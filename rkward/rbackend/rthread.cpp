@@ -103,7 +103,7 @@ void RThread::run () {
 	while (1) {
 		mutex.lock ();
 		
-		if (current_chain->commands.isEmpty () && (!current_chain->closed)) {
+		if ((!current_chain->commands.isEmpty ()) || (!current_chain->closed)) {
 			if (previously_idle) {
 				qApp->postEvent (inter, new QCustomEvent (RBUSY_EVENT));
 				previously_idle = false;
