@@ -293,6 +293,7 @@ QString RContainerObject::validizeName (const QString &child_name) {
 	QString ret = child_name;
 	ret = ret.replace (QRegExp ("[^a-zA-Z0-9]"), ".");
 	ret = ret.replace (QRegExp ("^\\.*[0-9]+"), ".");
+	if (ret == "") ret = "var";
 	int i=-1;
 	QString postfix = "";
 	while (childmap.contains (ret + postfix)) {

@@ -295,7 +295,7 @@ void RKEditorDataFrame::columnDeletionRequested (int col) {
 
 void RKEditorDataFrame::columnAdded (int col) {
 	RK_TRACE (EDITOR);
-	RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (varview->text (NAME_ROW, col), this);
+	RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName (varview->text (NAME_ROW, col)), this);
 	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + getObject ()->getFullName () + ", \"" + obj->getShortName () + "\", " + QString ().setNum (col+1) + ")", RCommand::App | RCommand::Sync));
 	
 	// TODO: find a nice way to update the list:

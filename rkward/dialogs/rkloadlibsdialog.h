@@ -28,37 +28,62 @@ class QPushButton;
 class RKErrorDialog;
 class QWidget;
 class QCloseEvent;
+class RCommandChain;
 
 /**
-Shows which packages are available (installed) / loaded, and lets the user load or detach packages.
+Dialog which excapsulates widgets to load/unload, update and install R packages
 
 @author Thomas Friedrichsmeier
 */
 
 // TODO: add a static member to create (single) instance of the dialog
 
-class RKLoadLibsDialog : public KDialogBase, public RCommandReceiver {
+class RKLoadLibsDialog : public KDialogBase {
 Q_OBJECT
 public:
-	RKLoadLibsDialog (QWidget *parent = 0);
+	RKLoadLibsDialog (QWidget *parent, RCommandChain *chain);
 
 	~RKLoadLibsDialog ();
-public slots:
-	void loadButtonClicked ();
-	void detachButtonClicked ();
 protected:
-	void rCommandDone (RCommand *command);
 	void closeEvent (QCloseEvent *e);
 protected slots:
 	void slotOk ();
 	void slotApply ();
 	void slotCancel ();
+	void childDeleted ();
+private:
+	void tryDestruct ();
+	bool should_destruct;
+friend class LoadUnloadWidget;
+	RKErrorDialog *error_dialog;
+	RCommandChain *chain;
+	int num_child_widgets;
+	bool accepted;
+};
+
+/**
+Shows which packages are available (installed) / loaded, and lets the user load or detach packages.
+
+@author Thomas Friedrichsmeier
+*/
+class LoadUnloadWidget : public QWidget, public RCommandReceiver {
+Q_OBJECT
+public:
+	LoadUnloadWidget (RKLoadLibsDialog *parent);
+	
+	~LoadUnloadWidget ();
+public slots:
+	void loadButtonClicked ();
+	void detachButtonClicked ();
+	void ok ();
+	void apply ();
+	void cancel ();
+protected:
+	void rCommandDone (RCommand *command);
 private:
 	void updateCurrentList ();
 	void doLoadUnload ();
-
-	QWidget *widget;
-
+	
 	QListView *loaded_view;
 	QListView *installed_view;
 
@@ -67,7 +92,7 @@ private:
 	
 	QStringList prev_packages;
 	
-	RKErrorDialog *error_dialog;
+	RKLoadLibsDialog *parent;
 };
 
 #endif
