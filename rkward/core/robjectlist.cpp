@@ -146,7 +146,8 @@ void RObjectList::childUpdateComplete () {
 		RK_TRACE (OBJECTS);
 
 		RK_ASSERT (update_chain);
-		update_chain = RKGlobals::rInterface ()->closeChain (update_chain);
+		RKGlobals::rInterface ()->closeChain (update_chain);
+		update_chain = 0;
 
 		emit (updateComplete ());
 	}
@@ -174,14 +175,16 @@ void RObjectList::renameChild (RObject *object, const QString &new_name) {
 	object->name = new_name;
 }
 
-void RObjectList::removeChild (RObject *object) {
+void RObjectList::removeChild (RObject *object, bool removed_in_workspace) {
 	RK_TRACE (OBJECTS);
 
 	RObjectMap::iterator it = childmap.find (object->getShortName ());
 	RK_ASSERT (it.data () == object);
 	
-	RCommand *command = new RCommand ("remove (" + object->getFullName () + ")", RCommand::App | RCommand::Sync);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	if (!removed_in_workspace) {
+		RCommand *command = new RCommand ("remove (" + object->getFullName () + ")", RCommand::App | RCommand::Sync);
+		RKGlobals::rInterface ()->issueCommand (command, 0);
+	}
 	
 	childmap.remove (it);
 	delete object;

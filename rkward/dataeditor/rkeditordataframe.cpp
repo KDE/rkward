@@ -60,6 +60,7 @@ void RKEditorDataFrame::enableEditing (bool on) {
 
 RKEditorDataFrame::~RKEditorDataFrame () {
 	RK_TRACE (EDITOR);
+	object->setObjectOpened (this, false);
 }
 
 void RKEditorDataFrame::flushChanges () {
@@ -71,22 +72,24 @@ void RKEditorDataFrame::openObject (RObject *object, bool initialize_to_empty) {
 	RK_TRACE (EDITOR);
 	flushEdit ();
 	RKEditor::object = object;
+	object->setObjectOpened (this, true);
 
 	enableEditing (false);
 	open_chain = RKGlobals::rInterface ()->startChain (open_chain);
 	if (initialize_to_empty) {
-		pushTable (open_chain);
 		for (int i=0; i < numCols (); ++i) {
-			RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (varview->text (NAME_ROW, i), this);
+			RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName ("var"), this);
 			if (obj->isVariable ()) {
+				static_cast<RKVariable*> (obj)->setLength (dataview->numRows ());
 				setColObject (i, static_cast<RKVariable*> (obj));
-				static_cast<RKVariable*> (obj)->setObjectOpened (this, true);
+				obj->setCreatedInEditor (this);
 			} else {
 				RK_ASSERT (false);
 			}
 		}
+		pushTable (open_chain);
 	}
-		
+
 	// actually, given the object, we already know the child-names. We don't know their order, however, so we better fetch the name-row again.
 	RCommand *command = new RCommand ("names (" + object->getFullName () + ")", RCommand::Sync | RCommand::GetStringVector, "", this, GET_NAMES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, open_chain);
@@ -98,16 +101,8 @@ void RKEditorDataFrame::openObject (RObject *object, bool initialize_to_empty) {
 void RKEditorDataFrame::rCommandDone (RCommand *command) {
 	RK_TRACE (EDITOR);
 	if (command->getFlags () == GET_NAMES_COMMAND) {
-		// this is just a quick and dirty fix. The real fix will be not to start the editor with a set of empty variables, but to implement a better way of adding
-		// variables "as you type", instead.
-		for (int i=command->stringVectorLength (); i < numCols (); ++i) {
-			RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (varview->text (NAME_ROW, i), this);
-			if (obj->isVariable ()) {
-				setColObject (i, static_cast<RKVariable*> (obj));
-				obj->setCreatedInEditor (this);
-			} else {
-				RK_ASSERT (false);
-			}
+		while (command->stringVectorLength () < numCols ()) {
+			deleteColumn (0);
 		}
 	
 		// set the names and meta-information
@@ -118,8 +113,12 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 			// TODO: make clean
 			RKVariable *current_child = static_cast<RKVariable *> (static_cast <RContainerObject*> (getObject ())->findChild (command->getStringVector ()[i]));
 			if (current_child->isVariable ()) {
-				setColObject (i, current_child);
-				current_child->setObjectOpened (this, true);
+				if (!getColObject (i)) {		// if we initialized the table to empty, the object may already exist in our map
+					setColObject (i, current_child);
+					current_child->setObjectOpened (this, true);
+				} else {
+					RK_ASSERT (getColObject (i) == current_child);
+				}
 			} else {
 				RK_ASSERT (false);
 			}
@@ -139,10 +138,10 @@ void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
 	TwinTableMember *table = dataview;
 	command = getObject ()->getFullName ();
 	command.append (" <- data.frame (");
-
+	
 	QString vector;
 	for (int col=0; col < table->numCols (); col++) {
-		vector = table->varTable ()->rText (NAME_ROW, col) + "=I (c (";
+		vector = getColObject (col)->getShortName () + "=I (c (";
 		for (int row=0; row < table->numRows (); row++) {
 			vector.append (table->rText (row, col));
 			if (row < (table->numRows ()-1)) {
@@ -185,7 +184,9 @@ void RKEditorDataFrame::columnDeletionRequested (int col) {
 void RKEditorDataFrame::columnAdded (int col) {
 	RK_TRACE (EDITOR);
 	RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName (varview->text (NAME_ROW, col)), this);
+	RK_ASSERT (obj->isVariable ());	
 	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + getObject ()->getFullName () + ", \"" + obj->getShortName () + "\", " + QString ().setNum (col+1) + ")", RCommand::App | RCommand::Sync));
+	static_cast<RKVariable*> (obj)->setLength (dataview->numRows ());
 	obj->setCreatedInEditor (this);
 
 	// TODO: find a nice way to update the list:
@@ -193,13 +194,12 @@ void RKEditorDataFrame::columnAdded (int col) {
 	for (int i=numCols () - 1; i > col; --i) {
 		setColObject (i, getColObject (i-1));
 	}
-	
 	if (obj->isVariable ()) {
 		setColObject (col, static_cast<RKVariable*> (obj));
-		static_cast<RKVariable*> (obj)->setObjectOpened (this, true);
 	} else {
 		RK_ASSERT (false);
 	}
+
 }
 
 void RKEditorDataFrame::aboutToAddRow (int row) {

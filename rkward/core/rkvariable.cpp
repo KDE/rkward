@@ -34,6 +34,7 @@ RKVariable::RKVariable (RContainerObject *parent, const QString &name) : RObject
 // TODO: better check, wether it really is one
 	RObject::type = Variable;
 	var_type = Unknown;
+	length = 0;
 }
 
 RKVariable::~RKVariable () {
@@ -121,6 +122,13 @@ void RKVariable::rCommandDone (RCommand *command) {
 
 #define RECHECK_VALID { if ((!myData ()->invalid_count) && (!myData ()->previously_valid)) RKGlobals::rInterface ()->issueCommand ("mode (" + getFullName () + ") <- \"numeric\"", RCommand::App | RCommand::Sync); }
 
+void RKVariable::setLength (int len) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (!length);	// should only be called once
+	
+	length = len;
+}
+
 void RKVariable::deleteStringData (int row) {
 	RK_ASSERT (myData ());
 
@@ -153,10 +161,18 @@ void RKVariable::allocateEditData () {
 }
 
 // virtual
-void RKVariable::initializeEditData (bool) {
+void RKVariable::initializeEditData (bool to_empty) {
 	RK_TRACE (OBJECTS);
-
-	RKGlobals::rInterface ()->issueCommand ("is.numeric (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, GET_STORAGE_MODE_COMMAND);
+	RK_ASSERT (myData ());
+	
+	if (to_empty) {
+		for (int row=0; row < getLength (); ++row) {
+			myData ()->cell_string_data[row] = RKGlobals::empty_char;
+			myData ()->cell_double_data[row] = RKGlobals::na_double;
+		}
+	} else {
+		RKGlobals::rInterface ()->issueCommand ("is.numeric (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, GET_STORAGE_MODE_COMMAND);
+	}
 }
 
 // virtual
@@ -173,6 +189,7 @@ void RKVariable::discardEditData () {
 
 	RK_ASSERT (!(myData ()->changes));
 	delete myData ();
+	data = 0;
 }
 
 void RKVariable::setSyncing (bool immediate) {
@@ -207,26 +224,12 @@ void RKVariable::writeData (int from_row, int to_row) {
 
 	// TODO: try to sync in correct storage mode
 	if (from_row == to_row) {
-		QString data_string;
-		if (cellStatus (from_row) == ValueUnused) {
-			data_string = ("NA");
-		} else if ((getVarType () == String) || (cellStatus (from_row) == ValueInvalid)) {
-			data_string = (rQuote (getText (from_row)));
-		} else {
-			data_string = (QString::number (myData ()->cell_double_data[from_row]));
-		}
-		RKGlobals::rInterface ()->issueCommand (getFullName () + "[" + QString::number (from_row+1) + "] <- " + data_string, RCommand::App | RCommand::Sync);
+		RKGlobals::rInterface ()->issueCommand (getFullName () + "[" + QString::number (from_row+1) + "] <- " + getRText (from_row), RCommand::App | RCommand::Sync);
 	} else {
 		QString data_string = "c (";
 		for (int row = from_row; row <= to_row; ++row) {
 			// TODO: use getCharacter and direct setting of vectors.
-			if (cellStatus (row) == ValueUnused) {
-				data_string.append ("NA");
-			} else if ((getVarType () == String) || (cellStatus (row) == ValueInvalid)) {
-				data_string.append (rQuote (getText (row)));
-			} else {
-				data_string.append (QString::number (myData ()->cell_double_data[row]));
-			}
+			data_string.append (getRText (row));
 			if (row != to_row) {
 				data_string.append (", ");
 			}
@@ -327,6 +330,20 @@ QString RKVariable::getText (int row) {
 		} else {
 			return QString::number (myData ()->cell_double_data[row]);
 		}
+	}
+}
+
+QString RKVariable::getRText (int row) {
+	RK_TRACE (OBJECTS);
+	
+	Status cell_state = cellStatus (row);
+	
+	if (cell_state == ValueUnused) {
+		return ("NA");
+	} else if ((getVarType () == String) || (cell_state == ValueInvalid)) {
+		return (rQuote (getText (row)));
+	} else {
+		return (QString::number (myData ()->cell_double_data[row]));
 	}
 }
 

@@ -58,7 +58,7 @@ public:
 	bool hasMetaObject () { return (type & HasMetaObject); };
 	
 	void rename (const QString &new_short_name);
-	void remove ();
+	void remove (bool removed_in_workspace);
 
 /** A map of objects accessible by their short name. Used in RContainerObject. Defined here for technical reasons. */
 	typedef QMap<QString, RObject*> RObjectMap;

@@ -101,7 +101,8 @@ bool TwinTableMember::eventFilter (QObject *object, QEvent *event) {
     return(QTable::eventFilter (object, event));
 }
 
-QString TwinTableMember::rText (int row, int col) {
+// virtual
+QString TwinTableMember::rText (int row, int col) const {
 	return (RObject::rQuote (text (row, col)));
 }
 

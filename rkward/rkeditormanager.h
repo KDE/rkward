@@ -49,7 +49,6 @@ public:
 	void flushAll ();
 	
 	bool canEditObject (RObject *object);
-	RKEditor *objectOpened (RObject *object);
 
 /// returns the currently active editor
 	RKEditor *currentEditor ();
@@ -64,9 +63,6 @@ protected:
 private:
 	QTabWidget *tabbook;
 	RCommandChain *restore_chain;
-	
-	typedef QMap<RObject*, RKEditor*> OpenedObjects;
-	OpenedObjects opened_objects;
 };
 
 #endif

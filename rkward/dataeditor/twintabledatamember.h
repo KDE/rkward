@@ -46,6 +46,8 @@ public:
 	QWidget *beginEdit (int row, int col, bool replace);
 /** reimplemented form QTable not to work on TableColumns instead of QTableItems */
 	QString text (int row, int col) const;
+/** reimplemented form TwinTableDataMember to use information from RKVariable for proper treatment of values */
+	QString rText (int row, int col) const;
 };
 
 #endif

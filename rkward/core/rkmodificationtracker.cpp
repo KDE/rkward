@@ -40,6 +40,7 @@ void RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 // TODO: allow more than one editor per object
 	RKEditor *ed = object->objectOpened ();
 	RK_ASSERT (!((editor) && (!ed)));
+	RK_ASSERT (!(removed_in_workspace && editor));
 	
 	if (removed_in_workspace) {
 		if (ed) {
@@ -63,7 +64,7 @@ void RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 	
 	if (ed) ed->removeObject (object);
 	emit (objectRemoved (object));
-	object->remove ();
+	object->remove (removed_in_workspace);
 }
 
 void RKModificationTracker::renameObject (RObject *object, const QString &new_name) {

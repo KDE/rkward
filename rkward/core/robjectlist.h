@@ -72,7 +72,7 @@ protected:
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	void renameChild (RObject *object, const QString &new_name);
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
-	void removeChild (RObject *object);
+	void removeChild (RObject *object, bool removed_in_workspace);
 /// reimplemented from RContainerObject to emit a change signal
 	void objectsChanged ();
 private:

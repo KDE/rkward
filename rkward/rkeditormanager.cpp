@@ -49,22 +49,20 @@ RKEditor *RKEditorManager::editObject (RObject *object, bool initialize_to_empty
 	RK_TRACE (APP);	
 	RObject *iobj = object;
 	RKEditor *ed = 0;
-	if (opened_objects.find (object) == opened_objects.end ()) {
+	if (!object->objectOpened()) {
 		if (object->isDataFrame ()) {
 			ed = new RKEditorDataFrame (tabbook);
 			// TODO: add child objects, too?
-			opened_objects.insert (object, ed);
 			ed->openObject (object, initialize_to_empty);
 		} else if (object->isVariable () && object->getContainer ()->isDataFrame ()) {
-			if (opened_objects.find (object->getContainer ()) == opened_objects.end ()) { 
+			if (!object->getContainer ()->objectOpened ()) { 
 				iobj = object->getContainer ();
 				ed = new RKEditorDataFrame (tabbook);
 				// TODO: add child objects, too?
-				opened_objects.insert (iobj, ed);
 				ed->openObject (iobj, initialize_to_empty);
 				// ed->focusObject (obj);
 			} else {
-				tabbook->showPage (opened_objects[object->getContainer ()]);
+				tabbook->showPage (object->getContainer ()->objectOpened ());
 			}
 		}
 
@@ -79,7 +77,7 @@ RKEditor *RKEditorManager::editObject (RObject *object, bool initialize_to_empty
 			RKGlobals::rInterface ()->issueCommand (command, restore_chain);
 		}
 	} else {
-		tabbook->showPage (opened_objects[object]);
+		tabbook->showPage (object->objectOpened ());
 	}
 	
 	return ed;
@@ -126,15 +124,7 @@ void RKEditorManager::closeEditor (RKEditor *editor) {
 	
 	RK_ASSERT (editor);
 	
-	RObject *object = 0;
-	// find object for the editor
-	for (OpenedObjects::iterator it = opened_objects.begin (); it != opened_objects.end (); ++it) {
-		if (it.data () == editor) {
-			object = it.key ();
-		}
-	}
-
-	opened_objects.remove (object);
+	RObject *object = editor->getObject ();
 	delete editor;
 
 	RCommand *command = new RCommand (".rk.editor.closed (" + object->getFullName() + ")", RCommand::App | RCommand::Sync);
@@ -149,21 +139,6 @@ void RKEditorManager::flushAll () {
 	for (int i=0; i < tabbook->count (); ++i) {
 		static_cast<RKEditor*> (tabbook->page (i))->flushChanges ();
 	}
-}
-
-RKEditor *RKEditorManager::objectOpened (RObject *object) {
-	RK_TRACE (APP);
-	
-	for (OpenedObjects::iterator it = opened_objects.begin (); it != opened_objects.end (); ++it) {
-		RObject *obj = it.key ();
-		if (obj == object) {
-			return it.data ();
-		} else if (obj->isContainer () && static_cast<RContainerObject*> (obj)->isParentOf (object, true)) {
-			return it.data ();
-		}
-	}
-	
-	return 0;
 }
 
 bool RKEditorManager::canEditObject (RObject *object) {

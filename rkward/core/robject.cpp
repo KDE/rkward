@@ -188,15 +188,15 @@ void RObject::rename (const QString &new_short_name) {
 	parent->renameChild (this, new_short_name);
 }
 
-void RObject::remove () {
+void RObject::remove (bool removed_in_workspace) {
 	RK_TRACE (OBJECTS);
-	parent->removeChild (this);	
+	parent->removeChild (this, removed_in_workspace);
 }
 
 //static
 QString RObject::typeToText (VarType var_type) {
 	if (var_type == Unknown) {
-		return "";
+		return "Unknown";
 	} else if (var_type == Number) {
 		return "Number";
 	} else if (var_type == String) {
@@ -210,7 +210,7 @@ QString RObject::typeToText (VarType var_type) {
 
 //static 
 RObject::VarType RObject::textToType (const QString &text) {
-	if (text == "") {
+	if (text == "Unknown") {
 		return Unknown;
 	} else if (text == "Number") {
 		return Number;
@@ -293,5 +293,6 @@ void RObject::discardEditData () {
 	RK_ASSERT (data);
 	
 	delete data;
+	data = 0;
 }
 

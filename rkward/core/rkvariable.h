@@ -79,6 +79,8 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	
 /** get the value at the given row in text-form - regardless of the storage mode. */
 	QString getText (int row);
+/** get the value at the given row in text-form suitable for submission to R. I.e. strings are quoted, numbers are not, empty values are returned as NA */
+	QString getRText (int row);
 /** set the value at the given row in text-form. Will try to convert the given string to the internal storage format if possible. */
 	void setText (int row, const QString &text);
 /** essentially like setText */
@@ -110,6 +112,8 @@ numeric! */
 	void insertRow (int row);
 /** like insertRow (), but inserts count rows. Does not sync with the backend for technical reasons! You have to remove the row in the backend explicitly. */
 	void insertRows (int row, int count);
+/** Tells the object it has (data) length len. Usually this will only be called directly after creating a new object */
+	void setLength (int len);
 protected:
 /** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData : public EditData {

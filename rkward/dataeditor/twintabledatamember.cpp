@@ -72,7 +72,7 @@ void TwinTableDataMember::paintCell (QPainter *p, int row, int col, const QRect 
 	}
 	if ((row >= numRows ()) || (!var)) {
 		brush = QBrush (Qt::gray);
-	} else if (var && (cell_state != RKVariable::ValueInvalid)) {
+	} else if (cell_state != RKVariable::ValueInvalid) {
 		if (!selected) {
 			brush = cg.brush (QColorGroup::Base);
 		}
@@ -80,7 +80,7 @@ void TwinTableDataMember::paintCell (QPainter *p, int row, int col, const QRect 
 	p->fillRect(0, 0, cr.width(), cr.height(), brush);
 
 	// draw grid
-	QPen pen( p->pen() );
+	QPen pen (p->pen ());
 	int gridColor = style ().styleHint (QStyle::SH_Table_GridLineColor, this);
 	if (gridColor != -1) {
 		const QPalette &pal = palette ();
@@ -119,8 +119,12 @@ QWidget *TwinTableDataMember::beginEdit (int row, int col, bool) {
 	RK_ASSERT (!tted);
 	RKVariable *var = table->getColObject (col);
 	if (!var) {
-		RK_ASSERT (false);
-		return 0;
+		table->insertNewColumn (col);
+		var = table->getColObject (col);
+		if (!var) {
+			RK_ASSERT (false);
+			return 0;
+		}
 	}
 
 	if (var->cellStatus (row) == RKVariable::ValueUnknown) return 0;
@@ -150,4 +154,13 @@ QString TwinTableDataMember::text (int row, int col) const {
 		return "";
 	}
 	return var->getText (row);
+}
+
+QString TwinTableDataMember::rText (int row, int col) const {
+	RKVariable *var = table->getColObject (col);
+	if (!var) {
+		RK_ASSERT (false);
+		return "";
+	}
+	return var->getRText (row);
 }

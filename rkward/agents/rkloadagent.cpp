@@ -43,9 +43,13 @@ RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
 	KIO::NetAccess::download (url, tmpfile, RKGlobals::rkApp ());
 #endif
 
+	update_was_delete = false;
 	RCommand *command;
 	
 	if (!merge) {
+		RKGlobals::rkApp ()->slotCloseAllEditors ();
+		update_was_delete = true;
+		RKGlobals::rObjectList ()->updateFromR ();
 		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App);
 		RKGlobals::rInterface ()->issueCommand (command);
 	}
@@ -54,7 +58,6 @@ RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
 	RKGlobals::rInterface ()->issueCommand (command);
 
 	connect (RKGlobals::rObjectList (), SIGNAL (updateComplete ()), this, SLOT (listUpdateComplete ()));
-	RKGlobals::rObjectList ()->updateFromR ();
 	
 	RKGlobals::rObjectList ()->setWorkspaceURL (url);
 }
@@ -79,6 +82,11 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 
 void RKLoadAgent::listUpdateComplete () {
 	RK_TRACE (APP);
+	if (update_was_delete) {
+		update_was_delete = false;
+		RKGlobals::rObjectList ()->updateFromR ();
+		return;
+	}
 	RKGlobals::editorManager ()->restoreEditors ();
-	delete this;
+	deleteThis ();
 }

@@ -72,7 +72,7 @@ protected:
 	friend class RObjectList;
 	void addChild (RObject *child, QString childname);
 	virtual void renameChild (RObject *object, const QString &new_name);
-	virtual void removeChild (RObject *object);
+	virtual void removeChild (RObject *object, bool removed_in_workspace);
 /** given the current list of children (as returned by the "names"-command or similar in derived classes) find out, which children have been removed,
 and takes the appropriate measures */
 	void checkRemovedChildren (char **current_children, int current_child_count);

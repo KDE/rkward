@@ -477,7 +477,8 @@ void TwinTable::setColObject (long int column, RKVariable *object) {
 }
 
 RKVariable *TwinTable::getColObject (long int col) {
-	RK_TRACE (EDITOR);
+	// do not trace. called very often
+	//RK_TRACE (EDITOR);
 	return col_map.find (col);
 }
 

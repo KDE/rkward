@@ -42,7 +42,8 @@ public:
 	QPoint mouse_at;
 /// TODO: can this be removed?
 	virtual TwinTableMember *varTable () { return this; };
-	QString rText (int row, int col);
+/** returns cell-value in a form suitable for submission to R (e.g. quoted for strings). Default implementation simply quotes the result of text () */
+	virtual QString rText (int row, int col) const;
 	TwinTableMember *getTwin () { return twin; };
 /** Checks all cells in a column for validity (e.g. if the type was changed) */
 	void checkColValid (int col);

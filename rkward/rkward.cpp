@@ -108,9 +108,11 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMainWindow
 
 RKwardApp::~RKwardApp() {
 	RK_TRACE (APP);
+	slotCloseAllEditors ();
 	delete RKGlobals::rInterface ();
 	delete RKGlobals::rObjectList ();
 	delete object_browser;
+	delete RKGlobals::tracker ();
 }
 
 void RKwardApp::doPostInit () {
@@ -479,7 +481,6 @@ void RKwardApp::fileOpenNoSave (const KURL &url) {
 		lurl = KFileDialog::getOpenURL (QString::null, i18n("*|All files"), this, i18n("Open File..."));
 	}
 	if (!lurl.isEmpty ()) {
-		slotCloseAllEditors ();
 		openWorkspace (lurl);
 	}
 	slotStatusMsg(i18n("Ready."));

@@ -41,6 +41,11 @@ RContainerObject::RContainerObject (RContainerObject *parent, const QString &nam
 
 RContainerObject::~RContainerObject () {
 	RK_TRACE (OBJECTS);
+	
+	// delete child objects. Note: the map itself is cleared/deleted automatically
+	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
+		delete it.data ();
+	}
 }
 
 void RContainerObject::updateFromR () {
@@ -237,14 +242,16 @@ void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 	object->name = new_name;
 }
 
-void RContainerObject::removeChild (RObject *object) {
+void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) {
 	RK_TRACE (OBJECTS);
 
 	RObjectMap::iterator it = childmap.find (object->getShortName ());
 	RK_ASSERT (it.data () == object);
 	
-	RCommand *command = new RCommand (object->getFullName () + " <- NULL", RCommand::App | RCommand::Sync);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	if (!removed_in_workspace) {
+		RCommand *command = new RCommand (object->getFullName () + " <- NULL", RCommand::App | RCommand::Sync);
+		RKGlobals::rInterface ()->issueCommand (command, 0);
+	}
 
 	childmap.remove (it);
 	delete object;
@@ -269,6 +276,8 @@ bool RContainerObject::isParentOf (RObject *object, bool recursive) {
 
 void RContainerObject::checkRemovedChildren (char **current_children, int current_child_count) {
 	RK_TRACE (OBJECTS);
+	QValueList<RObject*> removed_list;
+	
 // is there a more efficient algorythm for doing this?
 	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
 		QString child_string = it.key ();
@@ -280,9 +289,13 @@ void RContainerObject::checkRemovedChildren (char **current_children, int curren
 			}
 		}
 		if (!found) {
-			RKGlobals::tracker ()->removeObject (it.data (), 0, true);
-			RK_DO (qDebug ("child no longer present: %s.", child_string.latin1 ()), OBJECTS, DL_DEBUG);
+			removed_list.append (it.data ());
 		}
+	}
+
+	for (QValueList<RObject*>::iterator it = removed_list.begin (); it != removed_list.end (); ++it) {
+		RK_DO (qDebug ("child no longer present: %s.", (*it)->getFullName ().latin1 ()), OBJECTS, DL_DEBUG);
+		RKGlobals::tracker ()->removeObject ((*it), 0, true);
 	}
 }
 

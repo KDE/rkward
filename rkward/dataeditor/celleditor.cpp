@@ -55,12 +55,11 @@ CellEditor::~CellEditor () {
 }
 
 void CellEditor::timerEvent (QTimerEvent *e) {
-	RK_TRACE (EDITOR);
-	
 	if (e->timerId () != timer_id) {
 		QLineEdit::timerEvent (e);
 		return;
 	}
+	RK_TRACE (EDITOR);
 	
 	RK_ASSERT (value_list);
 	
