@@ -25,6 +25,9 @@
 
 class QListView;
 class QListViewItem;
+class RKVariable;
+
+#define VARSELECTOR_WIDGET 2
 
 /** This is an especially important RK-plugin-widget. It provides a list of variables
 (derived from the document's table), that can be selected for statistical analysis.
@@ -43,14 +46,12 @@ public:
 /** Returns the number of currently selected variables */
 	int numSelectedVars ();
 /** Returns pointers to the currently selected variables */
-	QValueList<int> selectedVars ();
-	QString getName (int item);
-	QString getLabel (int item);
+	QValueList<RKVariable*> selectedVars ();
+	int type () { return VARSELECTOR_WIDGET; };
 private:
 	QListView *list_view;
-	QMap<QListViewItem*, int> item_map;
-protected:
-	bool isVarSelector () { return true; };
+	typedef QMap<QListViewItem*, RKVariable*> ItemMap;
+	ItemMap item_map;
 };
 
 #endif

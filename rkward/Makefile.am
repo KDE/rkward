@@ -3,7 +3,7 @@ bin_PROGRAMS = rkward
 
 ## INCLUDES were found outside kdevelop specific part
 
-rkward_SOURCES = labelcell.cpp rcommand.cpp rktext.cpp rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp rkwarddoc.cpp rkward.cpp main.cpp rembed.cpp rembedinternal.cpp rkoutputwindow.cpp rksettingsmodule.cpp rksettingsmoduleplugins.cpp rksettingsmoduler.cpp rksettingsmodulephp.cpp rksettings.cpp rkerrordialog.cpp rksettingsmodulelogfiles.cpp rksettingsmoduleoutput.cpp rkcheckbox.cpp rthread.cpp phpbackend.cpp rkcommandeditor.cpp rkpluginhandle.cpp rkspinbox.cpp rkpluginspinbox.cpp
+rkward_SOURCES = labelcell.cpp rcommand.cpp rktext.cpp rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp rkwarddoc.cpp rkward.cpp main.cpp rembed.cpp rembedinternal.cpp rkoutputwindow.cpp rksettingsmodule.cpp rksettingsmoduleplugins.cpp rksettingsmoduler.cpp rksettingsmodulephp.cpp rksettings.cpp rkerrordialog.cpp rksettingsmodulelogfiles.cpp rksettingsmoduleoutput.cpp rkcheckbox.cpp rthread.cpp phpbackend.cpp rkcommandeditor.cpp rkpluginhandle.cpp rkspinbox.cpp rkpluginspinbox.cpp rkformula.cpp rkvariable.cpp
 rkward_LDADD   =  $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) $(LIBSOCKET) -lR -lkatepartinterfaces
 
 SUBDIRS = plugins
@@ -62,6 +62,6 @@ messages: rc.cpp
 	 $(XGETTEXT) $$LIST -o $(podir)/rkward.pot; \
 	fi
 
-noinst_HEADERS = rksettingsmodule.h rksettingsmoduleplugins.h rksettingsmoduler.h rksettingsmodulephp.h rksettings.h rkerrordialog.h rksettingsmodulelogfiles.h rksettingsmoduleoutput.h rkcheckbox.h rthread.h debug.h rkcommandeditor.h rkpluginhandle.h rkspinbox.h rkpluginspinbox.h
+noinst_HEADERS = rksettingsmodule.h rksettingsmoduleplugins.h rksettingsmoduler.h rksettingsmodulephp.h rksettings.h rkerrordialog.h rksettingsmodulelogfiles.h rksettingsmoduleoutput.h rkcheckbox.h rthread.h debug.h rkcommandeditor.h rkpluginhandle.h rkspinbox.h rkpluginspinbox.h rkformula.h rkvariable.h
 phpfilesdir = $(kde_datadir)/rkward/phpfiles
 phpfiles_DATA =  common.php

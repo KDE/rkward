@@ -27,6 +27,8 @@ class QDomElement;
 class RKPlugin;
 class QLayout;
 
+#define GENERIC_WIDGET 0
+
 /** The baseclass for all RK-plugin-widgets, i.e. widgets, that are used in the
 GUI for the plugins. It is mostly used as a skeleton and contains some virtual
 functions to be implemented in the respective derived classes.
@@ -39,8 +41,9 @@ tasks. It's still called a "widget", because it essentially functions as one.
   */
 
 class RKPluginWidget : public QBoxLayout {
+	Q_OBJECT
 public: 
-	RKPluginWidget(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
+	RKPluginWidget (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
 	virtual ~RKPluginWidget();
 	QWidget *parent () { return _parent; };
 /** Returns the plugin, this widget belongs to */	
@@ -54,8 +57,12 @@ public:
 /** Returns any complaints, this widget may have.
 	baseclass-implementation returns an empty string */
 	virtual QString complaints ();
-/** Returns, whether this widget is a varselector */
-	virtual bool isVarSelector () { return false; };
+/** Returns, what type of widget this is */
+	virtual int type () { return GENERIC_WIDGET; };
+/** Performs any initialization that has to be delayed unitl all widgets are constructed (if any) */
+	virtual void initialize () { ; };
+signals:
+	void changed ();
 private:
 	QWidget *_parent;
 	RKPlugin *_plugin;

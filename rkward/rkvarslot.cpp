@@ -27,6 +27,7 @@
 
 #include "rkvarselector.h"
 #include "rkplugin.h"
+#include "rkvariable.h"
 
 RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
 	qDebug ("creating varselector");
@@ -75,6 +76,10 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 RKVarSlot::~RKVarSlot(){
 }
 
+void RKVarSlot::initialize () {
+	source = plugin ()->getVarSelector (source_id);
+}
+
 void RKVarSlot::listSelectionChanged() {
 	selection = false;
 
@@ -96,13 +101,12 @@ void RKVarSlot::listSelectionChanged() {
 }
 
 void RKVarSlot::selectPressed () {
-	RKVarSelector *source = plugin ()->getVarSelector (source_id);
 	if (!multi) {
 		if (!num_vars) {
 			if (!source) return;
 			if (source->numSelectedVars() != 1) return;
-			int sel = source->selectedVars ().first ();
-			line_edit->setText (source->getName (sel));
+			RKVariable *sel = source->selectedVars ().first ();
+			line_edit->setText (sel->getShortName ());
 			item_map.insert (0, sel);
 			num_vars = 1;
 			select->setText ("<--");
@@ -130,9 +134,9 @@ void RKVarSlot::selectPressed () {
 			listSelectionChanged ();
 		} else {
 			if (!source) return;
-			QValueList<int> itemlist = source->selectedVars();
-			for (QValueList<int>::Iterator it = itemlist.begin (); it != itemlist.end (); ++it) {
-				int sel = *it;
+			QValueList<RKVariable*> itemlist = source->selectedVars();
+			for (QValueList<RKVariable*>::Iterator it = itemlist.begin (); it != itemlist.end (); ++it) {
+				RKVariable* sel = *it;
 				// don't allow duplicates
 				bool duplicate = false;
 				for (ItemMap::const_iterator iit = item_map.begin (); iit != item_map.end (); ++iit) {
@@ -142,7 +146,7 @@ void RKVarSlot::selectPressed () {
 					}
 				}
 				if (!duplicate) {
-					QListViewItem *new_item = new QListViewItem (list, source->getName (sel));
+					QListViewItem *new_item = new QListViewItem (list, sel->getShortName ());
 					list->insertItem (new_item);
 					item_map.insert (new_item, sel);
 				}
@@ -152,7 +156,15 @@ void RKVarSlot::selectPressed () {
 	}
 	
 	updateState ();
-	plugin ()->changed ();
+	emit (changed ());
+}
+
+QValueList<RKVariable*> RKVarSlot::getVariables () {
+	QValueList<RKVariable*> ret;
+	for (ItemMap::iterator it = item_map.begin (); it != item_map.end (); ++it) {
+		ret.append (it.data ());
+	}
+	return ret;
 }
 
 void RKVarSlot::updateState () {
@@ -177,12 +189,10 @@ bool RKVarSlot::isSatisfied () {
 }
 
 QString RKVarSlot::value (const QString &modifier) {
-	RKVarSelector *source = plugin ()->getVarSelector (source_id);
-	
 	if (modifier == "label") {
 		if (!multi) {
 			if (num_vars) {
-				return source->getLabel (item_map[0]);
+				return item_map[0]->getLabel ();
 			} else {
 				return "";
 			}
@@ -191,7 +201,7 @@ QString RKVarSlot::value (const QString &modifier) {
 	
 			QListViewItem *item = list->firstChild ();
 			while (item) {
-				ret.append (source->getLabel (item_map[item]) + "\n");
+				ret.append (item_map[item]->getLabel () + "\n");
 				item = item->nextSibling ();
 			}
 		
@@ -200,7 +210,7 @@ QString RKVarSlot::value (const QString &modifier) {
 	} else {
 		if (!multi) {
 			if (num_vars) {
-				return source->getName (item_map[0]);
+				return (item_map[0]->getFullName ());
 			} else {
 				return "";
 			}
@@ -210,7 +220,7 @@ QString RKVarSlot::value (const QString &modifier) {
 	
 			QListViewItem *item = list->firstChild ();
 			while (item) {
-				ret.append (source->getName (item_map[item]) + "\n");
+				ret.append (item_map[item]->getFullName () + "\n");
 				item = item->nextSibling ();
 			}
 		

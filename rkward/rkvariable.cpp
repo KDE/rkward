@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkcheckbox  -  description
+                          rkvariable  -  description
                              -------------------
-    begin                : Fri Jul 30 2004
+    begin                : Thu Aug 12 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,34 +14,31 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef RKCHECKBOX_H
-#define RKCHECKBOX_H
+#include "rkvariable.h"
 
-#include <rkpluginwidget.h>
+RKVariable::RKVariable () {
+}
 
-#include <qstring.h>
 
-class QCheckBox;
+RKVariable::~RKVariable () {
+}
 
-/**
-This RKPluginWidget provides a checkbox
+QString RKVariable::getLabel () {
+	return label;
+}
 
-@author Thomas Friedrichsmeier
-*/
-class RKCheckBox : public RKPluginWidget  {
-	Q_OBJECT
-public: 
-	RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
-	~RKCheckBox ();
-public slots:
-	void changedState (int);
-private:
-	QCheckBox *checkbox;
-	QString value_if_checked;
-	QString value_if_unchecked;
-protected:
-/** Returns the value of the currently selected option. */
-	QString value (const QString &modifier);
-};
+QString RKVariable::getShortName () {
+	return name;
+}
 
-#endif
+QString RKVariable::getFullName () {
+	return ("rk." + table + "[[" + name + "]]");
+}
+
+QString RKVariable::getTypeString () {
+	return type;
+}
+
+QString RKVariable::getDescription () {
+	return (name + " (" + label + ")");
+}

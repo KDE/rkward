@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkcheckbox  -  description
+                          rkvariable  -  description
                              -------------------
-    begin                : Fri Jul 30 2004
+    begin                : Thu Aug 12 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,34 +14,36 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef RKCHECKBOX_H
-#define RKCHECKBOX_H
-
-#include <rkpluginwidget.h>
+#ifndef RKVARIABLE_H
+#define RKVARIABLE_H
 
 #include <qstring.h>
 
-class QCheckBox;
-
-/**
-This RKPluginWidget provides a checkbox
+/** Abstract representation of a varialbe, along with helper functions to get different name/labels/descriptions etc.
+The implementation will look a lot different when done, but you can go ahead and use functions like getLabel (), getShortName (),
+getFullName (), getTypeString () etc. where appropriate.
 
 @author Thomas Friedrichsmeier
 */
-class RKCheckBox : public RKPluginWidget  {
-	Q_OBJECT
-public: 
-	RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
-	~RKCheckBox ();
-public slots:
-	void changedState (int);
-private:
-	QCheckBox *checkbox;
-	QString value_if_checked;
-	QString value_if_unchecked;
-protected:
-/** Returns the value of the currently selected option. */
-	QString value (const QString &modifier);
+class RKVariable{
+public:
+    RKVariable();
+
+    ~RKVariable();
+	
+	QString getShortName ();
+	QString getFullName ();
+	QString getLabel ();
+	QString getDescription ();
+	QString getTypeString ();
+	
+/* Begin: parts that will be re-written entirely */
+	
+	QString name;
+	QString type;
+	QString table;
+	QString label;
+/* End */
 };
 
 #endif

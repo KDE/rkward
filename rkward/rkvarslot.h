@@ -24,9 +24,13 @@
 
 class QLineEdit;
 class QPushButton;
-class QVarSelector;
 class QListView;
 class QListViewItem;
+
+class RKVarSelector;
+class RKVariable;
+
+#define VARSLOT_WIDGET 1
 
 /** An RKVarSlot takes one or more variable(s) from an RKVarSelector.
   *@author Thomas Friedrichsmeier
@@ -37,6 +41,8 @@ class RKVarSlot : public RKPluginWidget {
 public: 
 	RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
 	~RKVarSlot();
+	int getNumVars () { return num_vars; };
+	QValueList<RKVariable*> getVariables ();
 public slots:
 /** Called when the select-button is pressed */
 	void selectPressed ();
@@ -45,19 +51,22 @@ private:
 	QLineEdit *line_edit;
 	QListView *list;
 	QPushButton *select;
+	RKVarSelector *source;
 	QString source_id;
 	int min_vars;
 	int num_vars;
 	bool multi;
 	bool required;
 	bool selection;
-	typedef QMap<QListViewItem*, int> ItemMap; 
+	typedef QMap<QListViewItem*, RKVariable*> ItemMap; 
 	ItemMap item_map;
 	void updateState ();
+	int type () { return VARSLOT_WIDGET; };
 protected:
 	bool isSatisfied ();
 	QString value (const QString &modifier);
 	QString complaints ();
+	void initialize ();
 };
 
 #endif

@@ -33,7 +33,7 @@ RKCheckBox::RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *p
 		checkbox->setChecked (true);
 	}
 
-	connect (checkbox, SIGNAL (stateChanged (int)), this, SLOT (changed (int)));
+	connect (checkbox, SIGNAL (stateChanged (int)), this, SLOT (changedState (int)));
 	
 	addWidget (checkbox);
 }
@@ -49,7 +49,7 @@ QString RKCheckBox::value (const QString &) {
 	}
 }
 
-void RKCheckBox::changed (int id) {
-	plugin ()->changed ();
+void RKCheckBox::changedState (int) {
+	emit (changed ());
 }
 

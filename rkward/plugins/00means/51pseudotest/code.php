@@ -3,6 +3,7 @@
 	}
 	
 	function calculate () {
+	getRK ("model");
 ?>rk.temp <- "Nothing of interest"
 <?
 	}

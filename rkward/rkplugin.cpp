@@ -50,6 +50,7 @@
 #include "rkradio.h"
 #include "rkcheckbox.h"
 #include "rkpluginspinbox.h"
+#include "rkformula.h"
 
 #define FOR_PHP_FLAG 1
 
@@ -176,13 +177,20 @@ void RKPlugin::buildGUI (int type_override) {
 			}
 		}
 	}
+	
+	// initialize widgets
+	WidgetsMap::Iterator it;
+	for (it = widgets.begin(); it != widgets.end(); ++it) {
+		it.data ()->initialize ();
+	}
+	
 	show ();
 	resize (sizeHint ());
 
 	// keep it alive
 	should_destruct = false;
 	should_updatecode = true;
-
+	
 	// initialize code/warn-views
 	changed ();
 }
@@ -347,6 +355,8 @@ void RKPlugin::buildStructure (const QDomElement &element, QBoxLayout *playout, 
 			widget = new RKPluginSpinBox (e, pwidget, this, playout);
 		} else if (e.tagName () == "varslot") {
 			widget = new RKVarSlot (e, pwidget, this, playout);
+		} else if (e.tagName () == "formula") {
+			widget = new RKFormula (e, pwidget, this, playout);
 		} else {
 			widget = new RKText (e, pwidget, this, playout);
 		}
@@ -527,10 +537,20 @@ QString RKPlugin::getVar (const QString &id) {
 /** Returns a pointer to the varselector by that name (0 if not available) */
 RKVarSelector *RKPlugin::getVarSelector (const QString &id) {
 	RKPluginWidget *selector = widgets[id];
-	if (selector->isVarSelector ()) {
+	if (selector->type () == VARSELECTOR_WIDGET) {
 		return (RKVarSelector *) selector;
 	}
 
 	qDebug ("failed to find varselector!");
+	return 0;
+}
+
+RKVarSlot *RKPlugin::getVarSlot (const QString &id) {
+	RKPluginWidget *slot = widgets[id];
+	if (slot->type () == VARSLOT_WIDGET) {
+		return (RKVarSlot *) slot;
+	}
+
+	qDebug ("failed to find varselot!");
 	return 0;
 }

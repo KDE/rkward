@@ -35,6 +35,7 @@ class QWidgetStack;
 class RKPluginWidget;
 class QPushButton;
 class RKVarSelector;
+class RKVarSlot;
 class PHPBackend;
 class RCommand;
 class RKErrorDialog;
@@ -55,6 +56,8 @@ public:
 	RKwardApp *getApp () { return app; };
 /** Returns a pointer to the varselector by that name (0 if not available) */
 	RKVarSelector *getVarSelector (const QString &id);
+/** Returns a pointer to the varslot by that name (0 if not available) */	
+	RKVarSlot *getVarSlot (const QString &id);
 /** return value given by identifier */
 	QString getVar (const QString &id);
 public slots:
@@ -71,7 +74,6 @@ public slots:
 	void gotRResult (RCommand *command);
 private:
 friend class PHPBackend;
-friend class RKPluginGUIWidget;
 	void updateCode (const QString &text);
 
 /** return result of given call to the R-backend */

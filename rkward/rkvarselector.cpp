@@ -22,11 +22,12 @@
 #include <qdom.h>
 #include <qlabel.h>
 
-#include <rkplugin.h>
-#include <rkward.h>
-#include <rkwarddoc.h>
+#include "rkplugin.h"
+#include "rkward.h"
+#include "rkwarddoc.h"
+#include "rkvariable.h"
 
-RKVarSelector::RKVarSelector(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
+RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
 	qDebug ("creating varselector");
 	label = new QLabel (element.attribute ("label", "Select Variable(s)"), parent);
 	addWidget (label);
@@ -45,17 +46,25 @@ RKVarSelector::RKVarSelector(const QDomElement &element, QWidget *parent, RKPlug
 	
 	RKwardDoc *doc = plugin->getApp ()->getDocument ();
 	for (int i = doc->numCols () - 1; i >= 0; --i) {
-		item_map.insert (new QListViewItem (main_table, doc->varname (i), doc->label (i), doc->typeString (i)), i);
+		RKVariable *variable = new RKVariable;
+		variable->table = "data";
+		variable->name = doc->varname (i);
+		variable->label = doc->label (i);
+		variable->type = doc->typeString (i);
+		item_map.insert (new QListViewItem (main_table, doc->varname (i), doc->label (i), doc->typeString (i)), variable);
 	}
 
 	addWidget (list_view);
 }
 
 RKVarSelector::~RKVarSelector(){
+	for (ItemMap::iterator it = item_map.begin (); it != item_map.end (); ++it) {
+		delete it.data ();
+	}
 }
 
-QValueList<int> RKVarSelector::selectedVars () {
-	QValueList<int> selected;
+QValueList<RKVariable*> RKVarSelector::selectedVars () {
+	QValueList<RKVariable*> selected;
 
 	QListViewItem *current;
 	current = list_view->firstChild ();
@@ -82,13 +91,4 @@ int RKVarSelector::numSelectedVars () {
 	}
 
 	return i;
-}
-
-QString RKVarSelector::getName (int item) {
-	QString ret ("rk." + list_view->firstChild ()->text (0) + "[[\"" + plugin ()->getApp ()->getDocument ()->varname (item) + "\"]]");
-	return ret;
-}
-
-QString RKVarSelector::getLabel (int item) {
-	return plugin ()->getApp ()->getDocument ()->label (item);
 }

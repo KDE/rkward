@@ -5,10 +5,24 @@
 
 	<dialog>
 		<text>
-			This plugin is not implemented. It's only here, to populate the menus a little.
-			Did you notice, that all plugins are constructed at runtime and on the fly from XML-files?
-			Try Analyse->Means->T-Tests->Independent Samples T-Test or Analyse->Descriptive Statistics.
+			This plugin is bogus! Do not use!
 		</text>
+		<tabbook>
+			<tab label="Basic settings">
+				<row>
+					<column>
+						<varselector id="vars"/>
+					</column>
+					<column>
+						<varslot type="numeric" id="x" source="vars" required="true" label="dependent variable"/>
+						<varslot type="numeric" id="y" source="vars" required="true" multi="true" label="fixed factors"/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Model">
+				<formula id="model" fixed_factors="y" label="Now chose the model"/>
+			</tab>
+		</tabbook>
 	</dialog>
 
 </document>

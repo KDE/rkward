@@ -20,13 +20,17 @@
 #include <qwidget.h>
 #include <qdom.h>
 
-RKPluginWidget::RKPluginWidget(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : QBoxLayout (layout, QBoxLayout::TopToBottom, 6) {
+#include "rkplugin.h"
+
+RKPluginWidget::RKPluginWidget (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : QBoxLayout (layout, QBoxLayout::TopToBottom, 6) {
 	_parent = parent;
 	_plugin = plugin;
 	layout->setMargin (6);
+	
+	connect (this, SIGNAL (changed ()), _plugin, SLOT (changed ()));
 }
 
-RKPluginWidget::~RKPluginWidget(){
+RKPluginWidget::~RKPluginWidget () {
 	qDebug ("widget deleted");
 }
 

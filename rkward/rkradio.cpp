@@ -81,5 +81,5 @@ QString RKRadio::value (const QString &) {
 }
 
 void RKRadio::buttonClicked (int) {
-	plugin ()->changed ();
+	emit (changed ());
 }
