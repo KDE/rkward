@@ -38,7 +38,7 @@
 
 #define DOWNLOAD_PACKAGES_COMMAND 1
 
-RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KDialogBase (KDialogBase::Tabbed, Qt::WStyle_DialogBorder, parent, 0, modal, i18n ("Configure Libraries")) {
+RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KDialogBase (KDialogBase::Tabbed, Qt::WStyle_DialogBorder, parent, 0, modal, i18n ("Configure Packages")) {
 	RK_TRACE (DIALOGS);
 	RKLoadLibsDialog::chain = chain;
 	
