@@ -52,7 +52,7 @@ void RKwatch::addInput (RCommand *command) {
 	}
 
 	watch->append ("---------------------------\n");
-	watch->append ("Issueing command:\n");
+	watch->append ("Issuing command:\n");
 	watch->setItalic (true);
 
 	watch->append (command->command ());
