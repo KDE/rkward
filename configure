@@ -1899,7 +1899,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=rkward
- VERSION=0.2.1
+ VERSION=0.2.2
 
 
 cat >>confdefs.h <<_ACEOF

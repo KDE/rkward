@@ -63,7 +63,7 @@ bool PHPBackend::initialize (const QString &filename) {
 
 	busy_writing = doing_command = startup_done = false;
 	busy = true;
-	
+		
 	// start the real template
 	callFunction ("include (\"" + filename + "\");", 0);
 		
