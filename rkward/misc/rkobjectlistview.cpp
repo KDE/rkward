@@ -27,10 +27,10 @@
 RKObjectListView::RKObjectListView (QWidget *parent) : QListView (parent) {
 	RK_TRACE (APP);
 	setSorting (100);
-	addColumn ("Name");
-	addColumn ("Label");
-	addColumn ("Type");
-	addColumn ("Class(es)");
+	addColumn (i18n("Name"));
+	addColumn (i18n("Label"));
+	addColumn (i18n("Type"));
+	addColumn (i18n("Class(es)"));
 }
 
 RKObjectListView::~RKObjectListView () {
