@@ -29,11 +29,14 @@ The Window where RK displays the (formatted) output
 class RKOutputWindow : public RKToggleWidget {
 Q_OBJECT
 public:
-	RKOutputWindow(QWidget *parent = 0, const char *name = 0);
+	RKOutputWindow(QWidget *parent = 0);
 
 	~RKOutputWindow();
 
 	void checkNewInput ();
+public slots:
+	void configureOutput ();
+	void clearOutput ();
 private:
 	QTextBrowser *browser;
 };

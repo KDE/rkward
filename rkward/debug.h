@@ -39,6 +39,7 @@ extern int RK_Debug_Level;
 #define COMMANDEDITOR 256
 #define MISC 512
 #define DIALOGS 1024
+#define OUTPUT 2048
 #define ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR | RBACKEND | MISC)
 
 // only for now

@@ -1,3 +1,8 @@
+- added menu-entries to clear output-window and watch-log
+- don't duplicate menu-entries when plugins get re-scanned
+- place "Analyse"-menu left of help-menu
+- converted plugins to rely entirely on R for formatting, i.e. the printout ()-section contains pure R-code only
+- wizard-interface is set as default for plugins
 - added access to kate-config dialog in the command-editor part of the interface watch
 - added configuration settings for which types of commands to show in the interface watch
 - added a nice startup-dialog instead of creating an emtpy table unconditionally
