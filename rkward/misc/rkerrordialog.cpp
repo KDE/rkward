@@ -29,7 +29,8 @@ RKErrorDialog::RKErrorDialog (const QString &text, const QString &caption, bool 
 }
 
 RKErrorDialog::~RKErrorDialog () {
-	delete dialog;
+	// dialog deletes itself via Qt::WDestructiveClose!
+	//delete dialog;
 }
 
 void RKErrorDialog::newError (const QString &error) {

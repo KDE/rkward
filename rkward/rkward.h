@@ -125,6 +125,8 @@ protected:
     void slotFileSave();
     /** save a document by a new filename*/
     void slotFileSaveAs();
+	/** shows the dialog to install/load/unload packages */
+	void slotFileLoadLibs ();
 	/** close current editor */
 	void slotCloseEditor ();
 	/** close all editors */
@@ -199,6 +201,7 @@ protected:
     KAction* fileSaveAs;
     KAction* filePrint;
     KAction* fileQuit;
+    KAction* file_load_libs;
 	KAction* close_editor;
 	KAction* close_all_editors;
 	KAction* new_data_frame;

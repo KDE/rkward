@@ -58,6 +58,7 @@
 #include "rkglobals.h"
 #include "robjectbrowser.h"
 #include "dialogs/startupdialog.h"
+#include "dialogs/rkloadlibsdialog.h"
 #include "agents/rksaveagent.h"
 #include "agents/rkloadagent.h"
 #include "windows/rkcommandeditorwindow.h"
@@ -254,6 +255,7 @@ void RKwardApp::initActions()
 	fileOpen = KStdAction::open(this, SLOT(slotFileOpen()), actionCollection(), "file_openx");
 	fileOpen->setText (i18n ("Open Workspace"));
 	fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const KURL&)), actionCollection(), "file_open_recentx");
+	file_load_libs = new KAction (i18n ("Load R Libraries"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");
 	fileSave = KStdAction::save(this, SLOT(slotFileSave()), actionCollection(), "file_savex");
 	fileSave->setText (i18n ("Save Workspace"));
 	fileSaveAs = KStdAction::saveAs(this, SLOT(slotFileSaveAs()), actionCollection(), "file_save_asx");
@@ -266,7 +268,7 @@ void RKwardApp::initActions()
 	filePrint = KStdAction::print(this, SLOT(slotFilePrint()), actionCollection(), "file_printx");
 	filePrint->setEnabled (false);
 	fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection(), "file_quitx");
-
+	
   editCut = KStdAction::cut(this, SLOT(slotEditCut()), actionCollection());
   editCopy = KStdAction::copy(this, SLOT(slotEditCopy()), actionCollection());
   editPaste = KStdAction::paste(this, SLOT(slotEditPaste()), actionCollection());
@@ -502,6 +504,12 @@ void RKwardApp::slotFileOpenRecent(const KURL& url)
 {
 	RK_TRACE (APP);
 	fileOpenAskSave (url);
+}
+
+void RKwardApp::slotFileLoadLibs () {
+	RK_TRACE (APP);
+	RKLoadLibsDialog *dial = new RKLoadLibsDialog (this);
+	dial->show ();
 }
 
 void RKwardApp::slotFileSave () {

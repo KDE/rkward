@@ -72,6 +72,7 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 			KMessageBox::error (0, i18n ("There has been an error opening file '%1'. The error message was:\n%2").arg (RKGlobals::rObjectList ()->getWorkspaceURL ().path ()).arg (command->error ()), i18n ("Error loading workspace"));
 			RKGlobals::rkApp ()->setCaption (i18n ("Untitled"), false);
 		} else {
+			RKGlobals::rkApp ()->setCaption (RKGlobals::rObjectList ()->getWorkspaceURL ().filename (), false);
 		}
 	}
 }
@@ -79,6 +80,5 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 void RKLoadAgent::listUpdateComplete () {
 	RK_TRACE (APP);
 	RKGlobals::editorManager ()->restoreEditors ();
-	RKGlobals::rkApp ()->setCaption (RKGlobals::rObjectList ()->getWorkspaceURL ().filename (), false);
 	delete this;
 }

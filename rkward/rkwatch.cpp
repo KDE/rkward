@@ -35,7 +35,10 @@
 #include <klocale.h>
 #include <kmenubar.h>
 
+#include "debug.h"
+
 RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
+	RK_TRACE (APP);
 	QGridLayout *grid = new QGridLayout (this, 2, 1);
 
 	QSplitter *splitter = new QSplitter (QSplitter::Vertical, this);
@@ -98,16 +101,19 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 }
 
 RKwatch::~RKwatch(){
+	RK_TRACE (APP);
 	delete commands;
 }
 
 void RKwatch::addInput (RCommand *command) {
+	RK_TRACE (APP);
 	if (!RKSettingsModuleWatch::shouldShowInput (command)) return;
 
 	addInputNoCheck (command);
 }
 
 void RKwatch::addInputNoCheck (RCommand *command) {
+	RK_TRACE (APP);
 // TODO: make colors/styles configurable
 	if (command->type () & RCommand::User) {
 		watch->setColor (Qt::red);
@@ -129,9 +135,11 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 		show ();
 		raise ();
 	}
+	RK_TRACE (APP);
 }
 
 void RKwatch::addOutput (RCommand *command) {
+	RK_TRACE (APP);
 	if (!RKSettingsModuleWatch::shouldShowOutput (command)) {
 		if (!command->failed ()) {
 			return;
@@ -175,29 +183,35 @@ void RKwatch::addOutput (RCommand *command) {
 }
 
 void RKwatch::clearCommand () {
+	RK_TRACE (APP);
 	commands->setText ("");
 	commands->setFocus ();
 }
 
 void RKwatch::submitCommand () {
+	RK_TRACE (APP);
 	RKGlobals::editorManager ()->flushAll ();
 	r_inter->issueCommand (new RCommand (commands->text (), RCommand::User));
 	clearCommand ();
 }
 
 void RKwatch::configureWatch () {
+	RK_TRACE (APP);
 	RKSettings::configureSettings (RKSettings::Watch, this);
 }
 
 void RKwatch::configureEditor () {
+	RK_TRACE (APP);
 	commands->configure ();
 }
 
 void RKwatch::openEditor () {
+	RK_TRACE (APP);
 	new RKCommandEditorWindow (0);
 }
 
 void RKwatch::clearWatch () {
+	RK_TRACE (APP);
 	watch->setText ("");
 
 	// set a fixed width font

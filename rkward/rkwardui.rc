@@ -8,6 +8,7 @@
 		<Separator/>
 		<Action name="file_openx"/>
 		<Action name="file_open_recentx"/>
+		<Action name="file_load_libs"/>
 		<Separator/>
 		<Action name="file_savex"/>
 		<Action name="file_save_asx"/>

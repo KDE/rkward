@@ -7,9 +7,6 @@ stuff to do before 0.2.8 release
 - Twintable/RKEditorDataFrame
 	- rework type-select cell
 	- merge the two classes
-- create load-agent
-- basic modification tracking:
-	- do not ask for save on a workspace that is entirely empty and has seen no user commands (or just one that is entirely empty?)
 - pick some from below:
 
 (relatively) small stuff to do soon
@@ -25,7 +22,10 @@ stuff to do before 0.2.8 release
 - add XML-parsing helper functions and error-checking
 - create a spinbox, that can really deal with real numbers
 - UNPROTECT_PTR
+- KDialog::marginHint (), KDialog::spacingHint ()
 - give informative feedback on syntax errors (line numbers, etc.)!
+- GUI for installation/updating of packages
+	- show on failed require ()
 
 stuff to do before the thing is usable
 - RKWatch
