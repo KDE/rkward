@@ -25,6 +25,7 @@
 #include <qframe.h>
 #include <qpushbutton.h>
 #include <qtextedit.h>
+#include <qregexp.h>
 
 #include "rkward.h"
 #include "rkwarddoc.h"
@@ -247,16 +248,39 @@ void RKPlugin::changed () {
 	// update code-display
 	// TODO: make more flexible (allow "$$" etc);
 	QString code;
+	QString section;
 	int i = 0;
-	while (code_template.section ("$", i, i) != "") {
+	while ((section = code_template.section ("$", i, i)) != "") {
 		if (i % 2) {
-			if (widgets.contains (code_template.section ("$", i, i))) {
-				code.append (widgets[code_template.section ("$", i, i)]->value ());
+			QString ident = section.section ("_", 0, 0);
+			RKPluginWidget *widget;
+			if (widgets.contains (ident)) {
+				widget = widgets[ident];
 			} else {
-				qDebug ("Couldn't find value for $" + code_template.section ("$", i, i) +"$!");
+				widget = 0;
+				qDebug ("Couldn't find value for $" + section +"$!");
+			}
+
+			QString modifier = section.section ("_", 1, 1);
+
+			if (widget) {
+				if (modifier != "") {
+					QString quoted;
+					if (modifier == "label") {
+						int col = getApp ()->getDocument ()->lookUp (widget->value ());
+						if (col >= 0) {
+							quoted = getApp ()->getDocument ()->label (col);
+						}
+					} else if (modifier == "name") {
+						quoted = widget->value ();
+					}
+					code.append (quoted.replace (QRegExp ("\""), "\\\""));
+				} else {
+					code.append (widget->value ());
+				}
 			}
 		} else {
-			code.append (code_template.section ("$", i, i));
+			code.append (section);
 		}
 		i++;
 	}

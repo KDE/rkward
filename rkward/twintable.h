@@ -61,6 +61,9 @@ public:
 /** Returns the type of variable (as a string) of a column */
 	QString typeString (int col);
 
+/** Returns the column of a variable named "name" or -1 if no such var */
+	int lookUp (const QString &name);
+
 /** Returns the number of columns in the tables */
 	int numCols ();
 

@@ -477,3 +477,17 @@ QString TwinTable::typeString (int col) {
 int TwinTable::numCols () {
 	return varview->numCols ();
 }
+
+int TwinTable::lookUp (const QString &name) {
+	int return_val = -1;
+	for (unsigned int i = 0; i < numCols (); i++) {
+		// that section thing is an ugly hack only for the time being,
+		// that sorts out the varname from rk.data["varname"]
+		if (varname (i) == name.section ("\"", 1, 1)) {
+			return_val = i;
+			i = numCols ();
+		}
+	}
+
+	return return_val;	
+}
