@@ -19,24 +19,27 @@
 
 #include <qdom.h>
 #include <qlabel.h>
+#include <qlayout.h>
 #include <qbuttongroup.h>
 #include <qradiobutton.h>
 
-RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
-	qDebug ("creating radio");
+#include "../rkglobals.h"
 
-	// create label	
-	label = new QLabel (element.attribute ("label", "Select one:"), parent);
-	addWidget (label);
+RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+
+	// create label
+	label = new QLabel (element.attribute ("label", "Select one:"), this);
+	vbox->addWidget (label);
 
 	// create ButtonGroup
-	group = new QButtonGroup (parent);
+	group = new QButtonGroup (this);
 
 	// create internal layout for the buttons in the ButtonGroup
-	group->setColumnLayout(0, Qt::Vertical );
-	group->layout()->setSpacing (6);
-	group->layout()->setMargin (11);
-	QVBoxLayout *group_layout = new QVBoxLayout(group->layout());
+	group->setColumnLayout (0, Qt::Vertical);
+	group->layout()->setSpacing (RKGlobals::spacingHint ());
+	group->layout()->setMargin (RKGlobals::marginHint ());
+	QVBoxLayout *group_layout = new QVBoxLayout (group->layout(), RKGlobals::spacingHint ());
 
 	// create all the options
 	QDomNodeList children = element.elementsByTagName("option");
@@ -61,7 +64,7 @@ RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin, 
 
 	connect (group, SIGNAL (clicked (int)), this, SLOT (buttonClicked (int)));
 
-	addWidget (group);
+	vbox->addWidget (group);
 }
 
 RKRadio::~RKRadio(){

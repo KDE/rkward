@@ -16,25 +16,28 @@
  ***************************************************************************/
 #include "rkpluginspinbox.h"
 
-#include <qwidget.h>
+#include <qlayout.h>
 #include <qlabel.h>
 #include <qdom.h>
 
 #include "../misc/rkspinbox.h"
+#include "../rkglobals.h"
 #include "rkplugin.h"
 
-RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget(element, parent, plugin, layout) {
-	label = new QLabel (element.attribute ("label", "Enter value:"), parent);
-	addWidget (label);
+RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget(element, parent, plugin) {
+	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	
+	label = new QLabel (element.attribute ("label", "Enter value:"), this);
+	vbox->addWidget (label);
 
-	spinbox = new RKSpinBox (parent);
+	spinbox = new RKSpinBox (this);
 	if (element.attribute ("type") != "integer") {
 		spinbox->setRealMode (element.attribute ("min", "0").toFloat (), element.attribute ("max", "1").toFloat (), element.attribute ("initial", "0").toFloat (), element.attribute ("default_precision", "2").toInt (), element.attribute ("max_precision", "4").toInt ());
 	} else {
 		spinbox->setIntMode (element.attribute ("min", "0").toInt (), element.attribute ("max", "100").toInt (), element.attribute ("initial", "0").toInt ());
 	}
 	connect (spinbox, SIGNAL (valueChanged (int)), this, SLOT (valueChanged (int)));
-	addWidget (spinbox);
+	vbox->addWidget (spinbox);
 }
 
 RKPluginSpinBox::~RKPluginSpinBox () {

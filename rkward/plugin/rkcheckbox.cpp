@@ -17,15 +17,19 @@
 #include "rkcheckbox.h"
 
 #include <qdom.h>
+#include <qlayout.h>
 #include <qcheckbox.h>
 
 #include "rkplugin.h"
+#include "../rkglobals.h"
 
-RKCheckBox::RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
+RKCheckBox::RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
 	qDebug ("creating checkbox");
 
-	checkbox = new QCheckBox (element.attribute ("label"), parent);
-	
+	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	checkbox = new QCheckBox (element.attribute ("label"), this);
+	vbox->addWidget (checkbox);
+
 	value_if_checked = element.attribute ("value", "1");
 	value_if_unchecked = element.attribute ("value_unchecked", "");
 	
@@ -34,8 +38,6 @@ RKCheckBox::RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *p
 	}
 
 	connect (checkbox, SIGNAL (stateChanged (int)), this, SLOT (changedState (int)));
-	
-	addWidget (checkbox);
 }
 
 RKCheckBox::~RKCheckBox () {

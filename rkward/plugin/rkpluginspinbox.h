@@ -27,7 +27,7 @@ class RKSpinBox;
 class RKPluginSpinBox : public RKPluginWidget {
 	Q_OBJECT
 public:
-	RKPluginSpinBox(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
+	RKPluginSpinBox(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 
 	~RKPluginSpinBox();
 	QString value (const QString &modifier);

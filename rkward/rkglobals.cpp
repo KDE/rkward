@@ -37,4 +37,12 @@ RKGlobals::RKGlobals () {
 RKGlobals::~RKGlobals () {
 }
 
+#include <kdialog.h>
 
+int RKGlobals::marginHint () {
+	return KDialog::marginHint ();
+}
+
+int RKGlobals::spacingHint () {
+	return KDialog::spacingHint ();
+}

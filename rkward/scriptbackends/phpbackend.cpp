@@ -27,7 +27,6 @@
 #include "../settings/rksettingsmodulelogfiles.h"
 
 PHPBackend::PHPBackend() {
-	qDebug ("TODO: make location of PHP-binary configurable");
 	php_process = 0;
 	eot_string="#RKEND#\n";
 	busy_writing = false;

@@ -20,9 +20,16 @@
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qdom.h>
+#include <qlayout.h>
 #include <qlabel.h>
 
-RKText::RKText(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
+#include "../debug.h"
+#include "../rkglobals.h"
+
+RKText::RKText(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+	RK_TRACE (PLUGIN);
+	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	
 	QString text;
 	QStringList lines = lines.split ("\n", element.text (), false);
 	for (unsigned int i=0; i < lines.count (); i++) {
@@ -35,10 +42,11 @@ RKText::RKText(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QL
 	// strip final newline
 	text.truncate (text.length () -1);
 
-	label = new QLabel (text, parent);
-	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
-	addWidget (label);
+	label = new QLabel (text, this);
+	label->setAlignment (Qt::AlignAuto | Qt::ExpandTabs | Qt::WordBreak);
+	vbox->addWidget (label);
 }
 
 RKText::~RKText(){
+	RK_TRACE (PLUGIN);
 }

@@ -4,13 +4,26 @@
 	<entry type="entry" id="NA" label="This is a fictional t-test"/>
 
 	<dialog>
-		<row>
-			<text>
-				This plugin is not implemented. It's only here, to populate the menus a little.
-				Did you notice, that all plugins are constructed at runtime and on the fly from XML-files?
-				Try Analyse->Means->T-Tests->Independent Samples T-Test or Analyse->Descriptive Statistics.
-			</text>
-		</row>
+		<text>
+			This plugin is not implemented. It's only here, to populate the menus a little.
+			Did you notice, that all plugins are constructed at runtime and on the fly from XML-files?
+			Try Analyse->Means->T-Tests->Independent Samples T-Test or Analyse->Descriptive Statistics.
+		</text>
+		<text>
+			A test
+		</text>
+		<tabbook>
+			<tab>
+		<text>
+			A test
+		</text>
+			</tab>
+			<tab>
+		<text>
+			A test 2
+		</text>
+			</tab>
+		</tabbook>
 	</dialog>
 
 </document>

@@ -359,6 +359,7 @@ void RKVariable::cellsChanged (int from_row, int to_row) {
 void RKVariable::extendToLength (int length) {
 	RK_TRACE (OBJECTS);
 
+	if (length <= 0) length = 1;
 	if (length <= myData ()->allocated_length) {
 		RKVariable::length = length;
 		return;

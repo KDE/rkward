@@ -37,7 +37,7 @@ class RKVarSlot;
 class RKFormula : public RKPluginWidget {
   Q_OBJECT
 public:
-    RKFormula(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
+    RKFormula(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 
     ~RKFormula();
 public slots:

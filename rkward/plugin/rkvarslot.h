@@ -39,7 +39,7 @@ class RKVariable;
 class RKVarSlot : public RKPluginWidget {
 	Q_OBJECT
 public: 
-	RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
+	RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKVarSlot();
 	int getNumVars () { return num_vars; };
 	QValueList<RKVariable*> getVariables ();

@@ -31,7 +31,7 @@ This RKPluginWidget provides a checkbox
 class RKCheckBox : public RKPluginWidget  {
 	Q_OBJECT
 public: 
-	RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
+	RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKCheckBox ();
 public slots:
 	void changedState (int);

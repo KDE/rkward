@@ -22,38 +22,40 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qlistview.h>
+#include <qlayout.h>
 
 #include <klocale.h>
 
 #include "rkvarselector.h"
 #include "rkplugin.h"
+#include "../rkglobals.h"
 #include "../core/rkvariable.h"
 
-RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
+RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
 	qDebug ("creating varselector");
-
+	
 	// layout
-	QGridLayout *g_layout = new QGridLayout (3, 3, 6);
+	QGridLayout *g_layout = new QGridLayout (this, 3, 3, RKGlobals::spacingHint ());
 
-	select = new QPushButton ("-->", parent);
+	select = new QPushButton ("-->", this);
 	select->setFixedWidth (select->fontMetrics ().width (" --> "));
 	connect (select, SIGNAL (clicked ()), this, SLOT (selectPressed ()));
 	g_layout->addWidget (select, 1, 0);
 
 	g_layout->addColSpacing (1, 5);
 
-	label = new QLabel (element.attribute ("label", "Variable:"), parent);
+	label = new QLabel (element.attribute ("label", "Variable:"), this);
 	g_layout->addWidget (label, 0, 2);
 
 	multi = (element.attribute ("multi") == "true");
 	
 	if (!multi) {
-		line_edit = new QLineEdit (parent);
+		line_edit = new QLineEdit (this);
 		line_edit->setReadOnly (true);
 		g_layout->addWidget (line_edit, 1, 2);
 		min_vars = 1;
 	} else {
-		list = new QListView (parent);
+		list = new QListView (this);
 		list->setSorting (100);
 		list->setSelectionMode (QListView::Extended);
 		list->addColumn ("Name");
@@ -62,8 +64,6 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 		min_vars = dummy.toInt ();
 		connect (list, SIGNAL (selectionChanged ()), this, SLOT (listSelectionChanged ()));
 	}
-
-	addLayout (g_layout);
 
 	// further infos
 	source_id = element.attribute ("source");

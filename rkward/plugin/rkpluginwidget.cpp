@@ -17,15 +17,12 @@
 
 #include "rkpluginwidget.h"
 
-#include <qwidget.h>
 #include <qdom.h>
 
 #include "rkplugin.h"
 
-RKPluginWidget::RKPluginWidget (const QDomElement &, QWidget *parent, RKPlugin *plugin, QLayout *layout) : QBoxLayout (layout, QBoxLayout::TopToBottom, 6) {
-	_parent = parent;
+RKPluginWidget::RKPluginWidget (const QDomElement &, QWidget *parent, RKPlugin *plugin) : QWidget (parent) {
 	_plugin = plugin;
-	layout->setMargin (6);
 	
 	connect (this, SIGNAL (changed ()), _plugin, SLOT (changed ()));
 }

@@ -224,49 +224,52 @@ void RKPlugin::buildDialog (const QDomElement &dialog_element, bool wizard_avail
 	main_grid->addWidget (splitter, 0, 0);
 	QWidget *upper_widget = new QWidget (splitter);
 	
-	QGridLayout *grid = new QGridLayout (upper_widget, 1, 3, 6);
-	QVBoxLayout *vbox = new QVBoxLayout (grid);
+	QHBoxLayout *hbox = new QHBoxLayout (upper_widget, RKGlobals::marginHint (), RKGlobals::spacingHint ());
+	QVBoxLayout *vbox = new QVBoxLayout (hbox, RKGlobals::spacingHint ());
 
-	// default layout is in vertical	
+	// default layout is in vertical
 	buildStructure (dialog_element, vbox, upper_widget);
-
+	
 	// build standard elements
 	// lines
 	QFrame *line;
 	line = new QFrame (upper_widget);
 	line->setFrameShape (QFrame::VLine);
 	line->setFrameShadow (QFrame::Plain);	
-	grid->addWidget (line, 0, 1);
+	hbox->addWidget (line);
 
 	// buttons
-	vbox = new QVBoxLayout (0, 0, 6);
+	vbox = new QVBoxLayout (hbox, RKGlobals::spacingHint ());
 	okButton = new QPushButton ("Submit", upper_widget);
 	connect (okButton, SIGNAL (clicked ()), this, SLOT (ok ()));
+	vbox->addWidget (okButton);
+	
 	cancelButton = new QPushButton ("Close", upper_widget);
 	connect (cancelButton, SIGNAL (clicked ()), this, SLOT (cancel ()));
+	vbox->addWidget (cancelButton);
+	vbox->addStretch (1);
+	
 	helpButton = new QPushButton ("Help", upper_widget);
 	connect (helpButton, SIGNAL (clicked ()), this, SLOT (help ()));
+	vbox->addWidget (helpButton);
+	
 	if (wizard_available) {
 		switchButton = new QPushButton ("Use Wizard", upper_widget);
 		connect (switchButton, SIGNAL (clicked ()), this, SLOT (switchInterfaces ()));
+		vbox->addWidget (switchButton);
 	}
+	vbox->addStretch (2);
+	
 	toggleCodeButton = new QPushButton ("Code", upper_widget);
 	toggleCodeButton->setToggleButton (true);
 	toggleCodeButton->setOn (true);
 	connect (toggleCodeButton, SIGNAL (clicked ()), this, SLOT (toggleCode ()));
-	vbox->addWidget (okButton);
-	vbox->addWidget (cancelButton);
-	vbox->addStretch (1);
-	vbox->addWidget (helpButton);
-	vbox->addWidget (switchButton);
-	vbox->addStretch (2);
 	vbox->addWidget (toggleCodeButton);
-	grid->addLayout (vbox, 0, 2);
 	
 	// text-fields
 	QWidget *lower_widget = new QWidget (splitter);
 	
-	vbox = new QVBoxLayout (lower_widget, 6);
+	vbox = new QVBoxLayout (lower_widget, RKGlobals::spacingHint ());
 	codeDisplay = new RKCommandEditor (lower_widget, true);
 	vbox->addWidget (codeDisplay);
 
@@ -276,7 +279,7 @@ void RKPlugin::buildDialog (const QDomElement &dialog_element, bool wizard_avail
 void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_available) {
 	RK_TRACE (PLUGIN);
 
-	QGridLayout *main_grid = new QGridLayout (main_widget, 3, 4);
+	QGridLayout *main_grid = new QGridLayout (main_widget, 3, 4, RKGlobals::marginHint (), RKGlobals::spacingHint ());
 	wizard_stack = new QWidgetStack (main_widget);
 	main_grid->addMultiCellWidget (wizard_stack, 0, 0, 0, 3);
 	
@@ -300,7 +303,7 @@ void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_avail
 
 	// build the last page
 	QWidget *last_page = new QWidget (main_widget);
-	QVBoxLayout *vbox = new QVBoxLayout (last_page, 6);
+	QVBoxLayout *vbox = new QVBoxLayout (last_page, RKGlobals::spacingHint ());
 	QLabel *label = new QLabel (i18n ("Below you can see the command(s) corresponding to the settings you made. Click 'Submit' to run the command(s)."), last_page);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	codeDisplay = new RKCommandEditor (last_page, true);
@@ -335,54 +338,54 @@ void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_avail
 }
 
 void RKPlugin::buildStructure (const QDomElement &element, QBoxLayout *playout, QWidget *pwidget) {
-	RKPluginWidget *widget = 0;
-
 	QDomNodeList children = element.childNodes ();
 	
 	for (unsigned int i=0; i < children.count (); i++) {
+		RKPluginWidget *widget = 0;
 		QDomElement e = children.item (i).toElement ();
 		
 	    if (e.tagName () == "row") {
-			buildStructure (e, new QHBoxLayout (playout, 6), pwidget);
+			buildStructure (e, new QHBoxLayout (playout, RKGlobals::spacingHint ()), pwidget);
 		} else if (e.tagName () == "column") {
-			buildStructure (e, new QVBoxLayout (playout, 6), pwidget);
+			buildStructure (e, new QVBoxLayout (playout, RKGlobals::spacingHint ()), pwidget);
 		} else if (e.tagName () == "frame") {
-			QVBoxLayout *layout = new QVBoxLayout (playout, 6);	// just a container
+			QVBoxLayout *layout = new QVBoxLayout (playout, RKGlobals::spacingHint ());	// just a container
 			QGroupBox *box = new QGroupBox (1, Qt::Vertical, e.attribute ("label"), pwidget);
 			layout->addWidget (box);
 			QWidget *dummy = new QWidget (box);		// cumbersome workaround. Can this be done in a more straightforward way?
-			QVBoxLayout *ilayout = new QVBoxLayout (dummy, 6);
+			QVBoxLayout *ilayout = new QVBoxLayout (dummy, RKGlobals::spacingHint ());
 			buildStructure (e, ilayout, dummy);
 		} else if (e.tagName () == "tabbook") {
 			QTabWidget *tabbook = new QTabWidget (pwidget);
-			playout->addWidget (tabbook);
 			QDomNodeList tabs = e.childNodes ();
 			for (unsigned int t=0; t < tabs.count (); ++t) {
 				QDomElement tab_e = tabs.item (t).toElement ();
 				if (tab_e.tagName () == "tab") {
-					QWidget *tabwidget = new QWidget (tabbook);
-					QVBoxLayout *ilayout = new QVBoxLayout (tabwidget);
+					QFrame *tabwidget = new QFrame (pwidget);
+					QVBoxLayout *ilayout = new QVBoxLayout (tabwidget, RKGlobals::marginHint (), RKGlobals::spacingHint ());
 					buildStructure (tab_e, ilayout, tabwidget);
 					tabbook->addTab (tabwidget, tab_e.attribute ("label"));
 				}
 			}
+			playout->addWidget (tabbook);
 		} else if (e.tagName () == "varselector") {
-			widget = new RKVarSelector (e, pwidget, this, playout);
+			widget = new RKVarSelector (e, pwidget, this);
 		} else if (e.tagName () == "radio") {
-			widget = new RKRadio (e, pwidget, this, playout);
+			widget = new RKRadio (e, pwidget, this);
 		} else if (e.tagName () == "checkbox") {
-			widget = new RKCheckBox (e, pwidget, this, playout);
+			widget = new RKCheckBox (e, pwidget, this);
 		} else if (e.tagName () == "spinbox") {
-			widget = new RKPluginSpinBox (e, pwidget, this, playout);
+			widget = new RKPluginSpinBox (e, pwidget, this);
 		} else if (e.tagName () == "varslot") {
-			widget = new RKVarSlot (e, pwidget, this, playout);
+			widget = new RKVarSlot (e, pwidget, this);
 		} else if (e.tagName () == "formula") {
-			widget = new RKFormula (e, pwidget, this, playout);
+			widget = new RKFormula (e, pwidget, this);
 		} else {
-			widget = new RKText (e, pwidget, this, playout);
+			widget = new RKText (e, pwidget, this);
 		}
 		
 		if (widget) {
+			playout->addWidget (widget);
 			registerWidget (widget, e.attribute ("id", "#noid#"), num_pages);
 		}
 	}

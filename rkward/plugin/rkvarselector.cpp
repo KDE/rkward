@@ -17,28 +17,29 @@
 
 #include "rkvarselector.h"
 
-#include <qwidget.h>
+#include <qlayout.h>
 #include <qlistview.h>
 #include <qdom.h>
 #include <qlabel.h>
 
 #include "../core/rkvariable.h"
-
+#include "../rkglobals.h"
 #include "../misc/rkobjectlistview.h"
 
 #include "../debug.h"
 
-RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
+RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
 	RK_TRACE (PLUGIN);
+	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	
-	label = new QLabel (element.attribute ("label", "Select Variable(s)"), parent);
-	addWidget (label);
+	label = new QLabel (element.attribute ("label", "Select Variable(s)"), this);
+	vbox->addWidget (label);
 
-	list_view = new RKObjectListView (parent);
+	list_view = new RKObjectListView (this);
 	list_view->setSelectionMode (QListView::Extended);
 	connect (list_view, SIGNAL (listChanged ()), this, SLOT (objectListChanged ()));
 
-	addWidget (list_view);
+	vbox->addWidget (list_view);
 	list_view->initialize (true);
 }
 

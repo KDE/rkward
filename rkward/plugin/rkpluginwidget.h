@@ -18,10 +18,9 @@
 #ifndef RKPLUGINWIDGET_H
 #define RKPLUGINWIDGET_H
 
-#include <qlayout.h>
+#include <qwidget.h>
 #include <qstring.h>
 
-class QWidget;
 class QLabel;
 class QDomElement;
 class RKPlugin;
@@ -40,12 +39,11 @@ tasks. It's still called a "widget", because it essentially functions as one.
 @author Thomas Friedrichsmeier
   */
 
-class RKPluginWidget : public QBoxLayout {
+class RKPluginWidget : public QWidget {
 	Q_OBJECT
 public: 
-	RKPluginWidget (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
+	RKPluginWidget (const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	virtual ~RKPluginWidget();
-	QWidget *parent () { return _parent; };
 /** Returns the plugin, this widget belongs to */	
 	RKPlugin *plugin () { return _plugin; }
 	QLabel *label;

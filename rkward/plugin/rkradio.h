@@ -32,7 +32,7 @@ class QRadioButton;
 class RKRadio : public RKPluginWidget  {
 	Q_OBJECT
 public: 
-	RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
+	RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKRadio();
 public slots:
 	void buttonClicked (int id);

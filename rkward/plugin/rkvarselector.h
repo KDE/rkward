@@ -40,7 +40,7 @@ you can have more than one, e.g. for serving conceptionally different VarSlots.
 class RKVarSelector : public RKPluginWidget {
    Q_OBJECT
 public: 
-	RKVarSelector(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
+	RKVarSelector(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKVarSelector();
 /** Returns the number of currently selected variables */
 	int numSelectedVars ();

@@ -31,11 +31,15 @@
 #include "rkvarslot.h"
 #include "rkvarselector.h"
 #include "../core/rkvariable.h"
+#include "../rkglobals.h"
 
 #include "../debug.h"
 
-RKFormula::RKFormula (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
-	type_selector = new QButtonGroup (parent);
+RKFormula::RKFormula (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+	RK_TRACE (PLUGIN);
+	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	
+	type_selector = new QButtonGroup (this);
 	type_selector->setColumnLayout (0, Qt::Vertical);
 	type_selector->layout()->setSpacing (6);
 	type_selector->layout()->setMargin (11);
@@ -46,7 +50,7 @@ RKFormula::RKFormula (const QDomElement &element, QWidget *parent, RKPlugin *plu
 	connect (type_selector, SIGNAL (clicked (int)), this, SLOT (typeChange (int)));
 	
 	custom_model_widget = new QWidget (type_selector);
-	QHBoxLayout *model_hbox = new QHBoxLayout (custom_model_widget);
+	QHBoxLayout *model_hbox = new QHBoxLayout (custom_model_widget, RKGlobals::spacingHint ());
 	predictors_view = new QListView (custom_model_widget);
 	predictors_view->addColumn ("Name");
 	predictors_view->setSelectionMode (QListView::Extended);
@@ -54,17 +58,16 @@ RKFormula::RKFormula (const QDomElement &element, QWidget *parent, RKPlugin *plu
 	model_hbox->addWidget (predictors_view);
 	model_hbox->addSpacing (6);
 	
-	QVBoxLayout *model_vbox = new QVBoxLayout (custom_model_widget);
+	QVBoxLayout *model_vbox = new QVBoxLayout (model_hbox, RKGlobals::spacingHint ());
 	add_button = new QPushButton ("->", custom_model_widget);
 	connect (add_button, SIGNAL (clicked ()), this, SLOT (addButtonClicked ()));
 	model_vbox->addWidget (add_button);
 	remove_button = new QPushButton ("<-", custom_model_widget);
 	connect (remove_button, SIGNAL (clicked ()), this, SLOT (removeButtonClicked ()));
 	model_vbox->addWidget (remove_button);
-	level_box = new QSpinBox (custom_model_widget);
+	level_box = new QSpinBox (0, 0, 1, custom_model_widget);
 	level_box->setSpecialValueText ("Main effects");
 	model_vbox->addWidget (level_box);
-	model_hbox->addLayout (model_vbox);
 	model_hbox->addSpacing (6);
 
 	model_view = new QListView (custom_model_widget);
@@ -75,19 +78,21 @@ RKFormula::RKFormula (const QDomElement &element, QWidget *parent, RKPlugin *plu
 	model_hbox->addWidget (model_view);	
 
 	group_layout->addWidget (custom_model_widget);
-	
-	addWidget (type_selector);
-	
+
 	fixed_factors_id = element.attribute ("fixed_factors");
 	dependent_id = element.attribute ("dependent");
 	type_selector->setCaption (element.attribute ("label", "Specify model"));
+
+	vbox->addWidget (type_selector);
 }
 
 
 RKFormula::~RKFormula () {
+	RK_TRACE (PLUGIN);
 }
 
 void RKFormula::initialize () {
+	RK_TRACE (PLUGIN);
 	fixed_factors = plugin ()->getVarSlot (fixed_factors_id);
 	connect (fixed_factors, SIGNAL (changed ()), this, SLOT (factorsChanged ()));
 	dependent = plugin ()->getVarSlot (dependent_id);
@@ -96,11 +101,13 @@ void RKFormula::initialize () {
 }
 
 void RKFormula::factorsChanged () {
+	RK_TRACE (PLUGIN);
 	// trigger update:
 	typeChange ((int) model_type);
 }
 
 void RKFormula::typeChange (int id) {
+	RK_TRACE (PLUGIN);
 	type_selector->setButton (id);
 	
 	if (id == (int) FullModel) {
@@ -125,6 +132,7 @@ void RKFormula::typeChange (int id) {
 }
 
 void RKFormula::makeModelString () {
+	RK_TRACE (PLUGIN);
 	// first find out, whether mulitple tables are involved and construct table string
 	multitable = false;
 	model_ok = false;
@@ -190,6 +198,7 @@ void RKFormula::makeModelString () {
 }
 
 QString RKFormula::mangleName (RKVariable *var) {
+	RK_TRACE (PLUGIN);
 	if (!var) return "";
 		
 	QString dummy = var->getShortName ();
@@ -204,6 +213,7 @@ QString RKFormula::mangleName (RKVariable *var) {
 }
 
 void RKFormula::addButtonClicked () {
+	RK_TRACE (PLUGIN);
 	// create an array of selcted variables
 	// we allocate more than we'll probably need, but it's only going to be a handful of vars anyway.
 	RKVariable *varlist[predictors_view->childCount ()];
@@ -280,8 +290,10 @@ void RKFormula::addButtonClicked () {
 }
 
 RKFormula::Interaction* RKFormula::makeInteractions (int level, const RKVarPtr *source_vars, int source_count, int *count) {
+	RK_TRACE (PLUGIN);
 	RK_DO (qDebug ("makeInteractions: level %d, source_count %d", level, source_count), PLUGIN, DL_DEBUG);
-	
+	RK_ASSERT (level >= 0);
+
 	int start_var;
 	
 	// enough vars available?
@@ -339,6 +351,7 @@ RKFormula::Interaction* RKFormula::makeInteractions (int level, const RKVarPtr *
 }
 
 void RKFormula::removeButtonClicked () {
+	RK_TRACE (PLUGIN);
 	QListViewItem *current = model_view->firstChild ();
 	while (current) {
 		if (current->isSelected ()) {
@@ -388,8 +401,14 @@ void RKFormula::removeButtonClicked () {
 }
 
 void RKFormula::checkCustomModel () {
-	level_box->setMaxValue (predictors_view->childCount () - 1);
-	
+	RK_TRACE (PLUGIN);
+	int max_level = predictors_view->childCount () - 1;
+	if (max_level >= 0) {
+		level_box->setMaxValue (max_level);
+	} else {
+		level_box->setMaxValue (0);
+	}
+
 	// clear terms which are no longer valid
 	for (InteractionMap::iterator in = interaction_map.begin (); in != interaction_map.end (); ++in) {
 		Interaction inter = in.data ();
@@ -417,10 +436,12 @@ void RKFormula::checkCustomModel () {
 }
 
 bool RKFormula::isSatisfied () {
+	RK_TRACE (PLUGIN);
 	return (model_ok);
 }
 
 QString RKFormula::value (const QString &modifier) {
+	RK_TRACE (PLUGIN);
 	if (modifier == "data") {
 		return table_string;
 	} else if (modifier == "labels") {

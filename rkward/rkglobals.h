@@ -36,11 +36,16 @@ public:
     RKGlobals();
 
     ~RKGlobals();
-	
+
+/// static pointer to the app
 	static RKwardApp *rkApp () { return app; }
+/// static pointer to the RInterface
 	static RInterface *rInterface () { return rinter; };
+/// static pointer to the RObjectList
 	static RObjectList *rObjectList () { return list; };
+/// static pointer to the RKEditorManager
 	static RKEditorManager *editorManager () { return manager; };
+/// static pointer to the RKModificationTracker
 	static RKModificationTracker *tracker () { return mtracker; };
 	
 /// an empty char
@@ -49,6 +54,11 @@ public:
 	static char *unknown_char;
 /// a NA double
 	static double na_double;
+	
+/// returns KDialog::marginHint (), without the need to include kdialog.h in all the sources
+	static int marginHint ();
+/// returns KDialog::spacingHint (), without the need to include kdialog.h in all the sources
+	static int spacingHint ();
 private:
 	friend class RKwardApp;
 	static RKwardApp *app;

@@ -26,7 +26,7 @@
 
 class RKText : public RKPluginWidget  {
 public: 
-	RKText(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
+	RKText(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKText();
 };
 
