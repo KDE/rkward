@@ -40,12 +40,14 @@ Likely you will need to specify the location of additional header files, especia
 for debian use --with-extra-includes=/usr/lib/R/include
 
 
-Likewise you'll likely have to specify the location of the R-library:
+Likewise you'll likely have to specify the location of the R-library (file: libR.so):
 --with-extra-libs=/usr/lib/R/bin/ 		(or similar)
+for R >= 2.0, the default location seems to be
+--with-extra-libs=/usr/lib/R/lib/
 
 
 Personally, I need the following options for configure:
---prefix=/usr --with-extra-libs=/usr/lib/R/bin/ --with-extra-includes=/usr/lib/R/include --enable-debug=full
+--prefix=/usr --with-extra-libs=/usr/lib/R/lib/ --with-extra-includes=/usr/lib/R/include --enable-debug=full
 
 
 Installation
