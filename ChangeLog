@@ -1,4 +1,5 @@
 --- Version 0.2.1 - Aug-08-2004 ---
+- added "don't show again" setting to initial warning
 - added correlation matrix plugin
 - ask for R_HOME-setting if not availalbe at startup
 - allow direct (read) access of vectors in R

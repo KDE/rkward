@@ -104,7 +104,7 @@ void RKwardApp::doPostInit () {
 	dummy.append ("samples T-Test. Watch what happens in the RKWatch-window.\n");
 	dummy.append ("Note that the T-Test-dialog and all the entries in the Analyse-menu were created ");
 	dummy.append ("at run-time and on the fly from a simple XML-file located in the plugin-directory.");
-	KMessageBox::information (this, dummy, "Before you complain...");
+	KMessageBox::information (this, dummy, "Before you complain...", "state_of_rkward");
 
 	startR ();
 	initPlugins ();
