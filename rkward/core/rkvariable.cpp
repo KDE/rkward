@@ -24,6 +24,8 @@
 #include "rkmodificationtracker.h"
 
 #define UPDATE_DIM_COMMAND 1
+#define GET_STORAGE_MODE_COMMAND 10
+#define GET_DATA_COMMAND 11
 
 #include "../debug.h"
 
@@ -79,16 +81,57 @@ void RKVariable::rCommandDone (RCommand *command) {
 		QString dummy = getMetaProperty ("type");
 		int new_var_type = dummy.toInt ();
 		var_type = (RObject::VarType) new_var_type;
-		if (new_var_type != var_type) RKGlobals::tracker ()->objectMetaChanged (this, 0);
+		if (new_var_type != var_type) RKGlobals::tracker ()->objectMetaChanged (this);
 
 		parent->childUpdateComplete ();
+	} else if (command->getFlags () == GET_STORAGE_MODE_COMMAND) {
+		RK_ASSERT (command->intVectorLength () == 1);
+		int command_type = RCommand::App | RCommand::Sync;
+		if (command->getIntVector ()[0]) {
+			command_type |= RCommand::GetRealVector;
+		} else {
+			command_type |= RCommand::GetStringVector;
+		}
+		RKGlobals::rInterface ()->issueCommand (getFullName (), command_type, "", this, GET_DATA_COMMAND);
+	} else if (command->getFlags () == GET_DATA_COMMAND) {
+		// prevent resyncing of data
+		RK_ASSERT (myData ());
+		setSyncing (false);
+		if (command->realVectorLength ()) {
+			RK_ASSERT (command->realVectorLength () == length);
+			setNumeric (0, command->realVectorLength () - 1, command->getRealVector ());
+		} else if (command->stringVectorLength ()) {
+			RK_ASSERT (command->stringVectorLength () == length);
+			setCharacter (0, command->stringVectorLength () - 1, command->getStringVector ());
+			delete command->getStringVector ();
+			command->detachStringVector ();
+		} else {
+			RK_ASSERT (false);
+		}
+		ChangeSet *set = new ChangeSet;
+		set->from_index = 0;
+		set->to_index = length;
+		RKGlobals::tracker ()->objectDataChanged (this, set);
+		setSyncing (true);
 	}
 }
 
 ////////////////////// BEGIN: data-handling //////////////////////////////
 #define ALLOC_STEP 100
 
-#define DELETE_STRING_DATA(row) if (myData ()->cell_string_data && (myData ()->cell_string_data[row] != empty_char) && (myData ()->cell_string_data[row] != unknown_char)) { delete myData ()->cell_string_data[row]; } myData ()->cell_string_data[row] = 0;
+#define RECHECK_VALID { if ((!myData ()->invalid_count) && (!myData ()->previously_valid)) RKGlobals::rInterface ()->issueCommand ("mode (" + getFullName () + ") <- \"numeric\"", RCommand::App | RCommand::Sync); }
+
+void RKVariable::deleteStringData (int row) {
+	RK_ASSERT (myData ());
+
+	if (myData ()->cell_string_data[row] && (myData ()->cell_string_data[row] != RKGlobals::empty_char) && (myData ()->cell_string_data[row] != RKGlobals::unknown_char)) {
+		delete myData ()->cell_string_data[row];
+		if (getVarType () != String) {
+			myData ()->invalid_count--;
+		}
+	}
+	myData ()->cell_string_data[row] = 0;
+}
 
 // virtual
 void RKVariable::allocateEditData () {
@@ -103,6 +146,8 @@ void RKVariable::allocateEditData () {
 	myData ()->allocated_length = 0;
 	myData ()->immediate_sync = true;
 	myData ()->changes = 0;
+	myData ()->invalid_count = 0;
+	myData ()->previously_valid = true;
 	
 	extendToLength (getLength ());
 }
@@ -111,7 +156,7 @@ void RKVariable::allocateEditData () {
 void RKVariable::initializeEditData (bool) {
 	RK_TRACE (OBJECTS);
 
-	// TODO
+	RKGlobals::rInterface ()->issueCommand ("is.numeric (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, GET_STORAGE_MODE_COMMAND);
 }
 
 // virtual
@@ -122,7 +167,7 @@ void RKVariable::discardEditData () {
 
 	delete [] myData ()->cell_double_data;
 	for (int i = 0; i < myData ()->allocated_length; ++i) {
-		DELETE_STRING_DATA (i);
+		deleteStringData (i);
 	}
 	delete [] myData ()->cell_string_data;
 
@@ -162,12 +207,26 @@ void RKVariable::writeData (int from_row, int to_row) {
 
 	// TODO: try to sync in correct storage mode
 	if (from_row == to_row) {
-		RKGlobals::rInterface ()->issueCommand (getFullName () + "[" + QString::number (from_row+1) + "] <- " + rQuote (getText (from_row)), RCommand::App | RCommand::Sync);
+		QString data_string;
+		if (cellStatus (from_row) == ValueUnused) {
+			data_string = ("NA");
+		} else if ((getVarType () == String) || (cellStatus (from_row) == ValueInvalid)) {
+			data_string = (rQuote (getText (from_row)));
+		} else {
+			data_string = (QString::number (myData ()->cell_double_data[from_row]));
+		}
+		RKGlobals::rInterface ()->issueCommand (getFullName () + "[" + QString::number (from_row+1) + "] <- " + data_string, RCommand::App | RCommand::Sync);
 	} else {
 		QString data_string = "c (";
 		for (int row = from_row; row <= to_row; ++row) {
 			// TODO: use getCharacter and direct setting of vectors.
-			data_string.append (rQuote (getText (row)));
+			if (cellStatus (row) == ValueUnused) {
+				data_string.append ("NA");
+			} else if ((getVarType () == String) || (cellStatus (row) == ValueInvalid)) {
+				data_string.append (rQuote (getText (row)));
+			} else {
+				data_string.append (QString::number (myData ()->cell_double_data[row]));
+			}
 			if (row != to_row) {
 				data_string.append (", ");
 			}
@@ -175,6 +234,11 @@ void RKVariable::writeData (int from_row, int to_row) {
 		data_string.append (")");
 		RKGlobals::rInterface ()->issueCommand (getFullName () + "[" + QString::number (from_row + 1) + ":" + QString::number (to_row + 1) + "] <- " + data_string, RCommand::App | RCommand::Sync);
 	}
+
+	ChangeSet *set = new ChangeSet;
+	set->from_index = from_row;
+	set->to_index = to_row;
+	RKGlobals::tracker ()->objectDataChanged (this, set);
 }
 
 void RKVariable::cellChanged (int row) {
@@ -186,6 +250,7 @@ void RKVariable::cellChanged (int row) {
 		if ((myData ()->changes->from_index > row) || (myData ()->changes->from_index == -1)) myData ()->changes->from_index = row;
 		if (myData ()->changes->to_index < row) myData ()->changes->to_index = row;
 	}
+	RECHECK_VALID
 }
 
 void RKVariable::cellsChanged (int from_row, int to_row) {
@@ -197,6 +262,7 @@ void RKVariable::cellsChanged (int from_row, int to_row) {
 		if ((myData ()->changes->from_index > from_row) || (myData ()->changes->from_index == -1)) myData ()->changes->from_index = from_row;
 		if (myData ()->changes->to_index < to_row) myData ()->changes->to_index = to_row;
 	}
+	RECHECK_VALID
 }
 
 void RKVariable::extendToLength (int length) {
@@ -210,14 +276,14 @@ void RKVariable::extendToLength (int length) {
 	double *new_double_data = new double[target];
 	
 	if (myData ()->cell_string_data) {		// not starting from 0
-		qmemmove (myData ()->cell_string_data, new_string_data, myData ()->allocated_length * sizeof (char*));
-		qmemmove (myData ()->cell_double_data, new_double_data, myData ()->allocated_length * sizeof (double*));
+		qmemmove (new_string_data, myData ()->cell_string_data, myData ()->allocated_length * sizeof (char*));
+		qmemmove (new_double_data, myData ()->cell_double_data, myData ()->allocated_length * sizeof (double*));
 	
 		delete [] (myData ()->cell_string_data);
 		delete [] (myData ()->cell_double_data);
 	}
 	for (int i=myData ()->allocated_length; i < target; ++i) {
-		myData ()->cell_string_data[i] = empty_char;
+		new_string_data[i] = RKGlobals::unknown_char;
 	}
 
 	myData ()->cell_string_data = new_string_data;
@@ -235,7 +301,7 @@ void RKVariable::downSize () {
 		delete [] myData ()->cell_double_data;
 		myData ()->cell_double_data = 0;
 		for (int i = 0; i < myData ()->allocated_length; ++i) {
-			DELETE_STRING_DATA (i);
+			deleteStringData (i);
 		}
 		delete [] myData ()->cell_string_data;
 		myData ()->cell_string_data = 0;
@@ -251,7 +317,7 @@ RKVariable::RStorage RKVariable::rStorage () {
 QString RKVariable::getText (int row) {
 	if (row >= getLength ()) {
 		RK_ASSERT (false);
-		return unknown_char;
+		return RKGlobals::unknown_char;
 	}
 	if (getVarType () == String) {
 		return QString::fromLocal8Bit (myData ()->cell_string_data[row]);
@@ -265,20 +331,39 @@ QString RKVariable::getText (int row) {
 }
 
 void RKVariable::setText (int row, const QString &text) {
-	RK_ASSERT (row < length);
+	RK_TRACE (OBJECTS);
+	char *temp = qstrdup (text.local8Bit ());
+	setTextPlain (row, temp);
+	delete temp;
+}
 
+void RKVariable::setTextPlain (int row, char *text) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (row < length);
 	// delete previous string data, unless it's a special value
-	DELETE_STRING_DATA (row);
+	deleteStringData (row);
 
 	if (getVarType () == String) {
-		if (text.isEmpty ()) myData ()->cell_string_data[row] = empty_char;
-		else myData ()->cell_string_data[row] = qstrdup (text.local8Bit ());
+		if (text[0] == '\0') {
+			myData ()->cell_string_data[row] = RKGlobals::empty_char;
+		} else if (text == RKGlobals::empty_char) {
+			myData ()->cell_string_data[row] = RKGlobals::empty_char;
+		} else {
+			myData ()->cell_string_data[row] = qstrdup (text);
+		}
 	} else {
 		bool ok;
-		myData ()->cell_double_data[row] = text.toDouble (&ok);
+		myData ()->cell_double_data[row] = QCString (text).toDouble (&ok);
 		if (!ok) {
-			if (text.isEmpty ()) myData ()->cell_string_data[row] = empty_char;
-			else myData ()->cell_string_data[row] = qstrdup (text.local8Bit ());
+			if (text[0] == '\0') {
+				myData ()->cell_string_data[row] = RKGlobals::empty_char;
+			} else if (text == RKGlobals::empty_char) {
+				myData ()->cell_string_data[row] = RKGlobals::empty_char;
+			} else {
+				myData ()->invalid_count++;
+				myData ()->previously_valid = false;
+				myData ()->cell_string_data[row] = qstrdup (text);
+			}
 		}
 	}
 	cellChanged (row);
@@ -309,7 +394,7 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 	RK_ASSERT (to_row < length);
 	
 	for (int row=from_row; row <= to_row; ++row) {
-		DELETE_STRING_DATA (row);
+		deleteStringData (row);
 	}
 	
 	if (getVarType () == String) {
@@ -321,6 +406,8 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 	} else {
 		int i = 0;
 		for (int row=from_row; row <= to_row; ++row) {
+			deleteStringData (row);
+			if (data[i] == RKGlobals::na_double) myData ()->cell_string_data[row] = RKGlobals::empty_char;
 			myData ()->cell_double_data[row] = data[i++];
 		}
 	}
@@ -357,16 +444,15 @@ void RKVariable::setCharacter (int from_row, int to_row, char **data) {
 	if (getVarType () == String) {
 		int i=0;
 		for (int row=from_row; row <= to_row; ++row) {
-			DELETE_STRING_DATA (row);
+			deleteStringData (row);
 			myData ()->cell_string_data[row] = data[i++];
 		}
 	} else {
 		int i=0;
 		for (int row=from_row; row <= to_row; ++row) {
-			// TODO: converting to QString and then back to local8Bit () is inefficient!
-			// note: old string pointers are deleted inside setText ();
-			setText (row, data[i++]);
+			setTextPlain (row, data[i++]);
 		}
+		return;
 	}
 	cellsChanged (from_row, to_row);
 }
@@ -378,19 +464,17 @@ void RKVariable::setUnknown (int from_row, int to_row) {
 	if ((to_row < 0)) to_row = myData ()->allocated_length - 1;
 		
 	for (int row=from_row; row <= to_row; ++row) {
-		DELETE_STRING_DATA (row);
-		myData ()->cell_string_data[row] = unknown_char;
+		deleteStringData (row);
+		myData ()->cell_string_data[row] = RKGlobals::unknown_char;
 	}
 }
 
 RKVariable::Status RKVariable::cellStatus (int row) {
-	if (myData ()->cell_string_data[row] == empty_char) {
+	if (myData ()->cell_string_data[row] == RKGlobals::empty_char) {
 		return ValueUnused;
-	} else if (myData ()->cell_string_data[row] == unknown_char) {
+	} else if (myData ()->cell_string_data[row] == RKGlobals::unknown_char) {
 		return ValueUnknown;
-	} else if ((getVarType () == Number) && (myData ()->cell_string_data[row] != 0)) {
-		return ValueInvalid;
-	} else if (getVarType () != String) {
+	} else if ((getVarType () != String) && (myData ()->cell_string_data[row] != 0)) {
 		return ValueInvalid;
 	}
 	return ValueValid;
@@ -404,21 +488,22 @@ void RKVariable::removeRow (int row) {
 /** see removeRow (), but removes a range of rows (i.e. cells). Since data only needs to be copied once, this is more efficient than several single calls to removeRow () */
 void RKVariable::removeRows (int from_row, int to_row) {
 	for (int row = from_row; row <= to_row; ++row) {
-		DELETE_STRING_DATA (row);
+		deleteStringData (row);
 	}
 
 	if (to_row < (myData ()->allocated_length - 1)) {	// not the last rows
-		qmemmove (&(myData ()->cell_string_data[to_row+1]), &(myData ()->cell_string_data[from_row]), (myData ()->allocated_length - to_row - 1) * sizeof (char*));
-		qmemmove (&(myData ()->cell_double_data[to_row+1]), &(myData ()->cell_double_data[from_row]), (myData ()->allocated_length - to_row - 1) * sizeof (double*));
+		qmemmove (&(myData ()->cell_string_data[from_row]), &(myData ()->cell_string_data[to_row+1]), (myData ()->allocated_length - to_row - 1) * sizeof (char*));
+		qmemmove (&(myData ()->cell_double_data[from_row]), &(myData ()->cell_double_data[to_row+1]), (myData ()->allocated_length - to_row - 1) * sizeof (double*));
 	}
 
 	for (int row = (myData ()->allocated_length - 1 - (to_row - from_row)); row < myData ()->allocated_length; ++row) {
-		myData ()->cell_string_data[myData ()->allocated_length - 1] = empty_char;
+		myData ()->cell_string_data[myData ()->allocated_length - 1] = RKGlobals::empty_char;
 		myData ()->cell_double_data[myData ()->allocated_length - 1] = 0;
 	}
 
 	length -= (to_row - from_row) + 1;	
 	downSize ();
+	RECHECK_VALID
 }
 
 void RKVariable::insertRow (int row) {
@@ -428,11 +513,11 @@ void RKVariable::insertRow (int row) {
 void RKVariable::insertRows (int row, int count) {
 	extendToLength (row + count + 1);
 	
-	qmemmove (&(myData ()->cell_string_data[row]), &(myData ()->cell_string_data[row+count]), (myData ()->allocated_length - row - count) * sizeof (char*));
-	qmemmove (&(myData ()->cell_double_data[row]), &(myData ()->cell_double_data[row+count]), (myData ()->allocated_length - row - count) * sizeof (double));
+	qmemmove (&(myData ()->cell_string_data[row+count]), &(myData ()->cell_string_data[row]), (myData ()->allocated_length - row - count) * sizeof (char*));
+	qmemmove (&(myData ()->cell_double_data[row+count]), &(myData ()->cell_double_data[row]), (myData ()->allocated_length - row - count) * sizeof (double));
 	
 	for (int i=row+count; i >= row; --i) {
-		myData ()->cell_string_data[i] = empty_char;
+		myData ()->cell_string_data[i] = RKGlobals::empty_char;
 		myData ()->cell_double_data[i] = 0;
 	}
 }

@@ -50,20 +50,21 @@ void TwinTableMetaMember::insertRows (int, int) {
 
 void TwinTableMetaMember::setText (int row, int col, const QString &text) {
 	RK_TRACE (EDITOR);
-	TableColumn *column = table->getColumn (col);
-	RK_ASSERT (column);
+	RKVariable *var = table->getColObject (col);
+	RK_ASSERT (var);
+	if (text == var->getText (row)) return;
 	if (row == NAME_ROW) {
-		RKGlobals::tracker ()->renameObject (column->getObject (), column->getObject ()->getContainer ()->validizeName (text), 0);
+		RKGlobals::tracker ()->renameObject (var, var->getContainer ()->validizeName (text));
 	} else if (row == LABEL_ROW) {
-		column->getObject ()->setLabel (text, true);
+		var->setLabel (text, true);
 	} else if (row == TYPE_ROW) {
-		static_cast<RKVariable*> (column->getObject ())->setVarType ((RObject::VarType) text.toInt ());
+		var->setVarType ((RObject::VarType) text.toInt ());
 	}
 }
 
 void TwinTableMetaMember::paintCell (QPainter *p, int row, int col, const QRect &cr, bool selected, const QColorGroup &cg) {
 	// no trace for paint operations
-	TableColumn *column = table->getColumn (col);
+	RKVariable *var = table->getColObject (col);
 	
 	// draw background
 	QBrush brush = QBrush (Qt::red);
@@ -72,7 +73,7 @@ void TwinTableMetaMember::paintCell (QPainter *p, int row, int col, const QRect 
 	} else {
 		brush = cg.brush (QColorGroup::Base);
 	}	
-	if ((row >= numRows ()) || (!column)) {
+	if ((row >= numRows ()) || (!var)) {
 		brush = QBrush (Qt::gray);
 	}
 	p->fillRect(0, 0, cr.width(), cr.height(), brush);
@@ -105,7 +106,7 @@ void TwinTableMetaMember::paintCell (QPainter *p, int row, int col, const QRect 
 		p->setPen (cg.text ());
 	}
 
-	if (column && (row < numRows ())) {
+	if (var && (row < numRows ())) {
 		p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignLeft, formattedText (row, col));
 	}
 }
@@ -113,13 +114,13 @@ void TwinTableMetaMember::paintCell (QPainter *p, int row, int col, const QRect 
 QWidget *TwinTableMetaMember::beginEdit (int row, int col, bool) {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (!tted);
-	TableColumn *column = table->getColumn (col);
-	if (!column) {
+	RKVariable *var = table->getColObject (col);
+	if (!var) {
 		RK_ASSERT (false);
 		return 0;
 	}
 
-	if (column->cellStatus (row) == TableColumn::Unknown) return 0;
+	if (var->cellStatus (row) == RKVariable::ValueUnknown) return 0;
 
 	if (row == TYPE_ROW) {
 		tted = new CellEditor (viewport (), text (row, col), 0, &type_values);
@@ -144,35 +145,34 @@ QWidget *TwinTableMetaMember::beginEdit (int row, int col, bool) {
 QString TwinTableMetaMember::text (int row, int col) const {
 	RK_TRACE (EDITOR);
 	// called very often. do not trace
-	TableColumn *column = table->getColumn (col);
-	if (!column) {
+	RKVariable *var = table->getColObject (col);
+	if (!var) {
 		RK_ASSERT (false);
 		return "";
 	}
 	if (row == NAME_ROW) {
-		return column->getObject ()->getShortName ();
+		return var->getShortName ();
 	} else if (row == LABEL_ROW) {
-		return column->getObject ()->getLabel ();
+		return var->getLabel ();
 	} else if (row == TYPE_ROW) {
-		return QString::number (static_cast<RKVariable*> (column->getObject ())->getVarType ());
+		return QString::number (var->getVarType ());
 	}
 	return "";
 }
 
 QString TwinTableMetaMember::formattedText (int row, int col) const {
-	RK_TRACE (EDITOR);
 	// called very often. do not trace
-	TableColumn *column = table->getColumn (col);
-	if (!column) {
+	RKVariable *var = table->getColObject (col);
+	if (!var) {
 		RK_ASSERT (false);
 		return "";
 	}
 	if (row == NAME_ROW) {
-		return column->getObject ()->getShortName ();
+		return var->getShortName ();
 	} else if (row == LABEL_ROW) {
-		return column->getObject ()->getLabel ();
+		return var->getLabel ();
 	} else if (row == TYPE_ROW) {
-		return static_cast<RKVariable*> (column->getObject ())->getVarTypeString ();
+		return var->getVarTypeString ();
 	}
 	return "";
 }

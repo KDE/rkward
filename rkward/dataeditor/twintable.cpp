@@ -37,6 +37,7 @@
 #include "../debug.h"
 
 #include "../core/robject.h"
+#include "../core/rkvariable.h"
 
 #define HEADER_MENU_ID_ADD_COL_LEFT 0
 #define HEADER_MENU_ID_ADD_COL_RIGHT 1
@@ -110,6 +111,12 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
 TwinTable::~TwinTable(){
 	delete top_header_menu;
 	delete left_header_menu;
+	
+	for (int i=0; i < numCols (); ++i) {
+		RObject *object = getColObject (i);
+		if (object) object->setObjectOpened (this, false);
+		else RK_ASSERT (false);
+	}
 }
 
 void TwinTable::scrolled (int x, int) {
@@ -154,15 +161,14 @@ void TwinTable::insertNewRow (int where, TwinTableMember *table) {
 	if ((where < 0) || (where > table->numRows ())) {
 		where = table->numAllRows ();
 	}
-
-	table->insertRows (where);
-
-	// initialize cells according to table
+	
 	if (table == dataview) {
-		emit (dataAddedRow (where));
+		emit (dataAddingRow (where));
 	} else if (table == varview) {
 		RK_ASSERT (false);
 	}
+
+	table->insertRows (where);
 }
 
 void TwinTable::deleteRow (int where, TwinTableMember *table) {
@@ -172,10 +178,14 @@ void TwinTable::deleteRow (int where, TwinTableMember *table) {
 	if ((where < 0) || (where > table->numRows ())) {
 		where = table->numRows ();
 	}
+	
+	if (table == dataview) {
+		emit (dataRemovingRow (where));
+	} else if (table == varview) {
+		RK_ASSERT (false);
+	}
 
 	table->removeRow (where);
-
-	emit (dataRemovedRow (where));
 }
 
 void TwinTable::headerClicked (int col) {
@@ -457,34 +467,26 @@ int TwinTable::numCols () {
 	return varview->numCols ();
 }
 
-void TwinTable::setColObject (long int column, RObject *object) {
+void TwinTable::setColObject (long int column, RKVariable *object) {
 	RK_TRACE (EDITOR);
 	if (object) {
-		TableColumn *tcolumn = new TableColumn (object);
-		col_map.insert (column, tcolumn);
+		col_map.insert (column, object);
 	} else {
-		delete (col_map.take (column));
+		col_map.take (column);
 	}
 }
 
-RObject *TwinTable::getColObject (long int col) {
+RKVariable *TwinTable::getColObject (long int col) {
 	RK_TRACE (EDITOR);
-	TableColumn *tcolumn = col_map.find (col);
-	if (!tcolumn) return 0;
-	return tcolumn->getObject ();
+	return col_map.find (col);
 }
 
 long int TwinTable::getObjectCol (RObject *object) {
 	RK_TRACE (EDITOR);
-	for (QIntDictIterator<TableColumn> it (col_map); it.current (); ++it) {
-		if (it.current ()->getObject () == object) return it.currentKey ();
+	for (QIntDictIterator<RKVariable> it (col_map); it.current (); ++it) {
+		if (it.current () == object) return it.currentKey ();
 	}
 	
 	RK_ASSERT (false);
 	return -1;
-}
-
-TableColumn *TwinTable::getColumn (long int col) {
-	// no RK_TRACE, since called in paint-operations
-	return col_map.find (col);
 }

@@ -57,12 +57,10 @@ public:
 /** Tell the editor to (unconditionally) update its representation of the object data (in the range given in the ChangeSet) */
 	void updateObjectData (RObject *object, RObject::ChangeSet *changes);
 public slots:
-	void metaValueChanged (int row, int col);
-	void dataValueChanged (int row, int col);
 	void columnDeletionRequested (int col);
 	void columnAdded (int col);
-	void rowAdded (int row);
-	void rowRemoved (int row);
+	void aboutToAddRow (int row);
+	void aboutToRemoveRow (int row);
 private:
 /// syncs the whole table.
 	void pushTable (RCommandChain *sync_chain);

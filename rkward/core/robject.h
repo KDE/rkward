@@ -96,15 +96,6 @@ automatically take care of fetching its data. When closed by all editors, takes 
 		int from_index;
 		int to_index;
 	};
-
-/// an empty char
-	static char *empty_char;
-/// an unknown value
-	static char *unknown_char;
-/// a NA char
-	static char *na_char;
-/// a NA double
-	static double na_double;
 protected:
 // why do I need those to compile? I thought they were derived classes!
 	friend class RContainerObject;

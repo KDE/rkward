@@ -30,6 +30,14 @@ extern "C" {
 #include <stdlib.h>
 #include <string.h>
 
+#include <math.h>
+
+#include "../rkglobals.h"
+// static
+char *RKGlobals::empty_char = strdup ("");
+char *RKGlobals::unknown_char = strdup ("?");
+double RKGlobals::na_double = NA_REAL;
+
 REmbedInternal::REmbedInternal(){
 }
 
@@ -52,7 +60,11 @@ char **extractStrings (SEXP from_exp, int *count) {
 		if (TYPEOF (dummy) != CHARSXP) {
 			strings[i] = strdup ("not defined");	// can this ever happen?
 		} else {
-			strings[i] = strdup ((char *) STRING_PTR (dummy));
+			if (dummy == NA_STRING) {
+				strings[i] = RKGlobals::empty_char;
+			} else {
+				strings[i] = strdup ((char *) STRING_PTR (dummy));
+			}
 		}
 	}
 	UNPROTECT (1);	// strexp
@@ -202,6 +214,7 @@ double *REmbedInternal::getCommandAsRealVector (const char *command, int *count,
 		reals = new double[*count];
 		for (int i = 0; i < *count; ++i) {
 				reals[i] = REAL (realexp)[i];
+				if (R_IsNaNorNA (reals[i])) reals[i] = RKGlobals::na_double;
 		}
 		UNPROTECT (1);	// realexp
 	}

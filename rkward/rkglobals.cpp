@@ -22,6 +22,14 @@ RObjectList *RKGlobals::list;
 RKEditorManager *RKGlobals::manager;
 RKModificationTracker *RKGlobals::mtracker;
 
+/* statics
+- empty_char
+- unknown_char
+- na_char
+- na_double
+defined in REmbedInternal
+*/
+
 RKGlobals::RKGlobals () {
 }
 

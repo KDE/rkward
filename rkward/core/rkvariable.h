@@ -81,6 +81,8 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	QString getText (int row);
 /** set the value at the given row in text-form. Will try to convert the given string to the internal storage format if possible. */
 	void setText (int row, const QString &text);
+/** essentially like setText */
+	void setTextPlain (int row, char *text);
 
 /** get the text in pretty form, e.g. rounding numbers to a certain number of digits, replacing numeric values with value labels if available, etc. Formatting is done according to the meta-information stored in the RObject and global user preferences */
 	QString getFormatted (int row);
@@ -124,6 +126,10 @@ protected:
 		bool immediate_sync;
 /// stores changes if syncing is not immediate
 		ChangeSet *changes;
+/// number of invalid entries
+		int invalid_count;
+/// stores whether there were preivously invalid cells. If so, and there are no longer, now, we may change the mode in the backend.
+		bool previously_valid;
 	};
 /** reimplemented from RObject */
 	void allocateEditData ();
@@ -144,6 +150,8 @@ private:
 	void cellsChanged (int from_row, int to_row);
 /** writes the given range of cells to the backend (regardless of whether syncing should be immediate) */
 	void writeData (int from_row, int to_row);
+/** deletes the string data for the given cell */
+	void deleteStringData (int row);
 /////////////////// END: data-handling //////////////////////
 };
 

@@ -23,6 +23,9 @@ class RObjectList;
 class RKEditorManager;
 class RKModificationTracker;
 
+// deletes the given char*, if it is not a special value. Does not set to 0.
+#define DELETE_STRING(x) if (x && (x != RKGlobals::empty_char) && (x != RKGlobals::unknown_char)) { delete x; };
+
 /**
 This class basically keeps some static pointers which are needed all over the place, so they won't have to be passed around.
 
@@ -39,6 +42,13 @@ public:
 	static RObjectList *rObjectList () { return list; };
 	static RKEditorManager *editorManager () { return manager; };
 	static RKModificationTracker *tracker () { return mtracker; };
+	
+/// an empty char
+	static char *empty_char;
+/// an unknown value
+	static char *unknown_char;
+/// a NA double
+	static double na_double;
 private:
 	friend class RKwardApp;
 	static RKwardApp *app;

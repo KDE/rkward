@@ -42,23 +42,19 @@ RKEditorDataFrame::RKEditorDataFrame (QWidget *parent) : TwinTable (parent) {
 
 void RKEditorDataFrame::enableEditing (bool on) {
 	if (on) {
-		connect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int)));
-		connect (dataview, SIGNAL (valueChanged (int, int)), this, SLOT (dataValueChanged (int, int)));
 		connect (this, SIGNAL (deleteColumnRequest (int)), this, SLOT (columnDeletionRequested (int)));
 		connect (this, SIGNAL (addedColumn (int)), this, SLOT (columnAdded (int)));
-		connect (this, SIGNAL (dataAddedRow (int)), this, SLOT (rowAdded (int)));
-		connect (this, SIGNAL (dataRemovedRow (int)), this, SLOT (rowRemoved (int)));
+		connect (this, SIGNAL (dataAddingRow (int)), this, SLOT (aboutToAddRow (int)));
+		connect (this, SIGNAL (dataRemovingRow (int)), this, SLOT (aboutToRemoveRow (int)));
 		varview->setEnabled (true);
 		dataview->setEnabled (true);
 	} else {
 		varview->setEnabled (false);
 		dataview->setEnabled (false);
-		disconnect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int)));
-		disconnect (dataview, SIGNAL (valueChanged (int, int)), this, SLOT (dataValueChanged (int, int)));
 		disconnect (this, SIGNAL (deleteColumnRequest (int)), this, SLOT (columnDeletionRequested (int)));
 		disconnect (this, SIGNAL (addedColumn (int)), this, SLOT (columnAdded (int)));
-		disconnect (this, SIGNAL (dataAddedRow (int)), this, SLOT (rowAdded (int)));
-		disconnect (this, SIGNAL (dataRemovedRow (int)), this, SLOT (rowRemoved (int)));
+		disconnect (this, SIGNAL (dataAddingRow (int)), this, SLOT (aboutToAddRow (int)));
+		disconnect (this, SIGNAL (dataRemovingRow (int)), this, SLOT (aboutToRemoveRow (int)));
 	}
 }
 
@@ -82,7 +78,12 @@ void RKEditorDataFrame::openObject (RObject *object, bool initialize_to_empty) {
 		pushTable (open_chain);
 		for (int i=0; i < numCols (); ++i) {
 			RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (varview->text (NAME_ROW, i), this);
-			setColObject (i, obj);
+			if (obj->isVariable ()) {
+				setColObject (i, static_cast<RKVariable*> (obj));
+				static_cast<RKVariable*> (obj)->setObjectOpened (this, true);
+			} else {
+				RK_ASSERT (false);
+			}
 		}
 	}
 		
@@ -100,7 +101,13 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 		// this is just a quick and dirty fix. The real fix will be not to start the editor with a set of empty variables, but to implement a better way of adding
 		// variables "as you type", instead.
 		for (int i=command->stringVectorLength (); i < numCols (); ++i) {
-			setColObject (i, static_cast<RContainerObject *> (getObject ())->createNewChild (varview->text (NAME_ROW, i), this));
+			RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (varview->text (NAME_ROW, i), this);
+			if (obj->isVariable ()) {
+				setColObject (i, static_cast<RKVariable*> (obj));
+				obj->setCreatedInEditor (this);
+			} else {
+				RK_ASSERT (false);
+			}
 		}
 	
 		// set the names and meta-information
@@ -110,38 +117,17 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 			}
 			// TODO: make clean
 			RKVariable *current_child = static_cast<RKVariable *> (static_cast <RContainerObject*> (getObject ())->findChild (command->getStringVector ()[i]));
-			setColObject (i, current_child);
-			modifyObjectMeta (current_child, i);
-
-			// ok, now get the data
-			RCommand *rcom = new RCommand ("as.vector (" + current_child->getFullName() + ")", RCommand::Sync | RCommand::GetStringVector, "", this, GET_DATA_OFFSET + i);
-			RKGlobals::rInterface ()->issueCommand (rcom, open_chain);
+			if (current_child->isVariable ()) {
+				setColObject (i, current_child);
+				current_child->setObjectOpened (this, true);
+			} else {
+				RK_ASSERT (false);
+			}
 		}
-		
-		RKGlobals::rInterface ()->issueCommand (new RCommand ("", RCommand::App | RCommand::Sync | RCommand::EmptyCommand, "", this, LOAD_COMPLETE_COMMAND));
-		
+
 		open_chain = RKGlobals::rInterface ()->closeChain (open_chain);
-	} else if (command->getFlags () >= GET_DATA_OFFSET) {
-		int col = command->getFlags () - GET_DATA_OFFSET;
-		setColumn (dataview, col, 0, command->stringVectorLength () - 1, command->getStringVector ());
-	} else if (command->getFlags () == LOAD_COMPLETE_COMMAND) {
 		enableEditing (true);
 	}
-}
-
-void RKEditorDataFrame::modifyObjectMeta (RObject *object, int column) {
-	RK_TRACE (EDITOR);
-	if (object == getObject ()) {
-		RKGlobals::editorManager ()->setEditorName (this, object->getShortName ());
-		return;
-	}
-	RK_ASSERT (column >= 0);
-	
-/*	disconnect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int)));
-	varview->setText (NAME_ROW, column, object->getShortName ());
-	varview->setText (TYPE_ROW, column, static_cast<RKVariable *> (object)->getVarTypeString ());
-	varview->setText (LABEL_ROW, column, object->getLabel ());
-	connect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int))); */
 }
 
 void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
@@ -178,103 +164,12 @@ void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
 	static_cast<RContainerObject *>(getObject ())->writeChildMetaData (sync_chain);
 }
 
-void RKEditorDataFrame::metaValueChanged (int row, int col) {
-	RK_TRACE (EDITOR);
-	
-	if (col >= numCols ()) {
-		insertNewColumn (-1);
-	}
-	
-	RObject *obj = getColObject (col);
-	RK_ASSERT (obj);
-	// for now:
-	if (!obj) return;
-
-	updateMetaValue (obj, row, col, true);
-}
-
-void RKEditorDataFrame::updateMetaValue (RObject *obj, int row, int col, bool sync) {
-	RK_TRACE (EDITOR);
-	
-	if (sync) RKGlobals::tracker ()->objectMetaChanged (getColObject (col), this);
-}
-
-void RKEditorDataFrame::dataValueChanged (int row, int col) {
-	RK_TRACE (EDITOR);
-	
-	if (col >= numCols ()) {
-		insertNewColumn (-1);
-	}
-	
-	RObject *obj = getColObject (col);
-	RK_ASSERT (obj);
-	// for now:
-	if (!obj) return;
-	
-	if (row >= dataview->numRows ()) {
-		insertNewRow (-1);
-	}
-	
-	RObject::ChangeSet *changes = new RObject::ChangeSet;
-	changes->from_index = col;
-	changes->to_index = col;
-	
-	RKGlobals::rInterface ()->issueCommand (new RCommand (obj->getFullName () + "[" + QString ().setNum (row+1) + "] <- " + dataview->rText (row, col), RCommand::App | RCommand::Sync));
-	RKGlobals::tracker ()->objectDataChanged (obj, changes, this);
-}
-
 void RKEditorDataFrame::paste (QByteArray content) {
 	RK_TRACE (EDITOR);
-	disconnect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int)));
-	disconnect (dataview, SIGNAL (valueChanged (int, int)), this, SLOT (dataValueChanged (int, int)));
 
+	// TODO: clean
 	TwinTableMember *table;
 	TwinTable::ColChanges *change_map = pasteEncoded (content, &table);
-
-	connect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int)));
-	connect (dataview, SIGNAL (valueChanged (int, int)), this, SLOT (dataValueChanged (int, int)));
-
-	if (!table) {
-		RK_ASSERT (false);
-		delete change_map;
-		return;
-	}
-	
-	if (table == dataview) {
-		RK_DO (qDebug ("Paste in dataview complete"), EDITOR, DL_DEBUG);
-		for (TwinTable::ColChanges::iterator it = change_map->begin (); it != change_map->end (); ++it) {
-			int col = it.key ();
-			RK_DO (qDebug ("Paste in dataview: processing ChangeSet for col %d", col), EDITOR, DL_DEBUG);
-			RObject *obj = getColObject (col);
-			RObject::ChangeSet *set = it.data ();
-			QString command = obj->getFullName () + "[" + QString ().setNum (set->from_index+1) + ":" + QString ().setNum (set->to_index+1) + "] <- c (";
-			for (int row=set->from_index; row <= set->to_index; ++row) {
-				command.append (dataview->rText (row, col));
-				if (row < set->to_index) {
-					command.append (", ");
-				}
-			}
-			command.append (")");
-			RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::App | RCommand::Sync));
-			RKGlobals::tracker ()->objectDataChanged (obj, set, this);
-		}
-	} else {
-		RK_DO (qDebug ("Paste in varview complete"), EDITOR, DL_DEBUG);
-		for (TwinTable::ColChanges::iterator it = change_map->begin (); it != change_map->end (); ++it) {
-			int col = it.key ();
-			RK_DO (qDebug ("Paste in varview: processing ChangeSet for col %d", col), EDITOR, DL_DEBUG);
-			RObject *obj = getColObject (col);
-			RObject::ChangeSet *set = it.data ();
-			for (int row=set->from_index; row <= set->to_index; ++row) {
-				updateMetaValue (obj, row, col, false);
-			}
-			obj->writeMetaData (0);
-			RKGlobals::tracker ()->objectMetaChanged (obj, this);
-			delete set;
-		}
-	}
-	
-	delete change_map;
 }
 
 void RKEditorDataFrame::columnDeletionRequested (int col) {
@@ -291,21 +186,28 @@ void RKEditorDataFrame::columnAdded (int col) {
 	RK_TRACE (EDITOR);
 	RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName (varview->text (NAME_ROW, col)), this);
 	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + getObject ()->getFullName () + ", \"" + obj->getShortName () + "\", " + QString ().setNum (col+1) + ")", RCommand::App | RCommand::Sync));
-	
+	obj->setCreatedInEditor (this);
+
 	// TODO: find a nice way to update the list:
 	RK_ASSERT (col <= (numCols () - 1));
 	for (int i=numCols () - 1; i > col; --i) {
 		setColObject (i, getColObject (i-1));
 	}
-	setColObject (col, obj);
+	
+	if (obj->isVariable ()) {
+		setColObject (col, static_cast<RKVariable*> (obj));
+		static_cast<RKVariable*> (obj)->setObjectOpened (this, true);
+	} else {
+		RK_ASSERT (false);
+	}
 }
 
-void RKEditorDataFrame::rowAdded (int row) {
+void RKEditorDataFrame::aboutToAddRow (int row) {
 	RK_TRACE (EDITOR);
 	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.row (" + getObject ()->getFullName () + ", " + QString ().setNum (row+1) + ")", RCommand::App | RCommand::Sync));
 }
 
-void RKEditorDataFrame::rowRemoved (int row) {
+void RKEditorDataFrame::aboutToRemoveRow (int row) {
 	RK_TRACE (EDITOR);
 	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.delete.row (" + getObject ()->getFullName () + ", " + QString ().setNum (row+1) + ")", RCommand::App | RCommand::Sync));
 }
@@ -324,6 +226,7 @@ void RKEditorDataFrame::removeObject (RObject *object) {
 	if (col < 0) return;
 
 	deleteColumn (col);
+	object->setObjectOpened (this, false);
 	
 	for (int i=(col+1); i < numCols (); ++i) {
 		setColObject (i-1, getColObject (i));
@@ -339,8 +242,14 @@ void RKEditorDataFrame::restoreObject (RObject *object) {
 
 void RKEditorDataFrame::renameObject (RObject *object) {
 	RK_TRACE (EDITOR);
+	
+	if (object == getObject ()) {
+		RKGlobals::editorManager ()->setEditorName (this, object->getShortName ());
+		return;
+	}
+
 	int col = getObjectCol (object);
-	modifyObjectMeta (object, col);
+	varview->updateCell (NAME_ROW, col);
 }
 
 void RKEditorDataFrame::addObject (RObject *object) {
@@ -348,14 +257,20 @@ void RKEditorDataFrame::addObject (RObject *object) {
 	
 	enableEditing (false);
 	insertNewColumn ();
-	setColObject (numCols () - 1, object);
+	if (object->isVariable ()) {
+		setColObject (numCols () - 1, static_cast<RKVariable*> (object));
+		object->setObjectOpened (this, true);
+	} else {
+		RK_ASSERT (false);
+	}
+
 	enableEditing (true);
 	
 	updateObjectMeta (object);
 	RObject::ChangeSet *set = new RObject::ChangeSet;
 	set->from_index = -1;
 	set->to_index = -1;
-	updateObjectData (object, set);
+	RKGlobals::tracker ()->objectDataChanged (object, set);
 }
 
 void RKEditorDataFrame::updateObjectMeta (RObject *object) {
@@ -363,8 +278,9 @@ void RKEditorDataFrame::updateObjectMeta (RObject *object) {
 	if (object == getObject ()) return;	// for now: can't update meta on the table itself
 	
 	int col = getObjectCol (object);
-
-	modifyObjectMeta (object, col);
+	for (int i=0; i < varview->numRows (); ++i) {
+		varview->updateCell (i, col);
+	}
 }
 
 void RKEditorDataFrame::updateObjectData (RObject *object, RObject::ChangeSet *changes) {
@@ -372,12 +288,9 @@ void RKEditorDataFrame::updateObjectData (RObject *object, RObject::ChangeSet *c
 	
 	if (object != getObject ()) {
 		int col = getObjectCol (object);
-		RK_ASSERT (col >= 0);
-		// for now:
-		if (col < 0) return;
+		for (int i=0; i < dataview->numRows (); ++i) {
+			dataview->updateCell (i, col);
+		}
 	}
-
-	// TODO: this is downright stupid! get only the required data!
-	openObject (getObject ());
 }
 

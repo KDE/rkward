@@ -37,6 +37,7 @@ class QTable;
 class RKDrag;
 class RObject;
 struct RObject::ChangeSet;
+class RKVariable;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -72,16 +73,16 @@ public:
 	void setPasteMode (RKEditor::PasteMode mode);
     TwinTableMetaMember* varview;
     TwinTableDataMember* dataview;
-
-	TableColumn *getColumn (long int col);
+/** get the object at the given column (0 if there is no object for the column) */
+	RKVariable *getColObject (long int col);
 signals:
 	void deleteColumnRequest (int);
 /** emitted so the RKEditorDataFrame can add a corresponding object */
 	void addedColumn (int);
 /** emitted so the RKEditorDataFrame can update the R workspace accordingly. Only signals row additions in the data table, not the meta table */
-	void dataAddedRow (int);
+	void dataAddingRow (int);
 /** emitted so the RKEditorDataFrame can update the R workspace accordingly. Only signals row deletions in the data table, not the meta table */
-	void dataRemovedRow (int);
+	void dataRemovingRow (int);
 public slots:
 	void headerClicked (int col);
 	void headerRightClicked (int row, int col);
@@ -97,7 +98,7 @@ private:
 
 	RKEditor::PasteMode paste_mode;
 
-	typedef QIntDict<TableColumn> ColMap;
+	typedef QIntDict<RKVariable> ColMap;
 	ColMap col_map;
 protected:	
 /** set a row of cells, expanding the table if necessary. Assumes you provide the correct amount of data! */
@@ -111,8 +112,7 @@ protected:
 
 	long int getObjectCol (RObject *object);
 /// if object == 0, removes the column from the list
-	void setColObject (long int column, RObject *object);
-	RObject *getColObject (long int col);
+	void setColObject (long int column, RKVariable *object);
 private slots:
 	void scrolled (int x, int y);
 	void autoScrolled (int x, int y);

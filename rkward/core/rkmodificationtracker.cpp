@@ -38,7 +38,7 @@ RKModificationTracker::~RKModificationTracker () {
 void RKModificationTracker::removeObject (RObject *object, RKEditor *editor, bool removed_in_workspace) {
 	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
-	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (object);
+	RKEditor *ed = object->objectOpened ();
 	RK_ASSERT (!((editor) && (!ed)));
 	
 	if (removed_in_workspace) {
@@ -66,12 +66,11 @@ void RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 	object->remove ();
 }
 
-void RKModificationTracker::renameObject (RObject *object, const QString &new_name, RKEditor *editor) {
+void RKModificationTracker::renameObject (RObject *object, const QString &new_name) {
 	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
 // TODO: find out, whether new object-name is valid
-	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (object);
-	RK_ASSERT (!((editor) && (!ed)));
+	RKEditor *ed = object->objectOpened ();
 
 	object->rename (new_name);
 
@@ -83,7 +82,8 @@ void RKModificationTracker::renameObject (RObject *object, const QString &new_na
 void RKModificationTracker::addObject (RObject *object, RKEditor *editor) {
 	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
-	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (object->getContainer ());
+	RKEditor *ed = 0;
+	if (object->getContainer ()) ed = object->getContainer ()->objectOpened ();
 	RK_ASSERT (!((editor) && (!ed)));
 	
 	if (ed) {
@@ -94,32 +94,26 @@ void RKModificationTracker::addObject (RObject *object, RKEditor *editor) {
 	emit (objectAdded (object));
 }
 
-void RKModificationTracker::objectMetaChanged (RObject *object, RKEditor *editor) {
+void RKModificationTracker::objectMetaChanged (RObject *object) {
 	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
-	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (object);
-	RK_ASSERT (!((editor) && (!ed)));
+	RKEditor *ed = object->objectOpened ();
 	
 	if (ed) {
-		if (ed != editor) {
-			ed->updateObjectMeta (object);
-		}
+		ed->updateObjectMeta (object);
 	}
 	emit (objectPropertiesChanged (object));
 }
 
-void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeSet *changes, RKEditor *editor) {
+void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeSet *changes) {
 	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
-	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (object);
-	RK_ASSERT (!((editor) && (!ed)));
-	
+	RKEditor *ed = object->objectOpened ();
+
 	if (ed) {
-		if (ed != editor) {
-			ed->updateObjectData (object, changes);
-		}
+		ed->updateObjectData (object, changes);
 	}
-	
+
 	delete changes;
 }
 

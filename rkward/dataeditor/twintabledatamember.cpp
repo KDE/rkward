@@ -17,7 +17,7 @@
 #include "twintabledatamember.h"
 
 #include "twintable.h"
-#include "tablecolumn.h"
+#include "../core/rkvariable.h"
 #include "celleditor.h"
 
 #include <qpainter.h>
@@ -35,39 +35,44 @@ TwinTableDataMember::~TwinTableDataMember () {
 
 void TwinTableDataMember::removeRow (int row) {
 	RK_TRACE (EDITOR);
-	for (int i=0; i < table->numCols (); ++i) {
-		table->getColumn (i)->removeRow (row);
-	}
 	QTable::removeRow (row);
+	for (int i=0; i < table->numCols (); ++i) {
+		table->getColObject (i)->removeRow (row);
+	}
+	for (int i=row; i < numRows (); ++i) {
+		for (int j=0; j < table->numCols (); ++j) {
+			updateCell (i, j);
+		}
+	}
 }
 
 void TwinTableDataMember::insertRows (int row, int count) {
 	RK_TRACE (EDITOR);
-	for (int i=0; i < table->numCols (); ++i) {
-		table->getColumn (i)->insertRows (row, count);
-	}
 	QTable::insertRows (row, count);
+	for (int i=0; i < table->numCols (); ++i) {
+		table->getColObject (i)->insertRows (row, count);
+	}
 }
 
 void TwinTableDataMember::setText (int row, int col, const QString &text) {
 	RK_TRACE (EDITOR);
-	table->getColumn (col)->setText (row, text);
+	table->getColObject (col)->setText (row, text);
 }
 
 void TwinTableDataMember::paintCell (QPainter *p, int row, int col, const QRect &cr, bool selected, const QColorGroup &cg) {
 	// no trace for paint operations
-	TableColumn *column = table->getColumn (col);
-	TableColumn::Status cell_state = TableColumn::Invalid;
-	if (column) cell_state = column->cellStatus (row);
+	RKVariable *var = table->getColObject (col);
+	RKVariable::Status cell_state = RKVariable::ValueInvalid;
+	if (var) cell_state = var->cellStatus (row);
 	
 	// draw background
 	QBrush brush = QBrush (Qt::red);
 	if (selected) {
 		brush = cg.brush(QColorGroup::Highlight);
 	}
-	if ((row >= numRows ()) || (!column)) {
+	if ((row >= numRows ()) || (!var)) {
 		brush = QBrush (Qt::gray);
-	} else if (column && (cell_state != TableColumn::Invalid)) {
+	} else if (var && (cell_state != RKVariable::ValueInvalid)) {
 		if (!selected) {
 			brush = cg.brush (QColorGroup::Base);
 		}
@@ -98,29 +103,29 @@ void TwinTableDataMember::paintCell (QPainter *p, int row, int col, const QRect 
 	// draw text
 	if (selected) {
 		p->setPen (cg.highlightedText());
-	} else if (cell_state == TableColumn::Unknown) {
+	} else if (cell_state == RKVariable::ValueUnknown) {
 		p->setPen (cg.light ());
 	} else {
 		p->setPen (cg.text ());
 	}
 
-	if (column && (row < numRows ())) {
-		p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignRight, column->getFormatted (row));
+	if (var && (row < numRows ())) {
+		p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignRight, var->getFormatted (row));
 	}
 }
 
 QWidget *TwinTableDataMember::beginEdit (int row, int col, bool) {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (!tted);
-	TableColumn *column = table->getColumn (col);
-	if (!column) {
+	RKVariable *var = table->getColObject (col);
+	if (!var) {
 		RK_ASSERT (false);
 		return 0;
 	}
 
-	if (column->cellStatus (row) == TableColumn::Unknown) return 0;
+	if (var->cellStatus (row) == RKVariable::ValueUnknown) return 0;
 
-	tted = new CellEditor (viewport (), column->getText (row), 0);
+	tted = new CellEditor (viewport (), var->getText (row), 0);
 	tted->installEventFilter (this);
 
 	QRect cr = cellGeometry (row, col);
@@ -139,10 +144,10 @@ QWidget *TwinTableDataMember::beginEdit (int row, int col, bool) {
 QString TwinTableDataMember::text (int row, int col) const {
 	RK_TRACE (EDITOR);
 	// called very often. do not trace
-	TableColumn *column = table->getColumn (col);
-	if (!column) {
+	RKVariable *var = table->getColObject (col);
+	if (!var) {
 		RK_ASSERT (false);
 		return "";
 	}
-	return column->getText (row);
+	return var->getText (row);
 }

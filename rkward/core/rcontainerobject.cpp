@@ -97,7 +97,7 @@ void RContainerObject::rCommandDone (RCommand *command) {
 			command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CHILD_LIST_COMMAND);
 			RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 		}
-		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this, 0);
+		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
 		
 	} else if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
 		// first check, whether all known children still exist:
@@ -131,7 +131,7 @@ void RContainerObject::rCommandDone (RCommand *command) {
 			if (classname[cn] != command->getStringVector ()[cn]) properties_changed = true;
 			classname[cn] = command->getStringVector ()[cn];
 		}
-		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this, 0);
+		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
 	}
 }
 

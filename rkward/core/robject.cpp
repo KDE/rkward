@@ -29,14 +29,6 @@
 
 #define GET_META_COMMAND 1001
 
-// static
-char *RObject::empty_char = qstrdup ("");
-char *RObject::unknown_char = qstrdup ("?");
-// TODO: change
-char *RObject::na_char = qstrdup ("");
-// TODO: change
-double RObject::na_double = 0;
-
 RObject::RObject (RContainerObject *parent, const QString &name) {
 	RK_TRACE (OBJECTS);
 	
@@ -106,6 +98,7 @@ void RObject::setMetaProperty (const QString &id, const QString &value, bool syn
 				type -= (type & HasMetaObject);
 			}
 		}
+		RKGlobals::tracker ()->objectMetaChanged (this);
 		return;
 	}
 	
@@ -120,6 +113,7 @@ void RObject::setMetaProperty (const QString &id, const QString &value, bool syn
 
 	meta_map->insert (id, value);
 	if (sync) writeMetaData (0);
+	RKGlobals::tracker ()->objectMetaChanged (this);
 }
 
 QString RObject::makeChildName (const QString &short_child_name) {
@@ -185,7 +179,7 @@ void RObject::rCommandDone (RCommand *command) {
 			type -= (type & HasMetaObject);
 		}
 		// TODO: only signal change, if there really was a change!
-		RKGlobals::tracker ()->objectMetaChanged (this, 0);
+		RKGlobals::tracker ()->objectMetaChanged (this);
 	}
 }
 
@@ -247,8 +241,11 @@ void RObject::setObjectOpened (RKEditor *editor, bool opened) {
 	RK_TRACE (OBJECTS);
 
 	// TODO: only for now! Currently only a single editor may operate on an object
-	if (opened) RK_ASSERT (!data)
-	else RK_ASSERT (data);
+	if (opened) {
+		RK_ASSERT (!data);
+	} else {
+		RK_ASSERT (data);
+	}
 
 	if (opened) {
 		if (!data) {
