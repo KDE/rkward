@@ -145,6 +145,7 @@ void RKObjectListView::updateItem (QListViewItem *item, RObject *object) {
 		item->setText (3, static_cast<RContainerObject*> (object)->makeClassString ("; "));
 	} else if (object->isVariable ()) {
 		item->setText (2, static_cast<RKVariable*> (object)->getVarTypeString ());
+		item->setText (3, static_cast<RKVariable*> (object)->makeClassString (""));
 	}
 
 	if (object->isDataFrame ()) {
