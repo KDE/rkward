@@ -461,6 +461,14 @@ QString TwinTable::varname (int col) {
 	return varview->item (NAME_ROW, col)->text ();
 }
 
+QString TwinTable::label (int col) {
+	return varview->item (LABEL_ROW, col)->text ();
+}
+
+QString TwinTable::typeString (int col) {
+	return varview->item (TYPE_ROW, col)->text ();
+}
+
 int TwinTable::numCols () {
 	return varview->numCols ();
 }

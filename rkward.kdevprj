@@ -150,26 +150,26 @@ type=HEADER
 
 [rkward/plugins/50.50.50.t.test.rkward]
 dist=true
-install=false
-install_location=
+install=true
+install_location=$$(kde_datadir)/rkward/plugins/50.50.50.t.test.rkward
 type=DATA
 
 [rkward/plugins/50.50.60.does_not.exist.test.rkward]
 dist=true
-install=false
-install_location=
+install=true
+install_location=$$(kde_datadir)/rkward/plugins/50.50.60.does_not.exist.test.rkward
 type=DATA
 
 [rkward/plugins/50.50.99.not_implemented.test.rkward]
 dist=true
-install=false
-install_location=
+install=true
+install_location=$$(kde_datadir)/rkward/plugins/50.50.99.not_implemented.test.rkward
 type=DATA
 
 [rkward/plugins/50.60.50.another.test.rkward]
 dist=true
-install=false
-install_location=
+install=true
+install_location=$$(kde_datadir)/rkward/plugins/50.60.50.another.test.rkward
 type=DATA
 
 [rkward/plugins/Makefile.am]

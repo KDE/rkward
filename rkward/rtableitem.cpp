@@ -92,24 +92,18 @@ void RTableItem::paint (QPainter *p, const QColorGroup &cg, const QRect &cr, boo
 		}
 	}
 
-    p->fillRect( 0, 0, cr.width(), cr.height(), brush);
+	p->fillRect(0, 0, cr.width(), cr.height(), brush);
 
-    int w = cr.width();
-    int h = cr.height();
+	int w = cr.width();
+	int h = cr.height();
 
-    int x = 0;
+	int x = 0;
 
-    if ( selected )
-        p->setPen(cg.highlightedText());
-    else
-        p->setPen(cg.text());
+	if (selected) {
+		p->setPen(cg.highlightedText());
+	} else {
+		p->setPen(cg.text());
+	}
 
-/*	QString txt = text ();
-	if (type () != String) {
-		if (txt == "") {
-			txt = "NA";
-		}
-	}*/
-
-    p->drawText(x + 2, 0, w - x - 4, h, alignment (), text ());
+	p->drawText(x+2, 0, w-x- 4, h, alignment (), text ());
 }

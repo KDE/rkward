@@ -21,6 +21,7 @@
 #include <qtable.h>
 #include <qpoint.h>
 
+#define LABEL_ROW 0
 #define TYPE_ROW 1
 #define NAME_ROW 4
 

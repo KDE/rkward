@@ -44,7 +44,7 @@ RKVarSelector::RKVarSelector(const QDomElement &element, QWidget *parent, RKPlug
 	
 	RKwardDoc *doc = plugin->getApp ()->getDocument ();
 	for (int i = 0; i < doc->numCols (); i++) {
-		new QListViewItem (main_table, doc->varname (i));
+		new QListViewItem (main_table, doc->varname (i), doc->label (i), doc->typeString (i));
 	}
 
 	addWidget (list_view);

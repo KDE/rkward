@@ -52,7 +52,7 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
   config=kapp->config();
 
 	KGlobal::dirs()->addResourceType("plugins", KStandardDirs::kde_default("data") + "rkward/plugins/");
-	plugin_dir = KGlobal::dirs()->findResourceDir("plugins", "t.test.rkward");
+	plugin_dir = KGlobal::dirs()->findResourceDir("plugins", "50.50.50.t.test.rkward");
 	if (plugin_dir == "") {
 		// try our luck with a relative path
 		plugin_dir = "plugins/";

@@ -33,7 +33,9 @@ RKwatch::RKwatch(RInterface *parent) {
 	// set a fixed width font
     QFont font ("Courier");
 	watch->setCurrentFont (font);
+	watch->setWordWrap (QTextEdit::NoWrap);
 	commands->setCurrentFont (font);
+	commands->setWordWrap (QTextEdit::NoWrap);
 }
 
 RKwatch::~RKwatch(){
@@ -71,11 +73,17 @@ void RKwatch::addOutput (RCommand *command) {
 
 void RKwatch::clearCommand () {
 	commands->clear ();
+// unfortunately, clear also resets the font
+    QFont font ("Courier");
+	commands->setCurrentFont (font);
 }
 
 void RKwatch::submitCommand () {
 	r_inter->issueCommand (new RCommand (commands->text (), RCommand::User));
 	commands->clear ();
+// unfortunately, clear also resets the font
+    QFont font ("Courier");
+	commands->setCurrentFont (font);
 }
 
 void RKwatch::enableSubmit () {

@@ -55,6 +55,12 @@ public:
 /** Returns the variable-name of a column */
 	QString varname (int col);
 
+/** Returns the variable-label of a column */
+	QString label (int col);
+
+/** Returns the type of variable (as a string) of a column */
+	QString typeString (int col);
+
 /** Returns the number of columns in the tables */
 	int numCols ();
 

@@ -3,42 +3,48 @@
 <KDevPrjSession>
 <LastCompileConfig>(Default)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
- <DocsAndViews NumberOfDocuments="19" >
-<Doc0 CursorPosLine="22" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="14" FileName="/home/thomas/develop/rkward/rkward/rktext.h" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc0>
-  <Doc1 CursorPosLine="22" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="15" FileName="/home/thomas/develop/rkward/rkward/rkvarslot.h" >
-<View0 Top="0" Width="96" Attach="1" Height="26" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc1>
-  <Doc2 CursorPosLine="31" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="13" FileName="/home/thomas/develop/rkward/rkward/rktext.cpp" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc2>
-  <Doc3 CursorPosLine="29" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="126" FileName="/home/thomas/develop/rkward/rkward/rkvarslot.cpp" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc3>
-  <Doc4 CursorPosLine="201" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rkplugin.cpp" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc4>
-  <Doc5 CursorPosLine="30" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/plugins/50.50.60.does_not.exist.test.rkward" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc5>
-  <Doc6 CursorPosLine="25" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rkpluginwidget.cpp" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc6>
-  <Doc7 CursorPosLine="28" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="10" FileName="/home/thomas/develop/rkward/rkward/plugins/50.50.99.not_implemented.test.rkward" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc7>
-  <Doc8 CursorPosLine="28" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="10" FileName="/home/thomas/develop/rkward/rkward/plugins/50.60.50.another.test.rkward" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc8>
-  <Doc9 CursorPosLine="128" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rkward.cpp" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc9>
-  <Doc10 CursorPosLine="22" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="20" FileName="/home/thomas/develop/rkward/rkward/rinterface.cpp" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc10>
-  <Doc11 CursorPosLine="21" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="24" FileName="/home/thomas/develop/rkward/rkward/pluginsettings.cpp" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc11>
-  <Doc12 CursorPosLine="35" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="16" FileName="/home/thomas/develop/rkward/rkward/pluginsettings.h" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc12>
-  <Doc13 CursorPosLine="214" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rkward.h" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc13>
-  <Doc14 CursorPosLine="12" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="32" FileName="/home/thomas/develop/rkward/rkward/rkwardui.rc" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc14>
-  <Doc15 CursorPosLine="34" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="47" FileName="/home/thomas/develop/rkward/rkward/rsettings.cpp" >
-<View0 Top="0" Width="652" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc15>
-  <Doc16 CursorPosLine="23" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="14" FileName="/home/thomas/develop/rkward/rkward/rcommand.cpp" >
-<View0 Top="0" Width="794" Attach="1" Height="386" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />  </Doc16>
-  <Doc17 CursorPosLine="23" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="21" FileName="/home/thomas/develop/rkward/rkward/rcommand.h" >
-<View0 Top="0" Width="794" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc17>
-  <Doc18 Type="CDocBrowser" NumberOfViews="1" FileName="/usr/share/doc/qt3-doc/html/qmenubar.html#activated" >
-<View Top="0" Width="794" Attach="1" Height="386" Left="0" Focus="0" Type="KHTMLView" MinMaxMode="0" />  </Doc18> </DocsAndViews></KDevPrjSession>
+ <DocsAndViews NumberOfDocuments="22" >
+<Doc0 CursorPosLine="51" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rinterface.h" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc0>
+  <Doc1 CursorPosLine="106" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rinterface.cpp" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc1>
+  <Doc2 CursorPosLine="52" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="17" FileName="/home/thomas/develop/rkward/rkward/rcommand.h" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc2>
+  <Doc3 CursorPosLine="212" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="86" FileName="/home/thomas/develop/rkward/rkward/rkplugin.cpp" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc3>
+  <Doc4 CursorPosLine="83" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="44" FileName="/home/thomas/develop/rkward/rkward/rkwatch.cpp" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc4>
+  <Doc5 CursorPosLine="339" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rkwarddoc.cpp" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc5>
+  <Doc6 CursorPosLine="43" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="45" FileName="/home/thomas/develop/rkward/rkward/rkwarddoc.h" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc6>
+  <Doc7 CursorPosLine="34" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="40" FileName="/home/thomas/develop/rkward/rkward/rcommand.cpp" >
+<View0 Top="0" Width="674" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc7>
+  <Doc8 CursorPosLine="30" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/nameselectcell.h" >
+<View0 Top="0" Width="674" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc8>
+  <Doc9 CursorPosLine="23" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/nameselectcell.cpp" >
+<View0 Top="0" Width="674" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc9>
+  <Doc10 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward-api/html/annotated.html" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc10>
+  <Doc11 CursorPosLine="40" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="10" FileName="/home/thomas/develop/rkward/rkward/rkwatch.h" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc11>
+  <Doc12 CursorPosLine="32" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rtableitem.h" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc12>
+  <Doc13 CursorPosLine="79" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="9" FileName="/home/thomas/develop/rkward/rkward/rkradio.cpp" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc13>
+  <Doc14 CursorPosLine="46" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="82" FileName="/home/thomas/develop/rkward/rkward/rkvarselector.cpp" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc14>
+  <Doc15 CursorPosLine="61" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="19" FileName="/home/thomas/develop/rkward/rkward/twintable.h" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc15>
+  <Doc16 CursorPosLine="467" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="41" FileName="/home/thomas/develop/rkward/rkward/twintable.cpp" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc16>
+  <Doc17 CursorPosLine="23" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="19" FileName="/home/thomas/develop/rkward/rkward/twintablemember.h" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc17>
+  <Doc18 CursorPosLine="37" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rkvarselector.h" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc18>
+  <Doc19 CursorPosLine="54" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="68" FileName="/home/thomas/develop/rkward/rkward/rkward.cpp" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc19>
+  <Doc20 CursorPosLine="105" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="2" FileName="/home/thomas/develop/rkward/rkward/rtableitem.cpp" >
+<View0 Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />  </Doc20>
+  <Doc21 Type="CDocBrowser" NumberOfViews="1" FileName="/usr/share/doc/qt3-doc/html/qtextedit.html#setCurrentFont" >
+<View Top="0" Width="673" Attach="1" Height="386" Left="0" Focus="0" Type="KHTMLView" MinMaxMode="0" />  </Doc21> </DocsAndViews></KDevPrjSession>
