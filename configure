@@ -964,7 +964,7 @@ fi
 
 # Define the identity of the package.
 PACKAGE=rkward
-VERSION=0.0.1
+VERSION=0.1.0
 cat >> confdefs.h <<EOF
 #define PACKAGE "$PACKAGE"
 EOF

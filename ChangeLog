@@ -1,0 +1,13 @@
+--- Version 0.1.0 - Nov-19-2002 ---
+- Initial features:
+- A simple backend-interface communicating with R via stdin/stdout
+- Asynchronous command stack
+- A simple window for watching communication with R
+- Ability to issue commands manually
+- Editor window including meta information on the variables
+- Copy-and-Paste with some quirks
+- highighting of invalid data
+- load/save of R-workspace (load only works for RKWard data)
+- Automatic generation of menu-structure and plugin-dialogs from XML-files
+- Supported plugin widgets: textfield, variable-selector, variable-slot, radiobuttons
+- independent samples t-test plugin
