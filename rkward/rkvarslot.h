@@ -20,21 +20,22 @@
 
 #include <rkpluginwidget.h>
 
-#include <qlineedit.h>
-
 class QWidget;
+class QLineEdit;
+class QDomElement;
+class QPushButton;
 
 /**
   *@author Thomas Friedrichsmeier
   */
 
-class RKVarSlot : public QLineEdit, public RKPluginWidget {
+class RKVarSlot : public RKPluginWidget {
 public: 
-	RKVarSlot(QWidget *parent);
+	RKVarSlot(const QDomElement &element, QWidget *parent);
 	~RKVarSlot();
-	static int i;
-protected:
-	QWidget *widget () const;
+private:
+	QLineEdit *line_edit;
+	QPushButton *select;
 };
 
 #endif

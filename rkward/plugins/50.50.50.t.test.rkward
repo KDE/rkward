@@ -13,7 +13,7 @@ have to be translated. -->
 	<location tag="analyse" label="&amp;Analyse">
 		<location tag="means" label="Means">
 			<location tag="t_tests" label="T-Tests">
-				<entry label="Two Sample T-Test"/>
+				<entry label="Independed Samples T-Test"/>
 			</location>
 		</location>
 	</location>
@@ -26,9 +26,9 @@ have to be translated. -->
 				<varselector id="vars"/>
 			</column>
 			<column>
-				<varslot type="numeric" id="x" source="vars" required="true"/>
-				<varslot type="numeric" id="y" source="vars" required="true"/>
-				<radio id="hypothesis" label="Test hypothesis">
+				<varslot type="numeric" id="x" source="vars" required="true" label="compare"/>
+				<varslot type="numeric" id="y" source="vars" required="true" label="against"/>
+				<radio id="hypothesis" label="using test hypothesis">
 					<option value="two.sided" label="Two-sided"/>
 					<option value="greater" label="First is greater"/>
 					<option value="less" label="Second is greater"/>

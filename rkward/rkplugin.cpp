@@ -22,12 +22,12 @@
 #include <qdialog.h>
 #include <qlayout.h>
 #include <qmap.h>
-#include <qlabel.h>
 
 #include "rkmenu.h"
 #include "rkpluginwidget.h"
 #include "rkvarselector.h"
 #include "rkvarslot.h"
+#include "rkradio.h"
 
 RKPlugin::RKPlugin(RKMenu *parent, const QDomElement &element, QString filename) {
 	RKPlugin::parent = parent;
@@ -71,18 +71,19 @@ void RKPlugin::buildGUI () {
 	element = children.item (0).toElement ();
 
 	gui = new QWidget (0);
+	gui->setCaption (_label);
 	QGridLayout *layout = new QGridLayout (gui, 1, 1, 11, 6);
 
 	if ((element.tagName () == "row") || (element.tagName () == "column")) {
-		layout->addLayout (buildStructure (element, gui), 0, 0);
+		layout->addLayout (buildStructure (element), 0, 0);
 	} else {
-    	layout->addWidget (buildWidget (element)->widget (), 0, 0);
+    	layout->addLayout (buildWidget (element), 0, 0);
 	}
 
 	gui->show ();
 }
 
-QBoxLayout *RKPlugin::buildStructure (const QDomElement &element, QWidget *parent) {
+QBoxLayout *RKPlugin::buildStructure (const QDomElement &element) {
 	QBoxLayout *layout;
     if (element.tagName () == "row") {
 		layout = new QHBoxLayout (0, 0, 6);
@@ -92,18 +93,14 @@ QBoxLayout *RKPlugin::buildStructure (const QDomElement &element, QWidget *paren
 
 	QDomNodeList children = element.childNodes ();
 
-	for (int i=0; i < children.count (); i++) {
+	for (unsigned int i=0; i < children.count (); i++) {
 		QDomElement child = children.item (i).toElement ();
 
 		if ((child.tagName () == "row") || (child.tagName () == "column")) {
-			layout->addLayout (buildStructure (child, gui));
+			layout->addLayout (buildStructure (child));
 		} else {
-/*			QHBoxLayout *local_layout = new QHBoxLayout (0, 0 ,6);
-
-			if (
-			local_layout->addWidget */
-
-			layout->addWidget (buildWidget (child)->widget ());
+			// it's a widget
+			layout->addLayout (buildWidget (child));
 		}
 	}
 
@@ -114,10 +111,12 @@ RKPluginWidget *RKPlugin::buildWidget (const QDomElement &element) {
 	RKPluginWidget *widget;
 	qDebug ("creating RKPluginWidget " + element.tagName ());
 	if (element.tagName () == "varselector") {
-		widget = new RKVarSelector (gui);
+		widget = new RKVarSelector (element, gui);
+	} else if (element.tagName () == "radio") {
+		widget = new RKRadio (element, gui);
 	} else {
 		// TODO: to be changed, of course
-		widget = new RKVarSlot (gui);
+		widget = new RKVarSlot (element, gui);
 	}
 
 	widgets.insert (element.attribute ("id"), widget);

@@ -1,5 +1,5 @@
 /***************************************************************************
-                          rkvarselector.cpp  -  description
+                          rkradio.h  -  description
                              -------------------
     begin                : Thu Nov 7 2002
     copyright            : (C) 2002 by Thomas Friedrichsmeier
@@ -15,20 +15,29 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "rkvarselector.h"
+#ifndef RKRADIO_H
+#define RKRADIO_H
 
-#include <qwidget.h>
-#include <qlistview.h>
-#include <qdom.h>
-#include <qlabel.h>
+#include <rkpluginwidget.h>
 
-RKVarSelector::RKVarSelector(const QDomElement &element, QWidget *parent) : RKPluginWidget (element, parent) {
-	qDebug ("creating varselector");
-	list_view = new QListView (parent);
-	label = new QLabel (element.attribute ("label", "Select Variable(s)"), parent);
-	addWidget (label);
-	addWidget (list_view);
-}
+#include <qmap.h>
 
-RKVarSelector::~RKVarSelector(){
-}
+class QWidget;
+class QButtonGroup;
+class QDomElement;
+class QRadioButton;
+
+/**
+  *@author Thomas Friedrichsmeier
+  */
+
+class RKRadio : public RKPluginWidget  {
+public: 
+	RKRadio(const QDomElement &element, QWidget *parent);
+	~RKRadio();
+private:
+	QButtonGroup *group;
+	QMap<QRadioButton *, QString> options;
+};
+
+#endif

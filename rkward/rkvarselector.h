@@ -20,21 +20,21 @@
 
 #include <rkpluginwidget.h>
 
-#include <qlistview.h>
-
 class QWidget;
+class QListView;
+class QDomElement;
 
 /**
   *@author Thomas Friedrichsmeier
   */
 
-class RKVarSelector : public QListView, public RKPluginWidget {
+class RKVarSelector : public RKPluginWidget {
    Q_OBJECT
 public: 
-	RKVarSelector(QWidget *parent);
+	RKVarSelector(const QDomElement &element, QWidget *parent);
 	~RKVarSelector();
-protected:
-	QWidget *widget () const;
+private:
+	QListView *list_view;
 };
 
 #endif

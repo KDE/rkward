@@ -17,7 +17,11 @@
 
 #include "rkpluginwidget.h"
 
-RKPluginWidget::RKPluginWidget() {
+#include <qwidget.h>
+#include <qdom.h>
+
+RKPluginWidget::RKPluginWidget(const QDomElement &element, QWidget *parent) : QBoxLayout (0, QBoxLayout::TopToBottom, 6, 6) {
+	_parent = parent;
 }
 
 RKPluginWidget::~RKPluginWidget(){

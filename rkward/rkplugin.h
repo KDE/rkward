@@ -56,7 +56,7 @@ private:
 
 	void buildGUI ();
 
-	QBoxLayout *buildStructure (const QDomElement &element, QWidget *parent);
+	QBoxLayout *buildStructure (const QDomElement &element);
 	RKPluginWidget *buildWidget (const QDomElement &element);
 };
 

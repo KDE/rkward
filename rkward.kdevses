@@ -3,26 +3,22 @@
 <KDevPrjSession>
 <LastCompileConfig>(Default)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
- <DocsAndViews NumberOfDocuments="11" >
-<Doc0 CursorPosLine="213" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="51" FileName="/home/thomas/develop/rkward/rkward/rkward.h" >
+ <DocsAndViews NumberOfDocuments="9" >
+<Doc0 CursorPosLine="40" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="13" FileName="/home/thomas/develop/rkward/rkward/rkward.h" >
 <View0 Top="0" Width="734" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc0>
-  <Doc1 CursorPosLine="25" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rkward.cpp" >
-<View0 Top="0" Width="96" Attach="1" Height="26" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc1>
-  <Doc2 CursorPosLine="29" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rsettings.cpp" >
+  <Doc1 CursorPosLine="89" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="52" FileName="/home/thomas/develop/rkward/rkward/rkward.cpp" >
+<View0 Top="0" Width="734" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc1>
+  <Doc2 CursorPosLine="12" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="37" FileName="/home/thomas/develop/rkward/rkward/plugins/t.test.rkward" >
 <View0 Top="0" Width="734" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc2>
-  <Doc3 CursorPosLine="39" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rsettings.h" >
+  <Doc3 CursorPosLine="52" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="96" FileName="/home/thomas/develop/rkward/rkward/rkmenu.cpp" >
 <View0 Top="0" Width="734" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc3>
-  <Doc4 CursorPosLine="83" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rinterface.cpp" >
+  <Doc4 CursorPosLine="36" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="52" FileName="/home/thomas/develop/rkward/rkward/rkmenu.h" >
 <View0 Top="0" Width="734" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc4>
-  <Doc5 CursorPosLine="30" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rkwatch.h" >
-<View0 Top="0" Width="734" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc5>
-  <Doc6 CursorPosLine="34" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="25" FileName="/home/thomas/develop/rkward/rkward/rkwatch.cpp" >
+  <Doc5 CursorPosLine="26" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="48" FileName="/home/thomas/develop/rkward/rkward/rkplugin.cpp" >
+<View0 Top="0" Width="734" Attach="1" Height="386" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />  </Doc5>
+  <Doc6 CursorPosLine="30" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="24" FileName="/home/thomas/develop/rkward/rkward/rkplugin.h" >
 <View0 Top="0" Width="734" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc6>
-  <Doc7 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rkwatch_ui.h" >
+  <Doc7 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/thomas/develop/rkward/rkward/rkwardui.rc" >
 <View0 Top="0" Width="734" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc7>
-  <Doc8 CursorPosLine="18" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="23" FileName="/home/thomas/develop/rkward/rkward/rkwardui.rc" >
-<View0 Top="0" Width="734" Attach="1" Height="386" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc8>
-  <Doc9 CursorPosLine="44" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="8" FileName="/home/thomas/develop/rkward/rkward/plugins/t.test.rkward" >
-<View0 Top="0" Width="734" Attach="1" Height="386" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />  </Doc9>
-  <Doc10 Type="CDocBrowser" NumberOfViews="1" FileName="/usr/share/doc/kdelibs4-doc/html/classKProcess.html" >
-<View Top="0" Width="734" Attach="1" Height="386" Left="0" Focus="0" Type="KHTMLView" MinMaxMode="0" />  </Doc10> </DocsAndViews></KDevPrjSession>
+  <Doc8 Type="CDocBrowser" NumberOfViews="1" FileName="/usr/share/doc/kdelibs4-doc/html/classKStandardDirs.html#a3" >
+<View Top="0" Width="734" Attach="1" Height="386" Left="0" Focus="0" Type="KHTMLView" MinMaxMode="0" />  </Doc8> </DocsAndViews></KDevPrjSession>

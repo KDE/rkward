@@ -18,17 +18,24 @@
 #ifndef RKPLUGINWIDGET_H
 #define RKPLUGINWIDGET_H
 
+#include <qlayout.h>
+
 class QWidget;
+class QLabel;
+class QDomElement;
 
 /**
   *@author Thomas Friedrichsmeier
   */
 
-class RKPluginWidget {
+class RKPluginWidget : public QBoxLayout {
 public: 
-	RKPluginWidget();
+	RKPluginWidget(const QDomElement &element, QWidget *parent);
 	virtual ~RKPluginWidget();
-	virtual QWidget *widget () const=0;
+	QWidget *parent () { return _parent; };
+	QLabel *label;
+private:
+	QWidget *_parent;
 };
 
 #endif
