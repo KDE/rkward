@@ -6,12 +6,15 @@
 	<layout>
 		<row>
 			<text>
-				This plugin is not implemented. It's only here, to populate
-				the menus a little.
-				Did you notice, that all plugins are constructed at runtime
-				and on the fly from XML-files?
-				Try Means->T-Tests->Independent Samples T-Test.
+				This plugin is not implemented. It's only here, to populate the menus a little.
+				Did you notice, that all plugins are constructed at runtime and on the fly from XML-files?
+				Try Analyse->Means->T-Tests->Independent Samples T-Test or Analyse->Descriptive Statistics.
 			</text>
+			<frame label="a frame">
+				<text>
+					This is text in a frame.
+				</text>
+			</frame>
 		</row>
 	</layout>
 

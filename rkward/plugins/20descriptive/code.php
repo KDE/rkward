@@ -7,24 +7,25 @@
 		$domedian = getRK_val ("median");
 		$dorange = getRK_val ("range");
 		$dosd = getRK_val ("sd");
+		$x = getRK_val ("x");
 	
 		?>rk.temp <- list ()
 <?
 		
 		if ($domean) {
-		?>rk.temp$mean <- mean (<? getRK ("x"); ?>, 0, TRUE)
+		?>rk.temp$mean <- mean (<? echo $x; ?>, 0, TRUE)
 <?
 		}
 		if ($domedian) {
-		?>rk.temp$median <- median (<? getRK ("x"); ?>, TRUE)
+		?>rk.temp$median <- median (<? echo $x; ?>, TRUE)
 <?
 		}
 		if ($dorange) {
-		?>rk.temp$range <- range (<? getRK ("x"); ?>, na.rm=TRUE)
+		?>rk.temp$range <- range (<? echo $x; ?>, na.rm=TRUE)
 <?
 		}
 		if ($dosd) {
-		?>rk.temp$sd <- sd (<? getRK ("x"); ?>, TRUE)
+		?>rk.temp$sd <- sd (<? echo $x; ?>, TRUE)
 <?
 		}	
 	}
