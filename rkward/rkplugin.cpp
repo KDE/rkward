@@ -18,8 +18,16 @@
 #include "rkplugin.h"
 
 #include <qdom.h>
+#include <qfile.h>
+#include <qdialog.h>
+#include <qlayout.h>
+#include <qmap.h>
+#include <qlabel.h>
 
 #include "rkmenu.h"
+#include "rkpluginwidget.h"
+#include "rkvarselector.h"
+#include "rkvarslot.h"
 
 RKPlugin::RKPlugin(RKMenu *parent, const QDomElement &element, QString filename) {
 	RKPlugin::parent = parent;
@@ -32,4 +40,93 @@ RKPlugin::~RKPlugin(){
 
 void RKPlugin::activated () {
 	qDebug ("activated plugin: " + filename);
+	buildGUI ();
+}
+
+void RKPlugin::buildGUI () {
+	// open XML-file (TODO: remove code-duplication)
+	int error_line, error_column;
+	QString error_message, dummy;
+	QDomDocument doc;
+	QFile f(filename);
+	if (!f.open(IO_ReadOnly))
+		qDebug ("Could not open file for reading: " + filename);
+	if (!doc.setContent(&f, false, &error_message, &error_line, &error_column)) {
+		f.close();
+		qDebug ("parsing-error in: " + filename);
+		qDebug ("Message: " + error_message);
+		qDebug ("Line: %d", error_line);
+		qDebug ("Column: %d", error_column);
+		return;
+	}
+	f.close();
+
+	// find layout-section
+	QDomElement element = doc.documentElement ();
+	QDomNodeList children = element.elementsByTagName("layout");
+	element = children.item (0).toElement ();
+
+	// layout-section may only contain one top-level component
+	children = element.childNodes ();
+	element = children.item (0).toElement ();
+
+	gui = new QWidget (0);
+	QGridLayout *layout = new QGridLayout (gui, 1, 1, 11, 6);
+
+	if ((element.tagName () == "row") || (element.tagName () == "column")) {
+		layout->addLayout (buildStructure (element, gui), 0, 0);
+	} else {
+    	layout->addWidget (buildWidget (element)->widget (), 0, 0);
+	}
+
+	gui->show ();
+}
+
+QBoxLayout *RKPlugin::buildStructure (const QDomElement &element, QWidget *parent) {
+	QBoxLayout *layout;
+    if (element.tagName () == "row") {
+		layout = new QHBoxLayout (0, 0, 6);
+	} else {
+		layout = new QVBoxLayout (0, 0, 6);
+	}
+
+	QDomNodeList children = element.childNodes ();
+
+	for (int i=0; i < children.count (); i++) {
+		QDomElement child = children.item (i).toElement ();
+
+		if ((child.tagName () == "row") || (child.tagName () == "column")) {
+			layout->addLayout (buildStructure (child, gui));
+		} else {
+/*			QHBoxLayout *local_layout = new QHBoxLayout (0, 0 ,6);
+
+			if (
+			local_layout->addWidget */
+
+			layout->addWidget (buildWidget (child)->widget ());
+		}
+	}
+
+	return layout;	
+}
+
+RKPluginWidget *RKPlugin::buildWidget (const QDomElement &element) {
+	RKPluginWidget *widget;
+	qDebug ("creating RKPluginWidget " + element.tagName ());
+	if (element.tagName () == "varselector") {
+		widget = new RKVarSelector (gui);
+	} else {
+		// TODO: to be changed, of course
+		widget = new RKVarSlot (gui);
+	}
+
+	widgets.insert (element.attribute ("id"), widget);
+
+	return widget;
+}
+
+void RKPlugin::ok () {
+}
+
+void RKPlugin::cancel () {
 }

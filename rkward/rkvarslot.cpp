@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkplugin.h  -  description
+                          rkvarslot.cpp  -  description
                              -------------------
-    begin                : Wed Nov 6 2002
+    begin                : Thu Nov 7 2002
     copyright            : (C) 2002 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -15,49 +15,17 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RKPLUGIN_H
-#define RKPLUGIN_H
+#include "rkvarslot.h"
 
-#include <qstring.h>
-#include <qobject.h>
-#include <qmap.h>
+int RKVarSlot::i = 0;
 
-class QDomElement;
-class RKMenu;
-class QDialog;
-class QBoxLayout;
-class QLayout;
-class RKPluginWidget;
+RKVarSlot::RKVarSlot(QWidget *parent) : QLineEdit (parent) {
+	QString dummy;
+	setText (dummy.setNum (i));
+}
+RKVarSlot::~RKVarSlot(){
+}
 
-/**
-  *@author Thomas Friedrichsmeier
-  */
-
-class RKPlugin : public QObject {
-	Q_OBJECT
-public: 
-	RKPlugin(RKMenu *parent, const QDomElement &element, QString filename);
-	~RKPlugin();
-	QString label () { return _label; };	
-//	QString tag () { return _tag; }
-public slots:
-	void activated ();
-	void ok ();
-	void cancel ();
-private:
-	QString filename;
-	RKMenu *parent;
-	QString _label;
-//	QString _tag;
-
-	QWidget *gui;
-
-	QMap <QString, RKPluginWidget*> widgets;
-
-	void buildGUI ();
-
-	QBoxLayout *buildStructure (const QDomElement &element, QWidget *parent);
-	RKPluginWidget *buildWidget (const QDomElement &element);
-};
-
-#endif
+QWidget *RKVarSlot::widget () const {
+	return (QWidget *) this;
+}

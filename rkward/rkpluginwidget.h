@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkplugin.h  -  description
+                          rkpluginwidget.h  -  description
                              -------------------
-    begin                : Wed Nov 6 2002
+    begin                : Thu Nov 7 2002
     copyright            : (C) 2002 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -15,49 +15,20 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RKPLUGIN_H
-#define RKPLUGIN_H
+#ifndef RKPLUGINWIDGET_H
+#define RKPLUGINWIDGET_H
 
-#include <qstring.h>
-#include <qobject.h>
-#include <qmap.h>
-
-class QDomElement;
-class RKMenu;
-class QDialog;
-class QBoxLayout;
-class QLayout;
-class RKPluginWidget;
+class QWidget;
 
 /**
   *@author Thomas Friedrichsmeier
   */
 
-class RKPlugin : public QObject {
-	Q_OBJECT
+class RKPluginWidget {
 public: 
-	RKPlugin(RKMenu *parent, const QDomElement &element, QString filename);
-	~RKPlugin();
-	QString label () { return _label; };	
-//	QString tag () { return _tag; }
-public slots:
-	void activated ();
-	void ok ();
-	void cancel ();
-private:
-	QString filename;
-	RKMenu *parent;
-	QString _label;
-//	QString _tag;
-
-	QWidget *gui;
-
-	QMap <QString, RKPluginWidget*> widgets;
-
-	void buildGUI ();
-
-	QBoxLayout *buildStructure (const QDomElement &element, QWidget *parent);
-	RKPluginWidget *buildWidget (const QDomElement &element);
+	RKPluginWidget();
+	virtual ~RKPluginWidget();
+	virtual QWidget *widget () const=0;
 };
 
 #endif
