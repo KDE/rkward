@@ -114,6 +114,9 @@ class RKwardDoc : public TwinTable
 	void pushTable (TwinTable *ttable, QString name);
 	/** pulls a whole table from R */
 	void pullTable ();
+
+// needed if file to be loaded is remote
+	QString tmpfile;
 };
 
 #endif // RKWARDDOC_H

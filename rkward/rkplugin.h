@@ -18,8 +18,9 @@
 #ifndef RKPLUGIN_H
 #define RKPLUGIN_H
 
+#include <qwidget.h>
+
 #include <qstring.h>
-#include <qobject.h>
 #include <qmap.h>
 
 #include "rinterface.h"
@@ -36,18 +37,18 @@ class RKVarSelector;
 class PHPBackend;
 class RCommand;
 class RKErrorDialog;
+class RKCommandEditor;
 
 /**
   *@author Thomas Friedrichsmeier
   */
 
-class RKPlugin : public QObject {
+class RKPlugin : public QWidget {
 	Q_OBJECT
 public: 
 // TODO: pass directory only, not filename
-	RKPlugin(RKwardApp *parent, const QString &label, const QString &filename);
+	RKPlugin(RKwardApp *parent, const QString &filename);
 	~RKPlugin();
-	QString label () { return _label; };	
 //	QString tag () { return _tag; }
 	RKwardApp *getApp () { return app; };
 /** Returns a pointer to the varselector by that name (0 if not available) */
@@ -55,9 +56,6 @@ public:
 /** return value given by identifier */
 	QString getVar (const QString &id);
 public slots:
-/** Slot called, when the menu-item for this widget is selected. Responsible
-	for creating the GUI. */
-	void activated ();
 	void ok ();
 	void cancel ();
 	void toggleCode ();
@@ -66,9 +64,6 @@ public slots:
 /** Widgets, that if changed, require the code/problem-views to be updated,
 	connect to this slot (or call it directly). Updates code/problem-views */
 	void changed ();
-/** Discards this plugin (i.e. cleans up stuff that is no longer needed until
-	this plugin gets activated () again. */
-	void discard ();
 /** Get result of r-command (which was requested for the PHP-backend */
 	void gotRResult (RCommand *command);
 private:
@@ -92,16 +87,12 @@ friend class RKPluginGUIWidget;
 	via RKWardApp->RKOutputWindow */
 	void newOutput ();
 	
-	QString filename;
 	RKwardApp *app;
-	QString _label;
 /** sometimes the plugin can't be destroyed immediately, since, for example the PHP-backend is
 	still busy cleaning stuff up. In that case this var is set and the plugin gets destroyed ASAP. */
 	bool should_destruct;
 	bool should_updatecode;
 //	QString _tag;
-
-	QWidget *gui;
 
 	typedef QMap<QString, RKPluginWidget*> WidgetsMap;
 	WidgetsMap widgets;
@@ -112,7 +103,7 @@ friend class RKPluginGUIWidget;
 	void buildStructure (const QDomElement &element, QBoxLayout *parent, QWidget *pwidget);
 
 	// standard gui-elements
-	QTextEdit *codeDisplay;
+	RKCommandEditor *codeDisplay;
 	QTextEdit *warnDisplay;
 
 	QPushButton *okButton;
@@ -124,6 +115,8 @@ friend class RKPluginGUIWidget;
 	PHPBackend *backend;
 	RKErrorDialog *error_dialog;
 	RCommand::CommandChain *php_backend_chain;
+protected:
+	void closeEvent (QCloseEvent *e);
 };
 
 #endif

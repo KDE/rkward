@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkpluginguiwidget  -  description
+                          rkpluginhandle  -  description
                              -------------------
-    begin                : Tue Jul 27 2004
+    begin                : Tue Aug 10 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,22 +14,22 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rkpluginguiwidget.h"
+#include "rkpluginhandle.h"
 
 #include "rkplugin.h"
-#include "qevent.h"
+#include "rkward.h"
 
-RKPluginGUIWidget::RKPluginGUIWidget(RKPlugin *parent) : QWidget() {
-	plugin = parent;
+RKPluginHandle::RKPluginHandle (RKwardApp *parent, const QString &filename) : QObject (parent) {
+	_parent = parent;
+	_filename = filename;
 }
 
 
-RKPluginGUIWidget::~RKPluginGUIWidget() {
+RKPluginHandle::~RKPluginHandle () {
 }
 
-void RKPluginGUIWidget::closeEvent (QCloseEvent *e) {
-	e->accept ();
-	plugin->try_destruct ();
+void RKPluginHandle::activated () {
+	RKPlugin *plugin = new RKPlugin (_parent, _filename);
 }
 
-#include "rkpluginguiwidget.moc"
+#include "rkpluginhandle.moc"

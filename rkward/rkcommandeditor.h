@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkpluginguiwidget  -  description
+                          rkcommandeditor  -  description
                              -------------------
-    begin                : Tue Jul 27 2004
+    begin                : Mon Aug 9 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,29 +14,32 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef RKPLUGINGUIWIDGET_H
-#define RKPLUGINGUIWIDGET_H
+#ifndef RKCOMMANDEDITOR_H
+#define RKCOMMANDEDITOR_H
 
 #include <qwidget.h>
 
-class RKPlugin;
+#include <kate/document.h>
+#include <kate/view.h>
 
 /**
-The GUI/Widget constructed by a Plugin.
-The purpose of using this class instead of plain QWidget is to notify the RKPlugin when the window has been closed.
+Provides a wrapper around the Kate-part used for syntax-highlighting
 
 @author Thomas Friedrichsmeier
 */
-class RKPluginGUIWidget : public QWidget {
-Q_OBJECT
+class RKCommandEditor : public QWidget {
 public:
-    RKPluginGUIWidget(RKPlugin *parent);
+    RKCommandEditor (QWidget *parent, bool readonly=false);
 
-    ~RKPluginGUIWidget();
-protected:
-	void closeEvent (QCloseEvent *e);
+    ~RKCommandEditor ();
+	
+	void setText (const QString &text);
+	void insertText (const QString &text);
+	QString text ();
 private:
-	RKPlugin *plugin;
+	Kate::Document *doc;
+	Kate::View *view;
+	bool readwrite;
 };
 
 #endif

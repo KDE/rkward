@@ -24,7 +24,7 @@
 #include <qstring.h>
 
 class QMenuBar;
-class RKPlugin;
+class RKPluginHandle;
 class RKwardApp;
 class QDomElement;
 
@@ -38,14 +38,14 @@ public:
 	RKMenu(QMenuBar *parent, QString tag, QString label, RKwardApp *app);
 	~RKMenu();
 	void addSubMenu (const QString &id, RKMenu *submenu);
-	void addEntry (const QString &id, RKPlugin *plugin);
+	void addEntry (const QString &id, RKPluginHandle *plugin, const QString &label);
 	QString label ();
 private:
 /** TODO: Probably we neither need to keep the tag, the parent, nor is_top_level.
 	And probably, we don't ever have to propagate RKPlugin *s backwards.
 	But - we'll clean up later... */
 	QMap<QString, RKMenu*> submenus;
-	QMap<QString, RKPlugin*> entries;
+	QMap<QString, RKPluginHandle*> entries;
 	bool is_top_level;
 	QString _tag;
 	QString _label;

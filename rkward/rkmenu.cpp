@@ -20,7 +20,7 @@
 #include <qmenubar.h>
 #include <qdom.h>
 
-#include "rkplugin.h"
+#include "rkpluginhandle.h"
 #include "rkward.h"
 
 RKMenu::RKMenu(RKMenu *parent, QString tag, QString label, RKwardApp *app) : QPopupMenu (parent) {
@@ -50,7 +50,7 @@ void RKMenu::addSubMenu (const QString &id, RKMenu *submenu) {
 	insertItem (submenu->label (), submenu);
 }
 
-void RKMenu::addEntry (const QString &id, RKPlugin *plugin) {
+void RKMenu::addEntry (const QString &id, RKPluginHandle *plugin, const QString &label) {
 	entries.insert (id, plugin);
-	insertItem (plugin->label (), plugin, SLOT (activated ()));
+	insertItem (label, plugin, SLOT (activated ()));
 }

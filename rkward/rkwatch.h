@@ -22,13 +22,11 @@
 
 #include <qstring.h>
 
-#include <kate/document.h>
-#include <kate/view.h>
-
 class RInterface;
 class RCommand;
 class QPushButton;
 class QTextEdit;
+class RKCommandEditor;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -56,8 +54,7 @@ private:
 /** Pointer to the R-Interface */
 	RInterface *r_inter;
 
-	Kate::Document *commands;
-	Kate::View *commands_view;
+	RKCommandEditor *commands;
 	QTextEdit *watch;
 	QPushButton *submit;
 	QPushButton *clear_commands;

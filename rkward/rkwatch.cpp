@@ -20,6 +20,7 @@
 
 #include "rinterface.h"
 #include "rcommand.h"
+#include "rkcommandeditor.h"
 
 #include <qtextedit.h>
 #include <qpushbutton.h>
@@ -28,7 +29,6 @@
 #include <qsplitter.h>
 
 #include <klocale.h>
-#include <ktexteditor/document.h>
 
 RKwatch::RKwatch(RInterface *parent) : QWidget () {
 	QGridLayout *grid = new QGridLayout (this, 1, 1, 11, 6);
@@ -42,28 +42,8 @@ RKwatch::RKwatch(RInterface *parent) : QWidget () {
 	QWidget *layout_widget = new QWidget (splitter);
 	QHBoxLayout *bottom_hbox = new QHBoxLayout (layout_widget, 0, 6);
 
-	// create a Kate-part as command-editor
-	commands = Kate::document (KTextEditor::createDocument ("libkatepart", this, "Kate::Document"));
-	commands_view = Kate::view (commands->createView (layout_widget));
-	bottom_hbox->addWidget (commands_view);
-	commands->setText ("");
-	
-	// set syntax-highlighting for R
-	int modes_count = commands->hlModeCount ();
-	bool found_mode = false;
-	int i;
-	for (i = 0; i < modes_count; ++i) {
-		qDebug ("%s", commands->hlModeName(i).lower().latin1 ());
-		if (commands->hlModeName(i).lower() == "r script") {
-			found_mode = true;
-			break;
-		}
-	}
-	if (found_mode) {
-		commands->setHlMode(i);
-	} else {
-		qDebug ("%s", "could not find R-syntax scheme");
-	}
+	commands = new RKCommandEditor (layout_widget);
+	bottom_hbox->addWidget (commands);
 	
 	// add run & reset buttons
 	QVBoxLayout *button_vbox = new QVBoxLayout (0, 0, 6);
@@ -89,7 +69,6 @@ RKwatch::RKwatch(RInterface *parent) : QWidget () {
 }
 
 RKwatch::~RKwatch(){
-	delete commands_view;
 	delete commands;
 }
 
@@ -126,7 +105,7 @@ void RKwatch::addOutput (RCommand *command) {
 
 void RKwatch::clearCommand () {
 	commands->setText ("");
-	commands_view->setFocus ();
+	commands->setFocus ();
 }
 
 void RKwatch::submitCommand () {

@@ -20,19 +20,17 @@ rk.temp <- cor (data.frame (<? echo ($vars); ?>), NULL, "<? echo $use; ?>", "<? 
 		$labels = array ();
 		$labels = explode ("\n", trim (getRK_val ("x.label")));
 		
-		// fetch values from R and format
+		// fetch values from R
 		callR_val ("rk.temp <- data.frame (rk.temp)");
 		$matrix = array ();
 		for ($i = count ($vars); $i > 0; --$i) {
 			$matrix[$i] = array ();
 			$matrix[$i] = getRVector ("rk.temp[[" . ($i) . "]]");
 		}
-		getRVector ("x <- c (1,2, 3, 4)");
-
 		
 		// produce the output
 ?><h1>Correlation Matrix</h1>
-<h2>TODO: describe: <? echo ($method); ?>, <? echo ($use); ?></h2>
+<h2>TODO: describe in verbatim: <? echo ($method); ?>, <? echo ($use); ?></h2>
 <table border="1">
 	<tr>
 	<td>Variable</td>

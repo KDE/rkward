@@ -37,8 +37,8 @@
 #include "rkwarddoc.h"
 #include "rcommand.h"
 #include "phpbackend.h"
-#include "rkpluginguiwidget.h"
 #include "rkerrordialog.h"
+#include "rkcommandeditor.h"
 
 // plugin-widgets
 #include "rkpluginwidget.h"
@@ -50,27 +50,11 @@
 
 #define FOR_PHP_FLAG 1
 
-RKPlugin::RKPlugin(RKwardApp *parent, const QString &label, const QString &filename) {
+RKPlugin::RKPlugin(RKwardApp *parent, const QString &filename) : QWidget () {
 	app = parent;
-	RKPlugin::filename = filename;
-	_label = label;
 	backend = 0;
-	gui = 0;
 	php_backend_chain = 0;
-}
-
-RKPlugin::~RKPlugin(){
-	qDebug ("Implement destructor in RKPlugin");
-}
-
-void RKPlugin::activated () {
-	// can't activate the same plugin twice!
-	if (gui) {
-		gui->raise ();
-		return;
-	}
-	qDebug ("activated plugin: " + filename);
-
+	
 	// open XML-file (TODO: remove code-duplication)
 	int error_line, error_column;
 	QString error_message, dummy;
@@ -90,7 +74,11 @@ void RKPlugin::activated () {
 
 	// find layout-section
 	QDomElement element = doc.documentElement ();
-	QDomNodeList children = element.elementsByTagName("layout");
+	QDomNodeList children = element.elementsByTagName("entry");
+	element = children.item (0).toElement ();
+	setCaption (element.attribute ("label", "untitled"));
+
+	children = doc.documentElement ().elementsByTagName("layout");
 	element = children.item (0).toElement ();
 
 	// construct the GUI
@@ -101,7 +89,7 @@ void RKPlugin::activated () {
 	should_updatecode = true;
 	
 	// create an error-dialog
-	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin ") + gui->caption () + i18n (". This may lead to an incorrect ouput and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below."), i18n ("R-Error"), false);
+	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin ") + caption () + i18n (". This may lead to an incorrect ouput and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below."), i18n ("R-Error"), false);
 	
 	// initialize the PHP-backend with the code-template
 	dummy = QFileInfo (f).dirPath () + "/code.php";
@@ -112,17 +100,24 @@ void RKPlugin::activated () {
 	changed ();
 }
 
+RKPlugin::~RKPlugin(){
+	qDebug ("Implement destructor in RKPlugin");
+	delete error_dialog;
+}
+
+void RKPlugin::closeEvent (QCloseEvent *e) {
+	e->accept ();
+	try_destruct ();
+}
+
 void RKPlugin::buildGUI (const QDomElement &layout_element) {
-	gui = new RKPluginGUIWidget (this);
-	gui->setCaption (_label);
-	
-	QGridLayout *main_grid = new QGridLayout (gui, 1, 1, 11, 6);
-	QSplitter *splitter = new QSplitter (QSplitter::Vertical, gui);
+	QGridLayout *main_grid = new QGridLayout (this, 1, 1);
+	QSplitter *splitter = new QSplitter (QSplitter::Vertical, this);
 	main_grid->addWidget (splitter, 0, 0);
 	QWidget *upper_widget = new QWidget (splitter);
 	
-	QGridLayout *grid = new QGridLayout (upper_widget, 1, 3, 11, 6);
-	QVBoxLayout *vbox = new QVBoxLayout (grid, 6);
+	QGridLayout *grid = new QGridLayout (upper_widget, 1, 3, 6);
+	QVBoxLayout *vbox = new QVBoxLayout (grid);
 
 	// default layout is in vertical	
 	buildStructure (layout_element, vbox, upper_widget);
@@ -163,10 +158,7 @@ void RKPlugin::buildGUI (const QDomElement &layout_element) {
 	QWidget *lower_widget = new QWidget (splitter);
 	
 	vbox = new QVBoxLayout (lower_widget, 6);
-	codeDisplay = new QTextEdit (lower_widget);
-	codeDisplay->setMinimumHeight (40);
-	codeDisplay->setReadOnly (true);
-	codeDisplay->setWordWrap (QTextEdit::NoWrap);
+	codeDisplay = new RKCommandEditor (lower_widget, true);
 	warnDisplay = new QTextEdit (lower_widget);
 	warnDisplay->setMinimumHeight (40);
 	warnDisplay->hide ();
@@ -174,8 +166,7 @@ void RKPlugin::buildGUI (const QDomElement &layout_element) {
 	vbox->addWidget (codeDisplay);
 	vbox->addWidget (warnDisplay);
 
-	gui->show ();
-	connect (gui, SIGNAL (destroyed ()), this, SLOT (discard ()));
+	show ();
 }
 
 void RKPlugin::buildStructure (const QDomElement &element, QBoxLayout *playout, QWidget *pwidget) {
@@ -254,14 +245,14 @@ void RKPlugin::newOutput () {
 void RKPlugin::try_destruct () {
 	qDebug ("try_destruct");
 	if (!backend->isBusy ()) {
-		delete gui;
+		delete codeDisplay;
 		delete backend;
 		backend = 0;
-		gui = 0;
 		getApp ()->r_inter->closeChain (php_backend_chain);
 		php_backend_chain = 0;
+		delete this;
 	} else {
-		gui->hide ();
+		hide ();
 		should_destruct = true;
 	}
 }
@@ -316,12 +307,6 @@ void RKPlugin::help () {
 	// TODO
 }
 
-void RKPlugin::discard () {
-	delete error_dialog;
-	// the entire GUI and all widgets get deleted automatically!
-	qDebug ("plugin cleaned");
-}
-
 void RKPlugin::changed () {
 	// trigger update for code-display
 	should_updatecode = true;
@@ -335,7 +320,7 @@ void RKPlugin::changed () {
 }
 
 void RKPlugin::updateCode (const QString &text) {
-	codeDisplay->insert (text);
+	codeDisplay->insertText (text);
 }
 
 void RKPlugin::doRCall (const QString &call) {

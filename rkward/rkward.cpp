@@ -43,13 +43,15 @@
 #include "rkdrag.h"
 #include "rkwatch.h"
 #include "rkmenu.h"
-#include "rkplugin.h"
+#include "rkpluginhandle.h"
 #include "rkoutputwindow.h"
 #include "rksettings.h"
 #include "rksettingsmoduleplugins.h"
 #include "rksettingsmodulelogfiles.h"
 #include "rksettingsmoduleoutput.h"
 #include "rinterface.h"
+
+#include "debug.h"
 
 #define ID_STATUS_MSG 1
 #define ID_R_STATUS_MSG 2
@@ -133,16 +135,13 @@ int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
 
 	QFile description (dir.filePath ("description.xml"));
 	if (!description.open (IO_ReadOnly)) {
-		qDebug ("Could not open file for reading: " + description.name ());
+		RK_DO (qDebug ("Could not open file for reading: %s", description.name ().latin1 ()), APP | PLUGIN, DL_WARNING);
 		description.close ();
 		return 0;
 	}
 	if (!doc.setContent(&description, false, &error_message, &error_line, &error_column)) {
 		description.close();
-		qDebug ("parsing-error in: " + description.name ());
-		qDebug ("Message: " + error_message);
-		qDebug ("Line: %d", error_line);
-		qDebug ("Column: %d", error_column);
+		RK_DO (qDebug ("parsing-error in: %s\nMessage: %s, Line: %d, Column: %d", description.name ().latin1 (), error_message.latin1 (), error_line, error_column), APP | PLUGIN, DL_WARNING);
 		return 0;
 	}
 	description.close();
@@ -163,9 +162,9 @@ int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
 		}
 	} else {
 		if (!parent) {
-			qDebug ("can't add plugin on the top-level menu");
+			RK_DO (qDebug ("%s", "can't add plugin on the top-level menu"), APP | PLUGIN, DL_WARNING);
 		} else {
-			parent->addEntry (element.attribute ("id"), new RKPlugin (this, element.attribute ("label", "untitled"), description.name ()));
+			parent->addEntry (element.attribute ("id"), new RKPluginHandle (this, description.name ()), element.attribute ("label", "untitled"));
 			num_plugins++;
 		}
 	}
@@ -173,7 +172,7 @@ int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
 	if (menu) {
 		// get subdirectories if applicable
 		for (unsigned int i = 0; i < dir.count (); i++) {
-			qDebug (dir[i]);
+			RK_DO (qDebug ("%s", dir[i].latin1 ()), APP | PLUGIN, DL_DEBUG);
 			if ((dir[i] != ".") && (dir[i] != "..")) {
 				num_plugins += initPluginDir (dir.filePath (dir[i]), menu);
 			}
@@ -184,7 +183,7 @@ int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
 }
 
 void RKwardApp::startR () {
-	if (r_inter) qDebug ("Trying to start R-Interface a second time. Not good.");
+	RK_ASSERT (!r_inter);
 	
 	QDir dir (RKSettingsModuleLogfiles::filesPath());
 	if (!dir.exists ()) {
@@ -255,7 +254,7 @@ void RKwardApp::initStatusBar()
   // STATUSBAR
   // TODO: add your own items you need for displaying current application status.
   statusBar()->insertItem(i18n("Ready."), ID_STATUS_MSG);
-	statusBar()->insertItem(i18n("R-process busy"), ID_R_STATUS_MSG);
+	statusBar()->insertItem(i18n("starting R-processor"), ID_R_STATUS_MSG);
 }
 
 void RKwardApp::initDocument()

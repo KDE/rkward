@@ -118,6 +118,7 @@ char **REmbedInternal::getCommandAsStringVector (const char *command, int *count
 		strings = new char* [length (strexp)];
 		for (int i = 0; i < *count; ++i) {
 			SEXP dummy = VECTOR_ELT (strexp, i);
+// TODO: can we avoid this string copying by protecting strexp?
 			if (TYPEOF (dummy) != CHARSXP) {
 				strings[i] = strdup ("not defined");	// can this ever happen?
 			} else {

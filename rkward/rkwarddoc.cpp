@@ -38,6 +38,9 @@
 
 #define RLOAD_COMMAND 1
 #define RPULL_COMMAND 2
+#define RMETA_TABLE 4
+#define RDONE_WITH_TABLE 8
+#define RPULL_BOTH_TABLES 16
 
 RKwardDoc::RKwardDoc(RKwardApp *parent, const char *name) : TwinTable (parent, name)
 {
@@ -126,22 +129,16 @@ bool RKwardDoc::newDocument()
 
 bool RKwardDoc::openDocument(const KURL& url, const char *format /*=0*/)
 {
-  QString tmpfile;
-  KIO::NetAccess::download( url, tmpfile );
-  /////////////////////////////////////////////////
-  // TODO: Add your document opening code here
-  /////////////////////////////////////////////////
-
+	KIO::NetAccess::download (url, tmpfile, app);
+	
 	setURL (tmpfile);
 //	output_is = Loaded;
 	RCommand *command = new RCommand ("load (\"" + doc_url.path () + "\")", RCommand::App, "", this, SLOT (processROutput (RCommand *)), RLOAD_COMMAND);
 	app->r_inter->issueCommand (command);
 	pullTable ();
 	
-  KIO::NetAccess::removeTempFile( tmpfile );
-
-  modified=false;
-  return true;
+	modified=false;
+	return true;
 }
 
 bool RKwardDoc::saveDocument(const KURL& url, const char *format /*=0*/)
@@ -155,8 +152,8 @@ bool RKwardDoc::saveDocument(const KURL& url, const char *format /*=0*/)
 	app->r_inter->issueCommand (new RCommand ("save.image (\"" + url.path () + "\")", RCommand::App));
 
 	setURL (url);
-  modified=false;
-  return true;
+	modified=false;
+	return true;
 }
 
 void RKwardDoc::deleteContents()
@@ -243,6 +240,7 @@ void RKwardDoc::pullTable () {
 		pci->offset_col = 0;
 		pci->offset_row = i;
 		pci->length = -1;
+// TODO: use the RCommand-flags instead
 		pci->get_data_table_next = (i == 4);
 		RCommand *rcom = new RCommand (command, RCommand::Sync | RCommand::GetStringVector, "", this, SLOT (processROutput (RCommand *)), RPULL_COMMAND);
 		pull_map.insert (rcom, pci);
@@ -295,5 +293,7 @@ void RKwardDoc::processROutput (RCommand *command) {
 
 		delete pci;
 		pull_map.remove (command);
+	} else if (command->getFlags () == RLOAD_COMMAND) {
+		KIO::NetAccess::removeTempFile (tmpfile);
 	}
 }
