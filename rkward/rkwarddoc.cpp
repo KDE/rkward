@@ -32,6 +32,7 @@
 #include "twintablemember.h"
 #include "twintable.h"
 #include "rcommand.h"
+#include "rinterface.h"
 
 #define RK_DATA_PREFIX	"rk."
 

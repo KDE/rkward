@@ -17,51 +17,40 @@
 
 #include "rinterface.h"
 
-#include <qcstring.h>
-
-#include <kmessagebox.h>
-#include <klocale.h>
-
 #include "rkwatch.h"
 #include "rcommand.h"
-#include "rembed.h"
+#include "rthread.h"
+#include "rkward.h"
 
-RInterface::RInterface(){
-	embeddedR = new REmbed ();
+RInterface::RInterface(RKwardApp *parent){
+	app = parent;
+	
+	r_thread = new RThread (this);
+	r_thread->start ();
+	
 	watch = new RKwatch (this);
 	watch->show ();
-	command_stack.setAutoDelete (true);
+	watch->lower ();
 }
 
 RInterface::~RInterface(){
 	delete watch;
 }
 
-void RInterface::shutdown () {
-}
-
 void RInterface::issueCommand (RCommand *command) {
-	command_stack.append (command);
-	tryNextCommand ();
+	r_thread->issueCommand (command);
 }
 
-void RInterface::tryNextCommand () {
-	if (command_stack.count ()) {
-		write (command_stack.first ());
+void RInterface::customEvent (QCustomEvent *e) {
+	if (e->type () == RCOMMAND_IN_EVENT) {
+		watch->addInput (static_cast <RCommand *> (e->data ()));
+	} else if (e->type () == RCOMMAND_OUT_EVENT) {
+		RCommand *command = static_cast <RCommand *> (e->data ());
+		watch->addOutput (command);
+		command->finished ();
+	} else if ((e->type () == RIDLE_EVENT)) {
+		app->setRStatus (false);	
+	} else if ((e->type () == RBUSY_EVENT)) {
+		app->setRStatus (true);	
 	}
 }
-
-void RInterface::write (RCommand *command) {
-	QString output;
-	
-	embeddedR->runCommand (command);
-	watch->addInput (command);
-	qDebug ("ran command %d", command->id ());
-	
-	watch->addOutput (command);
-	command->finished ();
-	command_stack.removeFirst ();
-	
-	tryNextCommand ();
-}
-

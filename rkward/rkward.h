@@ -32,8 +32,6 @@
 #include <kaction.h>
 #include <kurl.h>
 
-#include "rinterface.h"
-
 // forward declaration of the RKward classes
 class RKwardDoc;
 class RKwardView;
@@ -43,6 +41,7 @@ class QTimer;
 class RKOutputWindow;
 class RKSettingsModule;
 class RKSettings;
+class RInterface;
 
 /**
   * The base class for RKward application windows. It sets up the main
@@ -231,6 +230,9 @@ class RKwardApp : public KMainWindow
 	QTimer *startup_timer;
 	
 	RKOutputWindow *output;
+	
+	friend class RInterface;
+	void setRStatus (bool busy);
 };
  
 #endif // RKWARD_H

@@ -18,14 +18,12 @@
 #ifndef RINTERFACE_H
 #define RINTERFACE_H
 
-#include <kprocess.h>
-#include <qstrlist.h>
-#include <qstring.h>
-#include <qptrlist.h>
+#include "qobject.h"
 
 class RKwatch;
 class RCommand;
-class REmbed;
+class RThread;
+class RKwardApp;
 
 /** This class does the rather low-level interfacing to the R-processor. The
 	interface can be used by submitting new commands with issueCommand () (see
@@ -40,31 +38,19 @@ class REmbed;
   *@author Thomas Friedrichsmeier
   */
 
-class RInterface : public KProcess  {
+class RInterface : public QObject {
 	Q_OBJECT
 public: 
-	RInterface();
+	RInterface(RKwardApp *parent);
 	~RInterface();
-	void shutdown ();
 	void issueCommand (RCommand *command);
-signals:
-/** Emitted, when synchronous commands are blocked (i.e. there is another command running) */
-//	void syncBlocked ();
-/** Emitted, when synchronous commands are allowed again */
-//	void syncUnblocked ();
 private:
-	REmbed *embeddedR;
+	RThread *r_thread;
+	RKwardApp *app;
 friend class RKwardApp;
-	QPtrList<RCommand> command_stack;
-/** Keeps everything R has so far responded to the last command */
-	QString r_output;
-/** We have to keep a local buffer for Stdinput to R. */
-	QString command_write_buffer;
-/** Commits the next command in the stack, if it can safely be written */
-	void tryNextCommand ();
 	RKwatch *watch;
-/** This is the last step in the chain of committing a command, and actually writes it */
-	void write (RCommand *command);
+protected:
+	void customEvent (QCustomEvent *e);
 };
 
 #endif

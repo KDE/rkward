@@ -1,3 +1,6 @@
+- display status of R-process in the statusbar
+- run R in a separate thread
+
 --- Version 0.2.0 - Aug-01-2004 ---
 - Use a PHP-backend for the plugins
 - Run R embedded (currently synchronous)

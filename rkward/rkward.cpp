@@ -49,8 +49,10 @@
 #include "rksettingsmoduleplugins.h"
 #include "rksettingsmodulelogfiles.h"
 #include "rksettingsmoduleoutput.h"
+#include "rinterface.h";
 
 #define ID_STATUS_MSG 1
+#define ID_R_STATUS_MSG 2
 
 RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
 {
@@ -190,7 +192,7 @@ void RKwardApp::startR () {
 		current.mkdir (dir.path (), true);
 	}
 	
-	r_inter = new RInterface ();
+	r_inter = new RInterface (this);
 }
 
 void RKwardApp::slotConfigure () {
@@ -253,6 +255,7 @@ void RKwardApp::initStatusBar()
   // STATUSBAR
   // TODO: add your own items you need for displaying current application status.
   statusBar()->insertItem(i18n("Ready."), ID_STATUS_MSG);
+	statusBar()->insertItem(i18n("R-process busy"), ID_R_STATUS_MSG);
 }
 
 void RKwardApp::initDocument()
@@ -651,5 +654,13 @@ void RKwardApp::newOutput () {
 		if (RKSettingsModuleOutput::autoRaise ()) {
 			output->raise ();
 		}
+	}
+}
+
+void RKwardApp::setRStatus (bool busy) {
+	if (busy) {
+		statusBar()->changeItem(i18n("R-process busy"), ID_R_STATUS_MSG);
+	} else {
+		statusBar ()->changeItem (i18n ("R-process idle"), ID_R_STATUS_MSG);
 	}
 }

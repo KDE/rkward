@@ -1,19 +1,28 @@
-The following list of TODO-items is not complete!
+The following list of TODO-items is NOT complete!
 
-stuff to do before 0.2.0 release
+stuff to do before 0.2.1 release
+- handle asynchronous data in Output
+	- locking
+	- move output logging to RKOutput?
+- plugin improvements:
+	- tabs
+	- wizards
+	- multi-varslots
 
 small stuff to do soon
 - plugins-scanning: don't duplicate everything
 - rework plugin-XML-format
-- add checkboxes etc.
+- add more plugin-widgets
 - if there is no R_HOME setting, ask for one instead of using /usr/lib/R unconditionally
 
 mid-term stuff
 - add XML-parsing helper functions and error-checking
 - restructure source-layout
+- allow RCommand-chains that will be executed in order
 
 stuff to do before the thing is usable
 - use a cool new RHistory-Widget for the RKWatch
+	- discard RCommand-data that is not needed in the history
 - add a help-system
 - mostly everything
 
