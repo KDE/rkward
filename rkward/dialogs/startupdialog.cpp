@@ -25,7 +25,12 @@
 #include <qstringlist.h>
 #include <qpixmap.h>
 
-#include <kactionclasses.h>
+#include <kdeversion.h>
+#if !KDE_IS_VERSION (3, 2,0)
+	#include <kaction.h>
+#else
+	#include <kactionclasses.h>
+#endif
 #include <klocale.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
@@ -90,12 +95,17 @@ StartupDialog::~StartupDialog() {
 
 void StartupDialog::accept () {
 	RK_TRACE (DIALOGS);
+#if QT_VERSION < 0x030200
+	int selected = choser->id (choser->selected ());
+#else
+	int selected = choser->selectedId ();
+#endif
 
-	if (choser->selectedId () == (int) EmptyWorkspace) {
+	if (selected == (int) EmptyWorkspace) {
 		result->result = EmptyWorkspace;
-	} else if (choser->selectedId () == (int) EmptyTable) {
+	} else if (selected == (int) EmptyTable) {
 		result->result = EmptyTable;
-	} else if (choser->selectedId () == (int) OpenFile) {
+	} else if (selected == (int) OpenFile) {
 		QListViewItem *item = file_list->selectedItem ();
 		if (item == chose_file_item) {
 			result->result = ChoseFile;

@@ -1,9 +1,12 @@
+--- Version 0.2.7 
+- several compilation fixes for KDE/Qt < 3.2.x (and maybe some new ones were introduced?)
 - slight reorganization of menus
 - added menu option to close all editor windows
 - some improvements in the editing behavior for the table. Some quirks still present
 - renamed windows
 - fixed some typos
 - set initial minimum sizes for object browser and object viewer windows
+- don't show all windows on startup
 - ask whether to save current workspace before loading a new one
 - added command-line option to set, which components to show debug-messages for
 - added option(s) to show/raise watch-window when new commands get displayed

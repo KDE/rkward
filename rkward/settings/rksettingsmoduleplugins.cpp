@@ -83,7 +83,11 @@ bool RKSettingsModulePlugins::hasChanges () {
 
 void RKSettingsModulePlugins::applyChanges () {
 	plugin_dir = dir_choser->getLocation ();
+#if QT_VERSION < 0x030200
+	interface_pref = static_cast<PluginPrefs> (button_group->id (button_group->selected ()));
+#else
 	interface_pref = static_cast<PluginPrefs> (button_group->selectedId ());
+#endif
 	RKGlobals::rkApp ()->initPlugins();
 }
 

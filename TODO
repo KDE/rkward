@@ -1,12 +1,21 @@
 The following list of TODO-items is NOT complete!
 
-stuff to do before 0.2.7 release
+stuff to do before 0.2.8 release
+- RKEditorDataFrame:
+	- allow row deletions
 - Object editing / modification tracking:
 	- maybe store data directly with objects? Probably not.
 	- functions to set double/int/string-vectors directly
-- RKEditorDataFrame:
-	- allow row deletions
-- fix compilation issues for KDE/Qt < 3.2
+- Twintable/RKEditorDataFrame
+	- rework type-select cell
+	- auto-addition of rows and columns
+	- merge the two classes
+- create load-agent
+- handle/give feedback on syntax errors!
+- calls from R to RKWard
+	- using TCP-sockets?
+- basic modification tracking:
+	- do not ask for save on a workspace that is entirely empty and has seen no user commands (or just one that is entirely empty?)
 - pick some from below:
 
 (relatively) small stuff to do soon
@@ -21,22 +30,15 @@ stuff to do before 0.2.7 release
 	- add constant term option
 - add XML-parsing helper functions and error-checking
 - create a spinbox, that can really deal with real numbers
-- create load-agent
-- handle/give feedback on syntax errors!
 - UNPROTECT_PTR
-- Twintable/RKEditorDataFrame
-	- rework type-select cell
-	- auto-addition of rows and columns
-	- merge the two classes
 
 stuff to do before the thing is usable
 - RKWatch
 	- use a cool new RHistory-Widget for the watch
 	- maybe keep an (optional) log of RCommands
 - add a help-system
+- add MDI-framework
 - mostly everything
-- calls from R to RKWard
-	- using TCP-sockets?
 
 stuff to do before a 1.0 release
 - handle graphics

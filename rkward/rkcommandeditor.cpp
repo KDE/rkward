@@ -18,6 +18,8 @@
 
 #include <qlayout.h>
 
+#include <kdeversion.h>
+
 #include "debug.h"
 
 RKCommandEditor::RKCommandEditor (QWidget *parent, bool readonly) : QWidget (parent) {
@@ -25,8 +27,15 @@ RKCommandEditor::RKCommandEditor (QWidget *parent, bool readonly) : QWidget (par
 	QVBoxLayout *layout = new QVBoxLayout (this);
 
 	// create a Kate-part as command-editor
+#if !KDE_IS_VERSION (3, 2, 0)
+	doc = static_cast<Kate::Document *> (KTextEditor::createDocument ("libkatepart", this, "Kate::Document"));
+	view = static_cast<Kate::View *> (doc->createView (this));
+# else
 	doc = Kate::document (KTextEditor::createDocument ("libkatepart", this, "Kate::Document"));
+	RK_ASSERT (doc);
 	view = Kate::view (doc->createView (this));
+	RK_ASSERT (view);
+#endif
 	layout->addWidget (view);
 	doc->setText ("");
 		

@@ -164,8 +164,12 @@ void RObjectList::childUpdateComplete () {
 
 void RObjectList::loadWorkspace (const KURL& url, bool merge) {
 	RK_TRACE (OBJECTS);
+#if !KDE_IS_VERSION (3, 2, 0)
+	KIO::NetAccess::download (url, tmpfile);
+#else
 	KIO::NetAccess::download (url, tmpfile, RKGlobals::rkApp ());
-	
+#endif
+
 	RCommand *command;
 	
 	if (!merge) {
