@@ -1,0 +1,485 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Polish translation started Nov 19, 2004 by donkiszot_at_fiz.coi.waw.pl
+# Any sugestions and help are welcome!
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-11-12 16:04+0100\n"
+"PO-Revision-Date: 2004-11-19 00:00+0100\n"
+"Last-Translator: Andrzej Pruszynski\n"
+"Language-Team: LANG <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: rkwatch.cpp:61
+msgid "&Run"
+msgstr "U&ruchom"
+
+#: rkwatch.cpp:67
+msgid "&Interrupt"
+msgstr "Przerw&ij"
+
+#: rkwatch.cpp:75
+msgid "&Print Log"
+msgstr "&Drukuj log"
+
+#: rkwatch.cpp:76
+msgid "Export Log"
+msgstr "Eksportuj log"
+
+#: rkwatch.cpp:77
+msgid "&Clear Log"
+msgstr "Wy&czy¶æ log"
+
+#: rkwatch.cpp:80
+msgid "Watch"
+msgstr "Podgl±d"
+
+#: rkwatch.cpp:83
+msgid "&Open new editor window"
+msgstr "&Otwórz nowe okno edycji"
+
+#: rkwatch.cpp:85
+msgid "Configure Editor"
+msgstr "Konfiguruj edytor"
+
+#: rkwatch.cpp:86
+msgid "Commands"
+msgstr "Polecenia"
+
+#: rkwatch.cpp:91 rkoutputwindow.cpp:51
+msgid "Sorry, no help available so far"
+msgstr "Przykro mi, plik pomocy nie jest jeszcze dostêpny"
+
+#: rkwatch.cpp:99
+msgid "R Console"
+msgstr "R-konsola"
+
+#: rkwatch.cpp:131
+msgid "Issuing command:\n"
+msgstr "Wprowadzane polecenie:\n"
+
+#: rkwatch.cpp:175
+msgid "Got reply:"
+msgstr "Otrzymana odpowied¼:"
+
+#: rkwatch.cpp:181
+msgid ""
+"An unspecified error occured while running the command.\n"
+"Probably a syntax error.\n"
+"Those - unfortunately - are not handled very well, yet.\n"
+msgstr ""
+"Wyst±pi³ nieznany b³±d w czasie wykonywania polecenia.\n"
+"Prawdopodobnie to b³±d syntaktyczny.\n"
+"Które - niestety - nie s± obs³ugiwane zbyt dobrze, jak na razie.\n"
+
+#: rkward.cpp:113
+msgid "Object Editor"
+msgstr "Edytor obiektów"
+
+#: rkward.cpp:113
+msgid "R Object Editor"
+msgstr "Edytor R-obiektów"
+
+#: rkward.cpp:180
+msgid "my.data"
+msgstr "my.data"
+
+#: rkward.cpp:191
+msgid "This is a list of the objects present in the R workspace."
+msgstr "Oto lista obiektów obecnych w roboczej przestrzeni R."
+
+#: rkward.cpp:191
+msgid "Object browser"
+msgstr "Przegl±darka obiektów"
+
+#: rkward.cpp:208
+msgid "Setting up plugins..."
+msgstr "£adowanie wtyczek..."
+
+#: rkward.cpp:211
+msgid ""
+"Could not find any plugins!\n"
+"RKWard is pretty useless without plugins, so you should use Settings-"
+">Plugins to import some.\n"
+msgstr ""
+"Nie znaleziono ¿adnych wtyczek!\n"
+"RKWard jest bezu¿yteczny bez wtyczek, tak wiêc powiniene¶ u¿yæ Ustawienia-"
+">Wtyczki aby je zaimportowaæ.\n"
+
+#: rkward.cpp:211
+msgid "No plugins found"
+msgstr "Nie znaleziono ¿adnych wtyczek"
+
+#: rkward.cpp:214 rkward.cpp:393 rkward.cpp:583 rkward.cpp:653 rkward.cpp:670
+#: rkward.cpp:682 rkward.cpp:704 rkward.cpp:755 rkward.cpp:773
+msgid "Ready."
+msgstr "Gotowe."
+
+#: rkward.cpp:304
+msgid "data.frame"
+msgstr "data.frame"
+
+#: rkward.cpp:307
+msgid "New Command File"
+msgstr "Nowy plik poleceñ"
+
+#: rkward.cpp:311
+msgid "Open Command File"
+msgstr "Otwórz plik poleceñ"
+
+#: rkward.cpp:314
+msgid "Save Command File"
+msgstr "Zapisz plik poleceñ"
+
+#: rkward.cpp:316
+msgid "Save Command File As"
+msgstr "Zapisz jako... plik poleceñ"
+
+#: rkward.cpp:319
+msgid "Open Workspace"
+msgstr "Otwórz przestrzeñ robocz±"
+
+#: rkward.cpp:322
+msgid "Save Workspace"
+msgstr "Zapisz przestrzeñ robocz±"
+
+#: rkward.cpp:324
+msgid "Save Workspace As"
+msgstr "Zapisz jako... przestrzeñ robocz±"
+
+#: rkward.cpp:325
+msgid "Load R Libraries"
+msgstr "Za³aduj R-biblioteki"
+
+#: rkward.cpp:327
+msgid "Close current editor"
+msgstr "Zamknij bie¿±cy edytor"
+
+#: rkward.cpp:329
+msgid "Close All Editors"
+msgstr "Zamknij wszystkie edytory"
+
+#: rkward.cpp:340
+msgid "Paste inside Table"
+msgstr "Wklej do tabeli"
+
+#: rkward.cpp:342
+msgid "Paste inside Selection"
+msgstr "Wklej do zaznaczenia"
+
+#: rkward.cpp:346
+msgid "Show R Console-Window"
+msgstr "Poka¿ okno R-konsoli"
+
+#: rkward.cpp:347
+msgid "Show Output-Window"
+msgstr "Poka¿ okno wyników"
+
+#: rkward.cpp:348
+msgid "Show Object Browser-Window"
+msgstr "Poka¿ okno przegl±darki"
+
+#: rkward.cpp:350
+msgid "Run All"
+msgstr "Uruchom wszystko"
+
+#: rkward.cpp:352
+msgid "Run Selection"
+msgstr "Uruchom zaznaczone"
+
+#: rkward.cpp:354
+msgid "Interrupt running command"
+msgstr "Przerwij uruchomione polecenie"
+
+#: rkward.cpp:357
+msgid "Configure Settings"
+msgstr "Konfiguracja ustawieñ"
+
+#: rkward.cpp:359
+msgid "Creates a new empty data.frame and opens it for editing"
+msgstr "Tworzy pusty data.frame i otwiera go do edycji"
+
+#: rkward.cpp:360
+msgid "Opens an existing document"
+msgstr "Otwiera istniej±cy dokument"
+
+#: rkward.cpp:361
+msgid "Opens a recently used file"
+msgstr "Otwiera ostatnio u¿ywany plik"
+
+#: rkward.cpp:362
+msgid "Saves the actual document"
+msgstr "Zapisuje bie¿±cy dokument"
+
+#: rkward.cpp:363
+msgid "Saves the actual document as..."
+msgstr "Zapisuje jako... bie¿±cy dokument"
+
+#: rkward.cpp:364
+msgid "Closes the current data editor"
+msgstr "Zamyka bie¿±cy edytor danych"
+
+#: rkward.cpp:365
+msgid "Closes all open data editors"
+msgstr "Zamyka wszystkie otwarte edytory danych"
+
+#: rkward.cpp:366
+msgid "Prints out the actual document"
+msgstr "Drukuje bie¿±cy dokument"
+
+#: rkward.cpp:367
+msgid "Quits the application"
+msgstr "Zamyka aplikacjê"
+
+#: rkward.cpp:368
+msgid "Cuts the selected section and puts it to the clipboard"
+msgstr "Wycina zaznaczone i umieszcza je w schowku"
+
+#: rkward.cpp:369
+msgid "Copies the selected section to the clipboard"
+msgstr "Kopiuje zaznaczone do schowka"
+
+#: rkward.cpp:370
+msgid "Pastes the clipboard contents to actual position"
+msgstr "Wkleja zawarto¶æ schowka"
+
+#: rkward.cpp:371
+msgid ""
+"Pastes the clipboard contents to actual position, but not beyond the table's "
+"boundaries"
+msgstr ""
+"Wkleja zawarto¶æ schowka, ale nie poza tabel±"
+
+#: rkward.cpp:372
+msgid ""
+"Pastes the clipboard contents to actual position, but not beyond the "
+"boundaries of the current selection"
+msgstr ""
+"Wkleja zawarto¶æ schowka, ale nie poza bie¿±ce zaznaczenie"
+
+#: rkward.cpp:373
+msgid "Enables/disables the toolbar"
+msgstr "W³±cza lub wy³±cza pasek narzêdziowy"
+
+#: rkward.cpp:374
+msgid "Enables/disables the statusbar"
+msgstr "W³±cza lub wy³±cza pasek statusu"
+
+#: rkward.cpp:394
+msgid "starting R-processor"
+msgstr "start R-procesora"
+
+#: rkward.cpp:535
+msgid "Do you want to save the workspace?"
+msgstr "Czy chcesz zapisaæ obszar roboczy?"
+
+#: rkward.cpp:535 rkward.cpp:594
+msgid "Save workspace?"
+msgstr "Zapisaæ obszar roboczy?"
+
+#: rkward.cpp:563
+msgid "Create new data.frame"
+msgstr "Utwórz nowy data.frame"
+
+#: rkward.cpp:563
+msgid "Enter name for the new object"
+msgstr "Podaj nazwê nowego obiektu"
+
+#: rkward.cpp:567 robjectbrowser.cpp:98
+msgid "The name you specified was already in use or not valid. Renamed to %1"
+msgstr "Nazwa, któr± poda³e¶ ju¿ istnieje lub jest nieprawid³owa. Zmieniono nazwê na %1"
+
+#: rkward.cpp:567 robjectbrowser.cpp:98
+msgid "Invalid Name"
+msgstr "Nieprawid³owa nazwa"
+
+#: rkward.cpp:575
+msgid "Opening workspace..."
+msgstr "Otwieranie obszaru roboczego"
+
+#: rkward.cpp:578
+msgid "*|All files"
+msgstr "*|Wszystkie pliki"
+
+#: rkward.cpp:578
+msgid "Open File..."
+msgstr "Otwórz plik..."
+
+#: rkward.cpp:594
+msgid "Do you want to save the current workspace?"
+msgstr "Czy chcesz zapisaæ bie¿±cy obszar roboczy?"
+
+#: rkward.cpp:645
+msgid "Printing..."
+msgstr "Drukowanie..."
+
+#: rkward.cpp:658
+msgid "Exiting..."
+msgstr "Koñczymy..."
+
+#: rkward.cpp:667
+msgid "Cutting selection..."
+msgstr "Wklejanie zaznaczenia..."
+
+#: rkward.cpp:680
+msgid "Copying selection to clipboard..."
+msgstr "Kopiowanie zaznaczenia do schowka..."
+
+#: rkward.cpp:691
+msgid "Inserting clipboard contents..."
+msgstr "Wklejanie zawarto¶ci schowka..."
+
+#: rkward.cpp:739
+msgid "Toggling toolbar..."
+msgstr "Prze³±czanie paska narzêdzi..."
+
+#: rkward.cpp:761
+msgid "Toggle the statusbar..."
+msgstr "Prze³±czanie paska statusu..."
+
+#: rkward.cpp:823
+msgid "R-process busy"
+msgstr "R-proces zajêty"
+
+#: rkward.cpp:825
+msgid "R-process idle"
+msgstr "R-proces niezajêty"
+
+#: rkward.cpp:876
+msgid "Open file"
+msgstr "Otwórz plik"
+
+#: rkward.cpp:911 rkward.cpp:952
+msgid "Could not save document"
+msgstr "Nie mo¿na zapisaæ dokumentu"
+
+#: rkward.cpp:936
+msgid "Save file"
+msgstr "Zapis pliku"
+
+#: rkward.cpp:995
+msgid "The document has been modified. Close anyway?"
+msgstr "Dokument zosta³ zmodyfikowany bez zapisu. Mimo to zamkn±æ?"
+
+#: rkward.cpp:995
+msgid "File not saved"
+msgstr "Pliku nie zapamiêtany"
+
+#: main.cpp:32 main.cpp:48
+msgid "RKWard"
+msgstr "RKWard"
+
+#: main.cpp:38
+msgid "file to open"
+msgstr "otwierany plik"
+
+#: main.cpp:39
+msgid "Verbosity of debug messages (0-5)"
+msgstr "Obfito¶æ komunikatów debagera (0-5)"
+
+#: main.cpp:40
+msgid "Mask for components to debug as a binary number (see debug.h)"
+msgstr "Maskuj komponemty debagowane jako liczby binarne (patrz debug.h)"
+
+#: rkoutputwindow.cpp:38
+msgid "Output Window"
+msgstr "Okno wyników"
+
+#: rkoutputwindow.cpp:43
+msgid "&Print Output"
+msgstr "Wy&druk wyników"
+
+#: rkoutputwindow.cpp:44
+msgid "Export Output"
+msgstr "Eksport wyników"
+
+#: rkoutputwindow.cpp:45
+msgid "&Clear Output"
+msgstr "Wy&czy¶æ wyniki"
+
+#: rkoutputwindow.cpp:48
+msgid "Output"
+msgstr "Wyniki"
+
+#: robjectbrowser.cpp:48
+msgid "Update"
+msgstr "Aktualizuj"
+
+#: robjectbrowser.cpp:51
+msgid "Objects in the R workspace"
+msgstr "Obiekty w R obszarze roboczym"
+
+#: robjectbrowser.cpp:56
+msgid "Rename"
+msgstr "Zmiana nazwy"
+
+#: robjectbrowser.cpp:94
+msgid "Rename object"
+msgstr "Zmiana nazwy obiektu"
+
+#: robjectbrowser.cpp:94
+msgid "Enter the new name"
+msgstr "Wprowad¼ now± nazwê"
+
+#: robjectviewer.cpp:43
+msgid "Object name: "
+msgstr "Nazwa obiektu: "
+
+#: robjectviewer.cpp:44
+msgid ""
+"\n"
+"Full location: "
+msgstr ""
+"\n"
+"Pe³na ¶cie¿ka:"
+
+#: robjectviewer.cpp:47
+msgid ""
+"\n"
+"Classes: "
+msgstr ""
+"\n"
+"Klasy: "
+
+#: robjectviewer.cpp:49
+msgid ""
+"\n"
+"Dimensions: "
+msgstr ""
+"\n"
+"Wymiary: "
+
+#: robjectviewer.cpp:56
+msgid ""
+"\n"
+"Result of 'print ("
+msgstr ""
+"\n"
+"Wynik polecenia 'print ("
+
+#: robjectviewer.cpp:56
+msgid ")':\n"
+msgstr ")':\n"
+
+#: robjectviewer.cpp:63
+msgid "Object-Viewer for object "
+msgstr "Przegl±darka obiektów dla obiektu "
+
+#: robjectviewer.cpp:64
+msgid " - Waiting for results from R..."
+msgstr " - Oczekiwanie na wyniki z R..."
+
+#: robjectviewer.cpp:77
+msgid ""
+"\n"
+"Some error(s) occured: "
+msgstr ""
+"\n"
+"Wyst±pi³y b³êdy: "
