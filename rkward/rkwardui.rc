@@ -17,9 +17,6 @@
 		<Action name="file_open_recentx"/>
 		<Action name="file_savex"/>
 		<Action name="file_save_asx"/>
-		<Separator/>
-		<Action name="file_load_libs"/>
-		<Separator/>
 		<Action name="file_printx"/>
 		<Separator/>
 		<Action name="file_quitx"/>
@@ -47,6 +44,7 @@
 	</Menu>   
  
 	<Menu name="settings"><text>&amp;Settings</text>
+		<Action name="file_load_libs"/>
 		<Action name="configure"></Action>
 	</Menu>
  	<Merge/>

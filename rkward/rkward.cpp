@@ -322,7 +322,7 @@ void RKwardApp::initActions()
 	fileSaveWorkspace->setText (i18n ("Save Workspace"));
 	fileSaveWorkspaceAs = KStdAction::saveAs(this, SLOT(slotFileSaveWorkspaceAs()), actionCollection(), "file_save_asx");
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
-	file_load_libs = new KAction (i18n ("Libraries"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");
+	//file_load_libs = new KAction (i18n ("Libraries"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");
 	close_editor = KStdAction::close (this, SLOT(slotCloseEditor ()), actionCollection(), "editor_close");
 	close_editor->setText (i18n ("Close current editor"));
 	close_editor->setEnabled (false);
@@ -353,7 +353,7 @@ void RKwardApp::initActions()
 	runSelection->setIcon("run");
 	interruptCommand = new KAction (i18n ("Interrupt running command"), 0, 0, this, SLOT (slotInterruptCommand ()), actionCollection (), "interrupt");
 	interruptCommand->setIcon("stop");
-	
+	file_load_libs = new KAction (i18n ("Configure Libraries"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 
 	new_data_frame->setStatusText (i18n ("Creates a new empty data.frame and opens it for editing"));
