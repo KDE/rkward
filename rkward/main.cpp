@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
 	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), version, description, KAboutData::License_GPL, "(c) 2002, 2004", 0, "http://rkward.sf.net", "");
 	aboutData.addAuthor ("Thomas Friedrichsmeier", "Project leader", "");
 	aboutData.addAuthor ("Pierre Ecochard", "Contributor", "");
+	aboutData.addAuthor ("Adrien d'Hardemare", "Contributor", "");
 	aboutData.addAuthor ("Daniele Medri", "Contributor", "");
 	aboutData.addCredit ("David Sibai", "Several valuable comments, hints and patches", "");
 	aboutData.addCredit ("Daniele Medri", "RKWard logo, many suggestions", "");

@@ -1,5 +1,8 @@
 # translation of fr.po to 
 # translation of fr.po to
+# translation of fr.po to
+# translation of fr.po to
+# translation of fr.po to
 # translation of rkward.po to
 # translation of rkward.po to
 # translation of rkward.po to
@@ -7,28 +10,28 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 # Pierre Ecochard <pierre.ecochard@laposte.net>, 2004.
+# Pierre Ecochard <pierre.ecochard@gmail.com>, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-12 16:04+0100\n"
-"PO-Revision-Date: 2004-10-23 14:08+0200\n"
-"Last-Translator: Pierre Ecochard <pierre.ecochard@laposte.net>\n"
+"PO-Revision-Date: 2005-03-24 21:24+0100\n"
+"Last-Translator: Pierre Ecochard <pierre.ecochard@gmail.com>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3.1\n"
+"X-Generator: KBabel 1.9.1\n"
 
 #: rkwatch.cpp:61
 msgid "&Run"
 msgstr "E&xécuter"
 
 #: rkwatch.cpp:67
-#, fuzzy
 msgid "&Interrupt"
-msgstr "Interrompre la commande"
+msgstr "&Interrompre"
 
 #: rkwatch.cpp:75
 msgid "&Print Log"
@@ -83,25 +86,23 @@ msgstr ""
 
 #: rkward.cpp:113
 msgid "Object Editor"
-msgstr ""
+msgstr "Éditeur d'objets"
 
 #: rkward.cpp:113
 msgid "R Object Editor"
-msgstr ""
+msgstr "Éditeur d'objets R"
 
 #: rkward.cpp:180
 msgid "my.data"
-msgstr ""
+msgstr "my.data"
 
 #: rkward.cpp:191
-#, fuzzy
 msgid "This is a list of the objects present in the R workspace."
-msgstr "Objets dans l'espace de travail R"
+msgstr "Liste des objets dans l'espace de travail R."
 
 #: rkward.cpp:191
-#, fuzzy
 msgid "Object browser"
-msgstr "Afficher les objets"
+msgstr "Objets."
 
 #: rkward.cpp:208
 msgid "Setting up plugins..."
@@ -128,23 +129,20 @@ msgid "data.frame"
 msgstr "data.frame"
 
 #: rkward.cpp:307
-#, fuzzy
 msgid "New Command File"
 msgstr "Nouvel éditeur de commandes"
 
 #: rkward.cpp:311
-#, fuzzy
 msgid "Open Command File"
-msgstr "Ouvrir un fichier..."
+msgstr "Ouvrir un fichier de commandes"
 
 #: rkward.cpp:314
-#, fuzzy
 msgid "Save Command File"
-msgstr "Erreur lors de l'enregistrement"
+msgstr "Sauver fichier de commandes"
 
 #: rkward.cpp:316
 msgid "Save Command File As"
-msgstr ""
+msgstr "Sauver fichier de commandes sous"
 
 #: rkward.cpp:319
 msgid "Open Workspace"
@@ -191,17 +189,14 @@ msgid "Show Object Browser-Window"
 msgstr "Afficher les objets"
 
 #: rkward.cpp:350
-#, fuzzy
 msgid "Run All"
 msgstr "Lancer tout"
 
 #: rkward.cpp:352
-#, fuzzy
 msgid "Run Selection"
 msgstr "Lancer la séléction"
 
 #: rkward.cpp:354
-#, fuzzy
 msgid "Interrupt running command"
 msgstr "Interrompre la commande"
 
@@ -364,27 +359,24 @@ msgid "R-process idle"
 msgstr "Processus R inactif"
 
 #: rkward.cpp:876
-#, fuzzy
 msgid "Open file"
-msgstr "Ouvrir un fichier..."
+msgstr "Ouvrir un fichier"
 
 #: rkward.cpp:911 rkward.cpp:952
 msgid "Could not save document"
-msgstr ""
+msgstr "Le document n'a pas pu être enregistré"
 
 #: rkward.cpp:936
-#, fuzzy
 msgid "Save file"
-msgstr "Erreur lors de l'enregistrement"
+msgstr "Enregistrer"
 
 #: rkward.cpp:995
 msgid "The document has been modified. Close anyway?"
-msgstr ""
+msgstr "Le document a été modifié. Voulez-vous le fermer quand-même ?"
 
 #: rkward.cpp:995
-#, fuzzy
 msgid "File not saved"
-msgstr "Nom de fichier"
+msgstr "Fichier non enregistré"
 
 #: main.cpp:32 main.cpp:48
 msgid "RKWard"
@@ -444,49 +436,59 @@ msgstr "Entrer un nouveau nom"
 
 #: robjectviewer.cpp:43
 msgid "Object name: "
-msgstr ""
+msgstr "Nom de l'objet :"
 
 #: robjectviewer.cpp:44
 msgid ""
 "\n"
 "Full location: "
 msgstr ""
+"\n"
+"Chemin complet : "
 
 #: robjectviewer.cpp:47
 msgid ""
 "\n"
 "Classes: "
 msgstr ""
+"\n"
+"Classes : "
 
 #: robjectviewer.cpp:49
 msgid ""
 "\n"
 "Dimensions: "
 msgstr ""
+"\n"
+"Dimensions : "
 
 #: robjectviewer.cpp:56
 msgid ""
 "\n"
 "Result of 'print ("
 msgstr ""
+"\n"
+"Sortie de \"print ("
 
 #: robjectviewer.cpp:56
 msgid ")':\n"
-msgstr ""
+msgstr ")\" :\n"
 
 #: robjectviewer.cpp:63
 msgid "Object-Viewer for object "
-msgstr ""
+msgstr "Objet affiché :"
 
 #: robjectviewer.cpp:64
 msgid " - Waiting for results from R..."
-msgstr ""
+msgstr " - En attente des résultats du processus R..."
 
 #: robjectviewer.cpp:77
 msgid ""
 "\n"
 "Some error(s) occured: "
 msgstr ""
+"\n"
+"Une erreur s'est produite : "
 
 #: _translatorinfo.cpp:1
 msgid ""
@@ -500,473 +502,3 @@ msgid ""
 "Your emails"
 msgstr "p-eco@rocketmail.com"
 
-#~ msgid "The object '"
-#~ msgstr "L'objet \""
-
-#~ msgid ""
-#~ "' was removed in the R workspace, but is currently opened for editing. Do "
-#~ "you want to restore the object?"
-#~ msgstr ""
-#~ "\" a été retiré de l'espace de travail R, mais est actuellement ouvert "
-#~ "pour édition. Voulez-vous restaurer l'objet ?"
-
-#~ msgid "Restore object?"
-#~ msgstr "Restaurer l'objet ?"
-
-#~ msgid "Do you really want to remove the object '"
-#~ msgstr "Voulez-vous réellement retirer l'objet \""
-
-#~ msgid ""
-#~ "'? The object is currently opened for editing, it will be removed in the "
-#~ "editor, too. There's no way to get it back."
-#~ msgstr ""
-#~ "\" ? Il est actuellement ouvert pour édition, et va aussi être retiré de "
-#~ "l'éditeur. Il sera perdu définitivement."
-
-#~ msgid "Remove object?"
-#~ msgstr "Retirer l'objet ?"
-
-#~ msgid "'? There's no way to get it back."
-#~ msgstr "\" ? Il sera perdu définitivement."
-
-#~ msgid "Browse"
-#~ msgstr "Naviguer"
-
-#~ msgid "RKObjectListView"
-#~ msgstr "RKObjectListView"
-
-#~ msgid "<R Workspace>"
-#~ msgstr "<Espace de travail R>"
-
-#~ msgid "Label"
-#~ msgstr "Label"
-
-#~ msgid "Type"
-#~ msgstr "Type"
-
-#~ msgid "Levels"
-#~ msgstr "Niveaux"
-
-#~ msgid "e.g. category"
-#~ msgstr "Type"
-
-#~ msgid "Name"
-#~ msgstr "Nom"
-
-#~ msgid "Insert new variable left"
-#~ msgstr "Insérer une nouvelle variable à gauche"
-
-#~ msgid "Insert new variable right"
-#~ msgstr "Insérer une nouvelle variable à droite"
-
-#~ msgid "Delete this variable"
-#~ msgstr "Détruire cette variable"
-
-#~ msgid "Insert new case above"
-#~ msgstr "Insérer une nouvelle case dessus"
-
-#~ msgid "Insert new case below"
-#~ msgstr "Insérer une nouvelle case dessous"
-
-#~ msgid "Delete this case"
-#~ msgstr "Détruire cette case"
-
-#~ msgid "Index"
-#~ msgstr "Index"
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-#~ msgid "Levels / Value labels for '%1'"
-#~ msgstr "Niveaux / labels de valeur pour '%1'"
-
-#~ msgid "RKEditorDataFrame"
-#~ msgstr "RKEditorDataFrame"
-
-#~ msgid "TwinTableDataMember"
-#~ msgstr "TwinTableDataMember"
-
-#~ msgid "TwinTableMetaMember"
-#~ msgstr "TwinTableMetaMember"
-
-#~ msgid "TwinTable"
-#~ msgstr "TwinTable"
-
-#~ msgid "TwinTableMember"
-#~ msgstr "TwinTableMember"
-
-#~ msgid ""
-#~ "The PHP backend could not be started. Check whether you have correctly "
-#~ "configured the location of the PHP-binary (Settings->Configure Settings-"
-#~ ">PHP backend)"
-#~ msgstr ""
-#~ "L'interface PHP n'a pas pu être démaré. Vérifiez que vous avez "
-#~ "correctement spécifié le chemin du binaire PHP (Options->Configurer->PHP)"
-
-#~ msgid "PHP-Error"
-#~ msgstr "Erreur PHP"
-
-#~ msgid ""
-#~ "There has been an error\n"
-#~ "(\""
-#~ msgstr ""
-#~ "Il y a eu une erreur\n"
-#~ "(\""
-
-#~ msgid ""
-#~ "\")\n"
-#~ "while starting up the PHP backend. Most likely this is due to either a "
-#~ "bug in RKward or an invalid setting for the location of the PHP support "
-#~ "files. Check the settings (Settings->Configure Settings->PHP backend) and "
-#~ "try again."
-#~ msgstr ""
-#~ "\")\n"
-#~ "en lançant l'interface PHP. Il s'agit probablement d'un bogue de RKward "
-#~ "ou d'un problème de configuration du répertoire de PHP. Vérifier la "
-#~ "configuration (Option->Configurer->PHP) et essayer à nouveau. "
-
-#~ msgid ""
-#~ "The PHP-backend has reported an error\n"
-#~ "(\""
-#~ msgstr ""
-#~ "L'interface PHP a généré une erreur\n"
-#~ "(\""
-
-#~ msgid ""
-#~ "\")\n"
-#~ "and has been shut down. This is most likely due to a bug in the plugin. "
-#~ "But of course you may want to try to close and restart the plugin to see "
-#~ "whether it works with different settings."
-#~ msgstr ""
-#~ "\")\n"
-#~ "et a été fermé. Cela est probablement du à un bogue dans le module "
-#~ "externe. Vous pouvez essayer de le redémarrer pour voir s'il fonctionne "
-#~ "avec des paramètres différents."
-
-#~ msgid "PHPBackend"
-#~ msgstr "PHPBackend"
-
-#~ msgid "R_HOME not set"
-#~ msgstr "R_HOME non défini"
-
-#~ msgid ""
-#~ "Could not find an R_HOME-environment variable and don't have a stored "
-#~ "setting for that either.\n"
-#~ "The R backend requires that variable. Please enter your R_HOME directory "
-#~ "below.\n"
-#~ "If you don't get it right, the application will quit immediately and "
-#~ "you'll have to start RKWard again."
-#~ msgstr ""
-#~ "La variable d'environnement R_HOME n'a pas été trouvée, et aucune "
-#~ "alternative n'est disponible dans la configuration.\n"
-#~ "L'interface R a besoin de cette variable pour fonctionner. Veuillez "
-#~ "entrer votre répertoire R_HOME ci-dessous.\n"
-#~ "Si vous entrez un chemin invalide, RKWard se terminera et vous devrez le "
-#~ "redémarrer."
-
-#~ msgid "Conflicting settings for R_HOME"
-#~ msgstr "Conflit de configuration pour R_HOME"
-
-#~ msgid ""
-#~ "There was a problem starting the R backend. The following error(s) "
-#~ "occurred:\n"
-#~ msgstr ""
-#~ "Il y a eu une erreur lors du lancement de l'interface R. L'erreur "
-#~ "suivante est survenue :\n"
-
-#~ msgid ""
-#~ "\t-An unspecified error occured that is not yet handled by RKWard. Likely "
-#~ "RKWard will not function properly. Please check your setup.\n"
-#~ msgstr ""
-#~ "\t-Une erreur non supportée par RKWard a eu lieu. Il est probable que "
-#~ "l'application ne fonctionne pas de manière satisfaisante. Veuillez "
-#~ "vérifier la configuration.\n"
-
-#~ msgid "Error starting R"
-#~ msgstr "Erreur pendant le lancement de R"
-
-#~ msgid "Require package '%1'"
-#~ msgstr "Requiert le paquet '%1'"
-
-#~ msgid "RCommand"
-#~ msgstr "RCommand"
-
-#~ msgid "RInterface"
-#~ msgstr "RInterface"
-
-#~ msgid "Start with an empty workspace"
-#~ msgstr "Démarrer avec un espace de travail vide"
-
-#~ msgid "Start with an empty table"
-#~ msgstr "Démarrer avec un tableau vide"
-
-#~ msgid "Load an existing workspace:"
-#~ msgstr "Charger un espace de travail existant:"
-
-#~ msgid "<<Open another file>>"
-#~ msgstr "<<Ouvrir un autre fichier>>"
-
-#~ msgid "What would you like to do?"
-#~ msgstr "Que voulez-vous faire ?"
-
-#~ msgid "Load / unload packages"
-#~ msgstr "Charger / décharger des paquets"
-
-#~ msgid "Load / unload installed packages"
-#~ msgstr "Charger / décharger des paquets installés"
-
-#~ msgid "Update installed packages"
-#~ msgstr "Mettre à jour les paquets installés"
-
-#~ msgid "Install new packages"
-#~ msgstr "Installer de nouveaux paquets"
-
-#~ msgid "Error loading/unloading packages"
-#~ msgstr "Erreur lors du chargement ou du déchargement des paquets"
-
-#~ msgid "Downloading Packages ..."
-#~ msgstr "Téléchargement des paquets en cours..."
-
-#~ msgid "Please stand by while downloading packages."
-#~ msgstr "Veuillez patienter pendant le téléchargement des paquets."
-
-#~ msgid "Installing Packages ..."
-#~ msgstr "Installation des paquets..."
-
-#~ msgid "Please stand by while installing packages."
-#~ msgstr "Processus d'installation des paquets en cours."
-
-#~ msgid ""
-#~ "There was an error while trying to install the packages. Please check the "
-#~ "output on stderr. Sorry, there is no better error-handling so far..."
-#~ msgstr ""
-#~ "Il y a eu une erreur pendant l'installation des paquets. Merci de "
-#~ "vérifier la sortie sur stderr. Désolé, pas de meilleure gestion des "
-#~ "erreurs pour l'instant..."
-
-#~ msgid "Error installing packages"
-#~ msgstr "Erreur pendant le processus d'installation des paquets"
-
-#~ msgid "Installed packages"
-#~ msgstr "Paquets installés"
-
-#~ msgid "Title"
-#~ msgstr "Titre"
-
-#~ msgid "Version"
-#~ msgstr "Version"
-
-#~ msgid "Location"
-#~ msgstr "Lieu"
-
-#~ msgid "Load"
-#~ msgstr "Charger"
-
-#~ msgid "Unload"
-#~ msgstr "Décharger"
-
-#~ msgid "Loaded packages"
-#~ msgstr "Paquets chargé"
-
-#~ msgid "Current Version"
-#~ msgstr "Version actuelle"
-
-#~ msgid "New Version"
-#~ msgstr "Nouvelle version"
-
-#~ msgid "Fetch list"
-#~ msgstr "Liste de téléchargement"
-
-#~ msgid "Update Selected"
-#~ msgstr "Mettre à jour la sélection"
-
-#~ msgid "Update All"
-#~ msgstr "Tout rafraîchir"
-
-#~ msgid "Become root for installation"
-#~ msgstr "Devenir root pour l'instalation"
-
-#~ msgid "Downloading package list ..."
-#~ msgstr "Téléchargement des paquets en cours"
-
-#~ msgid "Please stand by while downloading the list of packages from CRAN."
-#~ msgstr ""
-#~ "Veuillez patienter pendant le téléchargement des paquets depuis le CRAN."
-
-#~ msgid "Install Selected"
-#~ msgstr "Installer la sélection"
-
-#~ msgid "Workspace"
-#~ msgstr "Espace de travail"
-
-#~ msgid "Run &selection"
-#~ msgstr "Exécuter la &sélection"
-
-#~ msgid "RKwardApp"
-#~ msgstr "RKwardApp"
-
-#~ msgid "R-Error"
-#~ msgstr "Erreur R"
-
-#~ msgid ""
-#~ "Below you can see the command(s) corresponding to the settings you made. "
-#~ "Click 'Submit' to run the command(s)."
-#~ msgstr ""
-#~ "Vous pouvez voir ci-dessous les commandes correspondant aux choix que "
-#~ "vous avez faits. Cliquer sur 'Soumettre' pour exécuter ces commandes."
-
-#~ msgid "Submit"
-#~ msgstr "Soumettre"
-
-#~ msgid "Next >"
-#~ msgstr "Suivant >"
-
-#~ msgid "Full Model"
-#~ msgstr "Modèle complet"
-
-#~ msgid "Custom Model:"
-#~ msgstr "Modèle personnalisé :"
-
-#~ msgid "RKCheckBox"
-#~ msgstr "RKCheckBox"
-
-#~ msgid "RKVarSlot"
-#~ msgstr "RKVarSlot"
-
-#~ msgid " - You have to select a variable for the \""
-#~ msgstr " - Vous devez séléctionner une variable pour le \""
-
-#~ msgid "\"-field\n"
-#~ msgstr "\"- champ\n"
-
-#~ msgid "RKPlugin"
-#~ msgstr "RKPlugin"
-
-#~ msgid "RKPluginSpinBox"
-#~ msgstr "RKPluginSpinBox"
-
-#~ msgid "RKRadio"
-#~ msgstr "RKRadio"
-
-#~ msgid "RKPluginWidget"
-#~ msgstr "RKPluginWidget"
-
-#~ msgid "RKwatch"
-#~ msgstr "RKwatch"
-
-#~ msgid "Saving to file '"
-#~ msgstr "L'enregistrement dans le fichier '"
-
-#~ msgid "' failed. What do you want to do?"
-#~ msgstr "' a échoué. Que voulez-vous faire ?"
-
-#~ msgid "Try saving with a different filename"
-#~ msgstr "Essayez avec un nom de fichier différent"
-
-#~ msgid "Saving failed"
-#~ msgstr "Erreur lors de l'enregistrement"
-
-#~ msgid "' failed. Do you want to try saving to a different filename?"
-#~ msgstr "' a échoué. Voulez-vous spécifier un autre nom de fichier ?"
-
-#~ msgid "Loading Workspace ..."
-#~ msgstr "Chargement de l'espace de travail..."
-
-#~ msgid "Error loading workspace"
-#~ msgstr "Erreur lors du chargement de l'espace de travail"
-
-#~ msgid "RKLoadAgent"
-#~ msgstr "RKLoadAgent"
-
-#~ msgid "Run up to current line"
-#~ msgstr "Lancer jusqu'à la ligne courante"
-
-#~ msgid "Run from current line"
-#~ msgstr "Lancer depuis la ligne courante"
-
-#~ msgid "Run"
-#~ msgstr "Lancer"
-
-#~ msgid "Word wrap"
-#~ msgstr "Retour automatique à la ligne"
-
-#~ msgid "Line Numbering"
-#~ msgstr "Numérotation des lignes"
-
-#~ msgid "Configure editor"
-#~ msgstr "Configurer l'éditeur"
-
-#~ msgid "Settings"
-#~ msgstr "Configuration"
-
-#~ msgid "Command editor"
-#~ msgstr "Editeur de commandes"
-
-#~ msgid "The code was modified. Do you want to save it?"
-#~ msgstr "Le code a été modifié. Voulez vous l'enregistrer ?"
-
-#~ msgid "Save code?"
-#~ msgstr "Sauver le code ?"
-
-#~ msgid "' failed. Try with a different filename?"
-#~ msgstr "' échoué. Essayer avec un nom de fichier différent ?"
-
-#~ msgid "Directory where the logfiles should be kept"
-#~ msgstr "Répertoire où les fichiers de log doivent être rangés"
-
-#~ msgid "Logfiles"
-#~ msgstr "Fichiers de log"
-
-#~ msgid "RKSettingsModuleLogfiles"
-#~ msgstr "RKSettingsModuleLogfiles"
-
-#~ msgid "Output Window options"
-#~ msgstr "Option de la fenêtre des sorties"
-
-#~ msgid "File-location of the PHP binary"
-#~ msgstr "Emplacement des binaires PHP"
-
-#~ msgid "Directory, where the PHP support files are located"
-#~ msgstr "Dossier dans lequel se trouvent les fichier PHP"
-
-#~ msgid "PHP backend"
-#~ msgstr "Interface PHP"
-
-#~ msgid "Always prefer dialogs"
-#~ msgstr "Toujours préférer les boîtes de dialogue"
-
-#~ msgid "Prefer recommended interface"
-#~ msgstr "Utiliser les interfaces recommandées"
-
-#~ msgid "Always prefer wizards"
-#~ msgstr "Toujours préférer les assistants"
-
-#~ msgid "Directory where the plugins are located"
-#~ msgstr "Répertoire où se trouvent les modules externes"
-
-#~ msgid "Plugins"
-#~ msgstr "Modules externes"
-
-#~ msgid "R options"
-#~ msgstr "Options R"
-
-#~ msgid "R-Backend"
-#~ msgstr "Interface R"
-
-#~ msgid "always show command"
-#~ msgstr "toujours afficher les commandes"
-
-#~ msgid "always show result"
-#~ msgstr "toujours afficher les résultats"
-
-#~ msgid "show errors"
-#~ msgstr "afficher les erreurs"
-
-#~ msgid "User commands"
-#~ msgstr "Commandes utilisateur"
-
-#~ msgid "&Create New"
-#~ msgstr "&Créer nouveau"
-
-#~ msgid "&Windows"
-#~ msgstr "&Fenêtre"
