@@ -17,6 +17,7 @@
 		<Action name="file_open_recentx"/>
 		<Action name="file_savex"/>
 		<Action name="file_save_asx"/>
+		<Separator/>
 		<Action name="file_printx"/>
 		<Separator/>
 		<Action name="file_quitx"/>

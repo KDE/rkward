@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-12 16:04+0100\n"
-"PO-Revision-Date: 2004-11-30 12:21+0100\n"
+"PO-Revision-Date: 2004-12-02 13:30+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -90,9 +90,8 @@ msgid "my.data"
 msgstr "mio.dataset"
 
 #: rkward.cpp:191
-#, fuzzy
 msgid "This is a list of the objects present in the R workspace."
-msgstr "Oggetti nell'area di lavoro"
+msgstr "Questa è una lista di oggetti presenti nell'area di lavoro di R."
 
 #: rkward.cpp:191
 msgid "Object browser"
@@ -347,27 +346,24 @@ msgid "R-process idle"
 msgstr "Processo R in attesa"
 
 #: rkward.cpp:876
-#, fuzzy
 msgid "Open file"
-msgstr "Apri file..."
+msgstr "Apri file"
 
 #: rkward.cpp:911 rkward.cpp:952
 msgid "Could not save document"
 msgstr "Non è possibile salvare il documento"
 
 #: rkward.cpp:936
-#, fuzzy
 msgid "Save file"
-msgstr "Salvataggio non avvenuto"
+msgstr "Salva file"
 
 #: rkward.cpp:995
 msgid "The document has been modified. Close anyway?"
 msgstr "Il documento è stato modificato. Chiudere ugualmente?"
 
 #: rkward.cpp:995
-#, fuzzy
 msgid "File not saved"
-msgstr "Nome file"
+msgstr "File non salvato"
 
 #: main.cpp:32 main.cpp:48
 msgid "RKWard"
