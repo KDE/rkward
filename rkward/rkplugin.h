@@ -72,7 +72,8 @@ private:
 
 	QWidget *gui;
 
-	QMap <QString, RKPluginWidget*> widgets;
+	typedef QMap<QString, RKPluginWidget*> WidgetsMap;
+	WidgetsMap widgets;
 
 /** Called from activated (). builds the GUI */
 	void buildGUI (const QDomElement &layout_element);

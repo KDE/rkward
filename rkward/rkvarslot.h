@@ -47,6 +47,7 @@ private:
 protected:
 	bool isSatisfied ();
 	QString value ();
+	QString complaints ();
 };
 
 #endif

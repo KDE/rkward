@@ -31,6 +31,8 @@
 #include "rkvarselector.h"
 #include "rkvarslot.h"
 #include "rkradio.h"
+#include "rkwarddoc.h"
+#include "rinterface.h"
 
 RKPlugin::RKPlugin(RKwardApp *parent, const QDomElement &element, QString filename) {
 	app = parent;
@@ -119,9 +121,9 @@ void RKPlugin::buildGUI (const QDomElement &layout_element) {
 	// buttons
 	QVBoxLayout *vbox;
 	vbox = new QVBoxLayout (0, 0, 6);
-	okButton = new QPushButton ("Ok", gui);
+	okButton = new QPushButton ("Submit", gui);
 	connect (okButton, SIGNAL (clicked ()), this, SLOT (ok ()));
-	cancelButton = new QPushButton ("Cancel", gui);
+	cancelButton = new QPushButton ("Close", gui);
 	connect (cancelButton, SIGNAL (clicked ()), this, SLOT (cancel ()));
 	helpButton = new QPushButton ("Help", gui);
 	connect (helpButton, SIGNAL (clicked ()), this, SLOT (help ()));
@@ -200,7 +202,8 @@ RKPluginWidget *RKPlugin::buildWidget (const QDomElement &element) {
 }
 
 void RKPlugin::ok () {
-	// TODO
+	getApp ()->getDocument ()->syncToR ();
+	getApp ()->r_inter.issueAsyncCommand (codeDisplay->text ());
 }
 
 void RKPlugin::cancel () {
@@ -248,9 +251,20 @@ void RKPlugin::changed () {
 	}
 	codeDisplay->setText (code);
 
-	// TODO
-	// update warnDisplay
-	// check whether everything is satisfied (en/disable ok-Button)
+	// check whether everything is satisfied and fetch any complaints
+	bool ok = true;
+	QString warn;
+	WidgetsMap::Iterator it;
+	for (it = widgets.begin(); it != widgets.end(); ++it) {
+		if (!it.data ()->isSatisfied ()) {
+			ok = false;
+		}
+		warn.append (it.data ()->complaints ());
+	}
+
+	okButton->setEnabled (ok);
+	warn.truncate (warn.length () -1);
+	warnDisplay->setText (warn);	
 }
 
 /** Returns a pointer to the varselector by that name (0 if not available) */

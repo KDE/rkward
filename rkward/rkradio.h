@@ -27,7 +27,7 @@ class QButtonGroup;
 class QDomElement;
 class QRadioButton;
 
-/**
+/** This RKPluginWidget provides a group of radio-buttons.
   *@author Thomas Friedrichsmeier
   */
 

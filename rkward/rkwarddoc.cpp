@@ -145,7 +145,7 @@ bool RKwardDoc::saveDocument(const KURL& url, const char *format /*=0*/)
   // TODO: Add your document saving code here
   /////////////////////////////////////////////////
 
-	pushTable (this, tablename);	
+	syncToR ();
 
 	inter->issueAsyncCommand ("save.image (\"" + url.path () + "\")");
 
@@ -160,6 +160,11 @@ void RKwardDoc::deleteContents()
   // TODO: Add implementation to delete the document contents
   /////////////////////////////////////////////////
 
+}
+
+void RKwardDoc::syncToR () {
+	// TODO: only push changed rows/columns
+	pushTable (this, tablename);
 }
 
 void RKwardDoc::pushTable (TwinTable *ttable, QString name) {

@@ -22,6 +22,8 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 
+#include <klocale.h>
+
 #include "rkvarselector.h"
 #include "rkplugin.h"
 
@@ -80,4 +82,9 @@ bool RKVarSlot::isSatisfied () {
 
 QString RKVarSlot::value () {
 	return line_edit->text ();
+}
+
+QString RKVarSlot::complaints () {
+	if (isSatisfied ()) return "";
+	return i18n (" - You have to select a variable for the \"" + label->text () + "\"-field\n");
 }
