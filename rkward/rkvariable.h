@@ -19,7 +19,7 @@
 
 #include <qstring.h>
 
-/** Abstract representation of a varialbe, along with helper functions to get different name/labels/descriptions etc.
+/** Abstract representation of a variable, along with helper functions to get different name/labels/descriptions etc.
 The implementation will look a lot different when done, but you can go ahead and use functions like getLabel (), getShortName (),
 getFullName (), getTypeString () etc. where appropriate.
 
@@ -45,5 +45,7 @@ public:
 	QString label;
 /* End */
 };
+
+typedef RKVariable* RKVarPtr;
 
 #endif
