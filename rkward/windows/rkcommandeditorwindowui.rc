@@ -23,6 +23,8 @@
     <Separator/>
     <Action name="run_all"/>
     <Action name="run_selection"/>
+    <Separator/>
+    <Action name="interrupt"/>
   </Menu>   
  
  <Merge/>

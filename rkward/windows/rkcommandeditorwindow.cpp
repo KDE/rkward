@@ -66,18 +66,19 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : KParts::MainWin
 	setXMLFile( "rkcommandeditorwindowui.rc" );
 	
 	KAction * file_new = KStdAction::openNew (this, SLOT (newFile ()), actionCollection(), "file_new");
-	file_new->setWhatsThis(i18n("Use this to create a new document"));
+	file_new->setWhatsThis(i18n("Use this command to create a new document"));
 	KAction * file_open = KStdAction::open (this, SLOT (openFile ()), actionCollection(), "file_open");
-	file_open->setWhatsThis(i18n("Use this to open an existing document"));
+	file_open->setWhatsThis(i18n("Use this command to open an existing document for editing"));
 	
 	KAction * close_window = KStdAction::close (this, SLOT (close ()), actionCollection(), "file_close");
-	close_window->setWhatsThis(i18n("Use this to close the current window"));
+	close_window->setWhatsThis(i18n("Use this to close the current document"));
 
 	KAction * run_all = new KAction (i18n ("Run all"), KShortcut ("Ctrl+R"), this, SLOT (run ()), actionCollection(), "run_all" );
 	run_all->setWhatsThis(i18n("Use this to run the current document"));
 	KAction * run_selection = new KAction (i18n ("Run selection"), KShortcut ("Ctrl+E"), this, SLOT (runSelection ()), actionCollection(), "run_selection" );
 	run_selection->setWhatsThis(i18n("Use this to run the current selection"));
-
+	KAction * interrupt = new KAction (i18n ("Interrupt command"), KShortcut ("Ctrl+I"), this, SLOT (interruptCommand ()), actionCollection(), "interrupt" );
+	interrupt->setWhatsThis(i18n("Use this to interrupt the current command"));
 
 	KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
 	createShellGUI( true );
@@ -166,7 +167,10 @@ void RKCommandEditorWindow::runFromCursor () {
 	RK_TRACE (COMMANDEDITOR);
 }
 
-
+void RKCommandEditorWindow::interruptCommand () {
+	RK_TRACE (COMMANDEDITOR);
+	RKGlobals::rInterface ()->cancelCommand (user_command);
+}
 
 
 
