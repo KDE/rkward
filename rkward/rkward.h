@@ -244,6 +244,13 @@ protected:
     KAction* editPaste;
     KAction* editPasteToSelection;
     KAction* editPasteToTable;
+
+KAction* outputShow;
+KAction* outputFlush;
+KAction* outputRefresh;
+
+
+
     KToggleAction* viewToolBar;
     KToggleAction* viewStatusBar;
 	KToggleAction* showRKWatch;
@@ -304,6 +311,10 @@ protected:
 
 signals:
     void childWindowCloseRequest(KMdiChildView * window);
+private slots:
+    void slotOutputShow();
+    void slotOutputFlush();
+    void slotOutputRefresh();
 };
  
 #endif // RKWARD_H

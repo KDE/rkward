@@ -90,31 +90,28 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 	RKGlobals::rinter = 0;
 	RKGlobals::list = 0;
 	
-  config=kapp->config();
-
+	config=kapp->config();
+	
 	KGlobal::dirs()->addResourceType("plugins", KStandardDirs::kde_default("data") + "rkward/plugins/");
-
+	
 	// Nice docks a la Kdevelop.
 	setToolviewStyle(KMultiTabBar::KDEV3ICON);
+	
+	
+	
+	///////////////////////////////////////////////////////////////////
+	// call inits to invoke all other construction parts
+	initStatusBar();
+	initActions();
 
+	///////////////////////////////////////////////////////////////////
+	// build the interface
 
+	// use the absolute path to your rkwardui.rc file for testing purpose in createGUI();
+	setXMLFile( "rkwardui.rc" );
+	createShellGUI ( true );
 
-  ///////////////////////////////////////////////////////////////////
-  // call inits to invoke all other construction parts
-  initStatusBar();
-  initActions();
-
-  ///////////////////////////////////////////////////////////////////
-  // disable actions at startup   // why?
-/*  fileSave->setEnabled(false);
-  fileSaveAs->setEnabled(false);
-  filePrint->setEnabled(false);
-  editCut->setEnabled(false);
-  editCopy->setEnabled(false);
-  editPaste->setEnabled(false); */
-	setEnabledActions(false);
-
-
+	setEnabledActions(true);
 
 	
 	RKGlobals::manager = new RKEditorManager ();
@@ -140,111 +137,11 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 	startup_timer->start (50);
 	connect (startup_timer, SIGNAL (timeout ()), this, SLOT (doPostInit ()));
 	
-	
-	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//   m_manager = new KParts::PartManager( this );
-//   // When the manager says the active part changes,
-//   // the builder updates (recreates) the GUI
-//   connect( m_manager, SIGNAL( activePartChanged( KParts::Part * ) ),
-//            this, SLOT( createGUI( KParts::Part * ) ) );
-//   m_splitter = new QSplitter( this );
-// 
-//   // Try to find libkghostview
-//   KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
-//   if (factory)
-//   {
-//     // Create the part
-//     m_gvpart = (KParts::ReadOnlyPart *)factory->create( m_splitter,
-//                 "kgvpart", "KParts::ReadOnlyPart" );
-//   }
-// 
-// 
-//   factory = KLibLoader::self()->factory( "libkpdfpart" );
-//   if (factory)
-//     m_notepadpart = (KParts::ReadOnlyPart *)factory->create( m_splitter,
-//                      "knotepadpart", "KParts::ReadOnlyPart" );
-// 
-// 
-//   // CHANGE: No longer necessary.
-//   //setView( m_splitter );
-//   // Set a reasonable size
-//   /*m_splitter->setMinimumSize( 500, 400 );
-//   m_splitter->show();
-//   setCentralWidget(m_splitter);*/
-// 
-//   m_manager->addPart( m_gvpart, true ); // sets as the active part
-//   m_manager->addPart( m_notepadpart, false );
-// 
-// 
-// addWindow(createWrapper(m_splitter,"bla","bla"));
-
-
-
-
-
-
-
-KMdiChildView *view1 = new KMdiChildView( i18n( "View 1" ), this );
-KMdiChildView *view2 = new KMdiChildView( i18n( "View 1" ), this );
-
-  m_manager = new KParts::PartManager( this );
-  // When the manager says the active part changes,
-  // the builder updates (recreates) the GUI
-  connect( m_manager, SIGNAL( activePartChanged( KParts::Part * ) ),
-           this, SLOT( createGUI( KParts::Part * ) ) );
-  m_splitter = new QSplitter( this );
-
-  // Try to find libkghostview
-  KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
-  if (factory)
-  {
-    // Create the part
-    m_gvpart = (KParts::ReadOnlyPart *)factory->create( view1,
-                "kgvpart", "KParts::ReadOnlyPart" );
-    //((QWidget *)m_gvpart)->setFocusPolicy(QWidget::ClickFocus);
-  }
-
-
-  factory = KLibLoader::self()->factory( "libkpdfpart" );
-  if (factory){
-    m_notepadpart = (KParts::ReadOnlyPart *)factory->create( view2,
-                     "knotepadpart", "KParts::ReadOnlyPart" );
-    //((QWidget *)m_notepadpart)->setFocusPolicy(QWidget::ClickFocus);
-  }
-
-  // CHANGE: No longer necessary.
-  //setView( m_splitter );
-  // Set a reasonable size
-  /*m_splitter->setMinimumSize( 500, 400 );
-  m_splitter->show();
-  setCentralWidget(m_splitter);*/
-addWindow(view1);
-addWindow(view2);
-
-  m_manager->addPart( m_gvpart, true ); // sets as the active part
-  m_manager->addPart( m_notepadpart, false );
-
-
-
-
-
-	
+	m_manager = new KParts::PartManager( this );
+	// When the manager says the active part changes,
+	// the builder updates (recreates) the GUI
+	connect( m_manager, SIGNAL( activePartChanged( KParts::Part * ) ), this, SLOT( createGUI( KParts::Part * ) ) );
 }
 
 RKwardApp::~RKwardApp() {
@@ -267,7 +164,7 @@ void RKwardApp::doPostInit () {
 	/*output->showMaximized ();
 	output->hide ();*/
 
-    QString dummy = i18n("Before you start bashing at it: please note that this is merely a technology preview release. You might acutally be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments are welcome.");
+	QString dummy = i18n("Before you start bashing at it: please note that this is merely a technology preview release. You might acutally be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments are welcome.");
 	KMessageBox::information (this, dummy, i18n("Before you complain..."), "state_of_rkward");
 	
 	startR ();
@@ -447,15 +344,22 @@ void RKwardApp::initActions()
 	filePrint->setEnabled (false);
 	fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection(), "file_quitx");
 	
-  editCut = KStdAction::cut(this, SLOT(slotEditCut()), actionCollection(), "cut");
-  editCopy = KStdAction::copy(this, SLOT(slotEditCopy()), actionCollection(), "copy");
-  editPaste = KStdAction::paste(this, SLOT(slotEditPaste()), actionCollection(), "paste");
-  editPasteToTable = new KAction(i18n("Paste inside Table"), 0, 0, this, SLOT(slotEditPasteToTable()), actionCollection(), "paste_to_table");
-  editPasteToTable->setIcon("frame_spreadsheet");
-  editPasteToSelection = new KAction(i18n("Paste inside Selection"), 0, 0, this, SLOT(slotEditPasteToSelection()), actionCollection(), "paste_to_selection");
-  editPasteToSelection->setIcon("frame_edit");
-  viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
-  viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
+	editCut = KStdAction::cut(this, SLOT(slotEditCut()), actionCollection(), "cut");
+	editCopy = KStdAction::copy(this, SLOT(slotEditCopy()), actionCollection(), "copy");
+	editPaste = KStdAction::paste(this, SLOT(slotEditPaste()), actionCollection(), "paste");
+	editPasteToTable = new KAction(i18n("Paste inside Table"), 0, 0, this, SLOT(slotEditPasteToTable()), actionCollection(), "paste_to_table");
+	editPasteToTable->setIcon("frame_spreadsheet");
+	editPasteToSelection = new KAction(i18n("Paste inside Selection"), 0, 0, this, SLOT(slotEditPasteToSelection()), actionCollection(), "paste_to_selection");
+	editPasteToSelection->setIcon("frame_edit");
+
+
+	outputShow= new KAction (i18n ("&Show"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
+	outputFlush= new KAction (i18n ("&Flush"), 0, 0, this, SLOT (slotOutputFlush ()), actionCollection (), "output_flush");
+	outputRefresh= new KAction (i18n ("&Refresh"), 0, 0, this, SLOT (slotOutputRefresh ()), actionCollection (), "output_refresh");
+
+
+	viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
+	viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
 	showRKWatch = new KToggleAction (i18n ("Console"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "windows_rkwatch");
 	showRKOutput = new KToggleAction (i18n ("Output"), 0, 0, this, SLOT(slotShowRKOutput ()), actionCollection(), "windows_rkoutput");
 	showRObjectBrowser = new KToggleAction (i18n ("Workspace"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
@@ -470,42 +374,33 @@ void RKwardApp::initActions()
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 	
 	helpFunction = new KAction (i18n ("&Function reference"), KShortcut ("Ctrl+I"), this, SLOT(slotFunctionReference ()), actionCollection(), "function_reference");
-
+	
 	new_data_frame->setStatusText (i18n ("Creates new empty dataset and opens it for editing"));
-  fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
-  fileOpenRecentWorkspace->setStatusText(i18n("Opens a recently used file"));
-  fileSaveWorkspace->setStatusText(i18n("Saves the actual document"));
-  fileSaveWorkspaceAs->setStatusText(i18n("Saves the actual document as..."));
+	fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
+	fileOpenRecentWorkspace->setStatusText(i18n("Opens a recently used file"));
+	fileSaveWorkspace->setStatusText(i18n("Saves the actual document"));
+	fileSaveWorkspaceAs->setStatusText(i18n("Saves the actual document as..."));
 	close_editor->setStatusText (i18n ("Closes the current data editor"));
 	close_all_editors->setStatusText (i18n ("Closes all open data editors"));
-  filePrint ->setStatusText(i18n("Prints out the actual document"));
-  fileQuit->setStatusText(i18n("Quits the application"));
-  editCut->setStatusText(i18n("Cuts the selected section and puts it to the clipboard"));
-  editCopy->setStatusText(i18n("Copies the selected section to the clipboard"));
-  editPaste->setStatusText(i18n("Pastes the clipboard contents to actual position"));
-  editPasteToTable->setStatusText(i18n("Pastes the clipboard contents to actual position, but not beyond the table's boundaries"));
-  editPasteToSelection->setStatusText(i18n("Pastes the clipboard contents to actual position, but not beyond the boundaries of the current selection"));
-  viewToolBar->setStatusText(i18n("Enables/disables the toolbar"));
-  viewStatusBar->setStatusText(i18n("Enables/disables the statusbar"));
-  
-  // use the absolute path to your rkwardui.rc file for testing purpose in createGUI();
-  setXMLFile( "/home/pierre/adetr/rkward/rkward/rkwardui.rc" );
-  createShellGUI ( true );
-
-  //Is the following relevant now?
-	// is there a better way to change the name of the "File" menu?
-	//	menuBar ()->changeItem (menuBar ()->idAt (0), i18n ("&Workspace"));
-
+	filePrint ->setStatusText(i18n("Prints out the actual document"));
+	fileQuit->setStatusText(i18n("Quits the application"));
+	editCut->setStatusText(i18n("Cuts the selected section and puts it to the clipboard"));
+	editCopy->setStatusText(i18n("Copies the selected section to the clipboard"));
+	editPaste->setStatusText(i18n("Pastes the clipboard contents to actual position"));
+	editPasteToTable->setStatusText(i18n("Pastes the clipboard contents to actual position, but not beyond the table's boundaries"));
+	editPasteToSelection->setStatusText(i18n("Pastes the clipboard contents to actual position, but not beyond the boundaries of the current selection"));
+	viewToolBar->setStatusText(i18n("Enables/disables the toolbar"));
+	viewStatusBar->setStatusText(i18n("Enables/disables the statusbar"));
 }
 
 
 void RKwardApp::initStatusBar()
 {
 	RK_TRACE (APP);
-  ///////////////////////////////////////////////////////////////////
-  // STATUSBAR
-  // TODO: add your own items you need for displaying current application status.
-  statusBar()->insertItem(i18n("Ready."), ID_STATUS_MSG);
+	///////////////////////////////////////////////////////////////////
+	// STATUSBAR
+	// TODO: add your own items you need for displaying current application status.
+	statusBar()->insertItem(i18n("Ready."), ID_STATUS_MSG);
 	statusBar()->insertItem(i18n("starting R engine"), ID_R_STATUS_MSG);
 }
 
@@ -518,18 +413,19 @@ void RKwardApp::openWorkspace (const KURL &url) {
 void RKwardApp::saveOptions()
 {	
 	RK_TRACE (APP);
-  config->setGroup("General Options");
-  config->writeEntry("Geometry", size());
-  config->writeEntry("Show Toolbar", viewToolBar->isChecked());
-  config->writeEntry("Show Statusbar",viewStatusBar->isChecked());
-  config->writeEntry("ToolBarPos", (int) toolBar("mainToolBar")->barPos());
-  config->writeEntry("EditBarPos", (int) toolBar("editToolBar")->barPos());
-  config->writeEntry("RunBarPos", (int) toolBar("runToolBar")->barPos());
+	config->setGroup("General Options");
+	config->writeEntry("Geometry", size());
+	config->writeEntry("Show Toolbar", viewToolBar->isChecked());
+	config->writeEntry("Show Statusbar",viewStatusBar->isChecked());
+	config->writeEntry("ToolBarPos", (int) toolBar("mainToolBar")->barPos());
+	config->writeEntry("EditBarPos", (int) toolBar("editToolBar")->barPos());
+	config->writeEntry("RunBarPos", (int) toolBar("runToolBar")->barPos());
 
 
 	RKSettings::saveSettings (config);
 	
-  fileOpenRecentWorkspace->saveEntries(config,"Recent Files");
+	fileOpenRecentWorkspace->saveEntries(config,"Recent Files");
+	fileOpenRecent->saveEntries(config,"Recent Command Files");
 }
 
 
@@ -537,40 +433,40 @@ void RKwardApp::readOptions ()
 {
 	RK_TRACE (APP);
 	
-  config->setGroup("General Options");
-
-  // bar status settings
-  bool bViewToolbar = config->readBoolEntry("Show Toolbar", true);
-  viewToolBar->setChecked(bViewToolbar);
-  slotViewToolBar();
-
-  bool bViewStatusbar = config->readBoolEntry("Show Statusbar", true);
-  viewStatusBar->setChecked(bViewStatusbar);
-  slotViewStatusBar();
-
-
-  // bar position settings
-  KToolBar::BarPosition toolBarPos;
-  toolBarPos=(KToolBar::BarPosition) config->readNumEntry("ToolBarPos", KToolBar::Top);
-  toolBar("mainToolBar")->setBarPos(toolBarPos);
-
-  KToolBar::BarPosition editBarPos;
-  editBarPos=(KToolBar::BarPosition) config->readNumEntry("EditBarPos", KToolBar::Top);
-  toolBar("editToolBar")->setBarPos(editBarPos);
-  
-  KToolBar::BarPosition runBarPos;
-  runBarPos=(KToolBar::BarPosition) config->readNumEntry("RunBarPos", KToolBar::Top);
-  toolBar("runToolBar")->setBarPos(runBarPos);
- 
-  QSize size=config->readSizeEntry("Geometry");
-  if(!size.isEmpty ())
-  {
-    resize (size);
-  }
-  
-  // initialize the recent file list
-  fileOpenRecentWorkspace->loadEntries(config,"Recent Files");
-
+	config->setGroup("General Options");
+	
+	// bar status settings
+	bool bViewToolbar = config->readBoolEntry("Show Toolbar", true);
+	viewToolBar->setChecked(bViewToolbar);
+	slotViewToolBar();
+	
+	bool bViewStatusbar = config->readBoolEntry("Show Statusbar", true);
+	viewStatusBar->setChecked(bViewStatusbar);
+	slotViewStatusBar();
+	
+	
+	// bar position settings
+	KToolBar::BarPosition toolBarPos;
+	toolBarPos=(KToolBar::BarPosition) config->readNumEntry("ToolBarPos", KToolBar::Top);
+	toolBar("mainToolBar")->setBarPos(toolBarPos);
+	
+	KToolBar::BarPosition editBarPos;
+	editBarPos=(KToolBar::BarPosition) config->readNumEntry("EditBarPos", KToolBar::Top);
+	toolBar("editToolBar")->setBarPos(editBarPos);
+	
+	KToolBar::BarPosition runBarPos;
+	runBarPos=(KToolBar::BarPosition) config->readNumEntry("RunBarPos", KToolBar::Top);
+	toolBar("runToolBar")->setBarPos(runBarPos);
+	
+	QSize size=config->readSizeEntry("Geometry");
+	if(!size.isEmpty ()) {
+		resize (size);
+	}
+	
+	// initialize the recent file list
+	fileOpenRecentWorkspace->loadEntries(config,"Recent Files");
+	fileOpenRecent->loadEntries(config,"Recent Command Files");
+	
 	// do this last, since we may be setting some different config-group(s) in the process
 	RKSettings::loadSettings (config);  
 }
@@ -657,8 +553,8 @@ bool RKwardApp::queryClose () {
 bool RKwardApp::queryExit()
 {
 	RK_TRACE (APP);
-  saveOptions();
-  return true;
+	saveOptions();
+	return true;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -757,16 +653,16 @@ void RKwardApp::slotCloseAllEditors () {
 
 void RKwardApp::slotFilePrint()
 {
-	RK_TRACE (APP);
-  slotStatusMsg(i18n("Printing..."));
-
-  QPrinter printer;
-  if (printer.setup(this))
-  {
-//    view->print(&printer);
-  }
-
-  slotStatusMsg(i18n("Ready."));
+		RK_TRACE (APP);
+	slotStatusMsg(i18n("Printing..."));
+	
+	QPrinter printer;
+	if (printer.setup(this))
+	{
+	//    view->print(&printer);
+	}
+	
+	slotStatusMsg(i18n("Ready."));
 }
 
 void RKwardApp::slotFileQuit () {
@@ -977,7 +873,7 @@ void RKwardApp::slotOpenURL(const KURL &url){
 		return;
 	}
 	
-
+	fileOpenRecent->addURL (url);
 	editor->setIcon(SmallIcon("source"));
 	editor->name("RCEditor");
 	addWindow(editor);
@@ -997,8 +893,9 @@ void RKwardApp::slotOpenCommandEditor(){
 		return;
 	
 	urls = dlg.selectedURLs();
-	for (it = urls.begin() ; it != urls.end() ; ++it)
+	for (it = urls.begin() ; it != urls.end() ; ++it){
 		slotOpenURL(*it);
+	}
 
 };
 
@@ -1172,16 +1069,16 @@ void RKwardApp::slotEditRedo()
 void RKwardApp::slotViewActivated (KMdiChildView * window)
 {
 	if ((QString) activeWindow()->name()=="dataeditor"){
-		createGUI(0L);
+		m_manager->setActivePart(0L);
 	}
 	setEnabledActions((QString) activeWindow()->name()=="dataeditor");
 }
 
 
 
-void RKwardApp::slotOpenRecentCommandEditor(const KURL&)
+void RKwardApp::slotOpenRecentCommandEditor(const KURL& url)
 {
-
+	slotOpenURL(url);
 }
 
 void RKwardApp::slotInterruptCommand()
@@ -1193,21 +1090,7 @@ void RKwardApp::slotInterruptCommand()
 
 void RKwardApp::setEnabledActions(bool objectEditor)
 {
-	if (!objectEditor) {
-  		editCut->setEnabled(false);
-  		editCopy->setEnabled(false);
-  		editPaste->setEnabled(false);
-    		editPasteToSelection->setEnabled(false);
-    		editPasteToTable->setEnabled(false);
-		fileSave->setEnabled(true);
-		fileSaveAs->setEnabled(true);
-		runAll->setEnabled(true);
-		runSelection->setEnabled(true);
-		interruptCommand->setEnabled(true);
-		fileOpenRecent->setEnabled(true);
-
-	}
-	else {
+	if (objectEditor) {
   		editCut->setEnabled(true);
   		editCopy->setEnabled(true);
   		editPaste->setEnabled(true);
@@ -1218,14 +1101,24 @@ void RKwardApp::setEnabledActions(bool objectEditor)
 		runAll->setEnabled(false);
 		runSelection->setEnabled(false);
 		interruptCommand->setEnabled(false);
-		fileOpenRecent->setEnabled(false);
-
+	}
+	else{
+		editCut->setEnabled(false);
+		editCopy->setEnabled(false);
+		editPaste->setEnabled(false);
+		editPasteToSelection->setEnabled(false);
+		editPasteToTable->setEnabled(false);
+		fileSave->setEnabled(true);
+		fileSaveAs->setEnabled(true);
+		runAll->setEnabled(true);
+		runSelection->setEnabled(true);
+		interruptCommand->setEnabled(true);
 	}
 }
 
 void RKwardApp::openHTML(KURL url)
 {
-	RKHelpWindow *help = new RKHelpWindow;
+	RKHelpWindow *help = new RKHelpWindow(this,"help");
 	help->openURL (url);	
 	help->setIcon(SmallIcon("help"));
 	addWindow( help );
@@ -1240,3 +1133,44 @@ void RKwardApp::slotFunctionReference()
 	((RKCommandEditorWindow*) activeWindow())->showHelp();
 }
 
+
+
+/*!
+    \fn RKwardApp::slotOutputShow()
+	Show html output.
+ */
+void RKwardApp::slotOutputShow()
+{
+	RKHelpWindow *out = new RKHelpWindow(this,"output",true);
+	KURL url(RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
+	out->openURL (url);	
+	out->setIcon(SmallIcon("text_block"));
+	addWindow( out );
+}
+
+
+/*!
+    \fn RKwardApp::slotOutputFlush()
+	Empties output.
+ */
+void RKwardApp::slotOutputFlush()
+{
+	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to flush the ouput? It won't be possible to restore it."), i18n ("Flush output?"));
+	if (res==KMessageBox::Yes) {
+		QFile out_file (RKSettingsModuleLogfiles::filesPath () + "/rk_out.html");
+		out_file.remove ();
+	}
+}
+
+
+/*!
+    \fn RKwardApp::slotOutputRefresh()
+	Refresh output.
+ */
+void RKwardApp::slotOutputRefresh()
+{
+	if ((QString) activeWindow()->name()=="output"){
+		KURL url(RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
+		((RKHelpWindow*) activeWindow())->openURL (url);
+	}	
+}

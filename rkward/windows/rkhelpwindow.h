@@ -35,7 +35,7 @@ class RKHelpWindow : public KMdiChildView
 {
 Q_OBJECT
 public:
-    RKHelpWindow(QWidget *parent = 0, const char *name = 0);
+    RKHelpWindow(QWidget *parent = 0, const char *name = 0, bool output=false);
 
     ~RKHelpWindow();
     bool openURL(KURL url);
@@ -45,6 +45,9 @@ private:
     KHTMLPart * khtmlpart;
     QBoxLayout* pLayout;
     KParts::ReadOnlyPart *m_khtmlpart;
+
+    /** Are we showing the output? */
+    bool iShowOutput;
 };
 
 #endif

@@ -2,16 +2,14 @@
 <kpartgui name="rkward" version="0.3">
 <MenuBar>
 	<Menu name="file"><text>&amp;File</text>
-		<Menu name="new_data"><text>&amp;Create New</text>
+		<Menu name="new_data"><text>&amp;New</text>
 			<Action name="new_data_frame"/>
 			<Action name="new_command_editor"/>
 		</Menu>
-		<Merge/> 
-		<Separator/>
 		<Action name="file_openy"/>
 		<Action name="file_open_recenty"/>
-		<Action name="file_savey"/>
-		<Action name="file_save_asy"/>
+		<Separator/>
+		<Merge/> 
 		<Separator/>
 		<Action name="file_quitx"/>
 	</Menu>
@@ -24,9 +22,6 @@
 		<Action name="file_save_asx"/>
 		<Separator/>
 		<Action name="file_load_libs"/>
-		<Separator/>
-		<Action name="file_printx"/>
-
 	</Menu>
 	
 	
@@ -39,7 +34,15 @@
 		<Separator/>
 		<Merge/> 
 	</Menu>
-  
+
+	<Menu name="output"><text>&amp;Output</text>
+		<Separator/>
+		<Action name="output_show"/>
+		<Action name="output_refresh"/>
+		<Separator/>
+		<Action name="output_flush"/>
+	</Menu>   
+	
 	<Menu name="run"><text>&amp;Run</text>
 		<Separator/>
 		<Action name="run_all"/>
@@ -60,11 +63,10 @@
 <ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="new_data_frame"/>
 		<Action name="new_command_editor"/>
+		<Action name="file_openy"/>
+		<Action name="file_open_recenty"/>
 </ToolBar>
 <ToolBar fullWidth="true" name="editToolBar">
-		<Action name="undo"/>
-		<Action name="redo"/>
-		<Separator/>
 		<Action name="cut"/>
 		<Action name="copy"/>
 		<Action name="paste"/>

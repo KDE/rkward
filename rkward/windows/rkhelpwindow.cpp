@@ -33,14 +33,16 @@
 #include "rkhelpwindow.h"
 
 
-RKHelpWindow::RKHelpWindow(QWidget *parent, const char *name)
+RKHelpWindow::RKHelpWindow(QWidget *parent, const char *name, bool output)
  : KMdiChildView(parent, name)
 {
 	khtmlpart = new KHTMLPart(this,0,0,0,KHTMLPart::BrowserViewGUI);
 	khtmlpart->setSelectable(true);
-	khtmlpart->view()->setIcon(SmallIcon("help"));
+	/*khtmlpart->view()->setIcon(SmallIcon("help"));
 	khtmlpart->view()->setName("Help"); 
-	khtmlpart->view()->setCaption(i18n("Help")); 
+	khtmlpart->view()->setCaption(i18n("Help")); */
+	
+	iShowOutput=output;
 
 	(RKGlobals::rkApp()->m_manager)->addPart(khtmlpart,false);
 	khtmlpart->widget()->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
@@ -66,8 +68,14 @@ bool RKHelpWindow::openURL(KURL url)
 {
 	if (QFile::exists( url.path() )) {
 		khtmlpart->openURL(url);
-		setTabCaption(url.fileName());
-		setCaption(url.prettyURL());
+		if (iShowOutput) {
+			setTabCaption(i18n("Output"));
+			setCaption(i18n("Output"));
+		}
+		else {
+			setTabCaption(url.fileName());
+			setCaption(url.prettyURL());
+		}
 		return(true);
 	}
 	else{
@@ -82,7 +90,5 @@ bool RKHelpWindow::openURL(KURL url)
  */
 void RKHelpWindow::slotOpenURLRequest(const KURL &url, const KParts::URLArgs & )
 {
-	khtmlpart->openURL(url);
-	setTabCaption(url.fileName());
-	setCaption(url.prettyURL());
+	openURL (url);
 }
