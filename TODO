@@ -1,18 +1,13 @@
 The following list of TODO-items is NOT complete!
 
-stuff to do before 0.2.3 release
-- maybe implement simple RObjectViewer
-- jump to 0.2.5 on these changes?
-- snyc only modified objects!
-- add VarType unknown
+stuff to do before 0.2.5 release
+- 
 
-small stuff to do soon
-- instead of keeping state-data for each RObject, use a centralized list of all opened objects and their states in RObjectList?
+(relatively) small stuff to do soon
 - merge common functionality of RObjectBrowser and RKVarselector into a base of some sort
 - update RKVarselectors on changes in the object-list!
 - use a friendly startup-dialog instead of opening an empty table unconditionally
 - plugins-scanning: don't duplicate everything
-- rework plugin-XML-format
 - add more plugin-widgets
 - setValue-API for plugin-widgets and copying of values when switching from wizard to dialog-interface
 - improve and use debugging framework
@@ -21,8 +16,11 @@ small stuff to do soon
 	- use smart sorting, esp. of generated string
 	- add labels, add "up to level" option
 	- add constant term option
-
-mid-term stuff
+- Object editing / modification tracking:
+	- keep pointer to editor with objects instead of modification information
+	- maybe make objects assume own responsibility for syncing their data
+	- maybe store data directly with objects
+	- functions to set double/int/string-vectors directly
 - add XML-parsing helper functions and error-checking
 - create a spinbox, that can really deal with real numbers
 - create DemonDialogs that notify the user what's going on and potentially request further actions, if an action is to be carried out in the

@@ -115,14 +115,7 @@ void RKwardApp::doPostInit () {
 	output->showMaximized ();
 	output->hide ();
 
-    QString dummy = "Before you start bashing at it: Please note that is is merely ";
-	dummy.append ("a very early proof-of-concept release. It does not do much good. It might do some ");
-	dummy.append ("very bad things. It's really only targeted at people who might be interested in helping with the development.\n");
-	dummy.append ("So before you start finding all the bugs/missing features/design flaws, enter some ");
-	dummy.append ("data in the table, save the table, if you like, select Analyse->Means->T-Tests->Independent ");
-	dummy.append ("samples T-Test. Watch what happens in the RKWatch-window.\n");
-	dummy.append ("Note that the T-Test-dialog and all the entries in the Analyse-menu were created ");
-	dummy.append ("at run-time and on the fly from a simple XML-file located in the plugin-directory.");
+    QString dummy = "Before you start bashing at it: Please note that this is merely a technology preview release. You might acutally be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments welcome.";
 	KMessageBox::information (this, dummy, "Before you complain...", "state_of_rkward");
 
 	startR ();

@@ -50,9 +50,6 @@ RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlu
 
 RKVarSelector::~RKVarSelector(){
 	RK_TRACE (PLUGIN);
-	for (ItemMap::iterator it = item_map.begin (); it != item_map.end (); ++it) {
-		delete it.key ();
-	}
 }
 
 void RKVarSelector::addObject (QListViewItem *parent, RObject *object) {

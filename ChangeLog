@@ -1,3 +1,6 @@
+--- Version 0.2.5 - Aug-24-2004 ---
+- added simple viewer for R-objects
+- added simple browser for objects in the R-workspace
 - allow deletion of columns/objects (finally)
 - allow editing and using several objects/tables
 - interpret command-line parameter "file"
