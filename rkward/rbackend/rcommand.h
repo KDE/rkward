@@ -106,7 +106,7 @@ public:
 	QString error () { return _error; };
 /** Types of commands (potentially more to come), bitwise or-able,
 	although partially exclusive. */
-	enum CommandTypes {User=1, Plugin=2, PluginCom=4, App=8, Sync=16, EmptyCommand=32, GetIntVector=512, GetStringVector=1024, GetRealVector=2048, DirectToOutput=4096 };
+	enum CommandTypes {User=1, Plugin=2, PluginCom=4, App=8, Sync=16, EmptyCommand=32, GetIntVector=512, GetStringVector=1024, GetRealVector=2048, DirectToOutput=4096, Canceled=8192 };
 	enum CommandStatus {WasTried=1, Failed=2, HasOutput=4, HasError=8};
 	bool wasTried () { return (status & WasTried); };
 	bool failed () { return (status & Failed); };

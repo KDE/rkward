@@ -91,3 +91,15 @@
 	return (c (as.vector (x$Package), as.vector (titles), as.vector (x$Version), as.vector (x$LibPath)))
 }
 
+".rk.get.CRAN.packages" <- function () {
+	x <- CRAN.packages ()
+	return (c (as.vector (x[,1]), as.vector (x[,2])))
+}
+
+"require" <- function (package, quietly = FALSE, warn.conflicts = TRUE, keep.source = getOption("keep.source.pkgs"), character.only = FALSE, version, save = TRUE) {
+	if (!base::require (as.character (package), quietly, warn.conflicts, keep.source, character.only=TRUE, version, save)) {
+		.rk.do.call ("require", as.character (package))
+		return (base::require (as.character (package), quietly, warn.conflicts, keep.source, character.only=TRUE, version, save));
+	}
+	return (TRUE)
+}

@@ -26,6 +26,7 @@
 #include "../settings/rksettingsmodulelogfiles.h"
 #include "../core/robjectlist.h"
 #include "../core/rkmodificationtracker.h"
+#include "../dialogs/rkloadlibsdialog.h"
 
 #include "../rkglobals.h"
 #include "../debug.h"
@@ -40,8 +41,14 @@
 #include <sys/types.h>
 #include <signal.h>
 
+extern "C" {
+	// this is the var in R-space that stores an interrupt
+	extern int R_interrupts_pending;
+}
+
 //static
 QMutex RInterface::mutex;
+int RInterface::mutex_counter;
 
 RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
@@ -90,12 +97,16 @@ void RInterface::customEvent (QCustomEvent *e) {
 		watch->addInput (static_cast <RCommand *> (e->data ()));
 	} else if (e->type () == RCOMMAND_OUT_EVENT) {
 		RCommand *command = static_cast <RCommand *> (e->data ());
-		if (running_command_canceled) {
-			RK_ASSERT (command == command)
+		RK_DO (qDebug ("command out: %d, id: %d", command, command->id ()), RBACKEND, DL_DEBUG);
+		if (command->status & RCommand::Canceled) {
 			command->status |= RCommand::HasError;
 			command->_error.append ("--- interrupted ---");
-			running_command_canceled = 0;
-			r_thread->unlock ();
+			if (running_command_canceled) {
+				RK_DO (qDebug ("finished cancelling running command at address %d, id: %d", command, command->id ()), RBACKEND, DL_DEBUG);
+				RK_ASSERT (command == running_command_canceled);
+				running_command_canceled = 0;
+				r_thread->unlock ();
+			}
 		}
 		watch->addOutput (command);
 		command->finished ();
@@ -127,48 +138,47 @@ void RInterface::customEvent (QCustomEvent *e) {
 
 void RInterface::issueCommand (RCommand *command, RCommandChain *chain) { 
 	RK_TRACE (RBACKEND);
-	mutex.lock ();
+	MUTEX_LOCK;
 	RCommandStack::issueCommand (command, chain);
-	mutex.unlock ();
+	MUTEX_UNLOCK;
 }
 
 RCommandChain *RInterface::startChain (RCommandChain *parent) {
 	RK_TRACE (RBACKEND);
 	RCommandChain *ret;
-	mutex.lock ();
+	MUTEX_LOCK;
 	ret = RCommandStack::startChain (parent);
-	mutex.unlock ();
+	MUTEX_UNLOCK;
 	return ret;
 };
 
 RCommandChain *RInterface::closeChain (RCommandChain *chain) {
 	RK_TRACE (RBACKEND);
 	RCommandChain *ret;
-	mutex.lock ();
+	MUTEX_LOCK;
 	ret = RCommandStack::closeChain (chain);
-	mutex.unlock ();
+	MUTEX_UNLOCK;
 	return ret;
 };
 
 void RInterface::cancelCommand (RCommand *command) {
 	RK_TRACE (RBACKEND);
-	mutex.lock ();
+	MUTEX_LOCK;
 	
 	if (!(command->type () & RCommand::Sync)) {
+		command->status |= RCommand::Canceled;
 		if (command == r_thread->current_command) {
 			RK_ASSERT (!running_command_canceled);
 			r_thread->lock ();
 			running_command_canceled = command;
-			// send interrrupt to ourself (but only the R backend will do something with it)
-			kill (getpid (), SIGINT);
-		} else {
-			r_thread->canceled_commands.append (command);
+			// this is the var in R-space that stores an interrupt
+			R_interrupts_pending = 1;
 		}
 	} else {
 		RK_ASSERT (false);
 	}
 	
-	mutex.unlock ();
+	MUTEX_UNLOCK;
 }
 
 void RInterface::processREvalRequest (REvalRequest *request) {
@@ -213,6 +223,15 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			issueCommand (".rk.rkreply <- \"Sync scheduled for object '" + obj->getFullName () + "'\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
 		} else {
 			issueCommand (".rk.rkreply <- \"Object not recognized or not specified in call to sync. Ignoring\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+		}
+	} else if (call == "require") {
+		if (request->call_length >= 2) {
+			QString lib_name = request->call[1];
+			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We'll open the package-management tool, and there you can try to locate and install the needed package.").arg (lib_name), i18n ("Require package '%1'").arg (lib_name));
+			RKLoadLibsDialog::showInstallPackagesModal (0, request->in_chain);
+			issueCommand (".rk.rkreply <- \"\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+		} else {
+			issueCommand (".rk.rkreply <- \"Too few arguments in call to require.\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
 		}
 	} else {
 		issueCommand (".rk.rkreply <- \"Unrecognized call '" + call + "'. Ignoring\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);

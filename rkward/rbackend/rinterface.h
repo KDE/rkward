@@ -23,6 +23,9 @@
 
 #include "rthread.h"
 
+#define MUTEX_LOCK /*qDebug ("%d", ++RInterface::mutex_counter);*/ RInterface::mutex.lock ();
+#define MUTEX_UNLOCK /*qDebug ("%d", --RInterface::mutex_counter);*/ RInterface::mutex.unlock ();
+
 class RKwatch;
 class RCommand;
 class RKwardApp;
@@ -61,6 +64,7 @@ not be interrupted. */
 	void cancelCommand (RCommand *command);
 
 	static QMutex mutex;
+	static int mutex_counter;
 private:
 	RThread *r_thread;
 	RCommand *running_command_canceled;

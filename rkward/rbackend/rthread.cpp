@@ -52,7 +52,7 @@ void RThread::run () {
 	}
 	
 	while (1) {
-		RInterface::mutex.lock ();
+		MUTEX_LOCK;
 		
 		if (previously_idle) {
 			if (!RCommandStack::regular_stack->isEmpty ()) {
@@ -79,9 +79,10 @@ void RThread::run () {
 		}
 		
 		// if no commands are in queue, sleep for a while
-		RInterface::mutex.unlock ();
+		MUTEX_UNLOCK;
 		msleep (10);
 	}
+	RK_DO (qDebug ("R-Thread exited"), RBACKEND, DL_DEBUG);
 }
 
 void RThread::doCommand (RCommand *command) {
@@ -90,12 +91,13 @@ void RThread::doCommand (RCommand *command) {
 	QCustomEvent *event = new QCustomEvent (RCOMMAND_IN_EVENT);
 	event->setData (command);
 	qApp->postEvent (inter, event);
+	RCommand *prev_command = current_command;
 	current_command = command;
 
 	// mutex will be unlocked inside
 	embeddedR->runCommand (command);
 
-	current_command = 0;
+	current_command = prev_command;
 	// notify GUI-thread that command was finished
 	event = new QCustomEvent (RCOMMAND_OUT_EVENT);
 	event->setData (command);
@@ -104,14 +106,14 @@ void RThread::doCommand (RCommand *command) {
 
 void RThread::doSubstack (char **call, int call_length) {
 	RK_TRACE (RBACKEND);
-	
+
 	REvalRequest *request = new REvalRequest;
 	request->call = call;
 	request->call_length = call_length;
-	RInterface::mutex.lock ();
+	MUTEX_LOCK;
 	RCommandStack *reply_stack = new RCommandStack ();
 	request->in_chain = reply_stack->startChain (reply_stack);
-	RInterface::mutex.unlock ();
+	MUTEX_UNLOCK;
 
 	QCustomEvent *event = new QCustomEvent (R_EVAL_REQUEST_EVENT);
 	event->setData (request);
@@ -119,7 +121,7 @@ void RThread::doSubstack (char **call, int call_length) {
 	
 	bool done = false;
 	while (!done) {
-		RInterface::mutex.lock ();
+		MUTEX_LOCK;
 		// while commands are in queue, don't wait
 		while (reply_stack->isActive () && !locked) {
 			RCommand *command = reply_stack->pop ();
@@ -133,66 +135,11 @@ void RThread::doSubstack (char **call, int call_length) {
 		if (reply_stack->isEmpty ()) {
 			done = true;
 		}
-		RInterface::mutex.unlock ();
+		MUTEX_UNLOCK;
 
 		// if no commands are in queue, sleep for a while
 		msleep (10);
 	}
-
+	
 	delete reply_stack;
 }
-/*
-char **RThread::fetchValue (char **call, int call_length, int *reply_length) {
-	RK_TRACE (RBACKEND);
-	
-	RGetValueRequest *request = new RGetValueRequest;
-	request->call = call;
-	request->call_length = call_length;
-	
-	RK_ASSERT (r_get_value_reply == 0);
-
-	QCustomEvent *event = new QCustomEvent (R_EVAL_REQUEST_EVENT);
-	event->setData (request);
-	qApp->postEvent (inter, event);
-	
-	bool done = false;
-	while (!done) {
-		RInterface::mutex.lock ();
-		// while commands are in queue, don't wait
-		while (reply_stack->isActive ()) {
-			RCommand *command = reply_stack->pop ();
-			
-			if (command) {
-				RInterface::mutex.unlock ();
-				// this statement is the time-consuming one. Thankfully, we do not need a mutex at this point
-				doCommand (command);
-				RInterface::mutex.lock ();
-			}
-		}
-
-		if (reply_stack->isEmpty ()) {
-			done = true;
-		}
-		RInterface::mutex.unlock ();
-
-		// if no commands are in queue, sleep for a while
-		msleep (10);
-	}
-
-	delete reply_stack;
-
-	
-	
-	RK_ASSERT (false);
-	return call;
-}
-
-void RThread::setGetValueReply (RGetValueReply *reply) {
-	RK_TRACE (RBACKEND);
-	RInterface::mutex.lock ();
-	RK_ASSERT (r_get_value_reply == 0);
-	r_get_value_reply = reply;
-	RInterface::mutex.unlock ();
-}
-
-*/

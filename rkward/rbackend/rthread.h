@@ -47,11 +47,10 @@ public:
 	void lock () { locked=true; };
 	
 	void doSubstack (char **call, int call_length);
-	char **fetchValue (char **call, int call_length);
 	
-	//void setGetValueReply (RGetValueReply *reply);
 	RCommand *current_command;
-	QValueList<RCommand*> canceled_commands;
+	
+	void domsleep (int ms) { msleep (ms); };
 protected:
 	void run ();
 private:

@@ -103,43 +103,42 @@ void REmbed::runCommand (RCommand *command) {
 	
 	if (command->type () & RCommand::EmptyCommand) return;
 	
-	QValueList<RCommand*>::iterator it = thread->canceled_commands.find (command);
-	if (it != thread->canceled_commands.end ()) {
-		command->status |= RCommand::HasError;
-		command->_error = "--- interrupted ---";
-		thread->canceled_commands.remove (it);
-		return;
-	}
+	if (command->status & RCommand::Canceled) return;
 	
 	bool error;
 	
-	RInterface::mutex.unlock ();
+	int ctype = command->type ();
+	const char *ccommand = command->command ().latin1 ();
 	
 	if (command->type () & RCommand::DirectToOutput) {
 		runCommandInternal ("sink (\"" + RKSettingsModuleLogfiles::filesPath () + "/rk_out.html\", append=TRUE, split=TRUE)\n", &error);
 	}
-	
-	if (command->type () & RCommand::GetStringVector) {
-		command->string_data = getCommandAsStringVector (command->command ().latin1 (), &(command->string_count), &error);
-	} else if (command->type () & RCommand::GetRealVector) {
-		command->real_data = getCommandAsRealVector (command->command ().latin1 (), &(command->real_count), &error);
-	} else if (command->type () & RCommand::GetIntVector) {
-		command->integer_data = getCommandAsIntVector (command->command ().latin1 (), &(command->integer_count), &error);
+
+	MUTEX_UNLOCK;
+
+	if (ctype & RCommand::GetStringVector) {
+		command->string_data = getCommandAsStringVector (ccommand, &(command->string_count), &error);
+	} else if (ctype & RCommand::GetRealVector) {
+		command->real_data = getCommandAsRealVector (ccommand, &(command->real_count), &error);
+	} else if (ctype & RCommand::GetIntVector) {
+		command->integer_data = getCommandAsIntVector (ccommand, &(command->integer_count), &error);
 	} else {
-		runCommandInternal (command->command ().latin1 (), &error, command->type () & RCommand::User);
+		runCommandInternal (ccommand, &error, ctype & RCommand::User);
 	}
+
+	MUTEX_LOCK;
 	
 	if (error) {
-		command->status = RCommand::WasTried | RCommand::Failed;
+		command->status |= RCommand::WasTried | RCommand::Failed;
 		RK_DO (qDebug ("Command failed: command was: '%s'", command->command ().latin1 ()), RBACKEND, DL_WARNING);
 	} else {
-		command->status = RCommand::WasTried;
+		command->status |= RCommand::WasTried;
 	}
 
 	if (command->type () & RCommand::DirectToOutput) {
 		runCommandInternal ("sink ()\n", &error);
 	}
-	
+
 	QString temp = "";
 	while (!outfile.atEnd ()) {
 		outfile.readLine (temp, 2048);
@@ -153,7 +152,6 @@ void REmbed::runCommand (RCommand *command) {
 		command->_error.append (temp);
 		command->status |= RCommand::HasError;
 	}
-	RInterface::mutex.lock ();
 	
 	RK_DO (if (error) qDebug ("- error message was: '%s'", command->error ().latin1 ()), RBACKEND, DL_WARNING);
 }
