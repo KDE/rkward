@@ -71,7 +71,7 @@ RKPlugin::RKPlugin(const QString &filename) : QWidget () {
 	RKPlugin::filename = filename;
 	
 	// create an error-dialog
-	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin ") + caption () + i18n (". This may lead to an incorrect ouput and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below."), i18n ("R-Error"), false);
+	error_dialog = new RKErrorDialog (i18n ("The R engine reported errors while processing the plugin ") + caption () + i18n (". This may lead to an incorrect ouput and is likely due to a bug in the plugin.\nError messages are shown below."), i18n ("R-Error"), false);
 	
 	// initialize the PHP-backend with the code-template
 	should_updatecode=false;
