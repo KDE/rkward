@@ -110,7 +110,7 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 
 	
 	RKGlobals::manager = new RKEditorManager ();
-	KMdiChildView * editorManagerView = createWrapper(RKGlobals::editorManager (), i18n( "Object Editor"), i18n( "R Object Editor"));
+	KMdiChildView * editorManagerView = createWrapper(RKGlobals::editorManager (), i18n( "Editor"), i18n( "Editor"));
 	editorManagerView->setIcon(SmallIcon("spreadsheet"));
 	addWindow( editorManagerView );
 	
@@ -186,11 +186,11 @@ void RKwardApp::doPostInit () {
 	show ();
 	
 	//It's necessary to give a different name to all tool windows, or they won't be properly displayed
-	object_browser->setName("object browser"); 
+	object_browser->setName("workspace"); 
 	object_browser->setIcon(SmallIcon("view_tree"));
-	addToolWindow(object_browser,KDockWidget::DockLeft, getMainDockWidget(), 30 , i18n ("This is a list of the objects present in the R workspace.") , i18n ("Object browser"));
+	addToolWindow(object_browser,KDockWidget::DockLeft, getMainDockWidget(), 30 , i18n ("Existing objects in your workspace.") , i18n ("Workspace"));
 	
-	RKGlobals::rInterface ()->watch->setName("R console");
+	RKGlobals::rInterface ()->watch->setName("Console");
 	RKGlobals::rInterface ()->watch->setIcon(SmallIcon("konsole"));
 	addToolWindow(RKGlobals::rInterface ()->watch,KDockWidget::DockBottom, getMainDockWidget(), 10);
 	
@@ -208,7 +208,7 @@ void RKwardApp::initPlugins () {
 	slotStatusMsg(i18n("Setting up plugins..."));
 	
 	if (!initPluginDir (RKSettingsModulePlugins::pluginDir (), 0)) {
-		KMessageBox::information (0, i18n ("Could not find any plugins!\nRKWard is pretty useless without plugins, so you should use Settings->Plugins to import some.\n"), i18n ("No plugins found"));
+		KMessageBox::information (0, i18n ("Plugins are needed: you may manage these throught \"Settings->Configure RKWard\".\n"), i18n ("No plugins found"));
 	}
 	
 	slotStatusMsg(i18n("Ready."));
@@ -322,7 +322,7 @@ void RKwardApp::initActions()
 	fileSaveWorkspace->setText (i18n ("Save Workspace"));
 	fileSaveWorkspaceAs = KStdAction::saveAs(this, SLOT(slotFileSaveWorkspaceAs()), actionCollection(), "file_save_asx");
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
-	file_load_libs = new KAction (i18n ("Load R Libraries"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");
+	file_load_libs = new KAction (i18n ("Libraries"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");
 	close_editor = KStdAction::close (this, SLOT(slotCloseEditor ()), actionCollection(), "editor_close");
 	close_editor->setText (i18n ("Close current editor"));
 	close_editor->setEnabled (false);
@@ -343,9 +343,9 @@ void RKwardApp::initActions()
   editPasteToSelection->setIcon("frame_edit");
   viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
   viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
-	showRKWatch = new KToggleAction (i18n ("Show R Console-Window"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "windows_rkwatch");
-	showRKOutput = new KToggleAction (i18n ("Show Output-Window"), 0, 0, this, SLOT(slotShowRKOutput ()), actionCollection(), "windows_rkoutput");
-	showRObjectBrowser = new KToggleAction (i18n ("Show Object Browser-Window"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
+	showRKWatch = new KToggleAction (i18n ("Console"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "windows_rkwatch");
+	showRKOutput = new KToggleAction (i18n ("Output"), 0, 0, this, SLOT(slotShowRKOutput ()), actionCollection(), "windows_rkoutput");
+	showRObjectBrowser = new KToggleAction (i18n ("Workspace"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
 	
 	runAll = new KAction (i18n ("Run All"), 0, 0, this, SLOT (slotRunAll ()), actionCollection (), "run_all");
 	runAll->setIcon("package_system");
@@ -354,7 +354,7 @@ void RKwardApp::initActions()
 	interruptCommand = new KAction (i18n ("Interrupt running command"), 0, 0, this, SLOT (slotInterruptCommand ()), actionCollection (), "interrupt");
 	interruptCommand->setIcon("stop");
 	
-	configure = new KAction (i18n ("Configure Settings"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
+	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 
 	new_data_frame->setStatusText (i18n ("Creates a new empty data.frame and opens it for editing"));
   fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
@@ -391,7 +391,7 @@ void RKwardApp::initStatusBar()
   // STATUSBAR
   // TODO: add your own items you need for displaying current application status.
   statusBar()->insertItem(i18n("Ready."), ID_STATUS_MSG);
-	statusBar()->insertItem(i18n("starting R-processor"), ID_R_STATUS_MSG);
+	statusBar()->insertItem(i18n("starting R engine"), ID_R_STATUS_MSG);
 }
 
 void RKwardApp::openWorkspace (const KURL &url) {
@@ -560,7 +560,7 @@ void RKwardApp::slotNewDataFrame () {
 	RK_TRACE (APP);
 	bool ok;
 
-	QString name = KInputDialog::getText (i18n ("Create new data.frame"), i18n ("Enter name for the new object"), "my.data", &ok, this);
+	QString name = KInputDialog::getText (i18n ("New dataset"), i18n ("Enter name for the new dataset"), "my.data", &ok, this);
 
 	if (ok) {
 		QString valid = RKGlobals::rObjectList ()->validizeName (name);
@@ -758,7 +758,7 @@ void RKwardApp::slotViewToolBar()
 void RKwardApp::slotViewStatusBar()
 {
 	RK_TRACE (APP);
-  slotStatusMsg(i18n("Toggle the statusbar..."));
+  slotStatusMsg(i18n("Toggling statusbar..."));
   ///////////////////////////////////////////////////////////////////
   //turn Statusbar on or off
   if(!viewStatusBar->isChecked())
@@ -820,9 +820,9 @@ void RKwardApp::newOutput () {
 void RKwardApp::setRStatus (bool busy) {
 	RK_TRACE (APP);
 	if (busy) {
-		statusBar()->changeItem(i18n("R-process busy"), ID_R_STATUS_MSG);
+		statusBar()->changeItem(i18n("R engine busy"), ID_R_STATUS_MSG);
 	} else {
-		statusBar ()->changeItem (i18n ("R-process idle"), ID_R_STATUS_MSG);
+		statusBar ()->changeItem (i18n ("R engine idle"), ID_R_STATUS_MSG);
 	}
 }
 
@@ -843,7 +843,7 @@ void RKwardApp::slotOpenURL(const KURL &url){
 	if (!url.isLocalFile())
 	{
 		KMessageBox::messageBox(this,KMessageBox::Information,
-				"The file you specified is not a local file","Cannot open file");
+				"You specified a file that is not on local system","Cannot open file");
 		return;
 	}
 	
