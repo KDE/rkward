@@ -14,10 +14,12 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
+ 
 #define RKWARD_DEBUG
 
 #ifdef RKWARD_DEBUG
+
+extern int RK_Debug_Level;
 
 // Debug-levels
 #define DL_TRACE 0
@@ -33,19 +35,21 @@
 #define OBJECTS 4
 #define EDITOR 8
 #define PHP 64
-#define ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR)
+#define RBACKEND 128
+#define ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR | RBACKEND)
 
 // only for now
 #define RK_DEBUG_FLAGS ALL
-#define RK_DEBUG_LEVEL DL_TRACE
 
 // Debug functions 
-#define RK_DO(expr,flags,level) if ((flags | RK_DEBUG_FLAGS) && (level >= RK_DEBUG_LEVEL)) { expr; }
+#define RK_DO(expr,flags,level) if ((flags | RK_DEBUG_FLAGS) && (level >= RK_Debug_Level)) { expr; }
 #define RK_ASSERT(x) if (!(x)) qDebug ("Assert failed at %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__);
 #define RK_TRACE(flags) RK_DO (qDebug ("Trace: %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__), flags, DL_TRACE); 
 
 #else
 
-#define RK_ASSERT
+#define RK_DO(expr,flags,level)
+#define RK_ASSERT(x)
+#define RK_TRACE(flags)
 
 #endif

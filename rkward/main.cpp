@@ -19,7 +19,13 @@
 #include <kaboutdata.h>
 #include <klocale.h>
 
+#include <qstring.h>
+
 #include "rkward.h"
+
+#include "debug.h"
+
+int RK_Debug_Level = 0;
 
 static const char *description =
 	I18N_NOOP("RKward");
@@ -29,6 +35,7 @@ static const char *description =
 static KCmdLineOptions options[] =
 {
   { "+[File]", I18N_NOOP("file to open"), 0 },
+  { "debug-level <level>", I18N_NOOP("Verbosity of debug messages (0-5)"), "4"}, 
   { 0, 0, 0 }
   // INSERT YOUR COMMANDLINE OPTIONS HERE
 };
@@ -43,7 +50,7 @@ int main(int argc, char *argv[])
 	aboutData.setHomepage ("http://rkward.sf.net");
 	KCmdLineArgs::init( argc, argv, &aboutData );
 	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
-
+	
   KApplication app;
  
   if (app.isRestored())
@@ -52,7 +59,8 @@ int main(int argc, char *argv[])
   }
   else 
   {
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();	
+    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+	RK_Debug_Level = 5 - QString (args->getOption ("debug-level")).toInt ();
 	
 	KURL *open_url = 0;
 	if (args->count ()) {

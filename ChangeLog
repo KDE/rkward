@@ -1,3 +1,9 @@
+- allow deletion of columns/objects (finally)
+- allow editing and using several objects/tables
+- interpret command-line parameter "file"
+- save and restore size of the main window correctly
+- use internal representation of object-tree in the R-workspace
+- store meta-information (labels, etc.) as R-attributes
 - keep track of whether the windows (watch, output) are open
 - new method of access to objects in R: getIntVector
 - use some global static pointer instead of passing them around (e.g. for the r-interface)

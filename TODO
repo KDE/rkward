@@ -1,18 +1,16 @@
 The following list of TODO-items is NOT complete!
 
 stuff to do before 0.2.3 release
-- implement RObjectList and
-	- RObjectBrowser
 - maybe implement simple RObjectViewer
 - jump to 0.2.5 on these changes?
-- take care of removed and renamed objects!
 - snyc only modified objects!
-- open table(s) last opened or single empty table
-
-- instead of keeping state-data for each RObject, use a centralized list of all opened objects and their states in RObjectList?
-- merge common functionality of RObjectBrowser and RKVarselector into a base of some sort
+- add VarType unknown
 
 small stuff to do soon
+- instead of keeping state-data for each RObject, use a centralized list of all opened objects and their states in RObjectList?
+- merge common functionality of RObjectBrowser and RKVarselector into a base of some sort
+- update RKVarselectors on changes in the object-list!
+- use a friendly startup-dialog instead of opening an empty table unconditionally
 - plugins-scanning: don't duplicate everything
 - rework plugin-XML-format
 - add more plugin-widgets
@@ -27,6 +25,8 @@ small stuff to do soon
 mid-term stuff
 - add XML-parsing helper functions and error-checking
 - create a spinbox, that can really deal with real numbers
+- create DemonDialogs that notify the user what's going on and potentially request further actions, if an action is to be carried out in the
+	R backend that might potentially fail or require user interaction (asynchronously)
 
 stuff to do before the thing is usable
 - RKWatch
