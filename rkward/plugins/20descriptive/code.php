@@ -3,78 +3,38 @@
 	}
 	
 	function calculate () {
-		$domean = getRK_val ("mean");
-		$domedian = getRK_val ("median");
-		$dorange = getRK_val ("range");
-		$dosd = getRK_val ("sd");
-		$vars = strtr (trim (getRK_val ("x")), "\n", ",");
-		
-		
+		$vars = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val ("x"))) . ")";
 ?>
-rk.temp.vars <- data.frame (<? echo ($vars); ?>)
+rk.temp.options <- list (domean=<? getRK ("mean"); ?>, domedian=<? getRK ("median"); ?>, dorange=<? getRK ("range"); ?>, dosd=<? getRK ("sd"); ?>)
 rk.temp.results <- list ()
-for (col in 1:length (rk.temp.vars)) {
-	rk.temp.results[[col]] <- list ()
-<?
-
-		if ($domean) {
-?>	try (rk.temp.results[[col]]$mean <- mean (rk.temp.vars[col], 0, na.rm=TRUE))
-<?
-		}
-		if ($domedian) {
-?>	try (rk.temp.results[[col]]$median <- median (rk.temp.vars[[col]], na.rm=TRUE))
-<?
-		}
-		if ($dorange) {
-?>	try (rk.temp.results[[col]]$range <- range (rk.temp.vars[col], na.rm=TRUE))
-<?
-		}
-		if ($dosd) {
-?>	try (rk.temp.results[[col]]$sd <- sd (rk.temp.vars[col], na.rm=TRUE))
-<?
-		}	
-?>
+i=0; for (var in list (<? echo ($vars); ?>)) {
+	i = i+1
+	rk.temp.results[[i]] <- list ()
+	rk.temp.results[[i]]$object <- var
+	if (rk.temp.options$domean) try (rk.temp.results[[i]]$mean <- mean (eval (var), 0, na.rm=TRUE))
+	if (rk.temp.options$domedian) try (rk.temp.results[[i]]$median <- median (eval (var), na.rm=TRUE))
+	if (rk.temp.options$dorange) try (rk.temp.results[[i]]$range <- range (eval (var), na.rm=TRUE))
+	if (rk.temp.options$dosd) try (rk.temp.results[[i]]$sd <- sd (eval (var), na.rm=TRUE))
 }<?
 	}
 	
 	function printout () {
-		$domean = getRK_val ("mean");
-		$domedian = getRK_val ("median");
-		$dorange = getRK_val ("range");
-		$dosd = getRK_val ("sd");
-	
-		// produce the output
 ?>
-rk.temp.labels <- c (<? echo ("\"" . join ("\",\"", explode ("\n", trim (getRK_val ("x.label")))) . "\""); ?>)
 cat ("<h1>Descriptive statistics</h1>")
+
 cat ("<table border=\"1\"><tr><td>Variable</td>")
-<? if ($domean) { ?>
-cat ("<td>mean</td>")
-<? }
-	if ($domedian) { ?>
-cat ("<td>median</td>")
-<? }
-	if ($dorange) { ?>
-cat ("<td>min</td><td>max</td>")
-<? }
-	if ($dosd) { ?>
-cat ("<td>standard deviation</td>")
-<? } ?>
+if (rk.temp.options$domean) cat ("<td>mean</td>")
+if (rk.temp.options$domedian) cat ("<td>median</td>")
+if (rk.temp.options$dorange) cat ("<td>min</td><td>max</td>")
+if (rk.temp.options$dosd) cat ("<td>standard deviation</td>")
 cat ("</tr>")
-for (i in 1:dim (rk.temp.vars)[2]) {
-	cat (paste ("<tr><td>", rk.temp.labels[i], "</td>"))
-<? if ($domean) { ?>
-	cat (paste ("<td>", rk.temp.results[[i]]$mean, "</td>"))
-<? }
-if ($domedian) { ?>
-	cat (paste ("<td>", rk.temp.results[[i]]$median, "</td>"))
-<? }
-if ($dorange) { ?>
-	cat (paste ("<td>", rk.temp.results[[i]]$range[1], "</td>", "<td>", rk.temp.results[[i]]$range[2], "</td>"))
-<? }
-if ($dosd) { ?>
-	cat (paste ("<td>", rk.temp.results[[i]]$sd, "</td>"))
-<? } ?>
+
+for (i in 1:length (rk.temp.results)) {
+	cat (paste ("<tr><td>", rk.get.description (rk.temp.results[[i]]$object), "</td>"))
+	if (rk.temp.options$domean) cat (paste ("<td>", rk.temp.results[[i]]$mean, "</td>"))
+	if (rk.temp.options$domedian) cat (paste ("<td>", rk.temp.results[[i]]$median, "</td>"))
+	if (rk.temp.options$dorange) cat (paste ("<td>", rk.temp.results[[i]]$range[1], "</td>", "<td>", rk.temp.results[[i]]$range[2], "</td>"))
+	if (rk.temp.options$dosd) cat (paste ("<td>", rk.temp.results[[i]]$sd, "</td>"))
 	cat ("</tr>")
 }
 cat ("</table>")
@@ -82,7 +42,7 @@ cat ("</table>")
 	}
 	
 	function cleanup () {
-?>rm (rk.temp.vars)
+?>rm (rk.temp.options)
 rm (rk.temp.results)
 <?
 	}
