@@ -1,11 +1,7 @@
 The following list of TODO-items is NOT complete!
 Also, plans change frequently. If something is listed for a specific release, that's no more than a rough plan.
 
-stuff to do before 0.2.9 release
-
 stuff to do before 0.3.0 release
-- dataeditor
-	- add formatting options
 - plugins (general)
 	- rework structure (directory layout) of plugin definitions
 	- add import-filter plugins
@@ -19,6 +15,14 @@ stuff to do before 0.3.0 release
 - Twintable/RKEditorDataFrame
 	- merge the two classes
 	- more efficient syncing: fetch only the values actually needed instead of the whole table
+	- make configurable:
+		- invalid color (global and per variable)
+		- unused color (global and per variable)
+		- default alignment (per var type)
+		- default precision
+		- display of factor level labels (global and per variable)
+		- delay of factor-level popup
+	- highlighting of value ranges
 - Object editing / modification tracking:
 	- functions to set double/int/string-vectors directly. Use in paste-operations
 - RKVariable:

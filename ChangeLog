@@ -1,3 +1,9 @@
+- added basic per variable formatting options in the data editor (alignment, precision)
+- fixed: cell last edited did not react to single mouse click
+- fixed: switched to line below after a new row was automatically added
+- fixed: cursor right did not move to next cell when editing last (active) column
+- while editing, tab-key moves to next cell
+
 --- Version 0.2.9 - Sep-22-2004
 - use KDialog::marginHint () and KDialog::spacingHint () in plugins
 - fixed a crash in the formula widget
