@@ -20,6 +20,7 @@
 #include "misc/rktogglewidget.h"
 
 class QTextBrowser;
+class KHTMLPart;
 
 /**
 The Window where RK displays the (formatted) output
@@ -37,8 +38,9 @@ public:
 public slots:
 	void configureOutput ();
 	void clearOutput ();
+	void refreshOutput ();
 private:
-	QTextBrowser *browser;
+	KHTMLPart *khtmlpart;
 };
 
 #endif

@@ -83,6 +83,9 @@ int REmbed::initialize () {
 	runCommandInternal ("sink (file (\"" +RKSettingsModuleLogfiles::filesPath () +"/r_err\", \"w\"), FALSE, \"message\")\n", &error);
 	if (error) status |= SinkFail;
 	
+	runCommandInternal (".rk.output.file <- \"" +RKSettingsModuleLogfiles::filesPath() + "/rk_out.html\"", &error);
+	runCommandInternal (".rk.output.path <- \"" +RKSettingsModuleLogfiles::filesPath() + "\"", &error);
+	
 	outfile_offset = 0;
 	errfile_offset = 0;
 		

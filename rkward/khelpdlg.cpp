@@ -31,7 +31,7 @@
 
 #define GET_HELP_URL 1
 #define HELP_SEARCH 2
-
+#define GET_INSTALLED_PACKAGES 3
 
 KHelpDlg::KHelpDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
     : helpDlg(parent,name, modal,fl)
@@ -39,9 +39,11 @@ KHelpDlg::KHelpDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
 	resultsList->clear();
 	// HACK : I should'nt have to do that.
 	resultsList->removeColumn(0);
+	
 	resultsList->addColumn (i18n ("Topic"));
 	resultsList->addColumn (i18n ("Title"));
 	resultsList->addColumn (i18n ("Package"));
+	packagesList->insertItem (i18n("All"));
 }
 
 KHelpDlg::~KHelpDlg()
@@ -51,12 +53,20 @@ KHelpDlg::~KHelpDlg()
 void KHelpDlg::slotFindButtonClicked()
 {
 	QString agrep = "FALSE";
-	QString ignoreCase = "TRUE";
 	if(fuzzyCheckBox->isChecked ()==TRUE){
 		agrep="NULL";
 	}
+	
+	QString ignoreCase = "TRUE";
 	if(caseSensitiveCheckBox->isChecked ()==TRUE){
 		ignoreCase="FALSE";
+	}
+	
+	QString package = "NULL";
+	if(packagesList->currentItem()!=0){
+		package="\"";
+		package.append(packagesList->currentText());
+		package.append("\"");
 	}
 	
 	
@@ -66,9 +76,13 @@ void KHelpDlg::slotFindButtonClicked()
 	s.append(agrep);
 	s.append(", ignore.case=");
 	s.append(ignoreCase);
+	s.append(", package=");
+	s.append(package);
 	s.append(")");
 
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, HELP_SEARCH, chain);
+	
+	field->insertItem(field->currentText());
 }
 
 void KHelpDlg::slotResultsListDblClicked( QListViewItem * item, const QPoint &, int )
@@ -82,6 +96,12 @@ void KHelpDlg::slotResultsListDblClicked( QListViewItem * item, const QPoint &, 
 	
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_HELP_URL, chain);
 }
+
+void KHelpDlg::slotPackageListActivated()
+{
+	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_INSTALLED_PACKAGES, chain);
+}
+
 
 
 void KHelpDlg::rCommandDone (RCommand *command) {
@@ -100,7 +120,14 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 			RKGlobals::rkApp()->openHTML(url);
 			return;
 		}
-	} else {
+	} else if (command->getFlags () == GET_INSTALLED_PACKAGES) {
+		// FIXME : the following causes RKWard to crash (?).
+		RK_ASSERT ((command->stringVectorLength () % 4) == 0);
+		int count = (command->stringVectorLength () / 4);
+		for (int i=0; i < count; ++i) {
+			packagesList->insertItem(command->getStringVector ()[i]);
+		}
+	}else {
 		RK_ASSERT (false);
 	}
 }

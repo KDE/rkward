@@ -51,7 +51,7 @@
 // application specific includes
 #include "rkward.h"
 #include "rkeditormanager.h"
-#include "rkdocmanager.h"
+#include "rkdocmanager.h" 
 #include "core/rkmodificationtracker.h"
 #include "dataeditor/rkeditor.h"
 #include "dataeditor/rkdrag.h"
@@ -159,7 +159,7 @@ void RKwardApp::doPostInit () {
 	/*output->showMaximized ();
 	output->hide ();*/
 
-    QString dummy = "Before you start bashing at it: Please note that this is merely a technology preview release. You might acutally be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments are welcome.";
+    QString dummy = "Before you start bashing at it: please note that this is merely a technology preview release. You might acutally be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments are welcome.";
 	KMessageBox::information (this, dummy, "Before you complain...", "state_of_rkward");
 	
 	startR ();
@@ -202,6 +202,7 @@ void RKwardApp::doPostInit () {
 	
 	
 	helpDlg = new KHelpDlg(0);
+	helpDlg->setIcon(SmallIcon("help"));
 	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);
 	
 	
@@ -1081,7 +1082,6 @@ void RKwardApp::setEnabledActions(bool commandEditor)
 		editUndo->setEnabled(true);
 		editRedo->setEnabled(true);
 		editPaste->setEnabled(true);
-		fileOpen->setEnabled(true);
 		fileSave->setEnabled(true);
 		fileSaveAs->setEnabled(true);
 		runAll->setEnabled(true);
@@ -1095,7 +1095,6 @@ void RKwardApp::setEnabledActions(bool commandEditor)
 		editUndo->setEnabled(false);
 		editRedo->setEnabled(false);
 		editPaste->setEnabled(false);
-		fileOpen->setEnabled(false);
 		fileSave->setEnabled(false);
 		fileSaveAs->setEnabled(false);
 		runAll->setEnabled(false);

@@ -56,3 +56,27 @@
 	}
 	error ("Could not find column with given name")
 }
+
+
+# Requests a graph to be written.
+"rk.graph.on" <- function(){
+	i=1
+	while(file.exists(file.path(.rk.output.path,paste("graph",i,".png",sep="")))) {
+		i=i+1
+	}
+	png(file.path(.rk.output.path,paste("graph",i,".png",sep="")))
+	cat(paste("<img src=\"", paste("graph",i,".png",sep=""),"\"><br>",sep=""),file=.rk.output.file,append=TRUE)
+}
+
+"rk.graph.off" <- function(){
+	dev.off()
+}
+
+"rk.print" <- function(x) {
+	if(require(R2HTML)==TRUE) {
+		.HTML.file = .rk.output.file
+		HTML(x)
+	}
+}
+
+

@@ -38,6 +38,7 @@ public slots:
   /*$PUBLIC_SLOTS$*/
   virtual void          slotFindButtonClicked();
   virtual void          slotResultsListDblClicked( QListViewItem *item, const QPoint &, int );
+  virtual void          slotPackageListActivated();
   
 protected:
   /*$PROTECTED_FUNCTIONS$*/

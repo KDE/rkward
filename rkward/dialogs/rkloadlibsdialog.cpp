@@ -191,7 +191,7 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	LoadUnloadWidget::parent = dialog;
 	
 	QVBoxLayout *mvbox = new QVBoxLayout (this, 0, KDialog::spacingHint ());
-	QLabel *label = new QLabel (i18n ("No safeguards against removing essential packages. For example, unloading \"rkward\" package this application will no longer run properly. Please, be careful about the packages you unload."), this);
+	QLabel *label = new QLabel (i18n ("There are no safeguards against removing essential packages. For example, unloading \"rkward\" will prevent this application from running properly. Please, be careful about the packages you unload."), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	mvbox->addWidget (label);
 	
