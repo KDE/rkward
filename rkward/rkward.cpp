@@ -340,6 +340,11 @@ void RKwardApp::slotFileOpenRecent(const KURL& url)
 
 void RKwardApp::slotFileSave()
 {
+	if (doc->URL ().fileName() == i18n("Untitled")) {
+		slotFileSaveAs ();
+		return;
+	}
+
   slotStatusMsg(i18n("Saving file..."));
 	
   doc->saveDocument(doc->URL());

@@ -100,58 +100,49 @@ bool RInterface::issueCommand (const QString &command) {
 		qDebug ("could not issue synchronous command");
 		return false;
 	}
-	QString command_string = command;
-	command_string.append ("\nprint (\"" + end_tag + "\")\n");
 
-	qDebug (command_string);
-
-	issue (command_string);
+	issue (command);
 	sync_command = true;
 	return true;
 }
 
 void RInterface::issueAsyncCommand (const QString &command) {
-	QString command_string = command;
-	command_string.append ("\nprint (\"" + end_tag + "\")\n");
-
-	async_command_stack.append (command_string);
-
-	qDebug (command_string);
+	async_command_stack.append (command);
 
 	// this is the first item in the stack, start pushing immediately
 	if (async_command_stack.count () == 1) {
-		issue (command_string);
+		issue (command);
 	} else {
 		qDebug ("placed in queue");
 	}
 }
 
-void RInterface::issue (QString &command) {
+void RInterface::issue (const QString &command) {
 	emit (syncBlocked ());
 	command_running = true;
 	if (!busy_writing) {
-		// we must keep a local copy while write is in progress!
-		command_write_buffer = qstrdup (command);
-
-		writeStdin (command_write_buffer, command.length ());
-		emit (writingRequest (command_write_buffer));
-		busy_writing = true;
+		write (command);
 	} else {
 		waiting_commands.append (command);
 		commands_waiting = true;
 	}
 }
 
+void RInterface::write (const QString &command) {
+	// we must keep a local copy while write is in progress!
+	command_write_buffer = qstrdup (command);
+	command_write_buffer.append ("\nprint (\"" + end_tag + "\")\n");
+
+	writeStdin (command_write_buffer, command_write_buffer.length ());
+	emit (writingRequest (command));
+	busy_writing = true;
+}
+
 void RInterface::doneWriting (KProcess *proc) {
 	if (commands_waiting) {
 		QString command = waiting_commands.first ();
-		// we must keep a local copy while write is in progress!
-		command_write_buffer = qstrdup (command);
-
-		writeStdin (command_write_buffer, command.length ());
-		emit (writingRequest (command_write_buffer));
+		write (command);
 		command_running = true;
-		busy_writing = true;
 		if (waiting_commands.removeFirst ()) {
 			commands_waiting = false;
 		}

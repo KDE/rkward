@@ -62,8 +62,10 @@ friend class RKwardApp;
 	bool busy_writing;
 	bool commands_waiting;
 	QStrList waiting_commands;
-	void issue (QString &command);
+	void issue (const QString &command);
 	RKwatch *watch;
+/** This is the last step in the chain of committing a command, and actually writes it */
+	void write (const QString &command);
 private slots:
 /** This slot receives raw R-output */
 	void gotROutput (KProcess *proc, char *buffer, int buflen);

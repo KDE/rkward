@@ -31,6 +31,7 @@
 #include "twintablemember.h"
 #include "typeselectcell.h"
 #include "rtableitem.h"
+#include "nameselectcell.h"
 
 TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name){
     resize( 600, 480 );
@@ -49,11 +50,12 @@ TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name)
 			varview->setItem (j, i, new RTableItem (varview));		
 		}
 	}
-	varview->horizontalHeader()->setLabel(0, i18n( "new_Variable" ) );
 	varview->verticalHeader()->setLabel(0, i18n( "Label" ) );
 	varview->verticalHeader()->setLabel(TYPE_ROW, i18n( "Type" ) );
 	for (int i=0; i < varview->numCols (); i++) {
 		varview->setItem (TYPE_ROW, i, new TypeSelectCell (varview));
+		varview->setItem (NAME_ROW, i, new NameSelectCell (varview));
+		((NameSelectCell *) varview->item (NAME_ROW, i))->init ();
 	}
 	varview->verticalHeader()->setLabel(2, i18n( "e.g. format" ) );
 	varview->verticalHeader()->setLabel(3, i18n( "e.g. category" ) );
@@ -135,6 +137,7 @@ void TwinTable::insertNewColumn (int where, QString name) {
 		varview->setItem (i, where, new RTableItem (varview));
 	}
 	varview->setItem (TYPE_ROW, where, new TypeSelectCell (varview));
+	varview->setItem (NAME_ROW, where, new NameSelectCell (varview));
 	dataview->insertColumns (where);
 	for (int i=0; i < dataview->numRows (); i++) {
 		dataview->setItem (i, where, new RTableItem (dataview));

@@ -165,6 +165,7 @@ bool RKwardDoc::saveDocument(const KURL& url, const char *format /*=0*/)
 
 	inter->issueAsyncCommand ("save.image (\"" + url.path () + "\")");
 
+	setURL (url);
   modified=false;
   return true;
 }
@@ -185,8 +186,7 @@ void RKwardDoc::pushTable (TwinTableMember *table, QString name) {
 
 	QString vector;
 	for (int col=0; col < table->numCols (); col++) {
-		// TODO: add names!
-		vector= "c (";
+		vector = table->varTable ()->rText (NAME_ROW, col) + "=c (";
 		for (int row=0; row < table->numRows (); row++) {
 			vector.append (table->rText (row, col));
 			if (row < (table->numRows ()-1)) {

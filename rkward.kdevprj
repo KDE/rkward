@@ -114,7 +114,7 @@ install_location=
 type=DATA
 
 [rkward/Makefile.am]
-files=rkward/main.cpp,rkward/rkward.cpp,rkward/rkward.h,rkward/rkwarddoc.cpp,rkward/rkwarddoc.h,rkward/rkwardview.cpp,rkward/rkwardview.h,rkward/rkwardui.rc,rkward/rkward.desktop,rkward/lo32-app-rkward.png,rkward/lo16-app-rkward.png,rkward/view.ui,rkward/twintable.cpp,rkward/twintable.h,rkward/twintablemember.cpp,rkward/twintablemember.h,rkward/rkdrag.cpp,rkward/rkdrag.h,rkward/rinterface.cpp,rkward/rinterface.h,rkward/rkwatch_ui.ui,rkward/rkwatch.cpp,rkward/rkwatch.h,rkward/typeselectcell.cpp,rkward/typeselectcell.h,rkward/rtableitem.cpp,rkward/rtableitem.h
+files=rkward/main.cpp,rkward/rkward.cpp,rkward/rkward.h,rkward/rkwarddoc.cpp,rkward/rkwarddoc.h,rkward/rkwardview.cpp,rkward/rkwardview.h,rkward/rkwardui.rc,rkward/rkward.desktop,rkward/lo32-app-rkward.png,rkward/lo16-app-rkward.png,rkward/view.ui,rkward/twintable.cpp,rkward/twintable.h,rkward/twintablemember.cpp,rkward/twintablemember.h,rkward/rkdrag.cpp,rkward/rkdrag.h,rkward/rinterface.cpp,rkward/rinterface.h,rkward/rkwatch_ui.ui,rkward/rkwatch.cpp,rkward/rkwatch.h,rkward/typeselectcell.cpp,rkward/typeselectcell.h,rkward/rtableitem.cpp,rkward/rtableitem.h,rkward/nameselectcell.cpp,rkward/nameselectcell.h
 sub_dirs=
 type=prog_main
 
@@ -135,6 +135,18 @@ dist=true
 install=false
 install_location=
 type=SOURCE
+
+[rkward/nameselectcell.cpp]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[rkward/nameselectcell.h]
+dist=true
+install=false
+install_location=
+type=HEADER
 
 [rkward/rinterface.cpp]
 dist=true
