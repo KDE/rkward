@@ -71,14 +71,11 @@ RKPlugin::RKPlugin(const QString &filename) : QWidget () {
 	RKPlugin::filename = filename;
 	
 	// create an error-dialog
-	error_dialog = new RKErrorDialog (i18n ("The R engine reported errors while processing the plugin ") + caption () + i18n (". This may lead to an incorrect ouput and is likely due to a bug in the plugin.\nError messages are shown below."), i18n ("R-Error"), false);
+	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin ") + caption () + i18n (". This may lead to an incorrect ouput and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below."), i18n ("R-Error"), false);
 	
 	// initialize the PHP-backend with the code-template
 	should_updatecode=false;
-	
-	// Correcting a bug. Not sure about what I'm doing though. (Pierre)
-	//QString dummy = QFileInfo (QFile (filename)).dirPath () + "/code.php";
-	QString dummy = QFileInfo (filename).dirPath () + "/code.php";
+	QString dummy = QFileInfo (QFile (filename)).dirPath () + "/code.php";
 	backend = new PHPBackend ();
 	connect (backend, SIGNAL (commandDone (int)), this, SLOT (backendCommandDone (int)));
 	connect (backend, SIGNAL (idle ()), this, SLOT (backendIdle ()));
@@ -277,6 +274,51 @@ void RKPlugin::buildDialog (const QDomElement &dialog_element, bool wizard_avail
 	vbox->addWidget (codeDisplay);
 
 	num_pages = 1;
+
+
+  // inserting connection for enabling widgets - or not...
+  // work only if widget are on the same page
+  // valid for every widget excet formula (too weird)
+    Dependancies::Iterator it;
+  for (it = dependant.begin(); it != dependant.end(); ++it) {
+  qDebug ("id : %s", it.key().latin1 ()) ;
+  if  (it.data() != "#free#"){
+    WidgetsMap::iterator master ;
+      for (master = widgets.begin(); master != widgets.end(); ++master) {
+//        qDebug ("I depend on  : %s", it.data().latin1 ()) ;
+//        qDebug ("Am I your master ? I am : %s", master.key().latin1 ()) ;
+        if (master.data ()->type () == CHECKBOX_WIDGET && master.key() == it.data() ){
+//            qDebug ("I am your master I am : %s", master.key().latin1 ()) ;
+            WidgetsMap::iterator slave = widgets.find (it.key());
+            if (slave != widgets.end ()  ) {
+              if(  ! (RKCheckBox *) master.data()->isOk ){
+                slave.data()->setEnabled(false );
+                };
+               qDebug ("Connecting %s to %s",slave.key().latin1(),master.key().latin1()) ;
+               connect( (RKCheckBox *) master.data(), SIGNAL(clicked()) ,(RKCheckBox *)   slave.data(), SLOT(active()));
+               qDebug ("You are very right to choose me OK") ;
+               };
+          };
+          if (master.data ()->type () == RADIO_WIDGET  ){
+//          qDebug ("Is your master a radio ?") ;
+//          qDebug ("I look if %s is in %s", it.data().latin1() , master.key().latin1 ()) ;
+            RKRadio  * temp = (RKRadio * ) master.data() ;
+            QButton * sol = (QButton *) temp->findLabel(it.data()) ;
+            if ( sol != 0){
+            WidgetsMap::iterator slave = widgets.find (it.key());
+            if (slave != widgets.end ()  ) {
+//              qDebug ("Yes it is") ;
+              if (! temp->isOk(it.data()) ) slave.data()->setEnabled(false );
+              connect(  sol , SIGNAL(toggled(bool)) ,  slave.data(), SLOT(active(bool)));
+              };
+            }
+//            else  qDebug ("No it isn't") ;
+         };
+        };
+      };
+    };
+
+
 }
 
 void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_available) {
@@ -338,6 +380,47 @@ void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_avail
 	connect (helpButton, SIGNAL (clicked ()), this, SLOT (help ()));
 	
 	wizard_stack->raiseWidget (0);
+
+  // inserting connection for enabling widgets - or not...
+  // work only if widget are on the same page 
+  // valid for every widget excet formula (too weird)
+  Dependancies::Iterator it;
+  for (it = dependant.begin(); it != dependant.end(); ++it) {
+  qDebug ("id : %s", it.key().latin1 ()) ;
+  if  (it.data() != "#free#"){
+    WidgetsMap::iterator master ;
+      for (master = widgets.begin(); master != widgets.end(); ++master) {
+//        qDebug ("I depend on  : %s", it.data().latin1 ()) ;
+//        qDebug ("Am I your master ? I am : %s", master.key().latin1 ()) ;
+        if (master.data ()->type () == CHECKBOX_WIDGET && master.key() == it.data() ){
+//            qDebug ("I am your master I am : %s", master.key().latin1 ()) ;
+            WidgetsMap::iterator slave = widgets.find (it.key());
+            if (slave != widgets.end ()  ) {
+              if(  ! (RKCheckBox *) master.data()->isOk ){
+                slave.data()->setEnabled(false );
+                };
+               connect( (RKCheckBox *) master.data(), SIGNAL(clicked()) ,  slave.data(), SLOT(active()));
+               qDebug ("You are very right to choose me OK") ;
+               };
+          };
+          if (master.data ()->type () == RADIO_WIDGET  ){
+//          qDebug ("Is your master a radio ?") ;
+//          qDebug ("I look if %s is in %s", it.data().latin1() , master.key().latin1 ()) ;
+            RKRadio  * temp = (RKRadio * ) master.data() ;
+            QButton * sol = (QButton *) temp->findLabel(it.data()) ;
+            if ( sol != 0){
+            WidgetsMap::iterator slave = widgets.find (it.key());
+            if (slave != widgets.end ()  ) {
+//              qDebug ("Yes it is") ;
+              if (! temp->isOk(it.data()) ) slave.data()->setEnabled(false );
+              connect(  sol , SIGNAL(toggled(bool)) ,  slave.data(), SLOT(active(bool)));
+              };
+            }
+//            else  qDebug ("No it isn't") ;
+         };
+        };
+      };
+    };
 }
 
 void RKPlugin::buildStructure (const QDomElement &element, QBoxLayout *playout, QWidget *pwidget) {
@@ -377,7 +460,7 @@ void RKPlugin::buildStructure (const QDomElement &element, QBoxLayout *playout, 
 			widget = new RKRadio (e, pwidget, this);
 		} else if (e.tagName () == "checkbox") {
 			widget = new RKCheckBox (e, pwidget, this);
-		} else if (e.tagName () == "spinbox") {
+    } else if (e.tagName () == "spinbox") {
 			widget = new RKPluginSpinBox (e, pwidget, this);
 		} else if (e.tagName () == "varslot") {
 			widget = new RKVarSlot (e, pwidget, this);
@@ -389,7 +472,8 @@ void RKPlugin::buildStructure (const QDomElement &element, QBoxLayout *playout, 
 		
 		if (widget) {
 			playout->addWidget (widget);
-			registerWidget (widget, e.attribute ("id", "#noid#"), num_pages);
+			registerWidget (widget, e.attribute ("id", "#noid#"), e.attribute("depend","#free#"),
+      num_pages);
 		}
 	}
 }
@@ -499,9 +583,10 @@ void RKPlugin::backendIdle () {
 	}
 }
 
-void RKPlugin::registerWidget (RKPluginWidget *widget, const QString &id, int page) {
+void RKPlugin::registerWidget (RKPluginWidget *widget, const QString &id , const QString &dep, int page) {
 	widgets.insert (id, widget);
 	page_map.insert (widget, page);
+  dependant.insert (id,dep);
 }
 
 void RKPlugin::help () {
@@ -574,7 +659,7 @@ QString RKPlugin::getVar (const QString &id) {
 		widget = widgets[ident];
 	} else {
 		widget = 0;
-		RK_DO (qDebug ("Couldn't find value for $%s$!", id.latin1 ()), PLUGIN, DL_ERROR);
+		RK_DO (qDebug ("Couldn't find value for   $%s$    !", id.latin1 ()), PLUGIN, DL_ERROR);
 		return ("#unavailable#");
 	}
 

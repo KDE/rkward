@@ -31,6 +31,7 @@ RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin) 
 	// create label
 	label = new QLabel (element.attribute ("label", "Select one:"), this);
 	vbox->addWidget (label);
+	depend = element.attribute ("depend", "");
 
 	// create ButtonGroup
 	group = new QButtonGroup (this);
@@ -84,3 +85,42 @@ QString RKRadio::value (const QString &) {
 void RKRadio::buttonClicked (int) {
 	emit (changed ());
 }
+
+void RKRadio::setEnabled(bool checked){
+  group->setEnabled(checked);
+  }
+
+
+void RKRadio::active(){
+bool isOk = group->isEnabled();
+group->setEnabled(! isOk) ;
+}
+
+void RKRadio::active(bool isOk){
+group->setEnabled(isOk) ;
+}
+
+QRadioButton * RKRadio::findLabel (QString lab) {
+  QRadioButton * sol = 0 ;
+  OptionsMap::iterator findlab;
+      for (findlab = options.begin(); findlab != options.end(); ++findlab) {
+        if (findlab != options.end ()  ) { 
+//          qDebug ("looking  : %s", findlab.data().latin1 ()) ;
+        if ( findlab.data() == lab) { return findlab.key() ;};
+          };
+        };
+   return  sol ;
+}  
+
+bool RKRadio::isOk(QString val) {
+  QString sol ;
+  OptionsMap::Iterator it;
+	for (it = options.begin(); it != options.end(); ++it) {
+		if (it.key()->isChecked ()) {
+         sol   = it.data() ;
+		};
+    };
+    if (sol == val) return true ;
+    else return false;
+
+ }

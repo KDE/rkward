@@ -43,19 +43,25 @@ public:
 	~RKVarSlot();
 	int getNumVars () { return num_vars; };
 	QValueList<RKVariable*> getVariables ();
+  int type() {return VARSLOT_WIDGET ;};
+  void  setEnabled(bool);
+  
 public slots:
 /** Called when the select-button is pressed */
 	void selectPressed ();
 	void listSelectionChanged ();
 /// find out whether all items are still present, remove items which are no longer present and update text for all others
 	void objectListChanged ();
+  void active();
+  void active(bool);
 private:
 	QLineEdit *line_edit;
 	QListView *list;
 	QPushButton *select;
 	RKVarSelector *source;
 	QString source_id;
-	int min_vars;
+  QString depend;
+  int min_vars;
 	int num_vars;
 	bool multi;
 	bool required;
@@ -63,7 +69,6 @@ private:
 	typedef QMap<QListViewItem*, RKVariable*> ItemMap; 
 	ItemMap item_map;
 	void updateState ();
-	int type () { return VARSLOT_WIDGET; };
 protected:
 	bool isSatisfied ();
 	QString value (const QString &modifier);

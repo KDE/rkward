@@ -38,6 +38,7 @@
 RKFormula::RKFormula (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
 	RK_TRACE (PLUGIN);
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	depend = element.attribute ("depend", "");
 	
 	type_selector = new QButtonGroup (this);
 	type_selector->setColumnLayout (0, Qt::Vertical);

@@ -26,22 +26,31 @@
 RKCheckBox::RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
 	qDebug ("creating checkbox");
 
-	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+  QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	checkbox = new QCheckBox (element.attribute ("label"), this);
 	vbox->addWidget (checkbox);
-
+  isOk =false;
 	value_if_checked = element.attribute ("value", "1");
 	value_if_unchecked = element.attribute ("value_unchecked", "");
+	depend = element.attribute ("depend", "");
 	
 	if (element.attribute ("checked") == "true") {
 		checkbox->setChecked (true);
+    isOk =true ;
 	}
 
 	connect (checkbox, SIGNAL (stateChanged (int)), this, SLOT (changedState (int)));
+  connect(checkbox,SIGNAL(clicked()),  SIGNAL(clicked()) );
 }
 
 RKCheckBox::~RKCheckBox () {
 }
+
+
+void RKCheckBox::setEnabled(bool checked){
+  checkbox->setEnabled(checked);
+  }
+  
 
 QString RKCheckBox::value (const QString &) {
 	if (checkbox->isChecked ()) {
@@ -51,7 +60,18 @@ QString RKCheckBox::value (const QString &) {
 	}
 }
 
+
 void RKCheckBox::changedState (int) {
 	emit (changed ());
+}
+
+void RKCheckBox::active(bool isOk){
+checkbox->setEnabled(isOk) ;
+}
+
+  
+void RKCheckBox::active(){
+bool isOk = checkbox->isEnabled();
+checkbox->setEnabled(! isOk) ;
 }
 

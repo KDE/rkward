@@ -16,6 +16,7 @@
  ***************************************************************************/
 #ifndef RKPLUGINSPINBOX_H
 #define RKPLUGINSPINBOX_H
+#define SPINBOX_WIDGET 3 // comme ma note d'interro
 
 #include <rkpluginwidget.h>
 
@@ -31,10 +32,16 @@ public:
 
 	~RKPluginSpinBox();
 	QString value (const QString &modifier);
+  int type() {return SPINBOX_WIDGET ;} ;
+  void setEnabled(bool);
 public slots:
 	void valueChanged (int);
+  void active();
+  void active(bool);
+  
 private:
 	RKSpinBox *spinbox;
+  QString depend;
 };
 
 #endif

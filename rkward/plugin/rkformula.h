@@ -60,7 +60,7 @@ private:
 	QWidget *custom_model_widget;
 	QListView *model_view;
 	QListView *predictors_view;
-	
+   QString depend ; 
 	QPushButton *add_button;
 	QPushButton *remove_button;
 	QSpinBox *level_box;

@@ -37,6 +37,7 @@ you can have more than one, e.g. for serving conceptionally different VarSlots.
 @author Thomas Friedrichsmeier
   */
 
+
 class RKVarSelector : public RKPluginWidget {
    Q_OBJECT
 public: 
@@ -49,10 +50,14 @@ public:
 	int type () { return VARSELECTOR_WIDGET; };
 /** find out, whether the given object is available in the RKVarselector (i.e. it a) exists and b) matched the filter requirements) */
 	bool containsObject (RObject *object);
+  void setEnabled(bool);
 public slots:
 	void objectListChanged ();
+  void active();
+  void active(bool);
 private:
 	RKObjectListView *list_view;
+    QString depend;
 };
 
 #endif

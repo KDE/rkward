@@ -57,6 +57,7 @@ public:
 	virtual QString complaints ();
 /** Returns, what type of widget this is */
 	virtual int type () { return GENERIC_WIDGET; };
+  bool isOk;
 /** Performs any initialization that has to be delayed unitl all widgets are constructed (if any) */
 	virtual void initialize () { ; };
 signals:
@@ -64,6 +65,8 @@ signals:
 private:
 	QWidget *_parent;
 	RKPlugin *_plugin;
+
+  
 };
 
 #endif

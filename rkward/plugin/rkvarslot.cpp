@@ -67,6 +67,7 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 
 	// further infos
 	source_id = element.attribute ("source");
+	depend = element.attribute ("depend", "");
 	required = (element.attribute ("required") == "true");
 	num_vars = 0;
 	selection = false;
@@ -262,3 +263,20 @@ QString RKVarSlot::complaints () {
 	if (isSatisfied ()) return "";
 	return i18n (" - You have to select a variable for the \"" + label->text () + "\"-field\n");
 }
+
+void RKVarSlot::setEnabled(bool checked){
+  line_edit->setEnabled(checked);   
+  select->setEnabled(checked);
+    }
+
+void RKVarSlot::active(){
+  bool isOk = line_edit->isEnabled();
+  line_edit->setEnabled(! isOk) ;
+  select->setEnabled(! isOk) ;
+}
+
+void RKVarSlot::active(bool isOk){
+  line_edit->setEnabled(isOk) ;
+  select->setEnabled(isOk) ;
+}
+

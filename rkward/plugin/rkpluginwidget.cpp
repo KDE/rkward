@@ -42,3 +42,5 @@ QString RKPluginWidget::value (const QString &) {
 bool RKPluginWidget::isSatisfied () {
 	return true;
 }
+
+

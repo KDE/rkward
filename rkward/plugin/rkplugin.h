@@ -100,14 +100,17 @@ private:
 
 	typedef QMap<RKPluginWidget*, int> PageMap;
 	PageMap page_map;
-	
+
+  typedef QMap<QString, QString> Dependancies;
+	Dependancies dependant;
+
 /** Called from activated (). builds the GUI */
 	void buildDialog (const QDomElement &dialog_element, bool wizard_available);
 	void buildWizard (const QDomElement &wizard_element, bool dialog_available);
 	
 	void buildStructure (const QDomElement &element, QBoxLayout *parent, QWidget *pwidget);
 	
-	void registerWidget (RKPluginWidget *widget, const QString &id, int page=0);
+	void registerWidget (RKPluginWidget *widget, const QString &id, const QString &dep, int page=0);
 
 	QString current_code;
 	QString filename;

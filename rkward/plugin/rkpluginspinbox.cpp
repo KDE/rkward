@@ -29,6 +29,7 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, QWidget *parent, R
 	
 	label = new QLabel (element.attribute ("label", "Enter value:"), this);
 	vbox->addWidget (label);
+	depend = element.attribute ("depend", "");
 
 	spinbox = new RKSpinBox (this);
 	if (element.attribute ("type") != "integer") {
@@ -43,10 +44,23 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, QWidget *parent, R
 RKPluginSpinBox::~RKPluginSpinBox () {
 }
 
+void RKPluginSpinBox::setEnabled(bool checked){
+  spinbox->setEnabled(checked);
+  }
+
 QString RKPluginSpinBox::value (const QString &) {
 	return (spinbox->text ());
 }
 
 void RKPluginSpinBox::valueChanged (int) {
 	plugin ()->changed ();
+}
+
+void RKPluginSpinBox::active(){
+bool isOk = spinbox->isEnabled();
+spinbox->setEnabled(! isOk) ;
+}
+
+void RKPluginSpinBox::active(bool isOk){
+spinbox->setEnabled( isOk) ;
 }

@@ -21,7 +21,11 @@
 
 #include <qstring.h>
 
+#define CHECKBOX_WIDGET 51 // comme le pastis
+
+
 class QCheckBox;
+
 
 /**
 This RKPluginWidget provides a checkbox
@@ -33,15 +37,26 @@ class RKCheckBox : public RKPluginWidget  {
 public: 
 	RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKCheckBox ();
+	int type() {return CHECKBOX_WIDGET ; };
+//  bool isOk ;
+  void setEnabled(bool);
 public slots:
 	void changedState (int);
+  void active();
+  void active(bool);
+
+  
 private:
 	QCheckBox *checkbox;
 	QString value_if_checked;
 	QString value_if_unchecked;
+  QString depend;
 protected:
 /** Returns the value of the currently selected option. */
 	QString value (const QString &modifier);
+
+signals: // Signals
+  void clicked();
 };
 
 #endif

@@ -30,7 +30,8 @@
 
 RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
 	RK_TRACE (PLUGIN);
-	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	QVBoxLayout  *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	depend = element.attribute ("depend", "");
 	
 	label = new QLabel (element.attribute ("label", "Select Variable(s)"), this);
 	vbox->addWidget (label);
@@ -104,4 +105,17 @@ bool RKVarSelector::containsObject (RObject *object) {
 	}
 
 	return false;
+}
+
+void RKVarSelector::setEnabled(bool checked){
+  list_view->setEnabled(checked);
+  }
+
+void RKVarSelector::active(){
+bool isOk = list_view->isEnabled();
+list_view->setEnabled(! isOk) ;
+}
+
+void RKVarSelector::active(bool isOk){
+list_view->setEnabled(isOk) ;
 }

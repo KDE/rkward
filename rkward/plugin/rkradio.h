@@ -25,6 +25,9 @@
 class QButtonGroup;
 class QRadioButton;
 
+#define RADIO_WIDGET 666 // comme la radio pirate de caen
+
+
 /** This RKPluginWidget provides a group of radio-buttons.
   *@author Thomas Friedrichsmeier
   */
@@ -34,12 +37,20 @@ class RKRadio : public RKPluginWidget  {
 public: 
 	RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKRadio();
+  void setEnabled(bool);
+	int type() {return RADIO_WIDGET ; };
+  QRadioButton * findLabel(QString);
+  bool isOk (QString) ;
 public slots:
 	void buttonClicked (int id);
+  void active();
+  void active(bool);
+  
 private:
 	QButtonGroup *group;
 	typedef QMap<QRadioButton *, QString> OptionsMap;
 	OptionsMap options;
+  QString depend;
 protected:
 /** Returns the value of the currently selected option. */
 	QString value (const QString &modifier);
