@@ -51,7 +51,7 @@ RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin, 
 		options.insert (button, child.attribute ("value"));
 		group_layout->addWidget (button);
 
-		if (child.attribute ("checked") == true) {
+		if (child.attribute ("checked") == "true") {
 			button->setChecked (true);
 			checked_one = true;
 		}

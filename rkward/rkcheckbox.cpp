@@ -29,7 +29,7 @@ RKCheckBox::RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *p
 	value_if_checked = element.attribute ("value", "1");
 	value_if_unchecked = element.attribute ("value_unchecked", "");
 	
-	if (element.attribute ("checked") == true) {
+	if (element.attribute ("checked") == "true") {
 		checkbox->setChecked (true);
 	}
 

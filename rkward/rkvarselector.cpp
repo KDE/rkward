@@ -61,7 +61,7 @@ QStrList RKVarSelector::selectedVars () {
 	while (current->itemBelow ()) {
 		current = current->itemBelow ();
 		if (current->isSelected ()) {
-			selected.append ("rk." + current->parent ()->text (0) + "[\"" + current->text (0) + "\"]");
+			selected.append ("rk." + current->parent ()->text (0) + "[[\"" + current->text (0) + "\"]]");
 		}		              	
 	}
 

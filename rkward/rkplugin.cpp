@@ -188,7 +188,9 @@ void RKPlugin::buildStructure (const QDomElement &element, QLayout *playout, QWi
 			QVBoxLayout *layout = new QVBoxLayout (playout, 6);	// just a container
 			QGroupBox *box = new QGroupBox (1, Qt::Vertical, e.attribute ("label"), pwidget);
 			layout->addWidget (box);
-			buildStructure (e, box->layout (), box);
+			QWidget *dummy = new QWidget (box);		// cumbersome workaround. Can this be done in a more straightforward way?
+			QVBoxLayout *ilayout = new QVBoxLayout (dummy, 6);
+			buildStructure (e, ilayout, dummy);
 		} else if (e.tagName () == "varselector") {
 			widget = new RKVarSelector (e, pwidget, this, playout);
 		} else if (e.tagName () == "radio") {
