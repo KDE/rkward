@@ -17,6 +17,7 @@
 #include "robjectlist.h"
 
 #define AUTO_UPDATE_INTERVAL 10000
+#define UPDATE_DELAY_INTERVAL 500
 
 #define UPDATE_LIST_COMMAND 1
 #define GET_TYPE_COMMAND 2
@@ -39,6 +40,8 @@ RObjectList::RObjectList () : RContainerObject (0, "") {
 	update_timer->start (AUTO_UPDATE_INTERVAL, true);
 	
 	container_type = RObject::Workspace;
+	
+	command_chain = 0;
 }
 
 
@@ -49,7 +52,8 @@ void RObjectList::rCommandDone (RCommand *command) {
 	bool changed = false;
 
 	if (command->getFlags () == UPDATE_LIST_COMMAND) {
-		for (int i = 0; i < command->stringVectorLength (); ++i) {
+		num_children_updating = command->stringVectorLength ();
+		for (int i = 0; i < num_children_updating; ++i) {
 			QString cname = command->getStringVector ()[i];
 			if (childmap.find (cname) != childmap.end ()) {
 				childmap[cname]->updateFromR ();
@@ -85,8 +89,16 @@ void RObjectList::rCommandDone (RCommand *command) {
 }
 
 void RObjectList::updateFromR () {
+	if (command_chain) {
+		// gee, looks like another update is still on the way. lets schedule one for later:
+		update_timer->start (UPDATE_DELAY_INTERVAL, true);
+		return;
+	}
+
+	command_chain = RKGlobals::rInterface ()->startChain (0);
+
 	RCommand *command = new RCommand ("ls (all.names=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_LIST_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	RKGlobals::rInterface ()->issueCommand (command, command_chain);
 }
 
  void RObjectList::createFromR (RContainerObject *parent, const QString &cname) {
@@ -103,8 +115,23 @@ void RObjectList::updateFromR () {
 	
 	RCommand *command = new RCommand ("c (is.data.frame (" + fullname + "), is.matrix (" + fullname + "), is.array (" + fullname + "), is.list (" + fullname + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, GET_TYPE_COMMAND);
 	pending_objects.insert (command, obj);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
- }
+	RKGlobals::rInterface ()->issueCommand (command, command_chain);
+}
+
+void RObjectList::childUpdateComplete () {
+	RK_TRACE (APP);
+	RK_ASSERT (num_children_updating);
+	if ((--num_children_updating) <= 0) {
+		RK_TRACE (APP);
+
+		RK_ASSERT (command_chain);
+		command_chain = RKGlobals::rInterface ()->closeChain (command_chain);
+		RK_ASSERT (!command_chain);
+
+	// TODO: check whether there really were any changes
+		emit (updateComplete (true));
+	}
+}
 
 void RObjectList::timeout () {
 	updateFromR ();

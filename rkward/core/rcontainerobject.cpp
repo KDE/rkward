@@ -33,6 +33,7 @@ RContainerObject::RContainerObject (RContainerObject *parent, const QString &nam
 	classname = 0;
 	dimension = 0;
 	num_classes = num_dimensions = 0;
+	num_children_updating = 0;
 }
 
 RContainerObject::~RContainerObject () {
@@ -48,23 +49,24 @@ QString RContainerObject::getDescription () {
 
 void RContainerObject::updateFromR () {
 	RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 
 	command = new RCommand ("c (is.data.frame (" + getFullName () + "), is.matrix (" + getFullName () + "), is.array (" + getFullName () + "), is.list (" + getFullName () + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_TYPE_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 	
 	command = new RCommand ("dim (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 
 	command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CHILD_LIST_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 }
 
 void RContainerObject::rCommandDone (RCommand *command) {
 	bool changed = false;
 
 	if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
-		for (int i = 0; i < command->stringVectorLength (); ++i) {
+		num_children_updating = command->stringVectorLength ();
+		for (int i = 0; i < num_children_updating; ++i) {
 			QString cname = command->getStringVector ()[i];
 			if (childmap.find (cname) != childmap.end ()) {
 				childmap[cname]->updateFromR ();
@@ -146,6 +148,11 @@ void RContainerObject::typeMismatch (RObject *child, QString childname) {
 	childmap.remove (childname);
 	
 	RKGlobals::rObjectList()->createFromR (this, childname);
+}
+
+void RContainerObject::childUpdateComplete () {
+	RK_ASSERT (num_children_updating);
+	if ((--num_children_updating) <= 0) parent->childUpdateComplete ();
 }
 
 void RContainerObject::addChild (RObject *child, QString childname) {

@@ -64,6 +64,7 @@ RCommandChain *RThread::closeChain (RCommandChain *chain) {
 	mutex.lock ();
 	chain->closed = true;
 	RCommandChain *ret = chain->parent;
+	if (ret == top_chain) ret = 0;
 	
 	// lets see, whether we can do some cleanup
 	while (current_chain->commands.isEmpty () && current_chain->closed && current_chain->parent) {

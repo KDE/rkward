@@ -37,6 +37,8 @@ public:
 	QString getDescription ();
 
 	void updateFromR ();
+	
+	virtual void childUpdateComplete ();
 private:
 	friend class RObject;
 	void typeMismatch (RObject *child, QString childname);
@@ -51,6 +53,7 @@ protected:
 	int num_dimensions;
 	int *dimension;
 	int container_type;
+	int num_children_updating;
 
 	void rCommandDone (RCommand *command);
 };

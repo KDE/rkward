@@ -26,6 +26,7 @@
 
 class QTimer;
 class RCommand;
+class RCommandChain;
 
 /**
 This class is responsible for keeping and updating a list of objects in the R-workspace.
@@ -43,11 +44,15 @@ public:
 	void createFromR (RContainerObject *parent, const QString &cname);
 	
 	QString getFullName () { return ""; };
+	
+	RCommandChain *getUpdateCommandChain () { return command_chain; };
+	
+	void childUpdateComplete ();
 public slots:
 	void timeout ();
 signals:
-/// emitted if the list of objects has changed
-	void changed ();
+/// emitted when the list of objects has been updated
+	void updateComplete (bool changed);
 protected:
 	void rCommandDone (RCommand *command);
 private:
@@ -59,6 +64,8 @@ private:
 	};
 	
 	QMap<RCommand*, PendingObject*> pending_objects;
+	
+	RCommandChain *command_chain;
 };
 
 #endif
