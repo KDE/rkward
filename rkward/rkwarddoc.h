@@ -104,15 +104,15 @@ class RKwardDoc : public QObject
 	RInterface *inter;
 	RKwardView *view;
 	QString tablename;
+	QString command_separator;
 
-	enum OutputIs {Loaded=0, MetaDim=1, DataDim=2, MetaCol=3, DataCol=4, Nothing=0};
+	enum OutputIs {Loaded=0, WholeTables=4, Nothing=5};
 	OutputIs output_is;
-	int output_col;
 
 	/** pushes a whole (modified) twintable to R */
 	void pushTable (TwinTable *ttable, QString name);
 	/** pulls a whole table from R */
-	void pullTable (TwinTable *ttable);
+	void pullTable ();
 };
 
 #endif // RKWARDDOC_H

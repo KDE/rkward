@@ -40,11 +40,14 @@ public:
 /** Returns the text in a format suitable for submission to R
 	(Practically that means, to quote strings) */
 	virtual QString rText ();
-private:
-/** Stores, whether this cell holds a value that is legal for it */
-	bool valid;
+	virtual void checkValid ();
+	BaseType type ();
+	TwinTableMember *ttm ();
 protected:
 	void paint (QPainter *p, const QColorGroup &cg, const QRect &cr, bool selected);
+/** Stores, whether this cell holds a value that is legal for it */
+	bool valid;
+	void setText (const QString &str);
 };
 
 #endif

@@ -18,6 +18,7 @@
 // include files for Qt
 #include <qdir.h>
 #include <qwidget.h>
+#include <qregexp.h>
 
 // include files for KDE
 #include <klocale.h>
@@ -41,6 +42,8 @@ RKwardDoc::RKwardDoc(RKwardApp *parent, const char *name) : QObject(parent, name
 	output_is = Nothing;
 	tablename = RK_DATA_PREFIX;
 	tablename.append ("data");
+	command_separator = "-------------this is a separator---------------";
+	connect (inter, SIGNAL (receivedReply (QString)), this, SLOT (processROutput (QString)));
 }
 
 RKwardDoc::~RKwardDoc()
@@ -153,7 +156,6 @@ bool RKwardDoc::openDocument(const KURL& url, const char *format /*=0*/)
   /////////////////////////////////////////////////
 
 	setURL (tmpfile);
-	connect (inter, SIGNAL (receivedReply (QString)), this, SLOT (processROutput (QString)));
 	output_is = Loaded;
 	inter->issueCommand ("load (\"" + doc_url.path () + "\")");
 
@@ -241,25 +243,114 @@ void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 	inter->issueAsyncCommand (command);
 }
 
-void RKwardDoc::pullTable (TwinTable *ttable) {
-	output_is = MetaDim;
-	inter->issueCommand ("dim (" + tablename + ".meta)");
+void RKwardDoc::pullTable () {
+	QString command;
+
+	command = tablename + ".meta\n";
+	command.append ("print (\"" + command_separator + "\")\n");
+	command.append (tablename);
+	output_is = WholeTables;
+	inter->issueCommand (command);
+
 	// since communication is asynchronous, the rest is done inside
 	// processROutput!
 }
 
 void RKwardDoc::processROutput (QString output) {
-	static int cols;
 	if (output_is == Loaded) {
-		pullTable (view);
-	} else if (output_is == MetaDim) {
-		QString dim_string = inter->cleanROutput (output, false);
-		cols = dim_string.section ("\t", 1, 1).toInt ();
+		pullTable ();
+	} else if (output_is == WholeTables) {
+		int output_line = 0;
+		QString line = output.section ("\n", output_line, output_line);
+		QString tsv;
 
-		output_is = MetaCol;
-		output_col = 1;
-		dim_string.setNum (output_col);
-		inter->issueCommand (tablename + ".meta[1]");
-	} else if (output_is == MetaCol) {
+		// first process the meta-table:
+
+		// determine width of columns
+		QValueList<int> fieldends;
+		int pos;
+		pos = line.find (QRegExp ("[^ ]"), 0);		// skip whitespace at top-left
+		while ((pos = line.find (QRegExp ("[^ ] "), pos+1)) >= 0) {
+			fieldends.append (pos+1);
+		}
+		fieldends.append (line.length ());		// now keeps a list of where each column ends
+
+		++output_line;
+		line = output.section ("\n", output_line, output_line);
+        do  {
+			pos = line.find (QRegExp ("[^ ] "), 0);	// strip case numbering
+			unsigned col = 0;
+			while (col < fieldends.count ()) {
+				++pos;
+				QString value = line.mid (pos, fieldends[col] - pos);
+				tsv.append (value.stripWhiteSpace ());
+				pos = fieldends[col];
+				if (++col < fieldends.count ()) {
+					tsv.append ("\t");
+				}
+			}
+			tsv.append ("\n");
+			++output_line;
+			line = output.section ("\n", output_line, output_line);
+		}
+		while (line.length () && !line.contains (command_separator));
+
+		view->dataview->clearSelection (false);
+		QTableSelection topleft;
+		topleft.init (0, 0);
+		topleft.expandTo (0, 0);
+		view->varview->clearSelection (false);
+		view->setPasteMode (TwinTable::PasteEverywhere);
+		view->varview->addSelection (topleft);
+		view->pasteEncodedFlipped (tsv.local8Bit ());
+
+
+		// now process the data-table:
+		// TODO: cleanup code-dublication!!!
+
+		// advance past separator
+		++output_line;
+		line = output.section ("\n", output_line, output_line);
+		// start out empty
+		tsv = "";
+		// determine width of columns
+		fieldends.clear ();
+		pos = line.find (QRegExp ("[^ ]"), 0);		// skip whitespace at top-left
+		while ((pos = line.find (QRegExp ("[^ ] "), pos+1)) >= 0) {
+			fieldends.append (pos+1);
+		}
+		fieldends.append (line.length ());		// now keeps a list of where each column ends
+
+		++output_line;
+		line = output.section ("\n", output_line, output_line);
+        do  {
+			pos = line.find (QRegExp ("[^ ] "), 0);	// strip case numbering
+			unsigned col = 0;
+			while (col < fieldends.count ()) {
+				++pos;
+				QString value = line.mid (pos, fieldends[col] - pos);
+				tsv.append (value.stripWhiteSpace ());
+				pos = fieldends[col];
+				if (++col < fieldends.count ()) {
+					tsv.append ("\t");
+				}
+			}
+			tsv.append ("\n");
+			++output_line;
+			line = output.section ("\n", output_line, output_line);
+		}
+		while (line.length () && !line.contains (command_separator));
+
+		view->varview->clearSelection (false);
+		view->dataview->clearSelection (false);
+		view->setPasteMode (TwinTable::PasteEverywhere);
+		view->dataview->addSelection (topleft);
+		view->pasteEncoded (tsv.local8Bit ());
+
+/*		view->varview->update ();
+		view->dataview->update (); */
+
+		// next output is not for us!
+		output_is = Nothing;
 	}
 }

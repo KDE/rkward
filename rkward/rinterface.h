@@ -39,7 +39,6 @@ public:
 /** Submit an asynchronous command (i.e. one, where you don't care about output) */
 	void issueAsyncCommand (const QString &command);
 	bool commandRunning () { return command_running; };
-	QString cleanROutput (QString &raw, bool allow_spaces);
 signals:
 	void receivedReply (QString result);
 	void writingRequest (QString request);

@@ -42,8 +42,10 @@ public:
 	void insertNewColumn (int where=-1, QString name="");
 	void insertNewRow (int where=-1);
 	QCString encodeSelection ();
-/** Pastes content to the current selection */
+/** Pastes content to the current selection. */
 	void pasteEncoded (QByteArray content);
+/** Same as above, but flips the data (i.e. row <-> cols) */
+	void pasteEncodedFlipped (QByteArray content);
 /** Clear the currently selected cells */
 	void clearSelected ();
 	enum PasteMode {PasteEverywhere, PasteToTable, PasteToSelection};

@@ -240,7 +240,13 @@ void TwinTable::pasteEncoded (QByteArray content) {
 	if (!table) return;
 
 	QTableSelection selection;
-	selection = table->selection (table->currentSelection ());
+	// Unfortunately, selections added via addSelection () don't get "current".
+	// So for this case, we have to set it explicitely
+	if (table->currentSelection () >= 0) {
+		selection = table->selection (table->currentSelection ());
+	} else {
+		selection = table->selection (0);
+	}
 
 	QString pasted = content;
 
@@ -297,9 +303,104 @@ void TwinTable::pasteEncoded (QByteArray content) {
 				if (paste_mode == PasteToTable) {
 					next_delim = pasted.length ();
 				} else {
-					insertNewRow ();
+					if (next_delim != (pasted.length () -1)) {
+						insertNewRow ();
+					}
 				}
 			}
+		}
+
+		// proceed to the next segment
+		if (pasted.length () <= (next_delim + 1)) {
+			// unfortunately QString.right (<=0) does not return an empty string!
+			pasted = "";
+		} else {
+			pasted=pasted.right (pasted.length () - (next_delim + 1));
+		}
+	}
+}
+
+void TwinTable::pasteEncodedFlipped (QByteArray content) {
+	// this function mostly duplicates the code of the above, and the two
+	// should really be merged one day!
+
+	QTable *table = activeTable ();
+	if (!table) return;
+
+	QTableSelection selection;
+	// Unfortunately, selections added via addSelection () don't get "current".
+	// So for this case, we have to set it explicitely
+	if (table->currentSelection () >= 0) {
+		selection = table->selection (table->currentSelection ());
+	} else {
+		selection = table->selection (0);
+	}
+
+	QString pasted = content;
+
+	int row=selection.topRow ();
+	int col=selection.leftCol ();
+	while (pasted.length ()) {
+		int next_tab = pasted.find ("\t");
+		if (next_tab < 0) next_tab = pasted.length ();
+		int next_delim = next_tab;
+		int next_line = pasted.find ("\n");
+		if (next_line < 0) next_line = pasted.length ();
+		if (next_line < next_tab) {
+			next_delim = next_line;
+		}
+		table->setText (row, col, pasted.left (next_delim));
+		if (next_delim == next_tab) {
+			row++;
+			if (paste_mode == PasteToSelection) {
+				if (row > selection.bottomRow ()) {
+					next_delim = next_line;
+					col++;
+					row = selection.topRow ();
+					if (col > selection.rightCol ()) {
+						next_delim = pasted.length ();
+					}
+				}
+			}
+			if (row >= table->numRows ()) {
+				if (paste_mode == PasteToTable) {
+					next_delim = next_line;
+					col++;
+					row = selection.topRow ();
+					if (col >= table->numCols ()) {
+						next_delim = pasted.length ();
+					}
+				} else {
+					// the if below only fails, if this is the last line.
+					// We don't want a new column, then.
+					// Everything else does not get affected in this situation.
+					if (next_delim != next_line) {
+						insertNewRow ();
+					}
+				}
+			}
+
+		} else {
+			col++;
+			row=selection.topRow ();
+			if (paste_mode == PasteToSelection) {
+				if (col > selection.rightCol ()) {
+					next_delim = pasted.length ();
+				}
+			}
+			if (col >= table->numCols ()) {
+				if (paste_mode == PasteToTable) {
+					next_delim = pasted.length ();
+				} else {
+					// the if below only fails, if this is the last line.
+					// We don't want a new column, then.
+					// Everything else does not get affected in this situation.
+					if (next_delim != (pasted.length () -1)) {
+						insertNewColumn ();
+					}
+				}
+			}
+
 		}
 
 		// proceed to the next segment

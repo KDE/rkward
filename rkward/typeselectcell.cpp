@@ -26,6 +26,7 @@
 TypeSelectCell::TypeSelectCell (TwinTableMember *table) : RTableItem (table) {
 	// default to numeric
 	_type = Number;
+	valid = true;
 }
 TypeSelectCell::~TypeSelectCell(){
 }
@@ -43,7 +44,12 @@ QWidget *TypeSelectCell::createEditor () const {
 }
 
 void TypeSelectCell::setContentFromEditor (QWidget *w) {
+	BaseType old_type = _type;
 	_type = (BaseType) ((QComboBox*) w)->currentItem ();
+	valid = true;
+	if (old_type != _type) {
+		ttm ()->getTwin ()->checkColValid (col ());
+	}
 }
 
 QString TypeSelectCell::text () const {
@@ -62,6 +68,8 @@ QString TypeSelectCell::rText () {
 }
 
 void TypeSelectCell::setText (const QString &str) {
+	BaseType old_type = _type;
+	valid = true;
 	if (str == "Number") {
 		_type = Number;
 	} else if (str == "String") {
@@ -70,5 +78,9 @@ void TypeSelectCell::setText (const QString &str) {
 		_type = Date;
 	} else {
 		_type = Invalid;
+		valid = false;
+	}
+	if (old_type != _type) {
+		ttm ()->getTwin ()->checkColValid (col ());
 	}
 }

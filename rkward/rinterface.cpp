@@ -18,7 +18,6 @@
 #include "rinterface.h"
 
 #include <qcstring.h>
-#include <qregexp.h>
 
 #include <kmessagebox.h>
 
@@ -163,31 +162,4 @@ void RInterface::Rdied (KProcess *proc) {
 	} else {
 		emit (syncBlocked ());
 	}
-}
-
-QString RInterface::cleanROutput (QString &raw, bool allow_spaces) {
-	QString cleaned;
-	QString line;
-	bool done = false;
-	int raw_pos, line_pos, prev_pos;
-	prev_pos = 0;
-	while (!done) {
-		raw_pos = raw.find ("\n", raw_pos);
-		line = raw.mid (prev_pos, raw_pos - prev_pos);
-		prev_pos = raw_pos;		
-		if (line[0] == '[') {
-			line_pos = line.find (']');
-		}
-		line = line.right (line.length () - (line_pos+1));
-		if (!allow_spaces) {
-			line = line.simplifyWhiteSpace ();
-			line.replace (QRegExp (" "), "\t");
-		}
-		cleaned.append (line);
-		qDebug (line);
-		if ((raw_pos < 0) || (raw_pos == raw.length ())) {
-			done = true;
-		}
-	}	
-	return cleaned;
 }

@@ -39,6 +39,9 @@ public:
 	QPoint mouse_at;
 	TwinTableMember *varTable ();
 	QString rText (int row, int col);
+	TwinTableMember *getTwin () { return twin; };
+/** Checks all cells in a column for validity (e.g. if the type was changed) */
+	void checkColValid (int col);
 signals:
 	void headerRightClick (int row, int col);
 private:

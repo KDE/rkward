@@ -27,11 +27,43 @@ RTableItem::RTableItem(TwinTableMember *table) : QTableItem (table, QTableItem::
 RTableItem::~RTableItem(){
 }
 
+TwinTableMember *RTableItem::ttm () {
+	return (TwinTableMember *) table ();
+}
+
+RTableItem::BaseType RTableItem::type () {
+	return ((TypeSelectCell *) ttm ()->varTable ()->item (TYPE_ROW, col ()))->type ();
+}
+
+void RTableItem::checkValid () {
+	bool prev_valid = valid;
+	if (type () == String) {
+		valid = true;		// there are no invalid strings!
+	} else if (type () == Number) {
+		bool ok;
+		text ().toFloat (&ok);
+		valid = ok;
+	} else if (type () == Date) {
+		// TODO
+		valid = false;
+	} else {		// invalid type
+		valid = false;
+	}
+	if (valid != prev_valid) {
+		table ()->updateCell (row (), col ());
+	}
+}
+
+void RTableItem::setText (const QString &str) {
+	QTableItem::setText (str);
+	checkValid ();
+}
+
 QString RTableItem::rText () {
-	BaseType type = ((TypeSelectCell *) ((TwinTableMember *) table ())->varTable ()->item (TYPE_ROW, col ()))->type ();
-	if ((type == Number) && isValid ()) {
+	checkValid ();
+	if ((type () == Number) && isValid ()) {
 		return text ();	
-	} else if (type == String) {
+	} else if (type () == String) {
 		return ("\"" + text () + "\"");
 	} else {
 		if (text () != "") {
@@ -43,9 +75,17 @@ QString RTableItem::rText () {
 }
 
 void RTableItem::paint (QPainter *p, const QColorGroup &cg, const QRect &cr, bool selected) {
-    p->fillRect( 0, 0, cr.width(), cr.height(),
-                 selected ? cg.brush( QColorGroup::Highlight )
-                          : cg.brush( QColorGroup::Base ) );
+	QBrush brush = QBrush (Qt::red);
+	if (selected) {
+		brush = cg.brush(QColorGroup::Highlight);
+	}
+	if (isValid ()) {
+		if (!selected) {
+			brush = cg.brush(QColorGroup::Base);
+		}
+	}
+
+    p->fillRect( 0, 0, cr.width(), cr.height(), brush);
 
     int w = cr.width();
     int h = cr.height();
@@ -57,10 +97,12 @@ void RTableItem::paint (QPainter *p, const QColorGroup &cg, const QRect &cr, boo
     else
         p->setPen(cg.text());
 
-	QString txt = text ();
-	if (txt == "") {
-		txt = "NA";
-	}
+/*	QString txt = text ();
+	if (type () != String) {
+		if (txt == "") {
+			txt = "NA";
+		}
+	}*/
 
-    p->drawText(x + 2, 0, w - x - 4, h, alignment (), txt);
+    p->drawText(x + 2, 0, w - x - 4, h, alignment (), text ());
 }

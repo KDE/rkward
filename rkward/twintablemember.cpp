@@ -86,3 +86,10 @@ void TwinTableMember::setVarTable (TwinTableMember *table) {
 QString TwinTableMember::rText (int row, int col) {
 	return (((RTableItem *) item (row, col))->rText ());
 }
+
+void TwinTableMember::checkColValid (int col) {
+	int row = 0;
+	while (row < numRows ()) {
+		((RTableItem *) item (row++, col))->checkValid ();
+	}
+}
