@@ -44,7 +44,7 @@ void RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 	
 	if (removed_in_workspace) {
 		if (ed) {
-			if (KMessageBox::questionYesNo (0, i18n ("The object '") + object->getFullName () + i18n ("' was removed in the R workspace, but is currently opened for editing. Do you want to restore the object?"), i18n ("Restore object?")) == KMessageBox::Yes) {
+			if (KMessageBox::questionYesNo (0, i18n ("The object '") + object->getFullName () + i18n ("' was removed from workspace, but is currently opened for editing. Do you want to restore it?"), i18n ("Restore object?")) == KMessageBox::Yes) {
 				if (removed_in_workspace) ed->restoreObject (object);
 				return;
 			}

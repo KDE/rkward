@@ -54,7 +54,7 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	layout = new QVBoxLayout (page, 0, KDialog::spacingHint ());
 	layout->addWidget (new InstallPackagesWidget (this, page));
 
-	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported errors loading/removing or installing one or more packages.\nA transcript of the error message(s) is shown below."), i18n ("Error loading/unloading packages"), false);
+	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported errors handling one or more packages.\nA transcript of the error message(s) is shown below."), i18n ("Error handling packages"), false);
 
 	num_child_widgets = 3;
 	accepted = false;

@@ -38,7 +38,7 @@ EditLabelsDialog::EditLabelsDialog (QWidget *parent, RKVariable *var, int mode) 
 	EditLabelsDialog::mode = mode;
 
 	QVBoxLayout *mainvbox = new QVBoxLayout (this, KDialog::marginHint (), KDialog::spacingHint ());
-	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1. Warning: This means, if you remove a level, the indices of the other levels may change, hence changing the values of the factor!"), this);
+	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1. Warning: if you remove a level, the indices of the other levels may change, hence changing the values of the factor!"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	mainvbox->addWidget (label);
 	
