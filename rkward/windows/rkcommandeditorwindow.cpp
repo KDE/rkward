@@ -62,25 +62,23 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : KParts::MainWin
 
 	setCentralWidget(m_view);
 	setAcceptDrops(true);
-
 	
 	setXMLFile( "rkcommandeditorwindowui.rc" );
 	
-	KAction * file_new = new KAction (i18n ("New"), KShortcut ("Ctrl+N"), this, SLOT (newFile ()), actionCollection(), "file_new" );
+	KAction * file_new = KStdAction::openNew (this, SLOT (newFile ()), actionCollection(), "file_new");
 	file_new->setWhatsThis(i18n("Use this to create a new document"));
-	KAction * file_open = new KAction (i18n ("Open..."), KShortcut ("Ctrl+O"), this, SLOT (openFile ()), actionCollection(), "file_open" );
+	KAction * file_open = KStdAction::open (this, SLOT (openFile ()), actionCollection(), "file_open");
 	file_open->setWhatsThis(i18n("Use this to open an existing document"));
 	
-	KAction * close_window = new KAction( i18n( "&Close" ), "close", 0, this, SLOT( close() ), actionCollection(), "file_close_window" );
-	close_window->setWhatsThis(i18n("Use to close the current window"));
+	KAction * close_window = KStdAction::close (this, SLOT (close ()), actionCollection(), "file_close");
+	close_window->setWhatsThis(i18n("Use this to close the current window"));
 
 	KAction * run_all = new KAction (i18n ("Run all"), KShortcut ("Ctrl+R"), this, SLOT (run ()), actionCollection(), "run_all" );
 	run_all->setWhatsThis(i18n("Use this to run the current document"));
 	KAction * run_selection = new KAction (i18n ("Run selection"), KShortcut ("Ctrl+E"), this, SLOT (runSelection ()), actionCollection(), "run_selection" );
 	run_selection->setWhatsThis(i18n("Use this to run the current selection"));
 
-	
-		
+
 	KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
 	createShellGUI( true );
 	guiFactory()->addClient( m_view );
