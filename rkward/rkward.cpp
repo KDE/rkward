@@ -353,7 +353,7 @@ void RKwardApp::initActions()
 	runSelection->setIcon("run");
 	interruptCommand = new KAction (i18n ("Interrupt running command"), 0, 0, this, SLOT (slotInterruptCommand ()), actionCollection (), "interrupt");
 	interruptCommand->setIcon("stop");
-	file_load_libs = new KAction (i18n ("Configure Libraries"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
+	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 
 	new_data_frame->setStatusText (i18n ("Creates a new empty data.frame and opens it for editing"));

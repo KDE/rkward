@@ -42,7 +42,7 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	RK_TRACE (DIALOGS);
 	RKLoadLibsDialog::chain = chain;
 	
-	QFrame *page = addPage (i18n ("Local libraries"));
+	QFrame *page = addPage (i18n ("Local packages"));
 	QVBoxLayout *layout = new QVBoxLayout (page, 0, KDialog::spacingHint ());
 	layout->addWidget (new LoadUnloadWidget (this, page));
 	
@@ -141,7 +141,7 @@ bool RKLoadLibsDialog::downloadPackages (const QStringList &packages, QString to
 	RCommand *command = new RCommand ("download.packages (pkgs=" + package_string + ", destdir=\"" + to_dir + "\")", RCommand::App, "", this, DOWNLOAD_PACKAGES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 	
-	if (RKCancelDialog::showCancelDialog (i18n ("Downloading libraries..."), i18n ("Please stand by while downloading libraries."), this, this, SIGNAL (downloadComplete ()), command) == QDialog::Rejected) return false;
+	if (RKCancelDialog::showCancelDialog (i18n ("Downloading packages..."), i18n ("Please stand by while downloading packages."), this, this, SIGNAL (downloadComplete ()), command) == QDialog::Rejected) return false;
 	return true;
 }
 
@@ -166,7 +166,7 @@ void RKLoadLibsDialog::installDownloadedPackages (bool become_root, QString dir)
 		
 	proc->start ();
 	connect (proc, SIGNAL (processExited (KProcess *)), this, SLOT (processExited (KProcess *)));
-	if (RKCancelDialog::showCancelDialog (i18n ("Installing libraries..."), i18n ("Please stand by while installing libraries."), this, this, SIGNAL (installationComplete ())) == QDialog::Rejected) {
+	if (RKCancelDialog::showCancelDialog (i18n ("Installing packages..."), i18n ("Please stand by while installing packages."), this, this, SIGNAL (installationComplete ())) == QDialog::Rejected) {
 		proc->kill ();
 	};
 	if ((!proc->normalExit ()) || (proc->exitStatus ())) {
@@ -191,7 +191,7 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	LoadUnloadWidget::parent = dialog;
 	
 	QVBoxLayout *mvbox = new QVBoxLayout (this, 0, KDialog::spacingHint ());
-	QLabel *label = new QLabel (i18n ("Warning! There are no safeguards against removing essential library so far. If you remove e.g. library rkward, RKWard will no longer function properly (including this very dialog). So please be careful about the libraries you remove."), this);
+	QLabel *label = new QLabel (i18n ("Warning! There are no safeguards against removing essential library so far. If you remove e.g. library rkward, RKWard will no longer function properly (including this very dialog). So please be careful about the packages you remove."), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	mvbox->addWidget (label);
 	
@@ -200,7 +200,7 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	QVBoxLayout *buttonvbox = new QVBoxLayout (hbox, KDialog::spacingHint ());
 	QVBoxLayout *loadedvbox = new QVBoxLayout (hbox, KDialog::spacingHint ());
 	
-	label = new QLabel (i18n ("Installed libraries"), this);
+	label = new QLabel (i18n ("Installed packages"), this);
 	installed_view = new QListView (this);
 	installed_view->addColumn (i18n ("Name"));
 	installed_view->addColumn (i18n ("Title"));
@@ -219,7 +219,7 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	buttonvbox->addWidget (detach_button);
 	buttonvbox->addStretch (2);
 	
-	label = new QLabel (i18n ("Loaded libraries"), this);
+	label = new QLabel (i18n ("Loaded packages"), this);
 	loaded_view = new QListView (this);
 	loaded_view->addColumn (i18n ("Name"));
 	loaded_view->setSelectionMode (QListView::Extended);
