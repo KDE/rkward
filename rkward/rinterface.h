@@ -34,6 +34,7 @@ public:
 	RInterface();
 	~RInterface();
 	bool startR (QStrList &commandline);
+	void shutdown ();
 /** Submit a synchronous command to R (i.e. generally one, that gives relevant output) */
 	bool issueCommand (const QString &command);
 /** Submit an asynchronous command (i.e. one, where you don't care about output) */

@@ -20,6 +20,9 @@
 #include <qprinter.h>
 #include <qpainter.h>
 #include <qclipboard.h>
+#include <qcheckbox.h>
+#include <qpushbutton.h>
+#include <qlineedit.h>
 
 // include files for KDE
 #include <kiconloader.h>
@@ -37,6 +40,7 @@
 #include "rkwarddoc.h"
 #include "rkdrag.h"
 #include "rkwatch.h"
+#include "rsettings.h"
 
 #define ID_STATUS_MSG 1
 
@@ -61,18 +65,42 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
   initDocument();
   initView();
 
-	QStrList r_line;
-	r_line.append ("/usr/bin/R");
-	r_line.append ("--no-save");
-	r_line.append ("--slave");
-	r_inter.startR (r_line);
-	
   readOptions();
+	startR ();
 }
 
 RKwardApp::~RKwardApp()
 {
+}
 
+void RKwardApp::startR () {
+	r_inter.shutdown ();
+
+	QStrList r_line;
+	r_line.append (path_to_r);
+	if (opt_r_nosave) {
+		r_line.append ("--no-save");
+	}
+	if (opt_r_slave) {
+		r_line.append ("--slave");
+	}
+	r_inter.startR (r_line);
+}
+
+void RKwardApp::slotConfigureR () {
+	RSettings *settings = new RSettings (this);
+	settings->show ();
+}
+
+void RKwardApp::fetchRSettings (RSettings *from, bool apply) {
+	if (apply) {
+		opt_r_nosave = from->no_save->isChecked ();
+		opt_r_slave = from->slave->isChecked ();
+		path_to_r = from->path_to_r->text ();
+		saveOptions ();
+		startR ();
+	}
+	delete from;
 }
 
 void RKwardApp::initActions()
@@ -98,6 +126,7 @@ void RKwardApp::initActions()
   viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
   viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
 	showRKWatch = new KAction (i18n ("Toggle RKWatch-Window"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "settings_rkwatch");
+	configureR = new KAction (i18n ("R Settings"), 0, 0, this, SLOT(slotConfigureR ()), actionCollection(), "settings_r");
 
   fileNewWindow->setStatusText(i18n("Opens a new application window"));
   fileNew->setStatusText(i18n("Creates a new document"));
@@ -176,6 +205,12 @@ void RKwardApp::saveOptions()
   config->writeEntry("Show Toolbar", viewToolBar->isChecked());
   config->writeEntry("Show Statusbar",viewStatusBar->isChecked());
   config->writeEntry("ToolBarPos", (int) toolBar("mainToolBar")->barPos());
+
+	config->setGroup ("R-Settings");
+	config->writeEntry ("Option --no-save", opt_r_nosave);
+	config->writeEntry ("Option --slave", opt_r_slave);
+	config->writeEntry ("Path to R", path_to_r);
+
   fileOpenRecent->saveEntries(config,"Recent Files");
 }
 
@@ -200,6 +235,11 @@ void RKwardApp::readOptions()
   toolBarPos=(KToolBar::BarPosition) config->readNumEntry("ToolBarPos", KToolBar::Top);
   toolBar("mainToolBar")->setBarPos(toolBarPos);
 	
+	config->setGroup ("R-Settings");
+	opt_r_nosave = config->readBoolEntry ("Option --no-save", true);
+	opt_r_slave = config->readBoolEntry ("Option --slave", true);
+	path_to_r = config->readEntry ("Path to R", "/usr/bin/R");
+
   // initialize the recent file list
   fileOpenRecent->loadEntries(config,"Recent Files");
 

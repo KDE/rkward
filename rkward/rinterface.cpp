@@ -37,6 +37,12 @@ RInterface::~RInterface(){
 	delete watch;
 }
 
+void RInterface::shutdown () {
+	disconnect (this, SIGNAL (processExited (KProcess *)), this, SLOT (Rdied (KProcess *)));
+	kill ();
+	connect (this, SIGNAL (processExited (KProcess *)), this, SLOT (Rdied (KProcess *)));
+}
+
 bool RInterface::startR (QStrList &commandline) {
 	if (isRunning ()) {
 		return false;
@@ -74,9 +80,6 @@ void RInterface::gotROutput (KProcess *proc, char *buffer, int buflen) {
 		if (pos <= 0) {
 			r_output = "";
 		}
-
-		qDebug ("-----------------------------------------------");
-		qDebug (r_output.left (pos));
 
 		if (sync_command) {
 			emit (syncUnblocked ());
@@ -153,12 +156,12 @@ void RInterface::doneWriting (KProcess *proc) {
 
 void RInterface::Rdied (KProcess *proc) {
 	emit (receivedReply (r_output));
+	command_running = sync_command = false;
+	async_command_stack.clear ();
+	r_output = "";
 	if (KMessageBox::questionYesNo (0, "Oh no!\nThe R-Process died. Probably we did something wrong.\nShould I try to restart it?",
 			    "Restart R?") == KMessageBox::Yes) {
 		start (NotifyOnExit, All);
-		command_running = sync_command = false;
-		async_command_stack.clear ();
-		r_output = "";
 	} else {
 		emit (syncBlocked ());
 	}

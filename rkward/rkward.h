@@ -37,6 +37,7 @@
 // forward declaration of the RKward classes
 class RKwardDoc;
 class RKwardView;
+class RSettings;
 
 /**
   * The base class for RKward application windows. It sets up the main
@@ -72,6 +73,7 @@ class RKwardApp : public KMainWindow
     RKwardDoc *getDocument() const; 	
 
 	RInterface r_inter;
+	void startR ();
 
   protected:
     /** save general Options like all bar positions and status as well as the geometry and the recent file list to the configuration
@@ -168,6 +170,9 @@ class RKwardApp : public KMainWindow
 
 	/** shows/hides the RKWatch-window */
 	void slotShowRKWatch ();
+
+	/** configures R-settings */
+	void slotConfigureR ();
   private:
     /** the configuration object of the application */
     KConfig *config;
@@ -200,6 +205,13 @@ class RKwardApp : public KMainWindow
     KToggleAction* viewToolBar;
     KToggleAction* viewStatusBar;
 	KAction* showRKWatch;
+	KAction* configureR;
+
+	friend class RSettings;
+	QString path_to_r;
+	bool opt_r_nosave;
+	bool opt_r_slave;
+	void fetchRSettings (RSettings *from, bool apply);
 
 /** Does pasting (called from the respective slots) */
 	void doPaste ();
