@@ -19,8 +19,7 @@
 
 #include "rksettingsmodule.h"
 
-class QPushButton;
-class QLineEdit;
+class GetFileNameWidget;
 
 /**
 @author Thomas Friedrichsmeier
@@ -44,11 +43,9 @@ public:
 /// returns the directory-name where the logfiles should reside
 	static QString &filesPath () { return files_path; };
 public slots:
-	void browseFiles ();
-	void pathChanged (const QString &);
+	void pathChanged ();
 private:
-	QPushButton *files_browse_button;
-	QLineEdit *files_location_edit;
+	GetFileNameWidget *files_choser;
 	
 	static QString files_path;
 };

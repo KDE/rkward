@@ -17,20 +17,18 @@
 #include "rksettingsmoduleplugins.h"
 
 #include <klocale.h>
-#include <kfiledialog.h>
 #include <kconfig.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 
 #include <qlayout.h>
-#include <qpushbutton.h>
-#include <qlineedit.h>
 #include <qlabel.h>
 #include <qbuttongroup.h>
 #include <qradiobutton.h>
 
 #include "../rkward.h"
 #include "../rkglobals.h"
+#include "../misc/getfilenamewidget.h"
 
 // static members
 QString RKSettingsModulePlugins::plugin_dir;
@@ -59,30 +57,15 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	
 	main_vbox->addStretch ();
 	
-	main_vbox->addWidget (new QLabel (i18n ("Directory where the plugins are located"), this));
-	
-	QHBoxLayout *location_hbox = new QHBoxLayout (main_vbox, 6);
-	location_edit = new QLineEdit (this);
-	location_edit->setText (plugin_dir);
-	connect (location_edit, SIGNAL (textChanged (const QString &)), this, SLOT (pathChanged(const QString&)));
-	location_hbox->addWidget (location_edit);
-	
-	browse_button = new QPushButton (i18n ("Browse"), this);
-	connect (browse_button, SIGNAL (clicked ()), this, SLOT (browse ()));
-	location_hbox->addWidget (browse_button);
+	dir_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, i18n ("Directory where the plugins are located"), "", plugin_dir);
+	connect (dir_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
+	main_vbox->addWidget (dir_choser);
 }
 
 RKSettingsModulePlugins::~RKSettingsModulePlugins() {
 }
 
-void RKSettingsModulePlugins::browse () {
-	QString temp = KFileDialog::getExistingDirectory (location_edit->text (), this, i18n ("Select Plugin-directory"));
-	if (temp != "") {
-		location_edit->setText (temp);
-	}
-}
-
-void RKSettingsModulePlugins::pathChanged (const QString &) {
+void RKSettingsModulePlugins::pathChanged () {
 	change ();
 }
 
@@ -99,7 +82,7 @@ bool RKSettingsModulePlugins::hasChanges () {
 }
 
 void RKSettingsModulePlugins::applyChanges () {
-	plugin_dir = location_edit->text ();
+	plugin_dir = dir_choser->getLocation ();
 	interface_pref = static_cast<PluginPrefs> (button_group->selectedId ());
 	RKGlobals::rkApp ()->initPlugins();
 }

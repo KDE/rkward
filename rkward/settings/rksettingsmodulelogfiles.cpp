@@ -17,16 +17,15 @@
 #include "rksettingsmodulelogfiles.h"
 
 #include <klocale.h>
-#include <kfiledialog.h>
 #include <kconfig.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 
 #include <qlayout.h>
-#include <qpushbutton.h>
-#include <qlineedit.h>
 #include <qlabel.h>
 #include <qdir.h>
+
+#include "../misc/getfilenamewidget.h"
 
 // static members
 QString RKSettingsModuleLogfiles::files_path;
@@ -39,30 +38,15 @@ RKSettingsModuleLogfiles::RKSettingsModuleLogfiles (RKSettings *gui, QWidget *pa
 	
 	main_vbox->addStretch ();
 	
-	main_vbox->addWidget (new QLabel (i18n ("Directory where the logfiles should be kept"), this));
-	
-	QHBoxLayout *location_hbox = new QHBoxLayout (main_vbox, 6);
-	files_location_edit = new QLineEdit (this);
-	files_location_edit->setText (files_path);
-	connect (files_location_edit, SIGNAL (textChanged (const QString &)), this, SLOT (pathChanged(const QString&)));
-	location_hbox->addWidget (files_location_edit);
-	
-	files_browse_button = new QPushButton (i18n ("Browse"), this);
-	connect (files_browse_button, SIGNAL (clicked ()), this, SLOT (browseFiles ()));
-	location_hbox->addWidget (files_browse_button);	
+	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, i18n ("Directory where the logfiles should be kept"), "", files_path);
+	connect (files_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
+	main_vbox->addWidget (files_choser);
 }
 
 RKSettingsModuleLogfiles::~RKSettingsModuleLogfiles() {
 }
 
-void RKSettingsModuleLogfiles::browseFiles () {
-	QString temp = KFileDialog::getExistingDirectory (files_location_edit->text (), this, i18n ("Select directory with support files (e.g. common.php)"));
-	if (temp != "") {
-		files_location_edit->setText (temp);
-	}
-}
-
-void RKSettingsModuleLogfiles::pathChanged (const QString &) {
+void RKSettingsModuleLogfiles::pathChanged () {
 	change ();
 }
 
@@ -75,7 +59,7 @@ bool RKSettingsModuleLogfiles::hasChanges () {
 }
 
 void RKSettingsModuleLogfiles::applyChanges () {
-	files_path = files_location_edit->text ();
+	files_path = files_choser->getLocation ();
 }
 
 void RKSettingsModuleLogfiles::save (KConfig *config) {

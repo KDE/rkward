@@ -17,21 +17,20 @@
 #include "rksettingsmodulephp.h"
 
 #include <klocale.h>
-#include <kfiledialog.h>
 #include <kconfig.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 
 #include <qlayout.h>
-#include <qpushbutton.h>
-#include <qlineedit.h>
 #include <qlabel.h>
+
+#include "../misc/getfilenamewidget.h"
 
 // static members
 QString RKSettingsModulePHP::php_bin;
 QString RKSettingsModulePHP::files_path;
 
-RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
+RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, 6);
 	QLabel *label = new QLabel (i18n ("Changes in this section take effect the next time you start a plugin"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
@@ -39,51 +38,21 @@ RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, QWidget *parent) : RK
 	
 	main_vbox->addStretch ();
 	
-	main_vbox->addWidget (new QLabel (i18n ("Location of the PHP binary"), this));
-	
-	QHBoxLayout *location_hbox = new QHBoxLayout (main_vbox, 6);
-	bin_location_edit = new QLineEdit (this);
-	bin_location_edit->setText (php_bin);
-	connect (bin_location_edit, SIGNAL (textChanged (const QString &)), this, SLOT (pathChanged(const QString&)));
-	location_hbox->addWidget (bin_location_edit);
-	
-	bin_browse_button = new QPushButton (i18n ("Browse"), this);
-	connect (bin_browse_button, SIGNAL (clicked ()), this, SLOT (browseBin ()));
-	location_hbox->addWidget (bin_browse_button);
-	
+	bin_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, i18n ("File-location of the PHP binary"), "", php_bin);
+	connect (bin_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
+	main_vbox->addWidget (bin_choser);
+
 	main_vbox->addStretch ();
-	
-	main_vbox->addWidget (new QLabel (i18n ("Location of the PHP support files"), this));
-	
-	location_hbox = new QHBoxLayout (main_vbox, 6);
-	files_location_edit = new QLineEdit (this);
-	files_location_edit->setText (files_path);
-	connect (files_location_edit, SIGNAL (textChanged (const QString &)), this, SLOT (pathChanged(const QString&)));
-	location_hbox->addWidget (files_location_edit);
-	
-	files_browse_button = new QPushButton (i18n ("Browse"), this);
-	connect (files_browse_button, SIGNAL (clicked ()), this, SLOT (browseFiles ()));
-	location_hbox->addWidget (files_browse_button);	
+
+	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, i18n ("Directory, where the PHP support files are located"), "", files_path);
+	connect (bin_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
+	main_vbox->addWidget (files_choser);
 }
 
-RKSettingsModulePHP::~RKSettingsModulePHP() {
+RKSettingsModulePHP::~RKSettingsModulePHP () {
 }
 
-void RKSettingsModulePHP::browseBin () {
-	QString temp = KFileDialog::getOpenFileName (bin_location_edit->text (), QString::null, this, i18n ("Select Plugin-directory"));
-	if (temp != "") {
-		bin_location_edit->setText (temp);
-	}
-}
-
-void RKSettingsModulePHP::browseFiles () {
-	QString temp = KFileDialog::getExistingDirectory (files_location_edit->text (), this, i18n ("Select directory with support files (e.g. common.php)"));
-	if (temp != "") {
-		files_location_edit->setText (temp);
-	}
-}
-
-void RKSettingsModulePHP::pathChanged (const QString &) {
+void RKSettingsModulePHP::pathChanged () {
 	change ();
 }
 
@@ -96,8 +65,8 @@ bool RKSettingsModulePHP::hasChanges () {
 }
 
 void RKSettingsModulePHP::applyChanges () {
-	php_bin = bin_location_edit->text ();
-	files_path = files_location_edit->text ();
+	php_bin = bin_choser->getLocation ();
+	files_path = files_choser->getLocation ();
 }
 
 void RKSettingsModulePHP::save (KConfig *config) {

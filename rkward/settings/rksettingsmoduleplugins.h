@@ -21,8 +21,7 @@
 
 #include <qstring.h>
 
-class QPushButton;
-class QLineEdit;
+class GetFileNameWidget;
 class QButtonGroup;
 
 /** The settings-module for plugin specific settings
@@ -49,12 +48,10 @@ public:
 	static QString &pluginDir () { return plugin_dir; };
 	static PluginPrefs getInterfacePreference () { return interface_pref; };
 public slots:
-	void browse ();
-	void pathChanged (const QString &);
+	void pathChanged ();
 	void buttonClicked (int);
 private:
-	QPushButton *browse_button;
-	QLineEdit *location_edit;
+	GetFileNameWidget *dir_choser;
 	QButtonGroup *button_group;
 	
 	static QString plugin_dir;

@@ -22,9 +22,8 @@
 #include <qstring.h>
 #include <qstringlist.h>
 
-class QPushButton;
-class QLineEdit;
 class QCheckBox;
+class GetFileNameWidget;
 
 /**
 Configure the R-backend
@@ -49,24 +48,24 @@ public:
 	
 	static QString &rHomeDir () { return r_home_dir; };
 	static QString &pagerApp () { return pager_app; };
+	static QString &startupFile () { return r_startup_file; };
 	static bool rNosave () { return r_nosave; };
 	static bool rSlave () { return r_slave; };
 	static QStringList getOptionList ();
 public slots:
-	void browsePager ();
-	void pathChanged (const QString &);
 	void boxChanged (int);
+	void pathChanged ();
 private:
-	QPushButton *pager_browse_button;
-	QLineEdit *pager_location_edit;
 	QCheckBox *nosave_box;
 	QCheckBox *slave_box;
-
+	GetFileNameWidget *startup_file_choser;
+	GetFileNameWidget *pager_choser;
 friend class RInterface;
 	static bool r_nosave;
 	static bool r_slave;
 	static QString r_home_dir;
 	static QString pager_app;
+	static QString r_startup_file;
 };
 
 #endif

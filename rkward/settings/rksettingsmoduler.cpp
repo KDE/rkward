@@ -17,19 +17,20 @@
 #include "rksettingsmoduler.h"
 
 #include <klocale.h>
-#include <kfiledialog.h>
 #include <kconfig.h>
+#include <kstandarddirs.h>
 
 #include <qlayout.h>
-#include <qpushbutton.h>
-#include <qlineedit.h>
 #include <qlabel.h>
 #include <qvbuttongroup.h>
 #include <qcheckbox.h>
 
+#include "../misc/getfilenamewidget.h"
+
 // static members
 QString RKSettingsModuleR::r_home_dir;
 QString RKSettingsModuleR::pager_app;
+QString RKSettingsModuleR::r_startup_file;
 bool RKSettingsModuleR::r_nosave;
 bool RKSettingsModuleR::r_slave;
 
@@ -41,17 +42,9 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	main_vbox->addWidget (label);
 	main_vbox->addStretch ();
 	
-	main_vbox->addWidget (new QLabel (i18n ("Program to use as a pager (e.g. for R-help)"), this));
-	
-	QHBoxLayout *location_hbox = new QHBoxLayout (main_vbox, 6);
-	pager_location_edit = new QLineEdit (this);
-	pager_location_edit->setText (pager_app);
-	connect (pager_location_edit, SIGNAL (textChanged (const QString &)), this, SLOT (pathChanged(const QString&)));
-	location_hbox->addWidget (pager_location_edit);
-	
-	pager_browse_button = new QPushButton (i18n ("Browse"), this);
-	connect (pager_browse_button, SIGNAL (clicked ()), this, SLOT (browsePager ()));
-	location_hbox->addWidget (pager_browse_button);
+	pager_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, i18n ("Program to use as a pager (e.g. for R-help)"), "", pager_app);
+	connect (pager_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
+	main_vbox->addWidget (pager_choser);
 
 	main_vbox->addStretch ();
 
@@ -64,23 +57,21 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	connect (slave_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
 
 	main_vbox->addWidget (group);	
+
+	main_vbox->addStretch ();
+	startup_file_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, i18n ("Location of 'startup.R'-script"), "", r_startup_file);
+	connect (startup_file_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
+	main_vbox->addWidget (startup_file_choser);
 }
 
 RKSettingsModuleR::~RKSettingsModuleR() {
-}
-
-void RKSettingsModuleR::browsePager () {
-	QString temp = KFileDialog::getOpenFileName (pager_location_edit->text (), QString::null, this, i18n ("Select program to use as pager"));
-	if (temp != "") {
-		pager_location_edit->setText (temp);
-	}
 }
 
 void RKSettingsModuleR::boxChanged (int) {
 	change ();
 }
 
-void RKSettingsModuleR::pathChanged (const QString &) {
+void RKSettingsModuleR::pathChanged () {
 	change ();
 }
 
@@ -93,9 +84,10 @@ bool RKSettingsModuleR::hasChanges () {
 }
 
 void RKSettingsModuleR::applyChanges () {
-	pager_app = pager_location_edit->text ();
+	pager_app = pager_choser->getLocation ();
 	r_nosave = nosave_box->isChecked ();
 	r_slave = slave_box->isChecked ();
+	r_startup_file = startup_file_choser->getLocation ();
 }
 
 void RKSettingsModuleR::save (KConfig *config) {
@@ -106,6 +98,7 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	config->setGroup ("R Settings");
 	config->writeEntry ("R_HOME", r_home_dir);
 	config->writeEntry ("pager app", pager_app);
+	config->writeEntry ("startup file", r_startup_file);
 	config->writeEntry ("--no-save", r_nosave);
 	config->writeEntry ("--slave", r_slave);
 }
@@ -114,6 +107,7 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	config->setGroup ("R Settings");
 	r_home_dir = config->readEntry ("R_HOME", "");
 	pager_app = config->readEntry ("pager app", "xless");
+	r_startup_file = config->readEntry ("startup file", KGlobal::dirs ()->findResourceDir ("data", "rkward/rfiles/startup.R") + "rkward/rfiles/");
 	r_nosave = config->readBoolEntry ("--no-save", true);
 	r_slave = config->readBoolEntry ("--slave", true);
 }

@@ -19,8 +19,7 @@
 
 #include "rksettingsmodule.h"
 
-class QPushButton;
-class QLineEdit;
+class GetFileNameWidget;
 
 /**
 configuration for the PHP-backend
@@ -48,16 +47,11 @@ public:
 /// returns the directory-name where supporting files such as the "common.php" reside
 	static QString &filesPath () { return files_path; };
 public slots:
-	void browseBin ();
-	void browseFiles ();
-	void pathChanged (const QString &);
+	void pathChanged ();
 private:
-	QPushButton *bin_browse_button;
-	QLineEdit *bin_location_edit;
-	
-	QPushButton *files_browse_button;
-	QLineEdit *files_location_edit;
-	
+	GetFileNameWidget *bin_choser;
+	GetFileNameWidget *files_choser;
+
 	static QString php_bin;
 	static QString files_path;
 };
