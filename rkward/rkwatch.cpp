@@ -167,7 +167,7 @@ void RKwatch::clearCommand () {
 }
 
 void RKwatch::submitCommand () {
-	RKGlobals::editorManager ()->syncAllToR (0);
+	RKGlobals::editorManager ()->flushAll ();
 	r_inter->issueCommand (new RCommand (commands->text (), RCommand::User));
 	clearCommand ();
 }

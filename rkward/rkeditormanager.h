@@ -40,13 +40,13 @@ public:
 
     ~RKEditorManager();
 
-	RKEditor *editObject (RObject *object);
+	RKEditor *editObject (RObject *object, bool initialize_to_empty=false);
 /// tries to open the editors/objects that were last opened
 	void restoreEditors ();
 	
-	void closeEditor (RKEditor *editor, bool sync=true);
+	void closeEditor (RKEditor *editor);
 
-	void syncAllToR (RCommandChain *chain = 0);
+	void flushAll ();
 	
 	bool canEditObject (RObject *object);
 	RKEditor *objectOpened (RObject *object);

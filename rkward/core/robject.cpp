@@ -23,6 +23,7 @@
 
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
+#include "rkmodificationtracker.h"
 
 #include "../debug.h"
 
@@ -34,7 +35,6 @@ RObject::RObject (RContainerObject *parent, const QString &name) {
 	RObject::parent = parent;
 	RObject::name = name;
 	type = 0;
-	state = 0;
 	meta_map = 0;
 }
 
@@ -107,8 +107,8 @@ void RObject::setMetaProperty (const QString &id, const QString &value) {
 		meta_map = new MetaMap;
 	}
 
-	setMetaModified ();
 	meta_map->insert (id, value);
+	writeMetaData (0);
 }
 
 QString RObject::makeChildName (const QString &short_child_name) {
@@ -122,9 +122,8 @@ void RObject::getMetaData (RCommandChain *chain) {
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 }
 
-void RObject::writeMetaData (RCommandChain *chain, bool force) {
+void RObject::writeMetaData (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
-	if ((!force) && (!isMetaModified ())) return;
 	
 	if (!meta_map) {
 		if (hasMetaObject ()) {
@@ -132,7 +131,6 @@ void RObject::writeMetaData (RCommandChain *chain, bool force) {
 			RKGlobals::rInterface ()->issueCommand (command, chain);
 		}
 		type -= (type & HasMetaObject);
-		state -= (state & MetaModified);
 		return;
 	}
 	
@@ -153,7 +151,6 @@ void RObject::writeMetaData (RCommandChain *chain, bool force) {
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 	
 	type |= HasMetaObject;
-	state -= (state & MetaModified);
 }
 
 void RObject::rCommandDone (RCommand *command) {
@@ -176,19 +173,9 @@ void RObject::rCommandDone (RCommand *command) {
 			
 			type -= (type & HasMetaObject);
 		}
+		// TODO: only signal change, if there really was a change!
+		RKGlobals::tracker ()->objectMetaChanged (this, 0);
 	}
-}
-
-void RObject::setDataModified () {
-	RK_TRACE (OBJECTS);
-	state |= DataModified;
-	parent->setChildModified ();
-}
-
-void RObject::setMetaModified () {
-	RK_TRACE (OBJECTS);
-	state |= MetaModified;
-	parent->setChildModified ();
 }
 
 void RObject::rename (const QString &new_short_name) {

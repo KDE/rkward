@@ -35,6 +35,7 @@
 #include "../rbackend/rinterface.h"
 #include "../dataeditor/rkeditor.h"
 #include "../rkeditormanager.h"
+#include "rkmodificationtracker.h"
 
 #include "../rkglobals.h"
 #include "../rkward.h"
@@ -75,7 +76,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 		// empty workspace?
 		if (!num_children_updating) {
 			update_chain = RKGlobals::rInterface ()->closeChain (update_chain);
-			emit (updateComplete (true));
+			emit (updateComplete ());
 			return;
 		}
 		for (int i = 0; i < command->stringVectorLength (); ++i) {
@@ -108,6 +109,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 		pobj->parent->addChild (robj, pobj->name);
 		delete pobj;
 		pending_objects.remove (command);
+		RKGlobals::tracker ()->addObject (robj, 0);
 		
 	} else if (command->getFlags () == WORKSPACE_LOAD_COMMAND) {
 		KIO::NetAccess::removeTempFile (tmpfile);
@@ -155,8 +157,7 @@ void RObjectList::childUpdateComplete () {
 		update_chain = RKGlobals::rInterface ()->closeChain (update_chain);
 		RK_ASSERT (!update_chain);
 
-	// TODO: check whether there really were any changes
-		emit (updateComplete (true));
+		emit (updateComplete ());
 	}
 }
 
@@ -186,18 +187,6 @@ void RObjectList::timeout () {
 	updateFromR ();
 }
 
-void RObjectList::setChildModified () {
-	RK_TRACE (OBJECTS);
-	RObject::state |= ChildrenModified;
-}
-
-void RObjectList::writeMetaData (RCommandChain *chain, bool force) {
-	RK_TRACE (OBJECTS);
-	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
-		it.data ()->writeMetaData (chain, force);
-	}
-}
-
 void RObjectList::renameChild (RObject *object, const QString &new_name) {
 	RK_TRACE (OBJECTS);
 
@@ -213,8 +202,6 @@ void RObjectList::renameChild (RObject *object, const QString &new_name) {
 	childmap.insert (new_name, object);
 
 	object->name = new_name;
-
-	objectsChanged ();
 }
 
 void RObjectList::removeChild (RObject *object) {
@@ -228,13 +215,6 @@ void RObjectList::removeChild (RObject *object) {
 	
 	childmap.remove (it);
 	delete object;
-	
-	objectsChanged ();
-}
-
-void RObjectList::objectsChanged () {
-	RK_TRACE (OBJECTS);
-	emit (updateComplete (true));
 }
 
 RObject *RObjectList::findObject (const QString &full_name) {

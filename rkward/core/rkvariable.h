@@ -44,6 +44,7 @@ public:
 
 	void updateFromR ();
 protected:
+friend class RContainerObject;
 	int length;
 	RObject::VarType var_type;
 	

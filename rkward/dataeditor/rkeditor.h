@@ -19,8 +19,9 @@
 
 #include <qwidget.h>
 
+#include "../core/robject.h"
+
 class RCommandChain;
-class RObject;
 class RKDrag;
 
 /**
@@ -36,8 +37,8 @@ protected:
 
     virtual ~RKEditor ();
 public:
-/// syncs changes done in the editor (if any) to the R workspace. Implement in the child classes
-	virtual void syncToR (RCommandChain *chain) = 0;
+/// flushes all pending edit operations and syncs the data to R. Implement in the child classes
+	virtual void flushChanges () = 0;
 /// returns the object that is being edited in this editor
 	RObject *getObject () { return object; };
 	
@@ -48,14 +49,22 @@ public:
 	enum PasteMode {PasteEverywhere, PasteToTable, PasteToSelection};
 	virtual void setPasteMode (PasteMode mode) = 0;
 
-/// an object in this editor was deleted from outside the editor
-	virtual void objectDeleted (RObject *object) = 0;
-/// the meta-data for an object in this editor was changed from outside the editor (e.g. it was renamed)
-	virtual void objectMetaModified (RObject *object) = 0;
+/** Tells the editor to (unconditionally!) remove the object from its list. */
+	virtual void removeObject (RObject *object) = 0;
+/** Tells the editor to restore the given object in the R-workspace from its copy of the data */
+	virtual void restoreObject (RObject *object) = 0;
+/** Tells the editor to (unconditionally!) rename the object (the object already carries the new name, so the editor can read the new name from the object). */
+	virtual void renameObject (RObject *object) = 0;
+/** Tell the editor to (unconditionally) add the given object to its view */
+	virtual void addObject (RObject *object) = 0;
+/** Tell the editor to (unconditionally) update its representation of the object meta data */
+	virtual void updateObjectMeta (RObject *object) = 0;
+/** Tell the editor to (unconditionally) update its representation of the object data (in the range given in the ChangeSet) */
+	virtual void updateObjectData (RObject *object, RObject::ChangeSet *changes) = 0;
 protected:
 friend class RKEditorManager;
 /// opens the given object. Implement in the child-classes
-	virtual void openObject (RObject *object) = 0;
+	virtual void openObject (RObject *object, bool initialize_to_empty=false) = 0;
 
 	RObject *object;
 };

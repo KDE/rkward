@@ -37,16 +37,30 @@ public:
 
     ~RKEditorDataFrame ();
 
-	void syncToR (RCommandChain *sync_chain);
+	void flushChanges ();
 	
 	void setColObject (int column, RObject *object);
 	RObject *getColObject (int col);
-	void objectDeleted (RObject *object);
-	void objectMetaModified (RObject *object);
+	//void objectDeleted (RObject *object);
+	//void objectMetaModified (RObject *object);
+	
+/** Tells the editor to (unconditionally!) remove the object from its list. */
+	void removeObject (RObject *object);
+/** Tells the editor to restore the given object in the R-workspace from its copy of the data */
+	void restoreObject (RObject *object);
+/** Tells the editor to (unconditionally!) rename the object (the object already carries the new name, so the editor can read the new name from the object). */
+	void renameObject (RObject *object);
+/** Tell the editor to (unconditionally) add the given object to its view */
+	void addObject (RObject *object);
+/** Tell the editor to (unconditionally) update its representation of the object meta data */
+	void updateObjectMeta (RObject *object);
+/** Tell the editor to (unconditionally) update its representation of the object data (in the range given in the ChangeSet) */
+	void updateObjectData (RObject *object, RObject::ChangeSet *changes);
 public slots:
 	void metaValueChanged (int row, int col);
 	void dataValueChanged (int row, int col);
-	void columnDeleted (int col);
+	void columnDeletionRequested (int col);
+	void columnAdded (int col);
 private:
 /// syncs the whole table.
 	void pushTable (RCommandChain *sync_chain);
@@ -56,9 +70,9 @@ private:
 	typedef QMap <int, RObject*> ColMap;
 	ColMap col_map;
 	
-	void modifyObjectMeta (RKVariable *object, int column);
+	void modifyObjectMeta (RObject *object, int column);
 protected:
-	void openObject (RObject *object);
+	void openObject (RObject *object, bool initialize_to_empty=false);
 	void rCommandDone (RCommand *command);
 };
 

@@ -50,15 +50,13 @@ public:
 	
 	QString getFullName () { return ""; };
 	QString makeChildName (const QString &short_child_name) { return short_child_name; };
-	/// reimplemented from RContainerObject: descent into child-objects, but attempt to write own meta-data
-	void writeMetaData (RCommandChain *chain, bool force=false);
-
+	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
+	void writeMetaData (RCommandChain *) {};
+	
 	RCommandChain *getUpdateCommandChain () { return update_chain; };
 	
 	void childUpdateComplete ();
 
-	void setChildModified ();
-	
 	RObject *findObject (const QString &full_name);
 
 	void loadWorkspace (const KURL& url, bool merge=false);
@@ -68,7 +66,7 @@ public slots:
 	void timeout ();
 signals:
 /// emitted when the list of objects has been updated
-	void updateComplete (bool changed);
+	void updateComplete ();
 protected:
 	void rCommandDone (RCommand *command);
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"

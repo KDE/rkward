@@ -45,18 +45,18 @@ RKEditorManager::~RKEditorManager () {
 	RK_TRACE (APP);	
 }
 
-RKEditor *RKEditorManager::editObject (RObject *object) {
+RKEditor *RKEditorManager::editObject (RObject *object, bool initialize_to_empty) {
 	RK_TRACE (APP);	
 	RObject *iobj = object;
 	RKEditor *ed = 0;
 	if (opened_objects.find (object) == opened_objects.end ()) {
 		if (object->isDataFrame ()) {
 			ed = new RKEditorDataFrame (tabbook);
-			ed->openObject (object);
+			ed->openObject (object, initialize_to_empty);
 		} else if (object->isVariable () && object->getContainer ()->isDataFrame ()) {
 			iobj = object->getContainer ();
 			ed = new RKEditorDataFrame (tabbook);
-			ed->openObject (iobj);
+			ed->openObject (iobj, initialize_to_empty);
 			// ed->focusObject (obj);
 		}
 
@@ -108,7 +108,7 @@ RKEditor *RKEditorManager::currentEditor () {
 	return static_cast<RKEditor*> (tabbook->currentPage ());
 }
 
-void RKEditorManager::closeEditor (RKEditor *editor, bool sync) {
+void RKEditorManager::closeEditor (RKEditor *editor) {
 	RK_TRACE (APP);
 	
 	RK_ASSERT (editor);
@@ -120,33 +120,20 @@ void RKEditorManager::closeEditor (RKEditor *editor, bool sync) {
 			object = it.key ();
 		}
 	}
-	
-	if (sync) {
-		RK_ASSERT (object);
-		RK_DO (qDebug ("%s", object->getShortName ().latin1 ()), APP, DL_DEBUG);
-	
-		RCommandChain *chain = RKGlobals::rInterface ()->startChain (0);
-	
-		RCommand *command = new RCommand (".rk.editor.closed (" + object->getFullName() + ")", RCommand::App | RCommand::Sync);
-		RKGlobals::rInterface ()->issueCommand (command, chain);
 
-		editor->syncToR (chain);
-		RKGlobals::rInterface ()->closeChain (chain);
-	}
-	
 	opened_objects.remove (object);
 	delete editor;
+
+	RCommand *command = new RCommand (".rk.editor.closed (" + object->getFullName() + ")", RCommand::App | RCommand::Sync);
+	RKGlobals::rInterface ()->issueCommand (command, 0);
 }
 
-void RKEditorManager::syncAllToR (RCommandChain *chain) {
+void RKEditorManager::flushAll () {
 	RK_TRACE (APP);
-	RCommandChain *sync_chain = RKGlobals::rInterface ()->startChain (chain);
-	
+
 	for (int i=0; i < tabbook->count (); ++i) {
-		static_cast<RKEditor*> (tabbook->page (i))->syncToR (sync_chain);
+		static_cast<RKEditor*> (tabbook->page (i))->flushChanges ();
 	}
-	
-	RKGlobals::rInterface ()->closeChain (sync_chain);
 }
 
 RKEditor *RKEditorManager::objectOpened (RObject *object) {

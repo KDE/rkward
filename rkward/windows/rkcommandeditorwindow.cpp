@@ -72,6 +72,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : QWidget (parent
 	grid->addWidget (editor = new RKCommandEditor (this, false), 1, 0);
 
 	setCaption (caption = i18n ("Command editor"));
+	resize (minimumSizeHint ().expandedTo (QSize (640, 480)));
 	show ();
 }
 
@@ -143,14 +144,12 @@ void RKCommandEditorWindow::load () {
 }
 
 void RKCommandEditorWindow::run () {
-// TODO: remove call to sync as soon as obsolete
-	RKGlobals::editorManager ()->syncAllToR (0);
+	RKGlobals::editorManager ()->flushAll ();
 	RKGlobals::rInterface ()->issueCommand (new RCommand (editor->text (), RCommand::User, ""));
 }
 
 void RKCommandEditorWindow::runSelection () {
-// TODO: remove call to sync as soon as obsolete
-	RKGlobals::editorManager ()->syncAllToR (0);
+	RKGlobals::editorManager ()->flushAll ();
 	RKGlobals::rInterface ()->issueCommand (new RCommand (editor->getSelection (), RCommand::User, ""));
 }
 

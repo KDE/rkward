@@ -42,7 +42,7 @@ RInterface::RInterface(){
 		if (RKSettingsModuleR::r_home_dir == "") {
 			qDebug ("guess");
 			RKSettingsModuleR::r_home_dir = "/usr/lib/R";
-			RKSettingsModuleR::r_home_dir = KInputDialog::getText (i18n ("R_HOME not set"), i18n ("Could not find an R_HOME-environment variable and don't have a stored setting for that either.\nThe R backend requires that variable. Please enter your R_HOME directory below.\nIf you don't get it right, the application will quit immediately and you'll have to start RKWard again."),RKSettingsModuleR:: r_home_dir);
+			RKSettingsModuleR::r_home_dir = KInputDialog::getText (i18n ("R_HOME not set"), i18n ("Could not find an R_HOME-environment variable and don't have a stored setting for that either.\nThe R backend requires that variable. Please enter your R_HOME directory below.\nIf you don't get it right, the application will quit immediately and you'll have to start RKWard again."), RKSettingsModuleR:: r_home_dir);
 		}
 	} else {
 		if (env_r_home != RKSettingsModuleR::r_home_dir) {

@@ -3,15 +3,11 @@ The following list of TODO-items is NOT complete!
 stuff to do before 0.2.7 release
 - merge common functionality of RObjectBrowser and RKVarselector into a base of some sort
 - update RKVarselectors on changes in the object-list!
-- RKWatch:
-	- load / save / spawn as separate editor ...
 - Object editing / modification tracking:
-	- keep pointer to editor with objects instead of modification information
-	- maybe make objects assume own responsibility for syncing their data?
-	- NO, make it much simpler by syncing the data immediately! Delay syncing only during (large) paste operations.
 	- maybe store data directly with objects? Probably not.
 	- functions to set double/int/string-vectors directly
-	- remove objects that are no longer in the workspace from the objectlist
+- RKEditorDataFrame:
+	- take care of row additions/deletions
 - pick some from below:
 
 (relatively) small stuff to do soon
@@ -28,6 +24,7 @@ stuff to do before 0.2.7 release
 - create a spinbox, that can really deal with real numbers
 - create agent-dialogs that notify the user what's going on and potentially request further actions, if an action is to be carried out in the
 	R backend that might potentially fail or require user interaction (asynchronously)
+- UNPROTECT_PTR
 
 stuff to do before the thing is usable
 - RKWatch

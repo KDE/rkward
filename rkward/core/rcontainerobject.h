@@ -20,6 +20,7 @@
 #include "robject.h"
 
 class RCommand;
+class RKEditor;
 
 /**
 Internal representation of objects in the R-workspace that contain other objects
@@ -37,8 +38,7 @@ public:
 	QString getClassName (int index) { return classname[index]; };
 	QString makeClassString (const QString &sep);
 	
-	void writeMetaData (RCommandChain *chain, bool force=false);
-	virtual void setChildModified ();
+	void writeChildMetaData (RCommandChain *chain);
 	
 	void updateFromR ();
 
@@ -52,12 +52,11 @@ public:
 	
 	/** creates a new child. Right now only RKVariables (false, false), or data.frames (true, true), or unspecified containers (true, false) can be created.
 	API will likely change. */
-	RObject *createNewChild (const QString &name, bool container=false, bool data_frame=false);
+	RObject *createNewChild (const QString &name, RKEditor *creator=0, bool container=false, bool data_frame=false);
 	
 	int numDimensions () { return num_dimensions; };
 	int getDimension (int index) { return dimension[index]; };
 	
-	void setDataSynced ();
 private:
 	friend class RObject;
 	void typeMismatch (RObject *child, QString childname);
@@ -68,7 +67,6 @@ protected:
 	void addChild (RObject *child, QString childname);
 	virtual void renameChild (RObject *object, const QString &new_name);
 	virtual void removeChild (RObject *object);
-	virtual void objectsChanged ();
 /** given the current list of children (as returned by the "names"-command or similar in derived classes) find out, which children have been removed,
 and takes the appropriate measures */
 	void checkRemovedChildren (char **current_children, int current_child_count);

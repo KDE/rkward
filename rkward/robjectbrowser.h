@@ -44,21 +44,29 @@ public:
 	
 public slots:
 	void updateButtonClicked ();
-	void updateComplete (bool changed);
+	void updateComplete ();
 	void requestedContextMenu (QListViewItem *item, const QPoint &pos, int col);
 	
 	void popupEdit ();
 	void popupView ();
 	void popupDelete ();
 	void popupRename ();
+	
+	void objectAdded (RObject *object);
+	void objectRemoved (RObject *object);
+	void objectPropertiesChanged (RObject *object);
 private:
 	friend class RKwardApp;
 	void initialize ();
+// TODO: keep an additional map from RObject to QListViewItem, in order to make this (often called) more efficient
+	QListViewItem *findObjectItem (RObject *object);
+	void updateItem (QListViewItem *item, RObject *object);
 
 	QPushButton *update_button;
 	QListView *list_view;
 	
-	QMap<QListViewItem *, RObject *> object_map;
+	typedef QMap<QListViewItem *, RObject *> ObjectMap;
+	ObjectMap object_map;
 	
 	void addObject (QListViewItem *parent, RObject *object);
 	

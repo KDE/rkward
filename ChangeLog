@@ -1,3 +1,8 @@
+- variables can be added/removed correctly in the data.frame editor. Those changes are propagated to the RObjectBrowser automatically
+- synchronisation from the GUI to the R-workspace is done immediately
+- added ability to spawn separate command-editor window(s) with load/save/print/etc.
+- command-editor part in the watch-window keeps keyboard focus (most of the time)
+
 --- Version 0.2.6a - Aug-30-2004
 - synchronize edited objects before "View"ing them
 - fix small typo

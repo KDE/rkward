@@ -11,8 +11,8 @@
     </keywords>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
-    <version></version>
-    <description></description>
+    <version/>
+    <description/>
     <ignoreparts/>
     <secondaryLanguages/>
   </general>
@@ -48,7 +48,7 @@
       <autocompile>true</autocompile>
       <envvars/>
       <runarguments>
-        <rkward></rkward>
+        <rkward/>
       </runarguments>
     </run>
     <configurations>
@@ -98,11 +98,11 @@
   <kdevdebugger>
     <general>
       <dbgshell>libtool</dbgshell>
-      <programargs></programargs>
-      <gdbpath></gdbpath>
-      <configGdbScript></configGdbScript>
-      <runShellScript></runShellScript>
-      <runGdbScript></runGdbScript>
+      <programargs/>
+      <gdbpath/>
+      <configGdbScript/>
+      <runShellScript/>
+      <runGdbScript/>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>

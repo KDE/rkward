@@ -21,6 +21,7 @@
 
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
+#include "rkmodificationtracker.h"
 
 #define UPDATE_DIM_COMMAND 1
 
@@ -29,7 +30,8 @@
 RKVariable::RKVariable (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
 // TODO: better check, wether it really is one
-	RObject::type |= Variable;
+	RObject::type = Variable;
+	var_type = Unknown;
 }
 
 RKVariable::~RKVariable () {
@@ -55,7 +57,7 @@ QString RKVariable::getTable () {
 
 void RKVariable::updateFromR () {
 	RK_TRACE (OBJECTS);
-
+	
 	getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain ());
 
 	RCommand *command = new RCommand ("length (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
@@ -75,8 +77,10 @@ void RKVariable::rCommandDone (RCommand *command) {
 		}
 		
 		QString dummy = getMetaProperty ("type");
-		var_type = (RObject::VarType) dummy.toInt ();
-		
+		int new_var_type = dummy.toInt ();
+		var_type = (RObject::VarType) new_var_type;
+		if (new_var_type != var_type) RKGlobals::tracker ()->objectMetaChanged (this, 0);
+
 		parent->childUpdateComplete ();
 	}
 }

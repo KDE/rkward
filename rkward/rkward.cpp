@@ -41,6 +41,7 @@
 // application specific includes
 #include "rkward.h"
 #include "rkeditormanager.h"
+#include "core/rkmodificationtracker.h"
 #include "dataeditor/rkeditor.h"
 #include "dataeditor/rkdrag.h"
 #include "rkwatch.h"
@@ -91,6 +92,7 @@ RKwardApp::RKwardApp(KURL *load_url, QWidget* , const char* name):KMainWindow(0,
   
 	RKGlobals::manager = new RKEditorManager (this);
 	setCentralWidget (RKGlobals::editorManager ());
+	RKGlobals::mtracker = new RKModificationTracker (this);
 
 	initial_url = load_url;
   
@@ -140,9 +142,8 @@ void RKwardApp::doPostInit () {
 		} else if (result->result == StartupDialog::ChoseFile) {
 			slotFileOpen ();
 		} else if (result->result == StartupDialog::EmptyTable) {
-			RObject *object = RKGlobals::rObjectList ()->createNewChild ("my.data", true, true);
-			RKEditor *editor = RKGlobals::editorManager ()->editObject (object);
-			editor->syncToR (0);
+			RObject *object = RKGlobals::rObjectList ()->createNewChild ("my.data", 0, true, true);
+			RKEditor *editor = RKGlobals::editorManager ()->editObject (object, true);
 		}
 		delete result;
 	}
@@ -516,9 +517,8 @@ void RKwardApp::slotDataNewDataFrame () {
 	QString name = KInputDialog::getText (i18n ("Create new data.frame"), i18n ("Enter name for the new object (make it a valid one - no checks so far)"), "my.data", &ok, this);
 	
 	if (ok) {
-		RObject *object = RKGlobals::rObjectList ()->createNewChild (name, true, true);
-		RKEditor *editor = RKGlobals::editorManager ()->editObject (object);
-		editor->syncToR (0);
+		RObject *object = RKGlobals::rObjectList ()->createNewChild (name, 0, true, true);
+		RKEditor *editor = RKGlobals::editorManager ()->editObject (object, true);
 	}
 }
 

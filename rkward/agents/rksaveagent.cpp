@@ -38,8 +38,8 @@ RKSaveAgent::RKSaveAgent (KURL url, bool save_file_as, bool quit_after_save) {
 		if (!askURL ()) return;
 	}
 	
+	RKGlobals::editorManager ()->flushAll ();
 	save_chain = RKGlobals::rInterface ()->startChain (0);
-	RKGlobals::editorManager ()->syncAllToR (save_chain);
 	
 	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.path () + "\")", RCommand::App, "", this), save_chain);
 }

@@ -21,6 +21,7 @@
 #include "rkvariable.h"
 
 #include "../rkglobals.h"
+#include "rkmodificationtracker.h"
 
 #include "../debug.h"
 
@@ -52,7 +53,7 @@ void RContainerObject::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
 	RObject::rCommandDone (command);
 
-	bool changed = false;
+	bool properties_changed = false;
 	if (command->getFlags () == CLASSIFY_COMMAND) {
 		if (!command->intVectorLength ()) {
 			RK_ASSERT (false);
@@ -69,19 +70,19 @@ void RContainerObject::rCommandDone (RCommand *command) {
 				}
 			}
 			if (new_type != RObject::type) {
-				changed = true;
+				properties_changed = true;
 				RObject::type = new_type;
 			}
 
 			// get dimensions
 			if (num_dimensions != (command->intVectorLength () - 1)) {
 				num_dimensions = command->intVectorLength () - 1;
-				changed = true;
+				properties_changed = true;
 				delete dimension;
 				dimension = new int [num_dimensions];
 			}
 			for (int d=0; d < num_dimensions; ++d) {
-				if (dimension[d] != command->getIntVector ()[d+1]) changed=true;
+				if (dimension[d] != command->getIntVector ()[d+1]) properties_changed = true;
 				dimension[d] = command->getIntVector ()[d+1];
 			}
 
@@ -94,6 +95,7 @@ void RContainerObject::rCommandDone (RCommand *command) {
 			command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CHILD_LIST_COMMAND);
 			RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 		}
+		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this, 0);
 		
 	} else if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
 		// first check, whether all known children still exist:
@@ -113,7 +115,6 @@ void RContainerObject::rCommandDone (RCommand *command) {
 			} else {
 				RK_DO (qDebug ("creating new child: %s", cname.latin1 ()), APP, DL_DEBUG);
 				RKGlobals::rObjectList()->createFromR (this, cname);
-				changed = true;
 			}
 		}
 		
@@ -122,15 +123,14 @@ void RContainerObject::rCommandDone (RCommand *command) {
 			num_classes = command->stringVectorLength ();
 			delete classname;
 			classname = new QString [num_classes];
-			changed = true;
+			properties_changed = true;
 		}
 		for (int cn=0; cn < num_classes; ++cn) {
-			if (classname[cn] != command->getStringVector ()[cn]) changed = true;
+			if (classname[cn] != command->getStringVector ()[cn]) properties_changed = true;
 			classname[cn] = command->getStringVector ()[cn];
 		}
+		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this, 0);
 	}
-	
-	// TODO: signal change if any
 }
 
 void RContainerObject::typeMismatch (RObject *child, QString childname) {
@@ -138,6 +138,7 @@ void RContainerObject::typeMismatch (RObject *child, QString childname) {
 	delete child;
 	childmap.remove (childname);
 	
+	RKGlobals::tracker ()->removeObject (child, 0, true);
 	RKGlobals::rObjectList()->createFromR (this, childname);
 }
 
@@ -183,19 +184,11 @@ QString RContainerObject::makeClassString (const QString &sep) {
 	return ret;
 }
 
-void RContainerObject::writeMetaData (RCommandChain *chain, bool force) {
+void RContainerObject::writeChildMetaData (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
-	RObject::writeMetaData (chain, force);
-	
 	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
-		it.data ()->writeMetaData (chain, force);
+		it.data ()->writeMetaData (chain);
 	}
-}
-
-void RContainerObject::setChildModified () {
-	RK_TRACE (OBJECTS);
-	RObject::state |= ChildrenModified;
-	parent->setChildModified ();
 }
 
 RObject *RContainerObject::findChild (const QString &name) {
@@ -205,7 +198,7 @@ RObject *RContainerObject::findChild (const QString &name) {
 	return (it.data ());
 }
 
-RObject *RContainerObject::createNewChild (const QString &name, bool container, bool data_frame) {
+RObject *RContainerObject::createNewChild (const QString &name, RKEditor *creator, bool container, bool data_frame) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (childmap.find (name) == childmap.end ());
 
@@ -218,14 +211,11 @@ RObject *RContainerObject::createNewChild (const QString &name, bool container, 
 		}
 	} else {
 		ret = new RKVariable (this, name);
-		ret->type = Variable;
 	}
 	
 	childmap.insert (name, ret);
-	ret->setMetaModified ();
-	ret->setDataModified ();
-	
-	objectsChanged ();
+
+	RKGlobals::tracker ()->addObject (ret, creator);
 	
 	return ret;
 }
@@ -245,8 +235,6 @@ void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 	childmap.insert (new_name, object);
 	
 	object->name = new_name;
-	
-	objectsChanged ();
 }
 
 void RContainerObject::removeChild (RObject *object) {
@@ -260,13 +248,6 @@ void RContainerObject::removeChild (RObject *object) {
 
 	childmap.remove (it);
 	delete object;
-	
-	objectsChanged ();
-}
-
-void RContainerObject::objectsChanged () {
-	RK_TRACE (OBJECTS);
-	parent->objectsChanged ();
 }
 
 bool RContainerObject::isParentOf (RObject *object, bool recursive) {
@@ -286,18 +267,6 @@ bool RContainerObject::isParentOf (RObject *object, bool recursive) {
 	return false;
 }
 
-void RContainerObject::setDataSynced () {
-	RK_TRACE (OBJECTS);
-	state -= (state & DataModified);
-
-	if (hasModifiedChildren ()) {
-		for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
-			it.data ()->setDataSynced ();
-		}
-		state -= (state & ChildrenModified);
-	}
-}
-
 void RContainerObject::checkRemovedChildren (char **current_children, int current_child_count) {
 	RK_TRACE (OBJECTS);
 // is there a more efficient algorythm for doing this?
@@ -311,8 +280,8 @@ void RContainerObject::checkRemovedChildren (char **current_children, int curren
 			}
 		}
 		if (!found) {
-		// TODO: implement!
-			RK_DO (qDebug ("child no longer present: %s. TODO: take appropriate action.", child_string.latin1 ()), OBJECTS, DL_DEBUG);
+			RKGlobals::tracker ()->removeObject (it.data (), 0, true);
+			RK_DO (qDebug ("child no longer present: %s.", child_string.latin1 ()), OBJECTS, DL_DEBUG);
 		}
 	}
 }

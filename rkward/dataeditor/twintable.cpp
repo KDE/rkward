@@ -103,9 +103,9 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
 
 	// which will be reacted upon by the following popup-menu:
 	top_header_menu = new QPopupMenu (this);
-	top_header_menu->insertItem (i18n ("Insert new variable left"), this, SLOT (insertColumnAfter ()));
-	top_header_menu->insertItem (i18n ("Insert new variable right"), this, SLOT (insertColumnBefore ()));
-	top_header_menu->insertItem (i18n ("Delete this variable"), this, SLOT (deleteColumn ()));
+	top_header_menu->insertItem (i18n ("Insert new variable left"), this, SLOT (insertColumnBefore ()));
+	top_header_menu->insertItem (i18n ("Insert new variable right"), this, SLOT (insertColumnAfter ()));
+	top_header_menu->insertItem (i18n ("Delete this variable"), this, SLOT (requestDeleteColumn ()));
 
 	// and the same for the left header
 	connect (dataview, SIGNAL (headerRightClick (int, int)), this, SLOT (headerRightClicked (int, int)));
@@ -135,13 +135,12 @@ void TwinTable::autoScrolled (int x, int y) {
 
 void TwinTable::deleteColumn (int column) {
 	if ((column >= 0) && (column < numCols ())) {
-		emit (aboutToDeleteColumn (column));
 		varview->removeColumn (column);
 		dataview->removeColumn (column);
 	}
 }
 
-void TwinTable::insertNewColumn (int where, QString name) {
+void TwinTable::insertNewColumn (int where) {
 	if ((where < 0) || (where > varview->numCols ())) {
 		where = varview->numCols ();
 	}
@@ -166,9 +165,7 @@ void TwinTable::insertNewColumn (int where, QString name) {
 		rti->checkValid ();
 	}
 
-	if (name != "") {
-		varview->setText (NAME_ROW, where, name);
-	}
+	emit (addedColumn (where));
 }
 
 void TwinTable::insertNewRow (int where, TwinTableMember *table) {
@@ -249,8 +246,8 @@ void TwinTable::insertColumnBefore () {
 	insertNewColumn (header_pos);
 }
 
-void TwinTable::deleteColumn () {
-	deleteColumn (header_pos);
+void TwinTable::requestDeleteColumn () {
+	emit (deleteColumnRequest (header_pos));
 }
 
 void TwinTable::insertRowAfter () {

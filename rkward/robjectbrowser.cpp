@@ -29,6 +29,7 @@
 #include "core/robjectlist.h"
 #include "core/rkvariable.h"
 #include "rkeditormanager.h"
+#include "core/rkmodificationtracker.h"
 #include "dataeditor/rkeditor.h"
 #include "robjectviewer.h"
 
@@ -63,7 +64,13 @@ RObjectBrowser::~RObjectBrowser () {
 }
 
 void RObjectBrowser::initialize () {
-	connect (RKGlobals::rObjectList (), SIGNAL (updateComplete (bool)), this, SLOT (updateComplete (bool)));
+	addObject (0, RKGlobals::rObjectList());
+	
+	connect (RKGlobals::tracker (), SIGNAL (objectRemoved (RObject *)), this, SLOT (objectRemoved (RObject*)));
+	connect (RKGlobals::tracker (), SIGNAL (objectPropertiesChanged (RObject *)), this, SLOT (objectPropertiesChanged (RObject*)));
+	connect (RKGlobals::tracker (), SIGNAL (objectAdded (RObject *)), this, SLOT (objectAdded (RObject*)));
+
+	connect (RKGlobals::rObjectList (), SIGNAL (updateComplete ()), this, SLOT (updateComplete ()));
 	connect (update_button, SIGNAL (clicked ()), this, SLOT (updateButtonClicked ()));
 	connect (list_view, SIGNAL (contextMenuRequested (QListViewItem*, const QPoint &, int)), this, SLOT (requestedContextMenu (QListViewItem*, const QPoint &, int)));
 }
@@ -71,6 +78,43 @@ void RObjectBrowser::initialize () {
 void RObjectBrowser::updateButtonClicked () {
 	list_view->setEnabled (false);
 	RKGlobals::rObjectList ()->updateFromR ();
+}
+
+void RObjectBrowser::objectAdded (RObject *object) {
+	RK_TRACE (APP);
+
+	QListViewItem *parent = findObjectItem (object->getContainer ());
+	RK_ASSERT (parent);
+	addObject (parent, object);
+}
+
+void RObjectBrowser::objectRemoved (RObject *object) {
+	RK_TRACE (APP);
+
+	QListViewItem *item = findObjectItem (object);
+	RK_ASSERT (item);
+	object_map.remove (item);
+	delete item;
+}
+
+void RObjectBrowser::objectPropertiesChanged (RObject *object) {
+	RK_TRACE (APP);
+
+	QListViewItem *item = findObjectItem (object);
+	RK_ASSERT (item);
+	updateItem (item, object);
+}
+
+void RObjectBrowser::updateItem (QListViewItem *item, RObject *object) {
+	RK_TRACE (APP);
+	
+	item->setText (0, object->getShortName ());
+	item->setText (1, object->getLabel ());
+	if (object->isContainer ()) {
+		item->setText (3, static_cast<RContainerObject*> (object)->makeClassString ("; "));
+	} else if (object->isVariable ()) {
+		item->setText (2, static_cast<RKVariable*> (object)->getVarTypeString ());
+	}
 }
 
 void RObjectBrowser::addObject (QListViewItem *parent, RObject *object) {
@@ -82,33 +126,23 @@ void RObjectBrowser::addObject (QListViewItem *parent, RObject *object) {
 		item = new QListViewItem (parent);
 	} else {
 		item = new QListViewItem (list_view);
-	}
-	item->setText (0, object->getShortName ());
-	item->setText (1, object->getLabel ());
-	if (object->isContainer ()) {
-		item->setText (3, static_cast<RContainerObject*> (object)->makeClassString ("; "));
-	} else if (object->isVariable ()) {
-		item->setText (2, static_cast<RKVariable*> (object)->getVarTypeString ());
-	}
-
-	RObject **children = object->children ();
-	for (int i=0; i < object->numChildren (); ++i) {
-		addObject (item, children[i]);
-	}
-	
-	if (object->numChildren ()) {
 		item->setOpen (true);
 	}
-	
+
+	updateItem (item, object);
 	object_map.insert (item, object);
+	
+// code below won't work, as objects get added before editor is opened. Need to call from RKEditor(Manager)
+/*	if (object->numChildren () && RKGlobals::editorManager ()->objectOpened (object)) {
+		item->setOpen (true);
+		while (item->parent ()) {
+			item = item->parent ();
+			item->setOpen (true);
+		}
+	} */
 }
 
-void RObjectBrowser::updateComplete (bool changed) {
-	if (changed) {
-		list_view->clear ();
-		addObject (0, RKGlobals::rObjectList());
-	}
-	
+void RObjectBrowser::updateComplete () {
 	list_view->setEnabled (true);
 }
 
@@ -117,36 +151,20 @@ void RObjectBrowser::popupEdit () {
 }
 
 void RObjectBrowser::popupView () {
-	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (menu_object);
-	if (ed) ed->syncToR (0);
+	RKGlobals::editorManager ()->flushAll ();
 	new RObjectViewer (0, menu_object);
 }
 
 void RObjectBrowser::popupDelete () {
-	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (menu_object);
-	QString message = i18n ("Are you sure you want to delete this object? There's no way to get it back.");
-	if (ed) {
-		message.append (i18n ("\n(By the way, it's currently opened for editing)"));
-	}
-
-	if (KMessageBox::questionYesNo (this, message, i18n ("Ok to delete?")) == KMessageBox::No) return;
-
-	menu_object->remove ();
-	if (ed) ed->objectDeleted (menu_object);
+	RKGlobals::tracker ()->removeObject (menu_object);
 }
 
 void RObjectBrowser::popupRename () {
-	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (menu_object);
-	if (ed) {
-		if (KMessageBox::questionYesNo (this, i18n ("Are you sure you want to rename this object? It's currently opened for editing"), i18n ("Ok to rename?"), KStdGuiItem::yes (), KStdGuiItem::no (), "ok_to_rename_edited_object") == KMessageBox::No) return;
-	}
-
 	bool ok;
 	QString name = KInputDialog::getText (i18n ("Rename object"), i18n ("Enter the new name (make it a valid one - no checks so far)"), menu_object->getShortName (), &ok, this);
 
 	if (ok) {
-		menu_object->rename (name);
-		if (ed) ed->objectMetaModified (menu_object);
+		RKGlobals::tracker ()->renameObject (menu_object, name);
 	}
 }
 
@@ -157,6 +175,13 @@ void RObjectBrowser::requestedContextMenu (QListViewItem *item, const QPoint &po
 		menu_object = object;
 		menu->popup (pos);
 	}
+}
+
+QListViewItem *RObjectBrowser::findObjectItem (RObject *object) {
+	for (ObjectMap::iterator it = object_map.begin (); it != object_map.end (); ++it) {
+		if (it.data () == object) return it.key ();
+	}
+	return 0;
 }
 
 #include "robjectbrowser.moc"

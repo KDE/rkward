@@ -21,6 +21,7 @@ class RKwardApp;
 class RInterface;
 class RObjectList;
 class RKEditorManager;
+class RKModificationTracker;
 
 /**
 This class basically keeps some static pointers which are needed all over the place, so they won't have to be passed around.
@@ -37,12 +38,14 @@ public:
 	static RInterface *rInterface () { return rinter; };
 	static RObjectList *rObjectList () { return list; };
 	static RKEditorManager *editorManager () { return manager; };
+	static RKModificationTracker *tracker () { return mtracker; };
 private:
 	friend class RKwardApp;
 	static RKwardApp *app;
 	static RInterface *rinter;
 	static RObjectList *list;
 	static RKEditorManager *manager;
+	static RKModificationTracker *mtracker;
 };
 
 #endif

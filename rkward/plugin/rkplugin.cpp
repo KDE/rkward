@@ -393,7 +393,6 @@ void RKPlugin::ok () {
 		}
 		changed ();
 	} else {
-		RKGlobals::editorManager ()->syncAllToR ();
 		RKGlobals::rInterface ()->issueCommand (new RCommand (current_code, RCommand::Plugin, "", this));
 		script_backend_chain = RKGlobals::rInterface ()->startChain ();
 		backend->printout (BACKEND_DONT_CARE);

@@ -42,9 +42,10 @@ class TwinTable : public RKEditor {
 public: 
 	TwinTable(QWidget *parent=0);
 	~TwinTable();
-	void insertNewColumn (int where=-1, QString name="");
+/** Inserts a new column at the given position (or at the end for -1) */
+	void insertNewColumn (int where=-1);
+/** Inserts a new row at the given position (or at the end for -1) in the given table */
 	void insertNewRow (int where=-1, TwinTableMember *table=0);
-	void deleteColumn (int column);
 	QCString encodeSelection ();
 /** Pastes content to the current selection. */
 	void pasteEncoded (QByteArray content);
@@ -64,7 +65,9 @@ public:
     TwinTableMember* varview;
     TwinTableMember* dataview;
 signals:
-	void aboutToDeleteColumn (int);
+	void deleteColumnRequest (int);
+/** emitted so the RKEditorDataFrame can add a corresponding object */
+	void addedColumn (int);
 public slots:
 	void headerClicked (int col);
 	void headerRightClicked (int row, int col);
@@ -86,6 +89,8 @@ protected:
 	void setRow (TwinTableMember* table, int row, int start_col, int end_col, char **data);
 /** set a column of cells, expanding the table if necessary. Assumes you provide the correct amount of data! */
 	void setColumn (TwinTableMember* table, int col, int start_row, int end_row, char **data);
+/** deletes the given column. To be called only from RKEditorDataFrame, in order to take care of object-removal! */
+	void deleteColumn (int column);
 private slots:
 	void scrolled (int x, int y);
 	void autoScrolled (int x, int y);
@@ -97,8 +102,8 @@ private slots:
 	void insertRowAfter ();
 /** inserts a new row before the current header_pos */
 	void insertRowBefore ();
-/** deletes the column at the current header_pos */
-	void deleteColumn ();
+/** deletes the column at the current header_pos. Actually it does not really delete the column, but requests object-removal from the RKEditorDataFrame. That will take care of calling deleteColumn (int) */
+	void requestDeleteColumn ();
 };
 
 #endif

@@ -20,6 +20,7 @@ RKwardApp *RKGlobals::app;
 RInterface *RKGlobals::rinter;
 RObjectList *RKGlobals::list;
 RKEditorManager *RKGlobals::manager;
+RKModificationTracker *RKGlobals::mtracker;
 
 RKGlobals::RKGlobals () {
 }
