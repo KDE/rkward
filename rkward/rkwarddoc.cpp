@@ -283,7 +283,12 @@ void RKwardDoc::processROutput (QString output) {
 			while (col < fieldends.count ()) {
 				++pos;
 				QString value = line.mid (pos, fieldends[col] - pos);
-				tsv.append (value.stripWhiteSpace ());
+				value = value.stripWhiteSpace ();
+// TODO: somehow distinguish between literal "NA" and NA vs <NA> in R-output
+				if ((value == "NA") || (value == "<NA>")) {
+					value = "";
+				}
+				tsv.append (value);
 				pos = fieldends[col];
 				if (++col < fieldends.count ()) {
 					tsv.append ("\t");
@@ -329,7 +334,12 @@ void RKwardDoc::processROutput (QString output) {
 			while (col < fieldends.count ()) {
 				++pos;
 				QString value = line.mid (pos, fieldends[col] - pos);
-				tsv.append (value.stripWhiteSpace ());
+				value = value.stripWhiteSpace ();
+// TODO: somehow distinguish between literal "NA" and NA vs <NA> in R-output
+				if ((value == "NA") || (value == "<NA>")) {
+					value = "";
+				}
+				tsv.append (value);
 				pos = fieldends[col];
 				if (++col < fieldends.count ()) {
 					tsv.append ("\t");

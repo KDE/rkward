@@ -50,13 +50,13 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
   initActions();
 
   ///////////////////////////////////////////////////////////////////
-  // disable actions at startup
-  fileSave->setEnabled(false);
+  // disable actions at startup   // why?
+/*  fileSave->setEnabled(false);
   fileSaveAs->setEnabled(false);
   filePrint->setEnabled(false);
   editCut->setEnabled(false);
   editCopy->setEnabled(false);
-  editPaste->setEnabled(false);
+  editPaste->setEnabled(false); */
 
   initDocument();
   initView();
@@ -78,13 +78,17 @@ RKwardApp::~RKwardApp()
 void RKwardApp::initActions()
 {
   fileNewWindow = new KAction(i18n("New &Window"), 0, 0, this, SLOT(slotFileNewWindow()), actionCollection(),"file_new_window");
+	fileNewWindow->setEnabled (false);
   fileNew = KStdAction::openNew(this, SLOT(slotFileNew()), actionCollection());
+	fileNew->setEnabled (false);
   fileOpen = KStdAction::open(this, SLOT(slotFileOpen()), actionCollection());
   fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const KURL&)), actionCollection());
   fileSave = KStdAction::save(this, SLOT(slotFileSave()), actionCollection());
   fileSaveAs = KStdAction::saveAs(this, SLOT(slotFileSaveAs()), actionCollection());
   fileClose = KStdAction::close(this, SLOT(slotFileClose()), actionCollection());
+	fileClose->setEnabled (false);
   filePrint = KStdAction::print(this, SLOT(slotFilePrint()), actionCollection());
+	filePrint->setEnabled (false);
   fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection());
   editCut = KStdAction::cut(this, SLOT(slotEditCut()), actionCollection());
   editCopy = KStdAction::copy(this, SLOT(slotEditCopy()), actionCollection());
@@ -130,11 +134,11 @@ void RKwardApp::initDocument()
 {
 	doc = new RKwardDoc(this);
 	doc->newDocument();
-	editCopy->setEnabled(true);
+/*	editCopy->setEnabled(true);
 	editPaste->setEnabled(true);
 	editCut->setEnabled(true);
 	fileSave->setEnabled(true);
-	fileSaveAs->setEnabled(true);
+	fileSaveAs->setEnabled(true); */
 }
 
 void RKwardApp::initView()
