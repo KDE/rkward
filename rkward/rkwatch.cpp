@@ -18,6 +18,7 @@
 #include "rkwatch.h"
 
 #include "rinterface.h"
+#include "rcommand.h"
 
 #include <qtextedit.h>
 #include <qpushbutton.h>
@@ -67,7 +68,7 @@ void RKwatch::clearCommand () {
 
 void RKwatch::submitCommand () {
 	watch->setColor (Qt::red);
-	r_inter->issueCommand (commands->text ());
+	r_inter->issueCommand (new RCommand (commands->text ()));
 	commands->clear ();
 }
 

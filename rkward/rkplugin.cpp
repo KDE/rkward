@@ -29,6 +29,7 @@
 #include "rkward.h"
 #include "rkwarddoc.h"
 #include "rinterface.h"
+#include "rcommand.h"
 
 // plugin-widgets
 #include "rkpluginwidget.h"
@@ -209,7 +210,7 @@ RKPluginWidget *RKPlugin::buildWidget (const QDomElement &element) {
 
 void RKPlugin::ok () {
 	getApp ()->getDocument ()->syncToR ();
-	getApp ()->r_inter.issueAsyncCommand (codeDisplay->text ());
+	getApp ()->r_inter.issueCommand (new RCommand (codeDisplay->text ()));
 }
 
 void RKPlugin::cancel () {

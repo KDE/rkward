@@ -20,19 +20,31 @@
 int RCommand::next_id = 0;
 
 RCommand::RCommand(QString command, int type, QString alternative_text, QObject *receiver = 0, const char *slot){
+	_id = next_id++;
+	qDebug ("creating command %d", _id);
 	_command = command;
 	_type = type;
 	alttext = alternative_text;
-	if (receiver && slot) {
-		connect (this, SIGNAL (commandDone (RCommand *)), receiver, slot);
+	addReceiver (receiver, slot);
+// if we ever submit enough commands to get a buffer overflow, use only positive numbers.
+	if (next_id < 0) {
+		next_id = 0;
 	}
-	_id = next_id++;
 }
 
 RCommand::~RCommand(){
+	qDebug ("deleting command %d", _id);
 }
 
 void RCommand::finished (const QString &reply) {
+	qDebug ("finished command %d", _id);
 	_reply = reply;
 	emit (commandDone (this));
+}
+
+void RCommand::addReceiver (QObject *receiver, const char *slot) {
+	if (receiver && slot) {
+		connect (this, SIGNAL (commandDone (RCommand *)), receiver, slot);
+		qDebug ("connecting command %d", _id);
+	}
 }

@@ -38,13 +38,16 @@
 class RCommand : public QObject  {
 	Q_OBJECT
 public: 
-	RCommand(QString command, int type, QString alternative_text, QObject *receiver = 0, const char *slot = 0);
+	RCommand(QString command, int type = 0, QString alternative_text = "", QObject *receiver = 0, const char *slot = 0);
 	~RCommand();
 	int type () { return _type; };
 	QString alternativeText () { return alttext; };
 	QString command () { return _command; };
 	int id () { return _id; };
 	QString reply () { return _reply; };
+/** Adds an additional receiver (i.e. an object/slot that will be notified, when
+	this command is completed) */
+	void addReceiver (QObject *receiver, const char *slot);
 signals:
 	void commandDone (RCommand *command);
 private:

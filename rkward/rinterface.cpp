@@ -23,6 +23,7 @@
 #include <klocale.h>
 
 #include "rkwatch.h"
+#include "rcommand.h"
 
 RInterface::RInterface(){
 	end_tag = "Done with R-Command";
@@ -32,6 +33,7 @@ RInterface::RInterface(){
 	connect (this, SIGNAL (processExited (KProcess *)), this, SLOT (Rdied (KProcess *)));
 	watch = new RKwatch (this);
 	watch->show ();
+	command_stack.setAutoDelete (true);
 }
 
 RInterface::~RInterface(){
@@ -56,10 +58,20 @@ bool RInterface::startR (QStrList &commandline) {
 		*this << commandline.current ();
 	} while (commandline.next ());
 
-	command_running = sync_command = false;
-	commands_waiting = busy_writing = false;
+	command_running = busy_writing = false;
 
 	return start (NotifyOnExit, All);
+}
+
+void RInterface::issueCommand (RCommand *command) {
+	command_stack.append (command);
+	tryNextCommand ();
+}
+
+void RInterface::tryNextCommand () {
+	if ((!busy_writing) && command_stack.count () && (!command_running)) {
+		write (command_stack.first ());
+	}
 }
 
 void RInterface::gotROutput (KProcess *proc, char *buffer, int buflen) {
@@ -82,88 +94,42 @@ void RInterface::gotROutput (KProcess *proc, char *buffer, int buflen) {
 			r_output = "";
 		}
 
-		if (sync_command) {
-			emit (syncUnblocked ());
-			sync_command = false;
-		}
-		command_running = false;
+// TODO: remove line below, once no longer needed	
 		emit (receivedReply (r_output.left (pos)));
+		command_stack.first ()->finished (r_output.left (pos));
+		command_stack.removeFirst ();
 		r_output = "";
-		if (!sync_command) {
-			async_command_stack.removeFirst ();
-			if (async_command_stack.count ()) {
-				qDebug ("now issueing queued ");
-				issue (async_command_stack.first ());
-			}
-		}
+		command_running = false;
+		tryNextCommand ();
 	}
 }
 
-bool RInterface::issueCommand (const QString &command) {
-	if (command_running) {
-		qDebug ("could not issue synchronous command");
-		return false;
-	}
-
-	issue (command);
-	sync_command = true;
-	return true;
-}
-
-void RInterface::issueAsyncCommand (const QString &command) {
-	async_command_stack.append (command);
-
-	// this is the first item in the stack, start pushing immediately
-	if (async_command_stack.count () == 1) {
-		issue (command);
-	} else {
-		qDebug ("placed in queue");
-	}
-}
-
-void RInterface::issue (const QString &command) {
-	emit (syncBlocked ());
-	command_running = true;
-	if (!busy_writing) {
-		write (command);
-	} else {
-		waiting_commands.append (command);
-		commands_waiting = true;
-	}
-}
-
-void RInterface::write (const QString &command) {
+void RInterface::write (RCommand *command) {
 	// we must keep a local copy while write is in progress!
-	command_write_buffer = qstrdup (command);
+	command_write_buffer = qstrdup (command->command ());
 	command_write_buffer.append ("\nprint (\"" + end_tag + "\")\n");
 
 	writeStdin (command_write_buffer, command_write_buffer.length ());
-	emit (writingRequest (command));
+	emit (writingRequest (command->command ()));
+	qDebug ("ran command %d", command->id ());
 	busy_writing = true;
+	command_running = true;
 }
 
 void RInterface::doneWriting (KProcess *proc) {
-	if (commands_waiting) {
-		QString command = waiting_commands.first ();
-		write (command);
-		command_running = true;
-		if (waiting_commands.removeFirst ()) {
-			commands_waiting = false;
-		}
-	} else {
-		busy_writing = false;
-	}
+	busy_writing = false;
+	tryNextCommand ();
 }
 
 void RInterface::Rdied (KProcess *proc) {
 	emit (receivedReply (r_output));
-	command_running = sync_command = false;
-	async_command_stack.clear ();
+	command_running = false;
+	command_stack.clear ();
 	r_output = "";
 	if (KMessageBox::questionYesNo (0, i18n ("Oh no!\nThe R-Process died. Probably we did something wrong.\nShould I try to restart it?\nYou can do so manually via Settings->R Settings."),
 			    i18n ("Restart R?")) == KMessageBox::Yes) {
 		start (NotifyOnExit, All);
 	} else {
-		emit (syncBlocked ());
+//		emit (syncBlocked ());
 	}
 }

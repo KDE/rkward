@@ -21,8 +21,10 @@
 #include <kprocess.h>
 #include <qstrlist.h>
 #include <qstring.h>
+#include <qptrlist.h>
 
 class RKwatch;
+class RCommand;
 
 /** This class does the rather low-level interfacing to the R-processor.
   *@author Thomas Friedrichsmeier
@@ -35,22 +37,18 @@ public:
 	~RInterface();
 	bool startR (QStrList &commandline);
 	void shutdown ();
-/** Submit a synchronous command to R (i.e. generally one, that gives relevant output) */
-	bool issueCommand (const QString &command);
-/** Submit an asynchronous command (i.e. one, where you don't care about output) */
-	void issueAsyncCommand (const QString &command);
+	void issueCommand (RCommand *command);
 	bool commandRunning () { return command_running; };
 signals:
 	void receivedReply (QString result);
 	void writingRequest (QString request);
 /** Emitted, when synchronous commands are blocked (i.e. there is another command running) */
-	void syncBlocked ();
+//	void syncBlocked ();
 /** Emitted, when synchronous commands are allowed again */
-	void syncUnblocked ();
+//	void syncUnblocked ();
 private:
 friend class RKwardApp;
-
-	QStrList async_command_stack;
+	QPtrList<RCommand> command_stack;
 /** Keeps everything R has so far responded to the last command */
 	QString r_output;
 /** We have to keep a local buffer for Stdinput to R. */
@@ -59,14 +57,12 @@ friend class RKwardApp;
 	Should be a unique string. */
 	QString end_tag;
 	bool command_running;
-	bool sync_command;
 	bool busy_writing;
-	bool commands_waiting;
-	QStrList waiting_commands;
-	void issue (const QString &command);
+/** Commits the next command in the stack, if it can safely be written */
+	void tryNextCommand ();
 	RKwatch *watch;
 /** This is the last step in the chain of committing a command, and actually writes it */
-	void write (const QString &command);
+	void write (RCommand *command);
 private slots:
 /** This slot receives raw R-output */
 	void gotROutput (KProcess *proc, char *buffer, int buflen);

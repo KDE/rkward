@@ -35,6 +35,7 @@ class RKwardApp;
 class TwinTableMember;
 class TwinTable;
 class RInterface;
+class RCommand;
 
 /**	RKwardDoc provides a document object for a document-view model.
   *
@@ -79,7 +80,7 @@ class RKwardDoc : public TwinTable
   public slots:
 /** processes output received by R. Uses the output_is-var, to determine, how
 	to interpret this output */
-	void processROutput (QString output); 	
+	void processROutput (RCommand *command); 	
   public:	
 	/** will take care of all necessary operations to sync up to R */
 	void syncToR ();
@@ -96,8 +97,9 @@ class RKwardDoc : public TwinTable
 	QString tablename;
 	QString command_separator;
 
-	enum OutputIs {Loaded=0, WholeTables=4, Nothing=5};
-	OutputIs output_is;
+	/** These are used, to keep track of what a running RCommand means */
+	int should_load_id;
+	int should_pull_id;
 
 	/** pushes a whole (modified) twintable to R */
 	void pushTable (TwinTable *ttable, QString name);

@@ -31,6 +31,7 @@
 #include "rkward.h"
 #include "twintablemember.h"
 #include "twintable.h"
+#include "rcommand.h"
 
 #define RK_DATA_PREFIX	"rk."
 
@@ -38,11 +39,14 @@ RKwardDoc::RKwardDoc(RKwardApp *parent, const char *name) : TwinTable (parent, n
 {
 	app = parent;
 	inter = &app->r_inter;
-	output_is = Nothing;
+//	output_is = Nothing;
 	tablename = RK_DATA_PREFIX;
 	tablename.append ("data");
 	command_separator = "-------------this is a separator---------------";
-	connect (inter, SIGNAL (receivedReply (QString)), this, SLOT (processROutput (QString)));
+//	connect (inter, SIGNAL (receivedReply (QString)), this, SLOT (processROutput (QString)));
+
+	should_load_id = -1;
+	should_pull_id = -1;
 }
 
 RKwardDoc::~RKwardDoc()
@@ -130,8 +134,10 @@ bool RKwardDoc::openDocument(const KURL& url, const char *format /*=0*/)
   /////////////////////////////////////////////////
 
 	setURL (tmpfile);
-	output_is = Loaded;
-	inter->issueCommand ("load (\"" + doc_url.path () + "\")");
+//	output_is = Loaded;
+	RCommand *command = new RCommand ("load (\"" + doc_url.path () + "\")", 0, "", this, SLOT (processROutput (RCommand *)));
+	should_load_id = command->id ();
+	inter->issueCommand (command);
 
   KIO::NetAccess::removeTempFile( tmpfile );
 
@@ -147,7 +153,7 @@ bool RKwardDoc::saveDocument(const KURL& url, const char *format /*=0*/)
 
 	syncToR ();
 
-	inter->issueAsyncCommand ("save.image (\"" + url.path () + "\")");
+	inter->issueCommand (new RCommand ("save.image (\"" + url.path () + "\")"));
 
 	setURL (url);
   modified=false;
@@ -193,7 +199,7 @@ void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 	}
 	command.append (")");
 
-	inter->issueAsyncCommand (command);
+	inter->issueCommand (new RCommand (command));
 
 	// now push the meta-table (point-reflected at bottom-left corner)
 	table = varview;
@@ -220,7 +226,7 @@ void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 	}
 	command.append (")");
 
-	inter->issueAsyncCommand (command);
+	inter->issueCommand (new RCommand (command));
 }
 
 void RKwardDoc::pullTable () {
@@ -229,17 +235,24 @@ void RKwardDoc::pullTable () {
 	command = tablename + ".meta\n";
 	command.append ("print (\"" + command_separator + "\")\n");
 	command.append (tablename);
-	output_is = WholeTables;
-	inter->issueCommand (command);
+//	output_is = WholeTables;
+	RCommand *rcommand = new RCommand (command, 0, "", this, SLOT (processROutput (RCommand *)));
+	should_pull_id = rcommand->id ();
+	inter->issueCommand (rcommand);
 
 	// since communication is asynchronous, the rest is done inside
 	// processROutput!
 }
 
-void RKwardDoc::processROutput (QString output) {
-	if (output_is == Loaded) {
+void RKwardDoc::processROutput (RCommand *command) {
+	if (command->id () == should_load_id) {
+		should_load_id = -1;
 		pullTable ();
-	} else if (output_is == WholeTables) {
+	} else if (command->id () == should_pull_id) {
+		should_pull_id = -1;
+
+		QString output = command->reply ();
+
 		int output_line = 0;
 		QString line = output.section ("\n", output_line, output_line);
 		QString tsv;
@@ -339,8 +352,5 @@ void RKwardDoc::processROutput (QString output) {
 
 /*		view->varview->update ();
 		view->dataview->update (); */
-
-		// next output is not for us!
-		output_is = Nothing;
 	}
 }
