@@ -87,11 +87,18 @@ RCommandChain *RThread::closeChain (RCommandChain *chain) {
 void RThread::run () {
 	RK_TRACE (RBACKEND);
 	embeddedR = new REmbed ();
-	if (embeddedR->initialize ()) {
-		qApp->postEvent (inter, new QCustomEvent (RERROR_SINKING_EVENT));
+	locked = true;
+	int err;
+	if ((err = embeddedR->initialize ())) {
+		qApp->postEvent (inter, new QCustomEvent (RSTARTUP_ERROR_EVENT + err));
 	}
 	qApp->postEvent (inter, new QCustomEvent (RSTARTED_EVENT));
 
+	// wait until RKWard is set to go (esp, it has handled any errors during startup, etc.)
+	while (locked) {
+		msleep (10);
+	}
+	
 	while (1) {
 		mutex.lock ();
 		

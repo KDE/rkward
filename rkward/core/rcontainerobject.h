@@ -56,6 +56,8 @@ public:
 	
 	int numDimensions () { return num_dimensions; };
 	int getDimension (int index) { return dimension[index]; };
+	
+	void setDataSynced ();
 private:
 	friend class RObject;
 	void typeMismatch (RObject *child, QString childname);

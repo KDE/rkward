@@ -24,9 +24,10 @@
 #include <qfile.h>
 
 /** This class (together with its base class REmbedInternal) takes care of the
-	communication with the R-backend. It should eventually be converted to
-	run in a separate thread, in order to allow non-blocking access and stopping/restarting
-	the backend.
+	communication with the R-backend. It should only be used encapsulated in a thread, so
+	commands get executed non-blocking.
+	Only one REmbed-object can be used in an application.
+	Don't use this class in RKWard directly. Use the interface provided by RInterface, instead.
 @author Thomas Friedrichsmeier
 */
 class REmbed : public REmbedInternal {
@@ -37,7 +38,11 @@ public:
 	
 	void runCommand (RCommand *command);
 	
-	bool initialize ();
+	enum InitStatus { Ok=0, LibLoadFail=1, SinkFail=2, OtherFail=4 };
+	
+	/** initializes the R-backend. Returns an error-code that consists of a bit-wise or-conjunction of the InitStatus-enum. 0 on success.
+	Note that you should call initialize only once in a application */
+	int initialize ();
 private:
 	QIODevice::Offset outfile_offset;
 	QIODevice::Offset errfile_offset;

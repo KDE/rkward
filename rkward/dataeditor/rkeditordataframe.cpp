@@ -45,6 +45,7 @@ RKEditorDataFrame::~RKEditorDataFrame () {
 
 void RKEditorDataFrame::syncToR (RCommandChain *sync_chain) {
 	if (getObject ()->needsSyncToR ()) {
+		RK_DO (qDebug ("pushing table: data_modified %d, meta_modified %d, children_modified %d", getObject ()->isDataModified (), getObject ()->isMetaModified (), getObject ()->hasModifiedChildren ()), EDITOR, DL_DEBUG);
 		pushTable (sync_chain);
 	}
 }
@@ -126,6 +127,10 @@ void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
 
 	// now store the meta-data
 	getObject ()->writeMetaData (sync_chain, true);
+	
+	getObject ()->setDataSynced ();
+
+	RK_DO (qDebug ("table-state: data_modified %d, meta_modified %d, children_modified %d", getObject ()->isDataModified (), getObject ()->isMetaModified (), getObject ()->hasModifiedChildren ()), EDITOR, DL_DEBUG);
 }
 
 void RKEditorDataFrame::metaValueChanged (int row, int col) {

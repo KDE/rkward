@@ -118,7 +118,7 @@ QString RObject::makeChildName (const QString &short_child_name) {
 	
 void RObject::getMetaData (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
-	RCommand *command = new RCommand ("c (row.names (attr (" + getFullName () + ", \".rk.meta\")), as.vector (attr (" + getFullName () + ", \".rk.meta\")[[1]]), recursive=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_META_COMMAND);
+	RCommand *command = new RCommand (".rk.get.meta (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_META_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 }
 
@@ -132,39 +132,49 @@ void RObject::writeMetaData (RCommandChain *chain, bool force) {
 			RKGlobals::rInterface ()->issueCommand (command, chain);
 		}
 		type -= (type & HasMetaObject);
+		state -= (state & MetaModified);
 		return;
 	}
 	
-	QString command_string = "attr (" + getFullName () + ", \".rk.meta\") <- data.frame (d=c (";
-	QString row_names;
+	QString command_string = ".rk.set.meta (" + getFullName () + ", c (";
+	QString data_string = "), c (";
 	int i=meta_map->size ();
 	for (MetaMap::iterator it = meta_map->begin (); it != meta_map->end (); ++it) {
-		row_names.append (rQuote (it.key ()));
-		command_string.append (rQuote (it.data ()));
+		data_string.append (rQuote (it.data ()));
+		command_string.append (rQuote (it.key ()));
 		if (--i) {
-			row_names.append (", ");
+			data_string.append (", ");
 			command_string.append (", ");
 		}
 	}
-	command_string.append ("), row.names=c (" + row_names + "))");
+	command_string.append (data_string + "))");
 	
 	RCommand *command = new RCommand (command_string, RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 	
 	type |= HasMetaObject;
-	type -= (type & MetaModified);
+	state -= (state & MetaModified);
 }
 
 void RObject::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
 	if (command->getFlags () == GET_META_COMMAND) {
-		if (!meta_map) meta_map = new MetaMap;
-		
-		int len = command->stringVectorLength ();
-		RK_ASSERT (!(len % 2));
-		int cut = len/2;
-		for (int i=0; i < cut; ++i) {
-			meta_map->insert (command->getStringVector ()[i], command->getStringVector ()[i+cut]);
+		if (command->stringVectorLength ()) {
+			if (!meta_map) meta_map = new MetaMap;
+
+			int len = command->stringVectorLength ();
+			RK_ASSERT (!(len % 2));
+			int cut = len/2;
+			for (int i=0; i < cut; ++i) {
+				meta_map->insert (command->getStringVector ()[i], command->getStringVector ()[i+cut]);
+			}
+			
+			type |= HasMetaObject;
+		} else {		// no meta data received
+			delete meta_map;
+			meta_map = 0;
+			
+			type -= (type & HasMetaObject);
 		}
 	}
 }

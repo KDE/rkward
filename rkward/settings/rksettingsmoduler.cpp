@@ -30,7 +30,7 @@
 // static members
 QString RKSettingsModuleR::r_home_dir;
 QString RKSettingsModuleR::pager_app;
-QString RKSettingsModuleR::r_startup_file;
+//QString RKSettingsModuleR::r_startup_file;
 bool RKSettingsModuleR::r_nosave;
 bool RKSettingsModuleR::r_slave;
 
@@ -58,10 +58,10 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 
 	main_vbox->addWidget (group);	
 
-	main_vbox->addStretch ();
+/*	main_vbox->addStretch ();
 	startup_file_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, i18n ("Location of 'startup.R'-script"), "", r_startup_file);
 	connect (startup_file_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
-	main_vbox->addWidget (startup_file_choser);
+	main_vbox->addWidget (startup_file_choser); */
 }
 
 RKSettingsModuleR::~RKSettingsModuleR() {
@@ -87,7 +87,7 @@ void RKSettingsModuleR::applyChanges () {
 	pager_app = pager_choser->getLocation ();
 	r_nosave = nosave_box->isChecked ();
 	r_slave = slave_box->isChecked ();
-	r_startup_file = startup_file_choser->getLocation ();
+	//r_startup_file = startup_file_choser->getLocation ();
 }
 
 void RKSettingsModuleR::save (KConfig *config) {
@@ -98,7 +98,7 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	config->setGroup ("R Settings");
 	config->writeEntry ("R_HOME", r_home_dir);
 	config->writeEntry ("pager app", pager_app);
-	config->writeEntry ("startup file", r_startup_file);
+	//config->writeEntry ("startup file", r_startup_file);
 	config->writeEntry ("--no-save", r_nosave);
 	config->writeEntry ("--slave", r_slave);
 }
@@ -107,7 +107,7 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	config->setGroup ("R Settings");
 	r_home_dir = config->readEntry ("R_HOME", "");
 	pager_app = config->readEntry ("pager app", "xless");
-	r_startup_file = config->readEntry ("startup file", KGlobal::dirs ()->findResourceDir ("data", "rkward/rfiles/startup.R") + "rkward/rfiles/");
+	//r_startup_file = config->readEntry ("startup file", KGlobal::dirs ()->findResourceDir ("data", "rkward/rfiles/startup.R") + "rkward/rfiles/");
 	r_nosave = config->readBoolEntry ("--no-save", true);
 	r_slave = config->readBoolEntry ("--slave", true);
 }

@@ -28,7 +28,6 @@
 #define UPDATE_CLASS_COMMAND 2
 #define UPDATE_CHILD_LIST_COMMAND 3
 #define UPDATE_TYPE_COMMAND 4
-#define FIND_META_COMMAND 5
 
 RContainerObject::RContainerObject (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
@@ -44,7 +43,21 @@ RContainerObject::~RContainerObject () {
 
 void RContainerObject::updateFromR () {
 	RK_TRACE (OBJECTS);
-	RCommand *command = new RCommand ("!is.null (attr (" + getFullName () + ", \".rk.meta\"))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, FIND_META_COMMAND);
+	
+	getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain ());
+	
+	RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+	
+	command = new RCommand ("dim (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+
+	command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CHILD_LIST_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+
+	// this command might result in a type mismatch and then a deletion of this object. Hence we run it last.
+// TODO: no, run it first, and call the other commands only when successful!
+	command = new RCommand ("c (is.data.frame (" + getFullName () + "), is.matrix (" + getFullName () + "), is.array (" + getFullName () + "), is.list (" + getFullName () + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_TYPE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 }
 
@@ -53,27 +66,7 @@ void RContainerObject::rCommandDone (RCommand *command) {
 	RObject::rCommandDone (command);
 
 	bool changed = false;
-	if (command->getFlags () == FIND_META_COMMAND) {
-		if ((command->intVectorLength () == 1) && command->getIntVector ()[0]) {
-			type |= HasMetaObject;
-			getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain ());
-		} else {
-			type -= (type & HasMetaObject);
-		}
-		
-		RCommand *ncommand = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
-		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
-	
-		ncommand = new RCommand ("dim (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
-		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
-
-		ncommand = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CHILD_LIST_COMMAND);
-		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
-
-		// this command might result in a type mismatch and then a deletion of this object. Hence we run it last.
-		ncommand = new RCommand ("c (is.data.frame (" + getFullName () + "), is.matrix (" + getFullName () + "), is.array (" + getFullName () + "), is.list (" + getFullName () + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_TYPE_COMMAND);
-		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
-	} else if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
+	if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
 		num_children_updating = command->stringVectorLength ();
 		// empty object?
 		if (!num_children_updating) {
@@ -300,4 +293,16 @@ bool RContainerObject::isParentOf (RObject *object, bool recursive) {
 	}
 	
 	return false;
+}
+
+void RContainerObject::setDataSynced () {
+	RK_TRACE (OBJECTS);
+	state -= (state & DataModified);
+
+	if (hasModifiedChildren ()) {
+		for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
+			it.data ()->setDataSynced ();
+		}
+		state -= (state & ChildrenModified);
+	}
 }

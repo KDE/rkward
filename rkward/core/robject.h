@@ -81,6 +81,8 @@ public:
 	static VarType textToType (const QString &text);
 	
 	static QString rQuote (const QString &string);
+	
+	virtual void setDataSynced () { state -= (state & DataModified); };
 protected:
 // why do I need those to compile? I thought they were derived classes!
 	friend class RContainerObject;

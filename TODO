@@ -1,12 +1,14 @@
 The following list of TODO-items is NOT complete!
 
-stuff to do before 0.2.5 release
-- 
+stuff to do before 0.2.6 release
+- streamline object-syncing using smart R-functions
+- use a friendly startup-dialog instead of opening an empty table unconditionally
+- set wizard-interface as default
+- pick some from below:
 
 (relatively) small stuff to do soon
 - merge common functionality of RObjectBrowser and RKVarselector into a base of some sort
 - update RKVarselectors on changes in the object-list!
-- use a friendly startup-dialog instead of opening an empty table unconditionally
 - plugins-scanning: don't duplicate everything
 - add more plugin-widgets
 - setValue-API for plugin-widgets and copying of values when switching from wizard to dialog-interface

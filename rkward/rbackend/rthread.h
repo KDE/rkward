@@ -31,7 +31,8 @@ class RInterface;
 #define RBUSY_EVENT 1003
 #define RIDLE_EVENT 1004
 #define RSTARTED_EVENT 2001
-#define RERROR_SINKING_EVENT 2002
+// don't use the number following RSTARTUP_ERROR_EVENT, because an error code will be added!
+#define RSTARTUP_ERROR_EVENT 10000
 
 /** encapsulates the R-Backend in a separate thread. Use the inlines in RInterface and see documentation there.
 @author Thomas Friedrichsmeier
@@ -47,6 +48,8 @@ public:
 	
 	RCommandChain *startChain (RCommandChain *parent);
 	RCommandChain *closeChain (RCommandChain *chain);
+	
+	void unlock () { locked=false; };
 protected:
 	void run ();
 private:	
@@ -57,6 +60,8 @@ private:
 	void doCommand (RCommand *command);
 	REmbed *embeddedR;
 	QMutex mutex;
+	
+	bool locked;
 };
 
 #endif

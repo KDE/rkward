@@ -35,7 +35,7 @@ REmbed::~REmbed() {
 	errfile.close ();
 }
 
-bool REmbed::initialize () {
+int REmbed::initialize () {
 	RK_TRACE (RBACKEND);
 	QString r_home = RKSettingsModuleR::rHomeDir();
 
@@ -55,24 +55,30 @@ bool REmbed::initialize () {
 	}
 	
 	bool error;
+	int status = 0;
 	
+	runCommandInternal ("library (\"rkward\")\n", &error);
+	if (error) status |= LibLoadFail;
 	runCommandInternal ("options (pager=\"" + RKSettingsModuleR::pagerApp () + "\")\n", &error);
+	if (error) status |= OtherFail;
 	runCommandInternal ("sink (\"" + RKSettingsModuleLogfiles::filesPath () + "/r_out\")\n", &error);
+	if (error) status |= SinkFail;
 	runCommandInternal ("sink (file (\"" +RKSettingsModuleLogfiles::filesPath () +"/r_err\", \"w\"), FALSE, \"message\")\n", &error);
+	if (error) status |= SinkFail;
 
 	outfile_offset = 0;
 	errfile_offset = 0;
 		
 	outfile.setName (RKSettingsModuleLogfiles::filesPath () + "/r_out");
 	if (!outfile.open (IO_ReadOnly)) {
-		error = true;
+		if (error) status |= SinkFail;
 	}
 	errfile.setName (RKSettingsModuleLogfiles::filesPath () + "/r_err");
 	if (!errfile.open (IO_ReadOnly)) {
-		error = true;
+		if (error) status |= SinkFail;
 	}
 	
-	return error;
+	return status;
 }
 
 void REmbed::runCommand (RCommand *command) {

@@ -1,3 +1,6 @@
+- added convenience R-library: used to streamline communication with R
+- fix against data being synced over and over again
+
 --- Version 0.2.5 - Aug-24-2004 ---
 - added simple viewer for R-objects
 - added simple browser for objects in the R-workspace
