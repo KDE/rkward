@@ -40,6 +40,7 @@ public:
 	TwinTable(QWidget *parent=0, const char *name=0);
 	~TwinTable();
 	void insertNewColumn (int where=-1, QString name="");
+	void insertNewRow (int where=-1);
 	QCString encodeSelection ();
 /** Pastes content to the current selection */
 	void pasteEncoded (QByteArray content);

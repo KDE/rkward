@@ -113,6 +113,14 @@ void TwinTable::insertNewColumn (int where, QString name) {
 	varview->horizontalHeader()->setLabel(where, name);
 }
 
+void TwinTable::insertNewRow (int where=-1) {
+	if ((where < 0) || (where > dataview->numRows ())) {
+		where = dataview->numRows ();
+	}
+
+	dataview->insertRows (where);
+}
+
 void TwinTable::headerClicked (int col) {
 	QTableSelection selection;
 	selection.init (0, col);
@@ -203,21 +211,43 @@ void TwinTable::pasteEncoded (QByteArray content) {
 					next_delim = next_line;
 					row++;
 					col = selection.leftCol ();
+					if (row > selection.bottomRow ()) {
+						next_delim = pasted.length ();
+					}
 				}
 			}
-			if (col > table->numCols ()) {
+			if (col >= table->numCols ()) {
 				if (paste_mode == PasteToTable) {
 					next_delim = next_line;					
 					row++;
 					col = selection.leftCol ();
+					if (row >= table->numRows ()) {
+						next_delim = pasted.length ();
+					}
 				} else {
-					insertNewColumn ();
+					// the if only fails, if this is the last line.
+					// We don't want a new column, then.
+					// Everything else does not get affected in this situation.
+					if (next_delim != next_line) {
+						insertNewColumn ();
+					}
 				}
 			}
 		} else {
-			// TODO: add rows if appropriate
 			row++;
 			col=selection.leftCol ();
+			if (paste_mode == PasteToSelection) {
+				if (row > selection.bottomRow ()) {
+					next_delim = pasted.length ();
+				}
+			}
+			if (row >= table->numRows ()) {
+				if (paste_mode == PasteToTable) {
+					next_delim = pasted.length ();
+				} else {
+					insertNewRow ();
+				}
+			}
 		}
 
 		// proceed to the next segment
