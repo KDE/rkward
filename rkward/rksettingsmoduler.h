@@ -62,7 +62,7 @@ private:
 	QCheckBox *nosave_box;
 	QCheckBox *slave_box;
 
-friend class REmbed;
+friend class RInterface;
 	static bool r_nosave;
 	static bool r_slave;
 	static QString r_home_dir;

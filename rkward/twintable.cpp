@@ -475,6 +475,7 @@ void TwinTable::setPasteMode (PasteMode mode) {
 }
 
 void TwinTable::setRow (TwinTableMember* table, int row, int start_col, int end_col, char **data) {
+	flushEdit ();
 	while (numCols () <= end_col) {
 		insertNewColumn ();
 	}
@@ -486,7 +487,8 @@ void TwinTable::setRow (TwinTableMember* table, int row, int start_col, int end_
 }
 
 void TwinTable::setColumn (TwinTableMember* table, int col, int start_row, int end_row, char **data) {
-	while (table->numRows () >= end_row) {
+	flushEdit ();
+	while (table->numRows () <= end_row) {
 		insertNewRow (table->numRows (), table);
 	}
 	

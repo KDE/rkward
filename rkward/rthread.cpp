@@ -58,8 +58,8 @@ RCommand::CommandChain *RThread::startChain (RCommand::CommandChain *parent) {
 	return coc->chain;
 }
 
-void RThread::closeChain (RCommand::CommandChain *chain) {
-	if (!chain) return;
+RCommand::CommandChain *RThread::closeChain (RCommand::CommandChain *chain) {
+	if (!chain) return 0;
 
 	mutex.lock ();
 	chain->closed = true;
@@ -70,11 +70,18 @@ void RThread::closeChain (RCommand::CommandChain *chain) {
 		current_chain = current_chain->parent;
 		delete temp;
 	}
+	RCommand::CommandChain *ret = current_chain;
+	
 	mutex.unlock ();
+	return ret;
 }
 
 void RThread::run () {
 	embeddedR = new REmbed ();
+	if (embeddedR->initialize ()) {
+		qApp->postEvent (inter, new QCustomEvent (RERROR_SINKING_EVENT));
+	}
+	qApp->postEvent (inter, new QCustomEvent (RSTARTED_EVENT));
 
 	while (1) {
 		mutex.lock ();

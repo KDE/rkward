@@ -60,7 +60,11 @@ void RTableItem::checkValid () {
 }
 
 void RTableItem::setText (const QString &str) {
-	QTableItem::setText (str);
+	if (str == "NA") {
+		QTableItem::setText ("");
+	} else {
+		QTableItem::setText (str);
+	}
 	checkValid ();
 }
 

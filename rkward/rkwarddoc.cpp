@@ -36,16 +36,16 @@
 
 #define RK_DATA_PREFIX	"rk."
 
+#define RLOAD_COMMAND 1
+#define RPULL_COMMAND 2
+
 RKwardDoc::RKwardDoc(RKwardApp *parent, const char *name) : TwinTable (parent, name)
 {
 	app = parent;
 //	output_is = Nothing;
 	tablename = RK_DATA_PREFIX;
 	tablename.append ("data");
-	command_separator = "-------------this is a separator---------------";
-
-	should_load_id = -1;
-	should_pull_id = -1;
+	command_chain = 0;
 }
 
 RKwardDoc::~RKwardDoc()
@@ -134,10 +134,10 @@ bool RKwardDoc::openDocument(const KURL& url, const char *format /*=0*/)
 
 	setURL (tmpfile);
 //	output_is = Loaded;
-	RCommand *command = new RCommand ("load (\"" + doc_url.path () + "\")", RCommand::App, "", this, SLOT (processROutput (RCommand *)));
-	should_load_id = command->id ();
+	RCommand *command = new RCommand ("load (\"" + doc_url.path () + "\")", RCommand::App, "", this, SLOT (processROutput (RCommand *)), RLOAD_COMMAND);
 	app->r_inter->issueCommand (command);
-
+	pullTable ();
+	
   KIO::NetAccess::removeTempFile( tmpfile );
 
   modified=false;
@@ -198,7 +198,8 @@ void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 	}
 	command.append (")");
 
-	app->r_inter->issueCommand (new RCommand (command, RCommand::Sync));
+	command_chain = app->r_inter->startChain (command_chain);
+	app->r_inter->issueCommand (new RCommand (command, RCommand::Sync), command_chain);
 
 	// now push the meta-table (point-reflected at bottom-left corner)
 	table = varview;
@@ -225,131 +226,74 @@ void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 	}
 	command.append (")");
 
-	app->r_inter->issueCommand (new RCommand (command, RCommand::Sync));
+	app->r_inter->issueCommand (new RCommand (command, RCommand::Sync), command_chain);
+	command_chain = app->r_inter->closeChain (command_chain);
 }
 
 void RKwardDoc::pullTable () {
-	QString command;
+	QString command, dummy;
 
-	command = "print (" + tablename + ".meta)\n";
-	command.append ("print (\"" + command_separator + "\")\n");
-	command.append ("print (" + tablename + ")");
-//	output_is = WholeTables;
-	RCommand *rcommand = new RCommand (command, RCommand::Sync, "", this, SLOT (processROutput (RCommand *)));
-	should_pull_id = rcommand->id ();
-	app->r_inter->issueCommand (rcommand);
-
+	command_chain = app->r_inter->startChain (command_chain);
+	for (int i=0; i < 5; ++i) {
+		command = "as.vector (" + tablename + ".meta[[" + dummy.setNum (i+1) + "]])";
+		
+		PullCommandIdentifier *pci = new PullCommandIdentifier;
+		pci->table = varview;
+		pci->as_column = false;
+		pci->offset_col = 0;
+		pci->offset_row = i;
+		pci->length = -1;
+		pci->get_data_table_next = (i == 4);
+		RCommand *rcom = new RCommand (command, RCommand::Sync | RCommand::GetStringVector, "", this, SLOT (processROutput (RCommand *)), RPULL_COMMAND);
+		pull_map.insert (rcom, pci);
+		
+		app->r_inter->issueCommand (rcom, command_chain);
+	}
 	// since communication is asynchronous, the rest is done inside
 	// processROutput!
 }
 
 void RKwardDoc::processROutput (RCommand *command) {
-	if (command->id () == should_load_id) {
-		should_load_id = -1;
-		pullTable ();
-	} else if (command->id () == should_pull_id) {
-		should_pull_id = -1;
-
-		QString output = command->output ();
-
-		int output_line = 0;
-		QString line = output.section ("\n", output_line, output_line);
-		QString tsv;
-
-		// first process the meta-table:
-
-		// determine width of columns
-		QValueList<int> fieldends;
-		int pos;
-		pos = line.find (QRegExp ("[^ ]"), 0);		// skip whitespace at top-left
-		while ((pos = line.find (QRegExp ("[^ ] "), pos+1)) >= 0) {
-			fieldends.append (pos+1);
+	if (command->getFlags () == RPULL_COMMAND) {
+		PullMap::const_iterator it = pull_map.find (command);
+		if (it == pull_map.end ()) return;	// TODO: ASSERT
+		PullCommandIdentifier *pci = it.data ();
+	
+		if (pci->length == -1) {
+			pci->length = command->stringVectorLength ();
 		}
-		fieldends.append (line.length ());		// now keeps a list of where each column ends
+	
+		if (command->stringVectorLength () < pci->length) return; // TODO: ASSERT
+		if (pci->as_column) {
+			setColumn (pci->table, pci->offset_col, pci->offset_row, pci->offset_row + pci->length - 1, command->getStringVector());
+		} else {
+			setRow (pci->table, pci->offset_row, pci->offset_col, pci->offset_col + pci->length - 1, command->getStringVector());
+		}
+		
+		// seems we reached the end of the meta-table. Next, get the data-table.
+		if (pci->get_data_table_next) {
+			QString command_string, dummy;
 
-		++output_line;
-		line = output.section ("\n", output_line, output_line);
-        do  {
-			pos = line.find (QRegExp ("[^ ] "), 0);	// strip case numbering
-			unsigned col = 0;
-			while (col < fieldends.count ()) {
-				++pos;
-				QString value = line.mid (pos, fieldends[col] - pos);
-				value = value.stripWhiteSpace ();
-// TODO: somehow distinguish between literal "NA" and NA vs <NA> in R-output
-				if ((value == "NA") || (value == "<NA>")) {
-					value = "";
-				}
-				tsv.append (value);
-				pos = fieldends[col];
-				if (++col < fieldends.count ()) {
-					tsv.append ("\t");
-				}
+			for (int i=0; i < numCols (); ++i) {
+				command_string = "as.vector (" + tablename + "[[" + dummy.setNum (i+1) + "]])";
+		
+				PullCommandIdentifier *datapci = new PullCommandIdentifier;
+				datapci->table = dataview;
+				datapci->as_column = true;
+				datapci->offset_col = i;
+				datapci->offset_row = 0;
+				datapci->length = -1;
+				datapci->get_data_table_next = false;
+				RCommand *rcom = new RCommand (command_string, RCommand::Sync | RCommand::GetStringVector, "", this, SLOT (processROutput (RCommand *)), RPULL_COMMAND);
+				pull_map.insert (rcom, datapci);
+		
+				app->r_inter->issueCommand (rcom, command_chain);
 			}
-			tsv.append ("\n");
-			++output_line;
-			line = output.section ("\n", output_line, output_line);
+			
+			command_chain = app->r_inter->closeChain (command_chain);
 		}
-		while (line.length () && !line.contains (command_separator));
 
-		dataview->clearSelection (false);
-		QTableSelection topleft;
-		topleft.init (0, 0);
-		topleft.expandTo (0, 0);
-		varview->clearSelection (false);
-		setPasteMode (TwinTable::PasteEverywhere);
-		varview->addSelection (topleft);
-		pasteEncodedFlipped (tsv.local8Bit ());
-
-
-		// now process the data-table:
-		// TODO: cleanup code-dublication!!!
-
-		// advance past separator
-		++output_line;
-		line = output.section ("\n", output_line, output_line);
-		// start out empty
-		tsv = "";
-		// determine width of columns
-		fieldends.clear ();
-		pos = line.find (QRegExp ("[^ ]"), 0);		// skip whitespace at top-left
-		while ((pos = line.find (QRegExp ("[^ ] "), pos+1)) >= 0) {
-			fieldends.append (pos+1);
-		}
-		fieldends.append (line.length ());		// now keeps a list of where each column ends
-
-		++output_line;
-		line = output.section ("\n", output_line, output_line);
-        do  {
-			pos = line.find (QRegExp ("[^ ] "), 0);	// strip case numbering
-			unsigned col = 0;
-			while (col < fieldends.count ()) {
-				++pos;
-				QString value = line.mid (pos, fieldends[col] - pos);
-				value = value.stripWhiteSpace ();
-// TODO: somehow distinguish between literal "NA" and NA vs <NA> in R-output
-				if ((value == "NA") || (value == "<NA>")) {
-					value = "";
-				}
-				tsv.append (value);
-				pos = fieldends[col];
-				if (++col < fieldends.count ()) {
-					tsv.append ("\t");
-				}
-			}
-			tsv.append ("\n");
-			++output_line;
-			line = output.section ("\n", output_line, output_line);
-		}
-		while (line.length () && !line.contains (command_separator));
-
-		varview->clearSelection (false);
-		dataview->clearSelection (false);
-		setPasteMode (TwinTable::PasteEverywhere);
-		dataview->addSelection (topleft);
-		pasteEncoded (tsv.local8Bit ());
-
-/*		view->varview->update ();
-		view->dataview->update (); */
+		delete pci;
+		pull_map.remove (command);
 	}
 }

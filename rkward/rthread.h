@@ -30,6 +30,8 @@ class RInterface;
 #define RCOMMAND_OUT_EVENT 1002
 #define RBUSY_EVENT 1003
 #define RIDLE_EVENT 1004
+#define RSTARTED_EVENT 2001
+#define RERROR_SINKING_EVENT 2002
 
 /** encapsulates the R-Backend in a separate thread. Use the inlines in RInterface and see documentation there.
 @author Thomas Friedrichsmeier
@@ -37,14 +39,14 @@ class RInterface;
 class RThread : public QThread
 {
 public:
-    RThread(RInterface *parent);
+    RThread (RInterface *parent);
 
     ~RThread();
 
 	void issueCommand (RCommand *command, RCommand::CommandChain *chain);
 	
 	RCommand::CommandChain *startChain (RCommand::CommandChain *parent);
-	void closeChain (RCommand::CommandChain *chain);
+	RCommand::CommandChain *closeChain (RCommand::CommandChain *chain);
 protected:
 	void run ();
 private:	

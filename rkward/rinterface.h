@@ -48,7 +48,8 @@ public:
 	void issueCommand (RCommand *command, RCommand::CommandChain *chain=0) { r_thread->issueCommand (command, chain); };
 	
 	RCommand::CommandChain *startChain (RCommand::CommandChain *parent=0) { return r_thread->startChain (parent); };
-	void closeChain (RCommand::CommandChain *chain) { r_thread->closeChain (chain); };
+/** returns pointer to parent chain */
+	RCommand::CommandChain *closeChain (RCommand::CommandChain *chain) { return r_thread->closeChain (chain); };
 private:
 	RThread *r_thread;
 	RKwardApp *app;

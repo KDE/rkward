@@ -36,6 +36,8 @@ public:
     ~REmbed();
 	
 	void runCommand (RCommand *command);
+	
+	bool initialize ();
 private:
 	QIODevice::Offset outfile_offset;
 	QIODevice::Offset errfile_offset;

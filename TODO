@@ -1,6 +1,6 @@
 The following list of TODO-items is NOT complete!
 
-stuff to do before 0.2.1 release
+stuff to do before 0.2.2 release
 - handle asynchronous data in Output
 	- locking
 	- move output logging to RKOutput?
@@ -11,7 +11,6 @@ small stuff to do soon
 - plugins-scanning: don't duplicate everything
 - rework plugin-XML-format
 - add more plugin-widgets
-- if there is no R_HOME setting, ask for one instead of using /usr/lib/R unconditionally
 - set up a simple but serious debbugging framework
 - cleanup label-mess for plugin-widgets
 - further smarten up varselector / varslot-interaction

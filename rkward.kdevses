@@ -3,57 +3,37 @@
 <KDevPrjSession>
  <LastCompileConfig>(Default)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
- <DocsAndViews NumberOfDocuments="10" >
-  <Doc0 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rembedinternal.cpp" >
-   <View0 line="122" Type="???" >
+ <DocsAndViews NumberOfDocuments="6" >
+  <Doc0 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkwarddoc.cpp" >
+   <View0 line="209" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
    </View0>
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rembedinternal.h" >
+  <Doc1 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/twintable.cpp" >
    <View0 line="38" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
    </View0>
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rembed.cpp" >
-   <View0 line="80" Type="???" >
+  <Doc2 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/twintable.h" >
+   <View0 line="79" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
    </View0>
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rembed.h" >
-   <View0 line="39" Type="???" >
+  <Doc3 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/twintablemember.h" >
+   <View0 line="42" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
    </View0>
   </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/phpbackend.cpp" >
+  <Doc4 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/twintablemember.cpp" >
    <View0 line="0" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
    </View0>
   </Doc4>
-  <Doc5 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/common.php" >
-   <View0 line="22" Type="???" >
+  <Doc5 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkwarddoc.h" >
+   <View0 line="0" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
    </View0>
   </Doc5>
-  <Doc6 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkplugin.cpp" >
-   <View0 line="352" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc6>
-  <Doc7 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rcommand.h" >
-   <View0 line="0" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc7>
-  <Doc8 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rcommand.cpp" >
-   <View0 line="0" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc8>
-  <Doc9 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/TODO" >
-   <View0 line="32" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc9>
  </DocsAndViews>
  <pluginList>
   <kdevbookmarks>
@@ -75,7 +55,7 @@
   </kdevvalgrind>
   <kdevdebugger>
    <breakpointList>
-    <breakpoint0 location="/home/thomas/develop/rkward/rkward/phpbackend.cpp:223" type="1" condition="" enabled="1" />
+    <breakpoint0 location="/home/thomas/develop/rkward/rkward/phpbackend.cpp:228" type="1" condition="" enabled="1" />
    </breakpointList>
   </kdevdebugger>
  </pluginList>

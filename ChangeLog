@@ -1,4 +1,7 @@
-- allow direct (read) access of vectors in R (TODO: use for table-syncing)
+--- Version 0.2.1 - Aug-08-2004 ---
+- added correlation matrix plugin
+- ask for R_HOME-setting if not availalbe at startup
+- allow direct (read) access of vectors in R
 - support for selection of multiple variables at once
 - use a katepart as the command-editor (provides basic syntax-highlighting)
 - plugins can use a tabbook-layout
