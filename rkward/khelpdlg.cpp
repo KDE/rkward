@@ -51,6 +51,8 @@ KHelpDlg::KHelpDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
 	resultsList->addColumn (i18n ("Package"));
 	packagesList->insertItem (i18n("All"));
 
+	fieldsList->insertItem (i18n("Not implemented yet"));
+
 	connect(field, SIGNAL(keyPressEvent (QKeyEvent * e)), this, SLOT(slotFieldKeyPressEvent (QKeyEvent * e)));
 	
 	

@@ -38,6 +38,7 @@
 #include <kstdaction.h>
 #include <kinputdialog.h>
 #include <kdockwidget.h>
+#include <kmultitabbar.h>
 
 // include files for the kate part. Some may not be useful
 #include <ktexteditor/configinterface.h>
@@ -92,6 +93,10 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
   config=kapp->config();
 
 	KGlobal::dirs()->addResourceType("plugins", KStandardDirs::kde_default("data") + "rkward/plugins/");
+
+	setToolviewStyle(KMultiTabBar::KDEV3ICON);
+
+
 
   ///////////////////////////////////////////////////////////////////
   // call inits to invoke all other construction parts
