@@ -420,6 +420,21 @@ bool RKPlugin::backendIdle () {
 		try_destruct ();
 		return true;
 	}
+		
+	// check whether everything is satisfied and fetch any complaints
+	bool ok = true;
+	QString warn;
+	PageMap::Iterator it;
+	for (it = page_map.begin(); it != page_map.end(); ++it) {
+		if (it.data () <= current_page) {
+			if (!it.key ()->isSatisfied ()) {
+				ok = false;
+			}
+		}
+		//warn.append (it.key ()->complaints ());
+	}
+	okButton->setEnabled (ok);
+	//warn.truncate (warn.length () -1);
 
 	if (should_updatecode) {
 		current_code = "";
@@ -452,21 +467,6 @@ void RKPlugin::changed () {
 	if (current_page == (num_pages - 1)) {
 		should_updatecode = true;
 	}
-
-	// check whether everything is satisfied and fetch any complaints
-	bool ok = true;
-	QString warn;
-	PageMap::Iterator it;
-	for (it = page_map.begin(); it != page_map.end(); ++it) {
-		if (it.data () <= current_page) {
-			if (!it.key ()->isSatisfied ()) {
-				ok = false;
-			}
-		}
-		//warn.append (it.key ()->complaints ());
-	}
-	okButton->setEnabled (ok);
-	//warn.truncate (warn.length () -1);
 
 	if (!backend->isBusy ()) {
 		backendIdle ();
