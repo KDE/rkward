@@ -301,10 +301,10 @@ void RKwardApp::initActions()
 {  
 	RK_TRACE (APP);
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
-	new_data_frame = new KAction (i18n ("data.frame"), 0, 0, this, SLOT (slotNewDataFrame ()), actionCollection (), "new_data_frame");
+	new_data_frame = new KAction (i18n ("Dataset"), 0, 0, this, SLOT (slotNewDataFrame ()), actionCollection (), "new_data_frame");
 	new_data_frame->setIcon("spreadsheet");
 	new_command_editor = KStdAction::openNew(this, SLOT(slotNewCommandEditor()), actionCollection(), "new_command_editor");
-	new_command_editor->setText (i18n ("New Command File"));
+	new_command_editor->setText (i18n ("Command File"));
 	new_command_editor->setIcon("source");
 	
 	fileOpen = KStdAction::open(this, SLOT(slotOpenCommandEditor()), actionCollection(), "file_openy");
