@@ -1,4 +1,4 @@
---- Version 0.2.7 
+--- Version 0.2.7 - Sep-02-2004
 - several compilation fixes for KDE/Qt < 3.2.x (and maybe some new ones were introduced?)
 - slight reorganization of menus
 - added menu option to close all editor windows
