@@ -64,6 +64,7 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
 	varview->verticalHeader()->setLabel(3, i18n( "e.g. category" ) );
 	varview->verticalHeader()->setLabel(NAME_ROW, i18n( "Name" ) );
 	varview->setMinimumHeight (varview->horizontalHeader ()->height ());
+	varview->setMaximumHeight (varview->rowPos (NAME_ROW) + varview->rowHeight (NAME_ROW) + varview->horizontalHeader ()->height () + 3);
     varview->verticalHeader()->setResizeEnabled (false);
 
     dataview = new TwinTableMember (splitter);
