@@ -1,4 +1,6 @@
-# translation of rkward.po to 
+# translation of fr.po to 
+# translation of fr.po to
+# translation of rkward.po to
 # translation of rkward.po to
 # translation of rkward.po to
 # translation of rkward.po to
@@ -8,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: rkward\n"
+"Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-09-30 13:30+0200\n"
-"PO-Revision-Date: 2004-10-08 17:11+0200\n"
+"PO-Revision-Date: 2004-10-23 14:08+0200\n"
 "Last-Translator: Pierre Ecochard <pierre.ecochard@laposte.net>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -758,7 +760,7 @@ msgstr "Effa&cer Journal"
 
 #: rkwatch.cpp:84
 msgid "Watch"
-msgstr "Observer"
+msgstr "Console"
 
 #: rkwatch.cpp:87
 msgid "&Open new editor window"
@@ -1115,17 +1117,13 @@ msgstr "&Fenêtre"
 msgid ""
 "_: NAME OF TRANSLATORS\n"
 "Your names"
-msgstr ""
-"_: NOM DES TRADUCTEURS\n"
-"Pierre Ecochard,"
+msgstr "Pierre Ecochard,"
 
 #: _translatorinfo.cpp:3
 msgid ""
 "_: EMAIL OF TRANSLATORS\n"
 "Your emails"
-msgstr ""
-"_: COURRIEL DES TRADUCTEURS\n"
-"p-eco@rocketmail.com"
+msgstr "p-eco@rocketmail.com"
 
 #: rkoutputwindow.cpp:38
 msgid "Output Window"
