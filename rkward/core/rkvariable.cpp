@@ -37,10 +37,17 @@ RKVariable::~RKVariable () {
 	RK_TRACE (OBJECTS);
 }
 
-QString RKVariable::getTypeString () {
+QString RKVariable::getVarTypeString () {
 	RK_TRACE (OBJECTS);
-	return type;
+	return RObject::typeToText (var_type);
 }
+
+void RKVariable::setVarType (RObject::VarType new_type) {
+	RK_TRACE (OBJECTS);
+	var_type = new_type;
+	setMetaProperty ("type", QString ().setNum ((int) new_type));
+}
+
 
 QString RKVariable::getTable () {
 	RK_TRACE (OBJECTS);
@@ -77,6 +84,10 @@ void RKVariable::rCommandDone (RCommand *command) {
 		} else {
 			length = 1;
 		}
+		
+		QString dummy = getMetaProperty ("type");
+		var_type = (RObject::VarType) dummy.toInt ();
+		
 		parent->childUpdateComplete ();
 	}
 }

@@ -58,6 +58,9 @@ protected:
 	// why do I need this to make it compile?!
 	friend class RObjectList;
 	void addChild (RObject *child, QString childname);
+	virtual void renameChild (RObject *object, const QString &new_name);
+	virtual void removeChild (RObject *object);
+	virtual void objectsRemoved ();
 
 	int num_classes;
 	QString *classname;

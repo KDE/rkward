@@ -31,15 +31,15 @@ TwinTableMember *RTableItem::ttm () {
 	return (TwinTableMember *) table ();
 }
 
-RTableItem::BaseType RTableItem::type () {
+RObject::VarType RTableItem::type () {
 	return ((TypeSelectCell *) ttm ()->varTable ()->item (TYPE_ROW, col ()))->type ();
 }
 
 void RTableItem::checkValid () {
 	bool prev_valid = valid;
-	if (type () == String) {
+	if (type () == RObject::String) {
 		valid = true;		// there are no invalid strings!
-	} else if (type () == Number) {
+	} else if (type () == RObject::Number) {
 		if (text () != "") {
 			bool ok;
 			text ().toFloat (&ok);
@@ -48,7 +48,7 @@ void RTableItem::checkValid () {
 			// allow empty cells (will be translated into "NA")
 			valid = true;
 		}
-	} else if (type () == Date) {
+	} else if (type () == RObject::Date) {
 		// TODO
 		valid = false;
 	} else {		// invalid type
@@ -74,10 +74,10 @@ QString RTableItem::rText () {
 	if (text () == "") {
 		return "NA";
 	}
-	if ((type () == Number) && isValid ()) {
+	if ((type () == RObject::Number) && isValid ()) {
 		return text ();	
 	}
-	if (type () == String) {
+	if (type () == RObject::String) {
 		return ("\"" + text () + "\"");
 	}
 

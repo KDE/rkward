@@ -25,7 +25,7 @@
 
 TypeSelectCell::TypeSelectCell (TwinTableMember *table) : RTableItem (table) {
 	// default to numeric
-	_type = Number;
+	_type = RObject::Number;
 	valid = true;
 }
 TypeSelectCell::~TypeSelectCell(){
@@ -44,8 +44,8 @@ QWidget *TypeSelectCell::createEditor () const {
 }
 
 void TypeSelectCell::setContentFromEditor (QWidget *w) {
-	BaseType old_type = _type;
-	_type = (BaseType) ((QComboBox*) w)->currentItem ();
+	RObject::VarType old_type = _type;
+	_type = (RObject::VarType) ((QComboBox*) w)->currentItem ();
 	valid = true;
 	if (old_type != _type) {
 		ttm ()->getTwin ()->checkColValid (col ());
@@ -53,10 +53,7 @@ void TypeSelectCell::setContentFromEditor (QWidget *w) {
 }
 
 QString TypeSelectCell::text () const {
-	if (_type == Number) return ("Number");
-	if (_type == String) return ("String");
-	if (_type == Date) return ("Date");
-	return ("invalid");
+	return RObject::typeToText (_type);
 }
 
 QString TypeSelectCell::rText () {
@@ -68,16 +65,10 @@ QString TypeSelectCell::rText () {
 }
 
 void TypeSelectCell::setText (const QString &str) {
-	BaseType old_type = _type;
+	RObject::VarType old_type = _type;
 	valid = true;
-	if (str == "Number") {
-		_type = Number;
-	} else if (str == "String") {
-		_type = String;
-	} else if (str == "Date") {
-		_type = Date;
-	} else {
-		_type = Invalid;
+	_type = RObject::textToType (str);
+	if (_type == RObject::Invalid) {
 		valid = false;
 	}
 	if (old_type != _type) {

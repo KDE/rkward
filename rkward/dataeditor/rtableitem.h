@@ -21,6 +21,7 @@
 #include <qtable.h>
 
 #include "twintablemember.h"
+#include "../core/robject.h"
 
 class QPainter;
 class QColorGroup;
@@ -34,14 +35,13 @@ class RTableItem : public QTableItem  {
 public: 
 	RTableItem(TwinTableMember *table);
 	~RTableItem();
-	enum BaseType {Number=0, String=1, Date=2, Invalid=3};
 /** Returns, whether this cell holds a value that is legal for it */
 	bool isValid () { return valid; };
 /** Returns the text in a format suitable for submission to R
 	(Practically that means, to quote strings) */
 	virtual QString rText ();
 	virtual void checkValid ();
-	BaseType type ();
+	RObject::VarType type ();
 	TwinTableMember *ttm ();
 protected:
 friend class TwinTable;

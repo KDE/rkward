@@ -35,19 +35,17 @@ public:
 
     ~RKVariable ();
 	
-	QString getTypeString ();
-	
+	QString getVarTypeString ();
+	RObject::VarType getVarType () { return var_type; };
+	void setVarType (RObject::VarType);
+
 	int getLength () { return length; };
 	QString getTable ();
-	
+
 	void updateFromR ();
-	
-/* Begin: parts that will be re-written entirely */
-	QString type;
-/* End */
 protected:
 	int length;
-	int var_type;
+	RObject::VarType var_type;
 	
 	void rCommandDone (RCommand *command);
 };

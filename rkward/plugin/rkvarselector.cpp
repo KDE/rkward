@@ -70,7 +70,7 @@ void RKVarSelector::addObject (QListViewItem *parent, RObject *object) {
 	if (object->isContainer ()) {
 		item->setText (3, static_cast<RContainerObject*> (object)->makeClassString ("; "));
 	} else if (object->isVariable ()) {
-		item->setText (2, static_cast<RKVariable*> (object)->getTypeString ());
+		item->setText (2, static_cast<RKVariable*> (object)->getVarTypeString ());
 	}
 
 	RObject **children = object->children ();

@@ -6,8 +6,7 @@
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
-/**********************
-*****************************************************
+/***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,6 +19,8 @@
 
 #include "rbackend/rinterface.h"
 #include "rkcommandeditor.h"
+#include "rkglobals.h"
+#include "rkeditormanager.h"
 
 #include <qtextedit.h>
 #include <qpushbutton.h>
@@ -109,6 +110,7 @@ void RKwatch::clearCommand () {
 }
 
 void RKwatch::submitCommand () {
+	RKGlobals::editorManager ()->syncAllToR (0);
 	r_inter->issueCommand (new RCommand (commands->text (), RCommand::User));
 	clearCommand ();
 }

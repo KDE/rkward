@@ -241,3 +241,38 @@ RObject *RContainerObject::createNewChild (const QString &name, bool container) 
 	
 	return ret;
 }
+
+void RContainerObject::renameChild (RObject *object, const QString &new_name) {
+	RK_TRACE (OBJECTS);
+
+	RObjectMap::iterator it = childmap.find (object->getShortName ());
+	RK_ASSERT (it.data () == object);
+	
+	RCommand *command = new RCommand (makeChildName (new_name) + " <- " + object->getFullName ());
+	RKGlobals::rInterface ()->issueCommand (command, 0);
+	command = new RCommand (object->getFullName () + " <- NULL", RCommand::App | RCommand::Sync);
+	RKGlobals::rInterface ()->issueCommand (command, 0);
+	
+	childmap.remove (it);
+	childmap.insert (new_name, object);
+}
+
+void RContainerObject::removeChild (RObject *object) {
+	RK_TRACE (OBJECTS);
+
+	RObjectMap::iterator it = childmap.find (object->getShortName ());
+	RK_ASSERT (it.data () == object);
+	
+	RCommand *command = new RCommand (object->getFullName () + " <- NULL", RCommand::App | RCommand::Sync);
+	RKGlobals::rInterface ()->issueCommand (command, 0);
+
+	childmap.remove (it);
+	delete object;
+	
+	objectsRemoved ();
+}
+
+void RContainerObject::objectsRemoved () {
+	RK_TRACE (OBJECTS);
+	parent->objectsRemoved ();
+}

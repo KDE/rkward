@@ -194,4 +194,37 @@ void RObjectList::writeMetaData (RCommandChain *chain, bool force) {
 	}
 }
 
+void RObjectList::renameChild (RObject *object, const QString &new_name) {
+	RK_TRACE (OBJECTS);
+
+	RObjectMap::iterator it = childmap.find (object->getShortName ());
+	RK_ASSERT (it.data () == object);
+	
+	RCommand *command = new RCommand (makeChildName (new_name) + " <- " + object->getFullName ());
+	RKGlobals::rInterface ()->issueCommand (command, 0);
+	command = new RCommand ("remove (" + object->getFullName () + ")", RCommand::App | RCommand::Sync);
+	RKGlobals::rInterface ()->issueCommand (command, 0);
+	
+	childmap.remove (it);
+	childmap.insert (new_name, object);
+}
+
+void RObjectList::removeChild (RObject *object) {
+	RK_TRACE (OBJECTS);
+
+	RObjectMap::iterator it = childmap.find (object->getShortName ());
+	RK_ASSERT (it.data () == object);
+	
+	RCommand *command = new RCommand ("remove (" + object->getFullName () + ")", RCommand::App | RCommand::Sync);
+	RKGlobals::rInterface ()->issueCommand (command, 0);
+	
+	childmap.remove (it);
+	delete object;
+}
+
+void RObjectList::objectsRemoved () {
+	RK_TRACE (OBJECTS);
+	emit (updateComplete (true));
+}
+
 #include "robjectlist.moc"

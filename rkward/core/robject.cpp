@@ -115,13 +115,13 @@ QString RObject::makeChildName (const QString &short_child_name) {
 	
 void RObject::getMetaData (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
-	RCommand *command = new RCommand ("c (names (attr (" + getFullName () + ", \".rk.meta\")), as.vector (attr (" + getFullName () + ",\".rk.meta\")[1,]), recursive=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_META_COMMAND);
+	RCommand *command = new RCommand ("c (row.names (attr (" + getFullName () + ", \".rk.meta\")), as.vector (attr (" + getFullName () + ", \".rk.meta\")[[1]]), recursive=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_META_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 }
 
 void RObject::writeMetaData (RCommandChain *chain, bool force) {
 	RK_TRACE (OBJECTS);
-	if ((!force) && (!isMetaModified ())) return;	
+	if ((!force) && (!isMetaModified ())) return;
 	
 	if (!meta_map) {
 		if (hasMetaObject ()) {
@@ -132,15 +132,18 @@ void RObject::writeMetaData (RCommandChain *chain, bool force) {
 		return;
 	}
 	
-	QString command_string = "attr (" + getFullName () + ", \".rk.meta\") <- data.frame (";
+	QString command_string = "attr (" + getFullName () + ", \".rk.meta\") <- data.frame (d=c (";
+	QString row_names;
 	int i=meta_map->size ();
 	for (MetaMap::iterator it = meta_map->begin (); it != meta_map->end (); ++it) {
-		command_string.append (it.key () + "=c (" + it.data () + ")");
+		row_names.append ("\"" + it.key () + "\"");
+		command_string.append (it.data ());
 		if (--i) {
+			row_names.append (", ");
 			command_string.append (", ");
 		}
 	}
-	command_string.append (")");
+	command_string.append ("), row.names=c (" + row_names + "))");
 	
 	RCommand *command = new RCommand (command_string, RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
@@ -176,3 +179,40 @@ void RObject::setMetaModified () {
 	state |= MetaModified;
 	parent->setChildModified ();
 }
+
+void RObject::rename (const QString &new_short_name) {
+	RK_TRACE (OBJECTS);
+	parent->renameChild (this, new_short_name);
+}
+
+void RObject::remove () {
+	RK_TRACE (OBJECTS);
+	parent->removeChild (this);	
+}
+
+//static
+QString RObject::typeToText (VarType var_type) {
+	if (var_type == Number) {
+		return "Number";
+	} else if (var_type == String) {
+		return "String";
+	} else if (var_type == Date) {
+		return "Date";
+	} else {
+		return "Invalid";
+	}
+}
+
+//static 
+RObject::VarType RObject::textToType (const QString &text) {
+	if (text == "Number") {
+		return Number;
+	} else if (text == "String") {
+		return String;
+	} else if (text == "Date") {
+		return Date;
+	} else {
+		return Invalid;
+	}
+}
+

@@ -20,7 +20,9 @@
 #include "../rkglobals.h"
 #include "twintable.h"
 #include "twintablemember.h"
+#include "typeselectcell.h"
 #include "../core/robject.h"
+#include "../core/rkvariable.h"
 #include "../core/rcontainerobject.h"
 
 #include "../debug.h"
@@ -67,9 +69,10 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 				insertNewColumn ();
 			}
 			// TODO: make clean
-			RObject *current_child = static_cast <RContainerObject*> (getObject ())->findChild (command->getStringVector ()[i]);
+			RKVariable *current_child = static_cast<RKVariable *> (static_cast <RContainerObject*> (getObject ())->findChild (command->getStringVector ()[i]));
 			setColObject (i, current_child);
 			varview->setText (NAME_ROW, i, command->getStringVector ()[i]);
+			varview->setText (TYPE_ROW, i, current_child->getVarTypeString ());
 			varview->setText (LABEL_ROW, i, current_child->getLabel ());
 		
 			// ok, now get the data
@@ -125,12 +128,9 @@ void RKEditorDataFrame::metaValueChanged (int row, int col) {
 	if (row == LABEL_ROW) {
 		getColObject (col)->setLabel (varview->rText (row, col));
 	} else if (row == NAME_ROW) {
-		// TODO!!!
-		RK_ASSERT (false);
+		getColObject (col)->rename (varview->rText (row, col));
 	} else if (row == TYPE_ROW) {
-		// TODO!
-		RK_ASSERT (false);
-		//getColObject (col)->setLabel (varview->rText (row, col));
+		static_cast<RKVariable *> (getColObject (col))->setVarType (static_cast<TypeSelectCell *> (varview->item (row, col))->type ());
 	}
 }
 

@@ -68,6 +68,12 @@ signals:
 	void updateComplete (bool changed);
 protected:
 	void rCommandDone (RCommand *command);
+/// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
+	void renameChild (RObject *object, const QString &new_name);
+/// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
+	void removeChild (RObject *object);
+/// reimplemented from RContainerObject to emit a change signal
+	void objectsRemoved ();
 private:
 	QTimer *update_timer;
 	

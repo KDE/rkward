@@ -40,6 +40,7 @@ public:
 	virtual ~RObject();
 
 	enum RObjectType { DataFrame=1, Matrix=2, Array=4, List=8, Container=16, Variable=32, Workspace=64, HasMetaObject=128 };
+	enum VarType { Number=0, String=1, Date=2, Invalid=3 };
 	
 	QString getShortName ();
 	virtual QString getFullName ();
@@ -62,6 +63,8 @@ public:
 	virtual void setMetaModified ();
 	bool hasModifiedChildren () { return (state & ChildrenModified); };
 	bool needsSyncToR () { return (state & (MetaModified | DataModified | ChildrenModified)); };
+	void rename (const QString &new_short_name);
+	void remove ();
 	
 	typedef QMap<QString, RObject*> RObjectMap;
 	
@@ -73,6 +76,9 @@ public:
 	
 	virtual int numChildren () { return 0; };
 	virtual RObject **children () { return 0; };
+	
+	static QString typeToText (VarType var_type);
+	static VarType textToType (const QString &text);
 protected:
 	friend class RContainerObject;
 	RContainerObject *parent;

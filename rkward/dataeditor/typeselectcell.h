@@ -33,9 +33,9 @@ class TypeSelectCell : public RTableItem  {
 public: 
 	TypeSelectCell (TwinTableMember *table);
 	~TypeSelectCell ();
-	BaseType type () { return _type; };
+	RObject::VarType type () { return _type; };
 private:
-	BaseType _type;
+	RObject::VarType _type;
 protected:
 	QWidget *createEditor () const;
 	void setContentFromEditor (QWidget * w);
