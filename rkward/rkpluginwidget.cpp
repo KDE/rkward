@@ -26,6 +26,7 @@ RKPluginWidget::RKPluginWidget(const QDomElement &element, QWidget *parent, RKPl
 }
 
 RKPluginWidget::~RKPluginWidget(){
+	qDebug ("widget deleted");
 }
 
 QString RKPluginWidget::complaints () {

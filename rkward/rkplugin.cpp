@@ -22,6 +22,9 @@
 #include <qdialog.h>
 #include <qlayout.h>
 #include <qmap.h>
+#include <qframe.h>
+#include <qpushbutton.h>
+#include <qtextedit.h>
 
 #include "rkmenu.h"
 #include "rkpluginwidget.h"
@@ -70,15 +73,65 @@ void RKPlugin::buildGUI () {
 	children = element.childNodes ();
 	element = children.item (0).toElement ();
 
-	gui = new QWidget (0);
+	gui = new QWidget (0, "", Qt::WDestructiveClose);
 	gui->setCaption (_label);
-	QGridLayout *layout = new QGridLayout (gui, 1, 1, 11, 6);
+	QGridLayout *layout = new QGridLayout (gui, 4, 3, 11, 6);
 
 	if ((element.tagName () == "row") || (element.tagName () == "column")) {
 		layout->addLayout (buildStructure (element), 0, 0);
 	} else {
     	layout->addLayout (buildWidget (element), 0, 0);
 	}
+
+	// build standard elements
+	// lines
+	QFrame *line;
+	line = new QFrame (gui);
+	line->setFrameShape (QFrame::VLine);
+	line->setFrameShadow (QFrame::Plain);	
+	layout->addWidget (line, 0, 1);
+	line = new QFrame (gui);
+	line->setFrameShape (QFrame::HLine);
+	line->setFrameShadow (QFrame::Plain);
+	layout->addMultiCellWidget (line, 1, 1, 0, 2);
+
+	// buttons
+	QVBoxLayout *vbox;
+	vbox = new QVBoxLayout (0, 0, 6);
+	okButton = new QPushButton ("Ok", gui);
+	connect (okButton, SIGNAL (clicked ()), this, SLOT (ok ()));
+	cancelButton = new QPushButton ("Cancel", gui);
+	connect (cancelButton, SIGNAL (clicked ()), this, SLOT (cancel ()));
+	helpButton = new QPushButton ("Help", gui);
+	connect (helpButton, SIGNAL (clicked ()), this, SLOT (help ()));
+	toggleCodeButton = new QPushButton ("Code", gui);
+	toggleCodeButton->setToggleButton (true);
+	toggleCodeButton->setOn (true);
+	connect (toggleCodeButton, SIGNAL (clicked ()), this, SLOT (toggleCode ()));
+	toggleWarnButton = new QPushButton ("Problems", gui);
+	toggleWarnButton->setToggleButton (true);
+	connect (toggleWarnButton, SIGNAL (clicked ()), this, SLOT (toggleWarn ()));
+	vbox->addWidget (okButton);
+	vbox->addWidget (cancelButton);
+	vbox->addStretch (1);
+	vbox->addWidget (helpButton);
+	vbox->addStretch (2);
+	vbox->addWidget (toggleCodeButton);
+	vbox->addWidget (toggleWarnButton);
+	layout->addLayout (vbox, 0, 2);
+	
+	// text-fields
+	codeDisplay = new QTextEdit (gui);
+	codeDisplay->setMinimumHeight (40);
+	codeDisplay->setReadOnly (true);
+	warnDisplay = new QTextEdit (gui);
+	warnDisplay->setMinimumHeight (40);
+	warnDisplay->hide ();
+	warnDisplay->setReadOnly (true);
+	layout->addMultiCellWidget (codeDisplay, 3, 3, 0, 2);
+	layout->addMultiCellWidget (warnDisplay, 4, 4, 0, 2);
+
+	layout->setRowStretch (0, 4);
 
 	gui->show ();
 }
@@ -128,4 +181,23 @@ void RKPlugin::ok () {
 }
 
 void RKPlugin::cancel () {
+}
+
+void RKPlugin::toggleCode () {
+	if (codeDisplay->isVisible ()) {
+		codeDisplay->hide ();
+	} else {
+		codeDisplay->show ();
+	}
+}
+
+void RKPlugin::toggleWarn () {
+	if (warnDisplay->isVisible ()) {
+		warnDisplay->hide ();
+	} else {
+		warnDisplay->show ();
+	}
+}
+
+void RKPlugin::help () {
 }

@@ -28,6 +28,8 @@ class QDialog;
 class QBoxLayout;
 class QLayout;
 class RKPluginWidget;
+class QTextEdit;
+class QPushButton;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -44,6 +46,9 @@ public slots:
 	void activated ();
 	void ok ();
 	void cancel ();
+	void toggleCode ();
+	void toggleWarn ();
+	void help ();
 private:
 	QString filename;
 	RKMenu *parent;
@@ -58,6 +63,16 @@ private:
 
 	QBoxLayout *buildStructure (const QDomElement &element);
 	RKPluginWidget *buildWidget (const QDomElement &element);
+
+	// standard gui-elements
+	QTextEdit *codeDisplay;
+	QTextEdit *warnDisplay;
+
+	QPushButton *okButton;
+	QPushButton *cancelButton;
+	QPushButton *helpButton;
+	QPushButton *toggleCodeButton;
+	QPushButton *toggleWarnButton;
 };
 
 #endif
