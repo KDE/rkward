@@ -77,7 +77,7 @@ void RKEditorDataFrame::openObject (RObject *object, bool initialize_to_empty) {
 	enableEditing (false);
 	open_chain = RKGlobals::rInterface ()->startChain (open_chain);
 	if (initialize_to_empty) {
-		for (int i=0; i < numCols (); ++i) {
+		for (int i=0; i < numTrueCols (); ++i) {
 			RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName ("var"), this);
 			if (obj->isVariable ()) {
 				static_cast<RKVariable*> (obj)->setLength (dataview->numRows ());
@@ -101,13 +101,13 @@ void RKEditorDataFrame::openObject (RObject *object, bool initialize_to_empty) {
 void RKEditorDataFrame::rCommandDone (RCommand *command) {
 	RK_TRACE (EDITOR);
 	if (command->getFlags () == GET_NAMES_COMMAND) {
-		while (command->stringVectorLength () < numCols ()) {
+		while (command->stringVectorLength () < numTrueCols ()) {
 			deleteColumn (0);
 		}
 	
 		// set the names and meta-information
 		for (int i = 0; i < command->stringVectorLength (); ++i) {
-			if (numCols () <= i) {
+			if (numTrueCols () <= i) {
 				insertNewColumn ();
 			}
 			// TODO: make clean
@@ -144,16 +144,16 @@ void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
 	command.append (" <- data.frame (");
 	
 	QString na_vector = "=rep (NA, " + QString::number (getColObject (0)->getLength ()) + ")";
-	for (int col=0; col < table->numCols (); col++) {
+	for (int col=0; col < table->numTrueCols (); col++) {
 		command.append (getColObject (col)->getShortName () + na_vector);
-		if (col < (table->numCols ()-1)) {
+		if (col < (table->numTrueCols ()-1)) {
 			command.append (", ");
 		}
 	}
 	command.append (")");
 
 	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync), sync_chain);
-	for (int col=0; col < table->numCols (); col++) {
+	for (int col=0; col < table->numTrueCols (); col++) {
 		getColObject (col)->restore (sync_chain);
 	}
 
@@ -179,15 +179,15 @@ void RKEditorDataFrame::columnDeletionRequested (int col) {
 
 void RKEditorDataFrame::columnAdded (int col) {
 	RK_TRACE (EDITOR);
-	RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName (varview->text (NAME_ROW, col)), this);
+	RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName (""), this);
 	RK_ASSERT (obj->isVariable ());	
 	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + getObject ()->getFullName () + ", \"" + obj->getShortName () + "\", " + QString ().setNum (col+1) + ")", RCommand::App | RCommand::Sync));
 	static_cast<RKVariable*> (obj)->setLength (dataview->numRows ());
 	obj->setCreatedInEditor (this);
 
 	// TODO: find a nice way to update the list:
-	RK_ASSERT (col <= (numCols () - 1));
-	for (int i=numCols () - 1; i > col; --i) {
+	RK_ASSERT (col <= (numTrueCols () - 1));
+	for (int i=numTrueCols () - 1; i > col; --i) {
 		setColObject (i, getColObject (i-1));
 	}
 	if (obj->isVariable ()) {
@@ -224,10 +224,10 @@ void RKEditorDataFrame::removeObject (RObject *object) {
 	deleteColumn (col);
 	object->setObjectOpened (this, false);
 	
-	for (int i=(col+1); i < numCols (); ++i) {
+	for (int i=(col+1); i < numTrueCols (); ++i) {
 		setColObject (i-1, getColObject (i));
 	}
-	setColObject (numCols (), 0);
+	setColObject (numTrueCols (), 0);
 }
 
 void RKEditorDataFrame::restoreObject (RObject *object) {
@@ -259,7 +259,7 @@ void RKEditorDataFrame::addObject (RObject *object) {
 	enableEditing (false);
 	insertNewColumn ();
 	if (object->isVariable ()) {
-		setColObject (numCols () - 1, static_cast<RKVariable*> (object));
+		setColObject (numTrueCols () - 1, static_cast<RKVariable*> (object));
 		object->setObjectOpened (this, true);
 	} else {
 		RK_ASSERT (false);

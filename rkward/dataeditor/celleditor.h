@@ -24,6 +24,7 @@
 
 class QStringList;
 class QPopupMenu;
+class TwinTableMember;
 
 /**
 This is the main editor used in the TwinTableMembers
@@ -36,7 +37,7 @@ focus.
 class CellEditor : public QLineEdit {
 Q_OBJECT
 public:
-	CellEditor (QWidget *parent, const QString &text, int mode, const RObject::ValueLabels *named_values=0);
+	CellEditor (TwinTableMember* parent, const QString &text, int mode, const RObject::ValueLabels *named_values=0);
 
 	~CellEditor();
 public slots:
@@ -46,10 +47,13 @@ protected:
 	void timerEvent (QTimerEvent *e);
 /// reimplemented to ignore arrow left/right if at the beginning/end
 	void keyPressEvent (QKeyEvent *e);
+/// needed to catch Tab-keypresses (not usually sent to keyPressEvent) and relay those to the parent
+	bool event (QEvent *e);
 private:
 	QPopupMenu *value_list;
 	int timer_id;
 	QIntDict<QString> popup_values;
+	TwinTableMember *table;
 };
 
 #endif

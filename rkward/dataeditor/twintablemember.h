@@ -49,9 +49,8 @@ public:
 /** reimplemented from QTable to return only the number of used rows */
 	int numRows ();
 	int numAllRows ();
-/** reimplemented from QTable to return only the number of used columns */
-	int numCols ();
-	int numAllCols ();
+/** like QTable::numCols (), but returns only the "true", i.e. active columns (excluding the trailing_cols) */
+	int numTrueCols ();
 /** reimplemented form QTable not to use QTableItems. This one raises an assert (should never be called) */
 	void removeRows (const QMemArray<int> &rows);
 /** reimplemented form QTable not to use QTableItems. This one has no effect */
@@ -78,6 +77,10 @@ public:
 	void endEdit (int row, int col, bool accept, bool replace);
 /** reimplemented form QTable not to work on TableColumns instead of QTableItems */
 	void setCellContentFromEditor (int row, int col);
+/** needed to detect right mouse clicks in the header and tab-keypresses in the CellEditor */
+	bool eventFilter (QObject *object, QEvent *event);
+/** actually simply calls QTable::keyPressEvent (). Reimplemented only to allow CellEditor access to this function */
+	void keyPressEvent (QKeyEvent *e) { QTable::keyPressEvent (e); };
 signals:
 	void headerRightClick (int row, int col);
 protected:
@@ -100,8 +103,6 @@ public slots:
 	void currentCellChanged (int row, int col);
 protected slots:
 	void columnWidthChanged (int col);
-protected:
-	bool eventFilter (QObject *object, QEvent *event);
 };
 
 #endif

@@ -20,10 +20,14 @@
 #include <qpopupmenu.h>
 #include <qstyle.h>
 
+#include "twintablemember.h"
 #include "../debug.h"
 
-CellEditor::CellEditor (QWidget *parent, const QString &text, int mode, const RObject::ValueLabels *named_values) : QLineEdit (parent) {
+CellEditor::CellEditor (TwinTableMember *parent, const QString &text, int mode, const RObject::ValueLabels *named_values) : QLineEdit (parent->viewport ()) {
 	RK_TRACE (EDITOR);
+	
+	table = parent;
+	qDebug ("create: cols: %d, true cols: %d, current col: %d", table->numCols (), table->numTrueCols (), table->currentColumn ());
 	
 	setText (text);
 	setFrame (false);
@@ -82,16 +86,28 @@ void CellEditor::timerEvent (QTimerEvent *e) {
 	timer_id = 0;
 }
 
+bool CellEditor::event (QEvent *e) {
+	if (e->type () == QEvent::KeyPress) {
+		QKeyEvent *kev = static_cast<QKeyEvent *> (e);
+		if ((kev->key () == Qt::Key_Tab) || (kev->key () == Qt::Key_BackTab)) {
+			table->keyPressEvent (kev);
+			return true;
+		}
+	}
+	return QLineEdit::event (e);
+}
+
 void CellEditor::keyPressEvent (QKeyEvent *e) {
 	if (!e->state ()) {
 		if (e->key () == Qt::Key_Left) {
 			if (cursorPosition () < 1) {
-				e->ignore ();
+				table->keyPressEvent (e);
 				return;
 			}
 		} else if (e->key () == Qt::Key_Right) {
 			if (cursorPosition () >= text ().length ()) {
-				e->ignore ();
+				qDebug ("cols: %d, true cols: %d, current col: %d", table->numCols (), table->numTrueCols (), table->currentColumn ());
+				table->keyPressEvent (e);
 				return;
 			}
 		}

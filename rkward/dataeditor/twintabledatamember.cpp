@@ -36,11 +36,11 @@ TwinTableDataMember::~TwinTableDataMember () {
 void TwinTableDataMember::removeRow (int row) {
 	RK_TRACE (EDITOR);
 	QTable::removeRow (row);
-	for (int i=0; i < table->numCols (); ++i) {
+	for (int i=0; i < table->numTrueCols (); ++i) {
 		table->getColObject (i)->removeRow (row);
 	}
 	for (int i=row; i < numRows (); ++i) {
-		for (int j=0; j < table->numCols (); ++j) {
+		for (int j=0; j < table->numTrueCols (); ++j) {
 			updateCell (i, j);
 		}
 	}
@@ -48,7 +48,7 @@ void TwinTableDataMember::removeRow (int row) {
 
 void TwinTableDataMember::insertRows (int row, int count) {
 	RK_TRACE (EDITOR);
-	for (int i=0; i < table->numCols (); ++i) {
+	for (int i=0; i < table->numTrueCols (); ++i) {
 		table->getColObject (i)->insertRows (row, count);
 	}
 	QTable::insertRows (row, count);
@@ -119,7 +119,8 @@ QWidget *TwinTableDataMember::beginEdit (int row, int col, bool) {
 	RK_ASSERT (!tted);
 	RKVariable *var = table->getColObject (col);
 	if (!var) {
-		table->insertNewColumn (col);
+		RK_ASSERT (col >= numTrueCols ());
+		table->insertNewColumn (col+1);
 		var = table->getColObject (col);
 		if (!var) {
 			RK_ASSERT (false);
@@ -133,7 +134,7 @@ QWidget *TwinTableDataMember::beginEdit (int row, int col, bool) {
 	
 	if (var->cellStatus (row) == RKVariable::ValueUnknown) return 0;
 
-	tted = new CellEditor (viewport (), var->getText (row), 0, var->getValueLabels ());
+	tted = new CellEditor (this, var->getText (row), 0, var->getValueLabels ());
 	//tted->installEventFilter (this);
 
 	QRect cr = cellGeometry (row, col);

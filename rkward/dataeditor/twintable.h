@@ -66,8 +66,8 @@ public:
 /** Flushes pending edit-operations */
 	void flushEdit ();
 
-/** Returns the number of columns in the tables */
-	int numCols ();
+/** Returns the number of (true) columns in the tables. See TwinTableMember::numTrueCols () */
+	int numTrueCols ();
 	
 	void setPasteMode (RKEditor::PasteMode mode);
     TwinTableMetaMember* varview;

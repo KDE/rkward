@@ -118,19 +118,24 @@ QWidget *TwinTableMetaMember::beginEdit (int row, int col, bool) {
 	RK_ASSERT (!tted);
 	RKVariable *var = table->getColObject (col);
 	if (!var) {
-		RK_ASSERT (false);
-		return 0;
+		RK_ASSERT (col >= numTrueCols ());
+		table->insertNewColumn (col);
+		var = table->getColObject (col);
+		if (!var) {
+			RK_ASSERT (false);
+			return 0;
+		}
 	}
 
 	if (row == TYPE_ROW) {
-		tted = new CellEditor (viewport (), text (row, col), 0, &type_values);
+		tted = new CellEditor (this, text (row, col), 0, &type_values);
 	} else if (row == LEVELS_ROW) {
 		EditLabelsDialog *dialog = new EditLabelsDialog (0, var, 0);
 		dialog->exec ();
 		delete (dialog);
 		return 0;
 	} else {
-		tted = new CellEditor (viewport (), text (row, col), 0, 0);
+		tted = new CellEditor (this, text (row, col), 0, 0);
 	}
 	//tted->installEventFilter (this);
 

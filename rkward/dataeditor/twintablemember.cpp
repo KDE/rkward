@@ -48,16 +48,12 @@ int TwinTableMember::numAllRows () {
 	return QTable::numRows ();
 }
 
-int TwinTableMember::numAllCols () {
-	return QTable::numCols ();
+int TwinTableMember::numTrueCols () {
+	return numCols () - trailing_cols;
 }
 
 int TwinTableMember::numRows () {
 	return QTable::numRows () - trailing_rows;
-}
-
-int TwinTableMember::numCols () {
-	return QTable::numCols () - trailing_cols;
 }
 
 void TwinTableMember::setTwin (TwinTableMember * new_twin) {
@@ -80,24 +76,24 @@ void TwinTableMember::columnWidthChanged (int col) {
 
 bool TwinTableMember::eventFilter (QObject *object, QEvent *event) {
 	// filter out right mouse button events of the varview-header
-	if (event && (event->type() == QEvent::MouseButtonPress)) {
+	if (event && (event->type () == QEvent::MouseButtonPress)) {
 		QMouseEvent  *mouseEvent = (QMouseEvent *) event;
-		if (mouseEvent && (mouseEvent->button() == Qt::RightButton)) {
+		if (mouseEvent && (mouseEvent->button () == Qt::RightButton)) {
 			mouse_at = mouseEvent->globalPos ();
-			if (object == horizontalHeader()) {
+			if (object == horizontalHeader ()) {
 				emit headerRightClick (-1, horizontalHeader ()->sectionAt (mouseEvent->x ()));
-                return(true); // got it
+                return (true); // got it
             }
-			if (object == verticalHeader()) {
+			if (object == verticalHeader ()) {
 				emit headerRightClick (verticalHeader ()->sectionAt (mouseEvent->y ()), -1);
-                return(true); // got it
+                return (true); // got it
             }
         }
 		setFocus ();
     }
 
     // default processing
-    return(QTable::eventFilter (object, event));
+    return (QTable::eventFilter (object, event));
 }
 
 // virtual

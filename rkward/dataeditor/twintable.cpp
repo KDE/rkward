@@ -111,7 +111,7 @@ TwinTable::~TwinTable(){
 	delete top_header_menu;
 	delete left_header_menu;
 	
-	for (int i=0; i < numCols (); ++i) {
+	for (int i=0; i < numTrueCols (); ++i) {
 		RObject *object = getColObject (i);
 		if (object) object->setObjectOpened (this, false);
 		else RK_ASSERT (false);
@@ -132,7 +132,7 @@ void TwinTable::autoScrolled (int x, int) {
 
 void TwinTable::deleteColumn (int column) {
 	flushEdit ();
-	if ((column >= 0) && (column < numCols ())) {
+	if ((column >= 0) && (column < numTrueCols ())) {
 		varview->removeColumn (column);
 		dataview->removeColumn (column);
 	}
@@ -141,14 +141,14 @@ void TwinTable::deleteColumn (int column) {
 void TwinTable::insertNewColumn (int where) {
 	flushEdit ();
 	if ((where < 0) || (where > varview->numCols ())) {
-		where = varview->numAllCols ();
+		where = varview->numCols ();
 	}
 
 	varview->insertColumns (where);
 	dataview->insertColumns (where);
 
-	if (where >= varview->numCols ()) {		// the new addition was acutally not the new trailing row, but the one to the left - for all practical purposes
-		where = varview->numCols () - 1;
+	if (where >= varview->numTrueCols ()) {		// the new addition was acutally not the new trailing row, but the one to the left - for all practical purposes
+		where = varview->numTrueCols () - 1;
 	}
 	emit (addedColumn (where));
 }
@@ -199,12 +199,12 @@ void TwinTable::headerClicked (int col) {
 void TwinTable::headerRightClicked (int row, int col) {
 	if (col >= 0) {
 			header_pos = col;
-		if (col < varview->numCols ()) {
+		if (col < varview->numTrueCols ()) {
 			top_header_menu->setItemVisible (HEADER_MENU_ID_ADD_COL_LEFT, true);
 			top_header_menu->setItemVisible (HEADER_MENU_ID_ADD_COL_RIGHT, true);
 			top_header_menu->setItemVisible (HEADER_MENU_ID_DEL_COL, true);
 			top_header_menu->popup (varview->mouse_at);
-		} else if (col == varview->numCols ()) {		// trailing col
+		} else if (col == varview->numTrueCols ()) {		// trailing col
 			top_header_menu->setItemVisible (HEADER_MENU_ID_ADD_COL_LEFT, true);
 			top_header_menu->setItemVisible (HEADER_MENU_ID_ADD_COL_RIGHT, false);
 			top_header_menu->setItemVisible (HEADER_MENU_ID_DEL_COL, false);
@@ -349,7 +349,7 @@ void TwinTable::pasteEncoded (QByteArray content) {
 					}
 				}
 			}
-			if (col >= table->numCols ()) {
+			if (col >= table->numTrueCols ()) {
 				if (paste_mode == RKEditor::PasteToTable) {
 					next_delim = next_line;					
 					row++;
@@ -430,7 +430,7 @@ void TwinTable::setPasteMode (RKEditor::PasteMode mode) {
 
 void TwinTable::setRow (TwinTableMember* table, int row, int start_col, int end_col, char **data) {
 	flushEdit ();
-	while (numCols () <= end_col) {
+	while (numTrueCols () <= end_col) {
 		insertNewColumn ();
 	}
 	
@@ -458,8 +458,8 @@ void TwinTable::flushEdit () {
 	dataview->stopEditing ();
 }
 
-int TwinTable::numCols () {
-	return varview->numCols ();
+int TwinTable::numTrueCols () {
+	return varview->numTrueCols ();
 }
 
 void TwinTable::setColObject (long int column, RKVariable *object) {
