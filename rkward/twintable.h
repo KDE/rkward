@@ -48,6 +48,8 @@ public:
 	void clearSelected ();
 	enum PasteMode {PasteEverywhere, PasteToTable, PasteToSelection};
 	void setPasteMode (PasteMode mode);
+    TwinTableMember* varview;
+    TwinTableMember* dataview;
 public slots:
 	void headerClicked (int col);
 	void headerRightClicked (int col);
@@ -56,8 +58,6 @@ public slots:
 private:
 	QGridLayout *grid_layout;
     QSplitter* Splitter1;
-    TwinTableMember* varview;
-    TwinTableMember* dataview;
 /** PopupMenu shown when header is right-clicked */
 	QPopupMenu *header_menu;
 /** position the header_menu is operating on */

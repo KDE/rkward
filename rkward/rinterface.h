@@ -22,7 +22,7 @@
 #include <qstrlist.h>
 #include <qstring.h>
 
-/**
+/** This class does the rather low-level interfacing to the R-processor.
   *@author Thomas Friedrichsmeier
   */
 
@@ -32,17 +32,33 @@ public:
 	RInterface();
 	~RInterface();
 	bool startR (QStrList &commandline);
-	void issueCommand (const QString &command);
+/** Submit a synchronous command to R (i.e. generally one, that gives relevant output) */
+	bool issueCommand (const QString &command);
+/** Submit an asynchronous command (i.e. one, where you don't care about output) */
+	void issueAsyncCommand (const QString &command);
 	bool commandRunning () { return command_running; };
 signals:
 	void receivedReply (QString result);
 private:
+	QStrList async_command_stack;
+/** Keeps everything R has so far responded to the last command */
 	QString r_output;
-	char *command_buffer;
+/** We have to keep a local buffer for Stdinput to R. */
+	QString command_write_buffer;
+/** This is used to identify, when a command has finished.
+	Should be a unique string. */
 	QString end_tag;
 	bool command_running;
+	bool sync_command;
+	bool busy_writing;
+	bool commands_waiting;
+	QStrList waiting_commands;
+	void issue (QString &command);
 private slots:
+/** This slot receives raw R-output */
 	void gotROutput (KProcess *proc, char *buffer, int buflen);
+/** This slot receives the signal "finished writing Stdinput" */
+	void doneWriting (KProcess *proc);
 };
 
 #endif

@@ -65,7 +65,6 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
 	r_line.append ("--no-save");
 	r_line.append ("--slave");
 	r_inter.startR (r_line);
-	r_inter.issueCommand ("print (\"hello\")");
 	
   readOptions();
 }
@@ -132,6 +131,8 @@ void RKwardApp::initDocument()
 	editCopy->setEnabled(true);
 	editPaste->setEnabled(true);
 	editCut->setEnabled(true);
+	fileSave->setEnabled(true);
+	fileSaveAs->setEnabled(true);
 }
 
 void RKwardApp::initView()
@@ -141,7 +142,7 @@ void RKwardApp::initView()
   // connect the widget to your document to display document contents.
 
   view = new RKwardView(this);
-  doc->addView(view);
+  doc->setView(view);
   setCentralWidget(view);	
   setCaption(doc->URL().fileName(),false);
 

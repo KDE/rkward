@@ -30,8 +30,10 @@
 // include files for KDE
 #include <kurl.h>
 
-// forward declaration of the RKward classes
 class RKwardView;
+class RKwardApp;
+class QTable;
+class RInterface;
 
 /**	RKwardDoc provides a document object for a document-view model.
   *
@@ -48,12 +50,12 @@ class RKwardDoc : public QObject
   Q_OBJECT
   public:
     /** Constructor for the fileclass of the application */
-    RKwardDoc(QWidget *parent, const char *name=0);
+    RKwardDoc(RKwardApp *parent, const char *name=0);
     /** Destructor for the fileclass of the application */
     ~RKwardDoc();
 
-    /** adds a view to the document which represents the document contents. Usually this is your main view. */
-    void addView(RKwardView *view);
+    /** sets a view to the document which represents the document contents. */
+    void setView(RKwardView *view);
     /** removes a view from the list of currently connected views */
     void removeView(RKwardView *view);
     /** sets the modified flag for the document after a modifying action on the view connected to the document.*/
@@ -84,13 +86,24 @@ class RKwardDoc : public QObject
     void slotUpdateAllViews(RKwardView *sender);
  	
   public:	
-    /** the list of the views currently connected to the document */
-    static QList<RKwardView> *pViewList;	
+	/** will take care of all necessary operations to sync up to R */
+	void syncToR ();
+	/** will take care of all necessary operations to sync up from R */
+	void syncFromR ();
 
   private:
     /** the modified flag of the current document */
     bool modified;
     KURL doc_url;
+
+	RKwardApp *app;
+	RInterface *inter;
+	RKwardView *view;
+
+	/** pushes a whole (modified) table to R */
+	void pushTable (QTable *table, QString name);
+	/** pulls a whole table from R */
+	void pullTable (QTable *table, QString name);
 };
 
 #endif // RKWARDDOC_H

@@ -18,6 +18,7 @@
 // include files for Qt
 #include <qdir.h>
 #include <qwidget.h>
+#include <qtable.h>
 
 // include files for KDE
 #include <klocale.h>
@@ -29,31 +30,28 @@
 #include "rkwarddoc.h"
 #include "rkward.h"
 #include "rkwardview.h"
+#include "twintablemember.h"
 
-QList<RKwardView> *RKwardDoc::pViewList = 0L;
+#define RK_DATA_PREFIX	"rk."
 
-RKwardDoc::RKwardDoc(QWidget *parent, const char *name) : QObject(parent, name)
+RKwardDoc::RKwardDoc(RKwardApp *parent, const char *name) : QObject(parent, name)
 {
-  if(!pViewList)
-  {
-    pViewList = new QList<RKwardView>();
-  }
-
-  pViewList->setAutoDelete(true);
+	app = parent;
+	inter = &app->r_inter;
 }
 
 RKwardDoc::~RKwardDoc()
 {
 }
 
-void RKwardDoc::addView(RKwardView *view)
+void RKwardDoc::setView(RKwardView *view)
 {
-  pViewList->append(view);
+	RKwardDoc::view = view;
 }
 
 void RKwardDoc::removeView(RKwardView *view)
 {
-  pViewList->remove(view);
+//  pViewList->remove(view);
 }
 void RKwardDoc::setURL(const KURL &url)
 {
@@ -67,7 +65,9 @@ const KURL& RKwardDoc::URL() const
 
 void RKwardDoc::slotUpdateAllViews(RKwardView *sender)
 {
-  RKwardView *w;
+
+// TODO: discard
+/*  RKwardView *w;
   if(pViewList)
   {
     for(w=pViewList->first(); w!=0; w=pViewList->next())
@@ -76,7 +76,7 @@ void RKwardDoc::slotUpdateAllViews(RKwardView *sender)
         w->repaint();
     }
   }
-
+  */
 }
 
 bool RKwardDoc::saveModified()
@@ -161,6 +161,11 @@ bool RKwardDoc::saveDocument(const KURL& url, const char *format /*=0*/)
   // TODO: Add your document saving code here
   /////////////////////////////////////////////////
 
+	pushTable (view->dataview, "data");	
+	pushTable (view->varview, "data.meta");
+
+	inter->issueAsyncCommand ("save.image (\"" + url.path () + "\")");
+
   modified=false;
   return true;
 }
@@ -171,4 +176,34 @@ void RKwardDoc::deleteContents()
   // TODO: Add implementation to delete the document contents
   /////////////////////////////////////////////////
 
+}
+
+void RKwardDoc::pushTable (QTable *table, QString name) {
+	QString command;
+	command.append (RK_DATA_PREFIX);
+	command.append (name);
+	command.append (" <- data.frame (");
+
+	QString vector;
+	for (int col=0; col < table->numCols (); col++) {
+		// TODO: add names!
+		vector= "c (";
+		for (int row=0; row < table->numRows (); row++) {
+			vector.append (table->text (row, col));
+			if (row < (table->numRows ()-1)) {
+				vector.append (", ");
+			}
+		}
+		vector.append (")");
+		if (col < (table->numCols ()-1)) {
+			vector.append (", ");
+		}
+		command.append (vector);
+	}
+	command.append (")");
+
+	inter->issueAsyncCommand (command);
+}
+
+void RKwardDoc::pullTable (QTable *table, QString name) {
 }
