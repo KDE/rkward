@@ -128,9 +128,6 @@ void TwinTable::insertNewColumn (int where, QString name) {
 	if ((where < 0) || (where > varview->numCols ())) {
 		where = varview->numCols ();
 	}
-	if (name == "") {
-		name = "new var";
-	}
 
 	varview->insertColumns (where);
 	for (int i=0; i < varview->numRows (); i++) {
@@ -138,12 +135,15 @@ void TwinTable::insertNewColumn (int where, QString name) {
 	}
 	varview->setItem (TYPE_ROW, where, new TypeSelectCell (varview));
 	varview->setItem (NAME_ROW, where, new NameSelectCell (varview));
+	((NameSelectCell *) varview->item (NAME_ROW, where))->init ();
 	dataview->insertColumns (where);
 	for (int i=0; i < dataview->numRows (); i++) {
 		dataview->setItem (i, where, new RTableItem (dataview));
 	}
 
-	varview->horizontalHeader()->setLabel(where, name);
+	if (name != "") {
+		varview->setText (NAME_ROW, where, name);
+	}
 }
 
 void TwinTable::insertNewRow (int where=-1) {

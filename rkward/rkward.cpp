@@ -154,7 +154,7 @@ void RKwardApp::openDocumentFile(const KURL& url)
 {
   slotStatusMsg(i18n("Opening file..."));
 
-  doc->openDocument( url);
+//  doc->openDocument( url);
   fileOpenRecent->addURL( url );
   slotStatusMsg(i18n("Ready."));
 }
@@ -239,7 +239,7 @@ void RKwardApp::readProperties(KConfig* _cfg)
   	
     if(canRecover)
     {
-      doc->openDocument(_url);
+//      doc->openDocument(_url);
       doc->setModified();
       setCaption(_url.fileName(),true);
       QFile::remove(tempname);
@@ -249,7 +249,7 @@ void RKwardApp::readProperties(KConfig* _cfg)
   {
     if(!filename.isEmpty())
     {
-      doc->openDocument(url);
+//      doc->openDocument(url);
       setCaption(url.fileName(),false);
     }
   }

@@ -30,6 +30,7 @@
 #include "rkward.h"
 #include "rkwardview.h"
 #include "twintablemember.h"
+#include "twintable.h"
 
 #define RK_DATA_PREFIX	"rk."
 
@@ -37,6 +38,9 @@ RKwardDoc::RKwardDoc(RKwardApp *parent, const char *name) : QObject(parent, name
 {
 	app = parent;
 	inter = &app->r_inter;
+	output_is = Nothing;
+	tablename = RK_DATA_PREFIX;
+	tablename.append ("data");
 }
 
 RKwardDoc::~RKwardDoc()
@@ -148,6 +152,11 @@ bool RKwardDoc::openDocument(const KURL& url, const char *format /*=0*/)
   // TODO: Add your document opening code here
   /////////////////////////////////////////////////
 
+	setURL (tmpfile);
+	connect (inter, SIGNAL (receivedReply (QString)), this, SLOT (processROutput (QString)));
+	output_is = Loaded;
+	inter->issueCommand ("load (\"" + doc_url.path () + "\")");
+
   KIO::NetAccess::removeTempFile( tmpfile );
 
   modified=false;
@@ -160,8 +169,7 @@ bool RKwardDoc::saveDocument(const KURL& url, const char *format /*=0*/)
   // TODO: Add your document saving code here
   /////////////////////////////////////////////////
 
-	pushTable (view->dataview, "data");	
-	pushTable (view->varview, "data.meta");
+	pushTable (view, tablename);	
 
 	inter->issueAsyncCommand ("save.image (\"" + url.path () + "\")");
 
@@ -178,10 +186,12 @@ void RKwardDoc::deleteContents()
 
 }
 
-void RKwardDoc::pushTable (TwinTableMember *table, QString name) {
+void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 	QString command;
-	command.append (RK_DATA_PREFIX);
-	command.append (name);
+
+	// first push the data-table
+	TwinTableMember *table = ttable->dataview;
+	command = name;
 	command.append (" <- data.frame (");
 
 	QString vector;
@@ -202,7 +212,54 @@ void RKwardDoc::pushTable (TwinTableMember *table, QString name) {
 	command.append (")");
 
 	inter->issueAsyncCommand (command);
+
+	// now push the meta-table (point-reflected at bottom-left corner)
+	table = ttable->varview;
+	command = name;
+	command.append (".meta");
+	command.append (" <- data.frame (");
+
+	for (int row=0; row < table->numRows (); row++) {
+		// TODO: add labels
+		vector.setNum (row);
+		vector.prepend ("meta");
+		vector.append ("=c (");
+		for (int col=0; col < table->numCols (); col++) {
+			vector.append (table->rText (row, col));
+			if (col < (table->numCols ()-1)) {
+				vector.append (", ");
+			}
+		}
+		vector.append (")");
+		if (row < (table->numRows ()-1)) {
+			vector.append (", ");
+		}
+		command.append (vector);
+	}
+	command.append (")");
+
+	inter->issueAsyncCommand (command);
 }
 
-void RKwardDoc::pullTable (TwinTableMember *table, QString name) {
+void RKwardDoc::pullTable (TwinTable *ttable) {
+	output_is = MetaDim;
+	inter->issueCommand ("dim (" + tablename + ".meta)");
+	// since communication is asynchronous, the rest is done inside
+	// processROutput!
+}
+
+void RKwardDoc::processROutput (QString output) {
+	static int cols;
+	if (output_is == Loaded) {
+		pullTable (view);
+	} else if (output_is == MetaDim) {
+		QString dim_string = inter->cleanROutput (output, false);
+		cols = dim_string.section ("\t", 1, 1).toInt ();
+
+		output_is = MetaCol;
+		output_col = 1;
+		dim_string.setNum (output_col);
+		inter->issueCommand (tablename + ".meta[1]");
+	} else if (output_is == MetaCol) {
+	}
 }

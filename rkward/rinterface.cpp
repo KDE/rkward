@@ -18,6 +18,7 @@
 #include "rinterface.h"
 
 #include <qcstring.h>
+#include <qregexp.h>
 
 #include <kmessagebox.h>
 
@@ -78,19 +79,19 @@ void RInterface::gotROutput (KProcess *proc, char *buffer, int buflen) {
 		qDebug ("-----------------------------------------------");
 		qDebug (r_output.left (pos));
 
+		if (sync_command) {
+			emit (syncUnblocked ());
+			sync_command = false;
+		}
+		command_running = false;
 		emit (receivedReply (r_output.left (pos)));
 		r_output = "";
-		command_running = false;
 		if (!sync_command) {
 			async_command_stack.removeFirst ();
 			if (async_command_stack.count ()) {
-				QString command = async_command_stack.first ();
-				qDebug ("now issueing quequed " + command);
-				issue (command);
+				qDebug ("now issueing queued ");
+				issue (async_command_stack.first ());
 			}
-		} else {
-			emit (syncUnblocked ());
-			sync_command = false;
 		}
 	}
 }
@@ -162,4 +163,31 @@ void RInterface::Rdied (KProcess *proc) {
 	} else {
 		emit (syncBlocked ());
 	}
+}
+
+QString RInterface::cleanROutput (QString &raw, bool allow_spaces) {
+	QString cleaned;
+	QString line;
+	bool done = false;
+	int raw_pos, line_pos, prev_pos;
+	prev_pos = 0;
+	while (!done) {
+		raw_pos = raw.find ("\n", raw_pos);
+		line = raw.mid (prev_pos, raw_pos - prev_pos);
+		prev_pos = raw_pos;		
+		if (line[0] == '[') {
+			line_pos = line.find (']');
+		}
+		line = line.right (line.length () - (line_pos+1));
+		if (!allow_spaces) {
+			line = line.simplifyWhiteSpace ();
+			line.replace (QRegExp (" "), "\t");
+		}
+		cleaned.append (line);
+		qDebug (line);
+		if ((raw_pos < 0) || (raw_pos == raw.length ())) {
+			done = true;
+		}
+	}	
+	return cleaned;
 }

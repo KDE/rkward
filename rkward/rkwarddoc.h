@@ -33,6 +33,7 @@
 class RKwardView;
 class RKwardApp;
 class TwinTableMember;
+class TwinTable;
 class RInterface;
 
 /**	RKwardDoc provides a document object for a document-view model.
@@ -84,7 +85,10 @@ class RKwardDoc : public QObject
      * As this view normally repaints itself, it is excluded from the paintEvent.
      */
     void slotUpdateAllViews(RKwardView *sender);
- 	
+
+/** processes output received by R. Uses the output_is-var, to determine, how
+	to interpret this output */
+	void processROutput (QString output); 	
   public:	
 	/** will take care of all necessary operations to sync up to R */
 	void syncToR ();
@@ -99,11 +103,16 @@ class RKwardDoc : public QObject
 	RKwardApp *app;
 	RInterface *inter;
 	RKwardView *view;
+	QString tablename;
 
-	/** pushes a whole (modified) table to R */
-	void pushTable (TwinTableMember *table, QString name);
+	enum OutputIs {Loaded=0, MetaDim=1, DataDim=2, MetaCol=3, DataCol=4, Nothing=0};
+	OutputIs output_is;
+	int output_col;
+
+	/** pushes a whole (modified) twintable to R */
+	void pushTable (TwinTable *ttable, QString name);
 	/** pulls a whole table from R */
-	void pullTable (TwinTableMember *table, QString name);
+	void pullTable (TwinTable *ttable);
 };
 
 #endif // RKWARDDOC_H

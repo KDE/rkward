@@ -19,6 +19,8 @@
 
 #include "twintablemember.h"
 
+int NameSelectCell::num = 0;
+
 NameSelectCell::NameSelectCell(TwinTableMember *table) : RTableItem (table) {
 }
 
@@ -27,7 +29,7 @@ NameSelectCell::~NameSelectCell(){
 
 void NameSelectCell::init () {
     QString dummy;
-	dummy.setNum (col ());
+	dummy.setNum (num++);
 	while (dummy.length () < 5) {
 		dummy.prepend ("0");
 	}

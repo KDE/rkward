@@ -33,6 +33,8 @@ public:
 	NameSelectCell(TwinTableMember *table);
 	~NameSelectCell();
 	void init ();
+private:
+	static int num;
 protected:
 	void setText (const QString &str);
 	QString rText ();
