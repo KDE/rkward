@@ -27,12 +27,15 @@
 #include <qtextedit.h>
 
 #include "rkward.h"
+#include "rkwarddoc.h"
+#include "rinterface.h"
+
+// plugin-widgets
 #include "rkpluginwidget.h"
 #include "rkvarselector.h"
 #include "rkvarslot.h"
+#include "rktext.h"
 #include "rkradio.h"
-#include "rkwarddoc.h"
-#include "rinterface.h"
 
 RKPlugin::RKPlugin(RKwardApp *parent, const QDomElement &element, QString filename) {
 	app = parent;
@@ -74,18 +77,20 @@ void RKPlugin::activated () {
 	// retrieve other relevant information from XML-file
 	element = doc.documentElement ();
 	children = element.elementsByTagName("code");
-	element = children.item (0).toElement ();
+	if (children.length ()) {
+		element = children.item (0).toElement ();
 
-	QStringList lines = QStringList::split ("\n", element.text (), false);
-	for (unsigned int i=0; i < lines.count (); i++) {
-		QString line = lines[i].stripWhiteSpace ();
-		if (line != "") {
-			code_template.append (line + "\n");
+		QStringList lines = lines.split ("\n", element.text (), false);
+		for (unsigned int i=0; i < lines.count (); i++) {
+			QString line = lines[i].stripWhiteSpace ();
+			if (line != "") {
+				code_template.append (line + "\n");
+			}
 		}
-	}
 
-	// strip final newline
-	code_template.truncate (code_template.length () -1);
+		// strip final newline
+		code_template.truncate (code_template.length () -1);
+	}
 
 	// initialize code/warn-views
 	changed ();
@@ -191,12 +196,13 @@ RKPluginWidget *RKPlugin::buildWidget (const QDomElement &element) {
 		widget = new RKVarSelector (element, gui, this);
 	} else if (element.tagName () == "radio") {
 		widget = new RKRadio (element, gui, this);
-	} else {
-		// TODO: to be changed, of course
+	} else if (element.tagName () == "varslot") {
 		widget = new RKVarSlot (element, gui, this);
+	} else {
+		widget = new RKText (element, gui, this);
 	}
 
-	widgets.insert (element.attribute ("id"), widget);
+	widgets.insert (element.attribute ("id", "#noid#"), widget);
 
 	return widget;
 }
@@ -243,7 +249,11 @@ void RKPlugin::changed () {
 	int i = 0;
 	while (code_template.section ("$", i, i) != "") {
 		if (i % 2) {
-			code.append (widgets[code_template.section ("$", i, i)]->value ());
+			if (widgets.contains (code_template.section ("$", i, i))) {
+				code.append (widgets[code_template.section ("$", i, i)]->value ());
+			} else {
+				qDebug ("Couldn't find value for $" + code_template.section ("$", i, i) +"$!");
+			}
 		} else {
 			code.append (code_template.section ("$", i, i));
 		}

@@ -228,14 +228,14 @@ x_libraries = @x_libraries@
 
 bin_PROGRAMS = rkward
 
-#>- rkward_SOURCES = rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp rsettingsui.ui rsettings.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rkwatch_ui.ui rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp view.ui rkwarddoc.cpp rkward.cpp main.cpp 
+#>- rkward_SOURCES = rktext.cpp rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp rsettingsui.ui rsettings.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rkwatch_ui.ui rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp view.ui rkwarddoc.cpp rkward.cpp main.cpp 
 #>+ 1
-rkward_SOURCES=rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp  rsettings.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp  rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp  rkwarddoc.cpp rkward.cpp main.cpp  rsettingsui.cpp rkwatch_ui.cpp view.cpp
+rkward_SOURCES=rktext.cpp rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp  rsettings.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp  rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp  rkwarddoc.cpp rkward.cpp main.cpp  rsettingsui.cpp rkwatch_ui.cpp view.cpp
 rkward_LDADD = $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) $(LIBSOCKET)
 
 SUBDIRS = plugins 
 
-EXTRA_DIST = main.cpp rkward.cpp rkward.h rkwarddoc.cpp rkwarddoc.h rkwardui.rc rkward.desktop lo32-app-rkward.png lo16-app-rkward.png view.ui twintable.cpp twintable.h twintablemember.cpp twintablemember.h rkdrag.cpp rkdrag.h rinterface.cpp rinterface.h rkwatch_ui.ui rkwatch.cpp rkwatch.h typeselectcell.cpp typeselectcell.h rtableitem.cpp rtableitem.h nameselectcell.cpp nameselectcell.h rsettings.cpp rsettings.h rsettingsui.ui rkmenu.cpp rkmenu.h rkplugin.cpp rkplugin.h rkpluginwidget.cpp rkpluginwidget.h rkvarselector.cpp rkvarselector.h rkvarslot.cpp rkvarslot.h rkradio.cpp rkradio.h 
+EXTRA_DIST = main.cpp rkward.cpp rkward.h rkwarddoc.cpp rkwarddoc.h rkwardui.rc rkward.desktop lo32-app-rkward.png lo16-app-rkward.png view.ui twintable.cpp twintable.h twintablemember.cpp twintablemember.h rkdrag.cpp rkdrag.h rinterface.cpp rinterface.h rkwatch_ui.ui rkwatch.cpp rkwatch.h typeselectcell.cpp typeselectcell.h rtableitem.cpp rtableitem.h nameselectcell.cpp nameselectcell.h rsettings.cpp rsettings.h rsettingsui.ui rkmenu.cpp rkmenu.h rkplugin.cpp rkplugin.h rkpluginwidget.cpp rkpluginwidget.h rkvarselector.cpp rkvarselector.h rkvarslot.cpp rkvarslot.h rkradio.cpp rkradio.h rktext.cpp rktext.h 
 
 ####### kdevelop will overwrite this part!!! (end)############
 # These paths are KDE specific. Use them:
@@ -276,23 +276,25 @@ CONFIG_CLEAN_FILES =
 bin_PROGRAMS = rkward$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
-am_rkward_OBJECTS = rkradio.$(OBJEXT) rkvarslot.$(OBJEXT) \
-	rkvarselector.$(OBJEXT) rkpluginwidget.$(OBJEXT) \
-	rkplugin.$(OBJEXT) rkmenu.$(OBJEXT) rsettings.$(OBJEXT) \
-	nameselectcell.$(OBJEXT) rtableitem.$(OBJEXT) \
-	typeselectcell.$(OBJEXT) rkwatch.$(OBJEXT) rinterface.$(OBJEXT) \
-	rkdrag.$(OBJEXT) twintablemember.$(OBJEXT) twintable.$(OBJEXT) \
-	rkwarddoc.$(OBJEXT) rkward.$(OBJEXT) main.$(OBJEXT)
+am_rkward_OBJECTS = rktext.$(OBJEXT) rkradio.$(OBJEXT) \
+	rkvarslot.$(OBJEXT) rkvarselector.$(OBJEXT) \
+	rkpluginwidget.$(OBJEXT) rkplugin.$(OBJEXT) rkmenu.$(OBJEXT) \
+	rsettings.$(OBJEXT) nameselectcell.$(OBJEXT) \
+	rtableitem.$(OBJEXT) typeselectcell.$(OBJEXT) rkwatch.$(OBJEXT) \
+	rinterface.$(OBJEXT) rkdrag.$(OBJEXT) twintablemember.$(OBJEXT) \
+	twintable.$(OBJEXT) rkwarddoc.$(OBJEXT) rkward.$(OBJEXT) \
+	main.$(OBJEXT)
 #>- rkward_OBJECTS = $(am_rkward_OBJECTS)
-#>+ 12
+#>+ 13
 rkward_final_OBJECTS = rkward.all_cpp.o 
-rkward_nofinal_OBJECTS = rkradio.$(OBJEXT) rkvarslot.$(OBJEXT) \
-	rkvarselector.$(OBJEXT) rkpluginwidget.$(OBJEXT) \
-	rkplugin.$(OBJEXT) rkmenu.$(OBJEXT) rsettings.$(OBJEXT) \
-	nameselectcell.$(OBJEXT) rtableitem.$(OBJEXT) \
-	typeselectcell.$(OBJEXT) rkwatch.$(OBJEXT) rinterface.$(OBJEXT) \
-	rkdrag.$(OBJEXT) twintablemember.$(OBJEXT) twintable.$(OBJEXT) \
-	rkwarddoc.$(OBJEXT) rkward.$(OBJEXT) main.$(OBJEXT) rsettingsui.$(OBJEXT) rkwatch_ui.$(OBJEXT) view.$(OBJEXT)\
+rkward_nofinal_OBJECTS = rktext.$(OBJEXT) rkradio.$(OBJEXT) \
+	rkvarslot.$(OBJEXT) rkvarselector.$(OBJEXT) \
+	rkpluginwidget.$(OBJEXT) rkplugin.$(OBJEXT) rkmenu.$(OBJEXT) \
+	rsettings.$(OBJEXT) nameselectcell.$(OBJEXT) \
+	rtableitem.$(OBJEXT) typeselectcell.$(OBJEXT) rkwatch.$(OBJEXT) \
+	rinterface.$(OBJEXT) rkdrag.$(OBJEXT) twintablemember.$(OBJEXT) \
+	twintable.$(OBJEXT) rkwarddoc.$(OBJEXT) rkward.$(OBJEXT) \
+	main.$(OBJEXT) rsettingsui.$(OBJEXT) rkwatch_ui.$(OBJEXT) view.$(OBJEXT)\
 	rinterface.moc.o rkradio.moc.o rkvarslot.moc.o twintablemember.moc.o rkwarddoc.moc.o rsettings.moc.o twintable.moc.o rkwatch.moc.o rkvarselector.moc.o rkplugin.moc.o rkward.moc.o  \
 	rkward_meta_unload.o 
 @KDE_USE_FINAL_FALSE@rkward_OBJECTS = $(rkward_nofinal_OBJECTS)
@@ -309,11 +311,11 @@ depcomp = $(SHELL) $(top_srcdir)/admin/depcomp
 	@AMDEP_TRUE@	$(DEPDIR)/rinterface.Po $(DEPDIR)/rkdrag.Po \
 	@AMDEP_TRUE@	$(DEPDIR)/rkmenu.Po $(DEPDIR)/rkplugin.Po \
 	@AMDEP_TRUE@	$(DEPDIR)/rkpluginwidget.Po $(DEPDIR)/rkradio.Po \
-	@AMDEP_TRUE@	$(DEPDIR)/rkvarselector.Po $(DEPDIR)/rkvarslot.Po \
-	@AMDEP_TRUE@	$(DEPDIR)/rkward.Po $(DEPDIR)/rkwarddoc.Po \
-	@AMDEP_TRUE@	$(DEPDIR)/rkwatch.Po $(DEPDIR)/rsettings.Po \
-	@AMDEP_TRUE@	$(DEPDIR)/rtableitem.Po $(DEPDIR)/twintable.Po \
-	@AMDEP_TRUE@	$(DEPDIR)/twintablemember.Po \
+	@AMDEP_TRUE@	$(DEPDIR)/rktext.Po $(DEPDIR)/rkvarselector.Po \
+	@AMDEP_TRUE@	$(DEPDIR)/rkvarslot.Po $(DEPDIR)/rkward.Po \
+	@AMDEP_TRUE@	$(DEPDIR)/rkwarddoc.Po $(DEPDIR)/rkwatch.Po \
+	@AMDEP_TRUE@	$(DEPDIR)/rsettings.Po $(DEPDIR)/rtableitem.Po \
+	@AMDEP_TRUE@	$(DEPDIR)/twintable.Po $(DEPDIR)/twintablemember.Po \
 	@AMDEP_TRUE@	$(DEPDIR)/typeselectcell.Po
 #>- CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 #>- $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -414,6 +416,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/rkplugin.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/rkpluginwidget.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/rkradio.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/rktext.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/rkvarselector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/rkvarslot.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/rkward.Po@am__quote@
@@ -844,11 +847,11 @@ clean-moc-classes:
 	-rm -f  rkward_meta_unload.cpp
 
 #>+ 11
-rkward.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/rkradio.cpp $(srcdir)/rkvarslot.cpp $(srcdir)/rkvarselector.cpp $(srcdir)/rkpluginwidget.cpp $(srcdir)/rkplugin.cpp $(srcdir)/rkmenu.cpp $(srcdir)/rsettings.cpp $(srcdir)/nameselectcell.cpp $(srcdir)/rtableitem.cpp $(srcdir)/typeselectcell.cpp $(srcdir)/rkwatch.cpp $(srcdir)/rinterface.cpp $(srcdir)/rkdrag.cpp $(srcdir)/twintablemember.cpp $(srcdir)/twintable.cpp $(srcdir)/rkwarddoc.cpp $(srcdir)/rkward.cpp $(srcdir)/main.cpp rsettingsui.cpp rkwatch_ui.cpp view.cpp rkward_meta_unload.cpp  rinterface.moc.cpp rkradio.moc.cpp rkvarslot.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp
+rkward.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/rktext.cpp $(srcdir)/rkradio.cpp $(srcdir)/rkvarslot.cpp $(srcdir)/rkvarselector.cpp $(srcdir)/rkpluginwidget.cpp $(srcdir)/rkplugin.cpp $(srcdir)/rkmenu.cpp $(srcdir)/rsettings.cpp $(srcdir)/nameselectcell.cpp $(srcdir)/rtableitem.cpp $(srcdir)/typeselectcell.cpp $(srcdir)/rkwatch.cpp $(srcdir)/rinterface.cpp $(srcdir)/rkdrag.cpp $(srcdir)/twintablemember.cpp $(srcdir)/twintable.cpp $(srcdir)/rkwarddoc.cpp $(srcdir)/rkward.cpp $(srcdir)/main.cpp rsettingsui.cpp rkwatch_ui.cpp view.cpp rkward_meta_unload.cpp  rinterface.moc.cpp rkradio.moc.cpp rkvarslot.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp
 	@echo 'creating rkward.all_cpp.cpp ...'; \
 	rm -f rkward.all_cpp.files rkward.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> rkward.all_cpp.final; \
-	for file in rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp rsettings.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp rkwarddoc.cpp rkward.cpp main.cpp rsettingsui.cpp rkwatch_ui.cpp view.cpp rkward_meta_unload.cpp  rinterface.moc.cpp rkradio.moc.cpp rkvarslot.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp; do \
+	for file in rktext.cpp rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp rsettings.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp rkwarddoc.cpp rkward.cpp main.cpp rsettingsui.cpp rkwatch_ui.cpp view.cpp rkward_meta_unload.cpp  rinterface.moc.cpp rkradio.moc.cpp rkvarslot.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp; do \
 	  echo "#include \"$$file\"" >> rkward.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> rkward.all_cpp.final; \
 	done; \
@@ -879,13 +882,14 @@ cvs-clean:
 kde-rpo-clean:
 	-rm -f *.rpo
 
-#>+ 19
+#>+ 20
 $(srcdir)/rkvarselector.cpp: rsettingsui.h rkwatch_ui.h view.h 
 $(srcdir)/rkvarslot.cpp: rsettingsui.h rkwatch_ui.h view.h 
 $(srcdir)/rinterface.cpp: rsettingsui.h rkwatch_ui.h view.h 
 $(srcdir)/rkwarddoc.cpp: rsettingsui.h rkwatch_ui.h view.h 
 $(srcdir)/rkradio.cpp: rsettingsui.h rkwatch_ui.h view.h 
 $(srcdir)/twintablemember.cpp: rsettingsui.h rkwatch_ui.h view.h 
+$(srcdir)/rktext.cpp: rsettingsui.h rkwatch_ui.h view.h 
 $(srcdir)/main.cpp: rsettingsui.h rkwatch_ui.h view.h 
 $(srcdir)/rkplugin.cpp: rsettingsui.h rkwatch_ui.h view.h 
 $(srcdir)/typeselectcell.cpp: rsettingsui.h rkwatch_ui.h view.h 
