@@ -48,6 +48,9 @@ public:
 /** Adds an additional receiver (i.e. an object/slot that will be notified, when
 	this command is completed) */
 	void addReceiver (QObject *receiver, const char *slot);
+/** Types of commands (potentially more to come), bitwise or-able,
+	although partially exclusive. */
+	enum CommandTypes {User=1, Plugin=2, App=4, Sync=8};
 signals:
 	void commandDone (RCommand *command);
 private:

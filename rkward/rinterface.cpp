@@ -94,9 +94,8 @@ void RInterface::gotROutput (KProcess *proc, char *buffer, int buflen) {
 			r_output = "";
 		}
 
-// TODO: remove line below, once no longer needed	
-		emit (receivedReply (r_output.left (pos)));
 		command_stack.first ()->finished (r_output.left (pos));
+		watch->addOutput (command_stack.first ());
 		command_stack.removeFirst ();
 		r_output = "";
 		command_running = false;
@@ -110,7 +109,7 @@ void RInterface::write (RCommand *command) {
 	command_write_buffer.append ("\nprint (\"" + end_tag + "\")\n");
 
 	writeStdin (command_write_buffer, command_write_buffer.length ());
-	emit (writingRequest (command->command ()));
+	watch->addInput (command);
 	qDebug ("ran command %d", command->id ());
 	busy_writing = true;
 	command_running = true;
@@ -122,7 +121,8 @@ void RInterface::doneWriting (KProcess *proc) {
 }
 
 void RInterface::Rdied (KProcess *proc) {
-	emit (receivedReply (r_output));
+	command_stack.first ()->_reply = r_output;
+	watch->addOutput (command_stack.first ());
 	command_running = false;
 	command_stack.clear ();
 	r_output = "";

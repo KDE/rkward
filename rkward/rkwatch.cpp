@@ -25,8 +25,6 @@
 #include <qfont.h>
 
 RKwatch::RKwatch(RInterface *parent) {
-    connect (parent, SIGNAL (receivedReply (QString)), this, SLOT (slotAddOutput (QString)));
-    connect (parent, SIGNAL (writingRequest (QString)), this, SLOT (slotAddInput (QString)));	
 	connect (submit, SIGNAL (clicked ()), this, SLOT (submitCommand ()));
 	connect (clear_commands, SIGNAL (clicked ()), this, SLOT (clearCommand ()));
 	r_inter = parent;
@@ -41,22 +39,31 @@ RKwatch::RKwatch(RInterface *parent) {
 RKwatch::~RKwatch(){
 }
 
-void RKwatch::slotAddInput (QString text) {
+void RKwatch::addInput (RCommand *command) {
+// TODO: make colors/styles configurable
+	if (command->type () & RCommand::User) {
+		watch->setColor (Qt::red);
+	} else if (command->type () & RCommand::Sync) {
+		watch->setColor (Qt::gray);
+	} else if (command->type () & RCommand::Plugin) {
+		watch->setColor (Qt::blue);
+	}
+
 	watch->append ("---------------------------\n");
 	watch->append ("Issueing command:\n");
 	watch->setItalic (true);
 
-	watch->append (text);
+	watch->append (command->command ());
 
 	watch->setItalic (false);
 }
 
-void RKwatch::slotAddOutput (QString text) {
+void RKwatch::addOutput (RCommand *command) {
 	watch->append ("---------------------------\n");
 	watch->append ("Got reply:");
     watch->setBold (true);
 
-	watch->append (text);
+	watch->append (command->reply ());
 
 	watch->setBold (false);	
 	watch->setColor (Qt::black);
@@ -67,8 +74,7 @@ void RKwatch::clearCommand () {
 }
 
 void RKwatch::submitCommand () {
-	watch->setColor (Qt::red);
-	r_inter->issueCommand (new RCommand (commands->text ()));
+	r_inter->issueCommand (new RCommand (commands->text (), RCommand::User));
 	commands->clear ();
 }
 

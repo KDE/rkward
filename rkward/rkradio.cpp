@@ -73,11 +73,11 @@ QString RKRadio::value () {
 	OptionsMap::Iterator it;
 	for (it = options.begin(); it != options.end(); ++it) {
 		if (it.key()->isChecked ()) {
-			return ("\"" + it.data () + "\"");
+			return (it.data ());
 		}
 	}
 
-	return "\"\"";
+	return "";
 }
 
 void RKRadio::buttonClicked (int id) {

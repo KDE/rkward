@@ -26,7 +26,16 @@
 class RKwatch;
 class RCommand;
 
-/** This class does the rather low-level interfacing to the R-processor.
+/** This class does the rather low-level interfacing to the R-processor. The
+	interface can be used by submitting new commands with issueCommand () (see
+	the RCommand-class). Your command will then be placed in a first in first
+	out stack of commands to be executed. If you specified a receiver/slot in the
+	constructor of the RCommand, you will be notified, when the command has
+	finished.
+
+	Note that since communication with R is asynchronous, there is no way to get
+	R-output within the same function, the request is submitted. You have to
+	provide a callback-slot, if you're interested in the output. (@see RCommand)
   *@author Thomas Friedrichsmeier
   */
 
@@ -40,8 +49,6 @@ public:
 	void issueCommand (RCommand *command);
 	bool commandRunning () { return command_running; };
 signals:
-	void receivedReply (QString result);
-	void writingRequest (QString request);
 /** Emitted, when synchronous commands are blocked (i.e. there is another command running) */
 //	void syncBlocked ();
 /** Emitted, when synchronous commands are allowed again */

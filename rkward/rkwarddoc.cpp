@@ -135,7 +135,7 @@ bool RKwardDoc::openDocument(const KURL& url, const char *format /*=0*/)
 
 	setURL (tmpfile);
 //	output_is = Loaded;
-	RCommand *command = new RCommand ("load (\"" + doc_url.path () + "\")", 0, "", this, SLOT (processROutput (RCommand *)));
+	RCommand *command = new RCommand ("load (\"" + doc_url.path () + "\")", RCommand::App, "", this, SLOT (processROutput (RCommand *)));
 	should_load_id = command->id ();
 	inter->issueCommand (command);
 
@@ -153,7 +153,7 @@ bool RKwardDoc::saveDocument(const KURL& url, const char *format /*=0*/)
 
 	syncToR ();
 
-	inter->issueCommand (new RCommand ("save.image (\"" + url.path () + "\")"));
+	inter->issueCommand (new RCommand ("save.image (\"" + url.path () + "\")", RCommand::App));
 
 	setURL (url);
   modified=false;
@@ -199,7 +199,7 @@ void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 	}
 	command.append (")");
 
-	inter->issueCommand (new RCommand (command));
+	inter->issueCommand (new RCommand (command, RCommand::Sync));
 
 	// now push the meta-table (point-reflected at bottom-left corner)
 	table = varview;
@@ -226,7 +226,7 @@ void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 	}
 	command.append (")");
 
-	inter->issueCommand (new RCommand (command));
+	inter->issueCommand (new RCommand (command, RCommand::Sync));
 }
 
 void RKwardDoc::pullTable () {
@@ -236,7 +236,7 @@ void RKwardDoc::pullTable () {
 	command.append ("print (\"" + command_separator + "\")\n");
 	command.append (tablename);
 //	output_is = WholeTables;
-	RCommand *rcommand = new RCommand (command, 0, "", this, SLOT (processROutput (RCommand *)));
+	RCommand *rcommand = new RCommand (command, RCommand::Sync, "", this, SLOT (processROutput (RCommand *)));
 	should_pull_id = rcommand->id ();
 	inter->issueCommand (rcommand);
 

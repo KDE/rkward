@@ -23,6 +23,7 @@
 #include <qstring.h>
 
 class RInterface;
+class RCommand;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -33,11 +34,11 @@ class RKwatch : public RKwatchUi  {
 public: 
 	RKwatch(RInterface *parent);
 	~RKwatch();
-public slots:
 /** Adds input to the watch-window (i.e. commands issued) */
-	void slotAddInput (QString text);
+	void addInput (RCommand *command);
 /** Adds output to the watch-window (i.e. replies received) */
-	void slotAddOutput (QString text);
+	void addOutput (RCommand *command);
+public slots:
 /** Clears commands-textedit */
 	void clearCommand ();
 /** Submits commands in commands-textedit */

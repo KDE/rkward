@@ -40,6 +40,6 @@ have to be translated somehow. -->
 into code -->
 
 	<code>
-		t.test ($x$, $y$, $hypothesis$)
+		t.test ($x$, $y$, "$hypothesis$")
 	</code>
 </document>

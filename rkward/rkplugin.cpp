@@ -210,7 +210,7 @@ RKPluginWidget *RKPlugin::buildWidget (const QDomElement &element) {
 
 void RKPlugin::ok () {
 	getApp ()->getDocument ()->syncToR ();
-	getApp ()->r_inter.issueCommand (new RCommand (codeDisplay->text ()));
+	getApp ()->r_inter.issueCommand (new RCommand (codeDisplay->text (), RCommand::Plugin));
 }
 
 void RKPlugin::cancel () {
