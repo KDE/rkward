@@ -19,6 +19,7 @@
 #include <qlayout.h>
 #include <qlistview.h>
 #include <qpushbutton.h>
+#include <qpopupmenu.h>
 
 #include <klocale.h>
 
@@ -46,6 +47,12 @@ RObjectBrowser::RObjectBrowser () : RKToggleWidget () {
 	vbox->addWidget (update_button);
 	
 	setCaption (i18n ("Objects in the R workspace"));
+
+	menu = new QPopupMenu (this);
+	menu->insertItem (i18n ("Edit"), this, SLOT (popupEdit ()), 0, Edit);
+	menu->insertItem (i18n ("View"), this, SLOT (popupView ()), 0, View);
+	menu->setItemEnabled (View, false);
+	menu->insertItem (i18n ("Delete"), this, SLOT (popupDelete ()), 0, Delete);
 }
 
 RObjectBrowser::~RObjectBrowser () {
@@ -54,7 +61,7 @@ RObjectBrowser::~RObjectBrowser () {
 void RObjectBrowser::initialize () {
 	connect (RKGlobals::rObjectList (), SIGNAL (updateComplete (bool)), this, SLOT (updateComplete (bool)));
 	connect (update_button, SIGNAL (clicked ()), this, SLOT (updateButtonClicked ()));
-	connect (list_view, SIGNAL (clicked (QListViewItem*)), this, SLOT (itemClicked (QListViewItem*)));
+	connect (list_view, SIGNAL (contextMenuRequested (QListViewItem*, const QPoint &, int)), this, SLOT (requestedContextMenu (QListViewItem*, const QPoint &, int)));
 }
 
 void RObjectBrowser::updateButtonClicked () {
@@ -100,8 +107,25 @@ void RObjectBrowser::updateComplete (bool changed) {
 	list_view->setEnabled (true);
 }
 
-void RObjectBrowser::itemClicked (QListViewItem *item) {
-	if (item) RKGlobals::editorManager ()->editObject (object_map[item]);
+void RObjectBrowser::popupEdit () {
+	if (menu_object) RKGlobals::editorManager ()->editObject (menu_object);
+}
+
+void RObjectBrowser::popupView () {
+}
+
+void RObjectBrowser::popupDelete () {
+	menu_object->remove ();
+}
+
+void RObjectBrowser::requestedContextMenu (QListViewItem *item, const QPoint &pos, int) {
+	if (item) {
+		RObject *object = object_map[item];
+		menu->setItemEnabled (Edit, RKGlobals::editorManager ()->canEditObject (object));
+		menu->setItemEnabled (Delete, !RKGlobals::editorManager ()->isObjectOpened (object));
+		menu_object = object;
+		menu->popup (pos);
+	}
 }
 
 #include "robjectbrowser.moc"

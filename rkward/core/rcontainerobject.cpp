@@ -222,7 +222,7 @@ RObject *RContainerObject::findChild (const QString &name) {
 	return (it.data ());
 }
 
-RObject *RContainerObject::createNewChild (const QString &name, bool container) {
+RObject *RContainerObject::createNewChild (const QString &name, bool container, bool data_frame) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (childmap.find (name) == childmap.end ());
 
@@ -230,14 +230,19 @@ RObject *RContainerObject::createNewChild (const QString &name, bool container) 
 	if (container) {
 		ret = new RContainerObject (this, name);
 		ret->type = Container;
+		if (data_frame) {
+			ret->type |= DataFrame | List | Array | Matrix;
+		}
 	} else {
 		ret = new RKVariable (this, name);
 		ret->type = Variable;
 	}
 	
-	addChild (ret, name);
+	childmap.insert (name, ret);
 	ret->setMetaModified ();
 	ret->setDataModified ();
+	
+	objectsAdded ();
 	
 	return ret;
 }
@@ -275,4 +280,26 @@ void RContainerObject::removeChild (RObject *object) {
 void RContainerObject::objectsRemoved () {
 	RK_TRACE (OBJECTS);
 	parent->objectsRemoved ();
+}
+
+void RContainerObject::objectsAdded () {
+	RK_TRACE (OBJECTS);
+	parent->objectsAdded ();
+}
+
+bool RContainerObject::isParentOf (RObject *object, bool recursive) {
+	RK_TRACE (OBJECTS);
+
+	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
+		RObject *child = it.data ();
+		if (child == object) {
+			return true;
+		} else if (recursive && child->isContainer ()) {
+			if (static_cast<RContainerObject *>(child)->isParentOf (object, true)) {
+				return true;
+			}
+		}
+	}
+	
+	return false;
 }

@@ -48,8 +48,11 @@ public:
 	RObject **children ();
 	
 	RObject *findChild (const QString &name);
+	bool isParentOf (RObject *object, bool recursive=false);
 	
-	RObject *createNewChild (const QString &name, bool container=false);
+	/** creates a new child. Right now only RKVariables (false, false), or data.frames (true, true), or unspecified containers (true, false) can be created.
+	API will likely change. */
+	RObject *createNewChild (const QString &name, bool container=false, bool data_frame=false);
 private:
 	friend class RObject;
 	void typeMismatch (RObject *child, QString childname);
@@ -61,6 +64,7 @@ protected:
 	virtual void renameChild (RObject *object, const QString &new_name);
 	virtual void removeChild (RObject *object);
 	virtual void objectsRemoved ();
+	virtual void objectsAdded ();
 
 	int num_classes;
 	QString *classname;

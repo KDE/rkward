@@ -19,18 +19,23 @@
 
 #include <qregexp.h>
 
+#include "../debug.h"
 
 LabelCell::LabelCell(TwinTableMember *table) : RTableItem (table) {
+	RK_TRACE (EDITOR);
 	valid = true;
 }
 
 LabelCell::~LabelCell(){
+	RK_TRACE (EDITOR);
 }
 
 QString LabelCell::rText () {
-	return ("\"" + text ().replace (QRegExp ("\""), "\\\"") + "\"");
+	RK_TRACE (EDITOR);
+	return (RObject::rQuote (text ()));
 }
 
 void LabelCell::checkValid () {
+	RK_TRACE (EDITOR);
 	// must stay, even if empty, in order to override RTableItem::checkValid ()
 }

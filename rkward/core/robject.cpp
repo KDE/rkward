@@ -14,6 +14,9 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+
+#include <qregexp.h>
+
 #include "robject.h"
 
 #include "rcontainerobject.h"
@@ -136,8 +139,8 @@ void RObject::writeMetaData (RCommandChain *chain, bool force) {
 	QString row_names;
 	int i=meta_map->size ();
 	for (MetaMap::iterator it = meta_map->begin (); it != meta_map->end (); ++it) {
-		row_names.append ("\"" + it.key () + "\"");
-		command_string.append (it.data ());
+		row_names.append (rQuote (it.key ()));
+		command_string.append (rQuote (it.data ()));
 		if (--i) {
 			row_names.append (", ");
 			command_string.append (", ");
@@ -214,5 +217,12 @@ RObject::VarType RObject::textToType (const QString &text) {
 	} else {
 		return Invalid;
 	}
+}
+
+//static
+QString RObject::rQuote (const QString &string) {
+	// TODO: this is not entirely correct, yet (let alone efficient)!
+	QString copy = string;
+	return ("\"" + copy.replace (QRegExp ("\""), "\\\"") + "\"");
 }
 

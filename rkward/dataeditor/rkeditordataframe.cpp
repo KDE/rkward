@@ -126,9 +126,9 @@ void RKEditorDataFrame::metaValueChanged (int row, int col) {
 	if (!getColObject (col)) return;
 	
 	if (row == LABEL_ROW) {
-		getColObject (col)->setLabel (varview->rText (row, col));
+		getColObject (col)->setLabel (varview->text (row, col));
 	} else if (row == NAME_ROW) {
-		getColObject (col)->rename (varview->rText (row, col));
+		getColObject (col)->rename (varview->text (row, col));
 	} else if (row == TYPE_ROW) {
 		static_cast<RKVariable *> (getColObject (col))->setVarType (static_cast<TypeSelectCell *> (varview->item (row, col))->type ());
 	}

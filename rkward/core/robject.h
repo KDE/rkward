@@ -79,6 +79,8 @@ public:
 	
 	static QString typeToText (VarType var_type);
 	static VarType textToType (const QString &text);
+	
+	static QString rQuote (const QString &string);
 protected:
 	friend class RContainerObject;
 	RContainerObject *parent;

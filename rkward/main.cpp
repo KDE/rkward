@@ -36,10 +36,11 @@ static KCmdLineOptions options[] =
 int main(int argc, char *argv[])
 {
 
-	KAboutData aboutData( "rkward", I18N_NOOP("RKward"),
+	KAboutData aboutData( "rkward", I18N_NOOP("RKWard"),
 		VERSION, description, KAboutData::License_GPL,
-		"(c) 2002, ", 0, 0, "");
-	aboutData.addAuthor("",0, "");
+		"(c) 2002, 2004", 0, 0, "");
+	aboutData.addAuthor ("Thomas Friedrichsmeier",0, "");
+	aboutData.setHomepage ("http://rkward.sf.net");
 	KCmdLineArgs::init( argc, argv, &aboutData );
 	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
@@ -51,20 +52,16 @@ int main(int argc, char *argv[])
   }
   else 
   {
-    RKwardApp *rkward = new RKwardApp();
-    rkward->show();
+    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();	
+	
+	KURL *open_url = 0;
+	if (args->count ()) {
+		open_url = new KURL (args->arg (0));
+	}
+	args->clear();
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-		
-		if (args->count())
-		{
-        rkward->openDocumentFile(args->arg(0));
-		}
-		else
-		{
-		  rkward->openDocumentFile();
-		}
-		args->clear();
+	RKwardApp *rkward = new RKwardApp(open_url);
+	rkward->show();
   }
 
   return app.exec();

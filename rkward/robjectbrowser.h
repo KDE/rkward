@@ -24,6 +24,7 @@
 class QListView;
 class QListViewItem;
 class QPushButton;
+class QPopupMenu;
 class RObject;
 
 /**
@@ -38,10 +39,17 @@ public:
     RObjectBrowser ();
 
     ~RObjectBrowser ();
+	
+	enum PopupItems { Edit=1, View=2, Delete=3 };
+	
 public slots:
 	void updateButtonClicked ();
 	void updateComplete (bool changed);
-	void itemClicked (QListViewItem *item);
+	void requestedContextMenu (QListViewItem *item, const QPoint &pos, int col);
+	
+	void popupEdit ();
+	void popupView ();
+	void popupDelete ();
 private:
 	friend class RKwardApp;
 	void initialize ();
@@ -52,6 +60,10 @@ private:
 	QMap<QListViewItem *, RObject *> object_map;
 	
 	void addObject (QListViewItem *parent, RObject *object);
+	
+	QPopupMenu *menu;
+	/// the object the menu was invoked on
+	RObject *menu_object;
 };
 
 #endif

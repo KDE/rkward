@@ -36,6 +36,7 @@
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kstdaction.h>
+#include <kinputdialog.h>
 
 // application specific includes
 #include "rkward.h"
@@ -60,7 +61,7 @@
 #define ID_STATUS_MSG 1
 #define ID_R_STATUS_MSG 2
 
-RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
+RKwardApp::RKwardApp(KURL *load_url, QWidget* , const char* name):KMainWindow(0, name)
 {
 	RKGlobals::app = this;
 	RKGlobals::rinter = 0;
@@ -90,6 +91,8 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
   initView();
   readOptions();
 
+	initial_url = load_url;
+  
 	startup_timer = new QTimer (this);
 	startup_timer->start (50);
 	connect (startup_timer, SIGNAL (timeout ()), this, SLOT (doPostInit ()));
@@ -125,6 +128,16 @@ void RKwardApp::doPostInit () {
 	initPlugins ();
 	// just to initialize the window-actions accordingly
 	slotToggleWindowClosed ();
+	
+	if (initial_url) {
+		openWorkspace (*initial_url);
+		delete initial_url;
+	} else {
+// TODO: replace with a friendly startup dialog
+		RObject *object = RKGlobals::rObjectList ()->createNewChild ("my.data", true, true);
+		RKEditor *editor = RKGlobals::editorManager ()->editObject (object);
+		editor->syncToR (0);
+	}
 }
 
 void RKwardApp::initPlugins () {
@@ -219,8 +232,6 @@ void RKwardApp::slotConfigure () {
 
 void RKwardApp::initActions()
 {
-  fileNewWindow = new KAction(i18n("New &Window"), 0, 0, this, SLOT(slotFileNewWindow()), actionCollection(),"file_new_window");
-	fileNewWindow->setEnabled (false);
   fileOpen = KStdAction::open(this, SLOT(slotFileOpen()), actionCollection());
   fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const KURL&)), actionCollection());
   fileSave = KStdAction::save(this, SLOT(slotFileSave()), actionCollection());
@@ -230,6 +241,8 @@ void RKwardApp::initActions()
   filePrint = KStdAction::print(this, SLOT(slotFilePrint()), actionCollection());
 	filePrint->setEnabled (false);
   fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection());
+	dataClose = new KAction (i18n ("Close current editor"), 0, 0, this, SLOT (slotDataClose ()), actionCollection (), "data_close_editor");
+	dataNewDataFrame = new KAction (i18n ("data.frame"), 0, 0, this, SLOT (slotDataNewDataFrame ()), actionCollection (), "data_new_data_frame");
   editCut = KStdAction::cut(this, SLOT(slotEditCut()), actionCollection());
   editCopy = KStdAction::copy(this, SLOT(slotEditCopy()), actionCollection());
   editPaste = KStdAction::paste(this, SLOT(slotEditPaste()), actionCollection());
@@ -242,7 +255,6 @@ void RKwardApp::initActions()
 	showRObjectBrowser = new KToggleAction (i18n ("Show RObjectBrowser-Window"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
 	configure = new KAction (i18n ("Configure Settings"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 
-  fileNewWindow->setStatusText(i18n("Opens a new application window"));
   fileOpen->setStatusText(i18n("Opens an existing document"));
   fileOpenRecent->setStatusText(i18n("Opens a recently used file"));
   fileSave->setStatusText(i18n("Saves the actual document"));
@@ -250,6 +262,8 @@ void RKwardApp::initActions()
   fileClose->setStatusText(i18n("Closes the actual document"));
   filePrint ->setStatusText(i18n("Prints out the actual document"));
   fileQuit->setStatusText(i18n("Quits the application"));
+	dataClose->setStatusText (i18n ("Closes the currently active editor window"));
+	dataNewDataFrame->setStatusText (i18n ("Creates a new empty data.frame and opens it for editing"));
   editCut->setStatusText(i18n("Cuts the selected section and puts it to the clipboard"));
   editCopy->setStatusText(i18n("Copies the selected section to the clipboard"));
   editPaste->setStatusText(i18n("Pastes the clipboard contents to actual position"));
@@ -286,13 +300,10 @@ void RKwardApp::initView()
 
 }
 
-void RKwardApp::openDocumentFile(const KURL& url)
-{
-  slotStatusMsg(i18n("Opening file..."));
-
-//  doc->openDocument( url);
-  fileOpenRecent->addURL( url );
-  slotStatusMsg(i18n("Ready."));
+void RKwardApp::openWorkspace (const KURL &url) {
+	RKGlobals::rObjectList ()->loadWorkspace(url);
+	setCaption(url.fileName(), false);
+	fileOpenRecent->addURL( url );
 }
 
 
@@ -408,16 +419,6 @@ bool RKwardApp::queryExit()
 // SLOT IMPLEMENTATION
 /////////////////////////////////////////////////////////////////////
 
-void RKwardApp::slotFileNewWindow()
-{
-  slotStatusMsg(i18n("Opening a new application window..."));
-	
-  RKwardApp *new_window= new RKwardApp();
-  new_window->show();
-
-  slotStatusMsg(i18n("Ready."));
-}
-
 /*void RKwardApp::slotFileNew()
 {
   slotStatusMsg(i18n("Creating new workspace..."));
@@ -452,9 +453,7 @@ void RKwardApp::slotFileOpen()
         i18n("*|All files"), this, i18n("Open File..."));
     if(!url.isEmpty())
     {
-      RKGlobals::rObjectList ()->loadWorkspace(url);
-      setCaption(url.fileName(), false);
-      fileOpenRecent->addURL( url );
+		openWorkspace (url);
     }
   }
   slotStatusMsg(i18n("Ready."));
@@ -471,8 +470,7 @@ void RKwardApp::slotFileOpenRecent(const KURL& url)
   }
   else
   {
-    RKGlobals::rObjectList ()->loadWorkspace (url);
-    setCaption(url.fileName(), false);
+		openWorkspace (url);
   }
 
   slotStatusMsg(i18n("Ready."));
@@ -480,17 +478,12 @@ void RKwardApp::slotFileOpenRecent(const KURL& url)
 
 void RKwardApp::slotFileSave()
 {
-	slotFileSaveAs ();
-/*	if (doc->URL ().fileName() == i18n("Untitled")) {
+	if (RKGlobals::rObjectList ()->getWorkspaceURL ().fileName() == i18n("Untitled")) {
 		slotFileSaveAs ();
 		return;
 	}
 
-  slotStatusMsg(i18n("Saving file..."));
-	
-  doc->saveDocument(doc->URL());
-
-  slotStatusMsg(i18n("Ready.")); */
+	RKGlobals::rObjectList ()->saveWorkspace (RKGlobals::rObjectList ()->getWorkspaceURL ());
 }
 
 void RKwardApp::slotFileSaveAs()
@@ -548,6 +541,22 @@ void RKwardApp::slotFileQuit()
 	break;
     }
   }	
+}
+
+void RKwardApp::slotDataClose () {
+	RKGlobals::editorManager ()->closeEditor (RKGlobals::editorManager ()->currentEditor ());
+}
+
+void RKwardApp::slotDataNewDataFrame () {
+	bool ok;
+
+	QString name = KInputDialog::getText (i18n ("Create new data.frame"), i18n ("Enter name for the new object (make it a valid one - no checks so far)"), "my.data", &ok, this);
+	
+	if (ok) {
+		RObject *object = RKGlobals::rObjectList ()->createNewChild (name, true, true);
+		RKEditor *editor = RKGlobals::editorManager ()->editObject (object);
+		editor->syncToR (0);
+	}
 }
 
 void RKwardApp::slotEditCut()

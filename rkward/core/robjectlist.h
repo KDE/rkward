@@ -58,9 +58,13 @@ public:
 	void childUpdateComplete ();
 
 	void setChildModified ();
+	
+	RObject *findObject (const QString &full_name);
 
 	void saveWorkspace (const KURL& url);
-	void loadWorkspace (const KURL& url);
+	void loadWorkspace (const KURL& url, bool merge=false);
+	
+	KURL getWorkspaceURL () { return current_url; };
 public slots:
 	void timeout ();
 signals:
@@ -74,6 +78,8 @@ protected:
 	void removeChild (RObject *object);
 /// reimplemented from RContainerObject to emit a change signal
 	void objectsRemoved ();
+/// reimplemented from RContainerObject to emit a change signal
+	void objectsAdded ();
 private:
 	QTimer *update_timer;
 	
@@ -88,6 +94,8 @@ private:
 
 	/// needed if file to be loaded is remote
 	QString tmpfile;
+	
+	KURL current_url;
 };
 
 #endif

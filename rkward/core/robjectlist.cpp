@@ -21,6 +21,7 @@
 
 #define UPDATE_LIST_COMMAND 1
 #define CHILD_GET_TYPE_COMMAND 2
+#define LOAD_COMPLETE_COMMAND 3
 
 #define WORKSPACE_LOAD_COMMAND 10
 
@@ -75,10 +76,10 @@ void RObjectList::rCommandDone (RCommand *command) {
 		}
 		for (int i = 0; i < command->stringVectorLength (); ++i) {
 			QString cname = command->getStringVector ()[i];
-			if (cname == (".rk.meta")) {
+			/*if (cname == (".rk.meta")) {
 				childUpdateComplete ();
 				continue;
-			}
+			}*/
 			if (childmap.find (cname) != childmap.end ()) {
 				childmap[cname]->updateFromR ();
 			} else {
@@ -111,6 +112,8 @@ void RObjectList::rCommandDone (RCommand *command) {
 		
 	} else if (command->getFlags () == WORKSPACE_LOAD_COMMAND) {
 		KIO::NetAccess::removeTempFile (tmpfile);
+	} else if (command->getFlags () == LOAD_COMPLETE_COMMAND) {
+		RKGlobals::editorManager ()->restoreEditors ();
 	}
 	
 	// TODO: signal change
@@ -168,13 +171,25 @@ void RObjectList::saveWorkspace (const KURL& url) {
 	RKGlobals::rInterface ()->closeChain (chain);
 }
 
-void RObjectList::loadWorkspace (const KURL& url) {
+void RObjectList::loadWorkspace (const KURL& url, bool merge) {
 	RK_TRACE (OBJECTS);
 	KIO::NetAccess::download (url, tmpfile, RKGlobals::rkApp ());
 	
-	RCommand *command = new RCommand ("load (\"" + url.path () + "\")", RCommand::App, "", this, WORKSPACE_LOAD_COMMAND);
+	RCommand *command;
+	
+	if (!merge) {
+		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App);
+		RKGlobals::rInterface ()->issueCommand (command);
+		current_url = url;
+	}
+
+	command = new RCommand ("load (\"" + url.path () + "\")", RCommand::App, "", this, WORKSPACE_LOAD_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command);
 	updateFromR ();
+	
+	// since the update is done in the update chain, this command is guaranteed to run after the update is complete
+	command = new RCommand ("", RCommand::App | RCommand::EmptyCommand, "", this, LOAD_COMPLETE_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command);
 }
 
 void RObjectList::timeout () {
@@ -220,11 +235,51 @@ void RObjectList::removeChild (RObject *object) {
 	
 	childmap.remove (it);
 	delete object;
+	
+	objectsRemoved ();
 }
 
 void RObjectList::objectsRemoved () {
 	RK_TRACE (OBJECTS);
 	emit (updateComplete (true));
+}
+
+void RObjectList::objectsAdded () {
+	RK_TRACE (OBJECTS);
+	emit (updateComplete (true));
+}
+
+RObject *RObjectList::findObject (const QString &full_name) {
+	RK_TRACE (OBJECTS);
+	
+	// yeah, ok, this could be made more efficient relatively easily ...
+	QString canonified = full_name;
+	canonified = canonified.replace ("[\"", "$").replace ('[', "").replace ("\"]", "").replace (']', "");
+	
+	QStringList list = QStringList::split ('$', canonified);
+	RContainerObject *cobject = this;
+	RObject *object = 0;
+	RObjectMap::iterator oit;
+	for (QStringList::iterator it = list.begin (); it != list.end ();) {
+		oit = cobject->childmap.find (*it);
+		if (oit == cobject->childmap.end ()) {
+			return 0;
+		}
+		object = oit.data ();
+		++it;
+		if (object->isContainer ()) {
+			cobject = static_cast<RContainerObject *> (object);
+	// found a non-container-object, although path is not finished
+		} else {
+			if (it != list.end ()) {
+				object = 0;
+				// end loop
+				it = list.end ();
+			}
+		}
+	}
+	
+	return object;
 }
 
 #include "robjectlist.moc"

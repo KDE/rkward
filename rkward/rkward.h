@@ -65,17 +65,15 @@ class RKwardApp : public KMainWindow
   public:
     /** construtor of RKwardApp, calls all init functions to create the application.
      */
-    RKwardApp(QWidget* parent=0, const char* name=0);
+    RKwardApp(KURL *load_url=0, QWidget* parent=0, const char* name=0);
     ~RKwardApp();
-    /** opens a file specified by commandline option
-     */
-    void openDocumentFile(const KURL& url=0);
 
 	void startR ();
 	
 	void newOutput ();
 
   protected:
+	void openWorkspace (const KURL &url);
     /** save general Options like all bar positions and status as well as the geometry and the recent file list to the configuration
      * file
      */ 	
@@ -117,8 +115,6 @@ class RKwardApp : public KMainWindow
     virtual void readProperties(KConfig *_cfg);
 
   public slots:
-    /** open a new application window by creating a new instance of RKwardApp */
-    void slotFileNewWindow();
     /** open a file and load it into the document*/
     void slotFileOpen();
     /** opens a file from the recent files menu */
@@ -135,6 +131,10 @@ class RKwardApp : public KMainWindow
      * If queryClose() returns false because the user canceled the saveModified() dialog, the closing breaks.
      */
     void slotFileQuit();
+	/** closes the current editor */
+	void slotDataClose ();
+	/** creates a new (empty) data.frame */
+	void slotDataNewDataFrame ();
     /** put the marked text/object into the clipboard and remove
      *	it from the document
      */
@@ -188,7 +188,6 @@ class RKwardApp : public KMainWindow
     RKwardDoc *doc;
 
     // KAction pointers to enable/disable actions
-    KAction* fileNewWindow;
     KAction* fileOpen;
     KRecentFilesAction* fileOpenRecent;
     KAction* fileSave;
@@ -196,7 +195,9 @@ class RKwardApp : public KMainWindow
     KAction* fileClose;
     KAction* filePrint;
     KAction* fileQuit;
-    KAction* editCut;
+	KAction* dataClose;
+	KAction* dataNewDataFrame;
+	KAction* editCut;
     KAction* editCopy;
     KAction* editPaste;
     KAction* editPasteToSelection;
@@ -228,6 +229,8 @@ class RKwardApp : public KMainWindow
 	
 	RKOutputWindow *output;
 	RObjectBrowser *object_browser;
+	
+	KURL *initial_url;
 	
 	friend class RInterface;
 	void setRStatus (bool busy);

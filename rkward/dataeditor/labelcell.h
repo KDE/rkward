@@ -28,8 +28,8 @@ class LabelCell : public RTableItem  {
 public: 
 	LabelCell(TwinTableMember *table);
 	~LabelCell();
-protected:
 	QString rText ();
+protected:
 	void checkValid ();
 };
 
