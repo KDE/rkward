@@ -47,8 +47,6 @@ public slots:
 	void interruptCommand ();
 /** Submits commands in commands-textedit */
 	void submitCommand ();
-/** Submits selection in commands-textedit */
-	void submitSelectedCommand ();
 /** configures the watch-window */
 	void configureWatch ();
 /** configures the editor-window */

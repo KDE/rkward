@@ -37,10 +37,21 @@
 #include <kstandarddirs.h>
 #include <kstdaction.h>
 #include <kinputdialog.h>
+#include <kdockwidget.h>
+
+// include files for the kate part. Some may not be useful
+#include <ktexteditor/configinterface.h>
+#include <ktexteditor/sessionconfiginterface.h>
+#include <ktexteditor/viewcursorinterface.h>
+#include <ktexteditor/printinterface.h>
+#include <ktexteditor/encodinginterface.h>
+#include <ktexteditor/editorchooser.h>
+#include <ktexteditor/popupmenuinterface.h>
 
 // application specific includes
 #include "rkward.h"
 #include "rkeditormanager.h"
+#include "rkdocmanager.h"
 #include "core/rkmodificationtracker.h"
 #include "dataeditor/rkeditor.h"
 #include "dataeditor/rkdrag.h"
@@ -68,7 +79,9 @@
 #define ID_STATUS_MSG 1
 #define ID_R_STATUS_MSG 2
 
-RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMainWindow (0, name) {
+
+
+RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm (0, name, KMdi::IDEAlMode) {
 	RK_TRACE (APP);
 	RKGlobals::app = this;
 	RKGlobals::rinter = 0;
@@ -92,9 +105,17 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMainWindow
   editCopy->setEnabled(false);
   editPaste->setEnabled(false); */
 
-  
-	RKGlobals::manager = new RKEditorManager (this);
-	setCentralWidget (RKGlobals::editorManager ());
+
+	
+	RKGlobals::manager = new RKEditorManager ();
+	KMdiChildView * editorManagerView = createWrapper(RKGlobals::editorManager (), i18n( "Object Editor"), i18n( "R Object Editor"));
+	addWindow( editorManagerView );
+	
+	
+
+	
+	
+	
 	connect (RKGlobals::editorManager (), SIGNAL (editorClosed ()), this, SLOT (slotEditorsChanged ()));
 	connect (RKGlobals::editorManager (), SIGNAL (editorOpened ()), this, SLOT (slotEditorsChanged ()));
 	RKGlobals::mtracker = new RKModificationTracker (this);
@@ -123,12 +144,12 @@ void RKwardApp::doPostInit () {
 	object_browser = new RObjectBrowser ();
 	
 	output = new RKOutputWindow (0);
-	output->showMaximized ();
-	output->hide ();
+	/*output->showMaximized ();
+	output->hide ();*/
 
-    QString dummy = "Before you start bashing at it: Please note that this is merely a technology preview release. You might acutally be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments welcome.";
+    QString dummy = "Before you start bashing at it: Please note that this is merely a technology preview release. You might acutally be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments are welcome.";
 	KMessageBox::information (this, dummy, "Before you complain...", "state_of_rkward");
-
+	
 	startR ();
 	menu_list = new RKMenuList (menuBar ());
 	initPlugins ();
@@ -146,7 +167,7 @@ void RKwardApp::doPostInit () {
 		} else if (result->result == StartupDialog::ChoseFile) {
 			slotFileOpen ();
 		} else if (result->result == StartupDialog::EmptyTable) {
-			RObject *object = RKGlobals::rObjectList ()->createNewChild ("my.data", 0, true, true);
+			RObject *object = RKGlobals::rObjectList ()->createNewChild (i18n ("my.data"), 0, true, true);
 			RKGlobals::editorManager ()->editObject (object, true);
 		}
 		delete result;
@@ -154,7 +175,19 @@ void RKwardApp::doPostInit () {
 	
 	show ();
 	
-	object_browser->show ();
+	//It's necessary to give a different name to all tool windows, or they won't be properly displayed
+	object_browser->setName("object browser"); 
+	object_browser->setIcon(SmallIcon("view_tree"));
+	addToolWindow(object_browser,KDockWidget::DockLeft, getMainDockWidget(), 30 , i18n ("This is a list of the objects present in the R workspace.") , i18n ("Object browser"));
+	
+	RKGlobals::rInterface ()->watch->setName("R console");
+	RKGlobals::rInterface ()->watch->setIcon(SmallIcon("konsole"));
+	addToolWindow(RKGlobals::rInterface ()->watch,KDockWidget::DockBottom, getMainDockWidget(), 10);
+	
+	output->setIcon(SmallIcon("text_block"));
+	output->setName("output"); 
+	addToolWindow(output,KDockWidget::DockBottom, getMainDockWidget(), 10);
+	
 	
 	// just to initialize the window-actions according to whether they're shown on startup or not
 	slotToggleWindowClosed ();
@@ -307,10 +340,11 @@ void RKwardApp::initActions()
   viewStatusBar->setStatusText(i18n("Enables/disables the statusbar"));
   
   // use the absolute path to your rkwardui.rc file for testing purpose in createGUI();
-  createGUI("rkwardui.rc");
+  setXMLFile( "rkwardui.rc" );
+  createShellGUI ( true );
 
 // is there a better way to change the name of the "File" menu?
-	menuBar ()->changeItem (menuBar ()->idAt (0), i18n ("Workspace"));
+	menuBar ()->changeItem (menuBar ()->idAt (0), i18n ("&Workspace"));
 }
 
 

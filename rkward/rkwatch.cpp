@@ -55,23 +55,19 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	bottom_hbox->addWidget (commands);
 	
 	// add run & reset buttons
-	QVBoxLayout *button_vbox = new QVBoxLayout (0, 0, 6);
-	bottom_hbox->addLayout (button_vbox);
+	QHBoxLayout *button_hbox = new QHBoxLayout (0, 0, 6);
+	bottom_hbox->addLayout (button_hbox);
 	
 	submit = new QPushButton(i18n ("&Run"), layout_widget);
 	connect (submit, SIGNAL (clicked ()), this, SLOT (submitCommand ()));
-	button_vbox->addWidget (submit);
+	button_hbox->addWidget (submit);
 	
-	submit_selected = new QPushButton(i18n ("Run &selection"), layout_widget);
-	connect (submit_selected, SIGNAL (clicked ()), this, SLOT (submitSelectedCommand ()));
-	button_vbox->addWidget (submit_selected);
+
 	
-	button_vbox->addStretch ();
-	
-	interrupt_command = new QPushButton (i18n ("Interrupt command"), layout_widget);
+	interrupt_command = new QPushButton (i18n ("&Interrupt"), layout_widget);
 	connect (interrupt_command, SIGNAL (clicked ()), this, SLOT (interruptCommand ()));
 	interrupt_command->setEnabled (false);
-	button_vbox->addWidget (interrupt_command);
+	button_hbox->addWidget (interrupt_command);
 
 	// construct menu-bar
 	KMenuBar *menu = new KMenuBar (this);
@@ -203,20 +199,16 @@ void RKwatch::interruptCommand () {
 void RKwatch::submitCommand () {
 	RK_TRACE (APP);
 	RKGlobals::editorManager ()->flushAll ();
-	r_inter->issueCommand (user_command = new RCommand (commands->text (), RCommand::User));
-	interrupt_command->setEnabled (true);
+	if (! commands->text ().isEmpty()){
+		r_inter->issueCommand (user_command = new RCommand (commands->text (), RCommand::User));
+		interrupt_command->setEnabled (true);
+	}
 	
+	commands->setText ("");
 	commands->setFocus ();
 }
 
-void RKwatch::submitSelectedCommand () {
-	RK_TRACE (APP);
-	RKGlobals::editorManager ()->flushAll ();
-	r_inter->issueCommand (user_command = new RCommand (commands->getSelection (), RCommand::User));
-	interrupt_command->setEnabled (true);
-	
-	commands->setFocus ();
-}
+
 
 void RKwatch::configureWatch () {
 	RK_TRACE (APP);
