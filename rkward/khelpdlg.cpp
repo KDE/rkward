@@ -23,11 +23,13 @@
 #include <qlistview.h>
 
 #include "rbackend/rinterface.h"
+#include "rbackend/rcommandreceiver.h"
 #include "debug.h"
 #include "rkglobals.h"
 #include "rkward.h"
 
 #include "khelpdlg.h"
+#include <kmessagebox.h>
 
 #define GET_HELP_URL 1
 #define HELP_SEARCH 2
@@ -44,6 +46,8 @@ KHelpDlg::KHelpDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
 	resultsList->addColumn (i18n ("Title"));
 	resultsList->addColumn (i18n ("Package"));
 	packagesList->insertItem (i18n("All"));
+	
+	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_INSTALLED_PACKAGES, chain);
 }
 
 KHelpDlg::~KHelpDlg()
@@ -52,6 +56,10 @@ KHelpDlg::~KHelpDlg()
 /*$SPECIALIZATION$*/
 void KHelpDlg::slotFindButtonClicked()
 {
+	if (field->currentText().isEmpty()) {
+		return;
+	}
+
 	QString agrep = "FALSE";
 	if(fuzzyCheckBox->isChecked ()==TRUE){
 		agrep="NULL";
@@ -79,7 +87,7 @@ void KHelpDlg::slotFindButtonClicked()
 	s.append(", package=");
 	s.append(package);
 	s.append(")");
-
+	
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, HELP_SEARCH, chain);
 	
 	field->insertItem(field->currentText());
@@ -87,6 +95,13 @@ void KHelpDlg::slotFindButtonClicked()
 
 void KHelpDlg::slotResultsListDblClicked( QListViewItem * item, const QPoint &, int )
 {
+	if (item == NULL) {
+		return;
+	}
+	if (item->text(0).isEmpty()) {
+		return;
+	}
+	
 	chain=0;
 	QString s="help(\"";
 	s.append(item->text(0));
@@ -99,7 +114,7 @@ void KHelpDlg::slotResultsListDblClicked( QListViewItem * item, const QPoint &, 
 
 void KHelpDlg::slotPackageListActivated()
 {
-	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_INSTALLED_PACKAGES, chain);
+
 }
 
 
@@ -121,7 +136,6 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 			return;
 		}
 	} else if (command->getFlags () == GET_INSTALLED_PACKAGES) {
-		// FIXME : the following causes RKWard to crash (?).
 		RK_ASSERT ((command->stringVectorLength () % 4) == 0);
 		int count = (command->stringVectorLength () / 4);
 		for (int i=0; i < count; ++i) {

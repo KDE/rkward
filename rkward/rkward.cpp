@@ -159,8 +159,8 @@ void RKwardApp::doPostInit () {
 	/*output->showMaximized ();
 	output->hide ();*/
 
-    QString dummy = "Before you start bashing at it: please note that this is merely a technology preview release. You might acutally be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments are welcome.";
-	KMessageBox::information (this, dummy, "Before you complain...", "state_of_rkward");
+    QString dummy = i18n("Before you start bashing at it: please note that this is merely a technology preview release. You might acutally be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments are welcome.");
+	KMessageBox::information (this, dummy, i18n("Before you complain..."), "state_of_rkward");
 	
 	startR ();
 	menu_list = new RKMenuList (menuBar ());
@@ -201,9 +201,9 @@ void RKwardApp::doPostInit () {
 	addToolWindow(output,KDockWidget::DockBottom, getMainDockWidget(), 10);
 	
 	
-	helpDlg = new KHelpDlg(0);
+	/*helpDlg = new KHelpDlg(0);
 	helpDlg->setIcon(SmallIcon("help"));
-	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);
+	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);*/
 	
 	
 	// just to initialize the window-actions according to whether they're shown on startup or not
@@ -577,6 +577,7 @@ void RKwardApp::slotNewDataFrame () {
 		RObject *object = RKGlobals::rObjectList ()->createNewChild (valid, 0, true, true);
 		RKGlobals::editorManager ()->editObject (object, true);
 	}
+	
 }
 
 void RKwardApp::fileOpenNoSave (const KURL &url) {
