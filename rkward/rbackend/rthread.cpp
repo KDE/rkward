@@ -89,6 +89,7 @@ void RThread::run () {
 	embeddedR = new REmbed ();
 	locked = true;
 	int err;
+	bool previously_idle = false;
 	if ((err = embeddedR->initialize ())) {
 		qApp->postEvent (inter, new QCustomEvent (RSTARTUP_ERROR_EVENT + err));
 	}
@@ -103,7 +104,10 @@ void RThread::run () {
 		mutex.lock ();
 		
 		if (current_chain->commands.isEmpty () && (!current_chain->closed)) {
-			qApp->postEvent (inter, new QCustomEvent (RBUSY_EVENT));
+			if (previously_idle) {
+				qApp->postEvent (inter, new QCustomEvent (RBUSY_EVENT));
+				previously_idle = false;
+			}
 		}
 	
 		// while commands are in queue, don't wait
@@ -136,7 +140,10 @@ void RThread::run () {
 		
 		// if no commands are in queue, sleep for a while
 		if (current_chain->closed) {
-			qApp->postEvent (inter, new QCustomEvent (RIDLE_EVENT));
+			if (!previously_idle) {
+				qApp->postEvent (inter, new QCustomEvent (RIDLE_EVENT));
+				previously_idle = true;
+			}
 		}
 		
 		mutex.unlock ();
