@@ -1040,8 +1040,7 @@ void RKwardApp::slotRunSelection() {
 	if(((RKCommandEditorWindow*) activeWindow())->getSelection().isEmpty() || ((RKCommandEditorWindow*) activeWindow())->getSelection().isNull())
 		return;
 
-// 	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getSelection(), RCommand::User, ""));
-	konsole -> sendInput(((RKCommandEditorWindow*) activeWindow())->getSelection()  ) ;
+	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getSelection(), RCommand::User, ""));
 }
 
 
@@ -1052,8 +1051,7 @@ void RKwardApp::slotRunAll() {
 	if(((RKCommandEditorWindow*) activeWindow())->getText().isEmpty() || ((RKCommandEditorWindow*) activeWindow())->getText().isNull())
 		return;
 		
-// 	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getText(), RCommand::User, ""));
-	konsole->sendInput(((RKCommandEditorWindow*) activeWindow())->getText() + "\n " ) ;
+	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getText(), RCommand::User, ""));
 }
 
 
