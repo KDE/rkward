@@ -1,7 +1,10 @@
+--- Version 0.2.8 - Sep-09-2004
+- override for require () to show install-packages dialog, if required package is not installed.
+- Dialog to load/unload packages, update and install packages from CRAN
+- added capability to cancel commands (not properly integrated in the GUI, yet)
 - basic name checking for objects added or renamed by the user
 - remove uneccessary blank are below menu in R-Console window
 - fix R process busy/idle display
-- added dialog to load/detach installed packages
 - show error message if loading workspace fails
 - do not ask for save, if workspace is empty
 - results of user-commands get printed if not invisible (i.e. just like in a regular R session)

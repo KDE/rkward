@@ -97,14 +97,13 @@ void RInterface::customEvent (QCustomEvent *e) {
 		watch->addInput (static_cast <RCommand *> (e->data ()));
 	} else if (e->type () == RCOMMAND_OUT_EVENT) {
 		RCommand *command = static_cast <RCommand *> (e->data ());
-		RK_DO (qDebug ("command out: %d, id: %d", command, command->id ()), RBACKEND, DL_DEBUG);
 		if (command->status & RCommand::Canceled) {
 			command->status |= RCommand::HasError;
 			command->_error.append ("--- interrupted ---");
 			if (running_command_canceled) {
-				RK_DO (qDebug ("finished cancelling running command at address %d, id: %d", command, command->id ()), RBACKEND, DL_DEBUG);
 				RK_ASSERT (command == running_command_canceled);
 				running_command_canceled = 0;
+				R_interrupts_pending = 0;
 				r_thread->unlock ();
 			}
 		}

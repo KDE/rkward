@@ -40,7 +40,7 @@ void REmbedInternal::shutdown () {
 }
 
 char **extractStrings (SEXP from_exp, int *count) {
-	char **strings;
+	char **strings = 0;
 	
 	SEXP strexp;
 	PROTECT (strexp = coerceVector (from_exp, STRSXP));
@@ -172,7 +172,7 @@ void REmbedInternal::runCommandInternal (const char *command, bool *error, bool 
 
 char **REmbedInternal::getCommandAsStringVector (const char *command, int *count, bool *error) {	
 	SEXP exp;
-	char **strings;
+	char **strings = 0;
 	
 	PROTECT (exp = runCommandInternalBase (command, error));
 	
@@ -191,7 +191,7 @@ char **REmbedInternal::getCommandAsStringVector (const char *command, int *count
 
 double *REmbedInternal::getCommandAsRealVector (const char *command, int *count, bool *error) {
 	SEXP exp;
-	double *reals;
+	double *reals = 0;
 	
 	PROTECT (exp = runCommandInternalBase (command, error));
 	
@@ -217,7 +217,7 @@ double *REmbedInternal::getCommandAsRealVector (const char *command, int *count,
 
 int *REmbedInternal::getCommandAsIntVector (const char *command, int *count, bool *error) {
 	SEXP exp;
-	int *integers;
+	int *integers = 0;
 	
 	PROTECT (exp = runCommandInternalBase (command, error));
 	
