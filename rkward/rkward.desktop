@@ -1,12 +1,13 @@
 # KDE Config File  
 [Desktop Entry]
 Encoding=UTF-8
-Type=Application
-Exec=rkward -caption "%c" %i %m  
+Name=RKWard
+Comment=GUI for the R-project
+Comment[pl]=Graficzny interfejs dla projektu R
 Icon=rkward.png
+Exec=rkward -caption "%c" %i %m  
+Terminal=false
+Type=Application
 DocPath=rkward/index.html
-Comment=
-Comment[de]=
-Terminal=0
-Name=RKward
-Name[de]=RKward
+Categories=Education;Science;Math;
+# vi: encoding=utf-8
