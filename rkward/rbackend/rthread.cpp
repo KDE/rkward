@@ -19,9 +19,12 @@
 #include "rembed.h"
 #include "rinterface.h"
 
+#include "../debug.h"
+
 #include <qapplication.h>
 
-RThread::RThread(RInterface *parent) : QThread() {
+RThread::RThread (RInterface *parent) : QThread () {
+	RK_TRACE (RBACKEND);
 	inter = parent;
 	top_chain = new RCommandChain;
 	top_chain->closed = true;
@@ -30,9 +33,11 @@ RThread::RThread(RInterface *parent) : QThread() {
 }
 
 RThread::~RThread() {
+	RK_TRACE (RBACKEND);
 }
 
 void RThread::issueCommand (RCommand *command, RCommandChain *chain) {
+	RK_TRACE (RBACKEND);
 	mutex.lock ();
 	if (!chain) chain = top_chain;
 	
@@ -44,6 +49,7 @@ void RThread::issueCommand (RCommand *command, RCommandChain *chain) {
 }
 
 RCommandChain *RThread::startChain (RCommandChain *parent) {
+	RK_TRACE (RBACKEND);
 	mutex.lock ();
 	if (!parent) parent = top_chain;
 
@@ -59,6 +65,7 @@ RCommandChain *RThread::startChain (RCommandChain *parent) {
 }
 
 RCommandChain *RThread::closeChain (RCommandChain *chain) {
+	RK_TRACE (RBACKEND);
 	if (!chain) return 0;
 
 	mutex.lock ();
@@ -78,6 +85,7 @@ RCommandChain *RThread::closeChain (RCommandChain *chain) {
 }
 
 void RThread::run () {
+	RK_TRACE (RBACKEND);
 	embeddedR = new REmbed ();
 	if (embeddedR->initialize ()) {
 		qApp->postEvent (inter, new QCustomEvent (RERROR_SINKING_EVENT));
@@ -130,13 +138,13 @@ void RThread::run () {
 }
 
 void RThread::doCommand (RCommand *command) {
+	RK_TRACE (RBACKEND);
 	// notify GUI-thread that a new command is being tried
 	QCustomEvent *event = new QCustomEvent (RCOMMAND_IN_EVENT);
 	event->setData (command);
 	qApp->postEvent (inter, event);
 	
 	embeddedR->runCommand (command);
-	qDebug ("ran command %d", command->id ());
 
 	// notify GUI-thread that command was finished
 	event = new QCustomEvent (RCOMMAND_OUT_EVENT);

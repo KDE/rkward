@@ -56,7 +56,6 @@ friend class RThread;
 	The type-parameter is used to indicate the significance of this command, and
 	esp., whether it should be hidden from the user. (Not yet implemented)
 	There are several ways to identify a command when it's finished:
-		- using different slotsfor different commands
 		- storing the id ()
 		- passing appropriate flags to know how to handle the command
 		- keeping the pointer (CAUTION: don't use that pointer except to compare it with the pointer of an incoming command. Commands get deleted when they are finished, and maybe (in the future) if they become obsolete etc. Hence the pointers you keep may be invalid!)

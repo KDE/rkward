@@ -61,7 +61,6 @@ RObjectList::~RObjectList () {
 
 void RObjectList::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
-	RK_DO (qDebug ("command: %s", command->command ().latin1 ()), OBJECTS, DL_DEBUG);
 
 	RObject::rCommandDone (command);
 

@@ -158,14 +158,12 @@ void RObject::writeMetaData (RCommandChain *chain, bool force) {
 void RObject::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
 	if (command->getFlags () == GET_META_COMMAND) {
-		RK_DO (qDebug ("command: %s", command->command ().latin1 ()), OBJECTS, DL_DEBUG);
 		if (!meta_map) meta_map = new MetaMap;
 		
 		int len = command->stringVectorLength ();
 		RK_ASSERT (!(len % 2));
 		int cut = len/2;
 		for (int i=0; i < cut; ++i) {
-			RK_DO (qDebug ("meta: %s, value: %s", command->getStringVector ()[i], command->getStringVector ()[i+cut]), OBJECTS, DL_DEBUG);
 			meta_map->insert (command->getStringVector ()[i], command->getStringVector ()[i+cut]);
 		}
 	}

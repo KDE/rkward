@@ -23,15 +23,20 @@
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulelogfiles.h"
 
+#include "../debug.h"
+
 REmbed::REmbed() : REmbedInternal() {
+	RK_TRACE (RBACKEND);
 }
 
 REmbed::~REmbed() {
+	RK_TRACE (RBACKEND);
 	outfile.close ();
 	errfile.close ();
 }
 
 bool REmbed::initialize () {
+	RK_TRACE (RBACKEND);
 	QString r_home = RKSettingsModuleR::rHomeDir();
 
 	QStringList arglist = RKSettingsModuleR::getOptionList();
@@ -71,6 +76,7 @@ bool REmbed::initialize () {
 }
 
 void REmbed::runCommand (RCommand *command) {
+	RK_TRACE (RBACKEND);
 	
 	if (command->type () & RCommand::EmptyCommand) return;
 	
@@ -92,6 +98,7 @@ void REmbed::runCommand (RCommand *command) {
 	
 	if (error) {
 		command->status = RCommand::WasTried | RCommand::Failed;
+		RK_DO (qDebug ("Command failed: command was: '%s'", command->command ().latin1 ()), RBACKEND, DL_WARNING);
 	} else {
 		command->status = RCommand::WasTried;
 	}
@@ -103,7 +110,6 @@ void REmbed::runCommand (RCommand *command) {
 	QString temp = "";
 	while (!outfile.atEnd ()) {
 		outfile.readLine (temp, 2048);
-		qDebug (temp);
 		command->_output.append (temp);
 		command->status |= RCommand::HasOutput;
 	}
@@ -111,8 +117,8 @@ void REmbed::runCommand (RCommand *command) {
 	temp = "";
 	while (!errfile.atEnd ()) {
 		errfile.readLine (temp, 2048);
-		qDebug (temp);
 		command->_error.append (temp);
 		command->status |= RCommand::HasError;
 	}
+	RK_DO (if (error) qDebug ("- error message was: '%s'", command->error ().latin1 ()), RBACKEND, DL_WARNING);
 }

@@ -23,6 +23,7 @@
 #include "../settings/rksettingsmoduler.h"
 
 #include "../rkglobals.h"
+#include "../debug.h"
 
 #include <kmessagebox.h>
 #include <kinputdialog.h>
@@ -31,6 +32,7 @@
 #include <stdlib.h>
 
 RInterface::RInterface(){
+	RK_TRACE (RBACKEND);
 // note: we can safely mess with RKSettingsModuleR::r_home_dir, since if the setting is bad, the app will exit without anything being saved. If the
 // setting is good, everything is fine anyway.
 	
@@ -59,10 +61,12 @@ RInterface::RInterface(){
 }
 
 RInterface::~RInterface(){
+	RK_TRACE (RBACKEND);
 	delete watch;
 }
 
 void RInterface::customEvent (QCustomEvent *e) {
+	RK_TRACE (RBACKEND);
 	if (e->type () == RCOMMAND_IN_EVENT) {
 		watch->addInput (static_cast <RCommand *> (e->data ()));
 	} else if (e->type () == RCOMMAND_OUT_EVENT) {

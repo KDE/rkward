@@ -18,7 +18,10 @@
 
 #include <qlayout.h>
 
+#include "debug.h"
+
 RKCommandEditor::RKCommandEditor (QWidget *parent, bool readonly) : QWidget (parent) {
+	RK_TRACE (COMMANDEDITOR);
 	QVBoxLayout *layout = new QVBoxLayout (this);
 
 	// create a Kate-part as command-editor
@@ -31,8 +34,9 @@ RKCommandEditor::RKCommandEditor (QWidget *parent, bool readonly) : QWidget (par
 	int modes_count = doc->hlModeCount ();
 	bool found_mode = false;
 	int i;
+	RK_DO (qDebug ("%s", "Looking for syntax highlighting definition"), COMMANDEDITOR, DL_INFO);
 	for (i = 0; i < modes_count; ++i) {
-		qDebug ("%s", doc->hlModeName(i).lower().latin1 ());
+		RK_DO (qDebug ("%s", doc->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_DEBUG);
 		if (doc->hlModeName(i).lower() == "r script") {
 			found_mode = true;
 			break;
@@ -41,7 +45,7 @@ RKCommandEditor::RKCommandEditor (QWidget *parent, bool readonly) : QWidget (par
 	if (found_mode) {
 		doc->setHlMode(i);
 	} else {
-		qDebug ("%s", "could not find R-syntax scheme");
+		RK_DO (qDebug ("%s", doc->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_WARNING);
 	}
 	
 	view->setDynWordWrap (false);
@@ -50,21 +54,25 @@ RKCommandEditor::RKCommandEditor (QWidget *parent, bool readonly) : QWidget (par
 
 
 RKCommandEditor::~RKCommandEditor () {
+	RK_TRACE (COMMANDEDITOR);
 	delete view;
 	delete doc;
 }
 
 void RKCommandEditor::setText (const QString &text) {
+	RK_TRACE (COMMANDEDITOR);
 	doc->setReadWrite (true);
 	doc->setText (text);
 	doc->setReadWrite (readwrite);
 }
 
 void RKCommandEditor::insertText (const QString &text) {
+	RK_TRACE (COMMANDEDITOR);
 // TODO: make sane!
 	setText (doc->text () + text);
 }
 
 QString RKCommandEditor::text () {
+	RK_TRACE (COMMANDEDITOR);
 	return doc->text ();
 }

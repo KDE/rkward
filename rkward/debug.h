@@ -36,6 +36,7 @@ extern int RK_Debug_Level;
 #define EDITOR 8
 #define PHP 64
 #define RBACKEND 128
+#define COMMANDEDITOR 256
 #define ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR | RBACKEND)
 
 // only for now

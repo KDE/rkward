@@ -50,7 +50,6 @@ void RContainerObject::updateFromR () {
 
 void RContainerObject::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
-	RK_DO (qDebug ("command: %s", command->command ().latin1 ()), OBJECTS, DL_DEBUG);
 	RObject::rCommandDone (command);
 
 	bool changed = false;
@@ -122,7 +121,7 @@ void RContainerObject::rCommandDone (RCommand *command) {
 		}
 		if ((RObject::type) && (new_type != RObject::type)) {
 			if (!(new_type & RObject::Container)) {
-				RK_DO (qDebug ("name: %s, old_type: %d, new_type: %d", RObject::name.latin1 (), type, new_type), OBJECTS, DL_DEBUG);
+				RK_DO (qDebug ("type-mismatch: name: %s, old_type: %d, new_type: %d", RObject::name.latin1 (), type, new_type), OBJECTS, DL_INFO);
 				RObject::parent->typeMismatch (this, RObject::name);
 				return;	// will be deleted!
 			}
