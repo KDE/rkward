@@ -73,4 +73,5 @@ doc/Makefile \
 doc/en/Makefile \
 po/Makefile \
 rkward/Makefile \
+rkward/plugins/Makefile \
 )

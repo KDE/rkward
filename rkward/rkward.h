@@ -38,6 +38,7 @@
 class RKwardDoc;
 class RKwardView;
 class RSettings;
+class RKMenu;
 
 /**
   * The base class for RKward application windows. It sets up the main
@@ -213,8 +214,18 @@ class RKwardApp : public KMainWindow
 	bool opt_r_slave;
 	void fetchRSettings (RSettings *from, bool apply);
 
+	QString plugin_dir;
+
 /** Does pasting (called from the respective slots) */
 	void doPaste ();
+
+/** Finds plugins and inserts them into the menu-structure */
+	void initPlugins ();
+
+/** Sets up an individual plugin */
+	void initPlugin (const QString & filename);
+
+	QMap<QString, RKMenu*> rkmenus;
 };
  
 #endif // RKWARD_H

@@ -33,7 +33,7 @@ email=tfry@users.sourceforge.net
 kdevprj_version=1.3
 lfv_open_groups=
 make_options=\s-j1
-makefiles=Makefile.am,rkward/Makefile.am,doc/Makefile.am,doc/en/Makefile.am,po/Makefile.am
+makefiles=Makefile.am,rkward/Makefile.am,doc/Makefile.am,doc/en/Makefile.am,po/Makefile.am,rkward/plugins/Makefile.am
 modifyMakefiles=true
 project_name=RKward
 project_type=normal_kde2
@@ -114,8 +114,8 @@ install_location=
 type=DATA
 
 [rkward/Makefile.am]
-files=rkward/main.cpp,rkward/rkward.cpp,rkward/rkward.h,rkward/rkwarddoc.cpp,rkward/rkwarddoc.h,rkward/rkwardview.cpp,rkward/rkwardview.h,rkward/rkwardui.rc,rkward/rkward.desktop,rkward/lo32-app-rkward.png,rkward/lo16-app-rkward.png,rkward/view.ui,rkward/twintable.cpp,rkward/twintable.h,rkward/twintablemember.cpp,rkward/twintablemember.h,rkward/rkdrag.cpp,rkward/rkdrag.h,rkward/rinterface.cpp,rkward/rinterface.h,rkward/rkwatch_ui.ui,rkward/rkwatch.cpp,rkward/rkwatch.h,rkward/typeselectcell.cpp,rkward/typeselectcell.h,rkward/rtableitem.cpp,rkward/rtableitem.h,rkward/nameselectcell.cpp,rkward/nameselectcell.h,rkward/rsettings.cpp,rkward/rsettings.h,rkward/rsettingsui.ui
-sub_dirs=
+files=rkward/main.cpp,rkward/rkward.cpp,rkward/rkward.h,rkward/rkwarddoc.cpp,rkward/rkwarddoc.h,rkward/rkwardview.cpp,rkward/rkwardview.h,rkward/rkwardui.rc,rkward/rkward.desktop,rkward/lo32-app-rkward.png,rkward/lo16-app-rkward.png,rkward/view.ui,rkward/twintable.cpp,rkward/twintable.h,rkward/twintablemember.cpp,rkward/twintablemember.h,rkward/rkdrag.cpp,rkward/rkdrag.h,rkward/rinterface.cpp,rkward/rinterface.h,rkward/rkwatch_ui.ui,rkward/rkwatch.cpp,rkward/rkwatch.h,rkward/typeselectcell.cpp,rkward/typeselectcell.h,rkward/rtableitem.cpp,rkward/rtableitem.h,rkward/nameselectcell.cpp,rkward/nameselectcell.h,rkward/rsettings.cpp,rkward/rsettings.h,rkward/rsettingsui.ui,rkward/rkmenu.cpp,rkward/rkmenu.h,rkward/rkplugin.cpp,rkward/rkplugin.h
+sub_dirs=plugins
 type=prog_main
 
 [rkward/lo16-app-rkward.png]
@@ -148,6 +148,17 @@ install=false
 install_location=
 type=HEADER
 
+[rkward/plugins/50.50.50.t.test.rkward]
+dist=true
+install=false
+install_location=
+type=DATA
+
+[rkward/plugins/Makefile.am]
+files=rkward/plugins/50.50.50.t.test.rkward
+sub_dirs=
+type=normal
+
 [rkward/rinterface.cpp]
 dist=true
 install=false
@@ -167,6 +178,30 @@ install_location=
 type=SOURCE
 
 [rkward/rkdrag.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
+[rkward/rkmenu.cpp]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[rkward/rkmenu.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
+[rkward/rkplugin.cpp]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[rkward/rkplugin.h]
 dist=true
 install=false
 install_location=

@@ -32,6 +32,8 @@
 #include <kstatusbar.h>
 #include <klocale.h>
 #include <kconfig.h>
+#include <kglobal.h>
+#include <kstandarddirs.h>
 #include <kstdaction.h>
 
 // application specific includes
@@ -41,12 +43,20 @@
 #include "rkdrag.h"
 #include "rkwatch.h"
 #include "rsettings.h"
+#include "rkmenu.h"
 
 #define ID_STATUS_MSG 1
 
 RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
 {
   config=kapp->config();
+
+	KGlobal::dirs()->addResourceType("plugins", KStandardDirs::kde_default("data") + "rkward/plugins/");
+	plugin_dir = KGlobal::dirs()->findResourceDir("plugins", "t.test.rkward");
+	if (plugin_dir == "") {
+		// try our luck with a relative path
+		plugin_dir = "plugins/";
+	}
 
   ///////////////////////////////////////////////////////////////////
   // call inits to invoke all other construction parts
@@ -66,11 +76,54 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
   initView();
 
   readOptions();
+	initPlugins ();
 	startR ();
 }
 
 RKwardApp::~RKwardApp()
 {
+}
+
+void RKwardApp::initPlugins () {
+	slotStatusMsg(i18n("Setting up plugins..."));
+
+	QDir dir = QDir (plugin_dir, "*.rkward", QDir::Name, QDir::Files | QDir::Readable);
+
+	for (unsigned int i = 0; i < dir.count (); i++) {
+		qDebug (dir[i]);
+		initPlugin (plugin_dir + dir[i]);
+	}
+
+	slotStatusMsg(i18n("Ready."));
+}
+
+void RKwardApp::initPlugin (const QString & filename) {
+	int error_line, error_column;
+	QString error_message, dummy;
+	QDomDocument doc;
+	QFile f(filename);
+	if (!f.open(IO_ReadOnly))
+		qDebug ("Could not open file for reading: " + filename);
+	if (!doc.setContent(&f, false, &error_message, &error_line, &error_column)) {
+		f.close();
+		qDebug ("parsing-error in: " + filename);
+		qDebug ("Message: " + error_message);
+		qDebug ("Line: %d", error_line);
+		qDebug ("Column: %d", error_column);
+		return;
+	}
+	f.close();
+
+	QDomElement element = doc.documentElement ();
+	QDomNodeList children = element.elementsByTagName("location");
+	element = children.item (0).toElement ();
+
+	if (!rkmenus.contains (element.attribute ("tag"))) {
+		RKMenu *sub = new RKMenu (menuBar (), element.attribute ("tag"), element.attribute ("label", "untitled"));
+		rkmenus.insert (element.attribute ("tag"), sub);
+		menuBar ()->insertItem (sub->label (), sub);
+	}
+	rkmenus[element.attribute ("tag")]->place (element, filename);
 }
 
 void RKwardApp::startR () {

@@ -1,0 +1,44 @@
+<!DOCTYPE rkplugin>
+
+<!-- This is a simple example, of what a "plugin" might be configured.
+This is not yet implemented! -->
+
+<document>
+
+<!-- The location-section determines, where the function will be placed in the
+menu-structure and how it will be labeled. The "tag"-attributes are used
+to identify the same menu for differen plugins. The "label"-attributes will
+have to be translated. -->
+
+	<location tag="analyse" label="Analyse">
+		<location tag="means" label="Means">
+			<entry label="unimplemented test"/>
+		</location>
+	</location>
+
+<!-- The layout-section takes care of the layout of the GUI for this plugin. -->
+
+	<layout>
+		<row>
+			<column>
+				<varselector id="vars"/>
+			</column>
+			<column>
+				<varslot type="numeric" id="x" source="vars" required="true"/>
+				<varslot type="numeric" id="y" source="vars" required="true"/>
+				<radio id="hypothesis" label="Test hypothesis">
+					<option value="two.sided" label="Two-sided"/>
+					<option value="greater" label="First is greater"/>
+					<option value="less" label="Second is greater"/>
+				</radio>
+			</column>
+		</row>
+	</layout>
+
+<!-- The code-section specifies, how the selected options will be translated
+into code -->
+
+	<code>
+		t.test ($x$, $y$, $hypothesis$)
+	</code>
+</document>

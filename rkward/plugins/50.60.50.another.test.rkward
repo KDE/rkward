@@ -11,10 +11,8 @@ to identify the same menu for differen plugins. The "label"-attributes will
 have to be translated. -->
 
 	<location tag="analyse" label="Analyse">
-		<location tag="means" label="Means>
-	   	 	<location tag="t_tests" label="T-Tests">
-				<label="Two Sample T-Test"/>
-			</location>
+		<location tag="frequency" label="Frequency">
+			<entry label="Non-existent Test"/>
 		</location>
 	</location>
 
