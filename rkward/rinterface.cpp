@@ -27,7 +27,7 @@
 #include "rembed.h"
 
 RInterface::RInterface(){
-	embeddedR = new REmbed ("/usr/lib/R");
+	embeddedR = new REmbed ();
 	watch = new RKwatch (this);
 	watch->show ();
 	command_stack.setAutoDelete (true);

@@ -31,7 +31,7 @@
 */
 class REmbed : public REmbedInternal {
 public:
-    REmbed(const char* r_home);
+    REmbed();
 
     ~REmbed();
 	

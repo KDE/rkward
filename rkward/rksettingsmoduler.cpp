@@ -110,9 +110,9 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
 	config->setGroup ("R Settings");
-	r_nosave = config->readBoolEntry ("Option --no-save", true);
-	r_slave = config->readBoolEntry ("Option --slave", true);
-	r_home_dir = config->readEntry ("R_HOME", "/usr/lib/R");
+	r_nosave = config->readBoolEntry ("--no-save", true);
+	r_slave = config->readBoolEntry ("--slave", true);
+	r_home_dir = config->readEntry ("R_HOME", "");
 }
 
 #include "rksettingsmoduler.moc"

@@ -38,7 +38,7 @@
 RKwardDoc::RKwardDoc(RKwardApp *parent, const char *name) : TwinTable (parent, name)
 {
 	app = parent;
-	inter = &app->r_inter;
+	inter = app->r_inter;
 //	output_is = Nothing;
 	tablename = RK_DATA_PREFIX;
 	tablename.append ("data");

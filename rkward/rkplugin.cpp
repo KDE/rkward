@@ -207,7 +207,7 @@ RKPluginWidget *RKPlugin::buildWidget (const QDomElement &element) {
 
 void RKPlugin::ok () {
 	getApp ()->getDocument ()->syncToR ();
-	getApp ()->r_inter.issueCommand (new RCommand (codeDisplay->text (), RCommand::Plugin));
+	getApp ()->r_inter->issueCommand (new RCommand (codeDisplay->text (), RCommand::Plugin));
 	backend->callFunction ("printout (); cleanup ();", true);
 }
 
@@ -307,11 +307,11 @@ void RKPlugin::updateCode (const QString &text) {
 }
 
 void RKPlugin::doRCall (const QString &call) {
-	getApp ()->r_inter.issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, SLOT (gotRResult (RCommand *))));
+	getApp ()->r_inter->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, SLOT (gotRResult (RCommand *))));
 }
 
 void RKPlugin::gotRResult (RCommand *command) {
-// since R-call are (will be) asynchronous, we need to expect incoming data after the backend has been torn down
+// since R-calls are (will be) asynchronous, we need to expect incoming data after the backend has been torn down
 	if (backend) backend->gotRCallResult (command->output());
 }
 

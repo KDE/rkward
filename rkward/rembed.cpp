@@ -20,18 +20,53 @@
 #include <qtextstream.h>
 #include <qstring.h>
 
-REmbed::REmbed(const char* r_home) : REmbedInternal() {
+#include <stdlib.h>
+
+#include <kmessagebox.h>
+#include <klocale.h>
+
+#include "rksettingsmoduler.h"
+
+REmbed::REmbed() : REmbedInternal() {
+	QString r_home = RKSettingsModuleR::rHomeDir();
+	
+	char *env_r_home = getenv ("R_HOME");
+	if (!env_r_home) {
+		if (r_home == "") {
+			qDebug ("guess");
+			r_home = "/usr/lib/R/";		// guess
+			KMessageBox::warningContinueCancel (0, i18n ("Could not find an R_HOME-environment variable and don't have a stored setting for that either. The R backend requires that variable - if it is not set correctly, the application will quit immediately. We'll try it with a guessed value (" + r_home + ") for now. If it works - fine. If not, you'll have to set the correct value using 'export R_HOME=...' prior to starting RkWard again."), "R_HOME not set");
+		}
+	} else {
+		if (env_r_home != r_home) {
+			qDebug ("conflict");
+			if (KMessageBox::warningYesNo (0, i18n ("RKWard has a stored setting for the R_HOME-variable. However, in the environment, that variable is currently set to a different value. It's probably safe to assume the environment-setting is correct/more up to date. Using a wrong setting however will cause the application to quit immediately. Do you want to use the stored setting instead of the environment-setting?"), "Conflicting settings for R_HOME") != KMessageBox::Yes) {
+				r_home = env_r_home;
+			}
+		}
+	}
+
 	startR (r_home);
+
+	// if we're still alive at this point, the setting for r_home must have been correct
+	RKSettingsModuleR::r_home_dir = r_home;
+
 	outfile_offset = 0;
 	errfile_offset = 0;
 	
+	bool error = false;
+	
 	outfile.setName ("r_out");
 	if (!outfile.open (IO_ReadOnly)) {
-		qDebug ("can't open outfile! will lock up soon");
+		error = true;
 	}
 	errfile.setName ("r_err");
 	if (!errfile.open (IO_ReadOnly)) {
-		qDebug ("can't open errfile! will lock up soon");
+		error = true;
+	}
+	
+	if (error) {
+		KMessageBox::error (0, i18n ("There was a problem opening the files needed for communication with R. Most likely this is due to an incorrect setting for the location of these files. Check whether you have correctly configured the location of the log-files (Settings->Configure Settings->Logfiles) and restart RKWard."), i18n ("Error starting R"));
 	}
 }
 

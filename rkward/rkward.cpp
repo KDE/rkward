@@ -81,7 +81,9 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
 	
 	output = new RKOutputWindow (0);
 	output->showMaximized ();
-	output->lower ();
+	output->hide ();
+	
+	r_inter = 0;
 }
 
 RKwardApp::~RKwardApp()
@@ -101,8 +103,8 @@ void RKwardApp::doPostInit () {
 	dummy.append ("at run-time and on the fly from a simple XML-file located in the plugin-directory.");
 	KMessageBox::information (this, dummy, "Before you complain...");
 
-	initPlugins ();
 	startR ();
+	initPlugins ();
 }
 
 void RKwardApp::initPlugins () {
@@ -179,13 +181,14 @@ int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
 }
 
 void RKwardApp::startR () {
-	r_inter.shutdown ();
+	if (r_inter) qDebug ("Trying to start R-Interface a second time. Not good.");
+	r_inter = new RInterface ();
 
 	QStrList r_line;
 	r_line.append ("dummy");
 	r_line.append ("dummy2");
 	
-	r_inter.startR (r_line);
+	r_inter->startR (r_line);
 }
 
 void RKwardApp::slotConfigure () {
@@ -630,10 +633,10 @@ void RKwardApp::slotStatusMsg(const QString &text)
 }
 
 void RKwardApp::slotShowRKWatch () {
-	if (r_inter.watch->isVisible ()) {
-		r_inter.watch->hide ();
+	if (r_inter->watch->isVisible ()) {
+		r_inter->watch->hide ();
 	} else {
-		r_inter.watch->show ();
+		r_inter->watch->show ();
 	}
 }
 

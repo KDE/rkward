@@ -62,6 +62,6 @@ messages: rc.cpp
 	 $(XGETTEXT) $$LIST -o $(podir)/rkward.pot; \
 	fi
 
-noinst_HEADERS =  rksettingsmodule.h rksettingsmoduleplugins.h rksettingsmoduler.h rksettingsmodulephp.h rksettings.h
+noinst_HEADERS = rksettingsmodule.h rksettingsmoduleplugins.h rksettingsmoduler.h rksettingsmodulephp.h rksettings.h
 phpfilesdir = $(kde_datadir)/rkward/phpfiles
 phpfiles_DATA =  common.php

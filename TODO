@@ -1,11 +1,7 @@
 stuff to do before the next release
-- make locations configurable
+- make configurable
 	- temporary files
-	- R_HOME
-- check for good values/warn
-	- PHP-binary
-	- common.php
-	- R_HOME
+	- R-options
 - get rid of separate ui-file in rkwatch
 - add option to show/hide output
 - add a few plugins
@@ -15,6 +11,7 @@ small stuff to do soon
 - plugins-scanning: don't duplicate everything
 - rework plugin-XML-format
 - add checkboxes etc.
+- if there is no R_HOME setting, ask for one instead of using /usr/lib/R unconditionally
 
 stuff to do before the thing is usable
 - use a cool new RHistory-Widget for the RKWatch

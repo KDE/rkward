@@ -60,7 +60,8 @@ private:
 	QLineEdit *location_edit;
 	QCheckBox *nosave_box;
 	QCheckBox *slave_box;
-	
+
+friend class REmbed;
 	static bool r_nosave;
 	static bool r_slave;
 	static QString r_home_dir;
