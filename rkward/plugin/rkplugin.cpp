@@ -75,7 +75,10 @@ RKPlugin::RKPlugin(const QString &filename) : QWidget () {
 	
 	// initialize the PHP-backend with the code-template
 	should_updatecode=false;
-	QString dummy = QFileInfo (QFile (filename)).dirPath () + "/code.php";
+	
+	// Correcting a bug. Not sure about what I'm doing though. (Pierre)
+	//QString dummy = QFileInfo (QFile (filename)).dirPath () + "/code.php";
+	QString dummy = QFileInfo (filename).dirPath () + "/code.php";
 	backend = new PHPBackend ();
 	connect (backend, SIGNAL (commandDone (int)), this, SLOT (backendCommandDone (int)));
 	connect (backend, SIGNAL (idle ()), this, SLOT (backendIdle ()));

@@ -28,6 +28,9 @@
 int RK_Debug_Level = 0;
 int RK_Debug_Flags = ALL;
 
+static const char *version =
+       I18N_NOOP("0.3.0");
+
 static const char *description =
 	I18N_NOOP("RKWard");
 // INSERT A DESCRIPTION FOR YOUR APPLICATION HERE
@@ -45,7 +48,7 @@ static KCmdLineOptions options[] =
 int main(int argc, char *argv[])
 {
 
-	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), VERSION, description, KAboutData::License_GPL, "(c) 2002, 2004", 0, "http://rkward.sf.net", "");
+	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), version, description, KAboutData::License_GPL, "(c) 2002, 2004", 0, "http://rkward.sf.net", "");
 	aboutData.addAuthor ("Thomas Friedrichsmeier", "Project leader", "");
 	aboutData.addAuthor ("Pierre Ecochard", "Contributor", "");
 	aboutData.addAuthor ("Daniele Medri", "Contributor", "");
