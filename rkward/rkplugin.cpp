@@ -342,13 +342,30 @@ void RKPlugin::doRCall (const QString &call) {
 	getApp ()->r_inter->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, SLOT (gotRResult (RCommand *)), FOR_PHP_FLAG), php_backend_chain);
 }
 
+void RKPlugin::getRVector (const QString &call) {
+	getApp ()->r_inter->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom | RCommand::GetStringVector, "", this, SLOT (gotRResult (RCommand *)), FOR_PHP_FLAG), php_backend_chain);
+}
+
 void RKPlugin::gotRResult (RCommand *command) {
 	if (command->hasError()) {
 		error_dialog->newError (command->error());
 	}
 	if (command->getFlags() & FOR_PHP_FLAG) {
-		// since R-calls are (will be) asynchronous, we need to expect incoming data after the backend has been torn down
-		if (backend) backend->gotRCallResult (command->output());
+		if (!backend) return;
+		if ((command->type () & RCommand::GetStringVector)) {
+			QString temp;
+// TODO: can this painful process be optimized?
+			for (int i = 0; i < command->stringVectorLength (); ++i) {
+				if (i) {
+					temp.append ("\t");
+				}
+				temp.append (command->getStringVector ()[i]);
+			}
+			backend->gotRCallResult (temp);
+		} else {
+			// since R-calls are (will be) asynchronous, we need to expect incoming data after the backend has been torn down
+			backend->gotRCallResult (command->output());
+		}
 	}
 }
 
@@ -364,23 +381,6 @@ QString RKPlugin::getVar (const QString &id) {
 	}
 
 	return (widget->value (id.section (".", 1, 1)));
-	
-/*	if (widget) {
-		if (modifier != "") {
-			QString quoted;
-			if (modifier == "label") {
-				int col = getApp ()->getDocument ()->lookUp (widget->value ());
-				if (col >= 0) {
-					quoted = getApp ()->getDocument ()->label (col);
-				}
-			} else if (modifier == "name") {
-				quoted = widget->value ();
-			}
-			return (quoted.replace (QRegExp ("\""), "\\\""));
-		} else {
-			return (widget->value ());
-		}
-	} */
 }
 
 /** Returns a pointer to the varselector by that name (0 if not available) */

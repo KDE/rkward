@@ -62,9 +62,11 @@ REmbed::REmbed() : REmbedInternal() {
 		delete argv[argc];
 	}
 	
-	runCommandInternal ("options (pager=\"" + RKSettingsModuleR::pagerApp () + "\")\n");
-	runCommandInternal ("sink (\"" + RKSettingsModuleLogfiles::filesPath () + "/r_out\")\n");
-	runCommandInternal ("sink (file (\"" +RKSettingsModuleLogfiles::filesPath () +"/r_err\", \"w\"), FALSE, \"message\")\n");
+	bool error;
+	
+	runCommandInternal ("options (pager=\"" + RKSettingsModuleR::pagerApp () + "\")\n", &error);
+	runCommandInternal ("sink (\"" + RKSettingsModuleLogfiles::filesPath () + "/r_out\")\n", &error);
+	runCommandInternal ("sink (file (\"" +RKSettingsModuleLogfiles::filesPath () +"/r_err\", \"w\"), FALSE, \"message\")\n", &error);
 
 	// if we're still alive at this point, the setting for r_home must have been correct
 	RKSettingsModuleR::r_home_dir = r_home;
@@ -72,7 +74,7 @@ REmbed::REmbed() : REmbedInternal() {
 	outfile_offset = 0;
 	errfile_offset = 0;
 	
-	bool error = false;
+	error = false;
 	
 	outfile.setName (RKSettingsModuleLogfiles::filesPath () + "/r_out");
 	if (!outfile.open (IO_ReadOnly)) {
@@ -95,35 +97,31 @@ REmbed::~REmbed() {
 }
 
 void REmbed::runCommand (RCommand *command) {
-	qDebug ("TODO: REmbed::runCommand: Error-handling");
-
-	QFile file(RKSettingsModuleLogfiles::filesPath () + "/r_in");
-	if (file.open(IO_WriteOnly)) {
-		QTextStream stream(&file);
-		stream << command->command () << "\n";
-		file.close();
+	
+	bool error;
+	if (command->type () & RCommand::GetStringVector) {
+		command->string_data = getCommandAsStringVector (command->command ().latin1 (), &(command->string_count), &error);
+	} else if (command->type () & RCommand::GetRealVector) {
+		command->real_data = getCommandAsRealVector (command->command ().latin1 (), &(command->real_count), &error);
+	} else {
+		runCommandInternal (command->command ().latin1 (), &error);
 	}
 	
-	if (!runCommandInternal ("source (\"" + RKSettingsModuleLogfiles::filesPath () + "/r_in\")")) {
+	if (error) {
 		command->status = RCommand::WasTried | RCommand::Failed;
 	} else {
 		command->status = RCommand::WasTried;
 	}
-	
-	command->output_offset = outfile_offset;
-	command->error_offset = errfile_offset;;
-	
-	qDebug ("output");
-	QString temp;
+
+	QString temp = "";
 	while (!outfile.atEnd ()) {
 		outfile.readLine (temp, 2048);
 		qDebug (temp);
 		command->_output.append (temp);
 		command->status |= RCommand::HasOutput;
 	}
-	command->output_length = outfile.at () - command->output_offset;
+	qDebug ("output: %s", temp.latin1 ());
 
-	qDebug ("error");
 	temp = "";
 	while (!errfile.atEnd ()) {
 		errfile.readLine (temp, 2048);
@@ -131,5 +129,5 @@ void REmbed::runCommand (RCommand *command) {
 		command->_error.append (temp);
 		command->status |= RCommand::HasError;
 	}
-	command->error_length = errfile.at () - command->error_offset;
+	qDebug ("error: %s", temp.latin1 ());
 }

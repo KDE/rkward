@@ -6,8 +6,6 @@ stuff to do before 0.2.1 release
 	- move output logging to RKOutput?
 - plugin improvements:
 	- wizards
-	- let individual widgets deal with modifiers
-	- smarten up varselector / varslot-interaction
 
 small stuff to do soon
 - plugins-scanning: don't duplicate everything
@@ -16,6 +14,8 @@ small stuff to do soon
 - if there is no R_HOME setting, ask for one instead of using /usr/lib/R unconditionally
 - set up a simple but serious debbugging framework
 - cleanup label-mess for plugin-widgets
+- further smarten up varselector / varslot-interaction
+- separate plugins from their handles (allows multiple instances of a plugin to be active)
 
 mid-term stuff
 - add XML-parsing helper functions and error-checking
@@ -30,6 +30,7 @@ stuff to do before the thing is usable
 - add a help-system
 - support for multiple tables/data.frames
 - mostly everything
+- calls from R to RKWard
 
 stuff to do before a 1.0 release
 - handle graphics

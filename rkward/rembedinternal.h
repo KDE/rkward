@@ -31,7 +31,13 @@ public:
 protected:
 	bool startR (const char* r_home, int argc, char **argv);
 	void shutdown ();
-	bool runCommandInternal (const char *command);
+	void runCommandInternal (const char *command, bool *error);
+	
+	char **getCommandAsStringVector (const char *command, int *count, bool *error);
+	double *getCommandAsRealVector (const char *command, int *count, bool *error);
+private:
+// can't declare this as part of the class, as it would confuse REmbed
+//	SEXPREC *runCommandInternalBase (const char *command, bool *error);
 };
  
 #endif

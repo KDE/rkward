@@ -21,6 +21,7 @@
 #include <qfile.h>
 #include <qstring.h>
 #include <qobject.h>
+#include <qptrlist.h>
 
 /** This class is used to encapsulate an R-command, so it can be easiyl identified
 	in a chain of commands. It is needed, since communication with R is asynchronous
@@ -34,6 +35,11 @@
 	completion (or when/if the R-process dies).
 	The type-parameter is used to indicate the significance of this command, and
 	esp., whether it should be hidden from the user. (Not yet implemented)
+	There are several ways to identify a command when it's finished:
+		- using different slotsfor different commands
+		- storing the idthat gets returned
+		- passing appropriate flags to know how to handle the command
+		(- checking the command-string)
   *@author Thomas Friedrichsmeier
   */
 
@@ -54,14 +60,35 @@ public:
 	void addReceiver (QObject *receiver, const char *slot);
 /** Types of commands (potentially more to come), bitwise or-able,
 	although partially exclusive. */
-	enum CommandTypes {User=1, Plugin=2, PluginCom=4, App=8, Sync=16};
+	enum CommandTypes {User=1, Plugin=2, PluginCom=4, App=8, Sync=16, GetStringVector=1024, GetRealVector=2048};
 	enum CommandStatus {WasTried=1, Failed=2, HasOutput=4, HasError=8};
-	int wasTried () { return (status & WasTried); };
-	int failed () { return (status & Failed); };
-	int succeeded () { return ((status & WasTried) && !(status & Failed)); };
-	int hasOutput () { return (status & HasOutput); }; 
-	int hasError () { return (status & HasError); }; 
+	bool wasTried () { return (status & WasTried); };
+	bool failed () { return (status & Failed); };
+	bool succeeded () { return ((status & WasTried) && !(status & Failed)); };
+	bool hasOutput () { return (status & HasOutput); };
+	bool hasError () { return (status & HasError); };
+	int stringVectorLength () { return (string_count); };
+	int realVectorLength () { return (real_count); };
+	char **getStringVector () { return (string_data); };
+	double *getRealVector () { return (real_data); };
+/// if you want to keep the data, use this function to detach it from the RCommand (after reading it), so it won't be deleted with the RCommand
+	void detachStringVector () { string_data = 0; string_count = 0; };
+/// if you want to keep the data, use this function to detach it from the RCommand (after reading it), so it won't be deleted with the RCommand
+	void detachRealVector () { real_data = 0; real_count = 0; };
 	int getFlags () { return (_flags); };
+	
+	struct ChainOrCommand;
+/// this struct is needed by the rthread. Do not use directly!
+	struct CommandChain {
+		QPtrList<ChainOrCommand> commands;
+		bool closed;
+		CommandChain *parent;
+	};
+/// this struct is needed by the rthread. Do not use directly!
+	struct ChainOrCommand {
+		RCommand *command;
+		CommandChain *chain;
+	};
 signals:
 	void commandDone (RCommand *command);
 private:
@@ -71,12 +98,13 @@ friend class RInterface;
 	QString _output;
 	QString _error;
 	QString _command;
+	char **string_data;
+	int string_count;
+	double *real_data;
+	int real_count;
 	int _type;
 	int _flags;
 	int status;
-	QIODevice::Offset output_offset, error_offset;
-	int output_length, error_length;
-	int logindex;
 	QString _rk_equiv;
 	int _id;
 	static int next_id;

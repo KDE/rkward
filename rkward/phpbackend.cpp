@@ -211,8 +211,13 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 		} else if (request.startsWith ("requesting rcall:")) {
 			QString requested_call = request.remove ("requesting rcall:");
 			qDebug ("requested rcall: \"" + requested_call + "\"");
-			_responsible->doRCall (requested_call);
 			idle = false;
+			_responsible->doRCall (requested_call);
+		} else if (request.startsWith ("requesting rvector:")) {
+			QString requested_call = request.remove ("requesting rvector:");
+			qDebug ("requested rvector: \"" + requested_call + "\"");
+			idle = false;
+			_responsible->getRVector (requested_call);
 		} else if (request.startsWith ("PHP-Error")) {
 				QString error = request.remove ("PHP-Error");
 				closeTemplate ();

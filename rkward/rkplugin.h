@@ -78,6 +78,8 @@ friend class RKPluginGUIWidget;
 
 /** return result of given call to the R-backend */
 	void doRCall (const QString &call);
+/** return result of given call (string vector) to the R-backend */	
+	void getRVector (const QString &call);
 
 /** this gets called by the PHP-backend, when it's done. Might enable the
 	submit button or destruct the plugin. Returns true in the latter case. */
@@ -121,7 +123,7 @@ friend class RKPluginGUIWidget;
 	
 	PHPBackend *backend;
 	RKErrorDialog *error_dialog;
-	RThread::CommandChain *php_backend_chain;
+	RCommand::CommandChain *php_backend_chain;
 };
 
 #endif

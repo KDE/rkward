@@ -21,9 +21,10 @@
 #include <qptrlist.h>
 #include <qmutex.h>
 
+#include <rcommand.h>
+
 class REmbed;
 class RInterface;
-class RCommand;
 
 #define RCOMMAND_IN_EVENT 1001
 #define RCOMMAND_OUT_EVENT 1002
@@ -40,27 +41,16 @@ public:
 
     ~RThread();
 
-	struct ChainOrCommand;
-	struct CommandChain {
-		QPtrList<ChainOrCommand> commands;
-		bool closed;
-		CommandChain *parent;
-	};
-	struct ChainOrCommand {
-		RCommand *command;
-		CommandChain *chain;
-	};
-
-	void issueCommand (RCommand *command, CommandChain *chain);
+	void issueCommand (RCommand *command, RCommand::CommandChain *chain);
 	
-	CommandChain *startChain (CommandChain *parent);
-	void closeChain (CommandChain *chain);
+	RCommand::CommandChain *startChain (RCommand::CommandChain *parent);
+	void closeChain (RCommand::CommandChain *chain);
 protected:
 	void run ();
 private:	
 	RInterface *inter;
-	CommandChain *current_chain;
-	CommandChain *top_chain;
+	RCommand::CommandChain *current_chain;
+	RCommand::CommandChain *top_chain;
 /** This is the last step in the chain of committing a command, and actually writes it */
 	void doCommand (RCommand *command);
 	REmbed *embeddedR;

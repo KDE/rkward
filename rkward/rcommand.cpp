@@ -21,22 +21,29 @@ int RCommand::next_id = 0;
 
 RCommand::RCommand(QString command, int type, QString rk_equiv, QObject *receiver, const char *slot, int flags){
 	_id = next_id++;
+// if we ever submit enough commands to get a buffer overflow, use only positive numbers.
+	if (next_id < 0) {
+		next_id = 0;
+	}
 	qDebug ("creating command %d", _id);
 	_command = command;
 	_type = type;
 	_flags = flags;
 	status = 0;
+	string_data = 0;
+	real_data = 0;
+	string_count = real_count = 0;
 	_rk_equiv = rk_equiv;
 	addReceiver (receiver, slot);
-// if we ever submit enough commands to get a buffer overflow, use only positive numbers.
-	if (next_id < 0) {
-		next_id = 0;
-	}
-	logindex = 0;
 }
 
 RCommand::~RCommand(){
 	qDebug ("deleting command %d", _id);
+	for (int i = 0; i < string_count; ++i) {
+		delete string_data[i];
+	}
+	delete [] string_data;
+	delete real_data;
 }
 
 void RCommand::finished () {
