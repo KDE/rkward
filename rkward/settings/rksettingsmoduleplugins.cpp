@@ -107,7 +107,7 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 			plugin_dir = "plugins/";
 		}
 	}
-	interface_pref = static_cast<PluginPrefs> (config->readNumEntry ("Interface Preferences"), static_cast<int> (PreferRecommended));
+	interface_pref = static_cast<PluginPrefs> (config->readNumEntry ("Interface Preferences", static_cast<int> (PreferWizard)));
 }
 
 #include "rksettingsmoduleplugins.moc"
