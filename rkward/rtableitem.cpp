@@ -40,9 +40,14 @@ void RTableItem::checkValid () {
 	if (type () == String) {
 		valid = true;		// there are no invalid strings!
 	} else if (type () == Number) {
-		bool ok;
-		text ().toFloat (&ok);
-		valid = ok;
+		if (text () != "") {
+			bool ok;
+			text ().toFloat (&ok);
+			valid = ok;
+		} else {
+			// allow empty cells (will be translated into "NA")
+			valid = true;
+		}
 	} else if (type () == Date) {
 		// TODO
 		valid = false;
@@ -61,17 +66,19 @@ void RTableItem::setText (const QString &str) {
 
 QString RTableItem::rText () {
 	checkValid ();
+
+	if (text () == "") {
+		return "NA";
+	}
 	if ((type () == Number) && isValid ()) {
 		return text ();	
-	} else if (type () == String) {
-		return ("\"" + text () + "\"");
-	} else {
-		if (text () != "") {
-			return ("\"" + text () + "\"");
-		} else {
-			return "NA";
-		}
 	}
+	if (type () == String) {
+		return ("\"" + text () + "\"");
+	}
+
+	// else	
+	return ("\"" + text () + "\"");
 }
 
 void RTableItem::paint (QPainter *p, const QColorGroup &cg, const QRect &cr, bool selected) {

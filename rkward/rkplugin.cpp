@@ -111,12 +111,12 @@ RKPluginWidget *RKPlugin::buildWidget (const QDomElement &element) {
 	RKPluginWidget *widget;
 	qDebug ("creating RKPluginWidget " + element.tagName ());
 	if (element.tagName () == "varselector") {
-		widget = new RKVarSelector (element, gui);
+		widget = new RKVarSelector (element, gui, this);
 	} else if (element.tagName () == "radio") {
-		widget = new RKRadio (element, gui);
+		widget = new RKRadio (element, gui, this);
 	} else {
 		// TODO: to be changed, of course
-		widget = new RKVarSlot (element, gui);
+		widget = new RKVarSlot (element, gui, this);
 	}
 
 	widgets.insert (element.attribute ("id"), widget);

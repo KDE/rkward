@@ -34,29 +34,28 @@
 #include "nameselectcell.h"
 
 TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name){
-    resize( 600, 480 );
-    setCaption( i18n( "Form2" ) );
+	grid_layout = new QGridLayout(this);
 
-	grid_layout = new QGridLayout( this );
+    Splitter1 = new QSplitter(this);
+    Splitter1->setOrientation(QSplitter::Vertical);
 
-    Splitter1 = new QSplitter( this, "Splitter1" );
-    Splitter1->setOrientation( QSplitter::Vertical );
-
-    varview = new TwinTableMember( Splitter1, "varview" );
+    varview = new TwinTableMember(Splitter1, "varview");
     varview->setNumRows( 5 );
     varview->setNumCols( 5 );
 	for (int i=0; i < varview->numCols (); i++) {
 		for (int j=0; j < varview->numRows (); j++) {
-			varview->setItem (j, i, new RTableItem (varview));		
+			if (j == TYPE_ROW) {
+				varview->setItem (TYPE_ROW, i, new TypeSelectCell (varview));
+			} else if (j == NAME_ROW) {
+				varview->setItem (NAME_ROW, i, new NameSelectCell (varview));
+				((NameSelectCell *) varview->item (NAME_ROW, i))->init ();
+			} else {
+				varview->setItem (j, i, new RTableItem (varview));
+			}
 		}
 	}
 	varview->verticalHeader()->setLabel(0, i18n( "Label" ) );
 	varview->verticalHeader()->setLabel(TYPE_ROW, i18n( "Type" ) );
-	for (int i=0; i < varview->numCols (); i++) {
-		varview->setItem (TYPE_ROW, i, new TypeSelectCell (varview));
-		varview->setItem (NAME_ROW, i, new NameSelectCell (varview));
-		((NameSelectCell *) varview->item (NAME_ROW, i))->init ();
-	}
 	varview->verticalHeader()->setLabel(2, i18n( "e.g. format" ) );
 	varview->verticalHeader()->setLabel(3, i18n( "e.g. category" ) );
 	varview->verticalHeader()->setLabel(NAME_ROW, i18n( "Name" ) );
@@ -66,9 +65,12 @@ TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name)
     dataview = new TwinTableMember( Splitter1, "dataview" );
     dataview->setNumRows( 20 );
 	dataview->setNumCols( 5 );
+	dataview->setVarTable (varview);	// needed for initialization of RTableItems
 	for (int i=0; i < dataview->numCols (); i++) {
 		for (int j=0; j < dataview->numRows (); j++) {
-			dataview->setItem (j, i, new RTableItem (dataview));
+			RTableItem *rti;
+			dataview->setItem (j, i, rti = new RTableItem (dataview));
+			rti->checkValid ();
 		}
 	}
     dataview->verticalHeader()->setResizeEnabled (false);
@@ -83,7 +85,6 @@ TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name)
 	// these are to keep the two tables in sync
 	varview->setTwin (dataview);
 	dataview->setTwin (varview);
-	dataview->setVarTable (varview);
 	connect (dataview, SIGNAL (contentsMoving (int, int)), this, SLOT (scrolled (int, int)));
 	connect (varview, SIGNAL (contentsMoving (int, int)), this, SLOT (autoScrolled (int, int)));
 	connect (varview->horizontalHeader (), SIGNAL (clicked (int)), dataview, SLOT (columnClicked (int)));
@@ -100,7 +101,6 @@ TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name)
 	top_header_menu->insertItem (i18n ("Insert new variable before"), this, SLOT (insertColumnBefore ()));
 
 	// and the same for the left header
-
 	connect (dataview, SIGNAL (headerRightClick (int, int)), this, SLOT (headerRightClicked (int, int)));
 	left_header_menu = new QPopupMenu (this);
 	left_header_menu->insertItem (i18n ("Insert new case after"), this, SLOT (insertRowAfter ()));
@@ -131,14 +131,20 @@ void TwinTable::insertNewColumn (int where, QString name) {
 
 	varview->insertColumns (where);
 	for (int i=0; i < varview->numRows (); i++) {
-		varview->setItem (i, where, new RTableItem (varview));
+		if (i == TYPE_ROW) {
+			varview->setItem (TYPE_ROW, where, new TypeSelectCell (varview));
+		} else if (i == NAME_ROW) {
+			varview->setItem (NAME_ROW, where, new NameSelectCell (varview));
+			((NameSelectCell *) varview->item (NAME_ROW, where))->init ();
+		} else {
+			varview->setItem (i, where, new RTableItem (varview));
+		}
 	}
-	varview->setItem (TYPE_ROW, where, new TypeSelectCell (varview));
-	varview->setItem (NAME_ROW, where, new NameSelectCell (varview));
-	((NameSelectCell *) varview->item (NAME_ROW, where))->init ();
 	dataview->insertColumns (where);
 	for (int i=0; i < dataview->numRows (); i++) {
-		dataview->setItem (i, where, new RTableItem (dataview));
+		RTableItem *rti;
+		dataview->setItem (i, where, rti = new RTableItem (dataview));
+		rti->checkValid ();
 	}
 
 	if (name != "") {
@@ -154,7 +160,9 @@ void TwinTable::insertNewRow (int where=-1) {
 	dataview->insertRows (where);
 
 	for (int i=0; i < dataview->numCols (); i++) {
-		dataview->setItem (where, i, new RTableItem (dataview));
+		RTableItem *rti;
+		dataview->setItem (where, i, rti = new RTableItem (dataview));
+		rti->checkValid ();
 	}
 }
 

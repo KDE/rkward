@@ -189,6 +189,10 @@ void RKwardDoc::deleteContents()
 }
 
 void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
+	// flush pending edit operations
+	ttable->varview->endEdit (ttable->varview->currentRow (), ttable->varview->currentColumn (), true, false);
+	ttable->dataview->endEdit (ttable->dataview->currentRow (), ttable->dataview->currentColumn (), true, false);	
+
 	QString command;
 
 	// first push the data-table

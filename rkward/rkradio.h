@@ -33,7 +33,7 @@ class QRadioButton;
 
 class RKRadio : public RKPluginWidget  {
 public: 
-	RKRadio(const QDomElement &element, QWidget *parent);
+	RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKRadio();
 private:
 	QButtonGroup *group;

@@ -24,14 +24,19 @@ class QWidget;
 class QListView;
 class QDomElement;
 
-/**
-  *@author Thomas Friedrichsmeier
+/** This is an especially important RK-plugin-widget. It provides a list of variables
+(derived from the document's table), that can be selected for statistical analysis.
+It's major counterpart is the RKVarSlot-class, which "takes" variables selected from
+this list. Most of the time, you'll only have a single VarSelector in a GUI, but
+you can have more than one, e.g. for serving conceptionally different VarSlots.
+
+@author Thomas Friedrichsmeier
   */
 
 class RKVarSelector : public RKPluginWidget {
    Q_OBJECT
 public: 
-	RKVarSelector(const QDomElement &element, QWidget *parent);
+	RKVarSelector(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKVarSelector();
 private:
 	QListView *list_view;

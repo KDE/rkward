@@ -45,6 +45,7 @@ public:
 signals:
 	void headerRightClick (int row, int col);
 private:
+friend class RKwardDoc;
 	TwinTableMember *twin;
 	TwinTableMember *var_table;
 	static bool changing_width;

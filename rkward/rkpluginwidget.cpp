@@ -20,9 +20,19 @@
 #include <qwidget.h>
 #include <qdom.h>
 
-RKPluginWidget::RKPluginWidget(const QDomElement &element, QWidget *parent) : QBoxLayout (0, QBoxLayout::TopToBottom, 6, 6) {
+RKPluginWidget::RKPluginWidget(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : QBoxLayout (0, QBoxLayout::TopToBottom, 6, 6) {
 	_parent = parent;
+	_plugin = plugin;
 }
 
 RKPluginWidget::~RKPluginWidget(){
+}
+
+QString RKPluginWidget::complaints () {
+	QString empty;
+	return empty;
+}
+
+bool RKPluginWidget::isSatisfied () {
+	return true;
 }

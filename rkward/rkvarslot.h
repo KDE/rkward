@@ -25,13 +25,13 @@ class QLineEdit;
 class QDomElement;
 class QPushButton;
 
-/**
+/** An RKVarSlot takes a single variable from an RKVarSelector.
   *@author Thomas Friedrichsmeier
   */
 
 class RKVarSlot : public RKPluginWidget {
 public: 
-	RKVarSlot(const QDomElement &element, QWidget *parent);
+	RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKVarSlot();
 private:
 	QLineEdit *line_edit;

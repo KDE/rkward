@@ -19,23 +19,41 @@
 #define RKPLUGINWIDGET_H
 
 #include <qlayout.h>
+#include <qstring.h>
 
 class QWidget;
 class QLabel;
 class QDomElement;
+class RKPlugin;
 
-/**
-  *@author Thomas Friedrichsmeier
+/** The baseclass for all RK-plugin-widgets, i.e. widgets, that are used in the
+GUI for the plugins. It is mostly used as a skeleton and contains some abstract
+functions to be implemented in the respective derived classes.
+Note, that although being called a "widget", this class is actually a layout. This
+is due to the fact, that most GUI-elements will want to lay themselves out in some
+way, most importantly for including labels, but also for some more complex layouting
+tasks. It's still called a "widget", because it essentially functions as one.
+
+@author Thomas Friedrichsmeier
   */
 
 class RKPluginWidget : public QBoxLayout {
 public: 
-	RKPluginWidget(const QDomElement &element, QWidget *parent);
+	RKPluginWidget(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	virtual ~RKPluginWidget();
 	QWidget *parent () { return _parent; };
+/** Returns the plugin, this widget belongs to */	
+	RKPlugin *plugin () { return _plugin; }
 	QLabel *label;
+/** Returns, whether the requirements for this widget are fulfilled.
+	baseclass-implementation returns true. */
+	virtual bool isSatisfied ();
+/** Returns any complaints, this widget may have.
+	baseclass-implementation returns an empty string */
+	virtual QString complaints ();
 private:
 	QWidget *_parent;
+	RKPlugin *_plugin;
 };
 
 #endif

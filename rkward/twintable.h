@@ -58,6 +58,7 @@ public slots:
 	void viewClearSelection ();
 	void dataClearSelection ();
 private:
+friend class RKwardDoc;
 	QGridLayout *grid_layout;
     QSplitter* Splitter1;
 /** PopupMenu shown when top header is right-clicked */

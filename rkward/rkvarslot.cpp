@@ -23,7 +23,7 @@
 #include <qpushbutton.h>
 
 
-RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent) : RKPluginWidget (element, parent) {
+RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
 	qDebug ("creating varselector");
 
 	QGridLayout *g_layout = new QGridLayout (3, 3, 6);
@@ -38,6 +38,7 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent) : RKPluginWidg
 	g_layout->addWidget (label, 0, 2);
 
 	line_edit = new QLineEdit (parent);
+	line_edit->setReadOnly (true);
 	g_layout->addWidget (line_edit, 1, 2);
 
 	addLayout (g_layout);

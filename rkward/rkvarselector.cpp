@@ -22,7 +22,7 @@
 #include <qdom.h>
 #include <qlabel.h>
 
-RKVarSelector::RKVarSelector(const QDomElement &element, QWidget *parent) : RKPluginWidget (element, parent) {
+RKVarSelector::RKVarSelector(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
 	qDebug ("creating varselector");
 	list_view = new QListView (parent);
 	label = new QLabel (element.attribute ("label", "Select Variable(s)"), parent);
