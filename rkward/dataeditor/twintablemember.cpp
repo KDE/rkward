@@ -117,3 +117,12 @@ void TwinTableMember::checkColValid (int col) {
 		((RTableItem *) item (row++, col))->checkValid ();
 	}
 }
+
+QWidget *TwinTableMember::beginEdit (int row, int col, bool replace) {
+	if (numSelections ()) {
+		QTableSelection sel = selection (currentSelection ());
+		if (sel.bottomRow () != sel.topRow ()) return 0;
+		if (sel.leftCol () != sel.rightCol ()) return 0;
+	}
+	return QTable::beginEdit (row, col, replace);
+}

@@ -1,12 +1,19 @@
 The following list of TODO-items is NOT complete!
+Also, plans change frequently. If something is listed for a specific release, that's no more than a rough plan.
 
 stuff to do before 0.2.8 release
+- install / update packages
+
+stuff to do before 0.2.9 release
+- Twintable/RKEditorDataFrame
+	- merge the two classes
+	- rework type-select cell (actually all cells have to be reworked, but the type-select cell is worst)
+	- rework table not to keep QTableItems around for all cells; store data efficiently
+	- more efficient syncing: fetch only the values actually needed instead of the whole table
 - Object editing / modification tracking:
 	- maybe store data directly with objects? Probably not.
-	- functions to set double/int/string-vectors directly
-- Twintable/RKEditorDataFrame
-	- rework type-select cell
-	- merge the two classes
+	- functions to set double/int/string-vectors directly. Use in paste-operations
+- convert plugin-widgets to QWidgets instead of QLayouts
 - pick some from below:
 
 (relatively) small stuff to do soon
@@ -14,7 +21,8 @@ stuff to do before 0.2.8 release
 - setValue-API for plugin-widgets and copying of values when switching from wizard to dialog-interface
 - improve and use debugging framework
 - cleanup label-mess for plugin-widgets
-- convert plugin-widgets to QWidgets instead of QLayouts
+- add component-wrapper and allow embedded plugins
+- setEnabled (), setVisible ()-API (trivial, once the plugin-widgets are QWidgets)
 - formula-widget:
 	- use smart sorting, esp. of generated string
 	- add labels, add "up to level" option

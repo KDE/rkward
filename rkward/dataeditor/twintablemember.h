@@ -66,6 +66,8 @@ protected slots:
 protected:
 	bool eventFilter (QObject *object, QEvent *event);
 	void focusOutEvent (QFocusEvent *e);
+/** reimplemented from QTable to not begin editing if a selection is in place */
+	QWidget *beginEdit (int row, int col, bool replace);
 };
 
 #endif

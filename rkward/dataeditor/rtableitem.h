@@ -31,9 +31,9 @@ class QRect;
   *@author Thomas Friedrichsmeier
   */
 
-class RTableItem : public QTableItem  {
+class RTableItem : public QTableItem {
 public: 
-	RTableItem(TwinTableMember *table, QTableItem::EditType edit_type=OnTyping);
+	RTableItem (TwinTableMember *table, QTableItem::EditType edit_type=OnTyping);
 	~RTableItem();
 /** Returns, whether this cell holds a value that is legal for it */
 	bool isValid () { return valid; };
@@ -43,6 +43,7 @@ public:
 	virtual void checkValid ();
 	RObject::VarType type ();
 	TwinTableMember *ttm ();
+	QWidget *createEditor () const;
 protected:
 friend class TwinTable;
 	void paint (QPainter *p, const QColorGroup &cg, const QRect &cr, bool selected);

@@ -19,8 +19,9 @@
 #include "typeselectcell.h"
 
 #include <qpainter.h>
+#include <qlineedit.h>
 
-RTableItem::RTableItem(TwinTableMember *table, QTableItem::EditType edit_type) : QTableItem (table, edit_type, "") {
+RTableItem::RTableItem(TwinTableMember *table, QTableItem::EditType edit_type) : QTableItem (table, edit_type) {
 	valid = false;	// for now
 }
 
@@ -33,6 +34,14 @@ TwinTableMember *RTableItem::ttm () {
 
 RObject::VarType RTableItem::type () {
 	return ((TypeSelectCell *) ttm ()->varTable ()->item (TYPE_ROW, col ()))->type ();
+}
+
+QWidget *RTableItem::createEditor () const {
+	QLineEdit *e = new QLineEdit (table ()->viewport ());
+	e->setFrame (false);
+	e->setText (text ());
+	e->selectAll ();
+	return e;
 }
 
 void RTableItem::checkValid () {
