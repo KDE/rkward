@@ -1,16 +1,25 @@
 stuff to do before the next release
-- rework plugin-directory-structure
-- rework plugin-XML-format
-- rework settings
 - make locations configurable
 	- temporary files
-	- common.php
-	- PHP-binary
 	- R_HOME
-- get rid of ui in rkwatch, rksettings
-- add options to show/hide output and watch
+- check for good values/warn
+	- PHP-binary
+	- common.php
+	- R_HOME
+- get rid of separate ui-file in rkwatch
+- add option to show/hide output
 - add a few plugins
 - basic error-handling in plugins
 
+small stuff to do soon
+- plugins-scanning: don't duplicate everything
+- rework plugin-XML-format
+- add checkboxes etc.
+
 stuff to do before the thing is usable
+- use a cool new RHistory-Widget for the RKWatch
+- add a help-system
 - mostly everything
+
+stuff to do before a 1.0 release
+- handle graphics

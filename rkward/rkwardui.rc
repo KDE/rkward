@@ -9,8 +9,7 @@
 		<Action name="paste_to_table"/>
 	</Menu>
 	<Menu name="settings"><text>&amp;Settings</text>
-		<Action name="settings_r"></Action>
-		<Action name="settings_plugins"></Action>
+		<Action name="configure"></Action>
 	</Menu>
 	<Menu name="windows"><text>&amp;Windows</text>
 		<Action name="settings_rkwatch"/>

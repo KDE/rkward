@@ -42,10 +42,10 @@
 #include "rktext.h"
 #include "rkradio.h"
 
-RKPlugin::RKPlugin(RKwardApp *parent, const QDomElement &element, QString filename) {
+RKPlugin::RKPlugin(RKwardApp *parent, const QString &label, const QString &filename) {
 	app = parent;
 	RKPlugin::filename = filename;
-	_label = element.attribute ("label", "untitled");
+	_label = label;
 	backend = 0;
 }
 
@@ -88,7 +88,7 @@ void RKPlugin::activated () {
 	// initialize the PHP-backend with the code-template
 	dummy = QFileInfo (f).dirPath () + "/code.php";
 	backend = new PHPBackend ();
-	backend->initTemplate (dummy, this);
+	if (!backend->initTemplate (dummy, this)) return;
 	
 	// initialize code/warn-views
 	changed ();
@@ -311,7 +311,8 @@ void RKPlugin::doRCall (const QString &call) {
 }
 
 void RKPlugin::gotRResult (RCommand *command) {
-	backend->gotRCallResult (command->output());
+// since R-call are (will be) asynchronous, we need to expect incoming data after the backend has been torn down
+	if (backend) backend->gotRCallResult (command->output());
 }
 
 QString RKPlugin::getVar (const QString &id) {

@@ -70,6 +70,7 @@ friend class RKPlugin;
 	bool busy_writing;
 	bool doing_command;
 	bool doing_final;
+	bool startup_done;
 	
 	struct PHPCommand {
 	/// the temporary file where the command is stored

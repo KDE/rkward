@@ -38,10 +38,11 @@
 class RKwardDoc;
 class RKwardView;
 class RSettings;
-class PluginSettings;
 class RKMenu;
 class QTimer;
 class RKOutputWindow;
+class RKSettingsModule;
+class RKSettings;
 
 /**
   * The base class for RKward application windows. It sets up the main
@@ -174,11 +175,8 @@ class RKwardApp : public KMainWindow
 	/** shows/hides the RKWatch-window */
 	void slotShowRKWatch ();
 
-	/** configures R-settings */
-	void slotConfigureR ();
-
-	/** configures Plugin-settings */
-	void slotConfigurePlugins ();
+	/** configures RKward-settings */
+	void slotConfigure ();
 
 /** Init-procedures to be done after the exec-loop was started */
 	void doPostInit ();
@@ -208,28 +206,21 @@ class RKwardApp : public KMainWindow
     KToggleAction* viewToolBar;
     KToggleAction* viewStatusBar;
 	KAction* showRKWatch;
-	KAction* configureR;
-	KAction* configurePlugins;
+	KAction* configure;
 
-	friend class RSettings;
-	QString path_to_r;
-	bool opt_r_nosave;
-	bool opt_r_slave;
-	void fetchRSettings (RSettings *from, bool apply);
-
-	friend class PluginSettings;
-	void fetchPluginSettings (PluginSettings *from, bool apply);
-	QString plugin_dir;
-
+	friend class RKSettingsModule;
+	friend class RKSettingsModulePlugins;
+	friend class RKSettings;
+	
 /** Does pasting (called from the respective slots) */
 	void doPaste ();
 
 /** Finds plugins and inserts them into the menu-structure */
 	void initPlugins ();
 
-/** Sets up an individual plugin */
-	void initPlugin (const QString & filename);
-
+/** recursively initialize the plugins in this directory */
+	int initPluginDir (const QString & dirname, RKMenu *parent);
+	
 	QMap<QString, RKMenu*> rkmenus;
 
 /** Used to receive a signal during startup AFTER the exec loop was entered */

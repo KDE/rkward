@@ -20,13 +20,18 @@
 
 #include <qfile.h>
 
+#include <kmessagebox.h>
+#include <klocale.h>
+
 #include "rkplugin.h"
+#include "rksettingsmodulephp.h"
 
 PHPBackend::PHPBackend() {
 	qDebug ("TODO: make location of PHP-binary configurable");
 	php_process = 0;
 	eot_string="#RKEND#\n";
-	idle = busy_writing = false;
+	busy_writing = false;
+	idle = true;
 	doing_final = false;
 }
 
@@ -44,8 +49,8 @@ bool PHPBackend::initTemplate (const QString &filename, RKPlugin *responsible) {
 	_responsible = responsible;
 	
 	php_process = new KProcess (this);
-	*php_process << "php";
-	*php_process << "common.php";
+	*php_process << RKSettingsModulePHP::phpBin();
+	*php_process << (RKSettingsModulePHP::filesPath() + "/common.php");
 	
 	// we have to be connect at all times! Otherwise the connection will be gone for good.
 	//connect (php_process, SIGNAL (receivedStderr (KProcess *, char*, int)), this, SLOT (gotError (KProcess *, char*, int)));
@@ -53,11 +58,12 @@ bool PHPBackend::initTemplate (const QString &filename, RKPlugin *responsible) {
 	connect (php_process, SIGNAL (receivedStdout (KProcess *, char*, int)), this, SLOT (gotOutput (KProcess *, char*, int)));
 	
 	if (!php_process->start (KProcess::NotifyOnExit, KProcess::All)) {
-		qDebug ("could not launch php");
+		KMessageBox::error (0, i18n ("The PHP backend could not be started. Check whether you have correctly configured the location of the PHP-binary (Settings->Configure Settings->PHP backend)"), i18n ("PHP-Error"));
+		_responsible->try_destruct();
 		return false;
 	}
 
-	idle = busy_writing = doing_command = false;
+	idle = busy_writing = doing_command = startup_done = false;
 
 	// start the real template
 	callFunction ("include (\"" + filename + "\");");
@@ -70,7 +76,8 @@ void PHPBackend::closeTemplate () {
 	delete php_process;
 	php_process = 0;
 	
-	idle = busy_writing = false;
+	busy_writing = false;
+	idle = true;
 	
 	while (command_stack.count ()) {
 		command_stack.first ()->file->unlink ();
@@ -144,6 +151,7 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 	int i;
 	bool have_data = true;;
 	bool have_request = false;
+	
 	// is there a request in the output stream?
 	if ((i = output.find (eot_string)) >= 0) {
 		have_request = true;
@@ -161,6 +169,13 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 	
 	// pending data is always first in a stream, so process it first, too
 	if (have_data) {
+		if (!startup_done) {
+				closeTemplate ();
+				KMessageBox::error (0, i18n ("There has been an error\n(\"") + data.stripWhiteSpace () + i18n ("\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKward or an invalid setting for the location of the PHP support files. Check the settings (Settings->Configure Settings->PHP backend) and try again."), i18n ("PHP-Error"));
+				_responsible->try_destruct();
+				return;
+		}
+		
 		if (!doing_final) {
 			_responsible->updateCode (data);
 		} else {
@@ -181,7 +196,7 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 	
 	if (have_request) {
 		if (request == "requesting code") {
-			idle = true;
+			idle = startup_done = true;
 			tryNextFunction ();
 			if (idle) {
 				if (_responsible->backendIdle()) return;	// self-destruct imminent. quit
@@ -197,6 +212,12 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 			qDebug ("requested rcall: \"" + requested_call + "\"");
 			_responsible->doRCall (requested_call);
 			idle = false;
+		} else if (request.startsWith ("PHP-Error")) {
+				QString error = request.remove ("PHP-Error");
+				closeTemplate ();
+				KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"") + error.stripWhiteSpace () + i18n ("\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings."), i18n ("PHP-Error"));
+				_responsible->try_destruct();
+				return;
 		}
 		return;
 	}

@@ -42,10 +42,12 @@
 #include "rkwarddoc.h"
 #include "rkdrag.h"
 #include "rkwatch.h"
-#include "rsettings.h"
-#include "pluginsettings.h"
 #include "rkmenu.h"
+#include "rkplugin.h"
 #include "rkoutputwindow.h"
+#include "rksettings.h"
+#include "rksettingsmoduleplugins.h"
+#include "rksettingsmoduler.h"
 
 #define ID_STATUS_MSG 1
 
@@ -106,92 +108,89 @@ void RKwardApp::doPostInit () {
 void RKwardApp::initPlugins () {
 	slotStatusMsg(i18n("Setting up plugins..."));
 
-	QDir dir = QDir (plugin_dir, "*.rkward", QDir::Name, QDir::Files | QDir::Readable);
-
-	for (unsigned int i = 0; i < dir.count (); i++) {
-		qDebug (dir[i]);
-		initPlugin (plugin_dir + dir[i]);
+	if (!initPluginDir (RKSettingsModulePlugins::pluginDir (), 0)) {
+		KMessageBox::information (0, i18n ("Could not find any plugins!\nRKWard is pretty useless without plugins, so you should use Settings->Plugins to import some.\n"), i18n ("No plugins found"));
 	}
-
-	if (!dir.count ()) {
-		KMessageBox::information (0, i18n ("Could not find any plugins!\nRKWard is pretty useless without plugins, so you should use Settings->Plugins to import some.\n"),
-			    i18n ("No plugins found"));
-	}
-
+	
 	slotStatusMsg(i18n("Ready."));
 }
 
-void RKwardApp::initPlugin (const QString & filename) {
+int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
+	int num_plugins = 0;
+	
+	// list directories only
+	QDir dir = QDir (dirname, QString::null, QDir::Name, QDir::Dirs);
+	
+	// first get and parse the description for the current directory
 	int error_line, error_column;
 	QString error_message, dummy;
 	QDomDocument doc;
-	QFile f(filename);
-	if (!f.open(IO_ReadOnly))
-		qDebug ("Could not open file for reading: " + filename);
-	if (!doc.setContent(&f, false, &error_message, &error_line, &error_column)) {
-		f.close();
-		qDebug ("parsing-error in: " + filename);
+
+	QFile description (dir.filePath ("description.xml"));
+	if (!description.open (IO_ReadOnly)) {
+		qDebug ("Could not open file for reading: " + description.name ());
+		description.close ();
+		return 0;
+	}
+	if (!doc.setContent(&description, false, &error_message, &error_line, &error_column)) {
+		description.close();
+		qDebug ("parsing-error in: " + description.name ());
 		qDebug ("Message: " + error_message);
 		qDebug ("Line: %d", error_line);
 		qDebug ("Column: %d", error_column);
-		return;
+		return 0;
 	}
-	f.close();
+	description.close();
 
 	QDomElement element = doc.documentElement ();
-	QDomNodeList children = element.elementsByTagName("location");
+	QDomNodeList children = element.elementsByTagName("entry");
 	element = children.item (0).toElement ();
-
-	if (!rkmenus.contains (element.attribute ("tag"))) {
-		RKMenu *sub = new RKMenu (menuBar (), element.attribute ("tag"), element.attribute ("label", "untitled"), this);
-		rkmenus.insert (element.attribute ("tag"), sub);
-		menuBar ()->insertItem (sub->label (), sub);
+	
+	RKMenu *menu = 0;
+	if (element.attribute ("type") == "menu") {
+		if (!parent) {
+			menu = new RKMenu (menuBar (), element.attribute ("id"), element.attribute ("label", "untitled"), this);
+			rkmenus.insert (element.attribute ("id"), menu);
+			menuBar ()->insertItem (menu->label (), menu);
+		} else {
+			menu = new RKMenu (parent, element.attribute ("id"), element.attribute ("label", "untitled"), this);
+			parent->addSubMenu (element.attribute ("id"), menu);
+		}
+	} else {
+		if (!parent) {
+			qDebug ("can't add plugin on the top-level menu");
+		} else {
+			parent->addEntry (element.attribute ("id"), new RKPlugin (this, element.attribute ("label", "untitled"), description.name ()));
+			num_plugins++;
+		}
 	}
-	rkmenus[element.attribute ("tag")]->place (element, filename);
+
+	if (menu) {
+		// get subdirectories if applicable
+		for (unsigned int i = 0; i < dir.count (); i++) {
+			qDebug (dir[i]);
+			if ((dir[i] != ".") && (dir[i] != "..")) {
+				num_plugins += initPluginDir (dir.filePath (dir[i]), menu);
+			}
+		}
+	}
+	
+	return num_plugins;
 }
 
 void RKwardApp::startR () {
 	r_inter.shutdown ();
 
 	QStrList r_line;
-	r_line.append (path_to_r);
-	if (opt_r_nosave) {
-		r_line.append ("--no-save");
-	}
-	if (opt_r_slave) {
-		r_line.append ("--slave");
-	}
+	r_line.append ("dummy");
+	r_line.append ("dummy2");
+	
 	r_inter.startR (r_line);
 }
 
-void RKwardApp::slotConfigureR () {
-	RSettings *settings = new RSettings (this);
+void RKwardApp::slotConfigure () {
+	RKSettings *settings = new RKSettings (this);
 	settings->show ();
-}
-
-void RKwardApp::fetchRSettings (RSettings *from, bool apply) {
-	if (apply) {
-		opt_r_nosave = from->no_save->isChecked ();
-		opt_r_slave = from->slave->isChecked ();
-		path_to_r = from->path_to_r->text ();
-		saveOptions ();
-		startR ();
-	}
-	delete from;
-}
-
-void RKwardApp::slotConfigurePlugins () {
-	PluginSettings *settings = new PluginSettings (this);
-	settings->show ();
-}
-
-void RKwardApp::fetchPluginSettings (PluginSettings *from, bool apply) {
-	if (apply) {
-		plugin_dir = from->pathEdit->text ();
-		saveOptions ();
-		initPlugins ();
-	}
-	delete from;
 }
 
 void RKwardApp::initActions()
@@ -217,8 +216,7 @@ void RKwardApp::initActions()
   viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
   viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
 	showRKWatch = new KAction (i18n ("Toggle RKWatch-Window"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "settings_rkwatch");
-	configureR = new KAction (i18n ("R Settings"), 0, 0, this, SLOT(slotConfigureR ()), actionCollection(), "settings_r");
-	configurePlugins = new KAction (i18n ("Plugin Settings"), 0, 0, this, SLOT(slotConfigurePlugins ()), actionCollection(), "settings_plugins");
+	configure = new KAction (i18n ("Configure Settings"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 
   fileNewWindow->setStatusText(i18n("Opens a new application window"));
   fileNew->setStatusText(i18n("Creates a new document"));
@@ -299,12 +297,8 @@ void RKwardApp::saveOptions()
   config->writeEntry("Show Statusbar",viewStatusBar->isChecked());
   config->writeEntry("ToolBarPos", (int) toolBar("mainToolBar")->barPos());
 
-	config->setGroup ("R-Settings");
-	config->writeEntry ("Option --no-save", opt_r_nosave);
-	config->writeEntry ("Option --slave", opt_r_slave);
-	config->writeEntry ("Path to R", path_to_r);
-	config->writeEntry ("Plugin-Directory", plugin_dir);
-
+	RKSettings::saveSettings (config);
+	
   fileOpenRecent->saveEntries(config,"Recent Files");
 }
 
@@ -329,19 +323,7 @@ void RKwardApp::readOptions()
   toolBarPos=(KToolBar::BarPosition) config->readNumEntry("ToolBarPos", KToolBar::Top);
   toolBar("mainToolBar")->setBarPos(toolBarPos);
 	
-	config->setGroup ("R-Settings");
-	opt_r_nosave = config->readBoolEntry ("Option --no-save", true);
-	opt_r_slave = config->readBoolEntry ("Option --slave", true);
-	path_to_r = config->readEntry ("Path to R", "/usr/bin/R");
-
-	plugin_dir = config->readEntry ("Plugin-Directory", "#unknown#");
-	if (plugin_dir == "#unknown#") {
-		plugin_dir = KGlobal::dirs()->findResourceDir("plugins", "50.50.50.t.test.rkward");
-		if (plugin_dir == "") {
-			// try our luck with a relative path
-			plugin_dir = "plugins/";
-		}
-	}
+	RKSettings::loadSettings (config);
 
   // initialize the recent file list
   fileOpenRecent->loadEntries(config,"Recent Files");

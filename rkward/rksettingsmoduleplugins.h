@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rsettings.h  -  description
+                          rksettingsmoduleplugins  -  description
                              -------------------
-    begin                : Wed Nov 6 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    begin                : Wed Jul 28 2004
+    copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -14,31 +14,44 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+#ifndef RKSETTINGSMODULEPLUGINS_H
+#define RKSETTINGSMODULEPLUGINS_H
 
-#ifndef RSETTINGS_H
-#define RSETTINGS_H
-
-#include <rsettingsui.h>
+#include <rksettingsmodule.h>
 
 #include <qstring.h>
 
-/**
-  *@author Thomas Friedrichsmeier
-  */
+class QPushButton;
+class QLineEdit;
 
-class RKwardApp;
-
-class RSettings : public RSettingsUi  {
+/** The settings-module for plugin specific settings
+@author Thomas Friedrichsmeier
+*/
+class RKSettingsModulePlugins : public RKSettingsModule {
 	Q_OBJECT
-public: 
-	RSettings(RKwardApp *parent);
-	~RSettings();
+public:
+    RKSettingsModulePlugins (RKSettings *gui, RKwardApp *parent);
+
+    ~RKSettingsModulePlugins ();
+	
+	bool hasChanges ();
+	void applyChanges ();
+	void save (KConfig *config);
+	
+	static void saveSettings (KConfig *config);
+	static void loadSettings (KConfig *config);
+	
+	QString caption ();
+	
+	static QString &pluginDir () { return plugin_dir; };
 public slots:
-	void slotCancel ();
-	void slotReStart ();
-	void slotBrowse ();
+	void browse ();
+	void pathChanged (const QString &);
 private:
-	RKwardApp *_parent;
+	QPushButton *browse_button;
+	QLineEdit *location_edit;
+	
+	static QString plugin_dir;
 };
 
 #endif

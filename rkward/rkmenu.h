@@ -37,13 +37,15 @@ public:
 	RKMenu(RKMenu *parent, QString tag, QString label, RKwardApp *app);
 	RKMenu(QMenuBar *parent, QString tag, QString label, RKwardApp *app);
 	~RKMenu();
-	RKPlugin *place (const QDomElement &element, const QString &filename);
+	void addSubMenu (const QString &id, RKMenu *submenu);
+	void addEntry (const QString &id, RKPlugin *plugin);
 	QString label ();
 private:
 /** TODO: Probably we neither need to keep the tag, the parent, nor is_top_level.
 	And probably, we don't ever have to propagate RKPlugin *s backwards.
 	But - we'll clean up later... */
 	QMap<QString, RKMenu*> submenus;
+	QMap<QString, RKPlugin*> entries;
 	bool is_top_level;
 	QString _tag;
 	QString _label;

@@ -41,7 +41,8 @@ class RCommand;
 class RKPlugin : public QObject {
 	Q_OBJECT
 public: 
-	RKPlugin(RKwardApp *parent, const QDomElement &element, QString filename);
+// TODO: pass directory only, not filename
+	RKPlugin(RKwardApp *parent, const QString &label, const QString &filename);
 	~RKPlugin();
 	QString label () { return _label; };	
 //	QString tag () { return _tag; }

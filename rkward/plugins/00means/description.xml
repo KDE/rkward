@@ -1,0 +1,5 @@
+<!DOCTYPE rkplugin>
+
+<document>
+	<entry type="menu" id="means" label="Means"/>
+</document>

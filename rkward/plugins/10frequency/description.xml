@@ -1,0 +1,5 @@
+<!DOCTYPE rkplugin>
+
+<document>
+	<entry type="menu" id="frequency" label="Frequency"/>
+</document>

@@ -38,6 +38,9 @@ function getInput ($prompt) {
 }
 
 fclose (STDIN);
+
+ini_set ("error_prepend_string", "#RKEND#\nPHP-Error");
+
 while (1) {
 	include (getInput ("requesting code"));
 }

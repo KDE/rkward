@@ -3,19 +3,7 @@
 <!-- This is a simple example, of how a "plugin" might be configured. -->
 
 <document>
-
-<!-- The location-section determines, where the function will be placed in the
-menu-structure and how it will be labeled. The "tag"-attributes are used
-to identify the same menu across different plugins. The "label"-attributes will
-have to be translated somehow. -->
-
-	<location tag="analyse" label="&amp;Analyse">
-		<location tag="means" label="Means">
-			<location tag="t_tests" label="T-Tests">
-				<entry label="Independed Samples T-Test"/>
-			</location>
-		</location>
-	</location>
+	<entry type="entry" id="istt" label="Independed Samples T-Test"/>
 
 <!-- The layout-section takes care of the layout of the GUI for this plugin. -->
 
@@ -35,12 +23,5 @@ have to be translated somehow. -->
 			</column>
 		</row>
 	</layout>
-
-<!-- The code-section specifies, how the selected options will be translated
-into code -->
-
-	<code>
-		print ("Comparing $x.name$ ($x.label$) against $y.name$ ($y.label$)");
-		t.test ($x$, $y$, "$hypothesis$")
-	</code>
+	
 </document>

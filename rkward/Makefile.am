@@ -3,12 +3,12 @@ bin_PROGRAMS = rkward
 
 ## INCLUDES were found outside kdevelop specific part
 
-rkward_SOURCES = labelcell.cpp rcommand.cpp pluginsettings.cpp pluginsettingsui.ui rktext.cpp rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp rsettingsui.ui rsettings.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rkwatch_ui.ui rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp view.ui rkwarddoc.cpp rkward.cpp main.cpp rembed.cpp rembedinternal.cpp phpbackend.cpp rkpluginguiwidget.cpp rkoutputwindow.cpp
+rkward_SOURCES = labelcell.cpp rcommand.cpp rktext.cpp rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rkwatch_ui.ui rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp view.ui rkwarddoc.cpp rkward.cpp main.cpp rembed.cpp rembedinternal.cpp phpbackend.cpp rkpluginguiwidget.cpp rkoutputwindow.cpp rksettingsmodule.cpp rksettingsmoduleplugins.cpp rksettingsmoduler.cpp rksettingsmodulephp.cpp rksettings.cpp
 rkward_LDADD   =  $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) $(LIBSOCKET) -lR
 
-SUBDIRS = plugins 
+SUBDIRS = plugins
 
-EXTRA_DIST = main.cpp rkward.cpp rkward.h rkwarddoc.cpp rkwarddoc.h rkwardui.rc rkward.desktop lo32-app-rkward.png lo16-app-rkward.png view.ui twintable.cpp twintable.h twintablemember.cpp twintablemember.h rkdrag.cpp rkdrag.h rinterface.cpp rinterface.h rkwatch_ui.ui rkwatch.cpp rkwatch.h typeselectcell.cpp typeselectcell.h rtableitem.cpp rtableitem.h nameselectcell.cpp nameselectcell.h rsettings.cpp rsettings.h rsettingsui.ui rkmenu.cpp rkmenu.h rkplugin.cpp rkplugin.h rkpluginwidget.cpp rkpluginwidget.h rkvarselector.cpp rkvarselector.h rkvarslot.cpp rkvarslot.h rkradio.cpp rkradio.h rktext.cpp rktext.h pluginsettingsui.ui pluginsettings.cpp pluginsettings.h rcommand.cpp rcommand.h labelcell.cpp labelcell.h rembed.h rembedinternal.h phpbackend.h common.php rkpluginguiwidget.h rkoutputwindow.h
+EXTRA_DIST = main.cpp rkward.cpp rkward.h rkwarddoc.cpp rkwarddoc.h rkwardui.rc rkward.desktop lo32-app-rkward.png lo16-app-rkward.png view.ui twintable.cpp twintable.h twintablemember.cpp twintablemember.h rkdrag.cpp rkdrag.h rinterface.cpp rinterface.h rkwatch_ui.ui rkwatch.cpp rkwatch.h typeselectcell.cpp typeselectcell.h rtableitem.cpp rtableitem.h nameselectcell.cpp nameselectcell.h rkmenu.cpp rkmenu.h rkplugin.cpp rkplugin.h rkpluginwidget.cpp rkpluginwidget.h rkvarselector.cpp rkvarselector.h rkvarslot.cpp rkvarslot.h rkradio.cpp rkradio.h rktext.cpp rktext.h rcommand.cpp rcommand.h labelcell.cpp labelcell.h rembed.h rembedinternal.h phpbackend.h common.php rkpluginguiwidget.h rkoutputwindow.h rksettings.h rksettingsmodule.h rksettingsmoduleplugins.h
 
 install-data-local:
 	$(mkinstalldirs) $(kde_appsdir)/Applications/
@@ -46,7 +46,7 @@ uninstall-local:
 # kde_designerdir     Where Qt Designer plugins should go to (new in KDE 3).
 
 # set the include path for X, qt and KDE
-INCLUDES= $(all_includes)
+INCLUDES = $(all_includes)
 
 METASOURCES = AUTO
 
@@ -62,3 +62,6 @@ messages: rc.cpp
 	 $(XGETTEXT) $$LIST -o $(podir)/rkward.pot; \
 	fi
 
+noinst_HEADERS =  rksettingsmodule.h rksettingsmoduleplugins.h rksettingsmoduler.h rksettingsmodulephp.h rksettings.h
+phpfilesdir = $(kde_datadir)/rkward/phpfiles
+phpfiles_DATA =  common.php

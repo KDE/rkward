@@ -45,20 +45,12 @@ QString RKMenu::label () {
 	return _label;
 }
 
-RKPlugin *RKMenu::place (const QDomElement &element, const QString &filename) {
-	QDomNodeList children = element.childNodes ();
-	QDomElement child = children.item (0).toElement ();
+void RKMenu::addSubMenu (const QString &id, RKMenu *submenu) {
+	submenus.insert (id, submenu);
+	insertItem (submenu->label (), submenu);
+}
 
-	if (child.tagName () == "location") {
-		if (!submenus.contains (child.attribute ("tag"))) {
-			RKMenu *sub = new RKMenu (this, child.attribute ("tag"), child.attribute ("label", "untitled"), app);
-			submenus.insert (child.attribute ("tag"), sub);
-			insertItem (sub->label (), sub);
-		} 
-		return submenus[child.attribute ("tag")]->place (child, filename);
-	} else {		// entry
-		RKPlugin *plug = new RKPlugin (app, child, filename);
-		insertItem (plug->label (), plug, SLOT (activated ()));
-		return plug;
-	}
+void RKMenu::addEntry (const QString &id, RKPlugin *plugin) {
+	entries.insert (id, plugin);
+	insertItem (plugin->label (), plugin, SLOT (activated ()));
 }

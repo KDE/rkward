@@ -20,6 +20,7 @@
     <general>
       <mainprogram>rkward</mainprogram>
       <useconfiguration>default</useconfiguration>
+      <activetarget>rkward/rkward</activetarget>
     </general>
     <configure>
       <configargs>\s--build=i386-linux --host=i386-linux --target=i386-linux\s</configargs>
