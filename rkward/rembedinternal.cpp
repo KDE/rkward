@@ -34,18 +34,12 @@ REmbedInternal::~REmbedInternal(){
 void REmbedInternal::shutdown () {
 }
 
-bool REmbedInternal::startR (const char* r_home) {
+bool REmbedInternal::startR (const char* r_home, int argc, char** argv) {
 	extern int Rf_initEmbeddedR(int argc, char **argv);
 	setenv("R_HOME", r_home, 1);
-	char *argv[] = {"--gui=none", "--slave", "--no-save"};
-	int argc = sizeof(argv)/sizeof(argv[0]);
 	if (Rf_initEmbeddedR(argc, argv) < 0) {
 		return false;
 	}
-	
-	runCommandInternal ("options (pager=\"xless\")\n");
-	runCommandInternal ("sink (\"r_out\")\n");
-	runCommandInternal ("sink (file (\"r_err\", \"w\"), FALSE, \"message\")\n");
 }
 
 bool REmbedInternal::runCommandInternal (const char *command) {

@@ -24,7 +24,7 @@
 
 #include "rkplugin.h"
 
-RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
 	qDebug ("creating radio");
 
 	// create label	

@@ -40,10 +40,6 @@ RInterface::~RInterface(){
 void RInterface::shutdown () {
 }
 
-bool RInterface::startR (QStrList &commandline) {
-	qDebug ("TODO: cleanup startR!");
-}
-
 void RInterface::issueCommand (RCommand *command) {
 	command_stack.append (command);
 	tryNextCommand ();

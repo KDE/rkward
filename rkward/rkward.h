@@ -174,6 +174,9 @@ class RKwardApp : public KMainWindow
 
 	/** shows/hides the RKWatch-window */
 	void slotShowRKWatch ();
+	
+	/** shows/hides the RKWatch-window */
+	void slotShowRKOutput ();
 
 	/** configures RKward-settings */
 	void slotConfigure ();
@@ -205,7 +208,8 @@ class RKwardApp : public KMainWindow
     KAction* editPasteToTable;
     KToggleAction* viewToolBar;
     KToggleAction* viewStatusBar;
-	KAction* showRKWatch;
+	KToggleAction* showRKWatch;
+	KToggleAction* showRKOutput;
 	KAction* configure;
 
 	friend class RKSettingsModule;

@@ -27,6 +27,8 @@
 #include "rksettingsmoduleplugins.h"
 #include "rksettingsmoduler.h"
 #include "rksettingsmodulephp.h"
+#include "rksettingsmodulelogfiles.h"
+#include "rksettingsmoduleoutput.h"
 
 #include "rkward.h"
 
@@ -70,6 +72,8 @@ void RKSettings::initModules () {
 	modules.append (new RKSettingsModulePlugins (this, rk));
 	modules.append (new RKSettingsModuleR (this, rk));
 	modules.append (new RKSettingsModulePHP (this, rk));
+	modules.append (new RKSettingsModuleLogfiles (this, rk));
+	modules.append (new RKSettingsModuleOutput (this, rk));
 	
 	ModuleList::iterator it;
 	for (it = modules.begin (); it != modules.end (); ++it) {
@@ -106,12 +110,16 @@ void RKSettings::loadSettings (KConfig *config) {
 	RKSettingsModulePlugins::loadSettings(config);
 	RKSettingsModuleR::loadSettings(config);
 	RKSettingsModulePHP::loadSettings(config);
+	RKSettingsModuleLogfiles::loadSettings(config);
+	RKSettingsModuleOutput::loadSettings(config);
 }
 
 void RKSettings::saveSettings (KConfig *config) {
 	RKSettingsModulePlugins::saveSettings(config);
 	RKSettingsModuleR::saveSettings(config);
 	RKSettingsModulePHP::saveSettings(config);
+	RKSettingsModuleLogfiles::saveSettings(config);
+	RKSettingsModuleOutput::saveSettings(config);
 }
 
 #include "rksettings.moc"

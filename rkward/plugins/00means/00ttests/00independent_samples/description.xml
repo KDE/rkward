@@ -20,6 +20,7 @@
 					<option value="greater" label="First is greater"/>
 					<option value="less" label="Second is greater"/>
 				</radio>
+				<checkbox id="varequal" label="assume equal variances" value="TRUE"/>
 			</column>
 		</row>
 	</layout>

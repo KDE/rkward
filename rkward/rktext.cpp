@@ -22,7 +22,7 @@
 #include <qdom.h>
 #include <qlabel.h>
 
-RKText::RKText(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+RKText::RKText(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
 	QString text;
 	QStringList lines = lines.split ("\n", element.text (), false);
 	for (unsigned int i=0; i < lines.count (); i++) {

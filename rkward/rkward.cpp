@@ -47,7 +47,8 @@
 #include "rkoutputwindow.h"
 #include "rksettings.h"
 #include "rksettingsmoduleplugins.h"
-#include "rksettingsmoduler.h"
+#include "rksettingsmodulelogfiles.h"
+#include "rksettingsmoduleoutput.h"
 
 #define ID_STATUS_MSG 1
 
@@ -182,13 +183,14 @@ int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
 
 void RKwardApp::startR () {
 	if (r_inter) qDebug ("Trying to start R-Interface a second time. Not good.");
-	r_inter = new RInterface ();
-
-	QStrList r_line;
-	r_line.append ("dummy");
-	r_line.append ("dummy2");
 	
-	r_inter->startR (r_line);
+	QDir dir (RKSettingsModuleLogfiles::filesPath());
+	if (!dir.exists ()) {
+		QDir current (dir.currentDirPath ());
+		current.mkdir (dir.path (), true);
+	}
+	
+	r_inter = new RInterface ();
 }
 
 void RKwardApp::slotConfigure () {
@@ -218,7 +220,8 @@ void RKwardApp::initActions()
   editPasteToSelection = new KAction(i18n("Paste inside Selection"), 0, 0, this, SLOT(slotEditPasteToSelection()), actionCollection(), "paste_to_selection");
   viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
   viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
-	showRKWatch = new KAction (i18n ("Toggle RKWatch-Window"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "settings_rkwatch");
+	showRKWatch = new KToggleAction (i18n ("Show RKWatch-Window"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "windows_rkwatch");
+	showRKOutput = new KToggleAction (i18n ("Show RKOutput-Window"), 0, 0, this, SLOT(slotShowRKOutput ()), actionCollection(), "windows_rkoutput");
 	configure = new KAction (i18n ("Configure Settings"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 
   fileNewWindow->setStatusText(i18n("Opens a new application window"));
@@ -633,15 +636,20 @@ void RKwardApp::slotStatusMsg(const QString &text)
 }
 
 void RKwardApp::slotShowRKWatch () {
-	if (r_inter->watch->isVisible ()) {
-		r_inter->watch->hide ();
-	} else {
-		r_inter->watch->show ();
-	}
+	r_inter->watch->setShown (showRKWatch->isChecked ());
+}
+
+void RKwardApp::slotShowRKOutput () {
+	output->setShown (showRKOutput->isChecked ());
 }
 
 void RKwardApp::newOutput () {
 	output->checkNewInput ();
-	output->show ();
-	output->raise ();
+	if (RKSettingsModuleOutput::autoShow ()) {
+		output->show ();
+		showRKOutput->setChecked (true);
+		if (RKSettingsModuleOutput::autoRaise ()) {
+			output->raise ();
+		}
+	}
 }

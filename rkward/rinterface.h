@@ -45,7 +45,6 @@ class RInterface : public KProcess  {
 public: 
 	RInterface();
 	~RInterface();
-	bool startR (QStrList &commandline);
 	void shutdown ();
 	void issueCommand (RCommand *command);
 signals:

@@ -22,9 +22,7 @@
 
 #include <qmap.h>
 
-class QWidget;
 class QButtonGroup;
-class QDomElement;
 class QRadioButton;
 
 /** This RKPluginWidget provides a group of radio-buttons.
@@ -34,7 +32,7 @@ class QRadioButton;
 class RKRadio : public RKPluginWidget  {
 	Q_OBJECT
 public: 
-	RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
+	RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
 	~RKRadio();
 public slots:
 	void buttonClicked (int id);

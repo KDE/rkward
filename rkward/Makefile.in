@@ -260,7 +260,7 @@ xdg_menudir = @xdg_menudir@
 ####### kdevelop will overwrite this part!!! (begin)##########
 bin_PROGRAMS = rkward
 
-rkward_SOURCES = labelcell.cpp rcommand.cpp rktext.cpp rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp rkwarddoc.cpp rkward.cpp main.cpp rembed.cpp rembedinternal.cpp phpbackend.cpp rkpluginguiwidget.cpp rkoutputwindow.cpp rksettingsmodule.cpp rksettingsmoduleplugins.cpp rksettingsmoduler.cpp rksettingsmodulephp.cpp rksettings.cpp rkerrordialog.cpp
+rkward_SOURCES = labelcell.cpp rcommand.cpp rktext.cpp rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp rkwarddoc.cpp rkward.cpp main.cpp rembed.cpp rembedinternal.cpp phpbackend.cpp rkpluginguiwidget.cpp rkoutputwindow.cpp rksettingsmodule.cpp rksettingsmoduleplugins.cpp rksettingsmoduler.cpp rksettingsmodulephp.cpp rksettings.cpp rkerrordialog.cpp rksettingsmodulelogfiles.cpp rksettingsmoduleoutput.cpp rkcheckbox.cpp
 rkward_LDADD = $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) $(LIBSOCKET) -lR
 
 SUBDIRS = plugins
@@ -300,7 +300,7 @@ rkward_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 rcdir = $(kde_datadir)/rkward
 rc_DATA = rkwardui.rc
 
-noinst_HEADERS = rksettingsmodule.h rksettingsmoduleplugins.h rksettingsmoduler.h rksettingsmodulephp.h rksettings.h rkerrordialog.h
+noinst_HEADERS = rksettingsmodule.h rksettingsmoduleplugins.h rksettingsmoduler.h rksettingsmodulephp.h rksettings.h rkerrordialog.h rksettingsmodulelogfiles.h rksettingsmoduleoutput.h rkcheckbox.h
 phpfilesdir = $(kde_datadir)/rkward/phpfiles
 phpfiles_DATA = common.php
 subdir = rkward
@@ -322,9 +322,10 @@ am_rkward_OBJECTS = labelcell.$(OBJEXT) rcommand.$(OBJEXT) \
 	rkoutputwindow.$(OBJEXT) rksettingsmodule.$(OBJEXT) \
 	rksettingsmoduleplugins.$(OBJEXT) rksettingsmoduler.$(OBJEXT) \
 	rksettingsmodulephp.$(OBJEXT) rksettings.$(OBJEXT) \
-	rkerrordialog.$(OBJEXT)
+	rkerrordialog.$(OBJEXT) rksettingsmodulelogfiles.$(OBJEXT) \
+	rksettingsmoduleoutput.$(OBJEXT) rkcheckbox.$(OBJEXT)
 #>- rkward_OBJECTS = $(am_rkward_OBJECTS)
-#>+ 17
+#>+ 18
 rkward_final_OBJECTS = rkward.all_cpp.o 
 rkward_nofinal_OBJECTS = labelcell.$(OBJEXT) rcommand.$(OBJEXT) \
 	rktext.$(OBJEXT) rkradio.$(OBJEXT) rkvarslot.$(OBJEXT) \
@@ -338,8 +339,9 @@ rkward_nofinal_OBJECTS = labelcell.$(OBJEXT) rcommand.$(OBJEXT) \
 	rkoutputwindow.$(OBJEXT) rksettingsmodule.$(OBJEXT) \
 	rksettingsmoduleplugins.$(OBJEXT) rksettingsmoduler.$(OBJEXT) \
 	rksettingsmodulephp.$(OBJEXT) rksettings.$(OBJEXT) \
-	rkerrordialog.$(OBJEXT)\
-twintablemember.moc.o rkplugin.moc.o rcommand.moc.o rkward.moc.o phpbackend.moc.o rkvarslot.moc.o twintable.moc.o rkradio.moc.o rinterface.moc.o rkwarddoc.moc.o rkwatch.moc.o rkvarselector.moc.o 
+	rkerrordialog.$(OBJEXT) rksettingsmodulelogfiles.$(OBJEXT) \
+	rksettingsmoduleoutput.$(OBJEXT) rkcheckbox.$(OBJEXT)\
+rkcheckbox.moc.o twintablemember.moc.o rkplugin.moc.o rcommand.moc.o rkward.moc.o phpbackend.moc.o rkvarslot.moc.o twintable.moc.o rkradio.moc.o rinterface.moc.o rkwarddoc.moc.o rkwatch.moc.o rkvarselector.moc.o 
 @KDE_USE_FINAL_FALSE@rkward_OBJECTS = $(rkward_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@rkward_OBJECTS = $(rkward_final_OBJECTS)
 rkward_DEPENDENCIES =
@@ -355,14 +357,16 @@ am__depfiles_maybe = depfiles
 #>- @AMDEP_TRUE@	./$(DEPDIR)/nameselectcell.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/phpbackend.Po ./$(DEPDIR)/rcommand.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/rembed.Po ./$(DEPDIR)/rembedinternal.Po \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/rinterface.Po ./$(DEPDIR)/rkdrag.Po \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/rkerrordialog.Po ./$(DEPDIR)/rkmenu.Po \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/rkoutputwindow.Po \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/rinterface.Po ./$(DEPDIR)/rkcheckbox.Po \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/rkdrag.Po ./$(DEPDIR)/rkerrordialog.Po \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/rkmenu.Po ./$(DEPDIR)/rkoutputwindow.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/rkplugin.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/rkpluginguiwidget.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/rkpluginwidget.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/rkradio.Po ./$(DEPDIR)/rksettings.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/rksettingsmodule.Po \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/rksettingsmodulelogfiles.Po \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/rksettingsmoduleoutput.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/rksettingsmodulephp.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/rksettingsmoduleplugins.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/rksettingsmoduler.Po \
@@ -372,19 +376,21 @@ am__depfiles_maybe = depfiles
 #>- @AMDEP_TRUE@	./$(DEPDIR)/rtableitem.Po ./$(DEPDIR)/twintable.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/twintablemember.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/typeselectcell.Po
-#>+ 42
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@DEP_FILES =  $(DEPDIR)/twintablemember.moc.P $(DEPDIR)/rkplugin.moc.P $(DEPDIR)/rcommand.moc.P $(DEPDIR)/rkward.moc.P $(DEPDIR)/phpbackend.moc.P $(DEPDIR)/rkvarslot.moc.P $(DEPDIR)/twintable.moc.P $(DEPDIR)/rkradio.moc.P $(DEPDIR)/rinterface.moc.P $(DEPDIR)/rkwarddoc.moc.P $(DEPDIR)/rkwatch.moc.P $(DEPDIR)/rkvarselector.moc.P  $(DEPDIR)/rkward.all_cpp.P ./$(DEPDIR)/labelcell.Po ./$(DEPDIR)/main.Po \
+#>+ 46
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@DEP_FILES =  $(DEPDIR)/rkcheckbox.moc.P $(DEPDIR)/twintablemember.moc.P $(DEPDIR)/rkplugin.moc.P $(DEPDIR)/rcommand.moc.P $(DEPDIR)/rkward.moc.P $(DEPDIR)/phpbackend.moc.P $(DEPDIR)/rkvarslot.moc.P $(DEPDIR)/twintable.moc.P $(DEPDIR)/rkradio.moc.P $(DEPDIR)/rinterface.moc.P $(DEPDIR)/rkwarddoc.moc.P $(DEPDIR)/rkwatch.moc.P $(DEPDIR)/rkvarselector.moc.P  $(DEPDIR)/rkward.all_cpp.P ./$(DEPDIR)/labelcell.Po ./$(DEPDIR)/main.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/nameselectcell.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/phpbackend.Po ./$(DEPDIR)/rcommand.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rembed.Po ./$(DEPDIR)/rembedinternal.Po \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rinterface.Po ./$(DEPDIR)/rkdrag.Po \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rkerrordialog.Po ./$(DEPDIR)/rkmenu.Po \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rkoutputwindow.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rinterface.Po ./$(DEPDIR)/rkcheckbox.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rkdrag.Po ./$(DEPDIR)/rkerrordialog.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rkmenu.Po ./$(DEPDIR)/rkoutputwindow.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rkplugin.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rkpluginguiwidget.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rkpluginwidget.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rkradio.Po ./$(DEPDIR)/rksettings.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rksettingsmodule.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rksettingsmodulelogfiles.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rksettingsmoduleoutput.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rksettingsmodulephp.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rksettingsmoduleplugins.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rksettingsmoduler.Po \
@@ -394,18 +400,20 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/rtableitem.Po ./$(DEPDIR)/twintable.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/twintablemember.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/typeselectcell.Po
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@DEP_FILES =  $(DEPDIR)/twintablemember.moc.P $(DEPDIR)/rkplugin.moc.P $(DEPDIR)/rcommand.moc.P $(DEPDIR)/rkward.moc.P $(DEPDIR)/phpbackend.moc.P $(DEPDIR)/rkvarslot.moc.P $(DEPDIR)/twintable.moc.P $(DEPDIR)/rkradio.moc.P $(DEPDIR)/rinterface.moc.P $(DEPDIR)/rkwarddoc.moc.P $(DEPDIR)/rkwatch.moc.P $(DEPDIR)/rkvarselector.moc.P ./$(DEPDIR)/labelcell.Po ./$(DEPDIR)/main.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@DEP_FILES =  $(DEPDIR)/rkcheckbox.moc.P $(DEPDIR)/twintablemember.moc.P $(DEPDIR)/rkplugin.moc.P $(DEPDIR)/rcommand.moc.P $(DEPDIR)/rkward.moc.P $(DEPDIR)/phpbackend.moc.P $(DEPDIR)/rkvarslot.moc.P $(DEPDIR)/twintable.moc.P $(DEPDIR)/rkradio.moc.P $(DEPDIR)/rinterface.moc.P $(DEPDIR)/rkwarddoc.moc.P $(DEPDIR)/rkwatch.moc.P $(DEPDIR)/rkvarselector.moc.P ./$(DEPDIR)/labelcell.Po ./$(DEPDIR)/main.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/nameselectcell.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/phpbackend.Po ./$(DEPDIR)/rcommand.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rembed.Po ./$(DEPDIR)/rembedinternal.Po \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rinterface.Po ./$(DEPDIR)/rkdrag.Po \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rkerrordialog.Po ./$(DEPDIR)/rkmenu.Po \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rkoutputwindow.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rinterface.Po ./$(DEPDIR)/rkcheckbox.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rkdrag.Po ./$(DEPDIR)/rkerrordialog.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rkmenu.Po ./$(DEPDIR)/rkoutputwindow.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rkplugin.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rkpluginguiwidget.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rkpluginwidget.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rkradio.Po ./$(DEPDIR)/rksettings.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rksettingsmodule.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rksettingsmodulelogfiles.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rksettingsmoduleoutput.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rksettingsmodulephp.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rksettingsmoduleplugins.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/rksettingsmoduler.Po \
@@ -515,6 +523,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rembed.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rembedinternal.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rinterface.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rkcheckbox.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rkdrag.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rkerrordialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rkmenu.Po@am__quote@
@@ -525,6 +534,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rkradio.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rksettings.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rksettingsmodule.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rksettingsmodulelogfiles.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rksettingsmoduleoutput.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rksettingsmodulephp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rksettingsmoduleplugins.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rksettingsmoduler.Po@am__quote@
@@ -887,6 +898,13 @@ rksettingsmodulephp.moc: $(srcdir)/rksettingsmodulephp.h
 mocs: rksettingsmodulephp.moc
 
 #>+ 3
+rkcheckbox.moc.cpp: $(srcdir)/rkcheckbox.h
+	$(MOC) $(srcdir)/rkcheckbox.h -o rkcheckbox.moc.cpp
+
+#>+ 2
+mocs: rkcheckbox.moc.cpp
+
+#>+ 3
 rkpluginguiwidget.moc: $(srcdir)/rkpluginguiwidget.h
 	$(MOC) $(srcdir)/rkpluginguiwidget.h -o rkpluginguiwidget.moc
 
@@ -985,6 +1003,13 @@ rksettingsmoduleplugins.moc: $(srcdir)/rksettingsmoduleplugins.h
 mocs: rksettingsmoduleplugins.moc
 
 #>+ 3
+rksettingsmodulelogfiles.moc: $(srcdir)/rksettingsmodulelogfiles.h
+	$(MOC) $(srcdir)/rksettingsmodulelogfiles.h -o rksettingsmodulelogfiles.moc
+
+#>+ 2
+mocs: rksettingsmodulelogfiles.moc
+
+#>+ 3
 rkwarddoc.moc.cpp: $(srcdir)/rkwarddoc.h
 	$(MOC) $(srcdir)/rkwarddoc.h -o rkwarddoc.moc.cpp
 
@@ -997,6 +1022,13 @@ rkerrordialog.moc: $(srcdir)/rkerrordialog.h
 
 #>+ 2
 mocs: rkerrordialog.moc
+
+#>+ 3
+rksettingsmoduleoutput.moc: $(srcdir)/rksettingsmoduleoutput.h
+	$(MOC) $(srcdir)/rksettingsmoduleoutput.h -o rksettingsmoduleoutput.moc
+
+#>+ 2
+mocs: rksettingsmoduleoutput.moc
 
 #>+ 3
 rkwatch.moc.cpp: $(srcdir)/rkwatch.h
@@ -1021,10 +1053,10 @@ mocs: rkvarselector.moc.cpp
 
 #>+ 3
 clean-metasources:
-	-rm -f  rksettingsmodulephp.moc rkpluginguiwidget.moc rksettingsmodule.moc twintablemember.moc.cpp rkplugin.moc.cpp rcommand.moc.cpp rkward.moc.cpp phpbackend.moc.cpp rkoutputwindow.moc rkvarslot.moc.cpp rksettings.moc twintable.moc.cpp rkradio.moc.cpp rinterface.moc.cpp rksettingsmoduleplugins.moc rkwarddoc.moc.cpp rkerrordialog.moc rkwatch.moc.cpp rksettingsmoduler.moc rkvarselector.moc.cpp
+	-rm -f  rksettingsmodulephp.moc rkcheckbox.moc.cpp rkpluginguiwidget.moc rksettingsmodule.moc twintablemember.moc.cpp rkplugin.moc.cpp rcommand.moc.cpp rkward.moc.cpp phpbackend.moc.cpp rkoutputwindow.moc rkvarslot.moc.cpp rksettings.moc twintable.moc.cpp rkradio.moc.cpp rinterface.moc.cpp rksettingsmoduleplugins.moc rksettingsmodulelogfiles.moc rkwarddoc.moc.cpp rkerrordialog.moc rksettingsmoduleoutput.moc rkwatch.moc.cpp rksettingsmoduler.moc rkvarselector.moc.cpp
 
 #>+ 2
-KDE_DIST=b.php bullerr r_in rk_out.html bull launch test bullout r_out r_err rkward bull2 testdata test.php 
+KDE_DIST=r_in rk_out.html test r_out r_err rkward testdata test.php 
 
 #>+ 2
 docs-am:
@@ -1059,11 +1091,11 @@ bcheck-am:
 
 
 #>+ 11
-rkward.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/labelcell.cpp $(srcdir)/rcommand.cpp $(srcdir)/rktext.cpp $(srcdir)/rkradio.cpp $(srcdir)/rkvarslot.cpp $(srcdir)/rkvarselector.cpp $(srcdir)/rkpluginwidget.cpp $(srcdir)/rkplugin.cpp $(srcdir)/rkmenu.cpp $(srcdir)/nameselectcell.cpp $(srcdir)/rtableitem.cpp $(srcdir)/typeselectcell.cpp $(srcdir)/rkwatch.cpp $(srcdir)/rinterface.cpp $(srcdir)/rkdrag.cpp $(srcdir)/twintablemember.cpp $(srcdir)/twintable.cpp $(srcdir)/rkwarddoc.cpp $(srcdir)/rkward.cpp $(srcdir)/main.cpp $(srcdir)/rembed.cpp $(srcdir)/rembedinternal.cpp $(srcdir)/phpbackend.cpp $(srcdir)/rkpluginguiwidget.cpp $(srcdir)/rkoutputwindow.cpp $(srcdir)/rksettingsmodule.cpp $(srcdir)/rksettingsmoduleplugins.cpp $(srcdir)/rksettingsmoduler.cpp $(srcdir)/rksettingsmodulephp.cpp $(srcdir)/rksettings.cpp $(srcdir)/rkerrordialog.cpp $(srcdir)/rkplugin.moc.cpp $(srcdir)/twintablemember.moc.cpp $(srcdir)/rcommand.moc.cpp $(srcdir)/rkward.moc.cpp $(srcdir)/phpbackend.moc.cpp $(srcdir)/rkvarslot.moc.cpp $(srcdir)/twintable.moc.cpp $(srcdir)/rkradio.moc.cpp $(srcdir)/rinterface.moc.cpp $(srcdir)/rkwarddoc.moc.cpp $(srcdir)/rkwatch.moc.cpp $(srcdir)/rkvarselector.moc.cpp  rksettingsmodulephp.moc rkpluginguiwidget.moc rksettingsmodule.moc rkoutputwindow.moc rksettings.moc rksettingsmoduleplugins.moc rkerrordialog.moc rksettingsmoduler.moc
+rkward.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/labelcell.cpp $(srcdir)/rcommand.cpp $(srcdir)/rktext.cpp $(srcdir)/rkradio.cpp $(srcdir)/rkvarslot.cpp $(srcdir)/rkvarselector.cpp $(srcdir)/rkpluginwidget.cpp $(srcdir)/rkplugin.cpp $(srcdir)/rkmenu.cpp $(srcdir)/nameselectcell.cpp $(srcdir)/rtableitem.cpp $(srcdir)/typeselectcell.cpp $(srcdir)/rkwatch.cpp $(srcdir)/rinterface.cpp $(srcdir)/rkdrag.cpp $(srcdir)/twintablemember.cpp $(srcdir)/twintable.cpp $(srcdir)/rkwarddoc.cpp $(srcdir)/rkward.cpp $(srcdir)/main.cpp $(srcdir)/rembed.cpp $(srcdir)/rembedinternal.cpp $(srcdir)/phpbackend.cpp $(srcdir)/rkpluginguiwidget.cpp $(srcdir)/rkoutputwindow.cpp $(srcdir)/rksettingsmodule.cpp $(srcdir)/rksettingsmoduleplugins.cpp $(srcdir)/rksettingsmoduler.cpp $(srcdir)/rksettingsmodulephp.cpp $(srcdir)/rksettings.cpp $(srcdir)/rkerrordialog.cpp $(srcdir)/rksettingsmodulelogfiles.cpp $(srcdir)/rksettingsmoduleoutput.cpp $(srcdir)/rkcheckbox.cpp rkcheckbox.moc.cpp $(srcdir)/rkplugin.moc.cpp $(srcdir)/twintablemember.moc.cpp $(srcdir)/rcommand.moc.cpp $(srcdir)/rkward.moc.cpp $(srcdir)/phpbackend.moc.cpp $(srcdir)/rkvarslot.moc.cpp $(srcdir)/twintable.moc.cpp $(srcdir)/rkradio.moc.cpp $(srcdir)/rinterface.moc.cpp $(srcdir)/rkwarddoc.moc.cpp $(srcdir)/rkwatch.moc.cpp $(srcdir)/rkvarselector.moc.cpp  rksettingsmodulephp.moc rkpluginguiwidget.moc rksettingsmodule.moc rkoutputwindow.moc rksettings.moc rksettingsmoduleplugins.moc rksettingsmodulelogfiles.moc rksettingsmoduleoutput.moc rkerrordialog.moc rksettingsmoduler.moc
 	@echo 'creating rkward.all_cpp.cpp ...'; \
 	rm -f rkward.all_cpp.files rkward.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> rkward.all_cpp.final; \
-	for file in labelcell.cpp rcommand.cpp rktext.cpp rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp rkwarddoc.cpp rkward.cpp main.cpp rembed.cpp rembedinternal.cpp phpbackend.cpp rkpluginguiwidget.cpp rkoutputwindow.cpp rksettingsmodule.cpp rksettingsmoduleplugins.cpp rksettingsmoduler.cpp rksettingsmodulephp.cpp rksettings.cpp rkerrordialog.cpp rkplugin.moc.cpp twintablemember.moc.cpp rcommand.moc.cpp rkward.moc.cpp phpbackend.moc.cpp rkvarslot.moc.cpp twintable.moc.cpp rkradio.moc.cpp rinterface.moc.cpp rkwarddoc.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp ; do \
+	for file in labelcell.cpp rcommand.cpp rktext.cpp rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp rkwarddoc.cpp rkward.cpp main.cpp rembed.cpp rembedinternal.cpp phpbackend.cpp rkpluginguiwidget.cpp rkoutputwindow.cpp rksettingsmodule.cpp rksettingsmoduleplugins.cpp rksettingsmoduler.cpp rksettingsmodulephp.cpp rksettings.cpp rkerrordialog.cpp rksettingsmodulelogfiles.cpp rksettingsmoduleoutput.cpp rkcheckbox.cpp rkcheckbox.moc.cpp rkplugin.moc.cpp twintablemember.moc.cpp rcommand.moc.cpp rkward.moc.cpp phpbackend.moc.cpp rkvarslot.moc.cpp twintable.moc.cpp rkradio.moc.cpp rinterface.moc.cpp rkwarddoc.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp ; do \
 	  echo "#include \"$$file\"" >> rkward.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> rkward.all_cpp.final; \
 	done; \
@@ -1098,22 +1130,26 @@ cvs-clean:
 kde-rpo-clean:
 	-rm -f *.rpo
 
-#>+ 19
+#>+ 23
 rksettings.o: rksettings.moc 
 rkpluginguiwidget.o: rkpluginguiwidget.moc 
 rksettingsmoduler.o: rksettingsmoduler.moc 
+rksettingsmodulelogfiles.o: rksettingsmodulelogfiles.moc 
 rksettingsmoduler.lo: rksettingsmoduler.moc 
 rkpluginguiwidget.lo: rkpluginguiwidget.moc 
 rksettingsmodulephp.lo: rksettingsmodulephp.moc 
 rksettingsmoduleplugins.lo: rksettingsmoduleplugins.moc 
 rksettingsmodule.lo: rksettingsmodule.moc 
 rksettingsmoduleplugins.o: rksettingsmoduleplugins.moc 
+rksettingsmoduleoutput.lo: rksettingsmoduleoutput.moc 
 nmcheck: 
 rksettingsmodulephp.o: rksettingsmodulephp.moc 
 rksettings.lo: rksettings.moc 
+rksettingsmodulelogfiles.lo: rksettingsmodulelogfiles.moc 
 rkoutputwindow.o: rkoutputwindow.moc 
 nmcheck-am: nmcheck
 rksettingsmodule.o: rksettingsmodule.moc 
+rksettingsmoduleoutput.o: rksettingsmoduleoutput.moc 
 rkoutputwindow.lo: rkoutputwindow.moc 
 rkerrordialog.lo: rkerrordialog.moc 
 rkerrordialog.o: rkerrordialog.moc 

@@ -22,9 +22,7 @@
 
 #include <qstrlist.h>
 
-class QWidget;
 class QListView;
-class QDomElement;
 
 /** This is an especially important RK-plugin-widget. It provides a list of variables
 (derived from the document's table), that can be selected for statistical analysis.
@@ -38,7 +36,7 @@ you can have more than one, e.g. for serving conceptionally different VarSlots.
 class RKVarSelector : public RKPluginWidget {
    Q_OBJECT
 public: 
-	RKVarSelector(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
+	RKVarSelector(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
 	~RKVarSelector();
 /** Returns the number of currently selected variables */
 	int numSelectedVars ();

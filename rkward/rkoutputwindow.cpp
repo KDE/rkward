@@ -21,6 +21,8 @@
 
 #include <klocale.h>
 
+#include "rksettingsmodulelogfiles.h"
+
 RKOutputWindow::RKOutputWindow (QWidget *parent, const char *name) : QWidget (parent, name) {
 	QGridLayout *grid = new QGridLayout (this, 1, 1, 1, 6);
 	browser = new QTextBrowser (this);
@@ -35,7 +37,7 @@ RKOutputWindow::~RKOutputWindow () {
 
 void RKOutputWindow::checkNewInput () {
 	qDebug ("checkNewInput");
-	browser->setSource ("/home/thomas/develop/rkward/rkward/rk_out.html");
+	browser->setSource (RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
 	browser->reload ();
 	browser->scrollToBottom ();
 }

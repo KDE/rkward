@@ -25,6 +25,7 @@ class QWidget;
 class QLabel;
 class QDomElement;
 class RKPlugin;
+class QLayout;
 
 /** The baseclass for all RK-plugin-widgets, i.e. widgets, that are used in the
 GUI for the plugins. It is mostly used as a skeleton and contains some virtual
@@ -39,7 +40,7 @@ tasks. It's still called a "widget", because it essentially functions as one.
 
 class RKPluginWidget : public QBoxLayout {
 public: 
-	RKPluginWidget(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
+	RKPluginWidget(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
 	virtual ~RKPluginWidget();
 	QWidget *parent () { return _parent; };
 /** Returns the plugin, this widget belongs to */	

@@ -27,7 +27,7 @@
 #include "rkvarselector.h"
 #include "rkplugin.h"
 
-RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
 	qDebug ("creating varselector");
 
 	// layout

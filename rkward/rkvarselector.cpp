@@ -26,7 +26,7 @@
 #include <rkward.h>
 #include <rkwarddoc.h>
 
-RKVarSelector::RKVarSelector(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+RKVarSelector::RKVarSelector(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
 	qDebug ("creating varselector");
 	label = new QLabel (element.attribute ("label", "Select Variable(s)"), parent);
 	addWidget (label);

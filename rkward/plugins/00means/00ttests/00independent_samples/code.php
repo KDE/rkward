@@ -3,7 +3,7 @@
 	}
 	
 	function calculate () {
-?>rk.temp <- t.test (<? getRK ("x"); ?>, <? getRK ("y"); ?>, "<? getRK ("hypothesis"); ?>")
+?>rk.temp <- t.test (<? getRK ("x"); ?>, <? getRK ("y"); ?>, "<? getRK ("hypothesis"); ?>"<? if (($varequal = getRK_val ("varequal")) != "") echo (", 0, FALSE, " . $varequal); ?>)
 <?
 	}
 	
@@ -20,6 +20,10 @@
 		$y = getRK_val ("y");
 		$ylabel = getRK_val ("y.label");
 		$hypothesis = getRK_val ("hypothesis");
+		$varequal = "assuming equal variances";
+		if (getRK_val ("varequal") == "") {
+			$varequal = "not " . $varequal;
+		}
 		if ($hypothesis == "two.sided") {
 			$hypothesis = $x . " and " . $y . " differ (two sided)";
 		} else if ($hypothesis == "less") {
@@ -44,6 +48,7 @@
 ?><h1>T-test (independent samples)</h1>
 <h2>Comparing <? echo ($x); ?> (<? echo ($xlabel); ?>) against <? echo ($y); ?> (<? echo ($ylabel); ?>)</h2>
 <h3>H1: <? echo ($hypothesis); ?><h3>
+<h4>(<? echo ($varequal); ?>)</h4>
 <table border="1">
 	<tr><td>Variable</td><td>estimated mean</td><td>degrees of freedom</td><td>t</td><td>p</td></tr>
 	<tr><td><? echo ($x . "<br>(" . $xlabel . ")"); ?></td><td><? echo ($estx); ?></td><td rowspan="2"><? echo ($df); ?></td><td rowspan="2"><? echo ($t); ?></td><td rowspan="2"><? echo ($p); ?></td></tr>

@@ -29,7 +29,7 @@ public:
 	REmbedInternal();
 	~REmbedInternal();
 protected:
-	bool startR (const char* r_home);
+	bool startR (const char* r_home, int argc, char **argv);
 	void shutdown ();
 	bool runCommandInternal (const char *command);
 };

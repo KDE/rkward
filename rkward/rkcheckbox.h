@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rktext.h  -  description
+                          rkcheckbox  -  description
                              -------------------
-    begin                : Sun Nov 10 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    begin                : Fri Jul 30 2004
+    copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -14,20 +14,34 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
-#ifndef RKTEXT_H
-#define RKTEXT_H
+#ifndef RKCHECKBOX_H
+#define RKCHECKBOX_H
 
 #include <rkpluginwidget.h>
 
-/**
-  *@author Thomas Friedrichsmeier
-  */
+#include <qstring.h>
 
-class RKText : public RKPluginWidget  {
+class QCheckBox;
+
+/**
+This RKPluginWidget provides a checkbox
+
+@author Thomas Friedrichsmeier
+*/
+class RKCheckBox : public RKPluginWidget  {
+	Q_OBJECT
 public: 
-	RKText(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
-	~RKText();
+	RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
+	~RKCheckBox ();
+public slots:
+	void changed (int);
+private:
+	QCheckBox *checkbox;
+	QString value_if_checked;
+	QString value_if_unchecked;
+protected:
+/** Returns the value of the currently selected option. */
+	QString value ();
 };
 
 #endif

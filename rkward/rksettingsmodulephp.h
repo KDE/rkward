@@ -27,9 +27,8 @@ configuration for the PHP-backend
 
 @author Thomas Friedrichsmeier
 */
-class RKSettingsModulePHP : public RKSettingsModule
-{
-Q_OBJECT
+class RKSettingsModulePHP : public RKSettingsModule {
+	Q_OBJECT
 public:
     RKSettingsModulePHP (RKSettings *gui, RKwardApp *parent);
 

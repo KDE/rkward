@@ -20,9 +20,7 @@
 
 #include <rkpluginwidget.h>
 
-class QWidget;
 class QLineEdit;
-class QDomElement;
 class QPushButton;
 class QVarSelector;
 
@@ -33,7 +31,7 @@ class QVarSelector;
 class RKVarSlot : public RKPluginWidget {
 	Q_OBJECT
 public: 
-	RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
+	RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout);
 	~RKVarSlot();
 public slots:
 /** Called when the select-button is pressed */

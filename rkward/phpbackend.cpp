@@ -25,6 +25,7 @@
 
 #include "rkplugin.h"
 #include "rksettingsmodulephp.h"
+#include "rksettingsmodulelogfiles.h"
 
 PHPBackend::PHPBackend() {
 	qDebug ("TODO: make location of PHP-binary configurable");
@@ -181,7 +182,7 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 		} else {
 			qDebug ("got final output!");
 
-			QFile file ("rk_out.html");
+			QFile file (RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
 			if (!file.open (IO_WriteOnly| IO_Append)) {
 				qDebug ("failed to open outfile");
 				file.close ();

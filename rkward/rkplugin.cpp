@@ -22,6 +22,7 @@
 #include <qfileinfo.h>
 #include <qdialog.h>
 #include <qlayout.h>
+#include <qgroupbox.h>
 #include <qmap.h>
 #include <qframe.h>
 #include <qpushbutton.h>
@@ -44,6 +45,7 @@
 #include "rkvarslot.h"
 #include "rktext.h"
 #include "rkradio.h"
+#include "rkcheckbox.h"
 
 #define FOR_PHP_FLAG 1
 
@@ -52,6 +54,7 @@ RKPlugin::RKPlugin(RKwardApp *parent, const QString &label, const QString &filen
 	RKPlugin::filename = filename;
 	_label = label;
 	backend = 0;
+	gui = 0;
 }
 
 RKPlugin::~RKPlugin(){
@@ -59,6 +62,11 @@ RKPlugin::~RKPlugin(){
 }
 
 void RKPlugin::activated () {
+	// can't activate the same plugin twice!
+	if (gui) {
+		gui->raise ();
+		return;
+	}
 	qDebug ("activated plugin: " + filename);
 
 	// open XML-file (TODO: remove code-duplication)
@@ -103,19 +111,13 @@ void RKPlugin::activated () {
 }
 
 void RKPlugin::buildGUI (const QDomElement &layout_element) {
-	// layout-section may only contain one top-level component
-	QDomNodeList children = layout_element.childNodes ();
-	QDomElement element = children.item (0).toElement ();
-
 	gui = new RKPluginGUIWidget (this);
 	gui->setCaption (_label);
-	QGridLayout *layout = new QGridLayout (gui, 4, 3, 11, 6);
+	QGridLayout *grid = new QGridLayout (gui, 4, 3, 11, 6);
+	QVBoxLayout *vbox = new QVBoxLayout (grid, 6);
 
-	if ((element.tagName () == "row") || (element.tagName () == "column")) {
-		layout->addLayout (buildStructure (element), 0, 0);
-	} else {
-    	layout->addLayout (buildWidget (element), 0, 0);
-	}
+	// default layout is in vertical	
+	buildStructure (layout_element, vbox, gui);
 
 	// build standard elements
 	// lines
@@ -123,14 +125,13 @@ void RKPlugin::buildGUI (const QDomElement &layout_element) {
 	line = new QFrame (gui);
 	line->setFrameShape (QFrame::VLine);
 	line->setFrameShadow (QFrame::Plain);	
-	layout->addWidget (line, 0, 1);
+	grid->addWidget (line, 0, 1);
 	line = new QFrame (gui);
 	line->setFrameShape (QFrame::HLine);
 	line->setFrameShadow (QFrame::Plain);
-	layout->addMultiCellWidget (line, 1, 1, 0, 2);
+	grid->addMultiCellWidget (line, 1, 1, 0, 2);
 
 	// buttons
-	QVBoxLayout *vbox;
 	vbox = new QVBoxLayout (0, 0, 6);
 	okButton = new QPushButton ("Submit", gui);
 	connect (okButton, SIGNAL (clicked ()), this, SLOT (ok ()));
@@ -152,7 +153,7 @@ void RKPlugin::buildGUI (const QDomElement &layout_element) {
 	vbox->addStretch (2);
 	vbox->addWidget (toggleCodeButton);
 	vbox->addWidget (toggleWarnButton);
-	layout->addLayout (vbox, 0, 2);
+	grid->addLayout (vbox, 0, 2);
 	
 	// text-fields
 	codeDisplay = new QTextEdit (gui);
@@ -162,55 +163,48 @@ void RKPlugin::buildGUI (const QDomElement &layout_element) {
 	warnDisplay->setMinimumHeight (40);
 	warnDisplay->hide ();
 	warnDisplay->setReadOnly (true);
-	layout->addMultiCellWidget (codeDisplay, 3, 3, 0, 2);
-	layout->addMultiCellWidget (warnDisplay, 4, 4, 0, 2);
+	grid->addMultiCellWidget (codeDisplay, 3, 3, 0, 2);
+	grid->addMultiCellWidget (warnDisplay, 4, 4, 0, 2);
 
-	layout->setRowStretch (0, 4);
+	grid->setRowStretch (0, 4);
 
 	gui->show ();
 	connect (gui, SIGNAL (destroyed ()), this, SLOT (discard ()));
 }
 
-QBoxLayout *RKPlugin::buildStructure (const QDomElement &element) {
-	QBoxLayout *layout;
-    if (element.tagName () == "row") {
-		layout = new QHBoxLayout (0, 0, 6);
-	} else {
-		layout = new QVBoxLayout (0, 0, 6);
-	}
+void RKPlugin::buildStructure (const QDomElement &element, QLayout *playout, QWidget *pwidget) {
+	RKPluginWidget *widget = 0;
 
 	QDomNodeList children = element.childNodes ();
-
+	
 	for (unsigned int i=0; i < children.count (); i++) {
-		QDomElement child = children.item (i).toElement ();
-
-		if ((child.tagName () == "row") || (child.tagName () == "column")) {
-			layout->addLayout (buildStructure (child));
+		QDomElement e = children.item (i).toElement ();
+		
+	    if (e.tagName () == "row") {
+			buildStructure (e, new QHBoxLayout (playout, 6), pwidget);
+		} else if (e.tagName () == "column") {
+			buildStructure (e, new QVBoxLayout (playout, 6), pwidget);
+		} else if (e.tagName () == "frame") {
+			QVBoxLayout *layout = new QVBoxLayout (playout, 6);	// just a container
+			QGroupBox *box = new QGroupBox (1, Qt::Vertical, e.attribute ("label"), pwidget);
+			layout->addWidget (box);
+			buildStructure (e, box->layout (), box);
+		} else if (e.tagName () == "varselector") {
+			widget = new RKVarSelector (e, pwidget, this, playout);
+		} else if (e.tagName () == "radio") {
+			widget = new RKRadio (e, pwidget, this, playout);
+		} else if (e.tagName () == "checkbox") {
+			widget = new RKCheckBox (e, pwidget, this, playout);
+		} else if (e.tagName () == "varslot") {
+			widget = new RKVarSlot (e, pwidget, this, playout);
 		} else {
-			// it's a widget
-			layout->addLayout (buildWidget (child));
+			widget = new RKText (e, pwidget, this, playout);
+		}
+		
+		if (widget) {
+			widgets.insert (e.attribute ("id", "#noid#"), widget);
 		}
 	}
-
-	return layout;	
-}
-
-RKPluginWidget *RKPlugin::buildWidget (const QDomElement &element) {
-	RKPluginWidget *widget;
-	qDebug ("creating RKPluginWidget " + element.tagName ());
-	if (element.tagName () == "varselector") {
-		widget = new RKVarSelector (element, gui, this);
-	} else if (element.tagName () == "radio") {
-		widget = new RKRadio (element, gui, this);
-	} else if (element.tagName () == "varslot") {
-		widget = new RKVarSlot (element, gui, this);
-	} else {
-		widget = new RKText (element, gui, this);
-	}
-
-	widgets.insert (element.attribute ("id", "#noid#"), widget);
-
-	return widget;
 }
 
 void RKPlugin::ok () {
@@ -241,6 +235,7 @@ void RKPlugin::try_destruct () {
 		delete gui;
 		delete backend;
 		backend = 0;
+		gui = 0;
 	} else {
 		gui->hide ();
 		should_destruct = true;

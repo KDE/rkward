@@ -20,9 +20,10 @@
 #include <qwidget.h>
 #include <qdom.h>
 
-RKPluginWidget::RKPluginWidget(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : QBoxLayout (0, QBoxLayout::TopToBottom, 6, 6) {
+RKPluginWidget::RKPluginWidget(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : QBoxLayout (layout, QBoxLayout::TopToBottom, 6) {
 	_parent = parent;
 	_plugin = plugin;
+	layout->setMargin (6);
 }
 
 RKPluginWidget::~RKPluginWidget(){

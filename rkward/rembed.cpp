@@ -26,6 +26,7 @@
 #include <klocale.h>
 
 #include "rksettingsmoduler.h"
+#include "rksettingsmodulelogfiles.h"
 
 REmbed::REmbed() : REmbedInternal() {
 	QString r_home = RKSettingsModuleR::rHomeDir();
@@ -46,7 +47,24 @@ REmbed::REmbed() : REmbedInternal() {
 		}
 	}
 
-	startR (r_home);
+	QStringList arglist = RKSettingsModuleR::getOptionList();
+	char *argv[arglist.count ()];
+	int argc = 0;
+	QStringList::iterator it;
+	for (it = arglist.begin (); it != arglist.end (); ++it) {
+		argv[argc] = qstrdup ((*it).latin1 ());
+		argc++;
+	}
+	
+	startR (r_home, argc, argv);
+	
+	for (--argc; argc >= 0; --argc) {
+		delete argv[argc];
+	}
+	
+	runCommandInternal ("options (pager=\"" + RKSettingsModuleR::pagerApp () + "\")\n");
+	runCommandInternal ("sink (\"" + RKSettingsModuleLogfiles::filesPath () + "/r_out\")\n");
+	runCommandInternal ("sink (file (\"" +RKSettingsModuleLogfiles::filesPath () +"/r_err\", \"w\"), FALSE, \"message\")\n");
 
 	// if we're still alive at this point, the setting for r_home must have been correct
 	RKSettingsModuleR::r_home_dir = r_home;
@@ -56,11 +74,11 @@ REmbed::REmbed() : REmbedInternal() {
 	
 	bool error = false;
 	
-	outfile.setName ("r_out");
+	outfile.setName (RKSettingsModuleLogfiles::filesPath () + "/r_out");
 	if (!outfile.open (IO_ReadOnly)) {
 		error = true;
 	}
-	errfile.setName ("r_err");
+	errfile.setName (RKSettingsModuleLogfiles::filesPath () + "/r_err");
 	if (!errfile.open (IO_ReadOnly)) {
 		error = true;
 	}
@@ -79,14 +97,14 @@ REmbed::~REmbed() {
 void REmbed::runCommand (RCommand *command) {
 	qDebug ("TODO: REmbed::runCommand: Error-handling");
 
-	QFile file("r_in");
+	QFile file(RKSettingsModuleLogfiles::filesPath () + "/r_in");
 	if (file.open(IO_WriteOnly)) {
 		QTextStream stream(&file);
 		stream << command->command () << "\n";
 		file.close();
 	}
 	
-	if (!runCommandInternal ("source (\"r_in\")")) {
+	if (!runCommandInternal ("source (\"" + RKSettingsModuleLogfiles::filesPath () + "/r_in\")")) {
 		command->status = RCommand::WasTried | RCommand::Failed;
 	} else {
 		command->status = RCommand::WasTried;

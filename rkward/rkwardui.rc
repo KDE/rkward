@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.0.1">
+<kpartgui name="rkward" version="0.2.0">
 <MenuBar>
 	<Menu name="file"><text>&amp;File</text>
 		<Action name="file_new_window"/>
@@ -12,7 +12,8 @@
 		<Action name="configure"></Action>
 	</Menu>
 	<Menu name="windows"><text>&amp;Windows</text>
-		<Action name="settings_rkwatch"/>
+		<Action name="windows_rkwatch"/>
+		<Action name="windows_rkoutput"/>
 	</Menu>
 </MenuBar>
 </kpartgui>

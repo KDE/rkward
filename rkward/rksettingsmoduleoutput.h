@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rksettingsmoduler  -  description
+                          rksettingsmoduleoutput  -  description
                              -------------------
-    begin                : Wed Jul 28 2004
+    begin                : Fri Jul 30 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,29 +14,22 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef RKSETTINGSMODULER_H
-#define RKSETTINGSMODULER_H
+#ifndef RKSETTINGSMODULEOUTPUT_H
+#define RKSETTINGSMODULEOUTPUT_H
 
 #include <rksettingsmodule.h>
 
-#include <qstring.h>
-#include <qstringlist.h>
-
-class QPushButton;
-class QLineEdit;
 class QCheckBox;
 
 /**
-Configure the R-backend
-
 @author Thomas Friedrichsmeier
 */
-class RKSettingsModuleR : public RKSettingsModule {
+class RKSettingsModuleOutput : public RKSettingsModule {
 	Q_OBJECT
 public:
-    RKSettingsModuleR (RKSettings *gui, RKwardApp *parent);
+    RKSettingsModuleOutput (RKSettings *gui, RKwardApp *parent);
 
-    ~RKSettingsModuleR ();
+    ~RKSettingsModuleOutput ();
 	
 	bool hasChanges ();
 	void applyChanges ();
@@ -47,26 +40,16 @@ public:
 	
 	QString caption ();
 	
-	static QString &rHomeDir () { return r_home_dir; };
-	static QString &pagerApp () { return pager_app; };
-	static bool rNosave () { return r_nosave; };
-	static bool rSlave () { return r_slave; };
-	static QStringList getOptionList ();
+	static bool autoShow () { return auto_show; };
+	static bool autoRaise () { return auto_raise; };
 public slots:
-	void browsePager ();
-	void pathChanged (const QString &);
 	void boxChanged (int);
 private:
-	QPushButton *pager_browse_button;
-	QLineEdit *pager_location_edit;
-	QCheckBox *nosave_box;
-	QCheckBox *slave_box;
+	QCheckBox *auto_show_box;
+	QCheckBox *auto_raise_box;
 
-friend class REmbed;
-	static bool r_nosave;
-	static bool r_slave;
-	static QString r_home_dir;
-	static QString pager_app;
+	static bool auto_show;
+	static bool auto_raise;
 };
 
 #endif
