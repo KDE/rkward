@@ -1,7 +1,7 @@
 /***************************************************************************
-                          robjectlist  -  description
+                          rcontainerobject  -  description
                              -------------------
-    begin                : Wed Aug 18 2004
+    begin                : Thu Aug 19 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,50 +14,46 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef ROBJECTLIST_H
-#define ROBJECTLIST_H
+#ifndef RCONTAINEROBJECT_H
+#define RCONTAINEROBJECT_H
 
-#include <qobject.h>
+#include "robject.h"
 
-#include <qstring.h>
-#include <qmap.h>
-
-#include "rcontainerobject.h"
-
-class QTimer;
 class RCommand;
 
 /**
-This class is responsible for keeping and updating a list of objects in the R-workspace.
+Internal representation of objects in the R-workspace that contain other objects
 
 @author Thomas Friedrichsmeier
 */
-class RObjectList : public RContainerObject {
-  Q_OBJECT
-public:
-    RObjectList ();
 
-    ~RObjectList ();
+class RContainerObject : public RObject {
+	Q_OBJECT
+public:
+    RContainerObject(RContainerObject *parent, const QString &name);
+
+    ~RContainerObject();
+	
+	QString getLabel ();
+	QString getDescription ();
+
 	void updateFromR ();
-	
-	void createFromR (RContainerObject *parent, const QString &cname);
-	
-	QString getFullName () { return ""; };
 public slots:
-	void timeout ();
-	void gotRResult (RCommand *command);
-signals:
-/// emitted if the list of objects has changed
-	void changed ();
+	virtual void gotRResult (RCommand *command);
 private:
-	QTimer *update_timer;
+	friend class RObject;
+	void typeMismatch (RObject *child, QString childname);
+protected:
+	RObjectMap childmap;
+	// why do I need this to make it compile?!
+	friend class RObjectList;
+	void addChild (RObject *child, QString childname);
 	
-	struct PendingObject {
-		QString name;
-		RContainerObject *parent;
-	};
-	
-	QMap<RCommand*, PendingObject*> pending_objects;
+	int num_classes;
+	QString *classname;
+	int num_dimensions;
+	int *dimension;
+	int container_type;
 };
 
 #endif

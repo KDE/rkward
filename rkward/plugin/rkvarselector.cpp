@@ -22,7 +22,7 @@
 #include <qdom.h>
 #include <qlabel.h>
 
-#include "../rkvariable.h"
+#include "../core/rkvariable.h"
 
 #include "../rkglobals.h"
 
@@ -50,9 +50,8 @@ RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlu
 	
 	RKwardDoc *doc = RKGlobals::rkApp ()->getDocument ();
 	for (int i = doc->numCols () - 1; i >= 0; --i) {
-		RKVariable *variable = new RKVariable;
+		RKVariable *variable = new RKVariable (0, doc->varname (i));
 		variable->table = "rk.data";
-		variable->name = doc->varname (i);
 		variable->label = doc->label (i);
 		variable->type = doc->typeString (i);
 		item_map.insert (new QListViewItem (main_table, doc->varname (i), doc->label (i), doc->typeString (i)), variable);

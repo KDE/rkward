@@ -1,7 +1,7 @@
 /***************************************************************************
-                          robjectlist  -  description
+                          robject  -  description
                              -------------------
-    begin                : Wed Aug 18 2004
+    begin                : Thu Aug 19 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,50 +14,49 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef ROBJECTLIST_H
-#define ROBJECTLIST_H
+#ifndef ROBJECT_H
+#define ROBJECT_H
 
 #include <qobject.h>
 
 #include <qstring.h>
 #include <qmap.h>
 
-#include "rcontainerobject.h"
-
-class QTimer;
-class RCommand;
+class RContainerObject;
 
 /**
-This class is responsible for keeping and updating a list of objects in the R-workspace.
+Base class for representations of objects in the R-workspace
 
 @author Thomas Friedrichsmeier
 */
-class RObjectList : public RContainerObject {
-  Q_OBJECT
-public:
-    RObjectList ();
 
-    ~RObjectList ();
-	void updateFromR ();
+// TODO: this dependency on QObject is annoying! It's needed only to get RCommand results. RCommands should not use signals/slots after all!
+class RObject : public QObject {
+public:
+	RObject(RContainerObject *parent, const QString &name);
+
+	virtual ~RObject();
+
+	enum RObjectType { DataFrame=1, Matrix=2, Array=4, List=8, Container=16, Variable=32, Workspace=64 };
 	
-	void createFromR (RContainerObject *parent, const QString &cname);
+	QString getShortName ();
+	virtual QString getFullName ();
+	virtual QString getLabel () = 0;
+	virtual QString getDescription () = 0;
 	
-	QString getFullName () { return ""; };
-public slots:
-	void timeout ();
-	void gotRResult (RCommand *command);
-signals:
-/// emitted if the list of objects has changed
-	void changed ();
-private:
-	QTimer *update_timer;
+	bool isContainer () { return (type & Container); };
+	bool isVariable () { return (type & Variable); };
 	
-	struct PendingObject {
-		QString name;
-		RContainerObject *parent;
-	};
+	typedef QMap<QString, RObject*> RObjectMap;
 	
-	QMap<RCommand*, PendingObject*> pending_objects;
+	virtual void updateFromR () = 0;
+	
+	RContainerObject *getContainer () { return (parent); };
+	
+protected:
+	RContainerObject *parent;
+	QString name;
+	int type;
 };
 
 #endif

@@ -1,3 +1,4 @@
+- new method of access to objects in R: getIntVector
 - use some global static pointer instead of passing them around (e.g. for the r-interface)
 - reorganized sources: now using subdirectories for most components
 

@@ -30716,6 +30716,8 @@ done
 
           ac_config_files="$ac_config_files rkward/Makefile"
 
+          ac_config_files="$ac_config_files rkward/core/Makefile"
+
           ac_config_files="$ac_config_files rkward/dataeditor/Makefile"
 
           ac_config_files="$ac_config_files rkward/misc/Makefile"
@@ -31284,6 +31286,7 @@ do
   "doc/en/Makefile" ) CONFIG_FILES="$CONFIG_FILES doc/en/Makefile" ;;
   "po/Makefile" ) CONFIG_FILES="$CONFIG_FILES po/Makefile" ;;
   "rkward/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/Makefile" ;;
+  "rkward/core/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/core/Makefile" ;;
   "rkward/dataeditor/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/dataeditor/Makefile" ;;
   "rkward/misc/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/misc/Makefile" ;;
   "rkward/plugin/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/plugin/Makefile" ;;

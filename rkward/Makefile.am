@@ -3,8 +3,8 @@ bin_PROGRAMS = rkward
 
 ## INCLUDES were found outside kdevelop specific part
 
-rkward_SOURCES = rcommand.cpp rkwatch.cpp rkwarddoc.cpp rkward.cpp main.cpp rkoutputwindow.cpp rkcommandeditor.cpp rkvariable.cpp robjectlist.cpp rkglobals.cpp
-rkward_LDADD = $(top_builddir)/rkward/plugin/libplugin.a $(top_builddir)/rkward/misc/libmisc.a $(top_builddir)/rkward/rbackend/librbackend.a $(top_builddir)/rkward/settings/libsettings.a $(top_builddir)/rkward/dataeditor/libdataeditor.a $(top_builddir)/rkward/scriptbackends/libscriptbackends.a $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) $(LIBSOCKET) -lR -lkatepartinterfaces
+rkward_SOURCES = rkwatch.cpp rkwarddoc.cpp rkward.cpp main.cpp rkoutputwindow.cpp rkcommandeditor.cpp rkglobals.cpp
+rkward_LDADD = $(top_builddir)/rkward/core/libcore.a $(top_builddir)/rkward/plugin/libplugin.a $(top_builddir)/rkward/misc/libmisc.a $(top_builddir)/rkward/rbackend/librbackend.a $(top_builddir)/rkward/settings/libsettings.a $(top_builddir)/rkward/dataeditor/libdataeditor.a $(top_builddir)/rkward/scriptbackends/libscriptbackends.a $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) $(LIBSOCKET) -lR -lkatepartinterfaces
 
 SUBDIRS = plugins dataeditor settings plugin rbackend scriptbackends misc core
 
@@ -62,7 +62,7 @@ messages: rc.cpp
 	 $(XGETTEXT) $$LIST -o $(podir)/rkward.pot; \
 	fi
 
-noinst_HEADERS = debug.h rkcommandeditor.h rkvariable.h robjectlist.h rkglobals.h
+noinst_HEADERS = debug.h rkcommandeditor.h rkglobals.h
 phpfilesdir = $(kde_datadir)/rkward/phpfiles
 
 katesyntaxdir = $(kde_datadir)/katepart/syntax/

@@ -33,7 +33,7 @@
 
 #include "dataeditor/twintable.h"
 
-#include "rcommand.h"
+#include "core/rcommand.h"
 class RKwardApp;
 class TwinTableMember;
 class TwinTable;

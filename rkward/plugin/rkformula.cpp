@@ -30,7 +30,7 @@
 #include "rkplugin.h"
 #include "rkvarslot.h"
 #include "rkvarselector.h"
-#include "../rkvariable.h"
+#include "../core/rkvariable.h"
 
 #include "../debug.h"
 

@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkvariable  -  description
+                          robject  -  description
                              -------------------
-    begin                : Thu Aug 12 2004
+    begin                : Thu Aug 19 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,30 +14,27 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rkvariable.h"
+#include "robject.h"
 
-RKVariable::RKVariable (RContainerObject *parent, const QString &name) : RObject (parent, name) {
+#include "rcontainerobject.h"
+
+RObject::RObject (RContainerObject *parent, const QString &name) {
+	RObject::parent = parent;
+	RObject::name = name;
 }
 
-RKVariable::~RKVariable () {
+RObject::~RObject () {
 }
 
-QString RKVariable::getLabel () {
-	return (name + " (" + label + ")");
+QString RObject::getShortName () {
+	return name;
 }
 
-QString RKVariable::getFullName () {
-	return (table + "[[\"" + name + "\"]]");
-}
-
-QString RKVariable::getTypeString () {
-	return type;
-}
-
-QString RKVariable::getDescription () {
-	return label;
-}
-
-void RKVariable::updateFromR () {
-	// TODO: implement
+QString RObject::getFullName () {
+	QString pf = parent->getFullName ();
+	if (pf != "") {
+		return (pf + "[[\"" + RObject::name + "\"]]");
+	} else {
+		return RObject::name;
+	}
 }

@@ -18,7 +18,6 @@
 #include "rinterface.h"
 
 #include "../rkwatch.h"
-#include "../rcommand.h"
 #include "rthread.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduler.h"

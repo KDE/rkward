@@ -21,7 +21,7 @@
 
 #include <qstring.h>
 #include <qmap.h>
-#include "../rkvariable.h"
+#include "../core/rkvariable.h"
 
 class QListView;
 class QPushButton;

@@ -19,32 +19,41 @@
 
 #include <qstring.h>
 
+#include "robject.h"
+
+class RContainerObject;
+
 /** Abstract representation of a variable, along with helper functions to get different name/labels/descriptions etc.
 The implementation will look a lot different when done, but you can go ahead and use functions like getLabel (), getShortName (),
 getFullName (), getTypeString () etc. where appropriate.
 
 @author Thomas Friedrichsmeier
 */
-class RKVariable{
+class RKVariable : public RObject {
 public:
-    RKVariable();
+    RKVariable(RContainerObject *parent, const QString &name);
 
     ~RKVariable();
 	
-	QString getShortName ();
-	QString getFullName ();
 	QString getLabel ();
 	QString getDescription ();
+	QString getFullName ();
 	QString getTypeString ();
-	QString getTable ();
+	
+	int getLength () { return length; };
+	
+	void updateFromR ();;
 	
 /* Begin: parts that will be re-written entirely */
-	
-	QString name;
+	QString getTable () { return table; };	
+
 	QString type;
 	QString table;
 	QString label;
 /* End */
+protected:
+	int length;
+	int var_type;
 };
 
 typedef RKVariable* RKVarPtr;

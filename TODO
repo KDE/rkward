@@ -1,8 +1,6 @@
 The following list of TODO-items is NOT complete!
 
 stuff to do before 0.2.3 release
-- implement getIntegerVector-access
-- delete finished RCommands
 - implement RObjectList and
 	- RObjectBrowser
 	- should handle data.frames and vectors for now
@@ -11,6 +9,7 @@ stuff to do before 0.2.3 release
 	- allow multiple tables
 - maybe implement simple RObjectViewer
 - jump to 0.2.5 on these changes?
+- move RCommand to rbackend-dir
 
 small stuff to do soon
 - plugins-scanning: don't duplicate everything

@@ -50,7 +50,7 @@
 #include "settings/rksettingsmodulelogfiles.h"
 #include "settings/rksettingsmoduleoutput.h"
 #include "rbackend/rinterface.h"
-#include "robjectlist.h"
+#include "core/robjectlist.h"
 #include "rkglobals.h"
 
 #include "debug.h"

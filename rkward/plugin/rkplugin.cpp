@@ -37,7 +37,6 @@
 
 #include "../rkward.h"
 #include "../rkwarddoc.h"
-#include "../rcommand.h"
 #include "../scriptbackends/phpbackend.h"
 #include "../misc/rkerrordialog.h"
 #include "../rkcommandeditor.h"

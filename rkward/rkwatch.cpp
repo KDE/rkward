@@ -19,7 +19,7 @@
 #include "rkwatch.h"
 
 #include "rbackend/rinterface.h"
-#include "rcommand.h"
+#include "core/rcommand.h"
 #include "rkcommandeditor.h"
 
 #include <qtextedit.h>
