@@ -1,0 +1,4 @@
+<!DOCTYPE rkplugin>
+<document>
+  <entry type="menu" id="load" label="Load ..." />
+</document>
