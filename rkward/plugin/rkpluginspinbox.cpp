@@ -40,7 +40,7 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, QWidget *parent, R
 RKPluginSpinBox::~RKPluginSpinBox () {
 }
 
-QString RKPluginSpinBox::value (const QString &modifier) {
+QString RKPluginSpinBox::value (const QString &) {
 	return (spinbox->text ());
 }
 

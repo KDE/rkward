@@ -21,20 +21,17 @@
 #include <qdom.h>
 
 #include "../plugin/rkpluginhandle.h"
-#include "../rkward.h"
 
-RKMenu::RKMenu(RKMenu *parent, QString tag, QString label, RKwardApp *app) : QPopupMenu (parent) {
+RKMenu::RKMenu(RKMenu *parent, QString tag, QString label) : QPopupMenu (parent) {
 	is_top_level = false;
 	_tag = tag;
 	_label = label;
-	RKMenu::app = app;
 }
 
-RKMenu::RKMenu(QMenuBar *parent, QString tag, QString label, RKwardApp *app) : QPopupMenu (parent) {
+RKMenu::RKMenu(QMenuBar *parent, QString tag, QString label) : QPopupMenu (parent) {
 	is_top_level = true;
 	_tag = tag;
 	_label = label;
-	RKMenu::app = app;
 }
 
 RKMenu::~RKMenu(){

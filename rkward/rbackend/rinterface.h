@@ -42,7 +42,7 @@ class RKwardApp;
 class RInterface : public QObject {
 	Q_OBJECT
 public: 
-	RInterface(RKwardApp *parent);
+	RInterface();
 	~RInterface();
 	
 	void issueCommand (RCommand *command, RCommand::CommandChain *chain=0) { r_thread->issueCommand (command, chain); };
@@ -52,7 +52,6 @@ public:
 	RCommand::CommandChain *closeChain (RCommand::CommandChain *chain) { return r_thread->closeChain (chain); };
 private:
 	RThread *r_thread;
-	RKwardApp *app;
 friend class RKwardApp;
 	RKwatch *watch;
 protected:

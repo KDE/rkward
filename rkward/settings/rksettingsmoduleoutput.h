@@ -27,7 +27,7 @@ class QCheckBox;
 class RKSettingsModuleOutput : public RKSettingsModule {
 	Q_OBJECT
 public:
-    RKSettingsModuleOutput (RKSettings *gui, RKwardApp *parent);
+    RKSettingsModuleOutput (RKSettings *gui, QWidget *parent);
 
     ~RKSettingsModuleOutput ();
 	

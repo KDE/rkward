@@ -31,7 +31,7 @@ class QButtonGroup;
 class RKSettingsModulePlugins : public RKSettingsModule {
 	Q_OBJECT
 public:
-    RKSettingsModulePlugins (RKSettings *gui, RKwardApp *parent);
+    RKSettingsModulePlugins (RKSettings *gui, QWidget *parent);
 
     ~RKSettingsModulePlugins ();
 	

@@ -22,7 +22,7 @@
 
 #include "rkplugin.h"
 
-RKPluginWidget::RKPluginWidget (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : QBoxLayout (layout, QBoxLayout::TopToBottom, 6) {
+RKPluginWidget::RKPluginWidget (const QDomElement &, QWidget *parent, RKPlugin *plugin, QLayout *layout) : QBoxLayout (layout, QBoxLayout::TopToBottom, 6) {
 	_parent = parent;
 	_plugin = plugin;
 	layout->setMargin (6);
@@ -38,7 +38,7 @@ QString RKPluginWidget::complaints () {
 	return "";
 }
 
-QString RKPluginWidget::value (const QString &modifier) {
+QString RKPluginWidget::value (const QString &) {
 	return "";
 }
 

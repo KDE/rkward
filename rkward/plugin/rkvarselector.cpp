@@ -24,8 +24,9 @@
 
 #include "../rkvariable.h"
 
+#include "../rkglobals.h"
+
 // TODO: remove these!
-#include "rkplugin.h"
 #include "../rkward.h"
 #include "../rkwarddoc.h"
 
@@ -47,7 +48,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlu
 	main_table->setSelectable (false);
 	list_view->insertItem (main_table);
 	
-	RKwardDoc *doc = plugin->getApp ()->getDocument ();
+	RKwardDoc *doc = RKGlobals::rkApp ()->getDocument ();
 	for (int i = doc->numCols () - 1; i >= 0; --i) {
 		RKVariable *variable = new RKVariable;
 		variable->table = "rk.data";

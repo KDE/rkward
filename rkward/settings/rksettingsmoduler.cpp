@@ -33,7 +33,7 @@ QString RKSettingsModuleR::pager_app;
 bool RKSettingsModuleR::r_nosave;
 bool RKSettingsModuleR::r_slave;
 
-RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, RKwardApp *parent) : RKSettingsModule(gui, parent) {
+RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, 6);
 	
 	QLabel *label = new QLabel (i18n ("Note: changes in this section do not take effect until you restart RKWard!"), this);

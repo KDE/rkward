@@ -73,7 +73,6 @@ class RKwardApp : public KMainWindow
      */	
     RKwardDoc *getDocument() const; 	
 
-	RInterface *r_inter;
 	void startR ();
 	
 	void newOutput ();

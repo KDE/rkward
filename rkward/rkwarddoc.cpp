@@ -34,6 +34,8 @@
 #include "rcommand.h"
 #include "rbackend/rinterface.h"
 
+#include "rkglobals.h"
+
 #define RK_DATA_PREFIX	"rk."
 
 #define RLOAD_COMMAND 1
@@ -134,7 +136,7 @@ bool RKwardDoc::openDocument(const KURL& url, const char *format /*=0*/)
 	setURL (tmpfile);
 //	output_is = Loaded;
 	RCommand *command = new RCommand ("load (\"" + doc_url.path () + "\")", RCommand::App, "", this, SLOT (processROutput (RCommand *)), RLOAD_COMMAND);
-	app->r_inter->issueCommand (command);
+	RKGlobals::rInterface ()->issueCommand (command);
 	pullTable ();
 	
 	modified=false;
@@ -149,7 +151,7 @@ bool RKwardDoc::saveDocument(const KURL& url, const char *format /*=0*/)
 
 	syncToR ();
 
-	app->r_inter->issueCommand (new RCommand ("save.image (\"" + url.path () + "\")", RCommand::App));
+	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + url.path () + "\")", RCommand::App));
 
 	setURL (url);
 	modified=false;
@@ -195,8 +197,8 @@ void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 	}
 	command.append (")");
 
-	command_chain = app->r_inter->startChain (command_chain);
-	app->r_inter->issueCommand (new RCommand (command, RCommand::Sync), command_chain);
+	command_chain = RKGlobals::rInterface ()->startChain (command_chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync), command_chain);
 
 	// now push the meta-table (point-reflected at bottom-left corner)
 	table = varview;
@@ -223,14 +225,14 @@ void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 	}
 	command.append (")");
 
-	app->r_inter->issueCommand (new RCommand (command, RCommand::Sync), command_chain);
-	command_chain = app->r_inter->closeChain (command_chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync), command_chain);
+	command_chain = RKGlobals::rInterface ()->closeChain (command_chain);
 }
 
 void RKwardDoc::pullTable () {
 	QString command, dummy;
 
-	command_chain = app->r_inter->startChain (command_chain);
+	command_chain = RKGlobals::rInterface ()->startChain (command_chain);
 	for (int i=0; i < 5; ++i) {
 		command = "as.vector (" + tablename + ".meta[[" + dummy.setNum (i+1) + "]])";
 		
@@ -245,7 +247,7 @@ void RKwardDoc::pullTable () {
 		RCommand *rcom = new RCommand (command, RCommand::Sync | RCommand::GetStringVector, "", this, SLOT (processROutput (RCommand *)), RPULL_COMMAND);
 		pull_map.insert (rcom, pci);
 		
-		app->r_inter->issueCommand (rcom, command_chain);
+		RKGlobals::rInterface ()->issueCommand (rcom, command_chain);
 	}
 	// since communication is asynchronous, the rest is done inside
 	// processROutput!
@@ -285,10 +287,10 @@ void RKwardDoc::processROutput (RCommand *command) {
 				RCommand *rcom = new RCommand (command_string, RCommand::Sync | RCommand::GetStringVector, "", this, SLOT (processROutput (RCommand *)), RPULL_COMMAND);
 				pull_map.insert (rcom, datapci);
 		
-				app->r_inter->issueCommand (rcom, command_chain);
+				RKGlobals::rInterface ()->issueCommand (rcom, command_chain);
 			}
 			
-			command_chain = app->r_inter->closeChain (command_chain);
+			command_chain = RKGlobals::rInterface ()->closeChain (command_chain);
 		}
 
 		delete pci;

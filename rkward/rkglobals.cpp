@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rksettingsmodule  -  description
+                          rkglobals  -  description
                              -------------------
-    begin                : Wed Jul 28 2004
+    begin                : Wed Aug 18 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,23 +14,17 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rksettingsmodule.h"
+#include "rkglobals.h"
 
-#include "../rkward.h"
-#include "rksettings.h"
+RKwardApp *RKGlobals::app;
+RInterface *RKGlobals::rinter;
+RObjectList *RKGlobals::list;
 
-RKSettingsModule::RKSettingsModule(RKSettings *gui, QWidget *parent) : QWidget(parent) {
-	changed = false;
-	RKSettingsModule::gui = gui;
+RKGlobals::RKGlobals () {
 }
 
 
-RKSettingsModule::~RKSettingsModule() {
+RKGlobals::~RKGlobals () {
 }
 
-void RKSettingsModule::change () {
-	changed = true;
-	gui->enableApply ();
-}
 
-#include "rksettingsmodule.moc"

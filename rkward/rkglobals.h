@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rksettingsmodule  -  description
+                          rkglobals  -  description
                              -------------------
-    begin                : Wed Jul 28 2004
+    begin                : Wed Aug 18 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,23 +14,32 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rksettingsmodule.h"
+#ifndef RKGLOBALS_H
+#define RKGLOBALS_H
 
-#include "../rkward.h"
-#include "rksettings.h"
+class RKwardApp;
+class RInterface;
+class RObjectList;
 
-RKSettingsModule::RKSettingsModule(RKSettings *gui, QWidget *parent) : QWidget(parent) {
-	changed = false;
-	RKSettingsModule::gui = gui;
-}
+/**
+This class basically keeps some static pointers which are needed all over the place, so they won't have to be passed around.
 
+@author Thomas Friedrichsmeier
+*/
+class RKGlobals{
+public:
+    RKGlobals();
 
-RKSettingsModule::~RKSettingsModule() {
-}
+    ~RKGlobals();
+	
+	static RKwardApp *rkApp () { return app; }
+	static RInterface *rInterface () { return rinter; };
+	static RObjectList *rObjectList () { return list; };
+private:
+	friend class RKwardApp;
+	static RKwardApp *app;
+	static RInterface *rinter;
+	static RObjectList *list;
+};
 
-void RKSettingsModule::change () {
-	changed = true;
-	gui->enableApply ();
-}
-
-#include "rksettingsmodule.moc"
+#endif

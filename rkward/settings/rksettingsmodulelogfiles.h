@@ -28,7 +28,7 @@ class QLineEdit;
 class RKSettingsModuleLogfiles : public RKSettingsModule {
 	Q_OBJECT
 public:
-    RKSettingsModuleLogfiles (RKSettings *gui, RKwardApp *parent);
+    RKSettingsModuleLogfiles (RKSettings *gui, QWidget *parent);
 
     ~RKSettingsModuleLogfiles ();
 	

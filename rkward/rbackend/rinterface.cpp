@@ -23,15 +23,15 @@
 #include "../rkward.h"
 #include "../settings/rksettingsmoduler.h"
 
+#include "../rkglobals.h"
+
 #include <kmessagebox.h>
 #include <kinputdialog.h>
 #include <klocale.h>
 
 #include <stdlib.h>
 
-RInterface::RInterface(RKwardApp *parent){
-	app = parent;
-
+RInterface::RInterface(){
 // note: we can safely mess with RKSettingsModuleR::r_home_dir, since if the setting is bad, the app will exit without anything being saved. If the
 // setting is good, everything is fine anyway.
 	
@@ -71,9 +71,9 @@ void RInterface::customEvent (QCustomEvent *e) {
 		watch->addOutput (command);
 		command->finished ();
 	} else if ((e->type () == RIDLE_EVENT)) {
-		app->setRStatus (false);	
+		RKGlobals::rkApp ()->setRStatus (false);	
 	} else if ((e->type () == RBUSY_EVENT)) {
-		app->setRStatus (true);	
+		RKGlobals::rkApp ()->setRStatus (true);	
 	} else if ((e->type () == RSTARTED_EVENT)) {
 		// anything to do here?
 	} else if ((e->type () == RERROR_SINKING_EVENT)) {

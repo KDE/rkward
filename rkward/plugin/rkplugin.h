@@ -26,7 +26,6 @@
 #include "../rbackend/rinterface.h"
 
 class QDomElement;
-class RKwardApp;
 class QDialog;
 class QBoxLayout;
 class QGridLayout;
@@ -36,7 +35,7 @@ class RKPluginWidget;
 class QPushButton;
 class RKVarSelector;
 class RKVarSlot;
-class PHPBackend;
+class ScriptBackend;
 class RCommand;
 class RKErrorDialog;
 class RKCommandEditor;
@@ -50,10 +49,9 @@ class RKPlugin : public QWidget {
 	Q_OBJECT
 public: 
 // TODO: pass directory only, not filename
-	RKPlugin(RKwardApp *parent, const QString &filename);
+	RKPlugin(const QString &filename);
 	~RKPlugin();
 //	QString tag () { return _tag; }
-	RKwardApp *getApp () { return app; };
 /** Returns a pointer to the varselector by that name (0 if not available) */
 	RKVarSelector *getVarSelector (const QString &id);
 /** Returns a pointer to the varslot by that name (0 if not available) */	
@@ -70,11 +68,11 @@ public slots:
 /** Widgets, that if changed, require the code/problem-views to be updated,
 	connect to this slot (or call it directly). Updates code/problem-views */
 	void changed ();
-/** Get result of r-command (which was requested for the PHP-backend */
+/** Get result of r-command (which was requested for the script-backend */
 	void gotRResult (RCommand *command);
 	
 // slots below are called by the backend
-/** this gets called by the PHP-backend, when it's done. Might enable the
+/** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */
 	void backendIdle ();
 	void backendCommandDone (int flags);
@@ -85,12 +83,10 @@ public slots:
 /** get a value for the backend */
 	void getValue (const QString &id);
 private:
-friend class PHPBackend;
 /** try to destruct the plugin */
 	void try_destruct ();
 	
-	RKwardApp *app;
-/** sometimes the plugin can't be destroyed immediately, since, for example the PHP-backend is
+/** sometimes the plugin can't be destroyed immediately, since, for example the script-backend is
 	still busy cleaning stuff up. In that case this var is set and the plugin gets destroyed ASAP. */
 	bool should_destruct;
 	bool should_updatecode;
@@ -136,7 +132,7 @@ friend class PHPBackend;
 	// widgets for dialog only
 	QPushButton *toggleCodeButton;
 		
-	PHPBackend *backend;
+	ScriptBackend *backend;
 	RKErrorDialog *error_dialog;
 	RCommand::CommandChain *php_backend_chain;
 protected:

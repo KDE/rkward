@@ -1,6 +1,16 @@
 The following list of TODO-items is NOT complete!
 
-stuff to do before 0.2.2 release
+stuff to do before 0.2.3 release
+- implement getIntegerVector-access
+- delete finished RCommands
+- implement RObjectList and
+	- RObjectBrowser
+	- should handle data.frames and vectors for now
+	- use in varselector
+	- use in twintable
+	- allow multiple tables
+- maybe implement simple RObjectViewer
+- jump to 0.2.5 on these changes?
 
 small stuff to do soon
 - plugins-scanning: don't duplicate everything
@@ -16,7 +26,6 @@ small stuff to do soon
 
 mid-term stuff
 - add XML-parsing helper functions and error-checking
-- restructure source-layout
 - create a spinbox, that can really deal with real numbers
 
 stuff to do before the thing is usable

@@ -1,3 +1,6 @@
+- use some global static pointer instead of passing them around (e.g. for the r-interface)
+- reorganized sources: now using subdirectories for most components
+
 --- Version 0.2.2 - Aug-15-2004 ---
 - added an improved kate syntax-highlighting definition for R
 - output-formatting is done in R instead of PHP

@@ -47,6 +47,9 @@
       <terminal>false</terminal>
       <autocompile>true</autocompile>
       <envvars/>
+      <runarguments>
+        <rkward/>
+      </runarguments>
     </run>
     <configurations>
       <default>

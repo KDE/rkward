@@ -31,7 +31,7 @@
 QString RKSettingsModulePHP::php_bin;
 QString RKSettingsModulePHP::files_path;
 
-RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, RKwardApp *parent) : RKSettingsModule(gui, parent) {
+RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, 6);
 	QLabel *label = new QLabel (i18n ("Changes in this section take effect the next time you start a plugin"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);

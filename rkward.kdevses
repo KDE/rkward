@@ -4,33 +4,33 @@
  <LastCompileConfig>(Default)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
  <DocsAndViews NumberOfDocuments="6" >
-  <Doc0 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/phpbackend.cpp" >
-   <View0 line="65" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="536" Left="2" MinMaxMode="0" />
+  <Doc0 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkward.cpp" >
+   <View0 line="31" Type="???" >
+    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvarselector.cpp" >
-   <View0 line="0" Type="???" >
-    <AdditionalSettings Top="2" Width="798" Attach="1" Height="549" Left="2" MinMaxMode="0" />
+  <Doc1 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/robjectlist.cpp" >
+   <View0 line="83" Type="???" >
+    <AdditionalSettings Top="2" Width="401" Attach="1" Height="549" Left="2" MinMaxMode="0" />
    </View0>
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvarslot.cpp" >
-   <View0 line="0" Type="???" >
+  <Doc2 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/robjectlist.h" >
+   <View0 line="57" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkformula.cpp" >
-   <View0 line="0" Type="???" >
+  <Doc3 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rcommand.h" >
+   <View0 line="100" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
   </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkpluginspinbox.cpp" >
-   <View0 line="41" Type="???" >
+  <Doc4 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/ChangeLog" >
+   <View0 line="0" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
   </Doc4>
-  <Doc5 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkspinbox.cpp" >
-   <View0 line="0" Type="???" >
+  <Doc5 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/TODO" >
+   <View0 line="4" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
   </Doc5>
@@ -55,7 +55,7 @@
   </kdevvalgrind>
   <kdevdebugger>
    <breakpointList>
-    <breakpoint0 location="/home/thomas/develop/rkward/rkward/phpbackend.cpp:216" type="1" condition="" enabled="1" />
+    <breakpoint0 location="/home/thomas/develop/rkward/rkward/phpbackend.cpp:215" type="1" condition="" enabled="1" />
    </breakpointList>
   </kdevdebugger>
  </pluginList>

@@ -34,7 +34,7 @@ Configure the R-backend
 class RKSettingsModuleR : public RKSettingsModule {
 	Q_OBJECT
 public:
-    RKSettingsModuleR (RKSettings *gui, RKwardApp *parent);
+    RKSettingsModuleR (RKSettings *gui, QWidget *parent);
 
     ~RKSettingsModuleR ();
 	

@@ -20,7 +20,6 @@
 #include "../rkward.h"
 
 RKPluginHandle::RKPluginHandle (RKwardApp *parent, const QString &filename) : QObject (parent) {
-	_parent = parent;
 	_filename = filename;
 }
 
@@ -29,7 +28,7 @@ RKPluginHandle::~RKPluginHandle () {
 }
 
 void RKPluginHandle::activated () {
-	RKPlugin *plugin = new RKPlugin (_parent, _filename);
+	new RKPlugin (_filename);
 }
 
 #include "rkpluginhandle.moc"

@@ -21,7 +21,6 @@
 #include <qwidget.h>
 
 class KConfig;
-class RKwardApp;
 class RKSettings;
 
 /**
@@ -32,7 +31,7 @@ Base class for settings modules. Provides some pure virtual calls.
 class RKSettingsModule : public QWidget {
 	Q_OBJECT
 public:
-    RKSettingsModule(RKSettings *gui, RKwardApp *parent);
+    RKSettingsModule(RKSettings *gui, QWidget *parent);
 
     ~RKSettingsModule();
 
@@ -45,7 +44,6 @@ protected:
 	void change ();
 
 	bool changed;
-	RKwardApp *rk;
 private:
 	RKSettings *gui;
 };

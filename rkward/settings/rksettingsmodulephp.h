@@ -30,7 +30,7 @@ configuration for the PHP-backend
 class RKSettingsModulePHP : public RKSettingsModule {
 	Q_OBJECT
 public:
-    RKSettingsModulePHP (RKSettings *gui, RKwardApp *parent);
+    RKSettingsModulePHP (RKSettings *gui, QWidget *parent);
 
     ~RKSettingsModulePHP ();
 	

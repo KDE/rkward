@@ -30,12 +30,13 @@
 #include <qradiobutton.h>
 
 #include "../rkward.h"
+#include "../rkglobals.h"
 
 // static members
 QString RKSettingsModulePlugins::plugin_dir;
 RKSettingsModulePlugins::PluginPrefs RKSettingsModulePlugins::interface_pref;
 
-RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, RKwardApp *parent) : RKSettingsModule(gui, parent) {
+RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, 6);
 	
 	main_vbox->addStretch ();
@@ -100,7 +101,7 @@ bool RKSettingsModulePlugins::hasChanges () {
 void RKSettingsModulePlugins::applyChanges () {
 	plugin_dir = location_edit->text ();
 	interface_pref = static_cast<PluginPrefs> (button_group->selectedId ());
-	rk->initPlugins();
+	RKGlobals::rkApp ()->initPlugins();
 }
 
 void RKSettingsModulePlugins::save (KConfig *config) {

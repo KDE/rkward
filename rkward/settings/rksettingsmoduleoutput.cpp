@@ -28,7 +28,7 @@
 bool RKSettingsModuleOutput::auto_show;
 bool RKSettingsModuleOutput::auto_raise;
 
-RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, RKwardApp *parent) : RKSettingsModule(gui, parent) {
+RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, 6);
 	
 	QVButtonGroup *group = new QVButtonGroup (i18n ("Output Window options"), this);

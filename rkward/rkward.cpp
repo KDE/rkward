@@ -50,6 +50,8 @@
 #include "settings/rksettingsmodulelogfiles.h"
 #include "settings/rksettingsmoduleoutput.h"
 #include "rbackend/rinterface.h"
+#include "robjectlist.h"
+#include "rkglobals.h"
 
 #include "debug.h"
 
@@ -58,6 +60,10 @@
 
 RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
 {
+	RKGlobals::app = this;
+	RKGlobals::rinter = 0;
+	RKGlobals::list = 0;
+	
   config=kapp->config();
 
 	KGlobal::dirs()->addResourceType("plugins", KStandardDirs::kde_default("data") + "rkward/plugins/");
@@ -87,12 +93,11 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
 	output = new RKOutputWindow (0);
 	output->showMaximized ();
 	output->hide ();
-	
-	r_inter = 0;
 }
 
 RKwardApp::~RKwardApp() {
-	delete r_inter;
+	delete RKGlobals::rInterface ();
+	delete RKGlobals::rObjectList ();
 }
 
 void RKwardApp::doPostInit () {
@@ -153,11 +158,11 @@ int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
 	RKMenu *menu = 0;
 	if (element.attribute ("type") == "menu") {
 		if (!parent) {
-			menu = new RKMenu (menuBar (), element.attribute ("id"), element.attribute ("label", "untitled"), this);
+			menu = new RKMenu (menuBar (), element.attribute ("id"), element.attribute ("label", "untitled"));
 			rkmenus.insert (element.attribute ("id"), menu);
 			menuBar ()->insertItem (menu->label (), menu);
 		} else {
-			menu = new RKMenu (parent, element.attribute ("id"), element.attribute ("label", "untitled"), this);
+			menu = new RKMenu (parent, element.attribute ("id"), element.attribute ("label", "untitled"));
 			parent->addSubMenu (element.attribute ("id"), menu);
 		}
 	} else {
@@ -183,7 +188,7 @@ int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
 }
 
 void RKwardApp::startR () {
-	RK_ASSERT (!r_inter);
+	RK_ASSERT (!RKGlobals::rInterface ());
 	
 	QDir dir (RKSettingsModuleLogfiles::filesPath());
 	if (!dir.exists ()) {
@@ -191,7 +196,8 @@ void RKwardApp::startR () {
 		current.mkdir (dir.path (), true);
 	}
 	
-	r_inter = new RInterface (this);
+	RKGlobals::rinter = new RInterface ();
+	RKGlobals::list = new RObjectList ();
 }
 
 void RKwardApp::slotConfigure () {
@@ -638,7 +644,7 @@ void RKwardApp::slotStatusMsg(const QString &text)
 }
 
 void RKwardApp::slotShowRKWatch () {
-	r_inter->watch->setShown (showRKWatch->isChecked ());
+	RKGlobals::rInterface ()->watch->setShown (showRKWatch->isChecked ());
 }
 
 void RKwardApp::slotShowRKOutput () {

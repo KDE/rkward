@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkpluginhandle  -  description
+                          robjectlist  -  description
                              -------------------
-    begin                : Tue Aug 10 2004
+    begin                : Wed Aug 18 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,30 +14,49 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef RKPLUGINHANDLE_H
-#define RKPLUGINHANDLE_H
+#ifndef ROBJECTLIST_H
+#define ROBJECTLIST_H
 
 #include <qobject.h>
 
-#include <qstring.h>
-
-class RKwardApp;
+class QTimer;
+class RCommand;
 
 /**
+This class is responsible for keeping and updating a list of objects in the R-workspace.
+
 @author Thomas Friedrichsmeier
 */
-class RKPluginHandle : public QObject {
-	Q_OBJECT
+class RObjectList : public QObject
+{
+  Q_OBJECT
 public:
-    RKPluginHandle(RKwardApp *parent, const QString &filename);
+    RObjectList ();
 
-    ~RKPluginHandle();
+    ~RObjectList ();
+	void updateList ();
 public slots:
-/** Slot called, when the menu-item for this widget is selected. Responsible
-	for creating the GUI. */
-	void activated ();
+	void timeout ();
+	void receivedROutput (RCommand *command);
+signals:
+/// emitted if the list of objects has changed
+	void changed ();
 private:
-	QString _filename;
+	QTimer *update_timer;
+	void updateObject (char *name);
+
+/** this struct is used to represent an object which is currently in the process of being updated. It keeps the bits until all info has been gathered. TODO: will likely be changed in some way to interact more directly with RKVariables. */
+	struct UpdatingObject {
+		QString name;
+		QString *classname;
+		QString *dimension;
+		int num_classes;
+		int num_dimensions;
+	};
+
+/// Maps commands to objects
+	typedef QMap<RCommand *, UpdatingObject*> UpdateMap;
+	UpdateMap update_map;
 };
 
 #endif

@@ -31,7 +31,7 @@
 // static members
 QString RKSettingsModuleLogfiles::files_path;
 
-RKSettingsModuleLogfiles::RKSettingsModuleLogfiles (RKSettings *gui, RKwardApp *parent) : RKSettingsModule(gui, parent) {
+RKSettingsModuleLogfiles::RKSettingsModuleLogfiles (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, 6);
 	QLabel *label = new QLabel (i18n ("For now, when you change the setting for the location of the logfiles, RKWard will not function properly until you restart the application!"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
