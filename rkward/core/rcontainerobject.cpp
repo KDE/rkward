@@ -27,8 +27,11 @@
 #define UPDATE_CLASS_COMMAND 2
 #define UPDATE_CHILD_LIST_COMMAND 3
 #define UPDATE_TYPE_COMMAND 4
+#define FIND_META_COMMAND 5
+#define FIND_CHILD_META_COMMAND 6
 
 RContainerObject::RContainerObject (RContainerObject *parent, const QString &name) : RObject (parent, name) {
+	RK_TRACE (OBJECTS);
 	classname = 0;
 	dimension = 0;
 	num_classes = num_dimensions = 0;
@@ -36,34 +39,51 @@ RContainerObject::RContainerObject (RContainerObject *parent, const QString &nam
 }
 
 RContainerObject::~RContainerObject () {
-}
-
-QString RContainerObject::getLabel () {
-	return ("Container-Object: " + RObject::name);
-}
-
-QString RContainerObject::getDescription () {
-	return getLabel ();
+	RK_TRACE (OBJECTS);
 }
 
 void RContainerObject::updateFromR () {
-	RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
+	RK_TRACE (OBJECTS);
+	RCommand *command = new RCommand ("is.list (" + getMetaObjectName () + "$data)", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, FIND_META_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 
-	command = new RCommand ("c (is.data.frame (" + getFullName () + "), is.matrix (" + getFullName () + "), is.array (" + getFullName () + "), is.list (" + getFullName () + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_TYPE_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
-	
-	command = new RCommand ("dim (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
-
-	command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CHILD_LIST_COMMAND);
+	command = new RCommand ("is.list (" + getMetaObjectName () + "$children)", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, FIND_CHILD_META_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 }
 
 void RContainerObject::rCommandDone (RCommand *command) {
-	bool changed = false;
+	RK_TRACE (OBJECTS);
+	RK_DO (qDebug ("command: %s", command->command ().latin1 ()), OBJECTS, DL_DEBUG);
+	RObject::rCommandDone (command);
 
-	if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
+	bool changed = false;
+	if (command->getFlags () == FIND_META_COMMAND) {
+		if ((command->intVectorLength () == 1) && command->getIntVector ()[0]) {
+			type |= HasMetaObject;
+			getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain ());
+		} else {
+			type -= (type & HasMetaObject);
+		}
+	} else if (command->getFlags () == FIND_CHILD_META_COMMAND) {
+		if ((command->intVectorLength () == 1) && command->getIntVector ()[0]) {
+			type |= HasChildMetaObject;
+		} else {
+			type -= (type & HasChildMetaObject);
+		}
+		
+		RCommand *ncommand = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
+		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
+	
+		ncommand = new RCommand ("dim (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
+		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
+
+		ncommand = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CHILD_LIST_COMMAND);
+		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
+
+		// this command might result in a type mismatch and then a deletion of this object. Hence we run it last.
+		ncommand = new RCommand ("c (is.data.frame (" + getFullName () + "), is.matrix (" + getFullName () + "), is.array (" + getFullName () + "), is.list (" + getFullName () + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_TYPE_COMMAND);
+		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
+	} else if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
 		num_children_updating = command->stringVectorLength ();
 		// empty object?
 		if (!num_children_updating) {
@@ -109,15 +129,16 @@ void RContainerObject::rCommandDone (RCommand *command) {
 				new_type = RObject::List | RObject::Container;
 			}
 		}
-		if ((type) && (new_type != type)) {
-			if (!(type & RObject::Container)) {
+		if ((RObject::type) && (new_type != RObject::type)) {
+			if (!(new_type & RObject::Container)) {
+				RK_DO (qDebug ("name: %s, old_type: %d, new_type: %d", RObject::name.latin1 (), type, new_type), OBJECTS, DL_DEBUG);
 				RObject::parent->typeMismatch (this, RObject::name);
 				return;	// will be deleted!
 			}
 		}
-		if (new_type != type) {
+		if (new_type != RObject::type) {
 			changed = true;
-			type = new_type;
+			RObject::type = new_type;
 		}
 
 	} else if (command->getFlags () == UPDATE_DIM_COMMAND) {
@@ -133,24 +154,13 @@ void RContainerObject::rCommandDone (RCommand *command) {
 			if (dimension[d] != command->getIntVector ()[d]) changed=true;
 			dimension[d] = command->getIntVector ()[d];
 		}
-
-		/// TODO: remove debug code from here!
-		RK_DO (qDebug ("object name: %s", RObject::name.latin1 ()), APP, DL_DEBUG);
-		RK_DO (qDebug ("%s", "class names:"), APP, DL_DEBUG);
-		for (int a = 0; a < num_classes; ++a) {
-			RK_DO (qDebug ("%d: %s", a, classname[a].latin1 ()), APP, DL_DEBUG);
-		}
-		RK_DO (qDebug ("%s", "dimensions:"), APP, DL_DEBUG);
-		for (int a = 0; a < num_dimensions; ++a) {
-			RK_DO (qDebug ("%d: %d", a, dimension[a]), APP, DL_DEBUG);
-		}
-		RK_DO (qDebug ("%s %d", "type:", type), APP, DL_DEBUG);
 	}
 	
 	// TODO: signal change if any
 }
 
 void RContainerObject::typeMismatch (RObject *child, QString childname) {
+	RK_TRACE (OBJECTS);
 	delete child;
 	childmap.remove (childname);
 	
@@ -158,13 +168,13 @@ void RContainerObject::typeMismatch (RObject *child, QString childname) {
 }
 
 void RContainerObject::childUpdateComplete () {
-	RK_TRACE (APP);
+	RK_TRACE (OBJECTS);
 	RK_ASSERT (num_children_updating);
 	if ((--num_children_updating) <= 0) parent->childUpdateComplete ();
 }
 
 void RContainerObject::addChild (RObject *child, QString childname) {
-	RK_DO (qDebug ("child added: %s", childname.latin1 ()), APP, DL_DEBUG);
+	RK_TRACE (OBJECTS);
 	RK_ASSERT (child);
 
 	childmap.insert (childname, child);
@@ -172,10 +182,12 @@ void RContainerObject::addChild (RObject *child, QString childname) {
 }
 
 int RContainerObject::numChildren () {
+	RK_TRACE (OBJECTS);
 	return childmap.size ();
 }
 
 RObject **RContainerObject::children () {
+	RK_TRACE (OBJECTS);
 	RObject **ret = new RObject *[childmap.size ()];
 
 	int i = 0;
@@ -186,6 +198,7 @@ RObject **RContainerObject::children () {
 }
 
 QString RContainerObject::makeClassString (const QString &sep) {
+	RK_TRACE (OBJECTS);
 	QString ret;
 	for (int i=0; i < num_classes; ++i) {
 		ret.append (classname[i]);
@@ -194,4 +207,41 @@ QString RContainerObject::makeClassString (const QString &sep) {
 		}
 	}
 	return ret;
+}
+
+void RContainerObject::createMetaObject (RCommandChain *chain) {
+	RK_TRACE (OBJECTS);
+	if (!hasMetaObject ()) {
+		parent->createMetaObject (chain);
+		RCommand *command = new RCommand ("if (!is.list (" + getMetaObjectName () + ")) " + getMetaObjectName () + " <- list ()", RCommand::App | RCommand::Sync);
+		RKGlobals::rInterface ()->issueCommand (command, chain);
+		command = new RCommand ("if (!is.data.frame (" + getMetaObjectName () + "$data)) " + getMetaObjectName () + "$data <- data.frame ()", RCommand::App | RCommand::Sync);
+		RKGlobals::rInterface ()->issueCommand (command, chain);
+		command = new RCommand ("if (!is.list (" + getMetaObjectName () + "$children)) " + getMetaObjectName () + "$children <- list ()", RCommand::App | RCommand::Sync);
+		RKGlobals::rInterface ()->issueCommand (command, chain);
+	}
+	type |= HasMetaObject;
+	type |= HasChildMetaObject;
+}
+
+void RContainerObject::writeMetaData (RCommandChain *chain) {
+	RK_TRACE (OBJECTS);
+	RObject::writeMetaData (chain);
+	
+	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
+		it.data ()->writeMetaData (chain);;
+	}
+}
+
+void RContainerObject::setChildModified () {
+	RK_TRACE (OBJECTS);
+	RObject::state |= ChildrenModified;
+	parent->setChildModified ();
+}
+
+RObject *RContainerObject::findChild (const QString &name) {
+	RK_TRACE (OBJECTS);
+	RObjectMap::iterator it = childmap.find (name);
+	RK_ASSERT (it != childmap.end ());
+	return (it.data ());
 }

@@ -30,8 +30,10 @@
 // Debug components
 #define APP 1
 #define PLUGIN 2
+#define OBJECTS 4
+#define EDITOR 8
 #define PHP 64
-#define ALL (APP | PLUGIN | PHP)
+#define ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR)
 
 // only for now
 #define RK_DEBUG_FLAGS ALL

@@ -35,21 +35,17 @@ public:
 
     ~RKVariable ();
 	
-	QString getLabel ();
-	QString getDescription ();
-	QString getFullName ();
 	QString getTypeString ();
 	
 	int getLength () { return length; };
+	QString getTable ();
+
+	void createMetaObject (RCommandChain *chain);
 	
 	void updateFromR ();
 	
 /* Begin: parts that will be re-written entirely */
-	QString getTable () { return table; };
-
 	QString type;
-	QString table;
-	QString label;
 /* End */
 protected:
 	int length;

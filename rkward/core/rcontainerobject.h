@@ -32,13 +32,14 @@ public:
     RContainerObject(RContainerObject *parent, const QString &name);
 
     ~RContainerObject();
-	
-	QString getLabel ();
-	QString getDescription ();
 
 	int numClasses () { return num_classes; };
 	QString getClassName (int index) { return classname[index]; };
 	QString makeClassString (const QString &sep);
+	
+	void createMetaObject (RCommandChain *chain);
+	void writeMetaData (RCommandChain *chain);
+	virtual void setChildModified ();
 	
 	void updateFromR ();
 
@@ -47,6 +48,7 @@ public:
 	int numChildren ();
 	RObject **children ();
 	
+	RObject *findChild (const QString &name);
 private:
 	friend class RObject;
 	void typeMismatch (RObject *child, QString childname);

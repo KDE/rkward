@@ -30,6 +30,7 @@ An RKEditor for data.frames.
 @author Thomas Friedrichsmeier
 */
 class RKEditorDataFrame : public TwinTable, public RCommandReceiver {
+	Q_OBJECT
 public:
     RKEditorDataFrame (QWidget *parent);
 
@@ -37,22 +38,18 @@ public:
 
 	void syncToR (RCommandChain *sync_chain);
 	
+	void setColObject (int column, RObject *object);
+	RObject *getColObject (int col);
+public slots:
+	void metaValueChanged (int row, int col);
+	void dataValueChanged (int row, int col);
 private:
 /// syncs the whole table.
 	void pushTable (RCommandChain *sync_chain);
 	RCommandChain *open_chain;
-	
-	struct PullCommandIdentifier {
-		TwinTableMember *table;
-		bool as_column;
-		int offset_row;
-		int offset_col;
-		int length;
-		bool get_data_table_next;
-	};
-	
-	typedef QMap<RCommand*, PullCommandIdentifier*> PullMap;
-	PullMap pull_map;
+
+	typedef QMap <int, RObject*> ColMap;
+	ColMap col_map;
 protected:
 	void openObject (RObject *object);
 	void rCommandDone (RCommand *command);

@@ -31,6 +31,7 @@ class TwinTableMember;
 class QPopupMenu;
 class QTable;
 class RKDrag;
+class RObject;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -56,20 +57,20 @@ public:
 	void flushEdit ();
 
 /** Returns the variable-name of a column */
-	QString varname (int col);
+//	QString varname (int col);
 
 /** Returns the variable-label of a column */
-	QString label (int col);
+//	QString label (int col);
 
 /** Returns the type of variable (as a string) of a column */
-	QString typeString (int col);
+//	QString typeString (int col);
 
 /** Returns the column of a variable named "name" or -1 if no such var */
-	int lookUp (const QString &name);
+//	int lookUp (const QString &name);
 
 /** Returns the number of columns in the tables */
 	int numCols ();
-
+	
 	void setPasteMode (RKEditor::PasteMode mode);
     TwinTableMember* varview;
     TwinTableMember* dataview;

@@ -21,15 +21,19 @@
 #include "twintable.h"
 #include "twintablemember.h"
 #include "../core/robject.h"
+#include "../core/rcontainerobject.h"
 
-#define RLOAD_COMMAND 1
-#define RPULL_COMMAND 2
-#define RMETA_TABLE 4
-#define RDONE_WITH_TABLE 8
-#define RPULL_BOTH_TABLES 16
+#include "../debug.h"
+
+#define GET_NAMES_COMMAND 1
+// warning! numbers above GET_DATA_OFFSET are used to determine, which row, the data should go to!
+#define GET_DATA_OFFSET 10
 
 RKEditorDataFrame::RKEditorDataFrame (QWidget *parent) : TwinTable (parent) {
 	open_chain = 0;
+	
+	connect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int)));
+	connect (dataview, SIGNAL (valueChanged (int, int)), this, SLOT (dataValueChanged (int, int)));
 }
 
 RKEditorDataFrame::~RKEditorDataFrame () {
@@ -40,72 +44,42 @@ void RKEditorDataFrame::syncToR (RCommandChain *sync_chain) {
 }
 
 void RKEditorDataFrame::openObject (RObject *object) {
+	flushEdit ();
 	RKEditor::object = object;
-	QString command, dummy;
 
 	open_chain = RKGlobals::rInterface ()->startChain (open_chain);
-	for (int i=0; i < 5; ++i) {
-		command = "as.vector (" + object->getFullName () + ".meta[[" + dummy.setNum (i+1) + "]])";
-		
-		PullCommandIdentifier *pci = new PullCommandIdentifier;
-		pci->table = varview;
-		pci->as_column = false;
-		pci->offset_col = 0;
-		pci->offset_row = i;
-		pci->length = -1;
-// TODO: use the RCommand-flags instead
-		pci->get_data_table_next = (i == 4);
-		RCommand *rcom = new RCommand (command, RCommand::Sync | RCommand::GetStringVector, "", this, RPULL_COMMAND);
-		pull_map.insert (rcom, pci);
-		
-		RKGlobals::rInterface ()->issueCommand (rcom, open_chain);
-	}
+	
+	// actually, given the object, we already know the child-names. We don't know their order, however, so we better fetch the name-row again.
+	RCommand *command = new RCommand ("names (" + object->getFullName () + ")", RCommand::Sync | RCommand::GetStringVector, "", this, GET_NAMES_COMMAND);
+
+	RKGlobals::rInterface ()->issueCommand (command, open_chain);
 	// since communication is asynchronous, the rest is done inside
 	// processROutput!
 }
 
 void RKEditorDataFrame::rCommandDone (RCommand *command) {
-	if (command->getFlags () == RPULL_COMMAND) {
-		PullMap::const_iterator it = pull_map.find (command);
-		if (it == pull_map.end ()) return;	// TODO: ASSERT
-		PullCommandIdentifier *pci = it.data ();
-	
-		if (pci->length == -1) {
-			pci->length = command->stringVectorLength ();
-		}
-	
-		if (command->stringVectorLength () < pci->length) return; // TODO: ASSERT
-		if (pci->as_column) {
-			setColumn (pci->table, pci->offset_col, pci->offset_row, pci->offset_row + pci->length - 1, command->getStringVector());
-		} else {
-			setRow (pci->table, pci->offset_row, pci->offset_col, pci->offset_col + pci->length - 1, command->getStringVector());
-		}
-		
-		// seems we reached the end of the meta-table. Next, get the data-table.
-		if (pci->get_data_table_next) {
-			QString command_string, dummy;
-
-			for (int i=0; i < numCols (); ++i) {
-				command_string = "as.vector (" + getObject ()->getFullName () + "[[" + dummy.setNum (i+1) + "]])";
-		
-				PullCommandIdentifier *datapci = new PullCommandIdentifier;
-				datapci->table = dataview;
-				datapci->as_column = true;
-				datapci->offset_col = i;
-				datapci->offset_row = 0;
-				datapci->length = -1;
-				datapci->get_data_table_next = false;
-				RCommand *rcom = new RCommand (command_string, RCommand::Sync | RCommand::GetStringVector, "", this, RPULL_COMMAND);
-				pull_map.insert (rcom, datapci);
-		
-				RKGlobals::rInterface ()->issueCommand (rcom, open_chain);
+	if (command->getFlags () == GET_NAMES_COMMAND) {
+		// set the names and meta-information
+		for (int i = 0; i < command->stringVectorLength (); ++i) {
+			if (numCols () <= i) {
+				insertNewColumn ();
 			}
-			
-			open_chain = RKGlobals::rInterface ()->closeChain (open_chain);
+			// TODO: make clean
+			RObject *current_child = static_cast <RContainerObject*> (getObject ())->findChild (command->getStringVector ()[i]);
+			varview->setText (NAME_ROW, i, command->getStringVector ()[i]);
+			varview->setText (LABEL_ROW, i, current_child->getLabel ());
+			setColObject (i, current_child);
+		
+			// ok, now get the data
+			RCommand *rcom = new RCommand ("as.vector (" + current_child->getFullName() + ")", RCommand::Sync | RCommand::GetStringVector, "", this, GET_DATA_OFFSET + i);
+			RKGlobals::rInterface ()->issueCommand (rcom, open_chain);
 		}
+		
+		open_chain = RKGlobals::rInterface ()->closeChain (open_chain);
 
-		delete pci;
-		pull_map.remove (command);
+	} else if (command->getFlags () >= GET_DATA_OFFSET) {
+		int col = command->getFlags () - GET_DATA_OFFSET;
+		setColumn (dataview, col, 0, command->stringVectorLength () - 1, command->getStringVector ());
 	}
 }
 
@@ -137,32 +111,44 @@ void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
 
 	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync), sync_chain);
 
-/// TODO: store meta data entirely differently.
-	// now push the meta-table (point-reflected at bottom-left corner)
-	table = varview;
-	command = getObject ()->getFullName ();
-	command.append (".meta");
-	command.append (" <- data.frame (");
+	// now store the meta-data
+	getObject ()->writeMetaData (sync_chain);
+}
 
-	for (int row=0; row < table->numRows (); row++) {
-		// TODO: add labels
-		vector.setNum (row);
-		vector.prepend ("meta");
-		vector.append ("=c (");
-		for (int col=0; col < table->numCols (); col++) {
-			vector.append (table->rText (row, col));
-			if (col < (table->numCols ()-1)) {
-				vector.append (", ");
-			}
-		}
-		vector.append (")");
-		if (row < (table->numRows ()-1)) {
-			vector.append (", ");
-		}
-		command.append (vector);
+void RKEditorDataFrame::metaValueChanged (int row, int col) {
+	RK_ASSERT (getColObject (col));
+	// for now:
+	if (!getColObject (col)) return;
+	
+	if (row == LABEL_ROW) {
+		getColObject (col)->setLabel (varview->rText (row, col));
+	} else if (row == NAME_ROW) {
+		// TODO!!!
+		RK_ASSERT (false);
+	} else if (row == TYPE_ROW) {
+		// TODO!
+		RK_ASSERT (false);
+		//getColObject (col)->setLabel (varview->rText (row, col));
 	}
-	command.append (")");
+}
 
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync), sync_chain);
+void RKEditorDataFrame::dataValueChanged (int, int col) {
+	RK_ASSERT (getColObject (col));
+	// for now:
+	if (!getColObject (col)) return;
+	
+	getColObject (col)->setDataModified ();
+}
+
+void RKEditorDataFrame::setColObject (int column, RObject *object) {
+	col_map.insert (column, object);
+}
+
+RObject *RKEditorDataFrame::getColObject (int col) {
+	ColMap::iterator it = col_map.find (col);
+	if (it != col_map.end ()) {
+		return it.data ();
+	}
+	return 0;
 }
 

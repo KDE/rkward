@@ -107,7 +107,6 @@ void REmbed::runCommand (RCommand *command) {
 		command->_output.append (temp);
 		command->status |= RCommand::HasOutput;
 	}
-	qDebug ("output: %s", temp.latin1 ());
 
 	temp = "";
 	while (!errfile.atEnd ()) {
@@ -116,5 +115,4 @@ void REmbed::runCommand (RCommand *command) {
 		command->_error.append (temp);
 		command->status |= RCommand::HasError;
 	}
-	qDebug ("error: %s", temp.latin1 ());
 }

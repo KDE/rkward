@@ -26,7 +26,6 @@ RCommand::RCommand(QString command, int type, QString rk_equiv, RCommandReceiver
 	if (next_id < 0) {
 		next_id = 0;
 	}
-	qDebug ("creating command %d", _id);
 	_command = command;
 	_type = type;
 	_flags = flags;
@@ -40,7 +39,6 @@ RCommand::RCommand(QString command, int type, QString rk_equiv, RCommandReceiver
 }
 
 RCommand::~RCommand(){
-	qDebug ("deleting command %d", _id);
 	for (int i = 0; i < string_count; ++i) {
 		delete string_data[i];
 	}
@@ -50,7 +48,6 @@ RCommand::~RCommand(){
 }
 
 void RCommand::finished () {
-	qDebug ("finished command %d", _id);
 	if (receiver) {
 		receiver->rCommandDone (this);
 	}

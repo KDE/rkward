@@ -511,7 +511,7 @@ void TwinTable::flushEdit () {
 	dataview->endEdit (dataview->currentRow (), dataview->currentColumn (), true, false);
 }
 
-QString TwinTable::varname (int col) {
+/*QString TwinTable::varname (int col) {
 	return varview->item (NAME_ROW, col)->text ();
 }
 
@@ -521,13 +521,13 @@ QString TwinTable::label (int col) {
 
 QString TwinTable::typeString (int col) {
 	return varview->item (TYPE_ROW, col)->text ();
-}
+}*/
 
 int TwinTable::numCols () {
 	return varview->numCols ();
 }
 
-int TwinTable::lookUp (const QString &name) {
+/*int TwinTable::lookUp (const QString &name) {
 	int return_val = -1;
 	for (unsigned int i = 0; i < numCols (); i++) {
 		// that section thing is an ugly hack only for the time being,
@@ -539,4 +539,5 @@ int TwinTable::lookUp (const QString &name) {
 	}
 
 	return return_val;	
-}
+}*/
+

@@ -50,12 +50,14 @@ public:
 	
 	QString getFullName () { return ""; };
 	QString makeChildName (const QString &short_child_name) { return short_child_name; };
-	
+	QString getMetaObjectName () { return ".rk.meta"; };
+		
 	RCommandChain *getUpdateCommandChain () { return update_chain; };
 	
 	void childUpdateComplete ();
-	
-	void setObjectModified (RObject *object, bool modified);
+	void createMetaObject (RCommandChain *chain);
+
+	void setChildModified ();
 
 	void saveWorkspace (const KURL& url);
 	void loadWorkspace (const KURL& url);

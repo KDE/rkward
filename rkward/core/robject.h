@@ -40,27 +40,37 @@ public:
 
 	virtual ~RObject();
 
-	enum RObjectType { DataFrame=1, Matrix=2, Array=4, List=8, Container=16, Variable=32, Workspace=64 };
+	enum RObjectType { DataFrame=1, Matrix=2, Array=4, List=8, Container=16, Variable=32, Workspace=64, HasMetaObject=128, HasChildMetaObject=256 };
 	
 	QString getShortName ();
 	virtual QString getFullName ();
-	virtual QString getLabel () = 0;
-	virtual QString getDescription () = 0;
-	virtual QString makeChildName (const QString &short_child_name);
+	virtual QString getLabel ();
+	virtual QString getMetaProperty (const QString &id);
+	virtual QString getDescription ();
+	
+	virtual void setLabel (const QString &value);
+	virtual void setMetaProperty (const QString &id, const QString &value);
 	
 	bool isContainer () { return (type & Container); };
 	bool isDataFrame () { return (type & DataFrame); };
 	bool isVariable () { return (type & Variable); };
+	bool hasMetaObject () { return (type & HasMetaObject); };
+	bool hasChildMetaObject () { return (type & HasChildMetaObject); };
+
+	virtual void createMetaObject (RCommandChain *chain) = 0;
 	
 	bool isOpened () { return (state & OpenedInRKWard); };
 	bool isMetaModified () { return (state & MetaModified); };
 	bool isDataModified () { return (state & DataModified); };
+	virtual void setDataModified ();
+	virtual void setMetaModified ();
 	bool hasModifiedChildren () { return (state & ChildrenModified); };
 	bool needsSyncToR () { return (state & (MetaModified | DataModified | ChildrenModified)); };
 	
 	typedef QMap<QString, RObject*> RObjectMap;
 	
 	virtual void updateFromR () = 0;
+	virtual void writeMetaData (RCommandChain *chain);
 	
 	RContainerObject *getContainer () { return (parent); };
 	enum RObjectState { OpenedInRKWard=1, MetaModified=2, DataModified=4, ChildrenModified=8 };
@@ -72,6 +82,15 @@ protected:
 	QString name;
 	int type;
 	int state;
+	
+	virtual void getMetaData (RCommandChain *chain);
+	virtual QString getMetaObjectName ();
+	virtual QString makeChildName (const QString &short_child_name);
+	
+	typedef QMap<QString, QString> MetaMap;
+	MetaMap *meta_map;
+	
+	void rCommandDone (RCommand *command);
 };
 
 #endif

@@ -3,18 +3,14 @@ The following list of TODO-items is NOT complete!
 stuff to do before 0.2.3 release
 - implement RObjectList and
 	- RObjectBrowser
-	- should handle data.frames and vectors for now
-	- use in varselector
-	- use in twintable
-	- allow multiple tables
 - maybe implement simple RObjectViewer
 - jump to 0.2.5 on these changes?
-- new storage mechanism for meta-information
+- take care of removed and renamed objects!
 - snyc only modified objects!
+- open table(s) last opened or single empty table
 
-- instead of keeping state-data for each RObject, use a centralized list of all opened objects and their states in RObjectList!
+- instead of keeping state-data for each RObject, use a centralized list of all opened objects and their states in RObjectList?
 - merge common functionality of RObjectBrowser and RKVarselector into a base of some sort
-- let RKEditorManager create editors, not RKEditor
 
 small stuff to do soon
 - plugins-scanning: don't duplicate everything
