@@ -18,14 +18,14 @@
 #ifndef RINTERFACE_H
 #define RINTERFACE_H
 
-#include "qobject.h"
+#include <qobject.h>
+#include <qmutex.h>
 
 #include "rthread.h"
 
 class RKwatch;
 class RCommand;
 class RKwardApp;
-class RRequestServer;
 
 /** This class does the rather low-level interfacing to the R-processor. The
 	interface can be used by submitting new commands with issueCommand () (see
@@ -47,19 +47,21 @@ public:
 	~RInterface();
 
 /** issues the given command in the given chain */
-	void issueCommand (RCommand *command, RCommandChain *chain=0) { r_thread->issueCommand (command, chain); };
+	void issueCommand (RCommand *command, RCommandChain *chain=0);
 /** convenience function to create a new command and issue it. See documentation on RCommand::RCommand () and RInterface::issueCommand () */
 	void issueCommand (const QString &command, int type = 0, const QString &rk_equiv = "", RCommandReceiver *receiver=0, int flags=0, RCommandChain *chain=0);
 
 /** opens a new command chain. Returns a pointer to the new chain. If you specify a parent, the new chain will be a sub-chain of that chain. */
-	RCommandChain *startChain (RCommandChain *parent=0) { return r_thread->startChain (parent); };
+	RCommandChain *startChain (RCommandChain *parent=0);
 /** closes the command chain returns pointer to parent chain */
-	RCommandChain *closeChain (RCommandChain *chain) { return r_thread->closeChain (chain); };
-/** returns the port number of the request server */
-	int requestServerPort ();
+	RCommandChain *closeChain (RCommandChain *chain);
+	
+	static QMutex mutex;
 private:
 	RThread *r_thread;
-	RRequestServer *r_server;
+	
+	void processREvalRequest (REvalRequest *request);
+//	void processRGetValueRequest (RGetValueRequest);
 friend class RKwardApp;
 	RKwatch *watch;
 protected:

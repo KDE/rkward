@@ -147,7 +147,6 @@ void RObjectList::childUpdateComplete () {
 
 		RK_ASSERT (update_chain);
 		update_chain = RKGlobals::rInterface ()->closeChain (update_chain);
-		RK_ASSERT (!update_chain);
 
 		emit (updateComplete ());
 	}

@@ -5,10 +5,10 @@
 - results of user-commands get printed if not invisible (i.e. just like in a regular R session)
 - provide at least basic feedback on syntax errors
 - added communication channel from R-backend to RKWard. Initial features:
-	- automatic chosing of port to listen to
 	- checking for errors setting up the connection
 	- simple rk.sync for synchronisation of objects modified in the R workspace
 	- rk.get.tempfile.name for generation of a suitable temporary file (e.g. for storing images)
+	- allows for in-place execution of commands
 - auto addition of rows/columns when typing on last row/column
 - allow deletion of rows without losing meta-data
 

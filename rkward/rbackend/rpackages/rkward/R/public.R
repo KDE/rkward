@@ -35,9 +35,9 @@
 
 "rk.sync" <- function (x) {
 	object <- deparse (substitute (x))
-	.rk.do.call (paste ("sync\t", object, "\n", sep=""))
+	.rk.do.call ("sync", object)
 }
 
 "rk.get.tempfile.name" <- function (prefix="image", extension=".jpg") {
-	return (.rk.do.call (paste ("get.tempfile.name\t", prefix, "\t", extension, "\n", sep="")))
+	return (.rk.do.call ("get.tempfile.name", c (prefix, extension)))
 }

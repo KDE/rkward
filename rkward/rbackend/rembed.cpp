@@ -24,18 +24,33 @@
 #include "../settings/rksettingsmodulelogfiles.h"
 #include "../rkglobals.h"
 #include "rinterface.h"
+#include "rthread.h"
 
 #include "../debug.h"
 
-REmbed::REmbed() : REmbedInternal() {
+REmbed::REmbed (RThread *thread) : REmbedInternal() {
 	RK_TRACE (RBACKEND);
+	RK_ASSERT (this_pointer == 0);
+	this_pointer = this;
+	RK_ASSERT (this_pointer);
+	REmbed::thread = thread;
 }
 
-REmbed::~REmbed() {
+REmbed::~REmbed () {
 	RK_TRACE (RBACKEND);
 	outfile.close ();
 	errfile.close ();
 }
+
+void REmbed::handleSubstackCall (char **call, int call_length) {
+	RK_TRACE (RBACKEND);
+	thread->doSubstack (call, call_length);
+}
+/*
+char **REmbed::handleGetValueCall (char **call, int call_length, int *reply_length) {
+	RK_TRACE (RBACKEND);
+	return thread->fetchValue (call, call_length, reply_length);
+}*/
 
 int REmbed::initialize () {
 	RK_TRACE (RBACKEND);
@@ -67,10 +82,6 @@ int REmbed::initialize () {
 	if (error) status |= SinkFail;
 	runCommandInternal ("sink (file (\"" +RKSettingsModuleLogfiles::filesPath () +"/r_err\", \"w\"), FALSE, \"message\")\n", &error);
 	if (error) status |= SinkFail;
-	runCommandInternal (".rk.socket <- socketConnection (port=" + QString::number (RKGlobals::rInterface ()->requestServerPort ()) + ")\n", &error);
-	if (error) status |= ConnectFail;
-	runCommandInternal (".rk.test.connection ()\n", &error);
-	if (error) status |= ConnectFail;
 	
 	outfile_offset = 0;
 	errfile_offset = 0;

@@ -19,10 +19,13 @@
 
 #include "../rkwatch.h"
 #include "rthread.h"
+#include "rcommandstack.h"
 #include "rembed.h"
-#include "rrequestserver.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduler.h"
+#include "../settings/rksettingsmodulelogfiles.h"
+#include "../core/robjectlist.h"
+#include "../core/rkmodificationtracker.h"
 
 #include "../rkglobals.h"
 #include "../debug.h"
@@ -31,9 +34,14 @@
 #include <kinputdialog.h>
 #include <klocale.h>
 
+#include <qdir.h>
+
 #include <stdlib.h>
 
-RInterface::RInterface(){
+//static
+QMutex RInterface::mutex;
+
+RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
 // note: we can safely mess with RKSettingsModuleR::r_home_dir, since if the setting is bad, the app will exit without anything being saved. If the
 // setting is good, everything is fine anyway.
@@ -54,16 +62,12 @@ RInterface::RInterface(){
 		}
 	}
 	
-	r_server = new RRequestServer (this);
+	RCommandStack::regular_stack = new RCommandStack ();
+	
 	r_thread = new RThread (this);
 	r_thread->start ();
 	
 	watch = new RKwatch (this);
-}
-
-int RInterface::requestServerPort () {
-	RK_TRACE (RBACKEND);
-	return r_server->port ();
 }
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
@@ -89,7 +93,9 @@ void RInterface::customEvent (QCustomEvent *e) {
 	} else if ((e->type () == RIDLE_EVENT)) {
 		RKGlobals::rkApp ()->setRStatus (false);	
 	} else if ((e->type () == RBUSY_EVENT)) {
-		RKGlobals::rkApp ()->setRStatus (true);	
+		RKGlobals::rkApp ()->setRStatus (true);
+	} else if ((e->type () == R_EVAL_REQUEST_EVENT)) {
+		processREvalRequest (static_cast<REvalRequest *> (e->data ()));
 	} else if ((e->type () == RSTARTED_EVENT)) {
 		r_thread->unlock ();
 	} else if ((e->type () > RSTARTUP_ERROR_EVENT)) {
@@ -101,9 +107,6 @@ void RInterface::customEvent (QCustomEvent *e) {
 		if (err & REmbed::SinkFail) {
 			message.append (i18n ("\t-There was a problem opening the files needed for communication with R. Most likely this is due to an incorrect setting for the location of these files. Check whether you have correctly configured the location of the log-files (Settings->Configure Settings->Logfiles) and restart RKWard.\n"));
 		}
-		if (err & REmbed::ConnectFail) {
-			message.append (i18n ("\t-There was a problem opening a socket connection from the R-backend to RKWard. Check whether your build of R supports TCP sockets, or whether there might have been a problem opening a new (unprivileged) port.\n"));
-		}
 		if (err & REmbed::OtherFail) {
 			message.append (i18n ("\t-An unspecified error occured that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.\n"));
 		}
@@ -111,3 +114,79 @@ void RInterface::customEvent (QCustomEvent *e) {
 		r_thread->unlock ();
 	}
 }
+
+void RInterface::issueCommand (RCommand *command, RCommandChain *chain) { 
+	RK_TRACE (RBACKEND);
+	mutex.lock ();
+	RCommandStack::issueCommand (command, chain);
+	mutex.unlock ();
+}
+
+RCommandChain *RInterface::startChain (RCommandChain *parent) {
+	RK_TRACE (RBACKEND);
+	RCommandChain *ret;
+	mutex.lock ();
+	ret = RCommandStack::startChain (parent);
+	mutex.unlock ();
+	return ret;
+};
+
+RCommandChain *RInterface::closeChain (RCommandChain *chain) {
+	RK_TRACE (RBACKEND);
+	RCommandChain *ret;
+	mutex.lock ();
+	ret = RCommandStack::closeChain (chain);
+	mutex.unlock ();
+	return ret;
+};
+
+void RInterface::processREvalRequest (REvalRequest *request) {
+	RK_TRACE (RBACKEND);
+
+	// clear reply object
+	issueCommand (".rk.rkreply <- NULL", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+	if (!request->call_length) {
+		closeChain (request->in_chain);
+		return;
+	}
+	
+	QString call = request->call[0];
+	if (call == "get.tempfile.name") {
+		if (request->call_length >= 3) {
+			QString file_prefix = request->call[1];
+			QString file_extension = request->call[2];
+			QDir dir (RKSettingsModuleLogfiles::filesPath ());
+		
+			int i=0;
+			while (dir.exists (file_prefix + QString::number (i) + file_extension)) {
+				i++;
+			}
+			issueCommand (".rk.rkreply <- \"" + dir.filePath (file_prefix + QString::number (i) + file_extension) + "\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+		} else {
+			issueCommand (".rk.rkreply <- \"Too few arguments in call to get.tempfile.name.\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+		}
+	} else if (call == "sync") {
+		RObject *obj = 0;
+		if (request->call_length >= 2) {
+			QString object_name = request->call[1];
+			obj = RKGlobals::rObjectList ()->findObject (object_name);
+		}
+		if (obj) {
+			RObject::ChangeSet *set = new RObject::ChangeSet;
+			set->from_index = -1;
+			set->to_index = -1;
+			// for now a complete update is needed, in case new objects were added
+			RKGlobals::rObjectList ()->updateFromR ();
+			RKGlobals::tracker ()->objectDataChanged (obj, set);
+			
+			issueCommand (".rk.rkreply <- \"Sync scheduled for object '" + obj->getFullName () + "'\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+		} else {
+			issueCommand (".rk.rkreply <- \"Object not recognized or not specified in call to sync. Ignoring\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+		}
+	} else {
+		issueCommand (".rk.rkreply <- \"Unrecognized call '" + call + "'. Ignoring\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+	}
+	
+	closeChain (request->in_chain);
+}
+

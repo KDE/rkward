@@ -3,6 +3,7 @@ Also, plans change frequently. If something is listed for a specific release, th
 
 stuff to do before 0.2.8 release
 - install / update packages
+- basic name-checking
 
 stuff to do before 0.2.9 release
 - Twintable/RKEditorDataFrame
@@ -14,6 +15,7 @@ stuff to do before 0.2.9 release
 	- maybe store data directly with objects? Probably not.
 	- functions to set double/int/string-vectors directly. Use in paste-operations
 - convert plugin-widgets to QWidgets instead of QLayouts
+- error-handling/raising in .rk.do.call
 - pick some from below:
 
 (relatively) small stuff to do soon

@@ -18,10 +18,9 @@
 #define RTHREAD_H
 
 #include <qthread.h>
-#include <qptrlist.h>
-#include <qmutex.h>
 
 #include "rcommand.h"
+#include "rcommandstack.h"
 
 class REmbed;
 class RInterface;
@@ -31,35 +30,33 @@ class RInterface;
 #define RBUSY_EVENT 10003
 #define RIDLE_EVENT 10004
 #define RSTARTED_EVENT 11001
+#define R_EVAL_REQUEST_EVENT 12001
 // don't use the number following RSTARTUP_ERROR_EVENT, because an error code will be added!
 #define RSTARTUP_ERROR_EVENT 12000
 
 /** encapsulates the R-Backend in a separate thread. Use the inlines in RInterface and see documentation there.
 @author Thomas Friedrichsmeier
 */
-class RThread : public QThread
-{
+class RThread : public QThread {
 public:
     RThread (RInterface *parent);
 
     ~RThread();
 
-	void issueCommand (RCommand *command, RCommandChain *chain);
-	
-	RCommandChain *startChain (RCommandChain *parent);
-	RCommandChain *closeChain (RCommandChain *chain);
-	
 	void unlock () { locked=false; };
+	
+	void doSubstack (char **call, int call_length);
+	char **fetchValue (char **call, int call_length);
+	
+	//void setGetValueReply (RGetValueReply *reply);
 protected:
 	void run ();
-private:	
+private:
 	RInterface *inter;
-	RCommandChain *current_chain;
-	RCommandChain *top_chain;
 /** This is the last step in the chain of committing a command, and actually writes it */
 	void doCommand (RCommand *command);
 	REmbed *embeddedR;
-	QMutex mutex;
+	//RGetValueReply *r_get_value_reply;
 	
 	bool locked;
 };

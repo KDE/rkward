@@ -27,7 +27,7 @@
 class REmbedInternal {
 public: 
 	REmbedInternal();
-	~REmbedInternal();
+	virtual ~REmbedInternal();
 protected:
 	bool startR (const char* r_home, int argc, char **argv);
 	void shutdown ();
@@ -36,6 +36,14 @@ protected:
 	char **getCommandAsStringVector (const char *command, int *count, bool *error);
 	double *getCommandAsRealVector (const char *command, int *count, bool *error);
 	int *getCommandAsIntVector (const char *command, int *count, bool *error);
+
+public:
+// these will need QStrings and stuff and hence are handled in REmbed
+	virtual void handleSubstackCall (char **call, int call_length) = 0;
+	//virtual char **handleGetValueCall (char **call, int call_length, int *reply_length) = 0;
+
+// only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to C++
+	static REmbedInternal *this_pointer;
 private:
 // can't declare this as part of the class, as it would confuse REmbed
 //	SEXPREC *runCommandInternalBase (const char *command, bool *error);

@@ -29,8 +29,8 @@ class RCommand;
 class RChainOrCommand;
 /// this struct is needed by the rthread.
 class RCommandChain {
-private:
-friend class RThread;
+protected:
+friend class RCommandStack;
 	QPtrList<RChainOrCommand> commands;
 	bool closed;
 	RCommandChain *parent;
@@ -38,11 +38,39 @@ friend class RThread;
 /// this struct is needed by the rthread.
 class RChainOrCommand {
 private:
-friend class RThread;
+friend class RCommandStack;
 	RCommand *command;
 	RCommandChain *chain;
 };
 
+/** this struct is used to pass on eval-requests (i.e. request for RKWard to do something, which may involve issuing further commands) from the
+backend-thread to the main thread. Do not use outside the backend-classes. */
+struct REvalRequest {
+private:
+friend class RInterface;
+friend class RThread;
+	char **call;
+	int call_length;
+	RCommandChain *in_chain;
+};
+
+/*
+struct RGetValueRequest {
+private:
+friend class RInterface;
+friend class RThread;
+	char **call;
+	int call_length;
+};
+
+struct RGetValueReply {
+private:
+friend class RInterface;
+friend class RThread;
+	char **reply;
+	int reply_length;
+};
+*/
 
 /** This class is used to encapsulate an R-command, so it can be easiyl identified
 	in a chain of commands. It is needed, since communication with R is asynchronous

@@ -73,26 +73,13 @@
 	}
 }
 
-".rk.do.call" <- function (x) {
-	cat (x, file=.rk.socket)
-	res <- array ()
-	i <- 1
-	done <- FALSE
-	while (!done) {
-		inp <- readLines (.rk.socket, 1)
-		if (length (inp)) {
-			if (inp == "#RKEND#")  {
-				done <- TRUE
-			} else {
-				res[i] <- inp;
-			}
-		}
+".rk.do.call" <- function (x, args=NULL) {
+	.Call ("rk.do.command", c (x, args));
+	if (exists (".rk.rkreply")) {
+		return (.rk.rkreply)
+	} else {
+		return (NULL)
 	}
-	return (res)
-}
-
-".rk.test.connection" <- function (x) {
-	if (.rk.do.call ("checkconnection\n") != "ok") stop ("connection to RKWard failed")
 }
 
 # package information formats may - according to the help - be subject to change. Hence this function to cope with "missing" values

@@ -16,15 +16,19 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "rembedinternal.h"
+
+// static
+REmbedInternal *REmbedInternal::this_pointer = 0; 
+ 
 extern "C" {
 
-#include "Rinternals.h"
+#include "R_ext/Rdynload.h"
 #include "R.h"
+#include "Rinternals.h"
 
 #include <stdlib.h>
 #include <string.h>
-
-#include "rembedinternal.h"
 
 REmbedInternal::REmbedInternal(){
 }
@@ -35,12 +39,62 @@ REmbedInternal::~REmbedInternal(){
 void REmbedInternal::shutdown () {
 }
 
+char **extractStrings (SEXP from_exp, int *count) {
+	char **strings;
+	
+	SEXP strexp;
+	PROTECT (strexp = coerceVector (from_exp, STRSXP));
+	*count = length (strexp);
+	strings = new char* [length (strexp)];
+	for (int i = 0; i < *count; ++i) {
+		SEXP dummy = VECTOR_ELT (strexp, i);
+// TODO: can we avoid this string copying by protecting strexp?
+		if (TYPEOF (dummy) != CHARSXP) {
+			strings[i] = strdup ("not defined");	// can this ever happen?
+		} else {
+			strings[i] = strdup ((char *) STRING_PTR (dummy));
+		}
+	}
+	UNPROTECT (1);	// strexp
+	
+	return strings;
+}
+/*
+SEXP getValueCall (SEXP call) {
+	int count;
+	char **strings = extractStrings (call, &count);
+	int reply_length;
+	REmbedInternal::this_pointer->handleGetValueCall (strings, count, &reply_length);
+	return call;
+}*/
+
+SEXP doSubstackCall (SEXP call) {
+	int count;
+	char **strings = extractStrings (call, &count);
+	REmbedInternal::this_pointer->handleSubstackCall (strings, count);
+	return R_NilValue;
+}
+
 bool REmbedInternal::startR (const char* r_home, int argc, char** argv) {
 	extern int Rf_initEmbeddedR(int argc, char **argv);
 	setenv("R_HOME", r_home, 1);
 	if (Rf_initEmbeddedR(argc, argv) < 0) {
 		return false;
 	}
+
+// let's hope R internals never change...
+	typedef void *HINSTANCE;
+	extern int addDLL (char *path, char *name, HINSTANCE *handle);
+	addDLL (strdup ("rkward_pseudo_dll_pseudo_path"), strdup ("rkward_pseudo_dll"), 0);
+	DllInfo *info = R_getDllInfo ("rkward_pseudo_dll_pseudo_path");
+	
+	R_CallMethodDef callMethods [] = {
+		//{ "rk.get.value", (DL_FUNC) &getValueCall, 1 },
+		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
+		{ 0, 0, 0 }
+	};
+	R_registerRoutines (info, NULL, callMethods, NULL, NULL);
+	
 	return true;
 }
 
@@ -123,20 +177,7 @@ char **REmbedInternal::getCommandAsStringVector (const char *command, int *count
 	PROTECT (exp = runCommandInternalBase (command, error));
 	
 	if (!*error) {
-		SEXP strexp;
-		PROTECT (strexp = coerceVector (exp, STRSXP));
-		*count = length (strexp);
-		strings = new char* [length (strexp)];
-		for (int i = 0; i < *count; ++i) {
-			SEXP dummy = VECTOR_ELT (strexp, i);
-// TODO: can we avoid this string copying by protecting strexp?
-			if (TYPEOF (dummy) != CHARSXP) {
-				strings[i] = strdup ("not defined");	// can this ever happen?
-			} else {
-				strings[i] = strdup ((char *) STRING_PTR (dummy));
-			}
-		}
-		UNPROTECT (1);	// strexp
+		strings = extractStrings (exp, count);
 	}
 	
 	UNPROTECT (1); // exp
