@@ -53,11 +53,6 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
   config=kapp->config();
 
 	KGlobal::dirs()->addResourceType("plugins", KStandardDirs::kde_default("data") + "rkward/plugins/");
-	plugin_dir = KGlobal::dirs()->findResourceDir("plugins", "50.50.50.t.test.rkward");
-	if (plugin_dir == "") {
-		// try our luck with a relative path
-		plugin_dir = "plugins/";
-	}
 
   ///////////////////////////////////////////////////////////////////
   // call inits to invoke all other construction parts
@@ -75,12 +70,11 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
 
   initDocument();
   initView();
+  readOptions();
 
 	startup_timer = new QTimer (this);
 	startup_timer->start (50);
 	connect (startup_timer, SIGNAL (timeout ()), this, SLOT (doPostInit ()));
-
-  readOptions();
 }
 
 RKwardApp::~RKwardApp()
@@ -304,6 +298,7 @@ void RKwardApp::saveOptions()
 	config->writeEntry ("Option --no-save", opt_r_nosave);
 	config->writeEntry ("Option --slave", opt_r_slave);
 	config->writeEntry ("Path to R", path_to_r);
+	config->writeEntry ("Plugin-Directory", plugin_dir);
 
   fileOpenRecent->saveEntries(config,"Recent Files");
 }
@@ -333,6 +328,15 @@ void RKwardApp::readOptions()
 	opt_r_nosave = config->readBoolEntry ("Option --no-save", true);
 	opt_r_slave = config->readBoolEntry ("Option --slave", true);
 	path_to_r = config->readEntry ("Path to R", "/usr/bin/R");
+
+	plugin_dir = config->readEntry ("Plugin-Directory", "#unknown#");
+	if (plugin_dir == "#unknown#") {
+		plugin_dir = KGlobal::dirs()->findResourceDir("plugins", "50.50.50.t.test.rkward");
+		if (plugin_dir == "") {
+			// try our luck with a relative path
+			plugin_dir = "plugins/";
+		}
+	}
 
   // initialize the recent file list
   fileOpenRecent->loadEntries(config,"Recent Files");

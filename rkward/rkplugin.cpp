@@ -252,7 +252,7 @@ void RKPlugin::changed () {
 	int i = 0;
 	while ((section = code_template.section ("$", i, i)) != "") {
 		if (i % 2) {
-			QString ident = section.section ("_", 0, 0);
+			QString ident = section.section (".", 0, 0);
 			RKPluginWidget *widget;
 			if (widgets.contains (ident)) {
 				widget = widgets[ident];
@@ -261,7 +261,7 @@ void RKPlugin::changed () {
 				qDebug ("Couldn't find value for $" + section +"$!");
 			}
 
-			QString modifier = section.section ("_", 1, 1);
+			QString modifier = section.section (".", 1, 1);
 
 			if (widget) {
 				if (modifier != "") {

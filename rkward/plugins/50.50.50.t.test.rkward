@@ -40,7 +40,7 @@ have to be translated somehow. -->
 into code -->
 
 	<code>
-		print ("Comparing $x_name$ ($x_label$) against $y_name$ ($y_label$)");
+		print ("Comparing $x.name$ ($x.label$) against $y.name$ ($y.label$)");
 		t.test ($x$, $y$, "$hypothesis$")
 	</code>
 </document>
