@@ -13,6 +13,7 @@ distdir:
 		else \
 			cp -dP $$file $(distdir)/$$file; \
 		fi; \
-	done
+	done; \
+	cp -dP Makefile $(distdir)/Makefile
 distclean:
 clean:

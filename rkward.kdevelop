@@ -48,7 +48,7 @@
       <autocompile>true</autocompile>
       <envvars/>
       <runarguments>
-        <rkward/>
+        <rkward></rkward>
       </runarguments>
     </run>
     <configurations>
