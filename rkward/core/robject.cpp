@@ -29,6 +29,14 @@
 
 #define GET_META_COMMAND 1001
 
+// static
+char *RObject::empty_char = qstrdup ("");
+char *RObject::unknown_char = qstrdup ("?");
+// TODO: change
+char *RObject::na_char = qstrdup ("");
+// TODO: change
+double RObject::na_double = 0;
+
 RObject::RObject (RContainerObject *parent, const QString &name) {
 	RK_TRACE (OBJECTS);
 	
@@ -36,10 +44,13 @@ RObject::RObject (RContainerObject *parent, const QString &name) {
 	RObject::name = name;
 	type = 0;
 	meta_map = 0;
+	data = 0;
 }
 
 RObject::~RObject () {
 	RK_TRACE (OBJECTS);
+	
+	if (data) discardEditData ();
 }
 
 QString RObject::getShortName () {
@@ -223,5 +234,67 @@ QString RObject::rQuote (const QString &string) {
 	// TODO: this is not entirely correct, yet (let alone efficient)!
 	QString copy = string;
 	return ("\"" + copy.replace (QRegExp ("\""), "\\\"") + "\"");
+}
+
+RKEditor *RObject::objectOpened () {
+	RK_TRACE (OBJECTS);
+
+	if (!data) return 0;
+	return data->editor;
+}
+
+void RObject::setObjectOpened (RKEditor *editor, bool opened) {
+	RK_TRACE (OBJECTS);
+
+	// TODO: only for now! Currently only a single editor may operate on an object
+	if (opened) RK_ASSERT (!data)
+	else RK_ASSERT (data);
+
+	if (opened) {
+		if (!data) {
+			allocateEditData ();
+			initializeEditData (false);
+		}
+		data->editor = editor;
+	} else {
+		discardEditData ();
+	}
+}
+
+void RObject::setCreatedInEditor (RKEditor *editor) {
+	RK_TRACE (OBJECTS);
+
+	// TODO: only for now! Currently only a single editor may operate on an object
+	RK_ASSERT (!data)
+
+	if (!data) {
+		allocateEditData ();
+		initializeEditData (true);
+	}
+	data->editor = editor;
+}
+
+// virtual
+void RObject::allocateEditData () {
+	RK_TRACE (OBJECTS);
+
+	// this assert should stay even when more than one editor is allowed per object. After all, the edit-data should only ever be allocated once!
+	RK_ASSERT (!data);
+	
+	data = new EditData;
+}
+
+// virtual
+void RObject::initializeEditData (bool) {
+	RK_TRACE (OBJECTS);
+}
+
+// virtual
+void RObject::discardEditData () {
+	RK_TRACE (OBJECTS);
+
+	RK_ASSERT (data);
+	
+	delete data;
 }
 

@@ -24,11 +24,6 @@ class RObject;
 /**
 This is a helper class to be used in the TwinTable. It represents a column in the table along with the data in it, the data-type and the associated RObject. It comes with functions to read and set data in text format, regardless of how the data is stored internally. It also takes care of allocating memory in chunks, so frequent re-allocations are not necessary.
 
-TODO: acutally, for now, the data is always given to the backend as strings. Change that!
-TODO: there should be "chunks" of column-data. This should be done at the level of rows, i.e. across columns. After all, if a row gets added/removed in one column, all other columns of the same table will also be affected.
-TODO: which functions should do syncing by themselves, which should not? Or should all set... ()-functions have an extra parameter for this?
-TODO: probably this should be merged with RKVariable! One of the benefits would be that all editors working on the same RKVariable would share the same data and get their update immediately without further copying of values.
-
 @author Thomas Friedrichsmeier
 */
 class TableColumn {

@@ -56,20 +56,6 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
     varview = new TwinTableMetaMember (splitter, this);
     varview->setNumRows (5);
     varview->setNumCols (5);
-/*	for (int i=0; i < varview->numAllCols (); i++) {
-		for (int j=0; j < varview->numAllRows (); j++) {
-			if (j == TYPE_ROW) {
-				varview->setItem (TYPE_ROW, i, new TypeSelectCell (varview));
-			} else if (j == NAME_ROW) {
-				varview->setItem (NAME_ROW, i, new NameSelectCell (varview));
-				((NameSelectCell *) varview->item (NAME_ROW, i))->init ();
-			} else if (j == LABEL_ROW) {
-				varview->setItem (LABEL_ROW, i, new LabelCell (varview));
-			} else {
-				varview->setItem (j, i, new RTableItem (varview));
-			}
-		}
-	} */
 	varview->verticalHeader()->setLabel(0, i18n( "Label" ) );
 	varview->verticalHeader()->setLabel(TYPE_ROW, i18n( "Type" ) );
 	varview->verticalHeader()->setLabel(2, i18n( "e.g. format" ) );
@@ -83,13 +69,6 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
     dataview = new TwinTableDataMember (splitter, this);
     dataview->setNumRows (20);
 	dataview->setNumCols (5);
-/*	for (int i=0; i < dataview->numAllCols (); i++) {
-		for (int j=0; j < dataview->numAllRows (); j++) {
-			RTableItem *rti;
-			dataview->setItem (j, i, rti = new RTableItem (dataview));
-			rti->checkValid ();
-		}
-	}  */
     dataview->verticalHeader()->setResizeEnabled (false);
 
 	dataview->horizontalHeader ()->hide ();
@@ -160,24 +139,7 @@ void TwinTable::insertNewColumn (int where) {
 	}
 
 	varview->insertColumns (where);
-/*	for (int i=0; i < varview->numAllRows (); i++) {
-		if (i == TYPE_ROW) {
-			varview->setItem (TYPE_ROW, where, new TypeSelectCell (varview));
-		} else if (i == NAME_ROW) {
-			varview->setItem (NAME_ROW, where, new NameSelectCell (varview));
-			((NameSelectCell *) varview->item (NAME_ROW, where))->init ();
-		} else if (i == LABEL_ROW) {
-			varview->setItem (LABEL_ROW, where, new LabelCell (varview));
-		} else {
-			varview->setItem (i, where, new RTableItem (varview));
-		}
-	} */
 	dataview->insertColumns (where);
-/*	for (int i=0; i < dataview->numAllRows (); i++) {
-		RTableItem *rti;
-		dataview->setItem (i, where, rti = new RTableItem (dataview));
-		rti->checkValid ();
-	} */
 
 	if (where >= varview->numCols ()) {		// the new addition was acutally not the new trailing row, but the one to the left - for all practical purposes
 		where = varview->numCols () - 1;
@@ -197,25 +159,9 @@ void TwinTable::insertNewRow (int where, TwinTableMember *table) {
 
 	// initialize cells according to table
 	if (table == dataview) {
-/*		for (int i=0; i < dataview->numAllCols (); i++) {
-			RTableItem *rti;
-			dataview->setItem (where, i, rti = new RTableItem (dataview));
-			rti->checkValid ();
-		} */
 		emit (dataAddedRow (where));
 	} else if (table == varview) {
-/*		for (int i=0; i <= varview->numAllCols (); i++) {
-			if (where == TYPE_ROW) {
-				varview->setItem (where, i, new TypeSelectCell (varview));
-			} else if (where == NAME_ROW) {
-				varview->setItem (where, i, new NameSelectCell (varview));
-				((NameSelectCell *) varview->item (where, i))->init ();
-			} else if (where == LABEL_ROW) {
-				varview->setItem (where, i, new LabelCell (varview));
-			} else {
-				varview->setItem (where, i, new RTableItem (varview));
-			}
-		} */
+		RK_ASSERT (false);
 	}
 }
 
@@ -449,101 +395,6 @@ TwinTable::ColChanges *TwinTable::pasteEncoded (QByteArray content, TwinTableMem
 	return ret;
 }
 
-/*
-void TwinTable::pasteEncodedFlipped (QByteArray content) {
-	// this function mostly duplicates the code of the above, and the two
-	// should really be merged one day!
-
-	flushEdit ();
-	TwinTableMember *table = activeTable ();
-	if (!table) return;
-
-	QTableSelection selection;
-	// Unfortunately, selections added via addSelection () don't get "current".
-	// So for this case, we have to set it explicitely
-	if (table->currentSelection () >= 0) {
-		selection = table->selection (table->currentSelection ());
-	} else {
-		selection = table->selection (0);
-	}
-
-	QString pasted = content;
-
-	int row=selection.topRow ();
-	int col=selection.leftCol ();
-	while (pasted.length ()) {
-		int next_tab = pasted.find ("\t");
-		if (next_tab < 0) next_tab = pasted.length ();
-		int next_delim = next_tab;
-		int next_line = pasted.find ("\n");
-		if (next_line < 0) next_line = pasted.length ();
-		if (next_line < next_tab) {
-			next_delim = next_line;
-		}
-		table->setText (row, col, pasted.left (next_delim));
-		if (next_delim == next_tab) {
-			row++;
-			if (paste_mode == RKEditor::PasteToSelection) {
-				if (row > selection.bottomRow ()) {
-					next_delim = next_line;
-					col++;
-					row = selection.topRow ();
-					if (col > selection.rightCol ()) {
-						next_delim = pasted.length ();
-					}
-				}
-			}
-			if (row >= table->numRows ()) {
-				if (paste_mode == RKEditor::PasteToTable) {
-					next_delim = next_line;
-					col++;
-					row = selection.topRow ();
-					if (col >= table->numCols ()) {
-						next_delim = pasted.length ();
-					}
-				} else {
-					// the if below only fails, if this is the last line.
-					// We don't want a new column, then.
-					// Everything else does not get affected in this situation.
-					if (next_delim != next_line) {
-						insertNewRow (-1, table);
-					}
-				}
-			}
-
-		} else {
-			col++;
-			row=selection.topRow ();
-			if (paste_mode == RKEditor::PasteToSelection) {
-				if (col > selection.rightCol ()) {
-					next_delim = pasted.length ();
-				}
-			}
-			if (col >= table->numCols ()) {
-				if (paste_mode == RKEditor::PasteToTable) {
-					next_delim = pasted.length ();
-				} else {
-					// the if below only fails, if this is the last line.
-					// We don't want a new column, then.
-					// Everything else does not get affected in this situation.
-					if (next_delim != (pasted.length () -1)) {
-						insertNewColumn ();
-					}
-				}
-			}
-
-		}
-
-		// proceed to the next segment
-		if (pasted.length () <= (next_delim + 1)) {
-			// unfortunately QString.right (<=0) does not return an empty string!
-			pasted = "";
-		} else {
-			pasted=pasted.right (pasted.length () - (next_delim + 1));
-		}
-	}
-} */
-
 TwinTableMember *TwinTable::activeTable () {
 	if (varview->hasFocus ()) {
 		return varview;
@@ -552,13 +403,6 @@ TwinTableMember *TwinTable::activeTable () {
 	} else {
 		return 0;
 	}
-/*	if (varview->numSelections ()) {
-		return varview;
-	} else if (dataview->numSelections ()) {
-		return dataview;
-	} else {
-		return 0;
-	} */
 }
 
 void TwinTable::clearSelected () {
@@ -609,35 +453,9 @@ void TwinTable::flushEdit () {
 	dataview->stopEditing ();
 }
 
-/*QString TwinTable::varname (int col) {
-	return varview->item (NAME_ROW, col)->text ();
-}
-
-QString TwinTable::label (int col) {
-	return varview->item (LABEL_ROW, col)->text ();
-}
-
-QString TwinTable::typeString (int col) {
-	return varview->item (TYPE_ROW, col)->text ();
-}*/
-
 int TwinTable::numCols () {
 	return varview->numCols ();
 }
-
-/*int TwinTable::lookUp (const QString &name) {
-	int return_val = -1;
-	for (unsigned int i = 0; i < numCols (); i++) {
-		// that section thing is an ugly hack only for the time being,
-		// that sorts out the varname from rk.data["varname"]
-		if (varname (i) == name.section ("\"", 1, 1)) {
-			return_val = i;
-			i = numCols ();
-		}
-	}
-
-	return return_val;	
-}*/
 
 void TwinTable::setColObject (long int column, RObject *object) {
 	RK_TRACE (EDITOR);

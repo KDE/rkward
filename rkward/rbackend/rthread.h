@@ -32,7 +32,7 @@ class RInterface;
 #define RSTARTED_EVENT 11001
 #define R_EVAL_REQUEST_EVENT 12001
 // don't use the number following RSTARTUP_ERROR_EVENT, because an error code will be added!
-#define RSTARTUP_ERROR_EVENT 12000
+#define RSTARTUP_ERROR_EVENT 13000
 
 /** encapsulates the R-Backend in a separate thread. Use the inlines in RInterface and see documentation there.
 @author Thomas Friedrichsmeier
