@@ -36,6 +36,7 @@ RKText::RKText(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QL
 	text.truncate (text.length () -1);
 
 	label = new QLabel (text, parent);
+	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	addWidget (label);
 }
 
