@@ -268,8 +268,6 @@ void RKCommandEditorWindow::showHelp()
 }
 
 void RKCommandEditorWindow::rCommandDone (RCommand *command) {
-	RK_TRACE (COMMANDEDITOR);
-	
 	KURL url;
 	
 	if (command->getFlags () == GET_HELP_URL) {

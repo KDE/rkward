@@ -15,48 +15,38 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <khtmlview.h>
-#include <khtml_part.h>
+#ifndef KHELPDLG_H
+#define KHELPDLG_H
 
-#include <klocale.h>
-#include <kiconloader.h>
+#include "rbackend/rcommandreceiver.h"
 
-#include <qfile.h>
-#include <qlayout.h>
+#include "helpdlg.h"
 
-#include "rkhelpwindow.h"
+class RCommandChain;
 
-RKHelpWindow::RKHelpWindow(QWidget *parent, const char *name)
- : KMdiChildView(parent, name)
+class KHelpDlg : public helpDlg, public RCommandReceiver
 {
-	khtmlpart = new KHTMLPart (this);
-	khtmlpart->view()->setIcon(SmallIcon("help"));
-	khtmlpart->view()->setName("Help"); 
-	khtmlpart->view()->setCaption(i18n("Help")); 
-	
-	pLayout = new QHBoxLayout( this, 0, -1, "layout");
-	pLayout->addWidget(khtmlpart->view());
-}
+  Q_OBJECT
 
+public:
+    KHelpDlg(QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
+    ~KHelpDlg();
+    void rCommandDone (RCommand *command);
+  /*$PUBLIC_FUNCTIONS$*/
 
-RKHelpWindow::~RKHelpWindow()
-{
-}
+public slots:
+  /*$PUBLIC_SLOTS$*/
+  virtual void          slotFindButtonClicked();
+  virtual void          slotResultsListDblClicked( QListViewItem *item, const QPoint &, int );
+  
+protected:
+  /*$PROTECTED_FUNCTIONS$*/
 
+protected slots:
+  /*$PROTECTED_SLOTS$*/
+private:
+    RCommandChain *chain;
+};
 
-#include "rkhelpwindow.moc"
+#endif
 
-
-
-bool RKHelpWindow::openURL(KURL url)
-{
-	if (QFile::exists( url.path() )) {
-		khtmlpart->openURL(url);
-		setTabCaption(url.fileName());
-		setCaption(url.prettyURL());
-		return(true);
-	}
-	else{
-		return (false);
-	}
-}

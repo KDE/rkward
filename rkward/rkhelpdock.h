@@ -14,49 +14,27 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+ 
+#ifndef RKHELPDOCK_H
+#define RKHELPDOCK_H
 
-#include <khtmlview.h>
-#include <khtml_part.h>
+#include <qwidget.h>
 
-#include <klocale.h>
-#include <kiconloader.h>
-
-#include <qfile.h>
-#include <qlayout.h>
-
-#include "rkhelpwindow.h"
-
-RKHelpWindow::RKHelpWindow(QWidget *parent, const char *name)
- : KMdiChildView(parent, name)
+/**
+@author Thomas Friedrichsmeier
+*/
+class RKHelpDock : public QWidget
 {
-	khtmlpart = new KHTMLPart (this);
-	khtmlpart->view()->setIcon(SmallIcon("help"));
-	khtmlpart->view()->setName("Help"); 
-	khtmlpart->view()->setCaption(i18n("Help")); 
-	
-	pLayout = new QHBoxLayout( this, 0, -1, "layout");
-	pLayout->addWidget(khtmlpart->view());
-}
+Q_OBJECT
+public:
+    RKHelpDock(QWidget *parent = 0, const char *name = 0);
 
+    ~RKHelpDock();
+    
+private:
+    QBoxLayout* pLayout;
+    //KHelpDlg dlg;
 
-RKHelpWindow::~RKHelpWindow()
-{
-}
+};
 
-
-#include "rkhelpwindow.moc"
-
-
-
-bool RKHelpWindow::openURL(KURL url)
-{
-	if (QFile::exists( url.path() )) {
-		khtmlpart->openURL(url);
-		setTabCaption(url.fileName());
-		setCaption(url.prettyURL());
-		return(true);
-	}
-	else{
-		return (false);
-	}
-}
+#endif

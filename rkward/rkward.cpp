@@ -74,6 +74,7 @@
 #include "agents/rkloadagent.h"
 #include "windows/rkcommandeditorwindow.h"
 #include "windows/rkhelpwindow.h"
+#include "khelpdlg.h"
 
 #include "debug.h"
 
@@ -111,7 +112,7 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 
 	
 	RKGlobals::manager = new RKEditorManager ();
-	KMdiChildView * editorManagerView = createWrapper(RKGlobals::editorManager (), i18n( "Editor"), i18n( "Editor"));
+	KMdiChildView * editorManagerView = createWrapper(RKGlobals::editorManager (), i18n( "Data editor"), i18n( "Data editor"));
 	editorManagerView->setIcon(SmallIcon("spreadsheet"));
 	addWindow( editorManagerView );
 	
@@ -198,6 +199,10 @@ void RKwardApp::doPostInit () {
 	output->setIcon(SmallIcon("text_block"));
 	output->setName("output"); 
 	addToolWindow(output,KDockWidget::DockBottom, getMainDockWidget(), 10);
+	
+	
+	helpDlg = new KHelpDlg(0);
+	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);
 	
 	
 	// just to initialize the window-actions according to whether they're shown on startup or not

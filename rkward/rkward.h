@@ -47,6 +47,7 @@ class RKEditorManager;
 class RKMenuList;
 class RKDocManager;
 class RKCommandEditorWindow;
+class KHelpDlg;
 
 /**
   * The base class for RKward application windows. It sets up the main
@@ -270,6 +271,7 @@ protected:
 	
 	RKOutputWindow *output;
 	RObjectBrowser *object_browser;
+	KHelpDlg *helpDlg;
 	
 	KURL *initial_url;
 	

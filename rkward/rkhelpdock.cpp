@@ -15,48 +15,24 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <khtmlview.h>
-#include <khtml_part.h>
-
-#include <klocale.h>
-#include <kiconloader.h>
-
-#include <qfile.h>
 #include <qlayout.h>
 
-#include "rkhelpwindow.h"
+#include "khelpdlg.h"
 
-RKHelpWindow::RKHelpWindow(QWidget *parent, const char *name)
- : KMdiChildView(parent, name)
+#include "rkhelpdock.h"
+
+RKHelpDock::RKHelpDock(QWidget *parent, const char *name)
+ : QWidget(parent, name)
 {
-	khtmlpart = new KHTMLPart (this);
-	khtmlpart->view()->setIcon(SmallIcon("help"));
-	khtmlpart->view()->setName("Help"); 
-	khtmlpart->view()->setCaption(i18n("Help")); 
-	
+	/*dlg = new KHelpDlg();
 	pLayout = new QHBoxLayout( this, 0, -1, "layout");
-	pLayout->addWidget(khtmlpart->view());
+	pLayout->addWidget(dlg);*/
 }
 
 
-RKHelpWindow::~RKHelpWindow()
+RKHelpDock::~RKHelpDock()
 {
 }
 
 
-#include "rkhelpwindow.moc"
-
-
-
-bool RKHelpWindow::openURL(KURL url)
-{
-	if (QFile::exists( url.path() )) {
-		khtmlpart->openURL(url);
-		setTabCaption(url.fileName());
-		setCaption(url.prettyURL());
-		return(true);
-	}
-	else{
-		return (false);
-	}
-}
+#include "rkhelpdock.moc"
