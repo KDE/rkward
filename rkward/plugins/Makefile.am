@@ -7,6 +7,11 @@ dist_pluginsX20descriptive_DATA = \
 	20descriptive/code.php \
 	20descriptive/description.xml
 
+pluginsXcorr_matrixdir = $(kde_datadir)/rkward/plugins/corr_matrix
+dist_pluginsXcorr_matrix_DATA = \
+	corr_matrix/code.php \
+	corr_matrix/description.xml
+
 pluginsX00meansdir = $(kde_datadir)/rkward/plugins/00means
 dist_pluginsX00means_DATA = \
 	00means/description.xml
