@@ -72,8 +72,10 @@ class RKwardApp : public KMainWindow
 	void startR ();
 	
 	void newOutput ();
-
-  protected:
+	
+	void fileOpenNoSave (const KURL &url);
+	void fileOpenAskSave (const KURL &url);
+protected:
 	void openWorkspace (const KURL &url);
     /** save general Options like all bar positions and status as well as the geometry and the recent file list to the configuration
      * file
@@ -160,6 +162,9 @@ class RKwardApp : public KMainWindow
      */
     void slotStatusMsg(const QString &text);
 
+	/** creates an new RKCommandEditorWindow */
+	void slotNewRKCommandEditorWindow ();
+	
 	/** shows/hides the RKWatch-window */
 	void slotShowRKWatch ();
 	
@@ -202,6 +207,7 @@ class RKwardApp : public KMainWindow
     KAction* editPasteToTable;
     KToggleAction* viewToolBar;
     KToggleAction* viewStatusBar;
+	KAction* window_new_rkcommandeditorwindow;
 	KToggleAction* showRKWatch;
 	KToggleAction* showRKOutput;
 	KToggleAction* showRObjectBrowser;

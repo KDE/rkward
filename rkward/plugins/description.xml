@@ -1,5 +1,5 @@
 <!DOCTYPE rkplugin>
 
 <document>
-	<entry type="menu" id="root" label="Analyse"/>
+	<entry type="menu" id="root" label="Analysis"/>
 </document>

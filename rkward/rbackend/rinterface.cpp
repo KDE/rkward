@@ -57,8 +57,8 @@ RInterface::RInterface(){
 	r_thread->start ();
 	
 	watch = new RKwatch (this);
-	watch->show ();
-	watch->lower ();
+	//watch->show ();
+	//watch->lower ();
 }
 
 RInterface::~RInterface(){

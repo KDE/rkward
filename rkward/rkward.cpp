@@ -59,6 +59,7 @@
 #include "robjectbrowser.h"
 #include "dialogs/startupdialog.h"
 #include "agents/rksaveagent.h"
+#include "windows/rkcommandeditorwindow.h"
 
 #include "debug.h"
 
@@ -109,13 +110,10 @@ RKwardApp::~RKwardApp() {
 
 void RKwardApp::doPostInit () {
 	delete startup_timer;
-	
-	show ();
-	readOptions();
-	
-	object_browser = new RObjectBrowser ();
-	object_browser->show ();
 
+	readOptions();
+	object_browser = new RObjectBrowser ();
+	
 	output = new RKOutputWindow (0);
 	output->showMaximized ();
 	output->hide ();
@@ -126,8 +124,6 @@ void RKwardApp::doPostInit () {
 	startR ();
 	menu_list = new RKMenuList (menuBar ());
 	initPlugins ();
-	// just to initialize the window-actions accordingly
-	slotToggleWindowClosed ();
 	
 	if (initial_url) {
 		openWorkspace (*initial_url);
@@ -147,6 +143,13 @@ void RKwardApp::doPostInit () {
 		}
 		delete result;
 	}
+	
+	show ();
+	
+	object_browser->show ();
+	
+	// just to initialize the window-actions according to whether they're shown on startup or not
+	slotToggleWindowClosed ();
 }
 
 void RKwardApp::initPlugins () {
@@ -236,7 +239,7 @@ void RKwardApp::slotConfigure () {
 }
 
 void RKwardApp::initActions()
-{
+{  
   fileOpen = KStdAction::open(this, SLOT(slotFileOpen()), actionCollection());
   fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const KURL&)), actionCollection());
   fileSave = KStdAction::save(this, SLOT(slotFileSave()), actionCollection());
@@ -255,9 +258,10 @@ void RKwardApp::initActions()
   editPasteToSelection = new KAction(i18n("Paste inside Selection"), 0, 0, this, SLOT(slotEditPasteToSelection()), actionCollection(), "paste_to_selection");
   viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
   viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
-	showRKWatch = new KToggleAction (i18n ("Show RKWatch-Window"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "windows_rkwatch");
-	showRKOutput = new KToggleAction (i18n ("Show RKOutput-Window"), 0, 0, this, SLOT(slotShowRKOutput ()), actionCollection(), "windows_rkoutput");
-	showRObjectBrowser = new KToggleAction (i18n ("Show RObjectBrowser-Window"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
+	window_new_rkcommandeditorwindow = new KAction (i18n ("New Command Editor window"), 0, 0, this, SLOT (slotNewRKCommandEditorWindow ()), actionCollection (), "windows_new_command_editor");
+	showRKWatch = new KToggleAction (i18n ("Show R Console-Window"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "windows_rkwatch");
+	showRKOutput = new KToggleAction (i18n ("Show Output-Window"), 0, 0, this, SLOT(slotShowRKOutput ()), actionCollection(), "windows_rkoutput");
+	showRObjectBrowser = new KToggleAction (i18n ("Show Object Browser-Window"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
 	configure = new KAction (i18n ("Configure Settings"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 
   fileOpen->setStatusText(i18n("Opens an existing document"));
@@ -276,10 +280,12 @@ void RKwardApp::initActions()
   editPasteToSelection->setStatusText(i18n("Pastes the clipboard contents to actual position, but not beyond the boundaries of the current selection"));
   viewToolBar->setStatusText(i18n("Enables/disables the toolbar"));
   viewStatusBar->setStatusText(i18n("Enables/disables the statusbar"));
-
+  
   // use the absolute path to your rkwardui.rc file for testing purpose in createGUI();
   createGUI("rkwardui.rc");
 
+// is there a better way to change the name of the "File" menu?
+	menuBar ()->changeItem (menuBar ()->idAt (0), i18n ("Workspace"));
 }
 
 
@@ -399,7 +405,7 @@ bool RKwardApp::queryClose () {
 	int res;
 	res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the workspace?"), i18n ("Save workspace?"));
 	if (res == KMessageBox::No) return true;
-	if (res == KMessageBox::Yes) new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), false, true);
+	if (res == KMessageBox::Yes) new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Quit);
 
 	return false;
 }
@@ -432,43 +438,35 @@ bool RKwardApp::queryExit()
   slotStatusMsg(i18n("Ready."));
 }*/
 
-void RKwardApp::slotFileOpen()
-{
-  slotStatusMsg(i18n("Opening workspace..."));
-	
-  //if(!doc->saveModified())
-  if (false)
-  {
-     // here saving wasn't successful
-
-  }
-  else
-  {	
-    KURL url=KFileDialog::getOpenURL(QString::null,
-        i18n("*|All files"), this, i18n("Open File..."));
-    if(!url.isEmpty())
-    {
+void RKwardApp::fileOpenNoSave (const KURL &url) {
+	slotStatusMsg(i18n("Opening workspace..."));
+	if (url.isEmpty ()) {
+		KURL url = KFileDialog::getOpenURL(QString::null, i18n("*|All files"), this, i18n("Open File..."));
+	}
+	if (!url.isEmpty ()) {
 		openWorkspace (url);
-    }
-  }
-  slotStatusMsg(i18n("Ready."));
+	}
+	slotStatusMsg(i18n("Ready."));
+}
+
+void RKwardApp::fileOpenAskSave (const KURL &url) {
+	int res;
+	res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the current workspace?"), i18n ("Save workspace?"));
+	if (res == KMessageBox::No) {
+		fileOpenNoSave (url);
+	} else if (res == KMessageBox::Yes) {
+		new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Load, url);
+	}
+	// else: cancel. Don't do anything
+}
+
+void RKwardApp::slotFileOpen () {
+	fileOpenAskSave ("");
 }
 
 void RKwardApp::slotFileOpenRecent(const KURL& url)
 {
-  slotStatusMsg(i18n("Opening file..."));
-	
-//  if(!doc->saveModified())
-  if (false)
-  {
-     // here saving wasn't successful
-  }
-  else
-  {
-		openWorkspace (url);
-  }
-
-  slotStatusMsg(i18n("Ready."));
+	fileOpenAskSave (url);
 }
 
 void RKwardApp::slotFileSave () {
@@ -611,6 +609,10 @@ void RKwardApp::slotStatusMsg(const QString &text)
   // change status message permanently
   statusBar()->clear();
   statusBar()->changeItem(text, ID_STATUS_MSG);
+}
+
+void RKwardApp::slotNewRKCommandEditorWindow () {
+	new RKCommandEditorWindow ();
 }
 
 void RKwardApp::slotShowRKWatch () {

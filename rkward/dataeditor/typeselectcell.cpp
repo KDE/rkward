@@ -23,7 +23,7 @@
 
 #include "rtableitem.h"
 
-TypeSelectCell::TypeSelectCell (TwinTableMember *table) : RTableItem (table) {
+TypeSelectCell::TypeSelectCell (TwinTableMember *table) : RTableItem (table, QTableItem::WhenCurrent) {
 	// default to numeric
 	_type = RObject::Number;
 	valid = true;
@@ -34,10 +34,12 @@ TypeSelectCell::~TypeSelectCell(){
 QWidget *TypeSelectCell::createEditor () const {
 	QComboBox *edit_cb;
 	edit_cb = new QComboBox(table()->viewport());
-	QObject::connect(edit_cb, SIGNAL(activated(int)), table(), SLOT(doValueChanged()));
+	QObject::connect(edit_cb, SIGNAL(activated (int)), table(), SLOT(doValueChanged ()));
 	edit_cb->insertItem(i18n ("Number"));
 	edit_cb->insertItem(i18n ("String"));
 	edit_cb->insertItem(i18n ("Date"));
+	edit_cb->setEditable (true);
+	edit_cb->setAutoCompletion (true);
 
 	edit_cb->setCurrentItem(static_cast<int> (_type) - 1);
 	return edit_cb;
@@ -45,8 +47,9 @@ QWidget *TypeSelectCell::createEditor () const {
 
 void TypeSelectCell::setContentFromEditor (QWidget *w) {
 	RObject::VarType old_type = _type;
-	_type = (RObject::VarType) (static_cast<QComboBox*> (w)->currentItem () + 1);
-	valid = true;
+	_type = RObject::textToType (static_cast<QComboBox*> (w)->currentText ());
+	if (_type == RObject::Invalid) _type = old_type;
+	if (_type != RObject::Invalid) valid = true;
 	if (old_type != _type) {
 		ttm ()->getTwin ()->checkColValid (col ());
 	}

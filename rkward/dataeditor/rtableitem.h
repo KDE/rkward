@@ -33,7 +33,7 @@ class QRect;
 
 class RTableItem : public QTableItem  {
 public: 
-	RTableItem(TwinTableMember *table);
+	RTableItem(TwinTableMember *table, QTableItem::EditType edit_type=OnTyping);
 	~RTableItem();
 /** Returns, whether this cell holds a value that is legal for it */
 	bool isValid () { return valid; };

@@ -39,7 +39,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	
 	main_vbox->addStretch ();
 	
-	QLabel *label = new QLabel (i18n ("Some plugins are avaiable with both, a wizard-like interface and a traditional dialog interface. If both are available, which mode of presentation do you prefer?"), this);
+	QLabel *label = new QLabel (i18n ("Some plugins are available with both, a wizard-like interface and a traditional dialog interface. If both are available, which mode of presentation do you prefer?"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	main_vbox->addWidget (label);
 	
@@ -49,7 +49,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	button_group->layout()->setMargin (11);
 	QVBoxLayout *group_layout = new QVBoxLayout(button_group->layout());
 	group_layout->addWidget (new QRadioButton (i18n ("Always prefer dialogs"), button_group));
-	group_layout->addWidget (new QRadioButton (i18n ("Prefer recommended option"), button_group));
+	group_layout->addWidget (new QRadioButton (i18n ("Prefer recommended interface"), button_group));
 	group_layout->addWidget (new QRadioButton (i18n ("Always prefer wizards"), button_group));
 	button_group->setButton (static_cast<int> (interface_pref));
 	connect (button_group, SIGNAL (clicked (int)), this, SLOT (buttonClicked (int)));

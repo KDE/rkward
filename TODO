@@ -6,10 +6,7 @@ stuff to do before 0.2.7 release
 	- functions to set double/int/string-vectors directly
 - RKEditorDataFrame:
 	- allow row deletions
-	- find out, why top-left cell gets cleared sometimes
-- make CommandEditor-window accessible from the main window's menu
 - fix compilation issues for KDE/Qt < 3.2
-- rename windows/fix typos
 - pick some from below:
 
 (relatively) small stuff to do soon
@@ -24,9 +21,13 @@ stuff to do before 0.2.7 release
 	- add constant term option
 - add XML-parsing helper functions and error-checking
 - create a spinbox, that can really deal with real numbers
-- create agent-dialogs that notify the user what's going on and potentially request further actions, if an action is to be carried out in the
-	R backend that might potentially fail or require user interaction (asynchronously)
+- create load-agent
+- handle/give feedback on syntax errors!
 - UNPROTECT_PTR
+- Twintable/RKEditorDataFrame
+	- rework type-select cell
+	- auto-addition of rows and columns
+	- merge the two classes
 
 stuff to do before the thing is usable
 - RKWatch

@@ -157,7 +157,7 @@ void TwinTable::insertNewColumn (int where) {
 			varview->setItem (NAME_ROW, where, new NameSelectCell (varview));
 			((NameSelectCell *) varview->item (NAME_ROW, where))->init ();
 		} else if (i == LABEL_ROW) {
-			varview->setItem (LABEL_ROW, i, new LabelCell (varview));
+			varview->setItem (LABEL_ROW, where, new LabelCell (varview));
 		} else {
 			varview->setItem (i, where, new RTableItem (varview));
 		}

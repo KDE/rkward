@@ -20,7 +20,7 @@
 
 #include <qpainter.h>
 
-RTableItem::RTableItem(TwinTableMember *table) : QTableItem (table, QTableItem::OnTyping, "") {
+RTableItem::RTableItem(TwinTableMember *table, QTableItem::EditType edit_type) : QTableItem (table, edit_type, "") {
 	valid = false;	// for now
 }
 

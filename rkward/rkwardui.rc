@@ -17,6 +17,8 @@
 		<Action name="configure"></Action>
 	</Menu>
 	<Menu name="windows"><text>&amp;Windows</text>
+		<Action name="windows_new_command_editor"/>
+		<Separator/>
 		<Action name="windows_rkwatch"/>
 		<Action name="windows_rkoutput"/>
 		<Action name="windows_robjectbrowser"/>

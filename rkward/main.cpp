@@ -26,6 +26,7 @@
 #include "debug.h"
 
 int RK_Debug_Level = 0;
+int RK_Debug_Flags = ALL;
 
 static const char *description =
 	I18N_NOOP("RKWard");
@@ -36,6 +37,7 @@ static KCmdLineOptions options[] =
 {
   { "+[File]", I18N_NOOP ("file to open"), 0 },
   { "debug-level <level>", I18N_NOOP ("Verbosity of debug messages (0-5)"), "4"}, 
+  { "debug-flags <flags>", I18N_NOOP ("Mask for components to debug as a binary number (see debug.h)"), "111111111111" }, 
   { 0, 0, 0 }
   // INSERT YOUR COMMANDLINE OPTIONS HERE
 };
@@ -43,13 +45,11 @@ static KCmdLineOptions options[] =
 int main(int argc, char *argv[])
 {
 
-	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"),
-		VERSION, description, KAboutData::License_GPL,
-		"(c) 2002, 2004", 0, "http://rkward.sf.net", "");
+	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), VERSION, description, KAboutData::License_GPL, "(c) 2002, 2004", 0, "http://rkward.sf.net", "");
 	aboutData.addAuthor ("Thomas Friedrichsmeier", "Started the project, main coder", "");
 	aboutData.addCredit ("David Sibai", "Several valuable comments, hints and patches", "");
 	aboutData.addCredit ("Daniele Medri", "RKWard logo, many suggestions", "");
-	aboutData.addCredit ("Philippe Grosjean", "Several helpful pointers", "");
+	aboutData.addCredit ("Philippe Grosjean", "Several helpful comments and discussions", "");
 	aboutData.addCredit ("Many more people on rkward-devel@lists.sourceforge.net", "Sorry, I forgot to list you. Please contact me to get added", "");
 	KCmdLineArgs::init( argc, argv, &aboutData );
 	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
@@ -64,6 +64,8 @@ int main(int argc, char *argv[])
   {
     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 	RK_Debug_Level = 5 - QString (args->getOption ("debug-level")).toInt ();
+	RK_Debug_Flags = QString (args->getOption ("debug-flags")).toInt (0, 2);
+	qDebug ("Debug-flags as decimal: %d", RK_Debug_Flags);
 	
 	KURL *open_url = 0;
 	if (args->count ()) {

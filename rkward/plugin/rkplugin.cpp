@@ -32,9 +32,9 @@
 #include <qwidgetstack.h>
 #include <qlabel.h>
 #include <qtimer.h>
+#include <qapplication.h>
 
 #include <klocale.h>
-#include <kapplication.h>
 
 #include "../rkward.h"
 #include "../rkeditormanager.h"
@@ -88,7 +88,7 @@ RKPlugin::RKPlugin(const QString &filename) : QWidget () {
 	// create the main gui
 	sizer_grid = new QGridLayout (this, 1, 1);
 	
-	connect (KApplication::kApplication (), SIGNAL (shutDown ()), this, SLOT (cancel ()));
+	connect (qApp, SIGNAL (aboutToQuit ()), this, SLOT (cancel ()));
 	
 	update_timer = new QTimer (this);
 	connect (update_timer, SIGNAL (timeout ()), this, SLOT (doChangeUpdate ()));

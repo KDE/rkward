@@ -59,6 +59,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : QWidget (paren
 	
 	caption = "Object-Viewer for object " + object->getShortName ();
 	setCaption (caption + " - Waiting for results from R...");
+	resize (minimumSizeHint ().expandedTo (QSize (640, 480)));
 	show ();
 }
 

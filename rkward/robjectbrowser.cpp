@@ -53,6 +53,8 @@ RObjectBrowser::RObjectBrowser () : RKToggleWidget () {
 	menu->insertItem (i18n ("View"), this, SLOT (popupView ()), 0, View);
 	menu->insertItem (i18n ("Rename"), this, SLOT (popupRename ()), 0, Rename);
 	menu->insertItem (i18n ("Delete"), this, SLOT (popupDelete ()), 0, Delete);
+	
+	resize (minimumSizeHint ().expandedTo (QSize (400, 480)));
 }
 
 RObjectBrowser::~RObjectBrowser () {

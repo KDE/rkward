@@ -30,10 +30,12 @@ This class basically provides a mechanism to let the user save a workspace, find
 */
 class RKSaveAgent : public RCommandReceiver {
 public:
-/** creates a new RKSaveAgent. If quit_after_save, the RKSaveAgent will quit the application as soon as saving was successful (or it asked to by the user). If url is given (not empty), and not save_file_as, the agent will try to save to the given url, else it will ask the user to specify a url. RKSaveAgent will self destruct when done. */
-    RKSaveAgent (KURL url, bool save_file_as=false, bool quit_after_save=false);
+	enum DoneAction { DoNothing=0, Quit=1, Load=2 };
 
-    ~RKSaveAgent ();
+/** creates a new RKSaveAgent. If when_done == Quit, the RKSaveAgent will quit the application as soon as saving was successful (or it asked to by the user). Similarily, if when_done==Load, it will load a new workspace after saving (specify the url in load_url). If url is given (not empty), and not save_file_as, the agent will try to save to the given url, else it will ask the user to specify a url. RKSaveAgent will self destruct when done. */
+	RKSaveAgent (KURL url, bool save_file_as=false, DoneAction when_done=DoNothing, KURL load_url="");
+	
+	~RKSaveAgent ();
 protected:
 	void rCommandDone (RCommand *command);
 private:
@@ -41,7 +43,8 @@ private:
 	void done ();
 	RCommandChain *save_chain;
 	KURL save_url;
-	bool quit_when_done;
+	KURL load_url;
+	DoneAction when_done;
 };
 
 #endif

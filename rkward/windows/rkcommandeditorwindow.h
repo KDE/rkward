@@ -23,6 +23,8 @@
 #include <kurl.h>
 
 class RKCommandEditor;
+class KAction;
+class KToggleAction;
 
 /**
 This class provides an editor window for R-commands. Basically this class is responsible for adding a GUI to RKCommandEditor.
@@ -54,6 +56,18 @@ private:
 	bool checkSave ();
 	void trySave (const KURL &url);
 	QString caption;
+	
+	KAction *file_new;
+	KAction *file_open;
+	KAction *file_save;
+	KAction *file_save_as;
+	KAction *file_print;
+	KAction *file_close;
+	
+	KAction *run_all;
+	
+	KToggleAction *word_wrap;
+	KToggleAction *line_numbers;
 protected:
 	void closeEvent (QCloseEvent *e);
 };

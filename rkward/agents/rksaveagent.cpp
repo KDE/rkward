@@ -29,10 +29,11 @@
 
 #include "../debug.h"
 
-RKSaveAgent::RKSaveAgent (KURL url, bool save_file_as, bool quit_after_save) {
+RKSaveAgent::RKSaveAgent (KURL url, bool save_file_as, DoneAction when_done, KURL load_url) {
 	RK_TRACE (APP);
 	save_url = url;
-	quit_when_done = quit_after_save;
+	RKSaveAgent::when_done = when_done;
+	RKSaveAgent::load_url = load_url;
 	save_chain = 0;
 	if (save_url.isEmpty () || save_file_as) {
 		if (!askURL ()) return;
@@ -52,8 +53,8 @@ bool RKSaveAgent::askURL () {
 	RK_TRACE (APP);
 	save_url = KFileDialog::getSaveFileName (save_url.path (), "*.R");
 	if (save_url.isEmpty ()) {
-		if (quit_when_done) {
-			if (KMessageBox::warningYesNo (0, i18n ("No filename given. Your data was NOT saved. Do you still want to quit?")) == KMessageBox::No) quit_when_done = false;
+		if (when_done != DoNothing) {
+			if (KMessageBox::warningYesNo (0, i18n ("No filename given. Your data was NOT saved. Do you still want to proceed?")) == KMessageBox::No) when_done = DoNothing;
 		}
 		done ();
 		return false;
@@ -64,9 +65,9 @@ bool RKSaveAgent::askURL () {
 void RKSaveAgent::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 	if (command->hasError ()) {
-		if (quit_when_done) {
+		if (when_done != DoNothing) {
 			int res;
-			res = KMessageBox::warningYesNoCancel (0, i18n ("Saving to file '") + save_url.path () + i18n ("' failed. What do you want to do?"), i18n ("Save failed"), KGuiItem (i18n ("Try saving with a different filename")), KGuiItem (i18n ("Quit without saving")));
+			res = KMessageBox::warningYesNoCancel (0, i18n ("Saving to file '") + save_url.path () + i18n ("' failed. What do you want to do?"), i18n ("Save failed"), KGuiItem (i18n ("Try saving with a different filename")), KGuiItem (i18n ("Saving failed")));
 			if (res == KMessageBox::Yes) {
 				if (askURL ()) RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.path () + "\")", RCommand::App, "", this), save_chain);
 				return;
@@ -74,7 +75,7 @@ void RKSaveAgent::rCommandDone (RCommand *command) {
 				done ();
 				return;
 			} else {
-				quit_when_done = false;
+				when_done = DoNothing;
 				done ();
 				return;
 			}
@@ -99,9 +100,12 @@ void RKSaveAgent::done () {
 	if (save_chain) {
 		RKGlobals::rInterface ()->closeChain (save_chain);
 	}
-	if (quit_when_done) {
+	if (when_done == Quit) {
 		delete RKGlobals::rkApp ();
 		qApp->quit ();
+	} else if (when_done == Load) {
+		RKGlobals::rkApp ()->fileOpenNoSave (load_url);
+		delete this;
 	} else {
 		delete this;
 	}

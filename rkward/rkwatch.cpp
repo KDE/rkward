@@ -66,7 +66,7 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	button_vbox->addWidget (clear_commands);
 
     resize (QSize (600, 511).expandedTo (minimumSizeHint ()));
-	setCaption (i18n ("R-Interface Watch"));
+	setCaption (i18n ("R Console"));
 	
 	clearWatch ();
 	

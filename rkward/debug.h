@@ -20,6 +20,7 @@
 #ifdef RKWARD_DEBUG
 
 extern int RK_Debug_Level;
+extern int RK_Debug_Flags;
 
 // Debug-levels
 #define DL_TRACE 0
@@ -42,11 +43,8 @@ extern int RK_Debug_Level;
 #define OUTPUT 2048
 #define ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR | RBACKEND | MISC)
 
-// only for now
-#define RK_DEBUG_FLAGS ALL
-
 // Debug functions 
-#define RK_DO(expr,flags,level) if ((flags | RK_DEBUG_FLAGS) && (level >= RK_Debug_Level)) { expr; }
+#define RK_DO(expr,flags,level) if ((flags & RK_Debug_Flags) && (level >= RK_Debug_Level)) { expr; }
 #define RK_ASSERT(x) if (!(x)) qDebug ("Assert failed at %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__);
 #define RK_TRACE(flags) RK_DO (qDebug ("Trace: %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__), flags, DL_TRACE); 
 
