@@ -31,7 +31,7 @@
 // include files for KDE
 #include <kurl.h>
 
-#include "twintable.h"
+#include "dataeditor/twintable.h"
 
 #include "rcommand.h"
 class RKwardApp;

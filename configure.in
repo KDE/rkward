@@ -72,7 +72,13 @@ AC_CONFIG_FILES([ doc/Makefile ])
 AC_CONFIG_FILES([ doc/en/Makefile ])
 AC_CONFIG_FILES([ po/Makefile ])
 AC_CONFIG_FILES([ rkward/Makefile ])
+AC_CONFIG_FILES([ rkward/dataeditor/Makefile ])
+AC_CONFIG_FILES([ rkward/misc/Makefile ])
+AC_CONFIG_FILES([ rkward/plugin/Makefile ])
 AC_CONFIG_FILES([ rkward/plugins/Makefile ])
+AC_CONFIG_FILES([ rkward/rbackend/Makefile ])
+AC_CONFIG_FILES([ rkward/scriptbackends/Makefile ])
+AC_CONFIG_FILES([ rkward/settings/Makefile ])
 AC_OUTPUT
 if test "$all_tests" = "bad"; then
   if test ! "$cache_file" = "/dev/null"; then

@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkoutputwindow  -  description
+                          rembed  -  description
                              -------------------
-    begin                : Tue Jul 27 2004
+    begin                : Mon Jul 26 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,32 +14,36 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rkoutputwindow.h"
+#ifndef REMBED_H
+#define REMBED_H
 
-#include <qlayout.h>
-#include <qtextbrowser.h>
+#include "rembedinternal.h"
 
-#include <klocale.h>
+#include "../rcommand.h"
 
-#include "settings/rksettingsmodulelogfiles.h"
+#include <qfile.h>
 
-RKOutputWindow::RKOutputWindow (QWidget *parent, const char *name) : QWidget (parent, name) {
-	QGridLayout *grid = new QGridLayout (this, 1, 1, 1, 6);
-	browser = new QTextBrowser (this);
-	grid->addWidget (browser, 0, 0);
+/** This class (together with its base class REmbedInternal) takes care of the
+	communication with the R-backend. It should eventually be converted to
+	run in a separate thread, in order to allow non-blocking access and stopping/restarting
+	the backend.
+@author Thomas Friedrichsmeier
+*/
+class REmbed : public REmbedInternal {
+public:
+    REmbed();
+
+    ~REmbed();
 	
-	setCaption (i18n ("Output Window"));
-}
+	void runCommand (RCommand *command);
+	
+	bool initialize ();
+private:
+	QIODevice::Offset outfile_offset;
+	QIODevice::Offset errfile_offset;
+	
+	QFile outfile;
+	QFile errfile;
+};
 
-
-RKOutputWindow::~RKOutputWindow () {
-}
-
-void RKOutputWindow::checkNewInput () {
-	qDebug ("checkNewInput");
-	browser->setSource (RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
-	browser->reload ();
-	browser->scrollToBottom ();
-}
-
-#include "rkoutputwindow.moc"
+#endif

@@ -3,10 +3,10 @@ bin_PROGRAMS = rkward
 
 ## INCLUDES were found outside kdevelop specific part
 
-rkward_SOURCES = labelcell.cpp rcommand.cpp rktext.cpp rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp rkwarddoc.cpp rkward.cpp main.cpp rembed.cpp rembedinternal.cpp rkoutputwindow.cpp rksettingsmodule.cpp rksettingsmoduleplugins.cpp rksettingsmoduler.cpp rksettingsmodulephp.cpp rksettings.cpp rkerrordialog.cpp rksettingsmodulelogfiles.cpp rksettingsmoduleoutput.cpp rkcheckbox.cpp rthread.cpp phpbackend.cpp rkcommandeditor.cpp rkpluginhandle.cpp rkspinbox.cpp rkpluginspinbox.cpp rkformula.cpp rkvariable.cpp scriptbackend.cpp
-rkward_LDADD   =  $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) $(LIBSOCKET) -lR -lkatepartinterfaces
+rkward_SOURCES = rcommand.cpp rkwatch.cpp rkwarddoc.cpp rkward.cpp main.cpp rkoutputwindow.cpp rkcommandeditor.cpp rkvariable.cpp
+rkward_LDADD = $(top_builddir)/rkward/plugin/libplugin.a $(top_builddir)/rkward/misc/libmisc.a $(top_builddir)/rkward/rbackend/librbackend.a $(top_builddir)/rkward/settings/libsettings.a $(top_builddir)/rkward/dataeditor/libdataeditor.a $(top_builddir)/rkward/scriptbackends/libscriptbackends.a $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) $(LIBSOCKET) -lR -lkatepartinterfaces
 
-SUBDIRS = plugins
+SUBDIRS = plugins dataeditor settings plugin rbackend scriptbackends misc
 
 EXTRA_DIST = main.cpp rkward.cpp rkward.h rkwarddoc.cpp rkwarddoc.h rkwardui.rc rkward.desktop lo32-app-rkward.png lo16-app-rkward.png twintable.cpp twintable.h twintablemember.cpp twintablemember.h rkdrag.cpp rkdrag.h rinterface.cpp rinterface.h rkwatch.cpp rkwatch.h typeselectcell.cpp typeselectcell.h rtableitem.cpp rtableitem.h nameselectcell.cpp nameselectcell.h rkmenu.cpp rkmenu.h rkplugin.cpp rkplugin.h rkpluginwidget.cpp rkpluginwidget.h rkvarselector.cpp rkvarselector.h rkvarslot.cpp rkvarslot.h rkradio.cpp rkradio.h rktext.cpp rktext.h rcommand.cpp rcommand.h labelcell.cpp labelcell.h rembed.h rembedinternal.h phpbackend.h common.php rkoutputwindow.h rksettings.h rksettingsmodule.h rksettingsmoduleplugins.h
 
@@ -62,8 +62,8 @@ messages: rc.cpp
 	 $(XGETTEXT) $$LIST -o $(podir)/rkward.pot; \
 	fi
 
-noinst_HEADERS = rksettingsmodule.h rksettingsmoduleplugins.h rksettingsmoduler.h rksettingsmodulephp.h rksettings.h rkerrordialog.h rksettingsmodulelogfiles.h rksettingsmoduleoutput.h rkcheckbox.h rthread.h debug.h rkcommandeditor.h rkpluginhandle.h rkspinbox.h rkpluginspinbox.h rkformula.h rkvariable.h scriptbackend.h
+noinst_HEADERS = debug.h rkcommandeditor.h rkvariable.h
 phpfilesdir = $(kde_datadir)/rkward/phpfiles
-phpfiles_DATA =  common.php
+
 katesyntaxdir = $(kde_datadir)/katepart/syntax/
 katesyntax_DATA =  r.xml

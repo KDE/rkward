@@ -30716,7 +30716,19 @@ done
 
           ac_config_files="$ac_config_files rkward/Makefile"
 
+          ac_config_files="$ac_config_files rkward/dataeditor/Makefile"
+
+          ac_config_files="$ac_config_files rkward/misc/Makefile"
+
+          ac_config_files="$ac_config_files rkward/plugin/Makefile"
+
           ac_config_files="$ac_config_files rkward/plugins/Makefile"
+
+          ac_config_files="$ac_config_files rkward/rbackend/Makefile"
+
+          ac_config_files="$ac_config_files rkward/scriptbackends/Makefile"
+
+          ac_config_files="$ac_config_files rkward/settings/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -31272,7 +31284,13 @@ do
   "doc/en/Makefile" ) CONFIG_FILES="$CONFIG_FILES doc/en/Makefile" ;;
   "po/Makefile" ) CONFIG_FILES="$CONFIG_FILES po/Makefile" ;;
   "rkward/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/Makefile" ;;
+  "rkward/dataeditor/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/dataeditor/Makefile" ;;
+  "rkward/misc/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/misc/Makefile" ;;
+  "rkward/plugin/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/plugin/Makefile" ;;
   "rkward/plugins/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/plugins/Makefile" ;;
+  "rkward/rbackend/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/rbackend/Makefile" ;;
+  "rkward/scriptbackends/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/scriptbackends/Makefile" ;;
+  "rkward/settings/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/settings/Makefile" ;;
   "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
   "config.h" ) CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5

@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkoutputwindow  -  description
+                          rkpluginhandle  -  description
                              -------------------
-    begin                : Tue Jul 27 2004
+    begin                : Tue Aug 10 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,32 +14,22 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rkoutputwindow.h"
+#include "rkpluginhandle.h"
 
-#include <qlayout.h>
-#include <qtextbrowser.h>
+#include "rkplugin.h"
+#include "../rkward.h"
 
-#include <klocale.h>
-
-#include "settings/rksettingsmodulelogfiles.h"
-
-RKOutputWindow::RKOutputWindow (QWidget *parent, const char *name) : QWidget (parent, name) {
-	QGridLayout *grid = new QGridLayout (this, 1, 1, 1, 6);
-	browser = new QTextBrowser (this);
-	grid->addWidget (browser, 0, 0);
-	
-	setCaption (i18n ("Output Window"));
+RKPluginHandle::RKPluginHandle (RKwardApp *parent, const QString &filename) : QObject (parent) {
+	_parent = parent;
+	_filename = filename;
 }
 
 
-RKOutputWindow::~RKOutputWindow () {
+RKPluginHandle::~RKPluginHandle () {
 }
 
-void RKOutputWindow::checkNewInput () {
-	qDebug ("checkNewInput");
-	browser->setSource (RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
-	browser->reload ();
-	browser->scrollToBottom ();
+void RKPluginHandle::activated () {
+	RKPlugin *plugin = new RKPlugin (_parent, _filename);
 }
 
-#include "rkoutputwindow.moc"
+#include "rkpluginhandle.moc"

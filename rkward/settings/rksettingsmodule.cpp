@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkoutputwindow  -  description
+                          rksettingsmodule  -  description
                              -------------------
-    begin                : Tue Jul 27 2004
+    begin                : Wed Jul 28 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,32 +14,24 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rkoutputwindow.h"
+#include "rksettingsmodule.h"
 
-#include <qlayout.h>
-#include <qtextbrowser.h>
+#include "../rkward.h"
+#include "rksettings.h"
 
-#include <klocale.h>
-
-#include "settings/rksettingsmodulelogfiles.h"
-
-RKOutputWindow::RKOutputWindow (QWidget *parent, const char *name) : QWidget (parent, name) {
-	QGridLayout *grid = new QGridLayout (this, 1, 1, 1, 6);
-	browser = new QTextBrowser (this);
-	grid->addWidget (browser, 0, 0);
-	
-	setCaption (i18n ("Output Window"));
+RKSettingsModule::RKSettingsModule(RKSettings *gui, RKwardApp *parent) : QWidget(parent) {
+	changed = false;
+	rk = parent;
+	RKSettingsModule::gui = gui;
 }
 
 
-RKOutputWindow::~RKOutputWindow () {
+RKSettingsModule::~RKSettingsModule() {
 }
 
-void RKOutputWindow::checkNewInput () {
-	qDebug ("checkNewInput");
-	browser->setSource (RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
-	browser->reload ();
-	browser->scrollToBottom ();
+void RKSettingsModule::change () {
+	changed = true;
+	gui->enableApply ();
 }
 
-#include "rkoutputwindow.moc"
+#include "rksettingsmodule.moc"

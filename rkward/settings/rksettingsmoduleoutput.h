@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkoutputwindow  -  description
+                          rksettingsmoduleoutput  -  description
                              -------------------
-    begin                : Tue Jul 27 2004
+    begin                : Fri Jul 30 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,32 +14,42 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rkoutputwindow.h"
+#ifndef RKSETTINGSMODULEOUTPUT_H
+#define RKSETTINGSMODULEOUTPUT_H
 
-#include <qlayout.h>
-#include <qtextbrowser.h>
+#include "rksettingsmodule.h"
 
-#include <klocale.h>
+class QCheckBox;
 
-#include "settings/rksettingsmodulelogfiles.h"
+/**
+@author Thomas Friedrichsmeier
+*/
+class RKSettingsModuleOutput : public RKSettingsModule {
+	Q_OBJECT
+public:
+    RKSettingsModuleOutput (RKSettings *gui, RKwardApp *parent);
 
-RKOutputWindow::RKOutputWindow (QWidget *parent, const char *name) : QWidget (parent, name) {
-	QGridLayout *grid = new QGridLayout (this, 1, 1, 1, 6);
-	browser = new QTextBrowser (this);
-	grid->addWidget (browser, 0, 0);
+    ~RKSettingsModuleOutput ();
 	
-	setCaption (i18n ("Output Window"));
-}
+	bool hasChanges ();
+	void applyChanges ();
+	void save (KConfig *config);
+	
+	static void saveSettings (KConfig *config);
+	static void loadSettings (KConfig *config);
+	
+	QString caption ();
+	
+	static bool autoShow () { return auto_show; };
+	static bool autoRaise () { return auto_raise; };
+public slots:
+	void boxChanged (int);
+private:
+	QCheckBox *auto_show_box;
+	QCheckBox *auto_raise_box;
 
+	static bool auto_show;
+	static bool auto_raise;
+};
 
-RKOutputWindow::~RKOutputWindow () {
-}
-
-void RKOutputWindow::checkNewInput () {
-	qDebug ("checkNewInput");
-	browser->setSource (RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
-	browser->reload ();
-	browser->scrollToBottom ();
-}
-
-#include "rkoutputwindow.moc"
+#endif

@@ -18,7 +18,7 @@
 
 #include "rkwatch.h"
 
-#include "rinterface.h"
+#include "rbackend/rinterface.h"
 #include "rcommand.h"
 #include "rkcommandeditor.h"
 

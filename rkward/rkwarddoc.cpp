@@ -29,10 +29,10 @@
 // application specific includes
 #include "rkwarddoc.h"
 #include "rkward.h"
-#include "twintablemember.h"
-#include "twintable.h"
+#include "dataeditor/twintablemember.h"
+#include "dataeditor/twintable.h"
 #include "rcommand.h"
-#include "rinterface.h"
+#include "rbackend/rinterface.h"
 
 #define RK_DATA_PREFIX	"rk."
 
