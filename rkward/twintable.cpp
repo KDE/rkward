@@ -157,7 +157,7 @@ void TwinTable::insertNewColumn (int where, QString name) {
 	}
 }
 
-void TwinTable::insertNewRow (int where=-1) {
+void TwinTable::insertNewRow (int where) {
 	if ((where < 0) || (where > dataview->numRows ())) {
 		where = dataview->numRows ();
 	}

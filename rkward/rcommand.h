@@ -18,6 +18,8 @@
 #ifndef RCOMMAND_H
 #define RCOMMAND_H
 
+#include <qfile.h>
+#include <qstring.h>
 #include <qobject.h>
 
 /** This class is used to encapsulate an R-command, so it can be easiyl identified
@@ -38,28 +40,42 @@
 class RCommand : public QObject  {
 	Q_OBJECT
 public: 
-	RCommand(QString command, int type = 0, QString alternative_text = "", QObject *receiver = 0, const char *slot = 0);
+	RCommand(QString command, int type = 0, QString rk_equiv = "", QObject *receiver = 0, const char *slot = 0);
 	~RCommand();
 	int type () { return _type; };
-	QString alternativeText () { return alttext; };
+	QString rkEquivalent () { return _rk_equiv; };
 	QString command () { return _command; };
 	int id () { return _id; };
-	QString reply () { return _reply; };
+/** TODO: Adjust these two functions to allow re-getting of output and error-messages from logs */
+	QString output () { return _output; };
+	QString error () { return _error; };
 /** Adds an additional receiver (i.e. an object/slot that will be notified, when
 	this command is completed) */
 	void addReceiver (QObject *receiver, const char *slot);
 /** Types of commands (potentially more to come), bitwise or-able,
 	although partially exclusive. */
-	enum CommandTypes {User=1, Plugin=2, App=4, Sync=8};
+	enum CommandTypes {User=1, Plugin=2, PluginCom=4, App=8, Sync=16};
+	enum CommandStatus {WasTried=1, Failed=2, HasOutput=4, HasError=8};
+	int wasTried () { return (status & WasTried); };
+	int failed () { return (status & Failed); };
+	int succeeded () { return ((status & WasTried) && !(status & Failed)); };
+	int hasOutput () { return (status & HasOutput); }; 
+	int hasError () { return (status & HasError); }; 
 signals:
 	void commandDone (RCommand *command);
 private:
+friend class REmbed;
 friend class RInterface;
-	void finished (const QString &reply);
-	QString _reply;
+	void finished ();
+	QString _output;
+	QString _error;
 	QString _command;
 	int _type;
-	QString alttext;
+	int status;
+	QIODevice::Offset output_offset, error_offset;
+	int output_length, error_length;
+	int logindex;
+	QString _rk_equiv;
 	int _id;
 	static int next_id;
 };

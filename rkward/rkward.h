@@ -41,6 +41,7 @@ class RSettings;
 class PluginSettings;
 class RKMenu;
 class QTimer;
+class RKOutputWindow;
 
 /**
   * The base class for RKward application windows. It sets up the main
@@ -74,6 +75,8 @@ class RKwardApp : public KMainWindow
 
 	RInterface r_inter;
 	void startR ();
+	
+	void newOutput ();
 
   protected:
     /** save general Options like all bar positions and status as well as the geometry and the recent file list to the configuration
@@ -231,6 +234,8 @@ class RKwardApp : public KMainWindow
 
 /** Used to receive a signal during startup AFTER the exec loop was entered */
 	QTimer *startup_timer;
+	
+	RKOutputWindow *output;
 };
  
 #endif // RKWARD_H

@@ -65,7 +65,8 @@ void RKwatch::addOutput (RCommand *command) {
 	watch->append ("Got reply:");
     watch->setBold (true);
 
-	watch->append (command->reply ());
+	watch->append (command->output ());
+	watch->append (command->error ());
 
 	watch->setBold (false);	
 	watch->setColor (Qt::black);

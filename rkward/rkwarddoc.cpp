@@ -232,9 +232,9 @@ void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 void RKwardDoc::pullTable () {
 	QString command;
 
-	command = tablename + ".meta\n";
+	command = "print (" + tablename + ".meta)\n";
 	command.append ("print (\"" + command_separator + "\")\n");
-	command.append (tablename);
+	command.append ("print (" + tablename + ")");
 //	output_is = WholeTables;
 	RCommand *rcommand = new RCommand (command, RCommand::Sync, "", this, SLOT (processROutput (RCommand *)));
 	should_pull_id = rcommand->id ();
@@ -251,7 +251,7 @@ void RKwardDoc::processROutput (RCommand *command) {
 	} else if (command->id () == should_pull_id) {
 		should_pull_id = -1;
 
-		QString output = command->reply ();
+		QString output = command->output ();
 
 		int output_line = 0;
 		QString line = output.section ("\n", output_line, output_line);

@@ -31,6 +31,8 @@ class RKPluginWidget;
 class QTextEdit;
 class QPushButton;
 class RKVarSelector;
+class PHPBackend;
+class RCommand;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -46,6 +48,8 @@ public:
 	RKwardApp *getApp () { return app; };
 /** Returns a pointer to the varselector by that name (0 if not available) */
 	RKVarSelector *getVarSelector (const QString &id);
+/** return value given by identifier */
+	QString getVar (const QString &id);
 public slots:
 /** Slot called, when the menu-item for this widget is selected. Responsible
 	for creating the GUI. */
@@ -61,14 +65,35 @@ public slots:
 /** Discards this plugin (i.e. cleans up stuff that is no longer needed until
 	this plugin gets activated () again. */
 	void discard ();
+/** Get result of r-command (which was requested for the PHP-backend */
+	void gotRResult (RCommand *command);
 private:
+friend class PHPBackend;
+friend class RKPluginGUIWidget;
+	void updateCode (const QString &text);
+
+/** return result of given call to the R-backend */
+	void doRCall (const QString &call);
+
+/** this gets called by the PHP-backend, when it's done. Might enable the
+	submit button or destruct the plugin. Returns true in the latter case. */
+	bool backendIdle ();
+
+/** try to destruct the plugin */
+	void try_destruct ();
+
+/** called by the PHP-backend, when new (final) output is available. Passed on
+	via RKWardApp->RKOutputWindow */
+	void newOutput ();
+	
 	QString filename;
 	RKwardApp *app;
 	QString _label;
+/** sometimes the plugin can't be destroyed immediately, since, for example the PHP-backend is
+	still busy cleaning stuff up. In that case this var is set and the plugin gets destroyed ASAP. */
+	bool should_destruct;
+	bool should_updatecode;
 //	QString _tag;
-
-/** The code template as specified in the plugin's XML-description */
-	QString code_template;
 
 	QWidget *gui;
 
@@ -90,6 +115,8 @@ private:
 	QPushButton *helpButton;
 	QPushButton *toggleCodeButton;
 	QPushButton *toggleWarnButton;
+	
+	PHPBackend *backend;
 };
 
 #endif

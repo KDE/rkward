@@ -19,6 +19,7 @@
 
 #include <qdom.h>
 #include <qfile.h>
+#include <qfileinfo.h>
 #include <qdialog.h>
 #include <qlayout.h>
 #include <qmap.h>
@@ -31,6 +32,8 @@
 #include "rkwarddoc.h"
 #include "rinterface.h"
 #include "rcommand.h"
+#include "phpbackend.h"
+#include "rkpluginguiwidget.h"
 
 // plugin-widgets
 #include "rkpluginwidget.h"
@@ -43,9 +46,11 @@ RKPlugin::RKPlugin(RKwardApp *parent, const QDomElement &element, QString filena
 	app = parent;
 	RKPlugin::filename = filename;
 	_label = element.attribute ("label", "untitled");
+	backend = 0;
 }
 
 RKPlugin::~RKPlugin(){
+	qDebug ("Implement destructor in RKPlugin");
 }
 
 void RKPlugin::activated () {
@@ -76,24 +81,15 @@ void RKPlugin::activated () {
 	// construct the GUI
 	buildGUI (element);
 
-	// retrieve other relevant information from XML-file
-	element = doc.documentElement ();
-	children = element.elementsByTagName("code");
-	if (children.length ()) {
-		element = children.item (0).toElement ();
-
-		QStringList lines = lines.split ("\n", element.text (), false);
-		for (unsigned int i=0; i < lines.count (); i++) {
-			QString line = lines[i].stripWhiteSpace ();
-			if (line != "") {
-				code_template.append (line + "\n");
-			}
-		}
-
-		// strip final newline
-		code_template.truncate (code_template.length () -1);
-	}
-
+	// keep it alive
+	should_destruct = false;
+	should_updatecode = true;
+	
+	// initialize the PHP-backend with the code-template
+	dummy = QFileInfo (f).dirPath () + "/code.php";
+	backend = new PHPBackend ();
+	backend->initTemplate (dummy, this);
+	
 	// initialize code/warn-views
 	changed ();
 }
@@ -103,7 +99,7 @@ void RKPlugin::buildGUI (const QDomElement &layout_element) {
 	QDomNodeList children = layout_element.childNodes ();
 	QDomElement element = children.item (0).toElement ();
 
-	gui = new QWidget (0, "", Qt::WDestructiveClose);
+	gui = new RKPluginGUIWidget (this);
 	gui->setCaption (_label);
 	QGridLayout *layout = new QGridLayout (gui, 4, 3, 11, 6);
 
@@ -212,10 +208,11 @@ RKPluginWidget *RKPlugin::buildWidget (const QDomElement &element) {
 void RKPlugin::ok () {
 	getApp ()->getDocument ()->syncToR ();
 	getApp ()->r_inter.issueCommand (new RCommand (codeDisplay->text (), RCommand::Plugin));
+	backend->callFunction ("printout (); cleanup ();", true);
 }
 
 void RKPlugin::cancel () {
-	delete gui;
+	try_destruct ();
 }
 
 void RKPlugin::toggleCode () {
@@ -224,6 +221,56 @@ void RKPlugin::toggleCode () {
 	} else {
 		codeDisplay->show ();
 	}
+}
+
+void RKPlugin::newOutput () {
+	app->newOutput();
+}
+
+void RKPlugin::try_destruct () {
+	qDebug ("try_destruct");
+	if (!backend->isBusy ()) {
+		delete gui;
+		delete backend;
+		backend = 0;
+	} else {
+		gui->hide ();
+		should_destruct = true;
+	}
+}
+
+bool RKPlugin::backendIdle () {
+	qDebug ("backendIdle");
+	if (should_destruct) {
+		try_destruct ();
+		return true;
+	}
+
+	if (should_updatecode) {
+		codeDisplay->setText ("");
+		backend->callFunction ("preprocess (); calculate ();");
+		should_updatecode = false;
+		warnDisplay->setText ("Processing. Please wait.");
+		okButton->setEnabled (false);
+		return false;	// backend is not idle anymore, now
+	}
+
+	// check whether everything is satisfied and fetch any complaints
+	bool ok = true;
+	QString warn;
+	WidgetsMap::Iterator it;
+	for (it = widgets.begin(); it != widgets.end(); ++it) {
+		if (!it.data ()->isSatisfied ()) {
+			ok = false;
+		}
+		warn.append (it.data ()->complaints ());
+	}
+
+	okButton->setEnabled (ok);
+	warn.truncate (warn.length () -1);
+	warnDisplay->setText (warn);
+	
+	return false;
 }
 
 void RKPlugin::toggleWarn () {
@@ -239,67 +286,63 @@ void RKPlugin::help () {
 }
 
 void RKPlugin::discard () {
-	code_template = "";
 	// the entire GUI and all widgets get deleted automatically!
 	qDebug ("plugin cleaned");
 }
 
 void RKPlugin::changed () {
-	// update code-display
-	// TODO: make more flexible (allow "$$" etc);
-	QString code;
-	QString section;
-	int i = 0;
-	while ((section = code_template.section ("$", i, i)) != "") {
-		if (i % 2) {
-			QString ident = section.section (".", 0, 0);
-			RKPluginWidget *widget;
-			if (widgets.contains (ident)) {
-				widget = widgets[ident];
-			} else {
-				widget = 0;
-				qDebug ("Couldn't find value for $" + section +"$!");
-			}
+	// trigger update for code-display
+	should_updatecode = true;
+	
+	if (!backend->isBusy ()) {
+		backendIdle ();
+	} else {
+		okButton->setEnabled (false);
+		warnDisplay->setText ("Processing. Please wait.");
+	}
+}
 
-			QString modifier = section.section (".", 1, 1);
+void RKPlugin::updateCode (const QString &text) {
+	codeDisplay->insert (text);
+}
 
-			if (widget) {
-				if (modifier != "") {
-					QString quoted;
-					if (modifier == "label") {
-						int col = getApp ()->getDocument ()->lookUp (widget->value ());
-						if (col >= 0) {
-							quoted = getApp ()->getDocument ()->label (col);
-						}
-					} else if (modifier == "name") {
-						quoted = widget->value ();
-					}
-					code.append (quoted.replace (QRegExp ("\""), "\\\""));
-				} else {
-					code.append (widget->value ());
+void RKPlugin::doRCall (const QString &call) {
+	getApp ()->r_inter.issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, SLOT (gotRResult (RCommand *))));
+}
+
+void RKPlugin::gotRResult (RCommand *command) {
+	backend->gotRCallResult (command->output());
+}
+
+QString RKPlugin::getVar (const QString &id) {
+	QString ident = id.section (".", 0, 0);
+	RKPluginWidget *widget;
+	if (widgets.contains (ident)) {
+		widget = widgets[ident];
+	} else {
+		widget = 0;
+		qDebug ("Couldn't find value for $" + id +"$!");
+		return ("#unavailable#");
+	}
+
+	QString modifier = id.section (".", 1, 1);
+
+	if (widget) {
+		if (modifier != "") {
+			QString quoted;
+			if (modifier == "label") {
+				int col = getApp ()->getDocument ()->lookUp (widget->value ());
+				if (col >= 0) {
+					quoted = getApp ()->getDocument ()->label (col);
 				}
+			} else if (modifier == "name") {
+				quoted = widget->value ();
 			}
+			return (quoted.replace (QRegExp ("\""), "\\\""));
 		} else {
-			code.append (section);
+			return (widget->value ());
 		}
-		i++;
 	}
-	codeDisplay->setText (code);
-
-	// check whether everything is satisfied and fetch any complaints
-	bool ok = true;
-	QString warn;
-	WidgetsMap::Iterator it;
-	for (it = widgets.begin(); it != widgets.end(); ++it) {
-		if (!it.data ()->isSatisfied ()) {
-			ok = false;
-		}
-		warn.append (it.data ()->complaints ());
-	}
-
-	okButton->setEnabled (ok);
-	warn.truncate (warn.length () -1);
-	warnDisplay->setText (warn);	
 }
 
 /** Returns a pointer to the varselector by that name (0 if not available) */

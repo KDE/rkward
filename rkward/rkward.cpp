@@ -45,6 +45,7 @@
 #include "rsettings.h"
 #include "pluginsettings.h"
 #include "rkmenu.h"
+#include "rkoutputwindow.h"
 
 #define ID_STATUS_MSG 1
 
@@ -75,6 +76,10 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
 	startup_timer = new QTimer (this);
 	startup_timer->start (50);
 	connect (startup_timer, SIGNAL (timeout ()), this, SLOT (doPostInit ()));
+	
+	output = new RKOutputWindow (0);
+	output->showMaximized ();
+	output->lower ();
 }
 
 RKwardApp::~RKwardApp()
@@ -648,4 +653,10 @@ void RKwardApp::slotShowRKWatch () {
 	} else {
 		r_inter.watch->show ();
 	}
+}
+
+void RKwardApp::newOutput () {
+	output->checkNewInput ();
+	output->show ();
+	output->raise ();
 }
