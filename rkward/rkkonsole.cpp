@@ -46,18 +46,6 @@ RKKonsole::RKKonsole(QWidget *parent) :RKToggleWidget (parent){
     // functionality in some other way...
     return;
   };
-  // now use the interface in all sorts of ways, e.g.
-//      t->showShellInDir( QDir::home().path() );
-  // or:
-     QStrList l;
-     l.append( "python" );
-     interface->startProgram( QString::fromUtf8( "/usr/bin/R" ), l);
-  // or connect to one of the signals.  Connect to the Part object,
-  // not to the TerminalInterface, since the latter is no QObject,
-  // and as such cannot have signals..:
-  //    connect( p, SIGNAL( processExited( int ) ),
-  //             this, SLOT( shellExited( int ) ) );
-  // etc.*/
 }
 
 
