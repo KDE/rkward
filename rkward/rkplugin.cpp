@@ -70,7 +70,20 @@ void RKPlugin::activated () {
 	buildGUI (element);
 
 	// retrieve other relevant information from XML-file
-	// TODO
+	element = doc.documentElement ();
+	children = element.elementsByTagName("code");
+	element = children.item (0).toElement ();
+
+	QStringList lines = QStringList::split ("\n", element.text (), false);
+	for (unsigned int i=0; i < lines.count (); i++) {
+		QString line = lines[i].stripWhiteSpace ();
+		if (line != "") {
+			code_template.append (line + "\n");
+		}
+	}
+
+	// strip final newline
+	code_template.truncate (code_template.length () -1);
 
 	// initialize code/warn-views
 	changed ();
@@ -221,7 +234,23 @@ void RKPlugin::discard () {
 }
 
 void RKPlugin::changed () {
+	// update code-display
+	// TODO: make more flexible (allow "$$" etc);
+	QString code;
+	int i = 0;
+	while (code_template.section ("$", i, i) != "") {
+		if (i % 2) {
+			code.append (widgets[code_template.section ("$", i, i)]->value ());
+		} else {
+			code.append (code_template.section ("$", i, i));
+		}
+		i++;
+	}
+	codeDisplay->setText (code);
+
 	// TODO
+	// update warnDisplay
+	// check whether everything is satisfied (en/disable ok-Button)
 }
 
 /** Returns a pointer to the varselector by that name (0 if not available) */

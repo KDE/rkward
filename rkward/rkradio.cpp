@@ -22,6 +22,8 @@
 #include <qbuttongroup.h>
 #include <qradiobutton.h>
 
+#include "rkplugin.h"
+
 RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
 	qDebug ("creating radio");
 
@@ -59,6 +61,8 @@ RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin) 
 		group->setButton (0);
 	}
 
+	connect (group, SIGNAL (clicked (int)), this, SLOT (buttonClicked (int)));
+
 	addWidget (group);
 }
 
@@ -69,9 +73,13 @@ QString RKRadio::value () {
 	OptionsMap::Iterator it;
 	for (it = options.begin(); it != options.end(); ++it) {
 		if (it.key()->isChecked ()) {
-			return it.data ();
+			return ("\"" + it.data () + "\"");
 		}
 	}
 
-	return "";
+	return "\"\"";
+}
+
+void RKRadio::buttonClicked (int id) {
+	plugin ()->changed ();
 }

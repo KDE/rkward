@@ -293,7 +293,7 @@ rkward_nofinal_OBJECTS = rkradio.$(OBJEXT) rkvarslot.$(OBJEXT) \
 	typeselectcell.$(OBJEXT) rkwatch.$(OBJEXT) rinterface.$(OBJEXT) \
 	rkdrag.$(OBJEXT) twintablemember.$(OBJEXT) twintable.$(OBJEXT) \
 	rkwarddoc.$(OBJEXT) rkward.$(OBJEXT) main.$(OBJEXT) rsettingsui.$(OBJEXT) rkwatch_ui.$(OBJEXT) view.$(OBJEXT)\
-	rinterface.moc.o rkvarslot.moc.o twintablemember.moc.o rkwarddoc.moc.o rsettings.moc.o twintable.moc.o rkwatch.moc.o rkvarselector.moc.o rkplugin.moc.o rkward.moc.o  \
+	rinterface.moc.o rkradio.moc.o rkvarslot.moc.o twintablemember.moc.o rkwarddoc.moc.o rsettings.moc.o twintable.moc.o rkwatch.moc.o rkvarselector.moc.o rkplugin.moc.o rkward.moc.o  \
 	rkward_meta_unload.o 
 @KDE_USE_FINAL_FALSE@rkward_OBJECTS = $(rkward_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@rkward_OBJECTS = $(rkward_final_OBJECTS)
@@ -766,6 +766,10 @@ rinterface.moc.cpp: $(srcdir)/rinterface.h
 	$(MOC) $(srcdir)/rinterface.h -o rinterface.moc.cpp
 
 #>+ 3
+rkradio.moc.cpp: $(srcdir)/rkradio.h
+	$(MOC) $(srcdir)/rkradio.h -o rkradio.moc.cpp
+
+#>+ 3
 rkvarslot.moc.cpp: $(srcdir)/rkvarslot.h
 	$(MOC) $(srcdir)/rkvarslot.h -o rkvarslot.moc.cpp
 
@@ -803,7 +807,7 @@ rkward.moc.cpp: $(srcdir)/rkward.h
 
 #>+ 3
 clean-metasources:
-	-rm -f  rinterface.moc.cpp rkvarslot.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp
+	-rm -f  rinterface.moc.cpp rkradio.moc.cpp rkvarslot.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp
 
 #>+ 6
 clean-ui:
@@ -823,12 +827,12 @@ force-reedit:
 
 
 #>+ 12
-rkward_meta_unload.cpp:  rinterface.moc.cpp view.moc twintablemember.moc.cpp rkvarslot.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp rsettingsui.moc twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp rkwatch_ui.moc
+rkward_meta_unload.cpp:  rinterface.moc.cpp view.moc rkradio.moc.cpp twintablemember.moc.cpp rkvarslot.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp rsettingsui.moc twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp rkwatch_ui.moc
 	@echo 'creating rkward_meta_unload.cpp'
 	@-rm -f rkward_meta_unload.cpp
 	@if test ${kde_qtver} = 2; then \
 		echo 'static const char * _metalist_rkward[] = {' > rkward_meta_unload.cpp ;\
-		cat  rinterface.moc.cpp view.moc twintablemember.moc.cpp rkvarslot.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp rsettingsui.moc twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp rkwatch_ui.moc | grep 'char.*className' | sed -e 's/.*[^A-Za-z0-9_:]\([A-Za-z0-9_:]*\)::className.*$$/\"\1\",/' | sort | uniq >> rkward_meta_unload.cpp ;\
+		cat  rinterface.moc.cpp view.moc rkradio.moc.cpp twintablemember.moc.cpp rkvarslot.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp rsettingsui.moc twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp rkwatch_ui.moc | grep 'char.*className' | sed -e 's/.*[^A-Za-z0-9_:]\([A-Za-z0-9_:]*\)::className.*$$/\"\1\",/' | sort | uniq >> rkward_meta_unload.cpp ;\
 		echo '0};' >> rkward_meta_unload.cpp ;\
 		echo '#include <kunload.h>' >> rkward_meta_unload.cpp ;\
 		echo '_UNLOAD(rkward)' >> rkward_meta_unload.cpp ;\
@@ -840,11 +844,11 @@ clean-moc-classes:
 	-rm -f  rkward_meta_unload.cpp
 
 #>+ 11
-rkward.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/rkradio.cpp $(srcdir)/rkvarslot.cpp $(srcdir)/rkvarselector.cpp $(srcdir)/rkpluginwidget.cpp $(srcdir)/rkplugin.cpp $(srcdir)/rkmenu.cpp $(srcdir)/rsettings.cpp $(srcdir)/nameselectcell.cpp $(srcdir)/rtableitem.cpp $(srcdir)/typeselectcell.cpp $(srcdir)/rkwatch.cpp $(srcdir)/rinterface.cpp $(srcdir)/rkdrag.cpp $(srcdir)/twintablemember.cpp $(srcdir)/twintable.cpp $(srcdir)/rkwarddoc.cpp $(srcdir)/rkward.cpp $(srcdir)/main.cpp rsettingsui.cpp rkwatch_ui.cpp view.cpp rkward_meta_unload.cpp  rinterface.moc.cpp rkvarslot.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp
+rkward.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/rkradio.cpp $(srcdir)/rkvarslot.cpp $(srcdir)/rkvarselector.cpp $(srcdir)/rkpluginwidget.cpp $(srcdir)/rkplugin.cpp $(srcdir)/rkmenu.cpp $(srcdir)/rsettings.cpp $(srcdir)/nameselectcell.cpp $(srcdir)/rtableitem.cpp $(srcdir)/typeselectcell.cpp $(srcdir)/rkwatch.cpp $(srcdir)/rinterface.cpp $(srcdir)/rkdrag.cpp $(srcdir)/twintablemember.cpp $(srcdir)/twintable.cpp $(srcdir)/rkwarddoc.cpp $(srcdir)/rkward.cpp $(srcdir)/main.cpp rsettingsui.cpp rkwatch_ui.cpp view.cpp rkward_meta_unload.cpp  rinterface.moc.cpp rkradio.moc.cpp rkvarslot.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp
 	@echo 'creating rkward.all_cpp.cpp ...'; \
 	rm -f rkward.all_cpp.files rkward.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> rkward.all_cpp.final; \
-	for file in rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp rsettings.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp rkwarddoc.cpp rkward.cpp main.cpp rsettingsui.cpp rkwatch_ui.cpp view.cpp rkward_meta_unload.cpp  rinterface.moc.cpp rkvarslot.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp; do \
+	for file in rkradio.cpp rkvarslot.cpp rkvarselector.cpp rkpluginwidget.cpp rkplugin.cpp rkmenu.cpp rsettings.cpp nameselectcell.cpp rtableitem.cpp typeselectcell.cpp rkwatch.cpp rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp rkwarddoc.cpp rkward.cpp main.cpp rsettingsui.cpp rkwatch_ui.cpp view.cpp rkward_meta_unload.cpp  rinterface.moc.cpp rkradio.moc.cpp rkvarslot.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp; do \
 	  echo "#include \"$$file\"" >> rkward.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> rkward.all_cpp.final; \
 	done; \

@@ -18,7 +18,7 @@
 #ifndef RKRADIO_H
 #define RKRADIO_H
 
-#include <rkpluginwidget.h>
+#include "rkpluginwidget.h"
 
 #include <qmap.h>
 
@@ -32,14 +32,18 @@ class QRadioButton;
   */
 
 class RKRadio : public RKPluginWidget  {
+	Q_OBJECT
 public: 
 	RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKRadio();
+public slots:
+	void buttonClicked (int id);
 private:
 	QButtonGroup *group;
 	typedef QMap<QRadioButton *, QString> OptionsMap;
 	OptionsMap options;
 protected:
+/** Returns the value of the currently selected option. */
 	QString value ();
 };
 
