@@ -58,6 +58,8 @@ case it will be stored as a character vector */
 /** reimplemented from RObject to also store value labels/factor levels (and in the future probably futher info) */
 	void writeMetaData (RCommandChain *chain);
 protected:
+	int num_classes;
+	QString *classname;
 friend class RContainerObject;
 	int length;
 	RObject::VarType var_type;
@@ -153,6 +155,7 @@ numeric! */
 	enum CellAlign { AlignCellLeft=0, AlignCellRight=1 };
 /** returns alignment to use for this variable */
 	CellAlign getAlignment ();
+    QString makeClassString (const QString &sep);
 protected:
 /** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData : public EditData {

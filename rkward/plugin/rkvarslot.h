@@ -29,6 +29,7 @@ class QListViewItem;
 
 class RKVarSelector;
 class RKVariable;
+class RContainerObject;
 
 #define VARSLOT_WIDGET 1
 
@@ -42,9 +43,10 @@ public:
 	RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKVarSlot();
 	int getNumVars () { return num_vars; };
+	int getNumCont () { return num_cont; };
 	QValueList<RKVariable*> getVariables ();
-  int type() {return VARSLOT_WIDGET ;};
-  void  setEnabled(bool);
+  	int type() {return VARSLOT_WIDGET ;};
+  	void  setEnabled(bool);
   
 public slots:
 /** Called when the select-button is pressed */
@@ -52,23 +54,30 @@ public slots:
 	void listSelectionChanged ();
 /// find out whether all items are still present, remove items which are no longer present and update text for all others
 	void objectListChanged ();
-  void slotActive();
-  void slotActive(bool);
+  	void slotActive();
+  	void slotActive(bool);
 private:
 	QLineEdit *line_edit;
 	QListView *list;
 	QPushButton *select;
 	RKVarSelector *source;
 	QString source_id;
-  QString depend;
-  int min_vars;
+	QString depend;
+	QString varchier;
+	int min_vars;
 	int num_vars;
+	int num_cont;
 	bool multi;
 	bool required;
 	bool selection;
 	typedef QMap<QListViewItem*, RKVariable*> ItemMap; 
 	ItemMap item_map;
+	typedef QMap<QListViewItem*, RContainerObject*> ContMap; 
+	ContMap cont_map;
+	QString classes ; 
 	void updateState ();
+	bool belongToClasses (const QString &nom) ;
+	bool varOrCont ;
 protected:
 	bool isSatisfied ();
 	QString value (const QString &modifier);

@@ -15,7 +15,8 @@ RKInput::RKInput(const QDomElement &element, QWidget *parent, RKPlugin *plugin) 
 	qDebug("creating note");
 	vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	label = new QLabel (element.attribute ("label", "Enter your text"), this);
-	textedit = new QTextEdit ( element.attribute ("intial") ,
+	QString initial = element.attribute ("initial","") ;
+	textedit = new QTextEdit ( initial ,
 	QString::null,this, element.attribute ("id")) ;
 	vbox->addWidget (label);
 	vbox->addWidget (textedit);
@@ -60,7 +61,6 @@ label->setEnabled(! isOk) ;
 }
 
 QString RKInput::value (const QString &) {
-	qDebug("la valeur de edit est %s",textedit->text().latin1());
 	return textedit->text();
 }
 

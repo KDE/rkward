@@ -26,6 +26,7 @@
 #include "rkmodificationtracker.h"
 
 #define UPDATE_DIM_COMMAND 1
+#define UPDATE_CLASS_COMMAND 2
 #define GET_STORAGE_MODE_COMMAND 10
 #define GET_DATA_COMMAND 11
 #define GET_FACTOR_LEVELS_COMMAND 12
@@ -40,6 +41,8 @@ RKVariable::RKVariable (RContainerObject *parent, const QString &name) : RObject
 	RObject::type = Variable;
 	var_type = Unknown;
 	length = 0;
+	num_classes = 0 ;
+	classname = 0 ;
 }
 
 RKVariable::~RKVariable () {
@@ -109,7 +112,8 @@ void RKVariable::updateFromR () {
 
 void RKVariable::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
-
+	
+	bool properties_changed = false;
 	RObject::rCommandDone (command);
 	
 	if (command->getFlags () == UPDATE_DIM_COMMAND) {
@@ -125,6 +129,11 @@ void RKVariable::rCommandDone (RCommand *command) {
 		if (new_var_type != var_type) RKGlobals::tracker ()->objectMetaChanged (this);
 
 		parent->childUpdateComplete ();
+	
+		RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
+		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+
+		
 	} else if (command->getFlags () == GET_STORAGE_MODE_COMMAND) {
 		RK_ASSERT (command->intVectorLength () == 2);
 		if (!(command->getIntVector ()[1])) {
@@ -178,6 +187,18 @@ void RKVariable::rCommandDone (RCommand *command) {
 			myData ()->value_labels->insert (QString::number (i+1), command->getStringVector ()[i]);
 		}
 		setSyncing (true);
+	} else if (command->getFlags () == UPDATE_CLASS_COMMAND) {
+		if (num_classes != command->stringVectorLength ()) {
+			num_classes = command->stringVectorLength ();
+			delete classname;
+			classname = new QString [num_classes];
+			properties_changed = true;
+		}
+		for (int cn=0; cn < num_classes; ++cn) {
+			if (classname[cn] != command->getStringVector ()[cn]) properties_changed = true;
+			classname[cn] = command->getStringVector ()[cn];
+		}
+		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
 	}
 }
 
@@ -924,3 +945,18 @@ RKVariable::CellAlign RKVariable::getAlignment () {
 }
 
 /////////////////// END: data-handling ///////////////////////////
+
+
+QString RKVariable::makeClassString (const QString &sep)
+{
+	RK_TRACE (OBJECTS);
+	QString ret;
+	for (int i=0; i < num_classes; ++i) {
+		ret.append (classname[i]);
+		if (i < (num_classes - 1)) {
+			ret.append (sep);
+		}
+	}
+	return ret;
+
+}

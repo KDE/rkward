@@ -28,7 +28,7 @@ RKPluginBrowser::RKPluginBrowser(const QDomElement &element, QWidget *parent, RK
 	qDebug("creating note");
 	vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	label = new QLabel (element.attribute ("label", "Enter your text"), this);
-	textedit = new QTextEdit ( element.attribute ("intial") ,
+	textedit = new QTextEdit ( element.attribute ("initial" ,"") ,
 	QString::null,this, element.attribute ("id")) ;
 	button = new QPushButton ("Browser...",this);
 //	size = element.attribute ("size", "small");
@@ -42,12 +42,14 @@ RKPluginBrowser::RKPluginBrowser(const QDomElement &element, QWidget *parent, RK
 
 	size = element.attribute ("size", "small");
 	if (size == "small") {
-	textedit->setMaximumSize (300,25) ; 
 	textedit->setMinimumSize (300,25) ; 
+	button ->setMinimumSize (300,25) ; 
+	textedit->setMaximumSize (300,25) ; 
+	button ->setMaximumSize (300,25) ; 
 	}
 	else if (size == "big") {
-	textedit->setMaximumSize (300,100) ; 
 	textedit->setMinimumSize (300,100) ; 
+	button->setMinimumSize (300,100) ; 
 	}
 	
 	

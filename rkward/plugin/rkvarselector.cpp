@@ -22,14 +22,16 @@
 #include <qdom.h>
 #include <qlabel.h>
 
+#include "../core/rcontainerobject.h"
 #include "../core/rkvariable.h"
 #include "../rkglobals.h"
 #include "../misc/rkobjectlistview.h"
-
+#include "../core/robjectlist.h"
 #include "../debug.h"
 
 RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
 	RK_TRACE (PLUGIN);
+	RKGlobals::rObjectList ()->updateFromR ();
 	QVBoxLayout  *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	depend = element.attribute ("depend", "");
 	
@@ -57,7 +59,6 @@ void RKVarSelector::objectListChanged () {
 QValueList<RKVariable*> RKVarSelector::selectedVars () {
 	RK_TRACE (PLUGIN);
 	QValueList<RKVariable*> selected;
-
 	QListViewItem *current;
 	current = list_view->firstChild ();
 	while (current->itemBelow ()) {
@@ -118,4 +119,48 @@ list_view->setEnabled(! isOk) ;
 
 void RKVarSelector::slotActive(bool isOk){
 list_view->setEnabled(isOk) ;
+}
+
+
+
+QValueList <RContainerObject*> RKVarSelector::selectedContainer()
+{
+	RK_TRACE (PLUGIN);
+	QValueList<RContainerObject*> selected;
+	QListViewItem *current;
+	current = list_view->firstChild ();
+	while (current->itemBelow ()) {
+		current = current->itemBelow ();
+		if (current->isSelected ()) {
+			RObject *obj = list_view->findItemObject (current);
+			RK_ASSERT (obj);
+			if (obj->isContainer()) {
+				selected.append (static_cast<RContainerObject*> (obj));
+			}
+		}
+	}
+
+	return selected;
+}
+
+
+int RKVarSelector::numSelectedContainer()
+{
+	RK_TRACE (PLUGIN);
+	int i=0;
+
+	QListViewItem *current;
+	current = list_view->firstChild ();
+	while (current->itemBelow ()) {
+		current = current->itemBelow ();
+		if (current->isSelected ()) {
+			RObject *obj = list_view->findItemObject (current);
+			RK_ASSERT (obj);
+			if (obj->isContainer ()) {
+				++i;
+			}
+		}
+	}
+
+	return i;
 }

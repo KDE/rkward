@@ -25,6 +25,7 @@
 class RKObjectListView;
 class RObject;
 class RKVariable;
+class RContainerObject;
 
 #define VARSELECTOR_WIDGET 2
 
@@ -47,17 +48,19 @@ public:
 	int numSelectedVars ();
 /** Returns pointers to the currently selected variables */
 	QValueList<RKVariable*> selectedVars ();
+	QValueList<RContainerObject*> selectedContainer ();
 	int type () { return VARSELECTOR_WIDGET; };
 /** find out, whether the given object is available in the RKVarselector (i.e. it a) exists and b) matched the filter requirements) */
 	bool containsObject (RObject *object);
-  void setEnabled(bool);
+	void setEnabled(bool);
+	int numSelectedContainer();
 public slots:
 	void objectListChanged ();
-  void slotActive();
-  void slotActive(bool);
+	void slotActive();
+	void slotActive(bool);
 private:
 	RKObjectListView *list_view;
-    QString depend;
+	QString depend;
 };
 
 #endif

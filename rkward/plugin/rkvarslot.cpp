@@ -23,13 +23,17 @@
 #include <qpushbutton.h>
 #include <qlistview.h>
 #include <qlayout.h>
+#include <qstringlist.h>
 
 #include <klocale.h>
+#include <kiconloader.h>
 
 #include "rkvarselector.h"
 #include "rkplugin.h"
 #include "../rkglobals.h"
 #include "../core/rkvariable.h"
+#include "../core/rcontainerobject.h"
+
 
 RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
 	qDebug ("creating varselector");
@@ -37,8 +41,10 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 	// layout
 	QGridLayout *g_layout = new QGridLayout (this, 3, 3, RKGlobals::spacingHint ());
 
-	select = new QPushButton ("-->", this);
-	select->setFixedWidth (select->fontMetrics ().width (" --> "));
+	
+	select = new QPushButton ("", this);
+	select->setPixmap(SmallIcon("1rightarrow"));
+
 	connect (select, SIGNAL (clicked ()), this, SLOT (selectPressed ()));
 	g_layout->addWidget (select, 1, 0);
 
@@ -68,6 +74,10 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 	// further infos
 	source_id = element.attribute ("source");
 	depend = element.attribute ("depend", "");
+	classes = element.attribute ("classes", "all");
+	if (classes=="frame") classes = "data.frame matrix list array";
+	else if (classes=="number") classes = "numeric integer" ;
+	else if (classes=="vector") classes ="numeric integer character factor" ; 
 	required = (element.attribute ("required") == "true");
 	num_vars = 0;
 	selection = false;
@@ -83,6 +93,7 @@ void RKVarSlot::initialize () {
 	connect (source, SIGNAL (changed ()), this, SLOT (objectListChanged ()));
 }
 
+// TODO make the same with cont_map 
 void RKVarSlot::objectListChanged () {
 	if (!source) return;
 	if (!multi) {
@@ -91,7 +102,7 @@ void RKVarSlot::objectListChanged () {
 				line_edit->setText ("");
 				item_map.remove (0);
 				num_vars = 0;
-				select->setText ("-->");
+				select->setPixmap(SmallIcon("1rightarrow"));
 			} else {
 				line_edit->setText (item_map[0]->getShortName ());
 			}
@@ -133,9 +144,9 @@ void RKVarSlot::listSelectionChanged() {
 	}
 	
 	if (selection) {
-		select->setText ("<--");
+		select->setPixmap(SmallIcon("1leftarrow"));
 	} else {
-		select->setText ("-->");
+		select->setPixmap(SmallIcon("1rightarrow"));
 	}
 }
 
@@ -143,17 +154,33 @@ void RKVarSlot::selectPressed () {
 	if (!multi) {
 		if (!num_vars) {
 			if (!source) return;
-			if (source->numSelectedVars() != 1) return;
-			RKVariable *sel = source->selectedVars ().first ();
-			line_edit->setText (sel->getShortName ());
-			item_map.insert (0, sel);
-			num_vars = 1;
-			select->setText ("<--");
-   	 } else {
+			if (source->numSelectedVars() == 1) {
+				RKVariable *sel = source->selectedVars ().first ();
+				if (belongToClasses(sel->makeClassString(""))){
+					line_edit->setText (sel->getShortName ());
+					item_map.insert (0, sel);
+					num_vars = 1;
+					select->setPixmap(SmallIcon("1leftarrow"));
+					varOrCont = true ; 
+				}
+			}else if (source->numSelectedContainer() == 1 ){
+				RContainerObject *sel = source->selectedContainer().first ();
+				if (belongToClasses(sel->makeClassString(""))){
+				line_edit->setText (sel->getShortName ());
+				cont_map.insert (0, sel);
+				num_vars = 1;
+				select->setPixmap(SmallIcon("1leftarrow"));
+				varOrCont = false ; 
+				}
+			}
+			else return ;
+			
+		} else {
 			line_edit->setText ("");
 			item_map.remove (0);
+			cont_map.remove (0);
 			num_vars = 0;
-			select->setText ("-->");
+			select->setPixmap(SmallIcon("1rightarrow"));
 		}
 	} else {	// multi-slot
 		if (selection) {
@@ -184,10 +211,27 @@ void RKVarSlot::selectPressed () {
 						break;
 					}
 				}
-				if (!duplicate) {
+				if (!duplicate && belongToClasses(sel->makeClassString(""))) {
 					QListViewItem *new_item = new QListViewItem (list, sel->getShortName ());
 					list->insertItem (new_item);
 					item_map.insert (new_item, sel);
+				}
+			}
+			QValueList<RContainerObject*> contlist = source->selectedContainer();
+			for (QValueList<RContainerObject*>::Iterator et = contlist.begin (); et != contlist.end (); ++et) {
+				RContainerObject* selcont = *et;
+				// don't allow duplicates
+				bool duplicate = false;
+				for (ContMap::const_iterator eet = cont_map.begin (); eet != cont_map.end (); ++eet) {
+					if (eet.data () == selcont) {
+						duplicate = true;
+						break;
+					}
+				}
+				if (!duplicate && belongToClasses(selcont->makeClassString(""))) {
+					QListViewItem *new_item = new QListViewItem (list, selcont->getShortName ());
+					list->insertItem (new_item);
+					cont_map.insert (new_item, selcont);
 				}
 			}
 		}
@@ -228,35 +272,46 @@ bool RKVarSlot::isSatisfied () {
 }
 
 QString RKVarSlot::value (const QString &modifier) {
+QString ret;
 	if (!multi) {
 		if (num_vars) {
 			if (modifier == "label") {
-				return item_map[0]->getDescription ();
+				if (varOrCont)	return item_map[0]->getDescription();
+				else	return cont_map[0]->getDescription();
 			} else if (modifier == "shortname") {
-				return item_map[0]->getShortName ();
+				if (varOrCont)	return item_map[0]->getShortName();
+				else	return cont_map[0]->getShortName();
 			} else {
-				return (item_map[0]->getFullName ());
+				if (varOrCont)	return item_map[0]->getFullName();
+				else	return cont_map[0]->getFullName();
 			}
 		} else {
 			return "";
 		}
 	} else {
-		QString ret;
-
 		QListViewItem *item = list->firstChild ();
 		while (item) {
 			if (modifier == "label") {
-				ret.append (item_map[item]->getDescription () + "\n");
+				ItemMap::iterator it = item_map.find (item);
+				if (it != item_map.end ())  ret.append (item_map[item]->getDescription() + "\n");
+				ContMap::iterator et = cont_map.find (item);
+				if (et != cont_map.end ())  ret.append (cont_map[item]->getDescription() + "\n");
 			} else if (modifier == "shortname") {
-				ret.append (item_map[item]->getShortName () + "\n");
+				ItemMap::iterator it = item_map.find (item);
+				if (it != item_map.end ())  ret.append (item_map[item]->getShortName () + "\n");
+				ContMap::iterator et = cont_map.find (item);
+				if (et != cont_map.end ())  ret.append (cont_map[item]->getShortName () + "\n");
 			} else {
-				ret.append (item_map[item]->getFullName () + "\n");
+				ItemMap::iterator it = item_map.find (item);
+				if (it != item_map.end ())  ret.append (item_map[item]->getFullName () + "\n");
+				ContMap::iterator et = cont_map.find (item);
+				if (et != cont_map.end ())  ret.append (cont_map[item]->getFullName () + "\n");
 			}
 			item = item->nextSibling ();
 		}
-	
-		return ret;
 	}
+//		qDebug ( "%s", ret.latin1() ) ;
+return ret;
 }
 
 QString RKVarSlot::complaints () {
@@ -280,3 +335,8 @@ void RKVarSlot::slotActive(bool isOk){
   select->setEnabled(isOk) ;
 }
 
+bool RKVarSlot::belongToClasses(const QString &nom ) {
+if (classes=="all") return true ;
+if (classes.find( nom, 0 ) != -1) return true; 
+else return false ;
+}
