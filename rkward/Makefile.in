@@ -265,7 +265,7 @@ rkward_LDADD = $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) $(LIBSOCKET) -
 
 SUBDIRS = plugins
 
-EXTRA_DIST = main.cpp rkward.cpp rkward.h rkwarddoc.cpp rkwarddoc.h rkwardui.rc rkward.desktop lo32-app-rkward.png lo16-app-rkward.png view.ui twintable.cpp twintable.h twintablemember.cpp twintablemember.h rkdrag.cpp rkdrag.h rinterface.cpp rinterface.h rkwatch_ui.ui rkwatch.cpp rkwatch.h typeselectcell.cpp typeselectcell.h rtableitem.cpp rtableitem.h nameselectcell.cpp nameselectcell.h rkmenu.cpp rkmenu.h rkplugin.cpp rkplugin.h rkpluginwidget.cpp rkpluginwidget.h rkvarselector.cpp rkvarselector.h rkvarslot.cpp rkvarslot.h rkradio.cpp rkradio.h rktext.cpp rktext.h rcommand.cpp rcommand.h labelcell.cpp labelcell.h rembed.h rembedinternal.h phpbackend.h common.php rkpluginguiwidget.h rkoutputwindow.h rksettings.h rksettingsmodule.h rksettingsmoduleplugins.h
+EXTRA_DIST = main.cpp rkward.cpp rkward.h rkwarddoc.cpp rkwarddoc.h rkwardui.rc rkward.desktop lo32-app-rkward.png lo16-app-rkward.png twintable.cpp twintable.h twintablemember.cpp twintablemember.h rkdrag.cpp rkdrag.h rinterface.cpp rinterface.h rkwatch.cpp rkwatch.h typeselectcell.cpp typeselectcell.h rtableitem.cpp rtableitem.h nameselectcell.cpp nameselectcell.h rkmenu.cpp rkmenu.h rkplugin.cpp rkplugin.h rkpluginwidget.cpp rkpluginwidget.h rkvarselector.cpp rkvarselector.h rkvarslot.cpp rkvarslot.h rkradio.cpp rkradio.h rktext.cpp rktext.h rcommand.cpp rcommand.h labelcell.cpp labelcell.h rembed.h rembedinternal.h phpbackend.h common.php rkpluginguiwidget.h rkoutputwindow.h rksettings.h rksettingsmodule.h rksettingsmoduleplugins.h
 
 ####### kdevelop will overwrite this part!!! (end)############
 # These paths are KDE specific. Use them:
@@ -890,6 +890,7 @@ messages: rc.cpp
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
+
 #>+ 3
 rksettingsmodulephp.moc: $(srcdir)/rksettingsmodulephp.h
 	$(MOC) $(srcdir)/rksettingsmodulephp.h -o rksettingsmodulephp.moc
@@ -1056,7 +1057,7 @@ clean-metasources:
 	-rm -f  rksettingsmodulephp.moc rkcheckbox.moc.cpp rkpluginguiwidget.moc rksettingsmodule.moc twintablemember.moc.cpp rkplugin.moc.cpp rcommand.moc.cpp rkward.moc.cpp phpbackend.moc.cpp rkoutputwindow.moc rkvarslot.moc.cpp rksettings.moc twintable.moc.cpp rkradio.moc.cpp rinterface.moc.cpp rksettingsmoduleplugins.moc rksettingsmodulelogfiles.moc rkwarddoc.moc.cpp rkerrordialog.moc rksettingsmoduleoutput.moc rkwatch.moc.cpp rksettingsmoduler.moc rkvarselector.moc.cpp
 
 #>+ 2
-KDE_DIST=r_in rk_out.html test r_out r_err testdata test.php 
+KDE_DIST=r_in rk_out.html test r_err r_out testdata test.php 
 
 #>+ 2
 docs-am:
