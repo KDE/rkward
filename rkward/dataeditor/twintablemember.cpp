@@ -148,6 +148,7 @@ void TwinTableMember::currentCellChanged (int row, int col) {
 void TwinTableMember::endEdit (int row, int col, bool, bool) {
 	RK_TRACE (EDITOR);
 	if (tted) setCellContentFromEditor (row, col);
+	setEditMode (NotEditing, -1, -1);
 }
 
 void TwinTableMember::setCellContentFromEditor (int row, int col) {

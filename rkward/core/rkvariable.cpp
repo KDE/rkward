@@ -30,6 +30,8 @@
 #define GET_DATA_COMMAND 11
 #define GET_FACTOR_LEVELS_COMMAND 12
 
+#define MAX_PRECISION 16
+
 #include "../debug.h"
 
 RKVariable::RKVariable (RContainerObject *parent, const QString &name) : RObject (parent, name) {
@@ -417,7 +419,7 @@ QString RKVariable::getText (int row) {
 		if (myData ()->cell_string_data[row] != 0) {
 			return QString::fromLocal8Bit (myData ()->cell_string_data[row]);
 		} else {
-			return QString::number (myData ()->cell_double_data[row]);
+			return QString::number (myData ()->cell_double_data[row], 'g', MAX_PRECISION);
 		}
 	}
 }
@@ -430,11 +432,11 @@ QString RKVariable::getRText (int row) {
 	if (cell_state == ValueUnused) {
 		return ("NA");
 	} else if (getVarType () == Factor) {
-		return (rQuote (getFormatted (row)));
+		return (rQuote (getLabeled (row)));
 	} else if ((getVarType () == String) || (cell_state == ValueInvalid)) {
 		return (rQuote (getText (row)));
 	} else {
-		return (QString::number (myData ()->cell_double_data[row]));
+		return (QString::number (myData ()->cell_double_data[row], 'g', MAX_PRECISION));
 	}
 }
 
@@ -491,7 +493,41 @@ void RKVariable::setTextPlain (int row, char *text) {
 
 /** get the text in pretty form, e.g. rounding numbers to a certain number of digits, replacing numeric values with value labels if available, etc. Formatting is done according to the meta-information stored in the RObject and global user preferences */
 QString RKVariable::getFormatted (int row) {
-	// TODO: complete! (number of decimal places, etc.)
+	if (row >= getLength ()) {
+		RK_ASSERT (false);
+		return RKGlobals::unknown_char;
+	}
+
+	if (myData ()->value_labels) {
+		if (myData ()->value_labels->contains (getText (row))) {
+			return (*(myData ()->value_labels))[getText (row)];
+		}
+	}
+
+	if (getVarType () == String) {
+		return QString::fromLocal8Bit (myData ()->cell_string_data[row]);
+	} else {
+		if (myData ()->cell_string_data[row] != 0) {
+			return QString::fromLocal8Bit (myData ()->cell_string_data[row]);
+		} else {
+			if (myData ()->formatting_options && (myData ()->formatting_options->precision_mode != FormattingOptions::PrecisionDefault)) {
+				if (myData ()->formatting_options->precision_mode == FormattingOptions::PrecisionRequired) {
+					return QString::number (myData ()->cell_double_data[row], 'g', MAX_PRECISION);
+				} else {
+					return QString::number (myData ()->cell_double_data[row], 'f', myData ()->formatting_options->precision);
+				}
+			} else {
+				// TODO: use global (configurable) defaults!
+				return QString::number (myData ()->cell_double_data[row], 'g', MAX_PRECISION);
+			}
+		}
+	}
+
+	return getText (row);
+}
+
+/** tries to match a value-label to the value in the given cell. Returns the label, or - if there is no label - the original value in textual representation */
+QString RKVariable::getLabeled (int row) {
 	if (myData ()->value_labels) {
 		if (myData ()->value_labels->contains (getText (row))) {
 			return (*(myData ()->value_labels))[getText (row)];
@@ -524,12 +560,12 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 		RK_ASSERT (false);		// asserting false to catch cases of this use for now. it's not really a problem, though
 		int i = 0;
 		for (int row=from_row; row <= to_row; ++row) {
-			myData ()->cell_string_data[row] = qstrdup (QString::number (data[i++]));
+			myData ()->cell_string_data[row] = qstrdup (QString::number (data[i++], 'g', MAX_PRECISION));
 		}
 	} else if (getVarType () == Factor) {
 		int i = 0;
 		for (int row=from_row; row <= to_row; ++row) {
-			setTextPlain (row, qstrdup (QString::number (data[i++])));
+			setTextPlain (row, qstrdup (QString::number (data[i++], 'g', MAX_PRECISION)));
 		}
 	} else {
 		int i = 0;
@@ -777,26 +813,31 @@ void RKVariable::setFormattingOptions (FormattingOptions *formatting_options) {
 
 	if (!formatting_options) {
 		setMetaProperty ("format", "");
-		return;
-	}
-	
-	QString format_string;
-	if (formatting_options->alignment != (int) FormattingOptions::AlignDefault) {
-		format_string.append ("align:");
-		format_string.append (QString::number (formatting_options->alignment));
-	}
-
-	if (formatting_options->precision_mode != (int) FormattingOptions::PrecisionDefault) {
-		if (!format_string.isEmpty ()) format_string.append ("#");
-		format_string.append ("prec:");
-		if (formatting_options->precision_mode == (int) FormattingOptions::PrecisionRequired) {
-			format_string.append ("v");
-		} else {
-			format_string.append (QString::number (formatting_options->precision));
+	} else {
+		QString format_string;
+		if (formatting_options->alignment != (int) FormattingOptions::AlignDefault) {
+			format_string.append ("align:");
+			format_string.append (QString::number (formatting_options->alignment));
 		}
+	
+		if (formatting_options->precision_mode != (int) FormattingOptions::PrecisionDefault) {
+			if (!format_string.isEmpty ()) format_string.append ("#");
+			format_string.append ("prec:");
+			if (formatting_options->precision_mode == (int) FormattingOptions::PrecisionRequired) {
+				format_string.append ("v");
+			} else {
+				format_string.append (QString::number (formatting_options->precision));
+			}
+		}
+	
+		setMetaProperty ("format", format_string);
 	}
 
-	setMetaProperty ("format", format_string);
+	// also update display of all values:
+	ChangeSet *set = new ChangeSet;
+	set->from_index = 0;
+	set->to_index = getLength () - 1;	
+	RKGlobals::tracker ()->objectDataChanged (this, set);
 }
 
 QString RKVariable::getFormattingOptionsString () {
@@ -810,10 +851,7 @@ void RKVariable::setFormattingOptionsString (const QString &string) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (myData ());
 
-	delete (myData ()->formatting_options);
-	myData ()->formatting_options = parseFormattingOptionsString (string);
-	
-	setMetaProperty ("format", string);
+	setFormattingOptions (parseFormattingOptionsString (string));
 }
 
 RKVariable::FormattingOptions *RKVariable::parseFormattingOptionsString (const QString &string) {
@@ -865,6 +903,23 @@ RKVariable::FormattingOptions *RKVariable::parseFormattingOptionsString (const Q
 		return 0;
 	} else {
 		return formatting_options;
+	}
+}
+
+/** returns alignment to use for this variable */
+RKVariable::CellAlign RKVariable::getAlignment () {
+	RK_ASSERT (myData ());
+	
+	if (myData ()->formatting_options && (myData ()->formatting_options->alignment != FormattingOptions::AlignDefault)) {
+		if (myData ()->formatting_options->alignment == FormattingOptions::AlignLeft) return AlignCellLeft;
+		return AlignCellRight;
+	} else {
+	// TODO: use global (configurable) defaults, if not specified
+		if ((getVarType () == String) || (getVarType () == Factor)) {
+			return AlignCellLeft;
+		} else {
+			return AlignCellRight;
+		}
 	}
 }
 

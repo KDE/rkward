@@ -110,7 +110,11 @@ void TwinTableDataMember::paintCell (QPainter *p, int row, int col, const QRect 
 	}
 
 	if (var && (row < numRows ())) {
-		p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignRight, var->getFormatted (row));
+		if (var->getAlignment () == RKVariable::AlignCellRight) {
+			p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignRight, var->getFormatted (row));
+		} else {
+			p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignLeft, var->getFormatted (row));
+		}
 	}
 }
 

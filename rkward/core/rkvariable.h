@@ -148,6 +148,11 @@ numeric! */
 	QString getFormattingOptionsString ();
 /** parse formatting options from the given string */
 	void setFormattingOptionsString (const QString &string);
+
+/** This enum describes the alignment of text inside a table cell */
+	enum CellAlign { AlignCellLeft=0, AlignCellRight=1 };
+/** returns alignment to use for this variable */
+	CellAlign getAlignment ();
 protected:
 /** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData : public EditData {
@@ -197,6 +202,8 @@ private:
 	void writeValueLabels (RCommandChain *chain);
 /** creates/parses formatting options from the stored meta-property string. See also: getFormattingOptions () */
 	FormattingOptions *parseFormattingOptionsString (const QString &string);
+/** tries to match a value-label to the value in the given cell. Returns the label, or - if there is no label - the original value in textual representation */
+	QString getLabeled (int row);
 /////////////////// END: data-handling //////////////////////
 };
 

@@ -278,9 +278,14 @@ QCString TwinTable::encodeSelection () {
 		return encoded_data;
 	}
 
-// TODO: check whether there actually is a selection
 	QTableSelection selection;
-	selection = table->selection (table->currentSelection ());
+	if (table->currentSelection () >= 0) {
+		selection = table->selection (table->currentSelection ());
+	} else {
+		// Nothing selected. Copy current cell
+		selection.init (table->currentRow (), table->currentColumn ());
+		selection.expandTo (table->currentRow (), table->currentColumn ());
+	}
 
 	QString data;
 	for (int row=selection.topRow (); row <= selection.bottomRow (); row++) {
