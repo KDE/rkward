@@ -118,7 +118,7 @@ numeric! */
 /** Tells the object it has (data) length len. Usually this will only be called directly after creating a new object */
 	void setLength (int len);
 
-/** returns the map of value labels for this variable or 0 if no labels/levels are assigned */
+/** returns the map of value labels for this variable or 0 if no labels/levels are assigned. Does _not_ return a copy, but the real thing. Do not delete! */
 	ValueLabels *getValueLabels ();
 /** assigns a new map of labels. Also takes care of syncing with the backend. Ownership of the ValueLabels is transferred to the variable. Use setValueLabels (0) to remove all labels */
 	void setValueLabels (ValueLabels *labels);
@@ -126,9 +126,28 @@ numeric! */
 	QString getValueLabelString ();
 /** set value labels from string (for paste operations) */
 	void setValueLabelString (const QString &string);
-	
+
 /** Restores the variable including data and meta-data */
 	void restore (RCommandChain *chain=0);
+
+/** Stores formatting options set for this variable */
+	struct FormattingOptions {
+		enum Alignment { AlignDefault=0, AlignLeft=1, AlignRight=2 };
+		enum Precision { PrecisionDefault=0, PrecisionRequired=1, PrecisionFixed=2 };
+
+		Alignment alignment;
+		Precision precision_mode;
+		int precision;
+	};
+
+/** returns the formatting options, or 0 if no options specified (i.e. all set to default). Does _not_ return a copy, but the real thing. Do not delete! */
+	FormattingOptions *getFormattingOptions ();
+/** assigns new formatting options. Ownership of the FormattingOptions -struct is transferred to the variable. Use setFormatting (0) to remove all options */
+	void setFormattingOptions (FormattingOptions *formatting_options);
+/** get formatting options as a string (for display) */
+	QString getFormattingOptionsString ();
+/** parse formatting options from the given string */
+	void setFormattingOptionsString (const QString &string);
 protected:
 /** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData : public EditData {
@@ -148,6 +167,8 @@ protected:
 		bool previously_valid;
 /// the value-labels or factor levels assigned to this variable. 0 if no values/levels given
 		ValueLabels *value_labels;
+/// the formatting options set for this var (see FormattingOptions) */
+		FormattingOptions *formatting_options;
 	};
 /** reimplemented from RObject */
 	void allocateEditData ();
@@ -174,6 +195,8 @@ private:
 	void restoreStorageInBackend ();
 /** writes the values labels to the backend */
 	void writeValueLabels (RCommandChain *chain);
+/** creates/parses formatting options from the stored meta-property string. See also: getFormattingOptions () */
+	FormattingOptions *parseFormattingOptionsString (const QString &string);
 /////////////////// END: data-handling //////////////////////
 };
 

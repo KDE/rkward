@@ -56,11 +56,11 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
     varview = new TwinTableMetaMember (splitter, this);
     varview->setNumRows (5);
     varview->setNumCols (5);
-	varview->verticalHeader()->setLabel(0, i18n( "Label" ) );
-	varview->verticalHeader()->setLabel(TYPE_ROW, i18n( "Type" ) );
-	varview->verticalHeader()->setLabel(2, i18n( "Levels" ) );
-	varview->verticalHeader()->setLabel(3, i18n( "e.g. category" ) );
-	varview->verticalHeader()->setLabel(NAME_ROW, i18n( "Name" ) );
+	varview->verticalHeader ()->setLabel (LABEL_ROW, i18n ("Label"));
+	varview->verticalHeader ()->setLabel (TYPE_ROW, i18n ("Type"));
+	varview->verticalHeader ()->setLabel (LEVELS_ROW, i18n ("Levels"));
+	varview->verticalHeader ()->setLabel (FORMAT_ROW, i18n ("Format"));
+	varview->verticalHeader ()->setLabel (NAME_ROW, i18n ("Name"));
 	varview->setMinimumHeight (varview->horizontalHeader ()->height ());
 	varview->setMaximumHeight (varview->rowPos (NAME_ROW) + varview->rowHeight (NAME_ROW) + varview->horizontalHeader ()->height () + 5);
     splitter->setResizeMode (varview, QSplitter::KeepSize);

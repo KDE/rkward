@@ -60,6 +60,8 @@ void TwinTableMetaMember::setText (int row, int col, const QString &text) {
 		var->setLabel (text, true);
 	} else if (row == TYPE_ROW) {
 		var->setVarType ((RObject::VarType) text.toInt ());
+	} else if (row == FORMAT_ROW) {
+		return var->setFormattingOptionsString (text);
 	} else if (row == LEVELS_ROW) {
 		var->setValueLabelString (text);
 	}
@@ -172,6 +174,8 @@ QString TwinTableMetaMember::text (int row, int col) const {
 		return var->getLabel ();
 	} else if (row == TYPE_ROW) {
 		return QString::number (var->getVarType ());
+	} else if (row == FORMAT_ROW) {
+		return var->getFormattingOptionsString ();
 	} else if (row == LEVELS_ROW) {
 		return var->getValueLabelString ();
 	}
@@ -191,6 +195,8 @@ QString TwinTableMetaMember::formattedText (int row, int col) const {
 		return var->getLabel ();
 	} else if (row == TYPE_ROW) {
 		return var->getVarTypeString ();
+	} else if (row == FORMAT_ROW) {
+		return var->getFormattingOptionsString ();
 	} else if (row == LEVELS_ROW) {
 		return var->getValueLabelString ();
 	}

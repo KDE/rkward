@@ -229,6 +229,7 @@ void RKVariable::allocateEditData () {
 	myData ()->changes = 0;
 	myData ()->invalid_count = 0;
 	myData ()->value_labels = 0;
+	myData ()->formatting_options = 0;
 	myData ()->previously_valid = true;
 	
 	extendToLength (getLength ());
@@ -246,6 +247,7 @@ void RKVariable::initializeEditData (bool to_empty) {
 		}
 	} else {
 		RKGlobals::rInterface ()->issueCommand ("c (is.numeric (" + getFullName () + "), is.null (levels (" + getFullName () + ")))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, GET_STORAGE_MODE_COMMAND);
+		myData ()->formatting_options = parseFormattingOptionsString (getMetaProperty ("format"));
 	}
 }
 
@@ -263,6 +265,7 @@ void RKVariable::discardEditData () {
 
 	RK_ASSERT (!(myData ()->changes));
 	delete myData ()->value_labels;
+	delete myData ()->formatting_options;
 	delete myData ();
 	data = 0;
 }
@@ -753,6 +756,116 @@ void RKVariable::setValueLabelString (const QString &string) {
 		++i;
 	}
 	setValueLabels (new_labels);
+}
+
+RKVariable::FormattingOptions *RKVariable::getFormattingOptions () {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (myData ());
+
+	return myData ()->formatting_options;
+}
+
+void RKVariable::setFormattingOptions (FormattingOptions *formatting_options) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (myData ());
+	
+	if (formatting_options != myData ()->formatting_options) {
+		delete myData ()->formatting_options;
+	}
+
+	myData ()->formatting_options = formatting_options;
+
+	if (!formatting_options) {
+		setMetaProperty ("format", "");
+		return;
+	}
+	
+	QString format_string;
+	if (formatting_options->alignment != (int) FormattingOptions::AlignDefault) {
+		format_string.append ("align:");
+		format_string.append (QString::number (formatting_options->alignment));
+	}
+
+	if (formatting_options->precision_mode != (int) FormattingOptions::PrecisionDefault) {
+		if (!format_string.isEmpty ()) format_string.append ("#");
+		format_string.append ("prec:");
+		if (formatting_options->precision_mode == (int) FormattingOptions::PrecisionRequired) {
+			format_string.append ("v");
+		} else {
+			format_string.append (QString::number (formatting_options->precision));
+		}
+	}
+
+	setMetaProperty ("format", format_string);
+}
+
+QString RKVariable::getFormattingOptionsString () {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (myData ());
+
+	return getMetaProperty ("format");
+}
+
+void RKVariable::setFormattingOptionsString (const QString &string) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (myData ());
+
+	delete (myData ()->formatting_options);
+	myData ()->formatting_options = parseFormattingOptionsString (string);
+	
+	setMetaProperty ("format", string);
+}
+
+RKVariable::FormattingOptions *RKVariable::parseFormattingOptionsString (const QString &string) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (myData ());
+
+	FormattingOptions *formatting_options = new FormattingOptions;
+	formatting_options->alignment = FormattingOptions::AlignDefault;
+	formatting_options->precision_mode = FormattingOptions::PrecisionDefault;
+	formatting_options->precision = 0;
+	bool empty = true;
+
+	QStringList list = QStringList::split ("#", string);
+	QString option, parameter;
+	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
+		option = (*it).section (':', 0, 0);
+		parameter = (*it).section (':', 1, 1);
+		
+		if (parameter.isEmpty ()) continue;
+		
+		if (option == "align") {
+			int al = parameter.toInt ();
+			if ((al >= (int) FormattingOptions::AlignDefault) && (al <= (int) FormattingOptions::AlignRight)) {
+				empty = false;
+				formatting_options->alignment = (FormattingOptions::Alignment) al;
+			}
+		} else if (option == "prec") {
+			if (parameter == "d") {
+				empty = false;
+				formatting_options->precision_mode = FormattingOptions::PrecisionDefault;
+			} else if (parameter == "v") {
+				empty = false;
+				formatting_options->precision_mode = FormattingOptions::PrecisionRequired;
+			} else {
+				int dig = parameter.toInt ();
+				if ((dig >= 0) && (dig <= 15)) {
+					empty = false;
+					formatting_options->precision_mode = FormattingOptions::PrecisionFixed;
+					formatting_options->precision = dig;
+				}
+			}
+		} else {
+			RK_ASSERT (false);
+		}
+	}
+	
+	if (empty) {
+		delete formatting_options;
+		return 0;
+	} else {
+		return formatting_options;
+	}
 }
 
 /////////////////// END: data-handling ///////////////////////////
