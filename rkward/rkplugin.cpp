@@ -26,14 +26,14 @@
 #include <qpushbutton.h>
 #include <qtextedit.h>
 
-#include "rkmenu.h"
+#include "rkward.h"
 #include "rkpluginwidget.h"
 #include "rkvarselector.h"
 #include "rkvarslot.h"
 #include "rkradio.h"
 
-RKPlugin::RKPlugin(RKMenu *parent, const QDomElement &element, QString filename) {
-	RKPlugin::parent = parent;
+RKPlugin::RKPlugin(RKwardApp *parent, const QDomElement &element, QString filename) {
+	app = parent;
 	RKPlugin::filename = filename;
 	_label = element.attribute ("label", "untitled");
 }
@@ -43,10 +43,7 @@ RKPlugin::~RKPlugin(){
 
 void RKPlugin::activated () {
 	qDebug ("activated plugin: " + filename);
-	buildGUI ();
-}
 
-void RKPlugin::buildGUI () {
 	// open XML-file (TODO: remove code-duplication)
 	int error_line, error_column;
 	QString error_message, dummy;
@@ -69,9 +66,20 @@ void RKPlugin::buildGUI () {
 	QDomNodeList children = element.elementsByTagName("layout");
 	element = children.item (0).toElement ();
 
+	// construct the GUI
+	buildGUI (element);
+
+	// retrieve other relevant information from XML-file
+	// TODO
+
+	// initialize code/warn-views
+	changed ();
+}
+
+void RKPlugin::buildGUI (const QDomElement &layout_element) {
 	// layout-section may only contain one top-level component
-	children = element.childNodes ();
-	element = children.item (0).toElement ();
+	QDomNodeList children = layout_element.childNodes ();
+	QDomElement element = children.item (0).toElement ();
 
 	gui = new QWidget (0, "", Qt::WDestructiveClose);
 	gui->setCaption (_label);
@@ -134,6 +142,7 @@ void RKPlugin::buildGUI () {
 	layout->setRowStretch (0, 4);
 
 	gui->show ();
+	connect (gui, SIGNAL (destroyed ()), this, SLOT (discard ()));
 }
 
 QBoxLayout *RKPlugin::buildStructure (const QDomElement &element) {
@@ -178,9 +187,11 @@ RKPluginWidget *RKPlugin::buildWidget (const QDomElement &element) {
 }
 
 void RKPlugin::ok () {
+	// TODO
 }
 
 void RKPlugin::cancel () {
+	delete gui;
 }
 
 void RKPlugin::toggleCode () {
@@ -200,4 +211,26 @@ void RKPlugin::toggleWarn () {
 }
 
 void RKPlugin::help () {
+	// TODO
+}
+
+void RKPlugin::discard () {
+	code_template = "";
+	// the entire GUI and all widgets get deleted automatically!
+	qDebug ("plugin cleaned");
+}
+
+void RKPlugin::changed () {
+	// TODO
+}
+
+/** Returns a pointer to the varselector by that name (0 if not available) */
+RKVarSelector *RKPlugin::getVarSelector (const QString &id) {
+	RKPluginWidget *selector = widgets[id];
+	if (selector->isVarSelector ()) {
+		return (RKVarSelector *) selector;
+	}
+
+	qDebug ("failed to find varselector!");
+	return 0;
 }

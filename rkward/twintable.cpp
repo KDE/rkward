@@ -456,3 +456,11 @@ void TwinTable::flushEdit () {
 	varview->endEdit (varview->currentRow (), varview->currentColumn (), true, false);
 	dataview->endEdit (dataview->currentRow (), dataview->currentColumn (), true, false);
 }
+
+QString TwinTable::varname (int col) {
+	return varview->item (NAME_ROW, col)->text ();
+}
+
+int TwinTable::numCols () {
+	return varview->numCols ();
+}

@@ -52,6 +52,12 @@ public:
 /** Flushes pending edit-operations */
 	void flushEdit ();
 
+/** Returns the variable-name of a column */
+	QString varname (int col);
+
+/** Returns the number of columns in the tables */
+	int numCols ();
+
 	enum PasteMode {PasteEverywhere, PasteToTable, PasteToSelection};
 	void setPasteMode (PasteMode mode);
     TwinTableMember* varview;

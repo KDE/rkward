@@ -24,18 +24,29 @@ class QWidget;
 class QLineEdit;
 class QDomElement;
 class QPushButton;
+class QVarSelector;
 
 /** An RKVarSlot takes a single variable from an RKVarSelector.
   *@author Thomas Friedrichsmeier
   */
 
 class RKVarSlot : public RKPluginWidget {
+	Q_OBJECT
 public: 
 	RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKVarSlot();
+public slots:
+/** Called when the select-button is pressed */
+	void selectPressed ();
 private:
 	QLineEdit *line_edit;
 	QPushButton *select;
+	QString source_id;
+	bool filled;
+	bool required;
+protected:
+	bool isSatisfied ();
+	QString value ();
 };
 
 #endif

@@ -64,3 +64,14 @@ RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin) 
 
 RKRadio::~RKRadio(){
 }
+
+QString RKRadio::value () {
+	OptionsMap::Iterator it;
+	for (it = options.begin(); it != options.end(); ++it) {
+		if (it.key()->isChecked ()) {
+			return it.data ();
+		}
+	}
+
+	return "";
+}

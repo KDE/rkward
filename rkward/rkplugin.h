@@ -23,13 +23,14 @@
 #include <qmap.h>
 
 class QDomElement;
-class RKMenu;
+class RKwardApp;
 class QDialog;
 class QBoxLayout;
 class QLayout;
 class RKPluginWidget;
 class QTextEdit;
 class QPushButton;
+class RKVarSelector;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -38,28 +39,43 @@ class QPushButton;
 class RKPlugin : public QObject {
 	Q_OBJECT
 public: 
-	RKPlugin(RKMenu *parent, const QDomElement &element, QString filename);
+	RKPlugin(RKwardApp *parent, const QDomElement &element, QString filename);
 	~RKPlugin();
 	QString label () { return _label; };	
 //	QString tag () { return _tag; }
+	RKwardApp *getApp () { return app; };
+/** Returns a pointer to the varselector by that name (0 if not available) */
+	RKVarSelector *getVarSelector (const QString &id);
 public slots:
+/** Slot called, when the menu-item for this widget is selected. Responsible
+	for creating the GUI. */
 	void activated ();
 	void ok ();
 	void cancel ();
 	void toggleCode ();
 	void toggleWarn ();
 	void help ();
+/** Widgets, that if changed, require the code/problem-views to be updated,
+	connect to this slot (or call it directly). Updates code/problem-views */
+	void changed ();
+/** Discards this plugin (i.e. cleans up stuff that is no longer needed until
+	this plugin gets activated () again. */
+	void discard ();
 private:
 	QString filename;
-	RKMenu *parent;
+	RKwardApp *app;
 	QString _label;
 //	QString _tag;
+
+/** The code template as specified in the plugin's XML-description */
+	QString code_template;
 
 	QWidget *gui;
 
 	QMap <QString, RKPluginWidget*> widgets;
 
-	void buildGUI ();
+/** Called from activated (). builds the GUI */
+	void buildGUI (const QDomElement &layout_element);
 
 	QBoxLayout *buildStructure (const QDomElement &element);
 	RKPluginWidget *buildWidget (const QDomElement &element);

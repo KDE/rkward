@@ -30,8 +30,11 @@ RKPluginWidget::~RKPluginWidget(){
 }
 
 QString RKPluginWidget::complaints () {
-	QString empty;
-	return empty;
+	return "";
+}
+
+QString RKPluginWidget::value () {
+	return "";
 }
 
 bool RKPluginWidget::isSatisfied () {

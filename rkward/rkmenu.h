@@ -25,6 +25,7 @@
 
 class QMenuBar;
 class RKPlugin;
+class RKwardApp;
 class QDomElement;
 
 /**
@@ -33,8 +34,8 @@ class QDomElement;
 
 class RKMenu : public QPopupMenu  {
 public: 
-	RKMenu(RKMenu *parent, QString tag, QString label);
-	RKMenu(QMenuBar *parent, QString tag, QString label);
+	RKMenu(RKMenu *parent, QString tag, QString label, RKwardApp *app);
+	RKMenu(QMenuBar *parent, QString tag, QString label, RKwardApp *app);
 	~RKMenu();
 	RKPlugin *place (const QDomElement &element, const QString &filename);
 	QString label ();
@@ -46,7 +47,7 @@ private:
 	bool is_top_level;
 	QString _tag;
 	QString _label;
-	RKMenu *_parent;
+	RKwardApp *app;
 };
 
 #endif

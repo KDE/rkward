@@ -44,6 +44,7 @@ public:
 	BaseType type ();
 	TwinTableMember *ttm ();
 protected:
+friend class TwinTable;
 	void paint (QPainter *p, const QColorGroup &cg, const QRect &cr, bool selected);
 /** Stores, whether this cell holds a value that is legal for it */
 	bool valid;

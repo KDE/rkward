@@ -27,7 +27,7 @@ class QDomElement;
 class RKPlugin;
 
 /** The baseclass for all RK-plugin-widgets, i.e. widgets, that are used in the
-GUI for the plugins. It is mostly used as a skeleton and contains some abstract
+GUI for the plugins. It is mostly used as a skeleton and contains some virtual
 functions to be implemented in the respective derived classes.
 Note, that although being called a "widget", this class is actually a layout. This
 is due to the fact, that most GUI-elements will want to lay themselves out in some
@@ -48,9 +48,13 @@ public:
 /** Returns, whether the requirements for this widget are fulfilled.
 	baseclass-implementation returns true. */
 	virtual bool isSatisfied ();
+/** Returns this widgets "value" */
+	virtual QString value ();
 /** Returns any complaints, this widget may have.
 	baseclass-implementation returns an empty string */
 	virtual QString complaints ();
+/** Returns, whether this widget is a varselector */
+	virtual bool isVarSelector () { return false; };
 private:
 	QWidget *_parent;
 	RKPlugin *_plugin;

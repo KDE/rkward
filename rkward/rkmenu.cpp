@@ -21,19 +21,20 @@
 #include <qdom.h>
 
 #include "rkplugin.h"
+#include "rkward.h"
 
-RKMenu::RKMenu(RKMenu *parent, QString tag, QString label) : QPopupMenu (parent) {
+RKMenu::RKMenu(RKMenu *parent, QString tag, QString label, RKwardApp *app) : QPopupMenu (parent) {
 	is_top_level = false;
 	_tag = tag;
 	_label = label;
-	_parent = parent;
+	RKMenu::app = app;
 }
 
-RKMenu::RKMenu(QMenuBar *parent, QString tag, QString label) : QPopupMenu (parent) {
+RKMenu::RKMenu(QMenuBar *parent, QString tag, QString label, RKwardApp *app) : QPopupMenu (parent) {
 	is_top_level = true;
 	_tag = tag;
 	_label = label;
-//	_parent = parent;
+	RKMenu::app = app;
 }
 
 RKMenu::~RKMenu(){
@@ -50,13 +51,13 @@ RKPlugin *RKMenu::place (const QDomElement &element, const QString &filename) {
 
 	if (child.tagName () == "location") {
 		if (!submenus.contains (child.attribute ("tag"))) {
-			RKMenu *sub = new RKMenu (this, child.attribute ("tag"), child.attribute ("label", "untitled"));
+			RKMenu *sub = new RKMenu (this, child.attribute ("tag"), child.attribute ("label", "untitled"), app);
 			submenus.insert (child.attribute ("tag"), sub);
 			insertItem (sub->label (), sub);
 		} 
 		return submenus[child.attribute ("tag")]->place (child, filename);
 	} else {		// entry
-		RKPlugin *plug = new RKPlugin (this, child, filename);
+		RKPlugin *plug = new RKPlugin (app, child, filename);
 		insertItem (plug->label (), plug, SLOT (activated ()));
 		return plug;
 	}

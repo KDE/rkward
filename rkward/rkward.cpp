@@ -118,7 +118,7 @@ void RKwardApp::initPlugin (const QString & filename) {
 	element = children.item (0).toElement ();
 
 	if (!rkmenus.contains (element.attribute ("tag"))) {
-		RKMenu *sub = new RKMenu (menuBar (), element.attribute ("tag"), element.attribute ("label", "untitled"));
+		RKMenu *sub = new RKMenu (menuBar (), element.attribute ("tag"), element.attribute ("label", "untitled"), this);
 		rkmenus.insert (element.attribute ("tag"), sub);
 		menuBar ()->insertItem (sub->label (), sub);
 	}

@@ -37,7 +37,10 @@ public:
 	~RKRadio();
 private:
 	QButtonGroup *group;
-	QMap<QRadioButton *, QString> options;
+	typedef QMap<QRadioButton *, QString> OptionsMap;
+	OptionsMap options;
+protected:
+	QString value ();
 };
 
 #endif

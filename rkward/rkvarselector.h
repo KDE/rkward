@@ -20,6 +20,8 @@
 
 #include <rkpluginwidget.h>
 
+#include <qstrlist.h>
+
 class QWidget;
 class QListView;
 class QDomElement;
@@ -38,8 +40,14 @@ class RKVarSelector : public RKPluginWidget {
 public: 
 	RKVarSelector(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
 	~RKVarSelector();
+/** Returns the number of currently selected variables */
+	int numSelectedVars ();
+/** Returns the names of the currently selected variables */
+	QStrList selectedVars ();
 private:
 	QListView *list_view;
+protected:
+	bool isVarSelector () { return true; };
 };
 
 #endif
