@@ -1,11 +1,20 @@
 The following list of TODO-items is NOT complete!
 
-stuff to do before 0.2.6 release
+stuff to do before 0.2.7 release
+- merge common functionality of RObjectBrowser and RKVarselector into a base of some sort
+- update RKVarselectors on changes in the object-list!
+- RKWatch:
+	- load / save / spawn as separate editor ...
+- Object editing / modification tracking:
+	- keep pointer to editor with objects instead of modification information
+	- maybe make objects assume own responsibility for syncing their data?
+	- NO, make it much simpler by syncing the data immediately! Delay syncing only during (large) paste operations.
+	- maybe store data directly with objects? Probably not.
+	- functions to set double/int/string-vectors directly
+	- remove objects that are no longer in the workspace from the objectlist
 - pick some from below:
 
 (relatively) small stuff to do soon
-- merge common functionality of RObjectBrowser and RKVarselector into a base of some sort
-- update RKVarselectors on changes in the object-list!
 - add more plugin-widgets
 - setValue-API for plugin-widgets and copying of values when switching from wizard to dialog-interface
 - improve and use debugging framework
@@ -14,13 +23,6 @@ stuff to do before 0.2.6 release
 	- use smart sorting, esp. of generated string
 	- add labels, add "up to level" option
 	- add constant term option
-- Object editing / modification tracking:
-	- keep pointer to editor with objects instead of modification information
-	- maybe make objects assume own responsibility for syncing their data
-	- NO, make it much simpler by syncing the data immediately! Delay syncing only during (large) paste operations.
-	- maybe store data directly with objects? Probably not.
-	- functions to set double/int/string-vectors directly
-	- remove objects that are no longer in the workspace from the objectlist
 - add XML-parsing helper functions and error-checking
 - create a spinbox, that can really deal with real numbers
 - create agent-dialogs that notify the user what's going on and potentially request further actions, if an action is to be carried out in the
@@ -30,9 +32,7 @@ stuff to do before the thing is usable
 - RKWatch
 	- use a cool new RHistory-Widget for the watch
 	- maybe keep an (optional) log of RCommands
-	- load / save / spawn as separate editor ...
 - add a help-system
-- support for multiple tables/data.frames
 - mostly everything
 - calls from R to RKWard
 	- using TCP-sockets?
