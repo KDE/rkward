@@ -569,7 +569,7 @@ distclean-tags:
 
 #>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 #>+ 4
-KDE_DIST=rkwatch_ui.h valg rsettingsui.h view.h pluginsettingsui.h rkward 
+KDE_DIST=view.h rkwatch_ui.h valg rsettingsui.h pluginsettingsui.h 
 
 DISTFILES= $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST) $(KDE_DIST)
 
@@ -741,6 +741,7 @@ messages: rc.cpp
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
+
 #>+ 45
 pluginsettingsui.cpp: $(srcdir)/pluginsettingsui.ui pluginsettingsui.h pluginsettingsui.moc
 	rm -f pluginsettingsui.cpp
@@ -879,7 +880,7 @@ clean-moc-classes:
 	-rm -f  rkward_meta_unload.cpp
 
 #>+ 11
-rkward.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/labelcell.cpp $(srcdir)/rcommand.cpp $(srcdir)/pluginsettings.cpp $(srcdir)/rktext.cpp $(srcdir)/rkradio.cpp $(srcdir)/rkvarslot.cpp $(srcdir)/rkvarselector.cpp $(srcdir)/rkpluginwidget.cpp $(srcdir)/rkplugin.cpp $(srcdir)/rkmenu.cpp $(srcdir)/rsettings.cpp $(srcdir)/nameselectcell.cpp $(srcdir)/rtableitem.cpp $(srcdir)/typeselectcell.cpp $(srcdir)/rkwatch.cpp $(srcdir)/rinterface.cpp $(srcdir)/rkdrag.cpp $(srcdir)/twintablemember.cpp $(srcdir)/twintable.cpp $(srcdir)/rkwarddoc.cpp $(srcdir)/rkward.cpp $(srcdir)/main.cpp $(srcdir)/pluginsettingsui.cpp $(srcdir)/rsettingsui.cpp $(srcdir)/rkwatch_ui.cpp $(srcdir)/view.cpp $(srcdir)/rkward_meta_unload.cpp  rinterface.moc.cpp rcommand.moc.cpp rkradio.moc.cpp pluginsettings.moc.cpp rkvarslot.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp
+rkward.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/labelcell.cpp $(srcdir)/rcommand.cpp $(srcdir)/pluginsettings.cpp $(srcdir)/rktext.cpp $(srcdir)/rkradio.cpp $(srcdir)/rkvarslot.cpp $(srcdir)/rkvarselector.cpp $(srcdir)/rkpluginwidget.cpp $(srcdir)/rkplugin.cpp $(srcdir)/rkmenu.cpp $(srcdir)/rsettings.cpp $(srcdir)/nameselectcell.cpp $(srcdir)/rtableitem.cpp $(srcdir)/typeselectcell.cpp $(srcdir)/rkwatch.cpp $(srcdir)/rinterface.cpp $(srcdir)/rkdrag.cpp $(srcdir)/twintablemember.cpp $(srcdir)/twintable.cpp $(srcdir)/rkwarddoc.cpp $(srcdir)/rkward.cpp $(srcdir)/main.cpp $(srcdir)/pluginsettingsui.cpp $(srcdir)/rsettingsui.cpp $(srcdir)/rkwatch_ui.cpp $(srcdir)/view.cpp rkward_meta_unload.cpp  rinterface.moc.cpp rcommand.moc.cpp rkradio.moc.cpp pluginsettings.moc.cpp rkvarslot.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rsettings.moc.cpp twintable.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp rkplugin.moc.cpp rkward.moc.cpp
 	@echo 'creating rkward.all_cpp.cpp ...'; \
 	rm -f rkward.all_cpp.files rkward.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> rkward.all_cpp.final; \
