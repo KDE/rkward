@@ -47,6 +47,8 @@ public slots:
 	void interruptCommand ();
 /** Submits commands in commands-textedit */
 	void submitCommand ();
+/** Submits selection in commands-textedit */
+	void submitSelectedCommand ();
 /** configures the watch-window */
 	void configureWatch ();
 /** configures the editor-window */
@@ -63,8 +65,9 @@ private:
 	RKCommandEditor *commands;
 	QTextEdit *watch;
 	QPushButton *submit;
+	QPushButton *submit_selected;
 	QPushButton *interrupt_command;
-	RCommand *user_command;;
+	RCommand *user_command;
 };
 
 #endif

@@ -44,13 +44,13 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	QSplitter *splitter = new QSplitter (QSplitter::Vertical, this);
 	grid->addWidget (splitter, 1, 0);
 
+	QWidget *layout_widget = new QWidget (splitter);
+	QHBoxLayout *bottom_hbox = new QHBoxLayout (layout_widget, 0, 6);
+	
 	watch = new QTextEdit (splitter);
 	watch->setTextFormat (PlainText);
 	watch->setReadOnly (true);
-
-	QWidget *layout_widget = new QWidget (splitter);
-	QHBoxLayout *bottom_hbox = new QHBoxLayout (layout_widget, 0, 6);
-
+	
 	commands = new RKCommandEditor (layout_widget);
 	bottom_hbox->addWidget (commands);
 	
@@ -61,7 +61,11 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	submit = new QPushButton(i18n ("&Run"), layout_widget);
 	connect (submit, SIGNAL (clicked ()), this, SLOT (submitCommand ()));
 	button_vbox->addWidget (submit);
-
+	
+	submit_selected = new QPushButton(i18n ("Run &selection"), layout_widget);
+	connect (submit_selected, SIGNAL (clicked ()), this, SLOT (submitSelectedCommand ()));
+	button_vbox->addWidget (submit_selected);
+	
 	button_vbox->addStretch ();
 	
 	interrupt_command = new QPushButton (i18n ("Interrupt command"), layout_widget);
@@ -202,7 +206,15 @@ void RKwatch::submitCommand () {
 	r_inter->issueCommand (user_command = new RCommand (commands->text (), RCommand::User));
 	interrupt_command->setEnabled (true);
 	
-	commands->setText ("");
+	commands->setFocus ();
+}
+
+void RKwatch::submitSelectedCommand () {
+	RK_TRACE (APP);
+	RKGlobals::editorManager ()->flushAll ();
+	r_inter->issueCommand (user_command = new RCommand (commands->getSelection (), RCommand::User));
+	interrupt_command->setEnabled (true);
+	
 	commands->setFocus ();
 }
 
