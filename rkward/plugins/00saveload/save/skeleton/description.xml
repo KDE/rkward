@@ -1,0 +1,23 @@
+<!DOCTYPE rkplugin>
+<document>
+  <entry type="entry" id="skeleton" label="Save package" />
+<!-- The layout-section takes care of the layout of the GUI for this plugin. -->  <dialog>
+    <tabbook>
+      <tab label="Select variables" >
+        <column>
+          <row>
+            <varselector id="vars" label="Select a variable" />
+            <varslot multi="true" classes="all" source="vars" id="data" label="Objects" required="true" />
+          </row>
+        </column>
+        <frame label="Options" >
+          <row>
+            <input size="small" initial="anRpackage" id="name" label="Name of the package" />
+            <browser size="small" type="dir" id="path" initial="." label="Name of directory" />
+            <checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="force" label="Overwrite" />
+          </row>
+        </frame>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>
