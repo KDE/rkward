@@ -50,7 +50,7 @@
         <envvar value="IT" name="LANG" />
       </envvars>
       <runarguments>
-        <rkward></rkward>
+        <rkward/>
       </runarguments>
     </run>
     <configurations>

@@ -1899,7 +1899,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=rkward
- VERSION=0.2.9
+ VERSION=0.3.0
 
 
 cat >>confdefs.h <<_ACEOF
@@ -30653,6 +30653,16 @@ else
    LIB_KAB="-lkab $(LIB_KIMGIO) $(LIB_KDECORE)"
 
 fi
+
+
+#MIN_CONFIG(3)
+
+
+
+
+#MIN_CONFIG(3)
+
+
 
 
 #MIN_CONFIG(3)

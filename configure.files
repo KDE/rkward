@@ -1,2 +1,4 @@
 ./admin/configure.in.min
 configure.in.in
+./rkward-0.2.9/configure.in.in
+./rkward-0.3.0/configure.in.in
