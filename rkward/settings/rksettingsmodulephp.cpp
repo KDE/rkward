@@ -45,7 +45,7 @@ RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, QWidget *parent) : RK
 	main_vbox->addStretch ();
 
 	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, i18n ("Directory, where the PHP support files are located"), "", files_path);
-	connect (bin_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
+	connect (files_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
 	main_vbox->addWidget (files_choser);
 }
 
