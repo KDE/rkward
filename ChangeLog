@@ -1,8 +1,11 @@
+--- Version 0.2.0 - Aug-01-2004 ---
+- Use a PHP-backend for the plugins
+- Run R embedded (currently synchronous)
+- Some changes in plugin-creation
+- Use pretty HTML-output
 - got rid of ui-files
-- PHP-backend can handle errors
-- Reworked settings
-
-...
+- added descriptive statistics plugin
+- lots of small changes I didn't document properly
 
 --- Version 0.1.0 - Nov-19-2002 ---
 - Initial features:

@@ -1,12 +1,16 @@
-stuff to do before the next release
-- add a few plugins
-- install plugins
+The following list of TODO-items is not complete!
+
+stuff to do before 0.2.0 release
 
 small stuff to do soon
 - plugins-scanning: don't duplicate everything
 - rework plugin-XML-format
 - add checkboxes etc.
 - if there is no R_HOME setting, ask for one instead of using /usr/lib/R unconditionally
+
+mid-term stuff
+- add XML-parsing helper functions and error-checking
+- restructure source-layout
 
 stuff to do before the thing is usable
 - use a cool new RHistory-Widget for the RKWatch
