@@ -41,3 +41,18 @@
 "rk.get.tempfile.name" <- function (prefix="image", extension=".jpg") {
 	return (.rk.do.call ("get.tempfile.name", c (prefix, extension)))
 }
+
+# renames a named object in a data.frame/list without changing it's position
+# TODO: create a generic function instead, that can handle all kinds of renames
+"rk.rename.in.container" <- function (x, old_name, new_name) {
+	temp <- (names (x) == old_name)
+	i = 1;
+	for (val in temp) {
+		if (val) {
+			eval (substitute (names (x)[i] <<- new_name))
+			return ()
+		}
+		i = i+1;
+	}
+	error ("Could not find column with given name")
+}

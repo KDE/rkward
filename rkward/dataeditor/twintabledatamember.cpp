@@ -15,6 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "twintabledatamember.h"
+
 #include "twintable.h"
 #include "tablecolumn.h"
 #include "celleditor.h"
@@ -77,6 +78,10 @@ void TwinTableDataMember::paintCell (QPainter *p, int row, int col, const QRect 
 	QPen pen( p->pen() );
 	int gridColor = style ().styleHint (QStyle::SH_Table_GridLineColor, this);
 	if (gridColor != -1) {
+		const QPalette &pal = palette ();
+		if (cg != colorGroup () && cg != pal.disabled () && cg != pal.inactive ()) p->setPen (cg.mid ());
+		else p->setPen ((QRgb) gridColor);
+	} else {
 		p->setPen (cg.mid ());
 	}
 	int x2 = cr.width () - 1;
@@ -131,39 +136,6 @@ QWidget *TwinTableDataMember::beginEdit (int row, int col, bool) {
 	return (tted);
 }
 
-void TwinTableDataMember::endEdit (int row, int col, bool, bool) {
-	RK_TRACE (EDITOR);
-	if (tted) setCellContentFromEditor (row, col);
-}
-
-void TwinTableDataMember::setCellContentFromEditor (int row, int col) {
-	RK_TRACE (EDITOR);
-	RK_ASSERT (tted);
-	TableColumn *column = table->getColumn (col);
-	if (!column) {
-		RK_ASSERT (false);
-	}
-
-	QString text = tted->text ();
-	
-	tted->removeEventFilter (this);
-	delete tted;
-	tted = 0;
-	
-	if (column->getText (row) != text) {
-		column->setText (row, text);
-		emit (valueChanged (row, col));
-	}
-	
-	viewport ()->setFocus ();
-}
-
-void TwinTableDataMember::setCurrentCell (int row, int col) {
-	RK_TRACE (EDITOR);
-	if (tted) stopEditing ();
-	QTable::setCurrentCell (row, col);
-}
-
 QString TwinTableDataMember::text (int row, int col) const {
 	RK_TRACE (EDITOR);
 	// called very often. do not trace
@@ -174,5 +146,3 @@ QString TwinTableDataMember::text (int row, int col) const {
 	}
 	return column->getText (row);
 }
-
-

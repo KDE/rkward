@@ -45,12 +45,6 @@ public:
 /** reimplemented form QTable not to work on TableColumns instead of QTableItems */
 	QWidget *beginEdit (int row, int col, bool replace);
 /** reimplemented form QTable not to work on TableColumns instead of QTableItems */
-	void endEdit (int row, int col, bool accept, bool replace);
-/** reimplemented form QTable not to work on TableColumns instead of QTableItems */
-	void setCellContentFromEditor (int row, int col);
-/** reimplemented form QTable not to work on TableColumns instead of QTableItems */
-	void setCurrentCell (int row, int col);
-/** reimplemented form QTable not to work on TableColumns instead of QTableItems */
 	QString text (int row, int col) const;
 };
 

@@ -228,9 +228,7 @@ void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 	RObjectMap::iterator it = childmap.find (object->getShortName ());
 	RK_ASSERT (it.data () == object);
 	
-	RCommand *command = new RCommand (makeChildName (new_name) + " <- " + object->getFullName (), RCommand::App | RCommand::Sync);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
-	command = new RCommand (object->getFullName () + " <- NULL", RCommand::App | RCommand::Sync);
+	RCommand *command = new RCommand ("rk.rename.in.container (" + getFullName () + ", \"" + object->getShortName () + "\", \"" + new_name + "\")", RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 	
 	childmap.remove (it.key ());

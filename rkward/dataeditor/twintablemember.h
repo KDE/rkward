@@ -74,6 +74,10 @@ public:
 	void setCellWidget (int, int, QWidget *) {};
 /** ends editing. Actually it's just a simple wrapper around QTable::endEdit () */
 	void stopEditing ();
+/** reimplemented form QTable not to work on TableColumns instead of QTableItems. */
+	void endEdit (int row, int col, bool accept, bool replace);
+/** reimplemented form QTable not to work on TableColumns instead of QTableItems */
+	void setCellContentFromEditor (int row, int col);
 signals:
 	void headerRightClick (int row, int col);
 protected:
@@ -88,17 +92,16 @@ friend class RKwardDoc;
 	int trailing_rows;
 	int trailing_cols;
 	CellEditor *tted;
-	bool focussing_editor;
 friend class TwinTable;
 	void setTwin (TwinTableMember *new_twin);
 public slots:
 	void editorLostFocus ();
+/** called when the current cell is changed. If no selection is in place, will (does not do it yet) pop up the value-list */
+	void currentCellChanged (int row, int col);
 protected slots:
 	void columnWidthChanged (int col);
 protected:
 	bool eventFilter (QObject *object, QEvent *event);
-/** reimplemented from QTable to not begin editing if a selection is in place */
-	QWidget *beginEdit (int row, int col, bool replace);
 };
 
 #endif

@@ -22,7 +22,6 @@
 #include "twintablemember.h"
 #include "twintabledatamember.h"
 #include "twintablemetamember.h"
-#include "typeselectcell.h"
 #include "../core/robject.h"
 #include "../core/rkvariable.h"
 #include "../core/rcontainerobject.h"
@@ -138,11 +137,11 @@ void RKEditorDataFrame::modifyObjectMeta (RObject *object, int column) {
 	}
 	RK_ASSERT (column >= 0);
 	
-	disconnect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int)));
+/*	disconnect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int)));
 	varview->setText (NAME_ROW, column, object->getShortName ());
 	varview->setText (TYPE_ROW, column, static_cast<RKVariable *> (object)->getVarTypeString ());
 	varview->setText (LABEL_ROW, column, object->getLabel ());
-	connect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int)));
+	connect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int))); */
 }
 
 void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
@@ -196,14 +195,7 @@ void RKEditorDataFrame::metaValueChanged (int row, int col) {
 
 void RKEditorDataFrame::updateMetaValue (RObject *obj, int row, int col, bool sync) {
 	RK_TRACE (EDITOR);
-	if (row == LABEL_ROW) {
-		obj->setLabel (varview->text (row, col), sync);
-	} else if (row == NAME_ROW) {
-		RKGlobals::tracker ()->renameObject (obj, static_cast<RContainerObject *> (getObject ())->validizeName (varview->text (row, col)), this);
-	} else if (row == TYPE_ROW) {
-		static_cast<RKVariable *> (obj)->setVarType (static_cast<TypeSelectCell *> (varview->item (row, col))->type (), sync);
-	}
-
+	
 	if (sync) RKGlobals::tracker ()->objectMetaChanged (getColObject (col), this);
 }
 

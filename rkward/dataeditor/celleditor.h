@@ -18,27 +18,31 @@
 #define CELLEDITOR_H
 
 #include <qlineedit.h>
-#include <qdict.h>
+#include <qmap.h>
 
 class QStringList;
-class QListBox;
+class QPopupMenu;
 
 /**
 This is the main editor used in the TwinTableMembers
+
+TODO: the acutal editor will have to be separated from the value_list-popup in order to allow showing the popup, even if the list does not have strong
+focus.
 
 @author Thomas Friedrichsmeier
 */
 class CellEditor : public QLineEdit {
 Q_OBJECT
 public:
-	CellEditor (QWidget *parent, const QString &text, int mode, const QDict<QString> *named_values=0);
+	CellEditor (QWidget *parent, const QString &text, int mode, const QMap<QString, QString> *named_values=0);
 
 	~CellEditor();
 protected:
 /// for showing/hiding list of name_values
 	void timerEvent (QTimerEvent *e);
 private:
-	QListBox *value_list;
+	QPopupMenu *value_list;
+	int timer_id;
 };
 
 #endif

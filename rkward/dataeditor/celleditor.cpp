@@ -17,36 +17,34 @@
 #include "celleditor.h"
 
 #include <qapplication.h>
-#include <qlistbox.h>
+#include <qpopupmenu.h>
 #include <qstyle.h>
 
 #include "../debug.h"
 
-CellEditor::CellEditor (QWidget *parent, const QString &text, int mode, const QDict<QString> *named_values) : QLineEdit (parent) {
+CellEditor::CellEditor (QWidget *parent, const QString &text, int mode, const QMap<QString, QString> *named_values) : QLineEdit (parent) {
 	RK_TRACE (EDITOR);
 	
 	setText (text);
 	setFrame (false);
 	selectAll ();
 	
+	timer_id = 0;
 	if (named_values) {
-		// the next dozen lines basically copied from QComboBox
-		value_list = new QListBox (this);
+		value_list = new QPopupMenu (this);
 		value_list->setFont (font ());
 		value_list->setPalette (palette ());
-		value_list->setVScrollBarMode (QListBox::AlwaysOff);
-		value_list->setHScrollBarMode (QListBox::AlwaysOff);
 		value_list->setFrameStyle (QFrame::Box | QFrame::Plain);
 		value_list->setLineWidth (1);
-		value_list->resize (100, 10);
+		value_list->setFocusProxy (this);
 		
 		//connect(value_list, SIGNAL(selected (int)), SLOT(selectFromList (int)));
 		
-		for (QDictIterator<QString> it (*named_values); it.current (); ++it) {
-			value_list->insertItem (*(it.current ()));
+		for (QMap<QString, QString>::const_iterator it = named_values->constBegin (); it != named_values->constEnd (); ++it) {
+			value_list->insertItem (it.key () + ": " + it.data ());
 		}
 		
-		startTimer (200);
+		timer_id = startTimer (200);
 	} else {
 		value_list = 0;
 	}
@@ -58,42 +56,20 @@ CellEditor::~CellEditor () {
 
 void CellEditor::timerEvent (QTimerEvent *e) {
 	RK_TRACE (EDITOR);
-	if (!value_list) return;
 	
-	// stuff below basicall copied from QComboBox
-	int w = value_list->variableWidth() ? value_list->sizeHint().width() : width();
-	int h = value_list->height () + 2;
+	if (e->timerId () != timer_id) {
+		QLineEdit::timerEvent (e);
+		return;
+	}
 	
-	QRect screen = QApplication::desktop()->availableGeometry( this );
+	RK_ASSERT (value_list);
+	
+	QPoint pos = mapToGlobal (QPoint (5, height ()+5));
 
-	int sx = screen.x();                            // screen pos
-	int sy = screen.y();
-	int sw = screen.width();                        // screen width
-	int sh = screen.height();                       // screen height
-	QPoint pos = mapToGlobal( QPoint(0,height()) );
-	// ## Similar code is in QPopupMenu
-	int x = pos.x();
-	int y = pos.y();
-
-	// the complete widget must be visible
-	if ( x + w > sx + sw )
-		x = sx+sw - w;
-	if ( x < sx )
-		x = sx;
-	if (y + h > sy+sh && y - h - height() >= 0 )
-		y = y - h - height();
-
-	QRect rect =
-		style().querySubControlMetrics( QStyle::CC_ComboBox, this,
-										QStyle::SC_ComboBoxListBoxPopup,
-										QStyleOption( x, y, w, h ) );
-	// work around older styles that don't implement the combobox
-	// listbox popup subcontrol
-	if ( rect.isNull() )
-		rect.setRect( x, y, w, h );
-	value_list->setGeometry( rect );
-
-	value_list->raise();
+	value_list->popup (QPoint (pos));
+	
+	killTimer (timer_id);
+	timer_id = 0;
 }
 
 #include "celleditor.moc"

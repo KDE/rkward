@@ -17,7 +17,9 @@
 #ifndef TWINTABLEMETAMEMBER_H
 #define TWINTABLEMETAMEMBER_H
 
-#include <twintablemember.h>
+#include "twintablemember.h"
+
+#include <qmap.h>
 
 class QWidget;
 class TwinTable;
@@ -38,6 +40,18 @@ public:
 	void removeRow (int row);
 /** reimplemented to raise an assert (should never be called) */
 	void insertRows (int row, int count=1);
+/** reimplemented form QTable not to work on TableColumns instead of QTableItems */
+	void setText (int row, int col, const QString &text);
+/** reimplemented form QTable not to work on TableColumns instead of QTableItems */
+	void paintCell (QPainter *p, int row, int col, const QRect &cr, bool selected, const QColorGroup &cg);
+/** reimplemented form QTable not to work on TableColumns instead of QTableItems */
+	QWidget *beginEdit (int row, int col, bool replace);
+/** reimplemented form QTable not to work on TableColumns instead of QTableItems */
+	QString text (int row, int col) const;
+	
+	QString formattedText (int row, int col) const;
+private:
+	QMap<QString, QString> type_values;
 };
 
 #endif

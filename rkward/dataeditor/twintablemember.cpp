@@ -20,7 +20,8 @@
 #include <qevent.h>
 
 #include "celleditor.h"
-#include "rtableitem.h"
+#include "tablecolumn.h"
+#include "twintable.h"
 #include "../debug.h"
 
 bool TwinTableMember::changing_width = false;
@@ -37,7 +38,8 @@ TwinTableMember::TwinTableMember (QWidget *parent, TwinTable *table, int trailin
 	TwinTableMember::trailing_rows = trailing_rows;
 	
 	tted = 0;
-	focussing_editor = false;
+
+	connect (this, SIGNAL (currentChanged (int, int)), this, SLOT (currentCellChanged (int, int)));
 }
 
 TwinTableMember::~TwinTableMember(){
@@ -104,19 +106,10 @@ QString TwinTableMember::rText (int row, int col) {
 }
 
 void TwinTableMember::checkColValid (int col) {
-	int row = 0;
+/*	int row = 0;
 	while (row < numRows ()) {
 		((RTableItem *) item (row++, col))->checkValid ();
-	}
-}
-
-QWidget *TwinTableMember::beginEdit (int row, int col, bool replace) {
-	if (numSelections ()) {
-		QTableSelection sel = selection (currentSelection ());
-		if (sel.bottomRow () != sel.topRow ()) return 0;
-		if (sel.leftCol () != sel.rightCol ()) return 0;
-	}
-	return QTable::beginEdit (row, col, replace);
+	} */
 }
 
 void TwinTableMember::removeRows (const QMemArray<int> &) {
@@ -149,4 +142,40 @@ void TwinTableMember::stopEditing () {
 QWidget *TwinTableMember::cellWidget (int row, int col) const {
 	if (tted && (currEditRow () == row) && (currEditCol () == col)) return tted;
 	return 0;
+}
+
+void TwinTableMember::currentCellChanged (int row, int col) {
+	RK_TRACE (EDITOR);
+	if (tted) stopEditing ();
+
+	if (numSelections ()) {
+		QTableSelection sel = selection (currentSelection ());
+		if (sel.bottomRow () != sel.topRow ()) return;
+		if (sel.leftCol () != sel.rightCol ()) return;
+	}
+/*
+	editCell (row, col); */
+}
+
+void TwinTableMember::endEdit (int row, int col, bool, bool) {
+	RK_TRACE (EDITOR);
+	if (tted) setCellContentFromEditor (row, col);
+}
+
+void TwinTableMember::setCellContentFromEditor (int row, int col) {
+	RK_TRACE (EDITOR);
+	RK_ASSERT (tted);
+
+	QString text_save = tted->text ();
+	
+	tted->removeEventFilter (this);
+	delete tted;
+	tted = 0;
+	
+	if (text (row, col) != text_save) {
+		setText (row, col, text_save);
+		emit (valueChanged (row, col));
+	}
+	
+	viewport ()->setFocus ();
 }
