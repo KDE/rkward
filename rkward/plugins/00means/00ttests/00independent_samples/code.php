@@ -8,27 +8,19 @@
 	}
 	
 	function printout () {
-		// fetch values from R
-		$t = callR_val ("print (rk.temp\$statistic)");
-		$df = callR_val ("print (rk.temp\$parameter)");
-		$p = callR_val ("print (rk.temp\$p.value)");
-		$est = callR_val ("print (rk.temp\$estimate)");
-
+		$x = getRK_val ("x.shortname");
+		$y = getRK_val ("x.shortname");
+	
 		// fetch further values from RK
-		$x = getRK_val ("x");
-		$xlabel = getRK_val ("x.label");
-		$y = getRK_val ("y");
-		$ylabel = getRK_val ("y.label");
-		$hypothesis = getRK_val ("hypothesis");
 		if ($confint = getRK_val ("confint")) {
 			$conflevel = getRK_val ("conflevel");
 			$conflevel = ($conflevel * 100) . "%";
-			list ($confmin, $confmax) = explode (" ", callR_val ("cat (rk.temp\$conf.int)"), 2);
 		}
 		$varequal = "assuming equal variances";
 		if (getRK_val ("varequal") == "") {
 			$varequal = "not " . $varequal;
 		}
+		$hypothesis = getRK_val ("hypothesis");
 		if ($hypothesis == "two.sided") {
 			$hypothesis = $x . " and " . $y . " differ (two sided)";
 		} else if ($hypothesis == "less") {
@@ -50,18 +42,21 @@
 		$esty = trim ($esty);
 
 		// produce the output
-?><h1>T-test (independent samples)</h1>
-<h2>Comparing <? echo ($x); ?> (<? echo ($xlabel); ?>) against <? echo ($y); ?> (<? echo ($ylabel); ?>)</h2>
-<h3>H1: <? echo ($hypothesis); ?><h3>
-<h4>(<? echo ($varequal); ?>)</h4>
-<table border="1">
-	<tr><td>Variable</td><td>estimated mean</td><td>degrees of freedom</td><td>t</td><td>p</td><? if ($confint) echo ("<td> confidence interval of difference (" . $conflevel . ")</td>"); ?></tr>
-	<tr><td><? echo ($x . "<br>(" . $xlabel . ")"); ?></td><td><? echo ($estx); ?></td><td rowspan="2"><? echo ($df); ?></td><td rowspan="2"><? echo ($t); ?></td><td rowspan="2"><? echo ($p); ?></td><? if ($confint) echo ("<td rowspan=\"2\">[" . $confmin . " " . $confmax ."]</td>"); ?></tr>
-	<tr><td><? echo ($y . "<br>(" . $ylabel . ")"); ?></td><td><? echo ($esty); ?></td><tr>
-</table><?
+?>
+cat ("<h1>T-test (independent samples)</h1>")
+cat ("<h2>Comparing <? getRK ("x.label"); ?> against <? getRK ("x.label"); ?></h2>")
+cat ("<h3>H1: <? echo ($hypothesis); ?><h3>")
+cat ("<h4>(<? echo ($varequal); ?>)</h4>")
+cat ("<table border=\"1\">")
+cat (paste ("<tr><td>Variable</td><td>estimated mean</td><td>degrees of freedom</td><td>t</td><td>p</td><? if ($confint) { ?><td>confidence interval of difference (", 100 * attr(rk.temp$conf.int, "conf.level"), "%)</td><? } ?></tr>\n", sep=""))
+cat (paste ("<tr><td><? getRK ("x.label"); ?></td><td>", rk.temp$estimate[1], "</td><td rowspan=\"2\">", rk.temp$parameter, "</td><td rowspan=\"2\">", rk.temp$statistic, "</td><td rowspan=\"2\">", rk.temp$p.value, "</td><? if ($confint) { ?><td rowspan=\"2\">[", rk.temp$conf.int[1], " .. ", rk.temp$conf.int[2], "]</td><? }?></tr>\n", sep=""))
+cat (paste ("<tr><td><? getRK ("x.label"); ?></td><td>", rk.temp$estimate[2], "</td><tr>", sep=""))
+cat ("</table>")
+<?
 	}
 	
 	function cleanup () {
-		callR_val ("rm (rk.temp)");
+?>rm (rk.temp)
+<?
 	}
 ?>

@@ -18,11 +18,11 @@ for (col in 1:length (rk.temp.vars)) {
 <?
 
 		if ($domean) {
-?>	try (rk.temp.results[[col]]$mean <- mean (rk.temp.vars[col], 0, TRUE))
+?>	try (rk.temp.results[[col]]$mean <- mean (rk.temp.vars[col], 0, na.rm=TRUE))
 <?
 		}
 		if ($domedian) {
-?>	try (rk.temp.results[[col]]$median <- median (rk.temp.vars[col], TRUE))
+?>	try (rk.temp.results[[col]]$median <- median (rk.temp.vars[[col]], na.rm=TRUE))
 <?
 		}
 		if ($dorange) {
@@ -30,7 +30,7 @@ for (col in 1:length (rk.temp.vars)) {
 <?
 		}
 		if ($dosd) {
-?>	try (rk.temp.results[[col]]$sd <- sd (rk.temp.vars[col], TRUE))
+?>	try (rk.temp.results[[col]]$sd <- sd (rk.temp.vars[col], na.rm=TRUE))
 <?
 		}	
 ?>
@@ -42,68 +42,48 @@ for (col in 1:length (rk.temp.vars)) {
 		$domedian = getRK_val ("median");
 		$dorange = getRK_val ("range");
 		$dosd = getRK_val ("sd");
-		$vars = array ();
-		$vars = explode ("\n", trim (getRK_val ("x")));
-		$labels = array ();
-		$labels = explode ("\n", trim (getRK_val ("x.label")));
-		$means = array ();
-		$medians = array ();
-		$mins = array ();
-		$maxs = array ();
-		$sds = array ();
-		
-		// fetch values from R and format
-		for ($i = 0; $i < count ($vars); ++$i) {
-			if ($domean) {
-				list ($dummy, $mean) = explode (" ", callR_val ("print (rk.temp.results[[" . ($i + 1) . "]]\$mean)"), 2);
-				array_push ($means, trim ($mean));
-			}
-			if ($domedian) {
-				list ($dummy, $median) = explode (" ", callR_val ("print (rk.temp.results[[" . ($i + 1) . "]]\$median)"), 2);
-				array_push ($medians, trim ($median));
-			}
-			if ($dorange) {
-				list ($dummy, $range) = explode (" ", callR_val ("print (rk.temp.results[[" . ($i + 1) . "]]\$range)"), 2);
-				list ($min, $max) = explode (" ", trim ($range), 2);
-				array_push ($mins, $min);
-				array_push ($maxs, $max);
-			}
-			if ($dosd) {
-				list ($dummy, $sd) = explode (" ", callR_val ("print (rk.temp.results[[" . ($i + 1) . "]]\$sd)"), 2);
-				array_push ($sds, trim ($sd));
-			}
-		}
-
-		// fetch further values from RK
-//		$x = getRK_val ("x");
-//		$xlabel = getRK_val ("x.label");
-		
-		
+	
 		// produce the output
-?><h1>Descriptive statistics</h1>
-<?/*<?<h2>Stats for <? echo ($x); ?> (<? echo ($xlabel); ?>)</h2>*/?>
-<table border="1">
-	<tr>
-	<td>Variable</td>
-	<? if ($domean) { ?><td>mean</td><? }
-	if ($domedian) { ?><td>median</td><? }
-	if ($dorange) { ?><td>min</td><td>max</td><? }
-	if ($dosd) { ?><td>standard deviation</td><? } ?>
-	</tr>
-<? for ($i = 0; $i < count ($vars); ++$i) { ?>
-		<tr>
-		<td><? echo ($vars[$i] . "<br>(" . $labels[$i] . ")"); ?></td>
-		<? if ($domean) { ?><td><? echo $means[$i]; ?></td><? }
-		if ($domedian) { ?><td><? echo $medians[$i]; ?></td><? }
-		if ($dorange) { ?><td><? echo $mins[$i]; ?></td><td><? echo $maxs[$i]; ?></td><? }
-		if ($dosd) { ?><td><? echo $sds[$i]; ?></td><? } ?>
-		</tr>
-<?}?>
-</table><?
+?>
+rk.temp.labels <- c (<? echo ("\"" . join ("\",\"", explode ("\n", trim (getRK_val ("x.label")))) . "\""); ?>)
+cat ("<h1>Descriptive statistics</h1>")
+cat ("<table border=\"1\"><tr><td>Variable</td>")
+<? if ($domean) { ?>
+cat ("<td>mean</td>")
+<? }
+	if ($domedian) { ?>
+cat ("<td>median</td>")
+<? }
+	if ($dorange) { ?>
+cat ("<td>min</td><td>max</td>")
+<? }
+	if ($dosd) { ?>
+cat ("<td>standard deviation</td>")
+<? } ?>
+cat ("</tr>")
+for (i in 1:dim (rk.temp.vars)[2]) {
+	cat (paste ("<tr><td>", rk.temp.labels[i], "</td>"))
+<? if ($domean) { ?>
+	cat (paste ("<td>", rk.temp.results[[i]]$mean, "</td>"))
+<? }
+if ($domedian) { ?>
+	cat (paste ("<td>", rk.temp.results[[i]]$median, "</td>"))
+<? }
+if ($dorange) { ?>
+	cat (paste ("<td>", rk.temp.results[[i]]$range[1], "</td>", "<td>", rk.temp.results[[i]]$range[2], "</td>"))
+<? }
+if ($dosd) { ?>
+	cat (paste ("<td>", rk.temp.results[[i]]$sd, "</td>"))
+<? } ?>
+	cat ("</tr>")
+}
+cat ("</table>")
+<?
 	}
 	
 	function cleanup () {
-		callR_val ("rm (rk.temp.vars)");
-		callR_val ("rm (rk.temp.results)");
+?>rm (rk.temp.vars)
+rm (rk.temp.results)
+<?
 	}
 ?>

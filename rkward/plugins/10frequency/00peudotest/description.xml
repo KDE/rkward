@@ -10,7 +10,6 @@
 				Did you notice, that all plugins are constructed at runtime and on the fly from XML-files?
 				Try Analyse->Means->T-Tests->Independent Samples T-Test or Analyse->Descriptive Statistics.
 			</text>
-			<formula/>
 			<tabbook>
 				<tab label="first tab">
 					<frame label="a frame">
@@ -49,7 +48,6 @@
 			Did you notice, that all plugins are constructed at runtime and on the fly from XML-files?
 			Try Analyse->Means->T-Tests->Independent Samples T-Test or Analyse->Descriptive Statistics.
 		</text>
-		<formula/>
 		<tabbook>
 			<tab label="first tab">
 				<frame label="a frame">
