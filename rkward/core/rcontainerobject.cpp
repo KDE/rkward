@@ -24,10 +24,9 @@
 
 #include "../debug.h"
 
-#define UPDATE_DIM_COMMAND 1
+#define CLASSIFY_COMMAND 1
 #define UPDATE_CLASS_COMMAND 2
 #define UPDATE_CHILD_LIST_COMMAND 3
-#define UPDATE_TYPE_COMMAND 4
 
 RContainerObject::RContainerObject (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
@@ -43,21 +42,9 @@ RContainerObject::~RContainerObject () {
 
 void RContainerObject::updateFromR () {
 	RK_TRACE (OBJECTS);
-	
-	getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain ());
-	
-	RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
-	
-	command = new RCommand ("dim (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 
-	command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CHILD_LIST_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
-
-	// this command might result in a type mismatch and then a deletion of this object. Hence we run it last.
-// TODO: no, run it first, and call the other commands only when successful!
-	command = new RCommand ("c (is.data.frame (" + getFullName () + "), is.matrix (" + getFullName () + "), is.array (" + getFullName () + "), is.list (" + getFullName () + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_TYPE_COMMAND);
+// TODO: move classification / type mismatch-checking to RObject
+	RCommand *command = new RCommand (".rk.classify (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, CLASSIFY_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 }
 
@@ -66,7 +53,49 @@ void RContainerObject::rCommandDone (RCommand *command) {
 	RObject::rCommandDone (command);
 
 	bool changed = false;
-	if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
+	if (command->getFlags () == CLASSIFY_COMMAND) {
+		if (!command->intVectorLength ()) {
+			RK_ASSERT (false);
+			return;
+		} else {
+			int new_type = command->getIntVector ()[0];
+
+			// check whether this  is still a container object
+			if ((RObject::type) && (new_type != RObject::type)) {
+				if (!(new_type & RObject::Container)) {
+					RK_DO (qDebug ("type-mismatch: name: %s, old_type: %d, new_type: %d", RObject::name.latin1 (), type, new_type), OBJECTS, DL_INFO);
+					RObject::parent->typeMismatch (this, RObject::name);
+					return;	// will be deleted!
+				}
+			}
+			if (new_type != RObject::type) {
+				changed = true;
+				RObject::type = new_type;
+			}
+
+			// get dimensions
+			if (num_dimensions != (command->intVectorLength () - 1)) {
+				num_dimensions = command->intVectorLength () - 1;
+				changed = true;
+				delete dimension;
+				dimension = new int [num_dimensions];
+			}
+			for (int d=0; d < num_dimensions; ++d) {
+				if (dimension[d] != command->getIntVector ()[d+1]) changed=true;
+				dimension[d] = command->getIntVector ()[d+1];
+			}
+
+			// classifiy command was successful. now get further information.
+			if (hasMetaObject ()) getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain ());
+
+			RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
+			RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+
+			command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CHILD_LIST_COMMAND);
+			RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+		}
+		
+	} else if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
 		num_children_updating = command->stringVectorLength ();
 		// empty object?
 		if (!num_children_updating) {
@@ -83,8 +112,8 @@ void RContainerObject::rCommandDone (RCommand *command) {
 				changed = true;
 			}
 		}
+		
 	} else if (command->getFlags () == UPDATE_CLASS_COMMAND) {
-
 		if (num_classes != command->stringVectorLength ()) {
 			num_classes = command->stringVectorLength ();
 			delete classname;
@@ -94,48 +123,6 @@ void RContainerObject::rCommandDone (RCommand *command) {
 		for (int cn=0; cn < num_classes; ++cn) {
 			if (classname[cn] != command->getStringVector ()[cn]) changed = true;
 			classname[cn] = command->getStringVector ()[cn];
-		}
-	
-	} else if (command->getFlags () == UPDATE_TYPE_COMMAND) {
-
-		int new_type = 0;
-		if (command->intVectorLength () != 4) {
-			RK_ASSERT (false);
-		} else {
-			if (command->getIntVector ()[0]) {
-				new_type = RObject::DataFrame | RObject::Matrix | RObject::Array | RObject::List | RObject::Container;
-			} else if (command->getIntVector ()[1]) {
-				new_type = RObject::Matrix | RObject::Array | RObject::List | RObject::Container;
-			} else if (command->getIntVector ()[2]) {
-				new_type = RObject::Array | RObject::List | RObject::Container;
-			} else if (command->getIntVector ()[3]) {
-				new_type = RObject::List | RObject::Container;
-			}
-		}
-		if ((RObject::type) && (new_type != RObject::type)) {
-			if (!(new_type & RObject::Container)) {
-				RK_DO (qDebug ("type-mismatch: name: %s, old_type: %d, new_type: %d", RObject::name.latin1 (), type, new_type), OBJECTS, DL_INFO);
-				RObject::parent->typeMismatch (this, RObject::name);
-				return;	// will be deleted!
-			}
-		}
-		if (new_type != RObject::type) {
-			changed = true;
-			RObject::type = new_type;
-		}
-
-	} else if (command->getFlags () == UPDATE_DIM_COMMAND) {
-
-		if (num_dimensions != command->intVectorLength ()) {
-			num_dimensions = command->intVectorLength ();
-			changed = true;
-			delete dimension;
-			dimension = new int [num_dimensions];
-		}
-
-		for (int d=0; d < num_dimensions; ++d) {
-			if (dimension[d] != command->getIntVector ()[d]) changed=true;
-			dimension[d] = command->getIntVector ()[d];
 		}
 	}
 	

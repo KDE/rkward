@@ -90,17 +90,14 @@ void RObjectList::rCommandDone (RCommand *command) {
 	} else if (command->getFlags () == CHILD_GET_TYPE_COMMAND) {
 		bool container = false;
 		
-		if (command->intVectorLength () != 4) {
+		if (command->intVectorLength () != 1) {
 			RK_ASSERT (false);
-		} else {
-			if (command->getIntVector ()[0] + command->getIntVector ()[1] + command->getIntVector ()[2] + command->getIntVector ()[3]) {
-				container = true;
-			}
 		}
 
 		PendingObject *pobj = pending_objects[command];
 		RObject *robj;
-		if (container) {
+		// TODO: handle special type like functions, etc.!
+		if (command->getIntVector ()[0] == 1) {
 			robj = new RContainerObject (pobj->parent, pobj->name);
 		} else {
 			robj = new RKVariable (pobj->parent, pobj->name);
@@ -141,7 +138,7 @@ void RObjectList::updateFromR () {
 	
 	QString fullname = parent->makeChildName (cname);
 	
-	RCommand *command = new RCommand ("c (is.data.frame (" + fullname + "), is.matrix (" + fullname + "), is.array (" + fullname + "), is.list (" + fullname + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, CHILD_GET_TYPE_COMMAND);
+	RCommand *command = new RCommand (".rk.get.type (" + fullname + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, CHILD_GET_TYPE_COMMAND);
 	pending_objects.insert (command, obj);
 	RKGlobals::rInterface ()->issueCommand (command, update_chain);
 }
