@@ -1,7 +1,14 @@
 The following list of TODO-items is NOT complete!
 Also, plans change frequently. If something is listed for a specific release, that's no more than a rough plan.
 
-stuff to do before 0.3.1 release
+Little annoying stuff:
+- fix flickering when one uses arrows in the console
+- use proper KMDI+KParts
+- auto refresh output + auto scroll at the bottom
+- add an example to show rkward-specific commands (rk.print, rk.graph)
+
+
+stuff to do before 0.3.2 release
 - plugins (general)
 	- rework structure (directory layout) of plugin definitions
 	- add import-filter plugins
@@ -49,7 +56,6 @@ stuff to do before the thing is usable
 	- use a cool new RHistory-Widget for the watch
 	- maybe keep an (optional) log of RCommands
 - add a help-system
-- add MDI-framework
 - mostly everything
 
 stuff to do before a 1.0 release
