@@ -166,6 +166,8 @@ class RKwardApp : public KMainWindow
      */
     void slotStatusMsg(const QString &text);
 
+	/** shows/hides the RKWatch-window */
+	void slotShowRKWatch ();
   private:
     /** the configuration object of the application */
     KConfig *config;
@@ -197,6 +199,7 @@ class RKwardApp : public KMainWindow
     KAction* editPasteToTable;
     KToggleAction* viewToolBar;
     KToggleAction* viewStatusBar;
+	KAction* showRKWatch;
 
 /** Does pasting (called from the respective slots) */
 	void doPaste ();

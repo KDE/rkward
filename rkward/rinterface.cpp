@@ -19,14 +19,22 @@
 
 #include <qcstring.h>
 
+#include <kmessagebox.h>
+
+#include "rkwatch.h"
+
 RInterface::RInterface(){
 	end_tag = "Done with R-Command";
 	connect (this, SIGNAL (receivedStdout (KProcess *, char *, int)), this, SLOT (gotROutput (KProcess *, char *, int)));
 	connect (this, SIGNAL (receivedStderr (KProcess *, char *, int)), this, SLOT (gotROutput (KProcess *, char *, int)));
 	connect (this, SIGNAL (wroteStdin (KProcess *)), this, SLOT (doneWriting (KProcess *)));
+	connect (this, SIGNAL (processExited (KProcess *)), this, SLOT (Rdied (KProcess *)));
+	watch = new RKwatch (this);
+	watch->show ();
 }
 
 RInterface::~RInterface(){
+	delete watch;
 }
 
 bool RInterface::startR (QStrList &commandline) {
@@ -62,7 +70,7 @@ void RInterface::gotROutput (KProcess *proc, char *buffer, int buflen) {
 	// check, whether output seems to be done
 	if (r_output.right (end_tag.length () + 5).contains (end_tag)) {
 		int pos = r_output.findRev (end_tag, -1);
-		pos = r_output.findRev ("\n", -1);
+		pos = r_output.findRev ("\n", pos - r_output.length ());
 		if (pos <= 0) {
 			r_output = "";
 		}
@@ -81,6 +89,7 @@ void RInterface::gotROutput (KProcess *proc, char *buffer, int buflen) {
 				issue (command);
 			}
 		} else {
+			emit (syncUnblocked ());
 			sync_command = false;
 		}
 	}
@@ -118,12 +127,14 @@ void RInterface::issueAsyncCommand (const QString &command) {
 }
 
 void RInterface::issue (QString &command) {
+	emit (syncBlocked ());
 	command_running = true;
 	if (!busy_writing) {
 		// we must keep a local copy while write is in progress!
 		command_write_buffer = qstrdup (command);
 
 		writeStdin (command_write_buffer, command.length ());
+		emit (writingRequest (command_write_buffer));
 		busy_writing = true;
 	} else {
 		waiting_commands.append (command);
@@ -138,6 +149,7 @@ void RInterface::doneWriting (KProcess *proc) {
 		command_write_buffer = qstrdup (command);
 
 		writeStdin (command_write_buffer, command.length ());
+		emit (writingRequest (command_write_buffer));
 		command_running = true;
 		busy_writing = true;
 		if (waiting_commands.removeFirst ()) {
@@ -145,5 +157,18 @@ void RInterface::doneWriting (KProcess *proc) {
 		}
 	} else {
 		busy_writing = false;
+	}
+}
+
+void RInterface::Rdied (KProcess *proc) {
+	emit (receivedReply (r_output));
+	if (KMessageBox::questionYesNo (0, "Oh no!\nThe R-Process died. Probably we did something wrong.\nShould I try to restart it?",
+			    "Restart R?") == KMessageBox::Yes) {
+		start (NotifyOnExit, All);
+		command_running = sync_command = false;
+		async_command_stack.clear ();
+		r_output = "";
+	} else {
+		emit (syncBlocked ());
 	}
 }

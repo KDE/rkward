@@ -36,6 +36,7 @@
 #include "rkwardview.h"
 #include "rkwarddoc.h"
 #include "rkdrag.h"
+#include "rkwatch.h"
 
 #define ID_STATUS_MSG 1
 
@@ -92,6 +93,7 @@ void RKwardApp::initActions()
   editPasteToSelection = new KAction(i18n("Paste inside Selection"), 0, 0, this, SLOT(slotEditPasteToSelection()), actionCollection(), "paste_to_selection");
   viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
   viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
+	showRKWatch = new KAction (i18n ("Toggle RKWatch-Window"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "settings_rkwatch");
 
   fileNewWindow->setStatusText(i18n("Opens a new application window"));
   fileNew->setStatusText(i18n("Creates a new document"));
@@ -111,7 +113,7 @@ void RKwardApp::initActions()
   viewStatusBar->setStatusText(i18n("Enables/disables the statusbar"));
 
   // use the absolute path to your rkwardui.rc file for testing purpose in createGUI();
-  createGUI();
+  createGUI("/home/thomas/develop/rkward/rkward/rkwardui.rc");
 
 }
 
@@ -493,3 +495,10 @@ void RKwardApp::slotStatusMsg(const QString &text)
   statusBar()->changeItem(text, ID_STATUS_MSG);
 }
 
+void RKwardApp::slotShowRKWatch () {
+	if (r_inter.watch->isVisible ()) {
+		r_inter.watch->hide ();
+	} else {
+		r_inter.watch->show ();
+	}
+}

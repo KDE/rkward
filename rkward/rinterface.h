@@ -22,6 +22,8 @@
 #include <qstrlist.h>
 #include <qstring.h>
 
+class RKwatch;
+
 /** This class does the rather low-level interfacing to the R-processor.
   *@author Thomas Friedrichsmeier
   */
@@ -39,7 +41,14 @@ public:
 	bool commandRunning () { return command_running; };
 signals:
 	void receivedReply (QString result);
+	void writingRequest (QString request);
+/** Emitted, when synchronous commands are blocked (i.e. there is another command running) */
+	void syncBlocked ();
+/** Emitted, when synchronous commands are allowed again */
+	void syncUnblocked ();
 private:
+friend class RKwardApp;
+
 	QStrList async_command_stack;
 /** Keeps everything R has so far responded to the last command */
 	QString r_output;
@@ -54,11 +63,14 @@ private:
 	bool commands_waiting;
 	QStrList waiting_commands;
 	void issue (QString &command);
+	RKwatch *watch;
 private slots:
 /** This slot receives raw R-output */
 	void gotROutput (KProcess *proc, char *buffer, int buflen);
 /** This slot receives the signal "finished writing Stdinput" */
 	void doneWriting (KProcess *proc);
+/** This slot gets called, if/when the R-Process dies */
+	void Rdied (KProcess *proc);
 };
 
 #endif
