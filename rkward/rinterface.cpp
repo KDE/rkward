@@ -20,6 +20,7 @@
 #include <qcstring.h>
 
 #include <kmessagebox.h>
+#include <klocale.h>
 
 #include "rkwatch.h"
 
@@ -159,8 +160,8 @@ void RInterface::Rdied (KProcess *proc) {
 	command_running = sync_command = false;
 	async_command_stack.clear ();
 	r_output = "";
-	if (KMessageBox::questionYesNo (0, "Oh no!\nThe R-Process died. Probably we did something wrong.\nShould I try to restart it?",
-			    "Restart R?") == KMessageBox::Yes) {
+	if (KMessageBox::questionYesNo (0, i18n ("Oh no!\nThe R-Process died. Probably we did something wrong.\nShould I try to restart it?\nYou can do so manually via Settings->R Settings."),
+			    i18n ("Restart R?")) == KMessageBox::Yes) {
 		start (NotifyOnExit, All);
 	} else {
 		emit (syncBlocked ());

@@ -38,6 +38,7 @@
 class RKwardDoc;
 class RKwardView;
 class RSettings;
+class PluginSettings;
 class RKMenu;
 
 /**
@@ -171,6 +172,9 @@ class RKwardApp : public KMainWindow
 
 	/** configures R-settings */
 	void slotConfigureR ();
+
+	/** configures Plugin-settings */
+	void slotConfigurePlugins ();
   private:
     /** the configuration object of the application */
     KConfig *config;
@@ -198,6 +202,7 @@ class RKwardApp : public KMainWindow
     KToggleAction* viewStatusBar;
 	KAction* showRKWatch;
 	KAction* configureR;
+	KAction* configurePlugins;
 
 	friend class RSettings;
 	QString path_to_r;
@@ -205,6 +210,8 @@ class RKwardApp : public KMainWindow
 	bool opt_r_slave;
 	void fetchRSettings (RSettings *from, bool apply);
 
+	friend class PluginSettings;
+	void fetchPluginSettings (PluginSettings *from, bool apply);
 	QString plugin_dir;
 
 /** Does pasting (called from the respective slots) */

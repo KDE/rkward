@@ -42,6 +42,7 @@
 #include "rkdrag.h"
 #include "rkwatch.h"
 #include "rsettings.h"
+#include "pluginsettings.h"
 #include "rkmenu.h"
 
 #define ID_STATUS_MSG 1
@@ -91,6 +92,11 @@ void RKwardApp::initPlugins () {
 	for (unsigned int i = 0; i < dir.count (); i++) {
 		qDebug (dir[i]);
 		initPlugin (plugin_dir + dir[i]);
+	}
+
+	if (!dir.count ()) {
+		KMessageBox::information (0, i18n ("Could not find any plugins!\nRKWard is pretty useless without plugins, so you should use Settings->Plugins to import some.\n"),
+			    i18n ("No plugins found"));
 	}
 
 	slotStatusMsg(i18n("Ready."));
@@ -155,6 +161,20 @@ void RKwardApp::fetchRSettings (RSettings *from, bool apply) {
 	delete from;
 }
 
+void RKwardApp::slotConfigurePlugins () {
+	PluginSettings *settings = new PluginSettings (this);
+	settings->show ();
+}
+
+void RKwardApp::fetchPluginSettings (PluginSettings *from, bool apply) {
+	if (apply) {
+		plugin_dir = from->pathEdit->text ();
+		saveOptions ();
+		initPlugins ();
+	}
+	delete from;
+}
+
 void RKwardApp::initActions()
 {
   fileNewWindow = new KAction(i18n("New &Window"), 0, 0, this, SLOT(slotFileNewWindow()), actionCollection(),"file_new_window");
@@ -179,6 +199,7 @@ void RKwardApp::initActions()
   viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
 	showRKWatch = new KAction (i18n ("Toggle RKWatch-Window"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "settings_rkwatch");
 	configureR = new KAction (i18n ("R Settings"), 0, 0, this, SLOT(slotConfigureR ()), actionCollection(), "settings_r");
+	configurePlugins = new KAction (i18n ("Plugin Settings"), 0, 0, this, SLOT(slotConfigurePlugins ()), actionCollection(), "settings_plugins");
 
   fileNewWindow->setStatusText(i18n("Opens a new application window"));
   fileNew->setStatusText(i18n("Creates a new document"));
