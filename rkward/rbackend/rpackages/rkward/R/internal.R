@@ -8,11 +8,11 @@
 
 ".rk.editor.opened" <- function (x) {
 	if (!exists (".rk.editing")) .rk.editing <<- c ()
-	.rk.editing <<- c (.rk.editing, x)
+	.rk.editing <<- c (.rk.editing, deparse (substitute (x)))
 }
 
 ".rk.editor.closed" <- function (x) {
-	if (exists (".rk.editing")) .rk.editing <<- .rk.editing[.rk.editing != x]
+	if (exists (".rk.editing")) .rk.editing <<- .rk.editing[.rk.editing != deparse (substitute (x))]
 }
 
 ".rk.classify" <- function (x) {

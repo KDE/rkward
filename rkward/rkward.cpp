@@ -55,6 +55,7 @@
 #include "core/robjectlist.h"
 #include "rkglobals.h"
 #include "robjectbrowser.h"
+#include "dialogs/startupdialog.h"
 
 #include "debug.h"
 
@@ -127,11 +128,20 @@ void RKwardApp::doPostInit () {
 		openWorkspace (*initial_url);
 		delete initial_url;
 	} else {
-// TODO: replace with a friendly startup dialog
-		RObject *object = RKGlobals::rObjectList ()->createNewChild ("my.data", true, true);
-		RKEditor *editor = RKGlobals::editorManager ()->editObject (object);
-		editor->syncToR (0);
 		setCaption(i18n ("Untitled"));
+		
+		StartupDialog::StartupDialogResult *result = StartupDialog::getStartupAction (this, fileOpenRecent);
+		if (result->result == StartupDialog::EmptyWorkspace) {
+		} else if (result->result == StartupDialog::OpenFile) {
+			openWorkspace (result->open_url);
+		} else if (result->result == StartupDialog::ChoseFile) {
+			slotFileOpen ();
+		} else if (result->result == StartupDialog::EmptyTable) {
+			RObject *object = RKGlobals::rObjectList ()->createNewChild ("my.data", true, true);
+			RKEditor *editor = RKGlobals::editorManager ()->editObject (object);
+			editor->syncToR (0);
+		}
+		delete result;
 	}
 }
 
