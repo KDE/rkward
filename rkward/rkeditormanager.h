@@ -37,7 +37,8 @@ class RKEditorManager : public QWidget, public RCommandReceiver {
 Q_OBJECT
 public:
     RKEditorManager(QWidget *parent);
-
+    RKEditorManager();
+    
     ~RKEditorManager();
 
 	RKEditor *editObject (RObject *object, bool initialize_to_empty=false);

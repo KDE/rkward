@@ -32,8 +32,16 @@
 #define RESTORE_COMMAND 1
 
 RKEditorManager::RKEditorManager (QWidget *parent) : QWidget (parent) {
-	RK_TRACE (APP);	
+	RK_TRACE (APP);
+	QGridLayout *grid = new QGridLayout (this, 1, 1);
+	tabbook = new QTabWidget (this);
+	grid->addWidget (tabbook, 0, 0);
+	
+	restore_chain = 0;
+}
 
+RKEditorManager::RKEditorManager ()   {
+	RK_TRACE (APP);
 	QGridLayout *grid = new QGridLayout (this, 1, 1);
 	tabbook = new QTabWidget (this);
 	grid->addWidget (tabbook, 0, 0);
