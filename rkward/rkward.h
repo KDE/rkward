@@ -168,9 +168,6 @@ protected:
      */
     void slotStatusMsg(const QString &text);
 
-	/** creates an new RKCommandEditorWindow */
-	void slotNewRKCommandEditorWindow ();
-	
 	/** shows/hides the RKWatch-window */
 	void slotShowRKWatch ();
 	
@@ -199,10 +196,12 @@ protected:
 	void slotOpenURL(const KURL &url);
     void slotChildWindowCloseRequest (KMdiChildView * window);
     void slotRunSelection();
+    void slotInterruptCommand();
     void slotRunAll();
     void slotEditUndo();
     void slotEditRedo();
     void slotViewActivated (KMdiChildView *window);
+    void slotOpenRecentCommandEditor(const KURL&);
   private:
     /** the configuration object of the application */
     KConfig *config;
@@ -240,14 +239,13 @@ protected:
     KAction* editPasteToTable;
     KToggleAction* viewToolBar;
     KToggleAction* viewStatusBar;
-	KAction* window_new_rkcommandeditorwindow;
 	KToggleAction* showRKWatch;
 	KToggleAction* showRKOutput;
 	KToggleAction* showRObjectBrowser;
 	
 	KAction* runAll;
 	KAction* runSelection;
-	
+	KAction* interruptCommand;
 	KAction* configure;
 
 	friend class RKSettingsModule;
@@ -278,6 +276,7 @@ protected:
 	
 	bool getFilenameAndPath(const KURL &url,QString *fname);
 	void saveAsProcedure(RKCommandEditorWindow *editor);
+    void setEnabledActions(bool commandEditor);
 signals:
     void childWindowCloseRequest(KMdiChildView * window);
 };

@@ -17,8 +17,11 @@
 #include "robjectviewer.h"
 
 #include <qlayout.h>
+
 #include <qtextedit.h>
 #include <qfont.h>
+
+#include <klocale.h>
 
 #include "rbackend/rinterface.h"
 #include "rkglobals.h"
@@ -37,28 +40,28 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : QWidget (paren
 	view_area->setWordWrap (QTextEdit::NoWrap);
 	grid->addWidget (view_area, 0, 0);
 	
-	view_area->append ("Object name: " + object->getShortName ());
-	view_area->append ("\nFull location: " + object->getFullName ());
+	view_area->append (i18n("Object name: ") + object->getShortName ());
+	view_area->append (i18n("\nFull location: ") + object->getFullName ());
 	if (object->isContainer ()) {
 		RContainerObject *cobj = static_cast<RContainerObject*> (object);		// for convenience only
-		view_area->append ("\nClasses: " + cobj->makeClassString (", "));
+		view_area->append (i18n("\nClasses: ") + cobj->makeClassString (", "));
 		if (cobj->numDimensions ()) {
-			QString dummy = "\nDimensions: " + QString ().setNum (cobj->getDimension (0));
+			QString dummy = i18n("\nDimensions: ") + QString ().setNum (cobj->getDimension (0));
 			for (int i=1; i < cobj->numDimensions (); ++i) {
 				dummy.append (", " + QString ().setNum (cobj->getDimension (i)));
 			}
 			view_area->append (dummy);
 		}
 	}
-	view_area->append ("\nResult of 'print (" + object->getFullName () + ")':\n");
+	view_area->append (i18n("\nResult of 'print (") + object->getFullName () + i18n(")':\n"));
 	
 	RCommand *command = new RCommand ("print (" + object->getFullName () + ")", RCommand::App, "", this);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 	waiting = true;
 	destruct = false;
 	
-	caption = "Object-Viewer for object " + object->getShortName ();
-	setCaption (caption + " - Waiting for results from R...");
+	caption = i18n("Object-Viewer for object ") + object->getShortName ();
+	setCaption (caption + i18n(" - Waiting for results from R..."));
 	resize (minimumSizeHint ().expandedTo (QSize (640, 480)));
 	show ();
 }
@@ -71,7 +74,7 @@ void RObjectViewer::rCommandDone (RCommand *command) {
 	
 	view_area->append (command->output ());
 	if (command->hasError ()) {
-		view_area->append ("\nSome error(s) occured: " + command->error ());
+		view_area->append (i18n("\nSome error(s) occured: ") + command->error ());
 	}
 	
 	if (destruct) {

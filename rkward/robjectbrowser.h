@@ -24,6 +24,8 @@ class QListViewItem;
 class QPushButton;
 class QPopupMenu;
 class RObject;
+class RKCommandEditorWindow;
+
 
 /**
 This widget provides a browsable list of all objects in the R workspace
@@ -48,6 +50,7 @@ public slots:
 	void popupView ();
 	void popupDelete ();
 	void popupRename ();
+    void slotListDoubleClicked(QListViewItem *item, const QPoint &pos, int);
 private:
 	friend class RKwardApp;
 	void initialize ();

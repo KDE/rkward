@@ -139,13 +139,7 @@ bool RKCommandEditorWindow::openURL(const KURL &url){
 	if (m_doc->openURL(url)){
 		setRHighlighting(m_doc);
 		
-		QString fname;
-		if (getFilenameAndPath(url,&fname)){
-			setTabCaption(fname);
-		}
-		else {
-			setTabCaption(url.prettyURL());
-		}
+		updateTabCaption(url);
 		
 		return true;
 	}
@@ -197,7 +191,8 @@ bool RKCommandEditorWindow::save(){
 }
 
 bool RKCommandEditorWindow::saveAs(const KURL &url){
-	return m_doc->saveAs(url); 
+	return m_doc->saveAs(url);
+	updateTabCaption(url); 
 }
 
 
@@ -230,4 +225,25 @@ void RKCommandEditorWindow::undo(){
 
 void RKCommandEditorWindow::redo(){
 	 m_doc->redo();
+}
+
+
+
+void RKCommandEditorWindow::insertText(QString text)
+{
+	m_doc->insertText(m_view->cursorLine(),m_view->cursorColumn(),text);
+	setFocus();
+}
+
+
+
+void RKCommandEditorWindow::updateTabCaption(const KURL &url)
+{
+	QString fname;
+	if (getFilenameAndPath(url,&fname)){
+		setTabCaption(fname);
+	}
+	else {
+		setTabCaption(url.prettyURL());
+	}
 }

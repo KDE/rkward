@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.2.8">
+<kpartgui name="rkward" version="0.3">
 <MenuBar>
 	<Menu name="file"><text>&amp;File</text>
 		<Menu name="new_data"><text>&amp;Create New</text>
@@ -26,7 +26,7 @@
 	</Menu>
 	
 	
-	<Menu name="edit" noMerge="1"><text>&amp;Edit</text>
+	<Menu name="edit"><text>&amp;Edit</text>
 		<Action name="undo"/>
 		<Action name="redo"/>
 		<Separator/>
@@ -49,13 +49,31 @@
 	<Menu name="settings"><text>&amp;Settings</text>
 		<Action name="configure"></Action>
 	</Menu>
-	<Menu name="windows"><text>&amp;Windows</text>
-		<Action name="windows_new_command_editor"/>
-		<Separator/>
-		<Action name="windows_rkwatch"/>
-		<Action name="windows_rkoutput"/>
-		<Action name="windows_robjectbrowser"/>
-	</Menu>
  	<Merge/>
 </MenuBar>
+<ToolBar fullWidth="true" name="mainToolBar">
+		<Action name="new_data_frame"/>
+		<Action name="new_command_editor"/>
+		<Separator/>
+		<Action name="file_openy"/>
+		<Action name="file_savey"/>
+		<Action name="file_save_asy"/>
+</ToolBar>
+<ToolBar fullWidth="true" name="editToolBar">
+		<Action name="undo"/>
+		<Action name="redo"/>
+		<Separator/>
+		<Action name="cut"/>
+		<Action name="copy"/>
+		<Action name="paste"/>
+		<Separator/>
+		<Action name="paste_to_selection"/>
+		<Action name="paste_to_table"/>
+</ToolBar>
+<ToolBar fullWidth="true" name="runToolBar">
+		<Action name="run_all"/>
+		<Action name="run_selection"/>
+		<Separator/>
+		<Action name="interrupt"/>
+</ToolBar>
 </kpartgui>

@@ -61,6 +61,7 @@ public:
     void paste();
     void undo();
     void redo();
+    void insertText(QString text);
 
 private:
 	Kate::Document *m_doc;
@@ -68,12 +69,15 @@ private:
 	void setRHighlighting (Kate::Document *doc);
 	KLibrary *m_library;
 	bool getFilenameAndPath(const KURL &url,QString *fname);
+    
 	QBoxLayout* pLayout;
 private slots:
     void slotGotFocus();
     void slotLostFocus();
 
 
+private:
+    void updateTabCaption(const KURL &url);
 };
 
 #endif

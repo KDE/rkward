@@ -104,21 +104,14 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
   editCut->setEnabled(false);
   editCopy->setEnabled(false);
   editPaste->setEnabled(false); */
-  		editUndo->setEnabled(false);
-		editRedo->setEnabled(false);
-		fileOpen->setEnabled(false);
-		fileSave->setEnabled(false);
-		fileSaveAs->setEnabled(false);
-		runAll->setEnabled(false);
-		runSelection->setEnabled(false);
-		fileOpenRecent->setEnabled(false);
+	setEnabledActions(false);
 
 
 
 	
 	RKGlobals::manager = new RKEditorManager ();
 	KMdiChildView * editorManagerView = createWrapper(RKGlobals::editorManager (), i18n( "Object Editor"), i18n( "R Object Editor"));
-	editorManagerView->setIcon(SmallIcon("inline_table"));
+	editorManagerView->setIcon(SmallIcon("spreadsheet"));
 	addWindow( editorManagerView );
 	
 	
@@ -138,7 +131,10 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 	startup_timer->start (50);
 	connect (startup_timer, SIGNAL (timeout ()), this, SLOT (doPostInit ()));
 	
+	
+	
 
+	
 }
 
 RKwardApp::~RKwardApp() {
@@ -306,8 +302,10 @@ void RKwardApp::initActions()
 	RK_TRACE (APP);
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
 	new_data_frame = new KAction (i18n ("data.frame"), 0, 0, this, SLOT (slotNewDataFrame ()), actionCollection (), "new_data_frame");
+	new_data_frame->setIcon("spreadsheet");
 	new_command_editor = KStdAction::openNew(this, SLOT(slotNewCommandEditor()), actionCollection(), "new_command_editor");
 	new_command_editor->setText (i18n ("New Command File"));
+	new_command_editor->setIcon("source");
 	
 	fileOpen = KStdAction::open(this, SLOT(slotOpenCommandEditor()), actionCollection(), "file_openy");
 	fileOpen->setText (i18n ("Open Command File"));
@@ -340,17 +338,21 @@ void RKwardApp::initActions()
   editCopy = KStdAction::copy(this, SLOT(slotEditCopy()), actionCollection(), "copy");
   editPaste = KStdAction::paste(this, SLOT(slotEditPaste()), actionCollection(), "paste");
   editPasteToTable = new KAction(i18n("Paste inside Table"), 0, 0, this, SLOT(slotEditPasteToTable()), actionCollection(), "paste_to_table");
+  editPasteToTable->setIcon("frame_spreadsheet");
   editPasteToSelection = new KAction(i18n("Paste inside Selection"), 0, 0, this, SLOT(slotEditPasteToSelection()), actionCollection(), "paste_to_selection");
+  editPasteToSelection->setIcon("frame_edit");
   viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
   viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
-	window_new_rkcommandeditorwindow = new KAction (i18n ("New Command Editor window"), 0, 0, this, SLOT (slotNewRKCommandEditorWindow ()), actionCollection (), "windows_new_command_editor");
 	showRKWatch = new KToggleAction (i18n ("Show R Console-Window"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "windows_rkwatch");
 	showRKOutput = new KToggleAction (i18n ("Show Output-Window"), 0, 0, this, SLOT(slotShowRKOutput ()), actionCollection(), "windows_rkoutput");
 	showRObjectBrowser = new KToggleAction (i18n ("Show Object Browser-Window"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
 	
 	runAll = new KAction (i18n ("Run All"), 0, 0, this, SLOT (slotRunAll ()), actionCollection (), "run_all");
+	runAll->setIcon("package_system");
 	runSelection = new KAction (i18n ("Run Selection"), 0, 0, this, SLOT (slotRunSelection ()), actionCollection (), "run_selection");
-	
+	runSelection->setIcon("run");
+	interruptCommand = new KAction (i18n ("Interrupt running command"), 0, 0, this, SLOT (slotInterruptCommand ()), actionCollection (), "interrupt");
+	interruptCommand->setIcon("stop");
 	
 	configure = new KAction (i18n ("Configure Settings"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 
@@ -372,11 +374,13 @@ void RKwardApp::initActions()
   viewStatusBar->setStatusText(i18n("Enables/disables the statusbar"));
   
   // use the absolute path to your rkwardui.rc file for testing purpose in createGUI();
-  setXMLFile( "/home/pierre/rkward/rkward/rkward/rkwardui.rc" );
+  setXMLFile( "rkwardui.rc" );
   createShellGUI ( true );
 
-// is there a better way to change the name of the "File" menu?
-	menuBar ()->changeItem (menuBar ()->idAt (0), i18n ("&Workspace"));
+  //Is the following relevant now?
+	// is there a better way to change the name of the "File" menu?
+	//	menuBar ()->changeItem (menuBar ()->idAt (0), i18n ("&Workspace"));
+
 }
 
 
@@ -404,6 +408,9 @@ void RKwardApp::saveOptions()
   config->writeEntry("Show Toolbar", viewToolBar->isChecked());
   config->writeEntry("Show Statusbar",viewStatusBar->isChecked());
   config->writeEntry("ToolBarPos", (int) toolBar("mainToolBar")->barPos());
+  config->writeEntry("EditBarPos", (int) toolBar("editToolBar")->barPos());
+  config->writeEntry("RunBarPos", (int) toolBar("runToolBar")->barPos());
+
 
 	RKSettings::saveSettings (config);
 	
@@ -432,6 +439,14 @@ void RKwardApp::readOptions ()
   toolBarPos=(KToolBar::BarPosition) config->readNumEntry("ToolBarPos", KToolBar::Top);
   toolBar("mainToolBar")->setBarPos(toolBarPos);
 
+  KToolBar::BarPosition editBarPos;
+  editBarPos=(KToolBar::BarPosition) config->readNumEntry("EditBarPos", KToolBar::Top);
+  toolBar("editToolBar")->setBarPos(editBarPos);
+  
+  KToolBar::BarPosition runBarPos;
+  runBarPos=(KToolBar::BarPosition) config->readNumEntry("RunBarPos", KToolBar::Top);
+  toolBar("runToolBar")->setBarPos(runBarPos);
+ 
   QSize size=config->readSizeEntry("Geometry");
   if(!size.isEmpty ())
   {
@@ -727,10 +742,14 @@ void RKwardApp::slotViewToolBar()
   if(!viewToolBar->isChecked())
   {
     toolBar("mainToolBar")->hide();
+    toolBar("runToolBar")->hide();
+    toolBar("editToolBar")->hide();
   }
   else
   {
     toolBar("mainToolBar")->show();
+    toolBar("runToolBar")->show();
+    toolBar("editToolBar")->show();
   }		
 
   slotStatusMsg(i18n("Ready."));
@@ -762,11 +781,6 @@ void RKwardApp::slotStatusMsg(const QString &text)
   // change status message permanently
   statusBar()->clear();
   statusBar()->changeItem(text, ID_STATUS_MSG);
-}
-
-void RKwardApp::slotNewRKCommandEditorWindow () {
-	RK_TRACE (APP);
-	new RKCommandEditorWindow ();
 }
 
 void RKwardApp::slotShowRKWatch () {
@@ -1036,24 +1050,51 @@ void RKwardApp::slotEditRedo()
 
 void RKwardApp::slotViewActivated (KMdiChildView * window)
 {
-	if (window->inherits("RKCommandEditorWindow")) {
+	setEnabledActions(activeWindow()->inherits("RKCommandEditorWindow"));
+}
+
+
+
+void RKwardApp::slotOpenRecentCommandEditor(const KURL&)
+{
+
+}
+
+void RKwardApp::slotInterruptCommand()
+{
+
+}
+
+
+
+void RKwardApp::setEnabledActions(bool commandEditor)
+{
+	if (commandEditor) {
 		editUndo->setEnabled(true);
 		editRedo->setEnabled(true);
+		editPaste->setEnabled(true);
 		fileOpen->setEnabled(true);
 		fileSave->setEnabled(true);
 		fileSaveAs->setEnabled(true);
 		runAll->setEnabled(true);
 		runSelection->setEnabled(true);
+		interruptCommand->setEnabled(true);
 		fileOpenRecent->setEnabled(true);
+    		editPasteToSelection->setEnabled(false);
+    		editPasteToTable->setEnabled(false);
 	}
 	else {
 		editUndo->setEnabled(false);
 		editRedo->setEnabled(false);
+		editPaste->setEnabled(false);
 		fileOpen->setEnabled(false);
 		fileSave->setEnabled(false);
 		fileSaveAs->setEnabled(false);
 		runAll->setEnabled(false);
 		runSelection->setEnabled(false);
+		interruptCommand->setEnabled(false);
 		fileOpenRecent->setEnabled(false);
+    		editPasteToSelection->setEnabled(true);
+    		editPasteToTable->setEnabled(true);
 	}
 }
