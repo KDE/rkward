@@ -20,6 +20,8 @@
 #include "../rkglobals.h"
 #include "twintable.h"
 #include "twintablemember.h"
+#include "twintabledatamember.h"
+#include "twintablemetamember.h"
 #include "typeselectcell.h"
 #include "../core/robject.h"
 #include "../core/rkvariable.h"
@@ -81,7 +83,7 @@ void RKEditorDataFrame::openObject (RObject *object, bool initialize_to_empty) {
 		pushTable (open_chain);
 		for (int i=0; i < numCols (); ++i) {
 			RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (varview->text (NAME_ROW, i), this);
-			col_map.insert (i, obj);
+			setColObject (i, obj);
 		}
 	}
 		
@@ -111,7 +113,7 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 			RKVariable *current_child = static_cast<RKVariable *> (static_cast <RContainerObject*> (getObject ())->findChild (command->getStringVector ()[i]));
 			setColObject (i, current_child);
 			modifyObjectMeta (current_child, i);
-					
+
 			// ok, now get the data
 			RCommand *rcom = new RCommand ("as.vector (" + current_child->getFullName() + ")", RCommand::Sync | RCommand::GetStringVector, "", this, GET_DATA_OFFSET + i);
 			RKGlobals::rInterface ()->issueCommand (rcom, open_chain);
@@ -301,9 +303,9 @@ void RKEditorDataFrame::columnAdded (int col) {
 	// TODO: find a nice way to update the list:
 	RK_ASSERT (col <= (numCols () - 1));
 	for (int i=numCols () - 1; i > col; --i) {
-		col_map.insert (i, col_map[i-1]);
+		setColObject (i, getColObject (i-1));
 	}
-	col_map.insert (col, obj);
+	setColObject (col, obj);
 }
 
 void RKEditorDataFrame::rowAdded (int row) {
@@ -314,30 +316,6 @@ void RKEditorDataFrame::rowAdded (int row) {
 void RKEditorDataFrame::rowRemoved (int row) {
 	RK_TRACE (EDITOR);
 	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.delete.row (" + getObject ()->getFullName () + ", " + QString ().setNum (row+1) + ")", RCommand::App | RCommand::Sync));
-}
-
-void RKEditorDataFrame::setColObject (int column, RObject *object) {
-	RK_TRACE (EDITOR);
-	col_map.insert (column, object);
-}
-
-RObject *RKEditorDataFrame::getColObject (int col) {
-	RK_TRACE (EDITOR);
-	ColMap::iterator it = col_map.find (col);
-	if (it != col_map.end ()) {
-		return it.data ();
-	}
-	return 0;
-}
-
-int RKEditorDataFrame::getObjectCol (RObject *object) {
-	RK_TRACE (EDITOR);
-	for (ColMap::iterator it = col_map.begin (); it != col_map.end (); ++it) {
-		if (it.data () == object) return it.key ();
-	}
-	
-	RK_ASSERT (false);
-	return -1;
 }
 
 void RKEditorDataFrame::removeObject (RObject *object) {
@@ -355,15 +333,10 @@ void RKEditorDataFrame::removeObject (RObject *object) {
 
 	deleteColumn (col);
 	
-	// TODO: find a nice way to update the list:
-	ColMap new_map;
-	for (int i=0; i < col; ++i) {
-		new_map.insert (i, col_map[i]);
-	}
 	for (int i=(col+1); i < numCols (); ++i) {
-		new_map.insert (i-1, col_map[i]);
+		setColObject (i-1, getColObject (i));
 	}
-	col_map = new_map;
+	setColObject (numCols (), 0);
 }
 
 void RKEditorDataFrame::restoreObject (RObject *object) {
@@ -383,7 +356,7 @@ void RKEditorDataFrame::addObject (RObject *object) {
 	
 	enableEditing (false);
 	insertNewColumn ();
-	col_map.insert (numCols () - 1, object);
+	setColObject (numCols () - 1, object);
 	enableEditing (true);
 	
 	updateObjectMeta (object);

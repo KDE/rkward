@@ -28,7 +28,10 @@
 #include <qpopupmenu.h>
 #include <qcstring.h>
 
+#include "twintabledatamember.h"
+#include "twintablemetamember.h"
 #include "twintablemember.h"
+#include "tablecolumn.h"
 #include "typeselectcell.h"
 #include "rtableitem.h"
 #include "nameselectcell.h"
@@ -54,10 +57,10 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
     QSplitter *splitter = new QSplitter(this);
     splitter->setOrientation(QSplitter::Vertical);
 
-    varview = new TwinTableMember (splitter, 0, 1);
+    varview = new TwinTableMetaMember (splitter, this);
     varview->setNumRows (5);
     varview->setNumCols (5);
-	for (int i=0; i < varview->numAllCols (); i++) {
+/*	for (int i=0; i < varview->numAllCols (); i++) {
 		for (int j=0; j < varview->numAllRows (); j++) {
 			if (j == TYPE_ROW) {
 				varview->setItem (TYPE_ROW, i, new TypeSelectCell (varview));
@@ -70,7 +73,7 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
 				varview->setItem (j, i, new RTableItem (varview));
 			}
 		}
-	}
+	} */
 	varview->verticalHeader()->setLabel(0, i18n( "Label" ) );
 	varview->verticalHeader()->setLabel(TYPE_ROW, i18n( "Type" ) );
 	varview->verticalHeader()->setLabel(2, i18n( "e.g. format" ) );
@@ -81,17 +84,16 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
     splitter->setResizeMode (varview, QSplitter::KeepSize);
 	varview->verticalHeader()->setResizeEnabled (false);
 
-    dataview = new TwinTableMember (splitter, 1, 1);
+    dataview = new TwinTableDataMember (splitter, this);
     dataview->setNumRows (20);
 	dataview->setNumCols (5);
-	dataview->setVarTable (varview);	// needed for initialization of RTableItems
-	for (int i=0; i < dataview->numAllCols (); i++) {
+/*	for (int i=0; i < dataview->numAllCols (); i++) {
 		for (int j=0; j < dataview->numAllRows (); j++) {
 			RTableItem *rti;
 			dataview->setItem (j, i, rti = new RTableItem (dataview));
 			rti->checkValid ();
 		}
-	}
+	}  */
     dataview->verticalHeader()->setResizeEnabled (false);
 
 	dataview->horizontalHeader ()->hide ();
@@ -162,7 +164,7 @@ void TwinTable::insertNewColumn (int where) {
 	}
 
 	varview->insertColumns (where);
-	for (int i=0; i < varview->numAllRows (); i++) {
+/*	for (int i=0; i < varview->numAllRows (); i++) {
 		if (i == TYPE_ROW) {
 			varview->setItem (TYPE_ROW, where, new TypeSelectCell (varview));
 		} else if (i == NAME_ROW) {
@@ -173,13 +175,13 @@ void TwinTable::insertNewColumn (int where) {
 		} else {
 			varview->setItem (i, where, new RTableItem (varview));
 		}
-	}
+	} */
 	dataview->insertColumns (where);
-	for (int i=0; i < dataview->numAllRows (); i++) {
+/*	for (int i=0; i < dataview->numAllRows (); i++) {
 		RTableItem *rti;
 		dataview->setItem (i, where, rti = new RTableItem (dataview));
 		rti->checkValid ();
-	}
+	} */
 
 	if (where >= varview->numCols ()) {		// the new addition was acutally not the new trailing row, but the one to the left - for all practical purposes
 		where = varview->numCols () - 1;
@@ -199,14 +201,14 @@ void TwinTable::insertNewRow (int where, TwinTableMember *table) {
 
 	// initialize cells according to table
 	if (table == dataview) {
-		for (int i=0; i < dataview->numAllCols (); i++) {
+/*		for (int i=0; i < dataview->numAllCols (); i++) {
 			RTableItem *rti;
 			dataview->setItem (where, i, rti = new RTableItem (dataview));
 			rti->checkValid ();
-		}
+		} */
 		emit (dataAddedRow (where));
 	} else if (table == varview) {
-		for (int i=0; i <= varview->numAllCols (); i++) {
+/*		for (int i=0; i <= varview->numAllCols (); i++) {
 			if (where == TYPE_ROW) {
 				varview->setItem (where, i, new TypeSelectCell (varview));
 			} else if (where == NAME_ROW) {
@@ -217,7 +219,7 @@ void TwinTable::insertNewRow (int where, TwinTableMember *table) {
 			} else {
 				varview->setItem (where, i, new RTableItem (varview));
 			}
-		}
+		} */
 	}
 }
 
@@ -607,8 +609,8 @@ void TwinTable::setColumn (TwinTableMember* table, int col, int start_row, int e
 
 void TwinTable::flushEdit () {
 	// flush pending edit operations
-	varview->endEdit (varview->currentRow (), varview->currentColumn (), true, false);
-	dataview->endEdit (dataview->currentRow (), dataview->currentColumn (), true, false);
+	varview->stopEditing ();
+	dataview->stopEditing ();
 }
 
 /*QString TwinTable::varname (int col) {
@@ -641,3 +643,34 @@ int TwinTable::numCols () {
 	return return_val;	
 }*/
 
+void TwinTable::setColObject (long int column, RObject *object) {
+	RK_TRACE (EDITOR);
+	if (object) {
+		TableColumn *tcolumn = new TableColumn (object);
+		col_map.insert (column, tcolumn);
+	} else {
+		delete (col_map.take (column));
+	}
+}
+
+RObject *TwinTable::getColObject (long int col) {
+	RK_TRACE (EDITOR);
+	TableColumn *tcolumn = col_map.find (col);
+	if (!tcolumn) return 0;
+	return tcolumn->getObject ();
+}
+
+long int TwinTable::getObjectCol (RObject *object) {
+	RK_TRACE (EDITOR);
+	for (QIntDictIterator<TableColumn> it (col_map); it.current (); ++it) {
+		if (it.current ()->getObject () == object) return it.currentKey ();
+	}
+	
+	RK_ASSERT (false);
+	return -1;
+}
+
+TableColumn *TwinTable::getColumn (long int col) {
+	// no RK_TRACE, since called in paint-operations
+	return col_map.find (col);
+}

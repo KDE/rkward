@@ -19,20 +19,25 @@
 
 #include <qevent.h>
 
+#include "celleditor.h"
 #include "rtableitem.h"
+#include "../debug.h"
 
 bool TwinTableMember::changing_width = false;
 
-TwinTableMember::TwinTableMember (QWidget *parent, int trailing_rows, int trailing_cols) : QTable (parent){
+TwinTableMember::TwinTableMember (QWidget *parent, TwinTable *table, int trailing_rows, int trailing_cols) : QTable (parent){
 	twin = 0;
+	TwinTableMember::table = table;
 	setRowMovingEnabled (false);
 	setVScrollBarMode (QScrollView::AlwaysOn);
 	horizontalHeader()->installEventFilter (this);
 	verticalHeader()->installEventFilter (this);
-	var_table = this;
 	
 	TwinTableMember::trailing_cols = trailing_cols;
 	TwinTableMember::trailing_rows = trailing_rows;
+	
+	tted = 0;
+	focussing_editor = false;
 }
 
 TwinTableMember::~TwinTableMember(){
@@ -72,11 +77,6 @@ void TwinTableMember::columnWidthChanged (int col) {
 	}
 }
 
-void TwinTableMember::focusOutEvent (QFocusEvent *e) {
-	if (isEditing ()) endEdit (currentRow (), currentColumn (), true, false);
-	QTable::focusOutEvent (e);
-}
-
 bool TwinTableMember::eventFilter (QObject *object, QEvent *event) {
 	// filter out right mouse button events of the varview-header
 	if (event && (event->type() == QEvent::MouseButtonPress)) {
@@ -99,16 +99,8 @@ bool TwinTableMember::eventFilter (QObject *object, QEvent *event) {
     return(QTable::eventFilter (object, event));
 }
 
-TwinTableMember *TwinTableMember::varTable () {
-	return var_table;
-}
-
-void TwinTableMember::setVarTable (TwinTableMember *table) {
-	var_table = table;
-}
-
 QString TwinTableMember::rText (int row, int col) {
-	return (((RTableItem *) item (row, col))->rText ());
+	return (RObject::rQuote (text (row, col)));
 }
 
 void TwinTableMember::checkColValid (int col) {
@@ -125,4 +117,36 @@ QWidget *TwinTableMember::beginEdit (int row, int col, bool replace) {
 		if (sel.leftCol () != sel.rightCol ()) return 0;
 	}
 	return QTable::beginEdit (row, col, replace);
+}
+
+void TwinTableMember::removeRows (const QMemArray<int> &) {
+	RK_ASSERT (false);
+}
+
+void TwinTableMember::swapRows (int, int, bool) {
+	RK_ASSERT (false);
+}
+
+void TwinTableMember::swapCells (int, int, int, int) {
+	RK_ASSERT (false);
+}
+
+void TwinTableMember::swapColumns (int, int, bool) {
+	RK_ASSERT (false);
+}
+
+void TwinTableMember::editorLostFocus () {
+	RK_TRACE (EDITOR);
+	stopEditing ();
+}
+
+void TwinTableMember::stopEditing () {
+	RK_TRACE (EDITOR);
+	if (tted) endEdit (currEditRow (), currEditCol (), true, false);
+	RK_ASSERT (!tted);
+}
+
+QWidget *TwinTableMember::cellWidget (int row, int col) const {
+	if (tted && (currEditRow () == row) && (currEditCol () == col)) return tted;
+	return 0;
 }

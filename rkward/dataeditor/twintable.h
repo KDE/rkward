@@ -22,13 +22,16 @@
 
 #include <qvariant.h>
 #include <qstring.h>
-#include <qmap.h>
+#include <qintdict.h>
 
 class QVBoxLayout;
 class QHBoxLayout;
 class QGridLayout;
 class QSplitter;
 class TwinTableMember;
+class TwinTableDataMember;
+class TwinTableMetaMember;
+class TableColumn;
 class QPopupMenu;
 class QTable;
 class RKDrag;
@@ -67,8 +70,10 @@ public:
 	int numCols ();
 	
 	void setPasteMode (RKEditor::PasteMode mode);
-    TwinTableMember* varview;
-    TwinTableMember* dataview;
+    TwinTableMetaMember* varview;
+    TwinTableDataMember* dataview;
+
+	TableColumn *getColumn (long int col);
 signals:
 	void deleteColumnRequest (int);
 /** emitted so the RKEditorDataFrame can add a corresponding object */
@@ -91,6 +96,9 @@ private:
 	int header_pos;
 
 	RKEditor::PasteMode paste_mode;
+
+	typedef QIntDict<TableColumn> ColMap;
+	ColMap col_map;
 protected:	
 /** set a row of cells, expanding the table if necessary. Assumes you provide the correct amount of data! */
 	void setRow (TwinTableMember* table, int row, int start_col, int end_col, char **data);
@@ -100,6 +108,11 @@ protected:
 	void deleteColumn (int column);
 /** Returns the active Table (of the two members), 0 if no table active */
 	TwinTableMember *activeTable ();
+
+	long int getObjectCol (RObject *object);
+/// if object == 0, removes the column from the list
+	void setColObject (long int column, RObject *object);
+	RObject *getColObject (long int col);
 private slots:
 	void scrolled (int x, int y);
 	void autoScrolled (int x, int y);

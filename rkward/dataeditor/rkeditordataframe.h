@@ -39,8 +39,6 @@ public:
 
 	void flushChanges ();
 	
-	void setColObject (int column, RObject *object);
-	RObject *getColObject (int col);
 	//void objectDeleted (RObject *object);
 	//void objectMetaModified (RObject *object);
 
@@ -69,13 +67,9 @@ private:
 /// syncs the whole table.
 	void pushTable (RCommandChain *sync_chain);
 	RCommandChain *open_chain;
-	int getObjectCol (RObject *object);
 	void enableEditing (bool on);
 	void updateMetaValue (RObject *obj, int row, int col, bool sync=true);
-	
-	typedef QMap <int, RObject*> ColMap;
-	ColMap col_map;
-	
+
 	void modifyObjectMeta (RObject *object, int column);
 protected:
 	void openObject (RObject *object, bool initialize_to_empty=false);
