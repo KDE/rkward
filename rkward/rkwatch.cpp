@@ -37,6 +37,7 @@ RKwatch::RKwatch(RInterface *parent) : QWidget () {
 	grid->addWidget (splitter, 0, 0);
 
 	watch = new QTextEdit (splitter);
+	watch->setTextFormat (PlainText);
 	watch->setReadOnly (true);
 
 	QWidget *layout_widget = new QWidget (splitter);

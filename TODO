@@ -1,22 +1,28 @@
 The following list of TODO-items is NOT complete!
 
 stuff to do before 0.2.2 release
-- add more plugin-widgets, plugins
+- distribute r.xml-file
 
 small stuff to do soon
 - plugins-scanning: don't duplicate everything
 - rework plugin-XML-format
 - add more plugin-widgets
+- setValue-API for plugin-widgets and copying of values when switching from wizard to dialog-interface
 - set up a simple but serious debbugging framework
 - cleanup label-mess for plugin-widgets
-- further smarten up varselector / varslot-interaction
+- formula-widget:
+	- use smart sorting, esp. of generated string
+	- add labels, add "up to level" option
+	- add constant term option
 - handle asynchronous data in Output
 	- locking
 	- move output logging to RKOutput?
+- let R have main control over output, not PHP
 
 mid-term stuff
 - add XML-parsing helper functions and error-checking
 - restructure source-layout
+- create a spinbox, that can really deal with real numbers
 
 stuff to do before the thing is usable
 - RKWatch
@@ -28,6 +34,7 @@ stuff to do before the thing is usable
 - support for multiple tables/data.frames
 - mostly everything
 - calls from R to RKWard
+	- using TCP-sockets?
 
 stuff to do before a 1.0 release
 - handle graphics

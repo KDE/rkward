@@ -42,7 +42,7 @@ RKFormula::RKFormula (const QDomElement &element, QWidget *parent, RKPlugin *plu
 	QVBoxLayout *group_layout = new QVBoxLayout(type_selector->layout());
 	group_layout->addWidget (new QRadioButton (i18n ("Full Model"), type_selector));
 	group_layout->addWidget (new QRadioButton (i18n ("Main Effects only"), type_selector));
-	group_layout->addWidget (new QRadioButton (i18n ("Custom Model"), type_selector));
+	group_layout->addWidget (new QRadioButton (i18n ("Custom Model:"), type_selector));
 	connect (type_selector, SIGNAL (clicked (int)), this, SLOT (typeChange (int)));
 	
 	custom_model_widget = new QWidget (type_selector);
@@ -79,6 +79,7 @@ RKFormula::RKFormula (const QDomElement &element, QWidget *parent, RKPlugin *plu
 	addWidget (type_selector);
 	
 	fixed_factors_id = element.attribute ("fixed_factors");
+	dependent_id = element.attribute ("dependent");
 	type_selector->setCaption (element.attribute ("label", "Specify model"));
 }
 
@@ -89,6 +90,8 @@ RKFormula::~RKFormula () {
 void RKFormula::initialize () {
 	fixed_factors = plugin ()->getVarSlot (fixed_factors_id);
 	connect (fixed_factors, SIGNAL (changed ()), this, SLOT (factorsChanged ()));
+	dependent = plugin ()->getVarSlot (dependent_id);
+	connect (dependent, SIGNAL (changed ()), this, SLOT (factorsChanged ()));
 	typeChange (0);
 }
 
@@ -102,20 +105,8 @@ void RKFormula::typeChange (int id) {
 	
 	if (id == (int) FullModel) {
 		custom_model_widget->setEnabled (false);
-		model_string = "";
-		QValueList<RKVariable*> vlist = fixed_factors->getVariables ();
-		for (QValueList<RKVariable*>::iterator it = vlist.begin (); it != vlist.end (); ++it) {
-			if (it != vlist.begin ()) model_string.append (" * ");
-			model_string.append ((*it)->getFullName ());
-		}
 	} else if (id == (int) MainEffects) {
 		custom_model_widget->setEnabled (false);
-		model_string = "";
-		QValueList<RKVariable*> vlist = fixed_factors->getVariables ();
-		for (QValueList<RKVariable*>::iterator it = vlist.begin (); it != vlist.end (); ++it) {
-			if (it != vlist.begin ()) model_string.append (" + ");
-			model_string.append ((*it)->getFullName ());
-		}
 	} else if (id == (int) Custom) {
 		predictors_view->clear ();
 		item_map.clear ();
@@ -125,27 +116,91 @@ void RKFormula::typeChange (int id) {
 			item_map.insert (new_item, (*it));
 		}
 		checkCustomModel ();
-		makeCustomModelString ();
 		custom_model_widget->setEnabled (true);
 	}
 	
 	model_type = (ModelType) id;
+	makeModelString ();
 	emit (changed ());
 }
 
-void RKFormula::makeCustomModelString () {
-	model_string = "";
-	for (InteractionMap::Iterator it = interaction_map.begin (); it != interaction_map.end (); ++it) {
-		if (it != interaction_map.begin ()) {
-			model_string.append (" + ");
-		}
-		for (int i=0; i <= it.data ().level; ++i) {
-			if (i) {
-				model_string.append (":");
-			}
-			model_string.append (it.data ().vars[i]->getShortName ());
+void RKFormula::makeModelString () {
+	// first find out, whether mulitple tables are involved and construct table string
+	multitable = false;
+	model_ok = false;
+	mangled_names.clear ();
+	RKVariable *dep_var = 0;
+	QString table = "";
+	if (dependent->getNumVars()) {
+		dep_var = dependent->getVariables ().first ();
+		model_ok = true;
+	}
+	QValueList<RKVariable*> vlist = fixed_factors->getVariables ();
+	if (vlist.empty ()) {
+		model_ok = false;
+	}
+	if (dep_var) {
+		table = dep_var->getTable ();
+	} else if (!vlist.empty ()) {
+		table = vlist.first ()->getTable ();
+	}
+	for (QValueList<RKVariable*>::iterator it = vlist.begin (); it != vlist.end (); ++it) {
+		if ((*it)->getTable () != table) {
+			multitable = false;
+			break;
 		}
 	}
+	if (multitable) {
+		table_string = "data.frame (";
+		if (dep_var) table_string.append (mangleName (dep_var) + "=" + dep_var->getFullName ());
+		for (QValueList<RKVariable*>::iterator it = vlist.begin (); it != vlist.end (); ++it) {
+			table_string.append (", " + mangleName ((*it)) + "=" + (*it)->getFullName ());
+		}
+		table_string.append (")");
+	} else {
+		table_string = table;
+	}
+	
+	// construct model string
+	model_string = mangleName (dep_var) + " ~ ";
+	if (model_type == FullModel) {
+		for (QValueList<RKVariable*>::iterator it = vlist.begin (); it != vlist.end (); ++it) {
+			if (it != vlist.begin ()) model_string.append (" * ");
+			model_string.append (mangleName (*it));
+		}
+	} else if (model_type == MainEffects) {
+		for (QValueList<RKVariable*>::iterator it = vlist.begin (); it != vlist.end (); ++it) {
+			if (it != vlist.begin ()) model_string.append (" + ");
+			model_string.append (mangleName (*it));
+		}
+	} else if (model_type == Custom) {	
+		if (interaction_map.empty ()) model_ok = false;
+		for (InteractionMap::Iterator it = interaction_map.begin (); it != interaction_map.end (); ++it) {
+			if (it != interaction_map.begin ()) {
+				model_string.append (" + ");
+			}
+			for (int i=0; i <= it.data ().level; ++i) {
+				if (i) {
+					model_string.append (":");
+				}
+				model_string.append (mangleName (it.data ().vars[i]));
+			}
+		}
+	}
+}
+
+QString RKFormula::mangleName (RKVariable *var) {
+	if (!var) return "";
+		
+	QString dummy = var->getShortName ();
+	QString dummy2= dummy;
+	MangledNames::iterator it;
+	int i=-1;
+	while (mangled_names.find (dummy) != mangled_names.end ()) {
+		dummy = dummy2.append (QString ().setNum (++i));
+	}
+	mangled_names.insert (dummy, var);
+	return dummy;
 }
 
 void RKFormula::addButtonClicked () {
@@ -220,7 +275,7 @@ void RKFormula::addButtonClicked () {
 		interaction_map.insert (item, interactions[i]);
 	}
 	
-	makeCustomModelString ();
+	makeModelString ();
 	emit (changed ());
 }
 
@@ -328,7 +383,7 @@ void RKFormula::removeButtonClicked () {
 		}
 	}
 	
-	makeCustomModelString ();
+	makeModelString ();
 	emit (changed ());
 }
 
@@ -362,11 +417,26 @@ void RKFormula::checkCustomModel () {
 }
 
 bool RKFormula::isSatisfied () {
-	return (model_string != "");
+	return (model_ok);
 }
 
 QString RKFormula::value (const QString &modifier) {
-	return model_string;
+	if (modifier == "data") {
+		return table_string;
+	} else if (modifier == "labels") {
+		QString ret = "list (";
+		MangledNames::iterator it;
+		for (it = mangled_names.begin (); it != mangled_names.end (); ++it) {
+			if (it != mangled_names.begin ()) {
+				ret.append (", ");
+			}
+			ret.append (it.key () + "=\"" + it.data ()->getDescription () + "\"");
+		}
+		ret.append (")");
+		return ret;
+	} else {
+		return model_string;
+	}
 }
 
 #include "rkformula.moc"

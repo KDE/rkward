@@ -32,23 +32,20 @@ PHPBackend::PHPBackend() {
 	php_process = 0;
 	eot_string="#RKEND#\n";
 	busy_writing = false;
-	idle = true;
-	doing_final = false;
+	busy = false;
 }
 
 
 PHPBackend::~PHPBackend() {
-	closeTemplate ();
+	destroy ();
 }
 
-bool PHPBackend::initTemplate (const QString &filename, RKPlugin *responsible) {
+bool PHPBackend::initialize (const QString &filename) {
 	if (php_process && php_process->isRunning ()) {
 		qDebug ("another template is already openend in this backend");
 		return false;
 	}
 
-	_responsible = responsible;
-	
 	php_process = new KProcess (this);
 	*php_process << RKSettingsModulePHP::phpBin();
 	*php_process << (RKSettingsModulePHP::filesPath() + "/common.php");
@@ -60,25 +57,26 @@ bool PHPBackend::initTemplate (const QString &filename, RKPlugin *responsible) {
 	
 	if (!php_process->start (KProcess::NotifyOnExit, KProcess::All)) {
 		KMessageBox::error (0, i18n ("The PHP backend could not be started. Check whether you have correctly configured the location of the PHP-binary (Settings->Configure Settings->PHP backend)"), i18n ("PHP-Error"));
-		_responsible->try_destruct();
+		emit (haveError ());
 		return false;
 	}
 
-	idle = busy_writing = doing_command = startup_done = false;
-
+	busy_writing = doing_command = startup_done = false;
+	busy = true;
+	
 	// start the real template
-	callFunction ("include (\"" + filename + "\");");
+	callFunction ("include (\"" + filename + "\");", 0);
 		
 	return true;
 }
 
-void PHPBackend::closeTemplate () {
+void PHPBackend::destroy () {
 	if (php_process) php_process->kill ();
 	delete php_process;
 	php_process = 0;
 	
 	busy_writing = false;
-	idle = true;
+	busy = false;
 	
 	while (command_stack.count ()) {
 		command_stack.first ()->file->unlink ();
@@ -90,21 +88,21 @@ void PHPBackend::closeTemplate () {
 	data_stack.clear ();
 }
 
-void PHPBackend::callFunction (const QString &function, bool final) {
+void PHPBackend::callFunction (const QString &function, int flags) {
 	qDebug ("callFunction %s", function.latin1 ());
 	KTempFile *file = new KTempFile ();
 	*(file->textStream ()) << "<? " << function << " ?>\n";
 	file->close ();
 	PHPCommand *command = new PHPCommand;
 	command->file = file;
-	command->is_final = final;
+	command->flags = flags;
 	command->complete = false;
 	command_stack.append (command);
 	tryNextFunction ();
 }
 
 void PHPBackend::tryNextFunction () {
-	if ((!busy_writing) && php_process && php_process->isRunning () && idle && command_stack.count ()) {
+	if ((!busy_writing) && php_process && php_process->isRunning () && (!busy) && command_stack.count ()) {
 	/// clean up previous command if applicable
 		if (command_stack.first ()->complete) {
 			command_stack.first ()->file->unlink ();
@@ -118,20 +116,19 @@ void PHPBackend::tryNextFunction () {
 		qDebug ("submitting PHP code: " + command_stack.first ()->file->name ());
 		current_command = command_stack.first ()->file->name () + eot_string;
 		php_process->writeStdin (current_command.latin1 (), current_command.length ());
-		busy_writing = doing_command = true;
-		idle = false;
-		doing_final = command_stack.first ()->is_final;
+		busy_writing = doing_command = busy = true;
 		command_stack.first ()->complete = true;
+		current_flags = command_stack.first ()->flags;
 	}
 }
 
 void PHPBackend::writeData (const QString &data) {
-	data_stack.append (data);
+	data_stack.append (data  + eot_string);
 	tryWriteData ();
 }
 
 void PHPBackend::tryWriteData () {
-	if ((!busy_writing) && php_process && php_process->isRunning () && (!idle) && (data_stack.count ())) {
+	if ((!busy_writing) && php_process && php_process->isRunning () && busy && (data_stack.count ())) {
 		qDebug ("submitting data: " + data_stack.first ());
 		php_process->writeStdin (data_stack.first ().latin1 (), data_stack.first ().length ());
 		busy_writing = true;
@@ -171,64 +168,51 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 	// pending data is always first in a stream, so process it first, too
 	if (have_data) {
 		if (!startup_done) {
-				closeTemplate ();
+				destroy ();
 				KMessageBox::error (0, i18n ("There has been an error\n(\"") + data.stripWhiteSpace () + i18n ("\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKward or an invalid setting for the location of the PHP support files. Check the settings (Settings->Configure Settings->PHP backend) and try again."), i18n ("PHP-Error"));
-				_responsible->try_destruct();
+				emit (haveError ());
 				return;
 		}
 		
-		if (!doing_final) {
-			_responsible->updateCode (data);
-		} else {
-			qDebug ("got final output!");
-
-			QFile file (RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
-			if (!file.open (IO_WriteOnly| IO_Append)) {
-				qDebug ("failed to open outfile");
-				file.close ();
-				return;
-			}
-			QTextStream (&file) << data;
-			file.close ();
-
-			_responsible->newOutput ();
-		}
+		_output.append (data);
+		emit (newData (current_flags));
 	}
 	
 	if (have_request) {
 		if (request == "requesting code") {
-			idle = startup_done = true;
+			startup_done = true;
+			busy = false;
+			emit (commandDone (current_flags));
 			tryNextFunction ();
-			if (idle) {
-				if (_responsible->backendIdle()) return;	// self-destruct imminent. quit
+			if (!busy) {
+				emit (idle ());
+				return;
 			} 
 		} else if (request.startsWith ("requesting data:")) {
 			QString requested_object = request.remove ("requesting data:");
 			qDebug ("requested data: \"" + requested_object + "\"");
-			QString res = _responsible->getVar (requested_object);
-			idle = false;
-			writeData (res + eot_string);
+			emit (requestValue (requested_object));
+			busy = true;
+//			writeData (res + eot_string);
 		} else if (request.startsWith ("requesting rcall:")) {
 			QString requested_call = request.remove ("requesting rcall:");
 			qDebug ("requested rcall: \"" + requested_call + "\"");
-			idle = false;
-			_responsible->doRCall (requested_call);
+			emit (requestRCall (requested_call));
+			busy = true;
+//			_responsible->doRCall (requested_call);
 		} else if (request.startsWith ("requesting rvector:")) {
 			QString requested_call = request.remove ("requesting rvector:");
 			qDebug ("requested rvector: \"" + requested_call + "\"");
-			idle = false;
-			_responsible->getRVector (requested_call);
+			emit (requestRVector (requested_call));
+			busy = true;
+//			_responsible->getRVector (requested_call);
 		} else if (request.startsWith ("PHP-Error")) {
 				QString error = request.remove ("PHP-Error");
-				closeTemplate ();
+				destroy ();
 				KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"") + error.stripWhiteSpace () + i18n ("\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings."), i18n ("PHP-Error"));
-				_responsible->try_destruct();
+				emit (haveError ());
 				return;
 		}
 		return;
 	}
-}
-
-void PHPBackend::gotRCallResult (const QString &res) {
-	writeData (res + eot_string);	
 }

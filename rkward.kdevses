@@ -3,32 +3,82 @@
 <KDevPrjSession>
  <LastCompileConfig>(Default)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
- <DocsAndViews NumberOfDocuments="5" >
-  <Doc0 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkplugin.h" >
-   <View0 line="31" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+ <DocsAndViews NumberOfDocuments="15" >
+  <Doc0 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvarslot.cpp" >
+   <View0 line="152" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkplugin.cpp" >
-   <View0 line="62" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+  <Doc1 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvarslot.h" >
+   <View0 line="63" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="549" Left="2" MinMaxMode="0" />
    </View0>
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/plugins/00means/00ttests/00independent_samples/description.xml" >
-   <View0 line="56" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+  <Doc2 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/TODO" >
+   <View0 line="19" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvarslot.cpp" >
-   <View0 line="204" Type="???" >
+  <Doc3 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/ChangeLog" >
+   <View0 line="12" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
   </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvarslot.h" >
-   <View0 line="0" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+  <Doc4 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkformula.h" >
+   <View0 line="63" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
   </Doc4>
+  <Doc5 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkformula.cpp" >
+   <View0 line="165" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc5>
+  <Doc6 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvarselector.cpp" >
+   <View0 line="40" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc6>
+  <Doc7 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvarselector.h" >
+   <View0 line="54" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc7>
+  <Doc8 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvariable.h" >
+   <View0 line="48" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc8>
+  <Doc9 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvariable.cpp" >
+   <View0 line="41" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc9>
+  <Doc10 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/plugins/00means/51pseudotest/description.xml" >
+   <View0 line="22" Type="???" >
+    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc10>
+  <Doc11 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/plugins/00means/51pseudotest/code.php" >
+   <View0 line="20" Type="???" >
+    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc11>
+  <Doc12 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/debug.h" >
+   <View0 line="0" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc12>
+  <Doc13 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/plugins/simple_anova/description.xml" >
+   <View0 line="3" Type="???" >
+    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc13>
+  <Doc14 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/plugins/simple_anova/code.php" >
+   <View0 line="5" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc14>
  </DocsAndViews>
  <pluginList>
   <kdevbookmarks>

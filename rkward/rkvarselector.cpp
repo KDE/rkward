@@ -47,7 +47,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlu
 	RKwardDoc *doc = plugin->getApp ()->getDocument ();
 	for (int i = doc->numCols () - 1; i >= 0; --i) {
 		RKVariable *variable = new RKVariable;
-		variable->table = "data";
+		variable->table = "rk.data";
 		variable->name = doc->varname (i);
 		variable->label = doc->label (i);
 		variable->type = doc->typeString (i);

@@ -72,25 +72,22 @@ public slots:
 	void changed ();
 /** Get result of r-command (which was requested for the PHP-backend */
 	void gotRResult (RCommand *command);
-private:
-friend class PHPBackend;
-	void updateCode (const QString &text);
-
-/** return result of given call to the R-backend */
-	void doRCall (const QString &call);
+	
+// slots below are called by the backend
+/** this gets called by the PHP-backend, when it's done. Might enable the
+	submit button or destruct the plugin. */
+	void backendIdle ();
+	void backendCommandDone (int flags);
 /** return result of given call (string vector) to the R-backend */	
 	void getRVector (const QString &call);
-
-/** this gets called by the PHP-backend, when it's done. Might enable the
-	submit button or destruct the plugin. Returns true in the latter case. */
-	bool backendIdle ();
-
+/** return result of given call to the R-backend */
+	void doRCall (const QString &call);
+/** get a value for the backend */
+	void getValue (const QString &id);
+private:
+friend class PHPBackend;
 /** try to destruct the plugin */
 	void try_destruct ();
-
-/** called by the PHP-backend, when new (final) output is available. Passed on
-	via RKWardApp->RKOutputWindow */
-	void newOutput ();
 	
 	RKwardApp *app;
 /** sometimes the plugin can't be destroyed immediately, since, for example the PHP-backend is

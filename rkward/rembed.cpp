@@ -73,6 +73,9 @@ bool REmbed::initialize () {
 void REmbed::runCommand (RCommand *command) {
 	
 	bool error;
+	if (command->type () & RCommand::DirectToOutput) {
+		runCommandInternal ("sink (\"" + RKSettingsModuleLogfiles::filesPath () + "/rk_out.html\", append=TRUE, split=TRUE)\n", &error);
+	}
 	if (command->type () & RCommand::GetStringVector) {
 		command->string_data = getCommandAsStringVector (command->command ().latin1 (), &(command->string_count), &error);
 	} else if (command->type () & RCommand::GetRealVector) {
@@ -87,6 +90,10 @@ void REmbed::runCommand (RCommand *command) {
 		command->status = RCommand::WasTried;
 	}
 
+	if (command->type () & RCommand::DirectToOutput) {
+		runCommandInternal ("sink ()\n", &error);
+	}
+	
 	QString temp = "";
 	while (!outfile.atEnd ()) {
 		outfile.readLine (temp, 2048);

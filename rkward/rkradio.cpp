@@ -22,8 +22,6 @@
 #include <qbuttongroup.h>
 #include <qradiobutton.h>
 
-#include "rkplugin.h"
-
 RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
 	qDebug ("creating radio");
 

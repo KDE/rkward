@@ -1,3 +1,5 @@
+- added a formula widget for use in plugins (not entirely finished, yet)
+- fixed some small compilation problems
 - added spinbox widget for use in plugins
 - use coloring for "unsatisfied" plugin widgets instead of the "Problems" display
 - added support for wizard-like plugins

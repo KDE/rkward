@@ -189,43 +189,34 @@ bool RKVarSlot::isSatisfied () {
 }
 
 QString RKVarSlot::value (const QString &modifier) {
-	if (modifier == "label") {
-		if (!multi) {
-			if (num_vars) {
+	if (!multi) {
+		if (num_vars) {
+			if (modifier == "label") {
 				return item_map[0]->getLabel ();
+			} else if (modifier == "shortname") {
+				return item_map[0]->getShortName ();
 			} else {
-				return "";
+				return (item_map[0]->getFullName ());
 			}
 		} else {
-			QString ret;
-	
-			QListViewItem *item = list->firstChild ();
-			while (item) {
-				ret.append (item_map[item]->getLabel () + "\n");
-				item = item->nextSibling ();
-			}
-		
-			return ret;
+			return "";
 		}
 	} else {
-		if (!multi) {
-			if (num_vars) {
-				return (item_map[0]->getFullName ());
+		QString ret;
+
+		QListViewItem *item = list->firstChild ();
+		while (item) {
+			if (modifier == "label") {
+				ret.append (item_map[item]->getLabel () + "\n");
+			} else if (modifier == "shortname") {
+				ret.append (item_map[item]->getShortName () + "\n");
 			} else {
-				return "";
-			}
-			//return line_edit->text ();
-		} else {
-			QString ret;
-	
-			QListViewItem *item = list->firstChild ();
-			while (item) {
 				ret.append (item_map[item]->getFullName () + "\n");
-				item = item->nextSibling ();
 			}
-		
-			return ret;
+			item = item->nextSibling ();
 		}
+	
+		return ret;
 	}
 }
 

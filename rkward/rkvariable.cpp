@@ -24,7 +24,7 @@ RKVariable::~RKVariable () {
 }
 
 QString RKVariable::getLabel () {
-	return label;
+	return (name + " (" + label + ")");
 }
 
 QString RKVariable::getShortName () {
@@ -32,7 +32,7 @@ QString RKVariable::getShortName () {
 }
 
 QString RKVariable::getFullName () {
-	return ("rk." + table + "[[" + name + "]]");
+	return (table + "[[\"" + name + "\"]]");
 }
 
 QString RKVariable::getTypeString () {
@@ -40,5 +40,10 @@ QString RKVariable::getTypeString () {
 }
 
 QString RKVariable::getDescription () {
-	return (name + " (" + label + ")");
+	return label;
 }
+
+QString RKVariable::getTable () {
+	return table;
+}
+

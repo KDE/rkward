@@ -47,7 +47,12 @@ public slots:
 	void factorsChanged ();
 private:
 	QString model_string;
-	
+	QString table_string;
+	bool multitable;
+	bool model_ok;
+	typedef QMap<QString, RKVariable*> MangledNames;
+	MangledNames mangled_names;
+
 	enum ModelType { FullModel=0, MainEffects=1, Custom=2 };
 	ModelType model_type;
 	QButtonGroup *type_selector;
@@ -61,7 +66,8 @@ private:
 	QSpinBox *level_box;
 	
 	void checkCustomModel ();
-	void makeCustomModelString ();
+	void makeModelString ();
+	QString mangleName (RKVariable *var);
 	
 	typedef QMap<QListViewItem*, RKVariable*> ItemMap;
 	ItemMap item_map;
@@ -82,7 +88,9 @@ private:
 	Interaction *makeInteractions (int level, const RKVarPtr *source_vars, int source_count, int *count);
 	
 	QString fixed_factors_id;
+	QString dependent_id;
 	RKVarSlot *fixed_factors;
+	RKVarSlot *dependent;
 protected:
 	bool isSatisfied ();
 	QString value (const QString &modifier);

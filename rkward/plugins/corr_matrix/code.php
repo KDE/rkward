@@ -15,41 +15,32 @@ rk.temp <- cor (data.frame (<? echo ($vars); ?>), NULL, "<? echo $use; ?>", "<? 
 	function printout () {
 		$method = getRK_val ("method");
 		$use = getRK_val ("use");
-		$vars = array ();
-		$vars = explode ("\n", trim (getRK_val ("x")));
-		$labels = array ();
-		$labels = explode ("\n", trim (getRK_val ("x.label")));
-		
-		// fetch values from R
-		callR_val ("rk.temp <- data.frame (rk.temp)");
-		$matrix = array ();
-		for ($i = count ($vars); $i > 0; --$i) {
-			$matrix[$i] = array ();
-			$matrix[$i] = getRVector ("rk.temp[[" . ($i) . "]]");
-		}
-		
+
 		// produce the output
-?><h1>Correlation Matrix</h1>
-<h2>TODO: describe in verbatim: <? echo ($method); ?>, <? echo ($use); ?></h2>
-<table border="1">
-	<tr>
-	<td>Variable</td>
-	<? for ($i = 0; $i < count ($vars); ++$i) { ?>
-		<td><? echo $vars[$i]; ?></td>
-	<? } ?>
-	</tr>
-<? for ($i = 0; $i < count ($vars); ++$i) { ?>
-		<tr>
-		<td><? echo ($vars[$i] . "<br>(" . $labels[$i] . ")"); ?></td>
-	<? for ($j = 0; $j < count ($vars); ++$j) { ?>
-		<td><? echo ($matrix[$i+1][$j]); ?></td>
-	<?}?>
-		</tr>
-<?}?>
-</table><?
+?>
+rk.temp.vars <- c (<? echo ("\"" . join ("\",\"", explode ("\n", trim (getRK_val ("x.shortname")))) . "\""); ?>)
+rk.temp.labels <- c (<? echo ("\"" . join ("\",\"", explode ("\n", trim (getRK_val ("x.label")))) . "\""); ?>)
+rk.temp <- as.data.frame (rk.temp)
+cat ("<h1>Correlation Matrix</h1>")
+cat ("<h2>TODO: describe in verbatim: <? echo ($method); ?>, <? echo ($use); ?></h2>")
+cat ("<table border=\"1\">\n<tr>\n<td>Variable</td>")
+for (i in 1:dim (rk.temp)) {
+	cat (paste ("<td>", rk.temp.vars[i], "</td>"))
+}
+cat ("</tr>\n")
+for (i in 1:dim (rk.temp)) {
+	cat (paste ("<tr><td>", rk.temp.labels[i], "</td>"))
+	for (j in 1:dim (rk.temp)) {
+		cat (paste ("<td>", rk.temp[i,j], "</td>"))
+	}
+	cat ("</tr>\n")
+}
+cat ("</table>")
+<?
 	}
 	
 	function cleanup () {
-		callR_val ("rm (rk.temp)");
+?>rm (rk.temp)
+<?
 	}
 ?>

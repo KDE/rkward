@@ -33,6 +33,7 @@
 #include <qlabel.h>
 
 #include <klocale.h>
+#include <kapplication.h>
 
 #include "rkward.h"
 #include "rkwarddoc.h"
@@ -52,7 +53,13 @@
 #include "rkpluginspinbox.h"
 #include "rkformula.h"
 
-#define FOR_PHP_FLAG 1
+#include "debug.h"
+
+#define R_FOR_PHP_FLAG 1
+
+#define BACKEND_DONT_CARE 0
+#define BACKEND_FOR_CODE_WINDOW 1
+#define BACKEND_FOR_SUBMISSION 2
 
 RKPlugin::RKPlugin(RKwardApp *parent, const QString &filename) : QWidget () {
 	app = parent;
@@ -67,10 +74,18 @@ RKPlugin::RKPlugin(RKwardApp *parent, const QString &filename) : QWidget () {
 	// initialize the PHP-backend with the code-template
 	QString dummy = QFileInfo (QFile (filename)).dirPath () + "/code.php";
 	backend = new PHPBackend ();
-	if (!backend->initTemplate (dummy, this)) return;
+	connect (backend, SIGNAL (commandDone (int)), this, SLOT (backendCommandDone (int)));
+	connect (backend, SIGNAL (idle ()), this, SLOT (backendIdle ()));
+	connect (backend, SIGNAL (requestValue (const QString&)), this, SLOT (getValue (const QString&)));
+	connect (backend, SIGNAL (requestRCall (const QString&)), this, SLOT (doRCall (const QString&)));
+	connect (backend, SIGNAL (requestRVector (const QString&)), this, SLOT (getRVector (const QString&)));
+	connect (backend, SIGNAL (haveError ()), this, SLOT (cancel ()));
+	if (!backend->initialize (dummy)) return;
 
 	// create the main gui
 	sizer_grid = new QGridLayout (this, 1, 1);
+	
+	connect (KApplication::kApplication (), SIGNAL (shutDown ()), this, SLOT (cancel ()));
 	buildGUI (0);
 }
 
@@ -113,13 +128,13 @@ void RKPlugin::buildGUI (int type_override) {
 	QDomDocument doc;
 	QFile f(filename);
 	if (!f.open(IO_ReadOnly))
-		qDebug ("Could not open file for reading: " + filename);
+		RK_DO (qDebug ("Could not open file for reading: %s", filename.latin1 ()), PLUGIN, DL_ERROR);
 	if (!doc.setContent(&f, false, &error_message, &error_line, &error_column)) {
 		f.close();
-		qDebug ("parsing-error in: " + filename);
-		qDebug ("Message: " + error_message);
-		qDebug ("Line: %d", error_line);
-		qDebug ("Column: %d", error_column);
+		RK_DO (qDebug ("parsing-error in: %s", filename.latin1 ()), PLUGIN, DL_ERROR);
+		RK_DO (qDebug ("Message: %s", error_message.latin1 ()), PLUGIN, DL_ERROR);
+		RK_DO (qDebug ("Line: %d", error_line), PLUGIN, DL_ERROR);
+		RK_DO (qDebug ("Column: %d", error_column), PLUGIN, DL_ERROR);
 		return;
 	}
 	f.close();
@@ -196,8 +211,8 @@ void RKPlugin::buildGUI (int type_override) {
 }
 
 void RKPlugin::buildDialog (const QDomElement &dialog_element, bool wizard_available) {
-	qDebug ("%s", "buildDialog");
-		
+	RK_TRACE (PLUGIN);
+	
 	QGridLayout *main_grid = new QGridLayout (main_widget, 1, 1);
 	QSplitter *splitter = new QSplitter (QSplitter::Vertical, main_widget);
 	main_grid->addWidget (splitter, 0, 0);
@@ -253,7 +268,7 @@ void RKPlugin::buildDialog (const QDomElement &dialog_element, bool wizard_avail
 }
 
 void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_available) {
-	qDebug ("%s", "buildWizard");
+	RK_TRACE (PLUGIN);
 
 	QGridLayout *main_grid = new QGridLayout (main_widget, 3, 4);
 	wizard_stack = new QWidgetStack (main_widget);
@@ -379,7 +394,8 @@ void RKPlugin::ok () {
 		getApp ()->getDocument ()->syncToR ();
 		getApp ()->r_inter->issueCommand (new RCommand (current_code, RCommand::Plugin, "", this, SLOT (gotRResult (RCommand *))));
 		php_backend_chain = getApp ()->r_inter->startChain ();
-		backend->callFunction ("printout (); cleanup ();", true);
+		backend->printout (BACKEND_DONT_CARE);
+		backend->cleanup (BACKEND_FOR_SUBMISSION);
 	}
 }
 
@@ -407,12 +423,8 @@ void RKPlugin::toggleCode () {
 	}
 }
 
-void RKPlugin::newOutput () {
-	app->newOutput();
-}
-
 void RKPlugin::try_destruct () {
-	qDebug ("try_destruct");
+	RK_TRACE (PLUGIN);
 	if (!backend->isBusy ()) {
 		delete this;
 	} else {
@@ -421,14 +433,30 @@ void RKPlugin::try_destruct () {
 	}
 }
 
-bool RKPlugin::backendIdle () {
-	qDebug ("backendIdle");
+void RKPlugin::backendCommandDone (int flags) {
+	RK_TRACE (PLUGIN);
+	RK_DO (qDebug ("%d", flags), PLUGIN, DL_DEBUG);
+	
+	if (flags == BACKEND_DONT_CARE) {
+		return;
+	} else if (flags == BACKEND_FOR_CODE_WINDOW) {
+		current_code = backend->retrieveOutput ();
+		RK_DO (qDebug ("current_code %s", current_code.latin1 ()), PLUGIN, DL_DEBUG);
+		backend->resetOutput ();
+	} else if (flags == BACKEND_FOR_SUBMISSION) {
+		getApp ()->r_inter->issueCommand (new RCommand (backend->retrieveOutput (), RCommand::Plugin | RCommand::DirectToOutput, "", this, SLOT (gotRResult (RCommand *))), php_backend_chain);
+		backend->resetOutput ();
+	}
+}
+
+void RKPlugin::backendIdle () {
+	RK_TRACE (PLUGIN);
 	getApp ()->r_inter->closeChain (php_backend_chain);
 	php_backend_chain = 0;
 	
 	if (should_destruct) {
 		try_destruct ();
-		return true;
+		return;
 	}
 		
 	// check whether everything is satisfied and fetch any complaints
@@ -450,17 +478,15 @@ bool RKPlugin::backendIdle () {
 		current_code = "";
 		codeDisplay->setText ("Processing. Please wait.");
 		php_backend_chain = getApp ()->r_inter->startChain ();
-		backend->callFunction ("preprocess (); calculate ();");
+		backend->preprocess (BACKEND_DONT_CARE);
+		backend->calculate (BACKEND_FOR_CODE_WINDOW);
 		should_updatecode = false;
 		okButton->setEnabled (false);
-		return false;	// backend is not idle anymore, now
 	} else {
 		if (codeDisplay->isVisible () && (current_page == (num_pages - 1))) {
 			codeDisplay->setText (current_code);
 		}
 	}
-	
-	return false;
 }
 
 void RKPlugin::registerWidget (RKPluginWidget *widget, const QString &id, int page) {
@@ -485,23 +511,21 @@ void RKPlugin::changed () {
 	}
 }
 
-void RKPlugin::updateCode (const QString &text) {
-	current_code.append (text);
-}
-
 void RKPlugin::doRCall (const QString &call) {
-	getApp ()->r_inter->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, SLOT (gotRResult (RCommand *)), FOR_PHP_FLAG), php_backend_chain);
+	getApp ()->r_inter->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, SLOT (gotRResult (RCommand *)), R_FOR_PHP_FLAG), php_backend_chain);
 }
 
 void RKPlugin::getRVector (const QString &call) {
-	getApp ()->r_inter->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom | RCommand::GetStringVector, "", this, SLOT (gotRResult (RCommand *)), FOR_PHP_FLAG), php_backend_chain);
+	getApp ()->r_inter->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom | RCommand::GetStringVector, "", this, SLOT (gotRResult (RCommand *)), R_FOR_PHP_FLAG), php_backend_chain);
 }
 
 void RKPlugin::gotRResult (RCommand *command) {
+	RK_DO (qDebug ("gotRResult. Command-flags: %d", command->getFlags ()), PLUGIN, DL_DEBUG);
+
 	if (command->hasError()) {
 		error_dialog->newError (command->error());
 	}
-	if (command->getFlags() & FOR_PHP_FLAG) {
+	if (command->getFlags() & R_FOR_PHP_FLAG) {
 		// since R-calls are asynchronous, we need to expect incoming data after the backend has been torn down
 		if (!backend) return;
 		if ((command->type () & RCommand::GetStringVector)) {
@@ -513,11 +537,17 @@ void RKPlugin::gotRResult (RCommand *command) {
 				}
 				temp.append (command->getStringVector ()[i]);
 			}
-			backend->gotRCallResult (temp);
+			backend->writeData (temp);
 		} else {
-			backend->gotRCallResult (command->output());
+			backend->writeData (command->output());
 		}
+	} else if (command->type () & RCommand::DirectToOutput) {
+		app->newOutput ();
 	}
+}
+
+void RKPlugin::getValue (const QString &id) {
+	backend->writeData (getVar (id));
 }
 
 QString RKPlugin::getVar (const QString &id) {
@@ -527,7 +557,7 @@ QString RKPlugin::getVar (const QString &id) {
 		widget = widgets[ident];
 	} else {
 		widget = 0;
-		qDebug ("Couldn't find value for $" + id +"$!");
+		RK_DO (qDebug ("Couldn't find value for $%s$!", id.latin1 ()), PLUGIN, DL_ERROR);
 		return ("#unavailable#");
 	}
 
@@ -536,21 +566,25 @@ QString RKPlugin::getVar (const QString &id) {
 
 /** Returns a pointer to the varselector by that name (0 if not available) */
 RKVarSelector *RKPlugin::getVarSelector (const QString &id) {
-	RKPluginWidget *selector = widgets[id];
-	if (selector->type () == VARSELECTOR_WIDGET) {
-		return (RKVarSelector *) selector;
+	WidgetsMap::iterator it = widgets.find (id);
+	if (it != widgets.end ()) {
+		if (it.data ()->type () == VARSELECTOR_WIDGET) {
+			return (RKVarSelector *) it.data ();
+		}
 	}
 
-	qDebug ("failed to find varselector!");
+	RK_DO (qDebug ("%s", "failed to find varselector!"), PLUGIN, DL_ERROR);
 	return 0;
 }
 
 RKVarSlot *RKPlugin::getVarSlot (const QString &id) {
-	RKPluginWidget *slot = widgets[id];
-	if (slot->type () == VARSLOT_WIDGET) {
-		return (RKVarSlot *) slot;
+	WidgetsMap::iterator it = widgets.find (id);
+	if (it != widgets.end ()) {
+		if (it.data ()->type () == VARSLOT_WIDGET) {
+			return (RKVarSlot *) it.data ();
+		}
 	}
 
-	qDebug ("failed to find varselot!");
+	RK_DO (qDebug ("%s", "failed to find varselot!"), PLUGIN, DL_ERROR);
 	return 0;
 }

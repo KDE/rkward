@@ -1,5 +1,4 @@
 <?
-
 // rename to getR
 function callR_val ($call) {
 	return (getInput ("requesting rcall:" . $call));

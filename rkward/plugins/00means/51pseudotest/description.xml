@@ -20,7 +20,7 @@
 				</row>
 			</tab>
 			<tab label="Model">
-				<formula id="model" fixed_factors="y" label="Now chose the model"/>
+				<formula id="model" dependent="x" fixed_factors="y" label="Now chose the model"/>
 			</tab>
 		</tabbook>
 	</dialog>
