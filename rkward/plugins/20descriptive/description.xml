@@ -13,7 +13,7 @@
 				<varselector id="vars"/>
 			</column>
 			<column>
-				<varslot type="numeric" id="x" source="vars" required="true" label="variable:"/>
+				<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable:"/>
 				<checkbox id="mean" label="mean" value="1" value_unchecked="0" checked="true"/>
 				<checkbox id="median" label="median" value="1" value_unchecked="0"/>
 				<checkbox id="range" label="range" value="1" value_unchecked="0" checked="true"/>

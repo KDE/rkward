@@ -23,8 +23,9 @@
 class QLineEdit;
 class QPushButton;
 class QVarSelector;
+class QListView;
 
-/** An RKVarSlot takes a single variable from an RKVarSelector.
+/** An RKVarSlot takes one or more variable(s) from an RKVarSelector.
   *@author Thomas Friedrichsmeier
   */
 
@@ -36,12 +37,17 @@ public:
 public slots:
 /** Called when the select-button is pressed */
 	void selectPressed ();
+	void listSelectionChanged ();
 private:
 	QLineEdit *line_edit;
+	QListView *list;
 	QPushButton *select;
 	QString source_id;
-	bool filled;
+	int min_vars;
+	int num_vars;
+	bool multi;
 	bool required;
+	bool selection;
 protected:
 	bool isSatisfied ();
 	QString value ();
