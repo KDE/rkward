@@ -34,7 +34,7 @@
 QString RKSettingsModulePlugins::plugin_dir;
 RKSettingsModulePlugins::PluginPrefs RKSettingsModulePlugins::interface_pref;
 
-RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
+RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, 6);
 	
 	main_vbox->addStretch ();

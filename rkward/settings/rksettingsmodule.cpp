@@ -19,7 +19,7 @@
 #include "../rkward.h"
 #include "rksettings.h"
 
-RKSettingsModule::RKSettingsModule(RKSettings *gui, QWidget *parent) : QWidget(parent) {
+RKSettingsModule::RKSettingsModule(RKSettings *gui, QWidget *parent) : QWidget (parent) {
 	changed = false;
 	RKSettingsModule::gui = gui;
 }

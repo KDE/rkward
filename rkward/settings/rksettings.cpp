@@ -29,12 +29,30 @@
 #include "rksettingsmodulephp.h"
 #include "rksettingsmodulelogfiles.h"
 #include "rksettingsmoduleoutput.h"
+#include "rksettingsmodulewatch.h"
 
 #include "../rkward.h"
+#include "../rkglobals.h"
 
-RKSettings::RKSettings (RKwardApp *parent, const char *name) : QDialog (parent, name,false, QWidget::WDestructiveClose) {
-	rk = parent;
-	
+//static
+RKSettings *RKSettings::settings_dialog = 0;
+
+//static 
+void RKSettings::configureSettings (SettingsPage page, QWidget *parent) {
+	if (!settings_dialog) {
+		settings_dialog = new RKSettings (parent);
+	}
+	settings_dialog->show ();
+	settings_dialog->raise ();
+	settings_dialog->raisePage (page);
+}
+
+//static
+void RKSettings::dialogClosed () {
+	settings_dialog = 0;
+}
+
+RKSettings::RKSettings (QWidget *parent, const char *name) : QDialog (parent, name,false, QWidget::WDestructiveClose) {
 	setCaption (i18n ("Settings"));
 	
 	QGridLayout *grid = new QGridLayout (this, 2, 1, 11, 6);
@@ -66,18 +84,27 @@ RKSettings::~RKSettings() {
 		delete *it;
 	}
 	modules.clear ();
+	
+	dialogClosed ();
 }
 
 void RKSettings::initModules () {
-	modules.append (new RKSettingsModulePlugins (this, rk));
-	modules.append (new RKSettingsModuleR (this, rk));
-	modules.append (new RKSettingsModulePHP (this, rk));
-	modules.append (new RKSettingsModuleLogfiles (this, rk));
-	modules.append (new RKSettingsModuleOutput (this, rk));
+	modules.append (new RKSettingsModulePlugins (this, this));
+	modules.append (new RKSettingsModuleR (this, this));
+	modules.append (new RKSettingsModulePHP (this, this));
+	modules.append (new RKSettingsModuleLogfiles (this, this));
+	modules.append (new RKSettingsModuleOutput (this, this));
+	modules.append (new RKSettingsModuleWatch (this, this));
 	
 	ModuleList::iterator it;
 	for (it = modules.begin (); it != modules.end (); ++it) {
 		tabs->addTab (*it, (*it)->caption ());
+	}
+}
+
+void RKSettings::raisePage (SettingsPage page) {
+	if (page != NoPage) {
+		tabs->setCurrentPage (((int) page) - 1);
 	}
 }
 
@@ -86,7 +113,7 @@ void RKSettings::apply () {
 	for (it = modules.begin (); it != modules.end (); ++it) {
 		if ((*it)->hasChanges ()) {
 			(*it)->applyChanges ();
-			(*it)->save (rk->config);
+			(*it)->save (RKGlobals::rkApp ()->config);
 		}
 	}
 	applybutton->setEnabled (false);
@@ -112,6 +139,7 @@ void RKSettings::loadSettings (KConfig *config) {
 	RKSettingsModulePHP::loadSettings(config);
 	RKSettingsModuleLogfiles::loadSettings(config);
 	RKSettingsModuleOutput::loadSettings(config);
+	RKSettingsModuleWatch::loadSettings(config);
 }
 
 void RKSettings::saveSettings (KConfig *config) {
@@ -120,6 +148,7 @@ void RKSettings::saveSettings (KConfig *config) {
 	RKSettingsModulePHP::saveSettings(config);
 	RKSettingsModuleLogfiles::saveSettings(config);
 	RKSettingsModuleOutput::saveSettings(config);
+	RKSettingsModuleWatch::loadSettings(config);
 }
 
 #include "rksettings.moc"

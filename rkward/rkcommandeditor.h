@@ -36,6 +36,8 @@ public:
 	void setText (const QString &text);
 	void insertText (const QString &text);
 	QString text ();
+	
+	void configure ();
 private:
 	Kate::Document *doc;
 	Kate::View *view;

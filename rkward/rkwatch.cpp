@@ -20,6 +20,8 @@
 #include "rbackend/rinterface.h"
 #include "rkcommandeditor.h"
 #include "rkglobals.h"
+#include "settings/rksettingsmodulewatch.h"
+#include "settings/rksettings.h"
 #include "rkeditormanager.h"
 
 #include <qtextedit.h>
@@ -27,14 +29,16 @@
 #include <qfont.h>
 #include <qlayout.h>
 #include <qsplitter.h>
+#include <qmenubar.h>
+#include <qpopupmenu.h>
 
 #include <klocale.h>
 
 RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
-	QGridLayout *grid = new QGridLayout (this, 1, 1, 11, 6);
+	QGridLayout *grid = new QGridLayout (this, 2, 1);
 
 	QSplitter *splitter = new QSplitter (QSplitter::Vertical, this);
-	grid->addWidget (splitter, 0, 0);
+	grid->addWidget (splitter, 1, 0);
 
 	watch = new QTextEdit (splitter);
 	watch->setTextFormat (PlainText);
@@ -54,6 +58,8 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	connect (submit, SIGNAL (clicked ()), this, SLOT (submitCommand ()));
 	button_vbox->addWidget (submit);
 
+	button_vbox->addStretch ();
+	
 	clear_commands = new QPushButton (i18n ("Reset"), layout_widget);
 	connect (clear_commands, SIGNAL (clicked ()), this, SLOT (clearCommand ()));
 	button_vbox->addWidget (clear_commands);
@@ -61,12 +67,33 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
     resize (QSize (600, 511).expandedTo (minimumSizeHint ()));
 	setCaption (i18n ("R-Interface Watch"));
 	
-	// set a fixed width font
-    QFont font ("Courier");
-	watch->setCurrentFont (font);
-	watch->setWordWrap (QTextEdit::NoWrap);
+	clearWatch ();
 	
 	r_inter = parent;
+
+	// construct menu-bar
+	menu = new QMenuBar (this);
+	QPopupMenu *watch_menu = new QPopupMenu (this);
+	watch_menu->setItemEnabled (watch_menu->insertItem (i18n ("&Print Log"), 0, 0), false);
+	watch_menu->setItemEnabled (watch_menu->insertItem (i18n ("Export Log"), 0, 0), false);
+	watch_menu->insertItem (i18n ("&Clear Log"), this, SLOT (clearWatch ()));
+	watch_menu->insertSeparator ();
+	watch_menu->insertItem (i18n ("Configure"), this, SLOT (configureWatch ()));
+	menu->insertItem (i18n ("Watch"), watch_menu);
+
+	QPopupMenu *commands_menu = new QPopupMenu (this);
+	commands_menu->setItemEnabled (commands_menu->insertItem (i18n ("&Open new editor window"), 0, 0), false);
+	commands_menu->insertSeparator ();
+	commands_menu->insertItem (i18n ("Configure Editor"), this, SLOT (configureEditor ()));
+	menu->insertItem (i18n ("Commands"), commands_menu);
+	
+	menu->insertSeparator ();
+	
+	QPopupMenu *help_menu = new QPopupMenu (this);
+	help_menu->setItemEnabled (help_menu->insertItem (i18n ("Sorry, no help available so far"), 0, 0), false);
+	menu->insertItem (i18n ("Help"), help_menu);
+	
+	grid->addWidget (menu, 0, 0);
 }
 
 RKwatch::~RKwatch(){
@@ -74,6 +101,12 @@ RKwatch::~RKwatch(){
 }
 
 void RKwatch::addInput (RCommand *command) {
+	if (!RKSettingsModuleWatch::shouldShowInput (command)) return;
+
+	addInputNoCheck (command);
+}
+
+void RKwatch::addInputNoCheck (RCommand *command) {
 // TODO: make colors/styles configurable
 	if (command->type () & RCommand::User) {
 		watch->setColor (Qt::red);
@@ -93,6 +126,29 @@ void RKwatch::addInput (RCommand *command) {
 }
 
 void RKwatch::addOutput (RCommand *command) {
+	if (!RKSettingsModuleWatch::shouldShowOutput (command)) {
+		if (!command->hasError ()) {
+			return;
+		} else {
+		// if the command has an error and the error should be shown, but the command itself has not been shown so far, add it now.
+			if (RKSettingsModuleWatch::shouldShowError (command)) {
+				if (!RKSettingsModuleWatch::shouldShowInput (command)) {
+					addInputNoCheck (command);
+				}
+			} else {
+				return;
+			}
+		}
+	}
+
+	if (command->type () & RCommand::User) {
+		watch->setColor (Qt::red);
+	} else if (command->type () & RCommand::Sync) {
+		watch->setColor (Qt::gray);
+	} else if (command->type () & RCommand::Plugin) {
+		watch->setColor (Qt::blue);
+	}
+	
 	watch->append ("---------------------------\n");
 	watch->append ("Got reply:");
     watch->setBold (true);
@@ -115,10 +171,19 @@ void RKwatch::submitCommand () {
 	clearCommand ();
 }
 
-void RKwatch::enableSubmit () {
-	submit->setEnabled (true);
+void RKwatch::configureWatch () {
+	RKSettings::configureSettings (RKSettings::Watch, this);
 }
 
-void RKwatch::disableSubmit () {
-	submit->setEnabled (false);
+void RKwatch::configureEditor () {
+	commands->configure ();
+}
+
+void RKwatch::clearWatch () {
+	watch->setText ("");
+
+	// set a fixed width font
+    QFont font ("Courier");
+	watch->setCurrentFont (font);
+	watch->setWordWrap (QTextEdit::NoWrap);
 }

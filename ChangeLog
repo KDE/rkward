@@ -1,4 +1,6 @@
-
+- added access to kate-config dialog in the command-editor part of the interface watch
+- added configuration settings for which types of commands to show in the interface watch
+- added a nice startup-dialog instead of creating an emtpy table unconditionally
 - limit size of upper-half in the data.frame editor
 - added convenience R-library: used to streamline communication with R
 - fix against data being synced over and over again

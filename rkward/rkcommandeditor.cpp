@@ -55,6 +55,7 @@ RKCommandEditor::RKCommandEditor (QWidget *parent, bool readonly) : QWidget (par
 
 RKCommandEditor::~RKCommandEditor () {
 	RK_TRACE (COMMANDEDITOR);
+	doc->writeConfig ();
 	delete view;
 	delete doc;
 }
@@ -76,3 +77,8 @@ QString RKCommandEditor::text () {
 	RK_TRACE (COMMANDEDITOR);
 	return doc->text ();
 }
+
+void RKCommandEditor::configure () {
+	doc->configDialog ();
+}
+

@@ -2,7 +2,6 @@ The following list of TODO-items is NOT complete!
 
 stuff to do before 0.2.6 release
 - streamline object-syncing using smart R-functions
-- use a friendly startup-dialog instead of opening an empty table unconditionally
 - set wizard-interface as default
 - pick some from below:
 

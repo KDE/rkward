@@ -231,8 +231,7 @@ void RKwardApp::startR () {
 }
 
 void RKwardApp::slotConfigure () {
-	RKSettings *settings = new RKSettings (this);
-	settings->show ();
+	RKSettings::configureSettings (RKSettings::NoPage, this);
 }
 
 void RKwardApp::initActions()

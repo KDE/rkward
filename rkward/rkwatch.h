@@ -26,6 +26,7 @@ class RInterface;
 class RCommand;
 class QPushButton;
 class QTextEdit;
+class QMenuBar;
 class RKCommandEditor;
 
 /**
@@ -46,11 +47,14 @@ public slots:
 	void clearCommand ();
 /** Submits commands in commands-textedit */
 	void submitCommand ();
-/** Enables the submit button */
-	void enableSubmit ();
-/** Disable the submit button */
-	void disableSubmit ();
+/** configures the watch-window */
+	void configureWatch ();
+/** configures the editor-window */
+	void configureEditor ();
+/** clears the watch-window */
+	void clearWatch ();
 private:
+	void addInputNoCheck (RCommand *command);
 /** Pointer to the R-Interface */
 	RInterface *r_inter;
 
@@ -58,6 +62,8 @@ private:
 	QTextEdit *watch;
 	QPushButton *submit;
 	QPushButton *clear_commands;
+
+	QMenuBar *menu;
 };
 
 #endif
