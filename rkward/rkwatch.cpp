@@ -32,7 +32,7 @@ RKwatch::RKwatch(RInterface *parent) {
 	watch->setReadOnly (true);
 
 	// set a fixed width font
-    QFont font ( "Courier" );
+    QFont font ("Courier");
 	watch->setCurrentFont (font);
 	commands->setCurrentFont (font);
 }
