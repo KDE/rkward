@@ -72,6 +72,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : KMdiChildView (
 RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
 	delete pLayout;
+	delete m_doc;
 }
 
 
@@ -80,7 +81,7 @@ void RKCommandEditorWindow::setRHighlighting (Kate::Document *doc) {
 	int modes_count = highlightingInterface(doc)->hlModeCount ();
 	bool found_mode = false;
 	int i;
-	RK_DO (qDebug ("%s", "Looking for syntax highlighting definition"), COMMANDEDITOR, DL_INFO);
+	//RK_DO (qDebug ("%s", "Looking for syntax highlighting definition"), COMMANDEDITOR, DL_INFO);
 	for (i = 0; i < modes_count; ++i) {
 		RK_DO (qDebug ("%s", highlightingInterface(doc)->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_DEBUG);
 		if (highlightingInterface(doc)->hlModeName(i).lower() == "r script") {
@@ -91,7 +92,7 @@ void RKCommandEditorWindow::setRHighlighting (Kate::Document *doc) {
 	if (found_mode) {
 		highlightingInterface(doc)->setHlMode(i);
 	} else {
-		RK_DO (qDebug ("%s", highlightingInterface(doc)->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_WARNING);
+		//RK_DO (qDebug ("%s", highlightingInterface(doc)->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_WARNING);
 	}
 }
 
@@ -191,8 +192,9 @@ bool RKCommandEditorWindow::save(){
 }
 
 bool RKCommandEditorWindow::saveAs(const KURL &url){
-	return m_doc->saveAs(url);
+	bool result = m_doc->saveAs(url);
 	updateTabCaption(url); 
+	return result;
 }
 
 
