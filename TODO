@@ -5,7 +5,6 @@ stuff to do before the next release
 - get rid of separate ui-file in rkwatch
 - add option to show/hide output
 - add a few plugins
-- basic error-handling in plugins
 
 small stuff to do soon
 - plugins-scanning: don't duplicate everything

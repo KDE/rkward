@@ -38,12 +38,10 @@
 RKwardDoc::RKwardDoc(RKwardApp *parent, const char *name) : TwinTable (parent, name)
 {
 	app = parent;
-	inter = app->r_inter;
 //	output_is = Nothing;
 	tablename = RK_DATA_PREFIX;
 	tablename.append ("data");
 	command_separator = "-------------this is a separator---------------";
-//	connect (inter, SIGNAL (receivedReply (QString)), this, SLOT (processROutput (QString)));
 
 	should_load_id = -1;
 	should_pull_id = -1;
@@ -137,7 +135,7 @@ bool RKwardDoc::openDocument(const KURL& url, const char *format /*=0*/)
 //	output_is = Loaded;
 	RCommand *command = new RCommand ("load (\"" + doc_url.path () + "\")", RCommand::App, "", this, SLOT (processROutput (RCommand *)));
 	should_load_id = command->id ();
-	inter->issueCommand (command);
+	app->r_inter->issueCommand (command);
 
   KIO::NetAccess::removeTempFile( tmpfile );
 
@@ -153,7 +151,7 @@ bool RKwardDoc::saveDocument(const KURL& url, const char *format /*=0*/)
 
 	syncToR ();
 
-	inter->issueCommand (new RCommand ("save.image (\"" + url.path () + "\")", RCommand::App));
+	app->r_inter->issueCommand (new RCommand ("save.image (\"" + url.path () + "\")", RCommand::App));
 
 	setURL (url);
   modified=false;
@@ -199,7 +197,7 @@ void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 	}
 	command.append (")");
 
-	inter->issueCommand (new RCommand (command, RCommand::Sync));
+	app->r_inter->issueCommand (new RCommand (command, RCommand::Sync));
 
 	// now push the meta-table (point-reflected at bottom-left corner)
 	table = varview;
@@ -226,7 +224,7 @@ void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 	}
 	command.append (")");
 
-	inter->issueCommand (new RCommand (command, RCommand::Sync));
+	app->r_inter->issueCommand (new RCommand (command, RCommand::Sync));
 }
 
 void RKwardDoc::pullTable () {
@@ -238,7 +236,7 @@ void RKwardDoc::pullTable () {
 //	output_is = WholeTables;
 	RCommand *rcommand = new RCommand (command, RCommand::Sync, "", this, SLOT (processROutput (RCommand *)));
 	should_pull_id = rcommand->id ();
-	inter->issueCommand (rcommand);
+	app->r_inter->issueCommand (rcommand);
 
 	// since communication is asynchronous, the rest is done inside
 	// processROutput!

@@ -40,7 +40,7 @@
 class RCommand : public QObject  {
 	Q_OBJECT
 public: 
-	RCommand(QString command, int type = 0, QString rk_equiv = "", QObject *receiver = 0, const char *slot = 0);
+	RCommand(QString command, int type = 0, QString rk_equiv = "", QObject *receiver = 0, const char *slot = 0, int flags=0);
 	~RCommand();
 	int type () { return _type; };
 	QString rkEquivalent () { return _rk_equiv; };
@@ -61,6 +61,7 @@ public:
 	int succeeded () { return ((status & WasTried) && !(status & Failed)); };
 	int hasOutput () { return (status & HasOutput); }; 
 	int hasError () { return (status & HasError); }; 
+	int getFlags () { return (_flags); };
 signals:
 	void commandDone (RCommand *command);
 private:
@@ -71,6 +72,7 @@ friend class RInterface;
 	QString _error;
 	QString _command;
 	int _type;
+	int _flags;
 	int status;
 	QIODevice::Offset output_offset, error_offset;
 	int output_length, error_length;

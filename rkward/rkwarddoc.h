@@ -92,7 +92,6 @@ class RKwardDoc : public TwinTable
     KURL doc_url;
 
 	RKwardApp *app;
-	RInterface *inter;
 	QString tablename;
 	QString command_separator;
 

@@ -28,12 +28,15 @@
 #include <qtextedit.h>
 #include <qregexp.h>
 
+#include <klocale.h>
+
 #include "rkward.h"
 #include "rkwarddoc.h"
 #include "rinterface.h"
 #include "rcommand.h"
 #include "phpbackend.h"
 #include "rkpluginguiwidget.h"
+#include "rkerrordialog.h"
 
 // plugin-widgets
 #include "rkpluginwidget.h"
@@ -41,6 +44,8 @@
 #include "rkvarslot.h"
 #include "rktext.h"
 #include "rkradio.h"
+
+#define FOR_PHP_FLAG 1
 
 RKPlugin::RKPlugin(RKwardApp *parent, const QString &label, const QString &filename) {
 	app = parent;
@@ -84,6 +89,9 @@ void RKPlugin::activated () {
 	// keep it alive
 	should_destruct = false;
 	should_updatecode = true;
+	
+	// create an error-dialog
+	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin ") + gui->caption () + i18n (". This may lead to an incorrect ouput and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below."), i18n ("R-Error"), false);
 	
 	// initialize the PHP-backend with the code-template
 	dummy = QFileInfo (f).dirPath () + "/code.php";
@@ -207,7 +215,7 @@ RKPluginWidget *RKPlugin::buildWidget (const QDomElement &element) {
 
 void RKPlugin::ok () {
 	getApp ()->getDocument ()->syncToR ();
-	getApp ()->r_inter->issueCommand (new RCommand (codeDisplay->text (), RCommand::Plugin));
+	getApp ()->r_inter->issueCommand (new RCommand (codeDisplay->text (), RCommand::Plugin, "", this, SLOT (gotRResult (RCommand *))));
 	backend->callFunction ("printout (); cleanup ();", true);
 }
 
@@ -286,6 +294,7 @@ void RKPlugin::help () {
 }
 
 void RKPlugin::discard () {
+	delete error_dialog;
 	// the entire GUI and all widgets get deleted automatically!
 	qDebug ("plugin cleaned");
 }
@@ -307,12 +316,17 @@ void RKPlugin::updateCode (const QString &text) {
 }
 
 void RKPlugin::doRCall (const QString &call) {
-	getApp ()->r_inter->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, SLOT (gotRResult (RCommand *))));
+	getApp ()->r_inter->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, SLOT (gotRResult (RCommand *)), FOR_PHP_FLAG));
 }
 
 void RKPlugin::gotRResult (RCommand *command) {
-// since R-calls are (will be) asynchronous, we need to expect incoming data after the backend has been torn down
-	if (backend) backend->gotRCallResult (command->output());
+	if (command->hasError()) {
+		error_dialog->newError (command->error());
+	}
+	if (command->getFlags() & FOR_PHP_FLAG) {
+		// since R-calls are (will be) asynchronous, we need to expect incoming data after the backend has been torn down
+		if (backend) backend->gotRCallResult (command->output());
+	}
 }
 
 QString RKPlugin::getVar (const QString &id) {

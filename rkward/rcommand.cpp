@@ -19,11 +19,12 @@
 
 int RCommand::next_id = 0;
 
-RCommand::RCommand(QString command, int type, QString rk_equiv, QObject *receiver, const char *slot){
+RCommand::RCommand(QString command, int type, QString rk_equiv, QObject *receiver, const char *slot, int flags){
 	_id = next_id++;
 	qDebug ("creating command %d", _id);
 	_command = command;
 	_type = type;
+	_flags = flags;
 	status = 0;
 	_rk_equiv = rk_equiv;
 	addReceiver (receiver, slot);

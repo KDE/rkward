@@ -33,6 +33,7 @@ class QPushButton;
 class RKVarSelector;
 class PHPBackend;
 class RCommand;
+class RKErrorDialog;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -118,6 +119,7 @@ friend class RKPluginGUIWidget;
 	QPushButton *toggleWarnButton;
 	
 	PHPBackend *backend;
+	RKErrorDialog *error_dialog;
 };
 
 #endif
