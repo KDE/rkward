@@ -73,6 +73,7 @@ RKEditor *RKEditorManager::editObject (RObject *object, bool initialize_to_empty
 			tabbook->insertTab (ed, iobj->getShortName ());
 			tabbook->showPage (ed);
 			show ();
+			emit (editorOpened ());
 			
 			RCommand *command = new RCommand (".rk.editor.opened (" + iobj->getFullName() + ")", RCommand::App | RCommand::Sync);
 			RKGlobals::rInterface ()->issueCommand (command, restore_chain);
@@ -115,6 +116,11 @@ RKEditor *RKEditorManager::currentEditor () {
 	return static_cast<RKEditor*> (tabbook->currentPage ());
 }
 
+int RKEditorManager::numEditors () {
+	RK_TRACE (APP);	
+	return tabbook->count ();
+}
+
 void RKEditorManager::closeEditor (RKEditor *editor) {
 	RK_TRACE (APP);
 	
@@ -133,6 +139,8 @@ void RKEditorManager::closeEditor (RKEditor *editor) {
 
 	RCommand *command = new RCommand (".rk.editor.closed (" + object->getFullName() + ")", RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
+	
+	emit (editorClosed ());
 }
 
 void RKEditorManager::flushAll () {

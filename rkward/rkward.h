@@ -115,6 +115,8 @@ protected:
     virtual void readProperties(KConfig *_cfg);
 
   public slots:
+	/** creates a new (empty) data.frame */
+	void slotNewDataFrame ();
     /** open a file and load it into the document*/
     void slotFileOpen();
     /** opens a file from the recent files menu */
@@ -123,18 +125,16 @@ protected:
     void slotFileSave();
     /** save a document by a new filename*/
     void slotFileSaveAs();
-    /** asks for saving if the file is modified, then closes the actual file and window*/
-    void slotFileClose();
+	/** close current editor */
+	void slotCloseEditor ();
+	/** close all editors */
+	void slotCloseAllEditors ();
     /** print the actual file */
     void slotFilePrint();
     /** closes all open windows by calling close() on each memberList item until the list is empty, then quits the application.
      * If queryClose() returns false because the user canceled the saveModified() dialog, the closing breaks.
      */
     void slotFileQuit();
-	/** closes the current editor */
-	void slotDataClose ();
-	/** creates a new (empty) data.frame */
-	void slotDataNewDataFrame ();
     /** put the marked text/object into the clipboard and remove
      *	it from the document
      */
@@ -182,6 +182,8 @@ protected:
 
 /** Init-procedures to be done after the exec-loop was started */
 	void doPostInit ();
+	
+	void slotEditorsChanged ();
   private:
     /** the configuration object of the application */
     KConfig *config;
@@ -195,11 +197,11 @@ protected:
     KRecentFilesAction* fileOpenRecent;
     KAction* fileSave;
     KAction* fileSaveAs;
-    KAction* fileClose;
     KAction* filePrint;
     KAction* fileQuit;
-	KAction* dataClose;
-	KAction* dataNewDataFrame;
+	KAction* close_editor;
+	KAction* close_all_editors;
+	KAction* new_data_frame;
 	KAction* editCut;
     KAction* editCopy;
     KAction* editPaste;

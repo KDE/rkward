@@ -1,13 +1,23 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.2.3">
+<kpartgui name="rkward" version="0.2.7">
 <MenuBar>
 	<Menu name="file"><text>&amp;File</text>
-	</Menu>
-	<Menu name="data"><text>&amp;Data</text>
-		<Action name="data_close_editor"/>
-		<Menu name="data_new_data"><text>&amp;Create New</text>
-			<Action name="data_new_data_frame"/>
+		<Menu name="new_data"><text>&amp;Create New</text>
+			<Action name="new_data_frame"/>
 		</Menu>
+		<Separator/>
+		<Action name="file_openx"/>
+		<Action name="file_open_recentx"/>
+		<Separator/>
+		<Action name="file_savex"/>
+		<Action name="file_save_asx"/>
+		<Separator/>
+		<Action name="file_printx"/>
+		<Separator/>
+		<Action name="editor_close"/>
+		<Action name="close_all_editors"/>
+		<Separator/>
+		<Action name="file_quitx"/>
 	</Menu>
 	<Menu name="edit"><text>&amp;Edit</text>
 		<Action name="paste_to_selection"/>

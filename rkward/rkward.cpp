@@ -93,6 +93,8 @@ RKwardApp::RKwardApp(KURL *load_url, QWidget* , const char* name):KMainWindow(0,
   
 	RKGlobals::manager = new RKEditorManager (this);
 	setCentralWidget (RKGlobals::editorManager ());
+	connect (RKGlobals::editorManager (), SIGNAL (editorClosed ()), this, SLOT (slotEditorsChanged ()));
+	connect (RKGlobals::editorManager (), SIGNAL (editorOpened ()), this, SLOT (slotEditorsChanged ()));
 	RKGlobals::mtracker = new RKModificationTracker (this);
 
 	initial_url = load_url;
@@ -193,7 +195,7 @@ int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
 	RKMenu *menu = 0;
 	if (element.attribute ("type") == "menu") {
 		if (!parent) {
-			menu = menu_list->createMenu (element.attribute ("id"), element.attribute ("label"), 5);
+			menu = menu_list->createMenu (element.attribute ("id"), element.attribute ("label"), 4);
 		} else {
 			menu = parent->addSubMenu (element.attribute ("id"), element.attribute ("label", "untitled"));
 		}
@@ -240,17 +242,24 @@ void RKwardApp::slotConfigure () {
 
 void RKwardApp::initActions()
 {  
-  fileOpen = KStdAction::open(this, SLOT(slotFileOpen()), actionCollection());
-  fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const KURL&)), actionCollection());
-  fileSave = KStdAction::save(this, SLOT(slotFileSave()), actionCollection());
-  fileSaveAs = KStdAction::saveAs(this, SLOT(slotFileSaveAs()), actionCollection());
-  fileClose = KStdAction::close(this, SLOT(slotFileClose()), actionCollection());
-	fileClose->setEnabled (false);
-  filePrint = KStdAction::print(this, SLOT(slotFilePrint()), actionCollection());
+	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
+	new_data_frame = new KAction (i18n ("data.frame"), 0, 0, this, SLOT (slotNewDataFrame ()), actionCollection (), "new_data_frame");
+	fileOpen = KStdAction::open(this, SLOT(slotFileOpen()), actionCollection(), "file_openx");
+	fileOpen->setText (i18n ("Open Workspace"));
+	fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const KURL&)), actionCollection(), "file_open_recentx");
+	fileSave = KStdAction::save(this, SLOT(slotFileSave()), actionCollection(), "file_savex");
+	fileSave->setText (i18n ("Save Workspace"));
+	fileSaveAs = KStdAction::saveAs(this, SLOT(slotFileSaveAs()), actionCollection(), "file_save_asx");
+	fileSaveAs->setText (i18n ("Save Workspace As"));
+	close_editor = KStdAction::close (this, SLOT(slotCloseEditor ()), actionCollection(), "editor_close");
+	close_editor->setText (i18n ("Close current editor"));
+	close_editor->setEnabled (false);
+	close_all_editors = new KAction (i18n ("Close All Editors"), 0, 0, this, SLOT(slotCloseAllEditors ()), actionCollection (), "close_all_editors");
+	close_all_editors->setEnabled (false);
+	filePrint = KStdAction::print(this, SLOT(slotFilePrint()), actionCollection(), "file_printx");
 	filePrint->setEnabled (false);
-  fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection());
-	dataClose = new KAction (i18n ("Close current editor"), 0, 0, this, SLOT (slotDataClose ()), actionCollection (), "data_close_editor");
-	dataNewDataFrame = new KAction (i18n ("data.frame"), 0, 0, this, SLOT (slotDataNewDataFrame ()), actionCollection (), "data_new_data_frame");
+	fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection(), "file_quitx");
+
   editCut = KStdAction::cut(this, SLOT(slotEditCut()), actionCollection());
   editCopy = KStdAction::copy(this, SLOT(slotEditCopy()), actionCollection());
   editPaste = KStdAction::paste(this, SLOT(slotEditPaste()), actionCollection());
@@ -264,15 +273,15 @@ void RKwardApp::initActions()
 	showRObjectBrowser = new KToggleAction (i18n ("Show Object Browser-Window"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
 	configure = new KAction (i18n ("Configure Settings"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 
+	new_data_frame->setStatusText (i18n ("Creates a new empty data.frame and opens it for editing"));
   fileOpen->setStatusText(i18n("Opens an existing document"));
   fileOpenRecent->setStatusText(i18n("Opens a recently used file"));
   fileSave->setStatusText(i18n("Saves the actual document"));
   fileSaveAs->setStatusText(i18n("Saves the actual document as..."));
-  fileClose->setStatusText(i18n("Closes the actual document"));
+	close_editor->setStatusText (i18n ("Closes the current data editor"));
+	close_all_editors->setStatusText (i18n ("Closes all open data editors"));
   filePrint ->setStatusText(i18n("Prints out the actual document"));
   fileQuit->setStatusText(i18n("Quits the application"));
-	dataClose->setStatusText (i18n ("Closes the currently active editor window"));
-	dataNewDataFrame->setStatusText (i18n ("Creates a new empty data.frame and opens it for editing"));
   editCut->setStatusText(i18n("Cuts the selected section and puts it to the clipboard"));
   editCopy->setStatusText(i18n("Copies the selected section to the clipboard"));
   editPaste->setStatusText(i18n("Pastes the clipboard contents to actual position"));
@@ -420,23 +429,21 @@ bool RKwardApp::queryExit()
 // SLOT IMPLEMENTATION
 /////////////////////////////////////////////////////////////////////
 
-/*void RKwardApp::slotFileNew()
-{
-  slotStatusMsg(i18n("Creating new workspace..."));
+void RKwardApp::slotEditorsChanged () {
+	close_editor->setEnabled (RKGlobals::editorManager ()->numEditors ());
+	close_all_editors->setEnabled (RKGlobals::editorManager ()->numEditors ());
+}
 
-  if(!doc->saveModified())
-  {
-     // here saving wasn't successful
+void RKwardApp::slotNewDataFrame () {
+	bool ok;
 
-  }
-  else
-  {	
-    doc->newDocument();		
-    setCaption(doc->URL().fileName(), false);
-  }
-
-  slotStatusMsg(i18n("Ready."));
-}*/
+	QString name = KInputDialog::getText (i18n ("Create new data.frame"), i18n ("Enter name for the new object (make it a valid one - no checks so far)"), "my.data", &ok, this);
+	
+	if (ok) {
+		RObject *object = RKGlobals::rObjectList ()->createNewChild (name, 0, true, true);
+		RKGlobals::editorManager ()->editObject (object, true);
+	}
+}
 
 void RKwardApp::fileOpenNoSave (const KURL &url) {
 	slotStatusMsg(i18n("Opening workspace..."));
@@ -477,13 +484,14 @@ void RKwardApp::slotFileSaveAs () {
 	new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), true);
 }
 
-void RKwardApp::slotFileClose()
-{
-  slotStatusMsg(i18n("Closing file..."));
-	
-  close();
+void RKwardApp::slotCloseEditor () {
+	RKGlobals::editorManager ()->closeEditor (RKGlobals::editorManager ()->currentEditor ());
+}
 
-  slotStatusMsg(i18n("Ready."));
+void RKwardApp::slotCloseAllEditors () {
+	while (RKGlobals::editorManager ()->numEditors ()) {
+		RKGlobals::editorManager ()->closeEditor (RKGlobals::editorManager ()->currentEditor ());
+	}
 }
 
 void RKwardApp::slotFilePrint()
@@ -503,21 +511,6 @@ void RKwardApp::slotFileQuit () {
 	slotStatusMsg(i18n("Exiting..."));
 	saveOptions();
 	close ();
-}
-
-void RKwardApp::slotDataClose () {
-	RKGlobals::editorManager ()->closeEditor (RKGlobals::editorManager ()->currentEditor ());
-}
-
-void RKwardApp::slotDataNewDataFrame () {
-	bool ok;
-
-	QString name = KInputDialog::getText (i18n ("Create new data.frame"), i18n ("Enter name for the new object (make it a valid one - no checks so far)"), "my.data", &ok, this);
-	
-	if (ok) {
-		RObject *object = RKGlobals::rObjectList ()->createNewChild (name, 0, true, true);
-		RKGlobals::editorManager ()->editObject (object, true);
-	}
 }
 
 void RKwardApp::slotEditCut()

@@ -54,6 +54,11 @@ public:
 /// returns the currently active editor
 	RKEditor *currentEditor ();
 	void setEditorName (RKEditor *editor, const QString &new_name);
+	
+	int numEditors ();
+signals:
+	void editorClosed ();
+	void editorOpened ();
 protected:
 	void rCommandDone (RCommand *command);
 private:

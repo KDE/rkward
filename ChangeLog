@@ -1,3 +1,5 @@
+- slight reorganization of menus
+- added menu option to close all editor windows
 - some improvements in the editing behavior for the table. Some quirks still present
 - renamed windows
 - fixed some typos
