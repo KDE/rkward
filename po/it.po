@@ -10,22 +10,21 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-12 16:04+0100\n"
-"PO-Revision-Date: 2004-09-29 19:51+0200\n"
+"PO-Revision-Date: 2004-11-30 12:21+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3.1\n"
+"X-Generator: KBabel 1.9.1\n"
 
 #: rkwatch.cpp:61
 msgid "&Run"
 msgstr "&Esegui"
 
 #: rkwatch.cpp:67
-#, fuzzy
 msgid "&Interrupt"
-msgstr "Comando di interrunzione"
+msgstr "&Interrompi"
 
 #: rkwatch.cpp:75
 msgid "&Print Log"
@@ -65,7 +64,7 @@ msgstr "Console di R"
 
 #: rkwatch.cpp:131
 msgid "Issuing command:\n"
-msgstr ""
+msgstr "Esecuzione comando:\n"
 
 #: rkwatch.cpp:175
 msgid "Got reply:"
@@ -80,15 +79,15 @@ msgstr ""
 
 #: rkward.cpp:113
 msgid "Object Editor"
-msgstr ""
+msgstr "Editor di oggetto"
 
 #: rkward.cpp:113
 msgid "R Object Editor"
-msgstr ""
+msgstr "Editor di oggetto R"
 
 #: rkward.cpp:180
 msgid "my.data"
-msgstr ""
+msgstr "mio.dataset"
 
 #: rkward.cpp:191
 #, fuzzy
@@ -96,9 +95,8 @@ msgid "This is a list of the objects present in the R workspace."
 msgstr "Oggetti nell'area di lavoro"
 
 #: rkward.cpp:191
-#, fuzzy
 msgid "Object browser"
-msgstr "Mostra la finestra oggetti"
+msgstr "Navigazione oggetti"
 
 #: rkward.cpp:208
 msgid "Setting up plugins..."
@@ -125,23 +123,20 @@ msgid "data.frame"
 msgstr "data.frame"
 
 #: rkward.cpp:307
-#, fuzzy
 msgid "New Command File"
-msgstr "Nuova finestra dell'editor dei comandi"
+msgstr "Nuovo file di comandi"
 
 #: rkward.cpp:311
-#, fuzzy
 msgid "Open Command File"
-msgstr "Apri file..."
+msgstr "Apri file file di comandi"
 
 #: rkward.cpp:314
-#, fuzzy
 msgid "Save Command File"
-msgstr "Salvataggio non avvenuto"
+msgstr "Salva file di comandi"
 
 #: rkward.cpp:316
 msgid "Save Command File As"
-msgstr ""
+msgstr "Salva file di comandi come"
 
 #: rkward.cpp:319
 msgid "Open Workspace"
@@ -188,19 +183,16 @@ msgid "Show Object Browser-Window"
 msgstr "Mostra la finestra oggetti"
 
 #: rkward.cpp:350
-#, fuzzy
 msgid "Run All"
 msgstr "Esegui tutto"
 
 #: rkward.cpp:352
-#, fuzzy
 msgid "Run Selection"
 msgstr "Esegui selezione"
 
 #: rkward.cpp:354
-#, fuzzy
 msgid "Interrupt running command"
-msgstr "Comando di interrunzione"
+msgstr "Interrompi comando in esecuzione"
 
 #: rkward.cpp:357
 msgid "Configure Settings"
@@ -361,7 +353,7 @@ msgstr "Apri file..."
 
 #: rkward.cpp:911 rkward.cpp:952
 msgid "Could not save document"
-msgstr ""
+msgstr "Non è possibile salvare il documento"
 
 #: rkward.cpp:936
 #, fuzzy
@@ -370,7 +362,7 @@ msgstr "Salvataggio non avvenuto"
 
 #: rkward.cpp:995
 msgid "The document has been modified. Close anyway?"
-msgstr ""
+msgstr "Il documento è stato modificato. Chiudere ugualmente?"
 
 #: rkward.cpp:995
 #, fuzzy
@@ -435,49 +427,59 @@ msgstr "Inserisci il nuovo nome"
 
 #: robjectviewer.cpp:43
 msgid "Object name: "
-msgstr ""
+msgstr "Nome oggetto: "
 
 #: robjectviewer.cpp:44
 msgid ""
 "\n"
 "Full location: "
 msgstr ""
+"\n"
+"Percorso completo: "
 
 #: robjectviewer.cpp:47
 msgid ""
 "\n"
 "Classes: "
 msgstr ""
+"\n"
+"Classi: "
 
 #: robjectviewer.cpp:49
 msgid ""
 "\n"
 "Dimensions: "
 msgstr ""
+"\n"
+"Dimensioni: "
 
 #: robjectviewer.cpp:56
 msgid ""
 "\n"
 "Result of 'print ("
 msgstr ""
+"\n"
+"Risultato di 'print ("
 
 #: robjectviewer.cpp:56
 msgid ")':\n"
-msgstr ""
+msgstr ")':\n"
 
 #: robjectviewer.cpp:63
 msgid "Object-Viewer for object "
-msgstr ""
+msgstr "Visualizzatore di oggetto"
 
 #: robjectviewer.cpp:64
 msgid " - Waiting for results from R..."
-msgstr ""
+msgstr " - Aspettando risultati da R..."
 
 #: robjectviewer.cpp:77
 msgid ""
 "\n"
 "Some error(s) occured: "
 msgstr ""
+"\n"
+"Errori ricevuti: "
 
 #: _translatorinfo.cpp:1
 msgid ""
@@ -491,431 +493,3 @@ msgid ""
 "Your emails"
 msgstr "daniele.medri@libero.it"
 
-#~ msgid "The object '"
-#~ msgstr "L'oggetto '"
-
-#~ msgid ""
-#~ "' was removed in the R workspace, but is currently opened for editing. Do "
-#~ "you want to restore the object?"
-#~ msgstr ""
-#~ "' è stato rimosso dall'area di lavoro di R, ma è attualmente aperto per "
-#~ "le modifiche. Vuoi ripristinare l'oggetto?"
-
-#~ msgid "Restore object?"
-#~ msgstr "Ripristina l'oggetto?"
-
-#~ msgid "Do you really want to remove the object '"
-#~ msgstr "Vuoi veramente rimuovere l'oggetto?"
-
-#~ msgid ""
-#~ "'? The object is currently opened for editing, it will be removed in the "
-#~ "editor, too. There's no way to get it back."
-#~ msgstr ""
-#~ "'? L'oggetto è attualmente aperto per la modifica e sarà rimosso anche "
-#~ "dall'editor. Non c'è modo di ripristinare lo stato iniziale."
-
-#~ msgid "Remove object?"
-#~ msgstr "Rimuovi l'oggetto?"
-
-#~ msgid "'? There's no way to get it back."
-#~ msgstr "'? Non c'è modo di ripristinare lo stato iniziale."
-
-#~ msgid "Browse"
-#~ msgstr "Sfoglia"
-
-#~ msgid "<R Workspace>"
-#~ msgstr "<Area di lavoro di R>"
-
-#~ msgid "Label"
-#~ msgstr "Etichetta"
-
-#~ msgid "Type"
-#~ msgstr "Tipo"
-
-#~ msgid "e.g. category"
-#~ msgstr "es. categoria"
-
-#~ msgid "Name"
-#~ msgstr "Nome"
-
-#~ msgid "Insert new variable left"
-#~ msgstr "Inserisci una nuova variabile a sinistra"
-
-#~ msgid "Insert new variable right"
-#~ msgstr "Inserisci una nuova variabile a destra"
-
-#~ msgid "Delete this variable"
-#~ msgstr "Elimina questa variabile"
-
-#~ msgid "Insert new case above"
-#~ msgstr "Inserisci un nuovo caso sopra"
-
-#~ msgid "Insert new case below"
-#~ msgstr "Inserisci un nuovo caso sotto"
-
-#~ msgid "Delete this case"
-#~ msgstr "Elimina questo caso"
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-#~ msgid "PHP-Error"
-#~ msgstr "Errore di PHP"
-
-#~ msgid ""
-#~ "There has been an error\n"
-#~ "(\""
-#~ msgstr ""
-#~ "C'è stato un erore\n"
-#~ "(\""
-
-#, fuzzy
-#~ msgid "PHPBackend"
-#~ msgstr "Backend PHP"
-
-#~ msgid "R_HOME not set"
-#~ msgstr "R_HOME non impostata"
-
-#~ msgid "Conflicting settings for R_HOME"
-#~ msgstr "Impostazioni in conflitto per R_HOME"
-
-#, fuzzy
-#~ msgid ""
-#~ "There was a problem starting the R backend. The following error(s) "
-#~ "occurred:\n"
-#~ msgstr ""
-#~ "C'è stato un problema avviando il backend di PHP. I seguenti errori:\n"
-
-#~ msgid "Error starting R"
-#~ msgstr "Errore durante l'avvio di R"
-
-#~ msgid "Require package '%1'"
-#~ msgstr "Richiede il pacchetto '%1'"
-
-#~ msgid "RCommand"
-#~ msgstr "RCommand"
-
-#~ msgid "Start with an empty workspace"
-#~ msgstr "Avvia con una nuova area di lavoro"
-
-#~ msgid "Start with an empty table"
-#~ msgstr "Avvia con una tabella vuota"
-
-#~ msgid "Load an existing workspace:"
-#~ msgstr "Carica un'area di lavoro esistente:"
-
-#~ msgid "<<Open another file>>"
-#~ msgstr "<<Apri un altro file>>"
-
-#~ msgid "What would you like to do?"
-#~ msgstr "Che cosa desideri fare?"
-
-#~ msgid "Load / unload packages"
-#~ msgstr "Carica / scarica pacchetti"
-
-#~ msgid "Load / unload installed packages"
-#~ msgstr "Carica / scarica pacchetti installati"
-
-#~ msgid "Update installed packages"
-#~ msgstr "Aggiorna i pacchetti installati"
-
-#~ msgid "Install new packages"
-#~ msgstr "Installa nuovi pacchetti"
-
-#~ msgid "Error loading/unloading packages"
-#~ msgstr "Errore durante il caricamento / scaricamento dei pacchetti"
-
-#~ msgid "Downloading Packages ..."
-#~ msgstr "Scaricamento pacchetti..."
-
-#~ msgid "Please stand by while downloading packages."
-#~ msgstr "Per piacere, attendi mentre si scaricano i pacchetti."
-
-#~ msgid "Installing Packages ..."
-#~ msgstr "Installazione pacchetti..."
-
-#~ msgid "Please stand by while installing packages."
-#~ msgstr "Per piacere, attendi mentre si installano i pacchetti."
-
-#~ msgid "Error installing packages"
-#~ msgstr "Errore durante l'installazione dei pacchetti"
-
-#~ msgid "Installed packages"
-#~ msgstr "Pacchetti installati"
-
-#~ msgid "Title"
-#~ msgstr "Titolo"
-
-#~ msgid "Version"
-#~ msgstr "Versione"
-
-#~ msgid "Location"
-#~ msgstr "Posizione"
-
-#~ msgid "Load"
-#~ msgstr "Carica"
-
-#~ msgid "Unload"
-#~ msgstr "Scarica"
-
-#~ msgid "Loaded packages"
-#~ msgstr "Pacchetti caricati"
-
-#~ msgid "Current Version"
-#~ msgstr "Versione attuale"
-
-#~ msgid "New Version"
-#~ msgstr "Nuova versione"
-
-#~ msgid "Fetch list"
-#~ msgstr "Scarica lista"
-
-#~ msgid "Update Selected"
-#~ msgstr "Aggiorna selezionati"
-
-#~ msgid "Update All"
-#~ msgstr "Aggiorna tutti"
-
-#~ msgid "Become root for installation"
-#~ msgstr "Diventa root per l'installazione"
-
-#~ msgid "<<Click 'Fetch list' to find out which packages can be updated>>"
-#~ msgstr ""
-#~ "<<Fai clic su \"Scarica lista\" per trovare quali pacchetti aggiornare>>"
-
-#~ msgid "<<No updates available>>"
-#~ msgstr "<<Nessun aggiornamento disponibile>>"
-
-#~ msgid "Downloading package list ..."
-#~ msgstr "Scaricamento della lista pacchetti..."
-
-#~ msgid "Please stand by while downloading the list of packages from CRAN."
-#~ msgstr ""
-#~ "Per piacere, attendi mentre è in corso lo scaricamento della lista di "
-#~ "pacchetti da CRAN."
-
-#~ msgid "Install Selected"
-#~ msgstr "Installa selezionati"
-
-#~ msgid "<<No packages available>>"
-#~ msgstr "<<Nessun pacchetto disponibile>>"
-
-#~ msgid "Workspace"
-#~ msgstr "Area di lavoro"
-
-#, fuzzy
-#~ msgid "Run &selection"
-#~ msgstr "Esegui selezione"
-
-#, fuzzy
-#~ msgid "RKwardApp"
-#~ msgstr "RKWard"
-
-#~ msgid "R-Error"
-#~ msgstr "Errore di R"
-
-#~ msgid ""
-#~ "Below you can see the command(s) corresponding to the settings you made. "
-#~ "Click 'Submit' to run the command(s)."
-#~ msgstr ""
-#~ "Di seguito puoi vedere i comandi corrispondenti alle impostazioni fatte. "
-#~ "Fai clic su \"Invio\" per eseguire i comandi."
-
-#~ msgid "Submit"
-#~ msgstr "Invia"
-
-#~ msgid "Next >"
-#~ msgstr "Avanti >"
-
-#~ msgid "Full Model"
-#~ msgstr "Modello completo"
-
-#~ msgid "Main Effects only"
-#~ msgstr "Solo gli effetti principali"
-
-#~ msgid "Custom Model:"
-#~ msgstr "Modello personalizzato:"
-
-#~ msgid " - You have to select a variable for the \""
-#~ msgstr "' - Hai selezionato una variabile per il \""
-
-#~ msgid "\"-field\n"
-#~ msgstr "\"-campo\n"
-
-#, fuzzy
-#~ msgid "RKPlugin"
-#~ msgstr "Plugin"
-
-#, fuzzy
-#~ msgid "RKRadio"
-#~ msgstr "RKWard"
-
-#, fuzzy
-#~ msgid "RKwatch"
-#~ msgstr "Osserva"
-
-#~ msgid ""
-#~ "No filename given. Your data was NOT saved. Do you still want to proceed?"
-#~ msgstr ""
-#~ "Nessun nome file indicato. I tuoi dati non sono stati salvati. Desideri "
-#~ "procedere ancora?"
-
-#~ msgid "Saving to file '"
-#~ msgstr "Salvataggio file '"
-
-#~ msgid "' failed. What do you want to do?"
-#~ msgstr "' non avvenuto. Cosa desideri fare?"
-
-#~ msgid "Try saving with a different filename"
-#~ msgstr "Prova a salvare con nome differente"
-
-#~ msgid "Saving failed"
-#~ msgstr "Salvataggio non avvenuto"
-
-#~ msgid "' failed. Do you want to try saving to a different filename?"
-#~ msgstr "' non avvenuto. Desideri salvare con un nome differente?"
-
-#~ msgid "Loading Workspace ..."
-#~ msgstr "Caricamento dell'area di lavoro..."
-
-#~ msgid ""
-#~ "There has been an error opening file '%1'. The error message was:\n"
-#~ "%2"
-#~ msgstr ""
-#~ "C'è stato un errore durante l'apertura del file '%1'. Il messaggio di "
-#~ "errore era:\n"
-#~ "%2"
-
-#~ msgid "Error loading workspace"
-#~ msgstr "Errore durante il caricamento dell'area di lavoro"
-
-#~ msgid "Run up to current line"
-#~ msgstr "Esegui la parte precedente la linea attuale"
-
-#~ msgid "Run from current line"
-#~ msgstr "Esegui dalla linea attuale"
-
-#~ msgid "Run"
-#~ msgstr "Esegui"
-
-#~ msgid "Word wrap"
-#~ msgstr "A capo automatico"
-
-#~ msgid "Line Numbering"
-#~ msgstr "Numerazione di linea"
-
-#~ msgid "Configure editor"
-#~ msgstr "Configura editor"
-
-#~ msgid "Settings"
-#~ msgstr "Impostazioni"
-
-#~ msgid "Command editor"
-#~ msgstr "Editor dei comandi"
-
-#~ msgid "The code was modified. Do you want to save it?"
-#~ msgstr "Il codice è stato modificato. Desideri salvarlo?"
-
-#~ msgid "Save code?"
-#~ msgstr "Salva il codice?"
-
-#~ msgid "' failed. Try with a different filename?"
-#~ msgstr "' non avvenuto. Prova con un nome differente?"
-
-#~ msgid "Directory where the logfiles should be kept"
-#~ msgstr "Directory dove i file di log dovrebbero essere tenuti"
-
-#~ msgid "Logfiles"
-#~ msgstr "File di log"
-
-#~ msgid "RKSettingsModuleLogfiles"
-#~ msgstr "RKSettingsModuleLogfiles"
-
-#~ msgid "Output Window options"
-#~ msgstr "Opzioni per la finestra di output"
-
-#~ msgid "Changes in this section take effect the next time you start a plugin"
-#~ msgstr ""
-#~ "I cambiamenti in questa sezione avranno luogo la prossima volta che "
-#~ "avvierai un plugin"
-
-#~ msgid "File-location of the PHP binary"
-#~ msgstr "Posizione del binario di PHP"
-
-#~ msgid "Directory, where the PHP support files are located"
-#~ msgstr "Directory dove sono posizionati i file di supporto per PHP"
-
-#~ msgid "PHP backend"
-#~ msgstr "Backend PHP"
-
-#~ msgid "Always prefer dialogs"
-#~ msgstr "Preferisci sempre le maschere"
-
-#~ msgid "Prefer recommended interface"
-#~ msgstr "Preferisci l'interfaccia raccomandata"
-
-#~ msgid "Always prefer wizards"
-#~ msgstr "Preferisci sempre gli assistenti"
-
-#~ msgid "Directory where the plugins are located"
-#~ msgstr "Directory dove sono posizionati i plugin"
-
-#~ msgid "Plugins"
-#~ msgstr "Plugin"
-
-#~ msgid ""
-#~ "Note: changes in this section do not take effect until you restart RKWard!"
-#~ msgstr ""
-#~ "Nota: i cambiamenti in questa sezione non avranno effetto finchè non si "
-#~ "riavvia RKWard!"
-
-#~ msgid "Program to use as a pager (e.g. for R-help)"
-#~ msgstr "Programma da utilizzare come pager (es. per la guida di R)"
-
-#~ msgid "R options"
-#~ msgstr "Opzioni per R"
-
-#~ msgid "R-Backend"
-#~ msgstr "Backend di R"
-
-#~ msgid "always show command"
-#~ msgstr "mostra sempre i comandi"
-
-#~ msgid "always show result"
-#~ msgstr "mostra sempre il risultato"
-
-#~ msgid "show errors"
-#~ msgstr "mostra errori"
-
-#~ msgid "show/raise window"
-#~ msgstr "mostra/nascondi finestra"
-
-#~ msgid "User commands"
-#~ msgstr "Comandi utente"
-
-#~ msgid "Plugin generated commands"
-#~ msgstr "Comandi generati dai plugin"
-
-#~ msgid "Application commands"
-#~ msgstr "Comandi delle applicazioni"
-
-#~ msgid "Synchronisation commands"
-#~ msgstr "Comandi di sincronizzazione"
-
-#~ msgid "&Create New"
-#~ msgstr "&Crea nuovo"
-
-#~ msgid "&Windows"
-#~ msgstr "&Finestre"
-
-#~ msgid "e.g. format"
-#~ msgstr "es. formato"
-
-#~ msgid "Number"
-#~ msgstr "Numero"
-
-#~ msgid "String"
-#~ msgstr "Stringa"
-
-#~ msgid "Date"
-#~ msgstr "Data"
