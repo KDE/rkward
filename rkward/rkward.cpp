@@ -59,6 +59,13 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
 
   initDocument();
   initView();
+
+	QStrList r_line;
+	r_line.append ("/usr/bin/R");
+	r_line.append ("--no-save");
+	r_line.append ("--slave");
+	r_inter.startR (r_line);
+	r_inter.issueCommand ("print (\"hello\")");
 	
   readOptions();
 }

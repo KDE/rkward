@@ -32,6 +32,8 @@
 #include <kaction.h>
 #include <kurl.h>
 
+#include "rinterface.h"
+
 // forward declaration of the RKward classes
 class RKwardDoc;
 class RKwardView;
@@ -68,6 +70,8 @@ class RKwardApp : public KMainWindow
      * the View class to access the document object's methods
      */	
     RKwardDoc *getDocument() const; 	
+
+	RInterface r_inter;
 
   protected:
     /** save general Options like all bar positions and status as well as the geometry and the recent file list to the configuration
