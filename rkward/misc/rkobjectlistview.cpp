@@ -165,7 +165,7 @@ void RKObjectListView::addObject (QListViewItem *parent, RObject *object, bool r
 	
 // special treatment for the workspace object
 	if (!parent) {
-		item->setText (0, i18n ("[Objets]"));
+		item->setText (0, i18n ("[Objects]"));
 		item->setOpen (true);
 	}
 // code below won't work, as objects get added before editor is opened. Need to call from RKEditor(Manager)
