@@ -143,28 +143,22 @@ void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
 	command = getObject ()->getFullName ();
 	command.append (" <- data.frame (");
 	
-	QString vector;
+	QString na_vector = "=rep (NA, " + QString::number (getColObject (0)->getLength ()) + ")";
 	for (int col=0; col < table->numCols (); col++) {
-		vector = getColObject (col)->getShortName () + "=I (c (";
-		for (int row=0; row < table->numRows (); row++) {
-			vector.append (table->rText (row, col));
-			if (row < (table->numRows ()-1)) {
-				vector.append (", ");
-			}
-		}
-		vector.append ("))");
+		command.append (getColObject (col)->getShortName () + na_vector);
 		if (col < (table->numCols ()-1)) {
-			vector.append (", ");
+			command.append (", ");
 		}
-		command.append (vector);
 	}
 	command.append (")");
 
 	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync), sync_chain);
+	for (int col=0; col < table->numCols (); col++) {
+		getColObject (col)->restore (sync_chain);
+	}
 
 	// now store the meta-data
 	getObject ()->writeMetaData (sync_chain);
-	static_cast<RContainerObject *>(getObject ())->writeChildMetaData (sync_chain);
 }
 
 void RKEditorDataFrame::paste (QByteArray content) {
@@ -239,7 +233,12 @@ void RKEditorDataFrame::removeObject (RObject *object) {
 void RKEditorDataFrame::restoreObject (RObject *object) {
 	RK_TRACE (EDITOR);
 	// for now, simply sync the whole table unconditionally.
-	pushTable (0);
+	if (object == getObject ()) {
+		pushTable (0);
+	} else {
+		RK_ASSERT (object->isVariable ());
+		static_cast<RKVariable*> (object)->restore ();
+	}
 }
 
 void RKEditorDataFrame::renameObject (RObject *object) {

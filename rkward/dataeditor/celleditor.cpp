@@ -82,4 +82,21 @@ void CellEditor::timerEvent (QTimerEvent *e) {
 	timer_id = 0;
 }
 
+void CellEditor::keyPressEvent (QKeyEvent *e) {
+	if (!e->state ()) {
+		if (e->key () == Qt::Key_Left) {
+			if (cursorPosition () < 1) {
+				e->ignore ();
+				return;
+			}
+		} else if (e->key () == Qt::Key_Right) {
+			if (cursorPosition () >= text ().length ()) {
+				e->ignore ();
+				return;
+			}
+		}
+	}
+	QLineEdit::keyPressEvent (e);
+}
+
 #include "celleditor.moc"

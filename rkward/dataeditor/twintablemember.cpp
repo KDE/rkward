@@ -106,13 +106,6 @@ QString TwinTableMember::rText (int row, int col) const {
 	return (RObject::rQuote (text (row, col)));
 }
 
-void TwinTableMember::checkColValid (int col) {
-/*	int row = 0;
-	while (row < numRows ()) {
-		((RTableItem *) item (row++, col))->checkValid ();
-	} */
-}
-
 void TwinTableMember::removeRows (const QMemArray<int> &) {
 	RK_ASSERT (false);
 }

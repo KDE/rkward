@@ -44,6 +44,8 @@ public slots:
 protected:
 /// for showing/hiding list of name_values
 	void timerEvent (QTimerEvent *e);
+/// reimplemented to ignore arrow left/right if at the beginning/end
+	void keyPressEvent (QKeyEvent *e);
 private:
 	QPopupMenu *value_list;
 	int timer_id;
