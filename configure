@@ -30660,16 +30660,6 @@ fi
 
 
 
-#MIN_CONFIG(3)
-
-
-
-
-#MIN_CONFIG(3)
-
-
-
-
 
 
 DO_NOT_COMPILE="$DO_NOT_COMPILE CVS debian bsd-port admin"

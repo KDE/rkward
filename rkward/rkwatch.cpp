@@ -24,6 +24,7 @@
 #include "settings/rksettings.h"
 #include "rkeditormanager.h"
 #include "windows/rkcommandeditorwindow.h"
+#include "rkconsole.h"
 
 #include <qtextedit.h>
 #include <qpushbutton.h>
@@ -51,18 +52,14 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	watch->setTextFormat (PlainText);
 	watch->setReadOnly (true);
 	
-	commands = new RKCommandEditor (layout_widget);
-	bottom_hbox->addWidget (commands);
+	console = new RKConsole(layout_widget);
+	bottom_hbox->addWidget (console);
+	connect (console, SIGNAL (commandSubmitted (QString)), this, SLOT (submitConsoleCommand (QString)));
+	
 	
 	// add run & reset buttons
 	QHBoxLayout *button_hbox = new QHBoxLayout (0, 0, 6);
 	bottom_hbox->addLayout (button_hbox);
-	
-	submit = new QPushButton(i18n ("&Run"), layout_widget);
-	connect (submit, SIGNAL (clicked ()), this, SLOT (submitCommand ()));
-	button_hbox->addWidget (submit);
-	
-
 	
 	interrupt_command = new QPushButton (i18n ("&Interrupt"), layout_widget);
 	connect (interrupt_command, SIGNAL (clicked ()), this, SLOT (interruptCommand ()));
@@ -79,17 +76,6 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	watch_menu->insertItem (i18n ("Configure"), this, SLOT (configureWatch ()));
 	menu->insertItem (i18n ("Watch"), watch_menu);
 
-	QPopupMenu *commands_menu = new QPopupMenu (this);
-	commands_menu->insertItem (i18n ("&Open new editor window"), this, SLOT (openEditor ()));
-	commands_menu->insertSeparator ();
-	commands_menu->insertItem (i18n ("Configure Editor"), this, SLOT (configureEditor ()));
-	menu->insertItem (i18n ("Commands"), commands_menu);
-	
-	menu->insertSeparator ();
-	
-	QPopupMenu *help_menu = new QPopupMenu (this);
-	help_menu->setItemEnabled (help_menu->insertItem (i18n ("Sorry, no help available so far"), 0, 0), false);
-	menu->insertItem (i18n ("Help"), help_menu);
 	menu->setFixedHeight (menu->height ());
 	
 	grid->addWidget (menu, 0, 0);
@@ -147,6 +133,7 @@ void RKwatch::addOutput (RCommand *command) {
 	if (command == user_command){
 		user_command = 0;
 		interrupt_command->setEnabled (false);
+		console->addOutput(command->output (), command->error ());
 	}
 	if (!RKSettingsModuleWatch::shouldShowOutput (command)) {
 		if (!command->failed ()) {
@@ -183,7 +170,8 @@ void RKwatch::addOutput (RCommand *command) {
 
 	watch->setBold (false);	
 	watch->setColor (Qt::black);
-
+	
+	
 	if (RKSettingsModuleWatch::shouldRaiseWindow (command)) {
 		show ();
 		raise ();
@@ -196,37 +184,18 @@ void RKwatch::interruptCommand () {
 	RKGlobals::rInterface ()->cancelCommand (user_command);
 }
 
-void RKwatch::submitCommand () {
-	RK_TRACE (APP);
-	RKGlobals::editorManager ()->flushAll ();
-	if (! commands->text ().isEmpty()){
-		r_inter->issueCommand (user_command = new RCommand (commands->text (), RCommand::User));
-		interrupt_command->setEnabled (true);
-	}
-	
-	commands->setText ("");
-	commands->setFocus ();
-}
-
-
 
 void RKwatch::configureWatch () {
 	RK_TRACE (APP);
 	RKSettings::configureSettings (RKSettings::Watch, this);
 }
 
-void RKwatch::configureEditor () {
-	RK_TRACE (APP);
-	commands->configure ();
-}
-
-void RKwatch::openEditor () {
-	RK_TRACE (APP);
-	new RKCommandEditorWindow (0);
-}
 
 void RKwatch::clearWatch () {
 	RK_TRACE (APP);
+	
+	console->flush ();
+	
 	watch->setText ("");
 
 	// set a fixed width font
@@ -234,3 +203,13 @@ void RKwatch::clearWatch () {
 	watch->setCurrentFont (font);
 	watch->setWordWrap (QTextEdit::NoWrap);
 }
+
+void RKwatch::submitConsoleCommand (QString c)
+{
+	RK_TRACE (APP);
+	if (! c.isEmpty()){
+		r_inter->issueCommand (user_command = new RCommand (c, RCommand::User));
+		interrupt_command->setEnabled (true);
+	}
+}
+

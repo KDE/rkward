@@ -852,7 +852,7 @@ void RKwardApp::slotOpenURL(const KURL &url){
 	if (!url.isLocalFile())
 	{
 		KMessageBox::messageBox(this,KMessageBox::Information,
-				"You specified a file that is not on local system","Cannot open file");
+				i18n ("You specified a file that is not on local system"), i18n ("Cannot open file"));
 		return;
 	}
 	
@@ -860,12 +860,12 @@ void RKwardApp::slotOpenURL(const KURL &url){
 	
 	if (!editor->openURL(url))
 	{
-		QString errstr = "Unable to open ";
+		QString errstr = i18n ("Unable to open ");
 		
 		errstr += url.prettyURL();
 		
 		KMessageBox::messageBox(this,KMessageBox::Error,
-				errstr,"Error!");
+				errstr, i18n ("Error!"));
 		delete editor;
 		return;
 	}

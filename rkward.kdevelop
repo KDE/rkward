@@ -71,6 +71,10 @@
         <f77flags/>
       </default>
     </configurations>
+    <subclassing>
+      <subclass uifile="/rkward/helpdlg.ui" sourcefile="/rkward/khelpdlg.cpp" />
+      <subclass uifile="/rkward/helpdlg.ui" sourcefile="/rkward/khelpdlg.h" />
+    </subclassing>
   </kdevautoproject>
   <kdevfileview>
     <groups>

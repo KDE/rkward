@@ -4,8 +4,8 @@ bin_PROGRAMS = rkward
 ## INCLUDES were found outside kdevelop specific part
 
 rkward_SOURCES = rkwatch.cpp rkward.cpp main.cpp rkoutputwindow.cpp \
-	rkcommandeditor.cpp rkglobals.cpp robjectbrowser.cpp rkeditormanager.cpp robjectviewer.cpp \
-	helpdlg.ui khelpdlg.cpp rkhelpdock.cpp
+		rkcommandeditor.cpp rkglobals.cpp robjectbrowser.cpp rkeditormanager.cpp robjectviewer.cpp \
+		helpdlg.ui khelpdlg.cpp rkhelpdock.cpp rkconsole.cpp
 rkward_LDADD = $(top_builddir)/rkward/windows/libwindows.a \
 	$(top_builddir)/rkward/agents/libagents.a $(top_builddir)/rkward/dialogs/libdialogs.a \
 	$(top_builddir)/rkward/plugin/libplugin.a $(top_builddir)/rkward/settings/libsettings.a \
@@ -71,7 +71,7 @@ messages: rc.cpp
 	fi
 
 noinst_HEADERS = debug.h rkcommandeditor.h rkglobals.h robjectbrowser.h \
-	rkeditormanager.h robjectviewer.h khelpdlg.h rkhelpdock.h
+		rkeditormanager.h robjectviewer.h khelpdlg.h rkhelpdock.h rkconsole.h
 phpfilesdir = $(kde_datadir)/rkward/phpfiles
 
 katesyntaxdir = $(kde_datadir)/katepart/syntax/

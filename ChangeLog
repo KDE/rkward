@@ -1,4 +1,5 @@
 
+- new, console-like widget to enter commands manually.
 - added a class to show html help in an mdi child
 - added a new dock to search R help
 - many changes in labels

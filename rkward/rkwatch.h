@@ -28,6 +28,7 @@ class RCommand;
 class QPushButton;
 class QTextEdit;
 class RKCommandEditor;
+class RKConsole;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -45,21 +46,19 @@ public:
 public slots:
 /** Clears commands-textedit */
 	void interruptCommand ();
-/** Submits commands in commands-textedit */
-	void submitCommand ();
 /** configures the watch-window */
 	void configureWatch ();
-/** configures the editor-window */
-	void configureEditor ();
-/** opens a new editor-window */
-	void openEditor ();
 /** clears the watch-window */
 	void clearWatch ();
+/** Submits command from the RKConsole */
+	void submitConsoleCommand (QString c);
+
 private:
 	void addInputNoCheck (RCommand *command);
 /** Pointer to the R-Interface */
 	RInterface *r_inter;
 
+	RKConsole *console;
 	RKCommandEditor *commands;
 	QTextEdit *watch;
 	QPushButton *submit;
