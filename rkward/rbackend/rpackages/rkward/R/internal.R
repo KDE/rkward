@@ -73,3 +73,7 @@
 	}
 }
 
+".rk.do.call" <- function (x) {
+	cat (x, file=.rk.socket)
+	return (readLines (con=.rk.socket, 1))
+}

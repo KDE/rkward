@@ -20,6 +20,7 @@
 #include "../rkwatch.h"
 #include "rthread.h"
 #include "rembed.h"
+#include "rrequestserver.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduler.h"
 
@@ -52,7 +53,8 @@ RInterface::RInterface(){
 			}
 		}
 	}
-
+	
+	new RRequestServer (this);
 	r_thread = new RThread (this);
 	r_thread->start ();
 	

@@ -65,7 +65,9 @@ int REmbed::initialize () {
 	if (error) status |= SinkFail;
 	runCommandInternal ("sink (file (\"" +RKSettingsModuleLogfiles::filesPath () +"/r_err\", \"w\"), FALSE, \"message\")\n", &error);
 	if (error) status |= SinkFail;
-
+	runCommandInternal (".rk.socket <- socketConnection (port=4242)\n", &error);
+	if (error) status |= OtherFail;
+	
 	outfile_offset = 0;
 	errfile_offset = 0;
 		

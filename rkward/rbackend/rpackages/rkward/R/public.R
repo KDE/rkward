@@ -32,3 +32,8 @@
 	if (is.null (lbl)) return (sn)
 	return (paste (sn, " (", lbl, ")", sep=""))
 }
+
+"rk.sync" <- function (x) {
+	object <- deparse (substitute (x))
+	.rk.do.call (paste ("sync\t", object, "\n", sep=""))
+}

@@ -294,7 +294,9 @@ uninstall-info-am:
 tags: TAGS
 TAGS:
 
-DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+#>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+#>+ 1
+DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST) $(KDE_DIST)
 
 top_distdir = ..
 distdir = $(top_distdir)/$(PACKAGE)-$(VERSION)
@@ -403,6 +405,8 @@ uninstall-am: uninstall-info-am
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
+#>+ 2
+KDE_DIST=rkward.pot 
 
 #>+ 2
 docs-am:

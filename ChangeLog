@@ -1,3 +1,6 @@
+- auto addition of rows/columns when typing on last row/column
+- allow deletion of rows without losing meta-data
+
 --- Version 0.2.7 - Sep-02-2004
 - several compilation fixes for KDE/Qt < 3.2.x (and maybe some new ones were introduced?)
 - slight reorganization of menus

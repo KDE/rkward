@@ -389,6 +389,8 @@ void RKEditorDataFrame::addObject (RObject *object) {
 
 void RKEditorDataFrame::updateObjectMeta (RObject *object) {
 	RK_TRACE (EDITOR);
+	if (object == getObject ()) return;	// for now: can't update meta on the table itself
+	
 	int col = getObjectCol (object);
 
 	modifyObjectMeta (object, col);
@@ -401,6 +403,7 @@ void RKEditorDataFrame::updateObjectData (RObject *object, RObject::ChangeSet *c
 	// for now:
 	if (col < 0) return;
 
-	RK_ASSERT (false);		// not yet implemented. Need this as soon as several editors may work on the same object.
+	// TODO: this is downright stupid! get only the required data!
+	openObject (getObject ());
 }
 
