@@ -201,8 +201,8 @@ QString RObject::typeToText (VarType var_type) {
 		return "Number";
 	} else if (var_type == String) {
 		return "String";
-	} else if (var_type == Date) {
-		return "Date";
+	} else if (var_type == Factor) {
+		return "Factor";
 	} else {
 		return "Invalid";
 	}
@@ -216,8 +216,8 @@ RObject::VarType RObject::textToType (const QString &text) {
 		return Number;
 	} else if (text == "String") {
 		return String;
-	} else if (text == "Date") {
-		return Date;
+	} else if (text == "Factor") {
+		return Factor;
 	} else {
 		return Invalid;
 	}

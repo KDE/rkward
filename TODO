@@ -4,11 +4,11 @@ Also, plans change frequently. If something is listed for a specific release, th
 stuff to do before 0.2.9 release
 - Twintable/RKEditorDataFrame
 	- merge the two classes
-	- rework type-select cell (actually all cells have to be reworked, but the type-select cell is worst)
-	- rework table not to keep QTableItems around for all cells; store data efficiently
 	- more efficient syncing: fetch only the values actually needed instead of the whole table
+	- handle vartype changes
+	- rework RKEditorDataFrame::pushTable
+- on exit, check whether there are still RCommands left in the backend and wait/request user-interaction before tearing down the thread. After all, the last command might have been a "save"!
 - Object editing / modification tracking:
-	- maybe store data directly with objects? Probably not.
 	- functions to set double/int/string-vectors directly. Use in paste-operations
 - convert plugin-widgets to QWidgets instead of QLayouts
 - error-handling/raising in .rk.do.call
@@ -30,8 +30,7 @@ stuff to do before 0.2.9 release
 - UNPROTECT_PTR
 - KDialog::marginHint (), KDialog::spacingHint ()
 - give informative feedback on syntax errors (line numbers, etc.)!
-- GUI for installation/updating of packages
-	- show on failed require ()
+- handle insertion of values into factors; value-lables
 
 stuff to do before the thing is usable
 - RKWatch

@@ -166,9 +166,7 @@ void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
 void RKEditorDataFrame::paste (QByteArray content) {
 	RK_TRACE (EDITOR);
 
-	// TODO: clean
-	TwinTableMember *table;
-	TwinTable::ColChanges *change_map = pasteEncoded (content, &table);
+	pasteEncoded (content);
 }
 
 void RKEditorDataFrame::columnDeletionRequested (int col) {

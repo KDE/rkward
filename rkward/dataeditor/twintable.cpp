@@ -298,17 +298,16 @@ QCString TwinTable::encodeSelection () {
 	return encoded_data;
 }
 
-TwinTable::ColChanges *TwinTable::pasteEncoded (QByteArray content, TwinTableMember **table_p) {
+void TwinTable::pasteEncoded (QByteArray content) {
 	flushEdit ();
-	ColChanges *ret = new ColChanges;
 	
 	TwinTableMember *table = activeTable ();
-	*table_p = table;
-	if (!table) return (ret);
+	if (!table) return;
 
+	QValueList<RKVariable*> col_list;
 	QTableSelection selection;
 	if (table->numSelections () <= 0) {
-		if ((table->currentRow () < 0) || (table->currentColumn () < 0)) return ret;
+		if ((table->currentRow () < 0) || (table->currentColumn () < 0)) return;
 		selection.init (table->currentRow (), table->currentColumn ());
 		selection.expandTo (table->currentRow (), table->currentColumn ());
 		table->addSelection (selection);
@@ -334,17 +333,11 @@ TwinTable::ColChanges *TwinTable::pasteEncoded (QByteArray content, TwinTableMem
 		if (next_line < next_tab) {
 			next_delim = next_line;
 		}
-		table->setText (row, col, pasted.left (next_delim));
-		if (ret->find (col) == ret->end ()) {
-			RObject::ChangeSet *set = new RObject::ChangeSet;
-			set->from_index = row;
-			set->to_index = row;
-			ret->insert (col, set);
-		} else {
-			RObject::ChangeSet *set = (*ret)[col];
-			if (row > set->to_index) set->to_index = row;
-			if (row < set->from_index) set->from_index = row;
+		if (!col_list.contains (getColObject (col))) {
+			col_list.append (getColObject (col));
+			getColObject (col)->setSyncing (false);
 		}
+		table->setText (row, col, pasted.left (next_delim));
 		if (next_delim == next_tab) {
 			col++;
 			if (paste_mode == RKEditor::PasteToSelection) {
@@ -402,7 +395,10 @@ TwinTable::ColChanges *TwinTable::pasteEncoded (QByteArray content, TwinTableMem
 		}
 	}
 	
-	return ret;
+	for (QValueList<RKVariable*>::ConstIterator it = col_list.constBegin (); it != col_list.constEnd (); ++it) {
+		(*it)->syncDataToR ();
+		(*it)->setSyncing (true);
+	}
 }
 
 TwinTableMember *TwinTable::activeTable () {

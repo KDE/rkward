@@ -56,8 +56,7 @@ public:
 	void deleteRow (int where, TwinTableMember *table=0);
 	QCString encodeSelection ();
 /** Pastes content to the current selection. */
-	typedef QMap<int, RObject::ChangeSet*> ColChanges;
-	ColChanges *pasteEncoded (QByteArray content, TwinTableMember **table_p);
+	void pasteEncoded (QByteArray content);
 /** Same as above, but flips the data (i.e. row <-> cols) */
 //	void pasteEncodedFlipped (QByteArray content);
 /** Clear the currently selected cells */

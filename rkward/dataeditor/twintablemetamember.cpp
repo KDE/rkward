@@ -33,8 +33,8 @@
 
 TwinTableMetaMember::TwinTableMetaMember (QWidget *parent, TwinTable *table) : TwinTableMember (parent, table, 0, 1) {
 	type_values.insert (QString::number (RObject::Number), RObject::typeToText (RObject::Number));
+	type_values.insert (QString::number (RObject::Factor), RObject::typeToText (RObject::Factor));
 	type_values.insert (QString::number (RObject::String), RObject::typeToText (RObject::String));
-	type_values.insert (QString::number (RObject::Date), RObject::typeToText (RObject::Date));
 }
 
 TwinTableMetaMember::~TwinTableMetaMember () {

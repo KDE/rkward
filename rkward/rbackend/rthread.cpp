@@ -39,6 +39,7 @@ void RThread::run () {
 	RK_TRACE (RBACKEND);
 	embeddedR = new REmbed (this);
 	locked = true;
+	killed = false;
 	int err;
 	bool previously_idle = false;
 	if ((err = embeddedR->initialize ())) {
@@ -53,7 +54,7 @@ void RThread::run () {
 	
 	while (1) {
 		MUTEX_LOCK;
-		
+
 		if (previously_idle) {
 			if (!RCommandStack::regular_stack->isEmpty ()) {
 				qApp->postEvent (inter, new QCustomEvent (RBUSY_EVENT));
@@ -69,6 +70,11 @@ void RThread::run () {
 				// mutex will be unlocked inside
 				doCommand (command);
 			}
+		
+			if (killed) {
+				MUTEX_UNLOCK
+				return;
+			}
 		}
 		
 		if (!previously_idle) {
@@ -80,9 +86,9 @@ void RThread::run () {
 		
 		// if no commands are in queue, sleep for a while
 		MUTEX_UNLOCK;
+		if (killed) return;
 		msleep (10);
 	}
-	RK_DO (qDebug ("R-Thread exited"), RBACKEND, DL_DEBUG);
 }
 
 void RThread::doCommand (RCommand *command) {

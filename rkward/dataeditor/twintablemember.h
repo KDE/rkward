@@ -55,11 +55,11 @@ public:
 	int numAllCols ();
 /** reimplemented form QTable not to use QTableItems. This one raises an assert (should never be called) */
 	void removeRows (const QMemArray<int> &rows);
-/** reimplemented form QTable not to use QTableItems. This one raises an assert (should never be called) */
+/** reimplemented form QTable not to use QTableItems. This one has no effect */
 	void swapRows (int row1, int row2, bool swapHeader);
 /** reimplemented form QTable not to use QTableItems. This one raises an assert (should never be called) */
 	void swapCells (int row1, int col1, int row2, int col2);
-/** reimplemented form QTable not to use QTableItems. This one raises an assert (should never be called) */
+/** reimplemented form QTable not to use QTableItems. This one has no effect */
 	void swapColumns (int col1, int col2, bool swapHeader);
 /** reimplemented form QTable not to use QTableItems. This one always returns 0 */
 	QTableItem *item (int, int) { return 0; }

@@ -88,6 +88,22 @@ void RInterface::issueCommand (const QString &command, int type, const QString &
 
 RInterface::~RInterface(){
 	RK_TRACE (RBACKEND);
+	
+	// kill the thread gracefully
+	MUTEX_LOCK
+	r_thread->kill ();
+	MUTEX_UNLOCK
+	r_thread->wait (5000);
+	
+	// timeout in wait? Try a little harder
+	if (r_thread->running ()) {
+		MUTEX_LOCK
+		R_interrupts_pending = 1;
+		MUTEX_UNLOCK
+		r_thread->wait (10000);
+		// if the thread did not exit, yet - bad luck.
+	}
+	
 	delete watch;
 }
 

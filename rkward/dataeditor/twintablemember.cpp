@@ -118,7 +118,6 @@ void TwinTableMember::removeRows (const QMemArray<int> &) {
 }
 
 void TwinTableMember::swapRows (int, int, bool) {
-	RK_ASSERT (false);
 }
 
 void TwinTableMember::swapCells (int, int, int, int) {
@@ -126,7 +125,6 @@ void TwinTableMember::swapCells (int, int, int, int) {
 }
 
 void TwinTableMember::swapColumns (int, int, bool) {
-	RK_ASSERT (false);
 }
 
 void TwinTableMember::editorLostFocus () {

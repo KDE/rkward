@@ -103,3 +103,49 @@
 	}
 	return (TRUE)
 }
+
+# changed to allow assignment of values not in levels without losing information.
+"[<-.factor" <- function (x, i, value) {
+	ok <- TRUE
+	lx <- levels(x)
+	cx <- oldClass(x)
+	if (is.factor(value))
+		value <- levels(value)[value]
+	m <- match(value, lx)
+	if (any(is.na(m) & !is.na(value))) {
+		m <- value
+		ok <- FALSE
+		mode (x) <- "character"
+		warning("invalid factor level. Dropping factor-class. Restore using rk.restore.factor ().")
+	}
+## here, let m revert to original value to allow temporary storage in different type (probably character)
+## change storage back to 'normal' factor using "match (unclass (x), levels (x))"
+	class(x) <- NULL
+	if (missing(i))
+		x[] <- m
+	else x[i] <- m
+	attr(x, "levels") <- lx
+	if (ok) {
+		class (x) <- cx
+	} else {
+		tx <- cx[cx != "factor"]
+		if (length (tx) < 1) {
+			class (x) <- mode (x)
+		} else {
+			class (x) <- tx
+		}
+	}
+	x
+}
+
+"rk.restore.factor" <- function (x) {
+	t <- match (x, levels (x))
+	if (length (class (x)) > 1) {
+		class (t) <- c ("factor", class (x))
+	} else {
+		class (t) <- "factor"
+	}
+	levels (t) <- levels (x)
+	attributes (t) <- attributes (x)
+	eval (substitute (x <<- t))
+}

@@ -1,3 +1,9 @@
+- recursively remove children of removed objects (fixes one of probably many memory leaks)
+- wait for backend-thread to terminate on exit. Avoids crashes when closing RKWard
+- do not crash if loading the "rkward" R package fails, but rather display a nice error-message
+- data editor stores data more efficiently
+- renaming columns in a data.frame does not change their position in the frame
+
 --- Version 0.2.8 - Sep-09-2004
 - override for require () to show install-packages dialog, if required package is not installed.
 - Dialog to load/unload packages, update and install packages from CRAN

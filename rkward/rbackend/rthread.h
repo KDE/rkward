@@ -45,6 +45,7 @@ public:
 
 	void unlock () { locked=false; };
 	void lock () { locked=true; };
+	void kill () { killed = true; };
 	
 	void doSubstack (char **call, int call_length);
 	
@@ -60,6 +61,7 @@ private:
 	REmbed *embeddedR;
 	
 	bool locked;
+	bool killed;
 };
 
 #endif

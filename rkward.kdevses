@@ -3,152 +3,52 @@
 <KDevPrjSession>
  <LastCompileConfig>(Default)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
- <DocsAndViews NumberOfDocuments="29" >
-  <Doc0 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rbackend/rinterface.cpp" >
-   <View0 line="145" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rbackend/rinterface.h" >
-   <View0 line="65" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rbackend/rthread.cpp" >
-   <View0 line="123" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rbackend/rcommandstack.h" >
-   <View0 line="22" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rbackend/rcommandstack.cpp" >
-   <View0 line="99" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc4>
-  <Doc5 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rbackend/rthread.h" >
-   <View0 line="53" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc5>
-  <Doc6 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rbackend/rcommand.h" >
-   <View0 line="108" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc6>
-  <Doc7 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rbackend/rembedinternal.cpp" >
-   <View0 line="66" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc7>
-  <Doc8 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rbackend/rembedinternal.h" >
-   <View0 line="42" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc8>
-  <Doc9 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rbackend/rembed.h" >
-   <View0 line="43" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc9>
-  <Doc10 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rbackend/rembed.cpp" >
-   <View0 line="95" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc10>
-  <Doc11 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rbackend/rpackages/rkward/R/internal.R" >
-   <View0 line="77" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc11>
-  <Doc12 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rbackend/rpackages/rkward/R/public.R" >
-   <View0 line="41" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc12>
-  <Doc13 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/ChangeLog" >
-   <View0 line="2" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc13>
-  <Doc14 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkwatch.cpp" >
-   <View0 line="31" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc14>
-  <Doc15 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/dataeditor/twintable.cpp" >
-   <View0 line="81" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc15>
-  <Doc16 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/core/rcontainerobject.h" >
-   <View0 line="65" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc16>
-  <Doc17 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/core/rcontainerobject.cpp" >
-   <View0 line="243" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc17>
-  <Doc18 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/core/robjectlist.cpp" >
-   <View0 line="195" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc18>
-  <Doc19 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/dataeditor/rkeditordataframe.cpp" >
-   <View0 line="61" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc19>
-  <Doc20 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/core/rkmodificationtracker.cpp" >
+ <DocsAndViews NumberOfDocuments="9" >
+  <Doc0 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/TODO" >
    <View0 line="0" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
-  </Doc20>
-  <Doc21 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/robjectbrowser.cpp" >
-   <View0 line="90" Type="???" >
+  </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/dataeditor/twintable.h" >
+   <View0 line="58" Type="???" >
+    <AdditionalSettings Top="2" Width="208" Attach="1" Height="549" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/dataeditor/twintable.cpp" >
+   <View0 line="318" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
-  </Doc21>
-  <Doc22 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkward.cpp" >
-   <View0 line="512" Type="???" >
+  </Doc2>
+  <Doc3 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/core/rkvariable.cpp" >
+   <View0 line="92" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
-  </Doc22>
-  <Doc23 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/dialogs/rkloadlibsdialog.h" >
-   <View0 line="126" Type="???" >
+  </Doc3>
+  <Doc4 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/dataeditor/rkeditordataframe.cpp" >
+   <View0 line="159" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
-  </Doc23>
-  <Doc24 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/dialogs/rkloadlibsdialog.cpp" >
-   <View0 line="122" Type="???" >
+  </Doc4>
+  <Doc5 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/snippets" >
+   <View0 line="6" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
-  </Doc24>
-  <Doc25 context="ctx_doxygen" NumberOfViews="1" URL="file:/usr/share/doc/kde/HTML/en/kdelibs-apidocs/kdeui/html/classKProgress.html" >
-   <View0 Type="???" >
-    <AdditionalSettings/>
-   </View0>
-  </Doc25>
-  <Doc26 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/misc/rkcanceldialog.h" >
-   <View0 line="29" Type="???" >
+  </Doc5>
+  <Doc6 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/dataeditor/twintablemember.h" >
+   <View0 line="61" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
-  </Doc26>
-  <Doc27 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/misc/rkcanceldialog.cpp" >
-   <View0 line="24" Type="???" >
+  </Doc6>
+  <Doc7 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/dataeditor/twintablemember.cpp" >
+   <View0 line="133" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
-  </Doc27>
-  <Doc28 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/TODO" >
-   <View0 line="2" Type="???" >
+  </Doc7>
+  <Doc8 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/dataeditor/twintablemetamember.cpp" >
+   <View0 line="154" Type="???" >
     <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
-  </Doc28>
+  </Doc8>
  </DocsAndViews>
  <pluginList>
   <kdevbookmarks>
@@ -171,7 +71,7 @@
   <kdevdebugger>
    <breakpointList>
     <breakpoint0 location="/home/thomas/develop/rkward/rkward/phpbackend.cpp:215" type="1" condition="" enabled="1" />
-    <breakpoint1 location="/home/thomas/develop/rkward/rkward/rbackend/rembedinternal.cpp:161" type="1" condition="" enabled="1" />
+    <breakpoint1 location="/home/thomas/develop/rkward/rkward/rbackend/rembedinternal.cpp:173" type="1" condition="" enabled="1" />
    </breakpointList>
   </kdevdebugger>
  </pluginList>
