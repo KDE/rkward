@@ -26,7 +26,6 @@ class RInterface;
 class RCommand;
 class QPushButton;
 class QTextEdit;
-class QMenuBar;
 class RKCommandEditor;
 
 /**
@@ -62,8 +61,6 @@ private:
 	QTextEdit *watch;
 	QPushButton *submit;
 	QPushButton *clear_commands;
-
-	QMenuBar *menu;
 };
 
 #endif

@@ -22,32 +22,60 @@
 
 #include "../plugin/rkpluginhandle.h"
 
-RKMenu::RKMenu(RKMenu *parent, QString tag, QString label) : QPopupMenu (parent) {
-	is_top_level = false;
-	_tag = tag;
-	_label = label;
+#include "../debug.h"
+
+RKMenu::RKMenu () {
+	RK_TRACE (MISC);
 }
 
-RKMenu::RKMenu(QMenuBar *parent, QString tag, QString label) : QPopupMenu (parent) {
-	is_top_level = true;
-	_tag = tag;
-	_label = label;
+RKMenu::~RKMenu() {
+	RK_TRACE (MISC);
+	for (QMap<int, RKMenu*>::iterator it = submenus.begin (); it != submenus.end (); ++it) {
+		delete it.data ();
+	}
+	for (QMap<int, RKPluginHandle*>::iterator it = entry_plugins.begin (); it != entry_plugins.end (); ++it) {
+		delete it.data ();
+	}
 }
 
-RKMenu::~RKMenu(){
-	// TODO: delete submenus and items
+RKMenu *RKMenu::createSubMenu () {
+	RK_TRACE (MISC);
+	QPopupMenu *qmenu = new QPopupMenu (menu);
+	RKMenu *ret = new RKMenu ();
+	ret->menu = qmenu;
+	
+	return ret;
 }
 
-QString RKMenu::label () {
-	return _label;
+RKMenu *RKMenu::addSubMenu (const QString &id, const QString &label, int index) {
+	RK_TRACE (MISC);
+	int mid;
+	RKMenu *ret;
+	if (submenu_ids.find (id) == submenu_ids.end ()) {
+		ret = createSubMenu ();
+		mid = menu->insertItem (label, ret->menu, -1, index);
+	} else {
+		mid = submenu_ids[id];
+		menu->changeItem (mid, label);
+		ret = submenus [mid];
+	}
+	submenu_ids.insert (id, mid);
+	submenus.insert (mid, ret);
+	
+	return ret;
 }
 
-void RKMenu::addSubMenu (const QString &id, RKMenu *submenu) {
-	submenus.insert (id, submenu);
-	insertItem (submenu->label (), submenu);
-}
-
-void RKMenu::addEntry (const QString &id, RKPluginHandle *plugin, const QString &label) {
-	entries.insert (id, plugin);
-	insertItem (label, plugin, SLOT (activated ()));
+void RKMenu::addEntry (const QString &id, RKPluginHandle *plugin, const QString &label, int index) {
+	RK_TRACE (MISC);
+	int mid;
+	if (entry_ids.find (id) == entry_ids.end ()) {
+		mid = menu->insertItem (label, plugin, SLOT (activated ()), 0, -1, index);
+	} else {
+		mid = entry_ids[id];
+		delete entry_plugins[mid];
+		menu->removeItem (mid);
+		mid = menu->insertItem (label, plugin, SLOT (activated ()), 0, mid, index);
+	}
+	entry_plugins.insert (mid, plugin);
+	entry_ids.insert (id, mid);
 }

@@ -31,21 +31,25 @@ class QDomElement;
   *@author Thomas Friedrichsmeier
   */
 
-class RKMenu : public QPopupMenu  {
+class RKMenu {
 public: 
-	RKMenu(RKMenu *parent, QString tag, QString label);
-	RKMenu(QMenuBar *parent, QString tag, QString label);
 	~RKMenu();
-	void addSubMenu (const QString &id, RKMenu *submenu);
-	void addEntry (const QString &id, RKPluginHandle *plugin, const QString &label);
-	QString label ();
+/** adds a new submenu to this menu at the given index. If a menu with the given tag already exists, that menu will be returned, so entries can be merged (and the index will be ignored) */
+	RKMenu *addSubMenu (const QString &id, const QString &label, int index=-1);
+/** adds a new plugin to this menu at the given index. If a plugin with the given tag already exists, it will be deleted and overwritten, i.e. replaced with the newer plugin */
+	void addEntry (const QString &id, RKPluginHandle *plugin, const QString &label, int index=-1);
+protected:
+	RKMenu ();
 private:
+friend class RKMenuList;
+	RKMenu *createSubMenu ();
 /** TODO: Probably we neither need to keep the tag, nor is_top_level. */
-	QMap<QString, RKMenu*> submenus;
-	QMap<QString, RKPluginHandle*> entries;
-	bool is_top_level;
-	QString _tag;
-	QString _label;
+	QMap<QString, int> submenu_ids;
+	QMap<int, RKMenu*> submenus;
+	QMap<QString, int> entry_ids;
+	QMap<int, RKPluginHandle*> entry_plugins;
+/** the associated menu, the entries get placed in */
+	QPopupMenu *menu;
 };
 
 #endif

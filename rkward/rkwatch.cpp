@@ -29,10 +29,10 @@
 #include <qfont.h>
 #include <qlayout.h>
 #include <qsplitter.h>
-#include <qmenubar.h>
 #include <qpopupmenu.h>
 
 #include <klocale.h>
+#include <kmenubar.h>
 
 RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	QGridLayout *grid = new QGridLayout (this, 2, 1);
@@ -72,7 +72,7 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	r_inter = parent;
 
 	// construct menu-bar
-	menu = new QMenuBar (this);
+	KMenuBar *menu = new KMenuBar (this);
 	QPopupMenu *watch_menu = new QPopupMenu (this);
 	watch_menu->setItemEnabled (watch_menu->insertItem (i18n ("&Print Log"), 0, 0), false);
 	watch_menu->setItemEnabled (watch_menu->insertItem (i18n ("Export Log"), 0, 0), false);

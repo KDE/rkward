@@ -45,6 +45,7 @@
 #include "dataeditor/rkdrag.h"
 #include "rkwatch.h"
 #include "misc/rkmenu.h"
+#include "misc/rkmenulist.h"
 #include "plugin/rkpluginhandle.h"
 #include "rkoutputwindow.h"
 #include "settings/rksettings.h"
@@ -120,6 +121,7 @@ void RKwardApp::doPostInit () {
 	KMessageBox::information (this, dummy, "Before you complain...", "state_of_rkward");
 
 	startR ();
+	menu_list = new RKMenuList (menuBar ());
 	initPlugins ();
 	// just to initialize the window-actions accordingly
 	slotToggleWindowClosed ();
@@ -147,7 +149,7 @@ void RKwardApp::doPostInit () {
 
 void RKwardApp::initPlugins () {
 	slotStatusMsg(i18n("Setting up plugins..."));
-
+	
 	if (!initPluginDir (RKSettingsModulePlugins::pluginDir (), 0)) {
 		KMessageBox::information (0, i18n ("Could not find any plugins!\nRKWard is pretty useless without plugins, so you should use Settings->Plugins to import some.\n"), i18n ("No plugins found"));
 	}
@@ -186,12 +188,9 @@ int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
 	RKMenu *menu = 0;
 	if (element.attribute ("type") == "menu") {
 		if (!parent) {
-			menu = new RKMenu (menuBar (), element.attribute ("id"), element.attribute ("label", "untitled"));
-			rkmenus.insert (element.attribute ("id"), menu);
-			menuBar ()->insertItem (menu->label (), menu);
+			menu = menu_list->createMenu (element.attribute ("id"), element.attribute ("label"), 5);
 		} else {
-			menu = new RKMenu (parent, element.attribute ("id"), element.attribute ("label", "untitled"));
-			parent->addSubMenu (element.attribute ("id"), menu);
+			menu = parent->addSubMenu (element.attribute ("id"), element.attribute ("label", "untitled"));
 		}
 	} else {
 		if (!parent) {

@@ -44,6 +44,7 @@ class RKSettingsModule;
 class RKSettings;
 class RInterface;
 class RKEditorManager;
+class RKMenuList;
 
 /**
   * The base class for RKward application windows. It sets up the main
@@ -218,8 +219,6 @@ class RKwardApp : public KMainWindow
 
 /** recursively initialize the plugins in this directory */
 	int initPluginDir (const QString & dirname, RKMenu *parent);
-	
-	QMap<QString, RKMenu*> rkmenus;
 
 /** Used to receive a signal during startup AFTER the exec loop was entered */
 	QTimer *startup_timer;
@@ -228,6 +227,8 @@ class RKwardApp : public KMainWindow
 	RObjectBrowser *object_browser;
 	
 	KURL *initial_url;
+	
+	RKMenuList *menu_list;
 	
 	friend class RInterface;
 	void setRStatus (bool busy);
