@@ -59,6 +59,7 @@
 #include "robjectbrowser.h"
 #include "dialogs/startupdialog.h"
 #include "agents/rksaveagent.h"
+#include "agents/rkloadagent.h"
 #include "windows/rkcommandeditorwindow.h"
 
 #include "debug.h"
@@ -66,8 +67,8 @@
 #define ID_STATUS_MSG 1
 #define ID_R_STATUS_MSG 2
 
-RKwardApp::RKwardApp(KURL *load_url, QWidget* , const char* name):KMainWindow(0, name)
-{
+RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMainWindow (0, name) {
+	RK_TRACE (APP);
 	RKGlobals::app = this;
 	RKGlobals::rinter = 0;
 	RKGlobals::list = 0;
@@ -105,12 +106,14 @@ RKwardApp::RKwardApp(KURL *load_url, QWidget* , const char* name):KMainWindow(0,
 }
 
 RKwardApp::~RKwardApp() {
+	RK_TRACE (APP);
 	delete RKGlobals::rInterface ();
 	delete RKGlobals::rObjectList ();
 	delete object_browser;
 }
 
 void RKwardApp::doPostInit () {
+	RK_TRACE (APP);
 	delete startup_timer;
 
 	readOptions();
@@ -155,6 +158,7 @@ void RKwardApp::doPostInit () {
 }
 
 void RKwardApp::initPlugins () {
+	RK_TRACE (APP);
 	slotStatusMsg(i18n("Setting up plugins..."));
 	
 	if (!initPluginDir (RKSettingsModulePlugins::pluginDir (), 0)) {
@@ -165,6 +169,7 @@ void RKwardApp::initPlugins () {
 }
 
 int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
+	RK_TRACE (APP);
 	int num_plugins = 0;
 	
 	// list directories only
@@ -222,6 +227,7 @@ int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
 }
 
 void RKwardApp::startR () {
+	RK_TRACE (APP);
 	RK_ASSERT (!RKGlobals::rInterface ());
 	
 	QDir dir (RKSettingsModuleLogfiles::filesPath());
@@ -242,6 +248,7 @@ void RKwardApp::slotConfigure () {
 
 void RKwardApp::initActions()
 {  
+	RK_TRACE (APP);
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
 	new_data_frame = new KAction (i18n ("data.frame"), 0, 0, this, SLOT (slotNewDataFrame ()), actionCollection (), "new_data_frame");
 	fileOpen = KStdAction::open(this, SLOT(slotFileOpen()), actionCollection(), "file_openx");
@@ -300,6 +307,7 @@ void RKwardApp::initActions()
 
 void RKwardApp::initStatusBar()
 {
+	RK_TRACE (APP);
   ///////////////////////////////////////////////////////////////////
   // STATUSBAR
   // TODO: add your own items you need for displaying current application status.
@@ -308,14 +316,14 @@ void RKwardApp::initStatusBar()
 }
 
 void RKwardApp::openWorkspace (const KURL &url) {
-	RKGlobals::rObjectList ()->loadWorkspace(url);
-	setCaption(url.fileName(), false);
+	RK_TRACE (APP);
+	new RKLoadAgent (url, false);
 	fileOpenRecent->addURL (url);
 }
 
-
 void RKwardApp::saveOptions()
 {	
+	RK_TRACE (APP);
   config->setGroup("General Options");
   config->writeEntry("Geometry", size());
   config->writeEntry("Show Toolbar", viewToolBar->isChecked());
@@ -330,6 +338,7 @@ void RKwardApp::saveOptions()
 
 void RKwardApp::readOptions ()
 {
+	RK_TRACE (APP);
 	
   config->setGroup("General Options");
 
@@ -363,6 +372,7 @@ void RKwardApp::readOptions ()
 
 void RKwardApp::saveProperties(KConfig *_cfg)
 {
+	RK_TRACE (APP);
 /*  if(doc->URL().fileName()!=i18n("Untitled") && !doc->isModified())
   {
     // saving to tempfile not necessary
@@ -383,6 +393,7 @@ void RKwardApp::saveProperties(KConfig *_cfg)
 
 void RKwardApp::readProperties(KConfig* _cfg)
 {
+	RK_TRACE (APP);
 /*  QString filename = _cfg->readEntry("filename", "");
   KURL url(filename);
   bool modified = _cfg->readBoolEntry("modified", false);
@@ -411,6 +422,7 @@ void RKwardApp::readProperties(KConfig* _cfg)
 }		
 
 bool RKwardApp::queryClose () {
+	RK_TRACE (APP);
 	if (RKGlobals::rObjectList ()->isEmpty ()) return true;
 
 	int res;
@@ -423,6 +435,7 @@ bool RKwardApp::queryClose () {
 
 bool RKwardApp::queryExit()
 {
+	RK_TRACE (APP);
   saveOptions();
   return true;
 }
@@ -432,11 +445,13 @@ bool RKwardApp::queryExit()
 /////////////////////////////////////////////////////////////////////
 
 void RKwardApp::slotEditorsChanged () {
+	RK_TRACE (APP);
 	close_editor->setEnabled (RKGlobals::editorManager ()->numEditors ());
 	close_all_editors->setEnabled (RKGlobals::editorManager ()->numEditors ());
 }
 
 void RKwardApp::slotNewDataFrame () {
+	RK_TRACE (APP);
 	bool ok;
 
 	QString name = KInputDialog::getText (i18n ("Create new data.frame"), i18n ("Enter name for the new object (make it a valid one - no checks so far)"), "my.data", &ok, this);
@@ -448,18 +463,21 @@ void RKwardApp::slotNewDataFrame () {
 }
 
 void RKwardApp::fileOpenNoSave (const KURL &url) {
+	RK_TRACE (APP);
 	slotStatusMsg(i18n("Opening workspace..."));
-	if (url.isEmpty ()) {
-		KURL url = KFileDialog::getOpenURL(QString::null, i18n("*|All files"), this, i18n("Open File..."));
+	KURL lurl = url;
+	if (lurl.isEmpty ()) {
+		lurl = KFileDialog::getOpenURL (QString::null, i18n("*|All files"), this, i18n("Open File..."));
 	}
-	if (!url.isEmpty ()) {
+	if (!lurl.isEmpty ()) {
 		slotCloseAllEditors ();
-		openWorkspace (url);
+		openWorkspace (lurl);
 	}
 	slotStatusMsg(i18n("Ready."));
 }
 
 void RKwardApp::fileOpenAskSave (const KURL &url) {
+	RK_TRACE (APP);
 	if (RKGlobals::rObjectList ()->isEmpty ()) {
 		fileOpenNoSave (url);
 		return;
@@ -476,27 +494,33 @@ void RKwardApp::fileOpenAskSave (const KURL &url) {
 }
 
 void RKwardApp::slotFileOpen () {
+	RK_TRACE (APP);
 	fileOpenAskSave ("");
 }
 
 void RKwardApp::slotFileOpenRecent(const KURL& url)
 {
+	RK_TRACE (APP);
 	fileOpenAskSave (url);
 }
 
 void RKwardApp::slotFileSave () {
+	RK_TRACE (APP);
 	new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL ());
 }
 
 void RKwardApp::slotFileSaveAs () {
+	RK_TRACE (APP);
 	new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), true);
 }
 
 void RKwardApp::slotCloseEditor () {
+	RK_TRACE (APP);
 	RKGlobals::editorManager ()->closeEditor (RKGlobals::editorManager ()->currentEditor ());
 }
 
 void RKwardApp::slotCloseAllEditors () {
+	RK_TRACE (APP);
 	while (RKGlobals::editorManager ()->numEditors ()) {
 		RKGlobals::editorManager ()->closeEditor (RKGlobals::editorManager ()->currentEditor ());
 	}
@@ -504,6 +528,7 @@ void RKwardApp::slotCloseAllEditors () {
 
 void RKwardApp::slotFilePrint()
 {
+	RK_TRACE (APP);
   slotStatusMsg(i18n("Printing..."));
 
   QPrinter printer;
@@ -516,6 +541,7 @@ void RKwardApp::slotFilePrint()
 }
 
 void RKwardApp::slotFileQuit () {
+	RK_TRACE (APP);
 	slotStatusMsg(i18n("Exiting..."));
 	saveOptions();
 	close ();
@@ -523,6 +549,7 @@ void RKwardApp::slotFileQuit () {
 
 void RKwardApp::slotEditCut()
 {
+	RK_TRACE (APP);
 	slotStatusMsg(i18n("Cutting selection..."));
 	slotEditCopy ();
 	RKGlobals::editorManager ()->currentEditor ()->clearSelected ();
@@ -530,6 +557,7 @@ void RKwardApp::slotEditCut()
 }
 
 void RKwardApp::slotEditCopy() {
+	RK_TRACE (APP);
 
 	slotStatusMsg(i18n("Copying selection to clipboard..."));
 
@@ -539,6 +567,7 @@ void RKwardApp::slotEditCopy() {
 }
 
 void RKwardApp::doPaste () {
+	RK_TRACE (APP);
 	slotStatusMsg(i18n("Inserting clipboard contents..."));
 
 	// actually, we don't care, whether tsv or plain gets pasted - it's both
@@ -556,21 +585,25 @@ void RKwardApp::doPaste () {
 }
 
 void RKwardApp::slotEditPaste() {
+	RK_TRACE (APP);
 	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteEverywhere);
  	doPaste ();
 }
 
 void RKwardApp::slotEditPasteToTable() {
+	RK_TRACE (APP);
 	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteToTable);
 	doPaste();
 }
 void RKwardApp::slotEditPasteToSelection() {
+	RK_TRACE (APP);
 	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteToSelection);
 	doPaste();
 }
 
 void RKwardApp::slotViewToolBar()
 {
+	RK_TRACE (APP);
   slotStatusMsg(i18n("Toggling toolbar..."));
   ///////////////////////////////////////////////////////////////////
   // turn Toolbar on or off
@@ -588,6 +621,7 @@ void RKwardApp::slotViewToolBar()
 
 void RKwardApp::slotViewStatusBar()
 {
+	RK_TRACE (APP);
   slotStatusMsg(i18n("Toggle the statusbar..."));
   ///////////////////////////////////////////////////////////////////
   //turn Statusbar on or off
@@ -606,6 +640,7 @@ void RKwardApp::slotViewStatusBar()
 
 void RKwardApp::slotStatusMsg(const QString &text)
 {
+	RK_TRACE (APP);
   ///////////////////////////////////////////////////////////////////
   // change status message permanently
   statusBar()->clear();
@@ -613,28 +648,34 @@ void RKwardApp::slotStatusMsg(const QString &text)
 }
 
 void RKwardApp::slotNewRKCommandEditorWindow () {
+	RK_TRACE (APP);
 	new RKCommandEditorWindow ();
 }
 
 void RKwardApp::slotShowRKWatch () {
+	RK_TRACE (APP);
 	RKGlobals::rInterface ()->watch->setShown (showRKWatch->isChecked ());
 }
 
 void RKwardApp::slotShowRKOutput () {
+	RK_TRACE (APP);
 	output->setShown (showRKOutput->isChecked ());
 }
 
 void RKwardApp::slotShowRObjectBrowser () {
+	RK_TRACE (APP);
 	object_browser->setShown (showRObjectBrowser->isChecked ());
 }
 
 void RKwardApp::slotToggleWindowClosed () {
+	RK_TRACE (APP);
 	showRKWatch->setChecked (RKGlobals::rInterface ()->watch->isShown ());
 	showRKOutput->setChecked (output->isShown ());
 	showRObjectBrowser->setChecked (object_browser->isShown ());
 }
 
 void RKwardApp::newOutput () {
+	RK_TRACE (APP);
 	output->checkNewInput ();
 	if (RKSettingsModuleOutput::autoShow ()) {
 		output->show ();
@@ -646,6 +687,7 @@ void RKwardApp::newOutput () {
 }
 
 void RKwardApp::setRStatus (bool busy) {
+	RK_TRACE (APP);
 	if (busy) {
 		statusBar()->changeItem(i18n("R-process busy"), ID_R_STATUS_MSG);
 	} else {

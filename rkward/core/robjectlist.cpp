@@ -23,22 +23,17 @@
 #define CHILD_GET_TYPE_COMMAND 2
 #define LOAD_COMPLETE_COMMAND 3
 
-#define WORKSPACE_LOAD_COMMAND 10
-
 #include <qtimer.h>
+#include <qstringlist.h>
 
-#include <kio/netaccess.h>
 #include <klocale.h>
 
 #include "rkvariable.h"
 
 #include "../rbackend/rinterface.h"
-#include "../dataeditor/rkeditor.h"
-#include "../rkeditormanager.h"
 #include "rkmodificationtracker.h"
 
 #include "../rkglobals.h"
-#include "../rkward.h"
 
 #include "../debug.h"
 
@@ -99,7 +94,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 
 		PendingObject *pobj = pending_objects[command];
 		RObject *robj;
-		// TODO: handle special type like functions, etc.!
+		// TODO: handle special types like functions, etc.!
 		if (command->getIntVector ()[0] == 1) {
 			robj = new RContainerObject (pobj->parent, pobj->name);
 		} else {
@@ -111,11 +106,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 		pending_objects.remove (command);
 		RKGlobals::tracker ()->addObject (robj, 0);
 		
-	} else if (command->getFlags () == WORKSPACE_LOAD_COMMAND) {
-		KIO::NetAccess::removeTempFile (tmpfile);
-	} else if (command->getFlags () == LOAD_COMPLETE_COMMAND) {
-		RKGlobals::editorManager ()->restoreEditors ();
-	}
+	} 
 	
 	// TODO: signal change
 }
@@ -160,31 +151,6 @@ void RObjectList::childUpdateComplete () {
 
 		emit (updateComplete ());
 	}
-}
-
-void RObjectList::loadWorkspace (const KURL& url, bool merge) {
-	RK_TRACE (OBJECTS);
-#if !KDE_IS_VERSION (3, 2, 0)
-	KIO::NetAccess::download (url, tmpfile);
-#else
-	KIO::NetAccess::download (url, tmpfile, RKGlobals::rkApp ());
-#endif
-
-	RCommand *command;
-	
-	if (!merge) {
-		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App);
-		RKGlobals::rInterface ()->issueCommand (command);
-		current_url = url;
-	}
-
-	command = new RCommand ("load (\"" + url.path () + "\")", RCommand::App, "", this, WORKSPACE_LOAD_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command);
-	updateFromR ();
-	
-	// since the update is done in the update chain, this command is guaranteed to run after the update is complete
-	command = new RCommand ("", RCommand::App | RCommand::EmptyCommand, "", this, LOAD_COMPLETE_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command);
 }
 
 void RObjectList::timeout () {

@@ -58,8 +58,6 @@ public:
 	void childUpdateComplete ();
 
 	RObject *findObject (const QString &full_name);
-
-	void loadWorkspace (const KURL& url, bool merge=false);
 	
 	KURL getWorkspaceURL () { return current_url; };
 public slots:
@@ -78,6 +76,8 @@ protected:
 /// reimplemented from RContainerObject to emit a change signal
 	void objectsChanged ();
 private:
+	friend class RKLoadAgent;
+	void setWorkspaceURL (const KURL &url) { current_url = url; };
 	QTimer *update_timer;
 	
 	struct PendingObject {
@@ -89,9 +89,6 @@ private:
 	
 	RCommandChain *update_chain;
 
-	/// needed if file to be loaded is remote
-	QString tmpfile;
-	
 	KURL current_url;
 };
 
