@@ -53,6 +53,9 @@ public:
 	/** creates a new child. Right now only RKVariables (false, false), or data.frames (true, true), or unspecified containers (true, false) can be created.
 	API will likely change. */
 	RObject *createNewChild (const QString &name, bool container=false, bool data_frame=false);
+	
+	int numDimensions () { return num_dimensions; };
+	int getDimension (int index) { return dimension[index]; };
 private:
 	friend class RObject;
 	void typeMismatch (RObject *child, QString childname);

@@ -40,7 +40,7 @@ public:
 	virtual ~RObject();
 
 	enum RObjectType { DataFrame=1, Matrix=2, Array=4, List=8, Container=16, Variable=32, Workspace=64, HasMetaObject=128 };
-	enum VarType { Number=0, String=1, Date=2, Invalid=3 };
+	enum VarType { Unknown=0, Number=1, String=2, Date=3, Invalid=4 };
 	
 	QString getShortName ();
 	virtual QString getFullName ();

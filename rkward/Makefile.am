@@ -3,7 +3,7 @@ bin_PROGRAMS = rkward
 
 ## INCLUDES were found outside kdevelop specific part
 
-rkward_SOURCES = rkwatch.cpp rkward.cpp main.cpp rkoutputwindow.cpp rkcommandeditor.cpp rkglobals.cpp robjectbrowser.cpp rkeditormanager.cpp
+rkward_SOURCES = rkwatch.cpp rkward.cpp main.cpp rkoutputwindow.cpp rkcommandeditor.cpp rkglobals.cpp robjectbrowser.cpp rkeditormanager.cpp robjectviewer.cpp
 rkward_LDADD = $(top_builddir)/rkward/rbackend/librbackend.a $(top_builddir)/rkward/core/libcore.a $(top_builddir)/rkward/plugin/libplugin.a $(top_builddir)/rkward/misc/libmisc.a $(top_builddir)/rkward/settings/libsettings.a $(top_builddir)/rkward/dataeditor/libdataeditor.a $(top_builddir)/rkward/scriptbackends/libscriptbackends.a $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) $(LIBSOCKET) -lR -lkatepartinterfaces
 
 SUBDIRS = plugins dataeditor settings plugin rbackend scriptbackends misc core
@@ -62,7 +62,7 @@ messages: rc.cpp
 	 $(XGETTEXT) $$LIST -o $(podir)/rkward.pot; \
 	fi
 
-noinst_HEADERS = debug.h rkcommandeditor.h rkglobals.h robjectbrowser.h rkeditormanager.h
+noinst_HEADERS = debug.h rkcommandeditor.h rkglobals.h robjectbrowser.h rkeditormanager.h robjectviewer.h
 phpfilesdir = $(kde_datadir)/rkward/phpfiles
 
 katesyntaxdir = $(kde_datadir)/katepart/syntax/

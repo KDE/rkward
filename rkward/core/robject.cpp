@@ -195,7 +195,9 @@ void RObject::remove () {
 
 //static
 QString RObject::typeToText (VarType var_type) {
-	if (var_type == Number) {
+	if (var_type == Unknown) {
+		return "";
+	} else if (var_type == Number) {
 		return "Number";
 	} else if (var_type == String) {
 		return "String";
@@ -208,7 +210,9 @@ QString RObject::typeToText (VarType var_type) {
 
 //static 
 RObject::VarType RObject::textToType (const QString &text) {
-	if (text == "Number") {
+	if (text == "") {
+		return Unknown;
+	} else if (text == "Number") {
 		return Number;
 	} else if (text == "String") {
 		return String;

@@ -39,13 +39,13 @@ QWidget *TypeSelectCell::createEditor () const {
 	edit_cb->insertItem(i18n ("String"));
 	edit_cb->insertItem(i18n ("Date"));
 
-	edit_cb->setCurrentItem(static_cast<int> (_type));
+	edit_cb->setCurrentItem(static_cast<int> (_type) - 1);
 	return edit_cb;
 }
 
 void TypeSelectCell::setContentFromEditor (QWidget *w) {
 	RObject::VarType old_type = _type;
-	_type = (RObject::VarType) ((QComboBox*) w)->currentItem ();
+	_type = (RObject::VarType) (static_cast<QComboBox*> (w)->currentItem () + 1);
 	valid = true;
 	if (old_type != _type) {
 		ttm ()->getTwin ()->checkColValid (col ());
@@ -70,6 +70,8 @@ void TypeSelectCell::setText (const QString &str) {
 	_type = RObject::textToType (str);
 	if (_type == RObject::Invalid) {
 		valid = false;
+	} else if (_type == RObject::Unknown) {
+		_type = RObject::Number;
 	}
 	if (old_type != _type) {
 		ttm ()->getTwin ()->checkColValid (col ());

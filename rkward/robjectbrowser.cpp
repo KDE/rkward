@@ -30,6 +30,7 @@
 #include "core/rkvariable.h"
 #include "rkeditormanager.h"
 #include "dataeditor/rkeditor.h"
+#include "robjectviewer.h"
 
 #include "debug.h"
 
@@ -54,7 +55,6 @@ RObjectBrowser::RObjectBrowser () : RKToggleWidget () {
 	menu = new QPopupMenu (this);
 	menu->insertItem (i18n ("Edit"), this, SLOT (popupEdit ()), 0, Edit);
 	menu->insertItem (i18n ("View"), this, SLOT (popupView ()), 0, View);
-	menu->setItemEnabled (View, false);
 	menu->insertItem (i18n ("Rename"), this, SLOT (popupRename ()), 0, Rename);
 	menu->insertItem (i18n ("Delete"), this, SLOT (popupDelete ()), 0, Delete);
 }
@@ -117,6 +117,7 @@ void RObjectBrowser::popupEdit () {
 }
 
 void RObjectBrowser::popupView () {
+	new RObjectViewer (0, menu_object);
 }
 
 void RObjectBrowser::popupDelete () {
