@@ -48,10 +48,10 @@ void TwinTableDataMember::removeRow (int row) {
 
 void TwinTableDataMember::insertRows (int row, int count) {
 	RK_TRACE (EDITOR);
-	QTable::insertRows (row, count);
 	for (int i=0; i < table->numCols (); ++i) {
 		table->getColObject (i)->insertRows (row, count);
 	}
+	QTable::insertRows (row, count);
 }
 
 void TwinTableDataMember::setText (int row, int col, const QString &text) {
@@ -127,10 +127,14 @@ QWidget *TwinTableDataMember::beginEdit (int row, int col, bool) {
 		}
 	}
 
+	if (row >= numRows ()) {
+		table->insertNewRow (numRows (), this);
+	}
+	
 	if (var->cellStatus (row) == RKVariable::ValueUnknown) return 0;
 
-	tted = new CellEditor (viewport (), var->getText (row), 0);
-	tted->installEventFilter (this);
+	tted = new CellEditor (viewport (), var->getText (row), 0, var->getValueLabels ());
+	//tted->installEventFilter (this);
 
 	QRect cr = cellGeometry (row, col);
 	tted->resize (cr.size ());

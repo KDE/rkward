@@ -68,7 +68,7 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
 	varview->verticalHeader()->setResizeEnabled (false);
 
     dataview = new TwinTableDataMember (splitter, this);
-    dataview->setNumRows (20);
+    dataview->setNumRows (1);
 	dataview->setNumCols (5);
     dataview->verticalHeader()->setResizeEnabled (false);
 

@@ -114,15 +114,15 @@ numeric! */
 	void insertRows (int row, int count);
 /** Tells the object it has (data) length len. Usually this will only be called directly after creating a new object */
 	void setLength (int len);
+
+/** returns the map of value labels for this variable or 0 if no labels/levels are assigned */
+	ValueLabels *getValueLabels ();
 protected:
 /** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData : public EditData {
-/// status of the row
-		Status row_status;
-
-/// array of numeric data for the cells. 0 if internalStorage is set to String
+/// array of numeric data for the cells.
 		double *cell_double_data;
-/// array of string data for the cells. 0 if internalStorage is set to Numeric
+/// array of string data for the cells.
 		char **cell_string_data;
 /// the currently allocated length of cell_double_data of cell_string_data. Used to determine, when a re-allocation is required
 		int allocated_length;
@@ -134,6 +134,8 @@ protected:
 		int invalid_count;
 /// stores whether there were preivously invalid cells. If so, and there are no longer, now, we may change the mode in the backend.
 		bool previously_valid;
+/// the value-labels or factor levels assigned to this variable. 0 if no values/levels given
+		ValueLabels *value_labels;
 	};
 /** reimplemented from RObject */
 	void allocateEditData ();
@@ -156,6 +158,8 @@ private:
 	void writeData (int from_row, int to_row);
 /** deletes the string data for the given cell */
 	void deleteStringData (int row);
+/** called if a variable was invalid (and therefore stored in a wrong mode in the R backend) and is now valid again. Restores the storage mode in the backend. */
+	void restoreStorageInBackend ();
 /////////////////// END: data-handling //////////////////////
 };
 

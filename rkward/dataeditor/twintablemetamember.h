@@ -19,7 +19,7 @@
 
 #include "twintablemember.h"
 
-#include <qmap.h>
+#include "../core/robject.h"
 
 class QWidget;
 class TwinTable;
@@ -51,7 +51,7 @@ public:
 	
 	QString formattedText (int row, int col) const;
 private:
-	QMap<QString, QString> type_values;
+	RObject::ValueLabels type_values;
 };
 
 #endif

@@ -70,8 +70,8 @@ void RObjectList::rCommandDone (RCommand *command) {
 		num_children_updating = command->stringVectorLength ();
 		// empty workspace?
 		if (!num_children_updating) {
-			update_chain = RKGlobals::rInterface ()->closeChain (update_chain);
-			emit (updateComplete ());
+			num_children_updating = 1;
+			childUpdateComplete ();
 			return;
 		}
 		for (int i = 0; i < command->stringVectorLength (); ++i) {
@@ -116,6 +116,7 @@ void RObjectList::updateFromR () {
 	if (update_chain) {
 		// gee, looks like another update is still on the way. lets schedule one for later:
 		update_timer->start (UPDATE_DELAY_INTERVAL, true);
+		RK_DO (qDebug ("another object-list update is already running (%d children still updating). Rescheduling a further update for later", num_children_updating), OBJECTS, DL_DEBUG);
 		return;
 	}
 
@@ -149,6 +150,7 @@ void RObjectList::childUpdateComplete () {
 		RKGlobals::rInterface ()->closeChain (update_chain);
 		update_chain = 0;
 
+		RK_DO (qDebug ("object list update complete"), OBJECTS, DL_DEBUG);
 		emit (updateComplete ());
 	}
 }

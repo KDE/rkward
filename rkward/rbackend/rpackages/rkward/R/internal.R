@@ -141,11 +141,12 @@
 "rk.restore.factor" <- function (x) {
 	t <- match (x, levels (x))
 	if (length (class (x)) > 1) {
-		class (t) <- c ("factor", class (x))
+		classes <- c ("factor", class (x))
 	} else {
-		class (t) <- "factor"
+		classes <- "factor"
 	}
-	levels (t) <- levels (x)
-	attributes (t) <- attributes (x)
+	attribs <- attributes (x)
 	eval (substitute (x <<- t))
+	eval (substitute (attributes (x) <<- attribs))
+	eval (substitute (class (x) <<- classes))
 }

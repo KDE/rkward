@@ -63,6 +63,9 @@ public:
 /** A map of objects accessible by their short name. Used in RContainerObject. Defined here for technical reasons. */
 	typedef QMap<QString, RObject*> RObjectMap;
 
+/** A map of values to labels. This is used both in regular objects, in which it just represents a map of named values, if any. The more important use is in factors, where it represents the factor levels. Here, the key is always a string representation of a positive integer. */
+	typedef QMap<QString, QString> ValueLabels;
+
 /** Get the data for this object from the backend. Implemented in derived classes. */
 	virtual void updateFromR () = 0;
 /** write the MetaData to the backend. Commands will be issued in the given chain */

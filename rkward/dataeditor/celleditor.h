@@ -18,7 +18,9 @@
 #define CELLEDITOR_H
 
 #include <qlineedit.h>
-#include <qmap.h>
+#include <qintdict.h>
+
+#include "../core/robject.h"
 
 class QStringList;
 class QPopupMenu;
@@ -34,15 +36,18 @@ focus.
 class CellEditor : public QLineEdit {
 Q_OBJECT
 public:
-	CellEditor (QWidget *parent, const QString &text, int mode, const QMap<QString, QString> *named_values=0);
+	CellEditor (QWidget *parent, const QString &text, int mode, const RObject::ValueLabels *named_values=0);
 
 	~CellEditor();
+public slots:
+	void selectedFromList (int id);
 protected:
 /// for showing/hiding list of name_values
 	void timerEvent (QTimerEvent *e);
 private:
 	QPopupMenu *value_list;
 	int timer_id;
+	QIntDict<QString> popup_values;
 };
 
 #endif

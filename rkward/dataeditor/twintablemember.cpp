@@ -145,14 +145,15 @@ QWidget *TwinTableMember::cellWidget (int row, int col) const {
 
 void TwinTableMember::currentCellChanged (int row, int col) {
 	RK_TRACE (EDITOR);
+	if ((row == currEditRow ()) && (col == currEditCol ())) return;
 	if (tted) stopEditing ();
 
-	if (numSelections ()) {
+/*	if (numSelections ()) {
 		QTableSelection sel = selection (currentSelection ());
 		if (sel.bottomRow () != sel.topRow ()) return;
 		if (sel.leftCol () != sel.rightCol ()) return;
 	}
-/*
+
 	editCell (row, col); */
 }
 
@@ -167,7 +168,7 @@ void TwinTableMember::setCellContentFromEditor (int row, int col) {
 
 	QString text_save = tted->text ();
 	
-	tted->removeEventFilter (this);
+	//tted->removeEventFilter (this);
 	delete tted;
 	tted = 0;
 	

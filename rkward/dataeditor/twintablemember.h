@@ -83,7 +83,7 @@ signals:
 	void headerRightClick (int row, int col);
 protected:
 /** reimplemented form QTable not to use QTableItems. This one has no effect */
-	void resizeData (int len) {};
+	void resizeData (int) {};
 /** reimplemented form QTable not to use QTableItems. This one has no effect */
 	void insertWidget (int, int, QWidget *) {};
 friend class RKwardDoc;

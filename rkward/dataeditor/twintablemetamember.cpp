@@ -52,7 +52,7 @@ void TwinTableMetaMember::setText (int row, int col, const QString &text) {
 	RK_TRACE (EDITOR);
 	RKVariable *var = table->getColObject (col);
 	RK_ASSERT (var);
-	if (text == var->getText (row)) return;
+	if (text == TwinTableMetaMember::text (row, col)) return;
 	if (row == NAME_ROW) {
 		RKGlobals::tracker ()->renameObject (var, var->getContainer ()->validizeName (text));
 	} else if (row == LABEL_ROW) {
@@ -120,14 +120,12 @@ QWidget *TwinTableMetaMember::beginEdit (int row, int col, bool) {
 		return 0;
 	}
 
-	if (var->cellStatus (row) == RKVariable::ValueUnknown) return 0;
-
 	if (row == TYPE_ROW) {
 		tted = new CellEditor (viewport (), text (row, col), 0, &type_values);
 	} else {
 		tted = new CellEditor (viewport (), text (row, col), 0, 0);
 	}
-	tted->installEventFilter (this);
+	//tted->installEventFilter (this);
 
 	QRect cr = cellGeometry (row, col);
 	tted->resize (cr.size ());

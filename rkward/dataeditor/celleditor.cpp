@@ -22,7 +22,7 @@
 
 #include "../debug.h"
 
-CellEditor::CellEditor (QWidget *parent, const QString &text, int mode, const QMap<QString, QString> *named_values) : QLineEdit (parent) {
+CellEditor::CellEditor (QWidget *parent, const QString &text, int mode, const RObject::ValueLabels *named_values) : QLineEdit (parent) {
 	RK_TRACE (EDITOR);
 	
 	setText (text);
@@ -31,17 +31,19 @@ CellEditor::CellEditor (QWidget *parent, const QString &text, int mode, const QM
 	
 	timer_id = 0;
 	if (named_values) {
-		value_list = new QPopupMenu (this);
+		value_list = new QPopupMenu ();
 		value_list->setFont (font ());
 		value_list->setPalette (palette ());
 		value_list->setFrameStyle (QFrame::Box | QFrame::Plain);
 		value_list->setLineWidth (1);
 		value_list->setFocusProxy (this);
 		
-		//connect(value_list, SIGNAL(selected (int)), SLOT(selectFromList (int)));
+		connect(value_list, SIGNAL (activated (int)), SLOT (selectedFromList (int)));
 		
-		for (QMap<QString, QString>::const_iterator it = named_values->constBegin (); it != named_values->constEnd (); ++it) {
-			value_list->insertItem (it.key () + ": " + it.data ());
+		int i=0;
+		for (RObject::ValueLabels::const_iterator it = named_values->constBegin (); it != named_values->constEnd (); ++it) {
+			popup_values.insert (value_list->insertItem (it.key () + ": " + it.data (), i), &(it.key ()));
+			i++;
 		}
 		
 		timer_id = startTimer (200);
@@ -52,6 +54,15 @@ CellEditor::CellEditor (QWidget *parent, const QString &text, int mode, const QM
 
 CellEditor::~CellEditor () {
 	RK_TRACE (EDITOR);
+	if (value_list) {
+		value_list->setFocusProxy (0);
+		delete value_list;
+	}
+}
+
+void CellEditor::selectedFromList (int id) {
+	RK_TRACE (EDITOR);
+	setText (*popup_values[id]);
 }
 
 void CellEditor::timerEvent (QTimerEvent *e) {
