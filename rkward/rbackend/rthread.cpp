@@ -23,7 +23,7 @@
 
 RThread::RThread(RInterface *parent) : QThread() {
 	inter = parent;
-	top_chain = new RCommand::CommandChain;
+	top_chain = new RCommandChain;
 	top_chain->closed = true;
 	top_chain->parent = 0;
 	current_chain = top_chain;
@@ -32,24 +32,24 @@ RThread::RThread(RInterface *parent) : QThread() {
 RThread::~RThread() {
 }
 
-void RThread::issueCommand (RCommand::RCommand *command, RCommand::CommandChain *chain) {
+void RThread::issueCommand (RCommand *command, RCommandChain *chain) {
 	mutex.lock ();
 	if (!chain) chain = top_chain;
 	
-	RCommand::ChainOrCommand *coc = new RCommand::ChainOrCommand;
+	RChainOrCommand *coc = new RChainOrCommand;
 	coc->command = command;
 	coc->chain = 0;
 	chain->commands.append (coc);
 	mutex.unlock ();
 }
 
-RCommand::CommandChain *RThread::startChain (RCommand::CommandChain *parent) {
+RCommandChain *RThread::startChain (RCommandChain *parent) {
 	mutex.lock ();
 	if (!parent) parent = top_chain;
 
-	RCommand::ChainOrCommand *coc = new RCommand::ChainOrCommand;
+	RChainOrCommand *coc = new RChainOrCommand;
 	coc->command = 0;
-	coc->chain = new RCommand::CommandChain;
+	coc->chain = new RCommandChain;
 	coc->chain->closed = false;
 	coc->chain->parent = parent;
 	parent->commands.append (coc);
@@ -58,16 +58,16 @@ RCommand::CommandChain *RThread::startChain (RCommand::CommandChain *parent) {
 	return coc->chain;
 }
 
-RCommand::CommandChain *RThread::closeChain (RCommand::CommandChain *chain) {
+RCommandChain *RThread::closeChain (RCommandChain *chain) {
 	if (!chain) return 0;
 
 	mutex.lock ();
 	chain->closed = true;
-	RCommand::CommandChain *ret = chain->parent;
+	RCommandChain *ret = chain->parent;
 	
 	// lets see, whether we can do some cleanup
 	while (current_chain->commands.isEmpty () && current_chain->closed && current_chain->parent) {
-		RCommand::CommandChain *temp = current_chain;
+		RCommandChain *temp = current_chain;
 		current_chain = current_chain->parent;
 		delete temp;
 	}
@@ -92,7 +92,7 @@ void RThread::run () {
 	
 		// while commands are in queue, don't wait
 		while (!current_chain->commands.isEmpty ()) {
-			RCommand::ChainOrCommand *coc = current_chain->commands.first ();
+			RChainOrCommand *coc = current_chain->commands.first ();
 			current_chain->commands.removeFirst ();
 			if (coc->command) {
 				RCommand *command = coc->command;
@@ -112,7 +112,7 @@ void RThread::run () {
 			
 			// reached end of chain and chain is closed? walk up
 			while (current_chain->commands.isEmpty () && current_chain->closed && current_chain->parent) {
-				RCommand::CommandChain *temp = current_chain;
+				RCommandChain *temp = current_chain;
 				current_chain = current_chain->parent;
 				delete temp;
 			}

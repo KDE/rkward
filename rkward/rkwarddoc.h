@@ -32,12 +32,12 @@
 #include <kurl.h>
 
 #include "dataeditor/twintable.h"
-#include "rbackend/rinterface.h"
 #include "rbackend/rcommandreceiver.h"
 
 class RKwardApp;
 class TwinTableMember;
 class TwinTable;
+class RCommandChain;
 
 /**	This class represents the currently active document, i.e. the
 	currently opened table. As of this version, there only ever is
@@ -103,7 +103,7 @@ class RKwardDoc : public TwinTable, public RCommandReceiver
 	typedef QMap<RCommand*, PullCommandIdentifier*> PullMap;
 	PullMap pull_map;
 	
-	RCommand::CommandChain *command_chain;
+	RCommandChain *command_chain;
 	
 	/** pushes a whole (modified) twintable to R */
 	void pushTable (TwinTable *ttable, QString name);

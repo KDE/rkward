@@ -43,16 +43,16 @@ public:
 
     ~RThread();
 
-	void issueCommand (RCommand *command, RCommand::CommandChain *chain);
+	void issueCommand (RCommand *command, RCommandChain *chain);
 	
-	RCommand::CommandChain *startChain (RCommand::CommandChain *parent);
-	RCommand::CommandChain *closeChain (RCommand::CommandChain *chain);
+	RCommandChain *startChain (RCommandChain *parent);
+	RCommandChain *closeChain (RCommandChain *chain);
 protected:
 	void run ();
 private:	
 	RInterface *inter;
-	RCommand::CommandChain *current_chain;
-	RCommand::CommandChain *top_chain;
+	RCommandChain *current_chain;
+	RCommandChain *top_chain;
 /** This is the last step in the chain of committing a command, and actually writes it */
 	void doCommand (RCommand *command);
 	REmbed *embeddedR;

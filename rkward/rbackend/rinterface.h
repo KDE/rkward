@@ -45,11 +45,11 @@ public:
 	RInterface();
 	~RInterface();
 	
-	void issueCommand (RCommand *command, RCommand::CommandChain *chain=0) { r_thread->issueCommand (command, chain); };
+	void issueCommand (RCommand *command, RCommandChain *chain=0) { r_thread->issueCommand (command, chain); };
 	
-	RCommand::CommandChain *startChain (RCommand::CommandChain *parent=0) { return r_thread->startChain (parent); };
+	RCommandChain *startChain (RCommandChain *parent=0) { return r_thread->startChain (parent); };
 /** returns pointer to parent chain */
-	RCommand::CommandChain *closeChain (RCommand::CommandChain *chain) { return r_thread->closeChain (chain); };
+	RCommandChain *closeChain (RCommandChain *chain) { return r_thread->closeChain (chain); };
 private:
 	RThread *r_thread;
 friend class RKwardApp;

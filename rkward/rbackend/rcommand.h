@@ -25,6 +25,25 @@
 
 class RCommandReceiver;
 
+class RCommand;
+class RChainOrCommand;
+/// this struct is needed by the rthread.
+class RCommandChain {
+private:
+friend class RThread;
+	QPtrList<RChainOrCommand> commands;
+	bool closed;
+	RCommandChain *parent;
+};
+/// this struct is needed by the rthread.
+class RChainOrCommand {
+private:
+friend class RThread;
+	RCommand *command;
+	RCommandChain *chain;
+};
+
+
 /** This class is used to encapsulate an R-command, so it can be easiyl identified
 	in a chain of commands. It is needed, since communication with R is asynchronous
 	and it is therefore not possible to get the result of an R-call right away.
@@ -80,19 +99,6 @@ public:
 /// if you want to keep the data, use this function to detach it from the RCommand (after reading it), so it won't be deleted with the RCommand
 	void detachIntVector () { integer_data = 0; integer_count = 0; };
 	int getFlags () { return (_flags); };
-	
-	struct ChainOrCommand;
-/// this struct is needed by the rthread. Do not use directly!
-	struct CommandChain {
-		QPtrList<ChainOrCommand> commands;
-		bool closed;
-		CommandChain *parent;
-	};
-/// this struct is needed by the rthread. Do not use directly!
-	struct ChainOrCommand {
-		RCommand *command;
-		CommandChain *chain;
-	};
 private:
 friend class REmbed;
 friend class RInterface;

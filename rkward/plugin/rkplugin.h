@@ -24,7 +24,6 @@
 #include <qmap.h>
 
 #include "../rbackend/rcommandreceiver.h"
-#include "../rbackend/rinterface.h"
 
 class QDomElement;
 class QDialog;
@@ -38,6 +37,7 @@ class RKVarSelector;
 class RKVarSlot;
 class ScriptBackend;
 class RCommand;
+class RCommandChain;
 class RKErrorDialog;
 class RKCommandEditor;
 
@@ -133,7 +133,7 @@ private:
 		
 	ScriptBackend *backend;
 	RKErrorDialog *error_dialog;
-	RCommand::CommandChain *php_backend_chain;
+	RCommandChain *script_backend_chain;
 protected:
 	void closeEvent (QCloseEvent *e);
 /** Get result of r-command (which was requested for the script-backend */

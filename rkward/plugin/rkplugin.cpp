@@ -41,6 +41,7 @@
 #include "../misc/rkerrordialog.h"
 #include "../rkcommandeditor.h"
 #include "../settings/rksettingsmoduleplugins.h"
+#include "../rbackend/rinterface.h"
 
 // plugin-widgets
 #include "rkpluginwidget.h"
@@ -64,7 +65,7 @@
 
 RKPlugin::RKPlugin(const QString &filename) : QWidget () {
 	backend = 0;
-	php_backend_chain = 0;
+	script_backend_chain = 0;
 	main_widget = 0;
 	RKPlugin::filename = filename;
 	
@@ -94,7 +95,7 @@ RKPlugin::~RKPlugin(){
 	delete error_dialog;
 	delete codeDisplay;
 	delete backend;
-	RKGlobals::rInterface ()->closeChain (php_backend_chain);
+	RKGlobals::rInterface ()->closeChain (script_backend_chain);
 }
 
 void RKPlugin::closeEvent (QCloseEvent *e) {
@@ -394,7 +395,7 @@ void RKPlugin::ok () {
 	} else {
 		RKGlobals::rkApp ()->getDocument ()->syncToR ();
 		RKGlobals::rInterface ()->issueCommand (new RCommand (current_code, RCommand::Plugin, "", this));
-		php_backend_chain = RKGlobals::rInterface ()->startChain ();
+		script_backend_chain = RKGlobals::rInterface ()->startChain ();
 		backend->printout (BACKEND_DONT_CARE);
 		backend->cleanup (BACKEND_FOR_SUBMISSION);
 	}
@@ -445,15 +446,14 @@ void RKPlugin::backendCommandDone (int flags) {
 		RK_DO (qDebug ("current_code %s", current_code.latin1 ()), PLUGIN, DL_DEBUG);
 		backend->resetOutput ();
 	} else if (flags == BACKEND_FOR_SUBMISSION) {
-		RKGlobals::rInterface ()->issueCommand (new RCommand (backend->retrieveOutput (), RCommand::Plugin | RCommand::DirectToOutput, "", this), php_backend_chain);
+		RKGlobals::rInterface ()->issueCommand (new RCommand (backend->retrieveOutput (), RCommand::Plugin | RCommand::DirectToOutput, "", this), script_backend_chain);
 		backend->resetOutput ();
 	}
 }
 
 void RKPlugin::backendIdle () {
 	RK_TRACE (PLUGIN);
-	RKGlobals::rInterface ()->closeChain (php_backend_chain);
-	php_backend_chain = 0;
+	script_backend_chain = RKGlobals::rInterface ()->closeChain (script_backend_chain);
 	
 	if (should_destruct) {
 		try_destruct ();
@@ -478,7 +478,7 @@ void RKPlugin::backendIdle () {
 	if (should_updatecode) {
 		current_code = "";
 		codeDisplay->setText ("Processing. Please wait.");
-		php_backend_chain = RKGlobals::rInterface ()->startChain ();
+		script_backend_chain = RKGlobals::rInterface ()->startChain ();
 		backend->preprocess (BACKEND_DONT_CARE);
 		backend->calculate (BACKEND_FOR_CODE_WINDOW);
 		should_updatecode = false;
@@ -513,11 +513,11 @@ void RKPlugin::changed () {
 }
 
 void RKPlugin::doRCall (const QString &call) {
-	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, R_FOR_PHP_FLAG), php_backend_chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, R_FOR_PHP_FLAG), script_backend_chain);
 }
 
 void RKPlugin::getRVector (const QString &call) {
-	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom | RCommand::GetStringVector, "", this, R_FOR_PHP_FLAG), php_backend_chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom | RCommand::GetStringVector, "", this, R_FOR_PHP_FLAG), script_backend_chain);
 }
 
 void RKPlugin::rCommandDone (RCommand *command) {
