@@ -57,6 +57,7 @@ protected slots:
 	void columnWidthChanged (int col);
 protected:
 	bool eventFilter (QObject *object, QEvent *event);
+	void focusOutEvent (QFocusEvent *e);
 };
 
 #endif

@@ -23,7 +23,7 @@
 
 bool TwinTableMember::changing_width = false;
 
-TwinTableMember::TwinTableMember(QWidget *parent, const char *name) : QTable (parent, name){
+TwinTableMember::TwinTableMember (QWidget *parent, const char *name) : QTable (parent, name){
 	twin = 0;
 	setRowMovingEnabled (false);
 	setVScrollBarMode (QScrollView::AlwaysOn);
@@ -53,9 +53,13 @@ void TwinTableMember::columnWidthChanged (int col) {
 	}
 }
 
-bool TwinTableMember::eventFilter (QObject *object, QEvent *event)
-{
-    // filter out right mouse button events of the varview-header
+void TwinTableMember::focusOutEvent (QFocusEvent *e) {
+	if (isEditing ()) endEdit (currentRow (), currentColumn (), true, false);
+	QTable::focusOutEvent (e);
+}
+
+bool TwinTableMember::eventFilter (QObject *object, QEvent *event) {
+	// filter out right mouse button events of the varview-header
 	if (event && (event->type() == QEvent::MouseButtonPress)) {
 		QMouseEvent  *mouseEvent = (QMouseEvent *) event;
 		if (mouseEvent && (mouseEvent->button() == Qt::RightButton)) {
@@ -69,6 +73,7 @@ bool TwinTableMember::eventFilter (QObject *object, QEvent *event)
                 return(true); // got it
             }
         }
+		setFocus ();
     }
 
     // default processing
