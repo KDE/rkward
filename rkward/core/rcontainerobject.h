@@ -60,6 +60,9 @@ public:
 
 	/** returns true, if there are no children in this container. Note: of course the object list may not be up to date! */
 	bool isEmpty () { return childmap.isEmpty (); };
+
+	/** given child_name, constructs a name which is as close as possible to the orginial but valid (i.e. not alreay in use, not contaning illegal characters */
+	QString validizeName (const QString &child_name);
 private:
 	friend class RObject;
 	void typeMismatch (RObject *child, QString childname);

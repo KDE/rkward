@@ -16,6 +16,8 @@
  ***************************************************************************/
 #include "rcontainerobject.h"
 
+#include <qregexp.h>
+
 #include "../rbackend/rinterface.h"
 #include "robjectlist.h"
 #include "rkvariable.h"
@@ -285,3 +287,17 @@ void RContainerObject::checkRemovedChildren (char **current_children, int curren
 		}
 	}
 }
+
+QString RContainerObject::validizeName (const QString &child_name) {
+	RK_TRACE (OBJECTS);
+	QString ret = child_name;
+	ret = ret.replace (QRegExp ("[^a-zA-Z0-9]"), ".");
+	ret = ret.replace (QRegExp ("^\\.*[0-9]+"), ".");
+	int i=-1;
+	QString postfix = "";
+	while (childmap.contains (ret + postfix)) {
+		postfix.setNum (++i);
+	}
+	return (ret +postfix);
+}
+

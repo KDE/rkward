@@ -456,10 +456,12 @@ void RKwardApp::slotNewDataFrame () {
 	RK_TRACE (APP);
 	bool ok;
 
-	QString name = KInputDialog::getText (i18n ("Create new data.frame"), i18n ("Enter name for the new object (make it a valid one - no checks so far)"), "my.data", &ok, this);
-	
+	QString name = KInputDialog::getText (i18n ("Create new data.frame"), i18n ("Enter name for the new object"), "my.data", &ok, this);
+	QString valid = RKGlobals::rObjectList ()->validizeName (name);
+	if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1").arg (valid), i18n ("Invalid Name"));
+
 	if (ok) {
-		RObject *object = RKGlobals::rObjectList ()->createNewChild (name, 0, true, true);
+		RObject *object = RKGlobals::rObjectList ()->createNewChild (valid, 0, true, true);
 		RKGlobals::editorManager ()->editObject (object, true);
 	}
 }

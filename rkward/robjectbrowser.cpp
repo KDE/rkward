@@ -86,10 +86,11 @@ void RObjectBrowser::popupDelete () {
 
 void RObjectBrowser::popupRename () {
 	bool ok;
-	QString name = KInputDialog::getText (i18n ("Rename object"), i18n ("Enter the new name (make it a valid one - no checks so far)"), menu_object->getShortName (), &ok, this);
-
+	QString name = KInputDialog::getText (i18n ("Rename object"), i18n ("Enter the new name"), menu_object->getShortName (), &ok, this);
+	QString valid = menu_object->getContainer ()->validizeName (name);
+	if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1").arg (valid), i18n ("Invalid Name"));
 	if (ok) {
-		RKGlobals::tracker ()->renameObject (menu_object, name);
+		RKGlobals::tracker ()->renameObject (menu_object, valid);
 	}
 }
 

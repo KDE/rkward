@@ -197,7 +197,7 @@ void RKEditorDataFrame::updateMetaValue (RObject *obj, int row, int col, bool sy
 	if (row == LABEL_ROW) {
 		obj->setLabel (varview->text (row, col), sync);
 	} else if (row == NAME_ROW) {
-		RKGlobals::tracker ()->renameObject (obj, varview->text (row, col), this);
+		RKGlobals::tracker ()->renameObject (obj, static_cast<RContainerObject *> (getObject ())->validizeName (varview->text (row, col)), this);
 	} else if (row == TYPE_ROW) {
 		static_cast<RKVariable *> (obj)->setVarType (static_cast<TypeSelectCell *> (varview->item (row, col))->type (), sync);
 	}

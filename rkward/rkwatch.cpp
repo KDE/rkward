@@ -40,7 +40,7 @@
 RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	RK_TRACE (APP);
 	QGridLayout *grid = new QGridLayout (this, 2, 1);
-
+	
 	QSplitter *splitter = new QSplitter (QSplitter::Vertical, this);
 	grid->addWidget (splitter, 1, 0);
 
@@ -68,13 +68,6 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	connect (clear_commands, SIGNAL (clicked ()), this, SLOT (clearCommand ()));
 	button_vbox->addWidget (clear_commands);
 
-    resize (QSize (600, 511).expandedTo (minimumSizeHint ()));
-	setCaption (i18n ("R Console"));
-	
-	clearWatch ();
-	
-	r_inter = parent;
-
 	// construct menu-bar
 	KMenuBar *menu = new KMenuBar (this);
 	QPopupMenu *watch_menu = new QPopupMenu (this);
@@ -96,8 +89,17 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	QPopupMenu *help_menu = new QPopupMenu (this);
 	help_menu->setItemEnabled (help_menu->insertItem (i18n ("Sorry, no help available so far"), 0, 0), false);
 	menu->insertItem (i18n ("Help"), help_menu);
+	menu->setFixedHeight (menu->height ());
 	
 	grid->addWidget (menu, 0, 0);
+
+// resize, set caption
+	resize (QSize (600, 520).expandedTo (minimumSizeHint ()));
+	setCaption (i18n ("R Console"));
+	
+	clearWatch ();
+	
+	r_inter = parent;
 }
 
 RKwatch::~RKwatch(){

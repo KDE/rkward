@@ -1,3 +1,5 @@
+- basic name checking for objects added or renamed by the user
+- remove uneccessary blank are below menu in R-Console window
 - fix R process busy/idle display
 - added dialog to load/detach installed packages
 - show error message if loading workspace fails
@@ -8,7 +10,7 @@
 	- checking for errors setting up the connection
 	- simple rk.sync for synchronisation of objects modified in the R workspace
 	- rk.get.tempfile.name for generation of a suitable temporary file (e.g. for storing images)
-	- allows for in-place execution of commands
+	- allows for in-place execution of commands or scheduling of commands in the regular stack
 - auto addition of rows/columns when typing on last row/column
 - allow deletion of rows without losing meta-data
 
