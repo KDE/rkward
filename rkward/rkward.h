@@ -1,7 +1,7 @@
 /***************************************************************************
                           rkward.h  -  description
                              -------------------
-    begin                : Tue Oct 29 20:06:08 CET 2002
+    begin                : Tue Oct 29 20:06:08 CET 2002 
     copyright            : (C) 2002 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -46,6 +46,7 @@ class RInterface;
 class RKEditorManager;
 class RKMenuList;
 class RKDocManager;
+class RKCommandEditorWindow;
 
 /**
   * The base class for RKward application windows. It sets up the main
@@ -121,13 +122,13 @@ protected:
 	/** creates a new (empty) data.frame */
 	void slotNewDataFrame ();
     /** open a file and load it into the document*/
-    void slotFileOpen();
+    void slotFileOpenWorkspace();
     /** opens a file from the recent files menu */
-    void slotFileOpenRecent(const KURL& url);
+    void slotFileOpenRecentWorkspace(const KURL& url);
     /** save a document */
-    void slotFileSave();
+    void slotFileSaveWorkspace();
     /** save a document by a new filename*/
-    void slotFileSaveAs();
+    void slotFileSaveWorkspaceAs();
 	/** shows the dialog to install/load/unload packages */
 	void slotFileLoadLibs ();
 	/** close current editor */
@@ -189,6 +190,19 @@ protected:
 	void doPostInit ();
 	
 	void slotEditorsChanged ();
+	
+	void slotNewCommandEditor();
+	void slotOpenCommandEditor();
+	void slotSaveCommandEditor();
+	void slotSaveCommandEditorAs();
+	void slotCloseCommandEditor();
+	void slotOpenURL(const KURL &url);
+    void slotChildWindowCloseRequest (KMdiChildView * window);
+    void slotRunSelection();
+    void slotRunAll();
+    void slotEditUndo();
+    void slotEditRedo();
+    void slotViewActivated (KMdiChildView *window);
   private:
     /** the configuration object of the application */
     KConfig *config;
@@ -204,12 +218,21 @@ protected:
     KRecentFilesAction* fileOpenRecent;
     KAction* fileSave;
     KAction* fileSaveAs;
+    
+    KAction* fileOpenWorkspace;
+    KRecentFilesAction* fileOpenRecentWorkspace;
+    KAction* fileSaveWorkspace;
+    KAction* fileSaveWorkspaceAs;
     KAction* filePrint;
     KAction* fileQuit;
     KAction* file_load_libs;
 	KAction* close_editor;
 	KAction* close_all_editors;
 	KAction* new_data_frame;
+	KAction* new_command_editor;
+	
+	KAction* editUndo;
+	KAction* editRedo;
 	KAction* editCut;
     KAction* editCopy;
     KAction* editPaste;
@@ -221,6 +244,10 @@ protected:
 	KToggleAction* showRKWatch;
 	KToggleAction* showRKOutput;
 	KToggleAction* showRObjectBrowser;
+	
+	KAction* runAll;
+	KAction* runSelection;
+	
 	KAction* configure;
 
 	friend class RKSettingsModule;
@@ -248,6 +275,11 @@ protected:
 	
 	friend class RInterface;
 	void setRStatus (bool busy);
+	
+	bool getFilenameAndPath(const KURL &url,QString *fname);
+	void saveAsProcedure(RKCommandEditorWindow *editor);
+signals:
+    void childWindowCloseRequest(KMdiChildView * window);
 };
  
 #endif // RKWARD_H

@@ -26,47 +26,54 @@
 #include <kparts/mainwindow.h>
 #include <kparts/partmanager.h>
 #include <kparts/part.h>
+#include <kparts/factory.h>
 
+#include <kmdichildview.h>
 
 #include <kurl.h>
 
 class RKCommandEditor;
 class KAction;
 class KToggleAction;
+class RKwardApp; 
 
 /**
-This class provides an editor window for R-commands. Basically this class is responsible for adding a GUI to RKCommandEditor.
+This class provides an editor window for R-commands. It is an MDI child that is added to the main window.
 
-@author Thomas Friedrichsmeier
+@author Pierre Ecochard
 */
-class RKCommandEditorWindow : public KParts::MainWindow {
+class RKCommandEditorWindow : public KMdiChildView {
 Q_OBJECT
 public:
     RKCommandEditorWindow (QWidget *parent = 0);
 
     ~RKCommandEditorWindow();
-public slots:
-	void newWindow ();
+    QString getSelection();
+    QString getText();
+    bool openURL(const KURL &url);
+    KURL url();
+    bool save();
+    Kate::View *m_view;
+    bool saveAs(const KURL &url);
+    bool isModified();
+    void cut();
+    void copy();
+    void paste();
+    void undo();
+    void redo();
 
-	void closeWindow ();
-
-	void run ();
-	void runSelection ();
-	void runFromCursor ();
-	void runToCursor ();
-	void interruptCommand ();
-	void newFile ();
-	void openFile ();
 private:
-	RKCommandEditor *editor;
-	KTextEditor::View *m_view;
-	KTextEditor::Document *m_doc;
-	void setRHighlighting ();
+	Kate::Document *m_doc;
+	   
+	void setRHighlighting (Kate::Document *doc);
+	KLibrary *m_library;
+	bool getFilenameAndPath(const KURL &url,QString *fname);
+	QBoxLayout* pLayout;
+private slots:
+    void slotGotFocus();
+    void slotLostFocus();
 
-	QString caption;
-	
-protected:
-	void closeEvent (QCloseEvent *e);
+
 };
 
 #endif

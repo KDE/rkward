@@ -104,18 +104,30 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
   editCut->setEnabled(false);
   editCopy->setEnabled(false);
   editPaste->setEnabled(false); */
+  		editUndo->setEnabled(false);
+		editRedo->setEnabled(false);
+		fileOpen->setEnabled(false);
+		fileSave->setEnabled(false);
+		fileSaveAs->setEnabled(false);
+		runAll->setEnabled(false);
+		runSelection->setEnabled(false);
+		fileOpenRecent->setEnabled(false);
+
 
 
 	
 	RKGlobals::manager = new RKEditorManager ();
 	KMdiChildView * editorManagerView = createWrapper(RKGlobals::editorManager (), i18n( "Object Editor"), i18n( "R Object Editor"));
+	editorManagerView->setIcon(SmallIcon("inline_table"));
 	addWindow( editorManagerView );
 	
 	
 
 	
-	
-	
+	connect (this, SIGNAL (childWindowCloseRequest (KMdiChildView *)), this, SLOT (slotChildWindowCloseRequest (KMdiChildView *)));
+	connect (this, SIGNAL (viewActivated (KMdiChildView *)), this, SLOT (slotViewActivated (KMdiChildView *)));
+
+
 	connect (RKGlobals::editorManager (), SIGNAL (editorClosed ()), this, SLOT (slotEditorsChanged ()));
 	connect (RKGlobals::editorManager (), SIGNAL (editorOpened ()), this, SLOT (slotEditorsChanged ()));
 	RKGlobals::mtracker = new RKModificationTracker (this);
@@ -125,6 +137,8 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 	startup_timer = new QTimer (this);
 	startup_timer->start (50);
 	connect (startup_timer, SIGNAL (timeout ()), this, SLOT (doPostInit ()));
+	
+
 }
 
 RKwardApp::~RKwardApp() {
@@ -160,12 +174,12 @@ void RKwardApp::doPostInit () {
 	} else {
 		setCaption(i18n ("Untitled"));
 		
-		StartupDialog::StartupDialogResult *result = StartupDialog::getStartupAction (this, fileOpenRecent);
+		StartupDialog::StartupDialogResult *result = StartupDialog::getStartupAction (this, fileOpenRecentWorkspace);
 		if (result->result == StartupDialog::EmptyWorkspace) {
 		} else if (result->result == StartupDialog::OpenFile) {
 			openWorkspace (result->open_url);
 		} else if (result->result == StartupDialog::ChoseFile) {
-			slotFileOpen ();
+			slotFileOpenWorkspace ();
 		} else if (result->result == StartupDialog::EmptyTable) {
 			RObject *object = RKGlobals::rObjectList ()->createNewChild (i18n ("my.data"), 0, true, true);
 			RKGlobals::editorManager ()->editObject (object, true);
@@ -292,14 +306,25 @@ void RKwardApp::initActions()
 	RK_TRACE (APP);
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
 	new_data_frame = new KAction (i18n ("data.frame"), 0, 0, this, SLOT (slotNewDataFrame ()), actionCollection (), "new_data_frame");
-	fileOpen = KStdAction::open(this, SLOT(slotFileOpen()), actionCollection(), "file_openx");
-	fileOpen->setText (i18n ("Open Workspace"));
-	fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const KURL&)), actionCollection(), "file_open_recentx");
+	new_command_editor = KStdAction::openNew(this, SLOT(slotNewCommandEditor()), actionCollection(), "new_command_editor");
+	new_command_editor->setText (i18n ("New Command File"));
+	
+	fileOpen = KStdAction::open(this, SLOT(slotOpenCommandEditor()), actionCollection(), "file_openy");
+	fileOpen->setText (i18n ("Open Command File"));
+	fileOpenRecent = KStdAction::openRecent(this, SLOT(slotOpenRecentCommandEditor(const KURL&)), actionCollection(), "file_open_recenty");
+	fileSave = KStdAction::save(this, SLOT(slotSaveCommandEditor()), actionCollection(), "file_savey");
+	fileSave->setText (i18n ("Save Command File"));
+	fileSaveAs = KStdAction::saveAs(this, SLOT(slotSaveCommandEditorAs()), actionCollection(), "file_save_asy");
+	fileSaveAs->setText (i18n ("Save Command File As"));
+	
+	fileOpenWorkspace = KStdAction::open(this, SLOT(slotFileOpenWorkspace()), actionCollection(), "file_openx");
+	fileOpenWorkspace->setText (i18n ("Open Workspace"));
+	fileOpenRecentWorkspace = KStdAction::openRecent(this, SLOT(slotFileOpenRecentWorkspace(const KURL&)), actionCollection(), "file_open_recentx");
+	fileSaveWorkspace = KStdAction::save(this, SLOT(slotFileSaveWorkspace()), actionCollection(), "file_savex");
+	fileSaveWorkspace->setText (i18n ("Save Workspace"));
+	fileSaveWorkspaceAs = KStdAction::saveAs(this, SLOT(slotFileSaveWorkspaceAs()), actionCollection(), "file_save_asx");
+	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
 	file_load_libs = new KAction (i18n ("Load R Libraries"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");
-	fileSave = KStdAction::save(this, SLOT(slotFileSave()), actionCollection(), "file_savex");
-	fileSave->setText (i18n ("Save Workspace"));
-	fileSaveAs = KStdAction::saveAs(this, SLOT(slotFileSaveAs()), actionCollection(), "file_save_asx");
-	fileSaveAs->setText (i18n ("Save Workspace As"));
 	close_editor = KStdAction::close (this, SLOT(slotCloseEditor ()), actionCollection(), "editor_close");
 	close_editor->setText (i18n ("Close current editor"));
 	close_editor->setEnabled (false);
@@ -308,10 +333,12 @@ void RKwardApp::initActions()
 	filePrint = KStdAction::print(this, SLOT(slotFilePrint()), actionCollection(), "file_printx");
 	filePrint->setEnabled (false);
 	fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection(), "file_quitx");
-	
-  editCut = KStdAction::cut(this, SLOT(slotEditCut()), actionCollection());
-  editCopy = KStdAction::copy(this, SLOT(slotEditCopy()), actionCollection());
-  editPaste = KStdAction::paste(this, SLOT(slotEditPaste()), actionCollection());
+
+  editUndo = KStdAction::undo(this, SLOT(slotEditUndo()), actionCollection(), "undo");
+  editRedo = KStdAction::redo(this, SLOT(slotEditRedo()), actionCollection(), "redo");	
+  editCut = KStdAction::cut(this, SLOT(slotEditCut()), actionCollection(), "cut");
+  editCopy = KStdAction::copy(this, SLOT(slotEditCopy()), actionCollection(), "copy");
+  editPaste = KStdAction::paste(this, SLOT(slotEditPaste()), actionCollection(), "paste");
   editPasteToTable = new KAction(i18n("Paste inside Table"), 0, 0, this, SLOT(slotEditPasteToTable()), actionCollection(), "paste_to_table");
   editPasteToSelection = new KAction(i18n("Paste inside Selection"), 0, 0, this, SLOT(slotEditPasteToSelection()), actionCollection(), "paste_to_selection");
   viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
@@ -320,13 +347,18 @@ void RKwardApp::initActions()
 	showRKWatch = new KToggleAction (i18n ("Show R Console-Window"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "windows_rkwatch");
 	showRKOutput = new KToggleAction (i18n ("Show Output-Window"), 0, 0, this, SLOT(slotShowRKOutput ()), actionCollection(), "windows_rkoutput");
 	showRObjectBrowser = new KToggleAction (i18n ("Show Object Browser-Window"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
+	
+	runAll = new KAction (i18n ("Run All"), 0, 0, this, SLOT (slotRunAll ()), actionCollection (), "run_all");
+	runSelection = new KAction (i18n ("Run Selection"), 0, 0, this, SLOT (slotRunSelection ()), actionCollection (), "run_selection");
+	
+	
 	configure = new KAction (i18n ("Configure Settings"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 
 	new_data_frame->setStatusText (i18n ("Creates a new empty data.frame and opens it for editing"));
-  fileOpen->setStatusText(i18n("Opens an existing document"));
-  fileOpenRecent->setStatusText(i18n("Opens a recently used file"));
-  fileSave->setStatusText(i18n("Saves the actual document"));
-  fileSaveAs->setStatusText(i18n("Saves the actual document as..."));
+  fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
+  fileOpenRecentWorkspace->setStatusText(i18n("Opens a recently used file"));
+  fileSaveWorkspace->setStatusText(i18n("Saves the actual document"));
+  fileSaveWorkspaceAs->setStatusText(i18n("Saves the actual document as..."));
 	close_editor->setStatusText (i18n ("Closes the current data editor"));
 	close_all_editors->setStatusText (i18n ("Closes all open data editors"));
   filePrint ->setStatusText(i18n("Prints out the actual document"));
@@ -340,7 +372,7 @@ void RKwardApp::initActions()
   viewStatusBar->setStatusText(i18n("Enables/disables the statusbar"));
   
   // use the absolute path to your rkwardui.rc file for testing purpose in createGUI();
-  setXMLFile( "rkwardui.rc" );
+  setXMLFile( "/home/pierre/rkward/rkward/rkward/rkwardui.rc" );
   createShellGUI ( true );
 
 // is there a better way to change the name of the "File" menu?
@@ -361,7 +393,7 @@ void RKwardApp::initStatusBar()
 void RKwardApp::openWorkspace (const KURL &url) {
 	RK_TRACE (APP);
 	new RKLoadAgent (url, false);
-	fileOpenRecent->addURL (url);
+	fileOpenRecentWorkspace->addURL (url);
 }
 
 void RKwardApp::saveOptions()
@@ -375,7 +407,7 @@ void RKwardApp::saveOptions()
 
 	RKSettings::saveSettings (config);
 	
-  fileOpenRecent->saveEntries(config,"Recent Files");
+  fileOpenRecentWorkspace->saveEntries(config,"Recent Files");
 }
 
 
@@ -407,7 +439,7 @@ void RKwardApp::readOptions ()
   }
   
   // initialize the recent file list
-  fileOpenRecent->loadEntries(config,"Recent Files");
+  fileOpenRecentWorkspace->loadEntries(config,"Recent Files");
 
 	// do this last, since we may be setting some different config-group(s) in the process
 	RKSettings::loadSettings (config);  
@@ -466,6 +498,22 @@ void RKwardApp::readProperties(KConfig* _cfg)
 
 bool RKwardApp::queryClose () {
 	RK_TRACE (APP);
+	
+	/*QValueList<KMdiChildView *> children;
+	for(KMdiChildView *w = m_pDocumentViews->first();w;w= m_pDocumentViews->next()){
+		children.append(w);
+	}
+	QValueListIterator<KMdiChildView *> childIt;
+	for (childIt = children.begin(); childIt != children.end(); ++childIt) {
+		if ((*childIt)->inherits("RKCommandEditorWindow") ) {
+			if (! (*childIt)->close()) {
+				//If a child refuses to close, we return false.
+				return false;
+			}
+		}
+	}*/
+	
+	
 	if (RKGlobals::rObjectList ()->isEmpty ()) return true;
 
 	int res;
@@ -537,12 +585,12 @@ void RKwardApp::fileOpenAskSave (const KURL &url) {
 	// else: cancel. Don't do anything
 }
 
-void RKwardApp::slotFileOpen () {
+void RKwardApp::slotFileOpenWorkspace () {
 	RK_TRACE (APP);
 	fileOpenAskSave ("");
 }
 
-void RKwardApp::slotFileOpenRecent(const KURL& url)
+void RKwardApp::slotFileOpenRecentWorkspace(const KURL& url)
 {
 	RK_TRACE (APP);
 	fileOpenAskSave (url);
@@ -554,12 +602,12 @@ void RKwardApp::slotFileLoadLibs () {
 	dial->show ();
 }
 
-void RKwardApp::slotFileSave () {
+void RKwardApp::slotFileSaveWorkspace () {
 	RK_TRACE (APP);
 	new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL ());
 }
 
-void RKwardApp::slotFileSaveAs () {
+void RKwardApp::slotFileSaveWorkspaceAs () {
 	RK_TRACE (APP);
 	new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), true);
 }
@@ -600,20 +648,27 @@ void RKwardApp::slotFileQuit () {
 void RKwardApp::slotEditCut()
 {
 	RK_TRACE (APP);
-	slotStatusMsg(i18n("Cutting selection..."));
-	slotEditCopy ();
-	RKGlobals::editorManager ()->currentEditor ()->clearSelected ();
-	slotStatusMsg(i18n("Ready."));
+	if (! activeWindow()->inherits("RKCommandEditorWindow")) {
+		slotStatusMsg(i18n("Cutting selection..."));
+		slotEditCopy ();
+		RKGlobals::editorManager ()->currentEditor ()->clearSelected ();
+		slotStatusMsg(i18n("Ready."));
+	}
+	else {
+		((RKCommandEditorWindow*) activeWindow())->cut();
+	}
 }
 
 void RKwardApp::slotEditCopy() {
 	RK_TRACE (APP);
-
-	slotStatusMsg(i18n("Copying selection to clipboard..."));
-
-	QApplication::clipboard()->setData(RKGlobals::editorManager ()->currentEditor ()->makeDrag ());
-
-	slotStatusMsg(i18n("Ready."));
+	if (! activeWindow()->inherits("RKCommandEditorWindow")) {
+		slotStatusMsg(i18n("Copying selection to clipboard..."));
+		QApplication::clipboard()->setData(RKGlobals::editorManager ()->currentEditor ()->makeDrag ());
+		slotStatusMsg(i18n("Ready."));
+	}
+	else {
+		((RKCommandEditorWindow*) activeWindow())->copy();
+	}
 }
 
 void RKwardApp::doPaste () {
@@ -635,18 +690,30 @@ void RKwardApp::doPaste () {
 }
 
 void RKwardApp::slotEditPaste() {
-	RK_TRACE (APP);
-	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteEverywhere);
- 	doPaste ();
+	if (! activeWindow()->inherits("RKCommandEditorWindow")) {
+		RK_TRACE (APP);
+		RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteEverywhere);
+ 		doPaste ();
+	}
+	else {
+		((RKCommandEditorWindow*) activeWindow())->paste();
+	}
 }
 
 void RKwardApp::slotEditPasteToTable() {
 	RK_TRACE (APP);
+	if (activeWindow()->inherits("RKCommandEditorWindow"))
+		return;
+		
+	
 	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteToTable);
 	doPaste();
 }
 void RKwardApp::slotEditPasteToSelection() {
 	RK_TRACE (APP);
+	if (activeWindow()->inherits("RKCommandEditorWindow"))
+		return;		
+
 	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteToSelection);
 	doPaste();
 }
@@ -742,5 +809,251 @@ void RKwardApp::setRStatus (bool busy) {
 		statusBar()->changeItem(i18n("R-process busy"), ID_R_STATUS_MSG);
 	} else {
 		statusBar ()->changeItem (i18n ("R-process idle"), ID_R_STATUS_MSG);
+	}
+}
+
+
+
+void RKwardApp::slotNewCommandEditor(){
+	RKCommandEditorWindow *editor = new RKCommandEditorWindow;
+	editor->setIcon(SmallIcon("source"));
+	editor->name("RCEditor");
+	addWindow(editor);
+	
+}
+
+
+void RKwardApp::slotOpenURL(const KURL &url){
+	RKCommandEditorWindow *editor;
+	
+	if (!url.isLocalFile())
+	{
+		KMessageBox::messageBox(this,KMessageBox::Information,
+				"The file you specified is not a local file","Cannot open file");
+		return;
+	}
+	
+	editor = new RKCommandEditorWindow;
+	
+	if (!editor->openURL(url))
+	{
+		QString errstr = "Unable to open ";
+		
+		errstr += url.prettyURL();
+		
+		KMessageBox::messageBox(this,KMessageBox::Error,
+				errstr,"Error!");
+		delete editor;
+		return;
+	}
+	
+
+	editor->setIcon(SmallIcon("source"));
+	editor->name("RCEditor");
+	addWindow(editor);
+	
+
+};
+
+void RKwardApp::slotOpenCommandEditor(){
+	KURL::List urls;
+	KURL::List::const_iterator it;
+	
+	KFileDialog dlg(QString("."),QString("*.R *.r"),this,i18n("Open file"),true);
+	
+	dlg.setOperationMode(KFileDialog::Opening);
+	dlg.setMode(KFile::Files);
+	if (dlg.exec() == QDialog::Rejected)
+		return;
+	
+	urls = dlg.selectedURLs();
+	for (it = urls.begin() ; it != urls.end() ; ++it)
+		slotOpenURL(*it);
+
+};
+
+
+void RKwardApp::slotSaveCommandEditor(){
+
+	if (! activeWindow()->inherits("RKCommandEditorWindow"))
+		return;
+
+
+	RKCommandEditorWindow *editor;
+	KURL url;
+	QString strURL;
+	
+	editor = (RKCommandEditorWindow *)activeWindow();
+	if (!editor)
+		return;
+	url = editor->url();
+	strURL = url.url();
+	
+	if (strURL.length() == 0) // was a new document
+		saveAsProcedure(editor);
+	else
+	{
+		if (!editor->save())
+			KMessageBox::messageBox(this,KMessageBox::Information,i18n("Could not save document"),i18n("Warning"));
+	}
+};
+void RKwardApp::slotSaveCommandEditorAs(){
+	if (! activeWindow()->inherits("RKCommandEditorWindow"))
+		return;
+		
+	RKCommandEditorWindow *editor;
+	
+	editor = (RKCommandEditorWindow *)activeWindow();
+	if (editor == 0)
+		return;
+	saveAsProcedure(editor);
+};
+
+void RKwardApp::slotCloseCommandEditor(){
+	if (! activeWindow()->inherits("RKCommandEditorWindow"))
+		return;
+	
+	activeWindow()->close();
+};
+
+
+void RKwardApp::saveAsProcedure(RKCommandEditorWindow *editor)
+{
+	KFileDialog dlg(QString("."),QString("*.R *.r"),this,i18n("Save file"),true);
+	KURL url;
+	QString fname;
+		
+	dlg.setOperationMode(KFileDialog::Saving);
+	if (dlg.exec() == QDialog::Rejected)
+		return;
+	url = dlg.selectedURL();
+	if (editor->saveAs(url))
+	{
+		if (getFilenameAndPath(url,&fname))
+			editor->setTabCaption(fname);	
+		else
+			editor->setTabCaption(url.prettyURL());
+	}
+	else
+		KMessageBox::messageBox(this,KMessageBox::Information,i18n("Could not save document"),i18n("Warning"));
+}
+
+
+bool RKwardApp::getFilenameAndPath(const KURL &url,QString *fname)
+{
+	QString fullpath = url.path();
+	int i,length,fnamepos;
+	bool done;
+	
+	if ((length = (int)fullpath.length()) == 0)
+		return false;
+
+	fnamepos = 0;
+	for (i = length-1,done = false ; i >= 0 && !done ; i--)
+	{
+		if (fullpath[i] == '/')
+		{
+			done = true;
+			fnamepos = i+1;
+		}
+	}
+ 
+	if (!done)
+		return false;
+	
+	if (fnamepos >= length)
+		return false;
+
+	if (fname)
+		*fname = fullpath.right(length-fnamepos);
+
+		
+	return true;
+}
+
+
+
+void RKwardApp::slotChildWindowCloseRequest (KMdiChildView * window) {
+	//If it's an unsaved command editor window, there is a warning.
+	if (window->inherits("RKCommandEditorWindow")) 	{
+		RKCommandEditorWindow * editor = (RKCommandEditorWindow*) window;
+		if (editor->isModified()) {
+			int status = KMessageBox::warningYesNo(this,i18n("The document has been modified. Close anyway?"),i18n("File not saved"));
+	
+			if (status == KMessageBox::Yes) {
+				window->hide();
+				delete window;
+			}
+		}
+		else {
+			window->hide();
+			delete window;	
+		}
+		
+
+		
+	}
+}
+
+
+
+
+void RKwardApp::slotRunSelection() {
+	if (! activeWindow()->inherits("RKCommandEditorWindow"))
+		return;
+		
+	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getSelection(), RCommand::User, ""));
+}
+
+
+
+void RKwardApp::slotRunAll() {
+	if (! activeWindow()->inherits("RKCommandEditorWindow"))
+		return;
+		
+	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getText(), RCommand::User, ""));
+}
+
+
+
+void RKwardApp::slotEditUndo()
+{
+	if (! activeWindow()->inherits("RKCommandEditorWindow"))
+		return;
+	((RKCommandEditorWindow*) activeWindow())->undo();
+}
+
+
+
+void RKwardApp::slotEditRedo()
+{
+	if (! activeWindow()->inherits("RKCommandEditorWindow"))
+		return;
+	((RKCommandEditorWindow*) activeWindow())->redo();
+}
+
+
+
+void RKwardApp::slotViewActivated (KMdiChildView * window)
+{
+	if (window->inherits("RKCommandEditorWindow")) {
+		editUndo->setEnabled(true);
+		editRedo->setEnabled(true);
+		fileOpen->setEnabled(true);
+		fileSave->setEnabled(true);
+		fileSaveAs->setEnabled(true);
+		runAll->setEnabled(true);
+		runSelection->setEnabled(true);
+		fileOpenRecent->setEnabled(true);
+	}
+	else {
+		editUndo->setEnabled(false);
+		editRedo->setEnabled(false);
+		fileOpen->setEnabled(false);
+		fileSave->setEnabled(false);
+		fileSaveAs->setEnabled(false);
+		runAll->setEnabled(false);
+		runSelection->setEnabled(false);
+		fileOpenRecent->setEnabled(false);
 	}
 }
