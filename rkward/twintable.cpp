@@ -244,6 +244,7 @@ QCString TwinTable::encodeSelection () {
 }
 
 void TwinTable::pasteEncoded (QByteArray content) {
+	flushEdit ();
 	QTable *table = activeTable ();
 	if (!table) return;
 
@@ -332,6 +333,7 @@ void TwinTable::pasteEncodedFlipped (QByteArray content) {
 	// this function mostly duplicates the code of the above, and the two
 	// should really be merged one day!
 
+	flushEdit ();
 	QTable *table = activeTable ();
 	if (!table) return;
 
@@ -447,4 +449,10 @@ void TwinTable::clearSelected () {
 
 void TwinTable::setPasteMode (PasteMode mode) {
 	paste_mode = mode;
+}
+
+void TwinTable::flushEdit () {
+	// flush pending edit operations
+	varview->endEdit (varview->currentRow (), varview->currentColumn (), true, false);
+	dataview->endEdit (dataview->currentRow (), dataview->currentColumn (), true, false);
 }

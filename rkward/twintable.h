@@ -48,6 +48,10 @@ public:
 	void pasteEncodedFlipped (QByteArray content);
 /** Clear the currently selected cells */
 	void clearSelected ();
+
+/** Flushes pending edit-operations */
+	void flushEdit ();
+
 	enum PasteMode {PasteEverywhere, PasteToTable, PasteToSelection};
 	void setPasteMode (PasteMode mode);
     TwinTableMember* varview;

@@ -38,7 +38,6 @@
 
 // application specific includes
 #include "rkward.h"
-#include "rkwardview.h"
 #include "rkwarddoc.h"
 #include "rkdrag.h"
 #include "rkwatch.h"
@@ -216,6 +215,7 @@ void RKwardApp::initDocument()
 {
 	doc = new RKwardDoc(this);
 	doc->newDocument();
+	setCentralWidget (doc);
 /*	editCopy->setEnabled(true);
 	editPaste->setEnabled(true);
 	editCut->setEnabled(true);
@@ -229,9 +229,9 @@ void RKwardApp::initView()
   // create the main widget here that is managed by KTMainWindow's view-region and
   // connect the widget to your document to display document contents.
 
-  view = new RKwardView(this);
+/*  view = new RKwardView(this);
   doc->setView(view);
-  setCentralWidget(view);	
+  setCentralWidget(view);	*/
   setCaption(doc->URL().fileName(),false);
 
 }
@@ -481,7 +481,7 @@ void RKwardApp::slotFilePrint()
   QPrinter printer;
   if (printer.setup(this))
   {
-    view->print(&printer);
+//    view->print(&printer);
   }
 
   slotStatusMsg(i18n("Ready."));
@@ -510,7 +510,7 @@ void RKwardApp::slotEditCut()
 {
 	slotStatusMsg(i18n("Cutting selection..."));
 	slotEditCopy ();
-	view->clearSelected();
+	doc->clearSelected();
 	slotStatusMsg(i18n("Ready."));
 }
 
@@ -518,7 +518,7 @@ void RKwardApp::slotEditCopy() {
 
 	slotStatusMsg(i18n("Copying selection to clipboard..."));
 
-	QApplication::clipboard()->setData(new RKDrag(view));
+	QApplication::clipboard()->setData(new RKDrag(doc));
 
 	slotStatusMsg(i18n("Ready."));
 }
@@ -531,26 +531,26 @@ void RKwardApp::doPaste () {
 	// provided the two in order.
 	if (QApplication::clipboard()->data()->provides ("text/tab-separated-values")) {
 		qDebug ("paste tsv");
-		view->pasteEncoded (QApplication::clipboard()->data()->encodedData ("text/tab-separated-values"));
+		doc->pasteEncoded (QApplication::clipboard()->data()->encodedData ("text/tab-separated-values"));
 	} else if (QApplication::clipboard()->data()->provides ("text/plain")) {
 		qDebug ("paste plain");
-		view->pasteEncoded (QApplication::clipboard()->data()->encodedData ("text/plain"));
+		doc->pasteEncoded (QApplication::clipboard()->data()->encodedData ("text/plain"));
 	}
 
 	slotStatusMsg(i18n("Ready."));
 }
 
 void RKwardApp::slotEditPaste() {
-	view->setPasteMode (TwinTable::PasteEverywhere);
+	doc->setPasteMode (TwinTable::PasteEverywhere);
  	doPaste ();
 }
 
 void RKwardApp::slotEditPasteToTable() {
-	view->setPasteMode (TwinTable::PasteToTable);
+	doc->setPasteMode (TwinTable::PasteToTable);
 	doPaste();
 }
 void RKwardApp::slotEditPasteToSelection() {
-	view->setPasteMode (TwinTable::PasteToSelection);
+	doc->setPasteMode (TwinTable::PasteToSelection);
 	doPaste();
 }
 

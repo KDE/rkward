@@ -114,7 +114,7 @@ install_location=
 type=DATA
 
 [rkward/Makefile.am]
-files=rkward/main.cpp,rkward/rkward.cpp,rkward/rkward.h,rkward/rkwarddoc.cpp,rkward/rkwarddoc.h,rkward/rkwardview.cpp,rkward/rkwardview.h,rkward/rkwardui.rc,rkward/rkward.desktop,rkward/lo32-app-rkward.png,rkward/lo16-app-rkward.png,rkward/view.ui,rkward/twintable.cpp,rkward/twintable.h,rkward/twintablemember.cpp,rkward/twintablemember.h,rkward/rkdrag.cpp,rkward/rkdrag.h,rkward/rinterface.cpp,rkward/rinterface.h,rkward/rkwatch_ui.ui,rkward/rkwatch.cpp,rkward/rkwatch.h,rkward/typeselectcell.cpp,rkward/typeselectcell.h,rkward/rtableitem.cpp,rkward/rtableitem.h,rkward/nameselectcell.cpp,rkward/nameselectcell.h,rkward/rsettings.cpp,rkward/rsettings.h,rkward/rsettingsui.ui,rkward/rkmenu.cpp,rkward/rkmenu.h,rkward/rkplugin.cpp,rkward/rkplugin.h,rkward/rkpluginwidget.cpp,rkward/rkpluginwidget.h,rkward/rkvarselector.cpp,rkward/rkvarselector.h,rkward/rkvarslot.cpp,rkward/rkvarslot.h,rkward/rkradio.cpp,rkward/rkradio.h
+files=rkward/main.cpp,rkward/rkward.cpp,rkward/rkward.h,rkward/rkwarddoc.cpp,rkward/rkwarddoc.h,rkward/rkwardui.rc,rkward/rkward.desktop,rkward/lo32-app-rkward.png,rkward/lo16-app-rkward.png,rkward/view.ui,rkward/twintable.cpp,rkward/twintable.h,rkward/twintablemember.cpp,rkward/twintablemember.h,rkward/rkdrag.cpp,rkward/rkdrag.h,rkward/rinterface.cpp,rkward/rinterface.h,rkward/rkwatch_ui.ui,rkward/rkwatch.cpp,rkward/rkwatch.h,rkward/typeselectcell.cpp,rkward/typeselectcell.h,rkward/rtableitem.cpp,rkward/rtableitem.h,rkward/nameselectcell.cpp,rkward/nameselectcell.h,rkward/rsettings.cpp,rkward/rsettings.h,rkward/rsettingsui.ui,rkward/rkmenu.cpp,rkward/rkmenu.h,rkward/rkplugin.cpp,rkward/rkplugin.h,rkward/rkpluginwidget.cpp,rkward/rkpluginwidget.h,rkward/rkvarselector.cpp,rkward/rkvarselector.h,rkward/rkvarslot.cpp,rkward/rkvarslot.h,rkward/rkradio.cpp,rkward/rkradio.h
 sub_dirs=plugins
 type=prog_main
 
@@ -290,18 +290,6 @@ dist=true
 install=false
 install_location=
 type=DATA
-
-[rkward/rkwardview.cpp]
-dist=true
-install=false
-install_location=
-type=SOURCE
-
-[rkward/rkwardview.h]
-dist=true
-install=false
-install_location=
-type=HEADER
 
 [rkward/rkwatch.cpp]
 dist=true

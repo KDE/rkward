@@ -57,9 +57,6 @@ class RKMenu;
 class RKwardApp : public KMainWindow
 {
   Q_OBJECT
-
-  friend class RKwardView;
-
   public:
     /** construtor of RKwardApp, calls all init functions to create the application.
      */
@@ -177,12 +174,6 @@ class RKwardApp : public KMainWindow
   private:
     /** the configuration object of the application */
     KConfig *config;
-    /** view is the main widget which represents your working area. The View
-     * class should handle all events of the view widget.  It is kept empty so
-     * you can create your view according to your application's needs by
-     * changing the view class.
-     */
-    RKwardView *view;
     /** doc represents your actual document and is created only once. It keeps
      * information such as filename and does the serialization of your files.
      */

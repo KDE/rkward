@@ -29,13 +29,12 @@
 // application specific includes
 #include "rkwarddoc.h"
 #include "rkward.h"
-#include "rkwardview.h"
 #include "twintablemember.h"
 #include "twintable.h"
 
 #define RK_DATA_PREFIX	"rk."
 
-RKwardDoc::RKwardDoc(RKwardApp *parent, const char *name) : QObject(parent, name)
+RKwardDoc::RKwardDoc(RKwardApp *parent, const char *name) : TwinTable (parent, name)
 {
 	app = parent;
 	inter = &app->r_inter;
@@ -50,15 +49,6 @@ RKwardDoc::~RKwardDoc()
 {
 }
 
-void RKwardDoc::setView(RKwardView *view)
-{
-	RKwardDoc::view = view;
-}
-
-void RKwardDoc::removeView(RKwardView *view)
-{
-//  pViewList->remove(view);
-}
 void RKwardDoc::setURL(const KURL &url)
 {
   doc_url=url;
@@ -67,22 +57,6 @@ void RKwardDoc::setURL(const KURL &url)
 const KURL& RKwardDoc::URL() const
 {
   return doc_url;
-}
-
-void RKwardDoc::slotUpdateAllViews(RKwardView *sender)
-{
-
-// TODO: discard
-/*  RKwardView *w;
-  if(pViewList)
-  {
-    for(w=pViewList->first(); w!=0; w=pViewList->next())
-    {
-      if(w!=sender)
-        w->repaint();
-    }
-  }
-  */
 }
 
 bool RKwardDoc::saveModified()
@@ -171,7 +145,7 @@ bool RKwardDoc::saveDocument(const KURL& url, const char *format /*=0*/)
   // TODO: Add your document saving code here
   /////////////////////////////////////////////////
 
-	pushTable (view, tablename);	
+	pushTable (this, tablename);	
 
 	inter->issueAsyncCommand ("save.image (\"" + url.path () + "\")");
 
@@ -189,14 +163,11 @@ void RKwardDoc::deleteContents()
 }
 
 void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
-	// flush pending edit operations
-	ttable->varview->endEdit (ttable->varview->currentRow (), ttable->varview->currentColumn (), true, false);
-	ttable->dataview->endEdit (ttable->dataview->currentRow (), ttable->dataview->currentColumn (), true, false);	
-
+	flushEdit ();
 	QString command;
 
 	// first push the data-table
-	TwinTableMember *table = ttable->dataview;
+	TwinTableMember *table = dataview;
 	command = name;
 	command.append (" <- data.frame (");
 
@@ -220,7 +191,7 @@ void RKwardDoc::pushTable (TwinTable *ttable, QString name) {
 	inter->issueAsyncCommand (command);
 
 	// now push the meta-table (point-reflected at bottom-left corner)
-	table = ttable->varview;
+	table = varview;
 	command = name;
 	command.append (".meta");
 	command.append (" <- data.frame (");
@@ -304,14 +275,14 @@ void RKwardDoc::processROutput (QString output) {
 		}
 		while (line.length () && !line.contains (command_separator));
 
-		view->dataview->clearSelection (false);
+		dataview->clearSelection (false);
 		QTableSelection topleft;
 		topleft.init (0, 0);
 		topleft.expandTo (0, 0);
-		view->varview->clearSelection (false);
-		view->setPasteMode (TwinTable::PasteEverywhere);
-		view->varview->addSelection (topleft);
-		view->pasteEncodedFlipped (tsv.local8Bit ());
+		varview->clearSelection (false);
+		setPasteMode (TwinTable::PasteEverywhere);
+		varview->addSelection (topleft);
+		pasteEncodedFlipped (tsv.local8Bit ());
 
 
 		// now process the data-table:
@@ -355,11 +326,11 @@ void RKwardDoc::processROutput (QString output) {
 		}
 		while (line.length () && !line.contains (command_separator));
 
-		view->varview->clearSelection (false);
-		view->dataview->clearSelection (false);
-		view->setPasteMode (TwinTable::PasteEverywhere);
-		view->dataview->addSelection (topleft);
-		view->pasteEncoded (tsv.local8Bit ());
+		varview->clearSelection (false);
+		dataview->clearSelection (false);
+		setPasteMode (TwinTable::PasteEverywhere);
+		dataview->addSelection (topleft);
+		pasteEncoded (tsv.local8Bit ());
 
 /*		view->varview->update ();
 		view->dataview->update (); */
