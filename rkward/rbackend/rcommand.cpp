@@ -16,10 +16,11 @@
  ***************************************************************************/
 
 #include "rcommand.h"
+#include "rcommandreceiver.h"
 
 int RCommand::next_id = 0;
 
-RCommand::RCommand(QString command, int type, QString rk_equiv, QObject *receiver, const char *slot, int flags){
+RCommand::RCommand(QString command, int type, QString rk_equiv, RCommandReceiver *receiver, int flags){
 	_id = next_id++;
 // if we ever submit enough commands to get a buffer overflow, use only positive numbers.
 	if (next_id < 0) {
@@ -35,7 +36,7 @@ RCommand::RCommand(QString command, int type, QString rk_equiv, QObject *receive
 	integer_data = 0;
 	string_count = real_count = 0;
 	_rk_equiv = rk_equiv;
-	addReceiver (receiver, slot);
+	RCommand::receiver = receiver;
 }
 
 RCommand::~RCommand(){
@@ -50,12 +51,7 @@ RCommand::~RCommand(){
 
 void RCommand::finished () {
 	qDebug ("finished command %d", _id);
-	emit (commandDone (this));
-}
-
-void RCommand::addReceiver (QObject *receiver, const char *slot) {
-	qDebug ("connecting command %d", _id);
-	if (receiver && slot) {
-		connect (this, SIGNAL (commandDone (RCommand *)), receiver, slot);
+	if (receiver) {
+		receiver->rCommandDone (this);
 	}
 }

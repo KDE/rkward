@@ -1,7 +1,7 @@
 /***************************************************************************
-                          robjectlist  -  description
+                          rcommandreceiver  -  description
                              -------------------
-    begin                : Wed Aug 18 2004
+    begin                : Thu Aug 19 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,51 +14,22 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef ROBJECTLIST_H
-#define ROBJECTLIST_H
-
-#include <qobject.h>
-
-#include <qstring.h>
-#include <qmap.h>
-
-#include "rcontainerobject.h"
-
-class QTimer;
-class RCommand;
+#ifndef RCOMMANDRECEIVER_H
+#define RCOMMANDRECEIVER_H
 
 /**
-This class is responsible for keeping and updating a list of objects in the R-workspace.
+Use this class as a base for all classes that need to handle RCommands. Provides a pure virtual function for handling of RCommand-results.
 
 @author Thomas Friedrichsmeier
 */
-class RObjectList : public QObject, public RContainerObject {
-  Q_OBJECT
+class RCommandReceiver {
 public:
-    RObjectList ();
+    RCommandReceiver () {};
 
-    ~RObjectList ();
-	void updateFromR ();
-	
-	void createFromR (RContainerObject *parent, const QString &cname);
-	
-	QString getFullName () { return ""; };
-public slots:
-	void timeout ();
-signals:
-/// emitted if the list of objects has changed
-	void changed ();
+    virtual ~RCommandReceiver () {};
 protected:
-	void rCommandDone (RCommand *command);
-private:
-	QTimer *update_timer;
-	
-	struct PendingObject {
-		QString name;
-		RContainerObject *parent;
-	};
-	
-	QMap<RCommand*, PendingObject*> pending_objects;
+	friend class RCommand;
+	virtual void rCommandDone (RCommand *command) = 0;
 };
 
 #endif

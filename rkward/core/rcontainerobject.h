@@ -28,7 +28,6 @@ Internal representation of objects in the R-workspace that contain other objects
 */
 
 class RContainerObject : public RObject {
-	Q_OBJECT
 public:
     RContainerObject(RContainerObject *parent, const QString &name);
 
@@ -38,8 +37,6 @@ public:
 	QString getDescription ();
 
 	void updateFromR ();
-public slots:
-	virtual void gotRResult (RCommand *command);
 private:
 	friend class RObject;
 	void typeMismatch (RObject *child, QString childname);
@@ -54,6 +51,8 @@ protected:
 	int num_dimensions;
 	int *dimension;
 	int container_type;
+
+	void rCommandDone (RCommand *command);
 };
 
 #endif

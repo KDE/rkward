@@ -45,7 +45,7 @@ RObjectList::RObjectList () : RContainerObject (0, "") {
 RObjectList::~RObjectList () {
 }
 
-void RObjectList::gotRResult (RCommand *command) {
+void RObjectList::rCommandDone (RCommand *command) {
 	bool changed = false;
 
 	if (command->getFlags () == UPDATE_LIST_COMMAND) {
@@ -85,7 +85,7 @@ void RObjectList::gotRResult (RCommand *command) {
 }
 
 void RObjectList::updateFromR () {
-	RCommand *command = new RCommand ("ls (all.names=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, SLOT (gotRResult (RCommand *)), UPDATE_LIST_COMMAND);
+	RCommand *command = new RCommand ("ls (all.names=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_LIST_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 }
 
@@ -101,7 +101,7 @@ void RObjectList::updateFromR () {
 		fullname = cname;
 	}
 	
-	RCommand *command = new RCommand ("c (is.data.frame (" + fullname + "), is.matrix (" + fullname + "), is.array (" + fullname + "), is.list (" + fullname + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, SLOT (gotRResult (RCommand *)), GET_TYPE_COMMAND);
+	RCommand *command = new RCommand ("c (is.data.frame (" + fullname + "), is.matrix (" + fullname + "), is.array (" + fullname + "), is.list (" + fullname + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, GET_TYPE_COMMAND);
 	pending_objects.insert (command, obj);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
  }

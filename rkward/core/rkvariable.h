@@ -54,6 +54,8 @@ public:
 protected:
 	int length;
 	int var_type;
+	
+	void rCommandDone (RCommand *command);
 };
 
 typedef RKVariable* RKVarPtr;

@@ -393,7 +393,7 @@ void RKPlugin::ok () {
 		changed ();
 	} else {
 		RKGlobals::rkApp ()->getDocument ()->syncToR ();
-		RKGlobals::rInterface ()->issueCommand (new RCommand (current_code, RCommand::Plugin, "", this, SLOT (gotRResult (RCommand *))));
+		RKGlobals::rInterface ()->issueCommand (new RCommand (current_code, RCommand::Plugin, "", this));
 		php_backend_chain = RKGlobals::rInterface ()->startChain ();
 		backend->printout (BACKEND_DONT_CARE);
 		backend->cleanup (BACKEND_FOR_SUBMISSION);
@@ -445,7 +445,7 @@ void RKPlugin::backendCommandDone (int flags) {
 		RK_DO (qDebug ("current_code %s", current_code.latin1 ()), PLUGIN, DL_DEBUG);
 		backend->resetOutput ();
 	} else if (flags == BACKEND_FOR_SUBMISSION) {
-		RKGlobals::rInterface ()->issueCommand (new RCommand (backend->retrieveOutput (), RCommand::Plugin | RCommand::DirectToOutput, "", this, SLOT (gotRResult (RCommand *))), php_backend_chain);
+		RKGlobals::rInterface ()->issueCommand (new RCommand (backend->retrieveOutput (), RCommand::Plugin | RCommand::DirectToOutput, "", this), php_backend_chain);
 		backend->resetOutput ();
 	}
 }
@@ -513,15 +513,15 @@ void RKPlugin::changed () {
 }
 
 void RKPlugin::doRCall (const QString &call) {
-	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, SLOT (gotRResult (RCommand *)), R_FOR_PHP_FLAG), php_backend_chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, R_FOR_PHP_FLAG), php_backend_chain);
 }
 
 void RKPlugin::getRVector (const QString &call) {
-	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom | RCommand::GetStringVector, "", this, SLOT (gotRResult (RCommand *)), R_FOR_PHP_FLAG), php_backend_chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom | RCommand::GetStringVector, "", this, R_FOR_PHP_FLAG), php_backend_chain);
 }
 
-void RKPlugin::gotRResult (RCommand *command) {
-	RK_DO (qDebug ("gotRResult. Command-flags: %d", command->getFlags ()), PLUGIN, DL_DEBUG);
+void RKPlugin::rCommandDone (RCommand *command) {
+	RK_DO (qDebug ("rCommandDone. Command-flags: %d", command->getFlags ()), PLUGIN, DL_DEBUG);
 
 	if (command->hasError()) {
 		error_dialog->newError (command->error());

@@ -133,7 +133,7 @@ bool RKwardDoc::openDocument(const KURL& url, const char *format /*=0*/)
 	
 	setURL (tmpfile);
 //	output_is = Loaded;
-	RCommand *command = new RCommand ("load (\"" + doc_url.path () + "\")", RCommand::App, "", this, SLOT (processROutput (RCommand *)), RLOAD_COMMAND);
+	RCommand *command = new RCommand ("load (\"" + doc_url.path () + "\")", RCommand::App, "", this, RLOAD_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command);
 	pullTable ();
 	
@@ -242,7 +242,7 @@ void RKwardDoc::pullTable () {
 		pci->length = -1;
 // TODO: use the RCommand-flags instead
 		pci->get_data_table_next = (i == 4);
-		RCommand *rcom = new RCommand (command, RCommand::Sync | RCommand::GetStringVector, "", this, SLOT (processROutput (RCommand *)), RPULL_COMMAND);
+		RCommand *rcom = new RCommand (command, RCommand::Sync | RCommand::GetStringVector, "", this, RPULL_COMMAND);
 		pull_map.insert (rcom, pci);
 		
 		RKGlobals::rInterface ()->issueCommand (rcom, command_chain);
@@ -251,7 +251,7 @@ void RKwardDoc::pullTable () {
 	// processROutput!
 }
 
-void RKwardDoc::processROutput (RCommand *command) {
+void RKwardDoc::rCommandDone (RCommand *command) {
 	if (command->getFlags () == RPULL_COMMAND) {
 		PullMap::const_iterator it = pull_map.find (command);
 		if (it == pull_map.end ()) return;	// TODO: ASSERT
@@ -282,7 +282,7 @@ void RKwardDoc::processROutput (RCommand *command) {
 				datapci->offset_row = 0;
 				datapci->length = -1;
 				datapci->get_data_table_next = false;
-				RCommand *rcom = new RCommand (command_string, RCommand::Sync | RCommand::GetStringVector, "", this, SLOT (processROutput (RCommand *)), RPULL_COMMAND);
+				RCommand *rcom = new RCommand (command_string, RCommand::Sync | RCommand::GetStringVector, "", this, RPULL_COMMAND);
 				pull_map.insert (rcom, datapci);
 		
 				RKGlobals::rInterface ()->issueCommand (rcom, command_chain);

@@ -23,6 +23,8 @@
 #include <qobject.h>
 #include <qptrlist.h>
 
+class RCommandReceiver;
+
 /** This class is used to encapsulate an R-command, so it can be easiyl identified
 	in a chain of commands. It is needed, since communication with R is asynchronous
 	and it is therefore not possible to get the result of an R-call right away.
@@ -44,11 +46,10 @@
 	kept around very long, so they should not be a memory issue.
   *@author Thomas Friedrichsmeier
   */
-
-class RCommand : public QObject  {
-	Q_OBJECT
+  
+class RCommand {
 public: 
-	RCommand(QString command, int type = 0, QString rk_equiv = "", QObject *receiver = 0, const char *slot = 0, int flags=0);
+	RCommand(QString command, int type = 0, QString rk_equiv = "", RCommandReceiver *receiver=0, int flags=0);
 	~RCommand();
 	int type () { return _type; };
 	QString rkEquivalent () { return _rk_equiv; };
@@ -57,9 +58,6 @@ public:
 /** TODO: Adjust these two functions to allow re-getting of output and error-messages from logs */
 	QString output () { return _output; };
 	QString error () { return _error; };
-/** Adds an additional receiver (i.e. an object/slot that will be notified, when
-	this command is completed) */
-	void addReceiver (QObject *receiver, const char *slot);
 /** Types of commands (potentially more to come), bitwise or-able,
 	although partially exclusive. */
 	enum CommandTypes {User=1, Plugin=2, PluginCom=4, App=8, Sync=16, GetIntVector=512, GetStringVector=1024, GetRealVector=2048, DirectToOutput=4096};
@@ -95,8 +93,6 @@ public:
 		RCommand *command;
 		CommandChain *chain;
 	};
-signals:
-	void commandDone (RCommand *command);
 private:
 friend class REmbed;
 friend class RInterface;
@@ -116,6 +112,7 @@ friend class RInterface;
 	QString _rk_equiv;
 	int _id;
 	static int next_id;
+	RCommandReceiver *receiver;
 };
 
 #endif

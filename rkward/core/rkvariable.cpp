@@ -41,3 +41,6 @@ QString RKVariable::getDescription () {
 void RKVariable::updateFromR () {
 	// TODO: implement
 }
+
+void RKVariable::rCommandDone (RCommand *command) {
+}

@@ -23,6 +23,7 @@
 #include <qstring.h>
 #include <qmap.h>
 
+#include "../rbackend/rcommandreceiver.h"
 #include "../rbackend/rinterface.h"
 
 class QDomElement;
@@ -45,7 +46,7 @@ class RKCommandEditor;
   *@author Thomas Friedrichsmeier
   */
 
-class RKPlugin : public QWidget {
+class RKPlugin : public QWidget, public RCommandReceiver {
 	Q_OBJECT
 public: 
 // TODO: pass directory only, not filename
@@ -68,8 +69,6 @@ public slots:
 /** Widgets, that if changed, require the code/problem-views to be updated,
 	connect to this slot (or call it directly). Updates code/problem-views */
 	void changed ();
-/** Get result of r-command (which was requested for the script-backend */
-	void gotRResult (RCommand *command);
 	
 // slots below are called by the backend
 /** this gets called by the script-backend, when it's done. Might enable the
@@ -137,6 +136,8 @@ private:
 	RCommand::CommandChain *php_backend_chain;
 protected:
 	void closeEvent (QCloseEvent *e);
+/** Get result of r-command (which was requested for the script-backend */
+	void rCommandDone (RCommand *command);
 };
 
 #endif

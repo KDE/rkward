@@ -47,20 +47,20 @@ QString RContainerObject::getDescription () {
 }
 
 void RContainerObject::updateFromR () {
-	RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, SLOT (gotRResult (RCommand *)), UPDATE_CLASS_COMMAND);
+	RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 
-	command = new RCommand ("c (is.data.frame (" + getFullName () + "), is.matrix (" + getFullName () + "), is.array (" + getFullName () + "), is.list (" + getFullName () + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, SLOT (gotRResult (RCommand *)), UPDATE_TYPE_COMMAND);
+	command = new RCommand ("c (is.data.frame (" + getFullName () + "), is.matrix (" + getFullName () + "), is.array (" + getFullName () + "), is.list (" + getFullName () + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_TYPE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 	
-	command = new RCommand ("dim (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, SLOT (gotRResult (RCommand *)), UPDATE_DIM_COMMAND);
+	command = new RCommand ("dim (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 
-	command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, SLOT (gotRResult (RCommand *)), UPDATE_CHILD_LIST_COMMAND);
+	command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CHILD_LIST_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 }
 
-void RContainerObject::gotRResult (RCommand *command) {
+void RContainerObject::rCommandDone (RCommand *command) {
 	bool changed = false;
 
 	if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {

@@ -22,6 +22,8 @@
 #include <qstring.h>
 #include <qmap.h>
 
+#include "../rbackend/rcommandreceiver.h"
+
 class RContainerObject;
 
 /**
@@ -31,7 +33,7 @@ Base class for representations of objects in the R-workspace
 */
 
 // TODO: this dependency on QObject is annoying! It's needed only to get RCommand results. RCommands should not use signals/slots after all!
-class RObject : public QObject {
+class RObject : public RCommandReceiver {
 public:
 	RObject(RContainerObject *parent, const QString &name);
 
