@@ -30,7 +30,7 @@ RKObjectListView::RKObjectListView (QWidget *parent) : QListView (parent) {
 	addColumn (i18n("Name"));
 	addColumn (i18n("Label"));
 	addColumn (i18n("Type"));
-	addColumn (i18n("Class(es)"));
+	addColumn (i18n("Class"));
 }
 
 RKObjectListView::~RKObjectListView () {
@@ -165,7 +165,7 @@ void RKObjectListView::addObject (QListViewItem *parent, RObject *object, bool r
 	
 // special treatment for the workspace object
 	if (!parent) {
-		item->setText (0, i18n ("<R Workspace>"));
+		item->setText (0, i18n ("[Objets]"));
 		item->setOpen (true);
 	}
 // code below won't work, as objects get added before editor is opened. Need to call from RKEditor(Manager)
