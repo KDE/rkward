@@ -451,6 +451,7 @@ void RKwardApp::fileOpenNoSave (const KURL &url) {
 		KURL url = KFileDialog::getOpenURL(QString::null, i18n("*|All files"), this, i18n("Open File..."));
 	}
 	if (!url.isEmpty ()) {
+		slotCloseAllEditors ();
 		openWorkspace (url);
 	}
 	slotStatusMsg(i18n("Ready."));

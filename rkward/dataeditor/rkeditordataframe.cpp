@@ -179,11 +179,16 @@ void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
 
 void RKEditorDataFrame::metaValueChanged (int row, int col) {
 	RK_TRACE (EDITOR);
+	
+	if (col >= numCols ()) {
+		insertNewColumn (-1);
+	}
+	
 	RObject *obj = getColObject (col);
 	RK_ASSERT (obj);
 	// for now:
 	if (!obj) return;
-	
+
 	updateMetaValue (obj, row, col, true);
 }
 
@@ -202,6 +207,11 @@ void RKEditorDataFrame::updateMetaValue (RObject *obj, int row, int col, bool sy
 
 void RKEditorDataFrame::dataValueChanged (int row, int col) {
 	RK_TRACE (EDITOR);
+	
+	if (col >= numCols ()) {
+		insertNewColumn (-1);
+	}
+	
 	RObject *obj = getColObject (col);
 	RK_ASSERT (obj);
 	// for now:

@@ -43,7 +43,7 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
     QSplitter *splitter = new QSplitter(this);
     splitter->setOrientation(QSplitter::Vertical);
 
-    varview = new TwinTableMember (splitter);
+    varview = new TwinTableMember (splitter, 0, 1);
     varview->setNumRows (5);
     varview->setNumCols (5);
 	for (int i=0; i < varview->numAllCols (); i++) {
@@ -70,7 +70,7 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
     splitter->setResizeMode (varview, QSplitter::KeepSize);
 	varview->verticalHeader()->setResizeEnabled (false);
 
-    dataview = new TwinTableMember (splitter, 1);
+    dataview = new TwinTableMember (splitter, 1, 1);
     dataview->setNumRows (20);
 	dataview->setNumCols (5);
 	dataview->setVarTable (varview);	// needed for initialization of RTableItems
@@ -147,7 +147,7 @@ void TwinTable::deleteColumn (int column) {
 void TwinTable::insertNewColumn (int where) {
 	flushEdit ();
 	if ((where < 0) || (where > varview->numCols ())) {
-		where = varview->numCols ();
+		where = varview->numAllCols ();
 	}
 
 	varview->insertColumns (where);
