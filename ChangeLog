@@ -1,3 +1,6 @@
+--- Version 0.2.2 - Aug-15-2004 ---
+- added an improved kate syntax-highlighting definition for R
+- output-formatting is done in R instead of PHP
 - added a formula widget for use in plugins (not entirely finished, yet)
 - fixed some small compilation problems
 - added spinbox widget for use in plugins

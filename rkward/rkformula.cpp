@@ -196,7 +196,7 @@ QString RKFormula::mangleName (RKVariable *var) {
 	QString dummy2= dummy;
 	MangledNames::iterator it;
 	int i=-1;
-	while (mangled_names.find (dummy) != mangled_names.end ()) {
+	while (((it = mangled_names.find (dummy)) != mangled_names.end ()) && (it.data () != var)) {
 		dummy = dummy2.append (QString ().setNum (++i));
 	}
 	mangled_names.insert (dummy, var);

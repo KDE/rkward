@@ -1,23 +1,18 @@
 The following list of TODO-items is NOT complete!
 
 stuff to do before 0.2.2 release
-- distribute r.xml-file
 
 small stuff to do soon
 - plugins-scanning: don't duplicate everything
 - rework plugin-XML-format
 - add more plugin-widgets
 - setValue-API for plugin-widgets and copying of values when switching from wizard to dialog-interface
-- set up a simple but serious debbugging framework
+- improve and use debugging framework
 - cleanup label-mess for plugin-widgets
 - formula-widget:
 	- use smart sorting, esp. of generated string
 	- add labels, add "up to level" option
 	- add constant term option
-- handle asynchronous data in Output
-	- locking
-	- move output logging to RKOutput?
-- let R have main control over output, not PHP
 
 mid-term stuff
 - add XML-parsing helper functions and error-checking

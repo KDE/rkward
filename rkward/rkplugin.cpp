@@ -72,6 +72,7 @@ RKPlugin::RKPlugin(RKwardApp *parent, const QString &filename) : QWidget () {
 	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin ") + caption () + i18n (". This may lead to an incorrect ouput and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below."), i18n ("R-Error"), false);
 	
 	// initialize the PHP-backend with the code-template
+	should_updatecode=false;
 	QString dummy = QFileInfo (QFile (filename)).dirPath () + "/code.php";
 	backend = new PHPBackend ();
 	connect (backend, SIGNAL (commandDone (int)), this, SLOT (backendCommandDone (int)));

@@ -65,3 +65,5 @@ messages: rc.cpp
 noinst_HEADERS = rksettingsmodule.h rksettingsmoduleplugins.h rksettingsmoduler.h rksettingsmodulephp.h rksettings.h rkerrordialog.h rksettingsmodulelogfiles.h rksettingsmoduleoutput.h rkcheckbox.h rthread.h debug.h rkcommandeditor.h rkpluginhandle.h rkspinbox.h rkpluginspinbox.h rkformula.h rkvariable.h scriptbackend.h
 phpfilesdir = $(kde_datadir)/rkward/phpfiles
 phpfiles_DATA =  common.php
+katesyntaxdir = $(kde_datadir)/katepart/syntax/
+katesyntax_DATA =  r.xml

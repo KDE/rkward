@@ -303,6 +303,8 @@ rc_DATA = rkwardui.rc
 noinst_HEADERS = rksettingsmodule.h rksettingsmoduleplugins.h rksettingsmoduler.h rksettingsmodulephp.h rksettings.h rkerrordialog.h rksettingsmodulelogfiles.h rksettingsmoduleoutput.h rkcheckbox.h rthread.h debug.h rkcommandeditor.h rkpluginhandle.h rkspinbox.h rkpluginspinbox.h rkformula.h rkvariable.h scriptbackend.h
 phpfilesdir = $(kde_datadir)/rkward/phpfiles
 phpfiles_DATA = common.php
+katesyntaxdir = $(kde_datadir)/katepart/syntax/
+katesyntax_DATA = r.xml
 subdir = rkward
 mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
@@ -472,7 +474,7 @@ CXXLINK = $(LIBTOOL) --mode=link --tag=CXX $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 CXXFLAGS = @CXXFLAGS@
 DIST_SOURCES = $(rkward_SOURCES)
-DATA = $(phpfiles_DATA) $(rc_DATA)
+DATA = $(katesyntax_DATA) $(phpfiles_DATA) $(rc_DATA)
 
 HEADERS = $(noinst_HEADERS)
 
@@ -617,6 +619,24 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
+katesyntaxDATA_INSTALL = $(INSTALL_DATA)
+install-katesyntaxDATA: $(katesyntax_DATA)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(katesyntaxdir)
+	@list='$(katesyntax_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " $(katesyntaxDATA_INSTALL) $$d$$p $(DESTDIR)$(katesyntaxdir)/$$f"; \
+	  $(katesyntaxDATA_INSTALL) $$d$$p $(DESTDIR)$(katesyntaxdir)/$$f; \
+	done
+
+uninstall-katesyntaxDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(katesyntax_DATA)'; for p in $$list; do \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " rm -f $(DESTDIR)$(katesyntaxdir)/$$f"; \
+	  rm -f $(DESTDIR)$(katesyntaxdir)/$$f; \
+	done
 phpfilesDATA_INSTALL = $(INSTALL_DATA)
 install-phpfilesDATA: $(phpfiles_DATA)
 	@$(NORMAL_INSTALL)
@@ -795,7 +815,7 @@ check: check-recursive
 all-am: Makefile $(PROGRAMS) $(DATA) $(HEADERS)
 installdirs: installdirs-recursive
 installdirs-am:
-	$(mkinstalldirs) $(DESTDIR)$(bindir) $(DESTDIR)$(phpfilesdir) $(DESTDIR)$(rcdir)
+	$(mkinstalldirs) $(DESTDIR)$(bindir) $(DESTDIR)$(katesyntaxdir) $(DESTDIR)$(phpfilesdir) $(DESTDIR)$(rcdir)
 
 install: install-recursive
 install-exec: install-exec-recursive
@@ -842,7 +862,8 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-data-local install-phpfilesDATA install-rcDATA
+install-data-am: install-data-local install-katesyntaxDATA \
+	install-phpfilesDATA install-rcDATA
 
 install-exec-am: install-binPROGRAMS
 
@@ -861,8 +882,9 @@ mostlyclean: mostlyclean-recursive
 mostlyclean-am: mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool
 
-uninstall-am: uninstall-binPROGRAMS uninstall-info-am uninstall-local \
-	uninstall-phpfilesDATA uninstall-rcDATA
+uninstall-am: uninstall-binPROGRAMS uninstall-info-am \
+	uninstall-katesyntaxDATA uninstall-local uninstall-phpfilesDATA \
+	uninstall-rcDATA
 
 uninstall-info: uninstall-info-recursive
 
@@ -874,16 +896,18 @@ uninstall-info: uninstall-info-recursive
 	install-am install-binPROGRAMS install-data install-data-am \
 	install-data-local install-data-recursive install-exec \
 	install-exec-am install-exec-recursive install-info \
-	install-info-am install-info-recursive install-man \
-	install-phpfilesDATA install-rcDATA install-recursive \
-	install-strip installcheck installcheck-am installdirs \
-	installdirs-am installdirs-recursive maintainer-clean \
-	maintainer-clean-generic maintainer-clean-recursive mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	mostlyclean-recursive tags tags-recursive uninstall \
-	uninstall-am uninstall-binPROGRAMS uninstall-info-am \
-	uninstall-info-recursive uninstall-local uninstall-phpfilesDATA \
-	uninstall-rcDATA uninstall-recursive
+	install-info-am install-info-recursive install-katesyntaxDATA \
+	install-man install-phpfilesDATA install-rcDATA \
+	install-recursive install-strip installcheck installcheck-am \
+	installdirs installdirs-am installdirs-recursive \
+	maintainer-clean maintainer-clean-generic \
+	maintainer-clean-recursive mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool mostlyclean-recursive \
+	tags tags-recursive uninstall uninstall-am \
+	uninstall-binPROGRAMS uninstall-info-am \
+	uninstall-info-recursive uninstall-katesyntaxDATA \
+	uninstall-local uninstall-phpfilesDATA uninstall-rcDATA \
+	uninstall-recursive
 
 
 install-data-local:
@@ -1127,7 +1151,7 @@ clean-metasources:
 	-rm -f  rksettingsmodulephp.moc rkcheckbox.moc.cpp rksettingsmodule.moc rkpluginhandle.moc twintablemember.moc.cpp rkplugin.moc.cpp rcommand.moc.cpp scriptbackend.moc rkpluginwidget.moc.cpp rkward.moc.cpp phpbackend.moc.cpp rkoutputwindow.moc rkvarslot.moc.cpp rkformula.moc rkpluginspinbox.moc.cpp rksettings.moc twintable.moc.cpp rkspinbox.moc rkradio.moc.cpp rinterface.moc.cpp rksettingsmoduleplugins.moc rksettingsmodulelogfiles.moc rkwarddoc.moc.cpp rkerrordialog.moc rksettingsmoduleoutput.moc rkwatch.moc.cpp rksettingsmoduler.moc rkvarselector.moc.cpp
 
 #>+ 2
-KDE_DIST=snippets rkvarselector.loT rkcommandeditor.loT rkformula.loT fictional_data r_out testdata 
+KDE_DIST=snippets rkvarselector.loT rkcommandeditor.loT r.xml rkformula.loT fictional_data r_out rkward testdata 
 
 #>+ 2
 docs-am:
@@ -1162,7 +1186,7 @@ bcheck-am:
 
 
 #>+ 11
-rkward.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/labelcell.cpp $(srcdir)/rcommand.cpp $(srcdir)/rktext.cpp $(srcdir)/rkradio.cpp $(srcdir)/rkvarslot.cpp $(srcdir)/rkvarselector.cpp $(srcdir)/rkpluginwidget.cpp $(srcdir)/rkplugin.cpp $(srcdir)/rkmenu.cpp $(srcdir)/nameselectcell.cpp $(srcdir)/rtableitem.cpp $(srcdir)/typeselectcell.cpp $(srcdir)/rkwatch.cpp $(srcdir)/rinterface.cpp $(srcdir)/rkdrag.cpp $(srcdir)/twintablemember.cpp $(srcdir)/twintable.cpp $(srcdir)/rkwarddoc.cpp $(srcdir)/rkward.cpp $(srcdir)/main.cpp $(srcdir)/rembed.cpp $(srcdir)/rembedinternal.cpp $(srcdir)/rkoutputwindow.cpp $(srcdir)/rksettingsmodule.cpp $(srcdir)/rksettingsmoduleplugins.cpp $(srcdir)/rksettingsmoduler.cpp $(srcdir)/rksettingsmodulephp.cpp $(srcdir)/rksettings.cpp $(srcdir)/rkerrordialog.cpp $(srcdir)/rksettingsmodulelogfiles.cpp $(srcdir)/rksettingsmoduleoutput.cpp $(srcdir)/rkcheckbox.cpp $(srcdir)/rthread.cpp $(srcdir)/phpbackend.cpp $(srcdir)/rkcommandeditor.cpp $(srcdir)/rkpluginhandle.cpp $(srcdir)/rkspinbox.cpp $(srcdir)/rkpluginspinbox.cpp $(srcdir)/rkformula.cpp $(srcdir)/rkvariable.cpp $(srcdir)/scriptbackend.cpp rkcheckbox.moc.cpp rkplugin.moc.cpp twintablemember.moc.cpp rcommand.moc.cpp rkpluginwidget.moc.cpp rkward.moc.cpp phpbackend.moc.cpp rkvarslot.moc.cpp twintable.moc.cpp rkpluginspinbox.moc.cpp rinterface.moc.cpp rkradio.moc.cpp rkwarddoc.moc.cpp rkwatch.moc.cpp rkvarselector.moc.cpp  rksettingsmodulephp.moc rksettingsmodule.moc rkpluginhandle.moc scriptbackend.moc rkoutputwindow.moc rkformula.moc rkspinbox.moc rksettings.moc rksettingsmodulelogfiles.moc rksettingsmoduleplugins.moc rksettingsmoduleoutput.moc rkerrordialog.moc rksettingsmoduler.moc
+rkward.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/labelcell.cpp $(srcdir)/rcommand.cpp $(srcdir)/rktext.cpp $(srcdir)/rkradio.cpp $(srcdir)/rkvarslot.cpp $(srcdir)/rkvarselector.cpp $(srcdir)/rkpluginwidget.cpp $(srcdir)/rkplugin.cpp $(srcdir)/rkmenu.cpp $(srcdir)/nameselectcell.cpp $(srcdir)/rtableitem.cpp $(srcdir)/typeselectcell.cpp $(srcdir)/rkwatch.cpp $(srcdir)/rinterface.cpp $(srcdir)/rkdrag.cpp $(srcdir)/twintablemember.cpp $(srcdir)/twintable.cpp $(srcdir)/rkwarddoc.cpp $(srcdir)/rkward.cpp $(srcdir)/main.cpp $(srcdir)/rembed.cpp $(srcdir)/rembedinternal.cpp $(srcdir)/rkoutputwindow.cpp $(srcdir)/rksettingsmodule.cpp $(srcdir)/rksettingsmoduleplugins.cpp $(srcdir)/rksettingsmoduler.cpp $(srcdir)/rksettingsmodulephp.cpp $(srcdir)/rksettings.cpp $(srcdir)/rkerrordialog.cpp $(srcdir)/rksettingsmodulelogfiles.cpp $(srcdir)/rksettingsmoduleoutput.cpp $(srcdir)/rkcheckbox.cpp $(srcdir)/rthread.cpp $(srcdir)/phpbackend.cpp $(srcdir)/rkcommandeditor.cpp $(srcdir)/rkpluginhandle.cpp $(srcdir)/rkspinbox.cpp $(srcdir)/rkpluginspinbox.cpp $(srcdir)/rkformula.cpp $(srcdir)/rkvariable.cpp $(srcdir)/scriptbackend.cpp $(srcdir)/rkcheckbox.moc.cpp $(srcdir)/rkplugin.moc.cpp $(srcdir)/twintablemember.moc.cpp $(srcdir)/rcommand.moc.cpp $(srcdir)/rkpluginwidget.moc.cpp $(srcdir)/rkward.moc.cpp $(srcdir)/phpbackend.moc.cpp $(srcdir)/rkvarslot.moc.cpp $(srcdir)/twintable.moc.cpp $(srcdir)/rkpluginspinbox.moc.cpp $(srcdir)/rinterface.moc.cpp $(srcdir)/rkradio.moc.cpp $(srcdir)/rkwarddoc.moc.cpp $(srcdir)/rkwatch.moc.cpp $(srcdir)/rkvarselector.moc.cpp  rksettingsmodulephp.moc rksettingsmodule.moc rkpluginhandle.moc scriptbackend.moc rkoutputwindow.moc rkformula.moc rkspinbox.moc rksettings.moc rksettingsmodulelogfiles.moc rksettingsmoduleplugins.moc rksettingsmoduleoutput.moc rkerrordialog.moc rksettingsmoduler.moc
 	@echo 'creating rkward.all_cpp.cpp ...'; \
 	rm -f rkward.all_cpp.files rkward.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> rkward.all_cpp.final; \
