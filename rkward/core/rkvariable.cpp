@@ -18,6 +18,8 @@
 
 #include "rcontainerobject.h"
 
+#include "../debug.h"
+
 RKVariable::RKVariable (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 }
 
@@ -41,6 +43,7 @@ QString RKVariable::getDescription () {
 }
 
 void RKVariable::updateFromR () {
+	RK_TRACE (APP);
 	// TODO: implement
 	parent->childUpdateComplete ();
 }

@@ -55,6 +55,8 @@ public:
 	
 	RContainerObject *getContainer () { return (parent); };
 	
+	virtual int numChildren () { return 0; };
+	virtual RObject **children () { return 0; };
 protected:
 	RContainerObject *parent;
 	QString name;

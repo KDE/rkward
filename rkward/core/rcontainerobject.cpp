@@ -29,7 +29,6 @@
 #define UPDATE_TYPE_COMMAND 4
 
 RContainerObject::RContainerObject (RContainerObject *parent, const QString &name) : RObject (parent, name) {
-	container_type = 0;
 	classname = 0;
 	dimension = 0;
 	num_classes = num_dimensions = 0;
@@ -66,11 +65,13 @@ void RContainerObject::rCommandDone (RCommand *command) {
 
 	if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
 		num_children_updating = command->stringVectorLength ();
-		for (int i = 0; i < num_children_updating; ++i) {
+		for (int i = 0; i < command->stringVectorLength (); ++i) {
 			QString cname = command->getStringVector ()[i];
 			if (childmap.find (cname) != childmap.end ()) {
+				RK_DO (qDebug ("updating existing child: %s", cname.latin1 ()), APP, DL_DEBUG);
 				childmap[cname]->updateFromR ();
 			} else {
+				RK_DO (qDebug ("creating new child: %s", cname.latin1 ()), APP, DL_DEBUG);
 				RKGlobals::rObjectList()->createFromR (this, cname);
 				changed = true;
 			}
@@ -104,13 +105,15 @@ void RContainerObject::rCommandDone (RCommand *command) {
 				new_type = RObject::List | RObject::Container;
 			}
 		}
-		if ((container_type) && (new_type != container_type)) {
-			changed = true;
-			container_type = new_type;
-			if (!(container_type & RObject::Container)) {
+		if ((type) && (new_type != type)) {
+			if (!(type & RObject::Container)) {
 				RObject::parent->typeMismatch (this, RObject::name);
 				return;	// will be deleted!
 			}
+		}
+		if (new_type != type) {
+			changed = true;
+			type = new_type;
 		}
 
 	} else if (command->getFlags () == UPDATE_DIM_COMMAND) {
@@ -151,13 +154,40 @@ void RContainerObject::typeMismatch (RObject *child, QString childname) {
 }
 
 void RContainerObject::childUpdateComplete () {
+	RK_TRACE (APP);
 	RK_ASSERT (num_children_updating);
 	if ((--num_children_updating) <= 0) parent->childUpdateComplete ();
 }
 
 void RContainerObject::addChild (RObject *child, QString childname) {
 	RK_DO (qDebug ("child added: %s", childname.latin1 ()), APP, DL_DEBUG);
+	RK_ASSERT (child);
 
 	childmap.insert (childname, child);
 	child->updateFromR ();
+}
+
+int RContainerObject::numChildren () {
+	return childmap.size ();
+}
+
+RObject **RContainerObject::children () {
+	RObject **ret = new RObject *[childmap.size ()];
+
+	int i = 0;
+	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
+		ret[i++] = it.data ();
+	}
+	return ret;
+}
+
+QString RContainerObject::makeClassString (const QString &sep) {
+	QString ret;
+	for (int i=0; i < num_classes; ++i) {
+		ret.append (classname[i]);
+		if (ret < (num_classes - 1)) {
+			ret.append (sep);
+		}
+	}
+	return ret;
 }

@@ -1,5 +1,5 @@
 /***************************************************************************
-                          robject  -  description
+                          robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
@@ -14,28 +14,39 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "robject.h"
+#ifndef ROBJECTBROWSER_H
+#define ROBJECTBROWSER_H
 
-#include "rcontainerobject.h"
+#include <qwidget.h>
 
-RObject::RObject (RContainerObject *parent, const QString &name) {
-	RObject::parent = parent;
-	RObject::name = name;
-	type = 0;
-}
+class QListView;
+class QListViewItem;
+class QPushButton;
+class RObject;
 
-RObject::~RObject () {
-}
+/**
+This widget provides a browsable list of all objects in the R workspace
 
-QString RObject::getShortName () {
-	return name;
-}
+@author Thomas Friedrichsmeier
+*/
+class RObjectBrowser : public QWidget
+{
+Q_OBJECT
+public:
+    RObjectBrowser ();
 
-QString RObject::getFullName () {
-	QString pf = parent->getFullName ();
-	if (pf != "") {
-		return (pf + "[[\"" + RObject::name + "\"]]");
-	} else {
-		return RObject::name;
-	}
-}
+    ~RObjectBrowser ();
+public slots:
+	void updateButtonClicked ();
+	void updateComplete (bool changed);
+private:
+	friend class RKwardApp;
+	void initialize ();
+
+	QPushButton *update_button;
+	QListView *list_view;
+	
+	void addObject (QListViewItem *parent, RObject *object);
+};
+
+#endif

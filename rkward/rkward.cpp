@@ -52,6 +52,7 @@
 #include "rbackend/rinterface.h"
 #include "core/robjectlist.h"
 #include "rkglobals.h"
+#include "robjectbrowser.h"
 
 #include "debug.h"
 
@@ -93,11 +94,15 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
 	output = new RKOutputWindow (0);
 	output->showMaximized ();
 	output->hide ();
+	
+	object_browser = new RObjectBrowser ();
+	object_browser->show ();
 }
 
 RKwardApp::~RKwardApp() {
 	delete RKGlobals::rInterface ();
 	delete RKGlobals::rObjectList ();
+	delete object_browser;
 }
 
 void RKwardApp::doPostInit () {
@@ -198,6 +203,8 @@ void RKwardApp::startR () {
 	
 	RKGlobals::rinter = new RInterface ();
 	RKGlobals::list = new RObjectList ();
+	
+	object_browser->initialize ();
 }
 
 void RKwardApp::slotConfigure () {

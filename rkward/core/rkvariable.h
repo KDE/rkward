@@ -31,9 +31,9 @@ getFullName (), getTypeString () etc. where appropriate.
 */
 class RKVariable : public RObject {
 public:
-    RKVariable(RContainerObject *parent, const QString &name);
+    RKVariable (RContainerObject *parent, const QString &name);
 
-    ~RKVariable();
+    ~RKVariable ();
 	
 	QString getLabel ();
 	QString getDescription ();
@@ -42,10 +42,10 @@ public:
 	
 	int getLength () { return length; };
 	
-	void updateFromR ();;
+	void updateFromR ();
 	
 /* Begin: parts that will be re-written entirely */
-	QString getTable () { return table; };	
+	QString getTable () { return table; };
 
 	QString type;
 	QString table;

@@ -39,7 +39,7 @@ RObjectList::RObjectList () : RContainerObject (0, "") {
 	
 	update_timer->start (AUTO_UPDATE_INTERVAL, true);
 	
-	container_type = RObject::Workspace;
+	type = RObject::Workspace;
 	
 	command_chain = 0;
 }
@@ -53,7 +53,13 @@ void RObjectList::rCommandDone (RCommand *command) {
 
 	if (command->getFlags () == UPDATE_LIST_COMMAND) {
 		num_children_updating = command->stringVectorLength ();
-		for (int i = 0; i < num_children_updating; ++i) {
+		// empty workspace?
+		if (!num_children_updating) {
+			command_chain = RKGlobals::rInterface ()->closeChain (command_chain);
+			emit (updateComplete (true));
+			return;
+		}
+		for (int i = 0; i < command->stringVectorLength (); ++i) {
 			QString cname = command->getStringVector ()[i];
 			if (childmap.find (cname) != childmap.end ()) {
 				childmap[cname]->updateFromR ();
@@ -80,6 +86,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 		} else {
 			robj = new RKVariable (pobj->parent, pobj->name);
 		}
+		RK_ASSERT (robj);
 		pobj->parent->addChild (robj, pobj->name);
 		delete pobj;
 		pending_objects.remove (command);

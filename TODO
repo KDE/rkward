@@ -9,7 +9,8 @@ stuff to do before 0.2.3 release
 	- allow multiple tables
 - maybe implement simple RObjectViewer
 - jump to 0.2.5 on these changes?
-- move RCommand to rbackend-dir
+
+- RObjectList: use CommandChain. use empty Rcommand to find out when update is complete
 
 small stuff to do soon
 - plugins-scanning: don't duplicate everything

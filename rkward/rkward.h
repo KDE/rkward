@@ -39,6 +39,7 @@ class RSettings;
 class RKMenu;
 class QTimer;
 class RKOutputWindow;
+class RObjectBrowser;
 class RKSettingsModule;
 class RKSettings;
 class RInterface;
@@ -229,6 +230,7 @@ class RKwardApp : public KMainWindow
 	QTimer *startup_timer;
 	
 	RKOutputWindow *output;
+	RObjectBrowser *object_browser;
 	
 	friend class RInterface;
 	void setRStatus (bool busy);

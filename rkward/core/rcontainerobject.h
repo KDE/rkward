@@ -36,9 +36,16 @@ public:
 	QString getLabel ();
 	QString getDescription ();
 
-	void updateFromR ();
+	int numClasses () { return num_classes; };
+	QString getClassName (int index) { return classname[index]; };
+	QString makeClassString (const QString &sep);
 	
+	void updateFromR ();
+
 	virtual void childUpdateComplete ();
+	
+	int numChildren ();
+	RObject **children ();
 private:
 	friend class RObject;
 	void typeMismatch (RObject *child, QString childname);
@@ -52,7 +59,6 @@ protected:
 	QString *classname;
 	int num_dimensions;
 	int *dimension;
-	int container_type;
 	int num_children_updating;
 
 	void rCommandDone (RCommand *command);
