@@ -3,47 +3,32 @@
 <KDevPrjSession>
  <LastCompileConfig>(Default)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
- <DocsAndViews NumberOfDocuments="8" >
-  <Doc0 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/TODO" >
-   <View0 line="6" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/ChangeLog" >
-   <View0 line="13" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkwatch.cpp" >
-   <View0 line="34" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkward.cpp" >
-   <View0 line="192" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/misc/rkmenu.h" >
-   <View0 line="47" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc4>
-  <Doc5 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/misc/rkmenu.cpp" >
-   <View0 line="43" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
-   </View0>
-  </Doc5>
-  <Doc6 context="ctx_doxygen" NumberOfViews="1" URL="file:/usr/share/doc/kde/HTML/en/kdelibs-apidocs/kdeui/html/classKMainWindow.html#a4" >
+ <DocsAndViews NumberOfDocuments="5" >
+  <Doc0 context="ctx_doxygen" NumberOfViews="1" URL="file:/usr/share/qt3/doc/html/qmenudata.html#changeItem" >
    <View0 Type="???" >
     <AdditionalSettings/>
    </View0>
-  </Doc6>
-  <Doc7 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkwardui.rc" >
-   <View0 line="20" Type="???" >
-    <AdditionalSettings Top="2" Width="956" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+  </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkoutputwindow.h" >
+   <View0 line="31" Type="???" >
+    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
    </View0>
-  </Doc7>
+  </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkoutputwindow.cpp" >
+   <View0 line="29" Type="???" >
+    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc2>
+  <Doc3 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkwatch.cpp" >
+   <View0 line="94" Type="???" >
+    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc3>
+  <Doc4 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/main.cpp" >
+   <View0 line="70" Type="???" >
+    <AdditionalSettings Top="2" Width="954" Attach="1" Height="512" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc4>
  </DocsAndViews>
  <pluginList>
   <kdevbookmarks>

@@ -88,8 +88,6 @@ void RObjectList::rCommandDone (RCommand *command) {
 			}
 		}
 	} else if (command->getFlags () == CHILD_GET_TYPE_COMMAND) {
-		bool container = false;
-		
 		if (command->intVectorLength () != 1) {
 			RK_ASSERT (false);
 		}
@@ -156,16 +154,6 @@ void RObjectList::childUpdateComplete () {
 	// TODO: check whether there really were any changes
 		emit (updateComplete (true));
 	}
-}
-
-void RObjectList::saveWorkspace (const KURL& url) {
-	RK_TRACE (OBJECTS);
-	RCommandChain *chain = RKGlobals::rInterface ()->startChain (0);
-	
-	RKGlobals::editorManager ()->syncAllToR (chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + url.path () + "\")", RCommand::App), chain);
-	
-	RKGlobals::rInterface ()->closeChain (chain);
 }
 
 void RObjectList::loadWorkspace (const KURL& url, bool merge) {

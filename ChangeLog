@@ -1,3 +1,5 @@
+- added error-handling to workspace saving
+- ask whether to save workspace on application quit
 - added menu-entries to clear output-window and watch-log
 - don't duplicate menu-entries when plugins get re-scanned
 - place "Analyse"-menu left of help-menu

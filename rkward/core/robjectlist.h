@@ -61,7 +61,6 @@ public:
 	
 	RObject *findObject (const QString &full_name);
 
-	void saveWorkspace (const KURL& url);
 	void loadWorkspace (const KURL& url, bool merge=false);
 	
 	KURL getWorkspaceURL () { return current_url; };

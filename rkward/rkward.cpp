@@ -57,6 +57,7 @@
 #include "rkglobals.h"
 #include "robjectbrowser.h"
 #include "dialogs/startupdialog.h"
+#include "agents/rksaveagent.h"
 
 #include "debug.h"
 
@@ -393,11 +394,13 @@ void RKwardApp::readProperties(KConfig* _cfg)
   } */
 }		
 
-bool RKwardApp::queryClose()
-{
-// TODO: wait until document is saved?!
-	//RKGlobals::rObjectList ()->saveWorkspace ();
-	return true;
+bool RKwardApp::queryClose () {
+	int res;
+	res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the workspace?"), i18n ("Save workspace?"));
+	if (res == KMessageBox::No) return true;
+	if (res == KMessageBox::Yes) new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), false, true);
+
+	return false;
 }
 
 bool RKwardApp::queryExit()
@@ -467,30 +470,12 @@ void RKwardApp::slotFileOpenRecent(const KURL& url)
   slotStatusMsg(i18n("Ready."));
 }
 
-void RKwardApp::slotFileSave()
-{
-	if (RKGlobals::rObjectList ()->getWorkspaceURL ().isEmpty ()) {
-		slotFileSaveAs ();
-		return;
-	}
-
-	RKGlobals::rObjectList ()->saveWorkspace (RKGlobals::rObjectList ()->getWorkspaceURL ());
+void RKwardApp::slotFileSave () {
+	new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL ());
 }
 
-void RKwardApp::slotFileSaveAs()
-{
-  slotStatusMsg(i18n("Saving workspace with a new filename..."));
-
-  KURL url=KFileDialog::getSaveURL(QDir::currentDirPath(),
-        i18n("*|All files"), this, i18n("Save as..."));
-  if(!url.isEmpty())
-  {
-    RKGlobals::rObjectList ()->saveWorkspace (url);
-    fileOpenRecent->addURL(url);
-    setCaption(url.fileName(), false);
-  }
-
-  slotStatusMsg(i18n("Ready."));
+void RKwardApp::slotFileSaveAs () {
+	new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), true);
 }
 
 void RKwardApp::slotFileClose()
@@ -515,23 +500,10 @@ void RKwardApp::slotFilePrint()
   slotStatusMsg(i18n("Ready."));
 }
 
-void RKwardApp::slotFileQuit()
-{
-  slotStatusMsg(i18n("Exiting..."));
-  saveOptions();
-  // close the first window, the list makes the next one the first again.
-  // This ensures that queryClose() is called on each window to ask for closing
-  KMainWindow* w;
-  if(memberList)
-  {
-    for(w=memberList->first(); w!=0; w=memberList->first())
-    {
-      // only close the window if the closeEvent is accepted. If the user presses Cancel on the saveModified() dialog,
-      // the window and the application stay open.
-      if(!w->close())
-	break;
-    }
-  }	
+void RKwardApp::slotFileQuit () {
+	slotStatusMsg(i18n("Exiting..."));
+	saveOptions();
+	close ();
 }
 
 void RKwardApp::slotDataClose () {
