@@ -1,0 +1,67 @@
+<!DOCTYPE rkplugin>
+<document>
+  <entry type="entry" id="readtable" label="Load data" />
+<!-- The layout-section takes care of the layout of the GUI for this plugin. -->  <dialog>
+    <tabbook>
+      <tab label="Load" >
+        <browser size="small" id="file" label="Name of the file" />
+	<input label="Name of the table" id="name" initial="rk.temp.table" size="small"/>
+        <radio id="header" label="Header" >
+          <option value="TRUE" label="True" />
+          <option value="FALSE" label="False" />
+        </radio>
+        <radio id="dec" label="Character for decimal values" >
+          <option value="'.'" label="'.'" />
+          <option value="','" label="','" />
+        </radio>
+        <radio id="sep" label="Character to separe value" >
+          <option value="'\t'" label="Tab" />
+          <option value="';'" label="';'" />
+          <option value="','" label="','" />
+          <option value="' '" label="Coma" />
+        </radio>
+      </tab>
+      <tab label="Rows" >
+        <checkbox value_unchecked="false" checked="false" value="true" id="isrow" label="Customize the names of the row" />
+        <radio id="rowname" label="Name of rows" depend="isrow" >
+          <option value="NULL" label="Number" />
+          <option value="rowcol" label="Use a particular column" />
+          <option value="custoRow" label="Use a vector" />
+        </radio>
+        <input size="small" id="nomrow" initial="1" depend="rowcol" label="Give a number or a 'name'" />
+        <varslot multi="false" classes="character" id="rownames" source="varname" label="Give a character vector" depend="custoRow" />
+        <varselector id="varname" depend="custoRow" />
+      </tab>
+        <tab label="Columns" >
+        <radio id="colname" label="Name of columns" >
+          <option value="" label="Default" />
+          <option value="custoCol" label="Use a character vector" />
+        </radio>
+        <varslot multi="false" classes="character" id="colnames" source="varnames" label="Give a character vector" depend="custoCol" />
+	<radio id="colclass" label="Classes of columns" >
+          <option value="" label="Default" />
+          <option value="custoClass" label="Use a character vector" />
+        </radio>
+        <varslot multi="false" classes="character" id="custoClasses" source="varnames" label="Give a character vector" depend="custoClass" />
+	<varselector id="varnames" />
+      </tab>
+      <tab label="Options" >
+        <radio id="fill" label="Fill the rows if unqual length" >
+          <option value="FALSE" label="False" />
+          <option value="'TRUE" label="'True" />
+        </radio>
+        <row>
+          <input size="small" initial="0" id="skip" label="Number of lines" />
+          <input size="small" initial="-1" id="nrows" label="Maximal number of lines" />
+        </row>
+        <row>
+          <input size="small" initial="NA" id="na" label="Character for missing values" />
+          <input size="small" initial="#" id="commentchar" label="Character for comments" />
+        </row>
+        <checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="checkname" label="Check syntax of the variables names" />
+        <checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="stripwhite" label="Strip white values" />
+        <checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="blanklinesskip" label="Skip blank lines" />
+      </tab>
+    </tabbook>
+  </dialog>
+</document>
