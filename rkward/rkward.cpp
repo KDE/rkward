@@ -76,7 +76,7 @@
 #include "windows/rkcommandeditorwindow.h"
 #include "windows/rkhelpwindow.h"
 #include "khelpdlg.h"
-
+#include "rkkonsole.h"
 #include "debug.h"
 
 #define ID_STATUS_MSG 1
@@ -212,6 +212,10 @@ void RKwardApp::doPostInit () {
 	helpDlg = new KHelpDlg(0);
 	helpDlg->setIcon(SmallIcon("help"));
 	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);
+	
+	konsole = new RKKonsole(0);
+	konsole->setIcon(SmallIcon("konsole"));
+	addToolWindow(konsole,KDockWidget::DockBottom, getMainDockWidget(), 10);
 	
 	
 	// just to initialize the window-actions according to whether they're shown on startup or not
@@ -1036,7 +1040,8 @@ void RKwardApp::slotRunSelection() {
 	if(((RKCommandEditorWindow*) activeWindow())->getSelection().isEmpty() || ((RKCommandEditorWindow*) activeWindow())->getSelection().isNull())
 		return;
 
-	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getSelection(), RCommand::User, ""));
+// 	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getSelection(), RCommand::User, ""));
+	konsole -> sendInput(((RKCommandEditorWindow*) activeWindow())->getSelection()  ) ;
 }
 
 
@@ -1047,7 +1052,8 @@ void RKwardApp::slotRunAll() {
 	if(((RKCommandEditorWindow*) activeWindow())->getText().isEmpty() || ((RKCommandEditorWindow*) activeWindow())->getText().isNull())
 		return;
 		
-	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getText(), RCommand::User, ""));
+// 	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getText(), RCommand::User, ""));
+	konsole->sendInput(((RKCommandEditorWindow*) activeWindow())->getText() + "\n " ) ;
 }
 
 
