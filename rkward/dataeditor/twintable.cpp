@@ -35,6 +35,8 @@
 #include "labelcell.h"
 #include "rkdrag.h"
 
+#include "../core/robject.h"
+
 TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
 	QGridLayout *grid_layout = new QGridLayout(this);
 
@@ -110,8 +112,8 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
 	// and the same for the left header
 	connect (dataview, SIGNAL (headerRightClick (int, int)), this, SLOT (headerRightClicked (int, int)));
 	left_header_menu = new QPopupMenu (this);
-	left_header_menu->insertItem (i18n ("Insert new case above"), this, SLOT (insertRowAfter ()));
-	left_header_menu->insertItem (i18n ("Insert new case below"), this, SLOT (insertRowBefore ()));
+	left_header_menu->insertItem (i18n ("Insert new case above"), this, SLOT (insertRowBefore ()));
+	left_header_menu->insertItem (i18n ("Insert new case below"), this, SLOT (insertRowAfter ()));
 	
 	qDebug ("Twintable created");
 }
@@ -121,19 +123,20 @@ TwinTable::~TwinTable(){
 	delete left_header_menu;
 }
 
-void TwinTable::scrolled (int x, int y) {
+void TwinTable::scrolled (int x, int) {
 	disconnect (varview, SIGNAL (contentsMoving (int, int)), this, SLOT (autoScrolled (int, int)));
 	varview->setContentsPos (x, varview->contentsY ());
 	connect (varview, SIGNAL (contentsMoving (int, int)), this, SLOT (autoScrolled (int, int)));
 }
 
-void TwinTable::autoScrolled (int x, int y) {
+void TwinTable::autoScrolled (int x, int) {
 	disconnect (dataview, SIGNAL (contentsMoving (int, int)), this, SLOT (scrolled (int, int)));
 	dataview->setContentsPos (x, dataview->contentsY ());
 	connect (dataview, SIGNAL (contentsMoving (int, int)), this, SLOT (scrolled (int, int)));
 }
 
 void TwinTable::deleteColumn (int column) {
+	flushEdit ();
 	if ((column >= 0) && (column < numCols ())) {
 		varview->removeColumn (column);
 		dataview->removeColumn (column);
@@ -141,6 +144,7 @@ void TwinTable::deleteColumn (int column) {
 }
 
 void TwinTable::insertNewColumn (int where) {
+	flushEdit ();
 	if ((where < 0) || (where > varview->numCols ())) {
 		where = varview->numCols ();
 	}
@@ -169,6 +173,7 @@ void TwinTable::insertNewColumn (int where) {
 }
 
 void TwinTable::insertNewRow (int where, TwinTableMember *table) {
+	flushEdit ();
 	if (!table) table = dataview;
 	
 	if ((where < 0) || (where > table->numRows ())) {
@@ -184,6 +189,7 @@ void TwinTable::insertNewRow (int where, TwinTableMember *table) {
 			dataview->setItem (where, i, rti = new RTableItem (dataview));
 			rti->checkValid ();
 		}
+		emit (dataAddedRow (where));
 	} else if (table == varview) {
 		for (int i=0; i <= varview->numCols (); i++) {
 			if (where == TYPE_ROW) {
@@ -285,14 +291,23 @@ QCString TwinTable::encodeSelection () {
 	return encoded_data;
 }
 
-void TwinTable::pasteEncoded (QByteArray content) {
+TwinTable::ColChanges *TwinTable::pasteEncoded (QByteArray content, TwinTableMember **table_p) {
 	flushEdit ();
+	ColChanges *ret = new ColChanges;
+	
 	TwinTableMember *table = activeTable ();
-	if (!table) return;
+	*table_p = table;
+	if (!table) return (ret);
 
 	QTableSelection selection;
+	if (table->numSelections () <= 0) {
+		if ((table->currentRow () < 0) || (table->currentColumn () < 0)) return ret;
+		selection.init (table->currentRow (), table->currentColumn ());
+		selection.expandTo (table->currentRow (), table->currentColumn ());
+		table->addSelection (selection);
+	}
 	// Unfortunately, selections added via addSelection () don't get "current".
-	// So for this case, we have to set it explicitely
+	// So for this case, we have to set it explicitely --- what did I mean to say with that comment?
 	if (table->currentSelection () >= 0) {
 		selection = table->selection (table->currentSelection ());
 	} else {
@@ -313,6 +328,16 @@ void TwinTable::pasteEncoded (QByteArray content) {
 			next_delim = next_line;
 		}
 		table->setText (row, col, pasted.left (next_delim));
+		if (ret->find (col) == ret->end ()) {
+			RObject::ChangeSet *set = new RObject::ChangeSet;
+			set->from_index = row;
+			set->to_index = row;
+			ret->insert (col, set);
+		} else {
+			RObject::ChangeSet *set = (*ret)[col];
+			if (row > set->to_index) set->to_index = row;
+			if (row < set->from_index) set->from_index = row;
+		}
 		if (next_delim == next_tab) {
 			col++;
 			if (paste_mode == RKEditor::PasteToSelection) {
@@ -369,8 +394,11 @@ void TwinTable::pasteEncoded (QByteArray content) {
 			pasted=pasted.right (pasted.length () - (next_delim + 1));
 		}
 	}
+	
+	return ret;
 }
 
+/*
 void TwinTable::pasteEncodedFlipped (QByteArray content) {
 	// this function mostly duplicates the code of the above, and the two
 	// should really be merged one day!
@@ -463,16 +491,23 @@ void TwinTable::pasteEncodedFlipped (QByteArray content) {
 			pasted=pasted.right (pasted.length () - (next_delim + 1));
 		}
 	}
-}
+} */
 
 TwinTableMember *TwinTable::activeTable () {
-	if (varview->numSelections ()) {
+	if (varview->hasFocus ()) {
+		return varview;
+	} else if (dataview->hasFocus ()) {
+		return dataview;
+	} else {
+		return 0;
+	}
+/*	if (varview->numSelections ()) {
 		return varview;
 	} else if (dataview->numSelections ()) {
 		return dataview;
 	} else {
 		return 0;
-	}
+	} */
 }
 
 void TwinTable::clearSelected () {

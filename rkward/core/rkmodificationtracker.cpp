@@ -27,16 +27,16 @@
 #include "../debug.h"
 
 RKModificationTracker::RKModificationTracker (QObject *parent) : QObject (parent) {
-	RK_ASSERT (OBJECTS);
+	RK_TRACE (OBJECTS);
 }
 
 
 RKModificationTracker::~RKModificationTracker () {
-	RK_ASSERT (OBJECTS);
+	RK_TRACE (OBJECTS);
 }
 
 void RKModificationTracker::removeObject (RObject *object, RKEditor *editor, bool removed_in_workspace) {
-	RK_ASSERT (OBJECTS);
+	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
 	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (object);
 	RK_ASSERT (!((editor) && (!ed)));
@@ -48,18 +48,16 @@ void RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 				return;
 			}
 		}
-	}
-	
-	if (!editor) {
-		if (ed) {
+	} else {
+		if (editor || ed) {
 			if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '") + object->getFullName () + i18n ("'? The object is currently opened for editing, it will be removed in the editor, too. There's no way to get it back."), i18n ("Remove object?")) != KMessageBox::Yes) {
 				return;
 			}
-		}
-	} else {
-		// TODO: check for other editors editing this object
-		if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '") + object->getFullName () + i18n ("'? There's no way to get it back."), i18n ("Remove object?")) != KMessageBox::Yes) {
-			return;
+		} else {
+			// TODO: check for other editors editing this object
+			if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '") + object->getFullName () + i18n ("'? There's no way to get it back."), i18n ("Remove object?")) != KMessageBox::Yes) {
+				return;
+			}
 		}
 	}
 	
@@ -69,7 +67,7 @@ void RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 }
 
 void RKModificationTracker::renameObject (RObject *object, const QString &new_name, RKEditor *editor) {
-	RK_ASSERT (OBJECTS);
+	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
 // TODO: find out, whether new object-name is valid
 	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (object);
@@ -83,7 +81,7 @@ void RKModificationTracker::renameObject (RObject *object, const QString &new_na
 }
 
 void RKModificationTracker::addObject (RObject *object, RKEditor *editor) {
-	RK_ASSERT (OBJECTS);
+	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
 	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (object->getContainer ());
 	RK_ASSERT (!((editor) && (!ed)));
@@ -97,7 +95,7 @@ void RKModificationTracker::addObject (RObject *object, RKEditor *editor) {
 }
 
 void RKModificationTracker::objectMetaChanged (RObject *object, RKEditor *editor) {
-	RK_ASSERT (OBJECTS);
+	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
 	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (object);
 	RK_ASSERT (!((editor) && (!ed)));
@@ -111,7 +109,7 @@ void RKModificationTracker::objectMetaChanged (RObject *object, RKEditor *editor
 }
 
 void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeSet *changes, RKEditor *editor) {
-	RK_ASSERT (OBJECTS);
+	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
 	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (object);
 	RK_ASSERT (!((editor) && (!ed)));

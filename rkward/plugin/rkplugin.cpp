@@ -31,6 +31,7 @@
 #include <qsplitter.h>
 #include <qwidgetstack.h>
 #include <qlabel.h>
+#include <qtimer.h>
 
 #include <klocale.h>
 #include <kapplication.h>
@@ -88,6 +89,9 @@ RKPlugin::RKPlugin(const QString &filename) : QWidget () {
 	sizer_grid = new QGridLayout (this, 1, 1);
 	
 	connect (KApplication::kApplication (), SIGNAL (shutDown ()), this, SLOT (cancel ()));
+	
+	update_timer = new QTimer (this);
+	connect (update_timer, SIGNAL (timeout ()), this, SLOT (doChangeUpdate ()));
 	buildGUI (0);
 }
 
@@ -498,7 +502,7 @@ void RKPlugin::help () {
 	// TODO
 }
 
-void RKPlugin::changed () {
+void RKPlugin::doChangeUpdate () {
 	// trigger update for code-display
 	if (current_page == (num_pages - 1)) {
 		should_updatecode = true;
@@ -509,6 +513,13 @@ void RKPlugin::changed () {
 	} else {
 		okButton->setEnabled (false);
 	}
+}
+
+void RKPlugin::changed () {
+/* why don't we do the update right here? Two reasons:
+	- several widgets may be updating in a chain, an each will emit a change signal. However, we only want to update once.
+	- some widgets may be in a bad state, if the change-event was due to an RObject being deleted. These widgets should get a change to update before we try to get values from them */
+	update_timer->start (0, true);
 }
 
 void RKPlugin::doRCall (const QString &call) {

@@ -128,6 +128,7 @@ void RObjectList::updateFromR () {
 		return;
 	}
 
+	emit (updateStarted ());
 	update_chain = RKGlobals::rInterface ()->startChain (0);
 
 	RCommand *command = new RCommand ("ls (all.names=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_LIST_COMMAND);

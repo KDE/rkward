@@ -24,9 +24,7 @@
 
 #include "../core/rkvariable.h"
 
-#include "../rkglobals.h"
-
-#include "../core/robjectlist.h"
+#include "../misc/rkobjectlistview.h"
 
 #include "../debug.h"
 
@@ -36,48 +34,22 @@ RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlu
 	label = new QLabel (element.attribute ("label", "Select Variable(s)"), parent);
 	addWidget (label);
 
-	list_view = new QListView (parent);
-	list_view->setSorting (100);
-    list_view->addColumn ("Name");
-    list_view->addColumn ("Label");
-    list_view->addColumn ("Type");
+	list_view = new RKObjectListView (parent);
 	list_view->setSelectionMode (QListView::Extended);
-	
-	addObject (0, RKGlobals::rObjectList ());
+	connect (list_view, SIGNAL (listChanged ()), this, SLOT (objectListChanged ()));
 
 	addWidget (list_view);
+	list_view->initialize (true);
 }
 
 RKVarSelector::~RKVarSelector(){
 	RK_TRACE (PLUGIN);
 }
 
-void RKVarSelector::addObject (QListViewItem *parent, RObject *object) {
+void RKVarSelector::objectListChanged () {
 	RK_TRACE (PLUGIN);
-	QListViewItem *item;
-	
-	if (parent) {
-		item = new QListViewItem (parent);
-	} else {
-		item = new QListViewItem (list_view);
-	}
-	item_map.insert (item, object);
-	item->setText (0, object->getShortName ());
-	item->setText (1, object->getLabel ());
-	if (object->isContainer ()) {
-		item->setText (3, static_cast<RContainerObject*> (object)->makeClassString ("; "));
-	} else if (object->isVariable ()) {
-		item->setText (2, static_cast<RKVariable*> (object)->getVarTypeString ());
-	}
-
-	RObject **children = object->children ();
-	for (int i=0; i < object->numChildren (); ++i) {
-		addObject (item, children[i]);
-	}
-	
-	if (object->numChildren ()) {
-		item->setOpen (true);
-	}
+	// forward the change-notification
+	emit (changed ());
 }
 
 QValueList<RKVariable*> RKVarSelector::selectedVars () {
@@ -89,7 +61,7 @@ QValueList<RKVariable*> RKVarSelector::selectedVars () {
 	while (current->itemBelow ()) {
 		current = current->itemBelow ();
 		if (current->isSelected ()) {
-			RObject *obj = item_map[current];
+			RObject *obj = list_view->findItemObject (current);
 			RK_ASSERT (obj);
 			if (obj->isVariable ()) {
 				selected.append (static_cast<RKVariable*> (obj));
@@ -109,7 +81,7 @@ int RKVarSelector::numSelectedVars () {
 	while (current->itemBelow ()) {
 		current = current->itemBelow ();
 		if (current->isSelected ()) {
-			RObject *obj = item_map[current];
+			RObject *obj = list_view->findItemObject (current);
 			RK_ASSERT (obj);
 			if (obj->isVariable ()) {
 				++i;
@@ -118,4 +90,17 @@ int RKVarSelector::numSelectedVars () {
 	}
 
 	return i;
+}
+
+bool RKVarSelector::containsObject (RObject *object) {
+	RK_TRACE (PLUGIN);
+
+	QListViewItem *current;
+	current = list_view->firstChild ();
+	while (current->itemBelow ()) {
+		current = current->itemBelow ();
+		if (list_view->findItemObject (current) == object) return true;
+	}
+
+	return false;
 }

@@ -28,14 +28,14 @@
 int RK_Debug_Level = 0;
 
 static const char *description =
-	I18N_NOOP("RKward");
+	I18N_NOOP("RKWard");
 // INSERT A DESCRIPTION FOR YOUR APPLICATION HERE
 	
 	
 static KCmdLineOptions options[] =
 {
-  { "+[File]", I18N_NOOP("file to open"), 0 },
-  { "debug-level <level>", I18N_NOOP("Verbosity of debug messages (0-5)"), "4"}, 
+  { "+[File]", I18N_NOOP ("file to open"), 0 },
+  { "debug-level <level>", I18N_NOOP ("Verbosity of debug messages (0-5)"), "4"}, 
   { 0, 0, 0 }
   // INSERT YOUR COMMANDLINE OPTIONS HERE
 };
@@ -43,11 +43,14 @@ static KCmdLineOptions options[] =
 int main(int argc, char *argv[])
 {
 
-	KAboutData aboutData( "rkward", I18N_NOOP("RKWard"),
+	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"),
 		VERSION, description, KAboutData::License_GPL,
-		"(c) 2002, 2004", 0, 0, "");
-	aboutData.addAuthor ("Thomas Friedrichsmeier",0, "");
-	aboutData.setHomepage ("http://rkward.sf.net");
+		"(c) 2002, 2004", 0, "http://rkward.sf.net", "");
+	aboutData.addAuthor ("Thomas Friedrichsmeier", "Started the project, main coder", "");
+	aboutData.addCredit ("David Sibai", "Several valuable comments, hints and patches", "");
+	aboutData.addCredit ("Daniele Medri", "RKWard logo, many suggestions", "");
+	aboutData.addCredit ("Philippe Grosjean", "Several helpful pointers", "");
+	aboutData.addCredit ("Many more people on rkward-devel@lists.sourceforge.net", "Sorry, I forgot to list you. Please contact me to get added", "");
 	KCmdLineArgs::init( argc, argv, &aboutData );
 	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 	

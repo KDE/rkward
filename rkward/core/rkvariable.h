@@ -37,7 +37,7 @@ public:
 	
 	QString getVarTypeString ();
 	RObject::VarType getVarType () { return var_type; };
-	void setVarType (RObject::VarType);
+	void setVarType (RObject::VarType, bool sync=true);
 
 	int getLength () { return length; };
 	QString getTable ();

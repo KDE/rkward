@@ -65,6 +65,8 @@ public:
 public slots:
 	void timeout ();
 signals:
+/// emitted when the list of objects is about to be updated
+	void updateStarted ();
 /// emitted when the list of objects has been updated
 	void updateComplete ();
 protected:

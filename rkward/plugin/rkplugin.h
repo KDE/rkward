@@ -40,6 +40,7 @@ class RCommand;
 class RCommandChain;
 class RKErrorDialog;
 class RKCommandEditor;
+class QTimer;
 
 /** This class represents an activated plugin.
 
@@ -81,7 +82,10 @@ public slots:
 	void doRCall (const QString &call);
 /** get a value for the backend */
 	void getValue (const QString &id);
+	void doChangeUpdate ();
 private:
+	QTimer *update_timer;
+
 /** try to destruct the plugin */
 	void try_destruct ();
 	

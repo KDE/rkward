@@ -1,13 +1,15 @@
 The following list of TODO-items is NOT complete!
 
 stuff to do before 0.2.7 release
-- merge common functionality of RObjectBrowser and RKVarselector into a base of some sort
-- update RKVarselectors on changes in the object-list!
 - Object editing / modification tracking:
 	- maybe store data directly with objects? Probably not.
 	- functions to set double/int/string-vectors directly
 - RKEditorDataFrame:
-	- take care of row additions/deletions
+	- allow row deletions
+	- find out, why top-left cell gets cleared sometimes
+- make CommandEditor-window accessible from the main window's menu
+- fix compilation issues for KDE/Qt < 3.2
+- rename windows/fix typos
 - pick some from below:
 
 (relatively) small stuff to do soon

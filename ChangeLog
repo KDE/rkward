@@ -1,3 +1,8 @@
+- added option(s) to show/raise watch-window when new commands get displayed
+- formula-widget handles multiple table situation correctly
+- RKVarselector and RKObjectBrowser use a common base class for the list view
+- RKVarselector and dependent widgets get updated when objects get added/removed/modified
+- prevent conversion to factors when creating data.frames for now
 - variables can be added/removed correctly in the data.frame editor. Those changes are propagated to the RObjectBrowser automatically
 - synchronisation from the GUI to the R-workspace is done immediately
 - added ability to spawn separate command-editor window(s) with load/save/print/etc.

@@ -48,8 +48,8 @@ public:
 	virtual QString getMetaProperty (const QString &id);
 	virtual QString getDescription ();
 	
-	virtual void setLabel (const QString &value);
-	virtual void setMetaProperty (const QString &id, const QString &value);
+	virtual void setLabel (const QString &value, bool sync=true);
+	virtual void setMetaProperty (const QString &id, const QString &value, bool sync=true);
 	
 	bool isContainer () { return (type & Container); };
 	bool isDataFrame () { return (type & DataFrame); };

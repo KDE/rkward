@@ -143,7 +143,7 @@ void RKwardApp::doPostInit () {
 			slotFileOpen ();
 		} else if (result->result == StartupDialog::EmptyTable) {
 			RObject *object = RKGlobals::rObjectList ()->createNewChild ("my.data", 0, true, true);
-			RKEditor *editor = RKGlobals::editorManager ()->editObject (object, true);
+			RKGlobals::editorManager ()->editObject (object, true);
 		}
 		delete result;
 	}
@@ -518,7 +518,7 @@ void RKwardApp::slotDataNewDataFrame () {
 	
 	if (ok) {
 		RObject *object = RKGlobals::rObjectList ()->createNewChild (name, 0, true, true);
-		RKEditor *editor = RKGlobals::editorManager ()->editObject (object, true);
+		RKGlobals::editorManager ()->editObject (object, true);
 	}
 }
 
@@ -547,10 +547,10 @@ void RKwardApp::doPaste () {
 	// provided the two in order.
 	if (QApplication::clipboard()->data()->provides ("text/tab-separated-values")) {
 		qDebug ("paste tsv");
-		RKGlobals::editorManager ()->currentEditor ()->pasteEncoded (QApplication::clipboard()->data()->encodedData ("text/tab-separated-values"));
+		RKGlobals::editorManager ()->currentEditor ()->paste (QApplication::clipboard()->data()->encodedData ("text/tab-separated-values"));
 	} else if (QApplication::clipboard()->data()->provides ("text/plain")) {
 		qDebug ("paste plain");
-		RKGlobals::editorManager ()->currentEditor ()->pasteEncoded (QApplication::clipboard()->data()->encodedData ("text/plain"));
+		RKGlobals::editorManager ()->currentEditor ()->paste (QApplication::clipboard()->data()->encodedData ("text/plain"));
 	}
 
 	slotStatusMsg(i18n("Ready."));

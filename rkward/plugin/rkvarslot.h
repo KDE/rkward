@@ -47,6 +47,8 @@ public slots:
 /** Called when the select-button is pressed */
 	void selectPressed ();
 	void listSelectionChanged ();
+/// find out whether all items are still present, remove items which are no longer present and update text for all others
+	void objectListChanged ();
 private:
 	QLineEdit *line_edit;
 	QListView *list;

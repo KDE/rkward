@@ -22,6 +22,7 @@
 
 #include <qvariant.h>
 #include <qstring.h>
+#include <qmap.h>
 
 class QVBoxLayout;
 class QHBoxLayout;
@@ -32,6 +33,7 @@ class QPopupMenu;
 class QTable;
 class RKDrag;
 class RObject;
+struct RObject::ChangeSet;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -48,9 +50,10 @@ public:
 	void insertNewRow (int where=-1, TwinTableMember *table=0);
 	QCString encodeSelection ();
 /** Pastes content to the current selection. */
-	void pasteEncoded (QByteArray content);
+	typedef QMap<int, RObject::ChangeSet*> ColChanges;
+	ColChanges *pasteEncoded (QByteArray content, TwinTableMember **table_p);
 /** Same as above, but flips the data (i.e. row <-> cols) */
-	void pasteEncodedFlipped (QByteArray content);
+//	void pasteEncodedFlipped (QByteArray content);
 /** Clear the currently selected cells */
 	void clearSelected ();
 	RKDrag *makeDrag ();
@@ -68,6 +71,10 @@ signals:
 	void deleteColumnRequest (int);
 /** emitted so the RKEditorDataFrame can add a corresponding object */
 	void addedColumn (int);
+/** emitted so the RKEditorDataFrame can update the R workspace accordingly. Only signals row additions in the data table, not the meta table */
+	void dataAddedRow (int);
+/** emitted so the RKEditorDataFrame can update the R workspace accordingly. Only signals row deletions in the data table, not the meta table */
+	void dataRemovedRow (int);
 public slots:
 	void headerClicked (int col);
 	void headerRightClicked (int row, int col);
@@ -80,8 +87,6 @@ private:
 	QPopupMenu *left_header_menu;
 /** position (row or col) the header_menu is operating on */
 	int header_pos;
-/** Returns the active Table (of the two members), 0 if no table active */
-	TwinTableMember *activeTable ();
 
 	RKEditor::PasteMode paste_mode;
 protected:	
@@ -91,6 +96,8 @@ protected:
 	void setColumn (TwinTableMember* table, int col, int start_row, int end_row, char **data);
 /** deletes the given column. To be called only from RKEditorDataFrame, in order to take care of object-removal! */
 	void deleteColumn (int column);
+/** Returns the active Table (of the two members), 0 if no table active */
+	TwinTableMember *activeTable ();
 private slots:
 	void scrolled (int x, int y);
 	void autoScrolled (int x, int y);

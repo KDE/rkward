@@ -43,10 +43,10 @@ QString RKVariable::getVarTypeString () {
 	return RObject::typeToText (var_type);
 }
 
-void RKVariable::setVarType (RObject::VarType new_type) {
+void RKVariable::setVarType (RObject::VarType new_type, bool sync) {
 	RK_TRACE (OBJECTS);
 	var_type = new_type;
-	setMetaProperty ("type", QString ().setNum ((int) new_type));
+	setMetaProperty ("type", QString ().setNum ((int) new_type), sync);
 }
 
 

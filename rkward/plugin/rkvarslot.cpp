@@ -78,6 +78,44 @@ RKVarSlot::~RKVarSlot(){
 
 void RKVarSlot::initialize () {
 	source = plugin ()->getVarSelector (source_id);
+	if (!source) return;
+	connect (source, SIGNAL (changed ()), this, SLOT (objectListChanged ()));
+}
+
+void RKVarSlot::objectListChanged () {
+	if (!source) return;
+	if (!multi) {
+		if (num_vars) {
+			if (!source->containsObject (item_map[0])) {
+				line_edit->setText ("");
+				item_map.remove (0);
+				num_vars = 0;
+				select->setText ("-->");
+			} else {
+				line_edit->setText (item_map[0]->getShortName ());
+			}
+		}
+	} else {
+
+		QListViewItem *item = list->firstChild ();
+		while (item) {
+			if (source->containsObject (item_map[item])) {
+				item->setText (0, item_map[item]->getShortName ());
+				item = item->nextSibling ();
+			} else {
+				QListViewItem *dummy = item->nextSibling ();
+				list->takeItem (item);
+				item_map.remove (item);
+				delete item;
+				item = dummy;
+				num_vars--;
+			}
+		}
+	}
+
+	updateState ();
+// only after that signal the change to the plugin
+	emit (changed ());
 }
 
 void RKVarSlot::listSelectionChanged() {

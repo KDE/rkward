@@ -19,9 +19,7 @@
 
 #include "misc/rktogglewidget.h"
 
-#include <qmap.h>
-
-class QListView;
+class RKObjectListView;
 class QListViewItem;
 class QPushButton;
 class QPopupMenu;
@@ -44,31 +42,18 @@ public:
 	
 public slots:
 	void updateButtonClicked ();
-	void updateComplete ();
 	void requestedContextMenu (QListViewItem *item, const QPoint &pos, int col);
 	
 	void popupEdit ();
 	void popupView ();
 	void popupDelete ();
 	void popupRename ();
-	
-	void objectAdded (RObject *object);
-	void objectRemoved (RObject *object);
-	void objectPropertiesChanged (RObject *object);
 private:
 	friend class RKwardApp;
 	void initialize ();
-// TODO: keep an additional map from RObject to QListViewItem, in order to make this (often called) more efficient
-	QListViewItem *findObjectItem (RObject *object);
-	void updateItem (QListViewItem *item, RObject *object);
 
 	QPushButton *update_button;
-	QListView *list_view;
-	
-	typedef QMap<QListViewItem *, RObject *> ObjectMap;
-	ObjectMap object_map;
-	
-	void addObject (QListViewItem *parent, RObject *object);
+	RKObjectListView *list_view;	
 	
 	QPopupMenu *menu;
 	/// the object the menu was invoked on

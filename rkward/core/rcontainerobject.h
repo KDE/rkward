@@ -51,7 +51,8 @@ public:
 	bool isParentOf (RObject *object, bool recursive=false);
 	
 	/** creates a new child. Right now only RKVariables (false, false), or data.frames (true, true), or unspecified containers (true, false) can be created.
-	API will likely change. */
+	API will likely change. The child is NOT created in the workspace. That's your resonsibility. All this function returns is a new RObject* of the given
+	type and with the name (if neccessary) changed to a legal value. TODO: checking for and changing illegal names is not yet implemented */
 	RObject *createNewChild (const QString &name, RKEditor *creator=0, bool container=false, bool data_frame=false);
 	
 	int numDimensions () { return num_dimensions; };

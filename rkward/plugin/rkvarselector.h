@@ -21,10 +21,8 @@
 #include <rkpluginwidget.h>
 
 #include <qvaluelist.h>
-#include <qmap.h>
 
-class QListView;
-class QListViewItem;
+class RKObjectListView;
 class RObject;
 class RKVariable;
 
@@ -49,12 +47,12 @@ public:
 /** Returns pointers to the currently selected variables */
 	QValueList<RKVariable*> selectedVars ();
 	int type () { return VARSELECTOR_WIDGET; };
+/** find out, whether the given object is available in the RKVarselector (i.e. it a) exists and b) matched the filter requirements) */
+	bool containsObject (RObject *object);
+public slots:
+	void objectListChanged ();
 private:
-	QListView *list_view;
-	typedef QMap<QListViewItem*, RObject*> ItemMap;
-	ItemMap item_map;
-	
-	void addObject (QListViewItem *parent, RObject *object);
+	RKObjectListView *list_view;
 };
 
 #endif

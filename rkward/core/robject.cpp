@@ -79,12 +79,12 @@ QString RObject::getDescription () {
 	return getShortName ();;
 }
 
-void RObject::setLabel (const QString &value) {
+void RObject::setLabel (const QString &value, bool sync) {
 	RK_TRACE (OBJECTS);
-	setMetaProperty ("label", value);
+	setMetaProperty ("label", value, sync);
 }
 
-void RObject::setMetaProperty (const QString &id, const QString &value) {
+void RObject::setMetaProperty (const QString &id, const QString &value, bool sync) {
 	RK_TRACE (OBJECTS);
 	if (value == "") {
 		if (meta_map) {
@@ -108,7 +108,7 @@ void RObject::setMetaProperty (const QString &id, const QString &value) {
 	}
 
 	meta_map->insert (id, value);
-	writeMetaData (0);
+	if (sync) writeMetaData (0);
 }
 
 QString RObject::makeChildName (const QString &short_child_name) {

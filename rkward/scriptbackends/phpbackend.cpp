@@ -45,7 +45,7 @@ bool PHPBackend::initialize (const QString &filename) {
 		return false;
 	}
 
-	php_process = new KProcess (this);
+	php_process = new KProcess ();
 	*php_process << RKSettingsModulePHP::phpBin();
 	*php_process << (RKSettingsModulePHP::filesPath() + "/common.php");
 	

@@ -43,7 +43,9 @@ public:
 	RObject *getColObject (int col);
 	//void objectDeleted (RObject *object);
 	//void objectMetaModified (RObject *object);
-	
+
+	void paste (QByteArray content);
+
 /** Tells the editor to (unconditionally!) remove the object from its list. */
 	void removeObject (RObject *object);
 /** Tells the editor to restore the given object in the R-workspace from its copy of the data */
@@ -61,11 +63,15 @@ public slots:
 	void dataValueChanged (int row, int col);
 	void columnDeletionRequested (int col);
 	void columnAdded (int col);
+	void rowAdded (int row);
+	void rowRemoved (int row);
 private:
 /// syncs the whole table.
 	void pushTable (RCommandChain *sync_chain);
 	RCommandChain *open_chain;
 	int getObjectCol (RObject *object);
+	void enableEditing (bool on);
+	void updateMetaValue (RObject *obj, int row, int col, bool sync=true);
 	
 	typedef QMap <int, RObject*> ColMap;
 	ColMap col_map;

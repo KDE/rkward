@@ -46,12 +46,13 @@ public:
 	static bool shouldShowInput (RCommand *command);
 	static bool shouldShowOutput (RCommand *command);
 	static bool shouldShowError (RCommand *command);
+	static bool shouldRaiseWindow (RCommand *command);
 
 	QString caption ();
 public slots:
 	void changedSetting (int);
 private:
-	enum FilterType { ShowInput=1, ShowOutput=2, ShowError=4 };
+	enum FilterType { ShowInput=1, ShowOutput=2, ShowError=4, RaiseWindow=8 };
 
 	static int plugin_filter;
 	static int app_filter;
@@ -62,6 +63,7 @@ private:
 		QCheckBox *input;
 		QCheckBox *output;
 		QCheckBox *error;
+		QCheckBox *raise;
 	};
 	
 	FilterBoxes *plugin_filter_boxes;

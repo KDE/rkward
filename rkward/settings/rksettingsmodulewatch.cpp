@@ -88,6 +88,21 @@ bool RKSettingsModuleWatch::shouldShowError (RCommand *command) {
 	return true;
 }
 
+bool RKSettingsModuleWatch::shouldRaiseWindow (RCommand *command) {
+	if (command->type () & RCommand::Sync) {
+		return (sync_filter & RaiseWindow);
+	} else if (command->type () & RCommand::User) {
+		return (user_filter & RaiseWindow);
+	} else if (command->type () & RCommand::Plugin) {
+		return (plugin_filter & RaiseWindow);
+	} else if (command->type () & RCommand::App) {
+		return (app_filter & RaiseWindow);
+	}
+	
+	RK_ASSERT (false);
+	return true;
+}
+
 RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	QVBoxLayout *vbox = new QVBoxLayout (this, 6);
 
@@ -96,7 +111,7 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 	vbox->addWidget (label);
 	vbox->addStretch ();
 	
-	QGridLayout *grid = new QGridLayout (vbox, 5, 4);
+	QGridLayout *grid = new QGridLayout (vbox, 5, 5);
 
 	label = new QLabel (i18n ("always show command"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
@@ -107,6 +122,9 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 	label = new QLabel (i18n ("show errors"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	grid->addWidget (label, 0, 3);
+	label = new QLabel (i18n ("show/raise window"), this);
+	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+	grid->addWidget (label, 0, 4);
 	
 	user_filter_boxes = addFilterSettings (this, grid, 1, i18n ("User commands"), user_filter);
 	plugin_filter_boxes = addFilterSettings (this, grid, 2, i18n ("Plugin generated commands"), plugin_filter);
@@ -126,6 +144,7 @@ int RKSettingsModuleWatch::getFilterSettings (FilterBoxes *boxes) {
 	if (boxes->input->isChecked ()) ret |= ShowInput;
 	if (boxes->output->isChecked ()) ret |= ShowOutput;
 	if (boxes->error->isChecked ()) ret |= ShowError;
+	if (boxes->raise->isChecked ()) ret |= RaiseWindow;
 	return ret;
 }
 
@@ -149,6 +168,11 @@ RKSettingsModuleWatch::FilterBoxes *RKSettingsModuleWatch::addFilterSettings (QW
 	connect (filter_boxes->error, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
 	layout->addWidget (filter_boxes->error, row, 3);
 	
+	filter_boxes->raise = new QCheckBox (parent);
+	filter_boxes->raise->setChecked (state & RaiseWindow);
+	connect (filter_boxes->raise, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
+	layout->addWidget (filter_boxes->raise, row, 4);
+	
 	return filter_boxes;
 }
 
@@ -168,7 +192,7 @@ void RKSettingsModuleWatch::saveSettings (KConfig *config) {
 //static
 void RKSettingsModuleWatch::loadSettings (KConfig *config) {
 	config->setGroup ("RInterface Watch Settings");
-	user_filter = config->readNumEntry ("user command filter", ShowInput | ShowOutput | ShowError);
+	user_filter = config->readNumEntry ("user command filter", ShowInput | ShowOutput | ShowError | RaiseWindow);
 	plugin_filter = config->readNumEntry ("plugin command filter", ShowInput | ShowError);
 	app_filter = config->readNumEntry ("app command filter", ShowInput | ShowError);
 	sync_filter = config->readNumEntry ("sync command filter", (int) ShowError);

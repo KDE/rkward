@@ -52,26 +52,33 @@ RKEditor *RKEditorManager::editObject (RObject *object, bool initialize_to_empty
 	if (opened_objects.find (object) == opened_objects.end ()) {
 		if (object->isDataFrame ()) {
 			ed = new RKEditorDataFrame (tabbook);
+			// TODO: add child objects, too?
+			opened_objects.insert (object, ed);
 			ed->openObject (object, initialize_to_empty);
 		} else if (object->isVariable () && object->getContainer ()->isDataFrame ()) {
-			iobj = object->getContainer ();
-			ed = new RKEditorDataFrame (tabbook);
-			ed->openObject (iobj, initialize_to_empty);
-			// ed->focusObject (obj);
+			if (opened_objects.find (object->getContainer ()) == opened_objects.end ()) { 
+				iobj = object->getContainer ();
+				ed = new RKEditorDataFrame (tabbook);
+				// TODO: add child objects, too?
+				opened_objects.insert (iobj, ed);
+				ed->openObject (iobj, initialize_to_empty);
+				// ed->focusObject (obj);
+			} else {
+				tabbook->showPage (opened_objects[object->getContainer ()]);
+			}
 		}
 
 		if (ed) {
-			// TODO: add child objects, too?
-			opened_objects.insert (iobj, ed);
 			hide ();
 			tabbook->insertTab (ed, iobj->getShortName ());
+			tabbook->showPage (ed);
 			show ();
 			
 			RCommand *command = new RCommand (".rk.editor.opened (" + iobj->getFullName() + ")", RCommand::App | RCommand::Sync);
 			RKGlobals::rInterface ()->issueCommand (command, restore_chain);
 		}
 	} else {
-		// TODO: raise responsible editor
+		tabbook->showPage (opened_objects[object]);
 	}
 	
 	return ed;

@@ -33,3 +33,37 @@
 	if (is.vector (x)) return (3)		# a vector/variable
 	return (4)		# something else
 }
+
+".rk.data.frame.insert.row" <- function (x, index=0) {
+	if ((index == 0) || (index > dim (x)[1])) {	# insert row at end
+		eval (substitute (x[dim(x)[1]+1,] <<- c (NA)))
+	} else {
+		for (i in dim (x)[1]:index) {
+			eval (substitute (x[i+1,] <<- x[i,]))
+		}
+		eval (substitute (x[index,] <<- c (NA)))
+	}
+}
+
+".rk.data.frame.delete.row" <- function (x, index) {
+	for (i in index:dim (x)[1]) {
+		eval (substitute (x[i,] <<- x[i+1,]))
+	}
+	# TODO: is there a nice way to get rid of the row entirely (and without removing the meta-data)?
+	eval (substitute (x[dim (x)[1],] <<- c (NA)))
+}
+
+# function below is only needed to ensure a nice ordering of the columns. Simply adding a new column would be much easier than this.
+".rk.data.frame.insert.column" <- function (x, label, index=0) {
+	if ((index == 0) || (index > dim (x)[2])) {	# insert column at end
+		eval (substitute (x[[label]] <<- c (NA)))
+	} else {
+		for (i in dim (x)[2]:index) {
+			eval (substitute (x[i+1] <<- x[[i]]))
+			eval (substitute (names (x)[i+1] <<- names (x)[i]))
+		}
+		eval (substitute (x[index] <<- c (NA)))
+		eval (substitute (names (x)[index] <<- label))
+	}
+}
+

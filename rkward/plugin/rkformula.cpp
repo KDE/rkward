@@ -146,7 +146,7 @@ void RKFormula::makeModelString () {
 	}
 	for (QValueList<RKVariable*>::iterator it = vlist.begin (); it != vlist.end (); ++it) {
 		if ((*it)->getTable () != table) {
-			multitable = false;
+			multitable = true;
 			break;
 		}
 	}

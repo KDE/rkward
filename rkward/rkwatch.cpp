@@ -124,6 +124,11 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 	watch->append (command->command ());
 
 	watch->setItalic (false);
+	
+	if (RKSettingsModuleWatch::shouldRaiseWindow (command)) {
+		show ();
+		raise ();
+	}
 }
 
 void RKwatch::addOutput (RCommand *command) {
@@ -159,6 +164,11 @@ void RKwatch::addOutput (RCommand *command) {
 
 	watch->setBold (false);	
 	watch->setColor (Qt::black);
+
+	if (RKSettingsModuleWatch::shouldRaiseWindow (command)) {
+		show ();
+		raise ();
+	}
 }
 
 void RKwatch::clearCommand () {
