@@ -77,8 +77,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : KParts::MainWin
 	run_all->setWhatsThis(i18n("Use this to run the current document"));
 	KAction * run_selection = new KAction (i18n ("Run selection"), KShortcut ("Ctrl+E"), this, SLOT (runSelection ()), actionCollection(), "run_selection" );
 	run_selection->setWhatsThis(i18n("Use this to run the current selection"));
-	KAction * interrupt = new KAction (i18n ("Interrupt command"), KShortcut ("Ctrl+I"), this, SLOT (interruptCommand ()), actionCollection(), "interrupt" );
-	interrupt->setWhatsThis(i18n("Use this to interrupt the current command"));
+	/*KAction * interrupt = new KAction (i18n ("Interrupt command"), KShortcut ("Ctrl+I"), this, SLOT (interruptCommand ()), actionCollection(), "interrupt" );
+	interrupt->setWhatsThis(i18n("Use this to interrupt the current command"));*/
 
 	KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
 	createShellGUI( true );
@@ -90,6 +90,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : KParts::MainWin
 	
 	setCaption (caption = i18n ("Command editor"));
 	resize (minimumSizeHint ().expandedTo (QSize (640, 480)));
+	
 	
 	show ();
 }
@@ -169,7 +170,7 @@ void RKCommandEditorWindow::runFromCursor () {
 
 void RKCommandEditorWindow::interruptCommand () {
 	RK_TRACE (COMMANDEDITOR);
-	RKGlobals::rInterface ()->cancelCommand (user_command);
+
 }
 
 
