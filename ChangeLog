@@ -1,3 +1,5 @@
+- added the possibility to unable widget in plugins.
+- added a new plugin (basic statistics)
 - added icons in the object browser
 - using IDEAI dock mode style
 - new, console-like widget to enter commands manually.
