@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkcommandeditor  -  description
+                          rkcommandeditorwindow  -  description
                              -------------------
-    begin                : Mon Aug 9 2004
+    begin                : Mon Aug 30 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,49 +14,48 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef RKCOMMANDEDITOR_H
-#define RKCOMMANDEDITOR_H
+#ifndef RKCOMMANDEDITORWINDOW_H
+#define RKCOMMANDEDITORWINDOW_H
 
 #include <qwidget.h>
 #include <qstring.h>
 
-#include <kate/document.h>
-#include <kate/view.h>
-
 #include <kurl.h>
 
+class RKCommandEditor;
+
 /**
-Provides a wrapper around the Kate-part used for syntax-highlighting
+This class provides an editor window for R-commands. Basically this class is responsible for adding a GUI to RKCommandEditor.
 
 @author Thomas Friedrichsmeier
 */
-class RKCommandEditor : public QWidget {
+class RKCommandEditorWindow : public QWidget {
+Q_OBJECT
 public:
-    RKCommandEditor (QWidget *parent, bool readonly=false);
+    RKCommandEditorWindow (QWidget *parent = 0);
 
-    ~RKCommandEditor ();
-
-	void setFocus ();
-
-	void setText (const QString &text);
-	void insertText (const QString &text);
-	QString text ();
-	
-	void configure ();
-	
-	bool save (const KURL &url);
-	KURL getURL ();
-	bool isModified ();
-	bool open (const KURL &url);
-	void toggleWordWrap ();
-	void toggleLineNumbers ();
-	QString getSelection ();
+    ~RKCommandEditorWindow();
+public slots:
+	void newWindow ();
+	void save ();
+	void saveAs ();
 	void print ();
+	void close ();
+	void load ();
+	void run ();
+	void runSelection ();
+	void runFromCursor ();
+	void runToCursor ();
+	void configure ();
+	void wordWrap ();
+	void lineNumbers ();
 private:
-	Kate::Document *doc;
-	Kate::View *view;
-	bool readwrite;
-	void setRHighlighting ();
+	RKCommandEditor *editor;
+	bool checkSave ();
+	void trySave (const KURL &url);
+	QString caption;
+protected:
+	void closeEvent (QCloseEvent *e);
 };
 
 #endif

@@ -29,7 +29,23 @@ RKCommandEditor::RKCommandEditor (QWidget *parent, bool readonly) : QWidget (par
 	view = Kate::view (doc->createView (this));
 	layout->addWidget (view);
 	doc->setText ("");
+		
+	view->setDynWordWrap (false);
+	doc->setReadWrite ((readwrite = (!readonly)));
 	
+	setRHighlighting ();
+	doc->setModified (false);
+}
+
+
+RKCommandEditor::~RKCommandEditor () {
+	RK_TRACE (COMMANDEDITOR);
+	doc->writeConfig ();
+	delete view;
+	delete doc;
+}
+
+void RKCommandEditor::setRHighlighting () {
 	// set syntax-highlighting for R
 	int modes_count = doc->hlModeCount ();
 	bool found_mode = false;
@@ -47,17 +63,11 @@ RKCommandEditor::RKCommandEditor (QWidget *parent, bool readonly) : QWidget (par
 	} else {
 		RK_DO (qDebug ("%s", doc->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_WARNING);
 	}
-	
-	view->setDynWordWrap (false);
-	doc->setReadWrite ((readwrite = (!readonly)));
 }
 
-
-RKCommandEditor::~RKCommandEditor () {
+void RKCommandEditor::setFocus () {
 	RK_TRACE (COMMANDEDITOR);
-	doc->writeConfig ();
-	delete view;
-	delete doc;
+	view->setFocus ();
 }
 
 void RKCommandEditor::setText (const QString &text) {
@@ -79,6 +89,49 @@ QString RKCommandEditor::text () {
 }
 
 void RKCommandEditor::configure () {
+	RK_TRACE (COMMANDEDITOR);
 	doc->configDialog ();
 }
 
+bool RKCommandEditor::save (const KURL &url) {
+	RK_TRACE (COMMANDEDITOR);
+	return doc->saveAs (url);
+}
+
+KURL RKCommandEditor::getURL () {
+	RK_TRACE (COMMANDEDITOR);
+	return doc->url ();
+}
+
+bool RKCommandEditor::isModified () {
+	RK_TRACE (COMMANDEDITOR);
+	return doc->isModified ();
+}
+
+bool RKCommandEditor::open (const KURL &url) {
+	RK_TRACE (COMMANDEDITOR);
+	bool ok = doc->openURL (url);
+	setRHighlighting ();
+	doc->setModified (false);
+	return ok;
+}
+
+void RKCommandEditor::toggleWordWrap () {
+	RK_TRACE (COMMANDEDITOR);
+	view->setDynWordWrap (!view->dynWordWrap ());
+}
+
+void RKCommandEditor::toggleLineNumbers () {
+	RK_TRACE (COMMANDEDITOR);
+	view->toggleLineNumbersOn ();
+}
+
+QString RKCommandEditor::getSelection () {
+	RK_TRACE (COMMANDEDITOR);
+	return doc->selection ();
+}
+
+void RKCommandEditor::print () {
+	RK_TRACE (COMMANDEDITOR);
+	doc->print ();
+}

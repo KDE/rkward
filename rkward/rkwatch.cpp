@@ -23,7 +23,7 @@
 #include "settings/rksettingsmodulewatch.h"
 #include "settings/rksettings.h"
 #include "rkeditormanager.h"
-//#include "windows/rkcommandeditorwindow.h"
+#include "windows/rkcommandeditorwindow.h"
 
 #include <qtextedit.h>
 #include <qpushbutton.h>
@@ -83,8 +83,7 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	menu->insertItem (i18n ("Watch"), watch_menu);
 
 	QPopupMenu *commands_menu = new QPopupMenu (this);
-	commands_menu->setItemEnabled (commands_menu->insertItem (i18n ("&Open new editor window"), this, SLOT (openEditor ())), false);
-	//commands_menu->insertItem (i18n ("&Open new editor window"), this, SLOT (openEditor ()));
+	commands_menu->insertItem (i18n ("&Open new editor window"), this, SLOT (openEditor ()));
 	commands_menu->insertSeparator ();
 	commands_menu->insertItem (i18n ("Configure Editor"), this, SLOT (configureEditor ()));
 	menu->insertItem (i18n ("Commands"), commands_menu);
@@ -182,7 +181,7 @@ void RKwatch::configureEditor () {
 }
 
 void RKwatch::openEditor () {
-	//new RKCommandEditorWindow (0);
+	new RKCommandEditorWindow (0);
 }
 
 void RKwatch::clearWatch () {
