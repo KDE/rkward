@@ -46,8 +46,10 @@ public:
 	~TwinTable();
 /** Inserts a new column at the given position (or at the end for -1) */
 	void insertNewColumn (int where=-1);
-/** Inserts a new row at the given position (or at the end for -1) in the given table */
+/** Inserts a new row at the given position (or at the end for -1) in the given table. Don't try to do this in the varview, yet! */
 	void insertNewRow (int where=-1, TwinTableMember *table=0);
+/** Inserts the row at the given position (or at the end for -1) in the given table. Don't try to do this in the varview, yet! */
+	void deleteRow (int where, TwinTableMember *table=0);
 	QCString encodeSelection ();
 /** Pastes content to the current selection. */
 	typedef QMap<int, RObject::ChangeSet*> ColChanges;
@@ -101,14 +103,16 @@ protected:
 private slots:
 	void scrolled (int x, int y);
 	void autoScrolled (int x, int y);
-/** inserts a new column after the current header_pos */
-	void insertColumnAfter ();
-/** inserts a new column before the current header_pos */
-	void insertColumnBefore ();
-/** inserts a new row after the current header_pos */
-	void insertRowAfter ();
-/** inserts a new row before the current header_pos */
-	void insertRowBefore ();
+/** inserts a new column to the right of the current header_pos */
+	void insertColumnRight ();
+/** inserts a new column to the left of the current header_pos */
+	void insertColumnLeft ();
+/** inserts a new row below the current header_pos */
+	void insertRowBelow ();
+/** inserts a new row above the current header_pos */
+	void insertRowAbove ();
+/** deletes the current row */
+	void deleteRow ();
 /** deletes the column at the current header_pos. Actually it does not really delete the column, but requests object-removal from the RKEditorDataFrame. That will take care of calling deleteColumn (int) */
 	void requestDeleteColumn ();
 };

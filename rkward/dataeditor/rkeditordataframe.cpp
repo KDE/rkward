@@ -207,6 +207,10 @@ void RKEditorDataFrame::dataValueChanged (int row, int col) {
 	// for now:
 	if (!obj) return;
 	
+	if (row >= dataview->numRows ()) {
+		insertNewRow (-1);
+	}
+	
 	RObject::ChangeSet *changes = new RObject::ChangeSet;
 	changes->from_index = col;
 	changes->to_index = col;

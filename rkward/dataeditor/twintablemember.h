@@ -34,7 +34,7 @@ class QMouseEvent;
 class TwinTableMember : public QTable  {
 	Q_OBJECT
 public: 
-	TwinTableMember(QWidget *parent=0, const char *name=0);
+	TwinTableMember (QWidget *parent=0, int trailing_rows=0, int trailing_cols=0);
 	~TwinTableMember();
 /** stores the position of the mouse, when headerRightClick gets emitted */
 	QPoint mouse_at;
@@ -43,6 +43,12 @@ public:
 	TwinTableMember *getTwin () { return twin; };
 /** Checks all cells in a column for validity (e.g. if the type was changed) */
 	void checkColValid (int col);
+/** reimplemented from QTable to return only the number of used rows */
+	int numRows ();
+	int numAllRows ();
+/** reimplemented from QTable to return only the number of used columns */
+	int numCols ();
+	int numAllCols ();
 signals:
 	void headerRightClick (int row, int col);
 private:
@@ -50,6 +56,8 @@ friend class RKwardDoc;
 	TwinTableMember *twin;
 	TwinTableMember *var_table;
 	static bool changing_width;
+	int trailing_rows;
+	int trailing_cols;
 friend class TwinTable;
 	void setTwin (TwinTableMember *new_twin);
 	void setVarTable (TwinTableMember *table);

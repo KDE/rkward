@@ -90,7 +90,9 @@ void RTableItem::paint (QPainter *p, const QColorGroup &cg, const QRect &cr, boo
 	if (selected) {
 		brush = cg.brush(QColorGroup::Highlight);
 	}
-	if (isValid ()) {
+	if ((row () >= static_cast<TwinTableMember *> (table ())->numRows ()) || (col () >= static_cast<TwinTableMember *> (table ())->numCols ())) {
+		brush = QBrush (Qt::gray);
+	} else if (isValid ()) {
 		if (!selected) {
 			brush = cg.brush(QColorGroup::Base);
 		}

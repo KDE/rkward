@@ -41,16 +41,22 @@
 		for (i in dim (x)[1]:index) {
 			eval (substitute (x[i+1,] <<- x[i,]))
 		}
+		eval (substitute (row.names (x) <<- c (1:dim(x)[1])))
 		eval (substitute (x[index,] <<- c (NA)))
 	}
 }
 
+# TODO: is there a nice way to get rid of a row without removing the meta-data?
 ".rk.data.frame.delete.row" <- function (x, index) {
-	for (i in index:dim (x)[1]) {
-		eval (substitute (x[i,] <<- x[i+1,]))
+	attriblist <- list ()
+	for (i in 1:dim (x)[2]) {
+		attriblist[[names (x)[i]]] <- attr (x[[i]], ".rk.meta")
 	}
-	# TODO: is there a nice way to get rid of the row entirely (and without removing the meta-data)?
-	eval (substitute (x[dim (x)[1],] <<- c (NA)))
+	eval (substitute (x <<- x[-index,]))
+	eval (substitute (row.names (x) <<- c (1:dim(x)[1])))
+	for (i in 1:dim (x)[2]) {
+		eval (substitute (attr (x[[i]], ".rk.meta") <<- attriblist[[names (x)[i]]]))
+	}
 }
 
 # function below is only needed to ensure a nice ordering of the columns. Simply adding a new column would be much easier than this.

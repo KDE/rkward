@@ -46,8 +46,8 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
     varview = new TwinTableMember (splitter);
     varview->setNumRows (5);
     varview->setNumCols (5);
-	for (int i=0; i < varview->numCols (); i++) {
-		for (int j=0; j < varview->numRows (); j++) {
+	for (int i=0; i < varview->numAllCols (); i++) {
+		for (int j=0; j < varview->numAllRows (); j++) {
 			if (j == TYPE_ROW) {
 				varview->setItem (TYPE_ROW, i, new TypeSelectCell (varview));
 			} else if (j == NAME_ROW) {
@@ -70,12 +70,12 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
     splitter->setResizeMode (varview, QSplitter::KeepSize);
 	varview->verticalHeader()->setResizeEnabled (false);
 
-    dataview = new TwinTableMember (splitter);
+    dataview = new TwinTableMember (splitter, 1);
     dataview->setNumRows (20);
 	dataview->setNumCols (5);
 	dataview->setVarTable (varview);	// needed for initialization of RTableItems
-	for (int i=0; i < dataview->numCols (); i++) {
-		for (int j=0; j < dataview->numRows (); j++) {
+	for (int i=0; i < dataview->numAllCols (); i++) {
+		for (int j=0; j < dataview->numAllRows (); j++) {
 			RTableItem *rti;
 			dataview->setItem (j, i, rti = new RTableItem (dataview));
 			rti->checkValid ();
@@ -105,15 +105,16 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
 
 	// which will be reacted upon by the following popup-menu:
 	top_header_menu = new QPopupMenu (this);
-	top_header_menu->insertItem (i18n ("Insert new variable left"), this, SLOT (insertColumnBefore ()));
-	top_header_menu->insertItem (i18n ("Insert new variable right"), this, SLOT (insertColumnAfter ()));
+	top_header_menu->insertItem (i18n ("Insert new variable left"), this, SLOT (insertColumnLeft ()));
+	top_header_menu->insertItem (i18n ("Insert new variable right"), this, SLOT (insertColumnRight ()));
 	top_header_menu->insertItem (i18n ("Delete this variable"), this, SLOT (requestDeleteColumn ()));
 
 	// and the same for the left header
 	connect (dataview, SIGNAL (headerRightClick (int, int)), this, SLOT (headerRightClicked (int, int)));
 	left_header_menu = new QPopupMenu (this);
-	left_header_menu->insertItem (i18n ("Insert new case above"), this, SLOT (insertRowBefore ()));
-	left_header_menu->insertItem (i18n ("Insert new case below"), this, SLOT (insertRowAfter ()));
+	left_header_menu->insertItem (i18n ("Insert new case above"), this, SLOT (insertRowAbove ()));
+	left_header_menu->insertItem (i18n ("Insert new case below"), this, SLOT (insertRowBelow ()));
+	left_header_menu->insertItem (i18n ("Delete this case"), this, SLOT (deleteRow ()));
 	
 	qDebug ("Twintable created");
 }
@@ -150,7 +151,7 @@ void TwinTable::insertNewColumn (int where) {
 	}
 
 	varview->insertColumns (where);
-	for (int i=0; i < varview->numRows (); i++) {
+	for (int i=0; i < varview->numAllRows (); i++) {
 		if (i == TYPE_ROW) {
 			varview->setItem (TYPE_ROW, where, new TypeSelectCell (varview));
 		} else if (i == NAME_ROW) {
@@ -163,7 +164,7 @@ void TwinTable::insertNewColumn (int where) {
 		}
 	}
 	dataview->insertColumns (where);
-	for (int i=0; i < dataview->numRows (); i++) {
+	for (int i=0; i < dataview->numAllRows (); i++) {
 		RTableItem *rti;
 		dataview->setItem (i, where, rti = new RTableItem (dataview));
 		rti->checkValid ();
@@ -177,21 +178,21 @@ void TwinTable::insertNewRow (int where, TwinTableMember *table) {
 	if (!table) table = dataview;
 	
 	if ((where < 0) || (where > table->numRows ())) {
-		where = table->numRows ();
+		where = table->numAllRows ();
 	}
 
 	table->insertRows (where);
 
 	// initialize cells according to table
 	if (table == dataview) {
-		for (int i=0; i < dataview->numCols (); i++) {
+		for (int i=0; i < dataview->numAllCols (); i++) {
 			RTableItem *rti;
 			dataview->setItem (where, i, rti = new RTableItem (dataview));
 			rti->checkValid ();
 		}
 		emit (dataAddedRow (where));
 	} else if (table == varview) {
-		for (int i=0; i <= varview->numCols (); i++) {
+		for (int i=0; i <= varview->numAllCols (); i++) {
 			if (where == TYPE_ROW) {
 				varview->setItem (where, i, new TypeSelectCell (varview));
 			} else if (where == NAME_ROW) {
@@ -204,6 +205,19 @@ void TwinTable::insertNewRow (int where, TwinTableMember *table) {
 			}
 		}
 	}
+}
+
+void TwinTable::deleteRow (int where, TwinTableMember *table) {
+	flushEdit ();
+	if (!table) table = dataview;
+	
+	if ((where < 0) || (where > table->numRows ())) {
+		where = table->numRows ();
+	}
+
+	table->removeRow (where);
+
+	emit (dataRemovedRow (where));
 }
 
 void TwinTable::headerClicked (int col) {
@@ -244,11 +258,11 @@ RKDrag *TwinTable::makeDrag () {
 	return (new RKDrag (this));
 }
 
-void TwinTable::insertColumnAfter () {
+void TwinTable::insertColumnRight () {
 	insertNewColumn (header_pos+1);
 }
 
-void TwinTable::insertColumnBefore () {
+void TwinTable::insertColumnLeft () {
 	insertNewColumn (header_pos);
 }
 
@@ -256,12 +270,16 @@ void TwinTable::requestDeleteColumn () {
 	emit (deleteColumnRequest (header_pos));
 }
 
-void TwinTable::insertRowAfter () {
+void TwinTable::insertRowBelow () {
 	insertNewRow (header_pos+1);
 }
 
-void TwinTable::insertRowBefore () {
+void TwinTable::insertRowAbove () {
 	insertNewRow (header_pos);
+}
+
+void TwinTable::deleteRow () {
+	deleteRow (header_pos);
 }
 
 QCString TwinTable::encodeSelection () {

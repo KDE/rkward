@@ -23,16 +23,35 @@
 
 bool TwinTableMember::changing_width = false;
 
-TwinTableMember::TwinTableMember (QWidget *parent, const char *name) : QTable (parent, name){
+TwinTableMember::TwinTableMember (QWidget *parent, int trailing_rows, int trailing_cols) : QTable (parent){
 	twin = 0;
 	setRowMovingEnabled (false);
 	setVScrollBarMode (QScrollView::AlwaysOn);
 	horizontalHeader()->installEventFilter (this);
 	verticalHeader()->installEventFilter (this);
 	var_table = this;
+	
+	TwinTableMember::trailing_cols = trailing_cols;
+	TwinTableMember::trailing_rows = trailing_rows;
 }
 
 TwinTableMember::~TwinTableMember(){
+}
+
+int TwinTableMember::numAllRows () {
+	return QTable::numRows ();
+}
+
+int TwinTableMember::numAllCols () {
+	return QTable::numCols ();
+}
+
+int TwinTableMember::numRows () {
+	return QTable::numRows () - trailing_rows;
+}
+
+int TwinTableMember::numCols () {
+	return QTable::numCols () - trailing_cols;
 }
 
 void TwinTableMember::setTwin (TwinTableMember * new_twin) {
