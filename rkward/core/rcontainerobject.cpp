@@ -65,6 +65,10 @@ void RContainerObject::rCommandDone (RCommand *command) {
 
 	if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
 		num_children_updating = command->stringVectorLength ();
+		// empty object?
+		if (!num_children_updating) {
+			parent->childUpdateComplete ();
+		}
 		for (int i = 0; i < command->stringVectorLength (); ++i) {
 			QString cname = command->getStringVector ()[i];
 			if (childmap.find (cname) != childmap.end ()) {
@@ -143,7 +147,7 @@ void RContainerObject::rCommandDone (RCommand *command) {
 		RK_DO (qDebug ("%s %d", "type:", type), APP, DL_DEBUG);
 	}
 	
-	// TODO: sig
+	// TODO: signal change if any
 }
 
 void RContainerObject::typeMismatch (RObject *child, QString childname) {
@@ -185,7 +189,7 @@ QString RContainerObject::makeClassString (const QString &sep) {
 	QString ret;
 	for (int i=0; i < num_classes; ++i) {
 		ret.append (classname[i]);
-		if (ret < (num_classes - 1)) {
+		if (i < (num_classes - 1)) {
 			ret.append (sep);
 		}
 	}
