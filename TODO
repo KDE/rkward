@@ -21,6 +21,7 @@ stuff to do before 0.2.6 release
 - Object editing / modification tracking:
 	- keep pointer to editor with objects instead of modification information
 	- maybe make objects assume own responsibility for syncing their data
+	- NO, make it much simpler by syncing the data immediately! Delay syncing only during (large) paste operations.
 	- maybe store data directly with objects
 	- functions to set double/int/string-vectors directly
 - add XML-parsing helper functions and error-checking

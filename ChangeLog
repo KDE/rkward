@@ -1,3 +1,5 @@
+
+- limit size of upper-half in the data.frame editor
 - added convenience R-library: used to streamline communication with R
 - fix against data being synced over and over again
 
