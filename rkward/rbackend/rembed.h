@@ -19,7 +19,7 @@
 
 #include "rembedinternal.h"
 
-#include "../core/rcommand.h"
+#include "rcommand.h"
 
 #include <qfile.h>
 

@@ -21,7 +21,7 @@
 #include <qptrlist.h>
 #include <qmutex.h>
 
-#include "../core/rcommand.h"
+#include "rcommand.h"
 
 class REmbed;
 class RInterface;

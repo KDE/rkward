@@ -17,7 +17,6 @@
 #include "rcontainerobject.h"
 
 #include "../rbackend/rinterface.h"
-#include "rcommand.h"
 #include "robjectlist.h"
 
 #include "../rkglobals.h"

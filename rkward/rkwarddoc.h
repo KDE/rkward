@@ -32,12 +32,11 @@
 #include <kurl.h>
 
 #include "dataeditor/twintable.h"
+#include "rbackend/rinterface.h"
 
-#include "core/rcommand.h"
 class RKwardApp;
 class TwinTableMember;
 class TwinTable;
-class RInterface;
 
 /**	This class represents the currently active document, i.e. the
 	currently opened table. As of this version, there only ever is

@@ -26,7 +26,6 @@
 #include "rkvariable.h"
 
 #include "../rbackend/rinterface.h"
-#include "rcommand.h"
 
 #include "../rkglobals.h"
 
