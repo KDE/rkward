@@ -28,8 +28,11 @@
 
 #include "../core/robjectlist.h"
 
+#include "../debug.h"
+
 RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
-	qDebug ("creating varselector");
+	RK_TRACE (PLUGIN);
+	
 	label = new QLabel (element.attribute ("label", "Select Variable(s)"), parent);
 	addWidget (label);
 
@@ -39,11 +42,6 @@ RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlu
     list_view->addColumn ("Label");
     list_view->addColumn ("Type");
 	list_view->setSelectionMode (QListView::Extended);
-	QListViewItem *main_table;
-	main_table = new QListViewItem (list_view, "data", "Main table");
-	main_table->setOpen (true);
-	main_table->setSelectable (false);
-	list_view->insertItem (main_table);
 	
 	addObject (0, RKGlobals::rObjectList ());
 
@@ -51,14 +49,16 @@ RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlu
 }
 
 RKVarSelector::~RKVarSelector(){
+	RK_TRACE (PLUGIN);
 	for (ItemMap::iterator it = item_map.begin (); it != item_map.end (); ++it) {
-		delete it.data ();
+		delete it.key ();
 	}
 }
 
 void RKVarSelector::addObject (QListViewItem *parent, RObject *object) {
+	RK_TRACE (PLUGIN);
 	QListViewItem *item;
-
+	
 	if (parent) {
 		item = new QListViewItem (parent);
 	} else {
@@ -84,6 +84,7 @@ void RKVarSelector::addObject (QListViewItem *parent, RObject *object) {
 }
 
 QValueList<RKVariable*> RKVarSelector::selectedVars () {
+	RK_TRACE (PLUGIN);
 	QValueList<RKVariable*> selected;
 
 	QListViewItem *current;
@@ -92,6 +93,7 @@ QValueList<RKVariable*> RKVarSelector::selectedVars () {
 		current = current->itemBelow ();
 		if (current->isSelected ()) {
 			RObject *obj = item_map[current];
+			RK_ASSERT (obj);
 			if (obj->isVariable ()) {
 				selected.append (static_cast<RKVariable*> (obj));
 			}
@@ -102,6 +104,7 @@ QValueList<RKVariable*> RKVarSelector::selectedVars () {
 }
 
 int RKVarSelector::numSelectedVars () {
+	RK_TRACE (PLUGIN);
 	int i=0;
 
 	QListViewItem *current;
@@ -109,7 +112,11 @@ int RKVarSelector::numSelectedVars () {
 	while (current->itemBelow ()) {
 		current = current->itemBelow ();
 		if (current->isSelected ()) {
-			++i;
+			RObject *obj = item_map[current];
+			RK_ASSERT (obj);
+			if (obj->isVariable ()) {
+				++i;
+			}
 		}
 	}
 

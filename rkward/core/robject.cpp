@@ -94,25 +94,18 @@ void RObject::setMetaProperty (const QString &id, const QString &value) {
 		}
 		return;
 	}
-
-	if (!meta_map) {
-		meta_map = new MetaMap;
-	}
 	
 	if (meta_map) {
 		RObject::MetaMap::iterator it;
 		if ((it = meta_map->find (id)) != meta_map->end ()) {
 			if (it.data () == value) return;
 		}
+	} else {
+		meta_map = new MetaMap;
 	}
 
-	state |= MetaModified;
+	setMetaModified ();
 	meta_map->insert (id, value);
-}
-
-QString RObject::getMetaObjectName () {
-	RK_TRACE (OBJECTS);
-	return (parent->getMetaObjectName () + "$children$" + getShortName ());
 }
 
 QString RObject::makeChildName (const QString &short_child_name) {
@@ -122,16 +115,24 @@ QString RObject::makeChildName (const QString &short_child_name) {
 	
 void RObject::getMetaData (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
-	RCommand *command = new RCommand ("c (names (" + getMetaObjectName () + "$data), as.vector (" + getMetaObjectName ()+ "$data[1,]), recursive=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_META_COMMAND);
+	RCommand *command = new RCommand ("c (names (attr (" + getFullName () + ", \".rk.meta\")), as.vector (attr (" + getFullName () + ",\".rk.meta\")[1,]), recursive=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_META_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 }
 
-void RObject::writeMetaData (RCommandChain *chain) {
+void RObject::writeMetaData (RCommandChain *chain, bool force) {
 	RK_TRACE (OBJECTS);
-	if (!meta_map) return;
+	if ((!force) && (!isMetaModified ())) return;	
 	
-	createMetaObject (chain);
-	QString command_string = getMetaObjectName () + "$data <- data.frame (";
+	if (!meta_map) {
+		if (hasMetaObject ()) {
+			RCommand *command = new RCommand ("attr (" + getFullName () + ", \".rk.meta\") <- NULL", RCommand::App | RCommand::Sync);
+			RKGlobals::rInterface ()->issueCommand (command, chain);
+		}
+		type -= (type & HasMetaObject);
+		return;
+	}
+	
+	QString command_string = "attr (" + getFullName () + ", \".rk.meta\") <- data.frame (";
 	int i=meta_map->size ();
 	for (MetaMap::iterator it = meta_map->begin (); it != meta_map->end (); ++it) {
 		command_string.append (it.key () + "=c (" + it.data () + ")");
@@ -144,6 +145,7 @@ void RObject::writeMetaData (RCommandChain *chain) {
 	RCommand *command = new RCommand (command_string, RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 	
+	type |= HasMetaObject;
 	type -= (type & MetaModified);
 }
 

@@ -192,7 +192,7 @@ QString RKVarSlot::value (const QString &modifier) {
 	if (!multi) {
 		if (num_vars) {
 			if (modifier == "label") {
-				return item_map[0]->getLabel ();
+				return item_map[0]->getDescription ();
 			} else if (modifier == "shortname") {
 				return item_map[0]->getShortName ();
 			} else {
@@ -207,7 +207,7 @@ QString RKVarSlot::value (const QString &modifier) {
 		QListViewItem *item = list->firstChild ();
 		while (item) {
 			if (modifier == "label") {
-				ret.append (item_map[item]->getLabel () + "\n");
+				ret.append (item_map[item]->getDescription () + "\n");
 			} else if (modifier == "shortname") {
 				ret.append (item_map[item]->getShortName () + "\n");
 			} else {

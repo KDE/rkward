@@ -33,14 +33,13 @@ Base class for representations of objects in the R-workspace
 @author Thomas Friedrichsmeier
 */
 
-// TODO: this dependency on QObject is annoying! It's needed only to get RCommand results. RCommands should not use signals/slots after all!
 class RObject : public RCommandReceiver {
 public:
 	RObject(RContainerObject *parent, const QString &name);
 
 	virtual ~RObject();
 
-	enum RObjectType { DataFrame=1, Matrix=2, Array=4, List=8, Container=16, Variable=32, Workspace=64, HasMetaObject=128, HasChildMetaObject=256 };
+	enum RObjectType { DataFrame=1, Matrix=2, Array=4, List=8, Container=16, Variable=32, Workspace=64, HasMetaObject=128 };
 	
 	QString getShortName ();
 	virtual QString getFullName ();
@@ -55,9 +54,6 @@ public:
 	bool isDataFrame () { return (type & DataFrame); };
 	bool isVariable () { return (type & Variable); };
 	bool hasMetaObject () { return (type & HasMetaObject); };
-	bool hasChildMetaObject () { return (type & HasChildMetaObject); };
-
-	virtual void createMetaObject (RCommandChain *chain) = 0;
 	
 	bool isOpened () { return (state & OpenedInRKWard); };
 	bool isMetaModified () { return (state & MetaModified); };
@@ -70,7 +66,7 @@ public:
 	typedef QMap<QString, RObject*> RObjectMap;
 	
 	virtual void updateFromR () = 0;
-	virtual void writeMetaData (RCommandChain *chain);
+	virtual void writeMetaData (RCommandChain *chain, bool force=false);
 	
 	RContainerObject *getContainer () { return (parent); };
 	enum RObjectState { OpenedInRKWard=1, MetaModified=2, DataModified=4, ChildrenModified=8 };
@@ -78,13 +74,13 @@ public:
 	virtual int numChildren () { return 0; };
 	virtual RObject **children () { return 0; };
 protected:
+	friend class RContainerObject;
 	RContainerObject *parent;
 	QString name;
 	int type;
 	int state;
 	
 	virtual void getMetaData (RCommandChain *chain);
-	virtual QString getMetaObjectName ();
 	virtual QString makeChildName (const QString &short_child_name);
 	
 	typedef QMap<QString, QString> MetaMap;

@@ -37,8 +37,7 @@ public:
 	QString getClassName (int index) { return classname[index]; };
 	QString makeClassString (const QString &sep);
 	
-	void createMetaObject (RCommandChain *chain);
-	void writeMetaData (RCommandChain *chain);
+	void writeMetaData (RCommandChain *chain, bool force=false);
 	virtual void setChildModified ();
 	
 	void updateFromR ();
@@ -49,6 +48,8 @@ public:
 	RObject **children ();
 	
 	RObject *findChild (const QString &name);
+	
+	RObject *createNewChild (const QString &name, bool container=false);
 private:
 	friend class RObject;
 	void typeMismatch (RObject *child, QString childname);

@@ -20,9 +20,7 @@
 #define UPDATE_DELAY_INTERVAL 500
 
 #define UPDATE_LIST_COMMAND 1
-#define GET_TYPE_COMMAND 2
-#define FIND_META_COMMAND 3
-#define FIND_CHILD_META_COMMAND 4
+#define CHILD_GET_TYPE_COMMAND 2
 
 #define WORKSPACE_LOAD_COMMAND 10
 
@@ -67,23 +65,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 
 	bool changed = false;
 
-	if (command->getFlags () == FIND_META_COMMAND) {
-		if ((command->intVectorLength () == 1) && command->getIntVector ()[0]) {
-			type |= HasMetaObject;
-			getMetaData (update_chain);
-		} else {
-			type -= (type & HasMetaObject);
-		}
-	} else if (command->getFlags () == FIND_CHILD_META_COMMAND) {
-		if ((command->intVectorLength () == 1) && command->getIntVector ()[0]) {
-			type |= HasChildMetaObject;
-		} else {
-			type -= (type & HasChildMetaObject);
-		}
-		
-		command = new RCommand ("ls (all.names=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_LIST_COMMAND);
-		RKGlobals::rInterface ()->issueCommand (command, update_chain);
-	} else if (command->getFlags () == UPDATE_LIST_COMMAND) {
+	if (command->getFlags () == UPDATE_LIST_COMMAND) {
 		num_children_updating = command->stringVectorLength ();
 		// empty workspace?
 		if (!num_children_updating) {
@@ -104,7 +86,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 				changed = true;
 			}
 		}
-	} else if (command->getFlags () == GET_TYPE_COMMAND) {
+	} else if (command->getFlags () == CHILD_GET_TYPE_COMMAND) {
 		bool container = false;
 		
 		if (command->intVectorLength () != 4) {
@@ -144,10 +126,7 @@ void RObjectList::updateFromR () {
 
 	update_chain = RKGlobals::rInterface ()->startChain (0);
 
-	RCommand *command = new RCommand ("is.list (" + getMetaObjectName () + "$data)", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, FIND_META_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, update_chain);
-	
-	command = new RCommand ("is.list (" + getMetaObjectName () + "$children)", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, FIND_CHILD_META_COMMAND);
+	RCommand *command = new RCommand ("ls (all.names=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_LIST_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, update_chain);
 }
 
@@ -159,7 +138,7 @@ void RObjectList::updateFromR () {
 	
 	QString fullname = parent->makeChildName (cname);
 	
-	RCommand *command = new RCommand ("c (is.data.frame (" + fullname + "), is.matrix (" + fullname + "), is.array (" + fullname + "), is.list (" + fullname + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, GET_TYPE_COMMAND);
+	RCommand *command = new RCommand ("c (is.data.frame (" + fullname + "), is.matrix (" + fullname + "), is.array (" + fullname + "), is.list (" + fullname + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, CHILD_GET_TYPE_COMMAND);
 	pending_objects.insert (command, obj);
 	RKGlobals::rInterface ()->issueCommand (command, update_chain);
 }
@@ -203,23 +182,16 @@ void RObjectList::timeout () {
 	updateFromR ();
 }
 
-void RObjectList::createMetaObject (RCommandChain *chain) {
-	RK_TRACE (OBJECTS);
-	if (!hasMetaObject ()) {
-		RCommand *command = new RCommand ("if (!exists (\"" + getMetaObjectName () + "\")) " + getMetaObjectName () + " <- list ()", RCommand::App | RCommand::Sync);
-		RKGlobals::rInterface ()->issueCommand (command, chain);
-		command = new RCommand ("if (!is.data.frame (" + getMetaObjectName () + "$data)) " + getMetaObjectName () + "$data <- data.frame ()", RCommand::App | RCommand::Sync);
-		RKGlobals::rInterface ()->issueCommand (command, chain);
-		command = new RCommand ("if (!is.list (" + getMetaObjectName () + "$children)) " + getMetaObjectName () + "$children <- list ()", RCommand::App | RCommand::Sync);
-		RKGlobals::rInterface ()->issueCommand (command, chain);
-	}
-	RObject::type |= HasMetaObject;
-	RObject::type |= HasChildMetaObject;
-}
-
 void RObjectList::setChildModified () {
 	RK_TRACE (OBJECTS);
 	RObject::state |= ChildrenModified;
+}
+
+void RObjectList::writeMetaData (RCommandChain *chain, bool force) {
+	RK_TRACE (OBJECTS);
+	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
+		it.data ()->writeMetaData (chain, force);
+	}
 }
 
 #include "robjectlist.moc"

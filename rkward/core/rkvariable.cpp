@@ -29,6 +29,8 @@
 
 RKVariable::RKVariable (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
+// TODO: better check, wether it really is one
+	RObject::type |= Variable;
 }
 
 RKVariable::~RKVariable () {
@@ -48,7 +50,7 @@ QString RKVariable::getTable () {
 void RKVariable::updateFromR () {
 	RK_TRACE (OBJECTS);
 
-	RCommand *command = new RCommand ("is.list (" + getMetaObjectName () + "$data)", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, FIND_META_COMMAND);
+	RCommand *command = new RCommand ("!is.null (attr (" + getFullName () + ", \".rk.meta\"))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, FIND_META_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 }
 
@@ -77,16 +79,4 @@ void RKVariable::rCommandDone (RCommand *command) {
 		}
 		parent->childUpdateComplete ();
 	}
-}
-
-void RKVariable::createMetaObject (RCommandChain *chain) {
-	RK_TRACE (OBJECTS);
-	if (!hasMetaObject ()) {
-		parent->createMetaObject (chain);
-		RCommand *command = new RCommand ("if (!is.list (" + getMetaObjectName () + ") " + getMetaObjectName () + " <- list ()", RCommand::App | RCommand::Sync);
-		RKGlobals::rInterface ()->issueCommand (command, chain);
-		command = new RCommand ("if (!is.data.frame (" + getMetaObjectName () + "$data) " + getMetaObjectName () + "$data <- data.frame ()", RCommand::App | RCommand::Sync);
-		RKGlobals::rInterface ()->issueCommand (command, chain);
-	}
-	RObject::type |= RObject::HasMetaObject;
 }

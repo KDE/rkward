@@ -40,7 +40,9 @@ RKEditorDataFrame::~RKEditorDataFrame () {
 }
 
 void RKEditorDataFrame::syncToR (RCommandChain *sync_chain) {
-	pushTable (sync_chain);
+	if (getObject ()->needsSyncToR ()) {
+		pushTable (sync_chain);
+	}
 }
 
 void RKEditorDataFrame::openObject (RObject *object) {
@@ -66,9 +68,9 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 			}
 			// TODO: make clean
 			RObject *current_child = static_cast <RContainerObject*> (getObject ())->findChild (command->getStringVector ()[i]);
+			setColObject (i, current_child);
 			varview->setText (NAME_ROW, i, command->getStringVector ()[i]);
 			varview->setText (LABEL_ROW, i, current_child->getLabel ());
-			setColObject (i, current_child);
 		
 			// ok, now get the data
 			RCommand *rcom = new RCommand ("as.vector (" + current_child->getFullName() + ")", RCommand::Sync | RCommand::GetStringVector, "", this, GET_DATA_OFFSET + i);
@@ -112,7 +114,7 @@ void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
 	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync), sync_chain);
 
 	// now store the meta-data
-	getObject ()->writeMetaData (sync_chain);
+	getObject ()->writeMetaData (sync_chain, true);
 }
 
 void RKEditorDataFrame::metaValueChanged (int row, int col) {

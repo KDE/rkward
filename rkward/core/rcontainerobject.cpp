@@ -18,6 +18,7 @@
 
 #include "../rbackend/rinterface.h"
 #include "robjectlist.h"
+#include "rkvariable.h"
 
 #include "../rkglobals.h"
 
@@ -28,7 +29,6 @@
 #define UPDATE_CHILD_LIST_COMMAND 3
 #define UPDATE_TYPE_COMMAND 4
 #define FIND_META_COMMAND 5
-#define FIND_CHILD_META_COMMAND 6
 
 RContainerObject::RContainerObject (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
@@ -44,10 +44,7 @@ RContainerObject::~RContainerObject () {
 
 void RContainerObject::updateFromR () {
 	RK_TRACE (OBJECTS);
-	RCommand *command = new RCommand ("is.list (" + getMetaObjectName () + "$data)", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, FIND_META_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
-
-	command = new RCommand ("is.list (" + getMetaObjectName () + "$children)", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, FIND_CHILD_META_COMMAND);
+	RCommand *command = new RCommand ("!is.null (attr (" + getFullName () + ", \".rk.meta\"))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, FIND_META_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 }
 
@@ -63,12 +60,6 @@ void RContainerObject::rCommandDone (RCommand *command) {
 			getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain ());
 		} else {
 			type -= (type & HasMetaObject);
-		}
-	} else if (command->getFlags () == FIND_CHILD_META_COMMAND) {
-		if ((command->intVectorLength () == 1) && command->getIntVector ()[0]) {
-			type |= HasChildMetaObject;
-		} else {
-			type -= (type & HasChildMetaObject);
 		}
 		
 		RCommand *ncommand = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
@@ -209,27 +200,12 @@ QString RContainerObject::makeClassString (const QString &sep) {
 	return ret;
 }
 
-void RContainerObject::createMetaObject (RCommandChain *chain) {
+void RContainerObject::writeMetaData (RCommandChain *chain, bool force) {
 	RK_TRACE (OBJECTS);
-	if (!hasMetaObject ()) {
-		parent->createMetaObject (chain);
-		RCommand *command = new RCommand ("if (!is.list (" + getMetaObjectName () + ")) " + getMetaObjectName () + " <- list ()", RCommand::App | RCommand::Sync);
-		RKGlobals::rInterface ()->issueCommand (command, chain);
-		command = new RCommand ("if (!is.data.frame (" + getMetaObjectName () + "$data)) " + getMetaObjectName () + "$data <- data.frame ()", RCommand::App | RCommand::Sync);
-		RKGlobals::rInterface ()->issueCommand (command, chain);
-		command = new RCommand ("if (!is.list (" + getMetaObjectName () + "$children)) " + getMetaObjectName () + "$children <- list ()", RCommand::App | RCommand::Sync);
-		RKGlobals::rInterface ()->issueCommand (command, chain);
-	}
-	type |= HasMetaObject;
-	type |= HasChildMetaObject;
-}
-
-void RContainerObject::writeMetaData (RCommandChain *chain) {
-	RK_TRACE (OBJECTS);
-	RObject::writeMetaData (chain);
+	RObject::writeMetaData (chain, force);
 	
 	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
-		it.data ()->writeMetaData (chain);;
+		it.data ()->writeMetaData (chain, force);
 	}
 }
 
@@ -244,4 +220,24 @@ RObject *RContainerObject::findChild (const QString &name) {
 	RObjectMap::iterator it = childmap.find (name);
 	RK_ASSERT (it != childmap.end ());
 	return (it.data ());
+}
+
+RObject *RContainerObject::createNewChild (const QString &name, bool container) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (childmap.find (name) == childmap.end ());
+
+	RObject *ret;
+	if (container) {
+		ret = new RContainerObject (this, name);
+		ret->type = Container;
+	} else {
+		ret = new RKVariable (this, name);
+		ret->type = Variable;
+	}
+	
+	addChild (ret, name);
+	ret->setMetaModified ();
+	ret->setDataModified ();
+	
+	return ret;
 }

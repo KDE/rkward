@@ -50,12 +50,12 @@ public:
 	
 	QString getFullName () { return ""; };
 	QString makeChildName (const QString &short_child_name) { return short_child_name; };
-	QString getMetaObjectName () { return ".rk.meta"; };
-		
+	/// reimplemented from RContainerObject: descent into child-objects, but attempt to write own meta-data
+	void writeMetaData (RCommandChain *chain, bool force=false);
+
 	RCommandChain *getUpdateCommandChain () { return update_chain; };
 	
 	void childUpdateComplete ();
-	void createMetaObject (RCommandChain *chain);
 
 	void setChildModified ();
 

@@ -39,8 +39,6 @@ public:
 	
 	int getLength () { return length; };
 	QString getTable ();
-
-	void createMetaObject (RCommandChain *chain);
 	
 	void updateFromR ();
 	
