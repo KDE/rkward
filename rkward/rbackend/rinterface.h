@@ -55,10 +55,15 @@ public:
 	RCommandChain *startChain (RCommandChain *parent=0);
 /** closes the command chain returns pointer to parent chain */
 	RCommandChain *closeChain (RCommandChain *chain);
-	
+
+/** Ensures that the given command will not be executed, or, if it is already running, interrupts it. Note that commands marked RCommand::Sync can
+not be interrupted. */
+	void cancelCommand (RCommand *command);
+
 	static QMutex mutex;
 private:
 	RThread *r_thread;
+	RCommand *running_command_canceled;
 	
 	void processREvalRequest (REvalRequest *request);
 //	void processRGetValueRequest (RGetValueRequest);

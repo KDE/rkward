@@ -103,7 +103,17 @@ void REmbed::runCommand (RCommand *command) {
 	
 	if (command->type () & RCommand::EmptyCommand) return;
 	
+	QValueList<RCommand*>::iterator it = thread->canceled_commands.find (command);
+	if (it != thread->canceled_commands.end ()) {
+		command->status |= RCommand::HasError;
+		command->_error = "--- interrupted ---";
+		thread->canceled_commands.remove (it);
+		return;
+	}
+	
 	bool error;
+	
+	RInterface::mutex.unlock ();
 	
 	if (command->type () & RCommand::DirectToOutput) {
 		runCommandInternal ("sink (\"" + RKSettingsModuleLogfiles::filesPath () + "/rk_out.html\", append=TRUE, split=TRUE)\n", &error);
@@ -143,5 +153,7 @@ void REmbed::runCommand (RCommand *command) {
 		command->_error.append (temp);
 		command->status |= RCommand::HasError;
 	}
+	RInterface::mutex.lock ();
+	
 	RK_DO (if (error) qDebug ("- error message was: '%s'", command->error ().latin1 ()), RBACKEND, DL_WARNING);
 }

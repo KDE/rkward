@@ -44,11 +44,14 @@ public:
     ~RThread();
 
 	void unlock () { locked=false; };
+	void lock () { locked=true; };
 	
 	void doSubstack (char **call, int call_length);
 	char **fetchValue (char **call, int call_length);
 	
 	//void setGetValueReply (RGetValueReply *reply);
+	RCommand *current_command;
+	QValueList<RCommand*> canceled_commands;
 protected:
 	void run ();
 private:
@@ -56,7 +59,6 @@ private:
 /** This is the last step in the chain of committing a command, and actually writes it */
 	void doCommand (RCommand *command);
 	REmbed *embeddedR;
-	//RGetValueReply *r_get_value_reply;
 	
 	bool locked;
 };

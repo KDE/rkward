@@ -27,6 +27,7 @@
 RThread::RThread (RInterface *parent) : QThread () {
 	RK_TRACE (RBACKEND);
 	inter = parent;
+	current_command = 0;
 //	r_get_value_reply = 0;
 }
 
@@ -61,15 +62,13 @@ void RThread::run () {
 		}
 	
 		// while commands are in queue, don't wait
-		while (RCommandStack::regular_stack->isActive ()) {
+		while (RCommandStack::regular_stack->isActive () && !locked) {
 			RCommand *command = RCommandStack::regular_stack->pop ();
 			
-			RInterface::mutex.unlock ();
 			if (command) {
-				// this statement is the time-consuming one. Thankfully, we do not need a mutex at this point
+				// mutex will be unlocked inside
 				doCommand (command);
 			}
-			RInterface::mutex.lock ();
 		}
 		
 		if (!previously_idle) {
@@ -91,9 +90,12 @@ void RThread::doCommand (RCommand *command) {
 	QCustomEvent *event = new QCustomEvent (RCOMMAND_IN_EVENT);
 	event->setData (command);
 	qApp->postEvent (inter, event);
-	
+	current_command = command;
+
+	// mutex will be unlocked inside
 	embeddedR->runCommand (command);
 
+	current_command = 0;
 	// notify GUI-thread that command was finished
 	event = new QCustomEvent (RCOMMAND_OUT_EVENT);
 	event->setData (command);
@@ -119,14 +121,12 @@ void RThread::doSubstack (char **call, int call_length) {
 	while (!done) {
 		RInterface::mutex.lock ();
 		// while commands are in queue, don't wait
-		while (reply_stack->isActive ()) {
+		while (reply_stack->isActive () && !locked) {
 			RCommand *command = reply_stack->pop ();
 			
 			if (command) {
-				RInterface::mutex.unlock ();
-				// this statement is the time-consuming one. Thankfully, we do not need a mutex at this point
+				// mutex will be unlocked inside
 				doCommand (command);
-				RInterface::mutex.lock ();
 			}
 		}
 

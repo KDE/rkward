@@ -3,6 +3,7 @@ Also, plans change frequently. If something is listed for a specific release, th
 
 stuff to do before 0.2.8 release
 - install / update packages
+- find a smart way to remove commands that got cancelled but have finished in the instance before from the list of cancelled commands
 
 stuff to do before 0.2.9 release
 - Twintable/RKEditorDataFrame

@@ -37,6 +37,8 @@
 #include <qdir.h>
 
 #include <stdlib.h>
+#include <sys/types.h>
+#include <signal.h>
 
 //static
 QMutex RInterface::mutex;
@@ -63,10 +65,11 @@ RInterface::RInterface () {
 	}
 	
 	RCommandStack::regular_stack = new RCommandStack ();
+	running_command_canceled = 0;
 	
 	r_thread = new RThread (this);
 	r_thread->start ();
-	
+
 	watch = new RKwatch (this);
 }
 
@@ -87,6 +90,13 @@ void RInterface::customEvent (QCustomEvent *e) {
 		watch->addInput (static_cast <RCommand *> (e->data ()));
 	} else if (e->type () == RCOMMAND_OUT_EVENT) {
 		RCommand *command = static_cast <RCommand *> (e->data ());
+		if (running_command_canceled) {
+			RK_ASSERT (command == command)
+			command->status |= RCommand::HasError;
+			command->_error.append ("--- interrupted ---");
+			running_command_canceled = 0;
+			r_thread->unlock ();
+		}
 		watch->addOutput (command);
 		command->finished ();
 		delete command;
@@ -139,6 +149,27 @@ RCommandChain *RInterface::closeChain (RCommandChain *chain) {
 	mutex.unlock ();
 	return ret;
 };
+
+void RInterface::cancelCommand (RCommand *command) {
+	RK_TRACE (RBACKEND);
+	mutex.lock ();
+	
+	if (!(command->type () & RCommand::Sync)) {
+		if (command == r_thread->current_command) {
+			RK_ASSERT (!running_command_canceled);
+			r_thread->lock ();
+			running_command_canceled = command;
+			// send interrrupt to ourself (but only the R backend will do something with it)
+			kill (getpid (), SIGINT);
+		} else {
+			r_thread->canceled_commands.append (command);
+		}
+	} else {
+		RK_ASSERT (false);
+	}
+	
+	mutex.unlock ();
+}
 
 void RInterface::processREvalRequest (REvalRequest *request) {
 	RK_TRACE (RBACKEND);
