@@ -57,7 +57,9 @@ public:
 	
 	int numDimensions () { return num_dimensions; };
 	int getDimension (int index) { return dimension[index]; };
-	
+
+	/** returns true, if there are no children in this container. Note: of course the object list may not be up to date! */
+	bool isEmpty () { return childmap.isEmpty (); };
 private:
 	friend class RObject;
 	void typeMismatch (RObject *child, QString childname);

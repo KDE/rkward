@@ -100,8 +100,18 @@ SEXP runCommandInternalBase (const char *command, bool *error) {
 	return exp;
 }
 
-void REmbedInternal::runCommandInternal (const char *command, bool *error) {
-	runCommandInternalBase (command, error);
+void REmbedInternal::runCommandInternal (const char *command, bool *error, bool print_result) {
+	if (!print_result) {
+		runCommandInternalBase (command, error);
+	} else {
+		extern Rboolean R_Visible;
+		R_Visible = (Rboolean) 1;
+
+		SEXP exp;
+		PROTECT (exp = runCommandInternalBase (command, error));
+		if (R_Visible) Rf_PrintValue (exp);
+		UNPROTECT (1);
+	}
 }
 
 char **REmbedInternal::getCommandAsStringVector (const char *command, int *count, bool *error) {	

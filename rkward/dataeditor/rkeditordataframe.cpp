@@ -380,11 +380,17 @@ void RKEditorDataFrame::renameObject (RObject *object) {
 
 void RKEditorDataFrame::addObject (RObject *object) {
 	RK_TRACE (EDITOR);
-	insertNewColumn ();
-	// columnAdded will be called in between!
-	modifyObjectMeta (object, numCols () - 1);
 	
-	// TODO: get the data for the new object!
+	enableEditing (false);
+	insertNewColumn ();
+	col_map.insert (numCols () - 1, object);
+	enableEditing (true);
+	
+	updateObjectMeta (object);
+	RObject::ChangeSet *set = new RObject::ChangeSet;
+	set->from_index = -1;
+	set->to_index = -1;
+	updateObjectData (object, set);
 }
 
 void RKEditorDataFrame::updateObjectMeta (RObject *object) {
@@ -398,10 +404,13 @@ void RKEditorDataFrame::updateObjectMeta (RObject *object) {
 
 void RKEditorDataFrame::updateObjectData (RObject *object, RObject::ChangeSet *changes) {
 	RK_TRACE (EDITOR);
-	int col = getObjectCol (object);
-	RK_ASSERT (col >= 0);
-	// for now:
-	if (col < 0) return;
+	
+	if (object != getObject ()) {
+		int col = getObjectCol (object);
+		RK_ASSERT (col >= 0);
+		// for now:
+		if (col < 0) return;
+	}
 
 	// TODO: this is downright stupid! get only the required data!
 	openObject (getObject ());

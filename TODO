@@ -8,13 +8,6 @@ stuff to do before 0.2.8 release
 	- rework type-select cell
 	- merge the two classes
 - create load-agent
-- handle/give feedback on syntax errors!
-- calls from R to RKWard
-	- using TCP-sockets
-		- automatic selection of port!
-		- error-handling!
-		- sync implement proper updating in RKEditorDataFrame
-		- implement "getTempFileName"
 - basic modification tracking:
 	- do not ask for save on a workspace that is entirely empty and has seen no user commands (or just one that is entirely empty?)
 - pick some from below:
@@ -32,6 +25,7 @@ stuff to do before 0.2.8 release
 - add XML-parsing helper functions and error-checking
 - create a spinbox, that can really deal with real numbers
 - UNPROTECT_PTR
+- give informative feedback on syntax errors (line numbers, etc.)!
 
 stuff to do before the thing is usable
 - RKWatch

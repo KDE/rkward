@@ -32,6 +32,9 @@ public:
 	~RRequestServer ();
 
 	void newConnection (int socket);
+private:
+/// used to allow only a single connection
+	static bool connected;
 };
 
 #endif

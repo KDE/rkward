@@ -18,6 +18,7 @@
 #define RREQUESTHANDLER_H
 
 #include <qsocket.h>
+#include <qstring.h>
 
 /**
 This class (created by RRequestServer) is responsible for handling requests sent from R to RKWard via a TCP socket connection.
@@ -28,12 +29,14 @@ class RRequestHandler : public QSocket
 {
 Q_OBJECT
 public:
-	RRequestHandler (int socket, QObject *parent);
+	RRequestHandler (int socket, QObject *parent, bool reject=false);
 
 	~RRequestHandler ();
 public slots:
 	void readFromR ();
 	void connectionTerminated ();
+private:
+	QString eof_string;
 };
 
 #endif

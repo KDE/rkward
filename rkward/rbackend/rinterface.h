@@ -25,6 +25,7 @@
 class RKwatch;
 class RCommand;
 class RKwardApp;
+class RRequestServer;
 
 /** This class does the rather low-level interfacing to the R-processor. The
 	interface can be used by submitting new commands with issueCommand () (see
@@ -50,8 +51,11 @@ public:
 	RCommandChain *startChain (RCommandChain *parent=0) { return r_thread->startChain (parent); };
 /** returns pointer to parent chain */
 	RCommandChain *closeChain (RCommandChain *chain) { return r_thread->closeChain (chain); };
+/** returns the port number of the request server */
+	int requestServerPort ();
 private:
 	RThread *r_thread;
+	RRequestServer *r_server;
 friend class RKwardApp;
 	RKwatch *watch;
 protected:

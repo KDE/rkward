@@ -31,7 +31,7 @@ public:
 protected:
 	bool startR (const char* r_home, int argc, char **argv);
 	void shutdown ();
-	void runCommandInternal (const char *command, bool *error);
+	void runCommandInternal (const char *command, bool *error, bool print_result=false);
 	
 	char **getCommandAsStringVector (const char *command, int *count, bool *error);
 	double *getCommandAsRealVector (const char *command, int *count, bool *error);

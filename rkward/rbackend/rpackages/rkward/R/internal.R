@@ -75,5 +75,22 @@
 
 ".rk.do.call" <- function (x) {
 	cat (x, file=.rk.socket)
-	return (readLines (con=.rk.socket, 1))
+	res <- array ()
+	i <- 1
+	done <- FALSE
+	while (!done) {
+		inp <- readLines (.rk.socket, 1)
+		if (length (inp)) {
+			if (inp == "#RKEND#")  {
+				done <- TRUE
+			} else {
+				res[i] <- inp;
+			}
+		}
+	}
+	return (res)
+}
+
+".rk.test.connection" <- function (x) {
+	if (.rk.do.call ("checkconnection\n") != "ok") stop ("connection to RKWard failed")
 }

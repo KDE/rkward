@@ -22,6 +22,8 @@
 
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulelogfiles.h"
+#include "../rkglobals.h"
+#include "rinterface.h"
 
 #include "../debug.h"
 
@@ -65,8 +67,10 @@ int REmbed::initialize () {
 	if (error) status |= SinkFail;
 	runCommandInternal ("sink (file (\"" +RKSettingsModuleLogfiles::filesPath () +"/r_err\", \"w\"), FALSE, \"message\")\n", &error);
 	if (error) status |= SinkFail;
-	runCommandInternal (".rk.socket <- socketConnection (port=4242)\n", &error);
-	if (error) status |= OtherFail;
+	runCommandInternal (".rk.socket <- socketConnection (port=" + QString::number (RKGlobals::rInterface ()->requestServerPort ()) + ")\n", &error);
+	if (error) status |= ConnectFail;
+	runCommandInternal (".rk.test.connection ()\n", &error);
+	if (error) status |= ConnectFail;
 	
 	outfile_offset = 0;
 	errfile_offset = 0;
@@ -101,7 +105,7 @@ void REmbed::runCommand (RCommand *command) {
 	} else if (command->type () & RCommand::GetIntVector) {
 		command->integer_data = getCommandAsIntVector (command->command ().latin1 (), &(command->integer_count), &error);
 	} else {
-		runCommandInternal (command->command ().latin1 (), &error);
+		runCommandInternal (command->command ().latin1 (), &error, command->type () & RCommand::User);
 	}
 	
 	if (error) {

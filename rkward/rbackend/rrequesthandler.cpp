@@ -17,18 +17,27 @@
 #include "rrequesthandler.h"
 
 #include <qtextstream.h>
+#include <qdir.h>
 
 #include "../core/robjectlist.h"
 #include "../core/rkmodificationtracker.h"
 #include "../rkglobals.h"
+#include "../settings/rksettingsmodulelogfiles.h"
 
 #include "../debug.h"
 
-RRequestHandler::RRequestHandler (int socket, QObject *parent) : QSocket (parent) {
+RRequestHandler::RRequestHandler (int socket, QObject *parent, bool reject) : QSocket (parent) {
 	RK_TRACE (RBACKEND);
-	connect (this, SIGNAL (readyRead ()), SLOT (readFromR ()));
-	connect (this, SIGNAL (connectionClosed ()), SLOT(connectionTerminated ()));
+	
 	setSocket (socket);
+	if (reject) {
+		RK_DO (qDebug ("Rejecting TCP connection on socket %d, as one connection (hopefully with R) is already established!", socket), RBACKEND, DL_WARNING);
+		close ();
+	} else {
+		connect (this, SIGNAL (readyRead ()), SLOT (readFromR ()));
+		connect (this, SIGNAL (connectionClosed ()), SLOT(connectionTerminated ()));
+	}
+	eof_string = "\n#RKEND#\n";
 }
 
 RRequestHandler::~RRequestHandler () {
@@ -64,13 +73,26 @@ void RRequestHandler::readFromR () {
 		RObject::ChangeSet *set = new RObject::ChangeSet;
 		set->from_index = -1;
 		set->to_index = -1;
-		RKGlobals::tracker ()->objectMetaChanged (obj);
+		// for now a complete update is needed, in case new objects were added
+		RKGlobals::rObjectList ()->updateFromR ();
 		RKGlobals::tracker ()->objectDataChanged (obj, set);
+	} else if (call == "checkconnection") {
+		stream << "ok";
+	} else if (call == "get.tempfile.name") {
+		QString file_prefix = request.section ("\t", 1, 1);
+		QString file_extension = request.section ("\t", 2, 2);
+		QDir dir (RKSettingsModuleLogfiles::filesPath ());
+		
+		int i=0;
+		while (dir.exists (file_prefix + QString::number (i) + file_extension)) {
+			i++;
+		}
+		stream << dir.filePath (file_prefix + QString::number (i) + file_extension);
 	} else {
 		RK_DO (qDebug ("unrecognized request from R: %s", request.latin1 ()), RBACKEND, DL_DEBUG);
 	}
 	
-	stream << "#RKEND#" << endl;
+	stream << eof_string;
 }
 
 void RRequestHandler::connectionTerminated () {

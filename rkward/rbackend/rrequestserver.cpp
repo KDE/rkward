@@ -23,7 +23,11 @@
 
 #include "../debug.h"
 
-RRequestServer::RRequestServer (QObject *parent) : QServerSocket (/*QHostAddress ().setAddress ("127.0.0.1"), */4242, 1, parent) {
+//static
+bool RRequestServer::connected = false;
+
+//0x7f000001 is 127.0.0.1
+RRequestServer::RRequestServer (QObject *parent) : QServerSocket (QHostAddress (0x7f000001), 0, 1, parent) {
 	RK_TRACE (RBACKEND);
 	if (!ok ()) {
 		RK_DO (qDebug ("Failed to set up RRequestServer!"), RBACKEND, DL_ERROR);
@@ -39,7 +43,12 @@ RRequestServer::~RRequestServer () {
 void RRequestServer::newConnection (int socket) {
 	RK_TRACE (RBACKEND);
 	RK_DO (qDebug ("Received new TCP connection on socket %d", socket), RBACKEND, DL_DEBUG);
-	new RRequestHandler (socket, this);
+	if (!connected) {
+		new RRequestHandler (socket, this);
+		connected = true;
+	} else {
+		new RRequestHandler (socket, this, true);
+	}
 }
 
 #include "rrequestserver.moc"

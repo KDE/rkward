@@ -54,13 +54,16 @@ RInterface::RInterface(){
 		}
 	}
 	
-	new RRequestServer (this);
+	r_server = new RRequestServer (this);
 	r_thread = new RThread (this);
 	r_thread->start ();
 	
 	watch = new RKwatch (this);
-	//watch->show ();
-	//watch->lower ();
+}
+
+int RInterface::requestServerPort () {
+	RK_TRACE (RBACKEND);
+	return r_server->port ();
 }
 
 RInterface::~RInterface(){
@@ -91,6 +94,9 @@ void RInterface::customEvent (QCustomEvent *e) {
 		}
 		if (err & REmbed::SinkFail) {
 			message.append (i18n ("\t-There was a problem opening the files needed for communication with R. Most likely this is due to an incorrect setting for the location of these files. Check whether you have correctly configured the location of the log-files (Settings->Configure Settings->Logfiles) and restart RKWard.\n"));
+		}
+		if (err & REmbed::ConnectFail) {
+			message.append (i18n ("\t-There was a problem opening a socket connection from the R-backend to RKWard. Check whether your build of R supports TCP sockets, or whether there might have been a problem opening a new (unprivileged) port.\n"));
 		}
 		if (err & REmbed::OtherFail) {
 			message.append (i18n ("\t-An unspecified error occured that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.\n"));

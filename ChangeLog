@@ -1,3 +1,11 @@
+- do not ask for save, if workspace is empty
+- results of user-commands get printed if not invisible (i.e. just like in a regular R session)
+- provide at least basic feedback on syntax errors
+- added communication channel from R-backend to RKWard. Initial features:
+	- automatic chosing of port to listen to
+	- checking for errors setting up the connection
+	- simple rk.sync for synchronisation of objects modified in the R workspace
+	- rk.get.tempfile.name for generation of a suitable temporary file (e.g. for storing images) -> TODO: implement
 - auto addition of rows/columns when typing on last row/column
 - allow deletion of rows without losing meta-data
 

@@ -411,6 +411,8 @@ void RKwardApp::readProperties(KConfig* _cfg)
 }		
 
 bool RKwardApp::queryClose () {
+	if (RKGlobals::rObjectList ()->isEmpty ()) return true;
+
 	int res;
 	res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the workspace?"), i18n ("Save workspace?"));
 	if (res == KMessageBox::No) return true;
@@ -458,6 +460,11 @@ void RKwardApp::fileOpenNoSave (const KURL &url) {
 }
 
 void RKwardApp::fileOpenAskSave (const KURL &url) {
+	if (RKGlobals::rObjectList ()->isEmpty ()) {
+		fileOpenNoSave (url);
+		return;
+	}
+	
 	int res;
 	res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the current workspace?"), i18n ("Save workspace?"));
 	if (res == KMessageBox::No) {

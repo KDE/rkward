@@ -118,7 +118,7 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 	}
 
 	watch->append ("---------------------------\n");
-	watch->append ("Issuing command:\n");
+	watch->append (i18n ("Issuing command:\n"));
 	watch->setItalic (true);
 
 	watch->append (command->command ());
@@ -133,7 +133,7 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 
 void RKwatch::addOutput (RCommand *command) {
 	if (!RKSettingsModuleWatch::shouldShowOutput (command)) {
-		if (!command->hasError ()) {
+		if (!command->failed ()) {
 			return;
 		} else {
 		// if the command has an error and the error should be shown, but the command itself has not been shown so far, add it now.
@@ -156,11 +156,14 @@ void RKwatch::addOutput (RCommand *command) {
 	}
 	
 	watch->append ("---------------------------\n");
-	watch->append ("Got reply:");
+	watch->append (i18n ("Got reply:"));
     watch->setBold (true);
 
 	watch->append (command->output ());
 	watch->append (command->error ());
+	if (command->failed () && (command->error () == "")) {
+		watch->append (i18n ("An unspecified error occured while running the command.\nProbably a syntax error.\nThose - unfortunately - are not handled very well, yet.\n"));
+	}
 
 	watch->setBold (false);	
 	watch->setColor (Qt::black);

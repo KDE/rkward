@@ -38,7 +38,7 @@ public:
 	
 	void runCommand (RCommand *command);
 	
-	enum InitStatus { Ok=0, LibLoadFail=1, SinkFail=2, OtherFail=4 };
+	enum InitStatus { Ok=0, LibLoadFail=1, SinkFail=2, ConnectFail=4, OtherFail=8 };
 	
 	/** initializes the R-backend. Returns an error-code that consists of a bit-wise or-conjunction of the InitStatus-enum. 0 on success.
 	Note that you should call initialize only once in a application */
