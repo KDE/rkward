@@ -1,3 +1,11 @@
+
+- added a class to show html help in an mdi child
+- added a new dock to search R help
+- many changes in labels
+- fixed: bug that prevented RKWard to build on some systems
+- added R functions to show graphs in the html output
+- use a KHTML part to show output
+
 --- Version 0.3.0 - Nov-12-2004
 - added french and italian translations
 - added toolbars and some icons
