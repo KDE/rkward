@@ -24,6 +24,7 @@
 #define LABEL_ROW 0
 #define TYPE_ROW 1
 #define LEVELS_ROW 2
+#define FORMAT_ROW 3
 #define NAME_ROW 4
 
 class QMouseEvent;

@@ -22,6 +22,7 @@
 #include "twintable.h"
 #include "celleditor.h"
 #include "editlabelsdialog.h"
+#include "editformatdialog.h"
 #include "../rkglobals.h"
 
 #include <qpainter.h>
@@ -131,6 +132,11 @@ QWidget *TwinTableMetaMember::beginEdit (int row, int col, bool) {
 		tted = new CellEditor (this, text (row, col), 0, &type_values);
 	} else if (row == LEVELS_ROW) {
 		EditLabelsDialog *dialog = new EditLabelsDialog (0, var, 0);
+		dialog->exec ();
+		delete (dialog);
+		return 0;
+	} else if (row == FORMAT_ROW) {
+		EditFormatDialog *dialog = new EditFormatDialog (0, var, 0);
 		dialog->exec ();
 		delete (dialog);
 		return 0;

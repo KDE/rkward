@@ -41,9 +41,9 @@ RKFormula::RKFormula (const QDomElement &element, QWidget *parent, RKPlugin *plu
 	
 	type_selector = new QButtonGroup (this);
 	type_selector->setColumnLayout (0, Qt::Vertical);
-	type_selector->layout()->setSpacing (6);
-	type_selector->layout()->setMargin (11);
-	QVBoxLayout *group_layout = new QVBoxLayout(type_selector->layout());
+	type_selector->layout()->setSpacing (RKGlobals::spacingHint ());
+	type_selector->layout()->setMargin (RKGlobals::marginHint ());
+	QVBoxLayout *group_layout = new QVBoxLayout (type_selector->layout());
 	group_layout->addWidget (new QRadioButton (i18n ("Full Model"), type_selector));
 	group_layout->addWidget (new QRadioButton (i18n ("Main Effects only"), type_selector));
 	group_layout->addWidget (new QRadioButton (i18n ("Custom Model:"), type_selector));
