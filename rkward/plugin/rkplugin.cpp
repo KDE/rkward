@@ -53,6 +53,9 @@
 #include "rkcheckbox.h"
 #include "rkpluginspinbox.h"
 #include "rkformula.h"
+#include "rknote.h"
+#include "rkinput.h"
+#include "rkpluginbrowser.h"
 
 #include "../rkglobals.h"
 
@@ -295,7 +298,7 @@ void RKPlugin::buildDialog (const QDomElement &dialog_element, bool wizard_avail
                 slave.data()->setEnabled(false );
                 };
                qDebug ("Connecting %s to %s",slave.key().latin1(),master.key().latin1()) ;
-               connect( (RKCheckBox *) master.data(), SIGNAL(clicked()) ,(RKCheckBox *)   slave.data(), SLOT(active()));
+               connect( (RKCheckBox *) master.data(), SIGNAL(clicked()) ,(RKCheckBox *)   slave.data(), SLOT(slotActive()));
                qDebug ("You are very right to choose me OK") ;
                };
           };
@@ -309,7 +312,7 @@ void RKPlugin::buildDialog (const QDomElement &dialog_element, bool wizard_avail
             if (slave != widgets.end ()  ) {
 //              qDebug ("Yes it is") ;
               if (! temp->isOk(it.data()) ) slave.data()->setEnabled(false );
-              connect(  sol , SIGNAL(toggled(bool)) ,  slave.data(), SLOT(active(bool)));
+              connect(  sol , SIGNAL(toggled(bool)) ,  slave.data(), SLOT(slotActive(bool)));
               };
             }
 //            else  qDebug ("No it isn't") ;
@@ -327,7 +330,7 @@ void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_avail
 	QGridLayout *main_grid = new QGridLayout (main_widget, 3, 4, RKGlobals::marginHint (), RKGlobals::spacingHint ());
 	wizard_stack = new QWidgetStack (main_widget);
 	main_grid->addMultiCellWidget (wizard_stack, 0, 0, 0, 3);
-	
+
 	QDomNodeList pages = wizard_element.childNodes ();
 	for (unsigned int p=0; p < pages.count (); ++p) {
 		QDomElement page = pages.item (p).toElement ();
@@ -361,7 +364,7 @@ void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_avail
 	QFrame *line;
 	line = new QFrame (main_widget);
 	line->setFrameShape (QFrame::HLine);
-	line->setFrameShadow (QFrame::Plain);	
+	line->setFrameShadow (QFrame::Plain);
 	main_grid->addMultiCellWidget (line, 1, 1, 0, 3);
 
 	// buttons
@@ -378,11 +381,11 @@ void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_avail
 	connect (backButton, SIGNAL (clicked ()), this, SLOT (back ()));
 	connect (cancelButton, SIGNAL (clicked ()), this, SLOT (cancel ()));
 	connect (helpButton, SIGNAL (clicked ()), this, SLOT (help ()));
-	
+
 	wizard_stack->raiseWidget (0);
 
   // inserting connection for enabling widgets - or not...
-  // work only if widget are on the same page 
+  // work only if widget are on the same page
   // valid for every widget excet formula (too weird)
   Dependancies::Iterator it;
   for (it = dependant.begin(); it != dependant.end(); ++it) {
@@ -399,7 +402,7 @@ void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_avail
               if(  ! (RKCheckBox *) master.data()->isOk ){
                 slave.data()->setEnabled(false );
                 };
-               connect( (RKCheckBox *) master.data(), SIGNAL(clicked()) ,  slave.data(), SLOT(active()));
+               connect( (RKCheckBox *) master.data(), SIGNAL(clicked()) ,  slave.data(), SLOT(slotActive()));
                qDebug ("You are very right to choose me OK") ;
                };
           };
@@ -413,7 +416,7 @@ void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_avail
             if (slave != widgets.end ()  ) {
 //              qDebug ("Yes it is") ;
               if (! temp->isOk(it.data()) ) slave.data()->setEnabled(false );
-              connect(  sol , SIGNAL(toggled(bool)) ,  slave.data(), SLOT(active(bool)));
+              connect(  sol , SIGNAL(toggled(bool)) ,  slave.data(), SLOT(slotActive(bool)));
               };
             }
 //            else  qDebug ("No it isn't") ;
@@ -460,12 +463,18 @@ void RKPlugin::buildStructure (const QDomElement &element, QBoxLayout *playout, 
 			widget = new RKRadio (e, pwidget, this);
 		} else if (e.tagName () == "checkbox") {
 			widget = new RKCheckBox (e, pwidget, this);
-    } else if (e.tagName () == "spinbox") {
+		} else if (e.tagName () == "spinbox") {
 			widget = new RKPluginSpinBox (e, pwidget, this);
 		} else if (e.tagName () == "varslot") {
 			widget = new RKVarSlot (e, pwidget, this);
 		} else if (e.tagName () == "formula") {
 			widget = new RKFormula (e, pwidget, this);
+		} else if (e.tagName () == "note") {
+			widget = new RKNote (e, pwidget, this);
+		} else if (e.tagName () == "browser") {
+			widget = new RKPluginBrowser (e, pwidget, this);
+		} else if (e.tagName () == "input") {
+			widget = new RKInput (e, pwidget, this);
 		} else {
 			widget = new RKText (e, pwidget, this);
 		}
@@ -584,9 +593,10 @@ void RKPlugin::backendIdle () {
 }
 
 void RKPlugin::registerWidget (RKPluginWidget *widget, const QString &id , const QString &dep, int page) {
+	qDebug("inserting widget %s",id.latin1());
 	widgets.insert (id, widget);
 	page_map.insert (widget, page);
-  dependant.insert (id,dep);
+	dependant.insert (id,dep);
 }
 
 void RKPlugin::help () {
@@ -654,6 +664,7 @@ void RKPlugin::getValue (const QString &id) {
 
 QString RKPlugin::getVar (const QString &id) {
 	QString ident = id.section (".", 0, 0);
+	qDebug("searching fo %s",ident.latin1());
 	RKPluginWidget *widget;
 	if (widgets.contains (ident)) {
 		widget = widgets[ident];

@@ -52,8 +52,8 @@ public slots:
 	void listSelectionChanged ();
 /// find out whether all items are still present, remove items which are no longer present and update text for all others
 	void objectListChanged ();
-  void active();
-  void active(bool);
+  void slotActive();
+  void slotActive(bool);
 private:
 	QLineEdit *line_edit;
 	QListView *list;

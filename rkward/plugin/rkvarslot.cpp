@@ -269,13 +269,13 @@ void RKVarSlot::setEnabled(bool checked){
   select->setEnabled(checked);
     }
 
-void RKVarSlot::active(){
+void RKVarSlot::slotActive(){
   bool isOk = line_edit->isEnabled();
   line_edit->setEnabled(! isOk) ;
   select->setEnabled(! isOk) ;
 }
 
-void RKVarSlot::active(bool isOk){
+void RKVarSlot::slotActive(bool isOk){
   line_edit->setEnabled(isOk) ;
   select->setEnabled(isOk) ;
 }

@@ -65,12 +65,12 @@ void RKCheckBox::changedState (int) {
 	emit (changed ());
 }
 
-void RKCheckBox::active(bool isOk){
+void RKCheckBox::slotActive(bool isOk){
 checkbox->setEnabled(isOk) ;
 }
 
-  
-void RKCheckBox::active(){
+
+void RKCheckBox::slotActive(){
 bool isOk = checkbox->isEnabled();
 checkbox->setEnabled(! isOk) ;
 }

@@ -461,4 +461,19 @@ QString RKFormula::value (const QString &modifier) {
 	}
 }
 
+void RKFormula::setEnabled(bool checked){
+type_selector->setEnabled(checked);
+}
+
+void RKFormula::slotActive(){
+  bool isOk = type_selector->isEnabled();
+  type_selector->setEnabled(! isOk);
+}
+
+void RKFormula::slotActive(bool isOk){
+  type_selector->setEnabled( isOk);
+  }
+
+
+
 #include "rkformula.moc"

@@ -38,15 +38,19 @@ class RKFormula : public RKPluginWidget {
   Q_OBJECT
 public:
     RKFormula(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
-
     ~RKFormula();
+  void  setEnabled(bool);
+
 public slots:
 	void typeChange (int id);
 	void addButtonClicked ();
 	void removeButtonClicked ();
 	void factorsChanged ();
+  void slotActive();
+  void slotActive(bool);
+
 private:
-	QString model_string;
+ QString model_string;
 	QString table_string;
 	bool multitable;
 	bool model_ok;
@@ -60,7 +64,7 @@ private:
 	QWidget *custom_model_widget;
 	QListView *model_view;
 	QListView *predictors_view;
-   QString depend ; 
+  QString depend ; 
 	QPushButton *add_button;
 	QPushButton *remove_button;
 	QSpinBox *level_box;

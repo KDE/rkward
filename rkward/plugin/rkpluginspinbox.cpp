@@ -39,6 +39,11 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, QWidget *parent, R
 	}
 	connect (spinbox, SIGNAL (valueChanged (int)), this, SLOT (valueChanged (int)));
 	vbox->addWidget (spinbox);
+	size = element.attribute ("size", "small");
+	if (size=="small"){
+	spinbox->setMaximumWidth(100);
+	spinbox->setMinimumWidth(100);
+	}
 }
 
 RKPluginSpinBox::~RKPluginSpinBox () {
@@ -46,6 +51,7 @@ RKPluginSpinBox::~RKPluginSpinBox () {
 
 void RKPluginSpinBox::setEnabled(bool checked){
   spinbox->setEnabled(checked);
+  label->setEnabled(checked);
   }
 
 QString RKPluginSpinBox::value (const QString &) {
@@ -56,11 +62,19 @@ void RKPluginSpinBox::valueChanged (int) {
 	plugin ()->changed ();
 }
 
-void RKPluginSpinBox::active(){
+void RKPluginSpinBox::slotActive(){
 bool isOk = spinbox->isEnabled();
 spinbox->setEnabled(! isOk) ;
+label->setEnabled(! isOk);
 }
 
-void RKPluginSpinBox::active(bool isOk){
+void RKPluginSpinBox::slotActive(bool isOk){
 spinbox->setEnabled( isOk) ;
+label->setEnabled(isOk);
 }
+void RKPluginSpinBox::adjust(int longueur, int largeur){
+qDebug("coucou, c'est moi");
+spinbox->resize(longueur, largeur);
+}
+
+

@@ -29,7 +29,7 @@ int RK_Debug_Level = 0;
 int RK_Debug_Flags = ALL;
 
 static const char *version =
-       I18N_NOOP("0.3.0");
+       I18N_NOOP("0.3.1");
 
 static const char *description =
 	I18N_NOOP("RKWard");
@@ -49,14 +49,13 @@ int main(int argc, char *argv[])
 {
 
 	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), version, description, KAboutData::License_GPL, "(c) 2002, 2004", 0, "http://rkward.sf.net", "");
-	aboutData.addAuthor ("Thomas Friedrichsmeier", "Project leader", "");
-	aboutData.addAuthor ("Pierre Ecochard", "Contributor", "");
-	aboutData.addAuthor ("Adrien d'Hardemare", "Contributor", "");
-	aboutData.addAuthor ("Daniele Medri", "Contributor", "");
-	aboutData.addCredit ("David Sibai", "Several valuable comments, hints and patches", "");
-	aboutData.addCredit ("Daniele Medri", "RKWard logo, many suggestions", "");
-	aboutData.addCredit ("Philippe Grosjean", "Several helpful comments and discussions", "");
-	aboutData.addCredit ("Many more people on rkward-devel@lists.sourceforge.net", "Sorry, I forgot to list you. Please contact me to get added", "");
+	aboutData.addAuthor ("Thomas Friedrichsmeier", i18n("Project leader"), "");
+	aboutData.addAuthor ("Pierre Ecochard", i18n("Coder since 0.29"), "");
+	aboutData.addCredit ("Adrien d'Hardemare", i18n("Plugins and patches"), "");
+	aboutData.addCredit ("Daniele Medri", i18n("RKWard logo, many suggestions, help on wording"), "");
+	aboutData.addCredit ("David Sibai", i18n("Several valuable comments, hints and patches"), "");
+	aboutData.addCredit ("Philippe Grosjean", i18n("Several helpful comments and discussions"), "");
+	aboutData.addCredit (i18n("Many more people on rkward-devel@lists.sourceforge.net"), i18n("Sorry, I forgot to list you. Please contact me to get added"), "");
 	KCmdLineArgs::init( argc, argv, &aboutData );
 	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 	

@@ -21,6 +21,7 @@
 #include <rkpluginwidget.h>
 
 class RKSpinBox;
+class QLabel ;
 
 /**
 @author Thomas Friedrichsmeier
@@ -32,16 +33,19 @@ public:
 
 	~RKPluginSpinBox();
 	QString value (const QString &modifier);
-  int type() {return SPINBOX_WIDGET ;} ;
-  void setEnabled(bool);
+  	QLabel * label ;
+  	int type() {return SPINBOX_WIDGET ;} ;
+  	void setEnabled(bool);
+	void adjust(int, int);
 public slots:
 	void valueChanged (int);
-  void active();
-  void active(bool);
+  	void slotActive();
+  	void slotActive(bool);
   
 private:
 	RKSpinBox *spinbox;
-  QString depend;
+  	QString depend;
+	QString size;
 };
 
 #endif

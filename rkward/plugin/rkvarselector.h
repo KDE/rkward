@@ -53,8 +53,8 @@ public:
   void setEnabled(bool);
 public slots:
 	void objectListChanged ();
-  void active();
-  void active(bool);
+  void slotActive();
+  void slotActive(bool);
 private:
 	RKObjectListView *list_view;
     QString depend;

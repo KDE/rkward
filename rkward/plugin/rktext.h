@@ -18,6 +18,7 @@
 #ifndef RKTEXT_H
 #define RKTEXT_H
 
+
 #include <rkpluginwidget.h>
 
 /**
@@ -25,8 +26,9 @@
   */
 
 class RKText : public RKPluginWidget  {
-public: 
+public:
 	RKText(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
+ 
 	~RKText();
 };
 

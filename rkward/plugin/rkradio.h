@@ -24,6 +24,7 @@
 
 class QButtonGroup;
 class QRadioButton;
+class QLabel ;
 
 #define RADIO_WIDGET 666 // comme la radio pirate de caen
 
@@ -41,16 +42,17 @@ public:
 	int type() {return RADIO_WIDGET ; };
   QRadioButton * findLabel(QString);
   bool isOk (QString) ;
-public slots:
+  public slots:
 	void buttonClicked (int id);
-  void active();
-  void active(bool);
+  void slotActive();
+  void slotActive(bool);
   
 private:
 	QButtonGroup *group;
 	typedef QMap<QRadioButton *, QString> OptionsMap;
 	OptionsMap options;
   QString depend;
+  QLabel * label ;
 protected:
 /** Returns the value of the currently selected option. */
 	QString value (const QString &modifier);

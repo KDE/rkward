@@ -53,17 +53,9 @@ KHelpDlg::KHelpDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
 
 	fieldsList->insertItem (i18n("Not implemented yet"));
 
-	connect(field, SIGNAL(keyPressEvent (QKeyEvent * e)), this, SLOT(slotFieldKeyPressEvent (QKeyEvent * e)));
+	connect(this, SIGNAL(keyPressEvent (QKeyEvent * e)), this, SLOT(slotFieldKeyPressEvent (QKeyEvent * e)));
 	
-	
-	// HACK: apparantly, we have to wait a little bit before we lauch an R command. So we wait 3 seconds.
-        QTimer *timer = new QTimer (this);
-        connect(timer, SIGNAL(timeout ()), this, SLOT(slotTimerDone ()));
-        //timer->start(1000, TRUE); // 3 seconds single-shot timer
-	
-	
-	// HACK again: it looks like we need to issue a command here?!
-	//RKGlobals::rInterface ()->issueCommand ("cat("")");
+
 
 	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_INSTALLED_PACKAGES, 0);
 
@@ -103,7 +95,6 @@ void KHelpDlg::slotFindButtonClicked()
 	QString s = ".rk.get.search.results(\"" +field->currentText() +"\",agrep=" 
 		+ agrep +", ignore.case=" + ignoreCase + ", package=" + package +")";
 		
-	qDebug("Find button launching command: "+ s);
 	
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, HELP_SEARCH, 0);
 	field->insertItem(field->currentText());
@@ -172,27 +163,17 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 
 
 
-/*!
-    \fn KHelpDlg::slotTimerDone ()
-    
-    We use a timer to load the package list after a little while. We souln't have to do this.
- */
-void KHelpDlg::slotTimerDone ()
-{
-    RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_INSTALLED_PACKAGES, 0);
-}
-
 
 /*!
     \fn KHelpDlg::slotFieldKeyPressEvent ( QKeyEvent * e )
-    
+
     We intercept enter.
  */
 void KHelpDlg::slotFieldKeyPressEvent ( QKeyEvent * e )
 {
 
 	
-	if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
+	if ( (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) && field->hasFocus ()) {
 		slotFindButtonClicked ();
 		return;
 	}

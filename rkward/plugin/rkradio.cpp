@@ -88,16 +88,19 @@ void RKRadio::buttonClicked (int) {
 
 void RKRadio::setEnabled(bool checked){
   group->setEnabled(checked);
+  label->setEnabled(checked);
   }
 
 
-void RKRadio::active(){
+void RKRadio::slotActive(){
 bool isOk = group->isEnabled();
 group->setEnabled(! isOk) ;
+label->setEnabled(! isOk) ;
 }
 
-void RKRadio::active(bool isOk){
+void RKRadio::slotActive(bool isOk){
 group->setEnabled(isOk) ;
+label->setEnabled(isOk) ;
 }
 
 QRadioButton * RKRadio::findLabel (QString lab) {

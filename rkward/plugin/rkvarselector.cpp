@@ -111,11 +111,11 @@ void RKVarSelector::setEnabled(bool checked){
   list_view->setEnabled(checked);
   }
 
-void RKVarSelector::active(){
+void RKVarSelector::slotActive(){
 bool isOk = list_view->isEnabled();
 list_view->setEnabled(! isOk) ;
 }
 
-void RKVarSelector::active(bool isOk){
+void RKVarSelector::slotActive(bool isOk){
 list_view->setEnabled(isOk) ;
 }

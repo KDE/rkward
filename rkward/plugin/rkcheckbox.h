@@ -21,7 +21,7 @@
 
 #include <qstring.h>
 
-#define CHECKBOX_WIDGET 1
+#define CHECKBOX_WIDGET 51 // comme le pastis
 
 
 class QCheckBox;
@@ -39,24 +39,24 @@ public:
 	~RKCheckBox ();
 	int type() {return CHECKBOX_WIDGET ; };
 //  bool isOk ;
-  void setEnabled(bool);
+	void setEnabled(bool);
 public slots:
 	void changedState (int);
-  void active();
-  void active(bool);
+	void slotActive();
+	void slotActive(bool);
 
   
 private:
 	QCheckBox *checkbox;
 	QString value_if_checked;
 	QString value_if_unchecked;
-  QString depend;
+	QString depend;
 protected:
 /** Returns the value of the currently selected option. */
 	QString value (const QString &modifier);
 
 signals: // Signals
-  void clicked();
+	void clicked();
 };
 
 #endif
