@@ -96,6 +96,10 @@ void RContainerObject::rCommandDone (RCommand *command) {
 		}
 		
 	} else if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
+		// first check, whether all known children still exist:
+		checkRemovedChildren (command->getStringVector (), command->stringVectorLength ());
+		
+		// next, update the existing and/or new children
 		num_children_updating = command->stringVectorLength ();
 		// empty object?
 		if (!num_children_updating) {
@@ -291,5 +295,24 @@ void RContainerObject::setDataSynced () {
 			it.data ()->setDataSynced ();
 		}
 		state -= (state & ChildrenModified);
+	}
+}
+
+void RContainerObject::checkRemovedChildren (char **current_children, int current_child_count) {
+	RK_TRACE (OBJECTS);
+// is there a more efficient algorythm for doing this?
+	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
+		QString child_string = it.key ();
+		bool found = false;
+		for (int i=0; i < current_child_count; ++i) {
+			if (child_string == current_children[i]) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+		// TODO: implement!
+			RK_DO (qDebug ("child no longer present: %s. TODO: take appropriate action.", child_string.latin1 ()), OBJECTS, DL_DEBUG);
+		}
 	}
 }

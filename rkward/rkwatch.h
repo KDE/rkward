@@ -50,6 +50,8 @@ public slots:
 	void configureWatch ();
 /** configures the editor-window */
 	void configureEditor ();
+/** opens a new editor-window */
+	void openEditor ();
 /** clears the watch-window */
 	void clearWatch ();
 private:

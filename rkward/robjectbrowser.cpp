@@ -47,7 +47,7 @@ RObjectBrowser::RObjectBrowser () : RKToggleWidget () {
     list_view->addColumn ("Class(es)");
 	vbox->addWidget (list_view);
 
-	update_button = new QPushButton (i18n ("Udpate"), this);
+	update_button = new QPushButton (i18n ("Update"), this);
 	vbox->addWidget (update_button);
 	
 	setCaption (i18n ("Objects in the R workspace"));
@@ -117,6 +117,8 @@ void RObjectBrowser::popupEdit () {
 }
 
 void RObjectBrowser::popupView () {
+	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (menu_object);
+	if (ed) ed->syncToR (0);
 	new RObjectViewer (0, menu_object);
 }
 

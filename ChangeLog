@@ -1,3 +1,9 @@
+--- Version 0.2.6a - Aug-30-2004
+- synchronize edited objects before "View"ing them
+- fix small typo
+- quick-and-dirty fix for problem with objects in a new table (e.g. "my.data") never getting synced
+
+--- Version 0.2.6 - Aug-29-2004
 - added error-handling to workspace saving
 - ask whether to save workspace on application quit
 - added menu-entries to clear output-window and watch-log

@@ -36,7 +36,7 @@ dnl Perform program name transformation
 AC_ARG_PROGRAM
 
 dnl Automake doc recommends to do this only here. (Janos)
-AM_INIT_AUTOMAKE(rkward, 0.2.6) dnl searches for some needed programs
+AM_INIT_AUTOMAKE(rkward, 0.2.6a) dnl searches for some needed programs
 
 KDE_SET_PREFIX
 
@@ -83,6 +83,7 @@ AC_CONFIG_FILES([ rkward/plugins/Makefile ])
 AC_CONFIG_FILES([ rkward/rbackend/Makefile ])
 AC_CONFIG_FILES([ rkward/scriptbackends/Makefile ])
 AC_CONFIG_FILES([ rkward/settings/Makefile ])
+AC_CONFIG_FILES([ rkward/windows/Makefile ])
 AC_OUTPUT
 if test "$all_tests" = "bad"; then
   if test ! "$cache_file" = "/dev/null"; then

@@ -66,6 +66,12 @@ void RKEditorDataFrame::openObject (RObject *object) {
 
 void RKEditorDataFrame::rCommandDone (RCommand *command) {
 	if (command->getFlags () == GET_NAMES_COMMAND) {
+		// this is just a quick and dirty fix. The real fix will be not to start the editor with a set of empty variables, but to implement a better way of adding
+		// variables "as you type", instead.
+		for (int i=command->stringVectorLength (); i < numCols (); ++i) {
+			setColObject (i, static_cast<RContainerObject *> (getObject ())->createNewChild (varview->text (NAME_ROW, i)));
+		}
+	
 		// set the names and meta-information
 		for (int i = 0; i < command->stringVectorLength (); ++i) {
 			if (numCols () <= i) {

@@ -67,6 +67,10 @@ void RObjectList::rCommandDone (RCommand *command) {
 	bool changed = false;
 
 	if (command->getFlags () == UPDATE_LIST_COMMAND) {
+		// first check, whether all known children still exist:
+		checkRemovedChildren (command->getStringVector (), command->stringVectorLength ());
+		
+		// next, update the existing and/or new children
 		num_children_updating = command->stringVectorLength ();
 		// empty workspace?
 		if (!num_children_updating) {

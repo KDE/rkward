@@ -69,6 +69,9 @@ protected:
 	virtual void renameChild (RObject *object, const QString &new_name);
 	virtual void removeChild (RObject *object);
 	virtual void objectsChanged ();
+/** given the current list of children (as returned by the "names"-command or similar in derived classes) find out, which children have been removed,
+and takes the appropriate measures */
+	void checkRemovedChildren (char **current_children, int current_child_count);
 
 	int num_classes;
 	QString *classname;
