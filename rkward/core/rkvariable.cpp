@@ -640,6 +640,10 @@ void RKVariable::insertRow (int row) {
 }
 
 void RKVariable::insertRows (int row, int count) {
+	for (int i=getLength (); i <= row+count; ++i) {
+		myData ()->cell_string_data[i] = RKGlobals::empty_char;
+		myData ()->cell_double_data[i] = 0;
+	}
 	extendToLength (getLength () + count);
 	
 	qmemmove (&(myData ()->cell_string_data[row+count]), &(myData ()->cell_string_data[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (char*));

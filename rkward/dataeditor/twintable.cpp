@@ -278,6 +278,7 @@ QCString TwinTable::encodeSelection () {
 		return encoded_data;
 	}
 
+// TODO: check whether there actually is a selection
 	QTableSelection selection;
 	selection = table->selection (table->currentSelection ());
 

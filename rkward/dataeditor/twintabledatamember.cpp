@@ -129,7 +129,7 @@ QWidget *TwinTableDataMember::beginEdit (int row, int col, bool) {
 	}
 
 	if (row >= numRows ()) {
-		table->insertNewRow (numRows (), this);
+		table->insertNewRow ();
 	}
 	
 	if (var->cellStatus (row) == RKVariable::ValueUnknown) return 0;

@@ -119,7 +119,7 @@ QWidget *TwinTableMetaMember::beginEdit (int row, int col, bool) {
 	RKVariable *var = table->getColObject (col);
 	if (!var) {
 		RK_ASSERT (col >= numTrueCols ());
-		table->insertNewColumn (col);
+		table->insertNewColumn (col+1);
 		var = table->getColObject (col);
 		if (!var) {
 			RK_ASSERT (false);

@@ -27,7 +27,6 @@ CellEditor::CellEditor (TwinTableMember *parent, const QString &text, int mode, 
 	RK_TRACE (EDITOR);
 	
 	table = parent;
-	qDebug ("create: cols: %d, true cols: %d, current col: %d", table->numCols (), table->numTrueCols (), table->currentColumn ());
 	
 	setText (text);
 	setFrame (false);
@@ -106,7 +105,6 @@ void CellEditor::keyPressEvent (QKeyEvent *e) {
 			}
 		} else if (e->key () == Qt::Key_Right) {
 			if (cursorPosition () >= text ().length ()) {
-				qDebug ("cols: %d, true cols: %d, current col: %d", table->numCols (), table->numTrueCols (), table->currentColumn ());
 				table->keyPressEvent (e);
 				return;
 			}
