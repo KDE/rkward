@@ -44,6 +44,8 @@ for (col in 1:length (rk.temp.vars)) {
 		$dosd = getRK_val ("sd");
 		$vars = array ();
 		$vars = explode ("\n", trim (getRK_val ("x")));
+		$labels = array ();
+		$labels = explode ("\n", trim (getRK_val ("x.label")));
 		$means = array ();
 		$medians = array ();
 		$mins = array ();
@@ -90,7 +92,7 @@ for (col in 1:length (rk.temp.vars)) {
 	</tr>
 <? for ($i = 0; $i < count ($vars); ++$i) { ?>
 		<tr>
-		<td><? echo ($vars[$i] . " (" . $xlabel . ")"); ?></td>
+		<td><? echo ($vars[$i] . "<br>(" . $labels[$i] . ")"); ?></td>
 		<? if ($domean) { ?><td><? echo $means[$i]; ?></td><? }
 		if ($domedian) { ?><td><? echo $medians[$i]; ?></td><? }
 		if ($dorange) { ?><td><? echo $mins[$i]; ?></td><td><? echo $maxs[$i]; ?></td><? }

@@ -6,21 +6,27 @@ stuff to do before 0.2.1 release
 	- move output logging to RKOutput?
 - plugin improvements:
 	- wizards
-	- multi-varslots
+	- let individual widgets deal with modifiers
+	- smarten up varselector / varslot-interaction
 
 small stuff to do soon
 - plugins-scanning: don't duplicate everything
 - rework plugin-XML-format
 - add more plugin-widgets
 - if there is no R_HOME setting, ask for one instead of using /usr/lib/R unconditionally
+- set up a simple but serious debbugging framework
+- cleanup label-mess for plugin-widgets
 
 mid-term stuff
 - add XML-parsing helper functions and error-checking
 - restructure source-layout
 
 stuff to do before the thing is usable
-- use a cool new RHistory-Widget for the RKWatch
+- RKWatch
+	- use a cool new RHistory-Widget for the watch
 	- discard RCommand-data that is not needed in the history
+	- access to (command) editor-settings
+	- load / save / spawn as separate editor ...
 - add a help-system
 - support for multiple tables/data.frames
 - mostly everything

@@ -1,3 +1,5 @@
+- support for selection of multiple variables at once (TODO: handling of x.label etc.)
+- use a katepart as the command-editor (provides basic syntax-highlighting)
 - plugins can use a tabbook-layout
 - display status of R-process in the statusbar
 - R-backend allows chains of commands that are guaranteed to be run without other intermitting commands

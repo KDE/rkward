@@ -29,6 +29,7 @@
 #include <qtextedit.h>
 #include <qregexp.h>
 #include <qtabwidget.h>
+#include <qsplitter.h>
 
 #include <klocale.h>
 
@@ -114,37 +115,39 @@ void RKPlugin::activated () {
 void RKPlugin::buildGUI (const QDomElement &layout_element) {
 	gui = new RKPluginGUIWidget (this);
 	gui->setCaption (_label);
-	QGridLayout *grid = new QGridLayout (gui, 4, 3, 11, 6);
+	
+	QGridLayout *main_grid = new QGridLayout (gui, 1, 1, 11, 6);
+	QSplitter *splitter = new QSplitter (QSplitter::Vertical, gui);
+	main_grid->addWidget (splitter, 0, 0);
+	QWidget *upper_widget = new QWidget (splitter);
+	
+	QGridLayout *grid = new QGridLayout (upper_widget, 1, 3, 11, 6);
 	QVBoxLayout *vbox = new QVBoxLayout (grid, 6);
 
 	// default layout is in vertical	
-	buildStructure (layout_element, vbox, gui);
+	buildStructure (layout_element, vbox, upper_widget);
 
 	// build standard elements
 	// lines
 	QFrame *line;
-	line = new QFrame (gui);
+	line = new QFrame (upper_widget);
 	line->setFrameShape (QFrame::VLine);
 	line->setFrameShadow (QFrame::Plain);	
 	grid->addWidget (line, 0, 1);
-	line = new QFrame (gui);
-	line->setFrameShape (QFrame::HLine);
-	line->setFrameShadow (QFrame::Plain);
-	grid->addMultiCellWidget (line, 1, 1, 0, 2);
 
 	// buttons
 	vbox = new QVBoxLayout (0, 0, 6);
-	okButton = new QPushButton ("Submit", gui);
+	okButton = new QPushButton ("Submit", upper_widget);
 	connect (okButton, SIGNAL (clicked ()), this, SLOT (ok ()));
-	cancelButton = new QPushButton ("Close", gui);
+	cancelButton = new QPushButton ("Close", upper_widget);
 	connect (cancelButton, SIGNAL (clicked ()), this, SLOT (cancel ()));
-	helpButton = new QPushButton ("Help", gui);
+	helpButton = new QPushButton ("Help", upper_widget);
 	connect (helpButton, SIGNAL (clicked ()), this, SLOT (help ()));
-	toggleCodeButton = new QPushButton ("Code", gui);
+	toggleCodeButton = new QPushButton ("Code", upper_widget);
 	toggleCodeButton->setToggleButton (true);
 	toggleCodeButton->setOn (true);
 	connect (toggleCodeButton, SIGNAL (clicked ()), this, SLOT (toggleCode ()));
-	toggleWarnButton = new QPushButton ("Problems", gui);
+	toggleWarnButton = new QPushButton ("Problems", upper_widget);
 	toggleWarnButton->setToggleButton (true);
 	connect (toggleWarnButton, SIGNAL (clicked ()), this, SLOT (toggleWarn ()));
 	vbox->addWidget (okButton);
@@ -157,17 +160,19 @@ void RKPlugin::buildGUI (const QDomElement &layout_element) {
 	grid->addLayout (vbox, 0, 2);
 	
 	// text-fields
-	codeDisplay = new QTextEdit (gui);
+	QWidget *lower_widget = new QWidget (splitter);
+	
+	vbox = new QVBoxLayout (lower_widget, 6);
+	codeDisplay = new QTextEdit (lower_widget);
 	codeDisplay->setMinimumHeight (40);
 	codeDisplay->setReadOnly (true);
-	warnDisplay = new QTextEdit (gui);
+	codeDisplay->setWordWrap (QTextEdit::NoWrap);
+	warnDisplay = new QTextEdit (lower_widget);
 	warnDisplay->setMinimumHeight (40);
 	warnDisplay->hide ();
 	warnDisplay->setReadOnly (true);
-	grid->addMultiCellWidget (codeDisplay, 3, 3, 0, 2);
-	grid->addMultiCellWidget (warnDisplay, 4, 4, 0, 2);
-
-	grid->setRowStretch (0, 4);
+	vbox->addWidget (codeDisplay);
+	vbox->addWidget (warnDisplay);
 
 	gui->show ();
 	connect (gui, SIGNAL (destroyed ()), this, SLOT (discard ()));
@@ -358,9 +363,9 @@ QString RKPlugin::getVar (const QString &id) {
 		return ("#unavailable#");
 	}
 
-	QString modifier = id.section (".", 1, 1);
-
-	if (widget) {
+	return (widget->value (id.section (".", 1, 1)));
+	
+/*	if (widget) {
 		if (modifier != "") {
 			QString quoted;
 			if (modifier == "label") {
@@ -375,7 +380,7 @@ QString RKPlugin::getVar (const QString &id) {
 		} else {
 			return (widget->value ());
 		}
-	}
+	} */
 }
 
 /** Returns a pointer to the varselector by that name (0 if not available) */

@@ -41,7 +41,7 @@ RKCheckBox::RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *p
 RKCheckBox::~RKCheckBox () {
 }
 
-QString RKCheckBox::value () {
+QString RKCheckBox::value (const QString &) {
 	if (checkbox->isChecked ()) {
 		return value_if_checked;
 	} else {

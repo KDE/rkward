@@ -34,7 +34,7 @@ QString RKPluginWidget::complaints () {
 	return "";
 }
 
-QString RKPluginWidget::value () {
+QString RKPluginWidget::value (const QString &modifier) {
 	return "";
 }
 

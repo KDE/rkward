@@ -20,10 +20,13 @@
 
 #include <rkpluginwidget.h>
 
+#include <qmap.h>
+
 class QLineEdit;
 class QPushButton;
 class QVarSelector;
 class QListView;
+class QListViewItem;
 
 /** An RKVarSlot takes one or more variable(s) from an RKVarSelector.
   *@author Thomas Friedrichsmeier
@@ -48,9 +51,11 @@ private:
 	bool multi;
 	bool required;
 	bool selection;
+	typedef QMap<QListViewItem*, int> ItemMap; 
+	ItemMap item_map;
 protected:
 	bool isSatisfied ();
-	QString value ();
+	QString value (const QString &modifier);
 	QString complaints ();
 };
 

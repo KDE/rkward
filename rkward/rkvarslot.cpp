@@ -53,6 +53,8 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 		min_vars = 1;
 	} else {
 		list = new QListView (parent);
+		list->setSorting (100);
+		list->setSelectionMode (QListView::Extended);
 		list->addColumn ("Name");
 		g_layout->addWidget (list, 1, 2);
 		QString dummy = element.attribute ("min_vars", "1");
@@ -98,11 +100,14 @@ void RKVarSlot::selectPressed () {
 		if (!num_vars) {
 			if (!source) return;
 			if (source->numSelectedVars() != 1) return;
-			line_edit->setText (source->selectedVars ().first ());
+			int sel = source->selectedVars ().first ();
+			line_edit->setText (source->getName (sel));
+			item_map.insert (0, sel);
 			num_vars = 1;
 			select->setText ("<--");
    	 } else {
 			line_edit->setText ("");
+			item_map.remove (0);
 			num_vars = 0;
 			select->setText ("-->");
 		}
@@ -114,18 +119,32 @@ void RKVarSlot::selectPressed () {
 					selection = true;
 					QListViewItem *dummy = item->nextSibling ();
 					list->takeItem (item);
+					item_map.remove (item);
 					delete item;
 					item = dummy;
 				} else {
 					item = item->nextSibling ();
 				}
 			}
-			selection = false;
+			listSelectionChanged ();
 		} else {
 			if (!source) return;
-			QStrList itemlist = source->selectedVars();
-			for (QStrList::Iterator it = itemlist.begin (); it != itemlist.end (); ++it) {
-				list->insertItem (new QListViewItem (list, *it));
+			QValueList<int> itemlist = source->selectedVars();
+			for (QValueList<int>::Iterator it = itemlist.begin (); it != itemlist.end (); ++it) {
+				int sel = *it;
+				// don't allow duplicates
+				bool duplicate = false;
+				for (ItemMap::const_iterator iit = item_map.begin (); iit != item_map.end (); ++iit) {
+					if (iit.data () == sel) {
+						duplicate = true;
+						break;
+					}
+				}
+				if (!duplicate) {
+					QListViewItem *new_item = new QListViewItem (list, source->getName (sel));
+					list->insertItem (new_item);
+					item_map.insert (new_item, sel);
+				}
 			}
 		}
 		num_vars = list->childCount ();
@@ -139,19 +158,38 @@ bool RKVarSlot::isSatisfied () {
 	return (num_vars >= min_vars);
 }
 
-QString RKVarSlot::value () {
-	if (!multi) {
-		return line_edit->text ();
-	} else {
-		QString ret;	
+QString RKVarSlot::value (const QString &modifier) {
+	RKVarSelector *source = plugin ()->getVarSelector (source_id);
 	
-		QListViewItem *item = list->firstChild ();
-		while (item) {
-			ret.append (item->text (0) + "\n");
-			item = item->nextSibling ();
-		}
+	if (modifier == "label") {
+		if (!multi) {
+			return source->getLabel (item_map[0]);
+		} else {
+			QString ret;
+	
+			QListViewItem *item = list->firstChild ();
+			while (item) {
+				ret.append (source->getLabel (item_map[item]) + "\n");
+				item = item->nextSibling ();
+			}
 		
-		return ret;
+			return ret;
+		}
+	} else {
+		if (!multi) {
+			return source->getName (item_map[0]);
+			//return line_edit->text ();
+		} else {
+			QString ret;
+	
+			QListViewItem *item = list->firstChild ();
+			while (item) {
+				ret.append (source->getName (item_map[item]) + "\n");
+				item = item->nextSibling ();
+			}
+		
+			return ret;
+		}
 	}
 }
 

@@ -32,6 +32,7 @@ RKVarSelector::RKVarSelector(const QDomElement &element, QWidget *parent, RKPlug
 	addWidget (label);
 
 	list_view = new QListView (parent);
+	list_view->setSorting (100);
     list_view->addColumn ("Name");
     list_view->addColumn ("Label");
     list_view->addColumn ("Type");
@@ -43,8 +44,8 @@ RKVarSelector::RKVarSelector(const QDomElement &element, QWidget *parent, RKPlug
 	list_view->insertItem (main_table);
 	
 	RKwardDoc *doc = plugin->getApp ()->getDocument ();
-	for (int i = 0; i < doc->numCols (); i++) {
-		new QListViewItem (main_table, doc->varname (i), doc->label (i), doc->typeString (i));
+	for (int i = doc->numCols () - 1; i >= 0; --i) {
+		item_map.insert (new QListViewItem (main_table, doc->varname (i), doc->label (i), doc->typeString (i)), i);
 	}
 
 	addWidget (list_view);
@@ -53,16 +54,16 @@ RKVarSelector::RKVarSelector(const QDomElement &element, QWidget *parent, RKPlug
 RKVarSelector::~RKVarSelector(){
 }
 
-QStrList RKVarSelector::selectedVars () {
-	QStrList selected;
+QValueList<int> RKVarSelector::selectedVars () {
+	QValueList<int> selected;
 
 	QListViewItem *current;
 	current = list_view->firstChild ();
 	while (current->itemBelow ()) {
 		current = current->itemBelow ();
 		if (current->isSelected ()) {
-			selected.append ("rk." + current->parent ()->text (0) + "[[\"" + current->text (0) + "\"]]");
-		}		              	
+			selected.append (item_map[current]);
+		}
 	}
 
 	return selected;
@@ -81,4 +82,13 @@ int RKVarSelector::numSelectedVars () {
 	}
 
 	return i;
+}
+
+QString RKVarSelector::getName (int item) {
+	QString ret ("rk." + list_view->firstChild ()->text (0) + "[[\"" + plugin ()->getApp ()->getDocument ()->varname (item) + "\"]]");
+	return ret;
+}
+
+QString RKVarSelector::getLabel (int item) {
+	return plugin ()->getApp ()->getDocument ()->label (item);
 }

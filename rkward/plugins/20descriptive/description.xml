@@ -3,7 +3,7 @@
 <!-- This is a simple example, of how a "plugin" might be configured. -->
 
 <document>
-	<entry type="entry" id="istt" label="Descriptive Statistics"/>
+	<entry type="entry" id="descriptive" label="Descriptive Statistics"/>
 
 <!-- The layout-section takes care of the layout of the GUI for this plugin. -->
 
@@ -13,7 +13,7 @@
 				<varselector id="vars"/>
 			</column>
 			<column>
-				<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable:"/>
+				<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
 				<checkbox id="mean" label="mean" value="1" value_unchecked="0" checked="true"/>
 				<checkbox id="median" label="median" value="1" value_unchecked="0"/>
 				<checkbox id="range" label="range" value="1" value_unchecked="0" checked="true"/>

@@ -20,9 +20,11 @@
 
 #include <rkpluginwidget.h>
 
-#include <qstrlist.h>
+#include <qvaluelist.h>
+#include <qmap.h>
 
 class QListView;
+class QListViewItem;
 
 /** This is an especially important RK-plugin-widget. It provides a list of variables
 (derived from the document's table), that can be selected for statistical analysis.
@@ -40,10 +42,13 @@ public:
 	~RKVarSelector();
 /** Returns the number of currently selected variables */
 	int numSelectedVars ();
-/** Returns the names of the currently selected variables */
-	QStrList selectedVars ();
+/** Returns pointers to the currently selected variables */
+	QValueList<int> selectedVars ();
+	QString getName (int item);
+	QString getLabel (int item);
 private:
 	QListView *list_view;
+	QMap<QListViewItem*, int> item_map;
 protected:
 	bool isVarSelector () { return true; };
 };

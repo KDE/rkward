@@ -41,7 +41,7 @@ private:
 	QString value_if_unchecked;
 protected:
 /** Returns the value of the currently selected option. */
-	QString value ();
+	QString value (const QString &modifier);
 };
 
 #endif

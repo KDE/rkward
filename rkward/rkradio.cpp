@@ -69,7 +69,7 @@ RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin, 
 RKRadio::~RKRadio(){
 }
 
-QString RKRadio::value () {
+QString RKRadio::value (const QString &) {
 	OptionsMap::Iterator it;
 	for (it = options.begin(); it != options.end(); ++it) {
 		if (it.key()->isChecked ()) {
@@ -80,6 +80,6 @@ QString RKRadio::value () {
 	return "";
 }
 
-void RKRadio::buttonClicked (int id) {
+void RKRadio::buttonClicked (int) {
 	plugin ()->changed ();
 }

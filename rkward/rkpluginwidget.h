@@ -50,7 +50,7 @@ public:
 	baseclass-implementation returns true. */
 	virtual bool isSatisfied ();
 /** Returns this widgets "value" */
-	virtual QString value ();
+	virtual QString value (const QString &modifier);
 /** Returns any complaints, this widget may have.
 	baseclass-implementation returns an empty string */
 	virtual QString complaints ();
