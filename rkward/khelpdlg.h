@@ -47,6 +47,8 @@ protected slots:
   /*$PROTECTED_SLOTS$*/
 private:
     RCommandChain *chain;
+private slots:
+    void slotTimerDone ();
 };
 
 #endif

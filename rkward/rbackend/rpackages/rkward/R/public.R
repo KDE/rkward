@@ -74,7 +74,7 @@
 
 "rk.print" <- function(x) {
 	if(require(R2HTML)==TRUE) {
-		.HTML.file = .rk.output.file
+		#.HTML.file = .rk.output.file
 		HTML(x)
 	}
 }

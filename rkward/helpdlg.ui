@@ -265,12 +265,6 @@
         <receiver>helpDlg</receiver>
         <slot>slotResultsListDblClicked(QListViewItem*,const QPoint&amp;,int)</slot>
     </connection>
-    <connection>
-        <sender>packagesList</sender>
-        <signal>activated(int)</signal>
-        <receiver>helpDlg</receiver>
-        <slot>slotPackagesListActivated(int)</slot>
-    </connection>
 </connections>
 <includes>
     <include location="local" impldecl="in implementation">helpdlg.ui.h</include>
@@ -278,7 +272,6 @@
 <slots>
     <slot>slotFindButtonClicked()</slot>
     <slot>slotResultsListDblClicked( QListViewItem *, const QPoint &amp;, int )</slot>
-    <slot>slotPackagesListActivated(int)</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

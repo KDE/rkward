@@ -201,9 +201,9 @@ void RKwardApp::doPostInit () {
 	addToolWindow(output,KDockWidget::DockBottom, getMainDockWidget(), 10);
 	
 	
-	/*helpDlg = new KHelpDlg(0);
+	helpDlg = new KHelpDlg(0);
 	helpDlg->setIcon(SmallIcon("help"));
-	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);*/
+	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);
 	
 	
 	// just to initialize the window-actions according to whether they're shown on startup or not
@@ -1119,9 +1119,11 @@ void RKwardApp::openHTML(KURL url)
 
 void RKwardApp::slotFunctionReference()
 {
-	if (! activeWindow()->inherits("RKCommandEditorWindow"))
-		return;
-	((RKCommandEditorWindow*) activeWindow())->showHelp();
-	
+	//if (! activeWindow()->inherits("RKCommandEditorWindow"))
+	//	return;
+	//((RKCommandEditorWindow*) activeWindow())->showHelp();
+	helpDlg = new KHelpDlg(0);
+	helpDlg->setIcon(SmallIcon("help"));
+	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);
 }
 

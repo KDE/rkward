@@ -21,6 +21,7 @@
 #include <qptrlist.h>
 
 /**
+\brief Provides an R-like console.
 This class provides a console, which is very similar to the classic R console. It is mainly used by RKwatch to allow
 the user to enter commands manualy. It is basically just a modified QTextEdit.
 
@@ -69,6 +70,7 @@ Submits the current command
     void submitCommand();
     void commandsListUp();
     void commandsListDown();
+    void cursorAtTheBegining();
 };
 
 #endif

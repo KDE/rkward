@@ -69,7 +69,7 @@ void RKConsole::keyPressEvent ( QKeyEvent * e )
 		return;
 	}
 	else if (e->key () == Qt::Key_Home){
-		cursorAtTheEnd ();
+		cursorAtTheBegining ();
 		return;
 	}
 	
@@ -190,4 +190,14 @@ void RKConsole::commandsListDown()
 	if (commandsList.getLast () == commandsList.current ()){
 		commandsList.remove ();
 	}
+}
+
+
+/*!
+    \fn RKConsole::cursorAtTheBegining()
+    Puts the cursor at the begining of the last line.
+ */
+void RKConsole::cursorAtTheBegining()
+{
+	setCursorPosition (paragraphs () - 1, prefix.length ());
 }

@@ -15,12 +15,17 @@
  *                                                                         *
  ***************************************************************************/
 
+ // To be removed :
+#include <kmessagebox.h>
+ 
+ 
 #include <klocale.h>
 #include "kurl.h"
 
 #include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qlistview.h>
+#include <qtimer.h>
 
 #include "rbackend/rinterface.h"
 #include "rbackend/rcommandreceiver.h"
@@ -39,7 +44,6 @@ KHelpDlg::KHelpDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
     : helpDlg(parent,name, modal,fl)
 {
 	resultsList->clear();
-	// HACK : I should'nt have to do that.
 	resultsList->removeColumn(0);
 	
 	resultsList->addColumn (i18n ("Topic"));
@@ -47,7 +51,15 @@ KHelpDlg::KHelpDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
 	resultsList->addColumn (i18n ("Package"));
 	packagesList->insertItem (i18n("All"));
 	
-	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_INSTALLED_PACKAGES, chain);
+	// HACK: apparantly, we have to wait a little bit before we lauch an R command. So we wait half a second.
+        QTimer *timer = new QTimer (this);
+        connect(timer, SIGNAL(timeout ()), this, SLOT(slotTimerDone ()));
+        timer->start(2000, TRUE); // 0.5 seconds single-shot timer
+	
+	
+	// HACK again: it looks like we need to issue a command here?!
+	RKGlobals::rInterface ()->issueCommand ("cat("")");
+	
 }
 
 KHelpDlg::~KHelpDlg()
@@ -150,3 +162,16 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 
 #include "khelpdlg.moc"
 
+
+
+
+
+/*!
+    \fn KHelpDlg::slotTimerDone ()
+    
+    We use a timer to load the package list after a little while. We souln't have to do this.
+ */
+void KHelpDlg::slotTimerDone ()
+{
+    //RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_INSTALLED_PACKAGES, chain);
+}

@@ -21,7 +21,7 @@
 
 #include <qstring.h>
 
-#define CHECKBOX_WIDGET 51 // comme le pastis
+#define CHECKBOX_WIDGET 1
 
 
 class QCheckBox;

@@ -41,7 +41,8 @@ class RKwardApp;
 class RCommandChain;
 
 /**
-This class provides an editor window for R-commands. It is an MDI child that is added to the main window.
+\brief This class provides an editor window for R-commands.
+This class is an MDI child that is added to the main window.
 
 @author Pierre Ecochard
 */
@@ -65,11 +66,12 @@ public:
     void undo();
     void redo();
     void insertText(QString text);
+    /** Show help about the current word. */
     void showHelp();
     void rCommandDone (RCommand *command);
 private:
 	Kate::Document *m_doc;
-	   
+	
 	void setRHighlighting (Kate::Document *doc);
 	KLibrary *m_library;
 	bool getFilenameAndPath(const KURL &url,QString *fname);

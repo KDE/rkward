@@ -36,6 +36,10 @@ RKHelpWindow::RKHelpWindow(QWidget *parent, const char *name)
 	
 	pLayout = new QHBoxLayout( this, 0, -1, "layout");
 	pLayout->addWidget(khtmlpart->view());
+	
+	// We have to connect this in order to allow browsing.
+	connect( khtmlpart->browserExtension(), SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs & ) ), this, SLOT( slotOpenURLRequest(const KURL &, const KParts::URLArgs & ) ) );
+	
 }
 
 
@@ -59,4 +63,16 @@ bool RKHelpWindow::openURL(KURL url)
 	else{
 		return (false);
 	}
+}
+
+
+/*!
+    \fn RKHelpWindow::slotOpenURLRequest(const KURL &, const KParts::URLArgs & )
+    Called when the user clicks on a link
+ */
+void RKHelpWindow::slotOpenURLRequest(const KURL &url, const KParts::URLArgs & )
+{
+	khtmlpart->openURL(url);
+	setTabCaption(url.fileName());
+	setCaption(url.prettyURL());
 }
