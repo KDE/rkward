@@ -1,7 +1,7 @@
 The following list of TODO-items is NOT complete!
 Also, plans change frequently. If something is listed for a specific release, that's no more than a rough plan.
 
-stuff to do before 0.3.0 release
+stuff to do before 0.3.1 release
 - plugins (general)
 	- rework structure (directory layout) of plugin definitions
 	- add import-filter plugins

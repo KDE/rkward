@@ -1,3 +1,9 @@
+--- Version 0.2.9 - Nov-12-2004
+- added french and italian translations
+- added toolbars and some icons
+- some small i18n fixes
+- rework of user interface (now using KMDI and IDEAl mode)
+- compilation fix for R 2.0
 - added basic per variable formatting options in the data editor (alignment, precision)
 - fixed: cell last edited did not react to single mouse click
 - fixed: switched to line below after a new row was automatically added
