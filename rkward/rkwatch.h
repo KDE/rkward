@@ -18,18 +18,20 @@
 #ifndef RKWATCH_H
 #define RKWATCH_H
 
-#include <rkwatch_ui.h>
+#include <qwidget.h>
 
 #include <qstring.h>
 
 class RInterface;
 class RCommand;
+class QPushButton;
+class QTextEdit;
 
 /**
   *@author Thomas Friedrichsmeier
   */
 
-class RKwatch : public RKwatchUi  {
+class RKwatch : public QWidget {
 	Q_OBJECT
 public: 
 	RKwatch(RInterface *parent);
@@ -50,6 +52,11 @@ public slots:
 private:
 /** Pointer to the R-Interface */
 	RInterface *r_inter;
+
+	QTextEdit *commands;
+	QTextEdit *watch;
+	QPushButton *submit;
+	QPushButton *clear_commands;
 };
 
 #endif

@@ -23,19 +23,48 @@
 #include <qtextedit.h>
 #include <qpushbutton.h>
 #include <qfont.h>
+#include <qlayout.h>
+#include <qsplitter.h>
 
-RKwatch::RKwatch(RInterface *parent) {
-	connect (submit, SIGNAL (clicked ()), this, SLOT (submitCommand ()));
-	connect (clear_commands, SIGNAL (clicked ()), this, SLOT (clearCommand ()));
-	r_inter = parent;
+#include <klocale.h>
+
+RKwatch::RKwatch(RInterface *parent) : QWidget () {
+	QGridLayout *grid = new QGridLayout (this, 1, 1, 11, 6);
+
+	QSplitter *splitter = new QSplitter (QSplitter::Vertical, this);
+	grid->addWidget (splitter, 0, 0);
+
+	watch = new QTextEdit (splitter);
 	watch->setReadOnly (true);
 
+	QWidget *layout_widget = new QWidget (splitter);
+	QHBoxLayout *bottom_hbox = new QHBoxLayout (layout_widget, 0, 6);
+
+	commands = new QTextEdit (layout_widget);
+	bottom_hbox->addWidget (commands);
+
+	QVBoxLayout *button_vbox = new QVBoxLayout (0, 0, 6);
+	bottom_hbox->addLayout (button_vbox);
+	
+	submit = new QPushButton(i18n ("Submit"), layout_widget);
+	connect (submit, SIGNAL (clicked ()), this, SLOT (submitCommand ()));
+	button_vbox->addWidget (submit);
+
+	clear_commands = new QPushButton (i18n ("Reset"), layout_widget);
+	connect (clear_commands, SIGNAL (clicked ()), this, SLOT (clearCommand ()));
+	button_vbox->addWidget (clear_commands);
+
+    resize (QSize (600, 511).expandedTo (minimumSizeHint ()));
+	setCaption (i18n ("R-Interface Watch"));
+	
 	// set a fixed width font
     QFont font ("Courier");
 	watch->setCurrentFont (font);
 	watch->setWordWrap (QTextEdit::NoWrap);
 	commands->setCurrentFont (font);
 	commands->setWordWrap (QTextEdit::NoWrap);
+	
+	r_inter = parent;
 }
 
 RKwatch::~RKwatch(){
