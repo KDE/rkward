@@ -40,6 +40,7 @@ class RKwardView;
 class RSettings;
 class PluginSettings;
 class RKMenu;
+class QTimer;
 
 /**
   * The base class for RKward application windows. It sets up the main
@@ -175,6 +176,9 @@ class RKwardApp : public KMainWindow
 
 	/** configures Plugin-settings */
 	void slotConfigurePlugins ();
+
+/** Init-procedures to be done after the exec-loop was started */
+	void doPostInit ();
   private:
     /** the configuration object of the application */
     KConfig *config;
@@ -224,6 +228,9 @@ class RKwardApp : public KMainWindow
 	void initPlugin (const QString & filename);
 
 	QMap<QString, RKMenu*> rkmenus;
+
+/** Used to receive a signal during startup AFTER the exec loop was entered */
+	QTimer *startup_timer;
 };
  
 #endif // RKWARD_H

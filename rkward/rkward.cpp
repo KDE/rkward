@@ -23,6 +23,7 @@
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 #include <qlineedit.h>
+#include <qtimer.h>
 
 // include files for KDE
 #include <kiconloader.h>
@@ -75,13 +76,32 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
   initDocument();
   initView();
 
+	startup_timer = new QTimer (this);
+	startup_timer->start (50);
+	connect (startup_timer, SIGNAL (timeout ()), this, SLOT (doPostInit ()));
+
   readOptions();
-	initPlugins ();
-	startR ();
 }
 
 RKwardApp::~RKwardApp()
 {
+}
+
+void RKwardApp::doPostInit () {
+	delete startup_timer;
+	
+    QString dummy = "Before you start bashing at it: Please note that is is merely ";
+	dummy.append ("a very early proof-of-concept release. It does not do much good. It might do some ");
+	dummy.append ("very bad things. It's really only targeted at people who might be interested in helping with the development.\n");
+	dummy.append ("So before you start finding all the bugs/missing features/design flaws, enter some ");
+	dummy.append ("data in the table, save the table, if you like, select Analyse->Means->T-Tests->Independent ");
+	dummy.append ("samples T-Test. Watch what happens in the RKWatch-window.\n");
+	dummy.append ("Note that the T-Test-dialog and all the entries in the Analyse-menu were created ");
+	dummy.append ("at run-time and on the fly from a simple XML-file located in the plugin-directory.");
+	KMessageBox::information (this, dummy, "Before you complain...");
+
+	initPlugins ();
+	startR ();
 }
 
 void RKwardApp::initPlugins () {

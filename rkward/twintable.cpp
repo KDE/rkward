@@ -32,6 +32,7 @@
 #include "typeselectcell.h"
 #include "rtableitem.h"
 #include "nameselectcell.h"
+#include "labelcell.h"
 
 TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name){
 	grid_layout = new QGridLayout(this);
@@ -49,6 +50,8 @@ TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name)
 			} else if (j == NAME_ROW) {
 				varview->setItem (NAME_ROW, i, new NameSelectCell (varview));
 				((NameSelectCell *) varview->item (NAME_ROW, i))->init ();
+			} else if (j == LABEL_ROW) {
+				varview->setItem (LABEL_ROW, i, new LabelCell (varview));
 			} else {
 				varview->setItem (j, i, new RTableItem (varview));
 			}
@@ -136,6 +139,8 @@ void TwinTable::insertNewColumn (int where, QString name) {
 		} else if (i == NAME_ROW) {
 			varview->setItem (NAME_ROW, where, new NameSelectCell (varview));
 			((NameSelectCell *) varview->item (NAME_ROW, where))->init ();
+		} else if (i == LABEL_ROW) {
+			varview->setItem (LABEL_ROW, i, new LabelCell (varview));
 		} else {
 			varview->setItem (i, where, new RTableItem (varview));
 		}
