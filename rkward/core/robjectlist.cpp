@@ -28,6 +28,7 @@
 #include <qtimer.h>
 
 #include <kio/netaccess.h>
+#include <klocale.h>
 
 #include "rkvariable.h"
 
@@ -222,6 +223,10 @@ void RObjectList::renameChild (RObject *object, const QString &new_name) {
 	
 	childmap.remove (it);
 	childmap.insert (new_name, object);
+
+	object->name = new_name;
+
+	objectsChanged ();
 }
 
 void RObjectList::removeChild (RObject *object) {
@@ -236,15 +241,10 @@ void RObjectList::removeChild (RObject *object) {
 	childmap.remove (it);
 	delete object;
 	
-	objectsRemoved ();
+	objectsChanged ();
 }
 
-void RObjectList::objectsRemoved () {
-	RK_TRACE (OBJECTS);
-	emit (updateComplete (true));
-}
-
-void RObjectList::objectsAdded () {
+void RObjectList::objectsChanged () {
 	RK_TRACE (OBJECTS);
 	emit (updateComplete (true));
 }

@@ -86,9 +86,6 @@ class RKwardApp : public KMainWindow
     /** sets up the statusbar for the main window by initialzing a statuslabel.
      */
     void initStatusBar();
-    /** creates the centerwidget of the KTMainWindow instance and sets it as the view
-     */
-    void initView();
     /** queryClose is called by KTMainWindow on each closeEvent of a window. Against the
      * default implementation (only returns true), this calles saveModified() on the document object to ask if the document shall
      * be saved if Modified; on cancel the closeEvent is rejected.

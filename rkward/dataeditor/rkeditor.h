@@ -47,10 +47,16 @@ public:
 	virtual void pasteEncoded (QByteArray content) = 0;
 	enum PasteMode {PasteEverywhere, PasteToTable, PasteToSelection};
 	virtual void setPasteMode (PasteMode mode) = 0;
+
+/// an object in this editor was deleted from outside the editor
+	virtual void objectDeleted (RObject *object) = 0;
+/// the meta-data for an object in this editor was changed from outside the editor (e.g. it was renamed)
+	virtual void objectMetaModified (RObject *object) = 0;
 protected:
 friend class RKEditorManager;
 /// opens the given object. Implement in the child-classes
 	virtual void openObject (RObject *object) = 0;
+
 	RObject *object;
 };
 

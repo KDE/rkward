@@ -101,14 +101,15 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
 
 	// which will be reacted upon by the following popup-menu:
 	top_header_menu = new QPopupMenu (this);
-	top_header_menu->insertItem (i18n ("Insert new variable after"), this, SLOT (insertColumnAfter ()));
-	top_header_menu->insertItem (i18n ("Insert new variable before"), this, SLOT (insertColumnBefore ()));
+	top_header_menu->insertItem (i18n ("Insert new variable left"), this, SLOT (insertColumnAfter ()));
+	top_header_menu->insertItem (i18n ("Insert new variable right"), this, SLOT (insertColumnBefore ()));
+	top_header_menu->insertItem (i18n ("Delete this variable"), this, SLOT (deleteColumn ()));
 
 	// and the same for the left header
 	connect (dataview, SIGNAL (headerRightClick (int, int)), this, SLOT (headerRightClicked (int, int)));
 	left_header_menu = new QPopupMenu (this);
-	left_header_menu->insertItem (i18n ("Insert new case after"), this, SLOT (insertRowAfter ()));
-	left_header_menu->insertItem (i18n ("Insert new case before"), this, SLOT (insertRowBefore ()));
+	left_header_menu->insertItem (i18n ("Insert new case above"), this, SLOT (insertRowAfter ()));
+	left_header_menu->insertItem (i18n ("Insert new case below"), this, SLOT (insertRowBefore ()));
 	
 	qDebug ("Twintable created");
 }
@@ -128,6 +129,14 @@ void TwinTable::autoScrolled (int x, int y) {
 	disconnect (dataview, SIGNAL (contentsMoving (int, int)), this, SLOT (scrolled (int, int)));
 	dataview->setContentsPos (x, dataview->contentsY ());
 	connect (dataview, SIGNAL (contentsMoving (int, int)), this, SLOT (scrolled (int, int)));
+}
+
+void TwinTable::deleteColumn (int column) {
+	if ((column >= 0) && (column < numCols ())) {
+		emit (aboutToDeleteColumn (column));
+		varview->removeColumn (column);
+		dataview->removeColumn (column);
+	}
 }
 
 void TwinTable::insertNewColumn (int where, QString name) {
@@ -236,6 +245,10 @@ void TwinTable::insertColumnAfter () {
 
 void TwinTable::insertColumnBefore () {
 	insertNewColumn (header_pos);
+}
+
+void TwinTable::deleteColumn () {
+	deleteColumn (header_pos);
 }
 
 void TwinTable::insertRowAfter () {

@@ -61,7 +61,6 @@ int main(int argc, char *argv[])
 	args->clear();
 
 	RKwardApp *rkward = new RKwardApp(open_url);
-	rkward->show();
   }
 
   return app.exec();

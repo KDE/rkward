@@ -82,7 +82,9 @@ public:
 	
 	static QString rQuote (const QString &string);
 protected:
+// why do I need those to compile? I thought they were derived classes!
 	friend class RContainerObject;
+	friend class RObjectList;
 	RContainerObject *parent;
 	QString name;
 	int type;

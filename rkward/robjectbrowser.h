@@ -40,7 +40,7 @@ public:
 
     ~RObjectBrowser ();
 	
-	enum PopupItems { Edit=1, View=2, Delete=3 };
+	enum PopupItems { Edit=1, View=2, Rename=3, Delete=4 };
 	
 public slots:
 	void updateButtonClicked ();
@@ -50,6 +50,7 @@ public slots:
 	void popupEdit ();
 	void popupView ();
 	void popupDelete ();
+	void popupRename ();
 private:
 	friend class RKwardApp;
 	void initialize ();

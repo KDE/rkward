@@ -77,9 +77,7 @@ protected:
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	void removeChild (RObject *object);
 /// reimplemented from RContainerObject to emit a change signal
-	void objectsRemoved ();
-/// reimplemented from RContainerObject to emit a change signal
-	void objectsAdded ();
+	void objectsChanged ();
 private:
 	QTimer *update_timer;
 	

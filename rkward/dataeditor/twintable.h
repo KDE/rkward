@@ -44,6 +44,7 @@ public:
 	~TwinTable();
 	void insertNewColumn (int where=-1, QString name="");
 	void insertNewRow (int where=-1, TwinTableMember *table=0);
+	void deleteColumn (int column);
 	QCString encodeSelection ();
 /** Pastes content to the current selection. */
 	void pasteEncoded (QByteArray content);
@@ -56,24 +57,14 @@ public:
 /** Flushes pending edit-operations */
 	void flushEdit ();
 
-/** Returns the variable-name of a column */
-//	QString varname (int col);
-
-/** Returns the variable-label of a column */
-//	QString label (int col);
-
-/** Returns the type of variable (as a string) of a column */
-//	QString typeString (int col);
-
-/** Returns the column of a variable named "name" or -1 if no such var */
-//	int lookUp (const QString &name);
-
 /** Returns the number of columns in the tables */
 	int numCols ();
 	
 	void setPasteMode (RKEditor::PasteMode mode);
     TwinTableMember* varview;
     TwinTableMember* dataview;
+signals:
+	void aboutToDeleteColumn (int);
 public slots:
 	void headerClicked (int col);
 	void headerRightClicked (int row, int col);
@@ -106,6 +97,8 @@ private slots:
 	void insertRowAfter ();
 /** inserts a new row before the current header_pos */
 	void insertRowBefore ();
+/** deletes the column at the current header_pos */
+	void deleteColumn ();
 };
 
 #endif

@@ -88,21 +88,12 @@ RKwardApp::RKwardApp(KURL *load_url, QWidget* , const char* name):KMainWindow(0,
   
 	RKGlobals::manager = new RKEditorManager (this);
 	setCentralWidget (RKGlobals::editorManager ());
-  initView();
-  readOptions();
 
 	initial_url = load_url;
   
 	startup_timer = new QTimer (this);
 	startup_timer->start (50);
 	connect (startup_timer, SIGNAL (timeout ()), this, SLOT (doPostInit ()));
-	
-	output = new RKOutputWindow (0);
-	output->showMaximized ();
-	output->hide ();
-	
-	object_browser = new RObjectBrowser ();
-	object_browser->show ();
 }
 
 RKwardApp::~RKwardApp() {
@@ -114,6 +105,16 @@ RKwardApp::~RKwardApp() {
 void RKwardApp::doPostInit () {
 	delete startup_timer;
 	
+	show ();
+	readOptions();
+	
+	object_browser = new RObjectBrowser ();
+	object_browser->show ();
+
+	output = new RKOutputWindow (0);
+	output->showMaximized ();
+	output->hide ();
+
     QString dummy = "Before you start bashing at it: Please note that is is merely ";
 	dummy.append ("a very early proof-of-concept release. It does not do much good. It might do some ");
 	dummy.append ("very bad things. It's really only targeted at people who might be interested in helping with the development.\n");
@@ -137,6 +138,7 @@ void RKwardApp::doPostInit () {
 		RObject *object = RKGlobals::rObjectList ()->createNewChild ("my.data", true, true);
 		RKEditor *editor = RKGlobals::editorManager ()->editObject (object);
 		editor->syncToR (0);
+		setCaption(i18n ("Untitled"));
 	}
 }
 
@@ -287,23 +289,10 @@ void RKwardApp::initStatusBar()
 	statusBar()->insertItem(i18n("starting R-processor"), ID_R_STATUS_MSG);
 }
 
-void RKwardApp::initView()
-{ 
-  ////////////////////////////////////////////////////////////////////
-  // create the main widget here that is managed by KTMainWindow's view-region and
-  // connect the widget to your document to display document contents.
-
-/*  view = new RKwardView(this);
-  doc->setView(view);
-  setCentralWidget(view);	*/
- // setCaption(doc->URL().fileName(),false);
-
-}
-
 void RKwardApp::openWorkspace (const KURL &url) {
 	RKGlobals::rObjectList ()->loadWorkspace(url);
 	setCaption(url.fileName(), false);
-	fileOpenRecent->addURL( url );
+	fileOpenRecent->addURL (url);
 }
 
 
@@ -321,7 +310,7 @@ void RKwardApp::saveOptions()
 }
 
 
-void RKwardApp::readOptions()
+void RKwardApp::readOptions ()
 {
 	
   config->setGroup("General Options");
@@ -340,17 +329,18 @@ void RKwardApp::readOptions()
   KToolBar::BarPosition toolBarPos;
   toolBarPos=(KToolBar::BarPosition) config->readNumEntry("ToolBarPos", KToolBar::Top);
   toolBar("mainToolBar")->setBarPos(toolBarPos);
-	
-	RKSettings::loadSettings (config);
 
+  QSize size=config->readSizeEntry("Geometry");
+  if(!size.isEmpty ())
+  {
+    resize (size);
+  }
+  
   // initialize the recent file list
   fileOpenRecent->loadEntries(config,"Recent Files");
 
-  QSize size=config->readSizeEntry("Geometry");
-  if(!size.isEmpty())
-  {
-    resize(size);
-  }
+	// do this last, since we may be setting some different config-group(s) in the process
+	RKSettings::loadSettings (config);  
 }
 
 void RKwardApp::saveProperties(KConfig *_cfg)
@@ -478,7 +468,7 @@ void RKwardApp::slotFileOpenRecent(const KURL& url)
 
 void RKwardApp::slotFileSave()
 {
-	if (RKGlobals::rObjectList ()->getWorkspaceURL ().fileName() == i18n("Untitled")) {
+	if (RKGlobals::rObjectList ()->getWorkspaceURL ().isEmpty ()) {
 		slotFileSaveAs ();
 		return;
 	}

@@ -63,8 +63,7 @@ protected:
 	void addChild (RObject *child, QString childname);
 	virtual void renameChild (RObject *object, const QString &new_name);
 	virtual void removeChild (RObject *object);
-	virtual void objectsRemoved ();
-	virtual void objectsAdded ();
+	virtual void objectsChanged ();
 
 	int num_classes;
 	QString *classname;

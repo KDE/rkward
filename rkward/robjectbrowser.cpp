@@ -22,11 +22,14 @@
 #include <qpopupmenu.h>
 
 #include <klocale.h>
+#include <kinputdialog.h>
+#include <kmessagebox.h>
 
 #include "rkglobals.h"
 #include "core/robjectlist.h"
 #include "core/rkvariable.h"
 #include "rkeditormanager.h"
+#include "dataeditor/rkeditor.h"
 
 #include "debug.h"
 
@@ -52,6 +55,7 @@ RObjectBrowser::RObjectBrowser () : RKToggleWidget () {
 	menu->insertItem (i18n ("Edit"), this, SLOT (popupEdit ()), 0, Edit);
 	menu->insertItem (i18n ("View"), this, SLOT (popupView ()), 0, View);
 	menu->setItemEnabled (View, false);
+	menu->insertItem (i18n ("Rename"), this, SLOT (popupRename ()), 0, Rename);
 	menu->insertItem (i18n ("Delete"), this, SLOT (popupDelete ()), 0, Delete);
 }
 
@@ -100,9 +104,10 @@ void RObjectBrowser::addObject (QListViewItem *parent, RObject *object) {
 }
 
 void RObjectBrowser::updateComplete (bool changed) {
-	list_view->clear ();
-	
-	addObject (0, RKGlobals::rObjectList());
+	if (changed) {
+		list_view->clear ();
+		addObject (0, RKGlobals::rObjectList());
+	}
 	
 	list_view->setEnabled (true);
 }
@@ -115,14 +120,37 @@ void RObjectBrowser::popupView () {
 }
 
 void RObjectBrowser::popupDelete () {
+	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (menu_object);
+	QString message = i18n ("Are you sure you want to delete this object? There's no way to get it back.");
+	if (ed) {
+		message.append (i18n ("\n(By the way, it's currently opened for editing)"));
+	}
+
+	if (KMessageBox::questionYesNo (this, message, i18n ("Ok to delete?")) == KMessageBox::No) return;
+
 	menu_object->remove ();
+	if (ed) ed->objectDeleted (menu_object);
+}
+
+void RObjectBrowser::popupRename () {
+	RKEditor *ed = RKGlobals::editorManager ()->objectOpened (menu_object);
+	if (ed) {
+		if (KMessageBox::questionYesNo (this, i18n ("Are you sure you want to rename this object? It's currently opened for editing"), i18n ("Ok to rename?"), KStdGuiItem::yes (), KStdGuiItem::no (), "ok_to_rename_edited_object") == KMessageBox::No) return;
+	}
+
+	bool ok;
+	QString name = KInputDialog::getText (i18n ("Rename object"), i18n ("Enter the new name (make it a valid one - no checks so far)"), menu_object->getShortName (), &ok, this);
+
+	if (ok) {
+		menu_object->rename (name);
+		if (ed) ed->objectMetaModified (menu_object);
+	}
 }
 
 void RObjectBrowser::requestedContextMenu (QListViewItem *item, const QPoint &pos, int) {
 	if (item) {
 		RObject *object = object_map[item];
 		menu->setItemEnabled (Edit, RKGlobals::editorManager ()->canEditObject (object));
-		menu->setItemEnabled (Delete, !RKGlobals::editorManager ()->isObjectOpened (object));
 		menu_object = object;
 		menu->popup (pos);
 	}

@@ -24,6 +24,7 @@
 #include "../core/robject.h"
 #include "../core/rkvariable.h"
 #include "../core/rcontainerobject.h"
+#include "../rkeditormanager.h"
 
 #include "../debug.h"
 
@@ -36,6 +37,7 @@ RKEditorDataFrame::RKEditorDataFrame (QWidget *parent) : TwinTable (parent) {
 	
 	connect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int)));
 	connect (dataview, SIGNAL (valueChanged (int, int)), this, SLOT (dataValueChanged (int, int)));
+	connect (this, SIGNAL (aboutToDeleteColumn (int)), this, SLOT (columnDeleted (int)));
 }
 
 RKEditorDataFrame::~RKEditorDataFrame () {
@@ -71,10 +73,8 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 			// TODO: make clean
 			RKVariable *current_child = static_cast<RKVariable *> (static_cast <RContainerObject*> (getObject ())->findChild (command->getStringVector ()[i]));
 			setColObject (i, current_child);
-			varview->setText (NAME_ROW, i, command->getStringVector ()[i]);
-			varview->setText (TYPE_ROW, i, current_child->getVarTypeString ());
-			varview->setText (LABEL_ROW, i, current_child->getLabel ());
-		
+			modifyObjectMeta (current_child, i);
+					
 			// ok, now get the data
 			RCommand *rcom = new RCommand ("as.vector (" + current_child->getFullName() + ")", RCommand::Sync | RCommand::GetStringVector, "", this, GET_DATA_OFFSET + i);
 			RKGlobals::rInterface ()->issueCommand (rcom, open_chain);
@@ -86,6 +86,14 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 		int col = command->getFlags () - GET_DATA_OFFSET;
 		setColumn (dataview, col, 0, command->stringVectorLength () - 1, command->getStringVector ());
 	}
+}
+
+void RKEditorDataFrame::modifyObjectMeta (RKVariable *object, int column) {
+	disconnect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int)));
+	varview->setText (NAME_ROW, column, object->getShortName ());
+	varview->setText (TYPE_ROW, column, object->getVarTypeString ());
+	varview->setText (LABEL_ROW, column, object->getLabel ());
+	connect (varview, SIGNAL (valueChanged (int, int)), this, SLOT (metaValueChanged (int, int)));
 }
 
 void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
@@ -135,11 +143,21 @@ void RKEditorDataFrame::metaValueChanged (int row, int col) {
 }
 
 void RKEditorDataFrame::dataValueChanged (int, int col) {
-	RK_ASSERT (getColObject (col));
+	RObject *obj = getColObject (col);
+	RK_ASSERT (obj);
 	// for now:
-	if (!getColObject (col)) return;
+	if (!obj) return;
 	
-	getColObject (col)->setDataModified ();
+	obj->setDataModified ();
+}
+
+void RKEditorDataFrame::columnDeleted (int col) {
+	RObject *obj = getColObject (col);
+	RK_ASSERT (obj);
+	// for now:
+	if (!obj) return;
+
+	obj->remove ();
 }
 
 void RKEditorDataFrame::setColObject (int column, RObject *object) {
@@ -154,3 +172,34 @@ RObject *RKEditorDataFrame::getColObject (int col) {
 	return 0;
 }
 
+int RKEditorDataFrame::getObjectCol (RObject *object) {
+	for (ColMap::iterator it = col_map.begin (); it != col_map.end (); ++it) {
+		if (it.data () == object) return it.key ();
+	}
+	
+	RK_ASSERT (false);
+	return -1;
+}
+
+void RKEditorDataFrame::objectDeleted (RObject *object) {
+	if (object == getObject ()) {
+		// self destruct
+		RKGlobals::editorManager ()->closeEditor (this, false);
+		return;
+	}
+	
+	// we don't want any notification on this
+	disconnect (this, SIGNAL (aboutToDeleteColumn (int)), this, SLOT (columnDeleted (int)));
+	deleteColumn (getObjectCol (object));
+	connect (this, SIGNAL (aboutToDeleteColumn (int)), this, SLOT (columnDeleted (int)));
+}
+
+void RKEditorDataFrame::objectMetaModified (RObject *object) {
+	if (object == getObject ()) {
+		RKGlobals::editorManager ()->setEditorName (this, object->getShortName ());
+		// nothing to do for now
+		return;
+	}
+
+	modifyObjectMeta (static_cast<RKVariable*> (object), getObjectCol (object));
+}

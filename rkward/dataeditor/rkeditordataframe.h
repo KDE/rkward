@@ -23,6 +23,7 @@
 
 class TwinTable;
 class RCommand;
+class RKVariable;
 
 /**
 An RKEditor for data.frames.
@@ -40,16 +41,22 @@ public:
 	
 	void setColObject (int column, RObject *object);
 	RObject *getColObject (int col);
+	void objectDeleted (RObject *object);
+	void objectMetaModified (RObject *object);
 public slots:
 	void metaValueChanged (int row, int col);
 	void dataValueChanged (int row, int col);
+	void columnDeleted (int col);
 private:
 /// syncs the whole table.
 	void pushTable (RCommandChain *sync_chain);
 	RCommandChain *open_chain;
-
+	int getObjectCol (RObject *object);
+	
 	typedef QMap <int, RObject*> ColMap;
 	ColMap col_map;
+	
+	void modifyObjectMeta (RKVariable *object, int column);
 protected:
 	void openObject (RObject *object);
 	void rCommandDone (RCommand *command);

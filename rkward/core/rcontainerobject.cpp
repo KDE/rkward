@@ -242,7 +242,7 @@ RObject *RContainerObject::createNewChild (const QString &name, bool container, 
 	ret->setMetaModified ();
 	ret->setDataModified ();
 	
-	objectsAdded ();
+	objectsChanged ();
 	
 	return ret;
 }
@@ -258,8 +258,12 @@ void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 	command = new RCommand (object->getFullName () + " <- NULL", RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 	
-	childmap.remove (it);
+	childmap.remove (it.key ());
 	childmap.insert (new_name, object);
+	
+	object->name = new_name;
+	
+	objectsChanged ();
 }
 
 void RContainerObject::removeChild (RObject *object) {
@@ -274,17 +278,12 @@ void RContainerObject::removeChild (RObject *object) {
 	childmap.remove (it);
 	delete object;
 	
-	objectsRemoved ();
+	objectsChanged ();
 }
 
-void RContainerObject::objectsRemoved () {
+void RContainerObject::objectsChanged () {
 	RK_TRACE (OBJECTS);
-	parent->objectsRemoved ();
-}
-
-void RContainerObject::objectsAdded () {
-	RK_TRACE (OBJECTS);
-	parent->objectsAdded ();
+	parent->objectsChanged ();
 }
 
 bool RContainerObject::isParentOf (RObject *object, bool recursive) {
