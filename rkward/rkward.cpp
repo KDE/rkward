@@ -356,7 +356,7 @@ void RKwardApp::initActions()
 	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 
-	new_data_frame->setStatusText (i18n ("Creates a new empty data.frame and opens it for editing"));
+	new_data_frame->setStatusText (i18n ("Creates new empty dataset and opens it for editing"));
   fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
   fileOpenRecentWorkspace->setStatusText(i18n("Opens a recently used file"));
   fileSaveWorkspace->setStatusText(i18n("Saves the actual document"));
