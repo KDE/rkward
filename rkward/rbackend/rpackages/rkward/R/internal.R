@@ -91,6 +91,13 @@
 	return (c (as.vector (x$Package), as.vector (titles), as.vector (x$Version), as.vector (x$LibPath)))
 }
 
+# Here we concatenate everything (same as above) to get search results easily
+".rk.get.search.results" <- function (pattern, ...) {
+	H=as.data.frame (help.search(pattern, ...)$matches)
+	return(c(as.vector(H$topic),as.vector(H$title),as.vector(H$Package)))
+}
+
+
 ".rk.get.CRAN.packages" <- function () {
 	x <- CRAN.packages ()
 	return (c (as.vector (x[,1]), as.vector (x[,2])))
