@@ -215,7 +215,7 @@ void RKSettingsModuleWatch::save (KConfig *config) {
 }
 	
 QString RKSettingsModuleWatch::caption () {
-	return (i18n ("R Console"));
+	return (i18n ("Console"));
 }
 
 #include "rksettingsmodulewatch.moc"

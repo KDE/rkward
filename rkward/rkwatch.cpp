@@ -96,7 +96,7 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 
 // resize, set caption
 	resize (QSize (600, 520).expandedTo (minimumSizeHint ()));
-	setCaption (i18n ("R Console"));
+	setCaption (i18n ("Console"));
 	
 	clearWatch ();
 	
