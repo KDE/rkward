@@ -16,6 +16,18 @@
  ***************************************************************************/
 #include "rkcommandeditorwindow.h"
 
+#include <kate/document.h>
+#include <kate/view.h>
+
+#include <ktexteditor/configinterface.h>
+#include <ktexteditor/sessionconfiginterface.h>
+#include <ktexteditor/viewcursorinterface.h>
+#include <ktexteditor/printinterface.h>
+#include <ktexteditor/encodinginterface.h>
+#include <ktexteditor/editorchooser.h>
+#include <ktexteditor/popupmenuinterface.h>
+
+
 #include <qlayout.h>
 #include <qpopupmenu.h>
 #include <qapplication.h>
@@ -27,107 +39,99 @@
 #include <kaction.h>
 #include <kstdaction.h>
 #include <kaccel.h>
+#include <klibloader.h>
 
-#include "../rkcommandeditor.h"
+
 #include "../rbackend/rinterface.h"
 #include "../rkeditormanager.h"
 #include "../rkglobals.h"
 
 #include "../debug.h"
 
-// TODO: use KActions everywhere. Find a way to use a ui.rc-file
-RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : QWidget (parent) {
+
+RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : KParts::MainWindow (parent) {
 	RK_TRACE (COMMANDEDITOR);
 	connect (qApp, SIGNAL (aboutToQuit ()), this, SLOT (close ()));
-	QGridLayout *grid = new QGridLayout (this, 2, 1);
-	
-	KActionCollection *action_collection = new KActionCollection (this);
-	
-	KMenuBar *menu = new KMenuBar (this);
-	QPopupMenu *file_menu = new QPopupMenu (this);
-	file_new = KStdAction::openNew (this, SLOT (newWindow ()), action_collection);
-	file_new->plug (file_menu);
-	file_open = KStdAction::open (this, SLOT (load ()), action_collection);
-	file_open->plug (file_menu);
-	file_menu->insertSeparator ();
-	file_save = KStdAction::save (this, SLOT (save ()), action_collection);
-	file_save->plug (file_menu);
-	file_save_as = KStdAction::saveAs (this, SLOT (saveAs ()), action_collection);
-	file_save_as->plug (file_menu);
-	file_menu->insertSeparator ();
-	file_print = KStdAction::print (this, SLOT (print ()), action_collection);
-	file_print->plug (file_menu);
-	file_menu->insertSeparator ();
-	file_close = KStdAction::close (this, SLOT (close ()), action_collection);
-	file_close->plug (file_menu);
-	menu->insertItem (i18n ("File"), file_menu);
-	
-	QPopupMenu *run_menu = new QPopupMenu (this);
-	run_all = new KAction (i18n ("Run all"), KShortcut ("Alt+R"), this, SLOT (run ()), action_collection);
-	run_all->plug (run_menu);
-	run_menu->insertSeparator ();
-	run_menu->insertItem (i18n ("Run selection"), this, SLOT (runSelection ()));
-	run_menu->setItemEnabled (run_menu->insertItem (i18n ("Run up to current line"), this, SLOT (runToCursor ())), false);
-	run_menu->setItemEnabled (run_menu->insertItem (i18n ("Run from current line"), this, SLOT (runFromCursor ())), false);
-	menu->insertItem (i18n ("Run"), run_menu);
-	
-	QPopupMenu *settings_menu = new QPopupMenu (this);
-	word_wrap = new KToggleAction (i18n ("Word wrap"), KShortcut ("F10"), this, SLOT (wordWrap ()), action_collection);
-	word_wrap->plug (settings_menu);
-	line_numbers = new KToggleAction (i18n ("Line Numbering"), KShortcut ("F11"), this, SLOT (lineNumbers ()), action_collection);
-	line_numbers->plug (settings_menu);
-	settings_menu->insertSeparator ();
-	settings_menu->insertItem (i18n ("Configure editor"), this, SLOT (configure ()));
-	menu->insertItem (i18n ("Settings"), settings_menu);
-	
-	menu->insertSeparator ();
-	
-	QPopupMenu *help_menu = new QPopupMenu (this);
-	help_menu->setItemEnabled (help_menu->insertItem (i18n ("Sorry, no help available so far"), 0, 0), false);
-	menu->insertItem (i18n ("Help"), help_menu);
-	
-	grid->addWidget (menu, 0, 0);
-	
-	grid->addWidget (editor = new RKCommandEditor (this, false), 1, 0);
 
+	if ( !(m_doc = KTextEditor::EditorChooser::createDocument(0,"KTextEditor::Document")) ){
+		KMessageBox::error(this, i18n("A KDE text-editor component could not be found;\nplease check your KDE installation."));
+		delete this;
+	}
+
+	m_view = m_doc->createView (this, 0L);
+
+	setCentralWidget(m_view);
+	setAcceptDrops(true);
+
+	
+	setXMLFile( "rkcommandeditorwindowui.rc" );
+	
+	KAction * file_new = new KAction (i18n ("New"), KShortcut ("Ctrl+N"), this, SLOT (newFile ()), actionCollection(), "file_new" );
+	file_new->setWhatsThis(i18n("Use this to create a new document"));
+	KAction * file_open = new KAction (i18n ("Open..."), KShortcut ("Ctrl+O"), this, SLOT (openFile ()), actionCollection(), "file_open" );
+	file_open->setWhatsThis(i18n("Use this to open an existing document"));
+	
+	KAction * close_window = new KAction( i18n( "&Close" ), "close", 0, this, SLOT( close() ), actionCollection(), "file_close_window" );
+	close_window->setWhatsThis(i18n("Use to close the current window"));
+
+	KAction * run_all = new KAction (i18n ("Run all"), KShortcut ("Ctrl+R"), this, SLOT (run ()), actionCollection(), "run_all" );
+	run_all->setWhatsThis(i18n("Use this to run the current document"));
+	KAction * run_selection = new KAction (i18n ("Run selection"), KShortcut ("Ctrl+E"), this, SLOT (runSelection ()), actionCollection(), "run_selection" );
+	run_selection->setWhatsThis(i18n("Use this to run the current selection"));
+
+	
+		
+	KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
+	createShellGUI( true );
+	guiFactory()->addClient( m_view );
+	
+	setRHighlighting ();
+	m_doc->setModified (false);
+	
+	
 	setCaption (caption = i18n ("Command editor"));
 	resize (minimumSizeHint ().expandedTo (QSize (640, 480)));
+	
 	show ();
 }
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
-	delete editor;
+	delete m_view;
+	delete m_doc;
 }
 
 void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 	RK_TRACE (COMMANDEDITOR);
 // TODO: call quit in order to try to save changes
-	if (checkSave ()) {
+	if (m_doc->closeURL ()) {
 		e->accept ();
 		delete this;
 	}
 }
 
-bool RKCommandEditorWindow::checkSave () {
-	RK_TRACE (COMMANDEDITOR);
-	if (editor->isModified ()) {
-		int ret = KMessageBox::warningYesNoCancel (this, i18n ("The code was modified. Do you want to save it?"), i18n ("Save code?"));
-		if (ret == KMessageBox::Yes) save ();
-		else if (ret == KMessageBox::No) return true;
-		else return false;
+
+
+void RKCommandEditorWindow::setRHighlighting () {
+	// set syntax-highlighting for R
+	int modes_count = highlightingInterface(m_doc)->hlModeCount ();
+	bool found_mode = false;
+	int i;
+	RK_DO (qDebug ("%s", "Looking for syntax highlighting definition"), COMMANDEDITOR, DL_INFO);
+	for (i = 0; i < modes_count; ++i) {
+		RK_DO (qDebug ("%s", highlightingInterface(m_doc)->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_DEBUG);
+		if (highlightingInterface(m_doc)->hlModeName(i).lower() == "r script") {
+			found_mode = true;
+			break;
+		}
 	}
-	return true;
+	if (found_mode) {
+		highlightingInterface(m_doc)->setHlMode(i);
+	} else {
+		RK_DO (qDebug ("%s", highlightingInterface(m_doc)->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_WARNING);
+	}
 }
 
-void RKCommandEditorWindow::trySave (const KURL &url) {
-	RK_TRACE (COMMANDEDITOR);
-	if (!editor->save (url)) {
-		if (KMessageBox::warningYesNo (this, i18n ("Saving to file '") + url.path () + i18n ("' failed. Try with a different filename?"), i18n ("Saving failed")) == KMessageBox::Yes) saveAs ();
-	} else {
-		setCaption (caption + " - " + url.filename ());
-	}
-}
 
 // GUI slots below
 void RKCommandEditorWindow::newWindow () {
@@ -135,53 +139,25 @@ void RKCommandEditorWindow::newWindow () {
 	new RKCommandEditorWindow (0);
 }
 
-void RKCommandEditorWindow::save () {
+
+void RKCommandEditorWindow::closeWindow () {
 	RK_TRACE (COMMANDEDITOR);
-	if (editor->getURL ().isEmpty ()) {
-		saveAs ();
-	} else {
-		trySave (editor->getURL ());
-	}
+	if (m_doc->closeURL ()) delete this;
 }
 
-void RKCommandEditorWindow::saveAs () {
-	RK_TRACE (COMMANDEDITOR);
-	KURL url = KFileDialog::getSaveURL (QString::null, "*.R", this);
-	if (!url.isEmpty ()) trySave (url);
-}
-
-void RKCommandEditorWindow::print () {
-	RK_TRACE (COMMANDEDITOR);
-	editor->print ();
-}
-
-void RKCommandEditorWindow::close () {
-	RK_TRACE (COMMANDEDITOR);
-	if (checkSave ()) delete this;
-}
-
-void RKCommandEditorWindow::load () {
-	RK_TRACE (COMMANDEDITOR);
-	if (!checkSave ()) return;
-	
-	KURL url = KFileDialog::getOpenURL (QString::null, "*.R", this);
-	if (!url.isEmpty ()) {
-		if (editor->open (url)) {
-			setCaption (caption + " - " + url.filename ());
-		}
-	}
-}
 
 void RKCommandEditorWindow::run () {
 	RK_TRACE (COMMANDEDITOR);
-	RKGlobals::editorManager ()->flushAll ();
-	RKGlobals::rInterface ()->issueCommand (new RCommand (editor->text (), RCommand::User, ""));
+	if ( ! editInterface(m_doc)->text().isEmpty() ) {
+		RKGlobals::rInterface ()->issueCommand (new RCommand (editInterface(m_doc)->text(), RCommand::User, ""));
+	}
 }
 
 void RKCommandEditorWindow::runSelection () {
 	RK_TRACE (COMMANDEDITOR);
-	RKGlobals::editorManager ()->flushAll ();
-	RKGlobals::rInterface ()->issueCommand (new RCommand (editor->getSelection (), RCommand::User, ""));
+	if ( ! selectionInterface(m_doc)->selection().isEmpty() ) {
+		RKGlobals::rInterface ()->issueCommand (new RCommand (selectionInterface(m_doc)->selection(), RCommand::User, ""));
+	}
 }
 
 void RKCommandEditorWindow::runToCursor () {
@@ -192,19 +168,32 @@ void RKCommandEditorWindow::runFromCursor () {
 	RK_TRACE (COMMANDEDITOR);
 }
 
-void RKCommandEditorWindow::configure () {
-	RK_TRACE (COMMANDEDITOR);
-	editor->configure ();
+
+
+
+
+void RKCommandEditorWindow::newFile()
+{
+  if (m_view->document()->isModified() || !m_view->document()->url().isEmpty())
+    new RKCommandEditorWindow (0);
+  else
+    m_view->document()->openURL(KURL());
 }
 
-void RKCommandEditorWindow::wordWrap () {
+void RKCommandEditorWindow::openFile()
+{
 	RK_TRACE (COMMANDEDITOR);
-	editor->toggleWordWrap ();
+	if (!m_doc->closeURL ()) return;
+	
+	KURL url = KFileDialog::getOpenURL (QString::null, "*.R", this);
+	if (!url.isEmpty ()) {
+		if (m_view->document()->openURL(url)) {
+			setCaption (caption + " - " + url.filename ());
+			setRHighlighting ();
+		}
+	}
 }
 
-void RKCommandEditorWindow::lineNumbers () {
-	RK_TRACE (COMMANDEDITOR);
-	editor->toggleLineNumbers ();
-}
+
 
 #include "rkcommandeditorwindow.moc"

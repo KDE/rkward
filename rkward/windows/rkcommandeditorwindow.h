@@ -20,6 +20,14 @@
 #include <qwidget.h>
 #include <qstring.h>
 
+
+#include <kate/view.h>
+#include <kate/document.h>
+#include <kparts/mainwindow.h>
+#include <kparts/partmanager.h>
+#include <kparts/part.h>
+
+
 #include <kurl.h>
 
 class RKCommandEditor;
@@ -31,7 +39,7 @@ This class provides an editor window for R-commands. Basically this class is res
 
 @author Thomas Friedrichsmeier
 */
-class RKCommandEditorWindow : public QWidget {
+class RKCommandEditorWindow : public KParts::MainWindow {
 Q_OBJECT
 public:
     RKCommandEditorWindow (QWidget *parent = 0);
@@ -39,35 +47,24 @@ public:
     ~RKCommandEditorWindow();
 public slots:
 	void newWindow ();
-	void save ();
-	void saveAs ();
-	void print ();
-	void close ();
-	void load ();
+
+	void closeWindow ();
+
 	void run ();
 	void runSelection ();
 	void runFromCursor ();
 	void runToCursor ();
-	void configure ();
-	void wordWrap ();
-	void lineNumbers ();
+
+	void newFile ();
+	void openFile ();
 private:
 	RKCommandEditor *editor;
-	bool checkSave ();
-	void trySave (const KURL &url);
+	KTextEditor::View *m_view;
+	KTextEditor::Document *m_doc;
+	void setRHighlighting ();
+
 	QString caption;
 	
-	KAction *file_new;
-	KAction *file_open;
-	KAction *file_save;
-	KAction *file_save_as;
-	KAction *file_print;
-	KAction *file_close;
-	
-	KAction *run_all;
-	
-	KToggleAction *word_wrap;
-	KToggleAction *line_numbers;
 protected:
 	void closeEvent (QCloseEvent *e);
 };
