@@ -34,7 +34,6 @@
 
 #include "rkward.h"
 #include "rkwarddoc.h"
-#include "rinterface.h"
 #include "rcommand.h"
 #include "phpbackend.h"
 #include "rkpluginguiwidget.h"
@@ -56,6 +55,7 @@ RKPlugin::RKPlugin(RKwardApp *parent, const QString &label, const QString &filen
 	_label = label;
 	backend = 0;
 	gui = 0;
+	php_backend_chain = 0;
 }
 
 RKPlugin::~RKPlugin(){
@@ -226,6 +226,7 @@ void RKPlugin::buildStructure (const QDomElement &element, QBoxLayout *playout, 
 void RKPlugin::ok () {
 	getApp ()->getDocument ()->syncToR ();
 	getApp ()->r_inter->issueCommand (new RCommand (codeDisplay->text (), RCommand::Plugin, "", this, SLOT (gotRResult (RCommand *))));
+	php_backend_chain = getApp ()->r_inter->startChain ();
 	backend->callFunction ("printout (); cleanup ();", true);
 }
 
@@ -252,6 +253,8 @@ void RKPlugin::try_destruct () {
 		delete backend;
 		backend = 0;
 		gui = 0;
+		getApp ()->r_inter->closeChain (php_backend_chain);
+		php_backend_chain = 0;
 	} else {
 		gui->hide ();
 		should_destruct = true;
@@ -260,6 +263,9 @@ void RKPlugin::try_destruct () {
 
 bool RKPlugin::backendIdle () {
 	qDebug ("backendIdle");
+	getApp ()->r_inter->closeChain (php_backend_chain);
+	php_backend_chain = 0;
+	
 	if (should_destruct) {
 		try_destruct ();
 		return true;
@@ -267,6 +273,7 @@ bool RKPlugin::backendIdle () {
 
 	if (should_updatecode) {
 		codeDisplay->setText ("");
+		php_backend_chain = getApp ()->r_inter->startChain ();
 		backend->callFunction ("preprocess (); calculate ();");
 		should_updatecode = false;
 		warnDisplay->setText ("Processing. Please wait.");
@@ -327,7 +334,7 @@ void RKPlugin::updateCode (const QString &text) {
 }
 
 void RKPlugin::doRCall (const QString &call) {
-	getApp ()->r_inter->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, SLOT (gotRResult (RCommand *)), FOR_PHP_FLAG));
+	getApp ()->r_inter->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, SLOT (gotRResult (RCommand *)), FOR_PHP_FLAG), php_backend_chain);
 }
 
 void RKPlugin::gotRResult (RCommand *command) {

@@ -110,10 +110,7 @@ void RKwatch::clearCommand () {
 
 void RKwatch::submitCommand () {
 	r_inter->issueCommand (new RCommand (commands->text (), RCommand::User));
-	commands->clear ();
-// unfortunately, clear also resets the font
-    QFont font ("Courier");
-	commands->setCurrentFont (font);
+	clearCommand ();
 }
 
 void RKwatch::enableSubmit () {

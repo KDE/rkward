@@ -20,9 +20,10 @@
 
 #include "qobject.h"
 
+#include "rthread.h"
+
 class RKwatch;
 class RCommand;
-class RThread;
 class RKwardApp;
 
 /** This class does the rather low-level interfacing to the R-processor. The
@@ -43,7 +44,11 @@ class RInterface : public QObject {
 public: 
 	RInterface(RKwardApp *parent);
 	~RInterface();
-	void issueCommand (RCommand *command);
+	
+	void issueCommand (RCommand *command, RThread::CommandChain *chain=0) { r_thread->issueCommand (command, chain); };
+	
+	RThread::CommandChain *startChain (RThread::CommandChain *parent=0) { return r_thread->startChain (parent); };
+	void closeChain (RThread::CommandChain *chain) { r_thread->closeChain (chain); };
 private:
 	RThread *r_thread;
 	RKwardApp *app;

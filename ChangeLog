@@ -1,5 +1,6 @@
 - plugins can use a tabbook-layout
 - display status of R-process in the statusbar
+- R-backend allows chains of commands that are guaranteed to be run without other intermitting commands
 - run R in a separate thread
 
 --- Version 0.2.0 - Aug-01-2004 ---

@@ -37,10 +37,6 @@ RInterface::~RInterface(){
 	delete watch;
 }
 
-void RInterface::issueCommand (RCommand *command) {
-	r_thread->issueCommand (command);
-}
-
 void RInterface::customEvent (QCustomEvent *e) {
 	if (e->type () == RCOMMAND_IN_EVENT) {
 		watch->addInput (static_cast <RCommand *> (e->data ()));

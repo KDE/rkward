@@ -22,6 +22,8 @@
 #include <qobject.h>
 #include <qmap.h>
 
+#include "rinterface.h"
+
 class QDomElement;
 class RKwardApp;
 class QDialog;
@@ -119,6 +121,7 @@ friend class RKPluginGUIWidget;
 	
 	PHPBackend *backend;
 	RKErrorDialog *error_dialog;
+	RThread::CommandChain *php_backend_chain;
 };
 
 #endif

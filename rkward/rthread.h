@@ -19,6 +19,7 @@
 
 #include <qthread.h>
 #include <qptrlist.h>
+#include <qmutex.h>
 
 class REmbed;
 class RInterface;
@@ -29,7 +30,7 @@ class RCommand;
 #define RBUSY_EVENT 1003
 #define RIDLE_EVENT 1004
 
-/** encapsulated the R-Backend in a separate thread.
+/** encapsulates the R-Backend in a separate thread. Use the inlines in RInterface and see documentation there.
 @author Thomas Friedrichsmeier
 */
 class RThread : public QThread
@@ -38,16 +39,32 @@ public:
     RThread(RInterface *parent);
 
     ~RThread();
-public:
-	void issueCommand (RCommand *command);
+
+	struct ChainOrCommand;
+	struct CommandChain {
+		QPtrList<ChainOrCommand> commands;
+		bool closed;
+		CommandChain *parent;
+	};
+	struct ChainOrCommand {
+		RCommand *command;
+		CommandChain *chain;
+	};
+
+	void issueCommand (RCommand *command, CommandChain *chain);
+	
+	CommandChain *startChain (CommandChain *parent);
+	void closeChain (CommandChain *chain);
 protected:
 	void run ();
-private:
+private:	
 	RInterface *inter;
-	QPtrList<RCommand> command_stack;
+	CommandChain *current_chain;
+	CommandChain *top_chain;
 /** This is the last step in the chain of committing a command, and actually writes it */
-	void write (RCommand *command);
+	void doCommand (RCommand *command);
 	REmbed *embeddedR;
+	QMutex mutex;
 };
 
 #endif
