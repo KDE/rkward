@@ -12,6 +12,11 @@ dist_pluginsXcorr_matrix_DATA = \
 	corr_matrix/code.php \
 	corr_matrix/description.xml
 
+pluginsXsimple_anovadir = $(kde_datadir)/rkward/plugins/simple_anova
+dist_pluginsXsimple_anova_DATA = \
+	simple_anova/code.php \
+	simple_anova/description.xml
+
 pluginsX00meansdir = $(kde_datadir)/rkward/plugins/00means
 dist_pluginsX00means_DATA = \
 	00means/description.xml
