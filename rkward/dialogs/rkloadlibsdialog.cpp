@@ -22,8 +22,11 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qcheckbox.h>
+#include <qdir.h>
 
 #include <klocale.h>
+#include <kprocess.h>
+#include <kmessagebox.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -35,26 +38,40 @@
 
 #define DOWNLOAD_PACKAGES_COMMAND 1
 
-RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain) : KDialogBase (KDialogBase::Tabbed, Qt::WStyle_DialogBorder, parent, 0, false, i18n ("Load / unload packages")) {
+RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KDialogBase (KDialogBase::Tabbed, Qt::WStyle_DialogBorder, parent, 0, modal, i18n ("Load / unload packages")) {
 	RK_TRACE (DIALOGS);
 	RKLoadLibsDialog::chain = chain;
 	
 	QFrame *page = addPage (i18n ("Load / unload installed packages"));
 	QVBoxLayout *layout = new QVBoxLayout (page, 0, KDialog::spacingHint ());
 	layout->addWidget (new LoadUnloadWidget (this, page));
+	
 	page = addPage (i18n ("Update installed packages"));
 	layout = new QVBoxLayout (page, 0, KDialog::spacingHint ());
 	layout->addWidget (new UpdatePackagesWidget (this, page));
-	
+
+	page = addPage (i18n ("Install new packages"));
+	layout = new QVBoxLayout (page, 0, KDialog::spacingHint ());
+	layout->addWidget (new InstallPackagesWidget (this, page));
+
 	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported errors loading/removing or installing one or more packages.\nA transcript of the error message(s) is shown below."), i18n ("Error loading/unloading packages"), false);
 
-	num_child_widgets = 2;
+	num_child_widgets = 3;
 	accepted = false;
 }
 
 RKLoadLibsDialog::~RKLoadLibsDialog () {
 	RK_TRACE (DIALOGS);
 	delete error_dialog;
+}
+
+//static
+void RKLoadLibsDialog::showInstallPackagesModal (QWidget *parent, RCommandChain *chain) {
+	RK_TRACE (DIALOGS);
+
+	RKLoadLibsDialog *dialog = new RKLoadLibsDialog (parent, chain, true);
+	dialog->showPage (2);
+	dialog->exec ();
 }
 
 void RKLoadLibsDialog::tryDestruct () {
@@ -116,18 +133,51 @@ void RKLoadLibsDialog::rCommandDone (RCommand *command) {
 bool RKLoadLibsDialog::downloadPackages (const QStringList &packages, QString to_dir) {
 	RK_TRACE (DIALOGS);
 	if (to_dir == "") {
-		to_dir = RKSettingsModuleLogfiles::filesPath ();
+		to_dir = QDir (RKSettingsModuleLogfiles::filesPath ()).filePath (".packagetemp");
 	}
+	if (packages.isEmpty ()) return false;
 	
-	RCommand *command = new RCommand ("for (i in 1:100000) { j <- c (1:i); print (i); }", RCommand::App, "", this, DOWNLOAD_PACKAGES_COMMAND);
-	RKCancelDialog *cancel_dialog = new RKCancelDialog (i18n ("Downloading Packages ..."), i18n ("Please stand by while downloading packages."), this);
-	connect (this, SIGNAL (downloadComplete ()), cancel_dialog, SLOT (completed ()));
+	QString package_string = "c (\"" + packages.join ("\", \"") + "\")";
+	RCommand *command = new RCommand ("download.packages (pkgs=" + package_string + ", destdir=\"" + to_dir + "\")", RCommand::App, "", this, DOWNLOAD_PACKAGES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
-	if (cancel_dialog->exec () == QDialog::Rejected) {
-		RKGlobals::rInterface ()->cancelCommand (command);
-		return false;
-	}
+	
+	if (RKCancelDialog::showCancelDialog (i18n ("Downloading Packages ..."), i18n ("Please stand by while downloading packages."), this, this, SIGNAL (downloadComplete ()), command) == QDialog::Rejected) return false;
 	return true;
+}
+
+void RKLoadLibsDialog::installDownloadedPackages (bool become_root, QString dir) {
+	RK_TRACE (DIALOGS);
+	QDir tempdir;
+	if (dir == "") {
+		tempdir = QDir (RKSettingsModuleLogfiles::filesPath ()).filePath (".packagetemp");
+	} else {
+		tempdir = dir;
+	}
+	tempdir.setFilter (QDir::Files);
+	
+	KProcess *proc = new KProcess;
+	if (become_root) {
+		*proc << "kdesu";
+	};
+	*proc << "R" << "CMD" << "INSTALL";
+	for (unsigned int i=0; i < tempdir.count (); ++i) {
+		*proc << tempdir.filePath (tempdir[i]).latin1 ();
+	}
+		
+	proc->start ();
+	connect (proc, SIGNAL (processExited (KProcess *)), this, SLOT (processExited (KProcess *)));
+	if (RKCancelDialog::showCancelDialog (i18n ("Installing Packages ..."), i18n ("Please stand by while installing packages."), this, this, SIGNAL (installationComplete ())) == QDialog::Rejected) {
+		proc->kill ();
+	};
+	if ((!proc->normalExit ()) || (proc->exitStatus ())) {
+		KMessageBox::error (this, i18n ("There was an error while trying to install the packages. Please check the output on stderr. Sorry, there is no better error-handling so far..."), i18n ("Error installing packages"));
+	}
+	delete proc;
+}
+
+void RKLoadLibsDialog::processExited (KProcess *) {
+	RK_TRACE (DIALOGS);
+	emit (installationComplete ());
 }
 
 ////////////////////// LoadUnloadWidget ////////////////////////////
@@ -368,23 +418,26 @@ UpdatePackagesWidget::~UpdatePackagesWidget () {
 void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 	RK_TRACE (DIALOGS);
 	if (command->getFlags () == FIND_OLD_PACKAGES_COMMAND) {
-		delete placeholder;
-		placeholder = 0;
-		RK_ASSERT ((command->stringVectorLength () % 4) == 0);
-		int count = (command->stringVectorLength () / 4);
-		for (int i=0; i < count; ++i) {
-			new QListViewItem (updateable_view, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i], command->getStringVector ()[3* count + i]);
-		}
-		updateable_view->setEnabled (true);
+		emit (actionDone ());
+		if (!command->failed ()) {
+			delete placeholder;
+			placeholder = 0;
+			RK_ASSERT ((command->stringVectorLength () % 4) == 0);
+			int count = (command->stringVectorLength () / 4);
+			for (int i=0; i < count; ++i) {
+				new QListViewItem (updateable_view, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i], command->getStringVector ()[3* count + i]);
+			}
+			updateable_view->setEnabled (true);
 
-		
-		QStringList list;
-		parent->downloadPackages (list);
-		
-		
-		if (updateable_view->firstChild ()) {
-			update_selected_button->setEnabled (true);
-			update_all_button->setEnabled (true);
+			if (updateable_view->firstChild ()) {
+				update_selected_button->setEnabled (true);
+				update_all_button->setEnabled (true);
+			} else {
+				placeholder = new QListViewItem (updateable_view, i18n ("<<No updates available>>"));
+			}
+		} else {
+			get_list_button->setEnabled (true);
+			parent->error_dialog->newError (command->error ());
 		}
 	} else {
 		RK_ASSERT (false);
@@ -393,31 +446,35 @@ void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 
 void UpdatePackagesWidget::updatePackages (const QStringList &list) {
 	if (!list.isEmpty ()) {
-		parent->downloadPackages (list);
+		if (parent->downloadPackages (list)) parent->installDownloadedPackages (become_root_box->isChecked ());
 	}
 }
 
 void UpdatePackagesWidget::updateSelectedButtonClicked () {
 	RK_TRACE (DIALOGS);
 	QStringList list;
-	for (QListViewItem *item = updateable_view->firstChild (); item; item->nextSibling ()) {
+	for (QListViewItem *item = updateable_view->firstChild (); item; item = item->nextSibling ()) {
 		if (item->isSelected ()) list.append (item->text (0));
 	}
+	updatePackages (list);
 }
 
 void UpdatePackagesWidget::updateAllButtonClicked () {
 	RK_TRACE (DIALOGS);
 	QStringList list;
-	for (QListViewItem *item = updateable_view->firstChild (); item; item->nextSibling ()) {
+	for (QListViewItem *item = updateable_view->firstChild (); item; item = item->nextSibling ()) {
 		list.append (item->text (0));
 	}
+	updatePackages (list);
 }
 
 void UpdatePackagesWidget::getListButtonClicked () {
 	RK_TRACE (DIALOGS);
-	RKGlobals::rInterface ()->issueCommand ("as.vector (old.packages ())", RCommand::App, "", this, FIND_OLD_PACKAGES_COMMAND, parent->chain);
-	placeholder->setText (0, i18n ("<<Getting list from CRAN. Please wait>>"));
+	RCommand *command = new RCommand ("as.vector (old.packages ())", RCommand::App | RCommand::GetStringVector, "", this, FIND_OLD_PACKAGES_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
+	
 	get_list_button->setEnabled (false);
+	RKCancelDialog::showCancelDialog (i18n ("Downloading package list ..."), i18n ("Please stand by while downloading the list of packages from CRAN."), this, this, SIGNAL (actionDone ()), command);
 }
 
 void UpdatePackagesWidget::ok () {
@@ -426,6 +483,118 @@ void UpdatePackagesWidget::ok () {
 }
 
 void UpdatePackagesWidget::cancel () {
+	RK_TRACE (DIALOGS);
+	deleteThis ();
+}
+
+
+/////////////////////// InstallPackagesWidget //////////////////////////
+
+#define FIND_AVAILABLE_PACKAGES_COMMAND 1
+
+InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget *p_widget) : QWidget (p_widget) {
+	RK_TRACE (DIALOGS);
+	InstallPackagesWidget::parent = dialog;
+	
+	QVBoxLayout *mvbox = new QVBoxLayout (this, 0, KDialog::spacingHint ());
+	QLabel *label = new QLabel (i18n ("Packages available on CRAN. Click the 'Fetch list' button to determine the list of packages that can be downloaded. Note that this requires a working network connection to CRAN."), this);
+	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+	mvbox->addWidget (label);
+	
+	QHBoxLayout *hbox = new QHBoxLayout (mvbox, KDialog::spacingHint ());
+	
+	installable_view = new QListView (this);
+	installable_view->addColumn (i18n ("Name"));
+	installable_view->addColumn (i18n ("Version"));
+	installable_view->setSelectionMode (QListView::Extended);
+	hbox->addWidget (installable_view);
+	
+	QVBoxLayout *buttonvbox = new QVBoxLayout (hbox, KDialog::spacingHint ());
+	get_list_button = new QPushButton (i18n ("Fetch list"), this);
+	connect (get_list_button, SIGNAL (clicked ()), this, SLOT (getListButtonClicked ()));
+	install_selected_button = new QPushButton (i18n ("Install Selected"), this);
+	connect (install_selected_button, SIGNAL (clicked ()), this, SLOT (installSelectedButtonClicked ()));
+	become_root_box = new QCheckBox (i18n ("Become root for installation"), this);
+	become_root_box->setChecked (true);
+	buttonvbox->addWidget (get_list_button);
+	buttonvbox->addStretch (1);
+	buttonvbox->addWidget (install_selected_button);
+	buttonvbox->addStretch (1);
+	buttonvbox->addWidget (become_root_box);
+	buttonvbox->addStretch (1);
+	
+	install_selected_button->setEnabled (false);
+	installable_view->setEnabled (false);
+	placeholder = new QListViewItem (installable_view, i18n ("<<Click 'Fetch list' to find out which packages are availabe on CRAN>>"));
+	
+	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
+	connect (dialog, SIGNAL (cancelClicked ()), this, SLOT (cancel ()));
+	connect (this, SIGNAL (destroyed ()), dialog, SLOT (childDeleted ()));
+}
+
+InstallPackagesWidget::~InstallPackagesWidget () {
+	RK_TRACE (DIALOGS);
+	delete placeholder;
+}
+
+void InstallPackagesWidget::rCommandDone (RCommand *command) {
+	RK_TRACE (DIALOGS);
+	if (command->getFlags () == FIND_AVAILABLE_PACKAGES_COMMAND) {
+		emit (actionDone ());
+		if (!command->failed ()) {
+			delete placeholder;
+			placeholder = 0;
+			RK_ASSERT ((command->stringVectorLength () % 2) == 0);
+			int count = (command->stringVectorLength () / 2);
+			for (int i=0; i < count; ++i) {
+				new QListViewItem (installable_view, command->getStringVector ()[i], command->getStringVector ()[count + i]);
+			}
+			installable_view->setEnabled (true);
+
+			if (installable_view->firstChild ()) {
+				install_selected_button->setEnabled (true);
+			} else {
+				placeholder = new QListViewItem (installable_view, i18n ("<<No packages available>>"));
+			}
+		} else {
+			get_list_button->setEnabled (true);
+			parent->error_dialog->newError (command->error ());
+		}
+	} else {
+		RK_ASSERT (false);
+	}
+}
+
+void InstallPackagesWidget::installPackages (const QStringList &list) {
+	if (!list.isEmpty ()) {
+		if (parent->downloadPackages (list)) parent->installDownloadedPackages (become_root_box->isChecked ());
+	}
+}
+
+void InstallPackagesWidget::installSelectedButtonClicked () {
+	RK_TRACE (DIALOGS);
+	QStringList list;
+	for (QListViewItem *item = installable_view->firstChild (); item; item = item->nextSibling ()) {
+		if (item->isSelected ()) list.append (item->text (0));
+	}
+	installPackages (list);
+}
+
+void InstallPackagesWidget::getListButtonClicked () {
+	RK_TRACE (DIALOGS);
+	RCommand *command = new RCommand (".rk.get.CRAN.packages ()", RCommand::App | RCommand::GetStringVector, "", this, FIND_AVAILABLE_PACKAGES_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
+	
+	get_list_button->setEnabled (false);
+	RKCancelDialog::showCancelDialog (i18n ("Downloading package list ..."), i18n ("Please stand by while downloading the list of packages from CRAN."), this, this, SIGNAL (actionDone ()), command);
+}
+
+void InstallPackagesWidget::ok () {
+	RK_TRACE (DIALOGS);
+	deleteThis ();
+}
+
+void InstallPackagesWidget::cancel () {
 	RK_TRACE (DIALOGS);
 	deleteThis ();
 }

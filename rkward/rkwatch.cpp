@@ -64,9 +64,10 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 
 	button_vbox->addStretch ();
 	
-	clear_commands = new QPushButton (i18n ("Reset"), layout_widget);
-	connect (clear_commands, SIGNAL (clicked ()), this, SLOT (clearCommand ()));
-	button_vbox->addWidget (clear_commands);
+	interrupt_command = new QPushButton (i18n ("Interrupt command"), layout_widget);
+	connect (interrupt_command, SIGNAL (clicked ()), this, SLOT (interruptCommand ()));
+	interrupt_command->setEnabled (false);
+	button_vbox->addWidget (interrupt_command);
 
 	// construct menu-bar
 	KMenuBar *menu = new KMenuBar (this);
@@ -100,6 +101,7 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	clearWatch ();
 	
 	r_inter = parent;
+	user_command = 0;
 }
 
 RKwatch::~RKwatch(){
@@ -142,6 +144,10 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 
 void RKwatch::addOutput (RCommand *command) {
 	RK_TRACE (APP);
+	if (command == user_command){
+		user_command = 0;
+		interrupt_command->setEnabled (false);
+	}
 	if (!RKSettingsModuleWatch::shouldShowOutput (command)) {
 		if (!command->failed ()) {
 			return;
@@ -184,17 +190,20 @@ void RKwatch::addOutput (RCommand *command) {
 	}
 }
 
-void RKwatch::clearCommand () {
+void RKwatch::interruptCommand () {
 	RK_TRACE (APP);
-	commands->setText ("");
-	commands->setFocus ();
+	
+	RKGlobals::rInterface ()->cancelCommand (user_command);
 }
 
 void RKwatch::submitCommand () {
 	RK_TRACE (APP);
 	RKGlobals::editorManager ()->flushAll ();
-	r_inter->issueCommand (new RCommand (commands->text (), RCommand::User));
-	clearCommand ();
+	r_inter->issueCommand (user_command = new RCommand (commands->text (), RCommand::User));
+	interrupt_command->setEnabled (true);
+	
+	commands->setText ("");
+	commands->setFocus ();
 }
 
 void RKwatch::configureWatch () {

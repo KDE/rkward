@@ -23,9 +23,12 @@
 #include <klocale.h>
 #include <kdialog.h>
 
+#include "../rkglobals.h"
+#include "../rbackend/rinterface.h"
+
 #include "../debug.h"
 
-RKCancelDialog::RKCancelDialog (const QString &caption, const QString &text, QWidget *parent) : QDialog (parent, 0, true) {
+RKCancelDialog::RKCancelDialog (const QString &caption, const QString &text, QWidget *parent, RCommand *associated_command) : QDialog (parent, 0, true) {
 	RK_TRACE (DIALOGS);
 	setCaption (caption);
 	
@@ -36,11 +39,29 @@ RKCancelDialog::RKCancelDialog (const QString &caption, const QString &text, QWi
 	
 	QPushButton *cancel_button = new QPushButton (i18n ("Cancel"), this);
 	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (reject ()));
-	layout->addWidget (cancel_button);
+	cancel_button->setFixedWidth (cancel_button->sizeHint ().width ());
+	layout->addWidget (cancel_button, 0, Qt::AlignHCenter);
+	
+	resize (sizeHint ().expandedTo (QSize (300, 80)));
+	
+	command = associated_command;
 }
 
 RKCancelDialog::~RKCancelDialog () {
 	RK_TRACE (DIALOGS);
+}
+
+//static
+int RKCancelDialog::showCancelDialog (const QString &caption, const QString &text, QWidget *parent, QObject *done_sender, const char *done_signal, RCommand *associated_command) {
+	RK_TRACE (DIALOGS);
+	RKCancelDialog *dialog = new RKCancelDialog (caption, text, parent, associated_command);
+	connect (done_sender, done_signal, dialog, SLOT (completed ()));
+	
+	int res = dialog->exec ();
+	RK_ASSERT ((res == QDialog::Accepted) || (res == QDialog::Rejected));
+	
+	delete dialog;
+	return res;
 }
 
 void RKCancelDialog::closeEvent (QCloseEvent *e) {
@@ -51,6 +72,12 @@ void RKCancelDialog::closeEvent (QCloseEvent *e) {
 void RKCancelDialog::completed () {
 	RK_TRACE (DIALOGS);
 	accept ();
+}
+
+void RKCancelDialog::reject () {
+	RK_TRACE (DIALOGS);
+	if (command) RKGlobals::rInterface ()->cancelCommand (command);
+	QDialog::reject ();
 }
 
 #include "rkcanceldialog.moc"

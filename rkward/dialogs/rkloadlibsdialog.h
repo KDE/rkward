@@ -30,6 +30,7 @@ class QWidget;
 class QCloseEvent;
 class RCommandChain;
 class QCheckBox;
+class KProcess;
 
 /**
 Dialog which excapsulates widgets to load/unload, update and install R packages
@@ -42,13 +43,18 @@ Dialog which excapsulates widgets to load/unload, update and install R packages
 class RKLoadLibsDialog : public KDialogBase, public RCommandReceiver {
 Q_OBJECT
 public:
-	RKLoadLibsDialog (QWidget *parent, RCommandChain *chain);
+	RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal=false);
 
 	~RKLoadLibsDialog ();
 	
 	bool downloadPackages (const QStringList &packages, QString to_dir = QString::null);
+	void installDownloadedPackages (bool become_root, QString dir = QString::null);
+
+	/** opens a modal RKLoadLibsDialog with the "Install new Packages" tab on front (To be used when a require () fails in the R backend */
+	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain);
 signals:
 	void downloadComplete ();
+	void installationComplete ();
 protected:
 	void rCommandDone (RCommand *command);
 	void closeEvent (QCloseEvent *e);
@@ -57,11 +63,13 @@ protected slots:
 	void slotApply ();
 	void slotCancel ();
 	void childDeleted ();
+	void processExited (KProcess *);
 private:
 	void tryDestruct ();
 	bool should_destruct;
 friend class LoadUnloadWidget;
 friend class UpdatePackagesWidget;
+friend class InstallPackagesWidget;
 	RKErrorDialog *error_dialog;
 	RCommandChain *chain;
 	int num_child_widgets;
@@ -115,6 +123,8 @@ public:
 	UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *parent);
 	
 	~UpdatePackagesWidget ();
+signals:
+	void actionDone ();
 public slots:
 	void updateSelectedButtonClicked ();
 	void updateAllButtonClicked ();
@@ -130,6 +140,39 @@ private:
 
 	QPushButton *update_selected_button;
 	QPushButton *update_all_button;
+	QPushButton *get_list_button;
+	QCheckBox *become_root_box;
+	
+	RKLoadLibsDialog *parent;
+};
+
+/**
+Allows the user to install further R packages. For now only packages from CRAN.
+Ro be used in RKLoadLibsDialog.
+
+@author Thomas Friedrichsmeier
+*/
+class InstallPackagesWidget : public QWidget, public RCommandReceiver {
+Q_OBJECT
+public:
+	InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget *parent);
+	
+	~InstallPackagesWidget ();
+signals:
+	void actionDone ();
+public slots:
+	void installSelectedButtonClicked ();
+	void getListButtonClicked ();
+	void ok ();
+	void cancel ();
+protected:
+	void rCommandDone (RCommand *command);
+private:
+	void installPackages (const QStringList &list);
+	QListView *installable_view;
+	QListViewItem *placeholder;
+
+	QPushButton *install_selected_button;
 	QPushButton *get_list_button;
 	QCheckBox *become_root_box;
 	

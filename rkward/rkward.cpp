@@ -236,6 +236,11 @@ void RKwardApp::startR () {
 		QDir current (dir.currentDirPath ());
 		current.mkdir (dir.path (), true);
 	}
+	dir = dir.filePath (".packagetemp");
+	if (!dir.exists ()) {
+		QDir current (dir.currentDirPath ());
+		current.mkdir (dir.path (), true);
+	}
 	
 	RKGlobals::rinter = new RInterface ();
 	RKGlobals::list = new RObjectList ();
