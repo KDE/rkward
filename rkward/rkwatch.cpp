@@ -29,7 +29,7 @@
 
 #include <klocale.h>
 
-RKwatch::RKwatch(RInterface *parent) : QWidget () {
+RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	QGridLayout *grid = new QGridLayout (this, 1, 1, 11, 6);
 
 	QSplitter *splitter = new QSplitter (QSplitter::Vertical, this);

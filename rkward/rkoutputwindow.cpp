@@ -23,7 +23,7 @@
 
 #include "settings/rksettingsmodulelogfiles.h"
 
-RKOutputWindow::RKOutputWindow (QWidget *parent, const char *name) : QWidget (parent, name) {
+RKOutputWindow::RKOutputWindow (QWidget *parent, const char *name) : RKToggleWidget (parent) {
 	QGridLayout *grid = new QGridLayout (this, 1, 1, 1, 6);
 	browser = new QTextBrowser (this);
 	grid->addWidget (browser, 0, 0);

@@ -39,7 +39,8 @@
 
 // application specific includes
 #include "rkward.h"
-#include "rkwarddoc.h"
+#include "rkeditormanager.h"
+#include "dataeditor/rkeditor.h"
 #include "dataeditor/rkdrag.h"
 #include "rkwatch.h"
 #include "misc/rkmenu.h"
@@ -83,7 +84,9 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
   editCopy->setEnabled(false);
   editPaste->setEnabled(false); */
 
-  initDocument();
+  
+	RKGlobals::manager = new RKEditorManager (this);
+	setCentralWidget (RKGlobals::editorManager ());
   initView();
   readOptions();
 
@@ -120,6 +123,8 @@ void RKwardApp::doPostInit () {
 
 	startR ();
 	initPlugins ();
+	// just to initialize the window-actions accordingly
+	slotToggleWindowClosed ();
 }
 
 void RKwardApp::initPlugins () {
@@ -216,8 +221,6 @@ void RKwardApp::initActions()
 {
   fileNewWindow = new KAction(i18n("New &Window"), 0, 0, this, SLOT(slotFileNewWindow()), actionCollection(),"file_new_window");
 	fileNewWindow->setEnabled (false);
-  fileNew = KStdAction::openNew(this, SLOT(slotFileNew()), actionCollection());
-	fileNew->setEnabled (false);
   fileOpen = KStdAction::open(this, SLOT(slotFileOpen()), actionCollection());
   fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const KURL&)), actionCollection());
   fileSave = KStdAction::save(this, SLOT(slotFileSave()), actionCollection());
@@ -236,10 +239,10 @@ void RKwardApp::initActions()
   viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
 	showRKWatch = new KToggleAction (i18n ("Show RKWatch-Window"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "windows_rkwatch");
 	showRKOutput = new KToggleAction (i18n ("Show RKOutput-Window"), 0, 0, this, SLOT(slotShowRKOutput ()), actionCollection(), "windows_rkoutput");
+	showRObjectBrowser = new KToggleAction (i18n ("Show RObjectBrowser-Window"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
 	configure = new KAction (i18n ("Configure Settings"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 
   fileNewWindow->setStatusText(i18n("Opens a new application window"));
-  fileNew->setStatusText(i18n("Creates a new document"));
   fileOpen->setStatusText(i18n("Opens an existing document"));
   fileOpenRecent->setStatusText(i18n("Opens a recently used file"));
   fileSave->setStatusText(i18n("Saves the actual document"));
@@ -270,18 +273,6 @@ void RKwardApp::initStatusBar()
 	statusBar()->insertItem(i18n("starting R-processor"), ID_R_STATUS_MSG);
 }
 
-void RKwardApp::initDocument()
-{
-	doc = new RKwardDoc(this);
-	doc->newDocument();
-	setCentralWidget (doc);
-/*	editCopy->setEnabled(true);
-	editPaste->setEnabled(true);
-	editCut->setEnabled(true);
-	fileSave->setEnabled(true);
-	fileSaveAs->setEnabled(true); */
-}
-
 void RKwardApp::initView()
 { 
   ////////////////////////////////////////////////////////////////////
@@ -291,7 +282,7 @@ void RKwardApp::initView()
 /*  view = new RKwardView(this);
   doc->setView(view);
   setCentralWidget(view);	*/
-  setCaption(doc->URL().fileName(),false);
+ // setCaption(doc->URL().fileName(),false);
 
 }
 
@@ -304,11 +295,6 @@ void RKwardApp::openDocumentFile(const KURL& url)
   slotStatusMsg(i18n("Ready."));
 }
 
-
-RKwardDoc *RKwardApp::getDocument() const
-{
-  return doc;
-}
 
 void RKwardApp::saveOptions()
 {	
@@ -358,27 +344,27 @@ void RKwardApp::readOptions()
 
 void RKwardApp::saveProperties(KConfig *_cfg)
 {
-  if(doc->URL().fileName()!=i18n("Untitled") && !doc->isModified())
+/*  if(doc->URL().fileName()!=i18n("Untitled") && !doc->isModified())
   {
     // saving to tempfile not necessary
 
   }
-  else
+  else */
   {
-    KURL url=doc->URL();	
-    _cfg->writeEntry("filename", url.url());
-    _cfg->writeEntry("modified", doc->isModified());
-    QString tempname = kapp->tempSaveName(url.url());
-    QString tempurl= KURL::encode_string(tempname);
-    KURL _url(tempurl);
-    doc->saveDocument(_url);
+    //KURL url=doc->URL();	
+    //_cfg->writeEntry("filename", url.url());
+    //_cfg->writeEntry("modified", doc->isModified());
+    //QString tempname = kapp->tempSaveName(url.url());
+    //QString tempurl= KURL::encode_string(tempname);
+    //KURL _url(tempurl);
+    //doc->saveDocument(_url);
   }
 }
 
 
 void RKwardApp::readProperties(KConfig* _cfg)
 {
-  QString filename = _cfg->readEntry("filename", "");
+/*  QString filename = _cfg->readEntry("filename", "");
   KURL url(filename);
   bool modified = _cfg->readBoolEntry("modified", false);
   if(modified)
@@ -402,12 +388,14 @@ void RKwardApp::readProperties(KConfig* _cfg)
 //      doc->openDocument(url);
       setCaption(url.fileName(),false);
     }
-  }
+  } */
 }		
 
 bool RKwardApp::queryClose()
 {
-  return doc->saveModified();
+// TODO: wait until document is saved?!
+	//RKGlobals::rObjectList ()->saveWorkspace ();
+	return true;
 }
 
 bool RKwardApp::queryExit()
@@ -430,9 +418,9 @@ void RKwardApp::slotFileNewWindow()
   slotStatusMsg(i18n("Ready."));
 }
 
-void RKwardApp::slotFileNew()
+/*void RKwardApp::slotFileNew()
 {
-  slotStatusMsg(i18n("Creating new document..."));
+  slotStatusMsg(i18n("Creating new workspace..."));
 
   if(!doc->saveModified())
   {
@@ -446,13 +434,14 @@ void RKwardApp::slotFileNew()
   }
 
   slotStatusMsg(i18n("Ready."));
-}
+}*/
 
 void RKwardApp::slotFileOpen()
 {
-  slotStatusMsg(i18n("Opening file..."));
+  slotStatusMsg(i18n("Opening workspace..."));
 	
-  if(!doc->saveModified())
+  //if(!doc->saveModified())
+  if (false)
   {
      // here saving wasn't successful
 
@@ -463,7 +452,7 @@ void RKwardApp::slotFileOpen()
         i18n("*|All files"), this, i18n("Open File..."));
     if(!url.isEmpty())
     {
-      doc->openDocument(url);
+      RKGlobals::rObjectList ()->loadWorkspace(url);
       setCaption(url.fileName(), false);
       fileOpenRecent->addURL( url );
     }
@@ -475,13 +464,14 @@ void RKwardApp::slotFileOpenRecent(const KURL& url)
 {
   slotStatusMsg(i18n("Opening file..."));
 	
-  if(!doc->saveModified())
+//  if(!doc->saveModified())
+  if (false)
   {
      // here saving wasn't successful
   }
   else
   {
-    doc->openDocument(url);
+    RKGlobals::rObjectList ()->loadWorkspace (url);
     setCaption(url.fileName(), false);
   }
 
@@ -490,7 +480,8 @@ void RKwardApp::slotFileOpenRecent(const KURL& url)
 
 void RKwardApp::slotFileSave()
 {
-	if (doc->URL ().fileName() == i18n("Untitled")) {
+	slotFileSaveAs ();
+/*	if (doc->URL ().fileName() == i18n("Untitled")) {
 		slotFileSaveAs ();
 		return;
 	}
@@ -499,20 +490,20 @@ void RKwardApp::slotFileSave()
 	
   doc->saveDocument(doc->URL());
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(i18n("Ready.")); */
 }
 
 void RKwardApp::slotFileSaveAs()
 {
-  slotStatusMsg(i18n("Saving file with a new filename..."));
+  slotStatusMsg(i18n("Saving workspace with a new filename..."));
 
   KURL url=KFileDialog::getSaveURL(QDir::currentDirPath(),
         i18n("*|All files"), this, i18n("Save as..."));
   if(!url.isEmpty())
   {
-    doc->saveDocument(url);
+    RKGlobals::rObjectList ()->saveWorkspace (url);
     fileOpenRecent->addURL(url);
-    setCaption(url.fileName(),doc->isModified());
+    setCaption(url.fileName(), false);
   }
 
   slotStatusMsg(i18n("Ready."));
@@ -563,7 +554,7 @@ void RKwardApp::slotEditCut()
 {
 	slotStatusMsg(i18n("Cutting selection..."));
 	slotEditCopy ();
-	doc->clearSelected();
+	RKGlobals::editorManager ()->currentEditor ()->clearSelected ();
 	slotStatusMsg(i18n("Ready."));
 }
 
@@ -571,7 +562,7 @@ void RKwardApp::slotEditCopy() {
 
 	slotStatusMsg(i18n("Copying selection to clipboard..."));
 
-	QApplication::clipboard()->setData(new RKDrag(doc));
+	QApplication::clipboard()->setData(RKGlobals::editorManager ()->currentEditor ()->makeDrag ());
 
 	slotStatusMsg(i18n("Ready."));
 }
@@ -584,26 +575,26 @@ void RKwardApp::doPaste () {
 	// provided the two in order.
 	if (QApplication::clipboard()->data()->provides ("text/tab-separated-values")) {
 		qDebug ("paste tsv");
-		doc->pasteEncoded (QApplication::clipboard()->data()->encodedData ("text/tab-separated-values"));
+		RKGlobals::editorManager ()->currentEditor ()->pasteEncoded (QApplication::clipboard()->data()->encodedData ("text/tab-separated-values"));
 	} else if (QApplication::clipboard()->data()->provides ("text/plain")) {
 		qDebug ("paste plain");
-		doc->pasteEncoded (QApplication::clipboard()->data()->encodedData ("text/plain"));
+		RKGlobals::editorManager ()->currentEditor ()->pasteEncoded (QApplication::clipboard()->data()->encodedData ("text/plain"));
 	}
 
 	slotStatusMsg(i18n("Ready."));
 }
 
 void RKwardApp::slotEditPaste() {
-	doc->setPasteMode (TwinTable::PasteEverywhere);
+	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteEverywhere);
  	doPaste ();
 }
 
 void RKwardApp::slotEditPasteToTable() {
-	doc->setPasteMode (TwinTable::PasteToTable);
+	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteToTable);
 	doPaste();
 }
 void RKwardApp::slotEditPasteToSelection() {
-	doc->setPasteMode (TwinTable::PasteToSelection);
+	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteToSelection);
 	doPaste();
 }
 
@@ -656,6 +647,16 @@ void RKwardApp::slotShowRKWatch () {
 
 void RKwardApp::slotShowRKOutput () {
 	output->setShown (showRKOutput->isChecked ());
+}
+
+void RKwardApp::slotShowRObjectBrowser () {
+	object_browser->setShown (showRObjectBrowser->isChecked ());
+}
+
+void RKwardApp::slotToggleWindowClosed () {
+	showRKWatch->setChecked (RKGlobals::rInterface ()->watch->isShown ());
+	showRKOutput->setChecked (output->isShown ());
+	showRObjectBrowser->setChecked (object_browser->isShown ());
 }
 
 void RKwardApp::newOutput () {

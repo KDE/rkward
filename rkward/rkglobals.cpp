@@ -19,6 +19,7 @@
 RKwardApp *RKGlobals::app;
 RInterface *RKGlobals::rinter;
 RObjectList *RKGlobals::list;
+RKEditorManager *RKGlobals::manager;
 
 RKGlobals::RKGlobals () {
 }

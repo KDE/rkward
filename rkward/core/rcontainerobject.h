@@ -46,6 +46,7 @@ public:
 	
 	int numChildren ();
 	RObject **children ();
+	
 private:
 	friend class RObject;
 	void typeMismatch (RObject *child, QString childname);
@@ -54,7 +55,7 @@ protected:
 	// why do I need this to make it compile?!
 	friend class RObjectList;
 	void addChild (RObject *child, QString childname);
-	
+
 	int num_classes;
 	QString *classname;
 	int num_dimensions;

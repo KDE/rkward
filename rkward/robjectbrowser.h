@@ -17,7 +17,9 @@
 #ifndef ROBJECTBROWSER_H
 #define ROBJECTBROWSER_H
 
-#include <qwidget.h>
+#include "misc/rktogglewidget.h"
+
+#include <qmap.h>
 
 class QListView;
 class QListViewItem;
@@ -29,7 +31,7 @@ This widget provides a browsable list of all objects in the R workspace
 
 @author Thomas Friedrichsmeier
 */
-class RObjectBrowser : public QWidget
+class RObjectBrowser : public RKToggleWidget
 {
 Q_OBJECT
 public:
@@ -39,12 +41,15 @@ public:
 public slots:
 	void updateButtonClicked ();
 	void updateComplete (bool changed);
+	void itemClicked (QListViewItem *item);
 private:
 	friend class RKwardApp;
 	void initialize ();
 
 	QPushButton *update_button;
 	QListView *list_view;
+	
+	QMap<QListViewItem *, RObject *> object_map;
 	
 	void addObject (QListViewItem *parent, RObject *object);
 };

@@ -22,6 +22,7 @@ RObject::RObject (RContainerObject *parent, const QString &name) {
 	RObject::parent = parent;
 	RObject::name = name;
 	type = 0;
+	state = 0;
 }
 
 RObject::~RObject () {
@@ -32,10 +33,9 @@ QString RObject::getShortName () {
 }
 
 QString RObject::getFullName () {
-	QString pf = parent->getFullName ();
-	if (pf != "") {
-		return (pf + "[[\"" + RObject::name + "\"]]");
-	} else {
-		return RObject::name;
-	}
+	return parent->makeChildName (RObject::name);
+}
+
+QString RObject::makeChildName (const QString &short_child_name) {
+	return (getFullName () + "[[\"" + short_child_name + "\"]]");
 }

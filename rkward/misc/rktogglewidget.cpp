@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkglobals  -  description
+                          rktogglewidget  -  description
                              -------------------
-    begin                : Wed Aug 18 2004
+    begin                : Fri Aug 20 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,35 +14,22 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef RKGLOBALS_H
-#define RKGLOBALS_H
+#include "rktogglewidget.h"
 
-class RKwardApp;
-class RInterface;
-class RObjectList;
-class RKEditorManager;
+#include "../rkglobals.h"
+#include "../rkward.h"
 
-/**
-This class basically keeps some static pointers which are needed all over the place, so they won't have to be passed around.
+RKToggleWidget::RKToggleWidget (QWidget *parent) : QWidget (parent) {
+	connect (this, SIGNAL (closed ()), RKGlobals::rkApp (), SLOT (slotToggleWindowClosed ()));
+}
 
-@author Thomas Friedrichsmeier
-*/
-class RKGlobals{
-public:
-    RKGlobals();
+RKToggleWidget::~RKToggleWidget () {
+}
 
-    ~RKGlobals();
-	
-	static RKwardApp *rkApp () { return app; }
-	static RInterface *rInterface () { return rinter; };
-	static RObjectList *rObjectList () { return list; };
-	static RKEditorManager *editorManager () { return manager; };
-private:
-	friend class RKwardApp;
-	static RKwardApp *app;
-	static RInterface *rinter;
-	static RObjectList *list;
-	static RKEditorManager *manager;
-};
+void RKToggleWidget::closeEvent (QCloseEvent *e) {
+	e->accept ();
+	hide ();
+	emit (closed ());
+}
 
-#endif
+#include "rktogglewidget.moc"

@@ -26,10 +26,7 @@
 
 #include "../rkglobals.h"
 
-// TODO: remove these!
-#include "../rkward.h"
-#include "../rkwarddoc.h"
-
+#include "../core/robjectlist.h"
 
 RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlugin *plugin, QLayout *layout) : RKPluginWidget (element, parent, plugin, layout) {
 	qDebug ("creating varselector");
@@ -48,14 +45,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlu
 	main_table->setSelectable (false);
 	list_view->insertItem (main_table);
 	
-	RKwardDoc *doc = RKGlobals::rkApp ()->getDocument ();
-	for (int i = doc->numCols () - 1; i >= 0; --i) {
-		RKVariable *variable = new RKVariable (0, doc->varname (i));
-		variable->table = "rk.data";
-		variable->label = doc->label (i);
-		variable->type = doc->typeString (i);
-		item_map.insert (new QListViewItem (main_table, doc->varname (i), doc->label (i), doc->typeString (i)), variable);
-	}
+	addObject (0, RKGlobals::rObjectList ());
 
 	addWidget (list_view);
 }
@@ -63,6 +53,33 @@ RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlu
 RKVarSelector::~RKVarSelector(){
 	for (ItemMap::iterator it = item_map.begin (); it != item_map.end (); ++it) {
 		delete it.data ();
+	}
+}
+
+void RKVarSelector::addObject (QListViewItem *parent, RObject *object) {
+	QListViewItem *item;
+
+	if (parent) {
+		item = new QListViewItem (parent);
+	} else {
+		item = new QListViewItem (list_view);
+	}
+	item_map.insert (item, object);
+	item->setText (0, object->getShortName ());
+	item->setText (1, object->getLabel ());
+	if (object->isContainer ()) {
+		item->setText (3, static_cast<RContainerObject*> (object)->makeClassString ("; "));
+	} else if (object->isVariable ()) {
+		item->setText (2, static_cast<RKVariable*> (object)->getTypeString ());
+	}
+
+	RObject **children = object->children ();
+	for (int i=0; i < object->numChildren (); ++i) {
+		addObject (item, children[i]);
+	}
+	
+	if (object->numChildren ()) {
+		item->setOpen (true);
 	}
 }
 
@@ -74,7 +91,10 @@ QValueList<RKVariable*> RKVarSelector::selectedVars () {
 	while (current->itemBelow ()) {
 		current = current->itemBelow ();
 		if (current->isSelected ()) {
-			selected.append (item_map[current]);
+			RObject *obj = item_map[current];
+			if (obj->isVariable ()) {
+				selected.append (static_cast<RKVariable*> (obj));
+			}
 		}
 	}
 

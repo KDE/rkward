@@ -36,7 +36,7 @@
 #include <kapplication.h>
 
 #include "../rkward.h"
-#include "../rkwarddoc.h"
+#include "../rkeditormanager.h"
 #include "../scriptbackends/phpbackend.h"
 #include "../misc/rkerrordialog.h"
 #include "../rkcommandeditor.h"
@@ -393,7 +393,7 @@ void RKPlugin::ok () {
 		}
 		changed ();
 	} else {
-		RKGlobals::rkApp ()->getDocument ()->syncToR ();
+		RKGlobals::editorManager ()->syncAllToR ();
 		RKGlobals::rInterface ()->issueCommand (new RCommand (current_code, RCommand::Plugin, "", this));
 		script_backend_chain = RKGlobals::rInterface ()->startChain ();
 		backend->printout (BACKEND_DONT_CARE);

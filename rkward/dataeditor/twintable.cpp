@@ -33,8 +33,9 @@
 #include "rtableitem.h"
 #include "nameselectcell.h"
 #include "labelcell.h"
+#include "rkdrag.h"
 
-TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name){
+TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
 	QGridLayout *grid_layout = new QGridLayout(this);
 
     QSplitter *splitter = new QSplitter(this);
@@ -108,6 +109,8 @@ TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name)
 	left_header_menu = new QPopupMenu (this);
 	left_header_menu->insertItem (i18n ("Insert new case after"), this, SLOT (insertRowAfter ()));
 	left_header_menu->insertItem (i18n ("Insert new case before"), this, SLOT (insertRowBefore ()));
+	
+	qDebug ("Twintable created");
 }
 
 TwinTable::~TwinTable(){
@@ -223,6 +226,10 @@ void TwinTable::dataClearSelection () {
 	connect (dataview, SIGNAL (selectionChanged ()), this, SLOT (viewClearSelection ()));
 }
 
+RKDrag *TwinTable::makeDrag () {
+	return (new RKDrag (this));
+}
+
 void TwinTable::insertColumnAfter () {
 	insertNewColumn (header_pos+1);
 }
@@ -296,7 +303,7 @@ void TwinTable::pasteEncoded (QByteArray content) {
 		table->setText (row, col, pasted.left (next_delim));
 		if (next_delim == next_tab) {
 			col++;
-			if (paste_mode == PasteToSelection) {
+			if (paste_mode == RKEditor::PasteToSelection) {
 				if (col > selection.rightCol ()) {
 					next_delim = next_line;
 					row++;
@@ -307,7 +314,7 @@ void TwinTable::pasteEncoded (QByteArray content) {
 				}
 			}
 			if (col >= table->numCols ()) {
-				if (paste_mode == PasteToTable) {
+				if (paste_mode == RKEditor::PasteToTable) {
 					next_delim = next_line;					
 					row++;
 					col = selection.leftCol ();
@@ -326,13 +333,13 @@ void TwinTable::pasteEncoded (QByteArray content) {
 		} else {
 			row++;
 			col=selection.leftCol ();
-			if (paste_mode == PasteToSelection) {
+			if (paste_mode == RKEditor::PasteToSelection) {
 				if (row > selection.bottomRow ()) {
 					next_delim = pasted.length ();
 				}
 			}
 			if (row >= table->numRows ()) {
-				if (paste_mode == PasteToTable) {
+				if (paste_mode == RKEditor::PasteToTable) {
 					next_delim = pasted.length ();
 				} else {
 					if (next_delim != (pasted.length () -1)) {
@@ -385,7 +392,7 @@ void TwinTable::pasteEncodedFlipped (QByteArray content) {
 		table->setText (row, col, pasted.left (next_delim));
 		if (next_delim == next_tab) {
 			row++;
-			if (paste_mode == PasteToSelection) {
+			if (paste_mode == RKEditor::PasteToSelection) {
 				if (row > selection.bottomRow ()) {
 					next_delim = next_line;
 					col++;
@@ -396,7 +403,7 @@ void TwinTable::pasteEncodedFlipped (QByteArray content) {
 				}
 			}
 			if (row >= table->numRows ()) {
-				if (paste_mode == PasteToTable) {
+				if (paste_mode == RKEditor::PasteToTable) {
 					next_delim = next_line;
 					col++;
 					row = selection.topRow ();
@@ -416,13 +423,13 @@ void TwinTable::pasteEncodedFlipped (QByteArray content) {
 		} else {
 			col++;
 			row=selection.topRow ();
-			if (paste_mode == PasteToSelection) {
+			if (paste_mode == RKEditor::PasteToSelection) {
 				if (col > selection.rightCol ()) {
 					next_delim = pasted.length ();
 				}
 			}
 			if (col >= table->numCols ()) {
-				if (paste_mode == PasteToTable) {
+				if (paste_mode == RKEditor::PasteToTable) {
 					next_delim = pasted.length ();
 				} else {
 					// the if below only fails, if this is the last line.
@@ -470,7 +477,7 @@ void TwinTable::clearSelected () {
 	}
 }
 
-void TwinTable::setPasteMode (PasteMode mode) {
+void TwinTable::setPasteMode (RKEditor::PasteMode mode) {
 	paste_mode = mode;
 }
 

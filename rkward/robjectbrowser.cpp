@@ -25,13 +25,14 @@
 #include "rkglobals.h"
 #include "core/robjectlist.h"
 #include "core/rkvariable.h"
+#include "rkeditormanager.h"
 
 #include "debug.h"
 
-RObjectBrowser::RObjectBrowser () : QWidget() {
+RObjectBrowser::RObjectBrowser () : RKToggleWidget () {
 	QGridLayout *grid = new QGridLayout (this, 1, 1);
-	QHBoxLayout *hbox = new QHBoxLayout (this);
-	grid->addLayout (hbox, 0, 0);
+	QVBoxLayout *vbox = new QVBoxLayout ();
+	grid->addLayout (vbox, 0, 0);
 	
 	list_view = new QListView (this);
 	list_view->setSorting (100);
@@ -39,11 +40,12 @@ RObjectBrowser::RObjectBrowser () : QWidget() {
     list_view->addColumn ("Label");
     list_view->addColumn ("Type");
     list_view->addColumn ("Class(es)");
-	hbox->addWidget (list_view);
+	vbox->addWidget (list_view);
 
 	update_button = new QPushButton (i18n ("Udpate"), this);
-	hbox->addWidget (update_button);
+	vbox->addWidget (update_button);
 	
+	setCaption (i18n ("Objects in the R workspace"));
 }
 
 RObjectBrowser::~RObjectBrowser () {
@@ -52,6 +54,7 @@ RObjectBrowser::~RObjectBrowser () {
 void RObjectBrowser::initialize () {
 	connect (RKGlobals::rObjectList (), SIGNAL (updateComplete (bool)), this, SLOT (updateComplete (bool)));
 	connect (update_button, SIGNAL (clicked ()), this, SLOT (updateButtonClicked ()));
+	connect (list_view, SIGNAL (clicked (QListViewItem*)), this, SLOT (itemClicked (QListViewItem*)));
 }
 
 void RObjectBrowser::updateButtonClicked () {
@@ -85,6 +88,8 @@ void RObjectBrowser::addObject (QListViewItem *parent, RObject *object) {
 	if (object->numChildren ()) {
 		item->setOpen (true);
 	}
+	
+	object_map.insert (item, object);
 }
 
 void RObjectBrowser::updateComplete (bool changed) {
@@ -93,6 +98,10 @@ void RObjectBrowser::updateComplete (bool changed) {
 	addObject (0, RKGlobals::rObjectList());
 	
 	list_view->setEnabled (true);
+}
+
+void RObjectBrowser::itemClicked (QListViewItem *item) {
+	if (item) RKGlobals::editorManager ()->editObject (object_map[item]);
 }
 
 #include "robjectbrowser.moc"

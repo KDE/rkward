@@ -25,6 +25,7 @@
 
 class QListView;
 class QListViewItem;
+class RObject;
 class RKVariable;
 
 #define VARSELECTOR_WIDGET 2
@@ -50,8 +51,10 @@ public:
 	int type () { return VARSELECTOR_WIDGET; };
 private:
 	QListView *list_view;
-	typedef QMap<QListViewItem*, RKVariable*> ItemMap;
+	typedef QMap<QListViewItem*, RObject*> ItemMap;
 	ItemMap item_map;
+	
+	void addObject (QListViewItem *parent, RObject *object);
 };
 
 #endif

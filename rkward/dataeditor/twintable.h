@@ -18,7 +18,8 @@
 #ifndef TWINTABLE_H
 #define TWINTABLE_H
 
-#include <qwidget.h>
+#include "rkeditor.h"
+
 #include <qvariant.h>
 #include <qstring.h>
 
@@ -29,15 +30,16 @@ class QSplitter;
 class TwinTableMember;
 class QPopupMenu;
 class QTable;
+class RKDrag;
 
 /**
   *@author Thomas Friedrichsmeier
   */
 
-class TwinTable : public QWidget  {
+class TwinTable : public RKEditor {
 	Q_OBJECT
 public: 
-	TwinTable(QWidget *parent=0, const char *name=0);
+	TwinTable(QWidget *parent=0);
 	~TwinTable();
 	void insertNewColumn (int where=-1, QString name="");
 	void insertNewRow (int where=-1, TwinTableMember *table=0);
@@ -48,6 +50,7 @@ public:
 	void pasteEncodedFlipped (QByteArray content);
 /** Clear the currently selected cells */
 	void clearSelected ();
+	RKDrag *makeDrag ();
 
 /** Flushes pending edit-operations */
 	void flushEdit ();
@@ -67,8 +70,7 @@ public:
 /** Returns the number of columns in the tables */
 	int numCols ();
 
-	enum PasteMode {PasteEverywhere, PasteToTable, PasteToSelection};
-	void setPasteMode (PasteMode mode);
+	void setPasteMode (RKEditor::PasteMode mode);
     TwinTableMember* varview;
     TwinTableMember* dataview;
 public slots:
@@ -86,7 +88,7 @@ private:
 /** Returns the active Table (of the two members), 0 if no table active */
 	TwinTableMember *activeTable ();
 
-	PasteMode paste_mode;
+	RKEditor::PasteMode paste_mode;
 protected:	
 /** set a row of cells, expanding the table if necessary. Assumes you provide the correct amount of data! */
 	void setRow (TwinTableMember* table, int row, int start_col, int end_col, char **data);

@@ -22,13 +22,20 @@
 #define UPDATE_LIST_COMMAND 1
 #define GET_TYPE_COMMAND 2
 
+#define WORKSPACE_LOAD_COMMAND 3
+
 #include <qtimer.h>
+
+#include <kio/netaccess.h>
 
 #include "rkvariable.h"
 
 #include "../rbackend/rinterface.h"
+#include "../dataeditor/rkeditor.h"
+#include "../rkeditormanager.h"
 
 #include "../rkglobals.h"
+#include "../rkward.h"
 
 #include "../debug.h"
 
@@ -37,11 +44,11 @@ RObjectList::RObjectList () : RContainerObject (0, "") {
 	
 	connect (update_timer, SIGNAL (timeout ()), this, SLOT (timeout ()));
 	
-	update_timer->start (AUTO_UPDATE_INTERVAL, true);
+	//update_timer->start (AUTO_UPDATE_INTERVAL, true);
 	
 	type = RObject::Workspace;
 	
-	command_chain = 0;
+	update_chain = 0;
 }
 
 
@@ -55,7 +62,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 		num_children_updating = command->stringVectorLength ();
 		// empty workspace?
 		if (!num_children_updating) {
-			command_chain = RKGlobals::rInterface ()->closeChain (command_chain);
+			update_chain = RKGlobals::rInterface ()->closeChain (update_chain);
 			emit (updateComplete (true));
 			return;
 		}
@@ -90,22 +97,25 @@ void RObjectList::rCommandDone (RCommand *command) {
 		pobj->parent->addChild (robj, pobj->name);
 		delete pobj;
 		pending_objects.remove (command);
+		
+	} else if (command->getFlags () == WORKSPACE_LOAD_COMMAND) {
+		KIO::NetAccess::removeTempFile (tmpfile);
 	}
 	
 	// TODO: signal change
 }
 
 void RObjectList::updateFromR () {
-	if (command_chain) {
+	if (update_chain) {
 		// gee, looks like another update is still on the way. lets schedule one for later:
 		update_timer->start (UPDATE_DELAY_INTERVAL, true);
 		return;
 	}
 
-	command_chain = RKGlobals::rInterface ()->startChain (0);
+	update_chain = RKGlobals::rInterface ()->startChain (0);
 
 	RCommand *command = new RCommand ("ls (all.names=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_LIST_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, command_chain);
+	RKGlobals::rInterface ()->issueCommand (command, update_chain);
 }
 
  void RObjectList::createFromR (RContainerObject *parent, const QString &cname) {
@@ -113,16 +123,11 @@ void RObjectList::updateFromR () {
 	obj->name = cname;
 	obj->parent = parent;
 	
-	QString fullname;
-	if (parent != this) {
-		fullname = parent->getFullName () + "[[\"" + cname + "\"]]";
-	} else {
-		fullname = cname;
-	}
+	QString fullname = parent->makeChildName (cname);
 	
 	RCommand *command = new RCommand ("c (is.data.frame (" + fullname + "), is.matrix (" + fullname + "), is.array (" + fullname + "), is.list (" + fullname + "))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, GET_TYPE_COMMAND);
 	pending_objects.insert (command, obj);
-	RKGlobals::rInterface ()->issueCommand (command, command_chain);
+	RKGlobals::rInterface ()->issueCommand (command, update_chain);
 }
 
 void RObjectList::childUpdateComplete () {
@@ -131,13 +136,30 @@ void RObjectList::childUpdateComplete () {
 	if ((--num_children_updating) <= 0) {
 		RK_TRACE (APP);
 
-		RK_ASSERT (command_chain);
-		command_chain = RKGlobals::rInterface ()->closeChain (command_chain);
-		RK_ASSERT (!command_chain);
+		RK_ASSERT (update_chain);
+		update_chain = RKGlobals::rInterface ()->closeChain (update_chain);
+		RK_ASSERT (!update_chain);
 
 	// TODO: check whether there really were any changes
 		emit (updateComplete (true));
 	}
+}
+
+void RObjectList::saveWorkspace (const KURL& url) {
+	RCommandChain *chain = RKGlobals::rInterface ()->startChain (0);
+	
+	RKGlobals::editorManager ()->syncAllToR (chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + url.path () + "\")", RCommand::App), chain);
+	
+	RKGlobals::rInterface ()->startChain (chain);
+}
+
+void RObjectList::loadWorkspace (const KURL& url) {
+	KIO::NetAccess::download (url, tmpfile, RKGlobals::rkApp ());
+	
+	RCommand *command = new RCommand ("load (\"" + url.path () + "\")", RCommand::App, "", this, WORKSPACE_LOAD_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command);
+	updateFromR ();
 }
 
 void RObjectList::timeout () {

@@ -25,6 +25,7 @@
 #include "../rbackend/rcommandreceiver.h"
 
 class RContainerObject;
+class RCommandChain;
 
 /**
 Base class for representations of objects in the R-workspace
@@ -45,15 +46,24 @@ public:
 	virtual QString getFullName ();
 	virtual QString getLabel () = 0;
 	virtual QString getDescription () = 0;
+	virtual QString makeChildName (const QString &short_child_name);
 	
 	bool isContainer () { return (type & Container); };
+	bool isDataFrame () { return (type & DataFrame); };
 	bool isVariable () { return (type & Variable); };
+	
+	bool isOpened () { return (state & OpenedInRKWard); };
+	bool isMetaModified () { return (state & MetaModified); };
+	bool isDataModified () { return (state & DataModified); };
+	bool hasModifiedChildren () { return (state & ChildrenModified); };
+	bool needsSyncToR () { return (state & (MetaModified | DataModified | ChildrenModified)); };
 	
 	typedef QMap<QString, RObject*> RObjectMap;
 	
 	virtual void updateFromR () = 0;
 	
 	RContainerObject *getContainer () { return (parent); };
+	enum RObjectState { OpenedInRKWard=1, MetaModified=2, DataModified=4, ChildrenModified=8 };
 	
 	virtual int numChildren () { return 0; };
 	virtual RObject **children () { return 0; };
@@ -61,6 +71,7 @@ protected:
 	RContainerObject *parent;
 	QString name;
 	int type;
+	int state;
 };
 
 #endif

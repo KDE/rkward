@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkglobals  -  description
+                          rkeditordataframe  -  description
                              -------------------
-    begin                : Wed Aug 18 2004
+    begin                : Fri Aug 20 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,35 +14,48 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef RKGLOBALS_H
-#define RKGLOBALS_H
+#ifndef RKEDITORDATAFRAME_H
+#define RKEDITORDATAFRAME_H
 
-class RKwardApp;
-class RInterface;
-class RObjectList;
-class RKEditorManager;
+#include "rkeditor.h"
+#include "twintable.h"
+#include "../rbackend/rcommandreceiver.h"
+
+class TwinTable;
+class RCommand;
 
 /**
-This class basically keeps some static pointers which are needed all over the place, so they won't have to be passed around.
+An RKEditor for data.frames.
 
 @author Thomas Friedrichsmeier
 */
-class RKGlobals{
+class RKEditorDataFrame : public TwinTable, public RCommandReceiver {
 public:
-    RKGlobals();
+    RKEditorDataFrame (QWidget *parent);
 
-    ~RKGlobals();
+    ~RKEditorDataFrame ();
+
+	void syncToR (RCommandChain *sync_chain);
 	
-	static RKwardApp *rkApp () { return app; }
-	static RInterface *rInterface () { return rinter; };
-	static RObjectList *rObjectList () { return list; };
-	static RKEditorManager *editorManager () { return manager; };
 private:
-	friend class RKwardApp;
-	static RKwardApp *app;
-	static RInterface *rinter;
-	static RObjectList *list;
-	static RKEditorManager *manager;
+/// syncs the whole table.
+	void pushTable (RCommandChain *sync_chain);
+	RCommandChain *open_chain;
+	
+	struct PullCommandIdentifier {
+		TwinTableMember *table;
+		bool as_column;
+		int offset_row;
+		int offset_col;
+		int length;
+		bool get_data_table_next;
+	};
+	
+	typedef QMap<RCommand*, PullCommandIdentifier*> PullMap;
+	PullMap pull_map;
+protected:
+	void openObject (RObject *object);
+	void rCommandDone (RCommand *command);
 };
 
 #endif

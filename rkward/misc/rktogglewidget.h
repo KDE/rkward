@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkglobals  -  description
+                          rktogglewidget  -  description
                              -------------------
-    begin                : Wed Aug 18 2004
+    begin                : Fri Aug 20 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -14,35 +14,29 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef RKGLOBALS_H
-#define RKGLOBALS_H
+#ifndef RKTOGGLEWIDGET_H
+#define RKTOGGLEWIDGET_H
 
-class RKwardApp;
-class RInterface;
-class RObjectList;
-class RKEditorManager;
+#include <qwidget.h>
+
+class QCloseEvent;
 
 /**
-This class basically keeps some static pointers which are needed all over the place, so they won't have to be passed around.
+Basically just a QWidget which sends a signal when it gets closed. By default this signal is connected to the slotToggleWindowClosed of RKWardApp, so as to keep track of which togglable windows are open and which are closed.
 
 @author Thomas Friedrichsmeier
 */
-class RKGlobals{
+class RKToggleWidget : public QWidget
+{
+Q_OBJECT
 public:
-    RKGlobals();
+    RKToggleWidget (QWidget *parent = 0);
 
-    ~RKGlobals();
-	
-	static RKwardApp *rkApp () { return app; }
-	static RInterface *rInterface () { return rinter; };
-	static RObjectList *rObjectList () { return list; };
-	static RKEditorManager *editorManager () { return manager; };
-private:
-	friend class RKwardApp;
-	static RKwardApp *app;
-	static RInterface *rinter;
-	static RObjectList *list;
-	static RKEditorManager *manager;
+    ~RKToggleWidget();
+signals:
+	void closed ();
+protected:
+	void closeEvent (QCloseEvent *e);
 };
 
 #endif

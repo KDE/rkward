@@ -18,7 +18,7 @@
 #ifndef RKWATCH_H
 #define RKWATCH_H
 
-#include <qwidget.h>
+#include "misc/rktogglewidget.h"
 
 #include <qstring.h>
 
@@ -32,7 +32,7 @@ class RKCommandEditor;
   *@author Thomas Friedrichsmeier
   */
 
-class RKwatch : public QWidget {
+class RKwatch : public RKToggleWidget {
 	Q_OBJECT
 public: 
 	RKwatch(RInterface *parent);

@@ -17,7 +17,7 @@
 #ifndef RKOUTPUTWINDOW_H
 #define RKOUTPUTWINDOW_H
 
-#include <qwidget.h>
+#include "misc/rktogglewidget.h"
 
 class QTextBrowser;
 
@@ -26,7 +26,7 @@ The Window where RK displays the (formatted) output
 
 @author Thomas Friedrichsmeier
 */
-class RKOutputWindow : public QWidget {
+class RKOutputWindow : public RKToggleWidget {
 Q_OBJECT
 public:
 	RKOutputWindow(QWidget *parent = 0, const char *name = 0);

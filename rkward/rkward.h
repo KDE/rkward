@@ -43,6 +43,7 @@ class RObjectBrowser;
 class RKSettingsModule;
 class RKSettings;
 class RInterface;
+class RKEditorManager;
 
 /**
   * The base class for RKward application windows. It sets up the main
@@ -69,10 +70,6 @@ class RKwardApp : public KMainWindow
     /** opens a file specified by commandline option
      */
     void openDocumentFile(const KURL& url=0);
-    /** returns a pointer to the current document connected to the KTMainWindow instance and is used by
-     * the View class to access the document object's methods
-     */	
-    RKwardDoc *getDocument() const; 	
 
 	void startR ();
 	
@@ -91,10 +88,6 @@ class RKwardApp : public KMainWindow
     /** sets up the statusbar for the main window by initialzing a statuslabel.
      */
     void initStatusBar();
-    /** initializes the document object of the main window that is connected to the view in initView().
-     * @see initView();
-     */
-    void initDocument();
     /** creates the centerwidget of the KTMainWindow instance and sets it as the view
      */
     void initView();
@@ -126,8 +119,6 @@ class RKwardApp : public KMainWindow
   public slots:
     /** open a new application window by creating a new instance of RKwardApp */
     void slotFileNewWindow();
-    /** clears the document in the actual view to reuse it as the new document */
-    void slotFileNew();
     /** open a file and load it into the document*/
     void slotFileOpen();
     /** opens a file from the recent files menu */
@@ -177,6 +168,12 @@ class RKwardApp : public KMainWindow
 	/** shows/hides the RKWatch-window */
 	void slotShowRKOutput ();
 
+	/** shows/hides the RObjectBrowser-window */
+	void slotShowRObjectBrowser ();
+	
+	/** called when a togglable window was closed. Updates the corresponding actions */
+	void slotToggleWindowClosed ();
+	
 	/** configures RKward-settings */
 	void slotConfigure ();
 
@@ -192,7 +189,6 @@ class RKwardApp : public KMainWindow
 
     // KAction pointers to enable/disable actions
     KAction* fileNewWindow;
-    KAction* fileNew;
     KAction* fileOpen;
     KRecentFilesAction* fileOpenRecent;
     KAction* fileSave;
@@ -209,6 +205,7 @@ class RKwardApp : public KMainWindow
     KToggleAction* viewStatusBar;
 	KToggleAction* showRKWatch;
 	KToggleAction* showRKOutput;
+	KToggleAction* showRObjectBrowser;
 	KAction* configure;
 
 	friend class RKSettingsModule;

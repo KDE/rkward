@@ -9,8 +9,12 @@ stuff to do before 0.2.3 release
 	- allow multiple tables
 - maybe implement simple RObjectViewer
 - jump to 0.2.5 on these changes?
+- new storage mechanism for meta-information
+- snyc only modified objects!
 
-- RObjectList: use CommandChain. use empty Rcommand to find out when update is complete
+- instead of keeping state-data for each RObject, use a centralized list of all opened objects and their states in RObjectList!
+- merge common functionality of RObjectBrowser and RKVarselector into a base of some sort
+- let RKEditorManager create editors, not RKEditor
 
 small stuff to do soon
 - plugins-scanning: don't duplicate everything

@@ -22,14 +22,19 @@
 #include <qstring.h>
 #include <qmap.h>
 
+#include <kurl.h>
+
 #include "rcontainerobject.h"
 
 class QTimer;
 class RCommand;
 class RCommandChain;
+class RKEditor;
 
 /**
 This class is responsible for keeping and updating a list of objects in the R-workspace.
+Acutally it kind of represents the R-workspace, including methods to save and load the workspace.
+It acts as the "document".
 
 @author Thomas Friedrichsmeier
 */
@@ -44,10 +49,16 @@ public:
 	void createFromR (RContainerObject *parent, const QString &cname);
 	
 	QString getFullName () { return ""; };
+	QString makeChildName (const QString &short_child_name) { return short_child_name; };
 	
-	RCommandChain *getUpdateCommandChain () { return command_chain; };
+	RCommandChain *getUpdateCommandChain () { return update_chain; };
 	
 	void childUpdateComplete ();
+	
+	void setObjectModified (RObject *object, bool modified);
+
+	void saveWorkspace (const KURL& url);
+	void loadWorkspace (const KURL& url);
 public slots:
 	void timeout ();
 signals:
@@ -65,7 +76,10 @@ private:
 	
 	QMap<RCommand*, PendingObject*> pending_objects;
 	
-	RCommandChain *command_chain;
+	RCommandChain *update_chain;
+
+	/// needed if file to be loaded is remote
+	QString tmpfile;
 };
 
 #endif
