@@ -54,7 +54,7 @@ public slots:
 	void runSelection ();
 	void runFromCursor ();
 	void runToCursor ();
-
+	void interruptCommand ();
 	void newFile ();
 	void openFile ();
 private:
