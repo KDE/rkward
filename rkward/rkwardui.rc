@@ -13,6 +13,11 @@
 		<Action name="file_savey"/>
 		<Action name="file_save_asy"/>
 		<Separator/>
+		<Action name="file_quitx"/>
+	</Menu>
+		
+		
+	<Menu name="workspace"><text>&amp;Workspace</text>
 		<Action name="file_openx"/>
 		<Action name="file_open_recentx"/>
 		<Action name="file_savex"/>
@@ -21,21 +26,18 @@
 		<Action name="file_load_libs"/>
 		<Separator/>
 		<Action name="file_printx"/>
-		<Separator/>
-		<Action name="file_quitx"/>
+
 	</Menu>
 	
 	
 	<Menu name="edit"><text>&amp;Edit</text>
-		<Action name="undo"/>
-		<Action name="redo"/>
-		<Separator/>
 		<Action name="cut"/>
 		<Action name="copy"/>
 		<Action name="paste"/>
-		<Separator/>
 		<Action name="paste_to_selection"/>
 		<Action name="paste_to_table"/>
+		<Separator/>
+		<Merge/> 
 	</Menu>
   
 	<Menu name="run"><text>&amp;Run</text>
@@ -58,10 +60,6 @@
 <ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="new_data_frame"/>
 		<Action name="new_command_editor"/>
-		<Separator/>
-		<Action name="file_openy"/>
-		<Action name="file_savey"/>
-		<Action name="file_save_asy"/>
 </ToolBar>
 <ToolBar fullWidth="true" name="editToolBar">
 		<Action name="undo"/>

@@ -44,6 +44,7 @@ public slots:
 private:
     KHTMLPart * khtmlpart;
     QBoxLayout* pLayout;
+    KParts::ReadOnlyPart *m_khtmlpart;
 };
 
 #endif

@@ -85,6 +85,7 @@ private slots:
 private:
     void updateTabCaption(const KURL &url);
     RCommandChain *chain;
+    KParts::ReadWritePart *m_katepart;
 };
 
 #endif

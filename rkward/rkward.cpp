@@ -120,6 +120,7 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 	RKGlobals::manager = new RKEditorManager ();
 	KMdiChildView * editorManagerView = createWrapper(RKGlobals::editorManager (), i18n( "Data editor"), i18n( "Data editor"));
 	editorManagerView->setIcon(SmallIcon("spreadsheet"));
+	editorManagerView->setName("dataeditor");
 	addWindow( editorManagerView );
 	
 	
@@ -141,6 +142,107 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 	
 	
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//   m_manager = new KParts::PartManager( this );
+//   // When the manager says the active part changes,
+//   // the builder updates (recreates) the GUI
+//   connect( m_manager, SIGNAL( activePartChanged( KParts::Part * ) ),
+//            this, SLOT( createGUI( KParts::Part * ) ) );
+//   m_splitter = new QSplitter( this );
+// 
+//   // Try to find libkghostview
+//   KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
+//   if (factory)
+//   {
+//     // Create the part
+//     m_gvpart = (KParts::ReadOnlyPart *)factory->create( m_splitter,
+//                 "kgvpart", "KParts::ReadOnlyPart" );
+//   }
+// 
+// 
+//   factory = KLibLoader::self()->factory( "libkpdfpart" );
+//   if (factory)
+//     m_notepadpart = (KParts::ReadOnlyPart *)factory->create( m_splitter,
+//                      "knotepadpart", "KParts::ReadOnlyPart" );
+// 
+// 
+//   // CHANGE: No longer necessary.
+//   //setView( m_splitter );
+//   // Set a reasonable size
+//   /*m_splitter->setMinimumSize( 500, 400 );
+//   m_splitter->show();
+//   setCentralWidget(m_splitter);*/
+// 
+//   m_manager->addPart( m_gvpart, true ); // sets as the active part
+//   m_manager->addPart( m_notepadpart, false );
+// 
+// 
+// addWindow(createWrapper(m_splitter,"bla","bla"));
+
+
+
+
+
+
+
+KMdiChildView *view1 = new KMdiChildView( i18n( "View 1" ), this );
+KMdiChildView *view2 = new KMdiChildView( i18n( "View 1" ), this );
+
+  m_manager = new KParts::PartManager( this );
+  // When the manager says the active part changes,
+  // the builder updates (recreates) the GUI
+  connect( m_manager, SIGNAL( activePartChanged( KParts::Part * ) ),
+           this, SLOT( createGUI( KParts::Part * ) ) );
+  m_splitter = new QSplitter( this );
+
+  // Try to find libkghostview
+  KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
+  if (factory)
+  {
+    // Create the part
+    m_gvpart = (KParts::ReadOnlyPart *)factory->create( view1,
+                "kgvpart", "KParts::ReadOnlyPart" );
+    //((QWidget *)m_gvpart)->setFocusPolicy(QWidget::ClickFocus);
+  }
+
+
+  factory = KLibLoader::self()->factory( "libkpdfpart" );
+  if (factory){
+    m_notepadpart = (KParts::ReadOnlyPart *)factory->create( view2,
+                     "knotepadpart", "KParts::ReadOnlyPart" );
+    //((QWidget *)m_notepadpart)->setFocusPolicy(QWidget::ClickFocus);
+  }
+
+  // CHANGE: No longer necessary.
+  //setView( m_splitter );
+  // Set a reasonable size
+  /*m_splitter->setMinimumSize( 500, 400 );
+  m_splitter->show();
+  setCentralWidget(m_splitter);*/
+addWindow(view1);
+addWindow(view2);
+
+  m_manager->addPart( m_gvpart, true ); // sets as the active part
+  m_manager->addPart( m_notepadpart, false );
+
+
+
+
 
 	
 }
@@ -344,9 +446,7 @@ void RKwardApp::initActions()
 	filePrint = KStdAction::print(this, SLOT(slotFilePrint()), actionCollection(), "file_printx");
 	filePrint->setEnabled (false);
 	fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection(), "file_quitx");
-
-  editUndo = KStdAction::undo(this, SLOT(slotEditUndo()), actionCollection(), "undo");
-  editRedo = KStdAction::redo(this, SLOT(slotEditRedo()), actionCollection(), "redo");	
+	
   editCut = KStdAction::cut(this, SLOT(slotEditCut()), actionCollection(), "cut");
   editCopy = KStdAction::copy(this, SLOT(slotEditCopy()), actionCollection(), "copy");
   editPaste = KStdAction::paste(this, SLOT(slotEditPaste()), actionCollection(), "paste");
@@ -361,11 +461,11 @@ void RKwardApp::initActions()
 	showRObjectBrowser = new KToggleAction (i18n ("Workspace"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
 	
 	runAll = new KAction (i18n ("Run All"), 0, 0, this, SLOT (slotRunAll ()), actionCollection (), "run_all");
-	runAll->setIcon("package_system");
+	runAll->setIcon("player_fwd");
 	runSelection = new KAction (i18n ("Run Selection"), 0, 0, this, SLOT (slotRunSelection ()), actionCollection (), "run_selection");
-	runSelection->setIcon("run");
+	runSelection->setIcon("player_play");
 	interruptCommand = new KAction (i18n ("Interrupt running command"), 0, 0, this, SLOT (slotInterruptCommand ()), actionCollection (), "interrupt");
-	interruptCommand->setIcon("stop");
+	interruptCommand->setIcon("player_stop");
 	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 	
@@ -389,7 +489,7 @@ void RKwardApp::initActions()
   viewStatusBar->setStatusText(i18n("Enables/disables the statusbar"));
   
   // use the absolute path to your rkwardui.rc file for testing purpose in createGUI();
-  setXMLFile( "rkwardui.rc" );
+  setXMLFile( "/home/pierre/adetr/rkward/rkward/rkwardui.rc" );
   createShellGUI ( true );
 
   //Is the following relevant now?
@@ -1071,7 +1171,10 @@ void RKwardApp::slotEditRedo()
 
 void RKwardApp::slotViewActivated (KMdiChildView * window)
 {
-	setEnabledActions(activeWindow()->inherits("RKCommandEditorWindow"));
+	if ((QString) activeWindow()->name()=="dataeditor"){
+		createGUI(0L);
+	}
+	setEnabledActions((QString) activeWindow()->name()=="dataeditor");
 }
 
 
@@ -1088,33 +1191,35 @@ void RKwardApp::slotInterruptCommand()
 
 
 
-void RKwardApp::setEnabledActions(bool commandEditor)
+void RKwardApp::setEnabledActions(bool objectEditor)
 {
-	if (commandEditor) {
-		editUndo->setEnabled(true);
-		editRedo->setEnabled(true);
-		editPaste->setEnabled(true);
+	if (!objectEditor) {
+  		editCut->setEnabled(false);
+  		editCopy->setEnabled(false);
+  		editPaste->setEnabled(false);
+    		editPasteToSelection->setEnabled(false);
+    		editPasteToTable->setEnabled(false);
 		fileSave->setEnabled(true);
 		fileSaveAs->setEnabled(true);
 		runAll->setEnabled(true);
 		runSelection->setEnabled(true);
 		interruptCommand->setEnabled(true);
 		fileOpenRecent->setEnabled(true);
-    		editPasteToSelection->setEnabled(false);
-    		editPasteToTable->setEnabled(false);
+
 	}
 	else {
-		editUndo->setEnabled(false);
-		editRedo->setEnabled(false);
-		editPaste->setEnabled(false);
+  		editCut->setEnabled(true);
+  		editCopy->setEnabled(true);
+  		editPaste->setEnabled(true);
+    		editPasteToSelection->setEnabled(true);
+    		editPasteToTable->setEnabled(true);
 		fileSave->setEnabled(false);
 		fileSaveAs->setEnabled(false);
 		runAll->setEnabled(false);
 		runSelection->setEnabled(false);
 		interruptCommand->setEnabled(false);
 		fileOpenRecent->setEnabled(false);
-    		editPasteToSelection->setEnabled(true);
-    		editPasteToTable->setEnabled(true);
+
 	}
 }
 
@@ -1130,11 +1235,8 @@ void RKwardApp::openHTML(KURL url)
 
 void RKwardApp::slotFunctionReference()
 {
-	//if (! activeWindow()->inherits("RKCommandEditorWindow"))
-	//	return;
-	//((RKCommandEditorWindow*) activeWindow())->showHelp();
-	helpDlg = new KHelpDlg(0);
-	helpDlg->setIcon(SmallIcon("help"));
-	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);
+	if (! activeWindow()->inherits("RKCommandEditorWindow"))
+		return;
+	((RKCommandEditorWindow*) activeWindow())->showHelp();
 }
 

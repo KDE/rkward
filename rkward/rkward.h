@@ -49,6 +49,8 @@ class RKDocManager;
 class RKCommandEditorWindow;
 class KHelpDlg;
 
+class QSplitter;
+
 /**
   * The base class for RKward application windows. It sets up the main
   * window and reads the config file as well as providing a menubar, toolbar
@@ -81,6 +83,8 @@ class RKwardApp : public KMdiMainFrm, virtual public KParts::PartBase
 	void fileOpenNoSave (const KURL &url);
 	void fileOpenAskSave (const KURL &url);
 	void openHTML(KURL url);
+
+	KParts::PartManager *m_manager;
 protected:
 	void openWorkspace (const KURL &url);
     /** save general Options like all bar positions and status as well as the geometry and the recent file list to the configuration
@@ -283,6 +287,21 @@ protected:
 	bool getFilenameAndPath(const KURL &url,QString *fname);
 	void saveAsProcedure(RKCommandEditorWindow *editor);
     void setEnabledActions(bool commandEditor);
+
+
+
+
+
+
+
+  KParts::ReadOnlyPart *m_gvpart;
+  KParts::ReadOnlyPart *m_notepadpart;
+  
+  QSplitter *m_splitter;
+
+
+
+
 signals:
     void childWindowCloseRequest(KMdiChildView * window);
 };

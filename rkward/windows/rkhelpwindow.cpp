@@ -17,26 +17,36 @@
 
 #include <khtmlview.h>
 #include <khtml_part.h>
+#include <klibloader.h>
 
 #include <klocale.h>
 #include <kiconloader.h>
 
 #include <qfile.h>
+#include <qwidget.h>
 #include <qlayout.h>
 
+#include "../rkglobals.h"
+#include "../rkward.h"
+#include <kparts/partmanager.h>
+
 #include "rkhelpwindow.h"
+
 
 RKHelpWindow::RKHelpWindow(QWidget *parent, const char *name)
  : KMdiChildView(parent, name)
 {
-	khtmlpart = new KHTMLPart (this);
+	khtmlpart = new KHTMLPart(this,0,0,0,KHTMLPart::BrowserViewGUI);
+	khtmlpart->setSelectable(true);
 	khtmlpart->view()->setIcon(SmallIcon("help"));
 	khtmlpart->view()->setName("Help"); 
 	khtmlpart->view()->setCaption(i18n("Help")); 
-	
+
+	(RKGlobals::rkApp()->m_manager)->addPart(khtmlpart,false);
+	khtmlpart->widget()->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	pLayout = new QHBoxLayout( this, 0, -1, "layout");
-	pLayout->addWidget(khtmlpart->view());
-	
+	pLayout->addWidget(khtmlpart->widget());
+
 	// We have to connect this in order to allow browsing.
 	connect( khtmlpart->browserExtension(), SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs & ) ), this, SLOT( slotOpenURLRequest(const KURL &, const KParts::URLArgs & ) ) );
 	

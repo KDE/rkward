@@ -60,7 +60,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : KMdiChildView (
 	RK_TRACE (COMMANDEDITOR);
 	
 	
-	m_library = KLibLoader::self()->library("libkatepart");
+	/*m_library = KLibLoader::self()->library("libkatepart");
 	m_doc = (Kate::Document *) m_library->factory ()->create (0L,"kate","KTextEditor::Document");
 	m_view = (Kate::View *)m_doc->createView(this);
 	m_view->setName("Kate Part View");
@@ -68,6 +68,31 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : KMdiChildView (
 	pLayout = new QHBoxLayout( this, 0, -1, "layout");
 	pLayout->addWidget(m_view);
  
+	(RKGlobals::rkApp()->m_manager)->addPart((KParts::Part*)m_view,false);*/
+
+	KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
+	if (factory)
+	{
+		// Create the part
+		m_katepart = (KParts::ReadWritePart *)factory->create( this,
+			"katepart", "KParts::ReadWritePart" );
+	}
+	(RKGlobals::rkApp()->m_manager)->addPart((KParts::Part*)m_katepart,false);
+	//m_katepart->widget()->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+
+
+	m_doc = (Kate::Document *) m_katepart;
+	m_view = (Kate::View *) m_katepart->widget();
+
+	pLayout = new QHBoxLayout( this, 0, -1, "layout");
+	pLayout->addWidget(m_katepart->widget());
+
+
+	m_view->setName("Kate Part View");
+	setRHighlighting(m_doc);
+
+
 	connect (this, SIGNAL (gotFocus (KMdiChildView *)), this, SLOT (slotGotFocus ()));
 	connect (this, SIGNAL (lostFocus (KMdiChildView *)), this, SLOT (slotLostFocus ()));
 
