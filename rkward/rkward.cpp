@@ -113,7 +113,7 @@ void RKwardApp::initActions()
   viewStatusBar->setStatusText(i18n("Enables/disables the statusbar"));
 
   // use the absolute path to your rkwardui.rc file for testing purpose in createGUI();
-  createGUI("/home/thomas/develop/rkward/rkward/rkwardui.rc");
+  createGUI("rkwardui.rc");
 
 }
 

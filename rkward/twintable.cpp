@@ -29,6 +29,9 @@
 #include <qcstring.h>
 
 #include "twintablemember.h"
+#include "typeselectcell.h"
+
+#define TYPE_ROW 1
 
 TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name){
     resize( 600, 480 );
@@ -44,7 +47,10 @@ TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name)
     varview->setNumCols( 5 );
 	varview->horizontalHeader()->setLabel(0, i18n( "new_Variable" ) );
 	varview->verticalHeader()->setLabel(0, i18n( "Label" ) );
-	varview->verticalHeader()->setLabel(1, i18n( "Type" ) );
+	varview->verticalHeader()->setLabel(TYPE_ROW, i18n( "Type" ) );
+	for (int i=0; i < varview->numCols (); i++) {
+		varview->setItem (TYPE_ROW, i, new TypeSelectCell (varview));
+	}
 	varview->verticalHeader()->setLabel(2, i18n( "something" ) );
 	varview->verticalHeader()->setLabel(3, i18n( "4" ) );
 	varview->verticalHeader()->setLabel(4, i18n( "__________" ) );
@@ -108,6 +114,7 @@ void TwinTable::insertNewColumn (int where, QString name) {
 	}
 
 	varview->insertColumns (where);
+	varview->setItem (TYPE_ROW, where, new TypeSelectCell (varview));
 	dataview->insertColumns (where);
 
 	varview->horizontalHeader()->setLabel(where, name);
