@@ -108,7 +108,7 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 	// build the interface
 
 	// use the absolute path to your rkwardui.rc file for testing purpose in createGUI();
-	setXMLFile( "/home/pierre/rkward/rkward/rkwardui.rc" );
+	setXMLFile( "rkwardui.rc" );
 	createShellGUI ( true );
 
 	setEnabledActions(true);
