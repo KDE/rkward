@@ -3,13 +3,14 @@
 - added simple browser for objects in the R-workspace
 - allow deletion of columns/objects (finally)
 - allow editing and using several objects/tables
+- added command-line parameter "debug-level"
 - interpret command-line parameter "file"
 - save and restore size of the main window correctly
 - use internal representation of object-tree in the R-workspace
 - store meta-information (labels, etc.) as R-attributes
 - keep track of whether the windows (watch, output) are open
 - new method of access to objects in R: getIntVector
-- use some global static pointer instead of passing them around (e.g. for the r-interface)
+- use some "global" static pointers instead of passing them around (e.g. for the r-interface)
 - reorganized sources: now using subdirectories for most components
 
 --- Version 0.2.2 - Aug-15-2004 ---
