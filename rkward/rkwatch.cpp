@@ -46,7 +46,7 @@ RKwatch::RKwatch(RInterface *parent) : QWidget () {
 	QVBoxLayout *button_vbox = new QVBoxLayout (0, 0, 6);
 	bottom_hbox->addLayout (button_vbox);
 	
-	submit = new QPushButton(i18n ("Submit"), layout_widget);
+	submit = new QPushButton(i18n ("&Run"), layout_widget);
 	connect (submit, SIGNAL (clicked ()), this, SLOT (submitCommand ()));
 	button_vbox->addWidget (submit);
 

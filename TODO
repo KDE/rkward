@@ -5,7 +5,6 @@ stuff to do before 0.2.1 release
 	- locking
 	- move output logging to RKOutput?
 - plugin improvements:
-	- tabs
 	- wizards
 	- multi-varslots
 
@@ -24,6 +23,7 @@ stuff to do before the thing is usable
 - use a cool new RHistory-Widget for the RKWatch
 	- discard RCommand-data that is not needed in the history
 - add a help-system
+- support for multiple tables/data.frames
 - mostly everything
 
 stuff to do before a 1.0 release

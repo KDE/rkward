@@ -28,6 +28,7 @@
 #include <qpushbutton.h>
 #include <qtextedit.h>
 #include <qregexp.h>
+#include <qtabwidget.h>
 
 #include <klocale.h>
 
@@ -172,7 +173,7 @@ void RKPlugin::buildGUI (const QDomElement &layout_element) {
 	connect (gui, SIGNAL (destroyed ()), this, SLOT (discard ()));
 }
 
-void RKPlugin::buildStructure (const QDomElement &element, QLayout *playout, QWidget *pwidget) {
+void RKPlugin::buildStructure (const QDomElement &element, QBoxLayout *playout, QWidget *pwidget) {
 	RKPluginWidget *widget = 0;
 
 	QDomNodeList children = element.childNodes ();
@@ -191,6 +192,19 @@ void RKPlugin::buildStructure (const QDomElement &element, QLayout *playout, QWi
 			QWidget *dummy = new QWidget (box);		// cumbersome workaround. Can this be done in a more straightforward way?
 			QVBoxLayout *ilayout = new QVBoxLayout (dummy, 6);
 			buildStructure (e, ilayout, dummy);
+		} else if (e.tagName () == "tabbook") {
+			QTabWidget *tabbook = new QTabWidget (pwidget);
+			playout->addWidget (tabbook);
+			QDomNodeList tabs = e.childNodes ();
+			for (unsigned int t=0; t < tabs.count (); ++t) {
+				QDomElement tab_e = tabs.item (t).toElement ();
+				if (tab_e.tagName () == "tab") {
+					QWidget *tabwidget = new QWidget (tabbook);
+					QVBoxLayout *ilayout = new QVBoxLayout (tabwidget);
+					buildStructure (tab_e, ilayout, tabwidget);
+					tabbook->addTab (tabwidget, tab_e.attribute ("label"));
+				}
+			}
 		} else if (e.tagName () == "varselector") {
 			widget = new RKVarSelector (e, pwidget, this, playout);
 		} else if (e.tagName () == "radio") {

@@ -105,7 +105,7 @@ friend class RKPluginGUIWidget;
 /** Called from activated (). builds the GUI */
 	void buildGUI (const QDomElement &layout_element);
 
-	void buildStructure (const QDomElement &element, QLayout *parent, QWidget *pwidget);
+	void buildStructure (const QDomElement &element, QBoxLayout *parent, QWidget *pwidget);
 
 	// standard gui-elements
 	QTextEdit *codeDisplay;

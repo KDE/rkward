@@ -1,3 +1,4 @@
+- plugins can use a tabbook-layout
 - display status of R-process in the statusbar
 - run R in a separate thread
 
