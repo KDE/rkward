@@ -3,14 +3,12 @@
 <document>
 	<entry type="entry" id="NA" label="unimplemented test"/>
 
-	<layout>
-		<row>
-			<text>
-				This plugin is not implemented. It's only here, to populate the menus a little.
-				Did you notice, that all plugins are constructed at runtime and on the fly from XML-files?
-				Try Analyse->Means->T-Tests->Independent Samples T-Test or Analyse->Descriptive Statistics.
-			</text>
-		</row>
-	</layout>
+	<dialog>
+		<text>
+			This plugin is not implemented. It's only here, to populate the menus a little.
+			Did you notice, that all plugins are constructed at runtime and on the fly from XML-files?
+			Try Analyse->Means->T-Tests->Independent Samples T-Test or Analyse->Descriptive Statistics.
+		</text>
+	</dialog>
 
 </document>

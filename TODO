@@ -1,11 +1,7 @@
 The following list of TODO-items is NOT complete!
 
 stuff to do before 0.2.2 release
-- handle asynchronous data in Output
-	- locking
-	- move output logging to RKOutput?
-- plugin improvements:
-	- wizards
+- add more plugin-widgets, plugins
 
 small stuff to do soon
 - plugins-scanning: don't duplicate everything
@@ -14,7 +10,9 @@ small stuff to do soon
 - set up a simple but serious debbugging framework
 - cleanup label-mess for plugin-widgets
 - further smarten up varselector / varslot-interaction
-- separate plugins from their handles (allows multiple instances of a plugin to be active)
+- handle asynchronous data in Output
+	- locking
+	- move output logging to RKOutput?
 
 mid-term stuff
 - add XML-parsing helper functions and error-checking

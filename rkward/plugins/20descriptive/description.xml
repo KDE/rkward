@@ -7,7 +7,7 @@
 
 <!-- The layout-section takes care of the layout of the GUI for this plugin. -->
 
-	<layout>
+	<dialog>
 		<row>
 			<column>
 				<varselector id="vars"/>
@@ -20,6 +20,6 @@
 				<checkbox id="sd" label="standard deviation" value="1" value_unchecked="0" checked="true"/>
 			</column>
 		</row>
-	</layout>
+	</dialog>
 	
 </document>

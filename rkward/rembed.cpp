@@ -20,8 +20,6 @@
 #include <qtextstream.h>
 #include <qstring.h>
 
-#include <stdlib.h>
-
 #include "rksettingsmoduler.h"
 #include "rksettingsmodulelogfiles.h"
 

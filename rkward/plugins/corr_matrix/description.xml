@@ -3,7 +3,7 @@
 <document>
 	<entry type="entry" id="cor_matrix" label="Correlation matrix"/>
 	
-	<layout>
+	<dialog>
 		<tabbook>
 			<tab label="variables">
 				<row>
@@ -23,6 +23,6 @@
 				</radio>
 			</tab>
 		</tabbook>
-	</layout>
+	</dialog>
 
 </document>

@@ -23,6 +23,7 @@
 
 class QPushButton;
 class QLineEdit;
+class QButtonGroup;
 
 /** The settings-module for plugin specific settings
 @author Thomas Friedrichsmeier
@@ -38,20 +39,26 @@ public:
 	void applyChanges ();
 	void save (KConfig *config);
 	
+	enum PluginPrefs { PreferDialog=0, PreferRecommended=1, PreferWizard=2 };
+	
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
 	QString caption ();
 	
 	static QString &pluginDir () { return plugin_dir; };
+	static PluginPrefs getInterfacePreference () { return interface_pref; };
 public slots:
 	void browse ();
 	void pathChanged (const QString &);
+	void buttonClicked (int);
 private:
 	QPushButton *browse_button;
 	QLineEdit *location_edit;
+	QButtonGroup *button_group;
 	
 	static QString plugin_dir;
+	static PluginPrefs interface_pref;
 };
 
 #endif

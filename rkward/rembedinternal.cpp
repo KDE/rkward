@@ -21,7 +21,7 @@ extern "C" {
 #include "Rinternals.h"
 #include "R.h"
 
-#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "rembedinternal.h"
@@ -75,7 +75,6 @@ SEXP runCommandInternalBase (const char *command, bool *error) {
 
 	if (*status == 1) {
 		PROTECT (pr);
-		int errorOccurred;
 
 		exp=R_NilValue;
 		if (TYPEOF(pr)==EXPRSXP && LENGTH(pr)>0) {

@@ -7,22 +7,60 @@
 
 <!-- The layout-section takes care of the layout of the GUI for this plugin. -->
 
-	<layout>
-		<row>
-			<column>
-				<varselector id="vars"/>
-			</column>
-			<column>
-				<varslot type="numeric" id="x" source="vars" required="true" label="compare"/>
-				<varslot type="numeric" id="y" source="vars" required="true" label="against"/>
-				<radio id="hypothesis" label="using test hypothesis">
-					<option value="two.sided" label="Two-sided"/>
-					<option value="greater" label="First is greater"/>
-					<option value="less" label="Second is greater"/>
-				</radio>
+	<dialog>
+		<tabbook>
+			<tab label="Basic settings">
+				<row>
+					<column>
+						<varselector id="vars"/>
+					</column>
+					<column>
+						<varslot type="numeric" id="x" source="vars" required="true" label="compare"/>
+						<varslot type="numeric" id="y" source="vars" required="true" label="against"/>
+						<radio id="hypothesis" label="using test hypothesis">
+							<option value="two.sided" label="Two-sided"/>
+							<option value="greater" label="First is greater"/>
+							<option value="less" label="Second is greater"/>
+						</radio>
+					</column>
+				</row>
+			</tab>
+			<tab label="Options">
 				<checkbox id="varequal" label="assume equal variances" value="TRUE"/>
-			</column>
-		</row>
-	</layout>
+				<frame label="Confidence Interval">
+					<checkbox id="confint" label="print confidence interval" value="1" checked="true"/>
+					<spinbox type="real" id="conflevel" label="confidence level" min="0" max="1" initial="0.95"/>
+				</frame>
+			</tab>
+		</tabbook>
+	</dialog>
+	<wizard>
+		<page>
+			<text>As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater.</text>
+			<row>
+				<column>
+					<varselector id="vars"/>
+				</column>
+				<column>
+					<varslot type="numeric" id="x" source="vars" required="true" label="compare"/>
+					<varslot type="numeric" id="y" source="vars" required="true" label="against"/>
+					<radio id="hypothesis" label="using test hypothesis">
+						<option value="two.sided" label="Two-sided"/>
+						<option value="greater" label="First is greater"/>
+						<option value="less" label="Second is greater"/>
+					</radio>
+				</column>
+			</row>
+		</page>
+		<page>
+			<text>Below are some advanced options. It's generally safe not to assume the variables have equal variances. An appropriate correction will be applied then. Chosing "assume equal variances" may increase test-strength, however.</text>
+			<checkbox id="varequal" label="assume equal variances" value="TRUE"/>
+			<text>Sometimes it's helpful to get an estimate of the confidence interval of the difference in means. Below you can specify whether one should be shown, and which confidence-level should be applied (95% corresponds to a 5% level of significance).</text>
+			<frame label="Confidence Interval">
+				<checkbox id="confint" label="print confidence interval" value="1" checked="true"/>
+				<spinbox type="real" id="conflevel" label="confidence level" min="0" max="1" initial="0.95"/>
+			</frame>
+		</page>
+	</wizard>
 	
 </document>

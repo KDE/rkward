@@ -3,7 +3,7 @@
 <document>
 	<entry type="entry" id="NA" label="This is a fictional t-test"/>
 
-	<layout>
+	<dialog>
 		<row>
 			<text>
 				This plugin is not implemented. It's only here, to populate the menus a little.
@@ -11,6 +11,6 @@
 				Try Analyse->Means->T-Tests->Independent Samples T-Test or Analyse->Descriptive Statistics.
 			</text>
 		</row>
-	</layout>
+	</dialog>
 
 </document>

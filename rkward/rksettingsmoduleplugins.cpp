@@ -26,14 +26,35 @@
 #include <qpushbutton.h>
 #include <qlineedit.h>
 #include <qlabel.h>
+#include <qbuttongroup.h>
+#include <qradiobutton.h>
 
 #include "rkward.h"
 
 // static members
 QString RKSettingsModulePlugins::plugin_dir;
+RKSettingsModulePlugins::PluginPrefs RKSettingsModulePlugins::interface_pref;
 
 RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, RKwardApp *parent) : RKSettingsModule(gui, parent) {
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, 6);
+	
+	main_vbox->addStretch ();
+	
+	QLabel *label = new QLabel (i18n ("Some plugins are avaiable with both, a wizard-like interface and a traditional dialog interface. If both are available, which mode of presentation do you prefer?"), this);
+	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+	main_vbox->addWidget (label);
+	
+	button_group = new QButtonGroup (this);
+	button_group->setColumnLayout (0, Qt::Vertical);
+	button_group->layout()->setSpacing (6);
+	button_group->layout()->setMargin (11);
+	QVBoxLayout *group_layout = new QVBoxLayout(button_group->layout());
+	group_layout->addWidget (new QRadioButton (i18n ("Always prefer dialogs"), button_group));
+	group_layout->addWidget (new QRadioButton (i18n ("Prefer recommended option"), button_group));
+	group_layout->addWidget (new QRadioButton (i18n ("Always prefer wizards"), button_group));
+	button_group->setButton (static_cast<int> (interface_pref));
+	connect (button_group, SIGNAL (clicked (int)), this, SLOT (buttonClicked (int)));
+	main_vbox->addWidget (button_group);
 	
 	main_vbox->addStretch ();
 	
@@ -60,8 +81,11 @@ void RKSettingsModulePlugins::browse () {
 	}
 }
 
-
 void RKSettingsModulePlugins::pathChanged (const QString &) {
+	change ();
+}
+
+void RKSettingsModulePlugins::buttonClicked (int) {
 	change ();
 }
 
@@ -75,6 +99,7 @@ bool RKSettingsModulePlugins::hasChanges () {
 
 void RKSettingsModulePlugins::applyChanges () {
 	plugin_dir = location_edit->text ();
+	interface_pref = static_cast<PluginPrefs> (button_group->selectedId ());
 	rk->initPlugins();
 }
 
@@ -85,6 +110,7 @@ void RKSettingsModulePlugins::save (KConfig *config) {
 void RKSettingsModulePlugins::saveSettings (KConfig *config) {
 	config->setGroup ("Plugin Settings");
 	config->writeEntry ("Plugin-Directory", plugin_dir);
+	config->writeEntry ("Interface Preferences", static_cast<int> (interface_pref));
 }
 
 void RKSettingsModulePlugins::loadSettings (KConfig *config) {
@@ -97,6 +123,7 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 			plugin_dir = "plugins/";
 		}
 	}
+	interface_pref = static_cast<PluginPrefs> (config->readNumEntry ("Interface Preferences"), static_cast<int> (PreferRecommended));
 }
 
 #include "rksettingsmoduleplugins.moc"

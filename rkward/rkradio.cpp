@@ -28,7 +28,7 @@ RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin, 
 	qDebug ("creating radio");
 
 	// create label	
-	label = new QLabel (element.attribute ("label", "Variable:"), parent);
+	label = new QLabel (element.attribute ("label", "Select one:"), parent);
 	addWidget (label);
 
 	// create ButtonGroup
@@ -36,8 +36,8 @@ RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin, 
 
 	// create internal layout for the buttons in the ButtonGroup
 	group->setColumnLayout(0, Qt::Vertical );
-	group->layout()->setSpacing( 6 );
-	group->layout()->setMargin( 11 );
+	group->layout()->setSpacing (6);
+	group->layout()->setMargin (11);
 	QVBoxLayout *group_layout = new QVBoxLayout(group->layout());
 
 	// create all the options

@@ -29,9 +29,10 @@ class QDomElement;
 class RKwardApp;
 class QDialog;
 class QBoxLayout;
+class QGridLayout;
 class QLayout;
+class QWidgetStack;
 class RKPluginWidget;
-class QTextEdit;
 class QPushButton;
 class RKVarSelector;
 class PHPBackend;
@@ -39,7 +40,8 @@ class RCommand;
 class RKErrorDialog;
 class RKCommandEditor;
 
-/**
+/** This class represents an activated plugin.
+
   *@author Thomas Friedrichsmeier
   */
 
@@ -57,9 +59,10 @@ public:
 	QString getVar (const QString &id);
 public slots:
 	void ok ();
+	void back ();
 	void cancel ();
 	void toggleCode ();
-	void toggleWarn ();
+	void switchInterfaces ();
 	void help ();
 /** Widgets, that if changed, require the code/problem-views to be updated,
 	connect to this slot (or call it directly). Updates code/problem-views */
@@ -97,21 +100,43 @@ friend class RKPluginGUIWidget;
 	typedef QMap<QString, RKPluginWidget*> WidgetsMap;
 	WidgetsMap widgets;
 
+	typedef QMap<RKPluginWidget*, int> PageMap;
+	PageMap page_map;
+	
 /** Called from activated (). builds the GUI */
-	void buildGUI (const QDomElement &layout_element);
-
+	void buildDialog (const QDomElement &dialog_element, bool wizard_available);
+	void buildWizard (const QDomElement &wizard_element, bool dialog_available);
+	
 	void buildStructure (const QDomElement &element, QBoxLayout *parent, QWidget *pwidget);
+	
+	void registerWidget (RKPluginWidget *widget, const QString &id, int page=0);
+
+	QString current_code;
+	QString filename;
+	
+	void buildGUI (int type_override);
+	QWidget *main_widget;
+	QGridLayout *sizer_grid;
 
 	// standard gui-elements
 	RKCommandEditor *codeDisplay;
-	QTextEdit *warnDisplay;
 
+	// common widgets
 	QPushButton *okButton;
 	QPushButton *cancelButton;
 	QPushButton *helpButton;
-	QPushButton *toggleCodeButton;
-	QPushButton *toggleWarnButton;
+	QPushButton *switchButton;
 	
+	int num_pages;
+	int current_page;
+	
+	// widgets for wizard only
+	QWidgetStack *wizard_stack;
+	QPushButton *backButton;
+
+	// widgets for dialog only
+	QPushButton *toggleCodeButton;
+		
 	PHPBackend *backend;
 	RKErrorDialog *error_dialog;
 	RCommand::CommandChain *php_backend_chain;

@@ -1,3 +1,9 @@
+- added spinbox widget for use in plugins
+- use coloring for "unsatisfied" plugin widgets instead of the "Problems" display
+- added support for wizard-like plugins
+- same plugin can be opened several times at once
+- use katepart for plugin code view, too
+
 --- Version 0.2.1 - Aug-08-2004 ---
 - added "don't show again" setting to initial warning
 - added correlation matrix plugin

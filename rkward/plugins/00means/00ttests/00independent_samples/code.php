@@ -3,7 +3,7 @@
 	}
 	
 	function calculate () {
-?>rk.temp <- t.test (<? getRK ("x"); ?>, <? getRK ("y"); ?>, "<? getRK ("hypothesis"); ?>"<? if (($varequal = getRK_val ("varequal")) != "") echo (", 0, FALSE, " . $varequal); ?>)
+?>rk.temp <- t.test (<? getRK ("x"); ?>, <? getRK ("y"); ?>, "<? getRK ("hypothesis"); ?>"<? if (($varequal = getRK_val ("varequal")) != "") echo (", var.equal=" . $varequal); if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $conflevel); ?>)
 <?
 	}
 	
@@ -20,6 +20,11 @@
 		$y = getRK_val ("y");
 		$ylabel = getRK_val ("y.label");
 		$hypothesis = getRK_val ("hypothesis");
+		if ($confint = getRK_val ("confint")) {
+			$conflevel = getRK_val ("conflevel");
+			$conflevel = ($conflevel * 100) . "%";
+			list ($confmin, $confmax) = explode (" ", callR_val ("cat (rk.temp\$conf.int)"), 2);
+		}
 		$varequal = "assuming equal variances";
 		if (getRK_val ("varequal") == "") {
 			$varequal = "not " . $varequal;
@@ -50,8 +55,8 @@
 <h3>H1: <? echo ($hypothesis); ?><h3>
 <h4>(<? echo ($varequal); ?>)</h4>
 <table border="1">
-	<tr><td>Variable</td><td>estimated mean</td><td>degrees of freedom</td><td>t</td><td>p</td></tr>
-	<tr><td><? echo ($x . "<br>(" . $xlabel . ")"); ?></td><td><? echo ($estx); ?></td><td rowspan="2"><? echo ($df); ?></td><td rowspan="2"><? echo ($t); ?></td><td rowspan="2"><? echo ($p); ?></td></tr>
+	<tr><td>Variable</td><td>estimated mean</td><td>degrees of freedom</td><td>t</td><td>p</td><? if ($confint) echo ("<td> confidence interval of difference (" . $conflevel . ")</td>"); ?></tr>
+	<tr><td><? echo ($x . "<br>(" . $xlabel . ")"); ?></td><td><? echo ($estx); ?></td><td rowspan="2"><? echo ($df); ?></td><td rowspan="2"><? echo ($t); ?></td><td rowspan="2"><? echo ($p); ?></td><? if ($confint) echo ("<td rowspan=\"2\">[" . $confmin . " " . $confmax ."]</td>"); ?></tr>
 	<tr><td><? echo ($y . "<br>(" . $ylabel . ")"); ?></td><td><? echo ($esty); ?></td><tr>
 </table><?
 	}

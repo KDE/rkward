@@ -27,6 +27,8 @@
 #include <kinputdialog.h>
 #include <klocale.h>
 
+#include <stdlib.h>
+
 RInterface::RInterface(RKwardApp *parent){
 	app = parent;
 

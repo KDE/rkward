@@ -69,6 +69,7 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 	required = (element.attribute ("required") == "true");
 	num_vars = 0;
 	selection = false;
+	updateState ();
 }
 
 RKVarSlot::~RKVarSlot(){
@@ -150,7 +151,24 @@ void RKVarSlot::selectPressed () {
 		num_vars = list->childCount ();
 	}
 	
+	updateState ();
 	plugin ()->changed ();
+}
+
+void RKVarSlot::updateState () {
+	if (!isSatisfied ()) {
+		if (multi) {
+			list->setPaletteBackgroundColor (QColor (255, 0, 0));
+		} else {
+			line_edit->setPaletteBackgroundColor (QColor (255, 0, 0));
+		}
+	} else {
+		if (multi) {
+			list->setPaletteBackgroundColor (QColor (255, 255, 255));
+		} else {
+			line_edit->setPaletteBackgroundColor (QColor (255, 255, 255));
+		}
+	}
 }
 
 bool RKVarSlot::isSatisfied () {
@@ -163,7 +181,11 @@ QString RKVarSlot::value (const QString &modifier) {
 	
 	if (modifier == "label") {
 		if (!multi) {
-			return source->getLabel (item_map[0]);
+			if (num_vars) {
+				return source->getLabel (item_map[0]);
+			} else {
+				return "";
+			}
 		} else {
 			QString ret;
 	
@@ -177,7 +199,11 @@ QString RKVarSlot::value (const QString &modifier) {
 		}
 	} else {
 		if (!multi) {
-			return source->getName (item_map[0]);
+			if (num_vars) {
+				return source->getName (item_map[0]);
+			} else {
+				return "";
+			}
 			//return line_edit->text ();
 		} else {
 			QString ret;

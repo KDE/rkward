@@ -53,6 +53,7 @@ private:
 	bool selection;
 	typedef QMap<QListViewItem*, int> ItemMap; 
 	ItemMap item_map;
+	void updateState ();
 protected:
 	bool isSatisfied ();
 	QString value (const QString &modifier);
