@@ -17,6 +17,7 @@
 #include <kiconloader.h>
 
 #include <qfile.h>
+#include <qlayout.h>
 
 #include "rkhelpwindow.h"
 
@@ -32,6 +33,9 @@ RKHelpWindow::RKHelpWindow(QWidget *parent, const char *name)
 	khtmlpart->view()->setIcon(SmallIcon("help"));
 	khtmlpart->view()->setName("Help"); 
 	khtmlpart->view()->setCaption(i18n("Help")); 
+	
+	pLayout = new QHBoxLayout( this, 0, -1, "layout");
+	pLayout->addWidget(khtmlpart->view());
 }
 
 
@@ -48,6 +52,8 @@ bool RKHelpWindow::openURL(KURL url)
 {
 	if (QFile::exists( url.path() )) {
 		khtmlpart->openURL(url);
+		setTabCaption(url.fileName());
+		setCaption(url.prettyURL());
 		return(true);
 	}
 	else{

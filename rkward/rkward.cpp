@@ -73,6 +73,7 @@
 #include "agents/rksaveagent.h"
 #include "agents/rkloadagent.h"
 #include "windows/rkcommandeditorwindow.h"
+#include "windows/rkhelpwindow.h"
 
 #include "debug.h"
 
@@ -355,6 +356,8 @@ void RKwardApp::initActions()
 	interruptCommand->setIcon("stop");
 	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
+	
+	helpFunction = new KAction (i18n ("&Function reference"), KShortcut ("Ctrl+I"), this, SLOT(slotFunctionReference ()), actionCollection(), "function_reference");
 
 	new_data_frame->setStatusText (i18n ("Creates new empty dataset and opens it for editing"));
   fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
@@ -989,7 +992,7 @@ bool RKwardApp::getFilenameAndPath(const KURL &url,QString *fname)
 
 void RKwardApp::slotChildWindowCloseRequest (KMdiChildView * window) {
 	//If it's an unsaved command editor window, there is a warning.
-	if (window->inherits("RKCommandEditorWindow")) 	{
+	if (window->inherits("RKCommandEditorWindow")) {
 		RKCommandEditorWindow * editor = (RKCommandEditorWindow*) window;
 		if (editor->isModified()) {
 			int status = KMessageBox::warningYesNo(this,i18n("The document has been modified. Close anyway?"),i18n("File not saved"));
@@ -1003,9 +1006,9 @@ void RKwardApp::slotChildWindowCloseRequest (KMdiChildView * window) {
 			window->hide();
 			delete window;	
 		}
-		
-
-		
+	}
+	else if (window->inherits("RKHelpWindow")){
+		delete window;
 	}
 }
 
@@ -1098,3 +1101,22 @@ void RKwardApp::setEnabledActions(bool commandEditor)
     		editPasteToTable->setEnabled(true);
 	}
 }
+
+void RKwardApp::openHTML(KURL url)
+{
+	RKHelpWindow *help = new RKHelpWindow;
+	help->openURL (url);	
+	help->setIcon(SmallIcon("help"));
+	addWindow( help );
+}
+
+
+
+void RKwardApp::slotFunctionReference()
+{
+	if (! activeWindow()->inherits("RKCommandEditorWindow"))
+		return;
+	((RKCommandEditorWindow*) activeWindow())->showHelp();
+	
+}
+

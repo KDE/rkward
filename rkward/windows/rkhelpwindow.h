@@ -29,6 +29,7 @@ public:
     bool openURL(KURL url);
 private:
     KHTMLPart * khtmlpart;
+    QBoxLayout* pLayout;
 };
 
 #endif

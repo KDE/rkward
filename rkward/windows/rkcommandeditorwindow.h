@@ -30,19 +30,22 @@
 
 #include <kmdichildview.h>
 
+#include "../rbackend/rcommandreceiver.h"
+
 #include <kurl.h>
 
 class RKCommandEditor;
 class KAction;
 class KToggleAction;
 class RKwardApp; 
+class RCommandChain;
 
 /**
 This class provides an editor window for R-commands. It is an MDI child that is added to the main window.
 
 @author Pierre Ecochard
 */
-class RKCommandEditorWindow : public KMdiChildView {
+class RKCommandEditorWindow : public KMdiChildView, public RCommandReceiver {
 Q_OBJECT
 public:
     RKCommandEditorWindow (QWidget *parent = 0);
@@ -62,7 +65,8 @@ public:
     void undo();
     void redo();
     void insertText(QString text);
-
+    void showHelp();
+    void rCommandDone (RCommand *command);
 private:
 	Kate::Document *m_doc;
 	   
@@ -78,6 +82,7 @@ private slots:
 
 private:
     void updateTabCaption(const KURL &url);
+    RCommandChain *chain;
 };
 
 #endif

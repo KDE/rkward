@@ -29,10 +29,12 @@
 #include <ktexteditor/popupmenuinterface.h>
 
 
+
 #include <qlayout.h>
 #include <qpopupmenu.h>
 #include <qapplication.h>
 #include <qtabwidget.h>
+#include <qfile.h>
 
 #include <klocale.h>
 #include <kmenubar.h>
@@ -50,6 +52,8 @@
 #include "../rkward.h"
 
 #include "../debug.h"
+
+#define GET_HELP_URL 1
 
 
 RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : KMdiChildView (parent) {
@@ -247,5 +251,34 @@ void RKCommandEditorWindow::updateTabCaption(const KURL &url)
 	}
 	else {
 		setTabCaption(url.prettyURL());
+	}
+}
+
+
+void RKCommandEditorWindow::showHelp()
+{
+	chain=0;
+	QString s="help(\"";
+	s.append(m_view->currentWord());
+	s.append("\", htmlhelp=TRUE)[1]");
+	
+	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_HELP_URL, chain);
+
+		
+}
+
+void RKCommandEditorWindow::rCommandDone (RCommand *command) {
+	RK_TRACE (COMMANDEDITOR);
+	
+	KURL url;
+	
+	if (command->getFlags () == GET_HELP_URL) {
+		url.setPath(command->getStringVector ()[0]);
+		if (QFile::exists( url.path() )) {
+			RKGlobals::rkApp()->openHTML(url);
+			return;
+		}
+	} else {
+		RK_ASSERT (false);
 	}
 }

@@ -79,6 +79,7 @@ class RKwardApp : public KMdiMainFrm, virtual public KParts::PartBase
 	
 	void fileOpenNoSave (const KURL &url);
 	void fileOpenAskSave (const KURL &url);
+	void openHTML(KURL url);
 protected:
 	void openWorkspace (const KURL &url);
     /** save general Options like all bar positions and status as well as the geometry and the recent file list to the configuration
@@ -183,7 +184,7 @@ protected:
 	/** configures RKward-settings */
 	void slotConfigure ();
 
-/** Init-procedures to be done after the exec-loop was started */
+	/** Init-procedures to be done after the exec-loop was started */
 	void doPostInit ();
 	
 	void slotEditorsChanged ();
@@ -194,14 +195,15 @@ protected:
 	void slotSaveCommandEditorAs();
 	void slotCloseCommandEditor();
 	void slotOpenURL(const KURL &url);
-    void slotChildWindowCloseRequest (KMdiChildView * window);
-    void slotRunSelection();
-    void slotInterruptCommand();
-    void slotRunAll();
-    void slotEditUndo();
-    void slotEditRedo();
-    void slotViewActivated (KMdiChildView *window);
-    void slotOpenRecentCommandEditor(const KURL&);
+	void slotChildWindowCloseRequest (KMdiChildView * window);
+	void slotRunSelection();
+	void slotInterruptCommand();
+	void slotRunAll();
+	void slotEditUndo();
+	void slotEditRedo();
+	void slotViewActivated (KMdiChildView *window);
+	void slotOpenRecentCommandEditor(const KURL&);
+	void slotFunctionReference();
   private:
     /** the configuration object of the application */
     KConfig *config;
@@ -247,6 +249,8 @@ protected:
 	KAction* runSelection;
 	KAction* interruptCommand;
 	KAction* configure;
+	
+	KAction* helpFunction;
 
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;

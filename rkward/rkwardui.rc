@@ -18,6 +18,8 @@
 		<Action name="file_savex"/>
 		<Action name="file_save_asx"/>
 		<Separator/>
+		<Action name="file_load_libs"/>
+		<Separator/>
 		<Action name="file_printx"/>
 		<Separator/>
 		<Action name="file_quitx"/>
@@ -47,6 +49,9 @@
 	<Menu name="settings"><text>&amp;Settings</text>
 		<Action name="file_load_libs"/>
 		<Action name="configure"></Action>
+	</Menu>
+	<Menu name="help"><text>&amp;Help</text>
+		<Action name="function_reference"></Action>
 	</Menu>
  	<Merge/>
 </MenuBar>
