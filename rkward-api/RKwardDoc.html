@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<TITLE>class RKwardDoc</TITLE>
+
+<META NAME="Generator" CONTENT="KDOC ">
+</HEAD>
+<BODY bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#000099" alink= "#ffffff">
+<TABLE WIDTH="100%" BORDER="0">
+<TR>
+<TD>
+	<TABLE BORDER="0">
+		<TR><TD valign="top" align="left" cellspacing="10">
+		<h1>class RKwardDoc</h1>
+		</TD>
+		<TD valign="top" align="right" colspan="1">
+                                                                         *
+   This program is free software; you can redistribute it and/or modify  *
+   it under the terms of the GNU General Public License as published by  *
+   the Free Software Foundation; either version 2 of the License, or     *
+   (at your option) any later version. <small><A HREF="#longdesc">More...</A></small></TD></TR>
+	</TABLE>
+	<HR>
+	<TABLE BORDER="0">
+		<TR><TH>Definition</TH><TD><code>#include &lt;<A HREF="rkwarddoc_h.html">rkwarddoc.h</A>&gt;</code></TD></TR>
+<TR><TH>Inherits</TH><TD>QObject <small>(unknown)</small> <small>[public ]</small></TD></TR>
+<TR><TH><A HREF="full-list-RKwardDoc.html">List of all Methods</A></TH></TR>
+	</TABLE>
+	</TD>
+<TD align="right"><TABLE BORDER="0"><TR><TD><small><A HREF="index-long.html">Annotated List</A></small></TD></TR>
+<TR><TD><small><A HREF="header-list.html">Files</A></small></TD></TR>
+<TR><TD><small><A HREF="all-globals.html">Globals</A></small></TD></TR>
+<TR><TD><small><A HREF="hier.html">Hierarchy</A></small></TD></TR>
+<TR><TD><small><A HREF="index.html">Index</A></small></TD></TR>
+</TABLE></TD></TR></TABLE>
+<h4>Public Methods</h4><ul><LI>&nbsp;<b><A HREF="#ref1">RKwardDoc</A></b> (QWidget *parent, const char *name=0) 
+</LI>
+<LI>&nbsp;<b><A HREF="#ref2">~RKwardDoc</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref3">addView</A></b> (<A HREF="RKwardView.html">RKwardView</A> *view) 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref4">removeView</A></b> (<A HREF="RKwardView.html">RKwardView</A> *view) 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref5">setModified</A></b> (bool _m=true) 
+</LI>
+<LI>bool &nbsp;<b><A HREF="#ref6">isModified</A></b> () 
+</LI>
+<LI>bool &nbsp;<b><A HREF="#ref7">saveModified</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref8">deleteContents</A></b> () 
+</LI>
+<LI>bool &nbsp;<b><A HREF="#ref9">newDocument</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref10">closeDocument</A></b> () 
+</LI>
+<LI>bool &nbsp;<b><A HREF="#ref11">openDocument</A></b> (const KURL& url, const char *format=0) 
+</LI>
+<LI>bool &nbsp;<b><A HREF="#ref12">saveDocument</A></b> (const KURL& url, const char *format=0) 
+</LI>
+<LI>const KURL& &nbsp;<b><A HREF="#ref13">URL</A></b> ()  const
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref14">setURL</A></b> (const KURL& url) 
+</LI>
+</ul><h4>Public Slots</h4><ul><LI>void &nbsp;<b><A HREF="#ref15">slotUpdateAllViews</A></b> (<A HREF="RKwardView.html">RKwardView</A> *sender) 
+</LI>
+</ul><h4>Public Members</h4><ul><LI>static QList<RKwardView> *<b><A HREF="#ref16">pViewList</A></b></LI>
+</ul><h4>Private Members</h4><ul><LI>bool <b><A HREF="#ref17">modified</A></b></LI>
+<LI>KURL <b><A HREF="#ref18">doc_url</A></b></LI>
+</ul><HR><H2><A NAME="longdesc">Detailed Description</A></H2><p>
+                                                                         *
+   This program is free software; you can redistribute it and/or modify  *
+   it under the terms of the GNU General Public License as published by  *
+   the Free Software Foundation; either version 2 of the License, or     *
+   (at your option) any later version.                                   *
+                                                                         *
+*************************************************************************</p>
+<A NAME="RKwardDoc"></A><A NAME="ref1"></A><table width="100%"><tr bgcolor="#eeeeee"><td>&nbsp;<strong>RKwardDoc</strong> (QWidget *parent, const char *name=0)
+<br></td><td align="right"><h3><strong>RKwardDoc</strong></h3></td></tr></table><p></p><A NAME="~RKwardDoc"></A><A NAME="ref2"></A><table width="100%"><tr bgcolor="#eeeeee"><td>&nbsp;<strong>~RKwardDoc</strong> ()
+<br></td><td align="right"><h3><strong>~RKwardDoc</strong></h3></td></tr></table><p></p><A NAME="addView"></A><A NAME="ref3"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>addView</strong> (<A HREF="RKwardView.html">RKwardView</A> *view)
+<br></td><td align="right"><h3><strong>addView</strong></h3></td></tr></table><p></p><A NAME="removeView"></A><A NAME="ref4"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>removeView</strong> (<A HREF="RKwardView.html">RKwardView</A> *view)
+<br></td><td align="right"><h3><strong>removeView</strong></h3></td></tr></table><p></p><A NAME="setModified"></A><A NAME="ref5"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>setModified</strong> (bool _m=true)
+<br></td><td align="right"><h3><strong>setModified</strong></h3></td></tr></table><p></p><A NAME="isModified"></A><A NAME="ref6"></A><table width="100%"><tr bgcolor="#eeeeee"><td>bool &nbsp;<strong>isModified</strong> ()
+<br></td><td align="right"><h3><strong>isModified</strong></h3></td></tr></table><p></p><A NAME="saveModified"></A><A NAME="ref7"></A><table width="100%"><tr bgcolor="#eeeeee"><td>bool &nbsp;<strong>saveModified</strong> ()
+<br></td><td align="right"><h3><strong>saveModified</strong></h3></td></tr></table><p></p><A NAME="deleteContents"></A><A NAME="ref8"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>deleteContents</strong> ()
+<br></td><td align="right"><h3><strong>deleteContents</strong></h3></td></tr></table><p></p><A NAME="newDocument"></A><A NAME="ref9"></A><table width="100%"><tr bgcolor="#eeeeee"><td>bool &nbsp;<strong>newDocument</strong> ()
+<br></td><td align="right"><h3><strong>newDocument</strong></h3></td></tr></table><p></p><A NAME="closeDocument"></A><A NAME="ref10"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>closeDocument</strong> ()
+<br></td><td align="right"><h3><strong>closeDocument</strong></h3></td></tr></table><p></p><A NAME="openDocument"></A><A NAME="ref11"></A><table width="100%"><tr bgcolor="#eeeeee"><td>bool &nbsp;<strong>openDocument</strong> (const KURL& url, const char *format=0)
+<br></td><td align="right"><h3><strong>openDocument</strong></h3></td></tr></table><p></p><A NAME="saveDocument"></A><A NAME="ref12"></A><table width="100%"><tr bgcolor="#eeeeee"><td>bool &nbsp;<strong>saveDocument</strong> (const KURL& url, const char *format=0)
+<br></td><td align="right"><h3><strong>saveDocument</strong></h3></td></tr></table><p></p><A NAME="URL"></A><A NAME="ref13"></A><table width="100%"><tr bgcolor="#eeeeee"><td>const KURL& &nbsp;<strong>URL</strong> ()
+<br></td><td align="right"><h3><strong>URL</strong></h3></td></tr></table><p> <small>[const]</small></p><A NAME="setURL"></A><A NAME="ref14"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>setURL</strong> (const KURL& url)
+<br></td><td align="right"><h3><strong>setURL</strong></h3></td></tr></table><p></p><A NAME="slotUpdateAllViews"></A><A NAME="ref15"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotUpdateAllViews</strong> (<A HREF="RKwardView.html">RKwardView</A> *sender)
+<br></td><td align="right"><h3><strong>slotUpdateAllViews</strong></h3></td></tr></table><p> <small>[slot]</small></p><p> calls repaint() on all views connected to the document object and is called by the view by which the document has been changed.
+ As this view normally repaints itself, it is excluded from the paintEvent.
+     </p>
+<A NAME="pViewList"></A><A NAME="ref16"></A><table width="100%"><tr bgcolor="#eeeeee"><td>static QList<<A HREF="RKwardView.html">RKwardView</A>> * <strong>pViewList</strong>
+</td><td align="right"><h3><strong>pViewList</strong></h3></td></tr></table><p></p><A NAME="modified"></A><A NAME="ref17"></A><table width="100%"><tr bgcolor="#eeeeee"><td>bool  <strong>modified</strong>
+</td><td align="right"><h3><strong>modified</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="doc_url"></A><A NAME="ref18"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KURL  <strong>doc_url</strong>
+</td><td align="right"><h3><strong>doc_url</strong></h3></td></tr></table><p> <small>[private]</small></p><HR>
+	<table>
+	<tr><td><small>Generated by: thomas on debian on Tue Oct 29 20:06:39 2002, using kdoc 2.0a53.</small></td></tr>
+	</table>
+</BODY>
+</HTML>

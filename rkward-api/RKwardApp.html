@@ -1,0 +1,223 @@
+<HTML>
+<HEAD>
+<TITLE>class RKwardApp</TITLE>
+
+<META NAME="Generator" CONTENT="KDOC ">
+</HEAD>
+<BODY bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#000099" alink= "#ffffff">
+<TABLE WIDTH="100%" BORDER="0">
+<TR>
+<TD>
+	<TABLE BORDER="0">
+		<TR><TD valign="top" align="left" cellspacing="10">
+		<h1>class RKwardApp</h1>
+		</TD>
+		<TD valign="top" align="right" colspan="1">
+ The base class for RKward application windows. <small><A HREF="#longdesc">More...</A></small></TD></TR>
+	</TABLE>
+	<HR>
+	<TABLE BORDER="0">
+		<TR><TH>Definition</TH><TD><code>#include &lt;<A HREF="rkward_h.html">rkward.h</A>&gt;</code></TD></TR>
+<TR><TH>Inherits</TH><TD>KMainWindow <small>(unknown)</small> <small>[public ]</small></TD></TR>
+<TR><TH><A HREF="full-list-RKwardApp.html">List of all Methods</A></TH></TR>
+	</TABLE>
+	</TD>
+<TD align="right"><TABLE BORDER="0"><TR><TD><small><A HREF="index-long.html">Annotated List</A></small></TD></TR>
+<TR><TD><small><A HREF="header-list.html">Files</A></small></TD></TR>
+<TR><TD><small><A HREF="all-globals.html">Globals</A></small></TD></TR>
+<TR><TD><small><A HREF="hier.html">Hierarchy</A></small></TD></TR>
+<TR><TD><small><A HREF="index.html">Index</A></small></TD></TR>
+</TABLE></TD></TR></TABLE>
+<h4>Public Methods</h4><ul><LI>&nbsp;<b><A HREF="#ref2">RKwardApp</A></b> (QWidget* parent=0, const char* name=0) 
+</LI>
+<LI>&nbsp;<b><A HREF="#ref3">~RKwardApp</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref4">openDocumentFile</A></b> (const KURL& url=0) 
+</LI>
+<LI><A HREF="RKwardDoc.html">RKwardDoc</A> *&nbsp;<b><A HREF="#ref5">getDocument</A></b> ()  const
+</LI>
+</ul><h4>Public Slots</h4><ul><LI>void &nbsp;<b><A HREF="#ref16">slotFileNewWindow</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref17">slotFileNew</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref18">slotFileOpen</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref19">slotFileOpenRecent</A></b> (const KURL& url) 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref20">slotFileSave</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref21">slotFileSaveAs</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref22">slotFileClose</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref23">slotFilePrint</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref24">slotFileQuit</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref25">slotEditCut</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref26">slotEditCopy</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref27">slotEditPaste</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref28">slotViewToolBar</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref29">slotViewStatusBar</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref30">slotStatusMsg</A></b> (const QString &text) 
+</LI>
+</ul><h4>Protected Methods</h4><ul><LI>void &nbsp;<b><A HREF="#ref6">saveOptions</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref7">readOptions</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref8">initActions</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref9">initStatusBar</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref10">initDocument</A></b> () 
+</LI>
+<LI>void &nbsp;<b><A HREF="#ref11">initView</A></b> () 
+</LI>
+<LI>virtual  bool &nbsp;<b><A HREF="#ref12">queryClose</A></b> () 
+</LI>
+<LI>virtual  bool &nbsp;<b><A HREF="#ref13">queryExit</A></b> () 
+</LI>
+<LI>virtual  void &nbsp;<b><A HREF="#ref14">saveProperties</A></b> (KConfig *_cfg) 
+</LI>
+<LI>virtual  void &nbsp;<b><A HREF="#ref15">readProperties</A></b> (KConfig *_cfg) 
+</LI>
+</ul><h4>Private Members</h4><ul><LI>friend class <b><A HREF="#ref1">RKwardView</A></b></LI>
+<LI>KConfig *<b><A HREF="#ref31">config</A></b></LI>
+<LI>RKwardView *<b><A HREF="#ref32">view</A></b></LI>
+<LI>RKwardDoc *<b><A HREF="#ref33">doc</A></b></LI>
+<LI>KAction* <b><A HREF="#ref34">fileNewWindow</A></b></LI>
+<LI>KAction* <b><A HREF="#ref35">fileNew</A></b></LI>
+<LI>KAction* <b><A HREF="#ref36">fileOpen</A></b></LI>
+<LI>KRecentFilesAction* <b><A HREF="#ref37">fileOpenRecent</A></b></LI>
+<LI>KAction* <b><A HREF="#ref38">fileSave</A></b></LI>
+<LI>KAction* <b><A HREF="#ref39">fileSaveAs</A></b></LI>
+<LI>KAction* <b><A HREF="#ref40">fileClose</A></b></LI>
+<LI>KAction* <b><A HREF="#ref41">filePrint</A></b></LI>
+<LI>KAction* <b><A HREF="#ref42">fileQuit</A></b></LI>
+<LI>KAction* <b><A HREF="#ref43">editCut</A></b></LI>
+<LI>KAction* <b><A HREF="#ref44">editCopy</A></b></LI>
+<LI>KAction* <b><A HREF="#ref45">editPaste</A></b></LI>
+<LI>KToggleAction* <b><A HREF="#ref46">viewToolBar</A></b></LI>
+<LI>KToggleAction* <b><A HREF="#ref47">viewStatusBar</A></b></LI>
+</ul><HR><H2><A NAME="longdesc">Detailed Description</A></H2><p>
+ The base class for RKward application windows. It sets up the main
+ window and reads the config file as well as providing a menubar, toolbar
+ and statusbar. An instance of RKwardView creates your center view, which is connected
+ to the window's Doc object.
+ RKwardApp reimplements the methods that KMainWindow provides for main window handling and supports
+ full session management as well as using KActions.
+</p>
+<p></p>
+<p><b>See also</b>: KMainWindow, KApplication, KConfig</p>
+<A NAME="RKwardView"></A><A NAME="ref1"></A><table width="100%"><tr bgcolor="#eeeeee"><td>friend class  <strong>RKwardView</strong>
+</td><td align="right"><h3><strong>RKwardView</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="RKwardApp"></A><A NAME="ref2"></A><table width="100%"><tr bgcolor="#eeeeee"><td>&nbsp;<strong>RKwardApp</strong> (QWidget* parent=0, const char* name=0)
+<br></td><td align="right"><h3><strong>RKwardApp</strong></h3></td></tr></table><p></p><p> construtor of RKwardApp, calls all init functions to create the application.
+     </p>
+<A NAME="~RKwardApp"></A><A NAME="ref3"></A><table width="100%"><tr bgcolor="#eeeeee"><td>&nbsp;<strong>~RKwardApp</strong> ()
+<br></td><td align="right"><h3><strong>~RKwardApp</strong></h3></td></tr></table><p></p><A NAME="openDocumentFile"></A><A NAME="ref4"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>openDocumentFile</strong> (const KURL& url=0)
+<br></td><td align="right"><h3><strong>openDocumentFile</strong></h3></td></tr></table><p></p><p> opens a file specified by commandline option
+     </p>
+<A NAME="getDocument"></A><A NAME="ref5"></A><table width="100%"><tr bgcolor="#eeeeee"><td><A HREF="RKwardDoc.html">RKwardDoc</A> *&nbsp;<strong>getDocument</strong> ()
+<br></td><td align="right"><h3><strong>getDocument</strong></h3></td></tr></table><p> <small>[const]</small></p><p> returns a pointer to the current document connected to the KTMainWindow instance and is used by
+ the View class to access the document object's methods
+     </p>
+<A NAME="saveOptions"></A><A NAME="ref6"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>saveOptions</strong> ()
+<br></td><td align="right"><h3><strong>saveOptions</strong></h3></td></tr></table><p> <small>[protected]</small></p><p> save general Options like all bar positions and status as well as the geometry and the recent file list to the configuration
+ file
+     </p>
+<A NAME="readOptions"></A><A NAME="ref7"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>readOptions</strong> ()
+<br></td><td align="right"><h3><strong>readOptions</strong></h3></td></tr></table><p> <small>[protected]</small></p><p> read general Options again and initialize all variables like the recent file list
+     </p>
+<A NAME="initActions"></A><A NAME="ref8"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>initActions</strong> ()
+<br></td><td align="right"><h3><strong>initActions</strong></h3></td></tr></table><p> <small>[protected]</small></p><A NAME="initStatusBar"></A><A NAME="ref9"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>initStatusBar</strong> ()
+<br></td><td align="right"><h3><strong>initStatusBar</strong></h3></td></tr></table><p> <small>[protected]</small></p><p> sets up the statusbar for the main window by initialzing a statuslabel.
+     </p>
+<A NAME="initDocument"></A><A NAME="ref10"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>initDocument</strong> ()
+<br></td><td align="right"><h3><strong>initDocument</strong></h3></td></tr></table><p> <small>[protected]</small></p><p> initializes the document object of the main window that is connected to the view in initView().
+</p>
+<p><b>See also</b>: initView();</p>
+<A NAME="initView"></A><A NAME="ref11"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>initView</strong> ()
+<br></td><td align="right"><h3><strong>initView</strong></h3></td></tr></table><p> <small>[protected]</small></p><p> creates the centerwidget of the KTMainWindow instance and sets it as the view
+     </p>
+<A NAME="queryClose"></A><A NAME="ref12"></A><table width="100%"><tr bgcolor="#eeeeee"><td> bool &nbsp;<strong>queryClose</strong> ()
+<br></td><td align="right"><h3><strong>queryClose</strong></h3></td></tr></table><p> <small>[protected virtual]</small></p><p> queryClose is called by KTMainWindow on each closeEvent of a window. Against the
+ default implementation (only returns true), this calles saveModified() on the document object to ask if the document shall
+ be saved if Modified; on cancel the closeEvent is rejected.
+</p>
+<p><b>See also</b>: KTMainWindow#queryClose, KTMainWindow#closeEvent</p>
+<A NAME="queryExit"></A><A NAME="ref13"></A><table width="100%"><tr bgcolor="#eeeeee"><td> bool &nbsp;<strong>queryExit</strong> ()
+<br></td><td align="right"><h3><strong>queryExit</strong></h3></td></tr></table><p> <small>[protected virtual]</small></p><p> queryExit is called by KTMainWindow when the last window of the application is going to be closed during the closeEvent().
+ Against the default implementation that just returns true, this calls saveOptions() to save the settings of the last window's	
+ properties.
+</p>
+<p><b>See also</b>: KTMainWindow#queryExit, KTMainWindow#closeEvent</p>
+<A NAME="saveProperties"></A><A NAME="ref14"></A><table width="100%"><tr bgcolor="#eeeeee"><td> void &nbsp;<strong>saveProperties</strong> (KConfig *_cfg)
+<br></td><td align="right"><h3><strong>saveProperties</strong></h3></td></tr></table><p> <small>[protected virtual]</small></p><p> saves the window properties for each open window during session end to the session config file, including saving the currently
+ opened file by a temporary filename provided by KApplication.
+</p>
+<p><b>See also</b>: KTMainWindow#saveProperties</p>
+<A NAME="readProperties"></A><A NAME="ref15"></A><table width="100%"><tr bgcolor="#eeeeee"><td> void &nbsp;<strong>readProperties</strong> (KConfig *_cfg)
+<br></td><td align="right"><h3><strong>readProperties</strong></h3></td></tr></table><p> <small>[protected virtual]</small></p><p> reads the session config file and restores the application's state including the last opened files and documents by reading the
+ temporary files saved by saveProperties()
+</p>
+<p><b>See also</b>: KTMainWindow#readProperties</p>
+<A NAME="slotFileNewWindow"></A><A NAME="ref16"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotFileNewWindow</strong> ()
+<br></td><td align="right"><h3><strong>slotFileNewWindow</strong></h3></td></tr></table><p> <small>[slot]</small></p><A NAME="slotFileNew"></A><A NAME="ref17"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotFileNew</strong> ()
+<br></td><td align="right"><h3><strong>slotFileNew</strong></h3></td></tr></table><p> <small>[slot]</small></p><A NAME="slotFileOpen"></A><A NAME="ref18"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotFileOpen</strong> ()
+<br></td><td align="right"><h3><strong>slotFileOpen</strong></h3></td></tr></table><p> <small>[slot]</small></p><A NAME="slotFileOpenRecent"></A><A NAME="ref19"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotFileOpenRecent</strong> (const KURL& url)
+<br></td><td align="right"><h3><strong>slotFileOpenRecent</strong></h3></td></tr></table><p> <small>[slot]</small></p><A NAME="slotFileSave"></A><A NAME="ref20"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotFileSave</strong> ()
+<br></td><td align="right"><h3><strong>slotFileSave</strong></h3></td></tr></table><p> <small>[slot]</small></p><A NAME="slotFileSaveAs"></A><A NAME="ref21"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotFileSaveAs</strong> ()
+<br></td><td align="right"><h3><strong>slotFileSaveAs</strong></h3></td></tr></table><p> <small>[slot]</small></p><A NAME="slotFileClose"></A><A NAME="ref22"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotFileClose</strong> ()
+<br></td><td align="right"><h3><strong>slotFileClose</strong></h3></td></tr></table><p> <small>[slot]</small></p><A NAME="slotFilePrint"></A><A NAME="ref23"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotFilePrint</strong> ()
+<br></td><td align="right"><h3><strong>slotFilePrint</strong></h3></td></tr></table><p> <small>[slot]</small></p><A NAME="slotFileQuit"></A><A NAME="ref24"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotFileQuit</strong> ()
+<br></td><td align="right"><h3><strong>slotFileQuit</strong></h3></td></tr></table><p> <small>[slot]</small></p><p> closes all open windows by calling close() on each memberList item until the list is empty, then quits the application.
+ If queryClose() returns false because the user canceled the saveModified() dialog, the closing breaks.
+     </p>
+<A NAME="slotEditCut"></A><A NAME="ref25"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotEditCut</strong> ()
+<br></td><td align="right"><h3><strong>slotEditCut</strong></h3></td></tr></table><p> <small>[slot]</small></p><p> put the marked text/object into the clipboard and remove
+	it from the document
+     </p>
+<A NAME="slotEditCopy"></A><A NAME="ref26"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotEditCopy</strong> ()
+<br></td><td align="right"><h3><strong>slotEditCopy</strong></h3></td></tr></table><p> <small>[slot]</small></p><p> put the marked text/object into the clipboard
+     </p>
+<A NAME="slotEditPaste"></A><A NAME="ref27"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotEditPaste</strong> ()
+<br></td><td align="right"><h3><strong>slotEditPaste</strong></h3></td></tr></table><p> <small>[slot]</small></p><p> paste the clipboard into the document
+     </p>
+<A NAME="slotViewToolBar"></A><A NAME="ref28"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotViewToolBar</strong> ()
+<br></td><td align="right"><h3><strong>slotViewToolBar</strong></h3></td></tr></table><p> <small>[slot]</small></p><p> toggles the toolbar
+     </p>
+<A NAME="slotViewStatusBar"></A><A NAME="ref29"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotViewStatusBar</strong> ()
+<br></td><td align="right"><h3><strong>slotViewStatusBar</strong></h3></td></tr></table><p> <small>[slot]</small></p><p> toggles the statusbar
+     </p>
+<A NAME="slotStatusMsg"></A><A NAME="ref30"></A><table width="100%"><tr bgcolor="#eeeeee"><td>void &nbsp;<strong>slotStatusMsg</strong> (const QString &text)
+<br></td><td align="right"><h3><strong>slotStatusMsg</strong></h3></td></tr></table><p> <small>[slot]</small></p><p> changes the statusbar contents for the standard label permanently, used to indicate current actions.
+</p>
+<p><b>Parameters</b>:<TABLE BORDER="0" CELLPADDING="5">
+<TR><TD align="left" valign="top"><i>text</i></TD><TD align="left" valign="top">the text that is displayed in the statusbar
+     </TD></TR>
+</TABLE></P>
+<A NAME="config"></A><A NAME="ref31"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KConfig * <strong>config</strong>
+</td><td align="right"><h3><strong>config</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="view"></A><A NAME="ref32"></A><table width="100%"><tr bgcolor="#eeeeee"><td><A HREF="RKwardView.html">RKwardView</A> * <strong>view</strong>
+</td><td align="right"><h3><strong>view</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="doc"></A><A NAME="ref33"></A><table width="100%"><tr bgcolor="#eeeeee"><td><A HREF="RKwardDoc.html">RKwardDoc</A> * <strong>doc</strong>
+</td><td align="right"><h3><strong>doc</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="fileNewWindow"></A><A NAME="ref34"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KAction*  <strong>fileNewWindow</strong>
+</td><td align="right"><h3><strong>fileNewWindow</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="fileNew"></A><A NAME="ref35"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KAction*  <strong>fileNew</strong>
+</td><td align="right"><h3><strong>fileNew</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="fileOpen"></A><A NAME="ref36"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KAction*  <strong>fileOpen</strong>
+</td><td align="right"><h3><strong>fileOpen</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="fileOpenRecent"></A><A NAME="ref37"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KRecentFilesAction*  <strong>fileOpenRecent</strong>
+</td><td align="right"><h3><strong>fileOpenRecent</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="fileSave"></A><A NAME="ref38"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KAction*  <strong>fileSave</strong>
+</td><td align="right"><h3><strong>fileSave</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="fileSaveAs"></A><A NAME="ref39"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KAction*  <strong>fileSaveAs</strong>
+</td><td align="right"><h3><strong>fileSaveAs</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="fileClose"></A><A NAME="ref40"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KAction*  <strong>fileClose</strong>
+</td><td align="right"><h3><strong>fileClose</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="filePrint"></A><A NAME="ref41"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KAction*  <strong>filePrint</strong>
+</td><td align="right"><h3><strong>filePrint</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="fileQuit"></A><A NAME="ref42"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KAction*  <strong>fileQuit</strong>
+</td><td align="right"><h3><strong>fileQuit</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="editCut"></A><A NAME="ref43"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KAction*  <strong>editCut</strong>
+</td><td align="right"><h3><strong>editCut</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="editCopy"></A><A NAME="ref44"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KAction*  <strong>editCopy</strong>
+</td><td align="right"><h3><strong>editCopy</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="editPaste"></A><A NAME="ref45"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KAction*  <strong>editPaste</strong>
+</td><td align="right"><h3><strong>editPaste</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="viewToolBar"></A><A NAME="ref46"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KToggleAction*  <strong>viewToolBar</strong>
+</td><td align="right"><h3><strong>viewToolBar</strong></h3></td></tr></table><p> <small>[private]</small></p><A NAME="viewStatusBar"></A><A NAME="ref47"></A><table width="100%"><tr bgcolor="#eeeeee"><td>KToggleAction*  <strong>viewStatusBar</strong>
+</td><td align="right"><h3><strong>viewStatusBar</strong></h3></td></tr></table><p> <small>[private]</small></p><HR><UL><LI><i>Version</i>: KDevelop version 1.2 code generation
+  </LI><LI><i>Author</i>: Source Framework Automatically Generated by KDevelop, (c) The KDevelop Team.
+</LI><LI><i>Generated</i>: thomas on debian on Tue Oct 29 20:06:39 2002, using kdoc 2.0a53.</LI></UL></BODY></HTML>

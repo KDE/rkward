@@ -1,0 +1,12 @@
+# KDE Config File  
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=rkward -caption "%c" %i %m  
+Icon=rkward.png
+DocPath=rkward/index.html
+Comment=
+Comment[de]=
+Terminal=0
+Name=RKward
+Name[de]=RKward
