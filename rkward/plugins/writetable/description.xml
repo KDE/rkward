@@ -5,9 +5,12 @@
     <tabbook>
       <tab label="Save as ..." >
         <column>
+          <text>
+Be careful : your data will be converted into a data frame. If you don not want it, use the plugin 'write' for mere variables. 
+          </text>
           <varselector id="vars" label="Select a variable or a table" />
-          <varslot multi="false" classes="array data.frame matrix character numeric integer" id="data" source="vars" label="Data" required="true" />
-          <browser size="small" initial="~/rk.temp.data" id="file" label="Name of the file" />
+          <varslot multi="false" classes="array data.frame matrix character numeric integer" source="vars" id="data" label="Data" required="true" />
+          <browser size="small" id="file" initial="~/rk.temp.data" label="Name of the file" />
         </column>
         <frame label="Options" >
           <row>
@@ -21,13 +24,13 @@
           <option value="FALSE" label="No names" />
           <option value="custoCol" label="Customize" />
         </radio>
-        <varslot multi="false" classes="integer numeric character" id="colnames" source="varname" label="Columns names" depend="custoCol" />
+        <varslot multi="false" classes="integer numeric character" source="varname" id="colnames" depend="custoCol" label="Columns names" />
         <radio id="rows" label="Name of rows" >
           <option value="TRUE" id="temp1" label="Use the names of the rows" />
           <option value="FALSE" id="temp2" label="No names" />
           <option value="custoRow" label="Customize rows" />
         </radio>
-        <varslot multi="false" classes="integer numeric character" source="varname" id="rownames" label="Names of rows" depend="custoRow" />
+        <varslot multi="false" classes="integer numeric character" id="rownames" source="varname" depend="custoRow" label="Names of rows" />
         <varselector id="varname" />
       </tab>
       <tab label="Options" >
@@ -45,8 +48,8 @@
           <option value="'escape'" label="Escape" />
           <option value="'double'" label="Double" />
         </radio>
-        <input size="small" initial="NA" id="na" label="Character for missing values" />
-        <input size="small" initial="\n" id="eol" label="Character for end of line" />
+        <input size="small" id="na" initial="NA" label="Character for missing values" />
+        <input size="small" id="eol" initial="\n" label="Character for end of line" />
         <checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="quote" label="Quote" />
       </tab>
     </tabbook>
