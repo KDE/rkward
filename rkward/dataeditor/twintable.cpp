@@ -170,6 +170,9 @@ void TwinTable::insertNewColumn (int where) {
 		rti->checkValid ();
 	}
 
+	if (where >= varview->numCols ()) {		// the new addition was acutally not the new trailing row, but the one to the left - for all practical purposes
+		where = varview->numCols () - 1;
+	}
 	emit (addedColumn (where));
 }
 
