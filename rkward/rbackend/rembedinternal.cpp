@@ -213,7 +213,7 @@ double *REmbedInternal::getCommandAsRealVector (const char *command, int *count,
 		reals = new double[*count];
 		for (int i = 0; i < *count; ++i) {
 				reals[i] = REAL (realexp)[i];
-				if (R_IsNaNorNA (reals[i])) reals[i] = RKGlobals::na_double;
+				if (R_IsNaN (reals[i]) || R_IsNA (reals[i]) ) reals[i] = RKGlobals::na_double;
 		}
 		UNPROTECT (1);	// realexp
 	}
