@@ -1,0 +1,25 @@
+<!DOCTYPE rkplugin>
+
+<!-- This is a simple example, of how a "plugin" might be configured. -->
+
+<document>
+	<entry type="entry" id="istt" label="Descriptive Statistics"/>
+
+<!-- The layout-section takes care of the layout of the GUI for this plugin. -->
+
+	<layout>
+		<row>
+			<column>
+				<varselector id="vars"/>
+			</column>
+			<column>
+				<varslot type="numeric" id="x" source="vars" required="true" label="variable:"/>
+				<checkbox id="mean" label="mean" value="1" value_unchecked="0" checked="true"/>
+				<checkbox id="median" label="median" value="1" value_unchecked="0"/>
+				<checkbox id="range" label="range" value="1" value_unchecked="0" checked="true"/>
+				<checkbox id="sd" label="standard deviation" value="1" value_unchecked="0" checked="true"/>
+			</column>
+		</row>
+	</layout>
+	
+</document>
