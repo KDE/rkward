@@ -1030,7 +1030,10 @@ void RKwardApp::slotChildWindowCloseRequest (KMdiChildView * window) {
 void RKwardApp::slotRunSelection() {
 	if (! activeWindow()->inherits("RKCommandEditorWindow"))
 		return;
-		
+
+	if(((RKCommandEditorWindow*) activeWindow())->getSelection().isEmpty() || ((RKCommandEditorWindow*) activeWindow())->getSelection().isNull())
+		return;
+
 	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getSelection(), RCommand::User, ""));
 }
 
@@ -1038,6 +1041,8 @@ void RKwardApp::slotRunSelection() {
 
 void RKwardApp::slotRunAll() {
 	if (! activeWindow()->inherits("RKCommandEditorWindow"))
+		return;
+	if(((RKCommandEditorWindow*) activeWindow())->getText().isEmpty() || ((RKCommandEditorWindow*) activeWindow())->getText().isNull())
 		return;
 		
 	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getText(), RCommand::User, ""));
