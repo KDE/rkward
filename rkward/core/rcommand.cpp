@@ -32,6 +32,7 @@ RCommand::RCommand(QString command, int type, QString rk_equiv, QObject *receive
 	status = 0;
 	string_data = 0;
 	real_data = 0;
+	integer_data = 0;
 	string_count = real_count = 0;
 	_rk_equiv = rk_equiv;
 	addReceiver (receiver, slot);
@@ -44,6 +45,7 @@ RCommand::~RCommand(){
 	}
 	delete [] string_data;
 	delete real_data;
+	delete integer_data;
 }
 
 void RCommand::finished () {
@@ -52,8 +54,8 @@ void RCommand::finished () {
 }
 
 void RCommand::addReceiver (QObject *receiver, const char *slot) {
+	qDebug ("connecting command %d", _id);
 	if (receiver && slot) {
 		connect (this, SIGNAL (commandDone (RCommand *)), receiver, slot);
-		qDebug ("connecting command %d", _id);
 	}
 }

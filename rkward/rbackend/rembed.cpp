@@ -80,6 +80,8 @@ void REmbed::runCommand (RCommand *command) {
 		command->string_data = getCommandAsStringVector (command->command ().latin1 (), &(command->string_count), &error);
 	} else if (command->type () & RCommand::GetRealVector) {
 		command->real_data = getCommandAsRealVector (command->command ().latin1 (), &(command->real_count), &error);
+	} else if (command->type () & RCommand::GetIntVector) {
+		command->integer_data = getCommandAsIntVector (command->command ().latin1 (), &(command->integer_count), &error);
 	} else {
 		runCommandInternal (command->command ().latin1 (), &error);
 	}

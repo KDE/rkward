@@ -35,6 +35,7 @@ protected:
 	
 	char **getCommandAsStringVector (const char *command, int *count, bool *error);
 	double *getCommandAsRealVector (const char *command, int *count, bool *error);
+	int *getCommandAsIntVector (const char *command, int *count, bool *error);
 private:
 // can't declare this as part of the class, as it would confuse REmbed
 //	SEXPREC *runCommandInternalBase (const char *command, bool *error);

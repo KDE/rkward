@@ -45,13 +45,16 @@ private:
 	QTimer *update_timer;
 	void updateObject (char *name);
 
+	enum { DataFrame = 1, Matrix=2, Array=4, List=8 };
+	
 /** this struct is used to represent an object which is currently in the process of being updated. It keeps the bits until all info has been gathered. TODO: will likely be changed in some way to interact more directly with RKVariables. */
 	struct UpdatingObject {
 		QString name;
 		QString *classname;
-		QString *dimension;
+		int *dimension;
 		int num_classes;
 		int num_dimensions;
+		int type;
 	};
 
 /// Maps commands to objects

@@ -162,4 +162,30 @@ double *REmbedInternal::getCommandAsRealVector (const char *command, int *count,
 	return reals;
 }
 
+int *REmbedInternal::getCommandAsIntVector (const char *command, int *count, bool *error) {
+	SEXP exp;
+	int *integers;
+	
+	PROTECT (exp = runCommandInternalBase (command, error));
+	
+	if (!*error) {
+		SEXP intexp;
+		PROTECT (intexp = coerceVector (exp, INTSXP));
+		*count = length (intexp);
+		integers = new int[*count];
+		for (int i = 0; i < *count; ++i) {
+				integers[i] = INTEGER (intexp)[i];
+		}
+		UNPROTECT (1);	// intexp
+	}
+	
+	UNPROTECT (1); // exp
+	
+	if (*error) {
+		*count = 0;
+		return 0;
+	}
+	return integers;
+}
+
 } // extern "C"

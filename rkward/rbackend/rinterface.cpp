@@ -70,6 +70,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 		RCommand *command = static_cast <RCommand *> (e->data ());
 		watch->addOutput (command);
 		command->finished ();
+		delete command;
 	} else if ((e->type () == RIDLE_EVENT)) {
 		RKGlobals::rkApp ()->setRStatus (false);	
 	} else if ((e->type () == RBUSY_EVENT)) {
