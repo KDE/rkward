@@ -30,8 +30,7 @@
 
 #include "twintablemember.h"
 #include "typeselectcell.h"
-
-#define TYPE_ROW 1
+#include "rtableitem.h"
 
 TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name){
     resize( 600, 480 );
@@ -45,22 +44,31 @@ TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name)
     varview = new TwinTableMember( Splitter1, "varview" );
     varview->setNumRows( 5 );
     varview->setNumCols( 5 );
+	for (int i=0; i < varview->numCols (); i++) {
+		for (int j=0; j < varview->numRows (); j++) {
+			varview->setItem (j, i, new RTableItem (varview));		
+		}
+	}
 	varview->horizontalHeader()->setLabel(0, i18n( "new_Variable" ) );
 	varview->verticalHeader()->setLabel(0, i18n( "Label" ) );
 	varview->verticalHeader()->setLabel(TYPE_ROW, i18n( "Type" ) );
 	for (int i=0; i < varview->numCols (); i++) {
 		varview->setItem (TYPE_ROW, i, new TypeSelectCell (varview));
 	}
-	varview->verticalHeader()->setLabel(2, i18n( "something" ) );
-	varview->verticalHeader()->setLabel(3, i18n( "4" ) );
-	varview->verticalHeader()->setLabel(4, i18n( "__________" ) );
+	varview->verticalHeader()->setLabel(2, i18n( "e.g. format" ) );
+	varview->verticalHeader()->setLabel(3, i18n( "e.g. category" ) );
+	varview->verticalHeader()->setLabel(NAME_ROW, i18n( "Name" ) );
 	varview->setMinimumHeight (varview->horizontalHeader ()->height ());
     varview->verticalHeader()->setResizeEnabled (false);
 
     dataview = new TwinTableMember( Splitter1, "dataview" );
     dataview->setNumRows( 20 );
 	dataview->setNumCols( 5 );
-    dataview->verticalHeader()->setLabel(0, i18n ( "new Case" ));
+	for (int i=0; i < dataview->numCols (); i++) {
+		for (int j=0; j < dataview->numRows (); j++) {
+			dataview->setItem (j, i, new RTableItem (dataview));
+		}
+	}
     dataview->verticalHeader()->setResizeEnabled (false);
 
 	dataview->horizontalHeader ()->hide ();
@@ -73,6 +81,7 @@ TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name)
 	// these are to keep the two tables in sync
 	varview->setTwin (dataview);
 	dataview->setTwin (varview);
+	dataview->setVarTable (varview);
 	connect (dataview, SIGNAL (contentsMoving (int, int)), this, SLOT (scrolled (int, int)));
 	connect (varview, SIGNAL (contentsMoving (int, int)), this, SLOT (autoScrolled (int, int)));
 	connect (varview->horizontalHeader (), SIGNAL (clicked (int)), dataview, SLOT (columnClicked (int)));
@@ -80,17 +89,25 @@ TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name)
 	connect (varview, SIGNAL (selectionChanged ()), this, SLOT (dataClearSelection ()));
 	connect (dataview, SIGNAL (selectionChanged ()), this, SLOT (viewClearSelection ()));
 
-	// this is to catch right-clicks on the header
-	connect (varview, SIGNAL (headerRightClick (int)), this, SLOT (headerRightClicked (int)));
+	// this is to catch right-clicks on the top header
+	connect (varview, SIGNAL (headerRightClick (int, int)), this, SLOT (headerRightClicked (int, int)));
 
 	// which will be reacted upon by the following popup-menu:
-	header_menu = new QPopupMenu (this);
-	header_menu->insertItem (i18n ("Insert new variable after"), this, SLOT (insertColumnAfter ()));
-	header_menu->insertItem (i18n ("Insert new variable before"), this, SLOT (insertColumnBefore ()));
+	top_header_menu = new QPopupMenu (this);
+	top_header_menu->insertItem (i18n ("Insert new variable after"), this, SLOT (insertColumnAfter ()));
+	top_header_menu->insertItem (i18n ("Insert new variable before"), this, SLOT (insertColumnBefore ()));
+
+	// and the same for the left header
+
+	connect (dataview, SIGNAL (headerRightClick (int, int)), this, SLOT (headerRightClicked (int, int)));
+	left_header_menu = new QPopupMenu (this);
+	left_header_menu->insertItem (i18n ("Insert new case after"), this, SLOT (insertRowAfter ()));
+	left_header_menu->insertItem (i18n ("Insert new case before"), this, SLOT (insertRowBefore ()));
 }
 
 TwinTable::~TwinTable(){
-	delete header_menu;
+	delete top_header_menu;
+	delete left_header_menu;
 }
 
 void TwinTable::scrolled (int x, int y) {
@@ -114,8 +131,14 @@ void TwinTable::insertNewColumn (int where, QString name) {
 	}
 
 	varview->insertColumns (where);
+	for (int i=0; i < varview->numRows (); i++) {
+		varview->setItem (i, where, new RTableItem (varview));
+	}
 	varview->setItem (TYPE_ROW, where, new TypeSelectCell (varview));
 	dataview->insertColumns (where);
+	for (int i=0; i < dataview->numRows (); i++) {
+		dataview->setItem (i, where, new RTableItem (dataview));
+	}
 
 	varview->horizontalHeader()->setLabel(where, name);
 }
@@ -126,6 +149,10 @@ void TwinTable::insertNewRow (int where=-1) {
 	}
 
 	dataview->insertRows (where);
+
+	for (int i=0; i < dataview->numCols (); i++) {
+		dataview->setItem (where, i, new RTableItem (dataview));
+	}
 }
 
 void TwinTable::headerClicked (int col) {
@@ -136,10 +163,17 @@ void TwinTable::headerClicked (int col) {
 	dataview->addSelection (selection);
 }
 
-void TwinTable::headerRightClicked (int col) {
-	if (col < varview->numCols ()) {
-		header_pos = col;
-		header_menu->popup (varview->mouse_at);
+void TwinTable::headerRightClicked (int row, int col) {
+	if (col >= 0) {
+		if (col < varview->numCols ()) {
+			header_pos = col;
+			top_header_menu->popup (varview->mouse_at);
+		}
+	} else if (row >= 0) {
+		if (row < dataview->numRows ()) {
+			header_pos = row;
+			left_header_menu->popup (dataview->mouse_at);
+		}
 	}
 }
 
@@ -161,6 +195,14 @@ void TwinTable::insertColumnAfter () {
 
 void TwinTable::insertColumnBefore () {
 	insertNewColumn (header_pos);
+}
+
+void TwinTable::insertRowAfter () {
+	insertNewRow (header_pos+1);
+}
+
+void TwinTable::insertRowBefore () {
+	insertNewRow (header_pos);
 }
 
 QCString TwinTable::encodeSelection () {
@@ -232,7 +274,7 @@ void TwinTable::pasteEncoded (QByteArray content) {
 						next_delim = pasted.length ();
 					}
 				} else {
-					// the if only fails, if this is the last line.
+					// the if below only fails, if this is the last line.
 					// We don't want a new column, then.
 					// Everything else does not get affected in this situation.
 					if (next_delim != next_line) {

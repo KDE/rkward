@@ -20,12 +20,12 @@
 #include <klocale.h>
 
 #include <qcombobox.h>
-#include <qpainter.h>
-#include <qregexp.h>
 
-TypeSelectCell::TypeSelectCell (QTable *table) : QTableItem (table, QTableItem::WhenCurrent, "") {
+#include "rtableitem.h"
+
+TypeSelectCell::TypeSelectCell (TwinTableMember *table) : RTableItem (table) {
 	// default to numeric
-	type = Number;
+	_type = Number;
 }
 TypeSelectCell::~TypeSelectCell(){
 }
@@ -38,56 +38,37 @@ QWidget *TypeSelectCell::createEditor () const {
 	edit_cb->insertItem(i18n ("String"));
 	edit_cb->insertItem(i18n ("Date"));
 
-	edit_cb->setCurrentItem(static_cast<int> (type));
+	edit_cb->setCurrentItem(static_cast<int> (_type));
 	return edit_cb;
 }
 
 void TypeSelectCell::setContentFromEditor (QWidget *w) {
-	type = (BaseType) ((QComboBox*) w)->currentItem ();
+	_type = (BaseType) ((QComboBox*) w)->currentItem ();
 }
 
 QString TypeSelectCell::text () const {
-	if (type == Number) return ("\"Number\"");
-	if (type == String) return ("\"String\"");
-	if (type == Date) return ("\"Date\"");
-	return ("\"invalid\"");
+	if (_type == Number) return ("Number");
+	if (_type == String) return ("String");
+	if (_type == Date) return ("Date");
+	return ("invalid");
 }
 
-void TypeSelectCell::setText (const QString &str) {
-	QString text = str;
-	text.replace(QRegExp("\""), "");
-
-	if (text == "Number") {
-		type = Number;
-	} else if (text == "String") {
-		type = String;
-	} else if (text == "Date") {
-		type = Date;
+QString TypeSelectCell::rText () {
+	if (text () != "") {
+		return ("\"" + text () + "\"");
 	} else {
-		type = Invalid;
+		return "NA";
 	}
 }
 
-void TypeSelectCell::paint (QPainter *p, const QColorGroup &cg, const QRect &cr, bool selected) {
-    p->fillRect( 0, 0, cr.width(), cr.height(),
-                 selected ? cg.brush( QColorGroup::Highlight )
-                          : cg.brush( QColorGroup::Base ) );
-
-    int w = cr.width();
-    int h = cr.height();
-
-    int x = 0;
-
-    if ( selected )
-        p->setPen(cg.highlightedText());
-    else
-        p->setPen(cg.text());
-
-	QString txt;
-	if (type == Number) txt = "Number";
-	else if (type == String) txt = "String";
-	else if (type == Date) txt = "Date";
-	else txt = "invalid";
-
-    p->drawText(x + 2, 0, w - x - 4, h, alignment (), txt);
+void TypeSelectCell::setText (const QString &str) {
+	if (str == "Number") {
+		_type = Number;
+	} else if (str == "String") {
+		_type = String;
+	} else if (str == "Date") {
+		_type = Date;
+	} else {
+		_type = Invalid;
+	}
 }

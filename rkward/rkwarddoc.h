@@ -32,7 +32,7 @@
 
 class RKwardView;
 class RKwardApp;
-class QTable;
+class TwinTableMember;
 class RInterface;
 
 /**	RKwardDoc provides a document object for a document-view model.
@@ -101,9 +101,9 @@ class RKwardDoc : public QObject
 	RKwardView *view;
 
 	/** pushes a whole (modified) table to R */
-	void pushTable (QTable *table, QString name);
+	void pushTable (TwinTableMember *table, QString name);
 	/** pulls a whole table from R */
-	void pullTable (QTable *table, QString name);
+	void pullTable (TwinTableMember *table, QString name);
 };
 
 #endif // RKWARDDOC_H

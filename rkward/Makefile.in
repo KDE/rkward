@@ -228,12 +228,12 @@ x_libraries = @x_libraries@
 
 bin_PROGRAMS = rkward
 
-#>- rkward_SOURCES = typeselectcell.cpp rkwatch.cpp rkwatch_ui.ui rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp view.ui rkwardview.cpp rkwarddoc.cpp rkward.cpp main.cpp 
+#>- rkward_SOURCES = rtableitem.cpp typeselectcell.cpp rkwatch.cpp rkwatch_ui.ui rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp view.ui rkwardview.cpp rkwarddoc.cpp rkward.cpp main.cpp 
 #>+ 1
-rkward_SOURCES=typeselectcell.cpp rkwatch.cpp  rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp  rkwardview.cpp rkwarddoc.cpp rkward.cpp main.cpp  rkwatch_ui.cpp view.cpp
+rkward_SOURCES=rtableitem.cpp typeselectcell.cpp rkwatch.cpp  rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp  rkwardview.cpp rkwarddoc.cpp rkward.cpp main.cpp  rkwatch_ui.cpp view.cpp
 rkward_LDADD = $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) $(LIBSOCKET)
 
-EXTRA_DIST = main.cpp rkward.cpp rkward.h rkwarddoc.cpp rkwarddoc.h rkwardview.cpp rkwardview.h rkwardui.rc rkward.desktop lo32-app-rkward.png lo16-app-rkward.png view.ui twintable.cpp twintable.h twintablemember.cpp twintablemember.h rkdrag.cpp rkdrag.h rinterface.cpp rinterface.h rkwatch_ui.ui rkwatch.cpp rkwatch.h typeselectcell.cpp typeselectcell.h 
+EXTRA_DIST = main.cpp rkward.cpp rkward.h rkwarddoc.cpp rkwarddoc.h rkwardview.cpp rkwardview.h rkwardui.rc rkward.desktop lo32-app-rkward.png lo16-app-rkward.png view.ui twintable.cpp twintable.h twintablemember.cpp twintablemember.h rkdrag.cpp rkdrag.h rinterface.cpp rinterface.h rkwatch_ui.ui rkwatch.cpp rkwatch.h typeselectcell.cpp typeselectcell.h rtableitem.cpp rtableitem.h 
 
 ####### kdevelop will overwrite this part!!! (end)############
 # These paths are KDE specific. Use them:
@@ -274,17 +274,19 @@ CONFIG_CLEAN_FILES =
 bin_PROGRAMS = rkward$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
-am_rkward_OBJECTS = typeselectcell.$(OBJEXT) rkwatch.$(OBJEXT) \
-	rinterface.$(OBJEXT) rkdrag.$(OBJEXT) twintablemember.$(OBJEXT) \
-	twintable.$(OBJEXT) rkwardview.$(OBJEXT) rkwarddoc.$(OBJEXT) \
-	rkward.$(OBJEXT) main.$(OBJEXT)
+am_rkward_OBJECTS = rtableitem.$(OBJEXT) typeselectcell.$(OBJEXT) \
+	rkwatch.$(OBJEXT) rinterface.$(OBJEXT) rkdrag.$(OBJEXT) \
+	twintablemember.$(OBJEXT) twintable.$(OBJEXT) \
+	rkwardview.$(OBJEXT) rkwarddoc.$(OBJEXT) rkward.$(OBJEXT) \
+	main.$(OBJEXT)
 #>- rkward_OBJECTS = $(am_rkward_OBJECTS)
-#>+ 9
+#>+ 10
 rkward_final_OBJECTS = rkward.all_cpp.o 
-rkward_nofinal_OBJECTS = typeselectcell.$(OBJEXT) rkwatch.$(OBJEXT) \
-	rinterface.$(OBJEXT) rkdrag.$(OBJEXT) twintablemember.$(OBJEXT) \
-	twintable.$(OBJEXT) rkwardview.$(OBJEXT) rkwarddoc.$(OBJEXT) \
-	rkward.$(OBJEXT) main.$(OBJEXT) rkwatch_ui.$(OBJEXT) view.$(OBJEXT)\
+rkward_nofinal_OBJECTS = rtableitem.$(OBJEXT) typeselectcell.$(OBJEXT) \
+	rkwatch.$(OBJEXT) rinterface.$(OBJEXT) rkdrag.$(OBJEXT) \
+	twintablemember.$(OBJEXT) twintable.$(OBJEXT) \
+	rkwardview.$(OBJEXT) rkwarddoc.$(OBJEXT) rkward.$(OBJEXT) \
+	main.$(OBJEXT) rkwatch_ui.$(OBJEXT) view.$(OBJEXT)\
 	rkwatch.moc.o rinterface.moc.o twintable.moc.o rkwardview.moc.o twintablemember.moc.o rkwarddoc.moc.o rkward.moc.o  \
 	rkward_meta_unload.o 
 @KDE_USE_FINAL_FALSE@rkward_OBJECTS = $(rkward_nofinal_OBJECTS)
@@ -300,8 +302,8 @@ depcomp = $(SHELL) $(top_srcdir)/admin/depcomp
 @AMDEP_TRUE@DEP_FILES = $(DEPDIR)/main.Po $(DEPDIR)/rinterface.Po \
 	@AMDEP_TRUE@	$(DEPDIR)/rkdrag.Po $(DEPDIR)/rkward.Po \
 	@AMDEP_TRUE@	$(DEPDIR)/rkwarddoc.Po $(DEPDIR)/rkwardview.Po \
-	@AMDEP_TRUE@	$(DEPDIR)/rkwatch.Po $(DEPDIR)/twintable.Po \
-	@AMDEP_TRUE@	$(DEPDIR)/twintablemember.Po \
+	@AMDEP_TRUE@	$(DEPDIR)/rkwatch.Po $(DEPDIR)/rtableitem.Po \
+	@AMDEP_TRUE@	$(DEPDIR)/twintable.Po $(DEPDIR)/twintablemember.Po \
 	@AMDEP_TRUE@	$(DEPDIR)/typeselectcell.Po
 #>- CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 #>- $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -395,6 +397,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/rkwarddoc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/rkwardview.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/rkwatch.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/rtableitem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/twintable.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/twintablemember.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/typeselectcell.Po@am__quote@
@@ -714,11 +717,11 @@ clean-moc-classes:
 	-rm -f  rkward_meta_unload.cpp
 
 #>+ 11
-rkward.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/typeselectcell.cpp $(srcdir)/rkwatch.cpp $(srcdir)/rinterface.cpp $(srcdir)/rkdrag.cpp $(srcdir)/twintablemember.cpp $(srcdir)/twintable.cpp $(srcdir)/rkwardview.cpp $(srcdir)/rkwarddoc.cpp $(srcdir)/rkward.cpp $(srcdir)/main.cpp $(srcdir)/rkwatch_ui.cpp $(srcdir)/view.cpp $(srcdir)/rkward_meta_unload.cpp  rkwatch.moc.cpp rinterface.moc.cpp twintable.moc.cpp rkwardview.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rkward.moc.cpp
+rkward.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/rtableitem.cpp $(srcdir)/typeselectcell.cpp $(srcdir)/rkwatch.cpp $(srcdir)/rinterface.cpp $(srcdir)/rkdrag.cpp $(srcdir)/twintablemember.cpp $(srcdir)/twintable.cpp $(srcdir)/rkwardview.cpp $(srcdir)/rkwarddoc.cpp $(srcdir)/rkward.cpp $(srcdir)/main.cpp $(srcdir)/rkwatch_ui.cpp $(srcdir)/view.cpp $(srcdir)/rkward_meta_unload.cpp  rkwatch.moc.cpp rinterface.moc.cpp twintable.moc.cpp rkwardview.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rkward.moc.cpp
 	@echo 'creating rkward.all_cpp.cpp ...'; \
 	rm -f rkward.all_cpp.files rkward.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> rkward.all_cpp.final; \
-	for file in typeselectcell.cpp rkwatch.cpp rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp rkwardview.cpp rkwarddoc.cpp rkward.cpp main.cpp rkwatch_ui.cpp view.cpp rkward_meta_unload.cpp  rkwatch.moc.cpp rinterface.moc.cpp twintable.moc.cpp rkwardview.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rkward.moc.cpp; do \
+	for file in rtableitem.cpp typeselectcell.cpp rkwatch.cpp rinterface.cpp rkdrag.cpp twintablemember.cpp twintable.cpp rkwardview.cpp rkwarddoc.cpp rkward.cpp main.cpp rkwatch_ui.cpp view.cpp rkward_meta_unload.cpp  rkwatch.moc.cpp rinterface.moc.cpp twintable.moc.cpp rkwardview.moc.cpp twintablemember.moc.cpp rkwarddoc.moc.cpp rkward.moc.cpp; do \
 	  echo "#include \"$$file\"" >> rkward.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> rkward.all_cpp.final; \
 	done; \
@@ -749,14 +752,15 @@ cvs-clean:
 kde-rpo-clean:
 	-rm -f *.rpo
 
-#>+ 11
+#>+ 12
 $(srcdir)/typeselectcell.cpp: rkwatch_ui.h view.h 
-$(srcdir)/rinterface.cpp: rkwatch_ui.h view.h 
-$(srcdir)/rkwarddoc.cpp: rkwatch_ui.h view.h 
-$(srcdir)/rkward.cpp: rkwatch_ui.h view.h 
+$(srcdir)/rtableitem.cpp: rkwatch_ui.h view.h 
 $(srcdir)/twintablemember.cpp: rkwatch_ui.h view.h 
+$(srcdir)/rinterface.cpp: rkwatch_ui.h view.h 
 $(srcdir)/rkwardview.cpp: rkwatch_ui.h view.h 
 $(srcdir)/rkdrag.cpp: rkwatch_ui.h view.h 
 $(srcdir)/twintable.cpp: rkwatch_ui.h view.h 
+$(srcdir)/rkwarddoc.cpp: rkwatch_ui.h view.h 
+$(srcdir)/rkward.cpp: rkwatch_ui.h view.h 
 $(srcdir)/main.cpp: rkwatch_ui.h view.h 
 $(srcdir)/rkwatch.cpp: rkwatch_ui.h view.h 

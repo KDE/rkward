@@ -18,7 +18,6 @@
 // include files for Qt
 #include <qdir.h>
 #include <qwidget.h>
-#include <qtable.h>
 
 // include files for KDE
 #include <klocale.h>
@@ -178,7 +177,7 @@ void RKwardDoc::deleteContents()
 
 }
 
-void RKwardDoc::pushTable (QTable *table, QString name) {
+void RKwardDoc::pushTable (TwinTableMember *table, QString name) {
 	QString command;
 	command.append (RK_DATA_PREFIX);
 	command.append (name);
@@ -189,7 +188,7 @@ void RKwardDoc::pushTable (QTable *table, QString name) {
 		// TODO: add names!
 		vector= "c (";
 		for (int row=0; row < table->numRows (); row++) {
-			vector.append (table->text (row, col));
+			vector.append (table->rText (row, col));
 			if (row < (table->numRows ()-1)) {
 				vector.append (", ");
 			}
@@ -205,5 +204,5 @@ void RKwardDoc::pushTable (QTable *table, QString name) {
 	inter->issueAsyncCommand (command);
 }
 
-void RKwardDoc::pullTable (QTable *table, QString name) {
+void RKwardDoc::pullTable (TwinTableMember *table, QString name) {
 }

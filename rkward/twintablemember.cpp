@@ -19,6 +19,8 @@
 
 #include <qevent.h>
 
+#include "rtableitem.h"
+
 bool TwinTableMember::changing_width = false;
 
 TwinTableMember::TwinTableMember(QWidget *parent, const char *name) : QTable (parent, name){
@@ -26,6 +28,8 @@ TwinTableMember::TwinTableMember(QWidget *parent, const char *name) : QTable (pa
 	setRowMovingEnabled (false);
 	setVScrollBarMode (QScrollView::AlwaysOn);
 	horizontalHeader()->installEventFilter (this);
+	verticalHeader()->installEventFilter (this);
+	var_table = this;
 }
 
 TwinTableMember::~TwinTableMember(){
@@ -51,15 +55,17 @@ void TwinTableMember::columnWidthChanged (int col) {
 
 bool TwinTableMember::eventFilter (QObject *object, QEvent *event)
 {
-	static int i = 0;
     // filter out right mouse button events of the varview-header
-    if (object == horizontalHeader()) {
-        if (event && (event->type() == QEvent::MouseButtonPress)) {
-            QMouseEvent  *mouseEvent = (QMouseEvent *) event;
-            if (mouseEvent && (mouseEvent->button() == Qt::RightButton)) {
-				qDebug ("got event here %d", i++);
-				mouse_at = mouseEvent->globalPos ();
-				emit headerRightClick (horizontalHeader ()->sectionAt (mouseEvent->x ()));
+	if (event && (event->type() == QEvent::MouseButtonPress)) {
+		QMouseEvent  *mouseEvent = (QMouseEvent *) event;
+		if (mouseEvent && (mouseEvent->button() == Qt::RightButton)) {
+			mouse_at = mouseEvent->globalPos ();
+			if (object == horizontalHeader()) {
+				emit headerRightClick (-1, horizontalHeader ()->sectionAt (mouseEvent->x ()));
+                return(true); // got it
+            }
+			if (object == verticalHeader()) {
+				emit headerRightClick (verticalHeader ()->sectionAt (mouseEvent->y ()), -1);
                 return(true); // got it
             }
         }
@@ -67,4 +73,16 @@ bool TwinTableMember::eventFilter (QObject *object, QEvent *event)
 
     // default processing
     return(QTable::eventFilter (object, event));
+}
+
+TwinTableMember *TwinTableMember::varTable () {
+	return var_table;
+}
+
+void TwinTableMember::setVarTable (TwinTableMember *table) {
+	var_table = table;
+}
+
+QString TwinTableMember::rText (int row, int col) {
+	return (((RTableItem *) item (row, col))->rText ());
 }

@@ -21,6 +21,9 @@
 #include <qtable.h>
 #include <qpoint.h>
 
+#define TYPE_ROW 1
+#define NAME_ROW 4
+
 class QMouseEvent;
 
 /**
@@ -34,13 +37,17 @@ public:
 	~TwinTableMember();
 /** stores the position of the mouse, when headerRightClick gets emitted */
 	QPoint mouse_at;
+	TwinTableMember *varTable ();
+	QString rText (int row, int col);
 signals:
-	void headerRightClick (int col);
+	void headerRightClick (int row, int col);
 private:
-	TwinTableMember * twin;
+	TwinTableMember *twin;
+	TwinTableMember *var_table;
 	static bool changing_width;
 friend class TwinTable;
-	void setTwin (TwinTableMember * new_twin);
+	void setTwin (TwinTableMember *new_twin);
+	void setVarTable (TwinTableMember *table);
 protected slots:
 	void columnWidthChanged (int col);
 protected:

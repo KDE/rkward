@@ -52,15 +52,17 @@ public:
     TwinTableMember* dataview;
 public slots:
 	void headerClicked (int col);
-	void headerRightClicked (int col);
+	void headerRightClicked (int row, int col);
 	void viewClearSelection ();
 	void dataClearSelection ();
 private:
 	QGridLayout *grid_layout;
     QSplitter* Splitter1;
-/** PopupMenu shown when header is right-clicked */
-	QPopupMenu *header_menu;
-/** position the header_menu is operating on */
+/** PopupMenu shown when top header is right-clicked */
+	QPopupMenu *top_header_menu;
+/** PopupMenu shown when top header is right-clicked */
+	QPopupMenu *left_header_menu;
+/** position (row or col) the header_menu is operating on */
 	int header_pos;
 /** Returns the active Table (of the two members), 0 if no table active */
 	QTable *activeTable ();
@@ -73,6 +75,10 @@ private slots:
 	void insertColumnAfter ();
 /** inserts a new column before the current header_pos */
 	void insertColumnBefore ();
+/** inserts a new row after the current header_pos */
+	void insertRowAfter ();
+/** inserts a new row before the current header_pos */
+	void insertRowBefore ();
 };
 
 #endif

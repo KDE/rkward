@@ -1,7 +1,7 @@
 /***************************************************************************
-                          typeselectcell.h  -  description
+                          rtableitem.h  -  description
                              -------------------
-    begin                : Sun Nov 3 2002
+    begin                : Mon Nov 4 2002
     copyright            : (C) 2002 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -15,33 +15,36 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef TYPESELECTCELL_H
-#define TYPESELECTCELL_H
+#ifndef RTABLEITEM_H
+#define RTABLEITEM_H
 
 #include <qtable.h>
-#include <qstring.h>
 
-#include "rtableitem.h"
+#include "twintablemember.h"
+
+class QPainter;
+class QColorGroup;
+class QRect;
 
 /**
   *@author Thomas Friedrichsmeier
   */
 
-class TwinTableMember;
-
-class TypeSelectCell : public RTableItem  {
+class RTableItem : public QTableItem  {
 public: 
-	TypeSelectCell (TwinTableMember *table);
-	~TypeSelectCell ();
-	BaseType type () { return _type; };
+	RTableItem(TwinTableMember *table);
+	~RTableItem();
+	enum BaseType {Number=0, String=1, Date=2, Invalid=3};
+/** Returns, whether this cell holds a value that is legal for it */
+	bool isValid () { return valid; };
+/** Returns the text in a format suitable for submission to R
+	(Practically that means, to quote strings) */
+	virtual QString rText ();
 private:
-	BaseType _type;
+/** Stores, whether this cell holds a value that is legal for it */
+	bool valid;
 protected:
-	QWidget *createEditor () const;
-	void setContentFromEditor (QWidget * w);
-	QString text () const;
-	QString rText ();
-	void setText (const QString &str);
+	void paint (QPainter *p, const QColorGroup &cg, const QRect &cr, bool selected);
 };
 
 #endif
