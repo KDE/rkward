@@ -50,15 +50,22 @@ KHelpDlg::KHelpDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
 	resultsList->addColumn (i18n ("Title"));
 	resultsList->addColumn (i18n ("Package"));
 	packagesList->insertItem (i18n("All"));
+
+	connect(field, SIGNAL(keyPressEvent (QKeyEvent * e)), this, SLOT(slotFieldKeyPressEvent (QKeyEvent * e)));
 	
-	// HACK: apparantly, we have to wait a little bit before we lauch an R command. So we wait half a second.
+	
+	// HACK: apparantly, we have to wait a little bit before we lauch an R command. So we wait 3 seconds.
         QTimer *timer = new QTimer (this);
         connect(timer, SIGNAL(timeout ()), this, SLOT(slotTimerDone ()));
-        timer->start(2000, TRUE); // 0.5 seconds single-shot timer
+        //timer->start(1000, TRUE); // 3 seconds single-shot timer
 	
 	
 	// HACK again: it looks like we need to issue a command here?!
-	RKGlobals::rInterface ()->issueCommand ("cat("")");
+	//RKGlobals::rInterface ()->issueCommand ("cat("")");
+
+	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_INSTALLED_PACKAGES, 0);
+
+
 	
 }
 
@@ -68,10 +75,11 @@ KHelpDlg::~KHelpDlg()
 /*$SPECIALIZATION$*/
 void KHelpDlg::slotFindButtonClicked()
 {
+
 	if (field->currentText().isEmpty()) {
 		return;
 	}
-
+	
 	QString agrep = "FALSE";
 	if(fuzzyCheckBox->isChecked ()==TRUE){
 		agrep="NULL";
@@ -90,19 +98,15 @@ void KHelpDlg::slotFindButtonClicked()
 	}
 	
 	
-	QString s = ".rk.get.search.results(\"";
-	s.append(field->currentText());
-	s.append("\",agrep=");
-	s.append(agrep);
-	s.append(", ignore.case=");
-	s.append(ignoreCase);
-	s.append(", package=");
-	s.append(package);
-	s.append(")");
+	QString s = ".rk.get.search.results(\"" +field->currentText() +"\",agrep=" 
+		+ agrep +", ignore.case=" + ignoreCase + ", package=" + package +")";
+		
+	qDebug("Find button launching command: "+ s);
 	
-	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, HELP_SEARCH, chain);
-	
+	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, HELP_SEARCH, 0);
 	field->insertItem(field->currentText());
+	
+	
 }
 
 void KHelpDlg::slotResultsListDblClicked( QListViewItem * item, const QPoint &, int )
@@ -121,7 +125,7 @@ void KHelpDlg::slotResultsListDblClicked( QListViewItem * item, const QPoint &, 
 	s.append(item->text(2));
 	s.append("\")");
 	
-	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_HELP_URL, chain);
+	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_HELP_URL, 0);
 }
 
 void KHelpDlg::slotPackageListActivated()
@@ -173,5 +177,23 @@ void KHelpDlg::rCommandDone (RCommand *command) {
  */
 void KHelpDlg::slotTimerDone ()
 {
-    //RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_INSTALLED_PACKAGES, chain);
+    RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_INSTALLED_PACKAGES, 0);
+}
+
+
+/*!
+    \fn KHelpDlg::slotFieldKeyPressEvent ( QKeyEvent * e )
+    
+    We intercept enter.
+ */
+void KHelpDlg::slotFieldKeyPressEvent ( QKeyEvent * e )
+{
+
+	
+	if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
+		slotFindButtonClicked ();
+		return;
+	}
+	
+	//QComboBox::keyPressEvent( e );
 }

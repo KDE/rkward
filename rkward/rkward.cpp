@@ -795,36 +795,36 @@ void RKwardApp::slotStatusMsg(const QString &text)
 
 void RKwardApp::slotShowRKWatch () {
 	RK_TRACE (APP);
-	RKGlobals::rInterface ()->watch->setShown (showRKWatch->isChecked ());
+	//RKGlobals::rInterface ()->watch->setShown (showRKWatch->isChecked ());
 }
 
 void RKwardApp::slotShowRKOutput () {
 	RK_TRACE (APP);
-	output->setShown (showRKOutput->isChecked ());
+	//output->setShown (showRKOutput->isChecked ());
 }
 
 void RKwardApp::slotShowRObjectBrowser () {
 	RK_TRACE (APP);
-	object_browser->setShown (showRObjectBrowser->isChecked ());
+	//object_browser->setShown (showRObjectBrowser->isChecked ());
 }
 
 void RKwardApp::slotToggleWindowClosed () {
 	RK_TRACE (APP);
-	showRKWatch->setChecked (RKGlobals::rInterface ()->watch->isShown ());
+	/*showRKWatch->setChecked (RKGlobals::rInterface ()->watch->isShown ());
 	showRKOutput->setChecked (output->isShown ());
-	showRObjectBrowser->setChecked (object_browser->isShown ());
+	showRObjectBrowser->setChecked (object_browser->isShown ());*/
 }
 
 void RKwardApp::newOutput () {
 	RK_TRACE (APP);
-	output->checkNewInput ();
+	/*output->checkNewInput ();
 	if (RKSettingsModuleOutput::autoShow ()) {
 		output->show ();
 		showRKOutput->setChecked (true);
 		if (RKSettingsModuleOutput::autoRaise ()) {
 			output->raise ();
 		}
-	}
+	}*/
 }
 
 void RKwardApp::setRStatus (bool busy) {

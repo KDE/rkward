@@ -32,6 +32,7 @@ public:
     KHelpDlg(QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
     ~KHelpDlg();
     void rCommandDone (RCommand *command);
+    
   /*$PUBLIC_FUNCTIONS$*/
 
 public slots:
@@ -42,7 +43,7 @@ public slots:
   
 protected:
   /*$PROTECTED_FUNCTIONS$*/
-
+  void slotFieldKeyPressEvent ( QKeyEvent * e );
 protected slots:
   /*$PROTECTED_SLOTS$*/
 private:

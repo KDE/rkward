@@ -35,6 +35,8 @@ RKConsole::RKConsole(QWidget *parent, const char *name)
 	prefix = "> ";
 	flush();
 	
+	commandsList.append (new QString(""));
+	
 	commandsList.setAutoDelete( TRUE );
 	
 }
@@ -49,6 +51,7 @@ void RKConsole::keyPressEvent ( QKeyEvent * e )
 {
 	int para=0; int pos=0;
 	getCursorPosition (&para, &pos);
+	
 	
 	if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
 		submitCommand ();
