@@ -6,7 +6,8 @@
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
-/***************************************************************************
+/**********************
+*****************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -27,6 +28,7 @@
 #include <qsplitter.h>
 
 #include <klocale.h>
+#include <ktexteditor/document.h>
 
 RKwatch::RKwatch(RInterface *parent) : QWidget () {
 	QGridLayout *grid = new QGridLayout (this, 1, 1, 11, 6);
@@ -40,9 +42,30 @@ RKwatch::RKwatch(RInterface *parent) : QWidget () {
 	QWidget *layout_widget = new QWidget (splitter);
 	QHBoxLayout *bottom_hbox = new QHBoxLayout (layout_widget, 0, 6);
 
-	commands = new QTextEdit (layout_widget);
-	bottom_hbox->addWidget (commands);
-
+	// create a Kate-part as command-editor
+	commands = Kate::document (KTextEditor::createDocument ("libkatepart", this, "Kate::Document"));
+	commands_view = Kate::view (commands->createView (layout_widget));
+	bottom_hbox->addWidget (commands_view);
+	commands->setText ("");
+	
+	// set syntax-highlighting for R
+	int modes_count = commands->hlModeCount ();
+	bool found_mode = false;
+	int i;
+	for (i = 0; i < modes_count; ++i) {
+		qDebug ("%s", commands->hlModeName(i).lower().latin1 ());
+		if (commands->hlModeName(i).lower() == "r script") {
+			found_mode = true;
+			break;
+		}
+	}
+	if (found_mode) {
+		commands->setHlMode(i);
+	} else {
+		qDebug ("%s", "could not find R-syntax scheme");
+	}
+	
+	// add run & reset buttons
 	QVBoxLayout *button_vbox = new QVBoxLayout (0, 0, 6);
 	bottom_hbox->addLayout (button_vbox);
 	
@@ -61,13 +84,13 @@ RKwatch::RKwatch(RInterface *parent) : QWidget () {
     QFont font ("Courier");
 	watch->setCurrentFont (font);
 	watch->setWordWrap (QTextEdit::NoWrap);
-	commands->setCurrentFont (font);
-	commands->setWordWrap (QTextEdit::NoWrap);
 	
 	r_inter = parent;
 }
 
 RKwatch::~RKwatch(){
+	delete commands_view;
+	delete commands;
 }
 
 void RKwatch::addInput (RCommand *command) {
@@ -102,10 +125,8 @@ void RKwatch::addOutput (RCommand *command) {
 }
 
 void RKwatch::clearCommand () {
-	commands->clear ();
-// unfortunately, clear also resets the font
-    QFont font ("Courier");
-	commands->setCurrentFont (font);
+	commands->setText ("");
+	commands_view->setFocus ();
 }
 
 void RKwatch::submitCommand () {

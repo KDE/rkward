@@ -3,12 +3,57 @@
 <KDevPrjSession>
  <LastCompileConfig>(Default)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
- <DocsAndViews NumberOfDocuments="1" >
-  <Doc0 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/TODO" >
+ <DocsAndViews NumberOfDocuments="10" >
+  <Doc0 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvarselector.cpp" >
    <View0 line="0" Type="???" >
-    <AdditionalSettings Top="2" Width="954" Attach="1" Height="538" Left="2" MinMaxMode="0" />
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="514" Left="2" MinMaxMode="0" />
    </View0>
   </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvarselector.h" >
+   <View0 line="0" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="551" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvarslot.cpp" >
+   <View0 line="0" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="514" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc2>
+  <Doc3 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkvarslot.h" >
+   <View0 line="0" Type="???" >
+    <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc3>
+  <Doc4 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkwatch.cpp" >
+   <View0 line="67" Type="???" >
+    <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc4>
+  <Doc5 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkwatch.h" >
+   <View0 line="25" Type="???" >
+    <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc5>
+  <Doc6 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/Makefile.am" >
+   <View0 line="10" Type="???" >
+    <AdditionalSettings Top="2" Width="954" Attach="1" Height="514" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc6>
+  <Doc7 context="ctx_doxygen" NumberOfViews="1" URL="file:/usr/share/doc/kde/HTML/en/kdelibs-apidocs/kate/html/classKate_1_1Document-members.html" >
+   <View0 Type="???" >
+    <AdditionalSettings Top="-10000" Width="1" Attach="1" Height="1" Left="-10000" MinMaxMode="0" />
+   </View0>
+  </Doc7>
+  <Doc8 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/rkward.cpp" >
+   <View0 line="209" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="514" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc8>
+  <Doc9 NumberOfViews="1" URL="file:/home/thomas/develop/rkward/rkward/snippets" >
+   <View0 line="35" Type="???" >
+    <AdditionalSettings Top="2" Width="952" Attach="1" Height="514" Left="2" MinMaxMode="0" />
+   </View0>
+  </Doc9>
  </DocsAndViews>
  <pluginList>
   <kdevbookmarks>

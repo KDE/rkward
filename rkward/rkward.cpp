@@ -49,7 +49,7 @@
 #include "rksettingsmoduleplugins.h"
 #include "rksettingsmodulelogfiles.h"
 #include "rksettingsmoduleoutput.h"
-#include "rinterface.h";
+#include "rinterface.h"
 
 #define ID_STATUS_MSG 1
 #define ID_R_STATUS_MSG 2
@@ -89,8 +89,8 @@ RKwardApp::RKwardApp(QWidget* , const char* name):KMainWindow(0, name)
 	r_inter = 0;
 }
 
-RKwardApp::~RKwardApp()
-{
+RKwardApp::~RKwardApp() {
+	delete r_inter;
 }
 
 void RKwardApp::doPostInit () {
