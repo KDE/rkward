@@ -822,8 +822,8 @@ void RKwardApp::slotToggleWindowClosed () {
 
 void RKwardApp::newOutput () {
 	RK_TRACE (APP);
-	/*output->checkNewInput ();
-	if (RKSettingsModuleOutput::autoShow ()) {
+	output->checkNewInput ();
+	/*if (RKSettingsModuleOutput::autoShow ()) {
 		output->show ();
 		showRKOutput->setChecked (true);
 		if (RKSettingsModuleOutput::autoRaise ()) {
