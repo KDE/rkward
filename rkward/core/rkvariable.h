@@ -54,6 +54,9 @@ case it will be stored as a character vector */
 
 /** reimplemented from RObject */
 	void updateFromR ();
+	
+/** reimplemented from RObject to also store value labels/factor levels (and in the future probably futher info) */
+	void writeMetaData (RCommandChain *chain);
 protected:
 friend class RContainerObject;
 	int length;
@@ -66,11 +69,11 @@ public:
 is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the row are valid and Invalid if _one or more_ cells in the row are invalid, Unknown if _all_ cells in the row are unknown/updating. */
 	enum Status { ValueUnused=0, ValueValid=1, ValueInvalid=2, ValueUnknown=4 };
 /** The storage mode. For most vars this will be numeric. Note that if a single cell in a row is Invalid, the entire row will - in the R-backend - have to be stored as a string. */
-	enum RStorage { StorageString=0, StorageNumeric=1 };
+//	enum RStorage { StorageString=0, StorageNumeric=1 };
 /** See Storage enum. Returns how the row is actually saved in the R-backend. */
-	RStorage rStorage ();
+//	RStorage rStorage ();
 /** changes the internal storage mode, and also - if possible/necessary - the storage mode in the backend. Warning: this is an expensive operation, as it may involve conversion, deletion, reallocation and copying of data */
-	void changeStorageMode (RStorage new_mode);
+//	void changeStorageMode (RStorage new_mode);
 
 /** sets whether changed data should be synced immediately or not. Set this to off for large paste operations. Rember to call setSyncing (true) and syncDataToR () after the paste is complete */
 	void setSyncing (bool immediate);
@@ -117,6 +120,15 @@ numeric! */
 
 /** returns the map of value labels for this variable or 0 if no labels/levels are assigned */
 	ValueLabels *getValueLabels ();
+/** assigns a new map of labels. Also takes care of syncing with the backend. Ownership of the ValueLabels is transferred to the variable. Use setValueLabels (0) to remove all labels */
+	void setValueLabels (ValueLabels *labels);
+/** get value labels as string (for display) */
+	QString getValueLabelString ();
+/** set value labels from string (for paste operations) */
+	void setValueLabelString (const QString &string);
+	
+/** Restores the variable including data and meta-data */
+	void restore (RCommandChain *chain=0);
 protected:
 /** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData : public EditData {
@@ -155,11 +167,13 @@ private:
 /** takes care of syncing the given range of cells */
 	void cellsChanged (int from_row, int to_row);
 /** writes the given range of cells to the backend (regardless of whether syncing should be immediate) */
-	void writeData (int from_row, int to_row);
+	void writeData (int from_row, int to_row, RCommandChain *chain=0);
 /** deletes the string data for the given cell */
 	void deleteStringData (int row);
 /** called if a variable was invalid (and therefore stored in a wrong mode in the R backend) and is now valid again. Restores the storage mode in the backend. */
 	void restoreStorageInBackend ();
+/** writes the values labels to the backend */
+	void writeValueLabels (RCommandChain *chain);
 /////////////////// END: data-handling //////////////////////
 };
 

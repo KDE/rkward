@@ -16,12 +16,12 @@
  ***************************************************************************/
 #include "twintablemetamember.h"
 
-#include "tablecolumn.h"
 #include "../core/rkvariable.h"
 #include "../core/rcontainerobject.h"
 #include "../core/rkmodificationtracker.h"
 #include "twintable.h"
 #include "celleditor.h"
+#include "editlabelsdialog.h"
 #include "../rkglobals.h"
 
 #include <qpainter.h>
@@ -59,6 +59,8 @@ void TwinTableMetaMember::setText (int row, int col, const QString &text) {
 		var->setLabel (text, true);
 	} else if (row == TYPE_ROW) {
 		var->setVarType ((RObject::VarType) text.toInt ());
+	} else if (row == LEVELS_ROW) {
+		var->setValueLabelString (text);
 	}
 }
 
@@ -122,6 +124,11 @@ QWidget *TwinTableMetaMember::beginEdit (int row, int col, bool) {
 
 	if (row == TYPE_ROW) {
 		tted = new CellEditor (viewport (), text (row, col), 0, &type_values);
+	} else if (row == LEVELS_ROW) {
+		EditLabelsDialog *dialog = new EditLabelsDialog (0, var, 0);
+		dialog->exec ();
+		delete (dialog);
+		return 0;
 	} else {
 		tted = new CellEditor (viewport (), text (row, col), 0, 0);
 	}
@@ -154,6 +161,8 @@ QString TwinTableMetaMember::text (int row, int col) const {
 		return var->getLabel ();
 	} else if (row == TYPE_ROW) {
 		return QString::number (var->getVarType ());
+	} else if (row == LEVELS_ROW) {
+		return var->getValueLabelString ();
 	}
 	return "";
 }
@@ -171,6 +180,8 @@ QString TwinTableMetaMember::formattedText (int row, int col) const {
 		return var->getLabel ();
 	} else if (row == TYPE_ROW) {
 		return var->getVarTypeString ();
+	} else if (row == LEVELS_ROW) {
+		return var->getValueLabelString ();
 	}
 	return "";
 }

@@ -31,7 +31,6 @@
 #include "twintabledatamember.h"
 #include "twintablemetamember.h"
 #include "twintablemember.h"
-#include "tablecolumn.h"
 #include "rkdrag.h"
 
 #include "../debug.h"
@@ -59,7 +58,7 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent){
     varview->setNumCols (5);
 	varview->verticalHeader()->setLabel(0, i18n( "Label" ) );
 	varview->verticalHeader()->setLabel(TYPE_ROW, i18n( "Type" ) );
-	varview->verticalHeader()->setLabel(2, i18n( "e.g. format" ) );
+	varview->verticalHeader()->setLabel(2, i18n( "Levels" ) );
 	varview->verticalHeader()->setLabel(3, i18n( "e.g. category" ) );
 	varview->verticalHeader()->setLabel(NAME_ROW, i18n( "Name" ) );
 	varview->setMinimumHeight (varview->horizontalHeader ()->height ());

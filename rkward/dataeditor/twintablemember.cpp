@@ -20,7 +20,6 @@
 #include <qevent.h>
 
 #include "celleditor.h"
-#include "tablecolumn.h"
 #include "twintable.h"
 #include "../debug.h"
 

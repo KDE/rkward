@@ -76,7 +76,7 @@ void RKVariable::setVarType (RObject::VarType new_type, bool sync) {
 		if (sync) {
 			syncDataToR ();
 		}
-		setSyncing (myData ()->immediate_sync);
+		setSyncing (internal_sync);
 	} else {
 		var_type = new_type;
 	}
@@ -84,6 +84,12 @@ void RKVariable::setVarType (RObject::VarType new_type, bool sync) {
 	setMetaProperty ("type", QString ().setNum ((int) new_type), sync);
 }
 
+void RKVariable::writeMetaData (RCommandChain *chain) {
+	RK_TRACE (OBJECTS);
+
+	writeValueLabels (chain);
+	RObject::writeMetaData (chain);
+}
 
 QString RKVariable::getTable () {
 	RK_TRACE (OBJECTS);
@@ -122,14 +128,20 @@ void RKVariable::rCommandDone (RCommand *command) {
 		if (!(command->getIntVector ()[1])) {
 			RKGlobals::rInterface ()->issueCommand ("levels (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_FACTOR_LEVELS_COMMAND);
 			if (getVarType () == Unknown) {
-				setVarType (Factor);
+				var_type = Factor;
 			}
 		}
 		int command_type = RCommand::App | RCommand::Sync;
 		if (command->getIntVector ()[0]) {
 			command_type |= RCommand::GetRealVector;
+			if (getVarType () == Unknown) {
+				var_type = Number;
+			}
 		} else {
 			command_type |= RCommand::GetStringVector;
+			if (getVarType () == Unknown) {
+				var_type = String;
+			}
 		}
 		RKGlobals::rInterface ()->issueCommand (getFullName (), command_type, "", this, GET_DATA_COMMAND);
 	} else if (command->getFlags () == GET_DATA_COMMAND) {
@@ -151,6 +163,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 		set->from_index = 0;
 		set->to_index = length;
 		RKGlobals::tracker ()->objectDataChanged (this, set);
+		RKGlobals::tracker ()->objectMetaChanged (this);
 		setSyncing (true);
 	} else if (command->getFlags () == GET_FACTOR_LEVELS_COMMAND) {
 		RK_ASSERT (myData ());
@@ -281,12 +294,25 @@ void RKVariable::syncDataToR () {
 	myData ()->changes->to_index = -1;
 }
 
-void RKVariable::writeData (int from_row, int to_row) {
+void RKVariable::restore (RCommandChain *chain) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (myData ());
+
+	writeData (0, getLength () - 1, chain);
+	delete myData ()->changes;
+	writeMetaData (chain);
+	if (getVarType () == Factor) {
+		RKGlobals::rInterface ()->issueCommand ("rk.restore.factor (" + getFullName () + ")", RCommand::App | RCommand::Sync, "", 0, 0, chain);
+	}
+}
+
+void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
+	RK_TRACE (OBJECTS);
 	if (from_row == -1) return;
 
 	// TODO: try to sync in correct storage mode
 	if (from_row == to_row) {
-		RKGlobals::rInterface ()->issueCommand (getFullName () + "[" + QString::number (from_row+1) + "] <- " + getRText (from_row), RCommand::App | RCommand::Sync);
+		RKGlobals::rInterface ()->issueCommand (getFullName () + "[" + QString::number (from_row+1) + "] <- " + getRText (from_row), RCommand::App | RCommand::Sync, "", 0,0, chain);
 	} else {
 		QString data_string = "c (";
 		for (int row = from_row; row <= to_row; ++row) {
@@ -297,7 +323,7 @@ void RKVariable::writeData (int from_row, int to_row) {
 			}
 		}
 		data_string.append (")");
-		RKGlobals::rInterface ()->issueCommand (getFullName () + "[" + QString::number (from_row + 1) + ":" + QString::number (to_row + 1) + "] <- " + data_string, RCommand::App | RCommand::Sync);
+		RKGlobals::rInterface ()->issueCommand (getFullName () + "[" + QString::number (from_row + 1) + ":" + QString::number (to_row + 1) + "] <- " + data_string, RCommand::App | RCommand::Sync, "", 0,0, chain);
 	}
 
 	ChangeSet *set = new ChangeSet;
@@ -374,12 +400,6 @@ void RKVariable::downSize () {
 		delete [] myData ()->cell_string_data;
 		myData ()->cell_string_data = 0;
 	}
-}
-
-/** See Storage enum. Returns how the row is actually saved in the R-backend. */
-RKVariable::RStorage RKVariable::rStorage () {
-	//TODO: implement correctly!
-	return StorageString;
 }
 
 QString RKVariable::getText (int row) {
@@ -633,6 +653,101 @@ void RKVariable::insertRows (int row, int count) {
 RObject::ValueLabels *RKVariable::getValueLabels () {
 	RK_ASSERT (myData ());
 	return (myData ()->value_labels);
+}
+
+void RKVariable::setValueLabels (ValueLabels *labels) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (myData ());
+	
+	if (labels != myData ()->value_labels) {
+		delete (myData ()->value_labels);
+		myData ()->value_labels = labels;
+	}
+
+	writeValueLabels (0);
+	RKGlobals::tracker ()->objectMetaChanged (this);
+
+	// find out which values got valid / invalid and change those
+	for (int i=0; i < getLength (); ++i) {
+		if (cellStatus (i) == ValueInvalid) {
+			if (labels->contains (getText (i))) {
+				setText (i, getText (i));
+			}
+		} else {
+			if (!labels->contains (getText (i))) {
+				setText (i, getText (i));
+			}
+		}
+	}
+
+	// also update display of all values:
+	ChangeSet *set = new ChangeSet;
+	set->from_index = 0;
+	set->to_index = getLength () - 1;	
+	RKGlobals::tracker ()->objectDataChanged (this, set);
+
+	// TODO: find out whether the object is valid after the operation and update accordingly!
+}
+
+void RKVariable::writeValueLabels (RCommandChain *chain) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (myData ());
+	
+	if (myData ()->value_labels) {
+		int i = 1;
+		QString level_string = "c (";
+		while (myData ()->value_labels->contains (QString::number (i))) {
+			level_string.append (rQuote ((*(myData ()->value_labels))[QString::number (i)]));
+			if (myData ()->value_labels->contains (QString::number (++i))) {
+				level_string.append (", ");
+			}
+		}
+		level_string.append (")");
+		// using attr (..., "levels) instead of levels (...) in order to bypass checking
+		RKGlobals::rInterface ()->issueCommand ("attr (" + getFullName () + ", \"levels\") <- " + level_string, RCommand::App | RCommand::Sync, "", 0, 0, chain);
+	} else {
+		RKGlobals::rInterface ()->issueCommand ("attr (" + getFullName () + ", \"levels\") <- NULL", RCommand::App | RCommand::Sync, "", 0, 0, chain);
+	}
+}
+
+QString RKVariable::getValueLabelString () {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (myData ());
+
+	if (myData ()->value_labels) {
+		int i = 1;
+		QString level_string;
+		while (myData ()->value_labels->contains (QString::number (i))) {
+			level_string.append ((*(myData ()->value_labels))[QString::number (i)]);
+			if (myData ()->value_labels->contains (QString::number (++i))) {
+				level_string.append ("#,#");
+			}
+		}
+		
+		return level_string;
+	} else {
+		return "";
+	}
+}
+
+void RKVariable::setValueLabelString (const QString &string) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (myData ());
+
+	QStringList list = QStringList::split ("#,#", string);
+	
+	if (list.empty ()) {
+		setValueLabels (0);
+		return;
+	}
+	
+	int i = 1;
+	ValueLabels *new_labels = new ValueLabels;
+	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
+		new_labels->insert (QString::number (i), *it);
+		++i;
+	}
+	setValueLabels (new_labels);
 }
 
 /////////////////// END: data-handling ///////////////////////////
