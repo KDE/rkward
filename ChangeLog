@@ -1,3 +1,4 @@
+--- Version 0.2.9 - Sep-22-2004
 - use KDialog::marginHint () and KDialog::spacingHint () in plugins
 - fixed a crash in the formula widget
 - converted plugin element to QWidgets (in preparation for more extensive rework of plugin elements)

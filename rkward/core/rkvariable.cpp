@@ -671,11 +671,11 @@ void RKVariable::setValueLabels (ValueLabels *labels) {
 	// find out which values got valid / invalid and change those
 	for (int i=0; i < getLength (); ++i) {
 		if (cellStatus (i) == ValueInvalid) {
-			if (labels->contains (getText (i))) {
+			if (labels && labels->contains (getText (i))) {
 				setText (i, getText (i));
 			}
 		} else {
-			if (!labels->contains (getText (i))) {
+			if (!(labels && labels->contains (getText (i)))) {
 				setText (i, getText (i));
 			}
 		}

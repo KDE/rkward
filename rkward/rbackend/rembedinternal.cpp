@@ -33,12 +33,11 @@ extern "C" {
 #include <math.h>
 
 #include "../rkglobals.h"
-// static
-char *RKGlobals::empty_char = strdup ("");
-char *RKGlobals::unknown_char = strdup ("?");
-double RKGlobals::na_double = NA_REAL;
 
-REmbedInternal::REmbedInternal(){
+REmbedInternal::REmbedInternal() {
+	RKGlobals::empty_char = strdup ("");
+	RKGlobals::unknown_char = strdup ("?");
+	RKGlobals::na_double = NA_REAL;
 }
 
 REmbedInternal::~REmbedInternal(){

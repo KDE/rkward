@@ -2,34 +2,43 @@ The following list of TODO-items is NOT complete!
 Also, plans change frequently. If something is listed for a specific release, that's no more than a rough plan.
 
 stuff to do before 0.2.9 release
-- Twintable/RKEditorDataFrame
-	- merge the two classes
-	- more efficient syncing: fetch only the values actually needed instead of the whole table
+
+stuff to do before 0.3.0 release
+- dataeditor
+	- add formatting options
+- plugins (general)
+	- rework structure (directory layout) of plugin definitions
+	- add import-filter plugins
+	- add component-wrapper and allow embedded plugins
+	- add preliminary image generation
 - on exit, check whether there are still RCommands left in the backend and wait/request user-interaction before tearing down the thread. After all, the last command might have been a "save"!
-- Object editing / modification tracking:
-	- functions to set double/int/string-vectors directly. Use in paste-operations
-- convert plugin-widgets to QWidgets instead of QLayouts
 - error-handling/raising in .rk.do.call
 - pick some from below:
 
 (relatively) small stuff to do soon
-- add more plugin-widgets
-- setValue-API for plugin-widgets and copying of values when switching from wizard to dialog-interface
-- improve and use debugging framework
-- cleanup label-mess for plugin-widgets
-- add component-wrapper and allow embedded plugins
-- setEnabled (), setVisible ()-API (trivial, once the plugin-widgets are QWidgets)
+- Twintable/RKEditorDataFrame
+	- merge the two classes
+	- more efficient syncing: fetch only the values actually needed instead of the whole table
+- Object editing / modification tracking:
+	- functions to set double/int/string-vectors directly. Use in paste-operations
+- RKVariable:
+	- use QIntDict instead of string-map for value-labels / factor levels?
+- change EditLabelsDialog to use a small QTable? Probably a lot easier / straightforward to use
+- plugins (general)
+	- add more plugin-widgets
+	- setValue-API for plugin-widgets and copying of values when switching from wizard to dialog-interface
+	- improve and use debugging framework
+	- cleanup label-mess for plugin-widgets
+	- setEnabled (), setVisible ()-API (trivial, once the plugin-widgets are QWidgets)
+	- add XML-parsing helper functions and error-checking
 - formula-widget:
 	- use smart sorting, esp. of generated string
 	- add labels, add "up to level" option
 	- add constant term option
-- add XML-parsing helper functions and error-checking
 - create a spinbox, that can really deal with real numbers
 - UNPROTECT_PTR
-- KDialog::marginHint (), KDialog::spacingHint ()
+- use RKGlobals::marginHint (), RKGlobals::spacingHint () everywhere
 - give informative feedback on syntax errors (line numbers, etc.)!
-- take care of value-labels/factor levels in RKVariable::restore ()
-- change EditLabelsDialog to use a small QTable?
 
 stuff to do before the thing is usable
 - RKWatch

@@ -25,10 +25,12 @@ RKModificationTracker *RKGlobals::mtracker;
 /* statics
 - empty_char
 - unknown_char
-- na_char
 - na_double
-defined in REmbedInternal
+defined in rembedinternal.cpp for technical reasons
 */
+extern char *RKGlobals::empty_char;
+extern char *RKGlobals::unknown_char;
+extern double RKGlobals::na_double;
 
 RKGlobals::RKGlobals () {
 }
