@@ -94,6 +94,7 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 
 	KGlobal::dirs()->addResourceType("plugins", KStandardDirs::kde_default("data") + "rkward/plugins/");
 
+	// Nice docks a la Kdevelop.
 	setToolviewStyle(KMultiTabBar::KDEV3ICON);
 
 

@@ -17,6 +17,7 @@
 #include "rkobjectlistview.h"
 
 #include <klocale.h>
+#include <kiconloader.h>
 
 #include "../debug.h"
 #include "../rkglobals.h"
@@ -140,6 +141,28 @@ void RKObjectListView::updateItem (QListViewItem *item, RObject *object) {
 	} else if (object->isVariable ()) {
 		item->setText (2, static_cast<RKVariable*> (object)->getVarTypeString ());
 	}
+
+	if (object->isDataFrame ()) {
+		item->setPixmap (0, SmallIcon("spreadsheet"));
+	} else {
+		switch(static_cast<RKVariable*> (object)->getVarType ()) {
+			case RObject::Number:
+				item->setPixmap (0, SmallIcon("ledblue",8));
+				break;
+			case RObject::Factor:
+				item->setPixmap (0, SmallIcon("ledgreen",8));
+				break;
+			case RObject::String:
+				item->setPixmap (0, SmallIcon("ledyellow",8));
+				break;
+			case RObject::Invalid:
+				item->setPixmap (0, SmallIcon("cancel",8));
+				break;
+			case RObject::Unknown:
+				item->setPixmap (0, SmallIcon("ledred",8));
+				break;
+		}
+	}
 }
 
 void RKObjectListView::addObject (QListViewItem *parent, RObject *object, bool recursive) {
@@ -162,9 +185,12 @@ void RKObjectListView::addObject (QListViewItem *parent, RObject *object, bool r
 			addObject (item, children[i], true);
 		}
 	}
+
+
 	
 // special treatment for the workspace object
 	if (!parent) {
+		item->setPixmap (0, SmallIcon("view_tree"));
 		item->setText (0, i18n ("[Objects]"));
 		item->setOpen (true);
 	}
