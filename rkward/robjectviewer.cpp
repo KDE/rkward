@@ -44,7 +44,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : QWidget (paren
 	view_area->append (i18n("\nFull location: ") + object->getFullName ());
 	if (object->isContainer ()) {
 		RContainerObject *cobj = static_cast<RContainerObject*> (object);		// for convenience only
-		view_area->append (i18n("\nClasses: ") + cobj->makeClassString (", "));
+		view_area->append (i18n("\nClass: ") + cobj->makeClassString (", "));
 		if (cobj->numDimensions ()) {
 			QString dummy = i18n("\nDimensions: ") + QString ().setNum (cobj->getDimension (0));
 			for (int i=1; i < cobj->numDimensions (); ++i) {
@@ -60,7 +60,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : QWidget (paren
 	waiting = true;
 	destruct = false;
 	
-	caption = i18n("Object-Viewer for object ") + object->getShortName ();
+	caption = i18n("Object Viewer: ") + object->getShortName ();
 	setCaption (caption + i18n(" - Waiting for results from R..."));
 	resize (minimumSizeHint ().expandedTo (QSize (640, 480)));
 	show ();
@@ -74,7 +74,7 @@ void RObjectViewer::rCommandDone (RCommand *command) {
 	
 	view_area->append (command->output ());
 	if (command->hasError ()) {
-		view_area->append (i18n("\nSome error(s) occured: ") + command->error ());
+		view_area->append (i18n("\nSome errors occured: ") + command->error ());
 	}
 	
 	if (destruct) {
