@@ -40,7 +40,7 @@ public:
 	TwinTable(QWidget *parent=0, const char *name=0);
 	~TwinTable();
 	void insertNewColumn (int where=-1, QString name="");
-	void insertNewRow (int where=-1);
+	void insertNewRow (int where=-1, TwinTableMember *table=0);
 	QCString encodeSelection ();
 /** Pastes content to the current selection. */
 	void pasteEncoded (QByteArray content);
@@ -77,9 +77,6 @@ public slots:
 	void viewClearSelection ();
 	void dataClearSelection ();
 private:
-friend class RKwardDoc;
-	QGridLayout *grid_layout;
-    QSplitter* Splitter1;
 /** PopupMenu shown when top header is right-clicked */
 	QPopupMenu *top_header_menu;
 /** PopupMenu shown when top header is right-clicked */
@@ -87,9 +84,14 @@ friend class RKwardDoc;
 /** position (row or col) the header_menu is operating on */
 	int header_pos;
 /** Returns the active Table (of the two members), 0 if no table active */
-	QTable *activeTable ();
+	TwinTableMember *activeTable ();
 
 	PasteMode paste_mode;
+protected:	
+/** set a row of cells, expanding the table if necessary. Assumes you provide the correct amount of data! */
+	void setRow (TwinTableMember* table, int row, int start_col, int end_col, char **data);
+/** set a column of cells, expanding the table if necessary. Assumes you provide the correct amount of data! */
+	void setColumn (TwinTableMember* table, int col, int start_row, int end_row, char **data);
 private slots:
 	void scrolled (int x, int y);
 	void autoScrolled (int x, int y);

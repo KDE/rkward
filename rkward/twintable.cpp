@@ -35,14 +35,14 @@
 #include "labelcell.h"
 
 TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name){
-	grid_layout = new QGridLayout(this);
+	QGridLayout *grid_layout = new QGridLayout(this);
 
-    Splitter1 = new QSplitter(this);
-    Splitter1->setOrientation(QSplitter::Vertical);
+    QSplitter *splitter = new QSplitter(this);
+    splitter->setOrientation(QSplitter::Vertical);
 
-    varview = new TwinTableMember(Splitter1, "varview");
-    varview->setNumRows( 5 );
-    varview->setNumCols( 5 );
+    varview = new TwinTableMember (splitter);
+    varview->setNumRows (5);
+    varview->setNumCols (5);
 	for (int i=0; i < varview->numCols (); i++) {
 		for (int j=0; j < varview->numRows (); j++) {
 			if (j == TYPE_ROW) {
@@ -65,9 +65,9 @@ TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name)
 	varview->setMinimumHeight (varview->horizontalHeader ()->height ());
     varview->verticalHeader()->setResizeEnabled (false);
 
-    dataview = new TwinTableMember( Splitter1, "dataview" );
-    dataview->setNumRows( 20 );
-	dataview->setNumCols( 5 );
+    dataview = new TwinTableMember (splitter);
+    dataview->setNumRows (20);
+	dataview->setNumCols (5);
 	dataview->setVarTable (varview);	// needed for initialization of RTableItems
 	for (int i=0; i < dataview->numCols (); i++) {
 		for (int j=0; j < dataview->numRows (); j++) {
@@ -83,7 +83,7 @@ TwinTable::TwinTable(QWidget *parent, const char *name) : QWidget (parent, name)
 	dataview->setLeftMargin (varview->leftMargin ());
 	varview->setHScrollBarMode (QScrollView::AlwaysOff);
 
-    grid_layout->addWidget (Splitter1, 0, 0);
+    grid_layout->addWidget (splitter, 0, 0);
 	
 	// these are to keep the two tables in sync
 	varview->setTwin (dataview);
@@ -157,17 +157,35 @@ void TwinTable::insertNewColumn (int where, QString name) {
 	}
 }
 
-void TwinTable::insertNewRow (int where) {
-	if ((where < 0) || (where > dataview->numRows ())) {
-		where = dataview->numRows ();
+void TwinTable::insertNewRow (int where, TwinTableMember *table) {
+	if (!table) table = dataview;
+	
+	if ((where < 0) || (where > table->numRows ())) {
+		where = table->numRows ();
 	}
 
-	dataview->insertRows (where);
+	table->insertRows (where);
 
-	for (int i=0; i < dataview->numCols (); i++) {
-		RTableItem *rti;
-		dataview->setItem (where, i, rti = new RTableItem (dataview));
-		rti->checkValid ();
+	// initialize cells according to table
+	if (table == dataview) {
+		for (int i=0; i < dataview->numCols (); i++) {
+			RTableItem *rti;
+			dataview->setItem (where, i, rti = new RTableItem (dataview));
+			rti->checkValid ();
+		}
+	} else if (table == varview) {
+		for (int i=0; i <= varview->numCols (); i++) {
+			if (where == TYPE_ROW) {
+				varview->setItem (where, i, new TypeSelectCell (varview));
+			} else if (where == NAME_ROW) {
+				varview->setItem (where, i, new NameSelectCell (varview));
+				((NameSelectCell *) varview->item (where, i))->init ();
+			} else if (where == LABEL_ROW) {
+				varview->setItem (where, i, new LabelCell (varview));
+			} else {
+				varview->setItem (where, i, new RTableItem (varview));
+			}
+		}
 	}
 }
 
@@ -250,7 +268,7 @@ QCString TwinTable::encodeSelection () {
 
 void TwinTable::pasteEncoded (QByteArray content) {
 	flushEdit ();
-	QTable *table = activeTable ();
+	TwinTableMember *table = activeTable ();
 	if (!table) return;
 
 	QTableSelection selection;
@@ -318,7 +336,7 @@ void TwinTable::pasteEncoded (QByteArray content) {
 					next_delim = pasted.length ();
 				} else {
 					if (next_delim != (pasted.length () -1)) {
-						insertNewRow ();
+						insertNewRow (-1, table);
 					}
 				}
 			}
@@ -339,7 +357,7 @@ void TwinTable::pasteEncodedFlipped (QByteArray content) {
 	// should really be merged one day!
 
 	flushEdit ();
-	QTable *table = activeTable ();
+	TwinTableMember *table = activeTable ();
 	if (!table) return;
 
 	QTableSelection selection;
@@ -390,7 +408,7 @@ void TwinTable::pasteEncodedFlipped (QByteArray content) {
 					// We don't want a new column, then.
 					// Everything else does not get affected in this situation.
 					if (next_delim != next_line) {
-						insertNewRow ();
+						insertNewRow (-1, table);
 					}
 				}
 			}
@@ -428,7 +446,7 @@ void TwinTable::pasteEncodedFlipped (QByteArray content) {
 	}
 }
 
-QTable *TwinTable::activeTable () {
+TwinTableMember *TwinTable::activeTable () {
 	if (varview->numSelections ()) {
 		return varview;
 	} else if (dataview->numSelections ()) {
@@ -454,6 +472,28 @@ void TwinTable::clearSelected () {
 
 void TwinTable::setPasteMode (PasteMode mode) {
 	paste_mode = mode;
+}
+
+void TwinTable::setRow (TwinTableMember* table, int row, int start_col, int end_col, char **data) {
+	while (numCols () <= end_col) {
+		insertNewColumn ();
+	}
+	
+	int i=0;
+	for (int col=start_col; col <= end_col; ++col) {
+		table->setText (row, col, data[i++]);
+	}
+}
+
+void TwinTable::setColumn (TwinTableMember* table, int col, int start_row, int end_row, char **data) {
+	while (table->numRows () >= end_row) {
+		insertNewRow (table->numRows (), table);
+	}
+	
+	int i=0;
+	for (int row=start_row; row <= end_row; ++row) {
+		table->setText (row, col, data[i++]);
+	}
 }
 
 void TwinTable::flushEdit () {
