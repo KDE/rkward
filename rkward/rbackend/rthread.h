@@ -26,13 +26,13 @@
 class REmbed;
 class RInterface;
 
-#define RCOMMAND_IN_EVENT 1001
-#define RCOMMAND_OUT_EVENT 1002
-#define RBUSY_EVENT 1003
-#define RIDLE_EVENT 1004
-#define RSTARTED_EVENT 2001
+#define RCOMMAND_IN_EVENT 10001
+#define RCOMMAND_OUT_EVENT 10002
+#define RBUSY_EVENT 10003
+#define RIDLE_EVENT 10004
+#define RSTARTED_EVENT 11001
 // don't use the number following RSTARTUP_ERROR_EVENT, because an error code will be added!
-#define RSTARTUP_ERROR_EVENT 10000
+#define RSTARTUP_ERROR_EVENT 12000
 
 /** encapsulates the R-Backend in a separate thread. Use the inlines in RInterface and see documentation there.
 @author Thomas Friedrichsmeier

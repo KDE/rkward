@@ -109,7 +109,9 @@ void REmbedInternal::runCommandInternal (const char *command, bool *error, bool 
 
 		SEXP exp;
 		PROTECT (exp = runCommandInternalBase (command, error));
-		if (R_Visible) Rf_PrintValue (exp);
+		if (R_Visible) {
+			if (!*error) Rf_PrintValue (exp);
+		}
 		UNPROTECT (1);
 	}
 }

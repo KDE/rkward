@@ -94,3 +94,13 @@
 ".rk.test.connection" <- function (x) {
 	if (.rk.do.call ("checkconnection\n") != "ok") stop ("connection to RKWard failed")
 }
+
+# package information formats may - according to the help - be subject to change. Hence this function to cope with "missing" values
+# also it concatenates everything to a single vector, so we can easily get the whole structure with a single call
+".rk.get.installed.packages" <- function () {
+	x <- as.data.frame (installed.packages ())
+	try (titles <- as.data.frame (library ()$results)$Title)
+	if (length (titles) != dim (x)[1]) titles <- rep ("", dim (x)[1])
+	return (c (as.vector (x$Package), as.vector (titles), as.vector (x$Version), as.vector (x$LibPath)))
+}
+

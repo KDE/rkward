@@ -45,11 +45,15 @@ class RInterface : public QObject {
 public: 
 	RInterface();
 	~RInterface();
-	
+
+/** issues the given command in the given chain */
 	void issueCommand (RCommand *command, RCommandChain *chain=0) { r_thread->issueCommand (command, chain); };
-	
+/** convenience function to create a new command and issue it. See documentation on RCommand::RCommand () and RInterface::issueCommand () */
+	void issueCommand (const QString &command, int type = 0, const QString &rk_equiv = "", RCommandReceiver *receiver=0, int flags=0, RCommandChain *chain=0);
+
+/** opens a new command chain. Returns a pointer to the new chain. If you specify a parent, the new chain will be a sub-chain of that chain. */
 	RCommandChain *startChain (RCommandChain *parent=0) { return r_thread->startChain (parent); };
-/** returns pointer to parent chain */
+/** closes the command chain returns pointer to parent chain */
 	RCommandChain *closeChain (RCommandChain *chain) { return r_thread->closeChain (chain); };
 /** returns the port number of the request server */
 	int requestServerPort ();

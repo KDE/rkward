@@ -67,7 +67,7 @@ friend class RThread;
   
 class RCommand {
 public: 
-	RCommand(QString command, int type = 0, QString rk_equiv = "", RCommandReceiver *receiver=0, int flags=0);
+	RCommand(const QString &command, int type = 0, const QString &rk_equiv = "", RCommandReceiver *receiver=0, int flags=0);
 	~RCommand();
 	int type () { return _type; };
 	QString rkEquivalent () { return _rk_equiv; };

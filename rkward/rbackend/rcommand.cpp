@@ -22,7 +22,7 @@
 
 int RCommand::next_id = 0;
 
-RCommand::RCommand(QString command, int type, QString rk_equiv, RCommandReceiver *receiver, int flags){
+RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags){
 	RK_TRACE (RBACKEND);
 	_id = next_id++;
 // if we ever submit enough commands to get a buffer overflow, use only positive numbers.
@@ -39,6 +39,7 @@ RCommand::RCommand(QString command, int type, QString rk_equiv, RCommandReceiver
 	string_count = real_count = integer_count = 0;
 	_rk_equiv = rk_equiv;
 	RCommand::receiver = receiver;
+	if (receiver) receiver->addCommand ();
 }
 
 RCommand::~RCommand(){
@@ -55,5 +56,6 @@ void RCommand::finished () {
 	RK_TRACE (RBACKEND);
 	if (receiver) {
 		receiver->rCommandDone (this);
+		receiver->delCommand ();
 	}
 }
