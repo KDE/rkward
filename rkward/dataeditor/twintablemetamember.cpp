@@ -78,7 +78,7 @@ void TwinTableMetaMember::paintCell (QPainter *p, int row, int col, const QRect 
 	} else {
 		brush = cg.brush (QColorGroup::Base);
 	}	
-	if ((row >= numRows ()) || (!var)) {
+	if ((row >= numTrueRows ()) || (!var)) {
 		brush = QBrush (Qt::gray);
 	}
 	p->fillRect(0, 0, cr.width(), cr.height(), brush);
@@ -111,7 +111,7 @@ void TwinTableMetaMember::paintCell (QPainter *p, int row, int col, const QRect 
 		p->setPen (cg.text ());
 	}
 
-	if (var && (row < numRows ())) {
+	if (var && (row < numTrueRows ())) {
 		p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignLeft, formattedText (row, col));
 	}
 }

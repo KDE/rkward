@@ -44,15 +44,11 @@ TwinTableMember::TwinTableMember (QWidget *parent, TwinTable *table, int trailin
 TwinTableMember::~TwinTableMember(){
 }
 
-int TwinTableMember::numAllRows () {
-	return QTable::numRows ();
-}
-
 int TwinTableMember::numTrueCols () {
 	return numCols () - trailing_cols;
 }
 
-int TwinTableMember::numRows () {
+int TwinTableMember::numTrueRows () {
 	return QTable::numRows () - trailing_rows;
 }
 

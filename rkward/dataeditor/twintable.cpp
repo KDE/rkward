@@ -157,8 +157,8 @@ void TwinTable::insertNewRow (int where, TwinTableMember *table) {
 	flushEdit ();
 	if (!table) table = dataview;
 	
-	if ((where < 0) || (where > table->numRows ())) {
-		where = table->numAllRows ();
+	if ((where < 0) || (where > table->numTrueRows ())) {
+		where = table->numRows ();
 	}
 	
 	if (table == dataview) {
@@ -174,8 +174,8 @@ void TwinTable::deleteRow (int where, TwinTableMember *table) {
 	flushEdit ();
 	if (!table) table = dataview;
 	
-	if ((where < 0) || (where > table->numRows ())) {
-		where = table->numRows ();
+	if ((where < 0) || (where > table->numTrueRows ())) {
+		where = table->numRows () - 1;
 	}
 	
 	if (table == dataview) {
@@ -190,7 +190,7 @@ void TwinTable::deleteRow (int where, TwinTableMember *table) {
 void TwinTable::headerClicked (int col) {
 	QTableSelection selection;
 	selection.init (0, col);
-	selection.expandTo (dataview->numRows (), col);
+	selection.expandTo (dataview->numTrueRows (), col);
 
 	dataview->addSelection (selection);
 }
@@ -214,12 +214,12 @@ void TwinTable::headerRightClicked (int row, int col) {
 		}
 	} else if (row >= 0) {
 		header_pos = row;
-		if (row < dataview->numRows ()) {
+		if (row < dataview->numTrueRows ()) {
 			left_header_menu->setItemVisible (HEADER_MENU_ID_ADD_ROW_ABOVE, true);
 			left_header_menu->setItemVisible (HEADER_MENU_ID_ADD_ROW_BELOW, true);
 			left_header_menu->setItemVisible (HEADER_MENU_ID_DEL_ROW, true);
 			left_header_menu->popup (dataview->mouse_at);
-		} else if (row == dataview->numRows ()) {		// trailing row
+		} else if (row == dataview->numTrueRows ()) {		// trailing row
 			left_header_menu->setItemVisible (HEADER_MENU_ID_ADD_ROW_ABOVE, true);
 			left_header_menu->setItemVisible (HEADER_MENU_ID_ADD_ROW_BELOW, false);
 			left_header_menu->setItemVisible (HEADER_MENU_ID_DEL_ROW, false);
@@ -360,7 +360,7 @@ void TwinTable::pasteEncoded (QByteArray content) {
 					next_delim = next_line;					
 					row++;
 					col = selection.leftCol ();
-					if (row >= table->numRows ()) {
+					if (row >= table->numTrueRows ()) {
 						next_delim = pasted.length ();
 					}
 				} else {
@@ -380,7 +380,7 @@ void TwinTable::pasteEncoded (QByteArray content) {
 					next_delim = pasted.length ();
 				}
 			}
-			if (row >= table->numRows ()) {
+			if (row >= table->numTrueRows ()) {
 				if (paste_mode == RKEditor::PasteToTable) {
 					next_delim = pasted.length ();
 				} else {
@@ -448,8 +448,8 @@ void TwinTable::setRow (TwinTableMember* table, int row, int start_col, int end_
 
 void TwinTable::setColumn (TwinTableMember* table, int col, int start_row, int end_row, char **data) {
 	flushEdit ();
-	while (table->numRows () <= end_row) {
-		insertNewRow (table->numRows (), table);
+	while (table->numTrueRows () <= end_row) {
+		insertNewRow (table->numTrueRows (), table);
 	}
 	
 	int i=0;

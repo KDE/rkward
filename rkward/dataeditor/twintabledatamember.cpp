@@ -39,7 +39,7 @@ void TwinTableDataMember::removeRow (int row) {
 	for (int i=0; i < table->numTrueCols (); ++i) {
 		table->getColObject (i)->removeRow (row);
 	}
-	for (int i=row; i < numRows (); ++i) {
+	for (int i=row; i < numTrueRows (); ++i) {
 		for (int j=0; j < table->numTrueCols (); ++j) {
 			updateCell (i, j);
 		}
@@ -70,7 +70,7 @@ void TwinTableDataMember::paintCell (QPainter *p, int row, int col, const QRect 
 	if (selected) {
 		brush = cg.brush(QColorGroup::Highlight);
 	}
-	if ((row >= numRows ()) || (!var)) {
+	if ((row >= numTrueRows ()) || (!var)) {
 		brush = QBrush (Qt::gray);
 	} else if (cell_state != RKVariable::ValueInvalid) {
 		if (!selected) {
@@ -109,7 +109,7 @@ void TwinTableDataMember::paintCell (QPainter *p, int row, int col, const QRect 
 		p->setPen (cg.text ());
 	}
 
-	if (var && (row < numRows ())) {
+	if (var && (row < numTrueRows ())) {
 		if (var->getAlignment () == RKVariable::AlignCellRight) {
 			p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignRight, var->getFormatted (row));
 		} else {
@@ -132,7 +132,7 @@ QWidget *TwinTableDataMember::beginEdit (int row, int col, bool) {
 		}
 	}
 
-	if (row >= numRows ()) {
+	if (row >= numTrueRows ()) {
 		table->insertNewRow ();
 	}
 	

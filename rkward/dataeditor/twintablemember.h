@@ -47,9 +47,8 @@ public:
 /** returns cell-value in a form suitable for submission to R (e.g. quoted for strings). Default implementation simply quotes the result of text () */
 	virtual QString rText (int row, int col) const;
 	TwinTableMember *getTwin () { return twin; };
-/** reimplemented from QTable to return only the number of used rows */
-	int numRows ();
-	int numAllRows ();
+/** like QTable::numRows (), but returns only the "true", i.e. active rows (excluding the trailing_rows) */
+	int numTrueRows ();
 /** like QTable::numCols (), but returns only the "true", i.e. active columns (excluding the trailing_cols) */
 	int numTrueCols ();
 /** reimplemented form QTable not to use QTableItems. This one raises an assert (should never be called) */

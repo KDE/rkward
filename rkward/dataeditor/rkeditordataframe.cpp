@@ -80,7 +80,7 @@ void RKEditorDataFrame::openObject (RObject *object, bool initialize_to_empty) {
 		for (int i=0; i < numTrueCols (); ++i) {
 			RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName ("var"), this);
 			if (obj->isVariable ()) {
-				static_cast<RKVariable*> (obj)->setLength (dataview->numRows ());
+				static_cast<RKVariable*> (obj)->setLength (dataview->numTrueRows ());
 				setColObject (i, static_cast<RKVariable*> (obj));
 				obj->setCreatedInEditor (this);
 			} else {
@@ -126,8 +126,8 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 
 		open_chain = RKGlobals::rInterface ()->closeChain (open_chain);
 		/* make sure enough rows are displayed. Note: Calling QTable::insertRows, since no data should be juggled around, only the number of visible rows is to be changed. */
-		if (dataview->numRows () < getColObject (0)->getLength ()) {
-			dataview->QTable::insertRows (0, getColObject (0)->getLength () - dataview->numRows ());
+		if (dataview->numTrueRows () < getColObject (0)->getLength ()) {
+			dataview->QTable::insertRows (0, getColObject (0)->getLength () - dataview->numTrueRows ());
 		}
 		enableEditing (true);
 	}
@@ -182,7 +182,7 @@ void RKEditorDataFrame::columnAdded (int col) {
 	RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName (""), this);
 	RK_ASSERT (obj->isVariable ());	
 	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + getObject ()->getFullName () + ", \"" + obj->getShortName () + "\", " + QString ().setNum (col+1) + ")", RCommand::App | RCommand::Sync));
-	static_cast<RKVariable*> (obj)->setLength (dataview->numRows ());
+	static_cast<RKVariable*> (obj)->setLength (dataview->numTrueRows ());
 	obj->setCreatedInEditor (this);
 
 	// TODO: find a nice way to update the list:
@@ -279,7 +279,7 @@ void RKEditorDataFrame::updateObjectMeta (RObject *object) {
 	if (object == getObject ()) return;	// for now: can't update meta on the table itself
 	
 	int col = getObjectCol (object);
-	for (int i=0; i < varview->numRows (); ++i) {
+	for (int i=0; i < varview->numTrueRows (); ++i) {
 		varview->updateCell (i, col);
 	}
 }
@@ -289,7 +289,7 @@ void RKEditorDataFrame::updateObjectData (RObject *object, RObject::ChangeSet *c
 	
 	if (object != getObject ()) {
 		int col = getObjectCol (object);
-		for (int i=0; i < dataview->numRows (); ++i) {
+		for (int i=0; i < dataview->numTrueRows (); ++i) {
 			dataview->updateCell (i, col);
 		}
 	}
