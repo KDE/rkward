@@ -39,6 +39,8 @@ public:
 
     ~RKHelpWindow();
     bool openURL(KURL url);
+    void refresh();
+    void scrollToBottom();
 public slots:
     void slotOpenURLRequest(const KURL &url, const KParts::URLArgs & );
 private:
@@ -48,6 +50,12 @@ private:
 
     /** Are we showing the output? */
     bool iShowOutput;
+    KURL currentURL;
+private slots:
+    void loadDone();
+protected:
+	/** Here we store the position of the scroll bar before refresh */
+    int scrollPosition;
 };
 
 #endif

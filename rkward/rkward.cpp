@@ -108,7 +108,7 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 	// build the interface
 
 	// use the absolute path to your rkwardui.rc file for testing purpose in createGUI();
-	setXMLFile( "rkwardui.rc" );
+	setXMLFile( "/home/pierre/rkward/rkward/rkwardui.rc" );
 	createShellGUI ( true );
 
 	setEnabledActions(true);
@@ -201,9 +201,12 @@ void RKwardApp::doPostInit () {
 	RKGlobals::rInterface ()->watch->setIcon(SmallIcon("konsole"));
 	addToolWindow(RKGlobals::rInterface ()->watch,KDockWidget::DockBottom, getMainDockWidget(), 10);
 	
+	/*
+	Now obsolete:
+
 	output->setIcon(SmallIcon("text_block"));
 	output->setName("output"); 
-	addToolWindow(output,KDockWidget::DockBottom, getMainDockWidget(), 10);
+	addToolWindow(output,KDockWidget::DockBottom, getMainDockWidget(), 10);*/
 	
 	
 	helpDlg = new KHelpDlg(0);
@@ -1170,7 +1173,6 @@ void RKwardApp::slotOutputFlush()
 void RKwardApp::slotOutputRefresh()
 {
 	if ((QString) activeWindow()->name()=="output"){
-		KURL url(RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
-		((RKHelpWindow*) activeWindow())->openURL (url);
-	}	
+		((RKHelpWindow*) activeWindow())->refresh();
+	}
 }

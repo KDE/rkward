@@ -25,6 +25,7 @@
 #include <qfile.h>
 #include <qwidget.h>
 #include <qlayout.h>
+#include <qtimer.h>
 
 #include "../rkglobals.h"
 #include "../rkward.h"
@@ -36,11 +37,10 @@
 RKHelpWindow::RKHelpWindow(QWidget *parent, const char *name, bool output)
  : KMdiChildView(parent, name)
 {
+	scrollPosition=0;
+	
 	khtmlpart = new KHTMLPart(this,0,0,0,KHTMLPart::BrowserViewGUI);
 	khtmlpart->setSelectable(true);
-	/*khtmlpart->view()->setIcon(SmallIcon("help"));
-	khtmlpart->view()->setName("Help"); 
-	khtmlpart->view()->setCaption(i18n("Help")); */
 	
 	iShowOutput=output;
 
@@ -51,6 +51,8 @@ RKHelpWindow::RKHelpWindow(QWidget *parent, const char *name, bool output)
 
 	// We have to connect this in order to allow browsing.
 	connect( khtmlpart->browserExtension(), SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs & ) ), this, SLOT( slotOpenURLRequest(const KURL &, const KParts::URLArgs & ) ) );
+	
+	connect(khtmlpart,SIGNAL(completed()),this,SLOT(loadDone()));
 	
 }
 
@@ -76,6 +78,8 @@ bool RKHelpWindow::openURL(KURL url)
 			setTabCaption(url.fileName());
 			setCaption(url.prettyURL());
 		}
+		currentURL=url;
+		scrollPosition=0;
 		return(true);
 	}
 	else{
@@ -91,4 +95,37 @@ bool RKHelpWindow::openURL(KURL url)
 void RKHelpWindow::slotOpenURLRequest(const KURL &url, const KParts::URLArgs & )
 {
 	openURL (url);
+}
+
+
+/*!
+    \fn RKHelpWindow::refresh()
+
+	Reload current page.
+ */
+void RKHelpWindow::refresh()
+{
+	int pos = khtmlpart->view()->contentsY();
+	openURL (currentURL);
+	scrollPosition=pos;
+}
+
+
+/*!
+    \fn RKHelpWindow::loadDone()
+	This slot is called when the new page has finished loading.
+ */
+void RKHelpWindow::loadDone()
+{
+	khtmlpart->view()->setContentsPos ( 0, scrollPosition );
+}
+
+
+/*!
+    \fn RKHelpWindow::scrollToBottom()
+	Scrolls to the bottom of the page.
+ */
+void RKHelpWindow::scrollToBottom()
+{
+	khtmlpart->view()->setContentsPos ( 0, khtmlpart->view()->contentsHeight() );
 }
