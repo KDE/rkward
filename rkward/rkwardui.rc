@@ -75,9 +75,9 @@
 		<Action name="paste_to_table"/>
 </ToolBar>
 <ToolBar fullWidth="true" name="runToolBar">
-		<Action name="run_all"/>
-		<Action name="run_selection"/>
-		<Separator/>
 		<Action name="interrupt"/>
+		<Separator/>
+		<Action name="run_selection"/>
+		<Action name="run_all"/>
 </ToolBar>
 </kpartgui>

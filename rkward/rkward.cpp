@@ -216,7 +216,7 @@ void RKwardApp::doPostInit () {
 	konsole = new RKKonsole(0);
 	konsole->setIcon(SmallIcon("konsole"));
 	addToolWindow(konsole,KDockWidget::DockBottom, getMainDockWidget(), 10);
-	
+
 	
 	// just to initialize the window-actions according to whether they're shown on startup or not
 	slotToggleWindowClosed ();
@@ -371,9 +371,9 @@ void RKwardApp::initActions()
 	showRKOutput = new KToggleAction (i18n ("Output"), 0, 0, this, SLOT(slotShowRKOutput ()), actionCollection(), "windows_rkoutput");
 	showRObjectBrowser = new KToggleAction (i18n ("Workspace"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
 	
-	runAll = new KAction (i18n ("Run All"), 0, 0, this, SLOT (slotRunAll ()), actionCollection (), "run_all");
+	runAll = new KAction (i18n ("Run All"), KShortcut ("F9"), this, SLOT (slotRunAll ()), actionCollection (), "run_all");
 	runAll->setIcon("player_fwd");
-	runSelection = new KAction (i18n ("Run Selection"), 0, 0, this, SLOT (slotRunSelection ()), actionCollection (), "run_selection");
+	runSelection = new KAction (i18n ("Run Selection"), KShortcut ("F8"), this, SLOT (slotRunSelection ()), actionCollection (), "run_selection");
 	runSelection->setIcon("player_play");
 	interruptCommand = new KAction (i18n ("Interrupt running command"), 0, 0, this, SLOT (slotInterruptCommand ()), actionCollection (), "interrupt");
 	interruptCommand->setIcon("player_stop");
