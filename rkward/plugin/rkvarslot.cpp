@@ -54,6 +54,13 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 	g_layout->addWidget (label, 0, 2);
 
 	multi = (element.attribute ("multi") == "true");
+	QString temp  = element.attribute ("duplicate","false") ; 
+	if (temp == "true") {
+	qDebug("##########################oui");
+	dupli = true ; }
+	else {
+	qDebug("##########################non");
+	dupli = false ; }
 	
 	if (!multi) {
 		line_edit = new QLineEdit (this);
@@ -211,6 +218,9 @@ void RKVarSlot::selectPressed () {
 						break;
 					}
 				}
+				if (dupli) {
+				
+				duplicate = false ; }
 				if (!duplicate && belongToClasses(sel->makeClassString(""))) {
 					QListViewItem *new_item = new QListViewItem (list, sel->getShortName ());
 					list->insertItem (new_item);
@@ -228,6 +238,7 @@ void RKVarSlot::selectPressed () {
 						break;
 					}
 				}
+				if (dupli) duplicate = false ; 
 				if (!duplicate && belongToClasses(selcont->makeClassString(""))) {
 					QListViewItem *new_item = new QListViewItem (list, selcont->getShortName ());
 					list->insertItem (new_item);

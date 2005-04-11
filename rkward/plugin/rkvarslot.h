@@ -78,6 +78,7 @@ private:
 	void updateState ();
 	bool belongToClasses (const QString &nom) ;
 	bool varOrCont ;
+	bool dupli ;
 protected:
 	bool isSatisfied ();
 	QString value (const QString &modifier);
