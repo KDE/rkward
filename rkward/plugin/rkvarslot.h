@@ -79,6 +79,7 @@ private:
 	bool belongToClasses (const QString &nom) ;
 	bool varOrCont ;
 	bool dupli ;
+	int ordre ;
 protected:
 	bool isSatisfied ();
 	QString value (const QString &modifier);

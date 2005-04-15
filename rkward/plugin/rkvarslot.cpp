@@ -56,10 +56,8 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 	multi = (element.attribute ("multi") == "true");
 	QString temp  = element.attribute ("duplicate","false") ; 
 	if (temp == "true") {
-	qDebug("##########################oui");
 	dupli = true ; }
 	else {
-	qDebug("##########################non");
 	dupli = false ; }
 	
 	if (!multi) {
@@ -69,9 +67,11 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 		min_vars = 1;
 	} else {
 		list = new QListView (this);
-		list->setSorting (100);
 		list->setSelectionMode (QListView::Extended);
+		list->addColumn (" ");
 		list->addColumn ("Name");
+		list->setSorting (2); 
+		ordre = 1 ;
 		g_layout->addWidget (list, 1, 2);
 		QString dummy = element.attribute ("min_vars", "1");
 		min_vars = dummy.toInt ();
@@ -218,13 +218,14 @@ void RKVarSlot::selectPressed () {
 						break;
 					}
 				}
-				if (dupli) {
-				
-				duplicate = false ; }
+				if (dupli) duplicate = false ; 
 				if (!duplicate && belongToClasses(sel->makeClassString(""))) {
-					QListViewItem *new_item = new QListViewItem (list, sel->getShortName ());
+					QString string; 
+        				string = string.setNum( ordre);  
+					QListViewItem *new_item = new QListViewItem (list,string, sel->getShortName ());
 					list->insertItem (new_item);
 					item_map.insert (new_item, sel);
+					ordre ++ ;
 				}
 			}
 			QValueList<RContainerObject*> contlist = source->selectedContainer();
@@ -240,9 +241,12 @@ void RKVarSlot::selectPressed () {
 				}
 				if (dupli) duplicate = false ; 
 				if (!duplicate && belongToClasses(selcont->makeClassString(""))) {
-					QListViewItem *new_item = new QListViewItem (list, selcont->getShortName ());
+					QString string; 
+        				string = string.setNum( ordre);  
+					QListViewItem *new_item = new QListViewItem (list,string,selcont->getShortName ());
 					list->insertItem (new_item);
 					cont_map.insert (new_item, selcont);
+					ordre ++ ;
 				}
 			}
 		}

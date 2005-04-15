@@ -26,10 +26,11 @@ RKInput::RKInput(const QDomElement &element, QWidget *parent, RKPlugin *plugin) 
 	if (size == "small") {
 	textedit->setMaximumSize (100,25) ; 
 	textedit->setMinimumSize (100,25) ; 
-	}
-	else if (size == "big") {
-	textedit->setMaximumSize (500,200) ; 
-	textedit->setMinimumSize (500,200) ; 
+	} else if (size == "medium") {
+	textedit->setMaximumSize (250,25) ; 
+	textedit->setMinimumSize (250,25) ; 
+	} else if (size == "big") {
+	textedit->setMinimumSize (250,100) ; 
 	}
 
 	
