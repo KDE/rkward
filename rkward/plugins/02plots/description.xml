@@ -1,0 +1,4 @@
+<!DOCTYPE rkplugin>
+<document>
+  <entry type="menu" id="plot" label="Plots ..." />
+</document>
