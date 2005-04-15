@@ -71,7 +71,7 @@ int REmbed::initialize () {
 		delete argv[argc];
 	}
 	
-	bool error;
+	RKWardRError error;
 	int status = 0;
 	
 	runCommandInternal ("library (\"rkward\")\n", &error);
@@ -109,7 +109,7 @@ void REmbed::runCommand (RCommand *command) {
 	
 	if (command->status & RCommand::Canceled) return;
 	
-	bool error;
+	RKWardRError error;
 	
 	int ctype = command->type ();
 	const char *ccommand = command->command ().latin1 ();
@@ -132,9 +132,19 @@ void REmbed::runCommand (RCommand *command) {
 
 	MUTEX_LOCK;
 	
-	if (error) {
+	if (error != NoError) {
 		command->status |= RCommand::WasTried | RCommand::Failed;
-		RK_DO (qDebug ("Command failed: command was: '%s'", command->command ().latin1 ()), RBACKEND, DL_WARNING);
+		if (error == Incomplete) {
+			command->status |= RCommand::ErrorIncomplete;
+			RK_DO (qDebug ("Command failed (incomplete)"), RBACKEND, DL_WARNING);
+		} else if (error == SyntaxError) {
+			command->status |= RCommand::ErrorSyntax;
+			RK_DO (qDebug ("Command failed (syntax)"), RBACKEND, DL_WARNING);
+		} else {
+			command->status |= RCommand::ErrorOther;
+			RK_DO (qDebug ("Command failed (other)"), RBACKEND, DL_WARNING);
+		}
+		RK_DO (qDebug ("failed command was: '%s'", command->command ().latin1 ()), RBACKEND, DL_WARNING);
 	} else {
 		command->status |= RCommand::WasTried;
 	}

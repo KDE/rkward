@@ -109,14 +109,14 @@ bool REmbedInternal::startR (const char* r_home, int argc, char** argv) {
 	return true;
 }
 
-SEXP runCommandInternalBase (const char *command, bool *error) {
+SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *error) {
 // heavy copying from RServe below
 	extern SEXP R_ParseVector(SEXP, int, int*);
 
 	int maxParts=1;
 	int r_error = 0;
-	int stat;
-	int *status = &stat;
+	int status;
+	int *stat = &status;
 	const char *c = command;
 	SEXP cv, pr, exp;
 
@@ -129,16 +129,24 @@ SEXP runCommandInternalBase (const char *command, bool *error) {
 	SET_VECTOR_ELT(cv, 0, mkChar(command));  
 
 	while (maxParts>0) {
-		pr=R_ParseVector(cv, maxParts, status);
+		pr=R_ParseVector(cv, maxParts, stat);
 		// 2=incomplete; 4=eof
-		if (*status!=2 && *status!=4) {
+		if (status!=2 && status!=4) {
 			break;
 		}
 		maxParts--;
 	}
 	UNPROTECT(1);
 
-	if (*status == 1) {
+	if (status != 1) {
+		if ((status == 2) || (status == 4)) {
+			*error = REmbedInternal::Incomplete;
+		} else {
+			*error = REmbedInternal::SyntaxError;
+		}
+		exp = R_NilValue;
+	
+	} else {			// no error during parsing, let's try to evaluate the command
 		PROTECT (pr);
 		exp=R_NilValue;
 
@@ -146,7 +154,6 @@ SEXP runCommandInternalBase (const char *command, bool *error) {
 			int bi=0;
 			while (bi<LENGTH(pr)) {
 				SEXP pxp=VECTOR_ELT(pr, bi);
-				r_error=0;
 				exp=R_tryEval(pxp, R_GlobalEnv, &r_error);
 				bi++;
 				if (r_error) {
@@ -154,23 +161,22 @@ SEXP runCommandInternalBase (const char *command, bool *error) {
 				}
 			}
 		} else {
-			r_error=0;
 			exp=R_tryEval(pr, R_GlobalEnv, &r_error);
 		}
 
 		UNPROTECT(1); /* pr */
-	} else {
-		r_error = 1;
+
+		if (r_error) {
+			*error = REmbedInternal::OtherError;
+		} else {
+			*error = REmbedInternal::NoError;
+		}
 	}
 
-	if (r_error) {
-		exp = R_NilValue;
-	}
-	*error = (r_error != 0);
 	return exp;
 }
 
-void REmbedInternal::runCommandInternal (const char *command, bool *error, bool print_result) {
+void REmbedInternal::runCommandInternal (const char *command, RKWardRError *error, bool print_result) {
 	if (!print_result) {
 		runCommandInternalBase (command, error);
 	} else {
@@ -180,38 +186,38 @@ void REmbedInternal::runCommandInternal (const char *command, bool *error, bool 
 		SEXP exp;
 		PROTECT (exp = runCommandInternalBase (command, error));
 		if (R_Visible) {
-			if (!*error) Rf_PrintValue (exp);
+			if (*error == NoError) Rf_PrintValue (exp);
 		}
 		UNPROTECT (1);
 	}
 }
 
-char **REmbedInternal::getCommandAsStringVector (const char *command, int *count, bool *error) {	
+char **REmbedInternal::getCommandAsStringVector (const char *command, int *count, RKWardRError *error) {	
 	SEXP exp;
 	char **strings = 0;
 	
 	PROTECT (exp = runCommandInternalBase (command, error));
 	
-	if (!*error) {
+	if (*error == NoError) {
 		strings = extractStrings (exp, count);
 	}
 	
 	UNPROTECT (1); // exp
 	
-	if (*error) {
+	if (*error != NoError) {
 		*count = 0;
 		return 0;
 	}
 	return strings;
 }
 
-double *REmbedInternal::getCommandAsRealVector (const char *command, int *count, bool *error) {
+double *REmbedInternal::getCommandAsRealVector (const char *command, int *count, RKWardRError *error) {
 	SEXP exp;
 	double *reals = 0;
 	
 	PROTECT (exp = runCommandInternalBase (command, error));
 	
-	if (!*error) {
+	if (*error == NoError) {
 		SEXP realexp;
 		PROTECT (realexp = coerceVector (exp, REALSXP));
 		*count = length (realexp);
@@ -225,20 +231,20 @@ double *REmbedInternal::getCommandAsRealVector (const char *command, int *count,
 	
 	UNPROTECT (1); // exp
 	
-	if (*error) {
+	if (*error != NoError) {
 		*count = 0;
 		return 0;
 	}
 	return reals;
 }
 
-int *REmbedInternal::getCommandAsIntVector (const char *command, int *count, bool *error) {
+int *REmbedInternal::getCommandAsIntVector (const char *command, int *count, RKWardRError *error) {
 	SEXP exp;
 	int *integers = 0;
 	
 	PROTECT (exp = runCommandInternalBase (command, error));
 	
-	if (!*error) {
+	if (*error == NoError) {
 		SEXP intexp;
 		PROTECT (intexp = coerceVector (exp, INTSXP));
 		*count = length (intexp);
@@ -251,7 +257,7 @@ int *REmbedInternal::getCommandAsIntVector (const char *command, int *count, boo
 	
 	UNPROTECT (1); // exp
 	
-	if (*error) {
+	if (*error != NoError) {
 		*count = 0;
 		return 0;
 	}

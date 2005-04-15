@@ -28,14 +28,16 @@ class REmbedInternal {
 public: 
 	REmbedInternal();
 	virtual ~REmbedInternal();
+	
+	enum RKWardRError { NoError=0, Incomplete=1, SyntaxError=2, OtherError=3 };
 protected:
 	bool startR (const char* r_home, int argc, char **argv);
 	void shutdown ();
-	void runCommandInternal (const char *command, bool *error, bool print_result=false);
+	void runCommandInternal (const char *command, RKWardRError *error, bool print_result=false);
 	
-	char **getCommandAsStringVector (const char *command, int *count, bool *error);
-	double *getCommandAsRealVector (const char *command, int *count, bool *error);
-	int *getCommandAsIntVector (const char *command, int *count, bool *error);
+	char **getCommandAsStringVector (const char *command, int *count, RKWardRError *error);
+	double *getCommandAsRealVector (const char *command, int *count, RKWardRError *error);
+	int *getCommandAsIntVector (const char *command, int *count, RKWardRError *error);
 
 public:
 // these will need QStrings and stuff and hence are handled in REmbed
