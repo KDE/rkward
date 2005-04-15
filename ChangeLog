@@ -1,5 +1,10 @@
 - console can handle incomplete statements (allowing multi-line input)
 - fixed silly crash on incomplete statements
+- updated spanish translation
+- new plugin (graph)
+- reworked the interface to use kparts properly
+
+--- Version 0.3.1 - Mar-26-2005
 - added the possibility to unable widget in plugins.
 - added a new plugin (basic statistics)
 - added icons in the object browser
@@ -11,6 +16,7 @@
 - fixed: bug that prevented RKWard to build on some systems
 - added R functions to show graphs in the html output and to print objects (using E. Lecoutre's R2HTML)
 - use a KHTML part to show output (instead of the qt widget)
+
 
 --- Version 0.3.0 - Nov-12-2004
 - added french and italian translations
