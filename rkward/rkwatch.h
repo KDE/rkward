@@ -51,7 +51,7 @@ public slots:
 /** clears the watch-window */
 	void clearWatch ();
 /** Submits command from the RKConsole */
-	void submitConsoleCommand (QString c);
+	void consoleCommandRunning (RCommand *command);
 
 private:
 	void addInputNoCheck (RCommand *command);

@@ -54,8 +54,7 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	
 	console = new RKConsole(layout_widget);
 	bottom_hbox->addWidget (console);
-	connect (console, SIGNAL (commandSubmitted (QString)), this, SLOT (submitConsoleCommand (QString)));
-	
+	connect (console, SIGNAL (userCommandRunning (RCommand *)), this, SLOT (consoleCommandRunning (RCommand *)));
 	
 	// add run & reset buttons
 	QHBoxLayout *button_hbox = new QHBoxLayout (0, 0, 6);
@@ -133,7 +132,6 @@ void RKwatch::addOutput (RCommand *command) {
 	if (command == user_command){
 		user_command = 0;
 		interrupt_command->setEnabled (false);
-		console->addOutput(command->output (), command->error ());
 	}
 	if (!RKSettingsModuleWatch::shouldShowOutput (command)) {
 		if (!command->failed ()) {
@@ -165,7 +163,13 @@ void RKwatch::addOutput (RCommand *command) {
 	watch->append (command->output ());
 	watch->append (command->error ());
 	if (command->failed () && (command->error () == "")) {
-		watch->append (i18n ("An unspecified error occured while running the command.\nProbably a syntax error.\nThose - unfortunately - are not handled very well, yet.\n"));
+		if (command->errorIncomplete ()) {
+			watch->append (i18n ("Incomplete statement.\n"));
+		} else if (command->errorSyntax ()) {
+			watch->append (i18n ("Syntax error.\n"));
+		} else {
+			watch->append (i18n ("An unspecified error occured while running the command.\n"));
+		}
 	}
 
 	watch->setBold (false);	
@@ -204,12 +208,15 @@ void RKwatch::clearWatch () {
 	watch->setWordWrap (QTextEdit::NoWrap);
 }
 
-void RKwatch::submitConsoleCommand (QString c)
-{
+void RKwatch::consoleCommandRunning (RCommand *command) {
 	RK_TRACE (APP);
-	if (! c.isEmpty()){
-		r_inter->issueCommand (user_command = new RCommand (c, RCommand::User));
+	
+	if (command) {
+		user_command = command;
 		interrupt_command->setEnabled (true);
+	} else {
+		user_command = 0;
+		interrupt_command->setEnabled (false);
 	}
 }
 

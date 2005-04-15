@@ -262,8 +262,8 @@ xdg_menudir = @xdg_menudir@
 ####### kdevelop will overwrite this part!!! (end)############
 #>- POFILES = AUTO
 #>+ 2
-POFILES = it.po fr.po
-GMOFILES = it.gmo fr.gmo
+POFILES = es.po fr.po it.po pl.po
+GMOFILES = es.gmo fr.gmo it.gmo pl.gmo
 subdir = po
 mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
@@ -418,25 +418,30 @@ uninstall-am: uninstall-info-am
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
-
 #>+ 2
-KDE_DIST=fr.gmo fr.po rkward.pot it.gmo it.po 
+KDE_DIST=pl.po es.po it.po fr.po rkward.pot 
 
-#>+ 7
-it.gmo: it.po
-	rm -f it.gmo; $(GMSGFMT) -o it.gmo $(srcdir)/it.po
-	test ! -f it.gmo || touch it.gmo
+#>+ 13
+es.gmo: es.po
+	rm -f es.gmo; $(GMSGFMT) -o es.gmo $(srcdir)/es.po
+	test ! -f es.gmo || touch es.gmo
 fr.gmo: fr.po
 	rm -f fr.gmo; $(GMSGFMT) -o fr.gmo $(srcdir)/fr.po
 	test ! -f fr.gmo || touch fr.gmo
+it.gmo: it.po
+	rm -f it.gmo; $(GMSGFMT) -o it.gmo $(srcdir)/it.po
+	test ! -f it.gmo || touch it.gmo
+pl.gmo: pl.po
+	rm -f pl.gmo; $(GMSGFMT) -o pl.gmo $(srcdir)/pl.po
+	test ! -f pl.gmo || touch pl.gmo
 
 #>+ 3
 clean-nls:
-	-rm -f  it.gmo fr.gmo
+	-rm -f  es.gmo fr.gmo it.gmo pl.gmo
 
 #>+ 10
 install-nls:
-	@for base in it fr ; do \
+	@for base in es fr it pl ; do \
 	  echo $(INSTALL_DATA) $$base.gmo $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES/$(PACKAGE).mo ;\
 	  $(mkinstalldirs) $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES ; \
 	  if test -f $$base.gmo; then $(INSTALL_DATA) $$base.gmo $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES/$(PACKAGE).mo ;\
@@ -445,10 +450,12 @@ install-nls:
 	done
 
 
-#>+ 4
+#>+ 6
 uninstall-nls:
-	rm -f $(DESTDIR)$(kde_locale)/it/LC_MESSAGES/$(PACKAGE).mo
+	rm -f $(DESTDIR)$(kde_locale)/es/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/fr/LC_MESSAGES/$(PACKAGE).mo
+	rm -f $(DESTDIR)$(kde_locale)/it/LC_MESSAGES/$(PACKAGE).mo
+	rm -f $(DESTDIR)$(kde_locale)/pl/LC_MESSAGES/$(PACKAGE).mo
 
 #>+ 2
 all-nls: $(GMOFILES)

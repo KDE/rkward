@@ -26,6 +26,10 @@
  
 #include "rkconsole.h"
 
+#include "rkglobals.h"
+#include "rbackend/rinterface.h"
+#include "rbackend/rcommand.h"
+
 RKConsole::RKConsole(QWidget *parent, const char *name)
  : QTextEdit(parent, name)
 {
@@ -33,6 +37,7 @@ RKConsole::RKConsole(QWidget *parent, const char *name)
 	setFont (font);
 	
 	prefix = "> ";
+	command_incomplete = false;
 	flush();
 	
 	commandsList.append (new QString(""));
@@ -86,27 +91,6 @@ void RKConsole::keyPressEvent ( QKeyEvent * e )
 }
 
 
-void RKConsole::addInput (QString s)
-{
-	append (i18n (">> input from RKWard >>"));
-	append(s);
-	append (">>>>");
-}
-
-void RKConsole::addOutput (QString output, QString error) 
-{
-	if (! output.isEmpty ()){
-		append (output);
-	}
-	if (! error.isEmpty ()){
-		append (error);
-	}
-	newLine ();
-}
-
-#include "rkconsole.moc"
-
-
 void RKConsole::newLine()
 {
 	append (prefix);
@@ -117,6 +101,7 @@ QString RKConsole::currentCommand()
 {
 	QString s = text (paragraphs () - 1).right(paragraphLength (paragraphs () - 1) - prefix.length () + 1);
 	s = s.stripWhiteSpace ();
+	
 	return(s);
 }
 
@@ -127,8 +112,6 @@ void RKConsole::flush()
 	append (i18n (" "));
 	newLine ();
 }
-
-
 
 
 void RKConsole::setCurrentCommand(QString command)
@@ -155,9 +138,15 @@ void RKConsole::submitCommand()
 			commandsList.remove ();
 		}
 		QString c = currentCommand ();
-		commandsList.append (new QString(c.latin1 ()));
-		emit(commandSubmitted (c));
+		commandsList.append (new QString (c.latin1 ()));
+		
+		if (command_incomplete) {
+			c.prepend (incomplete_command + "\n");
+		}
+
+		RKGlobals::rInterface ()->issueCommand (c, RCommand::User, "", this);
 	} else {
+		command_incomplete = false;
 		newLine ();
 	}
 }
@@ -204,3 +193,27 @@ void RKConsole::cursorAtTheBegining()
 {
 	setCursorPosition (paragraphs () - 1, prefix.length ());
 }
+
+
+void RKConsole::rCommandDone (RCommand *command) {
+	if (command->hasOutput ()) {
+		append (command->output ());
+	}
+	if (command->hasError ()) {
+		append (command->error ());
+	}
+
+	if (command->errorIncomplete ()) {
+		prefix = "# ";
+		command_incomplete = true;
+		incomplete_command = command->command ();
+	} else {
+		prefix = "> ";
+		command_incomplete = false;
+		incomplete_command = "";
+	}
+
+	newLine ();
+}
+
+#include "rkconsole.moc"

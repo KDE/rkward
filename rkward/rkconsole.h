@@ -20,6 +20,8 @@
 #include <qtextedit.h>
 #include <qptrlist.h>
 
+#include "rbackend/rcommandreceiver.h"
+
 /**
 \brief Provides an R-like console.
 This class provides a console, which is very similar to the classic R console. It is mainly used by RKwatch to allow
@@ -29,8 +31,7 @@ the user to enter commands manualy. It is basically just a modified QTextEdit.
 
 @author Pierre Ecochard
 */
-class RKConsole : public QTextEdit
-{
+class RKConsole : public QTextEdit, public RCommandReceiver {
 Q_OBJECT
 public:
 /** Constructor */
@@ -38,26 +39,21 @@ public:
 /** Destructor */
     ~RKConsole();
     
-/** Adds input to the watch-window (i.e. commands issued) 
-\param s the input to be added. */
-	void addInput (QString s);
-/** Adds output to the watch-window (i.e. replies received) 
-\param output the output received
-\param error the optional error */
-	void addOutput (QString output, QString error);    
 /** Empties the console */
-    void flush();
+    void flush ();
 /** Sets the current command
 \param command the new command */
-    void setCurrentCommand(QString command);
-
+    void setCurrentCommand (QString command);
 
 signals:
-	void commandSubmitted (QString c);
+	void userCommandRunning (RCommand *command);
 protected:
 	void keyPressEvent ( QKeyEvent * e );
+	void rCommandDone (RCommand *command);
 private:
 	QString prefix;
+	QString incomplete_command;
+	bool command_incomplete;
 /** A list to store previous commands */
 	QPtrList<QString> commandsList;
 /** Sets the cursor position to the end of the last line. */

@@ -44,7 +44,7 @@ public:
 	virtual void handleSubstackCall (char **call, int call_length) = 0;
 	//virtual char **handleGetValueCall (char **call, int call_length, int *reply_length) = 0;
 
-// only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to C++
+/// only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++
 	static REmbedInternal *this_pointer;
 private:
 // can't declare this as part of the class, as it would confuse REmbed
