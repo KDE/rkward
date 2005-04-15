@@ -111,6 +111,8 @@ bool REmbedInternal::startR (const char* r_home, int argc, char** argv) {
 
 SEXP runCommandInternalBase (const char *command, bool *error) {
 // heavy copying from RServe below
+	extern SEXP R_ParseVector(SEXP, int, int*);
+
 	int maxParts=1;
 	int r_error = 0;
 	int stat;
@@ -127,11 +129,9 @@ SEXP runCommandInternalBase (const char *command, bool *error) {
 	SET_VECTOR_ELT(cv, 0, mkChar(command));  
 
 	while (maxParts>0) {
-		extern SEXP R_ParseVector(SEXP, int, int*);
 		pr=R_ParseVector(cv, maxParts, status);
 		// 2=incomplete; 4=eof
 		if (*status!=2 && *status!=4) {
-			r_error = 1;
 			break;
 		}
 		maxParts--;
@@ -140,8 +140,8 @@ SEXP runCommandInternalBase (const char *command, bool *error) {
 
 	if (*status == 1) {
 		PROTECT (pr);
-
 		exp=R_NilValue;
+
 		if (TYPEOF(pr)==EXPRSXP && LENGTH(pr)>0) {
 			int bi=0;
 			while (bi<LENGTH(pr)) {
@@ -159,8 +159,13 @@ SEXP runCommandInternalBase (const char *command, bool *error) {
 		}
 
 		UNPROTECT(1); /* pr */
+	} else {
+		r_error = 1;
 	}
 
+	if (r_error) {
+		exp = R_NilValue;
+	}
 	*error = (r_error != 0);
 	return exp;
 }
