@@ -83,6 +83,12 @@ bool RKHelpWindow::openURL(KURL url)
 		return(true);
 	}
 	else{
+
+		khtmlpart->begin();
+			khtmlpart->write(i18n("<HTML><BODY><H1>RKWard output</H1>"
+			"<P>The output is empty.</P>"
+			"</BODY></HTML>"));
+		khtmlpart->end();
 		return (false);
 	}
 }

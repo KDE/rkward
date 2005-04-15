@@ -165,7 +165,7 @@ void RKwardApp::doPostInit () {
 	output->showMaximized ();
 	output->hide ();*/
 
-	QString dummy = i18n("Before you start bashing at it: please note that this is merely a technology preview release. You might acutally be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments are welcome.");
+	QString dummy = i18n("Before you start bashing at it: please note that this is merely a technology preview release. You might actually be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments are welcome.");
 	KMessageBox::information (this, dummy, i18n("Before you complain..."), "state_of_rkward");
 	
 	startR ();
@@ -689,31 +689,39 @@ void RKwardApp::slotFileQuit () {
 void RKwardApp::slotEditCut()
 {
 	RK_TRACE (APP);
-	if (! activeWindow()->inherits("RKCommandEditorWindow")) {
-		slotStatusMsg(i18n("Cutting selection..."));
-		slotEditCopy ();
-		RKGlobals::editorManager ()->currentEditor ()->clearSelected ();
-		slotStatusMsg(i18n("Ready."));
+	
+	if ((QString) activeWindow()->name()!="dataeditor"){
+		return;
 	}
-	else {
-		((RKCommandEditorWindow*) activeWindow())->cut();
-	}
+	
+	slotStatusMsg(i18n("Cutting selection..."));
+	slotEditCopy ();
+	RKGlobals::editorManager ()->currentEditor ()->clearSelected ();
+	slotStatusMsg(i18n("Ready."));
+	
 }
 
 void RKwardApp::slotEditCopy() {
 	RK_TRACE (APP);
-	if (! activeWindow()->inherits("RKCommandEditorWindow")) {
-		slotStatusMsg(i18n("Copying selection to clipboard..."));
-		QApplication::clipboard()->setData(RKGlobals::editorManager ()->currentEditor ()->makeDrag ());
-		slotStatusMsg(i18n("Ready."));
+	
+	if ((QString) activeWindow()->name()!="dataeditor"){
+		return;
 	}
-	else {
-		((RKCommandEditorWindow*) activeWindow())->copy();
-	}
+	
+	slotStatusMsg(i18n("Copying selection to clipboard..."));
+	QApplication::clipboard()->setData(RKGlobals::editorManager ()->currentEditor ()->makeDrag ());
+	slotStatusMsg(i18n("Ready."));
+	
 }
 
 void RKwardApp::doPaste () {
 	RK_TRACE (APP);
+	
+	if ((QString) activeWindow()->name()!="dataeditor"){
+		return;
+	}
+	
+	
 	slotStatusMsg(i18n("Inserting clipboard contents..."));
 
 	// actually, we don't care, whether tsv or plain gets pasted - it's both
@@ -731,20 +739,22 @@ void RKwardApp::doPaste () {
 }
 
 void RKwardApp::slotEditPaste() {
-	if (! activeWindow()->inherits("RKCommandEditorWindow")) {
-		RK_TRACE (APP);
-		RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteEverywhere);
- 		doPaste ();
+	if ((QString) activeWindow()->name()!="dataeditor"){
+		return;
 	}
-	else {
-		((RKCommandEditorWindow*) activeWindow())->paste();
-	}
+	
+	RK_TRACE (APP);
+	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteEverywhere);
+ 	doPaste ();
+	
+
 }
 
 void RKwardApp::slotEditPasteToTable() {
 	RK_TRACE (APP);
-	if (activeWindow()->inherits("RKCommandEditorWindow"))
+	if ((QString) activeWindow()->name()!="dataeditor"){
 		return;
+	}
 		
 	
 	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteToTable);
@@ -752,8 +762,10 @@ void RKwardApp::slotEditPasteToTable() {
 }
 void RKwardApp::slotEditPasteToSelection() {
 	RK_TRACE (APP);
-	if (activeWindow()->inherits("RKCommandEditorWindow"))
-		return;		
+	
+	if ((QString) activeWindow()->name()!="dataeditor"){
+		return;
+	}
 
 	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteToSelection);
 	doPaste();
@@ -1023,17 +1035,16 @@ void RKwardApp::slotChildWindowCloseRequest (KMdiChildView * window) {
 			int status = KMessageBox::warningYesNo(this,i18n("The document has been modified. Close anyway?"),i18n("File not saved"));
 	
 			if (status == KMessageBox::Yes) {
-				window->hide();
-				delete window;
+				closeWindow(window);
 			}
 		}
 		else {
-			window->hide();
-			delete window;	
+			closeWindow(window);
 		}
 	}
-	else if (window->inherits("RKHelpWindow")){
-		delete window;
+	else if (window->inherits("RKHelpWindow"))
+	{
+		closeWindow(window);
 	}
 }
 
@@ -1156,11 +1167,18 @@ void RKwardApp::slotFunctionReference()
  */
 void RKwardApp::slotOutputShow()
 {
-	RKHelpWindow *out = new RKHelpWindow(this,"output",true);
-	KURL url(RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
-	out->openURL (url);	
-	out->setIcon(SmallIcon("text_block"));
-	addWindow( out );
+
+	KMdiChildView* outp = outputView();
+	if (outp){
+		activateView(outp);
+	}
+	else {
+		RKHelpWindow *out = new RKHelpWindow(this,"output",true);
+		KURL url(RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
+		out->openURL (url);	
+		out->setIcon(SmallIcon("text_block"));
+		addWindow( out );
+	}
 }
 
 
@@ -1174,6 +1192,7 @@ void RKwardApp::slotOutputFlush()
 	if (res==KMessageBox::Yes) {
 		QFile out_file (RKSettingsModuleLogfiles::filesPath () + "/rk_out.html");
 		out_file.remove ();
+		slotOutputRefresh();
 	}
 }
 
@@ -1184,7 +1203,36 @@ void RKwardApp::slotOutputFlush()
  */
 void RKwardApp::slotOutputRefresh()
 {
-	if ((QString) activeWindow()->name()=="output"){
-		((RKHelpWindow*) activeWindow())->refresh();
+	KMdiChildView* outp = outputView();
+	if (outp){
+		activateView(outp);
 	}
+	else {
+		return;
+	}
+
+	// Lets be cautious about what we get.
+	if ( activeWindow()->inherits("RKHelpWindow"))
+		((RKHelpWindow*) activeWindow())->refresh();
+
+}
+
+
+/*!
+    \fn RKwardApp::outputView()
+	Returns a pointer to the output MDI child view.
+ */
+KMdiChildView* RKwardApp::outputView()
+{
+	KMdiChildView* result = 0;
+	KMdiIterator<KMdiChildView*>* it = createIterator();
+	for ( it->first(); !it->isDone(); it->next() )
+	{
+		if ((QString)it->currentItem()->name() == "output" && it->currentItem() != 0){
+			result = it->currentItem();
+		}
+	}
+	deleteIterator(it);
+
+	return(result);
 }

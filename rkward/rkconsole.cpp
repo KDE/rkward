@@ -56,9 +56,10 @@ RKConsole::~RKConsole()
 
 void RKConsole::keyPressEvent ( QKeyEvent * e )
 {
-	int para=0; int pos=0;
-	getCursorPosition (&para, &pos);
-	
+	int para=0; int p=0;
+	getCursorPosition (&para, &p);
+	// Explicitely converting so we get less warnings.
+	uint pos=(uint) p;
 	
 	if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
 		submitCommand ();
@@ -206,7 +207,7 @@ void RKConsole::rCommandDone (RCommand *command) {
 	}
 
 	if (command->errorIncomplete ()) {
-		prefix = "# ";
+		prefix = "+ ";
 		command_incomplete = true;
 		incomplete_command = command->command ();
 	} else {

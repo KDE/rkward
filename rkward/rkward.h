@@ -297,6 +297,7 @@ KAction* outputRefresh;
 	bool getFilenameAndPath(const KURL &url,QString *fname);
 	void saveAsProcedure(RKCommandEditorWindow *editor);
     void setEnabledActions(bool commandEditor);
+    KMdiChildView* outputView();
 
 
 
