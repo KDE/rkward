@@ -36,6 +36,8 @@ RKConsole::RKConsole(QWidget *parent, const char *name)
 	QFont font ("Courier");
 	setFont (font);
 	
+	setCaption(i18n("R Console"));
+	
 	prefix = "> ";
 	command_incomplete = false;
 	flush();

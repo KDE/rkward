@@ -77,6 +77,7 @@
 #include "windows/rkhelpwindow.h"
 #include "khelpdlg.h"
 #include "rkkonsole.h"
+#include "rkconsole.h"
 #include "debug.h"
 
 #define ID_STATUS_MSG 1
@@ -160,8 +161,8 @@ void RKwardApp::doPostInit () {
 	readOptions();
 	object_browser = new RObjectBrowser ();
 	
-	output = new RKOutputWindow (0);
-	/*output->showMaximized ();
+	/*output = new RKOutputWindow (0);
+	output->showMaximized ();
 	output->hide ();*/
 
 	QString dummy = i18n("Before you start bashing at it: please note that this is merely a technology preview release. You might acutally be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments are welcome.");
@@ -197,9 +198,14 @@ void RKwardApp::doPostInit () {
 	object_browser->setIcon(SmallIcon("view_tree"));
 	addToolWindow(object_browser,KDockWidget::DockLeft, getMainDockWidget(), 30 , i18n ("Existing objects in your workspace.") , i18n ("Workspace"));
 	
-	RKGlobals::rInterface ()->watch->setName("Console");
-	RKGlobals::rInterface ()->watch->setIcon(SmallIcon("konsole"));
+	RKGlobals::rInterface ()->watch->setName("Command log");
+	RKGlobals::rInterface ()->watch->setIcon(SmallIcon("text_block"));
 	addToolWindow(RKGlobals::rInterface ()->watch,KDockWidget::DockBottom, getMainDockWidget(), 10);
+
+	console = new RKConsole(0);
+	console->setIcon(SmallIcon("konsole"));
+	console->setName("r_console");
+	addToolWindow(console,KDockWidget::DockBottom, getMainDockWidget(), 10);
 	
 	/*
 	Now obsolete:
@@ -215,6 +221,7 @@ void RKwardApp::doPostInit () {
 	
 	konsole = new RKKonsole(0);
 	konsole->setIcon(SmallIcon("konsole"));
+	console->setName("terminal");
 	addToolWindow(konsole,KDockWidget::DockBottom, getMainDockWidget(), 10);
 
 	

@@ -48,7 +48,8 @@ class RKMenuList;
 class RKDocManager;
 class RKCommandEditorWindow;
 class KHelpDlg;
-class RKKonsole ; 
+class RKKonsole;
+class RKConsole;
 class QSplitter;
 
 /**
@@ -284,6 +285,7 @@ KAction* outputRefresh;
 	RObjectBrowser *object_browser;
 	KHelpDlg *helpDlg;
 	RKKonsole * konsole ;
+	RKConsole * console;
 	
 	KURL *initial_url;
 	

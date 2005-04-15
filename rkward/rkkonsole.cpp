@@ -11,6 +11,7 @@
 //
 #include "rkkonsole.h"
 #include <kde_terminal_interface.h>
+#include <klocale.h>
 #include "windows/rkcommandeditorwindow.h"
 #include "debug.h"
 #include <qstringlist.h>
@@ -19,7 +20,9 @@
 
 
 RKKonsole::RKKonsole(QWidget *parent) :RKToggleWidget (parent){
-  
+
+  setCaption(i18n("Terminal"));
+
   QVBoxLayout *layout = new QVBoxLayout (this);
   KLibFactory* factory = KLibLoader::self()->factory( "libkonsolepart" );
   if ( factory == 0L )
