@@ -114,6 +114,8 @@ void REmbed::runCommand (RCommand *command) {
 	int ctype = command->type ();
 	const char *ccommand = command->command ().latin1 ();
 	
+	RK_DO (qDebug ("running command: %s", ccommand), RBACKEND, DL_DEBUG);
+
 	if (command->type () & RCommand::DirectToOutput) {
 		runCommandInternal ("sink (\"" + RKSettingsModuleLogfiles::filesPath () + "/rk_out.html\", append=TRUE, split=TRUE)\n", &error);
 	}

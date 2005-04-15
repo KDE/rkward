@@ -128,12 +128,9 @@ void RKVariable::rCommandDone (RCommand *command) {
 		var_type = (RObject::VarType) new_var_type;
 		if (new_var_type != var_type) RKGlobals::tracker ()->objectMetaChanged (this);
 
-		parent->childUpdateComplete ();
-	
-		RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
-		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+		RCommand *ncommand = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
+		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
 
-		
 	} else if (command->getFlags () == GET_STORAGE_MODE_COMMAND) {
 		RK_ASSERT (command->intVectorLength () == 2);
 		if (!(command->getIntVector ()[1])) {
@@ -189,6 +186,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 		setSyncing (true);
 	} else if (command->getFlags () == UPDATE_CLASS_COMMAND) {
 		if (num_classes != command->stringVectorLength ()) {
+// TODO: clean deletion of classnames. need to valgrind one day, anyway
 			num_classes = command->stringVectorLength ();
 			delete classname;
 			classname = new QString [num_classes];
@@ -199,7 +197,23 @@ void RKVariable::rCommandDone (RCommand *command) {
 			classname[cn] = command->getStringVector ()[cn];
 		}
 		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
+
+		parent->childUpdateComplete ();
 	}
+}
+
+QString RKVariable::makeClassString (const QString &sep)
+{
+	RK_TRACE (OBJECTS);
+	QString ret;
+	for (int i=0; i < num_classes; ++i) {
+		ret.append (classname[i]);
+		if (i < (num_classes - 1)) {
+			ret.append (sep);
+		}
+	}
+	return ret;
+
 }
 
 ////////////////////// BEGIN: data-handling //////////////////////////////
@@ -945,18 +959,3 @@ RKVariable::CellAlign RKVariable::getAlignment () {
 }
 
 /////////////////// END: data-handling ///////////////////////////
-
-
-QString RKVariable::makeClassString (const QString &sep)
-{
-	RK_TRACE (OBJECTS);
-	QString ret;
-	for (int i=0; i < num_classes; ++i) {
-		ret.append (classname[i]);
-		if (i < (num_classes - 1)) {
-			ret.append (sep);
-		}
-	}
-	return ret;
-
-}

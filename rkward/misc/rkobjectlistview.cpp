@@ -133,12 +133,8 @@ RObject *RKObjectListView::findItemObject (QListViewItem *item) {
 
 void RKObjectListView::updateItem (QListViewItem *item, RObject *object) {
 	RK_TRACE (APP);
+	qDebug ("object name: %s", object->getFullName().latin1 ());
 
-	// if the objec is hidden, it shouldn't appear
-	QString  temp  = (QString) object->getFullName()  ;
-	if (temp.left(1).latin1() == (QString) ".") return ;
-
-		
 	item->setText (0, object->getShortName ());
 	item->setText (1, object->getLabel ());
 	if (object->isContainer ()) {
@@ -169,15 +165,14 @@ void RKObjectListView::updateItem (QListViewItem *item, RObject *object) {
 				break;
 		}
 	}
+
+	// if the object is hidden, it shouldn't appear
+	if (object->getFullName ().startsWith (".")) item->setVisible (false);
 }
 
 void RKObjectListView::addObject (QListViewItem *parent, RObject *object, bool recursive) {
 	RK_TRACE (APP);
 	
-	// if the objec is hidden, it shouldn't appear
-	QString  temp  = (QString) object->getFullName()  ;
-	if (temp.left(1).latin1() == (QString) ".") return ;
-
 	QListViewItem *item;
 
 	if (parent) {
@@ -204,6 +199,10 @@ void RKObjectListView::addObject (QListViewItem *parent, RObject *object, bool r
 		item->setText (0, i18n ("[Objects]"));
 		item->setOpen (true);
 	}
+
+	// if the object is hidden, it shouldn't appear
+	if (object->getFullName ().startsWith (".")) item->setVisible (false);
+
 // code below won't work, as objects get added before editor is opened. Need to call from RKEditor(Manager)
 /*	if (object->numChildren () && RKGlobals::editorManager ()->objectOpened (object)) {
 		item->setOpen (true);
