@@ -21,6 +21,9 @@
  
  
 #include <qfont.h>
+#include <qstringlist.h>
+#include <qclipboard.h>
+#include <qapplication.h>
  
 #include <klocale.h>
  
@@ -46,12 +49,14 @@ RKConsole::RKConsole(QWidget *parent, const char *name)
 	
 	commandsList.setAutoDelete( TRUE );
 	
+	connect (this, SIGNAL (userCommandFinished ()), this, SLOT (slotCommandFinished ()));
 }
 
 
 RKConsole::~RKConsole()
 {
 }
+
 
 
 void RKConsole::keyPressEvent ( QKeyEvent * e )
@@ -80,10 +85,9 @@ void RKConsole::keyPressEvent ( QKeyEvent * e )
 		return;
 	}
 	else if (e->key () == Qt::Key_Home){
-		cursorAtTheBegining ();
+		cursorAtTheBeginning ();
 		return;
 	}
-	
 	
 	
 	if (para<paragraphs () - 1 || pos <= prefix.length () - 1){
@@ -188,11 +192,7 @@ void RKConsole::commandsListDown()
 }
 
 
-/*!
-    \fn RKConsole::cursorAtTheBegining()
-    Puts the cursor at the begining of the last line.
- */
-void RKConsole::cursorAtTheBegining()
+void RKConsole::cursorAtTheBeginning()
 {
 	setCursorPosition (paragraphs () - 1, prefix.length ());
 }
@@ -217,6 +217,48 @@ void RKConsole::rCommandDone (RCommand *command) {
 	}
 
 	newLine ();
+	emit(userCommandFinished());
+}
+
+
+
+void RKConsole::submitBatch(QString batch)
+{
+	// splitting batch, not allowing empty entries.
+	// TODO: hack something so we can have empty entries.
+	commandsBatch = QStringList::split("\n", batch, false);
+	setCurrentCommand(currentCommand() + commandsBatch.first());
+	if (commandsBatch.count()!=0){
+		submitCommand();
+	}
+	commandsBatch.erase(commandsBatch.begin());
 }
 
 #include "rkconsole.moc"
+
+
+
+
+
+void RKConsole::slotCommandFinished()
+{
+	if (!commandsBatch.empty()) {
+		// If we were not finished executing a batch of commands, we execute the next one.
+		setCurrentCommand(currentCommand() + commandsBatch.first());
+		commandsBatch.erase(commandsBatch.begin());
+		if (commandsBatch.count()>=1){
+			submitCommand();
+		}
+		// We would put this here if we would want the last line to be executed
+		//TODO: deal with this kind of situation better.
+		//commandsBatch.erase(commandsBatch.begin());
+	}
+
+}
+
+
+void RKConsole::paste()
+{
+	QClipboard *cb = QApplication::clipboard();
+	submitBatch (cb->text());
+}

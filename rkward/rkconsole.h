@@ -31,42 +31,64 @@ the user to enter commands manualy. It is basically just a modified QTextEdit.
 
 @author Pierre Ecochard
 */
+
+class QStringList;
+
 class RKConsole : public QTextEdit, public RCommandReceiver {
 Q_OBJECT
 public:
-/** Constructor */
-    RKConsole(QWidget *parent = 0, const char *name = 0);
-/** Destructor */
-    ~RKConsole();
-    
-/** Empties the console */
-    void flush ();
-/** Sets the current command
-\param command the new command */
-    void setCurrentCommand (QString command);
+	/** Constructor */
+	RKConsole(QWidget *parent = 0, const char *name = 0);
+	/** Destructor */
+	~RKConsole();
+	
+	/** Empties the console */
+	void flush ();
+	/** Sets the current command
+	\param command the new command */
+	void setCurrentCommand (QString command);
+	/** Submits a batch of commands, line by line.
+	\param batch a QString containing the batch of commands to be executed */
+	void submitBatch(QString batch);
+	
 
 signals:
 	void userCommandRunning (RCommand *command);
+/** Emited when the command has been executed */
+	void userCommandFinished ();
 protected:
 	void keyPressEvent ( QKeyEvent * e );
 	void rCommandDone (RCommand *command);
 private:
+/** This string stores the prefix printed at the beginning of each line. */
 	QString prefix;
 	QString incomplete_command;
 	bool command_incomplete;
 /** A list to store previous commands */
 	QPtrList<QString> commandsList;
+/** A list to store a commands batch that will be executed one line at a time */
+	QStringList commandsBatch;
 /** Sets the cursor position to the end of the last line. */
-    void cursorAtTheEnd();
-    void newLine();
-    QString currentCommand();
-/**
-Submits the current command
-*/
-    void submitCommand();
-    void commandsListUp();
-    void commandsListDown();
-    void cursorAtTheBegining();
+	void cursorAtTheEnd();
+/** Add a new line, with the prefix. */
+	void newLine();
+/** Returns the command currently being edited (not executed yet) */
+	QString currentCommand();
+/** Submits the current command */
+	void submitCommand();
+/** Set the current command to the previous command in the command list */
+	void commandsListUp();
+/** Set the current command to the next command in the command list */
+	void commandsListDown();
+/** Sets the cursor position to the beginning of the last line. */
+	void cursorAtTheBeginning();
+/** We overload the paste function, in order to intercept paste commands and get them executed thru submitBatch.
+@sa submitBatch */
+	void paste();
+    
+private slots:
+/** Called when a command has been executed. */
+	void slotCommandFinished();
 };
 
 #endif

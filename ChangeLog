@@ -1,3 +1,6 @@
+- fixed bug in the output (no update on empty output)
+- paste in the console is properly handled
+- r console and watch divorced
 - console can handle incomplete statements (allowing multi-line input)
 - fixed silly crash on incomplete statements
 - updated spanish translation
