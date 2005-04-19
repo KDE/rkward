@@ -15,6 +15,38 @@
  *                                                                         *
  ***************************************************************************/
 
+
+
+/*!
+**	\mainpage	RKWard
+**	\author		Thomas Friedrichsmeier and the RKWard Team
+**
+**	\section	website	Website
+**
+**	<A HREF="http://rkward.sourceforge.net">RKWard's project page</A>
+**
+**	\section	description Description
+**
+** RKWard is meant to become an easy to use, transparent frontend to the R-language, a very powerful, yet hard-to-get-into 
+** scripting-language with a strong focus on statistic functions. It will not only provide a convenient user-interface, however, but also 
+** take care of seamless integration with an office-suite. Practical statistics is not just about calculating, after all, but also about 
+** documenting and ultimately publishing the results.
+**
+** RKWard then is (will be) something like a free replacement for commercial statistical packages.
+**
+**	\section	copyright	Copyright
+**
+**   This program is free software; you can redistribute it and/or modify
+**   it under the terms of the GNU General Public License as published by
+**   the Free Software Foundation; either version 2 of the License, or
+**   (at your option) any later version.
+**
+*/
+
+
+
+
+
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <klocale.h>

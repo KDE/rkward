@@ -31,8 +31,9 @@ class RKCommandEditor;
 class QBoxLayout;
 
 /**
-  *@author Thomas Friedrichsmeier
-  */
+	\brief This widget shows all executed commands and their result
+@author Thomas Friedrichsmeier
+*/
 
 class RKwatch : public RKToggleWidget {
 	Q_OBJECT

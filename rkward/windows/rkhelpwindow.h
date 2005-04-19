@@ -25,7 +25,7 @@
 class KHTMLPart;
 
 /**
-\brief Show html help.
+	\brief Show html help.
 
 This class wraps a khtml part.
 

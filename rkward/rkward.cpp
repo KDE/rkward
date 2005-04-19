@@ -387,7 +387,7 @@ void RKwardApp::initActions()
 	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 	
-	helpFunction = new KAction (i18n ("&Function reference"), KShortcut ("Ctrl+I"), this, SLOT(slotFunctionReference ()), actionCollection(), "function_reference");
+	helpFunction = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT(slotFunctionReference ()), actionCollection(), "function_reference");
 	
 	new_data_frame->setStatusText (i18n ("Creates new empty dataset and opens it for editing"));
 	fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));

@@ -22,17 +22,19 @@
 
 #include "rbackend/rcommandreceiver.h"
 
-/**
-\brief Provides an R-like console.
-This class provides a console, which is very similar to the classic R console. It is mainly used by RKwatch to allow
-the user to enter commands manualy. It is basically just a modified QTextEdit.
-
-\sa RKwatch, QTextEdit
-
-@author Pierre Ecochard
-*/
 
 class QStringList;
+
+/**
+** 	\brief Provides an R-like console.
+**
+** This class provides a console, which is very similar to the classic R console. It is mainly used by RKwatch to allow
+** the user to enter commands manualy. It is basically just a modified QTextEdit.
+** 
+** \sa RKwatch, QTextEdit
+** 
+** @author Pierre Ecochard
+**/
 
 class RKConsole : public QTextEdit, public RCommandReceiver {
 Q_OBJECT

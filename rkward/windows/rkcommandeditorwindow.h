@@ -41,8 +41,9 @@ class RKwardApp;
 class RCommandChain;
 
 /**
-\brief This class provides an editor window for R-commands.
-This class is an MDI child that is added to the main window.
+	\brief Provides an editor window for R-commands.
+
+This is an MDI child that is added to the main window.
 
 @author Pierre Ecochard
 */
