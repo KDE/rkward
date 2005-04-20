@@ -830,7 +830,7 @@ void RKwardApp::slotToggleWindowClosed () {
 
 void RKwardApp::newOutput () {
 	RK_TRACE (APP);
-	refreshOutput (RKSettingsModuleOutput::autoShow ());
+	refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise ());
 }
 
 void RKwardApp::setRStatus (bool busy) {
@@ -1143,7 +1143,7 @@ void RKwardApp::slotFunctionReference()
 	Show html output.
  */
 void RKwardApp::slotOutputShow () {
-	refreshOutput (true);
+	refreshOutput (true, true);
 }
 
 
@@ -1156,24 +1156,25 @@ void RKwardApp::slotOutputFlush () {
 	if (res==KMessageBox::Yes) {
 		QFile out_file (RKSettingsModuleLogfiles::filesPath () + "/rk_out.html");
 		out_file.remove ();
-		refreshOutput (false);
+		refreshOutput (false, false);
 	}
 }
 
-void RKwardApp::refreshOutput (bool show) {
+void RKwardApp::refreshOutput (bool show, bool raise) {
 	KMdiChildView* outp = outputView();
 	if (outp){
-		activateView(outp);
-		// let's also refresh the output - can't do any harm
-		if ( activeWindow()->inherits("RKHelpWindow"))
-		((RKHelpWindow*) activeWindow())->refresh();
+		if (raise) {
+			activateView (outp);
+		}
+		// do we need this if?
+		if (outp->inherits ("RKHelpWindow")) static_cast<RKHelpWindow*> (outp)->refresh ();
 	} else {
 		if (show) {
-			RKHelpWindow *out = new RKHelpWindow(this,"output",true);
-			KURL url(RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
+			RKHelpWindow *out = new RKHelpWindow (this,"output",true);
+			KURL url (RKSettingsModuleLogfiles::filesPath () + "/rk_out.html");
 			out->openURL (url);	
-			out->setIcon(SmallIcon("text_block"));
-			addWindow( out );
+			out->setIcon (SmallIcon ("text_block"));
+			addWindow (out);
 		}
 	}
 }

@@ -309,8 +309,9 @@ protected:
 
 
 /** refreshes the output.
-	@param show if set to true, the output-window will be shown / raised. If set to false, the visibility will not be changed */
-	void refreshOutput (bool show);
+	@param show if set to true, the output-window will be shown / raised. If set to false, the visibility will not be changed
+	@param raise like show. If set to true, the output-window - if already shown - will additionally be raised */
+	void refreshOutput (bool show, bool raise);
 signals:
     void childWindowCloseRequest(KMdiChildView * window);
 private slots:
