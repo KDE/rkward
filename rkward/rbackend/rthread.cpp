@@ -54,6 +54,7 @@ void RThread::run () {
 	
 	while (1) {
 		MUTEX_LOCK;
+		embeddedR->processEvents ();
 
 		if (previously_idle) {
 			if (!RCommandStack::regular_stack->isEmpty ()) {

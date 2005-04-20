@@ -42,6 +42,7 @@ protected:
 public:
 // these will need QStrings and stuff and hence are handled in REmbed
 	virtual void handleSubstackCall (char **call, int call_length) = 0;
+	static void processEvents ();
 	//virtual char **handleGetValueCall (char **call, int call_length, int *reply_length) = 0;
 
 /// only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++

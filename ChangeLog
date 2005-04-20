@@ -1,3 +1,4 @@
+- R's x11 windows now handle their events
 - fixed bug in the output (no update on empty output)
 - paste in the console is properly handled
 - r console and watch divorced

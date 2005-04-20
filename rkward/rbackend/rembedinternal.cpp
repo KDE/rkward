@@ -24,6 +24,7 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 extern "C" {
 
 #include "R_ext/Rdynload.h"
+#include "R_ext/eventloop.h"
 #include "R.h"
 #include "Rinternals.h"
 
@@ -44,6 +45,17 @@ REmbedInternal::~REmbedInternal(){
 }
 
 void REmbedInternal::shutdown () {
+}
+
+void REmbedInternal::processEvents () {
+	extern InputHandler *R_InputHandlers;
+	InputHandler *handler = R_InputHandlers;
+	while (handler) {
+		if (handler->activity == XActivity) {
+			handler->handler ((void*) 0);
+		}
+		handler = handler->next;
+	}
 }
 
 char **extractStrings (SEXP from_exp, int *count) {
