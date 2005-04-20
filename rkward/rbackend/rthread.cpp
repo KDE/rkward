@@ -70,6 +70,7 @@ void RThread::run () {
 			if (command) {
 				// mutex will be unlocked inside
 				doCommand (command);
+				embeddedR->processEvents ();
 			}
 		
 			if (killed) {
@@ -129,6 +130,7 @@ void RThread::doSubstack (char **call, int call_length) {
 	bool done = false;
 	while (!done) {
 		MUTEX_LOCK;
+		embeddedR->processEvents ();
 		// while commands are in queue, don't wait
 		while (reply_stack->isActive () && !locked) {
 			RCommand *command = reply_stack->pop ();
@@ -136,6 +138,7 @@ void RThread::doSubstack (char **call, int call_length) {
 			if (command) {
 				// mutex will be unlocked inside
 				doCommand (command);
+				embeddedR->processEvents ();
 			}
 		}
 

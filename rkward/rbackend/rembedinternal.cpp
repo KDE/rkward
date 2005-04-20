@@ -47,7 +47,9 @@ REmbedInternal::~REmbedInternal(){
 void REmbedInternal::shutdown () {
 }
 
-void REmbedInternal::processEvents () {
+void REmbedInternal::processX11Events () {
+/* what we do here is walk the list of objects, that have told R, they're listening for events.
+We figure out which ones look for X11-events and tell those to do their stuff (regardless of whether events actually occurred) */
 	extern InputHandler *R_InputHandlers;
 	InputHandler *handler = R_InputHandlers;
 	while (handler) {
