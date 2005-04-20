@@ -38,7 +38,7 @@ class RKwardView;
 class RSettings;
 class RKMenu;
 class QTimer;
-class RKOutputWindow;
+//class RKOutputWindow;
 class RObjectBrowser;
 class RKSettingsModule;
 class RKSettings;
@@ -246,11 +246,9 @@ protected:
     KAction* editPasteToSelection;
     KAction* editPasteToTable;
 
-KAction* outputShow;
-KAction* outputFlush;
-KAction* outputRefresh;
-
-
+	KAction* outputShow;
+	KAction* outputFlush;
+	KAction* outputRefresh;
 
     KToggleAction* viewToolBar;
     KToggleAction* viewStatusBar;
@@ -281,7 +279,6 @@ KAction* outputRefresh;
 /** Used to receive a signal during startup AFTER the exec loop was entered */
 	QTimer *startup_timer;
 	
-	RKOutputWindow *output;
 	RObjectBrowser *object_browser;
 	KHelpDlg *helpDlg;
 	RKKonsole * konsole ;
@@ -311,14 +308,14 @@ KAction* outputRefresh;
   QSplitter *m_splitter;
 
 
-
-
+/** refreshes the output.
+	@param show if set to true, the output-window will be shown / raised. If set to false, the visibility will not be changed */
+	void refreshOutput (bool show);
 signals:
     void childWindowCloseRequest(KMdiChildView * window);
 private slots:
     void slotOutputShow();
     void slotOutputFlush();
-    void slotOutputRefresh();
 };
  
 #endif // RKWARD_H

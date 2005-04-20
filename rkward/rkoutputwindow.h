@@ -25,6 +25,7 @@ class KHTMLPart;
 /**
 The Window where RK displays the (formatted) output
 
+Note: This class is currently inactive! -> TODO
 @author Thomas Friedrichsmeier
 */
 class RKOutputWindow : public RKToggleWidget {

@@ -6,7 +6,7 @@ Little annoying stuff:
 - use proper KMDI+KParts
 - auto refresh output + auto scroll at the bottom
 - add an example to show rkward-specific commands (rk.print, rk.graph)
-
+- instead of delete RObject, call RObject::deleteThis () and check for deleted in rCommandDone ()?
 
 stuff to do before 0.3.2 release
 - plugins (general)
@@ -17,6 +17,11 @@ stuff to do before 0.3.2 release
 - on exit, check whether there are still RCommands left in the backend and wait/request user-interaction before tearing down the thread. After all, the last command might have been a "save"!
 - error-handling/raising in .rk.do.call
 - pick some from below:
+
+API documentation:
+- add overview pages with examples for RInterface usage
+- add page containing a rough overview of general architecture
+- include protected (and maybe even private) members in API-documentation (this is not a library, after all)
 
 (relatively) small stuff to do soon
 - Twintable/RKEditorDataFrame

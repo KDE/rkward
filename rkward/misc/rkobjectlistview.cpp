@@ -133,7 +133,6 @@ RObject *RKObjectListView::findItemObject (QListViewItem *item) {
 
 void RKObjectListView::updateItem (QListViewItem *item, RObject *object) {
 	RK_TRACE (APP);
-	qDebug ("object name: %s", object->getFullName().latin1 ());
 
 	item->setText (0, object->getShortName ());
 	item->setText (1, object->getLabel ());

@@ -60,7 +60,7 @@
 #include "misc/rkmenu.h"
 #include "misc/rkmenulist.h"
 #include "plugin/rkpluginhandle.h"
-#include "rkoutputwindow.h"
+//#include "rkoutputwindow.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleplugins.h"
 #include "settings/rksettingsmodulelogfiles.h"
@@ -114,7 +114,6 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 
 	setEnabledActions(true);
 
-	
 	RKGlobals::manager = new RKEditorManager ();
 	KMdiChildView * editorManagerView = createWrapper(RKGlobals::editorManager (), i18n( "Data editor"), i18n( "Data editor"));
 	editorManagerView->setIcon(SmallIcon("spreadsheet"));
@@ -161,10 +160,6 @@ void RKwardApp::doPostInit () {
 	readOptions();
 	object_browser = new RObjectBrowser ();
 	
-	/*output = new RKOutputWindow (0);
-	output->showMaximized ();
-	output->hide ();*/
-
 	QString dummy = i18n("Before you start bashing at it: please note that this is merely a technology preview release. You might actually be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments are welcome.");
 	KMessageBox::information (this, dummy, i18n("Before you complain..."), "state_of_rkward");
 	
@@ -207,14 +202,6 @@ void RKwardApp::doPostInit () {
 	console->setName("r_console");
 	addToolWindow(console,KDockWidget::DockBottom, getMainDockWidget(), 10);
 	
-	/*
-	Now obsolete:
-
-	output->setIcon(SmallIcon("text_block"));
-	output->setName("output"); 
-	addToolWindow(output,KDockWidget::DockBottom, getMainDockWidget(), 10);*/
-	
-	
 	helpDlg = new KHelpDlg(0);
 	helpDlg->setIcon(SmallIcon("help"));
 	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);
@@ -224,9 +211,8 @@ void RKwardApp::doPostInit () {
 	console->setName("terminal");
 	addToolWindow(konsole,KDockWidget::DockBottom, getMainDockWidget(), 10);
 
-	
 	// just to initialize the window-actions according to whether they're shown on startup or not
-	slotToggleWindowClosed ();
+	//slotToggleWindowClosed ();
 }
 
 void RKwardApp::initPlugins () {
@@ -367,9 +353,8 @@ void RKwardApp::initActions()
 	editPasteToSelection->setIcon("frame_edit");
 
 
-	outputShow= new KAction (i18n ("&Show"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
+	outputShow= new KAction (i18n ("&Show / Refresh"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
 	outputFlush= new KAction (i18n ("&Flush"), 0, 0, this, SLOT (slotOutputFlush ()), actionCollection (), "output_flush");
-	outputRefresh= new KAction (i18n ("&Refresh"), 0, 0, this, SLOT (slotOutputRefresh ()), actionCollection (), "output_refresh");
 
 
 	viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
@@ -845,15 +830,7 @@ void RKwardApp::slotToggleWindowClosed () {
 
 void RKwardApp::newOutput () {
 	RK_TRACE (APP);
-	output->checkNewInput ();
-	slotOutputRefresh() ;
-	/*if (RKSettingsModuleOutput::autoShow ()) {
-		output->show ();
-		showRKOutput->setChecked (true);
-		if (RKSettingsModuleOutput::autoRaise ()) {
-			output->raise ();
-		}
-	}*/
+	refreshOutput (RKSettingsModuleOutput::autoShow ());
 }
 
 void RKwardApp::setRStatus (bool busy) {
@@ -1165,20 +1142,8 @@ void RKwardApp::slotFunctionReference()
     \fn RKwardApp::slotOutputShow()
 	Show html output.
  */
-void RKwardApp::slotOutputShow()
-{
-
-	KMdiChildView* outp = outputView();
-	if (outp){
-		activateView(outp);
-	}
-	else {
-		RKHelpWindow *out = new RKHelpWindow(this,"output",true);
-		KURL url(RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
-		out->openURL (url);	
-		out->setIcon(SmallIcon("text_block"));
-		addWindow( out );
-	}
+void RKwardApp::slotOutputShow () {
+	refreshOutput (true);
 }
 
 
@@ -1186,37 +1151,32 @@ void RKwardApp::slotOutputShow()
     \fn RKwardApp::slotOutputFlush()
 	Empties output.
  */
-void RKwardApp::slotOutputFlush()
-{
+void RKwardApp::slotOutputFlush () {
 	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to flush the ouput? It won't be possible to restore it."), i18n ("Flush output?"));
 	if (res==KMessageBox::Yes) {
 		QFile out_file (RKSettingsModuleLogfiles::filesPath () + "/rk_out.html");
 		out_file.remove ();
-		slotOutputRefresh();
+		refreshOutput (false);
 	}
 }
 
-
-/*!
-    \fn RKwardApp::slotOutputRefresh()
-	Refresh output.
- */
-void RKwardApp::slotOutputRefresh()
-{
+void RKwardApp::refreshOutput (bool show) {
 	KMdiChildView* outp = outputView();
 	if (outp){
 		activateView(outp);
-	}
-	else {
-		return;
-	}
-
-	// Lets be cautious about what we get.
-	if ( activeWindow()->inherits("RKHelpWindow"))
+		// let's also refresh the output - can't do any harm
+		if ( activeWindow()->inherits("RKHelpWindow"))
 		((RKHelpWindow*) activeWindow())->refresh();
-
+	} else {
+		if (show) {
+			RKHelpWindow *out = new RKHelpWindow(this,"output",true);
+			KURL url(RKSettingsModuleLogfiles::filesPath() + "/rk_out.html");
+			out->openURL (url);	
+			out->setIcon(SmallIcon("text_block"));
+			addWindow( out );
+		}
+	}
 }
-
 
 /*!
     \fn RKwardApp::outputView()

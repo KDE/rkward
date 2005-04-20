@@ -56,9 +56,10 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 	multi = (element.attribute ("multi") == "true");
 	QString temp  = element.attribute ("duplicate","false") ; 
 	if (temp == "true") {
-	dupli = true ; }
-	else {
-	dupli = false ; }
+		dupli = true;
+	}else {
+		dupli = false;
+	}
 	
 	if (!multi) {
 		line_edit = new QLineEdit (this);
@@ -173,11 +174,11 @@ void RKVarSlot::selectPressed () {
 			}else if (source->numSelectedContainer() == 1 ){
 				RContainerObject *sel = source->selectedContainer().first ();
 				if (belongToClasses(sel->makeClassString(""))){
-				line_edit->setText (sel->getShortName ());
-				cont_map.insert (0, sel);
-				num_vars = 1;
-				select->setPixmap(SmallIcon("1leftarrow"));
-				varOrCont = false ; 
+					line_edit->setText (sel->getShortName ());
+					cont_map.insert (0, sel);
+					num_vars = 1;
+					select->setPixmap(SmallIcon("1leftarrow"));
+					varOrCont = false ; 
 				}
 			}
 			else return ;
@@ -351,7 +352,7 @@ void RKVarSlot::slotActive(bool isOk){
 }
 
 bool RKVarSlot::belongToClasses(const QString &nom ) {
-if (classes=="all") return true ;
-if (classes.find( nom, 0 ) != -1) return true; 
-else return false ;
+	if (classes == "all") return true;
+	if (classes.find (nom, 0) != -1) return true; 
+	else return false;
 }
