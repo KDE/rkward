@@ -35,6 +35,8 @@
 #include <qapplication.h>
 #include <qtabwidget.h>
 #include <qfile.h>
+#include <qstringlist.h>
+#include <qregexp.h>
 
 #include <klocale.h>
 #include <kmenubar.h>
@@ -282,9 +284,49 @@ void RKCommandEditorWindow::updateTabCaption(const KURL &url)
 
 void RKCommandEditorWindow::showHelp()
 {
+	// I know, there must be simpler way to do it...
+	// What we do here is that we look for the word under the cursor.
+	
+
+	uint para=0; uint p=0;
+	m_view->cursorPosition (&para, &p);
+
+	QString line=m_view->currentTextLine() + " ";
+	if(line.isEmpty() || line.isNull())
+		return;
+	
+	
+	// We want to match any valid R name, that is, everything composed of letters, 0-9, '.'s and '_'s..
+	QRegExp rx( "[^A-Za-z0-9'.''_']" );
+	QRegExp rx2( "[A-Za-z0-9'.''_']" );
+	
+	QStringList list=QStringList::split(rx,line);
+	QStringList list2=QStringList::split(rx2,line);
+
+	QStringList::Iterator it = list.begin();
+	QStringList::Iterator it2 = list2.begin();
+	uint pos=0;
+	QString result="";
+	
+	while( it != list.end() &&  it2 != list2.end() ) {
+		if (pos<=p) result=*it;
+		
+		pos=pos+(*it).length();
+		pos=pos+(*it2).length();
+		
+		++it;
+		++it2;
+	}
+
+	
+	if(result=="" && !line.isEmpty()){
+		//There is only one word on this line
+		result=line;
+	}
+		
 	chain=0;
 	QString s="help(\"";
-	s.append(m_view->currentWord());
+	s.append(result);
 	s.append("\", htmlhelp=TRUE)[1]");
 	
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_HELP_URL, chain);
