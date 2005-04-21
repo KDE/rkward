@@ -82,8 +82,7 @@ RInterface::RInterface () {
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
 	RK_TRACE (RBACKEND);
-	RCommand *command = new RCommand (command, type, rk_equiv, receiver, flags);
-	issueCommand (command, chain);
+	issueCommand (new RCommand (command, type, rk_equiv, receiver, flags), chain);
 }
 
 

@@ -17,8 +17,6 @@
 #include "rksettings.h"
 
 #include <qlayout.h>
-#include <qtabwidget.h>
-#include <qpushbutton.h>
 
 #include <klocale.h>
 #include <kapplication.h>
@@ -52,28 +50,8 @@ void RKSettings::dialogClosed () {
 	settings_dialog = 0;
 }
 
-RKSettings::RKSettings (QWidget *parent, const char *name) : QDialog (parent, name,false, QWidget::WDestructiveClose) {
-	setCaption (i18n ("Settings"));
-	
-	QGridLayout *grid = new QGridLayout (this, 2, 1, 11, 6);
-	tabs = new QTabWidget (this);
-	grid->addWidget (tabs, 0, 0);
-	
-	QHBoxLayout *button_layout = new QHBoxLayout (0, 0, 6);
-	grid->addLayout (button_layout, 1, 0);
-	
-	okbutton = new QPushButton (i18n ("Ok"), this);
-	connect (okbutton, SIGNAL (clicked ()), this, SLOT (ok ()));
-	applybutton = new QPushButton (i18n ("Apply"), this);
-	applybutton->setEnabled (false);
-	connect (applybutton, SIGNAL (clicked ()), this, SLOT (apply ()));
-	cancelbutton = new QPushButton (i18n ("Cancel"), this);
-	connect (cancelbutton, SIGNAL (clicked ()), this, SLOT (cancel ()));
-	
-	button_layout->addWidget (okbutton);
-	button_layout->addWidget (applybutton);
-	button_layout->addStretch ();
-	button_layout->addWidget (cancelbutton);
+RKSettings::RKSettings (QWidget *parent, const char *name) : KDialogBase (KDialogBase::Tabbed, i18n ("Settings"), KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel, KDialogBase::Ok, parent, name, false) {
+	setWFlags (getWFlags () | QWidget::WDestructiveClose);
 
 	initModules ();
 }
@@ -97,18 +75,24 @@ void RKSettings::initModules () {
 	modules.append (new RKSettingsModuleWatch (this, this));
 	
 	ModuleList::iterator it;
+	QFrame *page;
+	QVBoxLayout *layout;
 	for (it = modules.begin (); it != modules.end (); ++it) {
-		tabs->addTab (*it, (*it)->caption ());
+		page = addPage ((*it)->caption ());
+		layout = new QVBoxLayout (page);
+// this is somewhat ugly, but works fine
+		(*it)->reparent (page, QPoint (0,0), true);
+		layout->addWidget (*it);
 	}
 }
 
 void RKSettings::raisePage (SettingsPage page) {
 	if (page != NoPage) {
-		tabs->setCurrentPage (((int) page) - 1);
+		showPage (((int) page) - 1);
 	}
 }
 
-void RKSettings::apply () {
+void RKSettings::slotApply () {
 	ModuleList::iterator it;
 	for (it = modules.begin (); it != modules.end (); ++it) {
 		if ((*it)->hasChanges ()) {
@@ -116,21 +100,21 @@ void RKSettings::apply () {
 			(*it)->save (RKGlobals::rkApp ()->config);
 		}
 	}
-	applybutton->setEnabled (false);
+	enableButtonApply (false);
 }
 
-void RKSettings::ok () {
-	apply ();
+void RKSettings::slotOk () {
+	slotApply ();
 	accept ();
 	close ();
 }
 
-void RKSettings::cancel () {
-	close ();
+void RKSettings::slotCancel () {
+	QDialog::reject ();
 }
 
 void RKSettings::enableApply () {
-	applybutton->setEnabled (true);
+	enableButtonApply (true);
 }
 
 void RKSettings::loadSettings (KConfig *config) {

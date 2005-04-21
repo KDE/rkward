@@ -153,7 +153,11 @@ So next the RCommand created with RInterface::issueCommand goes on its way to/th
 
 \section UsingTheInterfaceToRMultipleCommands Dealing with several RCommands in the same object
 
-\section UsingTheInterfaceToRInternalHandling What happens with and RCommand internally?
+\section UsingTheInterfaceToRInternalHandling What happens with an RCommand internally?
+
+\section UsingTheInterfaceToRThreadingIssues Threading issues
+- command intermitting in a sequence
+- commands finishing earlier than "expected"?
 
 \section UsingTheInterfaceToRCommandChains How to ensure commands get executed in the correct order: RCommandChain
 
