@@ -45,7 +45,7 @@ for (rk.temp.var in list (<? echo ($vars); ?>))  {
 	<?  if (getRK_val ("mad") == "1") echo ("rk.temp.res [[ k ]][['Median Absolute Deviation']] <-  mad(rk.temp.var, constant = ". getRK_val("constMad") . " ,na.rm=".getRK_val("NA").")" ) ;?> 
 	<?  if (getRK_val ("huber") == "1") 
 	echo ("
-	library(MASS)
+	require ("MASS")
 	rk.temp.res [[ k ]][['Huber M-Estimator']] <- list()
 	rk.temp.res [[ k ]][['Huber M-Estimator']] [[1]] <- c('Location Estimate','Mad scale estimate')
 	rk.temp.res [[ k ]][['Huber M-Estimator']] [[2]] <- c(NA,NA)

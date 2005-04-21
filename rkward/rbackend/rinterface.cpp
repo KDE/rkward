@@ -42,7 +42,7 @@
 #include <signal.h>
 
 extern "C" {
-	// this is the var in R-space that stores an interrupt
+	/** this is the var in R-space that stores an interrupt */
 	extern int R_interrupts_pending;
 }
 
@@ -82,7 +82,8 @@ RInterface::RInterface () {
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
 	RK_TRACE (RBACKEND);
-	issueCommand (new RCommand (command, type, rk_equiv, receiver, flags), chain);
+	RCommand *command = new RCommand (command, type, rk_equiv, receiver, flags);
+	issueCommand (command, chain);
 }
 
 

@@ -18,6 +18,11 @@ stuff to do before 0.3.2 release
 - error-handling/raising in .rk.do.call
 - pick some from below:
 
+code cleanups
+- I've changed the simple RInterface::issueCommand (QString, ...) command to return a pointer to the RCommand created. This will allow for lots of small cleanups. Do them.
+	- well, on second thought, it might be better to rely more on RCommand::id () instead of pointers. Why? The id is unique (until integer overflow). The pointer may be reused after a delete -> potential problem when trying to cancel command which is actually already deleted (and potentially other cases)
+	- let's set this back for a while
+
 API documentation:
 - add overview pages with examples for RInterface usage
 - add page containing a rough overview of general architecture
