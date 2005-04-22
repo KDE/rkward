@@ -1,7 +1,7 @@
 # translation of it.po to Italian
 # translation of rkward.po to Italian
 # This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Copyright (C) 2005 THE PACKAGE'S COPYRIGHT HOLDER.
 # Daniele Medri <daniele@medri.org>, 2004.
 # Daniele Medri <daniele.medri@libero.it>, 2004, 2005.
 #
@@ -10,13 +10,12 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-26 11:25+0100\n"
-"PO-Revision-Date: 2005-03-29 13:32+0200\n"
+"PO-Revision-Date: 2005-04-22 08:59+0200\n"
 "Last-Translator: Daniele Medri <daniele.medri@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.9.1\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: agents/rkloadagent.cpp:38
 msgid "Loading Workspace ..."
@@ -26,7 +25,8 @@ msgstr "Apertura dell'area di lavoro..."
 msgid ""
 "There has been an error opening file '%1':\n"
 "%2"
-msgstr ""
+msgstr "Errore durante l'apertura del file '%1':\n"
+"%2"
 
 #: agents/rkloadagent.cpp:75
 msgid "Error loading workspace"
@@ -738,7 +738,7 @@ msgstr "Scarica lista"
 
 #: dialogs/rkloadlibsdialog.cpp:144
 msgid "Please, stand by while downloading list of packages."
-msgstr ""
+msgstr "Attendere prego, sto scaricando la lista dei pacchetti."
 
 #: dialogs/rkloadlibsdialog.cpp:169
 msgid "Installing packages..."
@@ -746,7 +746,7 @@ msgstr "Installazione pacchetti in corso..."
 
 #: dialogs/rkloadlibsdialog.cpp:169
 msgid "Please, stand by while installing packages."
-msgstr ""
+msgstr "Attendere prego, sto installando i pacchetti."
 
 #: dialogs/rkloadlibsdialog.cpp:173
 msgid ""
@@ -826,7 +826,7 @@ msgstr "[Nessun aggiornamento disponibile]"
 
 #: dialogs/rkloadlibsdialog.cpp:478
 msgid "Please, stand by while downloading the list of packages."
-msgstr ""
+msgstr "Attendere prego, sto scaricando la lista dei pacchetti."
 
 #: dialogs/rkloadlibsdialog.cpp:501
 msgid ""
@@ -931,7 +931,8 @@ msgstr "Errore di R"
 msgid ""
 "Below you can see the command(s) corresponding to the settings you made. "
 "Click 'Submit' to run the command(s)."
-msgstr ""
+msgstr "Sotto puoi vedere i comandi corrispondenti alle impostazioni eseguite. "
+"Fai clic su 'Invio' per eseguire i comandi."
 
 #: plugin/rkplugin.cpp:495 plugin.old/rkplugin.cpp:402
 #: plugin.old2/rkplugin.cpp:495 plugin.adrien/rkplugin.cpp:495
@@ -1031,7 +1032,8 @@ msgstr "Impostazioni in conflitto per R_HOME"
 msgid ""
 "There was a problem starting the R backend. The following error(s) "
 "occurred:\n"
-msgstr ""
+msgstr "C'è stato un problema durante l'avvio del backend di R. I seguenti"
+"errori sono apparsi:\n"
 
 #: rbackend/rinterface.cpp:142
 msgid ""
@@ -1093,7 +1095,8 @@ msgstr "Errore di PHP"
 msgid ""
 "There has been an error\n"
 "(\""
-msgstr ""
+msgstr "C'è stato un errore\n"
+"(\""
 
 #: scriptbackends/phpbackend.cpp:170
 msgid ""
@@ -1107,7 +1110,8 @@ msgstr ""
 msgid ""
 "The PHP-backend has reported an error\n"
 "(\""
-msgstr ""
+msgstr "Il backend PHP ha riportato un errore\n"
+"(\""
 
 #: scriptbackends/phpbackend.cpp:210
 msgid ""
@@ -1129,7 +1133,8 @@ msgstr "Impostazioni"
 msgid ""
 "For now, when you change the setting for the location of the logfiles, "
 "RKWard will not function properly until you restart the application!"
-msgstr ""
+msgstr "Per ora, quando cambi le impostazioni per la posizione dei file di log,"
+"RKWard non funzionerà propriamente fino al prossimo riavvio!"
 
 #: settings/rksettingsmodulelogfiles.cpp:41
 msgid "Directory where the logfiles should be kept"
@@ -1329,7 +1334,7 @@ msgstr "&Esegui"
 
 #: plugin.old/rkplugin.cpp:74
 msgid "The R engine reported errors while processing the plugin "
-msgstr ""
+msgstr "Il motore di R ha restituito errori durante l'esecuzione del plugin "
 
 #: plugin.old/rkplugin.cpp:74
 msgid ""
