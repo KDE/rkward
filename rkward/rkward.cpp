@@ -90,6 +90,7 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 	RKGlobals::app = this;
 	RKGlobals::rinter = 0;
 	RKGlobals::list = 0;
+	RKSettings::settings_tracker = new RKSettingsTracker (this);
 	
 	config=kapp->config();
 	
@@ -1197,3 +1198,4 @@ KMdiChildView* RKwardApp::outputView()
 
 	return(result);
 }
+

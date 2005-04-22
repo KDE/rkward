@@ -26,6 +26,7 @@ class QTabWidget;
 class QPushButton;
 class KConfig;
 class RKwardApp;
+class RKSettingsTracker;
 
 /**
 The main settings-dialog. Contains subsections (tabs) for different modules. Use configureSettings () to invoke or raise the settings dialog
@@ -34,7 +35,7 @@ The main settings-dialog. Contains subsections (tabs) for different modules. Use
 */
 class RKSettings : public KDialogBase {
 public:
-	enum SettingsPage { NoPage=0, Plugins=1, R=2, PHP=3, LogFiles=4, Output=5, Watch=6 };
+	enum SettingsPage { NoPage=0, Plugins=1, R=2, PHP=3, LogFiles=4, Output=5, Watch=6, ObjectBrowser=7 };
 
 	static void configureSettings (SettingsPage page=NoPage, QWidget *parent=0);
 
@@ -42,6 +43,8 @@ public:
 	static void saveSettings (KConfig *config);
 	
 	void enableApply ();
+	
+	static RKSettingsTracker* tracker () { return settings_tracker; };
 protected:
 	void slotApply ();
 	void slotOk ();
@@ -58,6 +61,21 @@ private:
 	ModuleList modules;
 	
 	static RKSettings *settings_dialog;
+friend class RKwardApp;
+	static RKSettingsTracker *settings_tracker;
+};
+
+/** This class represents a very simple QObject. It's only purpose is to emit signals when certain settings have changed. Classes that need to
+update themselves on certain changed settings should connect to those signals. */
+class RKSettingsTracker : public QObject {
+	Q_OBJECT
+public:
+	RKSettingsTracker (QObject *parent);
+	~RKSettingsTracker ();
+
+	void settingsChangedObjectBrowser ();
+signals:
+	void objectBrowserSettingsChanged ();
 };
 
 #endif

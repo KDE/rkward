@@ -19,11 +19,13 @@
 #include <klocale.h>
 #include <kiconloader.h>
 
-#include "../debug.h"
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../core/rkvariable.h"
 #include "../core/rkmodificationtracker.h"
+#include "../settings/rksettings.h"
+#include "../settings/rksettingsmoduleobjectbrowser.h"
+#include "../debug.h"
 
 RKObjectListView::RKObjectListView (QWidget *parent) : QListView (parent) {
 	RK_TRACE (APP);
@@ -32,10 +34,43 @@ RKObjectListView::RKObjectListView (QWidget *parent) : QListView (parent) {
 	addColumn (i18n("Label"));
 	addColumn (i18n("Type"));
 	addColumn (i18n("Class"));
+
+	objectBrowserSettingsChanged ();
+	connect (RKSettings::tracker (), SIGNAL (objectBrowserSettingsChanged ()), this, SLOT (objectBrowserSettingsChanged ()));
 }
 
 RKObjectListView::~RKObjectListView () {
 	RK_TRACE (APP);
+}
+
+void RKObjectListView::objectBrowserSettingsChanged () {
+	if (RKSettingsModuleObjectBrowser::showLabelField ()) {
+		setColumnWidthMode (1, QListView::Maximum);
+	} else {
+		setColumnWidthMode (1, QListView::Manual);
+		hideColumn (1);
+	}
+
+	if (RKSettingsModuleObjectBrowser::showTypeField ()) {
+		setColumnWidthMode (2, QListView::Maximum);
+	} else {
+		setColumnWidthMode (2, QListView::Manual);
+		hideColumn (1);
+	}
+
+	if (RKSettingsModuleObjectBrowser::showClassField ()) {
+		setColumnWidthMode (3, QListView::Maximum);
+	} else {
+		setColumnWidthMode (3, QListView::Manual);
+		hideColumn (1);
+	}
+	
+	for (QListViewItemIterator it (this); it.current (); ++it) {
+		RObject *object = findItemObject (it.current ());
+		RK_ASSERT (object);
+
+		if (object->getFullName ().startsWith (".")) it.current ()->setVisible (RKSettingsModuleObjectBrowser::showHiddenVars ());
+	}
 }
 
 void RKObjectListView::initialize (bool fetch_list) {
@@ -165,8 +200,10 @@ void RKObjectListView::updateItem (QListViewItem *item, RObject *object) {
 		}
 	}
 
-	// if the object is hidden, it shouldn't appear
-	if (object->getFullName ().startsWith (".")) item->setVisible (false);
+	if (!RKSettingsModuleObjectBrowser::showHiddenVars ()) {
+		// if the object is hidden, it shouldn't appear
+		if (object->getFullName ().startsWith (".")) item->setVisible (false);
+	}
 }
 
 void RKObjectListView::addObject (QListViewItem *parent, RObject *object, bool recursive) {
@@ -199,8 +236,10 @@ void RKObjectListView::addObject (QListViewItem *parent, RObject *object, bool r
 		item->setOpen (true);
 	}
 
-	// if the object is hidden, it shouldn't appear
-	if (object->getFullName ().startsWith (".")) item->setVisible (false);
+	if (!RKSettingsModuleObjectBrowser::showHiddenVars ()) {
+		// if the object is hidden, it shouldn't appear
+		if (object->getFullName ().startsWith (".")) item->setVisible (false);
+	}
 
 // code below won't work, as objects get added before editor is opened. Need to call from RKEditor(Manager)
 /*	if (object->numChildren () && RKGlobals::editorManager ()->objectOpened (object)) {
@@ -211,4 +250,3 @@ void RKObjectListView::addObject (QListViewItem *parent, RObject *object, bool r
 		}
 	} */
 }
-

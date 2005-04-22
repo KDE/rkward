@@ -50,8 +50,8 @@ extern int RK_Debug_Flags;
 
 #else
 
-#define RK_DO(expr,flags,level)
-#define RK_ASSERT(x)
-#define RK_TRACE(flags)
+#define RK_DO(expr,flags,level) ;
+#define RK_ASSERT(x) ;
+#define RK_TRACE(flags) ;
 
 #endif

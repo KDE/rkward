@@ -26,6 +26,7 @@
 #include <qcheckbox.h>
 
 #include "../misc/getfilenamewidget.h"
+#include "../rkglobals.h"
 
 // static members
 QString RKSettingsModuleR::r_home_dir;
@@ -35,7 +36,7 @@ bool RKSettingsModuleR::r_nosave;
 bool RKSettingsModuleR::r_slave;
 
 RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
-	QVBoxLayout *main_vbox = new QVBoxLayout (this, 6);
+	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 	
 	QLabel *label = new QLabel (i18n ("Note: changes in this section do not take effect until you restart RKWard!"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);

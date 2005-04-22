@@ -24,7 +24,6 @@ RKSettingsModule::RKSettingsModule(RKSettings *gui, QWidget *parent) : QWidget (
 	RKSettingsModule::gui = gui;
 }
 
-
 RKSettingsModule::~RKSettingsModule() {
 }
 
@@ -32,5 +31,3 @@ void RKSettingsModule::change () {
 	changed = true;
 	gui->enableApply ();
 }
-
-#include "rksettingsmodule.moc"

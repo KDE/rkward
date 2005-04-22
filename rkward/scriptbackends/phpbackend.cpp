@@ -188,19 +188,19 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 			} 
 		} else if (request.startsWith ("requesting data:")) {
 			QString requested_object = request.remove ("requesting data:");
-			qDebug ("requested data: \"" + requested_object + "\"");
+			qDebug ("requested data: \"%s\"", requested_object.latin1 ());
 			emit (requestValue (requested_object));
 			busy = true;
 //			writeData (res + eot_string);
 		} else if (request.startsWith ("requesting rcall:")) {
 			QString requested_call = request.remove ("requesting rcall:");
-			qDebug ("requested rcall: \"" + requested_call + "\"");
+			qDebug ("requested rcall: \"%s\"", requested_call.latin1 ());
 			emit (requestRCall (requested_call));
 			busy = true;
 //			_responsible->doRCall (requested_call);
 		} else if (request.startsWith ("requesting rvector:")) {
 			QString requested_call = request.remove ("requesting rvector:");
-			qDebug ("requested rvector: \"" + requested_call + "\"");
+			qDebug ("requested rvector: \"%s\"", requested_call.latin1 ());
 			emit (requestRVector (requested_call));
 			busy = true;
 //			_responsible->getRVector (requested_call);

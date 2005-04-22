@@ -58,7 +58,6 @@ RObjectBrowser::RObjectBrowser () : RKToggleWidget () {
 	
 	connect (list_view, SIGNAL (doubleClicked ( QListViewItem *, const QPoint &, int )), this, SLOT (slotListDoubleClicked (QListViewItem *, const QPoint &, int)));
 	
-	
 	resize (minimumSizeHint ().expandedTo (QSize (400, 480)));
 }
 
@@ -111,27 +110,17 @@ void RObjectBrowser::requestedContextMenu (QListViewItem *item, const QPoint &po
 	menu->popup (pos);
 }
 
-
-
-
-void RObjectBrowser::slotListDoubleClicked(QListViewItem *item, const QPoint &pos, int)
+void RObjectBrowser::slotListDoubleClicked (QListViewItem *item, const QPoint &, int)
 {
 	RObject *object = list_view->findItemObject (item);
 	
 	if (!object) return;
 	if (object == RKGlobals::rObjectList ()) return;
-	
-	menu->setItemEnabled (Edit, RKGlobals::editorManager ()->canEditObject (object));
-	menu_object = object;
-	
-	if (item==0)
-		return;
-	
+
 	if ( (RKGlobals::rkApp()->activeWindow())->inherits("RKCommandEditorWindow") ) {
-		( (RKCommandEditorWindow*)RKGlobals::rkApp()->activeWindow() )->insertText(menu_object->getFullName());
+		( (RKCommandEditorWindow*)RKGlobals::rkApp()->activeWindow() )->insertText(object->getFullName());
 	}
 }
-
 
 #include "robjectbrowser.moc"
 

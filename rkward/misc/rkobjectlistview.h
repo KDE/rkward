@@ -46,6 +46,8 @@ public slots:
 	void objectAdded (RObject *object);
 	void objectRemoved (RObject *object);
 	void objectPropertiesChanged (RObject *object);
+
+	void objectBrowserSettingsChanged ();
 private:
 // TODO: keep an additional map from RObject to QListViewItem, in order to make this (often called) more efficient
 	QListViewItem *findObjectItem (RObject *object);

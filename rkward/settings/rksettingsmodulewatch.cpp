@@ -24,6 +24,7 @@
 #include <qlabel.h>
 
 #include "../rbackend/rcommand.h"
+#include "../rkglobals.h"
 
 #include "../debug.h"
 
@@ -104,7 +105,7 @@ bool RKSettingsModuleWatch::shouldRaiseWindow (RCommand *command) {
 }
 
 RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
-	QVBoxLayout *vbox = new QVBoxLayout (this, 6);
+	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 
 	QLabel *label = new QLabel (i18n ("For now, settings only apply to new commands. All previous commands remain visible/invisible."), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);

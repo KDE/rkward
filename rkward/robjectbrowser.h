@@ -50,6 +50,7 @@ public slots:
 	void popupView ();
 	void popupDelete ();
 	void popupRename ();
+/** when an object in the list is double clicked, insert its name in the current RKCommandEditor windo */
     void slotListDoubleClicked(QListViewItem *item, const QPoint &pos, int);
 private:
 	friend class RKwardApp;

@@ -29,11 +29,10 @@ Base class for settings modules. Provides some pure virtual calls.
 @author Thomas Friedrichsmeier
 */
 class RKSettingsModule : public QWidget {
-	Q_OBJECT
 public:
-    RKSettingsModule(RKSettings *gui, QWidget *parent);
+    RKSettingsModule (RKSettings *gui, QWidget *parent);
 
-    ~RKSettingsModule();
+    ~RKSettingsModule ();
 
 	virtual bool hasChanges () = 0;
 	virtual void applyChanges () = 0;

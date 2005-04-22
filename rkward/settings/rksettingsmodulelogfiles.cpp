@@ -26,12 +26,13 @@
 #include <qdir.h>
 
 #include "../misc/getfilenamewidget.h"
+#include "../rkglobals.h"
 
 // static members
 QString RKSettingsModuleLogfiles::files_path;
 
 RKSettingsModuleLogfiles::RKSettingsModuleLogfiles (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
-	QVBoxLayout *main_vbox = new QVBoxLayout (this, 6);
+	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 	QLabel *label = new QLabel (i18n ("For now, when you change the setting for the location of the logfiles, RKWard will not function properly until you restart the application!"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	main_vbox->addWidget (label);

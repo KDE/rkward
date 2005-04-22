@@ -266,7 +266,7 @@ protected:
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;
 	friend class RKSettings;
-	
+
 /** Does pasting (called from the respective slots) */
 	void doPaste ();
 

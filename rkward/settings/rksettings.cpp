@@ -28,12 +28,14 @@
 #include "rksettingsmodulelogfiles.h"
 #include "rksettingsmoduleoutput.h"
 #include "rksettingsmodulewatch.h"
+#include "rksettingsmoduleobjectbrowser.h"
 
 #include "../rkward.h"
 #include "../rkglobals.h"
 
 //static
 RKSettings *RKSettings::settings_dialog = 0;
+RKSettingsTracker *RKSettings::settings_tracker = 0;
 
 //static 
 void RKSettings::configureSettings (SettingsPage page, QWidget *parent) {
@@ -73,13 +75,14 @@ void RKSettings::initModules () {
 	modules.append (new RKSettingsModuleLogfiles (this, this));
 	modules.append (new RKSettingsModuleOutput (this, this));
 	modules.append (new RKSettingsModuleWatch (this, this));
+	modules.append (new RKSettingsModuleObjectBrowser (this, this));
 	
 	ModuleList::iterator it;
 	QFrame *page;
 	QVBoxLayout *layout;
 	for (it = modules.begin (); it != modules.end (); ++it) {
 		page = addPage ((*it)->caption ());
-		layout = new QVBoxLayout (page);
+		layout = new QVBoxLayout (page, 0, KDialog::spacingHint ());
 // this is somewhat ugly, but works fine
 		(*it)->reparent (page, QPoint (0,0), true);
 		layout->addWidget (*it);
@@ -124,6 +127,7 @@ void RKSettings::loadSettings (KConfig *config) {
 	RKSettingsModuleLogfiles::loadSettings(config);
 	RKSettingsModuleOutput::loadSettings(config);
 	RKSettingsModuleWatch::loadSettings(config);
+	RKSettingsModuleObjectBrowser::loadSettings(config);
 }
 
 void RKSettings::saveSettings (KConfig *config) {
@@ -132,7 +136,21 @@ void RKSettings::saveSettings (KConfig *config) {
 	RKSettingsModulePHP::saveSettings(config);
 	RKSettingsModuleLogfiles::saveSettings(config);
 	RKSettingsModuleOutput::saveSettings(config);
-	RKSettingsModuleWatch::loadSettings(config);
+	RKSettingsModuleWatch::saveSettings(config);
+	RKSettingsModuleObjectBrowser::saveSettings(config);
+}
+
+//############ END RKSettings ##################
+//############ BEGIN RKSettingsTracker ############
+
+RKSettingsTracker::RKSettingsTracker (QObject *parent) : QObject (parent) {
+}
+
+RKSettingsTracker::~RKSettingsTracker () {
+}
+
+void RKSettingsTracker::settingsChangedObjectBrowser () {
+	emit (objectBrowserSettingsChanged ());
 }
 
 #include "rksettings.moc"

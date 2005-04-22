@@ -24,12 +24,14 @@
 #include <qvbuttongroup.h>
 #include <qcheckbox.h>
 
+#include "../rkglobals.h"
+
 // static members
 bool RKSettingsModuleOutput::auto_show;
 bool RKSettingsModuleOutput::auto_raise;
 
 RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
-	QVBoxLayout *main_vbox = new QVBoxLayout (this, 6);
+	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 	
 	QVButtonGroup *group = new QVButtonGroup (i18n ("Output Window options"), this);
 	auto_show_box = new QCheckBox ("show window on new output", group);
