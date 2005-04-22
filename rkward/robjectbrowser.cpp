@@ -50,11 +50,12 @@ RObjectBrowser::RObjectBrowser () : RKToggleWidget () {
 	
 	setCaption (i18n ("Objects in the R workspace"));
 
-	menu = new QPopupMenu (this);
-	menu->insertItem (i18n ("Edit"), this, SLOT (popupEdit ()), 0, Edit);
-	menu->insertItem (i18n ("View"), this, SLOT (popupView ()), 0, View);
-	menu->insertItem (i18n ("Rename"), this, SLOT (popupRename ()), 0, Rename);
-	menu->insertItem (i18n ("Delete"), this, SLOT (popupDelete ()), 0, Delete);
+	list_view->contextMenu ()->insertItem (i18n ("Edit"), this, SLOT (popupEdit ()), 0, Edit, 0);
+	list_view->contextMenu ()->insertItem (i18n ("View"), this, SLOT (popupView ()), 0, View, 1);
+	list_view->contextMenu ()->insertItem (i18n ("Rename"), this, SLOT (popupRename ()), 0, Rename, 2);
+	list_view->contextMenu ()->insertItem (i18n ("Delete"), this, SLOT (popupDelete ()), 0, Delete, 3);
+	list_view->contextMenu ()->insertSeparator (4);
+	connect (list_view, SIGNAL (aboutToShowContextMenu (QListViewItem*, bool*)), this, SLOT (contextMenuCallback (QListViewItem*, bool*)));
 	
 	connect (list_view, SIGNAL (doubleClicked ( QListViewItem *, const QPoint &, int )), this, SLOT (slotListDoubleClicked (QListViewItem *, const QPoint &, int)));
 	
@@ -68,7 +69,6 @@ void RObjectBrowser::initialize () {
 	list_view->initialize (false);
 	
 	connect (update_button, SIGNAL (clicked ()), this, SLOT (updateButtonClicked ()));
-	connect (list_view, SIGNAL (contextMenuRequested (QListViewItem*, const QPoint &, int)), this, SLOT (requestedContextMenu (QListViewItem*, const QPoint &, int)));
 }
 
 void RObjectBrowser::updateButtonClicked () {
@@ -76,38 +76,47 @@ void RObjectBrowser::updateButtonClicked () {
 }
 
 void RObjectBrowser::popupEdit () {
-	if (menu_object) RKGlobals::editorManager ()->editObject (menu_object);
+	if (list_view->menuObject ()) RKGlobals::editorManager ()->editObject (list_view->menuObject ());
 }
 
 void RObjectBrowser::popupView () {
 	RKGlobals::editorManager ()->flushAll ();
-	new RObjectViewer (0, menu_object);
+	new RObjectViewer (0, list_view->menuObject ());
 }
 
 void RObjectBrowser::popupDelete () {
-	RKGlobals::tracker ()->removeObject (menu_object);
+	RKGlobals::tracker ()->removeObject (list_view->menuObject ());
 }
 
 void RObjectBrowser::popupRename () {
 	bool ok;
-	QString name = KInputDialog::getText (i18n ("Rename object"), i18n ("Enter the new name"), menu_object->getShortName (), &ok, this);
+	QString name = KInputDialog::getText (i18n ("Rename object"), i18n ("Enter the new name"), list_view->menuObject ()->getShortName (), &ok, this);
 	
 	if (ok) {
-		QString valid = menu_object->getContainer ()->validizeName (name);
+		QString valid = list_view->menuObject ()->getContainer ()->validizeName (name);
 		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1").arg (valid), i18n ("Invalid Name"));
-		RKGlobals::tracker ()->renameObject (menu_object, valid);
+		RKGlobals::tracker ()->renameObject (list_view->menuObject (), valid);
 	}
 }
 
-void RObjectBrowser::requestedContextMenu (QListViewItem *item, const QPoint &pos, int) {
-	RObject *object = list_view->findItemObject (item);
-	
-	if (!object) return;
-	if (object == RKGlobals::rObjectList ()) return;
-	
+void RObjectBrowser::contextMenuCallback (QListViewItem *, bool *) {
+	RObject *object = list_view->menuObject ();
+	QPopupMenu *menu = list_view->contextMenu ();
+
+	if ((!object) || (object == RKGlobals::rObjectList ())) {
+		menu->setItemVisible (Edit, false);
+		menu->setItemVisible (View, false);
+		menu->setItemVisible (Rename, false);
+		menu->setItemVisible (Delete, false);
+
+		return;
+	}
+
+	menu->setItemVisible (Edit, true);
 	menu->setItemEnabled (Edit, RKGlobals::editorManager ()->canEditObject (object));
-	menu_object = object;
-	menu->popup (pos);
+	menu->setItemVisible (View, true);
+	menu->setItemVisible (Rename, true);
+	menu->setItemVisible (Delete, true);
 }
 
 void RObjectBrowser::slotListDoubleClicked (QListViewItem *item, const QPoint &, int)

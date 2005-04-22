@@ -44,7 +44,7 @@ public:
 	
 public slots:
 	void updateButtonClicked ();
-	void requestedContextMenu (QListViewItem *item, const QPoint &pos, int col);
+	void contextMenuCallback (QListViewItem *item, bool *suppress);
 	
 	void popupEdit ();
 	void popupView ();
@@ -58,10 +58,6 @@ private:
 
 	QPushButton *update_button;
 	RKObjectListView *list_view;	
-	
-	QPopupMenu *menu;
-	/// the object the menu was invoked on
-	RObject *menu_object;
 };
 
 #endif

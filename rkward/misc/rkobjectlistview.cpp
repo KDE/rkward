@@ -19,6 +19,8 @@
 #include <klocale.h>
 #include <kiconloader.h>
 
+#include <qpopupmenu.h>
+
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../core/rkvariable.h"
@@ -35,6 +37,10 @@ RKObjectListView::RKObjectListView (QWidget *parent) : QListView (parent) {
 	addColumn (i18n("Type"));
 	addColumn (i18n("Class"));
 
+	menu = new QPopupMenu (this);
+	menu->insertItem (i18n ("Configure View"), this, SLOT (popupConfigure ()));
+	connect (this, SIGNAL (contextMenuRequested (QListViewItem *, const QPoint &, int)), this, SLOT (requestedContextMenu (QListViewItem*, const QPoint&, int)));
+
 	objectBrowserSettingsChanged ();
 	connect (RKSettings::tracker (), SIGNAL (objectBrowserSettingsChanged ()), this, SLOT (objectBrowserSettingsChanged ()));
 }
@@ -45,6 +51,7 @@ RKObjectListView::~RKObjectListView () {
 
 void RKObjectListView::objectBrowserSettingsChanged () {
 	if (RKSettingsModuleObjectBrowser::showLabelField ()) {
+		setColumnWidth (1, 50);
 		setColumnWidthMode (1, QListView::Maximum);
 	} else {
 		setColumnWidthMode (1, QListView::Manual);
@@ -52,25 +59,45 @@ void RKObjectListView::objectBrowserSettingsChanged () {
 	}
 
 	if (RKSettingsModuleObjectBrowser::showTypeField ()) {
+		setColumnWidth (2, 50);
 		setColumnWidthMode (2, QListView::Maximum);
 	} else {
 		setColumnWidthMode (2, QListView::Manual);
-		hideColumn (1);
+		hideColumn (2);
 	}
 
 	if (RKSettingsModuleObjectBrowser::showClassField ()) {
+		setColumnWidth (3, 50);
 		setColumnWidthMode (3, QListView::Maximum);
 	} else {
 		setColumnWidthMode (3, QListView::Manual);
-		hideColumn (1);
+		hideColumn (3);
 	}
-	
+
+	triggerUpdate ();
+
 	for (QListViewItemIterator it (this); it.current (); ++it) {
 		RObject *object = findItemObject (it.current ());
 		RK_ASSERT (object);
 
 		if (object->getFullName ().startsWith (".")) it.current ()->setVisible (RKSettingsModuleObjectBrowser::showHiddenVars ());
 	}
+}
+
+//virtual 
+void RKObjectListView::popupConfigure () {
+	RKSettings::configureSettings (RKSettings::ObjectBrowser, this);
+}
+
+void RKObjectListView::requestedContextMenu (QListViewItem *item, const QPoint &pos, int) {
+	RObject *object = findItemObject (item);
+
+	menu_object = object;
+
+	bool suppress = false;
+	emit (aboutToShowContextMenu (item, &suppress));
+
+	if (!suppress) menu->popup (pos);
 }
 
 void RKObjectListView::initialize (bool fetch_list) {
