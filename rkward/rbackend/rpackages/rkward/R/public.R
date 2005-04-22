@@ -72,9 +72,9 @@
 	dev.off()
 }
 
-"rk.print" <- function(x) {
+"rk.print" <- function(x,...) {
 	if(require("R2HTML")==TRUE) {
-		HTML(x)
+		HTML(x,...)
 	}
 }
 
