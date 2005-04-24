@@ -315,7 +315,7 @@ Obviously, whenever trying to transfer data from the backend, this approach is h
 
 \section UsingTheInterfaceToRFurtherReading Where to find more detailed information on these topics
 
-The following classes contain (or should) contain further important documentation:
+The following classes contain (or should contain) further important documentation:
 
 - \ref RInterface
 - \ref RCommand

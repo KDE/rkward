@@ -74,7 +74,9 @@ friend class RThread;
 };
 */
 
-/** This class is used to encapsulate an R-command, so it can be easily identified
+/** For introductory information on using RCommand, see \ref UsingTheInterfaceToR 
+
+	This class is used to encapsulate an R-command, so it can be easily identified
 	in a chain of commands. It is needed, since communication with R is asynchronous
 	and it is therefore not possible to get the result of an R-call right away.
 	Instead, create an object of this class, specifying the RCommandReceiver that should
@@ -106,6 +108,7 @@ public:
 @param flags A freely assignable integer, that you can use to identify what the command was all about. Only the RCommandReceiver handling the results will have to know what exactly the flags mean.
 */
 	RCommand(const QString &command, int type = 0, const QString &rk_equiv = "", RCommandReceiver *receiver=0, int flags=0);
+/** destructor. Note: you should not delete RCommands manually. This is done in RInterface. TODO: make protected */
 	~RCommand();
 /** @returns the type as specified in RCommand::RCommand */
 	int type () { return _type; };
@@ -116,37 +119,73 @@ public:
 /** Each RCommand is assigned a unique integer id (incrementing from 0 to integer overflow) upon creation. This returns this id. 
 	@returns the unique id of this command */
 	int id () { return _id; };
-/** TODO: Adjust these two functions to allow re-getting of output and error-messages from logs */
+/* TODO: Adjust these two functions to allow re-getting of output and error-messages from logs */
+/** @returns the output of the command, if any (e.g. "[1] 1" for "print (1)"). @see RCommand::succeeded @see RCommand::hasOutput */
 	QString output () { return _output; };
+/** @returns the error message given by R, if any. @see RCommand::failed @see RCommand::hasError */
 	QString error () { return _error; };
 /** Types of commands (potentially more to come), bitwise or-able,
-	although partially exclusive. TODO: find out, why Canceled is in here, and document that fact. */
-	enum CommandTypes {User=1, Plugin=2, PluginCom=4, App=8, Sync=16, EmptyCommand=32, GetIntVector=512, GetStringVector=1024, GetRealVector=2048, DirectToOutput=4096, Canceled=8192 };
-	enum CommandStatus {WasTried=1, Failed=2, HasOutput=4, HasError=8, ErrorIncomplete=512, ErrorSyntax=1024, ErrorOther=2048};
+	although partially exclusive. See \ref UsingTheInterfaceToR for a overview of what these are used for. TODO: find out, why Canceled is in here, and document that fact. */
+	enum CommandTypes {
+		User=1,		/**< Command was created directly by the user (e.g. in the console or in a command editor window) */
+		Plugin=2,		/**< Command comes from a plugin */
+		PluginCom=4,	/**< Command comes from a plugin, and is used by the plugin to communicate directly with R (no real use so far) */
+		App=8,			/**< Command comes from the application (e.g. loading / saving the workspace */
+		Sync=16,		/**< Command is used to sync data to or from R-space. Typically used in the editor classes */
+		EmptyCommand=32,		/**< Command is empty and will not be processed (an empty command may be used as a "marker") */
+		GetIntVector=512,			/**< Try to fetch result as an array of integers */
+		GetStringVector=1024,	/**< Try to fetch result as an array of chars */
+		GetRealVector=2048,		/**< Try to fetch result as an array of doubles */
+		DirectToOutput=4096,		/**< Append command output to the HTML-output file */
+		Canceled=8192				/**< Command was cancelled. Do not use in RCommand::RCommand */
+	};
+	enum CommandStatus {
+		WasTried=1,						/**< the command has been passed to the backend. */
+		Failed=2,							/**< the command failed */
+		HasOutput=4,					/**< command has a string output retrievable via RCommand::output () */
+		HasError=8,						/**< command has an error-message retrievable via RCommand::error () */
+		ErrorIncomplete=512,		/**< backend rejected command as being incomplete */
+		ErrorSyntax=1024,			/**< backend rejected command as having a syntax error */
+		ErrorOther=2048				/**< another error (not incomplete, not syntax error) has occured while trying to execute the command */
+	};
+/** the command has been passed to the backend. */
 	bool wasTried () { return (status & WasTried); };
+/** the command failed */
 	bool failed () { return (status & Failed); };
+/** the command succeeded (wasTried () && (!failed ()) */
 	bool succeeded () { return ((status & WasTried) && !(status & Failed)); };
+/** command has a string output retrievable via RCommand::output () */
 	bool hasOutput () { return (status & HasOutput); };
+/** command has an error-message retrievable via RCommand::error () */
 	bool hasError () { return (status & HasError); };
+/** backend rejected command as being incomplete */
 	bool errorIncomplete () { return (status & ErrorIncomplete); };
+/** backend rejected command as having a syntax error */
 	bool errorSyntax () { return (status & ErrorSyntax); };
+/** returns the length (size) of the char * array. @see RCommand::GetStringVector @see RCommand::getStringVector @see RCommand::detachStringVector */
 	int stringVectorLength () { return (string_count); };
+/** returns the length (size) of the double array. @see RCommand::GetRealVector @see RCommand::getRealVector @see RCommand::detachRealVector */
 	int realVectorLength () { return (real_count); };
+/** returns the length (size) of the int array. @see RCommand::GetIntVector @see RCommand::getIntVector @see RCommand::detachIntVector */
 	int intVectorLength () { return (integer_count); };
+/** returns a pointer to the char * array. The char* array is owned by the RCommand! @see RCommand::GetStringVector @see RCommand::getStringVector @see RCommand::detachStringVector */
 	char **getStringVector () { return (string_data); };
+/** returns a pointer to the double array. The double array is owned by the RCommand! @see RCommand::GetRealVector @see RCommand::getRealVector @see RCommand::detachRealVector */
 	double *getRealVector () { return (real_data); };
+/** returns a pointer to the int array. The int array is owned by the RCommand! @see RCommand::GetIntVector @see RCommand::getIntVector @see RCommand::detachIntVector */
 	int *getIntVector () { return (integer_data); };
-/// if you want to keep the data, use this function to detach it from the RCommand (after reading it), so it won't be deleted with the RCommand
+/** if you want to keep the data, use this function to detach it from the RCommand (after reading the pointer with RCommand::getStringVector), so it won't be deleted with the RCommand */
 	void detachStringVector () { string_data = 0; string_count = 0; };
-/// if you want to keep the data, use this function to detach it from the RCommand (after reading it), so it won't be deleted with the RCommand
+/** if you want to keep the data, use this function to detach it from the RCommand (after reading the pointer with RCommand::getRealVector), so it won't be deleted with the RCommand */
 	void detachRealVector () { real_data = 0; real_count = 0; };
-/// if you want to keep the data, use this function to detach it from the RCommand (after reading it), so it won't be deleted with the RCommand
+/** if you want to keep the data, use this function to detach it from the RCommand (after reading the pointer with RCommand::getIntVector), so it won't be deleted with the RCommand */
 	void detachIntVector () { integer_data = 0; integer_count = 0; };
+/** return the flags associated with the command. Those are the same that you specified in the constructor, RKWard does not touch them. @see RCommand::RCommand */
 	int getFlags () { return (_flags); };
 private:
 friend class REmbed;
 friend class RInterface;
-/// internal function will be called by the backend, as the command gets passed through. Takes care of sending this command (back) to its receiver
+/** internal function will be called by the backend, as the command gets passed through. Takes care of sending this command (back) to its receiver */
 	void finished ();
 	QString _output;
 	QString _error;
