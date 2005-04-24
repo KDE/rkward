@@ -153,25 +153,174 @@ So next the RCommand created with RInterface::issueCommand goes on its way to/th
 
 \section UsingTheInterfaceToRMultipleCommands Dealing with several RCommands in the same object
 
+In many cases you don't just want to deal with a single RCommand in an RCommandReceiver, but rather you might submit a bunch of different command (for instance to find out about several different properties of an object in R-space), and then use some special handling for each of those commands. So the problem is, how to find out, which of your commands you're currently dealing with in rCommandDone.
+
+There are several ways to deal with this:
+
+	- storing the RCommand::id () (each command is automatically assigned a unique id, TODO: do we need this functionality? Maybe remove it for redundancy)
+	- passing appropriate flags to know how to handle the command
+	- keeping the pointer (CAUTION: don't use that pointer except to compare it with the pointer of an incoming command. Commands get deleted when they are finished, and maybe (in the future) if they become obsolete etc. Hence the pointers you keep may be invalid!)
+
+To illustrate the option of using "FLAGS", here is a reduced example of how RKVariable updates information about the dimensions and class of the corresponding object in R-space using two different RCommand s:
+
+\code
+#define UPDATE_DIM_COMMAND 1
+#define UPDATE_CLASS_COMMAND 2
+
+void RKVariable::updateFromR () {
+	//...
+	RCommand *command = new RCommand ("length (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+}
+
+void RKVariable::rCommandDone (RCommand *command) {
+	//...
+	if (command->getFlags () == UPDATE_DIM_COMMAND) {
+		// ...
+		RCommand *ncommand = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
+		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
+	} else if (command->getFlags () == UPDATE_CLASS_COMMAND) {
+		//...
+	}
+}
+\endcode
+
+Note that you can freely assign whatever flags you like. Only your own class will need to know how to interpret the flags.
+
+Now what about that RKGlobals::rObjectList()->getUpdateCommandChain ()? We'll talk about RCommandChain and what you need it for further down below. But first we'll have a look at how an RCommand is handled internally.
+
 \section UsingTheInterfaceToRInternalHandling What happens with an RCommand internally?
 
+So far we've discussed RInterface:issueCommand () and RCommandReceiver::rCommandDone (). But what happens in between?
+
+First the RCommand is placed in a first-in-first-out stack. This stack is needed, since - as discussed - the commands get executed in a separate thread, so several command may get stacked up, before the first one gets run.
+
+Then, in the backend thread (RThread) there is a loop running, which fetches those commands from the stack and executes them one by one. Whenver a command has been executed in this thread, it gets updated with information on any errors that occurred and of course also with the result of running the command. Next, a QCustomEvent is being posted. What this does is basically, transfer the pointer to the command back to the main thread in a safe way.
+
+Whenever the main thread becomes active again, it will find that QCustomEvent and handle it in RInterface::customEvent.
+
+The most important thing happening there, is a call to RCommand::finished (RCommand::finished basically just calls the responsible RCommandReceiver::rCommandDone), and right after that the RCommand gets deleted.
+
 \section UsingTheInterfaceToRThreadingIssues Threading issues
-- command intermitting in a sequence
-- commands finishing earlier than "expected"?
+
+The above description sound simple enough, but there may be some threading issues to keep in mind. Consider what needs to happen when RKVariable is trying to update the information on the corresponding object in R-space (see code example above):
+
+- RKVariable will first run a command to determine the dimensionality of the object.
+
+Now this is more significant than so may think, as RKVariable is a special kind of RObject, which only handles one-dimensional data. Hence, if you create an object in R with
+
+\code
+myobject <- c (1, 2, 3)
+\endcode
+
+In RKWard an RKVariable will be responsible for "myobject".
+
+However, if next, you assign something different to myobject:
+
+\code
+myobject <- data.frame (x=c (1, 2, 3), y=c (2, 3, 4))
+\endcode
+
+the object "myobject" can no longer be handled by RKVariable, but instead by RContainerObject.
+
+What this means practically is that if RKVariable finds out its corresponding object in R-space has more than a single dimension, the RKVariable will have to be deleted and an RContainerObject needs to be created instead.
+
+So what's the problem?
+
+Consider this hypothetical example:
+
+- RKVariable for object "myobject" runs a command to determine the dimensionality of "myobject"
+- Before that command has finished, the user assigns a data.frame to "myobject" (or deletes the object, or whatever)
+- The command to determine the dimensionality gets run and returns "1 dimension". RKVariable will assume it knows how to handle the object, and tries to do something with "myobject" which is only applicable for one-dimensionaly objects (e.g. trying to get the data as a one-dimensional array)
+- The user command assigning a data.frame gets run
+- RKVariables command to get the data fails
+
+Now, you may argue this does not sound all that likely, and probably it isn't, but the point to see is that there are cases in which the threaded nature of R access can pose some problems. More generally, that is the case, if you want a sequence of commands to run in exactly that order without being disturbed by intervening commands.
+
+To cope with this, it is sometimes desirable to keep closer control over the order in which commands get run in the backend.
 
 \section UsingTheInterfaceToRCommandChains How to ensure commands get executed in the correct order: RCommandChain
 
+The way to do this is to use RCommandChain. Basically, when you want command to be executed in a sequence being sure that no other commands intervene, you do this:
+
+\code
+	RCommandChain *chain = RKGlobals::rInterface ()->startChain ();
+
+	// create first command
+	RKGlobals::rInterface ()->issueCommand (first_command, chain);
+
+	// wait for command to return, potentially allows further calls to RInterface::issueCommand () from other places in the code
+
+	// create second command
+	RKGlobals::rInterface ()->issueCommand (second_command, chain);
+
+	RKGlobals::rInterface ()->closeChain (chain);
+\endcode
+
+Now the point is that you place both of your commands in a dedicated "chain", telling RKWard that those two commands will have to be run in direct succession. If between the first and the second command, another section of the code issues a different command, this command will never be run until all commands in the chain have been run and the chain has been marked as closed.
+
+To illustrate, consider this series of events:
+
+\code
+1) RCommandChain *chain = RKGlobals::rInterface ()->startChain ();
+2) RKGlobals::rInterface ()->issueCommand (first_command, chain);
+3) RKGlobals::rInterface ()->issueCommand (some_command);
+4) RKGlobals::rInterface ()->issueCommand (second_command, chain);
+5) RKGlobals::rInterface ()->issueCommand (some_command2);
+6) RKGlobals::rInterface ()->closeChain (chain);
+\endcode
+
+Now let's assume for a second, the R backend has been busy doing other stuff and has not executed any of the commands so far, then the execution stack will now look like this:
+
+- top level
+	- chain
+		- first_command
+		- second_command
+		- chain is marked as closed: after executing second_command, we may proceed with the top level
+	- some_command
+	- some_command2
+
+You can also open sub chains, using
+
+\code
+RCommandChain *sub_chain = RKGlobals::rInterface ()->startChain (parent_chain);
+\endcode
+
+Remember to close chains when you placed all the commands you needed to. If you don't close the chain, RKWard will continue to wait for new commands in that chain, and never proceed with commands outside of the chain.
+
 \section UsingTheInterfaceToROutputOptions Sending results to the output and retrieving low-level data from the backend
+
+There are a few special type-modifiers you can specify when creating and RCommand (as part of the second parameter to RCommand::RCommand or RInterface::issueCommand), that determine what will be done with the result:
+
+- RCommand::EmtpyCommand
+This one tells the backend, that the command does not really need to be executed, and does not contain anything. You'll rarely need this flag, but sometimes it is useful to submit an empty command simply to find out when it is finished.
+
+- RCommand::DirectToOutput
+This is typically used in plugins: When you specify this modifier, the plain text result of this command (i.e. whatever R prints out when evaluating the command) will be added to the HTML output file. Remember to call RKwardApp::newOutput in order to refresh the output-window once the command has finished.
+
+- RCommand::GetIntVector, RCommand::GetStringVector, RCommand::GetRealVector
+These are special modifiers helpful when transferring data from R to RKWard (used primarily in the editor classes and in conjunction with RCommand::Sync): They tell the backend to try to fetch the result as and array of int, char*, or double, respectively. For instance, if you know object "myobject" is an integer vector, you may get the data using
+
+\code
+RKGlobals::rInterface ()->issueCommand ("myobject", RCommand::Sync | RCommand::GetIntVector, "",this);
+\endcode
+
+Assuming the data can in fact be converted to a vector of integers, you can then access the data using these members in RCommand:
+
+- RCommand::intVectorLength (): size of int array
+- RCommand::getIntVector (): a pointer to the int array. Warning: The array is owned by the RCommand and will be deleted together with the RCommand, so don't just store the pointer
+- RCommand::detachIntVector (): If you do want to keep the array, use this call to transfer ownership to your class. You are now responsible for freeing up the data yourself.
+
+Obviously, whenever trying to transfer data from the backend, this approach is highly superior to parsing the QString RCommand::output ().
 
 \section UsingTheInterfaceToRFurtherReading Where to find more detailed information on these topics
 
-\section ToBeContinued To be continued
-This page is still incomplete!
+The following classes contain (or should) contain further important documentation:
 
-@see RInterface
-@see RCommand
-@see RCommandReceiver
-@see RCommandStack
+- \ref RInterface
+- \ref RCommand
+- \ref RCommandReceiver
+- \ref RCommandStack
 
 */
 

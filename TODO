@@ -24,7 +24,6 @@ code cleanups
 	- let's set this back for a while
 
 API documentation:
-- add overview pages with examples for RInterface usage
 - add page containing a rough overview of general architecture
 - include protected (and maybe even private) members in API-documentation (this is not a library, after all)
 

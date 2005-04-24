@@ -34,6 +34,12 @@
 **
 ** RKWard then is (will be) something like a free replacement for commercial statistical packages.
 **
+** \section docOverview Getting started with the documentation
+**
+** The following sections of the API-documentation provide useful entry-points:
+** 
+** - \ref UsingTheInterfaceToR
+**
 **	\section	copyright	Copyright
 **
 **   This program is free software; you can redistribute it and/or modify
