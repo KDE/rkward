@@ -25,7 +25,7 @@
 #include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qlistview.h>
-#include <qtimer.h>
+#include <qlineedit.h>
 
 #include "rbackend/rinterface.h"
 #include "rbackend/rcommandreceiver.h"
@@ -51,10 +51,15 @@ KHelpDlg::KHelpDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
 	resultsList->addColumn (i18n ("Package"));
 	packagesList->insertItem (i18n("All"));
 
-	fieldsList->insertItem (i18n("Not implemented yet"));
+	// HACK the following is hardcoded, do not modify
+	fieldsList->insertItem (i18n("All"));
+	fieldsList->insertItem (i18n("All but keywords"));
+	fieldsList->insertItem (i18n("Keywords"));
+	fieldsList->insertItem (i18n("Title"));
 
-	connect(this, SIGNAL(keyPressEvent (QKeyEvent * e)), this, SLOT(slotFieldKeyPressEvent (QKeyEvent * e)));
-	
+	QLineEdit *edit=field->lineEdit();
+
+	connect(edit, SIGNAL(returnPressed()), this, SLOT(slotFieldReturnPressed ()));
 
 
 	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_INSTALLED_PACKAGES, 0);
@@ -90,13 +95,25 @@ void KHelpDlg::slotFindButtonClicked()
 		package.append(packagesList->currentText());
 		package.append("\"");
 	}
+
+	// HACK the following is hardcoded, do not modify
+	QString fields="";
+	
+	switch(fieldsList->currentItem()){
+		case 1: fields = "c(\"alias\", \"concept\", \"title\")";break;
+		case 2: fields = "c(\"keyword\")";break;
+		case 3: fields = "c(\"title\")";break;
+		default: fields = "c(\"alias\", \"concept\", \"title\",\"keyword\")";
+			
+	}
 	
 	
 	QString s = ".rk.get.search.results(\"" +field->currentText() +"\",agrep=" 
-		+ agrep +", ignore.case=" + ignoreCase + ", package=" + package +")";
+		+ agrep +", ignore.case=" + ignoreCase + ", package=" + package +", fields=" + fields +")";
 		
 	
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, HELP_SEARCH, 0);
+	setEnabled(false);
 	field->insertItem(field->currentText());
 	
 	
@@ -137,6 +154,7 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 		for (int i=0; i < count; ++i) {
 			new QListViewItem (resultsList, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i]);
 		}
+		setEnabled(true);
 	} 
 	else if (command->getFlags () == GET_HELP_URL) {
 		url.setPath(command->getStringVector ()[0]);
@@ -162,21 +180,8 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 
 
 
-
-
-/*!
-    \fn KHelpDlg::slotFieldKeyPressEvent ( QKeyEvent * e )
-
-    We intercept enter.
- */
-void KHelpDlg::slotFieldKeyPressEvent ( QKeyEvent * e )
+void KHelpDlg::slotFieldReturnPressed (  )
 {
-
-	
-	if ( (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) && field->hasFocus ()) {
-		slotFindButtonClicked ();
-		return;
-	}
-	
-	//QComboBox::keyPressEvent( e );
+	slotFindButtonClicked ();
 }
+

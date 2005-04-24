@@ -40,10 +40,8 @@ public slots:
   virtual void          slotFindButtonClicked();
   virtual void          slotResultsListDblClicked( QListViewItem *item, const QPoint &, int );
   virtual void          slotPackageListActivated();
-  
-protected:
-  /*$PROTECTED_FUNCTIONS$*/
-  void slotFieldKeyPressEvent ( QKeyEvent * e );
+  virtual void          slotFieldReturnPressed();
+
 protected slots:
   /*$PROTECTED_SLOTS$*/
 private:

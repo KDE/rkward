@@ -18,7 +18,6 @@
 #include <khtmlview.h>
 #include <khtml_part.h>
 #include <klibloader.h>
-
 #include <klocale.h>
 #include <kiconloader.h>
 
@@ -72,11 +71,10 @@ bool RKHelpWindow::openURL(KURL url)
 		khtmlpart->openURL(url);
 		if (iShowOutput) {
 			setTabCaption(i18n("Output"));
-			setCaption(i18n("Output"));
 		}
 		else {
 			setTabCaption(url.fileName());
-			setCaption(url.prettyURL());
+			
 		}
 		currentURL=url;
 		scrollPosition=0;

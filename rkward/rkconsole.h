@@ -44,8 +44,6 @@ public:
 	/** Destructor */
 	~RKConsole();
 	
-	/** Empties the console */
-	void flush ();
 	/** Sets the current command
 	\param command the new command */
 	void setCurrentCommand (QString command);
@@ -87,6 +85,8 @@ private:
 /** We overload the paste function, in order to intercept paste commands and get them executed thru submitBatch.
 @sa submitBatch */
 	void paste();
+/** We overload the clear function.*/
+	void clear();
     
 private slots:
 /** Called when a command has been executed. */

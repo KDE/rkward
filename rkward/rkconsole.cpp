@@ -43,7 +43,7 @@ RKConsole::RKConsole(QWidget *parent, const char *name)
 	
 	prefix = "> ";
 	command_incomplete = false;
-	flush();
+	clear();
 	
 	commandsList.append (new QString(""));
 	
@@ -110,14 +110,6 @@ QString RKConsole::currentCommand()
 	s = s.stripWhiteSpace ();
 	
 	return(s);
-}
-
-
-void RKConsole::flush()
-{
-	setText("");
-	append (i18n (" "));
-	newLine ();
 }
 
 
@@ -261,4 +253,11 @@ void RKConsole::paste()
 {
 	QClipboard *cb = QApplication::clipboard();
 	submitBatch (cb->text());
+}
+
+void RKConsole::clear()
+{
+	QTextEdit::clear();
+	newLine();
+	
 }
