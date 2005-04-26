@@ -30,7 +30,7 @@ RKPluginBrowser::RKPluginBrowser(const QDomElement &element, QWidget *parent, RK
 	label = new QLabel (element.attribute ("label", "Enter your text"), this);
 	textedit = new QTextEdit ( element.attribute ("initial" ,"") ,
 	QString::null,this, element.attribute ("id")) ;
-	button = new QPushButton ("Browser...",this);
+	button = new QPushButton (i18n("Browse..."),this);
 //	size = element.attribute ("size", "small");
 	vbox->addWidget (label);
 	vbox->addWidget (textedit);

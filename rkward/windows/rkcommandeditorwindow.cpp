@@ -114,7 +114,7 @@ void RKCommandEditorWindow::setRHighlighting (Kate::Document *doc) {
 	int i;
 	//RK_DO (qDebug ("%s", "Looking for syntax highlighting definition"), COMMANDEDITOR, DL_INFO);
 	for (i = 0; i < modes_count; ++i) {
-		RK_DO (qDebug ("%s", highlightingInterface(doc)->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_DEBUG);
+		//RK_DO (qDebug ("%s", highlightingInterface(doc)->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_DEBUG);
 		if (highlightingInterface(doc)->hlModeName(i).lower() == "r script") {
 			found_mode = true;
 			break;

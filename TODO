@@ -3,7 +3,6 @@ Also, plans change frequently. If something is listed for a specific release, th
 
 Little annoying stuff:
 - fix flickering when one uses arrows in the console
-- use proper KMDI+KParts
 - auto refresh output + auto scroll at the bottom
 - add an example to show rkward-specific commands (rk.print, rk.graph)
 - instead of delete RObject, call RObject::deleteThis () and check for deleted in rCommandDone ()?

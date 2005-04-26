@@ -525,7 +525,7 @@ void RKwardApp::readProperties(KConfig* _cfg)
 bool RKwardApp::queryClose () {
 	RK_TRACE (APP);
 	
-	/*QValueList<KMdiChildView *> children;
+	QValueList<KMdiChildView *> children;
 	for(KMdiChildView *w = m_pDocumentViews->first();w;w= m_pDocumentViews->next()){
 		children.append(w);
 	}
@@ -537,7 +537,7 @@ bool RKwardApp::queryClose () {
 				return false;
 			}
 		}
-	}*/
+	}
 	
 	
 	if (RKGlobals::rObjectList ()->isEmpty ()) return true;
@@ -1010,7 +1010,7 @@ void RKwardApp::slotChildWindowCloseRequest (KMdiChildView * window) {
 	if (window->inherits("RKCommandEditorWindow")) {
 		RKCommandEditorWindow * editor = (RKCommandEditorWindow*) window;
 		if (editor->isModified()) {
-			int status = KMessageBox::warningYesNo(this,i18n("The document has been modified. Close anyway?"),i18n("File not saved"));
+			int status = KMessageBox::warningYesNo(this,i18n("The document \"%1\" has been modified. Close it anyway?").arg(editor->tabCaption()),i18n("File not saved"));
 	
 			if (status == KMessageBox::Yes) {
 				closeWindow(window);
