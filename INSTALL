@@ -46,7 +46,7 @@ for R >= 2.0, the default location seems to be
 --with-extra-libs=/usr/lib/R/lib/
 
 
-Personally, I need the following options for configure:
+Personally, I need the following options for configure (debian sid):
 --prefix=/usr --with-extra-libs=/usr/lib/R/lib/ --with-extra-includes=/usr/lib/R/include --enable-debug=full
 
 

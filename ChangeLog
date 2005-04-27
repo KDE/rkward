@@ -1,9 +1,12 @@
+--- Version 0.3.2 - Apr-27-2005
+- overloaded require works properly with character.only=FALSE
+- several API documentation improvement
 - hidden objects get shown/hidden according to configuration setting
 - settings dialog honors KDE-button order
-- R's x11 windows now handle their events
+- R's x11 windows now handle their events (x11-device is now usable)
 - fixed bug in the output (no update on empty output)
 - paste in the console is properly handled
-- r console and watch divorced
+- r console and command log divorced
 - console can handle incomplete statements (allowing multi-line input)
 - fixed silly crash on incomplete statements
 - updated spanish translation

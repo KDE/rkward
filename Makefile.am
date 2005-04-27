@@ -1,10 +1,10 @@
-####### kdevelop will overwrite this part!!! (begin)##########
 
 SUBDIRS = rkward po doc 
 
-EXTRA_DIST = rkward.kdevprj admin AUTHORS COPYING ChangeLog INSTALL README TODO rkward.lsm 
+EXTRA_DIST = admin AUTHORS COPYING ChangeLog INSTALL README TODO rkward.lsm Makefile.cvs
 
-####### kdevelop will overwrite this part!!! (end)############
+KDE_OPTIONS = noautodist
+
 # not a GNU package. You can remove this line, if 
 # have all needed files, that a GNU package needs
 AUTOMAKE_OPTIONS = foreign 

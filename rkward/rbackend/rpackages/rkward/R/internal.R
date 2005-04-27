@@ -104,6 +104,9 @@
 }
 
 "require" <- function (package, quietly = FALSE, warn.conflicts = TRUE, keep.source = getOption("keep.source.pkgs"), character.only = FALSE, version, save = TRUE) {
+	if (!character.only) {
+		package <- as.character (substitute (package));
+	}
 	if (!base::require (as.character (package), quietly, warn.conflicts, keep.source, character.only=TRUE, version, save)) {
 		.rk.do.call ("require", as.character (package))
 		return (base::require (as.character (package), quietly, warn.conflicts, keep.source, character.only=TRUE, version, save));
