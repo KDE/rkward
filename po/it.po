@@ -10,12 +10,12 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-04-26 21:39+0200\n"
-"PO-Revision-Date: 2005-04-22 08:59+0200\n"
+"PO-Revision-Date: 2005-04-29 00:29+0200\n"
 "Last-Translator: Daniele Medri <daniele.medri@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: agents/rkloadagent.cpp:38
 msgid "Loading Workspace ..."
@@ -146,7 +146,6 @@ msgid "Sorry, I forgot to list you. Please contact me to get added"
 msgstr "Ci dispiace, ho dimenticato di menzionarti. Per piacere, contattami"
 
 #: rkconsole.cpp:42
-#, fuzzy
 msgid "R Console"
 msgstr "Console"
 
@@ -156,7 +155,7 @@ msgstr ""
 
 #: rkoutputwindow.cpp:42
 msgid "Output Window"
-msgstr "Finestra di output"
+msgstr "Finestra dei risultati"
 
 #: rkoutputwindow.cpp:47
 msgid "&Print"
@@ -177,7 +176,7 @@ msgstr "&Aggiorna"
 #: rkoutputwindow.cpp:54 rkward.cpp:364 settings/rksettingsmoduleoutput.cpp:57
 #: windows/rkhelpwindow.cpp:73
 msgid "Output"
-msgstr "Output"
+msgstr "Risultato"
 
 #: rkward.cpp:119
 msgid "Data editor"
@@ -279,9 +278,8 @@ msgid "Paste inside Selection"
 msgstr "Incolla dentro la selezione"
 
 #: rkward.cpp:357
-#, fuzzy
 msgid "&Show / Refresh"
-msgstr "&Aggiorna"
+msgstr "Mo&stra / Aggiorna"
 
 #: rkward.cpp:358
 msgid "&Flush"
@@ -325,7 +323,7 @@ msgstr "Apre un documento esistente"
 
 #: rkward.cpp:380
 msgid "Opens a recently used file"
-msgstr "Apre un file usato recentemente"
+msgstr "Apre un file utilizzato recentemente"
 
 #: rkward.cpp:381
 msgid "Saves the actual document"
@@ -492,9 +490,8 @@ msgid "Save file"
 msgstr "Salva file"
 
 #: rkward.cpp:1013
-#, fuzzy
 msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr "Il documento è stato modificato. Chiudere ugualmente?"
+msgstr "Il documento \"%1\" è stato modificato. Chiudere ugualmente?"
 
 #: rkward.cpp:1013
 msgid "File not saved"
@@ -510,9 +507,8 @@ msgid "Flush output?"
 msgstr ""
 
 #: rkwatch.cpp:51
-#, fuzzy
 msgid "Command log"
-msgstr "Nuovo file di comandi"
+msgstr "Storico comandi"
 
 #: rkwatch.cpp:81
 msgid "Issuing command:\n"
@@ -572,7 +568,7 @@ msgid ""
 "Class: "
 msgstr ""
 "\n"
-"Classi: "
+"Classe: "
 
 #: robjectviewer.cpp:49
 msgid ""
@@ -622,7 +618,7 @@ msgstr ""
 
 #: core/rkmodificationtracker.cpp:47
 msgid "Restore object?"
-msgstr "Ripristina l'oggetto?"
+msgstr "Ripristina oggetto?"
 
 #: core/rkmodificationtracker.cpp:54 core/rkmodificationtracker.cpp:59
 msgid "Do you really want to remove the object '"
@@ -636,7 +632,7 @@ msgstr ""
 
 #: core/rkmodificationtracker.cpp:54 core/rkmodificationtracker.cpp:59
 msgid "Remove object?"
-msgstr "Rimuovi l'oggetto?"
+msgstr "Rimuovi oggetto?"
 
 #: core/rkmodificationtracker.cpp:59
 msgid "'? There's no way to get it back."
@@ -923,9 +919,8 @@ msgid "Class"
 msgstr "Classe"
 
 #: misc/rkobjectlistview.cpp:41
-#, fuzzy
 msgid "Configure View"
-msgstr "Configura pacchetti"
+msgstr "Configura vista"
 
 #: misc/rkobjectlistview.cpp:262
 msgid "[Objects]"
@@ -1048,8 +1043,7 @@ msgid ""
 "There was a problem starting the R backend. The following error(s) "
 "occurred:\n"
 msgstr ""
-"C'è stato un problema durante l'avvio del backend di R. I seguentierrori "
-"sono apparsi:\n"
+"C'è stato un problema durante l'avvio del backend di R. Sono successi i seguenti errori:\n"
 
 #: rbackend/rinterface.cpp:141
 msgid ""
@@ -1172,28 +1166,24 @@ msgid "Which columns should be shown?"
 msgstr ""
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:46
-#, fuzzy
 msgid "Label field"
-msgstr "Salvataggio non avvenuto"
+msgstr "Campo etichetta"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:51
-#, fuzzy
 msgid "Type field"
-msgstr "Apri file"
+msgstr "Tipo di campo"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:56
-#, fuzzy
 msgid "Class fied"
-msgstr "Classe"
+msgstr "Campo classe"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:84
-#, fuzzy
 msgid "Workspace Browser"
 msgstr "Area di lavoro"
 
 #: settings/rksettingsmoduleoutput.cpp:36
 msgid "Output Window options"
-msgstr "Opzioni per la finestra di output"
+msgstr "Opzioni per la finestra dei risultati"
 
 #: settings/rksettingsmodulephp.cpp:36
 msgid "Changes in this section take effect the next time you start a plugin"
@@ -1352,9 +1342,8 @@ msgid "RKwardApp"
 msgstr "RKwardApp"
 
 #: rkkonsole.moc.cpp:34 rkkonsole.moc.cpp:42
-#, fuzzy
 msgid "RKKonsole"
-msgstr "Console"
+msgstr "RKKConsole"
 
 #: rkwatch.moc.cpp:34 rkwatch.moc.cpp:42
 msgid "RKwatch"
@@ -1366,14 +1355,14 @@ msgid "&New"
 msgstr ""
 
 #: rc.cpp:9
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "&Workspace"
-msgstr "Area di lavoro"
+msgstr "&Area di lavoro"
 
 #: rc.cpp:15
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "&Output"
-msgstr "Output"
+msgstr "&Risultato"
 
 #: rc.cpp:18
 #, no-c-format
@@ -1390,35 +1379,5 @@ msgstr "Daniele Medri"
 msgid ""
 "_: EMAIL OF TRANSLATORS\n"
 "Your emails"
-msgstr "daniele.medri@libero.it"
+msgstr "daniele@medri.org"
 
-#~ msgid "&Interrupt"
-#~ msgstr "&Interrompi"
-
-#~ msgid "&Print Log"
-#~ msgstr "Stam&pa log"
-
-#~ msgid "Export Log"
-#~ msgstr "Esporta log"
-
-#~ msgid "&Clear Log"
-#~ msgstr "Pulis&ci log"
-
-#~ msgid "Watch"
-#~ msgstr "Osserva"
-
-#~ msgid "Not implemented yet"
-#~ msgstr "Non ancora implementato"
-
-#~ msgid ">> input from RKWard >>"
-#~ msgstr ">> input da RKWard >>"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "&Create New"
-#~ msgstr "&Crea nuovo"
-
-#~ msgid "The R engine reported errors while processing the plugin "
-#~ msgstr ""
-#~ "Il motore di R ha restituito errori durante l'esecuzione del plugin "
