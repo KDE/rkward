@@ -1,17 +1,17 @@
 # translation of it.po to Italian
 # translation of rkward.po to Italian
-# This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) 2005 THE PACKAGE'S COPYRIGHT HOLDER.
-# Daniele Medri <daniele@medri.org>, 2004.
-# Daniele Medri <daniele.medri@libero.it>, 2004, 2005.
-#
+# This file is distributed under the same license as the it package.
+# Copyright (C) 2005 THE it'S COPYRIGHT HOLDER.
+# Daniele Medri <daniele@medri.org>, 2004-2005.
+# 
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-04-26 21:39+0200\n"
-"PO-Revision-Date: 2005-04-29 00:29+0200\n"
-"Last-Translator: Daniele Medri <daniele.medri@libero.it>\n"
+"PO-Revision-Date: 2005-04-29 00:40+0200\n"
+"Last-Translator: Daniele Medri <daniele@medri.org>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -90,7 +90,7 @@ msgstr ""
 
 #: khelpdlg.cpp:57
 msgid "Keywords"
-msgstr ""
+msgstr "Parole chiave"
 
 #: main.cpp:70
 msgid "0.3.1"
@@ -151,7 +151,7 @@ msgstr "Console"
 
 #: rkkonsole.cpp:24
 msgid "Terminal"
-msgstr ""
+msgstr "Terminale"
 
 #: rkoutputwindow.cpp:42
 msgid "Output Window"
@@ -218,7 +218,7 @@ msgstr "Impostazione dei plugin..."
 msgid ""
 "Plugins are needed: you may manage these throught \"Settings->Configure "
 "RKWard\".\n"
-msgstr ""
+msgstr "I plugin sono necessari: puoi configurarli tramite \"Impostazioni->Configura RKWard\".\n"
 
 #: rkward.cpp:224
 msgid "No plugins found"
@@ -524,11 +524,11 @@ msgstr ""
 
 #: rkwatch.cpp:131
 msgid "Syntax error.\n"
-msgstr ""
+msgstr "Errore di sintassi.\n"
 
 #: rkwatch.cpp:133
 msgid "An unspecified error occured while running the command.\n"
-msgstr ""
+msgstr "Un errore indefinito è apparso durante l'esecuzione del comando.\n"
 
 #: robjectbrowser.cpp:48 dialogs/rkloadlibsdialog.cpp:49
 msgid "Update"
@@ -768,11 +768,12 @@ msgstr "Installa"
 msgid ""
 "The R-backend has reported errors handling packages.\n"
 "A transcript of the errors are shown below."
-msgstr ""
+msgstr "Il motore R ha riportato errori durante la gestione dei pacchetti.\n"
+"Una trascrizione degli errori è mostrata di seguito."
 
 #: dialogs/rkloadlibsdialog.cpp:57
 msgid "Error handling packages"
-msgstr ""
+msgstr "Errore durante la gestione dei pacchetti"
 
 #: dialogs/rkloadlibsdialog.cpp:144 dialogs/rkloadlibsdialog.cpp:387
 #: dialogs/rkloadlibsdialog.cpp:478 dialogs/rkloadlibsdialog.cpp:513
@@ -796,7 +797,7 @@ msgstr "Attendere prego, sto installando i pacchetti."
 msgid ""
 "There was an error installing the packages. Please, check the output on "
 "stderr. Sorry, there is no better error-handling so far..."
-msgstr ""
+msgstr "C'è stato un errore durante l'installazione dei pacchetti. Per piacere, controlla i risultati sullo standard error. Per piacere, non c'è una gestione degli errori migliore al momento..."
 
 #: dialogs/rkloadlibsdialog.cpp:173
 msgid "Error installing packages"
@@ -884,7 +885,7 @@ msgstr "[Nessun pacchetto disponibile]"
 
 #: dialogs/rkloadlibsdialog.cpp:590
 msgid "Please, stand by while downloading packages from CRAN."
-msgstr ""
+msgstr "Attendere per favore, scaricamento pacchetti da CRAN in corso."
 
 #: dialogs/startupdialog.cpp:56
 msgid "Start with an empty workspace"
@@ -945,7 +946,7 @@ msgstr "Modello personalizzato:"
 #: plugin/rkplugin.cpp:77
 msgid ""
 "The R-backend has reported one or more error(s) while processing the plugin "
-msgstr ""
+msgstr "Il motore di R ha riportato uno o più errori durante l'esecuzione del plugin "
 
 #: plugin/rkplugin.cpp:77
 msgid ""
@@ -1067,7 +1068,7 @@ msgstr ""
 msgid ""
 "\t-An unspecified error occured that is not yet handled by RKWard. Likely "
 "RKWard will not function properly. Please check your setup.\n"
-msgstr ""
+msgstr "\t-E' successo un errore non specificato non gestito da RKWard. Sembra che RKWard non funzionerà propriamente. Per piacere controlla le tue impostazioni.\n"
 
 #: rbackend/rinterface.cpp:149
 msgid "Error starting R"
@@ -1163,7 +1164,7 @@ msgstr ""
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:43
 msgid "Which columns should be shown?"
-msgstr ""
+msgstr "Quale colonna deve essere mostrata?"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:46
 msgid "Label field"
@@ -1290,7 +1291,7 @@ msgstr "Comandi di sincronizzazione"
 #: windows/rkhelpwindow.cpp:86
 msgid ""
 "<HTML><BODY><H1>RKWard output</H1><P>The output is empty.</P></BODY></HTML>"
-msgstr ""
+msgstr "<HTML><BODY><H1>Risultati di RKWard</H1><P>Nessun risultato.</P></BODY></HTML>"
 
 #: helpdlg.cpp:100 helpdlg.cpp:135 rc.cpp:48
 #, no-c-format
@@ -1352,7 +1353,7 @@ msgstr "RKwatch"
 #: rc.cpp:6
 #, no-c-format
 msgid "&New"
-msgstr ""
+msgstr "&Nuovo"
 
 #: rc.cpp:9
 #, no-c-format
