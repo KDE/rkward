@@ -6,6 +6,7 @@ Little annoying stuff:
 - auto refresh output + auto scroll at the bottom
 - add an example to show rkward-specific commands (rk.print, rk.graph)
 - instead of delete RObject, call RObject::deleteThis () and check for deleted in rCommandDone ()?
+- use include "x.moc" in order to speed up build
 
 stuff to do before 0.3.2 release
 - plugins (general)

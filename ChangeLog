@@ -1,3 +1,7 @@
+- decrease default debug level
+- don't crash when objects change their type from vector to list/data.frame, etc.
+- graph-creation no longer relies on (removable) R objects (can graph after load a workspace)
+
 --- Version 0.3.2 - Apr-27-2005
 - overloaded require works properly with character.only=FALSE
 - several API documentation improvement

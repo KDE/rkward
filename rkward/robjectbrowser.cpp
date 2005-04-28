@@ -125,9 +125,10 @@ void RObjectBrowser::slotListDoubleClicked (QListViewItem *item, const QPoint &,
 	
 	if (!object) return;
 	if (object == RKGlobals::rObjectList ()) return;
-
-	if ( (RKGlobals::rkApp()->activeWindow())->inherits("RKCommandEditorWindow") ) {
-		( (RKCommandEditorWindow*)RKGlobals::rkApp()->activeWindow() )->insertText(object->getFullName());
+	if (!RKGlobals::rkApp ()->activeWindow ()) return;	// yes, apparently this can happen!
+	
+	if ((RKGlobals::rkApp ()->activeWindow ())->inherits ("RKCommandEditorWindow")) {
+		static_cast<RKCommandEditorWindow*> (RKGlobals::rkApp ()->activeWindow ())->insertText (object->getFullName ());
 	}
 }
 
