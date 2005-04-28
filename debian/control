@@ -1,8 +1,8 @@
 Source: rkward
-Section: unknown
+Section: math
 Priority: optional
 Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
-Build-Depends: debhelper (>= 4.0.0), autotools-dev, kdelibs4-dev, r-base-dev (>= 2.0.0), libqt3-mt-dev (>= 3)
+Build-Depends: debhelper (>= 4.0.0), autotools-dev, kdelibs4-dev, r-base-dev (>= 2.0.0), libqt3-mt-dev (>= 3), r-base (>= 2.0.0)
 Standards-Version: 3.6.1
 
 Package: rkward

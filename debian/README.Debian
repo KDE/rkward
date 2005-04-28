@@ -1,0 +1,7 @@
+RKWard for Debian
+--------------
+
+RKWard usually ships its own version of the kate syntax-highlighting definition for R. The version shipped by RKWard is - at the time of this writing - better than the own shipped with kate in some respects. Due to packaging conflicts, however, this improved syntax highlighting definition can NOT be included in the rkward package.
+You may want to fetch the definition manually from RKWard-CVS and install to /usr/share/apps/katepart/syntax/r.xml.
+
+-- Thomas Friedrichsmeier <tfry@users.sourceforge.net>, Apr-29-2005

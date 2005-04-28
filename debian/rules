@@ -66,7 +66,13 @@ install: build
 
 	# Add here commands to install the package into debian/rkward.
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/rkward
-
+	# dirty hack to get rid of conflicting r.xml file without adjusting all makefiles
+	rm -vf $(CURDIR)/debian/rkward/usr/share/apps/katepart/syntax/r.xml
+	
+	# install the rkward R package to installation directory
+	dh_installdirs usr/lib/R/library
+	R CMD INSTALL -l $(CURDIR)/debian/rkward/usr/lib/R/library rkward/rbackend/rpackages/rkward
+	rm -vf $(CURDIR)/debian/rkward/usr/lib/R/library/R.css $(CURDIR)/debian/rkward/usr/lib/R/library/rkward/COPYING
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -98,7 +104,7 @@ binary-arch: build install
 #	dh_python
 #	dh_makeshlibs
 	dh_installdeb
-	dh_shlibdeps
+#	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
