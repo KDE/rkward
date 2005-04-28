@@ -53,7 +53,7 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, Q
 	connect (show_type_field_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
 	layout->addWidget (show_type_field_box);
 
-	show_class_field_box = new QCheckBox (i18n ("Class fied"), this);
+	show_class_field_box = new QCheckBox (i18n ("Class field"), this);
 	show_class_field_box->setChecked (showClassField ());
 	connect (show_class_field_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
 	layout->addWidget (show_class_field_box);
