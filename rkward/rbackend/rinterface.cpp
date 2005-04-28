@@ -221,6 +221,10 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		} else {
 			issueCommand (".rk.rkreply <- \"Too few arguments in call to get.tempfile.name.\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
 		}
+	} else if (call == "get.output.html.file") {
+		QDir dir (RKSettingsModuleLogfiles::filesPath ());
+		// TODO: make more generic, get filename sanely
+		issueCommand (".rk.rkreply <- \"" + dir.filePath ("rk_out.html") + "\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
 	} else if (call == "sync") {
 		RObject *obj = 0;
 		if (request->call_length >= 2) {

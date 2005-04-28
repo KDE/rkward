@@ -42,6 +42,10 @@
 	return (.rk.do.call ("get.tempfile.name", c (prefix, extension)))
 }
 
+"rk.get.output.html.file" <- function () {
+	return (.rk.do.call ("get.output.html.file", ""))
+}
+
 # renames a named object in a data.frame/list without changing it's position
 # TODO: create a generic function instead, that can handle all kinds of renames
 "rk.rename.in.container" <- function (x, old_name, new_name) {
@@ -57,15 +61,11 @@
 	error ("Could not find column with given name")
 }
 
-
 # Requests a graph to be written.
 "rk.graph.on" <- function(){
-	i=1
-	while(file.exists(file.path(.rk.output.path,paste("graph",i,".png",sep="")))) {
-		i=i+1
-	}
-	png(file.path(.rk.output.path,paste("graph",i,".png",sep="")))
-	cat(paste("<img src=\"", paste("graph",i,".png",sep=""),"\"><br>",sep=""),file=.rk.output.file,append=TRUE)
+	filename <- rk.get.tempfile.name (prefix="graph", extension=".png");
+	png (file.path (filename))
+	cat (paste ("<img src=\"", filename,"\"><br>", sep=""),file=rk.get.output.html.file (), append=TRUE)
 }
 
 "rk.graph.off" <- function(){
