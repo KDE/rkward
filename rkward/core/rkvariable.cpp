@@ -25,8 +25,9 @@
 #include "../rkglobals.h"
 #include "rkmodificationtracker.h"
 
-#define UPDATE_DIM_COMMAND 1
-#define UPDATE_CLASS_COMMAND 2
+#define CLASSIFY_COMMAND 1
+#define UPDATE_DIM_COMMAND 2
+#define UPDATE_CLASS_COMMAND 3
 #define GET_STORAGE_MODE_COMMAND 10
 #define GET_DATA_COMMAND 11
 #define GET_FACTOR_LEVELS_COMMAND 12
@@ -106,7 +107,8 @@ void RKVariable::updateFromR () {
 	
 	getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain ());
 
-	RCommand *command = new RCommand ("length (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
+// TODO: move classification / type mismatch-checking to RObject
+	RCommand *command = new RCommand (".rk.classify (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, CLASSIFY_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 }
 
@@ -116,7 +118,35 @@ void RKVariable::rCommandDone (RCommand *command) {
 	bool properties_changed = false;
 	RObject::rCommandDone (command);
 	
-	if (command->getFlags () == UPDATE_DIM_COMMAND) {
+	if (command->getFlags () == CLASSIFY_COMMAND) {
+		// WARNING: This code is (mostly) duplicated in RContainerObject!
+		if (!command->intVectorLength ()) {
+			RK_ASSERT (false);
+			return;
+		}
+
+		int new_type = command->getIntVector ()[0];
+
+		// check whether this  is still a container object
+		if ((RObject::type) && (new_type != RObject::type)) {
+			if ((new_type & RObject::Container)) {
+				RK_DO (qDebug ("type-mismatch: name: %s, old_type: %d, new_type: %d", RObject::name.latin1 (), type, new_type), OBJECTS, DL_INFO);
+				RObject::parent->typeMismatch (this, RObject::name);
+				return;	// will be deleted!
+			}
+		}
+		if (new_type != RObject::type) {
+			properties_changed = true;
+			RObject::type = new_type;
+		}
+
+		// classifiy command was successful. now get further information.
+		RCommand *command = new RCommand ("length (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
+		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+		
+		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
+
+	} else if (command->getFlags () == UPDATE_DIM_COMMAND) {
 		if (command->intVectorLength () == 1) {
 			length = command->getIntVector ()[0];
 		} else {

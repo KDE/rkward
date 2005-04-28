@@ -62,6 +62,7 @@ void RContainerObject::rCommandDone (RCommand *command) {
 
 	bool properties_changed = false;
 	if (command->getFlags () == CLASSIFY_COMMAND) {
+		// WARNING: This code is (mostly) duplicated in RContainerObject!
 		if (!command->intVectorLength ()) {
 			RK_ASSERT (false);
 			return;
@@ -142,8 +143,10 @@ void RContainerObject::rCommandDone (RCommand *command) {
 
 void RContainerObject::typeMismatch (RObject *child, QString childname) {
 	RK_TRACE (OBJECTS);
-	delete child;
-	childmap.remove (childname);
+	/* I no longer know, why I added the uncommented lines below. From what I can tell today, tracker->removeObject () will call removeChild ()
+	and the object will be deleted there. Will need to valgrind sonner or later to find out, if those lines did serve a purpose, after all. */
+	/* delete child;
+	childmap.remove (childname); */
 	
 	RKGlobals::tracker ()->removeObject (child, 0, true);
 	RKGlobals::rObjectList()->createFromR (this, childname);

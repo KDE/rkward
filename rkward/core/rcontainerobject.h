@@ -65,6 +65,7 @@ public:
 	QString validizeName (const QString &child_name);
 private:
 	friend class RObject;
+	friend class RKVariable;
 	void typeMismatch (RObject *child, QString childname);
 protected:
 	RObjectMap childmap;
