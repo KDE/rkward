@@ -141,7 +141,7 @@ bool RKLoadLibsDialog::downloadPackages (const QStringList &packages, QString to
 	RCommand *command = new RCommand ("download.packages (pkgs=" + package_string + ", destdir=\"" + to_dir + "\")", RCommand::App, "", this, DOWNLOAD_PACKAGES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 	
-	if (RKCancelDialog::showCancelDialog (i18n ("Fetch list"), i18n ("Please, stand by while downloading list of packages."), this, this, SIGNAL (downloadComplete ()), command) == QDialog::Rejected) return false;
+	if (RKCancelDialog::showCancelDialog (i18n ("Fetch list"), i18n ("Please, stand by while downloading the list of packages."), this, this, SIGNAL (downloadComplete ()), command) == QDialog::Rejected) return false;
 	return true;
 }
 
