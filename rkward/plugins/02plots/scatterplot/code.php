@@ -92,7 +92,9 @@ rk.plugin.on = expression( <? getRK("rkgraphson") ; ?>) ;
 rk.plugin.off = expression( <? getRK("rkgraphsoff") ; ?>) ;
 */ ?>
 rk.plugin.before = expression( <? getRK("before") ; ?>) ;
+<? /*
 rk.plugin.after = expression( <? getRK("after") ; ?>) ;
+*/ ?>
 
 <? # axes ?>
 rk.plugin.axes = <? getRK("axes") ;?> 
@@ -135,7 +137,7 @@ for (rk.plugin.iterator in 1:length(rk.plugin.Xvar)) {
 }
 
 # evaluating after
-if (!is.null(eval(rk.plugin.after))) eval(rk.plugin.after)
+# if (!is.null(eval(rk.plugin.after))) eval(rk.plugin.after)
 #doesn't work very well
 #if (!is.null(eval(rk.plugin.off))) eval(rk.plugin.off)
 rk.graph.off()
