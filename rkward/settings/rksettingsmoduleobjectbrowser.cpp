@@ -81,7 +81,7 @@ void RKSettingsModuleObjectBrowser::save (KConfig *config) {
 }
 
 QString RKSettingsModuleObjectBrowser::caption () {
-	return (i18n ("Workspace Browser"));
+	return (i18n ("Workspace"));
 }
 
 //static

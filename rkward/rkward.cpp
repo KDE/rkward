@@ -543,7 +543,7 @@ bool RKwardApp::queryClose () {
 	if (RKGlobals::rObjectList ()->isEmpty ()) return true;
 
 	int res;
-	res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the workspace?"), i18n ("Save workspace?"));
+	res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the workspace?"), i18n ("Save Workspace?"));
 	if (res == KMessageBox::No) return true;
 	if (res == KMessageBox::Yes) new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Quit);
 
@@ -603,7 +603,7 @@ void RKwardApp::fileOpenAskSave (const KURL &url) {
 	}
 	
 	int res;
-	res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the current workspace?"), i18n ("Save workspace?"));
+	res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the current workspace?"), i18n ("Save Workspace?"));
 	if (res == KMessageBox::No) {
 		fileOpenNoSave (url);
 	} else if (res == KMessageBox::Yes) {
