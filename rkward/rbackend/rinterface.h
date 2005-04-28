@@ -30,23 +30,24 @@ class RKwatch;
 class RCommand;
 class RKwardApp;
 
-/** This class does the rather low-level interfacing to the R-processor. The
-	interface can be used by submitting new commands with issueCommand () (see
-	the RCommand-class). Your command will then be placed in a first in first
-	out stack of commands to be executed. If you specified a receiver/slot in the
-	constructor of the RCommand, you will be notified, when the command has
-	finished.
+/** This class provides the main interface to the R-processor.
 
 	Note that since communication with R is asynchronous, there is no way to get
 	R-output within the same function, the request is submitted. You have to
-	provide a callback-slot, if you're interested in the output. (@see RCommand)
+	provide an RCommandReceiver object, if you're interested in the output.
+	
+	For a detailed explanation see \ref UsingTheInterfaceToR .
+
+	@see RCommand
   *@author Thomas Friedrichsmeier
   */
 
 class RInterface : public QObject {
 	Q_OBJECT
-public: 
+public:
+/** constructor */
 	RInterface();
+/** destructor */
 	~RInterface();
 
 /** issues the given command in the given chain */
