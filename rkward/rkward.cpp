@@ -211,9 +211,6 @@ void RKwardApp::doPostInit () {
 	konsole->setIcon(SmallIcon("konsole"));
 	console->setName("terminal");
 	addToolWindow(konsole,KDockWidget::DockBottom, getMainDockWidget(), 10);
-
-	// just to initialize the window-actions according to whether they're shown on startup or not
-	//slotToggleWindowClosed ();
 }
 
 void RKwardApp::initPlugins () {
@@ -364,12 +361,17 @@ void RKwardApp::initActions()
 	showRKOutput = new KToggleAction (i18n ("Output"), 0, 0, this, SLOT(slotShowRKOutput ()), actionCollection(), "windows_rkoutput");
 	showRObjectBrowser = new KToggleAction (i18n ("Workspace"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
 	
-	runAll = new KAction (i18n ("Run All"), KShortcut ("F9"), this, SLOT (slotRunAll ()), actionCollection (), "run_all");
+	runAll = new KAction (i18n ("Run all"), KShortcut ("F9"), this, SLOT (slotRunAll ()), actionCollection (), "run_all");
 	runAll->setIcon("player_fwd");
-	runSelection = new KAction (i18n ("Run Selection"), KShortcut ("F8"), this, SLOT (slotRunSelection ()), actionCollection (), "run_selection");
+	runSelection = new KAction (i18n ("Run selection"), KShortcut ("F8"), this, SLOT (slotRunSelection ()), actionCollection (), "run_selection");
 	runSelection->setIcon("player_play");
+	runLine = new KAction (i18n ("Run current line"), KShortcut ("Ctrl+L"), this, SLOT (slotRunLine ()), actionCollection (), "run_line");
+	runLine->setIcon("player_play");
 	interruptCommand = new KAction (i18n ("Interrupt running command"), 0, 0, this, SLOT (slotInterruptCommand ()), actionCollection (), "interrupt");
 	interruptCommand->setIcon("player_stop");
+
+
+
 	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
 	
@@ -1039,6 +1041,15 @@ void RKwardApp::slotRunSelection() {
 	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getSelection(), RCommand::User, ""));
 }
 
+void RKwardApp::slotRunLine() {
+	if (! activeWindow()->inherits("RKCommandEditorWindow"))
+		return;
+
+	if(((RKCommandEditorWindow*) activeWindow())->getLine().isEmpty() || ((RKCommandEditorWindow*) activeWindow())->getLine().isNull())
+		return;
+
+	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getLine(), RCommand::User, ""));
+}
 
 
 void RKwardApp::slotRunAll() {
@@ -1076,6 +1087,7 @@ void RKwardApp::slotViewActivated (KMdiChildView * window)
 		m_manager->setActivePart(0L);
 	}
 	setEnabledActions((QString) activeWindow()->name()=="dataeditor");
+	setCaption(window->caption());
 }
 
 
@@ -1104,6 +1116,7 @@ void RKwardApp::setEnabledActions(bool objectEditor)
 		fileSaveAs->setEnabled(false);
 		runAll->setEnabled(false);
 		runSelection->setEnabled(false);
+		runLine->setEnabled(false);
 		interruptCommand->setEnabled(false);
 	}
 	else{
@@ -1116,6 +1129,7 @@ void RKwardApp::setEnabledActions(bool objectEditor)
 		fileSaveAs->setEnabled(true);
 		runAll->setEnabled(true);
 		runSelection->setEnabled(true);
+		runLine->setEnabled(true);
 		interruptCommand->setEnabled(true);
 	}
 }

@@ -138,7 +138,11 @@ QString RKCommandEditorWindow::getSelection()
 	return selectionInterface(m_doc)->selection();
 }
 
-
+QString RKCommandEditorWindow::getLine()
+{
+    	RK_TRACE (COMMANDEDITOR);
+	return m_view->currentTextLine();
+}
 
 QString RKCommandEditorWindow::getText()
 {

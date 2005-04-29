@@ -86,10 +86,11 @@ static KCmdLineOptions options[] =
 int main(int argc, char *argv[])
 {
 
-	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), version, description, KAboutData::License_GPL, "(c) 2002, 2004", 0, "http://rkward.sf.net", "");
+	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), version, description, KAboutData::License_GPL, "(c) 2002, 2005", 0, "http://rkward.sf.net", "");
 	aboutData.addAuthor ("Thomas Friedrichsmeier", i18n("Project leader"), "");
-	aboutData.addAuthor ("Pierre Ecochard", i18n("Coder since 0.29"), "");
+	aboutData.addAuthor ("Pierre Ecochard", i18n("Core coder since 0.29"), "");
 	aboutData.addCredit ("Adrien d'Hardemare", i18n("Plugins and patches"), "");
+	aboutData.addCredit ("Marco Martin", i18n("A cool icon"), "");
 	aboutData.addCredit ("Daniele Medri", i18n("RKWard logo, many suggestions, help on wording"), "");
 	aboutData.addCredit ("David Sibai", i18n("Several valuable comments, hints and patches"), "");
 	aboutData.addCredit ("Philippe Grosjean", i18n("Several helpful comments and discussions"), "");

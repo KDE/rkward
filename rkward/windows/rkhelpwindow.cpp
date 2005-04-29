@@ -71,9 +71,11 @@ bool RKHelpWindow::openURL(KURL url)
 		khtmlpart->openURL(url);
 		if (iShowOutput) {
 			setTabCaption(i18n("Output"));
+			setCaption(i18n("Output"));
 		}
 		else {
 			setTabCaption(url.fileName());
+			setCaption(url.fileName());
 			
 		}
 		currentURL=url;

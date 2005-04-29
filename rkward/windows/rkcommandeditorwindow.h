@@ -54,6 +54,7 @@ public:
 
     ~RKCommandEditorWindow();
     QString getSelection();
+    QString getLine();
     QString getText();
     bool openURL(const KURL &url);
     KURL url();

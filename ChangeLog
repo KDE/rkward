@@ -1,3 +1,4 @@
+- new icon
 - decrease default debug level
 - don't crash when objects change their type from vector to list/data.frame, etc.
 - graph-creation no longer relies on (removable) R objects (can graph after load a workspace)

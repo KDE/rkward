@@ -45,8 +45,9 @@
 	
 	<Menu name="run"><text>&amp;Run</text>
 		<Separator/>
-		<Action name="run_all"/>
+		<Action name="run_line"/>
 		<Action name="run_selection"/>
+		<Action name="run_all"/>
 		<Separator/>
 		<Action name="interrupt"/>
 	</Menu>   
