@@ -92,4 +92,20 @@ private:
 	KURL current_url;
 };
 
+/**
+\page RepresentationOfRObjectsInRKWard Representation of R objects in RKWard
+\brief How objects in R space are represented in RKWard
+
+This page has not been written, yet.
+
+TODO: write me!
+	
+@see RObject
+@see RKVariable
+@see RContainerObject
+@see RObjectList
+@see RKModificationTracker
+ 
+ */
+ 
 #endif

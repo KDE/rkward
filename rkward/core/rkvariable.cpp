@@ -141,6 +141,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 		}
 
 		// classifiy command was successful. now get further information.
+		// TODO: actually, classify already contains dim (). Simplify!
 		RCommand *command = new RCommand ("length (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
 		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 		
