@@ -31,7 +31,7 @@ class RInterface;
 #define RIDLE_EVENT 10004
 #define RSTARTED_EVENT 11001
 #define R_EVAL_REQUEST_EVENT 12001
-// don't use the number following RSTARTUP_ERROR_EVENT, because an error code will be added!
+// don't use the numbers following RSTARTUP_ERROR_EVENT, because an error code will be added!
 #define RSTARTUP_ERROR_EVENT 13000
 
 /** This class represents the thread the R backend is running in. So to speak, this is where the "eventloop" of R is running. The main thing happening

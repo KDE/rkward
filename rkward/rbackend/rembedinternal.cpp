@@ -47,7 +47,7 @@ REmbedInternal::~REmbedInternal(){
 void REmbedInternal::shutdown () {
 }
 
-static int testcounter = 0;
+static int timeout_counter = 0;
 
 void REmbedInternal::processX11Events () {
 /* what we do here is walk the list of objects, that have told R, they're listening for events.
@@ -64,12 +64,12 @@ We figure out which ones look for X11-events and tell those to do their stuff (r
 /* I don't really understand what I'm doing here, but apparently this is necessary for Tcl-Tk windows to function properly. */
 	R_PolledEvents ();
 	
-/* Maybe we also need to also call R_timeout_handler once in a while? Needed for tkStartGUI () to do something. Obviously this is
-extremely crude code! */
-	if (++testcounter < 1000) {
+/* Maybe we also need to also call R_timeout_handler once in a while? Obviously this is extremely crude code! 
+TODO: verify we really need this. */
+	if (++timeout_counter > 100) {
 		extern void (* R_timeout_handler) ();
 		if (R_timeout_handler) R_timeout_handler ();
-		testcounter = 0;
+		timeout_counter = 0;
 	}
 }
 

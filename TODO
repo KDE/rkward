@@ -86,3 +86,11 @@ Notes for x11-window capturing:
 - Plan C:
 	- modify at R level (override x11 ())
 	- least preferable solution as we can not be sure we catch every use.
+- remaining problem: how to get the window id given the device id?
+	- http://tronche.com/gui/x/xlib/events/window-state-change/create.html#XCreateWindowEvent
+	- we may catch this using KApplication::installlX11EventFilter
+	- event filter should only be active during the wrapper (Plan A-C)
+	- event filter should probably do some sanity checking
+	- this should give us the window id corresponding to the x11-call
+	
+	

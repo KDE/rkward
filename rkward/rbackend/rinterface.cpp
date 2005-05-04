@@ -27,6 +27,7 @@
 #include "../core/robjectlist.h"
 #include "../core/rkmodificationtracker.h"
 #include "../dialogs/rkloadlibsdialog.h"
+//#include "rkwindowcatcher.h"
 
 #include "../rkglobals.h"
 #include "../debug.h"
@@ -52,9 +53,12 @@ int RInterface::mutex_counter;
 
 RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
+	
+/*	window_catcher = new RKWindowCatcher (0);
+	window_catcher->hide (); */
+	
 // note: we can safely mess with RKSettingsModuleR::r_home_dir, since if the setting is bad, the app will exit without anything being saved. If the
 // setting is good, everything is fine anyway.
-	
 	char *env_r_home = getenv ("R_HOME");
 	if (!env_r_home) {
 		if (RKSettingsModuleR::r_home_dir == "") {
@@ -252,6 +256,17 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		} else {
 			issueCommand (".rk.rkreply <- \"Too few arguments in call to require.\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
 		}
+/* does not work, yet :-(
+	} else if (call == "startOpenX11") {
+		// TODO: error checking handling (wrong parameter count/type)
+		if (request->call_length >= 2) {
+			window_catcher->start (QString (request->call[1]).toInt ());
+		}
+	} else if (call == "endOpenX11") {
+		// TODO: error checking handling (wrong parameter count/type)
+		if (request->call_length >= 2) {
+			window_catcher->stop (QString (request->call[1]).toInt ());
+		} */
 	} else {
 		issueCommand (".rk.rkreply <- \"Unrecognized call '" + call + "'. Ignoring\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
 	}

@@ -114,6 +114,18 @@
 	return (TRUE)
 }
 
+# overriding x11 to get informed, when a new x11 window is opened
+#"x11" <- function (display = "", width = 7, height = 7, pointsize = 12, gamma = 1, colortype = getOption("X11colortype"), maxcubesize = 256, bg #= "transparent", canvas = "white", fonts = getOption("X11fonts")) {
+#	.rk.do.call ("startOpenX11", as.character (dev.cur ()));
+#
+#	if (display == "" && .Platform$GUI == "AQUA" && Sys.getenv("DISPLAY") == "")
+#		Sys.putenv (DISPLAY = ":0")
+#	.Internal(X11(display, width, height, pointsize, gamma, colortype, maxcubesize, bg, canvas, fonts, NA))
+#
+#	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
+#}
+
+
 # changed to allow assignment of values not in levels without losing information.
 "[<-.factor" <- function (x, i, value) {
 	ok <- TRUE
