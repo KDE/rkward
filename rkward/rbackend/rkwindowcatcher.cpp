@@ -17,6 +17,8 @@
 
 #include "rkwindowcatcher.h"
 
+#ifndef DISABLE_RKWINDOWCATCHER
+
 #include <kapplication.h>
 #include <qxembed.h>
 
@@ -26,6 +28,7 @@
 #include "../debug.h"
 
 // function below is a slightly adapted copy from http://lists.trolltech.com/qt-interest/1999-10/msg00224.html
+// this could be tweaked a little more, since for instance we know we're only looking for toplevel windows
 Window Window_With_Name (Display *dp, Window top, const char *name) {
     Window *children, dummy;
     unsigned int nchildren;
@@ -56,6 +59,18 @@ RKWindowCatcher::RKWindowCatcher (QWidget *parent) : QWidget (parent) {
 RKWindowCatcher::~RKWindowCatcher () {
 }
 
+void RKWindowCatcher::catchWindow (const QString &title_start, int corresponding_device_number) {
+	Window w = Window_With_Name (qt_xdisplay (), qApp->desktop ()->winId (), title_start.latin1 ());
+	qDebug ("Window id is: %x", w);
+	if (w) {
+		QXEmbed *capture = new QXEmbed (); // (0, 0, Qt::WDestructiveClose);
+		capture->setProtocol (QXEmbed::XPLAIN);
+		capture->embed (w);
+		capture->show ();
+	}
+}
+
+/*
 void RKWindowCatcher::start (int prev_cur_device) {
 	RK_DO (qDebug ("Window Catcher activated"), RBACKEND, DL_DEBUG);
 
@@ -79,6 +94,8 @@ void RKWindowCatcher::stop (int new_cur_device) {
 		}
 	}
 	last_cur_device = new_cur_device;
-}
+} */
 
 #include "rkwindowcatcher.moc"
+
+#endif // DISABLE_RKWINDOWCATCHER

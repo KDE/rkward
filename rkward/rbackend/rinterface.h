@@ -29,7 +29,6 @@
 class RKwatch;
 class RCommand;
 class RKwardApp;
-//class RKWindowCatcher;
 
 /** This class provides the main interface to the R-processor.
 
@@ -73,7 +72,6 @@ private:
 	
 	void processREvalRequest (REvalRequest *request);
 //	void processRGetValueRequest (RGetValueRequest);	
-//	RKWindowCatcher *window_catcher;
 friend class RKwardApp;
 	RKwatch *watch;
 protected:

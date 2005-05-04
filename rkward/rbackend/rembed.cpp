@@ -19,7 +19,6 @@
 #include <qfile.h>
 #include <qtextstream.h>
 #include <qstring.h>
-//#include <qapplication.h>
 
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulelogfiles.h"

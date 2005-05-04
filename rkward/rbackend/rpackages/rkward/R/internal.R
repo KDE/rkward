@@ -114,6 +114,10 @@
 	return (TRUE)
 }
 
+".rk.catch.window" <- function (title_begin, corresponding_device) {
+	.rk.do.call ("catchWindow", c (as.character (title_begin), as.character (corresponding_device)))
+}
+
 # overriding x11 to get informed, when a new x11 window is opened
 #"x11" <- function (display = "", width = 7, height = 7, pointsize = 12, gamma = 1, colortype = getOption("X11colortype"), maxcubesize = 256, bg #= "transparent", canvas = "white", fonts = getOption("X11fonts")) {
 #	.rk.do.call ("startOpenX11", as.character (dev.cur ()));

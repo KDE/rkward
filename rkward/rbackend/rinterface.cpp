@@ -27,7 +27,12 @@
 #include "../core/robjectlist.h"
 #include "../core/rkmodificationtracker.h"
 #include "../dialogs/rkloadlibsdialog.h"
-//#include "rkwindowcatcher.h"
+
+#include "rkwindowcatcher.h"
+#ifndef DISABLE_RKWINDOWCATCHER
+// putting this here instead of the class-header so I'm able to mess with it often without long recompiles. Fix when it works!
+RKWindowCatcher *window_catcher;
+#endif // DISABLE_RKWINDOWCATCHER
 
 #include "../rkglobals.h"
 #include "../debug.h"
@@ -54,8 +59,10 @@ int RInterface::mutex_counter;
 RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
 	
-/*	window_catcher = new RKWindowCatcher (0);
-	window_catcher->hide (); */
+#ifndef DISABLE_RKWINDOWCATCHER
+	window_catcher = new RKWindowCatcher (0);
+	window_catcher->hide ();
+#endif // DISABLE_RKWINDOWCATCHER
 	
 // note: we can safely mess with RKSettingsModuleR::r_home_dir, since if the setting is bad, the app will exit without anything being saved. If the
 // setting is good, everything is fine anyway.
@@ -256,17 +263,14 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		} else {
 			issueCommand (".rk.rkreply <- \"Too few arguments in call to require.\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
 		}
-/* does not work, yet :-(
-	} else if (call == "startOpenX11") {
+ #ifndef DISABLE_RKWINDOWCATCHER
+ // does not work, yet :-( R crashes.
+	} else if (call == "catchWindow") {
 		// TODO: error checking handling (wrong parameter count/type)
-		if (request->call_length >= 2) {
-			window_catcher->start (QString (request->call[1]).toInt ());
+		if (request->call_length >= 3) {
+			window_catcher->catchWindow (request->call[1], QString (request->call[2]).toInt ());
 		}
-	} else if (call == "endOpenX11") {
-		// TODO: error checking handling (wrong parameter count/type)
-		if (request->call_length >= 2) {
-			window_catcher->stop (QString (request->call[1]).toInt ());
-		} */
+#endif // DISABLE_RKWINDOWCATCHER
 	} else {
 		issueCommand (".rk.rkreply <- \"Unrecognized call '" + call + "'. Ignoring\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
 	}
