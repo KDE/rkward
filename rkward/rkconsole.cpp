@@ -34,7 +34,7 @@
 #include "rbackend/rcommand.h"
 
 RKConsole::RKConsole(QWidget *parent, const char *name)
- : QTextEdit(parent, name)
+ : KTextEdit(parent, name)
 {
 	QFont font ("Courier");
 	setFont (font);
@@ -94,7 +94,7 @@ void RKConsole::keyPressEvent ( QKeyEvent * e )
 		cursorAtTheEnd ();
 	}
 	
-	QTextEdit::keyPressEvent( e );
+	KTextEdit::keyPressEvent( e );
 }
 
 
@@ -257,7 +257,7 @@ void RKConsole::paste()
 
 void RKConsole::clear()
 {
-	QTextEdit::clear();
+	KTextEdit::clear();
 	newLine();
 	
 }

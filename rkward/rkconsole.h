@@ -17,7 +17,7 @@
 #ifndef RKCONSOLE_H
 #define RKCONSOLE_H
 
-#include <qtextedit.h>
+#include <ktextedit.h>
 #include <qptrlist.h>
 
 #include "rbackend/rcommandreceiver.h"
@@ -29,14 +29,14 @@ class QStringList;
 ** 	\brief Provides an R-like console.
 **
 ** This class provides a console, which is very similar to the classic R console. It is mainly used by RKwatch to allow
-** the user to enter commands manualy. It is basically just a modified QTextEdit.
+** the user to enter commands manualy. It is basically just a modified KTextEdit.
 ** 
-** \sa RKwatch, QTextEdit
+** \sa RKwatch, KTextEdit
 ** 
 ** @author Pierre Ecochard
 **/
 
-class RKConsole : public QTextEdit, public RCommandReceiver {
+class RKConsole : public KTextEdit, public RCommandReceiver {
 Q_OBJECT
 public:
 	/** Constructor */
