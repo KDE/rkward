@@ -17,8 +17,6 @@
  
 #define RKWARD_DEBUG
 
-#ifdef RKWARD_DEBUG
-
 extern int RK_Debug_Level;
 extern int RK_Debug_Flags;
 
@@ -41,7 +39,10 @@ extern int RK_Debug_Flags;
 #define MISC 512
 #define DIALOGS 1024
 #define OUTPUT 2048
-#define ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR | RBACKEND | MISC)
+#define XML 4096
+#define ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR | RBACKEND | MISC | XML)
+
+#ifdef RKWARD_DEBUG
 
 // Debug functions 
 #define RK_DO(expr,flags,level) if ((flags & RK_Debug_Flags) && (level >= RK_Debug_Level)) { expr; }

@@ -65,7 +65,22 @@ void RKWindowCatcher::catchWindow (const QString &title_start, int corresponding
 	if (w) {
 		QXEmbed *capture = new QXEmbed (); // (0, 0, Qt::WDestructiveClose);
 		capture->setProtocol (QXEmbed::XPLAIN);
-		capture->embed (w);
+// (trying to) work around buggy R X11 event handling (see http://www.ens.gu.edu.au/robertk/R/devel/01a/0077.html)
+		extern Display *Rf_getX11Display (); // now, how to link this?
+
+		qDebug ("qt disp: %x r disp: %x", qt_xdisplay (), Rf_getX11Display ());
+		
+		Atom *old_prots;
+		int num_old_prots;
+		if (!XGetWMProtocols (Rf_getX11Display (), w, &old_prots, &num_old_prots)) qDebug ("fail 1");
+		if (!XSetWMProtocols (Rf_getX11Display (), w, 0, 0)) qDebug ("fail2");
+//		capture->embed (w);
+		XEvent dummy;
+		while (XPending (Rf_getX11Display ())) {
+			XNextEvent (Rf_getX11Display (), &dummy);
+			qDebug ("event for window: %x", dummy.xany.window);
+		}
+		XSetWMProtocols (Rf_getX11Display (), w, old_prots, num_old_prots);
 		capture->show ();
 	}
 }

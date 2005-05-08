@@ -263,12 +263,14 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		} else {
 			issueCommand (".rk.rkreply <- \"Too few arguments in call to require.\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
 		}
- #ifndef DISABLE_RKWINDOWCATCHER
+#ifndef DISABLE_RKWINDOWCATCHER
  // does not work, yet :-( R crashes.
 	} else if (call == "catchWindow") {
-		// TODO: error checking handling (wrong parameter count/type)
+		// TODO: error checking/handling (wrong parameter count/type)
 		if (request->call_length >= 3) {
+			MUTEX_LOCK;
 			window_catcher->catchWindow (request->call[1], QString (request->call[2]).toInt ());
+			MUTEX_UNLOCK;
 		}
 #endif // DISABLE_RKWINDOWCATCHER
 	} else {
