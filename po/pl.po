@@ -27,43 +27,46 @@ msgid ""
 "There has been an error opening file '%1':\n"
 "%2"
 msgstr ""
+"Wyst±pi³ b³±d podczas otwierania pliku '%1':\n"
+"%2"
 
 #: agents/rkloadagent.cpp:75
 #, fuzzy
 msgid "Error loading workspace"
-msgstr "Otwieranie obszaru roboczego"
+msgstr "B³±d otwarcia obszaru roboczego"
 
 #: agents/rksaveagent.cpp:57
 msgid ""
 "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
+"Nie poda³e¶ nazwy pliku. Dane NIE zosta³y zapisane. Czy chcesz kontynuowaæ?"
 
 #: agents/rksaveagent.cpp:70 agents/rksaveagent.cpp:83
 #, fuzzy
 msgid "Saving to file '"
-msgstr "Zapis pliku"
+msgstr "Zapis do pliku '"
 
 #: agents/rksaveagent.cpp:70
 msgid "' failed. What do you want to do?"
-msgstr ""
+msgstr "' nie powiód³ siê. Co chcesz zrobiæ?"
 
 #: agents/rksaveagent.cpp:70
 #, fuzzy
 msgid "Save failed"
-msgstr "Zapis pliku"
+msgstr "B³±d zapisu"
 
 #: agents/rksaveagent.cpp:70
 msgid "Try saving with a different filename"
-msgstr ""
+msgstr "Spróbuj zapisaæ do pliku o innej nazwie"
 
 #: agents/rksaveagent.cpp:70
 #, fuzzy
 msgid "Saving failed"
-msgstr "Zapis pliku"
+msgstr "B³±d zapisu"
 
 #: agents/rksaveagent.cpp:83
 msgid "' failed. Do you want to try saving to a different filename?"
-msgstr ""
+msgstr "' nie powiód³ siê. Czy chcesz spróbowaæ zapisaæ do pliku o innej nazwie?"
 
 #: agents/rkloadagent.moc.cpp:34 agents/rkloadagent.moc.cpp:42
 msgid "RKLoadAgent"
@@ -71,11 +74,11 @@ msgstr ""
 
 #: khelpdlg.cpp:49
 msgid "Topic"
-msgstr ""
+msgstr "Temat"
 
 #: khelpdlg.cpp:50 khelpdlg.cpp:58 dialogs/rkloadlibsdialog.cpp:206
 msgid "Title"
-msgstr ""
+msgstr "Tytu³"
 
 #: khelpdlg.cpp:51
 msgid "Package"
@@ -112,7 +115,7 @@ msgstr "Obfito¶æ komunikatów debagera (0-5)"
 
 #: main.cpp:81
 msgid "Mask for components to debug as a binary number (see debug.h)"
-msgstr "Maskuj komponemty debagowane jako liczby binarne (patrz debug.h)"
+msgstr "Maskuj komponenty debagowane jako liczby binarne (patrz debug.h)"
 
 #: main.cpp:90
 msgid "Project leader"
@@ -124,7 +127,7 @@ msgstr ""
 
 #: main.cpp:92
 msgid "Plugins and patches"
-msgstr ""
+msgstr "Wtyczki i ³atki"
 
 #: main.cpp:93
 msgid "RKWard logo, many suggestions, help on wording"
@@ -176,7 +179,7 @@ msgstr "Wy&czy¶æ log"
 
 #: rkoutputwindow.cpp:51
 msgid "&Refresh"
-msgstr ""
+msgstr "Odœwie¿ Log"
 
 #: rkoutputwindow.cpp:54 rkward.cpp:364 settings/rksettingsmoduleoutput.cpp:57
 #: windows/rkhelpwindow.cpp:73
@@ -287,7 +290,7 @@ msgstr "Wklej do zaznaczenia"
 
 #: rkward.cpp:357
 msgid "&Show / Refresh"
-msgstr ""
+msgstr "Poka¿ / Odœwie¿"
 
 #: rkward.cpp:358
 msgid "&Flush"
@@ -493,7 +496,7 @@ msgstr "otwierany plik"
 
 #: rkward.cpp:876
 msgid "Error!"
-msgstr ""
+msgstr "B³±d!"
 
 #: rkward.cpp:893
 msgid "Open file"
@@ -544,11 +547,11 @@ msgstr ""
 
 #: rkwatch.cpp:131
 msgid "Syntax error.\n"
-msgstr ""
+msgstr "B³±d syntaktyczny.\n"
 
 #: rkwatch.cpp:133
 msgid "An unspecified error occured while running the command.\n"
-msgstr ""
+msgstr "Wyst±pi³ nieznany b³±d podczas wykonywania polecenia.\n"
 
 #: robjectbrowser.cpp:48 dialogs/rkloadlibsdialog.cpp:49
 msgid "Update"
@@ -663,7 +666,7 @@ msgstr "Zmiana nazwy obiektu"
 
 #: core/rkmodificationtracker.cpp:59
 msgid "'? There's no way to get it back."
-msgstr ""
+msgstr "'? Nie mo¿na ich odzyskaæ."
 
 #: dataeditor/editformatdialog.cpp:44
 msgid "Alignment"
@@ -679,7 +682,7 @@ msgstr ""
 
 #: dataeditor/editformatdialog.cpp:60
 msgid "Default setting"
-msgstr ""
+msgstr "Ustawienia domyœlne"
 
 #: dataeditor/editformatdialog.cpp:61
 msgid "As required"
@@ -747,7 +750,7 @@ msgstr ""
 
 #: dataeditor/twintable.cpp:98
 msgid "Delete this variable"
-msgstr ""
+msgstr "Usuñ t¹ zmienn¹"
 
 #: dataeditor/twintable.cpp:103
 msgid "Insert new case above"
@@ -790,7 +793,7 @@ msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:53
 msgid "Install"
-msgstr ""
+msgstr "Instaluj"
 
 #: dialogs/rkloadlibsdialog.cpp:57
 msgid ""
@@ -844,7 +847,7 @@ msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:207 dialogs/rkloadlibsdialog.cpp:508
 msgid "Version"
-msgstr ""
+msgstr "Wersja"
 
 #: dialogs/rkloadlibsdialog.cpp:208 dialogs/rkloadlibsdialog.cpp:380
 msgid "Location"
@@ -871,7 +874,7 @@ msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:381
 msgid "Local"
-msgstr ""
+msgstr "Lokalny"
 
 #: dialogs/rkloadlibsdialog.cpp:382
 msgid "Online"
@@ -879,12 +882,12 @@ msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:389
 msgid "Update Selected"
-msgstr ""
+msgstr "Aktualizuj zaznaczone"
 
 #: dialogs/rkloadlibsdialog.cpp:391
 #, fuzzy
 msgid "Update All"
-msgstr "Aktualizuj"
+msgstr "Aktualizuj wszystko"
 
 #: dialogs/rkloadlibsdialog.cpp:393 dialogs/rkloadlibsdialog.cpp:517
 msgid "As \"root\" user"
@@ -906,7 +909,7 @@ msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:515
 msgid "Install Selected"
-msgstr ""
+msgstr "Instaluj zaznaczone"
 
 #: dialogs/rkloadlibsdialog.cpp:558
 msgid "[No packages available]"
@@ -937,7 +940,7 @@ msgstr "Zmiana nazwy"
 #: dialogs/startupdialog.cpp:63
 #, fuzzy
 msgid "<<Open another file>>"
-msgstr "Otwórz plik"
+msgstr "<<Otwórz kolejny plik>>"
 
 #: dialogs/startupdialog.cpp:86
 msgid "What would you like to do?"
@@ -1008,7 +1011,7 @@ msgstr ""
 
 #: plugin/rkplugin.cpp:512
 msgid "Next >"
-msgstr ""
+msgstr "Nastêpny >"
 
 #: plugin/rkvarslot.cpp:335
 msgid " - You have to select a variable for the \""
@@ -1143,6 +1146,8 @@ msgid ""
 "There has been an error\n"
 "(\""
 msgstr ""
+"Wyst±pi³ b³±d\n"
+"(\""
 
 #: scriptbackends/phpbackend.cpp:170
 msgid ""
@@ -1191,11 +1196,11 @@ msgstr ""
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:36
 msgid "Show hidden objects"
-msgstr ""
+msgstr "Poka¿ ukryte obiekty"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:43
 msgid "Which columns should be shown?"
-msgstr ""
+msgstr "Które kolumny mam pokazaæ"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:46
 #, fuzzy
@@ -1261,11 +1266,11 @@ msgstr ""
 
 #: settings/rksettingsmoduleplugins.cpp:60
 msgid "Directory where the plugins are located"
-msgstr ""
+msgstr "Katalog w którym znajduj¹ siê wtyczki"
 
 #: settings/rksettingsmoduleplugins.cpp:77
 msgid "Plugins"
-msgstr ""
+msgstr "Wtyczki"
 
 #: settings/rksettingsmoduler.cpp:41
 msgid ""
@@ -1292,15 +1297,15 @@ msgstr ""
 
 #: settings/rksettingsmodulewatch.cpp:117
 msgid "always show command"
-msgstr ""
+msgstr "zawsze pokazuj polecenia"
 
 #: settings/rksettingsmodulewatch.cpp:120
 msgid "always show result"
-msgstr ""
+msgstr "zawsze pokazuj wyniki"
 
 #: settings/rksettingsmodulewatch.cpp:123
 msgid "show errors"
-msgstr ""
+msgstr "Pokazuj b³êdy"
 
 #: settings/rksettingsmodulewatch.cpp:126
 msgid "show/raise window"
@@ -1331,7 +1336,7 @@ msgstr ""
 #: helpdlg.cpp:100 helpdlg.cpp:135 rc.cpp:48
 #, no-c-format
 msgid "Column 1"
-msgstr ""
+msgstr "Kolumna 1"
 
 #: helpdlg.cpp:128 rc.cpp:27
 #, no-c-format
@@ -1341,7 +1346,7 @@ msgstr ""
 #: helpdlg.cpp:129 rc.cpp:30
 #, no-c-format
 msgid "Find:"
-msgstr ""
+msgstr "Znajd¼:"
 
 #: helpdlg.cpp:130 rc.cpp:33
 #, no-c-format
@@ -1366,7 +1371,7 @@ msgstr ""
 #: helpdlg.cpp:134 rc.cpp:45
 #, no-c-format
 msgid "Find"
-msgstr ""
+msgstr "Znajd¼"
 
 #: helpdlg.cpp:138 rc.cpp:51
 #, no-c-format
@@ -1391,7 +1396,7 @@ msgstr "Podgl±d"
 #: rc.cpp:6
 #, no-c-format
 msgid "&New"
-msgstr ""
+msgstr "&Nowy"
 
 #: rc.cpp:9
 #, fuzzy, no-c-format
