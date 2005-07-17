@@ -10,12 +10,12 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-05-30 21:00+0200\n"
-"PO-Revision-Date: 2005-04-29 00:40+0200\n"
+"PO-Revision-Date: 2005-07-17 18:06+0200\n"
 "Last-Translator: Daniele Medri <daniele@medri.org>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: agents/rkloadagent.cpp:38
 msgid "Loading Workspace ..."
@@ -118,7 +118,6 @@ msgid "Project leader"
 msgstr "Capo progetto"
 
 #: main.cpp:91
-#, fuzzy
 msgid "Core coder since 0.29"
 msgstr "Sviluppatore dalla versione 0.29"
 
@@ -128,7 +127,7 @@ msgstr "Plugin e patch"
 
 #: main.cpp:93
 msgid "A cool icon"
-msgstr ""
+msgstr "Una bella icona"
 
 #: main.cpp:94
 msgid "RKWard logo, many suggestions, help on wording"
@@ -293,18 +292,16 @@ msgid "Console"
 msgstr "Console"
 
 #: rkward.cpp:364
-#, fuzzy
 msgid "Run all"
 msgstr "Esegui tutto"
 
 #: rkward.cpp:366
-#, fuzzy
 msgid "Run selection"
 msgstr "Esegui selezione"
 
 #: rkward.cpp:368
 msgid "Run current line"
-msgstr ""
+msgstr "Esegui la linea corrente"
 
 #: rkward.cpp:370
 msgid "Interrupt running command"
@@ -399,9 +396,8 @@ msgid "Do you want to save the workspace?"
 msgstr "Desideri salvare l'area di lavoro?"
 
 #: rkward.cpp:548 rkward.cpp:608
-#, fuzzy
 msgid "Save Workspace?"
-msgstr "Salva area di lavoro"
+msgstr "Salva area di lavoro?"
 
 #: rkward.cpp:576
 msgid "New dataset"
@@ -943,7 +939,7 @@ msgstr "RKObjectListView"
 
 #: misc/xmlhelper.cpp:54
 msgid "Could not open file for reading"
-msgstr ""
+msgstr "Impossibile aprire il file in lettura"
 
 #: misc/xmlhelper.cpp:56
 msgid ""
@@ -1311,7 +1307,7 @@ msgstr "Comandi di sincronizzazione"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:36
 msgid "Show hidden objects"
-msgstr ""
+msgstr "Mostra oggetti nascosti"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:43
 msgid "Which columns should be shown?"
@@ -1326,9 +1322,8 @@ msgid "Type field"
 msgstr "Tipo di campo"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:56
-#, fuzzy
 msgid "Class field"
-msgstr "Campo classe"
+msgstr "Classe campo"
 
 #: windows/rkhelpwindow.cpp:88
 msgid ""
@@ -1430,11 +1425,3 @@ msgid ""
 "Your emails"
 msgstr "daniele@medri.org"
 
-#~ msgid "Save workspace?"
-#~ msgstr "Salva l'area di lavoro?"
-
-#~ msgid "Please, stand by while downloading list of packages."
-#~ msgstr "Attendere prego, sto scaricando la lista dei pacchetti."
-
-#~ msgid "Workspace Browser"
-#~ msgstr "Area di lavoro"
