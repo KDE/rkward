@@ -1,0 +1,54 @@
+<!DOCTYPE rkpluginmap>
+
+<document base_prefix="" namespace="rkward">
+	<components>
+		<component type="standard" id="independent_samples_t_test" file="00means/00ttests/00independent_samples/description.xml" />
+
+		<component type="standard" id="load_r_object" file="00saveload/load/load/description.xml" />
+		<component type="standard" id="load_readtable" file="00saveload/load/readtable/description.xml" />
+		<component type="standard" id="load_source" file="00saveload/load/source/description.xml" />
+
+		<component type="standard" id="save_r_object" file="00saveload/save/save/description.xml" />
+		<component type="standard" id="save_skeleton" file="00saveload/save/skeleton/description.xml" />
+		<component type="standard" id="save_variables" file="00saveload/save/write/description.xml" />
+		<component type="standard" id="save_table" file="writetable/description.xml" />
+
+		<component type="standard" id="plots_scatterplot" file="02plots/scatterplot/description.xml" />
+
+		<component type="standard" id="descriptive" file="20descriptive/description.xml" />
+		<component type="standard" id="corr_matrix" file="corr_matrix/description.xml" />
+		<component type="standard" id="simple_anova" file="simple_anova/description.xml" />
+		<component type="standard" id="basic_statistics" file="uni1.2/description.xml" />
+
+	</components>
+
+	<hierarchy>
+		<menu id="analysis" label="Analysis" index="4">
+			<menu id="means" label="Means" index="0">
+				<menu id="ttests" label="T-Tests" index="0">
+					<entry component="independent_samples_t_test" label="Independent Samples" />
+				</menu>
+			</menu>
+			<menu id="saveload" label="Save / Load" index="0">
+				<menu id="load" label="Load" index="0">
+					<entry component="load_r_object" label="Load an R Object" />
+					<entry component="load_readtable" label="Load data" />
+					<entry component="load_source" label="Load R source" />
+				</menu>
+					<menu id="save" label="Save" index="0">
+					<entry component="save_r_object" label="Save an R Object" />
+					<entry component="save_skeleton" label="Save package" />
+					<entry component="save_variable" label="Save variables" />
+					<entry component="save_table" label="Save as table" />
+				</menu>
+			</menu>
+			<menu id="plots" label="Plots" index="0">
+				<entry component="plots_scatterplot" label="Scatterplot" />
+			</menu>
+			<entry component="descriptive" label="Descriptive Statistics" />
+			<entry component="corr_matrix" label="Correlation Matrix" />
+			<entry component="simple anova" label="Simple Anova" />
+			<entry component="basic_statistics" label="Basic Statistics" />
+		</menu>
+	</hierarchy>
+</document>
