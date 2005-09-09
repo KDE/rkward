@@ -59,7 +59,7 @@
 #include "rkwatch.h"
 #include "misc/rkmenu.h"
 #include "misc/rkmenulist.h"
-#include "plugin/rkpluginhandle.h"
+#include "plugin/rkcomponentmap.h"
 //#include "rkoutputwindow.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleplugins.h"
@@ -131,6 +131,7 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 	connect (RKGlobals::editorManager (), SIGNAL (editorClosed ()), this, SLOT (slotEditorsChanged ()));
 	connect (RKGlobals::editorManager (), SIGNAL (editorOpened ()), this, SLOT (slotEditorsChanged ()));
 	RKGlobals::mtracker = new RKModificationTracker (this);
+	RKGlobals::cmap = new RKComponentMap ();
 
 	initial_url = load_url;
   
@@ -217,69 +218,13 @@ void RKwardApp::initPlugins () {
 	RK_TRACE (APP);
 	slotStatusMsg(i18n("Setting up plugins..."));
 	
-	if (!initPluginDir (RKSettingsModulePlugins::pluginDir (), 0)) {
-		KMessageBox::information (0, i18n ("Plugins are needed: you may manage these throught \"Settings->Configure RKWard\".\n"), i18n ("No plugins found"));
+	RKGlobals::componentMap ()->clear ();
+	if (!(QFileInfo (RKSettingsModulePlugins::pluginMap ()).isReadable ())) {
+		KMessageBox::information (0, i18n ("Plugins are needed: you may manage these throught \"Settings->Configure RKWard\".\n"), i18n ("No pluginmap found"));
 	}
+	RKGlobals::componentMap ()->addPluginMap (RKSettingsModulePlugins::pluginMap ());
 	
 	slotStatusMsg(i18n("Ready."));
-}
-
-int RKwardApp::initPluginDir (const QString & dirname, RKMenu *parent) {
-	RK_TRACE (APP);
-	int num_plugins = 0;
-	
-	// list directories only
-	QDir dir = QDir (dirname, QString::null, QDir::Name, QDir::Dirs);
-	
-	// first get and parse the description for the current directory
-	int error_line, error_column;
-	QString error_message, dummy;
-	QDomDocument doc;
-
-	QFile description (dir.filePath ("description.xml"));
-	if (!description.open (IO_ReadOnly)) {
-		RK_DO (qDebug ("Could not open file for reading: %s", description.name ().latin1 ()), APP | PLUGIN, DL_WARNING);
-		description.close ();
-		return 0;
-	}
-	if (!doc.setContent(&description, false, &error_message, &error_line, &error_column)) {
-		description.close();
-		RK_DO (qDebug ("parsing-error in: %s\nMessage: %s, Line: %d, Column: %d", description.name ().latin1 (), error_message.latin1 (), error_line, error_column), APP | PLUGIN, DL_WARNING);
-		return 0;
-	}
-	description.close();
-
-	QDomElement element = doc.documentElement ();
-	QDomNodeList children = element.elementsByTagName("entry");
-	element = children.item (0).toElement ();
-	
-	RKMenu *menu = 0;
-	if (element.attribute ("type") == "menu") {
-		if (!parent) {
-			menu = menu_list->createMenu (element.attribute ("id"), element.attribute ("label"), 4);
-		} else {
-			menu = parent->addSubMenu (element.attribute ("id"), element.attribute ("label", "untitled"));
-		}
-	} else {
-		if (!parent) {
-			RK_DO (qDebug ("%s", "can't add plugin on the top-level menu"), APP | PLUGIN, DL_WARNING);
-		} else {
-			parent->addEntry (element.attribute ("id"), new RKPluginHandle (this, description.name ()), element.attribute ("label", "untitled"));
-			num_plugins++;
-		}
-	}
-
-	if (menu) {
-		// get subdirectories if applicable
-		for (unsigned int i = 0; i < dir.count (); i++) {
-			RK_DO (qDebug ("%s", dir[i].latin1 ()), APP | PLUGIN, DL_DEBUG);
-			if ((dir[i] != ".") && (dir[i] != "..")) {
-				num_plugins += initPluginDir (dir.filePath (dir[i]), menu);
-			}
-		}
-	}
-	
-	return num_plugins;
 }
 
 void RKwardApp::startR () {

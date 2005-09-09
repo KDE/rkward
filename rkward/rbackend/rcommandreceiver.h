@@ -24,6 +24,9 @@ This class will keep track of which RCommands are still out there (and expected 
 
 @author Thomas Friedrichsmeier
 */
+
+class RCommand;
+
 class RCommandReceiver {
 public:
     RCommandReceiver () { num_commands_waiting=0; deleted=false; };

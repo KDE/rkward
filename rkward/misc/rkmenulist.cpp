@@ -30,6 +30,11 @@ RKMenuList::RKMenuList (QMenuBar *menubar) {
 
 RKMenuList::~RKMenuList () {
 	RK_TRACE (MISC);
+	clear ();
+}
+
+void RKMenuList::clear () {
+	RK_TRACE (MISC);
 	for (MenuMap::iterator it = menu_map.begin (); it != menu_map.end (); ++it) {
 		delete it.data ();
 	}

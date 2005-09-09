@@ -38,7 +38,7 @@
 					<menu id="save" label="Save" index="0">
 					<entry component="save_r_object" label="Save an R Object" />
 					<entry component="save_skeleton" label="Save package" />
-					<entry component="save_variable" label="Save variables" />
+					<entry component="save_variables" label="Save variables" />
 					<entry component="save_table" label="Save as table" />
 				</menu>
 			</menu>
@@ -47,7 +47,7 @@
 			</menu>
 			<entry component="descriptive" label="Descriptive Statistics" />
 			<entry component="corr_matrix" label="Correlation Matrix" />
-			<entry component="simple anova" label="Simple Anova" />
+			<entry component="simple_anova" label="Simple Anova" />
 			<entry component="basic_statistics" label="Basic Statistics" />
 		</menu>
 	</hierarchy>

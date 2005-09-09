@@ -22,6 +22,7 @@ class RInterface;
 class RObjectList;
 class RKEditorManager;
 class RKModificationTracker;
+class RKComponentMap;
 
 // deletes the given char*, if it is not a special value. Does not set to 0.
 #define DELETE_STRING(x) if (x && (x != RKGlobals::empty_char) && (x != RKGlobals::unknown_char)) { delete x; };
@@ -47,7 +48,9 @@ public:
 	static RKEditorManager *editorManager () { return manager; };
 /// static pointer to the RKModificationTracker
 	static RKModificationTracker *tracker () { return mtracker; };
-	
+/// static pointer to the RKComponentMap
+	static RKComponentMap *componentMap () { return cmap; };
+
 /// an empty char
 	static char *empty_char;
 /// an unknown value
@@ -66,6 +69,7 @@ private:
 	static RObjectList *list;
 	static RKEditorManager *manager;
 	static RKModificationTracker *mtracker;
+	static RKComponentMap *cmap;
 };
 
 #endif

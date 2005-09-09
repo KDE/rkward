@@ -21,23 +21,23 @@
 
 #include <qstring.h>
 
+#include "rkcomponentmap.h"
+
 class RKwardApp;
 
 /**
 @author Thomas Friedrichsmeier
 */
-class RKPluginHandle : public QObject {
+class RKPluginHandle : public QObject, public RKComponentHandle {
 	Q_OBJECT
 public:
-    RKPluginHandle(RKwardApp *parent, const QString &filename);
+    RKPluginHandle(const QString &filename, RKComponentType type);
 
     ~RKPluginHandle();
 public slots:
 /** Slot called, when the menu-item for this widget is selected. Responsible
 	for creating the GUI. */
 	void activated ();
-private:
-	QString _filename;
 };
 
 #endif

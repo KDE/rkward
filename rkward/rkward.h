@@ -85,6 +85,9 @@ public:
 	void fileOpenAskSave (const KURL &url);
 	void openHTML(KURL url);
 
+/** returns a pointer to the menu-list (in essence the menu-bar) */
+	RKMenuList* getMenuList () { return menu_list; };
+
 	KParts::PartManager *m_manager;
 protected:
 	void openWorkspace (const KURL &url);
@@ -274,9 +277,6 @@ private:
 
 	/** Finds plugins and inserts them into the menu-structure */
 	void initPlugins ();
-
-	/** recursively initialize the plugins in this directory */
-	int initPluginDir (const QString & dirname, RKMenu *parent);
 
 	/** Used to receive a signal during startup AFTER the exec loop was entered */
 	QTimer *startup_timer;

@@ -18,9 +18,9 @@
 
 #include "rkplugin.h"
 #include "../rkward.h"
+#include "../rkglobals.h"
 
-RKPluginHandle::RKPluginHandle (RKwardApp *parent, const QString &filename) : QObject (parent) {
-	_filename = filename;
+RKPluginHandle::RKPluginHandle (const QString &filename, RKComponentType type) : QObject (RKGlobals::rkApp ()), RKComponentHandle (filename, type) {
 }
 
 
@@ -28,7 +28,7 @@ RKPluginHandle::~RKPluginHandle () {
 }
 
 void RKPluginHandle::activated () {
-	new RKPlugin (_filename);
+	new RKPlugin (getFilename ());
 }
 
 #include "rkpluginhandle.moc"

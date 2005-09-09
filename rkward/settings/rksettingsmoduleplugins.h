@@ -45,16 +45,16 @@ public:
 	
 	QString caption ();
 	
-	static QString &pluginDir () { return plugin_dir; };
+	static QString &pluginMap () { return plugin_map; };
 	static PluginPrefs getInterfacePreference () { return interface_pref; };
 public slots:
 	void pathChanged ();
 	void buttonClicked (int);
 private:
-	GetFileNameWidget *dir_choser;
+	GetFileNameWidget *map_choser;
 	QButtonGroup *button_group;
 	
-	static QString plugin_dir;
+	static QString plugin_map;
 	static PluginPrefs interface_pref;
 };
 

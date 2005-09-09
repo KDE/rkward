@@ -29,7 +29,7 @@ This class holds the entries in the menu-bar. Together with RKMenu it is used to
 
 @author Thomas Friedrichsmeier
 */
-class RKMenuList{
+class RKMenuList {
 public:
     RKMenuList (QMenuBar *menubar);
 
@@ -39,6 +39,8 @@ but rather the corresponding RKMenu will be returned. */
 	RKMenu *registerMenu (QPopupMenu *qmenu, const QString &id);
 /** like registerMenu, except that a new QPopupMenu is created with the given label. */
 	RKMenu *createMenu (const QString &id, const QString &label, int index);
+/** clears all menus created via RKMenuList */
+	void clear ();
 private:
 	typedef QMap<QString, RKMenu*> MenuMap;
 	MenuMap menu_map;

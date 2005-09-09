@@ -31,7 +31,7 @@
 #include "../misc/getfilenamewidget.h"
 
 // static members
-QString RKSettingsModulePlugins::plugin_dir;
+QString RKSettingsModulePlugins::plugin_map;
 RKSettingsModulePlugins::PluginPrefs RKSettingsModulePlugins::interface_pref;
 
 RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
@@ -57,9 +57,9 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	
 	main_vbox->addStretch ();
 	
-	dir_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, i18n ("Directory where the plugins are located"), "", plugin_dir);
-	connect (dir_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
-	main_vbox->addWidget (dir_choser);
+	map_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, i18n (".pluginmap file"), "", plugin_map);
+	connect (map_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
+	main_vbox->addWidget (map_choser);
 }
 
 RKSettingsModulePlugins::~RKSettingsModulePlugins() {
@@ -82,7 +82,7 @@ bool RKSettingsModulePlugins::hasChanges () {
 }
 
 void RKSettingsModulePlugins::applyChanges () {
-	plugin_dir = dir_choser->getLocation ();
+	plugin_map = map_choser->getLocation ();
 #if QT_VERSION < 0x030200
 	interface_pref = static_cast<PluginPrefs> (button_group->id (button_group->selected ()));
 #else
@@ -97,19 +97,20 @@ void RKSettingsModulePlugins::save (KConfig *config) {
 
 void RKSettingsModulePlugins::saveSettings (KConfig *config) {
 	config->setGroup ("Plugin Settings");
-	config->writeEntry ("Plugin-Directory", plugin_dir);
+	config->writeEntry ("Plugin-Map", plugin_map);
 	config->writeEntry ("Interface Preferences", static_cast<int> (interface_pref));
 }
 
 void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	config->setGroup ("Plugin Settings");
-	plugin_dir = config->readEntry ("Plugin-Directory", "#unknown#");
-	if (plugin_dir == "#unknown#") {
-		plugin_dir = KGlobal::dirs()->findResourceDir("plugins", "description.xml");
-		if (plugin_dir == "") {
+	plugin_map = config->readEntry ("Plugin-Map", "#unknown#");
+	if (plugin_map == "#unknown#") {
+		plugin_map = KGlobal::dirs()->findResourceDir("plugins", "standard_plugins.pluginmap");
+		if (plugin_map == "") {
 			// try our luck with a relative path
-			plugin_dir = "plugins/";
+			plugin_map = "plugins";
 		}
+		plugin_map += "/standard_plugins.pluginmap";
 	}
 	interface_pref = static_cast<PluginPrefs> (config->readNumEntry ("Interface Preferences", static_cast<int> (PreferWizard)));
 }

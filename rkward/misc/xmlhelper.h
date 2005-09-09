@@ -19,12 +19,18 @@
 #define XMLHELPER_H
 
 #include <qdom.h>
+#include <qvaluelist.h>
+
+/** a helper type used to pass a list of direct child elements of a node */
+typedef QValueList<QDomElement> XMLChildList;
 
 /** This class contains some convenience functions for parsing XML files (DOM). Usually you will use a static instance of this class (getStaticHelper ()), which will be created early in rkward initialization. The error-logs will be reset every time you open a new XML-file using openXMLFile (). This is fine as long as you are parsing files one by one instead of mixing several files. In the latter case you will want to create additional instances of XMLHelper (it's quite possible, this mechanism will be changed, but I want to get going before considering all implications ;-)).
 
 The functions in this class provide error-messages for illegal/problematic input. Information on the error status of the last commands is provided. More documentation to come once the API is somewhat finalized.
 
 Warning/Error messages will always be printed using the standard debugging framework (shown according to user settings).
+
+TODO: Probably it's not really clever to use the debugging-framework for showing error-messages in XML-file parsing. Anyway, the only function to adjust in order to change this would be displayError ().
 
 @author Thomas Friedrichsmeier
 */
@@ -42,20 +48,44 @@ When calling this function, highestError () will be reset to 0.
 @returns the document-element of the file. */
 	QDomElement openXMLFile (const QString &filename, int debug_level);
 
-/** returns all child elements with a given tag-name of the given parent
+/** returns all (direct) child elements with a given tag-name of the given parent
 @param parent the element whose children to return
 @param name the tag-name to look for (if none given, will return all children)
 @param debug_level level of debug message to generate in case of failure
 @returns a list of child elements (you'll have to call toElement () on the list items), in the order of occurence in the XML file */
-	QDomNodeList getChildElements (const QDomElement &parent, const QString &name, int debug_level);
+	XMLChildList getChildElements (const QDomElement &parent, const QString &name, int debug_level);
 
-/** returns the value of a string attribute
+/** like getChildElements, but tries to retrieve exactly one element. Throws an error, if no such element, or more than one such element was found.
+@param parent the element whose children to search
+@param name the tag-name to look for
+@param debug_level level of debug message to generate in case of failure
+@returns the element found */
+	QDomElement getChildElement (const QDomElement &parent, const QString &name, int debug_level);
+
+/** returns the value of a string attribute (Note: most get...Attribute functions use this function internally)
 @param element the element whose attributes to search
 @param name the name of the attribute to read
 @param def default value to return if no such attribute is given
 @param debug_level level of debug message to generate in case of failure (i.e. no such attribute was found)
 @returns the value of the given attribute or the given default */
 	QString getStringAttribute (const QDomElement &element, const QString &name, const QString &def, int debug_level);
+
+/** checks whether the given attribute is one of the allowed string values and returns the number of the value in the list (or the default)
+@param element the element whose attributes to search
+@param name the name of the attribute to read
+@param values a list of allowed values given as a QString separated by ';', e.g. "menu;entry" allows the values "menu" (returns 0) or "entry" (returns 1)
+@param def default value to return if no such attribute is given or does not hold a legal value
+@param debug_level level of debug message to generate in case of failure (i.e. no such attribute was found) Note that if the given attribute is found, but is not a valid value, an error-message will be shown regardless of this setting, but highestError () will still use debug_level)
+@returns the index of the value of the given attribute or the given default (see parameter values) */
+	int getMultiChoiceAttribute (const QDomElement &element, const QString &name, const QString &values, int def, int debug_level);
+
+/** returns the value of an integer attribute
+@param element the element whose attributes to search
+@param name the name of the attribute to read
+@param def default value to return if no such attribute is given
+@param debug_level level of debug message to generate in case of failure (i.e. no such attribute was found, or attribute was not an integer. Note that if the given attribute is found, but is not a valid integer, an error-message will be shown regardless of this setting, but highestError () will still use debug_level)
+@returns the value of the given attribute or the given default */
+	int getIntAttribute (const QDomElement &element, const QString &name, int def, int debug_level);
 
 /** returns the value of a boolean attribute ("true" or "false")
 @param element the element whose attributes to search
