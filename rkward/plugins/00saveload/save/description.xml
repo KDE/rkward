@@ -1,4 +1,0 @@
-<!DOCTYPE rkplugin>
-<document>
-  <entry type="menu" id="save" label="Save ..." />
-</document>
