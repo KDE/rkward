@@ -19,15 +19,19 @@
 #include "rkplugin.h"
 #include "../rkward.h"
 #include "../rkglobals.h"
+#include "../debug.h"
 
 RKPluginHandle::RKPluginHandle (const QString &filename, RKComponentType type) : QObject (RKGlobals::rkApp ()), RKComponentHandle (filename, type) {
+	RK_TRACE (PLUGIN);
 }
 
 
 RKPluginHandle::~RKPluginHandle () {
+	RK_TRACE (PLUGIN);
 }
 
 void RKPluginHandle::activated () {
+	RK_TRACE (PLUGIN);
 	new RKPlugin (getFilename ());
 }
 

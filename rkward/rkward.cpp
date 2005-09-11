@@ -219,11 +219,17 @@ void RKwardApp::initPlugins () {
 	slotStatusMsg(i18n("Setting up plugins..."));
 	
 	RKGlobals::componentMap ()->clear ();
-	if (!(QFileInfo (RKSettingsModulePlugins::pluginMap ()).isReadable ())) {
-		KMessageBox::information (0, i18n ("Plugins are needed: you may manage these throught \"Settings->Configure RKWard\".\n"), i18n ("No pluginmap found"));
+
+	QStringList list = RKSettingsModulePlugins::pluginMaps ();
+	int counter = 0;
+	for (QStringList::const_iterator it = RKSettingsModulePlugins::pluginMaps ().begin (); it != RKSettingsModulePlugins::pluginMaps ().end (); ++it) {
+		counter += RKGlobals::componentMap ()->addPluginMap ((*it));
 	}
-	RKGlobals::componentMap ()->addPluginMap (RKSettingsModulePlugins::pluginMap ());
-	
+
+	if (counter < 1) {
+		KMessageBox::information (0, i18n ("Plugins are needed: you may manage these through \"Settings->Configure RKWard\".\n"), i18n ("No (valid) plugins found"));
+	}
+
 	slotStatusMsg(i18n("Ready."));
 }
 

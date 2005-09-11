@@ -95,17 +95,19 @@ void MultiStringSelector::setValues (const QStringList& values) {
 		item->setText (0, (*it));
 	}
 	listSelectionChanged ();
+	emit (listChanged ());
 }
 
 void MultiStringSelector::addButtonClicked () {
 	RK_TRACE (MISC);
 
-	QString new_string;
-	emit (getNewString (&new_string));
-	if (!new_string.isEmpty ()) {
+	QStringList new_strings;
+	emit (getNewStrings (&new_strings));
+	for (QStringList::const_iterator it = new_strings.begin (); it != new_strings.end (); ++it) {
 		QListViewItem *item = new QListViewItem (list_view, list_view->lastItem ());
-		item->setText (0, new_string);
+		item->setText (0, (*it));
 	}
+	emit (listChanged ());
 	listSelectionChanged ();		// update button states
 }
 
@@ -113,6 +115,7 @@ void MultiStringSelector::removeButtonClicked () {
 	RK_TRACE (MISC);
 
 	delete (list_view->selectedItem ());
+	emit (listChanged ());
 }
 
 void MultiStringSelector::upButtonClicked () {
@@ -122,6 +125,7 @@ void MultiStringSelector::upButtonClicked () {
 	RK_ASSERT (sel);
 
 	sel->moveItem (sel->itemAbove ());
+	emit (listChanged ());
 }
 
 void MultiStringSelector::downButtonClicked () {
@@ -131,6 +135,7 @@ void MultiStringSelector::downButtonClicked () {
 	RK_ASSERT (sel);
 
 	if (sel->nextSibling ()) sel->moveItem (sel->nextSibling ());
+	emit (listChanged ());
 }
 
 void MultiStringSelector::listSelectionChanged () {

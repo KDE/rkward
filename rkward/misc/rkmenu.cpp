@@ -24,27 +24,29 @@
 
 #include "../debug.h"
 
-RKMenu::RKMenu () {
+RKMenu::RKMenu (QPopupMenu *menu, bool pre_existing) {
 	RK_TRACE (MISC);
+
+	RKMenu::menu = menu;
+	delete_q_menu = !pre_existing;
 }
 
 RKMenu::~RKMenu() {
 	RK_TRACE (MISC);
-	for (QMap<int, RKMenu*>::iterator it = submenus.begin (); it != submenus.end (); ++it) {
-		delete it.data ();
-	}
-	for (QMap<int, RKPluginHandle*>::iterator it = entry_plugins.begin (); it != entry_plugins.end (); ++it) {
-		delete it.data ();
-	}
-}
 
-RKMenu *RKMenu::createSubMenu () {
-	RK_TRACE (MISC);
-	QPopupMenu *qmenu = new QPopupMenu (menu);
-	RKMenu *ret = new RKMenu ();
-	ret->menu = qmenu;
-	
-	return ret;
+	for (QMap<int, RKMenu*>::iterator it = submenus.begin (); it != submenus.end (); ++it) {
+		menu->removeItem (it.key ());
+		delete it.data ();
+	}
+
+	if (delete_q_menu) {
+		delete menu;
+	} else{
+		// delete the dynamically created entries
+		for (QMap<QString, int>::iterator it = entry_ids.begin (); it != entry_ids.end (); ++it) {
+			menu->removeItem (it.data ());
+		}
+	}
 }
 
 RKMenu *RKMenu::addSubMenu (const QString &id, const QString &label, int index) {
@@ -52,7 +54,7 @@ RKMenu *RKMenu::addSubMenu (const QString &id, const QString &label, int index) 
 	int mid;
 	RKMenu *ret;
 	if (submenu_ids.find (id) == submenu_ids.end ()) {
-		ret = createSubMenu ();
+		ret = new RKMenu (new QPopupMenu (menu, false));
 		mid = menu->insertItem (label, ret->menu, -1, index);
 	} else {
 		mid = submenu_ids[id];
@@ -72,10 +74,8 @@ void RKMenu::addEntry (const QString &id, RKPluginHandle *plugin, const QString 
 		mid = menu->insertItem (label, plugin, SLOT (activated ()), 0, -1, index);
 	} else {
 		mid = entry_ids[id];
-		delete entry_plugins[mid];
 		menu->removeItem (mid);
 		mid = menu->insertItem (label, plugin, SLOT (activated ()), 0, mid, index);
 	}
-	entry_plugins.insert (mid, plugin);
 	entry_ids.insert (id, mid);
 }

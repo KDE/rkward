@@ -25,7 +25,7 @@
 class QListView;
 class QPushButton;
 
-/** This convenience widget allows to select one or more strings (e.g. filenames) and sort them in any order. The function to acutally select a new string to add to the selection is not implemented in this class for more flexibility. Rather, connect to the getNewString () signal and assign the desired QString in a custom slot.
+/** This convenience widget allows to select one or more strings (e.g. filenames) and sort them in any order. The function to acutally select new strings to add to the selection is not implemented in this class for more flexibility. Rather, connect to the getNewStrings () signal and assign the desired QString(s) in a custom slot.
 
 @author Thomas Friedrichsmeier
 */
@@ -53,8 +53,10 @@ private:
 	QPushButton* up_button;
 	QPushButton* down_button;
 signals:
-/** This signal is triggered, when the "Add"-button is pressed. Connect to this to your custom slot, and change the string. If you don't touch the string or set it to empty, nothing will be added to the list. Of course it does not make much sense to connect multiple slots to this signal, as only the last one called would be effective. */
-	void getNewString (QString *string);
+/** This signal is triggered, when the "Add"-button is pressed. Connect to this to your custom slot, and add strings to the (empty) string_list. If you don't touch the string_list or set it to empty, nothing will be added to the list. Of course it does not make much sense to connect multiple slots to this signal, as only the last one called would be effective. */
+	void getNewStrings (QStringList *string_list);
+/** emitted whenever there is a change in the user selection */
+	void listChanged ();
 };
 
 #endif

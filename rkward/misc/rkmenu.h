@@ -27,29 +27,31 @@ class QMenuBar;
 class RKPluginHandle;
 class QDomElement;
 
-/**
+/** The purpose of this class is to attach some additional information to a QPopupMenu, needed to create and delete dynamic menu-entries. See RKMenuList for more detailed information.
   *@author Thomas Friedrichsmeier
   */
 
 class RKMenu {
-public: 
-	~RKMenu();
+public:
+/** create a new RKMenu. If pre_existing==false, when the RKMenu gets deleted, the corresponding QPopupMenu will be deleted as well
+Use this for menus that are entirely dynamically created.
+
+If pre_existing==true, when the RKMenu gets deleted, this QPopupMenu will continue to live. Use this for pre-existing menus that only contain some dynamic items. */
+	RKMenu (QPopupMenu *menu, bool pre_existing=false);
+/** destructor */
+	~RKMenu ();
 /** adds a new submenu to this menu at the given index. If a menu with the given tag already exists, that menu will be returned, so entries can be merged (and the index will be ignored) */
 	RKMenu *addSubMenu (const QString &id, const QString &label, int index=-1);
 /** adds a new plugin to this menu at the given index. If a plugin with the given tag already exists, it will be deleted and overwritten, i.e. replaced with the newer plugin */
 	void addEntry (const QString &id, RKPluginHandle *plugin, const QString &label, int index=-1);
-protected:
-	RKMenu ();
 private:
-friend class RKMenuList;
-	RKMenu *createSubMenu ();
-/** TODO: Probably we neither need to keep the tag, nor is_top_level. */
 	QMap<QString, int> submenu_ids;
 	QMap<int, RKMenu*> submenus;
 	QMap<QString, int> entry_ids;
-	QMap<int, RKPluginHandle*> entry_plugins;
 /** the associated menu, the entries get placed in */
 	QPopupMenu *menu;
+/** whether the QPopupMenu should be deleted along with the RKMenu. See constructor. */
+	bool delete_q_menu;
 };
 
 #endif

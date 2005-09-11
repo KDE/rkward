@@ -35,17 +35,24 @@ RKMenuList::~RKMenuList () {
 
 void RKMenuList::clear () {
 	RK_TRACE (MISC);
+
+	for (QValueList<int>::const_iterator it = created_menu_ids.begin (); it != created_menu_ids.end (); ++it) {
+		menu_bar->removeItem (*it);
+	}
+	created_menu_ids.clear ();
+
 	for (MenuMap::iterator it = menu_map.begin (); it != menu_map.end (); ++it) {
 		delete it.data ();
 	}
+
+	menu_map.clear ();
 }
 
 RKMenu *RKMenuList::registerMenu (QPopupMenu *qmenu, const QString &id) {
 	RK_TRACE (MISC);
 	RKMenu *ret;
 	if (menu_map.find (id) == menu_map.end ()) {
-		ret = new RKMenu ();
-		ret->menu = qmenu;
+		ret = new RKMenu (qmenu, true);
 		menu_map.insert (id, ret);
 	} else {
 		ret = menu_map[id];
@@ -57,10 +64,9 @@ RKMenu *RKMenuList::createMenu (const QString &id, const QString &label, int ind
 	RK_TRACE (MISC);
 	RKMenu *ret;
 	if (menu_map.find (id) == menu_map.end ()) {
-		ret = new RKMenu ();
 		QPopupMenu *qmenu = new QPopupMenu (menu_bar);
-		menu_bar->insertItem (label, qmenu, -1, index);
-		ret->menu = qmenu;
+		created_menu_ids.append (menu_bar->insertItem (label, qmenu, -1, index));
+		ret = new RKMenu (qmenu, false);
 		menu_map.insert (id, ret);
 	} else {
 		ret = menu_map[id];

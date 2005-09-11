@@ -37,13 +37,13 @@ RKComponentMap::~RKComponentMap () {
 	RK_TRACE (PLUGIN);
 }
 
-void RKComponentMap::addPluginMap (const QString& plugin_map_file) {
+int RKComponentMap::addPluginMap (const QString& plugin_map_file) {
 	RK_TRACE (PLUGIN);
 
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
 
 	QDomElement document_element = xml->openXMLFile (plugin_map_file, DL_ERROR);
-	if (xml->highestError () >= DL_ERROR) return;
+	if (xml->highestError () >= DL_ERROR) return (0);
 
 	QString prefix = QFileInfo (plugin_map_file).dirPath (true) + "/" + xml->getStringAttribute(document_element, "base_prefix", "", DL_WARNING);
 	QString cnamespace = xml->getStringAttribute(document_element, "namespace", "rkward", DL_WARNING) + "::";
@@ -70,9 +70,11 @@ void RKComponentMap::addPluginMap (const QString& plugin_map_file) {
 	element = xml->getChildElement (document_element, "hierarchy", DL_ERROR);
 	list = xml->getChildElements (element, "menu", DL_ERROR);
 
+	int counter = 0;
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		addSubMenu (0, (*it), cnamespace);
+		counter += addSubMenu (0, (*it), cnamespace);
 	}
+	return counter;
 }
 
 void RKComponentMap::clear () {
@@ -80,8 +82,9 @@ void RKComponentMap::clear () {
 
 	RKGlobals::rkApp ()->getMenuList ()->clear ();
 	for (ComponentMap::iterator it = components.begin (); it != components.end (); ++it) {
-		delete it.data ();
+		delete (it.data ());
 	}
+	components.clear ();
 }
 
 RKComponentHandle* RKComponentMap::getComponentHandle (const QString &id) {
@@ -90,9 +93,10 @@ RKComponentHandle* RKComponentMap::getComponentHandle (const QString &id) {
 	return (components[id]);
 }
 
-void RKComponentMap::addSubMenu (RKMenu* parent, const QDomElement& element, const QString& cnamespace) {
+int RKComponentMap::addSubMenu (RKMenu* parent, const QDomElement& element, const QString& cnamespace) {
 	RK_TRACE (PLUGIN);
 
+	int counter = 0;
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
 
 	// 1: create new menu
@@ -107,7 +111,7 @@ void RKComponentMap::addSubMenu (RKMenu* parent, const QDomElement& element, con
 	XMLChildList list = xml->getChildElements (element, "menu", DL_INFO);
 
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		addSubMenu (menu, (*it), cnamespace);
+		counter += addSubMenu (menu, (*it), cnamespace);
 	}
 
 	// 3: add entries
@@ -121,8 +125,10 @@ void RKComponentMap::addSubMenu (RKMenu* parent, const QDomElement& element, con
 			RK_DO (qDebug ("No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", id.latin1 ()), PLUGIN, DL_ERROR);
 		} else {
 			menu->addEntry (id, static_cast<RKPluginHandle*> (handle), xml->getStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING));
+			counter++;
 		}
 	}
+	return counter;
 }
 
 ///########################### END RKComponentMap ###############################

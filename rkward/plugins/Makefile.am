@@ -1,30 +1,13 @@
 pluginsdir = $(kde_datadir)/rkward/
-dist_plugins_DATA = \
-	description.xml
-
 pluginsX00meansdir = $(kde_datadir)/rkward/00means
-dist_pluginsX00means_DATA = \
-	00means/description.xml
-
 pluginsX00meansX00ttestsdir = $(kde_datadir)/rkward/00means/00ttests
-dist_pluginsX00meansX00ttests_DATA = \
-	00means/00ttests/description.xml
-
-pluginsX00meansX00ttestsX10fictionaldir = $(kde_datadir)/rkward/00means/00ttests/10fictional
 pluginsX00meansX00ttestsX00independentUsamplesdir = $(kde_datadir)/rkward/00means/00ttests/00independent_samples
 dist_pluginsX00meansX00ttestsX00independentUsamples_DATA = \
 	00means/00ttests/00independent_samples/code.php \
 	00means/00ttests/00independent_samples/description.xml
 
-pluginsX00meansX51pseudotestdir = $(kde_datadir)/rkward/00means/51pseudotest
 pluginsX00saveloaddir = $(kde_datadir)/rkward/00saveload
-dist_pluginsX00saveload_DATA = \
-	00saveload/description.xml
-
 pluginsX00saveloadXloaddir = $(kde_datadir)/rkward/00saveload/load
-dist_pluginsX00saveloadXload_DATA = \
-	00saveload/load/description.xml
-
 pluginsX00saveloadXloadXloaddir = $(kde_datadir)/rkward/00saveload/load/load
 dist_pluginsX00saveloadXloadXload_DATA = \
 	00saveload/load/load/code.php \
@@ -41,9 +24,6 @@ dist_pluginsX00saveloadXloadXsource_DATA = \
 	00saveload/load/source/description.xml
 
 pluginsX00saveloadXsavedir = $(kde_datadir)/rkward/00saveload/save
-dist_pluginsX00saveloadXsave_DATA = \
-	00saveload/save/description.xml
-
 pluginsX00saveloadXsaveXsavedir = $(kde_datadir)/rkward/00saveload/save/save
 dist_pluginsX00saveloadXsaveXsave_DATA = \
 	00saveload/save/save/code.php \
@@ -60,16 +40,11 @@ dist_pluginsX00saveloadXsaveXwrite_DATA = \
 	00saveload/save/write/description.xml
 
 pluginsX02plotsdir = $(kde_datadir)/rkward/02plots
-dist_pluginsX02plots_DATA = \
-	02plots/description.xml
-
 pluginsX02plotsXscatterplotdir = $(kde_datadir)/rkward/02plots/scatterplot
 dist_pluginsX02plotsXscatterplot_DATA = \
 	02plots/scatterplot/code.php \
 	02plots/scatterplot/description.xml
 
-pluginsX10frequencydir = $(kde_datadir)/rkward/10frequency
-pluginsX10frequencyX00peudotestdir = $(kde_datadir)/rkward/10frequency/00peudotest
 pluginsX20descriptivedir = $(kde_datadir)/rkward/20descriptive
 dist_pluginsX20descriptive_DATA = \
 	20descriptive/code.php \
@@ -80,7 +55,6 @@ dist_pluginsXcorrUmatrix_DATA = \
 	corr_matrix/code.php \
 	corr_matrix/description.xml
 
-pluginsXreadtabledir = $(kde_datadir)/rkward/readtable
 pluginsXsimpleUanovadir = $(kde_datadir)/rkward/simple_anova
 dist_pluginsXsimpleUanova_DATA = \
 	simple_anova/code.php \

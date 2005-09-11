@@ -20,6 +20,7 @@
 #include <kconfig.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
+#include <kfiledialog.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -28,10 +29,10 @@
 
 #include "../rkward.h"
 #include "../rkglobals.h"
-#include "../misc/getfilenamewidget.h"
+#include "../misc/multistringselector.h"
 
 // static members
-QString RKSettingsModulePlugins::plugin_map;
+QStringList RKSettingsModulePlugins::plugin_maps;
 RKSettingsModulePlugins::PluginPrefs RKSettingsModulePlugins::interface_pref;
 
 RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
@@ -57,20 +58,26 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	
 	main_vbox->addStretch ();
 	
-	map_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, i18n (".pluginmap file"), "", plugin_map);
-	connect (map_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
+	map_choser = new MultiStringSelector (i18n ("Select .pluginmap file(s)"), this);
+	map_choser->setValues (plugin_maps);
+	connect (map_choser, SIGNAL (getNewStrings (QStringList*)), this, SLOT (browseRequest (QStringList*)));
+	connect (map_choser, SIGNAL (listChanged ()), this, SLOT (pathsChanged ()));
 	main_vbox->addWidget (map_choser);
 }
 
 RKSettingsModulePlugins::~RKSettingsModulePlugins() {
 }
 
-void RKSettingsModulePlugins::pathChanged () {
+void RKSettingsModulePlugins::pathsChanged () {
 	change ();
 }
 
 void RKSettingsModulePlugins::buttonClicked (int) {
 	change ();
+}
+
+void RKSettingsModulePlugins::browseRequest (QStringList* strings) {
+	(*strings) = KFileDialog::getOpenFileNames (KGlobal::dirs()->findResourceDir("plugins", "standard_plugins.pluginmap"), "*.pluginmap", this, i18n ("Select .pluginmap-file"));
 }
 
 QString RKSettingsModulePlugins::caption () {
@@ -82,7 +89,7 @@ bool RKSettingsModulePlugins::hasChanges () {
 }
 
 void RKSettingsModulePlugins::applyChanges () {
-	plugin_map = map_choser->getLocation ();
+	plugin_maps = map_choser->getValues ();
 #if QT_VERSION < 0x030200
 	interface_pref = static_cast<PluginPrefs> (button_group->id (button_group->selected ()));
 #else
@@ -97,20 +104,20 @@ void RKSettingsModulePlugins::save (KConfig *config) {
 
 void RKSettingsModulePlugins::saveSettings (KConfig *config) {
 	config->setGroup ("Plugin Settings");
-	config->writeEntry ("Plugin-Map", plugin_map);
+	config->writeEntry ("Plugin Maps", plugin_maps);
 	config->writeEntry ("Interface Preferences", static_cast<int> (interface_pref));
 }
 
 void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	config->setGroup ("Plugin Settings");
-	plugin_map = config->readEntry ("Plugin-Map", "#unknown#");
-	if (plugin_map == "#unknown#") {
-		plugin_map = KGlobal::dirs()->findResourceDir("plugins", "standard_plugins.pluginmap");
-		if (plugin_map == "") {
+	plugin_maps = config->readListEntry ("Plugin Maps");
+	if (!plugin_maps.count ()) {
+		QString dummy = KGlobal::dirs()->findResourceDir("plugins", "standard_plugins.pluginmap");
+		if (dummy == "") {
 			// try our luck with a relative path
-			plugin_map = "plugins";
+			dummy = "plugins";
 		}
-		plugin_map += "/standard_plugins.pluginmap";
+		plugin_maps.append (dummy + "/standard_plugins.pluginmap");
 	}
 	interface_pref = static_cast<PluginPrefs> (config->readNumEntry ("Interface Preferences", static_cast<int> (PreferWizard)));
 }

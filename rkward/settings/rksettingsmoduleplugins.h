@@ -19,9 +19,9 @@
 
 #include "rksettingsmodule.h"
 
-#include <qstring.h>
+#include <qstringlist.h>
 
-class GetFileNameWidget;
+class MultiStringSelector;
 class QButtonGroup;
 
 /** The settings-module for plugin specific settings
@@ -33,7 +33,7 @@ public:
     RKSettingsModulePlugins (RKSettings *gui, QWidget *parent);
 
     ~RKSettingsModulePlugins ();
-	
+
 	bool hasChanges ();
 	void applyChanges ();
 	void save (KConfig *config);
@@ -45,16 +45,17 @@ public:
 	
 	QString caption ();
 	
-	static QString &pluginMap () { return plugin_map; };
+	static QStringList &pluginMaps () { return plugin_maps; };
 	static PluginPrefs getInterfacePreference () { return interface_pref; };
 public slots:
-	void pathChanged ();
+	void pathsChanged ();
 	void buttonClicked (int);
+	void browseRequest (QStringList* strings);
 private:
-	GetFileNameWidget *map_choser;
+	MultiStringSelector *map_choser;
 	QButtonGroup *button_group;
 	
-	static QString plugin_map;
+	static QStringList plugin_maps;
 	static PluginPrefs interface_pref;
 };
 

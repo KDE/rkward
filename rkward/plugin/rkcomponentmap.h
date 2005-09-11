@@ -38,7 +38,7 @@ class RKComponentHandle {
 public:
 	RKComponentHandle (const QString &filename, RKComponentType type);
 
-	~RKComponentHandle ();
+	virtual ~RKComponentHandle ();
 
 	QString getFilename () { return filename; };
 	RKComponentType getType () { return type; };
@@ -70,8 +70,9 @@ public:
 
 	~RKComponentMap ();
 
-/** adds all Plugins / components in a .pluginmap-file. Also takes care of creating the menu-items, etc. */
-	void addPluginMap (const QString& plugin_map_file);
+/** adds all Plugins / components in a .pluginmap-file. Also takes care of creating the menu-items, etc.
+@returns number of plugins (i.e. stand-alone components/menu-entries) added successfully */
+	int addPluginMap (const QString& plugin_map_file);
 /** clears out (and deletes) all components / plugins */
 	void clear ();
 
@@ -80,8 +81,9 @@ public:
 private:
 /** recurse into a lower menu-level 
 @param parent the parent menu
-@param element the QDomElement containing the description for the new submenu */
-	void addSubMenu (RKMenu* parent, const QDomElement& element, const QString& cnamespace);
+@param element the QDomElement containing the description for the new submenu
+@returns number of plugins/menu-entries added successfully */
+	int addSubMenu (RKMenu* parent, const QDomElement& element, const QString& cnamespace);
 
 /** typedef for easy reference to iterator */
 	typedef QMap<QString, RKComponentHandle*> ComponentMap;
