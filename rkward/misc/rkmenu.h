@@ -45,13 +45,14 @@ If pre_existing==true, when the RKMenu gets deleted, this QPopupMenu will contin
 /** adds a new plugin to this menu at the given index. If a plugin with the given tag already exists, it will be deleted and overwritten, i.e. replaced with the newer plugin */
 	void addEntry (const QString &id, RKPluginHandle *plugin, const QString &label, int index=-1);
 private:
+friend class RKMenuList;
 	QMap<QString, int> submenu_ids;
 	QMap<int, RKMenu*> submenus;
 	QMap<QString, int> entry_ids;
 /** the associated menu, the entries get placed in */
 	QPopupMenu *menu;
 /** whether the QPopupMenu should be deleted along with the RKMenu. See constructor. */
-	bool delete_q_menu;
+	bool pre_existing;
 };
 
 #endif

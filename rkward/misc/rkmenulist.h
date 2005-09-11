@@ -18,6 +18,7 @@
 #define RKMENULIST_H
 
 #include <qstring.h>
+#include <qdict.h>
 #include <qmap.h>
 
 class QMenuBar;
@@ -47,7 +48,7 @@ rather a pointer to the existing menu gets returned. */
 /** clears all menus created via RKMenuList */
 	void clear ();
 private:
-	typedef QMap<QString, RKMenu*> MenuMap;
+	typedef QDict<RKMenu> MenuMap;
 	MenuMap menu_map;
 	
 	QValueList<int> created_menu_ids;

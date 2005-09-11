@@ -1,24 +1,25 @@
 <!DOCTYPE rkplugin>
 <document>
-  <entry type="entry" id="source" label="Load source file" />
-<!-- The layout-section takes care of the layout of the GUI for this plugin. -->  <dialog>
-    <tabbook>
-      <tab label="Select variables" >
-        <column>
-          <browser size="small" filter="*.R *.r" id="file" label="Name of the file" />
-        </column>
-        <frame label="Options. Implemented aber not doing any effect" >
-          	
-            <checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="local" label="Local environnement" />
-            <checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="echo" label="Echo" />
-            <checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="verbose" label="Verbose" />
-            <checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="chdir" label="Change working directory" />
-	    <checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="printeval" label="Print eval" />
-	    <input size="medium" initial = "getOption('prompt')" id="promptecho" label="Prompt"/>
-            <spinbox size="small" type="integer" id="maxdeparselength" min="1" initial="1" max="1000" depend="echo" label="Maximal length of 'echo'" />
-          
-        </frame>
-      </tab>
-    </tabbook>
-  </dialog>
+	<code file="code.php"/>
+	
+	<dialog label="Load source file" >
+		<tabbook>
+			<tab label="Select variables" >
+				<column>
+					<browser size="small" filter="*.R *.r" id="file" label="Name of the file" />
+				</column>
+				<frame label="Options. Implemented aber not doing any effect" >
+					
+					<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="local" label="Local environnement" />
+					<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="echo" label="Echo" />
+					<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="verbose" label="Verbose" />
+					<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="chdir" label="Change working directory" />
+					<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="printeval" label="Print eval" />
+					<input size="medium" initial = "getOption('prompt')" id="promptecho" label="Prompt"/>
+					<spinbox size="small" type="integer" id="maxdeparselength" min="1" initial="1" max="1000" depend="echo" label="Maximal length of 'echo'" />
+					
+				</frame>
+			</tab>
+		</tabbook>
+	</dialog>
 </document>

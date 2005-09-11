@@ -114,8 +114,9 @@ private:
 
 	QString current_code;
 	QString filename;
-	
-	void buildGUI (int type_override);
+
+/** if you pass 0 for doc_element, the description will be parsed anew */
+	void buildGUI (QDomElement *doc_element, int type_override);
 	QWidget *main_widget;
 	QGridLayout *sizer_grid;
 

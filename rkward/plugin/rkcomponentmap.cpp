@@ -102,7 +102,7 @@ int RKComponentMap::addSubMenu (RKMenu* parent, const QDomElement& element, cons
 	// 1: create new menu
 	RKMenu* menu = 0;
 	if (!parent) {
-		menu = RKGlobals::rkApp ()->getMenuList ()->createMenu (xml->getStringAttribute (element, "id", "none", DL_WARNING), xml->getStringAttribute (element, "label", i18n ("(no label)"), DL_WARNING), xml->getIntAttribute (element, "index", 4, DL_WARNING));
+		menu = RKGlobals::rkApp ()->getMenuList ()->createMenu (xml->getStringAttribute (element, "id", "none", DL_WARNING), xml->getStringAttribute (element, "label", i18n ("(no label)"), DL_WARNING), xml->getIntAttribute (element, "index", 4, DL_INFO));
 	} else {
 		menu = parent->addSubMenu (xml->getStringAttribute (element, "id", "none", DL_WARNING), xml->getStringAttribute (element, "label", i18n ("(no label)"), DL_WARNING), xml->getIntAttribute (element, "index", -1, DL_INFO));
 	}
@@ -124,7 +124,7 @@ int RKComponentMap::addSubMenu (RKMenu* parent, const QDomElement& element, cons
 		if ((!handle) || (!handle->isPlugin ())) {
 			RK_DO (qDebug ("No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", id.latin1 ()), PLUGIN, DL_ERROR);
 		} else {
-			menu->addEntry (id, static_cast<RKPluginHandle*> (handle), xml->getStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING));
+			menu->addEntry (id, static_cast<RKPluginHandle*> (handle), xml->getStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING), xml->getIntAttribute ((*it), "index", -1, DL_INFO));
 			counter++;
 		}
 	}

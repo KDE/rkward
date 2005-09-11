@@ -40,6 +40,7 @@
 #include "../rkeditormanager.h"
 #include "../scriptbackends/phpbackend.h"
 #include "../misc/rkerrordialog.h"
+#include "../misc/xmlhelper.h"
 #include "../rkcommandeditor.h"
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../rbackend/rinterface.h"
@@ -68,17 +69,28 @@
 #define BACKEND_FOR_SUBMISSION 2
 
 RKPlugin::RKPlugin(const QString &filename) : QWidget () {
+	RK_TRACE (PLUGIN);
+
 	backend = 0;
 	script_backend_chain = 0;
 	main_widget = 0;
 	RKPlugin::filename = filename;
-	
+
+	// open the main description file for parsing
+	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	QDomElement doc_element = xml->openXMLFile (filename, DL_ERROR);
+	if (xml->highestError () >= DL_ERROR) {
+		// TODO: inform user
+		return;
+	}
+
 	// create an error-dialog
-	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin ") + caption () + i18n (". This may lead to an incorrect ouput and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below."), i18n ("R-Error"), false);
+	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin ") + filename + i18n (". This may lead to an incorrect ouput and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below."), i18n ("R-Error"), false);
 	
 	// initialize the PHP-backend with the code-template
 	should_updatecode=false;
-	QString dummy = QFileInfo (filename).dirPath () + "/code.php";
+	QDomElement element = xml->getChildElement (doc_element, "code", DL_WARNING);
+	QString dummy = QFileInfo (filename).dirPath () + "/" + xml->getStringAttribute (element, "file", "code.php", DL_WARNING);
 	backend = new PHPBackend ();
 	connect (backend, SIGNAL (commandDone (int)), this, SLOT (backendCommandDone (int)));
 	connect (backend, SIGNAL (idle ()), this, SLOT (backendIdle ()));
@@ -95,10 +107,12 @@ RKPlugin::RKPlugin(const QString &filename) : QWidget () {
 	
 	update_timer = new QTimer (this);
 	connect (update_timer, SIGNAL (timeout ()), this, SLOT (doChangeUpdate ()));
-	buildGUI (0);
+	buildGUI (&doc_element, 0);
 }
 
 RKPlugin::~RKPlugin(){
+	RK_TRACE (PLUGIN);
+
 	delete error_dialog;
 	delete codeDisplay;
 	delete backend;
@@ -106,19 +120,33 @@ RKPlugin::~RKPlugin(){
 }
 
 void RKPlugin::closeEvent (QCloseEvent *e) {
+	RK_TRACE (PLUGIN);
+
 	e->accept ();
 	try_destruct ();
 }
 
 void RKPlugin::switchInterfaces () {
+	RK_TRACE (PLUGIN);
+
 	if (num_pages <= 1) {
-		buildGUI (1);
+		buildGUI (0, 1);
 	} else {
-		buildGUI (2);
+		buildGUI (0, 2);
 	}
 }
 
-void RKPlugin::buildGUI (int type_override) {
+void RKPlugin::buildGUI (QDomElement *doc_element, int type_override) {
+	RK_TRACE (PLUGIN);
+
+	QDomElement dummy;	// as this might become the document element (see below), its scope has to reach until the end of this function!
+	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	if (!doc_element) {
+		dummy = xml->openXMLFile (filename, DL_ERROR);
+		// no error should have occured at this stage, as this has already been tried in the constructor at least once.
+		doc_element = &dummy;
+	}
+
 	num_pages = 0;
 	current_page = 0;
 	
@@ -131,37 +159,14 @@ void RKPlugin::buildGUI (int type_override) {
 	widgets.clear ();
 	page_map.clear ();
 	
-	// open XML-file (TODO: remove code-duplication)
-	int error_line, error_column;
-	QString error_message, dummy;
-	QDomDocument doc;
-	QFile f(filename);
-	if (!f.open(IO_ReadOnly))
-		RK_DO (qDebug ("Could not open file for reading: %s", filename.latin1 ()), PLUGIN, DL_ERROR);
-	if (!doc.setContent(&f, false, &error_message, &error_line, &error_column)) {
-		f.close();
-		RK_DO (qDebug ("parsing-error in: %s", filename.latin1 ()), PLUGIN, DL_ERROR);
-		RK_DO (qDebug ("Message: %s", error_message.latin1 ()), PLUGIN, DL_ERROR);
-		RK_DO (qDebug ("Line: %d", error_line), PLUGIN, DL_ERROR);
-		RK_DO (qDebug ("Column: %d", error_column), PLUGIN, DL_ERROR);
-		return;
-	}
-	f.close();
-
-	// find layout-section
-	QDomElement element = doc.documentElement ();
-	QDomNodeList children = element.elementsByTagName("entry");
-	element = children.item (0).toElement ();
-	setCaption (element.attribute ("label", "untitled"));
-
 	// find available interfaces
 	QDomElement dialog_element;
 	QDomElement wizard_element;
 	bool wizard_recommended = false;
 	
-	children = doc.documentElement ().childNodes ();;
-	for (unsigned int n=0; n < children.count (); ++n) {
-		QDomElement e = children.item (n).toElement ();
+	QDomNode n = doc_element->firstChild ();
+	while (!n.isNull ()) {
+		QDomElement e = n.toElement ();
 		if (e.tagName () == "dialog") {
 			dialog_element = e;
 		} else if (e.tagName () == "wizard") {
@@ -170,6 +175,7 @@ void RKPlugin::buildGUI (int type_override) {
 			}
 			wizard_element = e;
 		}
+		n = n.nextSibling ();
 	}
 
 	main_widget = new QWidget (this);
@@ -221,7 +227,10 @@ void RKPlugin::buildGUI (int type_override) {
 
 void RKPlugin::buildDialog (const QDomElement &dialog_element, bool wizard_available) {
 	RK_TRACE (PLUGIN);
-	
+
+	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	setCaption (xml->getStringAttribute (dialog_element, "label", i18n ("No title"), DL_WARNING));
+
 	QGridLayout *main_grid = new QGridLayout (main_widget, 1, 1);
 	QSplitter *splitter = new QSplitter (QSplitter::Vertical, main_widget);
 	main_grid->addWidget (splitter, 0, 0);
@@ -327,26 +336,26 @@ void RKPlugin::buildDialog (const QDomElement &dialog_element, bool wizard_avail
 void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_available) {
 	RK_TRACE (PLUGIN);
 
+	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	setCaption (xml->getStringAttribute (wizard_element, "label", i18n ("No title"), DL_WARNING));
+
 	QGridLayout *main_grid = new QGridLayout (main_widget, 3, 4, RKGlobals::marginHint (), RKGlobals::spacingHint ());
 	wizard_stack = new QWidgetStack (main_widget);
 	main_grid->addMultiCellWidget (wizard_stack, 0, 0, 0, 3);
 
-	QDomNodeList pages = wizard_element.childNodes ();
-	for (unsigned int p=0; p < pages.count (); ++p) {
-		QDomElement page = pages.item (p).toElement ();
-		if (page.tagName () == "page") {
-			QWidget *page_widget = new QWidget (main_widget);
-			QVBoxLayout *ilayout = new QVBoxLayout (page_widget);
-			buildStructure (page, ilayout, page_widget);
-			if (!num_pages) {
-				if (dialog_available) {
-					switchButton = new QPushButton ("Use Dialog", page_widget);
-					ilayout->addWidget (switchButton);
-					connect (switchButton, SIGNAL (clicked ()), this, SLOT (switchInterfaces ()));
-				}
+	XMLChildList pages = xml->getChildElements (wizard_element, "page", DL_ERROR);
+	for (XMLChildList::const_iterator it = pages.begin (); it != pages.end (); ++it) {
+		QWidget *page_widget = new QWidget (main_widget);
+		QVBoxLayout *ilayout = new QVBoxLayout (page_widget);
+		buildStructure ((*it), ilayout, page_widget);
+		if (!num_pages) {
+			if (dialog_available) {
+				switchButton = new QPushButton ("Use Dialog", page_widget);
+				ilayout->addWidget (switchButton);
+				connect (switchButton, SIGNAL (clicked ()), this, SLOT (switchInterfaces ()));
 			}
-			wizard_stack->addWidget (page_widget, num_pages++);
 		}
+		wizard_stack->addWidget (page_widget, num_pages++);
 	}
 
 	// build the last page
@@ -427,6 +436,8 @@ void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_avail
 }
 
 void RKPlugin::buildStructure (const QDomElement &element, QBoxLayout *playout, QWidget *pwidget) {
+	RK_TRACE (PLUGIN);
+
 	QDomNodeList children = element.childNodes ();
 	
 	for (unsigned int i=0; i < children.count (); i++) {
@@ -488,6 +499,8 @@ void RKPlugin::buildStructure (const QDomElement &element, QBoxLayout *playout, 
 }
 
 void RKPlugin::ok () {
+	RK_TRACE (PLUGIN);
+
 	if (current_page < (num_pages - 1)) {
 		wizard_stack->raiseWidget (++current_page);
 		backButton->setEnabled (true);
@@ -504,6 +517,8 @@ void RKPlugin::ok () {
 }
 
 void RKPlugin::back () {
+	RK_TRACE (PLUGIN);
+
 	if (current_page > 0) {
 		wizard_stack->raiseWidget (--current_page);
 		if (!current_page) {
@@ -515,10 +530,14 @@ void RKPlugin::back () {
 }
 
 void RKPlugin::cancel () {
+	RK_TRACE (PLUGIN);
+
 	try_destruct ();
 }
 
 void RKPlugin::toggleCode () {
+	RK_TRACE (PLUGIN);
+
 	if (codeDisplay->isVisible ()) {
 		codeDisplay->hide ();
 	} else {
@@ -529,6 +548,7 @@ void RKPlugin::toggleCode () {
 
 void RKPlugin::try_destruct () {
 	RK_TRACE (PLUGIN);
+
 	if (!backend->isBusy ()) {
 		delete this;
 	} else {
@@ -593,17 +613,21 @@ void RKPlugin::backendIdle () {
 }
 
 void RKPlugin::registerWidget (RKPluginWidget *widget, const QString &id , const QString &dep, int page) {
-	qDebug("inserting widget %s",id.latin1());
+	RK_TRACE (PLUGIN);
+	RK_DO (qDebug ("inserting widget %s",id.latin1()), PLUGIN, DL_DEBUG);
+
 	widgets.insert (id, widget);
 	page_map.insert (widget, page);
 	dependant.insert (id,dep);
 }
 
 void RKPlugin::help () {
+	RK_TRACE (PLUGIN);
 	// TODO
 }
 
 void RKPlugin::doChangeUpdate () {
+	RK_TRACE (PLUGIN);
 	// trigger update for code-display
 	if (current_page == (num_pages - 1)) {
 		should_updatecode = true;
@@ -617,6 +641,7 @@ void RKPlugin::doChangeUpdate () {
 }
 
 void RKPlugin::changed () {
+	RK_TRACE (PLUGIN);
 /* why don't we do the update right here? Two reasons:
 	- several widgets may be updating in a chain, an each will emit a change signal. However, we only want to update once.
 	- some widgets may be in a bad state, if the change-event was due to an RObject being deleted. These widgets should get a change to update before we try to get values from them */
@@ -624,14 +649,17 @@ void RKPlugin::changed () {
 }
 
 void RKPlugin::doRCall (const QString &call) {
+	RK_TRACE (PLUGIN);
 	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, R_FOR_PHP_FLAG), script_backend_chain);
 }
 
 void RKPlugin::getRVector (const QString &call) {
+	RK_TRACE (PLUGIN);
 	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom | RCommand::GetStringVector, "", this, R_FOR_PHP_FLAG), script_backend_chain);
 }
 
 void RKPlugin::rCommandDone (RCommand *command) {
+	RK_TRACE (PLUGIN);
 	RK_DO (qDebug ("rCommandDone. Command-flags: %d", command->getFlags ()), PLUGIN, DL_DEBUG);
 
 	if (command->hasError()) {
@@ -659,12 +687,16 @@ void RKPlugin::rCommandDone (RCommand *command) {
 }
 
 void RKPlugin::getValue (const QString &id) {
+	RK_TRACE (PLUGIN);
 	backend->writeData (getVar (id));
 }
 
 QString RKPlugin::getVar (const QString &id) {
+	RK_TRACE (PLUGIN);
+
 	QString ident = id.section (".", 0, 0);
-	qDebug("searching fo %s",ident.latin1());
+	RK_DO (qDebug("searching fo %s",ident.latin1()), PLUGIN, DL_DEBUG);
+	
 	RKPluginWidget *widget;
 	if (widgets.contains (ident)) {
 		widget = widgets[ident];
@@ -679,6 +711,7 @@ QString RKPlugin::getVar (const QString &id) {
 
 /** Returns a pointer to the varselector by that name (0 if not available) */
 RKVarSelector *RKPlugin::getVarSelector (const QString &id) {
+	RK_TRACE (PLUGIN);
 	WidgetsMap::iterator it = widgets.find (id);
 	if (it != widgets.end ()) {
 		if (it.data ()->type () == VARSELECTOR_WIDGET) {
@@ -691,6 +724,7 @@ RKVarSelector *RKPlugin::getVarSelector (const QString &id) {
 }
 
 RKVarSlot *RKPlugin::getVarSlot (const QString &id) {
+	RK_TRACE (PLUGIN);
 	WidgetsMap::iterator it = widgets.find (id);
 	if (it != widgets.end ()) {
 		if (it.data ()->type () == VARSLOT_WIDGET) {

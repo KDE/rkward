@@ -1,247 +1,255 @@
 <!DOCTYPE rkplugin>
 <document>
-  <entry type="entry" id="scatterplot" label="Scatterplot" />
+	<code file="code.php"/>
+	
 <!--Adrien d'Hardemare	
 first attempt to produce simple plot using the plot function
-A duplicate option has to be tested-->  <dialog>
-    <tabbook>
-      <tab label="Variables" >
-        <row>
-          <varselector id="vars" />
-          <varslot multi="true" duplicate="true" classes="integer numeric" id="x" source="vars" label="'X' variables" required="true" />
-          <varslot multi="true" duplicate="true" duplicate="true" classes="integer numeric" id="y" source="vars" label="'Y' variables" required="true" />
-        </row>
-      </tab>
-      <tab label="Axes" >
-        <row>
-          <column>
-            <radio id="columns" label="Value for 'X' scale" >
-              <option value="FALSE" label="Default" />
-              <option value="custoCol" label="Customize" />
-            </radio>
-            <varslot multi="false" classes="integer numeric" source="varname" id="Xscale" depend="custoCol" />
-            <radio id="rows" label="Value for 'Y' scale" >
-              <option value="FALSE" id="temp2" label="Default" />
-              <option value="custoRow" label="Customize" />
-            </radio>
-            <varslot multi="false" classes="integer numeric " id="Yscale" source="varname" depend="custoRow" />
-          </column>
-          <varselector id="varname" />
-        </row>
-      </tab>
-      <tab label="Type" >
-        <radio id="type" label="Type of graphics" >
-          <option value="'p'" label="Plot individual points " />
-          <option value="'l'" label="Plot lines " />
-          <option value="b" label="Plot points connected by lines (both)" />
-          <option value="1" label="Plot points overlaid by lines " />
-          <option value="'h'" label="Plot vertical lines from points to the zero axis (high-density)" />
-          <option value="'s'" label="Step-function plots : the top of the vertical defines the point" />
-          <option value="'S'" label="Step-function plots : the bottom of the vertical defines the point" />
-          <option value="custoType" label="Customize" />
-        </radio>
-        <input size="medium" id="typeCusto" depend="custoType" label="Give a character vector eg : c('p','l')" />
-      </tab>
-      <tab label="Names" >
-        <row>
-          <column>
-            <checkbox checked="false" value="1" id="isXaxis" label="Give a name to 'X' axis" />
-            <input size="medium" id="Xname" initial="X" depend="isXaxis" label="Name for X axis" />
-            <checkbox checked="false" value="1" id="isYaxis" label="Give a name to Y axis" />
-            <input size="medium" id="Yname" initial="Y" label="Name of Y axis" depend="isYaxis" />
-            <checkbox checked="false" value="1" id="isTitle" label="Give a title" />
-            <input size="medium" id="main" depend="isTitle" />
-            <checkbox checked="false" value="1" id="isSub" label="Give a subtitle" />
-            <input size="medium" id="sub" depend="isSub" />
-          </column>
-          <column>
-            <checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="axes" label="Generate axes" />
-            <checkbox value_unchecked="" checked="false" value="x" id="logX" label="X as logarythm" />
-            <checkbox value_unchecked="" checked="false" value="y" id="logY" label="Y as logarythm" />
-          </column>
-        </row>
-      </tab>
-      <tab label="Options" >
-        <frame>
-          <row>
-            <radio id="color" label="Color" >
-              <option value="all" label="Same color for all variables" />
-              <option value="each" label="Different for each variable" />
-            </radio>
-            <column>
-              <text>
-	  Enter value - for diff.col. enter a vector -
-	  eg:  c(1,2) or c('red','green')
-	  </text>
-              <input size="small" id="col" initial="'black'" label=" " />
-            </column>
-          </row>
-        </frame>
-        <frame>
-          <row>
-            <radio id="isCe" label="Size" >
-              <option value="all" label="Same for all variables" />
-              <option value="each" label="Different for each variable" />
-            </radio>
-            <column>
-              <text>
-	  A numerical value giving the amount by which plotting text and symbols should be scaled relative to the default. 
-	  </text>
-              <input size="small" id="cex" initial="1" label="Enter value - for diff.size. enter a vector -" />
-            </column>
-          </row>
-        </frame>
-        <frame>
-          <row>
-            <radio id="isPch" label="Symbol" >
-              <option value="all" label="Same for all variables" />
-              <option value="each" label="Different for each variable" />
-            </radio>
-            <column>
-              <text>
-	  Either an integer specifying a symbol or a single character to be used as the default in plotting points.
-	  </text>
-              <input size="small" id="pch" initial="1" label="Enter value - for diff.symbol. enter a vector -" />
-            </column>
-          </row>
-        </frame>
-      </tab>
-      <tab label="More options" >
-        <text>
-        Everything cannot be here handled : R is too flexibel as concerns plots. Nonetheless, you can add extra code before and after the code of the plugin if you want to add whatever. This will allow you to modify if you want before par() and after to add low-level graphs. Please refer to 'R : an introduction' 
-     </text>
-        <frame label="Advanced options" >
-	<!-- doesn't work very well TODO
-          <checkbox value_unchecked=" " checked="true" value="rk.graph.on()" id="rkgraphson" label="Enter 'rk.graph.on()'" />
-	  -->
-          <input size="big" id="before" label="Before plot" />
-          <checkbox value_unchecked=" " checked="true" value="rk.graph.off()" id="rkgraphsoff" label="Enter 'rk.graph.off()'" />
-          <!-- doesn't work very well TODO
-	  <input size="big" id="after" label="After plot" />
-	  -->
-        </frame>
-      </tab>
-    </tabbook>
-  </dialog>
-  <wizard>
-<!--variable
--->    <page>
-      <row>
-        <varselector id="vars" />
-        <varslot multi="true" duplicate="true" classes="numeric integer" id="x" source="vars" label="'X' variables" required="true" />
-        <varslot multi="true" duplicate="true" duplicate="true" classes="numeric integer" id="y" source="vars" label="'Y' variables" required="true" />
-      </row>
-    </page>
-<!-- axes-->    <page>
-      <row>
-        <column>
-          <radio id="columns" label="Value for 'X' scale" >
-            <option value="FALSE" label="Default" />
-            <option value="custoCol" label="Customize" />
-          </radio>
-          <varslot multi="false" classes="integer numeric" source="varname" id="Xscale" depend="custoCol" />
-          <radio id="rows" label="Value for 'Y' scale" >
-            <option value="FALSE" id="temp2" label="Default" />
-            <option value="custoRow" label="Customize" />
-          </radio>
-          <varslot multi="false" classes="integer numeric " id="Yscale" source="varname" depend="custoRow" />
-        </column>
-        <varselector id="varname" />
-      </row>
-    </page>
-<!--couleur
--->    <page>
-      <frame>
-        <row>
-          <radio id="color" label="Color" >
-            <option value="all" label="Same color for all variables" />
-            <option value="each" label="Different for each variable" />
-          </radio>
-          <column>
-            <text>
-	  Enter value - for diff.col. enter a vector -
-	  eg:  c(1,2) or c('red','green')
-	  </text>
-            <input size="small" id="col" initial="'black'" label=" " />
-          </column>
-        </row>
-      </frame>
-      <frame>
-        <row>
-          <radio id="isCex" label="Size" >
-            <option value="all" label="Same for all variables" />
-            <option value="each" label="Different for each variable" />
-          </radio>
-          <column>
-            <text>
-	  A numerical value giving the amount by which plotting text and symbols should be scaled relative to the default. 
-	  </text>
-            <input size="small" id="cex" initial="1" label="Enter value - for diff.size. enter a vector -" />
-          </column>
-        </row>
-      </frame>
-      <frame>
-        <row>
-          <radio id="isPch" label="Symbol" >
-            <option value="all" label="Same for all variables" />
-            <option value="each" label="Different for each variable" />
-          </radio>
-          <column>
-            <text>
-	  Either an integer specifying a symbol or a single character to be used as the default in plotting points.
-	  </text>
-            <input size="small" id="pch" initial="1" label="Enter value - for diff.symbol. enter a vector -" />
-          </column>
-        </row>
-      </frame>
-    </page>
-<!--type
--->    <page>
-      <radio id="type" label="Type of graphics" >
-        <option value="'p'" label="Plot individual points " />
-        <option value="'l'" label="Plot lines " />
-        <option value="b" label="Plot points connected by lines (both)" />
-        <option value="1" label="Plot points overlaid by lines " />
-        <option value="'h'" label="Plot vertical lines from points to the zero axis (high-density)" />
-        <option value="'s'" label="Step-function plots : the top of the vertical defines the point" />
-        <option value="'S'" label="Step-function plots : the bottom of the vertical defines the point" />
-        <option value="custoType" label="Customize" />
-      </radio>
-      <input size="medium" id="typeCusto" depend="custoType" label="Give a character vector eg : c('p','l')" />
-    </page>
-<!--titre-->    <page>
-      <row>
-        <column>
-          <checkbox checked="false" value="1" id="isXaxis" label="Give a name to 'X' axis" />
-          <input size="medium" id="Xname" initial="X" depend="isXaxis" label="Name for X axis" />
-          <checkbox checked="false" value="1" id="isYaxis" label="Give a name to Y axis" />
-          <input size="medium" id="Yname" initial="Y" label="Name of Y axis" depend="isYaxis" />
-          <checkbox checked="false" value="1" id="isTitle" label="Give a title" />
-          <input size="medium" id="main" depend="isTitle" />
-          <checkbox checked="false" value="1" id="isSub" label="Give a subtitle" />
-          <input size="medium" id="sub" depend="isSub" />
-        </column>
-        <column>
-          <checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="axes" label="Generate axes" />
-          <checkbox value_unchecked="" checked="false" value="x" id="logX" label="X as logarythm" />
-          <checkbox value_unchecked="" checked="false" value="y" id="logY" label="Y as logarythm" />
-        </column>
-      </row>
-    </page>
-<!-- avant apr?-->    <page>
-      <text>
-        Everything cannot be here handled : R is too flexibel as concerns plots. Nonetheless, you can add extra code before and after the code of the plugin if you want to add whatever. This will allow you to modify if you want before par() and after to add low-level graphs. Please refer to 'R : an introduction' 
-     </text>
-      <frame label="Advanced options" >
-        <!-- doesn't work very well TODO
-        <checkbox value_unchecked=" " checked="true" value="rk.graph.on()" id="rkgraphson" label="Enter 'rk.graph.on()'" />
+A duplicate option has to be tested-->  
+	<dialog label="Scatterplot" >
+		<tabbook>
+			<tab label="Variables" >
+				<row>
+					<varselector id="vars" />
+					<varslot multi="true" duplicate="true" classes="integer numeric" id="x" source="vars" label="'X' variables" required="true" />
+					<varslot multi="true" duplicate="true" duplicate="true" classes="integer numeric" id="y" source="vars" label="'Y' variables" required="true" />
+				</row>
+			</tab>
+			<tab label="Axes" >
+				<row>
+					<column>
+						<radio id="columns" label="Value for 'X' scale" >
+							<option value="FALSE" label="Default" />
+							<option value="custoCol" label="Customize" />
+						</radio>
+						<varslot multi="false" classes="integer numeric" source="varname" id="Xscale" depend="custoCol" />
+						<radio id="rows" label="Value for 'Y' scale" >
+							<option value="FALSE" id="temp2" label="Default" />
+							<option value="custoRow" label="Customize" />
+						</radio>
+						<varslot multi="false" classes="integer numeric " id="Yscale" source="varname" depend="custoRow" />
+					</column>
+					<varselector id="varname" />
+				</row>
+			</tab>
+			<tab label="Type" >
+				<radio id="type" label="Type of graphics" >
+					<option value="'p'" label="Plot individual points " />
+					<option value="'l'" label="Plot lines " />
+					<option value="b" label="Plot points connected by lines (both)" />
+					<option value="1" label="Plot points overlaid by lines " />
+					<option value="'h'" label="Plot vertical lines from points to the zero axis (high-density)" />
+					<option value="'s'" label="Step-function plots : the top of the vertical defines the point" />
+					<option value="'S'" label="Step-function plots : the bottom of the vertical defines the point" />
+					<option value="custoType" label="Customize" />
+				</radio>
+				<input size="medium" id="typeCusto" depend="custoType" label="Give a character vector eg : c('p','l')" />
+			</tab>
+			<tab label="Names" >
+				<row>
+					<column>
+						<checkbox checked="false" value="1" id="isXaxis" label="Give a name to 'X' axis" />
+						<input size="medium" id="Xname" initial="X" depend="isXaxis" label="Name for X axis" />
+						<checkbox checked="false" value="1" id="isYaxis" label="Give a name to Y axis" />
+						<input size="medium" id="Yname" initial="Y" label="Name of Y axis" depend="isYaxis" />
+						<checkbox checked="false" value="1" id="isTitle" label="Give a title" />
+						<input size="medium" id="main" depend="isTitle" />
+						<checkbox checked="false" value="1" id="isSub" label="Give a subtitle" />
+						<input size="medium" id="sub" depend="isSub" />
+					</column>
+					<column>
+						<checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="axes" label="Generate axes" />
+						<checkbox value_unchecked="" checked="false" value="x" id="logX" label="X as logarythm" />
+						<checkbox value_unchecked="" checked="false" value="y" id="logY" label="Y as logarythm" />
+					</column>
+				</row>
+			</tab>
+			<tab label="Options" >
+				<frame>
+					<row>
+						<radio id="color" label="Color" >
+							<option value="all" label="Same color for all variables" />
+							<option value="each" label="Different for each variable" />
+						</radio>
+						<column>
+							<text>
+					Enter value - for diff.col. enter a vector -
+					eg:  c(1,2) or c('red','green')
+							</text>
+							<input size="small" id="col" initial="'black'" label=" " />
+						</column>
+					</row>
+				</frame>
+				<frame>
+					<row>
+						<radio id="isCe" label="Size" >
+							<option value="all" label="Same for all variables" />
+							<option value="each" label="Different for each variable" />
+						</radio>
+						<column>
+							<text>
+					A numerical value giving the amount by which plotting text and symbols should be scaled relative to the default. 
+							</text>
+							<input size="small" id="cex" initial="1" label="Enter value - for diff.size. enter a vector -" />
+						</column>
+					</row>
+				</frame>
+				<frame>
+					<row>
+						<radio id="isPch" label="Symbol" >
+							<option value="all" label="Same for all variables" />
+							<option value="each" label="Different for each variable" />
+						</radio>
+						<column>
+							<text>
+					Either an integer specifying a symbol or a single character to be used as the default in plotting points.
+							</text>
+							<input size="small" id="pch" initial="1" label="Enter value - for diff.symbol. enter a vector -" />
+						</column>
+					</row>
+				</frame>
+			</tab>
+			<tab label="More options" >
+				<text>
+				Everything cannot be here handled : R is too flexibel as concerns plots. Nonetheless, you can add extra code before and after the code of the plugin if you want to add whatever. This will allow you to modify if you want before par() and after to add low-level graphs. Please refer to 'R : an introduction' 
+				</text>
+				<frame label="Advanced options" >
+			<!-- doesn't work very well TODO
+				<checkbox value_unchecked=" " checked="true" value="rk.graph.on()" id="rkgraphson" label="Enter 'rk.graph.on()'" />
+			-->
+				<input size="big" id="before" label="Before plot" />
+				<checkbox value_unchecked=" " checked="true" value="rk.graph.off()" id="rkgraphsoff" label="Enter 'rk.graph.off()'" />
+				<!-- doesn't work very well TODO
+			<input size="big" id="after" label="After plot" />
+			-->
+				</frame>
+			</tab>
+		</tabbook>
+	</dialog>
+	<wizard label="Scatterplot">
+	<!--variable
 	-->
-        <input size="big" id="before" label="Before plot" />
-	  <!-- doesn't work very well TODO
-        <checkbox value_unchecked=" " checked="true" value="rk.graph.off()" id="rkgraphsoff" label="Enter 'rk.graph.off()'" />
+		<page>
+			<row>
+				<varselector id="vars" />
+				<varslot multi="true" duplicate="true" classes="numeric integer" id="x" source="vars" label="'X' variables" required="true" />
+				<varslot multi="true" duplicate="true" duplicate="true" classes="numeric integer" id="y" source="vars" label="'Y' variables" required="true" />
+			</row>
+		</page>
+	<!-- axes-->
+		<page>
+			<row>
+				<column>
+					<radio id="columns" label="Value for 'X' scale" >
+						<option value="FALSE" label="Default" />
+						<option value="custoCol" label="Customize" />
+					</radio>
+					<varslot multi="false" classes="integer numeric" source="varname" id="Xscale" depend="custoCol" />
+					<radio id="rows" label="Value for 'Y' scale" >
+						<option value="FALSE" id="temp2" label="Default" />
+						<option value="custoRow" label="Customize" />
+					</radio>
+					<varslot multi="false" classes="integer numeric " id="Yscale" source="varname" depend="custoRow" />
+				</column>
+				<varselector id="varname" />
+			</row>
+		</page>
+	<!--couleur
 	-->
-        <input size="big" id="after" label="After plot" />
-      </frame>
-    </page>
-  </wizard>
+		<page>
+			<frame>
+				<row>
+					<radio id="color" label="Color" >
+						<option value="all" label="Same color for all variables" />
+						<option value="each" label="Different for each variable" />
+					</radio>
+					<column>
+						<text>
+				Enter value - for diff.col. enter a vector -
+				eg:  c(1,2) or c('red','green')
+						</text>
+						<input size="small" id="col" initial="'black'" label=" " />
+					</column>
+				</row>
+			</frame>
+			<frame>
+				<row>
+					<radio id="isCex" label="Size" >
+						<option value="all" label="Same for all variables" />
+						<option value="each" label="Different for each variable" />
+					</radio>
+					<column>
+						<text>
+				A numerical value giving the amount by which plotting text and symbols should be scaled relative to the default. 
+						</text>
+						<input size="small" id="cex" initial="1" label="Enter value - for diff.size. enter a vector -" />
+					</column>
+				</row>
+			</frame>
+			<frame>
+				<row>
+					<radio id="isPch" label="Symbol" >
+						<option value="all" label="Same for all variables" />
+						<option value="each" label="Different for each variable" />
+					</radio>
+					<column>
+						<text>
+				Either an integer specifying a symbol or a single character to be used as the default in plotting points.
+						</text>
+						<input size="small" id="pch" initial="1" label="Enter value - for diff.symbol. enter a vector -" />
+					</column>
+				</row>
+			</frame>
+		</page>
+	<!--type
+	-->
+		<page>
+			<radio id="type" label="Type of graphics" >
+				<option value="'p'" label="Plot individual points " />
+				<option value="'l'" label="Plot lines " />
+				<option value="b" label="Plot points connected by lines (both)" />
+				<option value="1" label="Plot points overlaid by lines " />
+				<option value="'h'" label="Plot vertical lines from points to the zero axis (high-density)" />
+				<option value="'s'" label="Step-function plots : the top of the vertical defines the point" />
+				<option value="'S'" label="Step-function plots : the bottom of the vertical defines the point" />
+				<option value="custoType" label="Customize" />
+			</radio>
+			<input size="medium" id="typeCusto" depend="custoType" label="Give a character vector eg : c('p','l')" />
+		</page>
+		<!--titre-->
+		<page>
+			<row>
+				<column>
+					<checkbox checked="false" value="1" id="isXaxis" label="Give a name to 'X' axis" />
+					<input size="medium" id="Xname" initial="X" depend="isXaxis" label="Name for X axis" />
+					<checkbox checked="false" value="1" id="isYaxis" label="Give a name to Y axis" />
+					<input size="medium" id="Yname" initial="Y" label="Name of Y axis" depend="isYaxis" />
+					<checkbox checked="false" value="1" id="isTitle" label="Give a title" />
+					<input size="medium" id="main" depend="isTitle" />
+					<checkbox checked="false" value="1" id="isSub" label="Give a subtitle" />
+					<input size="medium" id="sub" depend="isSub" />
+				</column>
+				<column>
+					<checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="axes" label="Generate axes" />
+					<checkbox value_unchecked="" checked="false" value="x" id="logX" label="X as logarythm" />
+					<checkbox value_unchecked="" checked="false" value="y" id="logY" label="Y as logarythm" />
+				</column>
+			</row>
+		</page>
+	<!-- avant apr?-->
+		<page>
+			<text>
+			Everything cannot be here handled : R is too flexibel as concerns plots. Nonetheless, you can add extra code before and after the code of the plugin if you want to add whatever. This will allow you to modify if you want before par() and after to add low-level graphs. Please refer to 'R : an introduction' 
+			</text>
+			<frame label="Advanced options" >
+				<!-- doesn't work very well TODO
+				<checkbox value_unchecked=" " checked="true" value="rk.graph.on()" id="rkgraphson" label="Enter 'rk.graph.on()'" />
+			-->
+				<input size="big" id="before" label="Before plot" />
+			<!-- doesn't work very well TODO
+				<checkbox value_unchecked=" " checked="true" value="rk.graph.off()" id="rkgraphsoff" label="Enter 'rk.graph.off()'" />
+			-->
+				<input size="big" id="after" label="After plot" />
+			</frame>
+		</page>
+	</wizard>
 </document>

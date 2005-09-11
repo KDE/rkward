@@ -24,12 +24,18 @@
 
 	<hierarchy>
 		<menu id="analysis" label="Analysis" index="4">
-			<menu id="means" label="Means" index="0">
+			<menu id="means" label="Means" index="1">
 				<menu id="ttests" label="T-Tests" index="0">
 					<entry component="independent_samples_t_test" label="Independent Samples" />
 				</menu>
 			</menu>
-			<menu id="saveload" label="Save / Load" index="0">
+			<entry component="basic_statistics" label="Basic Statistics" index="2"/>
+			<entry component="corr_matrix" label="Correlation Matrix" index="3"/>
+			<entry component="descriptive" label="Descriptive Statistics" index="0"/>
+			<entry component="simple_anova" label="Simple Anova" index="4"/>
+		</menu>
+		<menu id="file" label="File">
+			<menu id="saveload" label="Save / Load R objects" index="4">
 				<menu id="load" label="Load" index="0">
 					<entry component="load_r_object" label="Load an R Object" />
 					<entry component="load_readtable" label="Load data" />
@@ -42,13 +48,9 @@
 					<entry component="save_table" label="Save as table" />
 				</menu>
 			</menu>
-			<menu id="plots" label="Plots" index="0">
-				<entry component="plots_scatterplot" label="Scatterplot" />
-			</menu>
-			<entry component="descriptive" label="Descriptive Statistics" />
-			<entry component="corr_matrix" label="Correlation Matrix" />
-			<entry component="simple_anova" label="Simple Anova" />
-			<entry component="basic_statistics" label="Basic Statistics" />
+		</menu>
+		<menu id="plots" label="Plots" index="5">
+			<entry component="plots_scatterplot" label="Scatterplot" />
 		</menu>
 	</hierarchy>
 </document>

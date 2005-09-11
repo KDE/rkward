@@ -166,7 +166,24 @@ void RKwardApp::doPostInit () {
 	KMessageBox::information (this, dummy, i18n("Before you complain..."), "state_of_rkward");
 	
 	startR ();
+
+	// create handle for menu bar and register standard menus
 	menu_list = new RKMenuList (menuBar ());
+	QMenuItem* item = menuBar ()->findItem (menuBar ()->idAt (0));
+	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "file");
+	item = menuBar ()->findItem (menuBar ()->idAt (1));
+	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "edit");
+	item = menuBar ()->findItem (menuBar ()->idAt (2));
+	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "workspace");
+	item = menuBar ()->findItem (menuBar ()->idAt (3));
+	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "output");
+	item = menuBar ()->findItem (menuBar ()->idAt (4));
+	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "run");
+	item = menuBar ()->findItem (menuBar ()->idAt (5));
+	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "settings");
+	item = menuBar ()->findItem (menuBar ()->idAt (6));
+	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "help");
+
 	initPlugins ();
 	
 	if (initial_url) {

@@ -3,11 +3,9 @@
 <!-- This is a simple example, of how a "plugin" might be configured. -->
 
 <document>
-	<entry type="entry" id="descriptive" label="Descriptive Statistics"/>
-
-<!-- The layout-section takes care of the layout of the GUI for this plugin. -->
-
-	<dialog>
+	<code file="code.php"/>
+	
+	<dialog label="Descriptive Statistics">
 		<row>
 			<column>
 				<varselector id="vars"/>
@@ -21,5 +19,5 @@
 			</column>
 		</row>
 	</dialog>
-	
+
 </document>

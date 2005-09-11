@@ -1,11 +1,11 @@
 <!DOCTYPE rkplugin>
 <document>
-  <entry type="entry" id="load" label="Load a R object" />
-<!-- The layout-section takes care of the layout of the GUI for this plugin. -->  <dialog>
-    <tabbook>
-      <tab label="Select variables" >
-        <browser size="small" id="file" label="Name of the file" filter="*.RData" />
-      </tab>
-    </tabbook>
-  </dialog>
+	<code file="code.php"/>
+	<dialog label="Load an R object">
+		<tabbook>
+			<tab label="Select variables" >
+				<browser size="small" id="file" label="Name of the file" filter="*.RData" />
+			</tab>
+		</tabbook>
+	</dialog>
 </document>

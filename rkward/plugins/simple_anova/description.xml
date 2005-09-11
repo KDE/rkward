@@ -1,9 +1,9 @@
 <!DOCTYPE rkplugin>
 
 <document>
-	<entry type="entry" id="simple_anova" label="Simple Anova"/>
-
-	<dialog>
+	<code file="code.php"/>
+	
+	<dialog label="Simple Anova">
 		<text>
 			This plugin is bogus! Do not use!
 		</text>

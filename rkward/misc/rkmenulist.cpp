@@ -41,21 +41,24 @@ void RKMenuList::clear () {
 	}
 	created_menu_ids.clear ();
 
-	for (MenuMap::iterator it = menu_map.begin (); it != menu_map.end (); ++it) {
-		delete it.data ();
+// remove only RKMenus, which were not pre-existing
+	QDictIterator<RKMenu> it (menu_map);
+	while (it.current ()) {
+		if (!(it.current ()->pre_existing)) {
+			delete it.current ();
+			menu_map.remove (it.currentKey ());
+		} else {
+			++it;
+		}
 	}
-
-	menu_map.clear ();
 }
 
 RKMenu *RKMenuList::registerMenu (QPopupMenu *qmenu, const QString &id) {
 	RK_TRACE (MISC);
 	RKMenu *ret;
-	if (menu_map.find (id) == menu_map.end ()) {
+	if (!(ret = menu_map.find (id))) {
 		ret = new RKMenu (qmenu, true);
 		menu_map.insert (id, ret);
-	} else {
-		ret = menu_map[id];
 	}
 	return ret;
 }
@@ -63,13 +66,12 @@ RKMenu *RKMenuList::registerMenu (QPopupMenu *qmenu, const QString &id) {
 RKMenu *RKMenuList::createMenu (const QString &id, const QString &label, int index) {
 	RK_TRACE (MISC);
 	RKMenu *ret;
-	if (menu_map.find (id) == menu_map.end ()) {
+
+	if (!(ret = menu_map.find (id))) {
 		QPopupMenu *qmenu = new QPopupMenu (menu_bar);
 		created_menu_ids.append (menu_bar->insertItem (label, qmenu, -1, index));
 		ret = new RKMenu (qmenu, false);
 		menu_map.insert (id, ret);
-	} else {
-		ret = menu_map[id];
 	}
 	return ret;
 }

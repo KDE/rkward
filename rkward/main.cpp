@@ -77,7 +77,7 @@ static const char *description =
 static KCmdLineOptions options[] =
 {
   { "+[File]", I18N_NOOP ("file to open"), 0 },
-  { "debug-level <level>", I18N_NOOP ("Verbosity of debug messages (0-5)"), "3"}, 
+  { "debug-level <level>", I18N_NOOP ("Verbosity of debug messages (0-5)"), "2"}, 
   { "debug-flags <flags>", I18N_NOOP ("Mask for components to debug as a binary number (see debug.h)"), "1111111111111" }, 
   { 0, 0, 0 }
   // INSERT YOUR COMMANDLINE OPTIONS HERE

@@ -1,102 +1,103 @@
 <!DOCTYPE rkplugin>
 <!-- This is a simple example, of how a "plugin" might be configured. --><document>
-  <entry type="entry" id="bs" label="Basic statistics" />
-<!-- The layout-section takes care of the layout of the GUI for this plugin. -->  <dialog>
-    <tabbook>
-      <tab label="Select variables" >
-        <column>
-          <row>
-            <varselector id="vars" />
-            <varslot multi="true" classes="numeric integer" id="z" source="vars" label="Variable" required="true" />
-          </row>
-        </column>
-      </tab>
-      <tab label="Statistics" >
-        <frame label="General" >
-          <row>
-            <checkbox value_unchecked="0" checked="false" value="1" id="nombre" label="Number of observations" />
-            <checkbox value_unchecked="0" checked="false" value="1" id="nbna" label="Number of missing values" />
-          </row>
-        </frame>
-        <frame label="Moments" >
-          <row>
-            <checkbox value_unchecked="0" checked="false" value="1" id="moyenne" label="Mean" />
-            <checkbox value_unchecked="0" checked="false" value="1" id="vari" label="Variance" />
-            <checkbox value_unchecked="0" checked="false" value="1" id="ecartt" label="Sd" />
-          </row>
-        </frame>
-        <frame label="extrema" >
-          <row>
-            <column>
-              <checkbox value_unchecked="0" checked="false" value="1" id="minimum" label="Minimum" />
-              <checkbox value_unchecked="0" checked="false" value="1" id="maximum" label="Maximum" />
-            </column>
-            <column>
-              <spinbox type="integer" id="nbminimum" min="0" initial="0" max="100" label="Number of minimum values displayed" />
-              <spinbox type="integer" id="nbmaximum" min="0" initial="0" max="100" label="Number of maximum values displayed" />
-            </column>
-          </row>
-        </frame>
-        <frame label="Quantile" >
-          <row>
-            <checkbox value_unchecked="0" checked="false" value="1" id="mediane" label="Median" />
-            <checkbox value_unchecked="0" checked="false" value="1" id="irq" label="Interquartile Range" />
-            <checkbox value_unchecked="0" checked="false" value="1" id="quartile" label="Quartile" />
-          </row>
-          <row>
-            <spinbox type="integer" id="autre" min="0" initial="0" max="100" label="Other (eg : for deciles, enter 10)" />
-          </row>
-        </frame>
-      </tab>
-      <tab label="Robust statistics" >
-        <column>
-          <frame label="Dispersion" >
-            <row>
-              <checkbox checked="false" value="1" id="mad" label="Median Absolute Deviation" />
-              <input size="small" intial="1.4628" id="constMad" depend="mad" label="Constant" />
-            </row>
-          </frame>
-          <frame label="Robust mean" >
-            <row>
-              <checkbox checked="false" value="1" id="trim" label="Trimmed Mean" />
-              <spinbox min="0" id="pourcent" initial="0.05" max="0.5" depend="trim" label="Percentage of trimmed values" />
-            </row>
-          </frame>
-          <frame label="M-Estimator" >
-            <row>
-              <checkbox checked="false" value="1" id="huber" label="Huber -M estimator (Require MASS Library)" />
-              <spinbox min="0" id="winsor" initial="1.5" max="10" depend="huber" label="Winsorize at 'k' sd" />
-            </row>
-            <row>
-              <column>
-                <checkbox checked="false" value="1" id="customMu" depend="huber" label="Custom Mu value" />
-                <input size="small" id="mu" depend="customMu" label="Enter your value" />
-              </column>
-              <column>
-                <checkbox checked="false" value="1" id="customS" depend="huber" label="Custom s value" />
-                <input size="small" id="s" depend="customS" label="S value" />
-              </column>
-            </row>
-            <row>
-              <column>
-                <input size="small" intial="1e-6" id="tol" depend="huber" label="Tolerance" />
-              </column>
-              <column>
-                <radio id="initmu" depend="huber" label="Initial value" >
-                  <option value="median" label="Median" />
-                  <option value="mean" label="Mean" />
-                </radio>
-              </column>
-            </row>
-          </frame>
-        </column>
-      </tab>
-      <tab id="option" label="Options" >
-        <checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="NA" label="Omit missing values in calculs" />
-        <checkbox checked="false" value="1" id="option" label="Print options in output" />
-        <checkbox checked="false" value="1" id="result" label="Get the result in the console" />
-        <input size="medium" intial="rk.univariate" id="nom" label="Name of the result" depend="result" />
-      </tab>
-    </tabbook>
-  </dialog>
+	<code file="code.php"/>
+	
+	<dialog label="Basic statistics" >
+		<tabbook>
+			<tab label="Select variables" >
+				<column>
+					<row>
+						<varselector id="vars" />
+						<varslot multi="true" classes="numeric integer" id="z" source="vars" label="Variable" required="true" />
+					</row>
+				</column>
+			</tab>
+			<tab label="Statistics" >
+				<frame label="General" >
+					<row>
+						<checkbox value_unchecked="0" checked="false" value="1" id="nombre" label="Number of observations" />
+						<checkbox value_unchecked="0" checked="false" value="1" id="nbna" label="Number of missing values" />
+					</row>
+				</frame>
+				<frame label="Moments" >
+					<row>
+						<checkbox value_unchecked="0" checked="false" value="1" id="moyenne" label="Mean" />
+						<checkbox value_unchecked="0" checked="false" value="1" id="vari" label="Variance" />
+						<checkbox value_unchecked="0" checked="false" value="1" id="ecartt" label="Sd" />
+					</row>
+				</frame>
+				<frame label="extrema" >
+					<row>
+						<column>
+							<checkbox value_unchecked="0" checked="false" value="1" id="minimum" label="Minimum" />
+							<checkbox value_unchecked="0" checked="false" value="1" id="maximum" label="Maximum" />
+						</column>
+						<column>
+							<spinbox type="integer" id="nbminimum" min="0" initial="0" max="100" label="Number of minimum values displayed" />
+							<spinbox type="integer" id="nbmaximum" min="0" initial="0" max="100" label="Number of maximum values displayed" />
+						</column>
+					</row>
+				</frame>
+				<frame label="Quantile" >
+					<row>
+						<checkbox value_unchecked="0" checked="false" value="1" id="mediane" label="Median" />
+						<checkbox value_unchecked="0" checked="false" value="1" id="irq" label="Interquartile Range" />
+						<checkbox value_unchecked="0" checked="false" value="1" id="quartile" label="Quartile" />
+					</row>
+					<row>
+						<spinbox type="integer" id="autre" min="0" initial="0" max="100" label="Other (eg : for deciles, enter 10)" />
+					</row>
+				</frame>
+			</tab>
+			<tab label="Robust statistics" >
+				<column>
+					<frame label="Dispersion" >
+						<row>
+							<checkbox checked="false" value="1" id="mad" label="Median Absolute Deviation" />
+							<input size="small" intial="1.4628" id="constMad" depend="mad" label="Constant" />
+						</row>
+					</frame>
+					<frame label="Robust mean" >
+						<row>
+							<checkbox checked="false" value="1" id="trim" label="Trimmed Mean" />
+							<spinbox min="0" id="pourcent" initial="0.05" max="0.5" depend="trim" label="Percentage of trimmed values" />
+						</row>
+					</frame>
+					<frame label="M-Estimator" >
+						<row>
+							<checkbox checked="false" value="1" id="huber" label="Huber -M estimator (Require MASS Library)" />
+							<spinbox min="0" id="winsor" initial="1.5" max="10" depend="huber" label="Winsorize at 'k' sd" />
+						</row>
+						<row>
+							<column>
+								<checkbox checked="false" value="1" id="customMu" depend="huber" label="Custom Mu value" />
+								<input size="small" id="mu" depend="customMu" label="Enter your value" />
+							</column>
+							<column>
+								<checkbox checked="false" value="1" id="customS" depend="huber" label="Custom s value" />
+								<input size="small" id="s" depend="customS" label="S value" />
+							</column>
+						</row>
+						<row>
+							<column>
+								<input size="small" intial="1e-6" id="tol" depend="huber" label="Tolerance" />
+							</column>
+							<column>
+								<radio id="initmu" depend="huber" label="Initial value" >
+									<option value="median" label="Median" />
+									<option value="mean" label="Mean" />
+								</radio>
+							</column>
+						</row>
+					</frame>
+				</column>
+			</tab>
+			<tab id="option" label="Options" >
+				<checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="NA" label="Omit missing values in calculs" />
+				<checkbox checked="false" value="1" id="option" label="Print options in output" />
+				<checkbox checked="false" value="1" id="result" label="Get the result in the console" />
+				<input size="medium" intial="rk.univariate" id="nom" label="Name of the result" depend="result" />
+			</tab>
+		</tabbook>
+	</dialog>
 </document>

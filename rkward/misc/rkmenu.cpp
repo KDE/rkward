@@ -28,7 +28,7 @@ RKMenu::RKMenu (QPopupMenu *menu, bool pre_existing) {
 	RK_TRACE (MISC);
 
 	RKMenu::menu = menu;
-	delete_q_menu = !pre_existing;
+	RKMenu::pre_existing = pre_existing;
 }
 
 RKMenu::~RKMenu() {
@@ -39,7 +39,7 @@ RKMenu::~RKMenu() {
 		delete it.data ();
 	}
 
-	if (delete_q_menu) {
+	if (!pre_existing) {
 		delete menu;
 	} else{
 		// delete the dynamically created entries
@@ -70,6 +70,7 @@ RKMenu *RKMenu::addSubMenu (const QString &id, const QString &label, int index) 
 void RKMenu::addEntry (const QString &id, RKPluginHandle *plugin, const QString &label, int index) {
 	RK_TRACE (MISC);
 	int mid;
+
 	if (entry_ids.find (id) == entry_ids.end ()) {
 		mid = menu->insertItem (label, plugin, SLOT (activated ()), 0, -1, index);
 	} else {

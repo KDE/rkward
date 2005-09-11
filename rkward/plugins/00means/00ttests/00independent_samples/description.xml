@@ -3,11 +3,9 @@
 <!-- This is a simple example, of how a "plugin" might be configured. -->
 
 <document>
-	<entry type="entry" id="istt" label="Independed Samples T-Test"/>
+	<code file="code.php"/>
 
-<!-- The layout-section takes care of the layout of the GUI for this plugin. -->
-
-	<dialog>
+	<dialog label="Independed Samples T-Test">
 		<tabbook>
 			<tab label="Basic settings">
 				<row>
@@ -32,7 +30,7 @@
 			</tab>
 		</tabbook>
 	</dialog>
-	<wizard>
+	<wizard label="Independed Samples T-Test">
 		<page>
 			<text>As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater.</text>
 			<row>

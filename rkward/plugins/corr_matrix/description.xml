@@ -1,9 +1,9 @@
 <!DOCTYPE rkplugin>
 
 <document>
-	<entry type="entry" id="cor_matrix" label="Correlation matrix"/>
+	<code file="code.php"/>
 	
-	<dialog>
+	<dialog label="Correlation matrix">
 		<tabbook>
 			<tab label="variables">
 				<row>

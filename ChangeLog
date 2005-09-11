@@ -1,3 +1,4 @@
+- plugins can now be placed in different menus
 - keep list of components/plugins and menu-hierarchy in (few) .pluginmap files instead of parsing directory structure
 - improved handling of tcltk windows
 - new icon
