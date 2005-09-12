@@ -24,6 +24,7 @@
 
 class REmbed;
 class RInterface;
+struct RCallbackArgs;
 
 #define RCOMMAND_IN_EVENT 10001
 #define RCOMMAND_OUT_EVENT 10002
@@ -31,6 +32,7 @@ class RInterface;
 #define RIDLE_EVENT 10004
 #define RSTARTED_EVENT 11001
 #define R_EVAL_REQUEST_EVENT 12001
+#define R_CALLBACK_REQUEST_EVENT 12002
 // don't use the numbers following RSTARTUP_ERROR_EVENT, because an error code will be added!
 #define RSTARTUP_ERROR_EVENT 13000
 
@@ -80,8 +82,18 @@ more errors/crashes. Also the thread may get locked when cancelling the currentl
 /** "Kills" the thread. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
 	void kill () { killed = true; };
 
-/** this is a sub-eventloop, being run when the backend request information from the frontend. See \ref RThread for a more detailed description */
+/** this is a sub-eventloop, being run when the backend request information from the frontend. See \ref RThread for a more detailed description
+
+@see REmbed::handleSubstackCall () */
 	void doSubstack (char **call, int call_length);
+
+/** this is a minimal sub-eventloop, being run, when the backend requests simple information from the frontend. It differs from doSubstack in two
+points:
+1) it does not create a full-fledged substack for additional R commands
+2) it may return information via the args parameter immediately
+
+@see REmbed::handleStandardCallback () */
+	void doStandardCallback (RCallbackArgs *args);
 
 /** The command currently being executed. This is used from RInterface::cancelCommand to find out, whether the command to be cancelled is
 already/still running. */

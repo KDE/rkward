@@ -153,3 +153,25 @@ void RThread::doSubstack (char **call, int call_length) {
 	
 	delete reply_stack;
 }
+
+void RThread::doStandardCallback (RCallbackArgs *args) {
+	RK_TRACE (RBACKEND);
+
+	QCustomEvent *event = new QCustomEvent (R_CALLBACK_REQUEST_EVENT);
+	event->setData (args);
+	qApp->postEvent (inter, event);
+	
+	bool done = false;
+	while (!done) {
+		// callback not done yet? Sleep for a while
+		msleep (10);
+
+		MUTEX_LOCK;
+		embeddedR->processX11Events ();
+
+		if (args->done) {
+			done = true;		// safe to access only while the mutex is locked
+		}
+		MUTEX_UNLOCK;
+	}
+}

@@ -52,6 +52,13 @@ char **REmbed::handleGetValueCall (char **call, int call_length, int *reply_leng
 	return thread->fetchValue (call, call_length, reply_length);
 }*/
 
+void REmbed::handleStandardCallback (RCallbackArgs *args) {
+	RK_TRACE (RBACKEND);
+
+	if (args->type == RCallbackArgs::RWriteConsole) qDebug ("Write console: '%s'", *(args->chars_a));
+	thread->doStandardCallback (args);
+}
+
 int REmbed::initialize () {
 	RK_TRACE (RBACKEND);
 	QString r_home = RKSettingsModuleR::rHomeDir();
@@ -66,11 +73,13 @@ int REmbed::initialize () {
 	}
 	
 	startR (r_home, argc, argv);
-	
+
 	for (--argc; argc >= 0; --argc) {
 		delete argv[argc];
 	}
-	
+
+	connectCallbacks ();
+
 	RKWardRError error;
 	int status = 0;
 	

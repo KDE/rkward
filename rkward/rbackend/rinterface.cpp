@@ -143,6 +143,8 @@ void RInterface::customEvent (QCustomEvent *e) {
 		RKGlobals::rkApp ()->setRStatus (true);
 	} else if ((e->type () == R_EVAL_REQUEST_EVENT)) {
 		processREvalRequest (static_cast<REvalRequest *> (e->data ()));
+	} else if ((e->type () == R_CALLBACK_REQUEST_EVENT)) {
+		processRCallbackRequest (static_cast<RCallbackArgs *> (e->data ()));
 	} else if ((e->type () == RSTARTED_EVENT)) {
 		r_thread->unlock ();
 	} else if ((e->type () > RSTARTUP_ERROR_EVENT)) {
@@ -278,5 +280,24 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 	}
 	
 	closeChain (request->in_chain);
+}
+
+void RInterface::processRCallbackRequest (RCallbackArgs *args) {
+	RK_TRACE (RBACKEND);
+
+	// first, copy out the type while mutex is locked. Allows for easier typing below
+	MUTEX_LOCK;
+	RCallbackArgs::RCallbackType type = args->type;
+
+	if (type == RCallbackArgs::RShowMessage) {
+		KMessageBox::information (0, QString (*(args->chars_a)), i18n ("Message from the R backend"));
+	} else if (type == RCallbackArgs::RReadConsole) {
+		QString res = KInputDialog::getText (i18n ("R backend requests information"), QString (*(args->chars_a)));
+		res = res.left (args->int_a - 2) + "\n";
+		qstrcpy (*(args->chars_b), res.latin1 ());
+	}
+
+	args->done = true;
+	MUTEX_UNLOCK;
 }
 

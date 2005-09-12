@@ -61,9 +61,13 @@ Note that you should call initialize only once in a application */
 	int initialize ();
 	
 /** this function is public for technical reasons, only. Don't use except from REmbedInternal! Called from REmbedInternal when the R backend
-places a call to the frontend. The call will be directly passed up to RThread::doSubstack (). */
+places a call to the frontend. The call will be directly passed up to RThread::doSubstack (). @see REmbedInternal::handleSubstackCall () */
 	void handleSubstackCall (char **call, int call_length);
 	//char **handleGetValueCall (char **call, int call_length, int *reply_length);
+
+/** this function is public for technical reasons, only. Don't use except from REmbedInternal! Called from REmbedInternal when the R backend
+requests a standard callback. The call will be directly passed up to RThread::doStandardCallback (). @see REmbedInternal::handleStandardCallback () */
+	void handleStandardCallback (RCallbackArgs *args);
 private:
 	QIODevice::Offset outfile_offset;
 	QIODevice::Offset errfile_offset;

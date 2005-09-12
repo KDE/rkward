@@ -14,7 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
+#if 0
 #include <qlayout.h>
 
 #include "khelpdlg.h"
@@ -36,3 +36,4 @@ RKHelpDock::~RKHelpDock()
 
 
 #include "rkhelpdock.moc"
+#endif

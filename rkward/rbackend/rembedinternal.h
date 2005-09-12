@@ -18,8 +18,33 @@
 #ifndef R_EMBED_H
 #define R_EMBED_H
 
- /** The main purpose of separating this class from REmbed is
-	that R- and Qt-includes don't like each other. Hence this class is Qt-agnostic while
+/** This struct is an ugly hack that allows us to pass all R standard callbacks to the main thread and back using the same mechanism.
+Basically, it contains enough space for all arguments and return values ever used. However, of course, it is inherently totally unsafe.
+All rests on having the handling functions know exactly, how these variables are used. So be extremely careful with modifications!
+
+Also, of course, this method of passing the arguments is somewhat wasteful, as most of the time we're alocating a lot more memory than needed.
+However, since all R standard callbacks are used very infrequently (and ask for user interaction), this is not really an issue.
+
+The bool done member is used to find out, when exactly the main thread has finished processing the callback. */
+struct RCallbackArgs {
+/** is main thread done with the callback, yet? Initialized to false inside the true handler: RThread::doStandardCallback () */
+	bool done;
+
+/** This enum specifies, what sort of callback this is */
+	enum RCallbackType { RSuicide, RShowMessage, RReadConsole, RWriteConsole, RResetConsole, RFlushConsole, RClearerrConsole,
+											RBusy, RCleanUp, RShowFiles, RChooseFile, REditFile, REditFiles
+	} type;
+
+	char **chars_a;
+	char **chars_b;
+	char **chars_c;
+	int int_a;
+	int int_b;
+	int int_c;
+	bool bool_a;
+};
+
+ /** The main purpose of separating this class from REmbed is that R- and Qt-includes don't go together well. Hence this class is Qt-agnostic while
 	REmbed is essentially R-agnostic.
 	
 	@see REmbed
@@ -33,6 +58,9 @@ public:
 	REmbedInternal();
 /** destructor */
 	virtual ~REmbedInternal();
+
+/** connect R standard callbacks */
+	void connectCallbacks ();
 
 /** Enum specifying types of errors that may occur while parsing/evaluation a command in R */
 	enum RKWardRError {
@@ -88,6 +116,12 @@ public:
 implementation is in REmbed::handleSubstackCall () */
 	virtual void handleSubstackCall (char **call, int call_length) = 0;
 	//virtual char **handleGetValueCall (char **call, int call_length, int *reply_length) = 0;
+
+/** This second callback handles R standard callbacks. The difference to the first one is, that these are typically required to finish within the same
+functions. On the other hand, also, they don't require further computations in R, and hence no full-fledged substack.
+
+Otherwise it is very similar to handleSubstackCall (), esp. in that is implemented in REmbed::handleStandardCallback () */
+	virtual void handleStandardCallback (RCallbackArgs *args) = 0;
 
 /** only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++ */
 	static REmbedInternal *this_pointer;

@@ -29,6 +29,7 @@
 class RKwatch;
 class RCommand;
 class RKwardApp;
+struct RCallbackArgs;
 
 /** This class provides the main interface to the R-processor.
 
@@ -69,9 +70,12 @@ not be interrupted. */
 private:
 	RThread *r_thread;
 	RCommand *running_command_canceled;
-	
+
+/** See \ref RThread::doSubstack (). Does the actual job. */
 	void processREvalRequest (REvalRequest *request);
-//	void processRGetValueRequest (RGetValueRequest);	
+//	void processRGetValueRequest (RGetValueRequest);
+/** See \ref RThread::doStandardCallback (). Does the actual job. */
+	void processRCallbackRequest (RCallbackArgs *args);
 friend class RKwardApp;
 	RKwatch *watch;
 protected:

@@ -14,7 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
- 
+#if 0
 #ifndef RKHELPDOCK_H
 #define RKHELPDOCK_H
 
@@ -36,5 +36,5 @@ private:
     //KHelpDlg dlg;
 
 };
-
+#endif
 #endif

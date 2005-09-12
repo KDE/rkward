@@ -22,11 +22,13 @@
 REmbedInternal *REmbedInternal::this_pointer = 0; 
  
 extern "C" {
+#define R_INTERFACE_PTRS 1
 
 #include "R_ext/Rdynload.h"
 #include "R_ext/eventloop.h"
 #include "R.h"
 #include "Rinternals.h"
+#include "Rinterface.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -35,13 +37,120 @@ extern "C" {
 
 #include "../rkglobals.h"
 
+/// ############## R Standard callback overrides BEGIN ####################
+void RSuicide (char* message) {
+// TODO
+}
+
+void RShowMessage (char* message) {
+	RCallbackArgs args;
+	args.type = RCallbackArgs::RShowMessage;
+	args.chars_a = &message;
+	REmbedInternal::this_pointer->handleStandardCallback (&args);
+}
+
+int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
+	RCallbackArgs args;
+	args.type = RCallbackArgs::RReadConsole;
+	args.chars_a = &prompt;
+	args.chars_b = (char **) (&buf);
+	args.int_a = buflen;
+	args.int_b = hist;		// actually, we ignore hist
+
+	REmbedInternal::this_pointer->handleStandardCallback (&args);
+// default implementation seems to return 1 on success, 0 on failure, contrary to some documentation. see unix/std-sys.c
+	if (buf)	return 1;
+	return 0;
+}
+
+void RWriteConsole (char *buf, int buflen) {
+	RCallbackArgs args;
+	args.type = RCallbackArgs::RWriteConsole;
+	args.chars_a = &buf;
+	args.int_a = buflen;
+	REmbedInternal::this_pointer->handleStandardCallback (&args);
+}
+
+void RResetConsole () {
+// we leave this un-implemented on purpose! We simply don't want that sort of thing to be done.
+}
+
+void RFlushConsole () {
+// we leave this un-implemented on purpose! We simply don't want that sort of thing to be done.
+}
+
+void RClearerrConsole () {
+// we leave this un-implemented on purpose! We simply don't want that sort of thing to be done.
+}
+
+void RBusy (int which) {
+//TODO
+}
+
+void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
+// TODO
+}
+
+int RShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean del, char *pager) {
+// TODO
+// default implementation seems to returns 1 on success, 0 on failure. see unix/std-sys.c
+	return 1;
+}
+
+int RChooseFile (int isnew, char *buf, int len) {
+// TODO
+// return length of filename (strlen (buf))
+	return 0;
+}
+
+int REditFile (char *buf) {
+// TODO
+// does not exist in standard R 2.1.0, so no idea what to return.
+	return 0;
+}
+
+int REditFiles (int nfile, char **file, char **title, char *editor) {
+//TODO
+// default impelementation seems to return 1 if nfile <= 0, else 1. No idea, what for. see unix/std-sys.c
+	return (nfile <= 0);
+}
+/// ############## R Standard callback overrides END ####################
+
+
 REmbedInternal::REmbedInternal() {
 	RKGlobals::empty_char = strdup ("");
 	RKGlobals::unknown_char = strdup ("?");
 	RKGlobals::na_double = NA_REAL;
 }
 
-REmbedInternal::~REmbedInternal(){
+void REmbedInternal::connectCallbacks () {
+// R standard callback pointers.
+// Rinterface.h thinks this can only ever be done on aqua, apparently. Here, we define it the other way around, i.e. #ifndef instead of #ifdef
+#ifndef HAVE_AQUA
+	extern int  (*ptr_R_EditFiles)(int, char **, char **, char *);
+#endif
+
+// connect R standard callback to our own functions. Important: Don't do so, before our own versions are ready to be used!
+//	ptr_R_Suicide = RSuicide;
+	ptr_R_ShowMessage = RShowMessage;			// when exactly does this ever get used?
+	ptr_R_ReadConsole = RReadConsole;
+	ptr_R_WriteConsole = RWriteConsole;				// when exactly does this ever get used? Apparently it does not get called if a sink is in place, but otherwise it is! Probably we can get rid of our sink, then, and provide "real-time" output! More '!'s!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	ptr_R_ResetConsole = RResetConsole;
+	ptr_R_FlushConsole = RFlushConsole;
+	ptr_R_ClearerrConsole = RClearerrConsole;
+//	ptr_R_Busy = RBusy;
+//	ptr_R_CleanUp = RCleanUp;
+//	ptr_R_ShowFiles = RShowFiles;
+//	ptr_R_ChooseFile = RChooseFile;
+//	ptr_R_EditFile = REditFile;
+//	ptr_R_EditFiles = REditFiles;
+
+// these two, we won't override
+//	ptr_R_loadhistory = ... 	// we keep our own history
+//	ptr_R_savehistory = ...	// we keep our own history
+}
+
+REmbedInternal::~REmbedInternal (){
 }
 
 void REmbedInternal::shutdown () {
@@ -67,7 +176,7 @@ We figure out which ones look for X11-events and tell those to do their stuff (r
 /* Maybe we also need to also call R_timeout_handler once in a while? Obviously this is extremely crude code! 
 TODO: verify we really need this. */
 	if (++timeout_counter > 100) {
-		extern void (* R_timeout_handler) ();
+//		extern void (* R_timeout_handler) ();	// already defined in Rinferface.h
 		if (R_timeout_handler) R_timeout_handler ();
 		timeout_counter = 0;
 	}
