@@ -16,9 +16,10 @@
  ***************************************************************************/
 #include "rkcommandeditorwindow.h"
 
-#include <kate/document.h>
-#include <kate/view.h>
 #include <kparts/partmanager.h>
+#include <kparts/mainwindow.h>
+#include <kparts/part.h>
+#include <kparts/factory.h>
 
 #include <ktexteditor/configinterface.h>
 #include <ktexteditor/sessionconfiginterface.h>
@@ -27,8 +28,6 @@
 #include <ktexteditor/encodinginterface.h>
 #include <ktexteditor/editorchooser.h>
 #include <ktexteditor/popupmenuinterface.h>
-
-
 
 #include <qlayout.h>
 #include <qpopupmenu.h>
@@ -47,7 +46,6 @@
 #include <kaccel.h>
 #include <klibloader.h>
 
-
 #include "../rbackend/rinterface.h"
 #include "../rkeditormanager.h"
 #include "../rkglobals.h"
@@ -60,17 +58,7 @@
 
 RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : KMdiChildView (parent) {
 	RK_TRACE (COMMANDEDITOR);
-	
-	
-	/*m_library = KLibLoader::self()->library("libkatepart");
-	m_doc = (Kate::Document *) m_library->factory ()->create (0L,"kate","KTextEditor::Document");
-	m_view = (Kate::View *)m_doc->createView(this);
-	m_view->setName("Kate Part View");
-	setRHighlighting(m_doc);
-	pLayout = new QHBoxLayout( this, 0, -1, "layout");
-	pLayout->addWidget(m_view);
- 
-	(RKGlobals::rkApp()->m_manager)->addPart((KParts::Part*)m_view,false);*/
+    KParts::ReadWritePart *m_katepart;
 
 	KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
 	if (factory)
@@ -82,27 +70,18 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : KMdiChildView (
 	(RKGlobals::rkApp()->m_manager)->addPart((KParts::Part*)m_katepart,false);
 	//m_katepart->widget()->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
-
-
 	m_doc = (Kate::Document *) m_katepart;
 	m_view = (Kate::View *) m_katepart->widget();
 
-	pLayout = new QHBoxLayout( this, 0, -1, "layout");
-	pLayout->addWidget(m_katepart->widget());
-
+	QHBoxLayout *pLayout = new QHBoxLayout( this, 0, -1, "layout");
+	pLayout->addWidget(m_view);
 
 	m_view->setName("Kate Part View");
 	setRHighlighting(m_doc);
-
-
-	connect (this, SIGNAL (gotFocus (KMdiChildView *)), this, SLOT (slotGotFocus ()));
-	connect (this, SIGNAL (lostFocus (KMdiChildView *)), this, SLOT (slotLostFocus ()));
-
 }
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
-	delete pLayout;
 	delete m_doc;
 }
 
@@ -148,27 +127,6 @@ QString RKCommandEditorWindow::getText()
 {
 	return editInterface(m_doc)->text();
 }
-
-
-#include "rkcommandeditorwindow.moc"
-
-
-
-void RKCommandEditorWindow::slotGotFocus()
-{
-
-	//RKGlobals::rkApp()->guiFactory()->addClient( m_view );
-	
-	//RKGlobals::rkApp()->changeGUI((KParts::Part *) this );//createGUI((KParts::Part *) m_view );
-}
-
-
-
-void RKCommandEditorWindow::slotLostFocus()
-{
-	//RKGlobals::rkApp()->guiFactory()->removeClient(m_view);
-}
-
 
 
 bool RKCommandEditorWindow::openURL(const KURL &url){

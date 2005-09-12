@@ -23,10 +23,6 @@
 
 #include <kate/view.h>
 #include <kate/document.h>
-#include <kparts/mainwindow.h>
-#include <kparts/partmanager.h>
-#include <kparts/part.h>
-#include <kparts/factory.h>
 
 #include <kmdichildview.h>
 
@@ -48,7 +44,6 @@ This is an MDI child that is added to the main window.
 @author Pierre Ecochard
 */
 class RKCommandEditorWindow : public KMdiChildView, public RCommandReceiver {
-Q_OBJECT
 public:
     RKCommandEditorWindow (QWidget *parent = 0);
 
@@ -75,19 +70,10 @@ private:
 	Kate::Document *m_doc;
 	
 	void setRHighlighting (Kate::Document *doc);
-	KLibrary *m_library;
 	bool getFilenameAndPath(const KURL &url,QString *fname);
-    
-	QBoxLayout* pLayout;
-private slots:
-    void slotGotFocus();
-    void slotLostFocus();
-
-
 private:
     void updateTabCaption(const KURL &url);
     RCommandChain *chain;
-    KParts::ReadWritePart *m_katepart;
 };
 
 #endif

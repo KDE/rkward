@@ -224,11 +224,6 @@ void RKwardApp::doPostInit () {
 	helpDlg = new KHelpDlg(0);
 	helpDlg->setIcon(SmallIcon("help"));
 	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);
-	
-	konsole = new RKKonsole(0);
-	konsole->setIcon(SmallIcon("konsole"));
-	console->setName("terminal");
-	addToolWindow(konsole,KDockWidget::DockBottom, getMainDockWidget(), 10);
 }
 
 void RKwardApp::initPlugins () {

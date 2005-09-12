@@ -31,6 +31,7 @@ email                : tfry@users.sourceforge.net
 #include <kaccel.h>
 #include <kaction.h>
 #include <kurl.h>
+#include <kparts/partmanager.h>
 
 // forward declaration of the RKward classes
 class RKwardDoc;
