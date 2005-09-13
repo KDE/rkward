@@ -76,7 +76,6 @@
 #include "windows/rkcommandeditorwindow.h"
 #include "windows/rkhelpwindow.h"
 #include "khelpdlg.h"
-#include "rkkonsole.h"
 #include "rkconsole.h"
 #include "debug.h"
 

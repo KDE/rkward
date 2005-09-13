@@ -208,11 +208,11 @@ The most important thing happening there, is a call to RCommand::finished (RComm
 
 \section UsingTheInterfaceToRThreadingIssues Threading issues
 
-The above description sound simple enough, but there may be some threading issues to keep in mind. Consider what needs to happen when RKVariable is trying to update the information on the corresponding object in R-space (see code example above):
+The above description sounds simple enough, but there may be some threading issues to keep in mind. Consider what needs to happen when RKVariable is trying to update the information on the corresponding object in R-space (see code example above):
 
 - RKVariable will first run a command to determine the dimensionality of the object.
 
-Now this is more significant than so may think, as RKVariable is a special kind of RObject, which only handles one-dimensional data. Hence, if you create an object in R with
+Now this is more significant than you may think, as RKVariable is a special kind of RObject, which only handles one-dimensional data. Hence, if you create an object in R with
 
 \code
 myobject <- c (1, 2, 3)
@@ -236,7 +236,7 @@ Consider this hypothetical example:
 
 - RKVariable for object "myobject" runs a command to determine the dimensionality of "myobject"
 - Before that command has finished, the user assigns a data.frame to "myobject" (or deletes the object, or whatever)
-- The command to determine the dimensionality gets run and returns "1 dimension". RKVariable will assume it knows how to handle the object, and tries to do something with "myobject" which is only applicable for one-dimensionaly objects (e.g. trying to get the data as a one-dimensional array)
+- The command to determine the dimensionality gets run and returns "1 dimension". RKVariable will assume it knows how to handle the object, and tries to do something with "myobject" which is only applicable for one-dimensional objects (e.g. trying to get the data as a one-dimensional array)
 - The user command assigning a data.frame gets run
 - RKVariables command to get the data fails
 

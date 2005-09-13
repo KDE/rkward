@@ -83,9 +83,10 @@ void RClearerrConsole () {
 // we leave this un-implemented on purpose! We simply don't want that sort of thing to be done.
 }
 
+/*
 void RBusy (int which) {
 //TODO
-}
+} */
 
 void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 // TODO
@@ -138,7 +139,7 @@ void REmbedInternal::connectCallbacks () {
 	ptr_R_ResetConsole = RResetConsole;
 	ptr_R_FlushConsole = RFlushConsole;
 	ptr_R_ClearerrConsole = RClearerrConsole;
-//	ptr_R_Busy = RBusy;
+//	ptr_R_Busy = RBusy;				// probably we don't have any use for this
 //	ptr_R_CleanUp = RCleanUp;
 //	ptr_R_ShowFiles = RShowFiles;
 //	ptr_R_ChooseFile = RChooseFile;
