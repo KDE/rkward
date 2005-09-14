@@ -92,8 +92,18 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 // TODO
 }
 
-int RShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean del, char *pager) {
-// TODO
+int RShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean del, char */*pager*/) {
+	RCallbackArgs args;
+	args.type = RCallbackArgs::RShowFiles;
+	args.int_a = nfile;
+	args.chars_a = file;
+	args.chars_b = headers;		// what exactly are the "headers"?!?
+	args.chars_c = &wtitle;
+	args.int_b = del;
+	// we ingnore the pager-parameter for now.
+
+	REmbedInternal::this_pointer->handleStandardCallback (&args);
+
 // default implementation seems to returns 1 on success, 0 on failure. see unix/std-sys.c
 	return 1;
 }
@@ -104,17 +114,28 @@ int RChooseFile (int isnew, char *buf, int len) {
 	return 0;
 }
 
-int REditFile (char *buf) {
-// TODO
-// does not exist in standard R 2.1.0, so no idea what to return.
-	return 0;
-}
-
 int REditFiles (int nfile, char **file, char **title, char *editor) {
-//TODO
+	RCallbackArgs args;
+	args.type = RCallbackArgs::REditFiles;
+	args.int_a = nfile;
+	args.chars_a = file;
+	args.chars_b = title;
+	args.chars_c = &editor;
+
+	REmbedInternal::this_pointer->handleStandardCallback (&args);
+
 // default impelementation seems to return 1 if nfile <= 0, else 1. No idea, what for. see unix/std-sys.c
 	return (nfile <= 0);
 }
+
+int REditFile (char *buf) {
+	char *editor = "none";
+	char *title = "";
+
+// does not exist in standard R 2.1.0, so no idea what to return.
+	return REditFiles (1, &buf, &title, editor);
+}
+
 /// ############## R Standard callback overrides END ####################
 
 
@@ -127,8 +148,9 @@ REmbedInternal::REmbedInternal() {
 void REmbedInternal::connectCallbacks () {
 // R standard callback pointers.
 // Rinterface.h thinks this can only ever be done on aqua, apparently. Here, we define it the other way around, i.e. #ifndef instead of #ifdef
+// No, does not work -> undefined reference! -> TODO: nag R-devels
 #ifndef HAVE_AQUA
-	extern int  (*ptr_R_EditFiles)(int, char **, char **, char *);
+	//extern int  (*ptr_R_EditFiles)(int, char **, char **, char *);
 #endif
 
 // connect R standard callback to our own functions. Important: Don't do so, before our own versions are ready to be used!
@@ -141,9 +163,9 @@ void REmbedInternal::connectCallbacks () {
 	ptr_R_ClearerrConsole = RClearerrConsole;
 //	ptr_R_Busy = RBusy;				// probably we don't have any use for this
 //	ptr_R_CleanUp = RCleanUp;
-//	ptr_R_ShowFiles = RShowFiles;
+	ptr_R_ShowFiles = RShowFiles;
 //	ptr_R_ChooseFile = RChooseFile;
-//	ptr_R_EditFile = REditFile;
+	ptr_R_EditFile = REditFile;
 //	ptr_R_EditFiles = REditFiles;
 
 // these two, we won't override

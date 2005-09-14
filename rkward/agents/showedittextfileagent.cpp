@@ -17,15 +17,126 @@
 
 #include "showedittextfileagent.h"
 
-ShowEditTextFileAgent::ShowEditTextFileAgent(QObject *parent, const char *name)
- : QObject(parent, name)
-{
+#include <kdialogbase.h>
+#include <klocale.h>
+
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qfile.h>
+
+#include "../windows/rkcommandeditorwindow.h"
+#include "../rbackend/rinterface.h"
+#include "../rbackend/rembedinternal.h"
+#include "../rkglobals.h"
+#include "../rkward.h"
+
+#include "../debug.h"
+
+ShowEditTextFileAgent::ShowEditTextFileAgent (RCallbackArgs *args, const QString &text, const QString &caption) : QObject (RKGlobals::rkApp ()) {
+	RK_TRACE (APP);
+
+	ShowEditTextFileAgent::args = args;
+
+	dialog = new ShowEditTextFileDialog (text, caption);
+	connect (dialog, SIGNAL (finished ()), this, SLOT (done ()));
+
+	dialog->show ();
 }
 
 
-ShowEditTextFileAgent::~ShowEditTextFileAgent()
-{
+ShowEditTextFileAgent::~ShowEditTextFileAgent () {
+	RK_TRACE (APP);
 }
 
+// static
+void ShowEditTextFileAgent::showEditFiles (RCallbackArgs *args) {
+	RK_TRACE (APP);
+	if (!args) return;
+
+	QString caption;
+	QString message;
+	QString message_snip1 = i18n (" For that reason processing has been stopped for now. Press the \"Done\"-button, or close this dialog once you think it is safe to resume.\n\n");
+	QString message_snip2 = i18n ("The file(s) have been opened in text-windows. The following is a list of the file(s) in question:\n\n");
+
+	QString bad_files_list;
+	if (args->type == RCallbackArgs::RShowFiles) {
+		caption = i18n ("Showing file(s)");
+		message = i18n ("A command running in the R-engine wants you to see one or more file(s). RKWard can not determine, whether it is safe to continue processing R commands, before you have read the file(s) in question.") + message_snip1 + message_snip2;
+
+		for (int n = 0; n < args->int_a; ++n) {
+			message.append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
+
+			RKCommandEditorWindow *window = new RKCommandEditorWindow (0, false);
+			bool ok = window->openURL (KURL (args->chars_a[n]), false, true);
+
+			if (ok) {
+				if (qstrlen (*(args->chars_c))) window->setTabCaption (*(args->chars_c));
+				RKGlobals::rkApp ()->addWindow (window);
+			} else {
+				delete (window);
+				bad_files_list.append ("- ").append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
+			}
+		}
+	} else if (args->type == RCallbackArgs::REditFiles) {
+		caption = i18n ("Edit file(s)");
+		message = i18n ("A command running in the R-engine wants you to edit one or more file(s). RKWard can not determine, whether it is safe to continue processing R commands, before you have read/edited (and saved) the file(s) in question.") + message_snip1 + message_snip2;
+
+		for (int n = 0; n < args->int_a; ++n) {
+			message.append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
+
+			RKCommandEditorWindow *window = new RKCommandEditorWindow (0, false);
+			bool ok = window->openURL (KURL (args->chars_a[n]), true, false);
+
+			if (ok) {
+				if (qstrlen (args->chars_b[n])) window->setTabCaption (args->chars_b[n]);
+				RKGlobals::rkApp ()->addWindow (window);
+			} else {
+				delete (window);
+				bad_files_list.append ("- ").append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
+			}
+		}
+	}
+
+
+	if (!bad_files_list.isEmpty ()) {
+		message.append (i18n ("\n\nThe following of the above files were not readable and have not been opened:\n\n"));
+		message.append (bad_files_list);
+	}
+
+	ShowEditTextFileAgent* agent = new ShowEditTextFileAgent (args, message, caption);
+}
+
+void ShowEditTextFileAgent::done () {
+	RK_TRACE (APP);
+	delete dialog;
+
+	// int_c in RShowFiles means files are to be deleted
+	if ((args->type == RCallbackArgs::RShowFiles) && args->int_c) {
+		for (int n = 0; n < args->int_a; ++n) {
+			QFile (QString (args->chars_a[n])).remove ();
+		}
+	}
+
+	args->done = true;
+
+	deleteLater ();
+}
+
+///################# END ShowEditTextFileAgent ##################
+///################# BEGIN ShowEditTextFileDialog #################
+
+ShowEditTextFileDialog::ShowEditTextFileDialog (const QString &text, const QString &caption) : KDialogBase ((QWidget*) 0, 0, false, caption, KDialogBase::Ok, KDialogBase::Ok) {
+	QWidget *page = new QWidget (this);
+	setMainWidget (page);
+	QVBoxLayout *layout = new QVBoxLayout (page, 0, spacingHint ());
+	QLabel *label = new QLabel (text, page);
+	label->setAlignment (Qt::WordBreak | Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs);
+	layout->addWidget (label);
+
+	setButtonOK (KGuiItem (i18n ("Done")));
+}
+
+ShowEditTextFileDialog::~ShowEditTextFileDialog () {
+}
 
 #include "showedittextfileagent.moc"

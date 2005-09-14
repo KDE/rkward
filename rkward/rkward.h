@@ -210,8 +210,6 @@ public slots:
 	void slotRunLine();
 	void slotInterruptCommand();
 	void slotRunAll();
-	void slotEditUndo();
-	void slotEditRedo();
 	void slotViewActivated (KMdiChildView *window);
 	void slotOpenRecentCommandEditor(const KURL&);
 	void slotFunctionReference();

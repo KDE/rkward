@@ -82,9 +82,11 @@
 #define ID_STATUS_MSG 1
 #define ID_R_STATUS_MSG 2
 
-
+#include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
 
 RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm (0, name, KMdi::IDEAlMode) {
+	ShowEditTextFileAgent::showEditFiles (0);		// TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
+
 	RK_TRACE (APP);
 	RKGlobals::app = this;
 	RKGlobals::rinter = 0;
@@ -1022,25 +1024,6 @@ void RKwardApp::slotRunAll() {
 		
 	RKGlobals::rInterface ()->issueCommand (new RCommand ( ((RKCommandEditorWindow*) activeWindow())->getText(), RCommand::User, ""));
 }
-
-
-
-void RKwardApp::slotEditUndo()
-{
-	if (! activeWindow()->inherits("RKCommandEditorWindow"))
-		return;
-	((RKCommandEditorWindow*) activeWindow())->undo();
-}
-
-
-
-void RKwardApp::slotEditRedo()
-{
-	if (! activeWindow()->inherits("RKCommandEditorWindow"))
-		return;
-	((RKCommandEditorWindow*) activeWindow())->redo();
-}
-
 
 
 void RKwardApp::slotViewActivated (KMdiChildView * window)

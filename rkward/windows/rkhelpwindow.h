@@ -35,27 +35,25 @@ class RKHelpWindow : public KMdiChildView
 {
 Q_OBJECT
 public:
-    RKHelpWindow(QWidget *parent = 0, const char *name = 0, bool output=false);
+    RKHelpWindow (QWidget *parent = 0, const char *name = 0, bool output=false);
 
     ~RKHelpWindow();
-    bool openURL(KURL url);
+    bool openURL(const KURL &url);
     void refresh();
     void scrollToBottom();
 public slots:
     void slotOpenURLRequest(const KURL &url, const KParts::URLArgs & );
 private:
     KHTMLPart * khtmlpart;
-    QBoxLayout* pLayout;
-    KParts::ReadOnlyPart *m_khtmlpart;
 
-    /** Are we showing the output? */
-    bool iShowOutput;
+/** Are we showing the output? (Rather than some other, non-special HTML-file */
+    bool window_is_output;
     KURL currentURL;
 private slots:
     void loadDone();
 protected:
-	/** Here we store the position of the scroll bar before refresh */
-    int scrollPosition;
+/** Here we store the position of the scroll bar before refresh */
+    int scroll_position;
 };
 
 #endif

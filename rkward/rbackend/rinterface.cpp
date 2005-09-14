@@ -27,6 +27,7 @@
 #include "../core/robjectlist.h"
 #include "../core/rkmodificationtracker.h"
 #include "../dialogs/rkloadlibsdialog.h"
+#include "../agents/showedittextfileagent.h"
 
 #include "rkwindowcatcher.h"
 #ifndef DISABLE_RKWINDOWCATCHER
@@ -295,6 +296,10 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		QString res = KInputDialog::getText (i18n ("R backend requests information"), QString (*(args->chars_a)));
 		res = res.left (args->int_a - 2) + "\n";
 		qstrcpy (*(args->chars_b), res.latin1 ());
+	} else if ((type == RCallbackArgs::RShowFiles) || (type == RCallbackArgs::REditFiles)) {
+		ShowEditTextFileAgent::showEditFiles (args);
+		MUTEX_UNLOCK;
+		return;
 	}
 
 	args->done = true;

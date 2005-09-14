@@ -15,7 +15,8 @@ rkward_LDADD = $(top_builddir)/rkward/windows/libwindows.a \
 	$(top_builddir)/rkward/misc/libmisc.a -lkhtml -lkmdi $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) \
 	$(LIBSOCKET) -lR -lkatepartinterfaces
 
-SUBDIRS = plugins dataeditor settings plugin rbackend scriptbackends misc core dialogs icons agents windows
+SUBDIRS = plugins dataeditor settings plugin agents rbackend scriptbackends \
+	misc core dialogs icons windows
 
 ##EXTRA_DIST = main.cpp rkward.cpp rkward.h rkwardui.rc rkward.desktop lo32-app-rkward.png lo16-app-rkward.png twintable.cpp twintable.h twintablemember.cpp twintablemember.h rkdrag.cpp rkdrag.h rinterface.cpp rinterface.h rkwatch.cpp rkwatch.h typeselectcell.cpp typeselectcell.h rtableitem.cpp rtableitem.h nameselectcell.cpp nameselectcell.h rkmenu.cpp rkmenu.h rkplugin.cpp rkplugin.h rkpluginwidget.cpp rkpluginwidget.h rkvarselector.cpp rkvarselector.h rkvarslot.cpp rkvarslot.h rkradio.cpp rkradio.h rktext.cpp rktext.h rcommand.cpp rcommand.h labelcell.cpp labelcell.h rembed.h rembedinternal.h phpbackend.h common.php rkoutputwindow.h rksettings.h rksettingsmodule.h rksettingsmoduleplugins.h
 

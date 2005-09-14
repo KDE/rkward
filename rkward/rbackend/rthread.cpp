@@ -157,6 +157,8 @@ void RThread::doSubstack (char **call, int call_length) {
 void RThread::doStandardCallback (RCallbackArgs *args) {
 	RK_TRACE (RBACKEND);
 
+	args->done = false;
+
 	QCustomEvent *event = new QCustomEvent (R_CALLBACK_REQUEST_EVENT);
 	event->setData (args);
 	qApp->postEvent (inter, event);

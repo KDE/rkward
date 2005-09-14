@@ -32,7 +32,7 @@ struct RCallbackArgs {
 
 /** This enum specifies, what sort of callback this is */
 	enum RCallbackType { RSuicide, RShowMessage, RReadConsole, RWriteConsole, RResetConsole, RFlushConsole, RClearerrConsole,
-											RBusy, RCleanUp, RShowFiles, RChooseFile, REditFile, REditFiles
+											RBusy, RCleanUp, RShowFiles, RChooseFile, /*REditFile,*/ REditFiles
 	} type;
 
 	char **chars_a;

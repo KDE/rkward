@@ -55,20 +55,17 @@
 
 #define GET_HELP_URL 1
 
-
-RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : KMdiChildView (parent) {
+RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting) : KMdiChildView (parent) {
 	RK_TRACE (COMMANDEDITOR);
     KParts::ReadWritePart *m_katepart;
 
 	KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
-	if (factory)
-	{
+	if (factory) {
 		// Create the part
 		m_katepart = (KParts::ReadWritePart *)factory->create( this,
 			"katepart", "KParts::ReadWritePart" );
 	}
 	(RKGlobals::rkApp()->m_manager)->addPart((KParts::Part*)m_katepart,false);
-	//m_katepart->widget()->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 	m_doc = (Kate::Document *) m_katepart;
 	m_view = (Kate::View *) m_katepart->widget();
@@ -77,7 +74,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent) : KMdiChildView (
 	pLayout->addWidget(m_view);
 
 	m_view->setName("Kate Part View");
-	setRHighlighting(m_doc);
+	if (use_r_highlighting) setRHighlighting(m_doc);
 }
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
@@ -88,21 +85,19 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 
 void RKCommandEditorWindow::setRHighlighting (Kate::Document *doc) {
 	// set syntax-highlighting for R
-	int modes_count = highlightingInterface(doc)->hlModeCount ();
+	int modes_count = highlightingInterface (doc)->hlModeCount ();
 	bool found_mode = false;
 	int i;
-	//RK_DO (qDebug ("%s", "Looking for syntax highlighting definition"), COMMANDEDITOR, DL_INFO);
 	for (i = 0; i < modes_count; ++i) {
-		//RK_DO (qDebug ("%s", highlightingInterface(doc)->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_DEBUG);
-		if (highlightingInterface(doc)->hlModeName(i).lower() == "r script") {
+		if (highlightingInterface (doc)->hlModeName (i).lower() == "r script") {
 			found_mode = true;
 			break;
 		}
 	}
 	if (found_mode) {
-		highlightingInterface(doc)->setHlMode(i);
+		highlightingInterface (doc)->setHlMode (i);
 	} else {
-		//RK_DO (qDebug ("%s", highlightingInterface(doc)->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_WARNING);
+		RK_DO (qDebug ("No syntax highlighting definition found for r script."), COMMANDEDITOR, DL_WARNING);
 	}
 }
 
@@ -129,17 +124,16 @@ QString RKCommandEditorWindow::getText()
 }
 
 
-bool RKCommandEditorWindow::openURL(const KURL &url){
-	if (m_doc->openURL(url)){
-		setRHighlighting(m_doc);
-		
-		updateTabCaption(url);
-		
+bool RKCommandEditorWindow::openURL (const KURL &url, bool use_r_highlighting, bool read_only){
+	if (m_doc->openURL (url)){
+		if (use_r_highlighting) setRHighlighting (m_doc);
+		m_doc->setReadWrite (!read_only);
+
+		updateTabCaption (url);
+
 		return true;
 	}
 	return false;
-	
-
 }
 
 bool RKCommandEditorWindow::getFilenameAndPath(const KURL &url,QString *fname){
@@ -195,33 +189,6 @@ bool RKCommandEditorWindow::saveAs(const KURL &url){
 bool RKCommandEditorWindow::isModified() {
     return m_doc->isModified();
 }
-
-
-void RKCommandEditorWindow::cut(){
-	m_view->cut();
-}
-
-
-void RKCommandEditorWindow::copy(){
-	 m_view->copy();
-}
-
-
-
-void RKCommandEditorWindow::paste(){
-	 m_view->paste();
-}
-
-
-void RKCommandEditorWindow::undo(){
-	 m_doc->undo();
-}
-
-
-void RKCommandEditorWindow::redo(){
-	 m_doc->redo();
-}
-
 
 
 void RKCommandEditorWindow::insertText(QString text)
@@ -292,8 +259,6 @@ void RKCommandEditorWindow::showHelp()
 	s.append("\", htmlhelp=TRUE)[1]");
 	
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_HELP_URL, chain);
-
-		
 }
 
 void RKCommandEditorWindow::rCommandDone (RCommand *command) {

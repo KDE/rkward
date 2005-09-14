@@ -36,16 +36,16 @@
 RKHelpWindow::RKHelpWindow(QWidget *parent, const char *name, bool output)
  : KMdiChildView(parent, name)
 {
-	scrollPosition=0;
+	scroll_position=0;
 	
 	khtmlpart = new KHTMLPart(this,0,0,0,KHTMLPart::BrowserViewGUI);
 	khtmlpart->setSelectable(true);
 	
-	iShowOutput=output;
+	window_is_output=output;
 
 	(RKGlobals::rkApp()->m_manager)->addPart(khtmlpart,false);
 	khtmlpart->widget()->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-	pLayout = new QHBoxLayout( this, 0, -1, "layout");
+	QHBoxLayout *pLayout = new QHBoxLayout( this, 0, -1, "layout");
 	pLayout->addWidget(khtmlpart->widget());
 
 	// We have to connect this in order to allow browsing.
@@ -60,16 +60,11 @@ RKHelpWindow::~RKHelpWindow()
 {
 }
 
-
-#include "rkhelpwindow.moc"
-
-
-
-bool RKHelpWindow::openURL(KURL url)
+bool RKHelpWindow::openURL(const KURL &url)
 {
 	if (QFile::exists( url.path() )) {
 		khtmlpart->openURL(url);
-		if (iShowOutput) {
+		if (window_is_output) {
 			setTabCaption(i18n("Output"));
 			setCaption(i18n("Output"));
 		}
@@ -79,7 +74,7 @@ bool RKHelpWindow::openURL(KURL url)
 			
 		}
 		currentURL=url;
-		scrollPosition=0;
+		scroll_position=0;
 		return(true);
 	}
 	else{
@@ -113,7 +108,7 @@ void RKHelpWindow::refresh()
 {
 	int pos = khtmlpart->view()->contentsY();
 	openURL (currentURL);
-	scrollPosition=pos;
+	scroll_position=pos;
 }
 
 
@@ -123,7 +118,7 @@ void RKHelpWindow::refresh()
  */
 void RKHelpWindow::loadDone()
 {
-	khtmlpart->view()->setContentsPos ( 0, scrollPosition );
+	khtmlpart->view()->setContentsPos ( 0, scroll_position );
 }
 
 
@@ -135,3 +130,5 @@ void RKHelpWindow::scrollToBottom()
 {
 	khtmlpart->view()->setContentsPos ( 0, khtmlpart->view()->contentsHeight() );
 }
+
+#include "rkhelpwindow.moc"
