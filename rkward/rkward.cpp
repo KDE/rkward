@@ -39,6 +39,7 @@
 #include <kinputdialog.h>
 #include <kdockwidget.h>
 #include <kmultitabbar.h>
+#include <dcopclient.h>
 
 // include files for the kate part. Some may not be useful
 #include <ktexteditor/configinterface.h>
@@ -84,7 +85,7 @@
 
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
 
-RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm (0, name, KMdi::IDEAlMode) {
+RKwardApp::RKwardApp (KURL *load_url) : KMdiMainFrm (0, 0, KMdi::IDEAlMode), DCOPObject ("rkwardapp") {
 	ShowEditTextFileAgent::showEditFiles (0);		// TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
 
 	RK_TRACE (APP);
@@ -145,6 +146,11 @@ RKwardApp::RKwardApp (KURL *load_url, QWidget* , const char* name) : KMdiMainFrm
 	// When the manager says the active part changes,
 	// the builder updates (recreates) the GUI
 	connect( m_manager, SIGNAL( activePartChanged( KParts::Part * ) ), this, SLOT( createGUI( KParts::Part * ) ) );
+
+	if (!kapp->dcopClient ()->isRegistered ()) {
+		kapp->dcopClient ()->registerAs ("rkward");
+		kapp->dcopClient ()->setDefaultObject (objId ());
+	}
 }
 
 RKwardApp::~RKwardApp() {
@@ -491,27 +497,34 @@ void RKwardApp::readProperties(KConfig* _cfg)
 bool RKwardApp::queryClose () {
 	RK_TRACE (APP);
 	
-	QValueList<KMdiChildView *> children;
-	for(KMdiChildView *w = m_pDocumentViews->first();w;w= m_pDocumentViews->next()){
-		children.append(w);
-	}
-	QValueListIterator<KMdiChildView *> childIt;
-	for (childIt = children.begin(); childIt != children.end(); ++childIt) {
-		if ((*childIt)->inherits("RKCommandEditorWindow") ) {
-			if (! (*childIt)->close()) {
-				//If a child refuses to close, we return false.
-				return false;
-			}
+	bool quit = true;
+
+	if (!RKGlobals::rObjectList ()->isEmpty ()) {
+		int res;
+		res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?\nPress Cancel, if you do not want to quit"), i18n ("Save Workspace?"));
+		if (res == KMessageBox::Yes) {
+			new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Quit);
+		} else if (res != KMessageBox::No) {
+			quit = false;
 		}
 	}
-	
-	
-	if (RKGlobals::rObjectList ()->isEmpty ()) return true;
 
-	int res;
-	res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the workspace?"), i18n ("Save Workspace?"));
-	if (res == KMessageBox::No) return true;
-	if (res == KMessageBox::Yes) new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Quit);
+	if (quit) {
+		QValueList<KMdiChildView *> children;
+		for(KMdiChildView *w = m_pDocumentViews->first();w;w= m_pDocumentViews->next()){
+			children.append(w);
+		}
+		QValueListIterator<KMdiChildView *> childIt;
+		for (childIt = children.begin(); childIt != children.end(); ++childIt) {
+			if ((*childIt)->inherits("RKCommandEditorWindow") ) {
+				if (! (*childIt)->close()) {
+					//If a child refuses to close, we return false.
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 
 	return false;
 }
@@ -1079,15 +1092,16 @@ void RKwardApp::setEnabledActions(bool objectEditor)
 	}
 }
 
-void RKwardApp::openHTML(KURL url)
-{
+void RKwardApp::openHTML(KURL url) {
 	RKHelpWindow *help = new RKHelpWindow(this,"help");
 	help->openURL (url);	
 	help->setIcon(SmallIcon("help"));
 	addWindow( help );
 }
 
-
+void RKwardApp::openHTMLHelp (const QString & url) {
+	openHTML (url);
+}
 
 void RKwardApp::slotFunctionReference()
 {

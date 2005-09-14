@@ -1,5 +1,5 @@
 
-SUBDIRS = rkward po doc 
+SUBDIRS = rkward po doc
 
 EXTRA_DIST = admin AUTHORS COPYING ChangeLog INSTALL README TODO rkward.lsm Makefile.cvs configure.in.in
 

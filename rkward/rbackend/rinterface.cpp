@@ -40,6 +40,7 @@ RKWindowCatcher *window_catcher;
 
 #include <kmessagebox.h>
 #include <kinputdialog.h>
+#include <kfiledialog.h>
 #include <klocale.h>
 
 #include <qdir.h>
@@ -266,6 +267,10 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		} else {
 			issueCommand (".rk.rkreply <- \"Too few arguments in call to require.\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
 		}
+	} else if (call == "quit") {
+		RKGlobals::rkApp ()->slotFileQuit ();
+		// if we're still alive, quitting was cancelled
+		issueCommand (".rk.rkreply <- \"Quitting was cancelled\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
 #ifndef DISABLE_RKWINDOWCATCHER
  // does not work, yet :-( R crashes.
 	} else if (call == "catchWindow") {
@@ -297,9 +302,37 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		res = res.left (args->int_a - 2) + "\n";
 		qstrcpy (*(args->chars_b), res.latin1 ());
 	} else if ((type == RCallbackArgs::RShowFiles) || (type == RCallbackArgs::REditFiles)) {
-		ShowEditTextFileAgent::showEditFiles (args);
-		MUTEX_UNLOCK;
-		return;
+		if ((type == RCallbackArgs::RShowFiles) && (QString (*(args->chars_d)) == "rkwardhtml")) {
+			// not to worry, just some help file to display
+			// TODO: maybe move this to ShowEditTextFileAgent instead
+			for (int n=0; n < args->int_a; ++n) {
+				RKGlobals::rkApp ()->openHTML (args->chars_a[n]);
+			}
+		} else {
+			ShowEditTextFileAgent::showEditFiles (args);
+			MUTEX_UNLOCK;
+			return;
+		}
+	} else if (type ==RCallbackArgs::RChooseFile) {
+		QString filename;
+		if (args->int_a) {
+			filename = KFileDialog::getSaveFileName ();
+		} else {
+			filename = KFileDialog::getOpenFileName ();
+		}
+		filename = filename.left (args->int_b - 2);
+		args->int_c = filename.length ();
+		qstrcpy (*(args->chars_a), filename.latin1 ());
+	} else if (type ==RCallbackArgs::RSuicide) {
+		QString message = i18n ("The R engine has encountered a fatal error:\n") + QString (*(args->chars_a));
+		message += i18n ("It will be shut down immediately. This means, you can not use any more functions that rely on the R backend. I.e. you can do hardly anything at all, not even save the workspace. What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
+		KMessageBox::error (0, message, i18n ("R engine has died"));
+		r_thread->terminate ();
+	} else if (type ==RCallbackArgs::RCleanUp) {
+		QString message = i18n ("The R engine has shut down with status: ") + QString::number (args->int_a);
+		message += i18n ("\nIt will be shut down immediately. This means, you can not use any more functions that rely on the R backend. I.e. you can do hardly anything at all, not even save the workspace. Hopefully, however, R has already saved the workspace. What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that.\nSince this should never happen, please write a mail to rkward-devel@lists.sourceforge.net, and tell us, what you were trying to do, when this happened. Sorry!");
+		KMessageBox::error (0, message, i18n ("R engine has died"));
+		r_thread->terminate ();
 	}
 
 	args->done = true;

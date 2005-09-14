@@ -5,7 +5,7 @@ bin_PROGRAMS = rkward
 
 rkward_SOURCES = rkwatch.cpp rkward.cpp main.cpp rkoutputwindow.cpp \
 	rkcommandeditor.cpp rkglobals.cpp robjectbrowser.cpp rkeditormanager.cpp robjectviewer.cpp \
-	helpdlg.ui khelpdlg.cpp rkconsole.cpp
+	helpdlg.ui khelpdlg.cpp rkconsole.cpp rkward.skel
 
 rkward_LDADD = $(top_builddir)/rkward/windows/libwindows.a \
 	$(top_builddir)/rkward/agents/libagents.a $(top_builddir)/rkward/dialogs/libdialogs.a \

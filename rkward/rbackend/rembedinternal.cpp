@@ -29,6 +29,7 @@ extern "C" {
 #include "R.h"
 #include "Rinternals.h"
 #include "Rinterface.h"
+#include "Rdevices.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -39,7 +40,11 @@ extern "C" {
 
 /// ############## R Standard callback overrides BEGIN ####################
 void RSuicide (char* message) {
-// TODO
+	RCallbackArgs args;
+	args.type = RCallbackArgs::RSuicide;
+	args.chars_a = &message;
+	REmbedInternal::this_pointer->handleStandardCallback (&args);
+	REmbedInternal::this_pointer->shutdown (true);
 }
 
 void RShowMessage (char* message) {
@@ -89,16 +94,36 @@ void RBusy (int which) {
 } */
 
 void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
-// TODO
+	if (saveact != SA_SUICIDE) {
+		RCallbackArgs args;
+		args.type = RCallbackArgs::RCleanUp;
+		args.int_a = status;
+		args.int_b = RunLast;
+		REmbedInternal::this_pointer->handleStandardCallback (&args);
+
+		if(saveact == SA_DEFAULT) saveact = SA_SAVE;
+		if (saveact == SA_SAVE) {
+				if (RunLast) R_dot_Last ();
+				if( R_DirtyImage) R_SaveGlobalEnv ();
+		} else {
+				if (RunLast) R_dot_Last ();
+		}
+
+		REmbedInternal::this_pointer->shutdown (false);
+	}
+	/*else {
+		we've already informed the user, and shut down the backend in RSuicide
+	}*/
 }
 
-int RShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean del, char */*pager*/) {
+int RShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean del, char *pager) {
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RShowFiles;
 	args.int_a = nfile;
 	args.chars_a = file;
 	args.chars_b = headers;		// what exactly are the "headers"?!?
 	args.chars_c = &wtitle;
+	args.chars_d = &pager;
 	args.int_b = del;
 	// we ingnore the pager-parameter for now.
 
@@ -109,9 +134,16 @@ int RShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean d
 }
 
 int RChooseFile (int isnew, char *buf, int len) {
-// TODO
+	RCallbackArgs args;
+	args.type = RCallbackArgs::RChooseFile;
+	args.int_a = isnew;
+	args.int_b = len;
+	args.chars_a = &buf;
+
+	REmbedInternal::this_pointer->handleStandardCallback (&args);
+
 // return length of filename (strlen (buf))
-	return 0;
+	return args.int_c;
 }
 
 int REditFiles (int nfile, char **file, char **title, char *editor) {
@@ -154,7 +186,7 @@ void REmbedInternal::connectCallbacks () {
 #endif
 
 // connect R standard callback to our own functions. Important: Don't do so, before our own versions are ready to be used!
-//	ptr_R_Suicide = RSuicide;
+	ptr_R_Suicide = RSuicide;
 	ptr_R_ShowMessage = RShowMessage;			// when exactly does this ever get used?
 	ptr_R_ReadConsole = RReadConsole;
 	ptr_R_WriteConsole = RWriteConsole;				// when exactly does this ever get used? Apparently it does not get called if a sink is in place, but otherwise it is! Probably we can get rid of our sink, then, and provide "real-time" output! More '!'s!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -162,11 +194,11 @@ void REmbedInternal::connectCallbacks () {
 	ptr_R_FlushConsole = RFlushConsole;
 	ptr_R_ClearerrConsole = RClearerrConsole;
 //	ptr_R_Busy = RBusy;				// probably we don't have any use for this
-//	ptr_R_CleanUp = RCleanUp;
+	ptr_R_CleanUp = RCleanUp;			// unfortunately, it seems, we can't safely cancel quitting anymore, here!
 	ptr_R_ShowFiles = RShowFiles;
-//	ptr_R_ChooseFile = RChooseFile;
+	ptr_R_ChooseFile = RChooseFile;
 	ptr_R_EditFile = REditFile;
-//	ptr_R_EditFiles = REditFiles;
+//	ptr_R_EditFiles = REditFiles;		// undefined reference
 
 // these two, we won't override
 //	ptr_R_loadhistory = ... 	// we keep our own history
@@ -176,7 +208,26 @@ void REmbedInternal::connectCallbacks () {
 REmbedInternal::~REmbedInternal (){
 }
 
-void REmbedInternal::shutdown () {
+void REmbedInternal::shutdown (bool suicidal) {
+// Code-recipe below essentially copied from http://stat.ethz.ch/R-manual/R-devel/doc/manual/R-exts.html#Linking-GUIs-and-other-front_002dends-to-R
+// modified quite a bit for our needs.
+	char *tmpdir;
+
+	if (!suicidal) {
+		R_dot_Last ();
+	}
+
+	R_RunExitFinalizers();
+
+	if((tmpdir = getenv("R_SESSION_TMPDIR"))) {
+		char buf[1024];
+		snprintf((char *)buf, 1024, "rm -rf %s", tmpdir);
+		R_system((char *)buf);
+	}
+
+	/* close all the graphics devices */
+	if (!suicidal) KillAllDevices ();
+	fpu_setup (FALSE);
 }
 
 static int timeout_counter = 0;

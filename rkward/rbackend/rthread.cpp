@@ -74,6 +74,7 @@ void RThread::run () {
 			}
 		
 			if (killed) {
+				embeddedR->shutdown (false);
 				MUTEX_UNLOCK
 				return;
 			}
@@ -88,7 +89,10 @@ void RThread::run () {
 		
 		// if no commands are in queue, sleep for a while
 		MUTEX_UNLOCK;
-		if (killed) return;
+		if (killed) {
+			embeddedR->shutdown (false);
+			return;
+		}
 		msleep (10);
 	}
 }

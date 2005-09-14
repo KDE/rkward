@@ -157,6 +157,7 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 		setEnabled(true);
 	} 
 	else if (command->getFlags () == GET_HELP_URL) {
+		RK_ASSERT (command->stringVectorLength ());
 		url.setPath(command->getStringVector ()[0]);
 		if (QFile::exists( url.path() )) {
 			RKGlobals::rkApp()->openHTML(url);

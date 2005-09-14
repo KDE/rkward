@@ -23,6 +23,17 @@ email                : tfry@users.sourceforge.net
 #include <config.h>
 #endif
 
+#include <dcopobject.h>
+
+/** This base provides the DCOP-Interface for RKWardApp */
+class RKWardDCOPInterface : virtual public DCOPObject {
+	K_DCOP
+	k_dcop:
+
+	virtual void openHTMLHelp (const QString &url) = 0;
+};
+
+
 // include files for Qt
 
 // include files for KDE 
@@ -69,13 +80,12 @@ class QSplitter;
 */
 
 
-class RKwardApp : public KMdiMainFrm, virtual public KParts::PartBase
-{
-Q_OBJECT
+class RKwardApp : public KMdiMainFrm, virtual public KParts::PartBase, virtual public RKWardDCOPInterface {
+	Q_OBJECT
 public:
 	/** construtor of RKwardApp, calls all init functions to create the application.
 	*/
-	RKwardApp(KURL *load_url=0, QWidget* parent=0, const char* name=0);
+	RKwardApp(KURL *load_url=0);
 	~RKwardApp();
 
 	void startR ();
@@ -85,6 +95,7 @@ public:
 	void fileOpenNoSave (const KURL &url);
 	void fileOpenAskSave (const KURL &url);
 	void openHTML(KURL url);
+	void openHTMLHelp (const QString &url);
 
 /** returns a pointer to the menu-list (in essence the menu-bar) */
 	RKMenuList* getMenuList () { return menu_list; };

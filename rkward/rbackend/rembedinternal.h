@@ -38,6 +38,7 @@ struct RCallbackArgs {
 	char **chars_a;
 	char **chars_b;
 	char **chars_c;
+	char **chars_d;
 	int int_a;
 	int int_b;
 	int int_c;
@@ -69,14 +70,15 @@ public:
 		SyntaxError=2,		/**< Syntax error */
 		OtherError=3		/**< Other error, usually a semantic error, e.g. object not found */
 	};
+
+/** clean shutdown of R. If suicidal, perform only the most basic shutdown operations */
+	void shutdown (bool suicidal);
 protected:
 /** low-level initialization of R
 @param r_home R_HOME-directory
 @param argc Number of arguments as would be passed on the commandline to R
 @param argv Arguments as would be passed on the commandline to R */
 	bool startR (const char* r_home, int argc, char **argv);
-/** clean shutdown of R. Not yet implemented! (TODO!) */
-	void shutdown ();
 /** low-level running of a command.
 @param command char* of the command to be run
 @param error this will be set to a value in RKWardError depending on success/failure or the command

@@ -103,21 +103,24 @@ void ShowEditTextFileAgent::showEditFiles (RCallbackArgs *args) {
 		message.append (bad_files_list);
 	}
 
-	ShowEditTextFileAgent* agent = new ShowEditTextFileAgent (args, message, caption);
+	new ShowEditTextFileAgent (args, message, caption);
 }
 
 void ShowEditTextFileAgent::done () {
 	RK_TRACE (APP);
 	delete dialog;
 
-	// int_c in RShowFiles means files are to be deleted
-	if ((args->type == RCallbackArgs::RShowFiles) && args->int_c) {
+	// int_b in RShowFiles means files are to be deleted
+	if ((args->type == RCallbackArgs::RShowFiles) && args->int_b) {
 		for (int n = 0; n < args->int_a; ++n) {
 			QFile (QString (args->chars_a[n])).remove ();
 		}
 	}
 
+	MUTEX_LOCK;
+	// this line is what causes the backend-thread to resume processing:
 	args->done = true;
+	MUTEX_UNLOCK;
 
 	deleteLater ();
 }

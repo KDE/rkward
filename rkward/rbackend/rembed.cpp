@@ -16,6 +16,9 @@
  ***************************************************************************/
 #include "rembed.h"
 
+#include <kapplication.h>
+#include <dcopclient.h>
+
 #include <qfile.h>
 #include <qtextstream.h>
 #include <qstring.h>
@@ -91,7 +94,9 @@ int REmbed::initialize () {
 	if (error) status |= SinkFail;
 	runCommandInternal ("sink (file (\"" +RKSettingsModuleLogfiles::filesPath () +"/r_err\", \"w\"), FALSE, \"message\")\n", &error);
 	if (error) status |= SinkFail;
-	
+	runCommandInternal ("options (htmlhelp=TRUE); options (browser=\"dcop " + kapp->dcopClient ()->appId () + " rkwardapp openHTMLHelp \")", &error);
+	// TODO: error-handling?
+
 	outfile_offset = 0;
 	errfile_offset = 0;
 		

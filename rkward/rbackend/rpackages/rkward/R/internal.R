@@ -114,6 +114,15 @@
 	return (TRUE)
 }
 
+# overriding q, to ask via GUI instead. Arguments are not interpreted.
+"q" <- function (save = "default", status = 0, runLast = TRUE) {
+	.rk.do.call ("quit")
+}
+
+"quit" <- function (save = "default", status = 0, runLast = TRUE) {
+	q (save, status, runLast)
+}
+
 ".rk.catch.window" <- function (title_begin, corresponding_device) {
 	.rk.do.call ("catchWindow", c (as.character (title_begin), as.character (corresponding_device)))
 }
