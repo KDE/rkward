@@ -274,3 +274,5 @@ void RKCommandEditorWindow::rCommandDone (RCommand *command) {
 		RK_ASSERT (false);
 	}
 }
+
+#include "rkcommandeditorwindow.moc"

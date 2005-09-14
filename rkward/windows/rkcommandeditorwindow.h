@@ -47,6 +47,8 @@ TODO: once ShowEditTextFileWindow is done, derive this class from that.
 @author Pierre Ecochard
 */
 class RKCommandEditorWindow : public KMdiChildView, public RCommandReceiver {
+// we need the Q_OBJECT thing for some inherits ("RKCommandEditorWindow")-calls in rkward.cpp.
+	Q_OBJECT
 public:
     RKCommandEditorWindow (QWidget *parent = 0, bool use_r_highlighting=true);
 

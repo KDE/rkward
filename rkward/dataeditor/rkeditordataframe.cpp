@@ -27,6 +27,7 @@
 #include "../core/rcontainerobject.h"
 #include "../rkeditormanager.h"
 #include "../core/rkmodificationtracker.h"
+#include "rkeditordataframepart.h"
 
 #include "../debug.h"
 
@@ -37,6 +38,9 @@
 
 RKEditorDataFrame::RKEditorDataFrame (QWidget *parent) : TwinTable (parent) {
 	RK_TRACE (EDITOR);
+
+	part = new RKEditorDataFramePart (parent, this);
+
 	open_chain = 0;
 }
 

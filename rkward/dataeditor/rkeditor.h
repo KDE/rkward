@@ -21,6 +21,9 @@
 
 #include "../core/robject.h"
 
+#include <kparts/part.h>
+#include <kmdichildview.h>
+
 class RCommandChain;
 class RKDrag;
 
@@ -29,8 +32,7 @@ Use a a base class for all widgets that can be used to display and edit RObjects
 
 @author Thomas Friedrichsmeier
 */
-class RKEditor : public QWidget
-{
+class RKEditor : public KMdiChildView {
 Q_OBJECT
 protected:
     RKEditor (QWidget *parent);
@@ -61,12 +63,16 @@ public:
 	virtual void updateObjectMeta (RObject *object) = 0;
 /** Tell the editor to (unconditionally) update its representation of the object data (in the range given in the ChangeSet) */
 	virtual void updateObjectData (RObject *object, RObject::ChangeSet *changes) = 0;
+
+	KParts::ReadWritePart *getPart () { return part; };
 protected:
 friend class RKEditorManager;
 /// opens the given object. Implement in the child-classes
 	virtual void openObject (RObject *object, bool initialize_to_empty=false) = 0;
 
 	RObject *object;
+
+	KParts::ReadWritePart *part;
 };
 
 #endif

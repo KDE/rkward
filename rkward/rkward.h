@@ -101,6 +101,9 @@ public:
 	RKMenuList* getMenuList () { return menu_list; };
 
 	KParts::PartManager *m_manager;
+
+/** it seems, sometimes, when creating a new part-object, we need to help the partmanager a little to notice... */
+	void activateGUI (KParts::Part *part);
 protected:
 	void openWorkspace (const KURL &url);
 	/** save general Options like all bar positions and status as well as the geometry and the recent file list to the configuration
@@ -163,22 +166,6 @@ public slots:
 	* If queryClose() returns false because the user canceled the saveModified() dialog, the closing breaks.
 	*/
 	void slotFileQuit();
-	/** put the marked text/object into the clipboard and remove
-	*	it from the document
-	*/
-	void slotEditCut();
-	/** put the marked text/object into the clipboard
-	*/
-	void slotEditCopy();
-	/** paste the clipboard into the document
-	*/
-	void slotEditPaste();
-	/** paste the clipboard into the document, but not beyond table boundaries
-	*/
-	void slotEditPasteToTable();
-	/** paste the clipboard into the document, but not beyond selection boundaries
-	*/
-	void slotEditPasteToSelection();
 	/** toggles the toolbar
 	*/
 	void slotViewToolBar();
@@ -189,6 +176,7 @@ public slots:
 	* @param text the text that is displayed in the statusbar
 	*/
 	void slotStatusMsg(const QString &text);
+	void slotStatusReady ();
 
 	/** shows/hides the RKWatch-window */
 	void slotShowRKWatch ();
@@ -254,11 +242,6 @@ private:
 	
 	KAction* editUndo;
 	KAction* editRedo;
-	KAction* editCut;
-	KAction* editCopy;
-	KAction* editPaste;
-	KAction* editPasteToSelection;
-	KAction* editPasteToTable;
 
 	KAction* outputShow;
 	KAction* outputFlush;
@@ -281,9 +264,6 @@ private:
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;
 	friend class RKSettings;
-
-	/** Does pasting (called from the respective slots) */
-	void doPaste ();
 
 	/** Finds plugins and inserts them into the menu-structure */
 	void initPlugins ();

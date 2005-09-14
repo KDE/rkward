@@ -1,3 +1,5 @@
+- data-editor uses KPart-infrastructure (better integration)
+- override standard callbacks used by R for ReadConsole, ShowFiles, EditFile(s), ChooseFile, Suicide, CleanUp. No more reliance on stdin
 - some cleanups of dead code
 - plugins can now be placed in different menus
 - keep list of components/plugins and menu-hierarchy in (few) .pluginmap files instead of parsing directory structure

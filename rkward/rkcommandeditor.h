@@ -28,6 +28,8 @@
 /**
 Provides a wrapper around the Kate-part used for syntax-highlighting
 
+TODO: This class seems to be obsolete! Check whether RCommandEditorWindow provides all required functionality, and use that instead.
+
 @author Thomas Friedrichsmeier
 */
 class RKCommandEditor : public QWidget {

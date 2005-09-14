@@ -16,10 +16,8 @@
  ***************************************************************************/
 
 // include files for QT
-#include <qdir.h>
 #include <qprinter.h>
 #include <qpainter.h>
-#include <qclipboard.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 #include <qlineedit.h>
@@ -55,8 +53,6 @@
 #include "rkeditormanager.h"
 #include "rkdocmanager.h" 
 #include "core/rkmodificationtracker.h"
-#include "dataeditor/rkeditor.h"
-#include "dataeditor/rkdrag.h"
 #include "rkwatch.h"
 #include "misc/rkmenu.h"
 #include "misc/rkmenulist.h"
@@ -118,20 +114,18 @@ RKwardApp::RKwardApp (KURL *load_url) : KMdiMainFrm (0, 0, KMdi::IDEAlMode), DCO
 	setEnabledActions(true);
 
 	RKGlobals::manager = new RKEditorManager ();
-	KMdiChildView * editorManagerView = createWrapper(RKGlobals::editorManager (), i18n( "Data editor"), i18n( "Data editor"));
+/*	KMdiChildView * editorManagerView = createWrapper(RKGlobals::editorManager (), i18n( "Data editor"), i18n( "Data editor"));
 	editorManagerView->setIcon(SmallIcon("spreadsheet"));
 	editorManagerView->setName("dataeditor");
-	addWindow( editorManagerView );
+	addWindow( editorManagerView ); */
 	
 	
 
 	
 	connect (this, SIGNAL (childWindowCloseRequest (KMdiChildView *)), this, SLOT (slotChildWindowCloseRequest (KMdiChildView *)));
-	connect (this, SIGNAL (viewActivated (KMdiChildView *)), this, SLOT (slotViewActivated (KMdiChildView *)));
+//	connect (this, SIGNAL (viewActivated (KMdiChildView *)), this, SLOT (slotViewActivated (KMdiChildView *)));
 
 
-	connect (RKGlobals::editorManager (), SIGNAL (editorClosed ()), this, SLOT (slotEditorsChanged ()));
-	connect (RKGlobals::editorManager (), SIGNAL (editorOpened ()), this, SLOT (slotEditorsChanged ()));
 	RKGlobals::mtracker = new RKModificationTracker (this);
 	RKGlobals::cmap = new RKComponentMap ();
 
@@ -153,13 +147,19 @@ RKwardApp::RKwardApp (KURL *load_url) : KMdiMainFrm (0, 0, KMdi::IDEAlMode), DCO
 	}
 }
 
+void RKwardApp::activateGUI (KParts::Part *part) {
+	RK_TRACE (APP);
+	createGUI (part);
+}
+
 RKwardApp::~RKwardApp() {
 	RK_TRACE (APP);
-	slotCloseAllEditors ();
+	RKGlobals::editorManager()->closeAll ();
 	delete RKGlobals::rInterface ();
 	delete RKGlobals::rObjectList ();
 	delete object_browser;
 	delete RKGlobals::tracker ();
+	delete RKGlobals::editorManager ();
 }
 
 void RKwardApp::doPostInit () {
@@ -193,6 +193,24 @@ void RKwardApp::doPostInit () {
 
 	initPlugins ();
 	
+	//It's necessary to give a different name to all tool windows, or they won't be properly displayed
+	object_browser->setName("workspace"); 
+	object_browser->setIcon(SmallIcon("view_tree"));
+	addToolWindow(object_browser,KDockWidget::DockLeft, getMainDockWidget(), 30 , i18n ("Existing objects in your workspace.") , i18n ("Workspace"));
+	
+	RKGlobals::rInterface ()->watch->setName("Command log");
+	RKGlobals::rInterface ()->watch->setIcon(SmallIcon("text_block"));
+	addToolWindow(RKGlobals::rInterface ()->watch,KDockWidget::DockBottom, getMainDockWidget(), 10);
+
+	console = new RKConsole(0);
+	console->setIcon(SmallIcon("konsole"));
+	console->setName("r_console");
+	addToolWindow(console,KDockWidget::DockBottom, getMainDockWidget(), 10);
+	
+	helpDlg = new KHelpDlg(0);
+	helpDlg->setIcon(SmallIcon("help"));
+	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);
+
 	if (initial_url) {
 		openWorkspace (*initial_url);
 		delete initial_url;
@@ -213,24 +231,6 @@ void RKwardApp::doPostInit () {
 	}
 	
 	show ();
-	
-	//It's necessary to give a different name to all tool windows, or they won't be properly displayed
-	object_browser->setName("workspace"); 
-	object_browser->setIcon(SmallIcon("view_tree"));
-	addToolWindow(object_browser,KDockWidget::DockLeft, getMainDockWidget(), 30 , i18n ("Existing objects in your workspace.") , i18n ("Workspace"));
-	
-	RKGlobals::rInterface ()->watch->setName("Command log");
-	RKGlobals::rInterface ()->watch->setIcon(SmallIcon("text_block"));
-	addToolWindow(RKGlobals::rInterface ()->watch,KDockWidget::DockBottom, getMainDockWidget(), 10);
-
-	console = new RKConsole(0);
-	console->setIcon(SmallIcon("konsole"));
-	console->setName("r_console");
-	addToolWindow(console,KDockWidget::DockBottom, getMainDockWidget(), 10);
-	
-	helpDlg = new KHelpDlg(0);
-	helpDlg->setIcon(SmallIcon("help"));
-	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);
 }
 
 void RKwardApp::initPlugins () {
@@ -249,7 +249,7 @@ void RKwardApp::initPlugins () {
 		KMessageBox::information (0, i18n ("Plugins are needed: you may manage these through \"Settings->Configure RKWard\".\n"), i18n ("No (valid) plugins found"));
 	}
 
-	slotStatusMsg(i18n("Ready."));
+	slotStatusReady ();
 }
 
 void RKwardApp::startR () {
@@ -311,15 +311,6 @@ void RKwardApp::initActions()
 	filePrint = KStdAction::print(this, SLOT(slotFilePrint()), actionCollection(), "file_printx");
 	filePrint->setEnabled (false);
 	fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection(), "file_quitx");
-	
-	editCut = KStdAction::cut(this, SLOT(slotEditCut()), actionCollection(), "cut");
-	editCopy = KStdAction::copy(this, SLOT(slotEditCopy()), actionCollection(), "copy");
-	editPaste = KStdAction::paste(this, SLOT(slotEditPaste()), actionCollection(), "paste");
-	editPasteToTable = new KAction(i18n("Paste inside Table"), 0, 0, this, SLOT(slotEditPasteToTable()), actionCollection(), "paste_to_table");
-	editPasteToTable->setIcon("frame_spreadsheet");
-	editPasteToSelection = new KAction(i18n("Paste inside Selection"), 0, 0, this, SLOT(slotEditPasteToSelection()), actionCollection(), "paste_to_selection");
-	editPasteToSelection->setIcon("frame_edit");
-
 
 	outputShow= new KAction (i18n ("&Show / Refresh"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
 	outputFlush= new KAction (i18n ("&Flush"), 0, 0, this, SLOT (slotOutputFlush ()), actionCollection (), "output_flush");
@@ -356,11 +347,6 @@ void RKwardApp::initActions()
 	close_all_editors->setStatusText (i18n ("Closes all open data editors"));
 	filePrint ->setStatusText(i18n("Prints out the actual document"));
 	fileQuit->setStatusText(i18n("Quits the application"));
-	editCut->setStatusText(i18n("Cuts the selected section and puts it to the clipboard"));
-	editCopy->setStatusText(i18n("Copies the selected section to the clipboard"));
-	editPaste->setStatusText(i18n("Pastes the clipboard contents to actual position"));
-	editPasteToTable->setStatusText(i18n("Pastes the clipboard contents to actual position, but not beyond the table's boundaries"));
-	editPasteToSelection->setStatusText(i18n("Pastes the clipboard contents to actual position, but not beyond the boundaries of the current selection"));
 	viewToolBar->setStatusText(i18n("Enables/disables the toolbar"));
 	viewStatusBar->setStatusText(i18n("Enables/disables the statusbar"));
 }
@@ -540,10 +526,11 @@ bool RKwardApp::queryExit()
 // SLOT IMPLEMENTATION
 /////////////////////////////////////////////////////////////////////
 
+// TODO: remove
 void RKwardApp::slotEditorsChanged () {
 	RK_TRACE (APP);
-	close_editor->setEnabled (RKGlobals::editorManager ()->numEditors ());
-	close_all_editors->setEnabled (RKGlobals::editorManager ()->numEditors ());
+//	close_editor->setEnabled (RKGlobals::editorManager ()->numEditors ());
+//	close_all_editors->setEnabled (RKGlobals::editorManager ()->numEditors ());
 }
 
 void RKwardApp::slotNewDataFrame () {
@@ -571,7 +558,7 @@ void RKwardApp::fileOpenNoSave (const KURL &url) {
 	if (!lurl.isEmpty ()) {
 		openWorkspace (lurl);
 	}
-	slotStatusMsg(i18n("Ready."));
+	slotStatusReady ();
 }
 
 void RKwardApp::fileOpenAskSave (const KURL &url) {
@@ -620,14 +607,14 @@ void RKwardApp::slotFileSaveWorkspaceAs () {
 
 void RKwardApp::slotCloseEditor () {
 	RK_TRACE (APP);
-	RKGlobals::editorManager ()->closeEditor (RKGlobals::editorManager ()->currentEditor ());
+	//RKGlobals::editorManager ()->closeEditor (RKGlobals::editorManager ()->currentEditor ());
 }
 
 void RKwardApp::slotCloseAllEditors () {
 	RK_TRACE (APP);
-	while (RKGlobals::editorManager ()->numEditors ()) {
+/*	while (RKGlobals::editorManager ()->numEditors ()) {
 		RKGlobals::editorManager ()->closeEditor (RKGlobals::editorManager ()->currentEditor ());
-	}
+	}*/
 }
 
 void RKwardApp::slotFilePrint()
@@ -641,7 +628,7 @@ void RKwardApp::slotFilePrint()
 	//    view->print(&printer);
 	}
 	
-	slotStatusMsg(i18n("Ready."));
+	slotStatusReady ();
 }
 
 void RKwardApp::slotFileQuit () {
@@ -649,91 +636,6 @@ void RKwardApp::slotFileQuit () {
 	slotStatusMsg(i18n("Exiting..."));
 	saveOptions();
 	close ();
-}
-
-void RKwardApp::slotEditCut()
-{
-	RK_TRACE (APP);
-	
-	if ((QString) activeWindow()->name()!="dataeditor"){
-		return;
-	}
-	
-	slotStatusMsg(i18n("Cutting selection..."));
-	slotEditCopy ();
-	RKGlobals::editorManager ()->currentEditor ()->clearSelected ();
-	slotStatusMsg(i18n("Ready."));
-	
-}
-
-void RKwardApp::slotEditCopy() {
-	RK_TRACE (APP);
-	
-	if ((QString) activeWindow()->name()!="dataeditor"){
-		return;
-	}
-	
-	slotStatusMsg(i18n("Copying selection to clipboard..."));
-	QApplication::clipboard()->setData(RKGlobals::editorManager ()->currentEditor ()->makeDrag ());
-	slotStatusMsg(i18n("Ready."));
-	
-}
-
-void RKwardApp::doPaste () {
-	RK_TRACE (APP);
-	
-	if ((QString) activeWindow()->name()!="dataeditor"){
-		return;
-	}
-	
-	
-	slotStatusMsg(i18n("Inserting clipboard contents..."));
-
-	// actually, we don't care, whether tsv or plain gets pasted - it's both
-	// treated the same. We should however encourage external senders to
-	// provided the two in order.
-	if (QApplication::clipboard()->data()->provides ("text/tab-separated-values")) {
-		qDebug ("paste tsv");
-		RKGlobals::editorManager ()->currentEditor ()->paste (QApplication::clipboard()->data()->encodedData ("text/tab-separated-values"));
-	} else if (QApplication::clipboard()->data()->provides ("text/plain")) {
-		qDebug ("paste plain");
-		RKGlobals::editorManager ()->currentEditor ()->paste (QApplication::clipboard()->data()->encodedData ("text/plain"));
-	}
-
-	slotStatusMsg(i18n("Ready."));
-}
-
-void RKwardApp::slotEditPaste() {
-	if ((QString) activeWindow()->name()!="dataeditor"){
-		return;
-	}
-	
-	RK_TRACE (APP);
-	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteEverywhere);
- 	doPaste ();
-	
-
-}
-
-void RKwardApp::slotEditPasteToTable() {
-	RK_TRACE (APP);
-	if ((QString) activeWindow()->name()!="dataeditor"){
-		return;
-	}
-		
-	
-	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteToTable);
-	doPaste();
-}
-void RKwardApp::slotEditPasteToSelection() {
-	RK_TRACE (APP);
-	
-	if ((QString) activeWindow()->name()!="dataeditor"){
-		return;
-	}
-
-	RKGlobals::editorManager ()->currentEditor ()->setPasteMode (RKEditor::PasteToSelection);
-	doPaste();
 }
 
 void RKwardApp::slotViewToolBar()
@@ -755,7 +657,7 @@ void RKwardApp::slotViewToolBar()
     toolBar("editToolBar")->show();
   }		
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusReady ();
 }
 
 void RKwardApp::slotViewStatusBar()
@@ -773,17 +675,23 @@ void RKwardApp::slotViewStatusBar()
     statusBar()->show();
   }
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusReady ();
 }
 
 
-void RKwardApp::slotStatusMsg(const QString &text)
-{
+void RKwardApp::slotStatusMsg(const QString &text) {
 	RK_TRACE (APP);
+
   ///////////////////////////////////////////////////////////////////
   // change status message permanently
   statusBar()->clear();
   statusBar()->changeItem(text, ID_STATUS_MSG);
+}
+
+void RKwardApp::slotStatusReady () {
+	RK_TRACE (APP);
+
+	slotStatusMsg (i18n ("Ready"));
 }
 
 void RKwardApp::slotShowRKWatch () {
@@ -1030,7 +938,7 @@ void RKwardApp::slotRunLine() {
 
 
 void RKwardApp::slotRunAll() {
-	if (! activeWindow()->inherits("RKCommandEditorWindow"))
+	if (!activeWindow()->inherits("RKCommandEditorWindow"))
 		return;
 	if(((RKCommandEditorWindow*) activeWindow())->getText().isEmpty() || ((RKCommandEditorWindow*) activeWindow())->getText().isNull())
 		return;
@@ -1039,6 +947,7 @@ void RKwardApp::slotRunAll() {
 }
 
 
+// TODO: remove this!!!
 void RKwardApp::slotViewActivated (KMdiChildView * window)
 {
 	if ((QString) activeWindow()->name()=="dataeditor"){
@@ -1065,11 +974,6 @@ void RKwardApp::slotInterruptCommand()
 void RKwardApp::setEnabledActions(bool objectEditor)
 {
 	if (objectEditor) {
-  		editCut->setEnabled(true);
-  		editCopy->setEnabled(true);
-  		editPaste->setEnabled(true);
-    		editPasteToSelection->setEnabled(true);
-    		editPasteToTable->setEnabled(true);
 		fileSave->setEnabled(false);
 		fileSaveAs->setEnabled(false);
 		runAll->setEnabled(false);
@@ -1078,11 +982,6 @@ void RKwardApp::setEnabledActions(bool objectEditor)
 		interruptCommand->setEnabled(false);
 	}
 	else{
-		editCut->setEnabled(false);
-		editCopy->setEnabled(false);
-		editPaste->setEnabled(false);
-		editPasteToSelection->setEnabled(false);
-		editPasteToTable->setEnabled(false);
 		fileSave->setEnabled(true);
 		fileSaveAs->setEnabled(true);
 		runAll->setEnabled(true);

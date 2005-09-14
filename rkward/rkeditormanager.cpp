@@ -16,9 +16,6 @@
  ***************************************************************************/
 #include "rkeditormanager.h"
 
-#include <qtabwidget.h>
-#include <qlayout.h>
-
 #include "dataeditor/rkeditor.h"
 #include "dataeditor/rkeditordataframe.h"
 #include "core/robject.h"
@@ -26,26 +23,17 @@
 #include "core/robjectlist.h"
 #include "rbackend/rinterface.h"
 #include "rkglobals.h"
+#include "rkward.h"
 
 #include "debug.h"
 
+#include <kiconloader.h>
+
 #define RESTORE_COMMAND 1
 
-RKEditorManager::RKEditorManager (QWidget *parent) : QWidget (parent) {
+RKEditorManager::RKEditorManager () : QObject () {
 	RK_TRACE (APP);
-	QGridLayout *grid = new QGridLayout (this, 1, 1);
-	tabbook = new QTabWidget (this);
-	grid->addWidget (tabbook, 0, 0);
-	
-	restore_chain = 0;
-}
 
-RKEditorManager::RKEditorManager ()   {
-	RK_TRACE (APP);
-	QGridLayout *grid = new QGridLayout (this, 1, 1);
-	tabbook = new QTabWidget (this);
-	grid->addWidget (tabbook, 0, 0);
-	
 	restore_chain = 0;
 }
 
@@ -57,35 +45,36 @@ RKEditor *RKEditorManager::editObject (RObject *object, bool initialize_to_empty
 	RK_TRACE (APP);	
 	RObject *iobj = object;
 	RKEditor *ed = 0;
-	if (!object->objectOpened()) {
+	if (!object->objectOpened ()) {
 		if (object->isDataFrame ()) {
-			ed = new RKEditorDataFrame (tabbook);
+			ed = newRKEditorDataFrame ();
 			// TODO: add child objects, too?
 			ed->openObject (object, initialize_to_empty);
 		} else if (object->isVariable () && object->getContainer ()->isDataFrame ()) {
 			if (!object->getContainer ()->objectOpened ()) { 
 				iobj = object->getContainer ();
-				ed = new RKEditorDataFrame (tabbook);
+				ed = newRKEditorDataFrame ();
 				// TODO: add child objects, too?
 				ed->openObject (iobj, initialize_to_empty);
 				// ed->focusObject (obj);
 			} else {
-				tabbook->showPage (object->getContainer ()->objectOpened ());
+				if (object->getContainer ()->objectOpened ()) {
+					object->getContainer ()->objectOpened ()->show ();
+					object->getContainer ()->objectOpened ()->raise ();
+				}
 			}
 		}
 
 		if (ed) {
-			hide ();
-			tabbook->insertTab (ed, iobj->getShortName ());
-			tabbook->showPage (ed);
-			show ();
+			setEditorName (ed, iobj->getShortName ());
 			emit (editorOpened ());
-			
+
 			RCommand *command = new RCommand (".rk.editor.opened (" + iobj->getFullName() + ")", RCommand::App | RCommand::Sync);
 			RKGlobals::rInterface ()->issueCommand (command, restore_chain);
 		}
 	} else {
-		tabbook->showPage (object->objectOpened ());
+		object->objectOpened ()->show ();
+		object->objectOpened ()->raise ();
 	}
 	
 	return ed;
@@ -117,23 +106,13 @@ void RKEditorManager::rCommandDone (RCommand *command) {
 	}
 }
 
-RKEditor *RKEditorManager::currentEditor () {
-	RK_TRACE (APP);	
-	return static_cast<RKEditor*> (tabbook->currentPage ());
-}
-
-int RKEditorManager::numEditors () {
-	RK_TRACE (APP);	
-	return tabbook->count ();
-}
-
 void RKEditorManager::closeEditor (RKEditor *editor) {
 	RK_TRACE (APP);
 	
 	RK_ASSERT (editor);
 	
 	RObject *object = editor->getObject ();
-	delete editor;
+	RKGlobals::rkApp ()->closeWindow (editor);
 
 	RCommand *command = new RCommand (".rk.editor.closed (" + object->getFullName() + ")", RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
@@ -144,9 +123,19 @@ void RKEditorManager::closeEditor (RKEditor *editor) {
 void RKEditorManager::flushAll () {
 	RK_TRACE (APP);
 
-	for (int i=0; i < tabbook->count (); ++i) {
-		static_cast<RKEditor*> (tabbook->page (i))->flushChanges ();
+	for (QValueList<RKEditor*>::const_iterator it = editors.begin (); it != editors.end (); ++it) {
+		(*it)->flushChanges ();
 	}
+}
+
+void RKEditorManager::closeAll () {
+	RK_TRACE (APP);
+
+	for (QValueList<RKEditor*>::const_iterator it = editors.begin (); it != editors.end (); ++it) {
+		closeEditor (*it);
+	}
+
+	editors.clear ();
 }
 
 bool RKEditorManager::canEditObject (RObject *object) {
@@ -161,7 +150,21 @@ bool RKEditorManager::canEditObject (RObject *object) {
 }
 
 void RKEditorManager::setEditorName (RKEditor *editor, const QString &new_name) {
-	tabbook->setTabLabel (editor, new_name);
+	RK_TRACE (APP);
+	editor->setMDICaption (new_name);
+}
+
+RKEditorDataFrame *RKEditorManager::newRKEditorDataFrame () {
+	RK_TRACE (APP);
+
+	RKEditorDataFrame *ed = new RKEditorDataFrame (0);
+	(RKGlobals::rkApp()->m_manager)->addPart (ed->getPart (), false);
+	RKGlobals::rkApp ()->addWindow (ed);
+	ed->setIcon (SmallIcon ("spreadsheet"));
+	editors.append (ed);
+	RKGlobals::rkApp ()->activateGUI (ed->getPart ());
+
+	return ed;
 }
 
 #include "rkeditormanager.moc"

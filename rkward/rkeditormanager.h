@@ -19,27 +19,27 @@
 
 #include <qwidget.h>
 #include <qmap.h>
+#include <qvaluelist.h>
 
 #include "rbackend/rcommandreceiver.h"
 
-class QTabWidget;
 class RKEditor;
 class RObject;
 class RCommandChain;
 class RCommand;
+class RKEditorDataFrame;
 
 /**
 This class is used to manage open editor windows. For now, it will arrange opened editors in a tabbook. Later it will also be responsible for docking/undocking editors, etc. This class does only GUI-related stuff. It knows nothing about the types of editors and the data they hold.
 
 @author Thomas Friedrichsmeier
 */
-class RKEditorManager : public QWidget, public RCommandReceiver {
+class RKEditorManager : public QObject, public RCommandReceiver {
 Q_OBJECT
 public:
-    RKEditorManager(QWidget *parent);
-    RKEditorManager();
-    
-    ~RKEditorManager();
+	RKEditorManager();
+
+	~RKEditorManager();
 
 	RKEditor *editObject (RObject *object, bool initialize_to_empty=false);
 /// tries to open the editors/objects that were last opened
@@ -48,22 +48,24 @@ public:
 	void closeEditor (RKEditor *editor);
 
 	void flushAll ();
+	void closeAll ();
 	
 	bool canEditObject (RObject *object);
 
 /// returns the currently active editor
-	RKEditor *currentEditor ();
+//	RKEditor *currentEditor ();
 	void setEditorName (RKEditor *editor, const QString &new_name);
 	
-	int numEditors ();
+//	int numEditors ();
 signals:
 	void editorClosed ();
 	void editorOpened ();
 protected:
 	void rCommandDone (RCommand *command);
 private:
-	QTabWidget *tabbook;
 	RCommandChain *restore_chain;
+	RKEditorDataFrame *newRKEditorDataFrame ();
+	QValueList<RKEditor*> editors;
 };
 
 #endif
