@@ -1,0 +1,21 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="rkeditordataframepart" version="0.3.3">
+	<MenuBar>
+		<Menu name="edit"><text>&amp;Edit</text>
+			<Action name="cut"/>
+			<Action name="copy"/>
+			<Action name="paste"/>
+			<Action name="paste_to_selection"/>
+			<Action name="paste_to_table"/>
+			<Separator/>
+			<Merge/> 
+		</Menu>
+	<ToolBar fullWidth="true" name="editToolBar">
+		<Action name="cut"/>
+		<Action name="copy"/>
+		<Action name="paste"/>
+		<Separator/>
+		<Action name="paste_to_selection"/>
+		<Action name="paste_to_table"/>
+	</ToolBar>
+</kpartgui>
