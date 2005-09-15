@@ -50,6 +50,7 @@
 #include "../rkeditormanager.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
+#include "rkcommandeditorwindowpart.h"
 
 #include "../debug.h"
 
@@ -57,18 +58,18 @@
 
 RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting) : KMdiChildView (parent) {
 	RK_TRACE (COMMANDEDITOR);
-    KParts::ReadWritePart *m_katepart;
 
 	KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
 	if (factory) {
 		// Create the part
-		m_katepart = (KParts::ReadWritePart *)factory->create( this,
-			"katepart", "KParts::ReadWritePart" );
+		m_doc = (Kate::Document *) factory->create( this, "katepart", "KParts::ReadWritePart" );
+		RK_ASSERT (m_doc);
+		m_view = (Kate::View *) m_doc->widget();
 	}
-	(RKGlobals::rkApp()->m_manager)->addPart((KParts::Part*)m_katepart,false);
 
-	m_doc = (Kate::Document *) m_katepart;
-	m_view = (Kate::View *) m_katepart->widget();
+	m_doc->insertChildClient (new RKCommandEditorWindowPart (m_view, this));
+
+	RKGlobals::rkApp()->m_manager->addPart(m_doc, false);
 
 	QHBoxLayout *pLayout = new QHBoxLayout( this, 0, -1, "layout");
 	pLayout->addWidget(m_view);
@@ -162,26 +163,6 @@ bool RKCommandEditorWindow::getFilenameAndPath(const KURL &url,QString *fname){
 		*fname = fullpath.right(length-fnamepos);
 
 	return true;
-}
-
-
-
-
-
-KURL RKCommandEditorWindow::url(){
-    return m_doc->url();
-}
-
-
-
-bool RKCommandEditorWindow::save(){
-    return m_doc->save();
-}
-
-bool RKCommandEditorWindow::saveAs(const KURL &url){
-	bool result = m_doc->saveAs(url);
-	updateTabCaption(url); 
-	return result;
 }
 
 

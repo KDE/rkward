@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.3">
+<kpartgui name="rkward" version="0.3.3">
 <MenuBar>
 	<Menu name="file"><text>&amp;File</text>
 		<Menu name="new_data"><text>&amp;New</text>
@@ -44,10 +44,7 @@
 	</Menu>   
 	
 	<Menu name="run"><text>&amp;Run</text>
-		<Separator/>
-		<Action name="run_line"/>
-		<Action name="run_selection"/>
-		<Action name="run_all"/>
+		<Merge/>
 		<Separator/>
 		<Action name="interrupt"/>
 	</Menu>   

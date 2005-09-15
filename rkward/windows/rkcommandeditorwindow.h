@@ -57,9 +57,6 @@ public:
     QString getLine();
     QString getText();
     bool openURL(const KURL &url, bool use_r_highlighting=true, bool read_only=false);
-    KURL url();
-    bool save();
-    bool saveAs(const KURL &url);
     bool isModified();
     void insertText(QString text);
     /** Show help about the current word. */

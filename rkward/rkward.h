@@ -156,8 +156,6 @@ public slots:
 	void slotFileSaveWorkspaceAs();
 	/** shows the dialog to install/load/unload packages */
 	void slotFileLoadLibs ();
-	/** close current editor */
-	void slotCloseEditor ();
 	/** close all editors */
 	void slotCloseAllEditors ();
 	/** print the actual file */
@@ -200,15 +198,9 @@ public slots:
 	
 	void slotNewCommandEditor();
 	void slotOpenCommandEditor();
-	void slotSaveCommandEditor();
-	void slotSaveCommandEditorAs();
-	void slotCloseCommandEditor();
 	void slotOpenURL(const KURL &url);
 	void slotChildWindowCloseRequest (KMdiChildView * window);
-	void slotRunSelection();
-	void slotRunLine();
 	void slotInterruptCommand();
-	void slotRunAll();
 	void slotViewActivated (KMdiChildView *window);
 	void slotOpenRecentCommandEditor(const KURL&);
 	void slotFunctionReference();
@@ -225,8 +217,6 @@ private:
 	// KAction pointers to enable/disable actions
 	KAction* fileOpen;
 	KRecentFilesAction* fileOpenRecent;
-	KAction* fileSave;
-	KAction* fileSaveAs;
 	
 	KAction* fileOpenWorkspace;
 	KRecentFilesAction* fileOpenRecentWorkspace;
@@ -235,7 +225,6 @@ private:
 	KAction* filePrint;
 	KAction* fileQuit;
 	KAction* file_load_libs;
-	KAction* close_editor;
 	KAction* close_all_editors;
 	KAction* new_data_frame;
 	KAction* new_command_editor;
@@ -253,9 +242,6 @@ private:
 	KToggleAction* showRKOutput;
 	KToggleAction* showRObjectBrowser;
 	
-	KAction* runAll;
-	KAction* runSelection;
-	KAction* runLine;
 	KAction* interruptCommand;
 	KAction* configure;
 	
@@ -285,7 +271,6 @@ private:
 	
 	bool getFilenameAndPath(const KURL &url,QString *fname);
 	void saveAsProcedure(RKCommandEditorWindow *editor);
-	void setEnabledActions(bool commandEditor);
 	KMdiChildView* outputView();
 
 	/** refreshes the output.
