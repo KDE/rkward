@@ -1,0 +1,16 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="rkward" version="0.3.3">
+	<MenuBar>
+		<Menu name="run"><text>&amp;Run</text>
+			<Action name="run_line"/>
+			<Action name="run_selection"/>
+			<Action name="run_all"/>
+			<Separator/>
+		</Menu>
+	</MenuBar>
+	<ToolBar fullWidth="true" name="runToolBar">
+		<Action name="run_line"/>
+		<Action name="run_selection"/>
+		<Action name="run_all"/>
+	</ToolBar>
+</kpartgui>
