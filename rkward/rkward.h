@@ -94,8 +94,8 @@ public:
 	
 	void fileOpenNoSave (const KURL &url);
 	void fileOpenAskSave (const KURL &url);
-	void openHTML(KURL url);
 	void openHTMLHelp (const QString &url);
+	void openHTML (const KURL &url);
 
 /** returns a pointer to the menu-list (in essence the menu-bar) */
 	RKMenuList* getMenuList () { return menu_list; };
@@ -203,7 +203,6 @@ public slots:
 	void slotInterruptCommand();
 	void slotViewActivated (KMdiChildView *window);
 	void slotOpenRecentCommandEditor(const KURL&);
-	void slotFunctionReference();
 private:
 	/** the configuration object of the application */
 	KConfig *config;
@@ -233,8 +232,6 @@ private:
 	KAction* editRedo;
 
 	KAction* outputShow;
-	KAction* outputFlush;
-	KAction* outputRefresh;
 
 	KToggleAction* viewToolBar;
 	KToggleAction* viewStatusBar;
@@ -245,8 +242,6 @@ private:
 	KAction* interruptCommand;
 	KAction* configure;
 	
-	KAction* helpFunction;
-
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;
 	friend class RKSettings;
@@ -281,7 +276,6 @@ signals:
 	void childWindowCloseRequest(KMdiChildView * window);
 private slots:
 	void slotOutputShow();
-	void slotOutputFlush();
 };
 
 #endif // RKWARD_H

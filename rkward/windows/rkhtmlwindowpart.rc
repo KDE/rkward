@@ -1,0 +1,10 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="rkward" version="0.3.3">
+	<MenuBar>
+		<Menu name="output"><text>&amp;Output</text>
+			<Separator/>
+			<Action name="output_refresh"/>
+			<Separator/>
+			<Action name="output_flush"/>
+		</Menu>   
+</kpartgui>

@@ -33,61 +33,47 @@
 #include "rkhelpwindow.h"
 
 
-RKHelpWindow::RKHelpWindow(QWidget *parent, const char *name, bool output)
- : KMdiChildView(parent, name)
-{
+RKHelpWindow::RKHelpWindow (QWidget *parent) : KMdiChildView (parent) {
 	scroll_position=0;
 	
-	khtmlpart = new KHTMLPart(this,0,0,0,KHTMLPart::BrowserViewGUI);
-	khtmlpart->setSelectable(true);
+	khtmlpart = new KHTMLPart (this,0,0,0,KHTMLPart::BrowserViewGUI);
+	khtmlpart->setSelectable (true);
 	
-	window_is_output=output;
-
-	(RKGlobals::rkApp()->m_manager)->addPart(khtmlpart,false);
-	khtmlpart->widget()->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QHBoxLayout *pLayout = new QHBoxLayout( this, 0, -1, "layout");
-	pLayout->addWidget(khtmlpart->widget());
+	khtmlpart->widget ()->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding);
+	QHBoxLayout *pLayout = new QHBoxLayout (this, 0, -1, "layout");
+	pLayout->addWidget (khtmlpart->widget());
 
 	// We have to connect this in order to allow browsing.
-	connect( khtmlpart->browserExtension(), SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs & ) ), this, SLOT( slotOpenURLRequest(const KURL &, const KParts::URLArgs & ) ) );
+	connect (khtmlpart->browserExtension (), SIGNAL(openURLRequest (const KURL &, const KParts::URLArgs &)), this, SLOT (slotOpenURLRequest (const KURL &, const KParts::URLArgs &)));
 	
-	connect(khtmlpart,SIGNAL(completed()),this,SLOT(loadDone()));
+	connect (khtmlpart, SIGNAL (completed ()), this, SLOT (loadDone ()));
 	
 }
-
 
 RKHelpWindow::~RKHelpWindow()
 {
 }
 
-bool RKHelpWindow::openURL(const KURL &url)
-{
-	if (QFile::exists( url.path() )) {
+bool RKHelpWindow::openURL(const KURL &url, bool update_caption) {
+	if (QFile::exists (url.path ())) {
 		khtmlpart->openURL(url);
-		if (window_is_output) {
-			setTabCaption(i18n("Output"));
-			setCaption(i18n("Output"));
-		}
-		else {
+		if (update_caption) {
 			setTabCaption(url.fileName());
 			setCaption(url.fileName());
-			
 		}
 		currentURL=url;
 		scroll_position=0;
-		return(true);
-	}
-	else{
-
-		khtmlpart->begin();
-			khtmlpart->write(i18n("<HTML><BODY><H1>RKWard output</H1>"
-			"<P>The output is empty.</P>"
-			"</BODY></HTML>"));
-		khtmlpart->end();
+		return (true);
+	} else{
 		return (false);
 	}
 }
 
+void RKHelpWindow::showOutputEmptyMessage () {
+		khtmlpart->begin();
+		khtmlpart->write (i18n ("<HTML><BODY><H1>RKWard output</H1>\n<P>The output is empty.</P>\n</BODY></HTML>"));
+		khtmlpart->end();
+}
 
 /*!
     \fn RKHelpWindow::slotOpenURLRequest(const KURL &, const KParts::URLArgs & )
@@ -116,9 +102,8 @@ void RKHelpWindow::refresh()
     \fn RKHelpWindow::loadDone()
 	This slot is called when the new page has finished loading.
  */
-void RKHelpWindow::loadDone()
-{
-	khtmlpart->view()->setContentsPos ( 0, scroll_position );
+void RKHelpWindow::loadDone () {
+	khtmlpart->view()->setContentsPos (0, scroll_position);
 }
 
 
@@ -126,9 +111,8 @@ void RKHelpWindow::loadDone()
     \fn RKHelpWindow::scrollToBottom()
 	Scrolls to the bottom of the page.
  */
-void RKHelpWindow::scrollToBottom()
-{
-	khtmlpart->view()->setContentsPos ( 0, khtmlpart->view()->contentsHeight() );
+void RKHelpWindow::scrollToBottom () {
+	khtmlpart->view()->setContentsPos (0, khtmlpart->view ()->contentsHeight ());
 }
 
 #include "rkhelpwindow.moc"

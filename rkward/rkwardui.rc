@@ -38,9 +38,6 @@
 	<Menu name="output"><text>&amp;Output</text>
 		<Separator/>
 		<Action name="output_show"/>
-		<Action name="output_refresh"/>
-		<Separator/>
-		<Action name="output_flush"/>
 	</Menu>   
 	
 	<Menu name="run"><text>&amp;Run</text>
@@ -52,9 +49,6 @@
 	<Menu name="settings"><text>&amp;Settings</text>
 		<Action name="file_load_libs"/>
 		<Action name="configure"></Action>
-	</Menu>
-	<Menu name="help"><text>&amp;Help</text>
-		<Action name="function_reference"></Action>
 	</Menu>
  	<Merge/>
 </MenuBar>

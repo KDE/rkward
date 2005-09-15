@@ -71,7 +71,7 @@
 #include "agents/rksaveagent.h"
 #include "agents/rkloadagent.h"
 #include "windows/rkcommandeditorwindow.h"
-#include "windows/rkhelpwindow.h"
+#include "windows/rkhtmlwindowpart.h"
 #include "khelpdlg.h"
 #include "rkconsole.h"
 #include "debug.h"
@@ -303,9 +303,7 @@ void RKwardApp::initActions()
 	filePrint->setEnabled (false);
 	fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection(), "file_quitx");
 
-	outputShow= new KAction (i18n ("&Show / Refresh"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
-	outputFlush= new KAction (i18n ("&Flush"), 0, 0, this, SLOT (slotOutputFlush ()), actionCollection (), "output_flush");
-
+	outputShow= new KAction (i18n ("&Show"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
 
 	viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
 	viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
@@ -320,8 +318,6 @@ void RKwardApp::initActions()
 
 	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
-	
-	helpFunction = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT(slotFunctionReference ()), actionCollection(), "function_reference");
 	
 	new_data_frame->setStatusText (i18n ("Creates new empty dataset and opens it for editing"));
 	fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
@@ -696,7 +692,7 @@ void RKwardApp::slotToggleWindowClosed () {
 
 void RKwardApp::newOutput () {
 	RK_TRACE (APP);
-	refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise ());
+	RKHTMLWindowPart::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise ());
 }
 
 void RKwardApp::setRStatus (bool busy) {
@@ -837,83 +833,19 @@ void RKwardApp::slotInterruptCommand () {
 // TODO!
 }
 
-void RKwardApp::openHTML(KURL url) {
-	RKHelpWindow *help = new RKHelpWindow(this,"help");
-	help->openURL (url);	
-	help->setIcon(SmallIcon("help"));
-	addWindow( help );
+void RKwardApp::openHTML(const KURL &url) {
+	RKHTMLWindowPart::openHTML (url, false);
 }
 
 void RKwardApp::openHTMLHelp (const QString & url) {
 	openHTML (url);
 }
 
-void RKwardApp::slotFunctionReference()
-{
-	if (! activeWindow()->inherits("RKCommandEditorWindow"))
-		return;
-	((RKCommandEditorWindow*) activeWindow())->showHelp();
-}
-
-
-
 /*!
     \fn RKwardApp::slotOutputShow()
 	Show html output.
  */
 void RKwardApp::slotOutputShow () {
-	refreshOutput (true, true);
-}
-
-
-/*!
-    \fn RKwardApp::slotOutputFlush()
-	Empties output.
- */
-void RKwardApp::slotOutputFlush () {
-	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to flush the ouput? It won't be possible to restore it."), i18n ("Flush output?"));
-	if (res==KMessageBox::Yes) {
-		QFile out_file (RKSettingsModuleLogfiles::filesPath () + "/rk_out.html");
-		out_file.remove ();
-		refreshOutput (false, false);
-	}
-}
-
-void RKwardApp::refreshOutput (bool show, bool raise) {
-	KMdiChildView* outp = outputView();
-	if (outp){
-		if (raise) {
-			activateView (outp);
-		}
-		// do we need this if?
-		if (outp->inherits ("RKHelpWindow")) static_cast<RKHelpWindow*> (outp)->refresh ();
-	} else {
-		if (show) {
-			RKHelpWindow *out = new RKHelpWindow (this,"output",true);
-			KURL url (RKSettingsModuleLogfiles::filesPath () + "/rk_out.html");
-			out->openURL (url);	
-			out->setIcon (SmallIcon ("text_block"));
-			addWindow (out);
-		}
-	}
-}
-
-/*!
-    \fn RKwardApp::outputView()
-	Returns a pointer to the output MDI child view.
- */
-KMdiChildView* RKwardApp::outputView()
-{
-	KMdiChildView* result = 0;
-	KMdiIterator<KMdiChildView*>* it = createIterator();
-	for ( it->first(); !it->isDone(); it->next() )
-	{
-		if ((QString)it->currentItem()->name() == "output" && it->currentItem() != 0){
-			result = it->currentItem();
-		}
-	}
-	deleteIterator(it);
-
-	return(result);
+	RKHTMLWindowPart::refreshOutput (true, true);
 }
 

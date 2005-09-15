@@ -248,7 +248,7 @@ void RKCommandEditorWindow::rCommandDone (RCommand *command) {
 	if (command->getFlags () == GET_HELP_URL) {
 		url.setPath(command->getStringVector ()[0]);
 		if (QFile::exists( url.path() )) {
-			RKGlobals::rkApp()->openHTML(url);
+			RKGlobals::rkApp ()->openHTML (url);
 			return;
 		}
 	} else {

@@ -29,25 +29,26 @@ class KHTMLPart;
 
 This class wraps a khtml part.
 
+TODO: rename this to RKHTMLWindow, as it really is more generic
+
 @author Pierre Ecochard
 */
-class RKHelpWindow : public KMdiChildView
-{
+class RKHelpWindow : public KMdiChildView {
 Q_OBJECT
 public:
-    RKHelpWindow (QWidget *parent = 0, const char *name = 0, bool output=false);
+    RKHelpWindow (QWidget *parent = 0);
 
-    ~RKHelpWindow();
-    bool openURL(const KURL &url);
-    void refresh();
-    void scrollToBottom();
+    ~RKHelpWindow ();
+    bool openURL (const KURL &url, bool update_caption=true);
+    void refresh ();
+    void scrollToBottom ();
+	void showOutputEmptyMessage ();
 public slots:
-    void slotOpenURLRequest(const KURL &url, const KParts::URLArgs & );
+    void slotOpenURLRequest (const KURL &url, const KParts::URLArgs &);
+friend class RKHTMLWindowPart;
 private:
     KHTMLPart * khtmlpart;
 
-/** Are we showing the output? (Rather than some other, non-special HTML-file */
-    bool window_is_output;
     KURL currentURL;
 private slots:
     void loadDone();

@@ -54,6 +54,8 @@ void RKCommandEditorWindowPart::initializeActions () {
 	runSelection->setIcon("player_play");
 	runLine = new KAction (i18n ("Run current line"), KShortcut ("Ctrl+L"), this, SLOT (slotRunLine ()), actionCollection (), "run_line");
 	runLine->setIcon("player_play");
+
+	helpFunction = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT (slotFunctionReference ()), actionCollection (), "function_reference");
 }
 
 void RKCommandEditorWindowPart::slotRunSelection() {
@@ -82,6 +84,12 @@ void RKCommandEditorWindowPart::slotRunAll() {
 		return;
 		
 	RKGlobals::rInterface ()->issueCommand (new RCommand (command_editor->getText (), RCommand::User, ""));
+}
+
+void RKCommandEditorWindowPart::slotFunctionReference () {
+	RK_TRACE (COMMANDEDITOR);
+
+	command_editor->showHelp ();
 }
 
 #include "rkcommandeditorwindowpart.moc"
