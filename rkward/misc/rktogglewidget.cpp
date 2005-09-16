@@ -20,7 +20,7 @@
 #include "../rkward.h"
 
 RKToggleWidget::RKToggleWidget (QWidget *parent) : QWidget (parent) {
-	connect (this, SIGNAL (closed ()), RKGlobals::rkApp (), SLOT (slotToggleWindowClosed ()));
+//	connect (this, SIGNAL (closed ()), RKGlobals::rkApp (), SLOT (slotToggleWindowClosed ()));
 }
 
 RKToggleWidget::~RKToggleWidget () {

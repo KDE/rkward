@@ -1,3 +1,4 @@
+- output-window has been switched to KPart-infrastructure
 - command-editor has been switched to KPart-infrastructure completely
 - data-editor uses KPart-infrastructure (better integration)
 - override standard callbacks used by R for ReadConsole, ShowFiles, EditFile(s), ChooseFile, Suicide, CleanUp. No more reliance on stdin

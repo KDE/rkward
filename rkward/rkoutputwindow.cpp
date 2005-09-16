@@ -16,6 +16,8 @@
  ***************************************************************************/
 #include "rkoutputwindow.h"
 
+#if 0
+
 #include <qlayout.h>
 #include <qpopupmenu.h>
 #include <qfile.h>
@@ -88,4 +90,6 @@ void RKOutputWindow::refreshOutput () {
 	checkNewInput ();
 }
 
+
 #include "rkoutputwindow.moc"
+#endif

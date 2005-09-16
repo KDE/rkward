@@ -56,6 +56,7 @@ void RKEditorDataFramePart::initializeActions () {
 	editPasteToTable->setIcon("frame_spreadsheet");
 	editPasteToSelection = new KAction(i18n("Paste inside Selection"), 0, 0, this, SLOT(slotEditPasteToSelection()), actionCollection(), "paste_to_selection");
 	editPasteToSelection->setIcon("frame_edit");
+	//windowClose = new KAction (i18n("Close"), 0, KShortcut ("Ctrl+W"), this, SLOT (slotCloseWindow()), actionCollection(), "window_close");
 
 	editCut->setStatusText(i18n("Cuts the selected section and puts it to the clipboard"));
 	editCopy->setStatusText(i18n("Copies the selected section to the clipboard"));
@@ -121,5 +122,11 @@ void RKEditorDataFramePart::doPaste () {
 
 	RKGlobals::rkApp ()->slotStatusMsg(i18n("Ready."));
 }
+/*
+void RKEditorDataFramePart::slotCloseWindow () {
+	RK_TRACE (EDITOR);
+
+	RKGlobals::rkApp ()->closeWindow (editor);
+}*/
 
 #include "rkeditordataframepart.moc"

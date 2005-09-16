@@ -53,13 +53,9 @@ public:
 	bool canEditObject (RObject *object);
 
 /// returns the currently active editor
-//	RKEditor *currentEditor ();
 	void setEditorName (RKEditor *editor, const QString &new_name);
-	
-//	int numEditors ();
-signals:
-	void editorClosed ();
-	void editorOpened ();
+public slots:
+	void editorDestroyed (QObject* editor);
 protected:
 	void rCommandDone (RCommand *command);
 private:

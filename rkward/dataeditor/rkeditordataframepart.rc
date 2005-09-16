@@ -10,6 +10,9 @@
 			<Separator/>
 			<Merge/> 
 		</Menu>
+<!--		<Menu name="windows"><text>&amp;Windows</text>
+			<Action name="window_close"/>
+		</Menu>-->
 	<ToolBar fullWidth="true" name="editToolBar">
 		<Action name="cut"/>
 		<Action name="copy"/>

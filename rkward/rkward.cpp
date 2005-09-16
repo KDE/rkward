@@ -223,6 +223,7 @@ void RKwardApp::doPostInit () {
 			slotFileOpenWorkspace ();
 		} else if (result->result == StartupDialog::EmptyTable) {
 			RObject *object = RKGlobals::rObjectList ()->createNewChild (i18n ("my.data"), 0, true, true);
+			// usually an explicit call to activateView should not be necessary. Somehow however, here, it is.
 			RKGlobals::editorManager ()->editObject (object, true);
 		}
 		delete result;
@@ -297,27 +298,26 @@ void RKwardApp::initActions()
 	fileSaveWorkspaceAs = KStdAction::saveAs(this, SLOT(slotFileSaveWorkspaceAs()), actionCollection(), "file_save_asx");
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
 	//file_load_libs = new KAction (i18n ("Libraries"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");
-	close_all_editors = new KAction (i18n ("Close All Editors"), 0, 0, this, SLOT(slotCloseAllEditors ()), actionCollection (), "close_all_editors");
-	close_all_editors->setEnabled (false);
+
 	filePrint = KStdAction::print(this, SLOT(slotFilePrint()), actionCollection(), "file_printx");
 	filePrint->setEnabled (false);
 	fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection(), "file_quitx");
+	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 
-	outputShow= new KAction (i18n ("&Show"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
 
 	viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
 	viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
-	showRKWatch = new KToggleAction (i18n ("Console"), 0, 0, this, SLOT(slotShowRKWatch ()), actionCollection(), "windows_rkwatch");
-	showRKOutput = new KToggleAction (i18n ("Output"), 0, 0, this, SLOT(slotShowRKOutput ()), actionCollection(), "windows_rkoutput");
-	showRObjectBrowser = new KToggleAction (i18n ("Workspace"), 0, 0, this, SLOT(slotShowRObjectBrowser ()), actionCollection(), "windows_robjectbrowser");
 	
 	interruptCommand = new KAction (i18n ("Interrupt running command"), 0, 0, this, SLOT (slotInterruptCommand ()), actionCollection (), "interrupt");
 	interruptCommand->setIcon("player_stop");
 
+	close_all_editors = new KAction (i18n ("Close All Data"), 0, 0, this, SLOT (slotCloseAllEditors ()), actionCollection (), "close_all_editors");
+	window_close = new KAction (i18n ("Close"), 0, KShortcut ("Crtl+W"), this, SLOT (slotCloseWindow ()), actionCollection (), "window_close");
+	window_close_all = new KAction (i18n ("Close All Windows"), 0, 0, this, SLOT (slotCloseAllWindows ()), actionCollection (), "window_close_all");
+	window_detach = new KAction (i18n ("Detach"), 0, 0, this, SLOT (slotDetachWindow ()), actionCollection (), "window_detach");
+	outputShow= new KAction (i18n ("Show &Output"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
 
-
-	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
-	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT(slotConfigure ()), actionCollection(), "configure");
+	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT (slotConfigure ()), actionCollection (), "configure");
 	
 	new_data_frame->setStatusText (i18n ("Creates new empty dataset and opens it for editing"));
 	fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
@@ -585,12 +585,6 @@ void RKwardApp::slotFileSaveWorkspaceAs () {
 	new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), true);
 }
 
-void RKwardApp::slotCloseAllEditors () {
-	RK_TRACE (APP);
-
-	RKGlobals::editorManager ()->closeAll ();
-}
-
 void RKwardApp::slotFilePrint()
 {
 		RK_TRACE (APP);
@@ -668,27 +662,47 @@ void RKwardApp::slotStatusReady () {
 	slotStatusMsg (i18n ("Ready"));
 }
 
-void RKwardApp::slotShowRKWatch () {
+void RKwardApp::slotCloseWindow () {
 	RK_TRACE (APP);
-	//RKGlobals::rInterface ()->watch->setShown (showRKWatch->isChecked ());
+
+	if (!activeWindow ()) {
+		qDebug ("no active window");
+	}
+
+	closeActiveView ();
+
+/*	KMdiChildView *w = activeWindow ();
+
+	if (w) {
+		RK_TRACE (APP);
+		removeWindowFromMdi (w);
+		delete w;
+	} */
 }
 
-void RKwardApp::slotShowRKOutput () {
+void RKwardApp::slotCloseAllWindows () {
 	RK_TRACE (APP);
-	//output->setShown (showRKOutput->isChecked ());
+
+	closeAllViews ();
+	// editor windows somehow are not recognized by closeAllViews ()
+	RKGlobals::editorManager()->closeAll ();
 }
 
-void RKwardApp::slotShowRObjectBrowser () {
+void RKwardApp::slotCloseAllEditors () {
 	RK_TRACE (APP);
-	//object_browser->setShown (showRObjectBrowser->isChecked ());
+
+	RKGlobals::editorManager ()->closeAll ();
 }
 
-void RKwardApp::slotToggleWindowClosed () {
+void RKwardApp::slotDetachWindow () {
 	RK_TRACE (APP);
-	/*showRKWatch->setChecked (RKGlobals::rInterface ()->watch->isShown ());
-	showRKOutput->setChecked (output->isShown ());
-	showRObjectBrowser->setChecked (object_browser->isShown ());*/
+
+	if (activeWindow ()) {
+		RK_TRACE (APP);
+		detachWindow (activeWindow ());
+	}
 }
+
 
 void RKwardApp::newOutput () {
 	RK_TRACE (APP);

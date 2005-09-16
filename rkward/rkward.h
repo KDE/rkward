@@ -176,18 +176,6 @@ public slots:
 	void slotStatusMsg(const QString &text);
 	void slotStatusReady ();
 
-	/** shows/hides the RKWatch-window */
-	void slotShowRKWatch ();
-	
-	/** shows/hides the RKWatch-window */
-	void slotShowRKOutput ();
-
-	/** shows/hides the RObjectBrowser-window */
-	void slotShowRObjectBrowser ();
-	
-	/** called when a togglable window was closed. Updates the corresponding actions */
-	void slotToggleWindowClosed ();
-	
 	/** configures RKward-settings */
 	void slotConfigure ();
 
@@ -203,6 +191,13 @@ public slots:
 	void slotInterruptCommand();
 	void slotViewActivated (KMdiChildView *window);
 	void slotOpenRecentCommandEditor(const KURL&);
+
+/** close current window (Windows->Close) */
+	void slotCloseWindow ();
+/** close current window (Windows->Close) */
+	void slotCloseAllWindows ();
+/** detach current window (Windows->Detach) */
+	void slotDetachWindow ();
 private:
 	/** the configuration object of the application */
 	KConfig *config;
@@ -235,9 +230,10 @@ private:
 
 	KToggleAction* viewToolBar;
 	KToggleAction* viewStatusBar;
-	KToggleAction* showRKWatch;
-	KToggleAction* showRKOutput;
-	KToggleAction* showRObjectBrowser;
+
+	KAction* window_close;
+	KAction* window_close_all;
+	KAction* window_detach;
 	
 	KAction* interruptCommand;
 	KAction* configure;

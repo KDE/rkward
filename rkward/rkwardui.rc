@@ -35,22 +35,28 @@
 		<Merge/> 
 	</Menu>
 
-	<Menu name="output"><text>&amp;Output</text>
-		<Separator/>
-		<Action name="output_show"/>
-	</Menu>   
-	
 	<Menu name="run"><text>&amp;Run</text>
 		<Merge/>
 		<Separator/>
 		<Action name="interrupt"/>
 	</Menu>   
  
+	<Menu name="windows"><text>&amp;Windows</text>
+		<Action name="output_show"/>
+		<Separator/>
+		<Action name="window_close"/>
+		<Action name="window_close_all"/>
+		<Action name="close_all_editors"/>
+		<Separator/>
+		<Action name="window_detach"/>
+	</Menu>
+	
 	<Menu name="settings"><text>&amp;Settings</text>
 		<Action name="file_load_libs"/>
-		<Action name="configure"></Action>
+		<Action name="configure"/>
 	</Menu>
- 	<Merge/>
+
+	<Merge/>
 </MenuBar>
 <ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="new_data_frame"/>

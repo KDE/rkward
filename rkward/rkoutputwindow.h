@@ -17,6 +17,7 @@
 #ifndef RKOUTPUTWINDOW_H
 #define RKOUTPUTWINDOW_H
 
+#if 0
 #include "misc/rktogglewidget.h"
 
 class QTextBrowser;
@@ -43,5 +44,5 @@ public slots:
 private:
 	KHTMLPart *khtmlpart;
 };
-
+#endif
 #endif

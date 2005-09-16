@@ -67,7 +67,6 @@ RKEditor *RKEditorManager::editObject (RObject *object, bool initialize_to_empty
 
 		if (ed) {
 			setEditorName (ed, iobj->getShortName ());
-			emit (editorOpened ());
 
 			RCommand *command = new RCommand (".rk.editor.opened (" + iobj->getFullName() + ")", RCommand::App | RCommand::Sync);
 			RKGlobals::rInterface ()->issueCommand (command, restore_chain);
@@ -116,8 +115,6 @@ void RKEditorManager::closeEditor (RKEditor *editor) {
 
 	RCommand *command = new RCommand (".rk.editor.closed (" + object->getFullName() + ")", RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
-	
-	emit (editorClosed ());
 }
 
 void RKEditorManager::flushAll () {
@@ -131,11 +128,13 @@ void RKEditorManager::flushAll () {
 void RKEditorManager::closeAll () {
 	RK_TRACE (APP);
 
-	for (QValueList<RKEditor*>::const_iterator it = editors.begin (); it != editors.end (); ++it) {
-		closeEditor (*it);
-	}
+	QValueList<RKEditor*>::const_iterator it = editors.begin ();
 
-	editors.clear ();
+	while (it != editors.end ()){
+		RKEditor *ed = *it;
+		++it;
+		RKGlobals::rkApp ()->closeWindow (ed);		// will be removed from list of editors in editorDestroyed ()
+	}
 }
 
 bool RKEditorManager::canEditObject (RObject *object) {
@@ -162,9 +161,18 @@ RKEditorDataFrame *RKEditorManager::newRKEditorDataFrame () {
 	RKGlobals::rkApp ()->addWindow (ed);
 	ed->setIcon (SmallIcon ("spreadsheet"));
 	editors.append (ed);
+	connect (ed, SIGNAL (destroyed (QObject*)), this, SLOT (editorDestroyed (QObject*)));
 	RKGlobals::rkApp ()->activateGUI (ed->getPart ());
 
 	return ed;
+}
+
+void RKEditorManager::editorDestroyed (QObject* editor) {
+	RK_TRACE (APP);
+
+	QValueList<RKEditor*>::iterator it = editors.find (static_cast<RKEditor*> (editor));
+	if (it != editors.end ()) editors.erase (it);
+
 }
 
 #include "rkeditormanager.moc"

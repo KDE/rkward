@@ -11,9 +11,13 @@ Little annoying stuff:
 
 - Use R_WriteConsole-override instead of sink. Find a way to do the same for stderr
 	- "real time" display of output in the console
-- make the output a KMdiChild, and probably a KPart, so we can have a consistent way of GUI merging; make command-editor a KPart
-	- add "window"-menu, esp. Window->close
+- add "window"-menu, esp. Window->close
+- check parts for correct destruction
 
+- remove classes/files:
+	- RKToggleWidget
+	- RKCommandEditor (first check for reusable functionality)
+	- RKOutputWindow (first scan for useful menu item ideas)
 
 stuff to do before 0.3.2 release
 - plugins (general)

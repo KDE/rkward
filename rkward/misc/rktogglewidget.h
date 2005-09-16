@@ -24,6 +24,9 @@ class QCloseEvent;
 /**
 Basically just a QWidget which sends a signal when it gets closed. By default this signal is connected to the slotToggleWindowClosed of RKWardApp, so as to keep track of which togglable windows are open and which are closed.
 
+
+// TODO: remove this class!
+
 @author Thomas Friedrichsmeier
 */
 class RKToggleWidget : public QWidget
