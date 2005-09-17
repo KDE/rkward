@@ -152,51 +152,28 @@ void RKCommandEditorWindow::updateTabCaption (const KURL &url) {
 }
 
 
-void RKCommandEditorWindow::showHelp()
-{
-	// I know, there must be simpler way to do it...
-	// What we do here is that we look for the word under the cursor.
-	
-
+void RKCommandEditorWindow::showHelp () {
+	// step 1: find out word under cursor
 	uint para=0; uint p=0;
 	m_view->cursorPosition (&para, &p);
 
 	QString line=m_view->currentTextLine() + " ";
 	if (line.isEmpty () || line.isNull ()) return;
 	
-	
 	// We want to match any valid R name, that is, everything composed of letters, 0-9, '.'s and '_'s..
-	QRegExp rx( "[^A-Za-z0-9\\._]" );
-	QRegExp rx2( "[A-Za-z0-9\\._]" );
-	
-	QStringList list=QStringList::split(rx,line);
-	QStringList list2=QStringList::split(rx2,line);
+	QRegExp rx_no_word ("[^A-Za-z0-9\\._]");
 
-	QStringList::Iterator it = list.begin();
-	QStringList::Iterator it2 = list2.begin();
-	uint pos=0;
-	QString result="";
-	
-	while( it != list.end() &&  it2 != list2.end() ) {
-		if (pos<=p) result=*it;
-		
-		pos=pos+(*it).length();
-		pos=pos+(*it2).length();
-		
-		++it;
-		++it2;
-	}
+	// find out the next non-word stuff left and right of the current cursor position
+	int current_word_start = line.findRev (rx_no_word, p-1) + 1;
+	int current_word_end = line.find (rx_no_word, p);
 
-	
-	if(result == "" && !line.isEmpty()){
-		//There is only one word on this line
-		result = line;
-	}
-		
-	chain = 0;
-	QString s = "help(\"" + result + "\", htmlhelp=TRUE)[1]";
-	
-	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_HELP_URL, chain);
+	// if both return the same position, we're on a non-word.
+	if (current_word_start == current_word_end) return;
+
+	QString result = line.mid (current_word_start, current_word_end - current_word_start);
+
+	// step 2: retrieve help
+	RKGlobals::rInterface ()->issueCommand ("help(\"" + result + "\", htmlhelp=TRUE)[1]", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_HELP_URL, 0);
 }
 
 void RKCommandEditorWindow::rCommandDone (RCommand *command) {
