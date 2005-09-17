@@ -83,18 +83,27 @@ class QSplitter;
 class RKwardApp : public KMdiMainFrm, virtual public KParts::PartBase, virtual public RKWardDCOPInterface {
 	Q_OBJECT
 public:
-	/** construtor of RKwardApp, calls all init functions to create the application.
-	*/
+/** construtor
+@param load_url The workspace file to load on startup. If 0, show a dialog asking what to do. */
 	RKwardApp(KURL *load_url=0);
+/** destructor */
 	~RKwardApp();
 
+/** initialize the backend */
 	void startR ();
-	
+
+/** signal there was new output, show/raise/refresh the output window as appropriate.
+
+TODO: rename to something sensible, and check whether it is redundant. */
 	void newOutput ();
-	
+
+/** open a workspace. Do not ask whether to save the old one. The old workspace is deleted! */
 	void fileOpenNoSave (const KURL &url);
+/** open a workspace. If the current workspace is not empty, ask wether to save first. */
 	void fileOpenAskSave (const KURL &url);
+/** opens the given url, assuming it is an HTML-help page. Like openHTML (), but with a QString parameter instead for DCOP. Generally you should use openHTML () instead. */
 	void openHTMLHelp (const QString &url);
+/** opens the given url, assuming it is an HTML-help page. */
 	void openHTML (const KURL &url);
 
 /** returns a pointer to the menu-list (in essence the menu-bar) */
@@ -106,12 +115,9 @@ public:
 	void activateGUI (KParts::Part *part);
 protected:
 	void openWorkspace (const KURL &url);
-	/** save general Options like all bar positions and status as well as the geometry and the recent file list to the configuration
-	* file
-	*/ 	
+	/** save Options/Settings. Includes general Options like all bar positions and status as well as the geometry and the recent file list */
 	void saveOptions();
-	/** read general Options again and initialize all variables like the recent file list
-	*/
+/** read general Options again and initialize all variables like the recent file list */
 	void readOptions();
 	/** initializes the KActions of the application */
 	void initActions();
@@ -135,11 +141,15 @@ protected:
 	/** saves the window properties for each open window during session end to the session config file, including saving the currently
 	* opened file by a temporary filename provided by KApplication.
 	* @see KTMainWindow#saveProperties
+
+	// TODO: defunct!! Find out what this is really for.
 	*/
 	virtual void saveProperties(KConfig *_cfg);
 	/** reads the session config file and restores the application's state including the last opened files and documents by reading the
 	* temporary files saved by saveProperties()
 	* @see KTMainWindow#readProperties
+
+	// TODO: defunct!! Find out what this is really for.
 	*/
 	virtual void readProperties(KConfig *_cfg);
 
@@ -156,7 +166,7 @@ public slots:
 	void slotFileSaveWorkspaceAs();
 	/** shows the dialog to install/load/unload packages */
 	void slotFileLoadLibs ();
-	/** close all editors */
+	/** close all editor windows */
 	void slotCloseAllEditors ();
 	/** print the actual file */
 	void slotFilePrint();
@@ -174,28 +184,37 @@ public slots:
 	* @param text the text that is displayed in the statusbar
 	*/
 	void slotStatusMsg(const QString &text);
+/** changes the status-message to "Ready". See \ref slotStatusMsg (). */
 	void slotStatusReady ();
 
-	/** configures RKward-settings */
+/** configures RKward-settings */
 	void slotConfigure ();
 
 	/** Init-procedures to be done after the exec-loop was started */
 	void doPostInit ();
-	
-	void slotEditorsChanged ();
-	
-	void slotNewCommandEditor();
-	void slotOpenCommandEditor();
-	void slotOpenURL(const KURL &url);
-	void slotChildWindowCloseRequest (KMdiChildView * window);
-	void slotInterruptCommand();
-	void slotViewActivated (KMdiChildView *window);
-	void slotOpenRecentCommandEditor(const KURL&);
 
+/** open a new command editor (blank file) */
+	void slotNewCommandEditor();
+/** open a new command editor (ask for file to open) */
+	void slotOpenCommandEditor ();
+/** open a new command editor (load given url) */
+	void slotOpenCommandEditor (const KURL &url);
+
+/** a child window has received a close event. Check, whether data needs to be saved. Ask if necessary. Close only if safe. */
+	void slotChildWindowCloseRequest (KMdiChildView * window);
+
+/** interrupt current command. TODO: defunct!!! */
+	void slotInterruptCommand();
+
+/** close current window (Windows->Close). Note: the only reason we need to implement this, is so we can set a default shortcut (Ctrl+W). Usually, KMdiMainFrm would provide an action like this by itselt */
+	void slotCloseWindow ();
 /** close all windows (Windows->Close All) */
 	void slotCloseAllWindows ();
 /** detach current window (Windows->Detach) */
 	void slotDetachWindow ();
+
+/** ensure output window is shown. */
+	void slotOutputShow ();
 private:
 	/** the configuration object of the application */
 	KConfig *config;
@@ -229,6 +248,7 @@ private:
 	KToggleAction* viewToolBar;
 	KToggleAction* viewStatusBar;
 
+	KAction* window_close;
 	KAction* window_close_all;
 	KAction* window_detach;
 	
@@ -247,7 +267,6 @@ private:
 	
 	RObjectBrowser *object_browser;
 	KHelpDlg *helpDlg;
-	RKKonsole * konsole ;
 	RKConsole * console;
 	
 	KURL *initial_url;
@@ -255,20 +274,18 @@ private:
 	RKMenuList *menu_list;
 	
 	friend class RInterface;
+/** set the R status message ("R engine idel/busy") to idle or busy */
 	void setRStatus (bool busy);
 	
-	bool getFilenameAndPath(const KURL &url,QString *fname);
 	void saveAsProcedure(RKCommandEditorWindow *editor);
-	KMdiChildView* outputView();
 
 	/** refreshes the output.
 	@param show if set to true, the output-window will be shown / raised. If set to false, the visibility will not be changed
 	@param raise like show. If set to true, the output-window - if already shown - will additionally be raised */
 	void refreshOutput (bool show, bool raise);
 signals:
-	void childWindowCloseRequest(KMdiChildView * window);
-private slots:
-	void slotOutputShow();
+/** no idea, why we have to declare this explicitly, to somehow we do. */
+	void childWindowCloseRequest (KMdiChildView *);
 };
 
 #endif // RKWARD_H

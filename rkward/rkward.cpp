@@ -112,23 +112,14 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	createShellGUI ( true );
 
 	RKGlobals::manager = new RKEditorManager ();
-/*	KMdiChildView * editorManagerView = createWrapper(RKGlobals::editorManager (), i18n( "Data editor"), i18n( "Data editor"));
-	editorManagerView->setIcon(SmallIcon("spreadsheet"));
-	editorManagerView->setName("dataeditor");
-	addWindow( editorManagerView ); */
-	
-	
 
-	
 	connect (this, SIGNAL (childWindowCloseRequest (KMdiChildView *)), this, SLOT (slotChildWindowCloseRequest (KMdiChildView *)));
-//	connect (this, SIGNAL (viewActivated (KMdiChildView *)), this, SLOT (slotViewActivated (KMdiChildView *)));
-
 
 	RKGlobals::mtracker = new RKModificationTracker (this);
 	RKGlobals::cmap = new RKComponentMap ();
 
 	initial_url = load_url;
-  
+
 	startup_timer = new QTimer (this);
 	startup_timer->start (50);
 	connect (startup_timer, SIGNAL (timeout ()), this, SLOT (doPostInit ()));
@@ -137,7 +128,7 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	m_manager = new KParts::PartManager( this );
 	// When the manager says the active part changes,
 	// the builder updates (recreates) the GUI
-	connect( m_manager, SIGNAL( activePartChanged( KParts::Part * ) ), this, SLOT( createGUI( KParts::Part * ) ) );
+	connect (m_manager, SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
 
 	if (!kapp->dcopClient ()->isRegistered ()) {
 		kapp->dcopClient ()->registerAs ("rkward");
@@ -288,7 +279,7 @@ void RKwardApp::initActions()
 	
 	fileOpen = KStdAction::open(this, SLOT(slotOpenCommandEditor()), actionCollection(), "file_openy");
 	fileOpen->setText (i18n ("Open Command File"));
-	fileOpenRecent = KStdAction::openRecent(this, SLOT(slotOpenRecentCommandEditor(const KURL&)), actionCollection(), "file_open_recenty");
+	fileOpenRecent = KStdAction::openRecent(this, SLOT(slotOpenCommandEditor (const KURL&)), actionCollection(), "file_open_recenty");
 	
 	fileOpenWorkspace = KStdAction::open(this, SLOT(slotFileOpenWorkspace()), actionCollection(), "file_openx");
 	fileOpenWorkspace->setText (i18n ("Open Workspace"));
@@ -297,7 +288,6 @@ void RKwardApp::initActions()
 	fileSaveWorkspace->setText (i18n ("Save Workspace"));
 	fileSaveWorkspaceAs = KStdAction::saveAs(this, SLOT(slotFileSaveWorkspaceAs()), actionCollection(), "file_save_asx");
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
-	//file_load_libs = new KAction (i18n ("Libraries"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");
 
 	filePrint = KStdAction::print(this, SLOT(slotFilePrint()), actionCollection(), "file_printx");
 	filePrint->setEnabled (false);
@@ -305,14 +295,15 @@ void RKwardApp::initActions()
 	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 
 
-	viewToolBar = KStdAction::showToolbar(this, SLOT(slotViewToolBar()), actionCollection());
-	viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
+	viewToolBar = KStdAction::showToolbar(this, SLOT (slotViewToolBar()), actionCollection());
+	viewStatusBar = KStdAction::showStatusbar(this, SLOT (slotViewStatusBar()), actionCollection());
 	
 	interruptCommand = new KAction (i18n ("Interrupt running command"), 0, 0, this, SLOT (slotInterruptCommand ()), actionCollection (), "interrupt");
 	interruptCommand->setIcon("player_stop");
 
 	close_all_editors = new KAction (i18n ("Close All Data"), 0, 0, this, SLOT (slotCloseAllEditors ()), actionCollection (), "close_all_editors");
-	window_close_all = new KAction (i18n ("Close All Windows"), 0, 0, this, SLOT (slotCloseAllWindows ()), actionCollection (), "window_close_all");
+	window_close = new KAction (i18n ("Close"), 0, KShortcut ("Ctrl+W"), this, SLOT (slotCloseWindow ()), actionCollection (), "window_close");
+	window_close_all = new KAction (i18n ("Close All"), 0, 0, this, SLOT (slotCloseAllWindows ()), actionCollection (), "window_close_all");
 	window_detach = new KAction (i18n ("Detach"), 0, 0, this, SLOT (slotDetachWindow ()), actionCollection (), "window_detach");
 	outputShow= new KAction (i18n ("Show &Output"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
 
@@ -461,8 +452,6 @@ void RKwardApp::readProperties(KConfig* _cfg)
 
 bool RKwardApp::queryClose () {
 	RK_TRACE (APP);
-	
-	bool quit = true;
 
 	if (!RKGlobals::rObjectList ()->isEmpty ()) {
 		int res;
@@ -470,28 +459,23 @@ bool RKwardApp::queryClose () {
 		if (res == KMessageBox::Yes) {
 			new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Quit);
 		} else if (res != KMessageBox::No) {
-			quit = false;
+			return false;
 		}
 	}
 
-	if (quit) {
-		QValueList<KMdiChildView *> children;
-		for(KMdiChildView *w = m_pDocumentViews->first();w;w= m_pDocumentViews->next()){
-			children.append(w);
+	QValueList<KMdiChildView *> child_copy;
+	for(KMdiChildView *w = m_pDocumentViews->first ();w;w= m_pDocumentViews->next ()){
+		child_copy.append (w);
+	}
+	QValueListIterator<KMdiChildView *> childIt;
+	for (childIt = child_copy.begin (); childIt != child_copy.end (); ++childIt) {
+		if (!(*childIt)->close ()) {
+			// If a child refuses to close, we return false.
+			return false;
 		}
-		QValueListIterator<KMdiChildView *> childIt;
-		for (childIt = children.begin(); childIt != children.end(); ++childIt) {
-			if ((*childIt)->inherits("RKCommandEditorWindow") ) {
-				if (! (*childIt)->close()) {
-					//If a child refuses to close, we return false.
-					return false;
-				}
-			}
-		}
-		return true;
 	}
 
-	return false;
+	return true;
 }
 
 bool RKwardApp::queryExit()
@@ -504,13 +488,6 @@ bool RKwardApp::queryExit()
 /////////////////////////////////////////////////////////////////////
 // SLOT IMPLEMENTATION
 /////////////////////////////////////////////////////////////////////
-
-// TODO: remove
-void RKwardApp::slotEditorsChanged () {
-	RK_TRACE (APP);
-//	close_editor->setEnabled (RKGlobals::editorManager ()->numEditors ());
-//	close_all_editors->setEnabled (RKGlobals::editorManager ()->numEditors ());
-}
 
 void RKwardApp::slotNewDataFrame () {
 	RK_TRACE (APP);
@@ -529,6 +506,9 @@ void RKwardApp::slotNewDataFrame () {
 
 void RKwardApp::fileOpenNoSave (const KURL &url) {
 	RK_TRACE (APP);
+
+	slotCloseAllEditors ();
+
 	slotStatusMsg(i18n("Opening workspace..."));
 	KURL lurl = url;
 	if (lurl.isEmpty ()) {
@@ -661,6 +641,12 @@ void RKwardApp::slotStatusReady () {
 	slotStatusMsg (i18n ("Ready"));
 }
 
+void RKwardApp::slotCloseWindow () {
+	RK_TRACE (APP);
+
+	closeActiveView ();
+}
+
 void RKwardApp::slotCloseAllWindows () {
 	RK_TRACE (APP);
 
@@ -698,101 +684,48 @@ void RKwardApp::setRStatus (bool busy) {
 }
 
 
-
-void RKwardApp::slotNewCommandEditor(){
+void RKwardApp::slotNewCommandEditor () {
+	RK_TRACE (APP);
 	RKCommandEditorWindow *editor = new RKCommandEditorWindow;
-	editor->setIcon(SmallIcon("source"));
-	editor->name("RCEditor");
-	addWindow(editor);
-	
+	editor->setIcon (SmallIcon("source"));
+	addWindow (editor);
+	editor->activate ();
 }
 
-
-void RKwardApp::slotOpenURL(const KURL &url){
+void RKwardApp::slotOpenCommandEditor (const KURL &url) {
+	RK_TRACE (APP);
 	RKCommandEditorWindow *editor;
-	
-	if (!url.isLocalFile())
-	{
-		KMessageBox::messageBox(this,KMessageBox::Information,
-				i18n ("You specified a file that is not on local system"), i18n ("Cannot open file"));
-		return;
-	}
-	
+
 	editor = new RKCommandEditorWindow;
-	
-	if (!editor->openURL(url))
-	{
-		QString errstr = i18n ("Unable to open ");
-		
-		errstr += url.prettyURL();
-		
-		KMessageBox::messageBox(this,KMessageBox::Error,
-				errstr, i18n ("Error!"));
+
+	if (!editor->openURL (url)) {
+		QString errstr = i18n ("Unable to open \"%1\"").arg (url.prettyURL ());
+
+		KMessageBox::messageBox (this, KMessageBox::Error, errstr, i18n ("Could not open command file"));
 		delete editor;
 		return;
 	}
-	
-	fileOpenRecent->addURL (url);
-	editor->setIcon(SmallIcon("source"));
-	editor->name("RCEditor");
-	addWindow(editor);
-	
 
+	fileOpenRecent->addURL (url);
+	editor->setIcon (SmallIcon("source"));
+	addWindow (editor);
+	editor->activate ();
 };
 
-void RKwardApp::slotOpenCommandEditor(){
+void RKwardApp::slotOpenCommandEditor (){
+	RK_TRACE (APP);
 	KURL::List urls;
 	KURL::List::const_iterator it;
 	
-	KFileDialog dlg(QString("."),QString("*.R *.r"),this,i18n("Open file"),true);
-	
-	dlg.setOperationMode(KFileDialog::Opening);
-	dlg.setMode(KFile::Files);
-	if (dlg.exec() == QDialog::Rejected)
-		return;
-	
-	urls = dlg.selectedURLs();
-	for (it = urls.begin() ; it != urls.end() ; ++it){
-		slotOpenURL(*it);
-	}
+	urls = KFileDialog::getOpenURLs (QString("."), QString("*.R *.r"), this, i18n ("Open command file(s)"));
 
+	for (it = urls.begin() ; it != urls.end() ; ++it){
+		slotOpenCommandEditor (*it);
+	}
 };
 
-bool RKwardApp::getFilenameAndPath(const KURL &url,QString *fname)
-{
-	QString fullpath = url.path();
-	int i,length,fnamepos;
-	bool done;
-	
-	if ((length = (int)fullpath.length()) == 0)
-		return false;
-
-	fnamepos = 0;
-	for (i = length-1,done = false ; i >= 0 && !done ; i--)
-	{
-		if (fullpath[i] == '/')
-		{
-			done = true;
-			fnamepos = i+1;
-		}
-	}
- 
-	if (!done)
-		return false;
-	
-	if (fnamepos >= length)
-		return false;
-
-	if (fname)
-		*fname = fullpath.right(length-fnamepos);
-
-		
-	return true;
-}
-
-
-
 void RKwardApp::slotChildWindowCloseRequest (KMdiChildView * window) {
+	RK_TRACE (APP);
 	//If it's an unsaved command editor window, there is a warning.
 	// TODO: it's sort of ugly, having to handle this here. Can't we somehow handle it in RKCommandEditorWindow instead?
 	if (window->inherits("RKCommandEditorWindow")) {
@@ -809,32 +742,22 @@ void RKwardApp::slotChildWindowCloseRequest (KMdiChildView * window) {
 	closeWindow(window);
 }
 
-void RKwardApp::slotViewActivated (KMdiChildView * window) {
-	setCaption(window->caption());
-}
-
-void RKwardApp::slotOpenRecentCommandEditor(const KURL& url)
-{
-	slotOpenURL(url);
-}
-
 void RKwardApp::slotInterruptCommand () {
 // TODO!
 }
 
 void RKwardApp::openHTML(const KURL &url) {
+	RK_TRACE (APP);
 	RKHTMLWindowPart::openHTML (url, false);
 }
 
 void RKwardApp::openHTMLHelp (const QString & url) {
+	RK_TRACE (APP);
 	openHTML (url);
 }
 
-/*!
-    \fn RKwardApp::slotOutputShow()
-	Show html output.
- */
 void RKwardApp::slotOutputShow () {
+	RK_TRACE (APP);
 	RKHTMLWindowPart::refreshOutput (true, true);
 }
 
