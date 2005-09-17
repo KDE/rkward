@@ -45,24 +45,18 @@ class RKWardDCOPInterface : virtual public DCOPObject {
 #include <kparts/partmanager.h>
 
 // forward declaration of the RKward classes
-class RKwardDoc;
-class RKwardView;
 class RSettings;
 class RKMenu;
 class QTimer;
-//class RKOutputWindow;
 class RObjectBrowser;
 class RKSettingsModule;
 class RKSettings;
 class RInterface;
 class RKEditorManager;
 class RKMenuList;
-class RKDocManager;
 class RKCommandEditorWindow;
 class KHelpDlg;
-class RKKonsole;
 class RKConsole;
-class QSplitter;
 
 /**
 * The base class for RKward application windows. It sets up the main
@@ -216,15 +210,6 @@ public slots:
 /** ensure output window is shown. */
 	void slotOutputShow ();
 private:
-	/** the configuration object of the application */
-	KConfig *config;
-	/** doc represents your actual document and is created only once. It keeps
-	* information such as filename and does the serialization of your files.
-	*/
-	RKwardDoc *doc;
-	
-	RKDocManager *m_docManager;
-	
 	// KAction pointers to enable/disable actions
 	KAction* fileOpen;
 	KRecentFilesAction* fileOpenRecent;

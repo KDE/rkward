@@ -30,9 +30,6 @@
 #include "rksettingsmodulewatch.h"
 #include "rksettingsmoduleobjectbrowser.h"
 
-#include "../rkward.h"
-#include "../rkglobals.h"
-
 //static
 RKSettings *RKSettings::settings_dialog = 0;
 RKSettingsTracker *RKSettings::settings_tracker = 0;
@@ -100,7 +97,7 @@ void RKSettings::slotApply () {
 	for (it = modules.begin (); it != modules.end (); ++it) {
 		if ((*it)->hasChanges ()) {
 			(*it)->applyChanges ();
-			(*it)->save (RKGlobals::rkApp ()->config);
+			(*it)->save (kapp->config ());
 		}
 	}
 	enableButtonApply (false);

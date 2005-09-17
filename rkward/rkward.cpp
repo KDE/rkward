@@ -90,8 +90,6 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	RKGlobals::list = 0;
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
 	
-	config=kapp->config();
-	
 	KGlobal::dirs()->addResourceType("plugins", KStandardDirs::kde_default("data") + "rkward/plugins/");
 	
 	// Nice docks a la Kdevelop.
@@ -338,9 +336,10 @@ void RKwardApp::openWorkspace (const KURL &url) {
 	fileOpenRecentWorkspace->addURL (url);
 }
 
-void RKwardApp::saveOptions()
-{	
+void RKwardApp::saveOptions () {	
 	RK_TRACE (APP);
+	KConfig *config = kapp->config ();
+
 	config->setGroup("General Options");
 	config->writeEntry("Geometry", size());
 	config->writeEntry("Show Toolbar", viewToolBar->isChecked());
@@ -349,42 +348,30 @@ void RKwardApp::saveOptions()
 	config->writeEntry("EditBarPos", (int) toolBar("editToolBar")->barPos());
 	config->writeEntry("RunBarPos", (int) toolBar("runToolBar")->barPos());
 
-
 	RKSettings::saveSettings (config);
 	
-	fileOpenRecentWorkspace->saveEntries(config,"Recent Files");
-	fileOpenRecent->saveEntries(config,"Recent Command Files");
+	fileOpenRecentWorkspace->saveEntries(config, "Recent Files");
+	fileOpenRecent->saveEntries(config, "Recent Command Files");
 }
 
 
-void RKwardApp::readOptions ()
-{
+void RKwardApp::readOptions () {
 	RK_TRACE (APP);
+	KConfig *config = kapp->config ();
 	
 	config->setGroup("General Options");
 	
 	// bar status settings
-	bool bViewToolbar = config->readBoolEntry("Show Toolbar", true);
-	viewToolBar->setChecked(bViewToolbar);
-	slotViewToolBar();
-	
-	bool bViewStatusbar = config->readBoolEntry("Show Statusbar", true);
-	viewStatusBar->setChecked(bViewStatusbar);
+	viewToolBar->setChecked (config->readBoolEntry ("Show Toolbar", true));
+	slotViewToolBar ();
+
+	viewStatusBar->setChecked (config->readBoolEntry ("Show Statusbar", true));
 	slotViewStatusBar();
-	
-	
+
 	// bar position settings
-	KToolBar::BarPosition toolBarPos;
-	toolBarPos=(KToolBar::BarPosition) config->readNumEntry("ToolBarPos", KToolBar::Top);
-	toolBar("mainToolBar")->setBarPos(toolBarPos);
-	
-	KToolBar::BarPosition editBarPos;
-	editBarPos=(KToolBar::BarPosition) config->readNumEntry("EditBarPos", KToolBar::Top);
-	toolBar("editToolBar")->setBarPos(editBarPos);
-	
-	KToolBar::BarPosition runBarPos;
-	runBarPos=(KToolBar::BarPosition) config->readNumEntry("RunBarPos", KToolBar::Top);
-	toolBar("runToolBar")->setBarPos(runBarPos);
+	toolBar("mainToolBar")->setBarPos ((KToolBar::BarPosition) config->readNumEntry ("ToolBarPos", KToolBar::Top));
+	toolBar("editToolBar")->setBarPos ((KToolBar::BarPosition) config->readNumEntry ("EditBarPos", KToolBar::Top));
+	toolBar("runToolBar")->setBarPos ((KToolBar::BarPosition) config->readNumEntry("RunBarPos", KToolBar::Top));
 	
 	QSize size=config->readSizeEntry("Geometry");
 	if(!size.isEmpty ()) {
@@ -392,11 +379,11 @@ void RKwardApp::readOptions ()
 	}
 	
 	// initialize the recent file list
-	fileOpenRecentWorkspace->loadEntries(config,"Recent Files");
-	fileOpenRecent->loadEntries(config,"Recent Command Files");
+	fileOpenRecentWorkspace->loadEntries (config,"Recent Files");
+	fileOpenRecent->loadEntries (config,"Recent Command Files");
 	
 	// do this last, since we may be setting some different config-group(s) in the process
-	RKSettings::loadSettings (config);  
+	RKSettings::loadSettings (config);
 }
 
 void RKwardApp::saveProperties(KConfig *_cfg)
