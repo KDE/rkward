@@ -111,7 +111,7 @@ void RKEditorManager::closeEditor (RKEditor *editor) {
 	RK_ASSERT (editor);
 	
 	RObject *object = editor->getObject ();
-	RKGlobals::rkApp ()->closeWindow (editor);
+	editor->close ();
 
 	RCommand *command = new RCommand (".rk.editor.closed (" + object->getFullName() + ")", RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
@@ -133,7 +133,7 @@ void RKEditorManager::closeAll () {
 	while (it != editors.end ()){
 		RKEditor *ed = *it;
 		++it;
-		RKGlobals::rkApp ()->closeWindow (ed);		// will be removed from list of editors in editorDestroyed ()
+		ed->close ();			// will be removed from list of editors in editorDestroyed ()
 	}
 }
 
@@ -158,11 +158,12 @@ RKEditorDataFrame *RKEditorManager::newRKEditorDataFrame () {
 
 	RKEditorDataFrame *ed = new RKEditorDataFrame (0);
 	(RKGlobals::rkApp()->m_manager)->addPart (ed->getPart (), false);
-	RKGlobals::rkApp ()->addWindow (ed);
 	ed->setIcon (SmallIcon ("spreadsheet"));
+	RKGlobals::rkApp ()->addWindow (ed);
+	ed->activate ();		// it seems, sometimes we need to call this explicitely
 	editors.append (ed);
 	connect (ed, SIGNAL (destroyed (QObject*)), this, SLOT (editorDestroyed (QObject*)));
-	RKGlobals::rkApp ()->activateGUI (ed->getPart ());
+	RKGlobals::rkApp ()->activateGUI (ed->getPart ());		// it seems, sometimes we need to call this explicitely
 
 	return ed;
 }

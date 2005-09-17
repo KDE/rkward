@@ -192,9 +192,7 @@ public slots:
 	void slotViewActivated (KMdiChildView *window);
 	void slotOpenRecentCommandEditor(const KURL&);
 
-/** close current window (Windows->Close) */
-	void slotCloseWindow ();
-/** close current window (Windows->Close) */
+/** close all windows (Windows->Close All) */
 	void slotCloseAllWindows ();
 /** detach current window (Windows->Detach) */
 	void slotDetachWindow ();
@@ -231,7 +229,6 @@ private:
 	KToggleAction* viewToolBar;
 	KToggleAction* viewStatusBar;
 
-	KAction* window_close;
 	KAction* window_close_all;
 	KAction* window_detach;
 	

@@ -81,7 +81,7 @@
 
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
 
-RKwardApp::RKwardApp (KURL *load_url) : KMdiMainFrm (0, 0, KMdi::IDEAlMode), DCOPObject ("rkwardapp") {
+RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
 	ShowEditTextFileAgent::showEditFiles (0);		// TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
 
 	RK_TRACE (APP);
@@ -152,7 +152,7 @@ void RKwardApp::activateGUI (KParts::Part *part) {
 
 RKwardApp::~RKwardApp() {
 	RK_TRACE (APP);
-	RKGlobals::editorManager()->closeAll ();
+	closeAllViews ();
 	delete RKGlobals::rInterface ();
 	delete RKGlobals::rObjectList ();
 	delete object_browser;
@@ -312,7 +312,6 @@ void RKwardApp::initActions()
 	interruptCommand->setIcon("player_stop");
 
 	close_all_editors = new KAction (i18n ("Close All Data"), 0, 0, this, SLOT (slotCloseAllEditors ()), actionCollection (), "close_all_editors");
-	window_close = new KAction (i18n ("Close"), 0, KShortcut ("Crtl+W"), this, SLOT (slotCloseWindow ()), actionCollection (), "window_close");
 	window_close_all = new KAction (i18n ("Close All Windows"), 0, 0, this, SLOT (slotCloseAllWindows ()), actionCollection (), "window_close_all");
 	window_detach = new KAction (i18n ("Detach"), 0, 0, this, SLOT (slotDetachWindow ()), actionCollection (), "window_detach");
 	outputShow= new KAction (i18n ("Show &Output"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
@@ -662,30 +661,10 @@ void RKwardApp::slotStatusReady () {
 	slotStatusMsg (i18n ("Ready"));
 }
 
-void RKwardApp::slotCloseWindow () {
-	RK_TRACE (APP);
-
-	if (!activeWindow ()) {
-		qDebug ("no active window");
-	}
-
-	closeActiveView ();
-
-/*	KMdiChildView *w = activeWindow ();
-
-	if (w) {
-		RK_TRACE (APP);
-		removeWindowFromMdi (w);
-		delete w;
-	} */
-}
-
 void RKwardApp::slotCloseAllWindows () {
 	RK_TRACE (APP);
 
 	closeAllViews ();
-	// editor windows somehow are not recognized by closeAllViews ()
-	RKGlobals::editorManager()->closeAll ();
 }
 
 void RKwardApp::slotCloseAllEditors () {
@@ -815,23 +794,19 @@ bool RKwardApp::getFilenameAndPath(const KURL &url,QString *fname)
 
 void RKwardApp::slotChildWindowCloseRequest (KMdiChildView * window) {
 	//If it's an unsaved command editor window, there is a warning.
+	// TODO: it's sort of ugly, having to handle this here. Can't we somehow handle it in RKCommandEditorWindow instead?
 	if (window->inherits("RKCommandEditorWindow")) {
 		RKCommandEditorWindow * editor = (RKCommandEditorWindow*) window;
 		if (editor->isModified()) {
 			int status = KMessageBox::warningYesNo(this,i18n("The document \"%1\" has been modified. Close it anyway?").arg(editor->tabCaption()),i18n("File not saved"));
 	
-			if (status == KMessageBox::Yes) {
-				closeWindow(window);
+			if (status != KMessageBox::Yes) {
+				return;
 			}
 		}
-		else {
-			closeWindow(window);
-		}
 	}
-	else if (window->inherits("RKHelpWindow"))
-	{
-		closeWindow(window);
-	}
+
+	closeWindow(window);
 }
 
 void RKwardApp::slotViewActivated (KMdiChildView * window) {

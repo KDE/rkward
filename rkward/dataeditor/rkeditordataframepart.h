@@ -44,16 +44,12 @@ public slots:
 	void slotEditPasteToTable();
 /** paste the clipboard into the table, but not beyond selection boundaries	*/
 	void slotEditPasteToSelection();
-/** closes the window. Note: Actually this should be handled in rkwardapp, but somehow that does not work. Therefore, we override the close-window
-	function and do this from here */
-//	void slotCloseWindow ();
 private:
 	KAction* editCut;
 	KAction* editCopy;
 	KAction* editPaste;
 	KAction* editPasteToSelection;
 	KAction* editPasteToTable;
-//	KAction* windowClose;
 
 	RKEditorDataFrame *editor;
 
