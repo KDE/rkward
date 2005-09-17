@@ -7,10 +7,10 @@
 			<Action name="run_all"/>
 			<Separator/>
 		</Menu>
+		<Menu name="help"><text>&amp;Help</text>
+			<Action name="function_reference"></Action>
+		</Menu>
 	</MenuBar>
-	<Menu name="help"><text>&amp;Help</text>
-		<Action name="function_reference"></Action>
-	</Menu>
 	<ToolBar fullWidth="true" name="runToolBar">
 		<Action name="run_line"/>
 		<Action name="run_selection"/>

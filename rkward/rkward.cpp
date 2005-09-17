@@ -194,9 +194,9 @@ void RKwardApp::doPostInit () {
 	console->setName("r_console");
 	addToolWindow(console,KDockWidget::DockBottom, getMainDockWidget(), 10);
 	
-	helpDlg = new KHelpDlg(0);
-	helpDlg->setIcon(SmallIcon("help"));
-	addToolWindow(helpDlg,KDockWidget::DockBottom, getMainDockWidget(), 10);
+	RKGlobals::helpdlg = new KHelpDlg(0);
+	RKGlobals::helpDialog ()->setIcon(SmallIcon("help"));
+	addToolWindow(RKGlobals::helpDialog (), KDockWidget::DockBottom, getMainDockWidget(), 10);
 
 	if (initial_url) {
 		openWorkspace (*initial_url);

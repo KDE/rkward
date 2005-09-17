@@ -25,9 +25,6 @@
 #include <kurl.h>
 #include <kmdichildview.h>
 
-#include "../rbackend/rcommandreceiver.h"
-
-
 class RKCommandEditor;
 class KAction;
 class KToggleAction;
@@ -41,7 +38,7 @@ While being called RKCommandEditorWindow, this class handles all sort of text-fi
 
 @author Pierre Ecochard
 */
-class RKCommandEditorWindow : public KMdiChildView, public RCommandReceiver {
+class RKCommandEditorWindow : public KMdiChildView {
 // we need the Q_OBJECT thing for some inherits ("RKCommandEditorWindow")-calls in rkward.cpp.
 	Q_OBJECT
 public:
@@ -66,8 +63,6 @@ public:
 	void insertText (const QString &text);
 /** Show help about the current word. */
 	void showHelp();
-/** re-implemented from \ref RCommandReceiver. */
-	void rCommandDone (RCommand *command);
 private:
 	Kate::Document *m_doc;
 	Kate::View *m_view;
@@ -77,7 +72,6 @@ private:
 
 /** update Tab caption according to the given url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url */
 	void updateTabCaption(const KURL &url);
-	RCommandChain *chain;
 };
 
 #endif

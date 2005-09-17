@@ -22,6 +22,7 @@ RObjectList *RKGlobals::list;
 RKEditorManager *RKGlobals::manager;
 RKModificationTracker *RKGlobals::mtracker;
 RKComponentMap *RKGlobals::cmap;
+KHelpDlg *RKGlobals::helpdlg;
 
 /* statics
 - empty_char

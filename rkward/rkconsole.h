@@ -18,6 +18,8 @@
 #define RKCONSOLE_H
 
 #include <ktextedit.h>
+#include <kparts/part.h>
+
 #include <qptrlist.h>
 
 #include "rbackend/rcommandreceiver.h"
@@ -87,10 +89,30 @@ private:
 	void paste();
 /** We overload the clear function.*/
 	void clear();
-    
 private slots:
 /** Called when a command has been executed. */
 	void slotCommandFinished();
+};
+
+/** A part interface to RKConsole. Provides the context-help functionality
+
+@author Thomas Friedrichsmeier */
+
+class RKConsolePart : public KParts::Part {
+	Q_OBJECT
+public:
+/** constructor.
+@param console The console for this part */
+	RKConsolePart (RKConsole *console);
+/** destructor */
+	~RKConsolePart ();
+public slots:
+/** show context help on the current word */
+	void showContextHelp ();
+private:
+	KAction *context_help;
+
+	RKConsole *console;
 };
 
 #endif

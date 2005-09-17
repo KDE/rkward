@@ -34,8 +34,6 @@
 #include <qapplication.h>
 #include <qtabwidget.h>
 #include <qfile.h>
-#include <qstringlist.h>
-#include <qregexp.h>
 
 #include <klocale.h>
 #include <kmenubar.h>
@@ -46,10 +44,10 @@
 #include <kaccel.h>
 #include <klibloader.h>
 
-#include "../rbackend/rinterface.h"
 #include "../rkeditormanager.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
+#include "../khelpdlg.h"
 #include "rkcommandeditorwindowpart.h"
 
 #include "../debug.h"
@@ -151,43 +149,13 @@ void RKCommandEditorWindow::updateTabCaption (const KURL &url) {
 	}
 }
 
-
 void RKCommandEditorWindow::showHelp () {
-	// step 1: find out word under cursor
 	uint para=0; uint p=0;
 	m_view->cursorPosition (&para, &p);
 
-	QString line=m_view->currentTextLine() + " ";
-	if (line.isEmpty () || line.isNull ()) return;
-	
-	// We want to match any valid R name, that is, everything composed of letters, 0-9, '.'s and '_'s..
-	QRegExp rx_no_word ("[^A-Za-z0-9\\._]");
+	QString line = m_view->currentTextLine() + " ";
 
-	// find out the next non-word stuff left and right of the current cursor position
-	int current_word_start = line.findRev (rx_no_word, p-1) + 1;
-	int current_word_end = line.find (rx_no_word, p);
-
-	// if both return the same position, we're on a non-word.
-	if (current_word_start == current_word_end) return;
-
-	QString result = line.mid (current_word_start, current_word_end - current_word_start);
-
-	// step 2: retrieve help
-	RKGlobals::rInterface ()->issueCommand ("help(\"" + result + "\", htmlhelp=TRUE)[1]", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_HELP_URL, 0);
-}
-
-void RKCommandEditorWindow::rCommandDone (RCommand *command) {
-	KURL url;
-	
-	if (command->getFlags () == GET_HELP_URL) {
-		url.setPath(command->getStringVector ()[0]);
-		if (QFile::exists( url.path() )) {
-			RKGlobals::rkApp ()->openHTML (url);
-			return;
-		}
-	} else {
-		RK_ASSERT (false);
-	}
+	RKGlobals::helpDialog ()->getContextHelp (line, p);
 }
 
 #include "rkcommandeditorwindow.moc"

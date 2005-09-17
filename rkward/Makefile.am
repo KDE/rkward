@@ -64,7 +64,7 @@ METASOURCES = AUTO
 rkward_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 
 rcdir = $(kde_datadir)/rkward
-rc_DATA = rkwardui.rc
+rc_DATA = rkwardui.rc rkconsolepart.rc
 
 messages: rc.cpp
 	LIST=`find . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name \*.cxx -o -name \*.ecpp -o -name \*.C`; \

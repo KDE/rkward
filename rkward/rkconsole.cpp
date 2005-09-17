@@ -26,16 +26,20 @@
 #include <qapplication.h>
  
 #include <klocale.h>
+#include <kaction.h>
  
 #include "rkconsole.h"
 
 #include "rkglobals.h"
+#include "rkward.h"
+#include "khelpdlg.h"
+#include "debug.h"
 #include "rbackend/rinterface.h"
 #include "rbackend/rcommand.h"
 
-RKConsole::RKConsole(QWidget *parent, const char *name)
- : KTextEdit(parent, name)
-{
+RKConsole::RKConsole (QWidget *parent, const char *name) : KTextEdit (parent, name) {
+	RK_TRACE (APP);
+
 	QFont font ("Courier");
 	setFont (font);
 	
@@ -50,11 +54,13 @@ RKConsole::RKConsole(QWidget *parent, const char *name)
 	commandsList.setAutoDelete( TRUE );
 	
 	connect (this, SIGNAL (userCommandFinished ()), this, SLOT (slotCommandFinished ()));
+
+	RKGlobals::rkApp()->m_manager->addPart (new RKConsolePart (this), false);
 }
 
 
-RKConsole::~RKConsole()
-{
+RKConsole::~RKConsole () {
+	RK_TRACE (APP);
 }
 
 
@@ -226,11 +232,6 @@ void RKConsole::submitBatch(QString batch)
 	commandsBatch.erase(commandsBatch.begin());
 }
 
-#include "rkconsole.moc"
-
-
-
-
 
 void RKConsole::slotCommandFinished()
 {
@@ -261,3 +262,35 @@ void RKConsole::clear()
 	newLine();
 	
 }
+
+///################### END RKConsole ########################
+///################### BEGIN RKConsolePart ####################
+
+RKConsolePart::RKConsolePart (RKConsole *console) : KParts::Part (0) {
+	RK_TRACE (APP);
+
+	KInstance* instance = new KInstance ("rkward");
+	setInstance (instance);
+
+	setWidget (console);
+	RKConsolePart::console = console;
+
+	setXMLFile ("rkconsolepart.rc");
+
+	context_help = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT (showContextHelp ()), actionCollection (), "function_reference");
+}
+
+RKConsolePart::~RKConsolePart () {
+	RK_TRACE (APP);
+}
+
+void RKConsolePart::showContextHelp () {
+	RK_TRACE (APP);
+
+	int para, p;
+	console->getCursorPosition (&para, &p);
+
+	RKGlobals::helpDialog ()->getContextHelp (console->text (para), p);
+}
+
+#include "rkconsole.moc"

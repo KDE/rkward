@@ -55,7 +55,6 @@ class RInterface;
 class RKEditorManager;
 class RKMenuList;
 class RKCommandEditorWindow;
-class KHelpDlg;
 class RKConsole;
 
 /**
@@ -251,7 +250,6 @@ private:
 	QTimer *startup_timer;
 	
 	RObjectBrowser *object_browser;
-	KHelpDlg *helpDlg;
 	RKConsole * console;
 	
 	KURL *initial_url;

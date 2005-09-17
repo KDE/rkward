@@ -23,6 +23,7 @@ class RObjectList;
 class RKEditorManager;
 class RKModificationTracker;
 class RKComponentMap;
+class KHelpDlg;
 
 // deletes the given char*, if it is not a special value. Does not set to 0.
 #define DELETE_STRING(x) if (x && (x != RKGlobals::empty_char) && (x != RKGlobals::unknown_char)) { delete x; };
@@ -34,9 +35,10 @@ This class basically keeps some static pointers which are needed all over the pl
 */
 class RKGlobals{
 public:
-    RKGlobals();
-
-    ~RKGlobals();
+/** constructor. Do not use. No instance needed of this class. Only static stuff inside */
+	RKGlobals ();
+/** destructor. Do not use. No instance needed of this class. Only static stuff inside */
+	~RKGlobals ();
 
 /// static pointer to the app
 	static RKwardApp *rkApp () { return app; }
@@ -50,6 +52,8 @@ public:
 	static RKModificationTracker *tracker () { return mtracker; };
 /// static pointer to the RKComponentMap
 	static RKComponentMap *componentMap () { return cmap; };
+/// static pointer to the RKHelpDlg
+	static KHelpDlg *helpDialog () { return helpdlg; };
 
 /// an empty char
 	static char *empty_char;
@@ -70,6 +74,7 @@ private:
 	static RKEditorManager *manager;
 	static RKModificationTracker *mtracker;
 	static RKComponentMap *cmap;
+	static KHelpDlg *helpdlg;
 };
 
 #endif

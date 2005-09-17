@@ -32,7 +32,13 @@ public:
     KHelpDlg(QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
     ~KHelpDlg();
     void rCommandDone (RCommand *command);
-    
+
+/** small convenience function to get context help for RKCommandEditorWindow and RKConsole.
+@param context_line The current line
+@param cursor_pos cursor position in the current line
+Will figure out the word under the cursor, and provide help on that (if there is such a word, and such help exists) */
+	void getContextHelp (const QString &context_line, int cursor_pos);
+
   /*$PUBLIC_FUNCTIONS$*/
 
 public slots:

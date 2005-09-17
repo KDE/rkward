@@ -1,0 +1,8 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="rkward" version="0.3.3">
+	<MenuBar>
+		<Menu name="help"><text>&amp;Help</text>
+			<Action name="function_reference"></Action>
+		</Menu>
+	</MenuBar>
+</kpartgui>
