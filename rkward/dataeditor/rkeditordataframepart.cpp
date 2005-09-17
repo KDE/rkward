@@ -29,7 +29,7 @@
 #include "../rkglobals.h"
 #include "../debug.h"
 
-RKEditorDataFramePart::RKEditorDataFramePart (QWidget *parent, RKEditorDataFrame *editor_widget) : KParts::ReadWritePart (parent) {
+RKEditorDataFramePart::RKEditorDataFramePart (QWidget *parent, RKEditorDataFrame *editor_widget) : KParts::Part (parent) {
 	RK_TRACE (EDITOR);
 	KInstance* instance = new KInstance ("rkward");
 	setInstance (instance);
@@ -38,8 +38,6 @@ RKEditorDataFramePart::RKEditorDataFramePart (QWidget *parent, RKEditorDataFrame
 	editor = editor_widget;
 
 	setXMLFile ("rkeditordataframepart.rc");
-
-	setReadWrite (true);
 
 	initializeActions ();
 }

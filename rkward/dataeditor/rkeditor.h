@@ -64,7 +64,7 @@ public:
 /** Tell the editor to (unconditionally) update its representation of the object data (in the range given in the ChangeSet) */
 	virtual void updateObjectData (RObject *object, RObject::ChangeSet *changes) = 0;
 
-	KParts::ReadWritePart *getPart () { return part; };
+	KParts::Part *getPart () { return part; };
 protected:
 friend class RKEditorManager;
 /// opens the given object. Implement in the child-classes
@@ -72,7 +72,7 @@ friend class RKEditorManager;
 
 	RObject *object;
 
-	KParts::ReadWritePart *part;
+	KParts::Part *part;
 };
 
 #endif

@@ -27,7 +27,7 @@ class KAction;
 
 @author Thomas Friedrichsmeier
 */
-class RKEditorDataFramePart : public KParts::ReadWritePart {
+class RKEditorDataFramePart : public KParts::Part {
 	Q_OBJECT
 public:
 	RKEditorDataFramePart (QWidget *parent, RKEditorDataFrame *editor_widget);

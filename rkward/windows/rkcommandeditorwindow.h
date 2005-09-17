@@ -20,15 +20,13 @@
 #include <qwidget.h>
 #include <qstring.h>
 
-
 #include <kate/view.h>
 #include <kate/document.h>
-
+#include <kurl.h>
 #include <kmdichildview.h>
 
 #include "../rbackend/rcommandreceiver.h"
 
-#include <kurl.h>
 
 class RKCommandEditor;
 class KAction;
@@ -41,36 +39,45 @@ class RCommandChain;
 
 While being called RKCommandEditorWindow, this class handles all sort of text-files, both read/write and read-only. It is an MDI child that is added to the main window, based on KatePart.
 
-TODO: find out, whether save (), saveAs (), and some others are still needed. Clean up includes after that.
-TODO: once ShowEditTextFileWindow is done, derive this class from that.
-
 @author Pierre Ecochard
 */
 class RKCommandEditorWindow : public KMdiChildView, public RCommandReceiver {
 // we need the Q_OBJECT thing for some inherits ("RKCommandEditorWindow")-calls in rkward.cpp.
 	Q_OBJECT
 public:
-    RKCommandEditorWindow (QWidget *parent = 0, bool use_r_highlighting=true);
-
-    ~RKCommandEditorWindow();
-    QString getSelection();
-    QString getLine();
-    QString getText();
-    bool openURL(const KURL &url, bool use_r_highlighting=true, bool read_only=false);
-    bool isModified();
-    void insertText(QString text);
-    /** Show help about the current word. */
-    void showHelp();
-    void rCommandDone (RCommand *command);
+/** constructor
+@param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file */
+	RKCommandEditorWindow (QWidget *parent = 0, bool use_r_highlighting=true);
+/** destructor */
+	~RKCommandEditorWindow ();
+/** return text of current selection */
+	QString getSelection();
+/** return text in current line */
+	QString getLine();
+/** return entire text */
+	QString getText();
+/** open given URL. 
+@param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file
+@param read_only Open the file in read-only mode */
+	bool openURL (const KURL &url, bool use_r_highlighting=true, bool read_only=false);
+/** returns, whether the document was modified since the last save */
+	bool isModified ();
+/** insert the given text into the document at the current cursor position. Additionally, focuses the view */
+	void insertText (const QString &text);
+/** Show help about the current word. */
+	void showHelp();
+/** re-implemented from \ref RCommandReceiver. */
+	void rCommandDone (RCommand *command);
 private:
 	Kate::Document *m_doc;
 	Kate::View *m_view;
-	
-	void setRHighlighting (Kate::Document *doc);
-	bool getFilenameAndPath(const KURL &url,QString *fname);
-private:
-    void updateTabCaption(const KURL &url);
-    RCommandChain *chain;
+
+/** set syntax highlighting-mode to R syntax */
+	void setRHighlighting ();
+
+/** update Tab caption according to the given url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url */
+	void updateTabCaption(const KURL &url);
+	RCommandChain *chain;
 };
 
 #endif

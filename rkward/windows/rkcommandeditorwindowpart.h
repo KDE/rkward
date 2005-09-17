@@ -28,7 +28,7 @@ class KAction;
 
 @author Thomas Friedrichsmeier
 */
-class RKCommandEditorWindowPart : public KParts::ReadWritePart {
+class RKCommandEditorWindowPart : public KParts::Part {
 	Q_OBJECT
 public:
 	RKCommandEditorWindowPart (QWidget *parent, RKCommandEditorWindow *editor_widget);
@@ -50,9 +50,6 @@ private:
 	KAction* runLine;
 
 	KAction* helpFunction;
-protected:
-	bool openFile () { return false; };
-	bool saveFile () { return false; };
 };
 
 #endif

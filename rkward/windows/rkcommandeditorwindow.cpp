@@ -75,7 +75,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	pLayout->addWidget(m_view);
 
 	m_view->setName("Kate Part View");
-	if (use_r_highlighting) setRHighlighting(m_doc);
+	if (use_r_highlighting) setRHighlighting ();
 }
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
@@ -84,50 +84,43 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 }
 
 
-void RKCommandEditorWindow::setRHighlighting (Kate::Document *doc) {
+void RKCommandEditorWindow::setRHighlighting () {
 	// set syntax-highlighting for R
-	int modes_count = highlightingInterface (doc)->hlModeCount ();
+	int modes_count = highlightingInterface (m_doc)->hlModeCount ();
 	bool found_mode = false;
 	int i;
 	for (i = 0; i < modes_count; ++i) {
-		if (highlightingInterface (doc)->hlModeName (i).lower() == "r script") {
+		if (highlightingInterface (m_doc)->hlModeName (i).lower() == "r script") {
 			found_mode = true;
 			break;
 		}
 	}
 	if (found_mode) {
-		highlightingInterface (doc)->setHlMode (i);
+		highlightingInterface (m_doc)->setHlMode (i);
 	} else {
 		RK_DO (qDebug ("No syntax highlighting definition found for r script."), COMMANDEDITOR, DL_WARNING);
 	}
 }
 
 
-
-
-
-
-QString RKCommandEditorWindow::getSelection()
-{
-    	RK_TRACE (COMMANDEDITOR);
-	return selectionInterface(m_doc)->selection();
+QString RKCommandEditorWindow::getSelection () {
+	RK_TRACE (COMMANDEDITOR);
+	return selectionInterface (m_doc)->selection ();
 }
 
-QString RKCommandEditorWindow::getLine()
-{
-    	RK_TRACE (COMMANDEDITOR);
-	return m_view->currentTextLine();
+QString RKCommandEditorWindow::getLine () {
+	RK_TRACE (COMMANDEDITOR);
+	return m_view->currentTextLine ();
 }
 
-QString RKCommandEditorWindow::getText()
-{
-	return editInterface(m_doc)->text();
+QString RKCommandEditorWindow::getText () {
+	return editInterface (m_doc)->text ();
 }
 
 
 bool RKCommandEditorWindow::openURL (const KURL &url, bool use_r_highlighting, bool read_only){
 	if (m_doc->openURL (url)){
-		if (use_r_highlighting) setRHighlighting (m_doc);
+		if (use_r_highlighting) setRHighlighting ();
 		m_doc->setReadWrite (!read_only);
 
 		updateTabCaption (url);
@@ -137,56 +130,23 @@ bool RKCommandEditorWindow::openURL (const KURL &url, bool use_r_highlighting, b
 	return false;
 }
 
-bool RKCommandEditorWindow::getFilenameAndPath(const KURL &url,QString *fname){
-	QString fullpath = url.path();
-	int i,length,fnamepos;
-	bool done;
-	
-	if ((length = (int)fullpath.length()) == 0)
-		return false;
-
-	fnamepos = 0;
-	for (i = length-1,done = false ; i >= 0 && !done ; i--){
-		if (fullpath[i] == '/'){
-			done = true;
-			fnamepos = i+1;
-		}
-	}
-
-	if (!done)
-		return false;
-	
-	if (fnamepos >= length)
-		return false;
-
-	if (fname)
-		*fname = fullpath.right(length-fnamepos);
-
-	return true;
-}
-
-
-
 bool RKCommandEditorWindow::isModified() {
     return m_doc->isModified();
 }
 
 
-void RKCommandEditorWindow::insertText(QString text)
-{
-	m_doc->insertText(m_view->cursorLine(),m_view->cursorColumn(),text);
+void RKCommandEditorWindow::insertText (const QString &text) {
+	m_doc->insertText (m_view->cursorLine  (), m_view->cursorColumn (), text);
 	setFocus();
 }
 
 
 
-void RKCommandEditorWindow::updateTabCaption(const KURL &url)
-{
-	QString fname;
-	if (getFilenameAndPath(url,&fname)){
+void RKCommandEditorWindow::updateTabCaption (const KURL &url) {
+	QString fname = url.fileName ();
+	if (!fname.isEmpty ()) {
 		setTabCaption(fname);
-	}
-	else {
+	} else {
 		setTabCaption(url.prettyURL());
 	}
 }
@@ -202,13 +162,12 @@ void RKCommandEditorWindow::showHelp()
 	m_view->cursorPosition (&para, &p);
 
 	QString line=m_view->currentTextLine() + " ";
-	if(line.isEmpty() || line.isNull())
-		return;
+	if (line.isEmpty () || line.isNull ()) return;
 	
 	
 	// We want to match any valid R name, that is, everything composed of letters, 0-9, '.'s and '_'s..
-	QRegExp rx( "[^A-Za-z0-9'.''_']" );
-	QRegExp rx2( "[A-Za-z0-9'.''_']" );
+	QRegExp rx( "[^A-Za-z0-9\\._]" );
+	QRegExp rx2( "[A-Za-z0-9\\._]" );
 	
 	QStringList list=QStringList::split(rx,line);
 	QStringList list2=QStringList::split(rx2,line);
@@ -229,15 +188,13 @@ void RKCommandEditorWindow::showHelp()
 	}
 
 	
-	if(result=="" && !line.isEmpty()){
+	if(result == "" && !line.isEmpty()){
 		//There is only one word on this line
-		result=line;
+		result = line;
 	}
 		
-	chain=0;
-	QString s="help(\"";
-	s.append(result);
-	s.append("\", htmlhelp=TRUE)[1]");
+	chain = 0;
+	QString s = "help(\"" + result + "\", htmlhelp=TRUE)[1]";
 	
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_HELP_URL, chain);
 }

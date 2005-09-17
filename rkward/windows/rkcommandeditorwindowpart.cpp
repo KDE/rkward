@@ -26,7 +26,7 @@
 #include "../rbackend/rinterface.h"
 #include "../debug.h"
 
-RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent, RKCommandEditorWindow *editor_widget) : KParts::ReadWritePart (parent) {
+RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent, RKCommandEditorWindow *editor_widget) : KParts::Part (parent) {
 	RK_TRACE (COMMANDEDITOR);
 
 	KInstance* instance = new KInstance ("rkward");
@@ -35,8 +35,6 @@ RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent, RKCommand
 	command_editor = editor_widget;
 
 	setXMLFile ("rkcommandeditorwindowpart.rc");
-
-	setReadWrite (true);
 
 	initializeActions ();
 }
@@ -61,8 +59,7 @@ void RKCommandEditorWindowPart::initializeActions () {
 void RKCommandEditorWindowPart::slotRunSelection() {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (command_editor->getSelection ().isEmpty () || command_editor->getSelection ().isNull ())
-		return;
+	if (command_editor->getSelection ().isEmpty () || command_editor->getSelection ().isNull ()) return;
 
 	RKGlobals::rInterface ()->issueCommand (new RCommand (command_editor->getSelection (), RCommand::User, ""));
 }
@@ -70,8 +67,7 @@ void RKCommandEditorWindowPart::slotRunSelection() {
 void RKCommandEditorWindowPart::slotRunLine() {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (command_editor->getLine ().isEmpty () || command_editor->getLine().isNull ())
-		return;
+	if (command_editor->getLine ().isEmpty () || command_editor->getLine().isNull ()) return;
 
 	RKGlobals::rInterface ()->issueCommand (new RCommand (command_editor->getLine (), RCommand::User, ""));
 }
@@ -80,8 +76,7 @@ void RKCommandEditorWindowPart::slotRunLine() {
 void RKCommandEditorWindowPart::slotRunAll() {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (command_editor->getText ().isEmpty () || command_editor->getText ().isNull ())
-		return;
+	if (command_editor->getText ().isEmpty () || command_editor->getText ().isNull ()) return;
 		
 	RKGlobals::rInterface ()->issueCommand (new RCommand (command_editor->getText (), RCommand::User, ""));
 }
