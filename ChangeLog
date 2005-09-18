@@ -1,3 +1,5 @@
+- option to change list of package repositories
+- option to archive downloaded packages
 - assorted bugfixes
 - provide context/function help for the console
 - output-window has been switched to KPart-infrastructure

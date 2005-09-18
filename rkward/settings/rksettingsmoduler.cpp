@@ -98,6 +98,7 @@ void RKSettingsModuleR::applyChanges () {
 	r_slave = slave_box->isChecked ();
 	archive_packages = archive_packages_box->isChecked ();
 
+	package_repositories = repository_selector->getValues ();
 	QString command = "options (repos=c(";
 	for (QStringList::const_iterator it = package_repositories.begin (); it != package_repositories.end (); ++it) {
 		if (it != package_repositories.begin ()) {
