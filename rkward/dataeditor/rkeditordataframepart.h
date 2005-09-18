@@ -57,9 +57,6 @@ private:
 
 /** Does pasting (called from the respective slots) */
 	void doPaste ();
-protected:
-	bool openFile () { return false; };
-	bool saveFile () { return false; };
 };
 
 #endif

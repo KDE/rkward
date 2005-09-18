@@ -53,7 +53,7 @@ private:
 	QPushButton* up_button;
 	QPushButton* down_button;
 signals:
-/** This signal is triggered, when the "Add"-button is pressed. Connect to this to your custom slot, and add strings to the (empty) string_list. If you don't touch the string_list or set it to empty, nothing will be added to the list. Of course it does not make much sense to connect multiple slots to this signal, as only the last one called would be effective. */
+/** This signal is triggered, when the "Add"-button is pressed. Connect to this to your custom slot, and add strings to the (empty) string_list. If you don't touch the string_list or set it to empty, nothing will be added to the list. */
 	void getNewStrings (QStringList *string_list);
 /** emitted whenever there is a change in the user selection */
 	void listChanged ();

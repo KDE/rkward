@@ -35,10 +35,13 @@ RKSettings *RKSettings::settings_dialog = 0;
 RKSettingsTracker *RKSettings::settings_tracker = 0;
 
 //static 
-void RKSettings::configureSettings (SettingsPage page, QWidget *parent) {
+void RKSettings::configureSettings (SettingsPage page, QWidget *parent, RCommandChain *chain) {
+	RKSettingsModule::chain = chain;
+
 	if (!settings_dialog) {
 		settings_dialog = new RKSettings (parent);
 	}
+
 	settings_dialog->show ();
 	settings_dialog->raise ();
 	settings_dialog->raisePage (page);

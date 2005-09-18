@@ -22,6 +22,7 @@
 
 class KConfig;
 class RKSettings;
+class RCommandChain;
 
 /**
 Base class for settings modules. Provides some pure virtual calls.
@@ -39,12 +40,17 @@ public:
 	virtual void save (KConfig *config) = 0;
 	
 	virtual QString caption () = 0;
+/** Some settings modules execute R commands on "apply". If an RCommandChain is specified for the RKSettings-dialog, those commands should
+be inserted into this chain. It's safe to use this unconditionally, as if there is no chain, this will return 0, which corresponds to using the top-level chain */
+	RCommandChain *commandChain () { return chain; };
 protected:
 	void change ();
 
 	bool changed;
 private:
 	RKSettings *gui;
+friend class RKSettings;
+	static RCommandChain *chain;
 };
 
 #endif

@@ -31,6 +31,7 @@
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
 #include "../settings/rksettingsmodulelogfiles.h"
+#include "../settings/rksettings.h"
 #include "../misc/rkerrordialog.h"
 #include "../misc/rkcanceldialog.h"
 
@@ -38,7 +39,7 @@
 
 #define DOWNLOAD_PACKAGES_COMMAND 1
 
-RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KDialogBase (KDialogBase::Tabbed, Qt::WStyle_DialogBorder, parent, 0, modal, i18n ("Configure Packages")) {
+RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KDialogBase (KDialogBase::Tabbed, Qt::WStyle_DialogBorder, parent, 0, modal, i18n ("Configure Packages"), KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel | KDialogBase::User1) {
 	RK_TRACE (DIALOGS);
 	RKLoadLibsDialog::chain = chain;
 	
@@ -55,6 +56,8 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	layout->addWidget (new InstallPackagesWidget (this, page));
 
 	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported errors handling packages.\nA transcript of the errors are shown below."), i18n ("Error handling packages"), false);
+
+	setButtonText (KDialogBase::User1, i18n ("Configure Repositories"));
 
 	num_child_widgets = 3;
 	accepted = false;
@@ -114,6 +117,12 @@ void RKLoadLibsDialog::slotCancel () {
 	tryDestruct ();
 }
 
+void RKLoadLibsDialog::slotUser1 () {
+	RK_TRACE (DIALOGS);
+
+	RKSettings::configureSettings (RKSettings::R, this, chain);
+}
+
 void RKLoadLibsDialog::closeEvent (QCloseEvent *e) {
 	RK_TRACE (DIALOGS);
 	QDialog::closeEvent (e);
@@ -130,11 +139,11 @@ void RKLoadLibsDialog::rCommandDone (RCommand *command) {
 	}
 }
 
-bool RKLoadLibsDialog::downloadPackages (const QStringList &packages, QString to_dir) {
+bool RKLoadLibsDialog::downloadPackages (const QStringList &packages) {
 	RK_TRACE (DIALOGS);
-	if (to_dir == "") {
-		to_dir = QDir (RKSettingsModuleLogfiles::filesPath ()).filePath (".packagetemp");
-	}
+
+	QString to_dir = QDir (RKSettingsModuleLogfiles::filesPath ()).filePath (".packagetemp");
+
 	if (packages.isEmpty ()) return false;
 	
 	QString package_string = "c (\"" + packages.join ("\", \"") + "\")";
@@ -145,14 +154,10 @@ bool RKLoadLibsDialog::downloadPackages (const QStringList &packages, QString to
 	return true;
 }
 
-void RKLoadLibsDialog::installDownloadedPackages (bool become_root, QString dir) {
+void RKLoadLibsDialog::installDownloadedPackages (bool become_root) {
 	RK_TRACE (DIALOGS);
-	QDir tempdir;
-	if (dir == "") {
-		tempdir = QDir (RKSettingsModuleLogfiles::filesPath ()).filePath (".packagetemp");
-	} else {
-		tempdir = dir;
-	}
+	QDir tempdir = QDir (RKSettingsModuleLogfiles::filesPath ()).filePath (".packagetemp");
+
 	tempdir.setFilter (QDir::Files);
 	
 	KProcess *proc = new KProcess;
@@ -173,6 +178,31 @@ void RKLoadLibsDialog::installDownloadedPackages (bool become_root, QString dir)
 		KMessageBox::error (this, i18n ("There was an error installing the packages. Please, check the output on stderr. Sorry, there is no better error-handling so far..."), i18n ("Error installing packages"));
 	}
 	delete proc;
+
+	// archive / delete packages
+	bool ok = true;
+	if (RKSettingsModuleR::archivePackages ()) {
+		// step 1: create archive-dir, if neccessary
+		QDir archivedir = QDir (RKSettingsModuleLogfiles::filesPath ()).filePath ("package_archive");
+		if (!archivedir.exists ()) {
+			QDir (RKSettingsModuleLogfiles::filesPath ()).mkdir ("package_archive");
+		} if (!archivedir.isReadable ()) {
+			RK_DO (qDebug ("Directory '%s' could not be created or is not readable", archivedir.absPath ().latin1 ()), DIALOGS, DL_ERROR);
+			return;
+		}
+
+		for (unsigned int i=0; i < tempdir.count (); ++i) {
+			if (!tempdir.rename (tempdir[i].latin1 (), archivedir.absFilePath (tempdir[i].latin1 ()))) ok = false;
+		}
+	} else {
+		for (unsigned int i=0; i < tempdir.count (); ++i) {
+			if (!QFile (tempdir.filePath (tempdir[i]).latin1 ()).remove ()) ok = false;
+		}
+	}
+
+	if (!ok) {
+		RK_DO (qDebug ("One or more package files could not be moved/delted"), DIALOGS, DL_ERROR);
+	}
 }
 
 void RKLoadLibsDialog::processExited (KProcess *) {
@@ -369,7 +399,7 @@ UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p
 	UpdatePackagesWidget::parent = dialog;
 	
 	QVBoxLayout *mvbox = new QVBoxLayout (this, 0, KDialog::spacingHint ());
-	QLabel *label = new QLabel (i18n ("Local packages could be updated with their latest versions from CRAN (Comprehensive R Archive Network). This feature require a working network connection to Internet."), this);
+	QLabel *label = new QLabel (i18n ("In order to find out, which of your installed packaged have an update available, click \"Fetch List\". This feature requires a working internet connection."), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	mvbox->addWidget (label);
 	
@@ -498,7 +528,7 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget 
 	InstallPackagesWidget::parent = dialog;
 	
 	QVBoxLayout *mvbox = new QVBoxLayout (this, 0, KDialog::spacingHint ());
-	QLabel *label = new QLabel (i18n ("Many packages are available on CRAN (Comprehensive R Archive Network) and you could fetch the list with a working network connection to Internet."), this);
+	QLabel *label = new QLabel (i18n ("Many packages are available on CRAN (Comprehensive R Archive Network), and other repositories (click \"Configure Repositories\" to add more sources). Click \"Fetch List\" to find out, which packages are available. This feature requires a working internet connection."), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	mvbox->addWidget (label);
 	QHBoxLayout *hbox = new QHBoxLayout (mvbox, KDialog::spacingHint ());

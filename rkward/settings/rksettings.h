@@ -27,6 +27,7 @@ class QPushButton;
 class KConfig;
 class RKwardApp;
 class RKSettingsTracker;
+class RCommandChain;
 
 /**
 The main settings-dialog. Contains subsections (tabs) for different modules. Use configureSettings () to invoke or raise the settings dialog
@@ -37,7 +38,7 @@ class RKSettings : public KDialogBase {
 public:
 	enum SettingsPage { NoPage=0, Plugins=1, R=2, PHP=3, LogFiles=4, Output=5, Watch=6, ObjectBrowser=7 };
 
-	static void configureSettings (SettingsPage page=NoPage, QWidget *parent=0);
+	static void configureSettings (SettingsPage page=NoPage, QWidget *parent=0, RCommandChain *chain=0);
 
 	static void loadSettings (KConfig *config);
 	static void saveSettings (KConfig *config);

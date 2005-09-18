@@ -88,13 +88,22 @@ int REmbed::initialize () {
 	
 	runCommandInternal ("library (\"rkward\")\n", &error);
 	if (error) status |= LibLoadFail;
-	runCommandInternal ("options (pager=\"" + RKSettingsModuleR::pagerApp () + "\")\n", &error);
+	QStringList list = RKSettingsModuleR::getPackageRepositories ();
+	QString command = "options (repos=c(";
+	for (QStringList::const_iterator it = list.begin (); it != list.end (); ++it) {
+		if (it != list.begin ()) {
+			command.append (", ");
+		}
+		command.append ("\"" + *it + "\"");
+	}
+	runCommandInternal (command + "))\n", &error);
 	if (error) status |= OtherFail;
 	runCommandInternal ("sink (\"" + RKSettingsModuleLogfiles::filesPath () + "/r_out\")\n", &error);
 	if (error) status |= SinkFail;
 	runCommandInternal ("sink (file (\"" +RKSettingsModuleLogfiles::filesPath () +"/r_err\", \"w\"), FALSE, \"message\")\n", &error);
 	if (error) status |= SinkFail;
 	runCommandInternal ("options (htmlhelp=TRUE); options (browser=\"dcop " + kapp->dcopClient ()->appId () + " rkwardapp openHTMLHelp \")", &error);
+	if (error) status |= OtherFail;
 	// TODO: error-handling?
 
 	outfile_offset = 0;

@@ -19,6 +19,9 @@
 #include "../rkward.h"
 #include "rksettings.h"
 
+//static
+RCommandChain* RKSettingsModule::chain = 0;
+
 RKSettingsModule::RKSettingsModule(RKSettings *gui, QWidget *parent) : QWidget (parent) {
 	changed = false;
 	RKSettingsModule::gui = gui;

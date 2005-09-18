@@ -19,37 +19,46 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <kstandarddirs.h>
+#include <kinputdialog.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qvbuttongroup.h>
 #include <qcheckbox.h>
 
-#include "../misc/getfilenamewidget.h"
+#include "../misc/multistringselector.h"
+#include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
 
 // static members
 QString RKSettingsModuleR::r_home_dir;
-QString RKSettingsModuleR::pager_app;
-//QString RKSettingsModuleR::r_startup_file;
 bool RKSettingsModuleR::r_nosave;
 bool RKSettingsModuleR::r_slave;
+bool RKSettingsModuleR::archive_packages;
+QStringList RKSettingsModuleR::package_repositories;
 
 RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
-	
-	QLabel *label = new QLabel (i18n ("Note: changes in this section do not take effect until you restart RKWard!"), this);
+
+	QLabel *label = new QLabel (i18n ("Note: Settings marked with (*) will not take effect until you restart RKWard!"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	main_vbox->addWidget (label);
 	main_vbox->addStretch ();
-	
-	pager_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, i18n ("Program to use as a pager (e.g. for R-help)"), "", pager_app);
-	connect (pager_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
-	main_vbox->addWidget (pager_choser);
+
+	repository_selector = new MultiStringSelector (i18n ("Package repositories"), this);
+	repository_selector->setValues (package_repositories);
+	connect (repository_selector, SIGNAL (listChanged ()), this, SLOT (pathChanged ()));
+	connect (repository_selector, SIGNAL (getNewStrings (QStringList*)), this, SLOT (addRepository (QStringList*)));
+	main_vbox->addWidget (repository_selector);
+
+	archive_packages_box = new QCheckBox (i18n ("Archive downloaded packages"), this);
+	archive_packages_box->setChecked (archive_packages);
+	connect (archive_packages_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
+	main_vbox->addWidget (archive_packages_box);	
 
 	main_vbox->addStretch ();
 
-	QVButtonGroup *group = new QVButtonGroup (i18n ("R options"), this);
+	QVButtonGroup *group = new QVButtonGroup (i18n ("R options (*)"), this);
 	nosave_box = new QCheckBox ("--no-save", group);
 	nosave_box->setChecked (r_nosave);
 	connect (nosave_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
@@ -58,11 +67,6 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	connect (slave_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
 
 	main_vbox->addWidget (group);	
-
-/*	main_vbox->addStretch ();
-	startup_file_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, i18n ("Location of 'startup.R'-script"), "", r_startup_file);
-	connect (startup_file_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
-	main_vbox->addWidget (startup_file_choser); */
 }
 
 RKSettingsModuleR::~RKSettingsModuleR() {
@@ -76,6 +80,11 @@ void RKSettingsModuleR::pathChanged () {
 	change ();
 }
 
+void RKSettingsModuleR::addRepository (QStringList *string_list) {
+	QString new_string = KInputDialog::getText (i18n ("Add repository"), i18n ("Add URL of new repository\n(Enter \"@CRAN@\" for the standard CRAN-mirror)"), QString::null, 0, this);
+	(*string_list).append (new_string);
+}
+
 QString RKSettingsModuleR::caption () {
 	return (i18n ("R-Backend"));
 }
@@ -85,10 +94,18 @@ bool RKSettingsModuleR::hasChanges () {
 }
 
 void RKSettingsModuleR::applyChanges () {
-	pager_app = pager_choser->getLocation ();
 	r_nosave = nosave_box->isChecked ();
 	r_slave = slave_box->isChecked ();
-	//r_startup_file = startup_file_choser->getLocation ();
+	archive_packages = archive_packages_box->isChecked ();
+
+	QString command = "options (repos=c(";
+	for (QStringList::const_iterator it = package_repositories.begin (); it != package_repositories.end (); ++it) {
+		if (it != package_repositories.begin ()) {
+			command.append (", ");
+		}
+		command.append ("\"" + *it + "\"");
+	}
+	RKGlobals::rInterface ()->issueCommand (command + "))\n", RCommand::App, "", 0, 0, commandChain ());
 }
 
 void RKSettingsModuleR::save (KConfig *config) {
@@ -98,19 +115,22 @@ void RKSettingsModuleR::save (KConfig *config) {
 void RKSettingsModuleR::saveSettings (KConfig *config) {
 	config->setGroup ("R Settings");
 	config->writeEntry ("R_HOME", r_home_dir);
-	config->writeEntry ("pager app", pager_app);
-	//config->writeEntry ("startup file", r_startup_file);
 	config->writeEntry ("--no-save", r_nosave);
 	config->writeEntry ("--slave", r_slave);
+	config->writeEntry ("archive packages", archive_packages);
+	config->writeEntry ("Repositories", package_repositories);
 }
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
 	config->setGroup ("R Settings");
 	r_home_dir = config->readEntry ("R_HOME", "");
-	pager_app = config->readEntry ("pager app", "xless");
-	//r_startup_file = config->readEntry ("startup file", KGlobal::dirs ()->findResourceDir ("data", "rkward/rfiles/startup.R") + "rkward/rfiles/");
 	r_nosave = config->readBoolEntry ("--no-save", true);
 	r_slave = config->readBoolEntry ("--slave", true);
+	archive_packages = config->readBoolEntry ("archive packages", false);
+	package_repositories = config->readListEntry ("Repositories");
+	if (!package_repositories.count ()) {
+		package_repositories.append ("@CRAN@");
+	}
 }
 
 // static

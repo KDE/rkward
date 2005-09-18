@@ -23,7 +23,7 @@
 #include <qstringlist.h>
 
 class QCheckBox;
-class GetFileNameWidget;
+class MultiStringSelector;
 
 /**
 Configure the R-backend
@@ -47,25 +47,26 @@ public:
 	QString caption ();
 	
 	static QString &rHomeDir () { return r_home_dir; };
-	static QString &pagerApp () { return pager_app; };
-	//static QString &startupFile () { return r_startup_file; };
 	static bool rNosave () { return r_nosave; };
 	static bool rSlave () { return r_slave; };
+	static bool archivePackages () { return archive_packages; }
 	static QStringList getOptionList ();
+	static QStringList getPackageRepositories () { return package_repositories; };
 public slots:
 	void boxChanged (int);
 	void pathChanged ();
+	void addRepository (QStringList *string_list);
 private:
 	QCheckBox *nosave_box;
 	QCheckBox *slave_box;
-	//GetFileNameWidget *startup_file_choser;
-	GetFileNameWidget *pager_choser;
+	QCheckBox *archive_packages_box;
+	MultiStringSelector *repository_selector;
 friend class RInterface;
 	static bool r_nosave;
 	static bool r_slave;
+	static bool archive_packages;
+	static QStringList package_repositories;
 	static QString r_home_dir;
-	static QString pager_app;
-	//static QString r_startup_file;
 };
 
 #endif

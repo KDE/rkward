@@ -1,3 +1,5 @@
+- assorted bugfixes
+- provide context/function help for the console
 - output-window has been switched to KPart-infrastructure
 - command-editor has been switched to KPart-infrastructure completely
 - data-editor uses KPart-infrastructure (better integration)

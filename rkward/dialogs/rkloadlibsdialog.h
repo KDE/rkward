@@ -21,6 +21,7 @@
 
 #include <qstringlist.h>
 
+#include "../settings/rksettingsmoduler.h"
 #include "../rbackend/rcommandreceiver.h"
 
 class QListView;
@@ -47,8 +48,8 @@ public:
 
 	~RKLoadLibsDialog ();
 	
-	bool downloadPackages (const QStringList &packages, QString to_dir = QString::null);
-	void installDownloadedPackages (bool become_root, QString dir = QString::null);
+	bool downloadPackages (const QStringList &packages);
+	void installDownloadedPackages (bool become_root);
 
 	/** opens a modal RKLoadLibsDialog with the "Install new Packages" tab on front (To be used when a require () fails in the R backend */
 	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain);
@@ -62,6 +63,8 @@ protected slots:
 	void slotOk ();
 	void slotApply ();
 	void slotCancel ();
+/** User1-button was clicked, i.e.: "Configure Repositories" */
+	void slotUser1 ();
 	void childDeleted ();
 	void processExited (KProcess *);
 private:
