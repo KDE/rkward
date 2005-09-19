@@ -383,6 +383,16 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 		}
 	}
 
+	/* Do NOT ask me why, but the line below is needed for warnings to be printed, while otherwise they would not be shown.
+	Apparently we need to print at least something in order to achieve this. Whatever really happens in Rprintf () to have such an effect, I did not bother to find out. */
+	Rprintf ("");
+
+	extern void Rf_PrintWarnings (void);
+	extern int R_CollectWarnings;
+	if (R_CollectWarnings) {
+		Rf_PrintWarnings ();
+	}
+
 	return exp;
 }
 
@@ -399,6 +409,15 @@ void REmbedInternal::runCommandInternal (const char *command, RKWardRError *erro
 			if (*error == NoError) Rf_PrintValue (exp);
 		}
 		UNPROTECT (1);
+
+		/* See the comment in the corresponding code in runCommandInternalBase. And yes, apparently, we need this at both places! */
+		Rprintf ("");
+
+		extern void Rf_PrintWarnings (void);
+		extern int R_CollectWarnings;
+		if (R_CollectWarnings) {
+			Rf_PrintWarnings ();
+		}
 	}
 }
 

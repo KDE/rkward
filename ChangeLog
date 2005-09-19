@@ -1,3 +1,4 @@
+- fix display of warning messages
 - option to change list of package repositories
 - option to archive downloaded packages
 - assorted bugfixes
