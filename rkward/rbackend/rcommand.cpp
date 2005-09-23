@@ -51,6 +51,11 @@ RCommand::~RCommand(){
 	delete [] string_data;
 	delete real_data;
 	delete integer_data;
+
+	for (QValueList<ROutput*>::iterator it = output_list.begin (); it != output_list.end (); ++it) {
+		delete (*it);
+	}
+	// The output_list itself is cleared automatically
 }
 
 void RCommand::finished () {
@@ -59,4 +64,50 @@ void RCommand::finished () {
 		receiver->rCommandDone (this);
 		receiver->delCommand ();
 	}
+}
+
+QString RCommand::error () {
+	RK_TRACE (RBACKEND);
+
+	QString ret;
+	for (QValueList<ROutput*>::const_iterator it = output_list.begin (); it != output_list.end (); ++it) {
+		if ((*it)->type == ROutput::Error) {
+			ret.append ((*it)->output);
+		}
+	}
+	return ret;
+}
+
+QString RCommand::output () {
+	RK_TRACE (RBACKEND);
+
+	QString ret;
+	for (QValueList<ROutput*>::const_iterator it = output_list.begin (); it != output_list.end (); ++it) {
+		if ((*it)->type == ROutput::Output) {
+			ret.append ((*it)->output);
+		}
+	}
+	return ret;
+}
+
+QString RCommand::warnings () {
+	RK_TRACE (RBACKEND);
+
+	QString ret;
+	for (QValueList<ROutput*>::const_iterator it = output_list.begin (); it != output_list.end (); ++it) {
+		if ((*it)->type == ROutput::Warning) {
+			ret.append ((*it)->output);
+		}
+	}
+	return ret;
+}
+
+QString RCommand::fullOutput () {
+	RK_TRACE (RBACKEND);
+
+	QString ret;
+	for (QValueList<ROutput*>::const_iterator it = output_list.begin (); it != output_list.end (); ++it) {
+		ret.append ((*it)->output);
+	}
+	return ret;
 }

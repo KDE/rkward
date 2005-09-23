@@ -59,11 +59,22 @@ REmbed and that is created in RThread::RThread */
 /** initializes the R-backend. Returns an error-code that consists of a bit-wise or-conjunction of the REmbed::InitStatus -enum, REmbed::Ok on success.
 Note that you should call initialize only once in a application */
 	int initialize ();
-	
+
+/** this function is public for technical reasons, only. Don't use except from REmbedInternal! Called from REmbedInternal when the R backend
+generates standard output. @see REmbedInternal::handleOutput () */
+	void handleOutput (char *buf, int buf_length);
+
+/** this function is public for technical reasons, only. Don't use except from REmbedInternal! Called from REmbedInternal when the R backend
+signals a condition. @see REmbedInternal::handleCondition () */
+//	void handleCondition (char **call, int call_length);
+
+/** this function is public for technical reasons, only. Don't use except from REmbedInternal! Called from REmbedInternal when the R backend
+reports an error. @see REmbedInternal::handleError () */
+	void handleError (char **call, int call_length);
+
 /** this function is public for technical reasons, only. Don't use except from REmbedInternal! Called from REmbedInternal when the R backend
 places a call to the frontend. The call will be directly passed up to RThread::doSubstack (). @see REmbedInternal::handleSubstackCall () */
 	void handleSubstackCall (char **call, int call_length);
-	//char **handleGetValueCall (char **call, int call_length, int *reply_length);
 
 /** this function is public for technical reasons, only. Don't use except from REmbedInternal! Called from REmbedInternal when the R backend
 requests a standard callback. The call will be directly passed up to RThread::doStandardCallback (). @see REmbedInternal::handleStandardCallback () */

@@ -73,6 +73,10 @@
 	}
 }
 
+".rk.do.error" <- function () {
+	.Call ("rk.do.error", c (geterrmessage ()));
+}
+
 ".rk.do.call" <- function (x, args=NULL) {
 	.Call ("rk.do.command", c (x, args));
 	if (exists (".rk.rkreply")) {
@@ -122,6 +126,11 @@
 "quit" <- function (save = "default", status = 0, runLast = TRUE) {
 	q (save, status, runLast)
 }
+
+#".rk.init.handlers" <- function () {
+#	options (warning.expression = expression ())
+#	.Internal (.addCondHands (c ("message", "warning", "error"), list (function (m) { .Call ("rk.do.condition", c ("m", conditionMessage (m))) }, function (w) { .Call ("rk.do.condition", c ("w", conditionMessage (w))) }, function (e) { .Call ("rk.do.condition", c ("e", conditionMessage (e))) }), globalenv (), NULL, TRUE))
+#}
 
 ".rk.catch.window" <- function (title_begin, corresponding_device) {
 	.rk.do.call ("catchWindow", c (as.character (title_begin), as.character (corresponding_device)))

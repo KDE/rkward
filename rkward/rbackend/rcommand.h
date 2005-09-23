@@ -22,6 +22,7 @@
 #include <qstring.h>
 #include <qobject.h>
 #include <qptrlist.h>
+#include <qvaluelist.h>
 
 class RCommandReceiver;
 
@@ -58,6 +59,18 @@ friend class RThread;
 	char **call;
 	int call_length;
 	RCommandChain *in_chain;
+};
+
+/** this struct is used to store the R output to an RCommand. The RCommand basically keeps a list of ROutputString (s). The difference to a normal
+QString is, that additionally we store information on whether the output was "normal", "warning", or an "error". */
+struct ROutput {
+	enum ROutputType {
+		Output,			/**< normal output */
+		Warning,		/**< R warning */
+		Error				/**< R error */
+	};
+	ROutputType type;
+	QString output;
 };
 
 /*
@@ -120,10 +133,14 @@ public:
 	@returns the unique id of this command */
 	int id () { return _id; };
 /* TODO: Adjust these two functions to allow re-getting of output and error-messages from logs */
-/** @returns the output of the command, if any (e.g. "[1] 1" for "print (1)"). @see RCommand::succeeded @see RCommand::hasOutput */
-	QString output () { return _output; };
+/** @returns the full output of the command, i.e. all "regular" output, warning messages, and errors, in the order they were encountered. @see RCommand::output @see RCommand::error @see RCommand::warnings */
+	QString fullOutput ();
+/** @returns the "regular" (ROutput::Output) output of the command, if any (e.g. "[1] 1" for "print (1)"). @see RCommand::succeeded @see RCommand::hasOutput */
+	QString output ();
+/** @returns the warning message(s) given by R, if any. @see RCommand::output @see RCommand::error */
+	QString warnings ();
 /** @returns the error message given by R, if any. @see RCommand::failed @see RCommand::hasError */
-	QString error () { return _error; };
+	QString error ();
 /** Types of commands (potentially more to come), bitwise or-able,
 	although partially exclusive. See \ref UsingTheInterfaceToR for a overview of what these are used for. TODO: find out, why Canceled is in here, and document that fact. */
 	enum CommandTypes {
@@ -144,6 +161,7 @@ public:
 		Failed=2,							/**< the command failed */
 		HasOutput=4,					/**< command has a string output retrievable via RCommand::output () */
 		HasError=8,						/**< command has an error-message retrievable via RCommand::error () */
+		HasWarnings=16,			/**< command has warning-message(s) retrievable via RCommand::warnings () */
 		ErrorIncomplete=512,		/**< backend rejected command as being incomplete */
 		ErrorSyntax=1024,			/**< backend rejected command as having a syntax error */
 		ErrorOther=2048				/**< another error (not incomplete, not syntax error) has occured while trying to execute the command */
@@ -187,8 +205,7 @@ friend class REmbed;
 friend class RInterface;
 /** internal function will be called by the backend, as the command gets passed through. Takes care of sending this command (back) to its receiver */
 	void finished ();
-	QString _output;
-	QString _error;
+	QValueList<ROutput*> output_list;
 	QString _command;
 	char **string_data;
 	int string_count;

@@ -114,10 +114,18 @@ public:
 /** call this periodically to make R's x11 windows process their events */
 	static void processX11Events ();
 
+/** This gets called, on normal R output (R_WriteConsole). Used to get at output. */
+	virtual void handleOutput (char *buf, int buf_length) = 0;
+
+/** This gets called, when R reports warnings/messages. Used to get at warning-output. */
+//	virtual void handleCondition (char **call, int call_length) = 0;
+
+/** This gets called, when R reports an error (override of options ("error") in R). Used to get at error-output. */
+	virtual void handleError (char **call, int call_length) = 0;
+
 /** The main callback from R to rkward. Since we need QStrings and stuff to handle the requests, this is only a pure virtual function. The real
 implementation is in REmbed::handleSubstackCall () */
 	virtual void handleSubstackCall (char **call, int call_length) = 0;
-	//virtual char **handleGetValueCall (char **call, int call_length, int *reply_length) = 0;
 
 /** This second callback handles R standard callbacks. The difference to the first one is, that these are typically required to finish within the same
 functions. On the other hand, also, they don't require further computations in R, and hence no full-fledged substack.
@@ -127,6 +135,11 @@ Otherwise it is very similar to handleSubstackCall (), esp. in that is implement
 
 /** only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++ */
 	static REmbedInternal *this_pointer;
+
+/** Flags used to classify output. */
+//	static bool output_is_warning;
+/** Flags used to classify output. */
+//	static bool next_output_is_error;
 private:
 // can't declare this as part of the class, as it would confuse REmbed
 //	SEXPREC *runCommandInternalBase (const char *command, bool *error);

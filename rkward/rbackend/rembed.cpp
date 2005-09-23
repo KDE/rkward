@@ -31,6 +31,10 @@
 
 #include "../debug.h"
 
+// static
+//bool REmbedInternal::next_output_is_error = false;
+//bool REmbedInternal::output_is_warning = false;
+
 REmbed::REmbed (RThread *thread) : REmbedInternal() {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (this_pointer == 0);
@@ -45,20 +49,68 @@ REmbed::~REmbed () {
 	errfile.close ();
 }
 
+void REmbed::handleOutput (char *buf, int buf_length) {
+	RK_TRACE (RBACKEND);
+
+	if (!buf_length) return;
+/*	if (REmbedInternal::next_output_is_error) {
+		REmbedInternal::next_output_is_error = false;
+		return;
+	}*/
+	if (!thread->current_command) return;
+
+	ROutput *out = new ROutput;
+	out->type = ROutput::Output;
+	out->output = QString (buf);
+
+	thread->current_command->output_list.append (out);
+	thread->current_command->status |= RCommand::HasOutput;
+	// TODO: pass a signal to the thread for real-time update of output
+
+	RK_DO (qDebug ("output '%s'", buf), RBACKEND, DL_DEBUG);
+}
+
+/*
+void REmbed::handleCondition (char **call, int call_length) {
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (call_length >= 2);
+	if (!call_length) return;
+
+	//REmbedInternal::next_output_is_error = true;
+	qDebug ("condition '%s', message '%s'", call[0], call[1]);
+} */
+
+void REmbed::handleError (char **call, int call_length) {
+	RK_TRACE (RBACKEND);
+
+	if (!call_length) return;
+
+	// Unfortunately, errors still get printed to the output. We try this crude method for the time being:
+	thread->current_command->output_list.last ()->type = ROutput::Error;
+	thread->current_command->status |= RCommand::HasError;
+
+/*	// for now we ignore everything but the first string.
+	ROutput *out = new ROutput;
+	out->type = ROutput::Error;
+	out->output = QString (call[0]);
+
+	thread->current_command->output_list.append (out);
+	thread->current_command->status |= RCommand::HasError; */
+	// TODO: pass a signal to the thread for real-time update of output
+
+	//REmbedInternal::next_output_is_error = true;
+	RK_DO (qDebug ("error '%s'", call[0]), RBACKEND, DL_DEBUG);
+}
+
 void REmbed::handleSubstackCall (char **call, int call_length) {
 	RK_TRACE (RBACKEND);
 	thread->doSubstack (call, call_length);
 }
-/*
-char **REmbed::handleGetValueCall (char **call, int call_length, int *reply_length) {
-	RK_TRACE (RBACKEND);
-	return thread->fetchValue (call, call_length, reply_length);
-}*/
 
 void REmbed::handleStandardCallback (RCallbackArgs *args) {
 	RK_TRACE (RBACKEND);
 
-	if (args->type == RCallbackArgs::RWriteConsole) qDebug ("Write console: '%s'", *(args->chars_a));
 	thread->doStandardCallback (args);
 }
 
@@ -98,32 +150,23 @@ int REmbed::initialize () {
 	}
 	runCommandInternal (command + "))\n", &error);
 	if (error) status |= OtherFail;
-	runCommandInternal ("sink (\"" + RKSettingsModuleLogfiles::filesPath () + "/r_out\")\n", &error);
+	runCommandInternal ("options (error=quote (.rk.do.error ()))\n", &error);
 	if (error) status |= SinkFail;
-	runCommandInternal ("sink (file (\"" +RKSettingsModuleLogfiles::filesPath () +"/r_err\", \"w\"), FALSE, \"message\")\n", &error);
-	if (error) status |= SinkFail;
+/*	runCommandInternal (".rk.init.handlers ()\n", &error);
+	if (error) status |= SinkFail; */
 	runCommandInternal ("options (htmlhelp=TRUE); options (browser=\"dcop " + kapp->dcopClient ()->appId () + " rkwardapp openHTMLHelp \")", &error);
 	if (error) status |= OtherFail;
 	// TODO: error-handling?
 
 	outfile_offset = 0;
 	errfile_offset = 0;
-		
-	outfile.setName (RKSettingsModuleLogfiles::filesPath () + "/r_out");
-	if (!outfile.open (IO_ReadOnly)) {
-		if (error) status |= SinkFail;
-	}
-	errfile.setName (RKSettingsModuleLogfiles::filesPath () + "/r_err");
-	if (!errfile.open (IO_ReadOnly)) {
-		if (error) status |= SinkFail;
-	}
-	
+
 	return status;
 }
 
 void REmbed::runCommand (RCommand *command) {
 	RK_TRACE (RBACKEND);
-	
+
 	if (command->type () & RCommand::EmptyCommand) return;
 	
 	if (command->status & RCommand::Canceled) return;
@@ -170,23 +213,13 @@ void REmbed::runCommand (RCommand *command) {
 		command->status |= RCommand::WasTried;
 	}
 
+	RKWardRError dummy;
 	if (command->type () & RCommand::DirectToOutput) {
-		runCommandInternal ("sink ()\n", &error);
+		runCommandInternal ("sink ()\n", &dummy);
 	}
 
-	QString temp = "";
-	while (!outfile.atEnd ()) {
-		outfile.readLine (temp, 2048);
-		command->_output.append (temp);
-		command->status |= RCommand::HasOutput;
+	if (error) {
+		RK_DO (qDebug ("- error message was: '%s'", command->error ().latin1 ()), RBACKEND, DL_WARNING);
+//		runCommandInternal (".rk.init.handlers ()\n", &dummy);
 	}
-
-	temp = "";
-	while (!errfile.atEnd ()) {
-		errfile.readLine (temp, 2048);
-		command->_error.append (temp);
-		command->status |= RCommand::HasError;
-	}
-	
-	RK_DO (if (error) qDebug ("- error message was: '%s'", command->error ().latin1 ()), RBACKEND, DL_WARNING);
 }

@@ -69,11 +69,12 @@ int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
 }
 
 void RWriteConsole (char *buf, int buflen) {
-	RCallbackArgs args;
+/*	RCallbackArgs args;
 	args.type = RCallbackArgs::RWriteConsole;
 	args.chars_a = &buf;
 	args.int_a = buflen;
-	REmbedInternal::this_pointer->handleStandardCallback (&args);
+	REmbedInternal::this_pointer->handleStandardCallback (&args); */
+	REmbedInternal::this_pointer->handleOutput (buf, buflen);
 }
 
 void RResetConsole () {
@@ -156,7 +157,7 @@ int REditFiles (int nfile, char **file, char **title, char *editor) {
 
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 
-// default impelementation seems to return 1 if nfile <= 0, else 1. No idea, what for. see unix/std-sys.c
+// default implementation seems to return 1 if nfile <= 0, else 1. No idea, what for. see unix/std-sys.c
 	return (nfile <= 0);
 }
 
@@ -169,7 +170,6 @@ int REditFile (char *buf) {
 }
 
 /// ############## R Standard callback overrides END ####################
-
 
 REmbedInternal::REmbedInternal() {
 	RKGlobals::empty_char = strdup ("");
@@ -186,6 +186,8 @@ void REmbedInternal::connectCallbacks () {
 #endif
 
 // connect R standard callback to our own functions. Important: Don't do so, before our own versions are ready to be used!
+	R_Outputfile = NULL;
+	R_Consolefile = NULL;
 	ptr_R_Suicide = RSuicide;
 	ptr_R_ShowMessage = RShowMessage;			// when exactly does this ever get used?
 	ptr_R_ReadConsole = RReadConsole;
@@ -280,19 +282,38 @@ char **extractStrings (SEXP from_exp, int *count) {
 	
 	return strings;
 }
+
+void deleteStrings (char **strings, int count) {
+	for (int i= (count-1); i >=0; --i) {
+		delete (strings[i]);
+	}
+	delete [] strings;
+}
+
+SEXP doError (SEXP call) {
+	extern int R_ShowErrorMessages;
+	if (R_ShowErrorMessages) {
+		int count;
+		char **strings = extractStrings (call, &count);
+		REmbedInternal::this_pointer->handleError (strings, count);
+		deleteStrings (strings, count);
+	}
+	return R_NilValue;
+}
+
 /*
-SEXP getValueCall (SEXP call) {
+SEXP doCondition (SEXP call) {
 	int count;
 	char **strings = extractStrings (call, &count);
-	int reply_length;
-	REmbedInternal::this_pointer->handleGetValueCall (strings, count, &reply_length);
-	return call;
-}*/
+	REmbedInternal::this_pointer->handleCondition (strings, count);
+	return R_NilValue;
+} */
 
 SEXP doSubstackCall (SEXP call) {
 	int count;
 	char **strings = extractStrings (call, &count);
 	REmbedInternal::this_pointer->handleSubstackCall (strings, count);
+	deleteStrings (strings, count);
 	return R_NilValue;
 }
 
@@ -310,7 +331,8 @@ bool REmbedInternal::startR (const char* r_home, int argc, char** argv) {
 	DllInfo *info = R_getDllInfo ("rkward_pseudo_dll_pseudo_path");
 	
 	R_CallMethodDef callMethods [] = {
-		//{ "rk.get.value", (DL_FUNC) &getValueCall, 1 },
+//		{ "rk.do.condition", (DL_FUNC) &doCondition, 1 },
+		{ "rk.do.error", (DL_FUNC) &doError, 1 },
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
 		{ 0, 0, 0 }
 	};

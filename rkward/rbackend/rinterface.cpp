@@ -128,7 +128,10 @@ void RInterface::customEvent (QCustomEvent *e) {
 		RCommand *command = static_cast <RCommand *> (e->data ());
 		if (command->status & RCommand::Canceled) {
 			command->status |= RCommand::HasError;
-			command->_error.append ("--- interrupted ---");
+			ROutput *out = new ROutput;
+			out->type = ROutput::Error;
+			out->output = ("--- interrupted ---");
+			command->output_list.append (out);
 			if (running_command_canceled) {
 				RK_ASSERT (command == running_command_canceled);
 				running_command_canceled = 0;
