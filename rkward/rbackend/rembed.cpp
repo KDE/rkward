@@ -14,13 +14,13 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+#if 0
+
 #include "rembed.h"
 
 #include <kapplication.h>
 #include <dcopclient.h>
 
-#include <qfile.h>
-#include <qtextstream.h>
 #include <qstring.h>
 
 #include "../settings/rksettingsmoduler.h"
@@ -45,8 +45,6 @@ REmbed::REmbed (RThread *thread) : REmbedInternal() {
 
 REmbed::~REmbed () {
 	RK_TRACE (RBACKEND);
-	outfile.close ();
-	errfile.close ();
 }
 
 void REmbed::handleOutput (char *buf, int buf_length) {
@@ -158,9 +156,6 @@ int REmbed::initialize () {
 	if (error) status |= OtherFail;
 	// TODO: error-handling?
 
-	outfile_offset = 0;
-	errfile_offset = 0;
-
 	return status;
 }
 
@@ -223,3 +218,6 @@ void REmbed::runCommand (RCommand *command) {
 //		runCommandInternal (".rk.init.handlers ()\n", &dummy);
 	}
 }
+
+#endif
+

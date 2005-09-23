@@ -201,7 +201,7 @@ public:
 /** return the flags associated with the command. Those are the same that you specified in the constructor, RKWard does not touch them. @see RCommand::RCommand */
 	int getFlags () { return (_flags); };
 private:
-friend class REmbed;
+friend class RThread;
 friend class RInterface;
 /** internal function will be called by the backend, as the command gets passed through. Takes care of sending this command (back) to its receiver */
 	void finished ();

@@ -10,8 +10,7 @@ Little annoying stuff:
 - use more QDicts instead of QMap<QString,...>s
 - use R_DirtyImage to determine, whether workspace needs to be saved
 
-- Use R_WriteConsole-override instead of sink. Find a way to do the same for stderr
-	- "real time" display of output in the console (remember to add Mutex protection before then!)
+- "real time" display of output in the console (remember to add Mutex protection before then!)
 - check parts for correct destruction
 
 - printutils.c->481 Rvprintf: can we get at the standard out-connection and give it a fake vprintf (or better write?!) and fake fflush?

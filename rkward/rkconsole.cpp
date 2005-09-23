@@ -202,6 +202,8 @@ void RKConsole::rCommandDone (RCommand *command) {
 	}
 	if (command->hasError ()) {
 		append (command->error ());
+	} else if (command->errorSyntax ()) {
+		append (i18n ("Syntax error"));
 	}
 
 	if (command->errorIncomplete ()) {

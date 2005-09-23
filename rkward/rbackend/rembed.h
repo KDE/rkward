@@ -14,6 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+#if 0
 #ifndef REMBED_H
 #define REMBED_H
 
@@ -32,7 +33,6 @@ class RThread;
 	Only one REmbed-object can be used in an application.
 
 	Don't use this class in RKWard directly. Use the interface provided by RInterface, instead.
-	REmbed could really be merged with RThread. Don't wonder about strange up-and-down calls.
 	Also REmbed and REmbedInternal are only separate for technical reasons (R-includes and Qt-includes clashing).
 
 @author Thomas Friedrichsmeier
@@ -80,13 +80,8 @@ places a call to the frontend. The call will be directly passed up to RThread::d
 requests a standard callback. The call will be directly passed up to RThread::doStandardCallback (). @see REmbedInternal::handleStandardCallback () */
 	void handleStandardCallback (RCallbackArgs *args);
 private:
-	QIODevice::Offset outfile_offset;
-	QIODevice::Offset errfile_offset;
-	
-	QFile outfile;
-	QFile errfile;
-	
 	RThread *thread;
 };
 
+#endif
 #endif

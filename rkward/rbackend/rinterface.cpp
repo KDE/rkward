@@ -155,13 +155,13 @@ void RInterface::customEvent (QCustomEvent *e) {
 	} else if ((e->type () > RSTARTUP_ERROR_EVENT)) {
 		int err = e->type () - RSTARTUP_ERROR_EVENT;
 		QString message = i18n ("There was a problem starting the R backend. The following error(s) occurred:\n");
-		if (err & REmbed::LibLoadFail) {
+		if (err & RThread::LibLoadFail) {
 			message.append (i18n ("\t- The 'rkward' R-library could not be loaded. This library is needed for communication between R and RKWard and many things will not work properly if this library is not present. Likely RKWard will even crash. The 'rkward' R-library should have been included in your distribution or RKWard, and should have been set up when you ran 'make install'. Please try 'make install' again and check for any errors. You should quit RKWard now.\n"));
 		}
-		if (err & REmbed::SinkFail) {
+		if (err & RThread::SinkFail) {
 			message.append (i18n ("\t-There was a problem opening the files needed for communication with R. Most likely this is due to an incorrect setting for the location of these files. Check whether you have correctly configured the location of the log-files (Settings->Configure Settings->Logfiles) and restart RKWard.\n"));
 		}
-		if (err & REmbed::OtherFail) {
+		if (err & RThread::OtherFail) {
 			message.append (i18n ("\t-An unspecified error occured that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.\n"));
 		}
 		KMessageBox::error (0, message, i18n ("Error starting R"));

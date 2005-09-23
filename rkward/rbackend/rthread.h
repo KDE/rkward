@@ -21,8 +21,8 @@
 
 #include "rcommand.h"
 #include "rcommandstack.h"
+#include "rembedinternal.h"
 
-class REmbed;
 class RInterface;
 struct RCallbackArgs;
 
@@ -54,18 +54,18 @@ the main queque. Some thing like:
 
 This subordinate/nested eventloop is done in doSubstack ().
 
-Internally, this class is closely related to REmbed and REmbedInternal, which is where the "real work" is being done. RThread basically just takes care of delegating the work. Also related is RInterface: RThread communicates with RInterface by placing QCustomEvent s, when commands are done
-or when the backend needs information from the frontend.
+A closely related class is RInterface: RThread communicates with RInterface by placing QCustomEvent s, when commands are done
+or when the backend needs information from the frontend. Also RThread and REmbedInternal are only separate for technical reasons (R-includes and Qt-includes clashing).
 
-Unless you really want to modify the internal workings of the backend, you will want to look at RInterface and use the functions there.
+Only one RThread-object can be used in an application.
+Don't use this class in RKWard directly. Unless you really want to modify the internal workings of the backend, you will want to look at RInterface and use the functions there.
 
 @see RInterface
-@see REmbed
 @see REmbedInternal
 
 @author Thomas Friedrichsmeier
 */
-class RThread : public QThread {
+class RThread : public QThread, public REmbedInternal {
 public:
 /** constructor. You need to specify a pointer to the RInterface, so the thread knows where to post its events. Only one RThread should ever be
 created, and that happens in RInterface::RInterface (). */
@@ -82,18 +82,45 @@ more errors/crashes. Also the thread may get locked when cancelling the currentl
 /** "Kills" the thread. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
 	void kill () { killed = true; };
 
-/** this is a sub-eventloop, being run when the backend request information from the frontend. See \ref RThread for a more detailed description
+/** An enum describing whether initialization of the embedded R-process went well, or what errors occurred. */
+	enum InitStatus {
+		Ok=0,					/**< No error */
+		LibLoadFail=1,		/**< Error while trying to load the rkward R package */
+		SinkFail=2,			/**< Error while redirecting R's stdout and stderr to files to be read from rkward */
+		OtherFail=4			/**< Other error while initializing the embedded R-process */
+	};
 
-@see REmbed::handleSubstackCall () */
-	void doSubstack (char **call, int call_length);
+/** initializes the R-backend. Returns an error-code that consists of a bit-wise or-conjunction of the RThread::InitStatus -enum, RThread::Ok on success.
+Note that you should call initialize only once in a application */
+	int initialize ();
 
-/** this is a minimal sub-eventloop, being run, when the backend requests simple information from the frontend. It differs from doSubstack in two
+/** this function is public for technical reasons, only. Don't use except from REmbedInternal! Called from REmbedInternal when the R backend
+generates standard output. @see REmbedInternal::handleOutput () */
+	void handleOutput (char *buf, int buf_length);
+
+/** this function is public for technical reasons, only. Don't use except from REmbedInternal! Called from REmbedInternal when the R backend
+signals a condition. @see REmbedInternal::handleCondition () */
+//	void handleCondition (char **call, int call_length);
+
+/** this function is public for technical reasons, only. Don't use except from REmbedInternal! Called from REmbedInternal when the R backend
+reports an error. @see REmbedInternal::handleError () */
+	void handleError (char **call, int call_length);
+
+/** This function is public for technical reasons, only. Don't use except from REmbedInternal!
+
+This is a sub-eventloop, being run when the backend request information from the frontend. See \ref RThread for a more detailed description
+@see REmbedInternal::handleSubstackCall () */
+	void handleSubstackCall (char **call, int call_length);
+
+/** This function is public for technical reasons, only. Don't use except from REmbedInternal!
+
+This is a minimal sub-eventloop, being run, when the backend requests simple information from the frontend. It differs from handleSubstack in two
 points:
 1) it does not create a full-fledged substack for additional R commands
 2) it may return information via the args parameter immediately
 
-@see REmbed::handleStandardCallback () */
-	void doStandardCallback (RCallbackArgs *args);
+@see REmbedInternal::handleStandardCallback () */
+	void handleStandardCallback (RCallbackArgs *args);
 
 /** The command currently being executed. This is used from RInterface::cancelCommand to find out, whether the command to be cancelled is
 already/still running. */
@@ -103,10 +130,8 @@ protected:
 	void run ();
 private:
 	RInterface *inter;
-/** This is the function in which an RCommand actually gets processed. Basically it passes the command to REmbed::doCommand () and sends
-RInterface some events about what is currently happening. */
+/** This is the function in which an RCommand actually gets processed. Basically it passes the command to REmbedInteranl::runCommandInternal () and sends RInterface some events about what is currently happening. */
 	void doCommand (RCommand *command);
-	REmbed *embeddedR;
 	
 	bool locked;
 	bool killed;
