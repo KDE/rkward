@@ -18,12 +18,9 @@
 #ifndef RKWATCH_H
 #define RKWATCH_H
 
-#include "misc/rktogglewidget.h"
-
 #include <qstring.h>
+#include <qwidget.h>
 
-class RInterface;
-class RCommand;
 class RCommand;
 class QPushButton;
 class QTextEdit;
@@ -35,10 +32,10 @@ class QBoxLayout;
 @author Thomas Friedrichsmeier
 */
 
-class RKwatch : public RKToggleWidget {
+class RKwatch : public QWidget {
 	Q_OBJECT
 public: 
-	RKwatch(RInterface *parent);
+	RKwatch ();
 	~RKwatch();
 /** Adds input to the watch-window (i.e. commands issued) */
 	void addInput (RCommand *command);
@@ -52,8 +49,6 @@ public slots:
 
 private:
 	void addInputNoCheck (RCommand *command);
-/** Pointer to the R-Interface */
-	RInterface *r_inter;
 
 	QTextEdit *watch;
 	QBoxLayout* pLayout;

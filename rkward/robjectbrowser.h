@@ -17,7 +17,7 @@
 #ifndef ROBJECTBROWSER_H
 #define ROBJECTBROWSER_H
 
-#include "misc/rktogglewidget.h"
+#include <qwidget.h>
 
 class RKObjectListView;
 class QListViewItem;
@@ -32,8 +32,7 @@ This widget provides a browsable list of all objects in the R workspace
 
 @author Thomas Friedrichsmeier
 */
-class RObjectBrowser : public RKToggleWidget
-{
+class RObjectBrowser : public QWidget {
 Q_OBJECT
 public:
     RObjectBrowser ();

@@ -11,35 +11,14 @@ Little annoying stuff:
 - use R_DirtyImage to determine, whether workspace needs to be saved
 
 - "real time" display of output in the console (remember to add Mutex protection before then!)
-- check parts for correct destruction
-
-- printutils.c->481 Rvprintf: can we get at the standard out-connection and give it a fake vprintf (or better write?!) and fake fflush?
-	- see also: connections.c line 3246ff InitConnections
-	- seems ok now. But maybe we could still use this to catch immediate warning messages (which go to R_Consolefile)?
-
-- still mysterious in warning-handling: 'help (doesnotexist); print ("stuff");'. Why is the order wrong?!
-
-
-##################
-
-tryCatch (message ("a"), error=function (x) {print ("e"); x$message}, warning=function (y) {print ("w"); conditionMessage(y)}, message=function (z) {print ("m"); conditionCall (z)})
-withCallingHandlers ({message ("a"); stop ("b");}, error=function (x) {print ("e"); x$message}, warning=function (y) {print ("w"); conditionMessage(y)}, message=function (z) {print ("c"); conditionCall (z)})
-
-Not quite correct yet:
-	.Internal (.addCondHands (c ("error"), list (function (x) {print ("e"); print (conditionMessage (x))}), parent.frame (), NULL, TRUE))
-
-.Internal (.addCondHands (c ("warning"), list (function (x) {print ("w"); print (conditionCall (x))}), globalenv (), NULL, TRUE))
-
-condition handlers seem to be reset after an error!!!
-
-#################
 
 - remove classes/files:
 	- RKToggleWidget
 	- RKCommandEditor (first check for reusable functionality)
 	- RKOutputWindow (first scan for useful menu item ideas)
+	- REmbed
 
-stuff to do before 0.3.2 release
+stuff to do before 0.3.5 release
 - plugins (general)
 	- add import-filter plugins
 	- add component-wrapper and allow embedded plugins
@@ -103,4 +82,21 @@ stuff to do before a 1.0 release
 
 Notes for x11-window capturing:
 - See deactived class-header rbackend/rkwindowcatcher.h
-	
+
+################## cryptic notes ######################
+
+- printutils.c->481 Rvprintf: can we get at the standard out-connection and give it a fake vprintf (or better write?!) and fake fflush?
+	- see also: connections.c line 3246ff InitConnections
+	- seems ok now. But maybe we could still use this to catch immediate warning messages (which go to R_Consolefile)?
+
+- still mysterious in warning-handling: 'help (doesnotexist); print ("stuff");'. Why is the order wrong?!
+
+tryCatch (message ("a"), error=function (x) {print ("e"); x$message}, warning=function (y) {print ("w"); conditionMessage(y)}, message=function (z) {print ("m"); conditionCall (z)})
+withCallingHandlers ({message ("a"); stop ("b");}, error=function (x) {print ("e"); x$message}, warning=function (y) {print ("w"); conditionMessage(y)}, message=function (z) {print ("c"); conditionCall (z)})
+
+Not quite correct yet:
+	.Internal (.addCondHands (c ("error"), list (function (x) {print ("e"); print (conditionMessage (x))}), parent.frame (), NULL, TRUE))
+
+.Internal (.addCondHands (c ("warning"), list (function (x) {print ("w"); print (conditionCall (x))}), globalenv (), NULL, TRUE))
+
+condition handlers seem to be reset after an error!!!

@@ -37,7 +37,7 @@
 
 #include "debug.h"
 
-RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
+RKwatch::RKwatch () : QWidget () {
 	RK_TRACE (APP);
 	
 	
@@ -51,8 +51,6 @@ RKwatch::RKwatch(RInterface *parent) : RKToggleWidget () {
 	setCaption (i18n ("Command log"));
 	
 	clearWatch ();
-	
-	r_inter = parent;
 }
 
 RKwatch::~RKwatch(){

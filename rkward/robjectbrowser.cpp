@@ -37,7 +37,7 @@
 
 #include "debug.h"
 
-RObjectBrowser::RObjectBrowser () : RKToggleWidget () {
+RObjectBrowser::RObjectBrowser () : QWidget () {
 	QGridLayout *grid = new QGridLayout (this, 1, 1);
 	QVBoxLayout *vbox = new QVBoxLayout ();
 	grid->addLayout (vbox, 0, 0);

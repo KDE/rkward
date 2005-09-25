@@ -20,7 +20,6 @@
 #include "../rkwatch.h"
 #include "rthread.h"
 #include "rcommandstack.h"
-#include "rembed.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulelogfiles.h"
@@ -90,7 +89,7 @@ RInterface::RInterface () {
 	r_thread = new RThread (this);
 	r_thread->start ();
 
-	watch = new RKwatch (this);
+	watch = new RKwatch ();
 }
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {

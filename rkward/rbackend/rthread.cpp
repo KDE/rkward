@@ -16,7 +16,6 @@
  ***************************************************************************/
 #include "rthread.h"
 
-#include "rembed.h"
 #include "rinterface.h"
 #include "rcommandstack.h"
 #include "../settings/rksettingsmoduler.h"
@@ -183,8 +182,9 @@ void RThread::doCommand (RCommand *command) {
 void RThread::handleOutput (char *buf, int buf_length) {
 	RK_TRACE (RBACKEND);
 
+// TODO: output sometimes arrives in small chunks. Maybe it would be better to keep an internal buffer, and only append it to the output, when R_FlushConsole gets called?
+
 	if (!buf_length) return;
-	if (!current_command) return;
 
 	ROutput *out = new ROutput;
 	out->type = ROutput::Output;
@@ -212,7 +212,6 @@ void RThread::handleError (char **call, int call_length) {
 	RK_TRACE (RBACKEND);
 
 	if (!call_length) return;
-	if (!current_command) return;
 
 	// Unfortunately, errors still get printed to the output. We try this crude method for the time being:
 	current_command->output_list.last ()->type = ROutput::Error;
@@ -299,6 +298,10 @@ void RThread::handleStandardCallback (RCallbackArgs *args) {
 
 int RThread::initialize () {
 	RK_TRACE (RBACKEND);
+
+	// we create a fake RCommand to capture all the output/errors during startup
+	current_command = new RCommand ("", RCommand::App, "R Startup");
+
 	QString r_home = RKSettingsModuleR::rHomeDir();
 
 	QStringList arglist = RKSettingsModuleR::getOptionList();
@@ -340,6 +343,10 @@ int RThread::initialize () {
 	runCommandInternal ("options (htmlhelp=TRUE); options (browser=\"dcop " + kapp->dcopClient ()->appId () + " rkwardapp openHTMLHelp \")", &error);
 	if (error) status |= OtherFail;
 	// TODO: error-handling?
+
+	QCustomEvent *event = new QCustomEvent (RCOMMAND_OUT_EVENT);
+	event->setData (current_command);
+	qApp->postEvent (inter, event);
 
 	return status;
 }

@@ -2,8 +2,8 @@ INCLUDES = $(all_includes)
 METASOURCES = AUTO
 
 noinst_LIBRARIES =  librbackend.a
-librbackend_a_SOURCES = rembed.cpp rembedinternal.cpp rinterface.cpp rthread.cpp rcommand.cpp rcommandstack.cpp \
+librbackend_a_SOURCES = rembedinternal.cpp rinterface.cpp rthread.cpp rcommand.cpp rcommandstack.cpp \
 rkwindowcatcher.cpp
-noinst_HEADERS = rembed.h rembedinternal.h rinterface.h rthread.h rcommand.h rcommandreceiver.h rcommandstack.h \
+noinst_HEADERS = rembedinternal.h rinterface.h rthread.h rcommand.h rcommandreceiver.h rcommandstack.h \
 rkwindowcatcher.h
 SUBDIRS =  rpackages

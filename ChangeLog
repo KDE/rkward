@@ -1,3 +1,4 @@
+- reworked handling of output from R (no more file-sinks)
 - fix display of warning messages (behavior does not match plain R, yet, but is mostly sane)
 - option to change list of package repositories
 - option to archive downloaded packages
