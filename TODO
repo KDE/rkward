@@ -13,10 +13,8 @@ Little annoying stuff:
 - "real time" display of output in the console (remember to add Mutex protection before then!)
 
 - remove classes/files:
-	- RKToggleWidget
 	- RKCommandEditor (first check for reusable functionality)
 	- RKOutputWindow (first scan for useful menu item ideas)
-	- REmbed
 
 stuff to do before 0.3.5 release
 - plugins (general)

@@ -55,24 +55,23 @@ RKHelpWindow::~RKHelpWindow()
 }
 
 bool RKHelpWindow::openURL(const KURL &url, bool update_caption) {
-	if (QFile::exists (url.path ())) {
-		khtmlpart->openURL(url);
-		if (update_caption) {
-			setTabCaption(url.fileName());
-			setCaption(url.fileName());
-		}
-		currentURL=url;
-		scroll_position=0;
-		return (true);
-	} else{
-		return (false);
+	currentURL=url;
+	bool ok = QFile (url.path ()).exists ();
+
+	if (!ok) return false;
+
+	khtmlpart->openURL (url);
+	if (update_caption) {
+		setMDICaption (url.fileName ());
 	}
+
+	return true;	
 }
 
 void RKHelpWindow::showOutputEmptyMessage () {
-		khtmlpart->begin();
-		khtmlpart->write (i18n ("<HTML><BODY><H1>RKWard output</H1>\n<P>The output is empty.</P>\n</BODY></HTML>"));
-		khtmlpart->end();
+	khtmlpart->begin();
+	khtmlpart->write (i18n ("<HTML><BODY><H1>RKWard output</H1>\n<P>The output is empty.</P>\n</BODY></HTML>"));
+	khtmlpart->end();
 }
 
 /*!
@@ -90,11 +89,11 @@ void RKHelpWindow::slotOpenURLRequest(const KURL &url, const KParts::URLArgs & )
 
 	Reload current page.
  */
-void RKHelpWindow::refresh()
+bool RKHelpWindow::refresh()
 {
 	int pos = khtmlpart->view()->contentsY();
-	openURL (currentURL);
 	scroll_position=pos;
+	return openURL (currentURL, false);
 }
 
 

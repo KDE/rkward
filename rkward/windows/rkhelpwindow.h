@@ -40,7 +40,7 @@ public:
 
     ~RKHelpWindow ();
     bool openURL (const KURL &url, bool update_caption=true);
-    void refresh ();
+    bool refresh ();
     void scrollToBottom ();
 	void showOutputEmptyMessage ();
 public slots:

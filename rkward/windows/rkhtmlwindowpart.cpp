@@ -101,8 +101,10 @@ void RKHTMLWindowPart::refreshOutput (bool show, bool raise) {
 
 	if (current_output) {
 		if (raise) {
-			current_output->widget->raise ();
-			current_output->widget->refresh ();
+			current_output->widget->activate ();
+		}
+		if (!current_output->widget->refresh ()) {
+			current_output->widget->showOutputEmptyMessage ();
 		}
 	} else {
 		if (show) {
