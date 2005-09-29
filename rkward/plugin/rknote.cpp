@@ -23,7 +23,7 @@ RKNote::RKNote(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : 
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	label = new QLabel (element.attribute ("label", "Select one:"), this);
 	vbox->addWidget (label);
-	depend = element.attribute ("depend", "");
+	depend = element.attribute ("depend", QString::null);
 
 
 }

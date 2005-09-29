@@ -149,7 +149,7 @@ void RKConsole::submitCommand()
 			c.prepend (incomplete_command + "\n");
 		}
 
-		RKGlobals::rInterface ()->issueCommand (c, RCommand::User, "", this);
+		RKGlobals::rInterface ()->issueCommand (c, RCommand::User, QString::null, this);
 	} else {
 		command_incomplete = false;
 		newLine ();
@@ -213,7 +213,7 @@ void RKConsole::rCommandDone (RCommand *command) {
 	} else {
 		prefix = "> ";
 		command_incomplete = false;
-		incomplete_command = "";
+		incomplete_command = QString::null;
 	}
 
 	newLine ();

@@ -160,7 +160,7 @@ QString TwinTableDataMember::text (int row, int col) const {
 	RKVariable *var = table->getColObject (col);
 	if (!var) {
 		RK_ASSERT (false);
-		return "";
+		return QString::null;
 	}
 	return var->getText (row);
 }
@@ -169,7 +169,7 @@ QString TwinTableDataMember::rText (int row, int col) const {
 	RKVariable *var = table->getColObject (col);
 	if (!var) {
 		RK_ASSERT (false);
-		return "";
+		return QString::null;
 	}
 	return var->getRText (row);
 }

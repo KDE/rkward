@@ -10,7 +10,7 @@ Little annoying stuff:
 - use more QDicts instead of QMap<QString,...>s
 - use R_DirtyImage to determine, whether workspace needs to be saved
 - in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
-- The logic in RKHTMLWindowPart is rather messy. I think we should use two (three?) separate parts for showing output, help pages (and other generic HTML?). Most importantly, all those need slightly different GUIs. Probably the parts should all derive from a common base class. Most of what is currently in RKHelpWindow should probably be merged into the parts. Maybe RKHelpWindow can be obsoleted entirely.
+- The logic in RKHTMLWindowPart is rather messy. I think we should use two (three?) separate KParts for showing output, help pages (and other generic HTML?). Most importantly, all those need slightly different GUIs. Probably the parts should all derive from a common base class. Most of what is currently in RKHelpWindow should probably be merged into the parts. Maybe RKHelpWindow can be obsoleted entirely.
 	- Place those sources right inside rkhelpwindow.cpp/.h, instead of file name inflation.
 	- Rename RKHelpWindow to RKHTMLWindow.
 
@@ -35,7 +35,6 @@ code cleanups
 	- well, on second thought, it might be better to rely more on RCommand::id () instead of pointers. Why? The id is unique (until integer overflow). The pointer may be reused after a delete -> potential problem when trying to cancel command which is actually already deleted (and potentially other cases)
 	- let's set this back for a while
 - active/disabled setting for RKPluginWidgets: 1) Move default implementation to RKPluginWidget-base class (make virtual for special needs). 2) rework mechanism, when switching to component infrastructure
-- replace '""' by QString::null everywhere (probably just an automatic replace; manual work will be needed only in a few places)
 
 API documentation:
 - add page containing a rough overview of general architecture
@@ -106,3 +105,5 @@ Not quite correct yet:
 
 condition handlers seem to be reset after an error!
 condition handlers do not seem to carry over two separate calls of R_tryEval ().
+
+http://slashdot.org/article.pl?sid=05/06/24/149231&tid=121&tid=188&tid=95&tid=1

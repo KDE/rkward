@@ -77,7 +77,7 @@ XMLChildList XMLHelper::getChildElements (const QDomElement &parent, const QStri
 		while (!n.isNull ()) {
 			QDomElement e = n.toElement ();
 			if (!e.isNull ()) {
-				if ((name == "") || (e.tagName () == name)) {
+				if ((name.isEmpty ()) || (e.tagName () == name)) {
 					list.append (e);
 				}
 			}

@@ -108,7 +108,7 @@ void RKVariable::updateFromR () {
 	getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain ());
 
 // TODO: move classification / type mismatch-checking to RObject
-	RCommand *command = new RCommand (".rk.classify (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, CLASSIFY_COMMAND);
+	RCommand *command = new RCommand (".rk.classify (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString::null, this, CLASSIFY_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 }
 
@@ -142,7 +142,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 
 		// classifiy command was successful. now get further information.
 		// TODO: actually, classify already contains dim (). Simplify!
-		RCommand *command = new RCommand ("length (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
+		RCommand *command = new RCommand ("length (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString::null, this, UPDATE_DIM_COMMAND);
 		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 		
 		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
@@ -159,13 +159,13 @@ void RKVariable::rCommandDone (RCommand *command) {
 		var_type = (RObject::VarType) new_var_type;
 		if (new_var_type != var_type) RKGlobals::tracker ()->objectMetaChanged (this);
 
-		RCommand *ncommand = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
+		RCommand *ncommand = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CLASS_COMMAND);
 		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
 
 	} else if (command->getFlags () == GET_STORAGE_MODE_COMMAND) {
 		RK_ASSERT (command->intVectorLength () == 2);
 		if (!(command->getIntVector ()[1])) {
-			RKGlobals::rInterface ()->issueCommand ("levels (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_FACTOR_LEVELS_COMMAND);
+			RKGlobals::rInterface ()->issueCommand ("levels (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_FACTOR_LEVELS_COMMAND);
 			if (getVarType () == Unknown) {
 				var_type = Factor;
 			}
@@ -182,7 +182,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 				var_type = String;
 			}
 		}
-		RKGlobals::rInterface ()->issueCommand (getFullName (), command_type, "", this, GET_DATA_COMMAND);
+		RKGlobals::rInterface ()->issueCommand (getFullName (), command_type, QString::null, this, GET_DATA_COMMAND);
 	} else if (command->getFlags () == GET_DATA_COMMAND) {
 		RK_ASSERT (myData ());
 		// prevent resyncing of data
@@ -314,7 +314,7 @@ void RKVariable::initializeEditData (bool to_empty) {
 			myData ()->cell_double_data[row] = RKGlobals::na_double;
 		}
 	} else {
-		RKGlobals::rInterface ()->issueCommand ("c (is.numeric (" + getFullName () + "), is.null (levels (" + getFullName () + ")))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, GET_STORAGE_MODE_COMMAND);
+		RKGlobals::rInterface ()->issueCommand ("c (is.numeric (" + getFullName () + "), is.null (levels (" + getFullName () + ")))", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString::null, this, GET_STORAGE_MODE_COMMAND);
 		myData ()->formatting_options = parseFormattingOptionsString (getMetaProperty ("format"));
 	}
 }
@@ -373,7 +373,7 @@ void RKVariable::restore (RCommandChain *chain) {
 	delete myData ()->changes;
 	writeMetaData (chain);
 	if (getVarType () == Factor) {
-		RKGlobals::rInterface ()->issueCommand ("rk.restore.factor (" + getFullName () + ")", RCommand::App | RCommand::Sync, "", 0, 0, chain);
+		RKGlobals::rInterface ()->issueCommand ("rk.restore.factor (" + getFullName () + ")", RCommand::App | RCommand::Sync, QString::null, 0, 0, chain);
 	}
 }
 
@@ -383,7 +383,7 @@ void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
 
 	// TODO: try to sync in correct storage mode
 	if (from_row == to_row) {
-		RKGlobals::rInterface ()->issueCommand (getFullName () + "[" + QString::number (from_row+1) + "] <- " + getRText (from_row), RCommand::App | RCommand::Sync, "", 0,0, chain);
+		RKGlobals::rInterface ()->issueCommand (getFullName () + "[" + QString::number (from_row+1) + "] <- " + getRText (from_row), RCommand::App | RCommand::Sync, QString::null, 0,0, chain);
 	} else {
 		QString data_string = "c (";
 		for (int row = from_row; row <= to_row; ++row) {
@@ -394,7 +394,7 @@ void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
 			}
 		}
 		data_string.append (")");
-		RKGlobals::rInterface ()->issueCommand (getFullName () + "[" + QString::number (from_row + 1) + ":" + QString::number (to_row + 1) + "] <- " + data_string, RCommand::App | RCommand::Sync, "", 0,0, chain);
+		RKGlobals::rInterface ()->issueCommand (getFullName () + "[" + QString::number (from_row + 1) + ":" + QString::number (to_row + 1) + "] <- " + data_string, RCommand::App | RCommand::Sync, QString::null, 0,0, chain);
 	}
 
 	ChangeSet *set = new ChangeSet;
@@ -814,9 +814,9 @@ void RKVariable::writeValueLabels (RCommandChain *chain) {
 		}
 		level_string.append (")");
 		// using attr (..., "levels) instead of levels (...) in order to bypass checking
-		RKGlobals::rInterface ()->issueCommand ("attr (" + getFullName () + ", \"levels\") <- " + level_string, RCommand::App | RCommand::Sync, "", 0, 0, chain);
+		RKGlobals::rInterface ()->issueCommand ("attr (" + getFullName () + ", \"levels\") <- " + level_string, RCommand::App | RCommand::Sync, QString::null, 0, 0, chain);
 	} else {
-		RKGlobals::rInterface ()->issueCommand ("attr (" + getFullName () + ", \"levels\") <- NULL", RCommand::App | RCommand::Sync, "", 0, 0, chain);
+		RKGlobals::rInterface ()->issueCommand ("attr (" + getFullName () + ", \"levels\") <- NULL", RCommand::App | RCommand::Sync, QString::null, 0, 0, chain);
 	}
 }
 
@@ -836,7 +836,7 @@ QString RKVariable::getValueLabelString () {
 		
 		return level_string;
 	} else {
-		return "";
+		return QString::null;
 	}
 }
 
@@ -878,7 +878,7 @@ void RKVariable::setFormattingOptions (FormattingOptions *formatting_options) {
 	myData ()->formatting_options = formatting_options;
 
 	if (!formatting_options) {
-		setMetaProperty ("format", "");
+		setMetaProperty ("format", QString::null);
 	} else {
 		QString format_string;
 		if (formatting_options->alignment != (int) FormattingOptions::AlignDefault) {

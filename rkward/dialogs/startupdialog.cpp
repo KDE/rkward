@@ -64,7 +64,7 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	if (recent_files) {
 		QStringList items = recent_files->items ();
 		for (QStringList::iterator it = items.begin (); it != items.end (); ++it) {
-			if ((*it) != "") new QListViewItem (file_list, (*it));
+			if (!(*it).isEmpty ()) new QListViewItem (file_list, (*it));
 		}
 	}
 	connect (file_list, SIGNAL (clicked (QListViewItem *)), this, SLOT (listClicked (QListViewItem*)));

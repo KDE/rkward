@@ -31,7 +31,7 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, QWidget *parent, R
 	
 	label = new QLabel (element.attribute ("label", "Enter value:"), this);
 	vbox->addWidget (label);
-	depend = element.attribute ("depend", "");
+	depend = element.attribute ("depend", QString::null);
 
 	spinbox = new RKSpinBox (this);
 	if (element.attribute ("type") != "integer") {

@@ -25,15 +25,14 @@ RKPluginBrowser::RKPluginBrowser(const QDomElement &element, QWidget *parent, RK
 
 	vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	label = new QLabel (element.attribute ("label", "Enter your text"), this);
-	textedit = new QTextEdit ( element.attribute ("initial" ,"") ,
-	QString::null,this, element.attribute ("id")) ;
+	textedit = new QTextEdit ( element.attribute ("initial", QString::null), QString::null,this, element.attribute ("id")) ;
 	button = new QPushButton (i18n("Browse..."),this);
 //	size = element.attribute ("size", "small");
 	vbox->addWidget (label);
 	vbox->addWidget (textedit);
 	vbox->addWidget (button);
 	type = element.attribute("type","file") ;
-	filter = element.attribute("filter","") ;
+	filter = element.attribute("filter", QString::null) ;
 	connect(textedit,SIGNAL(textChanged()),SLOT(textChanged()));
 	connect(button,SIGNAL(clicked()),SLOT(slotPopingup()));
 
@@ -96,7 +95,7 @@ void RKPluginBrowser::textChanged(){
 void RKPluginBrowser::slotPopingup(){
 	RK_TRACE (PLUGIN);
 	if (type == "file") {
-		QString filename= KFileDialog:: getOpenFileName("",filter,0,"") ; 
+		QString filename= KFileDialog:: getOpenFileName(QString::null,filter,0, QString::null) ; 
 		textedit ->setText(filename);
 		emit(changed());}
 	else if (type=="dir"){
@@ -104,7 +103,7 @@ void RKPluginBrowser::slotPopingup(){
 		textedit ->setText(filename);
 		emit(changed());}
 	else if (type=="files"){
-		QStringList filenames =KFileDialog:: getOpenFileNames("",filter,0,"") ; 
+		QStringList filenames =KFileDialog:: getOpenFileNames(QString::null,filter,0,QString::null);
 		QString filename = filenames.join( "\n" );
 		textedit ->setText(filename);
 		emit(changed());

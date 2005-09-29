@@ -54,7 +54,7 @@ RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
 		RKGlobals::rInterface ()->issueCommand (command);
 	}
 
-	command = new RCommand ("load (\"" + url.path () + "\")", RCommand::App, "", this, WORKSPACE_LOAD_COMMAND);
+	command = new RCommand ("load (\"" + url.path () + "\")", RCommand::App, QString::null, this, WORKSPACE_LOAD_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command);
 
 	connect (RKGlobals::rObjectList (), SIGNAL (updateComplete ()), this, SLOT (listUpdateComplete ()));

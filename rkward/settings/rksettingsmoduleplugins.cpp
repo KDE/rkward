@@ -113,7 +113,7 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	plugin_maps = config->readListEntry ("Plugin Maps");
 	if (!plugin_maps.count ()) {
 		QString dummy = KGlobal::dirs()->findResourceDir("plugins", "standard_plugins.pluginmap");
-		if (dummy == "") {
+		if (dummy.isEmpty ()) {
 			// try our luck with a relative path
 			dummy = "plugins";
 		}

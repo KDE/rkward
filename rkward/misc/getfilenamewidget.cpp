@@ -46,7 +46,7 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, const QStr
 	
 	GetFileNameWidget::mode = mode;
 	
-	if (caption == "") {
+	if (caption.isEmpty ()) {
 		GetFileNameWidget::caption = label;
 	} else {
 		GetFileNameWidget::caption = caption;
@@ -73,7 +73,7 @@ void GetFileNameWidget::browseButtonClicked () {
 		RK_ASSERT (false);
 	}
 
-	if (temp != "") {
+	if (!temp.isEmpty ()) {
 		location_edit->setText (temp);
 	}
 }

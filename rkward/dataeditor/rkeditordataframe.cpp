@@ -95,7 +95,7 @@ void RKEditorDataFrame::openObject (RObject *object, bool initialize_to_empty) {
 	}
 
 	// actually, given the object, we already know the child-names. We don't know their order, however, so we better fetch the name-row again.
-	RCommand *command = new RCommand ("names (" + object->getFullName () + ")", RCommand::Sync | RCommand::GetStringVector, "", this, GET_NAMES_COMMAND);
+	RCommand *command = new RCommand ("names (" + object->getFullName () + ")", RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_NAMES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, open_chain);
 
 	// since communication is asynchronous, the rest is done inside
@@ -183,7 +183,7 @@ void RKEditorDataFrame::columnDeletionRequested (int col) {
 
 void RKEditorDataFrame::columnAdded (int col) {
 	RK_TRACE (EDITOR);
-	RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName (""), this);
+	RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName (QString::null), this);
 	RK_ASSERT (obj->isVariable ());	
 	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + getObject ()->getFullName () + ", \"" + obj->getShortName () + "\", " + QString ().setNum (col+1) + ")", RCommand::App | RCommand::Sync));
 	static_cast<RKVariable*> (obj)->setLength (dataview->numTrueRows ());

@@ -69,7 +69,7 @@ RInterface::RInterface () {
 // setting is good, everything is fine anyway.
 	char *env_r_home = getenv ("R_HOME");
 	if (!env_r_home) {
-		if (RKSettingsModuleR::r_home_dir == "") {
+		if (RKSettingsModuleR::r_home_dir.isEmpty ()) {
 			RK_DO (qDebug ("guessing R_HOME"), RBACKEND, DL_WARNING);
 			RKSettingsModuleR::r_home_dir = "/usr/lib/R";
 			RKSettingsModuleR::r_home_dir = KInputDialog::getText (i18n ("R_HOME not set"), i18n ("Could not find an R_HOME-environment variable and don't have a stored setting for that either.\nThe R backend requires that variable. Please enter your R_HOME directory below.\nIf you don't get it right, the application will quit immediately and you'll have to start RKWard again."), RKSettingsModuleR:: r_home_dir);
@@ -217,7 +217,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 	RK_TRACE (RBACKEND);
 
 	// clear reply object
-	issueCommand (".rk.rkreply <- NULL", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+	issueCommand (".rk.rkreply <- NULL", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 	if (!request->call_length) {
 		closeChain (request->in_chain);
 		return;
@@ -234,14 +234,14 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			while (dir.exists (file_prefix + QString::number (i) + file_extension)) {
 				i++;
 			}
-			issueCommand (".rk.rkreply <- \"" + dir.filePath (file_prefix + QString::number (i) + file_extension) + "\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+			issueCommand (".rk.rkreply <- \"" + dir.filePath (file_prefix + QString::number (i) + file_extension) + "\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		} else {
-			issueCommand (".rk.rkreply <- \"Too few arguments in call to get.tempfile.name.\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+			issueCommand (".rk.rkreply <- \"Too few arguments in call to get.tempfile.name.\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		}
 	} else if (call == "get.output.html.file") {
 		QDir dir (RKSettingsModuleLogfiles::filesPath ());
 		// TODO: make more generic, get filename sanely
-		issueCommand (".rk.rkreply <- \"" + dir.filePath ("rk_out.html") + "\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+		issueCommand (".rk.rkreply <- \"" + dir.filePath ("rk_out.html") + "\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 	} else if (call == "sync") {
 		RObject *obj = 0;
 		if (request->call_length >= 2) {
@@ -256,23 +256,23 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			RKGlobals::rObjectList ()->updateFromR ();
 			RKGlobals::tracker ()->objectDataChanged (obj, set);
 			
-			issueCommand (".rk.rkreply <- \"Sync scheduled for object '" + obj->getFullName () + "'\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+			issueCommand (".rk.rkreply <- \"Sync scheduled for object '" + obj->getFullName () + "'\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		} else {
-			issueCommand (".rk.rkreply <- \"Object not recognized or not specified in call to sync. Ignoring\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+			issueCommand (".rk.rkreply <- \"Object not recognized or not specified in call to sync. Ignoring\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		}
 	} else if (call == "require") {
 		if (request->call_length >= 2) {
 			QString lib_name = request->call[1];
 			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We'll open the package-management tool, and there you can try to locate and install the needed package.").arg (lib_name), i18n ("Require package '%1'").arg (lib_name));
 			RKLoadLibsDialog::showInstallPackagesModal (0, request->in_chain);
-			issueCommand (".rk.rkreply <- \"\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+			issueCommand (".rk.rkreply <- \"\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		} else {
-			issueCommand (".rk.rkreply <- \"Too few arguments in call to require.\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+			issueCommand (".rk.rkreply <- \"Too few arguments in call to require.\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		}
 	} else if (call == "quit") {
 		RKGlobals::rkApp ()->slotFileQuit ();
 		// if we're still alive, quitting was cancelled
-		issueCommand (".rk.rkreply <- \"Quitting was cancelled\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+		issueCommand (".rk.rkreply <- \"Quitting was cancelled\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 #ifndef DISABLE_RKWINDOWCATCHER
  // does not work, yet :-( R crashes.
 	} else if (call == "catchWindow") {
@@ -284,7 +284,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		}
 #endif // DISABLE_RKWINDOWCATCHER
 	} else {
-		issueCommand (".rk.rkreply <- \"Unrecognized call '" + call + "'. Ignoring\"", RCommand::App | RCommand::Sync, "", 0, 0, request->in_chain);
+		issueCommand (".rk.rkreply <- \"Unrecognized call '" + call + "'. Ignoring\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 	}
 	
 	closeChain (request->in_chain);

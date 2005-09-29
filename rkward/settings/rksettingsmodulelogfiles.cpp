@@ -39,7 +39,7 @@ RKSettingsModuleLogfiles::RKSettingsModuleLogfiles (RKSettings *gui, QWidget *pa
 	
 	main_vbox->addStretch ();
 	
-	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, i18n ("Directory where the logfiles should be kept"), "", files_path);
+	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, i18n ("Directory where the logfiles should be kept"), QString::null, files_path);
 	connect (files_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
 	main_vbox->addWidget (files_choser);
 }

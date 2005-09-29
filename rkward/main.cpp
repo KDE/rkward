@@ -83,18 +83,18 @@ static KCmdLineOptions options[] =
   // INSERT YOUR COMMANDLINE OPTIONS HERE
 };
 
-int main(int argc, char *argv[])
-{
-
-	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), version, description, KAboutData::License_GPL, "(c) 2002, 2005", 0, "http://rkward.sf.net", "");
-	aboutData.addAuthor ("Thomas Friedrichsmeier", i18n("Project leader"), "");
-	aboutData.addAuthor ("Pierre Ecochard", i18n("Core coder since 0.29"), "");
-	aboutData.addCredit ("Adrien d'Hardemare", i18n("Plugins and patches"), "");
-	aboutData.addCredit ("Marco Martin", i18n("A cool icon"), "");
-	aboutData.addCredit ("Daniele Medri", i18n("RKWard logo, many suggestions, help on wording"), "");
-	aboutData.addCredit ("David Sibai", i18n("Several valuable comments, hints and patches"), "");
-	aboutData.addCredit ("Philippe Grosjean", i18n("Several helpful comments and discussions"), "");
-	aboutData.addCredit (i18n("Many more people on rkward-devel@lists.sourceforge.net"), i18n("Sorry, I forgot to list you. Please contact me to get added"), "");
+int main(int argc, char *argv[]) {
+	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), version, description, KAboutData::License_GPL, "(c) 2002, 2004, 2005", 0, "http://rkward.sf.net", QString::null);
+	aboutData.addAuthor ("Thomas Friedrichsmeier", I18N_NOOP ("Project leader"), QString::null);
+	aboutData.addAuthor ("Pierre Ecochard",  I18N_NOOP ("Core coder since 0.2.9"), QString::null);
+	aboutData.addCredit ("Contributors in alphabetical order", QString::null, QString::null);
+	aboutData.addCredit ("Philippe Grosjean", I18N_NOOP ("Several helpful comments and discussions"), QString::null);
+	aboutData.addCredit ("Adrien d'Hardemare", I18N_NOOP ("Plugins and patches"), QString::null);
+	aboutData.addCredit ("Yves Jacolin", I18N_NOOP ("New website"), QString::null);
+	aboutData.addCredit ("Marco Martin", I18N_NOOP ("A cool icon"), QString::null);
+	aboutData.addCredit ("Daniele Medri", I18N_NOOP ("RKWard logo, many suggestions, help on wording"), QString::null);
+	aboutData.addCredit ("David Sibai", I18N_NOOP ("Several valuable comments, hints and patches"), QString::null);
+	aboutData.addCredit (I18N_NOOP ("Many more people on rkward-devel@lists.sourceforge.net"), I18N_NOOP ("Sorry, I forgot to list you. Please contact me to get added"), QString::null);
 	KCmdLineArgs::init( argc, argv, &aboutData );
 	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 	

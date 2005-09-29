@@ -63,7 +63,7 @@ KHelpDlg::KHelpDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
 	connect(edit, SIGNAL(returnPressed()), this, SLOT(slotFieldReturnPressed ()));
 
 
-	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_INSTALLED_PACKAGES, 0);
+	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_INSTALLED_PACKAGES, 0);
 
 
 	
@@ -89,7 +89,7 @@ void KHelpDlg::getContextHelp (const QString &context_line, int cursor_pos) {
 	QString result = context_line.mid (current_word_start, current_word_end - current_word_start);
 
 	// step 2: retrieve help
-	RKGlobals::rInterface ()->issueCommand ("help(\"" + result + "\", htmlhelp=TRUE)[1]", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_HELP_URL, 0);
+	RKGlobals::rInterface ()->issueCommand ("help(\"" + result + "\", htmlhelp=TRUE)[1]", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
 }
 
 /*$SPECIALIZATION$*/
@@ -118,7 +118,7 @@ void KHelpDlg::slotFindButtonClicked()
 	}
 
 	// HACK the following is hardcoded, do not modify
-	QString fields="";
+	QString fields;
 	
 	switch(fieldsList->currentItem()){
 		case 1: fields = "c(\"alias\", \"concept\", \"title\")";break;
@@ -133,7 +133,7 @@ void KHelpDlg::slotFindButtonClicked()
 		+ agrep +", ignore.case=" + ignoreCase + ", package=" + package +", fields=" + fields +")";
 		
 	
-	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, HELP_SEARCH, 0);
+	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, HELP_SEARCH, 0);
 	setEnabled(false);
 	field->insertItem(field->currentText());
 	
@@ -156,7 +156,7 @@ void KHelpDlg::slotResultsListDblClicked( QListViewItem * item, const QPoint &, 
 	s.append(item->text(2));
 	s.append("\")");
 	
-	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_HELP_URL, 0);
+	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
 }
 
 void KHelpDlg::slotPackageListActivated()

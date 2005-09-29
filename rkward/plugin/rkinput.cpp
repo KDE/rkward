@@ -17,7 +17,7 @@ RKInput::RKInput(const QDomElement &element, QWidget *parent, RKPlugin *plugin) 
 
 	vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	label = new QLabel (element.attribute ("label", "Enter your text"), this);
-	QString initial = element.attribute ("initial","") ;
+	QString initial = element.attribute ("initial", QString::null) ;
 	textedit = new QTextEdit ( initial ,
 	QString::null,this, element.attribute ("id")) ;
 	vbox->addWidget (label);

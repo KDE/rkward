@@ -32,8 +32,8 @@ RKCheckBox::RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *p
 	vbox->addWidget (checkbox);
   isOk =false;
 	value_if_checked = element.attribute ("value", "1");
-	value_if_unchecked = element.attribute ("value_unchecked", "");
-	depend = element.attribute ("depend", "");
+	value_if_unchecked = element.attribute ("value_unchecked", QString::null);
+	depend = element.attribute ("depend", QString::null);
 	
 	if (element.attribute ("checked") == "true") {
 		checkbox->setChecked (true);

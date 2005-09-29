@@ -61,7 +61,7 @@ void RKCommandEditorWindowPart::slotRunSelection() {
 
 	if (command_editor->getSelection ().isEmpty () || command_editor->getSelection ().isNull ()) return;
 
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command_editor->getSelection (), RCommand::User, ""));
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command_editor->getSelection (), RCommand::User, QString::null));
 }
 
 void RKCommandEditorWindowPart::slotRunLine() {
@@ -69,7 +69,7 @@ void RKCommandEditorWindowPart::slotRunLine() {
 
 	if (command_editor->getLine ().isEmpty () || command_editor->getLine().isNull ()) return;
 
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command_editor->getLine (), RCommand::User, ""));
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command_editor->getLine (), RCommand::User, QString::null));
 }
 
 
@@ -78,7 +78,7 @@ void RKCommandEditorWindowPart::slotRunAll() {
 
 	if (command_editor->getText ().isEmpty () || command_editor->getText ().isNull ()) return;
 		
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command_editor->getText (), RCommand::User, ""));
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command_editor->getText (), RCommand::User, QString::null));
 }
 
 void RKCommandEditorWindowPart::slotFunctionReference () {

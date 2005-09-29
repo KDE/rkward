@@ -43,7 +43,7 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 	QGridLayout *g_layout = new QGridLayout (this, 3, 3, RKGlobals::spacingHint ());
 
 	
-	select = new QPushButton ("", this);
+	select = new QPushButton (QString::null, this);
 	select->setPixmap(SmallIcon("1rightarrow"));
 
 	connect (select, SIGNAL (clicked ()), this, SLOT (selectPressed ()));
@@ -82,7 +82,7 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 
 	// further infos
 	source_id = element.attribute ("source");
-	depend = element.attribute ("depend", "");
+	depend = element.attribute ("depend", QString::null);
 	classes = element.attribute ("classes", "all");
 	if (classes=="frame") classes = "data.frame matrix list array";
 	else if (classes=="number") classes = "numeric integer" ;
@@ -112,7 +112,7 @@ void RKVarSlot::objectListChanged () {
 	if (!multi) {
 		if (num_vars) {
 			if (!source->containsObject (item_map[0])) {
-				line_edit->setText ("");
+				line_edit->setText (QString::null);
 				item_map.remove (0);
 				num_vars = 0;
 				select->setPixmap(SmallIcon("1rightarrow"));
@@ -173,7 +173,7 @@ void RKVarSlot::selectPressed () {
 			if (!source) return;
 			if (source->numSelectedVars() == 1) {
 				RKVariable *sel = source->selectedVars ().first ();
-				if (belongToClasses(sel->makeClassString(""))){
+				if (belongToClasses(sel->makeClassString (QString::null))){
 					line_edit->setText (sel->getShortName ());
 					item_map.insert (0, sel);
 					num_vars = 1;
@@ -182,7 +182,7 @@ void RKVarSlot::selectPressed () {
 				}
 			}else if (source->numSelectedContainer() == 1 ){
 				RContainerObject *sel = source->selectedContainer().first ();
-				if (belongToClasses(sel->makeClassString(""))){
+				if (belongToClasses(sel->makeClassString(QString::null))){
 					line_edit->setText (sel->getShortName ());
 					cont_map.insert (0, sel);
 					num_vars = 1;
@@ -193,7 +193,7 @@ void RKVarSlot::selectPressed () {
 			else return ;
 			
 		} else {
-			line_edit->setText ("");
+			line_edit->setText (QString::null);
 			item_map.remove (0);
 			cont_map.remove (0);
 			num_vars = 0;
@@ -229,7 +229,7 @@ void RKVarSlot::selectPressed () {
 					}
 				}
 				if (dupli) duplicate = false ; 
-				if (!duplicate && belongToClasses(sel->makeClassString(""))) {
+				if (!duplicate && belongToClasses(sel->makeClassString(QString::null))) {
 					QString string; 
         				string = string.setNum( ordre);  
 					QListViewItem *new_item = new QListViewItem (list,string, sel->getShortName ());
@@ -250,7 +250,7 @@ void RKVarSlot::selectPressed () {
 					}
 				}
 				if (dupli) duplicate = false ; 
-				if (!duplicate && belongToClasses(selcont->makeClassString(""))) {
+				if (!duplicate && belongToClasses(selcont->makeClassString(QString::null))) {
 					QString string; 
         				string = string.setNum( ordre);  
 					QListViewItem *new_item = new QListViewItem (list,string,selcont->getShortName ());
@@ -319,7 +319,7 @@ QString RKVarSlot::value (const QString &modifier) {
 				else	return cont_map[0]->getFullName();
 			}
 		} else {
-			return "";
+			return QString::null;
 		}
 	} else {
 		QListViewItem *item = list->firstChild ();
@@ -351,7 +351,7 @@ QString RKVarSlot::value (const QString &modifier) {
 QString RKVarSlot::complaints () {
 	RK_TRACE (PLUGIN);
 
-	if (isSatisfied ()) return "";
+	if (isSatisfied ()) return QString::null;
 	return i18n (" - You have to select a variable for the \"" + label->text () + "\"-field\n");
 }
 

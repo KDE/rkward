@@ -83,7 +83,7 @@ void RKEditorManager::restoreEditors () {
 	RK_TRACE (APP);	
 	restore_chain = RKGlobals::rInterface ()->startChain (restore_chain);
 	
-	RCommand *command = new RCommand ("if (exists (\".rk.editing\")) { .rk.editingtemp <- .rk.editing; remove (.rk.editing); .rk.editingtemp; }", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, RESTORE_COMMAND);
+	RCommand *command = new RCommand ("if (exists (\".rk.editing\")) { .rk.editingtemp <- .rk.editing; remove (.rk.editing); .rk.editingtemp; }", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, RESTORE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, restore_chain);
 }
 

@@ -526,7 +526,7 @@ void RKwardApp::fileOpenAskSave (const KURL &url) {
 
 void RKwardApp::slotFileOpenWorkspace () {
 	RK_TRACE (APP);
-	fileOpenAskSave ("");
+	fileOpenAskSave (QString::null);
 }
 
 void RKwardApp::slotFileOpenRecentWorkspace(const KURL& url)

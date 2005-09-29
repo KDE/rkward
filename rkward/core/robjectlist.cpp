@@ -37,7 +37,7 @@
 
 #include "../debug.h"
 
-RObjectList::RObjectList () : RContainerObject (0, "") {
+RObjectList::RObjectList () : RContainerObject (0, QString::null) {
 	RK_TRACE (OBJECTS);
 	update_timer = new QTimer (this);
 	
@@ -123,7 +123,7 @@ void RObjectList::updateFromR () {
 	emit (updateStarted ());
 	update_chain = RKGlobals::rInterface ()->startChain (0);
 
-	RCommand *command = new RCommand ("ls (all.names=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_LIST_COMMAND);
+	RCommand *command = new RCommand ("ls (all.names=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_LIST_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, update_chain);
 }
 
@@ -135,7 +135,7 @@ void RObjectList::updateFromR () {
 	
 	QString fullname = parent->makeChildName (cname);
 	
-	RCommand *command = new RCommand (".rk.get.type (" + fullname + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, CHILD_GET_TYPE_COMMAND);
+	RCommand *command = new RCommand (".rk.get.type (" + fullname + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString::null, this, CHILD_GET_TYPE_COMMAND);
 	pending_objects.insert (command, obj);
 	RKGlobals::rInterface ()->issueCommand (command, update_chain);
 }

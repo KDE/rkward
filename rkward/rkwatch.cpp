@@ -122,7 +122,7 @@ void RKwatch::addOutput (RCommand *command) {
 
 	watch->append (command->output ());
 	watch->append (command->error ());
-	if (command->failed () && (command->error () == "")) {
+	if (command->failed () && (command->error ().isEmpty ())) {
 		if (command->errorIncomplete ()) {
 			watch->append (i18n ("Incomplete statement.\n"));
 		} else if (command->errorSyntax ()) {
@@ -155,7 +155,7 @@ void RKwatch::clearWatch () {
 	RK_TRACE (APP);
 	
 	
-	watch->setText ("");
+	watch->setText (QString::null);
 
 	// set a fixed width font
 	QFont font ("Courier");

@@ -38,7 +38,7 @@
 RKFormula::RKFormula (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
 	RK_TRACE (PLUGIN);
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
-	depend = element.attribute ("depend", "");
+	depend = element.attribute ("depend", QString::null);
 	
 	type_selector = new QButtonGroup (this);
 	type_selector->setColumnLayout (0, Qt::Vertical);
@@ -139,7 +139,7 @@ void RKFormula::makeModelString () {
 	model_ok = false;
 	mangled_names.clear ();
 	RKVariable *dep_var = 0;
-	QString table = "";
+	QString table;
 	if (dependent->getNumVars()) {
 		dep_var = dependent->getVariables ().first ();
 		model_ok = true;
@@ -200,7 +200,7 @@ void RKFormula::makeModelString () {
 
 QString RKFormula::mangleName (RKVariable *var) {
 	RK_TRACE (PLUGIN);
-	if (!var) return "";
+	if (!var) return QString::null;
 		
 	QString dummy = var->getShortName ();
 	QString dummy2= dummy;
@@ -282,7 +282,7 @@ void RKFormula::addButtonClicked () {
 			}
 			dummy.append (interactions[i].vars[j]->getShortName ());
 		}
-		QListViewItem *item = new QListViewItem (parent, "", dummy);
+		QListViewItem *item = new QListViewItem (parent, QString::null, dummy);
 		interaction_map.insert (item, interactions[i]);
 	}
 	

@@ -52,7 +52,7 @@ void RContainerObject::updateFromR () {
 	RK_TRACE (OBJECTS);
 
 // TODO: move classification / type mismatch-checking to RObject
-	RCommand *command = new RCommand (".rk.classify (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, CLASSIFY_COMMAND);
+	RCommand *command = new RCommand (".rk.classify (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString::null, this, CLASSIFY_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 }
 
@@ -97,10 +97,10 @@ void RContainerObject::rCommandDone (RCommand *command) {
 			// classifiy command was successful. now get further information.
 			if (hasMetaObject ()) getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain ());
 
-			RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
+			RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CLASS_COMMAND);
 			RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 
-			command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CHILD_LIST_COMMAND);
+			command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CHILD_LIST_COMMAND);
 			RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 		}
 		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
@@ -307,9 +307,9 @@ QString RContainerObject::validizeName (const QString &child_name) {
 	QString ret = child_name;
 	ret = ret.replace (QRegExp ("[^a-zA-Z0-9]"), ".");
 	ret = ret.replace (QRegExp ("^\\.*[0-9]+"), ".");
-	if (ret == "") ret = "var";
+	if (ret.isEmpty ()) ret = "var";
 	int i=-1;
-	QString postfix = "";
+	QString postfix;
 	while (childmap.contains (ret + postfix)) {
 		postfix.setNum (++i);
 	}

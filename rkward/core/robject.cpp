@@ -68,7 +68,7 @@ QString RObject::getMetaProperty (const QString &id) {
 			return (it.data ());
 		}
 	}
-	return "";
+	return QString::null;
 }
 
 QString RObject::getDescription () {
@@ -89,7 +89,7 @@ void RObject::setLabel (const QString &value, bool sync) {
 
 void RObject::setMetaProperty (const QString &id, const QString &value, bool sync) {
 	RK_TRACE (OBJECTS);
-	if (value == "") {
+	if (value.isEmpty ()) {
 		if (meta_map) {
 			meta_map->remove (id);
 			if (!meta_map->size ()) {
@@ -123,7 +123,7 @@ QString RObject::makeChildName (const QString &short_child_name) {
 	
 void RObject::getMetaData (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
-	RCommand *command = new RCommand (".rk.get.meta (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_META_COMMAND);
+	RCommand *command = new RCommand (".rk.get.meta (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_META_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 }
 

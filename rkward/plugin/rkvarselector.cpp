@@ -33,7 +33,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlu
 	RK_TRACE (PLUGIN);
 	RKGlobals::rObjectList ()->updateFromR ();
 	QVBoxLayout  *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
-	depend = element.attribute ("depend", "");
+	depend = element.attribute ("depend", QString::null);
 	
 	label = new QLabel (element.attribute ("label", "Select Variable(s)"), this);
 	vbox->addWidget (label);

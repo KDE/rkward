@@ -427,7 +427,7 @@ void TwinTable::pasteEncoded (QByteArray content) {
 		// proceed to the next segment
 		if (pasted.length () <= (next_delim + 1)) {
 			// unfortunately QString.right (<=0) does not return an empty string!
-			pasted = "";
+			pasted = QString::null;
 		} else {
 			pasted=pasted.right (pasted.length () - (next_delim + 1));
 		}

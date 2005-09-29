@@ -147,7 +147,7 @@ bool RKLoadLibsDialog::downloadPackages (const QStringList &packages) {
 	if (packages.isEmpty ()) return false;
 	
 	QString package_string = "c (\"" + packages.join ("\", \"") + "\")";
-	RCommand *command = new RCommand ("download.packages (pkgs=" + package_string + ", destdir=\"" + to_dir + "\")", RCommand::App, "", this, DOWNLOAD_PACKAGES_COMMAND);
+	RCommand *command = new RCommand ("download.packages (pkgs=" + package_string + ", destdir=\"" + to_dir + "\")", RCommand::App, QString::null, this, DOWNLOAD_PACKAGES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 	
 	if (RKCancelDialog::showCancelDialog (i18n ("Fetch list"), i18n ("Please, stand by while downloading the list of packages."), this, this, SIGNAL (downloadComplete ()), command) == QDialog::Rejected) return false;
@@ -258,8 +258,8 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	
 	setEnabled (false);
 	
-	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_INSTALLED_PACKAGES, dialog->chain);
-	RKGlobals::rInterface ()->issueCommand (".packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, GET_LOADED_PACKAGES, dialog->chain);
+	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_INSTALLED_PACKAGES, dialog->chain);
+	RKGlobals::rInterface ()->issueCommand (".packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_LOADED_PACKAGES, dialog->chain);
 	
 	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
 	connect (dialog, SIGNAL (apply ()), this, SLOT (apply ()));
@@ -355,7 +355,7 @@ void LoadUnloadWidget::doLoadUnload () {
 	QListViewItem *loaded = loaded_view->firstChild ();
 	while (loaded) {
 		if (!prev_packages.contains (loaded->text (0))) {
-			RKGlobals::rInterface ()->issueCommand ("library (\"" + loaded->text (0) + "\")", RCommand::App, "", this, LOAD_PACKAGE_COMMAND, parent->chain);
+			RKGlobals::rInterface ()->issueCommand ("library (\"" + loaded->text (0) + "\")", RCommand::App, QString::null, this, LOAD_PACKAGE_COMMAND, parent->chain);
 		}
 		loaded = loaded->nextSibling ();
 	}
@@ -373,7 +373,7 @@ void LoadUnloadWidget::doLoadUnload () {
 			loaded = next;
 		}
 		if (!found) {
-			RKGlobals::rInterface ()->issueCommand ("detach (package:" + (*it) + ")", RCommand::App, "", this, LOAD_PACKAGE_COMMAND, parent->chain);
+			RKGlobals::rInterface ()->issueCommand ("detach (package:" + (*it) + ")", RCommand::App, QString::null, this, LOAD_PACKAGE_COMMAND, parent->chain);
 		}
 	}
 }
@@ -501,7 +501,7 @@ void UpdatePackagesWidget::updateAllButtonClicked () {
 
 void UpdatePackagesWidget::getListButtonClicked () {
 	RK_TRACE (DIALOGS);
-	RCommand *command = new RCommand ("as.vector (old.packages ())", RCommand::App | RCommand::GetStringVector, "", this, FIND_OLD_PACKAGES_COMMAND);
+	RCommand *command = new RCommand ("as.vector (old.packages ())", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 	
 	get_list_button->setEnabled (false);
@@ -613,7 +613,7 @@ void InstallPackagesWidget::installSelectedButtonClicked () {
 
 void InstallPackagesWidget::getListButtonClicked () {
 	RK_TRACE (DIALOGS);
-	RCommand *command = new RCommand (".rk.get.CRAN.packages ()", RCommand::App | RCommand::GetStringVector, "", this, FIND_AVAILABLE_PACKAGES_COMMAND);
+	RCommand *command = new RCommand (".rk.get.CRAN.packages ()", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_AVAILABLE_PACKAGES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 	
 	get_list_button->setEnabled (false);

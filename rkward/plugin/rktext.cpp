@@ -34,7 +34,7 @@ RKText::RKText(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : 
 	QStringList lines = lines.split ("\n", element.text (), false);
 	for (unsigned int i=0; i < lines.count (); i++) {
 		QString line = lines[i].stripWhiteSpace ();
-		if (line != "") {
+		if (!line.isEmpty ()) {
 			text.append (line + "\n");
 		}
 	}

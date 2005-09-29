@@ -106,7 +106,7 @@ void RKSettingsModuleR::applyChanges () {
 		}
 		command.append ("\"" + *it + "\"");
 	}
-	RKGlobals::rInterface ()->issueCommand (command + "))\n", RCommand::App, "", 0, 0, commandChain ());
+	RKGlobals::rInterface ()->issueCommand (command + "))\n", RCommand::App, QString::null, 0, 0, commandChain ());
 }
 
 void RKSettingsModuleR::save (KConfig *config) {
@@ -124,7 +124,7 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
 	config->setGroup ("R Settings");
-	r_home_dir = config->readEntry ("R_HOME", "");
+	r_home_dir = config->readEntry ("R_HOME", QString::null);
 	r_nosave = config->readBoolEntry ("--no-save", true);
 	r_slave = config->readBoolEntry ("--slave", true);
 	archive_packages = config->readBoolEntry ("archive packages", false);

@@ -156,7 +156,7 @@ void RThread::doCommand (RCommand *command) {
 			command->status |= RCommand::ErrorOther;
 			RK_DO (qDebug ("Command failed (other)"), RBACKEND, DL_WARNING);
 		}
-		RK_DO (qDebug ("failed command was: '%s'", command->command ().latin1 ()), RBACKEND, DL_WARNING);
+		RK_DO (qDebug ("failed command was: '%s'", command->command ().latin1 ()), RBACKEND, DL_INFO);
 	} else {
 		command->status |= RCommand::WasTried;
 	}
@@ -300,7 +300,7 @@ int RThread::initialize () {
 	RK_TRACE (RBACKEND);
 
 	// we create a fake RCommand to capture all the output/errors during startup
-	current_command = new RCommand ("", RCommand::App, "R Startup");
+	current_command = new RCommand (QString::null, RCommand::App, "R Startup");
 
 	QString r_home = RKSettingsModuleR::rHomeDir();
 

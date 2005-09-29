@@ -35,12 +35,12 @@ RKPluginWidget::~RKPluginWidget () {
 
 QString RKPluginWidget::complaints () {
 	RK_TRACE (PLUGIN);
-	return "";
+	return QString::null;
 }
 
 QString RKPluginWidget::value (const QString &) {
 	RK_TRACE (PLUGIN);
-	return "";
+	return QString::null;
 }
 
 bool RKPluginWidget::isSatisfied () {

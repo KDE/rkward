@@ -46,7 +46,7 @@ public:
 	virtual void writeData (const QString &data) = 0;
 	
 	QString retrieveOutput () { return _output; };
-	void resetOutput () { _output = ""; };
+	void resetOutput () { _output = QString::null; };
 signals:
 	void commandDone (int);
 	void idle ();

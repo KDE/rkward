@@ -33,7 +33,7 @@ RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin) 
 	// create label
 	label = new QLabel (element.attribute ("label", "Select one:"), this);
 	vbox->addWidget (label);
-	depend = element.attribute ("depend", "");
+	depend = element.attribute ("depend", QString::null);
 
 	// create ButtonGroup
 	group = new QButtonGroup (this);
@@ -82,7 +82,7 @@ QString RKRadio::value (const QString &) {
 		}
 	}
 
-	return "";
+	return QString::null;
 }
 
 void RKRadio::buttonClicked (int) {

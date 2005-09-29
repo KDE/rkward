@@ -509,7 +509,7 @@ void RKPlugin::ok () {
 		}
 		changed ();
 	} else {
-		RKGlobals::rInterface ()->issueCommand (new RCommand (current_code, RCommand::Plugin, "", this));
+		RKGlobals::rInterface ()->issueCommand (new RCommand (current_code, RCommand::Plugin, QString::null, this));
 		script_backend_chain = RKGlobals::rInterface ()->startChain ();
 		backend->printout (BACKEND_DONT_CARE);
 		backend->cleanup (BACKEND_FOR_SUBMISSION);
@@ -568,7 +568,7 @@ void RKPlugin::backendCommandDone (int flags) {
 		RK_DO (qDebug ("current_code %s", current_code.latin1 ()), PLUGIN, DL_DEBUG);
 		backend->resetOutput ();
 	} else if (flags == BACKEND_FOR_SUBMISSION) {
-		RKGlobals::rInterface ()->issueCommand (new RCommand (backend->retrieveOutput (), RCommand::Plugin | RCommand::DirectToOutput, "", this), script_backend_chain);
+		RKGlobals::rInterface ()->issueCommand (new RCommand (backend->retrieveOutput (), RCommand::Plugin | RCommand::DirectToOutput, QString::null, this), script_backend_chain);
 		backend->resetOutput ();
 	}
 }
@@ -598,7 +598,7 @@ void RKPlugin::backendIdle () {
 	//warn.truncate (warn.length () -1);
 
 	if (should_updatecode) {
-		current_code = "";
+		current_code = QString::null;
 		codeDisplay->setText ("Processing. Please wait.");
 		script_backend_chain = RKGlobals::rInterface ()->startChain ();
 		backend->preprocess (BACKEND_DONT_CARE);
@@ -650,12 +650,12 @@ void RKPlugin::changed () {
 
 void RKPlugin::doRCall (const QString &call) {
 	RK_TRACE (PLUGIN);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, "", this, R_FOR_PHP_FLAG), script_backend_chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom, QString::null, this, R_FOR_PHP_FLAG), script_backend_chain);
 }
 
 void RKPlugin::getRVector (const QString &call) {
 	RK_TRACE (PLUGIN);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom | RCommand::GetStringVector, "", this, R_FOR_PHP_FLAG), script_backend_chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (call, RCommand::Plugin | RCommand::PluginCom | RCommand::GetStringVector, QString::null, this, R_FOR_PHP_FLAG), script_backend_chain);
 }
 
 void RKPlugin::rCommandDone (RCommand *command) {

@@ -42,7 +42,7 @@ RKSaveAgent::RKSaveAgent (KURL url, bool save_file_as, DoneAction when_done, KUR
 	RKGlobals::editorManager ()->flushAll ();
 	save_chain = RKGlobals::rInterface ()->startChain (0);
 	
-	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.path () + "\")", RCommand::App, "", this), save_chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.path () + "\")", RCommand::App, QString::null, this), save_chain);
 }
 
 RKSaveAgent::~RKSaveAgent () {
@@ -69,7 +69,7 @@ void RKSaveAgent::rCommandDone (RCommand *command) {
 			int res;
 			res = KMessageBox::warningYesNoCancel (0, i18n ("Saving to file '") + save_url.path () + i18n ("' failed. What do you want to do?"), i18n ("Save failed"), KGuiItem (i18n ("Try saving with a different filename")), KGuiItem (i18n ("Saving failed")));
 			if (res == KMessageBox::Yes) {
-				if (askURL ()) RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.path () + "\")", RCommand::App, "", this), save_chain);
+				if (askURL ()) RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.path () + "\")", RCommand::App, QString::null, this), save_chain);
 				return;
 			} else if (res == KMessageBox::No) {
 				done ();
@@ -81,7 +81,7 @@ void RKSaveAgent::rCommandDone (RCommand *command) {
 			}
 		} else {
 			if (KMessageBox::warningYesNo (0, i18n ("Saving to file '") + save_url.path () + i18n ("' failed. Do you want to try saving to a different filename?")) == KMessageBox::Yes) {
-				if (askURL ()) RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.path () + "\")", RCommand::App, "", this), save_chain);
+				if (askURL ()) RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.path () + "\")", RCommand::App, QString::null, this), save_chain);
 				return;
 			} else {
 				done ();

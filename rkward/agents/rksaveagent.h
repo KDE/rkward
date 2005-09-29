@@ -33,7 +33,7 @@ public:
 	enum DoneAction { DoNothing=0, Quit=1, Load=2 };
 
 /** creates a new RKSaveAgent. If when_done == Quit, the RKSaveAgent will quit the application as soon as saving was successful (or it asked to by the user). Similarily, if when_done==Load, it will load a new workspace after saving (specify the url in load_url). If url is given (not empty), and not save_file_as, the agent will try to save to the given url, else it will ask the user to specify a url. RKSaveAgent will self destruct when done. */
-	RKSaveAgent (KURL url, bool save_file_as=false, DoneAction when_done=DoNothing, KURL load_url="");
+	RKSaveAgent (KURL url, bool save_file_as=false, DoneAction when_done=DoNothing, KURL load_url=QString::null);
 	
 	~RKSaveAgent ();
 protected:

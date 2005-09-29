@@ -48,7 +48,7 @@ public:
 	
 	void createFromR (RContainerObject *parent, const QString &cname);
 	
-	QString getFullName () { return ""; };
+	QString getFullName () { return QString::null; };
 	QString makeChildName (const QString &short_child_name) { return short_child_name; };
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
 	void writeMetaData (RCommandChain *) {};

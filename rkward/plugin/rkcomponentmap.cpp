@@ -45,7 +45,7 @@ int RKComponentMap::addPluginMap (const QString& plugin_map_file) {
 	QDomElement document_element = xml->openXMLFile (plugin_map_file, DL_ERROR);
 	if (xml->highestError () >= DL_ERROR) return (0);
 
-	QString prefix = QFileInfo (plugin_map_file).dirPath (true) + "/" + xml->getStringAttribute(document_element, "base_prefix", "", DL_WARNING);
+	QString prefix = QFileInfo (plugin_map_file).dirPath (true) + "/" + xml->getStringAttribute(document_element, "base_prefix", QString::null, DL_WARNING);
 	QString cnamespace = xml->getStringAttribute(document_element, "namespace", "rkward", DL_WARNING) + "::";
 
 	// step 1: create list of components
@@ -53,8 +53,8 @@ int RKComponentMap::addPluginMap (const QString& plugin_map_file) {
 	XMLChildList list = xml->getChildElements (element, "component", DL_ERROR);
 
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		QString filename = prefix + xml->getStringAttribute((*it), "file", "", DL_WARNING);
-		QString id = cnamespace + xml->getStringAttribute((*it), "id", "", DL_WARNING);
+		QString filename = prefix + xml->getStringAttribute((*it), "file", QString::null, DL_WARNING);
+		QString id = cnamespace + xml->getStringAttribute((*it), "id", QString::null, DL_WARNING);
 		int type = xml->getMultiChoiceAttribute ((*it), "type", "standard", 0, DL_WARNING);
 
 		if (components.contains (id)) {

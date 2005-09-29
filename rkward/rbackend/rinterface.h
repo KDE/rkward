@@ -54,7 +54,7 @@ public:
 /** issues the given command in the given chain */
 	void issueCommand (RCommand *command, RCommandChain *chain=0);
 /** convenience function to create a new command and issue it. See documentation on RCommand::RCommand () and RInterface::issueCommand () */
-	void issueCommand (const QString &command, int type = 0, const QString &rk_equiv = "", RCommandReceiver *receiver=0, int flags=0, RCommandChain *chain=0);
+	void issueCommand (const QString &command, int type = 0, const QString &rk_equiv = QString::null, RCommandReceiver *receiver=0, int flags=0, RCommandChain *chain=0);
 
 /** opens a new command chain. Returns a pointer to the new chain. If you specify a parent, the new chain will be a sub-chain of that chain. */
 	RCommandChain *startChain (RCommandChain *parent=0);
@@ -142,7 +142,7 @@ private:
 
 
 void MyReceiver::someFunction () {
-	RKGlobals::rInter->issueCommand ("print (1+1)", RCommand::App, "", this);
+	RKGlobals::rInter->issueCommand ("print (1+1)", RCommand::App, QString::null, this);
 }
 
 void MyReceiver::rCommandDone (RCommand *command) {
@@ -174,7 +174,7 @@ To illustrate the option of using "FLAGS", here is a reduced example of how RKVa
 
 void RKVariable::updateFromR () {
 	//...
-	RCommand *command = new RCommand ("length (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, "", this, UPDATE_DIM_COMMAND);
+	RCommand *command = new RCommand ("length (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString::null, this, UPDATE_DIM_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 }
 
@@ -182,7 +182,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 	//...
 	if (command->getFlags () == UPDATE_DIM_COMMAND) {
 		// ...
-		RCommand *ncommand = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, "", this, UPDATE_CLASS_COMMAND);
+		RCommand *ncommand = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CLASS_COMMAND);
 		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
 	} else if (command->getFlags () == UPDATE_CLASS_COMMAND) {
 		//...
@@ -307,7 +307,7 @@ This is typically used in plugins: When you specify this modifier, the plain tex
 These are special modifiers helpful when transferring data from R to RKWard (used primarily in the editor classes and in conjunction with RCommand::Sync): They tell the backend to try to fetch the result as and array of int, char*, or double, respectively. For instance, if you know object "myobject" is an integer vector, you may get the data using
 
 \code
-RKGlobals::rInterface ()->issueCommand ("myobject", RCommand::Sync | RCommand::GetIntVector, "",this);
+RKGlobals::rInterface ()->issueCommand ("myobject", RCommand::Sync | RCommand::GetIntVector, QString::null,this);
 \endcode
 
 Assuming the data can in fact be converted to a vector of integers, you can then access the data using these members in RCommand:

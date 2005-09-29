@@ -34,7 +34,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : QWidget (paren
 	view_area = new QTextEdit (this);
 	view_area->setTextFormat (PlainText);
 	view_area->setReadOnly (true);
-	view_area->setText ("");
+	view_area->setText (QString::null);
 	QFont font ("Courier");
 	view_area->setCurrentFont (font);
 	view_area->setWordWrap (QTextEdit::NoWrap);
@@ -55,7 +55,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : QWidget (paren
 	}
 	view_area->append (i18n("\nResult of 'print (") + object->getFullName () + i18n(")':\n"));
 	
-	RCommand *command = new RCommand ("print (" + object->getFullName () + ")", RCommand::App, "", this);
+	RCommand *command = new RCommand ("print (" + object->getFullName () + ")", RCommand::App, QString::null, this);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 	waiting = true;
 	destruct = false;
