@@ -285,7 +285,7 @@ char **extractStrings (SEXP from_exp, int *count) {
 
 void deleteStrings (char **strings, int count) {
 	for (int i= (count-1); i >=0; --i) {
-		delete (strings[i]);
+		DELETE_STRING (strings[i]);
 	}
 	delete [] strings;
 }

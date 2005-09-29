@@ -9,11 +9,16 @@ Little annoying stuff:
 - use include "x.moc" in order to speed up build
 - use more QDicts instead of QMap<QString,...>s
 - use R_DirtyImage to determine, whether workspace needs to be saved
+- in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
+- The logic in RKHTMLWindowPart is rather messy. I think we should use two (three?) separate parts for showing output, help pages (and other generic HTML?). Most importantly, all those need slightly different GUIs. Probably the parts should all derive from a common base class. Most of what is currently in RKHelpWindow should probably be merged into the parts. Maybe RKHelpWindow can be obsoleted entirely.
+	- Place those sources right inside rkhelpwindow.cpp/.h, instead of file name inflation.
+	- Rename RKHelpWindow to RKHTMLWindow.
 
 - "real time" display of output in the console (remember to add Mutex protection before then!)
 
 - remove classes/files:
 	- RKCommandEditor (first check for reusable functionality)
+		- RKPlugin still uses RKCommandEditor. Convert to use RKCommandEditorWindow instead.
 	- RKOutputWindow (first scan for useful menu item ideas)
 
 stuff to do before 0.3.5 release
@@ -29,6 +34,8 @@ code cleanups
 - I've changed the simple RInterface::issueCommand (QString, ...) command to return a pointer to the RCommand created. This will allow for lots of small cleanups. Do them.
 	- well, on second thought, it might be better to rely more on RCommand::id () instead of pointers. Why? The id is unique (until integer overflow). The pointer may be reused after a delete -> potential problem when trying to cancel command which is actually already deleted (and potentially other cases)
 	- let's set this back for a while
+- active/disabled setting for RKPluginWidgets: 1) Move default implementation to RKPluginWidget-base class (make virtual for special needs). 2) rework mechanism, when switching to component infrastructure
+- replace '""' by QString::null everywhere (probably just an automatic replace; manual work will be needed only in a few places)
 
 API documentation:
 - add page containing a rough overview of general architecture
@@ -97,4 +104,5 @@ Not quite correct yet:
 
 .Internal (.addCondHands (c ("warning"), list (function (x) {print ("w"); print (conditionCall (x))}), globalenv (), NULL, TRUE))
 
-condition handlers seem to be reset after an error!!!
+condition handlers seem to be reset after an error!
+condition handlers do not seem to carry over two separate calls of R_tryEval ().

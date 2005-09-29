@@ -15,11 +15,11 @@
 #include <qlayout.h>
 
 #include "../rkglobals.h"
-
+#include "../debug.h"
 
 RKNote::RKNote(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+	RK_TRACE (PLUGIN);
 
-	qDebug("creating note");
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	label = new QLabel (element.attribute ("label", "Select one:"), this);
 	vbox->addWidget (label);
@@ -31,22 +31,23 @@ RKNote::RKNote(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : 
 
 RKNote::~RKNote()
 {
+	RK_TRACE (PLUGIN);
 }
 
 void RKNote::setEnabled(bool checked){
+	RK_TRACE (PLUGIN);
   label->setEnabled(checked);
   }
 void RKNote::slotActive(bool isOk){
+	RK_TRACE (PLUGIN);
 label->setEnabled(isOk) ;
 }
 
   
 void RKNote::slotActive(){
+	RK_TRACE (PLUGIN);
 bool isOk = label->isEnabled();
 label->setEnabled(! isOk) ;
 }
-
-
-
 
 #include "rknote.moc"

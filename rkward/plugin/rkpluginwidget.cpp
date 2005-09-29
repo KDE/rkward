@@ -20,26 +20,31 @@
 #include <qdom.h>
 
 #include "rkplugin.h"
+#include "../debug.h"
 
 RKPluginWidget::RKPluginWidget (const QDomElement &, QWidget *parent, RKPlugin *plugin) : QWidget (parent) {
+	RK_TRACE (PLUGIN);
 	_plugin = plugin;
 	
 	connect (this, SIGNAL (changed ()), _plugin, SLOT (changed ()));
 }
 
 RKPluginWidget::~RKPluginWidget () {
-	qDebug ("widget deleted");
+	RK_TRACE (PLUGIN);
 }
 
 QString RKPluginWidget::complaints () {
+	RK_TRACE (PLUGIN);
 	return "";
 }
 
 QString RKPluginWidget::value (const QString &) {
+	RK_TRACE (PLUGIN);
 	return "";
 }
 
 bool RKPluginWidget::isSatisfied () {
+	RK_TRACE (PLUGIN);
 	return true;
 }
 

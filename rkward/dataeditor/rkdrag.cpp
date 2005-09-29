@@ -19,14 +19,20 @@
 
 #include "twintable.h"
 
+#include "../debug.h"
+
 RKDrag::RKDrag(TwinTable *dragSource, const char *name) : QDragObject (dragSource, name){
+	RK_TRACE (EDITOR);
+
 	data = dragSource->encodeSelection ();
 }
 
 RKDrag::~RKDrag(){
+	RK_TRACE (EDITOR);
 }
 
 const char* RKDrag::format (int i) const {
+	RK_TRACE (EDITOR);
 	if (i == 0) {
 		return "text/tab-separated-values";
 	}
@@ -37,13 +43,12 @@ const char* RKDrag::format (int i) const {
 }
 
 QByteArray RKDrag::encodedData (const char * mimeType) const {
+	RK_TRACE (EDITOR);
 	QString request = mimeType;
 	if (request == format (0)) {
-		qDebug ("hit----------------------------");
 		return data;
 	}
 	if (request == format (1)) {
-		qDebug ("hit++++++++++++++++++++++++++++");
 		return data;
 	}
 	return data;
@@ -51,7 +56,7 @@ QByteArray RKDrag::encodedData (const char * mimeType) const {
 }
 
 bool RKDrag::provides (const char *mimeType) {
-	qDebug ("provides");
+	RK_TRACE (EDITOR);
 	if ((mimeType == format (0)) || (mimeType == format (1))) {
 		return true;
 	}

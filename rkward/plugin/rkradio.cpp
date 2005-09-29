@@ -24,8 +24,10 @@
 #include <qradiobutton.h>
 
 #include "../rkglobals.h"
+#include "../debug.h"
 
 RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+	RK_TRACE (PLUGIN);
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 
 	// create label
@@ -46,7 +48,6 @@ RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin) 
 	QDomNodeList children = element.elementsByTagName("option");
 	bool checked_one = false;	
 	for (unsigned int i=0; i < children.count (); i++) {
-		qDebug ("option");
 		QDomElement child = children.item (i).toElement ();
 
 		QRadioButton *button = new QRadioButton (child.attribute ("label"), group);
@@ -69,9 +70,11 @@ RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin) 
 }
 
 RKRadio::~RKRadio(){
+	RK_TRACE (PLUGIN);
 }
 
 QString RKRadio::value (const QString &) {
+	RK_TRACE (PLUGIN);
 	OptionsMap::Iterator it;
 	for (it = options.begin(); it != options.end(); ++it) {
 		if (it.key()->isChecked ()) {
@@ -83,27 +86,32 @@ QString RKRadio::value (const QString &) {
 }
 
 void RKRadio::buttonClicked (int) {
+	RK_TRACE (PLUGIN);
 	emit (changed ());
 }
 
 void RKRadio::setEnabled(bool checked){
+	RK_TRACE (PLUGIN);
   group->setEnabled(checked);
   label->setEnabled(checked);
   }
 
 
 void RKRadio::slotActive(){
+	RK_TRACE (PLUGIN);
 bool isOk = group->isEnabled();
 group->setEnabled(! isOk) ;
 label->setEnabled(! isOk) ;
 }
 
 void RKRadio::slotActive(bool isOk){
+	RK_TRACE (PLUGIN);
 group->setEnabled(isOk) ;
 label->setEnabled(isOk) ;
 }
 
 QRadioButton * RKRadio::findLabel (QString lab) {
+	RK_TRACE (PLUGIN);
   QRadioButton * sol = 0 ;
   OptionsMap::iterator findlab;
       for (findlab = options.begin(); findlab != options.end(); ++findlab) {
@@ -116,6 +124,7 @@ QRadioButton * RKRadio::findLabel (QString lab) {
 }  
 
 bool RKRadio::isOk(QString val) {
+	RK_TRACE (PLUGIN);
   QString sol ;
   OptionsMap::Iterator it;
 	for (it = options.begin(); it != options.end(); ++it) {

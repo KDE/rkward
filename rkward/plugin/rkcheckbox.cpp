@@ -22,9 +22,10 @@
 
 #include "rkplugin.h"
 #include "../rkglobals.h"
+#include "../debug.h"
 
 RKCheckBox::RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
-	qDebug ("creating checkbox");
+	RK_TRACE (PLUGIN);
 
   QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	checkbox = new QCheckBox (element.attribute ("label"), this);
@@ -44,15 +45,18 @@ RKCheckBox::RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *p
 }
 
 RKCheckBox::~RKCheckBox () {
+	RK_TRACE (PLUGIN);
 }
 
 
 void RKCheckBox::setEnabled(bool checked){
+	RK_TRACE (PLUGIN);
   checkbox->setEnabled(checked);
   }
   
 
 QString RKCheckBox::value (const QString &) {
+	RK_TRACE (PLUGIN);
 	if (checkbox->isChecked ()) {
 		return value_if_checked;
 	} else {
@@ -62,15 +66,18 @@ QString RKCheckBox::value (const QString &) {
 
 
 void RKCheckBox::changedState (int) {
+	RK_TRACE (PLUGIN);
 	emit (changed ());
 }
 
 void RKCheckBox::slotActive(bool isOk){
+	RK_TRACE (PLUGIN);
 checkbox->setEnabled(isOk) ;
 }
 
 
 void RKCheckBox::slotActive(){
+	RK_TRACE (PLUGIN);
 bool isOk = checkbox->isEnabled();
 checkbox->setEnabled(! isOk) ;
 }

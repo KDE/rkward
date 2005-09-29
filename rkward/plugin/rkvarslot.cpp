@@ -31,13 +31,14 @@
 #include "rkvarselector.h"
 #include "rkplugin.h"
 #include "../rkglobals.h"
+#include "../debug.h"
 #include "../core/rkvariable.h"
 #include "../core/rcontainerobject.h"
 
 
 RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
-	qDebug ("creating varselector");
-	
+	RK_TRACE (PLUGIN);
+
 	// layout
 	QGridLayout *g_layout = new QGridLayout (this, 3, 3, RKGlobals::spacingHint ());
 
@@ -93,9 +94,11 @@ RKVarSlot::RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plug
 }
 
 RKVarSlot::~RKVarSlot(){
+	RK_TRACE (PLUGIN);
 }
 
 void RKVarSlot::initialize () {
+	RK_TRACE (PLUGIN);
 	source = plugin ()->getVarSelector (source_id);
 	if (!source) return;
 	connect (source, SIGNAL (changed ()), this, SLOT (objectListChanged ()));
@@ -103,6 +106,8 @@ void RKVarSlot::initialize () {
 
 // TODO make the same with cont_map 
 void RKVarSlot::objectListChanged () {
+	RK_TRACE (PLUGIN);
+
 	if (!source) return;
 	if (!multi) {
 		if (num_vars) {
@@ -139,6 +144,8 @@ void RKVarSlot::objectListChanged () {
 }
 
 void RKVarSlot::listSelectionChanged() {
+	RK_TRACE (PLUGIN);
+
 	selection = false;
 
 	QListViewItem *item = list->firstChild ();
@@ -159,6 +166,8 @@ void RKVarSlot::listSelectionChanged() {
 }
 
 void RKVarSlot::selectPressed () {
+	RK_TRACE (PLUGIN);
+
 	if (!multi) {
 		if (!num_vars) {
 			if (!source) return;
@@ -259,6 +268,8 @@ void RKVarSlot::selectPressed () {
 }
 
 QValueList<RKVariable*> RKVarSlot::getVariables () {
+	RK_TRACE (PLUGIN);
+
 	QValueList<RKVariable*> ret;
 	for (ItemMap::iterator it = item_map.begin (); it != item_map.end (); ++it) {
 		ret.append (it.data ());
@@ -267,6 +278,8 @@ QValueList<RKVariable*> RKVarSlot::getVariables () {
 }
 
 void RKVarSlot::updateState () {
+	RK_TRACE (PLUGIN);
+
 	if (!isSatisfied ()) {
 		if (multi) {
 			list->setPaletteBackgroundColor (QColor (255, 0, 0));
@@ -283,12 +296,16 @@ void RKVarSlot::updateState () {
 }
 
 bool RKVarSlot::isSatisfied () {
+	RK_TRACE (PLUGIN);
+
 	if (!required) return ((!num_vars) || (num_vars >= min_vars));
 	return (num_vars >= min_vars);
 }
 
 QString RKVarSlot::value (const QString &modifier) {
-QString ret;
+	RK_TRACE (PLUGIN);
+
+	QString ret;
 	if (!multi) {
 		if (num_vars) {
 			if (modifier == "label") {
@@ -326,32 +343,39 @@ QString ret;
 			item = item->nextSibling ();
 		}
 	}
-//		qDebug ( "%s", ret.latin1() ) ;
-return ret;
+
+	//		qDebug ( "%s", ret.latin1() ) ;
+	return ret;
 }
 
 QString RKVarSlot::complaints () {
+	RK_TRACE (PLUGIN);
+
 	if (isSatisfied ()) return "";
 	return i18n (" - You have to select a variable for the \"" + label->text () + "\"-field\n");
 }
 
 void RKVarSlot::setEnabled(bool checked){
+	RK_TRACE (PLUGIN);
   line_edit->setEnabled(checked);   
   select->setEnabled(checked);
     }
 
 void RKVarSlot::slotActive(){
+	RK_TRACE (PLUGIN);
   bool isOk = line_edit->isEnabled();
   line_edit->setEnabled(! isOk) ;
   select->setEnabled(! isOk) ;
 }
 
 void RKVarSlot::slotActive(bool isOk){
+	RK_TRACE (PLUGIN);
   line_edit->setEnabled(isOk) ;
   select->setEnabled(isOk) ;
 }
 
 bool RKVarSlot::belongToClasses(const QString &nom ) {
+	RK_TRACE (PLUGIN);
 	if (classes == "all") return true;
 	if (classes.find (nom, 0) != -1) return true; 
 	else return false;

@@ -25,8 +25,11 @@
 
 #include "../settings/rksettingsmodulephp.h"
 #include "../settings/rksettingsmodulelogfiles.h"
+#include "../debug.h"
 
 PHPBackend::PHPBackend() {
+	RK_TRACE (PHP);
+
 	php_process = 0;
 	eot_string="#RKEND#\n";
 	busy_writing = false;
@@ -35,12 +38,15 @@ PHPBackend::PHPBackend() {
 
 
 PHPBackend::~PHPBackend() {
+	RK_TRACE (PHP);
 	destroy ();
 }
 
 bool PHPBackend::initialize (const QString &filename) {
+	RK_TRACE (PHP);
+
 	if (php_process && php_process->isRunning ()) {
-		qDebug ("another template is already openend in this backend");
+		RK_DO (qDebug ("another template is already openend in this backend"), PHP, DL_ERROR);
 		return false;
 	}
 
@@ -69,6 +75,8 @@ bool PHPBackend::initialize (const QString &filename) {
 }
 
 void PHPBackend::destroy () {
+	RK_TRACE (PHP);
+
 	if (php_process) php_process->kill ();
 	delete php_process;
 	php_process = 0;
@@ -87,7 +95,9 @@ void PHPBackend::destroy () {
 }
 
 void PHPBackend::callFunction (const QString &function, int flags) {
-	qDebug ("callFunction %s", function.latin1 ());
+	RK_TRACE (PHP);
+	RK_DO (qDebug ("callFunction %s", function.latin1 ()), PHP, DL_DEBUG);
+
 	KTempFile *file = new KTempFile ();
 	*(file->textStream ()) << "<? " << function << " ?>\n";
 	file->close ();
@@ -100,6 +110,8 @@ void PHPBackend::callFunction (const QString &function, int flags) {
 }
 
 void PHPBackend::tryNextFunction () {
+	RK_TRACE (PHP);
+
 	if ((!busy_writing) && php_process && php_process->isRunning () && (!busy) && command_stack.count ()) {
 	/// clean up previous command if applicable
 		if (command_stack.first ()->complete) {
@@ -111,7 +123,7 @@ void PHPBackend::tryNextFunction () {
 			if (!command_stack.count ()) return;
 		}
 		
-		qDebug ("submitting PHP code: " + command_stack.first ()->file->name ());
+		RK_DO (qDebug ("submitting PHP code: %s", command_stack.first ()->file->name ().latin1 ()), PHP, DL_DEBUG);
 		current_command = command_stack.first ()->file->name () + eot_string;
 		php_process->writeStdin (current_command.latin1 (), current_command.length ());
 		busy_writing = doing_command = busy = true;
@@ -121,13 +133,16 @@ void PHPBackend::tryNextFunction () {
 }
 
 void PHPBackend::writeData (const QString &data) {
+	RK_TRACE (PHP);
 	data_stack.append (data  + eot_string);
 	tryWriteData ();
 }
 
 void PHPBackend::tryWriteData () {
+	RK_TRACE (PHP);
+
 	if ((!busy_writing) && php_process && php_process->isRunning () && busy && (data_stack.count ())) {
-		qDebug ("submitting data: " + data_stack.first ());
+		RK_DO (qDebug ("submitting data: %s", data_stack.first ().latin1 ()), PHP, DL_DEBUG);
 		php_process->writeStdin (data_stack.first ().latin1 (), data_stack.first ().length ());
 		busy_writing = true;
 		doing_command = false;
@@ -135,12 +150,16 @@ void PHPBackend::tryWriteData () {
 }
 
 void PHPBackend::doneWriting (KProcess *proc) {
+	RK_TRACE (PHP);
+
 	busy_writing = false;
 	if (!doing_command) data_stack.pop_front ();
 	tryWriteData ();
 }
 
 void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
+	RK_TRACE (PHP);
+
 	QString output = buf;
 	QString request;
 	QString data;
@@ -161,7 +180,7 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 	} else {
 		data = output;
 	}
-	qDebug ("request: %s\ndata: %s", request.latin1 (), data.latin1 ());
+	RK_DO (qDebug ("request: %s\ndata: %s", request.latin1 (), data.latin1 ()), PHP, DL_DEBUG);
 	
 	// pending data is always first in a stream, so process it first, too
 	if (have_data) {
@@ -188,19 +207,19 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 			} 
 		} else if (request.startsWith ("requesting data:")) {
 			QString requested_object = request.remove ("requesting data:");
-			qDebug ("requested data: \"%s\"", requested_object.latin1 ());
+			RK_DO (qDebug ("requested data: \"%s\"", requested_object.latin1 ()), PHP, DL_DEBUG);
 			emit (requestValue (requested_object));
 			busy = true;
 //			writeData (res + eot_string);
 		} else if (request.startsWith ("requesting rcall:")) {
 			QString requested_call = request.remove ("requesting rcall:");
-			qDebug ("requested rcall: \"%s\"", requested_call.latin1 ());
+			RK_DO (qDebug ("requested rcall: \"%s\"", requested_call.latin1 ()), PHP, DL_DEBUG);
 			emit (requestRCall (requested_call));
 			busy = true;
 //			_responsible->doRCall (requested_call);
 		} else if (request.startsWith ("requesting rvector:")) {
 			QString requested_call = request.remove ("requesting rvector:");
-			qDebug ("requested rvector: \"%s\"", requested_call.latin1 ());
+			RK_DO (qDebug ("requested rvector: \"%s\"", requested_call.latin1 ()), PHP, DL_DEBUG);
 			emit (requestRVector (requested_call));
 			busy = true;
 //			_responsible->getRVector (requested_call);
@@ -214,3 +233,5 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 		return;
 	}
 }
+
+#include "phpbackend.moc"

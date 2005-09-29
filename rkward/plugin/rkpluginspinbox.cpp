@@ -22,9 +22,11 @@
 
 #include "../misc/rkspinbox.h"
 #include "../rkglobals.h"
+#include "../debug.h"
 #include "rkplugin.h"
 
 RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget(element, parent, plugin) {
+		RK_TRACE (PLUGIN);
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	
 	label = new QLabel (element.attribute ("label", "Enter value:"), this);
@@ -47,33 +49,39 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, QWidget *parent, R
 }
 
 RKPluginSpinBox::~RKPluginSpinBox () {
+	RK_TRACE (PLUGIN);
 }
 
 void RKPluginSpinBox::setEnabled(bool checked){
+	RK_TRACE (PLUGIN);
   spinbox->setEnabled(checked);
   label->setEnabled(checked);
   }
 
 QString RKPluginSpinBox::value (const QString &) {
+	RK_TRACE (PLUGIN);
 	return (spinbox->text ());
 }
 
 void RKPluginSpinBox::valueChanged (int) {
+	RK_TRACE (PLUGIN);
 	plugin ()->changed ();
 }
 
 void RKPluginSpinBox::slotActive(){
+	RK_TRACE (PLUGIN);
 bool isOk = spinbox->isEnabled();
 spinbox->setEnabled(! isOk) ;
 label->setEnabled(! isOk);
 }
 
 void RKPluginSpinBox::slotActive(bool isOk){
+	RK_TRACE (PLUGIN);
 spinbox->setEnabled( isOk) ;
 label->setEnabled(isOk);
 }
 void RKPluginSpinBox::adjust(int longueur, int largeur){
-qDebug("coucou, c'est moi");
+	RK_TRACE (PLUGIN);
 spinbox->resize(longueur, largeur);
 }
 

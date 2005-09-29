@@ -1,31 +1,28 @@
 
 #include "rkpluginbrowser.h"
+
 #include <qdom.h>
 #include <qlayout.h>
 #include <qtextedit.h>
 #include <qlabel.h>
 #include <qvbox.h>
 #include <qgrid.h>
-#include <rkplugin.h>
-#include <qpushbutton.h>
-#include <kfiledialog.h>
-
-#include <klocale.h>
-#include "../rkglobals.h"
 #include <qstring.h>
+#include <qpushbutton.h>
+
+#include <kfiledialog.h>
+#include <klocale.h>
 #include <kurl.h>
+
+#include "rkplugin.h"
+#include "../rkglobals.h"
+#include "../debug.h"
 
 // /////////////////////
 
-
-
-
-
-
-
 RKPluginBrowser::RKPluginBrowser(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+	RK_TRACE (PLUGIN);
 
-	qDebug("creating note");
 	vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	label = new QLabel (element.attribute ("label", "Enter your text"), this);
 	textedit = new QTextEdit ( element.attribute ("initial" ,"") ,
@@ -58,9 +55,11 @@ RKPluginBrowser::RKPluginBrowser(const QDomElement &element, QWidget *parent, RK
 
 RKPluginBrowser::~RKPluginBrowser()
 {
+	RK_TRACE (PLUGIN);
 }
 
 void RKPluginBrowser::setEnabled(bool checked){
+	RK_TRACE (PLUGIN);
 label->setEnabled(checked);
 textedit->setEnabled(checked);
 button->setEnabled(checked);
@@ -68,6 +67,7 @@ button->setEnabled(checked);
 
 
 void RKPluginBrowser::slotActive(bool isOk){
+	RK_TRACE (PLUGIN);
 textedit->setEnabled(isOk) ;
 button->setEnabled(isOk) ;
 label->setEnabled(isOk) ;
@@ -75,6 +75,7 @@ label->setEnabled(isOk) ;
 
   
 void RKPluginBrowser::slotActive(){
+	RK_TRACE (PLUGIN);
 bool isOk = textedit->isEnabled();
 textedit->setEnabled(! isOk) ;
 button->setEnabled(! isOk) ;
@@ -82,15 +83,18 @@ label->setEnabled(! isOk) ;
 }
 
 QString RKPluginBrowser::value (const QString &) {
+	RK_TRACE (PLUGIN);
 	return textedit->text();
 }
 
 
 void RKPluginBrowser::textChanged(){
+	RK_TRACE (PLUGIN);
 	emit(changed());
 }
 
 void RKPluginBrowser::slotPopingup(){
+	RK_TRACE (PLUGIN);
 	if (type == "file") {
 		QString filename= KFileDialog:: getOpenFileName("",filter,0,"") ; 
 		textedit ->setText(filename);

@@ -293,7 +293,7 @@ void RKPlugin::buildDialog (const QDomElement &dialog_element, bool wizard_avail
   // valid for every widget excet formula (too weird)
     Dependancies::Iterator it;
   for (it = dependant.begin(); it != dependant.end(); ++it) {
-  qDebug ("id : %s", it.key().latin1 ()) ;
+  RK_DO (qDebug ("id : %s", it.key().latin1 ()), PLUGIN, DL_DEBUG);
   if  (it.data() != "#free#"){
     WidgetsMap::iterator master ;
       for (master = widgets.begin(); master != widgets.end(); ++master) {
@@ -306,9 +306,9 @@ void RKPlugin::buildDialog (const QDomElement &dialog_element, bool wizard_avail
               if(  ! (RKCheckBox *) master.data()->isOk ){
                 slave.data()->setEnabled(false );
                 };
-               qDebug ("Connecting %s to %s",slave.key().latin1(),master.key().latin1()) ;
+               RK_DO (qDebug ("Connecting %s to %s",slave.key().latin1(),master.key().latin1()), PLUGIN, DL_DEBUG);
                connect( (RKCheckBox *) master.data(), SIGNAL(clicked()) ,(RKCheckBox *)   slave.data(), SLOT(slotActive()));
-               qDebug ("You are very right to choose me OK") ;
+               RK_DO (qDebug ("You are very right to choose me OK"), PLUGIN, DL_DEBUG);
                };
           };
           if (master.data ()->type () == RADIO_WIDGET  ){
@@ -398,7 +398,7 @@ void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_avail
   // valid for every widget excet formula (too weird)
   Dependancies::Iterator it;
   for (it = dependant.begin(); it != dependant.end(); ++it) {
-  qDebug ("id : %s", it.key().latin1 ()) ;
+  RK_DO (qDebug ("id : %s", it.key().latin1 ()), PLUGIN, DL_DEBUG);
   if  (it.data() != "#free#"){
     WidgetsMap::iterator master ;
       for (master = widgets.begin(); master != widgets.end(); ++master) {
@@ -412,7 +412,7 @@ void RKPlugin::buildWizard (const QDomElement &wizard_element, bool dialog_avail
                 slave.data()->setEnabled(false );
                 };
                connect( (RKCheckBox *) master.data(), SIGNAL(clicked()) ,  slave.data(), SLOT(slotActive()));
-               qDebug ("You are very right to choose me OK") ;
+               RK_DO (qDebug ("You are very right to choose me OK"), PLUGIN, DL_DEBUG);
                };
           };
           if (master.data ()->type () == RADIO_WIDGET  ){

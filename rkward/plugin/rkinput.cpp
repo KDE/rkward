@@ -1,18 +1,20 @@
 
 #include "rkinput.h"
+
 #include <qdom.h>
 #include <qlayout.h>
 #include <qtextedit.h>
 #include <qlabel.h>
 #include <qvbox.h>
 #include <qgrid.h>
-#include <rkplugin.h>
-#include "../rkglobals.h"
 
+#include "rkplugin.h"
+#include "../rkglobals.h"
+#include "../debug.h"
 
 RKInput::RKInput(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+	RK_TRACE (PLUGIN);
 
-	qDebug("creating note");
 	vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	label = new QLabel (element.attribute ("label", "Enter your text"), this);
 	QString initial = element.attribute ("initial","") ;
@@ -41,37 +43,40 @@ RKInput::RKInput(const QDomElement &element, QWidget *parent, RKPlugin *plugin) 
 
 RKInput::~RKInput()
 {
+	RK_TRACE (PLUGIN);
 }
 
 void RKInput::setEnabled(bool checked){
+	RK_TRACE (PLUGIN);
 label->setEnabled(checked);
 textedit->setEnabled(checked);
 }
 
 
 void RKInput::slotActive(bool isOk){
+	RK_TRACE (PLUGIN);
 textedit->setEnabled(isOk) ;
 label->setEnabled(isOk) ;
 }
 
   
 void RKInput::slotActive(){
+	RK_TRACE (PLUGIN);
 bool isOk = textedit->isEnabled();
 textedit->setEnabled(! isOk) ;
 label->setEnabled(! isOk) ;
 }
 
 QString RKInput::value (const QString &) {
+	RK_TRACE (PLUGIN);
 	return textedit->text();
 }
 
 
 void RKInput::textChanged(){
+	RK_TRACE (PLUGIN);
 	emit(changed());
 }
 
 
 #include "rkinput.moc"
-
-
-
