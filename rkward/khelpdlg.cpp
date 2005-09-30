@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rkward.h  -  description
+                          khelpdlg  -  description
                              -------------------
-    begin                : Tue Oct 29 20:06:08 CET 2002 
-    copyright            : (C) 2002 by Thomas Friedrichsmeier 
+    begin                : Fri Feb 25 2005
+    copyright            : (C) 2005 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -15,18 +15,18 @@
  *                                                                         *
  ***************************************************************************/
 
- // To be removed :
-#include <kmessagebox.h>
- 
- 
+#include "khelpdlg.h"
+
 #include <klocale.h>
-#include "kurl.h"
+#include <kurl.h>
 
 #include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qlistview.h>
 #include <qlineedit.h>
 #include <qregexp.h>
+#include <qlayout.h>
+#include <qlabel.h>
 
 #include "rbackend/rinterface.h"
 #include "rbackend/rcommandreceiver.h"
@@ -34,39 +34,71 @@
 #include "rkglobals.h"
 #include "rkward.h"
 
-#include "khelpdlg.h"
-#include <kmessagebox.h>
-
 #define GET_HELP_URL 1
 #define HELP_SEARCH 2
 #define GET_INSTALLED_PACKAGES 3
 
-KHelpDlg::KHelpDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
-    : helpDlg(parent,name, modal,fl)
-{
-	resultsList->clear();
-	resultsList->removeColumn(0);
-	
-	resultsList->addColumn (i18n ("Topic"));
-	resultsList->addColumn (i18n ("Title"));
-	resultsList->addColumn (i18n ("Package"));
-	packagesList->insertItem (i18n("All"));
+KHelpDlg::KHelpDlg (QWidget* parent, const char* name) : QWidget (parent, name) {
+	QVBoxLayout* main_layout = new QVBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
+	QHBoxLayout* selection_layout = new QHBoxLayout (main_layout, RKGlobals::spacingHint ());
 
-	// HACK the following is hardcoded, do not modify
+
+	QVBoxLayout* labels_layout = new QVBoxLayout (selection_layout, RKGlobals::spacingHint ());
+	QLabel *label = new QLabel (i18n ("Find:"), this);
+	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
+	labels_layout->addWidget (label);
+	label = new QLabel (i18n ("Fields:"), this);
+	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
+	labels_layout->addWidget (label);
+
+
+	QVBoxLayout* main_settings_layout = new QVBoxLayout (selection_layout, RKGlobals::spacingHint ());
+	field = new QComboBox (true, this);
+	field->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+	connect (field->lineEdit () , SIGNAL (returnPressed ()), this, SLOT (slotFindButtonClicked ()));
+	main_settings_layout->addWidget (field);
+
+	QHBoxLayout* fields_packages_layout = new QHBoxLayout (main_settings_layout, RKGlobals::spacingHint ());
+	fieldsList = new QComboBox (false, this);
+	// HACK the sequence of options is hardcoded, do not modify
 	fieldsList->insertItem (i18n("All"));
 	fieldsList->insertItem (i18n("All but keywords"));
 	fieldsList->insertItem (i18n("Keywords"));
 	fieldsList->insertItem (i18n("Title"));
+	fields_packages_layout->addWidget (fieldsList);
 
-	QLineEdit *edit=field->lineEdit();
+	label = new QLabel (i18n ("Package:"), this);
+	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
+	fields_packages_layout->addWidget (label);
 
-	connect(edit, SIGNAL(returnPressed()), this, SLOT(slotFieldReturnPressed ()));
+	packagesList = new QComboBox (false, this);
+	packagesList->insertItem (i18n("All"));
+	fields_packages_layout->addWidget (packagesList);
+
+
+	QVBoxLayout* checkboxes_layout = new QVBoxLayout (selection_layout, RKGlobals::spacingHint ());
+	caseSensitiveCheckBox = new QCheckBox (i18n ("Case sensitive"), this);
+	checkboxes_layout->addWidget (caseSensitiveCheckBox);
+	fuzzyCheckBox = new QCheckBox (i18n ("Fuzzy matching"), this);
+	fuzzyCheckBox->setChecked (true);
+	checkboxes_layout->addWidget (fuzzyCheckBox);
+
+	findButton = new QPushButton (i18n ("Find"), this);
+	findButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+	connect (findButton, SIGNAL (clicked ()), this, SLOT (slotFindButtonClicked ()));
+	selection_layout->addWidget (findButton);
+
+	resultsList = new QListView (this);
+	resultsList->addColumn (i18n ("Topic"));
+	resultsList->addColumn (i18n ("Title"));
+	resultsList->addColumn (i18n ("Package"));
+	connect (resultsList, SIGNAL (doubleClicked (QListViewItem*, const QPoint&, int)), this, SLOT (slotResultsListDblClicked (QListViewItem*, const QPoint&, int)));
+	main_layout->addWidget (resultsList);
 
 
 	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_INSTALLED_PACKAGES, 0);
 
-
-	
+	setCaption (i18n ("Help search"));
 }
 
 KHelpDlg::~KHelpDlg()
@@ -117,7 +149,7 @@ void KHelpDlg::slotFindButtonClicked()
 		package.append("\"");
 	}
 
-	// HACK the following is hardcoded, do not modify
+	// HACK the sequence of options is hardcoded, do not modify
 	QString fields;
 	
 	switch(fieldsList->currentItem()){
@@ -159,12 +191,6 @@ void KHelpDlg::slotResultsListDblClicked( QListViewItem * item, const QPoint &, 
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
 }
 
-void KHelpDlg::slotPackageListActivated()
-{
-
-}
-
-
 
 void KHelpDlg::rCommandDone (RCommand *command) {
 	KURL url;
@@ -198,12 +224,4 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 
 
 #include "khelpdlg.moc"
-
-
-
-
-void KHelpDlg::slotFieldReturnPressed (  )
-{
-	slotFindButtonClicked ();
-}
 

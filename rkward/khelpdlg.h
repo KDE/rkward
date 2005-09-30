@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rkward.h  -  description
+                          khelpdlg  -  description
                              -------------------
-    begin                : Tue Oct 29 20:06:08 CET 2002 
-    copyright            : (C) 2002 by Thomas Friedrichsmeier 
+    begin                : Fri Feb 25 2005
+    copyright            : (C) 2005 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,19 +18,28 @@
 #ifndef KHELPDLG_H
 #define KHELPDLG_H
 
+#include <qwidget.h>
+
 #include "rbackend/rcommandreceiver.h"
 
-#include "helpdlg.h"
+//#include "helpdlg.h"
+
+class QComboBox;
+class QCheckBox;
+class QPushButton;
+class QListView;
+class QListViewItem;
 
 class RCommandChain;
 
-class KHelpDlg : public helpDlg, public RCommandReceiver
-{
-  Q_OBJECT
+/** Provides a UI interface for help-search.
 
+@author Pierre Ecochard */
+class KHelpDlg : public QWidget, public RCommandReceiver {
+  Q_OBJECT
 public:
-    KHelpDlg(QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
-    ~KHelpDlg();
+    KHelpDlg (QWidget* parent = 0, const char* name = 0);
+    ~KHelpDlg ();
     void rCommandDone (RCommand *command);
 
 /** small convenience function to get context help for RKCommandEditorWindow and RKConsole.
@@ -39,18 +48,18 @@ public:
 Will figure out the word under the cursor, and provide help on that (if there is such a word, and such help exists) */
 	void getContextHelp (const QString &context_line, int cursor_pos);
 
-  /*$PUBLIC_FUNCTIONS$*/
-
 public slots:
-  /*$PUBLIC_SLOTS$*/
-  virtual void          slotFindButtonClicked();
-  virtual void          slotResultsListDblClicked( QListViewItem *item, const QPoint &, int );
-  virtual void          slotPackageListActivated();
-  virtual void          slotFieldReturnPressed();
-
-protected slots:
-  /*$PROTECTED_SLOTS$*/
+	void slotFindButtonClicked();
+	void slotResultsListDblClicked( QListViewItem *item, const QPoint &, int );
 private:
+    QComboBox* field;
+    QComboBox* fieldsList;
+    QComboBox* packagesList;
+    QCheckBox* caseSensitiveCheckBox;
+    QCheckBox* fuzzyCheckBox;
+    QPushButton* findButton;
+    QListView* resultsList;
+
     RCommandChain *chain;
 };
 
