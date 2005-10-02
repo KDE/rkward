@@ -1857,9 +1857,9 @@ all_includes="$all_includes $USER_INCLUDES"
 AC_SUBST(all_includes)
 AC_SUBST(all_libraries)
 
-if test -z "$1"; then
-KDE_CHECK_UIC_PLUGINS
-fi
+dnl if test -z "$1"; then
+dnl KDE_CHECK_UIC_PLUGINS
+dnl fi
 
 ac_kde_libraries="$kde_libdir"
 

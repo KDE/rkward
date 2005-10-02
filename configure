@@ -29152,66 +29152,6 @@ all_includes="$all_includes $USER_INCLUDES"
 
 
 
-if test -z ""; then
-
-
-
-if test x$ac_uic_supports_libpath = xyes; then
-
-echo "$as_me:$LINENO: checking if UIC has KDE plugins available" >&5
-echo $ECHO_N "checking if UIC has KDE plugins available... $ECHO_C" >&6
-if test "${kde_cv_uic_plugins+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-cat > actest.ui << EOF
-<!DOCTYPE UI><UI version="3.0" stdsetdef="1">
-<class>NewConnectionDialog</class>
-<widget class="QDialog">
-   <widget class="KLineEdit">
-        <property name="name">
-           <cstring>testInput</cstring>
-        </property>
-   </widget>
-</widget>
-</UI>
-EOF
-
-
-
-kde_cv_uic_plugins=no
-kde_line="$UIC_PATH -L $kde_widgetdir"
-if test x$ac_uic_supports_nounload = xyes; then
-   kde_line="$kde_line -nounload"
-fi
-kde_line="$kde_line -impl actest.h actest.ui > actest.cpp"
-if { (eval echo "$as_me:$LINENO: \"$kde_line\"") >&5
-  (eval $kde_line) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; then
-	# if you're trying to debug this check and think it's incorrect,
-	# better check your installation. The check _is_ correct - your
-	# installation is not.
-	if test -f actest.cpp && grep klineedit actest.cpp > /dev/null; then
-		kde_cv_uic_plugins=yes
-	fi
-fi
-rm -f actest.ui actest.cpp
-
-fi
-
-
-echo "$as_me:$LINENO: result: $kde_cv_uic_plugins" >&5
-echo "${ECHO_T}$kde_cv_uic_plugins" >&6
-if test "$kde_cv_uic_plugins" != yes; then
-	{ { echo "$as_me:$LINENO: error: you need to install kdelibs first." >&5
-echo "$as_me: error: you need to install kdelibs first." >&2;}
-   { (exit 1); exit 1; }; }
-fi
-fi
-
-fi
 
 ac_kde_libraries="$kde_libdir"
 
@@ -30494,7 +30434,7 @@ for i in $kde_sharedirs;
 do
   for j in apps/ksgmltools2/customization/kde-chunk.xsl;
   do
-    echo "configure: 30497: $i/$j" >&5
+    echo "configure: 30437: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       KDE_XSL_STYLESHEET=$i
@@ -30653,11 +30593,6 @@ else
    LIB_KAB="-lkab $(LIB_KIMGIO) $(LIB_KDECORE)"
 
 fi
-
-
-#MIN_CONFIG(3)
-
-
 
 
 #MIN_CONFIG(3)
