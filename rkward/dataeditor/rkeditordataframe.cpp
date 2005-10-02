@@ -121,7 +121,6 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 
 		// set the names and meta-information
 		for (int i = 0; i < command->stringVectorLength (); ++i) {
-			qDebug ("alive %d of %d", i+1, command->stringVectorLength ());
 			if (numTrueCols () <= i) {
 				insertNewColumn ();
 			}
