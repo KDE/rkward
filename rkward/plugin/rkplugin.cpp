@@ -735,3 +735,5 @@ RKVarSlot *RKPlugin::getVarSlot (const QString &id) {
 	RK_DO (qDebug ("%s", "failed to find varselot!"), PLUGIN, DL_ERROR);
 	return 0;
 }
+
+#include "rkplugin.moc"

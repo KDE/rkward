@@ -277,3 +277,5 @@ void RKObjectListView::addObject (QListViewItem *parent, RObject *object, bool r
 		}
 	} */
 }
+
+#include "rkobjectlistview.moc"

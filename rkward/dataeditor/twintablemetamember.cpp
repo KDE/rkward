@@ -203,4 +203,4 @@ QString TwinTableMetaMember::formattedText (int row, int col) const {
 	return QString::null;
 }
 
-
+#include "twintablemetamember.moc"

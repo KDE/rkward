@@ -48,4 +48,4 @@ bool RKPluginWidget::isSatisfied () {
 	return true;
 }
 
-
+#include "rkpluginwidget.moc"

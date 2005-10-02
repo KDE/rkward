@@ -85,4 +85,4 @@ void RKPluginSpinBox::adjust(int longueur, int largeur){
 spinbox->resize(longueur, largeur);
 }
 
-
+#include "rkpluginspinbox.moc"

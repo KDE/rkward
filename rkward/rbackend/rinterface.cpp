@@ -341,3 +341,4 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 	MUTEX_UNLOCK;
 }
 
+#include "rinterface.moc"

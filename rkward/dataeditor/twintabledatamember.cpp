@@ -173,3 +173,5 @@ QString TwinTableDataMember::rText (int row, int col) const {
 	}
 	return var->getRText (row);
 }
+
+#include "twintabledatamember.moc"

@@ -163,5 +163,4 @@ void RKwatch::clearWatch () {
 	watch->setWordWrap (QTextEdit::NoWrap);
 }
 
-
-
+#include "rkwatch.moc"

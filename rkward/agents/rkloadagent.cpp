@@ -90,3 +90,5 @@ void RKLoadAgent::listUpdateComplete () {
 	RKGlobals::editorManager ()->restoreEditors ();
 	deleteThis ();
 }
+
+#include "rkloadagent.moc"

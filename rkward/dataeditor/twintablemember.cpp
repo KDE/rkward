@@ -164,3 +164,5 @@ void TwinTableMember::setCellContentFromEditor (int row, int col) {
 	
 	viewport ()->setFocus ();
 }
+
+#include "twintablemember.moc"

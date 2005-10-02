@@ -750,3 +750,4 @@ void RKwardApp::slotOutputShow () {
 	RKHTMLWindowPart::refreshOutput (true, true);
 }
 
+#include "rkward.moc"

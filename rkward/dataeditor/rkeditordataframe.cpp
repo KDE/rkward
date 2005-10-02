@@ -314,3 +314,4 @@ void RKEditorDataFrame::updateObjectData (RObject *object, RObject::ChangeSet *c
 	}
 }
 
+#include "rkeditordataframe.moc"

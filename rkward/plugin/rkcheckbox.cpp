@@ -82,3 +82,4 @@ bool isOk = checkbox->isEnabled();
 checkbox->setEnabled(! isOk) ;
 }
 
+#include "rkcheckbox.moc"

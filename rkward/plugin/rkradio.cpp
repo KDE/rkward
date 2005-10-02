@@ -136,3 +136,5 @@ bool RKRadio::isOk(QString val) {
     else return false;
 
  }
+
+#include "rkradio.moc"

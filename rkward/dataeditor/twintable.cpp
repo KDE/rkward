@@ -537,3 +537,5 @@ long int TwinTable::getObjectCol (RObject *object) {
 	RK_ASSERT (false);
 	return -1;
 }
+
+#include "twintable.moc"

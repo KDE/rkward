@@ -164,3 +164,5 @@ int RKVarSelector::numSelectedContainer()
 
 	return i;
 }
+
+#include "rkvarselector.moc"

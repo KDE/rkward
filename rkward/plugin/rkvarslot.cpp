@@ -380,3 +380,5 @@ bool RKVarSlot::belongToClasses(const QString &nom ) {
 	if (classes.find (nom, 0) != -1) return true; 
 	else return false;
 }
+
+#include "rkvarslot.moc"
