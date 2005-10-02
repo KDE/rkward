@@ -33,7 +33,7 @@ class RKSettingsModule : public QWidget {
 public:
     RKSettingsModule (RKSettings *gui, QWidget *parent);
 
-    ~RKSettingsModule ();
+    virtual ~RKSettingsModule ();
 
 	virtual bool hasChanges () = 0;
 	virtual void applyChanges () = 0;

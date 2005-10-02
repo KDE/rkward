@@ -29,6 +29,7 @@
 #include "../misc/multistringselector.h"
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
+#include "../debug.h"
 
 // static members
 QString RKSettingsModuleR::r_home_dir;
@@ -38,6 +39,8 @@ bool RKSettingsModuleR::archive_packages;
 QStringList RKSettingsModuleR::package_repositories;
 
 RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
+	RK_TRACE (SETTINGS);
+
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 
 	QLabel *label = new QLabel (i18n ("Note: Settings marked with (*) will not take effect until you restart RKWard!"), this);
@@ -70,30 +73,38 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 }
 
 RKSettingsModuleR::~RKSettingsModuleR() {
+	RK_TRACE (SETTINGS);
 }
 
 void RKSettingsModuleR::boxChanged (int) {
+	RK_TRACE (SETTINGS);
 	change ();
 }
 
 void RKSettingsModuleR::pathChanged () {
+	RK_TRACE (SETTINGS);
 	change ();
 }
 
 void RKSettingsModuleR::addRepository (QStringList *string_list) {
+	RK_TRACE (SETTINGS);
 	QString new_string = KInputDialog::getText (i18n ("Add repository"), i18n ("Add URL of new repository\n(Enter \"@CRAN@\" for the standard CRAN-mirror)"), QString::null, 0, this);
 	(*string_list).append (new_string);
 }
 
 QString RKSettingsModuleR::caption () {
+	RK_TRACE (SETTINGS);
 	return (i18n ("R-Backend"));
 }
 
 bool RKSettingsModuleR::hasChanges () {
+	RK_TRACE (SETTINGS);
 	return changed;
 }
 
 void RKSettingsModuleR::applyChanges () {
+	RK_TRACE (SETTINGS);
+
 	r_nosave = nosave_box->isChecked ();
 	r_slave = slave_box->isChecked ();
 	archive_packages = archive_packages_box->isChecked ();
@@ -110,10 +121,14 @@ void RKSettingsModuleR::applyChanges () {
 }
 
 void RKSettingsModuleR::save (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	saveSettings (config);
 }
 
 void RKSettingsModuleR::saveSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	config->setGroup ("R Settings");
 	config->writeEntry ("R_HOME", r_home_dir);
 	config->writeEntry ("--no-save", r_nosave);
@@ -123,6 +138,8 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 }
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	config->setGroup ("R Settings");
 	r_home_dir = config->readEntry ("R_HOME", QString::null);
 	r_nosave = config->readBoolEntry ("--no-save", true);
@@ -136,6 +153,8 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 
 // static
 QStringList RKSettingsModuleR::getOptionList () {
+	RK_TRACE (SETTINGS);
+
 	QStringList ret;
 	if (r_nosave) {
 		ret.append ("--no-save");

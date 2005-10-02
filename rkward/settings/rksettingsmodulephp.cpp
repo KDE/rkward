@@ -26,12 +26,15 @@
 
 #include "../misc/getfilenamewidget.h"
 #include "../rkglobals.h"
+#include "../debug.h"
 
 // static members
 QString RKSettingsModulePHP::php_bin;
 QString RKSettingsModulePHP::files_path;
 
 RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
+	RK_TRACE (SETTINGS);
+
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 	QLabel *label = new QLabel (i18n ("Changes in this section take effect the next time you start a plugin"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
@@ -51,36 +54,46 @@ RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, QWidget *parent) : RK
 }
 
 RKSettingsModulePHP::~RKSettingsModulePHP () {
+	RK_TRACE (SETTINGS);
 }
 
 void RKSettingsModulePHP::pathChanged () {
+	RK_TRACE (SETTINGS);
 	change ();
 }
 
 QString RKSettingsModulePHP::caption () {
+	RK_TRACE (SETTINGS);
 	return (i18n ("PHP backend"));
 }
 
 bool RKSettingsModulePHP::hasChanges () {
+	RK_TRACE (SETTINGS);
 	return changed;
 }
 
 void RKSettingsModulePHP::applyChanges () {
+	RK_TRACE (SETTINGS);
 	php_bin = bin_choser->getLocation ();
 	files_path = files_choser->getLocation ();
 }
 
 void RKSettingsModulePHP::save (KConfig *config) {
+	RK_TRACE (SETTINGS);
 	saveSettings (config);
 }
 
 void RKSettingsModulePHP::saveSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	config->setGroup ("PHP Settings");
 	config->writeEntry ("PHP binary", php_bin);
 	config->writeEntry ("support files dir", files_path);
 }
 
 void RKSettingsModulePHP::loadSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	config->setGroup ("PHP Settings");
 	php_bin = config->readEntry ("PHP binary", "/usr/bin/php");
 	files_path = config->readEntry ("support files dir", KGlobal::dirs ()->findResourceDir ("data", "rkward/phpfiles/common.php") + "rkward/phpfiles/");

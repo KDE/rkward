@@ -39,6 +39,8 @@ int RKSettingsModuleWatch::user_filter;
 
 //static
 bool RKSettingsModuleWatch::shouldShowInput (RCommand *command) {
+	RK_TRACE (SETTINGS);
+
 	if (command->type () & RCommand::EmptyCommand) return false;
 	
 	if (command->type () & RCommand::Sync) {
@@ -57,6 +59,8 @@ bool RKSettingsModuleWatch::shouldShowInput (RCommand *command) {
 
 //static
 bool RKSettingsModuleWatch::shouldShowOutput (RCommand *command) {
+	RK_TRACE (SETTINGS);
+
 	if (command->type () & RCommand::EmptyCommand) return false;
 	
 	if (command->type () & RCommand::Sync) {
@@ -75,6 +79,8 @@ bool RKSettingsModuleWatch::shouldShowOutput (RCommand *command) {
 
 //static 
 bool RKSettingsModuleWatch::shouldShowError (RCommand *command) {
+	RK_TRACE (SETTINGS);
+
 	if (command->type () & RCommand::Sync) {
 		return (sync_filter & ShowError);
 	} else if (command->type () & RCommand::User) {
@@ -90,6 +96,8 @@ bool RKSettingsModuleWatch::shouldShowError (RCommand *command) {
 }
 
 bool RKSettingsModuleWatch::shouldRaiseWindow (RCommand *command) {
+	RK_TRACE (SETTINGS);
+
 	if (command->type () & RCommand::Sync) {
 		return (sync_filter & RaiseWindow);
 	} else if (command->type () & RCommand::User) {
@@ -105,6 +113,8 @@ bool RKSettingsModuleWatch::shouldRaiseWindow (RCommand *command) {
 }
 
 RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
+	RK_TRACE (SETTINGS);
+
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 
 	QLabel *label = new QLabel (i18n ("For now, settings only apply to new commands. All previous commands remain visible/invisible."), this);
@@ -134,6 +144,8 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 }
 
 RKSettingsModuleWatch::~RKSettingsModuleWatch () {
+	RK_TRACE (SETTINGS);
+
 	delete user_filter_boxes;
 	delete plugin_filter_boxes;
 	delete app_filter_boxes;
@@ -141,6 +153,8 @@ RKSettingsModuleWatch::~RKSettingsModuleWatch () {
 }
 
 int RKSettingsModuleWatch::getFilterSettings (FilterBoxes *boxes) {
+	RK_TRACE (SETTINGS);
+
 	int ret=0;
 	if (boxes->input->isChecked ()) ret |= ShowInput;
 	if (boxes->output->isChecked ()) ret |= ShowOutput;
@@ -150,6 +164,8 @@ int RKSettingsModuleWatch::getFilterSettings (FilterBoxes *boxes) {
 }
 
 RKSettingsModuleWatch::FilterBoxes *RKSettingsModuleWatch::addFilterSettings (QWidget *parent, QGridLayout *layout, int row, const QString &label, int state) {
+	RK_TRACE (SETTINGS);
+
 	FilterBoxes *filter_boxes = new FilterBoxes;
 	
 	layout->addWidget (new QLabel (label, parent), row, 0);
@@ -178,11 +194,14 @@ RKSettingsModuleWatch::FilterBoxes *RKSettingsModuleWatch::addFilterSettings (QW
 }
 
 void RKSettingsModuleWatch::changedSetting (int) {
+	RK_TRACE (SETTINGS);
 	change ();
 }
 
 //static
 void RKSettingsModuleWatch::saveSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	config->setGroup ("RInterface Watch Settings");
 	config->writeEntry ("user command filter", user_filter);
 	config->writeEntry ("plugin command filter", plugin_filter);
@@ -192,6 +211,8 @@ void RKSettingsModuleWatch::saveSettings (KConfig *config) {
 
 //static
 void RKSettingsModuleWatch::loadSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	config->setGroup ("RInterface Watch Settings");
 	user_filter = config->readNumEntry ("user command filter", ShowInput | ShowOutput | ShowError | RaiseWindow);
 	plugin_filter = config->readNumEntry ("plugin command filter", ShowInput | ShowError);
@@ -201,10 +222,13 @@ void RKSettingsModuleWatch::loadSettings (KConfig *config) {
 
 bool RKSettingsModuleWatch::hasChanges () {
 // TODO: move to RKSettingsModule -baseclass?
+	RK_TRACE (SETTINGS);
 	return changed;
 }
 
 void RKSettingsModuleWatch::applyChanges () {
+	RK_TRACE (SETTINGS);
+
 	user_filter = getFilterSettings (user_filter_boxes);
 	plugin_filter = getFilterSettings (plugin_filter_boxes);
 	app_filter = getFilterSettings (app_filter_boxes);
@@ -212,10 +236,14 @@ void RKSettingsModuleWatch::applyChanges () {
 }
 
 void RKSettingsModuleWatch::save (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	saveSettings (config);
 }
 	
 QString RKSettingsModuleWatch::caption () {
+	RK_TRACE (SETTINGS);
+
 	return (i18n ("Console"));
 }
 

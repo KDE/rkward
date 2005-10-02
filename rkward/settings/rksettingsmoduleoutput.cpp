@@ -25,12 +25,15 @@
 #include <qcheckbox.h>
 
 #include "../rkglobals.h"
+#include "../debug.h"
 
 // static members
 bool RKSettingsModuleOutput::auto_show;
 bool RKSettingsModuleOutput::auto_raise;
 
 RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
+	RK_TRACE (SETTINGS);
+
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 	
 	QVButtonGroup *group = new QVButtonGroup (i18n ("Output Window options"), this);
@@ -46,37 +49,49 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 }
 
 RKSettingsModuleOutput::~RKSettingsModuleOutput() {
+	RK_TRACE (SETTINGS);
 }
 
 void RKSettingsModuleOutput::boxChanged (int) {
+	RK_TRACE (SETTINGS);
 	change ();
 	auto_raise_box->setEnabled (auto_show_box->isChecked ());
 }
 
 QString RKSettingsModuleOutput::caption () {
+	RK_TRACE (SETTINGS);
 	return (i18n ("Output"));
 }
 
 bool RKSettingsModuleOutput::hasChanges () {
+	RK_TRACE (SETTINGS);
 	return changed;
 }
 
 void RKSettingsModuleOutput::applyChanges () {
+	RK_TRACE (SETTINGS);
+
 	auto_show = auto_show_box->isChecked ();
 	auto_raise = auto_raise_box->isChecked ();
 }
 
 void RKSettingsModuleOutput::save (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	saveSettings (config);
 }
 
 void RKSettingsModuleOutput::saveSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	config->setGroup ("Output Window");
 	config->writeEntry ("auto_show", auto_show);
 	config->writeEntry ("auto_raise", auto_raise);
 }
 
 void RKSettingsModuleOutput::loadSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	config->setGroup ("Output Window");
 	auto_show = config->readBoolEntry ("auto_show", true);
 	auto_raise = config->readBoolEntry ("auto_raise", true);

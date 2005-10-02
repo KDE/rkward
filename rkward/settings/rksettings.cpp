@@ -30,12 +30,16 @@
 #include "rksettingsmodulewatch.h"
 #include "rksettingsmoduleobjectbrowser.h"
 
+#include "../debug.h"
+
 //static
 RKSettings *RKSettings::settings_dialog = 0;
 RKSettingsTracker *RKSettings::settings_tracker = 0;
 
 //static 
 void RKSettings::configureSettings (SettingsPage page, QWidget *parent, RCommandChain *chain) {
+	RK_TRACE (SETTINGS);
+
 	RKSettingsModule::chain = chain;
 
 	if (!settings_dialog) {
@@ -49,16 +53,20 @@ void RKSettings::configureSettings (SettingsPage page, QWidget *parent, RCommand
 
 //static
 void RKSettings::dialogClosed () {
+	RK_TRACE (SETTINGS);
 	settings_dialog = 0;
 }
 
 RKSettings::RKSettings (QWidget *parent, const char *name) : KDialogBase (KDialogBase::Tabbed, i18n ("Settings"), KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel, KDialogBase::Ok, parent, name, false) {
+	RK_TRACE (SETTINGS);
 	setWFlags (getWFlags () | QWidget::WDestructiveClose);
 
 	initModules ();
 }
 
 RKSettings::~RKSettings() {
+	RK_TRACE (SETTINGS);
+
 	ModuleList::iterator it;
 	for (it = modules.begin (); it != modules.end (); ++it) {
 		delete *it;
@@ -69,6 +77,8 @@ RKSettings::~RKSettings() {
 }
 
 void RKSettings::initModules () {
+	RK_TRACE (SETTINGS);
+
 	modules.append (new RKSettingsModulePlugins (this, this));
 	modules.append (new RKSettingsModuleR (this, this));
 	modules.append (new RKSettingsModulePHP (this, this));
@@ -90,12 +100,16 @@ void RKSettings::initModules () {
 }
 
 void RKSettings::raisePage (SettingsPage page) {
+	RK_TRACE (SETTINGS);
+
 	if (page != NoPage) {
 		showPage (((int) page) - 1);
 	}
 }
 
 void RKSettings::slotApply () {
+	RK_TRACE (SETTINGS);
+
 	ModuleList::iterator it;
 	for (it = modules.begin (); it != modules.end (); ++it) {
 		if ((*it)->hasChanges ()) {
@@ -107,20 +121,26 @@ void RKSettings::slotApply () {
 }
 
 void RKSettings::slotOk () {
+	RK_TRACE (SETTINGS);
+
 	slotApply ();
 	accept ();
 	close ();
 }
 
 void RKSettings::slotCancel () {
+	RK_TRACE (SETTINGS);
 	QDialog::reject ();
 }
 
 void RKSettings::enableApply () {
+	RK_TRACE (SETTINGS);
 	enableButtonApply (true);
 }
 
 void RKSettings::loadSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	RKSettingsModulePlugins::loadSettings(config);
 	RKSettingsModuleR::loadSettings(config);
 	RKSettingsModulePHP::loadSettings(config);
@@ -131,6 +151,8 @@ void RKSettings::loadSettings (KConfig *config) {
 }
 
 void RKSettings::saveSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	RKSettingsModulePlugins::saveSettings(config);
 	RKSettingsModuleR::saveSettings(config);
 	RKSettingsModulePHP::saveSettings(config);
@@ -144,12 +166,15 @@ void RKSettings::saveSettings (KConfig *config) {
 //############ BEGIN RKSettingsTracker ############
 
 RKSettingsTracker::RKSettingsTracker (QObject *parent) : QObject (parent) {
+	RK_TRACE (SETTINGS);
 }
 
 RKSettingsTracker::~RKSettingsTracker () {
+	RK_TRACE (SETTINGS);
 }
 
 void RKSettingsTracker::settingsChangedObjectBrowser () {
+	RK_TRACE (SETTINGS);
 	emit (objectBrowserSettingsChanged ());
 }
 

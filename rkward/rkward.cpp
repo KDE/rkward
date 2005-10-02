@@ -352,6 +352,8 @@ void RKwardApp::saveOptions () {
 	
 	fileOpenRecentWorkspace->saveEntries(config, "Recent Files");
 	fileOpenRecent->saveEntries(config, "Recent Command Files");
+
+	config->sync ();
 }
 
 

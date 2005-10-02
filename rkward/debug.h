@@ -33,6 +33,7 @@ extern int RK_Debug_Flags;
 #define PLUGIN 2
 #define OBJECTS 4
 #define EDITOR 8
+#define SETTINGS 16
 #define PHP 64
 #define RBACKEND 128
 #define COMMANDEDITOR 256

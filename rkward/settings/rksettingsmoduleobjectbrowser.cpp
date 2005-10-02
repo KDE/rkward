@@ -26,11 +26,14 @@
 
 #include "../rkglobals.h"
 #include "rksettings.h"
+#include "../debug.h"
 
 // static
 int RKSettingsModuleObjectBrowser::options = 0;
 
 RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
+	RK_TRACE (SETTINGS);
+
 	QVBoxLayout *layout = new QVBoxLayout (this, RKGlobals::marginHint ());
 
 	show_hidden_vars_box = new QCheckBox (i18n ("Show hidden objects"), this);
@@ -60,13 +63,16 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, Q
 }
 
 RKSettingsModuleObjectBrowser::~RKSettingsModuleObjectBrowser () {
+	RK_TRACE (SETTINGS);
 }
 
 bool RKSettingsModuleObjectBrowser::hasChanges () {
+	RK_TRACE (SETTINGS);
 	return changed;
 }
 
 void RKSettingsModuleObjectBrowser::applyChanges () {
+	RK_TRACE (SETTINGS);
 	options = 0;
 	if (show_hidden_vars_box->isChecked ()) options |= ShowHiddenVars;
 	if (show_label_field_box->isChecked ()) options |= ShowLabelField;
@@ -77,17 +83,20 @@ void RKSettingsModuleObjectBrowser::applyChanges () {
 }
 
 void RKSettingsModuleObjectBrowser::save (KConfig *config) {
+	RK_TRACE (SETTINGS);
 	saveSettings (config);
 }
 
 QString RKSettingsModuleObjectBrowser::caption () {
+	RK_TRACE (SETTINGS);
 	return (i18n ("Workspace"));
 }
 
 //static
 void RKSettingsModuleObjectBrowser::saveSettings (KConfig *config) {
-	config->setGroup ("Object Browser");
+	RK_TRACE (SETTINGS);
 
+	config->setGroup ("Object Browser");
 	config->writeEntry ("show hidden vars", showHiddenVars ());
 	config->writeEntry ("show label field", showLabelField ());
 	config->writeEntry ("show type field", showTypeField ());
@@ -96,9 +105,10 @@ void RKSettingsModuleObjectBrowser::saveSettings (KConfig *config) {
 
 //static
 void RKSettingsModuleObjectBrowser::loadSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	options = 0;
 	config->setGroup ("Object Browser");
-	
 	if (config->readBoolEntry ("show hidden vars", false)) options |= ShowHiddenVars;
 	if (config->readBoolEntry ("show label field", true)) options |= ShowLabelField;
 	if (config->readBoolEntry ("show type field", true)) options |= ShowTypeField;
@@ -106,6 +116,7 @@ void RKSettingsModuleObjectBrowser::loadSettings (KConfig *config) {
 }
 
 void RKSettingsModuleObjectBrowser::boxChanged (int) {
+	RK_TRACE (SETTINGS);
 	change ();
 }
 

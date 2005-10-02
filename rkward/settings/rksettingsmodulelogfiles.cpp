@@ -27,11 +27,14 @@
 
 #include "../misc/getfilenamewidget.h"
 #include "../rkglobals.h"
+#include "../debug.h"
 
 // static members
 QString RKSettingsModuleLogfiles::files_path;
 
 RKSettingsModuleLogfiles::RKSettingsModuleLogfiles (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
+	RK_TRACE (SETTINGS);
+
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 	QLabel *label = new QLabel (i18n ("For now, when you change the setting for the location of the logfiles, RKWard will not function properly until you restart the application!"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
@@ -45,34 +48,44 @@ RKSettingsModuleLogfiles::RKSettingsModuleLogfiles (RKSettings *gui, QWidget *pa
 }
 
 RKSettingsModuleLogfiles::~RKSettingsModuleLogfiles() {
+	RK_TRACE (SETTINGS);
 }
 
 void RKSettingsModuleLogfiles::pathChanged () {
+	RK_TRACE (SETTINGS);
 	change ();
 }
 
 QString RKSettingsModuleLogfiles::caption () {
+	RK_TRACE (SETTINGS);
 	return (i18n ("Logfiles"));
 }
 
 bool RKSettingsModuleLogfiles::hasChanges () {
+	RK_TRACE (SETTINGS);
 	return changed;
 }
 
 void RKSettingsModuleLogfiles::applyChanges () {
+	RK_TRACE (SETTINGS);
 	files_path = files_choser->getLocation ();
 }
 
 void RKSettingsModuleLogfiles::save (KConfig *config) {
+	RK_TRACE (SETTINGS);
 	saveSettings (config);
 }
 
 void RKSettingsModuleLogfiles::saveSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	config->setGroup ("Logfiles");
 	config->writeEntry ("logfile dir", files_path);
 }
 
 void RKSettingsModuleLogfiles::loadSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	config->setGroup ("Logfiles");
 	files_path = config->readEntry ("logfile dir", QDir ().homeDirPath () + "/.rkward/");
 }
