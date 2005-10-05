@@ -185,7 +185,13 @@ void RKLoadLibsDialog::installDownloadedPackages (bool become_root) {
 		// step 1: create archive-dir, if neccessary
 		QDir archivedir = QDir (RKSettingsModuleLogfiles::filesPath ()).filePath ("package_archive");
 		if (!archivedir.exists ()) {
-			QDir (RKSettingsModuleLogfiles::filesPath ()).mkdir ("package_archive");
+			// does not compile on some systems (October 2005).
+			//QDir (RKSettingsModuleLogfiles::filesPath ()).mkdir ("package_archive");
+			// Workaround (use this instead for a couple of months):
+			QString dummy = RKSettingsModuleLogfiles::filesPath ();
+			QDir dir;
+			dir.setPath (dummy);
+			dir.mkdir ("package_archive");
 		} if (!archivedir.isReadable ()) {
 			RK_DO (qDebug ("Directory '%s' could not be created or is not readable", archivedir.absPath ().latin1 ()), DIALOGS, DL_ERROR);
 			return;

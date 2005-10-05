@@ -13,6 +13,7 @@ Little annoying stuff:
 - The logic in RKHTMLWindowPart is rather messy. I think we should use two (three?) separate KParts for showing output, help pages (and other generic HTML?). Most importantly, all those need slightly different GUIs. Probably the parts should all derive from a common base class. Most of what is currently in RKHelpWindow should probably be merged into the parts. Maybe RKHelpWindow can be obsoleted entirely.
 	- Place those sources right inside rkhelpwindow.cpp/.h, instead of file name inflation.
 	- Rename RKHelpWindow to RKHTMLWindow.
+- hide superflous GUI-items, esp. for the HTML windows
 
 - "real time" display of output in the console (remember to add Mutex protection before then!)
 

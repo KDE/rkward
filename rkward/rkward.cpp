@@ -652,7 +652,6 @@ void RKwardApp::slotDetachWindow () {
 	RK_TRACE (APP);
 
 	if (activeWindow ()) {
-		RK_TRACE (APP);
 		detachWindow (activeWindow ());
 	}
 }
