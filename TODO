@@ -6,7 +6,6 @@ Little annoying stuff:
 - auto refresh output + auto scroll at the bottom
 - add an example to show rkward-specific commands (rk.print, rk.graph)
 - instead of delete RObject, call RObject::deleteThis () and check for deleted in rCommandDone ()?
-- use include "x.moc" in order to speed up build
 - use more QDicts instead of QMap<QString,...>s
 - use R_DirtyImage to determine, whether workspace needs to be saved
 - in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
