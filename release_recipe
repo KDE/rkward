@@ -1,0 +1,10 @@
+This procedure helps working around a number of strange problems while creating releases, such as .moc-files not being generated, generated files not being removed, autotools being run again (with bad results) for no good reason... The following procedure seems to eliminate those problems, and thus should be followed for releases. Some items may also serve to keep the package lean.
+
+make clean
+make dist
+unpack tarball
+make -f Makefile.cvs
+rm rkward/rkward_skel.cpp
+touch config.h.in
+(rm -r autom4te.cache? not yet tested)
+repackage tarball
