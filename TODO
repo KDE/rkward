@@ -19,7 +19,6 @@ Little annoying stuff:
 - remove classes/files:
 	- RKCommandEditor (first check for reusable functionality)
 		- RKPlugin still uses RKCommandEditor. Convert to use RKCommandEditorWindow instead.
-	- RKOutputWindow (first scan for useful menu item ideas)
 
 stuff to do before 0.3.5 release
 - plugins (general)
@@ -38,7 +37,6 @@ code cleanups
 
 API documentation:
 - add page containing a rough overview of general architecture
-- include protected (and maybe even private) members in API-documentation (this is not a library, after all)
 - RCommandStack
 
 (relatively) small stuff to do soon
