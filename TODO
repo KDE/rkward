@@ -19,6 +19,7 @@ Little annoying stuff:
 - remove classes/files:
 	- RKCommandEditor (first check for reusable functionality)
 		- RKPlugin still uses RKCommandEditor. Convert to use RKCommandEditorWindow instead.
+	- rkhelpwindow.cpp/.h rkhtmlwindowpart.cpp/.h
 
 stuff to do before 0.3.5 release
 - plugins (general)

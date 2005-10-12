@@ -71,7 +71,7 @@
 #include "agents/rksaveagent.h"
 #include "agents/rkloadagent.h"
 #include "windows/rkcommandeditorwindow.h"
-#include "windows/rkhtmlwindowpart.h"
+#include "windows/rkhtmlwindow.h"
 #include "khelpdlg.h"
 #include "rkconsole.h"
 #include "debug.h"
@@ -659,7 +659,7 @@ void RKwardApp::slotDetachWindow () {
 
 void RKwardApp::newOutput () {
 	RK_TRACE (APP);
-	RKHTMLWindowPart::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise ());
+	RKOutputWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise ());
 }
 
 void RKwardApp::setRStatus (bool busy) {
@@ -736,7 +736,8 @@ void RKwardApp::slotInterruptCommand () {
 
 void RKwardApp::openHTML(const KURL &url) {
 	RK_TRACE (APP);
-	RKHTMLWindowPart::openHTML (url, false);
+	RKHelpWindow *hw = new RKHelpWindow (this);
+	hw->openURL (url);
 }
 
 void RKwardApp::openHTMLHelp (const QString & url) {
@@ -746,7 +747,7 @@ void RKwardApp::openHTMLHelp (const QString & url) {
 
 void RKwardApp::slotOutputShow () {
 	RK_TRACE (APP);
-	RKHTMLWindowPart::refreshOutput (true, true);
+	RKOutputWindow::refreshOutput (true, true);
 }
 
 #include "rkward.moc"
