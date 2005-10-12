@@ -22,7 +22,7 @@ function readsubs ($dir, $prefix) {
 	
 	while (false !== ($file = readdir($thisdir))) {
 		if (!is_dir ($ndir . $file)) {
-			if (($file == "description.xml") || ($file == "code.php")) {
+			if (($file == "description.xml") || ($file == "code.php") || (substr ($file, -10) == ".pluginmap")) {
 				array_push ($files, $file);
 			}
 		}  else {

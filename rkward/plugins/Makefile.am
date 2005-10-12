@@ -1,4 +1,7 @@
 pluginsdir = $(kde_datadir)/rkward/
+dist_plugins_DATA = \
+	standard_plugins.pluginmap
+
 pluginsX00meansdir = $(kde_datadir)/rkward/00means
 pluginsX00meansX00ttestsdir = $(kde_datadir)/rkward/00means/00ttests
 pluginsX00meansX00ttestsX00independentUsamplesdir = $(kde_datadir)/rkward/00means/00ttests/00independent_samples
@@ -70,4 +73,3 @@ dist_pluginsXwritetable_DATA = \
 	writetable/code.php \
 	writetable/description.xml
 
-pluginsXstandardUpluginsdir = $(kde_datadir)/rkward/standard_plugins
