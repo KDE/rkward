@@ -260,7 +260,7 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	config->writeEntry ("keep.source.pkgs", options_keepsourcepkgs);
 	config->writeEntry ("expressions", options_expressions);
 	config->writeEntry ("digits", options_digits);
-	config->writeEntry ("checkboungs", options_checkbounds);
+	config->writeEntry ("check.bounds", options_checkbounds);
 }
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
