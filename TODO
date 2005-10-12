@@ -3,15 +3,11 @@ Also, plans change frequently. If something is listed for a specific release, th
 
 Little annoying stuff:
 - fix flickering when one uses arrows in the console
-- auto refresh output + auto scroll at the bottom
 - add an example to show rkward-specific commands (rk.print, rk.graph)
 - instead of delete RObject, call RObject::deleteThis () and check for deleted in rCommandDone ()?
 - use more QDicts instead of QMap<QString,...>s
 - use R_DirtyImage to determine, whether workspace needs to be saved
 - in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
-- The logic in RKHTMLWindowPart is rather messy. I think we should use two (three?) separate KParts for showing output, help pages (and other generic HTML?). Most importantly, all those need slightly different GUIs. Probably the parts should all derive from a common base class. Most of what is currently in RKHelpWindow should probably be merged into the parts. Maybe RKHelpWindow can be obsoleted entirely.
-	- Place those sources right inside rkhelpwindow.cpp/.h, instead of file name inflation.
-	- Rename RKHelpWindow to RKHTMLWindow.
 - hide superflous GUI-items, esp. for the HTML windows
 
 - "real time" display of output in the console (remember to add Mutex protection before then!)
@@ -19,7 +15,6 @@ Little annoying stuff:
 - remove classes/files:
 	- RKCommandEditor (first check for reusable functionality)
 		- RKPlugin still uses RKCommandEditor. Convert to use RKCommandEditorWindow instead.
-	- rkhelpwindow.cpp/.h rkhtmlwindowpart.cpp/.h
 
 stuff to do before 0.3.5 release
 - plugins (general)
