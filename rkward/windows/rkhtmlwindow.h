@@ -37,10 +37,13 @@ It is used as a base for several purposes: Display R-help (in HTML format), disp
 class RKHTMLWindow : public KMdiChildView {
 	Q_OBJECT
 protected:
+/** constructor. Protected. Use derived classes instead, or derive your own class.
+@param parent parent QWidget, usually RKGlobals::rkApp () or similar */
 	RKHTMLWindow (QWidget *parent = 0);
-
+/** destructor */
 	virtual ~RKHTMLWindow ();
 public:
+/** open given URL. Returns false, if the URL is not an existing local file. Loading a non-local URL may succeed, even if this returns false! */
 	virtual bool openURL (const KURL &url);
 /** Reload current page.*/
 	virtual void refresh ();
@@ -53,6 +56,7 @@ private slots:
 protected:
 /** Here we store the position of the scroll bar before refresh. Used to scroll to the same position after a reload */
     int scroll_position;
+/** the KHTMLPart doing all the real work */
 	KHTMLPart * khtmlpart;
 /** update caption according to given URL */
 	virtual void updateCaption (const KURL &url);
@@ -61,31 +65,40 @@ protected:
 /**
 	\brief RKWard output window.
 
-Used to display RKWard output.
+Specialized RKHTMLWindow used for RKWard output.
 
 @author Thomas Friedrichsmeier
 */
 class RKOutputWindow : public RKHTMLWindow, public KXMLGUIClient {
 	Q_OBJECT
 public:
+/** constructor.
+@param parent parent QWidget, usually RKGlobals::rkApp () or similar */
 	RKOutputWindow (QWidget *parent = 0);
-
+/** destructor */
 	~RKOutputWindow ();
 
 /** reimplemented to show "output is empty" message, if file could not be opened */
 	bool openURL (const KURL &url);
 /** reimplemented to scroll to the bottom of the page */
 	void refresh ();
+/** refresh output window.
+@param show Show the window, if not currently shown (this actually means: it is created if not currently existant)
+@param raise Raise the window (if currently shown, or show==true) */
 	static void refreshOutput (bool show, bool raise);
 
+/** return a pointer to the current output. If there is no output window, one will be created (and shown) automatically */
 	static RKOutputWindow* getCurrentOutput ();
 public slots:
+/** flush current output. */
 	void flushOutput ();
+/** refresh current output. Slot Wrapper around refresh. */
 	void refreshOutput ();
 protected:
 /** reimplemented to never change the caption (it's always "Output") */
 	void updateCaption (const KURL &url);
 private:
+/** print a message "Output is empty" to the output window. Used internally, if loading output fails*/
 	void showOutputEmptyMessage ();
 
 	KAction* outputFlush;
@@ -99,14 +112,16 @@ private:
 
 This class wraps a khtml part.
 
-Specialized HTML window for displaying R help pages
+Specialized HTML window for displaying R help pages.
 
 @author Pierre Ecochard
 */
 class RKHelpWindow : public RKHTMLWindow, public KXMLGUIClient {
 public:
+/** constructor.
+@param parent parent QWidget, usually RKGlobals::rkApp () or similar */
 	RKHelpWindow (QWidget *parent = 0);
-
+/** destructor */
 	~RKHelpWindow ();
 };
 
