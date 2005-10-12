@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-09-28 19:52+0200\n"
-"PO-Revision-Date: 2005-10-11 08:48+0200\n"
+"PO-Revision-Date: 2005-10-12 14:47+0200\n"
 "Last-Translator: Pierre Ecochard <ecoch@users.sourceforge.net>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -113,7 +113,7 @@ msgstr "Fait"
 
 #: agents/rkloadagent.moc.cpp:34 agents/rkloadagent.moc.cpp:42
 msgid "RKLoadAgent"
-msgstr ""
+msgstr "RKLoadAgent"
 
 #: khelpdlg.cpp:50
 msgid "Topic"
@@ -243,10 +243,14 @@ msgid ""
 "http://rkward.sourceforge.net\n"
 "All comments are welcome."
 msgstr ""
+"Avant que vous ne commenciez, nous souhaitons souligner que RKWard est en développement. La version actuelle peut être utile, mais il y a des chances que vous ne puissiez faire ce que vous souhaitez. Faites attention : ne confiez pas des données importantes à RKWard. \n"
+"Si vous souhaitez aider à améliorer RKWard, ou simplement rentrer en contact avec nous, visitez :\n"
+"http://rkward.sf.net \n"
+"Tous les commentaire sont les bienvenus."
 
 #: rkward.cpp:160
 msgid "Before you complain..."
-msgstr ""
+msgstr "Avant de vous plaindre..."
 
 #: rkward.cpp:186
 msgid "Existing objects in your workspace."
@@ -490,7 +494,7 @@ msgstr "Erreur de syntaxe.\n"
 
 #: rkwatch.cpp:131
 msgid "An unspecified error occured while running the command.\n"
-msgstr ""
+msgstr "Une erreur inconnue s'est produite pendant l'exécution de la commande.\n"
 
 #: robjectbrowser.cpp:48 dialogs/rkloadlibsdialog.cpp:50
 msgid "Update"
@@ -610,11 +614,11 @@ msgstr "Alignement"
 
 #: dataeditor/editformatdialog.cpp:49
 msgid "Default for type '%1'"
-msgstr ""
+msgstr "Par défaut pour le type '%1'"
 
 #: dataeditor/editformatdialog.cpp:55
 msgid "Decimal Places"
-msgstr ""
+msgstr "Nombre de décimales"
 
 #: dataeditor/editformatdialog.cpp:60
 msgid "Default setting"
@@ -622,11 +626,11 @@ msgstr "Options par défaut"
 
 #: dataeditor/editformatdialog.cpp:61
 msgid "As required"
-msgstr ""
+msgstr "Autant que requis"
 
 #: dataeditor/editformatdialog.cpp:62
 msgid "Fixed precision:"
-msgstr ""
+msgstr "Précision déterminée :"
 
 #: dataeditor/editformatdialog.cpp:69 dataeditor/editlabelsdialog.cpp:82
 #: dialogs/startupdialog.cpp:77
@@ -635,14 +639,14 @@ msgstr "Ok"
 
 #: dataeditor/editformatdialog.cpp:75
 msgid "Formatting options for '%1'"
-msgstr ""
+msgstr "Option d'affichage pour '%1'"
 
 #: dataeditor/editlabelsdialog.cpp:41
 msgid ""
 "Levels can be assigned only to consecutive integers starting with 1. "
 "Warning: if you remove a level, the indices of the other levels may change, "
 "hence changing the values of the factor!"
-msgstr ""
+msgstr "Les niveaux (\"level\") ne peuvent être assignés qu'à des entiers qui se suivent, en commeçant par 1. Attention : si vous retirez un niveau, les indices des autres niveaux peuvent changer aussi, ce qui modifierait la valeur de la variable !"
 
 #: dataeditor/editlabelsdialog.cpp:48
 msgid "Index"
@@ -750,25 +754,25 @@ msgstr "Insertion du contenu du presse-papiers..."
 #: dataeditor/twintabledatamember.moc.cpp:34
 #: dataeditor/twintabledatamember.moc.cpp:42
 msgid "TwinTableDataMember"
-msgstr ""
+msgstr "TwinTableDataMember"
 
 #: dataeditor/twintablemember.moc.cpp:34 dataeditor/twintablemember.moc.cpp:42
 msgid "TwinTableMember"
-msgstr ""
+msgstr "TwinTableMember"
 
 #: dataeditor/twintable.moc.cpp:34 dataeditor/twintable.moc.cpp:42
 msgid "TwinTable"
-msgstr ""
+msgstr "TwinTable"
 
 #: dataeditor/rkeditordataframe.moc.cpp:34
 #: dataeditor/rkeditordataframe.moc.cpp:42
 msgid "RKEditorDataFrame"
-msgstr ""
+msgstr "RKEditorDataFrame"
 
 #: dataeditor/twintablemetamember.moc.cpp:34
 #: dataeditor/twintablemetamember.moc.cpp:42
 msgid "TwinTableMetaMember"
-msgstr ""
+msgstr "TwinTableMetaMember"
 
 #: dialogs/rkloadlibsdialog.cpp:46
 msgid "Local packages"
@@ -816,7 +820,7 @@ msgstr "Veuillez patienter pendant l'installation des paquets."
 msgid ""
 "There was an error installing the packages. Please, check the output on "
 "stderr. Sorry, there is no better error-handling so far..."
-msgstr ""
+msgstr "Une erreur s'est produite à l'installation des paquets. Veuillez contrôler les sorties sur stderr. Désolé, pas de meilleure gestion des erreurs pour l'instant..."
 
 #: dialogs/rkloadlibsdialog.cpp:178
 msgid "Error installing packages"
@@ -862,7 +866,7 @@ msgid ""
 "In order to find out, which of your installed packaged have an update "
 "available, click \"Fetch List\". This feature requires a working internet "
 "connection."
-msgstr ""
+msgstr "Pour voir quels paquets peuvent être mis à jour, cliquez sur \" Récupérer la liste \". Cela nécessite une connexion Internet active."
 
 #: dialogs/rkloadlibsdialog.cpp:411
 msgid "Local"
@@ -894,7 +898,7 @@ msgid ""
 "other repositories (click \"Configure Repositories\" to add more sources). "
 "Click \"Fetch List\" to find out, which packages are available. This feature "
 "requires a working internet connection."
-msgstr ""
+msgstr "De nombreux paquets sont disponible sur le CRAN (Comprehensive R Archive Network) ainsi que d'autres dépôts (cliquez sur \" Configuration des dépôts \" pour ajouter d'autres sources de paquets). Cliquez sur \" Récupérer la liste \" pour afficher les paquets disponibles. Cela nécessite une connexion Internet active."
 
 #: dialogs/rkloadlibsdialog.cpp:545
 msgid "Install Selected"
@@ -958,7 +962,7 @@ msgstr "[Objets]"
 
 #: misc/xmlhelper.cpp:61
 msgid "Could not open file for reading"
-msgstr ""
+msgstr "Le fichier n'a pas pu être ouvert pour lecture"
 
 #: misc/xmlhelper.cpp:63
 msgid ""
@@ -996,12 +1000,12 @@ msgstr ""
 
 #: misc/rkobjectlistview.moc.cpp:34 misc/rkobjectlistview.moc.cpp:42
 msgid "RKObjectListView"
-msgstr ""
+msgstr "RKObjectListView"
 
 #: plugin/rkcomponentmap.cpp:105 plugin/rkcomponentmap.cpp:107
 #: plugin/rkcomponentmap.cpp:127
 msgid "(no label)"
-msgstr ""
+msgstr "(pas de label)"
 
 #: plugin/rkformula.cpp:48
 msgid "Full Model"
@@ -1009,7 +1013,7 @@ msgstr "Modèle complet"
 
 #: plugin/rkformula.cpp:49
 msgid "Main Effects only"
-msgstr ""
+msgstr "Effets principaux seulement"
 
 #: plugin/rkformula.cpp:50
 msgid "Custom Model:"
@@ -1056,27 +1060,27 @@ msgstr "Suivant >"
 
 #: plugin/rkvarslot.cpp:335
 msgid " - You have to select a variable for the \""
-msgstr ""
+msgstr " - Vous devez sélectionner une variable pour le champ \""
 
 #: plugin/rkvarslot.cpp:335
 msgid "\"-field\n"
-msgstr ""
+msgstr "\"\n"
 
 #: plugin/rkcheckbox.moc.cpp:34 plugin/rkcheckbox.moc.cpp:42
 msgid "RKCheckBox"
-msgstr ""
+msgstr "RKCheckBox"
 
 #: plugin/rkvarslot.moc.cpp:34 plugin/rkvarslot.moc.cpp:42
 msgid "RKVarSlot"
-msgstr ""
+msgstr "RKVarSlot"
 
 #: plugin/rkplugin.moc.cpp:34 plugin/rkplugin.moc.cpp:42
 msgid "RKPlugin"
-msgstr ""
+msgstr "RKPlugin"
 
 #: plugin/rkpluginspinbox.moc.cpp:34 plugin/rkpluginspinbox.moc.cpp:42
 msgid "RKPluginSpinBox"
-msgstr ""
+msgstr "RKPluginSpinBox"
 
 #: plugin/rkradio.moc.cpp:34 plugin/rkradio.moc.cpp:42
 msgid "RKRadio"
@@ -1084,11 +1088,11 @@ msgstr "RKRadio"
 
 #: plugin/rkpluginwidget.moc.cpp:34 plugin/rkpluginwidget.moc.cpp:42
 msgid "RKPluginWidget"
-msgstr ""
+msgstr "RKPluginWidget"
 
 #: plugin/rkvarselector.moc.cpp:34 plugin/rkvarselector.moc.cpp:42
 msgid "RKVarSelector"
-msgstr ""
+msgstr "RKVarSelector"
 
 #: rbackend/rinterface.cpp:75
 msgid "R_HOME not set"
@@ -1116,7 +1120,7 @@ msgstr ""
 
 #: rbackend/rinterface.cpp:80
 msgid "Conflicting settings for R_HOME"
-msgstr ""
+msgstr "Conflit de configuration pour la variable R_HOME"
 
 #: rbackend/rinterface.cpp:156
 msgid ""
@@ -1158,7 +1162,7 @@ msgid ""
 "needs the package '%1', which is not currently installed. We'll open the "
 "package-management tool, and there you can try to locate and install the "
 "needed package."
-msgstr ""
+msgstr "Le moteur R a besoin du paquet '%1' pour continuer. Ce paquet n'est pas installé. L'outils de gestion des paquets va être ouvert, pour que vous puissiez installer le paquet manquant."
 
 #: rbackend/rinterface.cpp:266
 msgid "Require package '%1'"
@@ -1166,15 +1170,15 @@ msgstr "Paquet requis : \"%1\""
 
 #: rbackend/rinterface.cpp:301
 msgid "Message from the R backend"
-msgstr ""
+msgstr "Message du moteur R"
 
 #: rbackend/rinterface.cpp:303
 msgid "R backend requests information"
-msgstr ""
+msgstr "Le procesus R requiert des informations"
 
 #: rbackend/rinterface.cpp:329
 msgid "The R engine has encountered a fatal error:\n"
-msgstr ""
+msgstr "Erreur fatale du moteur R :\n"
 
 #: rbackend/rinterface.cpp:330
 msgid ""
@@ -1191,7 +1195,7 @@ msgstr "Le processus R s'est brutallement arrêté"
 
 #: rbackend/rinterface.cpp:334
 msgid "The R engine has shut down with status: "
-msgstr ""
+msgstr "Le moteur R s'est interrompu avec le status : "
 
 #: rbackend/rinterface.cpp:335
 msgid ""
@@ -1208,7 +1212,7 @@ msgstr ""
 
 #: rbackend/rinterface.moc.cpp:34 rbackend/rinterface.moc.cpp:42
 msgid "RInterface"
-msgstr ""
+msgstr "RInterface"
 
 #: scriptbackends/phpbackend.cpp:57
 msgid ""
@@ -1254,7 +1258,7 @@ msgstr ""
 
 #: scriptbackends/phpbackend.moc.cpp:34 scriptbackends/phpbackend.moc.cpp:42
 msgid "PHPBackend"
-msgstr ""
+msgstr "PHPBackend"
 
 #: settings/rksettings.cpp:55
 msgid "Settings"
@@ -1265,6 +1269,8 @@ msgid ""
 "For now, when you change the setting for the location of the logfiles, "
 "RKWard will not function properly until you restart the application!"
 msgstr ""
+"Pour l'instant, si vous changez le chemin des fichiers journal, "
+"RKWard ne fonctionnera pas correctement jusqu'à ce qu'il soit relancé."
 
 #: settings/rksettingsmodulelogfiles.cpp:42
 msgid "Directory where the logfiles should be kept"
@@ -1310,38 +1316,38 @@ msgstr "Emplacement du binaire PHP"
 
 #: settings/rksettingsmodulephp.cpp:48
 msgid "Directory, where the PHP support files are located"
-msgstr ""
+msgstr "Répertoire ou les fichiers de support PHP sont situés"
 
 #: settings/rksettingsmodulephp.cpp:61
 msgid "PHP backend"
-msgstr ""
+msgstr "Moteur PHP"
 
 #: settings/rksettingsmoduleplugins.cpp:43
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
 "presentation do you prefer?"
-msgstr ""
+msgstr "Dans le cas où un module externe est disponible en version boîte de dialogue et en version assistant, quelle interface préférez-vous ?"
 
 #: settings/rksettingsmoduleplugins.cpp:52
 msgid "Always prefer dialogs"
-msgstr ""
+msgstr "Toujours préférer le mode boîtes de dialogues"
 
 #: settings/rksettingsmoduleplugins.cpp:53
 msgid "Prefer recommended interface"
-msgstr ""
+msgstr "Utiliser le mode recommandé pour le module"
 
 #: settings/rksettingsmoduleplugins.cpp:54
 msgid "Always prefer wizards"
-msgstr ""
+msgstr "Toujours préférer le mode assistant"
 
 #: settings/rksettingsmoduleplugins.cpp:61
 msgid "Select .pluginmap file(s)"
-msgstr ""
+msgstr "Sélection du/des fichier(s) .pluginmap"
 
 #: settings/rksettingsmoduleplugins.cpp:80
 msgid "Select .pluginmap-file"
-msgstr ""
+msgstr "Sélection du fichier .pluginmap"
 
 #: settings/rksettingsmoduleplugins.cpp:84
 msgid "Plugins"
@@ -1349,11 +1355,11 @@ msgstr "Composants externes"
 
 #: settings/rksettingsmoduler.cpp:43
 msgid "Note: Settings marked with (*) will not take effect until you restart RKWard!"
-msgstr ""
+msgstr "Note : les options marquées d'une étoile (*) ne seront prise en compte qu'après un redémarrage de RKWard"
 
 #: settings/rksettingsmoduler.cpp:48
 msgid "Package repositories"
-msgstr ""
+msgstr "Dépôts de paquets"
 
 #: settings/rksettingsmoduler.cpp:54
 msgid "Archive downloaded packages"
@@ -1361,43 +1367,45 @@ msgstr "Archiver les paquets téléchargés"
 
 #: settings/rksettingsmoduler.cpp:61
 msgid "R options (*)"
-msgstr ""
+msgstr "Options R (*)"
 
 #: settings/rksettingsmoduler.cpp:84
 msgid "Add repository"
-msgstr ""
+msgstr "Ajouter un dépôt"
 
 #: settings/rksettingsmoduler.cpp:84
 msgid ""
 "Add URL of new repository\n"
 "(Enter \"@CRAN@\" for the standard CRAN-mirror)"
 msgstr ""
+"Ajoutez l'URL du nouveau dépôt\n"
+"(Utiliser \"@CRAN@\" pour le mirroir CRAN standard)"
 
 #: settings/rksettingsmoduler.cpp:89
 msgid "R-Backend"
-msgstr ""
+msgstr "Processus R"
 
 #: settings/rksettingsmodulewatch.cpp:110
 msgid ""
 "For now, settings only apply to new commands. All previous commands remain "
 "visible/invisible."
-msgstr ""
+msgstr "Les changements s'appliquent aux nouvelles commandes seulement."
 
 #: settings/rksettingsmodulewatch.cpp:117
 msgid "always show command"
-msgstr ""
+msgstr "toujours montrer les commandes"
 
 #: settings/rksettingsmodulewatch.cpp:120
 msgid "always show result"
-msgstr ""
+msgstr "toujours montrer les résultats"
 
 #: settings/rksettingsmodulewatch.cpp:123
 msgid "show errors"
-msgstr ""
+msgstr "montrer les erreurs"
 
 #: settings/rksettingsmodulewatch.cpp:126
 msgid "show/raise window"
-msgstr ""
+msgstr "Montrer la fenêtre"
 
 #: settings/rksettingsmodulewatch.cpp:130
 msgid "User commands"
@@ -1405,15 +1413,15 @@ msgstr "Commandes utilisateur"
 
 #: settings/rksettingsmodulewatch.cpp:131
 msgid "Plugin generated commands"
-msgstr ""
+msgstr "Commandes générées par les modules externes"
 
 #: settings/rksettingsmodulewatch.cpp:132
 msgid "Application commands"
-msgstr ""
+msgstr "Commandes de RKWard"
 
 #: settings/rksettingsmodulewatch.cpp:133
 msgid "Synchronisation commands"
-msgstr ""
+msgstr "Commandes de synchronisation"
 
 #: settings/rksettingsmodulewatch.cpp:219
 msgid "Console"
@@ -1451,7 +1459,7 @@ msgstr "Voulez-vous vraiment vider les sorties ? Il sera impossible de les resta
 
 #: windows/rkhtmlwindowpart.cpp:134
 msgid "Flush output?"
-msgstr ""
+msgstr "Vider les sorties ?"
 
 #: helpdlg.cpp:100 helpdlg.cpp:135 rc.cpp:48
 #, no-c-format
@@ -1504,7 +1512,7 @@ msgstr "RKWardApp"
 
 #: rkwatch.moc.cpp:34 rkwatch.moc.cpp:42
 msgid "RKwatch"
-msgstr ""
+msgstr "RKwatch"
 
 #: rc.cpp:9
 #, no-c-format
@@ -1524,7 +1532,7 @@ msgstr "E&xécuter"
 #: rc.cpp:21
 #, no-c-format
 msgid "&Windows"
-msgstr ""
+msgstr "&Fenêtres"
 
 #: _translatorinfo.cpp:1
 msgid ""
