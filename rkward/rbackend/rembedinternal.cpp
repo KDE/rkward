@@ -30,6 +30,7 @@ extern "C" {
 #include "Rinternals.h"
 #include "Rinterface.h"
 #include "Rdevices.h"
+#include "R_ext/Parse.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -347,8 +348,7 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 
 	int maxParts=1;
 	int r_error = 0;
-	int status;
-	int *stat = &status;
+	int status = PARSE_NULL;
 	const char *c = command;
 	SEXP cv, pr, exp;
 
@@ -360,21 +360,26 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 	PROTECT(cv=allocVector(STRSXP, 1));
 	SET_VECTOR_ELT(cv, 0, mkChar(command));  
 
+	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails
 	while (maxParts>0) {
-		pr=R_ParseVector(cv, maxParts, stat);
+		pr=R_ParseVector(cv, maxParts, &status);
 		// 2=incomplete; 4=eof
-		if (status!=2 && status!=4) {
+		if (status!=PARSE_INCOMPLETE && status!=PARSE_EOF) {
 			break;
 		}
 		maxParts--;
 	}
 	UNPROTECT(1);
 
-	if (status != 1) {
-		if ((status == 2) || (status == 4)) {
+	if (status != PARSE_OK) {
+		if ((status == PARSE_INCOMPLETE) || (status == PARSE_EOF)) {
 			*error = REmbedInternal::Incomplete;
-		} else {
+		} else if (status == PARSE_ERROR) {
+			//extern SEXP parseError (SEXP call, int linenum);
+			//parseError (R_NilValue, 0);
 			*error = REmbedInternal::SyntaxError;
+		} else { // PARSE_NULL
+			*error = REmbedInternal::OtherError;
 		}
 		exp = R_NilValue;
 	
