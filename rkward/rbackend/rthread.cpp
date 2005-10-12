@@ -304,15 +304,9 @@ int RThread::initialize () {
 
 	QString r_home = RKSettingsModuleR::rHomeDir();
 
-	QStringList arglist = RKSettingsModuleR::getOptionList();
-	char *argv[arglist.count ()];
-	int argc = 0;
-	QStringList::iterator it;
-	for (it = arglist.begin (); it != arglist.end (); ++it) {
-		argv[argc] = qstrdup ((*it).latin1 ());
-		argc++;
-	}
-	
+	int argc = 2;	
+	char* argv[2] = { qstrdup ("--slave"), qstrdup ("--no-save") };
+
 	startR (r_home, argc, argv);
 
 	for (--argc; argc >= 0; --argc) {
@@ -326,16 +320,11 @@ int RThread::initialize () {
 	
 	runCommandInternal ("library (\"rkward\")\n", &error);
 	if (error) status |= LibLoadFail;
-	QStringList list = RKSettingsModuleR::getPackageRepositories ();
-	QString command = "options (repos=c(";
-	for (QStringList::const_iterator it = list.begin (); it != list.end (); ++it) {
-		if (it != list.begin ()) {
-			command.append (", ");
-		}
-		command.append ("\"" + *it + "\"");
+	QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands ();
+	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
+		runCommandInternal (*it, &error);
+		if (error) status |= OtherFail;
 	}
-	runCommandInternal (command + "))\n", &error);
-	if (error) status |= OtherFail;
 	runCommandInternal ("options (error=quote (.rk.do.error ()))\n", &error);
 	if (error) status |= SinkFail;
 /*	runCommandInternal (".rk.init.handlers ()\n", &error);

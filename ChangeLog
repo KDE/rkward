@@ -1,3 +1,8 @@
+- allow configuration of many R options in Settings->R backend
+- updated French translation
+- make "up"-button work in R-backend repository settings
+- more code cleanups
+
 --- Version 0.3.3 - Oct-06-2005
 - honor debug-level setting everywhere
 - reworked handling of output from R (no more file-sinks)

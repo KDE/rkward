@@ -23,7 +23,10 @@
 #include <qstringlist.h>
 
 class QCheckBox;
+class QComboBox;
+class QLineEdit;
 class MultiStringSelector;
+class KIntSpinBox;
 
 /**
 Configure the R-backend
@@ -47,25 +50,41 @@ public:
 	QString caption ();
 	
 	static QString &rHomeDir () { return r_home_dir; };
-	static bool rNosave () { return r_nosave; };
-	static bool rSlave () { return r_slave; };
 	static bool archivePackages () { return archive_packages; }
-	static QStringList getOptionList ();
-	static QStringList getPackageRepositories () { return package_repositories; };
+//	static QStringList getPackageRepositories () { return package_repositories; };
+
+/** generate the commands needed to set the R run time options */
+	static QStringList makeRRunTimeOptionCommands ();
 public slots:
 	void boxChanged (int);
 	void pathChanged ();
+	void textChanged (const QString &);
 	void addRepository (QStringList *string_list);
 private:
-	QCheckBox *nosave_box;
-	QCheckBox *slave_box;
 	QCheckBox *archive_packages_box;
 	MultiStringSelector *repository_selector;
-friend class RInterface;
-	static bool r_nosave;
-	static bool r_slave;
+	QLineEdit *outdec_input;
+	KIntSpinBox *width_input;
+	QComboBox *warn_input;
+	KIntSpinBox *warningslength_input;
+	QComboBox *keepsource_input;
+	QComboBox *keepsourcepkgs_input;
+	KIntSpinBox *expressions_input;
+	KIntSpinBox *digits_input;
+	QComboBox *checkbounds_input;
+
 	static bool archive_packages;
 	static QStringList package_repositories;
+	static QString options_outdec;
+	static int options_width;
+	static int options_warn;
+	static int options_warningslength;
+	static bool options_keepsource;
+	static bool options_keepsourcepkgs;
+	static int options_expressions;
+	static int options_digits;
+	static bool options_checkbounds;
+friend class RInterface;
 	static QString r_home_dir;
 };
 
