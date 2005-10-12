@@ -124,7 +124,10 @@ void MultiStringSelector::upButtonClicked () {
 	QListViewItem *sel = list_view->selectedItem ();
 	RK_ASSERT (sel);
 
-	sel->moveItem (sel->itemAbove ());
+	QListViewItem *above = sel->itemAbove ();
+	if (above) {
+		above->moveItem (sel);
+	}
 	emit (listChanged ());
 }
 
