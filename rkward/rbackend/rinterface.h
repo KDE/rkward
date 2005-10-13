@@ -65,6 +65,9 @@ public:
 not be interrupted. */
 	void cancelCommand (RCommand *command);
 
+/** Pauses process. The current command will continue to run, but no new command will be */
+	void pauseProcessing (bool pause);
+
 	static QMutex mutex;
 	static int mutex_counter;
 private:

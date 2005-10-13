@@ -23,6 +23,7 @@ RKEditorManager *RKGlobals::manager;
 RKModificationTracker *RKGlobals::mtracker;
 RKComponentMap *RKGlobals::cmap;
 KHelpDlg *RKGlobals::helpdlg;
+RControlWindow *RKGlobals::rcontrol;
 
 /* statics
 - empty_char

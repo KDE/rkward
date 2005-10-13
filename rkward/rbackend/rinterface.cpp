@@ -27,6 +27,7 @@
 #include "../core/rkmodificationtracker.h"
 #include "../dialogs/rkloadlibsdialog.h"
 #include "../agents/showedittextfileagent.h"
+#include "../windows/rcontrolwindow.h"
 
 #include "rkwindowcatcher.h"
 #ifndef DISABLE_RKWINDOWCATCHER
@@ -135,7 +136,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 				RK_ASSERT (command == running_command_canceled);
 				running_command_canceled = 0;
 				R_interrupts_pending = 0;
-				r_thread->unlock ();
+				r_thread->unlock (RThread::Cancel);
 			}
 		}
 		watch->addOutput (command);
@@ -150,7 +151,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 	} else if ((e->type () == R_CALLBACK_REQUEST_EVENT)) {
 		processRCallbackRequest (static_cast<RCallbackArgs *> (e->data ()));
 	} else if ((e->type () == RSTARTED_EVENT)) {
-		r_thread->unlock ();
+		r_thread->unlock (RThread::Startup);
 	} else if ((e->type () > RSTARTUP_ERROR_EVENT)) {
 		int err = e->type () - RSTARTUP_ERROR_EVENT;
 		QString message = i18n ("There was a problem starting the R backend. The following error(s) occurred:\n");
@@ -164,7 +165,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 			message.append (i18n ("\t-An unspecified error occured that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.\n"));
 		}
 		KMessageBox::error (0, message, i18n ("Error starting R"));
-		r_thread->unlock ();
+		r_thread->unlock (RThread::Startup);
 	}
 }
 
@@ -172,6 +173,7 @@ void RInterface::issueCommand (RCommand *command, RCommandChain *chain) {
 	RK_TRACE (RBACKEND);
 	MUTEX_LOCK;
 	RCommandStack::issueCommand (command, chain);
+	RKGlobals::controlWindow ()->refreshCommands ();
 	MUTEX_UNLOCK;
 }
 
@@ -180,6 +182,7 @@ RCommandChain *RInterface::startChain (RCommandChain *parent) {
 	RCommandChain *ret;
 	MUTEX_LOCK;
 	ret = RCommandStack::startChain (parent);
+	RKGlobals::controlWindow ()->refreshCommands ();
 	MUTEX_UNLOCK;
 	return ret;
 };
@@ -189,6 +192,7 @@ RCommandChain *RInterface::closeChain (RCommandChain *chain) {
 	RCommandChain *ret;
 	MUTEX_LOCK;
 	ret = RCommandStack::closeChain (chain);
+	RKGlobals::controlWindow ()->refreshCommands ();
 	MUTEX_UNLOCK;
 	return ret;
 };
@@ -201,7 +205,7 @@ void RInterface::cancelCommand (RCommand *command) {
 		command->status |= RCommand::Canceled;
 		if (command == r_thread->current_command) {
 			RK_ASSERT (!running_command_canceled);
-			r_thread->lock ();
+			r_thread->lock (RThread::Cancel);
 			running_command_canceled = command;
 			// this is the var in R-space that stores an interrupt
 			R_interrupts_pending = 1;
@@ -210,7 +214,15 @@ void RInterface::cancelCommand (RCommand *command) {
 		RK_ASSERT (false);
 	}
 	
+	RKGlobals::controlWindow ()->refreshCommands ();
 	MUTEX_UNLOCK;
+}
+
+void RInterface::pauseProcessing (bool pause) {
+	RK_TRACE (RBACKEND);
+
+	if (pause) r_thread->lock (RThread::User);
+	else r_thread->unlock (RThread::User);
 }
 
 void RInterface::processREvalRequest (REvalRequest *request) {

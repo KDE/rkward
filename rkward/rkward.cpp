@@ -72,6 +72,7 @@
 #include "agents/rkloadagent.h"
 #include "windows/rkcommandeditorwindow.h"
 #include "windows/rkhtmlwindow.h"
+#include "windows/rcontrolwindow.h"
 #include "khelpdlg.h"
 #include "rkconsole.h"
 #include "debug.h"
@@ -155,12 +156,12 @@ void RKwardApp::doPostInit () {
 
 	readOptions();
 	object_browser = new RObjectBrowser ();
+
+	startR ();
 	
 	QString dummy = i18n("Before you start bashing at it: please note that this is merely a technology preview release. You might actually be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments are welcome.");
 	KMessageBox::information (this, dummy, i18n("Before you complain..."), "state_of_rkward");
 	
-	startR ();
-
 	// create handle for menu bar and register standard menus
 	menu_list = new RKMenuList (menuBar ());
 	QMenuItem* item = menuBar ()->findItem (menuBar ()->idAt (0));
@@ -187,16 +188,22 @@ void RKwardApp::doPostInit () {
 	
 	RKGlobals::rInterface ()->watch->setName("Command log");
 	RKGlobals::rInterface ()->watch->setIcon(SmallIcon("text_block"));
-	addToolWindow(RKGlobals::rInterface ()->watch,KDockWidget::DockBottom, getMainDockWidget(), 10);
+	addToolWindow(RKGlobals::rInterface ()->watch,KDockWidget::DockBottom, getMainDockWidget (), 10);
 
-	console = new RKConsole(0);
-	console->setIcon(SmallIcon("konsole"));
-	console->setName("r_console");
-	addToolWindow(console,KDockWidget::DockBottom, getMainDockWidget(), 10);
+	RControlWindowPart *rcpart = new RControlWindowPart ();
+	RKGlobals::rcontrol = static_cast<RControlWindow *> (rcpart->widget ());
+	RKGlobals::rcontrol->setCaption (i18n ("Command Stack"));
+	RKGlobals::rcontrol->setName ("rcontrol");
+	addToolWindow (RKGlobals::rcontrol, KDockWidget::DockBottom, getMainDockWidget (), 10);
+
+	console = new RKConsole (0);
+	console->setIcon (SmallIcon ("konsole"));
+	console->setName ("r_console");
+	addToolWindow (console, KDockWidget::DockBottom, getMainDockWidget (), 10);
 	
-	RKGlobals::helpdlg = new KHelpDlg(0);
-	RKGlobals::helpDialog ()->setIcon(SmallIcon("help"));
-	addToolWindow(RKGlobals::helpDialog (), KDockWidget::DockBottom, getMainDockWidget(), 10);
+	RKGlobals::helpdlg = new KHelpDlg (0);
+	RKGlobals::helpDialog ()->setIcon (SmallIcon ("help"));
+	addToolWindow (RKGlobals::helpDialog (), KDockWidget::DockBottom, getMainDockWidget (), 10);
 
 	if (initial_url) {
 		openWorkspace (*initial_url);

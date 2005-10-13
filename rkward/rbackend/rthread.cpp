@@ -47,7 +47,7 @@ RThread::~RThread() {
 
 void RThread::run () {
 	RK_TRACE (RBACKEND);
-	locked = true;
+	locked = Startup;
 	killed = false;
 	int err;
 	bool previously_idle = false;

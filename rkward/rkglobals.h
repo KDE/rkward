@@ -24,6 +24,7 @@ class RKEditorManager;
 class RKModificationTracker;
 class RKComponentMap;
 class KHelpDlg;
+class RControlWindow;
 
 // deletes the given char*, if it is not a special value. Does not set to 0.
 #define DELETE_STRING(x) if (x && (x != RKGlobals::empty_char) && (x != RKGlobals::unknown_char)) { delete x; };
@@ -54,6 +55,8 @@ public:
 	static RKComponentMap *componentMap () { return cmap; };
 /// static pointer to the RKHelpDlg
 	static KHelpDlg *helpDialog () { return helpdlg; };
+/// static pointer to the RControlWindow
+	static RControlWindow *controlWindow () { return rcontrol; };
 
 /// an empty char
 	static char *empty_char;
@@ -75,6 +78,7 @@ private:
 	static RKModificationTracker *mtracker;
 	static RKComponentMap *cmap;
 	static KHelpDlg *helpdlg;
+	static RControlWindow *rcontrol;
 };
 
 #endif

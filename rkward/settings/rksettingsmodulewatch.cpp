@@ -244,7 +244,7 @@ void RKSettingsModuleWatch::save (KConfig *config) {
 QString RKSettingsModuleWatch::caption () {
 	RK_TRACE (SETTINGS);
 
-	return (i18n ("Console"));
+	return (i18n ("Command log"));
 }
 
 #include "rksettingsmodulewatch.moc"

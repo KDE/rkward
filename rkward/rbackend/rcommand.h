@@ -35,6 +35,7 @@ class RChainOrCommand;
 @see RInterface::closeChain */
 class RCommandChain {
 protected:
+friend class RControlWindow;
 friend class RCommandStack;
 	QPtrList<RChainOrCommand> commands;
 	bool closed;
@@ -45,6 +46,7 @@ friend class RCommandStack;
 be able to insert either a command or a chain using the same mechanism, easily. You don't want to use this class outside of RCommandStack (TODO: move it to rcommandstack.h, then!) */
 class RChainOrCommand {
 private:
+friend class RControlWindow;
 friend class RCommandStack;
 	RCommand *command;
 	RCommandChain *chain;

@@ -1,3 +1,4 @@
+- fix installation of standard_plugins.pluginmap
 - allow configuration of many R options in Settings->R backend
 - updated French translation
 - make "up"-button work in R-backend repository settings

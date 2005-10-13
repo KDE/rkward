@@ -10,11 +10,29 @@ Little annoying stuff:
 - in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
 - hide superflous GUI-items, esp. for the HTML windows
 
+Configuration options to add:
+	- additional console options:
+		- length of command history
+		- save/load command history on RKWard exit/start
+		- maximum number of lines to show
+		- color highlighting for warnings/errors (once we can identify them reliably)
+	- additional R engine options:
+		- stack size (commandline arg --map-ppsize)
+	- new dataeditor options:
+		- see below: comments on RKEditorDataFrame
+
+- RKConsole:
+	- Console should start a command chain when submitting a batch of pasted commands
+	- Make constructor protected, and enforce creating via the part instead.
+	- I think I'll rework some of the logic in RKConsole
+
 - "real time" display of output in the console (remember to add Mutex protection before then!)
 
 - remove classes/files:
 	- RKCommandEditor (first check for reusable functionality)
 		- RKPlugin still uses RKCommandEditor. Convert to use RKCommandEditorWindow instead.
+
+- finish implementing RControlWindow
 
 stuff to do before 0.3.5 release
 - plugins (general)
