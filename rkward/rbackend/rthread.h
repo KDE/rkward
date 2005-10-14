@@ -69,7 +69,7 @@ class RThread : public QThread, public REmbedInternal {
 public:
 /** constructor. You need to specify a pointer to the RInterface, so the thread knows where to post its events. Only one RThread should ever be
 created, and that happens in RInterface::RInterface (). */
-	RThread (RInterface *parent);
+	RThread ();
 /** destructor */
 	~RThread();
 
@@ -136,7 +136,6 @@ protected:
 /** the main loop. See \ref RThread for a more detailed description */
 	void run ();
 private:
-	RInterface *inter;
 /** This is the function in which an RCommand actually gets processed. Basically it passes the command to REmbedInteranl::runCommandInternal () and sends RInterface some events about what is currently happening. */
 	void doCommand (RCommand *command);
 	

@@ -36,6 +36,7 @@ class RChainOrCommand;
 class RCommandChain {
 protected:
 friend class RControlWindow;
+friend class RControlWindowListViewItem;
 friend class RCommandStack;
 	QPtrList<RChainOrCommand> commands;
 	bool closed;

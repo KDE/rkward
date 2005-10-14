@@ -69,7 +69,10 @@ not be interrupted. */
 	void pauseProcessing (bool pause);
 
 	static QMutex mutex;
-	static int mutex_counter;
+	//static int mutex_counter;
+
+/** returns the command currently running in the thread. Be careful when using the returned pointer! */
+	RCommand *runningCommand () { return r_thread->current_command; };
 private:
 	RThread *r_thread;
 	RCommand *running_command_canceled;

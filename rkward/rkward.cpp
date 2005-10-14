@@ -195,6 +195,7 @@ void RKwardApp::doPostInit () {
 	RKGlobals::rcontrol->setCaption (i18n ("Command Stack"));
 	RKGlobals::rcontrol->setName ("rcontrol");
 	addToolWindow (RKGlobals::rcontrol, KDockWidget::DockBottom, getMainDockWidget (), 10);
+	RKGlobals::rcontrol->hide ();		// this line is important! RControlWindow must do some initializations on first show, and be hidden until then.
 
 	console = new RKConsole (0);
 	console->setIcon (SmallIcon ("konsole"));

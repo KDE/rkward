@@ -56,7 +56,7 @@ extern "C" {
 
 //static
 QMutex RInterface::mutex;
-int RInterface::mutex_counter;
+//int RInterface::mutex_counter;
 
 RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
@@ -87,7 +87,7 @@ RInterface::RInterface () {
 	RCommandStack::regular_stack = new RCommandStack ();
 	running_command_canceled = 0;
 	
-	r_thread = new RThread (this);
+	r_thread = new RThread ();
 	r_thread->start ();
 
 	watch = new RKwatch ();
@@ -124,6 +124,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 	RK_TRACE (RBACKEND);
 	if (e->type () == RCOMMAND_IN_EVENT) {
 		watch->addInput (static_cast <RCommand *> (e->data ()));
+		RKGlobals::controlWindow ()->setCommandRunning (static_cast <RCommand *> (e->data ()));
 	} else if (e->type () == RCOMMAND_OUT_EVENT) {
 		RCommand *command = static_cast <RCommand *> (e->data ());
 		if (command->status & RCommand::Canceled) {
@@ -139,6 +140,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 				r_thread->unlock (RThread::Cancel);
 			}
 		}
+		RKGlobals::controlWindow ()->removeCommand (command);
 		watch->addOutput (command);
 		command->finished ();
 		delete command;
@@ -173,7 +175,7 @@ void RInterface::issueCommand (RCommand *command, RCommandChain *chain) {
 	RK_TRACE (RBACKEND);
 	MUTEX_LOCK;
 	RCommandStack::issueCommand (command, chain);
-	RKGlobals::controlWindow ()->refreshCommands ();
+	RKGlobals::controlWindow ()->addCommand (command, chain);
 	MUTEX_UNLOCK;
 }
 
@@ -182,7 +184,7 @@ RCommandChain *RInterface::startChain (RCommandChain *parent) {
 	RCommandChain *ret;
 	MUTEX_LOCK;
 	ret = RCommandStack::startChain (parent);
-	RKGlobals::controlWindow ()->refreshCommands ();
+	RKGlobals::controlWindow ()->addChain (ret);
 	MUTEX_UNLOCK;
 	return ret;
 };
@@ -192,7 +194,7 @@ RCommandChain *RInterface::closeChain (RCommandChain *chain) {
 	RCommandChain *ret;
 	MUTEX_LOCK;
 	ret = RCommandStack::closeChain (chain);
-	RKGlobals::controlWindow ()->refreshCommands ();
+	RKGlobals::controlWindow ()->updateChain (chain);
 	MUTEX_UNLOCK;
 	return ret;
 };
@@ -214,7 +216,7 @@ void RInterface::cancelCommand (RCommand *command) {
 		RK_ASSERT (false);
 	}
 	
-	RKGlobals::controlWindow ()->refreshCommands ();
+	RKGlobals::controlWindow ()->updateCommand (command);
 	MUTEX_UNLOCK;
 }
 
@@ -227,6 +229,8 @@ void RInterface::pauseProcessing (bool pause) {
 
 void RInterface::processREvalRequest (REvalRequest *request) {
 	RK_TRACE (RBACKEND);
+
+	RKGlobals::controlWindow()->addChain (request->in_chain);
 
 	// clear reply object
 	issueCommand (".rk.rkreply <- NULL", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);

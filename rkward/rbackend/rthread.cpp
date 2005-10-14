@@ -31,9 +31,8 @@
 #include <qapplication.h>
 
 
-RThread::RThread (RInterface *parent) : QThread (), REmbedInternal () {
+RThread::RThread () : QThread (), REmbedInternal () {
 	RK_TRACE (RBACKEND);
-	inter = parent;
 	current_command = 0;
 
 	RK_ASSERT (this_pointer == 0);
@@ -52,9 +51,9 @@ void RThread::run () {
 	int err;
 	bool previously_idle = false;
 	if ((err = initialize ())) {
-		qApp->postEvent (inter, new QCustomEvent (RSTARTUP_ERROR_EVENT + err));
+		qApp->postEvent (RKGlobals::rInterface (), new QCustomEvent (RSTARTUP_ERROR_EVENT + err));
 	}
-	qApp->postEvent (inter, new QCustomEvent (RSTARTED_EVENT));
+	qApp->postEvent (RKGlobals::rInterface (), new QCustomEvent (RSTARTED_EVENT));
 
 	// wait until RKWard is set to go (esp, it has handled any errors during startup, etc.)
 	while (locked) {
@@ -67,7 +66,7 @@ void RThread::run () {
 
 		if (previously_idle) {
 			if (!RCommandStack::regular_stack->isEmpty ()) {
-				qApp->postEvent (inter, new QCustomEvent (RBUSY_EVENT));
+				qApp->postEvent (RKGlobals::rInterface (), new QCustomEvent (RBUSY_EVENT));
 				previously_idle = false;
 			}
 		}
@@ -91,7 +90,7 @@ void RThread::run () {
 		
 		if (!previously_idle) {
 			if (RCommandStack::regular_stack->isEmpty ()) {
-				qApp->postEvent (inter, new QCustomEvent (RIDLE_EVENT));
+				qApp->postEvent (RKGlobals::rInterface (), new QCustomEvent (RIDLE_EVENT));
 				previously_idle = true;
 			}
 		}
@@ -102,6 +101,7 @@ void RThread::run () {
 			shutdown (false);
 			return;
 		}
+		current_command = 0;
 		msleep (10);
 	}
 }
@@ -111,8 +111,7 @@ void RThread::doCommand (RCommand *command) {
 	// step 1: notify GUI-thread that a new command is being tried and initialize
 	QCustomEvent *event = new QCustomEvent (RCOMMAND_IN_EVENT);
 	event->setData (command);
-	qApp->postEvent (inter, event);
-	RCommand *prev_command = current_command;
+	qApp->postEvent (RKGlobals::rInterface (), event);
 	current_command = command;
 
 	// step 2: actual handling
@@ -172,11 +171,10 @@ void RThread::doCommand (RCommand *command) {
 	}
 
 	// step 3: cleanup
-	current_command = prev_command;
 	// notify GUI-thread that command was finished
 	event = new QCustomEvent (RCOMMAND_OUT_EVENT);
 	event->setData (command);
-	qApp->postEvent (inter, event);
+	qApp->postEvent (RKGlobals::rInterface (), event);
 }
 
 void RThread::handleOutput (char *buf, int buf_length) {
@@ -233,6 +231,7 @@ void RThread::handleError (char **call, int call_length) {
 void RThread::handleSubstackCall (char **call, int call_length) {
 	RK_TRACE (RBACKEND);
 
+	RCommand *prev_command = current_command;
 	REvalRequest *request = new REvalRequest;
 	request->call = call;
 	request->call_length = call_length;
@@ -243,7 +242,7 @@ void RThread::handleSubstackCall (char **call, int call_length) {
 
 	QCustomEvent *event = new QCustomEvent (R_EVAL_REQUEST_EVENT);
 	event->setData (request);
-	qApp->postEvent (inter, event);
+	qApp->postEvent (RKGlobals::rInterface (), event);
 	
 	bool done = false;
 	while (!done) {
@@ -266,6 +265,7 @@ void RThread::handleSubstackCall (char **call, int call_length) {
 		MUTEX_UNLOCK;
 
 		// if no commands are in queue, sleep for a while
+		current_command = prev_command;
 		msleep (10);
 	}
 
@@ -279,7 +279,7 @@ void RThread::handleStandardCallback (RCallbackArgs *args) {
 
 	QCustomEvent *event = new QCustomEvent (R_CALLBACK_REQUEST_EVENT);
 	event->setData (args);
-	qApp->postEvent (inter, event);
+	qApp->postEvent (RKGlobals::rInterface (), event);
 	
 	bool done = false;
 	while (!done) {
@@ -335,7 +335,7 @@ int RThread::initialize () {
 
 	QCustomEvent *event = new QCustomEvent (RCOMMAND_OUT_EVENT);
 	event->setData (current_command);
-	qApp->postEvent (inter, event);
+	qApp->postEvent (RKGlobals::rInterface (), event);
 
 	return status;
 }

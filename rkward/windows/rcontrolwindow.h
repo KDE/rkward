@@ -23,13 +23,13 @@
 
 #include <qmap.h>
 #include <qlabel.h>
+#include <qlistview.h>
 
-class QListView;
 class QPushButton;
-class QListViewItem;
 class RCommand;
 class RCommandChain;
 class RChainOrCommand;
+class RControlWindowListViewItem;
 
 /**
 	\brief Interface to control R command execution
@@ -55,15 +55,11 @@ protected:
 	~RControlWindow ();
 public:
 	void addChain (RCommandChain *chain);
-	void addCommand (RCommand *command, RCommandChain *chain);
+	void addCommand (RCommand *command, RCommandChain *parent);
 	void updateChain (RCommandChain *chain);
 	void updateCommand (RCommand *command);
-	void removeChain (RCommandChain *chain);
 	void removeCommand (RCommand *command);
-
-// TODO: move to private. The above functions should be used instead.
-/** causes the RControlWindow (if shown) to refresh it's entire list of commands. Warning! Does not lock the mutex. Lock the mutex before calling this! */
-	void refreshCommands ();
+	void setCommandRunning (RCommand *command);
 
 /** reimplemented to refresh list of commands when showing. */
 	void show ();
@@ -76,11 +72,14 @@ private:
 	QListView *commands_view;
 	QPushButton *cancel_button;
 	QPushButton *pause_button;
-	void addCommands (RChainOrCommand *coc, QListViewItem *parent);
-	void addCommand (RCommand *command, QListViewItem *parent);
+	void addCommands (RChainOrCommand *coc, RControlWindowListViewItem *parent);
+	void addCommand (RCommand *command, RControlWindowListViewItem *parent);
 
-	QMap <RCommand *, QListViewItem *> command_map;
-	QMap <RCommandChain *, QListViewItem *> chain_map;
+/** causes the RControlWindow (if shown) to refresh it's entire list of commands. Warning! Does not lock the mutex. Lock the mutex before calling this! */
+	void refreshCommands ();
+
+	QMap <RCommand *, RControlWindowListViewItem *> command_map;
+	QMap <RCommandChain *, RControlWindowListViewItem *> chain_map;
 
 	bool paused;
 };
@@ -99,6 +98,37 @@ public:
 	RControlWindowPart ();
 /** destructor */
 	~RControlWindowPart ();
+};
+
+/**
+	\brief ListViewItem used in RControlWindow
+
+A listview-item with a convenience constructor, and storing some additional information. For use in RControlWindow only.
+
+*/
+class RControlWindowListViewItem : public QListViewItem {
+public:
+/** constructor. */
+	RControlWindowListViewItem (QListViewItem *parent);
+/** constructor. */
+	RControlWindowListViewItem (QListView *parent);
+/** destructor */
+	~RControlWindowListViewItem ();
+
+/** initialize/update item according to command flags, status, etc. */
+	void update (RCommand *command);
+/** initialize/update item according to chain flags, status, etc. */
+	void update (RCommandChain *chain);
+
+/** warning! do not try to access members of this pointer! RCommandChains get deleted in the stack when done, without notice. Use this pointer only to check, whether this is a chain, and to remove it from the RControlWindow::chain_map! */
+	RCommandChain *chain;
+	bool chain_closed;
+
+	unsigned int id;
+	static unsigned int lid;
+
+/** reimplemented to always have the top of the stack at the top */
+	int compare (QListViewItem *i, int col, bool ascending) const;
 };
 
 #endif
