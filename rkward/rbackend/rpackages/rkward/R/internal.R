@@ -102,8 +102,8 @@
 }
 
 
-".rk.get.CRAN.packages" <- function () {
-	x <- CRAN.packages ()
+".rk.get.available.packages" <- function () {
+	x <- available.packages ()
 	return (c (as.vector (x[,1]), as.vector (x[,2])))
 }
 

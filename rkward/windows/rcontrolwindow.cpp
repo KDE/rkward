@@ -282,7 +282,7 @@ void RControlWindowListViewItem::update (RCommand *command) {
 	RK_TRACE (APP);
 	RK_ASSERT (this);
 
-	QString dummy = command->command ().left (40);
+	QString dummy = command->command ().left (40).stripWhiteSpace ();
 	if (dummy.length () > 37) {
 		dummy = dummy.left (37) + "...";
 	}

@@ -619,7 +619,7 @@ void InstallPackagesWidget::installSelectedButtonClicked () {
 
 void InstallPackagesWidget::getListButtonClicked () {
 	RK_TRACE (DIALOGS);
-	RCommand *command = new RCommand (".rk.get.CRAN.packages ()", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_AVAILABLE_PACKAGES_COMMAND);
+	RCommand *command = new RCommand (".rk.get.available.packages ()", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_AVAILABLE_PACKAGES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 	
 	get_list_button->setEnabled (false);
