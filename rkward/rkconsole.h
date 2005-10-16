@@ -91,7 +91,7 @@ friend class RKConsolePart;
 \param command the new command */
 	void setCurrentCommand (QString command);
 /** Add a new line, and try to submit the next item in a batch of (pasted) commands. If there is no batch, only add the new line. */
-	void tryNextInBatch ();
+	void tryNextInBatch (bool add_new_line = true);
 /** Add given command to command history. Also checks, wether the history is longer than max length, and chops it if so. */
 	void addCommandToHistory (const QString &command);
 

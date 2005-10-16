@@ -1,3 +1,4 @@
+- avoid adding incomplete (multi-line) Console commands to the Command Log
 - Settings->Command Log->show/raise window working again
 - allow loading/saving of command history (console commands)
 - add (meaningful) context menu for console

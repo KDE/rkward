@@ -206,12 +206,14 @@ void RKConsole::submitBatch (QString batch) {
 	// splitting batch, not allowing empty entries.
 	// TODO: hack something so we can have empty entries.
 	commands_batch = QStringList::split ("\n", batch, true);
-	tryNextInBatch ();
+	tryNextInBatch (false);
 }
 
-void RKConsole::tryNextInBatch () {
-	append (prefix);
-	cursorAtTheEnd ();
+void RKConsole::tryNextInBatch (bool add_new_line) {
+	if (add_new_line) {	
+		append (prefix);
+		cursorAtTheEnd ();
+	}
 
 	if (!commands_batch.isEmpty()) {
 		// If we were not finished executing a batch of commands, we execute the next one.
@@ -280,8 +282,8 @@ RKConsolePart::RKConsolePart () : KParts::Part (0) {
 // ugly HACK: we need this to override the default Ctrl+C binding
 	interrupt_command->setShortcut ("Ctrl+C");
 
-	copy = new KAction (i18n ("Copy selection"), 0, console, SLOT (copy ()), actionCollection ());
-	paste = new KAction (i18n ("Paste"), KShortcut ("Ctrl+V"), console, SLOT (paste ()), actionCollection ());
+	copy = new KAction (i18n ("Copy selection"), 0, console, SLOT (copy ()), actionCollection (), "rkconsole_copy");
+	paste = new KAction (i18n ("Paste"), KShortcut ("Ctrl+V"), console, SLOT (paste ()), actionCollection (), "rkconsole_paste");
 
 	connect (console, SIGNAL (fetchPopupMenu (QPopupMenu**)), this, SLOT (makePopupMenu (QPopupMenu**)));
 }
