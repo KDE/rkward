@@ -27,6 +27,7 @@
 class QStringList;
 class KAction;
 class RCommand;
+class QPopupMenu;
 
 /**
 ** 	\brief Provides an R-like console.
@@ -55,8 +56,11 @@ protected:
 
 	void keyPressEvent (QKeyEvent * e);
 	void rCommandDone (RCommand *command);
+/** reimplemented to provide our own context menu */
+	QPopupMenu *createPopupMenu (const QPoint &pos);
 signals:
 	void doingCommand (bool busy);
+	void fetchPopupMenu (QPopupMenu **menu);
 private:
 friend class RKConsolePart;
 	QString incomplete_command;
@@ -118,9 +122,12 @@ public slots:
 	void setDoingCommand (bool busy);
 /** interrupt current command. */
 	void slotInterruptCommand ();
+	void makePopupMenu (QPopupMenu **menu);
 private:
-	KAction *context_help;
+	KAction* context_help;
 	KAction* interrupt_command;
+	KAction* copy;
+	KAction* paste;
 
 	RKConsole *console;
 };

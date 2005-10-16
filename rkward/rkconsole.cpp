@@ -20,7 +20,7 @@
 #include <qstringlist.h>
 #include <qclipboard.h>
 #include <qapplication.h>
- 
+
 #include <klocale.h>
 #include <kaction.h>
 
@@ -251,6 +251,14 @@ void RKConsole::addCommandToHistory (const QString &command) {
 	}
 }
 
+QPopupMenu *RKConsole::createPopupMenu (const QPoint &pos) {
+	QPopupMenu *mp;
+	emit (fetchPopupMenu (&mp));
+	if (mp) return mp;
+
+	return KTextEdit::createPopupMenu (pos);
+}
+
 ///################### END RKConsole ########################
 ///################### BEGIN RKConsolePart ####################
 
@@ -269,6 +277,13 @@ RKConsolePart::RKConsolePart () : KParts::Part (0) {
 	interrupt_command = new KAction (i18n ("Interrupt running command"), KShortcut ("Ctrl+C"), this, SLOT (slotInterruptCommand ()), actionCollection (), "interrupt");
 	interrupt_command->setIcon ("player_stop");
 	interrupt_command->setEnabled (false);
+// ugly HACK: we need this to override the default Ctrl+C binding
+	interrupt_command->setShortcut ("Ctrl+C");
+
+	copy = new KAction (i18n ("Copy selection"), 0, console, SLOT (copy ()), actionCollection ());
+	paste = new KAction (i18n ("Paste"), KShortcut ("Ctrl+V"), console, SLOT (paste ()), actionCollection ());
+
+	connect (console, SIGNAL (fetchPopupMenu (QPopupMenu**)), this, SLOT (makePopupMenu (QPopupMenu**)));
 }
 
 RKConsolePart::~RKConsolePart () {
@@ -297,6 +312,22 @@ void RKConsolePart::slotInterruptCommand () {
 	console->commands_batch.clear ();
 	RKGlobals::rInterface ()->cancelCommand (console->current_command);
 	setDoingCommand (false);
+}
+
+void RKConsolePart::makePopupMenu (QPopupMenu **menu) {
+	RK_TRACE (APP);
+
+/*	// won't work, as both the factory (), and the KTextEdit will think, they own the menu -> crash
+	*menu = static_cast<QPopupMenu *>(factory ()->container ("rkconsole_context_menu", this));
+	factory ()->resetContainer ("rkconsole_context_menu"); */
+	*menu = new QPopupMenu (console);
+	copy->plug (*menu, 9);
+	copy->setEnabled (console->hasSelectedText ());
+	paste->plug (*menu, 10);
+	(*menu)->insertSeparator (11);
+	context_help->plug (*menu, 12);
+	(*menu)->insertSeparator (13);
+	interrupt_command->plug (*menu, 14);
 }
 
 #include "rkconsole.moc"

@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.3.3">
+<kpartgui name="rkward" version="0.3.4">
 	<MenuBar>
 		<Menu name="run"><text>&amp;Run</text>
 			<Merge/>
@@ -15,4 +15,11 @@
 		<Separator/>
 		<Merge/>
 	</ToolBar>
+<!-- unfortunately this won't work due to the internal going ons in KTextEdit
+	<Menu name="rkconsole_context_menu">
+		<Action name="rkconsole_copy"></Action>
+		<Action name="rkconsole_paste"></Action>
+		<Action name="function_reference"></Action>
+		<Action name="interrupt"></Action>
+	</Menu> -->
 </kpartgui>
