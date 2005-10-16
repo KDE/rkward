@@ -46,34 +46,22 @@ public:
 	/** Destructor */
 	~RKConsole();
 	
-	/** Sets the current command
-	\param command the new command */
-	void setCurrentCommand (QString command);
 	/** Submits a batch of commands, line by line.
 	\param batch a QString containing the batch of commands to be executed */
 	void submitBatch(QString batch);
-	
 
-signals:
-	void userCommandRunning (RCommand *command);
-/** Emited when the command has been executed */
-	void userCommandFinished ();
 protected:
 	void keyPressEvent ( QKeyEvent * e );
 	void rCommandDone (RCommand *command);
 private:
-/** This string stores the prefix printed at the beginning of each line. */
-	QString prefix;
 	QString incomplete_command;
 	bool command_incomplete;
 /** A list to store previous commands */
-	QPtrList<QString> commandsList;
+	QPtrList<QString> commands_history;
 /** A list to store a commands batch that will be executed one line at a time */
-	QStringList commandsBatch;
+	QStringList commands_batch;
 /** Sets the cursor position to the end of the last line. */
 	void cursorAtTheEnd();
-/** Add a new line, with the prefix. */
-	void newLine();
 /** Returns the command currently being edited (not executed yet) */
 	QString currentCommand();
 /** Submits the current command */
@@ -84,14 +72,22 @@ private:
 	void commandsListDown();
 /** Sets the cursor position to the beginning of the last line. */
 	void cursorAtTheBeginning();
-/** We overload the paste function, in order to intercept paste commands and get them executed thru submitBatch.
+/** We overload the paste function, in order to intercept paste commands and get them executed through submitBatch.
 @sa submitBatch */
 	void paste();
-/** We overload the clear function.*/
+/** We overload the clear function, to add a prompt at the top. */
 	void clear();
-private slots:
-/** Called when a command has been executed. */
-	void slotCommandFinished();
+/** Sets the current command. This is used from commandsListUp (), and commandsListDown ();
+\param command the new command */
+	void setCurrentCommand (QString command);
+/** Add a new line, and try to submit the next item in a batch of (pasted) commands. If there is no batch, only add the new line. */
+	void tryNextInBatch ();
+private:
+	QString prefix;
+/** This string stores the regular prefix printed at the beginning of each line. */
+	const char *nprefix;
+/** This string stores the continuation prefix. */
+	const char *iprefix;
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality

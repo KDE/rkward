@@ -1,3 +1,4 @@
+- add "Command stack" window for advanced control of R backend (cancel commands, pause chain, view stack)
 - modifiy rkward.desktop to always start rkward in a terminal. The backend sometimes behaves strangely, if this is not done.
 - use available.packages instead of CRAN.packages (deprecated in R 2.2.0)
 - fix installation of standard_plugins.pluginmap

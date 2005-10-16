@@ -35,7 +35,8 @@ class RControlWindowListViewItem;
 	\brief Interface to control R command execution
 
 This class provides a GUI interface to inspect, and manipulate the current RCommandStack, and to Pause/Resume the R engine.
-Do create an instance of this class directly. Create a RControlWindowPart instead.
+Do create an instance of this class directly. Create a RControlWindowPart instead. Also, probably RInterface should be the only class ever calling
+functions of RControlWindow.
 
 // TODO: probably the QListView of RCommands (and associated functionality) should be separted to an own class
 to allow reuse
@@ -54,30 +55,43 @@ protected:
 /** destructor */
 	~RControlWindow ();
 public:
+/** Add new chain to the RControlWindow. Has no effect unless RControlWindow::isShown () */
 	void addChain (RCommandChain *chain);
+/** Add new command to the RControlWindow. The command is added to the given parent chain. Has no effect unless RControlWindow::isShown () */
 	void addCommand (RCommand *command, RCommandChain *parent);
+/** Update information on the given chain. Use esp, if the chain was set to closed. Has no effect unless RControlWindow::isShown () */
 	void updateChain (RCommandChain *chain);
+/** Update information on the given command. Use esp, if the command was cancelled. Has no effect unless RControlWindow::isShown () */
 	void updateCommand (RCommand *command);
+/** Remove given command from the RControlWindow. This will also check, whether the parent chain can be torn down, automatically. Has no effect unless RControlWindow::isShown ()*/
 	void removeCommand (RCommand *command);
+/** Set given command as running. Has no effect unless RControlWindow::isShown ()*/
 	void setCommandRunning (RCommand *command);
 
-/** reimplemented to refresh list of commands when showing. */
+/** reimplemented to refresh list of commands when showing. This is needed, as the RControlWindow is only kept up to date as long as it is shown. Hence, if it was hidden, and then gets shown, it will have to update the entire list. */
 	void show ();
 public slots:
+/** command selection was changed. Automatically select sub-items of selected chains. Enable/disable "Cancel" button */
 	void commandSelectionChanged ();
+/** cancel button was clicked. Cancel selected commands (unless they are RCommand::Sync). */
 	void cancelButtonClicked ();
+/** pause button was clicked. Pause/Resume processing of the stack */
 	void pauseButtonClicked ();
+/** configure button was clicked. Invoke settings dialog */
 	void configureButtonClicked ();
 private:
 	QListView *commands_view;
 	QPushButton *cancel_button;
 	QPushButton *pause_button;
+
+/** internal: recursively add commands/chains */
 	void addCommands (RChainOrCommand *coc, RControlWindowListViewItem *parent);
+/** internal: add single command */
 	void addCommand (RCommand *command, RControlWindowListViewItem *parent);
-/** delete chain(s) if applicable. This basically mimics the behavior in RCommandStack::pop () */
+/** internal: delete chain(s) if applicable. This basically mimics the behavior in RCommandStack::pop () */
 	void checkCleanChain (RControlWindowListViewItem *chain);
 
-/** causes the RControlWindow (if shown) to refresh it's entire list of commands. Warning! Does not lock the mutex. Lock the mutex before calling this! */
+/** internal: causes the RControlWindow (if shown) to refresh it's entire list of commands. Warning! Does not lock the mutex. Lock the mutex before calling this! */
 	void refreshCommands ();
 
 	QMap <RCommand *, RControlWindowListViewItem *> command_map;
