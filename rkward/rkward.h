@@ -55,7 +55,6 @@ class RInterface;
 class RKEditorManager;
 class RKMenuList;
 class RKCommandEditorWindow;
-class RKConsole;
 
 /**
 * The base class for RKward application windows. It sets up the main
@@ -196,9 +195,6 @@ public slots:
 /** a child window has received a close event. Check, whether data needs to be saved. Ask if necessary. Close only if safe. */
 	void slotChildWindowCloseRequest (KMdiChildView * window);
 
-/** interrupt current command. TODO: defunct!!! */
-	void slotInterruptCommand();
-
 /** close current window (Windows->Close). Note: the only reason we need to implement this, is so we can set a default shortcut (Ctrl+W). Usually, KMdiMainFrm would provide an action like this by itselt */
 	void slotCloseWindow ();
 /** close all windows (Windows->Close All) */
@@ -236,7 +232,6 @@ private:
 	KAction* window_close_all;
 	KAction* window_detach;
 	
-	KAction* interruptCommand;
 	KAction* configure;
 	
 	friend class RKSettingsModule;
@@ -250,7 +245,6 @@ private:
 	QTimer *startup_timer;
 	
 	RObjectBrowser *object_browser;
-	RKConsole * console;
 	
 	KURL *initial_url;
 	

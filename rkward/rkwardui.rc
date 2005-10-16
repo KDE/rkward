@@ -34,12 +34,6 @@
 		<Separator/>
 		<Merge/> 
 	</Menu>
-
-	<Menu name="run"><text>&amp;Run</text>
-		<Merge/>
-		<Separator/>
-		<Action name="interrupt"/>
-	</Menu>   
  
 	<Menu name="windows"><text>&amp;Windows</text>
 		<Action name="output_show"/>
@@ -73,7 +67,6 @@
 		<Action name="paste_to_table"/>
 </ToolBar>
 <ToolBar fullWidth="true" name="runToolBar">
-		<Action name="interrupt"/>
 		<Separator/>
 		<Action name="run_selection"/>
 		<Action name="run_all"/>

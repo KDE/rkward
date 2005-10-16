@@ -1,8 +1,18 @@
 <!DOCTYPE kpartgui>
 <kpartgui name="rkward" version="0.3.3">
 	<MenuBar>
+		<Menu name="run"><text>&amp;Run</text>
+			<Merge/>
+			<Separator/>
+			<Action name="interrupt"/>
+		</Menu>
 		<Menu name="help"><text>&amp;Help</text>
 			<Action name="function_reference"></Action>
 		</Menu>
 	</MenuBar>
+	<ToolBar fullWidth="true" name="runToolBar">
+		<Action name="interrupt"/>
+		<Separator/>
+		<Merge/>
+	</ToolBar>
 </kpartgui>

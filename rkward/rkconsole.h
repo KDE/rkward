@@ -24,8 +24,9 @@
 
 #include "rbackend/rcommandreceiver.h"
 
-
 class QStringList;
+class KAction;
+class RCommand;
 
 /**
 ** 	\brief Provides an R-like console.
@@ -33,6 +34,8 @@ class QStringList;
 ** This class provides a console, which is very similar to the classic R console. It is mainly used by RKwatch to allow
 ** the user to enter commands manualy. It is basically just a modified KTextEdit.
 ** 
+	Do not construct directly. Construct an RKConsolePart instead.
+	
 ** \sa RKwatch, KTextEdit
 ** 
 ** @author Pierre Ecochard
@@ -41,19 +44,21 @@ class QStringList;
 class RKConsole : public KTextEdit, public RCommandReceiver {
 Q_OBJECT
 public:
-	/** Constructor */
-	RKConsole(QWidget *parent = 0, const char *name = 0);
-	/** Destructor */
-	~RKConsole();
-	
-	/** Submits a batch of commands, line by line.
-	\param batch a QString containing the batch of commands to be executed */
-	void submitBatch(QString batch);
-
+/** Submits a batch of commands, line by line.
+\param batch a QString containing the batch of commands to be executed */
+	void submitBatch (QString batch);
 protected:
-	void keyPressEvent ( QKeyEvent * e );
+/** Constructor. Protected. Construct an RKConsolePart instead */
+	RKConsole ();
+/** Destructor */
+	~RKConsole ();
+
+	void keyPressEvent (QKeyEvent * e);
 	void rCommandDone (RCommand *command);
+signals:
+	void doingCommand (bool busy);
 private:
+friend class RKConsolePart;
 	QString incomplete_command;
 	bool command_incomplete;
 /** A list to store previous commands */
@@ -61,6 +66,7 @@ private:
 /** A list to store a commands batch that will be executed one line at a time */
 	QStringList commands_batch;
 /** Sets the cursor position to the end of the last line. */
+
 	void cursorAtTheEnd();
 /** Returns the command currently being edited (not executed yet) */
 	QString currentCommand();
@@ -82,12 +88,16 @@ private:
 	void setCurrentCommand (QString command);
 /** Add a new line, and try to submit the next item in a batch of (pasted) commands. If there is no batch, only add the new line. */
 	void tryNextInBatch ();
-private:
+/** Add given command to command history. Also checks, wether the history is longer than max length, and chops it if so. */
+	void addCommandToHistory (const QString &command);
+
 	QString prefix;
 /** This string stores the regular prefix printed at the beginning of each line. */
 	const char *nprefix;
 /** This string stores the continuation prefix. */
 	const char *iprefix;
+
+	RCommand *current_command;
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality
@@ -99,14 +109,18 @@ class RKConsolePart : public KParts::Part {
 public:
 /** constructor.
 @param console The console for this part */
-	RKConsolePart (RKConsole *console);
+	RKConsolePart ();
 /** destructor */
 	~RKConsolePart ();
 public slots:
 /** show context help on the current word */
 	void showContextHelp ();
+	void setDoingCommand (bool busy);
+/** interrupt current command. */
+	void slotInterruptCommand ();
 private:
 	KAction *context_help;
+	KAction* interrupt_command;
 
 	RKConsole *console;
 };

@@ -14,11 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
- 
- 
-// TODO : use QStringList::split to enter several lines at a time.
- 
+#include "rkconsole.h"
  
 #include <qfont.h>
 #include <qstringlist.h>
@@ -27,8 +23,6 @@
  
 #include <klocale.h>
 #include <kaction.h>
- 
-#include "rkconsole.h"
 
 #include "rkglobals.h"
 #include "rkward.h"
@@ -36,8 +30,9 @@
 #include "debug.h"
 #include "rbackend/rinterface.h"
 #include "rbackend/rcommand.h"
+#include "settings/rksettingsmoduleconsole.h"
 
-RKConsole::RKConsole (QWidget *parent, const char *name) : KTextEdit (parent, name) {
+RKConsole::RKConsole () : KTextEdit (0) {
 	RK_TRACE (APP);
 
 	QFont font ("Courier");
@@ -51,23 +46,40 @@ RKConsole::RKConsole (QWidget *parent, const char *name) : KTextEdit (parent, na
 	command_incomplete = false;
 	clear();
 
-	commands_history.append (new QString (""));
 	commands_history.setAutoDelete (true);
+	commands_history.append (new QString (""));
+	QStringList history = RKSettingsModuleConsole::loadCommandHistory ();
+	for (QStringList::const_iterator it = history.begin (); it != history.end (); ++it) {
+		commands_history.append (new QString (*it));
+	}
 
-	RKGlobals::rkApp()->m_manager->addPart (new RKConsolePart (this), false);
+	current_command = 0;
 }
 
 
 RKConsole::~RKConsole () {
 	RK_TRACE (APP);
+
+	QStringList savelist;
+	QString *str;
+	for (str = commands_history.first (); str; str = commands_history.next ()) {
+		savelist.append (*str);
+	}
+
+	RKSettingsModuleConsole::saveCommandHistory (savelist);
 }
 
 void RKConsole::keyPressEvent (QKeyEvent *e) {
+	if (current_command) {
+		e->ignore ();
+		return;
+	}
+
 	int para=0; int p=0;
 	getCursorPosition (&para, &p);
 	// Explicitely converting so we get less warnings.
 	uint pos=(uint) p;
-	
+
 	if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
 		submitCommand ();
 		return;
@@ -99,7 +111,7 @@ void RKConsole::keyPressEvent (QKeyEvent *e) {
 }
 
 QString RKConsole::currentCommand () {
-	QString s = text (paragraphs () - 1).right(paragraphLength (paragraphs () - 1) - prefix.length () + 1);
+	QString s = text (paragraphs () - 1).right (paragraphLength (paragraphs () - 1) - prefix.length () + 1);
 	s = s.stripWhiteSpace ();
 	
 	return (s);
@@ -121,14 +133,16 @@ void RKConsole::submitCommand () {
 		commands_history.removeLast ();
 	}
 	QString c = currentCommand ();
-	commands_history.append (new QString (c.latin1 ()));
+	addCommandToHistory (c);
 	
 	if (command_incomplete) {
 		c.prepend (incomplete_command + "\n");
 	}
 
 	if (!currentCommand ().isEmpty ()) {
-		RKGlobals::rInterface ()->issueCommand (c, RCommand::User, QString::null, this);
+		current_command = new RCommand (c, RCommand::User, QString::null, this);
+		RKGlobals::rInterface ()->issueCommand (current_command);
+		emit (doingCommand (true));
 	} else {
 		tryNextInBatch ();
 	}
@@ -140,7 +154,7 @@ void RKConsole::commandsListUp () {
 	}
 	// We add the current line to the list.
 	if (commands_history.getLast () == commands_history.current ()) {
-		commands_history.append (new QString (currentCommand ().latin1 ()));
+		addCommandToHistory (currentCommand ());
 	}
 	commands_history.prev ();
 	QString new_string = commands_history.current ()->utf8 ();
@@ -205,11 +219,15 @@ void RKConsole::tryNextInBatch () {
 		commands_batch.pop_front ();
 		if (!commands_batch.isEmpty ()){
 			submitCommand ();
+			return;
 		}
 		// We would put this here if we would want the last line to be executed. We generally don't want this, as there is an empty last item, if there is a newline at the end.
 		//TODO: deal with this kind of situation better.
 		//commands_batch.erase(commands_batch.begin());
 	}
+
+	current_command = 0;
+	emit (doingCommand (false));
 }
 
 void RKConsole::paste () {
@@ -222,21 +240,35 @@ void RKConsole::clear () {
 	tryNextInBatch ();
 }
 
+void RKConsole::addCommandToHistory (const QString &command) {
+	commands_history.append (new QString (command.latin1 ()));
+
+	if (RKSettingsModuleConsole::maxHistoryLength ()) {
+		uint c = commands_history.count ();
+		for (uint ui = c; c > RKSettingsModuleConsole::maxHistoryLength (); --ui) {
+			commands_history.removeFirst ();
+		}
+	}
+}
+
 ///################### END RKConsole ########################
 ///################### BEGIN RKConsolePart ####################
 
-RKConsolePart::RKConsolePart (RKConsole *console) : KParts::Part (0) {
+RKConsolePart::RKConsolePart () : KParts::Part (0) {
 	RK_TRACE (APP);
 
 	KInstance* instance = new KInstance ("rkward");
 	setInstance (instance);
 
-	setWidget (console);
-	RKConsolePart::console = console;
+	setWidget (RKConsolePart::console = new RKConsole ());
+	connect (console, SIGNAL (doingCommand (bool)), this, SLOT (setDoingCommand (bool)));
 
 	setXMLFile ("rkconsolepart.rc");
 
 	context_help = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT (showContextHelp ()), actionCollection (), "function_reference");
+	interrupt_command = new KAction (i18n ("Interrupt running command"), KShortcut ("Ctrl+C"), this, SLOT (slotInterruptCommand ()), actionCollection (), "interrupt");
+	interrupt_command->setIcon ("player_stop");
+	interrupt_command->setEnabled (false);
 }
 
 RKConsolePart::~RKConsolePart () {
@@ -250,6 +282,21 @@ void RKConsolePart::showContextHelp () {
 	console->getCursorPosition (&para, &p);
 
 	RKGlobals::helpDialog ()->getContextHelp (console->text (para), p);
+}
+
+void RKConsolePart::setDoingCommand (bool busy) {
+	RK_TRACE (APP);
+
+	interrupt_command->setEnabled (busy);
+}
+
+void RKConsolePart::slotInterruptCommand () {
+	RK_TRACE (APP);
+	RK_ASSERT (console->current_command);
+
+	console->commands_batch.clear ();
+	RKGlobals::rInterface ()->cancelCommand (console->current_command);
+	setDoingCommand (false);
 }
 
 #include "rkconsole.moc"

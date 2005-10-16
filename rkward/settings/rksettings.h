@@ -36,7 +36,7 @@ The main settings-dialog. Contains subsections (tabs) for different modules. Use
 */
 class RKSettings : public KDialogBase {
 public:
-	enum SettingsPage { NoPage=0, Plugins=1, R=2, PHP=3, LogFiles=4, Output=5, Watch=6, ObjectBrowser=7 };
+	enum SettingsPage { NoPage=0, Plugins=1, R=2, PHP=3, LogFiles=4, Output=5, Watch=6, ObjectBrowser=7, Console=8 };
 
 	static void configureSettings (SettingsPage page=NoPage, QWidget *parent=0, RCommandChain *chain=0);
 

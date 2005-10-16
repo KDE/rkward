@@ -186,9 +186,9 @@ void RKwardApp::doPostInit () {
 	object_browser->setIcon(SmallIcon("view_tree"));
 	addToolWindow(object_browser,KDockWidget::DockLeft, getMainDockWidget(), 30 , i18n ("Existing objects in your workspace.") , i18n ("Workspace"));
 	
-	RKGlobals::rInterface ()->watch->setName("Command log");
-	RKGlobals::rInterface ()->watch->setIcon(SmallIcon("text_block"));
-	addToolWindow(RKGlobals::rInterface ()->watch,KDockWidget::DockBottom, getMainDockWidget (), 10);
+	RKGlobals::rInterface ()->watch->setName ("Command log");
+	RKGlobals::rInterface ()->watch->setIcon (SmallIcon ("text_block"));
+	addToolWindow(RKGlobals::rInterface ()->watch, KDockWidget::DockBottom, getMainDockWidget (), 10);
 
 	RControlWindowPart *rcpart = new RControlWindowPart ();
 	RKGlobals::rcontrol = static_cast<RControlWindow *> (rcpart->widget ());
@@ -197,10 +197,11 @@ void RKwardApp::doPostInit () {
 	addToolWindow (RKGlobals::rcontrol, KDockWidget::DockBottom, getMainDockWidget (), 10);
 	RKGlobals::rcontrol->hide ();		// this line is important! RControlWindow must do some initializations on first show, and be hidden until then.
 
-	console = new RKConsole (0);
-	console->setIcon (SmallIcon ("konsole"));
-	console->setName ("r_console");
-	addToolWindow (console, KDockWidget::DockBottom, getMainDockWidget (), 10);
+	RKConsolePart *consolepart = new RKConsolePart ();
+	consolepart->widget ()->setIcon (SmallIcon ("konsole"));
+	consolepart->widget ()->setName ("r_console");
+	addToolWindow (consolepart->widget (), KDockWidget::DockBottom, getMainDockWidget (), 10);
+	m_manager->addPart (consolepart, false);
 	
 	RKGlobals::helpdlg = new KHelpDlg (0);
 	RKGlobals::helpDialog ()->setIcon (SmallIcon ("help"));
@@ -300,12 +301,8 @@ void RKwardApp::initActions()
 	fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection(), "file_quitx");
 	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 
-
 	viewToolBar = KStdAction::showToolbar(this, SLOT (slotViewToolBar()), actionCollection());
 	viewStatusBar = KStdAction::showStatusbar(this, SLOT (slotViewStatusBar()), actionCollection());
-	
-	interruptCommand = new KAction (i18n ("Interrupt running command"), 0, 0, this, SLOT (slotInterruptCommand ()), actionCollection (), "interrupt");
-	interruptCommand->setIcon("player_stop");
 
 	close_all_editors = new KAction (i18n ("Close All Data"), 0, 0, this, SLOT (slotCloseAllEditors ()), actionCollection (), "close_all_editors");
 	window_close = new KAction (i18n ("Close"), 0, KShortcut ("Ctrl+W"), this, SLOT (slotCloseWindow ()), actionCollection (), "window_close");
@@ -736,10 +733,6 @@ void RKwardApp::slotChildWindowCloseRequest (KMdiChildView * window) {
 	}
 
 	closeWindow(window);
-}
-
-void RKwardApp::slotInterruptCommand () {
-// TODO!
 }
 
 void RKwardApp::openHTML(const KURL &url) {

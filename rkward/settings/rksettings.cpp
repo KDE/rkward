@@ -29,6 +29,7 @@
 #include "rksettingsmoduleoutput.h"
 #include "rksettingsmodulewatch.h"
 #include "rksettingsmoduleobjectbrowser.h"
+#include "rksettingsmoduleconsole.h"
 
 #include "../debug.h"
 
@@ -85,6 +86,7 @@ void RKSettings::initModules () {
 	modules.append (new RKSettingsModuleLogfiles (this, this));
 	modules.append (new RKSettingsModuleOutput (this, this));
 	modules.append (new RKSettingsModuleWatch (this, this));
+	modules.append (new RKSettingsModuleConsole (this, this));
 	modules.append (new RKSettingsModuleObjectBrowser (this, this));
 	
 	ModuleList::iterator it;
@@ -147,6 +149,7 @@ void RKSettings::loadSettings (KConfig *config) {
 	RKSettingsModuleLogfiles::loadSettings(config);
 	RKSettingsModuleOutput::loadSettings(config);
 	RKSettingsModuleWatch::loadSettings(config);
+	RKSettingsModuleConsole::loadSettings(config);
 	RKSettingsModuleObjectBrowser::loadSettings(config);
 }
 
@@ -159,6 +162,7 @@ void RKSettings::saveSettings (KConfig *config) {
 	RKSettingsModuleLogfiles::saveSettings(config);
 	RKSettingsModuleOutput::saveSettings(config);
 	RKSettingsModuleWatch::saveSettings(config);
+	RKSettingsModuleConsole::saveSettings(config);
 	RKSettingsModuleObjectBrowser::saveSettings(config);
 }
 
