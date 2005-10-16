@@ -22,6 +22,7 @@
 #include <qlayout.h>
 
 #include <klocale.h>
+#include <kmessagebox.h>
 
 #include "../settings/rksettings.h"
 #include "../rbackend/rinterface.h"
@@ -57,6 +58,8 @@ RControlWindow::RControlWindow (QWidget *parent) : KMdiChildView (parent) {
 	commands_view->addColumn (i18n ("Flags"));
 	commands_view->addColumn (i18n ("Description"));
 	commands_view->setSorting (0);		// actually, we ignore the column, and do our own sorting
+	commands_view->setSelectionMode (QListView::Extended);
+	connect (commands_view, SIGNAL (selectionChanged ()), this, SLOT (commandSelectionChanged ()));
 	main_vbox->addWidget (commands_view);
 
 	paused = false;
@@ -98,7 +101,9 @@ void RControlWindow::updateChain (RCommandChain *chain) {
 	if (!isShown ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
-	chain_map[chain]->update (chain);
+	RControlWindowListViewItem *chainitem = chain_map[chain];
+	chainitem->update (chain);
+	checkCleanChain (chainitem);
 }
 
 void RControlWindow::updateCommand (RCommand *command) {
@@ -118,7 +123,13 @@ void RControlWindow::removeCommand (RCommand *command) {
 	delete item;
 	command_map.remove (command);
 
-/* close parent chain(s) if applicable. This basically mimics the behavior in RCommandStack::pop () */
+	checkCleanChain (chain);
+}
+
+void RControlWindow::checkCleanChain (RControlWindowListViewItem *chain) {
+	if (!isShown ()) return;	// do expensive GUI stuff only when visible
+	RK_TRACE (APP);
+
 	while (chain && chain->chain_closed && chain->parent () && (!chain->firstChild ())) {
 		RControlWindowListViewItem *del = chain;
 		chain = static_cast<RControlWindowListViewItem *> (chain->parent ());
@@ -160,6 +171,8 @@ void RControlWindow::refreshCommands () {
 		addCommand (running, item);
 	}
 	if (running) setCommandRunning (running);
+
+	cancel_button->setEnabled (false);
 }
 
 void RControlWindow::addCommands (RChainOrCommand *coc, RControlWindowListViewItem *parent) {
@@ -198,10 +211,46 @@ void RControlWindow::addCommand (RCommand *command, RControlWindowListViewItem *
 
 void RControlWindow::commandSelectionChanged () {
 	RK_TRACE (APP);
+
+	// we will make some modifications to the selection in here, so disconnect the SIGNAL first.
+	disconnect (commands_view, SIGNAL (selectionChanged ()), this, SLOT (commandSelectionChanged ()));
+
+	bool have_selection = false;
+	// if a chain is selected, select all of its child items
+	QListViewItemIterator itemit (commands_view, QListViewItemIterator::Selected);
+	while (itemit.current ()) {
+		QListViewItem *item = itemit.current ()->firstChild ();
+		while (item) {
+			item->setSelected (true);
+			item = item->nextSibling ();
+		}
+		have_selection = true;
+		++itemit;
+	}
+
+	cancel_button->setEnabled (have_selection);
+
+	connect (commands_view, SIGNAL (selectionChanged ()), this, SLOT (commandSelectionChanged ()));
 }
 
 void RControlWindow::cancelButtonClicked () {
 	RK_TRACE (APP);
+
+	bool some_not_cancelable = false;
+	// find out all the RCommands selected (not the chains)
+	for (QMap <RCommand *, RControlWindowListViewItem *>::const_iterator it = command_map.begin (); it != command_map.end (); ++it) {
+		if (it.data ()->isSelected ()) {
+			if (!(it.key ()->type () & RCommand::Sync)) {
+				RKGlobals::rInterface ()->cancelCommand (it.key ());
+			} else {
+				some_not_cancelable = true;
+			}
+		}
+	}
+
+	if (some_not_cancelable) {
+		KMessageBox::information (this, i18n ("Some of the commands you were trying to cancel are marked as \"sync\" (letter 'S' in the type column). Cancelling such commands could lead to loss of data. These commands have _not_ been cancelled."), i18n ("Some commands not cancelled"), "cancel_sync");
+	}
 }
 
 void RControlWindow::pauseButtonClicked () {
@@ -299,7 +348,7 @@ void RControlWindowListViewItem::update (RCommand *command) {
 	if (command->type () & RCommand::DirectToOutput) dummy += "O";
 	setText (1, dummy);
 
-	if (command->type () & RCommand::Canceled) setText (2, i18n ("Cancelled"));
+	if (command->getStatus () & RCommand::Canceled) setText (2, i18n ("Cancelled"));
 
 	setText (3, command->rkEquivalent ());
 }

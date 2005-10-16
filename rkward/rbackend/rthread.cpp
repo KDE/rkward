@@ -115,59 +115,58 @@ void RThread::doCommand (RCommand *command) {
 	current_command = command;
 
 	// step 2: actual handling
-	if (command->type () & RCommand::EmptyCommand) return;
-	if (command->status & RCommand::Canceled) return;
+	if (!((command->type () & RCommand::EmptyCommand) || (command->status & RCommand::Canceled))) {
+		RKWardRError error;
+		
+		int ctype = command->type ();
+		const char *ccommand = command->command ().latin1 ();
+		
+		RK_DO (qDebug ("running command: %s", ccommand), RBACKEND, DL_DEBUG);
 	
-	RKWardRError error;
-	
-	int ctype = command->type ();
-	const char *ccommand = command->command ().latin1 ();
-	
-	RK_DO (qDebug ("running command: %s", ccommand), RBACKEND, DL_DEBUG);
-
-	if (command->type () & RCommand::DirectToOutput) {
-		runCommandInternal ("sink (\"" + RKSettingsModuleLogfiles::filesPath () + "/rk_out.html\", append=TRUE, split=TRUE)\n", &error);
-	}
-
-	MUTEX_UNLOCK;
-
-	if (ctype & RCommand::GetStringVector) {
-		command->string_data = getCommandAsStringVector (ccommand, &(command->string_count), &error);
-	} else if (ctype & RCommand::GetRealVector) {
-		command->real_data = getCommandAsRealVector (ccommand, &(command->real_count), &error);
-	} else if (ctype & RCommand::GetIntVector) {
-		command->integer_data = getCommandAsIntVector (ccommand, &(command->integer_count), &error);
-	} else {
-		runCommandInternal (ccommand, &error, ctype & RCommand::User);
-	}
-
-	MUTEX_LOCK;
-	
-	if (error != NoError) {
-		command->status |= RCommand::WasTried | RCommand::Failed;
-		if (error == Incomplete) {
-			command->status |= RCommand::ErrorIncomplete;
-			RK_DO (qDebug ("Command failed (incomplete)"), RBACKEND, DL_WARNING);
-		} else if (error == SyntaxError) {
-			command->status |= RCommand::ErrorSyntax;
-			RK_DO (qDebug ("Command failed (syntax)"), RBACKEND, DL_WARNING);
-		} else {
-			command->status |= RCommand::ErrorOther;
-			RK_DO (qDebug ("Command failed (other)"), RBACKEND, DL_WARNING);
+		if (command->type () & RCommand::DirectToOutput) {
+			runCommandInternal ("sink (\"" + RKSettingsModuleLogfiles::filesPath () + "/rk_out.html\", append=TRUE, split=TRUE)\n", &error);
 		}
-		RK_DO (qDebug ("failed command was: '%s'", command->command ().latin1 ()), RBACKEND, DL_INFO);
-	} else {
-		command->status |= RCommand::WasTried;
-	}
-
-	RKWardRError dummy;
-	if (command->type () & RCommand::DirectToOutput) {
-		runCommandInternal ("sink ()\n", &dummy);
-	}
-
-	if (error) {
-		RK_DO (qDebug ("- error message was: '%s'", command->error ().latin1 ()), RBACKEND, DL_WARNING);
-//		runCommandInternal (".rk.init.handlers ()\n", &dummy);
+	
+		MUTEX_UNLOCK;
+	
+		if (ctype & RCommand::GetStringVector) {
+			command->string_data = getCommandAsStringVector (ccommand, &(command->string_count), &error);
+		} else if (ctype & RCommand::GetRealVector) {
+			command->real_data = getCommandAsRealVector (ccommand, &(command->real_count), &error);
+		} else if (ctype & RCommand::GetIntVector) {
+			command->integer_data = getCommandAsIntVector (ccommand, &(command->integer_count), &error);
+		} else {
+			runCommandInternal (ccommand, &error, ctype & RCommand::User);
+		}
+	
+		MUTEX_LOCK;
+		
+		if (error != NoError) {
+			command->status |= RCommand::WasTried | RCommand::Failed;
+			if (error == Incomplete) {
+				command->status |= RCommand::ErrorIncomplete;
+				RK_DO (qDebug ("Command failed (incomplete)"), RBACKEND, DL_WARNING);
+			} else if (error == SyntaxError) {
+				command->status |= RCommand::ErrorSyntax;
+				RK_DO (qDebug ("Command failed (syntax)"), RBACKEND, DL_WARNING);
+			} else {
+				command->status |= RCommand::ErrorOther;
+				RK_DO (qDebug ("Command failed (other)"), RBACKEND, DL_WARNING);
+			}
+			RK_DO (qDebug ("failed command was: '%s'", command->command ().latin1 ()), RBACKEND, DL_INFO);
+		} else {
+			command->status |= RCommand::WasTried;
+		}
+	
+		RKWardRError dummy;
+		if (command->type () & RCommand::DirectToOutput) {
+			runCommandInternal ("sink ()\n", &dummy);
+		}
+	
+		if (error) {
+			RK_DO (qDebug ("- error message was: '%s'", command->error ().latin1 ()), RBACKEND, DL_WARNING);
+	//		runCommandInternal (".rk.init.handlers ()\n", &dummy);
+		}
 	}
 
 	// step 3: cleanup

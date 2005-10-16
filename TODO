@@ -26,6 +26,8 @@ Configuration options to add:
 	- Make constructor protected, and enforce creating via the part instead.
 	- I think I'll rework some of the logic in RKConsole
 
+- check whether we're running in a PTY, and warn otherwise. Currently the R backend needs this.
+
 - "real time" display of output in the console (remember to add Mutex protection before then!)
 
 - remove classes/files:

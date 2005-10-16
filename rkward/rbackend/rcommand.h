@@ -128,6 +128,8 @@ public:
 	~RCommand();
 /** @returns the type as specified in RCommand::RCommand */
 	int type () { return _type; };
+/** @returns the raw command status. @see CommandStatus */
+	int getStatus () { return status; };
 /** @returns the rk_equiv as specified in RCommand::RCommand */
 	QString rkEquivalent () { return _rk_equiv; };
 /** @returns the command string (i.e. the input) as specified in RCommand::RCommand */
@@ -156,8 +158,7 @@ public:
 		GetIntVector=512,			/**< Try to fetch result as an array of integers */
 		GetStringVector=1024,	/**< Try to fetch result as an array of chars */
 		GetRealVector=2048,		/**< Try to fetch result as an array of doubles */
-		DirectToOutput=4096,		/**< Append command output to the HTML-output file */
-		Canceled=8192				/**< Command was cancelled. Do not use in RCommand::RCommand */
+		DirectToOutput=4096		/**< Append command output to the HTML-output file */
 	};
 	enum CommandStatus {
 		WasTried=1,						/**< the command has been passed to the backend. */
@@ -167,7 +168,8 @@ public:
 		HasWarnings=16,			/**< command has warning-message(s) retrievable via RCommand::warnings () */
 		ErrorIncomplete=512,		/**< backend rejected command as being incomplete */
 		ErrorSyntax=1024,			/**< backend rejected command as having a syntax error */
-		ErrorOther=2048				/**< another error (not incomplete, not syntax error) has occured while trying to execute the command */
+		ErrorOther=2048,			/**< another error (not incomplete, not syntax error) has occured while trying to execute the command */
+		Canceled=8192				/**< Command was cancelled. */
 	};
 /** the command has been passed to the backend. */
 	bool wasTried () { return (status & WasTried); };

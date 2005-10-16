@@ -74,6 +74,8 @@ private:
 	QPushButton *pause_button;
 	void addCommands (RChainOrCommand *coc, RControlWindowListViewItem *parent);
 	void addCommand (RCommand *command, RControlWindowListViewItem *parent);
+/** delete chain(s) if applicable. This basically mimics the behavior in RCommandStack::pop () */
+	void checkCleanChain (RControlWindowListViewItem *chain);
 
 /** causes the RControlWindow (if shown) to refresh it's entire list of commands. Warning! Does not lock the mutex. Lock the mutex before calling this! */
 	void refreshCommands ();
