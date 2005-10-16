@@ -155,6 +155,7 @@ public:
 		App=8,			/**< Command comes from the application (e.g. loading / saving the workspace */
 		Sync=16,		/**< Command is used to sync data to or from R-space. Typically used in the editor classes */
 		EmptyCommand=32,		/**< Command is empty and will not be processed (an empty command may be used as a "marker") */
+		Console=64,	/**< Command originated in the console. These commands will get some extra treatment in RKwatch */
 		GetIntVector=512,			/**< Try to fetch result as an array of integers */
 		GetStringVector=1024,	/**< Try to fetch result as an array of chars */
 		GetRealVector=2048,		/**< Try to fetch result as an array of doubles */

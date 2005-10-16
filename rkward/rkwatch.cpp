@@ -37,7 +37,7 @@
 
 #include "debug.h"
 
-RKwatch::RKwatch () : QWidget () {
+RKwatch::RKwatch () : KMdiChildView () {
 	RK_TRACE (APP);
 	
 	
@@ -60,6 +60,9 @@ RKwatch::~RKwatch(){
 void RKwatch::addInput (RCommand *command) {
 	RK_TRACE (APP);
 	if (!RKSettingsModuleWatch::shouldShowInput (command)) return;
+
+// commands submitted via the console are often incomplete. We delay showing the input, until the command is finished.
+	if (command->type () & RCommand::Console) return;
 
 	addInputNoCheck (command);
 }
@@ -84,14 +87,20 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 	watch->setItalic (false);
 	
 	if (RKSettingsModuleWatch::shouldRaiseWindow (command)) {
-		show ();
-		raise ();
+		if (!(command->type () & RCommand::Console)) {
+			emit (raiseWatch ());
+		}
 	}
 	RK_TRACE (APP);
 }
 
 void RKwatch::addOutput (RCommand *command) {
 	RK_TRACE (APP);
+
+	if (command->type () & RCommand::Console) {
+		if (command->errorIncomplete ()) return;
+		if (RKSettingsModuleWatch::shouldShowInput (command)) addInputNoCheck (command);
+	}
 
 	if (!RKSettingsModuleWatch::shouldShowOutput (command)) {
 		if (!command->failed ()) {

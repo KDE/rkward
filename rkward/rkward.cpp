@@ -188,7 +188,8 @@ void RKwardApp::doPostInit () {
 	
 	RKGlobals::rInterface ()->watch->setName ("Command log");
 	RKGlobals::rInterface ()->watch->setIcon (SmallIcon ("text_block"));
-	addToolWindow(RKGlobals::rInterface ()->watch, KDockWidget::DockBottom, getMainDockWidget (), 10);
+	watch_view = addToolWindow (RKGlobals::rInterface ()->watch, KDockWidget::DockBottom, getMainDockWidget (), 10);
+	connect (RKGlobals::rInterface ()->watch, SIGNAL (raiseWatch ()), this, SLOT (raiseWatch ()));
 
 	RControlWindowPart *rcpart = new RControlWindowPart ();
 	RKGlobals::rcontrol = static_cast<RControlWindow *> (rcpart->widget ());
@@ -472,11 +473,16 @@ bool RKwardApp::queryClose () {
 	return true;
 }
 
-bool RKwardApp::queryExit()
-{
+bool RKwardApp::queryExit () {
 	RK_TRACE (APP);
-	saveOptions();
+	saveOptions ();
 	return true;
+}
+
+void RKwardApp::raiseWatch () {
+	RK_TRACE (APP);
+
+	watch_view->show ();
 }
 
 /////////////////////////////////////////////////////////////////////

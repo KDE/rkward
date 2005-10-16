@@ -120,7 +120,7 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 	QLabel *label = new QLabel (i18n ("For now, settings only apply to new commands. All previous commands remain visible/invisible."), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	vbox->addWidget (label);
-	vbox->addStretch ();
+	vbox->addSpacing (10);
 	
 	QGridLayout *grid = new QGridLayout (vbox, 5, 5);
 
@@ -141,6 +141,8 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 	plugin_filter_boxes = addFilterSettings (this, grid, 2, i18n ("Plugin generated commands"), plugin_filter);
 	app_filter_boxes = addFilterSettings (this, grid, 3, i18n ("Application commands"), app_filter);
 	sync_filter_boxes = addFilterSettings (this, grid, 4, i18n ("Synchronisation commands"), sync_filter);
+
+	vbox->addStretch ();
 }
 
 RKSettingsModuleWatch::~RKSettingsModuleWatch () {

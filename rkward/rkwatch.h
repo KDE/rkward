@@ -19,7 +19,7 @@
 #define RKWATCH_H
 
 #include <qstring.h>
-#include <qwidget.h>
+#include <kmdichildview.h>
 
 class RCommand;
 class QPushButton;
@@ -32,15 +32,18 @@ class QBoxLayout;
 @author Thomas Friedrichsmeier
 */
 
-class RKwatch : public QWidget {
+class RKwatch : public KMdiChildView {
 	Q_OBJECT
 public: 
 	RKwatch ();
-	~RKwatch();
+	~RKwatch ();
 /** Adds input to the watch-window (i.e. commands issued) */
 	void addInput (RCommand *command);
 /** Adds output to the watch-window (i.e. replies received) */
 	void addOutput (RCommand *command);
+signals:
+/** the watch emits this, when it should be raised (apparently this can only be done from the main frame) */
+	void raiseWatch ();
 public slots:
 /** configures the watch-window */
 	void configureWatch ();

@@ -55,6 +55,7 @@ class RInterface;
 class RKEditorManager;
 class RKMenuList;
 class RKCommandEditorWindow;
+class KMdiToolViewAccessor;
 
 /**
 * The base class for RKward application windows. It sets up the main
@@ -146,6 +147,8 @@ protected:
 	virtual void readProperties(KConfig *_cfg);
 
 public slots:
+	/** raises the watch window */
+	void raiseWatch ();
 	/** creates a new (empty) data.frame */
 	void slotNewDataFrame ();
 	/** open a file and load it into the document*/
@@ -233,6 +236,8 @@ private:
 	KAction* window_detach;
 	
 	KAction* configure;
+
+	KMdiToolViewAccessor *watch_view;
 	
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;

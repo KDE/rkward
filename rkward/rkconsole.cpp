@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "rkconsole.h"
- 
+
 #include <qfont.h>
 #include <qstringlist.h>
 #include <qclipboard.h>
@@ -140,7 +140,7 @@ void RKConsole::submitCommand () {
 	}
 
 	if (!currentCommand ().isEmpty ()) {
-		current_command = new RCommand (c, RCommand::User, QString::null, this);
+		current_command = new RCommand (c, RCommand::User | RCommand::Console, QString::null, this);
 		RKGlobals::rInterface ()->issueCommand (current_command);
 		emit (doingCommand (true));
 	} else {
