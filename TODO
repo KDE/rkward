@@ -9,6 +9,7 @@ Little annoying stuff:
 - use R_DirtyImage to determine, whether workspace needs to be saved
 - in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
 - hide superflous GUI-items, esp. for the HTML windows
+	- KXMLGUIFactory::resetContainer ()?
 
 Configuration options to add:
 	- additional console options:
@@ -23,6 +24,7 @@ Configuration options to add:
 
 - RKConsole:
 	- Console should start a command chain when submitting a batch of pasted commands
+	- option setting for max lines to keep
 
 - check whether we're running in a PTY, and warn otherwise. Currently the R backend needs this.
 

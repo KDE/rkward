@@ -32,6 +32,7 @@
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmodulelogfiles.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
 
 RKHTMLWindow::RKHTMLWindow (QWidget *parent) : KMdiChildView (parent) {
@@ -89,6 +90,9 @@ RKOutputWindow* RKOutputWindow::current_output = 0;
 
 RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUIClient () {
 	RK_TRACE (APP);
+
+	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
+	RKCommonFunctions::removeContainers (khtmlpart, QStringList::split (',', "tools,security,extraToolBar,saveBackground,saveFrame,kget_menu"), true);
 
 	KInstance* instance = new KInstance ("rkward");
 	setInstance (instance);
@@ -189,9 +193,11 @@ void RKOutputWindow::showOutputEmptyMessage () {
 //#################### END RKOutputWindow ##########################
 //#################### BEGIN RKHelpWindow ##########################
 
-
 RKHelpWindow::RKHelpWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUIClient () {
 	RK_TRACE (APP);
+
+	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
+	RKCommonFunctions::removeContainers (khtmlpart, QStringList::split (',', "tools,security,extraToolBar,saveBackground,saveDocument,saveFrame,kget_menu"), true);
 
 /*	KInstance* instance = new KInstance ("rkward");
 	setInstance (instance);
@@ -209,6 +215,5 @@ RKHelpWindow::RKHelpWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUICli
 RKHelpWindow::~RKHelpWindow () {
 	RK_TRACE (APP);
 }
-
 
 #include "rkhtmlwindow.moc"
