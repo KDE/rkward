@@ -67,6 +67,7 @@ protected slots:
 	void slotUser1 ();
 	void childDeleted ();
 	void processExited (KProcess *);
+	void installationProcessOutput (KProcess *proc, char *buffer, int buflen);
 private:
 	void tryDestruct ();
 	bool should_destruct;
@@ -74,6 +75,7 @@ friend class LoadUnloadWidget;
 friend class UpdatePackagesWidget;
 friend class InstallPackagesWidget;
 	RKErrorDialog *error_dialog;
+	RKErrorDialog *installation_error_dialog;
 	RCommandChain *chain;
 	int num_child_widgets;
 	bool accepted;

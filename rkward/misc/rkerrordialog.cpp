@@ -38,6 +38,18 @@ void RKErrorDialog::newError (const QString &error) {
 	error_log->append (error);
 }
 
+void RKErrorDialog::newOutput (const QString &output) {
+	if (dialog) {
+		error_log->append (output);
+	} else {
+		stored_output.append (output);
+	}
+}
+
+void RKErrorDialog::resetOutput () {
+	stored_output = QString::null;
+}
+
 void RKErrorDialog::dialogDestroyed () {
 	dialog = 0;
 }
@@ -56,6 +68,8 @@ void RKErrorDialog::createDialog () {
 	
 	error_log = new QTextEdit (dialog);
 	error_log->setReadOnly (true);
+	error_log->append (stored_output);
+	stored_output = QString::null;
 	vbox->addWidget (error_log);
 	
 	dialog->show ();

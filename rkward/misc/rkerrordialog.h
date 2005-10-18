@@ -35,8 +35,12 @@ public:
     RKErrorDialog (const QString &text, const QString &caption, bool modal=false);
 
     ~RKErrorDialog ();
-	
+
 	void newError (const QString &error);
+/** usually you will call newError instead. However, if in case of an error, you also want to show the regular output, use this function to add output. The output is added to the internal error_log, but the dialog is not shown until you call newError (). */
+	void newOutput (const QString &output);
+/** you don't need this, unless you feed regular output to the dialog using newOutput. */
+	void resetOutput ();
 public slots:
 // so we can easily keep track of whether the dialog is alive or not
 	void dialogDestroyed ();
@@ -51,6 +55,7 @@ private:
 	
 	QString text;
 	QString caption;
+	QString stored_output;
 };
 
 #endif

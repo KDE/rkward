@@ -55,7 +55,8 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	layout = new QVBoxLayout (page, 0, KDialog::spacingHint ());
 	layout->addWidget (new InstallPackagesWidget (this, page));
 
-	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported errors handling packages.\nA transcript of the errors are shown below."), i18n ("Error handling packages"), false);
+	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported errors handling packages.\nA transcript of the errors is shown below."), i18n ("Error handling packages"), false);
+	installation_error_dialog = new RKErrorDialog (i18n ("There was an error or warning while installing the packages.\nPlease check the output below for more information."), i18n ("Error installing packages"), false);
 
 	setButtonText (KDialogBase::User1, i18n ("Configure Repositories"));
 
@@ -66,6 +67,7 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 RKLoadLibsDialog::~RKLoadLibsDialog () {
 	RK_TRACE (DIALOGS);
 	delete error_dialog;
+	delete installation_error_dialog;
 }
 
 //static
@@ -159,24 +161,27 @@ void RKLoadLibsDialog::installDownloadedPackages (bool become_root) {
 	QDir tempdir = QDir (RKSettingsModuleLogfiles::filesPath ()).filePath (".packagetemp");
 
 	tempdir.setFilter (QDir::Files);
-	
+
 	KProcess *proc = new KProcess;
 	if (become_root) {
-		*proc << "kdesu";
+		*proc << "kdesu" << "-t";
 	};
 	*proc << "R" << "CMD" << "INSTALL";
 	for (unsigned int i=0; i < tempdir.count (); ++i) {
 		*proc << tempdir.filePath (tempdir[i]).latin1 ();
 	}
-		
-	proc->start ();
+
 	connect (proc, SIGNAL (processExited (KProcess *)), this, SLOT (processExited (KProcess *)));
+	connect (proc, SIGNAL (receivedStdout (KProcess *, char *, int)), this, SLOT (installationProcessOutput (KProcess *, char *, int)));
+	connect (proc, SIGNAL (receivedStderr (KProcess *, char *, int)), this, SLOT (installationProcessOutput (KProcess *, char *, int)));
+	proc->start (KProcess::NotifyOnExit, KProcess::AllOutput);
 	if (RKCancelDialog::showCancelDialog (i18n ("Installing packages..."), i18n ("Please, stand by while installing packages."), this, this, SIGNAL (installationComplete ())) == QDialog::Rejected) {
 		proc->kill ();
 	};
 	if ((!proc->normalExit ()) || (proc->exitStatus ())) {
-		KMessageBox::error (this, i18n ("There was an error installing the packages. Please, check the output on stderr. Sorry, there is no better error-handling so far..."), i18n ("Error installing packages"));
+		installation_error_dialog->newError (QString::null);		// to make sure it is shown
 	}
+	installation_error_dialog->resetOutput ();
 	delete proc;
 
 	// archive / delete packages
@@ -209,6 +214,11 @@ void RKLoadLibsDialog::installDownloadedPackages (bool become_root) {
 	if (!ok) {
 		RK_DO (qDebug ("One or more package files could not be moved/delted"), DIALOGS, DL_ERROR);
 	}
+}
+
+void RKLoadLibsDialog::installationProcessOutput (KProcess *, char *buffer, int buflen) {
+	RK_TRACE (DIALOGS);
+	installation_error_dialog->newOutput (QCString (buffer, buflen));
 }
 
 void RKLoadLibsDialog::processExited (KProcess *) {

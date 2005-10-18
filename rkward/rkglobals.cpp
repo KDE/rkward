@@ -25,15 +25,9 @@ RKComponentMap *RKGlobals::cmap;
 KHelpDlg *RKGlobals::helpdlg;
 RControlWindow *RKGlobals::rcontrol;
 
-/* statics
-- empty_char
-- unknown_char
-- na_double
-defined in rembedinternal.cpp for technical reasons
-*/
-extern char *RKGlobals::empty_char;
-extern char *RKGlobals::unknown_char;
-extern double RKGlobals::na_double;
+char *RKGlobals::empty_char;
+char *RKGlobals::unknown_char;
+double RKGlobals::na_double;
 
 RKGlobals::RKGlobals () {
 }
