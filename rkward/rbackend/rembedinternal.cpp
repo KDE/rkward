@@ -192,7 +192,7 @@ void REmbedInternal::connectCallbacks () {
 	ptr_R_Suicide = RSuicide;
 	ptr_R_ShowMessage = RShowMessage;			// when exactly does this ever get used?
 	ptr_R_ReadConsole = RReadConsole;
-	ptr_R_WriteConsole = RWriteConsole;				// when exactly does this ever get used? Apparently it does not get called if a sink is in place, but otherwise it is! Probably we can get rid of our sink, then, and provide "real-time" output! More '!'s!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	ptr_R_WriteConsole = RWriteConsole;
 	ptr_R_ResetConsole = RResetConsole;
 	ptr_R_FlushConsole = RFlushConsole;
 	ptr_R_ClearerrConsole = RClearerrConsole;
@@ -518,6 +518,15 @@ int *REmbedInternal::getCommandAsIntVector (const char *command, int *count, RKW
 		return 0;
 	}
 	return integers;
+}
+
+void REmbedInternal::interruptProcessing (bool interrupt) {
+	extern int R_interrupts_pending;
+	if (interrupt) {
+		R_interrupts_pending = 1;
+	} else {
+		R_interrupts_pending = 0;
+	}
 }
 
 } // extern "C"

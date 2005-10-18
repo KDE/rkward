@@ -49,11 +49,6 @@ RKWindowCatcher *window_catcher;
 #include <sys/types.h>
 #include <signal.h>
 
-extern "C" {
-	/** this is the var in R-space that stores an interrupt */
-	extern int R_interrupts_pending;
-}
-
 //static
 QMutex RInterface::mutex;
 //int RInterface::mutex_counter;
@@ -111,7 +106,7 @@ RInterface::~RInterface(){
 	// timeout in wait? Try a little harder
 	if (r_thread->running ()) {
 		MUTEX_LOCK
-		R_interrupts_pending = 1;
+		r_thread->interruptProcessing (true);
 		MUTEX_UNLOCK
 		r_thread->wait (10000);
 		// if the thread did not exit, yet - bad luck.
@@ -136,7 +131,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 			if (running_command_canceled) {
 				RK_ASSERT (command == running_command_canceled);
 				running_command_canceled = 0;
-				R_interrupts_pending = 0;
+				r_thread->interruptProcessing (false);
 				r_thread->unlock (RThread::Cancel);
 			}
 		}
@@ -209,8 +204,7 @@ void RInterface::cancelCommand (RCommand *command) {
 			RK_ASSERT (!running_command_canceled);
 			r_thread->lock (RThread::Cancel);
 			running_command_canceled = command;
-			// this is the var in R-space that stores an interrupt
-			R_interrupts_pending = 1;
+			r_thread->interruptProcessing (true);
 		}
 	} else {
 		RK_ASSERT (false);
