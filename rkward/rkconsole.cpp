@@ -111,6 +111,7 @@ void RKConsole::keyPressEvent (QKeyEvent *e) {
 }
 
 QString RKConsole::currentCommand () {
+	RK_TRACE (APP);
 	QString s = text (paragraphs () - 1).right (paragraphLength (paragraphs () - 1) - prefix.length () + 1);
 	s = s.stripWhiteSpace ();
 	
@@ -118,16 +119,19 @@ QString RKConsole::currentCommand () {
 }
 
 void RKConsole::setCurrentCommand (QString command) {
+	RK_TRACE (APP);
 	removeParagraph (paragraphs () - 1);
 	append (prefix + command);
 	cursorAtTheEnd ();
 }
 
 void RKConsole::cursorAtTheEnd () {
+	RK_TRACE (APP);
 	setCursorPosition (paragraphs () - 1, paragraphLength (paragraphs () - 1));
 }
 
 void RKConsole::submitCommand () {
+	RK_TRACE (APP);
 	// If we added an item to the list, we delete it here.
 	if (!(commands_history.getLast () == commands_history.current ())){
 		commands_history.removeLast ();
@@ -149,6 +153,7 @@ void RKConsole::submitCommand () {
 }
 
 void RKConsole::commandsListUp () {
+	RK_TRACE (APP);
 	if (commands_history.getFirst () == commands_history.current ()) {		// already at topmost item
 		return;
 	}
@@ -162,6 +167,7 @@ void RKConsole::commandsListUp () {
 }
 
 void RKConsole::commandsListDown () {
+	RK_TRACE (APP);
 	if (commands_history.getLast () == commands_history.current ()) {		// already at bottommost item
 		return;
 	}
@@ -176,10 +182,12 @@ void RKConsole::commandsListDown () {
 }
 
 void RKConsole::cursorAtTheBeginning () {
+	RK_TRACE (APP);
 	setCursorPosition (paragraphs () - 1, prefix.length ());
 }
 
 void RKConsole::rCommandDone (RCommand *command) {
+	RK_TRACE (APP);
 	if (command->hasOutput ()) {
 		append (command->output ());
 	}
@@ -203,6 +211,7 @@ void RKConsole::rCommandDone (RCommand *command) {
 }
 
 void RKConsole::submitBatch (QString batch) {
+	RK_TRACE (APP);
 	// splitting batch, not allowing empty entries.
 	// TODO: hack something so we can have empty entries.
 	commands_batch = QStringList::split ("\n", batch, true);
@@ -210,8 +219,15 @@ void RKConsole::submitBatch (QString batch) {
 }
 
 void RKConsole::tryNextInBatch (bool add_new_line) {
+	RK_TRACE (APP);
 	if (add_new_line) {	
 		append (prefix);
+		if (RKSettingsModuleConsole::maxConsoleLines ()) {
+			uint c = (uint) paragraphs ();
+			for (uint ui = c; ui > RKSettingsModuleConsole::maxConsoleLines (); --ui) {
+				removeParagraph (0);
+			}
+		}
 		cursorAtTheEnd ();
 	}
 
@@ -233,27 +249,32 @@ void RKConsole::tryNextInBatch (bool add_new_line) {
 }
 
 void RKConsole::paste () {
+	RK_TRACE (APP);
 	QClipboard *cb = QApplication::clipboard ();
 	submitBatch (cb->text ());
 }
 
 void RKConsole::clear () {
+	RK_TRACE (APP);
 	KTextEdit::clear ();
 	tryNextInBatch ();
 }
 
 void RKConsole::addCommandToHistory (const QString &command) {
+	RK_TRACE (APP);
 	commands_history.append (new QString (command.latin1 ()));
 
 	if (RKSettingsModuleConsole::maxHistoryLength ()) {
 		uint c = commands_history.count ();
-		for (uint ui = c; c > RKSettingsModuleConsole::maxHistoryLength (); --ui) {
+		for (uint ui = c; ui > RKSettingsModuleConsole::maxHistoryLength (); --ui) {
 			commands_history.removeFirst ();
 		}
+		commands_history.last ();
 	}
 }
 
 QPopupMenu *RKConsole::createPopupMenu (const QPoint &pos) {
+	RK_TRACE (APP);
 	QPopupMenu *mp;
 	emit (fetchPopupMenu (&mp));
 	if (mp) return mp;

@@ -36,14 +36,15 @@
 #include "../debug.h"
 
 RKHTMLWindow::RKHTMLWindow (QWidget *parent) : KMdiChildView (parent) {
+	RK_TRACE (APP);
 	scroll_position=0;
 	
-	khtmlpart = new KHTMLPart (this,0,0,0,KHTMLPart::BrowserViewGUI);
+	khtmlpart = new KHTMLPart (this, 0, 0, 0, KHTMLPart::BrowserViewGUI);
 	khtmlpart->setSelectable (true);
 	
 	khtmlpart->widget ()->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding);
 	QHBoxLayout *pLayout = new QHBoxLayout (this, 0, -1, "layout");
-	pLayout->addWidget (khtmlpart->widget());
+	pLayout->addWidget (khtmlpart->widget ());
 
 	// We have to connect this in order to allow browsing.
 	connect (khtmlpart->browserExtension (), SIGNAL(openURLRequest (const KURL &, const KParts::URLArgs &)), this, SLOT (slotOpenURLRequest (const KURL &, const KParts::URLArgs &)));
@@ -52,9 +53,11 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : KMdiChildView (parent) {
 }
 
 RKHTMLWindow::~RKHTMLWindow () {
+	RK_TRACE (APP);
 }
 
 bool RKHTMLWindow::openURL (const KURL &url) {
+	RK_TRACE (APP);
 	bool ok = QFile (url.path ()).exists ();
 
 	if (!ok) return false;
@@ -66,19 +69,23 @@ bool RKHTMLWindow::openURL (const KURL &url) {
 }
 
 void RKHTMLWindow::updateCaption (const KURL &url) {
+	RK_TRACE (APP);
 	setMDICaption (url.filename ());
 }
 
 void RKHTMLWindow::slotOpenURLRequest(const KURL &url, const KParts::URLArgs & ) {
+	RK_TRACE (APP);
 	openURL (url);
 }
 
 void RKHTMLWindow::refresh () {
+	RK_TRACE (APP);
 	scroll_position = khtmlpart->view ()->contentsY ();
 	openURL (khtmlpart->url ());
 }
 
 void RKHTMLWindow::loadDone () {
+	RK_TRACE (APP);
 	khtmlpart->view()->setContentsPos (0, scroll_position);
 }
 
@@ -108,6 +115,9 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 	outputRefresh = new KAction (i18n ("&Refresh"), 0, 0, this, SLOT (refreshOutput ()), actionCollection (), "output_refresh");
 
 	RKGlobals::rkApp ()->m_manager->addPart (khtmlpart);
+
+	KAction *action = khtmlpart->action ("saveDocument");
+	if (action) action->setText (i18n ("Save Output as HTML"));
 }
 
 RKOutputWindow::~RKOutputWindow () {

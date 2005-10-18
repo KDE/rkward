@@ -1,3 +1,4 @@
+- limit number of lines to display in console (user setting)
 - remove menu clutter from help window, and output window
 - avoid adding incomplete (multi-line) Console commands to the Command Log
 - Settings->Command Log->show/raise window working again

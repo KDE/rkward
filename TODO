@@ -8,23 +8,24 @@ Little annoying stuff:
 - use more QDicts instead of QMap<QString,...>s
 - use R_DirtyImage to determine, whether workspace needs to be saved
 - in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
-- hide superflous GUI-items, esp. for the HTML windows
-	- KXMLGUIFactory::resetContainer ()?
+
+- ComponentMap:
+	- probably the only clean solution to placing plugins in the GUI is to use KXMLGUI here, too. RKComponentHandle would be a KAction subclass. standard_plugins.pluginmap would contain a portion that essentially looks like an .rc file.
 
 Configuration options to add:
 	- additional console options:
-		- length of command history
-		- save/load command history on RKWard exit/start
-		- maximum number of lines to show
 		- color highlighting for warnings/errors (once we can identify them reliably)
 	- additional R engine options:
 		- stack size (commandline arg --map-ppsize)
 	- new dataeditor options:
 		- see below: comments on RKEditorDataFrame
 
+RKHTMLWindow
+	- make printing work
+	- RKHelpWindow: add back/forward
+
 - RKConsole:
 	- Console should start a command chain when submitting a batch of pasted commands
-	- option setting for max lines to keep
 
 - check whether we're running in a PTY, and warn otherwise. Currently the R backend needs this.
 
