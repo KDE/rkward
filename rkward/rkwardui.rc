@@ -13,8 +13,7 @@
 		<Separator/>
 		<Action name="file_quitx"/>
 	</Menu>
-		
-		
+
 	<Menu name="workspace"><text>&amp;Workspace</text>
 		<Action name="file_openx"/>
 		<Action name="file_open_recentx"/>
@@ -23,18 +22,9 @@
 		<Separator/>
 		<Action name="file_load_libs"/>
 	</Menu>
+
+	<Merge/>
 	
-	
-	<Menu name="edit"><text>&amp;Edit</text>
-		<Action name="cut"/>
-		<Action name="copy"/>
-		<Action name="paste"/>
-		<Action name="paste_to_selection"/>
-		<Action name="paste_to_table"/>
-		<Separator/>
-		<Merge/> 
-	</Menu>
- 
 	<Menu name="windows"><text>&amp;Windows</text>
 		<Action name="output_show"/>
 		<Separator/>
@@ -49,21 +39,11 @@
 		<Action name="file_load_libs"/>
 		<Action name="configure"/>
 	</Menu>
-
-	<Merge/>
 </MenuBar>
 <ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="new_data_frame"/>
 		<Action name="new_command_editor"/>
 		<Action name="file_openy"/>
 		<Action name="file_open_recenty"/>
-</ToolBar>
-<ToolBar fullWidth="true" name="editToolBar">
-		<Action name="cut"/>
-		<Action name="copy"/>
-		<Action name="paste"/>
-		<Separator/>
-		<Action name="paste_to_selection"/>
-		<Action name="paste_to_table"/>
 </ToolBar>
 </kpartgui>

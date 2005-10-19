@@ -78,9 +78,9 @@ class RKwardApp : public KMdiMainFrm, virtual public KParts::PartBase, virtual p
 public:
 /** construtor
 @param load_url The workspace file to load on startup. If 0, show a dialog asking what to do. */
-	RKwardApp(KURL *load_url=0);
+	RKwardApp (KURL *load_url=0);
 /** destructor */
-	~RKwardApp();
+	~RKwardApp ();
 
 /** initialize the backend */
 	void startR ();
@@ -169,9 +169,6 @@ public slots:
 	* If queryClose() returns false because the user canceled the saveModified() dialog, the closing breaks.
 	*/
 	void slotFileQuit();
-	/** toggles the toolbar
-	*/
-	void slotViewToolBar();
 	/** toggles the statusbar
 	*/
 	void slotViewStatusBar();
@@ -228,7 +225,6 @@ private:
 
 	KAction* outputShow;
 
-	KToggleAction* viewToolBar;
 	KToggleAction* viewStatusBar;
 
 	KAction* window_close;
@@ -258,15 +254,13 @@ private:
 	friend class RInterface;
 /** set the R status message ("R engine idel/busy") to idle or busy */
 	void setRStatus (bool busy);
-	
-	void saveAsProcedure(RKCommandEditorWindow *editor);
 
 	/** refreshes the output.
 	@param show if set to true, the output-window will be shown / raised. If set to false, the visibility will not be changed
 	@param raise like show. If set to true, the output-window - if already shown - will additionally be raised */
 	void refreshOutput (bool show, bool raise);
 signals:
-/** no idea, why we have to declare this explicitly, to somehow we do. */
+/** no idea, why we have to declare this explicitly, but somehow we do. */
 	void childWindowCloseRequest (KMdiChildView *);
 };
 

@@ -171,7 +171,8 @@ RKEditorDataFrame *RKEditorManager::newRKEditorDataFrame () {
 void RKEditorManager::editorDestroyed (QObject* editor) {
 	RK_TRACE (APP);
 
-	QValueList<RKEditor*>::iterator it = editors.find (static_cast<RKEditor*> (editor));
+	RKEditor *ed = static_cast<RKEditor*> (editor);
+	QValueList<RKEditor*>::iterator it = editors.find (ed);
 	if (it != editors.end ()) editors.erase (it);
 
 }

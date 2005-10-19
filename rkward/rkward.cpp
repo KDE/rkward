@@ -84,6 +84,11 @@
 
 RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
 	ShowEditTextFileAgent::showEditFiles (0);		// TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
+	// TODO: more linking workarounds: These lines are actually totally useless, as the real values are set during R initilization
+	RKGlobals::empty_char = const_cast<char*> ("");
+	RKGlobals::unknown_char = const_cast<char*> ("");
+	RKGlobals::na_double = 0.0;
+	// END linking workarounds
 
 	RK_TRACE (APP);
 	RKGlobals::app = this;
@@ -302,7 +307,7 @@ void RKwardApp::initActions()
 	fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection(), "file_quitx");
 	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 
-	viewToolBar = KStdAction::showToolbar(this, SLOT (slotViewToolBar()), actionCollection());
+	setStandardToolBarMenuEnabled (true);
 	viewStatusBar = KStdAction::showStatusbar(this, SLOT (slotViewStatusBar()), actionCollection());
 
 	close_all_editors = new KAction (i18n ("Close All Data"), 0, 0, this, SLOT (slotCloseAllEditors ()), actionCollection (), "close_all_editors");
@@ -321,7 +326,6 @@ void RKwardApp::initActions()
 	close_all_editors->setStatusText (i18n ("Closes all open data editors"));
 	filePrint ->setStatusText(i18n("Prints out the actual document"));
 	fileQuit->setStatusText(i18n("Quits the application"));
-	viewToolBar->setStatusText(i18n("Enables/disables the toolbar"));
 	viewStatusBar->setStatusText(i18n("Enables/disables the statusbar"));
 }
 
@@ -348,11 +352,11 @@ void RKwardApp::saveOptions () {
 
 	config->setGroup("General Options");
 	config->writeEntry("Geometry", size());
-	config->writeEntry("Show Toolbar", viewToolBar->isChecked());
+//	config->writeEntry("Show Toolbar", viewToolBar->isChecked());
 	config->writeEntry("Show Statusbar",viewStatusBar->isChecked());
 	config->writeEntry("ToolBarPos", (int) toolBar("mainToolBar")->barPos());
-	config->writeEntry("EditBarPos", (int) toolBar("editToolBar")->barPos());
-	config->writeEntry("RunBarPos", (int) toolBar("runToolBar")->barPos());
+/*	config->writeEntry("EditBarPos", (int) toolBar("editToolBar")->barPos());
+	config->writeEntry("RunBarPos", (int) toolBar("runToolBar")->barPos()); */
 
 	RKSettings::saveSettings (config);
 	
@@ -370,16 +374,16 @@ void RKwardApp::readOptions () {
 	config->setGroup("General Options");
 	
 	// bar status settings
-	viewToolBar->setChecked (config->readBoolEntry ("Show Toolbar", true));
-	slotViewToolBar ();
+//	viewToolBar->setChecked (config->readBoolEntry ("Show Toolbar", true));
 
 	viewStatusBar->setChecked (config->readBoolEntry ("Show Statusbar", true));
 	slotViewStatusBar();
 
 	// bar position settings
 	toolBar("mainToolBar")->setBarPos ((KToolBar::BarPosition) config->readNumEntry ("ToolBarPos", KToolBar::Top));
-	toolBar("editToolBar")->setBarPos ((KToolBar::BarPosition) config->readNumEntry ("EditBarPos", KToolBar::Top));
-	toolBar("runToolBar")->setBarPos ((KToolBar::BarPosition) config->readNumEntry("RunBarPos", KToolBar::Top));
+/*	toolBar("editToolBar")->setBarPos ((KToolBar::BarPosition) config->readNumEntry ("EditBarPos", KToolBar::Top));
+	toolBar("runToolBar")->setBarPos ((KToolBar::BarPosition) config->readNumEntry("RunBarPos", KToolBar::Top)); */
+//	delete toolBar ("KMdiTaskBar");
 	
 	QSize size=config->readSizeEntry("Geometry");
 	if(!size.isEmpty ()) {
@@ -583,28 +587,6 @@ void RKwardApp::slotFileQuit () {
 	slotStatusMsg(i18n("Exiting..."));
 	saveOptions();
 	close ();
-}
-
-void RKwardApp::slotViewToolBar()
-{
-	RK_TRACE (APP);
-  slotStatusMsg(i18n("Toggling toolbar..."));
-  ///////////////////////////////////////////////////////////////////
-  // turn Toolbar on or off
-  if(!viewToolBar->isChecked())
-  {
-    toolBar("mainToolBar")->hide();
-    toolBar("runToolBar")->hide();
-    toolBar("editToolBar")->hide();
-  }
-  else
-  {
-    toolBar("mainToolBar")->show();
-    toolBar("runToolBar")->show();
-    toolBar("editToolBar")->show();
-  }		
-
-  slotStatusReady ();
 }
 
 void RKwardApp::slotViewStatusBar()
