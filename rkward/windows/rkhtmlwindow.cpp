@@ -50,10 +50,43 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : KMdiChildView (parent) {
 	connect (khtmlpart->browserExtension (), SIGNAL(openURLRequest (const KURL &, const KParts::URLArgs &)), this, SLOT (slotOpenURLRequest (const KURL &, const KParts::URLArgs &)));
 	
 	connect (khtmlpart, SIGNAL (completed ()), this, SLOT (loadDone ()));
+
+	url_history.setAutoDelete (true);
+	back = forward = print = 0;		// initialization done in subclasses
 }
 
 RKHTMLWindow::~RKHTMLWindow () {
 	RK_TRACE (APP);
+}
+
+void RKHTMLWindow::slotPrint () {
+	RK_TRACE (APP);
+
+	khtmlpart->view ()->print ();
+}
+
+void RKHTMLWindow::slotForward () {
+	RK_TRACE (APP);
+
+	url_history.next ();
+	RK_ASSERT (url_history.current ());
+	khtmlpart->openURL (*(url_history.current ()));
+	updateCaption (*(url_history.current ()));
+
+	back->setEnabled (true);
+	forward->setEnabled (url_history.current () != url_history.getLast ());
+}
+
+void RKHTMLWindow::slotBack () {
+	RK_TRACE (APP);
+
+	url_history.prev ();
+	RK_ASSERT (url_history.current ());
+	khtmlpart->openURL (*(url_history.current ()));
+	updateCaption (*(url_history.current ()));
+
+	forward->setEnabled (true);
+	back->setEnabled (url_history.current () != url_history.getFirst ());
 }
 
 bool RKHTMLWindow::openURL (const KURL &url) {
@@ -64,6 +97,17 @@ bool RKHTMLWindow::openURL (const KURL &url) {
 
 	khtmlpart->openURL (url);
 	updateCaption (url);
+
+	if (back && forward) {
+		KURL *current_url = url_history.current ();
+		while (current_url != url_history.getLast ()) {
+			url_history.removeLast ();
+		}
+		KURL *url_copy = new KURL (url);
+		url_history.append (url_copy);
+		back->setEnabled (url_history.count () > 1);
+		forward->setEnabled (false);
+	}
 
 	return true;	
 }
@@ -99,7 +143,7 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 	RK_TRACE (APP);
 
 	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
-	RKCommonFunctions::removeContainers (khtmlpart, QStringList::split (',', "tools,security,extraToolBar,saveBackground,saveFrame,kget_menu"), true);
+	RKCommonFunctions::removeContainers (khtmlpart, QStringList::split (',', "tools,security,extraToolBar,saveBackground,saveFrame,printFrame,kget_menu"), true);
 
 	KInstance* instance = new KInstance ("rkward");
 	setInstance (instance);
@@ -113,6 +157,8 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 
 	outputFlush = new KAction (i18n ("&Flush"), 0, 0, this, SLOT (flushOutput ()), actionCollection (), "output_flush");
 	outputRefresh = new KAction (i18n ("&Refresh"), 0, 0, this, SLOT (refreshOutput ()), actionCollection (), "output_refresh");
+	print = KStdAction::print (this, SLOT (slotPrint ()), actionCollection (), "print_output");
+	print->setText (i18n ("Print Output"));
 
 	RKGlobals::rkApp ()->m_manager->addPart (khtmlpart);
 
@@ -207,13 +253,18 @@ RKHelpWindow::RKHelpWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUICli
 	RK_TRACE (APP);
 
 	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
-	RKCommonFunctions::removeContainers (khtmlpart, QStringList::split (',', "tools,security,extraToolBar,saveBackground,saveDocument,saveFrame,kget_menu"), true);
+	RKCommonFunctions::removeContainers (khtmlpart, QStringList::split (',', "tools,security,extraToolBar,saveBackground,saveDocument,saveFrame,printFrame,kget_menu"), true);
 
-/*	KInstance* instance = new KInstance ("rkward");
+	back = KStdAction::back (this, SLOT (slotBack ()), actionCollection (), "help_back");
+	forward = KStdAction::forward (this, SLOT (slotForward ()), actionCollection (), "help_forward");
+	print = KStdAction::print (this, SLOT (slotPrint ()), actionCollection (), "print_help");
+	print->setText (i18n ("Print Help"));
+
+	KInstance* instance = new KInstance ("rkward");
 	setInstance (instance);
-	setXMLFile ("rkhelpwindow.rc");		// TODO: create .rc-file
+	setXMLFile ("rkhelpwindow.rc");
 
-	khtmlpart->insertChildClient (this); */
+	khtmlpart->insertChildClient (this);
 
 	setIcon (SmallIcon ("help"));
 	setMDICaption (i18n ("R Help"));

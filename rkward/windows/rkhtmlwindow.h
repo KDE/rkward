@@ -23,6 +23,8 @@
 #include <kmdichildview.h>
 #include <kxmlguiclient.h>
 
+#include <qptrlist.h>
+
 class KHTMLPart;
 
 /**
@@ -50,6 +52,9 @@ public:
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
 	void slotOpenURLRequest (const KURL &url, const KParts::URLArgs &);
+	void slotPrint ();
+	void slotForward ();
+	void slotBack ();
 private slots:
 /** This slot is called when the new page has finished loading. Sets scroll position to scroll_position */
 	void loadDone ();
@@ -60,6 +65,11 @@ protected:
 	KHTMLPart * khtmlpart;
 /** update caption according to given URL */
 	virtual void updateCaption (const KURL &url);
+protected:
+	QPtrList<KURL> url_history;
+	KAction *back;
+	KAction *forward;
+	KAction *print;
 };
 
 /**

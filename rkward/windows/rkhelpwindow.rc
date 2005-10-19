@@ -1,0 +1,12 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="rkward" version="0.3.4">
+	<MenuBar>
+		<Menu name="file">
+			<Action name="print_help"/>
+		</Menu>
+	</MenuBar>
+	<ToolBar fullWidth="true" name="navigation_toolbar">
+		<Action name="help_back"/>
+		<Action name="help_forward"/>
+	</ToolBar>
+</kpartgui>
