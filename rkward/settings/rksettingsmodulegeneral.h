@@ -21,6 +21,7 @@
 #include "../dialogs/startupdialog.h"
 
 class GetFileNameWidget;
+class QComboBox;
 
 /**
 @author Thomas Friedrichsmeier
@@ -44,10 +45,13 @@ public:
 /// returns the directory-name where the logfiles should reside
 	static QString &filesPath () { return files_path; };
 	static StartupDialog::Result startupAction () { return startup_action; };
+	static void setStartupAction (StartupDialog::Result action) { startup_action = action; };
 public slots:
 	void pathChanged ();
+	void boxChanged (int);
 private:
 	GetFileNameWidget *files_choser;
+	QComboBox *startup_action_choser;
 
 	static StartupDialog::Result startup_action;
 	static QString files_path;

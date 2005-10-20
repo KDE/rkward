@@ -23,10 +23,7 @@ Configuration options to add:
 
 RKHelpDlg:
 	- in the mid term, this should probably be renamed and moved to windows
-	- call .rk.get.installed.packages, and update package selection drop down on every show, butnot on startup
-
-Option setting to always start with empty workspace/empty table instead of asking on startup
-	- startup dialog should have a checkbox "remember decision"
+	- call .rk.get.installed.packages, and update package selection drop down on every show, but not on startup
 
 - RKConsole:
 	- Console should start a command chain when submitting a batch of pasted commands

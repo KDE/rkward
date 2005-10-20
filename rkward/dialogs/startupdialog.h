@@ -22,7 +22,9 @@
 #include <kurl.h>
 
 class QPushButton;
+class QCheckBox;
 class QButtonGroup;
+class QRadioButton;
 class QListView;
 class QListViewItem;
 class QPixmap;
@@ -37,13 +39,13 @@ This class represents the startup dialog asking you whether to open a recent fil
 class StartupDialog : public QDialog {
 Q_OBJECT
 public:
-	/** enum to hold result of StartupDialog */
+	/** enum to hold result of StartupDialog. WARNING: do not change the numeric values! They are saved as user settings in the config (@see RKSettingsModuleGeneral). */
 	enum Result {
 		EmptyWorkspace=0,	/**< start with an empty workspace */
 		EmptyTable=1,				/**< start with an empty table */
-		OpenFile=2,					/**< open a recent file (already specified) */
-		ChoseFile=3,				/**< chose file to open */
-		NoSavedSetting=4		/**< not acutally returned as a result. Used in RKSettingsModuleGeneral. This is saved, if user wants to be asked on every startup */
+		ChoseFile=2,				/**< chose file to open */
+		NoSavedSetting=3,		/**< not acutally returned as a result. Used in RKSettingsModuleGeneral. This is saved, if user wants to be asked on every startup */
+		OpenFile=4					/**< open a recent file (already specified) */
 	};
 	struct StartupDialogResult {
 		Result result;
@@ -60,9 +62,14 @@ public slots:
 	void reject ();
 	void listDoubleClicked (QListViewItem *item, const QPoint &, int);
 	void listClicked (QListViewItem *item);
+	void openButtonSelected (int state);
 private:
 	QPushButton *ok_button;
 	QPushButton *cancel_button;
+	QRadioButton *empty_workspace_button;
+	QRadioButton *empty_table_button;
+	QRadioButton *open_button;
+	QCheckBox *remember_box;
 	
 	QButtonGroup *choser;
 	

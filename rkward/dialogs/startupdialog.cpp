@@ -18,6 +18,7 @@
 
 #include <qpushbutton.h>
 #include <qradiobutton.h>
+#include <qcheckbox.h>
 #include <qbuttongroup.h>
 #include <qlayout.h>
 #include <qlabel.h>
@@ -35,11 +36,14 @@
 #include <kglobal.h>
 #include <kstandarddirs.h>
 
+#include "../settings/rksettingsmodulegeneral.h"
 #include "../debug.h"
 
 StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRecentFilesAction *recent_files) : QDialog (parent, 0, true) {
 	RK_TRACE (DIALOGS);
 	StartupDialog::result = result;
+
+	setCaption (i18n ("What would you like to do?"));
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	
@@ -53,13 +57,16 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	choser->layout()->setSpacing (6);
 	choser->layout()->setMargin (11);
 	QVBoxLayout *choser_layout = new QVBoxLayout(choser->layout());
-	choser_layout->addWidget (new QRadioButton (i18n ("Start with an empty workspace"), choser));
-	choser_layout->addWidget (new QRadioButton (i18n ("Start with an empty table"), choser));
-	choser_layout->addWidget (new QRadioButton (i18n ("Load an existing workspace:"), choser));
-	choser->setButton (static_cast<int> (EmptyTable));
+	choser_layout->addWidget (empty_workspace_button = new QRadioButton (i18n ("Start with an empty workspace"), choser));
+	choser_layout->addWidget (empty_table_button = new QRadioButton (i18n ("Start with an empty table"), choser));
+	open_button = new QRadioButton (i18n ("Load an existing workspace:"), choser);
+	connect (open_button, SIGNAL (stateChanged (int)), this, SLOT (openButtonSelected (int)));
+	empty_table_button->setChecked (true);
+	choser_layout->addWidget (open_button);
 
 	file_list = new QListView (choser);
 	file_list->addColumn (i18n ("Filename"));
+	file_list->setSorting (-1);
 	chose_file_item = new QListViewItem (file_list, i18n ("<<Open another file>>"));
 	if (recent_files) {
 		QStringList items = recent_files->items ();
@@ -67,9 +74,10 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 			if (!(*it).isEmpty ()) new QListViewItem (file_list, (*it));
 		}
 	}
-	connect (file_list, SIGNAL (clicked (QListViewItem *)), this, SLOT (listClicked (QListViewItem*)));
+	connect (file_list, SIGNAL (selectionChanged (QListViewItem *)), this, SLOT (listClicked (QListViewItem*)));
 	connect (file_list, SIGNAL (doubleClicked (QListViewItem *, const QPoint &, int)), this, SLOT (listDoubleClicked (QListViewItem*, const QPoint &, int)));
 	choser_layout->addWidget (file_list);
+	choser_layout->addWidget (remember_box = new QCheckBox (i18n ("Always do this on startup"), choser));
 	
 	vbox->addWidget (choser);
 	
@@ -83,8 +91,6 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (reject ()));
 	button_hbox->addWidget (cancel_button);
 
-	setCaption (i18n ("What would you like to do?"));
-	
 	setFixedWidth (minimumWidth ());
 }
 
@@ -95,17 +101,12 @@ StartupDialog::~StartupDialog() {
 
 void StartupDialog::accept () {
 	RK_TRACE (DIALOGS);
-#if QT_VERSION < 0x030200
-	int selected = choser->id (choser->selected ());
-#else
-	int selected = choser->selectedId ();
-#endif
 
-	if (selected == (int) EmptyWorkspace) {
+	if (empty_workspace_button->isChecked ()) {
 		result->result = EmptyWorkspace;
-	} else if (selected == (int) EmptyTable) {
+	} else if (empty_table_button->isChecked ()) {
 		result->result = EmptyTable;
-	} else if (selected == (int) OpenFile) {
+	} else if (open_button->isChecked ()) {
 		QListViewItem *item = file_list->selectedItem ();
 		if (item == chose_file_item) {
 			result->result = ChoseFile;
@@ -116,6 +117,7 @@ void StartupDialog::accept () {
 	} else {
 		RK_ASSERT (false);
 	}
+	if (remember_box->isChecked ()) RKSettingsModuleGeneral::setStartupAction (result->result);
 	QDialog::accept ();
 }
 
@@ -131,7 +133,7 @@ void StartupDialog::listDoubleClicked (QListViewItem *item, const QPoint &, int)
 	RK_TRACE (DIALOGS);
 	
 	if (item) {
-		choser->setButton ((int) OpenFile);
+		open_button->setChecked (true);
 		item->setSelected (true);
 		accept ();
 	}
@@ -140,14 +142,40 @@ void StartupDialog::listDoubleClicked (QListViewItem *item, const QPoint &, int)
 void StartupDialog::listClicked (QListViewItem *item) {
 	RK_TRACE (DIALOGS);
 	
-	if (item) choser->setButton ((int) OpenFile);
+	if (item) {
+		open_button->setChecked (true);
+		openButtonSelected (QButton::On);		// always do processing
+	}
+}
+
+void StartupDialog::openButtonSelected (int state) {
+	RK_TRACE (DIALOGS);
+
+	if (state == QButton::On) {
+		if (!file_list->selectedItem ()) {
+			file_list->setSelected (file_list->firstChild (), true);
+		}
+		if (file_list->selectedItem () != chose_file_item) {
+			remember_box->setChecked (false);
+			remember_box->setEnabled (false);
+		} else {
+			remember_box->setEnabled (true);
+		}
+	} else if (state == QButton::Off) {
+		remember_box->setEnabled (true);
+	}
 }
 
 //static
 StartupDialog::StartupDialogResult *StartupDialog::getStartupAction (QWidget *parent, KRecentFilesAction *recent_files) {
 	RK_TRACE (DIALOGS);
+
 	StartupDialogResult *result = new StartupDialogResult;
-	result->result = EmptyWorkspace;
+	result->result = RKSettingsModuleGeneral::startupAction ();
+
+	if (result->result != NoSavedSetting) {
+		return result;
+	}
 
 	StartupDialog *dialog = new StartupDialog (parent, result, recent_files);
 	dialog->exec ();

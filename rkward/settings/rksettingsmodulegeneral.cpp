@@ -24,6 +24,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qdir.h>
+#include <qcombobox.h>
 
 #include "../misc/getfilenamewidget.h"
 #include "../rkglobals.h"
@@ -32,6 +33,7 @@
 // static members
 QString RKSettingsModuleGeneral::files_path;
 QString RKSettingsModuleGeneral::new_files_path;
+StartupDialog::Result RKSettingsModuleGeneral::startup_action;
 
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -40,12 +42,22 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	QLabel *label = new QLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	main_vbox->addWidget (label);
-	
-	main_vbox->addStretch ();
-	
+
 	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, i18n ("Directory where the logfiles should be kept (*)"), QString::null, new_files_path);
 	connect (files_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
 	main_vbox->addWidget (files_choser);
+
+	main_vbox->addWidget (new QLabel (i18n ("Startup Action (*)"), this));
+	startup_action_choser = new QComboBox (false, this);
+	startup_action_choser->insertItem (i18n ("Start with an empty workspace"), StartupDialog::EmptyWorkspace);
+	startup_action_choser->insertItem (i18n ("Start with an empty table"), StartupDialog::EmptyTable);
+	startup_action_choser->insertItem (i18n ("Ask for a file to open"), StartupDialog::ChoseFile);
+	startup_action_choser->insertItem (i18n ("Show selection dialog (default)"), StartupDialog::NoSavedSetting);
+	startup_action_choser->setCurrentItem (startup_action);
+	connect (startup_action_choser, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
+	main_vbox->addWidget (startup_action_choser);
+
+	main_vbox->addStretch ();
 }
 
 RKSettingsModuleGeneral::~RKSettingsModuleGeneral() {
@@ -53,6 +65,11 @@ RKSettingsModuleGeneral::~RKSettingsModuleGeneral() {
 }
 
 void RKSettingsModuleGeneral::pathChanged () {
+	RK_TRACE (SETTINGS);
+	change ();
+}
+
+void RKSettingsModuleGeneral::boxChanged (int) {
 	RK_TRACE (SETTINGS);
 	change ();
 }
@@ -70,6 +87,7 @@ bool RKSettingsModuleGeneral::hasChanges () {
 void RKSettingsModuleGeneral::applyChanges () {
 	RK_TRACE (SETTINGS);
 	new_files_path = files_choser->getLocation ();
+	startup_action = (StartupDialog::Result) startup_action_choser->currentItem ();
 }
 
 void RKSettingsModuleGeneral::save (KConfig *config) {
@@ -82,6 +100,9 @@ void RKSettingsModuleGeneral::saveSettings (KConfig *config) {
 
 	config->setGroup ("Logfiles");
 	config->writeEntry ("logfile dir", new_files_path);
+
+	config->setGroup ("General");
+	config->writeEntry ("startup action", (int) startup_action);
 }
 
 void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
@@ -89,6 +110,9 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 
 	config->setGroup ("Logfiles");
 	files_path = new_files_path = config->readEntry ("logfile dir", QDir ().homeDirPath () + "/.rkward/");
+
+	config->setGroup ("General");
+	startup_action = (StartupDialog::Result) config->readNumEntry ("startup action", StartupDialog::NoSavedSetting);
 }
 
 #include "rksettingsmodulegeneral.moc"
