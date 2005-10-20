@@ -1,5 +1,5 @@
 /***************************************************************************
-                          rksettingsmodulelogfiles  -  description
+                          rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
@@ -14,7 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rksettingsmodulelogfiles.h"
+#include "rksettingsmodulegeneral.h"
 
 #include <klocale.h>
 #include <kconfig.h>
@@ -33,7 +33,7 @@
 QString RKSettingsModuleLogfiles::files_path;
 QString RKSettingsModuleLogfiles::new_files_path;
 
-RKSettingsModuleLogfiles::RKSettingsModuleLogfiles (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
+RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
@@ -48,43 +48,43 @@ RKSettingsModuleLogfiles::RKSettingsModuleLogfiles (RKSettings *gui, QWidget *pa
 	main_vbox->addWidget (files_choser);
 }
 
-RKSettingsModuleLogfiles::~RKSettingsModuleLogfiles() {
+RKSettingsModuleGeneral::~RKSettingsModuleGeneral() {
 	RK_TRACE (SETTINGS);
 }
 
-void RKSettingsModuleLogfiles::pathChanged () {
+void RKSettingsModuleGeneral::pathChanged () {
 	RK_TRACE (SETTINGS);
 	change ();
 }
 
-QString RKSettingsModuleLogfiles::caption () {
+QString RKSettingsModuleGeneral::caption () {
 	RK_TRACE (SETTINGS);
-	return (i18n ("Logfiles"));
+	return (i18n ("General"));
 }
 
-bool RKSettingsModuleLogfiles::hasChanges () {
+bool RKSettingsModuleGeneral::hasChanges () {
 	RK_TRACE (SETTINGS);
 	return changed;
 }
 
-void RKSettingsModuleLogfiles::applyChanges () {
+void RKSettingsModuleGeneral::applyChanges () {
 	RK_TRACE (SETTINGS);
 	new_files_path = files_choser->getLocation ();
 }
 
-void RKSettingsModuleLogfiles::save (KConfig *config) {
+void RKSettingsModuleGeneral::save (KConfig *config) {
 	RK_TRACE (SETTINGS);
 	saveSettings (config);
 }
 
-void RKSettingsModuleLogfiles::saveSettings (KConfig *config) {
+void RKSettingsModuleGeneral::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	config->setGroup ("Logfiles");
 	config->writeEntry ("logfile dir", new_files_path);
 }
 
-void RKSettingsModuleLogfiles::loadSettings (KConfig *config) {
+void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	config->setGroup ("Logfiles");

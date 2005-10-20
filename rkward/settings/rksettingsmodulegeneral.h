@@ -1,5 +1,5 @@
 /***************************************************************************
-                          rksettingsmodulelogfiles  -  description
+                          rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
     copyright            : (C) 2004 by Thomas Friedrichsmeier
@@ -14,8 +14,8 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef RKSETTINGSMODULELOGFILES_H
-#define RKSETTINGSMODULELOGFILES_H
+#ifndef RKSETTINGSMODULEGENERALFILES_H
+#define RKSETTINGSMODULEGENERALFILES_H
 
 #include "rksettingsmodule.h"
 
@@ -24,12 +24,12 @@ class GetFileNameWidget;
 /**
 @author Thomas Friedrichsmeier
 */
-class RKSettingsModuleLogfiles : public RKSettingsModule {
+class RKSettingsModuleGeneral : public RKSettingsModule {
 	Q_OBJECT
 public:
-    RKSettingsModuleLogfiles (RKSettings *gui, QWidget *parent);
+    RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent);
 
-    ~RKSettingsModuleLogfiles ();
+    ~RKSettingsModuleGeneral ();
 	
 	bool hasChanges ();
 	void applyChanges ();
