@@ -31,18 +31,19 @@
 
 // static members
 QString RKSettingsModuleLogfiles::files_path;
+QString RKSettingsModuleLogfiles::new_files_path;
 
 RKSettingsModuleLogfiles::RKSettingsModuleLogfiles (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
-	QLabel *label = new QLabel (i18n ("For now, when you change the setting for the location of the logfiles, RKWard will not function properly until you restart the application!"), this);
+	QLabel *label = new QLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	main_vbox->addWidget (label);
 	
 	main_vbox->addStretch ();
 	
-	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, i18n ("Directory where the logfiles should be kept"), QString::null, files_path);
+	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, i18n ("Directory where the logfiles should be kept (*)"), QString::null, new_files_path);
 	connect (files_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
 	main_vbox->addWidget (files_choser);
 }
@@ -68,7 +69,7 @@ bool RKSettingsModuleLogfiles::hasChanges () {
 
 void RKSettingsModuleLogfiles::applyChanges () {
 	RK_TRACE (SETTINGS);
-	files_path = files_choser->getLocation ();
+	new_files_path = files_choser->getLocation ();
 }
 
 void RKSettingsModuleLogfiles::save (KConfig *config) {
@@ -80,14 +81,14 @@ void RKSettingsModuleLogfiles::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	config->setGroup ("Logfiles");
-	config->writeEntry ("logfile dir", files_path);
+	config->writeEntry ("logfile dir", new_files_path);
 }
 
 void RKSettingsModuleLogfiles::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	config->setGroup ("Logfiles");
-	files_path = config->readEntry ("logfile dir", QDir ().homeDirPath () + "/.rkward/");
+	files_path = new_files_path = config->readEntry ("logfile dir", QDir ().homeDirPath () + "/.rkward/");
 }
 
 #include "rksettingsmodulelogfiles.moc"
