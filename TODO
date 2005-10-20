@@ -8,6 +8,7 @@ Little annoying stuff:
 - use more QDicts instead of QMap<QString,...>s
 - use R_DirtyImage to determine, whether workspace needs to be saved
 - in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
+- find out how to save toolbar states properly in parts-GUI
 
 - ComponentMap:
 	- probably the only clean solution to placing plugins in the GUI is to use KXMLGUI here, too. RKComponentHandle would be a KAction subclass. .pluginmap-files would contain a portion that essentially looks like an .rc file.
@@ -23,10 +24,6 @@ Configuration options to add:
 RKHelpDlg:
 	- in the mid term, this should probably be renamed and moved to windows
 	- call .rk.get.installed.packages, and update package selection drop down on every show, butnot on startup
-
-RKHTMLWindow
-	- make printing work
-	- RKHelpWindow: add back/forward
 
 Option setting to always start with empty workspace/empty table instead of asking on startup
 	- startup dialog should have a checkbox "remember decision"
@@ -65,7 +62,6 @@ API documentation:
 - Twintable/RKEditorDataFrame
 	- merge the two classes
 	- more efficient syncing: fetch only the values actually needed instead of the whole table
-	- sometimes when closing the editor (esp. it seems, when this is the last window open), part-GUI does not get destroyed. Why? Part not deleted?
 	- make configurable:
 		- invalid color (global and per variable)
 		- unused color (global and per variable)

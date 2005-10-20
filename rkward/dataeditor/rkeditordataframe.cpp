@@ -36,10 +36,10 @@
 // warning! numbers above GET_DATA_OFFSET are used to determine, which row, the data should go to!
 #define GET_DATA_OFFSET 10
 
-RKEditorDataFrame::RKEditorDataFrame (QWidget *parent) : TwinTable (parent) {
+RKEditorDataFrame::RKEditorDataFrame (QWidget *parent, KParts::Part* part) : TwinTable (parent) {
 	RK_TRACE (EDITOR);
 
-	part = new RKEditorDataFramePart (parent, this);
+	RKEditorDataFrame::part = part;
 
 	open_chain = 0;
 }

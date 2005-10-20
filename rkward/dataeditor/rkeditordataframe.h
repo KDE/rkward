@@ -32,11 +32,13 @@ An RKEditor for data.frames.
 */
 class RKEditorDataFrame : public TwinTable, public RCommandReceiver {
 	Q_OBJECT
+protected:
+friend class RKEditorDataFramePart;
+/** constructor. Protected as you should not create an RKEditorDataFrame directly. Create an RKEditorDataFramePart instead. */
+	RKEditorDataFrame (QWidget *parent, KParts::Part* part);
+/** destructor */
+	~RKEditorDataFrame ();
 public:
-    RKEditorDataFrame (QWidget *parent);
-
-    ~RKEditorDataFrame ();
-
 	void flushChanges ();
 	
 	//void objectDeleted (RObject *object);

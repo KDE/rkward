@@ -29,13 +29,13 @@
 #include "../rkglobals.h"
 #include "../debug.h"
 
-RKEditorDataFramePart::RKEditorDataFramePart (QWidget *parent, RKEditorDataFrame *editor_widget) : KParts::Part (parent) {
+RKEditorDataFramePart::RKEditorDataFramePart (QWidget *parent) : KParts::Part (parent) {
 	RK_TRACE (EDITOR);
 	KInstance* instance = new KInstance ("rkward");
 	setInstance (instance);
  
-	setWidget (editor_widget);
-	editor = editor_widget;
+	editor = new RKEditorDataFrame (parent, this);
+	setWidget (editor);
 
 	setXMLFile ("rkeditordataframepart.rc");
 

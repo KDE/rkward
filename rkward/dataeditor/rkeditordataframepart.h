@@ -30,7 +30,7 @@ class KAction;
 class RKEditorDataFramePart : public KParts::Part {
 	Q_OBJECT
 public:
-	RKEditorDataFramePart (QWidget *parent, RKEditorDataFrame *editor_widget);
+	RKEditorDataFramePart (QWidget *parent);
 
 	~RKEditorDataFramePart ();
 public slots:
@@ -44,6 +44,8 @@ public slots:
 	void slotEditPasteToTable();
 /** paste the clipboard into the table, but not beyond selection boundaries	*/
 	void slotEditPasteToSelection();
+/** return a pointer to the underlying editor widget */
+	RKEditorDataFrame *getEditor () { return editor; };
 private:
 	KAction* editCut;
 	KAction* editCopy;
@@ -51,6 +53,7 @@ private:
 	KAction* editPasteToSelection;
 	KAction* editPasteToTable;
 
+/** we could always use static_cast<RKEditorDataFrame*> (widget ()) instead of keeping this pointer. This saves some typing, though */
 	RKEditorDataFrame *editor;
 
 	void initializeActions ();

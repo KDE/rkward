@@ -18,6 +18,7 @@
 
 #include "dataeditor/rkeditor.h"
 #include "dataeditor/rkeditordataframe.h"
+#include "dataeditor/rkeditordataframepart.h"
 #include "core/robject.h"
 #include "core/rcontainerobject.h"
 #include "core/robjectlist.h"
@@ -156,16 +157,15 @@ void RKEditorManager::setEditorName (RKEditor *editor, const QString &new_name) 
 RKEditorDataFrame *RKEditorManager::newRKEditorDataFrame () {
 	RK_TRACE (APP);
 
-	RKEditorDataFrame *ed = new RKEditorDataFrame (0);
-	(RKGlobals::rkApp()->m_manager)->addPart (ed->getPart (), false);
-	ed->setIcon (SmallIcon ("spreadsheet"));
-	RKGlobals::rkApp ()->addWindow (ed);
-	ed->activate ();		// it seems, sometimes we need to call this explicitely
-	editors.append (ed);
-	connect (ed, SIGNAL (destroyed (QObject*)), this, SLOT (editorDestroyed (QObject*)));
-	RKGlobals::rkApp ()->activateGUI (ed->getPart ());		// it seems, sometimes we need to call this explicitely
+	RKEditorDataFramePart *part = new RKEditorDataFramePart (0);
+	(RKGlobals::rkApp()->m_manager)->addPart (part, false);
+	part->getEditor ()->setIcon (SmallIcon ("spreadsheet"));
+	RKGlobals::rkApp ()->addWindow (part->getEditor ());
+	part->getEditor ()->setFocus ();		// somehow we need to call this explicitely
+	editors.append (part->getEditor ());
+	connect (part->getEditor (), SIGNAL (destroyed (QObject*)), this, SLOT (editorDestroyed (QObject*)));
 
-	return ed;
+	return part->getEditor ();
 }
 
 void RKEditorManager::editorDestroyed (QObject* editor) {

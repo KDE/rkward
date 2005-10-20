@@ -1,3 +1,5 @@
+- back/forward navigation in help pages
+- can print help pages and output
 - better handling of errors while installing packages
 - limit number of lines to display in console (user setting)
 - remove menu clutter from help window, and output window
