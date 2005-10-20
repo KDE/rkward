@@ -30,8 +30,8 @@
 #include "../debug.h"
 
 // static members
-QString RKSettingsModuleLogfiles::files_path;
-QString RKSettingsModuleLogfiles::new_files_path;
+QString RKSettingsModuleGeneral::files_path;
+QString RKSettingsModuleGeneral::new_files_path;
 
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -91,4 +91,4 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 	files_path = new_files_path = config->readEntry ("logfile dir", QDir ().homeDirPath () + "/.rkward/");
 }
 
-#include "rksettingsmodulelogfiles.moc"
+#include "rksettingsmodulegeneral.moc"

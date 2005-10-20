@@ -18,6 +18,7 @@
 #define RKSETTINGSMODULEGENERALFILES_H
 
 #include "rksettingsmodule.h"
+#include "../dialogs/startupdialog.h"
 
 class GetFileNameWidget;
 
@@ -42,11 +43,13 @@ public:
 
 /// returns the directory-name where the logfiles should reside
 	static QString &filesPath () { return files_path; };
+	static StartupDialog::Result startupAction () { return startup_action; };
 public slots:
 	void pathChanged ();
 private:
 	GetFileNameWidget *files_choser;
-	
+
+	static StartupDialog::Result startup_action;
 	static QString files_path;
 /** since changing the files_path can not easily be done while in an active session, the setting should only take effect on the next start. This string stores a changed setting, while keeping the old one intact as long as RKWard is running */
 	static QString new_files_path;

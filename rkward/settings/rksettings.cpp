@@ -25,7 +25,7 @@
 #include "rksettingsmoduleplugins.h"
 #include "rksettingsmoduler.h"
 #include "rksettingsmodulephp.h"
-#include "rksettingsmodulelogfiles.h"
+#include "rksettingsmodulegeneral.h"
 #include "rksettingsmoduleoutput.h"
 #include "rksettingsmodulewatch.h"
 #include "rksettingsmoduleobjectbrowser.h"
@@ -83,7 +83,7 @@ void RKSettings::initModules () {
 	modules.append (new RKSettingsModulePlugins (this, this));
 	modules.append (new RKSettingsModuleR (this, this));
 	modules.append (new RKSettingsModulePHP (this, this));
-	modules.append (new RKSettingsModuleLogfiles (this, this));
+	modules.append (new RKSettingsModuleGeneral (this, this));
 	modules.append (new RKSettingsModuleOutput (this, this));
 	modules.append (new RKSettingsModuleWatch (this, this));
 	modules.append (new RKSettingsModuleConsole (this, this));
@@ -146,7 +146,7 @@ void RKSettings::loadSettings (KConfig *config) {
 	RKSettingsModulePlugins::loadSettings(config);
 	RKSettingsModuleR::loadSettings(config);
 	RKSettingsModulePHP::loadSettings(config);
-	RKSettingsModuleLogfiles::loadSettings(config);
+	RKSettingsModuleGeneral::loadSettings(config);
 	RKSettingsModuleOutput::loadSettings(config);
 	RKSettingsModuleWatch::loadSettings(config);
 	RKSettingsModuleConsole::loadSettings(config);
@@ -159,7 +159,7 @@ void RKSettings::saveSettings (KConfig *config) {
 	RKSettingsModulePlugins::saveSettings(config);
 	RKSettingsModuleR::saveSettings(config);
 	RKSettingsModulePHP::saveSettings(config);
-	RKSettingsModuleLogfiles::saveSettings(config);
+	RKSettingsModuleGeneral::saveSettings(config);
 	RKSettingsModuleOutput::saveSettings(config);
 	RKSettingsModuleWatch::saveSettings(config);
 	RKSettingsModuleConsole::saveSettings(config);

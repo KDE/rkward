@@ -30,7 +30,7 @@
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
-#include "../settings/rksettingsmodulelogfiles.h"
+#include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettings.h"
 #include "../misc/rkerrordialog.h"
 #include "../misc/rkcanceldialog.h"
@@ -144,7 +144,7 @@ void RKLoadLibsDialog::rCommandDone (RCommand *command) {
 bool RKLoadLibsDialog::downloadPackages (const QStringList &packages) {
 	RK_TRACE (DIALOGS);
 
-	QString to_dir = QDir (RKSettingsModuleLogfiles::filesPath ()).filePath (".packagetemp");
+	QString to_dir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath (".packagetemp");
 
 	if (packages.isEmpty ()) return false;
 	
@@ -158,7 +158,7 @@ bool RKLoadLibsDialog::downloadPackages (const QStringList &packages) {
 
 void RKLoadLibsDialog::installDownloadedPackages (bool become_root) {
 	RK_TRACE (DIALOGS);
-	QDir tempdir = QDir (RKSettingsModuleLogfiles::filesPath ()).filePath (".packagetemp");
+	QDir tempdir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath (".packagetemp");
 
 	tempdir.setFilter (QDir::Files);
 
@@ -188,12 +188,12 @@ void RKLoadLibsDialog::installDownloadedPackages (bool become_root) {
 	bool ok = true;
 	if (RKSettingsModuleR::archivePackages ()) {
 		// step 1: create archive-dir, if neccessary
-		QDir archivedir = QDir (RKSettingsModuleLogfiles::filesPath ()).filePath ("package_archive");
+		QDir archivedir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive");
 		if (!archivedir.exists ()) {
 			// does not compile on some systems (October 2005).
 			//QDir (RKSettingsModuleLogfiles::filesPath ()).mkdir ("package_archive");
 			// Workaround (use this instead for a couple of months):
-			QString dummy = RKSettingsModuleLogfiles::filesPath ();
+			QString dummy = RKSettingsModuleGeneral::filesPath ();
 			QDir dir;
 			dir.setPath (dummy);
 			dir.mkdir ("package_archive");

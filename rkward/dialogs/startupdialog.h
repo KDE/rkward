@@ -37,7 +37,14 @@ This class represents the startup dialog asking you whether to open a recent fil
 class StartupDialog : public QDialog {
 Q_OBJECT
 public:
-	enum Result { EmptyWorkspace=0, EmptyTable=1, OpenFile=2, ChoseFile=3 };
+	/** enum to hold result of StartupDialog */
+	enum Result {
+		EmptyWorkspace=0,	/**< start with an empty workspace */
+		EmptyTable=1,				/**< start with an empty table */
+		OpenFile=2,					/**< open a recent file (already specified) */
+		ChoseFile=3,				/**< chose file to open */
+		NoSavedSetting=4		/**< not acutally returned as a result. Used in RKSettingsModuleGeneral. This is saved, if user wants to be asked on every startup */
+	};
 	struct StartupDialogResult {
 		Result result;
 		KURL open_url;

@@ -19,7 +19,7 @@
 #include "rinterface.h"
 #include "rcommandstack.h"
 #include "../settings/rksettingsmoduler.h"
-#include "../settings/rksettingsmodulelogfiles.h"
+#include "../settings/rksettingsmodulegeneral.h"
 #include "../rkglobals.h"
 
 #include "../debug.h"
@@ -124,7 +124,7 @@ void RThread::doCommand (RCommand *command) {
 		RK_DO (qDebug ("running command: %s", ccommand), RBACKEND, DL_DEBUG);
 	
 		if (command->type () & RCommand::DirectToOutput) {
-			runCommandInternal ("sink (\"" + RKSettingsModuleLogfiles::filesPath () + "/rk_out.html\", append=TRUE, split=TRUE)\n", &error);
+			runCommandInternal ("sink (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\", append=TRUE, split=TRUE)\n", &error);
 		}
 	
 		MUTEX_UNLOCK;

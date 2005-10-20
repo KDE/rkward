@@ -31,7 +31,7 @@
 
 #include "../rkglobals.h"
 #include "../rkward.h"
-#include "../settings/rksettingsmodulelogfiles.h"
+#include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
 
@@ -216,7 +216,7 @@ RKOutputWindow* RKOutputWindow::getCurrentOutput () {
 	if (!current_output) {
 		current_output = new RKOutputWindow (RKGlobals::rkApp ());
 
-		KURL url (RKSettingsModuleLogfiles::filesPath () + "/rk_out.html");
+		KURL url (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
 		current_output->openURL (url);
 	}
 
@@ -228,7 +228,7 @@ void RKOutputWindow::flushOutput () {
 
 	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to flush the ouput? It won't be possible to restore it."), i18n ("Flush output?"));
 	if (res==KMessageBox::Yes) {
-		QFile out_file (RKSettingsModuleLogfiles::filesPath () + "/rk_out.html");
+		QFile out_file (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
 		out_file.remove ();
 		refreshOutput (false, false);
 	}

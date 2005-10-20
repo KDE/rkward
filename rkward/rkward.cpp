@@ -60,7 +60,7 @@
 //#include "rkoutputwindow.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleplugins.h"
-#include "settings/rksettingsmodulelogfiles.h"
+#include "settings/rksettingsmodulegeneral.h"
 #include "settings/rksettingsmoduleoutput.h"
 #include "rbackend/rinterface.h"
 #include "core/robjectlist.h"
@@ -259,7 +259,7 @@ void RKwardApp::startR () {
 	RK_TRACE (APP);
 	RK_ASSERT (!RKGlobals::rInterface ());
 	
-	QDir dir (RKSettingsModuleLogfiles::filesPath());
+	QDir dir (RKSettingsModuleGeneral::filesPath());
 	if (!dir.exists ()) {
 		QDir current (dir.currentDirPath ());
 		current.mkdir (dir.path (), true);

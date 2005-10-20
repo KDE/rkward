@@ -24,7 +24,6 @@
 #include <klocale.h>
 
 #include "../settings/rksettingsmodulephp.h"
-#include "../settings/rksettingsmodulelogfiles.h"
 #include "../debug.h"
 
 PHPBackend::PHPBackend() {

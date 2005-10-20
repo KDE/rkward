@@ -22,7 +22,7 @@
 #include "rcommandstack.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduler.h"
-#include "../settings/rksettingsmodulelogfiles.h"
+#include "../settings/rksettingsmodulegeneral.h"
 #include "../core/robjectlist.h"
 #include "../core/rkmodificationtracker.h"
 #include "../dialogs/rkloadlibsdialog.h"
@@ -238,7 +238,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		if (request->call_length >= 3) {
 			QString file_prefix = request->call[1];
 			QString file_extension = request->call[2];
-			QDir dir (RKSettingsModuleLogfiles::filesPath ());
+			QDir dir (RKSettingsModuleGeneral::filesPath ());
 		
 			int i=0;
 			while (dir.exists (file_prefix + QString::number (i) + file_extension)) {
@@ -249,7 +249,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			issueCommand (".rk.rkreply <- \"Too few arguments in call to get.tempfile.name.\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		}
 	} else if (call == "get.output.html.file") {
-		QDir dir (RKSettingsModuleLogfiles::filesPath ());
+		QDir dir (RKSettingsModuleGeneral::filesPath ());
 		// TODO: make more generic, get filename sanely
 		issueCommand (".rk.rkreply <- \"" + dir.filePath ("rk_out.html") + "\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 	} else if (call == "sync") {
