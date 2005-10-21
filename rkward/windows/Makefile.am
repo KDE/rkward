@@ -6,4 +6,4 @@ noinst_HEADERS = rkcommandeditorwindow.h rkcommandeditorwindowpart.h \
 libwindows_a_SOURCES = rkcommandeditorwindow.cpp rkcommandeditorwindowpart.cpp \
 	rkhtmlwindow.cpp rcontrolwindow.cpp detachedwindowcontainer.cpp
 rcdir = $(kde_datadir)/rkward
-rc_DATA = rkcommandeditorwindowpart.rc rkoutputwindow.rc rkhelpwindow.rc
+rc_DATA = rkcommandeditorwindowpart.rc rkoutputwindow.rc rkhelpwindow.rc detachedwindowcontainer.rc

@@ -676,7 +676,7 @@ void RKwardApp::newOutput () {
 void RKwardApp::setRStatus (bool busy) {
 	RK_TRACE (APP);
 	if (busy) {
-		statusBar()->changeItem(i18n("R engine busy"), ID_R_STATUS_MSG);
+		statusBar()->changeItem(i18n ("R engine busy"), ID_R_STATUS_MSG);
 	} else {
 		statusBar ()->changeItem (i18n ("R engine idle"), ID_R_STATUS_MSG);
 	}

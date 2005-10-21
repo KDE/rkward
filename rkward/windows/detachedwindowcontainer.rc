@@ -1,0 +1,14 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="rkward" version="0.3.4">
+	<MenuBar>
+		<Merge/>
+		<Menu name="window"><text>&amp;Window</text>
+			<Action name="dwindow_close"/>
+			<Separator/>
+			<Action name="dwindow_attach"/>
+		</Menu>
+		<Menu name="help">
+			<Merge/>
+		</Menu>
+	</MenuBar>
+</kpartgui>

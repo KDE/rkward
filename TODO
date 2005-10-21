@@ -14,10 +14,6 @@ Little annoying stuff:
 - ComponentMap:
 	- probably the only clean solution to placing plugins in the GUI is to use KXMLGUI here, too. RKComponentHandle would be a KAction subclass. .pluginmap-files would contain a portion that essentially looks like an .rc file.
 
-- Detaching:
-	- create .rc file, allow reattaching
-	- integrate into loop in queryClose
-
 Configuration options to add:
 	- additional console options:
 		- color highlighting for warnings/errors (once we can identify them reliably)

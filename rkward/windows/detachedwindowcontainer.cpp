@@ -18,6 +18,8 @@
 #include "detachedwindowcontainer.h"
 
 #include <kmdichildview.h>
+#include <klocale.h>
+#include <kstdaction.h>
 
 #include <qlayout.h>
 
@@ -31,14 +33,22 @@ QPtrList<KMdiChildView> DetachedWindowContainer::detached_windows;
 DetachedWindowContainer::DetachedWindowContainer (KParts::Part *part_to_capture, KMdiChildView *widget_to_capture) : KParts::MainWindow  (RKGlobals::rkApp ()) {
 	RK_TRACE (APP);
 
-	setXMLFile ("adslk");
+// create own GUI
+	setXMLFile ("detachedwindowcontainer.rc");
+	KStdAction::close (widget_to_capture, SLOT (close ()), actionCollection (), "dwindow_close");
+	new KAction (i18n ("Attach to main window"), 0, this, SLOT (slotReattach ()), actionCollection (), "dwindow_attach");
+	createShellGUI ();
 
+// capture widget
+	part = part_to_capture;
 	widget_to_capture->reparent (this, QPoint (0, 0));
 	setCentralWidget (widget_to_capture);
 	setCaption (widget_to_capture->caption ());	
 	createGUI (part_to_capture);
 
+// add widget to list of detached windows
 	detached_windows.append (widget_to_capture);
+// should self-destruct, when child widget is destroyed
 	connect (widget_to_capture, SIGNAL (destroyed (QObject *)), this, SLOT (viewDestroyed (QObject *)));
 }
 
@@ -48,9 +58,22 @@ DetachedWindowContainer::~DetachedWindowContainer () {
 	detached_windows.remove (static_cast<KMdiChildView*> (centralWidget ()));
 }
 
-void DetachedWindowContainer::viewDestroyed (QObject *view) {
+void DetachedWindowContainer::viewDestroyed (QObject *) {
 	RK_TRACE (APP);
 
+	delete this;
+}
+
+void DetachedWindowContainer::slotReattach () {
+	RK_TRACE (APP);
+
+	KMdiChildView *view = static_cast<KMdiChildView *> (centralWidget ());
+
+	view->reparent (0, QPoint (0, 0));
+	RKGlobals::rkApp ()->addWindow (view);
+	RKGlobals::rkApp ()->m_manager->addPart (part);
+	view->show ();
+	view->setFocus ();
 	delete this;
 }
 
