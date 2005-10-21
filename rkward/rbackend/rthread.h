@@ -41,18 +41,18 @@ in this class, is that an infinite loop is running. Whenever there are commands 
 processing of X11-Events in R is triggered. The rest of the time the thread sleeps.
 
 Actually, there are really two copies of the main loop: The regular one, and a second one which gets run when the R backend has requested some
-task to be carried out. In this case, we might have to run some further child commands in the backend, before we proceed with the commands in
+task to be carried out (@see handleSubstackCall). In this case, we might have to run some further child commands in the backend, before we proceed with the commands in
 the main queque. Some thing like:
 
-- Run some R commands
+- Run some RCommand s
 	- R backend asks for some information / action
-		- potentially some more R commands are needed to accomplish this request
+		- potentially some more RCommand s are needed to accomplish this request
 			- (additional levels of substacks)
 		- return the result
 	- R backend request completed
-- Run some more R commands
+- Run some more RCommand s
 
-This subordinate/nested eventloop is done in doSubstack ().
+This subordinate/nested eventloop is done in handleSubstackCall ().
 
 A closely related class is RInterface: RThread communicates with RInterface by placing QCustomEvent s, when commands are done
 or when the backend needs information from the frontend. Also RThread and REmbedInternal are only separate for technical reasons (R-includes and Qt-includes clashing).
@@ -138,8 +138,9 @@ protected:
 private:
 /** This is the function in which an RCommand actually gets processed. Basically it passes the command to REmbedInteranl::runCommandInternal () and sends RInterface some events about what is currently happening. */
 	void doCommand (RCommand *command);
-	
+/** thread is locked. No new commands will be executed. @see LockType @see lock @see unlock */
 	int locked;
+/** thread is killed. Should exit as soon as possible. @see kill */
 	bool killed;
 };
 

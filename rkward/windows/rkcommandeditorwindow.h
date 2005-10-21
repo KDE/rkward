@@ -48,11 +48,11 @@ public:
 /** destructor */
 	~RKCommandEditorWindow ();
 /** return text of current selection */
-	QString getSelection();
+	QString getSelection ();
 /** return text in current line */
-	QString getLine();
+	QString getLine ();
 /** return entire text */
-	QString getText();
+	QString getText ();
 /** open given URL. 
 @param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file
 @param read_only Open the file in read-only mode */
@@ -62,7 +62,10 @@ public:
 /** insert the given text into the document at the current cursor position. Additionally, focuses the view */
 	void insertText (const QString &text);
 /** Show help about the current word. */
-	void showHelp();
+	void showHelp ();
+protected:
+/** reimplemented from KMdiChildView: give the editor window a chance to object to being closed (if unsaved) */
+	void closeEvent (QCloseEvent *e);
 private:
 	Kate::Document *m_doc;
 	Kate::View *m_view;

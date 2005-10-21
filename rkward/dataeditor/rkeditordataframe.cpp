@@ -64,7 +64,7 @@ void RKEditorDataFrame::enableEditing (bool on) {
 
 RKEditorDataFrame::~RKEditorDataFrame () {
 	RK_TRACE (EDITOR);
-	object->setObjectOpened (this, false);
+	RKGlobals::editorManager ()->closedEditor (this);
 }
 
 void RKEditorDataFrame::flushChanges () {
@@ -115,7 +115,7 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 		// TODO: actually, we should have a true check for object type each time before opening an object.
 		if (!command->stringVectorLength ()) {
 			open_chain = RKGlobals::rInterface ()->closeChain (open_chain);
-			RKGlobals::editorManager ()->closeEditor (this);
+			delete this;
 			return;
 		}
 
@@ -231,7 +231,7 @@ void RKEditorDataFrame::removeObject (RObject *object) {
 	RK_TRACE (EDITOR);
 	if (object == getObject ()) {
 		// self destruct
-		RKGlobals::editorManager ()->closeEditor (this);
+		delete this;
 		return;
 	}
 	

@@ -39,7 +39,7 @@ extern "C" {
 
 #include "../rkglobals.h"
 
-/// ############## R Standard callback overrides BEGIN ####################
+// ############## R Standard callback overrides BEGIN ####################
 void RSuicide (char* message) {
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RSuicide;
@@ -170,7 +170,7 @@ int REditFile (char *buf) {
 	return REditFiles (1, &buf, &title, editor);
 }
 
-/// ############## R Standard callback overrides END ####################
+// ############## R Standard callback overrides END ####################
 
 REmbedInternal::REmbedInternal() {
 	RKGlobals::empty_char = strdup ("");

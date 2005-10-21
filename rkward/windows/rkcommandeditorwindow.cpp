@@ -81,6 +81,18 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	delete m_doc;
 }
 
+void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
+	if (isModified ()) {
+		int status = KMessageBox::warningYesNo (this, i18n ("The document \"%1\" has been modified. Close it anyway?").arg (tabCaption ()),i18n ("File not saved"));
+	
+		if (status != KMessageBox::Yes) {
+			e->ignore ();
+			return;
+		}
+	}
+
+	KMdiChildView::closeEvent (e);
+}
 
 void RKCommandEditorWindow::setRHighlighting () {
 	// set syntax-highlighting for R
@@ -137,8 +149,6 @@ void RKCommandEditorWindow::insertText (const QString &text) {
 	m_doc->insertText (m_view->cursorLine  (), m_view->cursorColumn (), text);
 	setFocus();
 }
-
-
 
 void RKCommandEditorWindow::updateTabCaption (const KURL &url) {
 	QString fname = url.fileName ();

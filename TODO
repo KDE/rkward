@@ -1,5 +1,6 @@
 The following list of TODO-items is NOT complete!
 Also, plans change frequently. If something is listed for a specific release, that's no more than a rough plan.
+All in all, this TODO list is mostly for internal purposes, and many parts may not necessarily be intellegible to anybody but the authors.
 
 Little annoying stuff:
 - fix flickering when one uses arrows in the console
@@ -12,6 +13,10 @@ Little annoying stuff:
 
 - ComponentMap:
 	- probably the only clean solution to placing plugins in the GUI is to use KXMLGUI here, too. RKComponentHandle would be a KAction subclass. .pluginmap-files would contain a portion that essentially looks like an .rc file.
+
+- Detaching:
+	- create .rc file, allow reattaching
+	- integrate into loop in queryClose
 
 Configuration options to add:
 	- additional console options:

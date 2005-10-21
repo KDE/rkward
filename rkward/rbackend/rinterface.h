@@ -40,8 +40,8 @@ struct RCallbackArgs;
 	For a detailed explanation see \ref UsingTheInterfaceToR .
 
 	@see RCommand
-  *@author Thomas Friedrichsmeier
-  */
+	*@author Thomas Friedrichsmeier
+*/
 
 class RInterface : public QObject {
 	Q_OBJECT
@@ -68,13 +68,16 @@ not be interrupted. */
 /** Pauses process. The current command will continue to run, but no new command will be */
 	void pauseProcessing (bool pause);
 
+/** *The* mutex in usein RKWard. This is needed to ensure, the main (GUI) thread, and the backend thread (@see RThread) do not try to access the same data at the same time. Use MUTEX_LOCK and MUTEX_UNLOCK to lock/unlock the mutex. */
 	static QMutex mutex;
 	//static int mutex_counter;
 
 /** returns the command currently running in the thread. Be careful when using the returned pointer! */
 	RCommand *runningCommand () { return r_thread->current_command; };
 private:
+/** pointer to the RThread */
 	RThread *r_thread;
+/** cancelling the command that is (or seems to be) currently running is tricky: In order to do so, we need to signal an interrupt to the RThread. We need this pointer to find out, when the command has actually been interrupted, and we can resume processing. */
 	RCommand *running_command_canceled;
 
 /** See \ref RThread::doSubstack (). Does the actual job. */
@@ -83,8 +86,10 @@ private:
 /** See \ref RThread::doStandardCallback (). Does the actual job. */
 	void processRCallbackRequest (RCallbackArgs *args);
 friend class RKwardApp;
+/** pointer to the RKwatch. TODO: (re-)move this pointer */
 	RKwatch *watch;
 protected:
+/** needed to handle the QCustomEvent s, the RThread is sending (notifications on what's happening in the backend thread) */
 	void customEvent (QCustomEvent *e);
 };
 
@@ -93,7 +98,7 @@ protected:
 \brief An Introduction to using the R-backend: Running commands in R and handling the results
 
 This page tries to give you an introduction into using the RInterface and related classes. You'll learn how to submit a command for evaluation
-by R and how you can get and handle the results. Note that is fairly low-level. You do not need to read this documentation in order to develop
+by R and how you can get and handle the results. Note that this is fairly low-level. You do not need to read this documentation in order to develop
 plugins. You'll only need to know this in order to do C++-hacking in rkward.
 The page is divided into several sections on special problems, but if you're new to rkward, you will probably want to read it as a whole instead of
 jumping right to those sections.
@@ -108,23 +113,23 @@ code:
 #include "rkglobals.h"
 #include "rbackend/rinterface.h"
 
-RKGlobals::rInter->issueCommand ("print (\"hello world!\")", RCommand::User);
+RKGlobals::rInterface ()->issueCommand ("print (\"hello world!\")", RCommand::User);
 \endcode
 
 You will note, that actually there are two RInterface::issueCommand functions, this one is obviously the one taking a QString and several further
 parameters as argument. It is actually quite similar to the other RInterface::issueCommand function which takes an RCommand as a paramter. This convenience class basically just creates an RCommand with the same parameters as the constructor of RCommand (RCommand::RCommand), and then submits this RCommand. We'll discuss what an RCommand really is further down below. For now a good enough explanations is, that it's simply a container for a command.
 
-The first parameter here, is fairly obvious, the command-string the R backend should evaluate.
+The first parameter here is fairly obvious, the command-string the R backend should evaluate.
 
-The second parameter (RCommand::User) is and integer, which can be a bit-wise or-able combination of the values in the RCommand::CommandTypes enum. We'll deal with the more specific values in that enum later. Here, were just using RCommand::User, which signifies, that the command came
+The second parameter (RCommand::User) is an integer, which can be a bit-wise or-able combination of the values in the RCommand::CommandTypes enum. We'll deal with the more specific values in that enum later. Here, we're just using RCommand::User, which signifies, that the command came
 directly from the user. This information is fairly important, as it affects the handling of the command at several places: Which color it will be given in
-the R-command log (currently class RKWatch), whether the command can be cancelled (RCommand::User commands can be cancelled, but some other types of commands can not be cancelled), etc. See the documentation on RCommand::CommandTypes (not yet complete) for more information.
+the R-command log (currently class RKwatch), whether the command can be cancelled (RCommand::User commands can be cancelled, but some other types of commands can not be cancelled), etc. See the documentation on RCommand::CommandTypes (not yet complete) for more information.
 
 \section UsingTheInterfaceToRHandlingReturns A slightly more realistic example: Handling the result of an RCommand
 
-Most of the time you don't just want to run a command, but you also want to know the result. Now, this is a tad bit more difficult than one might expect at first glance. The reason for this is, that the R backend runs in a separate thread. Hence, whenever you submit a command, it generally does not get executed right away - or at least you just don't know, when exactly it gets executed, and when the result is available. This is neccessary, so (expensive) commands running in the backend do not block operations in the GUI/frontend.
+Most of the time you don't just want to run a command, but you also want to know the result. Now, this is a tad bit more difficult than one might expect at first glance. The reason for this is that the R backend runs in a separate thread. Hence, whenever you submit a command, it generally does not get executed right away - or at least you just don't know, when exactly it gets executed, and when the result is available. This is neccessary, so (expensive) commands running in the backend do not block operations in the GUI/frontend.
 
-Ok, so how do you get informed, when you command was completed? Using RCommandReceiver. What you will want to do is inherit the class you
+Ok, so how do you get informed, when your command was completed? Using RCommandReceiver. What you will want to do is inherit the class you
 want to handle the results of RCommands from RCommandReceiver. When finished, the RCommand will be submitted to the (pure virtual) RCommandReceiver::rCommandDone function, which of course you'll have to implement in a meaningful way in your derived class.
 
 The corresponding code would look something like this:
@@ -148,7 +153,7 @@ private:
 
 
 void MyReceiver::someFunction () {
-	RKGlobals::rInter->issueCommand ("print (1+1)", RCommand::App, QString::null, this);
+	RKGlobals::rInterface ()->issueCommand ("print (1+1)", RCommand::App, QString::null, this);
 }
 
 void MyReceiver::rCommandDone (RCommand *command) {
@@ -164,7 +169,7 @@ So next the RCommand created with RInterface::issueCommand goes on its way to/th
 
 \section UsingTheInterfaceToRMultipleCommands Dealing with several RCommands in the same object
 
-In many cases you don't just want to deal with a single RCommand in an RCommandReceiver, but rather you might submit a bunch of different command (for instance to find out about several different properties of an object in R-space), and then use some special handling for each of those commands. So the problem is, how to find out, which of your commands you're currently dealing with in rCommandDone.
+In many cases you don't just want to deal with a single RCommand in an RCommandReceiver, but rather you might submit a bunch of different commands (for instance to find out about several different properties of an object in R-space), and then use some special handling for each of those commands. So the problem is, how to find out, which of your commands you're currently dealing with in rCommandDone.
 
 There are several ways to deal with this:
 
@@ -206,7 +211,7 @@ So far we've discussed RInterface:issueCommand () and RCommandReceiver::rCommand
 
 First the RCommand is placed in a first-in-first-out stack. This stack is needed, since - as discussed - the commands get executed in a separate thread, so several command may get stacked up, before the first one gets run.
 
-Then, in the backend thread (RThread) there is a loop running, which fetches those commands from the stack and executes them one by one. Whenver a command has been executed in this thread, it gets updated with information on any errors that occurred and of course also with the result of running the command. Next, a QCustomEvent is being posted. What this does is basically, transfer the pointer to the command back to the main thread in a safe way.
+Then, in the backend thread (RThread) there is a loop running, which fetches those commands from the stack and executes them one by one. Whenver a command has been executed in this thread, it gets updated with information on any errors that occurred and of course also with the result of running the command. Next, a QCustomEvent is being posted. What this does is - rougly speaking -, transfer the pointer to the command back to the main thread in a safe way.
 
 Whenever the main thread becomes active again, it will find that QCustomEvent and handle it in RInterface::customEvent.
 
@@ -252,7 +257,7 @@ To cope with this, it is sometimes desirable to keep closer control over the ord
 
 \section UsingTheInterfaceToRCommandChains How to ensure commands get executed in the correct order: RCommandChain
 
-The way to do this is to use RCommandChain. Basically, when you want command to be executed in a sequence being sure that no other commands intervene, you do this:
+The way to do this is to use RCommandChain. Basically, when you want commands to be executed in a sequence being sure that no other commands intervene, you do this:
 
 \code
 	RCommandChain *chain = RKGlobals::rInterface ()->startChain ();
@@ -291,7 +296,7 @@ Now let's assume for a second, the R backend has been busy doing other stuff and
 	- some_command
 	- some_command2
 
-You can also open sub chains, using
+So the order of execution will be guaranteed to be first_command, second_command, some_command, some_command2, although they were issued ina different order. You can also open sub chains, using
 
 \code
 RCommandChain *sub_chain = RKGlobals::rInterface ()->startChain (parent_chain);
@@ -301,19 +306,19 @@ Remember to close chains when you placed all the commands you needed to. If you 
 
 \section UsingTheInterfaceToROutputOptions Sending results to the output and retrieving low-level data from the backend
 
-There are a few special type-modifiers you can specify when creating and RCommand (as part of the second parameter to RCommand::RCommand or RInterface::issueCommand), that determine what will be done with the result:
+There are a few special type-modifiers you can specify when creating an RCommand (as part of the second parameter to RCommand::RCommand or RInterface::issueCommand), that determine what will be done with the result:
 
-- RCommand::EmtpyCommand
+- RCommand::EmptyCommand
 This one tells the backend, that the command does not really need to be executed, and does not contain anything. You'll rarely need this flag, but sometimes it is useful to submit an empty command simply to find out when it is finished.
 
 - RCommand::DirectToOutput
 This is typically used in plugins: When you specify this modifier, the plain text result of this command (i.e. whatever R prints out when evaluating the command) will be added to the HTML output file. Remember to call RKwardApp::newOutput in order to refresh the output-window once the command has finished.
 
 - RCommand::GetIntVector, RCommand::GetStringVector, RCommand::GetRealVector
-These are special modifiers helpful when transferring data from R to RKWard (used primarily in the editor classes and in conjunction with RCommand::Sync): They tell the backend to try to fetch the result as and array of int, char*, or double, respectively. For instance, if you know object "myobject" is an integer vector, you may get the data using
+These are special modifiers helpful when transferring data from R to RKWard (used primarily in the editor classes and in conjunction with RCommand::Sync): They tell the backend to try to fetch the result as an array of int, char*, or double, respectively. For instance, if you know object "myobject" is an integer vector, you may get the data using
 
 \code
-RKGlobals::rInterface ()->issueCommand ("myobject", RCommand::Sync | RCommand::GetIntVector, QString::null,this);
+RKGlobals::rInterface ()->issueCommand ("myobject", RCommand::Sync | RCommand::GetIntVector, QString::null, this);
 \endcode
 
 Assuming the data can in fact be converted to a vector of integers, you can then access the data using these members in RCommand:
@@ -332,6 +337,11 @@ The following classes contain (or should contain) further important documentatio
 - \ref RCommand
 - \ref RCommandReceiver
 - \ref RCommandStack
+
+Even lower level API:
+
+- \ref RThread
+- \ref REmbedInternal
 
 */
 

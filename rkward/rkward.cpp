@@ -73,6 +73,7 @@
 #include "windows/rkcommandeditorwindow.h"
 #include "windows/rkhtmlwindow.h"
 #include "windows/rcontrolwindow.h"
+#include "windows/detachedwindowcontainer.h"
 #include "khelpdlg.h"
 #include "rkconsole.h"
 #include "debug.h"
@@ -342,6 +343,8 @@ void RKwardApp::initStatusBar()
 
 void RKwardApp::openWorkspace (const KURL &url) {
 	RK_TRACE (APP);
+	if (url.isEmpty ()) return;
+
 	new RKLoadAgent (url, false);
 	fileOpenRecentWorkspace->addURL (url);
 }
@@ -462,10 +465,16 @@ bool RKwardApp::queryClose () {
 		}
 	}
 
+// generate a (copy) list of all child views (detached or not)
 	QValueList<KMdiChildView *> child_copy;
-	for(KMdiChildView *w = m_pDocumentViews->first ();w;w= m_pDocumentViews->next ()){
+	for (KMdiChildView *w = m_pDocumentViews->first ();w;w= m_pDocumentViews->next ()){
 		child_copy.append (w);
 	}
+	for (KMdiChildView *w = DetachedWindowContainer::detachedWindows ()->first (); w; w = DetachedWindowContainer::detachedWindows ()->next ()) {
+		child_copy.append (w);
+	}
+
+// try to close all the children
 	QValueListIterator<KMdiChildView *> childIt;
 	for (childIt = child_copy.begin (); childIt != child_copy.end (); ++childIt) {
 		if (!(*childIt)->close ()) {
@@ -644,11 +653,20 @@ void RKwardApp::slotCloseAllEditors () {
 void RKwardApp::slotDetachWindow () {
 	RK_TRACE (APP);
 
-	if (activeWindow ()) {
-		detachWindow (activeWindow ());
+	KMdiChildView *window = activeWindow ();
+	if (window) {
+		KParts::Part *part = m_manager->activePart ();
+		if (part) {
+			m_manager->removePart (part);
+			removeWindowFromMdi (window);
+			m_pDocumentViews->remove (window);			// WORKAROUND: shouldn't this happen automatically in the above call? Apparently not so.
+			DetachedWindowContainer *detached = new DetachedWindowContainer (part, window);
+			detached->show ();
+		} else{
+			RK_ASSERT (false);
+		}
 	}
 }
-
 
 void RKwardApp::newOutput () {
 	RK_TRACE (APP);
@@ -707,20 +725,8 @@ void RKwardApp::slotOpenCommandEditor (){
 
 void RKwardApp::slotChildWindowCloseRequest (KMdiChildView * window) {
 	RK_TRACE (APP);
-	//If it's an unsaved command editor window, there is a warning.
-	// TODO: it's sort of ugly, having to handle this here. Can't we somehow handle it in RKCommandEditorWindow instead?
-	if (window->inherits("RKCommandEditorWindow")) {
-		RKCommandEditorWindow * editor = (RKCommandEditorWindow*) window;
-		if (editor->isModified()) {
-			int status = KMessageBox::warningYesNo(this,i18n("The document \"%1\" has been modified. Close it anyway?").arg(editor->tabCaption()),i18n("File not saved"));
-	
-			if (status != KMessageBox::Yes) {
-				return;
-			}
-		}
-	}
 
-	closeWindow(window);
+	closeWindow (window);
 }
 
 void RKwardApp::openHTML(const KURL &url) {

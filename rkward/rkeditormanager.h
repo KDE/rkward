@@ -30,7 +30,7 @@ class RCommand;
 class RKEditorDataFrame;
 
 /**
-This class is used to manage open editor windows. For now, it will arrange opened editors in a tabbook. Later it will also be responsible for docking/undocking editors, etc. This class does only GUI-related stuff. It knows nothing about the types of editors and the data they hold.
+This class is used to manage open editor windows. It is used to do some generic functions, like notifying the backend, when an editor window has been closed. Also (and perhaps most importantly), it contains a function editObject (), which will open any editable RObject with the editor capable to do so.
 
 @author Thomas Friedrichsmeier
 */
@@ -42,20 +42,19 @@ public:
 	~RKEditorManager();
 
 	RKEditor *editObject (RObject *object, bool initialize_to_empty=false);
-/// tries to open the editors/objects that were last opened
+/** tries to open the editors/objects that were last opened (in the previous session) */
 	void restoreEditors ();
 	
-	void closeEditor (RKEditor *editor);
+	void closedEditor (RKEditor *editor);
 
 	void flushAll ();
 	void closeAll ();
-	
+
+/** is an editor availble for the type of object given? */
 	bool canEditObject (RObject *object);
 
-/// returns the currently active editor
+/** set the name (caption) of an editor */
 	void setEditorName (RKEditor *editor, const QString &new_name);
-public slots:
-	void editorDestroyed (QObject* editor);
 protected:
 	void rCommandDone (RCommand *command);
 private:

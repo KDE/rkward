@@ -106,13 +106,15 @@ void RKEditorManager::rCommandDone (RCommand *command) {
 	}
 }
 
-void RKEditorManager::closeEditor (RKEditor *editor) {
+void RKEditorManager::closedEditor (RKEditor *editor) {
 	RK_TRACE (APP);
 	
 	RK_ASSERT (editor);
 	
 	RObject *object = editor->getObject ();
-	editor->close ();
+	object->setObjectOpened (editor, false);
+	QValueList<RKEditor*>::iterator it = editors.find (editor);
+	if (it != editors.end ()) editors.erase (it);
 
 	RCommand *command = new RCommand (".rk.editor.closed (" + object->getFullName() + ")", RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
@@ -134,7 +136,7 @@ void RKEditorManager::closeAll () {
 	while (it != editors.end ()){
 		RKEditor *ed = *it;
 		++it;
-		ed->close ();			// will be removed from list of editors in editorDestroyed ()
+		ed->close ();			// will be removed from list of editors in closedEditor ()
 	}
 }
 
@@ -163,18 +165,8 @@ RKEditorDataFrame *RKEditorManager::newRKEditorDataFrame () {
 	RKGlobals::rkApp ()->addWindow (part->getEditor ());
 	part->getEditor ()->setFocus ();		// somehow we need to call this explicitely
 	editors.append (part->getEditor ());
-	connect (part->getEditor (), SIGNAL (destroyed (QObject*)), this, SLOT (editorDestroyed (QObject*)));
 
 	return part->getEditor ();
-}
-
-void RKEditorManager::editorDestroyed (QObject* editor) {
-	RK_TRACE (APP);
-
-	RKEditor *ed = static_cast<RKEditor*> (editor);
-	QValueList<RKEditor*>::iterator it = editors.find (ed);
-	if (it != editors.end ()) editors.erase (it);
-
 }
 
 #include "rkeditormanager.moc"
