@@ -24,7 +24,9 @@
 	</Menu>
 
 	<Merge/>
-	
+
+	<Merge name="rkwardcomponents" />
+
 	<Menu name="windows"><text>&amp;Windows</text>
 		<Action name="output_show"/>
 		<Separator/>

@@ -242,6 +242,7 @@ void RKwardApp::initPlugins () {
 	slotStatusMsg(i18n("Setting up plugins..."));
 	
 	RKGlobals::componentMap ()->clear ();
+	factory ()->removeClient (RKGlobals::componentMap ());
 
 	QStringList list = RKSettingsModulePlugins::pluginMaps ();
 	int counter = 0;
@@ -252,6 +253,8 @@ void RKwardApp::initPlugins () {
 	if (counter < 1) {
 		KMessageBox::information (0, i18n ("Plugins are needed: you may manage these through \"Settings->Configure RKWard\".\n"), i18n ("No (valid) plugins found"));
 	}
+
+	factory ()->addClient (RKGlobals::componentMap ());
 
 	slotStatusReady ();
 }
