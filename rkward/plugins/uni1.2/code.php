@@ -97,7 +97,7 @@ for (rk.temp.var in names(rk.temp.res )) {
 	}
 	cat("</table>")
 }
-if ( ! is.na(rk.temp.option[[1]])) HTML(rk.temp.option)
+if ( ! is.na(rk.temp.option[[1]])) rk.print(rk.temp.option)
 
 <?
 	}
