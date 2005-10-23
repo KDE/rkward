@@ -10,4 +10,4 @@ Architecture: any
 Depends: kdebase (>= 4:3.2.0), r-base (>= 2.1.0), libstdc++6 (>= 4.0.1)
 Description: A KDE frontend to the R statistics language
  RKWard is meant to become an easy to use, transparent frontend to the R-language, a very powerful, yet hard-to-get-into scripting-language with a strong focus on statistic functions. It will not only provide a convenient user-interface, however, but also take care of seamless integration with an office-suite. Practical statistics is not just about calculating, after all, but also about documenting and ultimately publishing the results.
- RKWard is still in early development status.
+ RKWard is still in development status. Right now it is most useful as an IDE to users with some experience in R, or willing to learn R.

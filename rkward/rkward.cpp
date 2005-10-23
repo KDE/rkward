@@ -165,8 +165,8 @@ void RKwardApp::doPostInit () {
 
 	startR ();
 	
-	QString dummy = i18n("Before you start bashing at it: please note that this is merely a technology preview release. You might actually be able to use it for some very simple tasks, but chances are it's of hardly any practical value so far. It does not do much good. It might do some very bad things (don't let it touch valuable data!). It's lacking in many respects. If you would like to help improve it, or simply get in contact, visit:\nhttp://rkward.sourceforge.net\nAll comments are welcome.");
-	KMessageBox::information (this, dummy, i18n("Before you complain..."), "state_of_rkward");
+	QString dummy = i18n ("Please note that RKWard is still far from being finished. We feel it is already helpful for a number of tasks, but many features are lacking or buggy. You can help us by filing bug reports, feature requests, or providing feedback in any other form. Please visit http://rkward.sourceforge.net for contact information.");
+	KMessageBox::information (this, dummy, i18n("What to expect of RKWard"), "state_of_rkward");
 	
 	// create handle for menu bar and register standard menus
 	menu_list = new RKMenuList (menuBar ());
