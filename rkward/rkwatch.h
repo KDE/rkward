@@ -52,6 +52,8 @@ public slots:
 
 private:
 	void addInputNoCheck (RCommand *command);
+/** internal helper function, called whenever a line/lines have been added. Check whether log is longer than maximum setting. Scroll to the bottom */
+	void linesAdded ();
 
 	QTextEdit *watch;
 	QBoxLayout* pLayout;

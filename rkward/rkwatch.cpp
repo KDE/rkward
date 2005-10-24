@@ -78,8 +78,7 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 		watch->setColor (Qt::blue);
 	}
 
-	watch->append ("---------------------------\n");
-	watch->append (i18n ("Issuing command:\n"));
+	watch->append ("\n");
 	watch->setItalic (true);
 
 	watch->append (command->command ());
@@ -91,7 +90,8 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 			emit (raiseWatch ());
 		}
 	}
-	RK_TRACE (APP);
+
+	linesAdded ();
 }
 
 void RKwatch::addOutput (RCommand *command) {
@@ -124,9 +124,7 @@ void RKwatch::addOutput (RCommand *command) {
 	} else if (command->type () & RCommand::Plugin) {
 		watch->setColor (Qt::blue);
 	}
-	
-	watch->append ("---------------------------\n");
-	watch->append (i18n ("Got reply:"));
+
     watch->setBold (true);
 
 	watch->append (command->output ());
@@ -143,22 +141,35 @@ void RKwatch::addOutput (RCommand *command) {
 
 	watch->setBold (false);	
 	watch->setColor (Qt::black);
-	
-	
+
+	linesAdded ();
+
 	if (RKSettingsModuleWatch::shouldRaiseWindow (command)) {
-		show ();
-		raise ();
+		if (!(command->type () & RCommand::Console)) {
+			emit (raiseWatch ());
+		}
 	}
 }
 
+void RKwatch::linesAdded () {
+	RK_TRACE (APP);
 
+// limit number of lines shown
+	if (RKSettingsModuleWatch::maxLogLines ()) {
+		uint c = (uint) watch->paragraphs ();
+		for (uint ui = c; ui > RKSettingsModuleWatch::maxLogLines (); --ui) {
+			watch->removeParagraph (0);
+		}
+	}
 
+// scroll to bottom
+	watch->scrollToBottom ();
+}
 
 void RKwatch::configureWatch () {
 	RK_TRACE (APP);
 	RKSettings::configureSettings (RKSettings::Watch, this);
 }
-
 
 void RKwatch::clearWatch () {
 	RK_TRACE (APP);

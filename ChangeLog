@@ -1,10 +1,11 @@
+- less verbose output in command log (removed "issuing command", etc.)
 - use KXMLGUI for placing plugins in the menu (mostly an internal change, but menu placement should remain sane, when active window changes, now)
 - help-, output-, and editor-views can be detached to separate windows
 - allow to bypass startup dialog
 - back/forward navigation in help pages
 - can print help pages and output
 - better handling of errors while installing packages
-- limit number of lines to display in console (user setting)
+- limit number of lines to display in console and command log (user setting)
 - remove menu clutter from help window, and output window
 - avoid adding incomplete (multi-line) Console commands to the Command Log
 - Settings->Command Log->show/raise window working again

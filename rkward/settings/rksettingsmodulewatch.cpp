@@ -18,6 +18,7 @@
 
 #include <klocale.h>
 #include <kconfig.h>
+#include <knuminput.h>
 
 #include <qlayout.h>
 #include <qcheckbox.h>
@@ -30,12 +31,10 @@
 
 //static
 int RKSettingsModuleWatch::plugin_filter;
-//static
 int RKSettingsModuleWatch::app_filter;
-//static
 int RKSettingsModuleWatch::sync_filter;
-//static
 int RKSettingsModuleWatch::user_filter;
+uint RKSettingsModuleWatch::max_log_lines;
 
 //static
 bool RKSettingsModuleWatch::shouldShowInput (RCommand *command) {
@@ -142,6 +141,14 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 	app_filter_boxes = addFilterSettings (this, grid, 3, i18n ("Application commands"), app_filter);
 	sync_filter_boxes = addFilterSettings (this, grid, 4, i18n ("Synchronisation commands"), sync_filter);
 
+	vbox->addSpacing (2*RKGlobals::spacingHint ());
+
+	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the Command Log"), this));
+	max_log_lines_spinner = new KIntSpinBox (0, 10000, 10, max_log_lines, 10, this);
+	max_log_lines_spinner->setSpecialValueText (i18n ("Unlimited"));
+	connect (max_log_lines_spinner, SIGNAL (valueChanged (int)), this, SLOT (changedSetting (int)));
+	vbox->addWidget (max_log_lines_spinner);
+
 	vbox->addStretch ();
 }
 
@@ -209,6 +216,8 @@ void RKSettingsModuleWatch::saveSettings (KConfig *config) {
 	config->writeEntry ("plugin command filter", plugin_filter);
 	config->writeEntry ("app command filter", app_filter);
 	config->writeEntry ("sync command filter", sync_filter);
+
+	config->writeEntry ("max log lines", max_log_lines);
 }
 
 //static
@@ -220,6 +229,8 @@ void RKSettingsModuleWatch::loadSettings (KConfig *config) {
 	plugin_filter = config->readNumEntry ("plugin command filter", ShowInput | ShowError);
 	app_filter = config->readNumEntry ("app command filter", ShowInput | ShowError);
 	sync_filter = config->readNumEntry ("sync command filter", (int) ShowError);
+
+	max_log_lines = config->readNumEntry ("max log lines", 1000);
 }
 
 bool RKSettingsModuleWatch::hasChanges () {
@@ -235,6 +246,8 @@ void RKSettingsModuleWatch::applyChanges () {
 	plugin_filter = getFilterSettings (plugin_filter_boxes);
 	app_filter = getFilterSettings (app_filter_boxes);
 	sync_filter = getFilterSettings (sync_filter_boxes);
+
+	max_log_lines = max_log_lines_spinner->value ();
 }
 
 void RKSettingsModuleWatch::save (KConfig *config) {

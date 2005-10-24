@@ -46,7 +46,7 @@ public:
 
 	static RKComponentHandle* createComponentHandle (const QString &filename, RKComponentType type, const QString& id, const QString& label);
 private:
-/** The filename of the description file for this comonent */
+/** The filename of the description file for this component */
 	QString filename;
 	RKComponentType type;
 };
