@@ -14,8 +14,8 @@ Little annoying stuff:
 - in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
 - find out how to save toolbar states properly in parts-GUI
 
-- ComponentMap:
-	- probably the only clean solution to placing plugins in the GUI is to use KXMLGUI here, too. RKComponentHandle would be a KAction subclass. .pluginmap-files would contain a portion that essentially looks like an .rc file.
+- Plugin Documentation:
+	- Labels are now attached to components instead of menu-entries. Update documentation.
 
 Configuration options to add:
 	- additional console options:
@@ -39,6 +39,8 @@ RKHelpDlg:
 - remove classes/files:
 	- RKCommandEditor (first check for reusable functionality)
 		- RKPlugin still uses RKCommandEditor. Convert to use RKCommandEditorWindow instead.
+	- RKMenu
+	- RKMenuList
 
 stuff to do before 0.3.5 release
 - plugins (general)

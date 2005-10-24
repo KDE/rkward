@@ -14,7 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
+#if 0
 #ifndef RKMENU_H
 #define RKMENU_H
 
@@ -54,5 +54,7 @@ friend class RKMenuList;
 /** whether the QPopupMenu should be deleted along with the RKMenu. See constructor. */
 	bool pre_existing;
 };
+
+#endif
 
 #endif

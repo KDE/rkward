@@ -54,10 +54,7 @@
 #include "rkdocmanager.h" 
 #include "core/rkmodificationtracker.h"
 #include "rkwatch.h"
-#include "misc/rkmenu.h"
-#include "misc/rkmenulist.h"
 #include "plugin/rkcomponentmap.h"
-//#include "rkoutputwindow.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleplugins.h"
 #include "settings/rksettingsmodulegeneral.h"
@@ -168,23 +165,6 @@ void RKwardApp::doPostInit () {
 	QString dummy = i18n ("Please note that RKWard is still far from being finished. We feel it is already helpful for a number of tasks, but many features are lacking or buggy. You can help us by filing bug reports, feature requests, or providing feedback in any other form. Please visit http://rkward.sourceforge.net for contact information.");
 	KMessageBox::information (this, dummy, i18n("What to expect of RKWard"), "state_of_rkward");
 	
-	// create handle for menu bar and register standard menus
-	menu_list = new RKMenuList (menuBar ());
-	QMenuItem* item = menuBar ()->findItem (menuBar ()->idAt (0));
-	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "file");
-	item = menuBar ()->findItem (menuBar ()->idAt (1));
-	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "edit");
-	item = menuBar ()->findItem (menuBar ()->idAt (2));
-	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "workspace");
-	item = menuBar ()->findItem (menuBar ()->idAt (3));
-	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "output");
-	item = menuBar ()->findItem (menuBar ()->idAt (4));
-	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "run");
-	item = menuBar ()->findItem (menuBar ()->idAt (5));
-	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "settings");
-	item = menuBar ()->findItem (menuBar ()->idAt (6));
-	if (item && item->popup ()) menu_list->registerMenu (item->popup (), "help");
-
 	initPlugins ();
 	
 	//It's necessary to give a different name to all tool windows, or they won't be properly displayed
@@ -241,8 +221,8 @@ void RKwardApp::initPlugins () {
 	RK_TRACE (APP);
 	slotStatusMsg(i18n("Setting up plugins..."));
 	
-	RKGlobals::componentMap ()->clear ();
 	factory ()->removeClient (RKGlobals::componentMap ());
+	RKGlobals::componentMap ()->clear ();
 
 	QStringList list = RKSettingsModulePlugins::pluginMaps ();
 	int counter = 0;

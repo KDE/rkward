@@ -44,7 +44,7 @@ public:
 	RKComponentType getType () { return type; };
 	bool isPlugin ();
 
-	static RKComponentHandle* createComponentHandle (const QString &filename, RKComponentType type, const QString& id);
+	static RKComponentHandle* createComponentHandle (const QString &filename, RKComponentType type, const QString& id, const QString& label);
 private:
 /** The filename of the description file for this comonent */
 	QString filename;
@@ -63,8 +63,6 @@ the component can be retrieved.
 
 The RKComponentMap provides convenience functions for adding or removing a .pluginmap-file to/from the list of components, and looking up RKComponentHandle for a given component name.
 
-// TODO: maybe we do not need to keep a map at all, but only create the handles! Think about this one day!
-
 @author Thomas Friedrichsmeier
 */
 class RKComponentMap : public KXMLGUIClient {
@@ -76,7 +74,6 @@ public:
 /** adds all Plugins / components in a .pluginmap-file. Also takes care of creating the menu-items, etc.
 @returns number of plugins (i.e. stand-alone components/menu-entries) added successfully */
 	int addPluginMap (const QString& plugin_map_file);
-//	int addPluginMapNew (const QString& plugin_map_file);
 /** clears out (and deletes) all components / plugins */
 	void clear ();
 
@@ -84,12 +81,17 @@ public:
 	RKComponentHandle* getComponentHandle (const QString &id);
 private:
 /** recurse into a lower menu-level 
-@param parent the parent menu
-@param element the QDomElement containing the description for the new submenu
+@param parent the parent menu (in the KXMLGUI)
+@param description the QDomElement containing the description for the new submenu
 @returns number of plugins/menu-entries added successfully */
-//	int addSubMenu (RKMenu* parent, const QDomElement& element, const QString& cnamespace);
 	int addSubMenu (QDomElement& parent, const QDomElement& description, const QString& cnamespace);
 
+/** helper function: Find a specified element, and return it. If the element could not be found, it is created instead. The first three parameters are used as search parameters (all have to match). The additional two parameters only take effect, if a new element is created.
+@param parent the QDomElement whose children to search through
+@param tagname the tagname to look for
+@param name value of the "name"-attribute to look for
+@param label the label to assign to the new element (if no existing match could be found)
+@param index the index position where to insert the new element in the list of children (if no existing match could be found). -1 means insert at the end of the list. */
 	QDomElement findOrCreateElement (QDomElement& parent, const QString& tagname, const QString& name, const QString& label, int index);
 
 /** typedef for easy reference to iterator */

@@ -14,6 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+#if 0
 #include "rkmenulist.h"
 
 #include <qmenubar.h>
@@ -75,3 +76,5 @@ RKMenu *RKMenuList::createMenu (const QString &id, const QString &label, int ind
 	}
 	return ret;
 }
+
+#endif

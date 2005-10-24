@@ -1,3 +1,4 @@
+- use KXMLGUI for placing plugins in the menu (mostly an internal change, but menu placement should remain sane, when active window changes, now)
 - help-, output-, and editor-views can be detached to separate windows
 - allow to bypass startup dialog
 - back/forward navigation in help pages

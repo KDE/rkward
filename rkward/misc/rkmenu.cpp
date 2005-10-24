@@ -14,7 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
+#if 0
 #include "rkmenu.h"
 
 #include <qmenubar.h>
@@ -80,3 +80,5 @@ void RKMenu::addEntry (const QString &id, RKPluginHandle *plugin, const QString 
 	}
 	entry_ids.insert (id, mid);
 }
+
+#endif

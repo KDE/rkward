@@ -14,6 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+#if 0
 #ifndef RKMENULIST_H
 #define RKMENULIST_H
 
@@ -55,4 +56,5 @@ private:
 	QMenuBar *menu_bar;
 };
 
+#endif
 #endif
