@@ -38,7 +38,7 @@ RKSettingsModulePlugins::PluginPrefs RKSettingsModulePlugins::interface_pref;
 RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 	
-	main_vbox->addStretch ();
+	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 	
 	QLabel *label = new QLabel (i18n ("Some plugins are available with both, a wizard-like interface and a traditional dialog interface. If both are available, which mode of presentation do you prefer?"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
@@ -56,13 +56,15 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	connect (button_group, SIGNAL (clicked (int)), this, SLOT (buttonClicked (int)));
 	main_vbox->addWidget (button_group);
 	
-	main_vbox->addStretch ();
+	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 	
 	map_choser = new MultiStringSelector (i18n ("Select .pluginmap file(s)"), this);
 	map_choser->setValues (plugin_maps);
 	connect (map_choser, SIGNAL (getNewStrings (QStringList*)), this, SLOT (browseRequest (QStringList*)));
 	connect (map_choser, SIGNAL (listChanged ()), this, SLOT (pathsChanged ()));
 	main_vbox->addWidget (map_choser);
+
+	main_vbox->addStretch ();
 }
 
 RKSettingsModulePlugins::~RKSettingsModulePlugins() {

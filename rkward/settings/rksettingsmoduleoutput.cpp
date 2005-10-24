@@ -45,7 +45,9 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	auto_raise_box->setEnabled (auto_show);
 	connect (auto_raise_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
 
-	main_vbox->addWidget (group);	
+	main_vbox->addWidget (group);
+
+	main_vbox->addStretch ();
 }
 
 RKSettingsModuleOutput::~RKSettingsModuleOutput() {

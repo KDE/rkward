@@ -40,17 +40,19 @@ RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, QWidget *parent) : RK
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	main_vbox->addWidget (label);
 	
-	main_vbox->addStretch ();
+	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 	
 	bin_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, i18n ("File-location of the PHP binary"), QString::null, php_bin);
 	connect (bin_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
 	main_vbox->addWidget (bin_choser);
 
-	main_vbox->addStretch ();
+	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
 	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, i18n ("Directory, where the PHP support files are located"), QString::null, files_path);
 	connect (files_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
 	main_vbox->addWidget (files_choser);
+
+	main_vbox->addStretch ();
 }
 
 RKSettingsModulePHP::~RKSettingsModulePHP () {

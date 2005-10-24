@@ -41,7 +41,7 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, Q
 	connect (show_hidden_vars_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
 	layout->addWidget (show_hidden_vars_box);
 
-	layout->addStretch ();
+	layout->addSpacing (2*RKGlobals::spacingHint ());
 
 	QLabel *label = new QLabel (i18n ("Which columns should be shown?"), this);
 	layout->addWidget (label);
@@ -60,6 +60,8 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, Q
 	show_class_field_box->setChecked (showClassField ());
 	connect (show_class_field_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
 	layout->addWidget (show_class_field_box);
+
+	layout->addStretch ();
 }
 
 RKSettingsModuleObjectBrowser::~RKSettingsModuleObjectBrowser () {

@@ -32,6 +32,9 @@ RKHelpDlg:
 - RKConsole:
 	- Console should start a command chain when submitting a batch of pasted commands
 
+RKwatch:
+	- optionally keep a file log!
+
 - check whether we're running in a PTY, and warn otherwise. Currently the R backend needs this.
 
 - "real time" display of output in the console (remember to add Mutex protection before then!)
@@ -95,9 +98,6 @@ API documentation:
 - give informative feedback on syntax errors (line numbers, etc.)!
 
 stuff to do before the thing is usable
-- RKWatch
-	- use a cool new RHistory-Widget for the watch
-	- maybe keep an (optional) log of RCommands
 - add a help-system
 - mostly everything
 

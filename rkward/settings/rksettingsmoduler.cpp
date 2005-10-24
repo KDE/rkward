@@ -53,10 +53,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 
-/*	QLabel *label = new QLabel (i18n ("Note: Settings marked with (*) will not take effect until you restart RKWard!"), this);
-	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
-	main_vbox->addWidget (label); */
-	main_vbox->addStretch ();
+	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
 	repository_selector = new MultiStringSelector (i18n ("Package repositories"), this);
 	repository_selector->setValues (package_repositories);
