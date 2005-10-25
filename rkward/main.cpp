@@ -60,20 +60,16 @@
 #include <qstring.h>
 
 #include "rkward.h"
+#include "config.h"
 
 #include "debug.h"
 
 int RK_Debug_Level = 0;
 int RK_Debug_Flags = ALL;
 
-static const char *version =
-       I18N_NOOP("0.3.1");
+static const char *version = I18N_NOOP(VERSION);
+static const char *description = I18N_NOOP("RKWard");
 
-static const char *description =
-	I18N_NOOP("RKWard");
-// INSERT A DESCRIPTION FOR YOUR APPLICATION HERE
-	
-	
 static KCmdLineOptions options[] =
 {
   { "+[File]", I18N_NOOP ("file to open"), 0 },
