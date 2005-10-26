@@ -160,13 +160,16 @@ void RKwardApp::doPostInit () {
 	readOptions();
 	object_browser = new RObjectBrowser ();
 
+	RControlWindowPart *rcpart = new RControlWindowPart ();		// the control window needs to be initialized before startR () is called.
+	RKGlobals::rcontrol = static_cast<RControlWindow *> (rcpart->widget ());
+
 	startR ();
-	
+
 	QString dummy = i18n ("Please note that RKWard is still far from being finished. We feel it is already helpful for a number of tasks, but many features are lacking or buggy. You can help us by filing bug reports, feature requests, or providing feedback in any other form. Please visit http://rkward.sourceforge.net for contact information.");
 	KMessageBox::information (this, dummy, i18n("What to expect of RKWard"), "state_of_rkward");
 	
 	initPlugins ();
-	
+
 	//It's necessary to give a different name to all tool windows, or they won't be properly displayed
 	object_browser->setName("workspace"); 
 	object_browser->setIcon(SmallIcon("view_tree"));
@@ -177,8 +180,6 @@ void RKwardApp::doPostInit () {
 	watch_view = addToolWindow (RKGlobals::rInterface ()->watch, KDockWidget::DockBottom, getMainDockWidget (), 10);
 	connect (RKGlobals::rInterface ()->watch, SIGNAL (raiseWatch ()), this, SLOT (raiseWatch ()));
 
-	RControlWindowPart *rcpart = new RControlWindowPart ();
-	RKGlobals::rcontrol = static_cast<RControlWindow *> (rcpart->widget ());
 	RKGlobals::rcontrol->setCaption (i18n ("Command Stack"));
 	RKGlobals::rcontrol->setName ("rcontrol");
 	addToolWindow (RKGlobals::rcontrol, KDockWidget::DockBottom, getMainDockWidget (), 10);
