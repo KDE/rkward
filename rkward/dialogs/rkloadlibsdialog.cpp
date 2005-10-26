@@ -68,6 +68,14 @@ RKLoadLibsDialog::~RKLoadLibsDialog () {
 	RK_TRACE (DIALOGS);
 	delete error_dialog;
 	delete installation_error_dialog;
+
+	if (accepted) accept ();
+	else reject ();
+}
+
+void RKLoadLibsDialog::deleteThisNow () {
+	RK_TRACE (DIALOGS);
+	deleteLater ();
 }
 
 //static
@@ -77,13 +85,12 @@ void RKLoadLibsDialog::showInstallPackagesModal (QWidget *parent, RCommandChain 
 	RKLoadLibsDialog *dialog = new RKLoadLibsDialog (parent, chain, true);
 	dialog->showPage (2);
 	dialog->exec ();
+	RK_TRACE (DIALOGS);
 }
 
 void RKLoadLibsDialog::tryDestruct () {
 	RK_TRACE (DIALOGS);
-	if (accepted) accept ();
-	else reject ();
-	
+
 	if (num_child_widgets <= 0) {
 		deleteThis ();
 	}
@@ -92,16 +99,15 @@ void RKLoadLibsDialog::tryDestruct () {
 void RKLoadLibsDialog::childDeleted () {
 	RK_TRACE (DIALOGS);
 	--num_child_widgets;
-	if (should_destruct) tryDestruct ();
+	tryDestruct ();
 }
 
 void RKLoadLibsDialog::slotOk () {
 	RK_TRACE (DIALOGS);
 
-	emit (okClicked ());
 	accepted = true;
 	hide ();
-	tryDestruct ();
+	emit (okClicked ());
 }
 
 void RKLoadLibsDialog::slotApply () {
@@ -113,10 +119,9 @@ void RKLoadLibsDialog::slotApply () {
 void RKLoadLibsDialog::slotCancel () {
 	RK_TRACE (DIALOGS);
 	
-	emit (cancelClicked ());
 	accepted = false;
 	hide ();
-	tryDestruct ();
+	emit (cancelClicked ()); // will self-destruct via childDeleted ()
 }
 
 void RKLoadLibsDialog::slotUser1 () {
@@ -127,7 +132,7 @@ void RKLoadLibsDialog::slotUser1 () {
 
 void RKLoadLibsDialog::closeEvent (QCloseEvent *e) {
 	RK_TRACE (DIALOGS);
-	QDialog::closeEvent (e);
+	e->accept ();
 	slotCancel ();
 }
 
@@ -152,7 +157,7 @@ bool RKLoadLibsDialog::downloadPackages (const QStringList &packages) {
 	RCommand *command = new RCommand ("download.packages (pkgs=" + package_string + ", destdir=\"" + to_dir + "\")", RCommand::App, QString::null, this, DOWNLOAD_PACKAGES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 	
-	if (RKCancelDialog::showCancelDialog (i18n ("Fetch list"), i18n ("Please, stand by while downloading the list of packages."), this, this, SIGNAL (downloadComplete ()), command) == QDialog::Rejected) return false;
+	if (RKCancelDialog::showCancelDialog (i18n ("Fetch list"), i18n ("Please, stand by while downloading selected packages."), this, this, SIGNAL (downloadComplete ()), command) == QDialog::Rejected) return false;
 	return true;
 }
 
@@ -581,7 +586,6 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget 
 
 InstallPackagesWidget::~InstallPackagesWidget () {
 	RK_TRACE (DIALOGS);
-	delete placeholder;
 }
 
 void InstallPackagesWidget::rCommandDone (RCommand *command) {
@@ -633,7 +637,7 @@ void InstallPackagesWidget::getListButtonClicked () {
 	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 	
 	get_list_button->setEnabled (false);
-	RKCancelDialog::showCancelDialog (i18n ("Fetch list"), i18n ("Please, stand by while downloading packages from CRAN."), this, this, SIGNAL (actionDone ()), command);
+	RKCancelDialog::showCancelDialog (i18n ("Fetch list"), i18n ("Please, standy by while downloading list of packages."), this, this, SIGNAL (actionDone ()), command);
 }
 
 void InstallPackagesWidget::ok () {

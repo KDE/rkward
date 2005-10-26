@@ -110,7 +110,14 @@ void RControlWindow::updateCommand (RCommand *command) {
 	if (!isShown ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
-	command_map[command]->update (command);
+	RControlWindowListViewItem *item = command_map[command];
+	if (!item) {
+		RK_ASSERT (false);
+		// unfortunately, yes, this can happen! Namely when the command is in the reply stack. We do not find commands in (the) reply stack(s), in refreshCommands.
+		// TODO: find a way to include reply stacks in refreshCommands!
+		return;
+	}
+	item->update (command);
 }
 
 void RControlWindow::removeCommand (RCommand *command) {
@@ -118,6 +125,11 @@ void RControlWindow::removeCommand (RCommand *command) {
 	RK_TRACE (APP);
 
 	RControlWindowListViewItem *item = command_map[command];
+	if (!item) {
+		RK_ASSERT (false);
+		// TODO: see updateCommand ()
+		return;
+	}
 	RControlWindowListViewItem *chain = static_cast<RControlWindowListViewItem *> (item->parent ());
 
 	delete item;
@@ -142,8 +154,13 @@ void RControlWindow::setCommandRunning (RCommand *command) {
 	if (!isShown ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
-	RK_ASSERT (command_map[command]);
-	command_map[command]->setText (2, "Running");
+	RControlWindowListViewItem *item = command_map[command];
+	if (!item) {
+		RK_ASSERT (false);
+		// TODO: see updateCommand ()
+		return;
+	}
+	item->setText (2, "Running");
 }
 
 void RControlWindow::refreshCommands () {

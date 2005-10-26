@@ -33,15 +33,17 @@ public:
 
     virtual ~RCommandReceiver () {};
 	int numCommandsOut () { return num_commands_waiting; };
-	void deleteThis () { if (num_commands_waiting > 0) { deleted=true; } else { delete this; } };
+	void deleteThis () { if (num_commands_waiting > 0) { deleted=true; } else { deleteThisNow (); } };
 protected:
 	friend class RCommand;
 	virtual void rCommandDone (RCommand *command) = 0;
+/** calls "delete this" immediately (called from deleteThis ()). Virtual so you can use some other method of destruction, e.g. QObject::deleteLater (). */
+	virtual void deleteThisNow () { delete this; };
 private:
 	int num_commands_waiting;
 	bool deleted;
 	void addCommand () { ++num_commands_waiting; };
-	void delCommand () { if ((--num_commands_waiting <= 0) && deleted) { delete this; } };
+	void delCommand () { if ((--num_commands_waiting <= 0) && deleted) { deleteThisNow (); } };
 };
 
 #endif

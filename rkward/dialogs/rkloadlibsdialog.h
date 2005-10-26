@@ -59,6 +59,9 @@ signals:
 protected:
 	void rCommandDone (RCommand *command);
 	void closeEvent (QCloseEvent *e);
+/** reimplemented from RCommandReceiver to call QObject::deleteLater () instead of delete this. Not entirely sure, what's going on, but otherwise we
+get a double deletion -> crash */
+	void deleteThisNow ();
 protected slots:
 	void slotOk ();
 	void slotApply ();
@@ -70,7 +73,6 @@ protected slots:
 	void installationProcessOutput (KProcess *proc, char *buffer, int buflen);
 private:
 	void tryDestruct ();
-	bool should_destruct;
 friend class LoadUnloadWidget;
 friend class UpdatePackagesWidget;
 friend class InstallPackagesWidget;
