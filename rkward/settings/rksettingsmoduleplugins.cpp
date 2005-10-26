@@ -114,10 +114,12 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	config->setGroup ("Plugin Settings");
 	plugin_maps = config->readListEntry ("Plugin Maps");
 	if (!plugin_maps.count ()) {
-		QString dummy = KGlobal::dirs()->findResourceDir("plugins", "standard_plugins.pluginmap");
+		QString dummy = KGlobal::dirs()->findResourceDir("data", "rkward/standard_plugins.pluginmap");
 		if (dummy.isEmpty ()) {
 			// try our luck with a relative path
 			dummy = "plugins";
+		} else {
+			dummy.append ("rkward");
 		}
 		plugin_maps.append (dummy + "/standard_plugins.pluginmap");
 	}

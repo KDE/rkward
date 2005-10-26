@@ -94,8 +94,6 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	RKGlobals::list = 0;
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
 	
-	KGlobal::dirs()->addResourceType("plugins", KStandardDirs::kde_default("data") + "rkward/plugins/");
-	
 	// Nice docks a la Kdevelop.
 	setToolviewStyle(KMultiTabBar::KDEV3ICON);
 	
