@@ -217,7 +217,7 @@ void RKLoadLibsDialog::installDownloadedPackages (bool become_root) {
 	}
 
 	if (!ok) {
-		RK_DO (qDebug ("One or more package files could not be moved/delted"), DIALOGS, DL_ERROR);
+		RK_DO (qDebug ("One or more package files could not be moved/deleted"), DIALOGS, DL_ERROR);
 	}
 }
 
@@ -637,7 +637,7 @@ void InstallPackagesWidget::getListButtonClicked () {
 	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 	
 	get_list_button->setEnabled (false);
-	RKCancelDialog::showCancelDialog (i18n ("Fetch list"), i18n ("Please, standy by while downloading list of packages."), this, this, SIGNAL (actionDone ()), command);
+	RKCancelDialog::showCancelDialog (i18n ("Fetch list"), i18n ("Please stand by while downloading the list of packages."), this, this, SIGNAL (actionDone ()), command);
 }
 
 void InstallPackagesWidget::ok () {
