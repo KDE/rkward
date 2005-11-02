@@ -32,6 +32,8 @@ class RControlWindow;
 /**
 This class basically keeps some static pointers which are needed all over the place, so they won't have to be passed around.
 
+TODO: move the static members to the respective classes instead. There's no point in having them here, and having to include rkglobals.h all over the place.
+
 @author Thomas Friedrichsmeier
 */
 class RKGlobals{

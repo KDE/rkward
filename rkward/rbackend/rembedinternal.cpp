@@ -37,6 +37,15 @@ extern "C" {
 
 #include <math.h>
 
+// some functions we need that are not declared
+extern int Rf_initEmbeddedR(int argc, char **argv);
+typedef void *HINSTANCE;
+extern int addDLL (char *path, char *name, HINSTANCE *handle);
+extern SEXP R_ParseVector(SEXP, int, ParseStatus*);
+extern void Rf_PrintWarnings (void);
+extern int R_CollectWarnings;
+}
+
 #include "../rkglobals.h"
 
 // ############## R Standard callback overrides BEGIN ####################
@@ -319,15 +328,12 @@ SEXP doSubstackCall (SEXP call) {
 }
 
 bool REmbedInternal::startR (const char* r_home, int argc, char** argv) {
-	extern int Rf_initEmbeddedR(int argc, char **argv);
 	setenv("R_HOME", r_home, 1);
 	if (Rf_initEmbeddedR(argc, argv) < 0) {
 		return false;
 	}
 
 // let's hope R internals never change...
-	typedef void *HINSTANCE;
-	extern int addDLL (char *path, char *name, HINSTANCE *handle);
 	addDLL (strdup ("rkward_pseudo_dll_pseudo_path"), strdup ("rkward_pseudo_dll"), 0);
 	DllInfo *info = R_getDllInfo ("rkward_pseudo_dll_pseudo_path");
 	
@@ -344,11 +350,9 @@ bool REmbedInternal::startR (const char* r_home, int argc, char** argv) {
 
 SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *error) {
 // heavy copying from RServe below
-	extern SEXP R_ParseVector(SEXP, int, int*);
-
 	int maxParts=1;
 	int r_error = 0;
-	int status = PARSE_NULL;
+	ParseStatus status = PARSE_NULL;
 	const char *c = command;
 	SEXP cv, pr, exp;
 
@@ -414,8 +418,6 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 	Apparently we need to print at least something in order to achieve this. Whatever really happens in Rprintf () to have such an effect, I did not bother to find out. */
 	Rprintf ("");
 
-	extern void Rf_PrintWarnings (void);
-	extern int R_CollectWarnings;
 	if (R_CollectWarnings) {
 		Rf_PrintWarnings ();
 	}
@@ -440,8 +442,6 @@ void REmbedInternal::runCommandInternal (const char *command, RKWardRError *erro
 		/* See the comment in the corresponding code in runCommandInternalBase. And yes, apparently, we need this at both places! */
 		Rprintf ("");
 
-		extern void Rf_PrintWarnings (void);
-		extern int R_CollectWarnings;
 		if (R_CollectWarnings) {
 			Rf_PrintWarnings ();
 		}
@@ -529,4 +529,4 @@ void REmbedInternal::interruptProcessing (bool interrupt) {
 	}
 }
 
-} // extern "C"
+//} // extern "C"

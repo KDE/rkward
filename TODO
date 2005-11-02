@@ -44,6 +44,8 @@ RKwatch:
 		- RKPlugin still uses RKCommandEditor. Convert to use RKCommandEditorWindow instead.
 	- RKMenu
 	- RKMenuList
+	- RKGlobals
+		- static members should be moved to the respective classes. Much cleaner!
 
 stuff to do before 0.3.5 release
 - plugins (general)
