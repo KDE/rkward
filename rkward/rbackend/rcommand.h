@@ -159,7 +159,8 @@ public:
 		GetIntVector=512,			/**< Try to fetch result as an array of integers */
 		GetStringVector=1024,	/**< Try to fetch result as an array of chars */
 		GetRealVector=2048,		/**< Try to fetch result as an array of doubles */
-		DirectToOutput=4096		/**< Append command output to the HTML-output file */
+		DirectToOutput=4096,		/**< Append command output to the HTML-output file */
+		ImmediateOutput=8192	/**< Receive notifications whenever new output is available */
 	};
 	enum CommandStatus {
 		WasTried=1,						/**< the command has been passed to the backend. */

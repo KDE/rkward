@@ -43,6 +43,7 @@ RKwatch::RKwatch () : KMdiChildView () {
 	
 	watch = new QTextEdit (this);
 	watch->setTextFormat (PlainText);
+	watch->setUndoRedoEnabled (false);
 	watch->setReadOnly (true);
 
 	pLayout = new QHBoxLayout( this, 0, -1, "layout");
@@ -157,8 +158,9 @@ void RKwatch::linesAdded () {
 // limit number of lines shown
 	if (RKSettingsModuleWatch::maxLogLines ()) {
 		uint c = (uint) watch->paragraphs ();
-		for (uint ui = c; ui > RKSettingsModuleWatch::maxLogLines (); --ui) {
-			watch->removeParagraph (0);
+		if (c > RKSettingsModuleWatch::maxLogLines ()) {
+			watch->setSelection (0, 0, c - RKSettingsModuleWatch::maxLogLines (), 0, 1);
+			watch->removeSelectedText (1);
 		}
 	}
 

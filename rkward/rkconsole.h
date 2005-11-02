@@ -37,12 +37,13 @@ class QPopupMenu;
 ** 
 	Do not construct directly. Construct an RKConsolePart instead.
 	
+	TODO: Text display in the QTextEdit is rather slow. Find out how Konsole manages to be so much faster
 ** \sa RKwatch, KTextEdit
 ** 
 ** @author Pierre Ecochard
 **/
 
-class RKConsole : public KTextEdit, public RCommandReceiver {
+class RKConsole : public QTextEdit, public RCommandReceiver {
 Q_OBJECT
 public:
 /** Submits a batch of commands, line by line.
@@ -58,6 +59,8 @@ protected:
 	void rCommandDone (RCommand *command);
 /** reimplemented to provide our own context menu */
 	QPopupMenu *createPopupMenu (const QPoint &pos);
+/** reimplemented from RCommandReceiver::newOutput () to handle output of console commands */
+	void newOutput (RCommand *command, ROutput *output);
 signals:
 	void doingCommand (bool busy);
 	void fetchPopupMenu (QPopupMenu **menu);

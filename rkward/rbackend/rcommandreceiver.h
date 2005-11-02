@@ -26,17 +26,28 @@ This class will keep track of which RCommands are still out there (and expected 
 */
 
 class RCommand;
+struct ROutput;
 
 class RCommandReceiver {
 public:
+/** constructor. No args */
     RCommandReceiver () { num_commands_waiting=0; deleted=false; };
-
+/** destructor */
     virtual ~RCommandReceiver () {};
+/** number of commands issued with this RCommandReceiver as receiver, that have not returned, yet */
 	int numCommandsOut () { return num_commands_waiting; };
+/** use this instead of "delete this". Will wait until all commands still waiting (@see numCommandsOut ()), before acutally deleting the receiver */
 	void deleteThis () { if (num_commands_waiting > 0) { deleted=true; } else { deleteThisNow (); } };
 protected:
 	friend class RCommand;
+	friend class RInterface;
+/** This function is called when a command for this receiver is finished (and before it is deleted). You have to implement it in your subclass to do the actual handling.
+@param command A pointer to the command. The pointer is still valid during this call, but the RCommand will be deleted shortly after! */
 	virtual void rCommandDone (RCommand *command) = 0;
+/** This function is called when there is new output for a command or this receiver (only if the command has the RCommand::ImmediateOutput flag). Default implementation does nothing. Reimplement if you use commands with RCommand::ImmediateOutput flag.
+@param command A pointer to the command
+@param output The new output-fragment */
+	virtual void newOutput (RCommand *, ROutput *) {};
 /** calls "delete this" immediately (called from deleteThis ()). Virtual so you can use some other method of destruction, e.g. QObject::deleteLater (). */
 	virtual void deleteThisNow () { delete this; };
 private:

@@ -189,9 +189,23 @@ void RThread::handleOutput (char *buf, int buf_length) {
 
 	current_command->output_list.append (out);
 	current_command->status |= RCommand::HasOutput;
-	// TODO: pass a signal to the main thread for real-time update of output
 
 	RK_DO (qDebug ("output '%s'", buf), RBACKEND, DL_DEBUG);
+
+// pass a signal to the main thread for real-time update of output
+	if (current_command->type () & RCommand::ImmediateOutput) {
+		if (!(current_command->receiver)) {
+			RK_ASSERT (false);
+			return;
+		}
+
+		QCustomEvent *event = new QCustomEvent (RCOMMAND_OUTPUT_EVENT);
+		ROutputContainer *outc = new ROutputContainer;
+		outc->output = out;
+		outc->command = current_command;
+		event->setData (outc);
+		qApp->postEvent (RKGlobals::rInterface (), event);
+	}
 }
 
 /*

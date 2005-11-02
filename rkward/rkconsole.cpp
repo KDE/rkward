@@ -32,7 +32,7 @@
 #include "rbackend/rcommand.h"
 #include "settings/rksettingsmoduleconsole.h"
 
-RKConsole::RKConsole () : KTextEdit (0) {
+RKConsole::RKConsole () : QTextEdit (0) {
 	RK_TRACE (APP);
 
 	QFont font ("Courier");
@@ -44,7 +44,9 @@ RKConsole::RKConsole () : KTextEdit (0) {
 	iprefix = "+ ";
 	prefix = nprefix;
 	command_incomplete = false;
-	clear();
+	setTextFormat (PlainText);
+	setUndoRedoEnabled (false);
+	clear ();
 
 	commands_history.setAutoDelete (true);
 	commands_history.append (new QString (""));
@@ -107,7 +109,7 @@ void RKConsole::keyPressEvent (QKeyEvent *e) {
 		cursorAtTheEnd ();
 	}
 	
-	KTextEdit::keyPressEvent (e);
+	QTextEdit::keyPressEvent (e);
 }
 
 QString RKConsole::currentCommand () {
@@ -144,8 +146,9 @@ void RKConsole::submitCommand () {
 	}
 
 	if (!currentCommand ().isEmpty ()) {
-		current_command = new RCommand (c, RCommand::User | RCommand::Console, QString::null, this);
+		current_command = new RCommand (c, RCommand::User | RCommand::Console | RCommand::ImmediateOutput, QString::null, this);
 		RKGlobals::rInterface ()->issueCommand (current_command);
+		append ("");		// new line
 		emit (doingCommand (true));
 	} else {
 		tryNextInBatch ();
@@ -188,12 +191,15 @@ void RKConsole::cursorAtTheBeginning () {
 
 void RKConsole::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
-	if (command->hasOutput ()) {
-		append (command->output ());
+	if (!(command->type () & RCommand::ImmediateOutput)) {		// I don't think we'll have the other case, but for future extension
+		if (command->hasOutput ()) {
+			append (command->output ());
+		}
+		if (command->hasError ()) {
+			append (command->error ());
+		}
 	}
-	if (command->hasError ()) {
-		append (command->error ());
-	} else if (command->errorSyntax ()) {
+	if (command->errorSyntax ()) {
 		append (i18n ("Syntax error"));
 	}
 
@@ -208,6 +214,25 @@ void RKConsole::rCommandDone (RCommand *command) {
 	}
 
 	tryNextInBatch ();
+}
+
+void RKConsole::newOutput (RCommand *, ROutput *output) {
+	RK_TRACE (APP);
+
+// TODO: handle different types of output, once we can differentiate between them
+//	insertAt (output->output, paragraphs ()-1, paragraphLength (paragraphs () - 1));
+	cursorAtTheEnd ();
+	insert (output->output, (uint) CheckNewLines);
+
+	if (RKSettingsModuleConsole::maxConsoleLines ()) {
+		uint c = (uint) paragraphs ();
+// TODO: WORKAROUND: Somehow, when removing paragraph 0, the QTextEdit scrolls to the top in between (yes, this also happens when using removeParagaph (0)). Since this may happen very often in newOutput, we're a bit sloppy, and only remove lines after a certain threshold (20) is exceeded. When the command is finished, this will be cleaned up automatically.
+		if (c > (RKSettingsModuleConsole::maxConsoleLines () + 20)) {
+			setSelection (0, 0, c - RKSettingsModuleConsole::maxConsoleLines (), 0, 1);
+			removeSelectedText (1);
+		}
+	}
+	cursorAtTheEnd ();
 }
 
 void RKConsole::submitBatch (QString batch) {
@@ -256,7 +281,7 @@ void RKConsole::paste () {
 
 void RKConsole::clear () {
 	RK_TRACE (APP);
-	KTextEdit::clear ();
+	QTextEdit::clear ();
 	tryNextInBatch ();
 }
 
@@ -279,7 +304,7 @@ QPopupMenu *RKConsole::createPopupMenu (const QPoint &pos) {
 	emit (fetchPopupMenu (&mp));
 	if (mp) return mp;
 
-	return KTextEdit::createPopupMenu (pos);
+	return QTextEdit::createPopupMenu (pos);
 }
 
 ///################### END RKConsole ########################

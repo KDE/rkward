@@ -117,7 +117,12 @@ RInterface::~RInterface(){
 
 void RInterface::customEvent (QCustomEvent *e) {
 	RK_TRACE (RBACKEND);
-	if (e->type () == RCOMMAND_IN_EVENT) {
+	if (e->type () == RCOMMAND_OUTPUT_EVENT) {
+		RThread::ROutputContainer *container = (static_cast <RThread::ROutputContainer *> (e->data ()));
+		// we've already made sure, there is an existing receiver in RThread
+		container->command->receiver->newOutput (container->command, container->output);
+		delete container;
+	} else if (e->type () == RCOMMAND_IN_EVENT) {
 		watch->addInput (static_cast <RCommand *> (e->data ()));
 		RKGlobals::controlWindow ()->setCommandRunning (static_cast <RCommand *> (e->data ()));
 	} else if (e->type () == RCOMMAND_OUT_EVENT) {
@@ -128,6 +133,9 @@ void RInterface::customEvent (QCustomEvent *e) {
 			out->type = ROutput::Error;
 			out->output = ("--- interrupted ---");
 			command->output_list.append (out);
+			if (command->receiver && (command->type () & RCommand::ImmediateOutput)) {
+				command->receiver->newOutput (command, out);
+			}
 			if (running_command_canceled) {
 				RK_ASSERT (command == running_command_canceled);
 				running_command_canceled = 0;

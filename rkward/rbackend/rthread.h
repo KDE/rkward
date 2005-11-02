@@ -25,11 +25,13 @@
 
 class RInterface;
 struct RCallbackArgs;
+struct ROutput;
 
 #define RCOMMAND_IN_EVENT 10001
 #define RCOMMAND_OUT_EVENT 10002
 #define RBUSY_EVENT 10003
 #define RIDLE_EVENT 10004
+#define RCOMMAND_OUTPUT_EVENT 10005
 #define RSTARTED_EVENT 11001
 #define R_EVAL_REQUEST_EVENT 12001
 #define R_CALLBACK_REQUEST_EVENT 12002
@@ -132,6 +134,14 @@ points:
 /** The command currently being executed. This is used from RInterface::cancelCommand to find out, whether the command to be cancelled is
 already/still running. */
 	RCommand *current_command;
+
+/** convenience struct for event passing */
+	struct ROutputContainer {
+		/** the actual output fragment */
+		ROutput *output;
+		/** the corresponding command */
+		RCommand *command;
+	};
 protected:
 /** the main loop. See \ref RThread for a more detailed description */
 	void run ();

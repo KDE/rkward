@@ -529,4 +529,3 @@ void REmbedInternal::interruptProcessing (bool interrupt) {
 	}
 }
 
-//} // extern "C"
