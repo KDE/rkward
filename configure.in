@@ -68,6 +68,7 @@ dnl AC_PROG_YACC dnl __kdevelop__
 
 KDE_CREATE_SUBDIRSLIST
 AC_CONFIG_FILES([ Makefile ])
+AC_CONFIG_FILES([ debian/Makefile ])
 AC_CONFIG_FILES([ doc/Makefile ])
 AC_CONFIG_FILES([ doc/en/Makefile ])
 AC_CONFIG_FILES([ po/Makefile ])

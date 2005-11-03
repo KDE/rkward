@@ -229,7 +229,7 @@ if test -f inst-apps; then
 else
     topleveldirs=
     for dir in `ls -1d * | sort`; do
-	if test "$dir" != "debian" && test -d $dir; then
+	if test -d $dir; then
 	    topleveldirs="$topleveldirs $dir"
 	fi
     done
