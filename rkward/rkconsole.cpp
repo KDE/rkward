@@ -106,7 +106,8 @@ void RKConsole::keyPressEvent (QKeyEvent *e) {
 	}
 
 	if (para<paragraphs () - 1 || pos <= prefix.length () - 1){
-		cursorAtTheEnd ();
+		moveCursor (MoveEnd, false);
+		scrollToBottom ();
 	}
 	
 	QTextEdit::keyPressEvent (e);
@@ -129,7 +130,14 @@ void RKConsole::setCurrentCommand (QString command) {
 
 void RKConsole::cursorAtTheEnd () {
 	RK_TRACE (APP);
-	setCursorPosition (paragraphs () - 1, paragraphLength (paragraphs () - 1));
+	scrollToBottom ();
+	moveCursor (MoveEnd, false);
+}
+
+void RKConsole::cursorAtTheBeginning () {
+	RK_TRACE (APP);
+	scrollToBottom ();
+	setCursorPosition (paragraphs () - 1, prefix.length ());
 }
 
 void RKConsole::submitCommand () {
@@ -184,11 +192,6 @@ void RKConsole::commandsListDown () {
 	}
 }
 
-void RKConsole::cursorAtTheBeginning () {
-	RK_TRACE (APP);
-	setCursorPosition (paragraphs () - 1, prefix.length ());
-}
-
 void RKConsole::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 	if (!(command->type () & RCommand::ImmediateOutput)) {		// I don't think we'll have the other case, but for future extension
@@ -221,15 +224,17 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 
 // TODO: handle different types of output, once we can differentiate between them
 //	insertAt (output->output, paragraphs ()-1, paragraphLength (paragraphs () - 1));
-	cursorAtTheEnd ();
+	moveCursor (MoveEnd, false);
 	insert (output->output, (uint) CheckNewLines);
 
 	if (RKSettingsModuleConsole::maxConsoleLines ()) {
 		uint c = (uint) paragraphs ();
 // TODO: WORKAROUND: Somehow, when removing paragraph 0, the QTextEdit scrolls to the top in between (yes, this also happens when using removeParagaph (0)). Since this may happen very often in newOutput, we're a bit sloppy, and only remove lines after a certain threshold (20) is exceeded. When the command is finished, this will be cleaned up automatically.
 		if (c > (RKSettingsModuleConsole::maxConsoleLines () + 20)) {
+			setUpdatesEnabled (false);		// major performace boost while removing lines!
 			setSelection (0, 0, c - RKSettingsModuleConsole::maxConsoleLines (), 0, 1);
 			removeSelectedText (1);
+			setUpdatesEnabled (true);
 		}
 	}
 	cursorAtTheEnd ();
@@ -245,14 +250,16 @@ void RKConsole::submitBatch (QString batch) {
 
 void RKConsole::tryNextInBatch (bool add_new_line) {
 	RK_TRACE (APP);
-	if (add_new_line) {	
-		append (prefix);
+	if (add_new_line) {
 		if (RKSettingsModuleConsole::maxConsoleLines ()) {
 			uint c = (uint) paragraphs ();
+			setUpdatesEnabled (false);
 			for (uint ui = c; ui > RKSettingsModuleConsole::maxConsoleLines (); --ui) {
 				removeParagraph (0);
 			}
+			setUpdatesEnabled (true);
 		}
+		append (prefix);		// somehow, it seems to be safer to do this after removing superflous lines, than before
 		cursorAtTheEnd ();
 	}
 

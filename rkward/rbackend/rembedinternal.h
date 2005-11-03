@@ -116,6 +116,9 @@ public:
 /** This gets called on normal R output (R_WriteConsole). Used to get at output. */
 	virtual void handleOutput (char *buf, int buf_length) = 0;
 
+/** This gets called, when the console is flushed */
+	virtual void flushOutput () = 0;
+
 /** This gets called, when R reports warnings/messages. Used to get at warning-output. */
 //	virtual void handleCondition (char **call, int call_length) = 0;
 

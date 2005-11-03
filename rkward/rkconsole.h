@@ -37,7 +37,6 @@ class QPopupMenu;
 ** 
 	Do not construct directly. Construct an RKConsolePart instead.
 	
-	TODO: Text display in the QTextEdit is rather slow. Find out how Konsole manages to be so much faster
 ** \sa RKwatch, KTextEdit
 ** 
 ** @author Pierre Ecochard

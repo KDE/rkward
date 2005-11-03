@@ -1,3 +1,4 @@
+- real time display of command output in the console
 - automatically scroll command log to the bottom when new lines are added
 - less verbose output in command log (removed "issuing command", etc.)
 - use KXMLGUI for placing plugins in the menu (mostly an internal change, but menu placement should remain sane, when active window changes, now)

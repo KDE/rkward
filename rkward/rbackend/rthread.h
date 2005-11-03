@@ -107,6 +107,9 @@ Note that you should call initialize only once in a application */
 generates standard output. @see REmbedInternal::handleOutput () */
 	void handleOutput (char *buf, int buf_length);
 
+/** Flushes current output buffer. Lock the mutex before calling this function! It is called from both threads and is not re-entrant */
+	void flushOutput ();
+
 /** this function is public for technical reasons, only. Don't use except from REmbedInternal! Called from REmbedInternal when the R backend
 signals a condition. @see REmbedInternal::handleCondition () */
 //	void handleCondition (char **call, int call_length);
@@ -142,6 +145,10 @@ already/still running. */
 		/** the corresponding command */
 		RCommand *command;
 	};
+/** current output */
+	ROutput *current_output;
+/** current length of output. Used so we can flush every once in a while, if output becomes too long */
+	int out_buf_len;
 protected:
 /** the main loop. See \ref RThread for a more detailed description */
 	void run ();

@@ -23,13 +23,20 @@
 
 #include "rthread.h"
 
-#define MUTEX_LOCK /*qDebug ("%d", ++RInterface::mutex_counter);*/ RInterface::mutex.lock ();
-#define MUTEX_UNLOCK /*qDebug ("%d", --RInterface::mutex_counter);*/ RInterface::mutex.unlock ();
+//#define DEBUG_MUTEX
+#ifdef DEBUG_MUTEX
+#define MUTEX_LOCK qDebug ("mutex locks: %d, locked in %s, %s, %d", ++RInterface::mutex_counter, __FILE__, __FUNCTION__, __LINE__); RInterface::mutex.lock ();
+#define MUTEX_UNLOCK qDebug ("mutex locks: %d, unlocked in %s, %s, %d", --RInterface::mutex_counter, __FILE__, __FUNCTION__, __LINE__); RInterface::mutex.unlock ();
+#else
+#define MUTEX_LOCK RInterface::mutex.lock ();
+#define MUTEX_UNLOCK RInterface::mutex.unlock ();
+#endif
 
 class RKwatch;
 class RCommand;
 class RKwardApp;
 struct RCallbackArgs;
+class QTimer;
 
 /** This class provides the main interface to the R-processor.
 
@@ -70,13 +77,20 @@ not be interrupted. */
 
 /** *The* mutex in usein RKWard. This is needed to ensure, the main (GUI) thread, and the backend thread (@see RThread) do not try to access the same data at the same time. Use MUTEX_LOCK and MUTEX_UNLOCK to lock/unlock the mutex. */
 	static QMutex mutex;
-	//static int mutex_counter;
+#ifdef DEBUG_MUTEX
+	static int mutex_counter;
+#endif
 
 /** returns the command currently running in the thread. Be careful when using the returned pointer! */
 	RCommand *runningCommand () { return r_thread->current_command; };
+public slots:
+/** called periodically to flush output buffer in RThread */
+	void flushOutput ();
 private:
 /** pointer to the RThread */
 	RThread *r_thread;
+/** Timer to trigger flushing output */
+	QTimer *flush_timer;
 /** cancelling the command that is (or seems to be) currently running is tricky: In order to do so, we need to signal an interrupt to the RThread. We need this pointer to find out, when the command has actually been interrupted, and we can resume processing. */
 	RCommand *running_command_canceled;
 

@@ -44,14 +44,20 @@ RKWindowCatcher *window_catcher;
 #include <klocale.h>
 
 #include <qdir.h>
+#include <qtimer.h>
 
 #include <stdlib.h>
 #include <sys/types.h>
 #include <signal.h>
 
+// update output (for immediate output commands) at least this often:
+#define FLUSH_INTERVAL 50
+
 //static
-QMutex RInterface::mutex;
-//int RInterface::mutex_counter;
+QMutex RInterface::mutex (true);
+#ifdef DEBUG_MUTEX
+	int RInterface::mutex_counter;
+#endif // DEBUG_MUTEX
 
 RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
@@ -83,9 +89,14 @@ RInterface::RInterface () {
 	running_command_canceled = 0;
 	
 	r_thread = new RThread ();
-	r_thread->start ();
 
 	watch = new RKwatch ();
+
+	flush_timer = new QTimer (this);
+	connect (flush_timer, SIGNAL (timeout ()), this, SLOT (flushOutput ()));
+	flush_timer->start (FLUSH_INTERVAL);
+
+	r_thread->start ();
 }
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
@@ -111,7 +122,8 @@ RInterface::~RInterface(){
 		r_thread->wait (10000);
 		// if the thread did not exit, yet - bad luck.
 	}
-	
+
+	delete flush_timer;
 	delete watch;
 }
 
@@ -172,6 +184,14 @@ void RInterface::customEvent (QCustomEvent *e) {
 		KMessageBox::error (0, message, i18n ("Error starting R"));
 		r_thread->unlock (RThread::Startup);
 	}
+}
+
+void RInterface::flushOutput () {
+// do not trace. called periodically
+//	RK_TRACE (RBACKEND);
+	MUTEX_LOCK;
+	r_thread->flushOutput ();
+	MUTEX_UNLOCK;
 }
 
 void RInterface::issueCommand (RCommand *command, RCommandChain *chain) { 

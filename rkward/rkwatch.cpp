@@ -84,8 +84,6 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 
 	watch->append (command->command ());
 
-	watch->setItalic (false);
-	
 	if (RKSettingsModuleWatch::shouldRaiseWindow (command)) {
 		if (!(command->type () & RCommand::Console)) {
 			emit (raiseWatch ());
@@ -93,6 +91,7 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 	}
 
 	linesAdded ();
+	watch->setItalic (false);
 }
 
 void RKwatch::addOutput (RCommand *command) {
@@ -140,16 +139,15 @@ void RKwatch::addOutput (RCommand *command) {
 		}
 	}
 
-	watch->setBold (false);	
-	watch->setColor (Qt::black);
-
-	linesAdded ();
-
 	if (RKSettingsModuleWatch::shouldRaiseWindow (command)) {
 		if (!(command->type () & RCommand::Console)) {
 			emit (raiseWatch ());
 		}
 	}
+
+	linesAdded ();
+	watch->setBold (false);
+	watch->setColor (Qt::black);
 }
 
 void RKwatch::linesAdded () {
@@ -159,12 +157,16 @@ void RKwatch::linesAdded () {
 	if (RKSettingsModuleWatch::maxLogLines ()) {
 		uint c = (uint) watch->paragraphs ();
 		if (c > RKSettingsModuleWatch::maxLogLines ()) {
+			watch->setUpdatesEnabled (false);			// major performance boost while removing lines!
 			watch->setSelection (0, 0, c - RKSettingsModuleWatch::maxLogLines (), 0, 1);
 			watch->removeSelectedText (1);
+			watch->setUpdatesEnabled (true);
+			watch->update ();
 		}
 	}
 
 // scroll to bottom
+	watch->moveCursor (QTextEdit::MoveEnd, false);
 	watch->scrollToBottom ();
 }
 

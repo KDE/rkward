@@ -92,7 +92,7 @@ void RResetConsole () {
 }
 
 void RFlushConsole () {
-// we leave this un-implemented on purpose! We simply don't want that sort of thing to be done.
+	REmbedInternal::this_pointer->flushOutput ();
 }
 
 void RClearerrConsole () {

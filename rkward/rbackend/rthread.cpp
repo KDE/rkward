@@ -30,6 +30,7 @@
 #include <qstring.h>
 #include <qapplication.h>
 
+#define MAX_BUF_LENGTH 1000
 
 RThread::RThread () : QThread (), REmbedInternal () {
 	RK_TRACE (RBACKEND);
@@ -38,6 +39,8 @@ RThread::RThread () : QThread (), REmbedInternal () {
 	RK_ASSERT (this_pointer == 0);
 	this_pointer = this;
 	RK_ASSERT (this_pointer);
+	current_output = 0;
+	out_buf_len = 0;
 }
 
 RThread::~RThread() {
@@ -167,6 +170,8 @@ void RThread::doCommand (RCommand *command) {
 			RK_DO (qDebug ("- error message was: '%s'", command->error ().latin1 ()), RBACKEND, DL_WARNING);
 	//		runCommandInternal (".rk.init.handlers ()\n", &dummy);
 		}
+
+		flushOutput ();
 	}
 
 	// step 3: cleanup
@@ -183,14 +188,35 @@ void RThread::handleOutput (char *buf, int buf_length) {
 
 	if (!buf_length) return;
 
-	ROutput *out = new ROutput;
-	out->type = ROutput::Output;
-	out->output = QString (buf);
+	MUTEX_LOCK;
+	if (current_output) {
+		if (current_output->type != ROutput::Output) {
+			flushOutput ();
+		}
+	}
+	if (!current_output) {	// not an else, might have been set to 0 in the above if
+		current_output = new ROutput;
+		current_output->type = ROutput::Output;
+	}
+	current_output->output.append (buf);
 
-	current_command->output_list.append (out);
-	current_command->status |= RCommand::HasOutput;
+	if ((out_buf_len += buf_length) > MAX_BUF_LENGTH) {
+		RK_DO (qDebug ("Output buffer has %d characters. Forcing flush", out_buf_len), RBACKEND, DL_DEBUG);
+		flushOutput ();
+	}
+	MUTEX_UNLOCK;
+}
 
-	RK_DO (qDebug ("output '%s'", buf), RBACKEND, DL_DEBUG);
+void RThread::flushOutput () {
+	if (!current_output) return;		// avoid creating loads of traces
+	RK_TRACE (RBACKEND);
+
+	current_command->output_list.append (current_output);
+	if (current_output->type == ROutput::Output) {
+		current_command->status |= RCommand::HasOutput;
+	} else if (current_output->type == ROutput::Error) {
+		current_command->status |= RCommand::HasError;
+	}
 
 // pass a signal to the main thread for real-time update of output
 	if (current_command->type () & RCommand::ImmediateOutput) {
@@ -201,11 +227,16 @@ void RThread::handleOutput (char *buf, int buf_length) {
 
 		QCustomEvent *event = new QCustomEvent (RCOMMAND_OUTPUT_EVENT);
 		ROutputContainer *outc = new ROutputContainer;
-		outc->output = out;
+		outc->output = current_output;
 		outc->command = current_command;
 		event->setData (outc);
 		qApp->postEvent (RKGlobals::rInterface (), event);
 	}
+
+	RK_DO (qDebug ("output '%s'", current_output->output.latin1 ()), RBACKEND, DL_DEBUG);
+// forget output
+	current_output = 0;
+	out_buf_len = 0;
 }
 
 /*
@@ -224,21 +255,14 @@ void RThread::handleError (char **call, int call_length) {
 
 	if (!call_length) return;
 
+	MUTEX_LOCK;
 	// Unfortunately, errors still get printed to the output. We try this crude method for the time being:
+	flushOutput ();
 	current_command->output_list.last ()->type = ROutput::Error;
 	current_command->status |= RCommand::HasError;
 
-/*	// for now we ignore everything but the first string.
-	ROutput *out = new ROutput;
-	out->type = ROutput::Error;
-	out->output = QString (call[0]);
-
-	thread->current_command->output_list.append (out);
-	thread->current_command->status |= RCommand::HasError; */
-	// TODO: pass a signal to the main thread for real-time update of output
-
-	//RThreadInternal::next_output_is_error = true;
 	RK_DO (qDebug ("error '%s'", call[0]), RBACKEND, DL_DEBUG);
+	MUTEX_UNLOCK;
 }
 
 void RThread::handleSubstackCall (char **call, int call_length) {
@@ -249,6 +273,7 @@ void RThread::handleSubstackCall (char **call, int call_length) {
 	request->call = call;
 	request->call_length = call_length;
 	MUTEX_LOCK;
+	flushOutput ();
 	RCommandStack *reply_stack = new RCommandStack ();
 	request->in_chain = reply_stack->startChain (reply_stack);
 	MUTEX_UNLOCK;
@@ -288,6 +313,9 @@ void RThread::handleSubstackCall (char **call, int call_length) {
 void RThread::handleStandardCallback (RCallbackArgs *args) {
 	RK_TRACE (RBACKEND);
 
+	MUTEX_LOCK;
+	flushOutput ();
+	MUTEX_UNLOCK;
 	args->done = false;
 
 	QCustomEvent *event = new QCustomEvent (R_CALLBACK_REQUEST_EVENT);
@@ -346,6 +374,9 @@ int RThread::initialize () {
 	if (error) status |= OtherFail;
 	// TODO: error-handling?
 
+	MUTEX_LOCK;
+	flushOutput ();
+	MUTEX_UNLOCK;
 	QCustomEvent *event = new QCustomEvent (RCOMMAND_OUT_EVENT);
 	event->setData (current_command);
 	qApp->postEvent (RKGlobals::rInterface (), event);
