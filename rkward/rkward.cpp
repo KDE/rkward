@@ -82,11 +82,6 @@
 
 RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
 	ShowEditTextFileAgent::showEditFiles (0);		// TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
-	// TODO: more linking workarounds: These lines are actually totally useless, as the real values are set during R initilization
-	RKGlobals::empty_char = const_cast<char*> ("");
-	RKGlobals::unknown_char = const_cast<char*> ("");
-	RKGlobals::na_double = 0.0;
-	// END linking workarounds
 
 	RK_TRACE (APP);
 	RKGlobals::app = this;
