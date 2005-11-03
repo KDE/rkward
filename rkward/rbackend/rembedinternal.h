@@ -139,9 +139,6 @@ Otherwise it is very similar to handleSubstackCall (), esp. in that is implement
 /** only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++ */
 	static REmbedInternal *this_pointer;
 
-/** interrupt processing of the current command. This is much like the user pressing Ctrl+C in a terminal with R. */
-	void interruptProcessing (bool interrupt);
-
 /** Flags used to classify output. */
 //	static bool output_is_warning;
 /** Flags used to classify output. */

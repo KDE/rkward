@@ -149,6 +149,11 @@ already/still running. */
 	ROutput *current_output;
 /** current length of output. Used so we can flush every once in a while, if output becomes too long */
 	int out_buf_len;
+
+/** interrupt processing of the current command. This is much like the user pressing Ctrl+C in a terminal with R. This is probably the only non-portable function in RThread, but I can't see a good way around placing it here, or to make it portable. */
+	void interruptProcessing (bool interrupt);
+
+	Qt::HANDLE thread_id;
 protected:
 /** the main loop. See \ref RThread for a more detailed description */
 	void run ();

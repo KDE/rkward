@@ -34,7 +34,9 @@ extern "C" {
 
 #include <stdlib.h>
 #include <string.h>
-
+//#include <sys/types.h>
+//#include <signal.h>
+//#include <unistd.h>
 #include <math.h>
 
 // some functions we need that are not declared
@@ -44,6 +46,7 @@ extern int addDLL (char *path, char *name, HINSTANCE *handle);
 extern SEXP R_ParseVector(SEXP, int, ParseStatus*);
 extern void Rf_PrintWarnings (void);
 extern int R_CollectWarnings;
+extern int R_interrupts_pending;
 }
 
 #include "../rkglobals.h"
@@ -520,12 +523,4 @@ int *REmbedInternal::getCommandAsIntVector (const char *command, int *count, RKW
 	return integers;
 }
 
-void REmbedInternal::interruptProcessing (bool interrupt) {
-	extern int R_interrupts_pending;
-	if (interrupt) {
-		R_interrupts_pending = 1;
-	} else {
-		R_interrupts_pending = 0;
-	}
-}
 

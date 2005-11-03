@@ -30,6 +30,8 @@
 #include <qstring.h>
 #include <qapplication.h>
 
+#include <signal.h>		// needed for pthread_kill
+
 #define MAX_BUF_LENGTH 1000
 
 RThread::RThread () : QThread (), REmbedInternal () {
@@ -47,8 +49,21 @@ RThread::~RThread() {
 	RK_TRACE (RBACKEND);
 }
 
+void RThread::interruptProcessing (bool interrupt) {
+// TODO: find a good #ifdef to use the uncommented version below, if on a system without pthreads
+	if (interrupt) {
+		pthread_kill (thread_id, SIGINT);
+	}
+/*	if (interrupt) {
+		R_interrupts_pending = 1;
+	} else {
+		R_interrupts_pending = 0;
+	} */
+}
+
 void RThread::run () {
 	RK_TRACE (RBACKEND);
+	thread_id = currentThread ();
 	locked = Startup;
 	killed = false;
 	int err;
@@ -86,7 +101,7 @@ void RThread::run () {
 		
 			if (killed) {
 				shutdown (false);
-				MUTEX_UNLOCK
+				MUTEX_UNLOCK;
 				return;
 			}
 		}

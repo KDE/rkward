@@ -46,10 +46,6 @@ RKWindowCatcher *window_catcher;
 #include <qdir.h>
 #include <qtimer.h>
 
-#include <stdlib.h>
-#include <sys/types.h>
-#include <signal.h>
-
 // update output (for immediate output commands) at least this often:
 #define FLUSH_INTERVAL 50
 
