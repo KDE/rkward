@@ -1,3 +1,9 @@
+rkward (0.3.4) unstable; urgency=low
+
+  * debian directory is now included in official release
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 03 Nov 2005 23:00:33 +0200
+
 rkward (0.3.3) unstable; urgency=low
 
   * Adjusted depends for R (2.1.0)
