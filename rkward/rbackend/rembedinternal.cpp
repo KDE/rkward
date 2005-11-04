@@ -95,7 +95,11 @@ void RResetConsole () {
 }
 
 void RFlushConsole () {
-	REmbedInternal::this_pointer->flushOutput ();
+/* nope, we're not going to do the line below after all. Two reasons:
+1) We'd still have to add mutex protection around this call (ok, doable of course)
+2) I don't think we need it at all: We do our own flushing, and R rarely flushes, for obscure reasons, anyway.
+In order to prevent R from doing silly things, we still override this function and leave it unimplemented on purpose. */
+//	REmbedInternal::this_pointer->flushOutput ();
 }
 
 void RClearerrConsole () {
@@ -104,7 +108,7 @@ void RClearerrConsole () {
 
 /*
 void RBusy (int which) {
-//TODO
+// I guess this is not any better (actually worse) than rkward's own busy indikator
 } */
 
 void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
@@ -137,9 +141,8 @@ int RShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean d
 	args.chars_a = file;
 	args.chars_b = headers;		// what exactly are the "headers"?!?
 	args.chars_c = &wtitle;
-	args.chars_d = &pager;
+	args.chars_d = &pager;		// we ingnore the pager-parameter for now.
 	args.int_b = del;
-	// we ingnore the pager-parameter for now.
 
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 
