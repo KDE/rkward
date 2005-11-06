@@ -52,7 +52,7 @@ RThread::~RThread() {
 void RThread::interruptProcessing (bool interrupt) {
 // TODO: find a good #ifdef to use the uncommented version below, if on a system without pthreads
 	if (interrupt) {
-		pthread_kill (thread_id, SIGINT);
+		pthread_kill ((pthread_t) thread_id, SIGINT);
 	}
 /*	if (interrupt) {
 		R_interrupts_pending = 1;
