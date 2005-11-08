@@ -1,5 +1,6 @@
---- Version 0.3.4 - Nov--2005
-- linkage fixed
+--- Version 0.3.4 - Nov-08-2005
+- assorted bugfixes
+- include debian-dir in source distribution
 - real time display of command output in the console
 - automatically scroll command log to the bottom when new lines are added
 - less verbose output in command log (removed "issuing command", etc.)
