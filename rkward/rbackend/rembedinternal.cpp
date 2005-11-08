@@ -47,6 +47,7 @@ extern SEXP R_ParseVector(SEXP, int, ParseStatus*);
 extern void Rf_PrintWarnings (void);
 extern int R_CollectWarnings;
 extern int R_interrupts_pending;
+extern Rboolean R_Visible;
 }
 
 #include "../rkglobals.h"
@@ -411,8 +412,6 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 			exp=R_tryEval(pr, R_GlobalEnv, &r_error);
 		}
 
-		UNPROTECT(1); /* pr */
-
 		if (r_error) {
 			*error = REmbedInternal::OtherError;
 		} else {
@@ -428,22 +427,54 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 		Rf_PrintWarnings ();
 	}
 
+//	SET_SYMVALUE(R_LastvalueSymbol, exp);
+	UNPROTECT(1); /* pr */
+
 	return exp;
+}
+
+/* Basically a safe version of Rf_PrintValue, as yes, Rf_PrintValue may lead to an error and long_jump->crash!
+For example in help (function, htmlhelp=TRUE), when no HTML-help is installed!
+SEXP exp should be PROTECTed prior to calling this function.
+//TODO: I don't think it's meant to be this way. Maybe nag the R-devels about it one day. */
+void tryPrintValue (SEXP exp, REmbedInternal::RKWardRError *error) {
+	int ierror = 0;
+	SEXP tryprint, e;
+
+// Basically, we call 'print (expression)' (but inside a tryEval)
+	tryprint = Rf_findFun (Rf_install ("print"),  R_GlobalEnv);
+	PROTECT (tryprint);
+	e = allocVector (LANGSXP, 2);
+	PROTECT (e);
+	SETCAR (e, tryprint);
+	SETCAR (CDR (e), exp);
+	R_tryEval (e, R_GlobalEnv, &ierror);
+	UNPROTECT (2);	/* e, tryprint */
+
+	if (ierror) {
+		*error = REmbedInternal::OtherError;
+	} else {
+		*error = REmbedInternal::NoError;
+	}
 }
 
 void REmbedInternal::runCommandInternal (const char *command, RKWardRError *error, bool print_result) {
 	if (!print_result) {
 		runCommandInternalBase (command, error);
 	} else {
-		extern Rboolean R_Visible;
 		R_Visible = (Rboolean) 1;
 
 		SEXP exp;
 		PROTECT (exp = runCommandInternalBase (command, error));
+/*		char dummy[100];
+		sprintf (dummy, "type: %d", TYPEOF (exp));
+		Rprintf (dummy, 100); */
 		if (R_Visible) {
-			if (*error == NoError) Rf_PrintValue (exp);
+			if (*error == NoError) {
+				tryPrintValue (exp, error);
+			}
 		}
-		UNPROTECT (1);
+		UNPROTECT (1); /* exp */
 
 		/* See the comment in the corresponding code in runCommandInternalBase. And yes, apparently, we need this at both places! */
 		Rprintf ("");
@@ -451,7 +482,7 @@ void REmbedInternal::runCommandInternal (const char *command, RKWardRError *erro
 		if (R_CollectWarnings) {
 			Rf_PrintWarnings ();
 		}
-	}
+	} 
 }
 
 char **REmbedInternal::getCommandAsStringVector (const char *command, int *count, RKWardRError *error) {	
