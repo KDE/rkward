@@ -19,4 +19,4 @@ distdir:
 	cp -dP Makefile $(distdir)/Makefile
 clean \
 distclean:
-	-rm rkward_*.tar.gz
+	-rm -f rkward_*.tar.gz
