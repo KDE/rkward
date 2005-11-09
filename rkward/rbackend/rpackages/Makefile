@@ -2,6 +2,8 @@ all:
 	-R CMD build rkward
 install:
 	-R CMD INSTALL rkward
+uninstall:
+	-R CMD REMOVE rkward
 check:
 	-R CMD check rkward
 distdir:
@@ -15,5 +17,6 @@ distdir:
 		fi; \
 	done; \
 	cp -dP Makefile $(distdir)/Makefile
+clean \
 distclean:
-clean:
+	-rm rkward_*.tar.gz
