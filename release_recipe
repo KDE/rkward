@@ -2,9 +2,10 @@ This procedure helps working around a number of strange problems while creating 
 
 make clean
 make dist
-unpack tarball
+unpack tarball and cd there
+rm -r admin/CVS (not yet tested)
 make -f Makefile.cvs
 rm rkward/rkward_skel.cpp
 touch config.h.in
-(rm -r autom4te.cache? not yet tested)
+rm -r autom4te.cache
 repackage tarball

@@ -27,7 +27,7 @@ endif
 config.status: configure
 	dh_testdir
 	# Add here commands to configure the package.
-	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --with-extra-libs=/usr/lib/R/lib/ --with-extra-includes=/usr/lib/R/include
+	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --with-extra-libs=/usr/lib/R/lib/ --with-extra-includes=/usr/lib/R/include --disable-rpath
 
 
 build: build-stamp
@@ -95,7 +95,7 @@ binary-arch: build install
 #	dh_installinit
 #	dh_installcron
 #	dh_installinfo
-	dh_installman
+	dh_installman debian/rkward.1
 	dh_link
 	dh_strip
 #do not compress KDE HTML help
