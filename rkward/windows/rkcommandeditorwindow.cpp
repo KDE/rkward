@@ -43,6 +43,7 @@
 #include <kstdaction.h>
 #include <kaccel.h>
 #include <klibloader.h>
+#include <kiconloader.h>
 
 #include "../rkeditormanager.h"
 #include "../rkglobals.h"
@@ -72,7 +73,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	QHBoxLayout *pLayout = new QHBoxLayout( this, 0, -1, "layout");
 	pLayout->addWidget(m_view);
 
-	m_view->setName("Kate Part View");
+	setIcon (SmallIcon ("source"));
+
+	connect (m_doc, SIGNAL (fileNameChanged ()), this, SLOT (updateCaption ()));
+	connect (m_doc, SIGNAL (modifiedChanged ()), this, SLOT (updateCaption ()));		// of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 	if (use_r_highlighting) setRHighlighting ();
 }
 
@@ -112,7 +116,6 @@ void RKCommandEditorWindow::setRHighlighting () {
 	}
 }
 
-
 QString RKCommandEditorWindow::getSelection () {
 	RK_TRACE (COMMANDEDITOR);
 	return selectionInterface (m_doc)->selection ();
@@ -124,16 +127,17 @@ QString RKCommandEditorWindow::getLine () {
 }
 
 QString RKCommandEditorWindow::getText () {
+	RK_TRACE (COMMANDEDITOR);
 	return editInterface (m_doc)->text ();
 }
 
-
 bool RKCommandEditorWindow::openURL (const KURL &url, bool use_r_highlighting, bool read_only){
+	RK_TRACE (COMMANDEDITOR);
 	if (m_doc->openURL (url)){
 		if (use_r_highlighting) setRHighlighting ();
 		m_doc->setReadWrite (!read_only);
 
-		updateTabCaption (url);
+		updateCaption ();
 
 		return true;
 	}
@@ -141,25 +145,28 @@ bool RKCommandEditorWindow::openURL (const KURL &url, bool use_r_highlighting, b
 }
 
 bool RKCommandEditorWindow::isModified() {
+	RK_TRACE (COMMANDEDITOR);
     return m_doc->isModified();
 }
 
-
 void RKCommandEditorWindow::insertText (const QString &text) {
+	RK_TRACE (COMMANDEDITOR);
 	m_doc->insertText (m_view->cursorLine  (), m_view->cursorColumn (), text);
 	setFocus();
 }
 
-void RKCommandEditorWindow::updateTabCaption (const KURL &url) {
-	QString fname = url.fileName ();
-	if (!fname.isEmpty ()) {
-		setTabCaption(fname);
-	} else {
-		setTabCaption(url.prettyURL());
-	}
+void RKCommandEditorWindow::updateCaption () {
+	RK_TRACE (COMMANDEDITOR);
+	QString name = m_doc->url ().fileName ();
+	if (name.isEmpty ()) name = m_doc->url ().prettyURL ();
+	if (name.isEmpty ()) name = i18n ("Unnamed");
+	if (isModified ()) name.append (i18n (" [modified]"));
+
+	setMDICaption (name);
 }
 
 void RKCommandEditorWindow::showHelp () {
+	RK_TRACE (COMMANDEDITOR);
 	uint para=0; uint p=0;
 	m_view->cursorPosition (&para, &p);
 

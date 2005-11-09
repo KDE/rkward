@@ -1,3 +1,6 @@
+- update tab caption for command editor if filename changes (i.e. saved as)
+- indicate if a document in a command editor is modified (unsaved)
+
 --- Version 0.3.4 - Nov-08-2005
 - assorted bugfixes
 - include debian-dir in source distribution

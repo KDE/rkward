@@ -63,6 +63,9 @@ public:
 	void insertText (const QString &text);
 /** Show help about the current word. */
 	void showHelp ();
+public slots:
+/** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if approriate */
+	void updateCaption ();
 protected:
 /** reimplemented from KMdiChildView: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e);
@@ -72,9 +75,6 @@ private:
 
 /** set syntax highlighting-mode to R syntax */
 	void setRHighlighting ();
-
-/** update Tab caption according to the given url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url */
-	void updateTabCaption(const KURL &url);
 };
 
 #endif

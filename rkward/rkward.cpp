@@ -266,8 +266,8 @@ void RKwardApp::initActions()
 	new_data_frame->setIcon("spreadsheet");
 	new_command_editor = KStdAction::openNew(this, SLOT(slotNewCommandEditor()), actionCollection(), "new_command_editor");
 	new_command_editor->setText (i18n ("Command File"));
-	new_command_editor->setIcon("source");
-	
+	new_command_editor->setIcon ("source");
+
 	fileOpen = KStdAction::open(this, SLOT(slotOpenCommandEditor()), actionCollection(), "file_openy");
 	fileOpen->setText (i18n ("Open Command File"));
 	fileOpenRecent = KStdAction::openRecent(this, SLOT(slotOpenCommandEditor (const KURL&)), actionCollection(), "file_open_recenty");
@@ -663,7 +663,6 @@ void RKwardApp::setRStatus (bool busy) {
 void RKwardApp::slotNewCommandEditor () {
 	RK_TRACE (APP);
 	RKCommandEditorWindow *editor = new RKCommandEditorWindow;
-	editor->setIcon (SmallIcon("source"));
 	addWindow (editor);
 	editor->activate ();
 }
@@ -683,7 +682,6 @@ void RKwardApp::slotOpenCommandEditor (const KURL &url) {
 	}
 
 	fileOpenRecent->addURL (url);
-	editor->setIcon (SmallIcon("source"));
 	addWindow (editor);
 	editor->activate ();
 };
