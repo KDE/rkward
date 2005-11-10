@@ -1,3 +1,4 @@
+- use a shell wrapper around rkward to do some setup just like R. This should fix a number of minor quirks
 - Configure: use single configure option for location of R_HOME, and add check for libR.so
 - yet more code cleanups
 - keep main window caption up to date

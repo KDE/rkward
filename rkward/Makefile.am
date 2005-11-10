@@ -62,9 +62,9 @@ rc_DATA = rkwardui.rc rkconsolepart.rc
 
 bin_SCRIPTS = rkward
 
-# well, of course this is not the real thing yet. TODO: generate a wrapper
+# all the perl script does is fill in the placeholder for R_HOMEDIR
 rkward:
-	echo "$(kde_bindir)/rkward.bin" > rkward; \
+	./makerkwardscript.pl rkward.sh.template "$(R_HOMEDIR)" > rkward; \
 	chmod 744 rkward
 
 CLEANFILES = rkward
