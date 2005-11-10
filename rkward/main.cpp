@@ -91,30 +91,36 @@ int main(int argc, char *argv[]) {
 	aboutData.addCredit ("Daniele Medri", I18N_NOOP ("RKWard logo, many suggestions, help on wording"), QString::null);
 	aboutData.addCredit ("David Sibai", I18N_NOOP ("Several valuable comments, hints and patches"), QString::null);
 	aboutData.addCredit (I18N_NOOP ("Many more people on rkward-devel@lists.sourceforge.net"), I18N_NOOP ("Sorry, I forgot to list you. Please contact me to get added"), QString::null);
+
+	// before initializing the commandline args, remove the ".bin" from "rkward.bin".
+	// This is so it prints "Usage rkward..." instead of "Usage rkward.bin...", etc.
+	// it seems safest to keep a copy, since the shell still owns argv[0]
+	char *argv_zero_copy = argv[0];
+	argv[0] = qstrdup (QString (argv_zero_copy).remove (".bin").utf8 ());
 	KCmdLineArgs::init( argc, argv, &aboutData );
 	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 	
-  KApplication app;
- 
-  if (app.isRestored())
-  {
-    RESTORE(RKwardApp);
-  }
-  else 
-  {
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-	RK_Debug_Level = 5 - QString (args->getOption ("debug-level")).toInt ();
-	RK_Debug_Flags = QString (args->getOption ("debug-flags")).toInt (0, 2);
-	qDebug ("Debug-flags as decimal: %d", RK_Debug_Flags);
-	
-	KURL *open_url = 0;
-	if (args->count ()) {
-		open_url = new KURL (args->arg (0));
+	KApplication app;
+	if (app.isRestored ()) {
+		RESTORE(RKwardApp);	// well, whatever this is supposed to do -> TODO
+	} else {
+		KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+		RK_Debug_Level = 5 - QString (args->getOption ("debug-level")).toInt ();
+		RK_Debug_Flags = QString (args->getOption ("debug-flags")).toInt (0, 2);
+		qDebug ("Debug-flags as decimal: %d", RK_Debug_Flags);
+		
+		KURL *open_url = 0;
+		if (args->count ()) {
+			open_url = new KURL (args->arg (0));
+		}
+		args->clear();
+		
+		new RKwardApp(open_url);
 	}
-	args->clear();
 
-	new RKwardApp(open_url);
-  }
-
-  return app.exec();
-}  
+	// do it!
+	int status = app.exec ();
+	// restore old argv[0] so the shell is happy
+	argv[0] = argv_zero_copy;
+	return status;
+}
