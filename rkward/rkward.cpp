@@ -124,6 +124,9 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	// When the manager says the active part changes,
 	// the builder updates (recreates) the GUI
 	connect (m_manager, SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
+	// a few calls to setCaption too many result from the lines below, but it seems to be the only way to catch all cases where the caption should be changed
+	connect (this, SIGNAL (viewActivated (KMdiChildView *)), this, SLOT (viewChanged (KMdiChildView *)));
+	connect (this, SIGNAL (viewDeactivated (KMdiChildView *)), this, SLOT (viewChanged (KMdiChildView *)));
 
 	if (!kapp->dcopClient ()->isRegistered ()) {
 		kapp->dcopClient ()->registerAs ("rkward");
@@ -131,9 +134,11 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	}
 }
 
-void RKwardApp::activateGUI (KParts::Part *part) {
+void RKwardApp::addWindow (KMdiChildView *view, int flags) {
 	RK_TRACE (APP);
-	createGUI (part);
+
+	KMdiMainFrm::addWindow (view, flags);
+	connect (view, SIGNAL (windowCaptionChanged (const QString &)), this, SLOT (setCaption (const QString &)));
 }
 
 RKwardApp::~RKwardApp() {
@@ -192,8 +197,6 @@ void RKwardApp::doPostInit () {
 		openWorkspace (*initial_url);
 		delete initial_url;
 	} else {
-		setCaption(i18n ("Untitled"));
-		
 		StartupDialog::StartupDialogResult *result = StartupDialog::getStartupAction (this, fileOpenRecentWorkspace);
 		if (result->result == StartupDialog::EmptyWorkspace) {
 		} else if (result->result == StartupDialog::OpenFile) {
@@ -207,7 +210,8 @@ void RKwardApp::doPostInit () {
 		}
 		delete result;
 	}
-	
+
+	setCaption (QString::null);	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 	show ();
 }
 
@@ -280,8 +284,6 @@ void RKwardApp::initActions()
 	fileSaveWorkspaceAs = KStdAction::saveAs(this, SLOT(slotFileSaveWorkspaceAs()), actionCollection(), "file_save_asx");
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
 
-	filePrint = KStdAction::print(this, SLOT(slotFilePrint()), actionCollection(), "file_printx");
-	filePrint->setEnabled (false);
 	fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection(), "file_quitx");
 	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 
@@ -302,7 +304,6 @@ void RKwardApp::initActions()
 	fileSaveWorkspace->setStatusText(i18n("Saves the actual document"));
 	fileSaveWorkspaceAs->setStatusText(i18n("Saves the actual document as..."));
 	close_all_editors->setStatusText (i18n ("Closes all open data editors"));
-	filePrint ->setStatusText(i18n("Prints out the actual document"));
 	fileQuit->setStatusText(i18n("Quits the application"));
 	viewStatusBar->setStatusText(i18n("Enables/disables the statusbar"));
 }
@@ -415,7 +416,6 @@ void RKwardApp::readProperties(KConfig* _cfg)
     {
 //      doc->openDocument(_url);
       doc->setModified();
-      setCaption(_url.fileName(),true);
       QFile::remove(tempname);
     }
   }
@@ -424,13 +424,15 @@ void RKwardApp::readProperties(KConfig* _cfg)
     if(!filename.isEmpty())
     {
 //      doc->openDocument(url);
-      setCaption(url.fileName(),false);
     }
   } */
-}		
+}
 
 bool RKwardApp::queryClose () {
 	RK_TRACE (APP);
+
+	slotStatusMsg (i18n ("Exiting..."));
+	saveOptions ();
 
 	if (!RKGlobals::rObjectList ()->isEmpty ()) {
 		int res;
@@ -438,6 +440,7 @@ bool RKwardApp::queryClose () {
 		if (res == KMessageBox::Yes) {
 			new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Quit);
 		} else if (res != KMessageBox::No) {
+			slotStatusReady ();
 			return false;
 		}
 	}
@@ -456,16 +459,11 @@ bool RKwardApp::queryClose () {
 	for (childIt = child_copy.begin (); childIt != child_copy.end (); ++childIt) {
 		if (!(*childIt)->close ()) {
 			// If a child refuses to close, we return false.
+			slotStatusReady ();
 			return false;
 		}
 	}
 
-	return true;
-}
-
-bool RKwardApp::queryExit () {
-	RK_TRACE (APP);
-	saveOptions ();
 	return true;
 }
 
@@ -554,53 +552,20 @@ void RKwardApp::slotFileSaveWorkspaceAs () {
 	new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), true);
 }
 
-void RKwardApp::slotFilePrint()
-{
-		RK_TRACE (APP);
-	slotStatusMsg(i18n("Printing..."));
-	
-	QPrinter printer;
-	if (printer.setup(this))
-	{
-	//    view->print(&printer);
-	}
-	
-	slotStatusReady ();
-}
-
 void RKwardApp::slotFileQuit () {
 	RK_TRACE (APP);
-	slotStatusMsg(i18n("Exiting..."));
-	saveOptions();
 	close ();
 }
 
-void RKwardApp::slotViewStatusBar()
-{
+void RKwardApp::slotViewStatusBar () {
 	RK_TRACE (APP);
-  slotStatusMsg(i18n("Toggling statusbar..."));
-  ///////////////////////////////////////////////////////////////////
-  //turn Statusbar on or off
-  if(!viewStatusBar->isChecked())
-  {
-    statusBar()->hide();
-  }
-  else
-  {
-    statusBar()->show();
-  }
-
-  slotStatusReady ();
+	statusBar ()->setShown (viewStatusBar->isChecked ());
 }
-
 
 void RKwardApp::slotStatusMsg(const QString &text) {
 	RK_TRACE (APP);
 
-  ///////////////////////////////////////////////////////////////////
-  // change status message permanently
-  statusBar()->clear();
-  statusBar()->changeItem(text, ID_STATUS_MSG);
+	statusBar ()->changeItem (text, ID_STATUS_MSG);
 }
 
 void RKwardApp::slotStatusReady () {
@@ -653,7 +618,7 @@ void RKwardApp::newOutput () {
 void RKwardApp::setRStatus (bool busy) {
 	RK_TRACE (APP);
 	if (busy) {
-		statusBar()->changeItem(i18n ("R engine busy"), ID_R_STATUS_MSG);
+		statusBar ()->changeItem(i18n ("R engine busy"), ID_R_STATUS_MSG);
 	} else {
 		statusBar ()->changeItem (i18n ("R engine idle"), ID_R_STATUS_MSG);
 	}
@@ -718,6 +683,18 @@ void RKwardApp::openHTMLHelp (const QString & url) {
 void RKwardApp::slotOutputShow () {
 	RK_TRACE (APP);
 	RKOutputWindow::refreshOutput (true, true);
+}
+
+void RKwardApp::setCaption (const QString &) {
+	RK_TRACE (APP);
+
+	QString wcaption = RKGlobals::rObjectList ()->getWorkspaceURL ().fileName ();
+	if (wcaption.isEmpty ()) wcaption = RKGlobals::rObjectList ()->getWorkspaceURL ().prettyURL ();
+	if (wcaption.isEmpty ()) wcaption = i18n ("[Unnamed Workspace]");
+	if (activeWindow ()) {
+		wcaption.append (" - " + activeWindow ()->caption ());
+	}
+	KMdiMainFrm::setCaption (wcaption);
 }
 
 #include "rkward.moc"

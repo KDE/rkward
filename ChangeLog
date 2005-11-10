@@ -1,3 +1,5 @@
+- yet more code cleanups
+- keep main window caption up to date
 - update tab caption for command editor if filename changes (i.e. saved as)
 - indicate if a document in a command editor is modified (unsaved)
 

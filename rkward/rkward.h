@@ -103,9 +103,6 @@ TODO: rename to something sensible, and check whether it is redundant. */
 	RKMenuList* getMenuList () { return menu_list; };
 
 	KParts::PartManager *m_manager;
-
-/** it seems, sometimes, when creating a new part-object, we need to help the partmanager a little to notice... */
-	void activateGUI (KParts::Part *part);
 protected:
 	void openWorkspace (const KURL &url);
 	/** save Options/Settings. Includes general Options like all bar positions and status as well as the geometry and the recent file list */
@@ -124,13 +121,6 @@ protected:
 	* @see KTMainWindow#closeEvent
 	*/
 	virtual bool queryClose();
-	/** queryExit is called by KTMainWindow when the last window of the application is going to be closed during the closeEvent().
-	* Against the default implementation that just returns true, this calls saveOptions() to save the settings of the last window's	
-	* properties.
-	* @see KTMainWindow#queryExit
-	* @see KTMainWindow#closeEvent
-	*/
-	virtual bool queryExit();
 	/** saves the window properties for each open window during session end to the session config file, including saving the currently
 	* opened file by a temporary filename provided by KApplication.
 	* @see KTMainWindow#saveProperties
@@ -163,8 +153,6 @@ public slots:
 	void slotFileLoadLibs ();
 	/** close all editor windows */
 	void slotCloseAllEditors ();
-	/** print the actual file */
-	void slotFilePrint();
 	/** closes all open windows by calling close() on each memberList item until the list is empty, then quits the application.
 	* If queryClose() returns false because the user canceled the saveModified() dialog, the closing breaks.
 	*/
@@ -204,6 +192,12 @@ public slots:
 
 /** ensure output window is shown. */
 	void slotOutputShow ();
+/** reimplemented from KMainWindow, to additionally include the workspace url. Actually, we also ignore the caption-parameter, as it sometimes is not the one we want. Rather we create one according to the active view */
+	void setCaption (const QString &caption);
+/** a view has been activated or deactivated. We should make sure to update the main caption to fix strange quirks */
+	void viewChanged (KMdiChildView *) { setCaption (QString::null); };
+/** reimplemented from KMdiMainFrm to connect windowCaptionChanged to setCaption. It's beyond me, why the default implementation does not do this. */
+	void addWindow (KMdiChildView *view, int flags=KMdi::StandardAdd);
 private:
 	// KAction pointers to enable/disable actions
 	KAction* fileOpen;
@@ -213,7 +207,6 @@ private:
 	KRecentFilesAction* fileOpenRecentWorkspace;
 	KAction* fileSaveWorkspace;
 	KAction* fileSaveWorkspaceAs;
-	KAction* filePrint;
 	KAction* fileQuit;
 	KAction* file_load_libs;
 	KAction* close_all_editors;

@@ -43,13 +43,14 @@ DetachedWindowContainer::DetachedWindowContainer (KParts::Part *part_to_capture,
 	part = part_to_capture;
 	widget_to_capture->reparent (this, QPoint (0, 0));
 	setCentralWidget (widget_to_capture);
-	setCaption (widget_to_capture->caption ());	
 	createGUI (part_to_capture);
 
 // add widget to list of detached windows
 	detached_windows.append (widget_to_capture);
 // should self-destruct, when child widget is destroyed
 	connect (widget_to_capture, SIGNAL (destroyed (QObject *)), this, SLOT (viewDestroyed (QObject *)));
+	connect (widget_to_capture, SIGNAL (windowCaptionChanged (const QString&)), this, SLOT (setCaption (const QString&)));
+	setCaption (widget_to_capture->caption ());	// has to come after createGUI!
 }
 
 DetachedWindowContainer::~DetachedWindowContainer () {

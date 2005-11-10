@@ -35,7 +35,7 @@
 
 RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
 	RK_TRACE (APP);
-	RKGlobals::rkApp ()->setCaption (i18n ("Loading Workspace ..."), false);
+	RKGlobals::rkApp ()->slotStatusMsg (i18n ("Loading Workspace ..."));
 
 #if !KDE_IS_VERSION (3, 2, 0)
 	KIO::NetAccess::download (url, tmpfile);
@@ -49,9 +49,9 @@ RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
 	if (!merge) {
 		RKGlobals::rkApp ()->slotCloseAllEditors ();
 		update_was_delete = true;
-		RKGlobals::rObjectList ()->updateFromR ();
 		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App);
 		RKGlobals::rInterface ()->issueCommand (command);
+		RKGlobals::rObjectList ()->updateFromR ();
 	}
 
 	command = new RCommand ("load (\"" + url.path () + "\")", RCommand::App, QString::null, this, WORKSPACE_LOAD_COMMAND);
@@ -73,10 +73,10 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 		KIO::NetAccess::removeTempFile (tmpfile);
 		if (command->failed ()) {
 			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2").arg (RKGlobals::rObjectList ()->getWorkspaceURL ().path ()).arg (command->error ()), i18n ("Error loading workspace"));
-			RKGlobals::rkApp ()->setCaption (i18n ("Untitled"), false);
-		} else {
-			RKGlobals::rkApp ()->setCaption (RKGlobals::rObjectList ()->getWorkspaceURL ().filename (), false);
+			RKGlobals::rObjectList ()->setWorkspaceURL (QString::null);
 		}
+		RKGlobals::rkApp ()->slotStatusReady ();
+		RKGlobals::rkApp ()->setCaption (QString::null);	// trigger update of caption
 	}
 }
 
