@@ -1,37 +1,3 @@
-####### kdevelop will overwrite this part!!! (begin)##########
-bin_PROGRAMS = rkward
-
-## INCLUDES were found outside kdevelop specific part
-
-rkward_SOURCES = rkwatch.cpp rkward.cpp main.cpp \
-	rkcommandeditor.cpp rkglobals.cpp robjectbrowser.cpp rkeditormanager.cpp robjectviewer.cpp \
-	khelpdlg.cpp rkconsole.cpp rkward.skel
-
-rkward_LDADD = $(top_builddir)/rkward/windows/libwindows.a \
-	$(top_builddir)/rkward/agents/libagents.a $(top_builddir)/rkward/dialogs/libdialogs.a \
-	$(top_builddir)/rkward/plugin/libplugin.a $(top_builddir)/rkward/settings/libsettings.a \
-	$(top_builddir)/rkward/dataeditor/libdataeditor.a $(top_builddir)/rkward/core/libcore.a \
-	$(top_builddir)/rkward/rbackend/librbackend.a $(top_builddir)/rkward/scriptbackends/libscriptbackends.a \
-	$(top_builddir)/rkward/misc/libmisc.a -lkhtml -lkmdi $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) \
-	$(LIBSOCKET) -lR -lkatepartinterfaces
-
-SUBDIRS = plugins dataeditor settings plugin agents rbackend scriptbackends \
-	misc core dialogs icons windows
-
-install-data-local:
-	$(mkinstalldirs) $(kde_appsdir)/Applications/
-	$(INSTALL_DATA) $(srcdir)/rkward.desktop $(kde_appsdir)/Applications/rkward.desktop
-	$(mkinstalldirs) $(kde_icondir)/locolor/32x32/apps/
-	$(INSTALL_DATA) $(srcdir)/lo32-app-rkward.png $(kde_icondir)/locolor/32x32/apps/rkward.png
-	$(mkinstalldirs) $(kde_icondir)/locolor/16x16/apps/
-	$(INSTALL_DATA) $(srcdir)/lo16-app-rkward.png $(kde_icondir)/locolor/16x16/apps/rkward.png
-
-uninstall-local:
-	-rm -f $(kde_appsdir)/Applications/rkward.desktop
-	-rm -f $(kde_icondir)/locolor/32x32/apps/rkward.png
-	-rm -f $(kde_icondir)/locolor/16x16/apps/rkward.png
-
-####### kdevelop will overwrite this part!!! (end)############
 # These paths are KDE specific. Use them:
 # kde_appsdir         Where your application's menu entry (.desktop) should go to.
 # kde_icondir         Where your icon should go to - better use KDE_ICON.
@@ -53,16 +19,55 @@ uninstall-local:
 # kde_styledir        Where Qt/KDE widget styles should go to (new in KDE 3).
 # kde_designerdir     Where Qt Designer plugins should go to (new in KDE 3).
 
+bin_PROGRAMS = rkward.bin
+
+rkward_bin_SOURCES = rkwatch.cpp rkward.cpp main.cpp \
+	rkcommandeditor.cpp rkglobals.cpp robjectbrowser.cpp rkeditormanager.cpp robjectviewer.cpp \
+	khelpdlg.cpp rkconsole.cpp rkward.skel
+
+rkward_bin_LDADD = $(top_builddir)/rkward/windows/libwindows.a \
+	$(top_builddir)/rkward/agents/libagents.a $(top_builddir)/rkward/dialogs/libdialogs.a \
+	$(top_builddir)/rkward/plugin/libplugin.a $(top_builddir)/rkward/settings/libsettings.a \
+	$(top_builddir)/rkward/dataeditor/libdataeditor.a $(top_builddir)/rkward/core/libcore.a \
+	$(top_builddir)/rkward/rbackend/librbackend.a $(top_builddir)/rkward/scriptbackends/libscriptbackends.a \
+	$(top_builddir)/rkward/misc/libmisc.a -lkhtml -lkmdi $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) \
+	$(LIBSOCKET) -L$(R_HOMEDIR)/lib -lR -lkatepartinterfaces
+
+SUBDIRS = plugins dataeditor settings plugin agents rbackend scriptbackends \
+	misc core dialogs icons windows
+
+install-data-local:
+	$(mkinstalldirs) $(kde_appsdir)/Applications/
+	$(INSTALL_DATA) $(srcdir)/rkward.desktop $(kde_appsdir)/Applications/rkward.desktop
+	$(mkinstalldirs) $(kde_icondir)/locolor/32x32/apps/
+	$(INSTALL_DATA) $(srcdir)/lo32-app-rkward.png $(kde_icondir)/locolor/32x32/apps/rkward.png
+	$(mkinstalldirs) $(kde_icondir)/locolor/16x16/apps/
+	$(INSTALL_DATA) $(srcdir)/lo16-app-rkward.png $(kde_icondir)/locolor/16x16/apps/rkward.png
+
+uninstall-local:
+	-rm -f $(kde_appsdir)/Applications/rkward.desktop
+	-rm -f $(kde_icondir)/locolor/32x32/apps/rkward.png
+	-rm -f $(kde_icondir)/locolor/16x16/apps/rkward.png
+
 # set the include path for X, qt and KDE
 INCLUDES = $(all_includes)
 
 METASOURCES = AUTO
 
 # the library search path. 
-rkward_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+rkward_bin_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 
 rcdir = $(kde_datadir)/rkward
 rc_DATA = rkwardui.rc rkconsolepart.rc
+
+bin_SCRIPTS = rkward
+
+# well, of course this is not the real thing yet. TODO: generate a wrapper
+rkward:
+	echo "$(kde_bindir)/rkward.bin" > rkward; \
+	chmod 744 rkward
+
+CLEANFILES = rkward
 
 messages: rc.cpp
 	LIST=`find . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name \*.cxx -o -name \*.ecpp -o -name \*.C`; \

@@ -1865,8 +1865,46 @@ ac_kde_libraries="$kde_libdir"
 
 AC_SUBST(AUTODIRS)
 
+dnl ############################################ RKWARD specific addition begin #################################
+AC_REQUIRE([CHECK_RHOME])
+AC_REQUIRE([CHECK_LIBRSO])
+dnl ############################################ RKWARD specific addition end ###################################
 
 ])
+
+dnl ############################################ RKWARD specific addition begin #################################
+dnl check for R home dir
+dnl mostly no idea what I'm doing, but hoping for the best...
+AC_DEFUN([CHECK_RHOME],
+[
+AC_MSG_CHECKING(for R_HOME directory)
+AC_ARG_WITH(r-home,AC_HELP_STRING([--r-home=DIR],[specify location of R_HOME directory]),
+  use_r_home="$withval",
+  use_r_home="/usr/lib/R"
+)
+r_home=
+if test -d "$use_r_home"; then
+   R_HOMEDIR="$use_r_home"
+else
+   AC_MSG_ERROR("$use_r_home does not exist as a directory!")
+fi
+AC_SUBST(R_HOMEDIR)
+
+AC_MSG_RESULT($use_r_home)
+])
+
+dnl check for existence of libR.so
+AC_DEFUN([CHECK_LIBRSO],
+[
+AC_MSG_CHECKING(for libR.so)
+if test -f "$R_HOMEDIR/lib/libR.so"; then
+   AC_MSG_RESULT(found)
+else
+   AC_MSG_ERROR("$R_HOMEDIR/lib/libR.so does not exist. Check whether you have compiled R with shared library")
+fi
+])
+dnl ############################################ RKWARD specific addition end ###################################
+
 
 AC_DEFUN([KDE_CHECK_EXTRA_LIBS],
 [

@@ -34,26 +34,22 @@ You might also have to specify your qt (3) directory, passing the commandline-op
 to configure.
 
 
-Likely you will need to specify the location of additional header files, especially the R-headers:
---with-extra-includes=/path/to/those/headers
+Likely you will need to specify the location of the R home directory:
+--with-r-home=/path/to/R/home
+If you have the standalone version of R installed, you can determine this directory by running:
+# R RHOME
+for debian use --with-r-home=/usr/lib/R 		(default, so you do can omit this parameter)
 
-for debian use --with-extra-includes=/usr/lib/R/include
+You will need to have the R shared library installed. The makefiles assumes it to be in $R_HOME/lib/libR.so
 
-
-Likewise you'll likely have to specify the location of the R-library (file: libR.so):
---with-extra-libs=/usr/lib/R/bin/ 		(or similar)
-for R >= 2.0, the default location seems to be
---with-extra-libs=/usr/lib/R/lib/
-
-
-Personally, I need the following options for configure (debian sid):
---prefix=/usr --with-extra-libs=/usr/lib/R/lib/ --with-extra-includes=/usr/lib/R/include --enable-debug=full
+Personally, I need only the following option for configure (debian sid):
+--prefix=/usr
 
 
 Installation
 ==================
 
-You _have to_ install RKWard. Otherwise you may be missing important menu-options.
+You _have to_ install RKWard. Otherwise RKWard will be missing important menu-options, or may not run at all.
 As root run:
 # make install
 

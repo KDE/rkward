@@ -1,6 +1,8 @@
 INCLUDES = $(all_includes)
 METASOURCES = AUTO
 
+AM_CPPFLAGS = -I$(R_HOMEDIR)/include
+
 noinst_LIBRARIES =  librbackend.a
 librbackend_a_SOURCES = rembedinternal.cpp rinterface.cpp rthread.cpp rcommand.cpp rcommandstack.cpp \
 rkwindowcatcher.cpp
