@@ -49,7 +49,6 @@ public:
 	
 	QString caption ();
 	
-	static QString &rHomeDir () { return r_home_dir; };
 	static bool archivePackages () { return archive_packages; }
 //	static QStringList getPackageRepositories () { return package_repositories; };
 
@@ -84,8 +83,6 @@ private:
 	static int options_expressions;
 	static int options_digits;
 	static bool options_checkbounds;
-friend class RInterface;
-	static QString r_home_dir;
 };
 
 #endif

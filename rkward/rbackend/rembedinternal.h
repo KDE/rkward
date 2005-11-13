@@ -75,10 +75,9 @@ public:
 	void shutdown (bool suicidal);
 protected:
 /** low-level initialization of R
-@param r_home R_HOME-directory
 @param argc Number of arguments as would be passed on the commandline to R
 @param argv Arguments as would be passed on the commandline to R */
-	bool startR (const char* r_home, int argc, char **argv);
+	bool startR (int argc, char **argv);
 /** low-level running of a command.
 @param command char* of the command to be run
 @param error this will be set to a value in RKWardError depending on success/failure of the command

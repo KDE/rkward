@@ -16,7 +16,6 @@ Little annoying stuff:
 
 - on viewDeactivated, it may not be safe to call setCaption and there activeWindow (). Apparently, the pointer may be invalid:
 	- start rkward with empty table. open command editor. switch back to table. Edit some stuff in the table. Ctrl+W. Crash
-- remove obsolete R_HOME config, detection, warnings
 - HTMLWindow
 	- if invoking an invalid HTML url, there's bad and buggy behavior (esp., back/forward are enabled!)
 	- there should be a notice when following an invalid link fails

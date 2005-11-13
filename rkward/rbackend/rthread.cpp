@@ -358,12 +358,10 @@ int RThread::initialize () {
 	// we create a fake RCommand to capture all the output/errors during startup
 	current_command = new RCommand (QString::null, RCommand::App, "R Startup");
 
-	QString r_home = RKSettingsModuleR::rHomeDir();
-
 	int argc = 2;	
 	char* argv[2] = { qstrdup ("--slave"), qstrdup ("--no-save") };
 
-	startR (r_home, argc, argv);
+	startR (argc, argv);
 
 	for (--argc; argc >= 0; --argc) {
 		delete argv[argc];

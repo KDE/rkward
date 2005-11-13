@@ -35,7 +35,6 @@
 #include "../debug.h"
 
 // static members
-QString RKSettingsModuleR::r_home_dir;
 bool RKSettingsModuleR::archive_packages;
 QStringList RKSettingsModuleR::package_repositories;
 QString RKSettingsModuleR::options_outdec;
@@ -245,7 +244,6 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	config->setGroup ("R Settings");
-	config->writeEntry ("R_HOME", r_home_dir);
 	config->writeEntry ("archive packages", archive_packages);
 	config->writeEntry ("Repositories", package_repositories);
 
@@ -264,7 +262,6 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	config->setGroup ("R Settings");
-	r_home_dir = config->readEntry ("R_HOME", QString::null);
 	archive_packages = config->readBoolEntry ("archive packages", false);
 	package_repositories = config->readListEntry ("Repositories");
 	if (!package_repositories.count ()) {

@@ -334,8 +334,7 @@ SEXP doSubstackCall (SEXP call) {
 	return R_NilValue;
 }
 
-bool REmbedInternal::startR (const char* r_home, int argc, char** argv) {
-	setenv("R_HOME", r_home, 1);
+bool REmbedInternal::startR (int argc, char** argv) {
 	if (Rf_initEmbeddedR(argc, argv) < 0) {
 		return false;
 	}

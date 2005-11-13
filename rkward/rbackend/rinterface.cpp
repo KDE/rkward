@@ -63,24 +63,11 @@ RInterface::RInterface () {
 	window_catcher->hide ();
 #endif // DISABLE_RKWINDOWCATCHER
 	
-// note: we can safely mess with RKSettingsModuleR::r_home_dir, since if the setting is bad, the app will exit without anything being saved. If the
-// setting is good, everything is fine anyway.
-	char *env_r_home = getenv ("R_HOME");
-	if (!env_r_home) {
-		if (RKSettingsModuleR::r_home_dir.isEmpty ()) {
-			RK_DO (qDebug ("guessing R_HOME"), RBACKEND, DL_WARNING);
-			RKSettingsModuleR::r_home_dir = "/usr/lib/R";
-			RKSettingsModuleR::r_home_dir = KInputDialog::getText (i18n ("R_HOME not set"), i18n ("Could not find an R_HOME-environment variable and don't have a stored setting for that either.\nThe R backend requires that variable. Please enter your R_HOME directory below.\nIf you don't get it right, the application will quit immediately and you'll have to start RKWard again."), RKSettingsModuleR:: r_home_dir);
-		}
-	} else {
-		if (env_r_home != RKSettingsModuleR::r_home_dir) {
-			RK_DO (qDebug ("R_HOME conflict"), RBACKEND, DL_WARNING);
-			if (KMessageBox::warningYesNo (0, i18n ("RKWard has a stored setting for the R_HOME-variable. However, in the environment, that variable is currently set to a different value. It's probably safe to assume the environment-setting is correct/more up to date. Using a wrong setting however will cause the application to quit immediately. Do you want to use the stored setting instead of the environment-setting?"), i18n ("Conflicting settings for R_HOME")) != KMessageBox::Yes) {
-				RKSettingsModuleR::r_home_dir = env_r_home;
-			}
-		}
+// If R_HOME is not set, most certainly the user called the binary without the wrapper script
+	if (!getenv ("R_HOME")) {
+		RK_DO (qDebug ("No R_HOME environment variable set. RKWard will quit in a moment. Always start rkward in the default way unless you know what you're doing."), RBACKEND, DL_ERROR);
 	}
-	
+
 	RCommandStack::regular_stack = new RCommandStack ();
 	running_command_canceled = 0;
 	

@@ -1866,7 +1866,7 @@ dnl mostly no idea what I'm doing, but hoping for the best...
 AC_DEFUN([CHECK_RHOME],
 [
 AC_MSG_CHECKING(whether R_HOME directory exists)
-AC_ARG(r-home,AC_HELP_STRING([--r-home=DIR],[specify location of R_HOME directory]),
+AC_ARG_WITH(r-home,AC_HELP_STRING([--r-home=DIR],[specify location of R_HOME directory]),
   use_r_home="$withval",
   use_r_home="/usr/local/lib/R"
 )
