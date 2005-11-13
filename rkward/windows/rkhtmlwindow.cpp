@@ -22,6 +22,7 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
+#include <krun.h>
 #include <kparts/partmanager.h>
 
 #include <qfile.h>
@@ -91,9 +92,15 @@ void RKHTMLWindow::slotBack () {
 
 bool RKHTMLWindow::openURL (const KURL &url) {
 	RK_TRACE (APP);
-	bool ok = QFile (url.path ()).exists ();
 
-	if (!ok) return false;
+	// asyncrhonously dealing with non-local files would be quite a task. We chose the simple answer instead...
+	if (!url.isLocalFile ()) {
+		if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file. Do you want to open the url in the default application?").arg (url.prettyURL ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
+			return false;
+		}
+		KRun *runner = new KRun (url);		// according to KRun-documentation, KRun will self-destruct when done.
+		runner->setRunExecutables (false);
+	}
 
 	khtmlpart->openURL (url);
 	updateCaption (url);
@@ -132,8 +139,6 @@ void RKHTMLWindow::loadDone () {
 	RK_TRACE (APP);
 	khtmlpart->view()->setContentsPos (0, scroll_position);
 }
-
-
 
 //##################### BEGIN RKOutputWindow #####################
 //static 
@@ -256,7 +261,9 @@ RKHelpWindow::RKHelpWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUICli
 	RKCommonFunctions::removeContainers (khtmlpart, QStringList::split (',', "tools,security,extraToolBar,saveBackground,saveDocument,saveFrame,printFrame,kget_menu"), true);
 
 	back = KStdAction::back (this, SLOT (slotBack ()), actionCollection (), "help_back");
+	back->setEnabled (false);
 	forward = KStdAction::forward (this, SLOT (slotForward ()), actionCollection (), "help_forward");
+	forward->setEnabled (false);
 	print = KStdAction::print (this, SLOT (slotPrint ()), actionCollection (), "print_help");
 	print->setText (i18n ("Print Help"));
 
