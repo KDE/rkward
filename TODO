@@ -16,9 +16,19 @@ Little annoying stuff:
 
 - on viewDeactivated, it may not be safe to call setCaption and there activeWindow (). Apparently, the pointer may be invalid:
 	- start rkward with empty table. open command editor. switch back to table. Edit some stuff in the table. Ctrl+W. Crash
+- remove obsolete R_HOME config, detection, warnings
+- HTMLWindow
+	- if invoking an invalid HTML url, there's bad and buggy behavior (esp., back/forward are enabled!)
+	- there should be a notice when following an invalid link fails
+	- offer to spawn external browser when trying to open non-local url
+
+- fix status bar:
+	- r status indication sould be made "permanent"
+	- when a message is shown (esp. internally from the HTMLWindow), it may have to be regexped to replace < and > (why, oh why?)
 
 - Plugin Documentation:
 	- Labels are now attached to components instead of menu-entries. Update documentation.
+	- convert to kdoc
 
 Configuration options to add:
 	- additional console options:
@@ -49,7 +59,7 @@ RKwatch:
 	- RKGlobals
 		- static members should be moved to the respective classes. Much cleaner!
 
-stuff to do before 0.3.5 release
+stuff to do before 0.4.0 release
 - plugins (general)
 	- add import-filter plugins
 	- add component-wrapper and allow embedded plugins
@@ -91,7 +101,7 @@ API documentation:
 	- improve and use debugging framework
 	- cleanup label-mess for plugin-widgets
 	- setEnabled (), setVisible ()-API (trivial, once the plugin-widgets are QWidgets)
-	- add XML-parsing helper functions and error-checking
+	- use XMLHelper
 - formula-widget:
 	- use smart sorting, esp. of generated string
 	- add labels, add "up to level" option

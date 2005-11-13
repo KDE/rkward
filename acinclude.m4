@@ -1865,16 +1865,18 @@ dnl check for R home dir
 dnl mostly no idea what I'm doing, but hoping for the best...
 AC_DEFUN([CHECK_RHOME],
 [
-AC_MSG_CHECKING(for R_HOME directory)
-AC_ARG_WITH(r-home,AC_HELP_STRING([--r-home=DIR],[specify location of R_HOME directory]),
+AC_MSG_CHECKING(whether R_HOME directory exists)
+AC_ARG(r-home,AC_HELP_STRING([--r-home=DIR],[specify location of R_HOME directory]),
   use_r_home="$withval",
-  use_r_home="/usr/lib/R"
+  use_r_home="/usr/local/lib/R"
 )
 r_home=
 if test -d "$use_r_home"; then
    R_HOMEDIR="$use_r_home"
 else
-   AC_MSG_ERROR("$use_r_home does not exist as a directory!")
+   AC_MSG_ERROR([
+   $use_r_home does not exist as a directory!
+   Check your installation of R, and use --with-r-home to specify the correct location.])
 fi
 AC_SUBST(R_HOMEDIR)
 
@@ -1886,9 +1888,12 @@ AC_DEFUN([CHECK_LIBRSO],
 [
 AC_MSG_CHECKING(for libR.so)
 if test -f "$R_HOMEDIR/lib/libR.so"; then
-   AC_MSG_RESULT(found)
+   AC_MSG_RESULT($R_HOMEDIR/lib/libR.so)
 else
-   AC_MSG_ERROR("$R_HOMEDIR/lib/libR.so does not exist. Check whether you have compiled R with shared library")
+   AC_MSG_ERROR([
+   $R_HOMEDIR/lib/libR.so does not exist.
+   Check whether you have compiled R with shared library, 
+   and the --with-r-home setting was detected correctly above.])
 fi
 ])
 dnl ############################################ RKWARD specific addition end ###################################

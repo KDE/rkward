@@ -35,21 +35,21 @@ to configure.
 
 
 Likely you will need to specify the location of the R home directory:
---with-r-home=/path/to/R/home
+--with-r-home=/path/to/R/home			(default is /usr/local/lib/R)
 If you have the standalone version of R installed, you can determine this directory by running:
 # R RHOME
-for debian use --with-r-home=/usr/lib/R 		(default, so you do can omit this parameter)
+for debian use --with-r-home=/usr/lib/R
 
 You will need to have the R shared library installed. The makefiles assumes it to be in $R_HOME/lib/libR.so
 
-Personally, I need only the following option for configure (debian sid):
---prefix=/usr
+Personally, I need the following options for configure (debian sid):
+--prefix=/usr --with-r-home=/usr/lib/R
 
 
 Installation
 ==================
 
-You _have to_ install RKWard. Otherwise RKWard will be missing important menu-options, or may not run at all.
+You _have to_ install RKWard. Otherwise RKWard will be missing important menu-options, may behave strangely, or may not run at all.
 As root run:
 # make install
 
