@@ -64,10 +64,12 @@ bin_SCRIPTS = rkward
 
 # all the perl script does is fill in the placeholder for R_HOMEDIR
 rkward:
-	./makerkwardscript.pl rkward.sh.template "$(R_HOMEDIR)" > rkward; \
+	perl ./makerkwardscript.pl rkward.sh.template "$(R_HOMEDIR)" > rkward; \
 	chmod 744 rkward
 
 CLEANFILES = rkward
+
+EXTRA_DIST = makerkwardscript.pl rkward.sh.template
 
 messages: rc.cpp
 	LIST=`find . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name \*.cxx -o -name \*.ecpp -o -name \*.C`; \
