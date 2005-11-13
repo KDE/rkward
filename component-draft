@@ -1,0 +1,58 @@
+RKComponent (and related classes) draft:
+
+Key classes:
+
+RKComponentSlot
+something used as input, and output. Several types of this may exist, each offering different values. The more interesting application is using them as input-suppliers for components. Mockups:
+
+class RKComponentSlotBase : public QObject {
+public signals:
+/** slot has changed its value. Any connected RKComponents should update their state */
+	void valueChanged ();
+public:
+/** supplies the current value. Since more than one value may be supplied, modifier can be used to select a value. Default implementation only has  a single string, however. */
+	QString value (const QString &modifier=QString::null);
+/** set the value in string form */
+	void setValue (const QString &string);
+}
+
+/** special type of RKComponentSlot, that is based on a bool setting */
+class RKComponentSlotBool : public RKComponentSlotBase {
+public:
+/** sets the bool value. Also takes care of notifying dependent components */
+	void setValue (bool value);
+/** current value as bool*/
+	bool boolValue ();
+/** reimplemented from RKComponentSlotBase. Modifier "true" returns value if true. Modifier "false" returns value if false. Modifier QString::null returns current value. */
+	QString value (const QString &modifier=QString::null);
+}
+
+class RKComponentSlotInt;
+class RKComponentSlotDouble;
+
+/** special type of RKComponentSlot, that prepresents an RObject
+//TODO: this slot should auto-connect to RKModificationTracker, to be safe when the object gets deleted/changed */
+class RKComponentSlotRObject : public RKComponentSlotBase {
+public:
+	void setValue (RObject *object);
+	RObject *objectValue ();
+/** reimplemented from RKComponentSlotBase. Modifier "label" returns label. Modifier "shortname" returns short name. Modifier QString::null returns full name. */
+	QString value (const QString &modifier=QString::null);
+}
+
+/** special type of RKComponentSlot used to contain R code. All stand-alone RKComponents have this
+class RKComponentSlotCode : public RKComponentSlotBase {
+public:
+/** the preprocess code */
+	QString preprocess ();
+/** the calculate code */
+	QString calculate ();
+/** the printout code */		// TODO, maybe we can abstract this away. A component should _either_ do calculation _or_ printout, hence it could all be calculate () only, as well.
+	QString printout ();
+/** the cleanup code */
+	QString cleanup ();
+}
+
+RKComponentSlots are attached to and owned by RKComponents (those that use it as output)
+
+
