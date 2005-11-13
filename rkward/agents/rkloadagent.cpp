@@ -35,7 +35,7 @@
 
 RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
 	RK_TRACE (APP);
-	RKGlobals::rkApp ()->slotStatusMsg (i18n ("Loading Workspace ..."));
+	RKGlobals::rkApp ()->slotSetStatusBarText (i18n ("Loading Workspace ..."));
 
 #if !KDE_IS_VERSION (3, 2, 0)
 	KIO::NetAccess::download (url, tmpfile);
@@ -75,7 +75,7 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2").arg (RKGlobals::rObjectList ()->getWorkspaceURL ().path ()).arg (command->error ()), i18n ("Error loading workspace"));
 			RKGlobals::rObjectList ()->setWorkspaceURL (QString::null);
 		}
-		RKGlobals::rkApp ()->slotStatusReady ();
+		RKGlobals::rkApp ()->slotSetStatusReady ();
 		RKGlobals::rkApp ()->setCaption (QString::null);	// trigger update of caption
 	}
 }

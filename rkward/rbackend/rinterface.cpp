@@ -297,7 +297,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			issueCommand (".rk.rkreply <- \"Too few arguments in call to require.\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		}
 	} else if (call == "quit") {
-		RKGlobals::rkApp ()->slotFileQuit ();
+		RKGlobals::rkApp ()->close ();
 		// if we're still alive, quitting was cancelled
 		issueCommand (".rk.rkreply <- \"Quitting was cancelled\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 #ifndef DISABLE_RKWINDOWCATCHER

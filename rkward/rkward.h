@@ -153,19 +153,12 @@ public slots:
 	void slotFileLoadLibs ();
 	/** close all editor windows */
 	void slotCloseAllEditors ();
-	/** closes all open windows by calling close() on each memberList item until the list is empty, then quits the application.
-	* If queryClose() returns false because the user canceled the saveModified() dialog, the closing breaks.
-	*/
-	void slotFileQuit();
-	/** toggles the statusbar
-	*/
-	void slotViewStatusBar();
-	/** changes the statusbar contents for the standard label permanently, used to indicate current actions.
+	/** Reimplemented from KParts::MainWindow to be more pretty
 	* @param text the text that is displayed in the statusbar
 	*/
-	void slotStatusMsg(const QString &text);
-/** changes the status-message to "Ready". See \ref slotStatusMsg (). */
-	void slotStatusReady ();
+	void slotSetStatusBarText (const QString &text);
+/** Basically a shortcut to slotSetStatusBarText (QString::null). Needed as a slot without parameters. */
+	void slotSetStatusReady () { slotSetStatusBarText (QString::null); };
 
 /** configures RKward-settings */
 	void slotConfigure ();
@@ -198,6 +191,11 @@ public slots:
 	void viewChanged (KMdiChildView *) { setCaption (QString::null); };
 /** reimplemented from KMdiMainFrm to connect windowCaptionChanged to setCaption. It's beyond me, why the default implementation does not do this. */
 	void addWindow (KMdiChildView *view, int flags=KMdi::StandardAdd);
+
+/** connected to m_manager->partAdded (). Connects statusbar notifications */
+	void partAdded (KParts::Part *part);
+/** connected to m_manager->partAdded (). Disconnects statusbar notifications */
+	void partRemoved (KParts::Part *part);
 private:
 	// KAction pointers to enable/disable actions
 	KAction* fileOpen;
@@ -217,8 +215,6 @@ private:
 	KAction* editRedo;
 
 	KAction* outputShow;
-
-	KToggleAction* viewStatusBar;
 
 	KAction* window_close;
 	KAction* window_close_all;

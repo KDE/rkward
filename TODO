@@ -17,10 +17,6 @@ Little annoying stuff:
 - on viewDeactivated, it may not be safe to call setCaption and there activeWindow (). Apparently, the pointer may be invalid:
 	- start rkward with empty table. open command editor. switch back to table. Edit some stuff in the table. Ctrl+W. Crash
 
-- fix status bar:
-	- r status indication sould be made "permanent"
-	- when a message is shown (esp. internally from the HTMLWindow), it may have to be regexped to replace < and > (why, oh why?)
-
 - Plugin Documentation:
 	- Labels are now attached to components instead of menu-entries. Update documentation.
 	- convert to kdoc

@@ -75,7 +75,6 @@
 #include "rkconsole.h"
 #include "debug.h"
 
-#define ID_STATUS_MSG 1
 #define ID_R_STATUS_MSG 2
 
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
@@ -96,8 +95,8 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	
 	///////////////////////////////////////////////////////////////////
 	// call inits to invoke all other construction parts
-	initStatusBar();
 	initActions();
+	initStatusBar();
 
 	///////////////////////////////////////////////////////////////////
 	// build the interface
@@ -124,6 +123,8 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	// When the manager says the active part changes,
 	// the builder updates (recreates) the GUI
 	connect (m_manager, SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
+	connect (m_manager, SIGNAL (partAdded (KParts::Part *)), this, SLOT (partAdded (KParts::Part *)));
+	connect (m_manager, SIGNAL (partRemoved (KParts::Part *)), this, SLOT (partRemoved (KParts::Part *)));
 	// a few calls to setCaption too many result from the lines below, but it seems to be the only way to catch all cases where the caption should be changed
 	connect (this, SIGNAL (viewActivated (KMdiChildView *)), this, SLOT (viewChanged (KMdiChildView *)));
 	connect (this, SIGNAL (viewDeactivated (KMdiChildView *)), this, SLOT (viewChanged (KMdiChildView *)));
@@ -212,12 +213,11 @@ void RKwardApp::doPostInit () {
 	}
 
 	setCaption (QString::null);	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
-	show ();
 }
 
 void RKwardApp::initPlugins () {
 	RK_TRACE (APP);
-	slotStatusMsg(i18n("Setting up plugins..."));
+	slotSetStatusBarText(i18n("Setting up plugins..."));
 	
 	factory ()->removeClient (RKGlobals::componentMap ());
 	RKGlobals::componentMap ()->clear ();
@@ -234,7 +234,7 @@ void RKwardApp::initPlugins () {
 
 	factory ()->addClient (RKGlobals::componentMap ());
 
-	slotStatusReady ();
+	slotSetStatusReady ();
 }
 
 void RKwardApp::startR () {
@@ -284,11 +284,11 @@ void RKwardApp::initActions()
 	fileSaveWorkspaceAs = KStdAction::saveAs(this, SLOT(slotFileSaveWorkspaceAs()), actionCollection(), "file_save_asx");
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
 
-	fileQuit = KStdAction::quit(this, SLOT(slotFileQuit()), actionCollection(), "file_quitx");
+	fileQuit = KStdAction::quit(this, SLOT(close ()), actionCollection(), "file_quitx");
 	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 
 	setStandardToolBarMenuEnabled (true);
-	viewStatusBar = KStdAction::showStatusbar(this, SLOT (slotViewStatusBar()), actionCollection());
+	createStandardStatusBarAction ();
 
 	close_all_editors = new KAction (i18n ("Close All Data"), 0, 0, this, SLOT (slotCloseAllEditors ()), actionCollection (), "close_all_editors");
 	window_close = new KAction (i18n ("Close"), 0, KShortcut ("Ctrl+W"), this, SLOT (slotCloseWindow ()), actionCollection (), "window_close");
@@ -305,18 +305,42 @@ void RKwardApp::initActions()
 	fileSaveWorkspaceAs->setStatusText(i18n("Saves the actual document as..."));
 	close_all_editors->setStatusText (i18n ("Closes all open data editors"));
 	fileQuit->setStatusText(i18n("Quits the application"));
-	viewStatusBar->setStatusText(i18n("Enables/disables the statusbar"));
+
+	actionCollection ()->setHighlightingEnabled (true);
 }
 
-
-void RKwardApp::initStatusBar()
-{
+void RKwardApp::partAdded (KParts::Part *part) {
 	RK_TRACE (APP);
-	///////////////////////////////////////////////////////////////////
-	// STATUSBAR
-	// TODO: add your own items you need for displaying current application status.
-	statusBar()->insertItem(i18n("Ready."), ID_STATUS_MSG);
-	statusBar()->insertItem(i18n("starting R engine"), ID_R_STATUS_MSG);
+
+	if (!part->actionCollection ()) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	part->actionCollection ()->setHighlightingEnabled (true);
+	connect (part->actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
+	connect (part->actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
+}
+
+void RKwardApp::partRemoved (KParts::Part *part) {
+	RK_TRACE (APP);
+
+	if (!part->actionCollection ()) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	disconnect (part->actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
+	disconnect (part->actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
+}
+
+void RKwardApp::initStatusBar () {
+	RK_TRACE (APP);
+
+	statusBar()->insertItem (i18n ("starting R engine"), ID_R_STATUS_MSG, 0, true);
+
+	connect (actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
+	connect (actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
 }
 
 void RKwardApp::openWorkspace (const KURL &url) {
@@ -327,22 +351,19 @@ void RKwardApp::openWorkspace (const KURL &url) {
 	fileOpenRecentWorkspace->addURL (url);
 }
 
-void RKwardApp::saveOptions () {	
+void RKwardApp::saveOptions () {
 	RK_TRACE (APP);
 	KConfig *config = kapp->config ();
 
-	config->setGroup("General Options");
-	config->writeEntry("Geometry", size());
-//	config->writeEntry("Show Toolbar", viewToolBar->isChecked());
-	config->writeEntry("Show Statusbar",viewStatusBar->isChecked());
-	config->writeEntry("ToolBarPos", (int) toolBar("mainToolBar")->barPos());
-/*	config->writeEntry("EditBarPos", (int) toolBar("editToolBar")->barPos());
-	config->writeEntry("RunBarPos", (int) toolBar("runToolBar")->barPos()); */
+	saveMainWindowSettings (config, "main window options");
 
-	RKSettings::saveSettings (config);
-	
+	config->setGroup("General Options");
+// TODO: WORKAROUND. See corresponding line in readOptions ()
+	config->writeEntry("Geometry", size ());
 	fileOpenRecentWorkspace->saveEntries(config, "Recent Files");
 	fileOpenRecent->saveEntries(config, "Recent Command Files");
+
+	RKSettings::saveSettings (config);
 
 	config->sync ();
 }
@@ -351,30 +372,20 @@ void RKwardApp::saveOptions () {
 void RKwardApp::readOptions () {
 	RK_TRACE (APP);
 	KConfig *config = kapp->config ();
-	
+
+	applyMainWindowSettings (kapp->config (), "main window options", true);
+
+// TODO: WORKAROUND: Actually applyMainWindowSettings could/should do this, but apparently this just does not work for maximized windows. Therefore we use our own version instead.
 	config->setGroup("General Options");
-	
-	// bar status settings
-//	viewToolBar->setChecked (config->readBoolEntry ("Show Toolbar", true));
-
-	viewStatusBar->setChecked (config->readBoolEntry ("Show Statusbar", true));
-	slotViewStatusBar();
-
-	// bar position settings
-	toolBar("mainToolBar")->setBarPos ((KToolBar::BarPosition) config->readNumEntry ("ToolBarPos", KToolBar::Top));
-/*	toolBar("editToolBar")->setBarPos ((KToolBar::BarPosition) config->readNumEntry ("EditBarPos", KToolBar::Top));
-	toolBar("runToolBar")->setBarPos ((KToolBar::BarPosition) config->readNumEntry("RunBarPos", KToolBar::Top)); */
-//	delete toolBar ("KMdiTaskBar");
-	
-	QSize size=config->readSizeEntry("Geometry");
+	QSize size=config->readSizeEntry ("Geometry");
 	if(!size.isEmpty ()) {
 		resize (size);
 	}
-	
+
 	// initialize the recent file list
 	fileOpenRecentWorkspace->loadEntries (config,"Recent Files");
 	fileOpenRecent->loadEntries (config,"Recent Command Files");
-	
+
 	// do this last, since we may be setting some different config-group(s) in the process
 	RKSettings::loadSettings (config);
 }
@@ -431,7 +442,7 @@ void RKwardApp::readProperties(KConfig* _cfg)
 bool RKwardApp::queryClose () {
 	RK_TRACE (APP);
 
-	slotStatusMsg (i18n ("Exiting..."));
+	slotSetStatusBarText (i18n ("Exiting..."));
 	saveOptions ();
 
 	if (!RKGlobals::rObjectList ()->isEmpty ()) {
@@ -440,7 +451,7 @@ bool RKwardApp::queryClose () {
 		if (res == KMessageBox::Yes) {
 			new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Quit);
 		} else if (res != KMessageBox::No) {
-			slotStatusReady ();
+			slotSetStatusReady ();
 			return false;
 		}
 	}
@@ -459,7 +470,7 @@ bool RKwardApp::queryClose () {
 	for (childIt = child_copy.begin (); childIt != child_copy.end (); ++childIt) {
 		if (!(*childIt)->close ()) {
 			// If a child refuses to close, we return false.
-			slotStatusReady ();
+			slotSetStatusReady ();
 			return false;
 		}
 	}
@@ -497,7 +508,7 @@ void RKwardApp::fileOpenNoSave (const KURL &url) {
 
 	slotCloseAllEditors ();
 
-	slotStatusMsg(i18n("Opening workspace..."));
+	slotSetStatusBarText(i18n("Opening workspace..."));
 	KURL lurl = url;
 	if (lurl.isEmpty ()) {
 		lurl = KFileDialog::getOpenURL (QString::null, i18n("*|All files"), this, i18n("Open File..."));
@@ -505,7 +516,7 @@ void RKwardApp::fileOpenNoSave (const KURL &url) {
 	if (!lurl.isEmpty ()) {
 		openWorkspace (lurl);
 	}
-	slotStatusReady ();
+	slotSetStatusReady ();
 }
 
 void RKwardApp::fileOpenAskSave (const KURL &url) {
@@ -552,26 +563,16 @@ void RKwardApp::slotFileSaveWorkspaceAs () {
 	new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), true);
 }
 
-void RKwardApp::slotFileQuit () {
-	RK_TRACE (APP);
-	close ();
-}
-
-void RKwardApp::slotViewStatusBar () {
-	RK_TRACE (APP);
-	statusBar ()->setShown (viewStatusBar->isChecked ());
-}
-
-void RKwardApp::slotStatusMsg(const QString &text) {
+void RKwardApp::slotSetStatusBarText (const QString &text) {
 	RK_TRACE (APP);
 
-	statusBar ()->changeItem (text, ID_STATUS_MSG);
-}
-
-void RKwardApp::slotStatusReady () {
-	RK_TRACE (APP);
-
-	slotStatusMsg (i18n ("Ready"));
+	QString ntext = text.stripWhiteSpace ();
+	ntext.replace ("<qt>", "");	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
+	if (ntext.isEmpty ()) {
+		statusBar ()->message (i18n ("Ready."));
+	} else {
+		statusBar ()->message (ntext);
+	}
 }
 
 void RKwardApp::slotCloseWindow () {
