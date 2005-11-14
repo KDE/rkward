@@ -3,7 +3,7 @@ RKComponent (and related classes) draft:
 Key classes:
 
 RKComponentSlot
-something used as input, and output. Several types of this may exist, each offering different values. The more interesting application is using them as input-suppliers for components. Mockups:
+something used as input, and output. Several types of this may exist, each offering different values. The more interesting application is using them as input-suppliers for components. RKComponentSlot should probably also do input verification. Basically, an RKComponentSlot is the GUI-independent portion of a GUI-settable value. Mockups:
 
 class RKComponentSlotBase : public QObject {
 public signals:
@@ -11,33 +11,61 @@ public signals:
 	void valueChanged ();
 public:
 /** supplies the current value. Since more than one value may be supplied, modifier can be used to select a value. Default implementation only has  a single string, however. */
-	QString value (const QString &modifier=QString::null);
-/** set the value in string form */
-	void setValue (const QString &string);
+	virtual QString value (const QString &modifier=QString::null);
+/** set the value in string form.
+@returns false if the value is illegal (in the base class, all strings are legal) */
+	virtual bool setValue (const QString &string);
+/** do not set the value, only check, whether it is legal */
+	virtual bool isValid (const QString &string);
+/** current setting valid? */
+	bool isValid ();
+/** set to required: will only be satisfied if it holds a valid value. Else: satisfied if valid *or empty* */
+	void setRequired ();
+/** see setRequired () */
+	bool isSatisfied ();
+private:
+	bool valid;
+	bool required;
 }
 
 /** special type of RKComponentSlot, that is based on a bool setting */
 class RKComponentSlotBool : public RKComponentSlotBase {
 public:
+/** param value_true string value if true/on
+param value_false string value if false/off
+param default value to use, if invalid string value was set */
+	RKComponentSlotBool (const QString &value_true, const QString &value_false, bool default);
 /** sets the bool value. Also takes care of notifying dependent components */
 	void setValue (bool value);
 /** current value as bool*/
 	bool boolValue ();
 /** reimplemented from RKComponentSlotBase. Modifier "true" returns value if true. Modifier "false" returns value if false. Modifier QString::null returns current value. */
 	QString value (const QString &modifier=QString::null);
+/** reimplemented from RKComponentSlotBase to convert to bool value according to current settings */
+	bool setValue (const QString &value);
+/** reimplemented from RKComponentSlotBase to test whether conversion to bool value is possible according to current settings */
+	bool isValid (const QString &value);
 }
 
-class RKComponentSlotInt;
-class RKComponentSlotDouble;
+class RKComponentSlotInt;		// min, max
+class RKComponentSlotDouble;		// min, max
 
 /** special type of RKComponentSlot, that prepresents an RObject
 //TODO: this slot should auto-connect to RKModificationTracker, to be safe when the object gets deleted/changed */
 class RKComponentSlotRObject : public RKComponentSlotBase {
 public:
-	void setValue (RObject *object);
+	void setClassFilter (const QString &classes);
+	void setTypeFilter (const QString &types);
+	void setDimensionFilter (int dimensionality, int min_length=-1, int max_length=-1);
+	bool setValue (RObject *object);
+	bool isValid (RObject *object);
 	RObject *objectValue ();
 /** reimplemented from RKComponentSlotBase. Modifier "label" returns label. Modifier "shortname" returns short name. Modifier QString::null returns full name. */
 	QString value (const QString &modifier=QString::null);
+/** reimplemented from RKComponentSlotBase to convert to RObject, if possible with current constraints */
+	bool setValue (const QString &value);
+/** reimplemented from RKComponentSlotBase to test whether conversion to RObject, is possible with current constraints */
+	bool isValid (const QString &value);
 }
 
 /** special type of RKComponentSlot used to contain R code. All stand-alone RKComponents have this
