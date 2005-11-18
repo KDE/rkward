@@ -42,7 +42,7 @@ public:
 	bool isSatisfied ();
 /** for RTTI. see RKComponentSlotTypes */
 	virtual int type ();
-/** connect this slot to a governor slot (given as argument). If reconcile_requirements, the requirements of both slots are reconciled to the lest common denominator. The dependent slot will be notified on all changes made in the governing slot, so it can update its value. 
+/** connect this slot to a governor slot (given as argument). If reconcile_requirements, the requirements of both slots are reconciled to the least common denominator. The dependent slot will be notified on all changes made in the governing slot, so it can update its value. 
 Generally with few exceptions, you can only connect to slots that are either of the same class as this slot, or of an extended class. Maybe in the future we will add some sophisticated converters allowing to connect vastly different types of slots in a meaningful way.
 If you specify a modifier, only the sub-value indicated by the modifier will be retrieved from the governing slot on governorValueChanged. In this case reconcile_requirements is ignored. */
 	virtual void connectGovernor (RKComponentSlotBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
@@ -111,8 +111,7 @@ public:
 	bool isValid (const QString &value);
 };
 
-// Actually, I believe, we'd rather not have this one, but rather attach those function to the RKComponent class directly instead!
-/** special type of RKComponentSlot used to contain R code. All stand-alone RKComponents have this */
+/** special type of RKComponentSlot used to contain R code. All stand-alone RKComponents have this. The great thing about this, is that code can be made available to embedding RKComponents by just fetching the component.code.preprocess (or .calculate, .printout, .cleanup) value */
 class RKComponentSlotCode : public RKComponentSlotBase {
 public:
 /** the preprocess code */
@@ -129,6 +128,9 @@ RKComponentSlots are attached to and owned by RKComponents (those that use it as
 
 /** abstract base class of all RKComponents, including component widgets */
 class RKComponent : public QWidget {
+public slots:
+/** generally the valueChanged () signal of all RKComponentSlots directly owned by this component should be connected to this (Qt-)slot, so the component can update itself accordingly */
+	void slotValueChanged (RKComponentSlotBase *slot);
 public:
 /** standard slot controlling visibility */
 	RKComponentSlotBool *visibilitySlot ();
@@ -141,6 +143,8 @@ public:
 	RKComponent *parent ();
 	bool isSatisfied ();
 	bool isReady ();
+/** Locate the component.subcomponent.slot.value described by modifier and return its value as a string. Especially useful as a callback in code templates! Recursively walks subcomponents/slots until the requested value is found. */
+	QString fetchStringValue (const QString &modifier);
 private:
 /** also notifies the parent, if applicable */
 	void setSatisfied (bool satisfied);
@@ -155,8 +159,12 @@ class RKStandardComponent : public RKComponent {
 class RKExternalComponent : public RKComponent {
 };
 
-// TODO: do we need this?
-/** described the external interface provided by an RKComponent. This means a list of all slots that can be used as input for this component. Used for matching/mapping external RKComponentSlots to RKComponentSlots inside this component */
+/** (long-term): A special RKComponent doing some sort of logic conversion. It's used to connect to one or more governing slots, process/convert the value of those slots in some way, and provide one (or more) output slots.
+//TODO: how will these be programmed? Hopefully we will soon have a better picture on what logic elements are actually commonly needed */
+class RKLogicComponent;
+
+// TODO: do we need this at all?
+/** describes the external interface provided by an RKComponent. This means a list of all slots that can be used as input for this component. Used for matching/mapping external RKComponentSlots to RKComponentSlots inside this component */
 class RKComponentInterface {
 };
 
