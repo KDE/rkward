@@ -84,8 +84,6 @@ void PHPBackend::destroy () {
 	busy = false;
 	
 	while (command_stack.count ()) {
-		command_stack.first ()->file->unlink ();
-		delete command_stack.first ()->file;
 		delete command_stack.first ();
 		command_stack.pop_front ();
 	}
@@ -97,11 +95,8 @@ void PHPBackend::callFunction (const QString &function, int flags) {
 	RK_TRACE (PHP);
 	RK_DO (qDebug ("callFunction %s", function.latin1 ()), PHP, DL_DEBUG);
 
-	KTempFile *file = new KTempFile ();
-	*(file->textStream ()) << "<? " << function << " ?>\n";
-	file->close ();
 	PHPCommand *command = new PHPCommand;
-	command->file = file;
+	command->command = function;
 	command->flags = flags;
 	command->complete = false;
 	command_stack.append (command);
@@ -114,16 +109,14 @@ void PHPBackend::tryNextFunction () {
 	if ((!busy_writing) && php_process && php_process->isRunning () && (!busy) && command_stack.count ()) {
 	/// clean up previous command if applicable
 		if (command_stack.first ()->complete) {
-			command_stack.first ()->file->unlink ();
-			delete command_stack.first ()->file;
 			delete command_stack.first ();
 			command_stack.pop_front ();
 			
 			if (!command_stack.count ()) return;
 		}
 		
-		RK_DO (qDebug ("submitting PHP code: %s", command_stack.first ()->file->name ().latin1 ()), PHP, DL_DEBUG);
-		current_command = command_stack.first ()->file->name () + eot_string;
+		RK_DO (qDebug ("submitting PHP code: %s", command_stack.first ()->command.latin1 ()), PHP, DL_DEBUG);
+		current_command = command_stack.first ()->command + eot_string;
 		php_process->writeStdin (current_command.latin1 (), current_command.length ());
 		busy_writing = doing_command = busy = true;
 		command_stack.first ()->complete = true;
