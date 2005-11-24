@@ -36,9 +36,9 @@ This class takes care of interfacing with PHP
 class PHPBackend : public ScriptBackend {
 	Q_OBJECT
 public:
-    PHPBackend();
+	PHPBackend ();
 
-    ~PHPBackend();
+	~PHPBackend ();
 
 	bool initialize (const QString &filename);
 	void destroy ();

@@ -50,7 +50,6 @@ public:
 signals:
 	void commandDone (int);
 	void idle ();
-	void newData (int);
 	void requestValue (const QString &);
 	void requestRCall (const QString &);
 	void requestRVector (const QString &);

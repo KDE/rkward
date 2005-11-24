@@ -184,7 +184,6 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 		}
 		
 		_output.append (data);
-		emit (newData (current_flags));
 	}
 	
 	if (have_request) {
