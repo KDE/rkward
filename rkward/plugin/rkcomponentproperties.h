@@ -28,7 +28,7 @@ class RKComponentPropertyBase : public QObject {
 	Q_OBJECT
 public:
 /** constructor. Pass a valid QObject as parent so the property will be auto-destructed when no longer needed */
-	RKComponentPropertyBase (QObject *parent);
+	RKComponentPropertyBase (QObject *parent, bool required);
 /** destructor */
 	virtual ~RKComponentPropertyBase ();
 /** enum of types of properties. Used from RTTI */
@@ -48,13 +48,13 @@ public:
 @returns false if the value is illegal (in the base class, all strings are legal) */
 	virtual bool setValue (const QString &string);
 /** do not set the value, only check, whether it is legal */
-	virtual bool isValid (const QString &string);
+	virtual bool isStringValid (const QString &) { return true; };
 /** current setting valid? */
-	virtual bool isValid () { return true; };
+	virtual bool isValid () { return is_valid; };
 /** set to required: will only be satisfied if it holds a valid value. Else: satisfied if valid *or empty* */
 	void setRequired (bool require)  { required = require; };
 /** see setRequired () */
-	virtual bool isSatisfied () { return true; };
+	virtual bool isSatisfied ();
 /** for RTTI. see RKComponentPropertyTypes */
 	virtual int type () { return PropertyBase; };
 /** connect this property to a governor property (given as argument). If reconcile_requirements, the requirements of both properties are reconciled to the least common denominator. The dependent property will be notified on all changes made in the governing property, so it can update its value. 
@@ -69,10 +69,17 @@ public slots:
 /** the (Qt-)slot in which (by default) the (RKComponent-)property is notified, when a property it depends on has changed. Generally you should reimplement this function to add special handling for the properties you know about. */
 	virtual void governorValueChanged (RKComponentPropertyBase *property);
 protected:
+	void warnModifierNotRecognized (const QString &modifier);
 	bool required;
+	bool is_valid;
+	QString _value;
 /** if we're only interested in a specific sub-information of the governor-property, we need to remember the corresponding modifier */
 	QString governor_modifier;
 };
+
+
+
+///////////////////////////////////////////////// Bool ////////////////////////////////////////////////////////
 
 /** special type of RKComponentProperty, that is based on a bool setting */
 class RKComponentPropertyBool : public RKComponentPropertyBase {
@@ -80,22 +87,36 @@ public:
 /** param value_true string value if true/on
 param value_false string value if false/off
 param default value to use, if invalid string value was set */
-	RKComponentPropertyBool (const QString &value_true, const QString &value_false, bool default_state);
+	RKComponentPropertyBool (QObject *parent, bool required, const QString &value_true, const QString &value_false, bool default_state);
+/** destructor */
+	~RKComponentPropertyBool ();
 /** sets the bool value. Also takes care of notifying dependent components */
-	void setValue (bool value);
+	void setValue (bool new_value);
 /** current value as bool */
 	bool boolValue ();
 /** reimplemented from RKComponentPropertyBase. Modifier "true" returns value if true. Modifier "false" returns value if false. Modifier QString::null returns current value. */
 	QString value (const QString &modifier=QString::null);
 /** reimplemented from RKComponentPropertyBase to convert to bool value according to current settings */
-	bool setValue (const QString &value);
+	bool setValue (const QString &string);
 /** reimplemented from RKComponentPropertyBase to test whether conversion to bool value is possible according to current settings */
-	bool isValid (const QString &value);
+	bool isStringValid (const QString &string);
+private:
+/** helper function. Sets the value without emitting change signal */
+	void internalSetValue (bool new_value);
+/** helper function. Sets the value without emitting change signal */
+	void internalSetValue (QString new_value);
+	bool default_value;
+	bool current_value;
+	QString value_true;
+	QString value_false;
 };
 
+///////////////////////////////////////////////// Int ////////////////////////////////////////////////////////
 class RKComponentPropertyInt;		// min, max
+///////////////////////////////////////////////// Double ////////////////////////////////////////////////////////
 class RKComponentPropertyDouble;		// min, max
 
+///////////////////////////////////////////////// RObject ////////////////////////////////////////////////////////
 class RObject;
 
 /** special type of RKComponentProperty, that prepresents an RObject
@@ -106,7 +127,7 @@ public:
 	void setTypeFilter (const QString &types);
 	void setDimensionFilter (int dimensionality, int min_length=-1, int max_length=-1);
 	bool setValue (RObject *object);
-	bool isValid (RObject *object);
+	bool isObjectValid (RObject *object);
 	RObject *objectValue ();
 /** reimplemented from RKComponentPropertyBase. Modifier "label" returns label. Modifier "shortname" returns short name. Modifier QString::null returns full name. */
 	QString value (const QString &modifier=QString::null);
@@ -116,6 +137,8 @@ public:
 	bool isValid (const QString &value);
 };
 
+///////////////////////////////////////////////// RObjectList ////////////////////////////////////////////////////////
+
 #include <qvaluelist.h>
 
 /** extension of RKComponentPropertyRObject, allowing to hold several RObjects at once. */
@@ -124,7 +147,7 @@ public:
 	void setListLength (int min_length, int min_length_if_any=-1, int max_length=-1);
 	bool addValue (RObject *object);
 	void removeValue (RObject *object);
-	bool isValid (RObject *object);
+	bool isObjectValid (RObject *object);
 /** reimplemented from RKComponentPropertyBase to return the first RObject in the list */
 	RObject *objectValue ();
 	QValueList<RObject *> objectList ();
@@ -135,6 +158,8 @@ public:
 /** reimplemented from RKComponentPropertyBase to test whether conversion to list of RObject, is possible with current constraints */
 	bool isValid (const QString &value);
 };
+
+///////////////////////////////////////////////// Code ////////////////////////////////////////////////////////
 
 /** special type of RKComponentProperty used to contain R code. All stand-alone RKComponents have this. The great thing about this, is that code can be made available to embedding RKComponents by just fetching the component.code.preprocess (or .calculate, .printout, .cleanup) value */
 class RKComponentPropertyCode : public RKComponentPropertyBase {
