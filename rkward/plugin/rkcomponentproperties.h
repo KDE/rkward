@@ -84,14 +84,14 @@ protected:
 /** special type of RKComponentProperty, that is based on a bool setting */
 class RKComponentPropertyBool : public RKComponentPropertyBase {
 public:
-/** param value_true string value if true/on
-param value_false string value if false/off
-param default value to use, if invalid string value was set */
+/** @param value_true string value if true/on
+@param value_false string value if false/off
+@param default_state value to use, if invalid string value was set */
 	RKComponentPropertyBool (QObject *parent, bool required, const QString &value_true, const QString &value_false, bool default_state);
 /** destructor */
 	~RKComponentPropertyBool ();
 /** sets the bool value. Also takes care of notifying dependent components */
-	void setValue (bool new_value);
+	void setBoolValue (bool new_value);
 /** current value as bool */
 	bool boolValue ();
 /** reimplemented from RKComponentPropertyBase. Modifier "true" returns value if true. Modifier "false" returns value if false. Modifier QString::null returns current value. */
@@ -100,6 +100,10 @@ param default value to use, if invalid string value was set */
 	bool setValue (const QString &string);
 /** reimplemented from RKComponentPropertyBase to test whether conversion to bool value is possible according to current settings */
 	bool isStringValid (const QString &string);
+/** reimplemented from RKComponentPropertyBase to use special handling for bool and int properties (bools are copied directly, int handling: 0->false else true) */
+	void governorValueChanged (RKComponentPropertyBase *property);
+/** RTTI */
+	int type () { return PropertyBool; };
 private:
 /** helper function. Sets the value without emitting change signal */
 	void internalSetValue (bool new_value);
@@ -112,9 +116,98 @@ private:
 };
 
 ///////////////////////////////////////////////// Int ////////////////////////////////////////////////////////
-class RKComponentPropertyInt;		// min, max
+#include <qvalidator.h>
+
+class RKComponentPropertyInt : public RKComponentPropertyBase {
+public:
+/** constructor
+@param default_value value to use, if invalid string value was set */
+	RKComponentPropertyInt (QObject *parent, bool required, int default_value);
+/** destructor */
+	~RKComponentPropertyInt ();
+/** sets the int value. Also takes care of notifying dependent components */
+	bool setIntValue (int new_value);
+/** set lower boundary. Default parameter will effectively remove the boundary. You should call this *before* connecting to any other properties, so limits can be reconciled */
+	void setMin (int lower=INT_MIN);
+/** set upper boundary. Default parameter will effectively remove the boundary. You should call this *before* connecting to any other properties, so limits can be reconciled */
+	void setMax (int upper=INT_MAX);
+/** return current min value */
+	int minValue ();
+/** return current max value */
+	int maxValue ();
+/** current value as int */
+	int intValue ();
+/** reimplemented from RKComponentPropertyBase. Return current value as a string. In the future, modifier might be used for format. */
+	QString value (const QString &modifier=QString::null);
+/** reimplemented from RKComponentPropertyBase to convert to int value according to current settings */
+	bool setValue (const QString &string);
+/** reimplemented from RKComponentPropertyBase to test whether conversion to int value is possible according to current settings (is a number, and within limits min and max) */
+	bool isStringValid (const QString &string);
+/** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other numeric slots */
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+/** reimplemented from RKComponentPropertyBase to use special handling for int and double properties (ints are copied directly, doubles are rounded) */
+	void governorValueChanged (RKComponentPropertyBase *property);
+/** RTTI */
+	int type () { return PropertyInt; };
+/** returns a validator for use in lineedits or similar widgets. */
+	QIntValidator *getValidator ();
+private:
+/** helper function. Sets the value without emitting change signal */
+	void internalSetValue (int new_value);
+/** helper function. Sets the value without emitting change signal */
+	void internalSetValue (QString new_value);
+	int default_value;
+	int current_value;
+/** we could do without the validator, and create the logic on our own. Using Qt's validator, however, a) saves some typing b) allows to provide a validator object in use in lineedits, etc. (see getValidator ()) */
+	QIntValidator *validator;
+};
+
 ///////////////////////////////////////////////// Double ////////////////////////////////////////////////////////
-class RKComponentPropertyDouble;		// min, max
+#include <float.h>
+
+class RKComponentPropertyDouble :public RKComponentPropertyBase {
+public:
+/** constructor
+@param default_value value to use, if invalid string value was set */
+	RKComponentPropertyDouble (QObject *parent, bool required, double default_value);
+/** destructor */
+	~RKComponentPropertyDouble ();
+/** sets the int value. Also takes care of notifying dependent components */
+	bool setDoubleValue (double new_value);
+/** set lower boundary. Default parameter will effectively remove the boundary. You should call this *before* connecting to any other properties, so limits can be reconciled */
+	void setMin (double lower=FLT_MIN);
+/** set upper boundary. Default parameter will effectively remove the boundary. You should call this *before* connecting to any other properties, so limits can be reconciled */
+	void setMax (double upper=FLT_MAX);
+/** return current min value */
+	double minValue ();
+/** return current max value */
+	double maxValue ();
+/** current value as double */
+	double doubleValue ();
+/** reimplemented from RKComponentPropertyBase. Return current value as a string. In the future, modifier might be used for format. */
+	QString value (const QString &modifier=QString::null);
+/** reimplemented from RKComponentPropertyBase to convert to int value according to current settings */
+	bool setValue (const QString &string);
+/** reimplemented from RKComponentPropertyBase to test whether conversion to int value is possible according to current settings (is a number, and within limits min and max) */
+	bool isStringValid (const QString &string);
+/** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other numeric slots */
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+/** reimplemented from RKComponentPropertyBase to use special handling for int and double properties (ints and doubles are copied directly) */
+	void governorValueChanged (RKComponentPropertyBase *property);
+/** RTTI */
+	int type () { return PropertyDouble; };
+/** returns a validator for use in lineedits or similar widgets. */
+	QDoubleValidator *getValidator ();
+private:
+/** helper function. Sets the value without emitting change signal */
+	void internalSetValue (double new_value);
+/** helper function. Sets the value without emitting change signal */
+	void internalSetValue (QString new_value);
+	double default_value;
+	double current_value;
+/** we could do without the validator, and create the logic on our own. Using Qt's validator, however, a) saves some typing b) allows to provide a validator object in use in lineedits, etc. (see getValidator ()) */
+	QDoubleValidator *validator;
+};
 
 ///////////////////////////////////////////////// RObject ////////////////////////////////////////////////////////
 class RObject;
