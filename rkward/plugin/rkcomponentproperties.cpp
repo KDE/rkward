@@ -46,10 +46,12 @@ The solution is to provide a "property" for the variable selected. This property
 the specialized properties (e.g. RKComponentPropertyInt::intValue () always returns something valid). Does this really make sense?
 
 - Maybe some properties could hold sub-properties of a different type to make flexibly and meaningfully connecting different properties easier (e.g. an RKComponentPropertyRObject might make dimensionality of the selected object available as an RKComponentPropertyInt). This might be a future extension to consider. Properties containing sub-properties would parse the modifier to pass down requests, if applicable.
+	- make sure sub-properties are never connected to governors (only vice versa)
 
 - Maybe Int and Double properties could be joined to a numeric property?
 
 - Add something like RKComponentPropertySelect for a property that accepts one or more of a set of predefined strings (like e.g. for a radio-box)
+	- Maybe then, and in conjunction with sub-properties, the bool-property can be abstracted away (it would just be a select property, and an internal int-property could be used for bool purposes)?
 
 - Carefully check whether all API-elements are really needed once the implementation is complete
 
@@ -94,7 +96,7 @@ void RKComponentPropertyBase::connectToGovernor (RKComponentPropertyBase *govern
 	RK_ASSERT (governor);
 	connect (governor, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (governorValueChanged (RKComponentPropertyBase *)));
 	governor_modifier = modifier;
-	// no need to reconcile any requirements, and the RKComponentPropertyBase does not have any requirements
+	// no need to reconcile any requirements, as the RKComponentPropertyBase does not have any requirements
 
 	// fetch current value
 	governorValueChanged (governor);
@@ -549,5 +551,173 @@ void RKComponentPropertyDouble::internalSetValue (QString new_value) {
 	}
 	internalSetValue (current_value);		// will check range and prettify _value
 }
+
+///////////////////////////////////////////////// RObjects ////////////////////////////////////////////////////////
+
+RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool required) {
+	RK_TRACE (PLUGIN);
+
+// no initial requirements
+	int dims = min_length = max_length = min_num_objects = min_num_objects_if_any = max_num_objects = -1;
+}
+
+RKComponentPropertyRObjects::~RKComponentPropertyRObjects () {
+	RK_TRACE (PLUGIN);
+}
+
+void RKComponentPropertyRObjects::setListLength (int min_num_objects, int min_num_objects_if_any, int max_num_objects) {
+	RK_TRACE (PLUGIN);
+
+	RKComponentPropertyRObjects::min_num_objects = min_num_objects;
+	RKComponentPropertyRObjects::min_num_objects_if_any = min_num_objects_if_any;
+	RKComponentPropertyRObjects::max_num_objects = max_num_objects;
+
+	validizeAll ();
+}
+
+bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
+	RK_TRACE (PLUGIN);
+
+	if (isObjectValid (object)) {
+		if (!object_list->contains (object)) {
+			object_list->append (object);
+			checkListLengthValid ();
+			emit (valueChanged (this));
+		}
+	}
+}
+
+void RKComponentPropertyRObjects::removeObjectValue (RObject *object) {
+	RK_TRACE (PLUGIN);
+
+	object_list->remove (object);
+	checkListLengthValid ();
+	emit (valueChanged (this));
+}
+
+void RKComponentPropertyRObjects::setClassFilter (const QStringList &classes) {
+	RK_TRACE (PLUGIN);
+
+	RKComponentPropertyRObjects::classes = classes;
+	validizeAll ();
+}
+
+void RKComponentPropertyRObjects::setTypeFilter (const QStringList &types) {
+	RK_TRACE (PLUGIN);
+
+	RKComponentPropertyRObjects::types = types;
+	validizeAll ();
+}
+
+void RKComponentPropertyRObjects::setDimensionFilter (int dimensionality, int min_length, int max_length) {
+	RK_TRACE (PLUGIN);
+
+	dims = dimensionality;
+	RKComponentPropertyRObjects::min_length = min_length;
+	RKComponentPropertyRObjects::max_length = max_length;
+}
+
+bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
+	RK_TRACE (PLUGIN);
+
+	object_list->clear ();
+	return (addObjectValue (object));
+}
+
+/** Check whether an object is valid for this property.
+@returns false if the object does not qualify as a valid selection according to current settings (class/type/dimensions), true otherwise */
+bool RKComponentPropertyRObjects::isObjectValid (RObject *object) {
+	RK_TRACE (PLUGIN);
+
+	// TODO
+}
+
+RObject *RKComponentPropertyRObjects::objectValue () {
+	RK_TRACE (PLUGIN);
+
+	return (object_list->first ());
+}
+
+QValueList<RObject *> RKComponentPropertyRObjects::objectList () {
+	RK_TRACE (PLUGIN);
+
+	return (object_list);
+}
+
+/** reimplemented from RKComponentPropertyBase. Modifier "label" returns label. Modifier "shortname" returns short name. Modifier QString::null returns full name. If no object is set, returns an empty string */
+QString RKComponentPropertyRObjects::value (const QString &modifier) {
+	RK_TRACE (PLUGIN);
+
+//TODO!
+	QString ret;
+	if (modifier.isEmpty ()) {
+	} else if (modifier == "shortname") {
+	} else if (modifier == "label") {
+	} else {
+		warnModifierNotRecognized (modifier);
+	}
+	return ret;
+}
+
+/** reimplemented from RKComponentPropertyBase to convert to RObject with current constraints
+@returns 0 if no such object could be found or the object is invalid */
+bool RKComponentPropertyRObjects::setValue (const QString &value) {
+	RK_TRACE (PLUGIN);
+
+
+}
+
+/** reimplemented from RKComponentPropertyBase to test whether conversion to RObject, is possible with current constraints */
+bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
+	RK_TRACE (PLUGIN);
+
+
+}
+
+/** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other object properties */
+void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
+	RK_TRACE (PLUGIN);
+
+
+}
+
+/** reimplemented from RKComponentPropertyBase to use special handling for object properties */
+void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase *property) {
+	RK_TRACE (PLUGIN);
+
+
+}
+
+/** to be connected to RKModificationTracker::objectRemoved (). This is so we get notified if the object currently selected is removed */
+void RKComponentPropertyRObjects::objectRemoved (RObject *object) {
+	RK_TRACE (PLUGIN);
+
+
+}
+
+/** to be connected to RKModificationTracker::objectPropertiesChanged (). This is so we get notified if the object currently selected is changed */
+void RKComponentPropertyRObjects::objectPropertiesChanged (RObject *object) {
+	RK_TRACE (PLUGIN);
+
+
+}
+
+void RKComponentPropertyRObjects::validizeAll () {
+	RK_TRACE (PLUGIN);
+
+
+}
+
+/*
+	QValueList<RObject *> object_list;
+	int dims;
+	int min_length;
+	int max_length;
+	int min_num_objects;
+	int min_num_objects_if_any;
+	int max_num_objects;
+	QStringList classes;
+	QStringList types;
+}; */
 
 #include "rkcomponentproperties.moc"

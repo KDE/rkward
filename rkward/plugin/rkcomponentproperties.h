@@ -208,16 +208,19 @@ private:
 	QDoubleValidator *validator;
 };
 
-///////////////////////////////////////////////// RObject ////////////////////////////////////////////////////////
+///////////////////////////////////////////////// RObjects ////////////////////////////////////////////////////////
 class RObject;
 #include <qstringlist.h>
 #include <qvaluelist.h>
 
-/** special type of RKComponentProperty, that prepresents an RObject
-//TODO: this property should auto-connect to RKModificationTracker, to be safe when the object gets deleted/changed */
+/** special type of RKComponentProperty, that prepresents one or more RObject (s) */
 class RKComponentPropertyRObjects : public RKComponentPropertyBase {
 	Q_OBJECT
 public:
+/** constructor */
+	RKComponentPropertyRObjects (QObject *parent, bool required);
+/** destructor */
+	~RKComponentPropertyRObjects ();
 /** how many objects can this property hold? Use default values (-1) to remove constraints
 @param min_num_objects Minimum number of objects for this property to be valid
 @param min_num_objects_if_any Some properties may be valid, if they hold either no objects at all, or at least a certain number of objects
@@ -236,7 +239,7 @@ public:
 @param min_length Minimum length of first dimension. -1 will accept objects of all lenghts
 @param max_length Maximum length of first dimension. -1 will accept objects of all lengths */
 	void setDimensionFilter (int dimensionality=-1, int min_length=-1, int max_length=-1);
-/** Directly set an RObject.
+/** Directly set an RObject. Warning: This sets the list to contain only exactly this one item. Generally you do not want to use this, unless your list is in single mode. Use addObjectValue () instead, if the property can hold more than one object
 @returns false if the object does not qualify as a valid selection according to current settings (class/type/dimensions), true otherwise */
 	bool setObjectValue (RObject *object);
 /** Check whether an object is valid for this property.
@@ -245,15 +248,17 @@ public:
 /** Get current object. If the property can hold several objects, only the first is returned. See objectList ().
 @returns 0 if no valid object is selected */
 	RObject *objectValue ();
-/** Get current list of objects.
+/** Get current list of objects. Do not modify this list! It is the very same list, the property uses internally!
 @returns an empty list if no valid object is selected */
 	QValueList<RObject *> objectList ();
+/** set separator (used to concatenate object names/labels, etc. if more than one object is selected) */
+	void setSeparator (const QString &sep) { separator = sep; emit (valueChanged (this)); };
 /** reimplemented from RKComponentPropertyBase. Modifier "label" returns label. Modifier "shortname" returns short name. Modifier QString::null returns full name. If no object is set, returns an empty string */
 	QString value (const QString &modifier=QString::null);
 /** reimplemented from RKComponentPropertyBase to convert to RObject with current constraints
-@returns 0 if no such object could be found or the object is invalid */
+@returns false if no such object(s) could be found or the object(s) are invalid */
 	bool setValue (const QString &value);
-/** reimplemented from RKComponentPropertyBase to test whether conversion to RObject, is possible with current constraints */
+/** reimplemented from RKComponentPropertyBase to test whether conversion to RObject is possible with current constraints */
 	bool isStringValid (const QString &value);
 /** RTTI */
 	int type () { return PropertyRObjects; };
@@ -266,7 +271,11 @@ public slots:
 	void objectRemoved (RObject *object);
 /** to be connected to RKModificationTracker::objectPropertiesChanged (). This is so we get notified if the object currently selected is changed */
 	void objectPropertiesChanged (RObject *object);
-protected:
+private:
+/** check all objects currently in the list for validity. Remove invalid objects. Determine validity state depending on how many (valid) objects remain in the list. If the list was changed during validation, a valueChanged () signal is emitted */
+	void validizeAll ();
+/** simple helper function: Check whether the number of objects currently selected (and only that!), and set the valid state accordingly */
+	void checkListLengthValid ();
 	QValueList<RObject *> object_list;
 	int dims;
 	int min_length;
@@ -276,6 +285,7 @@ protected:
 	int max_num_objects;
 	QStringList classes;
 	QStringList types;
+	QString separator;
 };
 
 ///////////////////////////////////////////////// Code ////////////////////////////////////////////////////////
