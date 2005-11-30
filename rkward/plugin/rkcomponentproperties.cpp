@@ -42,8 +42,18 @@ The solution is to provide a "property" for the variable selected. This property
 \section RKComponentPropertiesAndComponents Interaction with RKComponents
 
 \section TODO TODO
-How should invalid values be handled? Currently we keep the bad value as the string value, but use a corrected default in
+- How should invalid values be handled? Currently we keep the bad value as the string value, but use a corrected default in
 the specialized properties (e.g. RKComponentPropertyInt::intValue () always returns something valid). Does this really make sense?
+
+- Maybe some properties could hold sub-properties of a different type to make flexibly and meaningfully connecting different properties easier (e.g. an RKComponentPropertyRObject might make dimensionality of the selected object available as an RKComponentPropertyInt). This might be a future extension to consider. Properties containing sub-properties would parse the modifier to pass down requests, if applicable.
+
+- Maybe Int and Double properties could be joined to a numeric property?
+
+- Add something like RKComponentPropertySelect for a property that accepts one or more of a set of predefined strings (like e.g. for a radio-box)
+
+- Carefully check whether all API-elements are really needed once the implementation is complete
+
+- All these TODOs should be delayed until there is at least a rudimentary implementation of components to play with
 */
 
 #include "rkcomponentproperties.h"
@@ -375,5 +385,169 @@ void RKComponentPropertyInt::internalSetValue (QString new_value) {
 }
 
 ///////////////////////////////////////////// Double //////////////////////////////////////////
+
+RKComponentPropertyDouble::RKComponentPropertyDouble (QObject *parent, bool required, double default_value) : RKComponentPropertyBase (parent, required) {
+	RK_TRACE (PLUGIN);
+
+	validator = new QDoubleValidator (this);		// accepts all ints initially
+	RKComponentPropertyDouble::default_value = default_value;
+	internalSetValue (default_value);
+}
+
+RKComponentPropertyDouble::~RKComponentPropertyDouble () {
+	RK_TRACE (PLUGIN);
+}
+
+bool RKComponentPropertyDouble::setDoubleValue (double new_value) {
+	RK_TRACE (PLUGIN);
+
+	internalSetValue (new_value);
+	emit (valueChanged (this));
+	return (isValid ());
+}
+
+bool RKComponentPropertyDouble::setValue (const QString &string) {
+	RK_TRACE (PLUGIN);
+
+	internalSetValue (string);
+	emit (valueChanged (this));
+	return (isValid ());
+}
+
+void RKComponentPropertyDouble::setMin (double lower) {
+	RK_TRACE (PLUGIN);
+
+	validator->setBottom (lower);
+	if (default_value < lower) {
+		RK_DO (qDebug ("default value in double property is lower than lower boundary"), PLUGIN, DL_WARNING);
+		default_value = lower;
+	}
+	if (current_value < lower) {
+		setDoubleValue (lower);
+	}
+}
+
+void RKComponentPropertyDouble::setMax (double upper) {
+	RK_TRACE (PLUGIN);
+
+	validator->setTop (upper);
+	if (default_value > upper) {
+		RK_DO (qDebug ("default value in double property is larger than upper boundary"), PLUGIN, DL_WARNING);
+		default_value = upper;
+	}
+	if (current_value > upper) {
+		setDoubleValue (upper);
+	}
+}
+
+double RKComponentPropertyDouble::minValue () {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (validator);
+
+	return (validator->bottom ());
+}
+
+double RKComponentPropertyDouble::maxValue () {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (validator);
+
+	return (validator->top ());
+}
+
+double RKComponentPropertyDouble::doubleValue () {
+	RK_TRACE (PLUGIN);
+
+	return current_value;
+}
+
+QString RKComponentPropertyDouble::value (const QString &modifier) {
+	RK_TRACE (PLUGIN);
+
+	if (!modifier.isEmpty ()) {
+		warnModifierNotRecognized (modifier);
+		return QString::null;
+	}
+	return _value;
+}
+
+bool RKComponentPropertyDouble::isStringValid (const QString &string) {
+	RK_TRACE (PLUGIN);
+
+	int dummy = 0;
+	QString string_copy = string;
+	return (validator->validate (string_copy, dummy) == QValidator::Acceptable);
+}
+
+void RKComponentPropertyDouble::connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
+	RK_TRACE (PLUGIN);
+
+	RK_ASSERT (governor);
+	connect (governor, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (governorValueChanged (RKComponentPropertyBase *)));
+	governor_modifier = modifier;
+
+	// reconcile requirements if applicable
+	if (reconcile_requirements && governor_modifier.isEmpty ()) {
+		if (governor->type () == PropertyInt) {
+			RKComponentPropertyInt *igov = static_cast<RKComponentPropertyInt *> (governor); 	// convenience pointer
+			if (validator->bottom () > igov->minValue ()) {
+				igov->setMin ((int) validator->bottom ());			// no (real) need to worry about integer overflow, as we only do this if the integers bottom limit is lower. Bad things could happen, if the bottom limit of this double property is extremely large (> INT_MAX), but this should rarely happen.
+			}
+			if (validator->top () < igov->maxValue ()) {
+				igov->setMax ((int) validator->top ());			// see above comment
+			}
+		} else if (governor->type () == PropertyDouble) {
+			RKComponentPropertyDouble *dgov = static_cast<RKComponentPropertyDouble *> (governor); 	// convenience pointer
+			if (validator->bottom () > dgov->minValue ()) {
+				dgov->setMin (validator->bottom ());
+			}
+			if (validator->top () < dgov->maxValue ()) {
+				dgov->setMax (validator->top ());
+			}
+		}
+	}
+
+	// fetch current value
+	governorValueChanged (governor);
+}
+
+void RKComponentPropertyDouble::governorValueChanged (RKComponentPropertyBase *property) {
+	RK_TRACE (PLUGIN);
+
+	if (governor_modifier.isEmpty ()) {
+		if (property->type () == PropertyInt) {
+			internalSetValue ((double) (static_cast<RKComponentPropertyInt *>(property)->intValue ()));
+		} else if (property->type () == PropertyDouble) {
+			internalSetValue (static_cast<RKComponentPropertyDouble *>(property)->doubleValue ());
+		} else {
+			internalSetValue (property->value (QString::null));
+		}
+	} else {
+		internalSetValue (property->value (governor_modifier));
+	}
+	emit (valueChanged (this));
+}
+
+QDoubleValidator *RKComponentPropertyDouble::getValidator () {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (validator);
+	return validator;
+}
+
+void RKComponentPropertyDouble::internalSetValue (double new_value) {
+	current_value = new_value;
+	_value = QString::number (current_value);
+	is_valid = ((new_value >= validator->bottom ()) && (new_value <= validator->top ()));
+	if (!is_valid) current_value = default_value;
+}
+
+void RKComponentPropertyDouble::internalSetValue (QString new_value) {
+	current_value = new_value.toDouble (&is_valid);
+	if (!is_valid) {
+		_value = new_value;
+		current_value = default_value;
+		return;
+	}
+	internalSetValue (current_value);		// will check range and prettify _value
+}
 
 #include "rkcomponentproperties.moc"

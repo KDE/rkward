@@ -37,9 +37,8 @@ public:
 		PropertyBool = 2,
 		PropertyInt = 3,
 		PropertyDouble = 4,
-		PropertyRObject = 5,
-		PropertyRObjectList = 6,
-		PropertyCode = 7,
+		PropertyRObjects = 5,
+		PropertyCode = 6,
 		PropertyUser = 1000		/**< for user expansion */
 	};
 /** supplies the current value. Since more than one value may be supplied, modifier can be used to select a value. Default implementation only has  a single string, however. */
@@ -174,6 +173,8 @@ public:
 	~RKComponentPropertyDouble ();
 /** sets the int value. Also takes care of notifying dependent components */
 	bool setDoubleValue (double new_value);
+/** reimplemented from RKComponentPropertyBase to convert to int value according to current settings */
+	bool setValue (const QString &string);
 /** set lower boundary. Default parameter will effectively remove the boundary. You should call this *before* connecting to any other properties, so limits can be reconciled */
 	void setMin (double lower=FLT_MIN);
 /** set upper boundary. Default parameter will effectively remove the boundary. You should call this *before* connecting to any other properties, so limits can be reconciled */
@@ -186,8 +187,6 @@ public:
 	double doubleValue ();
 /** reimplemented from RKComponentPropertyBase. Return current value as a string. In the future, modifier might be used for format. */
 	QString value (const QString &modifier=QString::null);
-/** reimplemented from RKComponentPropertyBase to convert to int value according to current settings */
-	bool setValue (const QString &string);
 /** reimplemented from RKComponentPropertyBase to test whether conversion to int value is possible according to current settings (is a number, and within limits min and max) */
 	bool isStringValid (const QString &string);
 /** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other numeric slots */
@@ -211,45 +210,72 @@ private:
 
 ///////////////////////////////////////////////// RObject ////////////////////////////////////////////////////////
 class RObject;
+#include <qstringlist.h>
+#include <qvaluelist.h>
 
 /** special type of RKComponentProperty, that prepresents an RObject
 //TODO: this property should auto-connect to RKModificationTracker, to be safe when the object gets deleted/changed */
-class RKComponentPropertyRObject : public RKComponentPropertyBase {
+class RKComponentPropertyRObjects : public RKComponentPropertyBase {
+	Q_OBJECT
 public:
-	void setClassFilter (const QString &classes);
-	void setTypeFilter (const QString &types);
-	void setDimensionFilter (int dimensionality, int min_length=-1, int max_length=-1);
-	bool setValue (RObject *object);
+/** how many objects can this property hold? Use default values (-1) to remove constraints
+@param min_num_objects Minimum number of objects for this property to be valid
+@param min_num_objects_if_any Some properties may be valid, if they hold either no objects at all, or at least a certain number of objects
+@param max_num_objects Maximum number of objects for this property to be valid */
+	void setListLength (int min_num_objects=-1, int min_num_objects_if_any=-1, int max_num_objects=-1);
+/** add an object value */
+	bool addObjectValue (RObject *object);
+/** remove an object value */
+	void removeObjectValue (RObject *object);
+/** Set property to only accept certain classes. If you provide an empty list, all classes will be accepted*/
+	void setClassFilter (const QStringList &classes);
+/** Set property to only accept certain object types. If you provide an empty list, all types will be accepted */
+	void setTypeFilter (const QStringList &types);
+/** Set property to only accept objects of certain dimensions. If you provide default parameters (-1), all objects will be accepted
+@param dimensionality Number of dimensions the object must have. -1 will accept objects of all dimensions
+@param min_length Minimum length of first dimension. -1 will accept objects of all lenghts
+@param max_length Maximum length of first dimension. -1 will accept objects of all lengths */
+	void setDimensionFilter (int dimensionality=-1, int min_length=-1, int max_length=-1);
+/** Directly set an RObject.
+@returns false if the object does not qualify as a valid selection according to current settings (class/type/dimensions), true otherwise */
+	bool setObjectValue (RObject *object);
+/** Check whether an object is valid for this property.
+@returns false if the object does not qualify as a valid selection according to current settings (class/type/dimensions), true otherwise */
 	bool isObjectValid (RObject *object);
+/** Get current object. If the property can hold several objects, only the first is returned. See objectList ().
+@returns 0 if no valid object is selected */
 	RObject *objectValue ();
-/** reimplemented from RKComponentPropertyBase. Modifier "label" returns label. Modifier "shortname" returns short name. Modifier QString::null returns full name. */
+/** Get current list of objects.
+@returns an empty list if no valid object is selected */
+	QValueList<RObject *> objectList ();
+/** reimplemented from RKComponentPropertyBase. Modifier "label" returns label. Modifier "shortname" returns short name. Modifier QString::null returns full name. If no object is set, returns an empty string */
 	QString value (const QString &modifier=QString::null);
-/** reimplemented from RKComponentPropertyBase to convert to RObject, if possible with current constraints */
+/** reimplemented from RKComponentPropertyBase to convert to RObject with current constraints
+@returns 0 if no such object could be found or the object is invalid */
 	bool setValue (const QString &value);
 /** reimplemented from RKComponentPropertyBase to test whether conversion to RObject, is possible with current constraints */
-	bool isValid (const QString &value);
-};
-
-///////////////////////////////////////////////// RObjectList ////////////////////////////////////////////////////////
-
-#include <qvaluelist.h>
-
-/** extension of RKComponentPropertyRObject, allowing to hold several RObjects at once. */
-class RKComponentPropertyRObjectList : public RKComponentPropertyRObject {
-public:
-	void setListLength (int min_length, int min_length_if_any=-1, int max_length=-1);
-	bool addValue (RObject *object);
-	void removeValue (RObject *object);
-	bool isObjectValid (RObject *object);
-/** reimplemented from RKComponentPropertyBase to return the first RObject in the list */
-	RObject *objectValue ();
-	QValueList<RObject *> objectList ();
-/** reimplemented from RKComponentPropertyBase. Modifier "label" returns label. Modifier "shortname" returns short name. Modifier QString::null returns full name. */
-	QString value (const QString &modifier=QString::null);
-/** reimplemented from RKComponentPropertyBase to convert to list of RObject, if possible with current constraints */
-	bool setValue (const QString &value);
-/** reimplemented from RKComponentPropertyBase to test whether conversion to list of RObject, is possible with current constraints */
-	bool isValid (const QString &value);
+	bool isStringValid (const QString &value);
+/** RTTI */
+	int type () { return PropertyRObjects; };
+/** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other object properties */
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+/** reimplemented from RKComponentPropertyBase to use special handling for object properties */
+	void governorValueChanged (RKComponentPropertyBase *property);
+public slots:
+/** to be connected to RKModificationTracker::objectRemoved (). This is so we get notified if the object currently selected is removed */
+	void objectRemoved (RObject *object);
+/** to be connected to RKModificationTracker::objectPropertiesChanged (). This is so we get notified if the object currently selected is changed */
+	void objectPropertiesChanged (RObject *object);
+protected:
+	QValueList<RObject *> object_list;
+	int dims;
+	int min_length;
+	int max_length;
+	int min_num_objects;
+	int min_num_objects_if_any;
+	int max_num_objects;
+	QStringList classes;
+	QStringList types;
 };
 
 ///////////////////////////////////////////////// Code ////////////////////////////////////////////////////////
