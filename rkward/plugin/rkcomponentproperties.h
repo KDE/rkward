@@ -217,6 +217,8 @@ class RObject;
 class RKComponentPropertyRObjects : public RKComponentPropertyBase {
 	Q_OBJECT
 public:
+/** for easier typing. A list of RObjects. Should probably be defined somewhere in core-dir instead. */
+	typedef QValueList<RObject *> ObjectList;
 /** constructor */
 	RKComponentPropertyRObjects (QObject *parent, bool required);
 /** destructor */
@@ -228,8 +230,6 @@ public:
 	void setListLength (int min_num_objects=-1, int min_num_objects_if_any=-1, int max_num_objects=-1);
 /** add an object value */
 	bool addObjectValue (RObject *object);
-/** remove an object value */
-	void removeObjectValue (RObject *object);
 /** Set property to only accept certain classes. If you provide an empty list, all classes will be accepted*/
 	void setClassFilter (const QStringList &classes);
 /** Set property to only accept certain object types. If you provide an empty list, all types will be accepted */
@@ -250,7 +250,7 @@ public:
 	RObject *objectValue ();
 /** Get current list of objects. Do not modify this list! It is the very same list, the property uses internally!
 @returns an empty list if no valid object is selected */
-	QValueList<RObject *> objectList ();
+	ObjectList objectList ();
 /** set separator (used to concatenate object names/labels, etc. if more than one object is selected) */
 	void setSeparator (const QString &sep) { separator = sep; emit (valueChanged (this)); };
 /** reimplemented from RKComponentPropertyBase. Modifier "label" returns label. Modifier "shortname" returns short name. Modifier QString::null returns full name. If no object is set, returns an empty string */
@@ -267,16 +267,16 @@ public:
 /** reimplemented from RKComponentPropertyBase to use special handling for object properties */
 	void governorValueChanged (RKComponentPropertyBase *property);
 public slots:
-/** to be connected to RKModificationTracker::objectRemoved (). This is so we get notified if the object currently selected is removed */
-	void objectRemoved (RObject *object);
+/** remove an object value. to be connected to RKModificationTracker::objectRemoved (). This is so we get notified if the object currently selected is removed */
+	void removeObjectValue (RObject *object);
 /** to be connected to RKModificationTracker::objectPropertiesChanged (). This is so we get notified if the object currently selected is changed */
 	void objectPropertiesChanged (RObject *object);
 private:
-/** check all objects currently in the list for validity. Remove invalid objects. Determine validity state depending on how many (valid) objects remain in the list. If the list was changed during validation, a valueChanged () signal is emitted */
-	void validizeAll ();
+/** check all objects currently in the list for validity. Remove invalid objects. Determine validity state depending on how many (valid) objects remain in the list. If the list was changed during validation, and silent!=false a valueChanged () signal is emitted */
+	void validizeAll (bool silent=false);
 /** simple helper function: Check whether the number of objects currently selected (and only that!), and set the valid state accordingly */
 	void checkListLengthValid ();
-	QValueList<RObject *> object_list;
+	ObjectList object_list;
 	int dims;
 	int min_length;
 	int max_length;

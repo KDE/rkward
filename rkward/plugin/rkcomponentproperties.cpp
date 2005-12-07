@@ -554,11 +554,20 @@ void RKComponentPropertyDouble::internalSetValue (QString new_value) {
 
 ///////////////////////////////////////////////// RObjects ////////////////////////////////////////////////////////
 
-RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool required) {
+#include "../rkglobals.h"
+#include "../core/robjectlist.h"
+#include "../core/rkmodificationtracker.h"
+
+RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool required) : RKComponentPropertyBase (parent, required) {
 	RK_TRACE (PLUGIN);
 
 // no initial requirements
-	int dims = min_length = max_length = min_num_objects = min_num_objects_if_any = max_num_objects = -1;
+	dims = min_length = max_length = min_num_objects = min_num_objects_if_any = max_num_objects = -1;
+	separator = ";";
+
+// get notifications about changed/removed objects
+	connect (RKGlobals::tracker (), SIGNAL (objectRemoved (RObject *)), this, SLOT (removeObjectValue (RObject *)));
+	connect (RKGlobals::tracker (), SIGNAL (objectPropertiesChanged (RObject *)), this, SLOT (objectPropertiesChanged (RObject *)));
 }
 
 RKComponentPropertyRObjects::~RKComponentPropertyRObjects () {
@@ -579,20 +588,25 @@ bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
 	RK_TRACE (PLUGIN);
 
 	if (isObjectValid (object)) {
-		if (!object_list->contains (object)) {
-			object_list->append (object);
+		if (!object_list.contains (object)) {
+			object_list.append (object);
 			checkListLengthValid ();
 			emit (valueChanged (this));
 		}
+		return isValid ();
 	}
+	return false;
 }
 
 void RKComponentPropertyRObjects::removeObjectValue (RObject *object) {
 	RK_TRACE (PLUGIN);
 
-	object_list->remove (object);
-	checkListLengthValid ();
-	emit (valueChanged (this));
+	ObjectList::Iterator it = object_list.find (object);
+	if (it != object_list.end ()) {
+		object_list.erase (it);
+		checkListLengthValid ();
+		emit (valueChanged (this));
+	}
 }
 
 void RKComponentPropertyRObjects::setClassFilter (const QStringList &classes) {
@@ -620,7 +634,7 @@ void RKComponentPropertyRObjects::setDimensionFilter (int dimensionality, int mi
 bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
 	RK_TRACE (PLUGIN);
 
-	object_list->clear ();
+	object_list.clear ();
 	return (addObjectValue (object));
 }
 
@@ -630,84 +644,6 @@ bool RKComponentPropertyRObjects::isObjectValid (RObject *object) {
 	RK_TRACE (PLUGIN);
 
 	// TODO
-}
-
-RObject *RKComponentPropertyRObjects::objectValue () {
-	RK_TRACE (PLUGIN);
-
-	return (object_list->first ());
-}
-
-QValueList<RObject *> RKComponentPropertyRObjects::objectList () {
-	RK_TRACE (PLUGIN);
-
-	return (object_list);
-}
-
-/** reimplemented from RKComponentPropertyBase. Modifier "label" returns label. Modifier "shortname" returns short name. Modifier QString::null returns full name. If no object is set, returns an empty string */
-QString RKComponentPropertyRObjects::value (const QString &modifier) {
-	RK_TRACE (PLUGIN);
-
-//TODO!
-	QString ret;
-	if (modifier.isEmpty ()) {
-	} else if (modifier == "shortname") {
-	} else if (modifier == "label") {
-	} else {
-		warnModifierNotRecognized (modifier);
-	}
-	return ret;
-}
-
-/** reimplemented from RKComponentPropertyBase to convert to RObject with current constraints
-@returns 0 if no such object could be found or the object is invalid */
-bool RKComponentPropertyRObjects::setValue (const QString &value) {
-	RK_TRACE (PLUGIN);
-
-
-}
-
-/** reimplemented from RKComponentPropertyBase to test whether conversion to RObject, is possible with current constraints */
-bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
-	RK_TRACE (PLUGIN);
-
-
-}
-
-/** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other object properties */
-void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
-	RK_TRACE (PLUGIN);
-
-
-}
-
-/** reimplemented from RKComponentPropertyBase to use special handling for object properties */
-void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase *property) {
-	RK_TRACE (PLUGIN);
-
-
-}
-
-/** to be connected to RKModificationTracker::objectRemoved (). This is so we get notified if the object currently selected is removed */
-void RKComponentPropertyRObjects::objectRemoved (RObject *object) {
-	RK_TRACE (PLUGIN);
-
-
-}
-
-/** to be connected to RKModificationTracker::objectPropertiesChanged (). This is so we get notified if the object currently selected is changed */
-void RKComponentPropertyRObjects::objectPropertiesChanged (RObject *object) {
-	RK_TRACE (PLUGIN);
-
-
-}
-
-void RKComponentPropertyRObjects::validizeAll () {
-	RK_TRACE (PLUGIN);
-
-
-}
-
 /*
 	QValueList<RObject *> object_list;
 	int dims;
@@ -719,5 +655,144 @@ void RKComponentPropertyRObjects::validizeAll () {
 	QStringList classes;
 	QStringList types;
 }; */
+
+}
+
+RObject *RKComponentPropertyRObjects::objectValue () {
+	RK_TRACE (PLUGIN);
+
+	return (object_list.first ());
+}
+
+QValueList<RObject *> RKComponentPropertyRObjects::objectList () {
+	RK_TRACE (PLUGIN);
+
+	return (object_list);
+}
+
+QString RKComponentPropertyRObjects::value (const QString &modifier) {
+	RK_TRACE (PLUGIN);
+
+	QStringList ret;
+	if (modifier.isEmpty ()) {
+		for (ObjectList::const_iterator it = object_list.begin (); it != object_list.end ();++it) {
+			ret.append ((*it)->getFullName ());
+		}
+	} else if (modifier == "shortname") {
+		for (ObjectList::const_iterator it = object_list.begin (); it != object_list.end ();++it) {
+			ret.append ((*it)->getShortName ());
+		}
+	} else if (modifier == "label") {
+		for (ObjectList::const_iterator it = object_list.begin (); it != object_list.end ();++it) {
+			ret.append ((*it)->getLabel ());
+		}
+	} else {
+		warnModifierNotRecognized (modifier);
+	}
+	return ret.join (separator);
+}
+
+bool RKComponentPropertyRObjects::setValue (const QString &value) {
+	RK_TRACE (PLUGIN);
+
+	object_list.clear ();
+
+	bool ok = true;
+	QStringList slist = QStringList::split (separator, value);
+
+	for (QStringList::const_iterator it = slist.begin (); it != slist.end (); ++it) {
+		RObject *obj = RKGlobals::rObjectList ()->findObject (value);
+		if (obj && isObjectValid (obj)) {
+			object_list.append (obj);
+		} else {
+			ok = false;
+		}
+	}
+
+	checkListLengthValid ();
+	return (isValid () && ok);
+}
+
+bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
+	RK_TRACE (PLUGIN);
+
+	QStringList slist = QStringList::split (separator, value);
+
+	for (QStringList::const_iterator it = slist.begin (); it != slist.end (); ++it) {
+		RObject *obj = RKGlobals::rObjectList ()->findObject (value);
+		if (!(obj && isObjectValid (obj))) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other object properties */
+void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
+	RK_TRACE (PLUGIN);
+
+	// TODO
+/*
+	QValueList<RObject *> object_list;
+	int dims;
+	int min_length;
+	int max_length;
+	int min_num_objects;
+	int min_num_objects_if_any;
+	int max_num_objects;
+	QStringList classes;
+	QStringList types;
+}; */
+
+
+}
+
+void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase *property) {
+	RK_TRACE (PLUGIN);
+
+	if ((property->type () == PropertyRObjects) && governor_modifier.isEmpty ()) {
+		object_list = static_cast <RKComponentPropertyRObjects *> (property)->objectList ();
+		validizeAll (true);
+		emit (valueChanged (this));
+	} else {
+		setValue (property->value (governor_modifier));
+	}
+}
+
+void RKComponentPropertyRObjects::objectPropertiesChanged (RObject *object) {
+	RK_TRACE (PLUGIN);
+
+	// if object list contains this object, check whether it is still valid. Otherwise remove it, revalidize and signal change.
+	ObjectList::Iterator it = object_list.find (object);
+	if (it != object_list.end ()) {
+		if (!isObjectValid (object)) {
+			object_list.erase (it);
+			checkListLengthValid ();
+			emit (valueChanged (this));
+		}
+	}
+}
+
+void RKComponentPropertyRObjects::validizeAll (bool silent) {
+	RK_TRACE (PLUGIN);
+
+	bool changes = false;
+
+	ObjectList::Iterator it = object_list.begin ();
+	while (it != object_list.end ()) {
+		if (isObjectValid (*it)) {
+			++it;
+		} else {
+			it = object_list.erase (it);		// it now points to the next object in the list
+			changes = true;
+		}
+	}
+
+	if (changes) {
+		checkListLengthValid ();
+		if (!silent) emit (valueChanged (this));
+	}
+}
 
 #include "rkcomponentproperties.moc"
