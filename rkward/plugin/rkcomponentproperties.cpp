@@ -640,66 +640,40 @@ bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
 	return (addObjectValue (object));
 }
 
-/** Check whether an object is valid for this property.
-@returns false if the object does not qualify as a valid selection according to current settings (class/type/dimensions), true otherwise */
 bool RKComponentPropertyRObjects::isObjectValid (RObject *object) {
 	RK_TRACE (PLUGIN);
 
-// TODO: this function could be made a lot more straightforward, if RObject would contain more information (via virtual functions). See TODO in RObject.
-
 	// first check dimensionality
-	if (dims >= 0) {
-		if (object->isVariable ()) {
-			RKVariable *var = static_cast<RKVariable *> (object);
-			if (var->getLength ()) {
-				if (dims != 1) return false;
-			} else {
-				if (dims != 0) return false;
-			}
-		} else if (object->isContainer ()) {
-			RContainerObject *cont = static_cast<RContainerObject *> (object);
-			if (cont->numDimensions () != dims) {
-				return false;
-			}
-		} else {
-			return false;
-		}
+	if (dims > 0) {
+		if (object->numDimensions () != dims) return false;
 	}
-	if ((min_length > 0) || (max_length >= 0)) {
-		// determine object length
-		int olength;
-		if (object->isVariable ()) {
-			olength = static_cast<RKVariable *> (object)->getLength ();
-		} else if (object->isContainer ()) {
-			if (static_cast<RContainerObject *> (object)->numDimensions ()) {
-				olength = static_cast<RContainerObject *> (object)->getDimension (0);
-			} else {
-				olength = 0;
-			}
-		}
-
-		// then check, whether length is valid
-		if ((min_length > 0) && (olength < min_length)) return false;
-		if ((max_length >= 0) && (olength > max_length)) return false;
-	}
+	int olength = object->getLength ();
+	if ((min_length > 0) && (olength < min_length)) return false;
+	if ((max_length >= 0) && (olength > max_length)) return false;
 
 	// next, check classes
 	if (!classes.isEmpty ()) {
-		
+		bool ok = false;
+		QStringList::const_iterator it = classes.begin ();
+		while ((!ok) && (it != classes.end ())) {
+			if (object->inherits (*it)) {
+				ok = true;
+			}
+			++it;
+		}
+		if (!ok) return false;
 	}
 
 	// finally, check type
 	if (!types.isEmpty ()) {
+		// TODO: this is not entirely correct, yet
+		if (object->isVariable ()) {
+			if (!types.contains (static_cast<RKVariable *> (object)->getVarTypeString ().lower ())) {
+				return false;
+			}
+		}
 	}
 
-	// TODO
-/*
-	int dims;
-	int min_length;
-	int max_length;
-	QStringList classes;
-	QStringList types;
-}; */
 	return true;
 }
 
@@ -786,8 +760,8 @@ void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *go
 			RKComponentPropertyRObjects *ogov = static_cast<RKComponentPropertyRObjects *> (governor); 	// convenience pointer
 
 			// reconcile dimensionality filter
-			if (dims != -1) {
-				if (ogov->dims == -1) {
+			if (dims > 0) {
+				if (ogov->dims <= 0) {
 					ogov->dims = dims;
 				} else if (ogov->dims != dims) {
 					RK_DO (qDebug ("Could not reconcile dimensionality in RObject properties"), PLUGIN, DL_WARNING);
@@ -796,7 +770,7 @@ void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *go
 			if (ogov->min_length < min_length) {
 				ogov->min_length = min_length;
 			}
-			if (max_length != -1) {
+			if (max_length > 0) {
 				if (ogov->max_length > max_length) {
 					ogov->max_length = max_length;
 				}
