@@ -27,9 +27,6 @@
 
 #include "../debug.h"
 
-#define GET_META_COMMAND 1001
-#define UPDATE_CLASS_COMMAND 1002
-
 RObject::RObject (RContainerObject *parent, const QString &name) {
 	RK_TRACE (OBJECTS);
 	
@@ -40,14 +37,19 @@ RObject::RObject (RContainerObject *parent, const QString &name) {
 	data = 0;
 	num_classes = 0;
 	classname = 0;
+	dimension = new int [1];		// safe initialization
+	dimension[0] = 0;
+	num_dimensions = 0;
 }
 
 RObject::~RObject () {
 	RK_TRACE (OBJECTS);
 
-	delete[] classname;
-	
 	if (data) discardEditData ();
+
+	delete[] classname;
+
+	delete dimension;
 }
 
 QString RObject::getShortName () {
@@ -144,14 +146,21 @@ bool RObject::inherits (const QString &class_name) {
 	return false;
 }
 
+bool RObject::isMatchingType (int old_type, int new_type) {
+	RK_TRACE (OBJECTS);
+
+	int type_mask = Container | Variable | Workspace;	// for easier typing
+	return ((old_type & type_mask) == (new_type & type_mask));
+}
+
 QString RObject::makeChildName (const QString &short_child_name) {
 	RK_TRACE (OBJECTS);
 	return (getFullName () + "[[\"" + short_child_name + "\"]]");
 }
 	
-void RObject::getMetaData (RCommandChain *chain) {
+void RObject::getMetaData (RCommandChain *chain, int flags) {
 	RK_TRACE (OBJECTS);
-	RCommand *command = new RCommand (".rk.get.meta (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_META_COMMAND);
+	RCommand *command = new RCommand (".rk.get.meta (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, flags);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 }
 
@@ -186,29 +195,30 @@ void RObject::writeMetaData (RCommandChain *chain) {
 	type |= HasMetaObject;
 }
 
-void RObject::rCommandDone (RCommand *command) {
+void RObject::handleGetMetaCommand (RCommand *command) {
 	RK_TRACE (OBJECTS);
-	if (command->getFlags () == GET_META_COMMAND) {
-		if (command->stringVectorLength ()) {
-			if (!meta_map) meta_map = new MetaMap;
 
-			int len = command->stringVectorLength ();
-			RK_ASSERT (!(len % 2));
-			int cut = len/2;
-			for (int i=0; i < cut; ++i) {
-				meta_map->insert (command->getStringVector ()[i], command->getStringVector ()[i+cut]);
-			}
-			
-			type |= HasMetaObject;
-		} else {		// no meta data received
-			delete meta_map;
-			meta_map = 0;
-			
-			type -= (type & HasMetaObject);
+	if (command->stringVectorLength ()) {
+		if (!meta_map) meta_map = new MetaMap;
+		meta_map->clear ();
+
+		int len = command->stringVectorLength ();
+		RK_ASSERT (!(len % 2));
+		int cut = len/2;
+		for (int i=0; i < cut; ++i) {
+			meta_map->insert (command->getStringVector ()[i], command->getStringVector ()[i+cut]);
 		}
-		// TODO: only signal change, if there really was a change!
-		RKGlobals::tracker ()->objectMetaChanged (this);
+		
+		type |= HasMetaObject;
+	} else {		// no meta data received
+		delete meta_map;
+		meta_map = 0;
+		
+		type -= (type & HasMetaObject);
 	}
+
+	// TODO: only signal change, if there really was a change!
+	RKGlobals::tracker ()->objectMetaChanged (this);
 }
 
 bool RObject::handleUpdateClassCommand (RCommand *command) {
@@ -228,6 +238,44 @@ bool RObject::handleUpdateClassCommand (RCommand *command) {
 	}
 
 	return change;
+}
+
+bool RObject::handleClassifyCommand (RCommand *command, bool *dims_changed) {
+	RK_TRACE (OBJECTS);
+
+	if (!command->intVectorLength ()) {
+		RK_ASSERT (false);
+		return false;
+	}
+	int new_type = command->getIntVector ()[0];
+
+	if (!isMatchingType (type, new_type)){
+		RK_DO (qDebug ("type-mismatch: name: %s, old_type: %d, new_type: %d", RObject::name.latin1 (), type, new_type), OBJECTS, DL_INFO);
+		RObject::parent->typeMismatch (this, RObject::name);
+		return false;	// will be deleted!
+	}
+	if (new_type != type) {
+		*dims_changed = true;
+		type = new_type;
+	}
+
+	// get dimensions
+	if (num_dimensions != (command->intVectorLength () - 1)) {
+		num_dimensions = command->intVectorLength () - 1;
+		*dims_changed = true;
+		delete dimension;
+		if (num_dimensions < 1) {
+			RK_ASSERT (false);
+			num_dimensions = 1;
+		}
+		dimension = new int [num_dimensions];
+	}
+	for (int d=0; d < num_dimensions; ++d) {
+		if (dimension[d] != command->getIntVector ()[d+1]) *dims_changed = true;
+		dimension[d] = command->getIntVector ()[d+1];
+	}
+
+	return true;
 }
 
 void RObject::rename (const QString &new_short_name) {

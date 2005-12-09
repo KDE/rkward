@@ -47,8 +47,6 @@ case it will be stored as a character vector */
 /** set the VarType. If sync, the change will be communicated to the backend immediately. See getVarType */
 	void setVarType (RObject::VarType, bool sync=true);
 
-/** The length (number of data-items) of this RKVariable */
-	int getLength () { return length; };
 /** A hack for now: returns the name of the parent (data.frame) */
 	QString getTable ();
 
@@ -58,7 +56,6 @@ case it will be stored as a character vector */
 /** reimplemented from RObject to also store value labels/factor levels (and in the future probably futher info) */
 	void writeMetaData (RCommandChain *chain);
 friend class RContainerObject;
-	int length;
 	RObject::VarType var_type;
 	
 	void rCommandDone (RCommand *command);

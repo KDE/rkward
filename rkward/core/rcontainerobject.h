@@ -50,9 +50,6 @@ public:
 	API will likely change. The child is NOT created in the workspace. That's your resonsibility. All this function returns is a new RObject* of the given
 	type and with the name (if neccessary) changed to a legal value. TODO: checking for and changing illegal names is not yet implemented */
 	RObject *createNewChild (const QString &name, RKEditor *creator=0, bool container=false, bool data_frame=false);
-	
-	int numDimensions () { return num_dimensions; };
-	int getDimension (int index) { return dimension[index]; };
 
 	/** returns true, if there are no children in this container. Note: of course the object list may not be up to date! */
 	bool isEmpty () { return childmap.isEmpty (); };

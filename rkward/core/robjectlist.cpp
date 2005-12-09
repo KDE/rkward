@@ -58,8 +58,6 @@ RObjectList::~RObjectList () {
 void RObjectList::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
 
-	RObject::rCommandDone (command);
-
 	bool changed = false;
 
 	if (command->getFlags () == UPDATE_LIST_COMMAND) {
@@ -105,8 +103,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 		delete pobj;
 		pending_objects.remove (command);
 		RKGlobals::tracker ()->addObject (robj, 0);
-		
-	} 
+	}
 	
 	// TODO: signal change
 }

@@ -30,12 +30,12 @@
 #define CLASSIFY_COMMAND 1
 #define UPDATE_CLASS_COMMAND 2
 #define UPDATE_CHILD_LIST_COMMAND 3
+#define GET_META_COMMAND 4
 
 RContainerObject::RContainerObject (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
-	dimension = 0;
-	num_dimensions = 0;
 	num_children_updating = 0;
+	type = Container;
 }
 
 RContainerObject::~RContainerObject () {
@@ -57,53 +57,26 @@ void RContainerObject::updateFromR () {
 
 void RContainerObject::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
-	RObject::rCommandDone (command);
 
 	bool properties_changed = false;
-	if (command->getFlags () == CLASSIFY_COMMAND) {
-		// WARNING: This code is (mostly) duplicated in RKVariable!
-		if (!command->intVectorLength ()) {
-			RK_ASSERT (false);
-			return;
-		} else {
-			int new_type = command->getIntVector ()[0];
-
-			// check whether this  is still a container object
-			if ((RObject::type) && (new_type != RObject::type)) {
-				if (!(new_type & RObject::Container)) {
-					RK_DO (qDebug ("type-mismatch: name: %s, old_type: %d, new_type: %d", RObject::name.latin1 (), type, new_type), OBJECTS, DL_INFO);
-					RObject::parent->typeMismatch (this, RObject::name);
-					return;	// will be deleted!
-				}
-			}
-			if (new_type != RObject::type) {
-				properties_changed = true;
-				RObject::type = new_type;
-			}
-
-			// get dimensions
-			if (num_dimensions != (command->intVectorLength () - 1)) {
-				num_dimensions = command->intVectorLength () - 1;
-				properties_changed = true;
-				delete dimension;
-				dimension = new int [num_dimensions];
-			}
-			for (int d=0; d < num_dimensions; ++d) {
-				if (dimension[d] != command->getIntVector ()[d+1]) properties_changed = true;
-				dimension[d] = command->getIntVector ()[d+1];
-			}
-
-			// classifiy command was successful. now get further information.
-			if (hasMetaObject ()) getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain ());
-
-			RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CLASS_COMMAND);
-			RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
-
-			command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CHILD_LIST_COMMAND);
-			RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+	if (command->getFlags () == GET_META_COMMAND) {
+		handleGetMetaCommand (command);
+	} else if (command->getFlags () == CLASSIFY_COMMAND) {
+		if (!handleClassifyCommand (command, &properties_changed)) {
+			return; // will be deleted!
 		}
+
+		// classifiy command was successful. now get further information.
+		if (hasMetaObject ()) getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain (), GET_META_COMMAND);
+
+		RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CLASS_COMMAND);
+		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+
+		command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CHILD_LIST_COMMAND);
+		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+
 		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
-		
+
 	} else if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
 		// first check, whether all known children still exist:
 		checkRemovedChildren (command->getStringVector (), command->stringVectorLength ());

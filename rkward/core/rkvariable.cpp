@@ -26,8 +26,8 @@
 #include "rkmodificationtracker.h"
 
 #define CLASSIFY_COMMAND 1
-#define UPDATE_DIM_COMMAND 2
 #define UPDATE_CLASS_COMMAND 3
+#define GET_META_COMMAND 4
 #define GET_STORAGE_MODE_COMMAND 10
 #define GET_DATA_COMMAND 11
 #define GET_FACTOR_LEVELS_COMMAND 12
@@ -38,10 +38,8 @@
 
 RKVariable::RKVariable (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
-// TODO: better check, wether it really is one
-	RObject::type = Variable;
+	type = Variable;
 	var_type = Unknown;
-	length = 0;
 }
 
 RKVariable::~RKVariable () {
@@ -103,7 +101,7 @@ QString RKVariable::getTable () {
 void RKVariable::updateFromR () {
 	RK_TRACE (OBJECTS);
 	
-	getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain ());
+	getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain (), GET_META_COMMAND);
 
 // TODO: move classification / type mismatch-checking to RObject
 	RCommand *command = new RCommand (".rk.classify (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString::null, this, CLASSIFY_COMMAND);
@@ -114,51 +112,25 @@ void RKVariable::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
 	
 	bool properties_changed = false;
-	RObject::rCommandDone (command);
-	
-	if (command->getFlags () == CLASSIFY_COMMAND) {
-		// WARNING: This code is (mostly) duplicated in RContainerObject!
-		if (!command->intVectorLength ()) {
-			RK_ASSERT (false);
-			return;
-		}
 
-		int new_type = command->getIntVector ()[0];
+	if (command->getFlags () == GET_META_COMMAND) {
+		handleGetMetaCommand (command);
 
-		// check whether this  is still a container object
-		if ((RObject::type) && (new_type != RObject::type)) {
-			if ((new_type & RObject::Container)) {
-				RK_DO (qDebug ("type-mismatch: name: %s, old_type: %d, new_type: %d", RObject::name.latin1 (), type, new_type), OBJECTS, DL_INFO);
-				RObject::parent->typeMismatch (this, RObject::name);
-				return;	// will be deleted!
-			}
-		}
-		if (new_type != RObject::type) {
-			properties_changed = true;
-			RObject::type = new_type;
-		}
-
-		// classifiy command was successful. now get further information.
-		// TODO: actually, classify already contains dim (). Simplify!
-		RCommand *command = new RCommand ("length (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString::null, this, UPDATE_DIM_COMMAND);
-		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
-		
-		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
-
-	} else if (command->getFlags () == UPDATE_DIM_COMMAND) {
-		if (command->intVectorLength () == 1) {
-			length = command->getIntVector ()[0];
-		} else {
-			length = 1;
-		}
-		
+		// TODO: This is not quite good, yet, as it may result in two calls to objectMetaChanged.
 		QString dummy = getMetaProperty ("type");
 		int new_var_type = dummy.toInt ();
 		var_type = (RObject::VarType) new_var_type;
 		if (new_var_type != var_type) RKGlobals::tracker ()->objectMetaChanged (this);
+	} else if (command->getFlags () == CLASSIFY_COMMAND) {
+		if (!handleClassifyCommand (command, &properties_changed)) {
+			return; // will be deleted!
+		}
 
+		// classifiy command was successful. now get further information.
 		RCommand *ncommand = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CLASS_COMMAND);
 		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
+
+		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
 
 	} else if (command->getFlags () == GET_STORAGE_MODE_COMMAND) {
 		RK_ASSERT (command->intVectorLength () == 2);
@@ -186,10 +158,10 @@ void RKVariable::rCommandDone (RCommand *command) {
 		// prevent resyncing of data
 		setSyncing (false);
 		if (command->realVectorLength ()) {
-			RK_ASSERT (command->realVectorLength () == length);
+			RK_ASSERT (command->realVectorLength () == getLength ());
 			setNumeric (0, command->realVectorLength () - 1, command->getRealVector ());
 		} else if (command->stringVectorLength ()) {
-			RK_ASSERT (command->stringVectorLength () == length);
+			RK_ASSERT (command->stringVectorLength () == getLength ());
 			setCharacter (0, command->stringVectorLength () - 1, command->getStringVector ());
 			delete command->getStringVector ();
 			command->detachStringVector ();
@@ -198,7 +170,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 		}
 		ChangeSet *set = new ChangeSet;
 		set->from_index = 0;
-		set->to_index = length;
+		set->to_index = getLength ();
 		RKGlobals::tracker ()->objectDataChanged (this, set);
 		RKGlobals::tracker ()->objectMetaChanged (this);
 		setSyncing (true);
@@ -229,9 +201,10 @@ void RKVariable::rCommandDone (RCommand *command) {
 
 void RKVariable::setLength (int len) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (!length);	// should only be called once
-	
-	length = len;
+	RK_ASSERT (!getLength ());	// should only be called once
+	RK_ASSERT (dimension);
+
+	dimension[0] = len;
 }
 
 void RKVariable::restoreStorageInBackend () {
@@ -407,7 +380,7 @@ void RKVariable::extendToLength (int length) {
 
 	if (length <= 0) length = 1;
 	if (length <= myData ()->allocated_length) {
-		RKVariable::length = length;
+		dimension[0] = length;
 		return;
 	}
 	
@@ -431,14 +404,14 @@ void RKVariable::extendToLength (int length) {
 	myData ()->cell_double_data = new_double_data;
 
 	myData ()->allocated_length = target;
-	RKVariable::length = length;
+	dimension[0] = length;
 }
 
 void RKVariable::downSize () {
 	RK_TRACE (OBJECTS);
 
 	// TODO: downsizing to values other than 0
-	if (length <= 0) {
+	if (getLength () <= 0) {
 		delete [] myData ()->cell_double_data;
 		myData ()->cell_double_data = 0;
 		for (int i = 0; i < myData ()->allocated_length; ++i) {
@@ -490,7 +463,7 @@ void RKVariable::setText (int row, const QString &text) {
 
 void RKVariable::setTextPlain (int row, char *text) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (row < length);
+	RK_ASSERT (row < getLength ());
 	// delete previous string data, unless it's a special value
 	deleteStringData (row);
 
@@ -579,7 +552,7 @@ QString RKVariable::getLabeled (int row) {
 
 /** get a copy of the numeric values of rows starting from from_index, going to to_index. Do not use this before making sure that the rStorage () is really numeric! */
 double *RKVariable::getNumeric (int from_row, int to_row) {
-	if (to_row >= length) {
+	if (to_row >= getLength ()) {
 		RK_ASSERT (false);
 		return 0;
 	}
@@ -591,7 +564,7 @@ double *RKVariable::getNumeric (int from_row, int to_row) {
 }
 
 void RKVariable::setNumeric (int from_row, int to_row, double *data) {
-	RK_ASSERT (to_row < length);
+	RK_ASSERT (to_row < getLength ());
 	
 	for (int row=from_row; row <= to_row; ++row) {
 		deleteStringData (row);
@@ -621,7 +594,7 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 
 /** like getNumeric, but returns values as an array of char*s */
 char **RKVariable::getCharacter (int from_row, int to_row) {
-	if (to_row >= length) {
+	if (to_row >= getLength ()) {
 		RK_ASSERT (false);
 		return 0;
 	}
@@ -644,7 +617,7 @@ char **RKVariable::getCharacter (int from_row, int to_row) {
 
 /** like setNumeric, but sets chars. If internalStorage () is numeric, attempts to convert the given strings to numbers. I.e. the function behaves essentially like setText (), but operates on a range of cells. */
 void RKVariable::setCharacter (int from_row, int to_row, char **data) {
-	RK_ASSERT (to_row < length);
+	RK_ASSERT (to_row < getLength ());
 	
 	if (getVarType () == String) {
 		int i=0;
@@ -663,7 +636,7 @@ void RKVariable::setCharacter (int from_row, int to_row, char **data) {
 }
 
 void RKVariable::setUnknown (int from_row, int to_row) {
-	RK_ASSERT (to_row < length);
+	RK_ASSERT (to_row < getLength ());
 
 	if ((from_row < 0)) from_row = 0;
 	if ((to_row < 0)) to_row = myData ()->allocated_length - 1;
@@ -710,7 +683,7 @@ void RKVariable::removeRows (int from_row, int to_row) {
 		myData ()->cell_double_data[myData ()->allocated_length - 1] = 0;
 	}
 
-	length -= (to_row - from_row) + 1;	
+	dimension[0] -= (to_row - from_row) + 1;	
 	downSize ();
 	RECHECK_VALID
 }

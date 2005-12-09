@@ -234,11 +234,11 @@ public:
 	void setClassFilter (const QStringList &classes);
 /** Set property to only accept certain object types. If you provide an empty list, all types will be accepted */
 	void setTypeFilter (const QStringList &types);
-/** Set property to only accept objects of certain dimensions. If you provide default parameters (-1), all objects will be accepted
-@param dimensionality Number of dimensions the object must have. -1 will accept objects of all dimensions
-@param min_length Minimum length of first dimension. -1 will accept objects of all lenghts
-@param max_length Maximum length of first dimension. -1 will accept objects of all lengths */
-	void setDimensionFilter (int dimensionality=-1, int min_length=-1, int max_length=-1);
+/** Set property to only accept objects of certain dimensions. If you provide default parameters (0), all objects will be accepted
+@param dimensionality Number of dimensions the object must have. 0 will accept objects of all dimensions
+@param min_length Minimum length of first dimension. 0 will accept objects of all lenghts
+@param max_length Maximum length of first dimension. 0 will accept objects of all lengths */
+	void setDimensionFilter (int dimensionality=0, int min_length=0, int max_length=0);
 /** Directly set an RObject. Warning: This sets the list to contain only exactly this one item. Generally you do not want to use this, unless your list is in single mode. Use addObjectValue () instead, if the property can hold more than one object
 @returns false if the object does not qualify as a valid selection according to current settings (class/type/dimensions), true otherwise */
 	bool setObjectValue (RObject *object);

@@ -58,6 +58,8 @@ public:
 	bool isDataFrame () { return (type & DataFrame); };
 	bool isVariable () { return (type & Variable); };
 	bool hasMetaObject () { return (type & HasMetaObject); };
+/** @returns false if an object of the given old type can not represent an object of the given new type (e.g. (new_type & RObjectType::Variable), but (old_type & RObjectType::Container)). */
+	bool isMatchingType (int old_type, int new_type);
 
 	void rename (const QString &new_short_name);
 	void remove (bool removed_in_workspace);
@@ -68,6 +70,13 @@ public:
 /** @param class_name the name of the class to check for
 @returns true, if the object has (among others) the given class, false otherwise */
 	bool inherits (const QString &class_name);
+
+/** get number of dimensions. In RKWard each object is viewed to have at least one dimension (this view, of course, is slightly incorrect as well, but makes life easier) */
+	int numDimensions () { return num_dimensions; };
+/** get the length of the given dimension. The object is guaranteed to have at least 1 dimension, so calling getDimension (0) is always safe */
+	int getDimension (int index) { return dimension[index]; };
+/** short hand for getDimension (0). Meaningful for one-dimensional objects */
+	int getLength () { return dimension[0]; }
 
 /** A map of objects accessible by their short name. Used in RContainerObject. Defined here for technical reasons. */
 	typedef QMap<QString, RObject*> RObjectMap;
@@ -117,21 +126,30 @@ protected:
 	int type;
 	int num_classes;
 	QString *classname;
+	int num_dimensions;
+	int *dimension;
 
-/** fetches the meta data from the backend */
-	virtual void getMetaData (RCommandChain *chain);
+/** fetches the meta data from the backend. Sets of a command with the given flags. Be sure to catch this command in your rCommandDone-function and send it to handleGetMetaCommand ()! */
+	virtual void getMetaData (RCommandChain *chain, int flags);
 /** generates a (full) name for a child of this object with the given name. */
 	virtual QString makeChildName (const QString &short_child_name);
 	
 	typedef QMap<QString, QString> MetaMap;
 	MetaMap *meta_map;
 	
-	void rCommandDone (RCommand *command);
 /** handles updating class names from an update class command given as argument (common functionality between RContainerObject and RKVariable
 @param command The command. Make sure it really is a command to update classes *before* calling this function!
 @returns true if the classes changed, false if no change resulted */
 	bool handleUpdateClassCommand (RCommand *command);
-	
+/** handles updating the meta data from a get meta data command given as argument (common functionality between RContainerObject and RKVariable. Takes care of notifying modification tracker, if meta data has changed. Therefore no return value. Most likely you will call this function for the result of a command triggered by getMetaData ();
+@param command The command. Make sure it really is a get meta data command *before* calling this function! */
+	void handleGetMetaCommand (RCommand *command);
+/** check the type of this object, and update dimension information from a .rk.classify command given as argument. If a type mismatch is found, this returns false, and you *must* return immediately, as the object will be deleted shortly!
+@param command The command. Make sure it really is a  .rk.classify command *before* calling this function!
+@param dims_changed If the dimensions changed, this bool is set to true. If the dimensions did not change, it is left untouched (i.e. even if it already was true)
+@returns false if there was a type mismatch. In this case you *must* return! */
+	bool handleClassifyCommand (RCommand *command, bool *dims_changed);
+
 /** an instance of this struct is created, when the object is opened for editing. For one thing, it keeps track of which editor(s) are working on the object.
 In subclasses like RKVariable, the struct is extended to additionally hold the data of the object, etc. */
 	struct EditData {
