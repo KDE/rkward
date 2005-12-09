@@ -42,8 +42,6 @@ protected:
 	void closeEvent (QCloseEvent *e);
 private:
 	QTextEdit *view_area;
-	bool waiting;
-	bool destruct;
 	QString caption;
 };
 

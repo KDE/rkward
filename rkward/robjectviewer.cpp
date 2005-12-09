@@ -57,8 +57,6 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : QWidget (paren
 	
 	RCommand *command = new RCommand ("print (" + object->getFullName () + ")", RCommand::App, QString::null, this);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
-	waiting = true;
-	destruct = false;
 	
 	caption = i18n("Object Viewer: ") + object->getShortName ();
 	setCaption (caption + i18n(" - Waiting for results from R..."));
@@ -76,23 +74,12 @@ void RObjectViewer::rCommandDone (RCommand *command) {
 	if (command->hasError ()) {
 		view_area->append (i18n("\nSome errors occured: ") + command->error ());
 	}
-	
-	if (destruct) {
-		delete this;
-		return;
-	}
 }
 
 void RObjectViewer::closeEvent (QCloseEvent *e) {
-	if (!waiting) {
-		e->accept ();
-		delete this;
-		return;
-	} else {
-		destruct = true;
-		e->accept ();
-		hide ();
-	}
+	e->accept ();
+	if (numCommandsOut ()) hide ();
+	deleteThis ();
 }
 
 #include "robjectviewer.moc"
