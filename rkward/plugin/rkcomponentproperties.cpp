@@ -556,6 +556,8 @@ void RKComponentPropertyDouble::internalSetValue (QString new_value) {
 
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
+#include "../core/rkvariable.h"
+#include "../core/rcontainerobject.h"
 #include "../core/rkmodificationtracker.h"
 
 RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool required) : RKComponentPropertyBase (parent, required) {
@@ -643,19 +645,62 @@ bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
 bool RKComponentPropertyRObjects::isObjectValid (RObject *object) {
 	RK_TRACE (PLUGIN);
 
+// TODO: this function could be made a lot more straightforward, if RObject would contain more information (via virtual functions). See TODO in RObject.
+
+	// first check dimensionality
+	if (dims >= 0) {
+		if (object->isVariable ()) {
+			RKVariable *var = static_cast<RKVariable *> (object);
+			if (var->getLength ()) {
+				if (dims != 1) return false;
+			} else {
+				if (dims != 0) return false;
+			}
+		} else if (object->isContainer ()) {
+			RContainerObject *cont = static_cast<RContainerObject *> (object);
+			if (cont->numDimensions () != dims) {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	if ((min_length > 0) || (max_length >= 0)) {
+		// determine object length
+		int olength;
+		if (object->isVariable ()) {
+			olength = static_cast<RKVariable *> (object)->getLength ();
+		} else if (object->isContainer ()) {
+			if (static_cast<RContainerObject *> (object)->numDimensions ()) {
+				olength = static_cast<RContainerObject *> (object)->getDimension (0);
+			} else {
+				olength = 0;
+			}
+		}
+
+		// then check, whether length is valid
+		if ((min_length > 0) && (olength < min_length)) return false;
+		if ((max_length >= 0) && (olength > max_length)) return false;
+	}
+
+	// next, check classes
+	if (!classes.isEmpty ()) {
+		
+	}
+
+	// finally, check type
+	if (!types.isEmpty ()) {
+	}
+
 	// TODO
 /*
-	QValueList<RObject *> object_list;
 	int dims;
 	int min_length;
 	int max_length;
-	int min_num_objects;
-	int min_num_objects_if_any;
-	int max_num_objects;
 	QStringList classes;
 	QStringList types;
 }; */
-
+	return true;
 }
 
 RObject *RKComponentPropertyRObjects::objectValue () {
@@ -728,24 +773,93 @@ bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
 	return true;
 }
 
-/** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other object properties */
 void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
 	RK_TRACE (PLUGIN);
 
-	// TODO
-/*
-	QValueList<RObject *> object_list;
-	int dims;
-	int min_length;
-	int max_length;
-	int min_num_objects;
-	int min_num_objects_if_any;
-	int max_num_objects;
-	QStringList classes;
-	QStringList types;
-}; */
+	RK_ASSERT (governor);
+	connect (governor, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (governorValueChanged (RKComponentPropertyBase *)));
+	governor_modifier = modifier;
 
+	// reconcile requirements if applicable
+	if (reconcile_requirements && governor_modifier.isEmpty ()) {
+		if (governor->type () == PropertyRObjects) {
+			RKComponentPropertyRObjects *ogov = static_cast<RKComponentPropertyRObjects *> (governor); 	// convenience pointer
 
+			// reconcile dimensionality filter
+			if (dims != -1) {
+				if (ogov->dims == -1) {
+					ogov->dims = dims;
+				} else if (ogov->dims != dims) {
+					RK_DO (qDebug ("Could not reconcile dimensionality in RObject properties"), PLUGIN, DL_WARNING);
+				}
+			}
+			if (ogov->min_length < min_length) {
+				ogov->min_length = min_length;
+			}
+			if (max_length != -1) {
+				if (ogov->max_length > max_length) {
+					ogov->max_length = max_length;
+				}
+			}
+
+			// reconcile number of objects filter
+			if (ogov->min_num_objects < min_num_objects) {
+				ogov->min_num_objects = min_num_objects;
+			}
+			if (ogov->min_num_objects_if_any < min_num_objects_if_any) {
+				ogov->min_num_objects_if_any = min_num_objects_if_any;
+			}
+			if (max_num_objects && (ogov->max_num_objects > max_num_objects)) {
+				ogov->max_num_objects = max_num_objects;
+			}
+
+			// reconcile class filter
+			if (!classes.isEmpty ()) {
+				if (ogov->classes.isEmpty ()) {
+					ogov->classes= classes;
+				} else {
+					QStringList::Iterator it = ogov->classes.begin ();
+					while (it != ogov->classes.end ()) {
+						if (classes.contains (*it)) {
+							++it;
+						} else {
+							ogov->classes.erase (it);		// automatically advances to the next item
+						}
+					}
+					if (ogov->classes.isEmpty ()) {
+						RK_DO (qDebug ("Incompatible class filters for RObject properties"), PLUGIN, DL_WARNING);
+						ogov->classes = classes;
+					}
+				}
+			}
+
+			// reconcile type filter
+			if (!types.isEmpty ()) {
+				if (ogov->types.isEmpty ()) {
+					ogov->types = types;
+				} else {
+					QStringList::Iterator it = ogov->types.begin ();
+					while (it != ogov->types.end ()) {
+						if (types.contains (*it)) {
+							++it;
+						} else {
+							ogov->types.erase (it);		// automatically advances to the next item
+						}
+					}
+					if (ogov->types.isEmpty ()) {
+						RK_DO (qDebug ("Incompatible type filters for RObject properties"), PLUGIN, DL_WARNING);
+						ogov->types = types;
+					}
+				}
+			}
+
+			// make governor recheck its values
+			ogov->validizeAll ();
+		}
+	}
+
+	// fetch current value
+	governorValueChanged (governor);
 }
 
 void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase *property) {
@@ -792,6 +906,18 @@ void RKComponentPropertyRObjects::validizeAll (bool silent) {
 	if (changes) {
 		checkListLengthValid ();
 		if (!silent) emit (valueChanged (this));
+	}
+}
+
+void RKComponentPropertyRObjects::checkListLengthValid () {
+	RK_TRACE (PLUGIN);
+
+	is_valid = true;	// innocent until proven guilty
+	if (min_num_objects || max_num_objects || min_num_objects_if_any) {
+		int len = object_list.count ();
+		if (len < min_num_objects) is_valid = false;
+		if (len && (len < min_num_objects_if_any)) is_valid = false;
+		if (max_num_objects && (len > max_num_objects)) is_valid = false;
 	}
 }
 

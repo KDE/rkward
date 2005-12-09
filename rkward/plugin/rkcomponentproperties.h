@@ -223,11 +223,11 @@ public:
 	RKComponentPropertyRObjects (QObject *parent, bool required);
 /** destructor */
 	~RKComponentPropertyRObjects ();
-/** how many objects can this property hold? Use default values (-1) to remove constraints
+/** how many objects can this property hold? Use default values (0) to remove constraints
 @param min_num_objects Minimum number of objects for this property to be valid
 @param min_num_objects_if_any Some properties may be valid, if they hold either no objects at all, or at least a certain number of objects
 @param max_num_objects Maximum number of objects for this property to be valid */
-	void setListLength (int min_num_objects=-1, int min_num_objects_if_any=-1, int max_num_objects=-1);
+	void setListLength (int min_num_objects=0, int min_num_objects_if_any=0, int max_num_objects=0);
 /** add an object value */
 	bool addObjectValue (RObject *object);
 /** Set property to only accept certain classes. If you provide an empty list, all classes will be accepted*/
@@ -284,6 +284,7 @@ private:
 	int min_num_objects_if_any;
 	int max_num_objects;
 	QStringList classes;
+/** TODO: use a list of enums instead for internal purposes! */
 	QStringList types;
 	QString separator;
 };
