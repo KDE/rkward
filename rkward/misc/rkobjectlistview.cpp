@@ -198,12 +198,10 @@ void RKObjectListView::updateItem (QListViewItem *item, RObject *object) {
 
 	item->setText (0, object->getShortName ());
 	item->setText (1, object->getLabel ());
-	if (object->isContainer ()) {
-		item->setText (3, static_cast<RContainerObject*> (object)->makeClassString ("; "));
-	} else if (object->isVariable ()) {
+	if (object->isVariable ()) {
 		item->setText (2, static_cast<RKVariable*> (object)->getVarTypeString ());
-		item->setText (3, static_cast<RKVariable*> (object)->makeClassString (QString::null));
 	}
+	item->setText (3, object->makeClassString ("; "));
 
 	if (object->isDataFrame ()) {
 		item->setPixmap (0, SmallIcon("spreadsheet"));

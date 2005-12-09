@@ -31,14 +31,16 @@ class RKEditor;
 /**
 Base class for representations of objects in the R-workspace. RObject is never used directly (contains pure virtual functions).
 
+TODO: information about dimensionality and classes should be moved to RObject instead of its derived classes (virtual functions).
+	- after that, several other portions of the code should be updated (e.g. RKComponentPropertyRObjects)
 @author Thomas Friedrichsmeier
 */
 
 class RObject : public RCommandReceiver {
 public:
-	RObject(RContainerObject *parent, const QString &name);
+	RObject (RContainerObject *parent, const QString &name);
 
-	virtual ~RObject();
+	virtual ~RObject ();
 
 	enum RObjectType { DataFrame=1, Matrix=2, Array=4, List=8, Container=16, Variable=32, Workspace=64, Function=128, HasMetaObject=256 };
 	enum VarType { Unknown=0, Number=1, Factor=2, String=3, Invalid=4 };
@@ -56,9 +58,16 @@ public:
 	bool isDataFrame () { return (type & DataFrame); };
 	bool isVariable () { return (type & Variable); };
 	bool hasMetaObject () { return (type & HasMetaObject); };
-	
+
 	void rename (const QString &new_short_name);
 	void remove (bool removed_in_workspace);
+
+	int numClasses () { return num_classes; };
+	QString getClassName (int index) { return classname[index]; };
+	QString makeClassString (const QString &sep);
+/** @param class_name the name of the class to check for
+@returns true, if the object has (among others) the given class, false otherwise */
+	bool inherits (const QString &class_name);
 
 /** A map of objects accessible by their short name. Used in RContainerObject. Defined here for technical reasons. */
 	typedef QMap<QString, RObject*> RObjectMap;
@@ -106,6 +115,8 @@ protected:
 	RContainerObject *parent;
 	QString name;
 	int type;
+	int num_classes;
+	QString *classname;
 
 /** fetches the meta data from the backend */
 	virtual void getMetaData (RCommandChain *chain);
@@ -116,6 +127,10 @@ protected:
 	MetaMap *meta_map;
 	
 	void rCommandDone (RCommand *command);
+/** handles updating class names from an update class command given as argument (common functionality between RContainerObject and RKVariable
+@param command The command. Make sure it really is a command to update classes *before* calling this function!
+@returns true if the classes changed, false if no change resulted */
+	bool handleUpdateClassCommand (RCommand *command);
 	
 /** an instance of this struct is created, when the object is opened for editing. For one thing, it keeps track of which editor(s) are working on the object.
 In subclasses like RKVariable, the struct is extended to additionally hold the data of the object, etc. */

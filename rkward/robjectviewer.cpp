@@ -42,9 +42,9 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : QWidget (paren
 	
 	view_area->append (i18n("Object name: ") + object->getShortName ());
 	view_area->append (i18n("\nFull location: ") + object->getFullName ());
+	view_area->append (i18n("\nClass(es): ") + object->makeClassString (", "));
 	if (object->isContainer ()) {
 		RContainerObject *cobj = static_cast<RContainerObject*> (object);		// for convenience only
-		view_area->append (i18n("\nClass: ") + cobj->makeClassString (", "));
 		if (cobj->numDimensions ()) {
 			QString dummy = i18n("\nDimensions: ") + QString ().setNum (cobj->getDimension (0));
 			for (int i=1; i < cobj->numDimensions (); ++i) {

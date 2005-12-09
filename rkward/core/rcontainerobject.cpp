@@ -33,9 +33,8 @@
 
 RContainerObject::RContainerObject (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
-	classname = 0;
 	dimension = 0;
-	num_classes = num_dimensions = 0;
+	num_dimensions = 0;
 	num_children_updating = 0;
 }
 
@@ -62,7 +61,7 @@ void RContainerObject::rCommandDone (RCommand *command) {
 
 	bool properties_changed = false;
 	if (command->getFlags () == CLASSIFY_COMMAND) {
-		// WARNING: This code is (mostly) duplicated in RContainerObject!
+		// WARNING: This code is (mostly) duplicated in RKVariable!
 		if (!command->intVectorLength ()) {
 			RK_ASSERT (false);
 			return;
@@ -127,16 +126,7 @@ void RContainerObject::rCommandDone (RCommand *command) {
 		}
 		
 	} else if (command->getFlags () == UPDATE_CLASS_COMMAND) {
-		if (num_classes != command->stringVectorLength ()) {
-			num_classes = command->stringVectorLength ();
-			delete classname;
-			classname = new QString [num_classes];
-			properties_changed = true;
-		}
-		for (int cn=0; cn < num_classes; ++cn) {
-			if (classname[cn] != command->getStringVector ()[cn]) properties_changed = true;
-			classname[cn] = command->getStringVector ()[cn];
-		}
+		if (handleUpdateClassCommand (command)) properties_changed = true;
 		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
 	}
 }
@@ -178,18 +168,6 @@ RObject **RContainerObject::children () {
 	int i = 0;
 	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
 		ret[i++] = it.data ();
-	}
-	return ret;
-}
-
-QString RContainerObject::makeClassString (const QString &sep) {
-	RK_TRACE (OBJECTS);
-	QString ret;
-	for (int i=0; i < num_classes; ++i) {
-		ret.append (classname[i]);
-		if (i < (num_classes - 1)) {
-			ret.append (sep);
-		}
 	}
 	return ret;
 }

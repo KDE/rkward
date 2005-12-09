@@ -28,6 +28,7 @@
 #include "../debug.h"
 
 #define GET_META_COMMAND 1001
+#define UPDATE_CLASS_COMMAND 1002
 
 RObject::RObject (RContainerObject *parent, const QString &name) {
 	RK_TRACE (OBJECTS);
@@ -37,10 +38,14 @@ RObject::RObject (RContainerObject *parent, const QString &name) {
 	type = 0;
 	meta_map = 0;
 	data = 0;
+	num_classes = 0;
+	classname = 0;
 }
 
 RObject::~RObject () {
 	RK_TRACE (OBJECTS);
+
+	delete[] classname;
 	
 	if (data) discardEditData ();
 }
@@ -116,6 +121,29 @@ void RObject::setMetaProperty (const QString &id, const QString &value, bool syn
 	RKGlobals::tracker ()->objectMetaChanged (this);
 }
 
+QString RObject::makeClassString (const QString &sep) {
+	RK_TRACE (OBJECTS);
+	QString ret;
+	for (int i=0; i < num_classes; ++i) {
+		ret.append (classname[i]);
+		if (i < (num_classes - 1)) {
+			ret.append (sep);
+		}
+	}
+	return ret;
+}
+
+bool RObject::inherits (const QString &class_name) {
+	RK_TRACE (OBJECTS);
+
+	for (int i=0; i < num_classes; ++i) {
+		if (classname[i] == class_name) {
+			return true;
+		}
+	}
+	return false;
+}
+
 QString RObject::makeChildName (const QString &short_child_name) {
 	RK_TRACE (OBJECTS);
 	return (getFullName () + "[[\"" + short_child_name + "\"]]");
@@ -181,6 +209,25 @@ void RObject::rCommandDone (RCommand *command) {
 		// TODO: only signal change, if there really was a change!
 		RKGlobals::tracker ()->objectMetaChanged (this);
 	}
+}
+
+bool RObject::handleUpdateClassCommand (RCommand *command) {
+	RK_TRACE (OBJECTS);
+
+	bool change = false;
+
+	if (num_classes != command->stringVectorLength ()) {
+		num_classes = command->stringVectorLength ();
+		delete[] classname;
+		classname = new QString [num_classes];
+		change = true;
+	}
+	for (int cn=0; cn < num_classes; ++cn) {
+		if (classname[cn] != command->getStringVector ()[cn]) change = true;
+		classname[cn] = command->getStringVector ()[cn];
+	}
+
+	return change;
 }
 
 void RObject::rename (const QString &new_short_name) {

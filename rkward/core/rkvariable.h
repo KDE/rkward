@@ -26,7 +26,7 @@ class RContainerObject;
 /** Abstract representation of a variable. A variable in this diction is an RObject, which is a vector of data. It may internally be a factor or a vector.
 RKVariables are so far the only type of object that is really editable (data.frames are just a bundle of RKVariables). Therefore, for most practical purposes, the RKVariable represents a column in a table.
 
-TODO: acutally, for now, the data is always given to the backend as strings. Change that!
+TODO: actually, for now, the data is always given to the backend as strings. Change that!
 TODO: there should be "chunks" of column-data. This should be done at the level of rows, i.e. across columns. After all, if a row gets added/removed in one column, all other columns of the same table will also be affected.
 TODO: which functions should do syncing by themselves, which should not? Or should all set... ()-functions have an extra parameter for this?
 
@@ -39,7 +39,7 @@ public:
 
 	~RKVariable ();
 
-/** The VarType in String representatio */
+/** The VarType in String representation */
 	QString getVarTypeString ();
 /** The VarType of this variable. Note: This is only the preferred VarType. In R the variable may be stored differently, if it contains illegal values (in that
 case it will be stored as a character vector */
@@ -57,9 +57,6 @@ case it will be stored as a character vector */
 	
 /** reimplemented from RObject to also store value labels/factor levels (and in the future probably futher info) */
 	void writeMetaData (RCommandChain *chain);
-protected:
-	int num_classes;
-	QString *classname;
 friend class RContainerObject;
 	int length;
 	RObject::VarType var_type;
@@ -155,7 +152,6 @@ numeric! */
 	enum CellAlign { AlignCellLeft=0, AlignCellRight=1 };
 /** returns alignment to use for this variable */
 	CellAlign getAlignment ();
-    QString makeClassString (const QString &sep);
 protected:
 /** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData : public EditData {

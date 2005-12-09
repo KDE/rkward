@@ -34,10 +34,6 @@ public:
 
     ~RContainerObject();
 
-	int numClasses () { return num_classes; };
-	QString getClassName (int index) { return classname[index]; };
-	QString makeClassString (const QString &sep);
-	
 	void writeChildMetaData (RCommandChain *chain);
 	
 	void updateFromR ();
@@ -78,8 +74,6 @@ protected:
 and takes the appropriate measures */
 	void checkRemovedChildren (char **current_children, int current_child_count);
 
-	int num_classes;
-	QString *classname;
 	int num_dimensions;
 	int *dimension;
 	int num_children_updating;

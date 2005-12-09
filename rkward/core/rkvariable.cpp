@@ -42,8 +42,6 @@ RKVariable::RKVariable (RContainerObject *parent, const QString &name) : RObject
 	RObject::type = Variable;
 	var_type = Unknown;
 	length = 0;
-	num_classes = 0 ;
-	classname = 0 ;
 }
 
 RKVariable::~RKVariable () {
@@ -216,36 +214,13 @@ void RKVariable::rCommandDone (RCommand *command) {
 		}
 		setSyncing (true);
 	} else if (command->getFlags () == UPDATE_CLASS_COMMAND) {
-		if (num_classes != command->stringVectorLength ()) {
-// TODO: clean deletion of classnames. need to valgrind one day, anyway
-			num_classes = command->stringVectorLength ();
-			delete classname;
-			classname = new QString [num_classes];
-			properties_changed = true;
-		}
-		for (int cn=0; cn < num_classes; ++cn) {
-			if (classname[cn] != command->getStringVector ()[cn]) properties_changed = true;
-			classname[cn] = command->getStringVector ()[cn];
-		}
+		if (handleUpdateClassCommand (command)) properties_changed = true;
 		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
 
 		parent->childUpdateComplete ();
 	}
 }
 
-QString RKVariable::makeClassString (const QString &sep)
-{
-	RK_TRACE (OBJECTS);
-	QString ret;
-	for (int i=0; i < num_classes; ++i) {
-		ret.append (classname[i]);
-		if (i < (num_classes - 1)) {
-			ret.append (sep);
-		}
-	}
-	return ret;
-
-}
 
 ////////////////////// BEGIN: data-handling //////////////////////////////
 #define ALLOC_STEP 100
