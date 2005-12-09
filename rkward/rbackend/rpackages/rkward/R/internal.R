@@ -25,7 +25,7 @@
 	if (is.function (x)) type = type + 128
 	if (!is.null (attr (x, ".rk.meta"))) type = type + 256
 	d <- dim (x)
-	if (length (d) < 1) d = length (d);	# handling for objects that according to R do not have a dimension (such as vectors, functions, etc.)
+	if (length (d) < 1) d <- length (x);	# handling for objects that according to R do not have a dimension (such as vectors, functions, etc.)
 	c (type, d)
 }
 

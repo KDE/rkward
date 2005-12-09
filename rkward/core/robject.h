@@ -31,8 +31,6 @@ class RKEditor;
 /**
 Base class for representations of objects in the R-workspace. RObject is never used directly (contains pure virtual functions).
 
-TODO: information about dimensionality and classes should be moved to RObject instead of its derived classes (virtual functions).
-	- after that, several other portions of the code should be updated (e.g. RKComponentPropertyRObjects)
 @author Thomas Friedrichsmeier
 */
 
@@ -42,7 +40,12 @@ public:
 
 	virtual ~RObject ();
 
+/** types of objects, RKWard knows about */
 	enum RObjectType { DataFrame=1, Matrix=2, Array=4, List=8, Container=16, Variable=32, Workspace=64, Function=128, HasMetaObject=256 };
+	#define ROBJECT_TYPE_INTERNAL_MASK (RObject::Container | RObject::Variable | RObject::Workspace)
+/** @returns false if an object of the given old type cannot represent an object of the given new type (e.g. (new_type & RObjectType::Variable), but (old_type & RObjectType::Container)). */
+	static bool isMatchingType (int old_type, int new_type) { return ((old_type & ROBJECT_TYPE_INTERNAL_MASK) == (new_type & ROBJECT_TYPE_INTERNAL_MASK)); };
+/** types of variables, RKWard knows about. See \ref RKVariable */
 	enum VarType { Unknown=0, Number=1, Factor=2, String=3, Invalid=4 };
 	
 	QString getShortName ();
@@ -58,8 +61,6 @@ public:
 	bool isDataFrame () { return (type & DataFrame); };
 	bool isVariable () { return (type & Variable); };
 	bool hasMetaObject () { return (type & HasMetaObject); };
-/** @returns false if an object of the given old type can not represent an object of the given new type (e.g. (new_type & RObjectType::Variable), but (old_type & RObjectType::Container)). */
-	bool isMatchingType (int old_type, int new_type);
 
 	void rename (const QString &new_short_name);
 	void remove (bool removed_in_workspace);
@@ -71,7 +72,7 @@ public:
 @returns true, if the object has (among others) the given class, false otherwise */
 	bool inherits (const QString &class_name);
 
-/** get number of dimensions. In RKWard each object is viewed to have at least one dimension (this view, of course, is slightly incorrect as well, but makes life easier) */
+/** get number of dimensions. For simplicity, In RKWard each object is considered to have at least one dimension (but that dimension may be 0 in length) */
 	int numDimensions () { return num_dimensions; };
 /** get the length of the given dimension. The object is guaranteed to have at least 1 dimension, so calling getDimension (0) is always safe */
 	int getDimension (int index) { return dimension[index]; };

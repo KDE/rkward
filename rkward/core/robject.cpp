@@ -146,13 +146,6 @@ bool RObject::inherits (const QString &class_name) {
 	return false;
 }
 
-bool RObject::isMatchingType (int old_type, int new_type) {
-	RK_TRACE (OBJECTS);
-
-	int type_mask = Container | Variable | Workspace;	// for easier typing
-	return ((old_type & type_mask) == (new_type & type_mask));
-}
-
 QString RObject::makeChildName (const QString &short_child_name) {
 	RK_TRACE (OBJECTS);
 	return (getFullName () + "[[\"" + short_child_name + "\"]]");
