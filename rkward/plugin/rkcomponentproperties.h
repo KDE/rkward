@@ -20,11 +20,16 @@
 
 #include <qobject.h>
 
+/* we need these foward declarations for now, due to cylcic includes. TODO: fix this */
+class RKComponentPropertyBase;
+class RKComponentPropertyBool;
+#include "rkcomponent.h"
+
 /** Base class for all RKComponentProperties. The base class can handle only a string-property. See derived classes for special types of properties.
 
 see \ref RKComponentProperties
 */
-class RKComponentPropertyBase : public QObject {
+class RKComponentPropertyBase : public QObject, public RKComponentBase {
 	Q_OBJECT
 public:
 /** constructor. Pass a valid QObject as parent so the property will be auto-destructed when no longer needed */
@@ -86,7 +91,7 @@ public:
 /** @param value_true string value if true/on
 @param value_false string value if false/off
 @param default_state value to use, if invalid string value was set */
-	RKComponentPropertyBool (QObject *parent, bool required, const QString &value_true, const QString &value_false, bool default_state);
+	RKComponentPropertyBool (QObject *parent, bool required, const QString &value_true="TRUE", const QString &value_false="FALSE", bool default_state=true);
 /** destructor */
 	~RKComponentPropertyBool ();
 /** sets the bool value. Also takes care of notifying dependent components */
