@@ -1,24 +1,12 @@
 Important note
 ==================
 
-RKward will not function correctly until it is installed properly. In particular, you will not see some important menus otherwise.
+RKward will not function correctly unless installed properly. In particular, you will not see some important menus otherwise.
 Please see INSTALL for details.
-
-
-Release notes / state of the app
-==================
-
-RKWard is not yet finished and it has not even reached the point of being a useful application. Way to go!
-
-The purpose of the current release of RKWard is to give some idea of what RKWard will look like on day, and to test and demonstrate some concepts. It is provided in the hope of attracting further developers / getting useful suggestions. It is of no use whatsoever to end-users.
-
-Do not use RKWard to do actual computations yet. Do not use it on valuable data. Expect it to do all sorts of evil things.
 
 
 Getting help / getting involved
 ==================
 
-Contact the author via:
-tfry AT users DOT sourceforge DOT net
-or
-rkward-devel AT lists DOT sourceforge DOT net
+For contact information, please refer to the rkward website: http://rkward.sourceforge.net
+You may also post all sorts of questions to the main mailing list: rkward-devel AT lists DOT sourceforge DOT net

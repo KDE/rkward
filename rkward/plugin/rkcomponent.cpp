@@ -19,6 +19,33 @@
 
 #include "../debug.h"
 
+//############### RKComponentBase #####################
+
+RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QString *modifier) {
+	RK_TRACE (PLUGIN);
+
+	if (identifier.isNull ()) return this;
+
+	RKComponentBase *child = child_map.find (identifier.section ("::", 0, 0));
+	if (!child) {	// if we do not have such a child, return 0 (RKComponentBase does not support modifiers)
+		RK_DO (qDebug ("Failed component lookup"), PLUGIN, DL_WARNING);
+		return 0;
+	} else {	// else do recursive lookup
+		return child->lookupComponent (identifier.section ("::", 1), modifier);
+	}
+}
+
+void RKComponentBase::addChild (const QString &id, RKComponentBase *child) {
+	RK_TRACE (PLUGIN);
+
+	child_map.insert (id, child);
+}
+
+
+
+
+//############### RKComponent ########################
+
 RKComponent::RKComponent (RKComponent *parent) : QWidget (parent) {
 	RK_TRACE (PLUGIN);
 
@@ -64,5 +91,16 @@ void RKComponent::setReady (bool ready) {
 	RK_TRACE (PLUGIN);
 }
 
+void RKComponent::setVisible (bool visible) {
+	visibilityProperty ()->setBoolValue (visible);
+}
+
+void RKComponent::setEnabled (bool enabled) {
+	enablednessProperty ()->setBoolValue (enabled);
+}
+
+void RKComponent::setRequired (bool required) {
+	requirednessProperty ()->setBoolValue (required);
+}
 
 #include "rkcomponent.moc"

@@ -30,7 +30,7 @@ public:
 	virtual ~RKComponentBase ();
 
 /** tries to locate a component (or property) described by identifier as a child (of any generation) of this RKComponentBase. If found, a pointer to this is returned. Also, the modifier parameter is set to hold any remaining modifier contained in the identifier.
-@param identifier The identifier string to look for (including a potential modifier suffix.
+@param identifier The identifier string to look for (including a potential modifier suffix).
 @param modifier If a non null pointer to QString is given, this will be set to the value of the remaining modifier (only if successful)
 @returns a pointer to the RKComponentBase, if found, or 0, if no such RKComponentBase exists as a child of this RKComponentBase. */
 	virtual RKComponentBase* lookupComponent (const QString &identifier, QString *modifier);
@@ -64,12 +64,12 @@ public:
 /** standard property controlling requiredness */
 	RKComponentPropertyBool *requirednessProperty ()  { return requiredness_property; };
 
+/** convenience call to set visibilty property (and hence visibility of this component). Can't inline due to inclusion problems. */
+	void setVisible (bool visible);
 /** convenience call to set visibilty property (and hence visibility of this component) */
-	void setVisible (bool visible) { visibilityProperty ()->setBoolValue (visible); };
+	void setEnabled (bool enabled);
 /** convenience call to set visibilty property (and hence visibility of this component) */
-	void setEnabled (bool enabled) { enablednessProperty ()->setBoolValue (enabled); };
-/** convenience call to set visibilty property (and hence visibility of this component) */
-	void setRequired (bool required) { requirednessProperty ()->setBoolValue (required); };
+	void setRequired (bool required);
 
 /** The parent of this component. Should be notified, whenever isSatisfied () or isReady ()-state changed. */
 	RKComponent *parent () { return _parent; };
@@ -86,7 +86,7 @@ protected:
 	RKComponentPropertyBool *requiredness_property;
 	RKComponent *_parent;
 private:
-/** also notifies the parent, if applicable */
+/** Internal function to use when satisfaction state changes. Also notifies the parent, if applicable */
 	void setSatisfied (bool satisfied);
 	void setReady (bool ready);
 };
