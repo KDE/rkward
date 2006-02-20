@@ -70,9 +70,9 @@ install: build
 	rm -vf $(CURDIR)/debian/rkward/usr/share/apps/katepart/syntax/r.xml
 	
 	# install the rkward R package to installation directory
-	dh_installdirs usr/lib/R/library
-	R CMD INSTALL -l $(CURDIR)/debian/rkward/usr/lib/R/library rkward/rbackend/rpackages/rkward
-	rm -vf $(CURDIR)/debian/rkward/usr/lib/R/library/R.css $(CURDIR)/debian/rkward/usr/lib/R/library/rkward/COPYING
+	dh_installdirs usr/lib/R/site-library
+	R CMD INSTALL -l $(CURDIR)/debian/rkward/usr/lib/R/site-library rkward/rbackend/rpackages/rkward
+	rm -vf $(CURDIR)/debian/rkward/usr/lib/R/site-library/R.css $(CURDIR)/debian/rkward/usr/lib/R/site-library/rkward/COPYING
 
 # Build architecture-independent files here.
 binary-indep: build install
