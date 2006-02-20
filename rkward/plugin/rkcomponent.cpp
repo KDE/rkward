@@ -2,7 +2,7 @@
                           rkcomponent  -  description
                              -------------------
     begin                : Tue Dec 13 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,10 +24,16 @@
 RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QString *modifier) {
 	RK_TRACE (PLUGIN);
 
-	if (identifier.isNull ()) return this;
+	if (identifier.isEmpty ()) return this;
 
 	RKComponentBase *child = child_map.find (identifier.section ("::", 0, 0));
-	if (!child) {	// if we do not have such a child, return 0 (RKComponentBase does not support modifiers)
+	if (!child) {	// if we do not have such a child, return 0 unless this is a property
+		if (isProperty ()) {
+			if (modifier) {
+				*modifier = identifier.section ("::", 1);
+			}
+			return this;
+		}
 		RK_DO (qDebug ("Failed component lookup"), PLUGIN, DL_WARNING);
 		return 0;
 	} else {	// else do recursive lookup
@@ -41,7 +47,19 @@ void RKComponentBase::addChild (const QString &id, RKComponentBase *child) {
 	child_map.insert (id, child);
 }
 
+QString RKComponentBase::fetchStringValue (const QString &identifier) {
+	RK_TRACE (PLUGIN);
 
+	QString mod;
+	RKComponentBase *prop = lookupComponent (identifier, &mod);
+
+	if (prop && (prop->isProperty ())) {
+		return (static_cast<RKComponentPropertyBase *> (prop)->value (mod));
+	} else {
+		RK_DO (qDebug ("Failed lookup or not a property: '%s'", identifier.latin1 ()), PLUGIN, DL_WARNING);
+		return QString::null;
+	}
+}
 
 
 //############### RKComponent ########################
@@ -80,15 +98,22 @@ void RKComponent::propertyValueChanged (RKComponentPropertyBase *property) {
 
 bool RKComponent::isSatisfied () {
 	RK_TRACE (PLUGIN);
+
+	// TODO
+	return true;
 }
 
 /** also notifies the parent, if applicable */
 void RKComponent::setSatisfied (bool satisfied) {
 	RK_TRACE (PLUGIN);
+
+	// TODO
 }
 
 void RKComponent::setReady (bool ready) {
 	RK_TRACE (PLUGIN);
+
+	// TODO
 }
 
 void RKComponent::setVisible (bool visible) {

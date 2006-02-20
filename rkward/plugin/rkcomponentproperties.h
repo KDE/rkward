@@ -2,7 +2,7 @@
                           rkcomponentproperties  -  description
                              -------------------
     begin                : Fri Nov 25 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -36,16 +36,6 @@ public:
 	RKComponentPropertyBase (QObject *parent, bool required);
 /** destructor */
 	virtual ~RKComponentPropertyBase ();
-/** enum of types of properties. Used from RTTI */
-	enum RKComponentPropertyTypes {
-		PropertyBase = 1,
-		PropertyBool = 2,
-		PropertyInt = 3,
-		PropertyDouble = 4,
-		PropertyRObjects = 5,
-		PropertyCode = 6,
-		PropertyUser = 1000		/**< for user expansion */
-	};
 /** supplies the current value. Since more than one value may be supplied, modifier can be used to select a value. Default implementation only has  a single string, however. */
 	virtual QString value (const QString &modifier=QString::null);
 /** set the value in string form.
@@ -59,8 +49,8 @@ public:
 	void setRequired (bool require)  { required = require; };
 /** see setRequired () */
 	virtual bool isSatisfied ();
-/** for RTTI. see RKComponentPropertyTypes */
-	virtual int type () { return PropertyBase; };
+/** for RTTI. see RKComponentBase::RKComponentTypes */
+	int type () { return PropertyBase; };
 /** connect this property to a governor property (given as argument). If reconcile_requirements, the requirements of both properties are reconciled to the least common denominator. The dependent property will be notified on all changes made in the governing property, so it can update its value. 
 Generally with few exceptions, you can only connect to properties that are either of the same class as this property, or of an extended class. Maybe in the future we will add some sophisticated converters allowing to connect vastly different types of properties in a meaningful way.
 If you specify a modifier, only the sub-value indicated by the modifier will be retrieved from the governing property on governorValueChanged. In this case reconcile_requirements is ignored. */

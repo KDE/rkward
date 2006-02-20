@@ -2,7 +2,7 @@
                           rkcomponent  -  description
                              -------------------
     begin                : Tue Dec 13 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -28,7 +28,22 @@ public:
 	RKComponentBase ();
 /** destructor */
 	virtual ~RKComponentBase ();
-
+/** enum of types of properties. Used from RTTI. Don't change the values, as there are some range checks in the code (see isProperty ()) */
+	enum RKComponentTypes {
+		PropertyBase = 1,
+		PropertyBool = 2,
+		PropertyInt = 3,
+		PropertyDouble = 4,
+		PropertyRObjects = 5,
+		PropertyCode = 6,
+		PropertyUser = 1000,		/**< for user expansion */
+		PropertyEnd = 1999,
+		ComponentBase = 2001,
+		Component = 2002,
+		ComponentUser = 3000	/**< for user expansion */
+	};
+/** for RTTI. see RKComponentBase::RKComponentTypes */
+	int type () { return ComponentBase; };
 /** tries to locate a component (or property) described by identifier as a child (of any generation) of this RKComponentBase. If found, a pointer to this is returned. Also, the modifier parameter is set to hold any remaining modifier contained in the identifier.
 @param identifier The identifier string to look for (including a potential modifier suffix).
 @param modifier If a non null pointer to QString is given, this will be set to the value of the remaining modifier (only if successful)
@@ -36,6 +51,8 @@ public:
 	virtual RKComponentBase* lookupComponent (const QString &identifier, QString *modifier);
 /** Locate the component.subcomponent.property.value described by identifier and return its value as a string. Especially useful as a callback in code templates! Recursively walks subcomponents/properties until the requested value is found. @See RKComponentBase::lookupComponent */
 	QString fetchStringValue (const QString &identifier);
+/** returns true, if this is a property */
+	bool isProperty () { return (type () <= PropertyEnd); };
 protected:
 /** simple convenience function to add a child to the map of children */
 	void addChild (const QString &id, RKComponentBase *child);
@@ -53,6 +70,7 @@ public:
 	RKComponent (RKComponent *parent);
 /** destructor */
 	virtual ~RKComponent ();
+	int type () { return Component; };
 public slots:
 /** generally the valueChanged () signal of all RKComponentPropertys directly owned by this component should be connected to this (Qt-)slot, so the component can update itself accordingly. Default implementation handles changes in visibilty, enabledness and requiredness properties. If you reimplement this, you will most likely still want to call the default implementation to handle these. */
 	virtual void propertyValueChanged (RKComponentPropertyBase *property);
