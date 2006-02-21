@@ -20,4 +20,4 @@
 #include "../debug.h"
 
 
-#include "rkstandardcomponent.moc"
+//#include "rkstandardcomponent.moc"

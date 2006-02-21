@@ -20,6 +20,8 @@
 
 #include "rkcomponent.h"
 
+#include <qdom.h>
+
 /** The standard type of component (i.e. stand-alone), previously known as "plugin" */
 class RKStandardComponent : public RKComponent {
 public:

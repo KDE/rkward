@@ -8,11 +8,11 @@ if test -n "${R_HOME}" && \
 fi
 R_HOME="${R_HOME_DIR}"
 export R_HOME
-R_SHARE_DIR="${R_HOME_DIR}/share"
+R_SHARE_DIR=###R_SHARE_DIR###
 export R_SHARE_DIR
-R_INCLUDE_DIR="${R_HOME_DIR}/include"
+R_INCLUDE_DIR=###R_INCLUDE_DIR###
 export R_INCLUDE_DIR
-R_DOC_DIR="${R_HOME_DIR}/doc"
+R_DOC_DIR=###R_DOC_DIR###
 export R_DOC_DIR
 
 # Adjust library path so libR.so can be located

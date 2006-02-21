@@ -1856,6 +1856,9 @@ AC_SUBST(AUTODIRS)
 dnl ############################################ RKWARD specific addition begin #################################
 AC_REQUIRE([CHECK_RHOME])
 AC_REQUIRE([CHECK_LIBRSO])
+AC_REQUIRE([CHECK_RINCLUDE])
+AC_REQUIRE([CHECK_RSHARE])
+AC_REQUIRE([CHECK_RDOC])
 dnl ############################################ RKWARD specific addition end ###################################
 
 ])
@@ -1868,7 +1871,7 @@ AC_DEFUN([CHECK_RHOME],
 AC_MSG_CHECKING(whether R_HOME directory exists)
 AC_ARG_WITH(r-home,AC_HELP_STRING([--r-home=DIR],[specify location of R_HOME directory]),
   use_r_home="$withval",
-  use_r_home="/usr/local/lib/R"
+  use_r_home=`R CMD sh -c 'echo $R_HOME' || echo "/usr/local/lib/R"`
 )
 r_home=
 if test -d "$use_r_home"; then
@@ -1876,12 +1879,13 @@ if test -d "$use_r_home"; then
 else
    AC_MSG_ERROR([
    $use_r_home does not exist as a directory!
-   Check your installation of R, and use --with-r-home to specify the correct location.])
+   Check your installation of R, and use --r-home to specify the correct location.])
 fi
 AC_SUBST(R_HOMEDIR)
 
 AC_MSG_RESULT($use_r_home)
 ])
+
 
 dnl check for existence of libR.so
 AC_DEFUN([CHECK_LIBRSO],
@@ -1893,9 +1897,79 @@ else
    AC_MSG_ERROR([
    $R_HOMEDIR/lib/libR.so does not exist.
    Check whether you have compiled R with shared library, 
-   and the --with-r-home setting was detected correctly above.])
+   and the --r-home setting was detected correctly above.])
 fi
 ])
+
+
+dnl find out R_INLUCDE_DIR
+AC_DEFUN([CHECK_RINCLUDE],
+[
+AC_MSG_CHECKING(for R include files)
+AC_ARG_WITH(r-includes,AC_HELP_STRING([--r-includes=DIR],[specify location of R include files]),
+  use_r_includes="$withval",
+  use_r_includes=`R CMD sh -c 'echo $R_INCLUDE_DIR' || echo "$R_HOMEDIR/include"`
+)
+
+r_includes=
+if test -f "$use_r_includes/R.h"; then
+   R_INCLUDEDIR="$use_r_includes"
+else
+   AC_MSG_ERROR([
+   $use_r_includes/R.h does not exist!
+   Check your installation of R, and use --r-includes to specify the correct directory.])
+fi
+AC_SUBST(R_INCLUDEDIR)
+
+AC_MSG_RESULT($use_r_includes)
+])
+
+
+dnl find out about R_SHARE_DIR
+AC_DEFUN([CHECK_RSHARE],
+[
+AC_MSG_CHECKING(for R_SHARE directory)
+AC_ARG_WITH(r-share,AC_HELP_STRING([--r-share=DIR],[specify location of R_SHARE directory]),
+  use_r_share="$withval",
+  use_r_share=`R CMD sh -c 'echo $R_SHARE_DIR' || echo "$R_HOMEDIR/share"`
+)
+
+r_share=
+if test -d "$use_r_share"; then
+   R_SHAREDIR="$use_r_share"
+else
+   AC_MSG_ERROR([
+   $use_r_share does not exist as a directory!
+   Check your installation of R, and use --r-share to specify the correct directory.])
+fi
+AC_SUBST(R_SHAREDIR)
+
+AC_MSG_RESULT($use_r_share)
+])
+
+
+dnl find out about R_DOC_DIR
+AC_DEFUN([CHECK_RDOC],
+[
+AC_MSG_CHECKING(for R_DOC directory)
+AC_ARG_WITH(r-doc,AC_HELP_STRING([--r-doc=DIR],[specify location of R_DOC directory]),
+  use_r_doc="$withval",
+  use_r_doc=`R CMD sh -c 'echo $R_DOC_DIR' || echo "$R_HOMEDIR/doc"`
+)
+
+r_doc=
+if test -d "$use_r_doc"; then
+   R_DOCDIR="$use_r_doc"
+else
+   AC_MSG_ERROR([
+   $use_r_doc does not exist as a directory!
+   Check your installation of R, and use --r-doc to specify the correct directory.])
+fi
+AC_SUBST(R_DOCDIR)
+
+AC_MSG_RESULT($use_r_doc)
+])
+
 dnl ############################################ RKWARD specific addition end ###################################
 
 
