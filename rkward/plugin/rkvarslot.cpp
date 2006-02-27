@@ -352,7 +352,7 @@ QString RKVarSlot::complaints () {
 	RK_TRACE (PLUGIN);
 
 	if (isSatisfied ()) return QString::null;
-	return i18n (" - You have to select a variable for the \"" + label->text () + "\"-field\n");
+	return (i18n (" - You have to select a variable for the \"%1\"-field\n").arg (label->text ()));
 }
 
 void RKVarSlot::setEnabled(bool checked){

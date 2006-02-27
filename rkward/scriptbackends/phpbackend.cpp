@@ -178,7 +178,7 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 	if (have_data) {
 		if (!startup_done) {
 				destroy ();
-				KMessageBox::error (0, i18n ("There has been an error\n(\"") + data.stripWhiteSpace () + i18n ("\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKward or an invalid setting for the location of the PHP support files. Check the settings (Settings->Configure Settings->PHP backend) and try again."), i18n ("PHP-Error"));
+				KMessageBox::error (0, i18n ("There has been an error\n(\"%1\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKward or an invalid setting for the location of the PHP support files. Check the settings (Settings->Configure Settings->PHP backend) and try again.").arg (data.stripWhiteSpace ()), i18n ("PHP-Error"));
 				emit (haveError ());
 				return;
 		}
@@ -217,7 +217,7 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 		} else if (request.startsWith ("PHP-Error")) {
 				QString error = request.remove ("PHP-Error");
 				destroy ();
-				KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"") + error.stripWhiteSpace () + i18n ("\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings."), i18n ("PHP-Error"));
+				KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"%1\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings.").arg (error.stripWhiteSpace ()), i18n ("PHP-Error"));
 				emit (haveError ());
 				return;
 		}
