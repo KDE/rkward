@@ -65,9 +65,10 @@ protected:
 class RKComponent : public QWidget, public RKComponentBase {
 	Q_OBJECT
 public:
-/** constructor
-@param parent The parent RKComponent (also used as the parent widget). If 0, this RKComponent will be a top-level component/widget */
-	RKComponent (RKComponent *parent);
+/** constructor.
+@param parent_component The parent RKComponent. If 0, this RKComponent will be a top-level component
+@param parent_widget The parent QWidget. This may be the same as the parent_component or a different specific widget.. If 0, this RKComponent will be represented by a top-level widget */
+	RKComponent (RKComponent *parent_component, QWidget *parent_widget);
 /** destructor */
 	virtual ~RKComponent ();
 	int type () { return Component; };
@@ -90,7 +91,7 @@ public:
 	void setRequired (bool required);
 
 /** The parent of this component. Should be notified, whenever isSatisfied () or isReady ()-state changed. */
-	RKComponent *parent () { return _parent; };
+	RKComponent *parentComponent () { return _parent; };
 
 /** check whether the component is satisfied (such as after a value change or requireness change). If statisfied state has changed, and silent==false, notfies parent. TODO: maybe statisfaction-state should be made a property as well! */
 	virtual void checkSatisfied (bool silent=false);

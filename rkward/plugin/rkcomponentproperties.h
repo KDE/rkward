@@ -288,7 +288,12 @@ private:
 
 /** special type of RKComponentProperty used to contain R code. All stand-alone RKComponents have this. The great thing about this, is that code can be made available to embedding RKComponents by just fetching the component.code.preprocess (or .calculate, .printout, .cleanup) value */
 class RKComponentPropertyCode : public RKComponentPropertyBase {
+	Q_OBJECT
 public:
+/** constructor */
+	RKComponentPropertyCode (QObject *parent, bool required);
+/** destructor */
+	~RKComponentPropertyCode ();
 /** the preprocess code */
 	QString preprocess ();
 /** the calculate code */
@@ -297,6 +302,19 @@ public:
 	QString printout ();
 /** the cleanup code */
 	QString cleanup ();
+
+	void setPreprocess (const QString &code);
+	void setCalculate (const QString &code);
+	void setPrintout (const QString &code);
+	void setCleanup (const QString &code);
+
+/** Sets all code to null strings and satisfied to false */
+	void reset ();
+private:
+	bool have_preprocess;
+	bool have_calculate;
+	bool have_printout;
+	bool have_cleanup;
 };
 
 

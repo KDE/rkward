@@ -644,7 +644,7 @@ void RKPlugin::changed () {
 	RK_TRACE (PLUGIN);
 /* why don't we do the update right here? Two reasons:
 	- several widgets may be updating in a chain, an each will emit a change signal. However, we only want to update once.
-	- some widgets may be in a bad state, if the change-event was due to an RObject being deleted. These widgets should get a change to update before we try to get values from them */
+	- some widgets may be in a bad state, if the change-event was due to an RObject being deleted. These widgets should get a chance to update before we try to get values from them */
 	update_timer->start (0, true);
 }
 
