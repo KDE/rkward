@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="" namespace="rkward">
+<document base_prefix="distributions/" namespace="rkward">
 	<components>
 	
 		<component type="standard" id="binomial_quantiles" file="binomial_quantiles.xml" label="Binomial quantils" />
