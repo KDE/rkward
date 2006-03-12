@@ -1,7 +1,8 @@
 pluginsdir = $(kde_datadir)/rkward/
 dist_plugins_DATA = \
 	standard_plugins.pluginmap \
-	distributions.pluginmap
+	distributions.pluginmap \
+	plots.pluginmap
 
 pluginsX00meansdir = $(kde_datadir)/rkward/00means
 pluginsX00meansX00ttestsdir = $(kde_datadir)/rkward/00means/00ttests
@@ -112,4 +113,11 @@ dist_pluginsXdistributions_DATA = \
 	distributions/t_probabilities.xml \
 	distributions/t_quantiles.php \
 	distributions/t_quantiles.xml
+
+pluginsXplotsdir = $(kde_datadir)/rkward/plots
+dist_pluginsXplots_DATA = \
+	plots/box_plot.php \
+	plots/box_plot.xml \
+	plots/histogram.php \
+	plots/histogram.xml
 

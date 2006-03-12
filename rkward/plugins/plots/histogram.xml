@@ -1,0 +1,26 @@
+<!DOCTYPE rkplugin>
+<document>
+  <code file="histogram.php" />
+  <dialog label="Histogram" >
+    <tabbook>
+      <tab label="Variable(s)" >
+        <row>
+          <varselector id="vars" />
+          <varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
+        </row>
+      </tab>
+      <tab label="Options" >
+        <column>
+          <radio id="scale" label="Scale" >
+            <option value="FALSE" label="No Frequency" />
+            <option value="TRUE" label="Frequency" />
+          </radio>
+          <column>
+            <checkbox value_unchecked="0" checked="false" value="1" id="rug" label="Rug" />
+            <checkbox value_unchecked="0" checked="false" value="1" id="jitter" label="Jitter" />
+          </column>
+        </column>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>
