@@ -1,0 +1,26 @@
+<!DOCTYPE rkplugin>
+<!--This is the simple "Normal quantile" plugin-->
+<document>
+  <code file="normal_quantiles.php" />
+  <dialog label="Normal quantile" >
+    <tabbook>
+      <tab label="Normal quantile" >
+        <frame>
+          <row>
+            <column>
+              <spinbox max_precision="4" default_precision="4" type="real" initial="0.95" id="p" min="0" max="1" label="probability [0,1]" depend="probs" />
+              <spinbox max_precision="2" default_precision="2" type="real" initial="0" id="mean" min="-10000000" max="10000000" label="mu (mean)" depend="probs" />
+              <spinbox max_precision="2" default_precision="2" type="real" initial="1" id="sd" min="-10000000" max="10000000" label="sigma (standard deviation)" depend="probs" />
+            </column>
+            <column>
+              <radio id="tail" label="Choose type of probability" >
+                <option value="lower.tail=TRUE" label="lower tail" />
+                <option value="lower.tail=FALSE" label="upper tail" />
+              </radio>
+            </column>
+          </row>
+        </frame>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>

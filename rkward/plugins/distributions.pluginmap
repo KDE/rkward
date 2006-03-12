@@ -1,0 +1,74 @@
+<!DOCTYPE rkpluginmap>
+
+<document base_prefix="" namespace="rkward">
+	<components>
+	
+		<component type="standard" id="binomial_quantiles" file="binomial_quantiles.xml" label="Binomial quantils" />
+		<component type="standard" id="binomial_probabilities" file="binomial_probabilities.xml" label="Binomial probabilities" />
+		<component type="standard" id="binomial_tail_probabilities" file="binomial_tail_probabilities.xml" label="Binomial tail probabilities" />
+		<component type="standard" id="plot_binomial_distribution" file="plot_binomial_distribution.xml" label="Plot binomial distribution" />
+		
+		<component type="standard" id="chi_squared_quantiles" file="chi_squared_quantiles.xml" label="Chi-squared quantiles" />
+		<component type="standard" id="chi_squared_probabilities" file="chi_squared_probabilities.xml" label="Chi-squared probabilities" />
+		<component type="standard" id="plot_chi_squared_distribution" file="plot_chi_squared_distribution.xml" label="Plot Chi-squared distribution" />
+		
+		<component type="standard" id="f_quantiles" file="f_quantiles.xml" label="F quantiles" />index="1"
+		<component type="standard" id="f_probabilities" file="f_probabilities.xml" label="F probabilities" />
+		<component type="standard" id="plot_f_distribution" file="plot_f_distribution.xml" label="Plot F distribution" />
+		
+		<component type="standard" id="normal_quantiles" file="normal_quantiles.xml" label="Normal quantiles" />
+		<component type="standard" id="normal_probabilities" file="normal_probabilities.xml" label="Normal probabilities" />
+		<component type="standard" id="plot_normal_distribution" file="plot_normal_distribution.xml" label="Plot Normal distribution" />
+		
+		<component type="standard" id="poisson_probabilities" file="poisson_probabilities.xml" label="Poisson probabilities" />
+		<component type="standard" id="plot_poisson_distribution&nbsp;" file="plot_poisson_distribution.xml" label="Plot Poisson distribution" />
+		
+		<component type="standard" id="t_quantiles" file="t_quantiles.xml" label="t quantiles" />
+		<component type="standard" id="t_probabilities" file="t_probabilities.xml" label="t probabilities" />
+		<component type="standard" id="plot_t_distribution" file="plot_t_distribution.xml" label="Plot t distribution" />
+		
+	</components>
+
+	<hierarchy>
+		<menu id="distributions" label="Distributions" index="7">
+		
+			<menu id="binomial_distribution" label="Binomial Distribution" index="0">
+				<entry component="binomial_quantiles" label="Binomial quantils" index="1"/>
+				<entry component="binomial_probabilities" label="Binomial probabilities" index="0"/>
+				<entry component="binomial_tail_probabilities" label="Binomial tail probabilities" index="2"/>
+				<entry component="plot_binomial_distribution" label="Plot binomial distribution" index="3"/>
+			</menu>
+			
+			<menu id="chi_squared_distribution" label="Chi-squared Distribution" index="1">
+				<entry component="chi_squared_quantiles" label="Chi-squared quantils" index="1"/>
+				<entry component="chi_squared_probabilities" label="Chi-squared probabilities" index="0"/>
+				<entry component="plot_chi_squared_distribution" label="Plot Chi-squared distribution" index="2"/>a
+			</menu>
+
+			<menu id="f_distribution" label="F Distribution" index="2">
+				<entry component="f_quantiles" label="F quantils" index="1"/>
+				<entry component="f_probabilities" label="F probabilities" index="0"/>
+				<entry component="plot_f_distribution" label="Plot F distribution" index="2"/>
+			</menu>
+
+			<menu id="normal_distribution" label="Normal Distribution" index="3">
+				<entry component="normal_quantiles" label="Normal quantiles" index="1"/>
+				<entry component="normal_probabilities" label="Normal probabilities" index="0"/>
+				<entry component="plot_normal_distribution" label="Plot Normal distribution" index="2"/>
+			</menu>
+
+			<menu id="poisson_distribution" label="Poisson Distribution" index="4">
+				<entry component="poisson_probabilities" label="Poisson probabilities"/>
+				<entry component="plot_poisson_distribution" label="Plot Poisson distribution"/>
+			</menu>
+
+			<menu id="t_distribution" label="t Distribution" index="5">
+				<entry component="t_quantiles" label="t quantiles" index="1"/>
+				<entry component="t_probabilities" label="t probabilities" index="0"/>
+				<entry component="plot_t_distribution" label="Plot t distribution" index="2"/>
+			</menu>
+			
+		</menu>
+	</hierarchy>
+</document>
+

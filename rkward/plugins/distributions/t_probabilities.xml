@@ -1,0 +1,25 @@
+<!DOCTYPE rkplugin>
+<!--This is the "t probability" plugin-->
+<document>
+  <code file="t_probabilities.php" />
+  <dialog label="t probability" >
+    <tabbook>
+      <tab label="t probability" >
+        <frame>
+          <row>
+            <column>
+              <spinbox max_precision="2" default_precision="2" type="real" initial="" id="val" min="0" max="1" label="Variable value"/>
+              <spinbox max_precision="2" default_precision="2" type="real" initial="0" id="df" min="0" max="10" label="Degree of Freedom"/>
+            </column>
+            <column>
+              <radio id="tail" label="Choose type of probability" >
+                <option value="lower.tail=TRUE" label="lower tail" />
+                <option value="lower.tail=FALSE" label="upper tail" />
+              </radio>
+            </column>
+          </row>
+        </frame>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>

@@ -1,0 +1,34 @@
+<!DOCTYPE rkplugin>
+<!--This is the simple "Plot Chi-squared probabilities" plugin--><document>
+  <code file="plot_chi_squared_distribution.php" />
+  <dialog label="Plot Chi-squared probabilities" >
+    <tabbook>
+	    <tab label="Plot Chi-squared probabilities" >
+        <frame>
+          <row>
+            <column>
+              <row>
+                <spinbox max_precision="" default_precision="4" type="real" min="-10000000" id="n" initial="100" max="10000000" label="Number of Observations" />
+              </row>
+              <row>
+                <frame label="Range" >
+			<spinbox max_precision="" default_precision="4" type="real" min="-10000000" id="min" initial="0.299" max="10000000" label="Minumum" />
+			<spinbox max_precision="" default_precision="4" type="real" min="-10000000" id="max" initial="24.103" max="10000000" label="Maximum" />
+                </frame>
+              </row>
+              <row>
+                <spinbox max_precision="1" default_precision="1" type="real" min="-10000000" id="df" initial="0" max="10000000" label="Degree of freedom" />
+              </row>
+            </column>
+            <column>
+              <radio id="function" label="Choose type of function plot" >
+		      <option value="dchisq" label="Plot density function" />
+		      <option value="pchisq" label="Plot distribution" />
+              </radio>
+            </column>
+          </row>
+        </frame>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>

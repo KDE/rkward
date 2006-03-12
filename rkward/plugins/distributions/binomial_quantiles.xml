@@ -1,0 +1,27 @@
+<!DOCTYPE rkplugin>
+<!--This is the "Binomial quantile" plugin-->
+
+<document>
+  <code file="binomial_quantiles.php" />
+  <dialog label="Binomial quantile" >
+    <tabbook>
+      <tab label="Binomial quantile" >
+        <frame>
+          <row>
+            <column>
+              <spinbox max_precision="2" default_precision="2" type="real" initial="0.95" id="p" min="0" max="1" label="Probability"/>
+              <spinbox max_precision="2" default_precision="2" type="real" initial="0" id="size" min="0" max="10" label="Binomial trials"/>
+	      <spinbox max_precision="2" default_precision="2" type="real" initial="0.5" id="prob" min="0" max="1" label="Probability of success"/>
+            </column>
+            <column>
+              <radio id="tail" label="Choose type of probability" >
+                <option value="lower.tail=TRUE" label="lower tail" />
+                <option value="upper.tail=TRUE" label="upper tail" />
+              </radio>
+            </column>
+          </row>
+        </frame>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>

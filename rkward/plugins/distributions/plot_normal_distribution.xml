@@ -1,0 +1,35 @@
+<!DOCTYPE rkplugin>
+<!--This is the simple "Plot normal probabilities" plugin--><document>
+  <code file="plot_normal_distribution.php" />
+  <dialog label="Plot normal probabilities" >
+    <tabbook>
+      <tab label="Plot normal probabilities" >
+        <frame>
+          <row>
+            <column>
+              <row>
+                <spinbox max_precision="2" default_precision="2" type="real" min="-10000000" id="n" initial="100" max="10000000" label="Number of Observations" />
+              </row>
+              <row>
+                <frame label="Range" >
+                  <spinbox max_precision="2" default_precision="2" type="real" min="-10000000" id="min" initial="-3.291" max="10000000" label="Minumum" />
+                  <spinbox max_precision="2" default_precision="2" type="real" min="-10000000" id="max" initial="3.291" max="10000000" label="Maximum" />
+                </frame>
+              </row>
+              <row>
+                <spinbox max_precision="2" default_precision="2" type="real" min="-10000000" id="mean" initial="0" max="10000000" label="mu (mean)" />
+		<spinbox max_precision="2" default_precision="2" type="real" min="-10000000" id="sd" initial="1" max="10000000" label="sigma (standard deviation)" label="standard deviation" />
+              </row>
+            </column>
+            <column>
+              <radio id="function" label="Choose type of function plot" >
+                <option value="dnorm" label="Plot density function" />
+		<option value="pnorm" label="Plot distribution" />
+              </radio>
+            </column>
+          </row>
+        </frame>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>

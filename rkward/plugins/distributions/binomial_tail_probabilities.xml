@@ -1,0 +1,27 @@
+<!DOCTYPE rkplugin>
+<!--This is the "Binomial tail probability" plugin-->
+
+<document>
+  <code file="binomial_tail_probabilities.php" />
+  <dialog label="Binomial tail probability" >
+    <tabbook>
+      <tab label="Binomial tail probability" >
+        <frame>
+          <row>
+            <column>
+              <spinbox max_precision="2" default_precision="2" type="real" initial="0.95" id="q" min="0" max="1" label="Variable value"/>
+              <spinbox max_precision="2" default_precision="2" type="real" initial="0" id="size" min="0" max="10" label="Binomial trials"/>
+	      <spinbox max_precision="2" default_precision="2" type="real" initial="0.5" id="prob" min="0" max="1" label="Probability of success"/>
+            </column>
+            <column>
+              <radio id="tail" label="Choose type of probability" >
+                <option value="lower.tail=TRUE" label="lower tail" />
+                <option value="upper.tail=TRUE" label="upper tail" />
+              </radio>
+            </column>
+          </row>
+        </frame>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>

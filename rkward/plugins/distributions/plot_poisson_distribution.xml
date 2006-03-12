@@ -1,0 +1,31 @@
+<!DOCTYPE rkplugin>
+<!--This is the simple "Plot Poisson probabilities" plugin--><document>
+  <code file="plot_poisson_distribution.php" />
+  <dialog label="Plot Poisson probabilities" >
+    <tabbook>
+	    <tab label="Plot Poisson probabilities" >
+        <frame>
+          <row>
+            <column>
+              <row>
+                <frame label="Range" >
+                  <spinbox max_precision="" default_precision="" type="real" min="0" id="min" initial="0" max="10000000" label="Minumum" />
+                  <spinbox max_precision="" default_precision="" type="real" min="0" id="max" initial="12" max="10000000" label="Maximum" />
+                </frame>
+              </row>
+              <row>
+                <spinbox max_precision="" default_precision="" type="real" min="-10000000" id="mean" initial="0" max="10000000" label="mean" />
+              </row>
+            </column>
+            <column>
+              <radio id="function" label="Choose type of function plot" >
+		      <option value="dpois" label="Plot density function" />
+		      <option value="ppois" label="Plot distribution" />
+              </radio>
+            </column>
+          </row>
+        </frame>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>
