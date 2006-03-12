@@ -2,7 +2,7 @@
 <!--This is the simple "Plot t probabilities" plugin-->
 
 <document>
-  <code file="plot_t_distribution_density.php" />
+  <code file="plot_t_distribution.php" />
   <dialog label="Plot t probabilities" >
     <tabbook>
       <tab label="Plot t probabilities" >
