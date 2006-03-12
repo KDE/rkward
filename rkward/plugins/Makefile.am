@@ -1,6 +1,7 @@
 pluginsdir = $(kde_datadir)/rkward/
 dist_plugins_DATA = \
-	standard_plugins.pluginmap
+	standard_plugins.pluginmap \
+	distributions.pluginmap
 
 pluginsX00meansdir = $(kde_datadir)/rkward/00means
 pluginsX00meansX00ttestsdir = $(kde_datadir)/rkward/00means/00ttests
@@ -72,4 +73,43 @@ pluginsXwritetabledir = $(kde_datadir)/rkward/writetable
 dist_pluginsXwritetable_DATA = \
 	writetable/code.php \
 	writetable/description.xml
+
+pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
+dist_pluginsXdistributions_DATA = \
+	distributions/binomial_probabilities.php \
+	distributions/binomial_probabilities.xml \
+	distributions/binomial_quantiles.php \
+	distributions/binomial_quantiles.xml \
+	distributions/binomial_tail_probabilities.php \
+	distributions/binomial_tail_probabilities.xml \
+	distributions/plot_binomial_distribution.php \
+	distributions/plot_binomial_distribution.xml \
+	distributions/chi_squared_probabilities.php \
+	distributions/chi_squared_probabilities.xml \
+	distributions/chi_squared_quantiles.php \
+	distributions/chi_squared_quantiles.xml \
+	distributions/plot_chi_squared_distribution.php \
+	distributions/plot_chi_squared_distribution.xml \
+	distributions/f_probabilities.php \
+	distributions/f_probabilities.xml \
+	distributions/f_quantiles.php \
+	distributions/f_quantiles.xml \
+	distributions/plot_f_distribution.php \
+	distributions/plot_f_distribution.xml \
+	distributions/normal_probabilities.php \
+	distributions/normal_probabilities.xml \
+	distributions/normal_quantiles.php \
+	distributions/normal_quantiles.xml \
+	distributions/plot_normal_distribution.php \
+	distributions/plot_normal_distribution.xml \
+	distributions/plot_poisson_distribution.php \
+	distributions/plot_poisson_distribution.xml \
+	distributions/poisson_probabilities.php \
+	distributions/poisson_probabilities.xml \
+	distributions/plot_t_distribution.xml \
+	distributions/plot_t_distribution.php \
+	distributions/t_probabilities.php \
+	distributions/t_probabilities.xml \
+	distributions/t_quantiles.php \
+	distributions/t_quantiles.xml
 
