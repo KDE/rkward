@@ -64,7 +64,7 @@ QString RKComponentBase::fetchStringValue (const QString &identifier) {
 
 //############### RKComponent ########################
 
-RKComponent::RKComponent (RKComponent *parent) : QWidget (parent) {
+RKComponent::RKComponent (RKComponent *parent_component, QWidget *parent_widget) : QWidget (parent_widget) {
 	RK_TRACE (PLUGIN);
 
 	addChild ("enabled", enabledness_property = new RKComponentPropertyBool (this, false));
@@ -74,7 +74,7 @@ RKComponent::RKComponent (RKComponent *parent) : QWidget (parent) {
 	addChild ("required", requiredness_property = new RKComponentPropertyBool (this, false));
 	connect (requiredness_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyValueChanged (RKComponentPropertyBase *)));
 
-	_parent = parent;
+	_parent = parent_component;
 }
 
 RKComponent::~RKComponent () {

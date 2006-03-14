@@ -22,6 +22,10 @@
 
 #include <qdom.h>
 
+class RKErrorDialog;
+class RKStandardComponentGUI;
+class ScriptBackend;
+
 /** The standard type of component (i.e. stand-alone), previously known as "plugin". This is the type of component described by an XML-file */
 class RKStandardComponent : public RKComponent {
 	Q_OBJECT
@@ -33,18 +37,73 @@ public:
 	RKStandardComponent (RKComponent *parent_component, QWidget *parent_widget, const QString &filename);
 /** destructor */
 	~RKStandardComponent ();
-// TODO: should these be moved to a separate RKStandardComponentGUI-class?
+/** try to destruct the plugin */
+	void tryDestruct ();
+public slots:
+	void switchInterfaces ();
+
+
+/** this gets called by the script-backend, when it's done. Might enable the
+	submit button or destruct the plugin. */
+	void backendIdle ();
+	void backendCommandDone (int flags);
+/** return result of given call (string vector) to the R-backend */	
+//	void getRVector (const QString &call);
+/** return result of given call to the R-backend */
+//	void doRCall (const QString &call);
+/** get a value for the backend */
+//	void getValue (const QString &id);
+private:
+/** The property holding the generated code. TODO: maybe, de facto, this property should be controlled (but not owned) by the scriptbackend. This way, we'd need less twisted logic inside this class. */
+	RKComponentPropertyCode *code;
+	QString filename;
+	ScriptBackend *backend;
+	RKErrorDialog *error_dialog;
+	RKStandardComponentGUI *gui;
+/** sometimes the plugin can't be destroyed immediately, since, for example the script-backend is
+	still busy cleaning stuff up. In that case this var is set and the plugin gets destroyed ASAP. */
+	bool destroyed;
+};
+
+#include <qwidget.h>
+
+class RKCommandEditor;
+class QPushButton;
+
+/** contains the standard GUI elements for a top-level RKStandardComponent
+TODO: differentiate into two classes for dialog and wizard interfaces. For now we ignore the wizard interface */
+class RKStandardComponentGUI : public QWidget {
+	Q_OBJECT
+public:
+	RKStandardComponentGUI (RKStandardComponent *component);
+	~RKStandardComponentGUI ();
+
+	QWidget *mainWidget () { return main_widget; };
 public slots:
 	void ok ();
 	void back ();
 	void cancel ();
 	void toggleCode ();
-	void switchInterfaces ();
 	void help ();
 private:
-/** The property holding the generated code. TODO: maybe, de facto, this property should be controlled (but not owned) by the scriptbackend. This way, we'd need less twisted logic inside this class. */
-	RKComponentPropertyCode *code;
-	QString filename;
+	QWidget *main_widget;
+
+	// standard gui-elements
+	RKCommandEditor *codeDisplay;
+
+	// common widgets
+	QPushButton *okButton;
+	QPushButton *cancelButton;
+	QPushButton *helpButton;
+	QPushButton *switchButton;
+
+	// widgets for dialog only
+	QPushButton *toggleCodeButton;
+
+private:
+	RKStandardComponent *component;
+protected:
+	void closeEvent (QCloseEvent *e);
 };
 
 /** A helper class used to build and initialize an RKComponent. Most importantly this will keep track of the properties yet to be connected. Used at least by RKStandardComponent.
@@ -60,7 +119,7 @@ Reminder to the twisted brain: Typically inside a standard-component, *all* chil
 */
 class RKComponentBuilder {
 public:
-	RKComponentBuilder (RKComponent *parent_component, QWidget *parent_widget);
+	RKComponentBuilder (RKComponent *parent_component);
 	~RKComponentBuilder ();
 	void buildElement (QWidget *parent, const QDomElement &element);
 	void makeConnections ();
