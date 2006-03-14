@@ -22,6 +22,8 @@
 #include <qfileinfo.h>
 //#include <qdialog.h>
 #include <qlayout.h>
+#include <qvbox.h>
+#include <qhbox.h>
 #include <qgroupbox.h>
 //#include <qmap.h>
 #include <qframe.h>
@@ -35,6 +37,7 @@
 #include <qapplication.h>
 
 #include <klocale.h>
+#include <kmessagebox.h>
 
 #include "../rkcommandeditor.h"
 #include "../scriptbackends/phpbackend.h"
@@ -65,20 +68,22 @@
 
 
 RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget *parent_widget, const QString &filename) : RKComponent (parent_component, parent_widget) {
+	RK_TRACE (PLUGIN);
+
 	RKStandardComponent::filename = filename;
 	backend = 0;
 	gui = 0;
-
-	// create an error-dialog
-	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin '%1'. This may lead to an incorrect ouput and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below.").arg (filename), i18n ("R-Error"), false);
 	
 	// open the main description file for parsing
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
 	QDomElement doc_element = xml->openXMLFile (filename, DL_ERROR);
 	if (xml->highestError () >= DL_ERROR) {
-		// TODO: inform user
+		KMessageBox::error (this, i18n ("There has been an error while trying to parse the description of this pluign ('%1'). Please refer to stdout for details.").arg (filename), i18n("Could not create plugin"));
 		return;
 	}
+
+	// create an error-dialog
+	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin '%1'. This may lead to an incorrect ouput and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below.").arg (filename), i18n ("R-Error"), false);
 
 	// initialize the PHP-backend with the code-template
 	QDomElement element = xml->getChildElement (doc_element, "code", DL_WARNING);
@@ -109,12 +114,24 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	// go
 	// TODO: this is wrong! wizard/dialog
 	builder->buildElement (parent_widget, doc_element);
+
+	// initialize
+	builder->makeConnections ();
+
+	// done!
+	delete builder;
 }
 
 RKStandardComponent::~RKStandardComponent () {
+	RK_TRACE (PLUGIN);
+
+	delete error_dialog;
+	delete backend;
 }
 
 void RKStandardComponent::tryDestruct () {
+	RK_TRACE (PLUGIN);
+
 	if (gui) {
 		gui->hide ();
 	}
@@ -124,17 +141,98 @@ void RKStandardComponent::tryDestruct () {
 }
 
 void RKStandardComponent::switchInterfaces () {
+	RK_TRACE (PLUGIN);
 }
 
+/////////////////////////////////////// RKComponentBuilder /////////////////////////////////////////
 
 
+RKComponentBuilder::RKComponentBuilder (RKComponent *parent_component) {
+	RK_TRACE (PLUGIN);
+	parent = parent_component;
+}
 
+RKComponentBuilder::~RKComponentBuilder () {
+	RK_TRACE (PLUGIN);
+}
 
+void RKComponentBuilder::buildElement (QWidget *parent, const QDomElement &element) {
+	RK_TRACE (PLUGIN);
+
+	RK_TRACE (PLUGIN);
+
+	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	XMLChildList children = xml->getChildElements (element, "", DL_ERROR);
+	
+	XMLChildList::const_iterator it;
+	for (it = children.begin (); it != children.end (); ++it) {
+		RKPluginWidget *widget = 0;
+		QDomElement e = *it;		// shorthand
+		
+	    if (e.tagName () == "row") {
+			QHBox box = new QHBox (parent);
+			box->setSpacing (RKGlobals::spacingHint ());
+			buildElement (e, box);
+		} else if (e.tagName () == "column") {
+			QVBox box = new QVBox (parent);
+			box->setSpacing (RKGlobals::spacingHint ());
+			buildElement (e, box);
+		} else if (e.tagName () == "frame") {
+			QGroupBox *box = new QGroupBox (1, Qt::Vertical, e.attribute ("label"), parent);
+			box->setSpacing (RKGlobals::spacingHint ());
+			buildElement (e, box);
+		} else if (e.tagName () == "tabbook") {
+			QTabWidget *tabbook = new QTabWidget (parent);
+			QDomNodeList tabs = e.childNodes ();
+			for (unsigned int t=0; t < tabs.count (); ++t) {
+				QDomElement tab_e = tabs.item (t).toElement ();
+				if (tab_e.tagName () == "tab") {
+					QVBox *tabpage = new QWidget (tabbook);
+					tabpage->setSpacing (RKGlobals::spacingHint ());
+					buildStructure (tab_e, tabpage);
+					tabbook->addTab (tabpage, tab_e.attribute ("label"));
+				}
+			}
+		} else if (e.tagName () == "varselector") {
+			widget = new RKVarSelector (e, parent, this);
+		} else if (e.tagName () == "radio") {
+			widget = new RKRadio (e, parent, this);
+		} else if (e.tagName () == "checkbox") {
+			widget = new RKCheckBox (e, parent, this);
+		} else if (e.tagName () == "spinbox") {
+			widget = new RKPluginSpinBox (e, parent, this);
+		} else if (e.tagName () == "varslot") {
+			widget = new RKVarSlot (e, paretn, this);
+		} else if (e.tagName () == "formula") {
+			widget = new RKFormula (e, parent, this);
+/*		} else if (e.tagName () == "note") {		//TODO: remove corresonding class
+			widget = new RKNote (e, parent, this); */
+		} else if (e.tagName () == "browser") {
+			widget = new RKPluginBrowser (e, parent, this);
+		} else if (e.tagName () == "input") {
+			widget = new RKInput (e, parent, this);
+		} else if (e.tagName () == "text") {
+			widget = new RKText (e, parent, this);
+		} else {
+			xml->displayError (e, "Invalid tagname '%'".arg (e.tagname ()), DL_ERROR);
+		}
+
+		if (widget) {
+			registerWidget (widget, e.attribute ("id", "#noid#"), e.attribute ("depend","#free#"), num_pages);
+		}
+	}
+}
+
+void RKComponentBuilder::makeConnections () {
+	RK_TRACE (PLUGIN);
+}
 
 
 /////////////////////////////////////// RKStandardComponentGUI ////////////////////////////////////////////////
 
 RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component) {
+	RK_TRACE (PLUGIN);
+
 	RKStandardComponentGUI::component = component;
 
 	QGridLayout *main_grid = new QGridLayout (this, 1, 1);
@@ -190,21 +288,27 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component) 
 }
 
 RKStandardComponentGUI::~RKStandardComponentGUI () {
+	RK_TRACE (PLUGIN);
 }
 
 void RKStandardComponentGUI::ok () {
+	RK_TRACE (PLUGIN);
 }
 
 void RKStandardComponentGUI::back () {
+	RK_TRACE (PLUGIN);
 }
 
 void RKStandardComponentGUI::cancel () {
+	RK_TRACE (PLUGIN);
 }
 
 void RKStandardComponentGUI::toggleCode () {
+	RK_TRACE (PLUGIN);
 }
 
 void RKStandardComponentGUI::help () {
+	RK_TRACE (PLUGIN);
 }
 
 void RKStandardComponentGUI::closeEvent (QCloseEvent *e) {
