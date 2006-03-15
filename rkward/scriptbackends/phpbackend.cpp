@@ -51,6 +51,7 @@ bool PHPBackend::initialize (const QString &filename) {
 
 	php_process = new KProcess ();
 	*php_process << RKSettingsModulePHP::phpBin();
+//	*php_process << "-a";		// run interactively. Does this have an effect?
 	*php_process << (RKSettingsModulePHP::filesPath() + "/common.php");
 	
 	// we have to be connect at all times! Otherwise the connection will be gone for good.
