@@ -48,7 +48,7 @@ public:
 /** set to required: will only be satisfied if it holds a valid value. Else: satisfied if valid *or empty* */
 	void setRequired (bool require)  { required = require; };
 /** see setRequired () */
-	virtual bool isSatisfied ();
+	bool isSatisfied ();
 /** for RTTI. see RKComponentBase::RKComponentTypes */
 	int type () { return PropertyBase; };
 /** connect this property to a governor property (given as argument). If reconcile_requirements, the requirements of both properties are reconciled to the least common denominator. The dependent property will be notified on all changes made in the governing property, so it can update its value. 
@@ -205,15 +205,18 @@ private:
 
 ///////////////////////////////////////////////// RObjects ////////////////////////////////////////////////////////
 class RObject;
+class RKObjectListView;
+
 #include <qstringlist.h>
 #include <qvaluelist.h>
+
+/** for easier typing. A list of RObjects. Should probably be defined somewhere in core-dir instead. */
+typedef QValueList<RObject *> ObjectList;
 
 /** special type of RKComponentProperty, that prepresents one or more RObject (s) */
 class RKComponentPropertyRObjects : public RKComponentPropertyBase {
 	Q_OBJECT
 public:
-/** for easier typing. A list of RObjects. Should probably be defined somewhere in core-dir instead. */
-	typedef QValueList<RObject *> ObjectList;
 /** constructor */
 	RKComponentPropertyRObjects (QObject *parent, bool required);
 /** destructor */
@@ -237,6 +240,8 @@ public:
 /** Directly set an RObject. Warning: This sets the list to contain only exactly this one item. Generally you do not want to use this, unless your list is in single mode. Use addObjectValue () instead, if the property can hold more than one object
 @returns false if the object does not qualify as a valid selection according to current settings (class/type/dimensions), true otherwise */
 	bool setObjectValue (RObject *object);
+/** set all the objects in the given new list (if valid), and only those. Emit a signal if there was any change */
+	void setObjectList (const ObjectList &newlist);
 /** Check whether an object is valid for this property.
 @returns false if the object does not qualify as a valid selection according to current settings (class/type/dimensions), true otherwise */
 	bool isObjectValid (RObject *object);
@@ -261,8 +266,11 @@ public:
 	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
 /** reimplemented from RKComponentPropertyBase to use special handling for object properties */
 	void governorValueChanged (RKComponentPropertyBase *property);
+/** fill this property with all objects shown in the given RKObjectListView. Emit a signal, if there was a change. Only valid objects are added!
+@param selected_only if true, only the currently selected objects are filled into this property */
+	void setFromListView (RKObjectListView *list_view, bool selected_only=false);
 public slots:
-/** remove an object value. to be connected to RKModificationTracker::objectRemoved (). This is so we get notified if the object currently selected is removed */
+/** remove an object value. to be connected to RKModificationTracker::objectRemoved (). This is so we get notified if the object currently selected is removed TODO: is this effectively a duplication of setFromList? */
 	void removeObjectValue (RObject *object);
 /** to be connected to RKModificationTracker::objectPropertiesChanged (). This is so we get notified if the object currently selected is changed */
 	void objectPropertiesChanged (RObject *object);
@@ -295,22 +303,31 @@ public:
 /** destructor */
 	~RKComponentPropertyCode ();
 /** the preprocess code */
-	QString preprocess ();
+	QString preprocess () { return preprocess_code; };
 /** the calculate code */
-	QString calculate ();
+	QString calculate () { return calculate_code; };
 /** the printout code */		// TODO, maybe we can abstract this away. A component should _either_ do calculation _or_ printout, hence it could all be calculate () only, as well.
-	QString printout ();
+	QString printout () { return printout_code; };
 /** the cleanup code */
-	QString cleanup ();
+	QString cleanup () { return cleanup_code; };
 
-	void setPreprocess (const QString &code);
-	void setCalculate (const QString &code);
-	void setPrintout (const QString &code);
-	void setCleanup (const QString &code);
+	QString value () { return (preprocess () + calculate () + printout () + cleanup ()); };
+
+	void setPreprocess (const QString &code) { preprocess_code = code; };
+	void setCalculate (const QString &code) { calculate_code = code; };
+	void setPrintout (const QString &code) { printout_code = code; };
+	void setCleanup (const QString &code) { cleanup_code = code; };
 
 /** Sets all code to null strings and satisfied to false */
 	void reset ();
+
+	bool isValid () { return (have_preprocess && have_calculate && have_printout && have_cleanup); };
 private:
+	QString preprocess_code;
+	QString calculate_code;
+	QString printout_code;
+	QString cleanup_code;
+
 	bool have_preprocess;
 	bool have_calculate;
 	bool have_printout;

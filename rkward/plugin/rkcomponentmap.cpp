@@ -2,7 +2,7 @@
                           rkcomponentmap.cpp  -  description
                              -------------------
     begin                : Thu May 12 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -188,7 +188,7 @@ RKComponentHandle::~RKComponentHandle () {
 //static 
 RKComponentHandle* RKComponentHandle::createComponentHandle (const QString &filename, RKComponentType type, const QString& id, const QString& label) {
 	if (type == (int) Standard) {
-		RKPluginHandle *ret = new RKPluginHandle (filename, type);
+		RKStandardComponentHandle *ret = new RKStandardComponentHandle (filename, type);
 		new KAction (label, 0, ret, SLOT (activated ()), RKGlobals::componentMap ()->actionCollection (), id);
 		return (ret);
 	}
@@ -206,3 +206,24 @@ bool RKComponentHandle::isPlugin () {
 	}
 	return true;
 }
+
+
+///########################### END RKComponentHandle ###############################
+///########################### BEGIN RKStandardComponentHandle ############################
+
+#include "rkstandardcomponent.h"
+
+RKStandardComponentHandle::RKStandardComponentHandle (const QString &filename, RKComponentType type) : QObject (RKGlobals::rkApp ()), RKComponentHandle (filename, type) {
+	RK_TRACE (PLUGIN);
+}
+
+RKStandardComponentHandle::~RKStandardComponentHandle () {
+	RK_TRACE (PLUGIN);
+}
+
+void RKStandardComponentHandle::activated () {
+	RK_TRACE (PLUGIN);
+	new RKStandardComponent (0, 0, getFilename ());
+}
+
+#include "rkcomponentmap.moc"

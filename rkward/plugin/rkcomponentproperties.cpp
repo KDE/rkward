@@ -559,6 +559,7 @@ void RKComponentPropertyDouble::internalSetValue (QString new_value) {
 #include "../core/rkvariable.h"
 #include "../core/rcontainerobject.h"
 #include "../core/rkmodificationtracker.h"
+#include "../misc/rkobjectlistview.h"
 
 RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool required) : RKComponentPropertyBase (parent, required) {
 	RK_TRACE (PLUGIN);
@@ -638,6 +639,38 @@ bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
 
 	object_list.clear ();
 	return (addObjectValue (object));
+}
+
+void RKComponentPropertyRObjects::setObjectList (const ObjectList &newlist) {
+	RK_TRACE (PLUGIN);
+
+	bool changes = false;
+	// now remove items from the old list that are not in the new list
+	ObjectList::Iterator it = object_list.begin ();
+	while (it != object_list.end ()) {
+		if (newlist.contains (*it)) {
+			++it;
+		} else {
+			it = object_list.erase (it);		// it now points to the next object in the list
+			changes = true;
+		}
+	}
+
+	// now add items from the new list that are not in the old list
+	ObjectList::const_iterator cit = newlist.begin ();
+	while (cit != newlist.end ()) {
+		if (!object_list.contains (*cit)) {
+			object_list.append (*cit);
+			changes = true;
+		}
+		++cit;
+	}
+
+	// emit a signal if there have been any changes
+	if (changes) {
+		checkListLengthValid ();
+		emit (valueChanged (this));
+	}
 }
 
 bool RKComponentPropertyRObjects::isObjectValid (RObject *object) {
@@ -848,6 +881,27 @@ void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase 
 	}
 }
 
+void RKComponentPropertyRObjects::setFromListView (RKObjectListView *list_view, bool selected_only) {
+	RK_TRACE (PLUGIN);
+
+	// first find out the list of objects from the listview
+	ObjectList newlist;
+	QListViewItem *current;
+	current = list_view->firstChild ();
+	while (current->itemBelow ()) {
+		current = current->itemBelow ();
+		if ((!selected_only) || current->isSelected ()) {
+			RObject *obj = list_view->findItemObject (current);
+			RK_ASSERT (obj);
+			if (isObjectValid (obj)) {
+				newlist.append (static_cast<RKVariable*> (obj));
+			}
+		}
+	}
+
+	setObjectList (newlist);
+}
+
 void RKComponentPropertyRObjects::objectPropertiesChanged (RObject *object) {
 	RK_TRACE (PLUGIN);
 
@@ -893,6 +947,26 @@ void RKComponentPropertyRObjects::checkListLengthValid () {
 		if (len && (len < min_num_objects_if_any)) is_valid = false;
 		if (max_num_objects && (len > max_num_objects)) is_valid = false;
 	}
+}
+
+
+/////////////////////////////////////////// Code ////////////////////////////////////////////////
+
+RKComponentPropertyCode::RKComponentPropertyCode (QObject *parent, bool required) : RKComponentPropertyBase (parent, required) {
+	RK_TRACE (PLUGIN);
+
+	reset ();
+}
+
+RKComponentPropertyCode::~RKComponentPropertyCode () {
+	RK_TRACE (PLUGIN);
+}
+
+void RKComponentPropertyCode::reset () {
+	RK_TRACE (PLUGIN);
+
+	preprocess_code = calculate_code = printout_code = cleanup_code = QString::null;
+	have_preprocess = have_calculate = have_printout = have_cleanup = false;
 }
 
 #include "rkcomponentproperties.moc"

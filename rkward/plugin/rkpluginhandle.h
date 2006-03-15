@@ -25,19 +25,5 @@
 
 class RKwardApp;
 
-/**
-@author Thomas Friedrichsmeier
-*/
-class RKPluginHandle : public QObject, public RKComponentHandle {
-	Q_OBJECT
-public:
-    RKPluginHandle(const QString &filename, RKComponentType type);
-
-    ~RKPluginHandle();
-public slots:
-/** Slot called, when the menu-item for this widget is selected. Responsible
-	for creating the GUI. */
-	void activated ();
-};
 
 #endif

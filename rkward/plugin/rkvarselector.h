@@ -2,7 +2,7 @@
                           rkvarselector.h  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,16 +18,10 @@
 #ifndef RKVARSELECTOR_H
 #define RKVARSELECTOR_H
 
-#include <rkpluginwidget.h>
-
-#include <qvaluelist.h>
+#include "rkstandardcomponent.h"
+#include "rkcomponentproperties.h"
 
 class RKObjectListView;
-class RObject;
-class RKVariable;
-class RContainerObject;
-
-#define VARSELECTOR_WIDGET 2
 
 /** This is an especially important RK-plugin-widget. It provides a list of variables
 (derived from the document's table), that can be selected for statistical analysis.
@@ -39,28 +33,19 @@ you can have more than one, e.g. for serving conceptionally different VarSlots.
   */
 
 
-class RKVarSelector : public RKPluginWidget {
+class RKVarSelector : public RKComponent {
    Q_OBJECT
 public: 
-	RKVarSelector(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
+	RKVarSelector(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKVarSelector();
-/** Returns the number of currently selected variables */
-	int numSelectedVars ();
-/** Returns pointers to the currently selected variables */
-	QValueList<RKVariable*> selectedVars ();
-	QValueList<RContainerObject*> selectedContainer ();
-	int type () { return VARSELECTOR_WIDGET; };
-/** find out, whether the given object is available in the RKVarselector (i.e. it a) exists and b) matched the filter requirements) */
-	bool containsObject (RObject *object);
-	void setEnabled(bool);
-	int numSelectedContainer();
+	int type () { return ComponentVarSelector; };
 public slots:
 	void objectListChanged ();
-	void slotActive();
-	void slotActive(bool);
+	void objectSelectionChanged ();
 private:
 	RKObjectListView *list_view;
-	QString depend;
+	RKComponentPropertyRObjects *selected;
+	RKComponentPropertyRObjects *available;
 };
 
 #endif

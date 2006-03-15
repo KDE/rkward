@@ -96,10 +96,17 @@ void RKComponent::propertyValueChanged (RKComponentPropertyBase *property) {
 	}
 }
 
+void RKComponent::checkSatisfied (bool silent) {
+	// TODO!
+
+}
+
 bool RKComponent::isSatisfied () {
 	RK_TRACE (PLUGIN);
 
-	// TODO
+	for (QDictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
+		if (!(it.current ()->isSatisfied ())) return false;
+	}
 	return true;
 }
 

@@ -2,7 +2,7 @@
                           rkvarselector.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002,2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,151 +18,54 @@
 #include "rkvarselector.h"
 
 #include <qlayout.h>
-#include <qlistview.h>
-#include <qdom.h>
 #include <qlabel.h>
 
+#include "../misc/xmlhelper.h"
 #include "../core/rcontainerobject.h"
 #include "../core/rkvariable.h"
 #include "../rkglobals.h"
 #include "../misc/rkobjectlistview.h"
 #include "../core/robjectlist.h"
+
 #include "../debug.h"
 
-RKVarSelector::RKVarSelector (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
+
+// TODO: read filter settings
+	addChild ("available", available = new RKComponentPropertyRObjects (this, false));
+	addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
+
 	RKGlobals::rObjectList ()->updateFromR ();
 	QVBoxLayout  *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
-	depend = element.attribute ("depend", QString::null);
 	
-	label = new QLabel (element.attribute ("label", "Select Variable(s)"), this);
+	QLabel *label = new QLabel (element.attribute ("label", "Select Variable(s)"), this);
 	vbox->addWidget (label);
 
 	list_view = new RKObjectListView (this);
 	list_view->setSelectionMode (QListView::Extended);
 	connect (list_view, SIGNAL (listChanged ()), this, SLOT (objectListChanged ()));
+	connect (list_view, SIGNAL (selectionChanged ()), this, SLOT (objectSelectionChanged ()));
 
 	vbox->addWidget (list_view);
 	list_view->initialize (true);
 }
 
-RKVarSelector::~RKVarSelector(){
+RKVarSelector::~RKVarSelector () {
 	RK_TRACE (PLUGIN);
 }
 
 void RKVarSelector::objectListChanged () {
 	RK_TRACE (PLUGIN);
-	// forward the change-notification
-	emit (changed ());
+
+	available->setFromListView (list_view);
+	selected->setFromListView (list_view, true);
 }
 
-QValueList<RKVariable*> RKVarSelector::selectedVars () {
-	RK_TRACE (PLUGIN);
-	QValueList<RKVariable*> selected;
-	QListViewItem *current;
-	current = list_view->firstChild ();
-	while (current->itemBelow ()) {
-		current = current->itemBelow ();
-		if (current->isSelected ()) {
-			RObject *obj = list_view->findItemObject (current);
-			RK_ASSERT (obj);
-			if (obj->isVariable ()) {
-				selected.append (static_cast<RKVariable*> (obj));
-			}
-		}
-	}
-
-	return selected;
-}
-
-int RKVarSelector::numSelectedVars () {
-	RK_TRACE (PLUGIN);
-	int i=0;
-
-	QListViewItem *current;
-	current = list_view->firstChild ();
-	while (current->itemBelow ()) {
-		current = current->itemBelow ();
-		if (current->isSelected ()) {
-			RObject *obj = list_view->findItemObject (current);
-			RK_ASSERT (obj);
-			if (obj->isVariable ()) {
-				++i;
-			}
-		}
-	}
-
-	return i;
-}
-
-bool RKVarSelector::containsObject (RObject *object) {
+void RKVarSelector::objectSelectionChanged () {
 	RK_TRACE (PLUGIN);
 
-	QListViewItem *current;
-	current = list_view->firstChild ();
-	while (current->itemBelow ()) {
-		current = current->itemBelow ();
-		if (list_view->findItemObject (current) == object) return true;
-	}
-
-	return false;
-}
-
-void RKVarSelector::setEnabled(bool checked){
-  list_view->setEnabled(checked);
-  }
-
-void RKVarSelector::slotActive(){
-bool isOk = list_view->isEnabled();
-list_view->setEnabled(! isOk) ;
-}
-
-void RKVarSelector::slotActive(bool isOk){
-list_view->setEnabled(isOk) ;
-}
-
-
-
-QValueList <RContainerObject*> RKVarSelector::selectedContainer()
-{
-	RK_TRACE (PLUGIN);
-	QValueList<RContainerObject*> selected;
-	QListViewItem *current;
-	current = list_view->firstChild ();
-	while (current->itemBelow ()) {
-		current = current->itemBelow ();
-		if (current->isSelected ()) {
-			RObject *obj = list_view->findItemObject (current);
-			RK_ASSERT (obj);
-			if (obj->isContainer()) {
-				selected.append (static_cast<RContainerObject*> (obj));
-			}
-		}
-	}
-
-	return selected;
-}
-
-
-int RKVarSelector::numSelectedContainer()
-{
-	RK_TRACE (PLUGIN);
-	int i=0;
-
-	QListViewItem *current;
-	current = list_view->firstChild ();
-	while (current->itemBelow ()) {
-		current = current->itemBelow ();
-		if (current->isSelected ()) {
-			RObject *obj = list_view->findItemObject (current);
-			RK_ASSERT (obj);
-			if (obj->isContainer ()) {
-				++i;
-			}
-		}
-	}
-
-	return i;
+	selected->setFromListView (list_view, true);
 }
 
 #include "rkvarselector.moc"

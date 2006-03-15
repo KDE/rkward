@@ -2,7 +2,7 @@
                           rkvarslot.h  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,7 +18,7 @@
 #ifndef RKVARSLOT_H
 #define RKVARSLOT_H
 
-#include <rkpluginwidget.h>
+#include <rkcomponent.h>
 
 #include <qmap.h>
 
@@ -26,65 +26,44 @@ class QLineEdit;
 class QPushButton;
 class QListView;
 class QListViewItem;
+class QDomElement;
 
-class RKVarSelector;
 class RKVariable;
 class RContainerObject;
 
-#define VARSLOT_WIDGET 1
-
-/** An RKVarSlot takes one or more variable(s) from an RKVarSelector.
+/** An RKVarSlot typically takes one or more variable(s) from an RKVarSelector.
   *@author Thomas Friedrichsmeier
   */
 
-class RKVarSlot : public RKPluginWidget {
+class RKVarSlot : public RKComponent {
 	Q_OBJECT
 public: 
-	RKVarSlot(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
-	~RKVarSlot();
-	int getNumVars () { return num_vars; };
-	int getNumCont () { return num_cont; };
-	QValueList<RKVariable*> getVariables ();
-  	int type() {return VARSLOT_WIDGET ;};
-  	void  setEnabled(bool);
-  
+	RKVarSlot (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+	~RKVarSlot ();
+	int type () {return ComponentVarSlot; };
 public slots:
 /** Called when the select-button is pressed */
 	void selectPressed ();
 	void listSelectionChanged ();
-/// find out whether all items are still present, remove items which are no longer present and update text for all others
-	void objectListChanged ();
-  	void slotActive();
-  	void slotActive(bool);
+	void availablePropertyChanged (RKComponentPropertyBase *);
 private:
-	QLineEdit *line_edit;
+/** change the select button to left/right / add/remove
+@param add if true, button shows arrow right, or signifies more values would be added. Else the other way around */
+	void setSelectButton (bool add);
+	bool add_mode;
+
+/** the available objects (typically a copy of the property of the varselector) */
+	RKComponentPropertyRObjects *source;
+/** the objects in the varslot */
+	RKComponentPropertyRObjects *available;
+/** of the objects in the varslot, those that are marked */
+	RKComponentPropertyRObjects *selected;
+
 	QListView *list;
 	QPushButton *select;
-	RKVarSelector *source;
-	QString source_id;
-	QString depend;
-	QString varchier;
-	int min_vars;
-	int num_vars;
-	int num_cont;
 	bool multi;
-	bool required;
-	bool selection;
-	typedef QMap<QListViewItem*, RKVariable*> ItemMap; 
+	typedef QMap<QListViewItem*, RObject*> ItemMap;
 	ItemMap item_map;
-	typedef QMap<QListViewItem*, RContainerObject*> ContMap; 
-	ContMap cont_map;
-	QString classes ; 
-	void updateState ();
-	bool belongToClasses (const QString &nom) ;
-	bool varOrCont ;
-	bool dupli ;
-	int ordre ;
-protected:
-	bool isSatisfied ();
-	QString value (const QString &modifier);
-	QString complaints ();
-	void initialize ();
 };
 
 #endif

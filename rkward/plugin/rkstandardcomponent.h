@@ -45,8 +45,8 @@ public slots:
 
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */
-	void backendIdle ();
-	void backendCommandDone (int flags);
+//	void backendIdle ();
+//	void backendCommandDone (int flags);
 /** return result of given call (string vector) to the R-backend */	
 //	void getRVector (const QString &call);
 /** return result of given call to the R-backend */
@@ -121,8 +121,9 @@ class RKComponentBuilder {
 public:
 	RKComponentBuilder (RKComponent *parent_component);
 	~RKComponentBuilder ();
-	void buildElement (QWidget *parent, const QDomElement &element);
+	void buildElement (const QDomElement &element, QWidget *parent_widget);
 	void makeConnections ();
+	RKComponent *component () const { return parent; };
 private:
 	RKComponent *parent;
 	struct RKComponentPropertyConnection {

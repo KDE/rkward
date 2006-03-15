@@ -2,7 +2,7 @@
                           rkcomponentmap.h  -  description
                              -------------------
     begin                : Thu May 12 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -98,6 +98,22 @@ private:
 	typedef QMap<QString, RKComponentHandle*> ComponentMap;
 /** the actual map of components */
 	ComponentMap components;
+};
+
+#include <qobject.h>
+
+/**
+@author Thomas Friedrichsmeier
+*/
+class RKStandardComponentHandle : public QObject, public RKComponentHandle {
+	Q_OBJECT
+public:
+	RKStandardComponentHandle (const QString &filename, RKComponentType type);
+
+	~RKStandardComponentHandle ();
+public slots:
+/** Slot called, when the menu-item for this widget is selected. Responsible for creating the GUI. */
+	void activated ();
 };
 
 #endif

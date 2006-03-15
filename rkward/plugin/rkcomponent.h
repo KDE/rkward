@@ -25,9 +25,9 @@
 class RKComponentBase {
 public:
 /** constructor */
-	RKComponentBase ();
+	RKComponentBase () {};
 /** destructor */
-	virtual ~RKComponentBase ();
+	virtual ~RKComponentBase () {};
 /** enum of types of properties. Used from RTTI. Don't change the values, as there are some range checks in the code (see isProperty ()) */
 	enum RKComponentTypes {
 		PropertyBase = 1,
@@ -40,6 +40,8 @@ public:
 		PropertyEnd = 1999,
 		ComponentBase = 2001,
 		Component = 2002,
+		ComponentVarSelector = 2003,
+		ComponentVarSlot = 2003,
 		ComponentUser = 3000	/**< for user expansion */
 	};
 /** for RTTI. see RKComponentBase::RKComponentTypes */
@@ -53,7 +55,10 @@ public:
 	QString fetchStringValue (const QString &identifier);
 /** returns true, if this is a property */
 	bool isProperty () { return (type () <= PropertyEnd); };
+/** returns satisfaction state. default implementation returns true */
+	virtual bool isSatisfied () { return true; }
 protected:
+	friend class RKComponentBuilder;
 /** simple convenience function to add a child to the map of children */
 	void addChild (const QString &id, RKComponentBase *child);
 	QDict<RKComponentBase> child_map;
@@ -96,7 +101,9 @@ public:
 /** check whether the component is satisfied (such as after a value change or requireness change). If statisfied state has changed, and silent==false, notfies parent. TODO: maybe statisfaction-state should be made a property as well! */
 	virtual void checkSatisfied (bool silent=false);
 
-	bool isSatisfied ();
+/** returns satisfaction state. default implementation returns false, if any of the children is dis-satisfied, true otherwise */
+	virtual bool isSatisfied ();
+
 /** Is the component "ready"? I.e. it is up to date according to current settings. Does not imply it is also satisfied. Default implementation always returns true. TODO: maybe ready-state should be made a property as well! */
 	virtual bool isReady () { return true; };
 protected:

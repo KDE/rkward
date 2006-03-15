@@ -29,7 +29,7 @@
 #include <qframe.h>
 #include <qpushbutton.h>
 //#include <qregexp.h>
-//#include <qtabwidget.h>
+#include <qtabwidget.h>
 #include <qsplitter.h>
 //#include <qwidgetstack.h>
 #include <qlabel.h>
@@ -49,11 +49,10 @@
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../rbackend/rinterface.h"*/
 
-// plugin-widgets
-/*#include "rkpluginwidget.h"
+// component widgets
 #include "rkvarselector.h"
 #include "rkvarslot.h"
-#include "rktext.h"
+/*#include "rktext.h"
 #include "rkradio.h"
 #include "rkcheckbox.h"
 #include "rkpluginspinbox.h"
@@ -105,7 +104,8 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 // construct the GUI
 	// if top-level, construct standard elements
 	if (!parent_widget) {
-		parent_widget = gui = new RKStandardComponentGUI (this);
+		gui = new RKStandardComponentGUI (this);
+		parent_widget = gui->mainWidget ();
 	}
 
 	// create a builder
@@ -113,13 +113,14 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 
 	// go
 	// TODO: this is wrong! wizard/dialog
-	builder->buildElement (parent_widget, doc_element);
+	builder->buildElement (xml->getChildElement (doc_element, "dialog", DL_ERROR), parent_widget);
 
 	// initialize
 	builder->makeConnections ();
 
 	// done!
 	delete builder;
+	if (gui) gui->show ();
 }
 
 RKStandardComponent::~RKStandardComponent () {
@@ -156,9 +157,7 @@ RKComponentBuilder::~RKComponentBuilder () {
 	RK_TRACE (PLUGIN);
 }
 
-void RKComponentBuilder::buildElement (QWidget *parent, const QDomElement &element) {
-	RK_TRACE (PLUGIN);
-
+void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *parent_widget) {
 	RK_TRACE (PLUGIN);
 
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
@@ -166,59 +165,61 @@ void RKComponentBuilder::buildElement (QWidget *parent, const QDomElement &eleme
 	
 	XMLChildList::const_iterator it;
 	for (it = children.begin (); it != children.end (); ++it) {
-		RKPluginWidget *widget = 0;
+		RKComponent *widget = 0;
 		QDomElement e = *it;		// shorthand
 		
 	    if (e.tagName () == "row") {
-			QHBox box = new QHBox (parent);
+			QHBox *box = new QHBox (parent_widget);
 			box->setSpacing (RKGlobals::spacingHint ());
 			buildElement (e, box);
 		} else if (e.tagName () == "column") {
-			QVBox box = new QVBox (parent);
+			QVBox *box = new QVBox (parent_widget);
 			box->setSpacing (RKGlobals::spacingHint ());
 			buildElement (e, box);
 		} else if (e.tagName () == "frame") {
-			QGroupBox *box = new QGroupBox (1, Qt::Vertical, e.attribute ("label"), parent);
-			box->setSpacing (RKGlobals::spacingHint ());
+			QGroupBox *box = new QGroupBox (1, Qt::Vertical, e.attribute ("label"), parent_widget);
+			box->setInsideSpacing (RKGlobals::spacingHint ());
 			buildElement (e, box);
 		} else if (e.tagName () == "tabbook") {
-			QTabWidget *tabbook = new QTabWidget (parent);
+			QTabWidget *tabbook = new QTabWidget (parent_widget);
 			QDomNodeList tabs = e.childNodes ();
 			for (unsigned int t=0; t < tabs.count (); ++t) {
 				QDomElement tab_e = tabs.item (t).toElement ();
 				if (tab_e.tagName () == "tab") {
-					QVBox *tabpage = new QWidget (tabbook);
+					QVBox *tabpage = new QVBox (tabbook);
 					tabpage->setSpacing (RKGlobals::spacingHint ());
-					buildStructure (tab_e, tabpage);
+					buildElement (tab_e, tabpage);
 					tabbook->addTab (tabpage, tab_e.attribute ("label"));
 				}
 			}
 		} else if (e.tagName () == "varselector") {
-			widget = new RKVarSelector (e, parent, this);
-		} else if (e.tagName () == "radio") {
-			widget = new RKRadio (e, parent, this);
-		} else if (e.tagName () == "checkbox") {
-			widget = new RKCheckBox (e, parent, this);
-		} else if (e.tagName () == "spinbox") {
-			widget = new RKPluginSpinBox (e, parent, this);
+			widget = new RKVarSelector (e, component (), parent_widget);
 		} else if (e.tagName () == "varslot") {
-			widget = new RKVarSlot (e, paretn, this);
+			widget = new RKVarSlot (e, component (), parent_widget);
+/*		} else if (e.tagName () == "radio") {
+			widget = new RKRadio (e, parent_component, parent_widget);
+		} else if (e.tagName () == "checkbox") {
+			widget = new RKCheckBox (e, parent_component, parent_widget);
+		} else if (e.tagName () == "spinbox") {
+			widget = new RKPluginSpinBox (e, parent_component, parent_widget);
 		} else if (e.tagName () == "formula") {
-			widget = new RKFormula (e, parent, this);
-/*		} else if (e.tagName () == "note") {		//TODO: remove corresonding class
-			widget = new RKNote (e, parent, this); */
+			widget = new RKFormula (e, parent_component, parent_widget);
+//		} else if (e.tagName () == "note") {		//TODO: remove corresonding class
+//			widget = new RKNote (e, parent_widget, this);
 		} else if (e.tagName () == "browser") {
-			widget = new RKPluginBrowser (e, parent, this);
+			widget = new RKPluginBrowser (e, parent_component, parent_widget);
 		} else if (e.tagName () == "input") {
-			widget = new RKInput (e, parent, this);
+			widget = new RKInput (e, parent_component, parent_widget);
 		} else if (e.tagName () == "text") {
-			widget = new RKText (e, parent, this);
+			widget = new RKText (e, parent_component, parent_widget); */
 		} else {
-			xml->displayError (e, "Invalid tagname '%'".arg (e.tagname ()), DL_ERROR);
+			xml->displayError (&e, QString ("Invalid tagname '%'").arg (e.tagName ()), DL_ERROR);
 		}
 
 		if (widget) {
-			registerWidget (widget, e.attribute ("id", "#noid#"), e.attribute ("depend","#free#"), num_pages);
+			parent->addChild (xml->getStringAttribute (e, "id", "#noid#", DL_WARNING), widget);
+			// TODO: deal with (multi-page) wizards
+			// TODO: parse connections
 		}
 	}
 }
@@ -238,42 +239,45 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component) 
 	QGridLayout *main_grid = new QGridLayout (this, 1, 1);
 	QSplitter *splitter = new QSplitter (QSplitter::Vertical, this);
 	main_grid->addWidget (splitter, 0, 0);
-	QWidget *main_widget = new QWidget (splitter);
+	QWidget *upper_widget = new QWidget (splitter);
 	
-	QHBoxLayout *hbox = new QHBoxLayout (main_widget, RKGlobals::marginHint (), RKGlobals::spacingHint ());
+	QHBoxLayout *hbox = new QHBoxLayout (upper_widget, RKGlobals::marginHint (), RKGlobals::spacingHint ());
 	QVBoxLayout *vbox = new QVBoxLayout (hbox, RKGlobals::spacingHint ());
 
 	// build standard elements
+	main_widget = new QVBox (upper_widget);
+	hbox->addWidget (main_widget);
+
 	// lines
 	QFrame *line;
-	line = new QFrame (main_widget);
+	line = new QFrame (upper_widget);
 	line->setFrameShape (QFrame::VLine);
 	line->setFrameShadow (QFrame::Plain);	
 	hbox->addWidget (line);
 
 	// buttons
 	vbox = new QVBoxLayout (hbox, RKGlobals::spacingHint ());
-	okButton = new QPushButton ("Submit", main_widget);
+	okButton = new QPushButton ("Submit", upper_widget);
 	connect (okButton, SIGNAL (clicked ()), this, SLOT (ok ()));
 	vbox->addWidget (okButton);
 	
-	cancelButton = new QPushButton ("Close", main_widget);
+	cancelButton = new QPushButton ("Close", upper_widget);
 	connect (cancelButton, SIGNAL (clicked ()), this, SLOT (cancel ()));
 	vbox->addWidget (cancelButton);
 	vbox->addStretch (1);
 	
-	helpButton = new QPushButton ("Help", main_widget);
+	helpButton = new QPushButton ("Help", upper_widget);
 	connect (helpButton, SIGNAL (clicked ()), this, SLOT (help ()));
 	vbox->addWidget (helpButton);
 	
 /*	if (wizard_available) {
-		switchButton = new QPushButton ("Use Wizard", main_widget);
+		switchButton = new QPushButton ("Use Wizard", upper_widget);
 		connect (switchButton, SIGNAL (clicked ()), this, SLOT (switchInterfaces ()));
 		vbox->addWidget (switchButton);
 	} */
 	vbox->addStretch (2);
 	
-	toggleCodeButton = new QPushButton ("Code", main_widget);
+	toggleCodeButton = new QPushButton ("Code", upper_widget);
 	toggleCodeButton->setToggleButton (true);
 	toggleCodeButton->setOn (true);
 	connect (toggleCodeButton, SIGNAL (clicked ()), this, SLOT (toggleCode ()));
