@@ -66,6 +66,7 @@ void RKVarSelector::objectSelectionChanged () {
 	RK_TRACE (PLUGIN);
 
 	selected->setFromListView (list_view, true);
+	RK_DO (qDebug ("selected in varselector: %s", selected->value ().latin1 ()), PLUGIN, DL_DEBUG);
 }
 
 #include "rkvarselector.moc"

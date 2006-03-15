@@ -645,7 +645,8 @@ void RKComponentPropertyRObjects::setObjectList (const ObjectList &newlist) {
 	RK_TRACE (PLUGIN);
 
 	bool changes = false;
-	// now remove items from the old list that are not in the new list
+
+	// remove items from the old list that are not in the new list
 	ObjectList::Iterator it = object_list.begin ();
 	while (it != object_list.end ()) {
 		if (newlist.contains (*it)) {
@@ -660,6 +661,7 @@ void RKComponentPropertyRObjects::setObjectList (const ObjectList &newlist) {
 	ObjectList::const_iterator cit = newlist.begin ();
 	while (cit != newlist.end ()) {
 		if (!object_list.contains (*cit)) {
+			if (isObjectValid (*cit));
 			object_list.append (*cit);
 			changes = true;
 		}
@@ -873,9 +875,7 @@ void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase 
 	RK_TRACE (PLUGIN);
 
 	if ((property->type () == PropertyRObjects) && governor_modifier.isEmpty ()) {
-		object_list = static_cast <RKComponentPropertyRObjects *> (property)->objectList ();
-		validizeAll (true);
-		emit (valueChanged (this));
+		setObjectList (static_cast <RKComponentPropertyRObjects *> (property)->objectList ());
 	} else {
 		setValue (property->value (governor_modifier));
 	}
@@ -893,12 +893,11 @@ void RKComponentPropertyRObjects::setFromListView (RKObjectListView *list_view, 
 		if ((!selected_only) || current->isSelected ()) {
 			RObject *obj = list_view->findItemObject (current);
 			RK_ASSERT (obj);
-			if (isObjectValid (obj)) {
-				newlist.append (static_cast<RKVariable*> (obj));
-			}
+			newlist.append (static_cast<RKVariable*> (obj));
 		}
 	}
 
+	// invalid objects will be ignored in setObjectList
 	setObjectList (newlist);
 }
 
@@ -948,6 +947,14 @@ void RKComponentPropertyRObjects::checkListLengthValid () {
 		if (max_num_objects && (len > max_num_objects)) is_valid = false;
 	}
 }
+
+bool RKComponentPropertyRObjects::atMaxLength () {
+	RK_TRACE (PLUGIN);
+
+	if (max_num_objects && (object_list.count () >= max_num_objects)) return true;
+	return false;
+}
+
 
 
 /////////////////////////////////////////// Code ////////////////////////////////////////////////

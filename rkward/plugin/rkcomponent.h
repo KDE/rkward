@@ -45,7 +45,7 @@ public:
 		ComponentUser = 3000	/**< for user expansion */
 	};
 /** for RTTI. see RKComponentBase::RKComponentTypes */
-	int type () { return ComponentBase; };
+	virtual int type () { return ComponentBase; };
 /** tries to locate a component (or property) described by identifier as a child (of any generation) of this RKComponentBase. If found, a pointer to this is returned. Also, the modifier parameter is set to hold any remaining modifier contained in the identifier.
 @param identifier The identifier string to look for (including a potential modifier suffix).
 @param modifier If a non null pointer to QString is given, this will be set to the value of the remaining modifier (only if successful)

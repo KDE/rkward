@@ -25,6 +25,7 @@ RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QS
 	RK_TRACE (PLUGIN);
 
 	if (identifier.isEmpty ()) return this;
+	RK_DO (qDebug ("looking up '%s'", identifier.latin1 ()), PLUGIN, DL_DEBUG);
 
 	RKComponentBase *child = child_map.find (identifier.section ("::", 0, 0));
 	if (!child) {	// if we do not have such a child, return 0 unless this is a property

@@ -125,13 +125,17 @@ public:
 	void makeConnections ();
 	RKComponent *component () const { return parent; };
 private:
+/** internal convenience function to schedule a property connection */
+	void addConnection (const QString &client_id, const QString &client_property, const QString &governor_id, const QString &governor_property, bool reconcile, const QDomElement &origin);
 	RKComponent *parent;
 	struct RKComponentPropertyConnection {
 		QString governor_property;
 		QString client_property;
 		bool reconcile;
+		QDomElement origin;
 	};
-	QValueList <RKComponentPropertyConnection *> connection_list;
+	typedef QValueList <RKComponentPropertyConnection> ConnectionList;
+	ConnectionList connection_list;
 };
 
 #endif

@@ -167,7 +167,8 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 	for (it = children.begin (); it != children.end (); ++it) {
 		RKComponent *widget = 0;
 		QDomElement e = *it;		// shorthand
-		
+		QString id = xml->getStringAttribute (e, "id", "#noid#", DL_INFO);
+
 	    if (e.tagName () == "row") {
 			QHBox *box = new QHBox (parent_widget);
 			box->setSpacing (RKGlobals::spacingHint ());
@@ -196,6 +197,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			widget = new RKVarSelector (e, component (), parent_widget);
 		} else if (e.tagName () == "varslot") {
 			widget = new RKVarSlot (e, component (), parent_widget);
+			addConnection (id, "source", xml->getStringAttribute (e, "source", "#noid#", DL_INFO), "selected", false, e);
 /*		} else if (e.tagName () == "radio") {
 			widget = new RKRadio (e, parent_component, parent_widget);
 		} else if (e.tagName () == "checkbox") {
@@ -213,20 +215,52 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 		} else if (e.tagName () == "text") {
 			widget = new RKText (e, parent_component, parent_widget); */
 		} else {
-			xml->displayError (&e, QString ("Invalid tagname '%'").arg (e.tagName ()), DL_ERROR);
+			xml->displayError (&e, QString ("Invalid tagname '%1'").arg (e.tagName ()), DL_ERROR);
 		}
 
 		if (widget) {
-			parent->addChild (xml->getStringAttribute (e, "id", "#noid#", DL_WARNING), widget);
+			parent->addChild (id, widget);
 			// TODO: deal with (multi-page) wizards
 			// TODO: parse connections
 		}
 	}
 }
 
+void RKComponentBuilder::addConnection (const QString &client_id, const QString &client_property, const QString &governor_id, const QString &governor_property, bool reconcile, const QDomElement &origin) {
+	RK_TRACE (PLUGIN);
+
+	RKComponentPropertyConnection conn;
+	conn.client_property = client_id + "::" + client_property;
+	conn.governor_property = governor_id + "::" + governor_property;
+	conn.reconcile = reconcile;
+	conn.origin = origin;
+	connection_list.append (conn);
+}
+
 void RKComponentBuilder::makeConnections () {
 	RK_TRACE (PLUGIN);
+	XMLHelper *xml = XMLHelper::getStaticHelper ();
+
+	for (ConnectionList::const_iterator it = connection_list.begin (); it != connection_list.end (); ++it) {
+		RK_DO (qDebug ("Connecting '%s' to '%s'", (*it).client_property.latin1 (), (*it).governor_property.latin1 ()), PLUGIN, DL_DEBUG);
+
+		QString dummy;
+		RKComponentBase *client = parent->lookupComponent ((*it).client_property, &dummy);
+		if ((!client) || (!dummy.isEmpty ()) || (!client->isProperty ())) {
+			xml->displayError (&((*it).origin), QString ("Invalid client identifier '%1'").arg ((*it).client_property), DL_ERROR);
+			continue;
+		}
+		RKComponentBase *governor = parent->lookupComponent ((*it).governor_property, &dummy);
+		if ((!governor) || (!governor->isProperty ())) {
+			xml->displayError (&((*it).origin), QString ("Invalid governor identifier '%1'").arg ((*it).governor_property), DL_ERROR);
+			continue;
+		}
+
+		static_cast<RKComponentPropertyBase *> (client)->connectToGovernor (static_cast<RKComponentPropertyBase *> (governor), dummy, (*it).reconcile);
+	}
 }
+
+
 
 
 /////////////////////////////////////// RKStandardComponentGUI ////////////////////////////////////////////////

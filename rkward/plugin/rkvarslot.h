@@ -51,6 +51,7 @@ private:
 @param add if true, button shows arrow right, or signifies more values would be added. Else the other way around */
 	void setSelectButton (bool add);
 	bool add_mode;
+	bool multi;
 
 /** the available objects (typically a copy of the property of the varselector) */
 	RKComponentPropertyRObjects *source;
@@ -61,7 +62,6 @@ private:
 
 	QListView *list;
 	QPushButton *select;
-	bool multi;
 	typedef QMap<QListViewItem*, RObject*> ItemMap;
 	ItemMap item_map;
 };

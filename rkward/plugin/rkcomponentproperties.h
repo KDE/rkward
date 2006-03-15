@@ -269,6 +269,8 @@ public:
 /** fill this property with all objects shown in the given RKObjectListView. Emit a signal, if there was a change. Only valid objects are added!
 @param selected_only if true, only the currently selected objects are filled into this property */
 	void setFromListView (RKObjectListView *list_view, bool selected_only=false);
+/** @returns true, if the property holds the maximum number of items (or more) */
+	bool atMaxLength ();
 public slots:
 /** remove an object value. to be connected to RKModificationTracker::objectRemoved (). This is so we get notified if the object currently selected is removed TODO: is this effectively a duplication of setFromList? */
 	void removeObjectValue (RObject *object);
@@ -322,6 +324,9 @@ public:
 	void reset ();
 
 	bool isValid () { return (have_preprocess && have_calculate && have_printout && have_cleanup); };
+
+/** RTTI */
+	int type () { return PropertyCode; };
 private:
 	QString preprocess_code;
 	QString calculate_code;
