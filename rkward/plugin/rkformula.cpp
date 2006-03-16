@@ -2,7 +2,7 @@
                           rkformula  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -26,24 +26,42 @@
 #include <qdom.h>
 
 #include <klocale.h>
+#include <kiconloader.h>
 
-#include "rkplugin.h"
-#include "rkvarslot.h"
-#include "rkvarselector.h"
-#include "../core/rkvariable.h"
+#include "rkcomponent.h"
+#include "../core/rcontainerobject.h"
+#include "../misc/xmlhelper.h"
 #include "../rkglobals.h"
 
 #include "../debug.h"
 
-RKFormula::RKFormula (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
+
+	// create and register properties
+	fixed_factors = new RKComponentPropertyRObjects (this, true);
+	connect (fixed_factors, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (factorsChanged (RKComponentPropertyBase *)));
+	addChild ("fixed_factors", fixed_factors);
+	dependent = new RKComponentPropertyRObjects (this, true);
+	connect (dependent, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (factorsChanged (RKComponentPropertyBase *)));
+	addChild ("dependent", dependent);
+	model = new RKComponentPropertyBase (this, true);
+	addChild ("model", model);
+	table = new RKComponentPropertyBase (this, true);
+	addChild ("table", table);
+	labels = new RKComponentPropertyBase (this, true);
+	addChild ("labels", labels);
+
+	// get xmlHelper
+	XMLHelper *xml = XMLHelper::getStaticHelper ();
+
+	// create layout
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
-	depend = element.attribute ("depend", QString::null);
-	
+
 	type_selector = new QButtonGroup (this);
 	type_selector->setColumnLayout (0, Qt::Vertical);
-	type_selector->layout()->setSpacing (RKGlobals::spacingHint ());
-	type_selector->layout()->setMargin (RKGlobals::marginHint ());
+	type_selector->layout ()->setSpacing (RKGlobals::spacingHint ());
+	type_selector->layout ()->setMargin (RKGlobals::marginHint ());
 	QVBoxLayout *group_layout = new QVBoxLayout (type_selector->layout());
 	group_layout->addWidget (new QRadioButton (i18n ("Full Model"), type_selector));
 	group_layout->addWidget (new QRadioButton (i18n ("Main Effects only"), type_selector));
@@ -53,55 +71,45 @@ RKFormula::RKFormula (const QDomElement &element, QWidget *parent, RKPlugin *plu
 	custom_model_widget = new QWidget (type_selector);
 	QHBoxLayout *model_hbox = new QHBoxLayout (custom_model_widget, RKGlobals::spacingHint ());
 	predictors_view = new QListView (custom_model_widget);
-	predictors_view->addColumn ("Name");
+	predictors_view->addColumn (i18n ("Name"));
 	predictors_view->setSelectionMode (QListView::Extended);
 	predictors_view->setSorting (100);
 	model_hbox->addWidget (predictors_view);
 	model_hbox->addSpacing (6);
 	
 	QVBoxLayout *model_vbox = new QVBoxLayout (model_hbox, RKGlobals::spacingHint ());
-	add_button = new QPushButton ("->", custom_model_widget);
+	add_button = new QPushButton (QString::null, custom_model_widget);
+	add_button->setPixmap (SmallIcon ("1rightarrow"));
 	connect (add_button, SIGNAL (clicked ()), this, SLOT (addButtonClicked ()));
 	model_vbox->addWidget (add_button);
-	remove_button = new QPushButton ("<-", custom_model_widget);
+	remove_button = new QPushButton (QString::null, custom_model_widget);
+	remove_button->setPixmap (SmallIcon ("1leftarrow"));
 	connect (remove_button, SIGNAL (clicked ()), this, SLOT (removeButtonClicked ()));
 	model_vbox->addWidget (remove_button);
 	level_box = new QSpinBox (0, 0, 1, custom_model_widget);
-	level_box->setSpecialValueText ("Main effects");
+	level_box->setSpecialValueText (i18n ("Main effects"));
 	model_vbox->addWidget (level_box);
 	model_hbox->addSpacing (6);
 
 	model_view = new QListView (custom_model_widget);
-	model_view->addColumn ("Level");
-	model_view->addColumn ("Term");
+	model_view->addColumn (i18n ("Level"));
+	model_view->addColumn (i18n ("Term"));
 	model_view->setSorting (0);
 	model_view->setRootIsDecorated (true);
 	model_hbox->addWidget (model_view);	
 
 	group_layout->addWidget (custom_model_widget);
 
-	fixed_factors_id = element.attribute ("fixed_factors");
-	dependent_id = element.attribute ("dependent");
-	type_selector->setCaption (element.attribute ("label", "Specify model"));
+	type_selector->setCaption (xml->getStringAttribute (element, "label", i18n ("Specify model"), DL_INFO));
 
 	vbox->addWidget (type_selector);
 }
-
 
 RKFormula::~RKFormula () {
 	RK_TRACE (PLUGIN);
 }
 
-void RKFormula::initialize () {
-	RK_TRACE (PLUGIN);
-	fixed_factors = plugin ()->getVarSlot (fixed_factors_id);
-	connect (fixed_factors, SIGNAL (changed ()), this, SLOT (factorsChanged ()));
-	dependent = plugin ()->getVarSlot (dependent_id);
-	connect (dependent, SIGNAL (changed ()), this, SLOT (factorsChanged ()));
-	typeChange (0);
-}
-
-void RKFormula::factorsChanged () {
+void RKFormula::factorsChanged (RKComponentPropertyBase *) {
 	RK_TRACE (PLUGIN);
 	// trigger update:
 	typeChange ((int) model_type);
@@ -118,8 +126,8 @@ void RKFormula::typeChange (int id) {
 	} else if (id == (int) Custom) {
 		predictors_view->clear ();
 		item_map.clear ();
-		QValueList<RKVariable*> fixed_list = fixed_factors->getVariables ();
-		for (QValueList<RKVariable*>::Iterator it = fixed_list.begin (); it != fixed_list.end (); ++it) {
+		ObjectList fixed_list = fixed_factors->objectList ();
+		for (ObjectList::const_iterator it = fixed_list.begin (); it != fixed_list.end (); ++it) {
 			QListViewItem *new_item = new QListViewItem (predictors_view, (*it)->getShortName ());
 			item_map.insert (new_item, (*it));
 		}
@@ -129,32 +137,31 @@ void RKFormula::typeChange (int id) {
 	
 	model_type = (ModelType) id;
 	makeModelString ();
-	emit (changed ());
 }
 
 void RKFormula::makeModelString () {
 	RK_TRACE (PLUGIN);
-	// first find out, whether mulitple tables are involved and construct table string
+	// first find out, whether multiple containers are involved and construct table string
 	multitable = false;
 	model_ok = false;
+	QString table_string, model_string, labels_string;
 	mangled_names.clear ();
-	RKVariable *dep_var = 0;
-	QString table;
-	if (dependent->getNumVars()) {
-		dep_var = dependent->getVariables ().first ();
+	RObject *dep_var = dependent->objectValue ();
+	RObject *container;
+	if (dep_var) {
 		model_ok = true;
 	}
-	QValueList<RKVariable*> vlist = fixed_factors->getVariables ();
+	ObjectList vlist = fixed_factors->objectList ();
 	if (vlist.empty ()) {
 		model_ok = false;
 	}
 	if (dep_var) {
-		table = dep_var->getTable ();
+		container = dep_var->getContainer ();
 	} else if (!vlist.empty ()) {
-		table = vlist.first ()->getTable ();
+		container = vlist.first ()->getContainer ();
 	}
-	for (QValueList<RKVariable*>::iterator it = vlist.begin (); it != vlist.end (); ++it) {
-		if ((*it)->getTable () != table) {
+	for (ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
+		if ((*it)->getContainer () != container) {
 			multitable = true;
 			break;
 		}
@@ -162,23 +169,23 @@ void RKFormula::makeModelString () {
 	if (multitable) {
 		table_string = "data.frame (";
 		if (dep_var) table_string.append (mangleName (dep_var) + "=" + dep_var->getFullName ());
-		for (QValueList<RKVariable*>::iterator it = vlist.begin (); it != vlist.end (); ++it) {
+		for (ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
 			table_string.append (", " + mangleName ((*it)) + "=" + (*it)->getFullName ());
 		}
 		table_string.append (")");
 	} else {
-		table_string = table;
+		table_string = container->getFullName ();;
 	}
 	
 	// construct model string
 	model_string = mangleName (dep_var) + " ~ ";
 	if (model_type == FullModel) {
-		for (QValueList<RKVariable*>::iterator it = vlist.begin (); it != vlist.end (); ++it) {
+		for (ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
 			if (it != vlist.begin ()) model_string.append (" * ");
 			model_string.append (mangleName (*it));
 		}
 	} else if (model_type == MainEffects) {
-		for (QValueList<RKVariable*>::iterator it = vlist.begin (); it != vlist.end (); ++it) {
+		for (ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
 			if (it != vlist.begin ()) model_string.append (" + ");
 			model_string.append (mangleName (*it));
 		}
@@ -196,14 +203,29 @@ void RKFormula::makeModelString () {
 			}
 		}
 	}
+
+	// labels
+	labels_string = "list (";
+	MangledNames::const_iterator it;
+	for (it = mangled_names.begin (); it != mangled_names.end (); ++it) {
+		if (it != mangled_names.begin ()) {
+			labels_string.append (", ");
+		}
+		labels_string.append (it.key () + "=\"" + it.data ()->getDescription () + "\"");
+	}
+	labels_string.append (")");
+
+	table->setValue (table_string);
+	model->setValue (model_string);
+	labels->setValue (labels_string);
 }
 
-QString RKFormula::mangleName (RKVariable *var) {
+QString RKFormula::mangleName (RObject *var) {
 	RK_TRACE (PLUGIN);
 	if (!var) return QString::null;
 		
 	QString dummy = var->getShortName ();
-	QString dummy2= dummy;
+	QString dummy2 = dummy;
 	MangledNames::iterator it;
 	int i=-1;
 	while (((it = mangled_names.find (dummy)) != mangled_names.end ()) && (it.data () != var)) {
@@ -215,9 +237,9 @@ QString RKFormula::mangleName (RKVariable *var) {
 
 void RKFormula::addButtonClicked () {
 	RK_TRACE (PLUGIN);
-	// create an array of selcted variables
+	// create an array of selected variables
 	// we allocate more than we'll probably need, but it's only going to be a handful of vars anyway.
-	RKVariable *varlist[predictors_view->childCount ()];
+	RObject *varlist[predictors_view->childCount ()];
 	int num_selected_vars = 0;
 	for (ItemMap::iterator item = item_map.begin (); item != item_map.end (); ++item) {
 		if (item.key ()->isSelected ()) {
@@ -287,10 +309,9 @@ void RKFormula::addButtonClicked () {
 	}
 	
 	makeModelString ();
-	emit (changed ());
 }
 
-RKFormula::Interaction* RKFormula::makeInteractions (int level, const RKVarPtr *source_vars, int source_count, int *count) {
+RKFormula::Interaction* RKFormula::makeInteractions (int level, const RObjectPtr *source_vars, int source_count, int *count) {
 	RK_TRACE (PLUGIN);
 	RK_DO (qDebug ("makeInteractions: level %d, source_count %d", level, source_count), PLUGIN, DL_DEBUG);
 	RK_ASSERT (level >= 0);
@@ -311,7 +332,7 @@ RKFormula::Interaction* RKFormula::makeInteractions (int level, const RKVarPtr *
 		for (start_var = 0; start_var < source_count; ++start_var) {
 			RK_DO (qDebug ("start_var %d, source_count %d", start_var, source_count), PLUGIN, DL_DEBUG);
 			ret[start_var].level = 0;
-			ret[start_var].vars = new RKVarPtr[1];
+			ret[start_var].vars = new RObjectPtr[1];
 			ret[start_var].vars[0] = source_vars[start_var];
 		}
 		return ret;
@@ -332,7 +353,7 @@ RKFormula::Interaction* RKFormula::makeInteractions (int level, const RKVarPtr *
 	for (start_var = 0; start_var < (source_count - level); ++start_var) {
 		for (int sub = 0; sub < sub_counts[start_var]; ++sub) {
 			// copy values
-			ret[current_interaction].vars = new RKVarPtr [sub_interactions[start_var][sub].level + 2];
+			ret[current_interaction].vars = new RObjectPtr [sub_interactions[start_var][sub].level + 2];
 			ret[current_interaction].vars[0] = source_vars[start_var];
 			for (int i=1; i <= (sub_interactions[start_var][sub].level + 1); ++i) {
 				ret[current_interaction].vars[i] = sub_interactions[start_var][sub].vars[i-1];
@@ -398,7 +419,6 @@ void RKFormula::removeButtonClicked () {
 	}
 	
 	makeModelString ();
-	emit (changed ());
 }
 
 void RKFormula::checkCustomModel () {
@@ -440,40 +460,5 @@ bool RKFormula::isSatisfied () {
 	RK_TRACE (PLUGIN);
 	return (model_ok);
 }
-
-QString RKFormula::value (const QString &modifier) {
-	RK_TRACE (PLUGIN);
-	if (modifier == "data") {
-		return table_string;
-	} else if (modifier == "labels") {
-		QString ret = "list (";
-		MangledNames::iterator it;
-		for (it = mangled_names.begin (); it != mangled_names.end (); ++it) {
-			if (it != mangled_names.begin ()) {
-				ret.append (", ");
-			}
-			ret.append (it.key () + "=\"" + it.data ()->getDescription () + "\"");
-		}
-		ret.append (")");
-		return ret;
-	} else {
-		return model_string;
-	}
-}
-
-void RKFormula::setEnabled(bool checked){
-type_selector->setEnabled(checked);
-}
-
-void RKFormula::slotActive(){
-  bool isOk = type_selector->isEnabled();
-  type_selector->setEnabled(! isOk);
-}
-
-void RKFormula::slotActive(bool isOk){
-  type_selector->setEnabled( isOk);
-  }
-
-
 
 #include "rkformula.moc"

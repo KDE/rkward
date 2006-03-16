@@ -166,4 +166,6 @@ In subclasses like RKVariable, the struct is extended to additionally hold the d
 	virtual void discardEditData ();
 };
 
+typedef RObject* RObjectPtr;
+
 #endif

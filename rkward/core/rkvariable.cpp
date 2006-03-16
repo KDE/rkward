@@ -93,11 +93,6 @@ void RKVariable::writeMetaData (RCommandChain *chain) {
 	RObject::writeMetaData (chain);
 }
 
-QString RKVariable::getTable () {
-	RK_TRACE (OBJECTS);
-	return parent->getFullName ();
-}
-
 void RKVariable::updateFromR () {
 	RK_TRACE (OBJECTS);
 	

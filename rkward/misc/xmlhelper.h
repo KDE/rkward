@@ -32,6 +32,8 @@ Warning/Error messages will always be printed using the standard debugging frame
 
 TODO: Probably it's not really clever to use the debugging-framework for showing error-messages in XML-file parsing. Anyway, the only function to adjust in order to change this would be displayError ().
 
+TODO: Either something like push-context/pop-context or an added closeFile (). This way, when parsing several XML-files, we'd still get the correct messages. Internally a stack of filenames and highest_errors would be kept.
+
 @author Thomas Friedrichsmeier
 */
 class XMLHelper {

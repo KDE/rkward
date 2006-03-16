@@ -47,9 +47,6 @@ case it will be stored as a character vector */
 /** set the VarType. If sync, the change will be communicated to the backend immediately. See getVarType */
 	void setVarType (RObject::VarType, bool sync=true);
 
-/** A hack for now: returns the name of the parent (data.frame) */
-	QString getTable ();
-
 /** reimplemented from RObject */
 	void updateFromR ();
 	

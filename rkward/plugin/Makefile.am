@@ -2,14 +2,14 @@ INCLUDES = $(all_includes)
 METASOURCES = AUTO
 noinst_LIBRARIES =  libplugin.a
 libplugin_a_SOURCES = rkcomponentmap.cpp rkcomponentproperties.cpp rkcomponent.cpp \
-	rkstandardcomponent.cpp rkvarselector.cpp rkvarslot.cpp
-# rkcheckbox.cpp rkformula.cpp rkplugin.cpp \
+	rkstandardcomponent.cpp rkvarselector.cpp rkvarslot.cpp rkformula.cpp
+# rkcheckbox.cpp rkplugin.cpp \
 #	rkpluginhandle.cpp rkpluginspinbox.cpp rkpluginwidget.cpp rkradio.cpp rktext.cpp \
 #	 rkinput.cpp rknote.cpp \
 #	rkpluginbrowser.cpp 
 noinst_HEADERS = rkcomponentmap.h rkcomponentproperties.h rkcomponent.h \
-	rkstandardcomponent.h rkvarselector.h rkvarslot.h
-# rkcheckbox.h rkformula.h rkplugin.h rkpluginhandle.h \
+	rkstandardcomponent.h rkvarselector.h rkvarslot.h rkformula.h
+# rkcheckbox.h rkplugin.h rkpluginhandle.h \
 #	rkpluginspinbox.h rkpluginwidget.h rkradio.h rktext.h  \
 #	rkpluginbrowser.h rkinput.h rknote.h 
 

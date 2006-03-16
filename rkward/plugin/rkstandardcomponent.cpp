@@ -52,11 +52,11 @@
 // component widgets
 #include "rkvarselector.h"
 #include "rkvarslot.h"
+#include "rkformula.h"
 /*#include "rktext.h"
 #include "rkradio.h"
 #include "rkcheckbox.h"
 #include "rkpluginspinbox.h"
-#include "rkformula.h"
 #include "rknote.h"
 #include "rkinput.h"
 #include "rkpluginbrowser.h" */
@@ -198,15 +198,17 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 		} else if (e.tagName () == "varslot") {
 			widget = new RKVarSlot (e, component (), parent_widget);
 			addConnection (id, "source", xml->getStringAttribute (e, "source", "#noid#", DL_INFO), "selected", false, e);
+		} else if (e.tagName () == "formula") {
+			widget = new RKFormula (e, component (), parent_widget);
+			addConnection (id, "dependent", xml->getStringAttribute (e, "dependent", "#noid#", DL_INFO), "available", false, e);
+			addConnection (id, "fixed_factors", xml->getStringAttribute (e, "fixed_factors", "#noid#", DL_INFO), "available", false, e);
 /*		} else if (e.tagName () == "radio") {
 			widget = new RKRadio (e, parent_component, parent_widget);
 		} else if (e.tagName () == "checkbox") {
 			widget = new RKCheckBox (e, parent_component, parent_widget);
 		} else if (e.tagName () == "spinbox") {
 			widget = new RKPluginSpinBox (e, parent_component, parent_widget);
-		} else if (e.tagName () == "formula") {
-			widget = new RKFormula (e, parent_component, parent_widget);
-//		} else if (e.tagName () == "note") {		//TODO: remove corresonding class
+//		} else if (e.tagName () == "note") {		//TODO: remove corresponding class
 //			widget = new RKNote (e, parent_widget, this);
 		} else if (e.tagName () == "browser") {
 			widget = new RKPluginBrowser (e, parent_component, parent_widget);
