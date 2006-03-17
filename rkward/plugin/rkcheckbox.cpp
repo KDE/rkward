@@ -2,7 +2,7 @@
                           rkcheckbox  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -16,70 +16,51 @@
  ***************************************************************************/
 #include "rkcheckbox.h"
 
-#include <qdom.h>
 #include <qlayout.h>
 #include <qcheckbox.h>
 
-#include "rkplugin.h"
 #include "../rkglobals.h"
+#include "../misc/xmlhelper.h"
 #include "../debug.h"
 
-RKCheckBox::RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+RKCheckBox::RKCheckBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
-  QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
-	checkbox = new QCheckBox (element.attribute ("label"), this);
-	vbox->addWidget (checkbox);
-  isOk =false;
-	value_if_checked = element.attribute ("value", "1");
-	value_if_unchecked = element.attribute ("value_unchecked", QString::null);
-	depend = element.attribute ("depend", QString::null);
-	
-	if (element.attribute ("checked") == "true") {
-		checkbox->setChecked (true);
-    isOk =true ;
-	}
+	// get xml-helper
+	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
+	// create and add property
+	addChild ("state", state = new RKComponentPropertyBool (this, true, xml->getStringAttribute (element, "value", "1", DL_WARNING), xml->getStringAttribute (element, "value_unchecked", QString::null, DL_INFO), xml->getBoolAttribute (element, "checked", false, DL_INFO)));
+	connect (state, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (changedState (RKComponentPropertyBase *)));
+
+	// create checkbox
+	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	checkbox = new QCheckBox (xml->getStringAttribute (element, "label", QString::null, DL_WARNING), this);
+	vbox->addWidget (checkbox);
 	connect (checkbox, SIGNAL (stateChanged (int)), this, SLOT (changedState (int)));
-  connect(checkbox,SIGNAL(clicked()),  SIGNAL(clicked()) );
+
+	// initialize
+	updating = false;
+	changedState (0);
 }
 
 RKCheckBox::~RKCheckBox () {
 	RK_TRACE (PLUGIN);
 }
 
-
-void RKCheckBox::setEnabled(bool checked){
+void RKCheckBox::changedState (RKComponentPropertyBase *) {
 	RK_TRACE (PLUGIN);
-  checkbox->setEnabled(checked);
-  }
-  
 
-QString RKCheckBox::value (const QString &) {
-	RK_TRACE (PLUGIN);
-	if (checkbox->isChecked ()) {
-		return value_if_checked;
-	} else {
-		return value_if_unchecked;
-	}
+	if (updating) return;
+	updating = true;
+	checkbox->setChecked (state->boolValue ());
+	updating = false;
 }
-
 
 void RKCheckBox::changedState (int) {
 	RK_TRACE (PLUGIN);
-	emit (changed ());
-}
 
-void RKCheckBox::slotActive(bool isOk){
-	RK_TRACE (PLUGIN);
-checkbox->setEnabled(isOk) ;
-}
-
-
-void RKCheckBox::slotActive(){
-	RK_TRACE (PLUGIN);
-bool isOk = checkbox->isEnabled();
-checkbox->setEnabled(! isOk) ;
+	state->setBoolValue (checkbox->isChecked ());
 }
 
 #include "rkcheckbox.moc"

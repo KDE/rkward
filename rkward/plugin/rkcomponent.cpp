@@ -62,6 +62,12 @@ QString RKComponentBase::fetchStringValue (const QString &identifier) {
 	}
 }
 
+bool RKComponentBase::isSatisfied () {
+	RK_TRACE (PLUGIN);
+	if (!required) return true;
+	if (isValid ()) return true;
+	return false;		// never happens in RKComponentBase, but might in subclasses
+}
 
 //############### RKComponent ########################
 
@@ -84,7 +90,6 @@ RKComponent::~RKComponent () {
 	// properties are QObjects, and hence deleted automatically
 }
 
-/** generally the valueChanged () signal of all RKComponentPropertys directly owned by this component should be connected to this (Qt-)slot, so the component can update itself accordingly. Default implementation handles changes in visibilty, enabledness and requiredness properties. If you reimplement this, you will most likely still want to call the default implementation to handle these. */
 void RKComponent::propertyValueChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
@@ -93,16 +98,11 @@ void RKComponent::propertyValueChanged (RKComponentPropertyBase *property) {
 	} else if (property == enabledness_property) {
 		setEnabled (enabledness_property->boolValue ());
 	} else if (property == requiredness_property) {
-		checkSatisfied ();
+		changed ();
 	}
 }
 
-void RKComponent::checkSatisfied (bool silent) {
-	// TODO!
-
-}
-
-bool RKComponent::isSatisfied () {
+bool RKComponent::isValid () {
 	RK_TRACE (PLUGIN);
 
 	for (QDictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
@@ -125,15 +125,29 @@ void RKComponent::setReady (bool ready) {
 }
 
 void RKComponent::setVisible (bool visible) {
+	RK_TRACE (PLUGIN);
+
 	visibilityProperty ()->setBoolValue (visible);
 }
 
 void RKComponent::setEnabled (bool enabled) {
+	RK_TRACE (PLUGIN);
+
 	enablednessProperty ()->setBoolValue (enabled);
 }
 
 void RKComponent::setRequired (bool required) {
+	RK_TRACE (PLUGIN);
+
 	requirednessProperty ()->setBoolValue (required);
+}
+
+void RKComponent::changed () {
+	RK_TRACE (PLUGIN);
+
+	if (parentComponent ()) {
+		parentComponent ()->changed ();
+	}
 }
 
 #include "rkcomponent.moc"

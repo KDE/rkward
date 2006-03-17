@@ -73,14 +73,13 @@ RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWi
 
 		++i;
 	}
+	updating = false;
 	number->setIntValue (checked);			// will also take care of checking the correct button
 	number->setMin (0);
 	number->setMax (i-1);
 
 	vbox->addWidget (group);
 	connect (group, SIGNAL (clicked (int)), this, SLOT (buttonClicked (int)));
-
-	updating = false;
 }
 
 RKRadio::~RKRadio(){

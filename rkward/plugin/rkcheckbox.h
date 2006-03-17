@@ -2,7 +2,7 @@
                           rkcheckbox  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -17,46 +17,32 @@
 #ifndef RKCHECKBOX_H
 #define RKCHECKBOX_H
 
-#include <rkpluginwidget.h>
+#include "rkcomponent.h"
 
+#include "rkcomponentproperties.h"
 #include <qstring.h>
 
-#define CHECKBOX_WIDGET 51 // comme le pastis
-
-
 class QCheckBox;
-
+class QDomElement;
 
 /**
-This RKPluginWidget provides a checkbox
+This RKComponent provides a checkbox
 
 @author Thomas Friedrichsmeier
 */
-class RKCheckBox : public RKPluginWidget  {
+class RKCheckBox : public RKComponent  {
 	Q_OBJECT
 public: 
-	RKCheckBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin);
+	RKCheckBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKCheckBox ();
-	int type() {return CHECKBOX_WIDGET ; };
-//  bool isOk ;
-	void setEnabled(bool);
+	int type () { return ComponentCheckBox; };
+	RKComponentPropertyBool *state;
 public slots:
 	void changedState (int);
-	void slotActive();
-	void slotActive(bool);
-
-  
+	void changedState (RKComponentPropertyBase *);
 private:
+	bool updating;		// prevent recursion
 	QCheckBox *checkbox;
-	QString value_if_checked;
-	QString value_if_unchecked;
-	QString depend;
-protected:
-/** Returns the value of the currently selected option. */
-	QString value (const QString &modifier);
-
-signals: // Signals
-	void clicked();
 };
 
 #endif

@@ -54,8 +54,8 @@
 #include "rkvarslot.h"
 #include "rkformula.h"
 #include "rkradio.h"
-/*#include "rktext.h"
 #include "rkcheckbox.h"
+/*#include "rktext.h"
 #include "rkpluginspinbox.h"
 #include "rknote.h"
 #include "rkinput.h"
@@ -204,18 +204,18 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			addConnection (id, "fixed_factors", xml->getStringAttribute (e, "fixed_factors", "#noid#", DL_INFO), "available", false, e);
 		} else if (e.tagName () == "radio") {
 			widget = new RKRadio (e, component (), parent_widget);
-/*		} else if (e.tagName () == "checkbox") {
-			widget = new RKCheckBox (e, parent_component, parent_widget);
-		} else if (e.tagName () == "spinbox") {
-			widget = new RKPluginSpinBox (e, parent_component, parent_widget);
+		} else if (e.tagName () == "checkbox") {
+			widget = new RKCheckBox (e, component (), parent_widget);
+/*		} else if (e.tagName () == "spinbox") {
+			widget = new RKPluginSpinBox (e, component (), parent_widget);
 //		} else if (e.tagName () == "note") {		//TODO: remove corresponding class
 //			widget = new RKNote (e, parent_widget, this);
 		} else if (e.tagName () == "browser") {
-			widget = new RKPluginBrowser (e, parent_component, parent_widget);
+			widget = new RKPluginBrowser (e, component (), parent_widget);
 		} else if (e.tagName () == "input") {
-			widget = new RKInput (e, parent_component, parent_widget);
+			widget = new RKInput (e, component (), parent_widget);
 		} else if (e.tagName () == "text") {
-			widget = new RKText (e, parent_component, parent_widget); */
+			widget = new RKText (e, component (), parent_widget); */
 		} else {
 			xml->displayError (&e, QString ("Invalid tagname '%1'").arg (e.tagName ()), DL_ERROR);
 		}

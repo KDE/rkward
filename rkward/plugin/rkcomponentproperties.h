@@ -44,11 +44,7 @@ public:
 /** do not set the value, only check, whether it is legal */
 	virtual bool isStringValid (const QString &) { return true; };
 /** current setting valid? */
-	virtual bool isValid () { return is_valid; };
-/** set to required: will only be satisfied if it holds a valid value. Else: satisfied if valid *or empty* */
-	void setRequired (bool require)  { required = require; };
-/** see setRequired () */
-	bool isSatisfied ();
+	bool isValid () { return is_valid; };
 /** for RTTI. see RKComponentBase::RKComponentTypes */
 	int type () { return PropertyBase; };
 /** connect this property to a governor property (given as argument). If reconcile_requirements, the requirements of both properties are reconciled to the least common denominator. The dependent property will be notified on all changes made in the governing property, so it can update its value. 
@@ -64,7 +60,6 @@ public slots:
 	virtual void governorValueChanged (RKComponentPropertyBase *property);
 protected:
 	void warnModifierNotRecognized (const QString &modifier);
-	bool required;
 	bool is_valid;
 	QString _value;
 /** if we're only interested in a specific sub-information of the governor-property, we need to remember the corresponding modifier */

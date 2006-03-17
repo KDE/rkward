@@ -25,7 +25,7 @@
 class RKComponentBase {
 public:
 /** constructor */
-	RKComponentBase () {};
+	RKComponentBase () { required=true; };
 /** destructor */
 	virtual ~RKComponentBase () {};
 /** enum of types of properties. Used from RTTI. Don't change the values, as there are some range checks in the code (see isProperty ()) */
@@ -44,6 +44,11 @@ public:
 		ComponentVarSlot = 2003,
 		ComponentFormula = 2004,
 		ComponentRadio = 2005,
+		ComponentCheckBox = 2006,
+		ComponentSpinBox = 2007,
+		ComponentInput = 2008,
+		ComponentBrowser = 2009,
+		ComponentText = 2010,
 		ComponentUser = 3000	/**< for user expansion */
 	};
 /** for RTTI. see RKComponentBase::RKComponentTypes */
@@ -57,13 +62,18 @@ public:
 	QString fetchStringValue (const QString &identifier);
 /** returns true, if this is a property */
 	bool isProperty () { return (type () <= PropertyEnd); };
-/** returns satisfaction state. default implementation returns true */
-	virtual bool isSatisfied () { return true; }
+/** returns satisfaction state. see setRequired () */
+	virtual bool isSatisfied ();
+/** currently valid (i.e. satisfied, even if required)? default implementation always returns true */
+	virtual bool isValid () { return true; };
+/** set to required: will only be satisfied if it is valid. Else: always satisfied (but subclasses might override to always be dissatisfied on really bad values. By default RKComponentBase is required at construction */
+	void setRequired (bool require) { required = require; };
 protected:
 	friend class RKComponentBuilder;
 /** simple convenience function to add a child to the map of children */
 	void addChild (const QString &id, RKComponentBase *child);
 	QDict<RKComponentBase> child_map;
+	bool required;
 };
 
 #include "rkcomponentproperties.h"
@@ -79,9 +89,14 @@ public:
 /** destructor */
 	virtual ~RKComponent ();
 	int type () { return Component; };
+/** change notification mechanism. Call this, if something in the component changed that could result in a change in code/values/satisfaction state. Default implementation propagates the change upwards to parent components, if any, but does not do anything further. Reimplement, for instance, to regenerate code */
+	virtual void changed ();
+/** reimplemented to only return true, if all children are satisfied */
+	bool isValid ();
 public slots:
-/** generally the valueChanged () signal of all RKComponentPropertys directly owned by this component should be connected to this (Qt-)slot, so the component can update itself accordingly. Default implementation handles changes in visibilty, enabledness and requiredness properties. If you reimplement this, you will most likely still want to call the default implementation to handle these. */
-	virtual void propertyValueChanged (RKComponentPropertyBase *property);
+/** This handles changes in the default properties (enabledness, visibility, requiredness). You will use similar slots in derived classes to handle
+specialized properties */
+	void propertyValueChanged (RKComponentPropertyBase *property);
 public:
 /** standard property controlling visibility */
 	RKComponentPropertyBool *visibilityProperty () { return visibility_property; };
@@ -99,12 +114,6 @@ public:
 
 /** The parent of this component. Should be notified, whenever isSatisfied () or isReady ()-state changed. */
 	RKComponent *parentComponent () { return _parent; };
-
-/** check whether the component is satisfied (such as after a value change or requireness change). If statisfied state has changed, and silent==false, notfies parent. TODO: maybe statisfaction-state should be made a property as well! */
-	virtual void checkSatisfied (bool silent=false);
-
-/** returns satisfaction state. default implementation returns false, if any of the children is dis-satisfied, true otherwise */
-	virtual bool isSatisfied ();
 
 /** Is the component "ready"? I.e. it is up to date according to current settings. Does not imply it is also satisfied. Default implementation always returns true. TODO: maybe ready-state should be made a property as well! */
 	virtual bool isReady () { return true; };

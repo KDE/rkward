@@ -108,13 +108,6 @@ void RKComponentPropertyBase::governorValueChanged (RKComponentPropertyBase *pro
 	setValue (property->value (governor_modifier));
 }
 
-bool RKComponentPropertyBase::isSatisfied () {
-	RK_TRACE (PLUGIN);
-	if (!required) return true;
-	if (isValid ()) return true;
-	return false;		// never happens in RKComponentPropertyBase, but might in subclasses
-}
-
 void RKComponentPropertyBase::warnModifierNotRecognized (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 	RK_DO (qDebug ("Modifier '%s' not recongnized.", modifier.latin1 ()), PLUGIN, DL_ERROR);
@@ -256,7 +249,6 @@ void RKComponentPropertyInt::setMin (int lower) {
 	validator->setBottom (lower);
 	if (default_value < lower) {
 		RK_DO (qDebug ("default value in integer property is lower than lower boundary"), PLUGIN, DL_DEBUG);	// actually this is ok. In this case the default is simply "invalid"
-		default_value = lower;
 	}
 	if (current_value < lower) {
 		setIntValue (lower);
@@ -269,7 +261,6 @@ void RKComponentPropertyInt::setMax (int upper) {
 	validator->setTop (upper);
 	if (default_value > upper) {
 		RK_DO (qDebug ("default value in integer property is larger than upper boundary"), PLUGIN, DL_DEBUG);	// see above
-		default_value = upper;
 	}
 	if (current_value > upper) {
 		setIntValue (upper);
@@ -421,8 +412,7 @@ void RKComponentPropertyDouble::setMin (double lower) {
 
 	validator->setBottom (lower);
 	if (default_value < lower) {
-		RK_DO (qDebug ("default value in double property is lower than lower boundary"), PLUGIN, DL_WARNING);
-		default_value = lower;
+		RK_DO (qDebug ("default value in double property is lower than lower boundary"), PLUGIN, DL_DEBUG);	// actually this is ok. In this case the default is simply "invalid"
 	}
 	if (current_value < lower) {
 		setDoubleValue (lower);
@@ -434,8 +424,7 @@ void RKComponentPropertyDouble::setMax (double upper) {
 
 	validator->setTop (upper);
 	if (default_value > upper) {
-		RK_DO (qDebug ("default value in double property is larger than upper boundary"), PLUGIN, DL_WARNING);
-		default_value = upper;
+		RK_DO (qDebug ("default value in double property is larger than upper boundary"), PLUGIN, DL_DEBUG);	// see above
 	}
 	if (current_value > upper) {
 		setDoubleValue (upper);
