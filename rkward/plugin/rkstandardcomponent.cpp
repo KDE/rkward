@@ -55,8 +55,8 @@
 #include "rkformula.h"
 #include "rkradio.h"
 #include "rkcheckbox.h"
-/*#include "rktext.h"
 #include "rkpluginspinbox.h"
+/*#include "rktext.h"
 #include "rknote.h"
 #include "rkinput.h"
 #include "rkpluginbrowser.h" */
@@ -206,11 +206,11 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			widget = new RKRadio (e, component (), parent_widget);
 		} else if (e.tagName () == "checkbox") {
 			widget = new RKCheckBox (e, component (), parent_widget);
-/*		} else if (e.tagName () == "spinbox") {
+		} else if (e.tagName () == "spinbox") {
 			widget = new RKPluginSpinBox (e, component (), parent_widget);
 //		} else if (e.tagName () == "note") {		//TODO: remove corresponding class
 //			widget = new RKNote (e, parent_widget, this);
-		} else if (e.tagName () == "browser") {
+/*		} else if (e.tagName () == "browser") {
 			widget = new RKPluginBrowser (e, component (), parent_widget);
 		} else if (e.tagName () == "input") {
 			widget = new RKInput (e, component (), parent_widget);

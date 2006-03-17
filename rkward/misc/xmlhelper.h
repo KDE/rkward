@@ -89,6 +89,15 @@ When calling this function, highestError () will be reset to 0.
 @returns the value of the given attribute or the given default */
 	int getIntAttribute (const QDomElement &element, const QString &name, int def, int debug_level);
 
+/** returns the value of a numeric (double) attribute
+@param element the element whose attributes to search
+@param name the name of the attribute to read
+@param def default value to return if no such attribute is given
+@param debug_level level of debug message to generate in case of failure (i.e. no such attribute was found, or attribute was not an integer. Note that if the given attribute is found, but is not a valid integer, an error-message will be shown regardless of this setting, but highestError () will still use debug_level)
+@returns the value of the given attribute or the given default */
+	double getDoubleAttribute (const QDomElement &element, const QString &name, double def, int debug_level);
+
+
 /** returns the value of a boolean attribute ("true" or "false")
 @param element the element whose attributes to search
 @param name the name of the attribute to read

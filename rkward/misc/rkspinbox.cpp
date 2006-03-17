@@ -25,16 +25,21 @@
 RKSpinBox::RKSpinBox (QWidget *parent) : QSpinBox (parent) {
 	validator = 0;
 	mode = Integer;
+	divisor = 1;
 }
 
 RKSpinBox::~RKSpinBox () {
 	delete validator;
 }
 
+void RKSpinBox::setRealValue (double new_value) {
+	setValue ((int) round (new_value * divisor));
+};
+
 int RKSpinBox::mapTextToValue (bool *ok) {
 	if (mode == Real) {
 		RK_DO (qDebug ("ttv %s -> %d", text ().latin1 (), (int) (divisor * text ().toFloat (ok))), PLUGIN, DL_DEBUG);
-		return (round (divisor * text ().toFloat (ok)));
+		return ((int) round (divisor * text ().toFloat (ok)));
 	} else {
 		return QSpinBox::mapTextToValue (ok);
 	}
@@ -44,7 +49,7 @@ QString RKSpinBox::mapValueToText (int v) {
 	if (mode == Real) {
 		QString dummy;
 		RK_DO (qDebug ("vtt %d", v), PLUGIN, DL_DEBUG);
-		RK_DO (qDebug (QString ("%1.%2").arg (v / divisor).arg (v % divisor, 2).latin1 ()), PLUGIN, DL_DEBUG);
+		RK_DO (qDebug ("%s", QString ("%1.%2").arg (v / divisor).arg (v % divisor, 2).latin1 ()), PLUGIN, DL_DEBUG);
 		return (QString ().setNum ((double) v / double (divisor)));
 	} else {
 		return QSpinBox::mapValueToText (v);
@@ -65,13 +70,13 @@ void RKSpinBox::setRealMode (double min, double max, double initial, int default
 	setMinValue ((int) (min * divisor));
 	setMaxValue ((int) (max * divisor));
 	setSteps ((int) (pow (10, default_precision)), (int) (pow (10, default_precision + 1)));
-	setValue (round ((double) initial * divisor));
-	RK_DO (qDebug ("minint %d maxint %d stepint %d pageint %d initialint %d", minValue (), maxValue (), lineStep (), pageStep (), round (initial * divisor)), PLUGIN, DL_DEBUG);
+	setValue ((int) round ((double) initial * divisor));
+	RK_DO (qDebug ("minint %d maxint %d stepint %d pageint %d initialint %d", minValue (), maxValue (), lineStep (), pageStep (), (int) round (initial * divisor)), PLUGIN, DL_DEBUG);
 }
 
 void RKSpinBox::setIntMode (int min, int max, int initial) {
 	QValidator *new_validator = new QIntValidator (min, max, this);
-	
+
 	int range_power = (int) (log10 (max - min));
 	if (range_power <= 0) {
 		range_power = 1;
@@ -85,6 +90,7 @@ void RKSpinBox::setIntMode (int min, int max, int initial) {
 	delete validator;
 	validator = new_validator;
 	mode = Integer;
+	divisor = 1;
 }
 
 #include "rkspinbox.moc"

@@ -123,8 +123,6 @@ protected:
 	RKComponentPropertyBool *requiredness_property;
 	RKComponent *_parent;
 private:
-/** Internal function to use when satisfaction state changes. Also notifies the parent, if applicable */
-	void setSatisfied (bool satisfied);
 	void setReady (bool ready);
 };
 

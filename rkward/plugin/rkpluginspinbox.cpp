@@ -2,7 +2,7 @@
                           rkpluginspinbox  -  description
                              -------------------
     begin                : Wed Aug 11 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,71 +18,112 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qdom.h>
+
+#include <klocale.h>
 
 #include "../misc/rkspinbox.h"
+#include "../misc/xmlhelper.h"
 #include "../rkglobals.h"
 #include "../debug.h"
-#include "rkplugin.h"
 
-RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget(element, parent, plugin) {
-		RK_TRACE (PLUGIN);
+RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
+	RK_TRACE (PLUGIN);
+	// get xml-helper
+	XMLHelper *xml = XMLHelper::getStaticHelper ();
+
+	// first question: int or real
+	intmode = (xml->getMultiChoiceAttribute (element, "type", "integer;real", 0, DL_INFO) == 0);
+
+	// create and add properties
+	addChild ("int", intvalue = new RKComponentPropertyInt (this, intmode, 0));
+	addChild ("real", realvalue = new RKComponentPropertyDouble (this, !intmode, 0));
+
+	// layout and label
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
-	
-	label = new QLabel (element.attribute ("label", "Enter value:"), this);
+	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Enter value:"), DL_WARNING), this);
 	vbox->addWidget (label);
-	depend = element.attribute ("depend", QString::null);
 
+	// create spinbox and read settings
 	spinbox = new RKSpinBox (this);
-	if (element.attribute ("type") != "integer") {
-		spinbox->setRealMode (element.attribute ("min", "0").toFloat (), element.attribute ("max", "1").toFloat (), element.attribute ("initial", "0").toFloat (), element.attribute ("default_precision", "2").toInt (), element.attribute ("max_precision", "4").toInt ());
+	if (!intmode) {
+		double min = xml->getDoubleAttribute (element, "min", FLT_MIN, DL_INFO);
+		double max = xml->getDoubleAttribute (element, "max", FLT_MAX, DL_INFO);
+		double initial = xml->getDoubleAttribute (element, "initial", min, DL_INFO);
+		int default_precision = xml->getIntAttribute (element, "default_precision", 2, DL_INFO);
+		int max_precision = xml->getIntAttribute (element, "max_precision", 4, DL_INFO);
+
+		spinbox->setRealMode (min, max, initial, default_precision, max_precision);
+
+		realvalue->setMin (min);
+		realvalue->setMax (max);
+		realvalue->setPrecision (max_precision);
+		intmode = false;
 	} else {
-		spinbox->setIntMode (element.attribute ("min", "0").toInt (), element.attribute ("max", "100").toInt (), element.attribute ("initial", "0").toInt ());
+		int min = xml->getIntAttribute (element, "min", INT_MIN, DL_INFO);
+		int max = xml->getIntAttribute (element, "max", INT_MAX, DL_INFO);
+		int initial = xml->getIntAttribute (element, "initial", min, DL_INFO);
+
+		spinbox->setIntMode (min, max, initial);
+
+		intvalue->setMin (min);
+		intvalue->setMax (max);
+		intmode = true;
 	}
+
+	// connect
 	connect (spinbox, SIGNAL (valueChanged (int)), this, SLOT (valueChanged (int)));
+	connect (intvalue, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (valueChanged (RKComponentPropertyBase *)));
+	connect (realvalue, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (valueChanged (RKComponentPropertyBase *)));
+	updating = false;
+
+	// finish layout
 	vbox->addWidget (spinbox);
-	size = element.attribute ("size", "small");
-	if (size=="small"){
-	spinbox->setMaximumWidth(100);
-	spinbox->setMinimumWidth(100);
+	if (xml->getStringAttribute (element, "size", "normal", DL_INFO) == "small") {
+		spinbox->setFixedWidth (100);
 	}
+
+	// initialize
+	valueChanged (1);
 }
 
 RKPluginSpinBox::~RKPluginSpinBox () {
 	RK_TRACE (PLUGIN);
 }
 
-void RKPluginSpinBox::setEnabled(bool checked){
+void RKPluginSpinBox::valueChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
-  spinbox->setEnabled(checked);
-  label->setEnabled(checked);
-  }
 
-QString RKPluginSpinBox::value (const QString &) {
-	RK_TRACE (PLUGIN);
-	return (spinbox->text ());
+	if (updating) return;
+	updating = true;
+
+	// sync the two properties
+	if (property == intvalue) {
+		realvalue->setDoubleValue ((double) intvalue->intValue ());
+	} else {
+		intvalue->setIntValue ((int) realvalue->doubleValue ());
+	}
+
+	// update GUI
+	if (intmode) {
+		spinbox->setValue (intvalue->intValue ());
+	} else {
+		spinbox->setRealValue (realvalue->doubleValue ());
+	}
+
+	updating = false;
 }
 
 void RKPluginSpinBox::valueChanged (int) {
 	RK_TRACE (PLUGIN);
-	plugin ()->changed ();
-}
 
-void RKPluginSpinBox::slotActive(){
-	RK_TRACE (PLUGIN);
-bool isOk = spinbox->isEnabled();
-spinbox->setEnabled(! isOk) ;
-label->setEnabled(! isOk);
-}
+	if (intmode) {
+		intvalue->setIntValue (spinbox->value ());
+	} else {
+		// this may be ugly, but we have to set via text to make sure we get the exact same display
+		realvalue->setValue (spinbox->text ());
+	}
 
-void RKPluginSpinBox::slotActive(bool isOk){
-	RK_TRACE (PLUGIN);
-spinbox->setEnabled( isOk) ;
-label->setEnabled(isOk);
-}
-void RKPluginSpinBox::adjust(int longueur, int largeur){
-	RK_TRACE (PLUGIN);
-spinbox->resize(longueur, largeur);
+	changed ();
 }
 
 #include "rkpluginspinbox.moc"

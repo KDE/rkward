@@ -111,13 +111,6 @@ bool RKComponent::isValid () {
 	return true;
 }
 
-/** also notifies the parent, if applicable */
-void RKComponent::setSatisfied (bool satisfied) {
-	RK_TRACE (PLUGIN);
-
-	// TODO
-}
-
 void RKComponent::setReady (bool ready) {
 	RK_TRACE (PLUGIN);
 

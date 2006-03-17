@@ -45,9 +45,6 @@ The solution is to provide a "property" for the variable selected. This property
 - How should invalid values be handled? Currently we keep the bad value as the string value, but use a corrected default in
 the specialized properties (e.g. RKComponentPropertyInt::intValue () always returns something valid). Does this really make sense?
 
-- Maybe some properties could hold sub-properties of a different type to make flexibly and meaningfully connecting different properties easier (e.g. an RKComponentPropertyRObject might make dimensionality of the selected object available as an RKComponentPropertyInt). This might be a future extension to consider. Properties containing sub-properties would parse the modifier to pass down requests, if applicable.
-	- make sure sub-properties are never connected to governors (only vice versa)
-
 - Maybe Int and Double properties could be joined to a numeric property?
 
 - Add something like RKComponentPropertySelect for a property that accepts one or more of a set of predefined strings (like e.g. for a radio-box)
@@ -384,6 +381,7 @@ RKComponentPropertyDouble::RKComponentPropertyDouble (QObject *parent, bool requ
 
 	validator = new QDoubleValidator (this);		// accepts all ints initially
 	RKComponentPropertyDouble::default_value = default_value;
+	precision = 6;
 	internalSetValue (default_value);
 }
 
@@ -525,13 +523,17 @@ QDoubleValidator *RKComponentPropertyDouble::getValidator () {
 }
 
 void RKComponentPropertyDouble::internalSetValue (double new_value) {
+	RK_TRACE (PLUGIN);
+
 	current_value = new_value;
-	_value = QString::number (current_value);
+	_value = QString::number (current_value, 'g', precision);
 	is_valid = ((new_value >= validator->bottom ()) && (new_value <= validator->top ()));
 	if (!is_valid) current_value = default_value;
 }
 
 void RKComponentPropertyDouble::internalSetValue (QString new_value) {
+	RK_TRACE (PLUGIN);
+
 	current_value = new_value.toDouble (&is_valid);
 	if (!is_valid) {
 		_value = new_value;

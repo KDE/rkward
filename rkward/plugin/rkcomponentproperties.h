@@ -169,6 +169,8 @@ public:
 	void setMin (double lower=FLT_MIN);
 /** set upper boundary. Default parameter will effectively remove the boundary. You should call this *before* connecting to any other properties, so limits can be reconciled */
 	void setMax (double upper=FLT_MAX);
+/** set text precision (default = 6) */
+	void setPrecision (int digits) { precision = digits; };
 /** return current min value */
 	double minValue ();
 /** return current max value */
@@ -196,6 +198,7 @@ private:
 	double current_value;
 /** we could do without the validator, and create the logic on our own. Using Qt's validator, however, a) saves some typing b) allows to provide a validator object in use in lineedits, etc. (see getValidator ()) */
 	QDoubleValidator *validator;
+	int precision;
 };
 
 ///////////////////////////////////////////////// RObjects ////////////////////////////////////////////////////////

@@ -35,6 +35,8 @@ public:
 	
 	void setRealMode (double min, double max, double initial, int default_precision, int max_precision);
 	void setIntMode (int min, int max, int initial);
+	double realValue () { return ((double) value () / (double) divisor); };
+	void setRealValue (double new_value);
 protected:
 	int mapTextToValue (bool *ok);
 	QString mapValueToText (int v);

@@ -2,7 +2,7 @@
                           rkpluginspinbox  -  description
                              -------------------
     begin                : Wed Aug 11 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -16,36 +16,36 @@
  ***************************************************************************/
 #ifndef RKPLUGINSPINBOX_H
 #define RKPLUGINSPINBOX_H
-#define SPINBOX_WIDGET 3 // comme ma note d'interro
 
-#include <rkpluginwidget.h>
+#include "rkcomponent.h"
+
+#include "rkcomponentproperties.h"
 
 class RKSpinBox;
-class QLabel ;
+class QDomElement;
 
-/**
+/** RKComponent for numeric input represented as a spinbox
+TODO: rename file and class to RKComponentSpinBox
 @author Thomas Friedrichsmeier
 */
-class RKPluginSpinBox : public RKPluginWidget {
+class RKPluginSpinBox : public RKComponent {
 	Q_OBJECT
 public:
-	RKPluginSpinBox(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
+	RKPluginSpinBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 
-	~RKPluginSpinBox();
+	~RKPluginSpinBox ();
 	QString value (const QString &modifier);
-  	QLabel * label ;
-  	int type() {return SPINBOX_WIDGET ;} ;
-  	void setEnabled(bool);
-	void adjust(int, int);
+	int type () { return ComponentSpinBox; };
+
+	RKComponentPropertyInt *intvalue;
+	RKComponentPropertyDouble *realvalue;
 public slots:
 	void valueChanged (int);
-  	void slotActive();
-  	void slotActive(bool);
-  
+	void valueChanged (RKComponentPropertyBase *property);
 private:
 	RKSpinBox *spinbox;
-  	QString depend;
-	QString size;
+	bool intmode;
+	bool updating;
 };
 
 #endif

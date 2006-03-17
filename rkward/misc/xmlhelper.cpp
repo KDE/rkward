@@ -146,6 +146,21 @@ int XMLHelper::getIntAttribute (const QDomElement &element, const QString &name,
 	return ret;
 }
 
+double XMLHelper::getDoubleAttribute (const QDomElement &element, const QString &name, double def, int debug_level) {
+	RK_TRACE (XML);
+
+	QString res = getStringAttribute (element, name, QString::number (def), debug_level);
+
+	bool valid_number;;
+	double ret = res.toDouble (&valid_number);
+
+	if (!valid_number) {
+		displayError (&element, i18n ("Illegal attribute value. Only real numbers are allowed."), debug_level, DL_ERROR);
+		return def;
+	}
+
+	return ret;
+}
 
 bool XMLHelper::getBoolAttribute (const QDomElement &element, const QString &name, bool def, int debug_level) {
 	RK_TRACE (XML);
