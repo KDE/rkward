@@ -59,7 +59,6 @@
 #include "rkinput.h"
 #include "rkpluginbrowser.h"
 #include "rktext.h"
-//#include "rknote.h"
 
 #include "../rkglobals.h"
 
@@ -214,8 +213,6 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			widget = new RKPluginBrowser (e, component (), parent_widget);
 		} else if (e.tagName () == "text") {
 			widget = new RKText (e, component (), parent_widget);
-//		} else if (e.tagName () == "note") {		//TODO: remove corresponding class, it's a dupe
-//			widget = new RKNote (e, parent_widget, this);
 		} else {
 			xml->displayError (&e, QString ("Invalid tagname '%1'").arg (e.tagName ()), DL_ERROR);
 		}
