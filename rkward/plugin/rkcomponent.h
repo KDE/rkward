@@ -42,6 +42,8 @@ public:
 		Component = 2002,
 		ComponentVarSelector = 2003,
 		ComponentVarSlot = 2003,
+		ComponentFormula = 2004,
+		ComponentRadio = 2005,
 		ComponentUser = 3000	/**< for user expansion */
 	};
 /** for RTTI. see RKComponentBase::RKComponentTypes */

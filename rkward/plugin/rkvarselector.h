@@ -18,10 +18,11 @@
 #ifndef RKVARSELECTOR_H
 #define RKVARSELECTOR_H
 
-#include "rkstandardcomponent.h"
+#include "rkcomponent.h"
 #include "rkcomponentproperties.h"
 
 class RKObjectListView;
+class QDomElement;
 
 /** This is an especially important RK-plugin-widget. It provides a list of variables
 (derived from the document's table), that can be selected for statistical analysis.
@@ -36,8 +37,8 @@ you can have more than one, e.g. for serving conceptionally different VarSlots.
 class RKVarSelector : public RKComponent {
    Q_OBJECT
 public: 
-	RKVarSelector(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKVarSelector();
+	RKVarSelector (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+	~RKVarSelector ();
 	int type () { return ComponentVarSelector; };
 public slots:
 	void objectListChanged ();

@@ -92,6 +92,9 @@ private:
 	Interaction *makeInteractions (int level, const RObjectPtr *source_vars, int source_count, int *count);
 
 	bool isSatisfied ();
+
+/** RTTI */
+	int type () { return ComponentFormula; };
 };
 
 #endif

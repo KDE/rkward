@@ -2,7 +2,7 @@
                           rkradio.h  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,44 +18,40 @@
 #ifndef RKRADIO_H
 #define RKRADIO_H
 
-#include "rkpluginwidget.h"
+#include "rkcomponent.h"
+#include "rkcomponentproperties.h"
 
 #include <qmap.h>
 
 class QButtonGroup;
 class QRadioButton;
-class QLabel ;
-
-#define RADIO_WIDGET 666 // comme la radio pirate de caen
-
+class QDomElement;
 
 /** This RKPluginWidget provides a group of radio-buttons.
   *@author Thomas Friedrichsmeier
   */
 
-class RKRadio : public RKPluginWidget  {
+class RKRadio : public RKComponent {
 	Q_OBJECT
 public: 
-	RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin);
-	~RKRadio();
-  void setEnabled(bool);
-	int type() {return RADIO_WIDGET ; };
-  QRadioButton * findLabel(QString);
-  bool isOk (QString) ;
-  public slots:
+	RKRadio (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+	~RKRadio ();
+	int type () { return ComponentRadio; };
+/** Find the option number with the corresponding string. If not found, returns -1
+@param option_string the option string to search for
+@returns the id (0, 1, 2...) of the corresponding option, or -1 if not found */
+	int findOption (const QString &option_string);
+public slots:
 	void buttonClicked (int id);
-  void slotActive();
-  void slotActive(bool);
-  
+	void propertyChanged (RKComponentPropertyBase *property);
 private:
+	RKComponentPropertyBase *string;
+	RKComponentPropertyInt *number;
+
+	bool updating;		// prevent recursion
 	QButtonGroup *group;
-	typedef QMap<QRadioButton *, QString> OptionsMap;
+	typedef QMap<int, QString> OptionsMap;
 	OptionsMap options;
-  QString depend;
-  QLabel * label ;
-protected:
-/** Returns the value of the currently selected option. */
-	QString value (const QString &modifier);
 };
 
 #endif

@@ -255,7 +255,7 @@ void RKComponentPropertyInt::setMin (int lower) {
 
 	validator->setBottom (lower);
 	if (default_value < lower) {
-		RK_DO (qDebug ("default value in integer property is lower than lower boundary"), PLUGIN, DL_WARNING);
+		RK_DO (qDebug ("default value in integer property is lower than lower boundary"), PLUGIN, DL_DEBUG);	// actually this is ok. In this case the default is simply "invalid"
 		default_value = lower;
 	}
 	if (current_value < lower) {
@@ -268,7 +268,7 @@ void RKComponentPropertyInt::setMax (int upper) {
 
 	validator->setTop (upper);
 	if (default_value > upper) {
-		RK_DO (qDebug ("default value in integer property is larger than upper boundary"), PLUGIN, DL_WARNING);
+		RK_DO (qDebug ("default value in integer property is larger than upper boundary"), PLUGIN, DL_DEBUG);	// see above
 		default_value = upper;
 	}
 	if (current_value > upper) {
@@ -951,7 +951,8 @@ void RKComponentPropertyRObjects::checkListLengthValid () {
 bool RKComponentPropertyRObjects::atMaxLength () {
 	RK_TRACE (PLUGIN);
 
-	if (max_num_objects && (object_list.count () >= max_num_objects)) return true;
+	int len = object_list.count ();
+	if (max_num_objects && (len >= max_num_objects)) return true;
 	return false;
 }
 

@@ -2,7 +2,7 @@
                           rkradio.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -23,17 +23,30 @@
 #include <qbuttongroup.h>
 #include <qradiobutton.h>
 
+#include <klocale.h>
+
 #include "../rkglobals.h"
+#include "../misc/xmlhelper.h"
 #include "../debug.h"
 
-RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
+
+	// create and register properties
+	addChild ("string", string = new RKComponentPropertyBase (this, false));
+	connect (string, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyChanged (RKComponentPropertyBase *)));
+	addChild ("number", number = new RKComponentPropertyInt (this, true, -1));
+	connect (number, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyChanged (RKComponentPropertyBase *)));
+
+	// get xml-helper
+	XMLHelper *xml = XMLHelper::getStaticHelper ();
+
+	// create layout
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 
 	// create label
-	label = new QLabel (element.attribute ("label", "Select one:"), this);
+	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
 	vbox->addWidget (label);
-	depend = element.attribute ("depend", QString::null);
 
 	// create ButtonGroup
 	group = new QButtonGroup (this);
@@ -45,96 +58,68 @@ RKRadio::RKRadio(const QDomElement &element, QWidget *parent, RKPlugin *plugin) 
 	QVBoxLayout *group_layout = new QVBoxLayout (group->layout(), RKGlobals::spacingHint ());
 
 	// create all the options
-	QDomNodeList children = element.elementsByTagName("option");
-	bool checked_one = false;	
-	for (unsigned int i=0; i < children.count (); i++) {
-		QDomElement child = children.item (i).toElement ();
-
-		QRadioButton *button = new QRadioButton (child.attribute ("label"), group);
-		options.insert (button, child.attribute ("value"));
+	XMLChildList option_elements = xml->getChildElements (element, "option", DL_ERROR);	
+	int checked = 0;
+	int i = 0;
+	for (XMLChildList::const_iterator it = option_elements.begin (); it != option_elements.end (); ++it) {
+		QRadioButton *button = new QRadioButton (xml->getStringAttribute (*it, "label", QString::null, DL_ERROR), group);
+		options.insert (i, xml->getStringAttribute (*it, "value", QString::null, DL_WARNING));
 		group_layout->addWidget (button);
 
-		if (child.attribute ("checked") == "true") {
+		if (xml->getBoolAttribute (*it, "checked", false, DL_INFO)) {
 			button->setChecked (true);
-			checked_one = true;
+			checked = i;
 		}
-	}
-	// if none was set to checked, check the first
-	if (!checked_one) {
-		group->setButton (0);
-	}
 
-	connect (group, SIGNAL (clicked (int)), this, SLOT (buttonClicked (int)));
+		++i;
+	}
+	number->setIntValue (checked);			// will also take care of checking the correct button
+	number->setMin (0);
+	number->setMax (i-1);
 
 	vbox->addWidget (group);
+	connect (group, SIGNAL (clicked (int)), this, SLOT (buttonClicked (int)));
+
+	updating = false;
 }
 
 RKRadio::~RKRadio(){
 	RK_TRACE (PLUGIN);
 }
 
-QString RKRadio::value (const QString &) {
+void RKRadio::propertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
-	OptionsMap::Iterator it;
-	for (it = options.begin(); it != options.end(); ++it) {
-		if (it.key()->isChecked ()) {
-			return (it.data ());
-		}
+
+	if (updating) return;
+
+	int new_id = -1;
+	if (property == string) {
+		new_id = findOption (string->value ());
+	} else if (property == number) {
+		new_id = number->intValue ();
+	} else {
+		RK_ASSERT (false);
 	}
 
-	return QString::null;
+	updating = true;
+	group->setButton (new_id);
+	updating = false;
 }
 
-void RKRadio::buttonClicked (int) {
+void RKRadio::buttonClicked (int id) {
 	RK_TRACE (PLUGIN);
-	emit (changed ());
+
+	string->setValue (options[id]);
+	number->setIntValue (id);
 }
 
-void RKRadio::setEnabled(bool checked){
+int RKRadio::findOption (const QString &option_string) {
 	RK_TRACE (PLUGIN);
-  group->setEnabled(checked);
-  label->setEnabled(checked);
-  }
 
-
-void RKRadio::slotActive(){
-	RK_TRACE (PLUGIN);
-bool isOk = group->isEnabled();
-group->setEnabled(! isOk) ;
-label->setEnabled(! isOk) ;
-}
-
-void RKRadio::slotActive(bool isOk){
-	RK_TRACE (PLUGIN);
-group->setEnabled(isOk) ;
-label->setEnabled(isOk) ;
-}
-
-QRadioButton * RKRadio::findLabel (QString lab) {
-	RK_TRACE (PLUGIN);
-  QRadioButton * sol = 0 ;
-  OptionsMap::iterator findlab;
-      for (findlab = options.begin(); findlab != options.end(); ++findlab) {
-        if (findlab != options.end ()  ) { 
-//          qDebug ("looking  : %s", findlab.data().latin1 ()) ;
-        if ( findlab.data() == lab) { return findlab.key() ;};
-          };
-        };
-   return  sol ;
+	for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
+		if (it.data () == option_string) return (it.key ());
+	}
+	return -1;
 }  
-
-bool RKRadio::isOk(QString val) {
-	RK_TRACE (PLUGIN);
-  QString sol ;
-  OptionsMap::Iterator it;
-	for (it = options.begin(); it != options.end(); ++it) {
-		if (it.key()->isChecked ()) {
-         sol   = it.data() ;
-		};
-    };
-    if (sol == val) return true ;
-    else return false;
-
- }
 
 #include "rkradio.moc"
