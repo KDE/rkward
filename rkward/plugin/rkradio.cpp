@@ -103,6 +103,8 @@ void RKRadio::propertyChanged (RKComponentPropertyBase *property) {
 	updating = true;
 	group->setButton (new_id);
 	updating = false;
+
+	changed ();
 }
 
 void RKRadio::buttonClicked (int id) {

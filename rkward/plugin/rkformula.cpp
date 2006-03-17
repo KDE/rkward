@@ -218,6 +218,7 @@ void RKFormula::makeModelString () {
 	table->setValue (table_string);
 	model->setValue (model_string);
 	labels->setValue (labels_string);
+	changed ();
 }
 
 QString RKFormula::mangleName (RObject *var) {

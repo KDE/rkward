@@ -78,6 +78,7 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 
 	// finish layout
 	vbox->addWidget (spinbox);
+	vbox->addStretch (1);		// make sure label remains attached to spinbox
 	if (xml->getStringAttribute (element, "size", "normal", DL_INFO) == "small") {
 		spinbox->setFixedWidth (100);
 	}

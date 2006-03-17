@@ -62,8 +62,6 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	list->setSorting (2);
 	g_layout->addWidget (list, 1, 2);
 
-	g_layout->setRowStretch (3, 1);		// so the label does not get separated from the view
-
 	// initialize properties
 	addChild ("source", source = new RKComponentPropertyRObjects (this, false));
 	addChild ("available", available = new RKComponentPropertyRObjects (this, true));
@@ -83,6 +81,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 		list->setColumnWidth (0, 0);
 		list->setHScrollBarMode (QScrollView::AlwaysOff);
 		list->setVScrollBarMode (QScrollView::AlwaysOff);
+		g_layout->setRowStretch (3, 1);		// so the label does not get separated from the view
 	}
 
 	// initialize filters
@@ -153,6 +152,8 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 	} else {
 		list->setPaletteBackgroundColor (QColor (255, 255, 255));
 	}
+
+	changed ();
 }
 
 void RKVarSlot::selectPressed () {

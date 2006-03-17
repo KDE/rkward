@@ -1,82 +1,87 @@
+/***************************************************************************
+                          rkinput  -  description
+                             -------------------
+    begin                : Sat Mar 10 2005
+    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
+    email                : tfry@users.sourceforge.net
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 
 #include "rkinput.h"
 
-#include <qdom.h>
 #include <qlayout.h>
 #include <qtextedit.h>
 #include <qlabel.h>
-#include <qvbox.h>
-#include <qgrid.h>
 
-#include "rkplugin.h"
+#include <klocale.h>
+
+#include "../misc/xmlhelper.h"
 #include "../rkglobals.h"
 #include "../debug.h"
 
-RKInput::RKInput(const QDomElement &element, QWidget *parent, RKPlugin *plugin) : RKPluginWidget (element, parent, plugin) {
+RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
-	vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
-	label = new QLabel (element.attribute ("label", "Enter your text"), this);
-	QString initial = element.attribute ("initial", QString::null) ;
-	textedit = new QTextEdit ( initial ,
-	QString::null,this, element.attribute ("id")) ;
+	// get xml-helper
+	XMLHelper *xml = XMLHelper::getStaticHelper ();
+
+	// create and add property
+	addChild ("text", text = new RKComponentPropertyBase (this, false));
+	connect (text, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (textChanged ( RKComponentPropertyBase *)));
+
+	// do all the layouting
+	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Enter text"), DL_INFO), this);
 	vbox->addWidget (label);
-	vbox->addWidget (textedit);
-	connect(textedit,SIGNAL(textChanged()),SLOT(textChanged()));
-	
-	size = element.attribute ("size", "medium");
-	if (size == "small") {
-	textedit->setMaximumSize (100,25) ; 
-	textedit->setMinimumSize (100,25) ; 
-	} else if (size == "medium") {
-	textedit->setMaximumSize (250,25) ; 
-	textedit->setMinimumSize (250,25) ; 
-	} else if (size == "big") {
-	textedit->setMinimumSize (250,100) ; 
+
+
+	textedit = new QTextEdit (this);
+	int size = xml->getMultiChoiceAttribute (element, "size", "small;medium;large", 1, DL_INFO);
+	if (size == 0) {
+		textedit->setFixedSize (100,25);
+	} else if (size == 1) {
+		textedit->setFixedSize (250,25);
+	} else if (size == 2) {
+		textedit->setMinimumSize (250, 100);
 	}
+	vbox->addWidget (textedit);
+	connect (textedit, SIGNAL (textChanged ()),SLOT (textChanged ()));
 
-	
-	//textedit->setMinimumSize (50 , 300) ; 
+	vbox->addStretch (1);		// to keep the label attached
 
+	// initialize
+	updating = false;
+	text->setValue (xml->getStringAttribute (element, "initial", QString::null, DL_INFO));
 }
 
-
-RKInput::~RKInput()
-{
+RKInput::~RKInput () {
 	RK_TRACE (PLUGIN);
 }
 
-void RKInput::setEnabled(bool checked){
+void RKInput::textChanged (RKComponentPropertyBase *) {
 	RK_TRACE (PLUGIN);
-label->setEnabled(checked);
-textedit->setEnabled(checked);
+
+	if (updating) return;
+	updating = true;
+
+	textedit->setText (text->value ());
+
+	updating = false;
+	changed ();
 }
 
-
-void RKInput::slotActive(bool isOk){
+void RKInput::textChanged () {
 	RK_TRACE (PLUGIN);
-textedit->setEnabled(isOk) ;
-label->setEnabled(isOk) ;
+
+	text->setValue (textedit->text ());
 }
-
-  
-void RKInput::slotActive(){
-	RK_TRACE (PLUGIN);
-bool isOk = textedit->isEnabled();
-textedit->setEnabled(! isOk) ;
-label->setEnabled(! isOk) ;
-}
-
-QString RKInput::value (const QString &) {
-	RK_TRACE (PLUGIN);
-	return textedit->text();
-}
-
-
-void RKInput::textChanged(){
-	RK_TRACE (PLUGIN);
-	emit(changed());
-}
-
 
 #include "rkinput.moc"

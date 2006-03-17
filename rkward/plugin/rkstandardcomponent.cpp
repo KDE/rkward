@@ -56,10 +56,10 @@
 #include "rkradio.h"
 #include "rkcheckbox.h"
 #include "rkpluginspinbox.h"
-/*#include "rktext.h"
-#include "rknote.h"
 #include "rkinput.h"
-#include "rkpluginbrowser.h" */
+#include "rkpluginbrowser.h"
+//#include "rktext.h"
+//#include "rknote.h"
 
 #include "../rkglobals.h"
 
@@ -178,7 +178,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			box->setSpacing (RKGlobals::spacingHint ());
 			buildElement (e, box);
 		} else if (e.tagName () == "frame") {
-			QGroupBox *box = new QGroupBox (1, Qt::Vertical, e.attribute ("label"), parent_widget);
+			QGroupBox *box = new QGroupBox (1, Qt::Horizontal, e.attribute ("label"), parent_widget);
 			box->setInsideSpacing (RKGlobals::spacingHint ());
 			buildElement (e, box);
 		} else if (e.tagName () == "tabbook") {
@@ -208,14 +208,14 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			widget = new RKCheckBox (e, component (), parent_widget);
 		} else if (e.tagName () == "spinbox") {
 			widget = new RKPluginSpinBox (e, component (), parent_widget);
-//		} else if (e.tagName () == "note") {		//TODO: remove corresponding class
-//			widget = new RKNote (e, parent_widget, this);
-/*		} else if (e.tagName () == "browser") {
-			widget = new RKPluginBrowser (e, component (), parent_widget);
 		} else if (e.tagName () == "input") {
 			widget = new RKInput (e, component (), parent_widget);
-		} else if (e.tagName () == "text") {
+		} else if (e.tagName () == "browser") {
+			widget = new RKPluginBrowser (e, component (), parent_widget);
+/*		} else if (e.tagName () == "text") {
 			widget = new RKText (e, component (), parent_widget); */
+//		} else if (e.tagName () == "note") {		//TODO: remove corresponding class, it's a dupe
+//			widget = new RKNote (e, parent_widget, this);
 		} else {
 			xml->displayError (&e, QString ("Invalid tagname '%1'").arg (e.tagName ()), DL_ERROR);
 		}

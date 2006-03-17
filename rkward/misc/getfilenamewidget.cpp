@@ -57,6 +57,12 @@ GetFileNameWidget::~GetFileNameWidget () {
 	RK_TRACE (MISC);
 }
 
+void GetFileNameWidget::setLocation (const QString &new_location) {
+	RK_TRACE (MISC);
+
+	location_edit->setText (new_location);
+}
+
 void GetFileNameWidget::locationEditChanged (const QString &) {
 	RK_TRACE (MISC);
 	emit (locationChanged ());
@@ -68,7 +74,7 @@ void GetFileNameWidget::browseButtonClicked () {
 	if (mode == ExistingDirectory) {
 		temp = KFileDialog::getExistingDirectory (location_edit->text (), this, caption);
 	} else if (mode == ExistingFile) {
-		temp = KFileDialog::getOpenFileName (location_edit->text (), QString::null, this, caption);
+		temp = KFileDialog::getOpenFileName (location_edit->text (), _filter, this, caption);
 	} else {
 		RK_ASSERT (false);
 	}

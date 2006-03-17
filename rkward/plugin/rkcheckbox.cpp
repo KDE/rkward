@@ -55,6 +55,8 @@ void RKCheckBox::changedState (RKComponentPropertyBase *) {
 	updating = true;
 	checkbox->setChecked (state->boolValue ());
 	updating = false;
+
+	changed ();
 }
 
 void RKCheckBox::changedState (int) {

@@ -34,10 +34,14 @@ public:
 	enum FileType { ExistingFile=0, ExistingDirectory=1 };
     
 	GetFileNameWidget (QWidget *parent, FileType mode, const QString &label, const QString &caption, const QString &initial);
+	~GetFileNameWidget ();
 
-    ~GetFileNameWidget ();
+/** set filename pattern filter, e.g. "*.cpp *.cc *.C|C++ Source Files\n*.h *.H|Header files" */
+	void setFilter (const QString &filter) { _filter = filter; };
+/** set the filename/location from outside */
+	void setLocation (const QString &new_location);
 
-/// retrieves the current location
+/** retrieves the current location */
 	QString getLocation ();
 public slots:
 	void locationEditChanged (const QString &);
@@ -48,6 +52,7 @@ private:
 	QLineEdit *location_edit;
 	QPushButton *browse_button;
 	QString caption;
+	QString _filter;
 	FileType mode;
 };
 
