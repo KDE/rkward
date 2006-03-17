@@ -18,6 +18,9 @@
 class QLabel ; 
 
 /**
+
+TODO: remove. This is essentially a dupe of RKText
+
 @author Thomas Friedrichsmeier
 */
 class RKNote : public RKPluginWidget
