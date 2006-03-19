@@ -40,6 +40,7 @@ public:
 	~RKPluginBrowser ();
 
 	RKComponentPropertyBase *selection;
+	QString value (const QString &modifier) { return (selection->value (modifier)); };
 public slots:
 	void textChanged ();
 	void textChanged (RKComponentPropertyBase *);

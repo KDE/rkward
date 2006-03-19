@@ -37,22 +37,21 @@ public:
 	RKStandardComponent (RKComponent *parent_component, QWidget *parent_widget, const QString &filename);
 /** destructor */
 	~RKStandardComponent ();
-/** try to destruct the plugin */
-	void tryDestruct ();
+/** reimplemented to update code on changes*/
+	void changed ();
+/** reimplemented to return true only when the backend is idle*/
+	bool isReady ();
 public slots:
 	void switchInterfaces ();
-
-
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */
-//	void backendIdle ();
-//	void backendCommandDone (int flags);
+	void backendIdle ();
 /** return result of given call (string vector) to the R-backend */	
 //	void getRVector (const QString &call);
 /** return result of given call to the R-backend */
 //	void doRCall (const QString &call);
 /** get a value for the backend */
-//	void getValue (const QString &id);
+	void getValue (const QString &id);
 private:
 /** The property holding the generated code. TODO: maybe, de facto, this property should be controlled (but not owned) by the scriptbackend. This way, we'd need less twisted logic inside this class. */
 	RKComponentPropertyCode *code;
@@ -63,30 +62,39 @@ private:
 /** sometimes the plugin can't be destroyed immediately, since, for example the script-backend is
 	still busy cleaning stuff up. In that case this var is set and the plugin gets destroyed ASAP. */
 	bool destroyed;
+	bool created;
 };
 
 #include <qwidget.h>
 
 class RKCommandEditor;
 class QPushButton;
+class QTimer;
 
 /** contains the standard GUI elements for a top-level RKStandardComponent
 TODO: differentiate into two classes for dialog and wizard interfaces. For now we ignore the wizard interface */
 class RKStandardComponentGUI : public QWidget {
 	Q_OBJECT
 public:
-	RKStandardComponentGUI (RKStandardComponent *component);
+	RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property);
 	~RKStandardComponentGUI ();
 
 	QWidget *mainWidget () { return main_widget; };
+
+	void enableSubmit (bool enable);
+	void updateCode ();
 public slots:
 	void ok ();
 	void back ();
 	void cancel ();
 	void toggleCode ();
 	void help ();
+	void codeChanged (RKComponentPropertyBase *);
+	void updateCodeNow ();
 private:
 	QWidget *main_widget;
+	RKComponentPropertyCode *code_property;
+	QTimer *code_update_timer;
 
 	// standard gui-elements
 	RKCommandEditor *codeDisplay;

@@ -33,7 +33,7 @@
 #include <qsplitter.h>
 //#include <qwidgetstack.h>
 #include <qlabel.h>
-//#include <qtimer.h>
+#include <qtimer.h>
 #include <qapplication.h>
 
 #include <klocale.h>
@@ -71,6 +71,8 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	RKStandardComponent::filename = filename;
 	backend = 0;
 	gui = 0;
+	created = false;
+	addChild ("code", code = new RKComponentPropertyCode (this, true));
 	
 	// open the main description file for parsing
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
@@ -87,13 +89,12 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	QDomElement element = xml->getChildElement (doc_element, "code", DL_WARNING);
 	QString dummy = QFileInfo (filename).dirPath () + "/" + xml->getStringAttribute (element, "file", "code.php", DL_WARNING);
 	backend = new PHPBackend ();
-	connect (backend, SIGNAL (commandDone (int)), this, SLOT (backendCommandDone (int)));
 	connect (backend, SIGNAL (idle ()), this, SLOT (backendIdle ()));
 	connect (backend, SIGNAL (requestValue (const QString&)), this, SLOT (getValue (const QString&)));
 //	connect (backend, SIGNAL (requestRCall (const QString&)), this, SLOT (doRCall (const QString&)));
 //	connect (backend, SIGNAL (requestRVector (const QString&)), this, SLOT (getRVector (const QString&)));
 	connect (backend, SIGNAL (haveError ()), this, SLOT (tryDestruct ()));
-	if (!backend->initialize (dummy)) return;
+	if (!backend->initialize (dummy, code)) return;
 
 	connect (qApp, SIGNAL (aboutToQuit ()), this, SLOT (tryDestruct ()));
 	
@@ -103,7 +104,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 // construct the GUI
 	// if top-level, construct standard elements
 	if (!parent_widget) {
-		gui = new RKStandardComponentGUI (this);
+		gui = new RKStandardComponentGUI (this, code);
 		parent_widget = gui->mainWidget ();
 	}
 
@@ -119,7 +120,9 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 
 	// done!
 	delete builder;
+	created = true;
 	if (gui) gui->show ();
+	changed ();
 }
 
 RKStandardComponent::~RKStandardComponent () {
@@ -129,19 +132,49 @@ RKStandardComponent::~RKStandardComponent () {
 	delete backend;
 }
 
-void RKStandardComponent::tryDestruct () {
+void RKStandardComponent::switchInterfaces () {
+	RK_TRACE (PLUGIN);
+}
+
+void RKStandardComponent::changed () {
+	RK_TRACE (PLUGIN);
+
+	if (!created) return;
+
+	backend->preprocess (0);
+	backend->calculate (0);
+	backend->printout (0);
+	backend->cleanup (0);
+
+	if (gui) {
+		gui->updateCode ();
+		gui->enableSubmit (isSatisfied ());
+	}
+
+	RKComponent::changed ();
+}
+
+bool RKStandardComponent::isReady () {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (backend);
+
+	return (!(backend->isBusy ()));
+};
+
+void RKStandardComponent::backendIdle () {
 	RK_TRACE (PLUGIN);
 
 	if (gui) {
-		gui->hide ();
+		gui->updateCode ();
+		gui->enableSubmit (isSatisfied ());
 	}
-	destroyed = true;
-
-	// TODO!
 }
 
-void RKStandardComponent::switchInterfaces () {
+void RKStandardComponent::getValue (const QString &id) {
 	RK_TRACE (PLUGIN);
+	RK_ASSERT (backend);
+
+	backend->writeData (fetchStringValue (id));
 }
 
 /////////////////////////////////////// RKComponentBuilder /////////////////////////////////////////
@@ -264,10 +297,12 @@ void RKComponentBuilder::makeConnections () {
 
 /////////////////////////////////////// RKStandardComponentGUI ////////////////////////////////////////////////
 
-RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component) {
+RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property) {
 	RK_TRACE (PLUGIN);
 
 	RKStandardComponentGUI::component = component;
+	RKStandardComponentGUI::code_property = code_property;
+	connect (code_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (codeChanged (RKComponentPropertyBase *)));
 
 	QGridLayout *main_grid = new QGridLayout (this, 1, 1);
 	QSplitter *splitter = new QSplitter (QSplitter::Vertical, this);
@@ -322,6 +357,10 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component) 
 	vbox = new QVBoxLayout (lower_widget, RKGlobals::spacingHint ());
 	codeDisplay = new RKCommandEditor (lower_widget, true);
 	vbox->addWidget (codeDisplay);
+
+	// code update timer
+	code_update_timer = new QTimer (this);
+	connect (code_update_timer, SIGNAL (timeout ()), this, SLOT (updateCodeNow ()));
 }
 
 RKStandardComponentGUI::~RKStandardComponentGUI () {
@@ -352,9 +391,38 @@ void RKStandardComponentGUI::closeEvent (QCloseEvent *e) {
 	RK_TRACE (PLUGIN);
 
 	e->accept ();
-	component->tryDestruct ();
+	hide ();
+	component->deleteLater ();
 }
 
+void RKStandardComponentGUI::enableSubmit (bool enable) {
+	RK_TRACE (PLUGIN);
+
+	okButton->setEnabled (enable);
+}
+
+void RKStandardComponentGUI::codeChanged (RKComponentPropertyBase *) {
+	RK_TRACE (PLUGIN);
+
+	updateCode ();
+}
+
+void RKStandardComponentGUI::updateCode () {
+	RK_TRACE (PLUGIN);
+
+	code_update_timer->start (0, true);
+}
+
+void RKStandardComponentGUI::updateCodeNow () {
+	RK_TRACE (PLUGIN);
+
+	if (!code_property->isValid ()) {
+		codeDisplay->setText (i18n ("Processing. Please wait"));
+		RK_DO (qDebug ("code not ready to be displayed: pre %d, cal %d, pri %d, cle %d", !code_property->preprocess ().isNull (), !code_property->calculate ().isNull (), !code_property->printout ().isNull (), !code_property->cleanup ().isNull ()), PLUGIN, DL_DEBUG);
+	} else {
+		codeDisplay->setText (code_property->preprocess () + code_property->calculate () + code_property->printout () + code_property->cleanup ());
+	}
+}
 
 
 #include "rkstandardcomponent.moc"

@@ -37,6 +37,7 @@ public:
 	~RKCheckBox ();
 	int type () { return ComponentCheckBox; };
 	RKComponentPropertyBool *state;
+	QString value (const QString &modifier) { return (state->value (modifier)); };
 public slots:
 	void changedState (int);
 	void changedState (RKComponentPropertyBase *);

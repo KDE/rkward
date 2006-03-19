@@ -76,7 +76,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 
 		// make it look like a line-edit
 		list->header ()->hide ();
-		list->setFixedHeight (20);		// TODO: use true height of one line instead of constant!
+		list->setFixedHeight (list->fontMetrics ().height () + 2*list->itemMargin () + 4);	// the height of a single line including margins
 		list->setColumnWidthMode (0, QListView::Manual);
 		list->setColumnWidth (0, 0);
 		list->setHScrollBarMode (QScrollView::AlwaysOff);

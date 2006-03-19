@@ -41,6 +41,7 @@ public:
 @param option_string the option string to search for
 @returns the id (0, 1, 2...) of the corresponding option, or -1 if not found */
 	int findOption (const QString &option_string);
+	QString value (const QString &modifier) { return (string->value (modifier)); };
 public slots:
 	void buttonClicked (int id);
 	void propertyChanged (RKComponentPropertyBase *property);

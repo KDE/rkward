@@ -55,11 +55,13 @@ public:
 	virtual int type () { return ComponentBase; };
 /** tries to locate a component (or property) described by identifier as a child (of any generation) of this RKComponentBase. If found, a pointer to this is returned. Also, the modifier parameter is set to hold any remaining modifier contained in the identifier.
 @param identifier The identifier string to look for (including a potential modifier suffix).
-@param modifier If a non null pointer to QString is given, this will be set to the value of the remaining modifier (only if successful)
-@returns a pointer to the RKComponentBase, if found, or 0, if no such RKComponentBase exists as a child of this RKComponentBase. */
-	virtual RKComponentBase* lookupComponent (const QString &identifier, QString *modifier);
+@param remainder If a non null pointer to QString is given, this will be set to the value of the remaining modifier
+@returns a pointer to the RKComponentBase, if found, or the nearest parent that could be looked up */
+	virtual RKComponentBase* lookupComponent (const QString &identifier, QString *remainder);
 /** Locate the component.subcomponent.property.value described by identifier and return its value as a string. Especially useful as a callback in code templates! Recursively walks subcomponents/properties until the requested value is found. @See RKComponentBase::lookupComponent */
 	QString fetchStringValue (const QString &identifier);
+/** returns the "value" of this component or property as a string. Properties generally return their value, components typically return the value of their "most important" property. Default implementation returns QString::null, and writes a debug message */
+	virtual QString value (const QString &modifier=QString::null);
 /** returns true, if this is a property */
 	bool isProperty () { return (type () <= PropertyEnd); };
 /** returns satisfaction state. see setRequired () */

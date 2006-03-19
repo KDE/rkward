@@ -38,6 +38,7 @@ public:
 	~RKInput ();
 
 	RKComponentPropertyBase *text;
+	QString value (const QString &modifier) { return (text->value (modifier)); };
 public slots:
 	void textChanged ();
 	void textChanged (RKComponentPropertyBase *);

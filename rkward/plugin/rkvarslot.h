@@ -41,6 +41,7 @@ public:
 	RKVarSlot (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKVarSlot ();
 	int type () {return ComponentVarSlot; };
+	QString value (const QString &modifier) { return (available->value (modifier)); };
 public slots:
 /** Called when the select-button is pressed */
 	void selectPressed ();

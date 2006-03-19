@@ -1,3 +1,5 @@
+- code display (for plugins) gets updated reliably
+- avoid leftover PHP processes if rkward crashes or gets killed
 - autodetection of R_HOME and related variables during configure
 - fix status bar
 - handle non-existing and non-local URLs (links) in help window

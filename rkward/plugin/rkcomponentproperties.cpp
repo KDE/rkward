@@ -954,18 +954,11 @@ bool RKComponentPropertyRObjects::atMaxLength () {
 RKComponentPropertyCode::RKComponentPropertyCode (QObject *parent, bool required) : RKComponentPropertyBase (parent, required) {
 	RK_TRACE (PLUGIN);
 
-	reset ();
+	preprocess_code = calculate_code = printout_code = cleanup_code = QString::null;
 }
 
 RKComponentPropertyCode::~RKComponentPropertyCode () {
 	RK_TRACE (PLUGIN);
-}
-
-void RKComponentPropertyCode::reset () {
-	RK_TRACE (PLUGIN);
-
-	preprocess_code = calculate_code = printout_code = cleanup_code = QString::null;
-	have_preprocess = have_calculate = have_printout = have_cleanup = false;
 }
 
 #include "rkcomponentproperties.moc"

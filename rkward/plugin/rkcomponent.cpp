@@ -21,7 +21,7 @@
 
 //############### RKComponentBase #####################
 
-RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QString *modifier) {
+RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QString *remainder) {
 	RK_TRACE (PLUGIN);
 
 	if (identifier.isEmpty ()) return this;
@@ -29,16 +29,10 @@ RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QS
 
 	RKComponentBase *child = child_map.find (identifier.section ("::", 0, 0));
 	if (!child) {	// if we do not have such a child, return 0 unless this is a property
-		if (isProperty ()) {
-			if (modifier) {
-				*modifier = identifier.section ("::", 1);
-			}
-			return this;
-		}
-		RK_DO (qDebug ("Failed component lookup"), PLUGIN, DL_WARNING);
-		return 0;
+		if (remainder) *remainder = identifier.section ("::", 1);
+		return this;
 	} else {	// else do recursive lookup
-		return child->lookupComponent (identifier.section ("::", 1), modifier);
+		return child->lookupComponent (identifier.section ("::", 1), remainder);
 	}
 }
 
@@ -54,12 +48,14 @@ QString RKComponentBase::fetchStringValue (const QString &identifier) {
 	QString mod;
 	RKComponentBase *prop = lookupComponent (identifier, &mod);
 
-	if (prop && (prop->isProperty ())) {
-		return (static_cast<RKComponentPropertyBase *> (prop)->value (mod));
-	} else {
-		RK_DO (qDebug ("Failed lookup or not a property: '%s'", identifier.latin1 ()), PLUGIN, DL_WARNING);
-		return QString::null;
-	}
+	return prop->value (mod);
+}
+
+QString RKComponentBase::value (const QString &modifier) {
+	RK_TRACE (PLUGIN);
+
+	RK_DO (qDebug ("Component type %d does not have a value. Remaining modifier is: '%s'", type (), modifier.latin1 ()), PLUGIN, DL_WARNING);
+	return QString::null;
 }
 
 bool RKComponentBase::isSatisfied () {

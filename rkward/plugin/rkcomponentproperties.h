@@ -36,8 +36,8 @@ public:
 	RKComponentPropertyBase (QObject *parent, bool required);
 /** destructor */
 	virtual ~RKComponentPropertyBase ();
-/** supplies the current value. Since more than one value may be supplied, modifier can be used to select a value. Default implementation only has  a single string, however. */
-	virtual QString value (const QString &modifier=QString::null);
+/** supplies the current value. Since more than one value may be supplied, modifier can be used to select a value. Default implementation only has  a single string, however. Reimplemented from RKComponentBase */
+	QString value (const QString &modifier=QString::null);
 /** set the value in string form.
 @returns false if the value is illegal (in the base class, all strings are legal) */
 	virtual bool setValue (const QString &string);
@@ -313,15 +313,17 @@ public:
 
 	QString value () { return (preprocess () + calculate () + printout () + cleanup ()); };
 
-	void setPreprocess (const QString &code) { preprocess_code = code; };
-	void setCalculate (const QString &code) { calculate_code = code; };
-	void setPrintout (const QString &code) { printout_code = code; };
-	void setCleanup (const QString &code) { cleanup_code = code; };
+/** set the preprocess code.
+@param code The code to set. If this is QString::null, the property is seen to lack preprocess code and hence is not valid (see isValid ()). In contrast, empty strings are seen as valid */
+	void setPreprocess (const QString &code) { preprocess_code = code; emit (valueChanged (this)); };
+/** see setPreprocess () */
+	void setCalculate (const QString &code) { calculate_code = code; emit (valueChanged (this)); };
+/** see setPreprocess () */
+	void setPrintout (const QString &code) { printout_code = code; emit (valueChanged (this)); };
+/** see setPreprocess () */
+	void setCleanup (const QString &code) { cleanup_code = code; emit (valueChanged (this)); };
 
-/** Sets all code to null strings and satisfied to false */
-	void reset ();
-
-	bool isValid () { return (have_preprocess && have_calculate && have_printout && have_cleanup); };
+	bool isValid () { return (!(preprocess_code.isNull () || calculate_code.isNull () || printout_code.isNull () || cleanup_code.isNull ())); };
 
 /** RTTI */
 	int type () { return PropertyCode; };
@@ -330,11 +332,6 @@ private:
 	QString calculate_code;
 	QString printout_code;
 	QString cleanup_code;
-
-	bool have_preprocess;
-	bool have_calculate;
-	bool have_printout;
-	bool have_cleanup;
 };
 
 

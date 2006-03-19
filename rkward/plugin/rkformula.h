@@ -40,6 +40,11 @@ public:
 	RKFormula (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKFormula ();
 
+	QString value (const QString &modifier) { return model->value (modifier); };
+	bool isSatisfied ();
+
+/** RTTI */
+	int type () { return ComponentFormula; };
 public slots:
 	void typeChange (int id);
 	void addButtonClicked ();
@@ -90,11 +95,6 @@ private:
 	/** recursively cross the given source variables on level level. Returns the resulting terms in an array. The number
 	of interactions generated is stored in count */
 	Interaction *makeInteractions (int level, const RObjectPtr *source_vars, int source_count, int *count);
-
-	bool isSatisfied ();
-
-/** RTTI */
-	int type () { return ComponentFormula; };
 };
 
 #endif

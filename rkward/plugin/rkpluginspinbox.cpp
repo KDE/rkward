@@ -127,4 +127,14 @@ void RKPluginSpinBox::valueChanged (int) {
 	changed ();
 }
 
+QString RKPluginSpinBox::value (const QString &modifier) {
+	RK_TRACE (PLUGIN);
+
+	if (intmode) {
+		return intvalue->value (modifier);
+	} else {
+		return realvalue->value (modifier);
+	}
+}
+
 #include "rkpluginspinbox.moc"

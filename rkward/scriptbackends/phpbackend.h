@@ -40,13 +40,13 @@ public:
 
 	~PHPBackend ();
 
-	bool initialize (const QString &filename);
+	bool initialize (const QString &filename, RKComponentPropertyCode *code_property=0);
 	void destroy ();
 	
-	void preprocess (int flags) { callFunction ("preprocess ();", flags); };
-	void calculate (int flags) { callFunction ("calculate ();", flags); };
-	void printout (int flags) { callFunction ("printout ();", flags); };
-	void cleanup (int flags) { callFunction ("cleanup ();", flags); };
+	void preprocess (int flags) { callFunction ("preprocess ();", flags, Preprocess); };
+	void calculate (int flags) { callFunction ("calculate ();", flags, Calculate); };
+	void printout (int flags) { callFunction ("printout ();", flags, Printout); };
+	void cleanup (int flags) { callFunction ("cleanup ();", flags, Cleanup); };
 	void writeData (const QString &data);
 public slots:
 	void gotOutput (KProcess *proc, char* buf, int len);
@@ -71,15 +71,21 @@ private:
 		QString command;
 	/// flags attached to this command by the parent
 		int flags;
+	/// internal type (used to find out, if this is a preproces, calculate, printout, or cleanup call)
+		int type;
 	/// whether command has finished
 		bool complete;
 	};
-	QValueList <PHPCommand *> command_stack;
+	QValueList<PHPCommand *> command_stack;
 
 	int current_flags;
-	
+	int current_type;
+
+/** Invalidate all previous calls of the given type */
+	void invalidateCalls (int type);
+
 /** call a PHP-function on the current template. */
-	void callFunction (const QString &function, int flags);
+	void callFunction (const QString &function, int flags, int type);
 };
 
 #endif

@@ -24,6 +24,7 @@
 #include <klocale.h>
 
 #include "../settings/rksettingsmodulephp.h"
+#include "../plugin/rkcomponentproperties.h"
 #include "../debug.h"
 
 PHPBackend::PHPBackend() {
@@ -41,7 +42,7 @@ PHPBackend::~PHPBackend() {
 	destroy ();
 }
 
-bool PHPBackend::initialize (const QString &filename) {
+bool PHPBackend::initialize (const QString &filename, RKComponentPropertyCode *code_property) {
 	RK_TRACE (PHP);
 
 	if (php_process && php_process->isRunning ()) {
@@ -67,10 +68,11 @@ bool PHPBackend::initialize (const QString &filename) {
 
 	busy_writing = doing_command = startup_done = false;
 	busy = true;
-		
+
 	// start the real template
-	callFunction ("include (\"" + filename + "\");", 0);
-		
+	callFunction ("include (\"" + filename + "\");", 0, Ignore);
+
+	PHPBackend::code_property = code_property;
 	return true;
 }
 
@@ -92,22 +94,58 @@ void PHPBackend::destroy () {
 	data_stack.clear ();
 }
 
-void PHPBackend::callFunction (const QString &function, int flags) {
+void PHPBackend::callFunction (const QString &function, int flags, int type) {
 	RK_TRACE (PHP);
 	RK_DO (qDebug ("callFunction %s", function.latin1 ()), PHP, DL_DEBUG);
 
 	PHPCommand *command = new PHPCommand;
 	command->command = function;
 	command->flags = flags;
+	command->type = type;
 	command->complete = false;
+
+	if (code_property) {
+		if (type == Preprocess) {
+			code_property->setPreprocess (QString::null);
+			invalidateCalls (Preprocess);
+		} else if (type == Calculate) {
+			code_property->setCalculate (QString::null);
+			invalidateCalls (Calculate);
+		} else if (type == Printout) {
+			code_property->setPrintout (QString::null);
+			invalidateCalls (Printout);
+		} else if (type == Cleanup) {
+			code_property->setCleanup (QString::null);
+		}
+	}
+
 	command_stack.append (command);
 	tryNextFunction ();
 }
 
+void PHPBackend::invalidateCalls (int type) {
+	RK_TRACE (PHP);
+
+	if (current_type == type) {
+		current_type = Ignore;
+	}
+
+	QValueList<PHPCommand *>::iterator it = command_stack.begin ();
+	while (it != command_stack.end ()) {
+		if ((*it)->type == type) {
+			delete (*it);
+			it = command_stack.erase (it);		// it now points to next item
+		} else {
+			++it;
+		}
+	}
+}
+
+
 void PHPBackend::tryNextFunction () {
 	RK_TRACE (PHP);
 
-	if ((!busy_writing) && php_process && php_process->isRunning () && (!busy) && command_stack.count ()) {
+	if ((!busy_writing) && php_process && php_process->isRunning () && (!busy) && (!command_stack.isEmpty ())) {
 	/// clean up previous command if applicable
 		if (command_stack.first ()->complete) {
 			delete command_stack.first ();
@@ -122,6 +160,7 @@ void PHPBackend::tryNextFunction () {
 		busy_writing = doing_command = busy = true;
 		command_stack.first ()->complete = true;
 		current_flags = command_stack.first ()->flags;
+		current_type = command_stack.first ()->type;
 	}
 }
 
@@ -134,7 +173,7 @@ void PHPBackend::writeData (const QString &data) {
 void PHPBackend::tryWriteData () {
 	RK_TRACE (PHP);
 
-	if ((!busy_writing) && php_process && php_process->isRunning () && busy && (data_stack.count ())) {
+	if ((!busy_writing) && php_process && php_process->isRunning () && busy && (!data_stack.isEmpty ())) {
 		RK_DO (qDebug ("submitting data: %s", data_stack.first ().latin1 ()), PHP, DL_DEBUG);
 		php_process->writeStdin (data_stack.first ().latin1 (), data_stack.first ().length ());
 		busy_writing = true;
@@ -142,15 +181,16 @@ void PHPBackend::tryWriteData () {
 	}
 }
 
-void PHPBackend::doneWriting (KProcess *proc) {
+void PHPBackend::doneWriting (KProcess *) {
 	RK_TRACE (PHP);
 
 	busy_writing = false;
 	if (!doing_command) data_stack.pop_front ();
 	tryWriteData ();
+	tryNextFunction ();
 }
 
-void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
+void PHPBackend::gotOutput (KProcess *, char* buf, int len) {
 	RK_TRACE (PHP);
 
 	QString output = buf;
@@ -191,7 +231,29 @@ void PHPBackend::gotOutput (KProcess *proc, char* buf, int len) {
 		if (request == "requesting code") {
 			startup_done = true;
 			busy = false;
-			emit (commandDone (current_flags));
+			RK_DO (qDebug ("got type: %d, stack %d", current_type, command_stack.count ()), PHP, DL_DEBUG);
+			if (current_type != Ignore) {
+				if (code_property) {
+					if (_output.isNull ()) _output = "";			// must not be null for the code property!
+					if (current_type == Preprocess) {
+						code_property->setPreprocess (retrieveOutput ());
+						resetOutput ();
+					} else if (current_type == Calculate) {
+						code_property->setCalculate (retrieveOutput ());
+						resetOutput ();
+					} else if (current_type == Printout) {
+						code_property->setPrintout (retrieveOutput ());
+						resetOutput ();
+					} else if (current_type == Cleanup) {
+						code_property->setCleanup (retrieveOutput ());
+						resetOutput ();
+					} else {
+						emit (commandDone (current_flags));
+					}
+				} else {
+					emit (commandDone (current_flags));
+				}
+			}
 			tryNextFunction ();
 			if (!busy) {
 				emit (idle ());
