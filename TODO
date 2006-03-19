@@ -15,11 +15,7 @@ Little annoying stuff:
 - find out how to save toolbar states properly in parts-GUI
 
 PHP-backend:
-- figure out, why sometimes an empty code is displayed (not even "Processing, please wait!"). Is serialization working ok?
 - switch to KProcIO for easier logic
-- use a single function(-call) to retrieve the different segments instead of separate calls to preprocess (), calculate (), etc.?
-	- we should definitely get rid of the mucked up BACKEND_DONT_CARE logic!
-- instead of retrieveOutput and resetOutput, pass the output in commandDone, and delete immediately after. Only when the command is done, the output is of interest.
 - http://de3.php.net/manual/en/function.call-user-func.php seems to be faster than eval
 
 - on viewDeactivated, it may not be safe to call setCaption and there activeWindow (). Apparently, the pointer may be invalid:

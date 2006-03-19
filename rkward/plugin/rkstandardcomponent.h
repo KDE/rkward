@@ -61,7 +61,6 @@ private:
 	RKStandardComponentGUI *gui;
 /** sometimes the plugin can't be destroyed immediately, since, for example the script-backend is
 	still busy cleaning stuff up. In that case this var is set and the plugin gets destroyed ASAP. */
-	bool destroyed;
 	bool created;
 };
 
@@ -70,6 +69,7 @@ private:
 class RKCommandEditor;
 class QPushButton;
 class QTimer;
+class QSplitter;
 
 /** contains the standard GUI elements for a top-level RKStandardComponent
 TODO: differentiate into two classes for dialog and wizard interfaces. For now we ignore the wizard interface */
@@ -97,17 +97,17 @@ private:
 	QTimer *code_update_timer;
 
 	// standard gui-elements
-	RKCommandEditor *codeDisplay;
+	RKCommandEditor *code_display;
 
 	// common widgets
-	QPushButton *okButton;
-	QPushButton *cancelButton;
-	QPushButton *helpButton;
-	QPushButton *switchButton;
+	QSplitter *splitter;
+	QPushButton *ok_button;
+	QPushButton *cancel_button;
+	QPushButton *help_button;
+	QPushButton *switch_button;
 
 	// widgets for dialog only
-	QPushButton *toggleCodeButton;
-
+	QPushButton *toggle_code_button;
 private:
 	RKStandardComponent *component;
 protected:

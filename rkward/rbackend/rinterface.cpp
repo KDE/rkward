@@ -147,6 +147,9 @@ void RInterface::customEvent (QCustomEvent *e) {
 		RKGlobals::controlWindow ()->removeCommand (command);
 		watch->addOutput (command);
 		command->finished ();
+		if (command->type () && RCommand::DirectToOutput) {
+			RKGlobals::rkApp ()->newOutput ();
+		}
 		delete command;
 	} else if ((e->type () == RIDLE_EVENT)) {
 		RKGlobals::rkApp ()->setRStatus (false);	
@@ -186,6 +189,7 @@ void RInterface::flushOutput () {
 void RInterface::issueCommand (RCommand *command, RCommandChain *chain) { 
 	RK_TRACE (RBACKEND);
 	MUTEX_LOCK;
+	if (command->command ().isEmpty ()) command->_type |= RCommand::EmptyCommand;
 	RCommandStack::issueCommand (command, chain);
 	RKGlobals::controlWindow ()->addCommand (command, chain);
 	MUTEX_UNLOCK;

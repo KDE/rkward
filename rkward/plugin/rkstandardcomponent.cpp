@@ -43,11 +43,12 @@
 #include "../scriptbackends/phpbackend.h"
 #include "../misc/rkerrordialog.h"
 #include "../misc/xmlhelper.h"
+#include "../rbackend/rinterface.h"
 /*#include "../rkward.h"
 #include "../rkeditormanager.h"
 #include "../rkcommandeditor.h"
 #include "../settings/rksettingsmoduleplugins.h"
-#include "../rbackend/rinterface.h"*/
+*/
 
 // component widgets
 #include "rkvarselector.h"
@@ -93,10 +94,10 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	connect (backend, SIGNAL (requestValue (const QString&)), this, SLOT (getValue (const QString&)));
 //	connect (backend, SIGNAL (requestRCall (const QString&)), this, SLOT (doRCall (const QString&)));
 //	connect (backend, SIGNAL (requestRVector (const QString&)), this, SLOT (getRVector (const QString&)));
-	connect (backend, SIGNAL (haveError ()), this, SLOT (tryDestruct ()));
+	connect (backend, SIGNAL (haveError ()), this, SLOT (deleteLater ()));
 	if (!backend->initialize (dummy, code)) return;
 
-	connect (qApp, SIGNAL (aboutToQuit ()), this, SLOT (tryDestruct ()));
+	connect (qApp, SIGNAL (aboutToQuit ()), this, SLOT (deleteLater ()));
 	
 /*	update_timer = new QTimer (this);
 	connect (update_timer, SIGNAL (timeout ()), this, SLOT (doChangeUpdate ())); */
@@ -305,7 +306,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 	connect (code_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (codeChanged (RKComponentPropertyBase *)));
 
 	QGridLayout *main_grid = new QGridLayout (this, 1, 1);
-	QSplitter *splitter = new QSplitter (QSplitter::Vertical, this);
+	splitter = new QSplitter (QSplitter::Vertical, this);
 	main_grid->addWidget (splitter, 0, 0);
 	QWidget *upper_widget = new QWidget (splitter);
 	
@@ -325,38 +326,34 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 
 	// buttons
 	vbox = new QVBoxLayout (hbox, RKGlobals::spacingHint ());
-	okButton = new QPushButton ("Submit", upper_widget);
-	connect (okButton, SIGNAL (clicked ()), this, SLOT (ok ()));
-	vbox->addWidget (okButton);
+	ok_button = new QPushButton ("Submit", upper_widget);
+	connect (ok_button, SIGNAL (clicked ()), this, SLOT (ok ()));
+	vbox->addWidget (ok_button);
 	
-	cancelButton = new QPushButton ("Close", upper_widget);
-	connect (cancelButton, SIGNAL (clicked ()), this, SLOT (cancel ()));
-	vbox->addWidget (cancelButton);
+	cancel_button = new QPushButton ("Close", upper_widget);
+	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
+	vbox->addWidget (cancel_button);
 	vbox->addStretch (1);
 	
-	helpButton = new QPushButton ("Help", upper_widget);
-	connect (helpButton, SIGNAL (clicked ()), this, SLOT (help ()));
-	vbox->addWidget (helpButton);
+	help_button = new QPushButton ("Help", upper_widget);
+	connect (help_button, SIGNAL (clicked ()), this, SLOT (help ()));
+	vbox->addWidget (help_button);
 	
 /*	if (wizard_available) {
-		switchButton = new QPushButton ("Use Wizard", upper_widget);
-		connect (switchButton, SIGNAL (clicked ()), this, SLOT (switchInterfaces ()));
-		vbox->addWidget (switchButton);
+		switch_button = new QPushButton ("Use Wizard", upper_widget);
+		connect (switch_button, SIGNAL (clicked ()), this, SLOT (switchInterfaces ()));
+		vbox->addWidget (switch_button);
 	} */
 	vbox->addStretch (2);
 	
-	toggleCodeButton = new QPushButton ("Code", upper_widget);
-	toggleCodeButton->setToggleButton (true);
-	toggleCodeButton->setOn (true);
-	connect (toggleCodeButton, SIGNAL (clicked ()), this, SLOT (toggleCode ()));
-	vbox->addWidget (toggleCodeButton);
+	toggle_code_button = new QPushButton ("Code", upper_widget);
+	toggle_code_button->setToggleButton (true);
+	toggle_code_button->setOn (true);
+	connect (toggle_code_button, SIGNAL (clicked ()), this, SLOT (toggleCode ()));
+	vbox->addWidget (toggle_code_button);
 	
-	// text-fields
-	QWidget *lower_widget = new QWidget (splitter);
-	
-	vbox = new QVBoxLayout (lower_widget, RKGlobals::spacingHint ());
-	codeDisplay = new RKCommandEditor (lower_widget, true);
-	vbox->addWidget (codeDisplay);
+	// code display
+	code_display = new RKCommandEditor (splitter, true);
 
 	// code update timer
 	code_update_timer = new QTimer (this);
@@ -369,6 +366,15 @@ RKStandardComponentGUI::~RKStandardComponentGUI () {
 
 void RKStandardComponentGUI::ok () {
 	RK_TRACE (PLUGIN);
+
+	RK_ASSERT (code_property->isValid ());
+	
+	RCommandChain *chain = RKGlobals::rInterface ()->startChain ();
+	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->preprocess (), RCommand::Plugin | RCommand::DirectToOutput), chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->calculate (), RCommand::Plugin | RCommand::DirectToOutput), chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->printout (), RCommand::Plugin | RCommand::DirectToOutput), chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->cleanup (), RCommand::Plugin | RCommand::DirectToOutput), chain);
+	RKGlobals::rInterface ()->closeChain (chain);
 }
 
 void RKStandardComponentGUI::back () {
@@ -377,10 +383,16 @@ void RKStandardComponentGUI::back () {
 
 void RKStandardComponentGUI::cancel () {
 	RK_TRACE (PLUGIN);
+
+	hide ();
+	component->deleteLater ();
 }
 
 void RKStandardComponentGUI::toggleCode () {
 	RK_TRACE (PLUGIN);
+
+	code_display->setShown (toggle_code_button->isOn ());
+	updateCode ();
 }
 
 void RKStandardComponentGUI::help () {
@@ -391,14 +403,13 @@ void RKStandardComponentGUI::closeEvent (QCloseEvent *e) {
 	RK_TRACE (PLUGIN);
 
 	e->accept ();
-	hide ();
-	component->deleteLater ();
+	cancel ();
 }
 
 void RKStandardComponentGUI::enableSubmit (bool enable) {
 	RK_TRACE (PLUGIN);
 
-	okButton->setEnabled (enable);
+	ok_button->setEnabled (enable);
 }
 
 void RKStandardComponentGUI::codeChanged (RKComponentPropertyBase *) {
@@ -410,6 +421,7 @@ void RKStandardComponentGUI::codeChanged (RKComponentPropertyBase *) {
 void RKStandardComponentGUI::updateCode () {
 	RK_TRACE (PLUGIN);
 
+	if (!code_display->isShown ()) return;
 	code_update_timer->start (0, true);
 }
 
@@ -417,12 +429,11 @@ void RKStandardComponentGUI::updateCodeNow () {
 	RK_TRACE (PLUGIN);
 
 	if (!code_property->isValid ()) {
-		codeDisplay->setText (i18n ("Processing. Please wait"));
+		code_display->setText (i18n ("Processing. Please wait"));
 		RK_DO (qDebug ("code not ready to be displayed: pre %d, cal %d, pri %d, cle %d", !code_property->preprocess ().isNull (), !code_property->calculate ().isNull (), !code_property->printout ().isNull (), !code_property->cleanup ().isNull ()), PLUGIN, DL_DEBUG);
 	} else {
-		codeDisplay->setText (code_property->preprocess () + code_property->calculate () + code_property->printout () + code_property->cleanup ());
+		code_display->setText (code_property->preprocess () + code_property->calculate () + code_property->printout () + code_property->cleanup ());
 	}
 }
-
 
 #include "rkstandardcomponent.moc"
