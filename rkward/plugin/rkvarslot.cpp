@@ -17,8 +17,6 @@
 
 #include "rkvarslot.h"
 
-#include <qlineedit.h>
-#include <qdom.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qlistview.h>
@@ -30,11 +28,9 @@
 #include <kiconloader.h>
 
 #include "rkvarselector.h"
-#include "rkplugin.h"
+#include "../core/robject.h"
 #include "../rkglobals.h"
 #include "../debug.h"
-#include "../core/rkvariable.h"
-#include "../core/rcontainerobject.h"
 #include "../misc/xmlhelper.h"
 
 

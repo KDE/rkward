@@ -27,7 +27,6 @@
 #include "../debug.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
-#include "rkpluginhandle.h"
 
 RKComponentMap::RKComponentMap () : KXMLGUIClient () {
 	RK_TRACE (PLUGIN);
