@@ -37,6 +37,7 @@ public:
 
 	RKComponentPropertyBase *text;
 	QString value (const QString &modifier) { return (text->value (modifier)); };
+	int type () { return ComponentText; };
 public slots:
 	void textChanged (RKComponentPropertyBase *);
 private:

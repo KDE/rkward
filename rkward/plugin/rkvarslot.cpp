@@ -163,11 +163,15 @@ void RKVarSlot::selectPressed () {
 
 	// first update the properties
 	if (add_mode) {
-		ObjectList objlist = source->objectList ();
-		ObjectList::const_iterator it = objlist.begin ();
-		while (it != objlist.end ()) {
-			available->addObjectValue (*it);
-			++it;
+		if (multi) {
+			ObjectList objlist = source->objectList ();
+			ObjectList::const_iterator it = objlist.begin ();
+			while (it != objlist.end ()) {
+				available->addObjectValue (*it);
+				++it;
+			}
+		} else {
+			available->setObjectValue (source->objectValue ());
 		}
 	} else {		// remove-mode
 		ObjectList objlist;

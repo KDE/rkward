@@ -64,6 +64,7 @@ the specialized properties (e.g. RKComponentPropertyInt::intValue () always retu
 RKComponentPropertyBase::RKComponentPropertyBase (QObject *parent, bool required) : QObject (parent) {
 	RK_TRACE (PLUGIN);
 	RKComponentPropertyBase::required = required;
+	is_valid = true;
 }
 
 RKComponentPropertyBase::~RKComponentPropertyBase () {
@@ -623,6 +624,7 @@ void RKComponentPropertyRObjects::setDimensionFilter (int dimensionality, int mi
 	dims = dimensionality;
 	RKComponentPropertyRObjects::min_length = min_length;
 	RKComponentPropertyRObjects::max_length = max_length;
+	validizeAll ();
 }
 
 bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
@@ -921,8 +923,8 @@ void RKComponentPropertyRObjects::validizeAll (bool silent) {
 		}
 	}
 
+	checkListLengthValid ();		// we should do this even if there are no changes in the list. There might have still been changes in the filter!
 	if (changes) {
-		checkListLengthValid ();
 		if (!silent) emit (valueChanged (this));
 	}
 }

@@ -41,14 +41,14 @@ public:
 		ComponentBase = 2001,
 		Component = 2002,
 		ComponentVarSelector = 2003,
-		ComponentVarSlot = 2003,
-		ComponentFormula = 2004,
-		ComponentRadio = 2005,
-		ComponentCheckBox = 2006,
-		ComponentSpinBox = 2007,
-		ComponentInput = 2008,
-		ComponentBrowser = 2009,
-		ComponentText = 2010,
+		ComponentVarSlot = 2004,
+		ComponentFormula = 2005,
+		ComponentRadio = 2006,
+		ComponentCheckBox = 2007,
+		ComponentSpinBox = 2008,
+		ComponentInput = 2009,
+		ComponentBrowser = 2010,
+		ComponentText = 2011,
 		ComponentUser = 3000	/**< for user expansion */
 	};
 /** for RTTI. see RKComponentBase::RKComponentTypes */
@@ -71,7 +71,6 @@ public:
 /** set to required: will only be satisfied if it is valid. Else: always satisfied (but subclasses might override to always be dissatisfied on really bad values. By default RKComponentBase is required at construction */
 	void setRequired (bool require) { required = require; };
 protected:
-	friend class RKComponentBuilder;
 /** simple convenience function to add a child to the map of children */
 	void addChild (const QString &id, RKComponentBase *child);
 	QDict<RKComponentBase> child_map;
@@ -95,6 +94,16 @@ public:
 	virtual void changed ();
 /** reimplemented to only return true, if all children are satisfied */
 	bool isValid ();
+/** The component as a wizardish (multi-page) interface. Default implementation returns false */
+	virtual bool isWizardish ();
+/** If the component isWizardish (), returns true, if it has a next/previous page
+@param next if true, returns true, if there is a next page (i.e. not at last page). If false, returns true if there is a previous page (i.e. not at first page). False otherwise. Default implementation returns false at all times. */
+	virtual bool havePage (bool next);
+/** go to page
+@param next if true, go to next (shown) page, if false go to previous (shown) page. Default implementation does nothing */
+	virtual void movePage (bool next);
+/** returns true, if the current page is satisfied (see isWizardish ()). Default implementation returns isSatisfied () */
+	virtual bool currentPageSatisfied () { return (isSatisfied ()); };
 public slots:
 /** This handles changes in the default properties (enabledness, visibility, requiredness). You will use similar slots in derived classes to handle
 specialized properties */
@@ -124,8 +133,8 @@ protected:
 	RKComponentPropertyBool *enabledness_property;
 	RKComponentPropertyBool *requiredness_property;
 	RKComponent *_parent;
-private:
-	void setReady (bool ready);
+/** usually happens during construction, so you don't need to call this - unless you're RKStandardComponent, and discard the children at some point of time */
+	void createDefaultProperties ();
 };
 
 #endif

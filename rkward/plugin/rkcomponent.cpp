@@ -39,7 +39,7 @@ RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QS
 void RKComponentBase::addChild (const QString &id, RKComponentBase *child) {
 	RK_TRACE (PLUGIN);
 
-	child_map.insert (id, child);
+	child_map.insert (id, child);		// no overwriting even on duplicate ("#noid#") ids, als this is really a QDict, not a QMap
 }
 
 QString RKComponentBase::fetchStringValue (const QString &identifier) {
@@ -70,14 +70,23 @@ bool RKComponentBase::isSatisfied () {
 RKComponent::RKComponent (RKComponent *parent_component, QWidget *parent_widget) : QWidget (parent_widget) {
 	RK_TRACE (PLUGIN);
 
-	addChild ("enabled", enabledness_property = new RKComponentPropertyBool (this, false));
-	connect (enabledness_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyValueChanged (RKComponentPropertyBase *)));
-	addChild ("visible", visibility_property = new RKComponentPropertyBool (this, false));
-	connect (visibility_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyValueChanged (RKComponentPropertyBase *)));
-	addChild ("required", requiredness_property = new RKComponentPropertyBool (this, false));
-	connect (requiredness_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyValueChanged (RKComponentPropertyBase *)));
+	createDefaultProperties ();
 
 	_parent = parent_component;
+}
+
+void RKComponent::createDefaultProperties () {
+	RK_TRACE (PLUGIN);
+
+	addChild ("enabled", enabledness_property = new RKComponentPropertyBool (this, false));
+	enabledness_property->setBoolValue (true);
+	connect (enabledness_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyValueChanged (RKComponentPropertyBase *)));
+	addChild ("visible", visibility_property = new RKComponentPropertyBool (this, false));
+	visibility_property->setBoolValue (true);
+	connect (visibility_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyValueChanged (RKComponentPropertyBase *)));
+	addChild ("required", requiredness_property = new RKComponentPropertyBool (this, false));
+	requiredness_property->setBoolValue (true);
+	connect (requiredness_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyValueChanged (RKComponentPropertyBase *)));
 }
 
 RKComponent::~RKComponent () {
@@ -107,10 +116,22 @@ bool RKComponent::isValid () {
 	return true;
 }
 
-void RKComponent::setReady (bool ready) {
+bool RKComponent::isWizardish () {
 	RK_TRACE (PLUGIN);
 
-	// TODO
+	return false;
+}
+
+bool RKComponent::havePage (bool) {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (false);		// should not be called as isWizardish returns false
+
+	return false;
+}
+
+void RKComponent::movePage (bool) {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (false);		// should not be called as isWizardish returns false
 }
 
 void RKComponent::setVisible (bool visible) {

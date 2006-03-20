@@ -24,9 +24,12 @@
 
 class RKErrorDialog;
 class RKStandardComponentGUI;
+class RKStandardComponentStack;
 class ScriptBackend;
 
-/** The standard type of component (i.e. stand-alone), previously known as "plugin". This is the type of component described by an XML-file */
+/** The standard type of component (i.e. stand-alone), previously known as "plugin". This is the type of component described by an XML-file
+
+@author Thomas Friedrichsmeier */
 class RKStandardComponent : public RKComponent {
 	Q_OBJECT
 public:
@@ -41,8 +44,19 @@ public:
 	void changed ();
 /** reimplemented to return true only when the backend is idle*/
 	bool isReady ();
+/** reimplemented to return true, if the RKStandardComponent is in Wizard mode */
+	bool isWizardish ();
+/** reimplemented to actually answer the question (if in Wizard mode) */
+	bool havePage (bool next);
+/** reimplemented to actually move the page (if in Wizard mode)  */
+	void movePage (bool next);
+/** reimplemented to actually answer the question (if in Wizard mode) */
+	bool currentPageSatisfied ();
+/** for use by RKComponentBuilder to add a page to a wizardish component */
+	RKComponent *addPage ();
+/** switch from dialog to wizard or vice versa */
+	void switchInterface ();
 public slots:
-	void switchInterfaces ();
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */
 	void backendIdle ();
@@ -53,66 +67,26 @@ public slots:
 /** get a value for the backend */
 	void getValue (const QString &id);
 private:
-/** The property holding the generated code. TODO: maybe, de facto, this property should be controlled (but not owned) by the scriptbackend. This way, we'd need less twisted logic inside this class. */
+/** The property holding the generated code. Note that this member is tightly controlled by the ScriptBackend */
 	RKComponentPropertyCode *code;
 	QString filename;
 	ScriptBackend *backend;
 	RKErrorDialog *error_dialog;
 	RKStandardComponentGUI *gui;
-/** sometimes the plugin can't be destroyed immediately, since, for example the script-backend is
-	still busy cleaning stuff up. In that case this var is set and the plugin gets destroyed ASAP. */
+	RKStandardComponentStack *wizard;
+/** Avoid updating code-display, etc. until the component is fully created */
 	bool created;
-};
-
-#include <qwidget.h>
-
-class RKCommandEditor;
-class QPushButton;
-class QTimer;
-class QSplitter;
-
-/** contains the standard GUI elements for a top-level RKStandardComponent
-TODO: differentiate into two classes for dialog and wizard interfaces. For now we ignore the wizard interface */
-class RKStandardComponentGUI : public QWidget {
-	Q_OBJECT
-public:
-	RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property);
-	~RKStandardComponentGUI ();
-
-	QWidget *mainWidget () { return main_widget; };
-
-	void enableSubmit (bool enable);
-	void updateCode ();
-public slots:
-	void ok ();
-	void back ();
-	void cancel ();
-	void toggleCode ();
-	void help ();
-	void codeChanged (RKComponentPropertyBase *);
-	void updateCodeNow ();
-private:
-	QWidget *main_widget;
-	RKComponentPropertyCode *code_property;
-	QTimer *code_update_timer;
-
-	// standard gui-elements
-	RKCommandEditor *code_display;
-
-	// common widgets
-	QSplitter *splitter;
-	QPushButton *ok_button;
-	QPushButton *cancel_button;
-	QPushButton *help_button;
-	QPushButton *switch_button;
-
-	// widgets for dialog only
-	QPushButton *toggle_code_button;
-private:
-	RKStandardComponent *component;
+	bool createTopLevel (const QDomElement &doc_element, int force_mode=0);
+	void buildAndInitialize (const QDomElement &doc_element, const QDomElement &gui_element, QWidget *parent_widget, bool build_wizard);
+/** used during switchInterfaces () to discard child components, and delete gui if applicable */
+	void discard ();
 protected:
-	void closeEvent (QCloseEvent *e);
+	friend class RKComponentBuilder;
+/** reimplemented for technical reasons. Additionally registers component children with the component stack if in wizard mode */
+	void addChild (const QString &id, RKComponentBase *child);
 };
+
+
 
 /** A helper class used to build and initialize an RKComponent. Most importantly this will keep track of the properties yet to be connected. Used at least by RKStandardComponent.
 
@@ -121,21 +95,23 @@ Notes: How does building work?
 - Simple components register their (property) connection wishes to the the builder during construction
 - Builder takes care of connecting properties
 
-Important: For built components with non-zero parent components should call parent_component->addChild () to register them! As an exception, this may be omitted for passive components (e.g. layouting components) that do not specify an id
+Calls parent_component->addChild () for built child-components. As an exception, this may be omitted for passive components (e.g. layouting components) that do not specify an id
 
 Reminder to the twisted brain: Typically inside a standard-component, *all* child components, even if nested in layouting components, etc. have the same standard-component as parent! Only embedded full-fledged components are a truely separate unit!
-*/
+
+@author Thomas Friedrichsmeier */
 class RKComponentBuilder {
 public:
-	RKComponentBuilder (RKComponent *parent_component);
+	RKComponentBuilder (RKStandardComponent *parent_component);
 	~RKComponentBuilder ();
-	void buildElement (const QDomElement &element, QWidget *parent_widget);
+	void buildElement (const QDomElement &element, QWidget *parent_widget, bool allow_pages);
+	void parseLogic (const QDomElement &element);
 	void makeConnections ();
-	RKComponent *component () const { return parent; };
+	RKStandardComponent *component () const { return parent; };
 private:
 /** internal convenience function to schedule a property connection */
 	void addConnection (const QString &client_id, const QString &client_property, const QString &governor_id, const QString &governor_property, bool reconcile, const QDomElement &origin);
-	RKComponent *parent;
+	RKStandardComponent *parent;
 	struct RKComponentPropertyConnection {
 		QString governor_property;
 		QString client_property;

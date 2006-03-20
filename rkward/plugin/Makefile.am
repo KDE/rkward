@@ -3,14 +3,16 @@ METASOURCES = AUTO
 noinst_LIBRARIES =  libplugin.a
 libplugin_a_SOURCES = rkcomponentmap.cpp rkcomponentproperties.cpp rkcomponent.cpp \
 	rkstandardcomponent.cpp rkvarselector.cpp rkvarslot.cpp rkformula.cpp rkradio.cpp \
-	rkcheckbox.cpp rkpluginspinbox.cpp rkinput.cpp rkpluginbrowser.cpp rktext.cpp
+	rkcheckbox.cpp rkpluginspinbox.cpp rkinput.cpp rkpluginbrowser.cpp rktext.cpp \
+	rkstandardcomponentgui.cpp
 # rkplugin.cpp \
 #	rkpluginhandle.cpp rkpluginwidget.cpp \
 #	  rknote.cpp
 
 noinst_HEADERS = rkcomponentmap.h rkcomponentproperties.h rkcomponent.h \
 	rkstandardcomponent.h rkvarselector.h rkvarslot.h rkformula.h rkradio.h \
-	rkcheckbox.h rkpluginspinbox.h rkinput.h rkpluginbrowser.h rktext.h
+	rkcheckbox.h rkpluginspinbox.h rkinput.h rkpluginbrowser.h rktext.h \
+	rkstandardcomponentgui.h
 # rkplugin.h rkpluginhandle.h \
 # rkpluginwidget.h  \
 # rknote.h 

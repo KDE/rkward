@@ -41,6 +41,7 @@ public:
 
 	RKComponentPropertyBase *selection;
 	QString value (const QString &modifier) { return (selection->value (modifier)); };
+	int type () { return ComponentBrowser; };
 public slots:
 	void textChanged ();
 	void textChanged (RKComponentPropertyBase *);

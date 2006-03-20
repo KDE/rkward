@@ -13,6 +13,7 @@ Little annoying stuff:
 - use R_DirtyImage to determine, whether workspace needs to be saved
 - in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
 - find out how to save toolbar states properly in parts-GUI
+- use constBegin (), constEnd ()
 
 PHP-backend:
 - switch to KProcIO for easier logic

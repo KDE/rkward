@@ -17,37 +17,27 @@
 
 #include "rkstandardcomponent.h"
 
-//#include <qdom.h>
-//#include <qfile.h>
 #include <qfileinfo.h>
-//#include <qdialog.h>
 #include <qlayout.h>
 #include <qvbox.h>
 #include <qhbox.h>
 #include <qgroupbox.h>
-//#include <qmap.h>
 #include <qframe.h>
-#include <qpushbutton.h>
-//#include <qregexp.h>
 #include <qtabwidget.h>
-#include <qsplitter.h>
-//#include <qwidgetstack.h>
 #include <qlabel.h>
-#include <qtimer.h>
 #include <qapplication.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include "../rkcommandeditor.h"
+#include "rkstandardcomponentgui.h"
 #include "../scriptbackends/phpbackend.h"
 #include "../misc/rkerrordialog.h"
 #include "../misc/xmlhelper.h"
-#include "../rbackend/rinterface.h"
+#include "../settings/rksettingsmoduleplugins.h"
 /*#include "../rkward.h"
 #include "../rkeditormanager.h"
 #include "../rkcommandeditor.h"
-#include "../settings/rksettingsmoduleplugins.h"
 */
 
 // component widgets
@@ -72,6 +62,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	RKStandardComponent::filename = filename;
 	backend = 0;
 	gui = 0;
+	wizard = 0;
 	created = false;
 	addChild ("code", code = new RKComponentPropertyCode (this, true));
 	
@@ -103,18 +94,140 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	connect (update_timer, SIGNAL (timeout ()), this, SLOT (doChangeUpdate ())); */
 
 // construct the GUI
-	// if top-level, construct standard elements
-	if (!parent_widget) {
-		gui = new RKStandardComponentGUI (this, code);
-		parent_widget = gui->mainWidget ();
+	if (!parent_component) {					// top-level
+		if (!createTopLevel (doc_element)) {
+			RK_ASSERT (false);
+			return;		// should never happen
+		}
+	} else {
+		bool build_wizard = false;
+		QDomElement gui_element;
+		if (parent_component->isWizardish ()) {
+			build_wizard = true;
+			gui_element = xml->getChildElement (doc_element, "wizard", DL_WARNING);
+			if (gui_element.isNull ()) {
+				gui_element = xml->getChildElement (doc_element, "dialog", DL_WARNING);
+				build_wizard = false;
+			}
+		} else {
+			QDomElement gui_element = xml->getChildElement (doc_element, "dialog", DL_WARNING);
+			if (gui_element.isNull ()) {
+				xml->displayError (&doc_element, "Cannot embed a wizard into a dialog, and no dialog definition available", DL_ERROR);
+				deleteLater ();
+				return;
+			}
+		}
+		buildAndInitialize (doc_element, gui_element, parent_widget, build_wizard);
 	}
+}
+
+RKStandardComponent::~RKStandardComponent () {
+	RK_TRACE (PLUGIN);
+
+	delete error_dialog;
+	delete backend;
+}
+
+bool RKStandardComponent::createTopLevel (const QDomElement &doc_element, int force_mode) {
+	RK_TRACE (PLUGIN);
+
+	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	bool build_wizard = false;
+	QDomElement dialog_element;
+	QDomElement wizard_element;
+
+	dialog_element = xml->getChildElement (doc_element, "dialog", DL_INFO);
+	wizard_element = xml->getChildElement (doc_element, "wizard", DL_INFO);
+	if (!wizard_element.isNull ()) {
+		build_wizard = xml->getBoolAttribute (wizard_element, "recommended", false, DL_INFO);
+	}
+
+	if (force_mode == 0) {
+		if (RKSettingsModulePlugins::getInterfacePreference () == RKSettingsModulePlugins::PreferDialog) {
+			if (!dialog_element.isNull ()) build_wizard = false;
+		} else if (RKSettingsModulePlugins::getInterfacePreference () == RKSettingsModulePlugins::PreferWizard) {
+			if (!wizard_element.isNull ()) build_wizard = true;
+		}
+	} else if (force_mode == 1) {
+		build_wizard = false;
+		if (dialog_element.isNull ()) {
+			xml->displayError (&doc_element, "Dialog mode forced, but no dialog element given", DL_ERROR);
+			deleteLater ();
+			return false;
+		}
+	} else if (force_mode == 2) {
+		build_wizard = true;
+		if (wizard_element.isNull ()) {
+			xml->displayError (&doc_element, "Wizard mode forced, but no wizard element given", DL_ERROR);
+			deleteLater ();
+			return false;
+		}
+	}
+
+	if (build_wizard) {
+		gui = new RKStandardComponentWizard (this, code);
+		static_cast<RKStandardComponentWizard *> (gui)->createWizard (!dialog_element.isNull ());
+		wizard = static_cast<RKStandardComponentWizard *> (gui)->getStack ();
+		buildAndInitialize (doc_element, wizard_element, gui->mainWidget (), true);
+		static_cast<RKStandardComponentWizard *> (gui)->addLastPage ();
+	} else {
+		gui = new RKStandardComponentGUI (this, code);
+		gui->createDialog (!wizard_element.isNull ());
+		buildAndInitialize (doc_element, dialog_element, gui->mainWidget (), false);
+	}
+
+	return true;
+}
+
+void RKStandardComponent::switchInterface () {
+	RK_TRACE (PLUGIN);
+
+	RK_ASSERT (gui);		// this should only ever happen on top level
+
+	// open the main description file for parsing (again)
+	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	QDomElement doc_element = xml->openXMLFile (filename, DL_ERROR);
+	int force_mode = 2;
+	if (isWizardish ()) force_mode = 1;
+
+	discard ();
+
+	createTopLevel (doc_element, force_mode);
+}
+
+void RKStandardComponent::discard () {
+	RK_TRACE (PLUGIN);
+
+	created = false;
+	gui->hide ();
+	gui->deleteLater ();
+	gui = 0;
+	wizard = 0;
+
+	for (QDictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
+		if (it.current () != code) {
+			if (it.current ()->isProperty ()) {
+				static_cast<RKComponentPropertyBase *> (it.current ())->deleteLater ();
+			} else {
+				static_cast<RKComponent *> (it.current ())->deleteLater ();
+			}
+		}
+	}
+	child_map.clear ();
+	createDefaultProperties ();
+}
+
+void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, const QDomElement &gui_element, QWidget *parent_widget, bool build_wizard) {
+	RK_TRACE (PLUGIN);
+
+	XMLHelper* xml = XMLHelper::getStaticHelper ();
 
 	// create a builder
 	RKComponentBuilder *builder = new RKComponentBuilder (this);
 
 	// go
-	// TODO: this is wrong! wizard/dialog
-	builder->buildElement (xml->getChildElement (doc_element, "dialog", DL_ERROR), parent_widget);
+	builder->buildElement (gui_element, parent_widget, build_wizard);
+	builder->parseLogic (xml->getChildElement (doc_element, "logic", DL_INFO));
 
 	// initialize
 	builder->makeConnections ();
@@ -126,16 +239,6 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	changed ();
 }
 
-RKStandardComponent::~RKStandardComponent () {
-	RK_TRACE (PLUGIN);
-
-	delete error_dialog;
-	delete backend;
-}
-
-void RKStandardComponent::switchInterfaces () {
-	RK_TRACE (PLUGIN);
-}
 
 void RKStandardComponent::changed () {
 	RK_TRACE (PLUGIN);
@@ -178,10 +281,61 @@ void RKStandardComponent::getValue (const QString &id) {
 	backend->writeData (fetchStringValue (id));
 }
 
+bool RKStandardComponent::isWizardish () {
+	RK_TRACE (PLUGIN);
+
+	return (wizard != 0);
+}
+
+bool RKStandardComponent::havePage (bool next) {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (wizard);
+
+	return (wizard->havePage (next));
+}
+
+void RKStandardComponent::movePage (bool next) {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (wizard);
+
+	wizard->movePage (next);
+}
+
+bool RKStandardComponent::currentPageSatisfied () {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (wizard);
+
+	return (wizard->currentPageSatisfied ());
+}
+
+RKComponent *RKStandardComponent::addPage () {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (wizard);
+
+	RKComponent *page = wizard->addPage (this);
+	return page;
+}
+
+/** reimplemented for technical reasons. Additionally registers component children with the component stack if in wizard mode */
+void RKStandardComponent::addChild (const QString &id, RKComponentBase *child) {
+	RK_TRACE (PLUGIN);
+
+	if (wizard) {
+		if (!child->isProperty ()) {
+			wizard->addComponentToCurrentPage (static_cast<RKComponent *>(child));
+		}
+	}
+
+	RKComponent::addChild (id, child);
+}
+
+
+
+
 /////////////////////////////////////// RKComponentBuilder /////////////////////////////////////////
 
 
-RKComponentBuilder::RKComponentBuilder (RKComponent *parent_component) {
+RKComponentBuilder::RKComponentBuilder (RKStandardComponent *parent_component) {
 	RK_TRACE (PLUGIN);
 	parent = parent_component;
 }
@@ -190,7 +344,7 @@ RKComponentBuilder::~RKComponentBuilder () {
 	RK_TRACE (PLUGIN);
 }
 
-void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *parent_widget) {
+void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *parent_widget, bool allow_pages) {
 	RK_TRACE (PLUGIN);
 
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
@@ -202,18 +356,25 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 		QDomElement e = *it;		// shorthand
 		QString id = xml->getStringAttribute (e, "id", "#noid#", DL_INFO);
 
-	    if (e.tagName () == "row") {
+		if (allow_pages && (e.tagName () == "page")) {
+			RKComponent *page = component ()->addPage ();
+			QVBoxLayout *layout = new QVBoxLayout (page);
+			QVBox *box = new QVBox (page);
+			box->setSpacing (RKGlobals::spacingHint ());
+			layout->addWidget (box);
+			buildElement (e, box, false);
+		} else if (e.tagName () == "row") {
 			QHBox *box = new QHBox (parent_widget);
 			box->setSpacing (RKGlobals::spacingHint ());
-			buildElement (e, box);
+			buildElement (e, box, false);
 		} else if (e.tagName () == "column") {
 			QVBox *box = new QVBox (parent_widget);
 			box->setSpacing (RKGlobals::spacingHint ());
-			buildElement (e, box);
+			buildElement (e, box, false);
 		} else if (e.tagName () == "frame") {
 			QGroupBox *box = new QGroupBox (1, Qt::Horizontal, e.attribute ("label"), parent_widget);
 			box->setInsideSpacing (RKGlobals::spacingHint ());
-			buildElement (e, box);
+			buildElement (e, box, false);
 		} else if (e.tagName () == "tabbook") {
 			QTabWidget *tabbook = new QTabWidget (parent_widget);
 			QDomNodeList tabs = e.childNodes ();
@@ -222,7 +383,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 				if (tab_e.tagName () == "tab") {
 					QVBox *tabpage = new QVBox (tabbook);
 					tabpage->setSpacing (RKGlobals::spacingHint ());
-					buildElement (tab_e, tabpage);
+					buildElement (tab_e, tabpage, false);
 					tabbook->addTab (tabpage, tab_e.attribute ("label"));
 				}
 			}
@@ -253,10 +414,14 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 
 		if (widget) {
 			parent->addChild (id, widget);
-			// TODO: deal with (multi-page) wizards
-			// TODO: parse connections
 		}
 	}
+}
+
+void RKComponentBuilder::parseLogic (const QDomElement &element) {
+	RK_TRACE (PLUGIN);
+
+	// TODO
 }
 
 void RKComponentBuilder::addConnection (const QString &client_id, const QString &client_property, const QString &governor_id, const QString &governor_property, bool reconcile, const QDomElement &origin) {
@@ -293,147 +458,5 @@ void RKComponentBuilder::makeConnections () {
 	}
 }
 
-
-
-
-/////////////////////////////////////// RKStandardComponentGUI ////////////////////////////////////////////////
-
-RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property) {
-	RK_TRACE (PLUGIN);
-
-	RKStandardComponentGUI::component = component;
-	RKStandardComponentGUI::code_property = code_property;
-	connect (code_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (codeChanged (RKComponentPropertyBase *)));
-
-	QGridLayout *main_grid = new QGridLayout (this, 1, 1);
-	splitter = new QSplitter (QSplitter::Vertical, this);
-	main_grid->addWidget (splitter, 0, 0);
-	QWidget *upper_widget = new QWidget (splitter);
-	
-	QHBoxLayout *hbox = new QHBoxLayout (upper_widget, RKGlobals::marginHint (), RKGlobals::spacingHint ());
-	QVBoxLayout *vbox = new QVBoxLayout (hbox, RKGlobals::spacingHint ());
-
-	// build standard elements
-	main_widget = new QVBox (upper_widget);
-	hbox->addWidget (main_widget);
-
-	// lines
-	QFrame *line;
-	line = new QFrame (upper_widget);
-	line->setFrameShape (QFrame::VLine);
-	line->setFrameShadow (QFrame::Plain);	
-	hbox->addWidget (line);
-
-	// buttons
-	vbox = new QVBoxLayout (hbox, RKGlobals::spacingHint ());
-	ok_button = new QPushButton ("Submit", upper_widget);
-	connect (ok_button, SIGNAL (clicked ()), this, SLOT (ok ()));
-	vbox->addWidget (ok_button);
-	
-	cancel_button = new QPushButton ("Close", upper_widget);
-	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
-	vbox->addWidget (cancel_button);
-	vbox->addStretch (1);
-	
-	help_button = new QPushButton ("Help", upper_widget);
-	connect (help_button, SIGNAL (clicked ()), this, SLOT (help ()));
-	vbox->addWidget (help_button);
-	
-/*	if (wizard_available) {
-		switch_button = new QPushButton ("Use Wizard", upper_widget);
-		connect (switch_button, SIGNAL (clicked ()), this, SLOT (switchInterfaces ()));
-		vbox->addWidget (switch_button);
-	} */
-	vbox->addStretch (2);
-	
-	toggle_code_button = new QPushButton ("Code", upper_widget);
-	toggle_code_button->setToggleButton (true);
-	toggle_code_button->setOn (true);
-	connect (toggle_code_button, SIGNAL (clicked ()), this, SLOT (toggleCode ()));
-	vbox->addWidget (toggle_code_button);
-	
-	// code display
-	code_display = new RKCommandEditor (splitter, true);
-
-	// code update timer
-	code_update_timer = new QTimer (this);
-	connect (code_update_timer, SIGNAL (timeout ()), this, SLOT (updateCodeNow ()));
-}
-
-RKStandardComponentGUI::~RKStandardComponentGUI () {
-	RK_TRACE (PLUGIN);
-}
-
-void RKStandardComponentGUI::ok () {
-	RK_TRACE (PLUGIN);
-
-	RK_ASSERT (code_property->isValid ());
-	
-	RCommandChain *chain = RKGlobals::rInterface ()->startChain ();
-	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->preprocess (), RCommand::Plugin | RCommand::DirectToOutput), chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->calculate (), RCommand::Plugin | RCommand::DirectToOutput), chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->printout (), RCommand::Plugin | RCommand::DirectToOutput), chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->cleanup (), RCommand::Plugin | RCommand::DirectToOutput), chain);
-	RKGlobals::rInterface ()->closeChain (chain);
-}
-
-void RKStandardComponentGUI::back () {
-	RK_TRACE (PLUGIN);
-}
-
-void RKStandardComponentGUI::cancel () {
-	RK_TRACE (PLUGIN);
-
-	hide ();
-	component->deleteLater ();
-}
-
-void RKStandardComponentGUI::toggleCode () {
-	RK_TRACE (PLUGIN);
-
-	code_display->setShown (toggle_code_button->isOn ());
-	updateCode ();
-}
-
-void RKStandardComponentGUI::help () {
-	RK_TRACE (PLUGIN);
-}
-
-void RKStandardComponentGUI::closeEvent (QCloseEvent *e) {
-	RK_TRACE (PLUGIN);
-
-	e->accept ();
-	cancel ();
-}
-
-void RKStandardComponentGUI::enableSubmit (bool enable) {
-	RK_TRACE (PLUGIN);
-
-	ok_button->setEnabled (enable);
-}
-
-void RKStandardComponentGUI::codeChanged (RKComponentPropertyBase *) {
-	RK_TRACE (PLUGIN);
-
-	updateCode ();
-}
-
-void RKStandardComponentGUI::updateCode () {
-	RK_TRACE (PLUGIN);
-
-	if (!code_display->isShown ()) return;
-	code_update_timer->start (0, true);
-}
-
-void RKStandardComponentGUI::updateCodeNow () {
-	RK_TRACE (PLUGIN);
-
-	if (!code_property->isValid ()) {
-		code_display->setText (i18n ("Processing. Please wait"));
-		RK_DO (qDebug ("code not ready to be displayed: pre %d, cal %d, pri %d, cle %d", !code_property->preprocess ().isNull (), !code_property->calculate ().isNull (), !code_property->printout ().isNull (), !code_property->cleanup ().isNull ()), PLUGIN, DL_DEBUG);
-	} else {
-		code_display->setText (code_property->preprocess () + code_property->calculate () + code_property->printout () + code_property->cleanup ());
-	}
-}
 
 #include "rkstandardcomponent.moc"
