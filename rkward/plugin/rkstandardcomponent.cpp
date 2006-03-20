@@ -67,6 +67,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	QDomElement doc_element = xml->openXMLFile (filename, DL_ERROR);
 	if (xml->highestError () >= DL_ERROR) {
 		KMessageBox::error (this, i18n ("There has been an error while trying to parse the description of this pluign ('%1'). Please refer to stdout for details.").arg (filename), i18n("Could not create plugin"));
+		removeFromParent ();
 		deleteLater ();
 		return;
 	}
@@ -83,6 +84,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 //	connect (backend, SIGNAL (requestRCall (const QString&)), this, SLOT (doRCall (const QString&)));
 //	connect (backend, SIGNAL (requestRVector (const QString&)), this, SLOT (getRVector (const QString&)));
 	connect (backend, SIGNAL (haveError ()), this, SLOT (hide ()));
+	connect (backend, SIGNAL (haveError ()), this, SLOT (removeFromParent ()));
 	connect (backend, SIGNAL (haveError ()), this, SLOT (deleteLater ()));
 	if (!backend->initialize (dummy, code)) return;
 
@@ -106,7 +108,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 				build_wizard = false;
 			}
 		} else {
-			QDomElement gui_element = xml->getChildElement (doc_element, "dialog", DL_WARNING);
+			gui_element = xml->getChildElement (doc_element, "dialog", DL_WARNING);
 			if (gui_element.isNull ()) {
 				xml->displayError (&doc_element, "Cannot embed a wizard into a dialog, and no dialog definition available", DL_ERROR);
 				deleteLater ();
@@ -338,6 +340,7 @@ void RKStandardComponent::addChild (const QString &id, RKComponentBase *child) {
 
 /////////////////////////////////////// RKComponentBuilder /////////////////////////////////////////
 
+#include "rkcomponentmap.h"
 
 RKComponentBuilder::RKComponentBuilder (RKStandardComponent *parent_component) {
 	RK_TRACE (PLUGIN);
@@ -421,6 +424,14 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			widget = new RKPluginBrowser (e, component (), parent_widget);
 		} else if (e.tagName () == "text") {
 			widget = new RKText (e, component (), parent_widget);
+		} else if (e.tagName () == "embed") {
+			QString component_id = xml->getStringAttribute (e, "component", QString::null, DL_ERROR);
+			RKComponentHandle *handle = RKGlobals::componentMap ()->getComponentHandle (component_id);
+			if (handle) {
+				widget = handle->invoke (component (), parent_widget);
+			} else {
+				xml->displayError (&e, QString ("Could not embed component '%1'. Not found").arg (component_id), DL_ERROR);
+			}
 		} else {
 			xml->displayError (&e, QString ("Invalid tagname '%1'").arg (e.tagName ()), DL_ERROR);
 		}
@@ -431,10 +442,6 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 	}
 }
 
-/**
- * 
- * @param element 
- */
 void RKComponentBuilder::parseLogic (const QDomElement &element) {
 	RK_TRACE (PLUGIN);
 
@@ -449,6 +456,15 @@ void RKComponentBuilder::parseLogic (const QDomElement &element) {
 		addConnection (xml->getStringAttribute (*it, "client", "#noid#", DL_WARNING), QString::null, xml->getStringAttribute (*it, "governor", "#noid#", DL_WARNING), QString::null, xml->getBoolAttribute (*it, "reconcile", false, DL_INFO), element);
 	}
 
+	// find outside elements
+	children = xml->getChildElements (element, "outside", DL_INFO);
+	for (it = children.constBegin (); it != children.constEnd (); ++it) {
+		RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), xml->getBoolAttribute (*it, "required", false, DL_INFO));
+		component ()->addChild (xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING), prop);
+		component ()->connect (prop, SIGNAL (valueChanged (RKComponentPropertyBase *)), component (), SLOT (outsideValueChanged (RKComponentPropertyBase *)));
+		// TODO add more options
+	}
+
 	// find convert elements
 	children = xml->getChildElements (element, "convert", DL_INFO);
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
@@ -458,7 +474,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element) {
 		QString sources = xml->getStringAttribute (*it, "sources", QString::null, DL_WARNING);
 		convert->setMode ((RKComponentPropertyConvert::ConvertMode) mode);
 		convert->setSources (sources);
-		if (mode == RKComponentPropertyConvert::Equals) {
+		if ((mode == RKComponentPropertyConvert::Equals) || (mode == RKComponentPropertyConvert::NotEquals)) {
 			convert->setStandard (xml->getStringAttribute (*it, "standard", QString::null, DL_WARNING));
 		} else if (mode == RKComponentPropertyConvert::Range) {
 			convert->setRange (xml->getDoubleAttribute (*it, "min", FLT_MIN, DL_INFO), xml->getDoubleAttribute (*it, "max", FLT_MAX, DL_INFO));

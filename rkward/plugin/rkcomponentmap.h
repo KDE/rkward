@@ -25,15 +25,12 @@ enum RKComponentType {
 
 #include <qstring.h>
 
+class RKComponent;
+class QWidget;
 /** This simple class keeps the most basic information about a component in RKWard. Most work is done in RKComponentMap.
-Note that standard components (i.e. components which can act as regular top-level dialogs) have an additional counterpart in RKPluginHandle
-
-TODO: no! RKPluginHandle should inherit from RKComponentHandle!
-
 
 @author Thomas Friedrichsmeier
 */
-
 class RKComponentHandle {
 public:
 	RKComponentHandle (const QString &filename, RKComponentType type);
@@ -45,6 +42,8 @@ public:
 	bool isPlugin ();
 
 	static RKComponentHandle* createComponentHandle (const QString &filename, RKComponentType type, const QString& id, const QString& label);
+/** invoke the component (standalone or embedded) */
+	virtual RKComponent *invoke (RKComponent *parent_component, QWidget *parent_widget) = 0;
 private:
 /** The filename of the description file for this component */
 	QString filename;
@@ -111,6 +110,8 @@ public:
 	RKStandardComponentHandle (const QString &filename, RKComponentType type);
 
 	~RKStandardComponentHandle ();
+
+	RKComponent *invoke (RKComponent *parent_component, QWidget *parent_widget);
 public slots:
 /** Slot called, when the menu-item for this widget is selected. Responsible for creating the GUI. */
 	void activated ();

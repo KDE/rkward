@@ -221,9 +221,16 @@ RKStandardComponentHandle::~RKStandardComponentHandle () {
 	RK_TRACE (PLUGIN);
 }
 
+RKComponent *RKStandardComponentHandle::invoke (RKComponent *parent_component, QWidget *parent_widget) {
+	RK_TRACE (PLUGIN);
+
+	return (new RKStandardComponent (parent_component, parent_widget, getFilename ()));
+}
+
 void RKStandardComponentHandle::activated () {
 	RK_TRACE (PLUGIN);
-	new RKStandardComponent (0, 0, getFilename ());
+
+	invoke (0, 0);
 }
 
 #include "rkcomponentmap.moc"

@@ -79,12 +79,10 @@ bool PHPBackend::initialize (const QString &filename, RKComponentPropertyCode *c
 void PHPBackend::destroy () {
 	RK_TRACE (PHP);
 
-	disconnect ();
 	if (php_process) {
-		php_process->suspend ();
 		php_process->detach ();
 	}
-	delete php_process;
+	php_process->deleteLater ();
 	php_process = 0;
 	
 	busy_writing = false;
@@ -222,9 +220,10 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int len) {
 	// pending data is always first in a stream, so process it first, too
 	if (have_data) {
 		if (!startup_done) {
-				destroy ();
-				KMessageBox::error (0, i18n ("There has been an error\n(\"%1\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKward or an invalid setting for the location of the PHP support files. Check the settings (Settings->Configure Settings->PHP backend) and try again.").arg (data.stripWhiteSpace ()), i18n ("PHP-Error"));
+				php_process->detach ();
+				KMessageBox::error (0, i18n ("There has been an error\n(\"%1\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKWard or an invalid setting for the location of the PHP support files. Check the settings (Settings->Configure Settings->PHP backend) and try again.").arg (data.stripWhiteSpace ()), i18n ("PHP-Error"));
 				emit (haveError ());
+				destroy ();
 				return;
 		}
 		
@@ -283,9 +282,10 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int len) {
 //			_responsible->getRVector (requested_call);
 		} else if (request.startsWith ("PHP-Error")) {
 				QString error = request.remove ("PHP-Error");
+				php_process->detach ();
+				KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"%1\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings.").arg (error.stripWhiteSpace ()), i18n ("PHP-Error"));
 				emit (haveError ());
 				destroy ();
-				KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"%1\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings.").arg (error.stripWhiteSpace ()), i18n ("PHP-Error"));
 				return;
 		}
 		return;

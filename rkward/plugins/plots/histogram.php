@@ -11,7 +11,7 @@ rk.temp.date = date()
 	function printout () {
 ?>cat ("<h1>Histogram</h1>")
 rk.graph.on ()
-plot (hist (<? getRK ("x"); ?>, freq = <? getRK ("scale"); ?>))
+plot (hist (<? getRK ("x"); ?>, freq = <? getRK ("scale"); ?>)<? getRK ("plotoptions.code.printout"); ?>)
 rk.graph.off ()
 cat ("<table border = \"1\">")
 		cat ("<TR><TD>Created</TD><TD> ", rk.temp.date," </TD></TR>")

@@ -110,6 +110,8 @@ public slots:
 /** This handles changes in the default properties (enabledness, visibility, requiredness). You will use similar slots in derived classes to handle
 specialized properties */
 	void propertyValueChanged (RKComponentPropertyBase *property);
+/** If you add an outside property to a component, connect it to this slot, so the component will update itself. used in RKComponentBuilder::parseLogic () */
+	void outsideValueChanged (RKComponentPropertyBase *) { changed (); }
 public:
 /** standard property controlling visibility */
 	RKComponentPropertyBool *visibilityProperty () { return visibility_property; };
@@ -130,6 +132,9 @@ public:
 
 /** Is the component "ready"? I.e. it is up to date according to current settings. Does not imply it is also satisfied. Default implementation always returns true. */
 	virtual bool isReady () { return true; };
+protected slots:
+/** if a child component self-destructs, it should remove itself from its parent *before* destructing. Don't use in a regular destructor. Call only if the child dies unexpectedly */
+	void removeFromParent ();
 protected:
 	RKComponentPropertyBool *visibility_property;
 	RKComponentPropertyBool *enabledness_property;

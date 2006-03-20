@@ -58,8 +58,6 @@ public:
 	void switchInterface ();
 /** RTTI */
 	int type () { return ComponentStandard; };
-/** reimplemented from QWidget to hide the gui if applicable */
-	void hide ();
 public slots:
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */
@@ -70,6 +68,8 @@ public slots:
 //	void doRCall (const QString &call);
 /** get a value for the backend */
 	void getValue (const QString &id);
+/** reimplemented from QWidget to hide the gui if applicable */
+	void hide ();
 private:
 /** The property holding the generated code. Note that this member is tightly controlled by the ScriptBackend */
 	RKComponentPropertyCode *code;

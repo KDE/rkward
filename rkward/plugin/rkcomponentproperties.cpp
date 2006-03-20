@@ -971,7 +971,17 @@ RKComponentPropertyCode::~RKComponentPropertyCode () {
 	RK_TRACE (PLUGIN);
 }
 
+QString RKComponentPropertyCode::value (const QString &modifier) {
+	RK_TRACE (PLUGIN);
 
+	if (modifier == "preprocess") return preprocess ();
+	if (modifier == "calculate") return calculate ();
+	if (modifier == "printout") return printout ();
+	if (modifier == "cleanup") return cleanup ();
+	if (!modifier.isEmpty ()) warnModifierNotRecognized (modifier);
+
+	return (preprocess () + calculate () + printout () + cleanup ());
+}
 
 /////////////////////////////////////////// Convert ////////////////////////////////////////////////
 
@@ -1049,6 +1059,12 @@ void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase 
 					return;
 				}
 				break;
+			} case NotEquals: {
+				if (source.property->value (source.modifier) == standard) {
+					setBoolValue (false);
+					return;
+				}
+				break;
 			} case Range: {
 				double val;
 				if (source.property->type () == PropertyInt) {
@@ -1092,6 +1108,7 @@ void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase 
 	// if we did not return above, this is the default value:
 	switch (_mode) {
 		case Equals:
+		case NotEquals:
 		case Range:
 		case And: { setBoolValue (true); break; }
 		case Or: { setBoolValue (false); break; }

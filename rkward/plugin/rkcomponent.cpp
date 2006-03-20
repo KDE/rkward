@@ -170,4 +170,22 @@ void RKComponent::changed () {
 	}
 }
 
+void RKComponent::removeFromParent () {
+	RK_TRACE (PLUGIN);
+
+	if (!parentComponent ()) return;
+	for (QDictIterator<RKComponentBase> it (parentComponent ()->child_map); it.current (); ++it) {
+		if (it.current () == this) {
+			QString key = it.currentKey ();
+	// unfortunately, several items might hvae the same key, and there seems to be no way to selectively remove the current item only.
+	// however, this function should only ever be called in cases of emergency and to prevent crashes. So we make extra sure to remove the child,
+	// even if we remove a little more than neccessary along the way.
+			while (parentComponent ()->child_map.remove (key));
+			return;
+		}
+	}
+
+	RK_ASSERT (false);
+}
+
 #include "rkcomponent.moc"

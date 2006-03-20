@@ -18,6 +18,7 @@ Little annoying stuff:
 PHP-backend:
 - switch to KProcIO for easier logic
 - http://de3.php.net/manual/en/function.call-user-func.php seems to be faster than eval
+- find out why an error in the backend often leads to a subsequent crash
 
 - on viewDeactivated, it may not be safe to call setCaption and there activeWindow (). Apparently, the pointer may be invalid:
 	- start rkward with empty table. open command editor. switch back to table. Edit some stuff in the table. Ctrl+W. Crash

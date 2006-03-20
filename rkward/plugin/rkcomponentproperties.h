@@ -311,7 +311,7 @@ public:
 /** the cleanup code */
 	QString cleanup () { return cleanup_code; };
 
-	QString value () { return (preprocess () + calculate () + printout () + cleanup ()); };
+	QString value (const QString &modifier=QString::null);
 
 /** set the preprocess code.
 @param code The code to set. If this is QString::null, the property is seen to lack preprocess code and hence is not valid (see isValid ()). In contrast, empty strings are seen as valid */
@@ -348,9 +348,10 @@ public:
 /** Mode of operation. see setMode () */
 	enum ConvertMode {
 		Equals = 0,		/** < Check, whether some property has exactly the given string value (see setSources (), setStandard ()) */
-		Range = 1,		/** < Check, whether some *numeric* property is in the given range (see setSources (), setRange ()) */
-		And = 2,			/** < Check, whether several *boolean* properties are all true at once (see setSources ()) */
-		Or = 3				/** < Check, whether one of several *boolean* properties is true (see setSources ()) */
+		NotEquals = 1,		/** < Opposite of ConvertMode::Equals */
+		Range = 2,		/** < Check, whether some *numeric* property is in the given range (see setSources (), setRange ()) */
+		And = 3,			/** < Check, whether several *boolean* properties are all true at once (see setSources ()) */
+		Or = 4				/** < Check, whether one of several *boolean* properties is true (see setSources ()) */
 	};
 
 /** set the mode. Usually you will only call this once, after construction, and usually followed by setSources () - if applicable - setStandard () or setRange (). */
@@ -368,7 +369,7 @@ public:
 	bool isValid ();
 
 /** string represenation of the options in ConvertMode. For use in XMLHelper::getMultiChoiceAttribute */
-	static QString convertModeOptionString () { return ("equals;range;and;or;require"); };
+	static QString convertModeOptionString () { return ("equals;notequals;range;and;or;require"); };
 public slots:
 /** unfortuntely, as the parent component likely does not know about us, we have to notify it manually of any changes. That's done from this slot */
 	void selfChanged (RKComponentPropertyBase *);

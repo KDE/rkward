@@ -1,6 +1,9 @@
 <!DOCTYPE rkplugin>
 <document>
   <code file="histogram.php" />
+  <logic>
+    <connect client="plotoptions.xvar" governor="x.available"/>
+  </logic>
   <dialog label="Histogram" >
     <tabbook>
       <tab label="Variable(s)" >
@@ -20,6 +23,9 @@
             <checkbox value_unchecked="0" checked="false" value="1" id="jitter" label="Jitter" />
           </column>
         </column>
+	</tab>
+      <tab label="Plot options">
+		<embed id="plotoptions" component="rkward::plot_options" />
       </tab>
     </tabbook>
   </dialog>

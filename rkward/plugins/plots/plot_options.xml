@@ -1,0 +1,63 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="plot_options.php" />
+	<logic>
+		<connect client="xlog.enabled" governor="xaxt.state" />
+		<connect client="xlab.enabled" governor="xaxt.state" />
+		<convert id="xlabfilled" mode="notequals" sources="xlab.text" standard="" />
+		<convert id="xlabspecified" mode="and" sources="xlabfilled;xlab.enabled" />
+		<connect client="xlabisexp.enabled" governor="xlabspecified" />
+		<connect client="xminvalue.enabled" governor="xaxt.state" />
+		<connect client="xmaxvalue.enabled" governor="xaxt.state" />
+
+		<connect client="ylog.enabled" governor="yaxt.state" />
+		<connect client="ylab.enabled" governor="yaxt.state" />
+		<convert id="ylabfilled" mode="notequals" sources="ylab.text" standard="" />
+		<convert id="ylabspecified" mode="and" sources="ylabfilled;ylab.enabled" />
+		<connect client="ylabisexp.enabled" governor="ylabspecified" />
+		<connect client="yminvalue.enabled" governor="yaxt.state" />
+		<connect client="ymaxvalue.enabled" governor="yaxt.state" />
+
+		<outside id="xvar" />
+		<outside id="yvar" />
+	</logic>
+	<dialog label="Default plot options" >
+		<tabbook>
+			<tab label="Axes" >
+				<column>
+					<frame id="axistypes" label="Axis types">
+						<row>
+							<checkbox id="xaxt" label="Draw X axis" checked="true" value="" value_unchecked="n" />
+							<checkbox id="yaxt" label="Draw Y axis" checked="true" value="" value_unchecked="n" />
+						</row>
+						<row>
+							<checkbox id="xlog" label="X axis logarithmic" checked="false" value="x" value_unchecked="" />
+							<checkbox id="ylog" label="Y axis logarithmic" checked="false" value="y" value_unchecked="" />
+						</row>
+					</frame>
+					<frame id="axislabels" label="Labels (leave empty for default)">
+						<row>
+							<input id="xlab" label="X axis label" />
+							<input id="ylab" label="Y axis label" />
+						</row>
+						<text>Interpret these labels be as R expressions (as opposed to string literals)?</text>
+						<row>
+							<checkbox id="xlabisexp" label="interpret as expression" value="1" />
+							<checkbox id="ylabisexp" label="interpret as expression" value="1" />
+						</row>
+					</frame>
+					<frame id="scale" label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic">
+						<row>
+							<input id="xminvalue" label="Min X value" />
+							<input id="yminvalue" label="Min Y value" />
+						</row>
+						<row>
+							<input id="xmaxvalue" label="Max X value" />
+							<input id="ymaxvalue" label="Max Y value" />
+						</row>
+					</frame>
+				</column>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>
