@@ -76,7 +76,7 @@ public:
 /** @param value_true string value if true/on
 @param value_false string value if false/off
 @param default_state value to use, if invalid string value was set */
-	RKComponentPropertyBool (QObject *parent, bool required, const QString &value_true="TRUE", const QString &value_false="FALSE", bool default_state=true);
+	RKComponentPropertyBool (QObject *parent, bool required, bool default_state=true, const QString &value_true="true", const QString &value_false="false");
 /** destructor */
 	~RKComponentPropertyBool ();
 /** sets the bool value. Also takes care of notifying dependent components */
@@ -334,6 +334,58 @@ private:
 	QString cleanup_code;
 };
 
+class RKComponent;	// what the ... why do I need this?
+/** A bool component that can do some logical transformations. This property works slightly different than the others, and is not intended to be connected the usual way. Also by default it is not required, since it does not really hold a validity state (unless in require mode).
+
+@author Thomas Friedrichsmeier */
+class RKComponentPropertyConvert : public RKComponentPropertyBool {
+	Q_OBJECT
+public:
+/** constructor. Note that this property *requires* an RKComponent as parent (the one at the top of all the source properties) */
+	RKComponentPropertyConvert (RKComponent *parent);
+	~RKComponentPropertyConvert ();
+
+/** Mode of operation. see setMode () */
+	enum ConvertMode {
+		Equals = 0,		/** < Check, whether some property has exactly the given string value (see setSources (), setStandard ()) */
+		Range = 1,		/** < Check, whether some *numeric* property is in the given range (see setSources (), setRange ()) */
+		And = 2,			/** < Check, whether several *boolean* properties are all true at once (see setSources ()) */
+		Or = 3				/** < Check, whether one of several *boolean* properties is true (see setSources ()) */
+	};
+
+/** set the mode. Usually you will only call this once, after construction, and usually followed by setSources () - if applicable - setStandard () or setRange (). */
+	void setMode (ConvertMode mode);
+/** set the sources, i.e. the properties to check against. To specify multiple sources, separate their IDs with ";" */
+	void setSources (const QString &source_string);
+/** set the standard for comparison. Only meaningful in Equals mode */
+	void setStandard (const QString &standard);
+/** set the range for comparison. Only meaningful in Range mode */
+	void setRange (double min, double max);
+/** set this property to required. Also it will only be valid if it is currently true. So it will block it's parent component in false state. */
+	void setRequireTrue (bool require_true);
+
+/** reimplemented for setRequireTrue ()*/
+	bool isValid ();
+
+/** string represenation of the options in ConvertMode. For use in XMLHelper::getMultiChoiceAttribute */
+	static QString convertModeOptionString () { return ("equals;range;and;or;require"); };
+public slots:
+/** unfortuntely, as the parent component likely does not know about us, we have to notify it manually of any changes. That's done from this slot */
+	void selfChanged (RKComponentPropertyBase *);
+/** a source property changed. Check the state */
+	void sourcePropertyChanged (RKComponentPropertyBase *);
+private:
+	ConvertMode _mode;
+	double min, max;
+	QString standard;
+	bool require_true;
+	RKComponent *c_parent;		// actually the same as parent (), but without the hassle of conversion
+	struct Source {
+		RKComponentPropertyBase *property;
+		QString modifier;
+	};
+	QValueList<Source> sources;
+};
 
 #endif
 

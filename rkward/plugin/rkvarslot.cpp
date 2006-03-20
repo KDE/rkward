@@ -147,13 +147,25 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 
 	listSelectionChanged ();		// takes care of updating the select button
 
-	if (!isSatisfied ()) {
-		list->setPaletteBackgroundColor (QColor (255, 0, 0));
-	} else {
-		list->setPaletteBackgroundColor (QColor (255, 255, 255));
-	}
-
 	changed ();
+}
+
+void RKVarSlot::updateLook () {
+	RK_TRACE (PLUGIN);
+
+	if (isEnabled ()) {
+		if (!isSatisfied ()) {
+			list->setPaletteBackgroundColor (QColor (255, 0, 0));
+		} else {
+			list->setPaletteBackgroundColor (QColor (255, 255, 255));
+		}
+	} else {
+		if (!isSatisfied ()) {
+			list->setPaletteBackgroundColor (QColor (200, 0, 0));
+		} else {
+			list->setPaletteBackgroundColor (QColor (200, 200, 200));
+		}
+	}
 }
 
 void RKVarSlot::selectPressed () {

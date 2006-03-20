@@ -4,7 +4,24 @@
 	
 <!--Adrien d'Hardemare	
 first attempt to produce simple plot using the plot function
-A duplicate option has to be tested-->  
+A duplicate option has to be tested-->
+	<logic>
+		<connect client="Xscale.enabled" governor="columns.number" />
+		<connect client="Xscale.required" governor="columns.number" />
+		<connect client="Yscale.enabled" governor="rows.number" />
+		<connect client="Yscale.required" governor="rows.number" />
+		<convert id="customtype" mode="equals" sources="type.string" standard="custoType" />
+		<connect client="typeCusto.enabled" governor="customtype" />
+		<connect client="typeCusto.required" governor="customtype" />
+		<connect client="Xname.enabled" governor="isXaxis.state" />
+		<connect client="Xname.required" governor="isXaxis.state" />
+		<connect client="Yname.enabled" governor="isYaxis.state" />
+		<connect client="Yname.required" governor="isYaxis.state" />
+		<connect client="main.enabled" governor="isTitle.state" />
+		<connect client="main.required" governor="isTitle.state" />
+		<connect client="sub.enabled" governor="isSub.state" />
+		<connect client="sub.required" governor="isSub.state" />
+	</logic>
 	<dialog label="Scatterplot" >
 		<tabbook>
 			<tab label="Variables" >
@@ -21,12 +38,12 @@ A duplicate option has to be tested-->
 							<option value="FALSE" label="Default" />
 							<option value="custoCol" label="Customize" />
 						</radio>
-						<varslot multi="false" classes="integer numeric" source="varname" id="Xscale" depend="custoCol" />
+						<varslot multi="false" classes="integer numeric" source="varname" id="Xscale" />
 						<radio id="rows" label="Value for 'Y' scale" >
 							<option value="FALSE" id="temp2" label="Default" />
 							<option value="custoRow" label="Customize" />
 						</radio>
-						<varslot multi="false" classes="integer numeric " id="Yscale" source="varname" depend="custoRow" />
+						<varslot multi="false" classes="integer numeric " id="Yscale" source="varname" />
 					</column>
 					<varselector id="varname" />
 				</row>
@@ -42,19 +59,19 @@ A duplicate option has to be tested-->
 					<option value="'S'" label="Step-function plots : the bottom of the vertical defines the point" />
 					<option value="custoType" label="Customize" />
 				</radio>
-				<input size="medium" id="typeCusto" depend="custoType" label="Give a character vector eg : c('p','l')" />
+				<input size="medium" id="typeCusto" label="Give a character vector eg : c('p','l')" />
 			</tab>
 			<tab label="Names" >
 				<row>
 					<column>
 						<checkbox checked="false" value="1" id="isXaxis" label="Give a name to 'X' axis" />
-						<input size="medium" id="Xname" initial="X" depend="isXaxis" label="Name for X axis" />
+						<input size="medium" id="Xname" initial="X" label="Name for X axis" />
 						<checkbox checked="false" value="1" id="isYaxis" label="Give a name to Y axis" />
-						<input size="medium" id="Yname" initial="Y" label="Name of Y axis" depend="isYaxis" />
+						<input size="medium" id="Yname" initial="Y" label="Name of Y axis" />
 						<checkbox checked="false" value="1" id="isTitle" label="Give a title" />
-						<input size="medium" id="main" depend="isTitle" />
+						<input size="medium" id="main" />
 						<checkbox checked="false" value="1" id="isSub" label="Give a subtitle" />
-						<input size="medium" id="sub" depend="isSub" />
+						<input size="medium" id="sub" />
 					</column>
 					<column>
 						<checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="axes" label="Generate axes" />
@@ -143,12 +160,12 @@ A duplicate option has to be tested-->
 						<option value="FALSE" label="Default" />
 						<option value="custoCol" label="Customize" />
 					</radio>
-					<varslot multi="false" classes="integer numeric" source="varname" id="Xscale" depend="custoCol" />
+					<varslot multi="false" classes="integer numeric" source="varname" id="Xscale" />
 					<radio id="rows" label="Value for 'Y' scale" >
 						<option value="FALSE" id="temp2" label="Default" />
 						<option value="custoRow" label="Customize" />
 					</radio>
-					<varslot multi="false" classes="integer numeric " id="Yscale" source="varname" depend="custoRow" />
+					<varslot multi="false" classes="integer numeric " id="Yscale" source="varname" />
 				</column>
 				<varselector id="varname" />
 			</row>
@@ -213,20 +230,20 @@ A duplicate option has to be tested-->
 				<option value="'S'" label="Step-function plots : the bottom of the vertical defines the point" />
 				<option value="custoType" label="Customize" />
 			</radio>
-			<input size="medium" id="typeCusto" depend="custoType" label="Give a character vector eg : c('p','l')" />
+			<input size="medium" id="typeCusto" label="Give a character vector eg : c('p','l')" />
 		</page>
 		<!--titre-->
 		<page>
 			<row>
 				<column>
 					<checkbox checked="false" value="1" id="isXaxis" label="Give a name to 'X' axis" />
-					<input size="medium" id="Xname" initial="X" depend="isXaxis" label="Name for X axis" />
+					<input size="medium" id="Xname" initial="X" label="Name for X axis" />
 					<checkbox checked="false" value="1" id="isYaxis" label="Give a name to Y axis" />
-					<input size="medium" id="Yname" initial="Y" label="Name of Y axis" depend="isYaxis" />
+					<input size="medium" id="Yname" initial="Y" label="Name of Y axis" />
 					<checkbox checked="false" value="1" id="isTitle" label="Give a title" />
-					<input size="medium" id="main" depend="isTitle" />
+					<input size="medium" id="main" />
 					<checkbox checked="false" value="1" id="isSub" label="Give a subtitle" />
-					<input size="medium" id="sub" depend="isSub" />
+					<input size="medium" id="sub" />
 				</column>
 				<column>
 					<checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="axes" label="Generate axes" />

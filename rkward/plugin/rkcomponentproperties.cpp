@@ -113,7 +113,7 @@ void RKComponentPropertyBase::warnModifierNotRecognized (const QString &modifier
 
 ///////////////////////////////////////////// Bool //////////////////////////////////////////
 
-RKComponentPropertyBool::RKComponentPropertyBool (QObject *parent, bool required, const QString &value_true, const QString &value_false, bool default_state) : RKComponentPropertyBase (parent, required) {
+RKComponentPropertyBool::RKComponentPropertyBool (QObject *parent, bool required, bool default_state, const QString &value_true, const QString &value_false) : RKComponentPropertyBase (parent, required) {
 	RK_TRACE (PLUGIN);
 	RKComponentPropertyBool::value_true = value_true;
 	RKComponentPropertyBool::value_false = value_false;
@@ -172,6 +172,14 @@ QString RKComponentPropertyBool::value (const QString &modifier) {
 	if (modifier.isEmpty ()) return _value;
 	if (modifier == "true") return value_true;
 	if (modifier == "false") return value_false;
+	if (modifier == "not") {
+		if (current_value) return value_false;
+		else return value_true;
+	}
+	if (modifier == "numeric") {
+		if (current_value) return "1";
+		else return "0";
+	}
 
 	warnModifierNotRecognized (modifier);
 	return QString::null;
@@ -961,6 +969,150 @@ RKComponentPropertyCode::RKComponentPropertyCode (QObject *parent, bool required
 
 RKComponentPropertyCode::~RKComponentPropertyCode () {
 	RK_TRACE (PLUGIN);
+}
+
+
+
+/////////////////////////////////////////// Convert ////////////////////////////////////////////////
+
+RKComponentPropertyConvert::RKComponentPropertyConvert (RKComponent *parent) : RKComponentPropertyBool (parent, false) {
+	RK_TRACE (PLUGIN);
+
+	_mode = Equals;
+	require_true = false;
+	c_parent = parent;
+	// get notified of own changes
+	connect (this, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (selfChanged (RKComponentPropertyBase *)));
+}
+
+RKComponentPropertyConvert::~RKComponentPropertyConvert () {
+	RK_TRACE (PLUGIN);
+}
+
+void RKComponentPropertyConvert::setMode (ConvertMode mode) {
+	RK_TRACE (PLUGIN);
+
+	_mode = mode;
+	sourcePropertyChanged (0);
+}
+
+void RKComponentPropertyConvert::setSources (const QString &source_string) {
+	RK_TRACE (PLUGIN);
+
+	sources.clear ();
+	QStringList source_ids = QStringList::split (";", source_string);
+	for (QStringList::const_iterator it = source_ids.constBegin (); it != source_ids.constEnd (); ++it) {
+		Source s;
+		RKComponentBase *prop = c_parent->lookupComponent (*it, &(s.modifier));
+		if (prop && prop->isProperty ()) {
+			s.property = static_cast<RKComponentPropertyBase *>(prop);
+			sources.append (s);
+			connect (s.property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (sourcePropertyChanged (RKComponentPropertyBase *)));
+		} else {
+			RK_DO (qDebug ("Not found or not a property: %s", (*it).latin1 ()), PLUGIN, DL_WARNING);
+		}
+	}
+
+	sourcePropertyChanged (0);
+}
+
+void RKComponentPropertyConvert::setStandard (const QString &standard) {
+	RK_TRACE (PLUGIN);
+
+	RKComponentPropertyConvert::standard = standard;
+	sourcePropertyChanged (0);
+}
+
+void RKComponentPropertyConvert::setRange (double min, double max) {
+	RK_TRACE (PLUGIN);
+
+	RKComponentPropertyConvert::min = min;
+	RKComponentPropertyConvert::max = max;
+	sourcePropertyChanged (0);
+}
+
+void RKComponentPropertyConvert::selfChanged (RKComponentPropertyBase *) {
+	RK_TRACE (PLUGIN);
+
+	c_parent->changed ();
+}
+
+void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase *) {
+	RK_TRACE (PLUGIN);
+
+	for (QValueList<Source>::const_iterator it = sources.constBegin (); it != sources.constEnd (); ++it) {
+		Source source = *it;		// easier typing
+		switch (_mode) {
+			case Equals: {
+				if (source.property->value (source.modifier) != standard) {
+					setBoolValue (false);
+					return;
+				}
+				break;
+			} case Range: {
+				double val;
+				if (source.property->type () == PropertyInt) {
+					val = (double) static_cast<RKComponentPropertyInt *>(source.property)->intValue ();
+				} else if (source.property->type () == PropertyDouble) {
+					val = (double) static_cast<RKComponentPropertyDouble *>(source.property)->doubleValue ();
+				} else {
+					val = min;
+					RK_DO (qDebug ("Non-numeric property in convert sources, cannot check range"), PLUGIN, DL_WARNING);
+				}
+
+				if ((min > val) || (max < val)) {
+					setBoolValue (false);
+					return;
+				}
+				break;
+			} case And: {
+				if ((source.property->type () == PropertyBool) || (source.property->type () == PropertyLogic)) {
+					if (!(static_cast<RKComponentPropertyBool *>(source.property)->boolValue ())) {
+						setBoolValue (false);
+						return;
+					}
+				} else {
+					RK_DO (qDebug ("Non-boolean property in convert sources, cannot check AND"), PLUGIN, DL_WARNING);
+				}
+				break;
+			} case Or: {
+				if ((source.property->type () == PropertyBool) || (source.property->type () == PropertyLogic)) {
+					if (!(static_cast<RKComponentPropertyBool *>(source.property)->boolValue ())) {
+						setBoolValue (true);
+						return;
+					}
+				} else {
+					RK_DO (qDebug ("Non-boolean property in convert sources, cannot check OR"), PLUGIN, DL_WARNING);
+				}
+				break;
+			}
+		}
+	}
+
+	// if we did not return above, this is the default value:
+	switch (_mode) {
+		case Equals:
+		case Range:
+		case And: { setBoolValue (true); break; }
+		case Or: { setBoolValue (false); break; }
+	}
+}
+
+void RKComponentPropertyConvert::setRequireTrue (bool require_true) {
+	RK_TRACE (PLUGIN);
+
+	RKComponentPropertyConvert::require_true = require_true;
+	required = require_true;
+}
+
+bool RKComponentPropertyConvert::isValid () {
+	RK_TRACE (PLUGIN);
+
+	if (require_true) {
+		return (boolValue ());
+	}
+
+	return is_valid;
 }
 
 #include "rkcomponentproperties.moc"

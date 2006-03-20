@@ -43,6 +43,9 @@ public:
 public slots:
 	void textChanged ();
 	void textChanged (RKComponentPropertyBase *);
+protected:
+/** Grey out input when disabled */
+	void enabledChange (bool old);
 private:
 	bool updating;
 	QTextEdit *textedit;

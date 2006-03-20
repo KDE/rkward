@@ -267,6 +267,8 @@ void RKStandardComponent::backendIdle () {
 		gui->updateCode ();
 		gui->enableSubmit (isSatisfied ());
 	}
+
+	RKComponent::changed ();		// notify parent, if any
 }
 
 void RKStandardComponent::getValue (const QString &id) {
@@ -345,7 +347,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 	XMLChildList children = xml->getChildElements (element, QString::null, DL_ERROR);
 	
 	XMLChildList::const_iterator it;
-	for (it = children.begin (); it != children.end (); ++it) {
+	for (it = children.constBegin (); it != children.constEnd (); ++it) {
 		RKComponent *widget = 0;
 		QDomElement e = *it;		// shorthand
 		QString id = xml->getStringAttribute (e, "id", "#noid#", DL_INFO);
@@ -421,18 +423,51 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 	}
 }
 
+/**
+ * 
+ * @param element 
+ */
 void RKComponentBuilder::parseLogic (const QDomElement &element) {
 	RK_TRACE (PLUGIN);
 
-	// TODO
+	if (element.isNull ()) return;
+
+	// find connect elements
+	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	XMLChildList children = xml->getChildElements (element, "connect", DL_INFO);
+
+	XMLChildList::const_iterator it;
+	for (it = children.constBegin (); it != children.constEnd (); ++it) {
+		addConnection (xml->getStringAttribute (*it, "client", "#noid#", DL_WARNING), QString::null, xml->getStringAttribute (*it, "governor", "#noid#", DL_WARNING), QString::null, xml->getBoolAttribute (*it, "reconcile", false, DL_INFO), element);
+	}
+
+	// find convert elements
+	children = xml->getChildElements (element, "convert", DL_INFO);
+	for (it = children.constBegin (); it != children.constEnd (); ++it) {
+		RKComponentPropertyConvert *convert = new RKComponentPropertyConvert (component ());
+		QString id = xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING);
+		int mode = xml->getMultiChoiceAttribute (*it, "mode", convert->convertModeOptionString (), 0, DL_WARNING);
+		QString sources = xml->getStringAttribute (*it, "sources", QString::null, DL_WARNING);
+		convert->setMode ((RKComponentPropertyConvert::ConvertMode) mode);
+		convert->setSources (sources);
+		if (mode == RKComponentPropertyConvert::Equals) {
+			convert->setStandard (xml->getStringAttribute (*it, "standard", QString::null, DL_WARNING));
+		} else if (mode == RKComponentPropertyConvert::Range) {
+			convert->setRange (xml->getDoubleAttribute (*it, "min", FLT_MIN, DL_INFO), xml->getDoubleAttribute (*it, "max", FLT_MAX, DL_INFO));
+		}
+		convert->setRequireTrue (xml->getStringAttribute (*it, "require_true", false, DL_INFO));
+		component ()->addChild (id, convert);
+	}
 }
 
 void RKComponentBuilder::addConnection (const QString &client_id, const QString &client_property, const QString &governor_id, const QString &governor_property, bool reconcile, const QDomElement &origin) {
 	RK_TRACE (PLUGIN);
 
 	RKComponentPropertyConnection conn;
-	conn.client_property = client_id + "::" + client_property;
-	conn.governor_property = governor_id + "::" + governor_property;
+	conn.client_property = client_id;
+	if (!client_property.isEmpty ()) conn.client_property += "." + client_property;
+	conn.governor_property = governor_id;
+	if (!governor_property.isEmpty ()) conn.governor_property += "." + governor_property;
 	conn.reconcile = reconcile;
 	conn.origin = origin;
 	connection_list.append (conn);

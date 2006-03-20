@@ -36,6 +36,7 @@ public:
 		PropertyDouble = 4,
 		PropertyRObjects = 5,
 		PropertyCode = 6,
+		PropertyLogic = 7,
 		PropertyUser = 1000,		/**< for user expansion */
 		PropertyEnd = 1999,
 		ComponentBase = 2001,
@@ -49,6 +50,7 @@ public:
 		ComponentInput = 2009,
 		ComponentBrowser = 2010,
 		ComponentText = 2011,
+		ComponentStandard = 2100,
 		ComponentUser = 3000	/**< for user expansion */
 	};
 /** for RTTI. see RKComponentBase::RKComponentTypes */
@@ -119,14 +121,14 @@ public:
 /** convenience call to set visibilty property (and hence visibility of this component). Can't inline due to inclusion problems. */
 	void setVisible (bool visible);
 /** convenience call to set visibilty property (and hence visibility of this component) */
-	void setEnabled (bool enabled);
+	void setEnabledness (bool enabled);
 /** convenience call to set visibilty property (and hence visibility of this component) */
 	void setRequired (bool required);
 
 /** The parent of this component. Should be notified, whenever isSatisfied () or isReady ()-state changed. */
 	RKComponent *parentComponent () { return _parent; };
 
-/** Is the component "ready"? I.e. it is up to date according to current settings. Does not imply it is also satisfied. Default implementation always returns true. TODO: maybe ready-state should be made a property as well! */
+/** Is the component "ready"? I.e. it is up to date according to current settings. Does not imply it is also satisfied. Default implementation always returns true. */
 	virtual bool isReady () { return true; };
 protected:
 	RKComponentPropertyBool *visibility_property;

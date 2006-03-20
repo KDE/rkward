@@ -27,12 +27,12 @@ RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QS
 	if (identifier.isEmpty ()) return this;
 	RK_DO (qDebug ("looking up '%s'", identifier.latin1 ()), PLUGIN, DL_DEBUG);
 
-	RKComponentBase *child = child_map.find (identifier.section ("::", 0, 0));
+	RKComponentBase *child = child_map.find (identifier.section (".", 0, 0));
 	if (!child) {	// if we do not have such a child, return 0 unless this is a property
-		if (remainder) *remainder = identifier.section ("::", 1);
+		if (remainder) *remainder = identifier.section (".", 1);
 		return this;
 	} else {	// else do recursive lookup
-		return child->lookupComponent (identifier.section ("::", 1), remainder);
+		return child->lookupComponent (identifier.section (".", 1), remainder);
 	}
 }
 
@@ -98,11 +98,21 @@ RKComponent::~RKComponent () {
 void RKComponent::propertyValueChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
+	// slightly more elaborat than necessary on first thought, to prevent loops
 	if (property == visibility_property) {
-		setShown (visibility_property->boolValue ());
+		if (visibility_property->boolValue ()) {
+			if (!isShown ()) show ();
+		} else {
+			if (isShown ()) hide ();
+		}
 	} else if (property == enabledness_property) {
-		setEnabled (enabledness_property->boolValue ());
+		if (enabledness_property->boolValue ()) {
+			if (!isEnabled ()) setEnabled (true);
+		} else {
+			if (isEnabled ()) setEnabled (false);
+		}
 	} else if (property == requiredness_property) {
+		required = requiredness_property->boolValue ();
 		changed ();
 	}
 }
@@ -140,7 +150,7 @@ void RKComponent::setVisible (bool visible) {
 	visibilityProperty ()->setBoolValue (visible);
 }
 
-void RKComponent::setEnabled (bool enabled) {
+void RKComponent::setEnabledness (bool enabled) {
 	RK_TRACE (PLUGIN);
 
 	enablednessProperty ()->setBoolValue (enabled);

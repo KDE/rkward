@@ -42,7 +42,7 @@ public:
 	~RKStandardComponent ();
 /** reimplemented to update code on changes*/
 	void changed ();
-/** reimplemented to return true only when the backend is idle*/
+/** reimplemented to return true only when the backend is idle */
 	bool isReady ();
 /** reimplemented to return true, if the RKStandardComponent is in Wizard mode */
 	bool isWizardish ();
@@ -56,6 +56,8 @@ public:
 	RKComponent *addPage ();
 /** switch from dialog to wizard or vice versa */
 	void switchInterface ();
+/** RTTI */
+	int type () { return ComponentStandard; };
 public slots:
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */

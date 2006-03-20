@@ -46,14 +46,14 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 	textedit = new QTextEdit (this);
 	int size = xml->getMultiChoiceAttribute (element, "size", "small;medium;large", 1, DL_INFO);
 	if (size == 0) {
-		textedit->setFixedSize (100,25);
+		textedit->setFixedSize (100, 25);
 	} else if (size == 1) {
-		textedit->setFixedSize (250,25);
+		textedit->setFixedSize (250, 25);
 	} else if (size == 2) {
 		textedit->setMinimumSize (250, 100);
 	}
 	vbox->addWidget (textedit);
-	connect (textedit, SIGNAL (textChanged ()),SLOT (textChanged ()));
+	connect (textedit, SIGNAL (textChanged ()), SLOT (textChanged ()));
 
 	vbox->addStretch (1);		// to keep the label attached
 
@@ -64,6 +64,18 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 
 RKInput::~RKInput () {
 	RK_TRACE (PLUGIN);
+}
+
+void RKInput::enabledChange (bool old) {
+	RK_TRACE (PLUGIN);
+
+	if (isEnabled ()) {
+		textedit->setPaletteBackgroundColor (QColor (255, 255, 255));
+	} else {
+		textedit->setPaletteBackgroundColor (QColor (200, 200, 200));
+	}
+
+	RKComponent::enabledChange (old);
 }
 
 void RKInput::textChanged (RKComponentPropertyBase *) {

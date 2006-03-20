@@ -42,11 +42,17 @@ public:
 	~RKVarSlot ();
 	int type () {return ComponentVarSlot; };
 	QString value (const QString &modifier) { return (available->value (modifier)); };
+/** reimplemented to call updateLook (), in case enabledness changed */
+	void changed () { updateLook (); RKComponent::changed (); };
+	void updateLook ();
 public slots:
 /** Called when the select-button is pressed */
 	void selectPressed ();
 	void listSelectionChanged ();
 	void availablePropertyChanged (RKComponentPropertyBase *);
+protected:
+/** Calls updateLook (), when enabledness changes */
+	void enabledChange (bool old) { updateLook (); QWidget::enabledChange (old); };
 private:
 /** change the select button to left/right / add/remove
 @param add if true, button shows arrow right, or signifies more values would be added. Else the other way around */
