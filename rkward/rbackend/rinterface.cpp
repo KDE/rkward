@@ -147,7 +147,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 		RKGlobals::controlWindow ()->removeCommand (command);
 		watch->addOutput (command);
 		command->finished ();
-		if (command->type () && RCommand::DirectToOutput) {
+		if (command->type () & RCommand::DirectToOutput) {
 			RKGlobals::rkApp ()->newOutput ();
 		}
 		delete command;

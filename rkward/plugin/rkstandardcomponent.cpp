@@ -35,10 +35,6 @@
 #include "../misc/rkerrordialog.h"
 #include "../misc/xmlhelper.h"
 #include "../settings/rksettingsmoduleplugins.h"
-/*#include "../rkward.h"
-#include "../rkeditormanager.h"
-#include "../rkcommandeditor.h"
-*/
 
 // component widgets
 #include "rkvarselector.h"
@@ -71,6 +67,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	QDomElement doc_element = xml->openXMLFile (filename, DL_ERROR);
 	if (xml->highestError () >= DL_ERROR) {
 		KMessageBox::error (this, i18n ("There has been an error while trying to parse the description of this pluign ('%1'). Please refer to stdout for details.").arg (filename), i18n("Could not create plugin"));
+		deleteLater ();
 		return;
 	}
 
@@ -89,14 +86,12 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	if (!backend->initialize (dummy, code)) return;
 
 	connect (qApp, SIGNAL (aboutToQuit ()), this, SLOT (deleteLater ()));
-	
-/*	update_timer = new QTimer (this);
-	connect (update_timer, SIGNAL (timeout ()), this, SLOT (doChangeUpdate ())); */
 
 // construct the GUI
 	if (!parent_component) {					// top-level
 		if (!createTopLevel (doc_element)) {
 			RK_ASSERT (false);
+			deleteLater ();
 			return;		// should never happen
 		}
 	} else {
@@ -316,7 +311,6 @@ RKComponent *RKStandardComponent::addPage () {
 	return page;
 }
 
-/** reimplemented for technical reasons. Additionally registers component children with the component stack if in wizard mode */
 void RKStandardComponent::addChild (const QString &id, RKComponentBase *child) {
 	RK_TRACE (PLUGIN);
 
@@ -348,7 +342,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 	RK_TRACE (PLUGIN);
 
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
-	XMLChildList children = xml->getChildElements (element, "", DL_ERROR);
+	XMLChildList children = xml->getChildElements (element, QString::null, DL_ERROR);
 	
 	XMLChildList::const_iterator it;
 	for (it = children.begin (); it != children.end (); ++it) {
@@ -357,23 +351,32 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 		QString id = xml->getStringAttribute (e, "id", "#noid#", DL_INFO);
 
 		if (allow_pages && (e.tagName () == "page")) {
-			RKComponent *page = component ()->addPage ();
-			QVBoxLayout *layout = new QVBoxLayout (page);
-			QVBox *box = new QVBox (page);
+			widget = component ()->addPage ();
+			QVBoxLayout *layout = new QVBoxLayout (widget);
+			QVBox *box = new QVBox (widget);
 			box->setSpacing (RKGlobals::spacingHint ());
 			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "row") {
-			QHBox *box = new QHBox (parent_widget);
+			RKComponent *widget = new RKComponent (component (), parent_widget);		// wrapping this (and column, frame below) inside an RKComponent has the benefit, that it can have an id, and hence can be set to visibile/hidden, enabled/disabled
+			QVBoxLayout *layout = new QVBoxLayout (widget);
+			QHBox *box = new QHBox (widget);
 			box->setSpacing (RKGlobals::spacingHint ());
+			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "column") {
-			QVBox *box = new QVBox (parent_widget);
+			RKComponent *widget = new RKComponent (component (), parent_widget);
+			QVBoxLayout *layout = new QVBoxLayout (widget);
+			QVBox *box = new QVBox (widget);
 			box->setSpacing (RKGlobals::spacingHint ());
+			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "frame") {
-			QGroupBox *box = new QGroupBox (1, Qt::Horizontal, e.attribute ("label"), parent_widget);
+			RKComponent *widget = new RKComponent (component (), parent_widget);
+			QVBoxLayout *layout = new QVBoxLayout (widget);
+			QGroupBox *box = new QGroupBox (1, Qt::Horizontal, e.attribute ("label"), widget);
 			box->setInsideSpacing (RKGlobals::spacingHint ());
+			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "tabbook") {
 			QTabWidget *tabbook = new QTabWidget (parent_widget);

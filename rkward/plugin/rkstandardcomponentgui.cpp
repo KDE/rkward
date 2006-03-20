@@ -389,7 +389,6 @@ void RKStandardComponentStack::addComponentToCurrentPage (RKComponent *component
 		return;
 	}
 
-	qDebug ("component added to page %d", current_page);
 	current_def->page_components.append (component);
 }
 
