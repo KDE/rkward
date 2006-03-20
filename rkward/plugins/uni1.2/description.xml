@@ -1,7 +1,23 @@
 <!DOCTYPE rkplugin>
 <!-- This is a simple example, of how a "plugin" might be configured. --><document>
 	<code file="code.php"/>
-	
+	<logic>
+		<connect client="constMad.enabled" governor="mad.state" />
+		<connect client="pourcent.enabled" governor="trim.state" />
+		<connect client="winsor.enabled" governor="huber.state" />
+
+		<connect client="customMu.enabled" governor="huber.state" />
+		<convert id="mubox" mode="and" sources="customMu.state;customMu.enabled" />
+		<connect client="mu.enabled" governor="mubox" />
+
+		<connect client="customS.enabled" governor="huber.state" />
+		<convert id="sbox" mode="and" sources="customS.state;customS.enabled" />
+		<connect client="s.enabled" governor="sbox" />
+
+		<connect client="tol.enabled" governor="huber.state" />
+		<connect client="initmu.enabled" governor="huber.state" />
+		<connect client="nom.enabled" governor="result.state" />
+	</logic>
 	<dialog label="Basic statistics" >
 		<tabbook>
 			<tab label="Select variables" >
@@ -54,36 +70,36 @@
 					<frame label="Dispersion" >
 						<row>
 							<checkbox checked="false" value="1" id="mad" label="Median Absolute Deviation" />
-							<input size="small" intial="1.4628" id="constMad" depend="mad" label="Constant" />
+							<input size="small" intial="1.4628" id="constMad" label="Constant" />
 						</row>
 					</frame>
 					<frame label="Robust mean" >
 						<row>
 							<checkbox checked="false" value="1" id="trim" label="Trimmed Mean" />
-							<spinbox min="0" id="pourcent" initial="0.05" max="0.5" depend="trim" label="Percentage of trimmed values" />
+							<spinbox min="0" id="pourcent" initial="0.05" max="0.5" label="Percentage of trimmed values" />
 						</row>
 					</frame>
 					<frame label="M-Estimator" >
 						<row>
 							<checkbox checked="false" value="1" id="huber" label="Huber -M estimator (Require MASS Library)" />
-							<spinbox min="0" id="winsor" initial="1.5" max="10" depend="huber" label="Winsorize at 'k' sd" />
+							<spinbox min="0" id="winsor" initial="1.5" max="10" label="Winsorize at 'k' sd" />
 						</row>
 						<row>
 							<column>
-								<checkbox checked="false" value="1" id="customMu" depend="huber" label="Custom Mu value" />
-								<input size="small" id="mu" depend="customMu" label="Enter your value" />
+								<checkbox checked="false" value="1" id="customMu" label="Custom Mu value" />
+								<input size="small" id="mu" label="Enter your value" />
 							</column>
 							<column>
-								<checkbox checked="false" value="1" id="customS" depend="huber" label="Custom s value" />
-								<input size="small" id="s" depend="customS" label="S value" />
+								<checkbox checked="false" value="1" id="customS" label="Custom s value" />
+								<input size="small" id="s" label="S value" />
 							</column>
 						</row>
 						<row>
 							<column>
-								<input size="small" intial="1e-6" id="tol" depend="huber" label="Tolerance" />
+								<input size="small" intial="1e-6" id="tol" label="Tolerance" />
 							</column>
 							<column>
-								<radio id="initmu" depend="huber" label="Initial value" >
+								<radio id="initmu" label="Initial value" >
 									<option value="median" label="Median" />
 									<option value="mean" label="Mean" />
 								</radio>
@@ -96,7 +112,7 @@
 				<checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="NA" label="Omit missing values in calculs" />
 				<checkbox checked="false" value="1" id="option" label="Print options in output" />
 				<checkbox checked="false" value="1" id="result" label="Get the result in the console" />
-				<input size="medium" intial="rk.univariate" id="nom" label="Name of the result" depend="result" />
+				<input size="medium" intial="rk.univariate" id="nom" label="Name of the result" />
 			</tab>
 		</tabbook>
 	</dialog>

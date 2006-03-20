@@ -1,7 +1,14 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="code.php"/>
-	
+	<logic>
+		<convert id="customizerow" mode="equals" sources="rows.string" standard="custoRow" />
+		<convert id="customizecol" mode="equals" sources="columns.string" standard="custoCol" />
+		<connect client="rownames.enabled" governor="customizerow" />
+		<connect client="rownames.required" governor="customizerow" />
+		<connect client="colnames.enabled" governor="customizecol" />
+		<connect client="colnames.required" governor="customizecol" />
+	</logic>
 	<dialog label="Save as table">
 		<tabbook>
 			<tab label="Save as ..." >
@@ -25,13 +32,13 @@
 					<option value="FALSE" label="No names" />
 					<option value="custoCol" label="Customize" />
 				</radio>
-				<varslot multi="false" classes="integer numeric character" source="varname" id="colnames" depend="custoCol" label="Columns names" />
+				<varslot multi="false" classes="integer numeric character" source="varname" id="colnames" label="Columns names" />
 				<radio id="rows" label="Name of rows" >
 					<option value="TRUE" id="temp1" label="Use the names of the rows" />
 					<option value="FALSE" id="temp2" label="No names" />
 					<option value="custoRow" label="Customize rows" />
 				</radio>
-				<varslot multi="false" classes="integer numeric character" id="rownames" source="varname" depend="custoRow" label="Names of rows" />
+				<varslot multi="false" classes="integer numeric character" id="rownames" source="varname" label="Names of rows" />
 				<varselector id="varname" />
 			</tab>
 			<tab label="Options" >

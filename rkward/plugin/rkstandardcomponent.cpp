@@ -82,6 +82,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	connect (backend, SIGNAL (requestValue (const QString&)), this, SLOT (getValue (const QString&)));
 //	connect (backend, SIGNAL (requestRCall (const QString&)), this, SLOT (doRCall (const QString&)));
 //	connect (backend, SIGNAL (requestRVector (const QString&)), this, SLOT (getRVector (const QString&)));
+	connect (backend, SIGNAL (haveError ()), this, SLOT (hide ()));
 	connect (backend, SIGNAL (haveError ()), this, SLOT (deleteLater ()));
 	if (!backend->initialize (dummy, code)) return;
 
@@ -121,6 +122,13 @@ RKStandardComponent::~RKStandardComponent () {
 
 	delete error_dialog;
 	delete backend;
+}
+
+void RKStandardComponent::hide () {
+	RK_TRACE (PLUGIN);
+
+	if (gui) gui->hide ();
+	RKComponent::hide ();
 }
 
 bool RKStandardComponent::createTopLevel (const QDomElement &doc_element, int force_mode) {

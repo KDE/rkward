@@ -32,7 +32,7 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	// first question: int or real
-	intmode = (xml->getMultiChoiceAttribute (element, "type", "integer;real", 0, DL_INFO) == 0);
+	intmode = (xml->getMultiChoiceAttribute (element, "type", "integer;real", 1, DL_INFO) == 0);
 
 	// create and add properties
 	addChild ("int", intvalue = new RKComponentPropertyInt (this, intmode, 0));

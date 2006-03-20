@@ -79,7 +79,11 @@ bool PHPBackend::initialize (const QString &filename, RKComponentPropertyCode *c
 void PHPBackend::destroy () {
 	RK_TRACE (PHP);
 
-	if (php_process) php_process->kill ();
+	disconnect ();
+	if (php_process) {
+		php_process->suspend ();
+		php_process->detach ();
+	}
 	delete php_process;
 	php_process = 0;
 	
@@ -279,9 +283,9 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int len) {
 //			_responsible->getRVector (requested_call);
 		} else if (request.startsWith ("PHP-Error")) {
 				QString error = request.remove ("PHP-Error");
+				emit (haveError ());
 				destroy ();
 				KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"%1\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings.").arg (error.stripWhiteSpace ()), i18n ("PHP-Error"));
-				emit (haveError ());
 				return;
 		}
 		return;

@@ -58,6 +58,8 @@ public:
 	void switchInterface ();
 /** RTTI */
 	int type () { return ComponentStandard; };
+/** reimplemented from QWidget to hide the gui if applicable */
+	void hide ();
 public slots:
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */

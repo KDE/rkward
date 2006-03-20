@@ -1077,7 +1077,7 @@ void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase 
 				break;
 			} case Or: {
 				if ((source.property->type () == PropertyBool) || (source.property->type () == PropertyLogic)) {
-					if (!(static_cast<RKComponentPropertyBool *>(source.property)->boolValue ())) {
+					if (static_cast<RKComponentPropertyBool *>(source.property)->boolValue ()) {
 						setBoolValue (true);
 						return;
 					}

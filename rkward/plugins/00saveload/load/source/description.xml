@@ -1,7 +1,9 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="code.php"/>
-	
+	<logic>
+		<connect client="maxdeparselength.enabled" governor="echo.state" />
+	</logic>
 	<dialog label="Load source file" >
 		<tabbook>
 			<tab label="Select variables" >
@@ -16,7 +18,7 @@
 					<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="chdir" label="Change working directory" />
 					<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="printeval" label="Print eval" />
 					<input size="medium" initial = "getOption('prompt')" id="promptecho" label="Prompt"/>
-					<spinbox size="small" type="integer" id="maxdeparselength" min="1" initial="1" max="1000" depend="echo" label="Maximal length of 'echo'" />
+					<spinbox size="small" type="integer" id="maxdeparselength" min="1" initial="1" max="1000" label="Maximal length of 'echo'" />
 					
 				</frame>
 			</tab>
