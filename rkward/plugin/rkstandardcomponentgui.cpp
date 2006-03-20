@@ -351,9 +351,7 @@ bool RKStandardComponentStack::currentPageSatisfied () {
 	}
 
 	for (PageComponents::const_iterator it = current_def->page_components.constBegin (); it != current_def->page_components.constEnd (); ++it) {
-		qDebug ("type %d", (*it)->type ());
 		if (!((*it)->isSatisfied ())) {
-			qDebug ("is dissatisfied");
 			return false;
 		}
 	}
