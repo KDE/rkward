@@ -35,12 +35,14 @@
 
 /////////////////////////////////////// RKStandardComponentGUI ////////////////////////////////////////////////
 
-RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property) {
+RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved) {
 	RK_TRACE (PLUGIN);
 
 	RKStandardComponentGUI::component = component;
 	RKStandardComponentGUI::code_property = code_property;
 	connect (code_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (codeChanged (RKComponentPropertyBase *)));
+
+	RKStandardComponentGUI::enslaved = enslaved;
 
 	// code update timer
 	code_update_timer = new QTimer (this);
@@ -75,34 +77,37 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 
 	// buttons
 	vbox = new QVBoxLayout (hbox, RKGlobals::spacingHint ());
-	ok_button = new QPushButton ("Submit", upper_widget);
+	ok_button = new QPushButton (i18n ("Submit"), upper_widget);
 	connect (ok_button, SIGNAL (clicked ()), this, SLOT (ok ()));
 	vbox->addWidget (ok_button);
+	if (enslaved) ok_button->hide ();
 	
-	cancel_button = new QPushButton ("Close", upper_widget);
+	cancel_button = new QPushButton (i18n ("Close"), upper_widget);
 	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
 	vbox->addWidget (cancel_button);
 	vbox->addStretch (1);
 	
-	help_button = new QPushButton ("Help", upper_widget);
+	help_button = new QPushButton (i18n ("Help"), upper_widget);
 	connect (help_button, SIGNAL (clicked ()), this, SLOT (help ()));
 	vbox->addWidget (help_button);
 	
-	if (switchable) {
-		switch_button = new QPushButton ("Use Wizard", upper_widget);
+	if (switchable && (!enslaved)) {
+		switch_button = new QPushButton (i18n ("Use Wizard"), upper_widget);
 		connect (switch_button, SIGNAL (clicked ()), this, SLOT (switchInterface ()));
 		vbox->addWidget (switch_button);
 	}
 	vbox->addStretch (2);
 	
-	toggle_code_button = new QPushButton ("Code", upper_widget);
+	toggle_code_button = new QPushButton (i18n ("Code"), upper_widget);
 	toggle_code_button->setToggleButton (true);
 	toggle_code_button->setOn (true);
 	connect (toggle_code_button, SIGNAL (clicked ()), this, SLOT (toggleCode ()));
 	vbox->addWidget (toggle_code_button);
+	if (enslaved) toggle_code_button->hide ();
 	
 	// code display
 	code_display = new RKCommandEditor (splitter, true);
+	if (enslaved) code_display->hide ();
 }
 
 void RKStandardComponentGUI::ok () {
@@ -122,7 +127,9 @@ void RKStandardComponentGUI::cancel () {
 	RK_TRACE (PLUGIN);
 
 	hide ();
-	component->deleteLater ();
+	if (!enslaved) {
+		component->deleteLater ();
+	}
 }
 
 void RKStandardComponentGUI::toggleCode () {
@@ -175,7 +182,7 @@ void RKStandardComponentGUI::updateCodeNow () {
 
 ///////////////////////////////// RKStandardComponentWizard /////////////////////////////////
 
-RKStandardComponentWizard::RKStandardComponentWizard (RKStandardComponent *component, RKComponentPropertyCode *code_property) : RKStandardComponentGUI (component, code_property) {
+RKStandardComponentWizard::RKStandardComponentWizard (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved) : RKStandardComponentGUI (component, code_property, enslaved) {
 	RK_TRACE (PLUGIN);
 
 	submit_enabled = false;
@@ -210,8 +217,9 @@ void RKStandardComponentWizard::createWizard (bool switchable) {
 	main_grid->addMultiCellWidget (line, 1, 1, 0, 3);
 
 	// buttons
-	cancel_button = new QPushButton ("Cancel", this);
+	cancel_button = new QPushButton (i18n ("Cancel"), this);
 	main_grid->addWidget (cancel_button, 2, 0, Qt::AlignLeft);
+	if (enslaved) cancel_button->hide ();
 	help_button = new QPushButton ("Help", this);
 	main_grid->addWidget (help_button, 2, 1, Qt::AlignLeft);
 	prev_button = new QPushButton (QString::null, this);
@@ -228,14 +236,16 @@ void RKStandardComponentWizard::createWizard (bool switchable) {
 void RKStandardComponentWizard::addLastPage () {
 	RK_TRACE (PLUGIN);
 
-	// build the last page
-	RKComponent *last_page = stack->addPage (component);
-	QVBoxLayout *vbox = new QVBoxLayout (last_page, RKGlobals::spacingHint ());
-	QLabel *label = new QLabel (i18n ("Below you can see the command(s) corresponding to the settings you made. Click 'Submit' to run the command(s)."), last_page);
-	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
-	code_display = new RKCommandEditor (last_page, true);
-	vbox->addWidget (label);
-	vbox->addWidget (code_display);
+	if (!enslaved) {
+		// build the last page
+		RKComponent *last_page = stack->addPage (component);
+		QVBoxLayout *vbox = new QVBoxLayout (last_page, RKGlobals::spacingHint ());
+		QLabel *label = new QLabel (i18n ("Below you can see the command(s) corresponding to the settings you made. Click 'Submit' to run the command(s)."), last_page);
+		label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+		code_display = new RKCommandEditor (last_page, true);
+		vbox->addWidget (label);
+		vbox->addWidget (code_display);
+	}
 
 	stack->goToFirstPage ();
 	updateState ();
@@ -270,10 +280,10 @@ void RKStandardComponentWizard::prev () {
 void RKStandardComponentWizard::updateState () {
 	RK_TRACE (PLUGIN);
 
-	if (stack->havePage (true)) {		// not on last page
+	if (stack->havePage (true) || enslaved) {		// not on last page
 		next_button->setText (i18n ("Next >"));
 		next_button->setEnabled (stack->currentPageSatisfied ());
-		if (stack->havePage (false) || (!is_switchable)) {		// not on first page
+		if (stack->havePage (false) || (!is_switchable) || enslaved) {		// not on first page
 			prev_button->setText (i18n ("< Back"));
 			prev_button->setEnabled (stack->havePage (false));
 		} else {

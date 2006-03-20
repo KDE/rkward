@@ -97,6 +97,12 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 			deleteLater ();
 			return;		// should never happen
 		}
+	} else if (!parent_widget) {				// we have a parent component, but should still have a separate GUI
+		if (!createTopLevel (doc_element, 0, true)) {
+			RK_ASSERT (false);
+			deleteLater ();
+			return;		// should never happen
+		}		
 	} else {
 		bool build_wizard = false;
 		QDomElement gui_element;
@@ -133,7 +139,25 @@ void RKStandardComponent::hide () {
 	RKComponent::hide ();
 }
 
-bool RKStandardComponent::createTopLevel (const QDomElement &doc_element, int force_mode) {
+void RKStandardComponent::showGUI () {
+	RK_TRACE (PLUGIN);
+
+	if (!gui) {
+		RK_ASSERT (false);
+		return;
+	}
+	gui->show ();
+	gui->raise ();
+}
+
+void RKStandardComponent::setCaption (const QString &caption) {
+	RK_TRACE (PLUGIN);
+
+	if (!gui) return;
+	gui->setCaption (caption);
+}
+
+bool RKStandardComponent::createTopLevel (const QDomElement &doc_element, int force_mode, bool enslaved) {
 	RK_TRACE (PLUGIN);
 
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
@@ -170,15 +194,15 @@ bool RKStandardComponent::createTopLevel (const QDomElement &doc_element, int fo
 	}
 
 	if (build_wizard) {
-		gui = new RKStandardComponentWizard (this, code);
+		gui = new RKStandardComponentWizard (this, code, enslaved);
 		static_cast<RKStandardComponentWizard *> (gui)->createWizard (!dialog_element.isNull ());
 		wizard = static_cast<RKStandardComponentWizard *> (gui)->getStack ();
-		buildAndInitialize (doc_element, wizard_element, gui->mainWidget (), true);
+		buildAndInitialize (doc_element, wizard_element, gui->mainWidget (), true, enslaved);
 		static_cast<RKStandardComponentWizard *> (gui)->addLastPage ();
 	} else {
-		gui = new RKStandardComponentGUI (this, code);
+		gui = new RKStandardComponentGUI (this, code, enslaved);
 		gui->createDialog (!wizard_element.isNull ());
-		buildAndInitialize (doc_element, dialog_element, gui->mainWidget (), false);
+		buildAndInitialize (doc_element, dialog_element, gui->mainWidget (), false, enslaved);
 	}
 
 	return true;
@@ -222,7 +246,7 @@ void RKStandardComponent::discard () {
 	createDefaultProperties ();
 }
 
-void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, const QDomElement &gui_element, QWidget *parent_widget, bool build_wizard) {
+void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, const QDomElement &gui_element, QWidget *parent_widget, bool build_wizard, bool enslaved) {
 	RK_TRACE (PLUGIN);
 
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
@@ -233,6 +257,7 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	// go
 	builder->buildElement (gui_element, parent_widget, build_wizard);
 	builder->parseLogic (xml->getChildElement (doc_element, "logic", DL_INFO));
+	setCaption (xml->getStringAttribute (gui_element, "label", QString::null, DL_WARNING));
 
 	// initialize
 	builder->makeConnections ();
@@ -240,7 +265,9 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	// done!
 	delete builder;
 	created = true;
-	if (gui) gui->show ();
+	if (gui && (!enslaved)) {
+		gui->show ();
+	}
 	changed ();
 }
 
@@ -342,6 +369,8 @@ void RKStandardComponent::addChild (const QString &id, RKComponentBase *child) {
 
 #include "rkcomponentmap.h"
 
+#include <qpushbutton.h>
+
 RKComponentBuilder::RKComponentBuilder (RKStandardComponent *parent_component) {
 	RK_TRACE (PLUGIN);
 	parent = parent_component;
@@ -428,7 +457,15 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			QString component_id = xml->getStringAttribute (e, "component", QString::null, DL_ERROR);
 			RKComponentHandle *handle = RKGlobals::componentMap ()->getComponentHandle (component_id);
 			if (handle) {
-				widget = handle->invoke (component (), parent_widget);
+				if (xml->getBoolAttribute (e, "as_button", false, DL_INFO)) {
+					widget = handle->invoke (component (), 0);
+					QString dummy = xml->getStringAttribute (e, "label", "Options", DL_WARNING);
+					widget->setCaption (dummy);
+					QPushButton *button = new QPushButton (dummy, parent_widget);
+					component ()->connect (button, SIGNAL (clicked ()), widget, SLOT (showGUI ()));
+				} else {
+					widget = handle->invoke (component (), parent_widget);
+				}
 			} else {
 				xml->displayError (&e, QString ("Could not embed component '%1'. Not found").arg (component_id), DL_ERROR);
 			}

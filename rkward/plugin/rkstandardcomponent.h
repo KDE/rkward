@@ -58,6 +58,8 @@ public:
 	void switchInterface ();
 /** RTTI */
 	int type () { return ComponentStandard; };
+/** set the GUI caption (if this is a top-level gui) */
+	void setCaption (const QString &caption);
 public slots:
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */
@@ -70,6 +72,8 @@ public slots:
 	void getValue (const QString &id);
 /** reimplemented from QWidget to hide the gui if applicable */
 	void hide ();
+/** for enslaved components */
+	void showGUI ();
 private:
 /** The property holding the generated code. Note that this member is tightly controlled by the ScriptBackend */
 	RKComponentPropertyCode *code;
@@ -80,8 +84,8 @@ private:
 	RKStandardComponentStack *wizard;
 /** Avoid updating code-display, etc. until the component is fully created */
 	bool created;
-	bool createTopLevel (const QDomElement &doc_element, int force_mode=0);
-	void buildAndInitialize (const QDomElement &doc_element, const QDomElement &gui_element, QWidget *parent_widget, bool build_wizard);
+	bool createTopLevel (const QDomElement &doc_element, int force_mode=0, bool enslaved=false);
+	void buildAndInitialize (const QDomElement &doc_element, const QDomElement &gui_element, QWidget *parent_widget, bool build_wizard, bool enslaved=false);
 /** used during switchInterfaces () to discard child components, and delete gui if applicable */
 	void discard ();
 protected:

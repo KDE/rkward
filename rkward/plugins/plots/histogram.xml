@@ -26,6 +26,7 @@
 	</tab>
       <tab label="Plot options">
 		<embed id="plotoptions" component="rkward::plot_options" />
+		<embed id="plotoptionsb" component="rkward::plot_options" as_button="true" label="Just a test" />
       </tab>
     </tabbook>
   </dialog>

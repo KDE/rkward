@@ -75,7 +75,7 @@ class QSplitter;
 class RKStandardComponentGUI : public QWidget {
 	Q_OBJECT
 public:
-	RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property);
+	RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved);
 	~RKStandardComponentGUI ();
 
 	QWidget *mainWidget () { return main_widget; };
@@ -109,6 +109,8 @@ protected:
 	QPushButton *help_button;
 	QPushButton *switch_button;
 	RKCommandEditor *code_display;
+
+	bool enslaved;
 };
 
 /** A wizardish RKStandardComponentGUI. You *must* call createDialog () after construction, and addLastPage () filling the wizard!
@@ -117,7 +119,7 @@ protected:
 class RKStandardComponentWizard : public RKStandardComponentGUI {
 	Q_OBJECT
 public:
-	RKStandardComponentWizard (RKStandardComponent *component, RKComponentPropertyCode *code_property);
+	RKStandardComponentWizard (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved);
 	~RKStandardComponentWizard ();
 
 	void enableSubmit (bool enable);
