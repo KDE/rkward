@@ -116,8 +116,10 @@ dist_pluginsXdistributions_DATA = \
 
 pluginsXplotsdir = $(kde_datadir)/rkward/plots
 dist_pluginsXplots_DATA = \
+	plots/plot_options.xml \
 	plots/box_plot.php \
 	plots/box_plot.xml \
 	plots/histogram.php \
-	plots/histogram.xml
+	plots/histogram.xml \
+	plots/plot_options.php
 
