@@ -1,0 +1,152 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1-Based Variant V1.0//EN" "dtd/kdex.dtd" [
+  <!ENTITY rkward '<application>RKWard</application>'>
+  <!ENTITY kapp "&rkward;"><!-- replace rkward here -->
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE"><!-- change language only here -->
+  
+  
+  <!-- Do not define any other entities; instead, use the entities
+       from kde-genent.entities and $LANG/user.entities. -->
+]>
+
+<book lang="&language;">
+
+<!-- This header contains all of the meta-information for the document such
+as Authors, publish date, the abstract, and Keywords -->
+
+<bookinfo>
+<title>Introduction to Writing Plugins for RKWard</title>
+
+<authorgroup>
+<author>
+<firstname>Thomas</firstname>
+<surname>Freidrichsmeier</surname>
+<affiliation>
+<address><email>tfry AT users DOT sourceforge DOT net</email></address>
+</affiliation>
+</author>
+</authorgroup>
+
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+
+<copyright>
+<year>2006</year>
+<holder>George N. Ugnacious</holder>
+</copyright>
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook 
+     and in the FDL itself on how to use it. -->
+<legalnotice>&FDLNotice;</legalnotice>
+
+<date>2006-03-21</date>
+<releaseinfo>0.3.5.00</releaseinfo>
+
+<abstract>
+<para>
+This is a guide to writing plugins for &rkward;.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>KDE</keyword>
+<keyword>R</keyword>
+<keyword>rkward</keyword>
+<keyword>plugins</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title>Introduction</title>
+
+<para>
+Documentation as of &kapp; release 0.3.5.
+</para>
+<para>
+This document describes how to write your own plugins. Note, that at the time of this writing, none of the concepts are set it stone. Therefore, this document should be regarded as an introduction to the current approach, and as a basis for discussion. All sorts of comments are welcome.
+</para>
+<para>
+For questions and comments, please write to the &kapp; development mailing list.
+</para>
+<para>
+<emphasis>You do not need to read this in order to use &kapp;.</emphasis> This document is about extending &kapp;. It is targeted at advanced users, or people willing to help improve &kapp;.
+</para>
+<para>
+Writing a standard plugin is basically a three-step process:
+<itemizedlist>
+<listitem><link linkend="pluginmap">Placing a new Action in the menu-hierarchy</link></listitem>
+<listitem><link linkend="mainxml">Describing the looks and behavior of the plugin-GUI</link></listitem>
+<listitem><link linkend="phptemplate">Defining, how R-code is to be generated from the settings, the user makes in the GUI</link></listitem>
+</itemizedlist>
+Those will be dealt with in turn.
+</para>
+<para>
+Some advanced concepts may be used in those three steps, but are dealt with in separate chapters, to keep things simple:
+<itemizedlist>
+<listitem><link linkend="logic">GUI logic</link></listitem>
+<listitem><link linkend="embedding">Embedding Plugins into Plugins</link></listitem>
+</itemizedlist>
+</para>
+<para>
+Also, none of the chapters shows all options, but rather only the basic concepts. A complete <link linkend="reference">reference</link> of options is provided separately.
+</para>
+</chapter>
+
+<chapter id="pluginmap">
+<title>Creating menu entries</title>
+</chapter>
+
+<chapter id="mainxml">
+<title>Defining the GUI</title>
+</chapter>
+
+<chapter id="what_are_plugins">
+<title>Generating R code from GUI settings</title>
+</chapter>
+
+<chapter id="logic">
+<title>GUI logic</title>
+</chapter>
+
+<chapter id="embedding">
+<title>Embedding Plugins</title>
+<para>
+
+<!-- Note that all graphics should be in .png format. Use no gifs because of
+patent issues. -->
+
+<screenshot>
+<screeninfo>Here's a screenshot of &kapp;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="screenshot.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="screenshot.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Screenshot</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+</chapter>
+
+
+
+<appendix id="reference">
+<title>Installation</title>
+</appendix>
+
+&documentation.index;
+</book>
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->
