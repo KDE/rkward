@@ -489,6 +489,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 					widget = handle->invoke (component (), 0);
 					QString dummy = xml->getStringAttribute (e, "label", "Options", DL_WARNING);
 					widget->setCaption (dummy);
+// TODO we should use a specialized pushbutton, that changes color if the corresponding component is dissatisfied!
 					QPushButton *button = new QPushButton (dummy, parent_widget);
 					component ()->connect (button, SIGNAL (clicked ()), widget, SLOT (showGUI ()));
 				} else {

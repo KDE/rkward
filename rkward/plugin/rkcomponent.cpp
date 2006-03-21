@@ -29,7 +29,7 @@ RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QS
 
 	RKComponentBase *child = child_map.find (identifier.section (".", 0, 0));
 	if (!child) {	// if we do not have such a child, return 0 unless this is a property
-		if (remainder) *remainder = identifier.section (".", 1);
+		if (remainder) *remainder = identifier;
 		return this;
 	} else {	// else do recursive lookup
 		return child->lookupComponent (identifier.section (".", 1), remainder);
