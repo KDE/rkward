@@ -260,41 +260,71 @@ void RKStandardComponentWizard::next () {
 		stack->movePage (true);
 		updateState ();
 	} else {
-		ok ();
+		if (enslaved) cancel ();
+		else ok ();
 	}
 }
 
 void RKStandardComponentWizard::prev () {
 	RK_TRACE (PLUGIN);
 
-	if (stack->havePage (false)) {
-		stack->movePage (false);
-		updateState ();
-	} else if (is_switchable) {
-		switchInterface ();
+	if (enslaved) {
+		if (stack->havePage (false)) {
+			stack->movePage (false);
+			updateState ();
+		} else {
+			cancel ();
+		}
 	} else {
-		RK_ASSERT (false);
+		if (stack->havePage (false)) {
+			stack->movePage (false);
+			updateState ();
+		} else if (is_switchable) {
+			switchInterface ();
+		} else {
+			RK_ASSERT (false);
+		}
 	}
 }
 
 void RKStandardComponentWizard::updateState () {
 	RK_TRACE (PLUGIN);
 
-	if (stack->havePage (true) || enslaved) {		// not on last page
+	if (enslaved) {
+		if (stack->havePage (true)) {		// not on last page
+			next_button->setText (i18n ("Next >"));
+			next_button->setEnabled (stack->currentPageSatisfied ());
+		} else {			// on last page
+			// do code update when on last page
+			next_button->setText (i18n ("Done"));
+			next_button->setEnabled (stack->currentPageSatisfied ());
+		}
+
+		prev_button->setEnabled (true);
+		if (stack->havePage (false)) {		// not on first page
+			prev_button->setText (i18n ("< Back"));
+		} else {
+			prev_button->setText (i18n ("Close"));
+		}
+		return;
+	}
+
+	if (stack->havePage (true)) {		// not on last page
 		next_button->setText (i18n ("Next >"));
 		next_button->setEnabled (stack->currentPageSatisfied ());
-		if (stack->havePage (false) || (!is_switchable) || enslaved) {		// not on first page
-			prev_button->setText (i18n ("< Back"));
-			prev_button->setEnabled (stack->havePage (false));
-		} else {
-			prev_button->setText (i18n ("Use Dialog"));
-			prev_button->setEnabled (true);
-		}
 	} else {			// on last page
 		// do code update when on last page
 		if (!stack->havePage (true)) code_update_timer->start (0, true);
 		next_button->setText (i18n ("Submit"));
 		next_button->setEnabled (submit_enabled);
+	}
+
+	if (stack->havePage (false) || (!is_switchable)) {		// not on first page
+		prev_button->setText (i18n ("< Back"));
+		prev_button->setEnabled (stack->havePage (false));
+	} else {
+		prev_button->setText (i18n ("Use Dialog"));
+		prev_button->setEnabled (true);
 	}
 }
 

@@ -144,6 +144,18 @@ void RKComponent::movePage (bool) {
 	RK_ASSERT (false);		// should not be called as isWizardish returns false
 }
 
+RKComponent *RKComponent::addPage () {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (false);		// should not be called as isWizardish returns false
+
+	return (new RKComponent (this, this));
+}
+
+void RKComponent::addComponentToCurrentPage (RKComponent *component) {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (false);		// should not be called as isWizardish returns false
+}
+
 void RKComponent::setVisible (bool visible) {
 	RK_TRACE (PLUGIN);
 

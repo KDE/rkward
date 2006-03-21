@@ -106,6 +106,10 @@ public:
 	virtual void movePage (bool next);
 /** returns true, if the current page is satisfied (see isWizardish ()). Default implementation returns isSatisfied () */
 	virtual bool currentPageSatisfied () { return (isSatisfied ()); };
+/** add a Page to the component. Don't worry, you'll only have to implement this is a meaningful way, if your component isWizardish (). Default implementation simply returns a new RKComponent (and raises an assert). */
+	virtual RKComponent *addPage ();
+/** For wizardish guis: this gets called to register a component on the current page during construction. The component does not get reparented. It will have to be satisfied in order to move to the next page in the wizard. See isWizardish () see addPage (). Default implementation does nothing. */
+	virtual void addComponentToCurrentPage (RKComponent *component);
 public slots:
 /** This handles changes in the default properties (enabledness, visibility, requiredness). You will use similar slots in derived classes to handle
 specialized properties */

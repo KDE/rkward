@@ -54,6 +54,8 @@ public:
 	bool currentPageSatisfied ();
 /** for use by RKComponentBuilder to add a page to a wizardish component */
 	RKComponent *addPage ();
+/** reimplemented to acutally register the component with the wizard */
+	void addComponentToCurrentPage (RKComponent *component);
 /** switch from dialog to wizard or vice versa */
 	void switchInterface ();
 /** RTTI */

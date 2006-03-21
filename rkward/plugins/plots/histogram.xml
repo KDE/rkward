@@ -30,4 +30,27 @@
       </tab>
     </tabbook>
   </dialog>
+  <wizard>
+	<page><text>This wizard is for testing purposes only. Remove it!</text></page>
+	<page label="Variable(s)" >
+		<row>
+			<varselector id="vars" />
+			<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
+		</row>
+	</page>
+	<embed id="plotoptions" component="rkward::plot_options" />
+	<page label="Options" >
+		<column>
+			<radio id="scale" label="Scale" >
+				<option value="FALSE" label="No Frequency" />
+				<option value="TRUE" label="Frequency" />
+			</radio>
+			<column>
+				<checkbox value_unchecked="0" checked="false" value="1" id="rug" label="Rug" />
+				<checkbox value_unchecked="0" checked="false" value="1" id="jitter" label="Jitter" />
+			</column>
+		</column>
+	</page>
+	<page><embed id="plotoptionsb" component="rkward::plot_options" as_button="true" label="Just a test" /></page>
+  </wizard>
 </document>

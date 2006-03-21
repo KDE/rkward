@@ -98,7 +98,9 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 			return;		// should never happen
 		}
 	} else if (!parent_widget) {				// we have a parent component, but should still have a separate GUI
-		if (!createTopLevel (doc_element, 0, true)) {
+		int force_mode = 1;
+		if (parentComponent ()->isWizardish ()) force_mode = 2;
+		if (!createTopLevel (doc_element, force_mode, true)) {
 			RK_ASSERT (false);
 			deleteLater ();
 			return;		// should never happen
@@ -112,6 +114,13 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 			if (gui_element.isNull ()) {
 				gui_element = xml->getChildElement (doc_element, "dialog", DL_WARNING);
 				build_wizard = false;
+
+				QWidget *fake_page = parent_component->addPage ();
+				QVBoxLayout *layout = new QVBoxLayout (fake_page);	
+				QVBox *box = new QVBox (fake_page);
+				box->setSpacing (RKGlobals::spacingHint ());
+				layout->addWidget (box);
+				parent_widget = box;
 			}
 		} else {
 			gui_element = xml->getChildElement (doc_element, "dialog", DL_WARNING);
@@ -180,14 +189,14 @@ bool RKStandardComponent::createTopLevel (const QDomElement &doc_element, int fo
 	} else if (force_mode == 1) {
 		build_wizard = false;
 		if (dialog_element.isNull ()) {
-			xml->displayError (&doc_element, "Dialog mode forced, but no dialog element given", DL_ERROR);
+			xml->displayError (&doc_element, "Dialog mode forced, but no dialog element given", DL_INFO);
 			deleteLater ();
 			return false;
 		}
 	} else if (force_mode == 2) {
 		build_wizard = true;
 		if (wizard_element.isNull ()) {
-			xml->displayError (&doc_element, "Wizard mode forced, but no wizard element given", DL_ERROR);
+			xml->displayError (&doc_element, "Wizard mode forced, but no wizard element given", DL_INFO);
 			deleteLater ();
 			return false;
 		}
@@ -318,7 +327,9 @@ void RKStandardComponent::getValue (const QString &id) {
 bool RKStandardComponent::isWizardish () {
 	RK_TRACE (PLUGIN);
 
-	return (wizard != 0);
+	if (gui) return (wizard != 0);
+	if (parentComponent ()) return (parentComponent ()->isWizardish ());
+	return false;
 }
 
 bool RKStandardComponent::havePage (bool next) {
@@ -344,25 +355,42 @@ bool RKStandardComponent::currentPageSatisfied () {
 
 RKComponent *RKStandardComponent::addPage () {
 	RK_TRACE (PLUGIN);
-	RK_ASSERT (wizard);
 
-	RKComponent *page = wizard->addPage (this);
-	return page;
+	if (wizard) {
+		RKComponent *page = wizard->addPage (this);
+		return page;
+	} else if (parentComponent ()) {
+		RK_ASSERT (!gui);
+		return parentComponent ()->addPage ();
+	}
+
+	RK_ASSERT (false);
+	return RKComponent::addPage ();
 }
 
 void RKStandardComponent::addChild (const QString &id, RKComponentBase *child) {
 	RK_TRACE (PLUGIN);
 
-	if (wizard) {
+	if (wizard || (parentComponent () && parentComponent ()->isWizardish ())) {
 		if (!child->isProperty ()) {
-			wizard->addComponentToCurrentPage (static_cast<RKComponent *>(child));
+			addComponentToCurrentPage (static_cast<RKComponent *>(child));
 		}
 	}
 
 	RKComponent::addChild (id, child);
 }
 
+void RKStandardComponent::addComponentToCurrentPage (RKComponent *component) {
+	RK_TRACE (PLUGIN);
 
+	if (wizard) {
+		wizard->addComponentToCurrentPage (component);
+	} else if (parentComponent () && parentComponent ()->isWizardish ()) {
+		parentComponent ()->addComponentToCurrentPage (component);
+	} else {
+		RK_ASSERT (false);
+	}
+}
 
 
 /////////////////////////////////////// RKComponentBuilder /////////////////////////////////////////

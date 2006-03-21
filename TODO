@@ -27,9 +27,6 @@ PHP-backend:
 	- Labels are now attached to components instead of menu-entries. Update documentation.
 	- convert to kdoc
 
-Plugin/Component-Widgets:
-	- have min / max default to minimum/maximum integer/float, etc. Or does this come automatically with XMLHelper?
-
 Configuration options to add:
 	- additional console options:
 		- color highlighting for warnings/errors (once we can identify them reliably)
@@ -63,8 +60,6 @@ RKwatch:
 stuff to do before 0.4.0 release
 - plugins (general)
 	- add import-filter plugins
-	- add component-wrapper and allow embedded plugins
-	- add preliminary image generation
 - on exit, check whether there are still RCommands left in the backend and wait/request user-interaction before tearing down the thread. After all, the last command might have been a "save"!
 	- How about always doing exiting via a "q ()" command in the backend, instead? That way we could always be sure, all previous commands have been completed before the q ()!
 - error-handling/raising in .rk.do.call
@@ -100,10 +95,6 @@ API documentation:
 - plugins (general)
 	- add more plugin-widgets
 	- setValue-API for plugin-widgets and copying of values when switching from wizard to dialog-interface
-	- improve and use debugging framework
-	- cleanup label-mess for plugin-widgets
-	- setEnabled (), setVisible ()-API (trivial, once the plugin-widgets are QWidgets)
-	- use XMLHelper
 - formula-widget:
 	- use smart sorting, esp. of generated string
 	- add labels, add "up to level" option

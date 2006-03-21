@@ -48,11 +48,8 @@ the specialized properties (e.g. RKComponentPropertyInt::intValue () always retu
 - Maybe Int and Double properties could be joined to a numeric property?
 
 - Add something like RKComponentPropertySelect for a property that accepts one or more of a set of predefined strings (like e.g. for a radio-box)
-	- Maybe then, and in conjunction with sub-properties, the bool-property can be abstracted away (it would just be a select property, and an internal int-property could be used for bool purposes)?
 
 - Carefully check whether all API-elements are really needed once the implementation is complete
-
-- All these TODOs should be delayed until there is at least a rudimentary implementation of components to play with
 */
 
 #include "rkcomponentproperties.h"
