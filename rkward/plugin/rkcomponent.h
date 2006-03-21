@@ -21,7 +21,7 @@
 #include <qdict.h>
 #include <qwidget.h>
 
-/** a very low level base for RKComponent and RKComponentProperty. Not sure, we really need it, yet, but here it is. */
+/** a very low level base for RKComponent and RKComponentProperty. */
 class RKComponentBase {
 public:
 /** constructor */

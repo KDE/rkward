@@ -39,6 +39,7 @@
 ** The following sections of the API-documentation provide useful entry-points:
 ** 
 ** - \ref UsingTheInterfaceToR
+** - \ref RKComponentProperties
 **
 **	\section	copyright	Copyright
 **

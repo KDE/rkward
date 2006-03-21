@@ -32,14 +32,53 @@ As an example, suppose you want to create a component to provide two simple rela
 The solution is to provide a "property" for the variable selected. This property can be connected to another "property". So in this case, we'd connect the property "variable selected for median" to the property "variable selected for mean". After that the two properties will automatically keep in sync and this without the components even knowing what's going on internally.
 
 \section RKComponentPropertyTypes Types of Properties
+RKComponentProperties come in a variety of types. For an up to date overview, refer to RKComponentPropertyBase and see, which classes derive from that. RKComponentPropertyBase as the base class is a property that simply represents a string. This means that all properties are able to supply their current value as a string, or to accept string values (if those can be converted to the correct data type). See RKComponentPropertyBase::value () and RKComponentPropertyBase::setValue ().
+
+Derived classes add to that by providing functions to directly set or retrieve - for instance - numeric values or RObjects. Also derived classes typically check whether they are "valid", for instance, if the number they hold is inside the valid range, etc. What the different properties do should be relatively self-explanatory (once again, refer to RKComponentPropertyBase for a complete list).
+
+A slight exception might be RKComponentPropertyConvert. This property follows slightly different rules internally. Derived from RKComponentPropertyBool it is used to do logic conversion (for instance it might AND the value of two different properties, and update its own value accordingly).
 
 \section RKComponentPropertyModifiers Modifiers: Properties of properties
+When fetching a property's string value with RKComponentPropertyBase::value (), you can additionally specify modifiers for some types or properties. For instance, the modifier "label" for RKComponentPropertyRObjects returns the label of the selected object(s) instead of the name.
+
+Currently these modifiers are known (but check the sources if in doubt):
+
+\subsection RKComponentPropertyBool RKComponentPropertyBool
+- "true" : return the string that would be returned if this property was true (regardless of its state)
+- "true" : return the string that would be returned if this property was false (regardless of its state)
+- "not" : return the opposite of the current state
+- "numeric" : return "1" if the property is true, or "0" if it is false
+
+\subsection RKComponentPropertyRObjects RKComponentPropertyRObjects
+- "shortname" : The short (as opposed to canonical) name of the current object(s). For instance the name inside a data.frame, but not the full name including the name of the data.frame
+- "label" : The RKWard label of the object (if available)
+
+\subsection RKComponentPropertyCode RKComponentPropertyCode
+- "preprocess" : return only the preprocess () section of the code
+- "calculate" : return only the calculate () section of the code
+- "printout" : return only the printout () section of the code
+- "cleanup" : return only the cleanup () section of the code
 
 \section RKComponentPropertyConversions Future extensions: Conversions and logic
+See RKComponentPropertyConvert
 
 \section RKComponentPropertyInternals Internal workings
+RKComponentProperties are QObjects, and communicate with each other via signals and slots. On each change they emit a RKComponentPropertyBase::valueChanged (RKComponentPropertyBase *) signal with a pointer to self as parameter.
+
+Properties can be connected to each other using RKComponentPropertyBase::connectToGovernor (). The calling property will connect to the governor's valueChange () signal, and keep itself in sync.
+
+Each property can act as a client and governor at the same time (passing through the changes from the governor to the child client(s), as a governor to many different client properties, but only as a client to one single governor.
+
+Typically properties are connected at the end of the construction of an RKComponent, and only then. Connections typically are not changed once established.
 
 \section RKComponentPropertiesAndComponents Interaction with RKComponents
+Each property holds two important pieces of information: RKComponentPropertyBase::isValid () and RKComponentPropertyBase::isSatisfied (). The former returns true if the value held by the property is an acceptable valid value. The latter also returns true is the property holds an invalid setting, but is not "required" (requiredness is a parameter to the constructor of the properties).
+
+The parent components will be invalid, if any of their children is not satisfied. They may however be satisfied, if they - in turn - are not required.
+
+Typically properties are owned by RKComponent (s), but this is not technically neccessary.
+
+Properties and components share much common functionality. See RKComponentBase.
 
 \section TODO TODO
 - How should invalid values be handled? Currently we keep the bad value as the string value, but use a corrected default in
