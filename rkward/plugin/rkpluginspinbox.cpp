@@ -46,7 +46,7 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 	// create spinbox and read settings
 	spinbox = new RKSpinBox (this);
 	if (!intmode) {
-		double min = xml->getDoubleAttribute (element, "min", FLT_MIN, DL_INFO);
+		double min = xml->getDoubleAttribute (element, "min", -FLT_MAX, DL_INFO);
 		double max = xml->getDoubleAttribute (element, "max", FLT_MAX, DL_INFO);
 		double initial = xml->getDoubleAttribute (element, "initial", min, DL_INFO);
 		int default_precision = xml->getIntAttribute (element, "default_precision", 2, DL_INFO);
