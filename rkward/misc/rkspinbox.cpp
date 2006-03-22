@@ -60,19 +60,20 @@ void RKSpinBox::setRealMode (double min, double max, double initial, int default
 	RK_ASSERT ((max_precision >= default_precision) && (max_precision <= 6) && (default_precision >= 0));
 	RK_DO (qDebug ("min %f max %f initial %f defp %d maxp %d", min, max, initial, default_precision, max_precision), PLUGIN, DL_DEBUG);
 
-	mode = Real;
-	QValidator *new_validator = new QDoubleValidator (min, max, max_precision, this);
 	divisor = (int) (pow (10, max_precision));
-	setValidator (new_validator);
-	delete validator;
-	validator = new_validator;
 
-	int max_max = INT_MAX / divisor;
-	int min_min = INT_MIN / divisor;
+	double max_max = (double) INT_MAX / (double) divisor;
+	double min_min = (double) (-(INT_MAX-1)) / (double) divisor;
 	if (max > max_max) max = max_max;
 	if (max < min_min) max = min_min;
 	if (min < min_min) min = min_min;
 	if (min > max_max) min = max_max;
+
+	mode = Real;
+	QValidator *new_validator = new QDoubleValidator (min, max, max_precision, this);
+	setValidator (new_validator);
+	delete validator;
+	validator = new_validator;
 
 	setMinValue ((int) (min * divisor));
 	setMaxValue ((int) (max * divisor));
