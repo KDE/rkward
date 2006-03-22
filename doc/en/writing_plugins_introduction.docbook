@@ -586,7 +586,7 @@ So far so good, but what about the generated code? How are the code for the embe
 <programlisting>
 function printout () {
 [...] ?&gt;
-myplotfunction ([...]<? getRK ("plotoptions.code.printout"); ?>)
+myplotfunction ([...]&lt;? getRK ("plotoptions.code.printout"); ?&gt;)
 &lt;? [...]
 }
 </programlisting>
@@ -619,7 +619,7 @@ If the embedded plugin provides a wizard interface, its pages will be inserted r
 <section id="embedding_as_button">
 <title>Less embedded embedding: Further options button</title>
 <para>
-While embedding is cool, you should be careful not to overdo it. To many functions inside a GUI just make it hard to find the relevant options. Of course, sometimes you may want to embed a great deal of options (like all the options to plot ()), but as those are really optional, you don't want them prominently in your GUI.
+While embedding is cool, you should be careful not to overdo it. Too many functions inside a GUI just make it hard to find the relevant options. Of course, sometimes you may want to embed a great deal of options (like all the options to plot ()), but as those are really optional, you don't want them prominently in your GUI.
 </para>
 <para>
 An alternative is to embed those options "as a button":
