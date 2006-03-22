@@ -66,7 +66,14 @@ void RKSpinBox::setRealMode (double min, double max, double initial, int default
 	setValidator (new_validator);
 	delete validator;
 	validator = new_validator;
-	
+
+	int max_max = INT_MAX / divisor;
+	int min_min = INT_MIN / divisor;
+	if (max > max_max) max = max_max;
+	if (max < min_min) max = min_min;
+	if (min < min_min) min = min_min;
+	if (min > max_max) min = max_max;
+
 	setMinValue ((int) (min * divisor));
 	setMaxValue ((int) (max * divisor));
 	setSteps ((int) (pow (10, default_precision)), (int) (pow (10, default_precision + 1)));
