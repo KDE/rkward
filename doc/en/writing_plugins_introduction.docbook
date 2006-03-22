@@ -118,13 +118,13 @@ When you create a new plugin, you need to tell &kapp; about it. So the first thi
 &lt;!DOCTYPE rkpluginmap&gt;
 </programlisting>
 <para>
-The doctype is not really interpreted, but set it to “rkpluginmap” anyway.
+The doctype is not really interpreted, but set it to "rkpluginmap" anyway.
 </para>
 <programlisting>
 &lt;document base_prefix="" namespace="rkward"&gt;
 </programlisting>
 <para>
-The “base_prefix”-attribute can be used, if all your plugins reside in a common directory. Basically, then, you can omit that directory from the filenames specified below. As you will see below, all plugins get a unique identifier. The “namespace” is a way to organized those ids, and make it less likely to create a duplicate identifier accidentally. Internally, basically the namespace and then a “::” gets prepended to all the identifiers you specify below.
+The "base_prefix"-attribute can be used, if all your plugins reside in a common directory. Basically, then, you can omit that directory from the filenames specified below. As you will see below, all plugins get a unique identifier. The "namespace" is a way to organized those ids, and make it less likely to create a duplicate identifier accidentally. Internally, basically the namespace and then a "::" gets prepended to all the identifiers you specify below.
 </para>
 <programlisting>
 	&lt;components&gt;
@@ -136,7 +136,7 @@ Components? Aren't we talking about plugins? Yes, but in the future, plugins wil
 		&lt;component type="standard" id="independent_samples_t_test" file="means/ttests/independent_samples.xml" label="Independent Samples" /&gt;
 </programlisting>
 <para>
-First the “type”-attribute: Leave this to “standard” for now. Further types are not yet implemented. The “id” I've already hinted at. Each component has to be given a unique (in its namespace) identifier. Pick one that is easily recognizable. Avoid spaces and any special characters. Those are not banned, so far, but might have special meanings. With the “file” attribute, you specify where the <link linkend="mainxml">description of the actual plugin itself</link> is located. This is relative to the directory the .pluginmap-file is in, and the “base_prefix” above. Finally, give the component a label. This label will be shown whereever the plugin is placed in the menu (or in the future perhaps in other places as well).
+First the "type"-attribute: Leave this to "standard" for now. Further types are not yet implemented. The "id" I've already hinted at. Each component has to be given a unique (in its namespace) identifier. Pick one that is easily recognizable. Avoid spaces and any special characters. Those are not banned, so far, but might have special meanings. With the "file" attribute, you specify where the <link linkend="mainxml">description of the actual plugin itself</link> is located. This is relative to the directory the .pluginmap-file is in, and the "base_prefix" above. Finally, give the component a label. This label will be shown whereever the plugin is placed in the menu (or in the future perhaps in other places as well).
 </para>
 <para>
 Typically a .pluginmap-file will contain several components, so here are a few more:
@@ -157,36 +157,36 @@ Ok, this was the first step. &kapp; now knows those plugins exist. But how to in
 		&lt;menu id="analysis" label="Analysis" index="4"&gt;
 </programlisting>
 <para>
-Right below the &lt;hierarchy&gt;-tag, you start describing, in which menu, your plugins should go. With the above line, you basically say, that your plugin should be in the “Analysis” menu (not necessarily directly there, but in a submenu). The “Analysis” menu is standard in &kapp;, so it does not acutally have to be created from scratch. However, if it did not exist yet, using the “label”-attribute you'd give it its name. The “index” attribute says, that the menu (if newly created) should be placed at the fourth position in the menubar.
-Finally, the “id” once again identifies this menu. This is needed, so several .pluginmap-files can place their plugins in the same menus. They do this by looking for a menu with the given “id”. If the id does not yet exist, a new menu will be created. Otherwise the entries will be added to the existing menu.
+Right below the &lt;hierarchy&gt;-tag, you start describing, in which menu, your plugins should go. With the above line, you basically say, that your plugin should be in the "Analysis" menu (not necessarily directly there, but in a submenu). The "Analysis" menu is standard in &kapp;, so it does not acutally have to be created from scratch. However, if it did not exist yet, using the "label"-attribute you'd give it its name. The "index" attribute says, that the menu (if newly created) should be placed at the fourth position in the menubar.
+Finally, the "id" once again identifies this menu. This is needed, so several .pluginmap-files can place their plugins in the same menus. They do this by looking for a menu with the given "id". If the id does not yet exist, a new menu will be created. Otherwise the entries will be added to the existing menu.
 </para>
 <programlisting>
 			&lt;menu id="means" label="Means" index="1"&gt;
 </programlisting>
 <para>
-Basically the same thing here: Now we define a submenu to the “Analysis”-menu. It is to be called “Means”.
+Basically the same thing here: Now we define a submenu to the "Analysis"-menu. It is to be called "Means".
 </para>
 <programlisting>
 				&lt;menu id="ttests" label="T-Tests"&gt;
 </programlisting>
 <para>
-And a final level in the menu-hierarchy: A sub-menu of the sub-menu “Means”. Note, that if you omit the “index” parameter, the new entry will be placed below any already existing ones.
+And a final level in the menu-hierarchy: A sub-menu of the sub-menu "Means". Note, that if you omit the "index" parameter, the new entry will be placed below any already existing ones.
 </para>
 <programlisting>
 					&lt;entry component="independent_samples_t_test" /&gt;
 </programlisting>
 <para>
-Now, finally, this is the menu, we want to place the plugin in. The &lt;entry&gt;-tag signals, this actually is the real thing, instead of another submenu. The “component”-attribute refers to the “id” you gave the plugin/component above.
+Now, finally, this is the menu, we want to place the plugin in. The &lt;entry&gt;-tag signals, this actually is the real thing, instead of another submenu. The "component"-attribute refers to the "id" you gave the plugin/component above.
 </para>
 <programlisting>
 					&lt;entry component="fictional_t_test" /&gt;
 				&lt;/menu&gt;
 				&lt;entry component="fictional_t_test" /&gt;
 			&lt;/menu&gt;
-			&lt;menu id=”frequency” label=”Frequency” index=”2”/&gt;
+			&lt;menu id="frequency" label="Frequency" index="2"/&gt;
 </programlisting>
 <para>
-In case you have lost track: This is another submenu to the “Analysis” menu. See the screenshot below. We'll skip some of what's not visible, marked with [...].
+In case you have lost track: This is another submenu to the "Analysis" menu. See the screenshot below. We'll skip some of what's not visible, marked with [...].
 </para>
 <programlisting>
 				[...]
@@ -197,7 +197,7 @@ In case you have lost track: This is another submenu to the “Analysis” menu.
 		&lt;/menu&gt;
 </programlisting>
 <para>
-These are the final entries visible in the screenshots below. Note, that you don't need to define the entries in the order they should have in the menu. Use the “index”-attribute instead.
+These are the final entries visible in the screenshots below. Note, that you don't need to define the entries in the order they should have in the menu. Use the "index"-attribute instead.
 </para>
 <programlisting>
 		&lt;menu id="plots" label="Plots" index="5"&gt;
@@ -205,7 +205,7 @@ These are the final entries visible in the screenshots below. Note, that you don
 		&lt;/menu&gt;
 </programlisting>
 <para>
-Of course you can also place your plugins in menus other than “Analysis”.
+Of course you can also place your plugins in menus other than "Analysis".
 </para>
 <programlisting>
 		&lt;menu id="file" label="File" index="0"&gt;
@@ -213,7 +213,7 @@ Of course you can also place your plugins in menus other than “Analysis”.
 		&lt;/menu&gt;
 </programlisting>
 <para>
-Even in standard-menus such as “File”. All you need is the correct “id”.
+Even in standard-menus such as "File". All you need is the correct "id".
 </para>
 <programlisting>
 	&lt;/hierarchy&gt;	
@@ -254,13 +254,13 @@ The doctype is not really interpreted, yet. Set it to rkplugin, anyway.
 </para>
 <programlisting>
 &lt;document&gt;
-	&lt;code file=”code.php”/&gt;
+	&lt;code file="code.php"/&gt;
 </programlisting>
 <para>
 All plugins generate some code. Currently the only way to do so is using PHP, as detailed in <link linkend="phptemplate">the next chapter</link>. This defines, where to look for the PHP-code. The filname is relative to the directory the plugin-xml is in.
 </para>
 <programlisting>
-	&lt;dialog label=”Independent Samples T-Test”&gt;
+	&lt;dialog label="Independent Samples T-Test"&gt;
 </programlisting>
 <para>
 As you know, plugins may have either a dialog or a wizard-interface or both. Here we start definining a dialog-interface. the label-attribute specifies the caption of the dialog.
@@ -270,7 +270,7 @@ As you know, plugins may have either a dialog or a wizard-interface or both. Her
 			&lt;tab label="Basic settings"&gt;
 </programlisting>
 <para>
-GUI-elements can be organized using a tabbook. Here we define a tabbook as the first element in the dialog. Use &lt;tabbook&gt;[...]&lt;/tabbook&gt; to define the tabbook and then for each page in the tabbook use &lt;tab&gt;[...]&lt;/tab&gt;. The “label”-attribute in the &lt;tab&gt;-element allows you to specify a caption for that page of the tabbook.
+GUI-elements can be organized using a tabbook. Here we define a tabbook as the first element in the dialog. Use &lt;tabbook&gt;[...]&lt;/tabbook&gt; to define the tabbook and then for each page in the tabbook use &lt;tab&gt;[...]&lt;/tab&gt;. The "label"-attribute in the &lt;tab&gt;-element allows you to specify a caption for that page of the tabbook.
 </para>
 <programlisting>
 				&lt;row&gt;
@@ -282,7 +282,7 @@ The &lt;row&gt; and &lt;column&gt; tags specify the layout of the GUI elements. 
 					&lt;varselector id="vars"/&gt;
 </programlisting>
 <para>
-Using this simple tag you create a list from which the user can select variables. You have to specify an id for this element, so RKWard knows how to find it. Note that you may NOT use a dot (.) in the “id” string.
+Using this simple tag you create a list from which the user can select variables. You have to specify an id for this element, so RKWard knows how to find it. Note that you may NOT use a dot (.) in the "id" string.
 </para>
 <programlisting>
 					&lt;column&gt;
@@ -295,7 +295,7 @@ Next, we nest a &lt;column&gt; inside the row. I.e. the following elements will 
 						&lt;varslot type="numeric" id="y" source="vars" required="true" label="against"/&gt;
 </programlisting>
 <para>
-These elements are the counterpart to the &lt;varselector&gt;. They represent “slots” into which the user can put variables. You will note that the “source” is set to the same value as the “id” of the &lt;varselector&gt;. This means, the &lt;varslot&gt;s will each take their variables from the varselector. The &lt;varslot&gt;s also have to be given an “id”. They may have a label, and they may be set to “required”. This means that the submit-button will not be enabled until the &lt;varslot&gt; holds a valid value. Finally the “type”-attribute is not interpreted, yet, but it will be used to take care that only the correct types of variables will be allowed in the &lt;varslot&gt;.
+These elements are the counterpart to the &lt;varselector&gt;. They represent "slots" into which the user can put variables. You will note that the "source" is set to the same value as the "id" of the &lt;varselector&gt;. This means, the &lt;varslot&gt;s will each take their variables from the varselector. The &lt;varslot&gt;s also have to be given an "id". They may have a label, and they may be set to "required". This means that the submit-button will not be enabled until the &lt;varslot&gt; holds a valid value. Finally the "type"-attribute is not interpreted, yet, but it will be used to take care that only the correct types of variables will be allowed in the &lt;varslot&gt;.
 </para>
 <programlisting>
 						&lt;radio id="hypothesis" label="using test hypothesis"&gt;
@@ -305,7 +305,7 @@ These elements are the counterpart to the &lt;varselector&gt;. They represent �
 						&lt;/radio&gt;
 </programlisting>
 <para>
-Here, you define a group of &lt;radio&gt;-exclusive buttons. The group has a “label” and an “id”. Each &lt;option&gt; (button) has a label and is assigned a value. This is the value the &lt;radio&gt;-element will return when the option is selected.
+Here, you define a group of &lt;radio&gt;-exclusive buttons. The group has a "label" and an "id". Each &lt;option&gt; (button) has a label and is assigned a value. This is the value the &lt;radio&gt;-element will return when the option is selected.
 </para>
 <programlisting>
 					&lt;/column&gt;
@@ -327,20 +327,20 @@ Each tag has to be closed. We've put all the elements we wanted (the two &lt;var
 	</mediaobject>
 </screenshot>
 <para>
-Note that we have not specified the “Submit”, “Close”, etc. buttons or the code-view. Those elements get generated automatically. But of course we still have to define the second page of the &lt;tabbook&gt;:
+Note that we have not specified the "Submit", "Close", etc. buttons or the code-view. Those elements get generated automatically. But of course we still have to define the second page of the &lt;tabbook&gt;:
 </para>
 <programlisting>
 			&lt;tab label="Options"&gt;
 				&lt;checkbox id="varequal" label="assume equal variances" value=", var.equal=TRUE"/&gt;
 </programlisting>
 <para>
-By default elements will be placed top-to-bottom like in a &lt;column&gt;. Since that is what we want here, we don't have to explicitly state a &lt;row&gt; or &lt;column&gt;-layout. The first element we define is a checkbox. Just like the &lt;radio&gt;&lt;option&gt;s, the checkbox has a “label” and a “value”. The “value” is what gets returned, if the checkbox is checked. Of course the checkbox also needs an “id”.
+By default elements will be placed top-to-bottom like in a &lt;column&gt;. Since that is what we want here, we don't have to explicitly state a &lt;row&gt; or &lt;column&gt;-layout. The first element we define is a checkbox. Just like the &lt;radio&gt;&lt;option&gt;s, the checkbox has a "label" and a "value". The "value" is what gets returned, if the checkbox is checked. Of course the checkbox also needs an "id".
 </para>
 <programlisting>
 				&lt;frame label="Confidence Interval"&gt;
 </programlisting>
 <para>
-Here's yet another layout-element: In order to signal that the two elements below  belong together, we draw a &lt;frame&gt; (box). That frame may have a caption. Since the frame is just a passive layout-element, it does not need an “id”.
+Here's yet another layout-element: In order to signal that the two elements below  belong together, we draw a &lt;frame&gt; (box). That frame may have a caption. Since the frame is just a passive layout-element, it does not need an "id".
 </para>
 <programlisting>
 					&lt;checkbox id="confint" label="print confidence interval" value="1" checked="true"/&gt;
@@ -348,7 +348,7 @@ Here's yet another layout-element: In order to signal that the two elements belo
 				&lt;/frame&gt;
 </programlisting>
 <para>
-Inside the &lt;frame&gt; we place another &lt;checkbox&gt; (using checked=”true”, we signal that checkbox should be checked by default), and a &lt;spinbox&gt;. The spinbox allows the user to select a value between “min” and “max” with the default/initial value “0.95”. Setting the “type” to “real” signals that real number are accepted as opposed to type=”integer” which would accept integers only.
+Inside the &lt;frame&gt; we place another &lt;checkbox&gt; (using checked="true", we signal that checkbox should be checked by default), and a &lt;spinbox&gt;. The spinbox allows the user to select a value between "min" and "max" with the default/initial value "0.95". Setting the "type" to "real" signals that real number are accepted as opposed to type="integer" which would accept integers only.
 </para>
 <programlisting>
 			&lt;/tab&gt;
@@ -359,7 +359,7 @@ Inside the &lt;frame&gt; we place another &lt;checkbox&gt; (using checked=”tru
 That all for the second page of the &lt;tabbook&gt;, all pages in the &lt;tabbook&gt; and all elements in the &lt;dialog&gt;. We're finished defining what the dialog looks like. Actually we don't have to define an additional &lt;wizard&gt;-interface, but here's how that would be done. Things should be fairly self-explanatory be now, so I leave that part without comments:
 </para>
 <programlisting>
-	&lt;wizard label=”Independent Samples T-Test”&gt;
+	&lt;wizard label="Independent Samples T-Test"&gt;
 		&lt;page id="firstpage"&gt;
 			&lt;text&gt;As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater.&lt;/text&gt;
 			&lt;row&gt;
@@ -402,7 +402,7 @@ Finally we close the &lt;document&gt;-tag, and that's it. The GUI is defined. Yo
 <chapter id="phptemplate">
 <title>Generating R code from GUI settings</title>
 <para>
-Now we have a GUI defined, but we still need to generate some R-code from that. For that, we need another text-file, “code.php”, located in the same directory as the <link linkend="mainxml">description.xml</link>. You may or may not be familiar with PHP. Documentation on PHP can be found here: http://www.php.net. But for most purposes you will not need to know much about PHP at all, as we'll only use some very basic features..
+Now we have a GUI defined, but we still need to generate some R-code from that. For that, we need another text-file, "code.php", located in the same directory as the <link linkend="mainxml">description.xml</link>. You may or may not be familiar with PHP. Documentation on PHP can be found here: http://www.php.net. But for most purposes you will not need to know much about PHP at all, as we'll only use some very basic features..
 </para>
 <para>
 For the independent samples t-test, the code.php file looks as follows (with comments in between):
@@ -422,7 +422,7 @@ The PHP-file is organized into four separate functions: preprocess, calculate, p
 </para>
 <programlisting>
 	function calculate () {
-?&gt;rk.temp &lt;- t.test (&lt;? getRK ("x"); ?&gt;, &lt;? getRK ("y"); ?&gt;, "&lt;? getRK ("hypothesis"); ?&gt;"&lt;? getRK (“varequal”); if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $conflevel); ?&gt;)
+?&gt;rk.temp &lt;- t.test (&lt;? getRK ("x"); ?&gt;, &lt;? getRK ("y"); ?&gt;, "&lt;? getRK ("hypothesis"); ?&gt;"&lt;? getRK ("varequal"); if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $conflevel); ?&gt;)
 &lt;?
 	}
 </programlisting>
@@ -431,18 +431,19 @@ This function generates the actual R-syntax to be run from the GUI-settings. Let
 First we leave the PHP-mode (?&gt;) and hence return
 </para>
 <screen>
-“rk.temp &lt;- t.test (“
+rk.temp &lt;- t.test (
 </screen>
 <para>
-as plain text. Next we need to fill in the value, the user selected as the first variable. Hence we enter PHP-mode again (&lt;?) and call 'getRK (“x”);'. This prints out the value of the GUI-element with id “x”: our first &lt;varslot&gt;. Next we leave PHP-mode again, print a ', ', and do the same to fetch the value of the element “y” - the second &lt;varslot&gt;. For the hypothesis (the &lt;radio&gt;-group), and the equal variances-&lt;checkbox&gt;, the procedure is very similar.
+as plain text. Next we need to fill in the value, the user selected as the first variable. Hence we enter PHP-mode again (&lt;?) and call 'getRK ("x");'. This prints out the value of the GUI-element with id "x": our first &lt;varslot&gt;. Next we leave PHP-mode again, print a ', ', and do the same to fetch the value of the element "y" - the second &lt;varslot&gt;. For the hypothesis (the &lt;radio&gt;-group), and the equal variances-&lt;checkbox&gt;, the procedure is very similar.
 </para>
 <para>
-It gets a little more tricky for the confidence level. For reasons of aestethics, we don't want to explicitly specify the confidence level to use, if it corresponds to the default value. Hence, instead of printing the value with 'getRK', we fetch it silently using 'getRK_val' and assign it to a PHP-variable. We then check, whether that variable differs from “0.95” and if so print out an additional argument.
+It gets a little more tricky for the confidence level. For reasons of aestethics, we don't want to explicitly specify the confidence level to use, if it corresponds to the default value. Hence, instead of printing the value with 'getRK', we fetch it silently using 'getRK_val' and assign it to a PHP-variable. We then check, whether that variable differs from "0.95" and if so print out an additional argument.
 Finally, we leave PHP-mode again, print a last ')', and that's it for the calculate-function.
 </para>
 <programlisting>
 	function printout () {
-&lt;? rk.print (rk.temp); ?&gt;
+?&gt;rk.print (rk.temp);
+&lt;?
 	}
 </programlisting>
 <para>
@@ -459,13 +460,20 @@ Note: At the time of this writing, I plan to add an rk.print.header () function 
 ?&gt;
 </programlisting>
 <para>
-Finally, in the function cleanup we discard the temporary object(s) we left in the R-workspace. You should always clean up all objects created while running the plugin, except the user explicitely requested otherwise.
+Finally, in the function cleanup we discard the temporary object(s) we left in the R-workspace. You should always clean up all objects created while running the plugin, except if the user explicitely requested otherwise.
+</para>
+<para>
+Congratulations! You created your first plugin. Read on in the next chapters for more advanced concepts
 </para>
 </chapter>
 
 <chapter id="logic">
 <title>GUI logic</title>
 <para>
+All the basic concepts of creating a plugin for &kapp; have been described in the previous chapters. Those basic concepts should be sufficient for many - if not most - cases. However, sometimes you want more control over how your plugin's GUI behaves.
+</para>
+<para>
+For instance
 </para>
 </chapter>
 
