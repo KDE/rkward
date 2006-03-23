@@ -42,7 +42,7 @@
 					<entry component="load_readtable" />
 					<entry component="load_source" />
 				</menu>
-					<menu id="save" label="Save" index="0">
+				<menu id="save" label="Save" index="0">
 					<entry component="save_r_object" />
 					<entry component="save_skeleton" />
 					<entry component="save_variables" />

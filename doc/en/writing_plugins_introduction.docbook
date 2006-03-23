@@ -40,7 +40,7 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2006-03-21</date>
+<date>2006-03-24</date>
 <releaseinfo>0.3.5.00</releaseinfo>
 
 <abstract>
@@ -1249,11 +1249,101 @@ In addition to this, some elements have additional properties you can connect to
 </section>
 
 <section id="pluginmapelements"><title>Elements for use in .pluginmap files</title>
+<variablelist>
+<varlistentry>
+<term>&lt;document&gt;</term>
+<listitem>Needs to be present in each .pluginmap file as the root-node (exactly once). Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>base_prefix</term>
+	<listitem>Filenames specified in the pluginmap file are assumed to be relative to the directory of the .pluginmap-file + the prefix you specify here. Useful, esp., if all your components are located below a single subdirectory.	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>namespace</term>
+	<listitem>A namespace for the component ids. When looking up components for embedding, the components will beretrievable via a string "namespace::component_id". Set to "rkward" for now.</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;components&gt;</term>
+<listitem>Needs to be present exactly once as a direct child of the &lt;document&gt; element. Contains the individual &lt;component&gt;-elements described below. No attributes.</listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;component&gt;</term>
+<listitem>One or more &lt;component&gt; elements should be given as direct children of the &lt;components&gt; element (and only there). Registers a component/plugin with rkward. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>type</term>
+	<listitem>For future extension: The type of component/plugin. Always set to "standard" for now (the only type currently supported).</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>id</term>
+	<listitem>The id by which this component can be retrieved (for placing it in the menu (see below), or for embedding). See &lt;document/gt;-namespace above.</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>file</term>
+	<listitem>Required at least for components of type="standard": The filename of the XML file describing the GUI.</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>label</term>
+	<listitem>The label for this component, when placed in the menu hierarchy.</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;hierarchy&gt;</term>
+<listitem>Needs to be present exactly once as a direct child of the &lt;document&gt; element. Described where the components declared above should be placed in the menu hierarchy. Accepts only &lt;menu&gt; elements as direct children. No attributes.</listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;menu&gt;</term>
+<listitem>One or more &lt;menu&gt; elements should be given as direct children of the &lt;hierarchy&gt; element. Declares a new (sub-)menu. If a menu by the given id (see below) already exists, the two menus are merged. The &lt;menu&gt; element is allowed either as a direct child of the &lt;hierarchy&gt; element (top level menu), or as the direct child on any other &lt;menu&gt; element (sub-menu). Conversely, the &lt;menu&gt; element accepts other &lt;menu&gt; elements or &lt;entry&gt; elements as children. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>id</term>
+	<listitem>An identifier string of the menu. Useful, when menu-definitions are read from several .pluginmap-files, to make sure plugins can be placed in the same menu(s). Some menu-ids such as "file" refer to predefined menus (in this case the "File" menu). Be sure to check with existing .pluginmap-files to use consistent ids.</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>label</term>
+	<listitem>A label for the menu.</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>index</term>
+	<listitem>Useful, when menu-definitions are read from several .pluginmap-files, to have control over the order in which (sub-)menus are placed inside a hierarchy level. Note that the index is not absolute (since more than one .pluginmap file may be read, more than one element at this hierarchy level may have the same id), but you can safely assume that an element with index="4" will be placed somewhere below an element which index="3" and above one with index="5" (optional, default is "-1", for add at end).</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;entry&gt;</term>
+<listitem>A menu entry, i.e. a menu-option to invoke a plugin. May be used only as a direct child of a &lt;menu&gt; element, accepts no child elements. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>component</term>
+	<listitem>The id of the component that should be invoked, when this menu entry is activated.</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>index</term>
+	<listitem>See &lt;menu index="..."&gt; above.</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+</variablelist>
 </section>
 </appendix>
 
 <appendix id="troubleshooting">
-<title>Troubleshooting during Plugin development</title>
+<title>Troubleshooting during plugin development</title>
+<para>
+So you've read all the documentation, did everything right, and still can't get it to work? Don't worry, we'll work it out. First thing to do is: Run rkward in a terminal/console, and watch out for messages on the console. As a general rule of thumb, you should not see any output when your plugin gets invoked, or at any other time (other than the startup message). If there is one, it's likely related to your plugin. See if it gets you anywhere.
+</para>
+<para>
+If everything seems fine on the console, try to increase the debug-level with <command>rkward --debug-level 3</command> (you may also use debug-level 4, or even 5, but as this always generates <emphasis>a lot</emphasis> of output, try a lower level at first). Not all messages shown at higher debug levels neccessarily indicate a problem, but chance are, your problem shows up somewhere between the messages.
+</para>
+<para>
+If you still can't find out what's wrong, don't despair. We know this is complicated stuff, and - after all - possibly you've also come across a bug in &kapp;, and &kapp; needs to be fixed. Just write to the development mailing list, and tell us about the problem. We'll be happy to help you.
+</para>
+<para>
+Finally, even if you found out how to do it on your own, but found the documentation to be not-so-helpful or even wrong in some respects, please tell us on the mailing list as well, so we can fix/improve the documentation.
+</para>
 </appendix>
 
 &documentation.index;
