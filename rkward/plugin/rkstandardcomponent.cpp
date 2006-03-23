@@ -523,7 +523,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element) {
 	}
 
 	// find outside elements
-	children = xml->getChildElements (element, "outside", DL_INFO);
+	children = xml->getChildElements (element, "external", DL_INFO);
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
 		RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), xml->getBoolAttribute (*it, "required", false, DL_INFO));
 		component ()->addChild (xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING), prop);
@@ -543,7 +543,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element) {
 		if ((mode == RKComponentPropertyConvert::Equals) || (mode == RKComponentPropertyConvert::NotEquals)) {
 			convert->setStandard (xml->getStringAttribute (*it, "standard", QString::null, DL_WARNING));
 		} else if (mode == RKComponentPropertyConvert::Range) {
-			convert->setRange (xml->getDoubleAttribute (*it, "min", FLT_MIN, DL_INFO), xml->getDoubleAttribute (*it, "max", FLT_MAX, DL_INFO));
+			convert->setRange (xml->getDoubleAttribute (*it, "min", -FLT_MAX, DL_INFO), xml->getDoubleAttribute (*it, "max", FLT_MAX, DL_INFO));
 		}
 		convert->setRequireTrue (xml->getStringAttribute (*it, "require_true", false, DL_INFO));
 		component ()->addChild (id, convert);

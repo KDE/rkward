@@ -12,13 +12,13 @@
               </row>
               <row>
                 <frame label="Range" >
-			<spinbox max_precision="" default_precision="" type="real" min="0.001" id="min" initial="0.001" max="10000000" label="Minumum" />
-			<spinbox max_precision="" default_precision="" type="real" min="0.001" id="max" initial="1999" max="10000000" label="Maximum" />
+			<spinbox max_precision="6" default_precision="2" type="real" min="0.001" id="min" initial="0.001" max="10000000" label="Minumum" />
+			<spinbox max_precision="6" default_precision="2" type="real" min="0.001" id="max" initial="1999" max="10000000" label="Maximum" />
                 </frame>
               </row>
               <row>
-                <spinbox max_precision="" default_precision="" type="real" min="1" id="df1" initial="1" max="10000000" label="Numerator degrees of freedom" />
-		<spinbox max_precision="2" default_precision="2" type="real" min="1" id="df2" initial="1" max="10000000" label="Denominator degrees of freedom" />
+                <spinbox type="integer" min="1" id="df1" initial="1" max="10000000" label="Numerator degrees of freedom" />
+		<spinbox type="integer" min="1" id="df2" initial="1" max="10000000" label="Denominator degrees of freedom" />
               </row>
             </column>
             <column>

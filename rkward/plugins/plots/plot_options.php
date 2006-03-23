@@ -12,6 +12,8 @@ function printout () {
 	$yvar = getRK_val ("yvar");
 	if ($yvar == "") {
 		$yvar = "1:length (" . $xvar .")";
+	} else if ($xvar == "") {	// don't replace both at the same time, even if both are empty
+		$xvar = "1:length (" . $yvar .")";
 	}
 
 	// X axis

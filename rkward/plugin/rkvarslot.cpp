@@ -65,7 +65,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 
 	// find out about options
 	if (multi = xml->getBoolAttribute (element, "multi", false, DL_INFO)) {
-		available->setListLength (xml->getIntAttribute (element, "min_vars", 1, DL_INFO), xml->getIntAttribute (element, "min_vars_if_any", 0, DL_INFO), xml->getIntAttribute (element, "max_vars", 0, DL_INFO));
+		available->setListLength (xml->getIntAttribute (element, "min_vars", 1, DL_INFO), xml->getIntAttribute (element, "min_vars_if_any", 1, DL_INFO), xml->getIntAttribute (element, "max_vars", 0, DL_INFO));
 		connect (list, SIGNAL (selectionChanged ()), this, SLOT (listSelectionChanged ()));
 	} else {
 		available->setListLength (1, 1, 1);
@@ -82,7 +82,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 
 	// initialize filters
 	available->setClassFilter (QStringList::split (" ", xml->getStringAttribute (element, "classes", QString::null, DL_INFO)));
-	available->setRequired (xml->getBoolAttribute (element, "required", true, DL_INFO));
+	available->setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
 	available->setTypeFilter (QStringList::split (" ", xml->getStringAttribute (element, "types", QString::null, DL_INFO)));
 
 	connect (available, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (availablePropertyChanged (RKComponentPropertyBase *)));
@@ -150,13 +150,13 @@ void RKVarSlot::updateLook () {
 	RK_TRACE (PLUGIN);
 
 	if (isEnabled ()) {
-		if (!isSatisfied ()) {
+		if (!isValid ()) {
 			list->setPaletteBackgroundColor (QColor (255, 0, 0));
 		} else {
 			list->setPaletteBackgroundColor (QColor (255, 255, 255));
 		}
 	} else {
-		if (!isSatisfied ()) {
+		if (!isValid ()) {
 			list->setPaletteBackgroundColor (QColor (200, 0, 0));
 		} else {
 			list->setPaletteBackgroundColor (QColor (200, 200, 200));

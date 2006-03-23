@@ -18,8 +18,8 @@
 		<connect client="yminvalue.enabled" governor="yaxt.state" />
 		<connect client="ymaxvalue.enabled" governor="yaxt.state" />
 
-		<outside id="xvar" />
-		<outside id="yvar" />
+		<external id="xvar" />
+		<external id="yvar" />
 	</logic>
 	<dialog label="Default plot options" >
 		<tabbook>

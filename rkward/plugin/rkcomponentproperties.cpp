@@ -45,7 +45,7 @@ Currently these modifiers are known (but check the sources if in doubt):
 
 \subsection RKComponentPropertyBool RKComponentPropertyBool
 - "true" : return the string that would be returned if this property was true (regardless of its state)
-- "true" : return the string that would be returned if this property was false (regardless of its state)
+- "false" : return the string that would be returned if this property was false (regardless of its state)
 - "not" : return the opposite of the current state
 - "numeric" : return "1" if the property is true, or "0" if it is false
 
@@ -602,7 +602,7 @@ RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool 
 
 // no initial requirements
 	dims = min_length = max_length = min_num_objects = min_num_objects_if_any = max_num_objects = -1;
-	separator = ";";
+	separator = "\n";
 
 // get notifications about changed/removed objects
 	connect (RKGlobals::tracker (), SIGNAL (objectRemoved (RObject *)), this, SLOT (removeObjectValue (RObject *)));

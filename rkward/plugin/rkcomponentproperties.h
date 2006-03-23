@@ -369,7 +369,7 @@ public:
 	bool isValid ();
 
 /** string represenation of the options in ConvertMode. For use in XMLHelper::getMultiChoiceAttribute */
-	static QString convertModeOptionString () { return ("equals;notequals;range;and;or;require"); };
+	static QString convertModeOptionString () { return ("equals;notequals;range;and;or"); };
 public slots:
 /** unfortuntely, as the parent component likely does not know about us, we have to notify it manually of any changes. That's done from this slot */
 	void selfChanged (RKComponentPropertyBase *);
