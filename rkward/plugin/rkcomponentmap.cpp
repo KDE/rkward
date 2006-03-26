@@ -135,12 +135,12 @@ int RKComponentMap::addPluginMap (const QString& plugin_map_file) {
 	QDomElement document_element = xml->openXMLFile (plugin_map_file, DL_ERROR);
 	if (xml->highestError () >= DL_ERROR) return (0);
 
-	QString prefix = QFileInfo (plugin_map_file).dirPath (true) + "/" + xml->getStringAttribute(document_element, "base_prefix", QString::null, DL_WARNING);
-	QString cnamespace = xml->getStringAttribute(document_element, "namespace", "rkward", DL_WARNING) + "::";
+	QString prefix = QFileInfo (plugin_map_file).dirPath (true) + "/" + xml->getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
+	QString cnamespace = xml->getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";
 
 	// step 1: create (list of) components
-	element = xml->getChildElement (document_element, "components", DL_ERROR);
-	list = xml->getChildElements (element, "component", DL_ERROR);
+	element = xml->getChildElement (document_element, "components", DL_INFO);
+	list = xml->getChildElements (element, "component", DL_INFO);
 
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
 		QString filename = prefix + xml->getStringAttribute((*it), "file", QString::null, DL_WARNING);
@@ -160,11 +160,26 @@ int RKComponentMap::addPluginMap (const QString& plugin_map_file) {
 	// step 2: create / insert into menus
 	QDomElement xmlgui_menubar_elem = xml->getChildElement (xmlguiBuildDocument ().documentElement (), "MenuBar", DL_ERROR);
 
-	element = xml->getChildElement (document_element, "hierarchy", DL_ERROR);
-	list = xml->getChildElements (element, "menu", DL_ERROR);
+	element = xml->getChildElement (document_element, "hierarchy", DL_INFO);
+	list = xml->getChildElements (element, "menu", DL_INFO);
 	int counter = 0;
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
 		counter += addSubMenu (xmlgui_menubar_elem, (*it), cnamespace);
+	}
+
+	// step 3: included files
+	QStringList includelist;
+	list = xml->getChildElements (document_element, "include", DL_INFO);
+	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
+		QString file = prefix + xml->getStringAttribute (*it, "file", QString::null, DL_ERROR);
+		if (QFileInfo (file).isReadable ()) {
+			includelist.append (file);
+		} else {
+			RK_DO (qDebug ("Specified include file '%s' does not exist or is not readable. Ignoring.", file.latin1 ()), PLUGIN, DL_ERROR);
+		}
+	}
+	for (QStringList::const_iterator it = includelist.constBegin (); it != includelist.constEnd (); ++it) {
+		counter += addPluginMap (*it);
 	}
 
 	return counter;

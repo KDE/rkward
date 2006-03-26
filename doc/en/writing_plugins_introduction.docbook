@@ -1326,6 +1326,16 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
+<varlistentry>
+<term>&lt;include&gt;</term>
+<listitem>Include another .pluginmap file. The most important use case is to provide a "default" selection of plugins in the &kapp; distribution, even if these plugins are defined in several separate .pluginmap files (see all.pluginmap). &lt;include&gt;-elements are only allowed as direct children of the &lt;document&gt;-node. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>file</term>
+	<listitem>The filename of the .pluginmap to include. This is seen relative to the directory of the current .pluginmap file + the base_prefix (see above, &lt;document&gt;-element).</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
 </variablelist>
 </section>
 </appendix>

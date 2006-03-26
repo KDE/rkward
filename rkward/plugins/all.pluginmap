@@ -52,7 +52,10 @@
 		</menu>
 		<menu id="plots" label="Plots" index="5">
 			<entry component="plots_scatterplot" />
-			<entry component="plot_options" />
 		</menu>
 	</hierarchy>
+
+	<include file="distributions.pluginmap"/>
+	<include file="plots.pluginmap"/>
 </document>
+ 

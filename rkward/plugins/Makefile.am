@@ -1,6 +1,6 @@
 pluginsdir = $(kde_datadir)/rkward/
 dist_plugins_DATA = \
-	standard_plugins.pluginmap \
+	all.pluginmap \
 	distributions.pluginmap \
 	plots.pluginmap
 

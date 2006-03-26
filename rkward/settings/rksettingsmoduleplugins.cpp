@@ -21,6 +21,7 @@
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kfiledialog.h>
+#include <kmessagebox.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -114,15 +115,36 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	config->setGroup ("Plugin Settings");
 	plugin_maps = config->readListEntry ("Plugin Maps");
 	if (!plugin_maps.count ()) {
-		QString dummy = KGlobal::dirs()->findResourceDir("data", "rkward/standard_plugins.pluginmap");
+		QString dummy = KGlobal::dirs()->findResourceDir ("data", "rkward/all.pluginmap");
 		if (dummy.isEmpty ()) {
 			// try our luck with a relative path
 			dummy = "plugins";
 		} else {
 			dummy.append ("rkward");
 		}
-		plugin_maps.append (dummy + "/standard_plugins.pluginmap");
+		plugin_maps.append (dummy + "/all.pluginmap");
 	}
+// TODO: this code is only needed for transition from rkward 0.3.4 to rkward 0.3.5. Remove some version later!
+// BEGIN
+	bool fix=false;
+	for (QStringList::const_iterator it = plugin_maps.constBegin (); it != plugin_maps.constEnd (); ++it) {
+		if ((*it).contains ("standard_plugins.pluginmap")) {
+			fix = (KMessageBox::questionYesNo (0, i18n ("You appear to have an old configuration for the plugin-paths. The default configuration was changed between rkward 0.3.4 and rkward 0.3.5. Should the configuration be set to the new default (recommended)?"), i18n ("Configuration change"), KStdGuiItem::yes (), KStdGuiItem::no (), "pluginmap_upgrade") == KMessageBox::Yes);
+		}
+	}
+	if (fix) {
+		plugin_maps.clear ();
+		QString dummy = KGlobal::dirs()->findResourceDir ("data", "rkward/all.pluginmap");
+		if (dummy.isEmpty ()) {
+			// try our luck with a relative path
+			dummy = "plugins";
+		} else {
+			dummy.append ("rkward");
+		}
+		plugin_maps.append (dummy + "/all.pluginmap");
+	}
+// END
+
 	interface_pref = static_cast<PluginPrefs> (config->readNumEntry ("Interface Preferences", static_cast<int> (PreferWizard)));
 }
 
