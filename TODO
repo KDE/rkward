@@ -94,7 +94,6 @@ API documentation:
 - change EditLabelsDialog to use a small QTable? Probably a lot easier / straightforward to use
 - plugins (general)
 	- add more plugin-widgets
-	- setValue-API for plugin-widgets and copying of values when switching from wizard to dialog-interface
 - formula-widget:
 	- use smart sorting, esp. of generated string
 	- add labels, add "up to level" option

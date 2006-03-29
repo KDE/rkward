@@ -128,6 +128,14 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 				if (RunLast) R_dot_Last ();
 		}
 
+		// clean up temp directory
+		char *tmpdir;
+		if((tmpdir = getenv ("R_SESSION_TMPDIR"))) {
+			char buf[1024];
+			snprintf ((char *) buf, 1024, "rm -rf %s", tmpdir);
+			R_system ((char *) buf);
+		}
+
 		REmbedInternal::this_pointer->shutdown (false);
 	}
 	/*else {

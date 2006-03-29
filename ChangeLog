@@ -1,3 +1,4 @@
+- clean up R temporary files on shutdown
 - when switching between dialog and wizard interfaces, GUI settings are copied
 - fix crash with objects with quotes in their names
 - add options to show help-search and R help index to Help menu
