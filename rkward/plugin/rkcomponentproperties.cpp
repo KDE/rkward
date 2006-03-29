@@ -801,6 +801,7 @@ bool RKComponentPropertyRObjects::setValue (const QString &value) {
 	}
 
 	checkListLengthValid ();
+	emit (valueChanged (this));
 	return (isValid () && ok);
 }
 

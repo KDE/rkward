@@ -121,7 +121,7 @@ void RKVarSlot::listSelectionChanged () {
 	}
 	selected->setObjectList (sellist);
 
-	setSelectButton ((!selection) && (!available->atMaxLength ()));
+	setSelectButton (((!multi) || (!selection)) && (!available->atMaxLength ()));
 }
 
 void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
@@ -179,7 +179,7 @@ void RKVarSlot::selectPressed () {
 				++it;
 			}
 		} else {
-			available->setObjectValue (source->objectValue ());
+			if (source->objectValue ()) available->setObjectValue (source->objectValue ());
 		}
 	} else {		// remove-mode
 		ObjectList objlist;

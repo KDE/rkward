@@ -42,6 +42,34 @@ void RKComponentBase::addChild (const QString &id, RKComponentBase *child) {
 	child_map.insert (id, child);		// no overwriting even on duplicate ("#noid#") ids, als this is really a QDict, not a QMap
 }
 
+void RKComponentBase::fetchPropertyValuesRecursive (QMap<QString, QString> *list, bool include_top_level, const QString &prefix) {
+	RK_TRACE (PLUGIN);
+
+	for (QDictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
+		if (it.currentKey () != "#noid#") {
+			if (it.current ()->isProperty ()) {
+				if (include_top_level) {
+					list->insert (prefix + it.currentKey (), it.current ()->value ());
+				}
+			} else {
+				it.current ()->fetchPropertyValuesRecursive (list, true, prefix + it.currentKey () + ".");
+			}
+		}
+	}
+}
+
+void RKComponentBase::setPropertyValues (QMap<QString, QString> *list) {
+	RK_TRACE (PLUGIN);
+
+	for (QMap<QString, QString>::const_iterator it = list->constBegin (); it != list->constEnd (); ++it) {
+		QString mod;
+		RKComponentBase *prop = lookupComponent (it.key (), &mod);
+		if (mod.isEmpty () && prop->isProperty ()) {		// found a property
+			static_cast<RKComponentPropertyBase*>(prop)->setValue (it.data ());
+		}
+	}
+}
+
 QString RKComponentBase::fetchStringValue (const QString &identifier) {
 	RK_TRACE (PLUGIN);
 
@@ -151,7 +179,7 @@ RKComponent *RKComponent::addPage () {
 	return (new RKComponent (this, this));
 }
 
-void RKComponent::addComponentToCurrentPage (RKComponent *component) {
+void RKComponent::addComponentToCurrentPage (RKComponent *) {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (false);		// should not be called as isWizardish returns false
 }

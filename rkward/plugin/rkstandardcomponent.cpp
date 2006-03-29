@@ -228,9 +228,14 @@ void RKStandardComponent::switchInterface () {
 	int force_mode = 2;
 	if (isWizardish ()) force_mode = 1;
 
+	QMap<QString, QString> value_save;		// fetch current GUI settings
+	fetchPropertyValuesRecursive (&value_save);
+
 	discard ();
 
 	createTopLevel (doc_element, force_mode);
+
+	setPropertyValues (&value_save);				// set old GUI settings
 }
 
 void RKStandardComponent::discard () {
