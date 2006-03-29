@@ -148,7 +148,7 @@ bool RObject::inherits (const QString &class_name) {
 
 QString RObject::makeChildName (const QString &short_child_name) {
 	RK_TRACE (OBJECTS);
-	return (getFullName () + "[[\"" + short_child_name + "\"]]");
+	return (getFullName () + "[[" + rQuote (short_child_name) + "]]");
 }
 	
 void RObject::getMetaData (RCommandChain *chain, int flags) {

@@ -131,7 +131,7 @@ void RObjectList::updateFromR () {
 	obj->parent = parent;
 	
 	QString fullname = parent->makeChildName (cname);
-	
+
 	RCommand *command = new RCommand (".rk.get.type (" + fullname + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString::null, this, CHILD_GET_TYPE_COMMAND);
 	pending_objects.insert (command, obj);
 	RKGlobals::rInterface ()->issueCommand (command, update_chain);
