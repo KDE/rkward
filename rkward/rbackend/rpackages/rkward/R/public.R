@@ -78,4 +78,17 @@
 	}
 }
 
-
+"rk.header" <- function (title, parameters=list ()) {
+	cat (paste ("<h1>", title, "<h1>\n", sep=""))
+	if (length (parameters)) {
+		cat ("<h2>Parameters</h2>\n<ul>")
+		len <- length (parameters)
+		i <- 2
+		while (i <= len) {
+			cat (paste ("<li>", parameters[i-1], ": ", parameters[i], "</li>\n", sep=""))
+			i <- i + 2
+		}
+		cat ("</ul>\n")
+	}
+	cat (date ())
+}
