@@ -1070,10 +1070,10 @@ Optional Packages:
   --with-qt-dir=DIR       where the root of Qt is installed
   --with-qt-includes=DIR  where the Qt includes are.
   --with-qt-libraries=DIR where the Qt library is installed.
-  --r-home=DIR            specify location of R_HOME directory
-  --r-includes=DIR        specify location of R include files
-  --r-share=DIR           specify location of R_SHARE directory
-  --r-doc=DIR             specify location of R_DOC directory
+  --with-r-home=DIR       specify location of R_HOME directory
+  --with-r-includes=DIR   specify location of R include files
+  --with-r-share=DIR      specify location of R_SHARE directory
+  --with-r-doc=DIR        specify location of R_DOC directory
   --without-arts          build without aRts default=yes
 
 Some influential environment variables:
@@ -28930,10 +28930,10 @@ if test -d "$use_r_home"; then
 else
    { { echo "$as_me:$LINENO: error:
    $use_r_home does not exist as a directory!
-   Check your installation of R, and use --r-home to specify the correct location." >&5
+   Check your installation of R, and use --with-r-home to specify the correct location." >&5
 echo "$as_me: error:
    $use_r_home does not exist as a directory!
-   Check your installation of R, and use --r-home to specify the correct location." >&2;}
+   Check your installation of R, and use --with-r-home to specify the correct location." >&2;}
    { (exit 1); exit 1; }; }
 fi
 
@@ -28951,11 +28951,11 @@ else
    { { echo "$as_me:$LINENO: error:
    $R_HOMEDIR/lib/libR.so does not exist.
    Check whether you have compiled R with shared library,
-   and the --r-home setting was detected correctly above." >&5
+   and the --with-r-home setting was detected correctly above." >&5
 echo "$as_me: error:
    $R_HOMEDIR/lib/libR.so does not exist.
    Check whether you have compiled R with shared library,
-   and the --r-home setting was detected correctly above." >&2;}
+   and the --with-r-home setting was detected correctly above." >&2;}
    { (exit 1); exit 1; }; }
 fi
 
@@ -28978,10 +28978,10 @@ if test -f "$use_r_includes/R.h"; then
 else
    { { echo "$as_me:$LINENO: error:
    $use_r_includes/R.h does not exist!
-   Check your installation of R, and use --r-includes to specify the correct directory." >&5
+   Check your installation of R, and use --with-r-includes to specify the correct directory." >&5
 echo "$as_me: error:
    $use_r_includes/R.h does not exist!
-   Check your installation of R, and use --r-includes to specify the correct directory." >&2;}
+   Check your installation of R, and use --with-r-includes to specify the correct directory." >&2;}
    { (exit 1); exit 1; }; }
 fi
 
@@ -29008,10 +29008,10 @@ if test -d "$use_r_share"; then
 else
    { { echo "$as_me:$LINENO: error:
    $use_r_share does not exist as a directory!
-   Check your installation of R, and use --r-share to specify the correct directory." >&5
+   Check your installation of R, and use --with-r-share to specify the correct directory." >&5
 echo "$as_me: error:
    $use_r_share does not exist as a directory!
-   Check your installation of R, and use --r-share to specify the correct directory." >&2;}
+   Check your installation of R, and use --with-r-share to specify the correct directory." >&2;}
    { (exit 1); exit 1; }; }
 fi
 
@@ -29038,10 +29038,10 @@ if test -d "$use_r_doc"; then
 else
    { { echo "$as_me:$LINENO: error:
    $use_r_doc does not exist as a directory!
-   Check your installation of R, and use --r-doc to specify the correct directory." >&5
+   Check your installation of R, and use --with-r-doc to specify the correct directory." >&5
 echo "$as_me: error:
    $use_r_doc does not exist as a directory!
-   Check your installation of R, and use --r-doc to specify the correct directory." >&2;}
+   Check your installation of R, and use --with-r-doc to specify the correct directory." >&2;}
    { (exit 1); exit 1; }; }
 fi
 
