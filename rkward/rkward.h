@@ -137,6 +137,8 @@ protected:
 	virtual void readProperties(KConfig *_cfg);
 
 public slots:
+	/** Invokes R help (help.start ()) */
+	void invokeRHelp ();
 	/** raises the watch window */
 	void raiseWatch ();
 	/** creates a new (empty) data.frame */
@@ -219,6 +221,8 @@ private:
 	KAction* window_close;
 	KAction* window_close_all;
 	KAction* window_detach;
+
+	KAction* help_invoke_r_help;
 	
 	KAction* configure;
 

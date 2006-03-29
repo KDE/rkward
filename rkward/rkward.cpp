@@ -295,9 +295,9 @@ void RKwardApp::initActions()
 	window_close_all = new KAction (i18n ("Close All"), 0, 0, this, SLOT (slotCloseAllWindows ()), actionCollection (), "window_close_all");
 	window_detach = new KAction (i18n ("Detach"), 0, 0, this, SLOT (slotDetachWindow ()), actionCollection (), "window_detach");
 	outputShow= new KAction (i18n ("Show &Output"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
-
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT (slotConfigure ()), actionCollection (), "configure");
-	
+	help_invoke_r_help = new KAction (i18n ("Help on R"), 0, 0, this, SLOT (invokeRHelp ()), actionCollection (), "invoke_r_help");
+
 	new_data_frame->setStatusText (i18n ("Creates new empty dataset and opens it for editing"));
 	fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
 	fileOpenRecentWorkspace->setStatusText(i18n("Opens a recently used file"));
@@ -305,6 +305,7 @@ void RKwardApp::initActions()
 	fileSaveWorkspaceAs->setStatusText(i18n("Saves the actual document as..."));
 	close_all_editors->setStatusText (i18n ("Closes all open data editors"));
 	fileQuit->setStatusText(i18n("Quits the application"));
+	help_invoke_r_help->setStatusText (i18n ("Shows the R help index"));
 
 	actionCollection ()->setHighlightingEnabled (true);
 }
@@ -484,9 +485,11 @@ void RKwardApp::raiseWatch () {
 	watch_view->show ();
 }
 
-/////////////////////////////////////////////////////////////////////
-// SLOT IMPLEMENTATION
-/////////////////////////////////////////////////////////////////////
+void RKwardApp::invokeRHelp () {
+	RK_TRACE (APP);
+
+	RKGlobals::rInterface ()->issueCommand ("help.start ()", RCommand::App);
+}
 
 void RKwardApp::slotNewDataFrame () {
 	RK_TRACE (APP);

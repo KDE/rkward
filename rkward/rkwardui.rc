@@ -41,6 +41,11 @@
 		<Action name="file_load_libs"/>
 		<Action name="configure"/>
 	</Menu>
+
+	<Menu name="help"><text>&amp;Help</text>
+		<Action name="invoke_r_help"/>
+	</Menu>
+
 </MenuBar>
 <ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="new_data_frame"/>
