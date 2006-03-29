@@ -192,7 +192,7 @@ void RKwardApp::doPostInit () {
 	
 	RKGlobals::helpdlg = new KHelpDlg (0);
 	RKGlobals::helpDialog ()->setIcon (SmallIcon ("help"));
-	addToolWindow (RKGlobals::helpDialog (), KDockWidget::DockBottom, getMainDockWidget (), 10);
+	search_help_view = addToolWindow (RKGlobals::helpDialog (), KDockWidget::DockBottom, getMainDockWidget (), 10);
 
 	if (initial_url) {
 		openWorkspace (*initial_url);
@@ -297,6 +297,7 @@ void RKwardApp::initActions()
 	outputShow= new KAction (i18n ("Show &Output"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT (slotConfigure ()), actionCollection (), "configure");
 	help_invoke_r_help = new KAction (i18n ("Help on R"), 0, 0, this, SLOT (invokeRHelp ()), actionCollection (), "invoke_r_help");
+	KAction *show_help_search = new KAction (i18n ("Search R Help"), 0, 0, this, SLOT (showHelpSearch ()), actionCollection (), "show_help_search");
 
 	new_data_frame->setStatusText (i18n ("Creates new empty dataset and opens it for editing"));
 	fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
@@ -489,6 +490,12 @@ void RKwardApp::invokeRHelp () {
 	RK_TRACE (APP);
 
 	RKGlobals::rInterface ()->issueCommand ("help.start ()", RCommand::App);
+}
+
+void RKwardApp::showHelpSearch () {
+	RK_TRACE (APP);
+
+	search_help_view->show ();
 }
 
 void RKwardApp::slotNewDataFrame () {

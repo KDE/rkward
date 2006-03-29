@@ -1,3 +1,6 @@
+- add options to show help-search and R help index to Help menu
+- complete rework of plugins code
+- plugins can embed other plugins
 - code display (for plugins) gets updated reliably
 - avoid leftover PHP processes if rkward crashes or gets killed
 - autodetection of R_HOME and related variables during configure

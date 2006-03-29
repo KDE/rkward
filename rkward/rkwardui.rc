@@ -44,6 +44,7 @@
 
 	<Menu name="help"><text>&amp;Help</text>
 		<Action name="invoke_r_help"/>
+		<Action name="show_help_search"/>
 	</Menu>
 
 </MenuBar>

@@ -137,6 +137,8 @@ protected:
 	virtual void readProperties(KConfig *_cfg);
 
 public slots:
+	/** Raise the help search window */
+	void showHelpSearch ();
 	/** Invokes R help (help.start ()) */
 	void invokeRHelp ();
 	/** raises the watch window */
@@ -227,6 +229,7 @@ private:
 	KAction* configure;
 
 	KMdiToolViewAccessor *watch_view;
+	KMdiToolViewAccessor *search_help_view;
 	
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;
