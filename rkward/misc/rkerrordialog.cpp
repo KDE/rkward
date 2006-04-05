@@ -20,8 +20,13 @@
 #include <qtextedit.h>
 #include <qlayout.h>
 #include <qlabel.h>
+#include <klocale.h>
+
+#include "../debug.h"
 
 RKErrorDialog::RKErrorDialog (const QString &text, const QString &caption, bool modal) : QObject () {
+	RK_TRACE (MISC);
+
 	RKErrorDialog::text = text;
 	RKErrorDialog::caption = caption;
 	show_modal = modal;
@@ -29,16 +34,21 @@ RKErrorDialog::RKErrorDialog (const QString &text, const QString &caption, bool 
 }
 
 RKErrorDialog::~RKErrorDialog () {
+	RK_TRACE (MISC);
+
 	// dialog deletes itself via Qt::WDestructiveClose!
 	//delete dialog;
 }
 
 void RKErrorDialog::newError (const QString &error) {
+	RK_TRACE (MISC);
+
 	if (!dialog) createDialog ();
 	error_log->append (error);
 }
 
 void RKErrorDialog::newOutput (const QString &output) {
+	RK_TRACE (MISC);
 	if (dialog) {
 		error_log->append (output);
 	} else {
@@ -47,14 +57,18 @@ void RKErrorDialog::newOutput (const QString &output) {
 }
 
 void RKErrorDialog::resetOutput () {
+	RK_TRACE (MISC);
 	stored_output = QString::null;
 }
 
 void RKErrorDialog::dialogDestroyed () {
+	RK_TRACE (MISC);
 	dialog = 0;
 }
 
 void RKErrorDialog::createDialog () {
+	RK_TRACE (MISC);
+
 	dialog = new QDialog (0, 0, show_modal, Qt::WDestructiveClose);
 	dialog->setCaption (caption);
 	connect (dialog, SIGNAL (destroyed ()), this, SLOT (dialogDestroyed ()));
@@ -73,6 +87,42 @@ void RKErrorDialog::createDialog () {
 	vbox->addWidget (error_log);
 	
 	dialog->show ();
+}
+
+////////////////////////////////////// RKRErrorDialog /////////////////////////////////////
+
+#include "../rbackend/rcommand.h"
+
+RKRErrorDialog::RKRErrorDialog (const QString &text, const QString &caption, bool modal) : RKErrorDialog (text, caption, modal) {
+	RK_TRACE (MISC);
+}
+
+RKRErrorDialog::~RKRErrorDialog () {
+	RK_TRACE (MISC);
+}
+
+void RKRErrorDialog::addRCommand (RCommand *command) {
+	RK_TRACE (MISC);
+
+	if (command->hasOutput ()) {
+		RKErrorDialog::newOutput (command->output ());
+	}
+
+	if (command->hasError ()) {
+		newError (command->error ());
+	}
+
+	if (command->errorSyntax ()) {
+		newError (i18n ("Syntax error"));
+	} else if (command->errorIncomplete ()) {
+		newError (i18n ("command incomplete"));
+	}
+}
+
+void RKRErrorDialog::rCommandDone (RCommand *command) {
+	RK_TRACE (MISC);
+
+	addRCommand (command);
 }
 
 #include "rkerrordialog.moc"

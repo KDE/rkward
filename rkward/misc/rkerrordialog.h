@@ -32,9 +32,9 @@ This class can be used to display errors (non-blocking). The dialog itself is on
 class RKErrorDialog : public QObject {
 	Q_OBJECT
 public:
-    RKErrorDialog (const QString &text, const QString &caption, bool modal=false);
+	RKErrorDialog (const QString &text, const QString &caption, bool modal=false);
 
-    ~RKErrorDialog ();
+	virtual ~RKErrorDialog ();
 
 	void newError (const QString &error);
 /** usually you will call newError instead. However, if in case of an error, you also want to show the regular output, use this function to add output. The output is added to the internal error_log, but the dialog is not shown until you call newError (). */
@@ -56,6 +56,21 @@ private:
 	QString text;
 	QString caption;
 	QString stored_output;
+};
+
+#include "../rbackend/rcommandreceiver.h"
+/** A subclass of RKErrorDialog, that has special helper functions to deal with RCommands. It can be set as the receiver of RCommands, or can be fed RCommands, and will extract any errors associated with those commands. If you use the RKRErrorDialog as a command receiver, be sure to always call deleteThis () instead of delete, so pending commands don't go to a destroyed object. */
+class RKRErrorDialog : public RKErrorDialog, public RCommandReceiver {
+public:
+/** constructor. See RKErrorDialog::RKErrorDialog () for details */
+	RKRErrorDialog (const QString &text, const QString &caption, bool modal=false);
+/** constructor. See RKErrorDialog::~RKErrorDialog () for details */
+	~RKRErrorDialog ();
+
+/** Use this mechanism to feed RCommands to the RKRErrorDialog manually. The alternative is to simply specify the error-dialog as the receiver of your RCommands (but then you'll never see tehm first). Errors contained in the command will be extracted. */
+	void addRCommand (RCommand *command);
+protected:
+	void rCommandDone (RCommand *command);
 };
 
 #endif
