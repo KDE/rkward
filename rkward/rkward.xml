@@ -35,7 +35,10 @@
 	 <Detect2Chars attribute="Normal Text" context="ctx0" firstNonSpace="true" char=">" char1=" "/>
 	 <Detect2Chars attribute="Normal Text" context="ctx0" firstNonSpace="true" char="+" char1=" "/>
        </context>
-       <context attribute="Normal Text" lineEndContext="#pop" name="ctx0">
+       <context attribute="Normal Text" lineEndContext="#stay" name="ctx0">
+         <!-- We pop at line starts manually. If we are in a String subcontext (ctx1), using lineEndContext="#pop" would still pop the
+               Normal Text (ctx0) parent context, which is not what we want. -->
+         <RegExpr attribute="Normal Text" context="#pop" String="^." lookAhead="true"/>
          <keyword attribute="Control Structure" context="#stay" String="controls"/>
          <keyword attribute="Reserved Words" context="#stay" String="words"/>
          <DetectChar attribute="String" context="ctx1" char="&quot;"/>
@@ -43,18 +46,19 @@
          <RegExpr attribute="Keyword" context="#stay" String="\.[a-zA-Z_\.]+[a-zA-Z_\.0-9]* *(?=[\s]*[(])"/>
          <Float attribute="Float" context="#stay"/>
          <Int attribute="Int" context="#stay"/>
-         <RegExpr attribute="Comment" context="#stay" String="#.*$"/>
          <AnyChar attribute="Operators" context="#stay" String="+-*/^:$~!&amp;|=&gt;&lt;@"/>
          <RegExpr attribute="Operators" context="#stay" String="%[a-zA-Z_]*%"/>
+         <RegExpr attribute="Comment" context="#stay" String="#.*$"/>
        </context>
-   
+
        <context attribute="String" lineEndContext="#stay" name="ctx1">
+         <Detect2Chars attribute="Normal Text" context="#pop#pop" firstNonSpace="true" char=">" char1=" " lookAhead="true"/>
+         <Detect2Chars attribute="Normal Text" context="#stay" firstNonSpace="true" char="+" char1=" "/>
          <DetectChar attribute="String" context="#pop" char="&quot;"/>
          <HlCStringChar attribute="String Char" context="#stay"/>
        </context>
-   
     </contexts>
-    
+
     <itemDatas>
       <itemData name="Output" defStyleNum="dsOthers"/>
       <itemData name="Normal Text" defStyleNum="dsNormal"/>
