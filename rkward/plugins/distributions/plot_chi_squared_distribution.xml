@@ -8,16 +8,16 @@
           <row>
             <column>
               <row>
-                <spinbox max_precision="" default_precision="4" type="real" min="-10000000" id="n" initial="100" max="10000000" label="Number of Observations" />
+                <spinbox default_precision="4" type="real" id="n" initial="100" label="Number of Observations" />
               </row>
               <row>
                 <frame label="Range" >
-			<spinbox max_precision="" default_precision="4" type="real" min="-10000000" id="min" initial="0.299" max="10000000" label="Minumum" />
-			<spinbox max_precision="" default_precision="4" type="real" min="-10000000" id="max" initial="24.103" max="10000000" label="Maximum" />
+			<spinbox default_precision="4" type="real" id="min" initial="0.299" label="Minimum" />
+			<spinbox default_precision="4" type="real" id="max" initial="24.103" label="Maximum" />
                 </frame>
               </row>
               <row>
-                <spinbox max_precision="1" default_precision="1" type="real" min="-10000000" id="df" initial="0" max="10000000" label="Degree of freedom" />
+                <spinbox max_precision="1" default_precision="1" type="real" id="df" initial="0.1" label="Degrees of freedom" />
               </row>
             </column>
             <column>
@@ -25,6 +25,7 @@
 		      <option value="dchisq" label="Plot density function" />
 		      <option value="pchisq" label="Plot distribution" />
               </radio>
+			  <stretch/>
             </column>
           </row>
         </frame>

@@ -14,7 +14,7 @@ quantile(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
   <code file="poisson_probabilities.php" />
   <dialog label="Descriptive Statistics" >
     <tabbook>
-      <tab label="Vairabel(s)" >
+      <tab label="Vairable(s)" >
         <row>
           <column>
             <varselector id="vars" />
@@ -31,26 +31,26 @@ quantile(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
               <checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="names" label="Names" />
               <checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="narm" label="Remove Missing Values" />
             </column>
-            <spinbox default_precission="10" type="integer" id="" min="1" initial="5" max="10" label="Precision" />
+            <!-- <spinbox type="integer" id="precision" min="1" initial="5" max="10" label="Precision" /> -->
           </row>
         </frame>
-        <radio value_unchecked="0" checked="TRUE" value="1" id="samplequantile" label="Sample Quantile Types" >
-          <option checked="false" value="1" id="type1" label="Inverse of empirical distribution function" />
-          <option checked="false" value="2" id="type2" label="Similar to type 1 but with averaging at discontinuities" />
-          <option checked="false" value="3" id="type3" label="SAS definition: nearest even order statistic" />
-          <option checked="false" value="4" id="type4" label="p(k) = k / n (linear interpolation of the empirical cdf)" />
-          <option checked="false" value="5" id="type5" label="p(k) = (k - 0.5) / n (piecewise linear function where the knots are the values midway through the steps of the empirical cdf)" />
-          <option checked="false" value="6" id="type6" label="p(k) = k / (n + 1). Thus p(k) = E[F(x[k])] (used by Minitab and by SPSS)" />
-          <option checked="false" value="7" id="type7" label="p(k) = (k - 1) / (n - 1). In this case, p(k) = mode[F(x[k])] (used by S)" />
-          <option checked="true" value="8" id="type8" label="p(k) = (k - 1/3) / (n + 1/3). Then p(k) =~ median[F(x[k])] (resulting quantile estimates are approximately median-unbiased regardless of the distribution of x)" />
-          <option checked="false" value="9" id="type9" label="p(k) = (k - 3/8) / (n + 1/4) (resulting quantile estimates are approximately unbiased if x is normally distributed" />
+        <radio id="samplequantile" label="Sample Quantile Types" >
+          <option value="1" label="Inverse of empirical distribution function" />
+          <option value="2" label="Similar to type 1 but with averaging at discontinuities" />
+          <option value="3" label="SAS definition: nearest even order statistic" />
+          <option value="4" label="p(k) = k / n (linear interpolation of the empirical cdf)" />
+          <option value="5" label="p(k) = (k - 0.5) / n (piecewise linear function where the knots are the values midway through the steps of the empirical cdf)" />
+          <option value="6" label="p(k) = k / (n + 1). Thus p(k) = E[F(x[k])] (used by Minitab and by SPSS)" />
+          <option value="7" label="p(k) = (k - 1) / (n - 1). In this case, p(k) = mode[F(x[k])] (used by S)" />
+          <option checked="true" value="8" label="p(k) = (k - 1/3) / (n + 1/3). Then p(k) =~ median[F(x[k])] (resulting quantile estimates are approximately median-unbiased regardless of the distribution of x)" />
+          <option value="9" label="p(k) = (k - 3/8) / (n + 1/4) (resulting quantile estimates are approximately unbiased if x is normally distributed" />
         </radio>
       </tab>
       <tab label="Probabilities" >
         <frame label="numeric vector of probabilities with values in [0,1]" >
-          <spinbox max_precision="2" default_precision="2" type="real" min="0" id="probs1" initial="0" max="1" depend="probs" label="Lower" />
-          <spinbox max_precision="2" default_precision="2" type="real" min="0" id="probs2" initial="1" max="1" depend="probs" label="Mid" />
-          <spinbox max_precision="2" default_precision="2" type="real" min="0" id="probs3" initial="0.25" max="1" depend="probs" label="Upper" />
+          <spinbox max_precision="2" default_precision="2" type="real" min="0" id="probs1" initial="0" max="1" label="Lower" />
+          <spinbox max_precision="2" default_precision="2" type="real" min="0" id="probs2" initial="1" max="1" label="Mid" />
+          <spinbox max_precision="2" default_precision="2" type="real" min="0" id="probs3" initial="0.25" max="1" label="Upper" />
         </frame>
       </tab>
     </tabbook>

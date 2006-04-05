@@ -10,16 +10,16 @@
           <row>
             <column>
               <row>
-                <spinbox max_precision="2" default_precision="2" type="real" min="-10000000" id="n" initial="100" max="10000000" label="Number of Observations" />
+                <spinbox max_precision="2" default_precision="2" type="real" id="n" initial="100" label="Number of Observations" />
               </row>
               <row>
                 <frame label="Range" >
-			<spinbox max_precision="2" default_precision="2" type="real" min="-10000000" id="min" initial="-12.924" max="10000000" label="Minumum" />
-			<spinbox max_precision="2" default_precision="2" type="real" min="-10000000" id="max" initial="12.924" max="10000000" label="Maximum" />
+			<spinbox max_precision="2" default_precision="2" type="real" id="min" initial="-12.924" label="Minimum" />
+			<spinbox max_precision="2" default_precision="2" type="real" id="max" initial="12.924" label="Maximum" />
                 </frame>
               </row>
               <row>
-                <spinbox max_precision="2" default_precision="2" type="real" min="-10000000" id="mean" initial="0" max="10000000" label="Degree of freedom" />
+                <spinbox max_precision="2" default_precision="2" type="real" id="df" initial="0.01" label="Degrees of freedom" />
               </row>
             </column>
             <column>
@@ -27,6 +27,7 @@
                 <option value="dt" label="Plot density function" />
 		<option value="pt" label="Plot distribution" />
               </radio>
+	      <stretch/>
             </column>
           </row>
         </frame>

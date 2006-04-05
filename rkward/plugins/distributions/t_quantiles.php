@@ -5,7 +5,6 @@
 	function calculate () {
 ?>
 rk.temp = (qt (p = <? getRK ("p"); ?>, df = <? getRK ("df"); ?>, <? getRK ("tail"); ?>))
-rk.temp.date = date()
 <?
 	}
 	
@@ -13,21 +12,14 @@ rk.temp.date = date()
 
 		//produce the output
 ?>
-cat ("<h1>t quantile</h1>")
-
-	cat ("<table border = \"1\">")
-		cat ("<TR><TD>Method:</TD><TD>Probabilities [0,1] : <? getRK ("p"); ?></TD><TD>Degree of Freedom :  <? getRK ("df"); ?></TD><TD><? getRK ("tail"); ?></TD></TR>")
-		cat ("<TR><TD>", rk.temp.date,"</TD></TR>")
-			cat ("<TR><TD></TD></TR>")
-		cat ("<TR><TD>t quantile:</TD><TD> ", rk.temp," </TD></TR>")
-	cat ("</table>")
+rk.header ("t quantile", list ("Probabilities [0,1]", "<? getRK ("p"); ?>", "Degrees of freedom", "<? getRK ("df"); ?>", "Tail", "<? getRK ("tail"); ?>"));
+cat ("<h3>t quantile:  ", rk.temp, "</h3>")
 <?
 	}
 	
 	function cleanup () {
 ?>
 rm (rk.temp)
-rm (rk.temp.date)
 <?
 	}
 ?>

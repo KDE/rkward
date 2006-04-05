@@ -5,7 +5,6 @@
 	function calculate () {
 ?>
 rk.temp = (pbinom (q = <? getRK ("q"); ?>, size = <? getRK ("size"); ?>, prob = <? getRK ("prob"); ?>, <? getRK ("tail"); ?>))
-rk.temp.date = date()
 <?
 	}
 	
@@ -13,21 +12,14 @@ rk.temp.date = date()
 
 		//produce the output
 ?>
-cat ("<h1>Binomial tail probability</h1>")
-
-	cat ("<table border = \"1\">")
-		cat ("<TR><TD>Method:</TD><TD>Variable value = <? getRK ("q"); ?></TD><TD>Binomial trials =  <? getRK ("size"); ?></TD><TD>Probability of success =  <? getRK ("prob"); ?></TD><TD><? getRK ("tail"); ?></TD></TR>")
-		cat ("<TR><TD>", rk.temp.date,"</TD></TR>")
-			cat ("<TR><TD></TD></TR>")
-		cat ("<TR><TD>Binomial tail probability:</TD><TD> ", rk.temp," </TD></TR>")
-	cat ("</table>")
+rk.header ("Binomial tail probability", list ("Variable value", "<? getRK ("q"); ?>", "Binomial trials", "<? getRK ("size"); ?>", "Probability of success", "<? getRK ("prob"); ?>", "Tail", "<? getRK ("tail"); ?>"));
+cat ("<h3>t probability:  ", rk.temp, "</h3>")
 <?
 	}
 	
 	function cleanup () {
 ?>
 rm (rk.temp)
-rm (rk.temp.date)
 <?
 	}
 ?>

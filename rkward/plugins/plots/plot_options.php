@@ -73,8 +73,11 @@ function printout () {
 	// final touches
 	if ($log != "") $log = ", log=\"" . $log . "\"";
 
+	$type = getRK_val ("pointtype");
+	if (!empty ($type)) $type = ", type=\"" . $type . "\"";
+
 	// make option string
-	$options = $xaxt . $yaxt . $log . $xlim . $ylim . $xlab . $ylab;
+	$options = $type . $xaxt . $yaxt . $log . $xlim . $ylim . $xlab . $ylab;
 
 	echo ($options);
 }

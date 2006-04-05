@@ -9,12 +9,12 @@
             <column>
               <row>
                 <frame label="Range" >
-                  <spinbox max_precision="" default_precision="" type="real" min="0" id="min" initial="0" max="10000000" label="Minumum" />
-                  <spinbox max_precision="" default_precision="" type="real" min="0" id="max" initial="12" max="10000000" label="Maximum" />
+                  <spinbox type="real" min="0" id="min" initial="0" label="Minimum" />
+                  <spinbox type="real" min="0" id="max" initial="12" label="Maximum" />
                 </frame>
               </row>
               <row>
-                <spinbox max_precision="" default_precision="" type="real" min="-10000000" id="mean" initial="0" max="10000000" label="mean" />
+                <spinbox type="real" id="mean" initial="0" label="mean" />
               </row>
             </column>
             <column>
@@ -22,6 +22,7 @@
 		      <option value="dpois" label="Plot density function" />
 		      <option value="ppois" label="Plot distribution" />
               </radio>
+			  <stretch/>
             </column>
           </row>
         </frame>

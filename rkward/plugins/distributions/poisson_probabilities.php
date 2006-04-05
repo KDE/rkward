@@ -5,7 +5,7 @@
 	function calculate () {
 		$vars = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val ("x"))) . ")";
 ?>
-rk.temp.options <- list (doquantile=<? getRK ("quantile"); ?>)
+rk.temp.options <- list (doquantile=<? getRK ("samplequantile"); ?>)
 rk.temp.results <- list ()
 i=0; for (var in list (<? echo ($vars); ?>)) {
 	i = i+1
