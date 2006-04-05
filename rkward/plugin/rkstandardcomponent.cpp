@@ -45,6 +45,7 @@
 #include "rkinput.h"
 #include "rkpluginbrowser.h"
 #include "rktext.h"
+#include "rktabpage.h"
 
 #include "../rkglobals.h"
 
@@ -422,7 +423,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
 		RKComponent *widget = 0;
 		QDomElement e = *it;		// shorthand
-		QString id = xml->getStringAttribute (e, "id", "#noid#", DL_INFO);
+		QString id = xml->getStringAttribute (e, "id", QString::null, DL_INFO);
 
 		if (allow_pages && (e.tagName () == "page")) {
 			widget = component ()->addPage ();
@@ -461,10 +462,12 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			for (unsigned int t=0; t < tabs.count (); ++t) {
 				QDomElement tab_e = tabs.item (t).toElement ();
 				if (tab_e.tagName () == "tab") {
-					QVBox *tabpage = new QVBox (tabbook);
-					tabpage->setSpacing (RKGlobals::spacingHint ());
-					buildElement (tab_e, tabpage, false);
-					tabbook->addTab (tabpage, tab_e.attribute ("label"));
+					RKTabPage *tabpage = new RKTabPage (tab_e, component (), tabbook);
+					buildElement (tab_e, tabpage->getPage (), false);
+					QString tab_id = xml->getStringAttribute (tab_e, "id", QString::null, DL_INFO);
+					if (!tab_id.isNull ()) {
+						parent->addChild (tab_id, tabpage);
+					}
 				}
 			}
 		} else if (e.tagName () == "varselector") {
@@ -509,7 +512,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			xml->displayError (&e, QString ("Invalid tagname '%1'").arg (e.tagName ()), DL_ERROR);
 		}
 
-		if (widget) {
+		if (widget && (!(id.isNull ()))) {
 			parent->addChild (id, widget);
 		}
 	}
@@ -529,12 +532,24 @@ void RKComponentBuilder::parseLogic (const QDomElement &element) {
 		addConnection (xml->getStringAttribute (*it, "client", "#noid#", DL_WARNING), QString::null, xml->getStringAttribute (*it, "governor", "#noid#", DL_WARNING), QString::null, xml->getBoolAttribute (*it, "reconcile", false, DL_INFO), element);
 	}
 
+	// find initialize elements
+	children = xml->getChildElements (element, "set", DL_INFO);
+	for (it = children.constBegin (); it != children.constEnd (); ++it) {
+		initial_values.insert (xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING), xml->getStringAttribute (*it, "to", "false", DL_WARNING));
+	}
+
 	// find outside elements
 	children = xml->getChildElements (element, "external", DL_INFO);
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
+		QString id = xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING);
 		RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), xml->getBoolAttribute (*it, "required", false, DL_INFO));
-		component ()->addChild (xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING), prop);
+		component ()->addChild (id, prop);
 		component ()->connect (prop, SIGNAL (valueChanged (RKComponentPropertyBase *)), component (), SLOT (outsideValueChanged (RKComponentPropertyBase *)));
+
+		QString dummy = xml->getStringAttribute (*it, "default", QString::null, DL_INFO);
+		if (!dummy.isNull ()) {
+			initial_values.insert (id, dummy);
+		}
 		// TODO add more options
 	}
 
@@ -572,6 +587,9 @@ void RKComponentBuilder::addConnection (const QString &client_id, const QString 
 
 void RKComponentBuilder::makeConnections () {
 	RK_TRACE (PLUGIN);
+
+	component ()->setPropertyValues (&initial_values);
+
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	for (ConnectionList::const_iterator it = connection_list.begin (); it != connection_list.end (); ++it) {
@@ -591,6 +609,10 @@ void RKComponentBuilder::makeConnections () {
 
 		static_cast<RKComponentPropertyBase *> (client)->connectToGovernor (static_cast<RKComponentPropertyBase *> (governor), dummy, (*it).reconcile);
 	}
+
+	// save some RAM
+	connection_list.clear ();
+	initial_values.clear ();
 }
 
 

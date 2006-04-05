@@ -96,7 +96,7 @@ protected:
 	void addChild (const QString &id, RKComponentBase *child);
 };
 
-
+#include <qmap.h>
 
 /** A helper class used to build and initialize an RKComponent. Most importantly this will keep track of the properties yet to be connected. Used at least by RKStandardComponent.
 
@@ -130,6 +130,7 @@ private:
 	};
 	typedef QValueList <RKComponentPropertyConnection> ConnectionList;
 	ConnectionList connection_list;
+	QMap<QString, QString> initial_values;
 };
 
 #endif
