@@ -828,6 +828,10 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 <listitem>All direct children of a "column" tag will be placed top-to-bottom.</listitem>
 </varlistentry>
 <varlistentry>
+<term>&lt;stretch&gt;</term>
+<listitem>By default, elements in the GUI take up all the space that's available. For instance, if you have two columns side by side, the left one is packed with elements, but the right one only contains a lonely &lt;radio&gt;, the &lt;radio&gt; control will expand vertically, even though it does not really need the available space, and it will look ugly. In this case you really want to add a "blank" below the &lt;radio&gt;. For this, use the &lt;stretch&gt; element. It will simply use up some space. Don't overuse this element, usually it's a good idea for GUI elements to get all the available space, only sometimes will the layout become spaced out. The &lt;stretch&gt; element does not take any arguments, not even an "id". Also you can place no children inside the &lt;stretch&gt; element (in other words, you'll only ever use it as "&lt;stretch/&gt;")</listitem>
+</varlistentry>
+<varlistentry>
 <term>&lt;frame&gt;</term>
 <listitem>Draws a frame/box around its direct children. Can be used to visually group related options. Layout inside a frame is top-to-bottom, unless you place a &lt;row&gt; inside. Attributes:
 	<variablelist>
@@ -925,7 +929,7 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 </varlistentry>
 <varlistentry>
 <term>&lt;option&gt;</term>
-<listitem>Can only be used as a direct child of a &lt;radio&gt; element. Represents one selectable option in a radio control. Attributes:
+<listitem>Can only be used as a direct child of a &lt;radio&gt; element. Represents one selectable option in a radio control. The &lt;option&gt; elements do not take an "id" attribute. Only the &lt;radio&gt; needs one. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
