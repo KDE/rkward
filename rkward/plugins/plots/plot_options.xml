@@ -8,8 +8,14 @@
 		<convert id="ylabfilled" mode="notequals" sources="ylab.text" standard="" />
 		<connect client="ylabisexp.enabled" governor="ylabfilled" />
 
+		<connect client="xlog.visible" governor="allow_log"/>
+		<connect client="ylog.visible" governor="allow_log"/>
+		<connect client="pointtypepage.visible" governor="allow_type"/>
+
 		<external id="xvar" />
 		<external id="yvar" />
+		<external id="allow_log" default="true" />
+		<external id="allow_type" default="true" />
 	</logic>
 	<dialog label="Default plot options" >
 		<tabbook>
@@ -48,7 +54,7 @@
 					</frame>
 				</column>
 			</tab>
-			<tab label="Points / Lines">
+			<tab id="pointtypepage" label="Points / Lines">
 				<radio id="pointtype" label="Type of points/lines" >
 					<option value="" label="default" checked="true" />
 					<option value="p" label="Plot individual points " />

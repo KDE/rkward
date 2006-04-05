@@ -1,56 +1,29 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="histogram.php" />
-  <logic>
-    <connect client="plotoptions.xvar" governor="x.available"/>
-  </logic>
-  <dialog label="Histogram" >
-    <tabbook>
-      <tab label="Variable(s)" >
-        <row>
-          <varselector id="vars" />
-          <varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
-        </row>
-      </tab>
-      <tab label="Options" >
-        <column>
-          <radio id="scale" label="Scale" >
-            <option value="FALSE" label="No Frequency" />
-            <option value="TRUE" label="Frequency" />
-          </radio>
-          <column>
-            <checkbox value_unchecked="0" checked="false" value="1" id="rug" label="Rug" />
-            <checkbox value_unchecked="0" checked="false" value="1" id="jitter" label="Jitter" />
-          </column>
-        </column>
-	</tab>
-      <tab label="Plot options">
-		<embed id="plotoptions" component="rkward::plot_options" />
-		<embed id="plotoptionsb" component="rkward::plot_options" as_button="true" label="Just a test" />
-      </tab>
-    </tabbook>
-  </dialog>
-  <wizard>
-	<page><text>This wizard is for testing purposes only. Remove it!</text></page>
-	<page label="Variable(s)" >
+<code file="histogram.php" />
+<logic>
+	<connect client="plotoptions.xvar" governor="x.available"/>
+	<set id="plotoptions.allow_log" to="false"/>
+	<set id="plotoptions.allow_type" to="false"/>
+</logic>
+<dialog label="Histogram" >
+	<tabbook>
+	<tab label="Variable(s)" >
 		<row>
-			<varselector id="vars" />
-			<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
+		<varselector id="vars" />
+		<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
 		</row>
-	</page>
-	<embed id="plotoptions" component="rkward::plot_options" />
-	<page label="Options" >
-		<column>
-			<radio id="scale" label="Scale" >
-				<option value="FALSE" label="No Frequency" />
-				<option value="TRUE" label="Frequency" />
-			</radio>
-			<column>
-				<checkbox value_unchecked="0" checked="false" value="1" id="rug" label="Rug" />
-				<checkbox value_unchecked="0" checked="false" value="1" id="jitter" label="Jitter" />
-			</column>
-		</column>
-	</page>
-	<page><embed id="plotoptionsb" component="rkward::plot_options" as_button="true" label="Just a test" /></page>
-  </wizard>
+	</tab>
+	<tab label="Options" >
+		<radio id="scale" label="Scale" >
+		<option value="FALSE" label="No Frequency" />
+		<option value="TRUE" label="Frequency" />
+		</radio>
+		<checkbox value_unchecked="0" checked="false" value="1" id="rug" label="Rug" />
+		<checkbox value_unchecked="0" checked="false" value="1" id="jitter" label="Jitter" />
+		<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
+		<stretch/>
+	</tab>
+	</tabbook>
+</dialog>
 </document>
