@@ -1051,6 +1051,25 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<term>&lt;id&gt;</term>
 	<listitem>The id of the new property (required)</listitem>
 	</varlistentry>
+	<varlistentry>
+	<term>&lt;default&gt;</term>
+	<listitem>The default string value of the new property, i.e. the value used, if the property is not connected to an outside property (optional, defaults to an empty string)</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>&lt;set&gt;</term>
+<listitem>Set a property to a fixed value (of course, if you additionally connect the property to some other property, the value does not remain fixed). For instance, if you embed a plugin, but want to hide some of its elements, you might set the visibility property of those elements to false. Useful esp. for embedded/embedding plugins. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>&lt;id&gt;</term>
+	<listitem>The id of the property to set (required)</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;to&gt;</term>
+	<listitem>The string value to set the property to (required). Note: For boolean properties such as visibility, enabledness, you'll typically set the to attribute to either to="true" or to="false".</listitem>
+	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
 
