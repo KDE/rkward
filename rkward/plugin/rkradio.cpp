@@ -44,12 +44,8 @@ RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWi
 	// create layout
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 
-	// create label
-	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
-	vbox->addWidget (label);
-
 	// create ButtonGroup
-	group = new QButtonGroup (this);
+	group = new QButtonGroup (xml->getStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
 
 	// create internal layout for the buttons in the ButtonGroup
 	group->setColumnLayout (0, Qt::Vertical);
