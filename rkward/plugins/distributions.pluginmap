@@ -12,7 +12,7 @@
 		<component type="standard" id="chi_squared_probabilities" file="chi_squared_probabilities.xml" label="Chi-squared probabilities" />
 		<component type="standard" id="plot_chi_squared_distribution" file="plot_chi_squared_distribution.xml" label="Plot Chi-squared distribution" />
 		
-		<component type="standard" id="f_quantiles" file="f_quantiles.xml" label="F quantiles" />index="1"
+		<component type="standard" id="f_quantiles" file="f_quantiles.xml" label="F quantiles" />
 		<component type="standard" id="f_probabilities" file="f_probabilities.xml" label="F probabilities" />
 		<component type="standard" id="plot_f_distribution" file="plot_f_distribution.xml" label="Plot F distribution" />
 		
@@ -21,7 +21,7 @@
 		<component type="standard" id="plot_normal_distribution" file="plot_normal_distribution.xml" label="Plot Normal distribution" />
 		
 		<component type="standard" id="poisson_probabilities" file="poisson_probabilities.xml" label="Poisson probabilities" />
-		<component type="standard" id="plot_poisson_distribution&nbsp;" file="plot_poisson_distribution.xml" label="Plot Poisson distribution" />
+		<component type="standard" id="plot_poisson_distribution" file="plot_poisson_distribution.xml" label="Plot Poisson distribution" />
 		
 		<component type="standard" id="t_quantiles" file="t_quantiles.xml" label="t quantiles" />
 		<component type="standard" id="t_probabilities" file="t_probabilities.xml" label="t probabilities" />

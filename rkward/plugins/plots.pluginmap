@@ -9,7 +9,7 @@
 	</components>
 
 	<hierarchy>
-			<menu id="plots" label="Plots" index="5">
+		<menu id="plots" label="Plots" index="5">
 			<entry component="box_plot" />
 			<entry component="histogram" />
 		</menu>
