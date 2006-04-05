@@ -571,7 +571,7 @@ void RKComponentPropertyDouble::internalSetValue (double new_value) {
 	RK_TRACE (PLUGIN);
 
 	current_value = new_value;
-	_value = QString::number (current_value, 'g', precision);
+	_value = QString::number (current_value, 'f', precision);
 	is_valid = ((new_value >= validator->bottom ()) && (new_value <= validator->top ()));
 	if (!is_valid) current_value = default_value;
 }
