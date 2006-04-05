@@ -6,11 +6,13 @@
 	}
 	
 	function printout () {
-	$x = getRK_val ("x");
+	$xvarsstring = join (", ", split ("\n", getRK_val ("x")));
+	$xvars = "list (" . $xvarsstring . ")";
+	$xvarsstring = str_replace (array ("\\", "\""), array ("\\\\", "\\\""), $xvarsstring);
 ?>
-rk.header ("Boxplot", list ("Variable", rk.get.description (<? echo ($x); ?>)))
+rk.header ("Boxplot", list ("Variable(s)", "<?echo ($xvarsstring); ?>"))
 rk.graph.on()
-boxplot (<? echo ($x); ?>, notch = <? getRK ("notch") ?>, outline = <? getRK("outline")?>, horizontal = <? getRK("orientation") ?><? getRK ("plotoptions.code.printout"); ?>)
+boxplot (<? echo ($xvars); ?>, notch = <? getRK ("notch") ?>, outline = <? getRK("outline")?>, horizontal = <? getRK("orientation") ?><? getRK ("plotoptions.code.printout"); ?>)
 rk.graph.off ()
 <?
 	}

@@ -10,7 +10,7 @@
 	<tab label="Variable(s)" >
 		<row>
 		<varselector id="vars" />
-		<varslot multi="false" type="numeric" source="vars" id="x" label="variable(s):" required="true" />
+		<varslot multi="true" type="numeric" source="vars" id="x" label="variable(s):" required="true" />
 		</row>
 	</tab>
 	<tab label="Options" >
