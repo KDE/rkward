@@ -22,8 +22,6 @@
 #include <klocale.h>
 
 #include "../misc/xmlhelper.h"
-#include "../misc/rkmenu.h"
-#include "../misc/rkmenulist.h"
 #include "../debug.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
