@@ -1,3 +1,4 @@
+- many new plugins by Stefan Roediger
 - clean up R temporary files on shutdown
 - when switching between dialog and wizard interfaces, GUI settings are copied
 - fix crash with objects with quotes in their names

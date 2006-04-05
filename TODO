@@ -23,10 +23,6 @@ PHP-backend:
 - on viewDeactivated, it may not be safe to call setCaption and there activeWindow (). Apparently, the pointer may be invalid:
 	- start rkward with empty table. open command editor. switch back to table. Edit some stuff in the table. Ctrl+W. Crash
 
-- Plugin Documentation:
-	- Labels are now attached to components instead of menu-entries. Update documentation.
-	- convert to kdoc
-
 Configuration options to add:
 	- additional console options:
 		- color highlighting for warnings/errors (once we can identify them reliably)
@@ -52,8 +48,6 @@ RKwatch:
 	- RKCommandEditor (first check for reusable functionality)
 		- RKPlugin still uses RKCommandEditor. Convert to use RKCommandEditorWindow instead.
 	- RKDocManager? Is this used?
-	- RKMenu
-	- RKMenuList
 	- RKGlobals
 		- static members should be moved to the respective classes. Much cleaner!
 
@@ -102,6 +96,8 @@ API documentation:
 - UNPROTECT_PTR
 - use RKGlobals::marginHint (), RKGlobals::spacingHint () everywhere
 - give informative feedback on syntax errors (line numbers, etc.)!
+
+- It seems impossible to extend rk.get.description and the like to accept a undetermined number of parameters (...). Maybe we can do this from C. Find out about PRINTNAME ().
 
 stuff to do before the thing is usable
 - add a help-system
