@@ -138,6 +138,7 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 	while (it != objlist.end ()) {
 		QListViewItem *new_item = new QListViewItem (list, QString::number (i++), (*it)->getShortName ());
 		list->insertItem (new_item);
+		item_map.insert (new_item, *it);
 		++it;
 	}
 
@@ -184,7 +185,7 @@ void RKVarSlot::selectPressed () {
 	} else {		// remove-mode
 		ObjectList objlist;
 		if (multi) {
-			ObjectList objlist = selected->objectList ();
+			objlist = selected->objectList ();
 		} else {
 			objlist = available->objectList ();
 		}

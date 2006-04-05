@@ -743,6 +743,8 @@ bool RKComponentPropertyRObjects::isObjectValid (RObject *object) {
 			if (!types.contains (static_cast<RKVariable *> (object)->getVarTypeString ().lower ())) {
 				return false;
 			}
+		} else {
+			return false;
 		}
 	}
 
