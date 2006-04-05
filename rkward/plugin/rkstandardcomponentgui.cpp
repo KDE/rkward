@@ -29,6 +29,7 @@
 
 #include "../rkcommandeditor.h"
 #include "../rbackend/rinterface.h"
+#include "../misc/rkerrordialog.h"
 #include "../rkglobals.h"
 #include "../debug.h"
 
@@ -37,6 +38,9 @@
 
 RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved) {
 	RK_TRACE (PLUGIN);
+
+	// create an error-dialog
+	error_dialog = new RKRErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin '%1'.\nThis may lead to an incorrect ouput and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below.").arg (component->getFilename ()), i18n ("R-Error"), false);
 
 	RKStandardComponentGUI::component = component;
 	RKStandardComponentGUI::code_property = code_property;
@@ -51,6 +55,8 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 
 RKStandardComponentGUI::~RKStandardComponentGUI () {
 	RK_TRACE (PLUGIN);
+
+	error_dialog->deleteThis ();
 }
 
 void RKStandardComponentGUI::createDialog (bool switchable) {
@@ -116,10 +122,10 @@ void RKStandardComponentGUI::ok () {
 	RK_ASSERT (code_property->isValid ());
 	
 	RCommandChain *chain = RKGlobals::rInterface ()->startChain ();
-	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->preprocess (), RCommand::Plugin | RCommand::DirectToOutput), chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->calculate (), RCommand::Plugin | RCommand::DirectToOutput), chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->printout (), RCommand::Plugin | RCommand::DirectToOutput), chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->cleanup (), RCommand::Plugin | RCommand::DirectToOutput), chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->preprocess (), RCommand::Plugin | RCommand::DirectToOutput, QString::null, error_dialog), chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->calculate (), RCommand::Plugin | RCommand::DirectToOutput, QString::null, error_dialog), chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->printout (), RCommand::Plugin | RCommand::DirectToOutput, QString::null, error_dialog), chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->cleanup (), RCommand::Plugin | RCommand::DirectToOutput, QString::null, error_dialog), chain);
 	RKGlobals::rInterface ()->closeChain (chain);
 }
 

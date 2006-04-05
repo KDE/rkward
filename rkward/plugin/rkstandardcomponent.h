@@ -22,7 +22,6 @@
 
 #include <qdom.h>
 
-class RKErrorDialog;
 class RKStandardComponentGUI;
 class RKStandardComponentStack;
 class ScriptBackend;
@@ -62,6 +61,8 @@ public:
 	int type () { return ComponentStandard; };
 /** set the GUI caption (if this is a top-level gui) */
 	void setCaption (const QString &caption);
+/** return the filename of the xml file */
+	QString getFilename () { return filename; };
 public slots:
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */
@@ -81,7 +82,6 @@ private:
 	RKComponentPropertyCode *code;
 	QString filename;
 	ScriptBackend *backend;
-	RKErrorDialog *error_dialog;
 	RKStandardComponentGUI *gui;
 	RKStandardComponentStack *wizard;
 /** Avoid updating code-display, etc. until the component is fully created */

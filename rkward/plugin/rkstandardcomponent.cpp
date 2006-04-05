@@ -32,7 +32,6 @@
 
 #include "rkstandardcomponentgui.h"
 #include "../scriptbackends/phpbackend.h"
-#include "../misc/rkerrordialog.h"
 #include "../misc/xmlhelper.h"
 #include "../settings/rksettingsmoduleplugins.h"
 
@@ -71,9 +70,6 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 		deleteLater ();
 		return;
 	}
-
-	// create an error-dialog
-	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin '%1'. This may lead to an incorrect ouput and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below.").arg (filename), i18n ("R-Error"), false);
 
 	// initialize the PHP-backend with the code-template
 	QDomElement element = xml->getChildElement (doc_element, "code", DL_WARNING);
@@ -137,7 +133,6 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 RKStandardComponent::~RKStandardComponent () {
 	RK_TRACE (PLUGIN);
 
-	delete error_dialog;
 	delete backend;
 }
 
@@ -235,7 +230,11 @@ void RKStandardComponent::switchInterface () {
 
 	createTopLevel (doc_element, force_mode);
 
-	setPropertyValues (&value_save);				// set old GUI settings
+	// set old GUI settings. For this purpose, we'll temporarily disable updates in the phpbackend
+	created = false;
+	setPropertyValues (&value_save);
+	created = true;
+	changed ();		// now we can update
 }
 
 void RKStandardComponent::discard () {
@@ -439,6 +438,9 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			box->setSpacing (RKGlobals::spacingHint ());
 			layout->addWidget (box);
 			buildElement (e, box, false);
+		} else if (e.tagName () == "stretch") {
+			QWidget *stretch = new QWidget (parent_widget);
+			stretch->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 		} else if (e.tagName () == "column") {
 			RKComponent *widget = new RKComponent (component (), parent_widget);
 			QVBoxLayout *layout = new QVBoxLayout (widget);
