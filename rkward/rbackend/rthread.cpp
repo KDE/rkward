@@ -137,7 +137,8 @@ void RThread::doCommand (RCommand *command) {
 		RKWardRError error;
 		
 		int ctype = command->type ();
-		const char *ccommand = command->command ().latin1 ();
+		QCString localc = command->command ().local8Bit ();		// needed so the string below does not go out of scope
+		const char *ccommand = localc;
 		
 		RK_DO (qDebug ("running command: %s", ccommand), RBACKEND, DL_DEBUG);
 	
