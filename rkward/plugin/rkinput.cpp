@@ -93,7 +93,10 @@ void RKInput::textChanged (RKComponentPropertyBase *) {
 void RKInput::textChanged () {
 	RK_TRACE (PLUGIN);
 
+	updating = true;
 	text->setValue (textedit->text ());
+	updating = false;
+	changed ();
 }
 
 #include "rkinput.moc"
