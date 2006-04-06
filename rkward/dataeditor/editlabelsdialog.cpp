@@ -39,11 +39,12 @@ LevelsTable::LevelsTable (QWidget *parent, RObject::ValueLabels *labels) : TwinT
 	storage = labels;
 
 	setNumCols (2);
-	verticalHeader ()->setLabel (0, i18n ("Index"));
-	verticalHeader ()->setLabel (1, i18n ("Label"));
-	setColumnReadOnly (0, true);
-
 	setNumRows (storage->count () + 1);
+	horizontalHeader ()->setLabel (0, i18n ("Index"));
+	horizontalHeader ()->setLabel (1, i18n ("Label"));
+	verticalHeader ()->hide ();
+	setLeftMargin (0);
+	setColumnReadOnly (0, true);
 }
 
 LevelsTable::~LevelsTable () {
@@ -133,6 +134,8 @@ QWidget *LevelsTable::beginEdit (int row, int col, bool) {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (!tted);
 
+	if (col < 1) return 0;
+
 	if (row >= numTrueRows ()) {
 		insertRows (numRows (), 1);
 	}
@@ -162,7 +165,7 @@ EditLabelsDialog::EditLabelsDialog (QWidget *parent, RKVariable *var, int mode) 
 	EditLabelsDialog::mode = mode;
 
 	QVBoxLayout *mainvbox = new QVBoxLayout (this, KDialog::marginHint (), KDialog::spacingHint ());
-	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1. To remove levels at the end of the list, just set them to empty."), this);
+	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1 (the index column is read only). To remove levels at the end of the list, just set them to empty."), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	mainvbox->addWidget (label);
 
