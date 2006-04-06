@@ -1,3 +1,4 @@
+- explicitely set LC_NUMERIC to "C" at startup. R does not work correctly with other settings of LC_NUMERIC
 - many new plugins by Stefan Roediger
 - clean up R temporary files on shutdown
 - when switching between dialog and wizard interfaces, GUI settings are copied

@@ -1,14 +1,14 @@
 rkward (0.3.5) unstable; urgency=low
 
-  * (new upstream release)
-  * use --disable-rpath in ./configure (This is not right, yet!)
+  * new upstream release
+  * use --disable-rpath in ./configure
   * remove /usr/sbin from dirs
   * use standards version 3.6.2
   * add man page
   * remove redundant build-dependency on libqt3-mt-dev
   * break long lines in description
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 10 Nov 2005 19:55:00 +0200
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 06 Apr 2006 10:55:00 +0200
 
 rkward (0.3.4) unstable; urgency=low
 

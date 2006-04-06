@@ -97,8 +97,6 @@ API documentation:
 - use RKGlobals::marginHint (), RKGlobals::spacingHint () everywhere
 - give informative feedback on syntax errors (line numbers, etc.)!
 
-- It seems impossible to extend rk.get.description and the like to accept a undetermined number of parameters (...). Maybe we can do this from C. Find out about PRINTNAME ().
-
 stuff to do before the thing is usable
 - add a help-system
 - mostly everything

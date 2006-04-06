@@ -50,6 +50,10 @@ fi
 R_SESSION_TMPDIR="${tmp}"
 export R_SESSION_TMPDIR
 
+## Apparently on some systems an embedded R gets outsmarted somehow, and LC_NUMERIC is set to some dangerous value for the whole app (likely via some Qt stuff)
+## To prevent this, set it here, explicitely. R does not work with wrong settings of LC_NUMERIC.
+export LC_NUMERIC="C"
+
 ## Start rkward
 exec $0.bin "$@"
 

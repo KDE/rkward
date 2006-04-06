@@ -358,7 +358,7 @@ bool REmbedInternal::startR (int argc, char** argv) {
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (info, NULL, callMethods, NULL, NULL);
-	
+
 	return true;
 }
 
