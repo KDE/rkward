@@ -48,9 +48,9 @@ public:
 	virtual QString rText (int row, int col) const;
 	TwinTableMember *getTwin () { return twin; };
 /** like QTable::numRows (), but returns only the "true", i.e. active rows (excluding the trailing_rows) */
-	int numTrueRows ();
+	int numTrueRows () const;
 /** like QTable::numCols (), but returns only the "true", i.e. active columns (excluding the trailing_cols) */
-	int numTrueCols ();
+	int numTrueCols () const;
 /** reimplemented form QTable not to use QTableItems. This one raises an assert (should never be called) */
 	void removeRows (const QMemArray<int> &rows);
 /** reimplemented form QTable not to use QTableItems. This one has no effect */

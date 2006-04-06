@@ -22,41 +22,52 @@
 #include "../core/robject.h"
 
 class RKVariable;
-class QListView;
-class QLineEdit;
-class QPushButton;
-class QListViewItem;
+
+#include "twintablemember.h"
+
+/** special mini class provides the table in EditLabelsDialog
+
+@author Thomas Friedrichsmeier
+*/
+class LevelsTable : public TwinTableMember {
+public:
+	LevelsTable (QWidget *parent, RObject::ValueLabels *labels);
+	~LevelsTable ();
+/** reimplemented form QTable not to add trailing rows/cols if needed */
+	QWidget *beginEdit (int row, int col, bool replace);
+/** reimplemented form QTable not to work on RObject::ValueLabels instead of QTableItems */
+	void paintCell (QPainter *p, int row, int col, const QRect &cr, bool selected, const QColorGroup &cg);
+/** reimplemented form QTable not to work on RObject::ValueLabels instead of QTableItems */
+	void setText (int row, int col, const QString &text);
+/** reimplemented form QTable not to work on RObject::ValueLabels instead of QTableItems */
+	QString text (int row, int col) const;
+private:
+friend class EditLabelsDialog;
+	RObject::ValueLabels *storage;
+};
 
 /**
 Allows editing of value labels / factor levels for an (edited) RKVariable
 
 @author Thomas Friedrichsmeier
 */
-
 class EditLabelsDialog : public QDialog {
-Q_OBJECT
+	Q_OBJECT
 public:
+/** constuctor., the variable to work on.
+@param parent a QWidget parent (usually 0)
+@param var the variable/factor to set labels for
+@param mode not yet used */
 	EditLabelsDialog (QWidget *parent, RKVariable *var, int mode=0);
 
 	~EditLabelsDialog ();
-public slots:
-	void addButtonClicked ();
-	void removeButtonClicked ();
-	void changeButtonClicked ();
-	void listSelectionChanged (QListViewItem *item);
-	void labelEditEnterPressed ();
 protected:
 /// reimplemented to submit the changes to the backend
 	void accept ();
 private:
-	QListView *list;
+	LevelsTable *table;
 	RKVariable *var;
-	RObject::ValueLabels *labels;
 	int mode;
-	QPushButton *add_button;
-	QPushButton *remove_button;
-	QPushButton *change_button;
-	QLineEdit *label_edit;
 };
 
 #endif
