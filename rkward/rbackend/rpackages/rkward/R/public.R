@@ -1,3 +1,4 @@
+# retrieve the rkward label (if any) of the given object
 "rk.get.label" <- function (x) {
 	if (is.call (x) || is.name (x)) {
 		as.vector (attr (eval (x), ".rk.meta")[row.names (attr (eval (x), ".rk.meta")) == "label",1])
@@ -6,31 +7,61 @@
 	}
 }
 
+# get a short name for the given object
 "rk.get.short.name" <- function (x) {
 	if (is.call (x) || is.name (x)) {
-		splt <- strsplit (deparse (x), "\"")
+		.rk.make.short.name (deparse (x))
 	} else {
-		splt <- strsplit (deparse (substitute (x)), "\"")
+		.rk.make.short.name (deparse (substitute (x)))
 	}
-	spllen <- length (splt[[1]])
-	if (spllen == 1) return (splt[[1]][1])
-	return (splt[[1]][spllen-1])
 }
 
-"rk.get.description" <- function (x) {
-	lbl <- rk.get.label (x)
-	
-	if (is.call (x) || is.name (x)) {
-		splt <- strsplit (deparse (x), "\"")
+# make a short name from the given arg (a character string)
+".rk.make.short.name" <- function (x) {
+	splt <- strsplit (x, "\"")[[1]]
+	spltlen <- length (splt)
+	if (spltlen == 1) {
+		splt[1]
 	} else {
-		splt <- strsplit (deparse (substitute (x)), "\"")
+		splt[spltlen - 1]
 	}
-	spllen <- length (splt[[1]])
-	sn <- (splt[[1]][spllen-1])
-	if (spllen == 1) sn <- splt[[1]][1]
-	
-	if (is.null (lbl)) return (sn)
-	return (paste (sn, " (", lbl, ")", sep=""))
+}
+
+# get descriptive strings for each of the arguments in ...
+"rk.get.description" <- function (..., paste.sep=NULL) {
+	args <- list(...)
+	argnames <- rk.list.names (...)
+	descript <- c ()
+
+	for (i in 1:length (args)) {
+		lbl <- rk.get.label (args[[i]])
+		shortname <- .rk.make.short.name (argnames[i])
+
+		if (is.null (lbl)) descript[i] <- shortname
+		else descript[i] <- paste (shortname, " (", lbl, ")", sep="")
+	}
+
+	if (is.null (paste.sep)) {
+		descript
+	} else {
+		paste (descript, collapse=paste.sep)
+	}
+}
+
+# this is basically copied from R-base table (). Returns the arguments passed to ... as a character vector
+"rk.list.names" <- function(..., deparse.level=2) {
+	l <- as.list(substitute(list(...)))[-1]
+	nm <- names(l)
+	fixup <- if (is.null(nm)) 
+		seq(along = l)
+	else nm == ""
+	dep <- sapply(l[fixup], function(x) switch(deparse.level + 1, "", if (is.symbol(x)) as.character(x) else "", deparse(x)[1]))
+	if (is.null(nm)) 
+		dep
+	else {
+		nm[fixup] <- dep
+		nm
+	}
 }
 
 "rk.sync" <- function (x) {

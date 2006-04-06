@@ -186,6 +186,7 @@ void RThread::doCommand (RCommand *command) {
 			RK_DO (qDebug ("- error message was: '%s'", command->error ().latin1 ()), RBACKEND, DL_WARNING);
 	//		runCommandInternal (".rk.init.handlers ()\n", &dummy);
 		}
+		RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
 
 		flushOutput ();
 	}

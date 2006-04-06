@@ -400,7 +400,6 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 			*error = REmbedInternal::OtherError;
 		}
 		exp = R_NilValue;
-	
 	} else {			// no error during parsing, let's try to evaluate the command
 		PROTECT (pr);
 		exp=R_NilValue;
