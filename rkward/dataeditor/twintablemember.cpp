@@ -2,7 +2,7 @@
                           twintablemember.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -32,6 +32,7 @@ TwinTableMember::TwinTableMember (QWidget *parent, TwinTable *table, int trailin
 	setVScrollBarMode (QScrollView::AlwaysOn);
 	horizontalHeader()->installEventFilter (this);
 	verticalHeader()->installEventFilter (this);
+	setSelectionMode (QTable::Single);
 	
 	TwinTableMember::trailing_cols = trailing_cols;
 	TwinTableMember::trailing_rows = trailing_rows;
@@ -163,6 +164,65 @@ void TwinTableMember::setCellContentFromEditor (int row, int col) {
 	}
 	
 	viewport ()->setFocus ();
+}
+
+QCString TwinTableMember::encodeSelection () {
+	RK_TRACE (EDITOR);
+
+	int top_row, left_col, bottom_row, right_col;
+	getSelectionBoundaries (&top_row, &left_col, &bottom_row, &right_col);
+
+	QString data;
+	for (int row=top_row; row <= bottom_row; ++row) {
+		for (int col=left_col; col <= right_col; ++col) {
+			data.append (text (row, col));
+			if (col != right_col) {
+				data.append ("\t");
+			}
+		}
+		if (row != bottom_row) {
+			data.append ("\n");
+		}
+	}
+
+	return data.local8Bit ();
+}
+
+void TwinTableMember::blankSelected () {
+	RK_TRACE (EDITOR);
+
+	int top_row, left_col, bottom_row, right_col;
+	getSelectionBoundaries (&top_row, &left_col, &bottom_row, &right_col);
+
+	for (int row=top_row; row <= bottom_row; ++row) {
+		for (int col=left_col; col <= right_col; ++col) {
+			clearCell (row, col);
+		}
+	}
+}
+
+void TwinTableMember::getSelectionBoundaries (int *top_row, int *left_col, int *bottom_row, int *right_col) {
+	RK_TRACE (EDITOR);
+
+	RK_ASSERT (top_row);
+	RK_ASSERT (bottom_row);
+	RK_ASSERT (left_col);
+	RK_ASSERT (right_col);
+
+	int selnum = -1;
+	if (currentSelection () >= 0) selnum = currentSelection ();
+	else if (numSelections () >= 1) selnum = 0;		// this is the one and only selection, as we only allow one single selection. Unfortunately, QTable does not regard a selection as current, if it was added programatically, instead of user-selected.
+	if (selnum >= 0) {
+		QTableSelection sel = selection (selnum);
+		*top_row = sel.topRow ();
+		*left_col = sel.leftCol ();
+		*bottom_row = sel.bottomRow ();
+		*right_col = sel.rightCol ();
+	} else {
+		// Nothing selected. Set current cell coordinates
+		*top_row = *bottom_row = currentRow ();
+		*left_col = *right_col = currentColumn ();
+	}
 }
 
 #include "twintablemember.moc"

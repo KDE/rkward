@@ -2,7 +2,7 @@
                           rkeditordataframe  -  description
                              -------------------
     begin                : Fri Aug 20 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -178,12 +178,6 @@ void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
 
 	// now store the meta-data
 	getObject ()->writeMetaData (sync_chain);
-}
-
-void RKEditorDataFrame::paste (QByteArray content) {
-	RK_TRACE (EDITOR);
-
-	pasteEncoded (content);
 }
 
 void RKEditorDataFrame::columnDeletionRequested (int col) {

@@ -2,7 +2,7 @@
                           editlabelsdialog  -  description
                              -------------------
     begin                : Tue Sep 21 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,7 +18,10 @@
 
 #include <klocale.h>
 #include <kdialogbase.h>
+#include <kaction.h>
 
+#include <qapplication.h>
+#include <qclipboard.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
@@ -28,6 +31,7 @@
 #include <qstyle.h>
 
 #include "../core/rkvariable.h"
+#include "rkdrag.h"
 #include "celleditor.h"
 
 #include "../debug.h"
@@ -38,22 +42,89 @@ LevelsTable::LevelsTable (QWidget *parent, RObject::ValueLabels *labels) : TwinT
 	RK_ASSERT (labels);
 	storage = labels;
 
-	setNumCols (2);
+	updating_size = false;
+
+	setNumCols (1);
 	setNumRows (storage->count () + 1);
-	horizontalHeader ()->setLabel (0, i18n ("Index"));
-	horizontalHeader ()->setLabel (1, i18n ("Label"));
-	verticalHeader ()->hide ();
-	setLeftMargin (0);
-	setColumnReadOnly (0, true);
+	horizontalHeader ()->setLabel (0, i18n ("Label"));
+	setHScrollBarMode (QScrollView::AlwaysOff);
+	setLeftMargin (40);
+	setMinimumWidth (80);
+
+	KActionCollection *ac = new KActionCollection (this);
+	KStdAction::cut (this, SLOT (cut ()), ac);
+	KStdAction::copy (this, SLOT (copy ()), ac);
+	KStdAction::paste (this, SLOT (paste ()), ac);
 }
 
 LevelsTable::~LevelsTable () {
 	RK_TRACE (EDITOR);
 }
 
+void LevelsTable::cut () {
+	RK_TRACE (EDITOR);
+
+	copy ();
+	blankSelected ();
+}
+
+void LevelsTable::copy () {
+	RK_TRACE (EDITOR);
+
+	QApplication::clipboard()->setData (new RKDrag (this));
+}
+
+void LevelsTable::paste () {
+	RK_TRACE (EDITOR);
+
+// Unfortunately, we need to duplicate some of TwinTable::paste () and RKEditorDataFramPart::doPaste. Those are not easy to reconcile.
+
+	// actually, we don't care, whether tsv or plain gets pasted - it's both
+	// treated the same. We should however encourage external senders to
+	// provided the two in order.
+	QString pasted;
+	if (QApplication::clipboard()->data()->provides ("text/tab-separated-values")) {
+		pasted = QString (QApplication::clipboard ()->data ()->encodedData ("text/tab-separated-values"));
+	} else if (QApplication::clipboard()->data()->provides ("text/plain")) {
+		pasted = QString (QApplication::clipboard ()->data ()->encodedData ("text/plain"));
+	}
+
+	int content_offset = 0;
+	int content_length = pasted.length ();
+	bool look_for_tabs;			// break on tabs or on lines?
+	int next_delim;
+
+	int first_tab = pasted.find ('\t', 0);
+	if (first_tab < 0) first_tab = content_length;
+	int first_line = pasted.find ('\n', 0);
+	if (first_line < 0) first_line = content_length;
+	if (first_tab < first_line) {
+		look_for_tabs = true;
+		next_delim = first_tab;
+	} else {
+		look_for_tabs = false;
+		next_delim = first_line;
+	}
+
+	int row = currentRow ();
+	do {
+		if (row >= numTrueRows ()) insertRows (row);
+		setText (row, 0, pasted.mid (content_offset, next_delim - content_offset));
+
+		++row;
+		content_offset = next_delim + 1;
+		if (look_for_tabs) {
+			next_delim = pasted.find ('\t', content_offset);
+		} else {
+			next_delim = pasted.find ('\n', content_offset);
+		}
+		if (next_delim < 0) next_delim = content_length;
+	} while (content_offset < content_length);
+}
+
 void LevelsTable::setText (int row, int col, const QString &text) {
 	RK_TRACE (EDITOR);
-	RK_ASSERT (col == 1);
+	RK_ASSERT (col == 0);
 
 	storage->insert (QString::number (row+1), text);
 	if (text.isEmpty ()) {
@@ -64,11 +135,13 @@ void LevelsTable::setText (int row, int col, const QString &text) {
 		}
 		setNumRows (maxrow + 2);
 	}
+
+	updateCell (row, col);
 }
 
 QString LevelsTable::text (int row, int col) const {
 	RK_TRACE (EDITOR);
-	RK_ASSERT (col == 1);
+	RK_ASSERT (col == 0);
 	RK_ASSERT (row < numTrueRows ());
 
 	return ((*storage)[QString::number (row+1)]);
@@ -118,15 +191,7 @@ void LevelsTable::paintCell (QPainter *p, int row, int col, const QRect &cr, boo
 		p->setPen (cg.text ());
 	}
 
-	QString dummy;
-	if (row < numTrueRows ()) {
-		if (!col) {
-			dummy.setNum (row +1);
-		} else {
-			dummy = (*storage)[QString::number (row+1)];
-		}
-	}
-	p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignLeft, dummy);
+	p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignLeft, (*storage)[QString::number (row+1)]);
 }
 
 
@@ -134,7 +199,7 @@ QWidget *LevelsTable::beginEdit (int row, int col, bool) {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (!tted);
 
-	if (col < 1) return 0;
+	if (col != 0) return 0;
 
 	if (row >= numTrueRows ()) {
 		insertRows (numRows (), 1);
@@ -154,6 +219,39 @@ QWidget *LevelsTable::beginEdit (int row, int col, bool) {
 	updateCell (row, col);
 	return (tted);
 }
+
+void LevelsTable::resizeEvent (QResizeEvent *e) {
+	RK_TRACE (EDITOR);
+
+	updating_size = true;
+	int nwidth = e->size ().width () - leftMargin ();
+	if (nwidth < 40) {
+		setLeftMargin (e->size ().width () - 40);
+		nwidth = 40;
+	}
+	setColumnWidth (0, nwidth);
+	updating_size = false;
+
+	QTable::resizeEvent (e);
+}
+
+void LevelsTable::columnWidthChanged (int col) {
+	RK_TRACE (EDITOR);
+
+	if (updating_size) return;
+
+	updating_size = true;
+
+	if (columnWidth (0) < 40) {
+		setColumnWidth (0, 40);
+	}
+	setLeftMargin (width () - columnWidth (0));
+
+	updating_size = false;
+
+	QTable::columnWidthChanged (col);
+}
+
 
 
 EditLabelsDialog::EditLabelsDialog (QWidget *parent, RKVariable *var, int mode) : QDialog (parent) {

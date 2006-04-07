@@ -2,7 +2,7 @@
                           rkeditordataframe  -  description
                              -------------------
     begin                : Fri Aug 20 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -43,8 +43,6 @@ public:
 	
 	//void objectDeleted (RObject *object);
 	//void objectMetaModified (RObject *object);
-
-	void paste (QByteArray content);
 
 /** Tells the editor to (unconditionally!) remove the object from its list. */
 	void removeObject (RObject *object);

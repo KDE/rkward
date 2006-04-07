@@ -2,7 +2,7 @@
                           twintable.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -204,11 +204,7 @@ void TwinTable::deleteRow (int where, TwinTableMember *table) {
 void TwinTable::headerClicked (int col) {
 	RK_TRACE (EDITOR);
 
-	QTableSelection selection;
-	selection.init (0, col);
-	selection.expandTo (dataview->numTrueRows (), col);
-
-	dataview->addSelection (selection);
+	dataview->selectCells (0, col, dataview->numTrueRows (), col);
 }
 
 // TODO: handle situation when several entire rows/cols are selected!
@@ -266,7 +262,7 @@ void TwinTable::dataClearSelection () {
 
 RKDrag *TwinTable::makeDrag () {
 	RK_TRACE (EDITOR);
-	return (new RKDrag (this));
+	return (new RKDrag (activeTable ()));
 }
 
 void TwinTable::insertColumnRight () {
@@ -299,42 +295,7 @@ void TwinTable::deleteRow () {
 	deleteRow (header_pos);
 }
 
-QCString TwinTable::encodeSelection () {
-	RK_TRACE (EDITOR);
-
-	QCString encoded_data;
-	QTable *table = activeTable ();
-	if (!table) {
-		// no selection -> return empty
-		return encoded_data;
-	}
-
-	QTableSelection selection;
-	if (table->currentSelection () >= 0) {
-		selection = table->selection (table->currentSelection ());
-	} else {
-		// Nothing selected. Copy current cell
-		selection.init (table->currentRow (), table->currentColumn ());
-		selection.expandTo (table->currentRow (), table->currentColumn ());
-	}
-
-	QString data;
-	for (int row=selection.topRow (); row <= selection.bottomRow (); row++) {
-		for (int col=selection.leftCol (); col <= selection.rightCol (); col++) {
-			data.append (table->text (row, col));
-			if (col != selection.rightCol ()) {
-				data.append ("\t");
-			}
-		}
-		if (row != selection.bottomRow ()) {
-			data.append ("\n");
-		}
-	}
-	encoded_data = data.local8Bit ();
-	return encoded_data;
-}
-
-void TwinTable::pasteEncoded (QByteArray content) {
+void TwinTable::paste (QByteArray &content) {
 	RK_TRACE (EDITOR);
 
 	flushEdit ();
@@ -342,97 +303,67 @@ void TwinTable::pasteEncoded (QByteArray content) {
 	TwinTableMember *table = activeTable ();
 	if (!table) return;
 
+	int top_row, left_col, bottom_row, right_col;
+	table->getSelectionBoundaries (&top_row, &left_col, &bottom_row, &right_col);
+	if (paste_mode == RKEditor::PasteToSelection) {
+		// ok, we got our values
+	} else if (paste_mode == RKEditor::PasteToTable) {
+		bottom_row = table->numTrueRows () - 1;
+		right_col = table->numTrueCols () - 1;
+		if (right_col < left_col) return;			// may happen, if the current cell is in the trailing cols/rows
+		if (bottom_row < top_row) return;
+	} else if (paste_mode == RKEditor::PasteEverywhere) {
+		bottom_row = INT_MAX;
+		right_col = INT_MAX;
+	}
+	if (table == varview) {			// do not allow new rows in the varview
+		if (bottom_row >= varview->numTrueRows ()) bottom_row = varview->numTrueRows () - 1;
+	}
+
 	QValueList<RKVariable*> col_list;
-	QTableSelection selection;
-	if (table->numSelections () <= 0) {
-		if ((table->currentRow () < 0) || (table->currentColumn () < 0)) return;
-		selection.init (table->currentRow (), table->currentColumn ());
-		selection.expandTo (table->currentRow (), table->currentColumn ());
-		table->addSelection (selection);
-	}
-	// Unfortunately, selections added via addSelection () don't get "current".
-	// So for this case, we have to set it explicitely --- what did I mean to say with that comment?
-	if (table->currentSelection () >= 0) {
-		selection = table->selection (table->currentSelection ());
-	} else {
-		selection = table->selection (0);
-	}
 
 	QString pasted = content;
+	int row = top_row;
+	int col = left_col;
+	int content_offset = 0;
+	int content_length = pasted.length ();
+	do {
+		// first add new rows/cols if needed. Range check is done below, and on first iteration, we're always inside the valid range
+		if (row >= table->numTrueRows ()) insertNewRow (-1, table);
+		if (col >= table->numTrueCols ()) insertNewColumn ();
 
-	int row=selection.topRow ();
-	int col=selection.leftCol ();
-	while (pasted.length ()) {
-		int next_tab = pasted.find ("\t");	
-		if (next_tab < 0) next_tab = pasted.length ();
-		int next_delim = next_tab;
-		int next_line = pasted.find ("\n");
-		if (next_line < 0) next_line = pasted.length ();
-		if (next_line < next_tab) {
-			next_delim = next_line;
-		}
-		if (!col_list.contains (getColObject (col))) {
+		if (!col_list.contains (getColObject (col))) {		// avoid syncing while doing the paste
 			col_list.append (getColObject (col));
 			getColObject (col)->setSyncing (false);
 		}
-		table->setText (row, col, pasted.left (next_delim));
-		if (next_delim == next_tab) {
-			col++;
-			if (paste_mode == RKEditor::PasteToSelection) {
-				if (col > selection.rightCol ()) {
-					next_delim = next_line;
-					row++;
-					col = selection.leftCol ();
-					if (row > selection.bottomRow ()) {
-						next_delim = pasted.length ();
-					}
-				}
-			}
-			if (col >= table->numTrueCols ()) {
-				if (paste_mode == RKEditor::PasteToTable) {
-					next_delim = next_line;					
-					row++;
-					col = selection.leftCol ();
-					if (row >= table->numTrueRows ()) {
-						next_delim = pasted.length ();
-					}
-				} else {
-					// the if below only fails, if this is the last line.
-					// We don't want a new column, then.
-					// Everything else does not get affected in this situation.
-					if (next_delim != next_line) {
-						insertNewColumn ();
-					}
-				}
-			}
-		} else {
-			row++;
-			col=selection.leftCol ();
-			if (paste_mode == RKEditor::PasteToSelection) {
-				if (row > selection.bottomRow ()) {
-					next_delim = pasted.length ();
-				}
-			}
-			if (row >= table->numTrueRows ()) {
-				if (paste_mode == RKEditor::PasteToTable) {
-					next_delim = pasted.length ();
-				} else {
-					if (next_delim != (pasted.length () -1)) {
-						insertNewRow (-1, table);
-					}
-				}
-			}
+
+		int next_tab = pasted.find ('\t', content_offset);
+		if (next_tab < 0) next_tab = content_length;
+		int next_delim = next_tab;
+		int next_line = pasted.find ('\n', content_offset);
+		if (next_line < 0) next_line = content_length;
+		if (next_line < next_tab) next_delim = next_line;
+
+		table->setText (row, col, pasted.mid (content_offset, next_delim - content_offset));
+
+		if (next_delim == next_tab) {						// move to next row/column
+			++col;
+		} else if (next_delim == next_line) {
+			col = left_col;
+			++row;
 		}
 
-		// proceed to the next segment
-		if (pasted.length () <= (next_delim + 1)) {
-			// unfortunately QString.right (<=0) does not return an empty string!
-			pasted = QString::null;
-		} else {
-			pasted=pasted.right (pasted.length () - (next_delim + 1));
+		if (col > right_col) {										// check boundaries for next iteration
+			next_delim = next_line;
+			col = left_col;
+			++row;
 		}
-	}
-	
+		if (row > bottom_row) break;
+
+		content_offset = next_delim + 1;
+	} while (content_offset < content_length);
+
+	// now do the syncing
 	for (QValueList<RKVariable*>::ConstIterator it = col_list.constBegin (); it != col_list.constEnd (); ++it) {
 		(*it)->syncDataToR ();
 		(*it)->setSyncing (true);
@@ -454,17 +385,10 @@ TwinTableMember *TwinTable::activeTable () {
 void TwinTable::clearSelected () {
 	RK_TRACE (EDITOR);
 
-	QTable *table = activeTable ();
+	TwinTableMember *table = activeTable ();
  	if (!table) return;
 
-	QTableSelection selection;
-	selection = table->selection (table->currentSelection ());
-
-	for (int row=selection.topRow (); row <= selection.bottomRow (); row++) {
-		for (int col=selection.leftCol (); col <= selection.rightCol (); col++) {
-			table->clearCell (row, col);
-		}
-	}
+	table->blankSelected ();
 }
 
 void TwinTable::setPasteMode (RKEditor::PasteMode mode) {

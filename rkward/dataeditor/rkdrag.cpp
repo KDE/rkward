@@ -2,7 +2,7 @@
                           rkdrag.cpp  -  description
                              -------------------
     begin                : Thu Oct 31 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -17,17 +17,20 @@
 
 #include "rkdrag.h"
 
-#include "twintable.h"
+#include "twintablemember.h"
 
 #include "../debug.h"
 
-RKDrag::RKDrag(TwinTable *dragSource, const char *name) : QDragObject (dragSource, name){
+RKDrag::RKDrag (TwinTableMember *drag_source) : QDragObject (drag_source){
 	RK_TRACE (EDITOR);
 
-	data = dragSource->encodeSelection ();
+	RK_ASSERT (drag_source);
+	if (drag_source) {
+		data = drag_source->encodeSelection ();
+	}
 }
 
-RKDrag::~RKDrag(){
+RKDrag::~RKDrag () {
 	RK_TRACE (EDITOR);
 }
 
@@ -45,14 +48,11 @@ const char* RKDrag::format (int i) const {
 QByteArray RKDrag::encodedData (const char * mimeType) const {
 	RK_TRACE (EDITOR);
 	QString request = mimeType;
-	if (request == format (0)) {
+	if ((request == format (0)) || (request == format (1))) {
 		return data;
 	}
-	if (request == format (1)) {
-		return data;
-	}
-	return data;
-	return empty;
+
+	return QCString ();
 }
 
 bool RKDrag::provides (const char *mimeType) {

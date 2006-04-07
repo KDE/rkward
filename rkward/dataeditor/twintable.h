@@ -2,7 +2,7 @@
                           twintable.h  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -54,9 +54,8 @@ public:
 	void insertNewRow (int where=-1, TwinTableMember *table=0);
 /** Inserts the row at the given position (or at the end for -1) in the given table. Don't try to do this in the varview, yet! */
 	void deleteRow (int where, TwinTableMember *table=0);
-	QCString encodeSelection ();
-/** Pastes content to the current selection. */
-	void pasteEncoded (QByteArray content);
+/** Pastes content to the current table */
+	void paste (QByteArray &content);
 /** Same as above, but flips the data (i.e. row <-> cols) */
 //	void pasteEncodedFlipped (QByteArray content);
 /** Clear the currently selected cells */

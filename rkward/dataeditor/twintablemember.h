@@ -2,7 +2,7 @@
                           twintablemember.h  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -81,6 +81,11 @@ public:
 	bool eventFilter (QObject *object, QEvent *event);
 /** actually simply calls QTable::keyPressEvent (). Reimplemented only to allow CellEditor access to this function */
 	void keyPressEvent (QKeyEvent *e) { QTable::keyPressEvent (e); };
+	QCString encodeSelection ();
+/** blanks out the currently selected cells (or the currently active cell, if there is no selection) */
+	void blankSelected ();
+/** shortcut to get the boundaries of the current selection */
+	void getSelectionBoundaries (int *top_row, int *left_col, int *bottom_row, int *right_col);
 signals:
 	void headerRightClick (int row, int col);
 protected:

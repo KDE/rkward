@@ -2,7 +2,7 @@
                           editlabelsdialog  -  description
                              -------------------
     begin                : Tue Sep 21 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -26,10 +26,12 @@ class RKVariable;
 #include "twintablemember.h"
 
 /** special mini class provides the table in EditLabelsDialog
+TODO: make copy/paste work
 
 @author Thomas Friedrichsmeier
 */
 class LevelsTable : public TwinTableMember {
+	Q_OBJECT
 public:
 	LevelsTable (QWidget *parent, RObject::ValueLabels *labels);
 	~LevelsTable ();
@@ -41,9 +43,22 @@ public:
 	void setText (int row, int col, const QString &text);
 /** reimplemented form QTable not to work on RObject::ValueLabels instead of QTableItems */
 	QString text (int row, int col) const;
+public slots:
+/** cut */
+	void cut();
+/** copy */
+	void copy();
+/** paste */
+	void paste();
+protected:
+/** reimplemented to resize the table columns so that there's no unused space to the right */
+	void resizeEvent (QResizeEvent *e);
+/** reimplemented to resize the table columns so that there's no unused space to the right */
+	void columnWidthChanged (int col);
 private:
 friend class EditLabelsDialog;
 	RObject::ValueLabels *storage;
+	bool updating_size;
 };
 
 /**

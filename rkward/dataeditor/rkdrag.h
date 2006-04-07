@@ -2,7 +2,7 @@
                           rkdrag.h  -  description
                              -------------------
     begin                : Thu Oct 31 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -20,23 +20,20 @@
 
 #include <qdragobject.h>
 
-class TwinTable;
+class TwinTableMember;
 
-/**
+/** A QDragObject that gets its data from a TwinTableMember. Used for all copy/paste/drag operations involving TwinTableMembers.
   *@author Thomas Friedrichsmeier
   */
-
 class RKDrag : public QDragObject  {
 public: 
-	RKDrag(TwinTable *dragSource=0, const char *name=0);
-	~RKDrag();
+	RKDrag (TwinTableMember *drag_source=0);
+	~RKDrag ();
 	const char* format (int i=0) const;
 	QByteArray encodedData (const char * mimeType) const;
 	bool provides (const char *mimeType);
 private:
 	QCString data;
-	QCString empty;
-protected:
 };
 
 #endif

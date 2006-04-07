@@ -47,7 +47,7 @@ public:
 /// editing functions:
 	virtual void clearSelected () = 0;
 	virtual RKDrag *makeDrag () = 0;
-	virtual void paste (QByteArray content) = 0;
+	virtual void paste (QByteArray &content) = 0;
 	enum PasteMode {PasteEverywhere, PasteToTable, PasteToSelection};
 	virtual void setPasteMode (PasteMode mode) = 0;
 

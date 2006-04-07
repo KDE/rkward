@@ -2,7 +2,7 @@
                           rkeditordataframepart  -  description
                              -------------------
     begin                : Wed Sep 14 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -91,14 +91,14 @@ void RKEditorDataFramePart::slotEditPasteToTable() {
 	RK_TRACE (EDITOR);
 	
 	editor->setPasteMode (RKEditor::PasteToTable);
-	doPaste();
+	doPaste ();
 }
 
 void RKEditorDataFramePart::slotEditPasteToSelection() {
 	RK_TRACE (EDITOR);
 	
 	editor->setPasteMode (RKEditor::PasteToSelection);
-	doPaste();
+	doPaste ();
 }
 
 void RKEditorDataFramePart::doPaste () {
@@ -111,10 +111,12 @@ void RKEditorDataFramePart::doPaste () {
 	// provided the two in order.
 	if (QApplication::clipboard()->data()->provides ("text/tab-separated-values")) {
 		RK_DO (qDebug ("paste tsv"), EDITOR, DL_DEBUG);
-		editor->paste (QApplication::clipboard()->data()->encodedData ("text/tab-separated-values"));
+		QByteArray data = QApplication::clipboard()->data()->encodedData ("text/tab-separated-values");
+		editor->paste (data);
 	} else if (QApplication::clipboard()->data()->provides ("text/plain")) {
 		RK_DO (qDebug ("paste plaing"), EDITOR, DL_DEBUG);
-		editor->paste (QApplication::clipboard()->data()->encodedData ("text/plain"));
+		QByteArray data = QApplication::clipboard()->data()->encodedData ("text/plain");
+		editor->paste (data);
 	}
 
 	RKGlobals::rkApp ()->slotSetStatusReady ();
