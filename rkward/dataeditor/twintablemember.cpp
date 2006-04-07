@@ -18,6 +18,8 @@
 #include "twintablemember.h"
 
 #include <qevent.h>
+#include <qpainter.h>
+#include <qstyle.h>
 
 #include "celleditor.h"
 #include "twintable.h"
@@ -224,5 +226,67 @@ void TwinTableMember::getSelectionBoundaries (int *top_row, int *left_col, int *
 		*left_col = *right_col = currentColumn ();
 	}
 }
+
+void TwinTableMember::paintCellInternal (QPainter *p, int row, int col, const QRect &cr, bool selected, const QColorGroup &cg, QBrush *brush_override, QPen *pen_override, const QString &text, int alignment) {
+	// no trace for paint operations
+
+	// draw background
+	QBrush brush = cg.brush (QColorGroup::Base);
+	if (!brush_override) {
+		if (selected) {
+			brush = cg.brush(QColorGroup::Highlight);
+			if ((row >= numTrueRows ()) || (col >= numTrueCols ())) {
+				brush = QBrush (QColor (127, 127, 255));
+			}
+		} else {
+			if ((row >= numTrueRows ()) || (col >= numTrueCols ())) {
+				brush = QBrush (Qt::gray);
+			}
+		}
+	} else {
+		brush = *brush_override;
+	}
+	p->fillRect(0, 0, cr.width(), cr.height(), brush);
+
+	// draw grid
+	QPen pen (p->pen ());
+	int gridColor = style ().styleHint (QStyle::SH_Table_GridLineColor, this);
+	if (gridColor != -1) {
+		const QPalette &pal = palette ();
+		if (cg != colorGroup () && cg != pal.disabled () && cg != pal.inactive ()) p->setPen (cg.mid ());
+		else p->setPen ((QRgb) gridColor);
+	} else {
+		p->setPen (cg.mid ());
+	}
+	int x2 = cr.width () - 1;
+	int y2 = cr.height () - 1;
+	p->drawLine (x2, 0, x2, y2);
+	p->drawLine (0, y2, x2, y2);
+	p->setPen (pen);
+
+	if (tted && (currEditRow () == row) && (currEditCol () == col)) {
+		tted->raise ();
+		return;
+	}
+
+	if (text.isNull ()) return;
+
+	if (!pen_override) {
+		if (selected) {
+			p->setPen (cg.highlightedText());
+		} else {
+			p->setPen (cg.text ());
+		}
+	} else {
+		p->setPen (*pen_override);
+	}
+
+	if (alignment == 1) {
+		p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignRight, text);
+	} else {
+		p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignLeft, text);
+	}
+}
+
 
 #include "twintablemember.moc"

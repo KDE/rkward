@@ -37,11 +37,11 @@ public:
 	~LevelsTable ();
 /** reimplemented form QTable not to add trailing rows/cols if needed */
 	QWidget *beginEdit (int row, int col, bool replace);
-/** reimplemented form QTable not to work on RObject::ValueLabels instead of QTableItems */
+/** reimplemented form QTable  to work on RObject::ValueLabels instead of QTableItems */
 	void paintCell (QPainter *p, int row, int col, const QRect &cr, bool selected, const QColorGroup &cg);
-/** reimplemented form QTable not to work on RObject::ValueLabels instead of QTableItems */
+/** reimplemented form QTable to work on RObject::ValueLabels instead of QTableItems */
 	void setText (int row, int col, const QString &text);
-/** reimplemented form QTable not to work on RObject::ValueLabels instead of QTableItems */
+/** reimplemented form QTable to work on RObject::ValueLabels instead of QTableItems */
 	QString text (int row, int col) const;
 public slots:
 /** cut */

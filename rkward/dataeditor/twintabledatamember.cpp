@@ -61,61 +61,31 @@ void TwinTableDataMember::setText (int row, int col, const QString &text) {
 
 void TwinTableDataMember::paintCell (QPainter *p, int row, int col, const QRect &cr, bool selected, const QColorGroup &cg) {
 	// no trace for paint operations
+
 	RKVariable *var = table->getColObject (col);
 	RKVariable::Status cell_state = RKVariable::ValueInvalid;
 	if (var) cell_state = var->cellStatus (row);
-	
-	// draw background
-	QBrush brush = QBrush (Qt::red);
-	if (selected) {
-		brush = cg.brush(QColorGroup::Highlight);
-	}
-	if ((row >= numTrueRows ()) || (!var)) {
-		brush = QBrush (Qt::gray);
-	} else if (cell_state != RKVariable::ValueInvalid) {
-		if (!selected) {
-			brush = cg.brush (QColorGroup::Base);
+
+	QBrush *brush_override = 0;
+	QPen *pen_override = 0;
+	if (var) {
+		if (cell_state == RKVariable::ValueInvalid) {
+			brush_override = new QBrush (Qt::red);
+		} else if (cell_state == RKVariable::ValueUnknown) {
+			pen_override = new QPen (cg.light ());
 		}
 	}
-	p->fillRect(0, 0, cr.width(), cr.height(), brush);
 
-	// draw grid
-	QPen pen (p->pen ());
-	int gridColor = style ().styleHint (QStyle::SH_Table_GridLineColor, this);
-	if (gridColor != -1) {
-		const QPalette &pal = palette ();
-		if (cg != colorGroup () && cg != pal.disabled () && cg != pal.inactive ()) p->setPen (cg.mid ());
-		else p->setPen ((QRgb) gridColor);
-	} else {
-		p->setPen (cg.mid ());
-	}
-	int x2 = cr.width () - 1;
-	int y2 = cr.height () - 1;
-	p->drawLine (x2, 0, x2, y2);
-	p->drawLine (0, y2, x2, y2);
-	p->setPen (pen);
-
-	if (tted && (currEditRow () == row) && (currEditCol () == col)) {
-		tted->raise ();
-		return;
-	}
-	
-	// draw text
-	if (selected) {
-		p->setPen (cg.highlightedText());
-	} else if (cell_state == RKVariable::ValueUnknown) {
-		p->setPen (cg.light ());
-	} else {
-		p->setPen (cg.text ());
-	}
-
+	QString text;
+	int align = 0;
 	if (var && (row < numTrueRows ())) {
-		if (var->getAlignment () == RKVariable::AlignCellRight) {
-			p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignRight, var->getFormatted (row));
-		} else {
-			p->drawText (2, 0, cr.width () - 4, cr.height (), Qt::AlignLeft, var->getFormatted (row));
-		}
+		text = var->getFormatted (row);
+		align = var->getAlignment ();
 	}
+	paintCellInternal (p, row, col, cr, selected, cg, brush_override, pen_override, text, align);
+
+	delete pen_override;
+	delete brush_override;
 }
 
 QWidget *TwinTableDataMember::beginEdit (int row, int col, bool) {

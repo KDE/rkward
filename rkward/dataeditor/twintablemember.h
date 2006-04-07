@@ -86,6 +86,12 @@ public:
 	void blankSelected ();
 /** shortcut to get the boundaries of the current selection */
 	void getSelectionBoundaries (int *top_row, int *left_col, int *bottom_row, int *right_col);
+/** internal function to paint the cell. Accepts the parameters of QTable::paintCell, and also:
+@param brush_override If not null, the cell-background will be painted in this brush
+@param pen_override If not null, the cell text will be painted in this pen
+@param text The text to draw
+@param aligment Alignment of the text. 0 = Left, 1=Right */
+	void paintCellInternal (QPainter *p, int row, int col, const QRect &cr, bool selected, const QColorGroup &cg, QBrush *brush_override, QPen *pen_override, const QString &text, int alignment);
 signals:
 	void headerRightClick (int row, int col);
 protected:
