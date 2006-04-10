@@ -56,4 +56,44 @@ namespace RKCommonFunctions {
 		}
 	}
 
+	void moveContainer (KXMLGUIClient *client, const QString &tagname, const QString &name, const QString &to_name, bool recursive) {
+		QDomDocument doc = client->xmlguiBuildDocument ();
+		if  (doc.documentElement ().isNull ()) doc = client->domDocument ();
+	
+		// find the given elements
+		QDomElement e = doc.documentElement ();
+
+		QDomElement from_elem;
+		QDomElement to_elem;
+
+		QDomNodeList list = e.elementsByTagName (tagname);
+		int count = list.count ();
+		for (int i = 0; i < count; ++i) {
+			QDomElement elem = list.item (i).toElement ();
+			if (elem.isNull ()) continue;
+			if (elem.attribute ("name") == name) {
+				from_elem = elem;
+			} else if (elem.attribute ("name") == to_name) {
+				to_elem = elem;
+			}
+		}
+
+		// move
+		from_elem.parentNode ().removeChild (from_elem);
+		to_elem.appendChild (from_elem);
+
+		// set result
+		client->setXMLGUIBuildDocument (doc);
+
+		// recurse
+		if (recursive) {
+			QPtrList <KXMLGUIClient> *children = const_cast<QPtrList <KXMLGUIClient> *> (client->childClients ());
+			if (children) {
+				for (KXMLGUIClient *child = children->first (); child; child = children->next ()) {
+					moveContainer (child, tagname, name, to_name, true);
+				}
+			}
+		}
+	}
+
 }	// namespace

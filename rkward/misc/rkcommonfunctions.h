@@ -18,6 +18,7 @@
 #define RKCOMMONFUNCTIONS_H
 
 class QStringList;
+class QString;
 class QDomNode;
 class KXMLGUIClient;
 
@@ -31,6 +32,8 @@ namespace RKCommonFunctions {
 	void removeNamedElementsRecursive (const QStringList &names, QDomNode &parent);
 /** remove containers (actions, menus, etc.) with attribute 'name="..."' from KXMLGUIClient from s XML gui, where "..." is any of the strings in names. If recursive, also removes those containers from child clients. */
 	void removeContainers (KXMLGUIClient *from, const QStringList &names, bool recursive);
+/** move container (action, menu, etc.) with tagname "tagname" and attribute 'name="..."' to be a child node of the tag with tagname=tagname and attribute name=to_name. Can be used to make a top-level menu a sub-menu of another menu instead */
+	void moveContainer (KXMLGUIClient *client, const QString &tagname, const QString &name, const QString &to_name, bool recursive);
 };
 
 #endif

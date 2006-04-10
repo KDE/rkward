@@ -46,6 +46,7 @@
 #include <kiconloader.h>
 
 #include "../rkeditormanager.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "../khelpdlg.h"
@@ -65,6 +66,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 		RK_ASSERT (m_doc);
 		m_view = (Kate::View *) m_doc->widget();
 	}
+
+	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
+	RKCommonFunctions::removeContainers (m_doc, QStringList::split (',', "bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line"), true);
+	RKCommonFunctions::moveContainer (m_doc, "Menu", "tools", "edit", true);
 
 	m_doc->insertChildClient (new RKCommandEditorWindowPart (m_view, this));
 

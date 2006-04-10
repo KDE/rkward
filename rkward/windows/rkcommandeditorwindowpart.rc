@@ -1,6 +1,12 @@
 <!DOCTYPE kpartgui>
 <kpartgui name="rkward" version="0.3.3">
 	<MenuBar>
+		<Menu name="edit" noMerge="1"><text>&amp;Edit</text>
+			<Menu name="tools"><text>&amp;Tools Move</text>
+				<Merge/>
+			</Menu>
+			<Merge/>
+		</Menu>
 		<Menu name="run"><text>&amp;Run</text>
 			<Action name="run_line"/>
 			<Action name="run_selection"/>
