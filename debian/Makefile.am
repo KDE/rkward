@@ -1,2 +1,2 @@
-EXTRA_DIST = changelog compat control copyright dirs docs files postinst postrm README.Debian rules rkward.1
+EXTRA_DIST = changelog compat control copyright dirs docs files README.Debian rules rkward.1
 

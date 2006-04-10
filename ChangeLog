@@ -1,3 +1,8 @@
+- configure: if not overriden, and $KDEDIR is not set, assume --prefix=`kde-config --prefix` instead of /usr/local/kde/
+- remove some GUI clutter for Script File editor
+- rename "Command File" to "Script File"
+- rename "Command Stack" window to "Pending Jobs"
+- backspace or del clear cells in data.frame editor
 - reworked factor levels editor
 - in trailing rows/columns of the data.frame editor, change background color, when selected
 - explicitely set LC_NUMERIC to "C" at startup. R does not work correctly with other settings of LC_NUMERIC
@@ -14,7 +19,7 @@
 - fix status bar
 - handle non-existing and non-local URLs (links) in help window
 - use a shell wrapper around rkward to do some setup just like R. This should fix a number of minor quirks
-- Configure: use single configure option for location of R_HOME, and add check for libR.so
+- configure: use single configure option for location of R_HOME, and add check for libR.so
 - yet more code cleanups
 - keep main window caption up to date
 - update tab caption for command editor if filename changes (i.e. saved as)

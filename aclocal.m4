@@ -4595,7 +4595,11 @@ AC_DEFUN([KDE_SET_PREFIX],
 [
   unset CDPATH
   dnl make $KDEDIR the default for the installation
-  AC_PREFIX_DEFAULT(${KDEDIR:-/usr/local/kde})
+dnl ############################################ RKWARD specific change begin #################################
+  AC_PREFIX_DEFAULT(${KDEDIR:-`kde-config --prefix`})
+dnl ############################################ RKWARD specific change previous: #############################
+dnl  AC_PREFIX_DEFAULT(${KDEDIR:-/usr/local/kde})
+dnl ############################################ RKWARD specific change end ###################################
 
   if test "x$prefix" = "xNONE"; then
     prefix=$ac_default_prefix

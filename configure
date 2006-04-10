@@ -426,7 +426,7 @@ PACKAGE_STRING=
 PACKAGE_BUGREPORT=
 
 ac_unique_file="acinclude.m4"
-ac_default_prefix=${KDEDIR:-/usr/local/kde}
+ac_default_prefix=${KDEDIR:-`kde-config --prefix`}
 # Factoring default headers for most tests.
 ac_includes_default="\
 #include <stdio.h>
@@ -30739,16 +30739,6 @@ else
    LIB_KAB="-lkab $(LIB_KIMGIO) $(LIB_KDECORE)"
 
 fi
-
-
-#MIN_CONFIG(3)
-
-
-
-
-#MIN_CONFIG(3)
-
-
 
 
 #MIN_CONFIG(3)
