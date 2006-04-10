@@ -10,40 +10,30 @@ RKWard requires:
 Compilation
 ==================
 
+IMPORTANT: You will need to have the R shared library installed. This is typically located in a place like /usr/lib/R/lib/libR.so. Unfortunately, some distributions do not yet ship their R binary with the shared library. In those (rare) cases, you'll have to compile and install R on your own.
+
 Compilation / installation is basically just a
+
 # ./configure
 # make
 # make install
 
-you may need to pass the following options to configure:
-
+and in 95% of the cases this should be all you need. Here are some ./configure options you may need to set in the other 5%:
 
 --prefix=/path/to/kde
 
-you can determine your kde-directory by looking for some K-Application you know you have installed:
+defaults to 1) $KDEDIR or if that is not set 2) the output of "kde-config --prefix". If you have multiple versions of KDE installed, or need to specify the kde-directory for any other reason, you need to set this option explicitely.
 
-# which kedit
-
-and strip the final /bin of the path (e.g. if which kedit returns /usr/bin/kedit , use /usr ).
-
-for debian use --prefix=/usr
-
-
-You might also have to specify your qt (3) directory, passing the commandline-option
+One some systems you might also have to specify your qt (3) directory, passing the commandline-option
 --with-qt-dir=/usr/lib/qt3			(or similar)
 to configure.
 
-
-Likely you will need to specify the location of the R home directory:
---with-r-home=/path/to/R/home			(default is /usr/local/lib/R)
-If you have the standalone version of R installed, you can determine this directory by running:
-# R RHOME
-for debian use --with-r-home=/usr/lib/R
-
-You will need to have the R shared library installed. The makefiles assumes it to be in $R_HOME/lib/libR.so
-
-Personally, I need the following options for configure (debian sid):
---prefix=/usr --with-r-home=/usr/lib/R
+The options
+--with-r-home
+--with-r-includes
+--with-r-share
+--with-r-doc
+can be used to configure the details of your R installation. Usually these settings should be detected automatically, but if - for instance - R can not find its help files when run from RKWard, you may need to adjust --with-r-doc.
 
 
 Installation
@@ -59,5 +49,7 @@ Make sure you have set the correct path in ./configure (the --prefix=... option)
 Running
 ==================
 
-For now it's recommended to run RKWard from the command-line for debug-output. There are no useful commandline-options so far.
+For now it's recommended to run RKWard from the command-line for debug-output. For the few available command-line options see
+
+# rkward --help
 
