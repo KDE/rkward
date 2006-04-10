@@ -179,7 +179,7 @@ void RKwardApp::doPostInit () {
 	watch_view = addToolWindow (RKGlobals::rInterface ()->watch, KDockWidget::DockBottom, getMainDockWidget (), 10);
 	connect (RKGlobals::rInterface ()->watch, SIGNAL (raiseWatch ()), this, SLOT (raiseWatch ()));
 
-	RKGlobals::rcontrol->setCaption (i18n ("Command Stack"));
+	RKGlobals::rcontrol->setCaption (i18n ("Pending Jobs"));
 	RKGlobals::rcontrol->setName ("rcontrol");
 	addToolWindow (RKGlobals::rcontrol, KDockWidget::DockBottom, getMainDockWidget (), 10);
 	RKGlobals::rcontrol->hide ();		// this line is important! RControlWindow must do some initializations on first show, and be hidden until then.
@@ -269,11 +269,11 @@ void RKwardApp::initActions()
 	new_data_frame = new KAction (i18n ("Dataset"), 0, 0, this, SLOT (slotNewDataFrame ()), actionCollection (), "new_data_frame");
 	new_data_frame->setIcon("spreadsheet");
 	new_command_editor = KStdAction::openNew(this, SLOT(slotNewCommandEditor()), actionCollection(), "new_command_editor");
-	new_command_editor->setText (i18n ("Command File"));
+	new_command_editor->setText (i18n ("Script File"));
 	new_command_editor->setIcon ("source");
 
 	fileOpen = KStdAction::open(this, SLOT(slotOpenCommandEditor()), actionCollection(), "file_openy");
-	fileOpen->setText (i18n ("Open Command File"));
+	fileOpen->setText (i18n ("Open R Script File"));
 	fileOpenRecent = KStdAction::openRecent(this, SLOT(slotOpenCommandEditor (const KURL&)), actionCollection(), "file_open_recenty");
 	
 	fileOpenWorkspace = KStdAction::open(this, SLOT(slotFileOpenWorkspace()), actionCollection(), "file_openx");
