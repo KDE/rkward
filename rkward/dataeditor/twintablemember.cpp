@@ -25,8 +25,6 @@
 #include "twintable.h"
 #include "../debug.h"
 
-bool TwinTableMember::changing_width = false;
-
 TwinTableMember::TwinTableMember (QWidget *parent, TwinTable *table, int trailing_rows, int trailing_cols) : QTable (parent){
 	twin = 0;
 	TwinTableMember::table = table;
@@ -40,6 +38,7 @@ TwinTableMember::TwinTableMember (QWidget *parent, TwinTable *table, int trailin
 	TwinTableMember::trailing_rows = trailing_rows;
 	
 	tted = 0;
+	changing_width = false;
 
 	connect (this, SIGNAL (currentChanged (int, int)), this, SLOT (currentCellChanged (int, int)));
 }
@@ -173,6 +172,12 @@ QCString TwinTableMember::encodeSelection () {
 
 	int top_row, left_col, bottom_row, right_col;
 	getSelectionBoundaries (&top_row, &left_col, &bottom_row, &right_col);
+// QCString uses (explicit) sharing, so we're not being too wasteful, here
+	return (encodeRange (top_row, left_col, bottom_row, right_col));
+}
+
+QCString TwinTableMember::encodeRange (int top_row, int left_col, int bottom_row, int right_col) {
+	RK_TRACE (EDITOR);
 
 	QString data;
 	for (int row=top_row; row <= bottom_row; ++row) {
@@ -198,7 +203,7 @@ void TwinTableMember::blankSelected () {
 
 	for (int row=top_row; row <= bottom_row; ++row) {
 		for (int col=left_col; col <= right_col; ++col) {
-			clearCell (row, col);
+			setText (row, col, QString::null);
 		}
 	}
 }
@@ -288,5 +293,15 @@ void TwinTableMember::paintCellInternal (QPainter *p, int row, int col, const QR
 	}
 }
 
+void TwinTableMember::keyPressEvent (QKeyEvent *e) {
+	RK_TRACE (EDITOR);
+
+	if ((e->key () == Qt::Key_Delete) || (e->key () == Qt::Key_Backspace)) {
+		blankSelected ();
+		e->accept ();
+	} else {
+		QTable::keyPressEvent (e);
+	}
+}
 
 #include "twintablemember.moc"

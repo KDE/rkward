@@ -2,7 +2,7 @@
                           twintablemetamember  -  description
                              -------------------
     begin                : Mon Sep 13 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 

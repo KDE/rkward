@@ -79,9 +79,10 @@ public:
 	void setCellContentFromEditor (int row, int col);
 /** needed to detect right mouse clicks in the header and tab-keypresses in the CellEditor */
 	bool eventFilter (QObject *object, QEvent *event);
-/** actually simply calls QTable::keyPressEvent (). Reimplemented only to allow CellEditor access to this function */
-	void keyPressEvent (QKeyEvent *e) { QTable::keyPressEvent (e); };
+/** reimplemented to delete cell contents on DEL and BACKSPACE. Placed in public, here, so CellEditor can have access */
+	void keyPressEvent (QKeyEvent *e);
 	QCString encodeSelection ();
+	QCString encodeRange (int top_row, int left_col, int bottom_row, int right_col);
 /** blanks out the currently selected cells (or the currently active cell, if there is no selection) */
 	void blankSelected ();
 /** shortcut to get the boundaries of the current selection */
@@ -99,10 +100,9 @@ protected:
 	void resizeData (int) {};
 /** reimplemented form QTable not to use QTableItems. This one has no effect */
 	void insertWidget (int, int, QWidget *) {};
-friend class RKwardDoc;
 	TwinTableMember *twin;
 	TwinTable *table;
-	static bool changing_width;
+	bool changing_width;
 	int trailing_rows;
 	int trailing_cols;
 	CellEditor *tted;

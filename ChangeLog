@@ -1,3 +1,5 @@
+- reworked factor levels editor
+- in trailing rows/columns of the data.frame editor, change background color, when selected
 - explicitely set LC_NUMERIC to "C" at startup. R does not work correctly with other settings of LC_NUMERIC
 - many new plugins by Stefan Roediger
 - clean up R temporary files on shutdown
