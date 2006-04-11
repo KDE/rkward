@@ -15,9 +15,15 @@
 		</row>
 	</tab>
 	<tab label="Options" >
-		<radio id="scale" label="Scale" >
-		<option value="FALSE" label="No Frequency" />
-		<option value="TRUE" label="Frequency" />
+		<radio id="breaks" label="Method of setting breakpoints" >
+			<option value="Sturges" label="Sturges" />
+			<option value="Scott" label="Scott" />
+			<option value="FD" label="Friedman-Diaconis" />
+			<option checked="true" value="int" label="Integer numbers" />
+		</radio>
+		<radio id="scale" label="Y Scale" >
+			<option value="TRUE" label="Frequency" />
+			<option value="FALSE" label="Density" />
 		</radio>
 		<checkbox value_unchecked="0" checked="false" value="1" id="rug" label="Rug" />
 		<checkbox value_unchecked="0" checked="false" value="1" id="jitter" label="Jitter" />
