@@ -374,8 +374,21 @@ int RThread::initialize () {
 	RKWardRError error;
 	int status = 0;
 	
+	char **paths;
 	runCommandInternal ("library (\"rkward\")\n", &error);
 	if (error) status |= LibLoadFail;
+	int c;
+	paths = getCommandAsStringVector ("library.dynam (\"rkward\", \"rkward\")$path\n", &c, &error);
+	if ((error) || (c != 1)) {
+		status |= LibLoadFail;
+	} else {
+		if (!registerFunctions (paths[0])) status |= LibLoadFail;
+	}
+	for (int i = (c-1); i >=0; --i) {
+		DELETE_STRING (paths[i]);
+	}
+	delete [] paths;
+
 	QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
 		runCommandInternal (*it, &error);

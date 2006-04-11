@@ -32,6 +32,7 @@ extern "C" {
 #include "Rdevices.h"
 #include "R_ext/Parse.h"
 
+#include <dlfcn.h>
 #include <stdlib.h>
 #include <string.h>
 //#include <sys/types.h>
@@ -347,10 +348,13 @@ bool REmbedInternal::startR (int argc, char** argv) {
 		return false;
 	}
 
-// let's hope R internals never change...
-	addDLL (strdup ("rkward_pseudo_dll_pseudo_path"), strdup ("rkward_pseudo_dll"), 0);
-	DllInfo *info = R_getDllInfo ("rkward_pseudo_dll_pseudo_path");
-	
+	return true;
+}
+
+bool REmbedInternal::registerFunctions (char *library_path) {
+	DllInfo *info = R_getDllInfo (library_path);
+	if (!info) return false;
+
 	R_CallMethodDef callMethods [] = {
 //		{ "rk.do.condition", (DL_FUNC) &doCondition, 1 },
 		{ "rk.do.error", (DL_FUNC) &doError, 1 },
