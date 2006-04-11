@@ -25,8 +25,6 @@
 			<option value="TRUE" label="Frequency" />
 			<option value="FALSE" label="Density" />
 		</radio>
-		<checkbox value_unchecked="0" checked="false" value="1" id="rug" label="Rug" />
-		<checkbox value_unchecked="0" checked="false" value="1" id="jitter" label="Jitter" />
 		<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 		<stretch/>
 	</tab>
