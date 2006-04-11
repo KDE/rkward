@@ -17,8 +17,11 @@
 #ifndef RKCONSOLE_H
 #define RKCONSOLE_H
 
-#include <ktextedit.h>
+
 #include <kparts/part.h>
+
+#include <kate/document.h>
+#include <kate/view.h>
 
 #include <qptrlist.h>
 
@@ -27,7 +30,7 @@
 class QStringList;
 class KAction;
 class RCommand;
-class QPopupMenu;
+
 
 /**
 ** 	\brief Provides an R-like console.
@@ -42,22 +45,30 @@ class QPopupMenu;
 ** @author Pierre Ecochard
 **/
 
-class RKConsole : public QTextEdit, public RCommandReceiver {
+class RKConsole : public QWidget, public RCommandReceiver {
 Q_OBJECT
 public:
 /** Submits a batch of commands, line by line.
 \param batch a QString containing the batch of commands to be executed */
 	void submitBatch (QString batch);
+/** Returns the command currently being edited (not executed yet) */
+	QString currentCommand();
+/** Returns the current cursor position. Returns the column on which is the cursor.  */
+	int currentCursorPosition();
+/** Returns TRUE if some text is selected; otherwise returns FALSE.  */
+	bool hasSelectedText();
 protected:
 /** Constructor. Protected. Construct an RKConsolePart instead */
 	RKConsole ();
 /** Destructor */
 	~RKConsole ();
 
-	void keyPressEvent (QKeyEvent * e);
+/** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
+\param e the QKeyEvent */
+	bool handleKeyPress (QKeyEvent * e);
 	void rCommandDone (RCommand *command);
-/** reimplemented to provide our own context menu */
-	QPopupMenu *createPopupMenu (const QPoint &pos);
+/** provides our own context menu */
+	void createPopupMenu (const QPoint &pos);
 /** reimplemented from RCommandReceiver::newOutput () to handle output of console commands */
 	void newOutput (RCommand *command, ROutput *output);
 signals:
@@ -65,6 +76,9 @@ signals:
 	void fetchPopupMenu (QPopupMenu **menu);
 private:
 friend class RKConsolePart;
+bool eventFilter( QObject *o, QEvent *e );
+/** set syntax-highlighting for R */
+	void setRHighlighting ();
 	QString incomplete_command;
 	bool command_incomplete;
 /** A list to store previous commands */
@@ -74,8 +88,6 @@ friend class RKConsolePart;
 /** Sets the cursor position to the end of the last line. */
 
 	void cursorAtTheEnd();
-/** Returns the command currently being edited (not executed yet) */
-	QString currentCommand();
 /** Submits the current command */
 	void submitCommand();
 /** Set the current command to the previous command in the command list */
@@ -84,10 +96,7 @@ friend class RKConsolePart;
 	void commandsListDown();
 /** Sets the cursor position to the beginning of the last line. */
 	void cursorAtTheBeginning();
-/** We overload the paste function, in order to intercept paste commands and get them executed through submitBatch.
-@sa submitBatch */
-	void paste();
-/** We overload the clear function, to add a prompt at the top. */
+/** Clear the view, and add a prompt at the top. */
 	void clear();
 /** Sets the current command. This is used from commandsListUp (), and commandsListDown ();
 \param command the new command */
@@ -102,8 +111,20 @@ friend class RKConsolePart;
 	const char *nprefix;
 /** This string stores the continuation prefix. */
 	const char *iprefix;
+/** This function unplugs a KAction
+\param action the KAction to be unplugged
+\param ac the action collection from which to retrieve the KAction*/
+	void unplugAction(QString action, KActionCollection* ac);
 
 	RCommand *current_command;
+	Kate::Document *doc;
+	Kate::View *view;
+
+public slots:
+/** We intercept paste commands and get them executed through submitBatch.
+@sa submitBatch */
+	void paste();
+	void copy();
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality
@@ -133,5 +154,9 @@ private:
 
 	RKConsole *console;
 };
+
+
+
+
 
 #endif
