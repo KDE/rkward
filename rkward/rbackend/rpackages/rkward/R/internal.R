@@ -76,7 +76,10 @@
 }
 
 ".rk.do.error" <- function () {
-	.Call ("rk.do.error", c (geterrmessage ()));
+# comment in R sources says, it may not be good to query options during error handling. But what can we do, if R_ShowErrorMessages is not longer exported?
+	if (getOption ("show.error.messages")) {
+		.Call ("rk.do.error", c (geterrmessage ()));
+	}
 }
 
 ".rk.do.call" <- function (x, args=NULL) {

@@ -42,11 +42,8 @@ extern "C" {
 
 // some functions we need that are not declared
 extern int Rf_initEmbeddedR(int argc, char **argv);
-typedef void *HINSTANCE;
-extern int addDLL (char *path, char *name, HINSTANCE *handle);
 extern SEXP R_ParseVector(SEXP, int, ParseStatus*);
 extern void Rf_PrintWarnings (void);
-extern int R_CollectWarnings;
 extern int R_interrupts_pending;
 extern Rboolean R_Visible;
 }
@@ -317,13 +314,11 @@ void deleteStrings (char **strings, int count) {
 }
 
 SEXP doError (SEXP call) {
-	extern int R_ShowErrorMessages;
-	if (R_ShowErrorMessages) {
-		int count;
-		char **strings = extractStrings (call, &count);
-		REmbedInternal::this_pointer->handleError (strings, count);
-		deleteStrings (strings, count);
-	}
+	int count;
+	char **strings = extractStrings (call, &count);
+	REmbedInternal::this_pointer->handleError (strings, count);
+	deleteStrings (strings, count);
+
 	return R_NilValue;
 }
 
@@ -433,9 +428,7 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 	Apparently we need to print at least something in order to achieve this. Whatever really happens in Rprintf () to have such an effect, I did not bother to find out. */
 	Rprintf ("");
 
-	if (R_CollectWarnings) {
-		Rf_PrintWarnings ();
-	}
+	Rf_PrintWarnings ();
 
 //	SET_SYMVALUE(R_LastvalueSymbol, exp);
 	UNPROTECT(1); /* pr */
@@ -489,10 +482,8 @@ void REmbedInternal::runCommandInternal (const char *command, RKWardRError *erro
 		/* See the comment in the corresponding code in runCommandInternalBase. And yes, apparently, we need this at both places! */
 		Rprintf ("");
 
-		if (R_CollectWarnings) {
-			Rf_PrintWarnings ();
-		}
-	} 
+		Rf_PrintWarnings ();
+	}
 }
 
 char **REmbedInternal::getCommandAsStringVector (const char *command, int *count, RKWardRError *error) {	
