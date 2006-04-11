@@ -84,4 +84,4 @@ noinst_HEADERS = rkwatch.h rkward.h debug.h \
 phpfilesdir = $(kde_datadir)/rkward/phpfiles
 
 katesyntaxdir = $(kde_datadir)/katepart/syntax/
-katesyntax_DATA =  r.xml
+katesyntax_DATA =  r.xml rkward.xml
