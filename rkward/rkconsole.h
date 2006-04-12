@@ -55,6 +55,8 @@ public:
 	QString currentCommand();
 /** Returns the current cursor position. Returns the column on which is the cursor.  */
 	int currentCursorPosition();
+/** Returns the current cursor position, within the current command (without taking into account the prefix).*/
+	int currentCursorPositionInCommand();
 /** Returns TRUE if some text is selected; otherwise returns FALSE.  */
 	bool hasSelectedText();
 protected:

@@ -26,6 +26,7 @@
 #include <klocale.h>
 #include <kaction.h>
 #include <kactioncollection.h>
+#include <kconfig.h>
 
 
 #include "rkglobals.h"
@@ -58,7 +59,9 @@ RKConsole::RKConsole () : QWidget (0) {
 	doc->setText ("");
 		
 	view->setDynWordWrap (false);
+
 	
+	setFocusProxy(view);
 	setFocusPolicy(QWidget::WheelFocus);
 	
 	/* We need to unplug kactions that were pluged to the KateViewInternal in kateview.cpp.
@@ -241,7 +244,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 			return TRUE;
 		} else {
 			view->cursorLeft();
-			return FALSE;
+			return TRUE;
 		}
 	}
 	else if (e->key () == Qt::Key_Backspace){
@@ -516,6 +519,10 @@ void RKConsole::unplugAction(QString action, KActionCollection* ac)
 	}
 }
 
+int RKConsole::currentCursorPositionInCommand(){
+	return(currentCursorPosition() - prefix.length());
+}
+
 
 ///################### END RKConsole ########################
 ///################### BEGIN RKConsolePart ####################
@@ -551,7 +558,7 @@ RKConsolePart::~RKConsolePart () {
 
 void RKConsolePart::showContextHelp () {
 	RK_TRACE (APP);
-	RKGlobals::helpDialog ()->getContextHelp (console->currentCommand (), console->currentCursorPosition());
+	RKGlobals::helpDialog ()->getContextHelp (console->currentCommand (), console->currentCursorPositionInCommand() );
 }
 
 void RKConsolePart::setDoingCommand (bool busy) {
