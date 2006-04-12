@@ -6,7 +6,7 @@ All in all, this TODO list is mostly for internal purposes, and many parts may n
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
 
 Little annoying stuff:
-- fix flickering when one uses arrows in the console
+- hide tabs in console
 - add an example to show rkward-specific commands (rk.print, rk.graph)
 - instead of delete RObject, call RObject::deleteThis () and check for deleted in rCommandDone ()?
 - use more QDicts instead of QMap<QString,...>s
