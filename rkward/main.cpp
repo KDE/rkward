@@ -2,8 +2,8 @@
                           main.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002 by 
-    email                : 
+    copyright            : (C) 2002, 2005, 2006 by Thomas Friedrichsmeier 
+    email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
 /***************************************************************************
@@ -81,7 +81,7 @@ static KCmdLineOptions options[] =
 };
 
 int main(int argc, char *argv[]) {
-	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), version, description, KAboutData::License_GPL, "(c) 2002, 2004, 2005", 0, "http://rkward.sf.net", QString::null);
+	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), version, description, KAboutData::License_GPL, "(c) 2002, 2004, 2005, 2006", 0, "http://rkward.sf.net", QString::null);
 	aboutData.addAuthor ("Thomas Friedrichsmeier", I18N_NOOP ("Project leader"), QString::null);
 	aboutData.addAuthor ("Pierre Ecochard",  I18N_NOOP ("Core coder since 0.2.9"), QString::null);
 	aboutData.addCredit ("Contributors in alphabetical order", QString::null, QString::null);
