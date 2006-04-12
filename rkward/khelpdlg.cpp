@@ -19,6 +19,7 @@
 
 #include <klocale.h>
 #include <kurl.h>
+#include <kmessagebox.h>
 
 #include <qcheckbox.h>
 #include <qcombobox.h>
@@ -121,7 +122,7 @@ void KHelpDlg::getContextHelp (const QString &context_line, int cursor_pos) {
 	QString result = context_line.mid (current_word_start, current_word_end - current_word_start);
 
 	// step 2: retrieve help
-	RKGlobals::rInterface ()->issueCommand ("help(\"" + result + "\", htmlhelp=TRUE)[1]", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
+	RKGlobals::rInterface ()->issueCommand ("help(\"" + result + "\", htmlhelp=TRUE)[1]", RCommand::App | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
 }
 
 /*$SPECIALIZATION$*/
@@ -206,9 +207,11 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 	else if (command->getFlags () == GET_HELP_URL) {
 		RK_ASSERT (command->stringVectorLength ());
 		url.setPath(command->getStringVector ()[0]);
-		if (QFile::exists( url.path() )) {
+		if (QFile::exists (url.path ())) {
 			RKGlobals::rkApp()->openHTML(url);
 			return;
+		} else {
+			KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.").arg (command->command ().section ("\"", 1, 1)), i18n ("No help found"));
 		}
 	} else if (command->getFlags () == GET_INSTALLED_PACKAGES) {
 		RK_ASSERT ((command->stringVectorLength () % 4) == 0);

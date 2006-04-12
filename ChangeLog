@@ -1,3 +1,4 @@
+- show info message, if retrieving context help fails
 - pressing Ctrl+C in the console resets a partial command, if any
 - adding syntax highlighting in the console
 - configure: if not overriden, and $KDEDIR is not set, assume --prefix=`kde-config --prefix` instead of /usr/local/kde/
