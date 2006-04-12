@@ -1,77 +1,73 @@
 <?
 	function preprocess () {
 	}
-?>
-<?
 
 	function calculate () {
 $x = str_replace ("\n", ",", trim (getRK_val ("x"))) ;
 $y = str_replace ("\n", ",", trim (getRK_val ("y"))) ;
 
+/** fetch some values which are needed in more than one place, to avoid mulitple transfer */
+$type = getRK_val ("type");
+$typeCusto = getRK_val ("typeCusto");
+$col = getRK_val ("col");
+$pch = getRK_val ("pch");
+$cex = getRK_val ("cex");
+if (getRK_val("isXaxis") == "1") $Xname = getRK_val ("Xname"); else $Xname = "";
+if (getRK_val("isYaxis") == "1") $Yname = getRK_val ("Yname"); else $Yname = "";
+if (getRK_val("isTitle") == "1") $main = getRK_val ("main"); else $main = "";
+if (getRK_val("isSub") == "1") $sub = getRK_val ("sub"); else $sub = "";
 ?>
 
 
 <? #input ?>
-rk.plugin.Xvar = list(<? echo ($x) ;?>) ; 
-rk.plugin.Yvar = list(<? echo ($y) ;?>) ; 
-rk.plugin.Xval =  c(<? echo ($x) ;?>) ;
-rk.plugin.Yval =  c(<? echo ($y) ;?>) ;
-
+rk.plugin.Xvar <- list(<? echo ($x) ;?>)
+rk.plugin.Yvar <- list(<? echo ($y) ;?>)
+rk.plugin.Xval <- <? if (getRK_val("columns") == "custoCol" ) echo (getRK_val("Xscale") . "\n"); else echo ("c(" . $x . ")\n"); ?>
+rk.plugin.Yval <- <? if (getRK_val("rows") == "custoRow" ) echo (getRK_val("Yscale") . "\n"); else echo ("c(" . $y . ")\n"); ?>
 
 <? # verification (chiant mais doit être fait)?>
 rk.plugin.ok = TRUE ;
 if (length(rk.plugin.Xvar) != length(rk.plugin.Yvar) ) { 
 	rk.plugin.ok = FALSE ;
 	stop("'X' is of length ",length(rk.plugin.Xvar)," and 'Y' of length ",length(rk.plugin.Yvar) )
-	}
- if ( "<? getRK("color") ; ?>" == "each") {
-	if (length( <? getRK('col') ; ?>) != length(rk.plugin.Xvar))
-	{
-		rk.plugin.ok = FALSE ;
-		stop('only ', length( <? getRK('col') ; ?>) ,' color(s) is(are) displayed') ;
-	}
 }
-if ( "<? getRK("isPch") ; ?>" == "each") {
-	if (length( <? getRK('pch') ; ?>) != length(rk.plugin.Xvar))
-	{
-		rk.plugin.ok = FALSE ;
-		stop('only ', length( <? getRK('pch') ; ?>) ,' symbol(s) is(are) displayed') ;
-	}
+<?
+if (getRK_val ("color") == "each") { ?>
+if (length( <? echo ($col); ?>) != length(rk.plugin.Xvar)) {
+	rk.plugin.ok = FALSE ;
+	stop('only ', length( <? echo ($col); ?>) ,' color(s) is(are) displayed') ;
 }
-if ( "<? getRK("isCex") ; ?>" == "each") {
-	if (length( <? getRK('cex') ; ?>) != length(rk.plugin.Xvar))
-	{
-		rk.plugin.ok = FALSE ;
-		stop('only ', length( <? getRK('pch') ; ?>) ,' size(s) is(are) displayed') ;
-	}
+<? }
+if (getRK_val ("isPch") == "each") { ?>
+if (length( <? echo ($pch); ?>) != length(rk.plugin.Xvar)) {
+	rk.plugin.ok = FALSE ;
+	stop('only ', length( <? echo ($pch); ?>) ,' symbol(s) is(are) displayed') ;
 }
-if ( "<? getRK("type") ; ?>" == "custoType") {
-	if (length( <? getRK('typeCusto') ; ?>) != length(rk.plugin.Xvar))
-	{
-		rk.plugin.ok = FALSE ;
-		stop('only ', length( <? getRK('typeCusto') ; ?>) ,' type(s) is(are) displayed') ;
-	}
+<? }
+if (getRK_val ("isCe") == "each") { ?>
+if (length( <? echo ($cex); ?>) != length(rk.plugin.Xvar)) {
+	rk.plugin.ok = FALSE ;
+	stop('only ', length( <? echo ($cex); ?>) ,' size(s) is(are) displayed') ;
 }
-
+<? }
+if ($type == "custoType") { ?>
+if (length( <? echo ($typeCusto); ?>) != length(rk.plugin.Xvar)) {
+	rk.plugin.ok = FALSE ;
+	stop('only ', length( <? echo ($typeCusto); ?>) ,' type(s) is(are) displayed') ;
+}
+<? } ?>
 
 if (rk.plugin.ok) {
 
 <? #finding min and max for default plotin  ; ?>
-<?  if (getRK_val("columns") == "custoCol" ) echo (getRK("Xscale") . "-> rk.plugin.Xval") ; ?> 
-<?  if (getRK_val("rows") == "custoRow" ) echo (getRK("Yscale") . "-> rk.plugin.Yval") ; ?>
 rk.plugin.Xdef = c(min(rk.plugin.Xval,na.rm=TRUE) , max(rk.plugin.Xval,na.rm=TRUE))
 rk.plugin.Ydef = c(min(rk.plugin.Yval,na.rm=TRUE) , max(rk.plugin.Yval,na.rm=TRUE))
 
 <? # names ?>
-rk.plugin.Xname = '<? getRK("Xname") ?>' ;
-rk.plugin.Yname = '<? getRK("Yname") ?>' ;
-rk.plugin.title =  '<? getRK("main") ?>' ;
-rk.plugin.sub =  '<? getRK("sub") ?>' ;
-<? if  (getRK_val("isXaxis") != "1" ) echo ( "rk.plugin.Xname  = '' "  ) ?> 
-<? if  (getRK_val("isYaxis") != "1" ) echo ( "rk.plugin.Yname  = '' "  ) ?> 
-<? if  (getRK_val("isSub") != "1" ) echo ( "rk.plugin.sub  = '' "  ) ?> 
-<? if  (getRK_val("isTitle") != "1" ) echo ( "rk.plugin.main  = '' "  ) ?> 
-
+rk.plugin.Xname = '<? echo ($Xname); ?>'
+rk.plugin.Yname = '<? echo ($Yname); ?>'
+rk.plugin.title = '<? echo ($main); ?>'
+rk.plugin.sub = '<? echo ($sub); ?>'
 
 <? # type ?>
 rk.plugin.tc = data.frame(
@@ -80,20 +76,16 @@ col = rep(NA,length(rk.plugin.Xvar)),
 pch = rep(NA,length(rk.plugin.Xvar)),
 cex = rep(NA,length(rk.plugin.Xvar)))
 
-<? if  (getRK_val("type") != "custoType" ) echo ( getRK("type") . " ->  rk.plugin.tc[[1]]" ) ; 
-else echo( getRK("typeCusto") . " ->  rk.plugin.type.tc[[1]]"  ) ?> 
-rk.plugin.tc[[2]] = <? getRK("col")  ;?> 
-rk.plugin.tc[[3]] = <? getRK("cex")  ;?> 
-rk.plugin.tc[[4]] = <? getRK("pch")  ;?> 
+<? if  ($type != "custoType" ) echo ( $type . " ->  rk.plugin.tc[[1]]" ) ;
+else echo( $typeCusto . " ->  rk.plugin.type.tc[[1]]"  ) ?>
+rk.plugin.tc[[2]] = <? echo ($col); ?>
+rk.plugin.tc[[3]] = <? echo ($cex); ?>
+rk.plugin.tc[[4]] = <? echo ($pch); ?>
 
 <? # avant après ?>
 <? /* TODO 
 rk.plugin.on = expression( <? getRK("rkgraphson") ; ?>) ;
 rk.plugin.off = expression( <? getRK("rkgraphsoff") ; ?>) ;
-*/ ?>
-rk.plugin.before = expression( <? getRK("before") ; ?>) ;
-<? /*
-rk.plugin.after = expression( <? getRK("after") ; ?>) ;
 */ ?>
 
 <? # axes ?>
@@ -106,20 +98,16 @@ rk.plugin.log = '<? getRK("logX") ; getRK("logY") ; ?>'
 
 	}
 
-	?>
-	<?
-
 	function printout () {
 	
 ?>
 if (rk.plugin.ok) {
 
 rk.graph.on()
-# evaluating before
-# doesn't work very well 
-#if (!is.null(eval(rk.plugin.on))) eval(rk.plugin.on)
-rk.graph.on()
-if (!is.null(eval(rk.plugin.before))) eval(rk.plugin.before)
+<? 
+$before = getRK_val ("before");
+if (!empty ($before)) echo ($before);
+?>
 
 # making frame 
 plot(rk.plugin.Xdef,rk.plugin.Ydef,type="n" , xlab = rk.plugin.Xname , ylab = rk.plugin.Yname , main = rk.plugin.title , sub = rk.plugin.sub , axes = rk.plugin.axes , log = rk.plugin.log)
@@ -136,10 +124,13 @@ for (rk.plugin.iterator in 1:length(rk.plugin.Xvar)) {
 		)
 }
 
-# evaluating after
-# if (!is.null(eval(rk.plugin.after))) eval(rk.plugin.after)
-#doesn't work very well
-#if (!is.null(eval(rk.plugin.off))) eval(rk.plugin.off)
+<?
+$after = getRK_val ("after");
+if (!empty ($after)) echo ($after);
+?>
+
+<? /*#doesn't work very well
+#if (!is.null(eval(rk.plugin.off))) eval(rk.plugin.off) */ ?>
 rk.graph.off()
 }
 

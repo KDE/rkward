@@ -30,8 +30,8 @@ A duplicate option has to be tested-->
 			<tab label="Variables" >
 				<row>
 					<varselector id="vars" />
-					<varslot multi="true" duplicate="true" classes="integer numeric" id="x" source="vars" label="'X' variables" required="true" />
-					<varslot multi="true" duplicate="true" duplicate="true" classes="integer numeric" id="y" source="vars" label="'Y' variables" required="true" />
+					<varslot multi="true" duplicate="true" types="number unknown" id="x" source="vars" label="'X' variables" required="true" />
+					<varslot multi="true" duplicate="true" types="number unknown" id="y" source="vars" label="'Y' variables" required="true" />
 				</row>
 			</tab>
 			<tab label="Axes" >
@@ -42,12 +42,12 @@ A duplicate option has to be tested-->
 							<option value="FALSE" label="Default" />
 							<option value="custoCol" label="Customize" />
 						</radio>
-						<varslot multi="false" classes="integer numeric" source="varname" id="Xscale" />
+						<varslot multi="false" types="number unknown" source="varname" id="Xscale" />
 						<radio id="rows" label="Value for 'Y' scale" >
 							<option value="FALSE" id="temp2" label="Default" />
 							<option value="custoRow" label="Customize" />
 						</radio>
-						<varslot multi="false" classes="integer numeric " id="Yscale" source="varname" />
+						<varslot multi="false" types="number unknown" id="Yscale" source="varname" />
 					</column>
 				</row>
 			</tab>
@@ -137,10 +137,10 @@ A duplicate option has to be tested-->
 				<checkbox value_unchecked=" " checked="true" value="rk.graph.on()" id="rkgraphson" label="Enter 'rk.graph.on()'" />
 			-->
 				<input size="big" id="before" label="Before plot" />
-				<checkbox value_unchecked=" " checked="true" value="rk.graph.off()" id="rkgraphsoff" label="Enter 'rk.graph.off()'" />
 				<!-- doesn't work very well TODO
-			<input size="big" id="after" label="After plot" />
-			-->
+				<checkbox value_unchecked=" " checked="true" value="rk.graph.off()" id="rkgraphsoff" label="Enter 'rk.graph.off()'" />
+				-->
+				<input size="big" id="after" label="After plot" />
 				</frame>
 			</tab>
 		</tabbook>
@@ -151,8 +151,8 @@ A duplicate option has to be tested-->
 		<page>
 			<row>
 				<varselector id="vars" />
-				<varslot multi="true" duplicate="true" classes="numeric integer" id="x" source="vars" label="'X' variables" required="true" />
-				<varslot multi="true" duplicate="true" duplicate="true" classes="numeric integer" id="y" source="vars" label="'Y' variables" required="true" />
+				<varslot multi="true" duplicate="true" types="number unknown" id="x" source="vars" label="'X' variables" required="true" />
+				<varslot multi="true" duplicate="true" duplicate="true" types="number unknown" id="y" source="vars" label="'Y' variables" required="true" />
 			</row>
 		</page>
 	<!-- axes-->
@@ -164,12 +164,12 @@ A duplicate option has to be tested-->
 						<option value="FALSE" label="Default" />
 						<option value="custoCol" label="Customize" />
 					</radio>
-					<varslot multi="false" classes="integer numeric" source="varname" id="Xscale" />
+					<varslot multi="false" types="number unknown" source="varname" id="Xscale" />
 					<radio id="rows" label="Value for 'Y' scale" >
 						<option value="FALSE" id="temp2" label="Default" />
 						<option value="custoRow" label="Customize" />
 					</radio>
-					<varslot multi="false" classes="integer numeric " id="Yscale" source="varname" />
+					<varslot multi="false" types="number unknown" id="Yscale" source="varname" />
 				</column>
 			</row>
 		</page>
