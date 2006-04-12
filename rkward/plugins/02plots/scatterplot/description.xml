@@ -10,6 +10,9 @@ A duplicate option has to be tested-->
 		<connect client="Xscale.required" governor="columns.number" />
 		<connect client="Yscale.enabled" governor="rows.number" />
 		<connect client="Yscale.required" governor="rows.number" />
+		<convert id="XorYscale" mode="or" sources="Xscale.enabled;Yscale.enabled" />
+		<connect client="varname.enabled" governor="XorYscale" />
+
 		<convert id="customtype" mode="equals" sources="type.string" standard="custoType" />
 		<connect client="typeCusto.enabled" governor="customtype" />
 		<connect client="typeCusto.required" governor="customtype" />
@@ -33,6 +36,7 @@ A duplicate option has to be tested-->
 			</tab>
 			<tab label="Axes" >
 				<row>
+					<varselector id="varname" />
 					<column>
 						<radio id="columns" label="Value for 'X' scale" >
 							<option value="FALSE" label="Default" />
@@ -45,7 +49,6 @@ A duplicate option has to be tested-->
 						</radio>
 						<varslot multi="false" classes="integer numeric " id="Yscale" source="varname" />
 					</column>
-					<varselector id="varname" />
 				</row>
 			</tab>
 			<tab label="Type" >
@@ -155,6 +158,7 @@ A duplicate option has to be tested-->
 	<!-- axes-->
 		<page>
 			<row>
+				<varselector id="varname" />
 				<column>
 					<radio id="columns" label="Value for 'X' scale" >
 						<option value="FALSE" label="Default" />
@@ -167,7 +171,6 @@ A duplicate option has to be tested-->
 					</radio>
 					<varslot multi="false" classes="integer numeric " id="Yscale" source="varname" />
 				</column>
-				<varselector id="varname" />
 			</row>
 		</page>
 	<!--couleur
