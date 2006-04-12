@@ -32,7 +32,7 @@
 
 #include <signal.h>		// needed for pthread_kill
 
-#define MAX_BUF_LENGTH 1000
+#define MAX_BUF_LENGTH 4000
 
 RThread::RThread () : QThread (), REmbedInternal () {
 	RK_TRACE (RBACKEND);
@@ -214,6 +214,7 @@ void RThread::handleOutput (char *buf, int buf_length) {
 	if (!current_output) {	// not an else, might have been set to 0 in the above if
 		current_output = new ROutput;
 		current_output->type = ROutput::Output;
+		current_output->output.reserve (MAX_BUF_LENGTH + 50);
 	}
 	current_output->output.append (buf);
 

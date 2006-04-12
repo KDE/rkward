@@ -46,8 +46,8 @@ RKWindowCatcher *window_catcher;
 #include <qdir.h>
 #include <qtimer.h>
 
-// update output (for immediate output commands) at least this often:
-#define FLUSH_INTERVAL 50
+// update output (for immediate output commands) at least this often (msecs):
+#define FLUSH_INTERVAL 100
 
 //static
 QMutex RInterface::mutex (true);
