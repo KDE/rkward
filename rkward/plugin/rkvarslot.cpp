@@ -82,7 +82,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 
 	// initialize filters
 	available->setClassFilter (QStringList::split (" ", xml->getStringAttribute (element, "classes", QString::null, DL_INFO)));
-	available->setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
+	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
 	available->setTypeFilter (QStringList::split (" ", xml->getStringAttribute (element, "types", QString::null, DL_INFO)));
 
 	connect (available, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (availablePropertyChanged (RKComponentPropertyBase *)));
@@ -151,13 +151,13 @@ void RKVarSlot::updateLook () {
 	RK_TRACE (PLUGIN);
 
 	if (isEnabled ()) {
-		if (!isValid ()) {
+		if (!isSatisfied ()) {
 			list->setPaletteBackgroundColor (QColor (255, 0, 0));
 		} else {
 			list->setPaletteBackgroundColor (QColor (255, 255, 255));
 		}
 	} else {
-		if (!isValid ()) {
+		if (!isSatisfied ()) {
 			list->setPaletteBackgroundColor (QColor (200, 0, 0));
 		} else {
 			list->setPaletteBackgroundColor (QColor (200, 200, 200));
