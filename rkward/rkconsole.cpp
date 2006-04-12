@@ -56,8 +56,7 @@ RKConsole::RKConsole () : QWidget (0) {
 	RK_ASSERT (view);
 #endif
 	layout->addWidget (view);
-	doc->setText ("");
-		
+
 	view->setDynWordWrap (false);
 
 	
@@ -143,9 +142,6 @@ RKConsole::RKConsole () : QWidget (0) {
 	}
 
 	current_command = 0;
-
-
-
 }
 
 
@@ -312,7 +308,7 @@ void RKConsole::setCurrentCommand (QString command) {
 
 void RKConsole::cursorAtTheEnd () {
 	RK_TRACE (APP);
-	view->	setCursorPosition (doc->numLines() -1, editInterface(doc)->textLine (doc->numLines() -1).length());
+	view->setCursorPosition (doc->numLines() -1, editInterface(doc)->textLine (doc->numLines() -1).length());
 	view->scrollDown ();
 }
 
@@ -472,6 +468,9 @@ void RKConsole::clear () {
 	RK_TRACE (APP);
 	doc->clear ();
 	tryNextInBatch ();
+	// need this HACK to remove empty line at start
+	selectionInterface (doc)->setSelection (0, 0, 1, 0);
+	selectionInterface (doc)->removeSelectedText ();
 }
 
 void RKConsole::addCommandToHistory (const QString &command) {
@@ -507,12 +506,12 @@ int RKConsole::currentCursorPosition(){
 	return((int) p);
 }
 
-bool RKConsole::hasSelectedText(){
-	return(selectionInterface(doc)->hasSelection());
+bool RKConsole::hasSelectedText() {
+	RK_TRACE (APP);
+	return (selectionInterface (doc)->hasSelection ());
 }
 
-void RKConsole::unplugAction(QString action, KActionCollection* ac)
-{
+void RKConsole::unplugAction(QString action, KActionCollection* ac) {
 	KAction* a = ac->action(action);
 	if( a ){
 		a->setEnabled(false);
@@ -520,7 +519,19 @@ void RKConsole::unplugAction(QString action, KActionCollection* ac)
 }
 
 int RKConsole::currentCursorPositionInCommand(){
+	RK_TRACE (APP);
 	return(currentCursorPosition() - prefix.length());
+}
+
+void RKConsole::resetIncompleteCommand () {
+	RK_TRACE (APP);
+
+	RK_ASSERT (command_incomplete);
+	prefix = nprefix;
+	command_incomplete = false;
+	incomplete_command = QString::null;
+
+	tryNextInBatch (true);
 }
 
 
@@ -564,16 +575,20 @@ void RKConsolePart::showContextHelp () {
 void RKConsolePart::setDoingCommand (bool busy) {
 	RK_TRACE (APP);
 
-	interrupt_command->setEnabled (busy);
+	interrupt_command->setEnabled (busy || console->command_incomplete);
 }
 
 void RKConsolePart::slotInterruptCommand () {
 	RK_TRACE (APP);
-	RK_ASSERT (console->current_command);
-	qDebug("was here");
+	RK_ASSERT (console->current_command || console->command_incomplete);
+	RK_DO (qDebug("received interrupt signal in console"), APP, DL_DEBUG);
 
 	console->commands_batch.clear ();
-	RKGlobals::rInterface ()->cancelCommand (console->current_command);
+	if (console->command_incomplete) {
+		console->resetIncompleteCommand ();
+	} else {
+		RKGlobals::rInterface ()->cancelCommand (console->current_command);
+	}
 	setDoingCommand (false);
 }
 

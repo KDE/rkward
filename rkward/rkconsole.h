@@ -59,6 +59,8 @@ public:
 	int currentCursorPositionInCommand();
 /** Returns TRUE if some text is selected; otherwise returns FALSE.  */
 	bool hasSelectedText();
+/** interrupt the current incomplete command (if any) */
+	void resetIncompleteCommand ();
 protected:
 /** Constructor. Protected. Construct an RKConsolePart instead */
 	RKConsole ();

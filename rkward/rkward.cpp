@@ -307,6 +307,7 @@ void RKwardApp::initActions()
 	close_all_editors->setStatusText (i18n ("Closes all open data editors"));
 	fileQuit->setStatusText(i18n("Quits the application"));
 	help_invoke_r_help->setStatusText (i18n ("Shows the R help index"));
+	show_help_search->setStatusText (i18n ("Shows/raises the R Help Search window"));
 
 	actionCollection ()->setHighlightingEnabled (true);
 }
