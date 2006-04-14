@@ -104,8 +104,9 @@
 }
 
 "rk.print" <- function(x,...) {
+	htmlfile <- rk.get.output.html.file()
 	if(require("R2HTML")==TRUE) {
-		HTML(x,...)
+		HTML(x, file=htmlfile,...)
 	}
 }
 
