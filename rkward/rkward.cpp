@@ -450,7 +450,7 @@ bool RKwardApp::queryClose () {
 
 	if (!RKGlobals::rObjectList ()->isEmpty ()) {
 		int res;
-		res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?\nPress Cancel, if you do not want to quit"), i18n ("Save Workspace?"));
+		res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?\nRKWard will remain open if you press Cancel"), i18n ("Save Workspace?"));
 		if (res == KMessageBox::Yes) {
 			new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Quit);
 		} else if (res != KMessageBox::No) {
@@ -483,8 +483,11 @@ bool RKwardApp::queryClose () {
 
 void RKwardApp::raiseWatch () {
 	RK_TRACE (APP);
-
 	watch_view->show ();
+	KMdiChildView *window = activeWindow ();
+	if (window) {
+		window->activate ();
+	}
 }
 
 void RKwardApp::invokeRHelp () {
