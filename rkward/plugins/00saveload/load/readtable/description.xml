@@ -20,6 +20,7 @@
 		<convert id="customizecolclass" mode="or" sources="colnames.enabled;custoClasses.enabled" />
 		<connect client="varnames.enabled" governor="customizecolclass" />
 	</logic>
+	<code file="code.php"/>
 	<dialog label="Load data" >
 		<tabbook>
 			<tab label="Load" >
