@@ -147,7 +147,7 @@ void RKFormula::makeModelString () {
 	QString table_string, model_string, labels_string;
 	mangled_names.clear ();
 	RObject *dep_var = dependent->objectValue ();
-	RObject *container;
+	RObject *container = 0;
 	if (dep_var) {
 		model_ok = true;
 	}
@@ -174,7 +174,7 @@ void RKFormula::makeModelString () {
 		}
 		table_string.append (")");
 	} else {
-		table_string = container->getFullName ();;
+		if (container) table_string = container->getFullName ();;
 	}
 	
 	// construct model string
