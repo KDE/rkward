@@ -20,15 +20,13 @@
 		<convert id="customizecolclass" mode="or" sources="colnames.enabled;custoClasses.enabled" />
 		<connect client="varnames.enabled" governor="customizecolclass" />
 	</logic>
+	<code file="code.php"/>
 	<dialog label="Load data" >
 		<tabbook>
 			<tab label="Load" >
 				<browser size="small" id="file" label="File name" />
 				<input label="Table name" id="name" initial="rk.temp.table" size="small"/>
-				<radio id="header" label="Header" >
-					<option value="TRUE" label="True" />
-					<option value="FALSE" label="False" />
-				</radio>
+				<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="true" label="First row contains column names"/>
 				<radio id="dec" label="Character used decimal points" >
 					<option value="'.'" label="'.'" />
 					<option value="','" label="','" />
