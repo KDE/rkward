@@ -26,11 +26,8 @@
 			<tab label="Load" >
 				<browser size="small" id="file" label="Name of the file" />
 				<input label="Name of the table" id="name" initial="rk.temp.table" size="small"/>
-				<radio id="header" label="Header" >
-					<option value="TRUE" label="True" />
-					<option value="FALSE" label="False" />
-				</radio>
-				<radio id="dec" label="Character for decimal values" >
+				<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="true" label="First row contains column names"/>
+				<radio id="dec" label="Decimal character" >
 					<option value="'.'" label="'.'" />
 					<option value="','" label="','" />
 				</radio>
