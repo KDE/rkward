@@ -1,10 +1,10 @@
 <!DOCTYPE rkplugin>
-<document>
+<document> 
 	<code file="code.php"/>
 	<dialog label="Load an R object">
 		<tabbook>
 			<tab label="Select variables" >
-				<browser size="small" id="file" label="Name of the file" filter="*.RData" />
+				<browser size="small" id="file" label="File name" filter="*.RData" />
 			</tab>
 		</tabbook>
 	</dialog>

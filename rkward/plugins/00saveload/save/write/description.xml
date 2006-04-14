@@ -1,5 +1,5 @@
 <!DOCTYPE rkplugin>
-<document>
+<document> 
 	<code file="code.php"/>
 	
 	<dialog label="Save variables" >
@@ -8,7 +8,7 @@
 			<column>
 				<varselector id="vars" label="Select a variable" />
 				<varslot multi="false" classes="character numeric integer factor" id="data" source="vars" label="Data" required="true" />
-				<browser size="small" initial="~/rk.temp.data" id="file" label="Name of the file" />
+				<browser size="small" initial="~/rk.temp.data" id="file" label="File name" />
 			</column>
 			<frame label="Options" >
 				<row>

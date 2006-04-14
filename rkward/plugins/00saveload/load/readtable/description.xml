@@ -1,5 +1,5 @@
 <!DOCTYPE rkplugin>
-<document>
+<document> 
 	<logic>
 		<connect client="rowname.enabled" governor="isrow.state" />
 
@@ -20,18 +20,20 @@
 		<convert id="customizecolclass" mode="or" sources="colnames.enabled;custoClasses.enabled" />
 		<connect client="varnames.enabled" governor="customizecolclass" />
 	</logic>
-	<code file="code.php"/>
 	<dialog label="Load data" >
 		<tabbook>
 			<tab label="Load" >
-				<browser size="small" id="file" label="Name of the file" />
-				<input label="Name of the table" id="name" initial="rk.temp.table" size="small"/>
-				<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="true" label="First row contains column names"/>
-				<radio id="dec" label="Decimal character" >
+				<browser size="small" id="file" label="File name" />
+				<input label="Table name" id="name" initial="rk.temp.table" size="small"/>
+				<radio id="header" label="Header" >
+					<option value="TRUE" label="True" />
+					<option value="FALSE" label="False" />
+				</radio>
+				<radio id="dec" label="Character used decimal points" >
 					<option value="'.'" label="'.'" />
 					<option value="','" label="','" />
 				</radio>
-				<radio id="sep" label="Character to separe value" >
+				<radio id="sep" label="Field separator character" >
 					<option value="'\t'" label="Tab" />
 					<option value="';'" label="';'" />
 					<option value="','" label="','" />
@@ -39,37 +41,37 @@
 				</radio>
 			</tab>
 			<tab label="Rows" >
-				<checkbox value_unchecked="false" checked="false" value="true" id="isrow" label="Customize the names of the row" />
-				<radio id="rowname" label="Name of rows" >
+				<checkbox value_unchecked="false" checked="false" value="true" id="isrow" label="Customize row names" />
+				<radio id="rowname" label="Rows names" >
 					<option value="NULL" label="Number" />
-					<option value="rowcol" label="Use a particular column" />
+					<option value="rowcol" label="Use a column" />
 					<option value="custoRow" label="Use a vector" />
 				</radio>
-				<input size="small" id="nomrow" initial="1" label="Give a number or a 'name'" />
-				<varslot multi="false" classes="character" id="rownames" source="varname" label="Give a character vector" />
+				<input size="small" id="nomrow" initial="1" label="Column number or variable name" />
+				<varslot multi="false" classes="character" id="rownames" source="varname" label="Row names character vector" />
 				<varselector id="varname" />
 			</tab>
 				<tab label="Columns" >
-				<radio id="colname" label="Name of columns" >
+				<radio id="colname" label="Columns names" >
 					<option value="" label="Default" />
 					<option value="custoCol" label="Use a character vector" />
 				</radio>
-				<varslot multi="false" classes="character" id="colnames" source="varnames" label="Give a character vector" />
+				<varslot multi="false" classes="character" id="colnames" source="varnames" label="Column names character vector" />
 				<radio id="colclass" label="Classes of columns" >
 					<option value="" label="Default" />
 					<option value="custoClass" label="Use a character vector" />
 				</radio>
-				<varslot multi="false" classes="character" id="custoClasses" source="varnames" label="Give a character vector" />
+				<varslot multi="false" classes="character" id="custoClasses" source="varnames" label="Column names character vector" />
 				<varselector id="varnames" />
 			</tab>
 			<tab label="Options" >
-				<radio id="fill" label="Fill the rows if unqual length" >
+				<radio id="fill" label="Fill the rows if unequal length" >
 					<option value="FALSE" label="False" />
 					<option value="'TRUE" label="'True" />
 				</radio>
 				<row>
 					<input size="small" initial="0" id="skip" label="Number of lines" />
-					<input size="small" initial="-1" id="nrows" label="Maximal number of lines" />
+					<input size="small" initial="-1" id="nrows" label="Max number of lines" />
 				</row>
 				<row>
 					<input size="small" initial="NA" id="na" label="Character for missing values" />

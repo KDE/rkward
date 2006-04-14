@@ -1,5 +1,5 @@
 <!DOCTYPE rkplugin>
-<document>
+<document> 
 	<code file="code.php"/>
 	
 	<dialog label="Save package">
@@ -13,8 +13,8 @@
 				</column>
 				<frame label="Options" >
 					<row>
-						<input size="small" initial="anRpackage" id="name" label="Name of the package" />
-						<browser size="small" type="dir" id="path" initial="." label="Name of directory" />
+						<input size="small" initial="anRpackage" id="name" label="Package name" />
+						<browser size="small" type="dir" id="path" initial="." label="Directory" />
 						<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="force" label="Overwrite" />
 					</row>
 				</frame>
