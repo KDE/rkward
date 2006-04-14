@@ -64,6 +64,10 @@ install: build
 	dh_clean -k 
 	dh_installdirs
 
+	# Add lintian exceptions
+	dh_installdirs usr/share/lintian/overrides
+	cp $(CURDIR)/debian/lintian.bin.overrides $(CURDIR)/debian/rkward/usr/share/lintian/overrides/rkward
+
 	# Add here commands to install the package into debian/rkward.
 	$(MAKE) install kde_htmldir=/usr/share/doc/kde/HTML DESTDIR=$(CURDIR)/debian/rkward
 	# dirty hack to get rid of conflicting r.xml file without adjusting all makefiles
