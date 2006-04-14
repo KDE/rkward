@@ -28921,7 +28921,8 @@ if test "${with_r_home+set}" = set; then
   withval="$with_r_home"
   use_r_home="$withval"
 else
-  use_r_home=`R CMD sh -c 'echo $R_HOME' || echo "/usr/local/lib/R"`
+  use_r_home=`R CMD sh -c 'echo $R_HOME'`
+  if test "$use_r_home" == "" ; then use_r_home="/usr/local/lib/R" ; fi
 
 fi;
 r_home=
@@ -28968,7 +28969,8 @@ if test "${with_r_includes+set}" = set; then
   withval="$with_r_includes"
   use_r_includes="$withval"
 else
-  use_r_includes=`R CMD sh -c 'echo $R_INCLUDE_DIR' || echo "$R_HOMEDIR/include"`
+  use_r_includes=`R CMD sh -c 'echo $R_INCLUDE_DIR'`
+  if test "$use_r_includes" == "" ; then use_r_includes="$R_HOMEDIR/include" ; fi
 
 fi;
 
@@ -28998,7 +29000,8 @@ if test "${with_r_share+set}" = set; then
   withval="$with_r_share"
   use_r_share="$withval"
 else
-  use_r_share=`R CMD sh -c 'echo $R_SHARE_DIR' || echo "$R_HOMEDIR/share"`
+  use_r_share=`R CMD sh -c 'echo $R_SHARE_DIR'`
+  if test "$use_r_share" == "" ; then use_r_share="$R_HOMEDIR/share" ; fi
 
 fi;
 
@@ -29028,7 +29031,8 @@ if test "${with_r_doc+set}" = set; then
   withval="$with_r_doc"
   use_r_doc="$withval"
 else
-  use_r_doc=`R CMD sh -c 'echo $R_DOC_DIR' || echo "$R_HOMEDIR/doc"`
+  use_r_doc=`R CMD sh -c 'echo $R_DOC_DIR'`
+  if test "$use_r_doc" == "" ; then use_r_doc="$R_HOMEDIR/doc" ; fi
 
 fi;
 
@@ -29139,7 +29143,7 @@ for i in $kde_incdirs;
 do
   for j in $kde_check_header;
   do
-    echo "configure: 29142: $i/$j" >&5
+    echo "configure: 29146: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       kde_incdir=$i
@@ -29169,7 +29173,7 @@ for i in $kde_libdirs;
 do
   for j in $kde_check_lib;
   do
-    echo "configure: 29172: $i/$j" >&5
+    echo "configure: 29176: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       kde_libdir=$i
@@ -29187,7 +29191,7 @@ for i in $kde_libdirs;
 do
   for j in "kde3/plugins/designer/kdewidgets.la";
   do
-    echo "configure: 29190: $i/$j" >&5
+    echo "configure: 29194: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       kde_widgetdir=$i
@@ -30580,7 +30584,7 @@ for i in $kde_sharedirs;
 do
   for j in apps/ksgmltools2/customization/kde-chunk.xsl;
   do
-    echo "configure: 30583: $i/$j" >&5
+    echo "configure: 30587: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       KDE_XSL_STYLESHEET=$i

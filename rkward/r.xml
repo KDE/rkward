@@ -2,7 +2,7 @@
 <!DOCTYPE language SYSTEM "language.dtd">
   <!-- Kate 2.0 (KDE 3.0) highlighting module for R
        based on an earlier version by E.L. Willighagen.
-       version 0.3: (c) 2006 Thomas Friedrichsmeier and the RKWard Team, GPL v2 license
+       version 0.3: (c) 2004, 2006 Thomas Friedrichsmeier and the RKWard Team, GPL v2 license
 
        Kate   : http://www.kde.org/kate
        R      : http://www.r-project.org/

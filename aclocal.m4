@@ -1883,7 +1883,8 @@ AC_DEFUN([CHECK_RHOME],
 AC_MSG_CHECKING(whether R_HOME directory exists)
 AC_ARG_WITH(r-home,AC_HELP_STRING([--with-r-home=DIR],[specify location of R_HOME directory]),
   use_r_home="$withval",
-  use_r_home=`R CMD sh -c 'echo $R_HOME' || echo "/usr/local/lib/R"`
+  use_r_home=`R CMD sh -c 'echo $R_HOME'`
+  if test "$use_r_home" == "" ; then use_r_home="/usr/local/lib/R" ; fi
 )
 r_home=
 if test -d "$use_r_home"; then
@@ -1920,7 +1921,8 @@ AC_DEFUN([CHECK_RINCLUDE],
 AC_MSG_CHECKING(for R include files)
 AC_ARG_WITH(r-includes,AC_HELP_STRING([--with-r-includes=DIR],[specify location of R include files]),
   use_r_includes="$withval",
-  use_r_includes=`R CMD sh -c 'echo $R_INCLUDE_DIR' || echo "$R_HOMEDIR/include"`
+  use_r_includes=`R CMD sh -c 'echo $R_INCLUDE_DIR'`
+  if test "$use_r_includes" == "" ; then use_r_includes="$R_HOMEDIR/include" ; fi
 )
 
 r_includes=
@@ -1943,7 +1945,8 @@ AC_DEFUN([CHECK_RSHARE],
 AC_MSG_CHECKING(for R_SHARE directory)
 AC_ARG_WITH(r-share,AC_HELP_STRING([--with-r-share=DIR],[specify location of R_SHARE directory]),
   use_r_share="$withval",
-  use_r_share=`R CMD sh -c 'echo $R_SHARE_DIR' || echo "$R_HOMEDIR/share"`
+  use_r_share=`R CMD sh -c 'echo $R_SHARE_DIR'`
+  if test "$use_r_share" == "" ; then use_r_share="$R_HOMEDIR/share" ; fi
 )
 
 r_share=
@@ -1966,7 +1969,8 @@ AC_DEFUN([CHECK_RDOC],
 AC_MSG_CHECKING(for R_DOC directory)
 AC_ARG_WITH(r-doc,AC_HELP_STRING([--with-r-doc=DIR],[specify location of R_DOC directory]),
   use_r_doc="$withval",
-  use_r_doc=`R CMD sh -c 'echo $R_DOC_DIR' || echo "$R_HOMEDIR/doc"`
+  use_r_doc=`R CMD sh -c 'echo $R_DOC_DIR'`
+  if test "$use_r_doc" == "" ; then use_r_doc="$R_HOMEDIR/doc" ; fi
 )
 
 r_doc=
