@@ -70,7 +70,6 @@ void RKPluginBrowser::textChanged (RKComponentPropertyBase *) {
 	selector->setLocation (selection->value ());
 
 	updating = false;
-	selection->setValue (selector->getLocation ());
 	changed ();
 }
 
