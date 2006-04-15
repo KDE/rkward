@@ -182,8 +182,11 @@ RKOutputWindow::~RKOutputWindow () {
 bool RKOutputWindow::openURL (const KURL &url) {
 	RK_TRACE (APP);
 
-	bool ok = RKHTMLWindow::openURL (url);
-	if (!ok) {
+	QFile out_file (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
+	bool ok = out_file.exists();
+	if (ok)  {
+		RKHTMLWindow::openURL (url);
+	} else {
 		showOutputEmptyMessage ();
 	}
 	return ok;
