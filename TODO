@@ -5,6 +5,31 @@ All in all, this TODO list is mostly for internal purposes, and many parts may n
 - Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
 
+Some items I'd like to get done for 0.3.6 or whatever the next release is going to be called, if they don't take too long:
+- RKEditorDataFrame
+	- undo/redo
+	- deletion of multiple rows/columns in one step
+- Rework package management dialog
+	- use install.packages () to handle dependencies
+	- manage R library locations, install to location with user write access
+	- the UI should probably be simplified somehow. But how? All in a single list with "filter"? Ask for ideas/look at other apps
+- Create an editor for single vectors/factors, or rework RKEditorDataFrame to handle those as well
+- RObjectListView
+	- use icons to mark up the different base types
+	- limit width
+- David's usability items
+Optional stuff, that could possibly be attacked for 0.3.6:
+- RExpressionObject as an abstraction for R-Expressions (i.e. manually edited expressions).
+	- It will be possible to "store" these in the RObjectList and select them just like any other object
+	- RKVarslot will allow editing the selected value by hand (or just typing the name in)
+		- How to do this nicely UI wise?
+- RFunctionObject for user defined functions. Maybe later it will be possible to use for functions from packages as well
+	- would be nice, if it also had some knowledge about function arguments
+	- ideally it would also know about the type of the return value, but this may not be realistic
+Timeframe for 0.3.6 release:
+- It would be good, if we're at a releasable state within one month from now (i.e. mid May).
+	- if reasonably possible, I think we should release then, even if some of the desired features are still missing
+
 Little annoying stuff:
 - hide tabs in console
 - add an example to show rkward-specific commands (rk.print, rk.graph)
