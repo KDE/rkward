@@ -1,8 +1,9 @@
-- giving back focus to the script editor after running line/selection/all.
-- rewording exit dialog box.
+--- Version 0.3.5 - Apr-16-2006
+- give back focus to the script editor after running line/selection/all
+- reworded exit dialog box
 - show info message, if retrieving context help fails
 - pressing Ctrl+C in the console resets a partial command, if any
-- adding syntax highlighting in the console
+- added syntax highlighting in the console
 - configure: if not overriden, and $KDEDIR is not set, assume --prefix=`kde-config --prefix` instead of /usr/local/kde/
 - remove some GUI clutter for Script File editor
 - rename "Command File" to "Script File"
