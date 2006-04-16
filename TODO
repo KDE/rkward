@@ -30,6 +30,9 @@ Timeframe for 0.3.6 release:
 - It would be good, if we're at a releasable state within one month from now (i.e. mid May).
 	- if reasonably possible, I think we should release then, even if some of the desired features are still missing
 
+RObjectTables sounds highly interesing. Maybe we can use a transparent table to find out about assignments?
+R_MakeActiveBinding sounds even more interesting. Maybe we can use this to "watch" symbols?!?
+
 Little annoying stuff:
 - hide tabs in console
 - add an example to show rkward-specific commands (rk.print, rk.graph)
