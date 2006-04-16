@@ -45,6 +45,7 @@ RKWindowCatcher *window_catcher;
 
 #include <qdir.h>
 #include <qtimer.h>
+#include <qvalidator.h>
 
 // update output (for immediate output commands) at least this often (msecs):
 #define FLUSH_INTERVAL 100
@@ -324,16 +325,20 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 	RK_TRACE (RBACKEND);
 
-	// first, copy out the type while mutex is locked. Allows for easier typing below
-	MUTEX_LOCK;
+	// first, copy out the type. Allows for easier typing below
 	RCallbackArgs::RCallbackType type = args->type;
 
 	if (type == RCallbackArgs::RShowMessage) {
 		KMessageBox::information (0, QString (*(args->chars_a)), i18n ("Message from the R backend"));
 	} else if (type == RCallbackArgs::RReadConsole) {
-		QString res = KInputDialog::getText (i18n ("R backend requests information"), QString (*(args->chars_a)));
+		bool ok;
+		QRegExpValidator *dummy = new QRegExpValidator (QRegExp (".*"), 0);		// needed to allow empty strings in KInputDialog::getText
+		QString res = KInputDialog::getText (i18n ("R backend requests information"), QString (*(args->chars_a)), QString::null, &ok, 0, 0, dummy);
+		delete dummy;
 		res = res.left (args->int_a - 2) + "\n";
 		qstrcpy (*(args->chars_b), res.latin1 ());
+
+		if (!ok) cancelCommand (runningCommand ());
 	} else if ((type == RCallbackArgs::RShowFiles) || (type == RCallbackArgs::REditFiles)) {
 		if ((type == RCallbackArgs::RShowFiles) && (QString (*(args->chars_d)) == "rkwardhtml")) {
 			// not to worry, just some help file to display
@@ -343,7 +348,6 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 			}
 		} else {
 			ShowEditTextFileAgent::showEditFiles (args);
-			MUTEX_UNLOCK;
 			return;
 		}
 	} else if (type ==RCallbackArgs::RChooseFile) {
@@ -368,6 +372,7 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		r_thread->terminate ();
 	}
 
+	MUTEX_LOCK;
 	args->done = true;
 	MUTEX_UNLOCK;
 }

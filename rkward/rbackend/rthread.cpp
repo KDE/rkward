@@ -168,6 +168,8 @@ void RThread::doCommand (RCommand *command) {
 			} else if (error == SyntaxError) {
 				command->status |= RCommand::ErrorSyntax;
 				RK_DO (qDebug ("Command failed (syntax)"), RBACKEND, DL_WARNING);
+			} else if (command->status & RCommand::Canceled) {
+				RK_DO (qDebug ("Command failed (interrupted)"), RBACKEND, DL_WARNING);
 			} else {
 				command->status |= RCommand::ErrorOther;
 				RK_DO (qDebug ("Command failed (other)"), RBACKEND, DL_WARNING);
