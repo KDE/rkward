@@ -100,6 +100,7 @@ bool RKHTMLWindow::openURL (const KURL &url) {
 		}
 		KRun *runner = new KRun (url);		// according to KRun-documentation, KRun will self-destruct when done.
 		runner->setRunExecutables (false);
+		return false;
 	}
 
 	khtmlpart->openURL (url);
@@ -116,7 +117,7 @@ bool RKHTMLWindow::openURL (const KURL &url) {
 		forward->setEnabled (false);
 	}
 
-	return true;	
+	return true;
 }
 
 void RKHTMLWindow::updateCaption (const KURL &url) {
@@ -182,7 +183,8 @@ RKOutputWindow::~RKOutputWindow () {
 bool RKOutputWindow::openURL (const KURL &url) {
 	RK_TRACE (APP);
 
-	QFile out_file (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
+	output_url = url;
+	QFile out_file (url.path ());
 	bool ok = out_file.exists();
 	if (ok)  {
 		RKHTMLWindow::openURL (url);
@@ -197,7 +199,7 @@ void RKOutputWindow::updateCaption (const KURL &) {
 
 void RKOutputWindow::refresh () {
 	scroll_position = khtmlpart->view ()->contentsHeight ();
-	openURL (khtmlpart->url ());
+	openURL (output_url);
 }
 
 //static

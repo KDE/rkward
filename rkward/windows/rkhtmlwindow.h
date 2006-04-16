@@ -115,6 +115,8 @@ private:
 	KAction* outputRefresh;
 
 	static RKOutputWindow* current_output;
+/** In case the output is empty (i.e. output file does not exist), we need to store, where the output *would* be, if it existed, so we can properly refresh the output */
+	KURL output_url;
 };
 
 /**
