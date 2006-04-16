@@ -1,3 +1,8 @@
+- pressing Cancel in readline ("R backend requests information") dialog interrupts the command
+- process R X11 events while modal dialogs (such as "R backend requests information") are shown
+- allow empty input in readline ("R backend requests information") dialog
+- make Ctrl+C/copy work in output and help windows
+
 --- Version 0.3.5 - Apr-16-2006
 - give back focus to the script editor after running line/selection/all
 - reworded exit dialog box
