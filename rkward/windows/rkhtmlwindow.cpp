@@ -49,7 +49,6 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : KMdiChildView (parent) {
 
 	// We have to connect this in order to allow browsing.
 	connect (khtmlpart->browserExtension (), SIGNAL(openURLRequest (const KURL &, const KParts::URLArgs &)), this, SLOT (slotOpenURLRequest (const KURL &, const KParts::URLArgs &)));
-	
 	connect (khtmlpart, SIGNAL (completed ()), this, SLOT (loadDone ()));
 
 	url_history.setAutoDelete (true);
@@ -58,6 +57,13 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : KMdiChildView (parent) {
 
 RKHTMLWindow::~RKHTMLWindow () {
 	RK_TRACE (APP);
+}
+
+void RKHTMLWindow::addCommonActions (KActionCollection *action_collection) {
+	RK_TRACE (APP);
+
+	// enable copy
+	KStdAction::copy (khtmlpart->browserExtension (), SLOT (copy ()), action_collection, "copy");
 }
 
 void RKHTMLWindow::slotPrint () {
@@ -165,6 +171,7 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 	outputRefresh = new KAction (i18n ("&Refresh"), 0, 0, this, SLOT (refreshOutput ()), actionCollection (), "output_refresh");
 	print = KStdAction::print (this, SLOT (slotPrint ()), actionCollection (), "print_output");
 	print->setText (i18n ("Print Output"));
+	addCommonActions (actionCollection ());
 
 	RKGlobals::rkApp ()->m_manager->addPart (khtmlpart);
 
@@ -271,6 +278,7 @@ RKHelpWindow::RKHelpWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUICli
 	forward->setEnabled (false);
 	print = KStdAction::print (this, SLOT (slotPrint ()), actionCollection (), "print_help");
 	print->setText (i18n ("Print Help"));
+	addCommonActions (actionCollection ());
 
 	KInstance* instance = new KInstance ("rkward");
 	setInstance (instance);

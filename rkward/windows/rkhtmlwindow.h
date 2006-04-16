@@ -26,6 +26,7 @@
 #include <qptrlist.h>
 
 class KHTMLPart;
+class KActionCollection;
 
 /**
 	\brief Show html files.
@@ -49,6 +50,9 @@ public:
 	virtual bool openURL (const KURL &url);
 /** Reload current page.*/
 	virtual void refresh ();
+/** Add common actions to the given action collection (currently only "copy")
+@param action_collection A KActionCollection to insert actions in. */
+	void addCommonActions (KActionCollection *action_collection);
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
 	void slotOpenURLRequest (const KURL &url, const KParts::URLArgs &);

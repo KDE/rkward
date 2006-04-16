@@ -4,6 +4,9 @@
 		<Menu name="file">
 			<Action name="print_help"/>
 		</Menu>
+		<Menu name="edit">
+			<Action name="copy"/>
+		</Menu>
 	</MenuBar>
 	<ToolBar fullWidth="true" name="navigation_toolbar">
 		<Action name="help_back"/>

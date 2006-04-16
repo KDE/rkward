@@ -4,6 +4,9 @@
 		<Menu name="file">
 			<Action name="print_output"/>
 		</Menu>
+		<Menu name="edit">
+			<Action name="copy"/>
+		</Menu>
 		<Menu name="output"><text>&amp;Output</text>
 			<Separator/>
 			<Action name="output_refresh"/>
