@@ -112,13 +112,23 @@
 	return (c (as.vector (x[,1]), as.vector (x[,2])))
 }
 
-"require" <- function (package, quietly = FALSE, warn.conflicts = TRUE, keep.source = getOption("keep.source.pkgs"), character.only = FALSE, version, save = TRUE) {
+"require" <- function (package, lib.loc=NULL, quietly = FALSE, warn.conflicts = TRUE, keep.source = getOption("keep.source.pkgs"), character.only = FALSE, version, save = TRUE) {
 	if (!character.only) {
 		package <- as.character (substitute (package));
 	}
-	if (!base::require (as.character (package), quietly, warn.conflicts, keep.source, character.only=TRUE, version, save)) {
-		.rk.do.call ("require", as.character (package))
-		return (base::require (as.character (package), quietly, warn.conflicts, keep.source, character.only=TRUE, version, save));
+# R 2.2.x does not have a lib.loc parameter! Do some conditional code until nobody uses R 2.2.x anymore
+	vers <- R.Version ()
+	vers <- 10 * as.numeric (vers$major) + as.numeric (vers$minor)
+	if (vers < 23) {
+		if (!base::require (as.character (package), quietly=quietly, warn.conflicts=warn.conflicts, keep.source=keep.source, character.only=TRUE, version=version, save=save)) {
+			.rk.do.call ("require", as.character (package))
+			return (base::require (as.character (package), quietly=quietly, warn.conflicts=warn.conflicts, keep.source=keep.source, character.only=TRUE, version=version, save=save));
+		}
+	} else {
+		if (!base::require (as.character (package), lib.loc=lib.loc, quietly=quietly, warn.conflicts=warn.conflicts, keep.source=keep.source, character.only=TRUE, version=version, save=save)) {
+			.rk.do.call ("require", as.character (package))
+			return (base::require (as.character (package), lib.loc=lib.loc, quietly=quietly, warn.conflicts=warn.conflicts, keep.source=keep.source, character.only=TRUE, version=version, save=save));
+		}
 	}
 	return (TRUE)
 }

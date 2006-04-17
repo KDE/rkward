@@ -1,13 +1,10 @@
-all:
-	-R CMD build rkward
-install:
-	-R CMD INSTALL rkward
-uninstall:
-	-R CMD REMOVE rkward
+all \
+install \
+uninstall \
 check:
-	-R CMD check rkward
+
 distdir:
-	@list=`find rkward -not -name '*~' -and -not -name 'CVS'`; \
+	@list=`find . -not -name '*~' -and -not -name 'CVS'`; \
 	for file in $$list; do \
 		echo $$file; \
 		if test -d $$file; then \
@@ -19,4 +16,3 @@ distdir:
 	cp -dP Makefile $(distdir)/Makefile
 clean \
 distclean:
-	-rm -f rkward_*.tar.gz
