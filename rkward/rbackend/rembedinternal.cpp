@@ -35,7 +35,8 @@ extern "C" {
 #include <dlfcn.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <sys/types.h>
+#include <sys/resource.h>
+#include <sys/types.h>
 //#include <signal.h>
 //#include <unistd.h>
 #include <math.h>
@@ -339,11 +340,23 @@ SEXP doSubstackCall (SEXP call) {
 }
 
 bool REmbedInternal::startR (int argc, char** argv) {
-	if (Rf_initEmbeddedR(argc, argv) < 0) {
-		return false;
-	}
+	// TODO: hopefully we don't need the HACK portions below. If R 2.3.0 goes unfixed, however, this should at least work in most cases (if no hard ulimit -s is set)
 
-	return true;
+	int teststack;
+	printf ("startR %lx\n", &teststack);
+	// HACK to disable Rs method of stack checking
+	struct rlimit rlimhack;
+	rlimhack.rlim_cur = rlimhack.rlim_max = (unsigned long)-1;
+	struct rlimit rlimsave;
+	getrlimit (RLIMIT_STACK, &rlimsave);
+	setrlimit (RLIMIT_STACK, &rlimhack);
+
+	bool ok = (Rf_initEmbeddedR (argc, argv) >= 0);
+
+	// HACK part 2: now reinstantiate standard stack checking
+	setrlimit (RLIMIT_STACK, &rlimsave);
+
+	return ok;
 }
 
 bool REmbedInternal::registerFunctions (char *library_path) {
