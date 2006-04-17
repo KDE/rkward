@@ -117,11 +117,9 @@
     if (!character.only) {
         package <- as.character(substitute(package))
     }
-        if (!base::require(as.character(package), quietly = quietly, 
-            character.only = TRUE, ...)) {
+        if (!base::require(as.character(package), quietly = quietly, character.only = TRUE, ...)) {
             .rk.do.call("require", as.character(package))
-            return(base::require(as.character(package), quietly = quietly, 
-                character.only = TRUE, ...))
+            return(base::require(as.character(package), quietly = TRUE, character.only = TRUE, ...))
         }
     return(TRUE)
 }
