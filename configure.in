@@ -66,6 +66,17 @@ dnl CXXFLAGS="$CXXFLAGS $USE_EXCEPTIONS" dnl __kdevelop[exc]__
 dnl KDE_NEED_FLEX dnl __kdevelop__
 dnl AC_PROG_YACC dnl __kdevelop__
 
+#MIN_CONFIG(3)
+
+dnl PACKAGE set before
+
+dnl CXXFLAGS="$NOOPT_CXXFLAGS" dnl __kdevelop[noopt]__
+dnl CFLAGS="$NOOPT_CFLAGS" dnl __kdevelop[noopt]__
+dnl CXXFLAGS="$CXXFLAGS $USE_EXCEPTIONS" dnl __kdevelop[exc]__
+
+dnl KDE_NEED_FLEX dnl __kdevelop__
+dnl AC_PROG_YACC dnl __kdevelop__
+
 KDE_CREATE_SUBDIRSLIST
 AC_CONFIG_FILES([ Makefile ])
 AC_CONFIG_FILES([ debian/Makefile ])
@@ -82,6 +93,7 @@ AC_CONFIG_FILES([ rkward/misc/Makefile ])
 AC_CONFIG_FILES([ rkward/plugin/Makefile ])
 AC_CONFIG_FILES([ rkward/plugins/Makefile ])
 AC_CONFIG_FILES([ rkward/rbackend/Makefile ])
+AC_CONFIG_FILES([ rkward/rbackend/rpackages/Makefile ])
 AC_CONFIG_FILES([ rkward/scriptbackends/Makefile ])
 AC_CONFIG_FILES([ rkward/settings/Makefile ])
 AC_CONFIG_FILES([ rkward/windows/Makefile ])

@@ -30750,6 +30750,11 @@ fi
 
 
 
+#MIN_CONFIG(3)
+
+
+
+
 
 
 DO_NOT_COMPILE="$DO_NOT_COMPILE CVS bsd-port admin"
@@ -30825,6 +30830,8 @@ done
           ac_config_files="$ac_config_files rkward/plugins/Makefile"
 
           ac_config_files="$ac_config_files rkward/rbackend/Makefile"
+
+          ac_config_files="$ac_config_files rkward/rbackend/rpackages/Makefile"
 
           ac_config_files="$ac_config_files rkward/scriptbackends/Makefile"
 
@@ -31396,6 +31403,7 @@ do
   "rkward/plugin/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/plugin/Makefile" ;;
   "rkward/plugins/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/plugins/Makefile" ;;
   "rkward/rbackend/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/rbackend/Makefile" ;;
+  "rkward/rbackend/rpackages/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/rbackend/rpackages/Makefile" ;;
   "rkward/scriptbackends/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/scriptbackends/Makefile" ;;
   "rkward/settings/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/settings/Makefile" ;;
   "rkward/windows/Makefile" ) CONFIG_FILES="$CONFIG_FILES rkward/windows/Makefile" ;;
