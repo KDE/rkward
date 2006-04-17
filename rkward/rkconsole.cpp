@@ -60,8 +60,8 @@ RKConsole::RKConsole () : QWidget (0) {
 	view->setDynWordWrap (false);
 
 	
-	setFocusProxy(view);
-	setFocusPolicy(QWidget::WheelFocus);
+	setFocusProxy (view);
+	setFocusPolicy (QWidget::WheelFocus);
 	
 	/* We need to unplug kactions that were pluged to the KateViewInternal in kateview.cpp.
 	These actions incluse Key_Up, Key_Down, etc.
@@ -110,16 +110,13 @@ RKConsole::RKConsole () : QWidget (0) {
 		unplugAction("select_bottom_of_view", ac);
 		unplugAction("to_matching_bracket", ac);
 		unplugAction("select_matching_bracket", ac);
-		
-
+		unplugAction("paste", ac);
 	} else {
-		qDebug("Warning: could not retrieve the view's action collection");
+		RK_DO (qDebug ("Could not retrieve the view's action collection"), APP, DL_WARNING);
 	}
 
-	
 	view->focusProxy()->installEventFilter(this);
 	view->installEventFilter(this);
-	
 
 	setRHighlighting ();
 	doc->setModified (false);
@@ -206,8 +203,6 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		return TRUE;
 	}
 
-
-	
 	if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
 		submitCommand ();
 		return TRUE;
@@ -223,7 +218,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		if(pos<=prefix.length ()){
 			return TRUE;
 		} else {
-			view->  shiftCursorLeft ();
+			view->shiftCursorLeft ();
 			return FALSE;
 		}
 	}
@@ -260,30 +255,27 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		return TRUE;
 	}
 
-	
-
-
 	return FALSE;
-	
 }
 
 bool RKConsole::eventFilter( QObject *o, QEvent *e )
 {
-	if ( (e->type() == QEvent::KeyPress) ) {
+	if (e->type () == QEvent::KeyPress) {
 		QKeyEvent *k = (QKeyEvent *)e;
-		return handleKeyPress(k); 
-	} else if ( (e->type() == QEvent::MouseButtonPress) ){
+		return handleKeyPress (k);
+	} else if (e->type () == QEvent::MouseButtonPress){
 		QMouseEvent *m = (QMouseEvent *)e;
 		if (m->button() == Qt::RightButton) {
 			createPopupMenu(m->globalPos());
 			return(TRUE);
 		}
 		return(FALSE);
-	} else if ( (e->type() == QEvent::MouseButtonRelease) ){
+	} else if (e->type () == QEvent::MouseButtonRelease){
 		QMouseEvent *m = (QMouseEvent *)e;
 		if (m->button() == Qt::MidButton) {
-			paste();
-			return(TRUE);
+			QClipboard *cb = QApplication::clipboard ();
+			submitBatch (cb->text (QClipboard::Selection));
+			return (true);
 		}
 		return(FALSE);
 	} else {
@@ -569,7 +561,7 @@ RKConsolePart::~RKConsolePart () {
 
 void RKConsolePart::showContextHelp () {
 	RK_TRACE (APP);
-	RKGlobals::helpDialog ()->getContextHelp (console->currentCommand (), console->currentCursorPositionInCommand() );
+	RKGlobals::helpDialog ()->getContextHelp (console->currentCommand (), console->currentCursorPositionInCommand ());
 }
 
 void RKConsolePart::setDoingCommand (bool busy) {

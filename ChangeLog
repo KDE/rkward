@@ -1,4 +1,6 @@
-- clean up output of require ()
+- make Ctrl+V work in the console
+- middle mouse pastes selection, not global clipboard in the console, as expected
+- clean up output of require (quietly=FALSE)
 - some fixes for R 2.3.0
 - pressing Cancel in readline ("R backend requests information") dialog interrupts the command
 - process R X11 events while modal dialogs (such as "R backend requests information") are shown
