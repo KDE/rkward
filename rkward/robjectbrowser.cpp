@@ -55,9 +55,9 @@ RObjectBrowser::RObjectBrowser () : QWidget () {
 	list_view->contextMenu ()->insertItem (i18n ("Rename"), this, SLOT (popupRename ()), 0, Rename, 2);
 	list_view->contextMenu ()->insertItem (i18n ("Delete"), this, SLOT (popupDelete ()), 0, Delete, 3);
 	list_view->contextMenu ()->insertSeparator (4);
-	connect (list_view, SIGNAL (aboutToShowContextMenu (QListViewItem*, bool*)), this, SLOT (contextMenuCallback (QListViewItem*, bool*)));
+	connect (list_view, SIGNAL (aboutToShowContextMenu (RKListViewItem*, bool*)), this, SLOT (contextMenuCallback (RKListViewItem*, bool*)));
 	
-	connect (list_view, SIGNAL (doubleClicked ( QListViewItem *, const QPoint &, int )), this, SLOT (slotListDoubleClicked (QListViewItem *, const QPoint &, int)));
+	connect (list_view, SIGNAL (doubleClicked (QListViewItem *, const QPoint &, int )), this, SLOT (slotListDoubleClicked (QListViewItem *, const QPoint &, int)));
 	
 	resize (minimumSizeHint ().expandedTo (QSize (400, 480)));
 }
@@ -99,7 +99,7 @@ void RObjectBrowser::popupRename () {
 	}
 }
 
-void RObjectBrowser::contextMenuCallback (QListViewItem *, bool *) {
+void RObjectBrowser::contextMenuCallback (RKListViewItem *, bool *) {
 	RObject *object = list_view->menuObject ();
 	QPopupMenu *menu = list_view->contextMenu ();
 
@@ -121,7 +121,7 @@ void RObjectBrowser::contextMenuCallback (QListViewItem *, bool *) {
 
 void RObjectBrowser::slotListDoubleClicked (QListViewItem *item, const QPoint &, int)
 {
-	RObject *object = list_view->findItemObject (item);
+	RObject *object = list_view->findItemObject (static_cast<RKListViewItem*> (item));
 	
 	if (!object) return;
 	if (object == RKGlobals::rObjectList ()) return;

@@ -20,6 +20,7 @@
 #include <qwidget.h>
 
 class RKObjectListView;
+class RKListViewItem;
 class QListViewItem;
 class QPushButton;
 class QPopupMenu;
@@ -43,14 +44,14 @@ public:
 	
 public slots:
 	void updateButtonClicked ();
-	void contextMenuCallback (QListViewItem *item, bool *suppress);
+	void contextMenuCallback (RKListViewItem *item, bool *suppress);
 	
 	void popupEdit ();
 	void popupView ();
 	void popupDelete ();
 	void popupRename ();
-/** when an object in the list is double clicked, insert its name in the current RKCommandEditor windo */
-    void slotListDoubleClicked(QListViewItem *item, const QPoint &pos, int);
+/** when an object in the list is double clicked, insert its name in the current RKCommandEditor window */
+    void slotListDoubleClicked (QListViewItem *item, const QPoint &pos, int);
 private:
 	friend class RKwardApp;
 	void initialize ();

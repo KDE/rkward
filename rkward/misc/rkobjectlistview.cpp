@@ -50,6 +50,8 @@ RKObjectListView::~RKObjectListView () {
 }
 
 void RKObjectListView::objectBrowserSettingsChanged () {
+	setColumnWidth (0, 50);
+	setColumnWidthMode (0, QListView::Maximum);
 	if (RKSettingsModuleObjectBrowser::showLabelField ()) {
 		setColumnWidth (1, 50);
 		setColumnWidthMode (1, QListView::Maximum);
@@ -77,7 +79,7 @@ void RKObjectListView::objectBrowserSettingsChanged () {
 	triggerUpdate ();
 
 	for (QListViewItemIterator it (this); it.current (); ++it) {
-		RObject *object = findItemObject (it.current ());
+		RObject *object = findItemObject (static_cast<RKListViewItem*> (it.current ()));
 		RK_ASSERT (object);
 
 		if (object->getFullName ().startsWith (".")) it.current ()->setVisible (RKSettingsModuleObjectBrowser::showHiddenVars ());
@@ -90,12 +92,12 @@ void RKObjectListView::popupConfigure () {
 }
 
 void RKObjectListView::requestedContextMenu (QListViewItem *item, const QPoint &pos, int) {
-	RObject *object = findItemObject (item);
+	RObject *object = findItemObject (static_cast<RKListViewItem *> (item));
 
 	menu_object = object;
 
 	bool suppress = false;
-	emit (aboutToShowContextMenu (item, &suppress));
+	emit (aboutToShowContextMenu (static_cast<RKListViewItem *> (item), &suppress));
 
 	if (!suppress) menu->popup (pos);
 }
@@ -135,7 +137,7 @@ void RKObjectListView::updateStarted () {
 void RKObjectListView::objectAdded (RObject *object) {
 	RK_TRACE (APP);
 
-	QListViewItem *parent = findObjectItem (object->getContainer ());
+	RKListViewItem *parent = findObjectItem (object->getContainer ());
 	RK_ASSERT (parent);
 	addObject (parent, object, false);
 	
@@ -149,7 +151,7 @@ void RKObjectListView::objectAdded (RObject *object) {
 void RKObjectListView::objectRemoved (RObject *object) {
 	RK_TRACE (APP);
 
-	QListViewItem *item = findObjectItem (object);
+	RKListViewItem *item = findObjectItem (object);
 	RK_ASSERT (item);
 	object_map.remove (item);
 	delete item;
@@ -164,7 +166,7 @@ void RKObjectListView::objectRemoved (RObject *object) {
 void RKObjectListView::objectPropertiesChanged (RObject *object) {
 	RK_TRACE (APP);
 
-	QListViewItem *item = findObjectItem (object);
+	RKListViewItem *item = findObjectItem (object);
 	RK_ASSERT (item);
 	updateItem (item, object);
 
@@ -175,7 +177,7 @@ void RKObjectListView::objectPropertiesChanged (RObject *object) {
 	}
 }
 
-QListViewItem *RKObjectListView::findObjectItem (RObject *object) {
+RKListViewItem *RKObjectListView::findObjectItem (RObject *object) {
 	RK_TRACE (APP);
 	for (ObjectMap::iterator it = object_map.begin (); it != object_map.end (); ++it) {
 		if (it.data () == object) return it.key ();
@@ -183,7 +185,7 @@ QListViewItem *RKObjectListView::findObjectItem (RObject *object) {
 	return 0;
 }
 
-RObject *RKObjectListView::findItemObject (QListViewItem *item) {
+RObject *RKObjectListView::findItemObject (RKListViewItem *item) {
 	RK_TRACE (APP);
 	if (!item) return 0;
 	if (object_map.find (item) == object_map.end ()) {
@@ -193,7 +195,7 @@ RObject *RKObjectListView::findItemObject (QListViewItem *item) {
 	}
 }
 
-void RKObjectListView::updateItem (QListViewItem *item, RObject *object) {
+void RKObjectListView::updateItem (RKListViewItem *item, RObject *object) {
 	RK_TRACE (APP);
 
 	item->setText (0, object->getShortName ());
@@ -231,15 +233,15 @@ void RKObjectListView::updateItem (QListViewItem *item, RObject *object) {
 	}
 }
 
-void RKObjectListView::addObject (QListViewItem *parent, RObject *object, bool recursive) {
+void RKObjectListView::addObject (RKListViewItem *parent, RObject *object, bool recursive) {
 	RK_TRACE (APP);
 	
-	QListViewItem *item;
+	RKListViewItem *item;
 
 	if (parent) {
-		item = new QListViewItem (parent);
+		item = new RKListViewItem (parent);
 	} else {
-		item = new QListViewItem (this);
+		item = new RKListViewItem (this);
 	}
 
 	updateItem (item, object);
@@ -274,6 +276,21 @@ void RKObjectListView::addObject (QListViewItem *parent, RObject *object, bool r
 			item->setOpen (true);
 		}
 	} */
+}
+
+
+
+//////////////////// RKListViewItem //////////////////////////
+int RKListViewItem::width (const QFontMetrics &fm, const QListView * lv, int c) const {
+	if (parent ()) {
+		if (!parent ()->isOpen ()) {
+			return 0;
+		}
+	}
+
+	int ret = QListViewItem::width (fm, lv, c);
+	if (ret > 200) return 200;
+	return ret;
 }
 
 #include "rkobjectlistview.moc"

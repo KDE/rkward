@@ -931,7 +931,7 @@ void RKComponentPropertyRObjects::setFromListView (RKObjectListView *list_view, 
 	while (current->itemBelow ()) {
 		current = current->itemBelow ();
 		if ((!selected_only) || current->isSelected ()) {
-			RObject *obj = list_view->findItemObject (current);
+			RObject *obj = list_view->findItemObject (static_cast<RKListViewItem *> (current));
 			RK_ASSERT (obj);
 			newlist.append (static_cast<RKVariable*> (obj));
 		}

@@ -1,3 +1,4 @@
+- prevent R-Object listviews (Varselector, Workspace Browser) from growing excessively wide
 - make Ctrl+V work in the console
 - middle mouse pastes selection, not global clipboard in the console, as expected
 - clean up output of require (quietly=FALSE)

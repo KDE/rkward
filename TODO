@@ -16,7 +16,6 @@ Some items I'd like to get done for 0.3.6 or whatever the next release is going 
 - Create an editor for single vectors/factors, or rework RKEditorDataFrame to handle those as well
 - RObjectListView
 	- use icons to mark up the different base types
-	- limit width
 - David's usability items
 Optional stuff, that could possibly be attacked for 0.3.6:
 - RExpressionObject as an abstraction for R-Expressions (i.e. manually edited expressions).
