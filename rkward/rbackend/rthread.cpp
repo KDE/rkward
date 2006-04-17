@@ -363,7 +363,7 @@ int RThread::initialize () {
 	// we create a fake RCommand to capture all the output/errors during startup
 	current_command = new RCommand (QString::null, RCommand::App, "R Startup");
 
-	int argc = 2;	
+	int argc = 2;
 	char* argv[2] = { qstrdup ("--slave"), qstrdup ("--no-save") };
 
 	startR (argc, argv);

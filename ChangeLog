@@ -1,3 +1,5 @@
+- clean up output of require ()
+- some fixes for R 2.3.0
 - pressing Cancel in readline ("R backend requests information") dialog interrupts the command
 - process R X11 events while modal dialogs (such as "R backend requests information") are shown
 - allow empty input in readline ("R backend requests information") dialog

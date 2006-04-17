@@ -1,63 +1,19 @@
 #!/bin/sh
-# Shell wrapper for rkward executable. Mostly copied from the wrapper for R executable.
+# Shell wrapper for rkward executable.
 
 R_HOME_DIR=###R_HOME_DIR###
-if test -n "${R_HOME}" && \
-   test "${R_HOME}" != "${R_HOME_DIR}"; then
-  echo "WARNING: ignoring environment value of R_HOME"
-fi
-R_HOME="${R_HOME_DIR}"
-export R_HOME
-R_SHARE_DIR=###R_SHARE_DIR###
-export R_SHARE_DIR
-R_INCLUDE_DIR=###R_INCLUDE_DIR###
-export R_INCLUDE_DIR
-R_DOC_DIR=###R_DOC_DIR###
-export R_DOC_DIR
+R_binary="$R_HOME_DIR/bin/R"
 
-# Adjust library path so libR.so can be located
-## NOTE:
-## We must set this here rather than in the main binary.
-: ${R_LD_LIBRARY_PATH=${R_HOME}/lib}
-if test -z "${LD_LIBRARY_PATH}"; then
-  LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}"
-else
-  LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}"
-fi
-export LD_LIBRARY_PATH
-
-error () {
-  echo "ERROR: $*" >&2
-  exit 1
-}
-
-## R_HOME may have moved, so check
-## (or you get "GUI X11 is not supported")
-if test -x "${R_HOME}"; then
+## Location of R may have moved, so check
+if test -x "${R_binary}"; then
   :
 else
-  error "R_HOME ('${R_HOME}') not found. Most likely your installation of R has moved to a new location. Please rebuild rkward."
+  error "R binary ('${R_binary}') not found. Most likely your installation of R has moved to a new location. Please rebuild rkward."
 fi
-
-## Create a per-session dir
-: ${TMPDIR=/tmp}
-{ tmp=`(umask 077 && mktemp -d -q "${TMPDIR}/RtmpXXXXXX") 2>/dev/null` \
-    && test -n "${tmp}" && test -d "${tmp}" ; } ||
-  { test -n "${RANDOM}" && tmp=${TMPDIR}/Rtmp$$-${RANDOM} \
-      && (umask 077 && mkdir "${tmp}") ; } ||
-  { tmp=${TMPDIR}/Rtmp$$ && (umask 077 && mkdir "${tmp}") ; } ||
-  error "cannot create temporary R session directory"
-R_SESSION_TMPDIR="${tmp}"
-export R_SESSION_TMPDIR
 
 ## Apparently on some systems an embedded R gets outsmarted somehow, and LC_NUMERIC is set to some dangerous value for the whole app (likely via some Qt stuff)
 ## To prevent this, set it here, explicitely. R does not work with wrong settings of LC_NUMERIC.
 export LC_NUMERIC="C"
 
-## Start rkward
-exec $0.bin "$@"
-
-### Local Variables: ***
-### mode: sh ***
-### sh-indentation: 2 ***
-### End: ***
+## Start rkward. Running through R CMD to set all the relevant R enviroment variables
+exec $R_binary CMD $0.bin "$@"

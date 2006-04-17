@@ -1869,8 +1869,6 @@ dnl ############################################ RKWARD specific addition begin 
 AC_REQUIRE([CHECK_RHOME])
 AC_REQUIRE([CHECK_LIBRSO])
 AC_REQUIRE([CHECK_RINCLUDE])
-AC_REQUIRE([CHECK_RSHARE])
-AC_REQUIRE([CHECK_RDOC])
 dnl ############################################ RKWARD specific addition end ###################################
 
 ])
@@ -1921,7 +1919,7 @@ AC_DEFUN([CHECK_RINCLUDE],
 AC_MSG_CHECKING(for R include files)
 AC_ARG_WITH(r-includes,AC_HELP_STRING([--with-r-includes=DIR],[specify location of R include files]),
   use_r_includes="$withval",
-  use_r_includes=`R CMD sh -c 'echo $R_INCLUDE_DIR'`
+  use_r_includes=`$R_HOMEDIR/bin/R CMD sh -c 'echo $R_INCLUDE_DIR'`
   if test "$use_r_includes" == "" ; then use_r_includes="$R_HOMEDIR/include" ; fi
 )
 
@@ -1936,54 +1934,6 @@ fi
 AC_SUBST(R_INCLUDEDIR)
 
 AC_MSG_RESULT($use_r_includes)
-])
-
-
-dnl find out about R_SHARE_DIR
-AC_DEFUN([CHECK_RSHARE],
-[
-AC_MSG_CHECKING(for R_SHARE directory)
-AC_ARG_WITH(r-share,AC_HELP_STRING([--with-r-share=DIR],[specify location of R_SHARE directory]),
-  use_r_share="$withval",
-  use_r_share=`R CMD sh -c 'echo $R_SHARE_DIR'`
-  if test "$use_r_share" == "" ; then use_r_share="$R_HOMEDIR/share" ; fi
-)
-
-r_share=
-if test -d "$use_r_share"; then
-   R_SHAREDIR="$use_r_share"
-else
-   AC_MSG_ERROR([
-   $use_r_share does not exist as a directory!
-   Check your installation of R, and use --with-r-share to specify the correct directory.])
-fi
-AC_SUBST(R_SHAREDIR)
-
-AC_MSG_RESULT($use_r_share)
-])
-
-
-dnl find out about R_DOC_DIR
-AC_DEFUN([CHECK_RDOC],
-[
-AC_MSG_CHECKING(for R_DOC directory)
-AC_ARG_WITH(r-doc,AC_HELP_STRING([--with-r-doc=DIR],[specify location of R_DOC directory]),
-  use_r_doc="$withval",
-  use_r_doc=`R CMD sh -c 'echo $R_DOC_DIR'`
-  if test "$use_r_doc" == "" ; then use_r_doc="$R_HOMEDIR/doc" ; fi
-)
-
-r_doc=
-if test -d "$use_r_doc"; then
-   R_DOCDIR="$use_r_doc"
-else
-   AC_MSG_ERROR([
-   $use_r_doc does not exist as a directory!
-   Check your installation of R, and use --with-r-doc to specify the correct directory.])
-fi
-AC_SUBST(R_DOCDIR)
-
-AC_MSG_RESULT($use_r_doc)
 ])
 
 dnl ############################################ RKWARD specific addition end ###################################

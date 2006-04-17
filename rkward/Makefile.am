@@ -64,7 +64,7 @@ bin_SCRIPTS = rkward
 
 # all the perl script does is fill in the placeholder for R_HOMEDIR and friends
 rkward:
-	perl ./makerkwardscript.pl rkward.sh.template "$(R_HOMEDIR)" "$(R_INCLUDEDIR)" "$(R_SHAREDIR)" "$(R_DOCDIR)" > rkward; \
+	perl ./makerkwardscript.pl rkward.sh.template "$(R_HOMEDIR)" > rkward; \
 	chmod 744 rkward
 
 CLEANFILES = rkward
