@@ -381,7 +381,7 @@ int RThread::initialize () {
 	runCommandInternal ("library (\"rkward\")\n", &error);
 	if (error) status |= LibLoadFail;
 	int c;
-	paths = getCommandAsStringVector ("library.dynam (\"rkward\", \"rkward\")$path\n", &c, &error);
+	paths = getCommandAsStringVector ("library.dynam (\"rkward\", \"rkward\")[[\"path\"]]\n", &c, &error);
 	if ((error) || (c != 1)) {
 		status |= LibLoadFail;
 	} else {
