@@ -17,7 +17,6 @@
 	}
 ?>
 rk.header ("Histogram", list ("Frequency", "<? echo $scale; ?>", "Breaks algorithm", <? echo ("\"" . $breaks . "\""); ?>, "Variable", rk.get.description (<? echo ($x); ?>)))
-cat ("<h1>Histogram</h1>")
 rk.graph.on ()
 hist (<? echo ($x); ?>, <? echo ($breaksopt); ?>, freq = <? echo $scale; ?><? getRK ("plotoptions.code.printout"); ?>)
 rk.graph.off ()
