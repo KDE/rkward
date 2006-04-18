@@ -30,6 +30,7 @@ extern "C" {
 #include "Rinternals.h"
 #include "Rinterface.h"
 #include "Rdevices.h"
+#include "Rversion.h"
 #include "R_ext/Parse.h"
 
 #include <dlfcn.h>
@@ -41,11 +42,20 @@ extern "C" {
 //#include <unistd.h>
 #include <math.h>
 
+#if (R_VERSION > R_Version(2, 2, 9))
+#define R_2_3
+#endif
+
 // some functions we need that are not declared
 extern int Rf_initEmbeddedR(int argc, char **argv);
 extern SEXP R_ParseVector(SEXP, int, ParseStatus*);
 extern void Rf_PrintWarnings (void);
 extern int R_interrupts_pending;
+#ifdef R_2_3
+extern int Rf_initialize_R(int ac, char **av);
+extern void setup_Rmainloop(void); /* in main.c */
+extern unsigned long R_CStackLimit;
+#endif
 extern Rboolean R_Visible;
 }
 
@@ -340,23 +350,14 @@ SEXP doSubstackCall (SEXP call) {
 }
 
 bool REmbedInternal::startR (int argc, char** argv) {
-	// TODO: hopefully we don't need the HACK portions below. If R 2.3.0 goes unfixed, however, this should at least work in most cases (if no hard ulimit -s is set)
-
-	int teststack;
-	printf ("startR %lx\n", &teststack);
-	// HACK to disable Rs method of stack checking
-	struct rlimit rlimhack;
-	rlimhack.rlim_cur = rlimhack.rlim_max = (unsigned long)-1;
-	struct rlimit rlimsave;
-	getrlimit (RLIMIT_STACK, &rlimsave);
-	setrlimit (RLIMIT_STACK, &rlimhack);
-
-	bool ok = (Rf_initEmbeddedR (argc, argv) >= 0);
-
-	// HACK part 2: now reinstantiate standard stack checking
-	setrlimit (RLIMIT_STACK, &rlimsave);
-
-	return ok;
+#ifdef R_2_3
+	Rf_initialize_R (argc, argv);
+	R_CStackLimit = (unsigned long) -1;
+	setup_Rmainloop ();
+	return true;
+#else
+	return (Rf_initEmbeddedR (argc, argv) >= 0);
+#endif
 }
 
 bool REmbedInternal::registerFunctions (char *library_path) {
