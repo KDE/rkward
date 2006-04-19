@@ -56,7 +56,12 @@ void TwinTableDataMember::insertRows (int row, int count) {
 
 void TwinTableDataMember::setText (int row, int col, const QString &text) {
 	RK_TRACE (EDITOR);
-	table->getColObject (col)->setText (row, text);
+
+	RKVariable *var = table->getColObject (col);
+	if (var) {
+		var->setText (row, text);
+	}
+	// we may also be in a row that has no var (e.g. left header)
 }
 
 void TwinTableDataMember::paintCell (QPainter *p, int row, int col, const QRect &cr, bool selected, const QColorGroup &cg) {

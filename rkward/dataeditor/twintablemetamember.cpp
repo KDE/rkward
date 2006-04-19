@@ -52,7 +52,7 @@ void TwinTableMetaMember::insertRows (int, int) {
 void TwinTableMetaMember::setText (int row, int col, const QString &text) {
 	RK_TRACE (EDITOR);
 	RKVariable *var = table->getColObject (col);
-	RK_ASSERT (var);
+	RK_ASSERT (var || (col < 0));
 	if (text == TwinTableMetaMember::text (row, col)) return;
 	if (row == NAME_ROW) {
 		RKGlobals::tracker ()->renameObject (var, var->getContainer ()->validizeName (text));

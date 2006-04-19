@@ -45,6 +45,7 @@
 #define HEADER_MENU_ID_ADD_ROW_ABOVE 0
 #define HEADER_MENU_ID_ADD_ROW_BELOW 1
 #define HEADER_MENU_ID_DEL_ROW 2
+#define HEADER_MENU_ID_DEL_ROWS 3
 
 
 TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
@@ -91,7 +92,7 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
 	connect (dataview, SIGNAL (selectionChanged ()), this, SLOT (viewClearSelection ()));
 	
 	// this is to catch right-clicks on the top header
-	connect (varview, SIGNAL (headerRightClick (int, int)), this, SLOT (headerRightClicked (int, int)));
+	connect (varview, SIGNAL (headerRightClick (int, int)), this, SLOT (varviewHeaderRightClicked (int, int)));
 	
 	// which will be reacted upon by the following popup-menu:
 	top_header_menu = new QPopupMenu (this);
@@ -100,11 +101,12 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
 	top_header_menu->insertItem (i18n ("Delete this variable"), this, SLOT (requestDeleteColumn ()), 0, HEADER_MENU_ID_DEL_COL);
 	
 	// and the same for the left header
-	connect (dataview, SIGNAL (headerRightClick (int, int)), this, SLOT (headerRightClicked (int, int)));
+	connect (dataview, SIGNAL (headerRightClick (int, int)), this, SLOT (dataviewHeaderRightClicked (int, int)));
 	left_header_menu = new QPopupMenu (this);
 	left_header_menu->insertItem (i18n ("Insert new case above"), this, SLOT (insertRowAbove ()), 0, HEADER_MENU_ID_ADD_ROW_ABOVE);
 	left_header_menu->insertItem (i18n ("Insert new case below"), this, SLOT (insertRowBelow ()), 0, HEADER_MENU_ID_ADD_ROW_BELOW);
-	left_header_menu->insertItem (i18n ("Delete this case"), this, SLOT (deleteRow ()), 0, HEADER_MENU_ID_DEL_ROW);
+	left_header_menu->insertItem (QString::null, this, SLOT (deleteRow ()), 0, HEADER_MENU_ID_DEL_ROW);
+	left_header_menu->insertItem (QString::null, this, SLOT (deleteRows ()), 0, HEADER_MENU_ID_DEL_ROWS);
 }
 
 TwinTable::~TwinTable() {
@@ -204,15 +206,19 @@ void TwinTable::deleteRow (int where, TwinTableMember *table) {
 void TwinTable::headerClicked (int col) {
 	RK_TRACE (EDITOR);
 
-	dataview->selectCells (0, col, dataview->numTrueRows (), col);
+	QTableSelection selection;
+	selection.init (0, col);
+	selection.expandTo (dataview->numTrueRows (), col);
+
+	dataview->addSelection (selection);
 }
 
 // TODO: handle situation when several entire rows/cols are selected!
-void TwinTable::headerRightClicked (int row, int col) {
+void TwinTable::varviewHeaderRightClicked (int, int col) {
 	RK_TRACE (EDITOR);
 
 	if (col >= 0) {
-			header_pos = col;
+		header_pos = col;
 		if (col < varview->numTrueCols ()) {
 			top_header_menu->setItemVisible (HEADER_MENU_ID_ADD_COL_LEFT, true);
 			top_header_menu->setItemVisible (HEADER_MENU_ID_ADD_COL_RIGHT, true);
@@ -226,15 +232,30 @@ void TwinTable::headerRightClicked (int row, int col) {
 		} else {
 			RK_ASSERT (false);
 		}
-	} else if (row >= 0) {
+	}
+}
+
+void TwinTable::dataviewHeaderRightClicked (int row, int col) {
+	RK_TRACE (EDITOR);
+
+	RK_ASSERT (col < 0);
+	if (row >= 0) {
 		header_pos = row;
+		left_header_menu->setItemVisible (HEADER_MENU_ID_ADD_ROW_ABOVE, true);
+		int top, bottom, left, right;
+		dataview->getSelectionBoundaries (&top, &left, &bottom, &right);
+		if (top >= 0 && bottom <= dataview->numTrueRows () && top != bottom) {
+			left_header_menu->setItemVisible (HEADER_MENU_ID_DEL_ROWS, true);
+			left_header_menu->changeItem (HEADER_MENU_ID_DEL_ROWS, i18n ("Delete marked rows (%1-%2)").arg (QString::number (top+1), QString::number (bottom+1)));
+		} else {
+			left_header_menu->setItemVisible (HEADER_MENU_ID_DEL_ROWS, false);
+		}
 		if (row < dataview->numTrueRows ()) {
-			left_header_menu->setItemVisible (HEADER_MENU_ID_ADD_ROW_ABOVE, true);
 			left_header_menu->setItemVisible (HEADER_MENU_ID_ADD_ROW_BELOW, true);
 			left_header_menu->setItemVisible (HEADER_MENU_ID_DEL_ROW, true);
+			left_header_menu->changeItem (HEADER_MENU_ID_DEL_ROW, i18n ("Delete this row (%1)").arg (QString::number (row+1)));
 			left_header_menu->popup (dataview->mouse_at);
 		} else if (row == dataview->numTrueRows ()) {		// trailing row
-			left_header_menu->setItemVisible (HEADER_MENU_ID_ADD_ROW_ABOVE, true);
 			left_header_menu->setItemVisible (HEADER_MENU_ID_ADD_ROW_BELOW, false);
 			left_header_menu->setItemVisible (HEADER_MENU_ID_DEL_ROW, false);
 			left_header_menu->popup (dataview->mouse_at);
@@ -246,7 +267,7 @@ void TwinTable::headerRightClicked (int row, int col) {
 
 void TwinTable::viewClearSelection () {
 	RK_TRACE (EDITOR);
-
+	
 	disconnect (varview, SIGNAL (selectionChanged ()), this, SLOT (dataClearSelection ()));
 	varview->clearSelection ();
 	connect (varview, SIGNAL (selectionChanged ()), this, SLOT (dataClearSelection ()));
@@ -293,6 +314,16 @@ void TwinTable::insertRowAbove () {
 void TwinTable::deleteRow () {
 	RK_TRACE (EDITOR);
 	deleteRow (header_pos);
+}
+
+void TwinTable::deleteRows () {
+	RK_TRACE (EDITOR);
+// TODO: this is inefficient. Remove all rows at once
+	int top, bottom, left, right;
+	dataview->getSelectionBoundaries (&top, &left, &bottom, &right);
+	for (; bottom >= top; --bottom) {
+		deleteRow (bottom);
+	}
 }
 
 void TwinTable::paste (QByteArray &content) {

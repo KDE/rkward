@@ -82,8 +82,9 @@ signals:
 /** emitted so the RKEditorDataFrame can update the R workspace accordingly. Only signals row deletions in the data table, not the meta table */
 	void dataRemovingRow (int);
 public slots:
+	void dataviewHeaderRightClicked (int row, int col);
+	void varviewHeaderRightClicked (int row, int col);
 	void headerClicked (int col);
-	void headerRightClicked (int row, int col);
 	void viewClearSelection ();
 	void dataClearSelection ();
 private:
@@ -122,8 +123,10 @@ private slots:
 	void insertRowBelow ();
 /** inserts a new row above the current header_pos */
 	void insertRowAbove ();
-/** deletes the current row */
+/** deletes the current row (in the data view) */
 	void deleteRow ();
+/** deletes all marked rows (in the data view) */
+	void deleteRows ();
 /** deletes the column at the current header_pos. Actually it does not really delete the column, but requests object-removal from the RKEditorDataFrame. That will take care of calling deleteColumn (int) */
 	void requestDeleteColumn ();
 };
