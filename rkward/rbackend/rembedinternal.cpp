@@ -406,7 +406,7 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 		// got a null SEXP. This means parse was *not* ok, even if R_ParseVector told us otherwise
 		if (status == PARSE_OK) {
 			status = PARSE_ERROR;
-		    printf ("weird parse error\n");
+			printf ("weird parse error\n");
 		}
 	}
 

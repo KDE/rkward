@@ -131,6 +131,52 @@ stuff to do before a 1.0 release
 Notes for x11-window capturing:
 - See deactived class-header rbackend/rkwindowcatcher.h
 
+################## menu structure file/workspace ###########
+File
+	New
+		Dataset
+		Script File
+	Open R Script File
+	Open Recent (Script File)
+	Save/Load R Objects
+		Save
+			...
+		Load
+			...
+	Save
+	Save As
+	Reload
+	Print
+	Quit
+
+Workspace
+	Open Workspace
+	Open Recent (Workspace)
+	Save Workspace
+	Save Workspace As
+	Configure Packages (redundant)
+
+How should this be changed? Maybe:
+
+File
+	New
+		Dataset
+		Script File
+	Open R Script File
+	Open Recent (Script File)
+	Open Workspace
+	Open Recent (Workspace)
+	Import (previously Load R Objects)
+	Export (previously Save R Objects)
+	Save
+	Save As
+	Save Workspace
+	Save Workspace As
+	Reload
+	Print
+	Quit
+
+
 ################## cryptic notes ######################
 
 - printutils.c->481 Rvprintf: can we get at the standard out-connection and give it a fake vprintf (or better write?!) and fake fflush?
