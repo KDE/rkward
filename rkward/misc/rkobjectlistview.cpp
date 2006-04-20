@@ -210,19 +210,19 @@ void RKObjectListView::updateItem (RKListViewItem *item, RObject *object) {
 	} else {
 		switch(static_cast<RKVariable*> (object)->getVarType ()) {
 			case RObject::Number:
-				item->setPixmap (0, SmallIcon("ledblue",8));
+				item->setPixmap (0, SmallIcon("math_paren",12));
 				break;
 			case RObject::Factor:
-				item->setPixmap (0, SmallIcon("ledgreen",8));
+				item->setPixmap (0, SmallIcon("math_onetwomatrix",12));
 				break;
 			case RObject::String:
-				item->setPixmap (0, SmallIcon("ledyellow",8));
+				item->setPixmap (0, SmallIcon("text",12));
 				break;
 			case RObject::Invalid:
-				item->setPixmap (0, SmallIcon("cancel",8));
+				item->setPixmap (0, SmallIcon("no",12));
 				break;
 			case RObject::Unknown:
-				item->setPixmap (0, SmallIcon("ledred",8));
+				item->setPixmap (0, SmallIcon("help",12));
 				break;
 		}
 	}
