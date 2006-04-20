@@ -36,18 +36,16 @@
 			<entry component="simple_anova" index="4"/>
 		</menu>
 		<menu id="file" label="File">
-			<menu id="saveload" label="Save / Load R objects" index="4">
-				<menu id="load" label="Load" index="0">
-					<entry component="load_r_object" />
-					<entry component="load_readtable" />
-					<entry component="load_source" />
-				</menu>
-				<menu id="save" label="Save" index="0">
-					<entry component="save_r_object" />
-					<entry component="save_skeleton" />
-					<entry component="save_variables" />
-					<entry component="save_table" />
-				</menu>
+			<menu id="import" label="Import" index="4">
+				<entry component="load_r_object" />
+				<entry component="load_readtable" />
+				<entry component="load_source" />
+			</menu>
+			<menu id="export" label="Export" index="5">
+				<entry component="save_r_object" />
+				<entry component="save_skeleton" />
+				<entry component="save_variables" />
+				<entry component="save_table" />
 			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
