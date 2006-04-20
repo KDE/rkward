@@ -30684,6 +30684,11 @@ fi
 
 
 
+#MIN_CONFIG(3)
+
+
+
+
 
 
 DO_NOT_COMPILE="$DO_NOT_COMPILE CVS bsd-port admin"

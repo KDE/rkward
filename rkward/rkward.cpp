@@ -391,6 +391,10 @@ void RKwardApp::readOptions () {
 
 	// do this last, since we may be setting some different config-group(s) in the process
 	RKSettings::loadSettings (config);
+
+	// explicitely hide the KMdiTaskBar. It could get in the way (and not quite sure, why it shows up on some systems)
+	KToolBar *mditask = (KToolBar*) child ("KMdiTaskBar", "KToolBar");
+	if (mditask) mditask->hide ();
 }
 
 void RKwardApp::saveProperties(KConfig *_cfg)
