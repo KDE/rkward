@@ -18,7 +18,6 @@ if (getRK_val("isTitle") == "1") $main = getRK_val ("main"); else $main = "";
 if (getRK_val("isSub") == "1") $sub = getRK_val ("sub"); else $sub = "";
 ?>
 
-
 <? #input ?>
 rk.plugin.Xvar <- list(<? echo ($x) ;?>)
 rk.plugin.Yvar <- list(<? echo ($y) ;?>)

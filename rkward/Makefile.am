@@ -22,8 +22,12 @@
 bin_PROGRAMS = rkward.bin
 
 rkward_bin_SOURCES = rkwatch.cpp rkward.cpp main.cpp \
-	rkcommandeditor.cpp rkglobals.cpp robjectbrowser.cpp rkeditormanager.cpp robjectviewer.cpp \
+	rkglobals.cpp robjectbrowser.cpp rkeditormanager.cpp robjectviewer.cpp \
 	khelpdlg.cpp rkconsole.cpp rkward.skel
+
+noinst_HEADERS = rkwatch.h rkward.h debug.h \
+	rkglobals.h robjectbrowser.h rkeditormanager.h robjectviewer.h \
+	khelpdlg.h rkconsole.h
 
 rkward_bin_LDADD = $(top_builddir)/rkward/windows/libwindows.a \
 	$(top_builddir)/rkward/agents/libagents.a $(top_builddir)/rkward/dialogs/libdialogs.a \
@@ -76,10 +80,6 @@ messages: rc.cpp
 	if test -n "$$LIST"; then \
 	 $(XGETTEXT) $$LIST -o $(podir)/rkward.pot; \
 	fi
-
-noinst_HEADERS = rkwatch.h rkward.h debug.h \
-	rkcommandeditor.h rkglobals.h robjectbrowser.h rkeditormanager.h robjectviewer.h \
-	khelpdlg.h rkconsole.h
 
 phpfilesdir = $(kde_datadir)/rkward/phpfiles
 

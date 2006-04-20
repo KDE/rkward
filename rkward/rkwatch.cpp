@@ -18,7 +18,6 @@
 #include "rkwatch.h"
 
 #include "rbackend/rinterface.h"
-#include "rkcommandeditor.h"
 #include "rkglobals.h"
 #include "settings/rksettingsmodulewatch.h"
 #include "settings/rksettings.h"
