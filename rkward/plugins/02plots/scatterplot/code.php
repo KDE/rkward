@@ -26,33 +26,33 @@ rk.plugin.Xval <- <? if (getRK_val("columns") == "custoCol" ) echo (getRK_val("X
 rk.plugin.Yval <- <? if (getRK_val("rows") == "custoRow" ) echo (getRK_val("Yscale") . "\n"); else echo ("c(" . $y . ")\n"); ?>
 
 <? # verification (chiant mais doit être fait)?>
-rk.plugin.ok = TRUE ;
+rk.plugin.ok <- TRUE
 if (length(rk.plugin.Xvar) != length(rk.plugin.Yvar) ) { 
-	rk.plugin.ok = FALSE ;
+	rk.plugin.ok <- FALSE ;
 	stop("'X' is of length ",length(rk.plugin.Xvar)," and 'Y' of length ",length(rk.plugin.Yvar) )
 }
 <?
 if (getRK_val ("color") == "each") { ?>
 if (length( <? echo ($col); ?>) != length(rk.plugin.Xvar)) {
-	rk.plugin.ok = FALSE ;
+	rk.plugin.ok <- FALSE
 	stop('only ', length( <? echo ($col); ?>) ,' color(s) is(are) displayed') ;
 }
 <? }
 if (getRK_val ("isPch") == "each") { ?>
 if (length( <? echo ($pch); ?>) != length(rk.plugin.Xvar)) {
-	rk.plugin.ok = FALSE ;
+	rk.plugin.ok <- FALSE
 	stop('only ', length( <? echo ($pch); ?>) ,' symbol(s) is(are) displayed') ;
 }
 <? }
 if (getRK_val ("isCe") == "each") { ?>
 if (length( <? echo ($cex); ?>) != length(rk.plugin.Xvar)) {
-	rk.plugin.ok = FALSE ;
+	rk.plugin.ok <- FALSE
 	stop('only ', length( <? echo ($cex); ?>) ,' size(s) is(are) displayed') ;
 }
 <? }
 if ($type == "custoType") { ?>
 if (length( <? echo ($typeCusto); ?>) != length(rk.plugin.Xvar)) {
-	rk.plugin.ok = FALSE ;
+	rk.plugin.ok <- FALSE
 	stop('only ', length( <? echo ($typeCusto); ?>) ,' type(s) is(are) displayed') ;
 }
 <? } ?>
@@ -60,27 +60,27 @@ if (length( <? echo ($typeCusto); ?>) != length(rk.plugin.Xvar)) {
 if (rk.plugin.ok) {
 
 <? #finding min and max for default plotin  ; ?>
-rk.plugin.Xdef = c(min(rk.plugin.Xval,na.rm=TRUE) , max(rk.plugin.Xval,na.rm=TRUE))
-rk.plugin.Ydef = c(min(rk.plugin.Yval,na.rm=TRUE) , max(rk.plugin.Yval,na.rm=TRUE))
+rk.plugin.Xdef <- c(min(rk.plugin.Xval,na.rm=TRUE) , max(rk.plugin.Xval,na.rm=TRUE))
+rk.plugin.Ydef <- c(min(rk.plugin.Yval,na.rm=TRUE) , max(rk.plugin.Yval,na.rm=TRUE))
 
 <? # names ?>
-rk.plugin.Xname = '<? echo ($Xname); ?>'
-rk.plugin.Yname = '<? echo ($Yname); ?>'
-rk.plugin.title = '<? echo ($main); ?>'
-rk.plugin.sub = '<? echo ($sub); ?>'
+rk.plugin.Xname <- '<? echo ($Xname); ?>'
+rk.plugin.Yname <- '<? echo ($Yname); ?>'
+rk.plugin.title <- '<? echo ($main); ?>'
+rk.plugin.sub <- '<? echo ($sub); ?>'
 
 <? # type ?>
-rk.plugin.tc = data.frame(
+rk.plugin.tc <- data.frame(
 type = rep(NA,length(rk.plugin.Xvar)),
 col = rep(NA,length(rk.plugin.Xvar)),
 pch = rep(NA,length(rk.plugin.Xvar)),
 cex = rep(NA,length(rk.plugin.Xvar)))
 
-<? if  ($type != "custoType" ) echo ( $type . " ->  rk.plugin.tc[[1]]" ) ;
-else echo( $typeCusto . " ->  rk.plugin.type.tc[[1]]"  ) ?>
-rk.plugin.tc[[2]] = <? echo ($col); ?>
-rk.plugin.tc[[3]] = <? echo ($cex); ?>
-rk.plugin.tc[[4]] = <? echo ($pch); ?>
+<? if  ($type != "custoType" ) echo ( $type . " ->  rk.plugin.tc[[1]]\n" ) ;
+else echo( $typeCusto . " ->  rk.plugin.type.tc[[1]]\n"  ) ?>
+rk.plugin.tc[[2]] <- <? echo ($col . "\n"); ?>
+rk.plugin.tc[[3]] <- <? echo ($cex . "\n"); ?>
+rk.plugin.tc[[4]] <- <? echo ($pch . "\n"); ?>
 
 <? # avant après ?>
 <? /* TODO 
