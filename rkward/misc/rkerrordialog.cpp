@@ -78,6 +78,7 @@ void RKErrorDialog::createDialog () {
 	grid->addLayout (vbox, 0, 0);
 	
 	QLabel *label = new QLabel (text, dialog);
+	label->setAlignment (Qt::AlignAuto | Qt::ExpandTabs | Qt::WordBreak);
 	vbox->addWidget (label);
 	
 	error_log = new QTextEdit (dialog);
