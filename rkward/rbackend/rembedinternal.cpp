@@ -402,6 +402,14 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 	}
 	UNPROTECT(1);
 
+	if ((!pr) || (TYPEOF (pr) == NILSXP)) {
+		// got a null SEXP. This means parse was *not* ok, even if R_ParseVector told us otherwise
+		if (status == PARSE_OK) {
+			status = PARSE_ERROR;
+		    printf ("weird parse error\n");
+		}
+	}
+
 	if (status != PARSE_OK) {
 		if ((status == PARSE_INCOMPLETE) || (status == PARSE_EOF)) {
 			*error = REmbedInternal::Incomplete;
@@ -436,6 +444,8 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 		} else {
 			*error = REmbedInternal::NoError;
 		}
+
+		UNPROTECT(1); /* pr */
 	}
 
 	/* Do NOT ask me why, but the line below is needed for warnings to be printed, while otherwise they would not be shown.
@@ -445,7 +455,6 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 	Rf_PrintWarnings ();
 
 //	SET_SYMVALUE(R_LastvalueSymbol, exp);
-	UNPROTECT(1); /* pr */
 
 	return exp;
 }
