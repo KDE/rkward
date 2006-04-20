@@ -8,7 +8,7 @@ All in all, this TODO list is mostly for internal purposes, and many parts may n
 Some items I'd like to get done for 0.3.6 or whatever the next release is going to be called, if they don't take too long:
 - RKEditorDataFrame
 	- undo/redo
-	- deletion of multiple rows/columns in one step
+	- deletion of multiple columns in one step
 - Rework package management dialog
 	- use install.packages () to handle dependencies
 	- manage R library locations, install to location with user write access

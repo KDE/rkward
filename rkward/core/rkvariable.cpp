@@ -17,6 +17,7 @@
 #include "rkvariable.h"
 
 #include <qstringlist.h>
+#include "float.h"
 
 #include "rcontainerobject.h"
 #include "robjectlist.h"
@@ -32,7 +33,7 @@
 #define GET_DATA_COMMAND 11
 #define GET_FACTOR_LEVELS_COMMAND 12
 
-#define MAX_PRECISION 16
+#define MAX_PRECISION DBL_DIG
 
 #include "../debug.h"
 

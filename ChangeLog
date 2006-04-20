@@ -1,3 +1,7 @@
+- don't try to show higher numeric precision than is acutally avaiable
+- fix bug in scatterplot plugin
+- remove configure options --with-r-share and --with-r-doc (obsoleted by improved wrapper script)
+- allow deletion of several rows at once in the data.frame editor and fix some bugs regarding deletion of rows
 - prevent R-Object listviews (Varselector, Workspace Browser) from growing excessively wide
 - make Ctrl+V work in the console
 - middle mouse pastes selection, not global clipboard in the console, as expected
