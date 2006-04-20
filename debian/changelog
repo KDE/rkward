@@ -1,6 +1,7 @@
 rkward (0.3.6) unstable; urgency=low
 
   * new upstream release
+  * specify --with-r-home in ./configure, in case there is more than one version of R installed
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sun, 23 Apr 2006 15:45:00 +0200
 
