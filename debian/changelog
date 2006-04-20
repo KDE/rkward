@@ -1,6 +1,13 @@
+rkward (0.3.6) unstable; urgency=low
+
+  * new upstream release
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sun, 23 Apr 2006 15:45:00 +0200
+
 rkward (0.3.5) unstable; urgency=low
 
   * new upstream release
+  * add lintian exception for rkward.bin (no man page)
   * remove call to build-help.pl during postinst postrm
   * use --disable-rpath in ./configure
   * remove /usr/sbin from dirs

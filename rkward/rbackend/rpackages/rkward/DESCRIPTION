@@ -1,6 +1,6 @@
 Package: rkward
 Title: Provides some helper functions for the RKWard frontend
-Version: 0.3.5
+Version: 0.3.6
 Author: Thomas Friedrichsmeier and the RKWard Team
 Description: Most of the functions in here are really only needed for the internal communication between RKWard and R. There are also a few functions, which allow access to RKWard or RKWard specifics. Most is not implemented, yet.
 Maintainer: RKWard-devel mailing list <rkward-devel@lists.sourceforge.net>

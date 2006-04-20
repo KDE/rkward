@@ -90,8 +90,9 @@ int main(int argc, char *argv[]) {
 	aboutData.addCredit ("Yves Jacolin", I18N_NOOP ("New website"), QString::null);
 	aboutData.addCredit ("Marco Martin", I18N_NOOP ("A cool icon"), QString::null);
 	aboutData.addCredit ("Daniele Medri", I18N_NOOP ("RKWard logo, many suggestions, help on wording"), QString::null);
+	aboutData.addCredit ("Stefan Roediger", I18N_NOOP ("Several plugins, and suggestions"), QString::null);
 	aboutData.addCredit ("David Sibai", I18N_NOOP ("Several valuable comments, hints and patches"), QString::null);
-	aboutData.addCredit (I18N_NOOP ("Many more people on rkward-devel@lists.sourceforge.net"), I18N_NOOP ("Sorry, I forgot to list you. Please contact me to get added"), QString::null);
+	aboutData.addCredit (I18N_NOOP ("Many more people on rkward-devel@lists.sourceforge.net"), I18N_NOOP ("Sorry, if we forgot to list you. Please contact us to get added"), QString::null);
 
 	// before initializing the commandline args, remove the ".bin" from "rkward.bin".
 	// This is so it prints "Usage rkward..." instead of "Usage rkward.bin...", etc.
