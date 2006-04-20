@@ -37,19 +37,17 @@ thanks ;-).
 
 <book lang="&language;">
 
-<!-- This header contains all of the meta-information for the document such
-as Authors, publish date, the abstract, and Keywords -->
 
 <bookinfo>
-<title>The RKward Handbook</title>
+<title>The RKWard Handbook</title>
 
 <authorgroup>
+<!-- New authors, add youselves here! -->
 <author>
-<firstname>George</firstname>
-<othername>N.</othername>
-<surname>Ugnacious</surname>
+<firstname>Thomas</firstname>
+<surname>Friedrichsmeier</surname>
 <affiliation>
-<address><email>gnu@kde.org</email></address>
+<address><email>rkward-devel@lists.sourceforge.net</email></address>
 </affiliation>
 </author>
 </authorgroup>
@@ -57,9 +55,8 @@ as Authors, publish date, the abstract, and Keywords -->
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 
 <copyright>
-<year>1999</year>
-<year>2000</year>
-<holder>George N. Ugnacious</holder>
+<year>2006</year>
+<holder>Thomas Friedrichsmeier &amp; the RKWard Team</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
 <!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook 
@@ -73,15 +70,14 @@ Please respect the format of the date (DD/MM/YYYY) and of the version
 (V.MM.LL), it could be used by automation scripts.
 Do NOT change these in the translation. -->
 
-<date>03/04/1999</date>
-<releaseinfo>1.01.00</releaseinfo>
+<date>20/04/2006</date>
+<releaseinfo>0.3.6</releaseinfo>
 
 <!-- Abstract about this handbook -->
 
 <abstract>
 <para>
-&rkward; is an application specially designed to do nothing you would
-ever want.
+&rkward; is a GUI frontend to the powerful R language for statistical computing.
 </para>
 </abstract>
 
@@ -91,97 +87,44 @@ Please at least include KDE, the KDE package it is in, the name
 
 <keywordset>
 <keyword>KDE</keyword>
-<keyword>kdeutils</keyword>
-<keyword>Kapp</keyword>
-<keyword>nothing</keyword>
-<keyword>nothing else</keyword>
+<keyword>R</keyword>
+<keyword>rkward</keyword>
+<keyword>science</keyword>
 </keywordset>
 
 </bookinfo>
 
-<!-- The contents of the documentation begin here.  Label
-each chapter so with the id attribute. This is necessary for two reasons: it
-allows you to easily reference the chapter from other chapters of your
-document, and if there is no ID, the name of the generated HTML files will vary
-from time to time making it hard to manage for maintainers and for the CVS
-system. Any chapter labelled (OPTIONAL) may be left out at the author's
-discretion. Other chapters should not be left out in order to maintain a
-consistent documentation style across all KDE apps. -->
 
 <chapter id="introduction">
 <title>Introduction</title>
-
-<!-- The introduction chapter contains a brief introduction for the
-application that explains what it does and where to report
-problems. Basically a long version of the abstract.  Don't include a
-revision history. (see installation appendix comment) -->
-
 <para>
-&kapp; is a program that lets you do absolutely nothing. Please report
-any problems or feature requests to the KDE mailing lists.
+&kapp; is meant to be(come) an easy to use graphical frontend to the powerful R language for statistical computing. Since R is a full featured programming language, &kapp; will never be able to offer a complete GUI for everything in R. However, &kapp; strives to make common task simple, to provide an easy entry point for newcomers, while at the same time, transparent access to the full power of the underlying R language is provided for advanced users.
 </para>
 </chapter>
 
 <chapter id="using-kapp">
-<title>Using RKward</title>
-
-<!-- This chapter should tell the user how to use your app. You should use as
-many sections (Chapter, Sect1, Sect3, etc...) as is necessary to fully document
-your application. -->
+<title>Using &kapp;</title>
 
 <para>
-
-<!-- Note that all graphics should be in .png format. Use no gifs because of
-patent issues. -->
-
-<screenshot>
-<screeninfo>Here's a screenshot of &kapp;</screeninfo>
-	<mediaobject>
-	  <imageobject>
-	    <imagedata fileref="screenshot.png" format="PNG"/>
-	  </imageobject>
-	  <imageobject>
-	    <imagedata fileref="screenshot.eps" format="EPS"/>
-	  </imageobject>
-	  <textobject>
-	    <phrase>Screenshot</phrase>
-	  </textobject>
-	</mediaobject>
-</screenshot>
+Documentation efforts have only just started. The most useful guide to getting started with &kapp; to this date is <ulink url="http://rkward.sourceforge.net/wiki/index.php?title=Getting_Started_Using_RKWard">Getting Started Section in the &kapp; wiki</ulink>.
 </para>
-
-
-<sect1 id="kapp-features">
-<title>More Kapp features</title>
-
-<para>It slices! It dices! and it comes with a free toaster!</para>
 <para>
-The Squiggle Tool <guiicon><inlinemediaobject>
-	  <imageobject>
-	    <imagedata fileref="squiggle.png" format="PNG"/>
-	  </imageobject>
-	  <imageobject>
-	    <imagedata fileref="squiggle.eps" format="EPS"/>
-	  </imageobject>
-	  <textobject>
-	    <phrase>Squiggle</phrase>
-	  </textobject>
-</inlinemediaobject></guiicon> is used to draw squiggly lines all over
-the &rkward; main window. It's not a bug, it's a feature!
+Please go there for an introduction to &kapp;, and contact us, if you can help with creating user documentation.
 </para>
 
-</sect1>
 </chapter>
 
 <chapter id="commands">
 <title>Command Reference</title>
-
+<para>
+TODO
+</para>
 <!-- (OPTIONAL, BUT RECOMMENDED) This chapter should list all of the
 application windows and their menubar and toolbar commands for easy reference.
 Also include any keys that have a special function but have no equivalent in the
 menus or toolbars. This may not be necessary for small apps or apps with no tool
 or menu bars. -->
-
+<!--
 <sect1 id="kapp-mainwindow">
 <title>The main RKward window</title>
 <para></para>
@@ -225,19 +168,14 @@ or menu bars. -->
 
 </sect2>
 
-</sect1>
+</sect1> -->
 </chapter>
 
 <chapter id="developers">
-<title>Developer's Guide to RKward</title>
-
-<!-- (OPTIONAL) A Programming/Scripting reference chapter should be
-used for apps that use plugins or that provide their own scripting hooks
-and/or development libraries. -->
+<title>Developer's Guide to &kapp;</title>
 
 <para>
-Programming &rkward; plugins is a joy to behold. Just read through the next
-66 pages of API's to learn how!
+&kapp; can be extended without the need to recompile using plugins. Extensive documentation on this should be included with &kapp; in docbook format, and is available in HTML format <ulink url="http://rkward.sourceforge.net/documents/devel/plugins/index.html">here</ulink>. (TODO: figure out, how to include this in the docs).
 </para>
 
 <!-- Use refentries to describe APIs.  Refentries are fairly complicated and you
@@ -246,43 +184,6 @@ taken from that reference and shortened a bit for readability. -->
 
 </chapter>
 
-<chapter id="faq">
-<title>Questions and Answers</title>
-
-<!-- (OPTIONAL but recommended) This chapter should include all of the silly
-(and not-so-silly) newbie questions that fill up your mailbox. This chapter
-should be reserved for BRIEF questions and answers! If one question uses more
-than a page or so then it should probably be part of the
-"Using this Application" chapter instead. You should use links to
-cross-reference questions to the parts of your documentation that answer them.
-This is also a great place to provide pointers to other FAQ's if your users
-must do some complicated configuration on other programs in order for your
-application work. -->
-
-&reporting.bugs;
-&updating.documentation;
-
-<qandaset id="faqlist">
-<qandaentry>
-<question>
-<para>My Mouse doesn't work. How do I quit &kapp;?</para>
-</question>
-<answer>
-<para>You silly goose! Check out the <link linkend="commands">Commands
-Section</link> for the answer.</para>
-</answer>
-</qandaentry>
-<qandaentry>
-<question>
-<para>Why can't I twiddle my documents?</para>
-</question>
-<answer>
-<para>You can only twiddle your documents if you have the foobar.lib
-installed.</para>
-</answer>
-</qandaentry>
-</qandaset>
-</chapter>
 
 <chapter id="credits">
 
@@ -291,26 +192,10 @@ contributors here. The license for your software should then be included below
 the credits with a reference to the appropriate license file included in the KDE
 distribution. -->
 
-<title>Credits and License</title>
+<title>License</title>
 
 <para>
-&kapp;
-</para>
-<para>
-Program copyright 1997 John Q. Hacker <email>jqh@kde.org</email>
-</para>
-<para>
-Contributors:
-<itemizedlist>
-<listitem><para>Konqui the KDE Dragon <email>konqui@kde.org</email></para>
-</listitem>
-<listitem><para>Tux the Linux Penguin <email>tux@linux.org</email></para>
-</listitem>
-</itemizedlist>
-</para>
-
-<para>
-Documentation copyright 1999 George N. Ugnacious <email>gnu@kde.org</email>
+Documentation:
 </para>
 
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->
@@ -325,87 +210,9 @@ Documentation copyright 1999 George N. Ugnacious <email>gnu@kde.org</email>
      regardless of what license the application uses) -->
 
 &underGPL;        	 <!-- GPL License -->
-&underBSDLicense;        <!-- BSD License -->
-&underArtisticLicense;   <!-- BSD Artistic License -->
-&underX11License;        <!-- X11 License  -->
 
 </chapter>
 
-<appendix id="installation">
-<title>Installation</title>
-
-<sect1 id="getting-rkward">
-<title>How to obtain RKward</title>
-
-<para>
-&rkward; is part of the KDE project
-<ulink url="http://www.kde.org">http://www.kde.org</ulink>.
-&rkward; can be found in the kdeutils package on
-<ulink url="ftp://ftp.kde.org/pub/kde/">ftp://ftp.kde.org/pub/kde/</ulink>, the
-main ftp site of the KDE project. </para>
-</sect1>
-
-<sect1 id="requirements">
-<title>Requirements</title>
-
-<!--
-List any special requirements for your application here. This should include:
-.Libraries or other software that is not included in kdesupport,
-kdelibs, or kdebase.
-.Hardware requirements like amount of RAM, disk space, graphics card
-capabilities, screen resolution, special expansion cards, etc.
-.Operating systems the app will run on. If your app is designed only for a
-specific OS, (you wrote a graphical LILO configurator for example) put this
-information here.
--->
-
-<para>
-In order to successfully use &rkward;, you need KDE 1.1. Foobar.lib is required
-in order to support the advanced &rkward; features. &rkward; uses about 5 megs of
-memory to run, but this may vary depending on your platform and
-configuration.
-</para>
-
-<para>
-All required libraries as well as &rkward; itself can be found
-on <ulink url="ftp://ftp.kapp.org">The &rkward; home page</ulink>.
-</para>
-
-<!-- For a list of updates, you may refer to the application web site
-or the ChangeLog file, or ... -->
-<para>
-You can find a list of changes at <ulink
-url="http://apps.kde.org/kapp">http://apps.kde.org/kapp</ulink>.
-</para>
-</sect1>
-
-<sect1 id="compilation">
-<title>Compilation and Installation</title>
-
-<para>
-In order to compile and install KApp on your system, type the following in the base
-directory of the Icon Editor distribution:
-<screen width="40">
-<prompt>%</prompt> <userinput>./configure</userinput>
-<prompt>%</prompt> <userinput>make</userinput>
-<prompt>%</prompt> <userinput>make install</userinput>
-</screen>
-</para>
-
-<para>Since KApp uses autoconf and automake you should have not trouble compiling it.
-Should you run into problems please report them to the KDE mailing lists.</para>
-
-</sect1>
-
-<sect1 id="configuration">
-<title>Configuration</title>
-
-<para>Don't forget to tell your system to start the <filename>dtd</filename>
-dicer-toaster daemon first, or KApp won't work !</para>
-
-</sect1>
-
-</appendix>
 
 &documentation.index;
 </book>
