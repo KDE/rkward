@@ -92,6 +92,7 @@ public slots:
 	void codeChanged (RKComponentPropertyBase *);
 	void updateCodeNow ();
 	void switchInterface () { component->switchInterface (); };
+	void copyCode ();
 private:
 	RKComponentPropertyCode *code_property;
 

@@ -18,6 +18,7 @@
 #include "rkstandardcomponentgui.h"
 
 #include <klocale.h>
+#include <kaction.h>
 
 #include <qtimer.h>
 #include <qsplitter.h>
@@ -51,6 +52,11 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 	// code update timer
 	code_update_timer = new QTimer (this);
 	connect (code_update_timer, SIGNAL (timeout ()), this, SLOT (updateCodeNow ()));
+
+	if (!enslaved) {
+		KActionCollection *action_collection = new KActionCollection (this);
+		KStdAction::copy (this, SLOT (copyCode ()), action_collection);
+	}
 }
 
 RKStandardComponentGUI::~RKStandardComponentGUI () {
@@ -143,6 +149,12 @@ void RKStandardComponentGUI::toggleCode () {
 
 	code_display->setShown (toggle_code_button->isOn ());
 	updateCode ();
+}
+
+void RKStandardComponentGUI::copyCode () {
+	RK_TRACE (PLUGIN);
+
+	code_display->copy ();
 }
 
 void RKStandardComponentGUI::help () {

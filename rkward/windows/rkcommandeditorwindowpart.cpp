@@ -51,7 +51,6 @@ void RKCommandEditorWindowPart::initializeActions () {
 	runSelection = new KAction (i18n ("Run selection"), KShortcut ("F8"), this, SLOT (slotRunSelection ()), actionCollection (), "run_selection");
 	runSelection->setIcon("player_play");
 	runLine = new KAction (i18n ("Run current line"), KShortcut ("Ctrl+L"), this, SLOT (slotRunLine ()), actionCollection (), "run_line");
-	runLine->setIcon("player_play");
 
 	helpFunction = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT (slotFunctionReference ()), actionCollection (), "function_reference");
 }

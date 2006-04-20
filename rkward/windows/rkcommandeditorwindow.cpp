@@ -92,7 +92,7 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 
 void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 	if (isModified ()) {
-		int status = KMessageBox::warningYesNo (this, i18n ("The document \"%1\" has been modified. Close it anyway?").arg (tabCaption ()),i18n ("File not saved"));
+		int status = KMessageBox::warningYesNo (this, i18n ("The document \"%1\" has been modified. Close it anyway?").arg (tabCaption ()), i18n ("File not saved"));
 	
 		if (status != KMessageBox::Yes) {
 			e->ignore ();
@@ -134,6 +134,12 @@ QString RKCommandEditorWindow::getLine () {
 QString RKCommandEditorWindow::getText () {
 	RK_TRACE (COMMANDEDITOR);
 	return editInterface (m_doc)->text ();
+}
+
+void RKCommandEditorWindow::copy () {
+	RK_TRACE (COMMANDEDITOR);
+
+	m_view->copy ();
 }
 
 bool RKCommandEditorWindow::openURL (const KURL &url, bool use_r_highlighting, bool read_only){

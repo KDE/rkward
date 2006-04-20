@@ -25,12 +25,6 @@
 #include <kurl.h>
 #include <kmdichildview.h>
 
-class RKCommandEditor;
-class KAction;
-class KToggleAction;
-class RKwardApp; 
-class RCommandChain;
-
 /**
 	\brief Provides an editor window for R-commands, as well as a text-editor window in general.
 
@@ -65,6 +59,8 @@ public:
 	void showHelp ();
 /** set the current text (clear all previous text, and sets new text) */
 	void setText (const QString &text);
+/** copy current selection. Wrapper for use by external classes */
+	void copy ();
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if approriate */
 	void updateCaption ();
