@@ -27,7 +27,7 @@
 #include <qpushbutton.h>
 #include <qlabel.h>
 
-#include "../rkcommandeditor.h"
+#include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
 #include "../misc/rkerrordialog.h"
 #include "../rkglobals.h"
@@ -112,7 +112,7 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	if (enslaved) toggle_code_button->hide ();
 	
 	// code display
-	code_display = new RKCommandEditor (splitter, true);
+	code_display = new RKCommandEditorWindow (splitter, true);
 	if (enslaved) code_display->hide ();
 }
 
@@ -248,7 +248,7 @@ void RKStandardComponentWizard::addLastPage () {
 		QVBoxLayout *vbox = new QVBoxLayout (last_page, RKGlobals::spacingHint ());
 		QLabel *label = new QLabel (i18n ("Below you can see the command(s) corresponding to the settings you made. Click 'Submit' to run the command(s)."), last_page);
 		label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
-		code_display = new RKCommandEditor (last_page, true);
+		code_display = new RKCommandEditorWindow (last_page, true);
 		vbox->addWidget (label);
 		vbox->addWidget (code_display);
 	}

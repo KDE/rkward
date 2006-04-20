@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "rkcommandeditor.h"
-
+#if 0
 #include <qlayout.h>
 
 #include <kdeversion.h>
@@ -144,3 +144,4 @@ void RKCommandEditor::print () {
 	RK_TRACE (COMMANDEDITOR);
 	doc->print ();
 }
+#endif

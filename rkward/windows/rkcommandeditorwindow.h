@@ -63,6 +63,8 @@ public:
 	void insertText (const QString &text);
 /** Show help about the current word. */
 	void showHelp ();
+/** set the current text (clear all previous text, and sets new text) */
+	void setText (const QString &text);
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if approriate */
 	void updateCaption ();

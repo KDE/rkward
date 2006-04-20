@@ -16,7 +16,7 @@
  ***************************************************************************/
 #ifndef RKCOMMANDEDITOR_H
 #define RKCOMMANDEDITOR_H
-
+#if 0
 #include <qwidget.h>
 #include <qstring.h>
 
@@ -61,4 +61,5 @@ private:
 	void setRHighlighting ();
 };
 
+#endif
 #endif

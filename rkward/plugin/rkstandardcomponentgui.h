@@ -64,7 +64,7 @@ private:
 
 #include <qwidget.h>
 
-class RKCommandEditor;
+class RKCommandEditorWindow;
 class QPushButton;
 class QTimer;
 class QSplitter;
@@ -110,7 +110,7 @@ protected:
 	QPushButton *cancel_button;
 	QPushButton *help_button;
 	QPushButton *switch_button;
-	RKCommandEditor *code_display;
+	RKCommandEditorWindow *code_display;
 
 	bool enslaved;
 };

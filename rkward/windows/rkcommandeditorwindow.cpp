@@ -160,6 +160,11 @@ void RKCommandEditorWindow::insertText (const QString &text) {
 	setFocus();
 }
 
+void RKCommandEditorWindow::setText (const QString &text) {
+	RK_TRACE (COMMANDEDITOR);
+	m_doc->setText (text);
+}
+
 void RKCommandEditorWindow::updateCaption () {
 	RK_TRACE (COMMANDEDITOR);
 	QString name = m_doc->url ().fileName ();
