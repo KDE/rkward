@@ -59,14 +59,17 @@ endif
 	dh_clean 
 
 install: build
+	# Link manpage for rkward.bin to rkward
+	ln -s rkward.1 rkward.bin.1
+
 	dh_testdir
 	dh_testroot
 	dh_clean -k 
 	dh_installdirs
 
 	# Add lintian exceptions
-	dh_installdirs usr/share/lintian/overrides
-	cp $(CURDIR)/debian/lintian.bin.overrides $(CURDIR)/debian/rkward/usr/share/lintian/overrides/rkward
+	#dh_installdirs usr/share/lintian/overrides
+	#cp $(CURDIR)/debian/lintian.bin.overrides $(CURDIR)/debian/rkward/usr/share/lintian/overrides/rkward
 
 	# Add here commands to install the package into debian/rkward.
 	$(MAKE) install kde_htmldir=/usr/share/doc/kde/HTML DESTDIR=$(CURDIR)/debian/rkward
@@ -109,7 +112,7 @@ binary-arch: build install
 #	dh_python
 #	dh_makeshlibs
 	dh_installdeb
-#	dh_shlibdeps
+	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
