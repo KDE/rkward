@@ -30684,11 +30684,6 @@ fi
 
 
 
-#MIN_CONFIG(3)
-
-
-
-
 
 
 DO_NOT_COMPILE="$DO_NOT_COMPILE CVS bsd-port admin"
@@ -30736,8 +30731,6 @@ done
 
 
           ac_config_files="$ac_config_files Makefile"
-
-          ac_config_files="$ac_config_files debian/Makefile"
 
           ac_config_files="$ac_config_files doc/Makefile"
 
@@ -31323,7 +31316,6 @@ do
   case "$ac_config_target" in
   # Handling of arguments.
   "Makefile" ) CONFIG_FILES="$CONFIG_FILES Makefile" ;;
-  "debian/Makefile" ) CONFIG_FILES="$CONFIG_FILES debian/Makefile" ;;
   "doc/Makefile" ) CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
   "doc/en/Makefile" ) CONFIG_FILES="$CONFIG_FILES doc/en/Makefile" ;;
   "po/Makefile" ) CONFIG_FILES="$CONFIG_FILES po/Makefile" ;;

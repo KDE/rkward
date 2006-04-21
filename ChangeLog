@@ -1,4 +1,5 @@
-- Remove one level of menu nesting for save/load R Objects plugins
+- remove debian dir from source distribution again
+- remove one level of menu nesting for save/load R Objects plugins
 - check for and handle some strange R parse errors that could crash rkward
 - make Ctrl+C copy work in the code window of plugins
 - use KDE standard icons in object lists (need to be replaced by customized icons in the long run)
