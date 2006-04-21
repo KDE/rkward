@@ -104,7 +104,7 @@ binary-arch: build install
 #	dh_installinit
 #	dh_installcron
 #	dh_installinfo
-	dh_installman debian/rkward.1
+	dh_installman debian/rkward.1 debian/rkward.bin.1
 	dh_link
 	dh_strip
 #do not compress KDE HTML help
@@ -116,7 +116,12 @@ binary-arch: build install
 	dh_installdeb
 	dh_shlibdeps
 	# unfortunately, the r-base-core dependency can not be found by dh_shlibdeps, so we need to get at the version manually
-	echo "rvers="`dpkg-query -W -f='$${Version}' r-base-core` >> $(CURDIR)/debian/rkward.substvars
+	RVERS=`dpkg-query -W -f='$${Version}' r-base-core`
+	@if [[ "$(RVERS)" > "2.2.1.svn37823" ]] ; then \
+		echo "rvers=r-base-core (>= 2.2.1.svn37824)" >> $(CURDIR)/debian/rkward.substvars ; \
+	else \
+		echo "rvers=r-base-core (<= 2.2.1-6), r-base-core (>= 2.1.0)" >> $(CURDIR)/debian/rkward.substvars ; \
+	fi
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
