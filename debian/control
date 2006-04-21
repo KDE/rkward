@@ -7,7 +7,7 @@ Standards-Version: 3.6.2
 
 Package: rkward
 Architecture: any
-Depends: php4-cli, ${shlibs:Depends}
+Depends: php4-cli, r-base-core (= ${rvers}) ${shlibs:Depends}
 Recommends: r-base-html
 Description: a KDE frontend to the R statistics language
  RKWard aims to become an easy to use, transparent frontend to R,
