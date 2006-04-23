@@ -1,3 +1,5 @@
+--- Version 0.3.6 - Apr-23-2006
+- several fixes to the distributions plugins
 - remove debian dir from source distribution again
 - remove one level of menu nesting for save/load R Objects plugins
 - check for and handle some strange R parse errors that could crash rkward

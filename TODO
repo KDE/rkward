@@ -41,6 +41,7 @@ Little annoying stuff:
 - in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
 - find out how to save toolbar states properly in parts-GUI
 - use constBegin (), constEnd ()
+- get rid of all the superflous dependencies: http://lists.debian.org/debian-devel/2005/12/msg00439.html
 
 PHP-backend:
 - switch to KProcIO for easier logic
