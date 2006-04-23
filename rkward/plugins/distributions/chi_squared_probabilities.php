@@ -4,7 +4,7 @@
 	
 	function calculate () {
 ?>
-rk.temp <- (pchisq (q = <? getRK ("val"); ?>, df = <? getRK ("df"); ?>,  ncp = <? getRK ("ncp"); ?>, <? getRK ("tail"); ?>))
+rk.temp <- (pchisq (q = <? getRK ("q"); ?>, df = <? getRK ("df"); ?>,  ncp = <? getRK ("ncp"); ?>, <? getRK ("tail"); ?>))
 <?
 	}
 	
@@ -12,7 +12,7 @@ rk.temp <- (pchisq (q = <? getRK ("val"); ?>, df = <? getRK ("df"); ?>,  ncp = <
 
 		//produce the output
 ?>
-rk.header ("Chi-squared probability", list ("Variable value", "<? getRK ("val"); ?>", "Degrees of Freedom", "<? getRK ("df"); ?>", "non-centrality parameter", "<? getRK ("ncp"); ?>", "Tail", "<? getRK ("tail"); ?>"));
+rk.header ("Chi-squared probability", list ("Variable value", "<? getRK ("q"); ?>", "Degrees of Freedom", "<? getRK ("df"); ?>", "non-centrality parameter", "<? getRK ("ncp"); ?>", "Tail", "<? getRK ("tail"); ?>"));
 cat ("<h3>Chi-squared probaility:  ", rk.temp, "</h3>")
 <?
 	}

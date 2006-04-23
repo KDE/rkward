@@ -4,7 +4,6 @@
   <dialog label="Plot Chi-squared probabilities" >
     <tabbook>
 	    <tab label="Plot Chi-squared probabilities" >
-        <frame>
           <row>
             <column>
               <row>
@@ -28,7 +27,6 @@
 			  <stretch/>
             </column>
           </row>
-        </frame>
       </tab>
     </tabbook>
   </dialog>

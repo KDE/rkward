@@ -31,8 +31,7 @@ quantile(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
               <checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="names" label="Names" />
               <checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="narm" label="Remove Missing Values" />
             </column>
-            <!-- <spinbox type="integer" id="precision" min="1" initial="5" max="10" label="Precision" /> -->
-          </row>
+       </row>
         </frame>
         <radio id="samplequantile" label="Sample Quantile Types" >
           <option value="1" label="Inverse of empirical distribution function" />

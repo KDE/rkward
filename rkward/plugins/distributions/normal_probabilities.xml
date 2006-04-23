@@ -5,12 +5,11 @@
   <dialog label="Normal probabilities" >
     <tabbook>
 	<tab label="Normal probabilities" >
-        <frame>
           <row>
             <column>
-	     <spinbox max_precision="2" default_precision="2" type="real" initial="" id="val" min="-10000000" max="10000000" label="Variable value(s)"/>
-             <spinbox max_precision="2" default_precision="2" type="real" initial="0" id="mean" min="-10000000" max="10000000" label="mu (mean)"/>
-             <spinbox max_precision="2" default_precision="2" type="real" initial="1" id="sd" min="-10000000" max="10000000" label="sigma (standard deviation)"/>
+	     <spinbox max_precision="2" default_precision="2" type="real" initial="0.95" id="q" label="Variable value(s)"/>
+             <spinbox max_precision="2" default_precision="2" type="real" initial="0" id="mean" label="mu (mean)"/>
+             <spinbox max_precision="2" default_precision="2" type="real" initial="1" id="sd" label="sigma (standard deviation)"/>
             </column>
             <column>
               <radio id="tail" label="Choose type of probability" >
@@ -19,7 +18,6 @@
               </radio>
             </column>
           </row>
-        </frame>
       </tab>
     </tabbook>
   </dialog>

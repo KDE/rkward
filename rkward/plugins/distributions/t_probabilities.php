@@ -4,7 +4,7 @@
 	
 	function calculate () {
 ?>
-rk.temp = (pt (q = <? getRK ("val"); ?>, df = <? getRK ("df"); ?>, <? getRK ("tail"); ?>))
+rk.temp = (pt (q = <? getRK ("q"); ?>, df = <? getRK ("df"); ?>, <? getRK ("tail"); ?>))
 <?
 	}
 	
@@ -12,7 +12,7 @@ rk.temp = (pt (q = <? getRK ("val"); ?>, df = <? getRK ("df"); ?>, <? getRK ("ta
 
 		//produce the output
 ?>
-rk.header ("r probability", list ("Variable value", "<? getRK ("val"); ?>", "Degrees of Freedom", "<? getRK ("df"); ?>", "Tail", "<? getRK ("tail"); ?>"));
+rk.header ("t probability", list ("Variable value", "<? getRK ("q"); ?>", "Degrees of Freedom", "<? getRK ("df"); ?>", "Tail", "<? getRK ("tail"); ?>"));
 cat ("<h3>t probability:  ", rk.temp, "</h3>")
 <?
 	}

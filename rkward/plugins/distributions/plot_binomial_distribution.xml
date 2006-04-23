@@ -4,7 +4,6 @@
   <dialog label="Plot normal probabilities" >
     <tabbook>
       <tab label="Plot normal probabilities" >
-        <frame>
           <row>
             <column>
               <row>
@@ -29,7 +28,6 @@
 			  <stretch/>
             </column>
           </row>
-        </frame>
       </tab>
     </tabbook>
   </dialog>
