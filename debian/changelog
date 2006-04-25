@@ -1,3 +1,19 @@
+rkward (0.3.6-3) unstable; urgency=low
+
+  * fix detection of r-base-core dependency when compiled with r-base-core >= 2.3.0
+  * clean up rules somewhat
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 25 Apr 2006 12:45:00 +0200
+
+rkward (0.3.6-2) unstable; urgency=low
+
+  * link manpage directly in installation instead of debian-dir
+  * use --show-format instead of -f in call to dpkg-query (to work on stable)
+  * delete any debian/CVS subdir included by accident during clean
+  * add newline to copyright file
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 24 Apr 2006 14:45:00 +0200
+
 rkward (0.3.6-1) unstable; urgency=low
 
   * new upstream release

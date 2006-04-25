@@ -1,20 +1,17 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
-# Sample debian/rules that uses debhelper.
-# This file was originally written by Joey Hess and Craig Small.
-# As a special exception, when this file is copied by dh-make into a
-# dh-make output file, you may use that output file without restriction.
-# This special exception was added by Craig Small in version 0.37 of dh-make.
+# Based on the sample debian/rules of dh_make
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
-
 
 # These are used for cross-compiling and for saving the configure script
 # from having to guess our platform (since we know it already)
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
+#we need to know the R version
+RVERS = $(shell dpkg-query -W --showformat='$${Version}' r-base-core) 
 
 CFLAGS = -Wall -g
 
@@ -37,14 +34,15 @@ build-stamp:  config.status
 
 	# Add here commands to compile the package.
 	$(MAKE)
-	#docbook-to-man debian/rkward.sgml > rkward.1
 
 	touch build-stamp
 
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp 
+	rm -f build-stamp
+	# remove any CVS subdir included by accident
+	rm -rf $(CURDIR)/debian/CVS
 
 	# Add here commands to clean up after the build process.
 	-$(MAKE) distclean
@@ -55,23 +53,13 @@ ifneq "$(wildcard /usr/share/misc/config.guess)" ""
 	cp -f /usr/share/misc/config.guess config.guess
 endif
 
-
 	dh_clean 
 
 install: build
-	# Link manpage for rkward.bin to rkward
-	@if test ! -e "$(CURDIR)/debian/rkward.bin.1" ; then \
-		ln -s $(CURDIR)/debian/rkward.1 $(CURDIR)/debian/rkward.bin.1; \
-	fi
-
 	dh_testdir
 	dh_testroot
 	dh_clean -k 
 	dh_installdirs
-
-	# Add lintian exceptions
-	#dh_installdirs usr/share/lintian/overrides
-	#cp $(CURDIR)/debian/lintian.bin.overrides $(CURDIR)/debian/rkward/usr/share/lintian/overrides/rkward
 
 	# Add here commands to install the package into debian/rkward.
 	$(MAKE) install kde_htmldir=/usr/share/doc/kde/HTML DESTDIR=$(CURDIR)/debian/rkward
@@ -104,10 +92,12 @@ binary-arch: build install
 #	dh_installinit
 #	dh_installcron
 #	dh_installinfo
-	dh_installman debian/rkward.1 debian/rkward.bin.1
+	dh_installman debian/rkward.1
+	# Link manpage for rkward.bin to rkward
+	ln -sf rkward.1.gz debian/rkward/usr/share/man/man1/rkward.bin.1.gz
 	dh_link
 	dh_strip
-#do not compress KDE HTML help
+	# do not compress KDE HTML help
 	dh_compress -Xusr/share/doc/kde/HTML
 	dh_fixperms
 #	dh_perl
@@ -116,9 +106,8 @@ binary-arch: build install
 	dh_installdeb
 	dh_shlibdeps
 	# unfortunately, the r-base-core dependency can not be found by dh_shlibdeps, so we need to get at the version manually
-	RVERS=`dpkg-query -W -f='$${Version}' r-base-core`
 	@if [[ "$(RVERS)" > "2.2.1.svn37823" ]] ; then \
-		echo "rvers=r-base-core (>= 2.2.1.svn37824)" >> $(CURDIR)/debian/rkward.substvars ; \
+		echo "rvers=r-base-core (>= 2.3.0)" >> $(CURDIR)/debian/rkward.substvars ; \
 	else \
 		echo "rvers=r-base-core (<= 2.2.1-6), r-base-core (>= 2.1.0)" >> $(CURDIR)/debian/rkward.substvars ; \
 	fi
