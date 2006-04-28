@@ -22,7 +22,7 @@
 	if (is.array (x)) type = type + 4
 	if (is.list (x)) type = type + 8
 	if (type != 0) type = type + 16 else type = 32
-	if (is.function (x)) type = type + 128
+	if (is.function (x)) type = 128
 	if (!is.null (attr (x, ".rk.meta"))) type = type + 256
 	d <- dim (x)
 	if (length (d) < 1) d <- length (x);	# handling for objects that according to R do not have a dimension (such as vectors, functions, etc.)

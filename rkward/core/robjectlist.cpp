@@ -29,6 +29,7 @@
 #include <klocale.h>
 
 #include "rkvariable.h"
+#include "rfunctionobject.h"
 
 #include "../rbackend/rinterface.h"
 #include "rkmodificationtracker.h"
@@ -92,9 +93,11 @@ void RObjectList::rCommandDone (RCommand *command) {
 
 		PendingObject *pobj = pending_objects[command];
 		RObject *robj;
-		// TODO: handle special types like functions, etc.!
+		// TODO: handle more special types!
 		if (command->getIntVector ()[0] == 1) {
 			robj = new RContainerObject (pobj->parent, pobj->name);
+		} else if (command->getIntVector ()[0] == 2) {
+			robj = new RFunctionObject (pobj->parent, pobj->name);
 		} else {
 			robj = new RKVariable (pobj->parent, pobj->name);
 		}

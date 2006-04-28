@@ -5,7 +5,10 @@ All in all, this TODO list is mostly for internal purposes, and many parts may n
 - Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
 
-Some items I'd like to get done for 0.3.6 or whatever the next release is going to be called, if they don't take too long:
+REmbedInternal:
+	- use -1 as maxparts in R_ParseVector! It's what's used in R's source.c to parse the whole text
+
+Some items I'd like to get done for 0.3.7 or whatever the next release is going to be called, if they don't take too long:
 - RKEditorDataFrame
 	- undo/redo
 	- deletion of multiple columns in one step
@@ -25,7 +28,7 @@ Optional stuff, that could possibly be attacked for 0.3.6:
 - RFunctionObject for user defined functions. Maybe later it will be possible to use for functions from packages as well
 	- would be nice, if it also had some knowledge about function arguments
 	- ideally it would also know about the type of the return value, but this may not be realistic
-Timeframe for 0.3.6 release:
+Timeframe for 0.3.7 release:
 - It would be good, if we're at a releasable state within one month from now (i.e. mid May).
 	- if reasonably possible, I think we should release then, even if some of the desired features are still missing
 
