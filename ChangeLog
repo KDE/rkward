@@ -1,3 +1,5 @@
+- sometimes the last level in the factor levels editor got lost. Fixed
+
 --- Version 0.3.6 - Apr-23-2006
 - several fixes to the distributions plugins
 - remove debian dir from source distribution again

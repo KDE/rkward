@@ -256,6 +256,7 @@ EditLabelsDialog::~EditLabelsDialog () {
 void EditLabelsDialog::accept () {
 	RK_TRACE (EDITOR);
 
+	table->stopEditing ();
 	RObject::ValueLabels *labels = table->storage;
 	if (labels->isEmpty ()) {
 		var->setValueLabels (0);
