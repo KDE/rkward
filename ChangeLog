@@ -1,3 +1,4 @@
+- remember location where R script/workspace files were last opened, and start file-selection dialogs there
 - sometimes the last level in the factor levels editor got lost. Fixed
 
 --- Version 0.3.6 - Apr-23-2006

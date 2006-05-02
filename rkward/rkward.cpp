@@ -529,7 +529,7 @@ void RKwardApp::fileOpenNoSave (const KURL &url) {
 	slotSetStatusBarText(i18n("Opening workspace..."));
 	KURL lurl = url;
 	if (lurl.isEmpty ()) {
-		lurl = KFileDialog::getOpenURL (QString::null, i18n("*|All files"), this, i18n("Open File..."));
+		lurl = KFileDialog::getOpenURL (":<rfiles>", i18n("*|All files"), this, i18n("Open File..."));
 	}
 	if (!lurl.isEmpty ()) {
 		openWorkspace (lurl);
@@ -675,7 +675,7 @@ void RKwardApp::slotOpenCommandEditor (){
 	KURL::List urls;
 	KURL::List::const_iterator it;
 	
-	urls = KFileDialog::getOpenURLs (QString("."), QString("*.R *.r"), this, i18n ("Open command file(s)"));
+	urls = KFileDialog::getOpenURLs (":<rfiles>", "*.R *.r", this, i18n ("Open command file(s)"));
 
 	for (it = urls.begin() ; it != urls.end() ; ++it){
 		slotOpenCommandEditor (*it);
