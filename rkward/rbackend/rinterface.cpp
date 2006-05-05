@@ -118,12 +118,12 @@ void RInterface::customEvent (QCustomEvent *e) {
 		if (container->command->receiver) container->command->receiver->newOutput (container->command, container->output);
 		watch->addOutput (container->command, container->output);
 		delete container;
-/* TODO: not quite good, yet, but something like this should be done:
+
+// TODO: not quite good, yet, leads to staggering output (but overall throughput is the same):
 	// output events can easily stack up in the hundreds, not allowing GUI events to get through. Let's block further output events for a minute (using MUTEX_LOCK) and then catch up with the event queue
 		MUTEX_LOCK;
 		qApp->processEvents ();
 		MUTEX_UNLOCK;
-*/
 	} else if (e->type () == RCOMMAND_IN_EVENT) {
 		watch->addInput (static_cast <RCommand *> (e->data ()));
 		RKGlobals::controlWindow ()->setCommandRunning (static_cast <RCommand *> (e->data ()));

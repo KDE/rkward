@@ -45,7 +45,6 @@ Little annoying stuff:
 - find out how to save toolbar states properly in parts-GUI
 - use constBegin (), constEnd ()
 - get rid of all the superflous dependencies: http://lists.debian.org/debian-devel/2005/12/msg00439.html
-- immediate output when running commands from script editor
 
 PHP-backend:
 - switch to KProcIO for easier logic
