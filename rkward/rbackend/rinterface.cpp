@@ -115,8 +115,8 @@ void RInterface::customEvent (QCustomEvent *e) {
 	RK_TRACE (RBACKEND);
 	if (e->type () == RCOMMAND_OUTPUT_EVENT) {
 		RThread::ROutputContainer *container = (static_cast <RThread::ROutputContainer *> (e->data ()));
-	// we've already made sure, there is an existing receiver in RThread
-		container->command->receiver->newOutput (container->command, container->output);
+		if (container->command->receiver) container->command->receiver->newOutput (container->command, container->output);
+		watch->addOutput (container->command, container->output);
 		delete container;
 /* TODO: not quite good, yet, but something like this should be done:
 	// output events can easily stack up in the hundreds, not allowing GUI events to get through. Let's block further output events for a minute (using MUTEX_LOCK) and then catch up with the event queue
@@ -135,7 +135,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 			out->type = ROutput::Error;
 			out->output = ("--- interrupted ---");
 			command->output_list.append (out);
-			if (command->receiver && (command->type () & RCommand::ImmediateOutput)) {
+			if (command->receiver) {
 				command->receiver->newOutput (command, out);
 			}
 			if (running_command_canceled) {
@@ -146,7 +146,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 			}
 		}
 		RKGlobals::controlWindow ()->removeCommand (command);
-		watch->addOutput (command);
+		watch->commandDone (command);
 		command->finished ();
 		if (command->type () & RCommand::DirectToOutput) {
 			RKGlobals::rkApp ()->newOutput ();

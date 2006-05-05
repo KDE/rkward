@@ -43,6 +43,7 @@ public:
 	bool hasChanges ();
 	void applyChanges ();
 	void save (KConfig *config);
+	void validateGUI ();
 
 	static bool shouldShowInput (RCommand *command);
 	static bool shouldShowOutput (RCommand *command);

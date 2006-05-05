@@ -61,7 +61,8 @@ bool RKSettingsModuleWatch::shouldShowOutput (RCommand *command) {
 	RK_TRACE (SETTINGS);
 
 	if (command->type () & RCommand::EmptyCommand) return false;
-	
+	if (!shouldShowInput (command)) return false;
+
 	if (command->type () & RCommand::Sync) {
 		return (sync_filter & ShowOutput);
 	} else if (command->type () & RCommand::User) {
@@ -150,6 +151,8 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 	vbox->addWidget (max_log_lines_spinner);
 
 	vbox->addStretch ();
+
+	validateGUI ();
 }
 
 RKSettingsModuleWatch::~RKSettingsModuleWatch () {
@@ -204,7 +207,19 @@ RKSettingsModuleWatch::FilterBoxes *RKSettingsModuleWatch::addFilterSettings (QW
 
 void RKSettingsModuleWatch::changedSetting (int) {
 	RK_TRACE (SETTINGS);
+
+	validateGUI ();
+
 	change ();
+}
+
+void RKSettingsModuleWatch::validateGUI () {
+	RK_TRACE (SETTINGS);
+
+	user_filter_boxes->output->setEnabled (user_filter_boxes->input->isChecked ());
+	plugin_filter_boxes->output->setEnabled (plugin_filter_boxes->input->isChecked ());
+	app_filter_boxes->output->setEnabled (app_filter_boxes->input->isChecked ());
+	sync_filter_boxes->output->setEnabled (sync_filter_boxes->input->isChecked ());
 }
 
 //static

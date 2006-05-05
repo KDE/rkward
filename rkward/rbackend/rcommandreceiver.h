@@ -44,7 +44,7 @@ protected:
 /** This function is called when a command for this receiver is finished (and before it is deleted). You have to implement it in your subclass to do the actual handling.
 @param command A pointer to the command. The pointer is still valid during this call, but the RCommand will be deleted shortly after! */
 	virtual void rCommandDone (RCommand *command) = 0;
-/** This function is called when there is new output for a command or this receiver (only if the command has the RCommand::ImmediateOutput flag). Default implementation does nothing. Reimplement if you use commands with RCommand::ImmediateOutput flag.
+/** This function is called when there is new output for a command or this receiver. Default implementation does nothing. Reimplement if you want to get at a command's output immediately (i.e. before the command is fully completed).
 @param command A pointer to the command
 @param output The new output-fragment */
 	virtual void newOutput (RCommand *, ROutput *) {};

@@ -51,6 +51,8 @@ RKwatch::RKwatch () : KMdiChildView () {
 	setCaption (i18n ("Command log"));
 	
 	clearWatch ();
+
+	command_input_shown = 0;
 }
 
 RKwatch::~RKwatch(){
@@ -69,6 +71,8 @@ void RKwatch::addInput (RCommand *command) {
 
 void RKwatch::addInputNoCheck (RCommand *command) {
 	RK_TRACE (APP);
+	if (command == command_input_shown) return;		// already shown
+
 // TODO: make colors/styles configurable
 	if (command->type () & RCommand::User) {
 		watch->setColor (Qt::red);
@@ -91,30 +95,12 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 
 	linesAdded ();
 	watch->setItalic (false);
+
+	command_input_shown = command;
 }
 
-void RKwatch::addOutput (RCommand *command) {
+void RKwatch::addOutputNoCheck (RCommand *command, const QString &output) {
 	RK_TRACE (APP);
-
-	if (command->type () & RCommand::Console) {
-		if (command->errorIncomplete ()) return;
-		if (RKSettingsModuleWatch::shouldShowInput (command)) addInputNoCheck (command);
-	}
-
-	if (!RKSettingsModuleWatch::shouldShowOutput (command)) {
-		if (!command->failed ()) {
-			return;
-		} else {
-		// if the command has an error and the error should be shown, but the command itself has not been shown so far, add it now.
-			if (RKSettingsModuleWatch::shouldShowError (command)) {
-				if (!RKSettingsModuleWatch::shouldShowInput (command)) {
-					addInputNoCheck (command);
-				}
-			} else {
-				return;
-			}
-		}
-	}
 
 	if (command->type () & RCommand::User) {
 		watch->setColor (Qt::red);
@@ -126,17 +112,7 @@ void RKwatch::addOutput (RCommand *command) {
 
     watch->setBold (true);
 
-	watch->append (command->output ());
-	watch->append (command->error ());
-	if (command->failed () && (command->error ().isEmpty ())) {
-		if (command->errorIncomplete ()) {
-			watch->append (i18n ("Incomplete statement.\n"));
-		} else if (command->errorSyntax ()) {
-			watch->append (i18n ("Syntax error.\n"));
-		} else {
-			watch->append (i18n ("An unspecified error occured while running the command.\n"));
-		}
-	}
+	watch->append (output);
 
 	if (RKSettingsModuleWatch::shouldRaiseWindow (command)) {
 		if (!(command->type () & RCommand::Console)) {
@@ -147,6 +123,41 @@ void RKwatch::addOutput (RCommand *command) {
 	linesAdded ();
 	watch->setBold (false);
 	watch->setColor (Qt::black);
+}
+
+void RKwatch::addOutput (RCommand *command, ROutput *output_fragment) {
+	RK_TRACE (APP);
+
+	if (!RKSettingsModuleWatch::shouldShowOutput (command)) return;
+
+	if (RKSettingsModuleWatch::shouldShowInput (command)) addInputNoCheck (command);
+
+	addOutputNoCheck (command, output_fragment->output);
+}
+
+void RKwatch::commandDone (RCommand *command) {
+	RK_TRACE (APP);
+
+	if (command->type () & RCommand::Console) {
+		if (command->errorIncomplete ()) return;
+	}
+
+// the case we have to deal with here, is that the command/output has not been shown, yet, but should, due to errors
+	if (command->failed ()) {
+		if (RKSettingsModuleWatch::shouldShowError (command)) {
+			if (!RKSettingsModuleWatch::shouldShowInput (command)) addInputNoCheck (command);
+			if (!RKSettingsModuleWatch::shouldShowOutput (command)) addOutputNoCheck (command, command->fullOutput ());
+			if (command->error ().isEmpty ()) {
+				if (command->errorIncomplete ()) {
+					addOutputNoCheck (command, i18n ("Incomplete statement.\n"));
+				} else if (command->errorSyntax ()) {
+					addOutputNoCheck (command, i18n ("Syntax error.\n"));
+				} else {
+					addOutputNoCheck (command, i18n ("An unspecified error occured while running the command.\n"));
+				}
+			}
+		}
+	}
 }
 
 void RKwatch::linesAdded () {

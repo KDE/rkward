@@ -239,19 +239,12 @@ void RThread::flushOutput () {
 	}
 
 // pass a signal to the main thread for real-time update of output
-	if (current_command->type () & RCommand::ImmediateOutput) {
-		if (!(current_command->receiver)) {
-			RK_ASSERT (false);
-			return;
-		}
-
-		QCustomEvent *event = new QCustomEvent (RCOMMAND_OUTPUT_EVENT);
-		ROutputContainer *outc = new ROutputContainer;
-		outc->output = current_output;
-		outc->command = current_command;
-		event->setData (outc);
-		qApp->postEvent (RKGlobals::rInterface (), event);
-	}
+	QCustomEvent *event = new QCustomEvent (RCOMMAND_OUTPUT_EVENT);
+	ROutputContainer *outc = new ROutputContainer;
+	outc->output = current_output;
+	outc->command = current_command;
+	event->setData (outc);
+	qApp->postEvent (RKGlobals::rInterface (), event);
 
 	RK_DO (qDebug ("output '%s'", current_output->output.latin1 ()), RBACKEND, DL_DEBUG);
 // forget output

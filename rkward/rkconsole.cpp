@@ -324,7 +324,7 @@ void RKConsole::submitCommand () {
 	}
 
 	if (!currentCommand ().isEmpty ()) {
-		current_command = new RCommand (c, RCommand::User | RCommand::Console | RCommand::ImmediateOutput, QString::null, this);
+		current_command = new RCommand (c, RCommand::User | RCommand::Console, QString::null, this);
 		RKGlobals::rInterface ()->issueCommand (current_command);
 		emit (doingCommand (true));
 	} else {
@@ -363,14 +363,6 @@ void RKConsole::commandsListDown () {
 
 void RKConsole::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
-	if (!(command->type () & RCommand::ImmediateOutput)) {		// I don't think we'll have the other case, but for future extension
-		if (command->hasOutput ()) {
-			editInterface(doc)->insertLine(doc->numLines(), command->output ());
-		}
-		if (command->hasError ()) {
-			editInterface(doc)->insertLine(doc->numLines(), command->error ());
-		}
-	}
 	if (command->errorSyntax ()) {
 		editInterface(doc)->insertLine(doc->numLines(), i18n ("Syntax error"));
 	}
