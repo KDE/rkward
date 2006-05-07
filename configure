@@ -28993,10 +28993,12 @@ echo "${ECHO_T}$use_r_includes" >&6
 echo "$as_me:$LINENO: checking whether we should link against libRlapack.so" >&5
 echo $ECHO_N "checking whether we should link against libRlapack.so... $ECHO_C" >&6
 if test -f "$R_HOMEDIR/lib/libRlapack.so"; then
-   echo "$as_me:$LINENO: result: $R_HOMEDIR/lib/libRlapack.so exists" >&5
-echo "${ECHO_T}$R_HOMEDIR/lib/libRlapack.so exists" >&6
+   echo "$as_me:$LINENO: result: yes $R_HOMEDIR/lib/libRlapack.so exists" >&5
+echo "${ECHO_T}yes $R_HOMEDIR/lib/libRlapack.so exists" >&6
    R_LAPACK_FLAG="-lRlapack"
 else
+   echo "$as_me:$LINENO: result: no $R_HOMEDIR/lib/libRlapack.so does not exist" >&5
+echo "${ECHO_T}no $R_HOMEDIR/lib/libRlapack.so does not exist" >&6
    R_LAPACK_FLAG=""
 fi
 
@@ -29091,7 +29093,7 @@ for i in $kde_incdirs;
 do
   for j in $kde_check_header;
   do
-    echo "configure: 29094: $i/$j" >&5
+    echo "configure: 29096: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       kde_incdir=$i
@@ -29121,7 +29123,7 @@ for i in $kde_libdirs;
 do
   for j in $kde_check_lib;
   do
-    echo "configure: 29124: $i/$j" >&5
+    echo "configure: 29126: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       kde_libdir=$i
@@ -29139,7 +29141,7 @@ for i in $kde_libdirs;
 do
   for j in "kde3/plugins/designer/kdewidgets.la";
   do
-    echo "configure: 29142: $i/$j" >&5
+    echo "configure: 29144: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       kde_widgetdir=$i
@@ -30531,7 +30533,7 @@ for i in $kde_sharedirs;
 do
   for j in apps/ksgmltools2/customization/kde-chunk.xsl;
   do
-    echo "configure: 30534: $i/$j" >&5
+    echo "configure: 30536: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       KDE_XSL_STYLESHEET=$i

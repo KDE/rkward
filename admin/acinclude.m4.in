@@ -1908,9 +1908,10 @@ AC_DEFUN([CHECK_RLAPACK],
 [
 AC_MSG_CHECKING(whether we should link against libRlapack.so)
 if test -f "$R_HOMEDIR/lib/libRlapack.so"; then
-   AC_MSG_RESULT($R_HOMEDIR/lib/libRlapack.so exists, so we'll link against it)
+   AC_MSG_RESULT(yes $R_HOMEDIR/lib/libRlapack.so exists)
    R_LAPACK_FLAG="-lRlapack"
 else
+   AC_MSG_RESULT(no $R_HOMEDIR/lib/libRlapack.so does not exist)
    R_LAPACK_FLAG=""
 fi
    AC_SUBST(R_LAPACK_FLAG)
