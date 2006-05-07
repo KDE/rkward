@@ -35,7 +35,7 @@ rkward_bin_LDADD = $(top_builddir)/rkward/windows/libwindows.a \
 	$(top_builddir)/rkward/dataeditor/libdataeditor.a $(top_builddir)/rkward/core/libcore.a \
 	$(top_builddir)/rkward/rbackend/librbackend.a $(top_builddir)/rkward/scriptbackends/libscriptbackends.a \
 	$(top_builddir)/rkward/misc/libmisc.a -lkhtml -lkmdi $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) \
-	$(LIBSOCKET) -L$(R_HOMEDIR)/lib -lR -lRlapack -lkatepartinterfaces
+	$(LIBSOCKET) -L$(R_HOMEDIR)/lib -lR $(R_LAPACK_FLAG) -lkatepartinterfaces
 
 SUBDIRS = plugins dataeditor settings plugin agents rbackend scriptbackends \
 	misc core dialogs icons windows

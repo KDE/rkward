@@ -1857,6 +1857,7 @@ dnl ############################################ RKWARD specific addition begin 
 AC_REQUIRE([CHECK_RHOME])
 AC_REQUIRE([CHECK_LIBRSO])
 AC_REQUIRE([CHECK_RINCLUDE])
+AC_REQUIRE([CHECK_RLAPACK])
 dnl ############################################ RKWARD specific addition end ###################################
 
 ])
@@ -1898,6 +1899,21 @@ else
    Check whether you have compiled R with shared library, 
    and the --with-r-home setting was detected correctly above.])
 fi
+])
+
+dnl for at least some versions of R, we seem to have to link against -lRlapack. Else loading some
+dnl R packages will fail due to unresolved symbols. However, we can't do this unconditionally,
+dnl as this is not available in some configurations of R
+AC_DEFUN([CHECK_RLAPACK],
+[
+AC_MSG_CHECKING(whether we should link against libRlapack.so)
+if test -f "$R_HOMEDIR/lib/libRlapack.so"; then
+   AC_MSG_RESULT($R_HOMEDIR/lib/libRlapack.so exists, so we'll link against it)
+   R_LAPACK_FLAG="-lRlapack"
+else
+   R_LAPACK_FLAG=""
+fi
+   AC_SUBST(R_LAPACK_FLAG)
 ])
 
 
