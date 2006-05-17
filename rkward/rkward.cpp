@@ -75,8 +75,6 @@
 #include "rkconsole.h"
 #include "debug.h"
 
-#define ID_R_STATUS_MSG 2
-
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
 
 RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
@@ -340,7 +338,9 @@ void RKwardApp::partRemoved (KParts::Part *part) {
 void RKwardApp::initStatusBar () {
 	RK_TRACE (APP);
 
-	statusBar()->insertItem (i18n ("starting R engine"), ID_R_STATUS_MSG, 0, true);
+	r_status_label = new QLabel (i18n ("starting R engine"), statusBar ());
+	r_status_label->setPaletteBackgroundColor (QColor (255, 255, 0));
+	statusBar ()->addWidget (r_status_label, 0, true);
 
 	connect (actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
 	connect (actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
@@ -637,9 +637,11 @@ void RKwardApp::newOutput () {
 void RKwardApp::setRStatus (bool busy) {
 	RK_TRACE (APP);
 	if (busy) {
-		statusBar ()->changeItem(i18n ("R engine busy"), ID_R_STATUS_MSG);
+		r_status_label->setText (i18n ("R engine busy"));
+		r_status_label->setPaletteBackgroundColor (QColor (255, 0, 0));
 	} else {
-		statusBar ()->changeItem (i18n ("R engine idle"), ID_R_STATUS_MSG);
+		r_status_label->setText (i18n ("R engine idle"));
+		r_status_label->setPaletteBackgroundColor (QColor (0, 255, 0));
 	}
 }
 

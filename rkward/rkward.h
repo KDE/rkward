@@ -44,10 +44,11 @@ class RKWardDCOPInterface : virtual public DCOPObject {
 #include <kurl.h>
 #include <kparts/partmanager.h>
 
+class QTimer;
+class QLabel;
 // forward declaration of the RKward classes
 class RSettings;
 class RKMenu;
-class QTimer;
 class RObjectBrowser;
 class RKSettingsModule;
 class RKSettings;
@@ -201,6 +202,8 @@ public slots:
 /** connected to m_manager->partAdded (). Disconnects statusbar notifications */
 	void partRemoved (KParts::Part *part);
 private:
+	QLabel* r_status_label;
+
 	// KAction pointers to enable/disable actions
 	KAction* fileOpen;
 	KRecentFilesAction* fileOpenRecent;
