@@ -1868,6 +1868,7 @@ AC_SUBST(AUTODIRS)
 dnl ############################################ RKWARD specific addition begin #################################
 AC_REQUIRE([CHECK_RHOME])
 AC_REQUIRE([CHECK_LIBRSO])
+AC_REQUIRE([CHECK_RLIBDIR])
 AC_REQUIRE([CHECK_RINCLUDE])
 AC_REQUIRE([CHECK_RLAPACK])
 dnl ############################################ RKWARD specific addition end ###################################
@@ -1951,6 +1952,29 @@ fi
 AC_SUBST(R_INCLUDEDIR)
 
 AC_MSG_RESULT($use_r_includes)
+])
+
+dnl find out R (package) library dir
+AC_DEFUN([CHECK_RLIBDIR],
+[
+AC_MSG_CHECKING(for R package library location)
+AC_ARG_WITH(r-libdir,AC_HELP_STRING([--with-r-libdir=DIR],[specify location of R (packages) library tree to install to]),
+  use_r_libdir="$withval",
+  r_libs=`$R_HOMEDIR/bin/R CMD sh -c 'echo $R_LIBS'`
+  if test -n "$r_libs"; then use_r_libdir=`echo "$r_libs" | cut -f1 -d:` ; else use_r_libdir="$R_HOMEDIR/library" ; fi
+)
+
+r_libdir=
+if test -d "$use_r_libdir"; then
+   R_LIBDIR="$use_r_libdir"
+else
+   AC_MSG_ERROR([
+   $use_r_libdir does not exist!
+   Check your installation of R, and use --with-r-libdir to specify an existing library tree.])
+fi
+AC_SUBST(R_LIBDIR)
+
+AC_MSG_RESULT($use_r_libdir)
 ])
 
 dnl ############################################ RKWARD specific addition end ###################################

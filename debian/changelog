@@ -1,5 +1,15 @@
+rkward (0.3.7-1) unstable; urgency=low
+
+  * new upstream release
+  * upstream now supports installing to a specified R library tree, use that feature
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 10 May 2006 18:45:00 +0200
+
 rkward (0.3.6-3) unstable; urgency=low
 
+  * first version to be uploaded to debian
+    closes: #333392
+  * Added Homepage to control file (changed by R.M.Rutschmann <rudi@debian.org>)
   * fix detection of r-base-core dependency when compiled with r-base-core >= 2.3.0
   * clean up rules somewhat
 

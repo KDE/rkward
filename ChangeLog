@@ -1,3 +1,4 @@
+- honor DESTDIR setting while installing rkward R package, and add configure option --with-r-libdir
 - only link against -lRlapack, if that is available
 - commands producing lots of output would sometimes be impossible to interrupt. Fixed
 - show command output immediately in command log

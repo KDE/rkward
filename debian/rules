@@ -23,8 +23,10 @@ endif
 
 config.status: configure
 	dh_testdir
+	dh_installdirs usr/lib/R/site-library
+
 	# Add here commands to configure the package.
-	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --disable-rpath --with-r-home=/usr/lib/R
+	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --disable-rpath --with-r-home=/usr/lib/R --with-r-libdir=/usr/lib/R/site-library
 
 
 build: build-stamp
@@ -66,9 +68,7 @@ install: build
 	# dirty hack to get rid of conflicting r.xml file without adjusting all makefiles
 	rm -vf $(CURDIR)/debian/rkward/usr/share/apps/katepart/syntax/r.xml
 	
-	# install the rkward R package to installation directory
-	dh_installdirs usr/lib/R/site-library
-	/usr/bin/R CMD INSTALL -l $(CURDIR)/debian/rkward/usr/lib/R/site-library rkward/rbackend/rpackages/rkward
+	# fix up the rkward R package installation
 	rm -vf $(CURDIR)/debian/rkward/usr/lib/R/site-library/R.css $(CURDIR)/debian/rkward/usr/lib/R/site-library/rkward/COPYING
 
 # Build architecture-independent files here.
