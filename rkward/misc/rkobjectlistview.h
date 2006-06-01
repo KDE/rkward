@@ -93,7 +93,7 @@ public:
 	RKListViewItem (QListViewItem *parent) : QListViewItem (parent) {};
 	~RKListViewItem () {};
 
-	int RKListViewItem::width (const QFontMetrics &fm, const QListView * lv, int c) const;
+	int width (const QFontMetrics &fm, const QListView * lv, int c) const;
 };
 
 #endif
