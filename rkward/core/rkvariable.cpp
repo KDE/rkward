@@ -18,6 +18,7 @@
 
 #include <qstringlist.h>
 #include "float.h"
+#include "math.h"
 
 #include "rcontainerobject.h"
 #include "robjectlist.h"
@@ -581,7 +582,7 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 		int i = 0;
 		for (int row=from_row; row <= to_row; ++row) {
 			deleteStringData (row);
-			if (data[i] == RKGlobals::na_double) myData ()->cell_string_data[row] = RKGlobals::empty_char;
+			if (isnan (data[i])) myData ()->cell_string_data[row] = RKGlobals::empty_char;
 			myData ()->cell_double_data[row] = data[i++];
 		}
 	}

@@ -208,7 +208,7 @@ int REditFile (char *buf) {
 REmbedInternal::REmbedInternal() {
 	RKGlobals::empty_char = strdup ("");
 	RKGlobals::unknown_char = strdup ("?");
-	RKGlobals::na_double = NA_REAL;
+//	RKGlobals::na_double = NA_REAL;			// this will be repeated in startR, as NA_REAL is 0 at this point!
 }
 
 void REmbedInternal::connectCallbacks () {
@@ -354,9 +354,12 @@ bool REmbedInternal::startR (int argc, char** argv) {
 	Rf_initialize_R (argc, argv);
 	R_CStackLimit = (unsigned long) -1;
 	setup_Rmainloop ();
+	RKGlobals::na_double = NA_REAL;
 	return true;
 #else
-	return (Rf_initEmbeddedR (argc, argv) >= 0);
+	bool ok = (Rf_initEmbeddedR (argc, argv) >= 0);
+	RKGlobals::na_double = NA_REAL;
+	return ok;
 #endif
 }
 
@@ -377,29 +380,16 @@ bool REmbedInternal::registerFunctions (char *library_path) {
 
 SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *error) {
 // heavy copying from RServe below
-	int maxParts=1;
 	int r_error = 0;
 	ParseStatus status = PARSE_NULL;
 	const char *c = command;
 	SEXP cv, pr, exp;
 
-	while (*c) {
-		if (*c=='\n' || *c==';') maxParts++;
-		c++;
-	}
-
 	PROTECT(cv=allocVector(STRSXP, 1));
 	SET_VECTOR_ELT(cv, 0, mkChar(command));  
 
 	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails
-	while (maxParts>0) {
-		pr=R_ParseVector(cv, maxParts, &status);
-		// 2=incomplete; 4=eof
-		if (status!=PARSE_INCOMPLETE && status!=PARSE_EOF) {
-			break;
-		}
-		maxParts--;
-	}
+	pr=R_ParseVector(cv, -1, &status);
 	UNPROTECT(1);
 
 	if ((!pr) || (TYPEOF (pr) == NILSXP)) {
@@ -448,6 +438,8 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 		UNPROTECT(1); /* pr */
 	}
 
+	// for safety, let's protect exp for the two print calls below.
+	PROTECT (exp);
 	/* Do NOT ask me why, but the line below is needed for warnings to be printed, while otherwise they would not be shown.
 	Apparently we need to print at least something in order to achieve this. Whatever really happens in Rprintf () to have such an effect, I did not bother to find out. */
 	Rprintf ("");
@@ -455,7 +447,7 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 	Rf_PrintWarnings ();
 
 //	SET_SYMVALUE(R_LastvalueSymbol, exp);
-
+	UNPROTECT (1);		// exp; We unprotect this, as most of the time the caller is not really interested in the result
 	return exp;
 }
 
@@ -540,8 +532,8 @@ double *REmbedInternal::getCommandAsRealVector (const char *command, int *count,
 		*count = length (realexp);
 		reals = new double[*count];
 		for (int i = 0; i < *count; ++i) {
-				reals[i] = REAL (realexp)[i];
-				if (R_IsNaN (reals[i]) || R_IsNA (reals[i]) ) reals[i] = RKGlobals::na_double;
+			reals[i] = REAL (realexp)[i];
+			if (R_IsNaN (reals[i]) || R_IsNA (reals[i]) ) reals[i] = RKGlobals::na_double;
 		}
 		UNPROTECT (1);	// realexp
 	}
