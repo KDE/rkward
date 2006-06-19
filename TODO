@@ -6,7 +6,7 @@ All in all, this TODO list is mostly for internal purposes, and many parts may n
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
 
 REmbedInternal:
-	- use -1 as maxparts in R_ParseVector! It's what's used in R's source.c to parse the whole text
+	- probably we do not need na_double at all (just any NaN) => less confusion
 
 Some items I'd like to get done for 0.3.7 or whatever the next release is going to be called, if they don't take too long:
 - RKEditorDataFrame
