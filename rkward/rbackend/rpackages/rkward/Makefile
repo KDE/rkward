@@ -16,3 +16,5 @@ distdir:
 	cp -dP Makefile $(distdir)/Makefile
 clean \
 distclean:
+	rm -f src/dummylib.o; \
+	rm -f src/rkward.so
