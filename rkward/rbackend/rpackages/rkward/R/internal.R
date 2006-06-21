@@ -203,12 +203,12 @@
 
 # these functions (not fully functional, yet) can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a backup location, removing it, and replacing it by an active binding to the backup location
 .rk.watched.value.change <- function (k, value) {
-	print ("set")
+	print (paste ("set", as.character(k)))
 	.rk.watched.symbols[[as.character(k)]] <<- value
 }
 
 .rk.watched.value.retrieve <- function (k) {
-	print ("ret")
+	print (paste ("ret", as.character(k)))
 	.rk.watched.symbols[[as.character(k)]]
 }
 
@@ -227,7 +227,7 @@
 .rk.watch.symbol <- function (k) {
 	f <- .rk.make.watch.f (substitute (k))
 	if (!exists (".rk.watched.symbols")) .rk.watched.symbols <<- list ()
-	.rk.watched.symbols[as.character (substitute (k))] <<- k
+	.rk.watched.symbols[[as.character (substitute (k))]] <<- k
 	lst <- c (substitute (k))
 	rm (list=as.character (lst), envir=parent.frame ())
 

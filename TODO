@@ -20,7 +20,7 @@ Some items I'd like to get done for 0.3.7 or whatever the next release is going 
 - RObjectListView
 	- use icons to mark up the different base types
 - David's usability items
-Optional stuff, that could possibly be attacked for 0.3.6:
+Optional stuff, that could possibly be attacked for 0.3.7:
 - RExpressionObject as an abstraction for R-Expressions (i.e. manually edited expressions).
 	- It will be possible to "store" these in the RObjectList and select them just like any other object
 	- RKVarslot will allow editing the selected value by hand (or just typing the name in)
@@ -33,7 +33,11 @@ Timeframe for 0.3.7 release:
 	- if reasonably possible, I think we should release then, even if some of the desired features are still missing
 
 RObjectTables sounds highly interesing. Maybe we can use a transparent table to find out about assignments?
+	- Problem: we can't add this on top of the globalenv () (or at least we're not supposed to)
+		- can we dare to replace R_GlobalEnv with a fake environment which redirects to the real thing?
 R_MakeActiveBinding sounds even more interesting. Maybe we can use this to "watch" symbols?!?
+	- can't track removal or creation of new objects this way
+	- seems to work only for top-level objects (elements in a list are not discernable, though we do catch the access to the list itself)
 
 Little annoying stuff:
 - hide tabs in console
