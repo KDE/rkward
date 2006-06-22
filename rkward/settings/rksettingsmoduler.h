@@ -85,4 +85,33 @@ private:
 	static bool options_checkbounds;
 };
 
+/**
+Configure packages and library paths
+
+@author Thomas Friedrichsmeier
+*/
+class RKSettingsModuleRPackages : public RKSettingsModule {
+	Q_OBJECT
+public:
+    RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent);
+
+    ~RKSettingsModuleRPackages ();
+	
+	bool hasChanges ();
+	void applyChanges ();
+	void save (KConfig *config);
+	
+	static void saveSettings (KConfig *config);
+	static void loadSettings (KConfig *config);
+	
+	QString caption ();
+public slots:
+	void listChanged ();
+	void addLibLoc (QStringList *string_list);
+private:
+	MultiStringSelector *libloc_selector;
+
+	static QStringList liblocs;
+};
+
 #endif

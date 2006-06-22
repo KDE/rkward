@@ -21,6 +21,7 @@
 #include <kstandarddirs.h>
 #include <kinputdialog.h>
 #include <knuminput.h>
+#include <kfiledialog.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -277,6 +278,82 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	options_expressions = config->readNumEntry ("expressions", 5000);
 	options_digits = config->readNumEntry ("digits", 7);
 	options_checkbounds = config->readNumEntry ("check.bounds", false);
+}
+
+//#################################################
+//############### RKSettingsModuleRPackages ################
+//#################################################
+
+// static members
+QStringList RKSettingsModuleRPackages::liblocs;
+
+RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
+	RK_TRACE (SETTINGS);
+
+	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+
+	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+
+	libloc_selector = new MultiStringSelector (i18n ("R Library locations (where R addons get installed to) NOT USED, YET"), this);
+	libloc_selector->setValues (liblocs);
+	connect (libloc_selector, SIGNAL (listChanged ()), this, SLOT (listChanged ()));
+	connect (libloc_selector, SIGNAL (getNewStrings (QStringList*)), this, SLOT (addLibLoc (QStringList*)));
+	main_vbox->addWidget (libloc_selector);
+	QLabel *label = new QLabel (i18n ("If you leave the list empty, only the startup defaults will be used"), this);
+	main_vbox->addWidget (label);
+}
+
+RKSettingsModuleRPackages::~RKSettingsModuleRPackages() {
+	RK_TRACE (SETTINGS);
+}
+
+void RKSettingsModuleRPackages::listChanged () {
+	RK_TRACE (SETTINGS);
+	change ();
+}
+
+void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
+	RK_TRACE (SETTINGS);
+	QString new_string = KFileDialog::getExistingDirectory (QString::null, this, i18n ("Add R Library Directory"));
+	if (!new_string.isEmpty ()) {
+		(*string_list).append (new_string);
+	}
+}
+
+QString RKSettingsModuleRPackages::caption () {
+	RK_TRACE (SETTINGS);
+	return (i18n ("R-Packages"));
+}
+
+bool RKSettingsModuleRPackages::hasChanges () {
+	RK_TRACE (SETTINGS);
+	return changed;
+}
+
+void RKSettingsModuleRPackages::applyChanges () {
+	RK_TRACE (SETTINGS);
+
+	liblocs = libloc_selector->getValues ();
+}
+
+void RKSettingsModuleRPackages::save (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
+	saveSettings (config);
+}
+
+void RKSettingsModuleRPackages::saveSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
+	config->setGroup ("R Settings");
+	config->writeEntry ("LibraryLocations", liblocs);
+}
+
+void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
+	config->setGroup ("R Settings");
+	liblocs = config->readListEntry ("LibraryLocations");
 }
 
 #include "rksettingsmoduler.moc"

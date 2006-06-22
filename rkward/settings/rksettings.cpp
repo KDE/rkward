@@ -82,6 +82,7 @@ void RKSettings::initModules () {
 
 	modules.append (new RKSettingsModulePlugins (this, this));
 	modules.append (new RKSettingsModuleR (this, this));
+	modules.append (new RKSettingsModuleRPackages (this, this));
 	modules.append (new RKSettingsModulePHP (this, this));
 	modules.append (new RKSettingsModuleGeneral (this, this));
 	modules.append (new RKSettingsModuleOutput (this, this));
@@ -145,6 +146,7 @@ void RKSettings::loadSettings (KConfig *config) {
 
 	RKSettingsModulePlugins::loadSettings(config);
 	RKSettingsModuleR::loadSettings(config);
+	RKSettingsModuleRPackages::loadSettings(config);
 	RKSettingsModulePHP::loadSettings(config);
 	RKSettingsModuleGeneral::loadSettings(config);
 	RKSettingsModuleOutput::loadSettings(config);
@@ -158,6 +160,7 @@ void RKSettings::saveSettings (KConfig *config) {
 
 	RKSettingsModulePlugins::saveSettings(config);
 	RKSettingsModuleR::saveSettings(config);
+	RKSettingsModuleRPackages::saveSettings(config);
 	RKSettingsModulePHP::saveSettings(config);
 	RKSettingsModuleGeneral::saveSettings(config);
 	RKSettingsModuleOutput::saveSettings(config);
