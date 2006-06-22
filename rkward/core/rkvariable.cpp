@@ -192,7 +192,8 @@ void RKVariable::rCommandDone (RCommand *command) {
 
 
 ////////////////////// BEGIN: data-handling //////////////////////////////
-#define ALLOC_STEP 100
+#define ALLOC_STEP 2
+#define INITIAL_ALLOC 100
 
 #define RECHECK_VALID { if ((!myData ()->invalid_count) && (!myData ()->previously_valid)) restoreStorageInBackend (); }
 
@@ -376,13 +377,19 @@ void RKVariable::extendToLength (int length) {
 	RK_TRACE (OBJECTS);
 
 	if (length <= 0) length = 1;
-	if (length <= myData ()->allocated_length) {
+	if (length < (myData ()->allocated_length - 1)) {
 		dimension[0] = length;
 		return;
 	}
-	
-	int target = length + ALLOC_STEP - (length % ALLOC_STEP);
-	
+
+	int target;
+	if (myData ()->allocated_length == 0) {
+		target = INITIAL_ALLOC;
+	} else {
+		target = myData ()->allocated_length * ALLOC_STEP;
+	}
+	qDebug ("resizing from %d to %d", myData ()->allocated_length, target);
+
 	char **new_string_data = new char*[target];
 	double *new_double_data = new double[target];
 	
@@ -690,14 +697,21 @@ void RKVariable::insertRow (int row) {
 }
 
 void RKVariable::insertRows (int row, int count) {
-	for (int i=getLength (); i <= row+count; ++i) {
+	int old_len = getLength ();
+	extendToLength (getLength () + count);
+
+	for (int i=old_len; i <= row+count; ++i) {
 		myData ()->cell_string_data[i] = RKGlobals::empty_char;
 		myData ()->cell_double_data[i] = 0;
 	}
-	extendToLength (getLength () + count);
-	
-	qmemmove (&(myData ()->cell_string_data[row+count]), &(myData ()->cell_string_data[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (char*));
-	qmemmove (&(myData ()->cell_double_data[row+count]), &(myData ()->cell_double_data[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (double));
+
+	if (row >= getLength () && (count == 1)) {		// important special case
+		myData ()->cell_string_data[row+count] = myData ()->cell_string_data[row];
+		myData ()->cell_double_data[row+count] = myData ()->cell_double_data[row];
+	} else { 
+		qmemmove (&(myData ()->cell_string_data[row+count]), &(myData ()->cell_string_data[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (char*));
+		qmemmove (&(myData ()->cell_double_data[row+count]), &(myData ()->cell_double_data[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (double));
+	}
 	
 	for (int i=row+count-1; i >= row; --i) {
 		myData ()->cell_string_data[i] = RKGlobals::empty_char;

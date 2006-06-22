@@ -388,7 +388,10 @@ int RThread::initialize () {
 	QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
 		runCommandInternal (*it, &error);
-		if (error) status |= OtherFail;
+		if (error) {
+			status |= OtherFail;
+			RK_DO (qDebug ("error in initialization call '%s'", (*it).latin1()), RBACKEND, DL_ERROR);
+		}
 	}
 	runCommandInternal ("options (error=quote (.rk.do.error ()))\n", &error);
 	if (error) status |= SinkFail;

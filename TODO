@@ -12,6 +12,8 @@ Some items I'd like to get done for 0.3.7 or whatever the next release is going 
 - RKEditorDataFrame
 	- undo/redo
 	- deletion of multiple columns in one step
+	- when pasting a large array, rows should not be added one by one. Suggested algorythm
+		- if we find out we've already pasted 100 rows, first check, how many more are to come and add this many both to the variable and to the R workspace. Can potentially avoid *lots* of work
 - Rework package management dialog
 	- use install.packages () to handle dependencies
 	- manage R library locations, install to location with user write access

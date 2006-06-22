@@ -1,3 +1,4 @@
+- don't crash on more than 100 rows of data in the editor (off by 2 bug in storage allocation)
 - correctly initialize the internal NaN representation (would sometimes be initialized to 0, resulting in 0s not to be shown in the editor)
 - engine status bar label ("R engine busy/idle") now changes background color according to state
 - honor DESTDIR setting while installing rkward R package, and add configure option --with-r-libdir
