@@ -388,7 +388,7 @@ void RKVariable::extendToLength (int length) {
 	} else {
 		target = myData ()->allocated_length * ALLOC_STEP;
 	}
-	qDebug ("resizing from %d to %d", myData ()->allocated_length, target);
+	RK_DO (qDebug ("resizing from %d to %d", myData ()->allocated_length, target), OBJECTS, DL_DEBUG);
 
 	char **new_string_data = new char*[target];
 	double *new_double_data = new double[target];
