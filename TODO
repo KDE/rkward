@@ -34,6 +34,12 @@ Timeframe for 0.3.7 release:
 - It would be good, if we're at a releasable state within one month from now (i.e. mid May).
 	- if reasonably possible, I think we should release then, even if some of the desired features are still missing
 
+- for (i in 1:10){ cat(i,'\t');Sys.sleep(0.05)} results in extra linebreaks in both console and log.
+- use SVG device for graphics output
+	- provide context menu / other UI to export to different formats / edit
+- hot-key/permanent icon to cancel current command / hold processing. Perhaps in the busy/idle indicator?
+- frequent output of a command should not raise the command log over and over again (user should have a chance to switch away)
+
 RObjectTables sounds highly interesing. Maybe we can use a transparent table to find out about assignments?
 	- Problem: we can't add this on top of the globalenv () (or at least we're not supposed to)
 		- can we dare to replace R_GlobalEnv with a fake environment which redirects to the real thing?
