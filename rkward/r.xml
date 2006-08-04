@@ -83,7 +83,7 @@
             <DetectChar attribute="Symbol" context="ctx0" char="{" beginRegion="Brace1" name="FoldingStart" />
             <!-- no need to define brace end here, as we've already jumped to ctx0 at the brace start -->
 
-	    <RegExpr attribute="Identifier" context="#stay" String="[a-zA-Z_\.]+[\s]*=(?=[^=])"/>
+	    <RegExpr attribute="Identifier" context="#stay" String="[a-zA-Z_\.][0-9a-zA-Z_\.]*[\s]*=(?=[^=])"/>
          </context>
 
          <context attribute="String" lineEndContext="#stay" name="string">
