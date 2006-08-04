@@ -40,6 +40,8 @@
             <keyword attribute="Reserved Words" context="#stay" String="words"/>
             <Float attribute="Float" context="#stay"/>
             <Int attribute="Int" context="#stay"/>
+	    <RegExpr attribute="Error" context="#stay" String="[+\-*]="/>
+	    <RegExpr attribute="Error" context="#stay" String="=[+\-*]"/>
             <RegExpr attribute="Keyword" context="#stay" String="[a-zA-Z_]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
             <RegExpr attribute="Keyword" context="#stay" String="\.[a-zA-Z_\.]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
             <RegExpr attribute="Keyword" context="parenthesis" String="\("/>
@@ -47,7 +49,7 @@
             <DetectChar attribute="Comment" context="Comment" char="#"/>
             <RegExpr attribute="Assign" context="#stay" String="[&lt;]{1,2}\-"/>
             <RegExpr attribute="Assign" context="#stay" String="\-[&gt;]{1,2}"/>
-            <RegExpr attribute="Assign" context="#stay" String="[^=!&gt;&lt;]=[^=!&gt;&lt;]"/>
+	    <RegExpr attribute="Assign" context="#stay" String="[^=!&gt;&lt;+\-*]=[^=!&gt;&lt;+\-*]"/>
             <AnyChar attribute="Operator" context="#stay" String="+-*/^:$~!&amp;|=&gt;&lt;@"/>
             <RegExpr attribute="Operator" context="#stay" String="%[^%]*%"/>
             <!--  for code folding (from Ben Goodrich) -->
@@ -65,6 +67,8 @@
             <keyword attribute="Reserved Words" context="#stay" String="words"/>
             <Float attribute="Float" context="#stay"/>
             <Int attribute="Int" context="#stay"/>
+	    <RegExpr attribute="Error" context="#stay" String="[+\-*]="/>
+	    <RegExpr attribute="Error" context="#stay" String="=[+\-*]"/>
 	    <RegExpr attribute="Keyword" context="#stay" String="[a-zA-Z_]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
 	    <RegExpr attribute="Keyword" context="#stay" String="\.[a-zA-Z_\.]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
             <RegExpr attribute="Keyword" context="parenthesis" String="\("/>
@@ -95,7 +99,7 @@
       <itemDatas>
          <itemData name="Normal Text" defStyleNum="dsNormal"/>
          <itemData name="Keyword" defStyleNum="dsKeyword"/>
-         <itemData name="Identifier" defStyleNum="dsNormal" color="#aa0000" selColor="#dd0000" bold="0" italic="0"/>
+         <itemData name="Identifier" defStyleNum="dsNormal" color="#880000" selColor="#dd0000" bold="0" italic="0"/>
          <itemData name="Types" defStyleNum="dsDataType"/>
          <itemData name="String" defStyleNum="dsString"/>
          <itemData name="Headline" defStyleNum="dsNormal" color="#dd0000" selColor="#ff0000" bold="1" italic="0"/>
@@ -103,6 +107,7 @@
          <itemData name="Assign" defStyleNum="dsNormal" color="#00aa88" selColor="#aa00aa" bold="1" italic="0"/>
          <itemData name="Control Structure" defStyleNum="dsNormal" color="#0000ff" selColor="#00ff00"/>
          <itemData name="Reserved Words" defStyleNum="dsOthers"/>
+	 <itemData name="Error" defStyleNum="dsNormal" color="#ff9900" selColor="#0066ff" bold="1" italic="0"/>
          <itemData name="Operator" defStyleNum="dsNormal"  color="#aa5500" selColor="#000077" bold="0" italic="0"/>
          <itemData name="String Char"  defStyleNum="dsChar"/>
          <itemData name="Float" defStyleNum="dsFloat"/>
