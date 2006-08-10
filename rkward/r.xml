@@ -97,18 +97,18 @@
       </contexts>
 
       <itemDatas>
+	 <!-- KDE default colors: http://accessibility.kde.org/oxygen.php?color=white -->
          <itemData name="Normal Text" defStyleNum="dsNormal"/>
          <itemData name="Keyword" defStyleNum="dsKeyword"/>
-         <itemData name="Identifier" defStyleNum="dsNormal" color="#880000" selColor="#dd0000" bold="0" italic="0"/>
-         <itemData name="Types" defStyleNum="dsDataType"/>
+	 <itemData name="Identifier" defStyleNum="dsDataType"/>
          <itemData name="String" defStyleNum="dsString"/>
-         <itemData name="Headline" defStyleNum="dsNormal" color="#dd0000" selColor="#ff0000" bold="1" italic="0"/>
+	 <itemData name="Headline" defStyleNum="dsNormal" color="#b00000" selColor="#b00000" bold="1" italic="0"/> <!-- KDE default color: text 5 -->
          <itemData name="Comment" defStyleNum="dsComment"/>
-         <itemData name="Assign" defStyleNum="dsNormal" color="#00aa88" selColor="#aa00aa" bold="1" italic="0"/>
-         <itemData name="Control Structure" defStyleNum="dsNormal" color="#0000ff" selColor="#00ff00"/>
+	 <itemData name="Assign" defStyleNum="dsNormal" color="#336366" selColor="#cc9c099" bold="1" italic="0"/> <!-- KDE default color: text 7 -->
+	 <itemData name="Control Structure" defStyleNum="dsNormal" color="#0000bf" selColor="#bfbf00"/> <!-- KDE default color: text 2 -->
          <itemData name="Reserved Words" defStyleNum="dsOthers"/>
          <itemData name="Error" defStyleNum="dsError"/>
-         <itemData name="Operator" defStyleNum="dsNormal"  color="#aa5500" selColor="#000077" bold="0" italic="0"/>
+	 <itemData name="Operator" defStyleNum="dsNormal"  color="#803f00" selColor="#000077" bold="0" italic="0"/> <!-- KDE default color: focussed text -->
          <itemData name="String Char"  defStyleNum="dsChar"/>
          <itemData name="Float" defStyleNum="dsFloat"/>
          <itemData name="Int" defStyleNum="dsDecVal"/>
