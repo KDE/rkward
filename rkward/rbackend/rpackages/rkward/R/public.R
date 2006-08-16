@@ -28,14 +28,27 @@
 }
 
 # get descriptive strings for each of the arguments in ...
-"rk.get.description" <- function (..., paste.sep=NULL) {
+"rk.get.description" <- function (..., paste.sep=NULL, is.substitute=FALSE) {
 	args <- list(...)
-	argnames <- rk.list.names (...)
+	if (is.substitute) {
+		argnames <- list ()
+		j <- 1
+		for (symb in list (...)) {
+			argnames[j] <- deparse (symb)
+			j <- j + 1
+		}
+	} else {
+		argnames <- rk.list.names (...)
+	}
 	descript <- c ()
 
 	for (i in 1:length (args)) {
 		lbl <- rk.get.label (args[[i]])
-		shortname <- .rk.make.short.name (argnames[i])
+		if (is.substitute) {
+			shortname <- .rk.make.short.name (as.character (argnames[i]))
+		} else {
+			shortname <- .rk.make.short.name (argnames[i])
+		}
 
 		if (is.null (lbl)) descript[i] <- shortname
 		else descript[i] <- paste (shortname, " (", lbl, ")", sep="")
