@@ -63,10 +63,6 @@
 				<varselector id="varnames" />
 			</tab>
 			<tab label="Options" >
-				<radio id="fill" label="Fill the rows if unequal length" >
-					<option value="FALSE" label="False" />
-					<option value="'TRUE" label="'True" />
-				</radio>
 				<row>
 					<input size="small" initial="0" id="skip" label="Number of lines" />
 					<input size="small" initial="-1" id="nrows" label="Max number of lines" />
@@ -75,6 +71,7 @@
 					<input size="small" initial="NA" id="na" label="Character for missing values" />
 					<input size="small" initial="#" id="commentchar" label="Character for comments" />
 				</row>
+				<checkbox id="fill" checked="false" value="TRUE" value_unchecked="FALSE" label="Fill the rows if unequal length" />
 				<checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="checkname" label="Check syntax of the variables names" />
 				<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="stripwhite" label="Strip white values" />
 				<checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="blanklinesskip" label="Skip blank lines" />
