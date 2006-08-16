@@ -1,23 +1,52 @@
 <!DOCTYPE rkplugin>
-
-<!-- This is a simple example, of how a "plugin" might be configured. -->
-
-<document>
-	<code file="code.php"/>
-	
-	<dialog label="Descriptive Statistics">
-		<row>
-			<column>
-				<varselector id="vars"/>
-			</column>
-			<column>
-				<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
-				<checkbox id="mean" label="mean" value="1" value_unchecked="0" checked="true"/>
-				<checkbox id="median" label="median" value="1" value_unchecked="0"/>
-				<checkbox id="range" label="range" value="1" value_unchecked="0" checked="true"/>
-				<checkbox id="sd" label="standard deviation" value="1" value_unchecked="0" checked="true"/>
-			</column>
-		</row>
-	</dialog>
-
+<!-- This is a simple example, of how a "plugin" might be configured. --><document>
+  <code file="code.php" />
+  <dialog label="Descriptive Statistics" >
+    <row>
+      <column>
+        <varselector id="vars" />
+      </column>
+      <column>
+        <varslot multi="true" type="numeric" source="vars" id="x" label="variable(s):" required="true" />
+      </column>
+    </row>
+    <row>
+      <column>
+        <frame label="Mean" >
+          <checkbox value_unchecked="0" checked="true" value="1" id="mean" label="mean" />
+          <spinbox type="real" initial="0" min="0" id="trim" max="0.5" label="trim" />
+        </frame>
+        <stretch/>
+        <frame label="Median, Range and Standard Deviation" >
+          <checkbox value_unchecked="0" value="1" id="median" label="median" />
+          <checkbox value_unchecked="0" checked="true" value="1" id="range" label="range" />
+          <checkbox value_unchecked="0" checked="true" value="1" id="sd" label="standard deviation" />
+        </frame>
+        <stretch/>
+      </column>
+      <column>
+        <frame label="Median Absolute Deviation (mad)" >
+          <checkbox value_unchecked="0" value="1" id="mad" label="mad" />
+          <radio id="low" label="lo-median" >
+              <option value="low = FALSE" label="FALSE" />
+              <option value="low = TRUE" label="TRUE" />
+          </radio>
+          <radio id="high" label="hi-median" >
+              <option value="high = FALSE" label="FALSE" />
+              <option value="high = TRUE" label="TRUE" />
+          </radio>
+        </frame>
+        <stretch/>
+      </column>
+      <column>
+        <frame label="Sum, Product and Length" >
+          <checkbox value_unchecked="0" value="1" id="sum" label="sum" />
+          <checkbox value_unchecked="0" value="1" id="prod" label="prod" />
+          <checkbox value_unchecked="0" value="1" id="length" label="length" />
+          <checkbox value_unchecked="0" value="1" id="nacount" label="Na count" />
+        </frame>
+        <stretch/>
+      </column>
+    </row>
+  </dialog>
 </document>
