@@ -395,7 +395,7 @@ void RKVariable::extendToLength (int length) {
 	
 	if (myData ()->cell_string_data) {		// not starting from 0
 		qmemmove (new_string_data, myData ()->cell_string_data, myData ()->allocated_length * sizeof (char*));
-		qmemmove (new_double_data, myData ()->cell_double_data, myData ()->allocated_length * sizeof (double*));
+		qmemmove (new_double_data, myData ()->cell_double_data, myData ()->allocated_length * sizeof (double));
 	
 		delete [] (myData ()->cell_string_data);
 		delete [] (myData ()->cell_double_data);
@@ -679,7 +679,7 @@ void RKVariable::removeRows (int from_row, int to_row) {
 	
 	if (to_row < (myData ()->allocated_length - 1)) {	// not the last rows
 		qmemmove (&(myData ()->cell_string_data[from_row]), &(myData ()->cell_string_data[to_row+1]), (myData ()->allocated_length - to_row - 1) * sizeof (char*));
-		qmemmove (&(myData ()->cell_double_data[from_row]), &(myData ()->cell_double_data[to_row+1]), (myData ()->allocated_length - to_row - 1) * sizeof (double*));
+		qmemmove (&(myData ()->cell_double_data[from_row]), &(myData ()->cell_double_data[to_row+1]), (myData ()->allocated_length - to_row - 1) * sizeof (double));
 	}
 
 	for (int row = (myData ()->allocated_length - 1 - (to_row - from_row)); row < myData ()->allocated_length; ++row) {
