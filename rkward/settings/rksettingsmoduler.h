@@ -49,19 +49,13 @@ public:
 	
 	QString caption ();
 	
-	static bool archivePackages () { return archive_packages; }
-//	static QStringList getPackageRepositories () { return package_repositories; };
-
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
 public slots:
 	void boxChanged (int);
 	void pathChanged ();
 	void textChanged (const QString &);
-	void addRepository (QStringList *string_list);
 private:
-	QCheckBox *archive_packages_box;
-	MultiStringSelector *repository_selector;
 	QLineEdit *outdec_input;
 	KIntSpinBox *width_input;
 	QComboBox *warn_input;
@@ -72,8 +66,6 @@ private:
 	KIntSpinBox *digits_input;
 	QComboBox *checkbounds_input;
 
-	static bool archive_packages;
-	static QStringList package_repositories;
 	static QString options_outdec;
 	static int options_width;
 	static int options_warn;
@@ -103,15 +95,29 @@ public:
 	
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
-	
+
+/** generate the commands needed to set the R run time options */
+	static QStringList makeRRunTimeOptionCommands ();
+
+	static bool archivePackages () { return archive_packages; }
+//	static QStringList getPackageRepositories () { return package_repositories; };
+
 	QString caption ();
 public slots:
 	void listChanged ();
 	void addLibLoc (QStringList *string_list);
+	void addRepository (QStringList *string_list);
 private:
 	MultiStringSelector *libloc_selector;
+	QCheckBox *archive_packages_box;
+	MultiStringSelector *repository_selector;
 
 	static QStringList liblocs;
+	static bool archive_packages;
+	static QStringList package_repositories;
+
+	friend class RThread;
+	static QStringList defaultliblocs;
 };
 
 #endif

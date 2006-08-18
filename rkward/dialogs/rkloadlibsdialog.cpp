@@ -127,7 +127,7 @@ void RKLoadLibsDialog::slotCancel () {
 void RKLoadLibsDialog::slotUser1 () {
 	RK_TRACE (DIALOGS);
 
-	RKSettings::configureSettings (RKSettings::R, this, chain);
+	RKSettings::configureSettings (RKSettings::RPackages, this, chain);
 }
 
 void RKLoadLibsDialog::closeEvent (QCloseEvent *e) {
@@ -191,7 +191,7 @@ void RKLoadLibsDialog::installDownloadedPackages (bool become_root) {
 
 	// archive / delete packages
 	bool ok = true;
-	if (RKSettingsModuleR::archivePackages ()) {
+	if (RKSettingsModuleRPackages::archivePackages ()) {
 		// step 1: create archive-dir, if neccessary
 		QDir archivedir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive");
 		if (!archivedir.exists ()) {

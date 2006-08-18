@@ -144,11 +144,11 @@ void RKSettings::enableApply () {
 void RKSettings::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
+	RKSettingsModuleGeneral::loadSettings(config);		// alway load this first, as it contains the base path for rkward files
 	RKSettingsModulePlugins::loadSettings(config);
 	RKSettingsModuleR::loadSettings(config);
 	RKSettingsModuleRPackages::loadSettings(config);
 	RKSettingsModulePHP::loadSettings(config);
-	RKSettingsModuleGeneral::loadSettings(config);
 	RKSettingsModuleOutput::loadSettings(config);
 	RKSettingsModuleWatch::loadSettings(config);
 	RKSettingsModuleConsole::loadSettings(config);
@@ -158,11 +158,11 @@ void RKSettings::loadSettings (KConfig *config) {
 void RKSettings::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
+	RKSettingsModuleGeneral::saveSettings(config);
 	RKSettingsModulePlugins::saveSettings(config);
 	RKSettingsModuleR::saveSettings(config);
 	RKSettingsModuleRPackages::saveSettings(config);
 	RKSettingsModulePHP::saveSettings(config);
-	RKSettingsModuleGeneral::saveSettings(config);
 	RKSettingsModuleOutput::saveSettings(config);
 	RKSettingsModuleWatch::saveSettings(config);
 	RKSettingsModuleConsole::saveSettings(config);

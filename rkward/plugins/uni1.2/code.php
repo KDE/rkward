@@ -9,7 +9,7 @@ $vars = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val (
 rk.temp.res <- list()
 rk.temp.option <- NA
 for (rk.temp.var in list (<? echo ($vars); ?>))  {
-	k <-  rk.get.description(rk.temp.var) 
+	k <-  rk.get.description(rk.temp.var, is.substitute=TRUE)
 	rk.temp.var <- eval(rk.temp.var)
 	rk.temp.res [[ k ]] <- list() 
 	<? if (getRK_val ("nombre")) 

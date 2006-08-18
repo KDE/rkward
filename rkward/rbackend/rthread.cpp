@@ -385,7 +385,17 @@ int RThread::initialize () {
 	}
 	delete [] paths;
 
-	QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands ();
+// find out about standard library locations
+	char **standardliblocs = getCommandAsStringVector (".libPaths ()\n", &c, &error);
+	if (error) status |= OtherFail;
+	for (int i = 0; i < c; ++i) {
+		RKSettingsModuleRPackages::defaultliblocs.append (standardliblocs[i]);
+		DELETE_STRING (standardliblocs[i]);
+	}
+	delete [] standardliblocs;
+
+// apply user configurable run time options
+	QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
 		runCommandInternal (*it, &error);
 		if (error) {
@@ -393,6 +403,8 @@ int RThread::initialize () {
 			RK_DO (qDebug ("error in initialization call '%s'", (*it).latin1()), RBACKEND, DL_ERROR);
 		}
 	}
+
+// error sink and help browser
 	runCommandInternal ("options (error=quote (.rk.do.error ()))\n", &error);
 	if (error) status |= SinkFail;
 /*	runCommandInternal (".rk.init.handlers ()\n", &error);

@@ -36,8 +36,6 @@
 #include "../debug.h"
 
 // static members
-bool RKSettingsModuleR::archive_packages;
-QStringList RKSettingsModuleR::package_repositories;
 QString RKSettingsModuleR::options_outdec;
 int RKSettingsModuleR::options_width;
 int RKSettingsModuleR::options_warn;
@@ -54,19 +52,6 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
-
-	repository_selector = new MultiStringSelector (i18n ("Package repositories"), this);
-	repository_selector->setValues (package_repositories);
-	connect (repository_selector, SIGNAL (listChanged ()), this, SLOT (pathChanged ()));
-	connect (repository_selector, SIGNAL (getNewStrings (QStringList*)), this, SLOT (addRepository (QStringList*)));
-	main_vbox->addWidget (repository_selector);
-
-	archive_packages_box = new QCheckBox (i18n ("Archive downloaded packages"), this);
-	archive_packages_box->setChecked (archive_packages);
-	connect (archive_packages_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
-	main_vbox->addWidget (archive_packages_box);	
-
-	main_vbox->addStretch ();
 
 	QLabel *label = new QLabel (i18n ("The following settings mostly affect R behavior in the console. It's generally safe to keep these unchanged."), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
@@ -143,6 +128,8 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	checkbounds_input->setCurrentItem (options_checkbounds ? 0 : 1);
 	connect (checkbounds_input, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
 	grid->addWidget (checkbounds_input, row, 1);
+
+	main_vbox->addStretch ();
 }
 
 RKSettingsModuleR::~RKSettingsModuleR() {
@@ -164,12 +151,6 @@ void RKSettingsModuleR::textChanged (const QString &) {
 	change ();
 }
 
-void RKSettingsModuleR::addRepository (QStringList *string_list) {
-	RK_TRACE (SETTINGS);
-	QString new_string = KInputDialog::getText (i18n ("Add repository"), i18n ("Add URL of new repository\n(Enter \"@CRAN@\" for the standard CRAN-mirror)"), QString::null, 0, this);
-	(*string_list).append (new_string);
-}
-
 QString RKSettingsModuleR::caption () {
 	RK_TRACE (SETTINGS);
 	return (i18n ("R-Backend"));
@@ -182,10 +163,6 @@ bool RKSettingsModuleR::hasChanges () {
 
 void RKSettingsModuleR::applyChanges () {
 	RK_TRACE (SETTINGS);
-
-	archive_packages = archive_packages_box->isChecked ();
-
-	package_repositories = repository_selector->getValues ();
 
 	options_outdec = outdec_input->text ();
 	options_width = width_input->value ();
@@ -207,16 +184,6 @@ void RKSettingsModuleR::applyChanges () {
 //static
 QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	QStringList list;
-
-// package repositories
-	QString command = "options (repos=c(";
-	for (QStringList::const_iterator it = package_repositories.begin (); it != package_repositories.end (); ++it) {
-		if (it != package_repositories.begin ()) {
-			command.append (", ");
-		}
-		command.append ("\"" + *it + "\"");
-	}
-	list.append (command + "))\n");
 
 	QString tf;
 	list.append ("options (OutDec=\"" + options_outdec.left (1) + "\")\n");
@@ -245,8 +212,6 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	config->setGroup ("R Settings");
-	config->writeEntry ("archive packages", archive_packages);
-	config->writeEntry ("Repositories", package_repositories);
 
 	config->writeEntry ("OutDec", options_outdec);
 	config->writeEntry ("width", options_width);
@@ -263,11 +228,6 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	config->setGroup ("R Settings");
-	archive_packages = config->readBoolEntry ("archive packages", false);
-	package_repositories = config->readListEntry ("Repositories");
-	if (!package_repositories.count ()) {
-		package_repositories.append ("@CRAN@");
-	}
 
 	options_outdec = config->readEntry ("OutDec", ".");
 	options_width = config->readNumEntry ("width", 80);
@@ -286,6 +246,9 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 
 // static members
 QStringList RKSettingsModuleRPackages::liblocs;
+QStringList RKSettingsModuleRPackages::defaultliblocs;
+bool RKSettingsModuleRPackages::archive_packages;
+QStringList RKSettingsModuleRPackages::package_repositories;
 
 RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -294,16 +257,31 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	libloc_selector = new MultiStringSelector (i18n ("R Library locations (where R addons get installed to) NOT USED, YET"), this);
+	repository_selector = new MultiStringSelector (i18n ("Package repositories (where libraries are downloaded from)"), this);
+	repository_selector->setValues (package_repositories);
+	connect (repository_selector, SIGNAL (listChanged ()), this, SLOT (pathChanged ()));
+	connect (repository_selector, SIGNAL (getNewStrings (QStringList*)), this, SLOT (addRepository (QStringList*)));
+	main_vbox->addWidget (repository_selector);
+
+	archive_packages_box = new QCheckBox (i18n ("Archive downloaded packages"), this);
+	archive_packages_box->setChecked (archive_packages);
+	connect (archive_packages_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
+	main_vbox->addWidget (archive_packages_box);	
+
+	main_vbox->addStretch ();
+
+	libloc_selector = new MultiStringSelector (i18n ("R Library locations  (where libraries get installed to, locally)"), this);
 	libloc_selector->setValues (liblocs);
 	connect (libloc_selector, SIGNAL (listChanged ()), this, SLOT (listChanged ()));
 	connect (libloc_selector, SIGNAL (getNewStrings (QStringList*)), this, SLOT (addLibLoc (QStringList*)));
 	main_vbox->addWidget (libloc_selector);
-	QLabel *label = new QLabel (i18n ("If you leave the list empty, only the startup defaults will be used"), this);
+	QLabel *label = new QLabel (i18n ("Note: The startup defaults will always be used in addition to the locations you specify in this list"), this);
 	main_vbox->addWidget (label);
+
+	main_vbox->addStretch ();
 }
 
-RKSettingsModuleRPackages::~RKSettingsModuleRPackages() {
+RKSettingsModuleRPackages::~RKSettingsModuleRPackages () {
 	RK_TRACE (SETTINGS);
 }
 
@@ -320,6 +298,12 @@ void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 	}
 }
 
+void RKSettingsModuleRPackages::addRepository (QStringList *string_list) {
+	RK_TRACE (SETTINGS);
+	QString new_string = KInputDialog::getText (i18n ("Add repository"), i18n ("Add URL of new repository\n(Enter \"@CRAN@\" for the standard CRAN-mirror)"), QString::null, 0, this);
+	(*string_list).append (new_string);
+}
+
 QString RKSettingsModuleRPackages::caption () {
 	RK_TRACE (SETTINGS);
 	return (i18n ("R-Packages"));
@@ -330,10 +314,51 @@ bool RKSettingsModuleRPackages::hasChanges () {
 	return changed;
 }
 
+//static
+QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
+	QStringList list;
+
+// package repositories
+	QString command = "options (repos=c(";
+	for (QStringList::const_iterator it = package_repositories.begin (); it != package_repositories.end (); ++it) {
+		if (it != package_repositories.begin ()) {
+			command.append (", ");
+		}
+		command.append ("\"" + *it + "\"");
+	}
+	list.append (command + "))\n");
+
+// library locations
+	command = ".libPaths (unique (c (";
+	bool first = true;
+	for (QStringList::const_iterator it = liblocs.begin (); it != liblocs.end (); ++it) {
+		if (first) first = false;
+		else command.append (", ");
+		command.append ("\"" + *it + "\"");
+	}
+	for (QStringList::const_iterator it = defaultliblocs.begin (); it != defaultliblocs.end (); ++it) {
+		if (first) first = false;
+		else command.append (", ");
+		command.append ("\"" + *it + "\"");
+	}
+	command.append (")))");
+	list.append (command);
+
+	return list;
+}
+
 void RKSettingsModuleRPackages::applyChanges () {
 	RK_TRACE (SETTINGS);
 
+	archive_packages = archive_packages_box->isChecked ();
+	package_repositories = repository_selector->getValues ();
 	liblocs = libloc_selector->getValues ();
+
+// apply options in R
+	QStringList commands = makeRRunTimeOptionCommands ();
+	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
+		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString::null, 0, 0, commandChain ());
+	}
 }
 
 void RKSettingsModuleRPackages::save (KConfig *config) {
@@ -346,6 +371,10 @@ void RKSettingsModuleRPackages::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	config->setGroup ("R Settings");
+
+	config->writeEntry ("archive packages", archive_packages);
+	config->writeEntry ("Repositories", package_repositories);
+
 	config->writeEntry ("LibraryLocations", liblocs);
 }
 
@@ -353,6 +382,13 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	config->setGroup ("R Settings");
+
+	archive_packages = config->readBoolEntry ("archive packages", false);
+	package_repositories = config->readListEntry ("Repositories");
+	if (!package_repositories.count ()) {
+		package_repositories.append ("@CRAN@");
+	}
+
 	liblocs = config->readListEntry ("LibraryLocations");
 }
 
