@@ -106,10 +106,12 @@
 }
 
 # Requests a graph to be written.
-"rk.graph.on" <- function(){
-	filename <- rk.get.tempfile.name (prefix="graph", extension=".png");
-	png (file.path (filename))
-	cat (paste ("<img src=\"", filename,"\"><br>", sep=""),file=rk.get.output.html.file (), append=TRUE)
+"rk.graph.on" <- function (width=480, height=480, ...)
+{
+    filename <- rk.get.tempfile.name(prefix = "graph", extension = ".png")
+    png(filename=file.path(filename), width=width, height=height, ...)
+    cat(paste("<img src=\"", filename, "\" width=\"", width, "\" height=\"", height, "\"><br>", sep = ""), 
+        file = rk.get.output.html.file(), append = TRUE)
 }
 
 "rk.graph.off" <- function(){
