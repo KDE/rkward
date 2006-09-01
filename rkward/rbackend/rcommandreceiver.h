@@ -18,7 +18,7 @@
 #define RCOMMANDRECEIVER_H
 
 /**
-Use this class as a base for all classes that need to handle RCommands. Provides a pure virtual function (rCommandDone ()) for handling of RCommand-results. Reimplement this to interpret the command-results.
+Use this class as a base for all classes that need to handle RCommands. Most importantly it provides a virtual function (rCommandDone ()) for handling of RCommand-results. Reimplement this to interpret the command-results.
 For windows/dialogs which interpret RCommand results, the receiver provides a special mechanism. The problem with those windows/dialogs is, that the user may close them, while there are still RCommands due to come in, i.e. they can't be deleted, but rather need to wait for the remaining results to come in.
 This class will keep track of which RCommands are still out there (and expected to return to this receiver). If you call deleteThis (), the RCommandReceiver will either self-destruct immediately or wait for any remaining commands to come in. Warning: This means, your class may be delelted immediately. You should return at once after calling deleteThis ().
 
@@ -43,7 +43,7 @@ protected:
 	friend class RInterface;
 /** This function is called when a command for this receiver is finished (and before it is deleted). You have to implement it in your subclass to do the actual handling.
 @param command A pointer to the command. The pointer is still valid during this call, but the RCommand will be deleted shortly after! */
-	virtual void rCommandDone (RCommand *command) = 0;
+	virtual void rCommandDone (RCommand *) {};
 /** This function is called when there is new output for a command or this receiver. Default implementation does nothing. Reimplement if you want to get at a command's output immediately (i.e. before the command is fully completed).
 @param command A pointer to the command
 @param output The new output-fragment */

@@ -123,7 +123,7 @@ public:
 @param receiver The RCommandReceiver this command should be passed on to, when finished.
 @param flags A freely assignable integer, that you can use to identify what the command was all about. Only the RCommandReceiver handling the results will have to know what exactly the flags mean.
 */
-	RCommand(const QString &command, int type = 0, const QString &rk_equiv = QString::null, RCommandReceiver *receiver=0, int flags=0);
+	RCommand (const QString &command, int type = 0, const QString &rk_equiv = QString::null, RCommandReceiver *receiver=0, int flags=0);
 /** destructor. Note: you should not delete RCommands manually. This is done in RInterface. TODO: make protected */
 	~RCommand();
 /** @returns the type as specified in RCommand::RCommand */
@@ -206,11 +206,15 @@ public:
 	void detachIntVector () { integer_data = 0; integer_count = 0; };
 /** return the flags associated with the command. Those are the same that you specified in the constructor, RKWard does not touch them. @see RCommand::RCommand */
 	int getFlags () { return (_flags); };
+/** Add an additional listener to the command */
+	void addReceiver (RCommandReceiver *receiver);
 private:
 friend class RThread;
 friend class RInterface;
-/** internal function will be called by the backend, as the command gets passed through. Takes care of sending this command (back) to its receiver */
+/** internal function will be called by the backend, as the command gets passed through. Takes care of sending this command (back) to its receiver(s) */
 	void finished ();
+/** new output was generated. Pass on to receiver(s) */
+	void newOutput (ROutput *output);
 	QValueList<ROutput*> output_list;
 	QString _command;
 	char **string_data;
@@ -225,7 +229,8 @@ friend class RInterface;
 	QString _rk_equiv;
 	int _id;
 	static int next_id;
-	RCommandReceiver *receiver;
+	int num_receivers;
+	RCommandReceiver **receivers;
 };
 
 #endif

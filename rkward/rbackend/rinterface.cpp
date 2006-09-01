@@ -115,8 +115,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 	RK_TRACE (RBACKEND);
 	if (e->type () == RCOMMAND_OUTPUT_EVENT) {
 		RThread::ROutputContainer *container = (static_cast <RThread::ROutputContainer *> (e->data ()));
-		if (container->command->receiver) container->command->receiver->newOutput (container->command, container->output);
-		watch->addOutput (container->command, container->output);
+		container->command->newOutput (container->output);
 		delete container;
 
 // TODO: not quite good, yet, leads to staggering output (but overall throughput is the same):
@@ -135,9 +134,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 			out->type = ROutput::Error;
 			out->output = ("--- interrupted ---");
 			command->output_list.append (out);
-			if (command->receiver) {
-				command->receiver->newOutput (command, out);
-			}
+			command->newOutput (out);
 			if (running_command_canceled) {
 				RK_ASSERT (command == running_command_canceled);
 				running_command_canceled = 0;

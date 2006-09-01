@@ -17,9 +17,13 @@
 
 #include "rcommand.h"
 #include "rcommandreceiver.h"
+#include "rinterface.h"
+#include "../rkwatch.h"
 
 #include "../debug.h"
 #include "../rkglobals.h"
+
+#define MAX_RECEIVERS 3
 
 int RCommand::next_id = 0;
 
@@ -39,8 +43,10 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 	integer_data = 0;
 	string_count = real_count = integer_count = 0;
 	_rk_equiv = rk_equiv;
-	RCommand::receiver = receiver;
-	if (receiver) receiver->addCommand ();
+	RCommand::receivers = new RCommandReceiver* [MAX_RECEIVERS];
+	num_receivers = 0;
+	addReceiver (receiver);
+	addReceiver (RKGlobals::rInterface ()->watch);
 }
 
 RCommand::~RCommand(){
@@ -58,11 +64,35 @@ RCommand::~RCommand(){
 	// The output_list itself is cleared automatically
 }
 
+void RCommand::addReceiver (RCommandReceiver *receiver) {
+	RK_TRACE (RBACKEND);
+
+	if (!receiver) return;
+
+	if (num_receivers >= MAX_RECEIVERS) {
+		RK_DO (qDebug ("Too many receivers for command"), RBACKEND, DL_ERROR);
+		return;
+	}
+
+	receivers[num_receivers++] = receiver;
+	receiver->addCommand ();
+}
+
+
 void RCommand::finished () {
 	RK_TRACE (RBACKEND);
-	if (receiver) {
-		receiver->rCommandDone (this);
-		receiver->delCommand ();
+
+	for (int i=0; i < num_receivers; ++i) {
+		receivers[i]->rCommandDone (this);
+		receivers[i]->delCommand ();
+	}
+}
+
+void RCommand::newOutput (ROutput *output) {
+	RK_TRACE (RBACKEND);
+
+	for (int i=0; i < num_receivers; ++i) {
+		receivers[i]->newOutput (this, output);
 	}
 }
 

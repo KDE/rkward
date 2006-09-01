@@ -21,6 +21,8 @@
 #include <qstring.h>
 #include <kmdichildview.h>
 
+#include "rbackend/rcommandreceiver.h"
+
 class RCommand;
 class ROutput;
 class QPushButton;
@@ -33,7 +35,7 @@ class QBoxLayout;
 @author Thomas Friedrichsmeier
 */
 
-class RKwatch : public KMdiChildView {
+class RKwatch : public KMdiChildView, public RCommandReceiver {
 	Q_OBJECT
 public: 
 	RKwatch ();
@@ -41,7 +43,7 @@ public:
 /** Adds input to the watch-window (i.e. commands issued) */
 	void addInput (RCommand *command);
 /** Adds output to the watch-window (i.e. replies received) */
-	void addOutput (RCommand *command, ROutput *output_fragment);
+	void newOutput (RCommand *command, ROutput *output_fragment);
 /** Command has finished. If the command has failed, it may be neccessary to print some more information */
 	void commandDone (RCommand *command);
 signals:

@@ -100,6 +100,7 @@ private:
 /** See \ref RThread::doStandardCallback (). Does the actual job. */
 	void processRCallbackRequest (RCallbackArgs *args);
 friend class RKwardApp;
+friend class RCommand;
 /** pointer to the RKwatch. TODO: (re-)move this pointer */
 	RKwatch *watch;
 protected:

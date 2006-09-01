@@ -125,7 +125,7 @@ void RKwatch::addOutputNoCheck (RCommand *command, const QString &output) {
 	watch->setColor (Qt::black);
 }
 
-void RKwatch::addOutput (RCommand *command, ROutput *output_fragment) {
+void RKwatch::newOutput (RCommand *command, ROutput *output_fragment) {
 	RK_TRACE (APP);
 
 	if (!RKSettingsModuleWatch::shouldShowOutput (command)) return;
