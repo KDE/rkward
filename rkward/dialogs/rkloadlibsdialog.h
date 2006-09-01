@@ -25,6 +25,7 @@
 #include "../rbackend/rcommandreceiver.h"
 
 class QListView;
+class QComboBox;
 class QPushButton;
 class RKErrorDialog;
 class QWidget;
@@ -32,6 +33,7 @@ class QCloseEvent;
 class RCommandChain;
 class QCheckBox;
 class KProcess;
+class PackageInstallParamsWidget;
 
 /**
 Dialog which excapsulates widgets to load/unload, update and install R packages
@@ -50,12 +52,14 @@ public:
 	
 	bool downloadPackages (const QStringList &packages);
 	void installDownloadedPackages (bool become_root);
+	bool installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies);
 
 	/** opens a modal RKLoadLibsDialog with the "Install new Packages" tab on front (To be used when a require () fails in the R backend */
 	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain);
 signals:
 	void downloadComplete ();
 	void installationComplete ();
+	void libraryLocationsChanged (const QStringList &);
 protected:
 	void rCommandDone (RCommand *command);
 	void closeEvent (QCloseEvent *e);
@@ -149,6 +153,7 @@ private:
 	QPushButton *update_all_button;
 	QPushButton *get_list_button;
 	QCheckBox *become_root_box;
+	PackageInstallParamsWidget *install_params;
 	
 	RKLoadLibsDialog *parent;
 };
@@ -186,5 +191,26 @@ private:
 	RKLoadLibsDialog *parent;
 };
 
+/**
+Simple helper class for RKLoadLibsDialog to allow selection of installation parameters
+
+@author Thomas Friedrichsmeier
+*/
+class PackageInstallParamsWidget : public QWidget {
+Q_OBJECT
+public:
+	PackageInstallParamsWidget (QWidget *parent, bool ask_depends);
+	
+	~PackageInstallParamsWidget ();
+
+	bool installDependencies ();
+	QString libraryLocation ();
+	bool checkWritable ();
+public slots:
+	void liblocsChanged (const QStringList &newlist);
+private:
+	QComboBox *libloc_selector;
+	QCheckBox *dependencies;
+};
 
 #endif

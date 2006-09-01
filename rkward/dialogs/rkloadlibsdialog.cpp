@@ -38,6 +38,8 @@
 #include "../debug.h"
 
 #define DOWNLOAD_PACKAGES_COMMAND 1
+#define GET_CURRENT_LIBLOCS_COMMAND 2
+#define INSTALL_PACKAGES_COMMAND 1
 
 RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KDialogBase (KDialogBase::Tabbed, Qt::WStyle_DialogBorder, parent, 0, modal, i18n ("Configure Packages"), KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel | KDialogBase::User1) {
 	RK_TRACE (DIALOGS);
@@ -62,6 +64,8 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 
 	num_child_widgets = 3;
 	accepted = false;
+
+	RKGlobals::rInterface ()->issueCommand (".libPaths ()", RCommand::App | RCommand::GetStringVector, QString::null, this, GET_CURRENT_LIBLOCS_COMMAND, chain);
 }
 
 RKLoadLibsDialog::~RKLoadLibsDialog () {
@@ -141,6 +145,16 @@ void RKLoadLibsDialog::rCommandDone (RCommand *command) {
 	if (command->getFlags () == DOWNLOAD_PACKAGES_COMMAND) {
 		if (command->failed ()) error_dialog->newError (command->error ());
 		emit (downloadComplete ());
+	} else if (command->getFlags () == INSTALL_PACKAGES_COMMAND) {
+		if (command->failed ()) error_dialog->newError (command->error ());
+		emit (installationComplete ());
+	} else if (command->getFlags () == GET_CURRENT_LIBLOCS_COMMAND) {
+		RK_ASSERT (command->stringVectorLength () > 0);
+		QStringList current_library_locations;
+		for (int i=0; i < command->stringVectorLength (); ++i) {
+			current_library_locations.append (command->getStringVector ()[i]);
+		}
+		emit (libraryLocationsChanged (current_library_locations));
 	} else {
 		RK_ASSERT (false);
 	}
@@ -220,6 +234,26 @@ void RKLoadLibsDialog::installDownloadedPackages (bool become_root) {
 		RK_DO (qDebug ("One or more package files could not be moved/deleted"), DIALOGS, DL_ERROR);
 	}
 }
+
+bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies) {
+	RK_TRACE (DIALOGS);
+
+	QString download_arg;
+	if (RKSettingsModuleRPackages::archivePackages ()) download_arg = ", destdir=\"" + QDir (RKSettingsModuleGeneral::filesPath ()).filePath (".packagetemp") + "\"";
+
+	QString dependencies_arg;
+	if (install_dependencies) dependencies_arg = ", dependencies=TRUE"; 
+
+	if (packages.isEmpty ()) return false;
+
+	QString package_string = "c (\"" + packages.join ("\", \"") + "\")";
+	RCommand *command = new RCommand ("install.packages (pkgs=" + package_string + ", lib=\"" + to_libloc + "\"" + download_arg + dependencies_arg + ")", RCommand::App, QString::null, this, INSTALL_PACKAGES_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command, chain);
+
+	if (RKCancelDialog::showCancelDialog (i18n ("Downloading / Installing"), i18n ("Please, stand by while downloading/installing selected packages."), this, this, SIGNAL (installationComplete ()), command) == QDialog::Rejected) return false;
+	return true;
+}
+
 
 void RKLoadLibsDialog::installationProcessOutput (KProcess *, char *buffer, int buflen) {
 	RK_TRACE (DIALOGS);
@@ -429,8 +463,8 @@ UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p
 	updateable_view = new QListView (this);
 	updateable_view->addColumn (i18n ("Name"));
 	updateable_view->addColumn (i18n ("Location"));
-	updateable_view->addColumn (i18n ("Local"));
-	updateable_view->addColumn (i18n ("Online"));
+	updateable_view->addColumn (i18n ("Local Version"));
+	updateable_view->addColumn (i18n ("Online Version"));
 	updateable_view->setSelectionMode (QListView::Extended);
 	hbox->addWidget (updateable_view);
 	
@@ -440,7 +474,10 @@ UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p
 	update_selected_button = new QPushButton (i18n ("Update Selected"), this);
 	connect (update_selected_button, SIGNAL (clicked ()), this, SLOT (updateSelectedButtonClicked ()));
 	update_all_button = new QPushButton (i18n ("Update All"), this);
-	connect (update_selected_button, SIGNAL (clicked ()), this, SLOT (updateAllButtonClicked ()));
+	connect (update_all_button, SIGNAL (clicked ()), this, SLOT (updateAllButtonClicked ()));
+	install_params = new PackageInstallParamsWidget (this, false);
+	connect (parent, SIGNAL (libraryLocationsChanged (const QStringList &)), install_params, SLOT (liblocsChanged (const QStringList &)));
+
 	become_root_box = new QCheckBox (i18n ("As \"root\" user"), this);
 	become_root_box->setChecked (true);
 	buttonvbox->addWidget (get_list_button);
@@ -448,6 +485,7 @@ UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p
 	buttonvbox->addWidget (update_selected_button);
 	buttonvbox->addWidget (update_all_button);
 	buttonvbox->addStretch (1);
+	buttonvbox->addWidget (install_params);
 	buttonvbox->addWidget (become_root_box);
 	buttonvbox->addStretch (1);
 	
@@ -497,9 +535,12 @@ void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 }
 
 void UpdatePackagesWidget::updatePackages (const QStringList &list) {
-	if (!list.isEmpty ()) {
-		if (parent->downloadPackages (list)) parent->installDownloadedPackages (become_root_box->isChecked ());
-	}
+	RK_TRACE (DIALOGS);
+
+	if (list.isEmpty ()) return;
+	if (!install_params->checkWritable ()) return;
+
+	parent->installPackages (list, install_params->libraryLocation (), install_params->installDependencies ());
 }
 
 void UpdatePackagesWidget::updateSelectedButtonClicked () {
@@ -522,9 +563,10 @@ void UpdatePackagesWidget::updateAllButtonClicked () {
 
 void UpdatePackagesWidget::getListButtonClicked () {
 	RK_TRACE (DIALOGS);
-	RCommand *command = new RCommand ("as.vector (old.packages ())", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
+	RCommand *command = new RCommand ("rk.temp.old <- old.packages (); as.vector (c (rk.temp.old[,\"Package\"], rk.temp.old[,\"LibPath\"], rk.temp.old[,\"Installed\"], rk.temp.old[,\"ReposVer\"]))", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
-	
+	RKGlobals::rInterface ()->issueCommand ("rm (rk.temp.old)", RCommand::App, QString::null, 0, 0, parent->chain);
+
 	get_list_button->setEnabled (false);
 	RKCancelDialog::showCancelDialog (i18n ("Fetch list"), i18n ("Please, stand by while downloading the list of packages."), this, this, SIGNAL (actionDone ()), command);
 }
@@ -648,6 +690,73 @@ void InstallPackagesWidget::ok () {
 void InstallPackagesWidget::cancel () {
 	RK_TRACE (DIALOGS);
 	deleteThis ();
+}
+
+/////////////////////// PackageInstallParamsWidget //////////////////////////
+
+#include <qcombobox.h>
+#include <qfileinfo.h>
+#include <kmessagebox.h>
+
+PackageInstallParamsWidget::PackageInstallParamsWidget (QWidget *parent, bool ask_depends) : QWidget (parent) {
+	RK_TRACE (DIALOGS);
+
+	QVBoxLayout *vbox = new QVBoxLayout (this, 0, KDialog::spacingHint ());
+	vbox->addWidget (new QLabel (i18n ("Install packages to:"), this));
+	libloc_selector = new QComboBox (this);
+	vbox->addWidget (libloc_selector);
+
+	if (ask_depends) {
+		dependencies = new QCheckBox (i18n ("Include dependencies"), this);
+		dependencies->setChecked (true);
+		vbox->addStretch ();
+		vbox->addWidget (dependencies);
+	} else {
+		dependencies = 0;
+	}
+}
+
+PackageInstallParamsWidget::~PackageInstallParamsWidget () {
+	RK_TRACE (DIALOGS);
+}
+
+bool PackageInstallParamsWidget::installDependencies () {
+	RK_TRACE (DIALOGS);
+
+	if (!dependencies) return false;
+	return dependencies->isChecked ();
+}
+
+QString PackageInstallParamsWidget::libraryLocation () {
+	RK_TRACE (DIALOGS);
+
+	return (libloc_selector->currentText ());
+}
+
+bool PackageInstallParamsWidget::checkWritable () {
+	RK_TRACE (DIALOGS);
+
+	QFileInfo fi = QFileInfo (libraryLocation ());
+	if (libraryLocation ().isEmpty () || (!fi.isWritable ())) {
+		KMessageBox::error (this, i18n ("No user writable library location was selected to install the package(s) to. You will probably want to use the \"Configure Repositories\"-button to select a writable directory to install packages to."), i18n ("No writable library location selected"));
+		return false;
+	}
+
+	return true;
+}
+
+void PackageInstallParamsWidget::liblocsChanged (const QStringList &newlist) {
+	RK_TRACE (DIALOGS);
+
+	libloc_selector->clear ();
+	bool haveone = false;
+	for (QStringList::const_iterator it = newlist.begin (); it != newlist.end (); ++it) {
+		QFileInfo fi = QFileInfo (*it);
+		if (fi.isWritable ()) {
+			haveone = true;
+			libloc_selector->insertItem (*it);
+		}
+	}
 }
 
 #include "rkloadlibsdialog.moc"

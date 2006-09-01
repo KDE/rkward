@@ -259,7 +259,7 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 
 	repository_selector = new MultiStringSelector (i18n ("Package repositories (where libraries are downloaded from)"), this);
 	repository_selector->setValues (package_repositories);
-	connect (repository_selector, SIGNAL (listChanged ()), this, SLOT (pathChanged ()));
+	connect (repository_selector, SIGNAL (listChanged ()), this, SLOT (listChanged ()));
 	connect (repository_selector, SIGNAL (getNewStrings (QStringList*)), this, SLOT (addRepository (QStringList*)));
 	main_vbox->addWidget (repository_selector);
 
@@ -286,6 +286,11 @@ RKSettingsModuleRPackages::~RKSettingsModuleRPackages () {
 }
 
 void RKSettingsModuleRPackages::listChanged () {
+	RK_TRACE (SETTINGS);
+	change ();
+}
+
+void RKSettingsModuleRPackages::boxChanged (int) {
 	RK_TRACE (SETTINGS);
 	change ();
 }

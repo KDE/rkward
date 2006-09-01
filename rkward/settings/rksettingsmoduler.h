@@ -105,6 +105,7 @@ public:
 	QString caption ();
 public slots:
 	void listChanged ();
+	void boxChanged (int);
 	void addLibLoc (QStringList *string_list);
 	void addRepository (QStringList *string_list);
 private:
