@@ -53,13 +53,13 @@ A duplicate option has to be tested-->
 			</tab>
 			<tab label="Type" >
 				<radio id="type" label="Type of graphics" >
-					<option value="'p'" label="Plot individual points " />
-					<option value="'l'" label="Plot lines " />
-					<option value="'b'" label="Plot points connected by lines (both)" />
-					<option value="'1'" label="Plot points overlaid by lines " />
-					<option value="'h'" label="Plot vertical lines from points to the zero axis (high-density)" />
-					<option value="'s'" label="Step-function plots : the top of the vertical defines the point" />
-					<option value="'S'" label="Step-function plots : the bottom of the vertical defines the point" />
+					<option value="'p'" label="Plot individual dots" />
+					<option value="'l'" label="Plot lines" />
+					<option value="'b'" label="Plot dots connected by lines (both)" />
+					<option value="'o'" label="Plot dots overplotted by lines (both)" />
+					<option value="'h'" label="Plot histogram like vertical lines (high-density)" />
+					<option value="'s'" label="Stair steps: the top of the vertical defines the point" />
+					<option value="'S'" label="Stair steps: the bottom of the vertical defines the point" />
 					<option value="custoType" label="Customize" />
 				</radio>
 				<input size="medium" id="typeCusto" label="Give a character vector eg : c('p','l')" />

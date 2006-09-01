@@ -76,7 +76,7 @@ pch = rep(NA,length(rk.plugin.Xvar)),
 cex = rep(NA,length(rk.plugin.Xvar)))
 
 <? if  ($type != "custoType" ) echo ( $type . " ->  rk.plugin.tc[[1]]\n" ) ;
-else echo( $typeCusto . " ->  rk.plugin.type.tc[[1]]\n"  ) ?>
+else echo( $typeCusto . " ->  rk.plugin.tc[[1]]\n"  ) ?>
 rk.plugin.tc[[2]] <- <? echo ($col . "\n"); ?>
 rk.plugin.tc[[3]] <- <? echo ($cex . "\n"); ?>
 rk.plugin.tc[[4]] <- <? echo ($pch . "\n"); ?>
