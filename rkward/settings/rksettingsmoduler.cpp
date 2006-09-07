@@ -324,11 +324,12 @@ QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
 	QStringList list;
 
 // package repositories
-	QString command = "options (repos=c(";
+	QString command = "options (repos=c (";
 	for (QStringList::const_iterator it = package_repositories.begin (); it != package_repositories.end (); ++it) {
 		if (it != package_repositories.begin ()) {
 			command.append (", ");
 		}
+		if (*it == "@CRAN@") command.append ("CRAN="); 
 		command.append ("\"" + *it + "\"");
 	}
 	list.append (command + "))\n");
