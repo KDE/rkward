@@ -156,101 +156,29 @@ void RKLoadLibsDialog::rCommandDone (RCommand *command) {
 	}
 }
 
-bool RKLoadLibsDialog::downloadPackages (const QStringList &packages) {
-	RK_TRACE (DIALOGS);
-
-	QString to_dir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath (".packagetemp");
-
-	if (packages.isEmpty ()) return false;
-	
-	QString package_string = "c (\"" + packages.join ("\", \"") + "\")";
-	RCommand *command = new RCommand ("download.packages (pkgs=" + package_string + ", destdir=\"" + to_dir + "\")", RCommand::App, QString::null, this, DOWNLOAD_PACKAGES_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, chain);
-	
-	if (RKCancelDialog::showCancelDialog (i18n ("Fetch list"), i18n ("Please, stand by while downloading selected packages."), this, this, SIGNAL (downloadComplete ()), command) == QDialog::Rejected) return false;
-	return true;
-}
-
-void RKLoadLibsDialog::installDownloadedPackages (bool become_root) {
-	RK_TRACE (DIALOGS);
-	QDir tempdir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath (".packagetemp");
-
-	tempdir.setFilter (QDir::Files);
-
-	KProcess *proc = new KProcess;
-	if (become_root) {
-		*proc << "kdesu" << "-t";
-	};
-	*proc << "R" << "CMD" << "INSTALL";
-	for (unsigned int i=0; i < tempdir.count (); ++i) {
-		*proc << tempdir.filePath (tempdir[i]).latin1 ();
-	}
-
-	connect (proc, SIGNAL (processExited (KProcess *)), this, SLOT (processExited (KProcess *)));
-	connect (proc, SIGNAL (receivedStdout (KProcess *, char *, int)), this, SLOT (installationProcessOutput (KProcess *, char *, int)));
-	connect (proc, SIGNAL (receivedStderr (KProcess *, char *, int)), this, SLOT (installationProcessOutput (KProcess *, char *, int)));
-	proc->start (KProcess::NotifyOnExit, KProcess::AllOutput);
-	if (RKCancelDialog::showCancelDialog (i18n ("Installing packages..."), i18n ("Please, stand by while installing packages."), this, this, SIGNAL (installationComplete ())) == QDialog::Rejected) {
-		proc->kill ();
-	};
-	if ((!proc->normalExit ()) || (proc->exitStatus ())) {
-		installation_error_dialog->newError (QString::null);		// to make sure it is shown
-	}
-	installation_error_dialog->resetOutput ();
-	delete proc;
-
-	// archive / delete packages
-	bool ok = true;
-	if (RKSettingsModuleRPackages::archivePackages ()) {
-		// step 1: create archive-dir, if neccessary
-		QDir archivedir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive");
-		if (!archivedir.exists ()) {
-			// does not compile on some systems (October 2005).
-			//QDir (RKSettingsModuleLogfiles::filesPath ()).mkdir ("package_archive");
-			// Workaround (use this instead for a couple of months):
-			QString dummy = RKSettingsModuleGeneral::filesPath ();
-			QDir dir;
-			dir.setPath (dummy);
-			dir.mkdir ("package_archive");
-		} if (!archivedir.isReadable ()) {
-			RK_DO (qDebug ("Directory '%s' could not be created or is not readable", archivedir.absPath ().latin1 ()), DIALOGS, DL_ERROR);
-			return;
-		}
-
-		for (unsigned int i=0; i < tempdir.count (); ++i) {
-			if (!tempdir.rename (tempdir[i].latin1 (), archivedir.absFilePath (tempdir[i].latin1 ()))) ok = false;
-		}
-	} else {
-		for (unsigned int i=0; i < tempdir.count (); ++i) {
-			if (!QFile (tempdir.filePath (tempdir[i]).latin1 ()).remove ()) ok = false;
-		}
-	}
-
-	if (!ok) {
-		RK_DO (qDebug ("One or more package files could not be moved/deleted"), DIALOGS, DL_ERROR);
-	}
-}
-
 bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies, bool as_root) {
 	RK_TRACE (DIALOGS);
 
 	if (packages.isEmpty ()) return false;
 	QString command_string = "install.packages (pkgs=c (\"" + packages.join ("\", \"") + "\")" + ", lib=\"" + to_libloc + "\""; 
-	if (RKSettingsModuleRPackages::archivePackages ()) command_string += ", destdir=\"" + QDir (RKSettingsModuleGeneral::filesPath ()).filePath (".packagetemp") + "\"";
-	if (install_dependencies) command_string += ", dependencies=TRUE, repos=\"@CRAN@\"";
-	command_string += ")";
+	if (RKSettingsModuleRPackages::archivePackages ()) command_string += ", destdir=\"" + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "\"";
+	if (install_dependencies) command_string += ", dependencies=TRUE";
+	command_string += ")\n";
 
-	command_string += "; q ()\n";
 	QFile file (QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("install_script.R"));
 	if (file.open (IO_WriteOnly)) {
 		QTextStream stream (&file);
 		stream << "options (repos=" + repos_string + ")\n" + command_string;
+		if (as_root) {
+			stream << QString ("system (\"chown ") + cuserid (0) + " " + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "/*\")\n";
+		}
+		stream << "q ()\n";
 		file.close();
 	}
+
 	KProcess *proc = new KProcess;
-	if (as_root) {
-		*proc << "kdesu" << "-t";
-	};
+	if (as_root) *proc << "kdesu" << "-t";
+	else *proc << "sh" << "-c";
 	*proc << "$R_HOME/bin/R --no-save < " + file.name ();
 
 	connect (proc, SIGNAL (processExited (KProcess *)), this, SLOT (processExited (KProcess *)));
@@ -506,15 +434,12 @@ UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p
 	install_params = new PackageInstallParamsWidget (this, false);
 	connect (parent, SIGNAL (libraryLocationsChanged (const QStringList &)), install_params, SLOT (liblocsChanged (const QStringList &)));
 
-	become_root_box = new QCheckBox (i18n ("As \"root\" user"), this);
-	become_root_box->setChecked (true);
 	buttonvbox->addWidget (get_list_button);
 	buttonvbox->addStretch (1);
 	buttonvbox->addWidget (update_selected_button);
 	buttonvbox->addWidget (update_all_button);
 	buttonvbox->addStretch (1);
 	buttonvbox->addWidget (install_params);
-	buttonvbox->addWidget (become_root_box);
 	buttonvbox->addStretch (1);
 	
 	update_selected_button->setEnabled (false);
@@ -640,13 +565,14 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget 
 	connect (get_list_button, SIGNAL (clicked ()), this, SLOT (getListButtonClicked ()));
 	install_selected_button = new QPushButton (i18n ("Install Selected"), this);
 	connect (install_selected_button, SIGNAL (clicked ()), this, SLOT (installSelectedButtonClicked ()));
-	become_root_box = new QCheckBox (i18n ("As \"root\" user"), this);
-	become_root_box->setChecked (true);
+	install_params = new PackageInstallParamsWidget (this, true);
+	connect (parent, SIGNAL (libraryLocationsChanged (const QStringList &)), install_params, SLOT (liblocsChanged (const QStringList &)));
+
 	buttonvbox->addWidget (get_list_button);
 	buttonvbox->addStretch (1);
 	buttonvbox->addWidget (install_selected_button);
 	buttonvbox->addStretch (1);
-	buttonvbox->addWidget (become_root_box);
+	buttonvbox->addWidget (install_params);
 	buttonvbox->addStretch (1);
 	
 	install_selected_button->setEnabled (false);
@@ -670,7 +596,7 @@ void InstallPackagesWidget::rCommandDone (RCommand *command) {
 		if (!command->failed ()) {
 			delete placeholder;
 			placeholder = 0;
-			RK_ASSERT ((command->stringVectorLength () % 2) == 0);
+			RK_ASSERT ((command->stringVectorLength () % 2) == 1);
 			int count = (command->stringVectorLength () / 2);
 			for (int i=0; i < count; ++i) {
 				new QListViewItem (installable_view, command->getStringVector ()[i], command->getStringVector ()[count + i]);
@@ -682,6 +608,9 @@ void InstallPackagesWidget::rCommandDone (RCommand *command) {
 			} else {
 				placeholder = new QListViewItem (installable_view, i18n ("[No packages available]"));
 			}
+
+			// this is after the repository was chosen. Update the repository string.
+			parent->repos_string = command->getStringVector ()[2 * count];
 		} else {
 			get_list_button->setEnabled (true);
 			parent->error_dialog->newError (command->error ());
@@ -692,9 +621,13 @@ void InstallPackagesWidget::rCommandDone (RCommand *command) {
 }
 
 void InstallPackagesWidget::installPackages (const QStringList &list) {
-	if (!list.isEmpty ()) {
-		if (parent->downloadPackages (list)) parent->installDownloadedPackages (become_root_box->isChecked ());
-	}
+	RK_TRACE (DIALOGS);
+	bool as_root = false;
+
+	if (list.isEmpty ()) return;
+	if (!install_params->checkWritable (&as_root)) return;
+
+	parent->installPackages (list, install_params->libraryLocation (), install_params->installDependencies (), as_root);
 }
 
 void InstallPackagesWidget::installSelectedButtonClicked () {
@@ -708,7 +641,7 @@ void InstallPackagesWidget::installSelectedButtonClicked () {
 
 void InstallPackagesWidget::getListButtonClicked () {
 	RK_TRACE (DIALOGS);
-	RCommand *command = new RCommand (".rk.get.available.packages ()", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_AVAILABLE_PACKAGES_COMMAND);
+	RCommand *command = new RCommand ("c (.rk.get.available.packages (), rk.make.repos.string ())", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_AVAILABLE_PACKAGES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 	
 	get_list_button->setEnabled (false);

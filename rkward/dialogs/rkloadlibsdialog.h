@@ -49,9 +49,7 @@ public:
 	RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal=false);
 
 	~RKLoadLibsDialog ();
-	
-	bool downloadPackages (const QStringList &packages);
-	void installDownloadedPackages (bool become_root);
+
 	bool installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies, bool as_root);
 
 	/** opens a modal RKLoadLibsDialog with the "Install new Packages" tab on front (To be used when a require () fails in the R backend */
@@ -150,7 +148,6 @@ private:
 	QPushButton *update_selected_button;
 	QPushButton *update_all_button;
 	QPushButton *get_list_button;
-	QCheckBox *become_root_box;
 	PackageInstallParamsWidget *install_params;
 	
 	RKLoadLibsDialog *parent;
@@ -184,7 +181,7 @@ private:
 
 	QPushButton *install_selected_button;
 	QPushButton *get_list_button;
-	QCheckBox *become_root_box;
+	PackageInstallParamsWidget *install_params;
 	
 	RKLoadLibsDialog *parent;
 };

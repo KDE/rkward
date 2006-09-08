@@ -17,6 +17,8 @@ Some items I'd like to get done for 0.3.7 or whatever the next release is going 
 - Rework package management dialog
 	- use install.packages () to handle dependencies
 	- manage R library locations, install to location with user write access
+		- BUG: "cannot create html package index" when installing as regular user
+	- Canceldialog and ErrorDialog should be unified!
 	- the UI should probably be simplified somehow. But how? All in a single list with "filter"? Ask for ideas/look at other apps
 		- this will be very hard to do with the current Qt. We'd really need several checkboxes *within* a QListViewItem. Tackle this when/after porting to Qt4
 - Create an editor for single vectors/factors, or rework RKEditorDataFrame to handle those as well
