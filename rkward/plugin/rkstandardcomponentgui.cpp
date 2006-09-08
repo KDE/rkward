@@ -62,7 +62,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 RKStandardComponentGUI::~RKStandardComponentGUI () {
 	RK_TRACE (PLUGIN);
 
-	error_dialog->deleteThis ();
+	delete error_dialog;
 }
 
 void RKStandardComponentGUI::createDialog (bool switchable) {

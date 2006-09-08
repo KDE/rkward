@@ -140,3 +140,24 @@
 	cat (date ())
 	cat ("<br>\n")
 }
+
+"rk.make.repos.string" <- function () {
+	x <- options ("repos")$repos
+	len <- length (x)
+	ret <- sprintf ("c (")
+	first <- TRUE
+	for (i in 1:len) {
+		if (first) {
+			first <- FALSE
+		} else {
+			ret <- sprintf ("%s, ", ret)
+		}
+		if (names (x)[i] != "") {
+			ret <- sprintf ("%s%s=%s", ret, names (x)[i], dQuote (x[i]))
+		} else {
+			ret <- sprintf ("%s%s", ret, dQuote (x[i]))
+		}
+	}
+	ret <- sprintf ("%s)", ret)
+	ret
+}

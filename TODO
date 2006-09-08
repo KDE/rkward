@@ -18,6 +18,7 @@ Some items I'd like to get done for 0.3.7 or whatever the next release is going 
 	- use install.packages () to handle dependencies
 	- manage R library locations, install to location with user write access
 	- the UI should probably be simplified somehow. But how? All in a single list with "filter"? Ask for ideas/look at other apps
+		- this will be very hard to do with the current Qt. We'd really need several checkboxes *within* a QListViewItem. Tackle this when/after porting to Qt4
 - Create an editor for single vectors/factors, or rework RKEditorDataFrame to handle those as well
 - RObjectListView
 	- use icons to mark up the different base types
@@ -46,6 +47,9 @@ RObjectTables sounds highly interesing. Maybe we can use a transparent table to 
 R_MakeActiveBinding sounds even more interesting. Maybe we can use this to "watch" symbols?!?
 	- can't track removal or creation of new objects this way
 	- seems to work only for top-level objects (elements in a list are not discernable, though we do catch the access to the list itself)
+
+"First-run wizard"
+	- pre-install R packages
 
 Little annoying stuff:
 - hide tabs in console

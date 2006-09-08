@@ -78,8 +78,7 @@ void RObjectViewer::rCommandDone (RCommand *command) {
 
 void RObjectViewer::closeEvent (QCloseEvent *e) {
 	e->accept ();
-	if (numCommandsOut ()) hide ();
-	deleteThis ();
+	delete this;
 }
 
 #include "robjectviewer.moc"

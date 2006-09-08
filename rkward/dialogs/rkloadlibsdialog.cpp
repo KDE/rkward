@@ -23,6 +23,7 @@
 #include <qpushbutton.h>
 #include <qcheckbox.h>
 #include <qdir.h>
+#include <qregexp.h>
 
 #include <klocale.h>
 #include <kprocess.h>
@@ -77,11 +78,6 @@ RKLoadLibsDialog::~RKLoadLibsDialog () {
 	else reject ();
 }
 
-void RKLoadLibsDialog::deleteThisNow () {
-	RK_TRACE (DIALOGS);
-	deleteLater ();
-}
-
 //static
 void RKLoadLibsDialog::showInstallPackagesModal (QWidget *parent, RCommandChain *chain) {
 	RK_TRACE (DIALOGS);
@@ -96,7 +92,7 @@ void RKLoadLibsDialog::tryDestruct () {
 	RK_TRACE (DIALOGS);
 
 	if (num_child_widgets <= 0) {
-		deleteThis ();
+		deleteLater ();
 	}
 }
 
@@ -235,23 +231,55 @@ void RKLoadLibsDialog::installDownloadedPackages (bool become_root) {
 	}
 }
 
-bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies) {
+bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies, bool as_root) {
 	RK_TRACE (DIALOGS);
 
-	QString download_arg;
-	if (RKSettingsModuleRPackages::archivePackages ()) download_arg = ", destdir=\"" + QDir (RKSettingsModuleGeneral::filesPath ()).filePath (".packagetemp") + "\"";
-
-	QString dependencies_arg;
-	if (install_dependencies) dependencies_arg = ", dependencies=TRUE"; 
-
 	if (packages.isEmpty ()) return false;
+	QString command_string = "install.packages (pkgs=c (\"" + packages.join ("\", \"") + "\")" + ", lib=\"" + to_libloc + "\""; 
+	if (RKSettingsModuleRPackages::archivePackages ()) command_string += ", destdir=\"" + QDir (RKSettingsModuleGeneral::filesPath ()).filePath (".packagetemp") + "\"";
+	if (install_dependencies) command_string += ", dependencies=TRUE, repos=\"@CRAN@\"";
+	command_string += ")";
 
-	QString package_string = "c (\"" + packages.join ("\", \"") + "\")";
-	RCommand *command = new RCommand ("install.packages (pkgs=" + package_string + ", lib=\"" + to_libloc + "\"" + download_arg + dependencies_arg + ")", RCommand::App, QString::null, this, INSTALL_PACKAGES_COMMAND);
+	command_string += "; q ()\n";
+	QFile file (QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("install_script.R"));
+	if (file.open (IO_WriteOnly)) {
+		QTextStream stream (&file);
+		stream << "options (repos=" + repos_string + ")\n" + command_string;
+		file.close();
+	}
+	KProcess *proc = new KProcess;
+	if (as_root) {
+		*proc << "kdesu" << "-t";
+	};
+	*proc << "$R_HOME/bin/R --no-save < " + file.name ();
+
+	connect (proc, SIGNAL (processExited (KProcess *)), this, SLOT (processExited (KProcess *)));
+	connect (proc, SIGNAL (receivedStdout (KProcess *, char *, int)), this, SLOT (installationProcessOutput (KProcess *, char *, int)));
+	connect (proc, SIGNAL (receivedStderr (KProcess *, char *, int)), this, SLOT (installationProcessOutput (KProcess *, char *, int)));
+	installation_error_dialog->newError ("test");
+	proc->start (KProcess::NotifyOnExit, KProcess::AllOutput);
+/*//	if (as_root) {
+		RK_ASSERT (!repos_string.isEmpty ());
+		command_string = "options (repos=" + repos_string + ")\n" + command_string;
+//	}
+	proc->writeStdin (command_string, command_string.length ()); */
+
+	if (RKCancelDialog::showCancelDialog (i18n ("Installing packages..."), i18n ("Please, stand by while installing packages."), this, this, SIGNAL (installationComplete ())) == QDialog::Rejected) {
+		proc->kill ();
+	};
+	if ((!proc->normalExit ()) || (proc->exitStatus ())) {
+		installation_error_dialog->newError (QString::null);		// to make sure it is shown
+	}
+//	installation_error_dialog->resetOutput ();
+	file.remove ();
+	delete proc;
+
+	return true;
+/*	RCommand *command = new RCommand (command_string, RCommand::App, QString::null, this, INSTALL_PACKAGES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 
 	if (RKCancelDialog::showCancelDialog (i18n ("Downloading / Installing"), i18n ("Please, stand by while downloading/installing selected packages."), this, this, SIGNAL (installationComplete ()), command) == QDialog::Rejected) return false;
-	return true;
+	return true; */
 }
 
 
@@ -390,7 +418,7 @@ void LoadUnloadWidget::detachButtonClicked () {
 void LoadUnloadWidget::ok () {
 	RK_TRACE (DIALOGS);
 	doLoadUnload ();
-	deleteThis ();
+	deleteLater ();
 }
 
 void LoadUnloadWidget::updateCurrentList () {
@@ -442,7 +470,7 @@ void LoadUnloadWidget::apply () {
 
 void LoadUnloadWidget::cancel () {
 	RK_TRACE (DIALOGS);
-	deleteThis ();
+	deleteLater ();
 }
 
 /////////////////////// UpdatePackagesWidget //////////////////////////
@@ -512,19 +540,23 @@ void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 		if (!command->failed ()) {
 			delete placeholder;
 			placeholder = 0;
-			RK_ASSERT ((command->stringVectorLength () % 4) == 0);
+			RK_ASSERT ((command->stringVectorLength () % 4) == 1);
 			int count = (command->stringVectorLength () / 4);
 			for (int i=0; i < count; ++i) {
-				new QListViewItem (updateable_view, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i], command->getStringVector ()[3* count + i]);
+				new QListViewItem (updateable_view, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i], command->getStringVector ()[3*count + i]);
 			}
-			updateable_view->setEnabled (true);
 
+			updateable_view->setEnabled (true);
+	
 			if (updateable_view->firstChild ()) {
 				update_selected_button->setEnabled (true);
 				update_all_button->setEnabled (true);
 			} else {
 				placeholder = new QListViewItem (updateable_view, i18n ("[No updates available]"));
 			}
+
+			// this is after the repository was chosen. Update the repository string.
+			parent->repos_string = command->getStringVector ()[4 * count];
 		} else {
 			get_list_button->setEnabled (true);
 			parent->error_dialog->newError (command->error ());
@@ -536,11 +568,12 @@ void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 
 void UpdatePackagesWidget::updatePackages (const QStringList &list) {
 	RK_TRACE (DIALOGS);
+	bool as_root = false;
 
 	if (list.isEmpty ()) return;
-	if (!install_params->checkWritable ()) return;
+	if (!install_params->checkWritable (&as_root)) return;
 
-	parent->installPackages (list, install_params->libraryLocation (), install_params->installDependencies ());
+	parent->installPackages (list, install_params->libraryLocation (), install_params->installDependencies (), as_root);
 }
 
 void UpdatePackagesWidget::updateSelectedButtonClicked () {
@@ -563,7 +596,7 @@ void UpdatePackagesWidget::updateAllButtonClicked () {
 
 void UpdatePackagesWidget::getListButtonClicked () {
 	RK_TRACE (DIALOGS);
-	RCommand *command = new RCommand ("rk.temp.old <- old.packages (); as.vector (c (rk.temp.old[,\"Package\"], rk.temp.old[,\"LibPath\"], rk.temp.old[,\"Installed\"], rk.temp.old[,\"ReposVer\"]))", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
+	RCommand *command = new RCommand ("rk.temp.old <- old.packages (); as.vector (c (rk.temp.old[,\"Package\"], rk.temp.old[,\"LibPath\"], rk.temp.old[,\"Installed\"], rk.temp.old[,\"ReposVer\"], rk.make.repos.string ()))", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 	RKGlobals::rInterface ()->issueCommand ("rm (rk.temp.old)", RCommand::App, QString::null, 0, 0, parent->chain);
 
@@ -573,12 +606,12 @@ void UpdatePackagesWidget::getListButtonClicked () {
 
 void UpdatePackagesWidget::ok () {
 	RK_TRACE (DIALOGS);
-	deleteThis ();
+	deleteLater ();
 }
 
 void UpdatePackagesWidget::cancel () {
 	RK_TRACE (DIALOGS);
-	deleteThis ();
+	deleteLater ();
 }
 
 
@@ -684,12 +717,12 @@ void InstallPackagesWidget::getListButtonClicked () {
 
 void InstallPackagesWidget::ok () {
 	RK_TRACE (DIALOGS);
-	deleteThis ();
+	deleteLater ();
 }
 
 void InstallPackagesWidget::cancel () {
 	RK_TRACE (DIALOGS);
-	deleteThis ();
+	deleteLater ();
 }
 
 /////////////////////// PackageInstallParamsWidget //////////////////////////
@@ -733,15 +766,21 @@ QString PackageInstallParamsWidget::libraryLocation () {
 	return (libloc_selector->currentText ());
 }
 
-bool PackageInstallParamsWidget::checkWritable () {
+bool PackageInstallParamsWidget::checkWritable (bool *as_root) {
 	RK_TRACE (DIALOGS);
+	RK_ASSERT (as_root);
 
 	QFileInfo fi = QFileInfo (libraryLocation ());
-	if (libraryLocation ().isEmpty () || (!fi.isWritable ())) {
-		KMessageBox::error (this, i18n ("No user writable library location was selected to install the package(s) to. You will probably want to use the \"Configure Repositories\"-button to select a writable directory to install packages to."), i18n ("No writable library location selected"));
+	if (!fi.isWritable ()) {
+		int res = KMessageBox::questionYesNo (this, i18n ("The directory you are trying to install to (%1) is not writable with your current user permissions. If you are the adminitstrator of this machine, you can try to install the packages as root (you'll be prompted for the root password). Otherwise you'll have to chose a different library location to install to (if none are writable, you will probably want to use the \"Configure Repositories\"-button to set up a writable directory to install packages to).").arg (libraryLocation ()), i18n ("Selected library location not writable"), KGuiItem (i18n ("Become root")), KGuiItem (i18n ("&Cancel")));
+		if (res == KMessageBox::Yes) {
+			*as_root = true;
+			return true;
+		}
 		return false;
 	}
 
+	*as_root = false;
 	return true;
 }
 
@@ -749,14 +788,7 @@ void PackageInstallParamsWidget::liblocsChanged (const QStringList &newlist) {
 	RK_TRACE (DIALOGS);
 
 	libloc_selector->clear ();
-	bool haveone = false;
-	for (QStringList::const_iterator it = newlist.begin (); it != newlist.end (); ++it) {
-		QFileInfo fi = QFileInfo (*it);
-		if (fi.isWritable ()) {
-			haveone = true;
-			libloc_selector->insertItem (*it);
-		}
-	}
+	libloc_selector->insertStringList (newlist);
 }
 
 #include "rkloadlibsdialog.moc"

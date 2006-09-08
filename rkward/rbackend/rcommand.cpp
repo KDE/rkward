@@ -75,16 +75,36 @@ void RCommand::addReceiver (RCommandReceiver *receiver) {
 	}
 
 	receivers[num_receivers++] = receiver;
-	receiver->addCommand ();
+	receiver->addCommand (this);
 }
 
+void RCommand::removeReceiver (RCommandReceiver *receiver) {
+	RK_TRACE (RBACKEND);
+
+	if (!receiver) return;
+
+	RCommandReceiver **newlist = new RCommandReceiver* [MAX_RECEIVERS];
+	int num_new_receivers = 0;
+	for (int i=0; i < num_receivers; ++i) {
+		if (receivers[i] != receiver) {
+			newlist[num_new_receivers++] = receiver;
+		}
+	}
+
+	if (num_new_receivers == num_receivers) {
+		RK_DO (qDebug ("Was not a receiver in RCommand::removeReceiver"), RBACKEND, DL_WARNING);
+	}
+
+	receivers = newlist;
+	num_receivers = num_new_receivers;
+}
 
 void RCommand::finished () {
 	RK_TRACE (RBACKEND);
 
 	for (int i=0; i < num_receivers; ++i) {
 		receivers[i]->rCommandDone (this);
-		receivers[i]->delCommand ();
+		receivers[i]->delCommand (this);
 	}
 }
 

@@ -52,7 +52,7 @@ public:
 	
 	bool downloadPackages (const QStringList &packages);
 	void installDownloadedPackages (bool become_root);
-	bool installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies);
+	bool installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies, bool as_root);
 
 	/** opens a modal RKLoadLibsDialog with the "Install new Packages" tab on front (To be used when a require () fails in the R backend */
 	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain);
@@ -63,9 +63,6 @@ signals:
 protected:
 	void rCommandDone (RCommand *command);
 	void closeEvent (QCloseEvent *e);
-/** reimplemented from RCommandReceiver to call QObject::deleteLater () instead of delete this. Not entirely sure, what's going on, but otherwise we
-get a double deletion -> crash */
-	void deleteThisNow ();
 protected slots:
 	void slotOk ();
 	void slotApply ();
@@ -85,6 +82,7 @@ friend class InstallPackagesWidget;
 	RCommandChain *chain;
 	int num_child_widgets;
 	bool accepted;
+	QString repos_string;
 };
 
 /**
@@ -205,7 +203,7 @@ public:
 
 	bool installDependencies ();
 	QString libraryLocation ();
-	bool checkWritable ();
+	bool checkWritable (bool *as_root);
 public slots:
 	void liblocsChanged (const QStringList &newlist);
 private:
