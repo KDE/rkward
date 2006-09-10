@@ -106,9 +106,32 @@
 	return(c(as.vector(H$topic),as.vector(H$title),as.vector(H$Package)))
 }
 
+# This function works like available.packages (with no arguments), but does simple caching of the result, and of course uses a cache if available. Cache is only used, if it is less than 1 hour old, and options("repos") is unchanged.
+".rk.cached.available.packages" <- function () {
+	x <- NULL
+	if (exists (".rk.available.packages.cache")) {
+		if (.rk.available.packages.cache$timestamp > (Sys.time () - 3600)) {
+			if (all (.rk.available.packages.cache$repos$repos == options ("repos")$repos)) {
+				x <- .rk.available.packages.cache$cache
+			}
+		}
+	}
+
+	if (is.null(x)) {
+		x <- available.packages()
+		.rk.available.packages.cache <<- list (cache = x, timestamp = Sys.time (), repos = options ("repos"))
+	}
+
+	return (x)
+}
+
+".rk.get.old.packages" <- function () {
+	x <- old.packages (available=.rk.cached.available.packages ())
+	return (as.vector (c (x[,"Package"], x[,"LibPath"], x[,"Installed"], x[,"ReposVer"])))
+}
 
 ".rk.get.available.packages" <- function () {
-	x <- available.packages ()
+	x <- .rk.cached.available.packages ()
 	return (c (as.vector (x[,1]), as.vector (x[,2])))
 }
 

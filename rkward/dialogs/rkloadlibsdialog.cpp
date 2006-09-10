@@ -509,7 +509,7 @@ void UpdatePackagesWidget::getListButtonClicked () {
 
 	get_list_button->setEnabled (false);
 
-	RCommand *command = new RCommand ("rk.temp.old <- old.packages (); as.vector (c (rk.temp.old[,\"Package\"], rk.temp.old[,\"LibPath\"], rk.temp.old[,\"Installed\"], rk.temp.old[,\"ReposVer\"], rk.make.repos.string ()))", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
+	RCommand *command = new RCommand ("c (.rk.get.old.packages (), rk.make.repos.string ())", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
 
 	RKProgressControl *control = new RKProgressControl (this, i18n ("Please, stand by while downloading the list packages with updates available."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
 	control->addRCommand (command, true);
