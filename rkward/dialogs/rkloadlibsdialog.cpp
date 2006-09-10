@@ -24,6 +24,7 @@
 #include <qcheckbox.h>
 #include <qdir.h>
 #include <qregexp.h>
+#include <qtimer.h>
 
 #include <klocale.h>
 #include <kprocess.h>
@@ -53,7 +54,7 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 
 	page = addPage (i18n ("Install"));
 	layout = new QVBoxLayout (page, 0, KDialog::spacingHint ());
-	layout->addWidget (new InstallPackagesWidget (this, page));
+	layout->addWidget (install_packages_widget = new InstallPackagesWidget (this, page));
 
 	setButtonText (KDialogBase::User1, i18n ("Configure Repositories"));
 
@@ -71,13 +72,22 @@ RKLoadLibsDialog::~RKLoadLibsDialog () {
 }
 
 //static
-void RKLoadLibsDialog::showInstallPackagesModal (QWidget *parent, RCommandChain *chain) {
+void RKLoadLibsDialog::showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QString &package_name) {
 	RK_TRACE (DIALOGS);
 
 	RKLoadLibsDialog *dialog = new RKLoadLibsDialog (parent, chain, true);
+	dialog->auto_install_package = package_name;
+	QTimer::singleShot (0, dialog, SLOT (automatedInstall ()));		// to get past the dialog->exec, below
 	dialog->showPage (2);
 	dialog->exec ();
 	RK_TRACE (DIALOGS);
+}
+
+void RKLoadLibsDialog::automatedInstall () {
+	RK_TRACE (DIALOGS);
+
+	install_packages_widget->getListButtonClicked ();
+	install_packages_widget->trySelectPackage (auto_install_package);
 }
 
 void RKLoadLibsDialog::tryDestruct () {
@@ -211,7 +221,7 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	LoadUnloadWidget::parent = dialog;
 	
 	QVBoxLayout *mvbox = new QVBoxLayout (this, 0, KDialog::spacingHint ());
-	QLabel *label = new QLabel (i18n ("There are no safeguards against removing essential packages. For example, unloading \"rkward\" will prevent this application from running properly. Please, be careful about the packages you unload."), this);
+	QLabel *label = new QLabel (i18n ("There are no safeguards against removing essential packages. For example, unloading \"rkward\" will prevent this application from running properly. Please be careful about the packages you unload."), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	mvbox->addWidget (label);
 	
@@ -511,7 +521,7 @@ void UpdatePackagesWidget::getListButtonClicked () {
 
 	RCommand *command = new RCommand ("c (.rk.get.old.packages (), rk.make.repos.string ())", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
 
-	RKProgressControl *control = new RKProgressControl (this, i18n ("Please, stand by while downloading the list packages with updates available."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
+	RKProgressControl *control = new RKProgressControl (this, i18n ("Please stand by while determining, which package have an update available online."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
 	control->addRCommand (command, true);
 	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 	control->doModal (true);
@@ -632,10 +642,28 @@ void InstallPackagesWidget::getListButtonClicked () {
 	get_list_button->setEnabled (false);
 
 	RCommand *command = new RCommand ("c (.rk.get.available.packages (), rk.make.repos.string ())", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_AVAILABLE_PACKAGES_COMMAND);
-	RKProgressControl *control = new RKProgressControl (this, i18n ("Please, stand by while downloading the list available packages."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
+	RKProgressControl *control = new RKProgressControl (this, i18n ("Please stand by while downloading the list of available packages."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
 	control->addRCommand (command, true);
 	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 	control->doModal (true);
+}
+
+void InstallPackagesWidget::trySelectPackage (const QString &package_name) {
+	RK_TRACE (DIALOGS);
+
+	bool found = false;
+	for (QListViewItem *item = installable_view->firstChild (); item; item = item->nextSibling ()) {
+		if (item->text (0) == package_name) {
+			found = true;
+			item->setSelected (true);
+			installable_view->ensureItemVisible (item);
+			break;
+		}
+	}
+
+	if (!found) {
+		KMessageBox::sorry (0, i18n ("The package requested by the backend (\"%1\") was not found in the package repositories. Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\"-button.").arg (package_name), i18n ("Package not available"));
+	}
 }
 
 void InstallPackagesWidget::ok () {

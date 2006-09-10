@@ -34,6 +34,7 @@ class RCommandChain;
 class QCheckBox;
 class KProcess;
 class PackageInstallParamsWidget;
+class InstallPackagesWidget;
 
 /**
 Dialog which excapsulates widgets to load/unload, update and install R packages
@@ -52,8 +53,11 @@ public:
 
 	bool installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies, bool as_root);
 
-	/** opens a modal RKLoadLibsDialog with the "Install new Packages" tab on front (To be used when a require () fails in the R backend */
-	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain);
+/** opens a modal RKLoadLibsDialog with the "Install new Packages" tab on front (To be used when a require () fails in the R backend
+@param parent parent QWidget. The dialog will be centered there
+@param chain RCommandChain to run the necessary commands in
+@param package_name name of the required package */
+	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QString &package_name);
 signals:
 	void downloadComplete ();
 	void installationComplete ();
@@ -73,12 +77,17 @@ protected slots:
 	void processExited (KProcess *);
 	void installationProcessOutput (KProcess *proc, char *buffer, int buflen);
 	void installationProcessError (KProcess *proc, char *buffer, int buflen);
+	void automatedInstall ();
 private:
 	void tryDestruct ();
 friend class LoadUnloadWidget;
 friend class UpdatePackagesWidget;
 friend class InstallPackagesWidget;
 	RCommandChain *chain;
+
+	InstallPackagesWidget *install_packages_widget;	// needed for automated installation
+
+	QString auto_install_package;
 	int num_child_widgets;
 	bool accepted;
 	QString repos_string;
@@ -166,6 +175,7 @@ public:
 	InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget *parent);
 	
 	~InstallPackagesWidget ();
+	void trySelectPackage (const QString &package_name);
 public slots:
 	void installSelectedButtonClicked ();
 	void getListButtonClicked ();
