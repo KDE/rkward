@@ -90,6 +90,10 @@ more errors/crashes. @see unlock @see RInterface::cancelCommand @see RInterface:
 	void unlock (LockType reason) { locked -= (locked & reason); };
 /** "Kills" the thread. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
 	void kill () { killed = true; };
+/** Pause output by placing it in a delay loop, until unpaused again */
+	void pauseOutput (bool paused) { output_paused = paused; };
+/** the internal counterpart to pauseOutput () */
+	void waitIfOutputPaused ();
 
 /** An enum describing whether initialization of the embedded R-process went well, or what errors occurred. */
 	enum InitStatus {
@@ -164,6 +168,7 @@ private:
 	int locked;
 /** thread is killed. Should exit as soon as possible. @see kill */
 	bool killed;
+	bool output_paused;
 };
 
 #endif

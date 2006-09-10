@@ -119,10 +119,12 @@ void RInterface::customEvent (QCustomEvent *e) {
 		delete container;
 
 // TODO: not quite good, yet, leads to staggering output (but overall throughput is the same):
-	// output events can easily stack up in the hundreds, not allowing GUI events to get through. Let's block further output events for a minute (using MUTEX_LOCK) and then catch up with the event queue
-		MUTEX_LOCK;
-		qApp->processEvents ();
-		MUTEX_UNLOCK;
+	// output events can easily stack up in the hundreds, not allowing GUI events to get through. Let's block further output events for a minute and then catch up with the event queue
+		if (qApp->hasPendingEvents ()) {
+			r_thread->pauseOutput (true);
+			qApp->processEvents ();
+			r_thread->pauseOutput (false);
+		}
 	} else if (e->type () == RCOMMAND_IN_EVENT) {
 		watch->addInput (static_cast <RCommand *> (e->data ()));
 		RKGlobals::controlWindow ()->setCommandRunning (static_cast <RCommand *> (e->data ()));
@@ -154,8 +156,10 @@ void RInterface::customEvent (QCustomEvent *e) {
 	} else if ((e->type () == RBUSY_EVENT)) {
 		RKGlobals::rkApp ()->setRStatus (true);
 	} else if ((e->type () == R_EVAL_REQUEST_EVENT)) {
+		r_thread->pauseOutput (false); // we may be recursing downwards into event loops here. Hence we need to make sure, we don't create a deadlock
 		processREvalRequest (static_cast<REvalRequest *> (e->data ()));
 	} else if ((e->type () == R_CALLBACK_REQUEST_EVENT)) {
+		r_thread->pauseOutput (false); // see above
 		processRCallbackRequest (static_cast<RCallbackArgs *> (e->data ()));
 	} else if ((e->type () == RSTARTED_EVENT)) {
 		r_thread->unlock (RThread::Startup);
@@ -292,8 +296,9 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 	} else if (call == "require") {
 		if (request->call_length >= 2) {
 			QString lib_name = request->call[1];
+			issueCommand (".rk.rkreply <- NULL", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We'll open the package-management tool, and there you can try to locate and install the needed package.").arg (lib_name), i18n ("Require package '%1'").arg (lib_name));
-			RKLoadLibsDialog::showInstallPackagesModal (0, request->in_chain);
+			RKLoadLibsDialog::showInstallPackagesModal (0, request->in_chain, lib_name);
 			issueCommand (".rk.rkreply <- \"\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		} else {
 			issueCommand (".rk.rkreply <- \"Too few arguments in call to require.\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);

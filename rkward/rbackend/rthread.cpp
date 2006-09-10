@@ -43,6 +43,7 @@ RThread::RThread () : QThread (), REmbedInternal () {
 	RK_ASSERT (this_pointer);
 	current_output = 0;
 	out_buf_len = 0;
+	output_paused = false;
 }
 
 RThread::~RThread() {
@@ -145,7 +146,7 @@ void RThread::doCommand (RCommand *command) {
 		if (command->type () & RCommand::DirectToOutput) {
 			runCommandInternal ("sink (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\", append=TRUE, split=TRUE)\n", &error);
 		}
-	
+
 		MUTEX_UNLOCK;
 	
 		if (ctype & RCommand::GetStringVector) {
@@ -157,9 +158,9 @@ void RThread::doCommand (RCommand *command) {
 		} else {
 			runCommandInternal (ccommand, &error, ctype & RCommand::User);
 		}
-	
+
 		MUTEX_LOCK;
-		
+
 		if (error != NoError) {
 			command->status |= RCommand::WasTried | RCommand::Failed;
 			if (error == Incomplete) {
@@ -200,12 +201,20 @@ void RThread::doCommand (RCommand *command) {
 	qApp->postEvent (RKGlobals::rInterface (), event);
 }
 
+void RThread::waitIfOutputPaused () {
+	// don't trace
+	while (output_paused) {
+		msleep (10);
+	}
+}
+
 void RThread::handleOutput (char *buf, int buf_length) {
 	RK_TRACE (RBACKEND);
 
 // TODO: output sometimes arrives in small chunks. Maybe it would be better to keep an internal buffer, and only append it to the output, when R_FlushConsole gets called?
 
 	if (!buf_length) return;
+	waitIfOutputPaused ();
 
 	MUTEX_LOCK;
 	if (current_output) {
@@ -267,6 +276,7 @@ void RThread::handleError (char **call, int call_length) {
 	RK_TRACE (RBACKEND);
 
 	if (!call_length) return;
+	waitIfOutputPaused ();
 
 	MUTEX_LOCK;
 	// Unfortunately, errors still get printed to the output. We try this crude method for the time being:
