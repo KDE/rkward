@@ -127,6 +127,7 @@ RKConsole::RKConsole () : QWidget (0) {
 	iprefix = "+ ";
 	prefix = nprefix;
 	command_incomplete = false;
+	output_continuation = false;
 	//TODO:
 	//view->setUndoRedoEnabled (false);
 	clear ();
@@ -300,7 +301,7 @@ void RKConsole::setCurrentCommand (QString command) {
 
 void RKConsole::cursorAtTheEnd () {
 	RK_TRACE (APP);
-	view->setCursorPosition (doc->numLines() -1, editInterface(doc)->textLine (doc->numLines() -1).length());
+	view->setCursorPosition (doc->numLines() -1, editInterface(doc)->lineLength (doc->numLines() -1));
 	view->scrollDown ();
 }
 
@@ -377,6 +378,7 @@ void RKConsole::rCommandDone (RCommand *command) {
 		incomplete_command = QString::null;
 	}
 
+	output_continuation = false;
 	tryNextInBatch ();
 }
 
@@ -385,8 +387,11 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 
 // TODO: handle different types of output, once we can differentiate between them
 //	insertAt (output->output, doc->numLines()-1, paragraphLength (doc->numLines() - 1));
-	view->setCursorPosition (doc->numLines() -1, 1);
-	editInterface(doc)->insertText (doc->numLines() , 0, output->output);
+	if (output_continuation) {
+		editInterface (doc)->insertText (doc->numLines () -1,  editInterface (doc)->lineLength (doc->numLines () -1), output->output);
+	} else {
+		editInterface (doc)->insertText (doc->numLines (), 0, output->output);
+	}
 
 	if (RKSettingsModuleConsole::maxConsoleLines ()) {
 		uint c = (uint) doc->numLines();
@@ -400,6 +405,7 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 		}
 	}
 	cursorAtTheEnd ();
+	output_continuation = true;
 }
 
 void RKConsole::submitBatch (QString batch) {

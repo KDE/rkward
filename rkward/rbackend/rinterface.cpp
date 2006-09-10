@@ -145,7 +145,6 @@ void RInterface::customEvent (QCustomEvent *e) {
 			}
 		}
 		RKGlobals::controlWindow ()->removeCommand (command);
-		watch->commandDone (command);
 		command->finished ();
 		if (command->type () & RCommand::DirectToOutput) {
 			RKGlobals::rkApp ()->newOutput ();

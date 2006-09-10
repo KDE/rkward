@@ -120,6 +120,8 @@ bool eventFilter( QObject *o, QEvent *e );
 \param ac the action collection from which to retrieve the KAction*/
 	void unplugAction(QString action, KActionCollection* ac);
 
+	bool output_continuation;
+
 	RCommand *current_command;
 	Kate::Document *doc;
 	Kate::View *view;

@@ -44,17 +44,17 @@ public:
 	void addInput (RCommand *command);
 /** Adds output to the watch-window (i.e. replies received) */
 	void newOutput (RCommand *command, ROutput *output_fragment);
-/** Command has finished. If the command has failed, it may be neccessary to print some more information */
-	void commandDone (RCommand *command);
 signals:
 /** the watch emits this, when it should be raised (apparently this can only be done from the main frame) */
 	void raiseWatch ();
+protected:
+/** Command has finished. If the command has failed, it may be neccessary to print some more information */
+	void rCommandDone (RCommand *command);
 public slots:
 /** configures the watch-window */
 	void configureWatch ();
 /** clears the watch-window */
 	void clearWatch ();
-
 private:
 	void addInputNoCheck (RCommand *command);
 	void addOutputNoCheck (RCommand *command, const QString &output);

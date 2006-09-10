@@ -82,10 +82,9 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 		watch->setColor (Qt::blue);
 	}
 
-	watch->append ("\n");
 	watch->setItalic (true);
 
-	watch->append (command->command ());
+	watch->append (command->command () + "\n");
 
 	if (RKSettingsModuleWatch::shouldRaiseWindow (command)) {
 		if (!(command->type () & RCommand::Console)) {
@@ -112,7 +111,7 @@ void RKwatch::addOutputNoCheck (RCommand *command, const QString &output) {
 
     watch->setBold (true);
 
-	watch->append (output);
+	watch->insert (output);
 
 	if (RKSettingsModuleWatch::shouldRaiseWindow (command)) {
 		if (!(command->type () & RCommand::Console)) {
@@ -135,7 +134,7 @@ void RKwatch::newOutput (RCommand *command, ROutput *output_fragment) {
 	addOutputNoCheck (command, output_fragment->output);
 }
 
-void RKwatch::commandDone (RCommand *command) {
+void RKwatch::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 
 	if (command->type () & RCommand::Console) {
@@ -158,6 +157,8 @@ void RKwatch::commandDone (RCommand *command) {
 			}
 		}
 	}
+
+	if (RKSettingsModuleWatch::shouldShowOutput (command)) watch->append ("\n");
 }
 
 void RKwatch::linesAdded () {
