@@ -33,14 +33,11 @@
 #include "../rbackend/rinterface.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettings.h"
-#include "../misc/rkerrordialog.h"
-#include "../misc/rkcanceldialog.h"
+#include "../misc/rkprogresscontrol.h"
 
 #include "../debug.h"
 
-#define DOWNLOAD_PACKAGES_COMMAND 1
-#define GET_CURRENT_LIBLOCS_COMMAND 2
-#define INSTALL_PACKAGES_COMMAND 1
+#define GET_CURRENT_LIBLOCS_COMMAND 1
 
 RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KDialogBase (KDialogBase::Tabbed, Qt::WStyle_DialogBorder, parent, 0, modal, i18n ("Configure Packages"), KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel | KDialogBase::User1) {
 	RK_TRACE (DIALOGS);
@@ -58,9 +55,6 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	layout = new QVBoxLayout (page, 0, KDialog::spacingHint ());
 	layout->addWidget (new InstallPackagesWidget (this, page));
 
-	error_dialog = new RKErrorDialog (i18n ("The R-backend has reported errors handling packages.\nA transcript of the errors is shown below."), i18n ("Error handling packages"), false);
-	installation_error_dialog = new RKErrorDialog (i18n ("There was an error or warning while installing the packages.\nPlease check the output below for more information."), i18n ("Error installing packages"), false);
-
 	setButtonText (KDialogBase::User1, i18n ("Configure Repositories"));
 
 	num_child_widgets = 3;
@@ -71,8 +65,6 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 
 RKLoadLibsDialog::~RKLoadLibsDialog () {
 	RK_TRACE (DIALOGS);
-	delete error_dialog;
-	delete installation_error_dialog;
 
 	if (accepted) accept ();
 	else reject ();
@@ -138,13 +130,7 @@ void RKLoadLibsDialog::closeEvent (QCloseEvent *e) {
 
 void RKLoadLibsDialog::rCommandDone (RCommand *command) {
 	RK_TRACE (DIALOGS);
-	if (command->getFlags () == DOWNLOAD_PACKAGES_COMMAND) {
-		if (command->failed ()) error_dialog->newError (command->error ());
-		emit (downloadComplete ());
-	} else if (command->getFlags () == INSTALL_PACKAGES_COMMAND) {
-		if (command->failed ()) error_dialog->newError (command->error ());
-		emit (installationComplete ());
-	} else if (command->getFlags () == GET_CURRENT_LIBLOCS_COMMAND) {
+	if (command->getFlags () == GET_CURRENT_LIBLOCS_COMMAND) {
 		RK_ASSERT (command->stringVectorLength () > 0);
 		QStringList current_library_locations;
 		for (int i=0; i < command->stringVectorLength (); ++i) {
@@ -183,37 +169,30 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 
 	connect (proc, SIGNAL (processExited (KProcess *)), this, SLOT (processExited (KProcess *)));
 	connect (proc, SIGNAL (receivedStdout (KProcess *, char *, int)), this, SLOT (installationProcessOutput (KProcess *, char *, int)));
-	connect (proc, SIGNAL (receivedStderr (KProcess *, char *, int)), this, SLOT (installationProcessOutput (KProcess *, char *, int)));
-	installation_error_dialog->newError ("test");
-	proc->start (KProcess::NotifyOnExit, KProcess::AllOutput);
-/*//	if (as_root) {
-		RK_ASSERT (!repos_string.isEmpty ());
-		command_string = "options (repos=" + repos_string + ")\n" + command_string;
-//	}
-	proc->writeStdin (command_string, command_string.length ()); */
+	connect (proc, SIGNAL (receivedStderr (KProcess *, char *, int)), this, SLOT (installationProcessError (KProcess *, char *, int)));
 
-	if (RKCancelDialog::showCancelDialog (i18n ("Installing packages..."), i18n ("Please, stand by while installing packages."), this, this, SIGNAL (installationComplete ())) == QDialog::Rejected) {
-		proc->kill ();
-	};
-	if ((!proc->normalExit ()) || (proc->exitStatus ())) {
-		installation_error_dialog->newError (QString::null);		// to make sure it is shown
-	}
-//	installation_error_dialog->resetOutput ();
+	RKProgressControl *installation_progress = new RKProgressControl (this, i18n ("Please stand by while installing selected packages"), i18n ("Installing packages"), RKProgressControl::CancellableProgress);
+	connect (this, SIGNAL (installationComplete ()), installation_progress, SLOT (done ()));
+	connect (this, SIGNAL (installationOutput (const QString &)), installation_progress, SLOT (newOutput (const QString &)));
+	connect (this, SIGNAL (installationError (const QString &)), installation_progress, SLOT (newError (const QString &)));
+	proc->start (KProcess::NotifyOnExit, KProcess::AllOutput);
+
+	if (!installation_progress->doModal (true)) proc->kill ();
+
 	file.remove ();
 	delete proc;
 
 	return true;
-/*	RCommand *command = new RCommand (command_string, RCommand::App, QString::null, this, INSTALL_PACKAGES_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, chain);
-
-	if (RKCancelDialog::showCancelDialog (i18n ("Downloading / Installing"), i18n ("Please, stand by while downloading/installing selected packages."), this, this, SIGNAL (installationComplete ()), command) == QDialog::Rejected) return false;
-	return true; */
 }
-
 
 void RKLoadLibsDialog::installationProcessOutput (KProcess *, char *buffer, int buflen) {
 	RK_TRACE (DIALOGS);
-	installation_error_dialog->newOutput (QCString (buffer, buflen));
+	emit (installationOutput (QCString (buffer, buflen)));
+}
+
+void RKLoadLibsDialog::installationProcessError (KProcess *, char *buffer, int buflen) {
+	RK_TRACE (DIALOGS);
+	emit (installationError (QCString (buffer, buflen)));
 }
 
 void RKLoadLibsDialog::processExited (KProcess *) {
@@ -297,9 +276,7 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 		setEnabled (true);
 		updateCurrentList ();
 	} else if (command->getFlags () == LOAD_PACKAGE_COMMAND) {
-		if (command->failed ()) {
-			parent->error_dialog->newError (command->error ());
-		}
+		emit (loadUnloadDone ());
 	} else {
 		RK_ASSERT (false);
 	}
@@ -362,11 +339,17 @@ void LoadUnloadWidget::updateCurrentList () {
 
 void LoadUnloadWidget::doLoadUnload () {
 	RK_TRACE (DIALOGS);
+
+	RKProgressControl *control = new RKProgressControl (this, i18n ("There has been an error while trying to load / unload packages. See transcript below for details"), i18n ("Error while handling packages"), RKProgressControl::DetailedError);
+	connect (this, SIGNAL (loadUnloadDone ()), control, SLOT (done ()));
+
 	// load packages previously not loaded
 	QListViewItem *loaded = loaded_view->firstChild ();
 	while (loaded) {
 		if (!prev_packages.contains (loaded->text (0))) {
-			RKGlobals::rInterface ()->issueCommand ("library (\"" + loaded->text (0) + "\")", RCommand::App, QString::null, this, LOAD_PACKAGE_COMMAND, parent->chain);
+			RCommand *command = new RCommand ("library (\"" + loaded->text (0) + "\")", RCommand::App, QString::null, this, LOAD_PACKAGE_COMMAND);
+			control->addRCommand (command);
+			RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 		}
 		loaded = loaded->nextSibling ();
 	}
@@ -384,9 +367,13 @@ void LoadUnloadWidget::doLoadUnload () {
 			loaded = next;
 		}
 		if (!found) {
-			RKGlobals::rInterface ()->issueCommand ("detach (package:" + (*it) + ")", RCommand::App, QString::null, this, LOAD_PACKAGE_COMMAND, parent->chain);
+			RCommand *command = new RCommand ("detach (package:" + (*it) + ")", RCommand::App, QString::null, this, LOAD_PACKAGE_COMMAND);
+			control->addRCommand (command);
+			RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 		}
 	}
+
+	control->doNonModal (true);
 }
 
 void LoadUnloadWidget::apply () {
@@ -461,7 +448,6 @@ UpdatePackagesWidget::~UpdatePackagesWidget () {
 void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 	RK_TRACE (DIALOGS);
 	if (command->getFlags () == FIND_OLD_PACKAGES_COMMAND) {
-		emit (actionDone ());
 		if (!command->failed ()) {
 			delete placeholder;
 			placeholder = 0;
@@ -484,7 +470,6 @@ void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 			parent->repos_string = command->getStringVector ()[4 * count];
 		} else {
 			get_list_button->setEnabled (true);
-			parent->error_dialog->newError (command->error ());
 		}
 	} else {
 		RK_ASSERT (false);
@@ -521,12 +506,16 @@ void UpdatePackagesWidget::updateAllButtonClicked () {
 
 void UpdatePackagesWidget::getListButtonClicked () {
 	RK_TRACE (DIALOGS);
-	RCommand *command = new RCommand ("rk.temp.old <- old.packages (); as.vector (c (rk.temp.old[,\"Package\"], rk.temp.old[,\"LibPath\"], rk.temp.old[,\"Installed\"], rk.temp.old[,\"ReposVer\"], rk.make.repos.string ()))", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
-	RKGlobals::rInterface ()->issueCommand ("rm (rk.temp.old)", RCommand::App, QString::null, 0, 0, parent->chain);
 
 	get_list_button->setEnabled (false);
-	RKCancelDialog::showCancelDialog (i18n ("Fetch list"), i18n ("Please, stand by while downloading the list of packages."), this, this, SIGNAL (actionDone ()), command);
+
+	RCommand *command = new RCommand ("rk.temp.old <- old.packages (); as.vector (c (rk.temp.old[,\"Package\"], rk.temp.old[,\"LibPath\"], rk.temp.old[,\"Installed\"], rk.temp.old[,\"ReposVer\"], rk.make.repos.string ()))", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
+
+	RKProgressControl *control = new RKProgressControl (this, i18n ("Please, stand by while downloading the list packages with updates available."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
+	control->addRCommand (command, true);
+	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
+	control->doModal (true);
+	RKGlobals::rInterface ()->issueCommand ("rm (rk.temp.old)", RCommand::App, QString::null, 0, 0, parent->chain);
 }
 
 void UpdatePackagesWidget::ok () {
@@ -592,7 +581,6 @@ InstallPackagesWidget::~InstallPackagesWidget () {
 void InstallPackagesWidget::rCommandDone (RCommand *command) {
 	RK_TRACE (DIALOGS);
 	if (command->getFlags () == FIND_AVAILABLE_PACKAGES_COMMAND) {
-		emit (actionDone ());
 		if (!command->failed ()) {
 			delete placeholder;
 			placeholder = 0;
@@ -613,7 +601,6 @@ void InstallPackagesWidget::rCommandDone (RCommand *command) {
 			parent->repos_string = command->getStringVector ()[2 * count];
 		} else {
 			get_list_button->setEnabled (true);
-			parent->error_dialog->newError (command->error ());
 		}
 	} else {
 		RK_ASSERT (false);
@@ -641,11 +628,14 @@ void InstallPackagesWidget::installSelectedButtonClicked () {
 
 void InstallPackagesWidget::getListButtonClicked () {
 	RK_TRACE (DIALOGS);
-	RCommand *command = new RCommand ("c (.rk.get.available.packages (), rk.make.repos.string ())", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_AVAILABLE_PACKAGES_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
-	
+
 	get_list_button->setEnabled (false);
-	RKCancelDialog::showCancelDialog (i18n ("Fetch list"), i18n ("Please stand by while downloading the list of packages."), this, this, SIGNAL (actionDone ()), command);
+
+	RCommand *command = new RCommand ("c (.rk.get.available.packages (), rk.make.repos.string ())", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_AVAILABLE_PACKAGES_COMMAND);
+	RKProgressControl *control = new RKProgressControl (this, i18n ("Please, stand by while downloading the list available packages."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
+	control->addRCommand (command, true);
+	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
+	control->doModal (true);
 }
 
 void InstallPackagesWidget::ok () {

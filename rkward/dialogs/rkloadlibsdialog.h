@@ -27,7 +27,7 @@
 class QListView;
 class QComboBox;
 class QPushButton;
-class RKErrorDialog;
+class RKProgressControl;
 class QWidget;
 class QCloseEvent;
 class RCommandChain;
@@ -58,6 +58,8 @@ signals:
 	void downloadComplete ();
 	void installationComplete ();
 	void libraryLocationsChanged (const QStringList &);
+	void installationOutput (const QString &output);
+	void installationError (const QString &error);
 protected:
 	void rCommandDone (RCommand *command);
 	void closeEvent (QCloseEvent *e);
@@ -70,13 +72,12 @@ protected slots:
 	void childDeleted ();
 	void processExited (KProcess *);
 	void installationProcessOutput (KProcess *proc, char *buffer, int buflen);
+	void installationProcessError (KProcess *proc, char *buffer, int buflen);
 private:
 	void tryDestruct ();
 friend class LoadUnloadWidget;
 friend class UpdatePackagesWidget;
 friend class InstallPackagesWidget;
-	RKErrorDialog *error_dialog;
-	RKErrorDialog *installation_error_dialog;
 	RCommandChain *chain;
 	int num_child_widgets;
 	bool accepted;
@@ -95,6 +96,8 @@ public:
 	LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *parent);
 	
 	~LoadUnloadWidget ();
+signals:
+	void loadUnloadDone ();
 public slots:
 	void loadButtonClicked ();
 	void detachButtonClicked ();
@@ -130,8 +133,6 @@ public:
 	UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *parent);
 	
 	~UpdatePackagesWidget ();
-signals:
-	void actionDone ();
 public slots:
 	void updateSelectedButtonClicked ();
 	void updateAllButtonClicked ();
@@ -165,8 +166,6 @@ public:
 	InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget *parent);
 	
 	~InstallPackagesWidget ();
-signals:
-	void actionDone ();
 public slots:
 	void installSelectedButtonClicked ();
 	void getListButtonClicked ();
