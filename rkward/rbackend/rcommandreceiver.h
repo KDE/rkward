@@ -2,7 +2,7 @@
                           rcommandreceiver  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004,2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -33,32 +33,29 @@ TODO: this mechanism may be slightly costly, if there are *many* commands outsta
 
 class RCommand;
 struct ROutput;
+typedef QValueList<RCommand*> RCommandList;
 
 class RCommandReceiver {
 public:
 /** constructor. No args */
-    RCommandReceiver () { };
+    RCommandReceiver ();
 /** destructor */
-    virtual ~RCommandReceiver () {
-		for (QValueList<RCommand*>::const_iterator it = outstanding_commands.begin (); it != outstanding_commands.end (); ++it) {
-			(*it)->removeReceiver (this);
-		}
-	};
+    virtual ~RCommandReceiver ();
 protected:
 	friend class RCommand;
 	friend class RInterface;
 /** This function is called when a command for this receiver is finished (and before it is deleted). You have to implement it in your subclass to do the actual handling.
 @param command A pointer to the command. The pointer is still valid during this call, but the RCommand will be deleted shortly after! */
-	virtual void rCommandDone (RCommand *) {};
+	virtual void rCommandDone (RCommand *);
 /** This function is called when there is new output for a command or this receiver. Default implementation does nothing. Reimplement if you want to get at a command's output immediately (i.e. before the command is fully completed).
 @param command A pointer to the command
 @param output The new output-fragment */
-	virtual void newOutput (RCommand *, ROutput *) {};
+	virtual void newOutput (RCommand *, ROutput *);
 protected:
-	QValueList<RCommand*> outstanding_commands;
+	RCommandList outstanding_commands;
 private:
-	void addCommand (RCommand *command) { outstanding_commands.append (command); };
-	void delCommand (RCommand *command) { outstanding_commands.remove (command); };
+	void addCommand (RCommand *command);
+	void delCommand (RCommand *command);
 };
 
 #endif

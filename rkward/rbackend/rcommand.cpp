@@ -87,7 +87,7 @@ void RCommand::removeReceiver (RCommandReceiver *receiver) {
 	int num_new_receivers = 0;
 	for (int i=0; i < num_receivers; ++i) {
 		if (receivers[i] != receiver) {
-			newlist[num_new_receivers++] = receiver;
+			newlist[num_new_receivers++] = receivers[i];
 		}
 	}
 
@@ -95,6 +95,7 @@ void RCommand::removeReceiver (RCommandReceiver *receiver) {
 		RK_DO (qDebug ("Was not a receiver in RCommand::removeReceiver"), RBACKEND, DL_WARNING);
 	}
 
+	delete receivers;
 	receivers = newlist;
 	num_receivers = num_new_receivers;
 }
