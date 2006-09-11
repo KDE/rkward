@@ -161,21 +161,28 @@ void RThread::doCommand (RCommand *command) {
 
 		MUTEX_LOCK;
 
+		#ifdef RKWARD_DEBUG
+			int dl = DL_WARNING;		// failed application commands are an issue worth reporting, failed user commands are not
+			if (command->type () | RCommand::User) dl = DL_DEBUG;
+		#endif
 		if (error != NoError) {
 			command->status |= RCommand::WasTried | RCommand::Failed;
 			if (error == Incomplete) {
 				command->status |= RCommand::ErrorIncomplete;
-				RK_DO (qDebug ("Command failed (incomplete)"), RBACKEND, DL_WARNING);
+				RK_DO (qDebug ("Command failed (incomplete)"), RBACKEND, dl);
 			} else if (error == SyntaxError) {
 				command->status |= RCommand::ErrorSyntax;
-				RK_DO (qDebug ("Command failed (syntax)"), RBACKEND, DL_WARNING);
+				RK_DO (qDebug ("Command failed (syntax)"), RBACKEND, dl);
 			} else if (command->status & RCommand::Canceled) {
-				RK_DO (qDebug ("Command failed (interrupted)"), RBACKEND, DL_WARNING);
+				RK_DO (qDebug ("Command failed (interrupted)"), RBACKEND, dl);
 			} else {
 				command->status |= RCommand::ErrorOther;
-				RK_DO (qDebug ("Command failed (other)"), RBACKEND, DL_WARNING);
+				#ifdef RKWARD_DEBUG
+					dl = DL_WARNING;		// always interested in strange errors
+				#endif
+				RK_DO (qDebug ("Command failed (other)"), RBACKEND, dl);
 			}
-			RK_DO (qDebug ("failed command was: '%s'", command->command ().latin1 ()), RBACKEND, DL_INFO);
+			RK_DO (qDebug ("failed command was: '%s'", command->command ().latin1 ()), RBACKEND, dl);
 		} else {
 			command->status |= RCommand::WasTried;
 		}
@@ -186,7 +193,7 @@ void RThread::doCommand (RCommand *command) {
 		}
 	
 		if (error) {
-			RK_DO (qDebug ("- error message was: '%s'", command->error ().latin1 ()), RBACKEND, DL_WARNING);
+			RK_DO (qDebug ("- error message was: '%s'", command->error ().latin1 ()), RBACKEND, dl);
 	//		runCommandInternal (".rk.init.handlers ()\n", &dummy);
 		}
 		RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);

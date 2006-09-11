@@ -132,7 +132,7 @@ RKConsole::RKConsole () : QWidget (0) {
 	clear ();
 
 	commands_history = RKSettingsModuleConsole::loadCommandHistory ();
-	commands_history_position = commands_history.constBegin ();
+	commands_history_position = commands_history.constEnd ();
 
 	current_command = 0;
 }
@@ -321,9 +321,8 @@ void RKConsole::submitCommand () {
 
 void RKConsole::commandsListUp () {
 	RK_TRACE (APP);
-	if (commands_history.constBegin () == commands_history_position) {		// already at topmost item
-		return;
-	}
+	if (commands_history.constBegin () == commands_history_position) return;	// already at topmost item
+	if (commands_history.constEnd () == commands_history_position) history_editing_line = currentCommand ();
 	--commands_history_position;
 
 	setCurrentCommand (*commands_history_position);
@@ -331,13 +330,10 @@ void RKConsole::commandsListUp () {
 
 void RKConsole::commandsListDown () {
 	RK_TRACE (APP);
-	if (commands_history.constEnd () == commands_history_position) {		// already at bottommost item
-		setCurrentCommand (QString::null);
-		return;
-	}
+	if (commands_history.constEnd () == commands_history_position) return;		// already at bottommost item
 	++commands_history_position;
-
-	setCurrentCommand (*commands_history_position);
+	if (commands_history.constEnd () == commands_history_position) setCurrentCommand (history_editing_line);
+ 	else setCurrentCommand (*commands_history_position);
 }
 
 void RKConsole::rCommandDone (RCommand *command) {
@@ -443,9 +439,10 @@ void RKConsole::clear () {
 
 void RKConsole::addCommandToHistory (const QString &command) {
 	RK_TRACE (APP);
-//	if (command.isEmpty ()) return;	// don't add empty lines		// WHOA! does not work that way!
+	if (command.isEmpty ()) return;			// don't add empty lines
 
 	commands_history_position = commands_history.append (command);
+	history_editing_line = QString::null;
 
 	if (RKSettingsModuleConsole::maxHistoryLength ()) {
 		uint c = commands_history.count ();

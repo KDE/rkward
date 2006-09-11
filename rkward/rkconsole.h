@@ -87,7 +87,10 @@ bool eventFilter( QObject *o, QEvent *e );
 	bool command_incomplete;
 /** A list to store previous commands */
 	QStringList commands_history;
+/** current position in the commands history */
 	QStringList::const_iterator commands_history_position;
+/** The last line in the history is special, in that it is stored before it is submitted, but not permanently so */
+	QString history_editing_line;
 /** A list to store a commands batch that will be executed one line at a time */
 	QStringList commands_batch;
 /** Sets the cursor position to the end of the last line. */
