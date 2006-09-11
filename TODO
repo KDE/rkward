@@ -8,17 +8,30 @@ All in all, this TODO list is mostly for internal purposes, and many parts may n
 REmbedInternal:
 	- probably we do not need na_double at all (just any NaN) => less confusion
 
+Bugs:
+	- There seems to be a race condition at startup, leading to a crash in doPostInit () in rkward.cpp. (Un-)Fortunately it triggers only rarely, and I have not yet figured out, when it occurs.
+
+RCommandReceiver:
+	- add virtual rCommandStarted () function, so receivers can find out, when their command becomes active
+
 Some items I'd like to get done for 0.3.7 or whatever the next release is going to be called, if they don't take too long:
 - RKEditorDataFrame
 	- undo/redo
 	- deletion of multiple columns in one step
 	- when pasting a large array, rows should not be added one by one. Suggested algorithm:
 		- if we find out we've already pasted 100 rows, first check, how many more are to come and add this many both to the variable and to the R workspace. Can potentially avoid *lots* of work
+- RKCancelDialog / RKErrorDialog:
+	- remove these classes. Port to use RKProgressControl instead
 - Rework package management dialog
 	- use install.packages () to handle dependencies
 	- manage R library locations, install to location with user write access
 		- BUG: "cannot create html package index" when installing as regular user
 	- Canceldialog and ErrorDialog should be unified!
+	- cache available.packages
+	- failed calls to require should
+		a) pop up dialog (already in place)
+		b) fetch list of available packages
+		c) select package or give warning, if package is not available.
 	- the UI should probably be simplified somehow. But how? All in a single list with "filter"? Ask for ideas/look at other apps
 		- this will be very hard to do with the current Qt. We'd really need several checkboxes *within* a QListViewItem. Tackle this when/after porting to Qt4
 - Create an editor for single vectors/factors, or rework RKEditorDataFrame to handle those as well

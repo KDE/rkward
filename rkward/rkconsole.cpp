@@ -128,8 +128,7 @@ RKConsole::RKConsole () : QWidget (0) {
 	prefix = nprefix;
 	command_incomplete = false;
 	output_continuation = false;
-	//TODO:
-	//view->setUndoRedoEnabled (false);
+	doc->setUndoSteps (0);
 	clear ();
 
 	commands_history.setAutoDelete (true);
@@ -350,6 +349,7 @@ void RKConsole::commandsListUp () {
 void RKConsole::commandsListDown () {
 	RK_TRACE (APP);
 	if (commands_history.getLast () == commands_history.current ()) {		// already at bottommost item
+		setCurrentCommand (QString::null);
 		return;
 	}
 	commands_history.next ();
@@ -399,8 +399,8 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 		if (c > (RKSettingsModuleConsole::maxConsoleLines () + 20)) {
 			view->setUpdatesEnabled (false);		// major performace boost while removing lines!
 			//TODO : deal with the case when there is already a selection
-			selectionInterface(doc)->setSelection (0, 0, c - RKSettingsModuleConsole::maxConsoleLines (), 0);
-			selectionInterface(doc)-> removeSelectedText();
+			selectionInterface (doc)->setSelection (0, 0, c - RKSettingsModuleConsole::maxConsoleLines (), 0);
+			selectionInterface (doc)->removeSelectedText ();
 			view->setUpdatesEnabled (true);
 		}
 	}
@@ -465,6 +465,8 @@ void RKConsole::clear () {
 
 void RKConsole::addCommandToHistory (const QString &command) {
 	RK_TRACE (APP);
+//	if (command.isEmpty ()) return;	// don't add empty lines		// WHOA! does not work that way!
+
 	commands_history.append (new QString (command.latin1 ()));
 
 	if (RKSettingsModuleConsole::maxHistoryLength ()) {
