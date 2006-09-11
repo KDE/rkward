@@ -52,13 +52,13 @@ public:
 \param batch a QString containing the batch of commands to be executed */
 	void submitBatch (QString batch);
 /** Returns the command currently being edited (not executed yet) */
-	QString currentCommand();
+	QString currentCommand ();
 /** Returns the current cursor position. Returns the column on which is the cursor.  */
-	int currentCursorPosition();
+	int currentCursorPosition ();
 /** Returns the current cursor position, within the current command (without taking into account the prefix).*/
-	int currentCursorPositionInCommand();
+	int currentCursorPositionInCommand ();
 /** Returns TRUE if some text is selected; otherwise returns FALSE.  */
-	bool hasSelectedText();
+	bool hasSelectedText ();
 /** interrupt the current incomplete command (if any) */
 	void resetIncompleteCommand ();
 protected:
@@ -86,20 +86,21 @@ bool eventFilter( QObject *o, QEvent *e );
 	QString incomplete_command;
 	bool command_incomplete;
 /** A list to store previous commands */
-	QPtrList<QString> commands_history;
+	QStringList commands_history;
+	QStringList::const_iterator commands_history_position;
 /** A list to store a commands batch that will be executed one line at a time */
 	QStringList commands_batch;
 /** Sets the cursor position to the end of the last line. */
 
-	void cursorAtTheEnd();
+	void cursorAtTheEnd ();
 /** Submits the current command */
-	void submitCommand();
+	void submitCommand ();
 /** Set the current command to the previous command in the command list */
-	void commandsListUp();
+	void commandsListUp ();
 /** Set the current command to the next command in the command list */
-	void commandsListDown();
+	void commandsListDown ();
 /** Sets the cursor position to the beginning of the last line. */
-	void cursorAtTheBeginning();
+	void cursorAtTheBeginning ();
 /** Clear the view, and add a prompt at the top. */
 	void clear();
 /** Sets the current command. This is used from commandsListUp (), and commandsListDown ();
@@ -118,7 +119,7 @@ bool eventFilter( QObject *o, QEvent *e );
 /** This function unplugs a KAction
 \param action the KAction to be unplugged
 \param ac the action collection from which to retrieve the KAction*/
-	void unplugAction(QString action, KActionCollection* ac);
+	void unplugAction (QString action, KActionCollection* ac);
 
 	bool output_continuation;
 
@@ -129,8 +130,8 @@ bool eventFilter( QObject *o, QEvent *e );
 public slots:
 /** We intercept paste commands and get them executed through submitBatch.
 @sa submitBatch */
-	void paste();
-	void copy();
+	void paste ();
+	void copy ();
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality
@@ -160,9 +161,5 @@ private:
 
 	RKConsole *console;
 };
-
-
-
-
 
 #endif

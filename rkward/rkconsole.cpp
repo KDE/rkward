@@ -131,12 +131,8 @@ RKConsole::RKConsole () : QWidget (0) {
 	doc->setUndoSteps (0);
 	clear ();
 
-	commands_history.setAutoDelete (true);
-	commands_history.append (new QString (""));
-	QStringList history = RKSettingsModuleConsole::loadCommandHistory ();
-	for (QStringList::const_iterator it = history.begin (); it != history.end (); ++it) {
-		commands_history.append (new QString (*it));
-	}
+	commands_history = RKSettingsModuleConsole::loadCommandHistory ();
+	commands_history_position = commands_history.constBegin ();
 
 	current_command = 0;
 }
@@ -145,13 +141,7 @@ RKConsole::RKConsole () : QWidget (0) {
 RKConsole::~RKConsole () {
 	RK_TRACE (APP);
 
-	QStringList savelist;
-	QString *str;
-	for (str = commands_history.first (); str; str = commands_history.next ()) {
-		savelist.append (*str);
-	}
-
-	RKSettingsModuleConsole::saveCommandHistory (savelist);
+	RKSettingsModuleConsole::saveCommandHistory (commands_history);
 }
 
 void RKConsole::setRHighlighting () {
@@ -312,10 +302,7 @@ void RKConsole::cursorAtTheBeginning () {
 
 void RKConsole::submitCommand () {
 	RK_TRACE (APP);
-	// If we added an item to the list, we delete it here.
-	if (!(commands_history.getLast () == commands_history.current ())){
-		commands_history.removeLast ();
-	}
+
 	QString c = currentCommand ();
 	addCommandToHistory (c);
 	
@@ -334,32 +321,23 @@ void RKConsole::submitCommand () {
 
 void RKConsole::commandsListUp () {
 	RK_TRACE (APP);
-	if (commands_history.getFirst () == commands_history.current ()) {		// already at topmost item
+	if (commands_history.constBegin () == commands_history_position) {		// already at topmost item
 		return;
 	}
-	// We add the current line to the list.
-	if (commands_history.getLast () == commands_history.current ()) {
-		addCommandToHistory (currentCommand ());
-	}
-	commands_history.prev ();
-	QString new_string = commands_history.current ()->utf8 ();
-	setCurrentCommand (new_string);
+	--commands_history_position;
+
+	setCurrentCommand (*commands_history_position);
 }
 
 void RKConsole::commandsListDown () {
 	RK_TRACE (APP);
-	if (commands_history.getLast () == commands_history.current ()) {		// already at bottommost item
+	if (commands_history.constEnd () == commands_history_position) {		// already at bottommost item
 		setCurrentCommand (QString::null);
 		return;
 	}
-	commands_history.next ();
-	QString newString = commands_history.current ()->utf8 ();
-	setCurrentCommand (newString);
-	
-	// If we are back at the begining of the list, we remove the item we've added.
-	if (commands_history.getLast () == commands_history.current ()){
-		commands_history.remove ();
-	}
+	++commands_history_position;
+
+	setCurrentCommand (*commands_history_position);
 }
 
 void RKConsole::rCommandDone (RCommand *command) {
@@ -467,14 +445,13 @@ void RKConsole::addCommandToHistory (const QString &command) {
 	RK_TRACE (APP);
 //	if (command.isEmpty ()) return;	// don't add empty lines		// WHOA! does not work that way!
 
-	commands_history.append (new QString (command.latin1 ()));
+	commands_history_position = commands_history.append (command);
 
 	if (RKSettingsModuleConsole::maxHistoryLength ()) {
 		uint c = commands_history.count ();
 		for (uint ui = c; ui > RKSettingsModuleConsole::maxHistoryLength (); --ui) {
-			commands_history.removeFirst ();
+			commands_history.pop_front ();
 		}
-		commands_history.last ();
 	}
 }
 
