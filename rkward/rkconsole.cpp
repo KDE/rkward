@@ -353,6 +353,7 @@ void RKConsole::rCommandDone (RCommand *command) {
 	}
 
 	output_continuation = false;
+	commands_history_position = commands_history.constEnd ();
 	tryNextInBatch ();
 }
 
@@ -441,7 +442,7 @@ void RKConsole::addCommandToHistory (const QString &command) {
 	RK_TRACE (APP);
 	if (command.isEmpty ()) return;			// don't add empty lines
 
-	commands_history_position = commands_history.append (command);
+	commands_history.append (command);
 	history_editing_line = QString::null;
 
 	if (RKSettingsModuleConsole::maxHistoryLength ()) {
@@ -575,11 +576,4 @@ void RKConsolePart::makePopupMenu (QPopupMenu **menu) {
 	interrupt_command->plug (*menu, 14);
 }
 
-
-
 #include "rkconsole.moc"
-
-
-
-
-
