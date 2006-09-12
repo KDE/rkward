@@ -35,33 +35,8 @@ extensions="*.R;*.r;*.S;*.s;*.q" mimetype="" license="GPL">
 
 	<contexts>
 		<context attribute="Normal Text" lineEndContext="#stay" name="ctx0">
-			<DetectChar attribute="String" context="string" char="&quot;"/>
-			<keyword attribute="Control Structure" context="#stay" String="controls"/>
-			<keyword attribute="Reserved Words" context="#stay" String="words"/>
-			<Float attribute="Float" context="#stay"/>
-			<Int attribute="Int" context="#stay"/>
-			<RegExpr attribute="Keyword" context="#stay" String="[a-zA-Z_]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
-			<RegExpr attribute="Keyword" context="#stay" String="\.[a-zA-Z_\.]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
-			<RegExpr attribute="Keyword" context="parenthesis" String="\("/>
-			<StringDetect attribute="Headline" context="Headline" String="##"/>
-			<DetectChar attribute="Comment" context="Comment" char="#"/>
-			
-			<!-- The following three lines look worse than they are: If there are any other operators directly before or after -> and <-, this is a syntax error (expections: ->> and <<-) -->
-			<RegExpr attribute="Error" context="#stay" String="([\+\-\*/\^\:\$~!&amp;\|=&gt;@^])([&lt;]{1,2}\-|\-[&gt;]{1,2})"/>
-			<RegExpr attribute="Error" context="#stay" String="([&lt;]{1,2}\-|\-[&gt;]{1,2})([\+\-\*/\^\:\$~!&amp;\|=&lt;@])"/>
-			<RegExpr attribute="Error" context="#stay" String="([&lt;]{3}|[&gt;]{3})"/>
-			<RegExpr attribute="Assign" context="#stay" String="[&lt;]{1,2}\-"/>
-			<RegExpr attribute="Assign" context="#stay" String="\-[&gt;]{1,2}"/>
-			<!-- Much like above: Most other operators are forbidden around = -->
-			<RegExpr attribute="Error" context="#stay" String="([\+\-\*/\^\:\$~&amp;\|@^])="/>
-			<RegExpr attribute="Error" context="#stay" String="=([\+\-\*/\^\:\$~!&lt;&gt;&amp;\|@^])"/>
-			<RegExpr attribute="Assign" context="#stay" String="=(?!=)"/>
-			<!-- These operators are fine as long as they're followed by something else or end of line. Error otherwise -->
-			<RegExpr attribute="Operator" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~)((?!(\+|\-|\*|/|&lt;=|&gt;=|=|\!=|\||&amp;|:|\^|@|\$|~))|$)"/>
-			<RegExpr attribute="Error" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~){2,}"/>	
-			<RegExpr attribute="Operator" context="#stay" String="%[^%]*%"/>
-			
-			<DetectChar attribute="Symbol" context="ctx0" char="{" beginRegion="Brace1" name="FoldingStart" />
+			<IncludeRules context="CommonRules"/>
+
 			<DetectChar attribute="Symbol" context="#pop" char="}" endRegion="Brace1" name="FoldingEnd" />
 		</context>
 
@@ -69,37 +44,9 @@ extensions="*.R;*.r;*.S;*.s;*.q" mimetype="" license="GPL">
 			<LineContinue attribute="Boolean" context="#stay"/>
 			<DetectChar attribute="Keyword" context="#pop" char=")"/>
 
-			<!-- The following are copied from the ctx0 context -->
-			<DetectChar attribute="String" context="string" char="&quot;"/>
-			<keyword attribute="Control Structure" context="#stay" String="controls"/>
-			<keyword attribute="Reserved Words" context="#stay" String="words"/>
-			<Float attribute="Float" context="#stay"/>
-			<Int attribute="Int" context="#stay"/>
-			<RegExpr attribute="Keyword" context="#stay" String="[a-zA-Z_]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
-			<RegExpr attribute="Keyword" context="#stay" String="\.[a-zA-Z_\.]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
-			<RegExpr attribute="Keyword" context="parenthesis" String="\("/>
-			<StringDetect attribute="Headline" context="Headline" String="##"/>
-			<DetectChar attribute="Comment" context="Comment" char="#"/>
-			
-			<!-- The following three lines look worse than they are: If there are any other operators directly before or after -> and <-, this is a syntax error (expections: ->> and <<-) -->
-			<RegExpr attribute="Error" context="#stay" String="([\+\-\*/\^\:\$~!&amp;\|=&gt;@^])([&lt;]{1,2}\-|\-[&gt;]{1,2})"/>
-			<RegExpr attribute="Error" context="#stay" String="([&lt;]{1,2}\-|\-[&gt;]{1,2})([\+\-\*/\^\:\$~!&amp;\|=&lt;@])"/>
-			<RegExpr attribute="Error" context="#stay" String="([&lt;]{3}|[&gt;]{3})"/>
-			<RegExpr attribute="Assign" context="#stay" String="[&lt;]{1,2}\-"/>
-			<RegExpr attribute="Assign" context="#stay" String="\-[&gt;]{1,2}"/>
-			<!-- Much like above: Most other operators are forbidden around = -->
-			<RegExpr attribute="Error" context="#stay" String="([\+\-\*/\^\:\$~&amp;\|@^])="/>
-			<RegExpr attribute="Error" context="#stay" String="=([\+\-\*/\^\:\$~!&lt;&gt;&amp;\|@^])"/>
-			<!-- no traditional assignment with "=" inside parentheses! See "Identifier below" -->
-			<!-- These operators are fine as long as they're followed by something else or end of line. Error otherwise -->
-			<RegExpr attribute="Operator" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~)((?!(\+|\-|\*|/|&lt;=|&gt;=|=|\!=|\||&amp;|:|\^|@|\$|~))|$)"/>
-			<RegExpr attribute="Error" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~){2,}"/>	
-			<RegExpr attribute="Operator" context="#stay" String="%[^%]*%"/>
-
-			<DetectChar attribute="Symbol" context="ctx0" char="{" beginRegion="Brace1" name="FoldingStart" />
-			<!-- no need to define brace end here, as we've already jumped to ctx0 at the brace start -->
-
 			<RegExpr attribute="Identifier" context="#stay" String="[a-zA-Z_\.][0-9a-zA-Z_\.]*[\s]*=(?=[^=])"/>
+
+			<IncludeRules context="CommonRules"/>
 		</context>
 
 		<context attribute="String" lineEndContext="#stay" name="string">
@@ -110,6 +57,37 @@ extensions="*.R;*.r;*.S;*.s;*.q" mimetype="" license="GPL">
 		<context attribute="Headline" lineEndContext="#pop" name="Headline"/>
 		<context attribute="Comment" lineEndContext="#pop" name="Comment"/>
 
+		<!-- This context is not really used, but contains the common rules -->
+		<context name="CommonRules">
+			<DetectChar attribute="String" context="string" char="&quot;"/>
+			<keyword attribute="Control Structure" context="#stay" String="controls"/>
+			<keyword attribute="Reserved Words" context="#stay" String="words"/>
+			<Float attribute="Float" context="#stay"/>
+			<Int attribute="Int" context="#stay"/>
+			<RegExpr attribute="Keyword" context="#stay" String="[a-zA-Z_]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
+			<RegExpr attribute="Keyword" context="#stay" String="\.[a-zA-Z_\.]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
+			<RegExpr attribute="Keyword" context="parenthesis" String="\("/>
+			<StringDetect attribute="Headline" context="Headline" String="##"/>
+			<DetectChar attribute="Comment" context="Comment" char="#"/>
+
+			<!-- The following three lines look worse than they are: If there are any other operators directly before or after -> and <-, this is a syntax error (expections: ->> and <<-) -->
+			<RegExpr attribute="Error" context="#stay" String="([\+\-\*/\^\:\$~!&amp;\|=&gt;@^])([&lt;]{1,2}\-|\-[&gt;]{1,2})"/>
+			<RegExpr attribute="Error" context="#stay" String="([&lt;]{1,2}\-|\-[&gt;]{1,2})([\+\-\*/\^\:\$~!&amp;\|=&lt;@])"/>
+			<RegExpr attribute="Error" context="#stay" String="([&lt;]{3}|[&gt;]{3})"/>
+			<RegExpr attribute="Assign" context="#stay" String="[&lt;]{1,2}\-"/>
+			<RegExpr attribute="Assign" context="#stay" String="\-[&gt;]{1,2}"/>
+			<!-- Much like above: Most other operators are forbidden around = -->
+			<RegExpr attribute="Error" context="#stay" String="([\+\-\*/\^\:\$~&amp;\|@^])="/>
+			<RegExpr attribute="Error" context="#stay" String="=([\+\-\*/\^\:\$~!&lt;&gt;&amp;\|@^])"/>
+			<RegExpr attribute="Assign" context="#stay" String="=(?!=)"/>
+
+			<!-- These operators are fine as long as they're followed by something else or end of line. Error otherwise -->
+			<RegExpr attribute="Operator" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~)((?!(\+|\-|\*|/|&lt;=|&gt;=|=|\!=|\||&amp;|:|\^|@|\$|~))|$)"/>
+			<RegExpr attribute="Error" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~){2,}"/>	
+			<RegExpr attribute="Operator" context="#stay" String="%[^%]*%"/>
+			
+			<DetectChar attribute="Symbol" context="ctx0" char="{" beginRegion="Brace1" name="FoldingStart" />
+		</context>
 	</contexts>
 
 	<itemDatas>
