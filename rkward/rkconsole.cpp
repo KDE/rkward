@@ -466,13 +466,13 @@ void RKConsole::copy () {
 	view->copy();
 }
 
-int RKConsole::currentCursorPosition(){
+int RKConsole::currentCursorPosition (){
 	uint para=0; uint p=0;
 	view->cursorPosition (&para, &p);
 	return((int) p);
 }
 
-bool RKConsole::hasSelectedText() {
+bool RKConsole::hasSelectedText () {
 	RK_TRACE (APP);
 	return (selectionInterface (doc)->hasSelection ());
 }
