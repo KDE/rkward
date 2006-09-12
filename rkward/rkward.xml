@@ -33,15 +33,10 @@
 	</list>
 	
 	<contexts>
-		<context attribute="Output" lineEndContext="#stay" name="ctx0">
-			<Detect2Chars attribute="Normal Text" context="ctxnorm" firstNonSpace="true" char=">" char1=" "/>
-			<Detect2Chars attribute="Normal Text" context="ctxnorm" firstNonSpace="true" char="+" char1=" "/>
-		</context>
-
 		<context attribute="Normal Text" lineEndContext="#stay" name="ctxnorm">
-			<!-- We pop at line starts manually. If we are in a String subcontext (ctx1), using lineEndContext="#pop" would still pop the
-				Normal Text (ctx0) parent context, which is not what we want. -->
-			<RegExpr attribute="Normal Text" context="#pop" String="^." lookAhead="true"/>
+			<RegExpr attribute="Normal Text" context="#stay" String="^&gt; " lookAhead="false"/>
+			<RegExpr attribute="Normal Text" context="#stay" String="^+ " lookAhead="false"/>
+			<RegExpr attribute="Normal Text" context="output" String="^." lookAhead="true"/>
 
 			<DetectChar attribute="String" context="string" char="&quot;"/>
 			<keyword attribute="Control Structure" context="#stay" String="controls"/>
@@ -72,7 +67,7 @@
 
 
 		<context attribute="In Parenthesis" lineEndContext="#stay" name="parenthesis">
-			<Detect2Chars attribute="Normal Text" context="#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop" firstNonSpace="true" char=">" char1=" " lookAhead="true"/>
+			<Detect2Chars attribute="Normal Text" context="#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop" firstNonSpace="true" char=">" char1=" " lookAhead="true"/>
 			<Detect2Chars attribute="Normal Text" context="#stay" firstNonSpace="true" char="+" char1=" "/>
 			<LineContinue attribute="Boolean" context="#stay"/>
 			<DetectChar attribute="Keyword" context="#pop" char=")"/>
@@ -114,6 +109,9 @@
 			<HlCStringChar attribute="String Char" context="#stay"/>
 		</context>
 
+		<context attribute="Output" lineEndContext="#stay" name="output">
+			<Detect2Chars attribute="Normal Text" context="#pop" lookAhead="true" firstNonSpace="true" char=">" char1=" "/>
+		</context>
 		<context attribute="Headline" lineEndContext="#pop" name="Headline"/>
 		<context attribute="Comment" lineEndContext="#pop" name="Comment"/>
 	</contexts>
