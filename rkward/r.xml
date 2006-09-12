@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
 <!-- Kate 2.5 (KDE 3.5) highlighting module for R
-	based on an earlier version by E.L. Willighagen.
+	based on an earlier version by E.L. Willighagen. Code folding code by Ben Goodrich
 	version 0.4: (c) 2006 Thomas Friedrichsmeier, Arne Henningsen, and the RKWard Team
 	license: GPL v2
 	Kate   : http://kate.kde.org/
@@ -40,19 +40,27 @@ extensions="*.R;*.r;*.S;*.s;*.q" mimetype="" license="GPL">
 			<keyword attribute="Reserved Words" context="#stay" String="words"/>
 			<Float attribute="Float" context="#stay"/>
 			<Int attribute="Int" context="#stay"/>
-			<RegExpr attribute="Error" context="#stay" String="[+\-*]="/>
-			<RegExpr attribute="Error" context="#stay" String="=[+\-*]"/>
 			<RegExpr attribute="Keyword" context="#stay" String="[a-zA-Z_]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
 			<RegExpr attribute="Keyword" context="#stay" String="\.[a-zA-Z_\.]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
 			<RegExpr attribute="Keyword" context="parenthesis" String="\("/>
 			<StringDetect attribute="Headline" context="Headline" String="##"/>
 			<DetectChar attribute="Comment" context="Comment" char="#"/>
+			
+			<!-- The following three lines look worse than they are: If there are any other operators directly before or after -> and <-, this is a syntax error (expections: ->> and <<-) -->
+			<RegExpr attribute="Error" context="#stay" String="([\+\-\*/\^\:\$~!&amp;\|=&gt;@^])([&lt;]{1,2}\-|\-[&gt;]{1,2})"/>
+			<RegExpr attribute="Error" context="#stay" String="([&lt;]{1,2}\-|\-[&gt;]{1,2})([\+\-\*/\^\:\$~!&amp;\|=&lt;@^])"/>
+			<RegExpr attribute="Error" context="#stay" String="([&lt;]{3}|[&gt;]{3})"/>
 			<RegExpr attribute="Assign" context="#stay" String="[&lt;]{1,2}\-"/>
 			<RegExpr attribute="Assign" context="#stay" String="\-[&gt;]{1,2}"/>
+			<!-- Much like above: Most other operators are forbidden around = -->
+			<RegExpr attribute="Error" context="#stay" String="([\+\-\*/\^\:\$~&amp;\|@^])="/>
+			<RegExpr attribute="Error" context="#stay" String="=([\+\-\*/\^\:\$~!&lt;&gt;&amp;\|@^])"/>
 			<RegExpr attribute="Assign" context="#stay" String="[^=!&gt;&lt;+\-*]=[^=!&gt;&lt;+\-*]"/>
-			<AnyChar attribute="Operator" context="#stay" String="+-*/^:$~!&amp;|=&gt;&lt;@"/>
+			<!-- These operators are fine as long as they're followed by something else or end of line. Error otherwise -->
+			<RegExpr attribute="Operator" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~)((?!(\+|\-|\*|/|&lt;=|&gt;=|=|\!=|\||&amp;|:|\^|@|\$|~))|$)"/>
+			<RegExpr attribute="Error" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~){2,}"/>	
 			<RegExpr attribute="Operator" context="#stay" String="%[^%]*%"/>
-			<!--  for code folding (from Ben Goodrich) -->
+			
 			<DetectChar attribute="Symbol" context="ctx0" char="{" beginRegion="Brace1" name="FoldingStart" />
 			<DetectChar attribute="Symbol" context="#pop" char="}" endRegion="Brace1" name="FoldingEnd" />
 		</context>
@@ -67,19 +75,27 @@ extensions="*.R;*.r;*.S;*.s;*.q" mimetype="" license="GPL">
 			<keyword attribute="Reserved Words" context="#stay" String="words"/>
 			<Float attribute="Float" context="#stay"/>
 			<Int attribute="Int" context="#stay"/>
-			<RegExpr attribute="Error" context="#stay" String="[+\-*]="/>
-			<RegExpr attribute="Error" context="#stay" String="=[+\-*]"/>
 			<RegExpr attribute="Keyword" context="#stay" String="[a-zA-Z_]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
 			<RegExpr attribute="Keyword" context="#stay" String="\.[a-zA-Z_\.]+[a-zA-Z_\.0-9]*(?=[\s]*[(])"/>
 			<RegExpr attribute="Keyword" context="parenthesis" String="\("/>
 			<StringDetect attribute="Headline" context="Headline" String="##"/>
 			<DetectChar attribute="Comment" context="Comment" char="#"/>
+			
+			<!-- The following three lines look worse than they are: If there are any other operators directly before or after -> and <-, this is a syntax error (expections: ->> and <<-) -->
+			<RegExpr attribute="Error" context="#stay" String="([\+\-\*/\^\:\$~!&amp;\|=&gt;@^])([&lt;]{1,2}\-|\-[&gt;]{1,2})"/>
+			<RegExpr attribute="Error" context="#stay" String="([&lt;]{1,2}\-|\-[&gt;]{1,2})([\+\-\*/\^\:\$~!&amp;\|=&lt;@^])"/>
+			<RegExpr attribute="Error" context="#stay" String="([&lt;]{3}|[&gt;]{3})"/>
 			<RegExpr attribute="Assign" context="#stay" String="[&lt;]{1,2}\-"/>
 			<RegExpr attribute="Assign" context="#stay" String="\-[&gt;]{1,2}"/>
+			<!-- Much like above: Most other operators are forbidden around = -->
+			<RegExpr attribute="Error" context="#stay" String="([\+\-\*/\^\:\$~&amp;\|@^])="/>
+			<RegExpr attribute="Error" context="#stay" String="=([\+\-\*/\^\:\$~!&lt;&gt;&amp;\|@^])"/>
 			<!-- no traditional assignment with "=" inside parentheses! See "Identifier below" -->
-			<AnyChar attribute="Operator" context="#stay" String="+-*/^:$~!&amp;|=&gt;&lt;@"/>
+			<!-- These operators are fine as long as they're followed by something else or end of line. Error otherwise -->
+			<RegExpr attribute="Operator" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~)((?!(\+|\-|\*|/|&lt;=|&gt;=|=|\!=|\||&amp;|:|\^|@|\$|~))|$)"/>
+			<RegExpr attribute="Error" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~){2,}"/>	
 			<RegExpr attribute="Operator" context="#stay" String="%[^%]*%"/>
-			<!--  for code folding (from Ben Goodrich) -->
+
 			<DetectChar attribute="Symbol" context="ctx0" char="{" beginRegion="Brace1" name="FoldingStart" />
 			<!-- no need to define brace end here, as we've already jumped to ctx0 at the brace start -->
 
@@ -104,7 +120,7 @@ extensions="*.R;*.r;*.S;*.s;*.q" mimetype="" license="GPL">
 		<itemData name="String" defStyleNum="dsString"/>
 		<itemData name="Headline" defStyleNum="dsNormal" color="#b00000" selColor="#b00000" bold="1" italic="0"/> <!-- KDE default color: text 5 -->
 		<itemData name="Comment" defStyleNum="dsComment"/>
-		<itemData name="Assign" defStyleNum="dsNormal" color="#336366" selColor="#cc9c099" bold="1" italic="0"/> <!-- KDE default color: text 7 -->
+		<itemData name="Assign" defStyleNum="dsNormal" color="#336366" selColor="#ccc099" bold="1" italic="0"/> <!-- KDE default color: text 7 -->
 		<itemData name="Control Structure" defStyleNum="dsNormal" color="#0000bf" selColor="#bfbf00"/> <!-- KDE default color: text 2 -->
 		<itemData name="Reserved Words" defStyleNum="dsOthers"/>
 		<itemData name="Error" defStyleNum="dsError"/>
