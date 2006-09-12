@@ -1,3 +1,13 @@
+- small improvements to command history in console
+- deal better with commands producing large amounts of output
+- small fixes in several plugins
+- package installation/update: semi-automate package installation in response to "require ()" calls
+- package installation/update: the online list of available packages is cached up to one hour (and only as long as the relevant options are unchanged)
+- package installation/update: give better progress indication
+- package installation/update: package dependencies are handled correctly when installating new packages
+- package installation/update: packages can be installed to custom library locations
+- fix spurious line breaks in output in command log and console
+- Improved syntax highlighting defintion including code folding
 - fix compilation with GCC 4.1
 - don't crash on more than 100 rows of data in the editor (off by 2 bug in storage allocation)
 - correctly initialize the internal NaN representation (would sometimes be initialized to 0, resulting in 0s not to be shown in the editor)

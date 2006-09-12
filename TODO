@@ -23,15 +23,7 @@ Some items I'd like to get done for 0.3.7 or whatever the next release is going 
 - RKCancelDialog / RKErrorDialog:
 	- remove these classes. Port to use RKProgressControl instead
 - Rework package management dialog
-	- use install.packages () to handle dependencies
-	- manage R library locations, install to location with user write access
-		- BUG: "cannot create html package index" when installing as regular user
-	- Canceldialog and ErrorDialog should be unified!
-	- cache available.packages
-	- failed calls to require should
-		a) pop up dialog (already in place)
-		b) fetch list of available packages
-		c) select package or give warning, if package is not available.
+	- BUG: "cannot create html package index" when installing as regular user
 	- the UI should probably be simplified somehow. But how? All in a single list with "filter"? Ask for ideas/look at other apps
 		- this will be very hard to do with the current Qt. We'd really need several checkboxes *within* a QListViewItem. Tackle this when/after porting to Qt4
 - Create an editor for single vectors/factors, or rework RKEditorDataFrame to handle those as well
@@ -50,7 +42,6 @@ Timeframe for 0.3.7 release:
 - It would be good, if we're at a releasable state within one month from now (i.e. mid May).
 	- if reasonably possible, I think we should release then, even if some of the desired features are still missing
 
-- for (i in 1:10){ cat(i,'\t');Sys.sleep(0.05)} results in extra linebreaks in both console and log.
 - use SVG device for graphics output
 	- provide context menu / other UI to export to different formats / edit
 - hot-key/permanent icon to cancel current command / hold processing. Perhaps in the busy/idle indicator?
