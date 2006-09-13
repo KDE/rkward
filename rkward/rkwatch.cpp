@@ -52,6 +52,7 @@ RKwatch::RKwatch () : KMdiChildView () {
 	
 	clearWatch ();
 
+	last_raised_command = 0;
 	command_input_shown = 0;
 }
 
@@ -86,13 +87,9 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 
 	watch->append (command->command () + "\n");
 
-	if (RKSettingsModuleWatch::shouldRaiseWindow (command)) {
-		if (!(command->type () & RCommand::Console)) {
-			emit (raiseWatch ());
-		}
-	}
-
+	checkRaiseWatch (command);
 	linesAdded ();
+
 	watch->setItalic (false);
 
 	command_input_shown = command;
@@ -113,15 +110,21 @@ void RKwatch::addOutputNoCheck (RCommand *command, const QString &output) {
 
 	watch->insert (output);
 
-	if (RKSettingsModuleWatch::shouldRaiseWindow (command)) {
-		if (!(command->type () & RCommand::Console)) {
-			emit (raiseWatch ());
-		}
-	}
-
+	checkRaiseWatch (command);
 	linesAdded ();
+
 	watch->setBold (false);
 	watch->setColor (Qt::black);
+}
+
+void RKwatch::checkRaiseWatch (RCommand *command) {
+	// called during output. do not trace
+	if (command == last_raised_command) return;
+	if (!RKSettingsModuleWatch::shouldRaiseWindow (command)) return;
+	if (command->type () & RCommand::Console) return;
+
+	last_raised_command = command;
+	emit (raiseWatch ());
 }
 
 void RKwatch::newOutput (RCommand *command, ROutput *output_fragment) {
@@ -188,8 +191,7 @@ void RKwatch::configureWatch () {
 
 void RKwatch::clearWatch () {
 	RK_TRACE (APP);
-	
-	
+
 	watch->setText (QString::null);
 
 	// set a fixed width font

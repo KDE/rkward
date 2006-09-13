@@ -1,3 +1,4 @@
+- do not raise the command log more than once for a given command producing continuous output
 - small improvements to command history in console
 - deal better with commands producing large amounts of output
 - small fixes in several plugins

@@ -88,6 +88,8 @@ Internal stuff:
 		- use QIntDict instead of string-map for value-labels / factor levels?
 	- UNPROTECT_PTR
 	- give informative feedback on syntax errors (line numbers, etc.)!
+	- .rk.get.available.packages ()
+		- use external (file) storage for cache to save mem
 
 General code:
 	- use constBegin (), constEnd ()
