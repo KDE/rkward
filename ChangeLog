@@ -1,3 +1,4 @@
+- remove whitespace from start and end of plugin generated commands and do not evaluate empty commands
 - do not raise the command log more than once for a given command producing continuous output
 - small improvements to command history in console
 - deal better with commands producing large amounts of output

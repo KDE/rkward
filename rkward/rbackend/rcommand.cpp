@@ -34,9 +34,11 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 	if (next_id < 0) {
 		next_id = 0;
 	}
-	_command = command;
 	_type = type;
 	_flags = flags;
+	if (type & Plugin) _command = command.stripWhiteSpace ();
+	else _command = command;
+	if (_command.isEmpty ()) _type |= EmptyCommand;
 	status = 0;
 	string_data = 0;
 	real_data = 0;
