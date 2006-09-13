@@ -34,9 +34,9 @@
 	
 	<contexts>
 		<context attribute="Normal Text" lineEndContext="#stay" name="ctxnorm">
-			<RegExpr attribute="LineStart" context="#stay" String="^&gt; "/>
+			<RegExpr attribute="LineStart" context="#stay" String="^&gt; " beginRegion="command" endRegion="command"/>
 			<RegExpr attribute="LineStart" context="#stay" String="^\+ "/>
-			<RegExpr attribute="Normal Text" context="output" String="^([^&gt;\+]|$)" lookAhead="true" endRegion="command" beginRegion="output"/>
+			<RegExpr attribute="Normal Text" context="output" String="^([^&gt;\+]|$)" lookAhead="true"/>
 
 			<IncludeRules context="CommonRules"/>
 		</context>
@@ -59,7 +59,7 @@
 
 		
 		<context attribute="Output" lineEndContext="#stay" name="output">
-			<Detect2Chars attribute="LineStart" context="#pop" lookAhead="true" firstNonSpace="true" char=">" char1=" " endRegion="output" beginRegion="command"/>
+			<Detect2Chars attribute="LineStart" context="#pop" lookAhead="true" firstNonSpace="true" char=">" char1=" "/>
 		</context>
 		<context attribute="Headline" lineEndContext="#pop" name="Headline"/>
 		<context attribute="Comment" lineEndContext="#pop" name="Comment"/>
