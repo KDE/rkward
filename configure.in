@@ -1,3 +1,7 @@
+dnl =======================================================
+dnl FILE: ./admin/configure.in.min
+dnl =======================================================
+
 dnl    This file is part of the KDE libraries/packages
 dnl    Copyright (C) 2001 Stephan Kulow (coolo@kde.org)
  
@@ -13,8 +17,8 @@ dnl    Library General Public License for more details.
  
 dnl    You should have received a copy of the GNU Library General Public License
 dnl    along with this library; see the file COPYING.LIB.  If not, write to
-dnl    the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-dnl    Boston, MA 02111-1307, USA.
+dnl    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+dnl    Boston, MA 02110-1301, USA.
 
 # Original Author was Kalle@kde.org
 # I lifted it in some mater. (Stephan Kulow)
@@ -36,7 +40,7 @@ dnl Perform program name transformation
 AC_ARG_PROGRAM
 
 dnl Automake doc recommends to do this only here. (Janos)
-AM_INIT_AUTOMAKE(rkward, 0.3.7pre1) dnl searches for some needed programs
+AM_INIT_AUTOMAKE(rkward, 0.3.7pre2) dnl searches for some needed programs
 
 KDE_SET_PREFIX
 
@@ -55,6 +59,10 @@ AM_KDE_WITH_NLS
 
 KDE_USE_QT(3)
 AC_PATH_KDE
+dnl =======================================================
+dnl FILE: configure.in.in
+dnl =======================================================
+
 #MIN_CONFIG(3)
 
 dnl PACKAGE set before
@@ -86,9 +94,42 @@ AC_CONFIG_FILES([ rkward/scriptbackends/Makefile ])
 AC_CONFIG_FILES([ rkward/settings/Makefile ])
 AC_CONFIG_FILES([ rkward/windows/Makefile ])
 AC_OUTPUT
+# Check if KDE_SET_PREFIX was called, and --prefix was passed to configure
+if test -n "$kde_libs_prefix" -a -n "$given_prefix"; then
+  # And if so, warn when they don't match
+  if test "$kde_libs_prefix" != "$given_prefix"; then
+    # And if kde doesn't know about the prefix yet
+    echo ":"`kde-config --path exe`":" | grep ":$given_prefix/bin/:" 2>&1 >/dev/null
+    if test $? -ne 0; then
+      echo ""
+      echo "Warning: you chose to install this package in $given_prefix,"
+      echo "but KDE was found in $kde_libs_prefix."
+      echo "For this to work, you will need to tell KDE about the new prefix, by ensuring"
+      echo "that KDEDIRS contains it, e.g. export KDEDIRS=$given_prefix:$kde_libs_prefix"
+      echo "Then restart KDE."
+      echo ""
+    fi
+  fi
+fi
+
+if test x$GXX = "xyes" -a x$kde_have_gcc_visibility = "xyes" -a x$kde_cv_val_qt_gcc_visibility_patched = "xno"; then
+  echo ""
+  echo "Your GCC supports symbol visibility, but the patch for Qt supporting visibility"
+  echo "was not included. Therefore, GCC symbol visibility support remains disabled."
+  echo ""
+  echo "For better performance, consider including the Qt visibility supporting patch"
+  echo "located at:"
+  echo ""
+  echo "http://bugs.kde.org/show_bug.cgi?id=109386"
+  echo ""
+  echo "and recompile all of Qt and KDE. Note, this is entirely optional and"
+  echo "everything will continue to work just fine without it."
+  echo ""
+fi
+
 if test "$all_tests" = "bad"; then
   if test ! "$cache_file" = "/dev/null"; then
-    echo ""    
+    echo ""
     echo "Please remove the file $cache_file after changing your setup"
     echo "so that configure will find the changes next time."
     echo ""
