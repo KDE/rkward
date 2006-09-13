@@ -61,10 +61,10 @@ private:
 	void checkRaiseWatch (RCommand *command);
 /** internal helper function, called whenever a line/lines have been added. Check whether log is longer than maximum setting. Scroll to the bottom */
 	void linesAdded ();
-/** A pointer to the last command the input (i.e. the command itself) was shown for. Used to keep track of whether a command's input should be shown or not */
-	RCommand *command_input_shown;
+/** Id of last command the input (i.e. the command itself) was shown for. Used to keep track of whether a command's input should be shown or not */
+	int command_input_shown;
 /** On a given command, the watch should not be raised more than once */
-	RCommand *last_raised_command;
+	int last_raised_command;
 
 	QTextEdit *watch;
 	QBoxLayout* pLayout;

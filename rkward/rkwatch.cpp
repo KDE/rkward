@@ -72,7 +72,7 @@ void RKwatch::addInput (RCommand *command) {
 
 void RKwatch::addInputNoCheck (RCommand *command) {
 	RK_TRACE (APP);
-	if (command == command_input_shown) return;		// already shown
+	if (command->id () == command_input_shown) return;		// already shown
 
 // TODO: make colors/styles configurable
 	if (command->type () & RCommand::User) {
@@ -92,7 +92,7 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 
 	watch->setItalic (false);
 
-	command_input_shown = command;
+	command_input_shown = command->id ();
 }
 
 void RKwatch::addOutputNoCheck (RCommand *command, const QString &output) {
@@ -119,11 +119,11 @@ void RKwatch::addOutputNoCheck (RCommand *command, const QString &output) {
 
 void RKwatch::checkRaiseWatch (RCommand *command) {
 	// called during output. do not trace
-	if (command == last_raised_command) return;
+	if (command->id () == last_raised_command) return;
 	if (!RKSettingsModuleWatch::shouldRaiseWindow (command)) return;
 	if (command->type () & RCommand::Console) return;
 
-	last_raised_command = command;
+	last_raised_command = command->id ();
 	emit (raiseWatch ());
 }
 
