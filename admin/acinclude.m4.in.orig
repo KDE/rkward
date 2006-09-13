@@ -1900,128 +1900,16 @@ all_includes="$all_includes $USER_INCLUDES"
 AC_SUBST(all_includes)
 AC_SUBST(all_libraries)
 
-dnl if test -z "$1"; then
-dnl KDE_CHECK_UIC_PLUGINS
-dnl fi
+if test -z "$1"; then
+KDE_CHECK_UIC_PLUGINS
+fi
 
 ac_kde_libraries="$kde_libdir"
 
 AC_SUBST(AUTODIRS)
 
-dnl ############################################ RKWARD specific addition begin #################################
-AC_REQUIRE([CHECK_RHOME])
-AC_REQUIRE([CHECK_LIBRSO])
-AC_REQUIRE([CHECK_RLIBDIR])
-AC_REQUIRE([CHECK_RINCLUDE])
-AC_REQUIRE([CHECK_RLAPACK])
-dnl ############################################ RKWARD specific addition end ###################################
 
 ])
-
-dnl ############################################ RKWARD specific addition begin #################################
-dnl check for R home dir
-dnl mostly no idea what I'm doing, but hoping for the best...
-AC_DEFUN([CHECK_RHOME],
-[
-AC_MSG_CHECKING(whether R_HOME directory exists)
-AC_ARG_WITH(r-home,AC_HELP_STRING([--with-r-home=DIR],[specify location of R_HOME directory]),
-  use_r_home="$withval",
-  use_r_home=`R CMD sh -c 'echo $R_HOME'`
-  if test "$use_r_home" == "" ; then use_r_home="/usr/local/lib/R" ; fi
-)
-r_home=
-if test -d "$use_r_home"; then
-   R_HOMEDIR="$use_r_home"
-else
-   AC_MSG_ERROR([
-   $use_r_home does not exist as a directory!
-   Check your installation of R, and use --with-r-home to specify the correct location.])
-fi
-AC_SUBST(R_HOMEDIR)
-
-AC_MSG_RESULT($use_r_home)
-])
-
-
-dnl check for existence of libR.so
-AC_DEFUN([CHECK_LIBRSO],
-[
-AC_MSG_CHECKING(for libR.so)
-if test -f "$R_HOMEDIR/lib/libR.so"; then
-   AC_MSG_RESULT($R_HOMEDIR/lib/libR.so)
-else
-   AC_MSG_ERROR([
-   $R_HOMEDIR/lib/libR.so does not exist.
-   Check whether you have compiled R with shared library, 
-   and the --with-r-home setting was detected correctly above.])
-fi
-])
-
-dnl for at least some versions of R, we seem to have to link against -lRlapack. Else loading some
-dnl R packages will fail due to unresolved symbols. However, we can't do this unconditionally,
-dnl as this is not available in some configurations of R
-AC_DEFUN([CHECK_RLAPACK],
-[
-AC_MSG_CHECKING(whether we should link against libRlapack.so)
-if test -f "$R_HOMEDIR/lib/libRlapack.so"; then
-   AC_MSG_RESULT(yes $R_HOMEDIR/lib/libRlapack.so exists)
-   R_LAPACK_FLAG="-lRlapack"
-else
-   AC_MSG_RESULT(no $R_HOMEDIR/lib/libRlapack.so does not exist)
-   R_LAPACK_FLAG=""
-fi
-   AC_SUBST(R_LAPACK_FLAG)
-])
-
-
-dnl find out R_INLUCDE_DIR
-AC_DEFUN([CHECK_RINCLUDE],
-[
-AC_MSG_CHECKING(for R include files)
-AC_ARG_WITH(r-includes,AC_HELP_STRING([--with-r-includes=DIR],[specify location of R include files]),
-  use_r_includes="$withval",
-  use_r_includes=`$R_HOMEDIR/bin/R CMD sh -c 'echo $R_INCLUDE_DIR'`
-  if test "$use_r_includes" == "" ; then use_r_includes="$R_HOMEDIR/include" ; fi
-)
-
-r_includes=
-if test -f "$use_r_includes/R.h"; then
-   R_INCLUDEDIR="$use_r_includes"
-else
-   AC_MSG_ERROR([
-   $use_r_includes/R.h does not exist!
-   Check your installation of R, and use --with-r-includes to specify the correct directory.])
-fi
-AC_SUBST(R_INCLUDEDIR)
-
-AC_MSG_RESULT($use_r_includes)
-])
-
-dnl find out R (package) library dir
-AC_DEFUN([CHECK_RLIBDIR],
-[
-AC_MSG_CHECKING(for R package library location)
-AC_ARG_WITH(r-libdir,AC_HELP_STRING([--with-r-libdir=DIR],[specify location of R (packages) library tree to install to]),
-  use_r_libdir="$withval",
-  r_libs=`$R_HOMEDIR/bin/R CMD sh -c 'echo $R_LIBS'`
-  if test -n "$r_libs"; then use_r_libdir=`echo "$r_libs" | cut -f1 -d:` ; else use_r_libdir="$R_HOMEDIR/library" ; fi
-)
-
-r_libdir=
-if test -d "$use_r_libdir"; then
-   R_LIBDIR="$use_r_libdir"
-else
-   AC_MSG_ERROR([
-   $use_r_libdir does not exist!
-   Check your installation of R, and use --with-r-libdir to specify an existing library tree.])
-fi
-AC_SUBST(R_LIBDIR)
-
-AC_MSG_RESULT($use_r_libdir)
-])
-
-dnl ############################################ RKWARD specific addition end ###################################
-
 
 AC_DEFUN([KDE_CHECK_EXTRA_LIBS],
 [
@@ -4868,7 +4756,7 @@ AC_DEFUN([AC_CHECK_UTMP_FILE],
 AC_DEFUN([KDE_CREATE_SUBDIRSLIST],
 [
 
-DO_NOT_COMPILE="$DO_NOT_COMPILE CVS bsd-port admin"
+DO_NOT_COMPILE="$DO_NOT_COMPILE CVS debian bsd-port admin"
 TOPSUBDIRS=""
 
 if test ! -s $srcdir/subdirs; then
@@ -5063,11 +4951,7 @@ AC_DEFUN([KDE_SET_PREFIX_CORE],
 [
   unset CDPATH
   dnl make $KDEDIR the default for the installation
-dnl ############################################ RKWARD specific change begin #################################
-  AC_PREFIX_DEFAULT(${KDEDIR:-`kde-config --prefix`})
-dnl ############################################ RKWARD specific change previous: #############################
-dnl  AC_PREFIX_DEFAULT(${KDEDIR:-/usr/local/kde})
-dnl ############################################ RKWARD specific change end ###################################
+  AC_PREFIX_DEFAULT(${KDEDIR:-/usr/local/kde})
 
   if test "x$prefix" = "xNONE"; then
     prefix=$ac_default_prefix
