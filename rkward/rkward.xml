@@ -34,14 +34,14 @@
 	
 	<contexts>
 		<context attribute="Normal Text" lineEndContext="#stay" name="ctxnorm">
-			<RegExpr attribute="Normal Text" context="#stay" String="^&gt; " lookAhead="false"/>
-			<RegExpr attribute="Normal Text" context="#stay" String="^+ " lookAhead="false"/>
-			<RegExpr attribute="Normal Text" context="output" String="^." lookAhead="true"/>
+			<RegExpr attribute="LineStart" context="#stay" String="^&gt; "/>
+			<RegExpr attribute="LineStart" context="#stay" String="^\+ "/>
+			<RegExpr attribute="Normal Text" context="output" String="^([^&gt;\+]|$)" lookAhead="true" endRegion="command" beginRegion="output"/>
 
 			<IncludeRules context="CommonRules"/>
 		</context>
 
-		<context attribute="In Parenthesis" lineEndContext="#stay" name="parenthesis">
+		<context attribute="Normal Text" lineEndContext="#stay" name="parenthesis">
 			<IncludeRules context="CommandContinuationCheck"/>
 			<LineContinue attribute="Boolean" context="#stay"/>
 			<DetectChar attribute="Keyword" context="#pop" char=")"/>
@@ -59,19 +59,19 @@
 
 		
 		<context attribute="Output" lineEndContext="#stay" name="output">
-			<Detect2Chars attribute="Normal Text" context="#pop" lookAhead="true" firstNonSpace="true" char=">" char1=" "/>
+			<Detect2Chars attribute="LineStart" context="#pop" lookAhead="true" firstNonSpace="true" char=">" char1=" " endRegion="output" beginRegion="command"/>
 		</context>
 		<context attribute="Headline" lineEndContext="#pop" name="Headline"/>
 		<context attribute="Comment" lineEndContext="#pop" name="Comment"/>
 
 		<!-- This context is not really used, but meant to be included. It checks whether a new line is a continuation of a command. If so, it eats the "+ " at the line start. Else it tries to pop back to the top level -->
 		<context attribute="Normal Text" name="CommandContinuationCheck">
-			<Detect2Chars attribute="Normal Text" context="#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop" firstNonSpace="true" char=">" char1=" " lookAhead="true"/>
-			<Detect2Chars attribute="Normal Text" context="#stay" firstNonSpace="true" char="+" char1=" "/>
+			<RegExpr attribute="Normal Text" context="#pop" String="^([^\+]|$)" lookAhead="true"/>		<!-- This should pop us back into ctxnorm, which will then most likely take us to output -->
+			<RegExpr attribute="LineStart" context="#stay" String="^\+ "/>
 		</context>
 
 		<!-- This context is not really used, but contains the common rules -->
-		<context name="CommonRules">
+		<context attribute="Normal Text" name="CommonRules">
 			<DetectChar attribute="String" context="string" char="&quot;"/>
 			<keyword attribute="Control Structure" context="#stay" String="controls"/>
 			<keyword attribute="Reserved Words" context="#stay" String="words"/>
@@ -106,6 +106,7 @@
 		<itemData name="Output" defStyleNum="dsOthers"/>
 		<!-- KDE default colors: http://accessibility.kde.org/oxygen.php?color=white -->
 		<itemData name="Normal Text" defStyleNum="dsNormal"/>
+		<itemData name="LineStart" defStyleNum="dsNormal"/>
 		<itemData name="Keyword" defStyleNum="dsKeyword"/>
 		<itemData name="Identifier" defStyleNum="dsDataType"/>
 		<itemData name="String" defStyleNum="dsString"/>
