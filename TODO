@@ -2,81 +2,126 @@ The following list of TODO-items is NOT complete!
 Also, plans change frequently. If something is listed for a specific release, that's no more than a rough plan.
 All in all, this TODO list is mostly for internal purposes, and many parts may not necessarily be intellegible to anybody but the authors.
 
-- Advertizing:
+Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
-
-REmbedInternal:
-	- probably we do not need na_double at all (just any NaN) => less confusion
 
 Bugs:
 	- There seems to be a race condition at startup, leading to a crash in doPostInit () in rkward.cpp. (Un-)Fortunately it triggers only rarely, and I have not yet figured out, when it occurs.
+	- "cannot create html package index" when installing package as a regular user (due to R.home ("doc") not writable)
+	- on viewDeactivated, it may not be safe to call setCaption and there activeWindow (). Apparently, the pointer may be invalid:
+		- start rkward with empty table. open command editor. switch back to table. Edit some stuff in the table. Ctrl+W. Crash
 
-RCommandReceiver:
-	- add virtual rCommandStarted () function, so receivers can find out, when their command becomes active
+UI-stuff
+	"First-run wizard"
+		- pre-install R packages
+	- RKEditorDataFrame
+		- undo/redo
+			- KDE4
+		- deletion of multiple columns in one step
+		- when pasting a large array, rows should not be added one by one. Suggested algorithm:
+			- if we find out we've already pasted 100 rows, first check, how many more are to come and add this many both to the variable and to the R workspace. Can potentially avoid *lots* of work
+	- Twintable/RKEditorDataFrame
+		- merge the two classes
+		- more efficient syncing: fetch only the values actually needed instead of the whole table
+		- make configurable:
+			- invalid color (global and per variable)
+			- unused color (global and per variable)
+			- default alignment (per var type)
+			- default precision
+			- display of factor level labels (global and per variable)
+			- delay of factor-level popup
+		- highlighting of value ranges
+	- Create an editor for single vectors/factors, or rework RKEditorDataFrame to handle those as well
+	- Rework package management dialog
+		- the UI should probably be simplified somehow. But how? All in a single list with "filter"? Ask for ideas/look at other apps
+			- this will be very hard to do with the current Qt. We'd really need several checkboxes *within* a QListViewItem. Tackle this when/after porting to Qt4
+	- RObjectListView
+		- use icons to mark up the different base types
+	- RKConsole:
+		- Console should start a command chain when submitting a batch of pasted commands
+		- hide tabs in console
+	- RKHelpDlg:
+		- in the mid term, this should probably be renamed and moved to windows
+		- call .rk.get.installed.packages, and update package selection drop down on every show, but not on startup
+	- RKwatch:
+		- optionally keep a file log!
+	- hot-key/permanent icon to cancel current command / hold processing. Perhaps in the busy/idle indicator?
+	- find out how to save toolbar states properly in parts-GUI
+	- frequent output of a command should not raise the command log over and over again (user should have a chance to switch away)
+	- David's usability items
+	- use RKGlobals::marginHint (), RKGlobals::spacingHint () everywhere
 
-Some items I'd like to get done for 0.3.7 or whatever the next release is going to be called, if they don't take too long:
-- RKEditorDataFrame
-	- undo/redo
-	- deletion of multiple columns in one step
-	- when pasting a large array, rows should not be added one by one. Suggested algorithm:
-		- if we find out we've already pasted 100 rows, first check, how many more are to come and add this many both to the variable and to the R workspace. Can potentially avoid *lots* of work
-- RKCancelDialog / RKErrorDialog:
-	- remove these classes. Port to use RKProgressControl instead
-- Rework package management dialog
-	- BUG: "cannot create html package index" when installing as regular user
-	- the UI should probably be simplified somehow. But how? All in a single list with "filter"? Ask for ideas/look at other apps
-		- this will be very hard to do with the current Qt. We'd really need several checkboxes *within* a QListViewItem. Tackle this when/after porting to Qt4
-- Create an editor for single vectors/factors, or rework RKEditorDataFrame to handle those as well
-- RObjectListView
-	- use icons to mark up the different base types
-- David's usability items
-Optional stuff, that could possibly be attacked for 0.3.7:
-- RExpressionObject as an abstraction for R-Expressions (i.e. manually edited expressions).
-	- It will be possible to "store" these in the RObjectList and select them just like any other object
-	- RKVarslot will allow editing the selected value by hand (or just typing the name in)
-		- How to do this nicely UI wise?
-- RFunctionObject for user defined functions. Maybe later it will be possible to use for functions from packages as well
-	- would be nice, if it also had some knowledge about function arguments
-	- ideally it would also know about the type of the return value, but this may not be realistic
-Timeframe for 0.3.7 release:
-- It would be good, if we're at a releasable state within one month from now (i.e. mid May).
-	- if reasonably possible, I think we should release then, even if some of the desired features are still missing
+Internal stuff:
+	RCommandReceiver:
+		- add virtual rCommandStarted () function, so receivers can find out, when their command becomes active
+	REmbedInternal:
+		- probably we do not need na_double at all (just any NaN) => less confusion
+	Detecting object modifications inside R:
+		- RObjectTables sounds highly interesing. Maybe we can use a transparent table to find out about assignments?
+			- Problem: we can't add this on top of the globalenv () (or at least we're not supposed to)
+				- can we dare to replace R_GlobalEnv with a fake environment which redirects to the real thing?
+		- R_MakeActiveBinding sounds even more interesting. Maybe we can use this to "watch" symbols?!?
+			- can't track removal or creation of new objects this way
+			- seems to work only for top-level objects (elements in a list are not discernable, though we do catch the access to the list itself)
+	- RExpressionObject as an abstraction for R-Expressions (i.e. manually edited expressions).
+		- It will be possible to "store" these in the RObjectList and select them just like any other object
+		- RKVarslot will allow editing the selected value by hand (or just typing the name in)
+			- How to do this nicely UI wise?
+	- RFunctionObject for user defined functions. Maybe later it will be possible to use for functions from packages as well
+		- would be nice, if it also had some knowledge about function arguments
+		- ideally it would also know about the type of the return value, but this may not be realistic
+	- RKCancelDialog / RKErrorDialog:
+		- remove these classes. Port to use RKProgressControl instead
+	- instead of delete RObject, call RObject::deleteThis () and check for deleted in rCommandDone ()?
+	- use R_DirtyImage to determine, whether workspace needs to be saved
+	- in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
+	- Object editing / modification tracking:
+		- functions to set double/int/string-vectors directly. Use in paste-operations
+	- check whether we're running in a PTY, and warn otherwise. Currently the R backend needs this.
+	- on exit, check whether there are still RCommands left in the backend and wait/request user-interaction before tearing down the thread. After all, the last command might have been a "save"!
+		- How about always doing exiting via a "q ()" command in the backend, instead? That way we could always be sure, all previous commands have been completed before the q ()!
+	- error-handling/raising in .rk.do.call
+	- I've changed the simple RInterface::issueCommand (QString, ...) command to return a pointer to the RCommand created. This will allow for lots of small cleanups. Do them.
+		- well, on second thought, it might be better to rely more on RCommand::id () instead of pointers. Why? The id is unique (until integer overflow). The pointer may be reused after a delete -> potential problem when trying to cancel command which is actually already deleted (and potentially other cases)
+		- let's set this back for a while
+	- RKVariable:
+		- use QIntDict instead of string-map for value-labels / factor levels?
+	- UNPROTECT_PTR
+	- give informative feedback on syntax errors (line numbers, etc.)!
 
-- use SVG device for graphics output
+General code:
+	- use constBegin (), constEnd ()
+	- get rid of all the superflous dependencies: http://lists.debian.org/debian-devel/2005/12/msg00439.html
+	- use more QDicts instead of QMap<QString,...>s
+	- remove classes/files:
+		- RKDocManager? Is this used?
+		- RKGlobals
+			- static members should be moved to the respective classes. Much cleaner!
+
+R plugins:
+	- use SVG device for graphics output
 	- provide context menu / other UI to export to different formats / edit
-- hot-key/permanent icon to cancel current command / hold processing. Perhaps in the busy/idle indicator?
-- frequent output of a command should not raise the command log over and over again (user should have a chance to switch away)
+	- PHP-backend:
+		- switch to KProcIO for easier logic
+		- http://de3.php.net/manual/en/function.call-user-func.php seems to be faster than eval
+		- find out why an error in the backend often leads to a subsequent crash
+	- plugins (general)
+		- add import-filter plugins
+	- formula-widget:
+		- use smart sorting, esp. of generated string
+		- add labels, add "up to level" option
+		- add constant term option
+	- create a spinbox, that can really deal with real numbers
+	- add a help system
 
-RObjectTables sounds highly interesing. Maybe we can use a transparent table to find out about assignments?
-	- Problem: we can't add this on top of the globalenv () (or at least we're not supposed to)
-		- can we dare to replace R_GlobalEnv with a fake environment which redirects to the real thing?
-R_MakeActiveBinding sounds even more interesting. Maybe we can use this to "watch" symbols?!?
-	- can't track removal or creation of new objects this way
-	- seems to work only for top-level objects (elements in a list are not discernable, though we do catch the access to the list itself)
+Documentation:
+	- add an example to show rkward-specific commands (rk.print, rk.graph)
 
-"First-run wizard"
-	- pre-install R packages
+API documentation:
+	- add page containing a rough overview of general architecture
+	- RCommandStack
 
-Little annoying stuff:
-- hide tabs in console
-- add an example to show rkward-specific commands (rk.print, rk.graph)
-- instead of delete RObject, call RObject::deleteThis () and check for deleted in rCommandDone ()?
-- use more QDicts instead of QMap<QString,...>s
-- use R_DirtyImage to determine, whether workspace needs to be saved
-- in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
-- find out how to save toolbar states properly in parts-GUI
-- use constBegin (), constEnd ()
-- get rid of all the superflous dependencies: http://lists.debian.org/debian-devel/2005/12/msg00439.html
-
-PHP-backend:
-- switch to KProcIO for easier logic
-- http://de3.php.net/manual/en/function.call-user-func.php seems to be faster than eval
-- find out why an error in the backend often leads to a subsequent crash
-
-- on viewDeactivated, it may not be safe to call setCaption and there activeWindow (). Apparently, the pointer may be invalid:
-	- start rkward with empty table. open command editor. switch back to table. Edit some stuff in the table. Ctrl+W. Crash
-
-Configuration options to add:
+Configuration:
 	- additional console options:
 		- color highlighting for warnings/errors (once we can identify them reliably)
 	- additional R engine options:
@@ -85,73 +130,8 @@ Configuration options to add:
 	- new dataeditor options:
 		- see below: comments on RKEditorDataFrame
 
-RKHelpDlg:
-	- in the mid term, this should probably be renamed and moved to windows
-	- call .rk.get.installed.packages, and update package selection drop down on every show, but not on startup
 
-- RKConsole:
-	- Console should start a command chain when submitting a batch of pasted commands
-
-RKwatch:
-	- optionally keep a file log!
-
-- check whether we're running in a PTY, and warn otherwise. Currently the R backend needs this.
-
-- remove classes/files:
-	- RKDocManager? Is this used?
-	- RKGlobals
-		- static members should be moved to the respective classes. Much cleaner!
-
-stuff to do before 0.4.0 release
-- plugins (general)
-	- add import-filter plugins
-- on exit, check whether there are still RCommands left in the backend and wait/request user-interaction before tearing down the thread. After all, the last command might have been a "save"!
-	- How about always doing exiting via a "q ()" command in the backend, instead? That way we could always be sure, all previous commands have been completed before the q ()!
-- error-handling/raising in .rk.do.call
-- pick some from below:
-
-code cleanups
-- I've changed the simple RInterface::issueCommand (QString, ...) command to return a pointer to the RCommand created. This will allow for lots of small cleanups. Do them.
-	- well, on second thought, it might be better to rely more on RCommand::id () instead of pointers. Why? The id is unique (until integer overflow). The pointer may be reused after a delete -> potential problem when trying to cancel command which is actually already deleted (and potentially other cases)
-	- let's set this back for a while
-
-API documentation:
-- add page containing a rough overview of general architecture
-- RCommandStack
-
-(relatively) small stuff to do soon
-- Twintable/RKEditorDataFrame
-	- merge the two classes
-	- more efficient syncing: fetch only the values actually needed instead of the whole table
-	- make configurable:
-		- invalid color (global and per variable)
-		- unused color (global and per variable)
-		- default alignment (per var type)
-		- default precision
-		- display of factor level labels (global and per variable)
-		- delay of factor-level popup
-	- highlighting of value ranges
-- Object editing / modification tracking:
-	- functions to set double/int/string-vectors directly. Use in paste-operations
-- RKVariable:
-	- use QIntDict instead of string-map for value-labels / factor levels?
-- plugins (general)
-	- add more plugin-widgets
-- formula-widget:
-	- use smart sorting, esp. of generated string
-	- add labels, add "up to level" option
-	- add constant term option
-- create a spinbox, that can really deal with real numbers
-- UNPROTECT_PTR
-- use RKGlobals::marginHint (), RKGlobals::spacingHint () everywhere
-- give informative feedback on syntax errors (line numbers, etc.)!
-
-stuff to do before the thing is usable
-- add a help-system
-- mostly everything
-
-stuff to do before a 1.0 release
-- handle graphics
+################## Some internal notes below ##############
 
 Notes for x11-window capturing:
 - See deactived class-header rbackend/rkwindowcatcher.h
