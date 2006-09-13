@@ -40,6 +40,12 @@ UI-stuff
 	- RKConsole:
 		- Console should start a command chain when submitting a batch of pasted commands
 		- hide tabs in console
+		- tabs should do name completion!
+	- Script editor:
+		- allow to pipe scripts to the console (console might have to be made smarter about large pasted commands, first)
+	- RKConsole / Script editor:
+		- syntax tool tips
+		- highlight only valid function names
 	- RKHelpDlg:
 		- in the mid term, this should probably be renamed and moved to windows
 		- call .rk.get.installed.packages, and update package selection drop down on every show, but not on startup
@@ -79,6 +85,12 @@ Internal stuff:
 	- check whether we're running in a PTY, and warn otherwise. Currently the R backend needs this.
 	- on exit, check whether there are still RCommands left in the backend and wait/request user-interaction before tearing down the thread. After all, the last command might have been a "save"!
 		- How about always doing exiting via a "q ()" command in the backend, instead? That way we could always be sure, all previous commands have been completed before the q ()!
+	- save Workplace when saving Workspace
+		- data editors (Already there, but should be reworked)
+		- Output window
+		- help pages
+		- script files
+		- auto-restore when loading Workspace
 	- error-handling/raising in .rk.do.call
 	- I've changed the simple RInterface::issueCommand (QString, ...) command to return a pointer to the RCommand created. This will allow for lots of small cleanups. Do them.
 		- well, on second thought, it might be better to rely more on RCommand::id () instead of pointers. Why? The id is unique (until integer overflow). The pointer may be reused after a delete -> potential problem when trying to cancel command which is actually already deleted (and potentially other cases)
