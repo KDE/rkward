@@ -29,30 +29,30 @@ check_autotool_versions()
 {
 AUTOCONF_VERSION=`$AUTOCONF --version | head -n 1`
 case $AUTOCONF_VERSION in
-  Autoconf*2.5* | autoconf*2.5* ) : ;;
+  Autoconf*2.5* | autoconf*2.5* | autoconf*2.6* ) : ;;
   "" )
     echo "*** AUTOCONF NOT FOUND!."
-    echo "*** KDE requires autoconf 2.52, 2.53 or 2.54"
+    echo "*** KDE requires autoconf 2.52, 2.53 or 2.54 or 2.6x"
     exit 1
     ;;
   * )
     echo "*** YOU'RE USING $AUTOCONF_VERSION."
-    echo "*** KDE requires autoconf 2.52, 2.53 or 2.54"
+    echo "*** KDE requires autoconf 2.52, 2.53 or 2.54 or 2.6x"
     exit 1
     ;;
 esac
  
 AUTOHEADER_VERSION=`$AUTOHEADER --version | head -n 1`
 case $AUTOHEADER_VERSION in
-  Autoconf*2.5* | autoheader*2.5* ) : ;;
+  Autoconf*2.5* | autoheader*2.5* | autoheader*2.6* ) : ;;
   "" )
     echo "*** AUTOHEADER NOT FOUND!."
-    echo "*** KDE requires autoheader 2.52 or 2.53 (part of autoconf)"
+    echo "*** KDE requires autoheader 2.52 or 2.53 or 2.6x (part of autoconf)"
     exit 1
     ;;
   * )
     echo "*** YOU'RE USING $AUTOHEADER_VERSION."
-    echo "*** KDE requires autoheader 2.52 or 2.53 (part of autoconf)"
+    echo "*** KDE requires autoheader 2.52 or 2.53 or 2.6x (part of autoconf)"
     exit 1
     ;;
 esac
