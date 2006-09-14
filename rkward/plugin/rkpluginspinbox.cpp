@@ -64,6 +64,7 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 		int initial = xml->getIntAttribute (element, "initial", min, DL_INFO);
 
 		spinbox->setIntMode (min, max, initial);
+		spinbox->setLineStep (initial > 1 ? initial : 1);
 
 		intvalue->setMin (min);
 		intvalue->setMax (max);
