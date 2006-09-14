@@ -34,11 +34,17 @@
 	
 	<contexts>
 		<!-- This context dispatches to the two main contexts output or command -->
-		<context attribute="LineStart" lineEndContext="#stay" name="ctxbase">
-			<RegExpr attribute="LineStart" context="command" String="^&gt; " beginRegion="command"/>
+		<context attribute="Prompt" lineEndContext="#stay" name="ctxbase">
+			<RegExpr attribute="Prompt" context="command" String="^&gt; " beginRegion="command"/>
 			<RegExpr attribute="Normal Text" context="output" String="^([^&gt;\+]|$)" lookAhead="true"/>
 		</context>
 
+		<!-- The output context does no highlighting. If a "> " is encountered at line start, pop back to ctxbase (and to command from there) --> 
+		<context attribute="Output" lineEndContext="#stay" name="output">
+			<RegExpr attribute="Prompt" context="#pop" String="^&gt; " lookAhead="true" endRegion="command"/>
+		</context>
+
+		<!-- The base context in command mode -->
 		<context attribute="Normal Text" lineEndContext="#stay" name="command">
 			<IncludeRules context="CommandContinuationCheck"/>
 			<IncludeRules context="CommonRules"/>
@@ -59,19 +65,16 @@
 			<HlCStringChar attribute="String Char" context="#stay"/>
 		</context>
 
-		
-		<context attribute="Output" lineEndContext="#stay" name="output">
-			<RegExpr attribute="LineStart" context="#pop" String="^&gt; " lookAhead="true" endRegion="command"/>
-		</context>
 		<context attribute="Headline" lineEndContext="#pop" name="Headline"/>
 		<context attribute="Comment" lineEndContext="#pop" name="Comment"/>
 
 		<!-- This context is not really used, but meant to be included. It checks whether a new line is a continuation of a command. If so, it eats the "+ " at the line start. Else it tries to pop back to the top level -->
 		<context attribute="Normal Text" name="CommandContinuationCheck">
+			<!-- This should pop us back into ctxbase, which will then take us to the next command -->
+			<RegExpr attribute="Prompt" context="#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop" String="^&gt; " lookAhead="true" endRegion="command"/>
 			<!-- This should pop us back into ctxbase, which will then most likely take us to output -->
-			<RegExpr attribute="Normal Text" context="#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop" String="^&gt; " lookAhead="true" endRegion="command"/>
 			<RegExpr attribute="Normal Text" context="#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop" String="^([^\+]|$)" lookAhead="true"/>
-			<RegExpr attribute="LineStart" context="#stay" String="^\+ "/>
+			<RegExpr attribute="Prompt" context="#stay" String="^\+ "/>
 		</context>
 
 		<!-- This context is not really used, but contains the common rules -->
@@ -103,14 +106,13 @@
 			<RegExpr attribute="Error" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~){2,}"/>	
 			<RegExpr attribute="Operator" context="#stay" String="%[^%]*%"/>
 		</context>
-
 	</contexts>
 
 	<itemDatas>
 		<itemData name="Output" defStyleNum="dsOthers"/>
 		<!-- KDE default colors: http://accessibility.kde.org/oxygen.php?color=white -->
 		<itemData name="Normal Text" defStyleNum="dsNormal"/>
-		<itemData name="LineStart" defStyleNum="dsNormal"/>
+		<itemData name="Prompt" defStyleNum="dsNormal"/>
 		<itemData name="Keyword" defStyleNum="dsKeyword"/>
 		<itemData name="Identifier" defStyleNum="dsDataType"/>
 		<itemData name="String" defStyleNum="dsString"/>
@@ -124,7 +126,6 @@
 		<itemData name="String Char"  defStyleNum="dsChar"/>
 		<itemData name="Float" defStyleNum="dsFloat"/>
 		<itemData name="Int" defStyleNum="dsDecVal"/>
-		<itemData name="Test" defStyleNum="dsAlert"/>
 	</itemDatas>
 </highlighting>
 
