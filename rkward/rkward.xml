@@ -61,14 +61,16 @@
 
 		
 		<context attribute="Output" lineEndContext="#stay" name="output">
-			<RegExpr attribute="LineStart" context="#pop" String="^&gt; " lookAhead="true"/>
+			<RegExpr attribute="LineStart" context="#pop" String="^&gt; " lookAhead="true" endRegion="command"/>
 		</context>
 		<context attribute="Headline" lineEndContext="#pop" name="Headline"/>
 		<context attribute="Comment" lineEndContext="#pop" name="Comment"/>
 
 		<!-- This context is not really used, but meant to be included. It checks whether a new line is a continuation of a command. If so, it eats the "+ " at the line start. Else it tries to pop back to the top level -->
 		<context attribute="Normal Text" name="CommandContinuationCheck">
-			<RegExpr attribute="Normal Text" context="#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop" String="^([^\+]|$)" lookAhead="true" endRegion="command"/>		<!-- This should pop us back into ctxbase, which will then most likely take us to output -->
+			<!-- This should pop us back into ctxbase, which will then most likely take us to output -->
+			<RegExpr attribute="Normal Text" context="#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop" String="^&gt; " lookAhead="true" endRegion="command"/>
+			<RegExpr attribute="Normal Text" context="#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop" String="^([^\+]|$)" lookAhead="true"/>
 			<RegExpr attribute="LineStart" context="#stay" String="^\+ "/>
 		</context>
 
