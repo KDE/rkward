@@ -118,7 +118,6 @@ RKConsole::RKConsole () : QWidget (0) {
 	view->focusProxy()->installEventFilter(this);
 	view->installEventFilter(this);
 
-	setRHighlighting ();
 	doc->setModified (false);
 	
 	setCaption (i18n ("R Console"));
@@ -130,6 +129,7 @@ RKConsole::RKConsole () : QWidget (0) {
 	output_continuation = false;
 	doc->setUndoSteps (0);
 	clear ();
+	setRHighlighting ();
 
 	commands_history = RKSettingsModuleConsole::loadCommandHistory ();
 	commands_history_position = commands_history.constEnd ();
@@ -160,7 +160,7 @@ void RKConsole::setRHighlighting () {
 	if (found_mode) {
 		doc->setHlMode(i);
 	} else {
-		RK_DO (qDebug ("%s", doc->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_WARNING);
+		RK_DO (qDebug ("rkward output highlighting not found"), COMMANDEDITOR, DL_WARNING);
 	}
 }
 
