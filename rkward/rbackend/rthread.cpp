@@ -353,17 +353,18 @@ void RThread::handleStandardCallback (RCallbackArgs *args) {
 	qApp->postEvent (RKGlobals::rInterface (), event);
 	
 	bool done = false;
-	while (!done) {
-		// callback not done yet? Sleep for a while
-		msleep (10);
+	while (!(done || (locked & Cancel))) {	// what's with that lock? If the current command is cancelled, while we're in this loop, we must not lock the mutex. We may get long-jumped out of the loop before we get a chance to unlock.
+		msleep (10); // callback not done yet? Sleep for a while
 
-		MUTEX_LOCK;
-		processX11Events ();
-
-		if (args->done) {
-			done = true;		// safe to access only while the mutex is locked
+		if (!locked) {
+			MUTEX_LOCK;
+			processX11Events ();
+	
+			if (args->done) {
+				done = true;		// safe to access only while the mutex is locked
+			}
+			MUTEX_UNLOCK;
 		}
-		MUTEX_UNLOCK;
 	}
 }
 

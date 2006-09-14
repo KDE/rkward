@@ -21,7 +21,7 @@
 #include <qobject.h>
 #include <qmutex.h>
 
-#include "rthread.h"
+#include "rcommand.h"
 
 //#define DEBUG_MUTEX
 #ifdef DEBUG_MUTEX
@@ -37,6 +37,9 @@ class RCommand;
 class RKwardApp;
 struct RCallbackArgs;
 class QTimer;
+class RThread;
+class RCommandReceiver;
+struct REvalRequest;
 
 /** This class provides the main interface to the R-processor.
 
@@ -82,7 +85,7 @@ not be interrupted. */
 #endif
 
 /** returns the command currently running in the thread. Be careful when using the returned pointer! */
-	RCommand *runningCommand () { return r_thread->current_command; };
+	RCommand *runningCommand ();
 public slots:
 /** called periodically to flush output buffer in RThread */
 	void flushOutput ();

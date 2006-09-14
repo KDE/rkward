@@ -101,6 +101,7 @@ Internal stuff:
 	- give informative feedback on syntax errors (line numbers, etc.)!
 	- .rk.get.available.packages ()
 		- use external (file) storage for cache to save mem
+	- can the mutex be made non-recursive? I think so, but don't recall
 
 General code:
 	- use constBegin (), constEnd ()

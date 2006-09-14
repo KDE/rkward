@@ -111,6 +111,10 @@ RInterface::~RInterface(){
 	delete watch;
 }
 
+RCommand *RInterface::runningCommand () {
+	 return r_thread->current_command;
+}
+
 void RInterface::customEvent (QCustomEvent *e) {
 	RK_TRACE (RBACKEND);
 	if (e->type () == RCOMMAND_OUTPUT_EVENT) {
@@ -332,9 +336,11 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 	if (type == RCallbackArgs::RShowMessage) {
 		KMessageBox::information (0, QString (*(args->chars_a)), i18n ("Message from the R backend"));
 	} else if (type == RCallbackArgs::RReadConsole) {
+		QString question = *(args->chars_a);
+
 		bool ok;
 		QRegExpValidator *dummy = new QRegExpValidator (QRegExp (".*"), 0);		// needed to allow empty strings in KInputDialog::getText
-		QString res = KInputDialog::getText (i18n ("R backend requests information"), QString (*(args->chars_a)), QString::null, &ok, 0, 0, dummy);
+		QString res = KInputDialog::getText (i18n ("R backend requests information"), question, QString::null, &ok, 0, 0, dummy);
 		delete dummy;
 		res = res.left (args->int_a - 2) + "\n";
 		qstrcpy (*(args->chars_b), res.latin1 ());
