@@ -1926,6 +1926,7 @@ AC_REQUIRE([CHECK_LIBRSO])
 AC_REQUIRE([CHECK_RLIBDIR])
 AC_REQUIRE([CHECK_RINCLUDE])
 AC_REQUIRE([CHECK_RLAPACK])
+AC_REQUIRE([CHECK_RBLAS])
 dnl ############################################ RKWARD specific addition end ###################################
 
 ])
@@ -1985,6 +1986,21 @@ fi
    AC_SUBST(R_LAPACK_FLAG)
 ])
 
+dnl for at least some versions of R, we seem to have to link against -lRblas. Else loading some
+dnl R packages will fail due to unresolved symbols. However, we can't do this unconditionally,
+dnl as this is not available in some configurations of R
+AC_DEFUN([CHECK_RBLAS],
+[
+AC_MSG_CHECKING(whether we should link against libRblas.so)
+if test -f "$R_HOMEDIR/lib/libRblas.so"; then
+   AC_MSG_RESULT(yes $R_HOMEDIR/lib/libRblas.so exists)
+   R_BLAS_FLAG="-lRblas"
+else
+   AC_MSG_RESULT(no $R_HOMEDIR/lib/libRblas.so does not exist)
+   R_BLAS_FLAG=""
+fi
+   AC_SUBST(R_BLAS_FLAG)
+])
 
 dnl find out R_INLUCDE_DIR
 AC_DEFUN([CHECK_RINCLUDE],

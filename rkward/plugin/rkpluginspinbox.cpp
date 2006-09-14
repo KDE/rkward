@@ -57,7 +57,6 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 		realvalue->setMin (min);
 		realvalue->setMax (max);
 		realvalue->setPrecision (max_precision);
-		intmode = false;
 	} else {
 		int min = xml->getIntAttribute (element, "min", INT_MIN, DL_INFO);
 		int max = xml->getIntAttribute (element, "max", INT_MAX, DL_INFO);
@@ -68,7 +67,6 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 
 		intvalue->setMin (min);
 		intvalue->setMax (max);
-		intmode = true;
 	}
 
 	// connect
