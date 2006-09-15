@@ -345,7 +345,11 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		res = res.left (args->int_a - 2) + "\n";
 		qstrcpy (*(args->chars_b), res.latin1 ());
 
-		if (!ok) cancelCommand (runningCommand ());
+		if (!ok) {
+			args->done = true;		// need to do this at once. Else we risk getting stuck in the standard callback event loop
+			cancelCommand (runningCommand ());
+			return;
+		}
 	} else if ((type == RCallbackArgs::RShowFiles) || (type == RCallbackArgs::REditFiles)) {
 		if ((type == RCallbackArgs::RShowFiles) && (QString (*(args->chars_d)) == "rkwardhtml")) {
 			// not to worry, just some help file to display
@@ -379,9 +383,7 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		r_thread->terminate ();
 	}
 
-	MUTEX_LOCK;
 	args->done = true;
-	MUTEX_UNLOCK;
 }
 
 #include "rinterface.moc"
