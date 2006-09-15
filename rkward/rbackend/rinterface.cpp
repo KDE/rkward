@@ -26,6 +26,7 @@
 #include "../core/robjectlist.h"
 #include "../core/rkmodificationtracker.h"
 #include "../dialogs/rkloadlibsdialog.h"
+#include "../dialogs/rkreadlinedialog.h"
 #include "../agents/showedittextfileagent.h"
 #include "../windows/rcontrolwindow.h"
 
@@ -39,7 +40,6 @@ RKWindowCatcher *window_catcher;
 #include "../debug.h"
 
 #include <kmessagebox.h>
-#include <kinputdialog.h>
 #include <kfiledialog.h>
 #include <klocale.h>
 
@@ -336,14 +336,12 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 	if (type == RCallbackArgs::RShowMessage) {
 		KMessageBox::information (0, QString (*(args->chars_a)), i18n ("Message from the R backend"));
 	} else if (type == RCallbackArgs::RReadConsole) {
-		QString question = *(args->chars_a);
+		QString result;
 
-		bool ok;
-		QRegExpValidator *dummy = new QRegExpValidator (QRegExp (".*"), 0);		// needed to allow empty strings in KInputDialog::getText
-		QString res = KInputDialog::getText (i18n ("R backend requests information"), question, QString::null, &ok, 0, 0, dummy);
-		delete dummy;
-		res = res.left (args->int_a - 2) + "\n";
-		qstrcpy (*(args->chars_b), res.latin1 ());
+		bool ok = RKReadLineDialog::readLine (0, i18n ("R backend requests information"), *(args->chars_a), runningCommand (), &result);
+
+		result = result.left (args->int_a - 2) + "\n";
+		qstrcpy (*(args->chars_b), result.latin1 ());
 
 		if (!ok) {
 			args->done = true;		// need to do this at once. Else we risk getting stuck in the standard callback event loop

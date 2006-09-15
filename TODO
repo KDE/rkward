@@ -11,7 +11,7 @@ Bugs:
 	- on viewDeactivated, it may not be safe to call setCaption and there activeWindow (). Apparently, the pointer may be invalid:
 		- start rkward with empty table. open command editor. switch back to table. Edit some stuff in the table. Ctrl+W. Crash
 	- produce many readline calls (e.g. "for (i in 1:10) readline()") repeatedly and cancel all of them.
-		- Sometimes only the readine is interrupted, sometimes the whole command (might be R's fault?)
+		- Sometimes only the readine is interrupted, sometimes the whole command (might be R's fault? But works fine in plain R)
 		- Occasionally this seems to leave R in a bad (semi-crashed) state
 
 UI-stuff
@@ -42,6 +42,7 @@ UI-stuff
 		- use icons to mark up the different base types
 	- RKConsole:
 		- Console should start a command chain when submitting a batch of pasted commands
+		- Better yet, the commands might be autosplit in the backend. Need to think about how to design this correctly, though
 		- hide tabs in console
 		- tabs should do name completion!
 	- Script editor:
@@ -51,7 +52,7 @@ UI-stuff
 		- highlight only valid function names
 	- RKHelpDlg:
 		- in the mid term, this should probably be renamed and moved to windows
-		- call .rk.get.installed.packages, and update package selection drop down on every show, but not on startup
+		- call .rk.get.installed.packages, and update package selection drop down on every show, but not on startup? Really? Maybe both.
 	- RKwatch:
 		- optionally keep a file log!
 	- hot-key/permanent icon to cancel current command / hold processing. Perhaps in the busy/idle indicator?
@@ -106,6 +107,7 @@ Internal stuff:
 	- .rk.get.available.packages ()
 		- use external (file) storage for cache to save mem
 	- can the mutex be made non-recursive? I think so, but don't recall
+	- RCommand::GetStructure for retrieving simple lists in a single call. Create class RStructure with field string/int/double/structure data, make RCommand a subclass of this (or something similar)
 
 General code:
 	- use constBegin (), constEnd ()

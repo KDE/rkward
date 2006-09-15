@@ -76,10 +76,15 @@
 #include "debug.h"
 
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
+#include "dialogs/rkreadlinedialog.h"	// TODO: see below: needed purely for linking!
+
+// This nevers gets called. It's needed to trick ld into linking correctly. Nothing else.
+void bogusCalls () {
+	ShowEditTextFileAgent::showEditFiles (0);		// TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
+	RKReadLineDialog::readLine (0, QString(), QString(), 0, 0);	// TODO: see above
+}
 
 RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
-	ShowEditTextFileAgent::showEditFiles (0);		// TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
-
 	RK_TRACE (APP);
 	RKGlobals::app = this;
 	RKGlobals::rinter = 0;
