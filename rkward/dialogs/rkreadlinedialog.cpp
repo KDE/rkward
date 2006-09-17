@@ -21,6 +21,8 @@
 #include <qtextedit.h>
 #include <qlabel.h>
 #include <qvbox.h>
+#include <qapplication.h>
+#include <qdesktopwidget.h>
 
 #include <klocale.h>
 
@@ -30,9 +32,12 @@
 
 RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, const QString &prompt, RCommand *command) : KDialogBase (parent, 0, true, caption, KDialogBase::Ok | KDialogBase::Cancel) {
 	RK_TRACE (DIALOGS);
+	RK_ASSERT (command);
 
 	QVBox *page = makeVBoxMainWidget ();
 	new QLabel (caption, page);
+
+	int screen_width = qApp->desktop ()->width () - 2*marginHint() - 2*spacingHint ();		// TODO is this correct on xinerama?
 
 	QString context = command->fullOutput ();
 	if (!context.isEmpty ()) {
@@ -45,11 +50,13 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 		output->setWordWrap (QTextEdit::NoWrap);
 		output->setText (context);
 		output->setReadOnly (true);
-		setMinimumWidth (output->contentsWidth ());		// TODO: should never be wider than screen
+		int cwidth = output->contentsWidth ();
+		output->setMinimumWidth (screen_width < cwidth ? screen_width : cwidth);
 		output->scrollToBottom ();
 	}
 
-	new QLabel (prompt, page);
+	QLabel *promptl = new QLabel (prompt, page);
+	promptl->setAlignment (Qt::WordBreak | promptl->alignment ());
 
 	input = new QLineEdit (QString (), page);
 	input->setMinimumWidth (fontMetrics ().maxWidth ()*20);
@@ -67,7 +74,7 @@ bool RKReadLineDialog::readLine (QWidget *parent, const QString &caption, const 
 	RKReadLineDialog *dialog = new RKReadLineDialog (parent, caption, prompt, command);
 	int res = dialog->exec ();
 	*result = dialog->input->text ();
+	delete dialog;
 
-	if (res == KDialogBase::Cancel) return false;
-	return true;
+	return (res != KDialogBase::Cancel);
 }
