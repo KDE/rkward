@@ -1,3 +1,5 @@
+--- Version 0.3.7 - Sep-17-2006
+- added Turkish translation
 - avoid lockups when cancelling a readline ()
 - show output context (if any) when the backend asks for input via readline ()
 - link against libRblas.so if it is found in the R libs dir (needed for some compiles of R 2.4.0)

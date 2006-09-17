@@ -53,6 +53,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 		int cwidth = output->contentsWidth ();
 		output->setMinimumWidth (screen_width < cwidth ? screen_width : cwidth);
 		output->scrollToBottom ();
+		output->setFocusPolicy (QWidget::NoFocus);
 	}
 
 	QLabel *promptl = new QLabel (prompt, page);
@@ -60,6 +61,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 
 	input = new QLineEdit (QString (), page);
 	input->setMinimumWidth (fontMetrics ().maxWidth ()*20);
+	input->setFocus ();
 }
 
 RKReadLineDialog::~RKReadLineDialog () {

@@ -59,7 +59,6 @@ UI-stuff
 	- find out how to save toolbar states properly in parts-GUI
 	- David's usability items
 	- use RKGlobals::marginHint (), RKGlobals::spacingHint () everywhere
-	- In response to a readline, offer to show output context, as often them prompt is not meaningful. Need a new class for that
 
 Internal stuff:
 	RCommandReceiver:
