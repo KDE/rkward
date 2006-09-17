@@ -1,6 +1,7 @@
 rkward (0.3.7-1) unstable; urgency=low
 
   * new upstream release
+  * use confiure option --with-r-libdir to make sure the rkward R package is installed in /usr/lib/R/site-library/
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sun, 17 Sep 2006 16:40:00 +0200
 
