@@ -683,7 +683,7 @@ void RKwardApp::slotOpenCommandEditor (){
 	KURL::List urls;
 	KURL::List::const_iterator it;
 	
-	urls = KFileDialog::getOpenURLs (":<rfiles>", "*.R *.r", this, i18n ("Open command file(s)"));
+	urls = KFileDialog::getOpenURLs (":<rfiles>", "*.R;*.r;*.S;*.s;*.q", this, i18n ("Open command file(s)"));
 
 	for (it = urls.begin() ; it != urls.end() ; ++it){
 		slotOpenCommandEditor (*it);
