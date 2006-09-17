@@ -106,6 +106,8 @@ friend class RKwardApp;
 friend class RCommand;
 /** pointer to the RKwatch. TODO: (re-)move this pointer */
 	RKwatch *watch;
+/** Used (once!) to start the RThread. Need to make this separate to avoid race conditions */
+	void startThread ();
 protected:
 /** needed to handle the QCustomEvent s, the RThread is sending (notifications on what's happening in the backend thread) */
 	void customEvent (QCustomEvent *e);

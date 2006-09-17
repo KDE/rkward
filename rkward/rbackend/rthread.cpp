@@ -25,6 +25,7 @@
 #include "../debug.h"
 
 #include <kapplication.h>
+#include <klocale.h>
 #include <dcopclient.h>
 
 #include <qstring.h>
@@ -368,7 +369,7 @@ int RThread::initialize () {
 	RK_TRACE (RBACKEND);
 
 	// we create a fake RCommand to capture all the output/errors during startup
-	current_command = new RCommand (QString::null, RCommand::App, "R Startup");
+	current_command = new RCommand (i18n ("R Startup"), RCommand::App, i18n ("R Startup"));
 
 	int argc = 2;
 	char* argv[2] = { qstrdup ("--slave"), qstrdup ("--no-save") };

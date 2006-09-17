@@ -79,15 +79,12 @@ RInterface::RInterface () {
 	flush_timer = new QTimer (this);
 	connect (flush_timer, SIGNAL (timeout ()), this, SLOT (flushOutput ()));
 	flush_timer->start (FLUSH_INTERVAL);
-
-	r_thread->start ();
 }
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
 	RK_TRACE (RBACKEND);
 	issueCommand (new RCommand (command, type, rk_equiv, receiver, flags), chain);
 }
-
 
 RInterface::~RInterface(){
 	RK_TRACE (RBACKEND);
@@ -109,6 +106,11 @@ RInterface::~RInterface(){
 
 	delete flush_timer;
 	delete watch;
+}
+
+void RInterface::startThread () {
+	RK_TRACE (RBACKEND);
+	r_thread->start ();
 }
 
 RCommand *RInterface::runningCommand () {

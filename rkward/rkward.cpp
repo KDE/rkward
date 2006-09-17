@@ -257,7 +257,8 @@ void RKwardApp::startR () {
 	
 	RKGlobals::rinter = new RInterface ();
 	RKGlobals::list = new RObjectList ();
-	
+
+	RKGlobals::rInterface ()->startThread ();
 	object_browser->initialize ();
 }
 
