@@ -14,6 +14,10 @@ Bugs:
 		- Sometimes only the readine is interrupted, sometimes the whole command (might be R's fault? But works fine in plain R)
 		- Occasionally this seems to leave R in a bad (semi-crashed) state
 
+Compilation / technical
+	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org
+	- move to subversion
+
 UI-stuff
 	"First-run wizard"
 		- pre-install R packages
