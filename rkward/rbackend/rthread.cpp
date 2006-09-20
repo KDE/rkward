@@ -145,7 +145,7 @@ void RThread::doCommand (RCommand *command) {
 		RK_DO (qDebug ("running command: %s", ccommand), RBACKEND, DL_DEBUG);
 	
 		if (command->type () & RCommand::DirectToOutput) {
-			runCommandInternal ("sink (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\", append=TRUE, split=TRUE)\n", &error);
+			runCommandInternal (QString ("sink (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\", append=TRUE, split=TRUE)\n").local8Bit (), &error);
 		}
 
 		MUTEX_UNLOCK;
@@ -280,7 +280,7 @@ void RThread::handleCondition (char **call, int call_length) {
 	qDebug ("condition '%s', message '%s'", call[0], call[1]);
 } */
 
-void RThread::handleError (char **call, int call_length) {
+void RThread::handleError (QString *call, int call_length) {
 	RK_TRACE (RBACKEND);
 
 	if (!call_length) return;
@@ -292,11 +292,11 @@ void RThread::handleError (char **call, int call_length) {
 	current_command->output_list.last ()->type = ROutput::Error;
 	current_command->status |= RCommand::HasError;
 
-	RK_DO (qDebug ("error '%s'", call[0]), RBACKEND, DL_DEBUG);
+	RK_DO (qDebug ("error '%s'", call[0].latin1 ()), RBACKEND, DL_DEBUG);
 	MUTEX_UNLOCK;
 }
 
-void RThread::handleSubstackCall (char **call, int call_length) {
+void RThread::handleSubstackCall (QString *call, int call_length) {
 	RK_TRACE (RBACKEND);
 
 	RCommand *prev_command = current_command;
@@ -385,34 +385,29 @@ int RThread::initialize () {
 	RKWardRError error;
 	int status = 0;
 	
-	char **paths;
 	runCommandInternal ("library (\"rkward\")\n", &error);
 	if (error) status |= LibLoadFail;
 	int c;
-	paths = getCommandAsStringVector ("library.dynam (\"rkward\", \"rkward\")[[\"path\"]]\n", &c, &error);
+	QString *paths = getCommandAsStringVector ("library.dynam (\"rkward\", \"rkward\")[[\"path\"]]\n", &c, &error);
 	if ((error) || (c != 1)) {
 		status |= LibLoadFail;
 	} else {
-		if (!registerFunctions (paths[0])) status |= LibLoadFail;
-	}
-	for (int i = (c-1); i >=0; --i) {
-		DELETE_STRING (paths[i]);
+		if (!registerFunctions (paths[0].local8Bit ())) status |= LibLoadFail;
 	}
 	delete [] paths;
 
 // find out about standard library locations
-	char **standardliblocs = getCommandAsStringVector (".libPaths ()\n", &c, &error);
+	QString *standardliblocs = getCommandAsStringVector (".libPaths ()\n", &c, &error);
 	if (error) status |= OtherFail;
 	for (int i = 0; i < c; ++i) {
 		RKSettingsModuleRPackages::defaultliblocs.append (standardliblocs[i]);
-		DELETE_STRING (standardliblocs[i]);
 	}
 	delete [] standardliblocs;
 
 // apply user configurable run time options
 	QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
-		runCommandInternal (*it, &error);
+		runCommandInternal ((*it).local8Bit (), &error);
 		if (error) {
 			status |= OtherFail;
 			RK_DO (qDebug ("error in initialization call '%s'", (*it).latin1()), RBACKEND, DL_ERROR);
@@ -436,4 +431,17 @@ int RThread::initialize () {
 	qApp->postEvent (RKGlobals::rInterface (), event);
 
 	return status;
+}
+
+QString *stringsToStringList (char **strings, int count) {
+	QString *list = new QString[count];
+	for (int i=0; i < count; ++i) {
+		if (strings[i] == REmbedInternal::na_char_internal) list[i] = QString::null;
+		else list[i] = (QString::fromLocal8Bit (strings[i]));
+	}
+	return list;
+}
+
+void deleteQStringArray (QString *strings) {
+	delete [] strings;
 }

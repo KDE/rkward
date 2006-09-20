@@ -45,6 +45,12 @@ struct RCallbackArgs {
 	bool bool_a;		/**< a bool parameter. Look at the respective callbacks to find out, what it is used for. */
 };
 
+class QString;
+/** This function converts a list of strings to a QStringList (locale aware), and returns the pointer. Needed to keep R and Qt includes separate. The strings can be deleted afterwards. Implementation is in rthread.cpp */
+QString *stringsToStringList (char **strings, int count);
+/** Function to delete an array of Qstring. Does delete [] strings, nothing more. But can not inline this in this class due to conflicting R and Qt includes. Implementation is in rthread.cpp */
+void deleteQStringArray (QString *strings);
+
  /** The main purpose of separating this class from RThread is that R- and Qt-includes don't go together well. Hence this class is Qt-agnostic while
 	RThread is essentially R-agnostic.
 	
@@ -87,11 +93,11 @@ will only be printed if called for expressedly with print ("...") or similar. */
 /** basically a wrapper to runCommandInternal (). Tries to convert the result of the command to an array of char* after running the command. Since
 this will not ever be done for user commands, the R_Visible flag will never be set. @see RCommand::GetStringVector
 @param command char* of the command to be run 
-@param count length of array returned
+@param count length of list returned
 @param error this will be set to a value in RKWardError depending on success/failure of the command
-@returns an array of char* or 0 on failure
+@returns an array of QString or 0 on failure
 @see RCommand::GetStringVector */
-	char **getCommandAsStringVector (const char *command, int *count, RKWardRError *error);
+	QString *getCommandAsStringVector (const char *command, int *count, RKWardRError *error);
 /** basically a wrapper to runCommandInternal (). Tries to convert the result of the command to an array of double after running the command. Since
 this will not ever be done for user commands, the R_Visible flag will never be set. @see RCommand::GetRealVector
 @param command char* of the command to be run 
@@ -122,11 +128,11 @@ public:
 //	virtual void handleCondition (char **call, int call_length) = 0;
 
 /** This gets called, when R reports an error (override of options ("error") in R). Used to get at error-output. */
-	virtual void handleError (char **call, int call_length) = 0;
+	virtual void handleError (QString *call, int call_length) = 0;
 
 /** The main callback from R to rkward. Since we need QStrings and stuff to handle the requests, this is only a pure virtual function. The real
 implementation is in RThread::handleSubstackCall () */
-	virtual void handleSubstackCall (char **call, int call_length) = 0;
+	virtual void handleSubstackCall (QString *call, int call_length) = 0;
 
 /** This second callback handles R standard callbacks. The difference to the first one is, that these are typically required to finish within the same
 function. On the other hand, also, they don't require further computations in R, and hence no full-fledged substack.
@@ -135,9 +141,10 @@ Otherwise it is very similar to handleSubstackCall (), esp. in that is implement
 @see RCallbackArgs @see RCallbackType */
 	virtual void handleStandardCallback (RCallbackArgs *args) = 0;
 
-	bool registerFunctions (char *library_path);
+	bool registerFunctions (const char *library_path);
 /** only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++ */
 	static REmbedInternal *this_pointer;
+	static char *na_char_internal;
 
 /** Flags used to classify output. */
 //	static bool output_is_warning;

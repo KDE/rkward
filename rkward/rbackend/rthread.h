@@ -120,13 +120,13 @@ signals a condition. @see REmbedInternal::handleCondition () */
 
 /** this function is public for technical reasons, only. Don't use except from REmbedInternal! Called from REmbedInternal when the R backend
 reports an error. @see REmbedInternal::handleError () */
-	void handleError (char **call, int call_length);
+	void handleError (QString *call, int call_length);
 
 /** This function is public for technical reasons, only. Don't use except from REmbedInternal!
 
 This is a sub-eventloop, being run when the backend request information from the frontend. See \ref RThread for a more detailed description
 @see REmbedInternal::handleSubstackCall () */
-	void handleSubstackCall (char **call, int call_length);
+	void handleSubstackCall (QString *call, int call_length);
 
 /** This function is public for technical reasons, only. Don't use except from REmbedInternal!
 

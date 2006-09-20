@@ -74,6 +74,9 @@ dnl CXXFLAGS="$CXXFLAGS $USE_EXCEPTIONS" dnl __kdevelop[exc]__
 dnl KDE_NEED_FLEX dnl __kdevelop__
 dnl AC_PROG_YACC dnl __kdevelop__
 
+dnl set QT_NO_ASCII_CAST globally
+CPPFLAGS+=" -DQT_NO_ASCII_CAST"
+
 KDE_CREATE_SUBDIRSLIST
 AC_CONFIG_FILES([ Makefile ])
 AC_CONFIG_FILES([ doc/Makefile ])

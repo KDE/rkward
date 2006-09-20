@@ -120,23 +120,23 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 		}
 
 		// set the names and meta-information
-		for (int i = 0; i < command->stringVectorLength (); ++i) {
-			if (numTrueCols () <= i) {
+		for (int col = 0; col < command->stringVectorLength (); ++col) {
+			if (numTrueCols () <= col) {
 				insertNewColumn ();
 			}
 			// TODO: make clean
-			RKVariable *current_child = static_cast<RKVariable *> (static_cast <RContainerObject*> (getObject ())->findChild (command->getStringVector ()[i]));
+			RKVariable *current_child = static_cast<RKVariable *> (static_cast <RContainerObject*> (getObject ())->findChild (command->getStringVector ()[col]));
 			// this is really just a very preliminary HACK. If we find new children now exist, create them now in order to avoid crash..
 			// TODO: actually, we should have a true check for object type/structure each time before opening an object.
 			if (!current_child) {
-				current_child = static_cast<RKVariable *> (static_cast<RContainerObject *> (getObject ())->createNewChild (command->getStringVector ()[i], this));
+				current_child = static_cast<RKVariable *> (static_cast<RContainerObject *> (getObject ())->createNewChild (command->getStringVector ()[col], this));
 			}
 			if (current_child->isVariable ()) {
-				if (!getColObject (i)) {		// if we initialized the table to empty, the object may already exist in our map
-					setColObject (i, current_child);
+				if (!getColObject (col)) {		// if we initialized the table to empty, the object may already exist in our map
+					setColObject (col, current_child);
 					current_child->setObjectOpened (this, true);
 				} else {
-					RK_ASSERT (getColObject (i) == current_child);
+					RK_ASSERT (getColObject (col) == current_child);
 				}
 			} else {
 				RK_ASSERT (false);

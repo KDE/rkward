@@ -25,9 +25,10 @@ class RKModificationTracker;
 class RKComponentMap;
 class KHelpDlg;
 class RControlWindow;
+class QString;
 
 // deletes the given char*, if it is not a special value. Does not set to 0.
-#define DELETE_STRING(x) if (x && (x != RKGlobals::empty_char) && (x != RKGlobals::unknown_char)) { delete x; };
+#define DELETE_STRING(x) if (x && (x != RKGlobals::na_char) && (x != RKGlobals::unknown_char)) { delete x; };
 
 /**
 This class basically keeps some static pointers which are needed all over the place, so they won't have to be passed around.
@@ -61,9 +62,9 @@ public:
 	static RControlWindow *controlWindow () { return rcontrol; };
 
 /// an empty char
-	static char *empty_char;
+	static QString *na_char;
 /// an unknown value
-	static char *unknown_char;
+	static QString *unknown_char;
 /// a NA double
 	static double na_double;
 	
@@ -71,6 +72,9 @@ public:
 	static int marginHint ();
 /// returns KDialog::spacingHint (), without the need to include kdialog.h in all the sources
 	static int spacingHint ();
+
+	static void deleteStrings (QString **strings, int count);
+
 private:
 	friend class RKwardApp;
 	static RKwardApp *app;

@@ -79,8 +79,6 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	QString getRText (int row);
 /** set the value at the given row in text-form. Will try to convert the given string to the internal storage format if possible. */
 	void setText (int row, const QString &text);
-/** essentially like setText */
-	void setTextPlain (int row, char *text);
 
 /** get the text in pretty form, e.g. rounding numbers to a certain number of digits, replacing numeric values with value labels if available, etc. Formatting is done according to the meta-information stored in the RObject and global user preferences */
 	QString getFormatted (int row);
@@ -89,10 +87,10 @@ numeric! */
 	double *getNumeric (int from_row, int to_row);
 /** set numeric values in the given range. Assumes you provide enough values for the range. If internalStorage is String, all values will be converted to strings, so you should use this function only, if you know you are dealing with a numeric object */
 	void setNumeric (int from_row, int to_row, double *data);
-/** like getNumeric, but returns values as an array of char*s */
-	char **getCharacter (int from_row, int to_row);
+/** like getNumeric, but returns values as an array of QString*s. */
+	QString *getCharacter (int from_row, int to_row);
 /** like setNumeric, but sets chars. If internalStorage () is numeric, attempts to convert the given strings to numbers. I.e. the function behaves essentially like setText (), but operates on a range of cells. */
-	void setCharacter (int from_row, int to_row, char **data);
+	void setCharacter (int from_row, int to_row, QString *data);
 	
 /** returns the current status of the given cell */
 	Status cellStatus (int row);
@@ -151,8 +149,9 @@ protected:
 	struct RKVarEditData : public EditData {
 /// array of numeric data for the cells.
 		double *cell_double_data;
-/// array of string data for the cells.
-		char **cell_string_data;
+/** array of string data for the cells.
+Why is this an array of Qstring* instead of just of QString? The reason is that we need to differentiate three special strings: 1) empty 2) NA 3) unknown / unused. QString.isNull () vs. QString.isEmpty () would buy us two, but that's not enough, unfortunately. */
+		QString **cell_string_data;
 /// the currently allocated length of cell_double_data of cell_string_data. Used to determine, when a re-allocation is required
 		int allocated_length;
 /// see setSyncing

@@ -66,7 +66,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 		checkRemovedChildren (command->getStringVector (), command->stringVectorLength ());
 		
 		// next, update the existing and/or new children
-		num_children_updating = command->stringVectorLength ();
+		num_children_updating = command->stringVectorLength ();		// TODO: is this correct? Some children might have been removed!
 		// empty workspace?
 		if (!num_children_updating) {
 			num_children_updating = 1;
@@ -74,7 +74,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 			return;
 		}
 		for (int i = 0; i < command->stringVectorLength (); ++i) {
-			QString cname = command->getStringVector ()[i];
+			QString cname = command->getStringVector ()[i];		// for easier typing
 			/*if (cname == (".rk.meta")) {
 				childUpdateComplete ();
 				continue;

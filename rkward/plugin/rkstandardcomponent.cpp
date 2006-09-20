@@ -567,7 +567,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element) {
 		} else if (mode == RKComponentPropertyConvert::Range) {
 			convert->setRange (xml->getDoubleAttribute (*it, "min", -FLT_MAX, DL_INFO), xml->getDoubleAttribute (*it, "max", FLT_MAX, DL_INFO));
 		}
-		convert->setRequireTrue (xml->getStringAttribute (*it, "require_true", false, DL_INFO));
+		convert->setRequireTrue (xml->getBoolAttribute (*it, "require_true", false, DL_INFO));
 		component ()->addChild (id, convert);
 	}
 }

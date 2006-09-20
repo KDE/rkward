@@ -59,7 +59,7 @@ struct REvalRequest {
 private:
 friend class RInterface;
 friend class RThread;
-	char **call;
+	QString *call;
 	int call_length;
 	RCommandChain *in_chain;
 };
@@ -192,8 +192,8 @@ public:
 	int realVectorLength () { return (real_count); };
 /** returns the length (size) of the int array. @see RCommand::GetIntVector @see RCommand::getIntVector @see RCommand::detachIntVector */
 	int intVectorLength () { return (integer_count); };
-/** returns a pointer to the char * array. The char* array is owned by the RCommand! @see RCommand::GetStringVector @see RCommand::getStringVector @see RCommand::detachStringVector */
-	char **getStringVector () { return (string_data); };
+/** returns an array of QString*. The array is owned by the RCommand! @see RCommand::GetStringVector @see RCommand::getStringVector @see RCommand::detachStringVector */
+	QString *getStringVector () { return (string_data); };
 /** returns a pointer to the double array. The double array is owned by the RCommand! @see RCommand::GetRealVector @see RCommand::getRealVector @see RCommand::detachRealVector */
 	double *getRealVector () { return (real_data); };
 /** returns a pointer to the int array. The int array is owned by the RCommand! @see RCommand::GetIntVector @see RCommand::getIntVector @see RCommand::detachIntVector */
@@ -219,7 +219,7 @@ friend class RInterface;
 	void newOutput (ROutput *output);
 	QValueList<ROutput*> output_list;
 	QString _command;
-	char **string_data;
+	QString *string_data;
 	int string_count;
 	double *real_data;
 	int real_count;

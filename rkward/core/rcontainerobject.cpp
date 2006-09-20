@@ -88,7 +88,7 @@ void RContainerObject::rCommandDone (RCommand *command) {
 			parent->childUpdateComplete ();
 		}
 		for (int i = 0; i < command->stringVectorLength (); ++i) {
-			QString cname = command->getStringVector ()[i];
+			QString cname = command->getStringVector ()[i]; 	// for easier typing
 			if (childmap.find (cname) != childmap.end ()) {
 				RK_DO (qDebug ("updating existing child: %s", cname.latin1 ()), APP, DL_DEBUG);
 				childmap[cname]->updateFromR ();
@@ -228,15 +228,15 @@ bool RContainerObject::isParentOf (RObject *object, bool recursive) {
 	return false;
 }
 
-void RContainerObject::checkRemovedChildren (char **current_children, int current_child_count) {
+void RContainerObject::checkRemovedChildren (QString *current_children, int child_count) {
 	RK_TRACE (OBJECTS);
 	QValueList<RObject*> removed_list;
-	
-// is there a more efficient algorythm for doing this?
+
+// is there a more efficient algorithm for doing this?
 	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
 		QString child_string = it.key ();
 		bool found = false;
-		for (int i=0; i < current_child_count; ++i) {
+		for (int i = 0; i < child_count; ++i) {
 			if (child_string == current_children[i]) {
 				found = true;
 				break;

@@ -35692,6 +35692,8 @@ fi
 
 
 
+CPPFLAGS+=" -DQT_NO_ASCII_CAST"
+
 
 
 DO_NOT_COMPILE="$DO_NOT_COMPILE CVS bsd-port admin"

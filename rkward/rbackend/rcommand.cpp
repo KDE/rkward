@@ -53,9 +53,6 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 
 RCommand::~RCommand(){
 	RK_TRACE (RBACKEND);
-	for (int i = 0; i < string_count; ++i) {
-		DELETE_STRING (string_data[i]);
-	}
 	delete [] string_data;
 	delete real_data;
 	delete integer_data;

@@ -479,7 +479,7 @@ bool RKConsole::hasSelectedText () {
 }
 
 void RKConsole::unplugAction(QString action, KActionCollection* ac) {
-	KAction* a = ac->action(action);
+	KAction* a = ac->action(action.latin1 ());
 	if( a ){
 		a->setEnabled(false);
 	}

@@ -201,7 +201,7 @@ RKComponentHandle::~RKComponentHandle () {
 RKComponentHandle* RKComponentHandle::createComponentHandle (const QString &filename, RKComponentType type, const QString& id, const QString& label) {
 	if (type == (int) Standard) {
 		RKStandardComponentHandle *ret = new RKStandardComponentHandle (filename, type);
-		new KAction (label, 0, ret, SLOT (activated ()), RKGlobals::componentMap ()->actionCollection (), id);
+		new KAction (label, 0, ret, SLOT (activated ()), RKGlobals::componentMap ()->actionCollection (), id.latin1 ());
 		return (ret);
 	}
 	// TODO: create an RKPluginHandle instead!

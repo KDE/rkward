@@ -288,10 +288,9 @@ int REditFile (char *buf) {
 
 // ############## R Standard callback overrides END ####################
 
-REmbedInternal::REmbedInternal() {
-	RKGlobals::empty_char = strdup ("");
-	RKGlobals::unknown_char = strdup ("?");
-//	RKGlobals::na_double = NA_REAL;			// this will be repeated in startR, as NA_REAL is 0 at this point!
+char *REmbedInternal::na_char_internal = new char;
+
+REmbedInternal::REmbedInternal () {
 }
 
 void REmbedInternal::connectCallbacks () {
@@ -324,7 +323,7 @@ void REmbedInternal::connectCallbacks () {
 //	ptr_R_savehistory = ...	// we keep our own history
 }
 
-REmbedInternal::~REmbedInternal (){
+REmbedInternal::~REmbedInternal () {
 }
 
 void REmbedInternal::shutdown (bool suicidal) {
@@ -375,44 +374,41 @@ TODO: verify we really need this. */
 	}
 }
 
-char **extractStrings (SEXP from_exp, int *count) {
+/** This function is the R side wrapper around stringsToStringList */
+QString *SEXPToStringList (SEXP from_exp, int *count) {
 	char **strings = 0;
 	
 	SEXP strexp;
 	PROTECT (strexp = coerceVector (from_exp, STRSXP));
 	*count = length (strexp);
 	strings = new char* [length (strexp)];
-	for (int i = 0; i < *count; ++i) {
+	int i = 0;
+	for (; i < *count; ++i) {
 		SEXP dummy = VECTOR_ELT (strexp, i);
-// TODO: can we avoid this string copying by protecting strexp?
+
 		if (TYPEOF (dummy) != CHARSXP) {
 			strings[i] = strdup ("not defined");	// can this ever happen?
 		} else {
 			if (dummy == NA_STRING) {
-				strings[i] = RKGlobals::empty_char;
+				strings[i] = REmbedInternal::na_char_internal;
 			} else {
-				strings[i] = strdup ((char *) STRING_PTR (dummy));
+				strings[i] = (char *) STRING_PTR (dummy);
 			}
 		}
 	}
-	UNPROTECT (1);	// strexp
-	
-	return strings;
-}
-
-void deleteStrings (char **strings, int count) {
-	for (int i= (count-1); i >=0; --i) {
-		DELETE_STRING (strings[i]);
-	}
+	QString *list = stringsToStringList (strings, i);
 	delete [] strings;
+
+	UNPROTECT (1);	// strexp
+
+	return list;
 }
 
 SEXP doError (SEXP call) {
 	int count;
-	char **strings = extractStrings (call, &count);
+	QString *strings = SEXPToStringList (call, &count);
 	REmbedInternal::this_pointer->handleError (strings, count);
-	deleteStrings (strings, count);
-
+	deleteQStringArray (strings);
 	return R_NilValue;
 }
 
@@ -426,9 +422,9 @@ SEXP doCondition (SEXP call) {
 
 SEXP doSubstackCall (SEXP call) {
 	int count;
-	char **strings = extractStrings (call, &count);
+	QString *strings = SEXPToStringList (call, &count);
 	REmbedInternal::this_pointer->handleSubstackCall (strings, count);
-	deleteStrings (strings, count);
+	deleteQStringArray (strings);
 	return R_NilValue;
 }
 
@@ -446,7 +442,7 @@ bool REmbedInternal::startR (int argc, char** argv) {
 #endif
 }
 
-bool REmbedInternal::registerFunctions (char *library_path) {
+bool REmbedInternal::registerFunctions (const char *library_path) {
 	DllInfo *info = R_getDllInfo (library_path);
 	if (!info) return false;
 
@@ -584,14 +580,14 @@ void REmbedInternal::runCommandInternal (const char *command, RKWardRError *erro
 	}
 }
 
-char **REmbedInternal::getCommandAsStringVector (const char *command, int *count, RKWardRError *error) {	
+QString *REmbedInternal::getCommandAsStringVector (const char *command, int *count, RKWardRError *error) {	
 	SEXP exp;
-	char **strings = 0;
+	QString *list = 0;
 	
 	PROTECT (exp = runCommandInternalBase (command, error));
 	
 	if (*error == NoError) {
-		strings = extractStrings (exp, count);
+		list = SEXPToStringList (exp, count);
 	}
 	
 	UNPROTECT (1); // exp
@@ -600,7 +596,7 @@ char **REmbedInternal::getCommandAsStringVector (const char *command, int *count
 		*count = 0;
 		return 0;
 	}
-	return strings;
+	return list;
 }
 
 double *REmbedInternal::getCommandAsRealVector (const char *command, int *count, RKWardRError *error) {
