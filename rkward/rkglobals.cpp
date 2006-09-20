@@ -27,8 +27,6 @@ RKComponentMap *RKGlobals::cmap;
 KHelpDlg *RKGlobals::helpdlg;
 RControlWindow *RKGlobals::rcontrol;
 
-QString *RKGlobals::na_char = new QString ("");
-QString *RKGlobals::unknown_char = new QString ("?");
 double RKGlobals::na_double;
 
 RKGlobals::RKGlobals () {
@@ -46,12 +44,5 @@ int RKGlobals::marginHint () {
 
 int RKGlobals::spacingHint () {
 	return KDialog::spacingHint ();
-}
-
-void RKGlobals::deleteStrings (QString **strings, int count) {
-	for (int i = (count-1); i >= 0; --i) {
-		DELETE_STRING (strings[i]);
-	}
-	delete [] strings;
 }
 

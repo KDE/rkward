@@ -144,6 +144,12 @@ numeric! */
 	enum CellAlign { AlignCellLeft=0, AlignCellRight=1 };
 /** returns alignment to use for this variable */
 	CellAlign getAlignment ();
+
+/// an empty char
+	static QString *na_char;
+/// an unknown value
+	static QString *unknown_char;
+
 protected:
 /** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData : public EditData {
