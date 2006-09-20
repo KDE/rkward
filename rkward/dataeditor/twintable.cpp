@@ -353,7 +353,7 @@ void TwinTable::paste (QByteArray &content) {
 
 	QValueList<RKVariable*> col_list;
 
-	QString pasted = content;
+	QString pasted = QString::fromLocal8Bit (content);
 	int row = top_row;
 	int col = left_col;
 	int content_offset = 0;

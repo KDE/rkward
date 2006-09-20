@@ -235,7 +235,7 @@ void RThread::handleOutput (char *buf, int buf_length) {
 		current_output->type = ROutput::Output;
 		current_output->output.reserve (MAX_BUF_LENGTH + 50);
 	}
-	current_output->output.append (buf);
+	current_output->output.append (QString::fromLocal8Bit (buf));
 
 	if ((out_buf_len += buf_length) > MAX_BUF_LENGTH) {
 		RK_DO (qDebug ("Output buffer has %d characters. Forcing flush", out_buf_len), RBACKEND, DL_DEBUG);

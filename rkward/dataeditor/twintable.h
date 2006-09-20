@@ -69,8 +69,8 @@ public:
 	int numTrueCols ();
 	
 	void setPasteMode (RKEditor::PasteMode mode);
-    TwinTableMetaMember* varview;
-    TwinTableDataMember* dataview;
+	TwinTableMetaMember* varview;
+	TwinTableDataMember* dataview;
 /** get the object at the given column (0 if there is no object for the column) */
 	RKVariable *getColObject (long int col);
 signals:
