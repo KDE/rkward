@@ -383,12 +383,9 @@ void RKVariable::extendToLength (int length) {
 		return;
 	}
 
-	int target;
-	if (myData ()->allocated_length == 0) {
-		target = INITIAL_ALLOC;
-	} else {
-		target = myData ()->allocated_length * ALLOC_STEP;
-	}
+	int target = myData ()->allocated_length;
+	if (!target) target = INITIAL_ALLOC;
+	while (target < length) target = target * ALLOC_STEP;
 	RK_DO (qDebug ("resizing from %d to %d", myData ()->allocated_length, target), OBJECTS, DL_DEBUG);
 
 	QString **new_string_data = new QString*[target];
@@ -420,6 +417,7 @@ void RKVariable::downSize () {
 		delete [] myData ()->cell_double_data;
 		myData ()->cell_double_data = 0;
 		for (int i = 0; i < myData ()->allocated_length; ++i) {
+#warning inefficient
 			deleteStringData (i);
 		}
 		delete [] myData ()->cell_string_data;
@@ -559,6 +557,7 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 	RK_ASSERT (to_row < getLength ());
 	
 	for (int row=from_row; row <= to_row; ++row) {
+#warning inefficient
 		deleteStringData (row);
 	}
 	
@@ -576,7 +575,6 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 	} else {
 		int i = 0;
 		for (int row=from_row; row <= to_row; ++row) {
-			deleteStringData (row);
 			if (isnan (data[i])) myData ()->cell_string_data[row] = na_char;
 			myData ()->cell_double_data[row] = data[i++];
 		}
@@ -612,6 +610,7 @@ void RKVariable::setCharacter (int from_row, int to_row, QString *data) {
 	if (getVarType () == String) {
 		int i=0;
 		for (int row=from_row; row <= to_row; ++row) {
+#warning inefficient
 			deleteStringData (row);
 			myData ()->cell_string_data[row] = new QString (data[i++]);
 		}
@@ -632,6 +631,7 @@ void RKVariable::setUnknown (int from_row, int to_row) {
 	if ((to_row < 0)) to_row = myData ()->allocated_length - 1;
 		
 	for (int row=from_row; row <= to_row; ++row) {
+#warning inefficient
 		deleteStringData (row);
 		myData ()->cell_string_data[row] = unknown_char;
 	}
@@ -656,6 +656,7 @@ void RKVariable::removeRow (int row) {
 /** see removeRow (), but removes a range of rows (i.e. cells). Since data only needs to be copied once, this is more efficient than several single calls to removeRow () */
 void RKVariable::removeRows (int from_row, int to_row) {
 	for (int row = from_row; row <= to_row; ++row) {
+#warning inefficient
 		deleteStringData (row);
 	}
 
