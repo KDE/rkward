@@ -1,3 +1,5 @@
+- RKWard should now be fully UTF-8 aware. All characters are passed to and from R reliably
+
 --- Version 0.3.7 - Sep-17-2006
 - added Turkish translation
 - avoid lockups when cancelling a readline ()
