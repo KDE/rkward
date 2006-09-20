@@ -92,6 +92,7 @@ int main(int argc, char *argv[]) {
 	aboutData.addCredit ("Daniele Medri", I18N_NOOP ("RKWard logo, many suggestions, help on wording"), 0);
 	aboutData.addCredit ("Stefan Roediger", I18N_NOOP ("Several plugins, and suggestions"), 0);
 	aboutData.addCredit ("David Sibai", I18N_NOOP ("Several valuable comments, hints and patches"), 0);
+	aboutData.addCredit ("Ralf Tautenhahn", I18N_NOOP ("Many comments, useful suggestions, and bug reports"), 0);
 	aboutData.addCredit (I18N_NOOP ("Many more people on rkward-devel@lists.sourceforge.net"), I18N_NOOP ("Sorry, if we forgot to list you. Please contact us to get added"), 0);
 
 	// before initializing the commandline args, remove the ".bin" from "rkward.bin".
