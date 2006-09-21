@@ -33,22 +33,31 @@
 	</list>
 	
 	<contexts>
-		<!-- This context dispatches to the two main contexts output or command. Anything that does not match one of the rules is an error (you may get this, if a closing brace '}' pops out of a command context) -->
-		<context attribute="Error" lineEndContext="#stay" name="ctxbase">
-			<RegExpr attribute="Prompt" context="command" String="^&gt; " beginRegion="command"/>
+		<!-- This context dispatches to the two main contexts output or command. -->
+		<context attribute="Prompt" lineEndContext="#stay" name="ctxbase">
+			<RegExpr attribute="Prompt" context="command0" String="^&gt; " beginRegion="commandRegion"/>
 			<RegExpr attribute="Normal Text" context="output" String="^([^&gt;\+]|$)" lookAhead="true"/>
 		</context>
 
-		<!-- The output context does no highlighting. If a "> " is encountered at line start, pop back to ctxbase (and to command from there) --> 
+		<!-- The output context does no highlighting. If a "> " is encountered at line start, pop back to ctxbase (and to command0 from there) --> 
 		<context attribute="Output" lineEndContext="#stay" name="output">
-			<RegExpr attribute="Prompt" context="#pop" String="^&gt; " lookAhead="true" endRegion="command"/>
+			<RegExpr attribute="Prompt" context="#pop" String="^&gt; " lookAhead="true" endRegion="commandRegion"/>
 		</context>
 
-		<!-- The base context in command mode -->
+		<!-- The base level context in command mode. Does not allow closing '}' -->
+		<context attribute="Normal Text" lineEndContext="#stay" name="command0">
+			<IncludeRules context="CommandContinuationCheck"/>
+			<IncludeRules context="CommonRules"/>
+			<DetectChar attribute="Error" context="#stay" char="}" />
+			<DetectChar attribute="Error" context="#stay" char=")"/>
+		</context>
+		
+		<!-- A nested context in command mode. Closing '}' pops a level -->
 		<context attribute="Normal Text" lineEndContext="#stay" name="command">
 			<IncludeRules context="CommandContinuationCheck"/>
 			<IncludeRules context="CommonRules"/>
 			<DetectChar attribute="Symbol" context="#pop" char="}" />
+			<DetectChar attribute="Error" context="#stay" char=")"/>
 		</context>
 
 		<context attribute="Normal Text" lineEndContext="#stay" name="parenthesis">
@@ -73,7 +82,7 @@
 		<!-- This context is not really used, but meant to be included. It checks whether a new line is a continuation of a command. If so, it eats the "+ " at the line start. Else it tries to pop back to the top level -->
 		<context attribute="Normal Text" name="CommandContinuationCheck">
 			<!-- Since this rule is included in every (relevant) context, this will unwind the entire context stack back to ctxbase. -->
-			<RegExpr attribute="Prompt" context="#pop" String="^&gt; " lookAhead="true" endRegion="command"/>
+			<RegExpr attribute="Prompt" context="#pop" String="^&gt; " lookAhead="true" endRegion="commandRegion"/>
 			<!-- See above -->
 			<RegExpr attribute="Normal Text" context="#pop" String="^([^\+]|$)" lookAhead="true"/>
 			<RegExpr attribute="Prompt" context="#stay" String="^\+ "/>
