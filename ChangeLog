@@ -1,4 +1,6 @@
-- Yet another crash on more than 100 rows bug fixed
+- fix "Open R Script File" filename ending filter
+- add mismatching brace detection to syntax highlighting
+- yet another crash on more than 100 rows bug fixed
 - RKWard should now be fully UTF-8 aware. All characters are passed to and from R reliably
 
 --- Version 0.3.7 - Sep-17-2006
