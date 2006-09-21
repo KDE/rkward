@@ -30,12 +30,14 @@ for( i in 2:5 ) {
 try ( {
 	x <<- 1
 	x <<<- 1		# syntax error
-	x += 1 -= x1 *= x2  # syntax error
-	x =+ 1 =- x1 =* x2  # syntax error
+	x += 1 -= x1 *= x2	# syntax error
+	x =+ 1 =- x1 =* x2	# syntax error
 	"%my 1st infix%" <- function (x, y) { x + y }		# legal infix
 	3 %my 1st infix% 4
 	"%my%infix%" <- function (x, y) { x + y }		# illegal infix
-	3 %my%infix% 4							# syntax error
+	3 %my%infix% 4						# syntax error
+	)		# unexpected closing ')'
+	(})		# unexpected closing '}'
 },
 silent=FALSE)
 
