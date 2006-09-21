@@ -51,6 +51,8 @@ DetachedWindowContainer::DetachedWindowContainer (KParts::Part *part_to_capture,
 	connect (widget_to_capture, SIGNAL (destroyed (QObject *)), this, SLOT (viewDestroyed (QObject *)));
 	connect (widget_to_capture, SIGNAL (windowCaptionChanged (const QString&)), this, SLOT (setCaption (const QString&)));
 	setCaption (widget_to_capture->caption ());	// has to come after createGUI!
+
+	emit (detached (widget_to_capture));
 }
 
 DetachedWindowContainer::~DetachedWindowContainer () {
@@ -75,6 +77,9 @@ void DetachedWindowContainer::slotReattach () {
 	RKGlobals::rkApp ()->m_manager->addPart (part);
 	view->show ();
 	view->setFocus ();
+
+	emit (reattached (view));
+
 	delete this;
 }
 

@@ -41,6 +41,9 @@ public:
 
 /** static list of all detached windows */
 	static QPtrList<KMdiChildView> *detachedWindows () { return &detached_windows; };
+signals:
+	void detached (KMdiChildView *widget);
+	void reattached (KMdiChildView *widget);
 public slots:
 /** self-destruct, when child view is destroyed */
 	void viewDestroyed (QObject *view);
