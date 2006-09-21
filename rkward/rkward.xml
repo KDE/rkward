@@ -9,7 +9,7 @@
 	R      : http://www.r-project.org/
 	RKWard : http://rkward.sourceforge.net/
 	-->
-<language version="0.1" kateversion="2.1" name="RKWard output" section="Scripts" extensions="" mimetype="" author="P. Ecochard" license="GPL">
+<language version="0.2" kateversion="2.1" name="RKWard output" section="Scripts" extensions="" mimetype="" author="P. Ecochard" license="GPL">
 <highlighting>
 	<list name="controls">
 	<item> for </item>

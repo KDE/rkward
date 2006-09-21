@@ -2,7 +2,7 @@
 <!DOCTYPE language SYSTEM "language.dtd">
 <!-- Kate 2.5 (KDE 3.5) highlighting module for R
 	based on an earlier version by E.L. Willighagen. Code folding code by Ben Goodrich
-	version 0.4: (c) 2006 Thomas Friedrichsmeier, Arne Henningsen, and the RKWard Team
+	version 2.0: (c) 2006 Thomas Friedrichsmeier, Arne Henningsen, and the RKWard Team
 	license: GPL v2
 	Kate   : http://kate.kde.org/
 	R      : http://www.r-project.org/
