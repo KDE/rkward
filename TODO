@@ -16,7 +16,6 @@ Bugs:
 
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org
-	- move to subversion
 
 UI-stuff
 	"First-run wizard"
@@ -99,6 +98,7 @@ Internal stuff:
 		- help pages
 		- script files
 		- auto-restore when loading Workspace
+		- Probably a new class is called for, that keeps track of open and detached windows. Some simplifications may then be possible in RKEditorManager and DetachedWindowContainer.
 	- error-handling/raising in .rk.do.call
 	- I've changed the simple RInterface::issueCommand (QString, ...) command to return a pointer to the RCommand created. This will allow for lots of small cleanups. Do them.
 		- well, on second thought, it might be better to rely more on RCommand::id () instead of pointers. Why? The id is unique (until integer overflow). The pointer may be reused after a delete -> potential problem when trying to cancel command which is actually already deleted (and potentially other cases)

@@ -33,8 +33,8 @@
 	</list>
 	
 	<contexts>
-		<!-- This context dispatches to the two main contexts output or command -->
-		<context attribute="Prompt" lineEndContext="#stay" name="ctxbase">
+		<!-- This context dispatches to the two main contexts output or command. Anything that does not match one of the rules is an error (you may get this, if a closing brace '}' pops out of a command context) -->
+		<context attribute="Error" lineEndContext="#stay" name="ctxbase">
 			<RegExpr attribute="Prompt" context="command" String="^&gt; " beginRegion="command"/>
 			<RegExpr attribute="Normal Text" context="output" String="^([^&gt;\+]|$)" lookAhead="true"/>
 		</context>
@@ -48,6 +48,7 @@
 		<context attribute="Normal Text" lineEndContext="#stay" name="command">
 			<IncludeRules context="CommandContinuationCheck"/>
 			<IncludeRules context="CommonRules"/>
+			<DetectChar attribute="Symbol" context="#pop" char="}" />
 		</context>
 
 		<context attribute="Normal Text" lineEndContext="#stay" name="parenthesis">
@@ -57,6 +58,7 @@
 			<RegExpr attribute="Identifier" context="#stay" String="[a-zA-Z_\.][0-9a-zA-Z_\.]*[\s]*=(?=([^=]|$))"/>
 			
 			<IncludeRules context="CommonRules"/>
+			<DetectChar attribute="Error" context="#stay" char="}" />
 		</context>
 
 		<context attribute="String" lineEndContext="#stay" name="string">
@@ -70,10 +72,10 @@
 
 		<!-- This context is not really used, but meant to be included. It checks whether a new line is a continuation of a command. If so, it eats the "+ " at the line start. Else it tries to pop back to the top level -->
 		<context attribute="Normal Text" name="CommandContinuationCheck">
-			<!-- This should pop us back into ctxbase, which will then take us to the next command -->
-			<RegExpr attribute="Prompt" context="#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop" String="^&gt; " lookAhead="true" endRegion="command"/>
-			<!-- This should pop us back into ctxbase, which will then most likely take us to output -->
-			<RegExpr attribute="Normal Text" context="#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop#pop" String="^([^\+]|$)" lookAhead="true"/>
+			<!-- Since this rule is included in every (relevant) context, this will unwind the entire context stack back to ctxbase. -->
+			<RegExpr attribute="Prompt" context="#pop" String="^&gt; " lookAhead="true" endRegion="command"/>
+			<!-- See above -->
+			<RegExpr attribute="Normal Text" context="#pop" String="^([^\+]|$)" lookAhead="true"/>
 			<RegExpr attribute="Prompt" context="#stay" String="^\+ "/>
 		</context>
 
@@ -105,6 +107,9 @@
 			<RegExpr attribute="Operator" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~)((?!(\+|\-|\*|/|&lt;=|&gt;=|=|\!=|\||&amp;|:|\^|@|\$|~))|$)"/>
 			<RegExpr attribute="Error" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~){2,}"/>	
 			<RegExpr attribute="Operator" context="#stay" String="%[^%]*%"/>
+
+			<!-- Contrary to the normal R Script highlighting, we don't start a region here, but we do go into a command sub-context -->
+			<DetectChar attribute="Symbol" context="command" char="{" />
 		</context>
 	</contexts>
 
