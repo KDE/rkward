@@ -20,42 +20,56 @@
 
 #include <qvaluelist.h>
 #include <qstring.h>
+#include <qtabwidget.h>
 
 #include <kurl.h>
 
 #include "../rbackend/rcommandreceiver.h"
 
-class KMdiChildView;
 class RObject;
 class RCommandChain;
+class RKWorkplaceView;
 
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the
-workplace, which are detached, etc. Will replace RKEditorManager. TODO: maybe this class can also keep track of the active view more reliably than KMDI-framework does? */
-class RKWorkPlace : public QObject, public RCommandReceiver {
+workplace, which are detached, etc. Will replace RKEditorManager.
+It also provides a QWidget (RKWorkplace::view ()), which actually manages the document windows (only those, so far. I.e. this is a half-replacement for KMdi, which will be gone in KDE 4). Currently layout of the document windows is always tabbed. */
+class RKWorkplace : public QObject, public RCommandReceiver {
 	Q_OBJECT
 public:
-	RKWorkPlace (QObject *parent);
-	~RKWorkPlace ();
+/** ctor.
+@param parent: The parent widget for the workspace view (see view ()) */
+	RKWorkplace (QWidget *parent);
+	~RKWorkplace ();
 
-	enum RKWorkPlaceObjectType {
-		EditorWindow=1,
+	enum RKWorkplaceObjectType {
+		DataEditorWindow=1,
 		CommandEditorWindow=2,
-		OutputWindow=3,
-		HelpWindo=4
+		OutputWindow=4,
+		HelpWindow=8,
+		AnyType=DataEditorWindow | CommandEditorWindow | OutputWindow | HelpWindow
 	};
 
-	struct RKWorkPlaceObject {
-		KMdiChildView *view;
-		RKWorkPlaceObjectType type;
-		QString location_or_name;
+	enum RKWorkplaceObjectState {
+		Attached=1,
+		Detached=2,
+		AnyState=Attached | Detached
+	};
+
+	struct RKWorkplaceObjectInfo {
+		RKWorkplaceObjectType type;
+		QString location_or_name;		// do we need this?
 		bool detached;
 	};
 
-	typedef QValueList<RKWorkPlaceObject *> RKWorkPlaceObjectList;
+	typedef QMap<QWidget *, RKWorkplaceObjectInfo *> RKWorkplaceObjectMap;
 
-	RKWorkPlaceObjectList getObjectList ();
+	RKWorkplaceView *view ();
 
-	void detachView (KMdiChildView *view);
+	RKWorkplaceObjectMap getObjectList () { return windows; };
+
+	void detachWindow (QWidget *window);
+/** Attach an already created window. */
+	void attachWindow (QWidget *window);
 
 	void openScriptEditor (const KURL &url=KURL ());
 	void openHelpWindow (const KURL &url=KURL ());
@@ -64,27 +78,31 @@ public:
 	bool canEditObject (RObject *object);
 	void editObject (RObject *object, bool initialize_to_empty=false);
 
+/** tell all DataEditorWindow s to syncronize changes to the R backend
+// TODO: add RCommandChain parameter */
 	void flushAllData ();
-	void closeAll ();
-	void closeAllData ();
+/** Closes all windows of the given type(s). Default call (no arguments) closes all windows
+@param type: A bitwise OR of RKWorkplaceObjectType
+@param state: A bitwise OR of RKWorkplaceObjectState */
+	void closeAll (int type=AnyType, int state=AnyState);
 
 	void saveWorkplace (RCommandChain *chain=0);
 	void restoreWorkplace (RCommandChain *chain=0);
 signals:
 	void lastWindowClosed ();
 public slots:
-	// TODO: eventually, this class should do all the work, not just receive the signals
-	void viewDetached (KMdiChildView *view);
-	void viewAttached (KMdiChildView *view);
+	void windowDestroyed (QWidget *window);
 
-	void viewDestroyed (KMdiChildView *view);
-
-	void updateViewCaption (KMdiChildView *view);
+	void updateWindowCaption (QWidget *window);
 protected:
 	void rCommandDone (RCommand *command);
 private:
-	RKWorkPlaceObjectList attached_windows;
-	RKWorkPlaceObjectList detached_windows;
+	RKWorkplaceObjectMap windows;
+};
+
+class RKWorkplaceView : public QTabWidget {
+	RKWorkplaceView (QWidget *parent);
+	~RKWorkplaceView ();
 };
 
 #endif
