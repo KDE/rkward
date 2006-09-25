@@ -20,7 +20,6 @@
 class RKwardApp;
 class RInterface;
 class RObjectList;
-class RKEditorManager;
 class RKModificationTracker;
 class RKComponentMap;
 class KHelpDlg;
@@ -47,8 +46,6 @@ public:
 	static RInterface *rInterface () { return rinter; };
 /// static pointer to the RObjectList
 	static RObjectList *rObjectList () { return list; };
-/// static pointer to the RKEditorManager
-	static RKEditorManager *editorManager () { return manager; };
 /// static pointer to the RKModificationTracker
 	static RKModificationTracker *tracker () { return mtracker; };
 /// static pointer to the RKComponentMap
@@ -73,7 +70,6 @@ private:
 	static RKwardApp *app;
 	static RInterface *rinter;
 	static RObjectList *list;
-	static RKEditorManager *manager;
 	static RKModificationTracker *mtracker;
 	static RKComponentMap *cmap;
 	static KHelpDlg *helpdlg;

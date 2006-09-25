@@ -32,6 +32,7 @@
 #include "core/robjectlist.h"
 #include "core/rkmodificationtracker.h"
 #include "misc/rkobjectlistview.h"
+#include "misc/rkworkplace.h"
 #include "dataeditor/rkeditor.h"
 #include "robjectviewer.h"
 
@@ -76,11 +77,11 @@ void RObjectBrowser::updateButtonClicked () {
 }
 
 void RObjectBrowser::popupEdit () {
-	if (list_view->menuObject ()) RKGlobals::editorManager ()->editObject (list_view->menuObject ());
+	if (list_view->menuObject ()) RKWorkplace::mainWorkplace ()->editObject (list_view->menuObject ());
 }
 
 void RObjectBrowser::popupView () {
-	RKGlobals::editorManager ()->flushAll ();
+	RKWorkplace::mainWorkplace ()->flushAllData ();
 	new RObjectViewer (0, list_view->menuObject ());
 }
 
@@ -113,22 +114,22 @@ void RObjectBrowser::contextMenuCallback (RKListViewItem *, bool *) {
 	}
 
 	menu->setItemVisible (Edit, true);
-	menu->setItemEnabled (Edit, RKGlobals::editorManager ()->canEditObject (object));
+	menu->setItemEnabled (Edit, RKWorkplace::mainWorkplace ()->canEditObject (object));
 	menu->setItemVisible (View, true);
 	menu->setItemVisible (Rename, true);
 	menu->setItemVisible (Delete, true);
 }
 
-void RObjectBrowser::slotListDoubleClicked (QListViewItem *item, const QPoint &, int)
-{
+void RObjectBrowser::slotListDoubleClicked (QListViewItem *item, const QPoint &, int) {
 	RObject *object = list_view->findItemObject (static_cast<RKListViewItem*> (item));
 	
 	if (!object) return;
 	if (object == RKGlobals::rObjectList ()) return;
-	if (!RKGlobals::rkApp ()->activeWindow ()) return;	// yes, apparently this can happen!
+	QWidget *w = RKWorkplace::mainWorkplace ()->activeAttachedWindow ();
+	if (!w) return;
 	
-	if ((RKGlobals::rkApp ()->activeWindow ())->inherits ("RKCommandEditorWindow")) {
-		static_cast<RKCommandEditorWindow*> (RKGlobals::rkApp ()->activeWindow ())->insertText (object->getFullName ());
+	if (w->inherits ("RKCommandEditorWindow")) {
+		static_cast<RKCommandEditorWindow*> (w)->insertText (object->getFullName ());
 	}
 }
 

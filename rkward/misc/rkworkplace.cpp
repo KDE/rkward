@@ -34,10 +34,14 @@
 
 #include "../debug.h"
 
+// static
+RKWorkplace *RKWorkplace::main_workplace = 0;
 
 RKWorkplace::RKWorkplace (QWidget *parent) : QObject (parent) {
 	RK_TRACE (APP);
+	RK_ASSERT (main_workplace == 0);
 
+	main_workplace = this;
 	wview = new RKWorkplaceView (parent);
 	connect (wview, SIGNAL (currentChanged (QWidget *)), this, SLOT (activeAttachedChanged (QWidget *)));
 	part_manager = new KParts::PartManager (view ());
@@ -80,9 +84,7 @@ void RKWorkplace::detachWindow (QWidget *window) {
 void RKWorkplace::addWindow (QWidget *window, RKWorkplaceObjectType type) {
 	RK_TRACE (APP);
 
-	connect (window, SIGNAL (destroyed (QWidget *)), this, SLOT (windowDestroyed (QWidget *)));
-	// TODO: most views do not emit that signal, yet
-	connect (window, SIGNAL (captionChanged (QWidget *)), this, SLOT (updateWindowCaption (QWidget *)));
+	connect (window, SIGNAL (destroyed (QObject *)), this, SLOT (windowDestroyed (QObject *)));
 
 	RKWorkplaceObjectInfo *info = new RKWorkplaceObjectInfo;
 	info->part = 0;
@@ -90,23 +92,35 @@ void RKWorkplace::addWindow (QWidget *window, RKWorkplaceObjectType type) {
 	info->type = type;
 	windows.insert (window, info);
 
+	window->show ();
 	view ()->addTab (window, window->caption ());
+	view ()->setCurrentPage (view ()->indexOf (window));
+	window->setFocus ();
 }
 
-bool RKWorkplace::openScriptEditor (const KURL &url) {
+void RKWorkplace::registerPart (QWidget *window, KParts::Part *part) {
+	RK_TRACE (APP);
+	RK_ASSERT (windows.find (window) != windows.end ());
+
+	windows[window]->part = part;
+}
+
+bool RKWorkplace::openScriptEditor (const KURL &url, bool use_r_highlighting, bool read_only, const QString &force_caption) {
 	RK_TRACE (APP);
 
-	RKCommandEditorWindow *editor = new RKCommandEditorWindow (view ());
+	RKCommandEditorWindow *editor = new RKCommandEditorWindow (view (), use_r_highlighting);
 
 	if (!url.isEmpty ()) {
-		if (!editor->openURL (url)) {
+		if (!editor->openURL (url, use_r_highlighting, read_only)) {
 			delete editor;
 			KMessageBox::messageBox (view (), KMessageBox::Error, i18n ("Unable to open \"%1\"").arg (url.prettyURL ()), i18n ("Could not open command file"));
 			return false;
 		}
 	}
 
+	if (!force_caption.isEmpty ()) editor->setCaption (force_caption);
 	addWindow (editor, CommandEditorWindow);
+	registerPart (editor, editor->getPart ());
 	return true;
 }
 
@@ -198,7 +212,15 @@ void RKWorkplace::closeWindow (QWidget *window) {
 	RK_TRACE (APP);
 	RK_ASSERT (windows.find (window) != windows.end ());
 
-	delete window;		// all the rest should happen in windowDestroyed ()
+	window->close (true);		// all the rest should happen in windowDestroyed ()
+}
+
+void RKWorkplace::closeActiveWindow () {
+	RK_TRACE (APP);
+
+	QWidget *w = activeAttachedWindow ();
+	if (w) closeWindow (w);
+	else RK_ASSERT (false);		// this is benign, and maybe even ok, but I'd like to see when this happens
 }
 
 void RKWorkplace::closeAll (int type, int state) {
@@ -216,8 +238,9 @@ void RKWorkplace::closeAll (int type, int state) {
 	}
 }
 
-void RKWorkplace::windowDestroyed (QWidget *window) {
+void RKWorkplace::windowDestroyed (QObject *object) {
 	RK_TRACE (APP);
+	QWidget *window = static_cast<QWidget *> (object);
 
 	RK_ASSERT (windows.find (window) != windows.end ());
 	delete windows[window];
@@ -229,14 +252,17 @@ void RKWorkplace::updateWindowCaption (QWidget *window) {
 
 	RK_ASSERT (windows.find (window) != windows.end ());
 	view ()->changeTab (window, window->caption ());
-	if (window == activeAttachedWindow ()) emit (changeCaption (window->caption ()));
+	if (window == activeAttachedWindow ()) emit (changeCaption ());
 }
 
 void RKWorkplace::activeAttachedChanged (QWidget *window) {
 	RK_TRACE (APP);
+	RK_ASSERT (windows.find (window) != windows.end ());
 	RK_ASSERT (window);
 
-	emit (changeCaption (window->caption ()));
+	emit (changeCaption ());
+	// do we need to force an update of the active Part?
+	emit (changeGUI (windows[window]->part));
 }
 
 QWidget *RKWorkplace::activeAttachedWindow () {
@@ -250,7 +276,6 @@ void RKWorkplace::activateWindow (QWidget *window) {
 
 	window->raise ();		// Does this do the trick?
 }
-
 
 void RKWorkplace::saveWorkplace (RCommandChain *chain) {
 	RK_TRACE (APP);

@@ -28,6 +28,7 @@
 #include "../rkeditormanager.h"
 #include "../core/rkmodificationtracker.h"
 #include "rkeditordataframepart.h"
+#include "../misc/rkworkplace.h"
 
 #include "../debug.h"
 
@@ -64,7 +65,6 @@ void RKEditorDataFrame::enableEditing (bool on) {
 
 RKEditorDataFrame::~RKEditorDataFrame () {
 	RK_TRACE (EDITOR);
-	RKGlobals::editorManager ()->closedEditor (this);
 }
 
 void RKEditorDataFrame::flushChanges () {
@@ -258,7 +258,8 @@ void RKEditorDataFrame::renameObject (RObject *object) {
 	RK_TRACE (EDITOR);
 	
 	if (object == getObject ()) {
-		RKGlobals::editorManager ()->setEditorName (this, object->getShortName ());
+		setCaption (object->getShortName ());
+		RKWorkplace::mainWorkplace ()->updateWindowCaption (this);
 		return;
 	}
 

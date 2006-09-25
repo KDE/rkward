@@ -77,7 +77,7 @@ public:
 	QWidget *activeAttachedWindow ();
 	void activateWindow (QWidget *window);
 
-	bool openScriptEditor (const KURL &url=KURL ());
+	bool openScriptEditor (const KURL &url=KURL (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString::null);
 	void openHelpWindow (const KURL &url=KURL ());
 	void openOutputWindow (const KURL &url=KURL ());
 
@@ -87,6 +87,7 @@ public:
 /** tell all DataEditorWindow s to syncronize changes to the R backend
 // TODO: add RCommandChain parameter */
 	void flushAllData ();
+	void closeActiveWindow ();
 	void closeWindow (QWidget *window);
 /** Closes all windows of the given type(s). Default call (no arguments) closes all windows
 @param type: A bitwise OR of RKWorkplaceObjectType
@@ -95,31 +96,34 @@ public:
 
 	void saveWorkplace (RCommandChain *chain=0);
 	void restoreWorkplace (RCommandChain *chain=0);
+
+	static RKWorkplace *mainWorkplace () { return main_workplace; };
 signals:
 	void lastWindowClosed ();
 	void changeGUI (KParts::Part *active_part);
-	void changeCaption (const QString &caption);
+	void changeCaption ();
 public slots:
-	void windowDestroyed (QWidget *window);
+	void windowDestroyed (QObject *window);
 	void updateWindowCaption (QWidget *window);
 	void activeAttachedChanged (QWidget *window);
 
-	void registerPart (QWidget *widget, KParts::Part *part);
+	void registerPart (QWidget *window, KParts::Part *part);
 protected:
 	void rCommandDone (RCommand *command);
 private:
 	RKWorkplaceObjectMap windows;
 	RKWorkplaceView *wview;
 	void addWindow (QWidget *window, RKWorkplaceObjectType type);
-
+	static RKWorkplace *main_workplace;
+friend class RKwardApp;
 	KParts::PartManager *part_manager;
 };
 
 /** This is a separate class mostly for future extension. right now, it's just a QTabWidget */
 class RKWorkplaceView : public QTabWidget {
 public:
-	RKWorkplaceView (QWidget *parent);
-	~RKWorkplaceView ();
+	RKWorkplaceView (QWidget *parent) : QTabWidget (parent) {};
+	~RKWorkplaceView () {};
 };
 
 #endif

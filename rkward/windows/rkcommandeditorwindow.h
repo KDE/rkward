@@ -23,7 +23,6 @@
 #include <kate/view.h>
 #include <kate/document.h>
 #include <kurl.h>
-#include <kmdichildview.h>
 
 /**
 	\brief Provides an editor window for R-commands, as well as a text-editor window in general.
@@ -32,7 +31,7 @@ While being called RKCommandEditorWindow, this class handles all sort of text-fi
 
 @author Pierre Ecochard
 */
-class RKCommandEditorWindow : public KMdiChildView {
+class RKCommandEditorWindow : public QWidget {
 // we need the Q_OBJECT thing for some inherits ("RKCommandEditorWindow")-calls in rkward.cpp.
 	Q_OBJECT
 public:
@@ -61,6 +60,8 @@ public:
 	void setText (const QString &text);
 /** copy current selection. Wrapper for use by external classes */
 	void copy ();
+
+	KParts::Part *getPart () { return m_doc; };
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if approriate */
 	void updateCaption ();

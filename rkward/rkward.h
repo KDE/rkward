@@ -103,7 +103,7 @@ TODO: rename to something sensible, and check whether it is redundant. */
 /** returns a pointer to the menu-list (in essence the menu-bar) */
 	RKMenuList* getMenuList () { return menu_list; };
 
-	KParts::PartManager *m_manager;
+	KParts::PartManager *toolviews_manager;
 protected:
 	void openWorkspace (const KURL &url);
 	/** save Options/Settings. Includes general Options like all bar positions and status as well as the geometry and the recent file list */
@@ -136,7 +136,9 @@ protected:
 	// TODO: defunct!! Find out what this is really for.
 	*/
 	virtual void readProperties(KConfig *_cfg);
-
+signals:
+/** no idea, why we have to declare this explicitly, but somehow we do. */
+       void childWindowCloseRequest (KMdiChildView *);
 public slots:
 	/** Raise the help search window */
 	void showHelpSearch ();
@@ -253,14 +255,6 @@ private:
 	friend class RInterface;
 /** set the R status message ("R engine idel/busy") to idle or busy */
 	void setRStatus (bool busy);
-
-	/** refreshes the output.
-	@param show if set to true, the output-window will be shown / raised. If set to false, the visibility will not be changed
-	@param raise like show. If set to true, the output-window - if already shown - will additionally be raised */
-	void refreshOutput (bool show, bool raise);
-signals:
-/** no idea, why we have to declare this explicitly, but somehow we do. */
-	void childWindowCloseRequest (KMdiChildView *);
 };
 
 #endif // RKWARD_H

@@ -17,20 +17,18 @@
 
 #include "detachedwindowcontainer.h"
 
-#include <kmdichildview.h>
 #include <klocale.h>
 #include <kstdaction.h>
 
 #include <qlayout.h>
+#include <qwidget.h>
 
 #include "../rkward.h"
+#include "../misc/rkworkplace.h"
 #include "../rkglobals.h"
 #include "../debug.h"
 
-//static
-QPtrList<KMdiChildView> DetachedWindowContainer::detached_windows;
-
-DetachedWindowContainer::DetachedWindowContainer (KParts::Part *part_to_capture, KMdiChildView *widget_to_capture) : KParts::MainWindow  (RKGlobals::rkApp ()) {
+DetachedWindowContainer::DetachedWindowContainer (KParts::Part *part_to_capture, QWidget *widget_to_capture) : KParts::MainWindow  (RKGlobals::rkApp ()) {
 	RK_TRACE (APP);
 
 // create own GUI
@@ -45,20 +43,14 @@ DetachedWindowContainer::DetachedWindowContainer (KParts::Part *part_to_capture,
 	setCentralWidget (widget_to_capture);
 	createGUI (part_to_capture);
 
-// add widget to list of detached windows
-	detached_windows.append (widget_to_capture);
 // should self-destruct, when child widget is destroyed
 	connect (widget_to_capture, SIGNAL (destroyed (QObject *)), this, SLOT (viewDestroyed (QObject *)));
-	connect (widget_to_capture, SIGNAL (windowCaptionChanged (const QString&)), this, SLOT (setCaption (const QString&)));
+	connect (widget_to_capture, SIGNAL (captionChanged (QWidget *)), this, SLOT (updateCaption (QWidget *)));
 	setCaption (widget_to_capture->caption ());	// has to come after createGUI!
-
-	emit (detached (widget_to_capture));
 }
 
 DetachedWindowContainer::~DetachedWindowContainer () {
 	RK_TRACE (APP);
-
-	detached_windows.remove (static_cast<KMdiChildView*> (centralWidget ()));
 }
 
 void DetachedWindowContainer::viewDestroyed (QObject *) {
@@ -67,18 +59,19 @@ void DetachedWindowContainer::viewDestroyed (QObject *) {
 	delete this;
 }
 
+void DetachedWindowContainer::updateCaption (QWidget *widget) {
+	RK_TRACE (APP);
+	RK_ASSERT (widget = centralWidget ());
+
+	setCaption (widget->caption ());
+}
+
 void DetachedWindowContainer::slotReattach () {
 	RK_TRACE (APP);
 
-	KMdiChildView *view = static_cast<KMdiChildView *> (centralWidget ());
-
-	view->reparent (0, QPoint (0, 0));
-	RKGlobals::rkApp ()->addWindow (view);
-	RKGlobals::rkApp ()->m_manager->addPart (part);
-	view->show ();
-	view->setFocus ();
-
-	emit (reattached (view));
+	QWidget *window = centralWidget ();
+	window->reparent (0, QPoint (0, 0));
+	RKWorkplace::mainWorkplace ()->attachWindow (window);
 
 	delete this;
 }

@@ -27,6 +27,7 @@
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rembedinternal.h"
+#include "../misc/rkworkplace.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 
@@ -66,14 +67,9 @@ void ShowEditTextFileAgent::showEditFiles (RCallbackArgs *args) {
 		for (int n = 0; n < args->int_a; ++n) {
 			message.append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
 
-			RKCommandEditorWindow *window = new RKCommandEditorWindow (0, false);
-			bool ok = window->openURL (KURL (args->chars_a[n]), false, true);
+			bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KURL (args->chars_a[n]), false, true, QString (*(args->chars_c)));
 
-			if (ok) {
-				if (qstrlen (*(args->chars_c))) window->setTabCaption (*(args->chars_c));
-				RKGlobals::rkApp ()->addWindow (window);
-			} else {
-				delete (window);
+			if (!ok)  {
 				bad_files_list.append ("- ").append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
 			}
 		}
@@ -84,14 +80,9 @@ void ShowEditTextFileAgent::showEditFiles (RCallbackArgs *args) {
 		for (int n = 0; n < args->int_a; ++n) {
 			message.append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
 
-			RKCommandEditorWindow *window = new RKCommandEditorWindow (0, false);
-			bool ok = window->openURL (KURL (args->chars_a[n]), true, false);
+			bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KURL (args->chars_a[n]), true, false, QString (args->chars_b[n]));
 
-			if (ok) {
-				if (qstrlen (args->chars_b[n])) window->setTabCaption (args->chars_b[n]);
-				RKGlobals::rkApp ()->addWindow (window);
-			} else {
-				delete (window);
+			if (!ok) {
 				bad_files_list.append ("- ").append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
 			}
 		}

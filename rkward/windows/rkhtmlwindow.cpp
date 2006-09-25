@@ -34,6 +34,7 @@
 #include "../rkward.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkworkplace.h"
 #include "../debug.h"
 
 RKHTMLWindow::RKHTMLWindow (QWidget *parent) : KMdiChildView (parent) {
@@ -173,7 +174,7 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 	print->setText (i18n ("Print Output"));
 	addCommonActions (actionCollection ());
 
-	RKGlobals::rkApp ()->m_manager->addPart (khtmlpart);
+	emit (partCreated (this, khtmlpart));
 
 	KAction *action = khtmlpart->action ("saveDocument");
 	if (action) action->setText (i18n ("Save Output as HTML"));
@@ -231,7 +232,8 @@ RKOutputWindow* RKOutputWindow::getCurrentOutput () {
 	RK_TRACE (APP);
 	
 	if (!current_output) {
-		current_output = new RKOutputWindow (RKGlobals::rkApp ());
+		current_output = new RKOutputWindow (RKWorkplace::mainWorkplace ()->view ());
+#warning need to register the window!
 
 		KURL url (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
 		current_output->openURL (url);
@@ -290,7 +292,7 @@ RKHelpWindow::RKHelpWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUICli
 	setMDICaption (i18n ("R Help"));
 	RKGlobals::rkApp ()->addWindow (this);
 
-	RKGlobals::rkApp ()->m_manager->addPart (khtmlpart);
+	emit (partCreated (this, khtmlpart));
 }
 
 RKHelpWindow::~RKHelpWindow () {

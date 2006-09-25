@@ -25,6 +25,7 @@
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
+#include "../misc/rkworkplace.h"
 #include "../rkeditormanager.h"
 
 #include "../debug.h"
@@ -39,7 +40,7 @@ RKSaveAgent::RKSaveAgent (KURL url, bool save_file_as, DoneAction when_done, KUR
 		if (!askURL ()) return;
 	}
 	
-	RKGlobals::editorManager ()->flushAll ();
+	RKWorkplace::mainWorkplace ()->flushAllData ();
 	save_chain = RKGlobals::rInterface ()->startChain (0);
 	
 	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.path () + "\")", RCommand::App, QString::null, this), save_chain);

@@ -21,7 +21,6 @@
 RKwardApp *RKGlobals::app;
 RInterface *RKGlobals::rinter;
 RObjectList *RKGlobals::list;
-RKEditorManager *RKGlobals::manager;
 RKModificationTracker *RKGlobals::mtracker;
 RKComponentMap *RKGlobals::cmap;
 KHelpDlg *RKGlobals::helpdlg;

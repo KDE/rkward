@@ -26,8 +26,8 @@
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../rbackend/rinterface.h"
-#include "../rkeditormanager.h"
 #include "../rkward.h"
+#include "../misc/rkworkplace.h"
 
 #include "../debug.h"
 
@@ -87,7 +87,7 @@ void RKLoadAgent::listUpdateComplete () {
 		RKGlobals::rObjectList ()->updateFromR ();
 		return;
 	}
-	RKGlobals::editorManager ()->restoreEditors ();
+	RKWorkplace::mainWorkplace ()->restoreWorkplace ();
 
 	delete this;
 }

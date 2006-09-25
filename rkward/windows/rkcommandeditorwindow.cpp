@@ -47,6 +47,7 @@
 
 #include "../rkeditormanager.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkworkplace.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "../khelpdlg.h"
@@ -56,7 +57,7 @@
 
 #define GET_HELP_URL 1
 
-RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting) : KMdiChildView (parent) {
+RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting) : QWidget (parent) {
 	RK_TRACE (COMMANDEDITOR);
 
 	KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
@@ -72,8 +73,6 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	RKCommonFunctions::moveContainer (m_doc, "Menu", "tools", "edit", true);
 
 	m_doc->insertChildClient (new RKCommandEditorWindowPart (m_view, this));
-
-	RKGlobals::rkApp()->m_manager->addPart(m_doc, false);
 
 	QHBoxLayout *pLayout = new QHBoxLayout( this, 0, -1, "layout");
 	pLayout->addWidget(m_view);
@@ -92,7 +91,7 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 
 void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 	if (isModified ()) {
-		int status = KMessageBox::warningYesNo (this, i18n ("The document \"%1\" has been modified. Close it anyway?").arg (tabCaption ()), i18n ("File not saved"));
+		int status = KMessageBox::warningYesNo (this, i18n ("The document \"%1\" has been modified. Close it anyway?").arg (caption ()), i18n ("File not saved"));
 	
 		if (status != KMessageBox::Yes) {
 			e->ignore ();
@@ -100,7 +99,7 @@ void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 		}
 	}
 
-	KMdiChildView::closeEvent (e);
+	QWidget::closeEvent (e);
 }
 
 void RKCommandEditorWindow::setRHighlighting () {
@@ -178,7 +177,8 @@ void RKCommandEditorWindow::updateCaption () {
 	if (name.isEmpty ()) name = i18n ("Unnamed");
 	if (isModified ()) name.append (i18n (" [modified]"));
 
-	setMDICaption (name);
+	setCaption (name);
+	RKWorkplace::mainWorkplace ()->updateWindowCaption (this);
 }
 
 void RKCommandEditorWindow::showHelp () {

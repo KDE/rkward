@@ -50,8 +50,6 @@
 
 // application specific includes
 #include "rkward.h"
-#include "rkeditormanager.h"
-#include "rkdocmanager.h" 
 #include "core/rkmodificationtracker.h"
 #include "rkwatch.h"
 #include "plugin/rkcomponentmap.h"
@@ -67,21 +65,24 @@
 #include "dialogs/rkloadlibsdialog.h"
 #include "agents/rksaveagent.h"
 #include "agents/rkloadagent.h"
-#include "windows/rkcommandeditorwindow.h"
-#include "windows/rkhtmlwindow.h"
 #include "windows/rcontrolwindow.h"
-#include "windows/detachedwindowcontainer.h"
+#include "windows/rkhtmlwindow.h"
+#include "misc/rkworkplace.h"
 #include "khelpdlg.h"
 #include "rkconsole.h"
 #include "debug.h"
 
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
 #include "dialogs/rkreadlinedialog.h"	// TODO: see below: needed purely for linking!
+#include "windows/detachedwindowcontainer.h"	// TODO: see below: needed purely for linking!
+#include "dataeditor/rkeditordataframepart.h"	// TODO: see below: needed purely for linking!
 
 // This nevers gets called. It's needed to trick ld into linking correctly. Nothing else.
 void bogusCalls () {
 	ShowEditTextFileAgent::showEditFiles (0);		// TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
 	RKReadLineDialog::readLine (0, QString(), QString(), 0, 0);	// TODO: see above
+	new RKEditorDataFramePart (0);
+	DetachedWindowContainer (0, 0);
 }
 
 RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
@@ -108,8 +109,6 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	setXMLFile( "rkwardui.rc" );
 	createShellGUI ( true );
 
-	RKGlobals::manager = new RKEditorManager ();
-
 	connect (this, SIGNAL (childWindowCloseRequest (KMdiChildView *)), this, SLOT (slotChildWindowCloseRequest (KMdiChildView *)));
 
 	RKGlobals::mtracker = new RKModificationTracker (this);
@@ -120,14 +119,24 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	startup_timer = new QTimer (this);
 	startup_timer->start (50);
 	connect (startup_timer, SIGNAL (timeout ()), this, SLOT (doPostInit ()));
+
+	KMdiChildView *dummy = new KMdiChildView (this);
+	QVBoxLayout *layout = new QVBoxLayout (dummy);
+	addWindow (dummy);
+	new RKWorkplace (dummy);
+	layout->addWidget (RKWorkplace::mainWorkplace ()->view ());
+	connect (RKWorkplace::mainWorkplace ()->part_manager, SIGNAL (partAdded (KParts::Part *)), this, SLOT (partAdded (KParts::Part *)));
+	connect (RKWorkplace::mainWorkplace ()->part_manager, SIGNAL (partRemoved (KParts::Part *)), this, SLOT (partRemoved (KParts::Part *)));
+	connect (RKWorkplace::mainWorkplace (), SIGNAL (changeGUI (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
+	connect (RKWorkplace::mainWorkplace (), SIGNAL (changeCaption (const QString &)), this, SLOT (setCaption (const QString &)));
 	
 
-	m_manager = new KParts::PartManager( this );
+	toolviews_manager = new KParts::PartManager( this );
 	// When the manager says the active part changes,
 	// the builder updates (recreates) the GUI
-	connect (m_manager, SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
-	connect (m_manager, SIGNAL (partAdded (KParts::Part *)), this, SLOT (partAdded (KParts::Part *)));
-	connect (m_manager, SIGNAL (partRemoved (KParts::Part *)), this, SLOT (partRemoved (KParts::Part *)));
+	connect (toolviews_manager, SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
+	connect (toolviews_manager, SIGNAL (partAdded (KParts::Part *)), this, SLOT (partAdded (KParts::Part *)));
+	connect (toolviews_manager, SIGNAL (partRemoved (KParts::Part *)), this, SLOT (partRemoved (KParts::Part *)));
 	// a few calls to setCaption too many result from the lines below, but it seems to be the only way to catch all cases where the caption should be changed
 	connect (this, SIGNAL (viewActivated (KMdiChildView *)), this, SLOT (viewChanged (KMdiChildView *)));
 	connect (this, SIGNAL (viewDeactivated (KMdiChildView *)), this, SLOT (viewChanged (KMdiChildView *)));
@@ -152,7 +161,6 @@ RKwardApp::~RKwardApp() {
 	delete RKGlobals::rObjectList ();
 	delete object_browser;
 	delete RKGlobals::tracker ();
-	delete RKGlobals::editorManager ();
 }
 
 void RKwardApp::doPostInit () {
@@ -191,7 +199,7 @@ void RKwardApp::doPostInit () {
 	consolepart->widget ()->setIcon (SmallIcon ("konsole"));
 	consolepart->widget ()->setName ("r_console");
 	addToolWindow (consolepart->widget (), KDockWidget::DockBottom, getMainDockWidget (), 10);
-	m_manager->addPart (consolepart, false);
+	toolviews_manager->addPart (consolepart, false);
 	
 	RKGlobals::helpdlg = new KHelpDlg (0);
 	RKGlobals::helpDialog ()->setIcon (SmallIcon ("help"));
@@ -210,7 +218,7 @@ void RKwardApp::doPostInit () {
 		} else if (result->result == StartupDialog::EmptyTable) {
 			RObject *object = RKGlobals::rObjectList ()->createNewChild (i18n ("my.data"), 0, true, true);
 			// usually an explicit call to activateView should not be necessary. Somehow however, here, it is.
-			RKGlobals::editorManager ()->editObject (object, true);
+			RKWorkplace::mainWorkplace ()->editObject (object, true);
 		}
 		delete result;
 	}
@@ -469,19 +477,9 @@ bool RKwardApp::queryClose () {
 		}
 	}
 
-// generate a (copy) list of all child views (detached or not)
-	QValueList<KMdiChildView *> child_copy;
-	for (KMdiChildView *w = m_pDocumentViews->first ();w;w= m_pDocumentViews->next ()){
-		child_copy.append (w);
-	}
-	for (KMdiChildView *w = DetachedWindowContainer::detachedWindows ()->first (); w; w = DetachedWindowContainer::detachedWindows ()->next ()) {
-		child_copy.append (w);
-	}
-
-// try to close all the children
-	QValueListIterator<KMdiChildView *> childIt;
-	for (childIt = child_copy.begin (); childIt != child_copy.end (); ++childIt) {
-		if (!(*childIt)->close ()) {
+	RKWorkplace::RKWorkplaceObjectMap map = RKWorkplace::mainWorkplace ()->getObjectList ();
+	for (RKWorkplace::RKWorkplaceObjectMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it){
+		if (!it.key ()->close ()) {
 			// If a child refuses to close, we return false.
 			slotSetStatusReady ();
 			return false;
@@ -522,7 +520,7 @@ void RKwardApp::slotNewDataFrame () {
 		QString valid = RKGlobals::rObjectList ()->validizeName (name);
 		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1").arg (valid), i18n ("Invalid Name"));
 		RObject *object = RKGlobals::rObjectList ()->createNewChild (valid, 0, true, true);
-		RKGlobals::editorManager ()->editObject (object, true);
+		RKWorkplace::mainWorkplace ()->editObject (object, true);
 	}
 	
 }
@@ -602,37 +600,25 @@ void RKwardApp::slotSetStatusBarText (const QString &text) {
 void RKwardApp::slotCloseWindow () {
 	RK_TRACE (APP);
 
-	closeActiveView ();
+	RKWorkplace::mainWorkplace ()->closeActiveWindow ();
 }
 
 void RKwardApp::slotCloseAllWindows () {
 	RK_TRACE (APP);
 
-	closeAllViews ();
+	RKWorkplace::mainWorkplace ()->closeAll ();
 }
 
 void RKwardApp::slotCloseAllEditors () {
 	RK_TRACE (APP);
 
-	RKGlobals::editorManager ()->closeAll ();
+	RKWorkplace::mainWorkplace ()->closeAll (RKWorkplace::DataEditorWindow);
 }
 
 void RKwardApp::slotDetachWindow () {
 	RK_TRACE (APP);
 
-	KMdiChildView *window = activeWindow ();
-	if (window) {
-		KParts::Part *part = m_manager->activePart ();
-		if (part) {
-			m_manager->removePart (part);
-			removeWindowFromMdi (window);
-			m_pDocumentViews->remove (window);			// WORKAROUND: shouldn't this happen automatically in the above call? Apparently not so.
-			DetachedWindowContainer *detached = new DetachedWindowContainer (part, window);
-			detached->show ();
-		} else{
-			RK_ASSERT (false);
-		}
-	}
+	RKWorkplace::mainWorkplace ()->detachWindow (RKWorkplace::mainWorkplace ()->activeAttachedWindow ());
 }
 
 void RKwardApp::newOutput () {
@@ -654,31 +640,19 @@ void RKwardApp::setRStatus (bool busy) {
 
 void RKwardApp::slotNewCommandEditor () {
 	RK_TRACE (APP);
-	RKCommandEditorWindow *editor = new RKCommandEditorWindow;
-	addWindow (editor);
-	editor->activate ();
+
+	slotOpenCommandEditor (KURL ());
 }
 
 void RKwardApp::slotOpenCommandEditor (const KURL &url) {
 	RK_TRACE (APP);
-	RKCommandEditorWindow *editor;
 
-	editor = new RKCommandEditorWindow;
-
-	if (!editor->openURL (url)) {
-		QString errstr = i18n ("Unable to open \"%1\"").arg (url.prettyURL ());
-
-		KMessageBox::messageBox (this, KMessageBox::Error, errstr, i18n ("Could not open command file"));
-		delete editor;
-		return;
+	if (RKWorkplace::mainWorkplace ()->openScriptEditor (url)) {
+		fileOpenRecent->addURL (url);
 	}
-
-	fileOpenRecent->addURL (url);
-	addWindow (editor);
-	editor->activate ();
 };
 
-void RKwardApp::slotOpenCommandEditor (){
+void RKwardApp::slotOpenCommandEditor () {
 	RK_TRACE (APP);
 	KURL::List urls;
 	KURL::List::const_iterator it;
@@ -696,10 +670,10 @@ void RKwardApp::slotChildWindowCloseRequest (KMdiChildView * window) {
 	closeWindow (window);
 }
 
-void RKwardApp::openHTML(const KURL &url) {
+void RKwardApp::openHTML (const KURL &url) {
 	RK_TRACE (APP);
-	RKHelpWindow *hw = new RKHelpWindow (this);
-	hw->openURL (url);
+
+	RKWorkplace::mainWorkplace ()->openHelpWindow (url);
 }
 
 void RKwardApp::openHTMLHelp (const QString & url) {
@@ -718,8 +692,9 @@ void RKwardApp::setCaption (const QString &) {
 	QString wcaption = RKGlobals::rObjectList ()->getWorkspaceURL ().fileName ();
 	if (wcaption.isEmpty ()) wcaption = RKGlobals::rObjectList ()->getWorkspaceURL ().prettyURL ();
 	if (wcaption.isEmpty ()) wcaption = i18n ("[Unnamed Workspace]");
-	if (activeWindow ()) {
-		wcaption.append (" - " + activeWindow ()->caption ());
+	QWidget *aw = RKWorkplace::mainWorkplace ()->activeAttachedWindow ();
+	if (aw) {
+		wcaption.append (" - " + aw->caption ());
 	}
 	KMdiMainFrm::setCaption (wcaption);
 }

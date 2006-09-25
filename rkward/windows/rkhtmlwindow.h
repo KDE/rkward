@@ -53,6 +53,8 @@ public:
 /** Add common actions to the given action collection (currently only "copy")
 @param action_collection A KActionCollection to insert actions in. */
 	void addCommonActions (KActionCollection *action_collection);
+signals:
+	void partCreated (QWidget *widget, KParts::Part *part);
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
 	void slotOpenURLRequest (const KURL &url, const KParts::URLArgs &);
