@@ -23,16 +23,20 @@
 #include <qtabwidget.h>
 
 #include <kurl.h>
+#include <kparts/part.h>
 
 #include "../rbackend/rcommandreceiver.h"
 
 class RObject;
 class RCommandChain;
 class RKWorkplaceView;
+class KParts::PartManager;
+class RKEditor;
 
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the
 workplace, which are detached, etc. Will replace RKEditorManager.
-It also provides a QWidget (RKWorkplace::view ()), which actually manages the document windows (only those, so far. I.e. this is a half-replacement for KMdi, which will be gone in KDE 4). Currently layout of the document windows is always tabbed. */
+It also provides a QWidget (RKWorkplace::view ()), which actually manages the document windows (only those, so far. I.e. this is a half-replacement for KMdi, which will be gone in KDE 4). Currently layout of the document windows is always tabbed.
+//TODO: move to windows */
 class RKWorkplace : public QObject, public RCommandReceiver {
 	Q_OBJECT
 public:
@@ -57,30 +61,33 @@ public:
 
 	struct RKWorkplaceObjectInfo {
 		RKWorkplaceObjectType type;
-		QString location_or_name;		// do we need this?
-		bool detached;
+		KParts::Part *part;
+		RKWorkplaceObjectState state;
 	};
 
 	typedef QMap<QWidget *, RKWorkplaceObjectInfo *> RKWorkplaceObjectMap;
 
-	RKWorkplaceView *view ();
+	RKWorkplaceView *view () { return wview; };
 
 	RKWorkplaceObjectMap getObjectList () { return windows; };
 
-	void detachWindow (QWidget *window);
 /** Attach an already created window. */
 	void attachWindow (QWidget *window);
+	void detachWindow (QWidget *window);
+	QWidget *activeAttachedWindow ();
+	void activateWindow (QWidget *window);
 
-	void openScriptEditor (const KURL &url=KURL ());
+	bool openScriptEditor (const KURL &url=KURL ());
 	void openHelpWindow (const KURL &url=KURL ());
 	void openOutputWindow (const KURL &url=KURL ());
 
 	bool canEditObject (RObject *object);
-	void editObject (RObject *object, bool initialize_to_empty=false);
+	RKEditor *editObject (RObject *object, bool initialize_to_empty=false);
 
 /** tell all DataEditorWindow s to syncronize changes to the R backend
 // TODO: add RCommandChain parameter */
 	void flushAllData ();
+	void closeWindow (QWidget *window);
 /** Closes all windows of the given type(s). Default call (no arguments) closes all windows
 @param type: A bitwise OR of RKWorkplaceObjectType
 @param state: A bitwise OR of RKWorkplaceObjectState */
@@ -90,17 +97,27 @@ public:
 	void restoreWorkplace (RCommandChain *chain=0);
 signals:
 	void lastWindowClosed ();
+	void changeGUI (KParts::Part *active_part);
+	void changeCaption (const QString &caption);
 public slots:
 	void windowDestroyed (QWidget *window);
-
 	void updateWindowCaption (QWidget *window);
+	void activeAttachedChanged (QWidget *window);
+
+	void registerPart (QWidget *widget, KParts::Part *part);
 protected:
 	void rCommandDone (RCommand *command);
 private:
 	RKWorkplaceObjectMap windows;
+	RKWorkplaceView *wview;
+	void addWindow (QWidget *window, RKWorkplaceObjectType type);
+
+	KParts::PartManager *part_manager;
 };
 
+/** This is a separate class mostly for future extension. right now, it's just a QTabWidget */
 class RKWorkplaceView : public QTabWidget {
+public:
 	RKWorkplaceView (QWidget *parent);
 	~RKWorkplaceView ();
 };
