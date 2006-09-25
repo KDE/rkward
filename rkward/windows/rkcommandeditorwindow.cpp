@@ -47,7 +47,6 @@
 
 #include "../rkeditormanager.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkworkplace.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "../khelpdlg.h"
@@ -57,7 +56,7 @@
 
 #define GET_HELP_URL 1
 
-RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting) : QWidget (parent) {
+RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting) : RKMDIWindow (parent, RKWorkplace::CommandEditorWindow) {
 	RK_TRACE (COMMANDEDITOR);
 
 	KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
@@ -178,7 +177,7 @@ void RKCommandEditorWindow::updateCaption () {
 	if (isModified ()) name.append (i18n (" [modified]"));
 
 	setCaption (name);
-	RKWorkplace::mainWorkplace ()->updateWindowCaption (this);
+	emit (captionChanged (this));
 }
 
 void RKCommandEditorWindow::showHelp () {

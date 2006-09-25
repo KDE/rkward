@@ -32,6 +32,7 @@ class RCommandChain;
 class RKWorkplaceView;
 class KParts::PartManager;
 class RKEditor;
+class RKMDIWindow;
 
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the
 workplace, which are detached, etc. Will replace RKEditorManager.
@@ -45,37 +46,30 @@ public:
 	RKWorkplace (QWidget *parent);
 	~RKWorkplace ();
 
-	enum RKWorkplaceObjectType {
+	enum ObjectType {
 		DataEditorWindow=1,
 		CommandEditorWindow=2,
 		OutputWindow=4,
 		HelpWindow=8,
 		AnyType=DataEditorWindow | CommandEditorWindow | OutputWindow | HelpWindow
 	};
-
-	enum RKWorkplaceObjectState {
+	
+	enum ObjectState {
 		Attached=1,
 		Detached=2,
 		AnyState=Attached | Detached
 	};
 
-	struct RKWorkplaceObjectInfo {
-		RKWorkplaceObjectType type;
-		KParts::Part *part;
-		RKWorkplaceObjectState state;
-	};
-
-	typedef QMap<QWidget *, RKWorkplaceObjectInfo *> RKWorkplaceObjectMap;
-
 	RKWorkplaceView *view () { return wview; };
 
-	RKWorkplaceObjectMap getObjectList () { return windows; };
+	typedef QValueList<RKMDIWindow *> RKWorkplaceObjectList;
+	RKWorkplaceObjectList getObjectList () { return windows; };
 
 /** Attach an already created window. */
-	void attachWindow (QWidget *window);
-	void detachWindow (QWidget *window);
-	QWidget *activeAttachedWindow ();
-	void activateWindow (QWidget *window);
+	void attachWindow (RKMDIWindow *window);
+	void detachWindow (RKMDIWindow *window);
+	RKMDIWindow *activeAttachedWindow ();
+	void activateWindow (RKMDIWindow *window);
 
 	bool openScriptEditor (const KURL &url=KURL (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString::null);
 	void openHelpWindow (const KURL &url=KURL ());
@@ -88,7 +82,7 @@ public:
 // TODO: add RCommandChain parameter */
 	void flushAllData ();
 	void closeActiveWindow ();
-	void closeWindow (QWidget *window);
+	void closeWindow (RKMDIWindow *window);
 /** Closes all windows of the given type(s). Default call (no arguments) closes all windows
 @param type: A bitwise OR of RKWorkplaceObjectType
 @param state: A bitwise OR of RKWorkplaceObjectState */
@@ -100,20 +94,17 @@ public:
 	static RKWorkplace *mainWorkplace () { return main_workplace; };
 signals:
 	void lastWindowClosed ();
-	void changeGUI (KParts::Part *active_part);
 	void changeCaption ();
 public slots:
 	void windowDestroyed (QObject *window);
-	void updateWindowCaption (QWidget *window);
+	void updateWindowCaption (RKMDIWindow *window);
 	void activeAttachedChanged (QWidget *window);
-
-	void registerPart (QWidget *window, KParts::Part *part);
 protected:
 	void rCommandDone (RCommand *command);
 private:
-	RKWorkplaceObjectMap windows;
+	RKWorkplaceObjectList windows;
 	RKWorkplaceView *wview;
-	void addWindow (QWidget *window, RKWorkplaceObjectType type);
+	void addWindow (RKMDIWindow *window);
 	static RKWorkplace *main_workplace;
 friend class RKwardApp;
 	KParts::PartManager *part_manager;
@@ -124,6 +115,27 @@ class RKWorkplaceView : public QTabWidget {
 public:
 	RKWorkplaceView (QWidget *parent) : QTabWidget (parent) {};
 	~RKWorkplaceView () {};
+};
+
+class RKMDIWindow : public QWidget {
+	Q_OBJECT
+protected:
+	RKMDIWindow (QWidget *parent, RKWorkplace::ObjectType type) : QWidget (parent) { RKMDIWindow::type=type; state=RKWorkplace::Attached; };
+	~RKMDIWindow () {};
+public:
+	virtual bool isModified () = 0;
+	virtual QString fullCaption () { return shortCaption (); };
+	virtual QString shortCaption () { return caption (); };
+	virtual KParts::Part *getPart () = 0;
+	void setCaption (const QString &caption) { QWidget::setCaption (caption); emit (captionChanged (this)); };
+	virtual QWidget *getWindow () { return getPart ()->widget (); };
+signals:
+	void captionChanged (RKMDIWindow *);
+protected:
+friend class RKWorkplace;
+	RKWorkplace::ObjectType type;
+private:
+	RKWorkplace::ObjectState state;
 };
 
 #endif

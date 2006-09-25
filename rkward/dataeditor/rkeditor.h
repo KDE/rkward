@@ -24,6 +24,8 @@
 #include <kparts/part.h>
 #include <kmdichildview.h>
 
+#include "../misc/rkworkplace.h"
+
 class RCommandChain;
 class RKDrag;
 
@@ -32,8 +34,8 @@ Use a a base class for all widgets that can be used to display and edit RObjects
 
 @author Thomas Friedrichsmeier
 */
-class RKEditor : public KMdiChildView {
-Q_OBJECT
+class RKEditor : public RKMDIWindow {
+	Q_OBJECT
 protected:
     RKEditor (QWidget *parent);
 
@@ -64,6 +66,7 @@ public:
 /** Tell the editor to (unconditionally) update its representation of the object data (in the range given in the ChangeSet) */
 	virtual void updateObjectData (RObject *object, RObject::ChangeSet *changes) = 0;
 
+	bool isModified () { return false; };
 	KParts::Part *getPart () { return part; };
 protected:
 friend class RKWorkplace;

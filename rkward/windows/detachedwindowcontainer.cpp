@@ -28,7 +28,7 @@
 #include "../rkglobals.h"
 #include "../debug.h"
 
-DetachedWindowContainer::DetachedWindowContainer (KParts::Part *part_to_capture, QWidget *widget_to_capture) : KParts::MainWindow  (RKGlobals::rkApp ()) {
+DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture) : KParts::MainWindow  (RKGlobals::rkApp ()) {
 	RK_TRACE (APP);
 
 // create own GUI
@@ -38,15 +38,14 @@ DetachedWindowContainer::DetachedWindowContainer (KParts::Part *part_to_capture,
 	createShellGUI ();
 
 // capture widget
-	part = part_to_capture;
 	widget_to_capture->reparent (this, QPoint (0, 0));
 	setCentralWidget (widget_to_capture);
-	createGUI (part_to_capture);
+	createGUI (widget_to_capture->getPart ());
 
 // should self-destruct, when child widget is destroyed
 	connect (widget_to_capture, SIGNAL (destroyed (QObject *)), this, SLOT (viewDestroyed (QObject *)));
-	connect (widget_to_capture, SIGNAL (captionChanged (QWidget *)), this, SLOT (updateCaption (QWidget *)));
-	setCaption (widget_to_capture->caption ());	// has to come after createGUI!
+	connect (widget_to_capture, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (updateCaption (RKMDIWindow *)));
+	setCaption (widget_to_capture->fullCaption ());	// has to come after createGUI!
 }
 
 DetachedWindowContainer::~DetachedWindowContainer () {
@@ -59,17 +58,17 @@ void DetachedWindowContainer::viewDestroyed (QObject *) {
 	delete this;
 }
 
-void DetachedWindowContainer::updateCaption (QWidget *widget) {
+void DetachedWindowContainer::updateCaption (RKMDIWindow *widget) {
 	RK_TRACE (APP);
-	RK_ASSERT (widget = centralWidget ());
+	RK_ASSERT (widget == centralWidget ());
 
-	setCaption (widget->caption ());
+	setCaption (widget->fullCaption ());
 }
 
 void DetachedWindowContainer::slotReattach () {
 	RK_TRACE (APP);
 
-	QWidget *window = centralWidget ();
+	RKMDIWindow *window = static_cast<RKMDIWindow *> (centralWidget ());
 	window->reparent (0, QPoint (0, 0));
 	RKWorkplace::mainWorkplace ()->attachWindow (window);
 

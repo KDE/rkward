@@ -21,7 +21,7 @@
 #include <kparts/part.h>
 #include <kparts/mainwindow.h>
 
-class QWidget;
+class RKMDIWindow;
 
 /** This class can be used host a (part) window detached from the main window. @see RKwardApp::slotDetachWindow ().
 
@@ -33,7 +33,7 @@ public:
 /** constructor.
 @param part_to_capture The part to use to create the GUI in the detached window
 @param widget_to_capture The view to reparent into the detached window */
-	DetachedWindowContainer (KParts::Part *part_to_capture, QWidget *widget_to_capture);
+	DetachedWindowContainer (RKMDIWindow *widget_to_capture);
 /** destructor. Usually you don't call this explicitely, but rather delete/close the child view. The DetachedWindowContainer will then self destruct */
 	~DetachedWindowContainer ();
 
@@ -42,7 +42,7 @@ public slots:
 	void viewDestroyed (QObject *view);
 /** re-attach to the main window */
 	void slotReattach ();
-	void updateCaption (QWidget *);
+	void updateCaption (RKMDIWindow *);
 private:
 	KParts::Part *part;
 };

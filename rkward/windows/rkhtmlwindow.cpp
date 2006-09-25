@@ -34,10 +34,9 @@
 #include "../rkward.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkworkplace.h"
 #include "../debug.h"
 
-RKHTMLWindow::RKHTMLWindow (QWidget *parent) : KMdiChildView (parent) {
+RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKWorkplace::HelpWindow) {
 	RK_TRACE (APP);
 	scroll_position=0;
 	
@@ -58,6 +57,16 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : KMdiChildView (parent) {
 
 RKHTMLWindow::~RKHTMLWindow () {
 	RK_TRACE (APP);
+}
+
+bool RKHTMLWindow::isModified () {
+	RK_TRACE (APP);
+	return false;
+}
+
+KParts::Part *RKHTMLWindow::getPart () {
+	RK_TRACE (APP);
+	return khtmlpart;
 }
 
 void RKHTMLWindow::addCommonActions (KActionCollection *action_collection) {
@@ -129,7 +138,7 @@ bool RKHTMLWindow::openURL (const KURL &url) {
 
 void RKHTMLWindow::updateCaption (const KURL &url) {
 	RK_TRACE (APP);
-	setMDICaption (url.filename ());
+	setCaption (url.filename ());
 }
 
 void RKHTMLWindow::slotOpenURLRequest(const KURL &url, const KParts::URLArgs & ) {
@@ -155,6 +164,7 @@ RKOutputWindow* RKOutputWindow::current_output = 0;
 RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUIClient () {
 	RK_TRACE (APP);
 
+	type = RKWorkplace::OutputWindow;
 	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
 	RKCommonFunctions::removeContainers (khtmlpart, QStringList::split (',', "tools,security,extraToolBar,saveBackground,saveFrame,printFrame,kget_menu"), true);
 
@@ -165,16 +175,13 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 	khtmlpart->insertChildClient (this);
 
 	setIcon (SmallIcon ("text_block"));
-	setMDICaption (i18n ("Output"));
-	RKGlobals::rkApp ()->addWindow (this);
+	setCaption (i18n ("Output"));
 
 	outputFlush = new KAction (i18n ("&Flush"), 0, 0, this, SLOT (flushOutput ()), actionCollection (), "output_flush");
 	outputRefresh = new KAction (i18n ("&Refresh"), 0, 0, this, SLOT (refreshOutput ()), actionCollection (), "output_refresh");
 	print = KStdAction::print (this, SLOT (slotPrint ()), actionCollection (), "print_output");
 	print->setText (i18n ("Print Output"));
 	addCommonActions (actionCollection ());
-
-	emit (partCreated (this, khtmlpart));
 
 	KAction *action = khtmlpart->action ("saveDocument");
 	if (action) action->setText (i18n ("Save Output as HTML"));
@@ -216,7 +223,7 @@ void RKOutputWindow::refreshOutput (bool show, bool raise) {
 
 	if (current_output) {
 		if (raise) {
-			current_output->activate ();
+			RKWorkplace::mainWorkplace ()->activateWindow (current_output);
 		}
 		current_output->refresh ();
 	} else {
@@ -233,7 +240,6 @@ RKOutputWindow* RKOutputWindow::getCurrentOutput () {
 	
 	if (!current_output) {
 		current_output = new RKOutputWindow (RKWorkplace::mainWorkplace ()->view ());
-#warning need to register the window!
 
 		KURL url (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
 		current_output->openURL (url);
@@ -289,10 +295,7 @@ RKHelpWindow::RKHelpWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUICli
 	khtmlpart->insertChildClient (this);
 
 	setIcon (SmallIcon ("help"));
-	setMDICaption (i18n ("R Help"));
-	RKGlobals::rkApp ()->addWindow (this);
-
-	emit (partCreated (this, khtmlpart));
+	setCaption (i18n ("R Help"));
 }
 
 RKHelpWindow::~RKHelpWindow () {

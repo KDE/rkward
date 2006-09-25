@@ -25,6 +25,8 @@
 
 #include <qptrlist.h>
 
+#include "../misc/rkworkplace.h"
+
 class KHTMLPart;
 class KActionCollection;
 
@@ -37,7 +39,7 @@ It is used as a base for several purposes: Display R-help (in HTML format), disp
 
 @author Pierre Ecochard
 */
-class RKHTMLWindow : public KMdiChildView {
+class RKHTMLWindow : public RKMDIWindow {
 	Q_OBJECT
 protected:
 /** constructor. Protected. Use derived classes instead, or derive your own class.
@@ -53,8 +55,8 @@ public:
 /** Add common actions to the given action collection (currently only "copy")
 @param action_collection A KActionCollection to insert actions in. */
 	void addCommonActions (KActionCollection *action_collection);
-signals:
-	void partCreated (QWidget *widget, KParts::Part *part);
+	bool isModified ();
+	KParts::Part *getPart ();
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
 	void slotOpenURLRequest (const KURL &url, const KParts::URLArgs &);

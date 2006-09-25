@@ -24,6 +24,8 @@
 #include <kate/document.h>
 #include <kurl.h>
 
+#include "../misc/rkworkplace.h"
+
 /**
 	\brief Provides an editor window for R-commands, as well as a text-editor window in general.
 
@@ -31,7 +33,7 @@ While being called RKCommandEditorWindow, this class handles all sort of text-fi
 
 @author Pierre Ecochard
 */
-class RKCommandEditorWindow : public QWidget {
+class RKCommandEditorWindow : public RKMDIWindow {
 // we need the Q_OBJECT thing for some inherits ("RKCommandEditorWindow")-calls in rkward.cpp.
 	Q_OBJECT
 public:

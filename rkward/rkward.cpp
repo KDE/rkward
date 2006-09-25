@@ -82,7 +82,7 @@ void bogusCalls () {
 	ShowEditTextFileAgent::showEditFiles (0);		// TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
 	RKReadLineDialog::readLine (0, QString(), QString(), 0, 0);	// TODO: see above
 	new RKEditorDataFramePart (0);
-	DetachedWindowContainer (0, 0);
+	DetachedWindowContainer (0);
 }
 
 RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
@@ -127,7 +127,7 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	layout->addWidget (RKWorkplace::mainWorkplace ()->view ());
 	connect (RKWorkplace::mainWorkplace ()->part_manager, SIGNAL (partAdded (KParts::Part *)), this, SLOT (partAdded (KParts::Part *)));
 	connect (RKWorkplace::mainWorkplace ()->part_manager, SIGNAL (partRemoved (KParts::Part *)), this, SLOT (partRemoved (KParts::Part *)));
-	connect (RKWorkplace::mainWorkplace (), SIGNAL (changeGUI (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
+	connect (RKWorkplace::mainWorkplace ()->part_manager, SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
 	connect (RKWorkplace::mainWorkplace (), SIGNAL (changeCaption (const QString &)), this, SLOT (setCaption (const QString &)));
 	
 
@@ -477,9 +477,9 @@ bool RKwardApp::queryClose () {
 		}
 	}
 
-	RKWorkplace::RKWorkplaceObjectMap map = RKWorkplace::mainWorkplace ()->getObjectList ();
-	for (RKWorkplace::RKWorkplaceObjectMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it){
-		if (!it.key ()->close ()) {
+	RKWorkplace::RKWorkplaceObjectList map = RKWorkplace::mainWorkplace ()->getObjectList ();
+	for (RKWorkplace::RKWorkplaceObjectList::const_iterator it = map.constBegin (); it != map.constEnd (); ++it){
+		if (!(*it)->close ()) {
 			// If a child refuses to close, we return false.
 			slotSetStatusReady ();
 			return false;
