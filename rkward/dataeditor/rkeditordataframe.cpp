@@ -259,7 +259,6 @@ void RKEditorDataFrame::renameObject (RObject *object) {
 	
 	if (object == getObject ()) {
 		setCaption (object->getShortName ());
-		RKWorkplace::mainWorkplace ()->updateWindowCaption (this);
 		return;
 	}
 

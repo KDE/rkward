@@ -24,7 +24,7 @@
 #include <kparts/part.h>
 #include <kmdichildview.h>
 
-#include "../misc/rkworkplace.h"
+#include "../windows/rkmdiwindow.h"
 
 class RCommandChain;
 class RKDrag;

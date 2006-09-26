@@ -24,7 +24,7 @@
 #include <kate/document.h>
 #include <kurl.h>
 
-#include "../misc/rkworkplace.h"
+#include "../windows/rkmdiwindow.h"
 
 /**
 	\brief Provides an editor window for R-commands, as well as a text-editor window in general.

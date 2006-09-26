@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "rkeditor.h"
 
-RKEditor::RKEditor (QWidget *parent) : RKMDIWindow (parent, RKWorkplace::DataEditorWindow) {
+RKEditor::RKEditor (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow::DataEditorWindow) {
 }
 
 

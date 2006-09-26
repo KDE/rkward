@@ -25,7 +25,7 @@
 
 #include <qptrlist.h>
 
-#include "../misc/rkworkplace.h"
+#include "../windows/rkmdiwindow.h"
 
 class KHTMLPart;
 class KActionCollection;

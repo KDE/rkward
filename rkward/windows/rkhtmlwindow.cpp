@@ -34,9 +34,11 @@
 #include "../rkward.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkworkplace.h"
+#include "../windows/rkworkplaceview.h"
 #include "../debug.h"
 
-RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKWorkplace::HelpWindow) {
+RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow::HelpWindow) {
 	RK_TRACE (APP);
 	scroll_position=0;
 	
@@ -164,7 +166,7 @@ RKOutputWindow* RKOutputWindow::current_output = 0;
 RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUIClient () {
 	RK_TRACE (APP);
 
-	type = RKWorkplace::OutputWindow;
+	type = RKMDIWindow::OutputWindow;
 	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
 	RKCommonFunctions::removeContainers (khtmlpart, QStringList::split (',', "tools,security,extraToolBar,saveBackground,saveFrame,printFrame,kget_menu"), true);
 

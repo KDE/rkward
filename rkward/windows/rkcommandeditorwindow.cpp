@@ -56,7 +56,7 @@
 
 #define GET_HELP_URL 1
 
-RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting) : RKMDIWindow (parent, RKWorkplace::CommandEditorWindow) {
+RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
 	RK_TRACE (COMMANDEDITOR);
 
 	KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
@@ -81,6 +81,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	connect (m_doc, SIGNAL (fileNameChanged ()), this, SLOT (updateCaption ()));
 	connect (m_doc, SIGNAL (modifiedChanged ()), this, SLOT (updateCaption ()));		// of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 	if (use_r_highlighting) setRHighlighting ();
+
+	updateCaption ();	// initialize
 }
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
@@ -177,7 +179,6 @@ void RKCommandEditorWindow::updateCaption () {
 	if (isModified ()) name.append (i18n (" [modified]"));
 
 	setCaption (name);
-	emit (captionChanged (this));
 }
 
 void RKCommandEditorWindow::showHelp () {

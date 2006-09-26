@@ -67,6 +67,7 @@
 #include "agents/rkloadagent.h"
 #include "windows/rcontrolwindow.h"
 #include "windows/rkhtmlwindow.h"
+#include "windows/rkworkplaceview.h"
 #include "misc/rkworkplace.h"
 #include "khelpdlg.h"
 #include "rkconsole.h"
@@ -83,6 +84,7 @@ void bogusCalls () {
 	RKReadLineDialog::readLine (0, QString(), QString(), 0, 0);	// TODO: see above
 	new RKEditorDataFramePart (0);
 	DetachedWindowContainer (0);
+	new RKWorkplaceView (0);
 }
 
 RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
@@ -128,7 +130,7 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	connect (RKWorkplace::mainWorkplace ()->part_manager, SIGNAL (partAdded (KParts::Part *)), this, SLOT (partAdded (KParts::Part *)));
 	connect (RKWorkplace::mainWorkplace ()->part_manager, SIGNAL (partRemoved (KParts::Part *)), this, SLOT (partRemoved (KParts::Part *)));
 	connect (RKWorkplace::mainWorkplace ()->part_manager, SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
-	connect (RKWorkplace::mainWorkplace (), SIGNAL (changeCaption (const QString &)), this, SLOT (setCaption (const QString &)));
+	connect (RKWorkplace::mainWorkplace ()->view (), SIGNAL (captionChanged (const QString &)), this, SLOT (setCaption (const QString &)));
 	
 
 	toolviews_manager = new KParts::PartManager( this );
@@ -147,6 +149,7 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	}
 }
 
+#warning Obsolete, remove
 void RKwardApp::addWindow (KMdiChildView *view, int flags) {
 	RK_TRACE (APP);
 
@@ -612,7 +615,7 @@ void RKwardApp::slotCloseAllWindows () {
 void RKwardApp::slotCloseAllEditors () {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->closeAll (RKWorkplace::DataEditorWindow);
+	RKWorkplace::mainWorkplace ()->closeAll (RKMDIWindow::DataEditorWindow);
 }
 
 void RKwardApp::slotDetachWindow () {
@@ -692,10 +695,7 @@ void RKwardApp::setCaption (const QString &) {
 	QString wcaption = RKGlobals::rObjectList ()->getWorkspaceURL ().fileName ();
 	if (wcaption.isEmpty ()) wcaption = RKGlobals::rObjectList ()->getWorkspaceURL ().prettyURL ();
 	if (wcaption.isEmpty ()) wcaption = i18n ("[Unnamed Workspace]");
-	QWidget *aw = RKWorkplace::mainWorkplace ()->activeAttachedWindow ();
-	if (aw) {
-		wcaption.append (" - " + aw->caption ());
-	}
+	wcaption.append (" - " + RKWorkplace::mainWorkplace ()->view ()->activeCaption ());
 	KMdiMainFrm::setCaption (wcaption);
 }
 

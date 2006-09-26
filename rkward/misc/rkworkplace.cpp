@@ -25,6 +25,7 @@
 #include "../windows/detachedwindowcontainer.h"
 #include "../windows/rkcommandeditorwindow.h"
 #include "../windows/rkhtmlwindow.h"
+#include "../windows/rkworkplaceview.h"
 #include "../core/robject.h"
 #include "../core/rcontainerobject.h"
 #include "../core/robjectlist.h"
@@ -45,28 +46,21 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QObject (parent) {
 
 	main_workplace = this;
 	wview = new RKWorkplaceView (parent);
-	connect (wview, SIGNAL (currentChanged (QWidget *)), this, SLOT (activeAttachedChanged (QWidget *)));
 	part_manager = new KParts::PartManager (RKGlobals::rkApp ());
 }
 
 RKWorkplace::~RKWorkplace () {
 	RK_TRACE (APP);
 
-	closeAll ();
+//	closeAll ();	// not needed, as the windows will autodelete themselves using QObject mechanism. Of course, closeAll () should be called *before* quitting.
 }
 
 void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	RK_TRACE (APP);
 	RK_ASSERT (windows.find (window) != windows.end ());		// This should not happen for now.
 
-	connect (window, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (updateWindowCaption (RKMDIWindow *)));
-	window->state = Attached;
-
-	window->reparent (view (), QPoint (0, 0));
-	view ()->addTab (window, *(window->icon ()), window->shortCaption ());
-	window->show ();
-	view ()->setCurrentPage (view ()->indexOf (window));
-	window->setFocus ();
+	window->state = RKMDIWindow::Attached;
+	view ()->addPage (window);
 
 	RK_ASSERT (window->getPart ());
 	part_manager->addPart (window->getPart ());
@@ -76,8 +70,7 @@ void RKWorkplace::detachWindow (RKMDIWindow *window) {
 	RK_TRACE (APP);
 	RK_ASSERT (windows.find (window) != windows.end ());		// Can't detach a window that is not attached
 
-	disconnect (window, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (updateWindowCaption (RKMDIWindow *)));
-	window->state = Detached;
+	window->state = RKMDIWindow::Detached;
 
 	RK_ASSERT (window->getPart ());
 	part_manager->removePart (window->getPart ());
@@ -90,9 +83,8 @@ void RKWorkplace::detachWindow (RKMDIWindow *window) {
 void RKWorkplace::addWindow (RKMDIWindow *window) {
 	RK_TRACE (APP);
 
-	connect (window, SIGNAL (destroyed (QObject *)), this, SLOT (windowDestroyed (QObject *)));
-
 	windows.append (window);
+	connect (window, SIGNAL (destroyed (QObject *)), this, SLOT (windowDestroyed (QObject *)));
 	attachWindow (window);
 }
 
@@ -191,7 +183,7 @@ void RKWorkplace::flushAllData () {
 	RK_TRACE (APP);
 
 	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
-		if ((*it)->type == DataEditorWindow) {
+		if ((*it)->type == RKMDIWindow::DataEditorWindow) {
 			static_cast<RKEditor *> (*it)->flushChanges ();
 		}
 	}
@@ -232,30 +224,14 @@ void RKWorkplace::windowDestroyed (QObject *object) {
 	RKMDIWindow *window = static_cast<RKMDIWindow *> (object);
 
 	RK_ASSERT (windows.find (window) != windows.end ());
+	view ()->removePage (window, true);
 	windows.remove (window);
-}
-
-void RKWorkplace::updateWindowCaption (RKMDIWindow *window) {
-	RK_TRACE (APP);
-
-	RK_ASSERT (windows.find (window) != windows.end ());
-	view ()->changeTab (window, window->shortCaption ());
-	if (window == activeAttachedWindow ()) emit (changeCaption ());
-}
-
-void RKWorkplace::activeAttachedChanged (QWidget *window) {
-	RK_TRACE (APP);
-	RKMDIWindow *w = static_cast<RKMDIWindow *>(window);
-	RK_ASSERT (windows.find (w) != windows.end ());
-	RK_ASSERT (window);
-
-	emit (changeCaption ());
 }
 
 RKMDIWindow *RKWorkplace::activeAttachedWindow () {
 	RK_TRACE (APP);
 
-	return (static_cast<RKMDIWindow *> (view ()->currentPage ()));
+	return (static_cast<RKMDIWindow *> (view ()->activePage ()));
 }
 
 void RKWorkplace::activateWindow (RKMDIWindow *window) {
