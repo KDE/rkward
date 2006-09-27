@@ -40,8 +40,6 @@ public:
 /** destructor. Do not use. No instance needed of this class. Only static stuff inside */
 	~RKGlobals ();
 
-/// static pointer to the app
-	static RKwardApp *rkApp () { return app; }
 /// static pointer to the RInterface
 	static RInterface *rInterface () { return rinter; };
 /// static pointer to the RObjectList
@@ -67,7 +65,6 @@ public:
 
 private:
 	friend class RKwardApp;
-	static RKwardApp *app;
 	static RInterface *rinter;
 	static RObjectList *list;
 	static RKModificationTracker *mtracker;

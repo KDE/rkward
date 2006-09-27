@@ -98,7 +98,7 @@ void RKSettingsModulePlugins::applyChanges () {
 #else
 	interface_pref = static_cast<PluginPrefs> (button_group->selectedId ());
 #endif
-	RKGlobals::rkApp ()->initPlugins();
+	RKwardApp::getApp ()->initPlugins();
 }
 
 void RKSettingsModulePlugins::save (KConfig *config) {

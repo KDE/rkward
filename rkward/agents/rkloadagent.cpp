@@ -27,7 +27,7 @@
 #include "../core/robjectlist.h"
 #include "../rbackend/rinterface.h"
 #include "../rkward.h"
-#include "../misc/rkworkplace.h"
+#include "../windows/rkworkplace.h"
 
 #include "../debug.h"
 
@@ -35,19 +35,19 @@
 
 RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
 	RK_TRACE (APP);
-	RKGlobals::rkApp ()->slotSetStatusBarText (i18n ("Loading Workspace ..."));
+	RKwardApp::getApp ()->slotSetStatusBarText (i18n ("Loading Workspace ..."));
 
 #if !KDE_IS_VERSION (3, 2, 0)
 	KIO::NetAccess::download (url, tmpfile);
 #else
-	KIO::NetAccess::download (url, tmpfile, RKGlobals::rkApp ());
+	KIO::NetAccess::download (url, tmpfile, RKwardApp::getApp ());
 #endif
 
 	update_was_delete = false;
 	RCommand *command;
 	
 	if (!merge) {
-		RKGlobals::rkApp ()->slotCloseAllEditors ();
+		RKwardApp::getApp ()->slotCloseAllEditors ();
 		update_was_delete = true;
 		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App);
 		RKGlobals::rInterface ()->issueCommand (command);
@@ -75,8 +75,8 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2").arg (RKGlobals::rObjectList ()->getWorkspaceURL ().path ()).arg (command->error ()), i18n ("Error loading workspace"));
 			RKGlobals::rObjectList ()->setWorkspaceURL (QString::null);
 		}
-		RKGlobals::rkApp ()->slotSetStatusReady ();
-		RKGlobals::rkApp ()->setCaption (QString::null);	// trigger update of caption
+		RKwardApp::getApp ()->slotSetStatusReady ();
+		RKwardApp::getApp ()->setCaption (QString::null);	// trigger update of caption
 	}
 }
 

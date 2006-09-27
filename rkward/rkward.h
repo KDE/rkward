@@ -102,8 +102,9 @@ TODO: rename to something sensible, and check whether it is redundant. */
 
 /** returns a pointer to the menu-list (in essence the menu-bar) */
 	RKMenuList* getMenuList () { return menu_list; };
+	KParts::PartManager *partManager () { return part_manager; };
 
-	KParts::PartManager *toolviews_manager;
+	static RKwardApp *getApp () { return rkward_app; };
 protected:
 	void openWorkspace (const KURL &url);
 	/** save Options/Settings. Includes general Options like all bar positions and status as well as the geometry and the recent file list */
@@ -196,8 +197,6 @@ public slots:
 	void setCaption (const QString &caption);
 /** a view has been activated or deactivated. We should make sure to update the main caption to fix strange quirks */
 	void viewChanged (KMdiChildView *) { setCaption (QString::null); };
-/** reimplemented from KMdiMainFrm to connect windowCaptionChanged to setCaption. It's beyond me, why the default implementation does not do this. */
-	void addWindow (KMdiChildView *view, int flags=KMdi::StandardAdd);
 
 /** connected to m_manager->partAdded (). Connects statusbar notifications */
 	void partAdded (KParts::Part *part);
@@ -205,6 +204,7 @@ public slots:
 	void partRemoved (KParts::Part *part);
 private:
 	QLabel* r_status_label;
+	KParts::PartManager *part_manager;
 
 	// KAction pointers to enable/disable actions
 	KAction* fileOpen;
@@ -251,7 +251,9 @@ private:
 	KURL *initial_url;
 	
 	RKMenuList *menu_list;
-	
+
+	static RKwardApp *rkward_app;
+
 	friend class RInterface;
 /** set the R status message ("R engine idel/busy") to idle or busy */
 	void setRStatus (bool busy);

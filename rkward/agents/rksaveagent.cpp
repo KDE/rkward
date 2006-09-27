@@ -25,7 +25,7 @@
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
-#include "../misc/rkworkplace.h"
+#include "../windows/rkworkplace.h"
 #include "../rkeditormanager.h"
 
 #include "../debug.h"
@@ -90,7 +90,8 @@ void RKSaveAgent::rCommandDone (RCommand *command) {
 			}
 		}
 	} else {
-		RKGlobals::rkApp ()->setCaption (save_url.filename ());
+#warning TODO This line is wrong!
+		RKwardApp::getApp ()->setCaption (save_url.filename ());
 		done ();
 		return;
 	}
@@ -102,10 +103,10 @@ void RKSaveAgent::done () {
 		RKGlobals::rInterface ()->closeChain (save_chain);
 	}
 	if (when_done == Quit) {
-		delete RKGlobals::rkApp ();
+		delete RKwardApp::getApp ();
 		qApp->quit ();
 	} else if (when_done == Load) {
-		RKGlobals::rkApp ()->fileOpenNoSave (load_url);
+		RKwardApp::getApp ()->fileOpenNoSave (load_url);
 		delete this;
 	} else {
 		delete this;

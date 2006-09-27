@@ -23,15 +23,13 @@
 #include <qtabwidget.h>
 
 #include <kurl.h>
-#include <kparts/part.h>
 
-#include "../windows/rkmdiwindow.h"
+#include "rkmdiwindow.h"
 #include "../rbackend/rcommandreceiver.h"
 
 class RObject;
 class RCommandChain;
 class RKWorkplaceView;
-class KParts::PartManager;
 class RKEditor;
 
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the
@@ -89,8 +87,6 @@ private:
 	RKWorkplaceView *wview;
 	void addWindow (RKMDIWindow *window);
 	static RKWorkplace *main_workplace;
-friend class RKwardApp;
-	KParts::PartManager *part_manager;
 };
 
 #endif

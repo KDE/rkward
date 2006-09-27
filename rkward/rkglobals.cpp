@@ -18,7 +18,6 @@
 
 #include <qstring.h>
 
-RKwardApp *RKGlobals::app;
 RInterface *RKGlobals::rinter;
 RObjectList *RKGlobals::list;
 RKModificationTracker *RKGlobals::mtracker;

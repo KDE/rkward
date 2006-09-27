@@ -26,7 +26,6 @@
 #include "rkeditordataframe.h"
 #include "rkdrag.h"
 #include "../rkward.h"
-#include "../rkglobals.h"
 #include "../debug.h"
 
 RKEditorDataFramePart::RKEditorDataFramePart (QWidget *parent) : KParts::Part (parent) {
@@ -65,18 +64,18 @@ void RKEditorDataFramePart::initializeActions () {
 void RKEditorDataFramePart::slotEditCut () {
 	RK_TRACE (EDITOR);
 	
-	RKGlobals::rkApp ()->slotSetStatusBarText (i18n ("Cutting selection..."));
+	RKwardApp::getApp ()->slotSetStatusBarText (i18n ("Cutting selection..."));
 	slotEditCopy ();
 	editor->clearSelected ();
-	RKGlobals::rkApp ()->slotSetStatusReady ();
+	RKwardApp::getApp ()->slotSetStatusReady ();
 }
 
 void RKEditorDataFramePart::slotEditCopy() {
 	RK_TRACE (EDITOR);
 	
-	RKGlobals::rkApp ()->slotSetStatusBarText (i18n ("Copying selection to clipboard..."));
+	RKwardApp::getApp ()->slotSetStatusBarText (i18n ("Copying selection to clipboard..."));
 	QApplication::clipboard()->setData(editor->makeDrag ());
-	RKGlobals::rkApp ()->slotSetStatusReady ();
+	RKwardApp::getApp ()->slotSetStatusReady ();
 }
 
 
@@ -104,7 +103,7 @@ void RKEditorDataFramePart::slotEditPasteToSelection() {
 void RKEditorDataFramePart::doPaste () {
 	RK_TRACE (EDITOR);
 
-	RKGlobals::rkApp ()->slotSetStatusBarText(i18n("Inserting clipboard contents..."));
+	RKwardApp::getApp ()->slotSetStatusBarText(i18n("Inserting clipboard contents..."));
 
 	// actually, we don't care, whether tsv or plain gets pasted - it's both
 	// treated the same. We should however encourage external senders to
@@ -119,7 +118,7 @@ void RKEditorDataFramePart::doPaste () {
 		editor->paste (data);
 	}
 
-	RKGlobals::rkApp ()->slotSetStatusReady ();
+	RKwardApp::getApp ()->slotSetStatusReady ();
 }
 
 #include "rkeditordataframepart.moc"

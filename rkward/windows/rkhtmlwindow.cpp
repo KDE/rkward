@@ -34,7 +34,7 @@
 #include "../rkward.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkworkplace.h"
+#include "../windows/rkworkplace.h"
 #include "../windows/rkworkplaceview.h"
 #include "../debug.h"
 

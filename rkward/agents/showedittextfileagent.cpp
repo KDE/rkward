@@ -27,13 +27,13 @@
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rembedinternal.h"
-#include "../misc/rkworkplace.h"
+#include "../windows/rkworkplace.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 
 #include "../debug.h"
 
-ShowEditTextFileAgent::ShowEditTextFileAgent (RCallbackArgs *args, const QString &text, const QString &caption) : QObject (RKGlobals::rkApp ()) {
+ShowEditTextFileAgent::ShowEditTextFileAgent (RCallbackArgs *args, const QString &text, const QString &caption) : QObject (RKwardApp::getApp ()) {
 	RK_TRACE (APP);
 
 	ShowEditTextFileAgent::args = args;

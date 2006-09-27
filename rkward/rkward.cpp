@@ -68,7 +68,7 @@
 #include "windows/rcontrolwindow.h"
 #include "windows/rkhtmlwindow.h"
 #include "windows/rkworkplaceview.h"
-#include "misc/rkworkplace.h"
+#include "windows/rkworkplace.h"
 #include "khelpdlg.h"
 #include "rkconsole.h"
 #include "debug.h"
@@ -87,17 +87,20 @@ void bogusCalls () {
 	new RKWorkplaceView (0);
 }
 
+//static
+RKwardApp *RKwardApp::rkward_app = 0;
+
 RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
 	RK_TRACE (APP);
-	RKGlobals::app = this;
+	RK_ASSERT (rkward_app == 0);
+
+	rkward_app = this;
 	RKGlobals::rinter = 0;
 	RKGlobals::list = 0;
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
 	
 	// Nice docks a la Kdevelop.
 	setToolviewStyle(KMultiTabBar::KDEV3ICON);
-	
-	
 	
 	///////////////////////////////////////////////////////////////////
 	// call inits to invoke all other construction parts
@@ -122,39 +125,28 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	startup_timer->start (50);
 	connect (startup_timer, SIGNAL (timeout ()), this, SLOT (doPostInit ()));
 
+	part_manager = new KParts::PartManager( this );
+	// When the manager says the active part changes,
+	// the builder updates (recreates) the GUI
+	connect (partManager (), SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
+	connect (partManager (), SIGNAL (partAdded (KParts::Part *)), this, SLOT (partAdded (KParts::Part *)));
+	connect (partManager (), SIGNAL (partRemoved (KParts::Part *)), this, SLOT (partRemoved (KParts::Part *)));
+
 	KMdiChildView *dummy = new KMdiChildView (this);
 	QVBoxLayout *layout = new QVBoxLayout (dummy);
 	addWindow (dummy);
 	new RKWorkplace (dummy);
 	layout->addWidget (RKWorkplace::mainWorkplace ()->view ());
-	connect (RKWorkplace::mainWorkplace ()->part_manager, SIGNAL (partAdded (KParts::Part *)), this, SLOT (partAdded (KParts::Part *)));
-	connect (RKWorkplace::mainWorkplace ()->part_manager, SIGNAL (partRemoved (KParts::Part *)), this, SLOT (partRemoved (KParts::Part *)));
-	connect (RKWorkplace::mainWorkplace ()->part_manager, SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
 	connect (RKWorkplace::mainWorkplace ()->view (), SIGNAL (captionChanged (const QString &)), this, SLOT (setCaption (const QString &)));
-	
 
-	toolviews_manager = new KParts::PartManager( this );
-	// When the manager says the active part changes,
-	// the builder updates (recreates) the GUI
-	connect (toolviews_manager, SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
-	connect (toolviews_manager, SIGNAL (partAdded (KParts::Part *)), this, SLOT (partAdded (KParts::Part *)));
-	connect (toolviews_manager, SIGNAL (partRemoved (KParts::Part *)), this, SLOT (partRemoved (KParts::Part *)));
-	// a few calls to setCaption too many result from the lines below, but it seems to be the only way to catch all cases where the caption should be changed
+/*	// a few calls to setCaption too many result from the lines below, but it seems to be the only way to catch all cases where the caption should be changed
 	connect (this, SIGNAL (viewActivated (KMdiChildView *)), this, SLOT (viewChanged (KMdiChildView *)));
-	connect (this, SIGNAL (viewDeactivated (KMdiChildView *)), this, SLOT (viewChanged (KMdiChildView *)));
+	connect (this, SIGNAL (viewDeactivated (KMdiChildView *)), this, SLOT (viewChanged (KMdiChildView *))); */
 
 	if (!kapp->dcopClient ()->isRegistered ()) {
 		kapp->dcopClient ()->registerAs ("rkward");
 		kapp->dcopClient ()->setDefaultObject (objId ());
 	}
-}
-
-#warning Obsolete, remove
-void RKwardApp::addWindow (KMdiChildView *view, int flags) {
-	RK_TRACE (APP);
-
-	KMdiMainFrm::addWindow (view, flags);
-	connect (view, SIGNAL (windowCaptionChanged (const QString &)), this, SLOT (setCaption (const QString &)));
 }
 
 RKwardApp::~RKwardApp() {
@@ -202,7 +194,7 @@ void RKwardApp::doPostInit () {
 	consolepart->widget ()->setIcon (SmallIcon ("konsole"));
 	consolepart->widget ()->setName ("r_console");
 	addToolWindow (consolepart->widget (), KDockWidget::DockBottom, getMainDockWidget (), 10);
-	toolviews_manager->addPart (consolepart, false);
+	partManager ()->addPart (consolepart, false);
 	
 	RKGlobals::helpdlg = new KHelpDlg (0);
 	RKGlobals::helpDialog ()->setIcon (SmallIcon ("help"));

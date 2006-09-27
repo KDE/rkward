@@ -17,7 +17,7 @@
 
 #include "rkmdiwindow.h"
 
-#include "../misc/rkworkplace.h"
+#include "rkworkplace.h"
 
 #include "../debug.h"
 

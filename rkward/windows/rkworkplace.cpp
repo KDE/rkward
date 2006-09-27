@@ -22,10 +22,10 @@
 #include <klocale.h>
 #include <kiconloader.h>
 
-#include "../windows/detachedwindowcontainer.h"
-#include "../windows/rkcommandeditorwindow.h"
-#include "../windows/rkhtmlwindow.h"
-#include "../windows/rkworkplaceview.h"
+#include "detachedwindowcontainer.h"
+#include "rkcommandeditorwindow.h"
+#include "rkhtmlwindow.h"
+#include "rkworkplaceview.h"
 #include "../core/robject.h"
 #include "../core/rcontainerobject.h"
 #include "../core/robjectlist.h"
@@ -46,7 +46,6 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QObject (parent) {
 
 	main_workplace = this;
 	wview = new RKWorkplaceView (parent);
-	part_manager = new KParts::PartManager (RKGlobals::rkApp ());
 }
 
 RKWorkplace::~RKWorkplace () {
@@ -63,7 +62,7 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	view ()->addPage (window);
 
 	RK_ASSERT (window->getPart ());
-	part_manager->addPart (window->getPart ());
+	RKwardApp::getApp ()->partManager ()->addPart (window->getPart ());
 }
 
 void RKWorkplace::detachWindow (RKMDIWindow *window) {
@@ -73,7 +72,7 @@ void RKWorkplace::detachWindow (RKMDIWindow *window) {
 	window->state = RKMDIWindow::Detached;
 
 	RK_ASSERT (window->getPart ());
-	part_manager->removePart (window->getPart ());
+	RKwardApp::getApp ()->partManager ()->removePart (window->getPart ());
 	view ()->removePage (window);
 
 	DetachedWindowContainer *detached = new DetachedWindowContainer (window);

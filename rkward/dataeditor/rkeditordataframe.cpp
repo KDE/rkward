@@ -28,7 +28,7 @@
 #include "../rkeditormanager.h"
 #include "../core/rkmodificationtracker.h"
 #include "rkeditordataframepart.h"
-#include "../misc/rkworkplace.h"
+#include "../windows/rkworkplace.h"
 
 #include "../debug.h"
 

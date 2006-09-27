@@ -24,11 +24,11 @@
 #include <qwidget.h>
 
 #include "../rkward.h"
-#include "../misc/rkworkplace.h"
+#include "rkworkplace.h"
 #include "../rkglobals.h"
 #include "../debug.h"
 
-DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture) : KParts::MainWindow  (RKGlobals::rkApp ()) {
+DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture) : KParts::MainWindow  (RKwardApp::getApp ()) {
 	RK_TRACE (APP);
 
 // create own GUI

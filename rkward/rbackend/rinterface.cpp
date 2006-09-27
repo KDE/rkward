@@ -153,13 +153,13 @@ void RInterface::customEvent (QCustomEvent *e) {
 		RKGlobals::controlWindow ()->removeCommand (command);
 		command->finished ();
 		if (command->type () & RCommand::DirectToOutput) {
-			RKGlobals::rkApp ()->newOutput ();
+			RKwardApp::getApp ()->newOutput ();
 		}
 		delete command;
 	} else if ((e->type () == RIDLE_EVENT)) {
-		RKGlobals::rkApp ()->setRStatus (false);	
+		RKwardApp::getApp ()->setRStatus (false);	
 	} else if ((e->type () == RBUSY_EVENT)) {
-		RKGlobals::rkApp ()->setRStatus (true);
+		RKwardApp::getApp ()->setRStatus (true);
 	} else if ((e->type () == R_EVAL_REQUEST_EVENT)) {
 		r_thread->pauseOutput (false); // we may be recursing downwards into event loops here. Hence we need to make sure, we don't create a deadlock
 		processREvalRequest (static_cast<REvalRequest *> (e->data ()));
@@ -309,7 +309,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			issueCommand (".rk.rkreply <- \"Too few arguments in call to require.\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		}
 	} else if (call == "quit") {
-		RKGlobals::rkApp ()->close ();
+		RKwardApp::getApp ()->close ();
 		// if we're still alive, quitting was cancelled
 		issueCommand (".rk.rkreply <- \"Quitting was cancelled\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 #ifndef DISABLE_RKWINDOWCATCHER
@@ -355,7 +355,7 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 			// not to worry, just some help file to display
 			// TODO: maybe move this to ShowEditTextFileAgent instead
 			for (int n=0; n < args->int_a; ++n) {
-				RKGlobals::rkApp ()->openHTML (args->chars_a[n]);
+				RKwardApp::getApp ()->openHTML (args->chars_a[n]);
 			}
 		} else {
 			ShowEditTextFileAgent::showEditFiles (args);

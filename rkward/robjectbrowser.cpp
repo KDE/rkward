@@ -32,7 +32,7 @@
 #include "core/robjectlist.h"
 #include "core/rkmodificationtracker.h"
 #include "misc/rkobjectlistview.h"
-#include "misc/rkworkplace.h"
+#include "windows/rkworkplace.h"
 #include "dataeditor/rkeditor.h"
 #include "robjectviewer.h"
 
