@@ -45,7 +45,6 @@
 #include <klibloader.h>
 #include <kiconloader.h>
 
-#include "../rkeditormanager.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../core/robject.h"
 #include "../rkglobals.h"

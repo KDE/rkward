@@ -25,7 +25,6 @@
 #include "../core/robject.h"
 #include "../core/rkvariable.h"
 #include "../core/rcontainerobject.h"
-#include "../rkeditormanager.h"
 #include "../core/rkmodificationtracker.h"
 #include "rkeditordataframepart.h"
 #include "../windows/rkworkplace.h"

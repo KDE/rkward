@@ -1,3 +1,4 @@
+- internal cleanups (partially to make porting to KDE4/Qt4 easier)
 - when saving/loading the workspace, save / restore all windows (not just data editors)
 - remember workspace filename after saving
 - fix a long standing (but hard to trigger) crash while closing data editor window

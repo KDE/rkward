@@ -21,7 +21,6 @@
 #include "rkglobals.h"
 #include "settings/rksettingsmodulewatch.h"
 #include "settings/rksettings.h"
-#include "rkeditormanager.h"
 #include "windows/rkcommandeditorwindow.h"
 
 #include <qtextedit.h>

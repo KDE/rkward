@@ -28,7 +28,6 @@
 #include "rkward.h"
 #include "windows/rkcommandeditorwindow.h"
 #include "rkglobals.h"
-#include "rkeditormanager.h"
 #include "core/robjectlist.h"
 #include "core/rkmodificationtracker.h"
 #include "misc/rkobjectlistview.h"

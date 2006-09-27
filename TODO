@@ -108,7 +108,6 @@ General code:
 	- get rid of all the superflous dependencies: http://lists.debian.org/debian-devel/2005/12/msg00439.html
 	- use more QDicts instead of QMap<QString,...>s
 	- remove classes/files:
-		- RKDocManager? Is this used?
 		- RKGlobals
 			- static members should be moved to the respective classes. Much cleaner!
 

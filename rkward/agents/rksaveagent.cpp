@@ -27,7 +27,6 @@
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "../windows/rkworkplace.h"
-#include "../rkeditormanager.h"
 
 #include "../debug.h"
 

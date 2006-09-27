@@ -20,7 +20,6 @@
 #include <klocale.h>
 
 #include "../rkglobals.h"
-#include "../rkeditormanager.h"
 #include "../dataeditor/rkeditor.h"
 #include "rcontainerobject.h"
 
