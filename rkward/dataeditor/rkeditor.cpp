@@ -19,8 +19,8 @@
 RKEditor::RKEditor (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow::DataEditorWindow) {
 }
 
-
 RKEditor::~RKEditor () {
+	getObject ()->setObjectOpened (this, false);
 }
 
 #include "rkeditor.moc"

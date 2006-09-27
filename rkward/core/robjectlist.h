@@ -77,6 +77,7 @@ protected:
 	void objectsChanged ();
 private:
 	friend class RKLoadAgent;
+	friend class RKSaveAgent;
 	void setWorkspaceURL (const KURL &url) { current_url = url; };
 	QTimer *update_timer;
 	

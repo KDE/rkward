@@ -23,6 +23,7 @@
 #include <qapplication.h>
 
 #include "../rbackend/rinterface.h"
+#include "../core/robjectlist.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "../windows/rkworkplace.h"
@@ -43,6 +44,7 @@ RKSaveAgent::RKSaveAgent (KURL url, bool save_file_as, DoneAction when_done, KUR
 	RKWorkplace::mainWorkplace ()->flushAllData ();
 	save_chain = RKGlobals::rInterface ()->startChain (0);
 	
+	RKWorkplace::mainWorkplace ()->saveWorkplace (save_chain);
 	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.path () + "\")", RCommand::App, QString::null, this), save_chain);
 }
 
@@ -90,8 +92,8 @@ void RKSaveAgent::rCommandDone (RCommand *command) {
 			}
 		}
 	} else {
-#warning TODO This line is wrong!
-		RKwardApp::getApp ()->setCaption (save_url.filename ());
+		RKGlobals::rObjectList ()->setWorkspaceURL (save_url);
+		RKwardApp::getApp ()->setCaption (QString::null);	// trigger update of caption
 		done ();
 		return;
 	}
