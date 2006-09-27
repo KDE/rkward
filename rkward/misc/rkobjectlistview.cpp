@@ -17,9 +17,13 @@
 #include "rkobjectlistview.h"
 
 #include <klocale.h>
+#include <kglobal.h>
+#include <kstandarddirs.h>
 #include <kiconloader.h>
 
 #include <qpopupmenu.h>
+#include <qpixmap.h>
+#include <qimage.h>
 
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
@@ -29,8 +33,17 @@
 #include "../settings/rksettingsmoduleobjectbrowser.h"
 #include "../debug.h"
 
+// static
+QPixmap *RKObjectListView::icon_function = 0;
+QPixmap *RKObjectListView::icon_list = 0;
+
 RKObjectListView::RKObjectListView (QWidget *parent) : QListView (parent) {
 	RK_TRACE (APP);
+	if (icon_function == 0) {
+		icon_function = new QPixmap (QImage (KGlobal::dirs ()->findResourceDir ("data", "rkward/phpfiles/common.php") + "rkward/icons/function.png"));
+		icon_list = new QPixmap (QImage (KGlobal::dirs ()->findResourceDir ("data", "rkward/phpfiles/common.php") + "rkward/icons/list.png"));
+	}
+
 	setSorting (100);
 	addColumn (i18n("Name"));
 	addColumn (i18n("Label"));
@@ -207,7 +220,7 @@ void RKObjectListView::updateItem (RKListViewItem *item, RObject *object) {
 
 	if (object->isDataFrame ()) {
 		item->setPixmap (0, SmallIcon("spreadsheet"));
-	} else {
+	} else if (object->isVariable()) {
 		switch(static_cast<RKVariable*> (object)->getVarType ()) {
 			case RObject::Number:
 				item->setPixmap (0, SmallIcon("math_paren",12));
@@ -225,6 +238,10 @@ void RKObjectListView::updateItem (RKListViewItem *item, RObject *object) {
 				item->setPixmap (0, SmallIcon("help",12));
 				break;
 		}
+	} else if (object->isType (RObject::List)) {
+		item->setPixmap (0, *icon_list);
+	} else if (object->isType (RObject::Function)) {
+		item->setPixmap (0, *icon_function);
 	}
 
 	if (!RKSettingsModuleObjectBrowser::showHiddenVars ()) {

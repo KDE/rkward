@@ -21,6 +21,7 @@
 #include <qmap.h>
 
 class RObject;
+class QPixmap;
 class QPopupMenu;
 class RKListViewItem;
 
@@ -81,6 +82,9 @@ private:
 
 	QPopupMenu *menu;
 	RObject *menu_object;
+
+	static QPixmap *icon_function;
+	static QPixmap *icon_list;
 };
 
 /** This subclass of RKListViewItem reimplements the width ()-function to return 0 if the item is not currently visible. This is needed to get a sane column width in the listview. Also limit maximum default width to 200 px (TODO: make this configurable)

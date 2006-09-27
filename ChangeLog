@@ -1,3 +1,4 @@
+- add (ugly) items for functions and lists to object browser
 - internal cleanups (partially to make porting to KDE4/Qt4 easier)
 - when saving/loading the workspace, save / restore all windows (not just data editors)
 - remember workspace url after save as

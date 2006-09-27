@@ -60,6 +60,7 @@ public:
 	bool isContainer () { return (type & Container); };
 	bool isDataFrame () { return (type & DataFrame); };
 	bool isVariable () { return (type & Variable); };
+	bool isType (int type) { return (RObject::type & type); };
 	bool hasMetaObject () { return (type & HasMetaObject); };
 
 	void rename (const QString &new_short_name);
