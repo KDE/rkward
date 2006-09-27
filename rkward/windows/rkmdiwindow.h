@@ -46,7 +46,7 @@ protected:
 @param parent parent widget
 @param type Type of window */
 	RKMDIWindow (QWidget *parent, Type type);
-	~RKMDIWindow ();
+	virtual ~RKMDIWindow ();
 public:
 	virtual bool isModified () = 0;
 	virtual QString fullCaption ();

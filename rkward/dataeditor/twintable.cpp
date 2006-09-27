@@ -107,6 +107,8 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
 	left_header_menu->insertItem (i18n ("Insert new case below"), this, SLOT (insertRowBelow ()), 0, HEADER_MENU_ID_ADD_ROW_BELOW);
 	left_header_menu->insertItem (QString::null, this, SLOT (deleteRow ()), 0, HEADER_MENU_ID_DEL_ROW);
 	left_header_menu->insertItem (QString::null, this, SLOT (deleteRows ()), 0, HEADER_MENU_ID_DEL_ROWS);
+
+	setFocusPolicy (QWidget::StrongFocus);
 }
 
 TwinTable::~TwinTable() {

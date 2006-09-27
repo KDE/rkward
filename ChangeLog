@@ -1,3 +1,4 @@
+- fix a long standing (but hard to trigger) crash while closing data editor window
 - fix "Open R Script File" filename ending filter
 - add mismatching brace detection to syntax highlighting
 - yet another crash on more than 100 rows bug fixed

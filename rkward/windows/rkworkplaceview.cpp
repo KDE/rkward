@@ -19,6 +19,8 @@
 
 #include <qtabbar.h>
 #include <qwidgetstack.h>
+#include <qapplication.h>
+#include <qevent.h>
 #include <qlayout.h>
 #include <qiconset.h>
 
@@ -56,20 +58,19 @@ void RKWorkplaceView::addPage (RKMDIWindow *widget) {
 		if (tabs->count () > 1) tabs->show ();
 	}
 
-	tabs->setCurrentTab (id);	// activates the newly added window
+	setPage (id);		// active new window
 }
 
 void RKWorkplaceView::removePage (RKMDIWindow *widget, bool destroyed) {
 	RK_TRACE (APP);
 
-	int id = idOfWidget (widget);
+	int id = idOfWidget (widget);		// which page is it?
 	RK_DO (if (id == -1) qDebug ("did not find page in RKWorkplaceView::removePage"), APP, DL_WARNING);
-	pages.remove (id);
 	if (!destroyed) disconnect (widget, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (childCaptionChanged (RKMDIWindow *)));
 
-	int oldindex = tabs->indexOf (tabs->currentTab ());
+	int oldindex = tabs->indexOf (tabs->currentTab ());	// which page will have to be activated later?
 	int oldcount = tabs->count ();
-	QTab *new_tab = tabs->tab (oldindex);
+	QTab *new_tab = tabs->tabAt (oldindex);
 	if (widget == activePage ()) {
 		if (oldindex >= 1) {
 			new_tab = tabs->tabAt (oldindex - 1);
@@ -79,15 +80,20 @@ void RKWorkplaceView::removePage (RKMDIWindow *widget, bool destroyed) {
 			new_tab = 0;
 		}
 	}
-	if (new_tab == 0) RK_ASSERT (oldcount == 1);
 
-	if (new_tab) tabs->setCurrentTab (new_tab);
-	else emit (pageChanged (0));
+	widgets->removeWidget (widget);			// remove
+	tabs->removeTab (tabs->tab (id));
+	pages.remove (id);
 
-	if (oldcount <= 2) tabs->hide ();
-
-	widgets->removeWidget (widget);
-	tabs->removeTab (tabs->tab (oldindex));
+	if (oldcount <= 2) tabs->hide ();		// activate next page
+	if (new_tab == 0) {
+		RK_ASSERT (oldcount == 1);
+		setCaption (QString ());
+		emit (pageChanged (0));
+	} else {
+		//tabs->setCurrentTab (new_tab); 	// somehome this version is NOT safe! (tabbar fails to emit signal?)
+		setPage (new_tab->identifier ());
+	}
 }
 
 void RKWorkplaceView::setActivePage (RKMDIWindow *widget) {
@@ -101,9 +107,11 @@ void RKWorkplaceView::setActivePage (RKMDIWindow *widget) {
 
 RKMDIWindow *RKWorkplaceView::activePage () {
 	RK_TRACE (APP);
+	RK_DO (qDebug ("active page %d: %d, visible: %d", tabs->currentTab (), (int) pages[tabs->currentTab ()], (int) widgets->visibleWidget ()), APP, DL_DEBUG);
 
 	if (tabs->currentTab () == -1) return 0;
-	RK_ASSERT (pages[tabs->currentTab ()] == widgets->visibleWidget ());
+	// The assert below can in fact fail temporarily, as the widgetstack (widgets) does not update immediately after widgets->raiseWidget ().
+	//RK_ASSERT (pages[tabs->currentTab ()] == widgets->visibleWidget ());
 	return (pages[tabs->currentTab ()]);
 }
 
@@ -124,9 +132,17 @@ void RKWorkplaceView::setPage (int page) {
 		return;		// will get here again via signal from tabs
 	}
 
+	RK_DO (qDebug ("setting page %d: %d", page, (int) pages[page]), APP, DL_DEBUG);
 	RKMDIWindow *window = pages[page];
 	widgets->raiseWidget (window);
+
 	window->setFocus ();
+/*	// a slightly more convoluted version of window->setFocus, which set's the focus after the window has been shown, but unfortunately it does not work either
+	QFocusEvent *focus = new QFocusEvent (QEvent::FocusIn);
+	focus->setReason (QFocusEvent::Mouse);
+	qApp->postEvent (window, focus); */
+
+	emit (pageChanged (window));
 	setCaption (window->shortCaption ());
 }
 
