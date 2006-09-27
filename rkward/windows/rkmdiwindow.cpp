@@ -51,10 +51,4 @@ void RKMDIWindow::setCaption (const QString &caption) {
 	emit (captionChanged (this));
 }
 
-//virtual
-QWidget *RKMDIWindow::getWindow () {
-	RK_TRACE (APP);
-	return getPart ()->widget ();
-}
-
 #include "rkmdiwindow.moc"

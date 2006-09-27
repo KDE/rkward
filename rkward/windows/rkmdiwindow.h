@@ -48,19 +48,29 @@ protected:
 	RKMDIWindow (QWidget *parent, Type type);
 	virtual ~RKMDIWindow ();
 public:
+/** @returns true, if the window's document was modified (and would need to be saved) */
 	virtual bool isModified () = 0;
+/** @returns A long / complete caption. Default implementation simply calls shortCaption () */
 	virtual QString fullCaption ();
+/** @returns A short caption (e.g. only the filename without the path). Default implementation simply calls QWidget::caption () */
 	virtual QString shortCaption ();
+/** @returns The corresponding KPart for this window */
 	virtual KParts::Part *getPart () = 0;
+/** This is used in RKWorkplace::saveWorkplace () to save the info about the workplace. Make sure to add corresponding code to RKWorkplace::restoreWorkplace (), so your window(s) get restored when loading a Workspace
+@returns An internal descriptive string suitable for storage in R. */
 	virtual QString getRDescription () = 0;
+/** Reimplemented from QWidget::setCaption () to emit the signal captionChanged () when the caption is changed. */
 	void setCaption (const QString &caption);
-	virtual QWidget *getWindow ();
 signals:
+/** This signal is emitted, whenever the window caption was changed.
+@param RKMDIWindow* a pointer to this window */
 	void captionChanged (RKMDIWindow *);
 protected:
 friend class RKWorkplace;
+/** type of this window */
 	Type type;
 private:
+/** state of this window (attached / detached). This is set from the RKWorkplace */
 	State state;
 };
 

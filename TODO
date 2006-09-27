@@ -6,7 +6,7 @@ Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
 
 Bugs:
-	- There seems to be a race condition at startup, leading to a crash in doPostInit () in rkward.cpp. (Un-)Fortunately it triggers only rarely, and I have not yet figured out, when it occurs.
+	- There seems to be a race condition at startup, leading to a crash in doPostInit () in rkward.cpp. (Un-)Fortunately it triggers only rarely, and I have not yet figured out, when it occurs. Is this still the case? I've fixed one potential race condition a while ago, and have not seen this crash in a while (2006/09/27)
 	- "cannot create html package index" when installing package as a regular user (due to R.home ("doc") not writable)
 	- produce many readline calls (e.g. "for (i in 1:10) readline()") repeatedly and cancel all of them.
 		- Sometimes only the readine is interrupted, sometimes the whole command (might be R's fault? But works fine in plain R)

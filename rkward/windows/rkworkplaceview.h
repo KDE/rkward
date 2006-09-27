@@ -29,27 +29,44 @@ class RKMDIWindow;
 class RKWorkplaceView : public QWidget {
 	Q_OBJECT
 public:
+/** constructor
+@param parent parent QWidget */
 	RKWorkplaceView (QWidget *parent);
 	~RKWorkplaceView ();
 
+/** add the given window to the view */
 	void addPage (RKMDIWindow *widget);
+/** remove the given window to the view
+@param destroyed if the window is already destroyed, set this to true */
 	void removePage (RKMDIWindow *widget, bool destroyed=false);
 
+/** activate the given window */
 	void setActivePage (RKMDIWindow *widget);
+/** @returns the currently active window */
 	RKMDIWindow *activePage ();
+/** Like activePage ()->shortCaption, but safe even if there is no active window
+@returns the caption of the currently active window. */
 	QString activeCaption ();
+/** reimplemented form QWidget::setCaption () to emit captionChanged () when the caption changes */
 	void setCaption (const QString &caption);
 signals:
+/** a new page / window was activated
+@param widget the newly activated window */
 	void pageChanged (RKMDIWindow *widget);
+/** caption has changed
+@param new_caption the new caption */
 	void captionChanged (const QString &new_caption);
 public slots:
+/** like setActivePage (), but activates by internal id. Used internally */
 	void setPage (int page);
+/** called when the caption of a window changes. Updates the tab-label, and - if appropriate - the caption of this widget */
 	void childCaptionChanged (RKMDIWindow *widget);
 private:
 	QTabBar *tabs;
 	QWidgetStack *widgets;
 	typedef QMap<int, RKMDIWindow*> PageMap;
 	PageMap pages;
+/** internal convenience function to get the internal id of the given window */
 	int idOfWidget (RKMDIWindow *widget);
 };
 
