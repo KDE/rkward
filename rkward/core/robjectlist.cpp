@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -190,39 +190,6 @@ void RObjectList::removeChild (RObject *object, bool removed_in_workspace) {
 	
 	childmap.remove (it);
 	delete object;
-}
-
-RObject *RObjectList::findObject (const QString &full_name) {
-	RK_TRACE (OBJECTS);
-	
-	// yeah, ok, this could be made more efficient relatively easily ...
-	QString canonified = full_name;
-	canonified = canonified.replace ("[\"", "$").replace ('[', "").replace ("\"]", "").replace (']', "");
-	
-	QStringList list = QStringList::split ('$', canonified);
-	RContainerObject *cobject = this;
-	RObject *object = 0;
-	RObjectMap::iterator oit;
-	for (QStringList::iterator it = list.begin (); it != list.end ();) {
-		oit = cobject->childmap.find (*it);
-		if (oit == cobject->childmap.end ()) {
-			return 0;
-		}
-		object = oit.data ();
-		++it;
-		if (object->isContainer ()) {
-			cobject = static_cast<RContainerObject *> (object);
-	// found a non-container-object, although path is not finished
-		} else {
-			if (it != list.end ()) {
-				object = 0;
-				// end loop
-				it = list.end ();
-			}
-		}
-	}
-	
-	return object;
 }
 
 #include "robjectlist.moc"

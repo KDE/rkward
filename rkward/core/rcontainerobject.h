@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -56,6 +56,9 @@ public:
 
 	/** given child_name, constructs a name which is as close as possible to the orginial but valid (i.e. not alreay in use, not contaning illegal characters */
 	QString validizeName (const QString &child_name);
+
+	/** reimplemented from RObject to actually search for the object */
+	RObject *findObject (const QString &name, bool is_canonified=false);
 private:
 	friend class RObject;
 	friend class RKVariable;

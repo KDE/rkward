@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -65,6 +65,11 @@ QString RObject::getFullName () {
 QString RObject::getLabel () {
 	RK_TRACE (OBJECTS);
 	return getMetaProperty ("label");
+}
+
+RObject *RObject::findObject (const QString &, bool) {
+	RK_TRACE (OBJECTS);
+	return 0;
 }
 
 QString RObject::getMetaProperty (const QString &id) {

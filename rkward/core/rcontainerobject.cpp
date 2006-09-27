@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -157,6 +157,28 @@ RObject *RContainerObject::findChild (const QString &name) {
 	RObjectMap::iterator it = childmap.find (name);
 	RK_ASSERT (it != childmap.end ());
 	return (it.data ());
+}
+
+RObject *RContainerObject::findObject (const QString &name, bool is_canonified) {
+	RK_TRACE (OBJECTS);
+
+	QString canonified = name;
+	if (!is_canonified) {
+		// yeah, ok, this could be made more efficient relatively easily ...
+		canonified = canonified.replace ("[\"", "$").replace ('[', "").replace ("\"]", "").replace (']', "");
+	}
+
+	// TODO: there could be objects with "$" in their names!
+	QString current_level = canonified.section (QChar ('$'), 0, 0);
+	QString remainder = canonified.section (QChar ('$'), 1);
+
+	RObjectMap::iterator it = childmap.find (current_level);
+	if (it == childmap.end ()) return 0;
+
+	RObject *found = it.data ();
+	if (remainder.isEmpty ()) return found;
+
+	return (found->findObject (remainder, true));
 }
 
 RObject *RContainerObject::createNewChild (const QString &name, RKEditor *creator, bool container, bool data_frame) {

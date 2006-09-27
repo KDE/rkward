@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -39,11 +39,11 @@ It acts as the "document".
 @author Thomas Friedrichsmeier
 */
 class RObjectList : public QObject, public RContainerObject {
-  Q_OBJECT
+	Q_OBJECT
 public:
-    RObjectList ();
+	RObjectList ();
+	~RObjectList ();
 
-    ~RObjectList ();
 	void updateFromR ();
 	
 	void createFromR (RContainerObject *parent, const QString &cname);
@@ -57,8 +57,6 @@ public:
 	
 	void childUpdateComplete ();
 
-	RObject *findObject (const QString &full_name);
-	
 	KURL getWorkspaceURL () { return current_url; };
 public slots:
 	void timeout ();
