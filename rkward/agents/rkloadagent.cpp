@@ -88,6 +88,7 @@ void RKLoadAgent::listUpdateComplete () {
 		return;
 	}
 	RKWorkplace::mainWorkplace ()->restoreWorkplace ();
+	RKWorkplace::mainWorkplace ()->clearWorkplaceDescription ();
 
 	delete this;
 }

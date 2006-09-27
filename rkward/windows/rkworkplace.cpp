@@ -32,10 +32,14 @@
 #include "../dataeditor/rkeditor.h"
 #include "../dataeditor/rkeditordataframe.h"
 #include "../dataeditor/rkeditordataframepart.h"
+#include "../rbackend/rinterface.h"
+#include "../rbackend/rcommand.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 
 #include "../debug.h"
+
+#define RESTORE_WORKPLACE_COMMAND 1
 
 // static
 RKWorkplace *RKWorkplace::main_workplace = 0;
@@ -242,16 +246,54 @@ void RKWorkplace::activateWindow (RKMDIWindow *window) {
 void RKWorkplace::saveWorkplace (RCommandChain *chain) {
 	RK_TRACE (APP);
 
-	// TODO
+	QString workplace_description = "c (";
+
+	bool first = true;
+	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
+		if (first) first = false;
+		else workplace_description.append (", ");
+		workplace_description.append ((*it)->getRDescription ());
+	}
+	workplace_description = ".rk.workplace.save <- " + workplace_description + ")";
+
+
+	RKGlobals::rInterface ()->issueCommand (workplace_description, RCommand::App | RCommand::Sync, i18n ("Save Workplace layout"), 0, 0, chain); 
 }
 
 void RKWorkplace::restoreWorkplace (RCommandChain *chain) {
 	RK_TRACE (APP);
 
-	// TODO
+	RKGlobals::rInterface ()->issueCommand (".rk.workplace.save", RCommand::App | RCommand::Sync | RCommand::GetStringVector, i18n ("Restore Workplace layout"), this, RESTORE_WORKPLACE_COMMAND, chain);
+}
+
+void RKWorkplace::clearWorkplaceDescription (RCommandChain *chain) {
+	RK_TRACE (APP);
+
+	RKGlobals::rInterface ()->issueCommand ("remove (.rk.workplace.save)", RCommand::App | RCommand::Sync, QString::null, 0, 0, chain); 
 }
 
 void RKWorkplace::rCommandDone (RCommand *command) {
+	RK_TRACE (APP);
+
+	RK_ASSERT (command->getFlags () == RESTORE_WORKPLACE_COMMAND);
+	for (int i = 0; i < command->stringVectorLength (); ++i) {
+		QString desc = command->getStringVector ()[i];
+		QString type = desc.section (QChar (':'), 0, 0);
+		QString specification = desc.section (QChar (':'), 1);
+
+		if (type == "data") {
+			RObject *object = RKGlobals::rObjectList ()->findObject (specification);
+			if (object) editObject (object, false);
+		} else if (type == "script") {
+			openScriptEditor (specification);
+		} else if (type == "output") {
+			openOutputWindow (specification);
+		} else if (type == "help") {
+			openHelpWindow (specification);
+		} else {
+			RK_ASSERT (false);
+		}
+	}
 }
 
 #include "rkworkplace.moc"

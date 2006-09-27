@@ -16,11 +16,22 @@
  ***************************************************************************/
 #include "rkeditor.h"
 
+#include "../debug.h"
+
 RKEditor::RKEditor (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow::DataEditorWindow) {
+	RK_TRACE (EDITOR);
 }
 
 RKEditor::~RKEditor () {
+	RK_TRACE (EDITOR);
 	getObject ()->setObjectOpened (this, false);
+}
+
+QString RKEditor::getRDescription () {
+	RK_TRACE (EDITOR);
+	RK_ASSERT (getObject ());
+//TODO: is this quoted correctly?
+	return (RObject::rQuote ("data:" + getObject ()->getFullName ()));
 }
 
 #include "rkeditor.moc"

@@ -74,6 +74,7 @@ public:
 
 	void saveWorkplace (RCommandChain *chain=0);
 	void restoreWorkplace (RCommandChain *chain=0);
+	void clearWorkplaceDescription (RCommandChain *chain=0);
 
 	static RKWorkplace *mainWorkplace () { return main_workplace; };
 signals:

@@ -52,6 +52,7 @@ public:
 	virtual QString fullCaption ();
 	virtual QString shortCaption ();
 	virtual KParts::Part *getPart () = 0;
+	virtual QString getRDescription () = 0;
 	void setCaption (const QString &caption);
 	virtual QWidget *getWindow ();
 signals:

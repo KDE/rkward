@@ -32,6 +32,7 @@
 
 #include "../rkglobals.h"
 #include "../rkward.h"
+#include "../core/robject.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../windows/rkworkplace.h"
@@ -59,6 +60,12 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow:
 
 RKHTMLWindow::~RKHTMLWindow () {
 	RK_TRACE (APP);
+}
+
+QString RKHTMLWindow::getRDescription () {
+	RK_TRACE (APP);
+
+	return (RObject::rQuote ("help:" + khtmlpart->url ().url ()));
 }
 
 bool RKHTMLWindow::isModified () {
@@ -195,6 +202,12 @@ RKOutputWindow::~RKOutputWindow () {
 	if (this == current_output) {
 		current_output = 0;
 	}
+}
+
+QString RKOutputWindow::getRDescription () {
+	RK_TRACE (APP);
+
+	return (RObject::rQuote ("output:" + output_url.url ()));
 }
 
 bool RKOutputWindow::openURL (const KURL &url) {

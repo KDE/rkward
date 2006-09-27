@@ -55,6 +55,8 @@ public:
 /** Add common actions to the given action collection (currently only "copy")
 @param action_collection A KActionCollection to insert actions in. */
 	void addCommonActions (KActionCollection *action_collection);
+
+	QString getRDescription ();
 	bool isModified ();
 	KParts::Part *getPart ();
 public slots:
@@ -68,7 +70,7 @@ private slots:
 	void loadDone ();
 protected:
 /** Here we store the position of the scroll bar before refresh. Used to scroll to the same position after a reload */
-    int scroll_position;
+	int scroll_position;
 /** the KHTMLPart doing all the real work */
 	KHTMLPart * khtmlpart;
 /** update caption according to given URL */
@@ -107,6 +109,8 @@ public:
 
 /** return a pointer to the current output. If there is no output window, one will be created (and shown) automatically */
 	static RKOutputWindow* getCurrentOutput ();
+
+	QString getRDescription ();
 public slots:
 /** flush current output. */
 	void flushOutput ();

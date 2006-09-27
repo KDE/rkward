@@ -47,6 +47,7 @@
 
 #include "../rkeditormanager.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../core/robject.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "../khelpdlg.h"
@@ -88,6 +89,12 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
 	delete m_doc;
+}
+
+QString RKCommandEditorWindow::getRDescription () {
+	RK_TRACE (COMMANDEDITOR);
+
+	return (RObject::rQuote ("script:" + m_doc->url ().url ()));
 }
 
 void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {

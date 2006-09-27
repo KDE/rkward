@@ -678,7 +678,8 @@ void RKwardApp::openHTMLHelp (const QString & url) {
 
 void RKwardApp::slotOutputShow () {
 	RK_TRACE (APP);
-	RKOutputWindow::refreshOutput (true, true);
+
+	RKWorkplace::mainWorkplace ()->openOutputWindow (KURL ());
 }
 
 void RKwardApp::setCaption (const QString &) {
