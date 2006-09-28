@@ -153,9 +153,9 @@
 			ret <- sprintf ("%s, ", ret)
 		}
 		if (names (x)[i] != "") {
-			ret <- sprintf ("%s%s=%s", ret, names (x)[i], dQuote (x[i]))
+			ret <- sprintf ("%s%s=\"%s\"", ret, names (x)[i], x[i])
 		} else {
-			ret <- sprintf ("%s%s", ret, dQuote (x[i]))
+			ret <- sprintf ("%s\"%s\"", ret, x[i])
 		}
 	}
 	ret <- sprintf ("%s)", ret)
