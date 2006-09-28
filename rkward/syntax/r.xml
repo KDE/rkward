@@ -8,8 +8,7 @@
 	R      : http://www.r-project.org/
 	RKWard : http://rkward.sourceforge.net/
 	-->
-<language version="2.0" kateversion="2.5" name="R Script" section="Scripts"
-extensions="*.R;*.r;*.S;*.s;*.q" mimetype="" license="GPL">
+<language version="2.00" kateversion="2.5" name="R Script" section="Scripts" extensions="*.R;*.r;*.S;*.s;*.q" mimetype="" license="GPL">
 <highlighting>
 
 	<list name="controls">
@@ -45,7 +44,7 @@ extensions="*.R;*.r;*.S;*.s;*.q" mimetype="" license="GPL">
 		<context attribute="Normal Text" lineEndContext="#stay" name="ctx0">
 			<IncludeRules context="CommonRules"/>
 
-			<DetectChar attribute="Symbol" context="#pop" char="}" endRegion="Brace1" name="FoldingEnd" />
+			<DetectChar attribute="Symbol" context="#pop" char="}" endRegion="Brace1" />
 			<DetectChar attribute="Error" context="#stay" char=")"/>
 		</context>
 
@@ -68,7 +67,7 @@ extensions="*.R;*.r;*.S;*.s;*.q" mimetype="" license="GPL">
 		<context attribute="Comment" lineEndContext="#pop" name="Comment"/>
 
 		<!-- This context is not really used, but contains the common rules -->
-		<context name="CommonRules">
+		<context name="CommonRules" lineEndContext="#stay" attribute="Normal Text" >
 			<DetectChar attribute="String" context="string" char="&quot;"/>
 			<keyword attribute="Control Structure" context="#stay" String="controls"/>
 			<keyword attribute="Reserved Words" context="#stay" String="words"/>
@@ -96,7 +95,7 @@ extensions="*.R;*.r;*.S;*.s;*.q" mimetype="" license="GPL">
 			<RegExpr attribute="Error" context="#stay" String="(\+|\-|\*|/|&lt;=|&gt;=|={1,2}|\!=|\|{1,2}|&amp;{1,2}|:{1,2}|\^|@|\$|~){2,}"/>	
 			<RegExpr attribute="Operator" context="#stay" String="%[^%]*%"/>
 			
-			<DetectChar attribute="Symbol" context="ctx0" char="{" beginRegion="Brace1" name="FoldingStart" />
+			<DetectChar attribute="Symbol" context="ctx0" char="{" beginRegion="Brace1" />
 		</context>
 	</contexts>
 

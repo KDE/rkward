@@ -80,7 +80,7 @@
 		<context attribute="Comment" lineEndContext="#pop" name="Comment"/>
 
 		<!-- This context is not really used, but meant to be included. It checks whether a new line is a continuation of a command. If so, it eats the "+ " at the line start. Else it tries to pop back to the top level -->
-		<context attribute="Normal Text" name="CommandContinuationCheck">
+		<context attribute="Normal Text" name="CommandContinuationCheck" lineEndContext="#stay">
 			<!-- Since this rule is included in every (relevant) context, this will unwind the entire context stack back to ctxbase. -->
 			<RegExpr attribute="Prompt" context="#pop" String="^&gt; " lookAhead="true" endRegion="commandRegion"/>
 			<!-- See above -->
@@ -89,7 +89,7 @@
 		</context>
 
 		<!-- This context is not really used, but contains the common rules -->
-		<context attribute="Normal Text" name="CommonRules">
+		<context attribute="Normal Text" name="CommonRules" lineEndContext="#stay">
 			<DetectChar attribute="String" context="string" char="&quot;"/>
 			<keyword attribute="Control Structure" context="#stay" String="controls"/>
 			<keyword attribute="Reserved Words" context="#stay" String="words"/>
