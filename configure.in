@@ -95,6 +95,7 @@ AC_CONFIG_FILES([ rkward/rbackend/Makefile ])
 AC_CONFIG_FILES([ rkward/rbackend/rpackages/Makefile ])
 AC_CONFIG_FILES([ rkward/scriptbackends/Makefile ])
 AC_CONFIG_FILES([ rkward/settings/Makefile ])
+AC_CONFIG_FILES([ rkward/syntax/Makefile ])
 AC_CONFIG_FILES([ rkward/windows/Makefile ])
 AC_OUTPUT
 # Check if KDE_SET_PREFIX was called, and --prefix was passed to configure

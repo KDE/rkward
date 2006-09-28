@@ -38,7 +38,7 @@ rkward_bin_LDADD = $(top_builddir)/rkward/windows/libwindows.a \
 	$(LIBSOCKET) -L$(R_HOMEDIR)/lib -lR $(R_LAPACK_FLAG) $(R_BLAS_FLAG) -lkatepartinterfaces
 
 SUBDIRS = plugins dataeditor settings plugin agents rbackend dialogs scriptbackends \
-	misc core icons windows
+	misc core icons windows syntax
 
 install-data-local:
 	$(mkinstalldirs) $(kde_appsdir)/Applications/
@@ -82,6 +82,3 @@ messages: rc.cpp
 	fi
 
 phpfilesdir = $(kde_datadir)/rkward/phpfiles
-
-katesyntaxdir = $(kde_datadir)/katepart/syntax/
-katesyntax_DATA =  r.xml rkward.xml
