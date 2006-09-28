@@ -42,7 +42,8 @@ public:
 	
 	int numChildren ();
 	RObject **children ();
-	
+
+	/** like findObject (), but does not recurse, i.e. only direct children */
 	RObject *findChild (const QString &name);
 	bool isParentOf (RObject *object, bool recursive=false);
 	
