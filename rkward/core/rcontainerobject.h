@@ -30,9 +30,9 @@ Internal representation of objects in the R-workspace that contain other objects
 
 class RContainerObject : public RObject {
 public:
-    RContainerObject(RContainerObject *parent, const QString &name);
+	RContainerObject (RContainerObject *parent, const QString &name);
 
-    ~RContainerObject();
+	~RContainerObject ();
 
 	void writeChildMetaData (RCommandChain *chain);
 	
@@ -60,6 +60,8 @@ public:
 
 	/** reimplemented from RObject to actually search for the object */
 	RObject *findObject (const QString &name, bool is_canonified=false);
+
+	virtual QString listChildrenCommand ();
 private:
 	friend class RObject;
 	friend class RKVariable;

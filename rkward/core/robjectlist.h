@@ -56,6 +56,7 @@ public:
 	RCommandChain *getUpdateCommandChain () { return update_chain; };
 	
 	void childUpdateComplete ();
+	QString listChildrenCommand ();
 
 	KURL getWorkspaceURL () { return current_url; };
 public slots:

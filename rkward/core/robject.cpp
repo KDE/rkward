@@ -355,7 +355,7 @@ void RObject::setCreatedInEditor (RKEditor *editor) {
 	RK_TRACE (OBJECTS);
 
 	// TODO: only for now! Currently only a single editor may operate on an object
-	RK_ASSERT (!data)
+	RK_ASSERT (!data);
 
 	if (!data) {
 		allocateEditData ();

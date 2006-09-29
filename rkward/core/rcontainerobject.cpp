@@ -55,6 +55,13 @@ void RContainerObject::updateFromR () {
 	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 }
 
+//virtual
+QString RContainerObject::listChildrenCommand () {
+	RK_TRACE (OBJECTS);
+
+	return ("names (" + getFullName () + ")");
+}
+
 void RContainerObject::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
 
@@ -72,7 +79,7 @@ void RContainerObject::rCommandDone (RCommand *command) {
 		RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CLASS_COMMAND);
 		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 
-		command = new RCommand ("names (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CHILD_LIST_COMMAND);
+		command = new RCommand (listChildrenCommand (), RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CHILD_LIST_COMMAND);
 		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 
 		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);

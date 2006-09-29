@@ -41,7 +41,7 @@ public:
 	virtual ~RObject ();
 
 /** types of objects, RKWard knows about */
-	enum RObjectType { DataFrame=1, Matrix=2, Array=4, List=8, Container=16, Variable=32, Workspace=64, Function=128, HasMetaObject=256 };
+	enum RObjectType { DataFrame=1, Matrix=2, Array=4, List=8, Container=16, Variable=32, Workspace=64, Function=128, Environment=256, GlobalEnv=512, EnvironmentVar=1024, HasMetaObject=2048 };
 	#define ROBJECT_TYPE_INTERNAL_MASK (RObject::Container | RObject::Variable | RObject::Workspace | RObject::Function)
 /** @returns false if an object of the given old type cannot represent an object of the given new type (e.g. (new_type & RObjectType::Variable), but (old_type & RObjectType::Container)). */
 	static bool isMatchingType (int old_type, int new_type) { return ((old_type & ROBJECT_TYPE_INTERNAL_MASK) == (new_type & ROBJECT_TYPE_INTERNAL_MASK)); };
@@ -62,6 +62,15 @@ public:
 	bool isVariable () { return (type & Variable); };
 	bool isType (int type) { return (RObject::type & type); };
 	bool hasMetaObject () { return (type & HasMetaObject); };
+
+/* Is the object writable? Recurses upwards to find any locked environments/bindings TODO */
+//	virtual bool isWriteAble ();
+//	virtual bool isRemovable ();
+/* @returns 0 if the object is not masked, else the *highest* environment masking the object (i.e. preferentially the .GlobalEnv */
+//	virtual REnvironmentObject *findMaskingEnvironment ();
+/* Is the object inside the global env? Else we better not support writing to it TODO*/
+//	virtual bool isInGlobalEnv ();
+//	virtual REnvironmentObject *parentEnvironment ();
 
 	void rename (const QString &new_short_name);
 	void remove (bool removed_in_workspace);

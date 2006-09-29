@@ -111,6 +111,12 @@ void RObjectList::rCommandDone (RCommand *command) {
 	// TODO: signal change
 }
 
+QString RObjectList::listChildrenCommand () {
+	RK_TRACE (OBJECTS);
+
+	return ("ls (all.names=TRUE)");
+}
+
 void RObjectList::updateFromR () {
 	RK_TRACE (OBJECTS);
 	if (update_chain) {
@@ -123,7 +129,7 @@ void RObjectList::updateFromR () {
 	emit (updateStarted ());
 	update_chain = RKGlobals::rInterface ()->startChain (0);
 
-	RCommand *command = new RCommand ("ls (all.names=TRUE)", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_LIST_COMMAND);
+	RCommand *command = new RCommand (listChildrenCommand (), RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_LIST_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, update_chain);
 }
 
