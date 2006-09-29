@@ -7,10 +7,11 @@ RKWard requires:
 - R and headers (http://www.r-project.org)
 - PHP with commandline-interface (http://www.php.net)
 
+
 Compilation
 ==================
 
-IMPORTANT: You will need to have the R shared library installed. This is typically located in a place like /usr/lib/R/lib/libR.so. Unfortunately, some distributions do not yet ship their R binary with the shared library. In those (rare) cases, you'll have to compile and install R on your own.
+IMPORTANT: You will need to have the R shared library installed. This is typically located in a place like /usr/lib/R/lib/libR.so. Unfortunately, some distributions do not yet ship their R binary with the shared library. In those (rare) cases, you'll have to compile and install R on your own with the option --enable-R-shlib.
 
 Compilation / installation is basically just a
 
@@ -31,9 +32,8 @@ to configure.
 The options
 --with-r-home
 --with-r-includes
---with-r-share
---with-r-doc
-can be used to configure the details of your R installation. Usually these settings should be detected automatically, but if - for instance - R can not find its help files when run from RKWard, you may need to adjust --with-r-doc.
+--with-r-libdir
+can be used to configure the details of your R installation. Usually these settings should be detected automatically, but especially if you have several versions of R installed, these may be relevant. NOTE: --with-r-libdir does not refer to the location of the shared R library, but rather to where the rkward R package should be installed to. By default, the first entry in .libPaths () will be used, (typically something like /usr/lib/R/site-library), but in case you keep several dedicated library paths, this allows you to specify, which one to install to.
 
 
 Installation
