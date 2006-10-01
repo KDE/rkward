@@ -97,7 +97,7 @@
 	x <- as.data.frame (installed.packages ())
 	try (titles <- as.data.frame (library ()$results)$Title)
 	if (length (titles) != dim (x)[1]) titles <- rep ("", dim (x)[1])
-	return (c (as.vector (x$Package), as.vector (titles), as.vector (x$Version), as.vector (x$LibPath)))
+	return (list (as.character (x$Package), as.character (titles), as.character (x$Version), as.character (x$LibPath)))
 }
 
 # Here we concatenate everything (same as above) to get search results easily
@@ -127,7 +127,7 @@
 
 ".rk.get.old.packages" <- function () {
 	x <- old.packages (available=.rk.cached.available.packages ())
-	return (as.vector (c (x[,"Package"], x[,"LibPath"], x[,"Installed"], x[,"ReposVer"])))
+	return (list (as.character (x[,"Package"]), as.character (x[,"LibPath"]), as.character (x[,"Installed"]), as.character (x[,"ReposVer"]), rk.make.repos.string ()))
 }
 
 ".rk.get.available.packages" <- function () {

@@ -259,7 +259,7 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	
 	setEnabled (false);
 	
-	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_INSTALLED_PACKAGES, dialog->chain);
+	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, GET_INSTALLED_PACKAGES, dialog->chain);
 	RKGlobals::rInterface ()->issueCommand (".packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_LOADED_PACKAGES, dialog->chain);
 	
 	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
@@ -275,11 +275,17 @@ LoadUnloadWidget::~LoadUnloadWidget () {
 void LoadUnloadWidget::rCommandDone (RCommand *command) {
 	RK_TRACE (DIALOGS);
 	if (command->getFlags () == GET_INSTALLED_PACKAGES) {
-		RK_ASSERT (command->getDataType () == RData::StringVector);
-		RK_ASSERT ((command->getDataLength () % 4) == 0);
-		int count = (command->getDataLength () / 4);
-		for (int i=0; i < count; ++i) {
-			new QListViewItem (installed_view, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i], command->getStringVector ()[3* count + i]);
+		RK_ASSERT (command->getDataLength () == 4);
+
+		RData *package = command->getStructureVector ()[0];
+		RData *title = command->getStructureVector ()[1];
+		RData *version = command->getStructureVector ()[2];
+		RData *libpath = command->getStructureVector ()[3];
+
+		unsigned int count = package->getDataLength ();
+		RK_ASSERT (count == title->getDataLength () == version->getDataLength () == libpath->getDataLength ()); 
+		for (unsigned int i=0; i < count; ++i) {
+			new QListViewItem (installed_view, package->getStringVector ()[i], title->getStringVector ()[i], version->getStringVector ()[i], libpath->getStringVector ()[i]);
 		}
 	} else if (command->getFlags () == GET_LOADED_PACKAGES) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
@@ -464,11 +470,18 @@ void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 		if (!command->failed ()) {
 			delete placeholder;
 			placeholder = 0;
-			RK_ASSERT (command->getDataType () == RData::StringVector);
-			RK_ASSERT ((command->getDataLength () % 4) == 1);
-			unsigned int count = (command->getDataLength () / 4);
+
+			RK_ASSERT (command->getDataLength () == 5);
+			RData *package = command->getStructureVector ()[0];
+			RData *libpath = command->getStructureVector ()[1];
+			RData *installed = command->getStructureVector ()[2];
+			RData *reposver = command->getStructureVector ()[3];
+			RData *reposstring = command->getStructureVector ()[4];
+
+			unsigned int count = package->getDataLength ();
+			RK_ASSERT (count == libpath->getDataLength () == installed->getDataLength () == reposver->getDataLength ());
 			for (unsigned int i=0; i < count; ++i) {
-				new QListViewItem (updateable_view, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i], command->getStringVector ()[3*count + i]);
+				new QListViewItem (updateable_view, package->getStringVector ()[i], libpath->getStringVector ()[i], installed->getStringVector ()[i], reposver->getStringVector ()[i]);
 			}
 
 			updateable_view->setEnabled (true);
@@ -480,8 +493,9 @@ void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 				placeholder = new QListViewItem (updateable_view, i18n ("[No updates available]"));
 			}
 
+			RK_ASSERT (reposstring->getDataLength () == 1);
 			// this is after the repository was chosen. Update the repository string.
-			parent->repos_string = command->getStringVector ()[4 * count];
+			parent->repos_string = reposstring->getStringVector ()[0];
 		} else {
 			get_list_button->setEnabled (true);
 		}
@@ -523,13 +537,12 @@ void UpdatePackagesWidget::getListButtonClicked () {
 
 	get_list_button->setEnabled (false);
 
-	RCommand *command = new RCommand ("c (.rk.get.old.packages (), rk.make.repos.string ())", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
+	RCommand *command = new RCommand (".rk.get.old.packages ()", RCommand::App | RCommand::GetStructuredData, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
 
 	RKProgressControl *control = new RKProgressControl (this, i18n ("Please stand by while determining, which package have an update available online."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
 	control->addRCommand (command, true);
 	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 	control->doModal (true);
-	RKGlobals::rInterface ()->issueCommand ("rm (rk.temp.old)", RCommand::App, QString::null, 0, 0, parent->chain);
 }
 
 void UpdatePackagesWidget::ok () {
