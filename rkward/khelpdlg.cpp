@@ -133,17 +133,17 @@ void KHelpDlg::slotFindButtonClicked () {
 	}
 	
 	QString agrep = "FALSE";
-	if(fuzzyCheckBox->isChecked ()==TRUE){
+	if (fuzzyCheckBox->isChecked ()==TRUE) {
 		agrep="NULL";
 	}
 	
 	QString ignoreCase = "TRUE";
-	if(caseSensitiveCheckBox->isChecked ()==TRUE){
+	if(caseSensitiveCheckBox->isChecked ()==TRUE) {
 		ignoreCase="FALSE";
 	}
 	
 	QString package = "NULL";
-	if (packagesList->currentItem ()!=0){
+	if (packagesList->currentItem ()!=0) {
 		package="\"";
 		package.append (packagesList->currentText ());
 		package.append ("\"");
@@ -152,7 +152,7 @@ void KHelpDlg::slotFindButtonClicked () {
 	// HACK the sequence of options is hardcoded, do not modify
 	QString fields;
 	
-	switch (fieldsList->currentItem ()){
+	switch (fieldsList->currentItem ()) {
 		case 1: fields = "c(\"alias\", \"concept\", \"title\")";break;
 		case 2: fields = "c(\"keyword\")";break;
 		case 3: fields = "c(\"title\")";break;
