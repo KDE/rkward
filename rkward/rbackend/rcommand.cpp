@@ -27,7 +27,7 @@
 
 int RCommand::next_id = 0;
 
-RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags){
+RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags) : RData () {
 	RK_TRACE (RBACKEND);
 	_id = next_id++;
 // if we ever submit enough commands to get a buffer overflow, use only positive numbers.
@@ -40,10 +40,6 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 	else _command = command;
 	if (_command.isEmpty ()) _type |= EmptyCommand;
 	status = 0;
-	string_data = 0;
-	real_data = 0;
-	integer_data = 0;
-	string_count = real_count = integer_count = 0;
 	_rk_equiv = rk_equiv;
 	RCommand::receivers = new RCommandReceiver* [MAX_RECEIVERS];
 	num_receivers = 0;
@@ -53,9 +49,6 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 
 RCommand::~RCommand(){
 	RK_TRACE (RBACKEND);
-	delete [] string_data;
-	delete real_data;
-	delete integer_data;
 
 	for (QValueList<ROutput*>::iterator it = output_list.begin (); it != output_list.end (); ++it) {
 		delete (*it);
@@ -160,4 +153,69 @@ QString RCommand::fullOutput () {
 		ret.append ((*it)->output);
 	}
 	return ret;
+}
+
+//////////////////////// RData ////////////////////////////77
+
+RData::RData () {
+	RK_TRACE (RBACKEND);
+	datatype = NoData;
+	data = 0;
+	length = 0; 
+}
+
+RData::~RData () {
+	RK_TRACE (RBACKEND);
+
+	if (datatype == StructureVector) {
+		RData **sdata = getStructureVector ();
+		for (int i=length-1; i >= 0; --i) {
+			delete (sdata[i]);
+		}
+		delete [] sdata;
+	} else if (datatype == IntVector) {
+		int *idata = getIntVector ();
+		delete [] idata;
+	} else if (datatype == RealVector) {
+		double *rdata = getRealVector ();
+		delete [] rdata;
+	} else if (datatype == StringVector) {
+		QString *stdata = getStringVector ();
+		delete [] stdata;
+	} else {
+		RK_ASSERT (datatype == NoData);
+	}
+}
+
+double *RData::getRealVector () {
+	if (datatype == RealVector) return (static_cast<double *> (data));
+
+	RK_ASSERT (false);
+	return 0;
+}
+
+int *RData::getIntVector () {
+	if (datatype == IntVector) return (static_cast<int *> (data));
+
+	RK_ASSERT (false);
+	return 0;
+}
+
+QString *RData::getStringVector () {
+	if (datatype == StringVector) return (static_cast<QString *> (data));
+
+	RK_ASSERT (false);
+	return 0;
+}
+
+RData **RData::getStructureVector () {
+	if (datatype == StructureVector) return (static_cast<RData **> (data));
+
+	RK_ASSERT (false);
+	return 0;
+}
+
+void RData::detachData () {
+	data = 0;
+	length = 0;
 }

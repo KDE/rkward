@@ -196,11 +196,11 @@ void RObject::writeMetaData (RCommandChain *chain) {
 void RObject::handleGetMetaCommand (RCommand *command) {
 	RK_TRACE (OBJECTS);
 
-	if (command->stringVectorLength ()) {
+	if (command->getDataLength ()) {
 		if (!meta_map) meta_map = new MetaMap;
 		meta_map->clear ();
 
-		int len = command->stringVectorLength ();
+		int len = command->getDataLength ();
 		RK_ASSERT (!(len % 2));
 		int cut = len/2;
 		for (int i=0; i < cut; ++i) {
@@ -224,8 +224,9 @@ bool RObject::handleUpdateClassCommand (RCommand *command) {
 
 	bool change = false;
 
-	if (num_classes != command->stringVectorLength ()) {
-		num_classes = command->stringVectorLength ();
+	int len = command->getDataLength ();
+	if (num_classes != len) {
+		num_classes = len;
 		delete[] classname;
 		classname = new QString [num_classes];
 		change = true;
@@ -241,7 +242,7 @@ bool RObject::handleUpdateClassCommand (RCommand *command) {
 bool RObject::handleClassifyCommand (RCommand *command, bool *dims_changed) {
 	RK_TRACE (OBJECTS);
 
-	if (!command->intVectorLength ()) {
+	if (!command->getDataLength ()) {
 		RK_ASSERT (false);
 		return false;
 	}
@@ -258,8 +259,9 @@ bool RObject::handleClassifyCommand (RCommand *command, bool *dims_changed) {
 	}
 
 	// get dimensions
-	if (num_dimensions != (command->intVectorLength () - 1)) {
-		num_dimensions = command->intVectorLength () - 1;
+	int len = command->getDataLength () - 1;
+	if (num_dimensions != len) {
+		num_dimensions = len;
 		*dims_changed = true;
 		delete dimension;
 		if (num_dimensions < 1) {

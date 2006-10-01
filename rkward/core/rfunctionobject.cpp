@@ -55,10 +55,10 @@ void RFunctionObject::rCommandDone (RCommand *command) {
 		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 
 	} else if (command->getFlags () == UPDATE_ARGS_COMMAND) {
-		RK_ASSERT (command->stringVectorLength () % 2 == 0);
+		RK_ASSERT (command->getDataLength () % 2 == 0);
 
 		function_args.clear ();
-		for (int i = 0; i < command->stringVectorLength (); i += 2) {
+		for (unsigned int i = 0; i < command->getDataLength (); i += 2) {
 			function_args.append (new FunctionArg (command->getStringVector ()[i], command->getStringVector ()[i+1]));
 		}
 

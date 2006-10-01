@@ -141,9 +141,10 @@ void RKLoadLibsDialog::closeEvent (QCloseEvent *e) {
 void RKLoadLibsDialog::rCommandDone (RCommand *command) {
 	RK_TRACE (DIALOGS);
 	if (command->getFlags () == GET_CURRENT_LIBLOCS_COMMAND) {
-		RK_ASSERT (command->stringVectorLength () > 0);
+		RK_ASSERT (command->getDataType () == RData::StringVector);
+		RK_ASSERT (command->getDataLength () > 0);
 		QStringList current_library_locations;
-		for (int i=0; i < command->stringVectorLength (); ++i) {
+		for (unsigned int i=0; i < command->getDataLength (); ++i) {
 			current_library_locations.append (command->getStringVector ()[i]);
 		}
 		emit (libraryLocationsChanged (current_library_locations));
@@ -274,13 +275,15 @@ LoadUnloadWidget::~LoadUnloadWidget () {
 void LoadUnloadWidget::rCommandDone (RCommand *command) {
 	RK_TRACE (DIALOGS);
 	if (command->getFlags () == GET_INSTALLED_PACKAGES) {
-		RK_ASSERT ((command->stringVectorLength () % 4) == 0);
-		int count = (command->stringVectorLength () / 4);
+		RK_ASSERT (command->getDataType () == RData::StringVector);
+		RK_ASSERT ((command->getDataLength () % 4) == 0);
+		int count = (command->getDataLength () / 4);
 		for (int i=0; i < count; ++i) {
 			new QListViewItem (installed_view, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i], command->getStringVector ()[3* count + i]);
 		}
 	} else if (command->getFlags () == GET_LOADED_PACKAGES) {
-		for (int i=0; i < command->stringVectorLength (); ++i) {
+		RK_ASSERT (command->getDataType () == RData::StringVector);
+		for (unsigned int i=0; i < command->getDataLength (); ++i) {
 			new QListViewItem (loaded_view, command->getStringVector ()[i]);
 		}
 		setEnabled (true);
@@ -461,9 +464,10 @@ void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 		if (!command->failed ()) {
 			delete placeholder;
 			placeholder = 0;
-			RK_ASSERT ((command->stringVectorLength () % 4) == 1);
-			int count = (command->stringVectorLength () / 4);
-			for (int i=0; i < count; ++i) {
+			RK_ASSERT (command->getDataType () == RData::StringVector);
+			RK_ASSERT ((command->getDataLength () % 4) == 1);
+			unsigned int count = (command->getDataLength () / 4);
+			for (unsigned int i=0; i < count; ++i) {
 				new QListViewItem (updateable_view, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i], command->getStringVector ()[3*count + i]);
 			}
 
@@ -594,9 +598,10 @@ void InstallPackagesWidget::rCommandDone (RCommand *command) {
 		if (!command->failed ()) {
 			delete placeholder;
 			placeholder = 0;
-			RK_ASSERT ((command->stringVectorLength () % 2) == 1);
-			int count = (command->stringVectorLength () / 2);
-			for (int i=0; i < count; ++i) {
+			RK_ASSERT (command->getDataType () == RData::StringVector);
+			RK_ASSERT ((command->getDataLength () % 2) == 1);
+			unsigned int count = (command->getDataLength () / 2);
+			for (unsigned int i=0; i < count; ++i) {
 				new QListViewItem (installable_view, command->getStringVector ()[i], command->getStringVector ()[count + i]);
 			}
 			installable_view->setEnabled (true);

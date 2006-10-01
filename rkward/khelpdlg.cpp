@@ -197,15 +197,15 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 	KURL url;
 	if (command->getFlags () == HELP_SEARCH) {
 		resultsList->clear();
-		RK_ASSERT ((command->stringVectorLength () % 3) == 0);
-		int count = (command->stringVectorLength () / 3);
+		RK_ASSERT ((command->getDataLength () % 3) == 0);
+		int count = (command->getDataLength () / 3);
 		for (int i=0; i < count; ++i) {
 			new QListViewItem (resultsList, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i]);
 		}
 		setEnabled(true);
 	} 
 	else if (command->getFlags () == GET_HELP_URL) {
-		RK_ASSERT (command->stringVectorLength ());
+		RK_ASSERT (command->getDataLength ());
 		url.setPath(command->getStringVector ()[0]);
 		if (QFile::exists (url.path ())) {
 			RKwardApp::getApp ()->openHTML (url);
@@ -214,8 +214,8 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 			KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.").arg (command->command ().section ("\"", 1, 1)), i18n ("No help found"));
 		}
 	} else if (command->getFlags () == GET_INSTALLED_PACKAGES) {
-		RK_ASSERT ((command->stringVectorLength () % 4) == 0);
-		int count = (command->stringVectorLength () / 4);
+		RK_ASSERT ((command->getDataLength () % 4) == 0);
+		int count = (command->getDataLength () / 4);
 		for (int i=0; i < count; ++i) {
 			packagesList->insertItem(command->getStringVector ()[i]);
 		}

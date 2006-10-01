@@ -76,6 +76,39 @@ struct ROutput {
 	QString output;
 };
 
+/** Class to represent data (other than output/erros) passed from the R backend to the main thread. Data is usually a vector of type int, double or QString, but can also contain a hierarchy of RData*s. RCommand is a subclass of this */ 
+class RData {
+public:
+	RData ();
+	~RData ();
+	enum RDataType {
+		StructureVector,
+		IntVector,
+		RealVector,
+		StringVector,
+		NoData
+	};
+
+/** returns the type of data contained */
+	RDataType getDataType () { return datatype; };
+/** returns the length (size) of the data array. @see RCommand::GetStringVector @see RCommand::GetRealVector @see RCommand::GetIntVector @see RCommand:GetStructure */
+	unsigned int getDataLength () { return length; };
+/** returns an array of double, if that is the type of data contained (else 0). The array is owned by the RCommand! @see RCommand::GetRealVector @see RData::detachData () @see RData::getDataLength () @see RData::getDataType () */
+	double *getRealVector ();
+/** returns an array of int, if that is the type of data contained (else 0). The array is owned by the RCommand! @see RCommand::GetIntVector @see RData::detachData () @see RData::getDataLength () @see RData::getDataType () */
+	int *getIntVector ();
+/** returns an array of QString, if that is the type of data contained (else 0). The array is owned by the RCommand! @see RCommand::GetStringVector @see RData::detachData () @see RData::getDataLength () @see RData::getDataType () */
+	QString *getStringVector ();
+/** returns an array of RData*, if that is the type of data contained (else 0). The array is owned by the RCommand! @see RCommand::GetStructureVector @see RData::detachData () @see RData::getDataLength () @see RData::getDataType () */
+	RData **getStructureVector ();
+/** The data contained in the RData structure is owned by RData, and will usually be deleted at the end of the lifetime of the RData object. If you want to keep the data, call detachData () to prevent this deletion. You will be responsible for deletion of the data yourself. */
+	void detachData ();
+protected:
+	RDataType datatype;
+	void *data;
+	unsigned int length;
+};
+
 /*
 struct RGetValueRequest {
 private:
@@ -114,7 +147,7 @@ friend class RThread;
   *@author Thomas Friedrichsmeier
   */
   
-class RCommand {
+class RCommand : public RData {
 public:
 /** constructs an RCommand.
 @param command The command (string) to be run in the backend. This may include newlines and ";". The command should be a complete statement. If it is an incomplete statement, the backend will not wait for the rest of the command to come in, but rather the command will fail with RCommand::errorIncomplete.
@@ -186,24 +219,6 @@ public:
 	bool errorIncomplete () { return (status & ErrorIncomplete); };
 /** backend rejected command as having a syntax error */
 	bool errorSyntax () { return (status & ErrorSyntax); };
-/** returns the length (size) of the char * array. @see RCommand::GetStringVector @see RCommand::getStringVector @see RCommand::detachStringVector */
-	int stringVectorLength () { return (string_count); };
-/** returns the length (size) of the double array. @see RCommand::GetRealVector @see RCommand::getRealVector @see RCommand::detachRealVector */
-	int realVectorLength () { return (real_count); };
-/** returns the length (size) of the int array. @see RCommand::GetIntVector @see RCommand::getIntVector @see RCommand::detachIntVector */
-	int intVectorLength () { return (integer_count); };
-/** returns an array of QString*. The array is owned by the RCommand! @see RCommand::GetStringVector @see RCommand::getStringVector @see RCommand::detachStringVector */
-	QString *getStringVector () { return (string_data); };
-/** returns a pointer to the double array. The double array is owned by the RCommand! @see RCommand::GetRealVector @see RCommand::getRealVector @see RCommand::detachRealVector */
-	double *getRealVector () { return (real_data); };
-/** returns a pointer to the int array. The int array is owned by the RCommand! @see RCommand::GetIntVector @see RCommand::getIntVector @see RCommand::detachIntVector */
-	int *getIntVector () { return (integer_data); };
-/** if you want to keep the data, use this function to detach it from the RCommand (after reading the pointer with RCommand::getStringVector), so it won't be deleted with the RCommand */
-	void detachStringVector () { string_data = 0; string_count = 0; };
-/** if you want to keep the data, use this function to detach it from the RCommand (after reading the pointer with RCommand::getRealVector), so it won't be deleted with the RCommand */
-	void detachRealVector () { real_data = 0; real_count = 0; };
-/** if you want to keep the data, use this function to detach it from the RCommand (after reading the pointer with RCommand::getIntVector), so it won't be deleted with the RCommand */
-	void detachIntVector () { integer_data = 0; integer_count = 0; };
 /** return the flags associated with the command. Those are the same that you specified in the constructor, RKWard does not touch them. @see RCommand::RCommand */
 	int getFlags () { return (_flags); };
 /** Add an additional listener to the command */
@@ -219,12 +234,6 @@ friend class RInterface;
 	void newOutput (ROutput *output);
 	QValueList<ROutput*> output_list;
 	QString _command;
-	QString *string_data;
-	int string_count;
-	double *real_data;
-	int real_count;
-	int *integer_data;
-	int integer_count;
 	int _type;
 	int _flags;
 	int status;

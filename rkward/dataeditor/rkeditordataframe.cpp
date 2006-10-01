@@ -105,21 +105,22 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 	RK_TRACE (EDITOR);
 
 	if (command->getFlags () == GET_NAMES_COMMAND) {
-		while (command->stringVectorLength () < numTrueCols ()) {	// get rid of superficial columns
+		int len = command->getDataLength ();
+		while (len < numTrueCols ()) {	// get rid of superficial columns
 			deleteColumn (0);
 		}
 
 		// this is really just a very preliminary HACK. If stringVectorLength () is 0, this can not be a data.frame any longer.
 		// abort in order to avoid crash.
 		// TODO: actually, we should have a true check for object type each time before opening an object.
-		if (!command->stringVectorLength ()) {
+		if (!len) {
 			open_chain = RKGlobals::rInterface ()->closeChain (open_chain);
 			delete this;
 			return;
 		}
 
 		// set the names and meta-information
-		for (int col = 0; col < command->stringVectorLength (); ++col) {
+		for (int col = 0; col < len; ++col) {
 			if (numTrueCols () <= col) {
 				insertNewColumn ();
 			}

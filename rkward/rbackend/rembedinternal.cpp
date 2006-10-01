@@ -375,14 +375,14 @@ TODO: verify we really need this. */
 }
 
 /** This function is the R side wrapper around stringsToStringList */
-QString *SEXPToStringList (SEXP from_exp, int *count) {
+QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 	char **strings = 0;
 	
 	SEXP strexp;
 	PROTECT (strexp = coerceVector (from_exp, STRSXP));
 	*count = length (strexp);
 	strings = new char* [length (strexp)];
-	int i = 0;
+	unsigned int i = 0;
 	for (; i < *count; ++i) {
 		SEXP dummy = VECTOR_ELT (strexp, i);
 
@@ -405,7 +405,7 @@ QString *SEXPToStringList (SEXP from_exp, int *count) {
 }
 
 SEXP doError (SEXP call) {
-	int count;
+	unsigned int count;
 	QString *strings = SEXPToStringList (call, &count);
 	REmbedInternal::this_pointer->handleError (strings, count);
 	deleteQStringArray (strings);
@@ -421,7 +421,7 @@ SEXP doCondition (SEXP call) {
 } */
 
 SEXP doSubstackCall (SEXP call) {
-	int count;
+	unsigned int count;
 	QString *strings = SEXPToStringList (call, &count);
 	REmbedInternal::this_pointer->handleSubstackCall (strings, count);
 	deleteQStringArray (strings);
@@ -461,7 +461,6 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 // heavy copying from RServe below
 	int r_error = 0;
 	ParseStatus status = PARSE_NULL;
-	const char *c = command;
 	SEXP cv, pr, exp;
 
 	PROTECT(cv=allocVector(STRSXP, 1));
@@ -580,7 +579,7 @@ void REmbedInternal::runCommandInternal (const char *command, RKWardRError *erro
 	}
 }
 
-QString *REmbedInternal::getCommandAsStringVector (const char *command, int *count, RKWardRError *error) {	
+QString *REmbedInternal::getCommandAsStringVector (const char *command, uint *count, RKWardRError *error) {	
 	SEXP exp;
 	QString *list = 0;
 	
@@ -599,7 +598,7 @@ QString *REmbedInternal::getCommandAsStringVector (const char *command, int *cou
 	return list;
 }
 
-double *REmbedInternal::getCommandAsRealVector (const char *command, int *count, RKWardRError *error) {
+double *REmbedInternal::getCommandAsRealVector (const char *command, uint *count, RKWardRError *error) {
 	SEXP exp;
 	double *reals = 0;
 	
@@ -610,7 +609,7 @@ double *REmbedInternal::getCommandAsRealVector (const char *command, int *count,
 		PROTECT (realexp = coerceVector (exp, REALSXP));
 		*count = length (realexp);
 		reals = new double[*count];
-		for (int i = 0; i < *count; ++i) {
+		for (unsigned int i = 0; i < *count; ++i) {
 			reals[i] = REAL (realexp)[i];
 			if (R_IsNaN (reals[i]) || R_IsNA (reals[i]) ) reals[i] = RKGlobals::na_double;
 		}
@@ -626,7 +625,7 @@ double *REmbedInternal::getCommandAsRealVector (const char *command, int *count,
 	return reals;
 }
 
-int *REmbedInternal::getCommandAsIntVector (const char *command, int *count, RKWardRError *error) {
+int *REmbedInternal::getCommandAsIntVector (const char *command, uint *count, RKWardRError *error) {
 	SEXP exp;
 	int *integers = 0;
 	
@@ -637,7 +636,7 @@ int *REmbedInternal::getCommandAsIntVector (const char *command, int *count, RKW
 		PROTECT (intexp = coerceVector (exp, INTSXP));
 		*count = length (intexp);
 		integers = new int[*count];
-		for (int i = 0; i < *count; ++i) {
+		for (unsigned int i = 0; i < *count; ++i) {
 				integers[i] = INTEGER (intexp)[i];
 		}
 		UNPROTECT (1);	// intexp

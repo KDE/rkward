@@ -133,7 +133,8 @@ void RKVariable::rCommandDone (RCommand *command) {
 		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
 
 	} else if (command->getFlags () == GET_STORAGE_MODE_COMMAND) {
-		RK_ASSERT (command->intVectorLength () == 2);
+		RK_ASSERT (command->getDataType () == RData::IntVector);
+		RK_ASSERT (command->getDataLength () == 2);
 		if (!(command->getIntVector ()[1])) {
 			RKGlobals::rInterface ()->issueCommand ("levels (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_FACTOR_LEVELS_COMMAND);
 			if (getVarType () == Unknown) {
@@ -157,12 +158,12 @@ void RKVariable::rCommandDone (RCommand *command) {
 		RK_ASSERT (myData ());
 		// prevent resyncing of data
 		setSyncing (false);
-		if (command->realVectorLength ()) {
-			RK_ASSERT (command->realVectorLength () == getLength ());
-			setNumeric (0, command->realVectorLength () - 1, command->getRealVector ());
-		} else if (command->stringVectorLength ()) {
-			RK_ASSERT (command->stringVectorLength () == getLength ());
-			setCharacter (0, command->stringVectorLength () - 1, command->getStringVector ());
+		int len = command->getDataLength ();
+		RK_ASSERT (len == getLength ());
+		if (command->getDataType () == RData::RealVector) {
+			setNumeric (0, len - 1, command->getRealVector ());
+		} else if (command->getDataType () == RData::StringVector) {
+			setCharacter (0, len - 1, command->getStringVector ());
 		} else {
 			RK_ASSERT (false);
 		}
@@ -176,10 +177,10 @@ void RKVariable::rCommandDone (RCommand *command) {
 		RK_ASSERT (myData ());
 		// prevent resyncing of data
 		setSyncing (false);
-		RK_ASSERT (command->stringVectorLength ());
+		RK_ASSERT (command->getDataLength ());
 		RK_ASSERT (!myData ()->value_labels);
 		myData ()->value_labels = new RObject::ValueLabels;
-		for (int i=0; i < command->stringVectorLength (); ++i) {
+		for (unsigned int i=0; i < command->getDataLength (); ++i) {
 			myData ()->value_labels->insert (QString::number (i+1), command->getStringVector ()[i]);
 		}
 		setSyncing (true);

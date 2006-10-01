@@ -86,15 +86,15 @@ void RContainerObject::rCommandDone (RCommand *command) {
 
 	} else if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
 		// first check, whether all known children still exist:
-		checkRemovedChildren (command->getStringVector (), command->stringVectorLength ());
+		checkRemovedChildren (command->getStringVector (), command->getDataLength ());
 		
 		// next, update the existing and/or new children
-		num_children_updating = command->stringVectorLength ();
+		num_children_updating = command->getDataLength ();
 		// empty object?
 		if (!num_children_updating) {
 			parent->childUpdateComplete ();
 		}
-		for (int i = 0; i < command->stringVectorLength (); ++i) {
+		for (unsigned int i = 0; i < command->getDataLength (); ++i) {
 			QString cname = command->getStringVector ()[i]; 	// for easier typing
 			if (childmap.find (cname) != childmap.end ()) {
 				RK_DO (qDebug ("updating existing child: %s", cname.latin1 ()), APP, DL_DEBUG);

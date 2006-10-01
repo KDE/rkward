@@ -151,11 +151,14 @@ void RThread::doCommand (RCommand *command) {
 		MUTEX_UNLOCK;
 	
 		if (ctype & RCommand::GetStringVector) {
-			command->string_data = getCommandAsStringVector (ccommand, &(command->string_count), &error);
+			command->datatype = RData::StringVector;
+			command->data = getCommandAsStringVector (ccommand, &(command->length), &error);
 		} else if (ctype & RCommand::GetRealVector) {
-			command->real_data = getCommandAsRealVector (ccommand, &(command->real_count), &error);
+			command->datatype = RData::RealVector;
+			command->data = getCommandAsRealVector (ccommand, &(command->length), &error);
 		} else if (ctype & RCommand::GetIntVector) {
-			command->integer_data = getCommandAsIntVector (ccommand, &(command->integer_count), &error);
+			command->datatype = RData::IntVector;
+			command->data = getCommandAsIntVector (ccommand, &(command->length), &error);
 		} else {
 			runCommandInternal (ccommand, &error, ctype & RCommand::User);
 		}
@@ -387,7 +390,7 @@ int RThread::initialize () {
 	
 	runCommandInternal ("library (\"rkward\")\n", &error);
 	if (error) status |= LibLoadFail;
-	int c;
+	unsigned int c;
 	QString *paths = getCommandAsStringVector ("library.dynam (\"rkward\", \"rkward\")[[\"path\"]]\n", &c, &error);
 	if ((error) || (c != 1)) {
 		status |= LibLoadFail;
@@ -399,7 +402,7 @@ int RThread::initialize () {
 // find out about standard library locations
 	QString *standardliblocs = getCommandAsStringVector (".libPaths ()\n", &c, &error);
 	if (error) status |= OtherFail;
-	for (int i = 0; i < c; ++i) {
+	for (unsigned int i = 0; i < c; ++i) {
 		RKSettingsModuleRPackages::defaultliblocs.append (standardliblocs[i]);
 	}
 	delete [] standardliblocs;

@@ -97,7 +97,7 @@ this will not ever be done for user commands, the R_Visible flag will never be s
 @param error this will be set to a value in RKWardError depending on success/failure of the command
 @returns an array of QString or 0 on failure
 @see RCommand::GetStringVector */
-	QString *getCommandAsStringVector (const char *command, int *count, RKWardRError *error);
+	QString *getCommandAsStringVector (const char *command, unsigned int *count, RKWardRError *error);
 /** basically a wrapper to runCommandInternal (). Tries to convert the result of the command to an array of double after running the command. Since
 this will not ever be done for user commands, the R_Visible flag will never be set. @see RCommand::GetRealVector
 @param command char* of the command to be run 
@@ -105,7 +105,7 @@ this will not ever be done for user commands, the R_Visible flag will never be s
 @param error this will be set to a value in RKWardError depending on success/failure of the command
 @returns an array of double or 0 on failure
 @see RCommand::GetRealVector */
-	double *getCommandAsRealVector (const char *command, int *count, RKWardRError *error);
+	double *getCommandAsRealVector (const char *command, unsigned int *count, RKWardRError *error);
 /** basically a wrapper to runCommandInternal (). Tries to convert the result of the command to an array of int after running the command. Since
 this will not ever be done for user commands, the R_Visible flag will never be set.  @see RCommand::GetIntVector
 @param command char* of the command to be run 
@@ -113,7 +113,7 @@ this will not ever be done for user commands, the R_Visible flag will never be s
 @param error this will be set to a value in RKWardError depending on success/failure of the command
 @returns an array of int or 0 on failure
 @see RCommand::GetIntVector */
-	int *getCommandAsIntVector (const char *command, int *count, RKWardRError *error);
+	int *getCommandAsIntVector (const char *command, unsigned int *count, RKWardRError *error);
 public:
 /** call this periodically to make R's x11 windows process their events */
 	static void processX11Events ();

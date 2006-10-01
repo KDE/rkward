@@ -276,7 +276,7 @@ void RKWorkplace::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 
 	RK_ASSERT (command->getFlags () == RESTORE_WORKPLACE_COMMAND);
-	for (int i = 0; i < command->stringVectorLength (); ++i) {
+	for (unsigned int i = 0; i < command->getDataLength (); ++i) {
 		QString desc = command->getStringVector ()[i];
 		QString type = desc.section (QChar (':'), 0, 0);
 		QString specification = desc.section (QChar (':'), 1);

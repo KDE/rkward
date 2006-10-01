@@ -63,17 +63,17 @@ void RObjectList::rCommandDone (RCommand *command) {
 
 	if (command->getFlags () == UPDATE_LIST_COMMAND) {
 		// first check, whether all known children still exist:
-		checkRemovedChildren (command->getStringVector (), command->stringVectorLength ());
+		checkRemovedChildren (command->getStringVector (), command->getDataLength ());
 		
 		// next, update the existing and/or new children
-		num_children_updating = command->stringVectorLength ();		// TODO: is this correct? Some children might have been removed!
+		num_children_updating = command->getDataLength ();		// TODO: is this correct? Some children might have been removed!
 		// empty workspace?
 		if (!num_children_updating) {
 			num_children_updating = 1;
 			childUpdateComplete ();
 			return;
 		}
-		for (int i = 0; i < command->stringVectorLength (); ++i) {
+		for (unsigned int i = 0; i < command->getDataLength (); ++i) {
 			QString cname = command->getStringVector ()[i];		// for easier typing
 			/*if (cname == (".rk.meta")) {
 				childUpdateComplete ();
@@ -87,7 +87,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 			}
 		}
 	} else if (command->getFlags () == CHILD_GET_TYPE_COMMAND) {
-		if (command->intVectorLength () != 1) {
+		if (command->getDataLength () != 1) {
 			RK_ASSERT (false);
 		}
 
