@@ -102,8 +102,8 @@ KHelpDlg::KHelpDlg (QWidget* parent, const char* name) : QWidget (parent, name) 
 	setCaption (i18n ("Help search"));
 }
 
-KHelpDlg::~KHelpDlg()
-{}
+KHelpDlg::~KHelpDlg () {
+}
 
 void KHelpDlg::getContextHelp (const QString &context_line, int cursor_pos) {
 	if (context_line.isEmpty () || context_line.isNull ()) return;
@@ -126,10 +126,9 @@ void KHelpDlg::getContextHelp (const QString &context_line, int cursor_pos) {
 }
 
 /*$SPECIALIZATION$*/
-void KHelpDlg::slotFindButtonClicked()
-{
+void KHelpDlg::slotFindButtonClicked () {
 
-	if (field->currentText().isEmpty()) {
+	if (field->currentText ().isEmpty ()) {
 		return;
 	}
 	
@@ -144,67 +143,58 @@ void KHelpDlg::slotFindButtonClicked()
 	}
 	
 	QString package = "NULL";
-	if(packagesList->currentItem()!=0){
+	if (packagesList->currentItem ()!=0){
 		package="\"";
-		package.append(packagesList->currentText());
-		package.append("\"");
+		package.append (packagesList->currentText ());
+		package.append ("\"");
 	}
 
 	// HACK the sequence of options is hardcoded, do not modify
 	QString fields;
 	
-	switch(fieldsList->currentItem()){
+	switch (fieldsList->currentItem ()){
 		case 1: fields = "c(\"alias\", \"concept\", \"title\")";break;
 		case 2: fields = "c(\"keyword\")";break;
 		case 3: fields = "c(\"title\")";break;
 		default: fields = "c(\"alias\", \"concept\", \"title\",\"keyword\")";
-			
 	}
-	
-	
-	QString s = ".rk.get.search.results(\"" +field->currentText() +"\",agrep=" 
-		+ agrep +", ignore.case=" + ignoreCase + ", package=" + package +", fields=" + fields +")";
-		
+
+	QString s = ".rk.get.search.results (\"" + field->currentText () + "\",agrep=" + agrep + ", ignore.case=" + ignoreCase + ", package=" + package + ", fields=" + fields +")";
 	
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, HELP_SEARCH, 0);
-	setEnabled(false);
-	field->insertItem(field->currentText());
-	
-	
+	setEnabled (false);
+	field->insertItem (field->currentText ());
 }
 
-void KHelpDlg::slotResultsListDblClicked( QListViewItem * item, const QPoint &, int )
-{
+void KHelpDlg::slotResultsListDblClicked (QListViewItem * item, const QPoint &, int) {
 	if (item == NULL) {
 		return;
 	}
-	if (item->text(0).isEmpty()) {
+	if (item->text(0).isEmpty ()) {
 		return;
 	}
 	
 	chain=0;
 	QString s="help(\"";
-	s.append(item->text(0));
-	s.append("\", htmlhelp=TRUE, package= \"");
-	s.append(item->text(2));
-	s.append("\")");
+	s.append (item->text (0));
+	s.append ("\", htmlhelp=TRUE, package= \"");
+	s.append (item->text (2));
+	s.append ("\")");
 	
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
 }
 
-
 void KHelpDlg::rCommandDone (RCommand *command) {
 	KURL url;
 	if (command->getFlags () == HELP_SEARCH) {
-		resultsList->clear();
+		resultsList->clear ();
 		RK_ASSERT ((command->getDataLength () % 3) == 0);
 		int count = (command->getDataLength () / 3);
 		for (int i=0; i < count; ++i) {
 			new QListViewItem (resultsList, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i]);
 		}
 		setEnabled(true);
-	} 
-	else if (command->getFlags () == GET_HELP_URL) {
+	} else if (command->getFlags () == GET_HELP_URL) {
 		RK_ASSERT (command->getDataLength ());
 		url.setPath(command->getStringVector ()[0]);
 		if (QFile::exists (url.path ())) {
@@ -217,14 +207,11 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 		RK_ASSERT ((command->getDataLength () % 4) == 0);
 		int count = (command->getDataLength () / 4);
 		for (int i=0; i < count; ++i) {
-			packagesList->insertItem(command->getStringVector ()[i]);
+			packagesList->insertItem (command->getStringVector ()[i]);
 		}
-	}else {
+	} else {
 		RK_ASSERT (false);
 	}
 }
 
-
-
 #include "khelpdlg.moc"
-
