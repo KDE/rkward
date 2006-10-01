@@ -73,6 +73,16 @@ Internal stuff:
 		- R_MakeActiveBinding sounds even more interesting. Maybe we can use this to "watch" symbols?!?
 			- can't track removal or creation of new objects this way
 			- seems to work only for top-level objects (elements in a list are not discernable, though we do catch the access to the list itself)
+			- function rk.watch.symbol (), and friends already in public.R seem to do the trick
+		- The plan:
+			- use makeActiveBinding (rk.watch.symbol ()) to track changes in existing objects
+			- after each user or plugin command, simply update the list of toplevel objects in .GlobalEnv
+				- if new objects are found, instantiate them
+				- if objects are missing, remove them
+				- should be fast enough, if done close to the backend
+	- REnvironmentObjects:
+		- Fetching the tree of all environments using the current method is slooooooow, and has hard to fix bugs, so far
+		- Should have getCommandAsStructure first, and update whole trees in a single command
 	- RExpressionObject as an abstraction for R-Expressions (i.e. manually edited expressions).
 		- It will be possible to "store" these in the RObjectList and select them just like any other object
 		- RKVarslot will allow editing the selected value by hand (or just typing the name in)
