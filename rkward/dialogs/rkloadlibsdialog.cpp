@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -598,11 +598,19 @@ void InstallPackagesWidget::rCommandDone (RCommand *command) {
 		if (!command->failed ()) {
 			delete placeholder;
 			placeholder = 0;
-			RK_ASSERT (command->getDataType () == RData::StringVector);
-			RK_ASSERT ((command->getDataLength () % 2) == 1);
-			unsigned int count = (command->getDataLength () / 2);
+
+			RK_ASSERT (command->getDataLength () == 3);
+
+			RData *names = command->getStructureVector ()[0];
+			RData *versions = command->getStructureVector ()[1];
+			RData *repos = command->getStructureVector ()[2];
+
+			unsigned int count = names->getDataLength ();
+			RK_ASSERT (count == versions->getDataLength ());
+			RK_ASSERT (repos->getDataLength () == 1);
+
 			for (unsigned int i=0; i < count; ++i) {
-				new QListViewItem (installable_view, command->getStringVector ()[i], command->getStringVector ()[count + i]);
+				new QListViewItem (installable_view, names->getStringVector ()[i], versions->getStringVector ()[i]);
 			}
 			installable_view->setEnabled (true);
 
@@ -613,7 +621,7 @@ void InstallPackagesWidget::rCommandDone (RCommand *command) {
 			}
 
 			// this is after the repository was chosen. Update the repository string.
-			parent->repos_string = command->getStringVector ()[2 * count];
+			parent->repos_string = repos->getStringVector ()[0];
 		} else {
 			get_list_button->setEnabled (true);
 		}
@@ -646,7 +654,7 @@ void InstallPackagesWidget::getListButtonClicked () {
 
 	get_list_button->setEnabled (false);
 
-	RCommand *command = new RCommand ("c (.rk.get.available.packages (), rk.make.repos.string ())", RCommand::App | RCommand::GetStringVector, QString::null, this, FIND_AVAILABLE_PACKAGES_COMMAND);
+	RCommand *command = new RCommand (".rk.get.available.packages ()", RCommand::App | RCommand::GetStructuredData, QString::null, this, FIND_AVAILABLE_PACKAGES_COMMAND);
 	RKProgressControl *control = new RKProgressControl (this, i18n ("Please stand by while downloading the list of available packages."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
 	control->addRCommand (command, true);
 	RKGlobals::rInterface ()->issueCommand (command, parent->chain);

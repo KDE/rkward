@@ -455,7 +455,10 @@ RData *SEXPToRData (SEXP from_exp) {
 			{
 				RData **structure_array = new RData*[count];
 				for (unsigned int i=0; i < count; ++i) {
-					structure_array[i] = SEXPToRData (VECTOR_ELT (from_exp, i));
+					SEXP subexp;
+					PROTECT (subexp = VECTOR_ELT (from_exp, i));
+					structure_array[i] = SEXPToRData (subexp);
+					UNPROTECT (1);
 				}
 				data->data = structure_array;
 			}
@@ -716,9 +719,6 @@ RData *REmbedInternal::getCommandAsRData (const char *command, RKWardRError *err
 	
 	UNPROTECT (1); // exp
 	
-	if (*error != NoError) {
-		return 0;
-	}
 	return data;
 }
 

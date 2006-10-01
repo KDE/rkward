@@ -132,7 +132,7 @@
 
 ".rk.get.available.packages" <- function () {
 	x <- .rk.cached.available.packages ()
-	return (c (as.vector (x[,1]), as.vector (x[,2])))
+	return (list (as.character (x[,1]), as.character (x[,2]), rk.make.repos.string ()))
 }
 
 "require" <- function (package, quietly = FALSE, character.only = FALSE, ...)

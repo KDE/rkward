@@ -82,6 +82,7 @@ RData **RData::getStructureVector () {
 void RData::detachData () {
 	data = 0;
 	length = 0;
+	datatype = NoData;
 }
 
 void RData::setData (RData *from) {
