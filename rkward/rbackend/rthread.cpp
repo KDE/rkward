@@ -159,6 +159,8 @@ void RThread::doCommand (RCommand *command) {
 		} else if (ctype & RCommand::GetIntVector) {
 			command->datatype = RData::IntVector;
 			command->data = getCommandAsIntVector (ccommand, &(command->length), &error);
+		} else if (ctype & RCommand::GetStructuredData) {
+			command->setData (getCommandAsRData (ccommand, &error));
 		} else {
 			runCommandInternal (ccommand, &error, ctype & RCommand::User);
 		}

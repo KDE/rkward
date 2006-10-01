@@ -46,6 +46,7 @@ struct RCallbackArgs {
 };
 
 class QString;
+class RData;
 /** This function converts a list of strings to a QStringList (locale aware), and returns the pointer. Needed to keep R and Qt includes separate. The strings can be deleted afterwards. Implementation is in rthread.cpp */
 QString *stringsToStringList (char **strings, int count);
 /** Function to delete an array of Qstring. Does delete [] strings, nothing more. But can not inline this in this class due to conflicting R and Qt includes. Implementation is in rthread.cpp */
@@ -91,7 +92,7 @@ protected:
 will only be printed if called for expressedly with print ("...") or similar. */
 	void runCommandInternal (const char *command, RKWardRError *error, bool print_result=false);
 /** basically a wrapper to runCommandInternal (). Tries to convert the result of the command to an array of char* after running the command. Since
-this will not ever be done for user commands, the R_Visible flag will never be set. @see RCommand::GetStringVector
+this will not ever be done for user commands, the R_Visible flag will never be set.
 @param command char* of the command to be run 
 @param count length of list returned
 @param error this will be set to a value in RKWardError depending on success/failure of the command
@@ -99,7 +100,7 @@ this will not ever be done for user commands, the R_Visible flag will never be s
 @see RCommand::GetStringVector */
 	QString *getCommandAsStringVector (const char *command, unsigned int *count, RKWardRError *error);
 /** basically a wrapper to runCommandInternal (). Tries to convert the result of the command to an array of double after running the command. Since
-this will not ever be done for user commands, the R_Visible flag will never be set. @see RCommand::GetRealVector
+this will not ever be done for user commands, the R_Visible flag will never be set.
 @param command char* of the command to be run 
 @param count length of array returned
 @param error this will be set to a value in RKWardError depending on success/failure of the command
@@ -107,13 +108,19 @@ this will not ever be done for user commands, the R_Visible flag will never be s
 @see RCommand::GetRealVector */
 	double *getCommandAsRealVector (const char *command, unsigned int *count, RKWardRError *error);
 /** basically a wrapper to runCommandInternal (). Tries to convert the result of the command to an array of int after running the command. Since
-this will not ever be done for user commands, the R_Visible flag will never be set.  @see RCommand::GetIntVector
+this will not ever be done for user commands, the R_Visible flag will never be set.
 @param command char* of the command to be run 
 @param count length of array returned
 @param error this will be set to a value in RKWardError depending on success/failure of the command
 @returns an array of int or 0 on failure
 @see RCommand::GetIntVector */
 	int *getCommandAsIntVector (const char *command, unsigned int *count, RKWardRError *error);
+/** basically a wrapper to runCommandInternal (). Tries to convert the result of the command to an RData structure after running the command. Since this will not ever be done for user commands, the R_Visible flag will never be set.
+@param command char* of the command to be run 
+@param error this will be set to a value in RKWardError depending on success/failure of the command
+@returns an array of int or 0 on failure
+@see RCommand::GetStructuredData */
+	RData *getCommandAsRData (const char *command, RKWardRError *error);
 public:
 /** call this periodically to make R's x11 windows process their events */
 	static void processX11Events ();

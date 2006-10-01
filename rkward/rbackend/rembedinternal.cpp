@@ -62,6 +62,7 @@ extern Rboolean R_Visible;
 }
 
 #include "../rkglobals.h"
+#include "rdata.h"
 
 #ifdef REMBEDINTERNALEXPERIMENTAL
 // code mostly copied from RObjectTables
@@ -404,6 +405,73 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 	return list;
 }
 
+int *SEXPToIntArray (SEXP from_exp, unsigned int *count) {
+	int *integers;
+
+	SEXP intexp;
+	PROTECT (intexp = coerceVector (from_exp, INTSXP));
+	*count = length (intexp);
+	integers = new int[*count];
+	for (unsigned int i = 0; i < *count; ++i) {
+		integers[i] = INTEGER (intexp)[i];
+	}
+	UNPROTECT (1);
+
+	return integers;
+}
+
+double *SEXPToRealArray (SEXP from_exp, unsigned int *count) {
+	double *reals;
+
+	SEXP realexp;
+	PROTECT (realexp = coerceVector (from_exp, REALSXP));
+	*count = length (realexp);
+	reals = new double[*count];
+	for (unsigned int i = 0; i < *count; ++i) {
+		reals[i] = REAL (realexp)[i];
+		if (R_IsNaN (reals[i]) || R_IsNA (reals[i]) ) reals[i] = RKGlobals::na_double;
+	}
+	UNPROTECT (1);	// realexp
+
+	return reals;
+}
+
+RData *SEXPToRData (SEXP from_exp) {
+	RData *data = new RData;
+
+	unsigned int count;
+	int type = TYPEOF (from_exp);
+	switch (type) {
+		case INTSXP:
+			data->data = SEXPToIntArray (from_exp, &count);
+			data->datatype = RData::IntVector;
+			break;
+		case REALSXP:
+			data->data = SEXPToRealArray (from_exp, &count);
+			data->datatype = RData::RealVector;
+			break;
+		case VECSXP:
+			count = length (from_exp);
+			{
+				RData **structure_array = new RData*[count];
+				for (unsigned int i=0; i < count; ++i) {
+					structure_array[i] = SEXPToRData (VECTOR_ELT (from_exp, i));
+				}
+				data->data = structure_array;
+			}
+			data->datatype = RData::StructureVector;
+			break;
+		case STRSXP:
+		default:
+			data->data = SEXPToStringList (from_exp, &count);
+			data->datatype = RData::StringVector;
+	}
+
+	data->length = count;
+
+	return data;
+}
+
 SEXP doError (SEXP call) {
 	unsigned int count;
 	QString *strings = SEXPToStringList (call, &count);
@@ -605,15 +673,7 @@ double *REmbedInternal::getCommandAsRealVector (const char *command, uint *count
 	PROTECT (exp = runCommandInternalBase (command, error));
 	
 	if (*error == NoError) {
-		SEXP realexp;
-		PROTECT (realexp = coerceVector (exp, REALSXP));
-		*count = length (realexp);
-		reals = new double[*count];
-		for (unsigned int i = 0; i < *count; ++i) {
-			reals[i] = REAL (realexp)[i];
-			if (R_IsNaN (reals[i]) || R_IsNA (reals[i]) ) reals[i] = RKGlobals::na_double;
-		}
-		UNPROTECT (1);	// realexp
+		reals = SEXPToRealArray (exp, count);
 	}
 	
 	UNPROTECT (1); // exp
@@ -632,14 +692,7 @@ int *REmbedInternal::getCommandAsIntVector (const char *command, uint *count, RK
 	PROTECT (exp = runCommandInternalBase (command, error));
 	
 	if (*error == NoError) {
-		SEXP intexp;
-		PROTECT (intexp = coerceVector (exp, INTSXP));
-		*count = length (intexp);
-		integers = new int[*count];
-		for (unsigned int i = 0; i < *count; ++i) {
-				integers[i] = INTEGER (intexp)[i];
-		}
-		UNPROTECT (1);	// intexp
+		integers = SEXPToIntArray (exp, count);
 	}
 	
 	UNPROTECT (1); // exp
@@ -651,4 +704,21 @@ int *REmbedInternal::getCommandAsIntVector (const char *command, uint *count, RK
 	return integers;
 }
 
+RData *REmbedInternal::getCommandAsRData (const char *command, RKWardRError *error) {
+	SEXP exp;
+	RData *data = 0;
+	
+	PROTECT (exp = runCommandInternalBase (command, error));
+	
+	if (*error == NoError) {
+		data = SEXPToRData (exp);
+	}
+	
+	UNPROTECT (1); // exp
+	
+	if (*error != NoError) {
+		return 0;
+	}
+	return data;
+}
 

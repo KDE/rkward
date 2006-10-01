@@ -2,7 +2,7 @@
                           rcommand.h  -  description
                              -------------------
     begin                : Mon Nov 11 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,8 +24,9 @@
 #include <qptrlist.h>
 #include <qvaluelist.h>
 
-class RCommandReceiver;
+#include "rdata.h"
 
+class RCommandReceiver;
 class RCommand;
 class RChainOrCommand;
 
@@ -74,39 +75,6 @@ struct ROutput {
 	};
 	ROutputType type;
 	QString output;
-};
-
-/** Class to represent data (other than output/erros) passed from the R backend to the main thread. Data is usually a vector of type int, double or QString, but can also contain a hierarchy of RData*s. RCommand is a subclass of this */ 
-class RData {
-public:
-	RData ();
-	~RData ();
-	enum RDataType {
-		StructureVector,
-		IntVector,
-		RealVector,
-		StringVector,
-		NoData
-	};
-
-/** returns the type of data contained */
-	RDataType getDataType () { return datatype; };
-/** returns the length (size) of the data array. @see RCommand::GetStringVector @see RCommand::GetRealVector @see RCommand::GetIntVector @see RCommand:GetStructure */
-	unsigned int getDataLength () { return length; };
-/** returns an array of double, if that is the type of data contained (else 0). The array is owned by the RCommand! @see RCommand::GetRealVector @see RData::detachData () @see RData::getDataLength () @see RData::getDataType () */
-	double *getRealVector ();
-/** returns an array of int, if that is the type of data contained (else 0). The array is owned by the RCommand! @see RCommand::GetIntVector @see RData::detachData () @see RData::getDataLength () @see RData::getDataType () */
-	int *getIntVector ();
-/** returns an array of QString, if that is the type of data contained (else 0). The array is owned by the RCommand! @see RCommand::GetStringVector @see RData::detachData () @see RData::getDataLength () @see RData::getDataType () */
-	QString *getStringVector ();
-/** returns an array of RData*, if that is the type of data contained (else 0). The array is owned by the RCommand! @see RCommand::GetStructureVector @see RData::detachData () @see RData::getDataLength () @see RData::getDataType () */
-	RData **getStructureVector ();
-/** The data contained in the RData structure is owned by RData, and will usually be deleted at the end of the lifetime of the RData object. If you want to keep the data, call detachData () to prevent this deletion. You will be responsible for deletion of the data yourself. */
-	void detachData ();
-protected:
-	RDataType datatype;
-	void *data;
-	unsigned int length;
 };
 
 /*
@@ -192,7 +160,8 @@ public:
 		GetIntVector=512,			/**< Try to fetch result as an array of integers */
 		GetStringVector=1024,	/**< Try to fetch result as an array of chars */
 		GetRealVector=2048,		/**< Try to fetch result as an array of doubles */
-		DirectToOutput=4096		/**< Append command output to the HTML-output file */
+		GetStructuredData=4096,		/**< Try to fetch result as an RData structure */
+		DirectToOutput=8192		/**< Append command output to the HTML-output file */
 	};
 	enum CommandStatus {
 		WasTried=1,						/**< the command has been passed to the backend. */
