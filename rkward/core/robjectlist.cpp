@@ -19,16 +19,15 @@
 #define AUTO_UPDATE_INTERVAL 10000
 #define UPDATE_DELAY_INTERVAL 500
 
-#define UPDATE_WORKSPACE_COMMAND 1
+#define ROBJECTLIST_UDPATE_ENVIRONMENTS_COMMAND 1
+#define ROBJECTLIST_UDPATE_COMPLETE_COMMAND 2
 
 #include <qtimer.h>
 #include <qstringlist.h>
 
 #include <klocale.h>
 
-#include "rkvariable.h"
-#include "rfunctionobject.h"
-
+#include "renvironmentobject.h"
 #include "../rbackend/rinterface.h"
 #include "rkmodificationtracker.h"
 
@@ -47,6 +46,8 @@ RObjectList::RObjectList () : RContainerObject (0, QString::null) {
 	type = RObject::Workspace;
 	
 	update_chain = 0;
+	toplevel_environments = 0;
+	num_toplevel_environments = 0;
 }
 
 RObjectList::~RObjectList () {
@@ -65,62 +66,176 @@ void RObjectList::updateFromR () {
 	emit (updateStarted ());
 	update_chain = RKGlobals::rInterface ()->startChain (0);
 
-	RCommand *command = new RCommand (".rk.get.environment.structure (as.environment (\".GlobalEnv\"))", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
+	RCommand *command = new RCommand ("search ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, ROBJECTLIST_UDPATE_ENVIRONMENTS_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, update_chain);
+}
+
+void RObjectList::rCommandDone (RCommand *command) {
+	RK_TRACE (OBJECTS);
+
+	if (command->getFlags () == ROBJECTLIST_UDPATE_ENVIRONMENTS_COMMAND) {
+		unsigned int num_new_environments = command->getDataLength ();
+		RK_ASSERT (command->getDataType () == RData::StringVector);
+		RK_ASSERT (num_new_environments >= 2);
+		QString *new_environments = command->getStringVector ();
+
+		updateEnvironments (new_environments, num_new_environments);
+
+		RKGlobals::rInterface ()->issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UDPATE_COMPLETE_COMMAND, update_chain);
+	} else if (command->getFlags () == ROBJECTLIST_UDPATE_COMPLETE_COMMAND) {
+		RK_ASSERT (update_chain);
+		RKGlobals::rInterface ()->closeChain (update_chain);
+		update_chain = 0;
+	
+		RK_DO (qDebug ("object list update complete"), OBJECTS, DL_DEBUG);
+		emit (updateComplete ());
+	} else {
+		RK_ASSERT (false);
+	}
+}
+
+void RObjectList::updateEnvironments (QString *env_names, unsigned int env_count) {
+	RK_TRACE (OBJECTS);
+
+	QValueList<REnvironmentObject *> removelist;
+
+	// check which envs are removed
+	// we could as well iterate over the childmap, but this is easier
+	for (unsigned int i = 0; i < num_toplevel_environments; ++i) {
+		bool found = false;
+		for (unsigned int j = 0; i < env_count; ++j) {
+			if (toplevel_environments[i]->getShortName () == env_names[j]) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) removelist.append (toplevel_environments[i]);
+	}
+
+	// remove the environments which are gone
+	for (QValueList<REnvironmentObject *>::const_iterator it = removelist.constBegin (); it != removelist.constEnd (); ++it) {
+		removeChild (*it, true);
+	}
+
+	// find which items are new
+	for (unsigned int i = 0; i < env_count; ++i) {
+		QString name = env_names[i];
+		if (childmap.find (name) == childmap.end ()) {
+			REnvironmentObject *envobj = new REnvironmentObject (this, env_names[i]);
+
+			if (name == ".GlobalEnv") {
+				envobj->type |= GlobalEnv;
+			} else if (name.contains (':')) {
+				envobj->namespace_name = name.section (':', 1);
+			} else if (name == "Autoloads") {
+				envobj->type |= GlobalEnv;              // this is wrong! but it's a temporary HACK to get things to work
+			}
+
+			childmap.insert (name, envobj);
+			RKGlobals::tracker ()->addObject (envobj, 0);
+			envobj->updateFromR ();
+		} else {
+			RObject *obj = childmap[name];
+			// for now, we only update the .GlobalEnv. All others we assume to be static
+			if (obj->isType (GlobalEnv)) {
+				obj->updateFromR ();
+			}
+		}
+	}
+
+	// set the new list of environments in the correct order
+	delete [] toplevel_environments;
+	toplevel_environments = new REnvironmentObject*[env_count];
+	num_toplevel_environments = env_count;
+	for (unsigned int i = 0; i < env_count; ++i) {
+		RObject *obj = childmap[env_names[i]];
+		RK_ASSERT (obj);
+		RK_ASSERT (obj->isType (Environment));
+
+		toplevel_environments[i] = static_cast<REnvironmentObject *> (obj); 
+	}
+}
+
+RObject *RObjectList::findObject (const QString &name, bool is_canonified) {
+	RK_TRACE (OBJECTS);
+
+	QString canonified = name;
+	if (!is_canonified) {
+		canonified = canonified.replace ("[\"", "$").replace ('[', "").replace ("\"]", "").replace (']', "");
+	}
+
+	// TODO: there could be objects with "::" in their names!
+	if (canonified.contains ("::")) {
+		QString env = canonified.section ("::", 0, 0);
+		QString remainder = canonified.section ("::", 1);
+
+		RObjectMap::iterator it = childmap.find (env);
+		if (it == childmap.end ()) return 0;
+
+		RObject *found = it.data ();
+		return (found->findObject (remainder, true));
+	}
+
+	// no environment specified, do regular search:
+	// TODO: there could be objects with "$" in their names!
+	QString current_level = canonified.section (QChar ('$'), 0, 0);
+	QString remainder = canonified.section (QChar ('$'), 1);
+
+	for (int i = 0; i < num_toplevel_environments; ++i) {
+		RObject *found = toplevel_environments[i]->findChild (current_level);
+		if (found) {
+			if (remainder.isEmpty ()) return (found);
+			return (found->findObject (remainder, true));
+		}
+	}
+	return 0;
 }
 
 bool RObjectList::updateStructure (RData *new_data) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 
-//	if (!RObject::updateStructure (new_data)) return false;		// this is the workspace object. nothing to update
-	updateChildren (new_data);		// children are directly in the structure
-
-	RK_ASSERT (update_chain);
-	RKGlobals::rInterface ()->closeChain (update_chain);
-	update_chain = 0;
-
-	RK_DO (qDebug ("object list update complete"), OBJECTS, DL_DEBUG);
-	emit (updateComplete ());
+	RK_ASSERT (false);
 
 	return true;
 }
 
 void RObjectList::timeout () {
 	RK_TRACE (OBJECTS);
+
 	updateFromR ();
 }
 
-void RObjectList::renameChild (RObject *object, const QString &new_name) {
+QString RObjectList::renameChildCommand (RObject *object, const QString &new_name) {
 	RK_TRACE (OBJECTS);
 
-	RObjectMap::iterator it = childmap.find (object->getShortName ());
-	RK_ASSERT (it.data () == object);
-	
-	RCommand *command = new RCommand (makeChildName (new_name) + " <- " + object->getFullName ());
-	RKGlobals::rInterface ()->issueCommand (command, 0);
-	command = new RCommand ("remove (" + object->getFullName () + ")", RCommand::App | RCommand::Sync);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
-	
-	childmap.remove (it);
-	childmap.insert (new_name, object);
+	return (makeChildName (new_name) + " <- " + object->getFullName () + "\n" + removeChildCommand (object));
+}
 
-	object->name = new_name;
+QString RObjectList::removeChildCommand (RObject *object) {
+	RK_TRACE (OBJECTS);
+
+	return ("remove (" + object->getFullName () + ")");
 }
 
 void RObjectList::removeChild (RObject *object, bool removed_in_workspace) {
 	RK_TRACE (OBJECTS);
 
-	RObjectMap::iterator it = childmap.find (object->getShortName ());
-	RK_ASSERT (it.data () == object);
-	
-	if (!removed_in_workspace) {
-		RCommand *command = new RCommand ("remove (" + object->getFullName () + ")", RCommand::App | RCommand::Sync);
-		RKGlobals::rInterface ()->issueCommand (command, 0);
+	if (removed_in_workspace) {
+		// remove from list of toplevel environments
+		REnvironmentObject **new_toplevel_envs = new REnvironmentObject*[num_toplevel_environments];
+		int num_new_toplevel_envs = 0;
+		for (int i=0; i < num_toplevel_environments; ++i) {
+			if (toplevel_environments[i] != object) new_toplevel_envs[num_new_toplevel_envs++] = toplevel_environments[i];
+		}
+		RK_ASSERT ((num_toplevel_environments - 1) == num_new_toplevel_envs);
+		delete [] toplevel_environments;
+		toplevel_environments = new_toplevel_envs;
+		num_toplevel_environments = num_new_toplevel_envs;
+
+		RContainerObject::removeChild (object, removed_in_workspace);
+	} else {
+		RK_ASSERT (false);
 	}
-	
-	childmap.remove (it);
-	delete object;
 }
 
 #include "robjectlist.moc"

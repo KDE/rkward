@@ -16,6 +16,9 @@
  ***************************************************************************/
 
 #include "renvironmentobject.h"
+#include "robjectlist.h"
+#include "../rbackend/rinterface.h"
+#include "../rkglobals.h"
 
 #include "../debug.h"
 
@@ -23,8 +26,8 @@ REnvironmentObject::REnvironmentObject (RContainerObject *parent, const QString 
 	RK_TRACE (OBJECTS);
 
 	type = Environment;
-	if (name == ".GlobalEnv") {
-		type |= GlobalEnv;
+	if (parent != RKGlobals::rObjectList ()) {
+		type |= EnvironmentVar;
 	}
 
 	// TODO: determine namespace_name
@@ -47,7 +50,7 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name) {
 
 	if (type & GlobalEnv) return (short_child_name);
 	if (type & EnvironmentVar) return (name + "$" + short_child_name);
-	return (namespace_name + "::" + short_child_name);
+	return (namespace_name + "::" + RObject::rQuote (short_child_name));
 }
 
 void REnvironmentObject::writeMetaData (RCommandChain *chain) {
@@ -56,28 +59,28 @@ void REnvironmentObject::writeMetaData (RCommandChain *chain) {
 	if (type & EnvironmentVar) RContainerObject::writeMetaData (chain);
 }
 
-QString REnvironmentObject::listChildrenCommand () {
+void REnvironmentObject::updateFromR () {
 	RK_TRACE (OBJECTS);
 
-	return ("ls (as.environment (" + getFullName () + ", all.names=TRUE)");
+	RCommand *command = new RCommand (".rk.get.environment.structure (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+}
+
+bool REnvironmentObject::updateStructure (RData *new_data) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
+
+//	if (!RObject::updateStructure (new_data)) return false;		// this is an environment object. nothing to update
+	updateChildren (new_data);		// children are directly in the structure
+
+	return true;
 }
 
 void REnvironmentObject::renameChild (RObject *object, const QString &new_name) {
 	RK_TRACE (OBJECTS);
 
 	if (type & GlobalEnv) {
-		RObjectMap::iterator it = childmap.find (object->getShortName ());
-		RK_ASSERT (it.data () == object);
-		
-		RCommand *command = new RCommand (makeChildName (new_name) + " <- " + object->getFullName ());
-		RKGlobals::rInterface ()->issueCommand (command, 0);
-		command = new RCommand ("remove (" + object->getFullName () + ")", RCommand::App | RCommand::Sync);
-		RKGlobals::rInterface ()->issueCommand (command, 0);
-		
-		childmap.remove (it);
-		childmap.insert (new_name, object);
-	
-		object->name = new_name;
+		RContainerObject::renameChild (object, new_name);
 	} else {
 		RK_ASSERT (false);
 	}
@@ -87,17 +90,20 @@ void REnvironmentObject::removeChild (RObject *object, bool removed_in_workspace
 	RK_TRACE (OBJECTS);
 
 	if ((type & GlobalEnv) || removed_in_workspace) {
-		RObjectMap::iterator it = childmap.find (object->getShortName ());
-		RK_ASSERT (it.data () == object);
-		
-		if (!removed_in_workspace) {
-			RCommand *command = new RCommand ("remove (" + object->getFullName () + ")", RCommand::App | RCommand::Sync);
-			RKGlobals::rInterface ()->issueCommand (command, 0);
-		}
-		
-		childmap.remove (it);
-		delete object;
+		RContainerObject::removeChild (object, removed_in_workspace);
 	} else {
 		RK_ASSERT (false);
 	}
+}
+
+QString REnvironmentObject::renameChildCommand (RObject *object, const QString &new_name) {
+	RK_TRACE (OBJECTS);
+
+	return (makeChildName (new_name) + " <- " + object->getFullName () + "\n" + removeChildCommand (object));
+}
+
+QString REnvironmentObject::removeChildCommand (RObject *object) {
+	RK_TRACE (OBJECTS);
+
+	return ("remove (" + object->getFullName () + ")");
 }

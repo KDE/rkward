@@ -161,6 +161,7 @@ protected:
 // why do I need those to compile? I thought they were derived classes!
 	friend class RContainerObject;
 	friend class RObjectList;
+	friend class REnvironmentObject;
 	RContainerObject *parent;
 	QString name;
 	int type;

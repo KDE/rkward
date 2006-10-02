@@ -32,14 +32,14 @@ public:
 	REnvironmentObject (RContainerObject *parent, const QString &name);
 	~REnvironmentObject ();
 
+	void updateFromR ();
+
 	QString getFullName ();
 	QString makeChildName (const QString &short_child_name);
 /** reimplemented from RContainerObject: If this is an environment var, call RContainerObject::writeMetaData (). Else, do nothing. An environment has no meta data. */
 	void writeMetaData (RCommandChain *chain);
 
 	bool isGlobalEnv () { return (type & GlobalEnv); };
-
-	QString listChildrenCommand ();
 /** 
 # search ()
 or rather
@@ -64,10 +64,16 @@ RContainerObject::findObjectsMatching (...) for code completion popups
 RContainerObject::canonifyName
 */
 protected:
+	friend class RObjectList;
+	bool updateStructure (RData *new_data);
 /** reimplemented from RContainerObject to raise an assert if this is not the isGlobalEnv (). Otherwise calls "remove (objectname)" instead of objectname <- NULL" */
 	void renameChild (RObject *object, const QString &new_name);
 /** reimplemented from RContainerObject to raise an assert if this is not the isGlobalEnv (). Otherwise calls "remove (objectname)" instead of objectname <- NULL" */
 	void removeChild (RObject *object, bool removed_in_workspace);
+/// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
+	QString removeChildCommand (RObject *object);
+/// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
+	QString renameChildCommand (RObject *object, const QString &new_name);
 	QString namespace_name;
 };
  

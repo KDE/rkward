@@ -244,7 +244,7 @@ void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 	RObjectMap::iterator it = childmap.find (object->getShortName ());
 	RK_ASSERT (it.data () == object);
 	
-	RCommand *command = new RCommand ("rk.rename.in.container (" + getFullName () + ", \"" + object->getShortName () + "\", \"" + new_name + "\")", RCommand::App | RCommand::Sync);
+	RCommand *command = new RCommand (renameChildCommand (object, new_name), RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 	
 	childmap.remove (it.key ());
@@ -257,7 +257,7 @@ void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) 
 	RK_TRACE (OBJECTS);
 
 	if (!removed_in_workspace) {
-		RCommand *command = new RCommand (object->getFullName () + " <- NULL", RCommand::App | RCommand::Sync);
+		RCommand *command = new RCommand (removeChildCommand (object), RCommand::App | RCommand::Sync);
 		RKGlobals::rInterface ()->issueCommand (command, 0);
 	}
 
@@ -269,6 +269,18 @@ void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) 
 
 	childmap.remove (it);
 	delete object;
+}
+
+QString RContainerObject::removeChildCommand (RObject *object) {
+	RK_TRACE (OBJECTS);
+
+	return (object->getFullName () + " <- NULL");
+}
+
+QString RContainerObject::renameChildCommand (RObject *object, const QString &new_name) {
+	RK_TRACE (OBJECTS);
+
+	return ("rk.rename.in.container (" + getFullName () + ", \"" + object->getShortName () + "\", \"" + new_name + "\")");
 }
 
 bool RContainerObject::isParentOf (RObject *object, bool recursive) {

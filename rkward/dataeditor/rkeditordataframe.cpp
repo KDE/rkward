@@ -193,7 +193,7 @@ void RKEditorDataFrame::columnDeletionRequested (int col) {
 void RKEditorDataFrame::columnAdded (int col) {
 	RK_TRACE (EDITOR);
 	RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName (QString::null), this);
-	RK_ASSERT (obj->isVariable ());	
+	RK_ASSERT (obj->isVariable ());
 	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + getObject ()->getFullName () + ", \"" + obj->getShortName () + "\", " + QString ().setNum (col+1) + ")", RCommand::App | RCommand::Sync));
 	static_cast<RKVariable*> (obj)->setLength (dataview->numTrueRows ());
 	obj->setCreatedInEditor (this);

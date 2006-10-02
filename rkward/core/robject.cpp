@@ -38,7 +38,7 @@ RObject::RObject (RContainerObject *parent, const QString &name) {
 	data = 0;
 	classnames = 0;
 	num_classes = 0;
-	dimensions = 0;
+	dimensions = new int[1];	// safe initialization
 	num_dimensions = 0;
 }
 

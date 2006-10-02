@@ -44,7 +44,7 @@ UI-stuff
 		- the UI should probably be simplified somehow. But how? All in a single list with "filter"? Ask for ideas/look at other apps
 			- this will be very hard to do with the current Qt. We'd really need several checkboxes *within* a QListViewItem. Tackle this when/after porting to Qt4
 	- RObjectListView
-		- use icons to mark up the different base types
+		- use better icons to mark up the different base types
 	- RKConsole:
 		- Console should start a command chain when submitting a batch of pasted commands
 		- Better yet, the commands might be autosplit in the backend. Need to think about how to design this correctly, though

@@ -62,7 +62,7 @@ public:
 	QString validizeName (const QString &child_name);
 
 	/** reimplemented from RObject to actually search for the object */
-	RObject *findObject (const QString &name, bool is_canonified=false);
+	virtual RObject *findObject (const QString &name, bool is_canonified=false);
 protected:
 	void updateChildren (RData *new_children);
 	RObjectMap childmap;
@@ -71,6 +71,8 @@ protected:
 	friend class RObject;
 	virtual void renameChild (RObject *object, const QString &new_name);
 	virtual void removeChild (RObject *object, bool removed_in_workspace);
+	virtual QString removeChildCommand (RObject *object);
+	virtual QString renameChildCommand (RObject *object, const QString &new_name);
 };
 
 #endif
