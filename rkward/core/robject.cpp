@@ -39,6 +39,7 @@ RObject::RObject (RContainerObject *parent, const QString &name) {
 	classnames = 0;
 	num_classes = 0;
 	dimensions = new int[1];	// safe initialization
+	dimensions[0] = 0;
 	num_dimensions = 0;
 }
 
@@ -190,7 +191,7 @@ void RObject::updateFromR () {
 	RK_TRACE (OBJECTS);
 
 	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+	RKGlobals::rInterface ()->issueCommand (command, RObjectList::getObjectList ()->getUpdateCommandChain ());
 }
 
 void RObject::rCommandDone (RCommand *command) {

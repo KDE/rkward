@@ -42,8 +42,6 @@ public:
 
 /// static pointer to the RInterface
 	static RInterface *rInterface () { return rinter; };
-/// static pointer to the RObjectList
-	static RObjectList *rObjectList () { return list; };
 /// static pointer to the RKModificationTracker
 	static RKModificationTracker *tracker () { return mtracker; };
 /// static pointer to the RKComponentMap
@@ -66,7 +64,6 @@ public:
 private:
 	friend class RKwardApp;
 	static RInterface *rinter;
-	static RObjectList *list;
 	static RKModificationTracker *mtracker;
 	static RKComponentMap *cmap;
 	static KHelpDlg *helpdlg;

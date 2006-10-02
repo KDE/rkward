@@ -51,15 +51,15 @@ RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
 		update_was_delete = true;
 		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App);
 		RKGlobals::rInterface ()->issueCommand (command);
-		RKGlobals::rObjectList ()->updateFromR ();
+		RObjectList::getObjectList ()->updateFromR ();
 	}
 
 	command = new RCommand ("load (\"" + url.path () + "\")", RCommand::App, QString::null, this, WORKSPACE_LOAD_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command);
 
-	connect (RKGlobals::rObjectList (), SIGNAL (updateComplete ()), this, SLOT (listUpdateComplete ()));
+	connect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (listUpdateComplete ()));
 	
-	RKGlobals::rObjectList ()->setWorkspaceURL (url);
+	RObjectList::getObjectList ()->setWorkspaceURL (url);
 }
 
 RKLoadAgent::~RKLoadAgent () {
@@ -72,8 +72,8 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 	if (command->getFlags () == WORKSPACE_LOAD_COMMAND) {
 		KIO::NetAccess::removeTempFile (tmpfile);
 		if (command->failed ()) {
-			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2").arg (RKGlobals::rObjectList ()->getWorkspaceURL ().path ()).arg (command->error ()), i18n ("Error loading workspace"));
-			RKGlobals::rObjectList ()->setWorkspaceURL (QString::null);
+			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2").arg (RObjectList::getObjectList ()->getWorkspaceURL ().path ()).arg (command->error ()), i18n ("Error loading workspace"));
+			RObjectList::getObjectList ()->setWorkspaceURL (QString::null);
 		}
 		RKwardApp::getApp ()->slotSetStatusReady ();
 		RKwardApp::getApp ()->setCaption (QString::null);	// trigger update of caption
@@ -84,7 +84,7 @@ void RKLoadAgent::listUpdateComplete () {
 	RK_TRACE (APP);
 	if (update_was_delete) {
 		update_was_delete = false;
-		RKGlobals::rObjectList ()->updateFromR ();
+		RObjectList::getObjectList ()->updateFromR ();
 		return;
 	}
 	RKWorkplace::mainWorkplace ()->restoreWorkplace ();

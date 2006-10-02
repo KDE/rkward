@@ -66,13 +66,13 @@ RObjectBrowser::~RObjectBrowser () {
 }
 
 void RObjectBrowser::initialize () {
-	list_view->initialize (false);
+	list_view->initialize (true);
 	
 	connect (update_button, SIGNAL (clicked ()), this, SLOT (updateButtonClicked ()));
 }
 
 void RObjectBrowser::updateButtonClicked () {
-	RKGlobals::rObjectList ()->updateFromR ();
+	RObjectList::getObjectList ()->updateFromR ();
 }
 
 void RObjectBrowser::popupEdit () {
@@ -103,7 +103,7 @@ void RObjectBrowser::contextMenuCallback (RKListViewItem *, bool *) {
 	RObject *object = list_view->menuObject ();
 	QPopupMenu *menu = list_view->contextMenu ();
 
-	if ((!object) || (object == RKGlobals::rObjectList ())) {
+	if ((!object) || (object == RObjectList::getObjectList ())) {
 		menu->setItemVisible (Edit, false);
 		menu->setItemVisible (View, false);
 		menu->setItemVisible (Rename, false);
@@ -123,7 +123,7 @@ void RObjectBrowser::slotListDoubleClicked (QListViewItem *item, const QPoint &,
 	RObject *object = list_view->findItemObject (static_cast<RKListViewItem*> (item));
 	
 	if (!object) return;
-	if (object == RKGlobals::rObjectList ()) return;
+	if (object == RObjectList::getObjectList ()) return;
 	QWidget *w = RKWorkplace::mainWorkplace ()->activeAttachedWindow ();
 	if (!w) return;
 	

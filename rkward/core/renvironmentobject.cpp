@@ -26,7 +26,7 @@ REnvironmentObject::REnvironmentObject (RContainerObject *parent, const QString 
 	RK_TRACE (OBJECTS);
 
 	type = Environment;
-	if (parent != RKGlobals::rObjectList ()) {
+	if (parent != RObjectList::getObjectList ()) {
 		type |= EnvironmentVar;
 	}
 
@@ -63,7 +63,7 @@ void REnvironmentObject::updateFromR () {
 	RK_TRACE (OBJECTS);
 
 	RCommand *command = new RCommand (".rk.get.environment.structure (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+	RKGlobals::rInterface ()->issueCommand (command, RObjectList::getObjectList ()->getUpdateCommandChain ());
 }
 
 bool REnvironmentObject::updateStructure (RData *new_data) {

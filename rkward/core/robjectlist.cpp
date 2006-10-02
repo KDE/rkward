@@ -35,8 +35,13 @@
 
 #include "../debug.h"
 
+// static
+RObjectList *RObjectList::object_list = 0;
+
 RObjectList::RObjectList () : RContainerObject (0, QString::null) {
 	RK_TRACE (OBJECTS);
+	object_list = this;
+
 	update_timer = new QTimer (this);
 	
 	connect (update_timer, SIGNAL (timeout ()), this, SLOT (timeout ()));
@@ -46,8 +51,9 @@ RObjectList::RObjectList () : RContainerObject (0, QString::null) {
 	type = RObject::Workspace;
 	
 	update_chain = 0;
-	toplevel_environments = 0;
-	num_toplevel_environments = 0;
+	toplevel_environments = new REnvironmentObject*[1];
+	num_toplevel_environments = 1;
+	toplevel_environments[0] = createTopLevelEnvironment (".GlobalEnv");
 }
 
 RObjectList::~RObjectList () {
@@ -121,19 +127,7 @@ void RObjectList::updateEnvironments (QString *env_names, unsigned int env_count
 	for (unsigned int i = 0; i < env_count; ++i) {
 		QString name = env_names[i];
 		if (childmap.find (name) == childmap.end ()) {
-			REnvironmentObject *envobj = new REnvironmentObject (this, env_names[i]);
-
-			if (name == ".GlobalEnv") {
-				envobj->type |= GlobalEnv;
-			} else if (name.contains (':')) {
-				envobj->namespace_name = name.section (':', 1);
-			} else if (name == "Autoloads") {
-				envobj->type |= GlobalEnv;              // this is wrong! but it's a temporary HACK to get things to work
-			}
-
-			childmap.insert (name, envobj);
-			RKGlobals::tracker ()->addObject (envobj, 0);
-			envobj->updateFromR ();
+			createTopLevelEnvironment (name);
 		} else {
 			RObject *obj = childmap[name];
 			// for now, we only update the .GlobalEnv. All others we assume to be static
@@ -154,6 +148,26 @@ void RObjectList::updateEnvironments (QString *env_names, unsigned int env_count
 
 		toplevel_environments[i] = static_cast<REnvironmentObject *> (obj); 
 	}
+}
+
+REnvironmentObject *RObjectList::createTopLevelEnvironment (const QString &name) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (childmap.find (name) == childmap.end ());
+	REnvironmentObject *envobj = new REnvironmentObject (this, name);
+
+	if (name == ".GlobalEnv") {
+		envobj->type |= GlobalEnv;
+	} else if (name.contains (':')) {
+		envobj->namespace_name = name.section (':', 1);
+	} else if (name == "Autoloads") {
+		envobj->type |= GlobalEnv;              // this is wrong! but it's a temporary HACK to get things to work
+	}
+
+	childmap.insert (name, envobj);
+	RKGlobals::tracker ()->addObject (envobj, 0);
+	envobj->updateFromR ();
+
+	return envobj;
 }
 
 RObject *RObjectList::findObject (const QString &name, bool is_canonified) {
@@ -181,7 +195,7 @@ RObject *RObjectList::findObject (const QString &name, bool is_canonified) {
 	QString current_level = canonified.section (QChar ('$'), 0, 0);
 	QString remainder = canonified.section (QChar ('$'), 1);
 
-	for (int i = 0; i < num_toplevel_environments; ++i) {
+	for (unsigned int i = 0; i < num_toplevel_environments; ++i) {
 		RObject *found = toplevel_environments[i]->findChild (current_level);
 		if (found) {
 			if (remainder.isEmpty ()) return (found);
@@ -191,7 +205,21 @@ RObject *RObjectList::findObject (const QString &name, bool is_canonified) {
 	return 0;
 }
 
-bool RObjectList::updateStructure (RData *new_data) {
+RObject *RObjectList::createNewChild (const QString &name, RKEditor *creator, bool container, bool data_frame) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (childmap.find (".GlobalEnv") != childmap.end ());
+
+	return (static_cast<RContainerObject *> (childmap[".GlobalEnv"])->createNewChild (name, creator, container, data_frame));
+}
+
+QString RObjectList::validizeName (const QString &child_name) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (childmap.find (".GlobalEnv") != childmap.end ());
+
+	return (static_cast<RContainerObject *> (childmap[".GlobalEnv"])->validizeName (child_name));
+}
+
+bool RObjectList::updateStructure (RData *) {
 	RK_TRACE (OBJECTS);
 
 	RK_ASSERT (false);
@@ -223,8 +251,8 @@ void RObjectList::removeChild (RObject *object, bool removed_in_workspace) {
 	if (removed_in_workspace) {
 		// remove from list of toplevel environments
 		REnvironmentObject **new_toplevel_envs = new REnvironmentObject*[num_toplevel_environments];
-		int num_new_toplevel_envs = 0;
-		for (int i=0; i < num_toplevel_environments; ++i) {
+		unsigned int num_new_toplevel_envs = 0;
+		for (unsigned int i=0; i < num_toplevel_environments; ++i) {
 			if (toplevel_environments[i] != object) new_toplevel_envs[num_new_toplevel_envs++] = toplevel_environments[i];
 		}
 		RK_ASSERT ((num_toplevel_environments - 1) == num_new_toplevel_envs);

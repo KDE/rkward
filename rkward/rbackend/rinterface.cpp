@@ -284,14 +284,14 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		RObject *obj = 0;
 		if (request->call_length >= 2) {
 			QString object_name = request->call[1];
-			obj = RKGlobals::rObjectList ()->findObject (object_name);
+			obj = RObjectList::getObjectList ()->findObject (object_name);
 		}
 		if (obj) {
 			RObject::ChangeSet *set = new RObject::ChangeSet;
 			set->from_index = -1;
 			set->to_index = -1;
 			// for now a complete update is needed, in case new objects were added
-			RKGlobals::rObjectList ()->updateFromR ();
+			RObjectList::getObjectList ()->updateFromR ();
 			RKGlobals::tracker ()->objectDataChanged (obj, set);
 			
 			issueCommand (".rk.rkreply <- \"Sync scheduled for object '" + obj->getFullName () + "'\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);

@@ -57,7 +57,14 @@ public:
 	/** reimplemented from RContainerObject to search the environments in search order */
 	RObject *findObject (const QString &name, bool canonified=false);
 
+	/** reimplemented from RContainerObject to create the child in the .GlobalEnv */
+	RObject *createNewChild (const QString &name, RKEditor *creator=0, bool container=false, bool data_frame=false);
+	/** reimplemented from RContainerObject to validize the name in .GlobalEnv */
+	QString validizeName (const QString &child_name);
+
 	KURL getWorkspaceURL () { return current_url; };
+
+	static RObjectList *getObjectList () { return object_list; };
 public slots:
 	void timeout ();
 signals:
@@ -87,7 +94,11 @@ private:
 	REnvironmentObject **toplevel_environments;
 	unsigned int num_toplevel_environments;
 
+	REnvironmentObject *createTopLevelEnvironment (const QString &name);
+
 	KURL current_url;
+
+	static RObjectList *object_list;
 };
 
 /**

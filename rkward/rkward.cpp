@@ -96,7 +96,6 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 
 	rkward_app = this;
 	RKGlobals::rinter = 0;
-	RKGlobals::list = 0;
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
 	
 	// Nice docks a la Kdevelop.
@@ -153,7 +152,7 @@ RKwardApp::~RKwardApp() {
 	RK_TRACE (APP);
 	closeAllViews ();
 	delete RKGlobals::rInterface ();
-	delete RKGlobals::rObjectList ();
+	delete RObjectList::getObjectList ();
 	delete object_browser;
 	delete RKGlobals::tracker ();
 }
@@ -211,7 +210,7 @@ void RKwardApp::doPostInit () {
 		} else if (result->result == StartupDialog::ChoseFile) {
 			slotFileOpenWorkspace ();
 		} else if (result->result == StartupDialog::EmptyTable) {
-			RObject *object = RKGlobals::rObjectList ()->createNewChild (i18n ("my.data"), 0, true, true);
+			RObject *object = RObjectList::getObjectList ()->createNewChild (i18n ("my.data"), 0, true, true);
 			// usually an explicit call to activateView should not be necessary. Somehow however, here, it is.
 			RKWorkplace::mainWorkplace ()->editObject (object, true);
 		}
@@ -259,7 +258,7 @@ void RKwardApp::startR () {
 	}
 	
 	RKGlobals::rinter = new RInterface ();
-	RKGlobals::list = new RObjectList ();
+	new RObjectList ();
 
 	RKGlobals::rInterface ()->startThread ();
 	object_browser->initialize ();
@@ -461,11 +460,11 @@ bool RKwardApp::queryClose () {
 	slotSetStatusBarText (i18n ("Exiting..."));
 	saveOptions ();
 
-	if (!RKGlobals::rObjectList ()->isEmpty ()) {
+	if (!RObjectList::getObjectList ()->isEmpty ()) {
 		int res;
 		res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?\nRKWard will remain open if you press Cancel"), i18n ("Save Workspace?"));
 		if (res == KMessageBox::Yes) {
-			new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Quit);
+			new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Quit);
 		} else if (res != KMessageBox::No) {
 			slotSetStatusReady ();
 			return false;
@@ -512,9 +511,9 @@ void RKwardApp::slotNewDataFrame () {
 	QString name = KInputDialog::getText (i18n ("New dataset"), i18n ("Enter name for the new dataset"), "my.data", &ok, this);
 
 	if (ok) {
-		QString valid = RKGlobals::rObjectList ()->validizeName (name);
+		QString valid = RObjectList::getObjectList ()->validizeName (name);
 		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1").arg (valid), i18n ("Invalid Name"));
-		RObject *object = RKGlobals::rObjectList ()->createNewChild (valid, 0, true, true);
+		RObject *object = RObjectList::getObjectList ()->createNewChild (valid, 0, true, true);
 		RKWorkplace::mainWorkplace ()->editObject (object, true);
 	}
 	
@@ -538,7 +537,7 @@ void RKwardApp::fileOpenNoSave (const KURL &url) {
 
 void RKwardApp::fileOpenAskSave (const KURL &url) {
 	RK_TRACE (APP);
-	if (RKGlobals::rObjectList ()->isEmpty ()) {
+	if (RObjectList::getObjectList ()->isEmpty ()) {
 		fileOpenNoSave (url);
 		return;
 	}
@@ -548,7 +547,7 @@ void RKwardApp::fileOpenAskSave (const KURL &url) {
 	if (res == KMessageBox::No) {
 		fileOpenNoSave (url);
 	} else if (res == KMessageBox::Yes) {
-		new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Load, url);
+		new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Load, url);
 	}
 	// else: cancel. Don't do anything
 }
@@ -572,12 +571,12 @@ void RKwardApp::slotFileLoadLibs () {
 
 void RKwardApp::slotFileSaveWorkspace () {
 	RK_TRACE (APP);
-	new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL ());
+	new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL ());
 }
 
 void RKwardApp::slotFileSaveWorkspaceAs () {
 	RK_TRACE (APP);
-	new RKSaveAgent (RKGlobals::rObjectList ()->getWorkspaceURL (), true);
+	new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), true);
 }
 
 void RKwardApp::slotSetStatusBarText (const QString &text) {
@@ -685,8 +684,8 @@ void RKwardApp::slotOutputShow () {
 void RKwardApp::setCaption (const QString &) {
 	RK_TRACE (APP);
 
-	QString wcaption = RKGlobals::rObjectList ()->getWorkspaceURL ().fileName ();
-	if (wcaption.isEmpty ()) wcaption = RKGlobals::rObjectList ()->getWorkspaceURL ().prettyURL ();
+	QString wcaption = RObjectList::getObjectList ()->getWorkspaceURL ().fileName ();
+	if (wcaption.isEmpty ()) wcaption = RObjectList::getObjectList ()->getWorkspaceURL ().prettyURL ();
 	if (wcaption.isEmpty ()) wcaption = i18n ("[Unnamed Workspace]");
 	wcaption.append (" - " + RKWorkplace::mainWorkplace ()->view ()->activeCaption ());
 	KMdiMainFrm::setCaption (wcaption);

@@ -19,7 +19,6 @@
 #include <qstring.h>
 
 RInterface *RKGlobals::rinter;
-RObjectList *RKGlobals::list;
 RKModificationTracker *RKGlobals::mtracker;
 RKComponentMap *RKGlobals::cmap;
 KHelpDlg *RKGlobals::helpdlg;

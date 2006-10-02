@@ -92,7 +92,7 @@ void RKSaveAgent::rCommandDone (RCommand *command) {
 			}
 		}
 	} else {
-		RKGlobals::rObjectList ()->setWorkspaceURL (save_url);
+		RObjectList::getObjectList ()->setWorkspaceURL (save_url);
 		RKwardApp::getApp ()->setCaption (QString::null);	// trigger update of caption
 		done ();
 		return;

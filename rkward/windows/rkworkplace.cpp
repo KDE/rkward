@@ -288,7 +288,7 @@ void RKWorkplace::rCommandDone (RCommand *command) {
 		QString specification = desc.section (QChar (':'), 1);
 
 		if (type == "data") {
-			RObject *object = RKGlobals::rObjectList ()->findObject (specification);
+			RObject *object = RObjectList::getObjectList ()->findObject (specification);
 			if (object) editObject (object, false);
 		} else if (type == "script") {
 			openScriptEditor (specification);
