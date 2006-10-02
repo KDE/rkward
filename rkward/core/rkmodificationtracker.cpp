@@ -36,29 +36,30 @@ RKModificationTracker::~RKModificationTracker () {
 	RK_TRACE (OBJECTS);
 }
 
-void RKModificationTracker::removeObject (RObject *object, RKEditor *editor, bool removed_in_workspace) {
+bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, bool removed_in_workspace) {
 	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
+#warning ! This does not work, if a sub-object is being edited!
 	RKEditor *ed = object->objectOpened ();
 	RK_ASSERT (!((editor) && (!ed)));
 	RK_ASSERT (!(removed_in_workspace && editor));
-	
+
 	if (removed_in_workspace) {
 		if (ed) {
-			if (KMessageBox::questionYesNo (0, i18n ("The object '%1' was removed from workspace, but is currently opened for editing. Do you want to restore it?").arg (object->getFullName ()), i18n ("Restore object?")) == KMessageBox::Yes) {
+			if (KMessageBox::questionYesNo (0, i18n ("The object '%1' was removed from workspace or changed to a different type of object, but is currently opened for editing. Do you want to restore it?").arg (object->getFullName ()), i18n ("Restore object?")) == KMessageBox::Yes) {
 				if (removed_in_workspace) ed->restoreObject (object);
-				return;
+				return false;
 			}
 		}
 	} else {
 		if (editor || ed) {
 			if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '%1'? The object is currently opened for editing, it will be removed in the editor, too. There's no way to get it back.").arg (object->getFullName ()), i18n ("Remove object?")) != KMessageBox::Yes) {
-				return;
+				return false;
 			}
 		} else {
 			// TODO: check for other editors editing this object
 			if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '%1'? There's no way to get it back.").arg (object->getFullName ()), i18n ("Remove object?")) != KMessageBox::Yes) {
-				return;
+				return false;
 			}
 		}
 	}
@@ -66,6 +67,8 @@ void RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 	if (ed) ed->removeObject (object);
 	if (updates_locked <= 0) emit (objectRemoved (object));
 	object->remove (removed_in_workspace);
+
+	return true;
 }
 
 void RKModificationTracker::renameObject (RObject *object, const QString &new_name) {

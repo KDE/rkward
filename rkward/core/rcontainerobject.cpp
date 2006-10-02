@@ -55,15 +55,16 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 			RK_ASSERT (false);
 			return 0;
 		} else {
-qDebug (child->getFullName ().latin1());
-			RKGlobals::tracker ()->removeObject (child, 0, true);
-
-			RData *child_name_data = new_data->getStructureVector ()[0];
-			RK_ASSERT (child_name_data->getDataType () == RData::StringVector);
-			RK_ASSERT (child_name_data->getDataLength () >= 1);
-			QString child_name = child_name_data->getStringVector ()[0];
-
-			return (createChildFromStructure (new_data, child_name));
+			if (RKGlobals::tracker ()->removeObject (child, 0, true)) {
+				RData *child_name_data = new_data->getStructureVector ()[0];
+				RK_ASSERT (child_name_data->getDataType () == RData::StringVector);
+				RK_ASSERT (child_name_data->getDataLength () >= 1);
+				QString child_name = child_name_data->getStringVector ()[0];
+	
+				return (createChildFromStructure (new_data, child_name));
+			} else {
+				return child;		// it was restored in it's old shape
+			}
 		}
 	}
 }

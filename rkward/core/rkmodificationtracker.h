@@ -38,7 +38,7 @@ public:
 	~RKModificationTracker ();
 	
 /** the given object should be removed (either it was removed in the R-workspace, or the user requests removal of the object in an editor or the RObjectList). First, if the object is being edited somewhere, the user will get a chance to object to the removal. If the user does no object, the RKModificationTracker will remove the object and notify all editors/objectlists that the object really was removed. When calling from the RObjectList, you will likely set removed_in_workspace to true, to signal that the object-data is already gone in the workspace. */
-	void removeObject (RObject *object, RKEditor *editor=0, bool removed_in_workspace=false);
+	bool removeObject (RObject *object, RKEditor *editor=0, bool removed_in_workspace=false);
 /** essentially like the above function, but requests a renaming of the object. Will also take care of finding out, whether the name is valid and promting for a different name otherwise. */
 	void renameObject (RObject *object, const QString &new_name);
 /** essentially like the above function(s). All objects editing a parent of the new objects are notified of the addition. */
