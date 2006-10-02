@@ -181,7 +181,6 @@ void RKObjectListView::objectPropertiesChanged (RObject *object) {
 
 	RKListViewItem *item = findObjectItem (object);
 	RK_ASSERT (item);
-	qDebug (object->getFullName ().latin1 ());
 	updateItem (item, object);
 
 	if (update_in_progress) {

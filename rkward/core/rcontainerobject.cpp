@@ -55,6 +55,7 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 			RK_ASSERT (false);
 			return 0;
 		} else {
+qDebug (child->getFullName ().latin1());
 			RKGlobals::tracker ()->removeObject (child, 0, true);
 
 			RData *child_name_data = new_data->getStructureVector ()[0];
@@ -96,7 +97,6 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 	RData *type_data = child_data->getStructureVector ()[1];
 	RK_ASSERT (type_data->getDataType () == RData::IntVector);
 	RK_ASSERT (type_data->getDataLength () == 1);
-	qDebug ("t%d l%d", type_data->getDataType (), type_data->getDataLength ()); 
 
 	int child_type = type_data->getIntVector ()[0];
 
@@ -133,7 +133,6 @@ void RContainerObject::updateChildren (RData *new_children) {
 		RK_ASSERT (child_name_data->getDataType () == RData::StringVector);
 		RK_ASSERT (child_name_data->getDataLength () >= 1);
 		QString child_name = child_name_data->getStringVector ()[0];
-		qDebug (child_name.latin1 ());
 
 		RObject *child_object;
 		RObjectMap::const_iterator it = childmap.find (child_name);

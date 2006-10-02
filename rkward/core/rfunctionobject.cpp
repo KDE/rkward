@@ -56,9 +56,9 @@ bool RFunctionObject::updateArguments (RData *new_data) {
 	RData *argvalues_data = new_data->getStructureVector ()[6];
 
 	unsigned int new_arglen = argnames_data->getDataLength (); 
-	RK_ASSERT (argnames_data->getDataType () == argvalues_data->getDataType () == RData::StringVector);
-#warning Change this!
-return false;
+	RK_ASSERT (argnames_data->getDataType () == RData::StringVector);
+	RK_ASSERT (argvalues_data->getDataType () == RData::StringVector);
+
 	RK_ASSERT (new_arglen == argvalues_data->getDataLength ());
 	QString *new_argnames = argnames_data->getStringVector ();
 	QString *new_argvalues = argvalues_data->getStringVector ();
