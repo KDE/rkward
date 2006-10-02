@@ -22,6 +22,7 @@
 #include "../rkglobals.h"
 #include "../dataeditor/rkeditor.h"
 #include "rcontainerobject.h"
+#include "../windows/rkworkplace.h"
 
 #include "../debug.h"
 
@@ -39,7 +40,7 @@ RKModificationTracker::~RKModificationTracker () {
 bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, bool removed_in_workspace) {
 	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
-#warning ! This does not work, if a sub-object is being edited!
+// WARNING: This does not work, if a sub-object is being edited!
 	RKEditor *ed = object->objectOpened ();
 	RK_ASSERT (!((editor) && (!ed)));
 	RK_ASSERT (!(removed_in_workspace && editor));
@@ -64,7 +65,19 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 		}
 	}
 	
-	if (ed) ed->removeObject (object);
+	if (ed) ed->removeObject (object);		// READ: delete ed
+/* What's this? A child of a removed complex object may be edited somewhere, but not the whole object. In this case, the editor has no chance of restoring the object, but it still needs to be closed. We search all editors for the removed object */
+	if (object->isContainer ()) {
+		RKWorkplace::RKWorkplaceObjectList list = RKWorkplace::mainWorkplace ()->getObjectList (RKMDIWindow::DataEditorWindow);
+		for (RKWorkplace::RKWorkplaceObjectList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
+			RKEditor *subed = static_cast<RKEditor *> (*it);
+			RObject *subedobj = subed->getObject ();
+			if (static_cast<RContainerObject *> (object)->isParentOf (subedobj, true)) {
+				subed->removeObject (subedobj);
+			}
+		}
+	}
+
 	if (updates_locked <= 0) emit (objectRemoved (object));
 	object->remove (removed_in_workspace);
 

@@ -207,16 +207,22 @@ void RKWorkplace::closeActiveWindow () {
 	else RK_ASSERT (false);		// this is benign, and maybe even ok, but I'd like to see when this happens
 }
 
+RKWorkplace::RKWorkplaceObjectList RKWorkplace::getObjectList (int type, int state) {
+	RK_TRACE (APP);
+
+	RKWorkplaceObjectList ret;
+	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
+		if (((*it)->type & type) && ((*it)->state & state)) {
+			ret.append ((*it));
+		}
+	}
+	return ret;
+}
+
 void RKWorkplace::closeAll (int type, int state) {
 	RK_TRACE (APP);
 
-	RKWorkplaceObjectList list_to_close;
-	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
-		if (((*it)->type & type) && ((*it)->state & state)) {
-			list_to_close.append ((*it));		// can't inline deletion
-		}
-	}
-
+	RKWorkplaceObjectList list_to_close = getObjectList (type, state);
 	for (RKWorkplaceObjectList::const_iterator it = list_to_close.constBegin (); it != list_to_close.constEnd (); ++it) {
 		closeWindow (*it);
 	}

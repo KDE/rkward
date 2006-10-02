@@ -49,6 +49,8 @@ public:
 	typedef QValueList<RKMDIWindow *> RKWorkplaceObjectList;
 /** Returns a list of all windows in the workplace. */
 	RKWorkplaceObjectList getObjectList () { return windows; };
+/** Returns a list of all windows with a given type and state */
+	RKWorkplaceObjectList getObjectList (int type, int state=RKMDIWindow::AnyState);
 
 /** Attach an already created window. */
 	void attachWindow (RKMDIWindow *window);
