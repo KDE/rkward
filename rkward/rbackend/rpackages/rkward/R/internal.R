@@ -14,7 +14,7 @@
 ".rk.editor.closed" <- function (x) {
 	if (exists (".rk.editing")) .rk.editing <<- .rk.editing[.rk.editing != deparse (substitute (x))]
 }
-
+#TODO: remove:
 ".rk.classify" <- function (x) {
 	type <- 0
 	if (is.data.frame (x)) type = type + 1
@@ -23,12 +23,13 @@
 	if (is.list (x)) type = type + 8
 	if (type != 0) type = type + 16 else type = 32
 	if (is.function (x)) type = 128
-	if (!is.null (attr (x, ".rk.meta"))) type = type + 256
+	if (is.environment (x)) type = 256
+	if (!is.null (attr (x, ".rk.meta"))) type = type + 2048
 	d <- dim (x)
 	if (length (d) < 1) d <- length (x);	# handling for objects that according to R do not have a dimension (such as vectors, functions, etc.)
 	c (type, d)
 }
-
+#TODO: remove:
 ".rk.get.type" <- function (x) {
 	if (is.data.frame (x) || is.matrix (x) || is.array (x) || is.list (x)) return (1)		# container
 	if (is.function (x)) return (2)		# function
@@ -268,4 +269,77 @@
 	.rk.watched.symbols[as.character(substitute (k))] <<- NULL
 
 	invisible (TRUE)
+}
+
+".rk.get.structure" <- function (x, name) {
+	fun <- FALSE
+	cont <- FALSE
+	type <- 0
+
+# Do not change the order! Make sure all fields exist, even if empty
+	ret = list ()
+
+# 1: name should always be first
+	ret$name <- as.character (name)
+
+# 2: classification
+	if (is.data.frame (x)) type = type + 1
+	if (is.matrix (x)) type = type + 2
+	if (is.array (x)) type = type + 4
+	if (is.list (x)) type = type + 8
+	if (type != 0) {
+		type = type + 16
+		cont <- TRUE
+	} else type = 32
+	if (is.function (x)) {
+		fun <- TRUE
+		type = 128
+	}
+	if (is.environment (x)) type = 256
+	if (!is.null (attr (x, ".rk.meta"))) type = type + 2048
+	ret$type <- as.integer (type)
+
+# 3: classes
+	ret$classes <- class (x)
+	if (is.null (ret$classes)) ret$classes = ""
+
+# 4: meta info
+	ret$meta <- .rk.get.meta (x)
+	if (is.null (ret$meta)) ret$meta <- ""
+
+# 5: dimensionality
+	ret$dims <- dim(x)
+	if (is.null (ret$dims)) ret$dims <- length (x)	# handling for objects that - according to R - do not have a dimension (such as vectors, functions, etc.)
+	if (is.null (ret$dims)) ret$dims <- 0	# according to help ("length"), we need to play safe
+	ret$dims <- as.integer (ret$dims)
+
+# 6: Special info valid for some objects ony. This should always be last in the returned structure, as the number of fields may vary
+	if (cont) {		# a container
+		nms <- names (x)
+		if (!is.null (nms)) {
+			i <- 0
+			sub <- list ()
+			for (child in x) {
+				i <- i+1
+				sub[[nms[i]]] <- .rk.get.structure (child, nms[i])
+			}
+			ret$sub <- sub
+		}
+	} else if (fun) {	# a function
+		ret$argnames <- as.character (names (formals (x)))
+		ret$argvalues <- as.character (formals (x))
+	}
+
+	ret
+}
+
+".rk.get.environment.structure" <- function (x) {
+	ret <- list ()
+
+	lst <- ls (x, all.names=TRUE)
+	for (childname in lst) {
+		ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname)
+	}
+
+	ret
 }

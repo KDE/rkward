@@ -27,9 +27,6 @@
 #include "../rkglobals.h"
 #include "rkmodificationtracker.h"
 
-#define CLASSIFY_COMMAND 1
-#define UPDATE_CLASS_COMMAND 3
-#define GET_META_COMMAND 4
 #define GET_STORAGE_MODE_COMMAND 10
 #define GET_DATA_COMMAND 11
 #define GET_FACTOR_LEVELS_COMMAND 12
@@ -98,40 +95,11 @@ void RKVariable::writeMetaData (RCommandChain *chain) {
 	RObject::writeMetaData (chain);
 }
 
-void RKVariable::updateFromR () {
-	RK_TRACE (OBJECTS);
-	
-	getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain (), GET_META_COMMAND);
-
-// TODO: move classification / type mismatch-checking to RObject
-	RCommand *command = new RCommand (".rk.classify (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString::null, this, CLASSIFY_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
-}
-
 void RKVariable::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
 	
-	bool properties_changed = false;
-
-	if (command->getFlags () == GET_META_COMMAND) {
-		handleGetMetaCommand (command);
-
-		// TODO: This is not quite good, yet, as it may result in two calls to objectMetaChanged.
-		QString dummy = getMetaProperty ("type");
-		int new_var_type = dummy.toInt ();
-		var_type = (RObject::VarType) new_var_type;
-		if (new_var_type != var_type) RKGlobals::tracker ()->objectMetaChanged (this);
-	} else if (command->getFlags () == CLASSIFY_COMMAND) {
-		if (!handleClassifyCommand (command, &properties_changed)) {
-			return; // will be deleted!
-		}
-
-		// classifiy command was successful. now get further information.
-		RCommand *ncommand = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CLASS_COMMAND);
-		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
-
-		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
-
+	if (command->getFlags () == ROBJECT_UDPATE_STRUCTURE_COMMAND) {
+		RObject::rCommandDone (command);
 	} else if (command->getFlags () == GET_STORAGE_MODE_COMMAND) {
 		RK_ASSERT (command->getDataType () == RData::IntVector);
 		RK_ASSERT (command->getDataLength () == 2);
@@ -184,11 +152,6 @@ void RKVariable::rCommandDone (RCommand *command) {
 			myData ()->value_labels->insert (QString::number (i+1), command->getStringVector ()[i]);
 		}
 		setSyncing (true);
-	} else if (command->getFlags () == UPDATE_CLASS_COMMAND) {
-		if (handleUpdateClassCommand (command)) properties_changed = true;
-		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
-
-		parent->childUpdateComplete ();
 	}
 }
 
@@ -202,9 +165,9 @@ void RKVariable::rCommandDone (RCommand *command) {
 void RKVariable::setLength (int len) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (!getLength ());	// should only be called once
-	RK_ASSERT (dimension);
+	RK_ASSERT (dimensions);
 
-	dimension[0] = len;
+	dimensions[0] = len;
 }
 
 void RKVariable::restoreStorageInBackend () {
@@ -380,7 +343,7 @@ void RKVariable::extendToLength (int length) {
 
 	if (length <= 0) length = 1;
 	if (length < (myData ()->allocated_length - 1)) {
-		dimension[0] = length;
+		dimensions[0] = length;
 		return;
 	}
 
@@ -407,7 +370,7 @@ void RKVariable::extendToLength (int length) {
 	myData ()->cell_double_data = new_double_data;
 
 	myData ()->allocated_length = target;
-	dimension[0] = length;
+	dimensions[0] = length;
 }
 
 void RKVariable::downSize () {
@@ -675,7 +638,7 @@ void RKVariable::removeRows (int from_row, int to_row) {
 		myData ()->cell_double_data[myData ()->allocated_length - 1] = 0;
 	}
 
-	dimension[0] -= (to_row - from_row) + 1;	
+	dimensions[0] -= (to_row - from_row) + 1;	
 	downSize ();
 	RECHECK_VALID
 }

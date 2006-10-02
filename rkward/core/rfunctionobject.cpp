@@ -17,51 +17,76 @@
 
 #include "rfunctionobject.h"
 
-#include "../rbackend/rinterface.h"
-#include "robjectlist.h"
+#include "../rbackend/rdata.h"
+#include "rkmodificationtracker.h"
 #include "../rkglobals.h"
 #include "../debug.h"
-
-#define CLASSIFY_COMMAND 1
-#define UPDATE_ARGS_COMMAND 2
 
 RFunctionObject::RFunctionObject (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
 	type = Function;
+
+	argcount = 0;
+	argnames = 0;
+	argvalues = 0;
 }
 
 RFunctionObject::~RFunctionObject () {
 	RK_TRACE (OBJECTS);
 }
 
-void RFunctionObject::updateFromR () {
+bool RFunctionObject::updateStructure (RData *new_data) {
 	RK_TRACE (OBJECTS);
+	RK_ASSERT (new_data->getDataLength () >= 5);
+	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 
-// TODO: move classification / type mismatch-checking to RObject
-	RCommand *command = new RCommand (".rk.classify (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString::null, this, CLASSIFY_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+	if (!RObject::updateStructure (new_data)) return false;
+
+	if (updateArguments (new_data)) RKGlobals::tracker ()->objectMetaChanged (this);
+
+	return true;
 }
 
-void RFunctionObject::rCommandDone (RCommand *command) {
+bool RFunctionObject::updateArguments (RData *new_data) {
 	RK_TRACE (OBJECTS);
+	RK_ASSERT (new_data->getDataLength () == 7);
+	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 
-	bool dummy;
-	if (command->getFlags () == CLASSIFY_COMMAND) {
-		if (!handleClassifyCommand (command, &dummy)) {
-			return; // will be deleted!
+	RData *argnames_data = new_data->getStructureVector ()[5];
+	RData *argvalues_data = new_data->getStructureVector ()[6];
+
+	unsigned int new_arglen = argnames_data->getDataLength (); 
+	RK_ASSERT (argnames_data->getDataType () == argvalues_data->getDataType () == RData::StringVector);
+#warning Change this!
+return false;
+	RK_ASSERT (new_arglen == argvalues_data->getDataLength ());
+	QString *new_argnames = argnames_data->getStringVector ();
+	QString *new_argvalues = argvalues_data->getStringVector ();
+	argnames_data->detachData ();
+	argvalues_data->detachData ();
+
+	bool changed = false;
+	if (new_arglen != argcount) {
+		changed = true;
+	} else {
+		for (unsigned int i = 0; i < new_arglen; ++i) {
+			if (argnames[i] != new_argnames[i]) {
+				changed = true;
+				break;
+			}
+
+			if (argvalues[i] != new_argvalues[i]) {
+				changed = true;
+				break;
+			}
 		}
-
-		RCommand *command = new RCommand ("c (as.character (names (formals (" + getFullName () +"))), as.character (formals (" +getFullName () + ")))", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_ARGS_COMMAND);
-		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
-
-	} else if (command->getFlags () == UPDATE_ARGS_COMMAND) {
-		RK_ASSERT (command->getDataLength () % 2 == 0);
-
-		function_args.clear ();
-		for (unsigned int i = 0; i < command->getDataLength (); i += 2) {
-			function_args.append (new FunctionArg (command->getStringVector ()[i], command->getStringVector ()[i+1]));
-		}
-
-		parent->childUpdateComplete ();
 	}
+
+	argcount = new_arglen;
+	delete [] argnames;
+	delete [] argvalues;
+	argnames = new_argnames;
+	argvalues = new_argvalues;
+
+	return changed;
 }

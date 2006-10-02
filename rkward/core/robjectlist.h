@@ -46,46 +46,34 @@ public:
 
 	void updateFromR ();
 	
-	void createFromR (RContainerObject *parent, const QString &cname);
-	
 	QString getFullName () { return QString::null; };
 	QString makeChildName (const QString &short_child_name) { return short_child_name; };
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
 	void writeMetaData (RCommandChain *) {};
 	
 	RCommandChain *getUpdateCommandChain () { return update_chain; };
-	
-	void childUpdateComplete ();
-	QString listChildrenCommand ();
 
 	KURL getWorkspaceURL () { return current_url; };
 public slots:
 	void timeout ();
 signals:
-/// emitted when the list of objects is about to be updated
+/// emitted when the list of objects is about to be updated	// TODO: remove me
 	void updateStarted ();
-/// emitted when the list of objects has been updated
+/// emitted when the list of objects has been updated	// TODO: remove me
 	void updateComplete ();
 protected:
-	void rCommandDone (RCommand *command);
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	void renameChild (RObject *object, const QString &new_name);
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	void removeChild (RObject *object, bool removed_in_workspace);
 /// reimplemented from RContainerObject to emit a change signal
 	void objectsChanged ();
+	bool updateStructure (RData *new_data);
 private:
 	friend class RKLoadAgent;
 	friend class RKSaveAgent;
 	void setWorkspaceURL (const KURL &url) { current_url = url; };
 	QTimer *update_timer;
-	
-	struct PendingObject {
-		QString name;
-		RContainerObject *parent;
-	};
-	
-	QMap<RCommand*, PendingObject*> pending_objects;
 	
 	RCommandChain *update_chain;
 

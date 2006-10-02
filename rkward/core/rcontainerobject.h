@@ -35,11 +35,14 @@ public:
 	~RContainerObject ();
 
 	void writeChildMetaData (RCommandChain *chain);
-	
-	void updateFromR ();
 
-	virtual void childUpdateComplete ();
-	
+	/** update the given child with the given data. Since the child may be mismatching, and may need to be recreated, returns a pointer to the child (old or new) */
+	RObject *updateChildStructure (RObject *child, RData *new_data, bool just_created=false);
+	RObject *createChildFromStructure (RData *child_data, const QString &child_name);
+
+	/** reimplemented from RObject to also update children */
+	bool updateStructure (RData *new_data);
+
 	int numChildren ();
 	RObject **children ();
 
@@ -60,28 +63,14 @@ public:
 
 	/** reimplemented from RObject to actually search for the object */
 	RObject *findObject (const QString &name, bool is_canonified=false);
-
-	virtual QString listChildrenCommand ();
-private:
-	friend class RObject;
-	friend class RKVariable;
-	void typeMismatch (RObject *child, QString childname);
 protected:
+	void updateChildren (RData *new_children);
 	RObjectMap childmap;
 	// why do I need this to make it compile?!
 	friend class RObjectList;
-	void addChild (RObject *child, QString childname);
+	friend class RObject;
 	virtual void renameChild (RObject *object, const QString &new_name);
 	virtual void removeChild (RObject *object, bool removed_in_workspace);
-/** given the current list of children (as returned by the "names"-command or similar in derived classes) find out, which children have been removed,
-and takes the appropriate measures */
-	void checkRemovedChildren (QString *current_children, int child_count);
-
-	int num_dimensions;
-	int *dimension;
-	int num_children_updating;
-
-	void rCommandDone (RCommand *command);
 };
 
 #endif

@@ -21,20 +21,15 @@
 #include "../rbackend/rinterface.h"
 #include "robjectlist.h"
 #include "rkvariable.h"
+#include "rfunctionobject.h"
 
 #include "../rkglobals.h"
 #include "rkmodificationtracker.h"
 
 #include "../debug.h"
 
-#define CLASSIFY_COMMAND 1
-#define UPDATE_CLASS_COMMAND 2
-#define UPDATE_CHILD_LIST_COMMAND 3
-#define GET_META_COMMAND 4
-
 RContainerObject::RContainerObject (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
-	num_children_updating = 0;
 	type = Container;
 }
 
@@ -47,93 +42,126 @@ RContainerObject::~RContainerObject () {
 	}
 }
 
-void RContainerObject::updateFromR () {
+RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data, bool just_created) {
 	RK_TRACE (OBJECTS);
+	RK_ASSERT (child);
+	RK_ASSERT (new_data);
 
-// TODO: move classification / type mismatch-checking to RObject
-	RCommand *command = new RCommand (".rk.classify (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString::null, this, CLASSIFY_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
-}
+	if (child->updateStructure (new_data)) {
+		return child;
+	} else {
+		if (just_created) {
+			delete child;
+			RK_ASSERT (false);
+			return 0;
+		} else {
+			RKGlobals::tracker ()->removeObject (child, 0, true);
 
-//virtual
-QString RContainerObject::listChildrenCommand () {
-	RK_TRACE (OBJECTS);
+			RData *child_name_data = new_data->getStructureVector ()[0];
+			RK_ASSERT (child_name_data->getDataType () == RData::StringVector);
+			RK_ASSERT (child_name_data->getDataLength () >= 1);
+			QString child_name = child_name_data->getStringVector ()[0];
 
-	return ("names (" + getFullName () + ")");
-}
-
-void RContainerObject::rCommandDone (RCommand *command) {
-	RK_TRACE (OBJECTS);
-
-	bool properties_changed = false;
-	if (command->getFlags () == GET_META_COMMAND) {
-		handleGetMetaCommand (command);
-	} else if (command->getFlags () == CLASSIFY_COMMAND) {
-		if (!handleClassifyCommand (command, &properties_changed)) {
-			return; // will be deleted!
+			return (createChildFromStructure (new_data, child_name));
 		}
-
-		// classifiy command was successful. now get further information.
-		if (hasMetaObject ()) getMetaData (RKGlobals::rObjectList()->getUpdateCommandChain (), GET_META_COMMAND);
-
-		RCommand *command = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CLASS_COMMAND);
-		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
-
-		command = new RCommand (listChildrenCommand (), RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_CHILD_LIST_COMMAND);
-		RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
-
-		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
-
-	} else if (command->getFlags () == UPDATE_CHILD_LIST_COMMAND) {
-		// first check, whether all known children still exist:
-		checkRemovedChildren (command->getStringVector (), command->getDataLength ());
-		
-		// next, update the existing and/or new children
-		num_children_updating = command->getDataLength ();
-		// empty object?
-		if (!num_children_updating) {
-			parent->childUpdateComplete ();
-		}
-		for (unsigned int i = 0; i < command->getDataLength (); ++i) {
-			QString cname = command->getStringVector ()[i]; 	// for easier typing
-			if (childmap.find (cname) != childmap.end ()) {
-				RK_DO (qDebug ("updating existing child: %s", cname.latin1 ()), APP, DL_DEBUG);
-				childmap[cname]->updateFromR ();
-			} else {
-				RK_DO (qDebug ("creating new child: %s", cname.latin1 ()), APP, DL_DEBUG);
-				RKGlobals::rObjectList()->createFromR (this, cname);
-			}
-		}
-		
-	} else if (command->getFlags () == UPDATE_CLASS_COMMAND) {
-		if (handleUpdateClassCommand (command)) properties_changed = true;
-		if (properties_changed) RKGlobals::tracker ()->objectMetaChanged (this);
 	}
 }
 
-void RContainerObject::typeMismatch (RObject *child, QString childname) {
+bool RContainerObject::updateStructure (RData *new_data) {
 	RK_TRACE (OBJECTS);
-	/* I no longer know, why I added the uncommented lines below. From what I can tell today, tracker->removeObject () will call removeChild ()
-	and the object will be deleted there. Will need to valgrind sonner or later to find out, if those lines did serve a purpose, after all. */
-	/* delete child;
-	childmap.remove (childname); */
-	
-	RKGlobals::tracker ()->removeObject (child, 0, true);
-	RKGlobals::rObjectList()->createFromR (this, childname);
+	unsigned int data_length = new_data->getDataLength (); 
+	RK_ASSERT (data_length >= 5);
+	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
+
+	if (!RObject::updateStructure (new_data)) return false;
+
+	if (data_length > 5) {
+		RK_ASSERT (data_length == 6);
+
+		RData *children_sub = new_data->getStructureVector ()[5];
+		RK_ASSERT (children_sub->getDataType () == RData::StructureVector);
+
+		updateChildren (children_sub);
+	}
+
+	return true;
 }
 
-void RContainerObject::childUpdateComplete () {
+RObject *RContainerObject::createChildFromStructure (RData *child_data, const QString &child_name) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (num_children_updating);
-	if ((--num_children_updating) <= 0) parent->childUpdateComplete ();
+	RK_ASSERT (child_data->getDataType () == RData::StructureVector);
+	RK_ASSERT (childmap.find (child_name) == childmap.end ());
+	RK_ASSERT (child_data->getDataLength () >= 2);		// need to see at least the type at this point
+
+	RData *type_data = child_data->getStructureVector ()[1];
+	RK_ASSERT (type_data->getDataType () == RData::IntVector);
+	RK_ASSERT (type_data->getDataLength () == 1);
+	qDebug ("t%d l%d", type_data->getDataType (), type_data->getDataLength ()); 
+
+	int child_type = type_data->getIntVector ()[0];
+
+	RObject *child_object;
+	if (child_type & RObject::Container) {
+		child_object = new RContainerObject (this, child_name);
+	} else if (child_type & RObject::Function) {
+		child_object = new RFunctionObject (this, child_name);
+	} else {
+		child_object = new RKVariable (this, child_name);
+	}
+	RK_ASSERT (child_object);
+	RKGlobals::tracker ()->lockUpdates (true);	// object not yet added. prevent updates
+	child_object = updateChildStructure (child_object, child_data, true);
+	RKGlobals::tracker ()->lockUpdates (false);
+	RK_ASSERT (child_object);
+
+	if (child_object) RKGlobals::tracker ()->addObject (child_object, 0);
+	return child_object;
 }
 
-void RContainerObject::addChild (RObject *child, QString childname) {
+void RContainerObject::updateChildren (RData *new_children) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (child);
+	RK_ASSERT (new_children->getDataType () == RData::StructureVector);
+	unsigned int new_child_count = new_children->getDataLength ();
 
-	childmap.insert (childname, child);
-	child->updateFromR ();
+// first find out, which children are now available, copy the old one, create the new ones
+	RObjectMap new_childmap;
+	for (unsigned int i = 0; i < new_child_count; ++i) {
+		RData *child_data = new_children->getStructureVector ()[i];
+		RK_ASSERT (child_data->getDataType () == RData::StructureVector);
+		RK_ASSERT (child_data->getDataLength () >= 1);
+		RData *child_name_data = child_data->getStructureVector ()[0];
+		RK_ASSERT (child_name_data->getDataType () == RData::StringVector);
+		RK_ASSERT (child_name_data->getDataLength () >= 1);
+		QString child_name = child_name_data->getStringVector ()[0];
+		qDebug (child_name.latin1 ());
+
+		RObject *child_object;
+		RObjectMap::const_iterator it = childmap.find (child_name);
+		if (it != childmap.end ()) {
+			child_object = updateChildStructure (it.data (), child_data);
+		} else {
+			child_object = createChildFromStructure (child_data, child_name);
+		}
+		new_childmap.insert (child_name, child_object);
+	}
+
+// now find out, which old ones are missing
+	QValueList<RObject*> removed_list;
+	for (RObjectMap::const_iterator it = childmap.constBegin (); it != childmap.constEnd (); ++it) {
+		QString child_string = it.key ();
+
+		if (new_childmap.find (child_string) == new_childmap.end ()) {
+			removed_list.append (it.data ());
+		}
+	}
+
+// finally delete the missing old ones
+	for (QValueList<RObject*>::iterator it = removed_list.begin (); it != removed_list.end (); ++it) {
+		RK_DO (qDebug ("child no longer present: %s.", (*it)->getFullName ().latin1 ()), OBJECTS, DL_DEBUG);
+		RKGlobals::tracker ()->removeObject ((*it), 0, true);
+	}
+
+	childmap = new_childmap;
 }
 
 int RContainerObject::numChildren () {
@@ -228,13 +256,16 @@ void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) {
 	RK_TRACE (OBJECTS);
 
-	RObjectMap::iterator it = childmap.find (object->getShortName ());
-	RK_ASSERT (it.data () == object);
-	
 	if (!removed_in_workspace) {
 		RCommand *command = new RCommand (object->getFullName () + " <- NULL", RCommand::App | RCommand::Sync);
 		RKGlobals::rInterface ()->issueCommand (command, 0);
 	}
+
+	RObjectMap::iterator it = childmap.find (object->getShortName ());
+	if (it == childmap.end ()) {
+		return;
+	}
+	RK_ASSERT (it.data () == object);
 
 	childmap.remove (it);
 	delete object;
@@ -257,31 +288,6 @@ bool RContainerObject::isParentOf (RObject *object, bool recursive) {
 	return false;
 }
 
-void RContainerObject::checkRemovedChildren (QString *current_children, int child_count) {
-	RK_TRACE (OBJECTS);
-	QValueList<RObject*> removed_list;
-
-// is there a more efficient algorithm for doing this?
-	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
-		QString child_string = it.key ();
-		bool found = false;
-		for (int i = 0; i < child_count; ++i) {
-			if (child_string == current_children[i]) {
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
-			removed_list.append (it.data ());
-		}
-	}
-
-	for (QValueList<RObject*>::iterator it = removed_list.begin (); it != removed_list.end (); ++it) {
-		RK_DO (qDebug ("child no longer present: %s.", (*it)->getFullName ().latin1 ()), OBJECTS, DL_DEBUG);
-		RKGlobals::tracker ()->removeObject ((*it), 0, true);
-	}
-}
-
 QString RContainerObject::validizeName (const QString &child_name) {
 	RK_TRACE (OBJECTS);
 	QString ret = child_name;
@@ -295,4 +301,3 @@ QString RContainerObject::validizeName (const QString &child_name) {
 	}
 	return (ret +postfix);
 }
-

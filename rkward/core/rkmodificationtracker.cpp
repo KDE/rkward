@@ -27,6 +27,8 @@
 
 RKModificationTracker::RKModificationTracker (QObject *parent) : QObject (parent) {
 	RK_TRACE (OBJECTS);
+
+	updates_locked = 0;
 }
 
 
@@ -62,7 +64,7 @@ void RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 	}
 	
 	if (ed) ed->removeObject (object);
-	emit (objectRemoved (object));
+	if (updates_locked <= 0) emit (objectRemoved (object));
 	object->remove (removed_in_workspace);
 }
 
@@ -76,7 +78,7 @@ void RKModificationTracker::renameObject (RObject *object, const QString &new_na
 
 // since we may end up with a different name that originally requested, we propagate the change also to the original editor
 	if (ed) ed->renameObject (object);
-	emit (objectPropertiesChanged (object));
+	if (updates_locked <= 0) emit (objectPropertiesChanged (object));
 }
 
 void RKModificationTracker::addObject (RObject *object, RKEditor *editor) {
@@ -91,7 +93,7 @@ void RKModificationTracker::addObject (RObject *object, RKEditor *editor) {
 			ed->addObject (object);
 		}
 	}
-	emit (objectAdded (object));
+	if (updates_locked <= 0) emit (objectAdded (object));
 }
 
 void RKModificationTracker::objectMetaChanged (RObject *object) {
@@ -102,7 +104,7 @@ void RKModificationTracker::objectMetaChanged (RObject *object) {
 	if (ed) {
 		ed->updateObjectMeta (object);
 	}
-	emit (objectPropertiesChanged (object));
+	if (updates_locked <= 0) emit (objectPropertiesChanged (object));
 }
 
 void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeSet *changes) {

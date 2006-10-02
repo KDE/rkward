@@ -11,6 +11,10 @@ Bugs:
 	- produce many readline calls (e.g. "for (i in 1:10) readline()") repeatedly and cancel all of them.
 		- Sometimes only the readine is interrupted, sometimes the whole command (might be R's fault? But works fine in plain R)
 		- Occasionally this seems to leave R in a bad (semi-crashed) state
+	- There is definitely a memory leak in handling output!
+		- Produce lots and lots of output -> watch mem usage grow
+		- Probably the RKConsole is to blame (run outside console -> no significant increase)
+			- Maybe the kate-part needs to be reset (syntax parse tree) every once in a while?
 
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org
@@ -87,9 +91,6 @@ Internal stuff:
 		- It will be possible to "store" these in the RObjectList and select them just like any other object
 		- RKVarslot will allow editing the selected value by hand (or just typing the name in)
 			- How to do this nicely UI wise?
-	- RFunctionObject for user defined functions. Maybe later it will be possible to use for functions from packages as well
-		- would be nice, if it also had some knowledge about function arguments
-		- ideally it would also know about the type of the return value, but this may not be realistic
 	- RKCancelDialog / RKErrorDialog:
 		- remove these classes. Port to use RKProgressControl instead
 	- instead of delete RObject, call RObject::deleteThis () and check for deleted in rCommandDone ()?
@@ -105,13 +106,12 @@ Internal stuff:
 		- well, on second thought, it might be better to rely more on RCommand::id () instead of pointers. Why? The id is unique (until integer overflow). The pointer may be reused after a delete -> potential problem when trying to cancel command which is actually already deleted (and potentially other cases)
 		- let's set this back for a while
 	- RKVariable:
-		- use QIntDict instead of string-map for value-labels / factor levels?
+		- use QIntDict instead of string-map for value-labels / factor levels? Qt4: QHash
 	- UNPROTECT_PTR
 	- give informative feedback on syntax errors (line numbers, etc.)!
 	- .rk.get.available.packages ()
 		- use external (file) storage for cache to save mem
 	- can the mutex be made non-recursive? I think so, but don't recall
-	- RCommand::GetStructure for retrieving simple lists in a single call. Create class RStructure with field string/int/double/structure data, make RCommand a subclass of this (or something similar)
 
 General code:
 	- use constBegin (), constEnd ()

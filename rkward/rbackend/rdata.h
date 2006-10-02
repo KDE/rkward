@@ -25,11 +25,11 @@ public:
 	RData ();
 	~RData ();
 	enum RDataType {
-		StructureVector,
-		IntVector,
-		RealVector,
-		StringVector,
-		NoData
+		StructureVector=0,
+		IntVector=1,
+		RealVector=2,
+		StringVector=3,
+		NoData=4
 	};
 
 /** returns the type of data contained */
@@ -46,6 +46,7 @@ public:
 	RData **getStructureVector ();
 /** The data contained in the RData structure is owned by RData, and will usually be deleted at the end of the lifetime of the RData object. If you want to keep the data, call detachData () to prevent this deletion. You will be responsible for deletion of the data yourself. */
 	void detachData ();
+	void discardData ();
 
 /** public for technical reasons only. Do not use! Copy data from the given RData, and discard it */
 	void setData (RData *from);

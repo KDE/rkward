@@ -19,9 +19,7 @@
 #define AUTO_UPDATE_INTERVAL 10000
 #define UPDATE_DELAY_INTERVAL 500
 
-#define UPDATE_LIST_COMMAND 1
-#define CHILD_GET_TYPE_COMMAND 2
-#define LOAD_COMPLETE_COMMAND 3
+#define UPDATE_WORKSPACE_COMMAND 1
 
 #include <qtimer.h>
 #include <qstringlist.h>
@@ -51,70 +49,8 @@ RObjectList::RObjectList () : RContainerObject (0, QString::null) {
 	update_chain = 0;
 }
 
-
 RObjectList::~RObjectList () {
 	RK_TRACE (OBJECTS);
-}
-
-void RObjectList::rCommandDone (RCommand *command) {
-	RK_TRACE (OBJECTS);
-
-	bool changed = false;
-
-	if (command->getFlags () == UPDATE_LIST_COMMAND) {
-		// first check, whether all known children still exist:
-		checkRemovedChildren (command->getStringVector (), command->getDataLength ());
-		
-		// next, update the existing and/or new children
-		num_children_updating = command->getDataLength ();		// TODO: is this correct? Some children might have been removed!
-		// empty workspace?
-		if (!num_children_updating) {
-			num_children_updating = 1;
-			childUpdateComplete ();
-			return;
-		}
-		for (unsigned int i = 0; i < command->getDataLength (); ++i) {
-			QString cname = command->getStringVector ()[i];		// for easier typing
-			/*if (cname == (".rk.meta")) {
-				childUpdateComplete ();
-				continue;
-			}*/
-			if (childmap.find (cname) != childmap.end ()) {
-				childmap[cname]->updateFromR ();
-			} else {
-				createFromR (this, cname);
-				changed = true;
-			}
-		}
-	} else if (command->getFlags () == CHILD_GET_TYPE_COMMAND) {
-		if (command->getDataLength () != 1) {
-			RK_ASSERT (false);
-		}
-
-		PendingObject *pobj = pending_objects[command];
-		RObject *robj;
-		// TODO: handle more special types!
-		if (command->getIntVector ()[0] == 1) {
-			robj = new RContainerObject (pobj->parent, pobj->name);
-		} else if (command->getIntVector ()[0] == 2) {
-			robj = new RFunctionObject (pobj->parent, pobj->name);
-		} else {
-			robj = new RKVariable (pobj->parent, pobj->name);
-		}
-		RK_ASSERT (robj);
-		pobj->parent->addChild (robj, pobj->name);
-		delete pobj;
-		pending_objects.remove (command);
-		RKGlobals::tracker ()->addObject (robj, 0);
-	}
-	
-	// TODO: signal change
-}
-
-QString RObjectList::listChildrenCommand () {
-	RK_TRACE (OBJECTS);
-
-	return ("ls (all.names=TRUE)");
 }
 
 void RObjectList::updateFromR () {
@@ -122,43 +58,32 @@ void RObjectList::updateFromR () {
 	if (update_chain) {
 		// gee, looks like another update is still on the way. lets schedule one for later:
 		update_timer->start (UPDATE_DELAY_INTERVAL, true);
-		RK_DO (qDebug ("another object-list update is already running (%d children still updating). Rescheduling a further update for later", num_children_updating), OBJECTS, DL_DEBUG);
+		RK_DO (qDebug ("another object-list update is already running. Rescheduling a further update for later"), OBJECTS, DL_DEBUG);
 		return;
 	}
 
 	emit (updateStarted ());
 	update_chain = RKGlobals::rInterface ()->startChain (0);
 
-	RCommand *command = new RCommand (listChildrenCommand (), RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, UPDATE_LIST_COMMAND);
+	RCommand *command = new RCommand (".rk.get.environment.structure (as.environment (\".GlobalEnv\"))", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, update_chain);
 }
 
- void RObjectList::createFromR (RContainerObject *parent, const QString &cname) {
+bool RObjectList::updateStructure (RData *new_data) {
 	RK_TRACE (OBJECTS);
- 	PendingObject *obj = new PendingObject;
-	obj->name = cname;
-	obj->parent = parent;
-	
-	QString fullname = parent->makeChildName (cname);
+	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 
-	RCommand *command = new RCommand (".rk.get.type (" + fullname + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString::null, this, CHILD_GET_TYPE_COMMAND);
-	pending_objects.insert (command, obj);
-	RKGlobals::rInterface ()->issueCommand (command, update_chain);
-}
+//	if (!RObject::updateStructure (new_data)) return false;		// this is the workspace object. nothing to update
+	updateChildren (new_data);		// children are directly in the structure
 
-void RObjectList::childUpdateComplete () {
-	RK_TRACE (OBJECTS);
-	RK_ASSERT (num_children_updating);
-	if ((--num_children_updating) <= 0) {
-		RK_TRACE (OBJECTS);
+	RK_ASSERT (update_chain);
+	RKGlobals::rInterface ()->closeChain (update_chain);
+	update_chain = 0;
 
-		RK_ASSERT (update_chain);
-		RKGlobals::rInterface ()->closeChain (update_chain);
-		update_chain = 0;
+	RK_DO (qDebug ("object list update complete"), OBJECTS, DL_DEBUG);
+	emit (updateComplete ());
 
-		RK_DO (qDebug ("object list update complete"), OBJECTS, DL_DEBUG);
-		emit (updateComplete ());
-	}
+	return true;
 }
 
 void RObjectList::timeout () {

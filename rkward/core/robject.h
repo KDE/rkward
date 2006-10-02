@@ -27,6 +27,9 @@
 class RContainerObject;
 class RCommandChain;
 class RKEditor;
+class RData;
+
+#define ROBJECT_UDPATE_STRUCTURE_COMMAND 1
 
 /**
 Base class for representations of objects in the R-workspace. RObject is never used directly (contains pure virtual functions).
@@ -37,16 +40,35 @@ Base class for representations of objects in the R-workspace. RObject is never u
 class RObject : public RCommandReceiver {
 public:
 	RObject (RContainerObject *parent, const QString &name);
-
 	virtual ~RObject ();
 
 /** types of objects, RKWard knows about */
-	enum RObjectType { DataFrame=1, Matrix=2, Array=4, List=8, Container=16, Variable=32, Workspace=64, Function=128, Environment=256, GlobalEnv=512, EnvironmentVar=1024, HasMetaObject=2048 };
-	#define ROBJECT_TYPE_INTERNAL_MASK (RObject::Container | RObject::Variable | RObject::Workspace | RObject::Function)
+	enum RObjectType {
+		DataFrame=1,
+		Matrix=2,
+		Array=4,
+		List=8,
+		Container=16,
+		Variable=32,
+		Workspace=64,
+		Function=128,
+		Environment=256,
+		GlobalEnv=512,
+		EnvironmentVar=1024,
+		HasMetaObject=2048
+	};
+
+	#define ROBJECT_TYPE_INTERNAL_MASK (RObject::Container | RObject::Variable | RObject::Workspace | RObject::Environment | RObject::Function)
 /** @returns false if an object of the given old type cannot represent an object of the given new type (e.g. (new_type & RObjectType::Variable), but (old_type & RObjectType::Container)). */
 	static bool isMatchingType (int old_type, int new_type) { return ((old_type & ROBJECT_TYPE_INTERNAL_MASK) == (new_type & ROBJECT_TYPE_INTERNAL_MASK)); };
 /** types of variables, RKWard knows about. See \ref RKVariable */
-	enum VarType { Unknown=0, Number=1, Factor=2, String=3, Invalid=4 };
+	enum VarType {
+		Unknown=0,
+		Number=1,
+		Factor=2,
+		String=3,
+		Invalid=4
+	};
 	
 	QString getShortName ();
 	virtual QString getFullName ();
@@ -63,6 +85,9 @@ public:
 	bool isType (int type) { return (RObject::type & type); };
 	bool hasMetaObject () { return (type & HasMetaObject); };
 
+/** trigger an update of this and all descendent objects */
+	virtual void updateFromR ();
+
 /* Is the object writable? Recurses upwards to find any locked environments/bindings TODO */
 //	virtual bool isWriteAble ();
 //	virtual bool isRemovable ();
@@ -75,19 +100,19 @@ public:
 	void rename (const QString &new_short_name);
 	void remove (bool removed_in_workspace);
 
-	int numClasses () { return num_classes; };
-	QString getClassName (int index) { return classname[index]; };
+	unsigned int numClasses () { return num_classes; };
+	QString getClassName (int index) { return classnames[index]; };
 	QString makeClassString (const QString &sep);
 /** @param class_name the name of the class to check for
 @returns true, if the object has (among others) the given class, false otherwise */
 	bool inherits (const QString &class_name);
 
 /** get number of dimensions. For simplicity, In RKWard each object is considered to have at least one dimension (but that dimension may be 0 in length) */
-	int numDimensions () { return num_dimensions; };
+	unsigned int numDimensions () { return num_dimensions; };
 /** get the length of the given dimension. The object is guaranteed to have at least 1 dimension, so calling getDimension (0) is always safe */
-	int getDimension (int index) { return dimension[index]; };
+	int getDimension (int index) { return dimensions[index]; };
 /** short hand for getDimension (0). Meaningful for one-dimensional objects */
-	int getLength () { return dimension[0]; }
+	int getLength () { return dimensions[0]; };
 
 /** A map of objects accessible by their short name. Used in RContainerObject. Defined here for technical reasons. */
 	typedef QMap<QString, RObject*> RObjectMap;
@@ -95,8 +120,6 @@ public:
 /** A map of values to labels. This is used both in regular objects, in which it just represents a map of named values, if any. The more important use is in factors, where it represents the factor levels. Here, the key is always a string representation of a positive integer. */
 	typedef QMap<QString, QString> ValueLabels;
 
-/** Get the data for this object from the backend. Implemented in derived classes. */
-	virtual void updateFromR () = 0;
 /** write the MetaData to the backend. Commands will be issued in the given chain */
 	virtual void writeMetaData (RCommandChain *chain);
 
@@ -141,31 +164,45 @@ protected:
 	RContainerObject *parent;
 	QString name;
 	int type;
-	int num_classes;
-	QString *classname;
-	int num_dimensions;
-	int *dimension;
+	int *dimensions;
+	unsigned int num_dimensions;
+	QString *classnames;
+	unsigned int num_classes;
 
-/** fetches the meta data from the backend. Sets of a command with the given flags. Be sure to catch this command in your rCommandDone-function and send it to handleGetMetaCommand ()! */
-	virtual void getMetaData (RCommandChain *chain, int flags);
 /** generates a (full) name for a child of this object with the given name. */
 	virtual QString makeChildName (const QString &short_child_name);
-	
+
+/** Update object to reflect the structure passed in the new_data argument. If the data is mismatching (i.e. can not be accommodated by this type of object) false is returned (calls canAccommodateStructure () internally). In this case you should delete the object, and create a new one.
+@returns true if the changes could be done, false if this  */
+	virtual bool updateStructure (RData *new_data);
+
 	typedef QMap<QString, QString> MetaMap;
 	MetaMap *meta_map;
-	
-/** handles updating class names from an update class command given as argument (common functionality between RContainerObject and RKVariable
-@param command The command. Make sure it really is a command to update classes *before* calling this function!
-@returns true if the classes changed, false if no change resulted */
-	bool handleUpdateClassCommand (RCommand *command);
-/** handles updating the meta data from a get meta data command given as argument (common functionality between RContainerObject and RKVariable. Takes care of notifying modification tracker, if meta data has changed. Therefore no return value. Most likely you will call this function for the result of a command triggered by getMetaData ();
-@param command The command. Make sure it really is a get meta data command *before* calling this function! */
-	void handleGetMetaCommand (RCommand *command);
-/** check the type of this object, and update dimension information from a .rk.classify command given as argument. If a type mismatch is found, this returns false, and you *must* return immediately, as the object will be deleted shortly!
-@param command The command. Make sure it really is a  .rk.classify command *before* calling this function!
-@param dims_changed If the dimensions changed, this bool is set to true. If the dimensions did not change, it is left untouched (i.e. even if it already was true)
-@returns false if there was a type mismatch. In this case you *must* return! */
-	bool handleClassifyCommand (RCommand *command, bool *dims_changed);
+
+	virtual bool canAccommodateStructure (RData *new_data);
+	bool isValidName (RData *new_data);
+	bool isValidType (RData *new_data);
+
+/** handles updating the object name from the given data (common functionality between RContainerObject and RKVariable. This should really never return true, as the name should never change. Hence also raises an assert. Is still useful for it's side effect of detaching and deleting the data from the RData structure after checking it.
+@param new_data The data. Make sure it really is the classes field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
+@returns whether this caused any changes */
+	bool updateName (RData *new_data);
+/** update type information from the given data.
+@param new_data The command. Make sure it really is the classification field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
+@returns whether this caused any changes */
+	bool updateType (RData *new_data);
+/** handles updating class names from the given data (common functionality between RContainerObject and RKVariable
+@param new_data The data. Make sure it really is the classes field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
+@returns whether this caused any changes */
+	bool updateClasses (RData *new_data);
+/** handles updating the meta data from the given data (common functionality between RContainerObject and RKVariable. WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
+@param new_data The data. Make sure it really is the meta field of an .rk.get.structure-command to update classes *before* calling this function!
+@returns whether this caused any changes */
+	bool updateMeta (RData *new_data);
+/** update dimension information from the given data.
+@param new_data The command. Make sure it really is the dims field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
+@returns whether this caused any changes */
+	bool updateDimensions (RData *new_data);
 
 /** an instance of this struct is created, when the object is opened for editing. For one thing, it keeps track of which editor(s) are working on the object.
 In subclasses like RKVariable, the struct is extended to additionally hold the data of the object, etc. */
@@ -180,6 +217,8 @@ In subclasses like RKVariable, the struct is extended to additionally hold the d
 	virtual void initializeEditData (bool to_empty=false);
 /** see above */
 	virtual void discardEditData ();
+
+	void rCommandDone (RCommand *command);
 };
 
 typedef RObject* RObjectPtr;

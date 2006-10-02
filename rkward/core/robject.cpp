@@ -24,6 +24,7 @@
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
 #include "rkmodificationtracker.h"
+#include "robjectlist.h"
 
 #include "../debug.h"
 
@@ -35,10 +36,9 @@ RObject::RObject (RContainerObject *parent, const QString &name) {
 	type = 0;
 	meta_map = 0;
 	data = 0;
+	classnames = 0;
 	num_classes = 0;
-	classname = 0;
-	dimension = new int [1];		// safe initialization
-	dimension[0] = 0;
+	dimensions = 0;
 	num_dimensions = 0;
 }
 
@@ -47,9 +47,8 @@ RObject::~RObject () {
 
 	if (data) discardEditData ();
 
-	delete[] classname;
-
-	delete dimension;
+	delete [] dimensions;
+	delete [] classnames;
 }
 
 QString RObject::getShortName () {
@@ -131,11 +130,11 @@ void RObject::setMetaProperty (const QString &id, const QString &value, bool syn
 QString RObject::makeClassString (const QString &sep) {
 	RK_TRACE (OBJECTS);
 	QString ret;
-	for (int i=0; i < num_classes; ++i) {
-		ret.append (classname[i]);
-		if (i < (num_classes - 1)) {
-			ret.append (sep);
-		}
+	bool first = true;
+	for (unsigned int i=0; i < numClasses (); ++i) {
+		if (first) first = false;
+		else ret.append (sep);
+		ret.append (getClassName (i));
 	}
 	return ret;
 }
@@ -143,8 +142,8 @@ QString RObject::makeClassString (const QString &sep) {
 bool RObject::inherits (const QString &class_name) {
 	RK_TRACE (OBJECTS);
 
-	for (int i=0; i < num_classes; ++i) {
-		if (classname[i] == class_name) {
+	for (unsigned int i=0; i < numClasses (); ++i) {
+		if (getClassName (i) == class_name) {
 			return true;
 		}
 	}
@@ -154,12 +153,6 @@ bool RObject::inherits (const QString &class_name) {
 QString RObject::makeChildName (const QString &short_child_name) {
 	RK_TRACE (OBJECTS);
 	return (getFullName () + "[[" + rQuote (short_child_name) + "]]");
-}
-	
-void RObject::getMetaData (RCommandChain *chain, int flags) {
-	RK_TRACE (OBJECTS);
-	RCommand *command = new RCommand (".rk.get.meta (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, flags);
-	RKGlobals::rInterface ()->issueCommand (command, chain);
 }
 
 void RObject::writeMetaData (RCommandChain *chain) {
@@ -193,87 +186,197 @@ void RObject::writeMetaData (RCommandChain *chain) {
 	type |= HasMetaObject;
 }
 
-void RObject::handleGetMetaCommand (RCommand *command) {
+void RObject::updateFromR () {
 	RK_TRACE (OBJECTS);
 
-	if (command->getDataLength ()) {
-		if (!meta_map) meta_map = new MetaMap;
-		meta_map->clear ();
-
-		int len = command->getDataLength ();
-		RK_ASSERT (!(len % 2));
-		int cut = len/2;
-		for (int i=0; i < cut; ++i) {
-			meta_map->insert (command->getStringVector ()[i], command->getStringVector ()[i+cut]);
-		}
-		
-		type |= HasMetaObject;
-	} else {		// no meta data received
-		delete meta_map;
-		meta_map = 0;
-		
-		type -= (type & HasMetaObject);
-	}
-
-	// TODO: only signal change, if there really was a change!
-	RKGlobals::tracker ()->objectMetaChanged (this);
+	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 }
 
-bool RObject::handleUpdateClassCommand (RCommand *command) {
+void RObject::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
+
+	if (command->getFlags () == ROBJECT_UDPATE_STRUCTURE_COMMAND) {
+		if (parent) parent->updateChildStructure (this, command);		// this may result in a delete, so nothing after this!
+		else updateStructure (command);		// if we have no parent, likely we're the RObjectList 
+		return;
+	} else {
+		RK_ASSERT (false);
+	}
+}
+
+bool RObject::updateStructure (RData *new_data) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (new_data->getDataLength () >= 5);
+	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
+
+	if (!canAccommodateStructure (new_data)) return false;
+
+	bool properties_change = false;
+
+	properties_change = updateName (new_data->getStructureVector ()[0]);
+	properties_change = updateType (new_data->getStructureVector ()[1]);
+	properties_change = updateClasses (new_data->getStructureVector ()[2]);
+	properties_change = updateMeta (new_data->getStructureVector ()[3]);
+	properties_change = updateDimensions (new_data->getStructureVector ()[4]);
+
+	if (properties_change) RKGlobals::tracker ()->objectMetaChanged (this);
+
+	return true;
+}
+
+bool RObject::canAccommodateStructure (RData *new_data) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (new_data->getDataLength () >= 5);
+	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
+
+	if (!isValidName (new_data->getStructureVector ()[0])) return false;
+	if (!isValidType (new_data->getStructureVector ()[1])) return false;
+	return true;
+}
+
+bool RObject::isValidName (RData *new_data) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (new_data->getDataLength () == 1);
+	RK_ASSERT (new_data->getDataType () == RData::StringVector);
+
+	if (name != new_data->getStringVector ()[0]) {
+		RK_ASSERT (false);
+		name = new_data->getStringVector ()[0];
+		return false;
+	}
+	return true;
+}
+
+bool RObject::updateName (RData *new_data) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (new_data->getDataLength () == 1);
+	RK_ASSERT (new_data->getDataType () == RData::StringVector);
+
+	bool changed = false;
+	if (name != new_data->getStringVector ()[0]) {
+		changed = true;
+		RK_ASSERT (false);
+		name = new_data->getStringVector ()[0];
+	}
+	new_data->discardData ();
+	return changed;
+}
+
+bool RObject::isValidType (RData *new_data) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (new_data->getDataLength () == 1);
+	RK_ASSERT (new_data->getDataType () == RData::IntVector);
+
+	int new_type = new_data->getIntVector ()[0];
+	if (!isMatchingType (type, new_type)) return false;
+
+	return true;
+}
+
+bool RObject::updateType (RData *new_data) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (new_data->getDataLength () == 1);
+	RK_ASSERT (new_data->getDataType () == RData::IntVector);
+
+	bool changed = false;
+	int new_type = new_data->getIntVector ()[0];
+	if (type != new_type) {
+		changed = true;
+		type = new_type;
+	}
+	new_data->discardData ();
+	return changed;
+}
+
+bool RObject::updateClasses (RData *new_data) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (new_data->getDataLength () >= 1);		// or can there be classless objects in R?
+	RK_ASSERT (new_data->getDataType () == RData::StringVector);
 
 	bool change = false;
 
-	int len = command->getDataLength ();
-	if (num_classes != len) {
-		num_classes = len;
-		delete[] classname;
-		classname = new QString [num_classes];
+	unsigned int new_len = new_data->getDataLength ();
+	QString *new_classes = new_data->getStringVector ();
+	new_data->detachData ();
+
+	if (numClasses () != new_len) {
 		change = true;
+	} else {
+		for (unsigned int cn=0; cn < numClasses (); ++cn) {
+			if (classnames[cn] != new_classes[cn]) {
+				change = true;
+				break;
+			}
+		}
 	}
-	for (int cn=0; cn < num_classes; ++cn) {
-		if (classname[cn] != command->getStringVector ()[cn]) change = true;
-		classname[cn] = command->getStringVector ()[cn];
-	}
+
+	num_classes = new_len;
+	delete [] classnames;
+	classnames = new_classes;
 
 	return change;
 }
 
-bool RObject::handleClassifyCommand (RCommand *command, bool *dims_changed) {
+bool RObject::updateMeta (RData *new_data) {
 	RK_TRACE (OBJECTS);
 
-	if (!command->getDataLength ()) {
-		RK_ASSERT (false);
-		return false;
-	}
-	int new_type = command->getIntVector ()[0];
+	RK_ASSERT (new_data->getDataType () == RData::StringVector);
 
-	if (!isMatchingType (type, new_type)){
-		RK_DO (qDebug ("type-mismatch: name: %s, old_type: %d, new_type: %d", RObject::name.latin1 (), type, new_type), OBJECTS, DL_INFO);
-		RObject::parent->typeMismatch (this, RObject::name);
-		return false;	// will be deleted!
-	}
-	if (new_type != type) {
-		*dims_changed = true;
-		type = new_type;
-	}
+	unsigned int len = new_data->getDataLength ();
+	if (len == 1) len = 0;		// if it's a single element, it's just a dummy
+	bool change = false;
+	if (len) {
+		if (!meta_map) meta_map = new MetaMap;
+		meta_map->clear ();
 
-	// get dimensions
-	int len = command->getDataLength () - 1;
-	if (num_dimensions != len) {
-		num_dimensions = len;
-		*dims_changed = true;
-		delete dimension;
-		if (num_dimensions < 1) {
-			RK_ASSERT (false);
-			num_dimensions = 1;
+		RK_ASSERT (!(len % 2));
+		unsigned int cut = len/2;
+		for (unsigned int i=0; i < cut; ++i) {
+			meta_map->insert (new_data->getStringVector ()[i], new_data->getStringVector ()[i+cut]);
 		}
-		dimension = new int [num_dimensions];
+
+		type |= HasMetaObject;
+		// TODO: only signal change, if there really was a change!
+		change = true;
+	} else {		// no meta data received
+		if (meta_map) {
+			delete meta_map;
+			meta_map = 0;
+			change = true;
+		}
+
+		type -= (type & HasMetaObject);
 	}
-	for (int d=0; d < num_dimensions; ++d) {
-		if (dimension[d] != command->getIntVector ()[d+1]) *dims_changed = true;
-		dimension[d] = command->getIntVector ()[d+1];
+
+	new_data->discardData ();
+	return change;
+}
+
+bool RObject::updateDimensions (RData *new_data) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (new_data->getDataLength () >= 1);
+	RK_ASSERT (new_data->getDataType () == RData::IntVector);
+
+	bool changed = false;
+
+	unsigned int new_len = new_data->getDataLength ();
+	int *new_dimensions = new_data->getIntVector ();
+	new_data->detachData ();
+
+	if (num_dimensions != new_len) {
+		changed = true;
+	} else {
+		for (unsigned int d=0; d < num_dimensions; ++d) {
+			if (dimensions[d] != new_dimensions[d]) {
+				changed = true;
+				break;
+			}
+		}
 	}
+	delete [] dimensions;
+	num_dimensions = new_len;
+	dimensions = new_dimensions;
 
 	return true;
 }

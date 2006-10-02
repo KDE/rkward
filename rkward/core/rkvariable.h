@@ -47,9 +47,6 @@ case it will be stored as a character vector */
 /** set the VarType. If sync, the change will be communicated to the backend immediately. See getVarType */
 	void setVarType (RObject::VarType, bool sync=true);
 
-/** reimplemented from RObject */
-	void updateFromR ();
-	
 /** reimplemented from RObject to also store value labels/factor levels (and in the future probably futher info) */
 	void writeMetaData (RCommandChain *chain);
 friend class RContainerObject;

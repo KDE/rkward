@@ -31,6 +31,34 @@ RData::RData () {
 RData::~RData () {
 	RK_TRACE (RBACKEND);
 
+	discardData ();
+}
+
+double *RData::getRealVector () {
+	return (static_cast<double *> (data));
+}
+
+int *RData::getIntVector () {
+	return (static_cast<int *> (data));
+}
+
+QString *RData::getStringVector () {
+	return (static_cast<QString *> (data));
+}
+
+RData **RData::getStructureVector () {
+	return (static_cast<RData **> (data));
+}
+
+void RData::detachData () {
+	data = 0;
+	length = 0;
+	datatype = NoData;
+}
+
+void RData::discardData () {
+	RK_TRACE (RBACKEND);
+
 	if (datatype == StructureVector) {
 		RData **sdata = getStructureVector ();
 		for (int i=length-1; i >= 0; --i) {
@@ -49,40 +77,8 @@ RData::~RData () {
 	} else {
 		RK_ASSERT (datatype == NoData);
 	}
-}
 
-double *RData::getRealVector () {
-	if (datatype == RealVector) return (static_cast<double *> (data));
-
-	RK_ASSERT (false);
-	return 0;
-}
-
-int *RData::getIntVector () {
-	if (datatype == IntVector) return (static_cast<int *> (data));
-
-	RK_ASSERT (false);
-	return 0;
-}
-
-QString *RData::getStringVector () {
-	if (datatype == StringVector) return (static_cast<QString *> (data));
-
-	RK_ASSERT (false);
-	return 0;
-}
-
-RData **RData::getStructureVector () {
-	if (datatype == StructureVector) return (static_cast<RData **> (data));
-
-	RK_ASSERT (false);
-	return 0;
-}
-
-void RData::detachData () {
-	data = 0;
-	length = 0;
-	datatype = NoData;
+	detachData ();
 }
 
 void RData::setData (RData *from) {

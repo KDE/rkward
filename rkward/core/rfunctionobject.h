@@ -35,13 +35,13 @@ public:
 	RFunctionObject (RContainerObject *parent, const QString &name);
 	~RFunctionObject ();
 
-	void updateFromR ();
+/** reimplemented from RObject to handle function arguments */
+	bool updateStructure (RData *new_data);
 protected:
-	void rCommandDone (RCommand *command);
-
-	typedef QPair<QString, QString> FunctionArg;
-	typedef QValueList<FunctionArg *> FunctionArguments;
-	FunctionArguments function_args;
+	unsigned int argcount;
+	QString *argnames;
+	QString *argvalues;
+	bool updateArguments (RData *new_data);
 };
 
 #endif
