@@ -109,7 +109,7 @@ void RObjectList::updateEnvironments (QString *env_names, unsigned int env_count
 	// we could as well iterate over the childmap, but this is easier
 	for (unsigned int i = 0; i < num_toplevel_environments; ++i) {
 		bool found = false;
-		for (unsigned int j = 0; i < env_count; ++j) {
+		for (unsigned int j = 0; j < env_count; ++j) {
 			if (toplevel_environments[i]->getShortName () == env_names[j]) {
 				found = true;
 				break;
@@ -120,7 +120,8 @@ void RObjectList::updateEnvironments (QString *env_names, unsigned int env_count
 
 	// remove the environments which are gone
 	for (QValueList<REnvironmentObject *>::const_iterator it = removelist.constBegin (); it != removelist.constEnd (); ++it) {
-		removeChild (*it, true);
+		RK_DO (qDebug ("removing toplevel environment %s from list", (*it)->getShortName ().latin1 ()), OBJECTS, DL_INFO);
+		RKGlobals::tracker ()->removeObject (*it, 0, true);
 	}
 
 	// find which items are new
@@ -237,7 +238,7 @@ void RObjectList::timeout () {
 QString RObjectList::renameChildCommand (RObject *object, const QString &new_name) {
 	RK_TRACE (OBJECTS);
 
-	return (makeChildName (new_name) + " <- " + object->getFullName () + "\n" + removeChildCommand (object));
+	return (makeChildName (new_name, false) + " <- " + object->getFullName () + "\n" + removeChildCommand (object));
 }
 
 QString RObjectList::removeChildCommand (RObject *object) {
@@ -265,6 +266,20 @@ void RObjectList::removeChild (RObject *object, bool removed_in_workspace) {
 	} else {
 		RK_ASSERT (false);
 	}
+}
+
+//static
+REnvironmentObject *RObjectList::getGlobalEnv () {
+	RK_TRACE (OBJECTS);
+
+	RObjectList *list = getObjectList ();
+	RK_ASSERT (list);
+
+	REnvironmentObject *envobj = list->toplevel_environments[0];
+	RK_ASSERT (envobj);
+	RK_ASSERT (envobj->isType (RObject::GlobalEnv));
+
+	return envobj;
 }
 
 #include "robjectlist.moc"

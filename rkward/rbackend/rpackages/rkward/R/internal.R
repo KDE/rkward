@@ -271,7 +271,7 @@
 	invisible (TRUE)
 }
 
-".rk.get.structure" <- function (x, name, envlevel=0) {
+".rk.get.structure" <- function (x, name, envlevel=0, namespacename=NULL, misplaced=FALSE) {
 	fun <- FALSE
 	cont <- FALSE
 	type <- 0
@@ -300,6 +300,7 @@
 		cont <- TRUE
 	}
 	if (!is.null (attr (x, ".rk.meta"))) type = type + 2048
+	if (misplaced) type <- type + 4096
 	ret$type <- as.integer (type)
 
 # 3: classes
@@ -319,7 +320,7 @@
 # 6: Special info valid for some objects ony. This should always be last in the returned structure, as the number of fields may vary
 	if (cont) {		# a container
 		if (is.environment (x)) {
-			ret$sub <- .rk.get.environment.children (x, envlevel+1)
+			ret$sub <- .rk.get.environment.children (x, envlevel+1, namespacename)
 		} else {
 			nms <- names (x)
 			if (!is.null (nms)) {
@@ -340,13 +341,20 @@
 	ret
 }
 
-".rk.get.environment.children" <- function (x, envlevel=0) {
+".rk.get.environment.children" <- function (x, envlevel=0, namespacename=NULL) {
 	ret <- list ()
 
 	if (envlevel < 2) {		# prevent infinite recursion
 		lst <- ls (x, all.names=TRUE)
 		for (childname in lst) {
-			ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname, envlevel)
+			misplaced <- FALSE
+			if (!is.null (namespacename)) {
+				tst <- try ({eval (parse (text=paste (namespacename, childname, sep="::")))}, silent=TRUE)
+				if (class (tst) == "try-error") {
+					misplaced <- TRUE
+				}
+			}
+			ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname, envlevel, misplaced=misplaced)
 		}
 	}
 

@@ -59,7 +59,7 @@ QString RObject::getShortName () {
 
 QString RObject::getFullName () {
 	RK_TRACE (OBJECTS);
-	return parent->makeChildName (RObject::name);
+	return parent->makeChildName (RObject::name, type & Misplaced);
 }
 
 QString RObject::getLabel () {
@@ -151,7 +151,7 @@ bool RObject::inherits (const QString &class_name) {
 	return false;
 }
 
-QString RObject::makeChildName (const QString &short_child_name) {
+QString RObject::makeChildName (const QString &short_child_name, bool) {
 	RK_TRACE (OBJECTS);
 	return (getFullName () + "[[" + rQuote (short_child_name) + "]]");
 }
@@ -282,6 +282,7 @@ bool RObject::updateType (RData *new_data) {
 
 	bool changed = false;
 	int new_type = new_data->getIntVector ()[0];
+	if (type & Misplaced) new_type |= Misplaced;
 	if (type != new_type) {
 		changed = true;
 		type = new_type;

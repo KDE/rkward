@@ -42,14 +42,18 @@ QString REnvironmentObject::getFullName () {
 	RK_TRACE (OBJECTS);
 
 	if (type & ToplevelEnv) return ("as.environment (\"" + name + "\")");
-	return (parent->makeChildName (name));
+	return parent->makeChildName (name, type & Misplaced);
 }
 
-QString REnvironmentObject::makeChildName (const QString &short_child_name) {
+QString REnvironmentObject::makeChildName (const QString &short_child_name, bool misplaced) {
 	RK_TRACE (OBJECTS);
 
 	if (type & GlobalEnv) return (short_child_name);
-	if (type & ToplevelEnv) return (namespace_name + "::" + RObject::rQuote (short_child_name));
+	if (type & ToplevelEnv) {
+/* Some items are placed outside of their native namespace. E.g. in package:boot item "motor". It can be retrieved using as.environment ("package:boot")$motor. This is extremly ugly. We need to give them (and only them) this special treatment. */
+		if (misplaced) return (getFullName () + "$" + RObject::rQuote (short_child_name));
+		return (namespace_name + "::" + RObject::rQuote (short_child_name));
+	}
 	return (name + "$" + short_child_name);
 }
 
@@ -62,10 +66,11 @@ void REnvironmentObject::writeMetaData (RCommandChain *chain) {
 
 void REnvironmentObject::updateFromR () {
 	RK_TRACE (OBJECTS);
-	QString envlevel;
-	if (type & GlobalEnv) envlevel = ", -1";	// in the .GlobalEnv recurse one more level
+	QString options;
+	if (type & GlobalEnv) options = ", envleve=-1";	// in the .GlobalEnv recurse one more level
+	if (type & ToplevelEnv) options.append (", namespacename=" + rQuote (namespace_name));
 
-	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + envlevel + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
+	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + options + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, RObjectList::getObjectList ()->getUpdateCommandChain ());
 }
 

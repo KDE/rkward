@@ -48,7 +48,7 @@ public:
 	void updateFromR ();
 	
 	QString getFullName () { return QString::null; };
-	QString makeChildName (const QString &short_child_name) { return short_child_name; };
+	QString makeChildName (const QString &short_child_name, bool) { return short_child_name; };
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
 	void writeMetaData (RCommandChain *) {};
 	
@@ -65,6 +65,7 @@ public:
 	KURL getWorkspaceURL () { return current_url; };
 
 	static RObjectList *getObjectList () { return object_list; };
+	static REnvironmentObject *getGlobalEnv ();
 public slots:
 	void timeout ();
 signals:

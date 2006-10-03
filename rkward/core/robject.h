@@ -55,7 +55,8 @@ public:
 		Environment=256,
 		GlobalEnv=512,
 		ToplevelEnv=1024,
-		HasMetaObject=2048
+		HasMetaObject=2048,
+		Misplaced=4096		/** < the object is not in the namespace where it would be expected */
 	};
 
 	#define ROBJECT_TYPE_INTERNAL_MASK (RObject::Container | RObject::Variable | RObject::Workspace | RObject::Environment | RObject::Function)
@@ -171,7 +172,7 @@ protected:
 	unsigned int num_classes;
 
 /** generates a (full) name for a child of this object with the given name. */
-	virtual QString makeChildName (const QString &short_child_name);
+	virtual QString makeChildName (const QString &short_child_name, bool misplaced=false);
 
 /** Update object to reflect the structure passed in the new_data argument. If the data is mismatching (i.e. can not be accommodated by this type of object) false is returned (calls canAccommodateStructure () internally). In this case you should delete the object, and create a new one.
 @returns true if the changes could be done, false if this  */

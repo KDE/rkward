@@ -34,6 +34,7 @@
 #include "../rbackend/rinterface.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettings.h"
+#include "../core/robjectlist.h"
 #include "../misc/rkprogresscontrol.h"
 
 #include "../debug.h"
@@ -283,7 +284,9 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 		RData *libpath = command->getStructureVector ()[3];
 
 		unsigned int count = package->getDataLength ();
-		RK_ASSERT (count == title->getDataLength () == version->getDataLength () == libpath->getDataLength ()); 
+		RK_ASSERT (count == title->getDataLength ());
+		RK_ASSERT (count == version->getDataLength ());
+		RK_ASSERT (count == libpath->getDataLength ());
 		for (unsigned int i=0; i < count; ++i) {
 			new QListViewItem (installed_view, package->getStringVector ()[i], title->getStringVector ()[i], version->getStringVector ()[i], libpath->getStringVector ()[i]);
 		}
@@ -393,6 +396,7 @@ void LoadUnloadWidget::doLoadUnload () {
 	}
 
 	control->doNonModal (true);
+	RObjectList::getObjectList ()->updateFromR ();
 }
 
 void LoadUnloadWidget::apply () {

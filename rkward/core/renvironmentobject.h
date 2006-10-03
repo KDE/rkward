@@ -35,34 +35,11 @@ public:
 	void updateFromR ();
 
 	QString getFullName ();
-	QString makeChildName (const QString &short_child_name);
+	QString makeChildName (const QString &short_child_name, bool misplaced=false);
 /** reimplemented from RContainerObject: If this is an environment var, call RContainerObject::writeMetaData (). Else, do nothing. An environment has no meta data. */
 	void writeMetaData (RCommandChain *chain);
 
 	bool isGlobalEnv () { return (type & GlobalEnv); };
-/** 
-# search ()
-or rather
-# loadedNamespaces?! No, namespaces are evil! maybe rename to RKNamespaceObject? No. Let's deal with envirs for now.
-# ls (envir=as.environment ("package:base"))
-name is base::something
-
-How to deal with those names?
-You can't assign like this:
-envir::object <- something
-Probably it's best not to support assignments outside the .GlobalEnv at all.
-It's important to find out, when objects are masked, however. If they are, reading should return a full qualified name. Writing should return a simple name, to allow creation of a masking object in .GlobalEnv
-
-What should be the algorithm?
-1) Maybe we should always return the full qualified name.
-2) When editing an object in any other env, *first* (suggest to?) make a copy to the .GlobalEnv, and edit that copy
-3) Essentially objects in any other environment remain read-only
-
-4) check whether objects are masked, and warn when viewing / editing (only needed for objects outside the global env)
-
-RContainerObject::findObjectsMatching (...) for code completion popups
-RContainerObject::canonifyName
-*/
 protected:
 	friend class RObjectList;
 	friend class RContainerObject;

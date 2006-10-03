@@ -59,6 +59,7 @@
 #include "settings/rksettingsmoduleoutput.h"
 #include "rbackend/rinterface.h"
 #include "core/robjectlist.h"
+#include "core/renvironmentobject.h"
 #include "rkglobals.h"
 #include "robjectbrowser.h"
 #include "dialogs/startupdialog.h"
@@ -460,7 +461,7 @@ bool RKwardApp::queryClose () {
 	slotSetStatusBarText (i18n ("Exiting..."));
 	saveOptions ();
 
-	if (!RObjectList::getObjectList ()->isEmpty ()) {
+	if (!RObjectList::getGlobalEnv ()->isEmpty ()) {
 		int res;
 		res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?\nRKWard will remain open if you press Cancel"), i18n ("Save Workspace?"));
 		if (res == KMessageBox::Yes) {
