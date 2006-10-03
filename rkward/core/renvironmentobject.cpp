@@ -26,8 +26,8 @@ REnvironmentObject::REnvironmentObject (RContainerObject *parent, const QString 
 	RK_TRACE (OBJECTS);
 
 	type = Environment;
-	if (parent != RObjectList::getObjectList ()) {
-		type |= EnvironmentVar;
+	if (parent == RObjectList::getObjectList ()) {
+		type |= ToplevelEnv;
 	}
 
 	// TODO: determine namespace_name
@@ -41,22 +41,23 @@ REnvironmentObject::~REnvironmentObject () {
 QString REnvironmentObject::getFullName () {
 	RK_TRACE (OBJECTS);
 
-	if (type & EnvironmentVar) return (parent->makeChildName (name));
-	return ("as.environment (\"" + name + "\")");
+	if (type & ToplevelEnv) return ("as.environment (\"" + name + "\")");
+	return (parent->makeChildName (name));
 }
 
 QString REnvironmentObject::makeChildName (const QString &short_child_name) {
 	RK_TRACE (OBJECTS);
 
 	if (type & GlobalEnv) return (short_child_name);
-	if (type & EnvironmentVar) return (name + "$" + short_child_name);
-	return (namespace_name + "::" + RObject::rQuote (short_child_name));
+	if (type & ToplevelEnv) return (namespace_name + "::" + RObject::rQuote (short_child_name));
+	return (name + "$" + short_child_name);
 }
 
 void REnvironmentObject::writeMetaData (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 
-	if (type & EnvironmentVar) RContainerObject::writeMetaData (chain);
+	if (type & ToplevelEnv) return;
+	RContainerObject::writeMetaData (chain);
 }
 
 void REnvironmentObject::updateFromR () {
@@ -73,7 +74,7 @@ bool REnvironmentObject::updateStructure (RData *new_data) {
 	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 	RK_ASSERT (new_data->getDataLength () >= 5);
 
-	if (type & EnvironmentVar) {
+	if (!(type & ToplevelEnv)) {
 		if (!RObject::updateStructure (new_data)) return false;
 	}
 

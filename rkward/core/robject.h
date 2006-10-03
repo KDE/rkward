@@ -54,7 +54,7 @@ public:
 		Function=128,
 		Environment=256,
 		GlobalEnv=512,
-		EnvironmentVar=1024,
+		ToplevelEnv=1024,
 		HasMetaObject=2048
 	};
 
