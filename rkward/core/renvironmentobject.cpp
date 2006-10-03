@@ -61,17 +61,34 @@ void REnvironmentObject::writeMetaData (RCommandChain *chain) {
 
 void REnvironmentObject::updateFromR () {
 	RK_TRACE (OBJECTS);
+	QString envlevel;
+	if (type & GlobalEnv) envlevel = ", -1";	// in the .GlobalEnv recurse one more level
 
-	RCommand *command = new RCommand (".rk.get.environment.structure (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
+	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + envlevel + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, RObjectList::getObjectList ()->getUpdateCommandChain ());
 }
 
 bool REnvironmentObject::updateStructure (RData *new_data) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
+	RK_ASSERT (new_data->getDataLength () >= 5);
 
-//	if (!RObject::updateStructure (new_data)) return false;		// this is an environment object. nothing to update
-	updateChildren (new_data);		// children are directly in the structure
+	if (type & EnvironmentVar) {
+		if (!RObject::updateStructure (new_data)) return false;
+	}
+
+	RData *children_sub = 0;
+	if (new_data->getDataLength () > 5) {
+		RK_ASSERT (new_data->getDataLength () == 6);
+
+		children_sub = new_data->getStructureVector ()[5];
+		RK_ASSERT (children_sub->getDataType () == RData::StructureVector);
+	} else {
+		// create an empty dummy structure to make sure existing children are removed
+		children_sub = new RData;
+		children_sub->datatype = RData::StructureVector;
+	}
+	updateChildren (children_sub);
 
 	return true;
 }

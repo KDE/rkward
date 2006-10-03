@@ -160,6 +160,7 @@ REnvironmentObject *RObjectList::createTopLevelEnvironment (const QString &name)
 	} else if (name.contains (':')) {
 		envobj->namespace_name = name.section (':', 1);
 	} else if (name == "Autoloads") {
+#warning HACK, wrong
 		envobj->type |= GlobalEnv;              // this is wrong! but it's a temporary HACK to get things to work
 	}
 

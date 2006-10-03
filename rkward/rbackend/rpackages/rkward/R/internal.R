@@ -271,7 +271,7 @@
 	invisible (TRUE)
 }
 
-".rk.get.structure" <- function (x, name) {
+".rk.get.structure" <- function (x, name, envlevel=0) {
 	fun <- FALSE
 	cont <- FALSE
 	type <- 0
@@ -295,7 +295,10 @@
 		fun <- TRUE
 		type = 128
 	}
-	if (is.environment (x)) type = 256
+	if (is.environment (x)) {
+		type = 256
+		cont <- TRUE
+	}
 	if (!is.null (attr (x, ".rk.meta"))) type = type + 2048
 	ret$type <- as.integer (type)
 
@@ -315,15 +318,19 @@
 
 # 6: Special info valid for some objects ony. This should always be last in the returned structure, as the number of fields may vary
 	if (cont) {		# a container
-		nms <- names (x)
-		if (!is.null (nms)) {
-			i <- 0
-			sub <- list ()
-			for (child in x) {
-				i <- i+1
-				sub[[nms[i]]] <- .rk.get.structure (child, nms[i])
+		if (is.environment (x)) {
+			ret$sub <- .rk.get.environment.children (x, envlevel+1)
+		} else {
+			nms <- names (x)
+			if (!is.null (nms)) {
+				i <- 0
+				sub <- list ()
+				for (child in x) {
+					i <- i+1
+					sub[[nms[i]]] <- .rk.get.structure (child, nms[i])
+				}
+				ret$sub <- sub
 			}
-			ret$sub <- sub
 		}
 	} else if (fun) {	# a function
 		ret$argnames <- as.character (names (formals (x)))
@@ -333,12 +340,14 @@
 	ret
 }
 
-".rk.get.environment.structure" <- function (x) {
+".rk.get.environment.children" <- function (x, envlevel=0) {
 	ret <- list ()
 
-	lst <- ls (x, all.names=TRUE)
-	for (childname in lst) {
-		ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname)
+	if (envlevel < 2) {		# prevent infinite recursion
+		lst <- ls (x, all.names=TRUE)
+		for (childname in lst) {
+			ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname, envlevel)
+		}
 	}
 
 	ret

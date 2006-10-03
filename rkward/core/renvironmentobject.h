@@ -65,6 +65,7 @@ RContainerObject::canonifyName
 */
 protected:
 	friend class RObjectList;
+	friend class RContainerObject;
 	bool updateStructure (RData *new_data);
 /** reimplemented from RContainerObject to raise an assert if this is not the isGlobalEnv (). Otherwise calls "remove (objectname)" instead of objectname <- NULL" */
 	void renameChild (RObject *object, const QString &new_name);

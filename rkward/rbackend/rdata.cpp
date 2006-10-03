@@ -89,3 +89,40 @@ void RData::setData (RData *from) {
 	from->detachData ();
 	delete from;
 }
+
+void RData::printStructure (const QString &prefix) {
+	switch (datatype) {
+		case NoData:
+			qDebug ("%s: NoData, length %d", prefix.latin1(), length);
+			break;
+		case IntVector:
+			qDebug ("%s: IntVector, length %d", prefix.latin1(), length);
+			for (unsigned int i = 0; i < length; ++i) {
+				qDebug ("%s%d: %d", prefix.latin1(), i, getIntVector ()[i]);
+			}
+			break;
+		case RealVector:
+			qDebug ("%s: RealVector, length %d", prefix.latin1(), length);
+			for (unsigned int i = 0; i < length; ++i) {
+				qDebug ("%s%d: %f", prefix.latin1(), i, getRealVector ()[i]);
+			}
+			break;
+		case StringVector:
+			qDebug ("%s: StringVector, length %d", prefix.latin1(), length);
+			for (unsigned int i = 0; i < length; ++i) {
+				qDebug ("%s%d: %s", prefix.latin1(), i, getStringVector ()[i].latin1());
+			}
+			break;
+		case StructureVector:
+			qDebug ("%s: StructureVector, length %d", prefix.latin1(), length);
+			for (unsigned int i = 0; i < length; ++i) {
+				QString sub_prefix = prefix + QString::number (i);
+				getStructureVector ()[i]->printStructure (sub_prefix);
+			}
+			break;
+		default:
+			qDebug ("%s: INVALID %d, length %d", prefix.latin1(), datatype, length);
+	}
+	qDebug ("%s: END\n\n", prefix.latin1 ());
+}
+

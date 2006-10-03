@@ -47,6 +47,8 @@ public:
 /** The data contained in the RData structure is owned by RData, and will usually be deleted at the end of the lifetime of the RData object. If you want to keep the data, call detachData () to prevent this deletion. You will be responsible for deletion of the data yourself. */
 	void detachData ();
 	void discardData ();
+/** purely for debugging! */
+	void printStructure (const QString &prefix);
 
 /** public for technical reasons only. Do not use! Copy data from the given RData, and discard it */
 	void setData (RData *from);

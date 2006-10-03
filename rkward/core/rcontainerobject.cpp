@@ -22,6 +22,7 @@
 #include "robjectlist.h"
 #include "rkvariable.h"
 #include "rfunctionobject.h"
+#include "renvironmentobject.h"
 
 #include "../rkglobals.h"
 #include "rkmodificationtracker.h"
@@ -51,8 +52,9 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 		return child;
 	} else {
 		if (just_created) {
-			delete child;
 			RK_ASSERT (false);
+			RK_DO (qDebug (child->getFullName ().latin1 ()), OBJECTS, DL_ERROR);
+			delete child;
 			return 0;
 		} else {
 			if (RKGlobals::tracker ()->removeObject (child, 0, true)) {
@@ -77,14 +79,18 @@ bool RContainerObject::updateStructure (RData *new_data) {
 
 	if (!RObject::updateStructure (new_data)) return false;
 
+	RData *children_sub = 0;
 	if (data_length > 5) {
 		RK_ASSERT (data_length == 6);
 
-		RData *children_sub = new_data->getStructureVector ()[5];
+		children_sub = new_data->getStructureVector ()[5];
 		RK_ASSERT (children_sub->getDataType () == RData::StructureVector);
-
-		updateChildren (children_sub);
+	} else {
+		// create an empty dummy structure to make sure existing children are removed
+		children_sub = new RData;
+		children_sub->datatype = RData::StructureVector;
 	}
+	updateChildren (children_sub);
 
 	return true;
 }
@@ -102,12 +108,18 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 	int child_type = type_data->getIntVector ()[0];
 
 	RObject *child_object;
-	if (child_type & RObject::Container) {
+	if (child_type & RObject::Environment) {
+		child_object = new REnvironmentObject (this, child_name);
+		static_cast<REnvironmentObject *> (child_object)->namespace_name = makeChildName (child_name);
+	} else if (child_type & RObject::Container) {
 		child_object = new RContainerObject (this, child_name);
 	} else if (child_type & RObject::Function) {
 		child_object = new RFunctionObject (this, child_name);
-	} else {
+	} else if (child_type & RObject::Variable) {
 		child_object = new RKVariable (this, child_name);
+	} else {
+		RK_DO (qDebug ("Can't represent object '%s', type %d", child_name.latin1 (), child_type), OBJECTS, DL_WARNING);
+		return 0;
 	}
 	RK_ASSERT (child_object);
 	RKGlobals::tracker ()->lockUpdates (true);	// object not yet added. prevent updates
