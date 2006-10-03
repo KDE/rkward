@@ -47,7 +47,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : QWidget (paren
 		RContainerObject *cobj = static_cast<RContainerObject*> (object);		// for convenience only
 		if (cobj->numDimensions ()) {
 			QString dummy = i18n("\nDimensions: ") + QString ().setNum (cobj->getDimension (0));
-			for (int i=1; i < cobj->numDimensions (); ++i) {
+			for (unsigned int i=1; i < cobj->numDimensions (); ++i) {
 				dummy.append (", " + QString ().setNum (cobj->getDimension (i)));
 			}
 			view_area->append (dummy);
