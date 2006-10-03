@@ -97,7 +97,7 @@ KHelpDlg::KHelpDlg (QWidget* parent, const char* name) : QWidget (parent, name) 
 	main_layout->addWidget (resultsList);
 
 
-	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_INSTALLED_PACKAGES, 0);
+	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()[[1]]", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_INSTALLED_PACKAGES, 0);
 
 	setCaption (i18n ("Help search"));
 }
@@ -205,8 +205,8 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 		}
 	} else if (command->getFlags () == GET_INSTALLED_PACKAGES) {
 		RK_ASSERT ((command->getDataLength () % 4) == 0);
-		int count = (command->getDataLength () / 4);
-		for (int i=0; i < count; ++i) {
+		unsigned int count = (command->getDataLength () / 4);
+		for (unsigned int i=0; i < count; ++i) {
 			packagesList->insertItem (command->getStringVector ()[i]);
 		}
 	} else {
