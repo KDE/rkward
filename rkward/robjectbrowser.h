@@ -40,18 +40,21 @@ public:
 
     ~RObjectBrowser ();
 	
-	enum PopupItems { Edit=1, View=2, Rename=3, Delete=4 };
+	enum PopupItems { Edit=1, View=2, Rename=3, Copy=4, CopyToGlobalEnv=5, Delete=6 };
 	
 public slots:
 	void updateButtonClicked ();
 	void contextMenuCallback (RKListViewItem *item, bool *suppress);
 	
 	void popupEdit ();
+	void popupCopy ();
+/** essentially like popupCopy, but does not ask for a name */
+	void popupCopyToGlobalEnv ();
 	void popupView ();
 	void popupDelete ();
 	void popupRename ();
 /** when an object in the list is double clicked, insert its name in the current RKCommandEditor window */
-    void slotListDoubleClicked (QListViewItem *item, const QPoint &pos, int);
+	void slotListDoubleClicked (QListViewItem *item, const QPoint &pos, int);
 private:
 	friend class RKwardApp;
 	void initialize ();

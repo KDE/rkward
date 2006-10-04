@@ -90,14 +90,11 @@ public:
 /** trigger an update of this and all descendent objects */
 	virtual void updateFromR ();
 
-/* Is the object writable? Recurses upwards to find any locked environments/bindings TODO */
-//	virtual bool isWriteAble ();
-//	virtual bool isRemovable ();
-/* @returns 0 if the object is not masked, else the *highest* environment masking the object (i.e. preferentially the .GlobalEnv */
-//	virtual REnvironmentObject *findMaskingEnvironment ();
-/* Is the object inside the global env? Else we better not support writing to it TODO*/
-//	virtual bool isInGlobalEnv ();
-//	virtual REnvironmentObject *parentEnvironment ();
+	bool canEdit ();
+	bool canRead ();
+	bool canRename ();
+	bool canRemove ();
+	bool isInGlobalEnv ();
 
 	void rename (const QString &new_short_name);
 	void remove (bool removed_in_workspace);

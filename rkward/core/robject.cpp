@@ -208,6 +208,10 @@ void RObject::rCommandDone (RCommand *command) {
 
 bool RObject::updateStructure (RData *new_data) {
 	RK_TRACE (OBJECTS);
+	if (new_data->getDataLength () == 0) { // can happen, if the object no longer exists
+		return false;
+	}
+
 	RK_ASSERT (new_data->getDataLength () >= 5);
 	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 
@@ -496,3 +500,51 @@ void RObject::discardEditData () {
 	data = 0;
 }
 
+bool RObject::canEdit () {
+	RK_TRACE (OBJECTS);
+
+	// TODO: find out, if binding is locked:
+	// if (isLocked ()) return false;
+	return (isInGlobalEnv ());
+}
+
+bool RObject::canRead () {
+	RK_TRACE (OBJECTS);
+
+	return (this != RObjectList::getObjectList ());
+}
+
+bool RObject::canRename () {
+	RK_TRACE (OBJECTS);
+
+	// TODO: find out, if binding is locked:
+	// if (isLocked ()) return false;
+	return (isInGlobalEnv ());
+}
+
+bool RObject::canRemove () {
+	RK_TRACE (OBJECTS);
+
+	// TODO: find out, if binding is locked:
+	// if (isLocked ()) return false;
+	return (isInGlobalEnv ());
+}
+
+bool RObject::isInGlobalEnv () {
+	RK_TRACE (OBJECTS);
+
+// could be made recursive instead, but likely it's faster like this
+	RObject *o = this;
+	while (o && (!o->isType (ToplevelEnv))) {
+		o = o->parent;
+	}
+
+	if (!o) {
+		RK_ASSERT (this == RObjectList::getObjectList ());
+		return false;
+	}
+	if (o->isType (GlobalEnv)) {
+		if (o != this) return true;	// the GlobalEnv is not inside the GlobalEnv!
+	}
+	return false;
+}

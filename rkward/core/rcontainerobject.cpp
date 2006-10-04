@@ -123,6 +123,7 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 	RKGlobals::tracker ()->lockUpdates (false);
 	RK_ASSERT (child_object);
 
+	if (child_object) childmap.insert (child_name, child_object);
 	if (child_object) RKGlobals::tracker ()->addObject (child_object, 0);
 	return child_object;
 }
@@ -132,7 +133,7 @@ void RContainerObject::updateChildren (RData *new_children) {
 	RK_ASSERT (new_children->getDataType () == RData::StructureVector);
 	unsigned int new_child_count = new_children->getDataLength ();
 
-// first find out, which children are now available, copy the old one, create the new ones
+// first find out, which children are now available, copy the old ones, create the new ones
 	RObjectMap new_childmap;
 	for (unsigned int i = 0; i < new_child_count; ++i) {
 		RData *child_data = new_children->getStructureVector ()[i];

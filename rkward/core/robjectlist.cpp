@@ -200,16 +200,14 @@ RObject *RObjectList::findObject (const QString &name, bool is_canonified) {
 
 RObject *RObjectList::createNewChild (const QString &name, RKEditor *creator, bool container, bool data_frame) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (childmap.find (".GlobalEnv") != childmap.end ());
 
-	return (static_cast<RContainerObject *> (childmap[".GlobalEnv"])->createNewChild (name, creator, container, data_frame));
+	return (getGlobalEnv ()->createNewChild (name, creator, container, data_frame));
 }
 
 QString RObjectList::validizeName (const QString &child_name) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (childmap.find (".GlobalEnv") != childmap.end ());
 
-	return (static_cast<RContainerObject *> (childmap[".GlobalEnv"])->validizeName (child_name));
+	return (getGlobalEnv ()->validizeName (child_name));
 }
 
 bool RObjectList::updateStructure (RData *) {
