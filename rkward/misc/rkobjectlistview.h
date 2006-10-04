@@ -24,6 +24,7 @@ class RObject;
 class QPixmap;
 class QPopupMenu;
 class RKListViewItem;
+class RKObjectListViewSettings;
 
 /**
 This class provides the common functionality for the list-views in the RObjectBrowser and RKVarselector(s). The caps it (will) provide are: keeping the list up to date and emitting change-signals when appropriate, filtering for certain types of objects, sorting, mapping items to objects. Maybe some GUI-stuff like popup-menus should also be added to this class?
@@ -49,6 +50,8 @@ public:
 /** This function returns the RObject the context menu has last been invoked on (or 0 if not invoked on an RObject). You can use this in slots called
 from your custom menu items, to figure out, which object you should operate on. */
 	RObject *menuObject () { return menu_object; };
+
+	RKObjectListViewSettings *getSettings () { return settings; };
 signals:
 	void listChanged ();
 /** This signal is emitted just before the context-menu is shown. If you connect to this signal, you can make some adjustments to the context-menu.
@@ -83,6 +86,8 @@ private:
 	QPopupMenu *menu;
 	RObject *menu_object;
 
+	RKObjectListViewSettings *settings;
+
 	static QPixmap *icon_function;
 	static QPixmap *icon_list;
 	static QPixmap *package_environment;
@@ -100,6 +105,68 @@ public:
 	~RKListViewItem () {};
 
 	int width (const QFontMetrics &fm, const QListView * lv, int c) const;
+};
+
+/** Represents the filter/view settings possible for an RKListView. */
+class RKObjectListViewSettings : public QObject {
+	Q_OBJECT
+public:
+/** ctor. copies the default settings from RKSettingsModuleObjectBrowser */ 
+	RKObjectListViewSettings ();
+	~RKObjectListViewSettings ();
+
+	enum Settings {
+		ShowObjectsVariable=0,
+		ShowObjectsAllEnvironments=1,
+		ShowObjectsFunction=2,
+		ShowObjectsContainer=3,
+		ShowObjectsHidden=4,
+		ShowFieldsType=5,
+		ShowFieldsClass=6,
+		ShowFieldsLabel=7,
+		SettingsCount=8
+	};
+
+	enum State {
+		Never,
+		No,
+		Yes,
+		Always
+	};
+
+	void setSetting (Settings setting, State to);
+	State getSetting (Settings setting);
+
+	bool shouldShowObject (RObject *object);
+
+	QPopupMenu *showObjectsMenu () { return show_objects_menu; };
+	QPopupMenu *showFieldsMenu () { return show_fields_menu; };
+signals:
+	void settingsChanged ();
+public slots:
+	void globalSettingsChanged ();
+	void toggleSetting (int which);
+private:
+	State *settings;
+	bool *settings_default;
+	bool optionConfigurable (Settings setting);
+	void insertPopupItem (QPopupMenu *menu, Settings setting, const QString &text);
+	void createContextMenus ();
+	void updateSelf ();
+
+	QPopupMenu *show_objects_menu;
+	QPopupMenu *show_fields_menu;
+};
+
+class RKObjectListViewSettingsWidget : public QWidget {
+	Q_OBJECT
+public:
+	RKObjectListViewSettingsWidget (RKObjectListViewSettings *settings, QWidget *parent);
+	~RKObjectListViewSettingsWidget ();
+public slots:
+	void settingsChanged ();
+private:
+	RKObjectListViewSettings *settings;
 };
 
 #endif

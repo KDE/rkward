@@ -53,13 +53,16 @@ RKObjectListView::RKObjectListView (QWidget *parent) : QListView (parent) {
 	addColumn (i18n("Label"));
 	addColumn (i18n("Type"));
 	addColumn (i18n("Class"));
+	settings = new RKObjectListViewSettings ();
+	connect (settings, SIGNAL (settingsChanged ()), this, SLOT (objectBrowserSettingsChanged ()));
 
 	menu = new QPopupMenu (this);
-	menu->insertItem (i18n ("Configure View"), this, SLOT (popupConfigure ()));
+	menu->insertItem (i18n ("Show Objects"), settings->showObjectsMenu ());
+	menu->insertItem (i18n ("Show Fields"), settings->showFieldsMenu ());
+	menu->insertItem (i18n ("Configure Defaults"), this, SLOT (popupConfigure ()));
 	connect (this, SIGNAL (contextMenuRequested (QListViewItem *, const QPoint &, int)), this, SLOT (requestedContextMenu (QListViewItem*, const QPoint&, int)));
 
 	objectBrowserSettingsChanged ();
-	connect (RKSettings::tracker (), SIGNAL (objectBrowserSettingsChanged ()), this, SLOT (objectBrowserSettingsChanged ()));
 }
 
 RKObjectListView::~RKObjectListView () {
@@ -67,10 +70,9 @@ RKObjectListView::~RKObjectListView () {
 }
 
 void RKObjectListView::objectBrowserSettingsChanged () {
-	setColumnWidth (0, 50);
 	setColumnWidthMode (0, QListView::Maximum);
 	if (RKSettingsModuleObjectBrowser::showLabelField ()) {
-		setColumnWidth (1, 50);
+		if (columnWidth (1) == 0) setColumnWidth (1, 50);
 		setColumnWidthMode (1, QListView::Maximum);
 	} else {
 		setColumnWidthMode (1, QListView::Manual);
@@ -78,7 +80,7 @@ void RKObjectListView::objectBrowserSettingsChanged () {
 	}
 
 	if (RKSettingsModuleObjectBrowser::showTypeField ()) {
-		setColumnWidth (2, 50);
+		if (columnWidth (2) == 0) setColumnWidth (2, 50);
 		setColumnWidthMode (2, QListView::Maximum);
 	} else {
 		setColumnWidthMode (2, QListView::Manual);
@@ -86,7 +88,7 @@ void RKObjectListView::objectBrowserSettingsChanged () {
 	}
 
 	if (RKSettingsModuleObjectBrowser::showClassField ()) {
-		setColumnWidth (3, 50);
+		if (columnWidth (3) == 0) setColumnWidth (3, 50);
 		setColumnWidthMode (3, QListView::Maximum);
 	} else {
 		setColumnWidthMode (3, QListView::Manual);
@@ -99,7 +101,7 @@ void RKObjectListView::objectBrowserSettingsChanged () {
 		RObject *object = findItemObject (static_cast<RKListViewItem*> (it.current ()));
 		RK_ASSERT (object);
 
-		if (object->getFullName ().startsWith (".")) it.current ()->setVisible (RKSettingsModuleObjectBrowser::showHiddenVars ());
+		it.current ()->setVisible (settings->shouldShowObject (object));
 	}
 }
 
@@ -255,10 +257,7 @@ void RKObjectListView::updateItem (RKListViewItem *item, RObject *object) {
 		item->setPixmap (0, *environment);
 	}
 
-	if (!RKSettingsModuleObjectBrowser::showHiddenVars ()) {
-		// if the object is hidden, it shouldn't appear
-		if (object->getFullName ().startsWith (".")) item->setVisible (false);
-	}
+	if (!settings->shouldShowObject (object)) item->setVisible (false);
 }
 
 void RKObjectListView::addObject (RKListViewItem *parent, RObject *object, bool recursive) {
@@ -282,8 +281,6 @@ void RKObjectListView::addObject (RKListViewItem *parent, RObject *object, bool 
 		}
 	}
 
-
-	
 // special treatment for the workspace object
 	if (!parent) {
 		item->setPixmap (0, SmallIcon("view_tree"));
@@ -293,7 +290,9 @@ void RKObjectListView::addObject (RKListViewItem *parent, RObject *object, bool 
 
 	if (!RKSettingsModuleObjectBrowser::showHiddenVars ()) {
 		// if the object is hidden, it shouldn't appear
-		if (object->getFullName ().startsWith (".")) item->setVisible (false);
+		if (!object->isType (RObject::GlobalEnv)) {
+			if (object->getShortName ().startsWith (".")) item->setVisible (false);
+		}
 	}
 
 // code below won't work, as objects get added before editor is opened. Need to call from RKEditor(Manager)
@@ -320,5 +319,152 @@ int RKListViewItem::width (const QFontMetrics &fm, const QListView * lv, int c) 
 	if (ret > 200) return 200;
 	return ret;
 }
+
+
+//////////////////// RKObjectListViewSettings //////////////////////////
+
+RKObjectListViewSettings::RKObjectListViewSettings () {
+	RK_TRACE (APP);
+
+	settings = new State[SettingsCount];
+	settings_default = new bool[SettingsCount];
+	for (int i = 0; i < SettingsCount; ++i) settings_default[i] = true;
+
+	createContextMenus ();
+	globalSettingsChanged ();
+}
+
+RKObjectListViewSettings::~RKObjectListViewSettings () {
+	RK_TRACE (APP);
+
+	delete settings;
+	delete settings_default;
+	delete show_fields_menu;
+	delete show_objects_menu;
+}
+
+void RKObjectListViewSettings::setSetting (Settings setting, State to) {
+	RK_TRACE (APP);
+
+	settings[setting] = to;
+	settings_default[setting] = false;
+
+	updateSelf ();
+}
+
+RKObjectListViewSettings::State RKObjectListViewSettings::getSetting (Settings setting) {
+	RK_TRACE (APP);
+
+	return (settings[setting]);
+}
+
+bool RKObjectListViewSettings::shouldShowObject (RObject *object) {
+	RK_TRACE (APP);
+
+	if (object->getShortName ().startsWith (".")) {
+		if (object->isType (RObject::GlobalEnv)) return true;
+		return (settings[ShowObjectsHidden] >= Yes);
+	} else if (object->isType (RObject::ToplevelEnv)) {
+		if (object->isType (RObject::GlobalEnv)) return true;
+		return (settings[ShowObjectsAllEnvironments] >= Yes);
+	} else if (object->isType (RObject::Function)) {
+		return (settings[ShowObjectsFunction] >= Yes);
+	} else if (object->isType (RObject::Container)) {
+		return (settings[ShowObjectsContainer] >= Yes);
+	} else if (object->isVariable ()) {
+		return (settings[ShowObjectsVariable] >= Yes);
+	}
+	return true;
+}
+
+void RKObjectListViewSettings::createContextMenus () {
+	RK_TRACE (APP);
+
+	show_objects_menu = new QPopupMenu (0);
+	insertPopupItem (show_objects_menu, ShowObjectsAllEnvironments, i18n ("All Environments"));
+	insertPopupItem (show_objects_menu, ShowObjectsContainer, i18n ("Objects with children"));
+	insertPopupItem (show_objects_menu, ShowObjectsVariable, i18n ("Variables"));
+	insertPopupItem (show_objects_menu, ShowObjectsFunction, i18n ("Functions"));
+	show_objects_menu->insertSeparator ();
+	insertPopupItem (show_objects_menu, ShowObjectsHidden, i18n ("Hidden Objects"));
+
+	show_fields_menu = new QPopupMenu (0);
+	insertPopupItem (show_fields_menu, ShowFieldsType, i18n ("Type"));
+	insertPopupItem (show_fields_menu, ShowFieldsLabel, i18n ("Label"));
+	insertPopupItem (show_fields_menu, ShowFieldsClass, i18n ("Class"));
+}
+
+void RKObjectListViewSettings::updateSelf () {
+	RK_TRACE (APP);
+
+	for (int i = 0; i <= ShowObjectsHidden; ++i) {
+		show_objects_menu->setItemChecked (i, settings[(Settings) i] >= Yes);
+		show_objects_menu->setItemEnabled (i, optionConfigurable ((Settings) i));
+	}
+
+	for (int i = ShowFieldsType; i <= ShowFieldsLabel; ++i) {
+		show_fields_menu->setItemChecked (i, settings[(Settings) i] >= Yes);
+		show_fields_menu->setItemEnabled (i, optionConfigurable ((Settings) i));
+	}
+
+	emit (settingsChanged ());
+}
+
+void RKObjectListViewSettings::insertPopupItem (QPopupMenu *menu, Settings setting, const QString &text) {
+	RK_TRACE (APP);
+
+	menu->insertItem (text, setting);
+	menu->setItemParameter (setting, setting);
+	menu->connectItem (setting, this, SLOT (toggleSetting (int)));
+}
+
+void RKObjectListViewSettings::globalSettingsChanged () {
+	RK_TRACE (APP);
+
+	// TODO: copy global settings
+	for (int i = 0; i < SettingsCount; ++i) {
+		settings[i] = Yes;
+	}
+
+	updateSelf ();
+}
+
+void RKObjectListViewSettings::toggleSetting (int which) {
+	RK_TRACE (APP);
+	RK_ASSERT (which < SettingsCount);
+
+	if (settings[which] == Yes) {
+		settings[which] = No;
+	} else if (settings[which] == No) {
+		settings[which] = Yes;
+	} else {
+		RK_ASSERT (false);
+	}
+	settings_default[which] = false;
+
+	updateSelf ();
+}
+
+bool RKObjectListViewSettings::optionConfigurable (Settings setting) {
+	RK_TRACE (APP);
+
+	if (settings[setting] == Always) return false;
+	if (settings[setting] == Never) return false;
+	return true;
+}
+
+//////////////////// RKObjectListViewSettingsWidget //////////////////////////
+RKObjectListViewSettingsWidget::RKObjectListViewSettingsWidget (RKObjectListViewSettings *settings, QWidget *parent) : QWidget (parent) {
+	RK_TRACE (APP);
+}
+
+RKObjectListViewSettingsWidget::~RKObjectListViewSettingsWidget () {
+	RK_TRACE (APP);
+}
+
+void RKObjectListViewSettingsWidget::settingsChanged () {
+	RK_TRACE (APP);
+}
+
 
 #include "rkobjectlistview.moc"
