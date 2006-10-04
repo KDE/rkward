@@ -36,12 +36,16 @@
 // static
 QPixmap *RKObjectListView::icon_function = 0;
 QPixmap *RKObjectListView::icon_list = 0;
+QPixmap *RKObjectListView::package_environment = 0;
+QPixmap *RKObjectListView::environment = 0;
 
 RKObjectListView::RKObjectListView (QWidget *parent) : QListView (parent) {
 	RK_TRACE (APP);
 	if (icon_function == 0) {
 		icon_function = new QPixmap (QImage (KGlobal::dirs ()->findResourceDir ("data", "rkward/phpfiles/common.php") + "rkward/icons/function.png"));
 		icon_list = new QPixmap (QImage (KGlobal::dirs ()->findResourceDir ("data", "rkward/phpfiles/common.php") + "rkward/icons/list.png"));
+		package_environment = new QPixmap (SmallIcon ("ark", 12));
+		environment = new QPixmap (SmallIcon ("konqueror", 12));
 	}
 
 	setSorting (100);
@@ -245,6 +249,10 @@ void RKObjectListView::updateItem (RKListViewItem *item, RObject *object) {
 		item->setPixmap (0, *icon_list);
 	} else if (object->isType (RObject::Function)) {
 		item->setPixmap (0, *icon_function);
+	} else if (object->isType (RObject::PackageEnv)) {
+		item->setPixmap (0, *package_environment);
+	} else if (object->isType (RObject::Environment)) {
+		item->setPixmap (0, *environment);
 	}
 
 	if (!RKSettingsModuleObjectBrowser::showHiddenVars ()) {

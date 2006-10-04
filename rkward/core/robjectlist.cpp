@@ -156,13 +156,6 @@ REnvironmentObject *RObjectList::createTopLevelEnvironment (const QString &name)
 	RK_ASSERT (childmap.find (name) == childmap.end ());
 	REnvironmentObject *envobj = new REnvironmentObject (this, name);
 
-	if (name == ".GlobalEnv") {
-		envobj->type |= GlobalEnv | PackageEnv;
-	} else if (name.contains (':')) {
-		envobj->namespace_name = name.section (':', 1);
-		envobj->type |= PackageEnv;
-	}
-
 	childmap.insert (name, envobj);
 	RKGlobals::tracker ()->addObject (envobj, 0);
 	envobj->updateFromR ();

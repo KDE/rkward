@@ -107,7 +107,6 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 	RObject *child_object;
 	if (child_type & RObject::Environment) {
 		child_object = new REnvironmentObject (this, child_name);
-		static_cast<REnvironmentObject *> (child_object)->namespace_name = makeChildName (child_name);
 	} else if (child_type & RObject::Container) {
 		child_object = new RContainerObject (this, child_name);
 	} else if (child_type & RObject::Function) {

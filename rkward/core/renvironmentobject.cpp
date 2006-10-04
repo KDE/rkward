@@ -28,10 +28,15 @@ REnvironmentObject::REnvironmentObject (RContainerObject *parent, const QString 
 	type = Environment;
 	if (parent == RObjectList::getObjectList ()) {
 		type |= ToplevelEnv;
+		if (name == ".GlobalEnv") {
+			type |= GlobalEnv;
+		} else if (name.contains (':')) {
+			namespace_name = name.section (':', 1);
+			type |= PackageEnv;
+		}
+	} else {
+		//namespace_name = parent->makeChildName (name);	// not needed, will not be used
 	}
-
-	// TODO: determine namespace_name
-	// TODO: determine if this is an environment var (or maybe this is done from the parent)
 }
 
 REnvironmentObject::~REnvironmentObject () {

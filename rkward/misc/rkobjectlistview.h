@@ -85,6 +85,8 @@ private:
 
 	static QPixmap *icon_function;
 	static QPixmap *icon_list;
+	static QPixmap *package_environment;
+	static QPixmap *environment;
 };
 
 /** This subclass of RKListViewItem reimplements the width ()-function to return 0 if the item is not currently visible. This is needed to get a sane column width in the listview. Also limit maximum default width to 200 px (TODO: make this configurable)
