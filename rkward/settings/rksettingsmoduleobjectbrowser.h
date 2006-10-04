@@ -20,6 +20,8 @@
 
 #include "rksettingsmodule.h"
 
+#include "../misc/rkobjectlistview.h"
+
 class QCheckBox;
 
 /** Configuration module for instances of RObjectListView
@@ -47,26 +49,13 @@ public:
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 
-/** whether hidden variables should be shown in RObjectListViews by default */
-	static bool showHiddenVars () { return (options & ShowHiddenVars); };
-/** whether the type field should be shown in RObjectListViews by default */
-	static bool showTypeField () { return (options & ShowTypeField); };
-/** whether the class field should be shown in RObjectListViews by default */
-	static bool showClassField () { return (options & ShowClassField); };
-/** whether the label field should be shown in RObjectListViews by default */
-	static bool showLabelField () { return (options & ShowLabelField); };
-	
-	enum ObjectBrowserOptions { ShowHiddenVars=1, ShowTypeField=2, ShowClassField=4, ShowLabelField=8 };
+	static bool isSettingActive (RKObjectListViewSettings::Settings setting);
 public slots:
 /** called when a checkbox has been changed. Signals change to RKSettings dialog to enable apply button */
 	void boxChanged (int);
 private:
-	QCheckBox *show_hidden_vars_box;
-	QCheckBox *show_type_field_box;
-	QCheckBox *show_class_field_box;
-	QCheckBox *show_label_field_box;
-
-	static int options;
+	QCheckBox **checkboxes;
+	static bool settings[RKObjectListViewSettings::SettingsCount];
 };
 
 #endif

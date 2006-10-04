@@ -136,6 +136,7 @@ public:
 
 	void setSetting (Settings setting, State to);
 	State getSetting (Settings setting);
+	bool settingActive (Settings setting);
 
 	bool shouldShowObject (RObject *object);
 

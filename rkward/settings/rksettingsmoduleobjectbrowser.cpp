@@ -29,43 +29,56 @@
 #include "../debug.h"
 
 // static
-int RKSettingsModuleObjectBrowser::options = 0;
+bool RKSettingsModuleObjectBrowser::settings[RKObjectListViewSettings::SettingsCount];
 
 RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
+	checkboxes = new QCheckBox*[RKObjectListViewSettings::SettingsCount];
+
 	QVBoxLayout *layout = new QVBoxLayout (this, RKGlobals::marginHint ());
 
-	show_hidden_vars_box = new QCheckBox (i18n ("Show hidden objects"), this);
-	show_hidden_vars_box->setChecked (showHiddenVars ());
-	connect (show_hidden_vars_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
-	layout->addWidget (show_hidden_vars_box);
+	layout->addWidget (new QLabel (i18n ("Which objects should be shown by default?"), this));
+
+	checkboxes[RKObjectListViewSettings::ShowObjectsHidden] = new QCheckBox (i18n ("Show hidden objects"), this);
+	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowObjectsHidden]);
+	checkboxes[RKObjectListViewSettings::ShowObjectsAllEnvironments] = new QCheckBox (i18n ("Show all environments"), this);
+	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowObjectsAllEnvironments]);
+	layout->addSpacing (2*RKGlobals::spacingHint ());
+	checkboxes[RKObjectListViewSettings::ShowObjectsContainer] = new QCheckBox (i18n ("Show objects with children"), this);
+	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowObjectsContainer]);
+	checkboxes[RKObjectListViewSettings::ShowObjectsFunction] = new QCheckBox (i18n ("Show functions"), this);
+	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowObjectsFunction]);
+	checkboxes[RKObjectListViewSettings::ShowObjectsVariable] = new QCheckBox (i18n ("Show variables"), this);
+	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowObjectsVariable]);
 
 	layout->addSpacing (2*RKGlobals::spacingHint ());
 
-	QLabel *label = new QLabel (i18n ("Which columns should be shown?"), this);
-	layout->addWidget (label);
+	layout->addWidget (new QLabel (i18n ("Which columns should be shown by default?"), this));
 
-	show_label_field_box = new QCheckBox (i18n ("Label field"), this);
-	show_label_field_box->setChecked (showLabelField ());
-	connect (show_label_field_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
-	layout->addWidget (show_label_field_box);
-
-	show_type_field_box = new QCheckBox (i18n ("Type field"), this);
-	show_type_field_box->setChecked (showTypeField ());
-	connect (show_type_field_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
-	layout->addWidget (show_type_field_box);
-
-	show_class_field_box = new QCheckBox (i18n ("Class field"), this);
-	show_class_field_box->setChecked (showClassField ());
-	connect (show_class_field_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
-	layout->addWidget (show_class_field_box);
+	checkboxes[RKObjectListViewSettings::ShowFieldsLabel] = new QCheckBox (i18n ("Label field"), this);
+	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowFieldsLabel]);
+	checkboxes[RKObjectListViewSettings::ShowFieldsType] = new QCheckBox (i18n ("Type field"), this);
+	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowFieldsType]);
+	checkboxes[RKObjectListViewSettings::ShowFieldsClass] = new QCheckBox (i18n ("Class field"), this);
+	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowFieldsClass]);
 
 	layout->addStretch ();
+
+	for (int i = 0; i < RKObjectListViewSettings::SettingsCount; ++i) {
+		checkboxes[i]->setChecked (settings[i]);
+		connect (checkboxes[i], SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
+	}
 }
 
 RKSettingsModuleObjectBrowser::~RKSettingsModuleObjectBrowser () {
 	RK_TRACE (SETTINGS);
+}
+
+//static
+bool RKSettingsModuleObjectBrowser::isSettingActive (RKObjectListViewSettings::Settings setting) {
+	RK_TRACE (SETTINGS);
+	return settings[setting];
 }
 
 bool RKSettingsModuleObjectBrowser::hasChanges () {
@@ -75,11 +88,10 @@ bool RKSettingsModuleObjectBrowser::hasChanges () {
 
 void RKSettingsModuleObjectBrowser::applyChanges () {
 	RK_TRACE (SETTINGS);
-	options = 0;
-	if (show_hidden_vars_box->isChecked ()) options |= ShowHiddenVars;
-	if (show_label_field_box->isChecked ()) options |= ShowLabelField;
-	if (show_type_field_box->isChecked ()) options |= ShowTypeField;
-	if (show_class_field_box->isChecked ()) options |= ShowClassField;
+
+	for (int i = 0; i < RKObjectListViewSettings::SettingsCount; ++i) {
+		settings[i] = checkboxes[i]->isChecked ();
+	}
 
 	RKSettings::tracker ()->settingsChangedObjectBrowser ();
 }
@@ -99,22 +111,29 @@ void RKSettingsModuleObjectBrowser::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	config->setGroup ("Object Browser");
-	config->writeEntry ("show hidden vars", showHiddenVars ());
-	config->writeEntry ("show label field", showLabelField ());
-	config->writeEntry ("show type field", showTypeField ());
-	config->writeEntry ("show class field", showClassField ());
+	config->writeEntry ("show hidden vars", settings[RKObjectListViewSettings::ShowObjectsHidden]);
+	config->writeEntry ("show all environments", settings[RKObjectListViewSettings::ShowObjectsAllEnvironments]);
+	config->writeEntry ("show container objects", settings[RKObjectListViewSettings::ShowObjectsContainer]);
+	config->writeEntry ("show function objects", settings[RKObjectListViewSettings::ShowObjectsFunction]);
+	config->writeEntry ("show variable objects", settings[RKObjectListViewSettings::ShowObjectsVariable]);
+	config->writeEntry ("show label field", settings[RKObjectListViewSettings::ShowFieldsLabel]);
+	config->writeEntry ("show type field", settings[RKObjectListViewSettings::ShowFieldsType]);
+	config->writeEntry ("show class field", settings[RKObjectListViewSettings::ShowFieldsClass]);
 }
 
 //static
 void RKSettingsModuleObjectBrowser::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	options = 0;
 	config->setGroup ("Object Browser");
-	if (config->readBoolEntry ("show hidden vars", false)) options |= ShowHiddenVars;
-	if (config->readBoolEntry ("show label field", true)) options |= ShowLabelField;
-	if (config->readBoolEntry ("show type field", true)) options |= ShowTypeField;
-	if (config->readBoolEntry ("show class field", true)) options |= ShowClassField;
+	settings[RKObjectListViewSettings::ShowObjectsHidden] = config->readBoolEntry ("show hidden vars", false);
+	settings[RKObjectListViewSettings::ShowObjectsAllEnvironments] = config->readBoolEntry ("show all environments", true);
+	settings[RKObjectListViewSettings::ShowObjectsContainer] = config->readBoolEntry ("show container objects", true);
+	settings[RKObjectListViewSettings::ShowObjectsFunction] = config->readBoolEntry ("show function objects", true);
+	settings[RKObjectListViewSettings::ShowObjectsVariable] = config->readBoolEntry ("show variable objects", true);
+	settings[RKObjectListViewSettings::ShowFieldsLabel] = config->readBoolEntry ("show label field", true);
+	settings[RKObjectListViewSettings::ShowFieldsType] = config->readBoolEntry ("show type field", true);
+	settings[RKObjectListViewSettings::ShowFieldsClass] = config->readBoolEntry ("show class field", true);
 }
 
 void RKSettingsModuleObjectBrowser::boxChanged (int) {

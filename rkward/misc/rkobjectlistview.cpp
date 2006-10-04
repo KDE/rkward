@@ -71,7 +71,7 @@ RKObjectListView::~RKObjectListView () {
 
 void RKObjectListView::objectBrowserSettingsChanged () {
 	setColumnWidthMode (0, QListView::Maximum);
-	if (RKSettingsModuleObjectBrowser::showLabelField ()) {
+	if (settings->settingActive (RKObjectListViewSettings::ShowFieldsLabel)) {
 		if (columnWidth (1) == 0) setColumnWidth (1, 50);
 		setColumnWidthMode (1, QListView::Maximum);
 	} else {
@@ -79,7 +79,7 @@ void RKObjectListView::objectBrowserSettingsChanged () {
 		hideColumn (1);
 	}
 
-	if (RKSettingsModuleObjectBrowser::showTypeField ()) {
+	if (settings->settingActive (RKObjectListViewSettings::ShowFieldsType)) {
 		if (columnWidth (2) == 0) setColumnWidth (2, 50);
 		setColumnWidthMode (2, QListView::Maximum);
 	} else {
@@ -87,7 +87,7 @@ void RKObjectListView::objectBrowserSettingsChanged () {
 		hideColumn (2);
 	}
 
-	if (RKSettingsModuleObjectBrowser::showClassField ()) {
+	if (settings->settingActive (RKObjectListViewSettings::ShowFieldsClass)) {
 		if (columnWidth (3) == 0) setColumnWidth (3, 50);
 		setColumnWidthMode (3, QListView::Maximum);
 	} else {
@@ -288,13 +288,6 @@ void RKObjectListView::addObject (RKListViewItem *parent, RObject *object, bool 
 		item->setOpen (true);
 	}
 
-	if (!RKSettingsModuleObjectBrowser::showHiddenVars ()) {
-		// if the object is hidden, it shouldn't appear
-		if (!object->isType (RObject::GlobalEnv)) {
-			if (object->getShortName ().startsWith (".")) item->setVisible (false);
-		}
-	}
-
 // code below won't work, as objects get added before editor is opened. Need to call from RKEditor(Manager)
 /*	if (object->numChildren () && RKGlobals::editorManager ()->objectOpened (object)) {
 		item->setOpen (true);
@@ -329,6 +322,7 @@ RKObjectListViewSettings::RKObjectListViewSettings () {
 	settings = new State[SettingsCount];
 	settings_default = new bool[SettingsCount];
 	for (int i = 0; i < SettingsCount; ++i) settings_default[i] = true;
+	connect (RKSettings::tracker (), SIGNAL (objectBrowserSettingsChanged ()), this, SLOT (globalSettingsChanged ()));
 
 	createContextMenus ();
 	globalSettingsChanged ();
@@ -356,6 +350,12 @@ RKObjectListViewSettings::State RKObjectListViewSettings::getSetting (Settings s
 	RK_TRACE (APP);
 
 	return (settings[setting]);
+}
+
+bool RKObjectListViewSettings::settingActive (Settings setting) {
+	RK_TRACE (APP);
+
+	return (settings[setting] >= Yes);
 }
 
 bool RKObjectListViewSettings::shouldShowObject (RObject *object) {
@@ -421,9 +421,11 @@ void RKObjectListViewSettings::insertPopupItem (QPopupMenu *menu, Settings setti
 void RKObjectListViewSettings::globalSettingsChanged () {
 	RK_TRACE (APP);
 
-	// TODO: copy global settings
 	for (int i = 0; i < SettingsCount; ++i) {
-		settings[i] = Yes;
+		if (settings_default[i]) {
+			if (RKSettingsModuleObjectBrowser::isSettingActive ((Settings) i)) settings[i] = Yes;
+			else settings[i] = No;
+		}
 	}
 
 	updateSelf ();
