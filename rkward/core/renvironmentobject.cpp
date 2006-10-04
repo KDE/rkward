@@ -52,8 +52,8 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 	if (type & ToplevelEnv) {
 /* Some items are placed outside of their native namespace. E.g. in package:boot item "motor". It can be retrieved using as.environment ("package:boot")$motor. This is extremly ugly. We need to give them (and only them) this special treatment. */
 // TODO: hopefully one day operator "::" will work even in those cases. So check back later, and remove after a sufficient amount of backwards compatibility time
-		if (misplaced) return (getFullName () + "$" + RObject::rQuote (short_child_name));
-		return (namespace_name + "::" + RObject::rQuote (short_child_name));
+		if ((type & PackageEnv) && (!misplaced)) return (namespace_name + "::" + RObject::rQuote (short_child_name));
+		return (getFullName () + "$" + RObject::rQuote (short_child_name));
 	}
 	return (name + "$" + short_child_name);
 }

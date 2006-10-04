@@ -14,28 +14,6 @@
 ".rk.editor.closed" <- function (x) {
 	if (exists (".rk.editing")) .rk.editing <<- .rk.editing[.rk.editing != deparse (substitute (x))]
 }
-#TODO: remove:
-".rk.classify" <- function (x) {
-	type <- 0
-	if (is.data.frame (x)) type = type + 1
-	if (is.matrix (x)) type = type + 2
-	if (is.array (x)) type = type + 4
-	if (is.list (x)) type = type + 8
-	if (type != 0) type = type + 16 else type = 32
-	if (is.function (x)) type = 128
-	if (is.environment (x)) type = 256
-	if (!is.null (attr (x, ".rk.meta"))) type = type + 2048
-	d <- dim (x)
-	if (length (d) < 1) d <- length (x);	# handling for objects that according to R do not have a dimension (such as vectors, functions, etc.)
-	c (type, d)
-}
-#TODO: remove:
-".rk.get.type" <- function (x) {
-	if (is.data.frame (x) || is.matrix (x) || is.array (x) || is.list (x)) return (1)		# container
-	if (is.function (x)) return (2)		# function
-	if (is.vector (x)) return (3)		# a vector/variable
-	return (4)		# something else
-}
 
 ".rk.data.frame.insert.row" <- function (x, index=0) {
 	if ((index == 0) || (index > dim (x)[1])) {	# insert row at end
@@ -298,8 +276,8 @@
 		type = 256
 		cont <- TRUE
 	}
-	if (!is.null (attr (x, ".rk.meta"))) type = type + 2048
-	if (misplaced) type <- type + 4096
+	if (!is.null (attr (x, ".rk.meta"))) type = type + 4096
+	if (misplaced) type <- type + 8192
 	type <- as.integer (type)
 
 # 3: classes

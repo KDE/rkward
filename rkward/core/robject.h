@@ -55,8 +55,9 @@ public:
 		Environment=256,
 		GlobalEnv=512,
 		ToplevelEnv=1024,
-		HasMetaObject=2048,
-		Misplaced=4096		/** < the object is not in the namespace where it would be expected */
+		PackageEnv=2048,
+		HasMetaObject=4096,
+		Misplaced=8192		/** < the object is not in the namespace where it would be expected */
 	};
 
 	#define ROBJECT_TYPE_INTERNAL_MASK (RObject::Container | RObject::Variable | RObject::Workspace | RObject::Environment | RObject::Function)
