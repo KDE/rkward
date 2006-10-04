@@ -350,11 +350,23 @@
 				ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname, envlevel)
 			}
 		} else {
-			ns <- tryCatch (asNamespace (namespacename), error = function(e) NULL)
-			for (childname in lst) {
-				misplaced <- FALSE
-				if ((!is.null (ns)) && (!exists (childname, envir=ns, inherits=FALSE))) misplaced <- TRUE
-				ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname, envlevel, misplaced=misplaced)
+			# before R 2.4.0, operator "::" would only work on true namespaces, not on package names (operator "::" work, if there is a namespace, and that namespace has the symbol in it)
+			# TODO remove once we depend on R >= 2.4.0
+			if (compareVersion (paste (R.version$major, R.version$minor, sep="."), "2.4.0") < 0) {
+				ns <- tryCatch (asNamespace (namespacename), error = function(e) NULL)
+				for (childname in lst) {
+					misplaced <- FALSE
+					if (is.null (ns) || (!exists (childname, envir=ns, inherits=FALSE))) misplaced <- TRUE
+					ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname, envlevel, misplaced=misplaced)
+				}
+			} else {
+			# for R 2.4.0 or greater: operator "::" works if package has no namespace at all, or has a namespace with the symbol in it
+				ns <- tryCatch (asNamespace (namespacename), error = function(e) NULL)
+				for (childname in lst) {
+					misplaced <- FALSE
+					if ((!is.null (ns)) && (!exists (childname, envir=ns, inherits=FALSE))) misplaced <- TRUE
+					ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname, envlevel, misplaced=misplaced)
+				}
 			}
 		}
 	}

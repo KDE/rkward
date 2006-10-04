@@ -51,6 +51,7 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 	if (type & GlobalEnv) return (short_child_name);
 	if (type & ToplevelEnv) {
 /* Some items are placed outside of their native namespace. E.g. in package:boot item "motor". It can be retrieved using as.environment ("package:boot")$motor. This is extremly ugly. We need to give them (and only them) this special treatment. */
+// TODO: hopefully one day operator "::" will work even in those cases. So check back later, and remove after a sufficient amount of backwards compatibility time
 		if (misplaced) return (getFullName () + "$" + RObject::rQuote (short_child_name));
 		return (namespace_name + "::" + RObject::rQuote (short_child_name));
 	}
@@ -67,7 +68,7 @@ void REnvironmentObject::writeMetaData (RCommandChain *chain) {
 void REnvironmentObject::updateFromR () {
 	RK_TRACE (OBJECTS);
 	QString options;
-	if (type & GlobalEnv) options = ", envleve=-1";	// in the .GlobalEnv recurse one more level
+	if (type & GlobalEnv) options = ", envlevel=-1";	// in the .GlobalEnv recurse one more level
 	if (type & ToplevelEnv) options.append (", namespacename=" + rQuote (namespace_name));
 
 	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + options + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
