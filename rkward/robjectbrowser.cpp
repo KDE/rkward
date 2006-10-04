@@ -20,6 +20,9 @@
 #include <qlistview.h>
 #include <qpushbutton.h>
 #include <qpopupmenu.h>
+#include <qcheckbox.h>
+#include <qradiobutton.h>
+#include <qbuttongroup.h>
 
 #include <klocale.h>
 #include <kinputdialog.h>
@@ -42,11 +45,10 @@
 RObjectBrowser::RObjectBrowser () : QWidget () {
 	RK_TRACE (APP);
 
-	QGridLayout *grid = new QGridLayout (this, 1, 1);
-	QVBoxLayout *vbox = new QVBoxLayout ();
-	grid->addLayout (vbox, 0, 0);
-	
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+
 	list_view = new RKObjectListView (this);
+	vbox->addWidget (new RKObjectListViewSettingsWidget (list_view->getSettings (), this));
 	vbox->addWidget (list_view);
 
 	update_button = new QPushButton (i18n ("Update"), this);
@@ -178,6 +180,105 @@ void RObjectBrowser::slotListDoubleClicked (QListViewItem *item, const QPoint &,
 	
 	if (w->inherits ("RKCommandEditorWindow")) {
 		static_cast<RKCommandEditorWindow*> (w)->insertText (object->getFullName ());
+	}
+}
+
+
+//////////////////// RKObjectListViewSettingsWidget //////////////////////////
+RKObjectListViewSettingsWidget::RKObjectListViewSettingsWidget (RKObjectListViewSettings *settings, QWidget *parent) : QWidget (parent) {
+	RK_TRACE (APP);
+
+	RKObjectListViewSettingsWidget::settings = settings;
+	connect (settings, SIGNAL (settingsChanged ()), this, SLOT (settingsChanged ()));
+
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	group = new QButtonGroup (this);
+	QHBoxLayout *grouplayout = new QHBoxLayout (group);
+	all = new QRadioButton (i18n ("All"), group);
+	nonfunctions = new QRadioButton (i18n ("Non-Functions"), group);
+	functions = new QRadioButton (i18n ("Functions"), group);
+	grouplayout->addWidget (all);
+	grouplayout->addWidget (nonfunctions);
+	grouplayout->addWidget (functions);
+	connect (group, SIGNAL (clicked (int)), this, SLOT (modeActivated (int)));
+	layout->addWidget (group);
+
+	all_envirs = new QCheckBox (i18n ("Show All Environments"), this);
+	connect (all_envirs, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
+	layout->addWidget (all_envirs);
+
+	hidden_objects = new QCheckBox (i18n ("Show Hidden Objects"), this);
+	connect (hidden_objects, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
+	layout->addWidget (hidden_objects);
+
+	settingsChanged ();
+}
+
+RKObjectListViewSettingsWidget::~RKObjectListViewSettingsWidget () {
+	RK_TRACE (APP);
+}
+
+void RKObjectListViewSettingsWidget::settingsChanged () {
+	RK_TRACE (APP);
+
+	all_envirs->setChecked (settings->settingActive (RKObjectListViewSettings::ShowObjectsAllEnvironments));
+	all_envirs->setEnabled (settings->optionConfigurable (RKObjectListViewSettings::ShowObjectsAllEnvironments));
+
+	hidden_objects->setChecked (settings->settingActive (RKObjectListViewSettings::ShowObjectsHidden));
+	hidden_objects->setEnabled (settings->optionConfigurable (RKObjectListViewSettings::ShowObjectsHidden));
+
+	bool functions_shown = settings->settingActive (RKObjectListViewSettings::ShowObjectsFunction);
+	bool functions_configurable = settings->optionConfigurable (RKObjectListViewSettings::ShowObjectsFunction);
+
+	bool vars_shown = settings->settingActive (RKObjectListViewSettings::ShowObjectsVariable);
+	bool vars_configurable = settings->optionConfigurable (RKObjectListViewSettings::ShowObjectsVariable);
+
+	bool containers_shown = settings->settingActive (RKObjectListViewSettings::ShowObjectsContainer);
+	bool containers_configurable = settings->optionConfigurable (RKObjectListViewSettings::ShowObjectsContainer);
+
+	if (functions_configurable && (vars_configurable || containers_configurable)) group->show ();
+	else group->hide ();
+
+	if (functions_shown && vars_shown && containers_shown) {
+		all->setChecked (true);
+	} else if (vars_shown && containers_shown) {
+		nonfunctions->setChecked (true);
+	} else if (functions_shown && (!(vars_shown || containers_shown))) {
+		functions->setChecked (true);
+	} else {
+		all->setChecked (false);
+		nonfunctions->setChecked (false);
+		functions->setChecked (false);
+	}
+}
+
+void RKObjectListViewSettingsWidget::modeActivated (int mode) {
+	RK_TRACE (APP);
+
+	if (mode == All) {
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsFunction, RKObjectListViewSettings::Yes);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsVariable, RKObjectListViewSettings::Yes);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsContainer, RKObjectListViewSettings::Yes);
+	} else if (mode == Functions) {
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsFunction, RKObjectListViewSettings::Yes);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsVariable, RKObjectListViewSettings::No);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsContainer, RKObjectListViewSettings::No);
+	} else if (mode == NonFunctions) {
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsFunction, RKObjectListViewSettings::No);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsVariable, RKObjectListViewSettings::Yes);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsContainer, RKObjectListViewSettings::Yes);
+	} else {
+		RK_ASSERT (false);
+	}
+}
+
+void RKObjectListViewSettingsWidget::boxChanged (int) {
+	RK_TRACE (APP);
+
+	if (sender () == all_envirs) {
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments, all_envirs->isChecked () ? RKObjectListViewSettings::Yes : RKObjectListViewSettings::No);
+	} else {
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsHidden, hidden_objects->isChecked () ? RKObjectListViewSettings::Yes : RKObjectListViewSettings::No);
 	}
 }
 

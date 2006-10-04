@@ -362,9 +362,9 @@ bool RKObjectListViewSettings::shouldShowObject (RObject *object) {
 	RK_TRACE (APP);
 
 	if (object->getShortName ().startsWith (".")) {
-		if (object->isType (RObject::GlobalEnv)) return true;
-		return (settings[ShowObjectsHidden] >= Yes);
-	} else if (object->isType (RObject::ToplevelEnv)) {
+		if ((!object->isType (RObject::GlobalEnv)) && (settings[ShowObjectsHidden] <= No)) return false;
+	}
+	if (object->isType (RObject::ToplevelEnv)) {
 		if (object->isType (RObject::GlobalEnv)) return true;
 		return (settings[ShowObjectsAllEnvironments] >= Yes);
 	} else if (object->isType (RObject::Function)) {
@@ -454,19 +454,5 @@ bool RKObjectListViewSettings::optionConfigurable (Settings setting) {
 	if (settings[setting] == Never) return false;
 	return true;
 }
-
-//////////////////// RKObjectListViewSettingsWidget //////////////////////////
-RKObjectListViewSettingsWidget::RKObjectListViewSettingsWidget (RKObjectListViewSettings *settings, QWidget *parent) : QWidget (parent) {
-	RK_TRACE (APP);
-}
-
-RKObjectListViewSettingsWidget::~RKObjectListViewSettingsWidget () {
-	RK_TRACE (APP);
-}
-
-void RKObjectListViewSettingsWidget::settingsChanged () {
-	RK_TRACE (APP);
-}
-
 
 #include "rkobjectlistview.moc"

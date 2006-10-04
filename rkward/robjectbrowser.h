@@ -20,9 +20,13 @@
 #include <qwidget.h>
 
 class RKObjectListView;
+class RKObjectListViewSettings;
 class RKListViewItem;
 class QListViewItem;
 class QPushButton;
+class QRadioButton;
+class QButtonGroup;
+class QCheckBox;
 class QPopupMenu;
 class RObject;
 class RKCommandEditorWindow;
@@ -61,6 +65,32 @@ private:
 
 	QPushButton *update_button;
 	RKObjectListView *list_view;	
+};
+
+/** This class provides a widget to switch quickly between the most important RKObjectListViewSettings */
+class RKObjectListViewSettingsWidget : public QWidget {
+	Q_OBJECT
+public:
+	RKObjectListViewSettingsWidget (RKObjectListViewSettings *settings, QWidget *parent);
+	~RKObjectListViewSettingsWidget ();
+
+	enum Modes {
+		All = 0,
+		NonFunctions = 1,
+		Functions = 2
+	};
+public slots:
+	void settingsChanged ();
+	void modeActivated (int mode);
+	void boxChanged (int);
+private:
+	QButtonGroup *group;
+	QRadioButton *all;
+	QRadioButton *nonfunctions;
+	QRadioButton *functions;
+	QCheckBox *all_envirs;
+	QCheckBox *hidden_objects;
+	RKObjectListViewSettings *settings;
 };
 
 #endif

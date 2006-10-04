@@ -137,6 +137,7 @@ public:
 	void setSetting (Settings setting, State to);
 	State getSetting (Settings setting);
 	bool settingActive (Settings setting);
+	bool optionConfigurable (Settings setting);
 
 	bool shouldShowObject (RObject *object);
 
@@ -150,24 +151,12 @@ public slots:
 private:
 	State *settings;
 	bool *settings_default;
-	bool optionConfigurable (Settings setting);
 	void insertPopupItem (QPopupMenu *menu, Settings setting, const QString &text);
 	void createContextMenus ();
 	void updateSelf ();
 
 	QPopupMenu *show_objects_menu;
 	QPopupMenu *show_fields_menu;
-};
-
-class RKObjectListViewSettingsWidget : public QWidget {
-	Q_OBJECT
-public:
-	RKObjectListViewSettingsWidget (RKObjectListViewSettings *settings, QWidget *parent);
-	~RKObjectListViewSettingsWidget ();
-public slots:
-	void settingsChanged ();
-private:
-	RKObjectListViewSettings *settings;
 };
 
 #endif
