@@ -277,10 +277,9 @@
 	type <- 0
 
 # Do not change the order! Make sure all fields exist, even if empty
-	ret = list ()
 
 # 1: name should always be first
-	ret$name <- as.character (name)
+	name <- as.character (name)
 
 # 2: classification
 	if (is.data.frame (x)) type = type + 1
@@ -301,44 +300,44 @@
 	}
 	if (!is.null (attr (x, ".rk.meta"))) type = type + 2048
 	if (misplaced) type <- type + 4096
-	ret$type <- as.integer (type)
+	type <- as.integer (type)
 
 # 3: classes
-	ret$classes <- class (x)
-	if (is.null (ret$classes)) ret$classes = ""
+	classes <- class (x)
+	if (is.null (classes)) classes = ""
 
 # 4: meta info
-	ret$meta <- .rk.get.meta (x)
-	if (is.null (ret$meta)) ret$meta <- ""
+	meta <- .rk.get.meta (x)
+	if (is.null (meta)) meta <- ""
 
 # 5: dimensionality
-	ret$dims <- dim(x)
-	if (is.null (ret$dims)) ret$dims <- length (x)	# handling for objects that - according to R - do not have a dimension (such as vectors, functions, etc.)
-	if (is.null (ret$dims)) ret$dims <- 0	# according to help ("length"), we need to play safe
-	ret$dims <- as.integer (ret$dims)
+	dims <- dim(x)
+	if (is.null (dims)) dims <- length (x)	# handling for objects that - according to R - do not have a dimension (such as vectors, functions, etc.)
+	if (is.null (dims)) dims <- 0	# according to help ("length"), we need to play safe
+	dims <- as.integer (dims)
 
 # 6: Special info valid for some objects ony. This should always be last in the returned structure, as the number of fields may vary
 	if (cont) {		# a container
 		if (is.environment (x)) {
-			ret$sub <- .rk.get.environment.children (x, envlevel+1, namespacename)
+			sub <- .rk.get.environment.children (x, envlevel+1, namespacename)
 		} else {
+			sub <- list ()
 			nms <- names (x)
 			if (!is.null (nms)) {
 				i <- 0
-				sub <- list ()
 				for (child in x) {
 					i <- i+1
 					sub[[nms[i]]] <- .rk.get.structure (child, nms[i])
 				}
-				ret$sub <- sub
 			}
 		}
+		return (invisible (list (name, type, classes, meta, dims, sub)))
 	} else if (fun) {	# a function
-		ret$argnames <- as.character (names (formals (x)))
-		ret$argvalues <- as.character (formals (x))
+		argnames <- as.character (names (formals (x)))
+		argvalues <- as.character (formals (x))
+		return (invisible (list (name, type, classes, meta, dims, argnames, argvalues)))
 	}
-
-	ret
+	return (invisible (list (name, type, classes, meta, dims)))
 }
 
 ".rk.get.environment.children" <- function (x, envlevel=0, namespacename=NULL) {
@@ -346,15 +345,17 @@
 
 	if (envlevel < 2) {		# prevent infinite recursion
 		lst <- ls (x, all.names=TRUE)
-		for (childname in lst) {
-			misplaced <- FALSE
-			if (!is.null (namespacename)) {
-				tst <- try ({eval (parse (text=paste (namespacename, childname, sep="::")))}, silent=TRUE)
-				if (class (tst) == "try-error") {
-					misplaced <- TRUE
-				}
+		if (is.null (namespacename)) {
+			for (childname in lst) {
+				ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname, envlevel)
 			}
-			ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname, envlevel, misplaced=misplaced)
+		} else {
+			ns <- tryCatch (asNamespace (namespacename), error = function(e) NULL)
+			for (childname in lst) {
+				misplaced <- FALSE
+				if ((!is.null (ns)) && (!exists (childname, envir=ns, inherits=FALSE))) misplaced <- TRUE
+				ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname, envlevel, misplaced=misplaced)
+			}
 		}
 	}
 

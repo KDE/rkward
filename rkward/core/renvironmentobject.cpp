@@ -83,18 +83,15 @@ bool REnvironmentObject::updateStructure (RData *new_data) {
 		if (!RObject::updateStructure (new_data)) return false;
 	}
 
-	RData *children_sub = 0;
 	if (new_data->getDataLength () > 5) {
 		RK_ASSERT (new_data->getDataLength () == 6);
 
-		children_sub = new_data->getStructureVector ()[5];
+		RData *children_sub = new_data->getStructureVector ()[5];
 		RK_ASSERT (children_sub->getDataType () == RData::StructureVector);
+		updateChildren (children_sub);
 	} else {
-		// create an empty dummy structure to make sure existing children are removed
-		children_sub = new RData;
-		children_sub->datatype = RData::StructureVector;
+		RK_ASSERT (false);
 	}
-	updateChildren (children_sub);
 
 	return true;
 }
