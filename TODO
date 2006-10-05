@@ -70,7 +70,7 @@ Internal stuff:
 		- add virtual rCommandStarted () function, so receivers can find out, when their command becomes active
 	REmbedInternal:
 		- probably we do not need na_double at all (just any NaN) => less confusion
-	RObjectList:
+	RObjectListView:
 		- most of the time seems to be spent on lookups of object->item
 			- probably it would be smarter to use a reverse map, as item->object should be mostly GUI bound
 			- also use a QHash (Qt4)
@@ -81,11 +81,8 @@ Internal stuff:
 				user does
 				rm (x); x <- function () {}
 				(object list remains the same, watch was not active, but symbol changed)
-				- will need to put an extra notification inside .rk.watch.globalenv ()
+				- will need to put an extra notification inside .rk.watch.globalenv ()? Will that get run?
 			- deal with data changes in edited objects
-	- REnvironmentObjects:
-		- Fetching the tree of all environments using the current method is slooooooow, and has hard to fix bugs, so far
-		- Should have getCommandAsStructure first, and update whole trees in a single command
 	- RExpressionObject as an abstraction for R-Expressions (i.e. manually edited expressions).
 		- It will be possible to "store" these in the RObjectList and select them just like any other object
 		- RKVarslot will allow editing the selected value by hand (or just typing the name in)
