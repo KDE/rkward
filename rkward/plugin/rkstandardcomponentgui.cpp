@@ -131,7 +131,7 @@ void RKStandardComponentGUI::ok () {
 	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->preprocess (), RCommand::Plugin | RCommand::DirectToOutput, QString::null, error_dialog), chain);
 	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->calculate (), RCommand::Plugin | RCommand::DirectToOutput, QString::null, error_dialog), chain);
 	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->printout (), RCommand::Plugin | RCommand::DirectToOutput, QString::null, error_dialog), chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->cleanup (), RCommand::Plugin | RCommand::DirectToOutput, QString::null, error_dialog), chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->cleanup (), RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate, QString::null, error_dialog), chain);
 	RKGlobals::rInterface ()->closeChain (chain);
 }
 
