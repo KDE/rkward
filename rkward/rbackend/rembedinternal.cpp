@@ -379,13 +379,21 @@ TODO: verify we really need this. */
 QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 	char **strings = 0;
 	
-	SEXP strexp;
-	PROTECT (strexp = coerceVector (from_exp, STRSXP));
-	*count = length (strexp);
-	strings = new char* [length (strexp)];
+	// bad format? coerce the vector first
+	if (TYPEOF (from_exp) != STRSXP) {
+		SEXP strexp;
+		PROTECT (strexp = coerceVector (from_exp, STRSXP));
+		QString *list = SEXPToStringList (strexp, count);
+		UNPROTECT (1);
+		return list;
+	}
+
+	// format already good? Avoid coercion (and associated copying)
+	*count = length (from_exp);
+	strings = new char* [*count];
 	unsigned int i = 0;
 	for (; i < *count; ++i) {
-		SEXP dummy = VECTOR_ELT (strexp, i);
+		SEXP dummy = VECTOR_ELT (from_exp, i);
 
 		if (TYPEOF (dummy) != CHARSXP) {
 			strings[i] = strdup ("not defined");	// can this ever happen?
@@ -400,39 +408,49 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 	QString *list = stringsToStringList (strings, i);
 	delete [] strings;
 
-	UNPROTECT (1);	// strexp
-
 	return list;
 }
 
 int *SEXPToIntArray (SEXP from_exp, unsigned int *count) {
 	int *integers;
 
-	SEXP intexp;
-	PROTECT (intexp = coerceVector (from_exp, INTSXP));
-	*count = length (intexp);
+	// bad format? coerce the vector first
+	if (TYPEOF (from_exp) != INTSXP) {
+		SEXP intexp;
+		PROTECT (intexp = coerceVector (from_exp, INTSXP));
+		integers = SEXPToIntArray (intexp, count);
+		UNPROTECT (1);
+		return integers;
+	}
+
+	// format already good? Avoid coercion (and associated copying)
+	*count = length (from_exp);
 	integers = new int[*count];
 	for (unsigned int i = 0; i < *count; ++i) {
-		integers[i] = INTEGER (intexp)[i];
+		integers[i] = INTEGER (from_exp)[i];
 	}
-	UNPROTECT (1);
-
 	return integers;
 }
 
 double *SEXPToRealArray (SEXP from_exp, unsigned int *count) {
 	double *reals;
 
-	SEXP realexp;
-	PROTECT (realexp = coerceVector (from_exp, REALSXP));
-	*count = length (realexp);
+	// bad format? coerce the vector first
+	if (TYPEOF (from_exp) != REALSXP) {
+		SEXP realexp;
+		PROTECT (realexp = coerceVector (from_exp, REALSXP));
+		reals = SEXPToRealArray (realexp, count);
+		UNPROTECT (1);
+		return reals;
+	}
+	
+	// format already good? Avoid coercion (and associated copying)
+	*count = length (from_exp);
 	reals = new double[*count];
 	for (unsigned int i = 0; i < *count; ++i) {
-		reals[i] = REAL (realexp)[i];
+		reals[i] = REAL (from_exp)[i];
 		if (R_IsNaN (reals[i]) || R_IsNA (reals[i]) ) reals[i] = RKGlobals::na_double;
 	}
-	UNPROTECT (1);	// realexp
-
 	return reals;
 }
 
@@ -451,14 +469,15 @@ RData *SEXPToRData (SEXP from_exp) {
 			data->datatype = RData::RealVector;
 			break;
 		case VECSXP:
+			count = 0;
 			count = length (from_exp);
 			{
 				RData **structure_array = new RData*[count];
 				for (unsigned int i=0; i < count; ++i) {
-					SEXP subexp;
-					PROTECT (subexp = VECTOR_ELT (from_exp, i));
+					SEXP subexp = VECTOR_ELT (from_exp, i);
+					//PROTECT (subexp);	// should already be protected as part of the parent from_exp
 					structure_array[i] = SEXPToRData (subexp);
-					UNPROTECT (1);
+					//UNPROTECT (1);
 				}
 				data->data = structure_array;
 			}

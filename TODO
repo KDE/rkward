@@ -70,6 +70,10 @@ Internal stuff:
 		- add virtual rCommandStarted () function, so receivers can find out, when their command becomes active
 	REmbedInternal:
 		- probably we do not need na_double at all (just any NaN) => less confusion
+	RObjectList:
+		- most of the time seems to be spent on lookups of object->item
+			- probably it would be smarter to use a reverse map, as item->object should be mostly GUI bound
+			- also use a QHash (Qt4)
 	Detecting object modifications inside R:
 		- RObjectTables sounds highly interesing. Maybe we can use a transparent table to find out about assignments?
 			- Problem: we can't add this on top of the globalenv () (or at least we're not supposed to)
