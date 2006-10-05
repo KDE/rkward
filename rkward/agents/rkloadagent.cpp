@@ -49,12 +49,11 @@ RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
 	if (!merge) {
 		RKwardApp::getApp ()->slotCloseAllEditors ();
 		update_was_delete = true;
-		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App);
+		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App | RCommand::ObjectListUpdate);
 		RKGlobals::rInterface ()->issueCommand (command);
-		RObjectList::getObjectList ()->updateFromR ();
 	}
 
-	command = new RCommand ("load (\"" + url.path () + "\")", RCommand::App, QString::null, this, WORKSPACE_LOAD_COMMAND);
+	command = new RCommand ("load (\"" + url.path () + "\")", RCommand::App | RCommand::ObjectListUpdate, QString::null, this, WORKSPACE_LOAD_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command);
 
 	connect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (listUpdateComplete ()));

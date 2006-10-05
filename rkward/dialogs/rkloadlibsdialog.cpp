@@ -369,7 +369,7 @@ void LoadUnloadWidget::doLoadUnload () {
 	QListViewItem *loaded = loaded_view->firstChild ();
 	while (loaded) {
 		if (!prev_packages.contains (loaded->text (0))) {
-			RCommand *command = new RCommand ("library (\"" + loaded->text (0) + "\")", RCommand::App, QString::null, this, LOAD_PACKAGE_COMMAND);
+			RCommand *command = new RCommand ("library (\"" + loaded->text (0) + "\")", RCommand::App | RCommand::ObjectListUpdate, QString::null, this, LOAD_PACKAGE_COMMAND);
 			control->addRCommand (command);
 			RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 		}
@@ -389,14 +389,13 @@ void LoadUnloadWidget::doLoadUnload () {
 			loaded = next;
 		}
 		if (!found) {
-			RCommand *command = new RCommand ("detach (package:" + (*it) + ")", RCommand::App, QString::null, this, LOAD_PACKAGE_COMMAND);
+			RCommand *command = new RCommand ("detach (package:" + (*it) + ")", RCommand::App | RCommand::ObjectListUpdate, QString::null, this, LOAD_PACKAGE_COMMAND);
 			control->addRCommand (command);
 			RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 		}
 	}
 
 	control->doNonModal (true);
-	RObjectList::getObjectList ()->updateFromR ();
 }
 
 void LoadUnloadWidget::apply () {

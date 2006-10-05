@@ -75,19 +75,14 @@ Internal stuff:
 			- probably it would be smarter to use a reverse map, as item->object should be mostly GUI bound
 			- also use a QHash (Qt4)
 	Detecting object modifications inside R:
-		- RObjectTables sounds highly interesing. Maybe we can use a transparent table to find out about assignments?
-			- Problem: we can't add this on top of the globalenv () (or at least we're not supposed to)
-				- can we dare to replace R_GlobalEnv with a fake environment which redirects to the real thing?
-		- R_MakeActiveBinding sounds even more interesting. Maybe we can use this to "watch" symbols?!?
-			- can't track removal or creation of new objects this way
-			- seems to work only for top-level objects (elements in a list are not discernable, though we do catch the access to the list itself)
-			- function rk.watch.symbol (), and friends already in public.R seem to do the trick
-		- The plan:
-			- use makeActiveBinding (rk.watch.symbol ()) to track changes in existing objects
-			- after each user or plugin command, simply update the list of toplevel objects in .GlobalEnv
-				- if new objects are found, instantiate them
-				- if objects are missing, remove them
-				- should be fast enough, if done close to the backend
+		- left TODO:
+			- detection hole:
+				x is 1
+				user does
+				rm (x); x <- function () {}
+				(object list remains the same, watch was not active, but symbol changed)
+				- will need to put an extra notification inside .rk.watch.globalenv ()
+			- deal with data changes in edited objects
 	- REnvironmentObjects:
 		- Fetching the tree of all environments using the current method is slooooooow, and has hard to fix bugs, so far
 		- Should have getCommandAsStructure first, and update whole trees in a single command

@@ -213,7 +213,7 @@ void RThread::doCommand (RCommand *command) {
 	}
 
 	// step 3: cleanup
-	checkObjectUpdatesNeeded (command->type () & RCommand::User);
+	checkObjectUpdatesNeeded (command->type () & (RCommand::User | RCommand::ObjectListUpdate));
 
 	// notify GUI-thread that command was finished
 	event = new QCustomEvent (RCOMMAND_OUT_EVENT);

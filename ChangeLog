@@ -1,3 +1,4 @@
+- the object browser is updated automatically when needed
 - allow some more configuration in object browser
 - include all package environments in object list
 - use more efficient data passing to synchronize object list
