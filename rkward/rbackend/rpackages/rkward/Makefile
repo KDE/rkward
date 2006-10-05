@@ -4,7 +4,7 @@ uninstall \
 check:
 
 distdir:
-	@list=`find . -not -name '*~' -and -not -name 'CVS'`; \
+	@list=`find . -not -name '*~' -and -not -wholename '*/.svn*'`; \
 	for file in $$list; do \
 		echo $$file; \
 		if test -d $$file; then \

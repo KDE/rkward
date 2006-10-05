@@ -1,7 +1,7 @@
 
 SUBDIRS = rkward po doc
 
-EXTRA_DIST = admin AUTHORS COPYING ChangeLog INSTALL README TODO rkward.lsm Makefile.cvs configure.in.in
+EXTRA_DIST = admin AUTHORS COPYING ChangeLog INSTALL README TODO rkward.lsm Makefile.svn configure.in.in
 
 KDE_OPTIONS = noautodist
 
