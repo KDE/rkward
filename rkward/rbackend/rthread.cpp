@@ -45,6 +45,11 @@ RThread::RThread () : QThread (), REmbedInternal () {
 	current_output = 0;
 	out_buf_len = 0;
 	output_paused = false;
+
+	toplevel_env_names = 0;
+	toplevel_env_count = 0;
+	global_env_toplevel_names = 0;
+	global_env_toplevel_count = 0;
 }
 
 RThread::~RThread() {
@@ -208,6 +213,10 @@ void RThread::doCommand (RCommand *command) {
 	}
 
 	// step 3: cleanup
+	if (command->type () & RCommand::User) {
+		checkObjectUpdatesNeeded ();
+	}
+
 	// notify GUI-thread that command was finished
 	event = new QCustomEvent (RCOMMAND_OUT_EVENT);
 	event->setData (command);
@@ -428,6 +437,8 @@ int RThread::initialize () {
 	if (error) status |= OtherFail;
 	// TODO: error-handling?
 
+	checkObjectUpdatesNeeded ();
+
 	MUTEX_LOCK;
 	flushOutput ();
 	MUTEX_UNLOCK;
@@ -436,6 +447,64 @@ int RThread::initialize () {
 	qApp->postEvent (RKGlobals::rInterface (), event);
 
 	return status;
+}
+
+void RThread::checkObjectUpdatesNeeded () {
+	RK_TRACE (RBACKEND);
+
+	RKWardRError error;
+	unsigned int count;
+	QString *strings;
+
+	bool search_update_needed = false;
+	bool globalenv_update_needed = false;
+
+// TODO: avoid parsing this over and over again
+	strings = getCommandAsStringVector ("search ()\n", &count, &error);
+	if (count != toplevel_env_count) {
+		search_update_needed = true;
+	} else {
+		for (unsigned int i = 0; i < toplevel_env_count; ++i) {
+			if (toplevel_env_names[i] != strings[i]) {
+				search_update_needed = true;
+				break;
+			}
+		}
+	}
+	delete [] toplevel_env_names;
+	toplevel_env_names = strings;
+	toplevel_env_count = count;
+
+// TODO: avoid parsing this over and over again
+	strings = getCommandAsStringVector ("ls (globalenv (), all.names=TRUE)\n", &count, &error);
+	if (count != global_env_toplevel_count) {
+		globalenv_update_needed = true;
+	} else {
+		for (unsigned int i = 0; i < global_env_toplevel_count; ++i) {
+			bool found = false;
+			for (unsigned int j = 0; j < global_env_toplevel_count; ++j) {
+				if (global_env_toplevel_names[j] == strings[i]) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				globalenv_update_needed = true;
+				break;
+			}
+		}
+	}
+	delete [] global_env_toplevel_names;
+	global_env_toplevel_names = strings;
+	global_env_toplevel_count = count;
+
+	if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
+		QCustomEvent *event = new QCustomEvent (RSEARCHLIST_CHANGED_EVENT);
+		qApp->postEvent (RKGlobals::rInterface (), event);
+	} else if (globalenv_update_needed) {
+		QCustomEvent *event = new QCustomEvent (RGLOBALENV_SYMBOLS_CHANGED_EVENT);
+		qApp->postEvent (RKGlobals::rInterface (), event);
+	}
 }
 
 QString *stringsToStringList (char **strings, int count) {

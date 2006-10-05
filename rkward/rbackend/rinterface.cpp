@@ -24,6 +24,7 @@
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../core/robjectlist.h"
+#include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
 #include "../dialogs/rkloadlibsdialog.h"
 #include "../dialogs/rkreadlinedialog.h"
@@ -161,6 +162,13 @@ void RInterface::customEvent (QCustomEvent *e) {
 		RKwardApp::getApp ()->setRStatus (false);	
 	} else if ((e->type () == RBUSY_EVENT)) {
 		RKwardApp::getApp ()->setRStatus (true);
+	} else if ((e->type () == RSEARCHLIST_CHANGED_EVENT)) {
+		RK_DO (qDebug ("triggering update of object list"), RBACKEND, DL_DEBUG);
+		RObjectList::getObjectList ()->updateFromR ();
+	} else if ((e->type () == RGLOBALENV_SYMBOLS_CHANGED_EVENT)) {
+		RK_DO (qDebug ("triggering update of globalenv"), RBACKEND, DL_DEBUG);
+		// TODO: maybe this should be put inside a chain
+		RObjectList::getGlobalEnv ()->updateFromR ();
 	} else if ((e->type () == R_EVAL_REQUEST_EVENT)) {
 		r_thread->pauseOutput (false); // we may be recursing downwards into event loops here. Hence we need to make sure, we don't create a deadlock
 		processREvalRequest (static_cast<REvalRequest *> (e->data ()));

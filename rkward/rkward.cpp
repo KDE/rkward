@@ -264,7 +264,6 @@ void RKwardApp::startR () {
 	RKGlobals::rInterface ()->startThread ();
 
 	object_browser->initialize ();
-	RObjectList::getObjectList ()->updateFromR ();
 }
 
 void RKwardApp::slotConfigure () {
