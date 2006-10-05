@@ -262,7 +262,9 @@ void RKwardApp::startR () {
 	new RObjectList ();
 
 	RKGlobals::rInterface ()->startThread ();
+
 	object_browser->initialize ();
+	RObjectList::getObjectList ()->updateFromR ();
 }
 
 void RKwardApp::slotConfigure () {
@@ -614,11 +616,6 @@ void RKwardApp::slotDetachWindow () {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->detachWindow (RKWorkplace::mainWorkplace ()->activeAttachedWindow ());
-}
-
-void RKwardApp::newOutput () {
-	RK_TRACE (APP);
-	RKOutputWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise ());
 }
 
 void RKwardApp::setRStatus (bool busy) {

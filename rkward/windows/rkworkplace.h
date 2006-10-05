@@ -75,6 +75,9 @@ public:
 /** Opens a new output window. Currently only a single output window will ever be created. Subsequent calls to the function will not create additional windows right now (but will raise / refresh the output window
 @param url currently ignored! */
 	void openOutputWindow (const KURL &url=KURL ());
+/** signal there was new output, show/raise/refresh the output window as appropriate.
+TODO: this should be obsoleted somehow */
+	void newOutput ();
 
 /** @returns true if there is a known editor for this type of object, false otherwise */
 	bool canEditObject (RObject *object);

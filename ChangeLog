@@ -1,3 +1,6 @@
+- allow some more configuration in object browser
+- include all package environments in object list
+- use more efficient data passing to synchronize object list
 - add (ugly) items for functions and lists to object browser
 - internal cleanups (partially to make porting to KDE4/Qt4 easier)
 - when saving/loading the workspace, save / restore all windows (not just data editors)

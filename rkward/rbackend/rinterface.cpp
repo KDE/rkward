@@ -29,6 +29,7 @@
 #include "../dialogs/rkreadlinedialog.h"
 #include "../agents/showedittextfileagent.h"
 #include "../windows/rcontrolwindow.h"
+#include "../windows/rkworkplace.h"
 
 #include "rkwindowcatcher.h"
 #ifndef DISABLE_RKWINDOWCATCHER
@@ -153,7 +154,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 		RKGlobals::controlWindow ()->removeCommand (command);
 		command->finished ();
 		if (command->type () & RCommand::DirectToOutput) {
-			RKwardApp::getApp ()->newOutput ();
+			RKWorkplace::mainWorkplace ()->newOutput ();
 		}
 		delete command;
 	} else if ((e->type () == RIDLE_EVENT)) {

@@ -86,11 +86,6 @@ public:
 /** initialize the backend */
 	void startR ();
 
-/** signal there was new output, show/raise/refresh the output window as appropriate.
-
-TODO: rename to something sensible, and check whether it is redundant. */
-	void newOutput ();
-
 /** open a workspace. Do not ask whether to save the old one. The old workspace is deleted! */
 	void fileOpenNoSave (const KURL &url);
 /** open a workspace. If the current workspace is not empty, ask wether to save first. */

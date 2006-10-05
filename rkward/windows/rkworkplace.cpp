@@ -32,6 +32,7 @@
 #include "../dataeditor/rkeditor.h"
 #include "../dataeditor/rkeditordataframe.h"
 #include "../dataeditor/rkeditordataframepart.h"
+#include "../settings/rksettingsmoduleoutput.h"
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rcommand.h"
 #include "../rkglobals.h"
@@ -126,6 +127,16 @@ void RKWorkplace::openOutputWindow (const KURL &url) {
 	RKOutputWindow::refreshOutput (true, true);
 	if (windows.find (RKOutputWindow::getCurrentOutput ()) == windows.end ()) {
 		addWindow (RKOutputWindow::getCurrentOutput ());
+	}
+}
+
+void RKWorkplace::newOutput () {
+	RK_TRACE (APP);
+	RKOutputWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise ());
+	if (RKSettingsModuleOutput::autoShow ()) {
+		if (windows.find (RKOutputWindow::getCurrentOutput ()) == windows.end ()) {
+			addWindow (RKOutputWindow::getCurrentOutput ());
+		}
 	}
 }
 
