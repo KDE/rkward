@@ -18,6 +18,7 @@
 #define RTHREAD_H
 
 #include <qthread.h>
+#include <qstringlist.h>
 
 #include "rcommand.h"
 #include "rcommandstack.h"
@@ -39,6 +40,7 @@ struct ROutput;
 #define RSTARTUP_ERROR_EVENT 13000
 #define RSEARCHLIST_CHANGED_EVENT 14000
 #define RGLOBALENV_SYMBOLS_CHANGED_EVENT 14001
+#define RINDIVIDUAL_SYMBOLS_CHANGED_EVENT 14002
 
 /** This class represents the thread the R backend is running in. So to speak, this is where the "eventloop" of R is running. The main thing happening
 in this class, is that an infinite loop is running. Whenever there are commands to be executed, those get evaluated. Also, at regular intervals,
@@ -176,7 +178,8 @@ private:
 	unsigned int toplevel_env_count;
 	QString *global_env_toplevel_names;
 	unsigned int global_env_toplevel_count;
-	void checkObjectUpdatesNeeded ();
+	QStringList changed_symbol_names;
+	void checkObjectUpdatesNeeded (bool check_list);
 };
 
 #endif

@@ -213,9 +213,7 @@ void RThread::doCommand (RCommand *command) {
 	}
 
 	// step 3: cleanup
-	if (command->type () & RCommand::User) {
-		checkObjectUpdatesNeeded ();
-	}
+	checkObjectUpdatesNeeded (command->type () & RCommand::User);
 
 	// notify GUI-thread that command was finished
 	event = new QCustomEvent (RCOMMAND_OUT_EVENT);
@@ -312,6 +310,13 @@ void RThread::handleError (QString *call, int call_length) {
 
 void RThread::handleSubstackCall (QString *call, int call_length) {
 	RK_TRACE (RBACKEND);
+
+	if (call_length == 2) {		// schedule symbol update for later
+		if (call[0] == "ws") {
+			if (!changed_symbol_names.contains (call[1])) changed_symbol_names.append (call[1]);
+			return;
+		}
+	}
 
 	RCommand *prev_command = current_command;
 	REvalRequest *request = new REvalRequest;
@@ -437,7 +442,7 @@ int RThread::initialize () {
 	if (error) status |= OtherFail;
 	// TODO: error-handling?
 
-	checkObjectUpdatesNeeded ();
+	checkObjectUpdatesNeeded (true);
 
 	MUTEX_LOCK;
 	flushOutput ();
@@ -449,62 +454,80 @@ int RThread::initialize () {
 	return status;
 }
 
-void RThread::checkObjectUpdatesNeeded () {
+void RThread::checkObjectUpdatesNeeded (bool check_list) {
 	RK_TRACE (RBACKEND);
 
-	RKWardRError error;
-	unsigned int count;
-	QString *strings;
+	/* NOTE: We're keeping separate lists of the items on the search path, and the toplevel symbols in .GlobalEnv here.
+	This info is also present in RObjectList (and it's children). However: a) in a less convenient form, b) in the other thread. To avoid locking, and other complexity, keeping separate lists seems an ok solution. Keep in mind that only the names of only the toplevel objects are kept, here, so the memory overhead should be minimal */
 
 	bool search_update_needed = false;
 	bool globalenv_update_needed = false;
+	RKWardRError error;
 
-// TODO: avoid parsing this over and over again
-	strings = getCommandAsStringVector ("search ()\n", &count, &error);
-	if (count != toplevel_env_count) {
-		search_update_needed = true;
-	} else {
-		for (unsigned int i = 0; i < toplevel_env_count; ++i) {
-			if (toplevel_env_names[i] != strings[i]) {
-				search_update_needed = true;
-				break;
-			}
-		}
-	}
-	delete [] toplevel_env_names;
-	toplevel_env_names = strings;
-	toplevel_env_count = count;
-
-// TODO: avoid parsing this over and over again
-	strings = getCommandAsStringVector ("ls (globalenv (), all.names=TRUE)\n", &count, &error);
-	if (count != global_env_toplevel_count) {
-		globalenv_update_needed = true;
-	} else {
-		for (unsigned int i = 0; i < global_env_toplevel_count; ++i) {
-			bool found = false;
-			for (unsigned int j = 0; j < global_env_toplevel_count; ++j) {
-				if (global_env_toplevel_names[j] == strings[i]) {
-					found = true;
+	if (check_list) {
+		unsigned int count;
+		QString *strings;
+	
+	// TODO: avoid parsing this over and over again
+		strings = getCommandAsStringVector ("search ()\n", &count, &error);
+		if (count != toplevel_env_count) {
+			search_update_needed = true;
+		} else {
+			for (unsigned int i = 0; i < toplevel_env_count; ++i) {
+				if (toplevel_env_names[i] != strings[i]) {
+					search_update_needed = true;
 					break;
 				}
 			}
-			if (!found) {
-				globalenv_update_needed = true;
-				break;
+		}
+		delete [] toplevel_env_names;
+		toplevel_env_names = strings;
+		toplevel_env_count = count;
+	
+	// TODO: avoid parsing this over and over again
+		strings = getCommandAsStringVector ("ls (globalenv (), all.names=TRUE)\n", &count, &error);
+		if (count != global_env_toplevel_count) {
+			globalenv_update_needed = true;
+		} else {
+			for (unsigned int i = 0; i < global_env_toplevel_count; ++i) {
+				bool found = false;
+				for (unsigned int j = 0; j < global_env_toplevel_count; ++j) {
+					if (global_env_toplevel_names[j] == strings[i]) {
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					globalenv_update_needed = true;
+					break;
+				}
 			}
 		}
+		delete [] global_env_toplevel_names;
+		global_env_toplevel_names = strings;
+		global_env_toplevel_count = count;
+	
+		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
+			QCustomEvent *event = new QCustomEvent (RSEARCHLIST_CHANGED_EVENT);
+			qApp->postEvent (RKGlobals::rInterface (), event);
+		} else if (globalenv_update_needed) {
+			QCustomEvent *event = new QCustomEvent (RGLOBALENV_SYMBOLS_CHANGED_EVENT);
+			qApp->postEvent (RKGlobals::rInterface (), event);
+		}
 	}
-	delete [] global_env_toplevel_names;
-	global_env_toplevel_names = strings;
-	global_env_toplevel_count = count;
 
-	if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
-		QCustomEvent *event = new QCustomEvent (RSEARCHLIST_CHANGED_EVENT);
-		qApp->postEvent (RKGlobals::rInterface (), event);
-	} else if (globalenv_update_needed) {
-		QCustomEvent *event = new QCustomEvent (RGLOBALENV_SYMBOLS_CHANGED_EVENT);
-		qApp->postEvent (RKGlobals::rInterface (), event);
+	if (search_update_needed || globalenv_update_needed) {
+		runCommandInternal (".rk.watch.globalenv ()\n", &error);
+	} else {
+		if (!changed_symbol_names.isEmpty ()) {
+			QStringList *copy = new QStringList (changed_symbol_names);
+			QCustomEvent *event = new QCustomEvent (RINDIVIDUAL_SYMBOLS_CHANGED_EVENT);
+			event->setData (copy);
+			qApp->postEvent (RKGlobals::rInterface (), event);
+		}
 	}
+
+	changed_symbol_names.clear ();
 }
 
 QString *stringsToStringList (char **strings, int count) {

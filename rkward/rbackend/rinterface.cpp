@@ -169,6 +169,19 @@ void RInterface::customEvent (QCustomEvent *e) {
 		RK_DO (qDebug ("triggering update of globalenv"), RBACKEND, DL_DEBUG);
 		// TODO: maybe this should be put inside a chain
 		RObjectList::getGlobalEnv ()->updateFromR ();
+	} else if ((e->type () == RINDIVIDUAL_SYMBOLS_CHANGED_EVENT)) {
+		RK_DO (qDebug ("triggering update of some symbols"), RBACKEND, DL_DEBUG);
+		QStringList *list = static_cast <QStringList *> (e->data ());
+		for (QStringList::const_iterator it = list->constBegin (); it != list->constEnd (); ++it) {
+			RObject *obj = RObjectList::getGlobalEnv ()->findObject (*it);
+			if (obj) {
+				// TODO: maybe this should be put inside a chain
+				obj->updateFromR ();
+			} else {
+				RK_DO (qDebug ("lookup failed for changed symbol %s", (*it).latin1 ()), RBACKEND, DL_WARNING);
+			}
+		}
+		delete list;
 	} else if ((e->type () == R_EVAL_REQUEST_EVENT)) {
 		r_thread->pauseOutput (false); // we may be recursing downwards into event loops here. Hence we need to make sure, we don't create a deadlock
 		processREvalRequest (static_cast<REvalRequest *> (e->data ()));

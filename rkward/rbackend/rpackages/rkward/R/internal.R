@@ -204,49 +204,56 @@
 }
 
 # these functions (not fully functional, yet) can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a backup location, removing it, and replacing it by an active binding to the backup location
-.rk.watched.value.change <- function (k, value) {
-	print (paste ("set", as.character(k)))
-	.rk.watched.symbols[[as.character(k)]] <<- value
-}
 
-.rk.watched.value.retrieve <- function (k) {
-	print (paste ("ret", as.character(k)))
-	.rk.watched.symbols[[as.character(k)]]
-}
+".rk.watched.symbols" <- new.env ()
 
-.rk.make.watch.f <- function (k) {
+".rk.make.watch.f" <- function (k) {
 	function (value) {
 		if (!missing (value)) {
-			.rk.watched.value.change (k, value)
+			assign (k, value, envir=.rk.watched.symbols)
+			.rk.do.call ("ws", k);
 			invisible (value)
-		}
-		else {
-			.rk.watched.value.retrieve (k)
+		} else {
+			get (k, envir=.rk.watched.symbols)
 		}
 	}
 }
 
-.rk.watch.symbol <- function (k) {
-	f <- .rk.make.watch.f (substitute (k))
-	if (!exists (".rk.watched.symbols")) .rk.watched.symbols <<- list ()
-	.rk.watched.symbols[[as.character (substitute (k))]] <<- k
-	lst <- c (substitute (k))
-	rm (list=as.character (lst), envir=parent.frame ())
+".rk.watch.symbol" <- function (k) {
+	f <- .rk.make.watch.f (k)
+	assign (k, get (k, envir=globalenv ()), envir=.rk.watched.symbols)
+	rm (list=k, envir=globalenv ())
 
-	makeActiveBinding (substitute (k), f, parent.frame ())
+	makeActiveBinding (k, f, globalenv ())
 
 	invisible (TRUE)
 }
 
-.rk.unwatch.symbol <- function (k) {
-	lst <- c (substitute (k))
-	rm (list=as.character (lst), envir=parent.frame ())
+# not needed by rkward
+".rk.unwatch.symbol" <- function (k) {
+	rm (list=k, envir=globalenv ())
 
-	eval (substitute (k <<- .rk.watched.symbols[[as.character (substitute (k))]]))
+	k <<- .rk.watched.symbols$k
 
-	.rk.watched.symbols[as.character(substitute (k))] <<- NULL
+	rm (k, envir=.rk.watched.symbols);
 
 	invisible (TRUE)
+}
+
+".rk.watch.globalenv" <- function () {
+	newlist <- ls (globalenv (), all.names=TRUE)
+	oldlist <- ls (.rk.watched.symbols, all.names=TRUE)
+	for (old in oldlist) {		# unwatch no longer present items
+		if (!(old %in% newlist)) {
+			rm (old, envir=.rk.watched.symbols);
+		}
+	}
+
+	for (new in newlist) {		# watch new items
+		if (!(new %in% oldlist)) {
+			.rk.watch.symbol (new)
+		}
+	}
 }
 
 ".rk.get.structure" <- function (x, name, envlevel=0, namespacename=NULL, misplaced=FALSE) {
