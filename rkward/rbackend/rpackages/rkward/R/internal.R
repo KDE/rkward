@@ -6,15 +6,6 @@
 	eval (substitute (attr (x, ".rk.meta") <<- data.frame (d=m, row.names=l)))
 }
 
-".rk.editor.opened" <- function (x) {
-	if (!exists (".rk.editing")) .rk.editing <<- c ()
-	.rk.editing <<- c (.rk.editing, deparse (substitute (x)))
-}
-
-".rk.editor.closed" <- function (x) {
-	if (exists (".rk.editing")) .rk.editing <<- .rk.editing[.rk.editing != deparse (substitute (x))]
-}
-
 ".rk.data.frame.insert.row" <- function (x, index=0) {
 	if ((index == 0) || (index > dim (x)[1])) {	# insert row at end
 		eval (substitute (x[dim(x)[1]+1,] <<- c (NA)))
