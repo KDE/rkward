@@ -236,7 +236,7 @@
 	oldlist <- ls (.rk.watched.symbols, all.names=TRUE)
 	for (old in oldlist) {		# unwatch no longer present items
 		if (!(old %in% newlist)) {
-			rm (old, envir=.rk.watched.symbols);
+			rm (list=old, envir=.rk.watched.symbols);
 		}
 	}
 

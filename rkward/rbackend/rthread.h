@@ -73,11 +73,10 @@ Don't use this class in RKWard directly. Unless you really want to modify the in
 */
 class RThread : public QThread, public REmbedInternal {
 public:
-/** constructor. You need to specify a pointer to the RInterface, so the thread knows where to post its events. Only one RThread should ever be
-created, and that happens in RInterface::RInterface (). */
+/** constructor. Only one RThread should ever be created, and that happens in RInterface::RInterface (). */
 	RThread ();
 /** destructor */
-	~RThread();
+	~RThread ();
 
 /** @see lock (), @see unlock ()*/
 	enum LockType {
@@ -161,6 +160,7 @@ already/still running. */
 /** interrupt processing of the current command. This is much like the user pressing Ctrl+C in a terminal with R. This is probably the only non-portable function in RThread, but I can't see a good way around placing it here, or to make it portable. */
 	void interruptProcessing (bool interrupt);
 
+/** On pthread systems this is the pthread_id of the backend thread. It is needed to send SIGINT to the R backend */
 	Qt::HANDLE thread_id;
 protected:
 /** the main loop. See \ref RThread for a more detailed description */
@@ -172,13 +172,20 @@ private:
 	int locked;
 /** thread is killed. Should exit as soon as possible. @see kill */
 	bool killed;
+/** The internal storage for pauseOutput () */
 	bool output_paused;
 
+/** A copy of the names of the toplevel environments (as returned by "search ()"). */
 	QString *toplevel_env_names;
+/** number of toplevel environments */
 	unsigned int toplevel_env_count;
+/** A copy of the names of the toplevel symbols in the .GlobalEnv. */
 	QString *global_env_toplevel_names;
+/** number of symbols in .GlobalEnv */
 	unsigned int global_env_toplevel_count;
+/** A list of symbols that have been assigned new values during the current command */
 	QStringList changed_symbol_names;
+/** check wether the object list / global environemnt / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
 };
 

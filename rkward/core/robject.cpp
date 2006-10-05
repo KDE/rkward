@@ -198,6 +198,12 @@ void RObject::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
 
 	if (command->getFlags () == ROBJECT_UDPATE_STRUCTURE_COMMAND) {
+		if (command->failed ()) {
+			RK_DO (qDebug ("command failed while trying to update object '%s'. No longer present?", getShortName ().latin1 ()), OBJECTS, DL_INFO);
+			// this may happen, if the object has been removed in the workspace in between
+			RKGlobals::tracker ()->removeObject (this, 0, true);
+			return;
+		}
 		if (parent) parent->updateChildStructure (this, command);		// this may result in a delete, so nothing after this!
 		else updateStructure (command);		// if we have no parent, likely we're the RObjectList 
 		return;

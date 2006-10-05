@@ -165,7 +165,8 @@ void RThread::doCommand (RCommand *command) {
 			command->datatype = RData::IntVector;
 			command->data = getCommandAsIntVector (ccommand, &(command->length), &error);
 		} else if (ctype & RCommand::GetStructuredData) {
-			command->setData (getCommandAsRData (ccommand, &error));
+			RData *data = getCommandAsRData (ccommand, &error);
+			if (data) command->setData (data);
 		} else {
 			runCommandInternal (ccommand, &error, ctype & RCommand::User);
 		}
@@ -469,6 +470,7 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 		QString *strings;
 	
 	// TODO: avoid parsing this over and over again
+		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting search list"), RBACKEND, DL_TRACE);
 		strings = getCommandAsStringVector ("search ()\n", &count, &error);
 		if (count != toplevel_env_count) {
 			search_update_needed = true;
@@ -485,6 +487,7 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 		toplevel_env_count = count;
 	
 	// TODO: avoid parsing this over and over again
+		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting globalenv symbols"), RBACKEND, DL_TRACE);
 		strings = getCommandAsStringVector ("ls (globalenv (), all.names=TRUE)\n", &count, &error);
 		if (count != global_env_toplevel_count) {
 			globalenv_update_needed = true;
@@ -517,6 +520,7 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 	}
 
 	if (search_update_needed || globalenv_update_needed) {
+		RK_DO (qDebug ("checkObjectUpdatesNeeded: updating watches"), RBACKEND, DL_TRACE);
 		runCommandInternal (".rk.watch.globalenv ()\n", &error);
 	} else {
 		if (!changed_symbol_names.isEmpty ()) {

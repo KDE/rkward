@@ -40,7 +40,6 @@ protected:
 private:
 /// needed if file to be loaded is remote
 	QString tmpfile;
-	bool update_was_delete;
 };
 
 #endif

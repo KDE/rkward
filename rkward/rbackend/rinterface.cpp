@@ -176,6 +176,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 			RObject *obj = RObjectList::getGlobalEnv ()->findObject (*it);
 			if (obj) {
 				// TODO: maybe this should be put inside a chain
+				RK_DO (qDebug ("update triggered for %s", (*it).latin1 ()), RBACKEND, DL_DEBUG);
 				obj->updateFromR ();
 			} else {
 				RK_DO (qDebug ("lookup failed for changed symbol %s", (*it).latin1 ()), RBACKEND, DL_WARNING);

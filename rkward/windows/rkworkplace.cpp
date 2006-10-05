@@ -286,7 +286,7 @@ void RKWorkplace::restoreWorkplace (RCommandChain *chain) {
 void RKWorkplace::clearWorkplaceDescription (RCommandChain *chain) {
 	RK_TRACE (APP);
 
-	RKGlobals::rInterface ()->issueCommand ("remove (.rk.workplace.save)", RCommand::App | RCommand::Sync, QString::null, 0, 0, chain); 
+	RKGlobals::rInterface ()->issueCommand ("remove (.rk.workplace.save)", RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, QString::null, 0, 0, chain); 
 }
 
 void RKWorkplace::rCommandDone (RCommand *command) {
