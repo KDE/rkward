@@ -180,6 +180,10 @@ void RKObjectListView::objectRemoved (RObject *object) {
 
 	RKListViewItem *item = findObjectItem (object);
 	RK_ASSERT (item);
+	for (QListViewItemIterator it (item); it.current (); ++it) {
+		object_map.remove (static_cast<RKListViewItem *> (*it));
+		// the children will be deleted with the parent, we just need to remove them from the map
+	}
 	object_map.remove (item);
 	delete item;
 	
@@ -206,7 +210,7 @@ void RKObjectListView::objectPropertiesChanged (RObject *object) {
 
 RKListViewItem *RKObjectListView::findObjectItem (RObject *object) {
 	RK_TRACE (APP);
-	for (ObjectMap::iterator it = object_map.begin (); it != object_map.end (); ++it) {
+	for (ObjectMap::const_iterator it = object_map.constBegin (); it != object_map.constEnd (); ++it) {
 		if (it.data () == object) return it.key ();
 	}
 	return 0;
@@ -317,7 +321,6 @@ int RKListViewItem::width (const QFontMetrics &fm, const QListView * lv, int c) 
 	if (ret > 200) return 200;
 	return ret;
 }
-
 
 //////////////////// RKObjectListViewSettings //////////////////////////
 
