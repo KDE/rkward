@@ -27,6 +27,7 @@
 
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
+#include "../core/renvironmentobject.h"
 #include "../core/rkvariable.h"
 #include "../core/rkmodificationtracker.h"
 #include "../settings/rksettings.h"
@@ -123,8 +124,12 @@ void RKObjectListView::requestedContextMenu (QListViewItem *item, const QPoint &
 
 void RKObjectListView::initialize (bool fetch_list) {
 	RK_TRACE (APP);
+
 	addObject (0, RObjectList::getObjectList (), fetch_list);
-	
+	RKListViewItem *item = findObjectItem (RObjectList::getGlobalEnv ());
+	RK_ASSERT (item);
+	item->setOpen (true);
+
 	connect (RKGlobals::tracker (), SIGNAL (objectRemoved (RObject *)), this, SLOT (objectRemoved (RObject*)));
 	connect (RKGlobals::tracker (), SIGNAL (objectPropertiesChanged (RObject *)), this, SLOT (objectPropertiesChanged (RObject*)));
 	connect (RKGlobals::tracker (), SIGNAL (objectAdded (RObject *)), this, SLOT (objectAdded (RObject*)));
