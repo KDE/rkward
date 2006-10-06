@@ -3,9 +3,10 @@
 	}
 	
 	function calculate () {
-?>rk.temp.glm = glm (<? getRK ("model"); ?>, data=<? getRK ("model.data"); ?>)
+?>rk.temp.glm = glm (<? getRK ("model"); ?>, data=<? getRK ("model.table"); ?>)
 rk.temp.labels = <? getRK ("model.labels"); ?> 
-rk.temp.anova = anova (rk.temp.glm)<?
+rk.temp.anova = anova (rk.temp.glm)
+<?
 	}
 	
 	function printout () {

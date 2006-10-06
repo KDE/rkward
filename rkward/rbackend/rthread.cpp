@@ -314,7 +314,10 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 
 	if (call_length == 2) {		// schedule symbol update for later
 		if (call[0] == "ws") {
-			if (!changed_symbol_names.contains (call[1])) changed_symbol_names.append (call[1]);
+			RK_ASSERT (current_command);
+			if ((current_command->type () & RCommand::ObjectListUpdate) || (!current_command->type () & RCommand::Sync)) {		// ignore Sync commands that are not flagged as ObjectListUpdate
+				if (!changed_symbol_names.contains (call[1])) changed_symbol_names.append (call[1]);
+			}
 			return;
 		}
 	}
@@ -523,6 +526,7 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 		RK_DO (qDebug ("checkObjectUpdatesNeeded: updating watches"), RBACKEND, DL_TRACE);
 		runCommandInternal (".rk.watch.globalenv ()\n", &error);
 	} else {
+		// TODO: maybe this has to be done outside the parent if: We may want to also check wether the modified objects are opened, and, if so, update their data
 		if (!changed_symbol_names.isEmpty ()) {
 			QStringList *copy = new QStringList (changed_symbol_names);
 			QCustomEvent *event = new QCustomEvent (RINDIVIDUAL_SYMBOLS_CHANGED_EVENT);
