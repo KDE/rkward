@@ -122,10 +122,12 @@ void RKObjectListView::requestedContextMenu (QListViewItem *item, const QPoint &
 	if (!suppress) menu->popup (pos);
 }
 
-void RKObjectListView::initialize (bool fetch_list) {
+void RKObjectListView::initialize () {
 	RK_TRACE (APP);
 
-	addObject (0, RObjectList::getObjectList (), fetch_list);
+	setUpdatesEnabled (false);
+	addObject (0, RObjectList::getObjectList (), true);
+	setUpdatesEnabled (true);
 	RKListViewItem *item = findObjectItem (RObjectList::getGlobalEnv ());
 	RK_ASSERT (item);
 	item->setOpen (true);
@@ -135,15 +137,24 @@ void RKObjectListView::initialize (bool fetch_list) {
 	connect (RKGlobals::tracker (), SIGNAL (objectAdded (RObject *)), this, SLOT (objectAdded (RObject*)));
 
 	connect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (updateComplete ()));
+	disconnect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (initialize ()));
 	connect (RObjectList::getObjectList (), SIGNAL (updateStarted ()), this, SLOT (updateStarted ()));
 
 	emit (listChanged ());
-	update_in_progress = false;
 	changes = false;
+	updateComplete ();
+}
+
+void RKObjectListView::initializeLater () {
+	RK_TRACE (APP);
+
+	connect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (initialize ()));
+	updateStarted ();
 }
 
 void RKObjectListView::updateComplete () {
 	RK_TRACE (APP);
+
 	setEnabled (true);
 	update_in_progress = false;
 	if (changes) {
@@ -154,6 +165,7 @@ void RKObjectListView::updateComplete () {
 
 void RKObjectListView::updateStarted () {
 	RK_TRACE (APP);
+
 	setEnabled (false);
 	update_in_progress = true;
 }

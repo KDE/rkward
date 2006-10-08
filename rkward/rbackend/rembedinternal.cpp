@@ -90,7 +90,7 @@ int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
 
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 // default implementation seems to return 1 on success, 0 on failure, contrary to some documentation. see unix/std-sys.c
-	if (buf)	return 1;
+	if (buf) return 1;
 	return 0;
 }
 

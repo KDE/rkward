@@ -98,7 +98,6 @@ bool REnvironmentObject::updateStructure (RData *new_data) {
 	} else {
 		RK_ASSERT (false);
 	}
-
 	return true;
 }
 

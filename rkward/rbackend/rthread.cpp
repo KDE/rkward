@@ -386,6 +386,8 @@ void RThread::handleStandardCallback (RCallbackArgs *args) {
 			MUTEX_UNLOCK;
 		}
 	}
+
+	RK_DO (qDebug ("standard callback done"), RBACKEND, DL_DEBUG);
 }
 
 int RThread::initialize () {

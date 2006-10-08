@@ -11,10 +11,14 @@ Bugs:
 	- produce many readline calls (e.g. "for (i in 1:10) readline()") repeatedly and cancel all of them.
 		- Sometimes only the readine is interrupted, sometimes the whole command (might be R's fault? But works fine in plain R)
 		- Occasionally this seems to leave R in a bad (semi-crashed) state
+		- Can't we just return 0 from RReadConsole?
 	- There is definitely a memory leak in handling output!
 		- Produce lots and lots of output -> watch mem usage grow
 		- Probably the RKConsole is to blame (run outside console -> no significant increase)
 			- Maybe the kate-part needs to be reset (syntax parse tree) every once in a while?
+	- A call to "browser ()" *will* crash rkward. I suppose it's a long jump out of the tryEval context.
+		- Maybe overwrite browser () with an error message to avoid the crash
+		- investigate why exactly this happens, and whether it's fixable in R or rkward
 
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org

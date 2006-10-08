@@ -77,7 +77,7 @@ RObjectBrowser::~RObjectBrowser () {
 void RObjectBrowser::initialize () {
 	RK_TRACE (APP);
 
-	list_view->initialize (true);
+	list_view->initializeLater ();
 	
 	connect (update_button, SIGNAL (clicked ()), this, SLOT (updateButtonClicked ()));
 }

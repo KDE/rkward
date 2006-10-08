@@ -38,8 +38,7 @@ public:
 	
 	~RKObjectListView ();
 
-/** Takes care initializing the RKObjectListView (delayed, as the RObjectList may not have been created, yet) and of getting the current list of objects from the RObjectList if fetch_list is set to true*/
-	void initialize (bool fetch_list);
+	void initializeLater ();
 /** @returns the RObject corresponding to the given RKListViewItem or 0 if no such item is known. */
 	RObject *findItemObject (RKListViewItem *item);
 
@@ -58,6 +57,9 @@ signals:
 If you set *suppress to true, showing the context menu will be suppressed. */
 	void aboutToShowContextMenu (RKListViewItem *item, bool *suppress);
 public slots:
+/** Takes care initializing the RKObjectListView (delayed, as the RObjectList may not have been created, yet) and of getting the current list of objects from the RObjectList */
+	void initialize ();
+
 	void updateComplete ();
 	void updateStarted ();
 

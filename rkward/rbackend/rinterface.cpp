@@ -365,8 +365,8 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 
 		bool ok = RKReadLineDialog::readLine (0, i18n ("R backend requests information"), *(args->chars_a), runningCommand (), &result);
 
-		result = result.left (args->int_a - 2) + "\n";
-		qstrcpy (*(args->chars_b), result.latin1 ());
+		result = result.left (args->int_a - 2) + '\n';
+		qstrcpy (*(args->chars_b), result.local8Bit ());
 
 		if (!ok) {
 			args->done = true;		// need to do this at once. Else we risk getting stuck in the standard callback event loop

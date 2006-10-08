@@ -270,7 +270,6 @@ bool RObject::updateName (RData *new_data) {
 		RK_ASSERT (false);
 		name = new_data->getStringVector ()[0];
 	}
-	new_data->discardData ();
 	return changed;
 }
 
@@ -297,7 +296,6 @@ bool RObject::updateType (RData *new_data) {
 		changed = true;
 		type = new_type;
 	}
-	new_data->discardData ();
 	return changed;
 }
 
@@ -360,8 +358,6 @@ bool RObject::updateMeta (RData *new_data) {
 
 		type -= (type & HasMetaObject);
 	}
-
-	new_data->discardData ();
 	return change;
 }
 
