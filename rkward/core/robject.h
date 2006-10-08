@@ -136,6 +136,17 @@ public:
 	static VarType textToType (const QString &text);
 /** Returns the given string in quotes, taking care of escaping quotation marks inside the string. */
 	static QString rQuote (const QString &string);
+// UNIMPLEMENTED
+/** Returns a canonified name given a non-canoified name. Warning! This is not (necessarily) suitable for submission to
+R, only for internal lookup. For submission to R, always use RObject::getFullName (), as it will apply more complicated (and correct) rules depending on object type */
+//	static QString canonifyName (const QString &from);
+/** Function for code completion: given the partial name, find all objects matching this partial name
+@param partial_name The partial name to look up
+@param current_list A pointer to a valid (but probably initially empty) RObjectMap. Matches will be added to this list
+@param name_is_canonified internal parameter. Set to true, if the name to match is already canonfied (else it will be canonified internally) */
+//	virtual void findObjectsMatching (const QString &partial_name, RObjectMap *current_list, bool name_is_canonified=false);
+// UNIMPLEMENTED END
+
 
 /** If the object is being edited, returns that editor (in the future probably a list of editors). Else returns 0 */
 	RKEditor *objectOpened ();
