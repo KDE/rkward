@@ -527,6 +527,7 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 	}
 
 	// for safety, let's protect exp for the two print calls below.
+	// TODO: this is not good. It causes an additional PROTECT and UPROTECT. Need to (re-)move printing
 	PROTECT (exp);
 	/* Do NOT ask me why, but the line below is needed for warnings to be printed, while otherwise they would not be shown.
 	Apparently we need to print at least something in order to achieve this. Whatever really happens in Rprintf () to have such an effect, I did not bother to find out. */
@@ -534,7 +535,6 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 
 	Rf_PrintWarnings ();
 
-//	SET_SYMVALUE(R_LastvalueSymbol, exp);
 	UNPROTECT (1);		// exp; We unprotect this, as most of the time the caller is not really interested in the result
 	return exp;
 }

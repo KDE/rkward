@@ -20,7 +20,12 @@ Bugs:
 		- I suppose it's a long jump out of the tryEval context.
 			- do_browser() seems to guard against that. Instead, it's likely that the console io buffer is used, but not set up
 		- investigate why exactly this happens, and whether it's fixable in R or rkward
-	- rnorm () and friends print value only once. R_Visible is 0 on subsequent calls (what in the world is going on, here?)
+		- maybe we can fix this issue (and save other work), by actually running User/Console commands through run_Rmainloop. The command-text would be fed in via R_ReadConsole (would need to keep a buffer). To terminate the loop, we can return 0 there, which should get us out.
+			- How to differentiate readline calls to get new command data from readline calls to get user info?! The prompt may not be realiable enough. Is there other info?
+				- the hist parameter may be a hint, but is also set in do_browser
+				- Does R_ResetConsole play any role in this?
+			- Where would we jump after a SIGINT?
+	- rnorm () and friends auto-print value only once. R_Visible is 0 on subsequent calls (what in the world is going on, here?)
 
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org
