@@ -2,7 +2,7 @@
                           khelpdlg  -  description
                              -------------------
     begin                : Fri Feb 25 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -36,11 +36,11 @@ class RCommandChain;
 
 @author Pierre Ecochard */
 class KHelpDlg : public QWidget, public RCommandReceiver {
-  Q_OBJECT
+	Q_OBJECT
 public:
-    KHelpDlg (QWidget* parent = 0, const char* name = 0);
-    ~KHelpDlg ();
-    void rCommandDone (RCommand *command);
+	KHelpDlg (QWidget* parent = 0, const char* name = 0);
+	~KHelpDlg ();
+	void rCommandDone (RCommand *command);
 
 /** small convenience function to get context help for RKCommandEditorWindow and RKConsole.
 @param context_line The current line
@@ -52,15 +52,13 @@ public slots:
 	void slotFindButtonClicked();
 	void slotResultsListDblClicked( QListViewItem *item, const QPoint &, int );
 private:
-    QComboBox* field;
-    QComboBox* fieldsList;
-    QComboBox* packagesList;
-    QCheckBox* caseSensitiveCheckBox;
-    QCheckBox* fuzzyCheckBox;
-    QPushButton* findButton;
-    QListView* resultsList;
-
-    RCommandChain *chain;
+	QComboBox* field;
+	QComboBox* fieldsList;
+	QComboBox* packagesList;
+	QCheckBox* caseSensitiveCheckBox;
+	QCheckBox* fuzzyCheckBox;
+	QPushButton* findButton;
+	QListView* resultsList;
 };
 
 #endif

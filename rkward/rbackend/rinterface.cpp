@@ -369,6 +369,7 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		qstrcpy (*(args->chars_b), result.local8Bit ());
 
 		if (!ok) {
+			args->int_c = 0;
 			args->done = true;		// need to do this at once. Else we risk getting stuck in the standard callback event loop
 			cancelCommand (runningCommand ());
 			return;

@@ -11,13 +11,14 @@ Bugs:
 	- produce many readline calls (e.g. "for (i in 1:10) readline()") repeatedly and cancel all of them.
 		- Sometimes only the readine is interrupted, sometimes the whole command (might be R's fault? But works fine in plain R)
 		- Occasionally this seems to leave R in a bad (semi-crashed) state
-		- Can't we just return 0 from RReadConsole?
+		- Can't we just return 0 from RReadConsole? We do, but it doesn't help. Maybe in this case we need to send the SIGINT from within the callback (in the backend thread)?
 	- There is definitely a memory leak in handling output!
 		- Produce lots and lots of output -> watch mem usage grow
 		- Probably the RKConsole is to blame (run outside console -> no significant increase)
 			- Maybe the kate-part needs to be reset (syntax parse tree) every once in a while?
-	- A call to "browser ()" *will* crash rkward. I suppose it's a long jump out of the tryEval context.
-		- Maybe overwrite browser () with an error message to avoid the crash
+	- A call to "browser ()" *will* crash rkward.
+		- I suppose it's a long jump out of the tryEval context.
+			- do_browser() seems to guard against that. Instead, it's likely that the console io buffer is used, but not set up
 		- investigate why exactly this happens, and whether it's fixable in R or rkward
 
 Compilation / technical
@@ -111,6 +112,10 @@ Internal stuff:
 	- .rk.get.available.packages ()
 		- use external (file) storage for cache to save mem
 	- can the mutex be made non-recursive? I think so, but don't recall
+	- .rk.get.meta ()
+		- this is surprisingly inefficient, and may account for 5% of startup time (due to being called on all objects while initializing the object list)
+			- use a vector with named rows instead of a dataframe
+				- this is an incompatible change, and will require some porting script
 
 General code:
 	- use constBegin (), constEnd ()

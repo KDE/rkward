@@ -87,10 +87,11 @@ int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
 	args.chars_b = (char **) (&buf);
 	args.int_a = buflen;
 	args.int_b = hist;		// actually, we ignore hist
+	args.int_c = 1;			// not cancelled
 
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 // default implementation seems to return 1 on success, 0 on failure, contrary to some documentation. see unix/std-sys.c
-	if (buf) return 1;
+	if (buf && args.int_c) return 1;
 	return 0;
 }
 

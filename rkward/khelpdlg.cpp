@@ -2,7 +2,7 @@
                           khelpdlg  -  description
                              -------------------
     begin                : Fri Feb 25 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -133,12 +133,12 @@ void KHelpDlg::slotFindButtonClicked () {
 	}
 	
 	QString agrep = "FALSE";
-	if (fuzzyCheckBox->isChecked ()==TRUE) {
+	if (fuzzyCheckBox->isChecked ()) {
 		agrep="NULL";
 	}
 	
 	QString ignoreCase = "TRUE";
-	if(caseSensitiveCheckBox->isChecked ()==TRUE) {
+	if(caseSensitiveCheckBox->isChecked ()) {
 		ignoreCase="FALSE";
 	}
 	
@@ -174,7 +174,6 @@ void KHelpDlg::slotResultsListDblClicked (QListViewItem * item, const QPoint &, 
 		return;
 	}
 	
-	chain=0;
 	QString s="help(\"";
 	s.append (item->text (0));
 	s.append ("\", htmlhelp=TRUE, package= \"");
