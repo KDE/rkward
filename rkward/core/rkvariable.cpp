@@ -347,9 +347,10 @@ void RKVariable::extendToLength (int length) {
 		return;
 	}
 
+	int ilength = length + 1;		// be a little generous
 	int target = myData ()->allocated_length;
 	if (!target) target = INITIAL_ALLOC;
-	while (target < length) target = target * ALLOC_STEP;
+	while (target <= ilength) target = target * ALLOC_STEP;
 	RK_DO (qDebug ("resizing from %d to %d", myData ()->allocated_length, target), OBJECTS, DL_DEBUG);
 
 	QString **new_string_data = new QString*[target];
@@ -434,7 +435,7 @@ void RKVariable::setText (int row, const QString &text) {
 			myData ()->cell_string_data[row] = new QString (text);
 		}
 	} else if (getVarType () == Factor) {
-		if (text.isNull ()) {
+		if (text.isEmpty ()) {
 			myData ()->cell_string_data[row] = na_char;
 		} else if (myData ()->value_labels && myData ()->value_labels->contains (text)) {
 			myData ()->cell_double_data[row] = text.toInt ();
@@ -447,7 +448,7 @@ void RKVariable::setText (int row, const QString &text) {
 		bool ok;
 		myData ()->cell_double_data[row] = text.toDouble (&ok);
 		if (!ok) {
-			if (text.isNull ()) {
+			if (text.isEmpty ()) {
 				myData ()->cell_string_data[row] = na_char;
 			} else {
 				myData ()->invalid_count++;
