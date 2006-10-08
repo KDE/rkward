@@ -48,6 +48,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	connect (list_view, SIGNAL (selectionChanged ()), this, SLOT (objectSelectionChanged ()));
 
 	vbox->addWidget (list_view);
+	list_view->getSettings ()->setSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments, RKObjectListViewSettings::No);
 	list_view->initialize ();
 }
 
