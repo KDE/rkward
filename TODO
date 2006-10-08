@@ -20,6 +20,7 @@ Bugs:
 		- I suppose it's a long jump out of the tryEval context.
 			- do_browser() seems to guard against that. Instead, it's likely that the console io buffer is used, but not set up
 		- investigate why exactly this happens, and whether it's fixable in R or rkward
+	- rnorm () and friends print value only once. R_Visible is 0 on subsequent calls (what in the world is going on, here?)
 
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org

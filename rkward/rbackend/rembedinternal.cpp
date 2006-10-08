@@ -542,7 +542,9 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 /* Basically a safe version of Rf_PrintValue, as yes, Rf_PrintValue may lead to an error and long_jump->crash!
 For example in help (function, htmlhelp=TRUE), when no HTML-help is installed!
 SEXP exp should be PROTECTed prior to calling this function.
-//TODO: I don't think it's meant to be this way. Maybe nag the R-devels about it one day. */
+//TODO: I don't think it's meant to be this way. Maybe nag the R-devels about it one day. 
+//TODO: this is not entirely correct. See PrintValueEnv (), which is what Repl_Console uses (but is hidden)
+*/
 void tryPrintValue (SEXP exp, REmbedInternal::RKWardRError *error) {
 	int ierror = 0;
 	SEXP tryprint, e;
@@ -568,15 +570,16 @@ void REmbedInternal::runCommandInternal (const char *command, RKWardRError *erro
 	if (!print_result) {
 		runCommandInternalBase (command, error);
 	} else {
-		R_Visible = (Rboolean) 1;
+		R_Visible = (Rboolean) 0;
 
 		SEXP exp;
 		PROTECT (exp = runCommandInternalBase (command, error));
 /*		char dummy[100];
 		sprintf (dummy, "type: %d", TYPEOF (exp));
 		Rprintf (dummy, 100); */
-		if (R_Visible) {
-			if (*error == NoError) {
+		if (*error == NoError) {
+			SET_SYMVALUE (R_LastvalueSymbol, exp);
+			if (R_Visible) {
 				tryPrintValue (exp, error);
 			}
 		}
