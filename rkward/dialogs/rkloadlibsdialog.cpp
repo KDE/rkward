@@ -163,7 +163,12 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 	if (install_dependencies) command_string += ", dependencies=TRUE";
 	command_string += ")\n";
 
-	QFile file (QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("install_script.R"));
+// TODO: won't work with some versions of GCC (which ones exactly)?
+//	QFile file (QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("install_script.R"));
+// WORKAROUND:
+	QDir dir = RKSettingsModuleGeneral::filesPath ();
+	QFile file (dir.filePath ("install_script.R"));
+// WORKADOUND END
 	if (file.open (IO_WriteOnly)) {
 		QTextStream stream (&file);
 		stream << "options (repos=" + repos_string + ")\n" + command_string;
