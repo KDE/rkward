@@ -194,8 +194,11 @@
 	eval (substitute (class (x) <<- classes))
 }
 
-# these functions (not fully functional, yet) can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a backup location, removing it, and replacing it by an active binding to the backup location
+"browser" <- function (...) {
+	stop ("Function browser () is disabled, as it will crash rkward. We're investigating this issue.")
+}
 
+# these functions can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a backup environment, removing it, and replacing it by an active binding to the backup location
 ".rk.watched.symbols" <- new.env ()
 
 ".rk.make.watch.f" <- function (k) {
