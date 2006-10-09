@@ -48,6 +48,16 @@ extern "C" {
 #define R_2_3
 #endif
 
+#if (R_VERSION > R_Version(2, 3, 9))
+#define R_2_4
+#endif
+
+#ifdef R_2_4
+#include "Rembedded.h"
+#else
+extern void R_ReplDLLinit (void);
+#endif
+
 // some functions we need that are not declared
 extern int Rf_initEmbeddedR(int argc, char **argv);
 extern SEXP R_ParseVector(SEXP, int, ParseStatus*);
@@ -444,10 +454,12 @@ bool REmbedInternal::startR (int argc, char** argv) {
 	R_CStackLimit = (unsigned long) -1;
 	setup_Rmainloop ();
 	RKGlobals::na_double = NA_REAL;
+	R_ReplDLLinit ();
 	return true;
 #else
 	bool ok = (Rf_initEmbeddedR (argc, argv) >= 0);
 	RKGlobals::na_double = NA_REAL;
+	R_ReplDLLinit ();
 	return ok;
 #endif
 }
