@@ -170,7 +170,7 @@ void RObjectBrowser::contextMenuCallback (RKListViewItem *, bool *) {
 		return;
 	}
 
-	menu->setItemVisible (Help, object->isType (RObject::Function));
+	menu->setItemVisible (Help, !object->isInGlobalEnv ());
 	menu->setItemVisible (Edit, object->canEdit () && RKWorkplace::mainWorkplace ()->canEditObject (object));
 	menu->setItemVisible (View, object->canRead ());
 	menu->setItemVisible (Rename, object->canRename ());
