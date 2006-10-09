@@ -68,15 +68,14 @@ UI-stuff
 	- use RKGlobals::marginHint (), RKGlobals::spacingHint () everywhere
 
 Internal stuff:
-	- maybe we can do stuff like auto-printing, toplevel handlers, syntax error information by using R_ReplDLLdo1 () for user/console commands
-		The command-text would be fed in via R_ReadConsole (would need to keep a buffer).
+	- maybe we can do stuff like auto-printing, (toplevel handlers: no, not those, they are not called in R_ReplDLLdo1 ()), syntax error information by using R_ReplDLLdo1 () for user/console commands. The command-text would be fed in via R_ReadConsole (would need to keep a buffer).
 			- How to differentiate readline calls to get new command data from readline calls to get user info?! The prompt may not be realiable enough. Is there other info?
 				- the hist parameter may be a hint, but is also set in do_browser
 				- Does R_ResetConsole play any role in this?
-				- maybe (but this would really be taking chances) do so by determining, if the buffer belongs to the main Repl_Console (currently that buffer always remains the same during one loop, but can we be certain, this never changes?)
-				- RBusy is set to 0 just before the command data is read!
+				- maybe (but this would really be taking chances) do so by determining, if the buffer belongs to the main Repl_Console (currently that buffer always remains the same during one loop, but can we be certain, this never changes?). Same buffer is used while inside do_browser ().
+				- RBusy is set to 0 just before the command data is read! (but also while inside do_browser ())
 			- Where would we jump after a SIGINT? I suppose we'd have to make sure to clear the buffer before signalling (another mutex)
-			- It's R_ReplDLLinit (), and R_ReplDLLdo1 () for us, not run_Rmainloop!
+			- Is it UTF-8 safe?
 	RCommandReceiver:
 		- add virtual rCommandStarted () function, so receivers can find out, when their command becomes active
 	REmbedInternal:

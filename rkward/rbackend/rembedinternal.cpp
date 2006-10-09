@@ -480,7 +480,7 @@ bool REmbedInternal::registerFunctions (const char *library_path) {
 }
 
 SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *error) {
-// heavy copying from RServe below
+// some copying from RServe below
 	int r_error = 0;
 	ParseStatus status = PARSE_NULL;
 	SEXP cv, pr, exp;
