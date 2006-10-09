@@ -80,10 +80,6 @@ Internal stuff:
 		- add virtual rCommandStarted () function, so receivers can find out, when their command becomes active
 	REmbedInternal:
 		- probably we do not need na_double at all (just any NaN) => less confusion
-	RObjectListView:
-		- most of the time seems to be spent on lookups of object->item
-			- probably it would be smarter to use a reverse map, as item->object should be mostly GUI bound
-			- also use a QHash (Qt4)
 	Detecting object modifications inside R:
 		- left TODO:
 			- detection hole:

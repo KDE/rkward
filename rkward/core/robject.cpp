@@ -102,16 +102,18 @@ QString RObject::getDescription () {
 QString RObject::getObjectDescription () {
 	RK_TRACE (OBJECTS);
 
+#define ESCS replace ('<', "&lt;")
+
 	QString ret;
-	ret.append ("<i>" + getShortName () + "</i>");
-	ret.append ("<br><b>" + i18n ("Full location:") + " </b>" + getFullName ());
+	ret.append ("<i>" + getShortName ().ESCS + "</i>");
+	ret.append ("<br><b>" + i18n ("Full location:") + " </b>" + getFullName ().ESCS);
 	QString lab = getLabel ();
-	if (!lab.isEmpty ()) ret.append ("<br><b>" + i18n ("Label:") + " </b>" + lab);
+	if (!lab.isEmpty ()) ret.append ("<br><b>" + i18n ("Label:") + " </b>" + lab.ESCS);
 	ret.append ("<br><b>" + i18n ("Type:") + " </b>");
 
 	if (isType (Function)) {
 		ret.append (i18n ("Function"));
-		ret.append ("<br><b>" + i18n ("Usage: ") + " </b>" + getShortName () + "(" + static_cast<RFunctionObject *> (this)->printArgs () + ")");
+		ret.append ("<br><b>" + i18n ("Usage: ") + " </b>" + getShortName ().ESCS + "(" + static_cast<RFunctionObject *> (this)->printArgs ().ESCS + ")");
 	} else if (isType (DataFrame)) {
 		ret.append (i18n ("Data frame"));
 	} else if (isType (Array)) {
@@ -139,7 +141,7 @@ QString RObject::getObjectDescription () {
 		}
 	}
 
-	ret.append ("<br><b>" + i18n ("Class(es):") + " </b>" + makeClassString (","));
+	ret.append ("<br><b>" + i18n ("Class(es):") + " </b>" + makeClassString (",").ESCS);
 
 	return ret;
 }
