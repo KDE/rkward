@@ -47,7 +47,7 @@ public:
 @param cursor_pos cursor position in the current line
 Will figure out the word under the cursor, and provide help on that (if there is such a word, and such help exists) */
 	void getContextHelp (const QString &context_line, int cursor_pos);
-
+	void getFunctionHelp (const QString &function_name);
 public slots:
 	void slotFindButtonClicked();
 	void slotResultsListDblClicked( QListViewItem *item, const QPoint &, int );

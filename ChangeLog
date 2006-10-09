@@ -1,3 +1,4 @@
+- RMB option to search help on function objects in object browser
 - show tooltip information on objects in object browser
 - do not crash on call to "browser ()"
 - the object browser is updated automatically when needed

@@ -44,12 +44,13 @@ public:
 
     ~RObjectBrowser ();
 	
-	enum PopupItems { Edit=1, View=2, Rename=3, Copy=4, CopyToGlobalEnv=5, Delete=6 };
+	enum PopupItems { Help=1, Edit=2, View=3, Rename=4, Copy=5, CopyToGlobalEnv=6, Delete=7 };
 	
 public slots:
 	void updateButtonClicked ();
 	void contextMenuCallback (RKListViewItem *item, bool *suppress);
 	
+	void popupHelp ();
 	void popupEdit ();
 	void popupCopy ();
 /** essentially like popupCopy, but does not ask for a name */

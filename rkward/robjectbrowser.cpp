@@ -29,6 +29,7 @@
 #include <kmessagebox.h>
 
 #include "rkward.h"
+#include "khelpdlg.h"
 #include "windows/rkcommandeditorwindow.h"
 #include "rkglobals.h"
 #include "core/robjectlist.h"
@@ -56,13 +57,14 @@ RObjectBrowser::RObjectBrowser () : QWidget () {
 	
 	setCaption (i18n ("Objects in the R workspace"));
 
-	list_view->contextMenu ()->insertItem (i18n ("Edit"), this, SLOT (popupEdit ()), 0, Edit, 0);
-	list_view->contextMenu ()->insertItem (i18n ("View"), this, SLOT (popupView ()), 0, View, 1);
-	list_view->contextMenu ()->insertItem (i18n ("Rename"), this, SLOT (popupRename ()), 0, Rename, 2);
-	list_view->contextMenu ()->insertItem (i18n ("Copy to new symbol"), this, SLOT (popupCopy ()), 0, Copy, 3);
-	list_view->contextMenu ()->insertItem (i18n ("Copy to .GlobalEnv"), this, SLOT (popupCopyToGlobalEnv ()), 0, CopyToGlobalEnv, 4);
-	list_view->contextMenu ()->insertItem (i18n ("Delete"), this, SLOT (popupDelete ()), 0, Delete, 5);
-	list_view->contextMenu ()->insertSeparator (6);
+	list_view->contextMenu ()->insertItem (i18n ("Search Help"), this, SLOT (popupHelp ()), 0, Help, 0);
+	list_view->contextMenu ()->insertItem (i18n ("Edit"), this, SLOT (popupEdit ()), 0, Edit, 1);
+	list_view->contextMenu ()->insertItem (i18n ("View"), this, SLOT (popupView ()), 0, View, 2);
+	list_view->contextMenu ()->insertItem (i18n ("Rename"), this, SLOT (popupRename ()), 0, Rename, 3);
+	list_view->contextMenu ()->insertItem (i18n ("Copy to new symbol"), this, SLOT (popupCopy ()), 0, Copy, 4);
+	list_view->contextMenu ()->insertItem (i18n ("Copy to .GlobalEnv"), this, SLOT (popupCopyToGlobalEnv ()), 0, CopyToGlobalEnv, 5);
+	list_view->contextMenu ()->insertItem (i18n ("Delete"), this, SLOT (popupDelete ()), 0, Delete, 6);
+	list_view->contextMenu ()->insertSeparator (7);
 	connect (list_view, SIGNAL (aboutToShowContextMenu (RKListViewItem*, bool*)), this, SLOT (contextMenuCallback (RKListViewItem*, bool*)));
 	
 	connect (list_view, SIGNAL (doubleClicked (QListViewItem *, const QPoint &, int )), this, SLOT (slotListDoubleClicked (QListViewItem *, const QPoint &, int)));
@@ -85,6 +87,12 @@ void RObjectBrowser::initialize () {
 void RObjectBrowser::updateButtonClicked () {
 	RK_TRACE (APP);
 	RObjectList::getObjectList ()->updateFromR ();
+}
+
+void RObjectBrowser::popupHelp () {
+	RK_TRACE (APP);
+
+	if (list_view->menuObject ()) RKGlobals::helpDialog ()->getFunctionHelp (list_view->menuObject ()->getShortName ());
 }
 
 void RObjectBrowser::popupEdit () {
@@ -151,6 +159,7 @@ void RObjectBrowser::contextMenuCallback (RKListViewItem *, bool *) {
 	QPopupMenu *menu = list_view->contextMenu ();
 
 	if (!object) {
+		menu->setItemVisible (Help, false);
 		menu->setItemVisible (Edit, false);
 		menu->setItemVisible (View, false);
 		menu->setItemVisible (Rename, false);
@@ -161,6 +170,7 @@ void RObjectBrowser::contextMenuCallback (RKListViewItem *, bool *) {
 		return;
 	}
 
+	menu->setItemVisible (Help, object->isType (RObject::Function));
 	menu->setItemVisible (Edit, object->canEdit () && RKWorkplace::mainWorkplace ()->canEditObject (object));
 	menu->setItemVisible (View, object->canRead ());
 	menu->setItemVisible (Rename, object->canRename ());

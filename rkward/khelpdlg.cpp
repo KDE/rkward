@@ -125,7 +125,10 @@ void KHelpDlg::getContextHelp (const QString &context_line, int cursor_pos) {
 	RKGlobals::rInterface ()->issueCommand ("help(\"" + result + "\", htmlhelp=TRUE)[1]", RCommand::App | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
 }
 
-/*$SPECIALIZATION$*/
+void KHelpDlg::getFunctionHelp (const QString &function_name) {
+	RKGlobals::rInterface ()->issueCommand ("help(\"" + function_name + "\", htmlhelp=TRUE)[1]", RCommand::App | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
+}
+
 void KHelpDlg::slotFindButtonClicked () {
 
 	if (field->currentText ().isEmpty ()) {
