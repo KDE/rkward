@@ -39,6 +39,12 @@
 
 #include "../debug.h"
 
+#ifdef __FreeBSD__
+#include <sys/types.h>
+#include <unistd.h>
+#include <pwd.h>
+#endif
+
 #define GET_CURRENT_LIBLOCS_COMMAND 1
 
 RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KDialogBase (KDialogBase::Tabbed, Qt::WStyle_DialogBorder, parent, 0, modal, i18n ("Configure Packages"), KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel | KDialogBase::User1) {
@@ -173,7 +179,12 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 		QTextStream stream (&file);
 		stream << "options (repos=" + repos_string + ")\n" + command_string;
 		if (as_root) {
+#ifdef __FreeBSD__
+			struct passwd *passe = getpwuid(getuid ());
+			stream << QString ("system (\"chown ") + passe->pw_name + " " + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "/*\")\n";
+#else
 			stream << QString ("system (\"chown ") + cuserid (0) + " " + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "/*\")\n";
+#endif
 		}
 		stream << "q ()\n";
 		file.close();
@@ -487,7 +498,9 @@ void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 			RData *reposstring = command->getStructureVector ()[4];
 
 			unsigned int count = package->getDataLength ();
-			RK_ASSERT (count == libpath->getDataLength () == installed->getDataLength () == reposver->getDataLength ());
+			RK_ASSERT (count == libpath->getDataLength ());
+			RK_ASSERT (count == installed->getDataLength ());
+			RK_ASSERT (count == reposver->getDataLength ());
 			for (unsigned int i=0; i < count; ++i) {
 				new QListViewItem (updateable_view, package->getStringVector ()[i], libpath->getStringVector ()[i], installed->getStringVector ()[i], reposver->getStringVector ()[i]);
 			}
@@ -547,7 +560,7 @@ void UpdatePackagesWidget::getListButtonClicked () {
 
 	RCommand *command = new RCommand (".rk.get.old.packages ()", RCommand::App | RCommand::GetStructuredData, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
 
-	RKProgressControl *control = new RKProgressControl (this, i18n ("Please stand by while determining, which package have an update available online."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
+	RKProgressControl *control = new RKProgressControl (this, i18n ("Please stand by while determining, which packages have an update available online."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
 	control->addRCommand (command, true);
 	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 	control->doModal (true);
