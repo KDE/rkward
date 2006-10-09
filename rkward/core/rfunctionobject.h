@@ -37,6 +37,7 @@ public:
 
 /** reimplemented from RObject to handle function arguments */
 	bool updateStructure (RData *new_data);
+	QString printArgs ();
 protected:
 	unsigned int argcount;
 	QString *argnames;

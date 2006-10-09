@@ -136,6 +136,8 @@ public:
 	static VarType textToType (const QString &text);
 /** Returns the given string in quotes, taking care of escaping quotation marks inside the string. */
 	static QString rQuote (const QString &string);
+/** Returns a pretty description of the object, and its most important properties. TODO should this be virtual or not? I suppose, it's a close call. For now, we do all work here with casts */
+	QString getObjectDescription ();
 // UNIMPLEMENTED
 /** Returns a canonified name given a non-canoified name. Warning! This is not (necessarily) suitable for submission to
 R, only for internal lookup. For submission to R, always use RObject::getFullName (), as it will apply more complicated (and correct) rules depending on object type */

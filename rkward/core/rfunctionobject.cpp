@@ -35,6 +35,21 @@ RFunctionObject::~RFunctionObject () {
 	RK_TRACE (OBJECTS);
 }
 
+QString RFunctionObject::printArgs () {
+	RK_TRACE (OBJECTS);
+
+	QString ret;
+	for (unsigned int i = 0; i < argcount; ++i) {
+		if (i) ret.append (", ");
+		ret.append (argnames[i]);
+		if (!argvalues[i].isEmpty ()) {
+			ret.append ("=");
+			ret.append (argvalues[i]);
+		}
+	}
+	return ret;
+}
+
 bool RFunctionObject::updateStructure (RData *new_data) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (new_data->getDataLength () >= 5);

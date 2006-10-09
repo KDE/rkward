@@ -28,6 +28,7 @@
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
+#include "../core/rfunctionobject.h"
 #include "../core/rkvariable.h"
 #include "../core/rkmodificationtracker.h"
 #include "../settings/rksettings.h"
@@ -63,11 +64,16 @@ RKObjectListView::RKObjectListView (QWidget *parent) : QListView (parent) {
 	menu->insertItem (i18n ("Configure Defaults"), this, SLOT (popupConfigure ()));
 	connect (this, SIGNAL (contextMenuRequested (QListViewItem *, const QPoint &, int)), this, SLOT (requestedContextMenu (QListViewItem*, const QPoint&, int)));
 
+	setShowToolTips (false);
+	tip = new RKObjectListViewTip (this);
+
 	objectBrowserSettingsChanged ();
 }
 
 RKObjectListView::~RKObjectListView () {
 	RK_TRACE (APP);
+
+	delete tip;
 }
 
 void RKObjectListView::objectBrowserSettingsChanged () {
@@ -473,6 +479,32 @@ bool RKObjectListViewSettings::optionConfigurable (Settings setting) {
 	if (settings[setting] == Always) return false;
 	if (settings[setting] == Never) return false;
 	return true;
+}
+
+
+///////// RKObjectListViewTip ////////////
+RKObjectListViewTip::RKObjectListViewTip (RKObjectListView *parent) : QToolTip (parent->viewport ()) {
+	RK_TRACE (APP);
+
+	view = parent;
+}
+
+RKObjectListViewTip::~RKObjectListViewTip () {
+	RK_TRACE (APP);
+}
+
+void RKObjectListViewTip::maybeTip (const QPoint &pos) {
+	RK_TRACE (APP);
+
+	RKListViewItem *item = static_cast<RKListViewItem *> (view->itemAt (pos));
+	if (!item) return;
+	RObject *object = view->findItemObject (item);
+	if (!object) return;
+
+	// TODO: move all this to RObject::getDescription () or something similar (and complete it)
+	// merge with age-old code in RObjectViewer
+
+	tip (view->itemRect (item), object->getObjectDescription ());
 }
 
 #include "rkobjectlistview.moc"

@@ -18,12 +18,14 @@
 #define RKOBJECTLISTVIEW_H
 
 #include <qlistview.h>
+#include <qtooltip.h>
 #include <qmap.h>
 
 class RObject;
 class QPixmap;
 class QPopupMenu;
 class RKListViewItem;
+class RKObjectListViewTip;
 class RKObjectListViewSettings;
 
 /**
@@ -89,6 +91,7 @@ private:
 	RObject *menu_object;
 
 	RKObjectListViewSettings *settings;
+	RKObjectListViewTip *tip;
 
 	static QPixmap *icon_function;
 	static QPixmap *icon_list;
@@ -107,6 +110,16 @@ public:
 	~RKListViewItem () {};
 
 	int width (const QFontMetrics &fm, const QListView * lv, int c) const;
+};
+
+class RKObjectListViewTip : public QToolTip {
+protected:
+friend class RKObjectListView;
+	RKObjectListViewTip (RKObjectListView *parent);
+	~RKObjectListViewTip ();
+
+	void maybeTip (const QPoint &pos);
+	RKObjectListView *view;
 };
 
 /** Represents the filter/view settings possible for an RKListView. */

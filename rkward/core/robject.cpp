@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include <qregexp.h>
+#include <klocale.h>
 
 #include "robject.h"
 
@@ -23,8 +24,12 @@
 
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
-#include "rkmodificationtracker.h"
 #include "robjectlist.h"
+#include "rcontainerobject.h"
+#include "rkvariable.h"
+#include "renvironmentobject.h"
+#include "rfunctionobject.h"
+#include "rkmodificationtracker.h"
 
 #include "../debug.h"
 
@@ -92,6 +97,51 @@ QString RObject::getDescription () {
 		}
 	}
 	return getShortName ();;
+}
+
+QString RObject::getObjectDescription () {
+	RK_TRACE (OBJECTS);
+
+	QString ret;
+	ret.append ("<i>" + getShortName () + "</i>");
+	ret.append ("<br><b>" + i18n ("Full location:") + " </b>" + getFullName ());
+	QString lab = getLabel ();
+	if (!lab.isEmpty ()) ret.append ("<br><b>" + i18n ("Label:") + " </b>" + lab);
+	ret.append ("<br><b>" + i18n ("Type:") + " </b>");
+
+	if (isType (Function)) {
+		ret.append (i18n ("Function"));
+		ret.append ("<br><b>" + i18n ("Usage: ") + " </b>" + getShortName () + "(" + static_cast<RFunctionObject *> (this)->printArgs () + ")");
+	} else if (isType (DataFrame)) {
+		ret.append (i18n ("Data frame"));
+	} else if (isType (Array)) {
+		ret.append (i18n ("Array"));
+	} else if (isType (Matrix)) {
+		ret.append (i18n ("Matrix"));
+	} else if (isType (List)) {
+		ret.append (i18n ("List"));
+	} else if (isType (Variable)) {
+		ret.append (i18n ("Variable"));
+		ret.append ("<br><b>" + i18n ("Data Type:") + " </b>" + static_cast<RKVariable *> (this)->getVarTypeString ());
+	} else if (isType (Environment)) {
+		ret.append (i18n ("Environment"));
+	}
+
+	if (isType (Container | Variable)) {
+		if (num_dimensions == 1) {
+			ret.append ("<br><b>" + i18n ("Length: ") + QString::number (dimensions[0]));
+		} else if (num_dimensions > 1) {
+			ret.append ("<br><b>" + i18n ("Dimensions: "));
+			for (unsigned int i=0; i < num_dimensions; ++i) {
+				if (i) ret.append (", ");
+				ret.append (QString::number (dimensions[i]));
+			}
+		}
+	}
+
+	ret.append ("<br><b>" + i18n ("Class(es):") + " </b>" + makeClassString (","));
+
+	return ret;
 }
 
 void RObject::setLabel (const QString &value, bool sync) {

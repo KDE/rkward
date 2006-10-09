@@ -93,13 +93,14 @@ Internal stuff:
 				(object list remains the same, watch was not active, but symbol changed)
 				- will need to put an extra notification inside .rk.watch.globalenv ()? Will that get run?
 			- deal with data changes in edited objects
+	- RFunctionObject:
+		- problem with argument values like "" (or text arguments in general). Need to find a better representation. Maybe use formals () directly, and do all work in RFunctionObject::updateArguments ()
 	- RExpressionObject as an abstraction for R-Expressions (i.e. manually edited expressions).
 		- It will be possible to "store" these in the RObjectList and select them just like any other object
 		- RKVarslot will allow editing the selected value by hand (or just typing the name in)
 			- How to do this nicely UI wise?
 	- RKCancelDialog / RKErrorDialog:
 		- remove these classes. Port to use RKProgressControl instead
-	- instead of delete RObject, call RObject::deleteThis () and check for deleted in rCommandDone ()?
 	- use R_DirtyImage to determine, whether workspace needs to be saved
 	- in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
 	- Object editing / modification tracking:
@@ -160,7 +161,7 @@ Configuration:
 		- stack size (commandline arg --map-ppsize)
 		- disable html help
 	- new dataeditor options:
-		- see below: comments on RKEditorDataFrame
+		- see comments on RKEditorDataFrame
 
 
 ################## Some internal notes below ##############
@@ -221,6 +222,7 @@ File
 	- seems ok now. But maybe we could still use this to catch immediate warning messages (which go to R_Consolefile)?
 
 - still mysterious in warning-handling: 'help (doesnotexist); print ("stuff");'. Why is the order wrong?!
+	- because first both are evaluated, then the warnings are printed. R_ReplIteration works differently in that it stops at each ";" and "\n"
 
 tryCatch (message ("a"), error=function (x) {print ("e"); x$message}, warning=function (y) {print ("w"); conditionMessage(y)}, message=function (z) {print ("m"); conditionCall (z)})
 withCallingHandlers ({message ("a"); stop ("b");}, error=function (x) {print ("e"); x$message}, warning=function (y) {print ("w"); conditionMessage(y)}, message=function (z) {print ("c"); conditionCall (z)})
