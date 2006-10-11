@@ -113,7 +113,6 @@ void RKVariable::rCommandDone (RCommand *command) {
 
 		RK_ASSERT (command->getDataType () == RData::StructureVector);
 		RK_ASSERT (command->getDataLength () == 3);
-		command->printStructure ("");
 
 		RData *data = command->getStructureVector ()[0];
 		RData *levels = command->getStructureVector ()[1];
