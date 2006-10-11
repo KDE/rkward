@@ -315,7 +315,7 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 	if (call_length == 2) {		// schedule symbol update for later
 		if (call[0] == "ws") {
 			RK_ASSERT (current_command);
-			if ((current_command->type () & RCommand::ObjectListUpdate) || (!current_command->type () & RCommand::Sync)) {		// ignore Sync commands that are not flagged as ObjectListUpdate
+			if ((current_command->type () & RCommand::ObjectListUpdate) || (!(current_command->type () & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
 				if (!changed_symbol_names.contains (call[1])) changed_symbol_names.append (call[1]);
 			}
 			return;
