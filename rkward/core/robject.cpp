@@ -221,17 +221,13 @@ void RObject::writeMetaData (RCommandChain *chain) {
 	}
 	
 	QString command_string = ".rk.set.meta (" + getFullName () + ", c (";
-	QString data_string = "), c (";
-	int i=meta_map->size ();
-	for (MetaMap::iterator it = meta_map->begin (); it != meta_map->end (); ++it) {
-		data_string.append (rQuote (it.data ()));
-		command_string.append (rQuote (it.key ()));
-		if (--i) {
-			data_string.append (", ");
+	for (MetaMap::const_iterator it = meta_map->constBegin (); it != meta_map->constEnd (); ++it) {
+		if (it != meta_map->constBegin ()) {
 			command_string.append (", ");
 		}
+		command_string.append (rQuote (it.key ()) + "=" + rQuote (it.data ()));
 	}
-	command_string.append (data_string + "))");
+	command_string.append ("))");
 	
 	RCommand *command = new RCommand (command_string, RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
@@ -452,32 +448,38 @@ void RObject::remove (bool removed_in_workspace) {
 }
 
 //static
-QString RObject::typeToText (VarType var_type) {
-	if (var_type == Unknown) {
+QString RObject::typeToText (RDataType var_type) {
+	if (var_type == DataUnknown) {
 		return "Unknown";
-	} else if (var_type == Number) {
+	} else if (var_type == DataNumeric) {
 		return "Number";
-	} else if (var_type == String) {
+	} else if (var_type == DataCharacter) {
 		return "String";
-	} else if (var_type == Factor) {
+	} else if (var_type == DataFactor) {
 		return "Factor";
+	} else if (var_type == DataLogical) {
+		return "Logical";
 	} else {
+		RK_ASSERT (false);
 		return "Invalid";
 	}
 }
 
 //static 
-RObject::VarType RObject::textToType (const QString &text) {
+RObject::RDataType RObject::textToType (const QString &text) {
 	if (text == "Unknown") {
-		return Unknown;
+		return DataUnknown;
 	} else if (text == "Number") {
-		return Number;
+		return DataNumeric;
 	} else if (text == "String") {
-		return String;
+		return DataCharacter;
 	} else if (text == "Factor") {
-		return Factor;
+		return DataFactor;
+	} else if (text == "Logical") {
+		return DataLogical;
 	} else {
-		return Invalid;
+		RK_ASSERT (false);
+		return DataUnknown;
 	}
 }
 

@@ -57,20 +57,25 @@ public:
 		ToplevelEnv=1024,
 		PackageEnv=2048,
 		HasMetaObject=4096,
-		Misplaced=8192		/** < the object is not in the namespace where it would be expected */
+		Misplaced=8192,		/** < the object is not in the namespace where it would be expected */
+		Numeric=1 << 14,
+		Factor=2 << 14,
+		Character=3 << 14,
+		Logical=4 << 14,
+		DataTypeMask=NumericA | FactorA | CharacterA | LogicalA
+	};
+
+	enum RDataType {
+		DataUnknown=0,
+		DataNumeric=1,
+		DataFactor=2,
+		DataCharacter=3,
+		DataLogical=4
 	};
 
 	#define ROBJECT_TYPE_INTERNAL_MASK (RObject::Container | RObject::Variable | RObject::Workspace | RObject::Environment | RObject::Function)
 /** @returns false if an object of the given old type cannot represent an object of the given new type (e.g. (new_type & RObjectType::Variable), but (old_type & RObjectType::Container)). */
 	static bool isMatchingType (int old_type, int new_type) { return ((old_type & ROBJECT_TYPE_INTERNAL_MASK) == (new_type & ROBJECT_TYPE_INTERNAL_MASK)); };
-/** types of variables, RKWard knows about. See \ref RKVariable */
-	enum VarType {
-		Unknown=0,
-		Number=1,
-		Factor=2,
-		String=3,
-		Invalid=4
-	};
 	
 	QString getShortName ();
 	virtual QString getFullName ();
@@ -130,10 +135,15 @@ public:
 /** array of child objects. Always 0, reimplemented in RContainerObject */
 	virtual RObject **children () { return 0; };
 
-/** returns a textual representation of the given VarType */
-	static QString typeToText (VarType var_type);
+	RDataType getDataType () { return ((RDataType) ((type & DataTypeMask) >> 14)); };
+	void setDataType (RDataType new_type) {
+		int n_type = type - (type & DataTypeMask);
+		type = n_type + (new_type << 14);
+	};
+/** returns a textual representation of the given RDataType */
+	static QString typeToText (RDataType);
 /** converts the given text to a VarType. Returns Invalid on failure */
-	static VarType textToType (const QString &text);
+	static RDataType textToType (const QString &text);
 /** Returns the given string in quotes, taking care of escaping quotation marks inside the string. */
 	static QString rQuote (const QString &string);
 /** Returns a pretty description of the object, and its most important properties. TODO should this be virtual or not? I suppose, it's a close call. For now, we do all work here with casts */

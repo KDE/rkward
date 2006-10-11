@@ -201,7 +201,7 @@ void RKObjectListView::objectRemoved (RObject *object) {
 	// also take care of removing the children of the removed item!
 	// this can NOT be done by using QListViewItemIterator (item), as that is NOT constrained to the children!
 	RObject **children = object->children ();
-	for (unsigned int i = 0; i < object->numChildren (); ++i) {
+	for (int i = 0; i < object->numChildren (); ++i) {
 		objectRemoved (children[i]);
 	}
 
@@ -253,28 +253,30 @@ void RKObjectListView::updateItem (RKListViewItem *item, RObject *object) {
 	item->setText (0, object->getShortName ());
 	item->setText (1, object->getLabel ());
 	if (object->isVariable ()) {
-		item->setText (2, static_cast<RKVariable*> (object)->getVarTypeString ());
+		item->setText (2, RObject::typeToText (object->getDataType ()));
 	}
 	item->setText (3, object->makeClassString ("; "));
 
 	if (object->isDataFrame ()) {
 		item->setPixmap (0, SmallIcon("spreadsheet"));
 	} else if (object->isVariable()) {
-		switch(static_cast<RKVariable*> (object)->getVarType ()) {
-			case RObject::Number:
+		switch(object->getDataType ()) {
+			case RObject::DataNumeric:
 				item->setPixmap (0, SmallIcon("math_paren",12));
 				break;
-			case RObject::Factor:
+			case RObject::DataFactor:
 				item->setPixmap (0, SmallIcon("math_onetwomatrix",12));
 				break;
-			case RObject::String:
+			case RObject::DataCharacter:
 				item->setPixmap (0, SmallIcon("text",12));
 				break;
-			case RObject::Invalid:
-				item->setPixmap (0, SmallIcon("no",12));
-				break;
-			case RObject::Unknown:
+			case RObject::DataLogical:
+				#warning TODO icon for logical
+			case RObject::DataUnknown:
 				item->setPixmap (0, SmallIcon("help",12));
+				break;
+			default:
+				item->setPixmap (0, SmallIcon("no",12));
 				break;
 		}
 	} else if (object->isType (RObject::List)) {

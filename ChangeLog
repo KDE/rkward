@@ -1,3 +1,4 @@
+- storage mode for RKWard meta data was changed -> TODO
 - RMB option to search help on objects from packages in object browser
 - show tooltip information on objects in object browser
 - do not crash on call to "browser ()"

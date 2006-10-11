@@ -18,6 +18,7 @@
 #define RKVARIABLE_H
 
 #include <qstring.h>
+#include <qintdict.h>
 
 #include "robject.h"
 
@@ -39,19 +40,12 @@ public:
 
 	~RKVariable ();
 
-/** The VarType in String representation */
-	QString getVarTypeString ();
-/** The VarType of this variable. Note: This is only the preferred VarType. In R the variable may be stored differently, if it contains illegal values (in that
-case it will be stored as a character vector */
-	RObject::VarType getVarType () { return var_type; };
-/** set the VarType. If sync, the change will be communicated to the backend immediately. See getVarType */
-	void setVarType (RObject::VarType, bool sync=true);
+/** set the VarType. If sync, the change will be communicated to the backend immediately. See RObject::RDataType */
+	void setVarType (RObject::RDataType, bool sync=true);
 
 /** reimplemented from RObject to also store value labels/factor levels (and in the future probably futher info) */
 	void writeMetaData (RCommandChain *chain);
 friend class RContainerObject;
-	RObject::VarType var_type;
-	
 	void rCommandDone (RCommand *command);
 public:
 ////////////// BEGIN: data handling ////////////////////////
@@ -80,11 +74,11 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 /** get the text in pretty form, e.g. rounding numbers to a certain number of digits, replacing numeric values with value labels if available, etc. Formatting is done according to the meta-information stored in the RObject and global user preferences */
 	QString getFormatted (int row);
 /** get a copy of the numeric values of rows starting from from_index, going to to_index. Do not use this before making sure that the rStorage () is really
-numeric! */
+numeric!  TODO: unused  */
 	double *getNumeric (int from_row, int to_row);
 /** set numeric values in the given range. Assumes you provide enough values for the range. If internalStorage is String, all values will be converted to strings, so you should use this function only, if you know you are dealing with a numeric object */
 	void setNumeric (int from_row, int to_row, double *data);
-/** like getNumeric, but returns values as an array of QString*s. */
+/** like getNumeric, but returns values as an array of QString*s. TODO: unused */
 	QString *getCharacter (int from_row, int to_row);
 /** like setNumeric, but sets chars. If internalStorage () is numeric, attempts to convert the given strings to numbers. I.e. the function behaves essentially like setText (), but operates on a range of cells. */
 	void setCharacter (int from_row, int to_row, QString *data);
@@ -150,25 +144,30 @@ numeric! */
 protected:
 /** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData : public EditData {
-/// array of numeric data for the cells.
-		double *cell_double_data;
-/** array of string data for the cells.
-Why is this an array of Qstring* instead of just of QString? The reason is that we need to differentiate three special strings: 1) empty 2) NA 3) unknown / unused. QString.isNull () vs. QString.isEmpty () would buy us two, but that's not enough, unfortunately. */
-		QString **cell_string_data;
-/// the currently allocated length of cell_double_data of cell_string_data. Used to determine, when a re-allocation is required
+		void *cell_data;
+		enum CellState {
+			Unknown=0,
+			Invalid=1,
+			NA=2,
+			Valid=4,
+			UnsyncedInvalidState=4
+		};
+		CellState *cell_states;
+
+/// the currently allocated length of cell_data and cell_states. Used to determine, when a re-allocation is required
 		int allocated_length;
 /// see setSyncing
 		bool immediate_sync;
 /// stores changes if syncing is not immediate
 		ChangeSet *changes;
-/// number of invalid entries
-		int invalid_count;
 /// stores whether there were preivously invalid cells. If so, and there are no longer, now, we may change the mode in the backend.
 		bool previously_valid;
 /// the value-labels or factor levels assigned to this variable. 0 if no values/levels given
 		ValueLabels *value_labels;
 /// the formatting options set for this var (see FormattingOptions) */
 		FormattingOptions *formatting_options;
+/// storage for invalid fields
+		QIntDict<QString> invalid_fields;
 	};
 /** reimplemented from RObject */
 	void allocateEditData ();
@@ -189,10 +188,7 @@ private:
 	void cellsChanged (int from_row, int to_row);
 /** writes the given range of cells to the backend (regardless of whether syncing should be immediate) */
 	void writeData (int from_row, int to_row, RCommandChain *chain=0);
-/** deletes the string data for the given cell */
-	void deleteStringData (int row);
-/** called if a variable was invalid (and therefore stored in a wrong mode in the R backend) and is now valid again. Restores the storage mode in the backend. */
-	void restoreStorageInBackend ();
+	void writeInvalidField (int row, RCommandChain *chain=0);
 /** writes the values labels to the backend */
 	void writeValueLabels (RCommandChain *chain);
 /** creates/parses formatting options from the stored meta-property string. See also: getFormattingOptions () */

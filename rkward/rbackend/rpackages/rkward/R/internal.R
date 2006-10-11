@@ -1,9 +1,17 @@
 ".rk.get.meta" <- function (x) {
-	c (row.names (attr (x, ".rk.meta")), as.vector (attr (x, ".rk.meta")[[1]]), recursive=TRUE)
+	y <- attr (x, ".rk.meta");
+	c (names (y), as.character (y))
 }
 
-".rk.set.meta" <- function (x, l, m) {
-	eval (substitute (attr (x, ".rk.meta") <<- data.frame (d=m, row.names=l)))
+".rk.set.meta" <- function (x, m) {
+	eval (substitute (attr (x, ".rk.meta") <<- m))
+}
+
+".rk.set.invalid.field" <- function (x, r, d) {
+	l <- attr (x, ".rk.invalid.fields");
+	if (is.null (l)) l <- list ();
+	l[[as.character(r)]] <- d;
+	eval (substitute (attr (x, ".rk.invalid.fields") <<- l))
 }
 
 ".rk.data.frame.insert.row" <- function (x, index=0) {
@@ -246,6 +254,17 @@
 	}
 }
 
+".rk.get.vector.data" <- function (x) {
+	ret <- list ();
+	ret$data <- as.vector (x);
+	ret$levels <- levels (x)
+	if (is.null (ret$levels)) ret$levels <- ""
+	i <- attr (x, ".rk.invalid.fields");
+	ret$invalids <- as.character (c (names (i), i));
+	if (is.null (ret$invalids)) ret$invalid <- ""
+	ret
+}
+
 ".rk.get.structure" <- function (x, name, envlevel=0, namespacename=NULL, misplaced=FALSE) {
 	fun <- FALSE
 	cont <- FALSE
@@ -257,21 +276,27 @@
 	name <- as.character (name)
 
 # 2: classification
-	if (is.data.frame (x)) type = type + 1
-	if (is.matrix (x)) type = type + 2
-	if (is.array (x)) type = type + 4
-	if (is.list (x)) type = type + 8
+	if (is.data.frame (x)) type <- type + 1
+	if (is.matrix (x)) type <- type + 2
+	if (is.array (x)) type <- type + 4
+	if (is.list (x)) type <- type + 8
 	if (type != 0) {
-		type = type + 16
+		type <- type + 16
 		cont <- TRUE
-	} else type = 32
-	if (is.function (x)) {
-		fun <- TRUE
-		type = 128
-	}
-	if (is.environment (x)) {
-		type = 256
-		cont <- TRUE
+	} else {
+		if (is.function (x)) {
+			fun <- TRUE
+			type <- 128
+		} else if (is.environment (x)) {
+			type <- 256
+			cont <- TRUE
+		} else {
+			type <- 32
+			if (is.facter (x)) type <- type + 32768			# 2 << 14
+			else if (is.logical (x)) type <- type + 65536		# 4 << 14
+			else if (is.numeric (x)) type <- type + 16384		# 1 << 14
+			else if (is.character (x)) type <- type + 49152		# 3 << 14
+		}
 	}
 	if (!is.null (attr (x, ".rk.meta"))) type = type + 4096
 	if (misplaced) type <- type + 8192

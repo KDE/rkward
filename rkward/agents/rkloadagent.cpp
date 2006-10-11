@@ -54,12 +54,7 @@ RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
 	command = new RCommand ("load (\"" + url.path () + "\")", RCommand::App | RCommand::ObjectListUpdate, QString::null, this, WORKSPACE_LOAD_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command);
 
-	connect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (listUpdateComplete ()));
-	
 	RObjectList::getObjectList ()->setWorkspaceURL (url);
-
-	RKWorkplace::mainWorkplace ()->restoreWorkplace ();
-	RKWorkplace::mainWorkplace ()->clearWorkplaceDescription ();
 }
 
 RKLoadAgent::~RKLoadAgent () {
@@ -74,16 +69,18 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 		if (command->failed ()) {
 			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2").arg (RObjectList::getObjectList ()->getWorkspaceURL ().path ()).arg (command->error ()), i18n ("Error loading workspace"));
 			RObjectList::getObjectList ()->setWorkspaceURL (QString::null);
+		} else {
+			RKWorkplace::mainWorkplace ()->restoreWorkplace ();
+			RKWorkplace::mainWorkplace ()->clearWorkplaceDescription ();
 		}
 		RKwardApp::getApp ()->slotSetStatusReady ();
 		RKwardApp::getApp ()->setCaption (QString::null);	// trigger update of caption
+
+		delete this;
+		return;
+	} else {
+		RK_ASSERT (false);
 	}
-}
-
-void RKLoadAgent::listUpdateComplete () {
-	RK_TRACE (APP);
-
-	delete this;
 }
 
 #include "rkloadagent.moc"

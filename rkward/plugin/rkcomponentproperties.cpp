@@ -740,7 +740,7 @@ bool RKComponentPropertyRObjects::isObjectValid (RObject *object) {
 	if (!types.isEmpty ()) {
 		// TODO: this is not entirely correct, yet
 		if (object->isVariable ()) {
-			if (!types.contains (static_cast<RKVariable *> (object)->getVarTypeString ().lower ())) {
+			if (!types.contains (RObject::typeToText (object->getDataType ()).lower ())) {
 				return false;
 			}
 		} else {

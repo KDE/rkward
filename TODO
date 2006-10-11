@@ -74,6 +74,7 @@ Internal stuff:
 			- Invalid values are stored in a list in an attribute of the variable in question
 			- The corresponding "real" fields are set to NA
 			- Need to add a conversion script. See .rk.get.meta (). Both should be changed at the same time.
+				- Not really, it's already broken, currently, after save / reload
 	- maybe we can do stuff like auto-printing, (toplevel handlers: no, not those, they are not called in R_ReplDLLdo1 ()), syntax error information by using R_ReplDLLdo1 () for user/console commands. The command-text would be fed in via R_ReadConsole (would need to keep a buffer).
 			- How to differentiate readline calls to get new command data from readline calls to get user info?! The prompt may not be realiable enough. Is there other info?
 				- the hist parameter may be a hint, but is also set in do_browser
@@ -95,6 +96,7 @@ Internal stuff:
 				(object list remains the same, watch was not active, but symbol changed)
 				- will need to put an extra notification inside .rk.watch.globalenv ()? Will that get run?
 			- deal with data changes in edited objects
+			- object (list) updates should be run in a substack to ensure they are done in time
 	- RExpressionObject as an abstraction for R-Expressions (i.e. manually edited expressions).
 		- It will be possible to "store" these in the RObjectList and select them just like any other object
 		- RKVarslot will allow editing the selected value by hand (or just typing the name in)

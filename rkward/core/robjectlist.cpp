@@ -189,7 +189,7 @@ RObject *RObjectList::findObject (const QString &name, bool is_canonified) {
 	QString remainder = canonified.section (QChar ('$'), 1);
 
 	for (unsigned int i = 0; i < num_toplevel_environments; ++i) {
-		RObject *found = toplevel_environments[i]->findChild (current_level);
+		RObject *found = toplevel_environments[i]->findObject (current_level, true);
 		if (found) {
 			if (remainder.isEmpty ()) return (found);
 			return (found->findObject (remainder, true));

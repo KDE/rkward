@@ -46,7 +46,7 @@ EditFormatDialog::EditFormatDialog (QWidget *parent, RKVariable *var, int mode) 
 	alignment_group->layout()->setSpacing (RKGlobals::spacingHint ());
 	alignment_group->layout()->setMargin (RKGlobals::marginHint ());
 	QVBoxLayout *group_layout = new QVBoxLayout (alignment_group->layout());
-	group_layout->addWidget (new QRadioButton (i18n ("Default for type '%1'").arg (var->getVarTypeString ()), alignment_group));
+	group_layout->addWidget (new QRadioButton (i18n ("Default for type '%1'").arg (RObject::typeToText (var->getDataType ())), alignment_group));
 	group_layout->addWidget (new QRadioButton (i18n ("Left"), alignment_group));
 	group_layout->addWidget (new QRadioButton (i18n ("Right"), alignment_group));
 	alignment_group->setButton ((int) RKVariable::FormattingOptions::AlignDefault);

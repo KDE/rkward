@@ -33,8 +33,6 @@ public:
 	RKLoadAgent (const KURL &url, bool merge=false);
 
 	~RKLoadAgent ();
-public slots:
-	void listUpdateComplete ();
 protected:
 	void rCommandDone (RCommand *command);
 private:

@@ -33,9 +33,9 @@
 #include "../debug.h"
 
 TwinTableMetaMember::TwinTableMetaMember (QWidget *parent, TwinTable *table) : TwinTableMember (parent, table, 0, 1) {
-	type_values.insert (QString::number (RObject::Number), RObject::typeToText (RObject::Number));
-	type_values.insert (QString::number (RObject::Factor), RObject::typeToText (RObject::Factor));
-	type_values.insert (QString::number (RObject::String), RObject::typeToText (RObject::String));
+	type_values.insert (QString::number (RObject::DataNumeric), RObject::typeToText (RObject::DataNumeric));
+	type_values.insert (QString::number (RObject::DataFactor), RObject::typeToText (RObject::DataFactor));
+	type_values.insert (QString::number (RObject::DataCharacter), RObject::typeToText (RObject::DataCharacter));
 }
 
 TwinTableMetaMember::~TwinTableMetaMember () {
@@ -59,7 +59,7 @@ void TwinTableMetaMember::setText (int row, int col, const QString &text) {
 	} else if (row == LABEL_ROW) {
 		var->setLabel (text, true);
 	} else if (row == TYPE_ROW) {
-		var->setVarType ((RObject::VarType) text.toInt ());
+		var->setVarType ((RObject::RDataType) text.toInt ());
 	} else if (row == FORMAT_ROW) {
 		return var->setFormattingOptionsString (text);
 	} else if (row == LEVELS_ROW) {
@@ -135,7 +135,7 @@ QString TwinTableMetaMember::text (int row, int col) const {
 	} else if (row == LABEL_ROW) {
 		return var->getLabel ();
 	} else if (row == TYPE_ROW) {
-		return QString::number (var->getVarType ());
+		return QString::number (var->getDataType ());
 	} else if (row == FORMAT_ROW) {
 		return var->getFormattingOptionsString ();
 	} else if (row == LEVELS_ROW) {
@@ -156,7 +156,7 @@ QString TwinTableMetaMember::formattedText (int row, int col) const {
 	} else if (row == LABEL_ROW) {
 		return var->getLabel ();
 	} else if (row == TYPE_ROW) {
-		return var->getVarTypeString ();
+		return RObject::typeToText (var->getDataType ());
 	} else if (row == FORMAT_ROW) {
 		return var->getFormattingOptionsString ();
 	} else if (row == LEVELS_ROW) {
