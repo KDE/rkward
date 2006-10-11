@@ -95,8 +95,6 @@ Internal stuff:
 				(object list remains the same, watch was not active, but symbol changed)
 				- will need to put an extra notification inside .rk.watch.globalenv ()? Will that get run?
 			- deal with data changes in edited objects
-	- RFunctionObject:
-		- problem with argument values like "" (or text arguments in general). Need to find a better representation. Maybe use formals () directly, and do all work in RFunctionObject::updateArguments ()
 	- RExpressionObject as an abstraction for R-Expressions (i.e. manually edited expressions).
 		- It will be possible to "store" these in the RObjectList and select them just like any other object
 		- RKVarslot will allow editing the selected value by hand (or just typing the name in)
