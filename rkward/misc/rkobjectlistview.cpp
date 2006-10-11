@@ -198,10 +198,13 @@ void RKObjectListView::objectRemoved (RObject *object) {
 
 	RKListViewItem *item = findObjectItem (object);
 	RK_ASSERT (item);
-	for (QListViewItemIterator it (item); it.current (); ++it) {
-		object_map.remove (static_cast<RKListViewItem *> (*it));
-		// the children will be deleted with the parent, we just need to remove them from the map
+	// also take care of removing the children of the removed item!
+	// this can NOT be done by using QListViewItemIterator (item), as that is NOT constrained to the children!
+	RObject **children = object->children ();
+	for (unsigned int i = 0; i < object->numChildren (); ++i) {
+		objectRemoved (children[i]);
 	}
+
 	object_map.remove (item);
 	delete item;
 	

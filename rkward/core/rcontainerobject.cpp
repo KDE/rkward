@@ -266,7 +266,7 @@ void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) 
 	RK_TRACE (OBJECTS);
 
 	if (!removed_in_workspace) {
-		RCommand *command = new RCommand (removeChildCommand (object), RCommand::App | RCommand::Sync);
+		RCommand *command = new RCommand (removeChildCommand (object), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate);
 		RKGlobals::rInterface ()->issueCommand (command, 0);
 	}
 
