@@ -171,7 +171,7 @@ void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
 	}
 	command.append (")");
 
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync), sync_chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync | RCommand::ObjectListUpdate), sync_chain);
 	for (int col=0; col < table->numTrueCols (); col++) {
 		getColObject (col)->restore (sync_chain);
 	}
@@ -234,13 +234,13 @@ void RKEditorDataFrame::removeObject (RObject *object) {
 	// for now:
 	if (col < 0) return;
 
-	deleteColumn (col);
 	object->setObjectOpened (this, false);
 	
 	for (int i=(col+1); i < numTrueCols (); ++i) {
 		setColObject (i-1, getColObject (i));
 	}
-	setColObject (numTrueCols (), 0);
+	setColObject (numTrueCols () - 1, 0);
+	deleteColumn (col);
 }
 
 void RKEditorDataFrame::restoreObject (RObject *object) {

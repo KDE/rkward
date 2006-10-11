@@ -147,6 +147,8 @@ void TwinTable::deleteColumn (int column) {
 	if ((column >= 0) && (column < numTrueCols ())) {
 		varview->removeColumn (column);
 		dataview->removeColumn (column);
+		varview->updateContents ();
+		dataview->updateContents ();
 	}
 }
 
@@ -473,9 +475,9 @@ int TwinTable::numTrueCols () {
 void TwinTable::setColObject (long int column, RKVariable *object) {
 	RK_TRACE (EDITOR);
 	if (object) {
-		col_map.insert (column, object);
+		col_map.replace (column, object);		// will insert, if not already in dict
 	} else {
-		col_map.take (column);
+		col_map.remove (column);
 	}
 }
 
