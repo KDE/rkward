@@ -52,27 +52,20 @@ public:
 /** the Status enum is used for both keeping track of the entire row and inidvidual cells. For single cells the meaning should be obvious. The entire row
 is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the row are valid and Invalid if _one or more_ cells in the row are invalid, Unknown if _all_ cells in the row are unknown/updating. */
 	enum Status { ValueUnused=0, ValueValid=1, ValueInvalid=2, ValueUnknown=4 };
-/** The storage mode. For most vars this will be numeric. Note that if a single cell in a row is Invalid, the entire row will - in the R-backend - have to be stored as a string. */
-//	enum RStorage { StorageString=0, StorageNumeric=1 };
-/** See Storage enum. Returns how the row is actually saved in the R-backend. */
-//	RStorage rStorage ();
-/** changes the internal storage mode, and also - if possible/necessary - the storage mode in the backend. Warning: this is an expensive operation, as it may involve conversion, deletion, reallocation and copying of data */
-//	void changeStorageMode (RStorage new_mode);
 
 /** sets whether changed data should be synced immediately or not. Set this to off for large paste operations. Rember to call setSyncing (true) and syncDataToR () after the paste is complete */
 	void setSyncing (bool immediate);
 /** syncs pending data changes to the backend */
 	void syncDataToR ();
 	
-/** get the value at the given row in text-form - regardless of the storage mode. */
-	QString getText (int row);
+/** get the value at the given row in text-form - regardless of the storage mode.
+@param pretty: get the text in pretty form, e.g. rounding numbers to a certain number of digits, replacing numeric values with value labels if available, etc. Formatting is done according to the meta-information stored in the RObject and global user preferences */
+	QString getText (int row, bool pretty=false);
 /** get the value at the given row in text-form suitable for submission to R. I.e. strings are quoted, numbers are not, empty values are returned as NA */
 	QString getRText (int row);
 /** set the value at the given row in text-form. Will try to convert the given string to the internal storage format if possible. */
 	void setText (int row, const QString &text);
 
-/** get the text in pretty form, e.g. rounding numbers to a certain number of digits, replacing numeric values with value labels if available, etc. Formatting is done according to the meta-information stored in the RObject and global user preferences */
-	QString getFormatted (int row);
 /** get a copy of the numeric values of rows starting from from_index, going to to_index. Do not use this before making sure that the rStorage () is really
 numeric!  TODO: unused  */
 	double *getNumeric (int from_row, int to_row);
@@ -144,7 +137,8 @@ numeric!  TODO: unused  */
 protected:
 /** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData : public EditData {
-		void *cell_data;
+		QString *cell_strings;
+		double *cell_doubles;
 		enum CellState {
 			Unknown=0,
 			Invalid=1,
@@ -152,7 +146,7 @@ protected:
 			Valid=4,
 			UnsyncedInvalidState=4
 		};
-		CellState *cell_states;
+		int *cell_states;
 
 /// the currently allocated length of cell_data and cell_states. Used to determine, when a re-allocation is required
 		int allocated_length;

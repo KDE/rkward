@@ -124,7 +124,7 @@ QString RObject::getObjectDescription () {
 		ret.append (i18n ("List"));
 	} else if (isType (Variable)) {
 		ret.append (i18n ("Variable"));
-		ret.append ("<br><b>" + i18n ("Data Type:") + " </b>" + static_cast<RKVariable *> (this)->getVarTypeString ());
+		ret.append ("<br><b>" + i18n ("Data Type:") + " </b>" + typeToText (getDataType ()));
 	} else if (isType (Environment)) {
 		ret.append (i18n ("Environment"));
 	}

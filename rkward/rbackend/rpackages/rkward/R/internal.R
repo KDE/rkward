@@ -292,7 +292,7 @@
 			cont <- TRUE
 		} else {
 			type <- 32
-			if (is.facter (x)) type <- type + 32768			# 2 << 14
+			if (is.factor (x)) type <- type + 32768			# 2 << 14
 			else if (is.logical (x)) type <- type + 65536		# 4 << 14
 			else if (is.numeric (x)) type <- type + 16384		# 1 << 14
 			else if (is.character (x)) type <- type + 49152		# 3 << 14

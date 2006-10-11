@@ -62,7 +62,7 @@ public:
 		Factor=2 << 14,
 		Character=3 << 14,
 		Logical=4 << 14,
-		DataTypeMask=NumericA | FactorA | CharacterA | LogicalA
+		DataTypeMask=Numeric | Factor | Character | Logical
 	};
 
 	enum RDataType {

@@ -84,7 +84,7 @@ void TwinTableDataMember::paintCell (QPainter *p, int row, int col, const QRect 
 	QString text;
 	int align = 0;
 	if (var && (row < numTrueRows ())) {
-		text = var->getFormatted (row);
+		text = var->getText (row, true);
 		align = var->getAlignment ();
 	}
 	paintCellInternal (p, row, col, cr, selected, cg, brush_override, pen_override, text, align);
@@ -110,7 +110,7 @@ QWidget *TwinTableDataMember::beginEdit (int row, int col, bool) {
 	if (row >= numTrueRows ()) {
 		table->insertNewRow ();
 	}
-	
+
 	if (var->cellStatus (row) == RKVariable::ValueUnknown) return 0;
 
 	tted = new CellEditor (this, var->getText (row), 0, var->getValueLabels ());
