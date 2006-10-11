@@ -256,12 +256,12 @@
 
 ".rk.get.vector.data" <- function (x) {
 	ret <- list ();
-	ret$data <- as.vector (x);
+	ret$data <- as.vector (unclass (x));
 	ret$levels <- levels (x)
 	if (is.null (ret$levels)) ret$levels <- ""
-	i <- attr (x, ".rk.invalid.fields");
+	i <- attr (x, ".rk.invalid.fields")
 	ret$invalids <- as.character (c (names (i), i));
-	if (is.null (ret$invalids)) ret$invalid <- ""
+	if (length (ret$invalids) == 0) ret$invalids <- ""
 	ret
 }
 

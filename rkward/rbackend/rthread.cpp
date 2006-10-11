@@ -401,10 +401,6 @@ int RThread::initialize () {
 
 	startR (argc, argv);
 
-	for (--argc; argc >= 0; --argc) {
-		delete argv[argc];
-	}
-
 	connectCallbacks ();
 
 	RKWardRError error;

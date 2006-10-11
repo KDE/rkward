@@ -115,6 +115,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 
 		RK_ASSERT (command->getDataType () == RData::StructureVector);
 		RK_ASSERT (command->getDataLength () == 3);
+		command->printStructure ("");
 
 		RData *data = command->getStructureVector ()[0];
 		RData *levels = command->getStructureVector ()[1];
@@ -130,7 +131,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 			// no levels
 		} else {
 			for (unsigned int i=0; i < levels_len; ++i) {
-				myData ()->value_labels->insert (QString::number (i+1), command->getStringVector ()[i]);
+				myData ()->value_labels->insert (QString::number (i+1), levels->getStringVector ()[i]);
 			}
 		}
 
@@ -142,21 +143,21 @@ void RKVariable::rCommandDone (RCommand *command) {
 		} else if (data->getDataType () == RData::RealVector) {
 			setNumeric (0, getLength () - 1, data->getRealVector ());
 		} else if (data->getDataType () == RData::IntVector) {
-			RK_ASSERT (false);		// not a problem, but I'd like to know if / when this happens
-			double *dd = new double[getLength ()];
 			unsigned int len = getLength ();
+			double *dd = new double[len];
 			for (unsigned int i = 0; i < len; ++i) {
-				dd[i] = data->getIntVector ()[i];
+				if (data->getIntVector ()[i] == INT_MIN) dd[i] = NAN;
+				else dd[i] = (double) data->getIntVector ()[i];
 			}
 			setNumeric (0, getLength () - 1, dd);
 			delete [] dd;
 		}
 
 		// now set the invalid fields (only if they are still NAs in the R data)
-		RK_ASSERT (invalids->getDataType () == RData::StringVector);
-		if (invalids->getDataLength () == 1) {
+		if (invalids->getDataLength () <= 1) {
 			// no invalids
 		} else {
+			RK_ASSERT (invalids->getDataType () == RData::StringVector);
 			unsigned int invalids_length = invalids->getDataLength ();
 			RK_ASSERT ((invalids_length % 2) == 0);
 			unsigned int invalids_count = invalids_length / 2;
@@ -528,6 +529,7 @@ QString RKVariable::getLabeled (int row) {
 }
 
 double *RKVariable::getNumeric (int from_row, int to_row) {
+	RK_TRACE (OBJECTS);
 	if (to_row >= getLength ()) {
 		RK_ASSERT (false);
 		return 0;
@@ -540,6 +542,7 @@ double *RKVariable::getNumeric (int from_row, int to_row) {
 }
 
 void RKVariable::setNumeric (int from_row, int to_row, double *data) {
+	RK_TRACE (OBJECTS);
 	RK_ASSERT (to_row < getLength ());
 
 	if (getDataType () == DataCharacter) {
@@ -551,7 +554,16 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 	} else if (getDataType () == DataFactor) {
 		int i = 0;
 		for (int row=from_row; row <= to_row; ++row) {
-			setText (row, QString::number (data[i++], 'g', MAX_PRECISION));
+			if (myData ()->cell_states[row] & RKVarEditData::Invalid) myData ()->cell_states[row] = RKVarEditData::UnsyncedInvalidState;
+			else myData ()->cell_states[row] = 0;
+
+			if (isnan (data[i]) || (!myData ()->value_labels) || (!myData ()->value_labels->contains (QString::number (data[i])))) {
+				myData ()->cell_states[row] |= RKVarEditData::NA;
+			} else {
+				myData ()->cell_states[row] |= RKVarEditData::Valid;
+				myData ()->cell_doubles[row] = data[i];
+			}
+			++i;
 		}
 	} else {
 		int i = 0;
@@ -560,6 +572,7 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 			else myData ()->cell_states[row] = 0;
 
 			if (isnan (data[i])) {
+				qDebug ("nan");
 				myData ()->cell_states[row] |= RKVarEditData::NA;
 			} else {
 				myData ()->cell_states[row] |= RKVarEditData::Valid;
@@ -572,6 +585,7 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 }
 
 QString *RKVariable::getCharacter (int from_row, int to_row) {
+	RK_TRACE (OBJECTS);
 	if (to_row >= getLength ()) {
 		RK_ASSERT (false);
 		return 0;
@@ -590,6 +604,7 @@ QString *RKVariable::getCharacter (int from_row, int to_row) {
 }
 
 void RKVariable::setCharacter (int from_row, int to_row, QString *data) {
+	RK_TRACE (OBJECTS);
 	RK_ASSERT (to_row < getLength ());
 	
 	if (getDataType () == DataCharacter) {
@@ -601,7 +616,7 @@ void RKVariable::setCharacter (int from_row, int to_row, QString *data) {
 			if (data[i].isNull ()) myData ()->cell_states[row] |= RKVarEditData::NA;
 			else myData ()->cell_states[row] |= RKVarEditData::Valid;
 
-			myData ()->cell_strings[row] = QString (data[i++]);
+			myData ()->cell_strings[row] = data[i++];
 		}
 	} else {
 		int i=0;
@@ -614,6 +629,7 @@ void RKVariable::setCharacter (int from_row, int to_row, QString *data) {
 }
 
 void RKVariable::setUnknown (int from_row, int to_row) {
+	RK_TRACE (OBJECTS);
 	RK_ASSERT (to_row < getLength ());
 
 	if ((from_row < 0)) from_row = 0;
@@ -632,10 +648,12 @@ RKVariable::Status RKVariable::cellStatus (int row) {
 }
 
 void RKVariable::removeRow (int row) {
+	RK_TRACE (OBJECTS);
 	removeRows (row, row);
 }
 
 void RKVariable::removeRows (int from_row, int to_row) {
+	RK_TRACE (OBJECTS);
 	for (int row = from_row; row <= to_row; ++row) {
 		myData ()->invalid_fields.remove (row);
 	}
@@ -658,10 +676,12 @@ void RKVariable::removeRows (int from_row, int to_row) {
 }
 
 void RKVariable::insertRow (int row) {
+	RK_TRACE (OBJECTS);
 	insertRows (row, 1);
 }
 
 void RKVariable::insertRows (int row, int count) {
+	RK_TRACE (OBJECTS);
 	int old_len = getLength ();
 	extendToLength (getLength () + count);
 

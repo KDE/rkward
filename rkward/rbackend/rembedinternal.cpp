@@ -358,6 +358,7 @@ int *SEXPToIntArray (SEXP from_exp, unsigned int *count) {
 	integers = new int[*count];
 	for (unsigned int i = 0; i < *count; ++i) {
 		integers[i] = INTEGER (from_exp)[i];
+		if (integers[i] == R_NaInt) integers[i] = INT_MIN;		// this has no effect for now, but if R ever chnages it's R_NaInt, then it will
 	}
 	return integers;
 }
@@ -413,6 +414,11 @@ RData *SEXPToRData (SEXP from_exp) {
 			}
 			data->datatype = RData::StructureVector;
 			break;
+/*		case NILSXP:
+			data->data = 0;
+			data->datatype = RData::NoData;
+			count = 0;
+			break; */
 		case STRSXP:
 		default:
 			data->data = SEXPToStringList (from_exp, &count);
