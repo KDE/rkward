@@ -126,12 +126,12 @@
 }
 
 # overriding q, to ask via GUI instead. Arguments are not interpreted.
-"q" <- function (save = "default", status = 0, runLast = TRUE) {
+"q" <- function (save = "default", status = 0, runLast = TRUE, ...) {
 	.rk.do.call ("quit")
 }
 
-"quit" <- function (save = "default", status = 0, runLast = TRUE) {
-	q (save, status, runLast)
+"quit" <- function (save = "default", status = 0, runLast = TRUE, ...) {
+	q (save, status, runLast, ...)
 }
 
 #".rk.init.handlers" <- function () {
@@ -153,54 +153,6 @@
 #
 #	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
 #}
-
-
-# changed to allow assignment of values not in levels without losing information.
-"[<-.factor" <- function (x, i, value) {
-	ok <- TRUE
-	lx <- levels(x)
-	cx <- oldClass(x)
-	if (is.factor(value))
-		value <- levels(value)[value]
-	m <- match(value, lx)
-	if (any(is.na(m) & !is.na(value))) {
-		m <- value
-		ok <- FALSE
-		mode (x) <- "character"
-		warning("invalid factor level. Dropping factor-class. Restore using rk.restore.factor ().")
-	}
-## here, let m revert to original value to allow temporary storage in different type (probably character)
-## change storage back to 'normal' factor using "match (unclass (x), levels (x))"
-	class(x) <- NULL
-	if (missing(i))
-		x[] <- m
-	else x[i] <- m
-	attr(x, "levels") <- lx
-	if (ok) {
-		class (x) <- cx
-	} else {
-		tx <- cx[cx != "factor"]
-		if (length (tx) < 1) {
-			class (x) <- mode (x)
-		} else {
-			class (x) <- tx
-		}
-	}
-	x
-}
-
-"rk.restore.factor" <- function (x) {
-	t <- match (x, levels (x))
-	if (length (class (x)) > 1) {
-		classes <- c ("factor", class (x))
-	} else {
-		classes <- "factor"
-	}
-	attribs <- attributes (x)
-	eval (substitute (x <<- t))
-	eval (substitute (attributes (x) <<- attribs))
-	eval (substitute (class (x) <<- classes))
-}
 
 # these functions can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a backup environment, removing it, and replacing it by an active binding to the backup location
 ".rk.watched.symbols" <- new.env ()

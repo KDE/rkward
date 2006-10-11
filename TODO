@@ -66,18 +66,18 @@ UI-stuff
 Internal stuff:
 	RKVariable:
 		- Need to add a conversion script. See .rk.get.meta (). Both should be changed at the same time.
-			-Or was it already broken, before?
+			- Or was it already broken, before?
 		- True Support for Logicals
 		- In the current design, RKVariable would not handle storage mode changes from outside well at all
 		- use QIntDict instead of string-map for value-labels / factor levels? Qt4: QHash
 	- maybe we can do stuff like auto-printing, (toplevel handlers: no, not those, they are not called in R_ReplDLLdo1 ()), syntax error information by using R_ReplDLLdo1 () for user/console commands. The command-text would be fed in via R_ReadConsole (would need to keep a buffer).
-			- How to differentiate readline calls to get new command data from readline calls to get user info?! The prompt may not be realiable enough. Is there other info?
-				- the hist parameter may be a hint, but is also set in do_browser
-				- Does R_ResetConsole play any role in this?
-				- maybe (but this would really be taking chances) do so by determining, if the buffer belongs to the main Repl_Console (currently that buffer always remains the same during one loop, but can we be certain, this never changes?). Same buffer is used while inside do_browser ().
-				- RBusy is set to 0 just before the command data is read! (but also while inside do_browser ())
-			- Where would we jump after a SIGINT? I suppose we'd have to make sure to clear the buffer before signalling (another mutex)
-			- Is it UTF-8 safe?
+		- How to differentiate readline calls to get new command data from readline calls to get user info?! The prompt may not be realiable enough. Is there other info?
+			- the hist parameter may be a hint, but is also set in do_browser
+			- Does R_ResetConsole play any role in this?
+			- maybe (but this would really be taking chances) do so by determining, if the buffer belongs to the main Repl_Console (currently that buffer always remains the same during one loop, but can we be certain, this never changes?). Same buffer is used while inside do_browser ().
+			- RBusy is set to 0 just before the command data is read! (but also while inside do_browser ())
+		- Where would we jump after a SIGINT? I suppose we'd have to make sure to clear the buffer before signalling (another mutex)
+		- Is it UTF-8 safe?
 	RCommandReceiver:
 		- add virtual rCommandStarted () function, so receivers can find out, when their command becomes active
 	REmbedInternal:
@@ -113,10 +113,6 @@ Internal stuff:
 	- .rk.get.available.packages ()
 		- use external (file) storage for cache to save mem
 	- can the mutex be made non-recursive? I think so, but don't recall
-	- .rk.get.meta ()
-		- this is surprisingly inefficient, and may account for 5% of startup time (due to being called on all objects while initializing the object list)
-			- use a vector with named rows instead of a dataframe
-				- this is an incompatible change, and will require some porting script
 
 General code:
 	- use constBegin (), constEnd ()
