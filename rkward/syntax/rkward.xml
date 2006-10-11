@@ -126,6 +126,7 @@
 		<itemData name="Output" defStyleNum="dsOthers"/>
 		<!-- KDE default colors: http://accessibility.kde.org/oxygen.php?color=white -->
 		<itemData name="Normal Text" defStyleNum="dsNormal"/>
+		<itemData name="Symbol" defStyleNum="dsNormal"/>
 		<itemData name="Prompt" defStyleNum="dsNormal"/>
 		<itemData name="Keyword" defStyleNum="dsKeyword"/>
 		<itemData name="Identifier" defStyleNum="dsDataType"/>
