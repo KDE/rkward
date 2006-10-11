@@ -390,6 +390,13 @@ void RThread::handleStandardCallback (RCallbackArgs *args) {
 	RK_DO (qDebug ("standard callback done"), RBACKEND, DL_DEBUG);
 }
 
+void RThread::currentCommandWasCancelled () {
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (current_command);
+	current_command->status |= RCommand::Canceled;
+}
+
 int RThread::initialize () {
 	RK_TRACE (RBACKEND);
 

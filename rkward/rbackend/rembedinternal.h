@@ -148,6 +148,8 @@ Otherwise it is very similar to handleSubstackCall (), esp. in that is implement
 @see RCallbackArgs @see RCallbackType */
 	virtual void handleStandardCallback (RCallbackArgs *args) = 0;
 
+	virtual void currentCommandWasCancelled () = 0;
+
 	bool registerFunctions (const char *library_path);
 /** only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++ */
 	static REmbedInternal *this_pointer;

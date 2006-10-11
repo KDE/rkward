@@ -78,5 +78,5 @@ bool RKReadLineDialog::readLine (QWidget *parent, const QString &caption, const 
 	*result = dialog->input->text ();
 	delete dialog;
 
-	return (res != KDialogBase::Cancel);
+	return (res != QDialog::Rejected);
 }

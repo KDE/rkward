@@ -141,6 +141,8 @@ points:
 @see REmbedInternal::handleStandardCallback () */
 	void handleStandardCallback (RCallbackArgs *args);
 
+	void currentCommandWasCancelled ();
+
 /** The command currently being executed. This is used from RInterface::cancelCommand to find out, whether the command to be cancelled is
 already/still running. */
 	RCommand *current_command;

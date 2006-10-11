@@ -368,12 +368,7 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		result = result.left (args->int_a - 2) + '\n';
 		qstrcpy (*(args->chars_b), result.local8Bit ());
 
-		if (!ok) {
-			args->int_c = 0;
-			args->done = true;		// need to do this at once. Else we risk getting stuck in the standard callback event loop
-			cancelCommand (runningCommand ());
-			return;
-		}
+		if (!ok) args->int_c = 0;	// will be cancelled deep inside REmbedInternal, where it's safest
 	} else if ((type == RCallbackArgs::RShowFiles) || (type == RCallbackArgs::REditFiles)) {
 		if ((type == RCallbackArgs::RShowFiles) && (QString (*(args->chars_d)) == "rkwardhtml")) {
 			// not to worry, just some help file to display
