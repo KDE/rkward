@@ -50,8 +50,6 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 	RK_TRACE (OBJECTS);
 
 	if (getDataType () == new_type) {
-		// of course this is not harmful in any way, but in order to catch this kind of use, we raise an assert here for now.
-		RK_ASSERT (false);
 		return;
 	}
 
@@ -217,6 +215,21 @@ void RKVariable::allocateEditData () {
 	for (int i = 0; i < getLength (); ++i) {
 		myData ()->cell_states[i] = RKVarEditData::NA;
 	}
+}
+
+bool RKVariable::updateType (RData *new_data) {
+	RK_TRACE (OBJECTS);
+
+	if (myData ()) {
+		int old_type = type;
+		bool ret = RObject::updateType (new_data);
+		int new_type = type;
+		type = old_type;		// needed to read out the old data
+		setVarType (typeToDataType (new_type), false);
+		type = new_type;
+		return ret;
+	}
+	return RObject::updateType (new_data);
 }
 
 // virtual

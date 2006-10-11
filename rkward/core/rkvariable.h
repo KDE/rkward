@@ -135,6 +135,8 @@ numeric!  TODO: unused  */
 	static QString *unknown_char;
 
 protected:
+/** reimplemented from RObject to change the internal data storage mode, if the var is being edited */
+	bool updateType (RData *new_data);
 /** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData : public EditData {
 		QString *cell_strings;

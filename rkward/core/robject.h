@@ -135,7 +135,8 @@ public:
 /** array of child objects. Always 0, reimplemented in RContainerObject */
 	virtual RObject **children () { return 0; };
 
-	RDataType getDataType () { return ((RDataType) ((type & DataTypeMask) >> 14)); };
+	RDataType getDataType () { return (typeToDataType (type)); };
+	static RDataType typeToDataType (int ftype) { return ((RDataType) ((ftype & DataTypeMask) >> 14)); };
 	void setDataType (RDataType new_type) {
 		int n_type = type - (type & DataTypeMask);
 		type = n_type + (new_type << 14);
@@ -213,7 +214,7 @@ protected:
 /** update type information from the given data.
 @param new_data The command. Make sure it really is the classification field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
 @returns whether this caused any changes */
-	bool updateType (RData *new_data);
+	virtual bool updateType (RData *new_data);
 /** handles updating class names from the given data (common functionality between RContainerObject and RKVariable
 @param new_data The data. Make sure it really is the classes field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
 @returns whether this caused any changes */
