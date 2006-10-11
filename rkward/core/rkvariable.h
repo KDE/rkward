@@ -144,7 +144,7 @@ protected:
 			Invalid=1,
 			NA=2,
 			Valid=4,
-			UnsyncedInvalidState=4
+			UnsyncedInvalidState=8
 		};
 		int *cell_states;
 

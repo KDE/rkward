@@ -39,6 +39,7 @@ QString *RKVariable::unknown_char = new QString ("?");
 RKVariable::RKVariable (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
 	type = Variable;
+	setDataType (RObject::DataNumeric);
 }
 
 RKVariable::~RKVariable () {
@@ -160,12 +161,19 @@ void RKVariable::rCommandDone (RCommand *command) {
 			RK_ASSERT ((invalids_length % 2) == 0);
 			unsigned int invalids_count = invalids_length / 2;
 			for (unsigned int i=0; i < invalids_count; ++i) {
-				int row = invalids->getStringVector ()[i].toInt ();
+				int row = invalids->getStringVector ()[i].toInt () - 1;
 				if (myData ()->cell_states[row] & RKVarEditData::NA) {
 					setText (row, invalids->getStringVector ()[invalids_count + i]);
 				}
 			}
 		}
+
+		ChangeSet *set = new ChangeSet;
+		set->from_index = 0;
+		set->to_index = getLength ();
+		RKGlobals::tracker ()->objectDataChanged (this, set);
+		RKGlobals::tracker ()->objectMetaChanged (this);
+		setSyncing (true);
 	} else {
 		RK_ASSERT (false);
 	}
@@ -204,6 +212,10 @@ void RKVariable::allocateEditData () {
 	myData ()->invalid_fields.setAutoDelete (true);
 	
 	extendToLength (getLength ());
+
+	for (int i = 0; i < getLength (); ++i) {
+		myData ()->cell_states[i] = RKVarEditData::NA;
+	}
 }
 
 // virtual
@@ -213,7 +225,7 @@ void RKVariable::initializeEditData (bool to_empty) {
 	
 	if (to_empty) {
 		for (int row=0; row < getLength (); ++row) {
-			myData ()->cell_states[row] = RKVarEditData::Unknown;
+			myData ()->cell_states[row] = RKVarEditData::NA;
 		}
 	} else {
 		RKGlobals::rInterface ()->issueCommand (".rk.get.vector.data (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, GET_DATA_COMMAND);
@@ -461,14 +473,12 @@ void RKVariable::setText (int row, const QString &text) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (row < getLength ());
 
-	if (myData ()->cell_states[row] & ValueInvalid) {
+	if (myData ()->cell_states[row] & RKVarEditData::Invalid) {
 		myData ()->cell_states[row] = RKVarEditData::UnsyncedInvalidState;
 		myData ()->invalid_fields.remove (row);
 	} else {
 		myData ()->cell_states[row] = 0;
 	}
-
-	qDebug ("%d, %s", row, text.latin1 ());
 
 	if (text.isNull ()) {
 		myData ()->cell_states[row] |= RKVarEditData::NA;
@@ -489,25 +499,21 @@ void RKVariable::setText (int row, const QString &text) {
 				myData ()->cell_states[row] |= RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
 			}
 		} else {
-			qDebug ("1");
 			RK_ASSERT (myData ()->cell_doubles != 0);
 			bool ok;
-			myData ()->cell_doubles[row] = text.toDouble (&ok);
-			if (!ok) {
-				if (text.isEmpty ()) {
-					myData ()->cell_states[row] |= RKVarEditData::NA;
+			if (text.isEmpty ()) {
+				myData ()->cell_states[row] |= RKVarEditData::NA;
+			} else {
+				myData ()->cell_doubles[row] = text.toDouble (&ok);
+				if (ok) {
+					myData ()->cell_states[row] |= RKVarEditData::Valid;
 				} else {
 					myData ()->invalid_fields.replace (row, new QString (text));
 					myData ()->cell_states[row] |= RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
 				}
-			} else {
-				qDebug ("here");
-				myData ()->cell_states[row] |= RKVarEditData::Valid;
 			}
 		}
 	}
-
-	qDebug ("new cell state %d: %d", row, myData ()->cell_states[row]);
 	cellChanged (row);
 }
 
@@ -557,8 +563,9 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 				myData ()->cell_states[row] |= RKVarEditData::NA;
 			} else {
 				myData ()->cell_states[row] |= RKVarEditData::Valid;
-				myData ()->cell_doubles[row] = data[i++];
+				myData ()->cell_doubles[row] = data[i];
 			}
+			++i;
 		}
 	}
 	cellsChanged (from_row, to_row);
@@ -655,12 +662,12 @@ void RKVariable::insertRow (int row) {
 }
 
 void RKVariable::insertRows (int row, int count) {
-//	int old_len = getLength ();
+	int old_len = getLength ();
 	extendToLength (getLength () + count);
 
-/*	for (int i=old_len; i <= row+count; ++i) {
+	for (int i=old_len; i <= row+count; ++i) {
 		myData ()->cell_states[i] = RKVarEditData::NA;
-	} */
+	}
 
 	if (row >= getLength () && (count == 1)) {		// important special case
 		if (myData ()->cell_strings) myData ()->cell_strings[row+count] = myData ()->cell_strings[row];

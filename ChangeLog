@@ -1,3 +1,4 @@
+- invalid values are stored in a separate attribute instead of changing the storage mode back and forth -> TODO
 - storage mode for RKWard meta data was changed -> TODO
 - RMB option to search help on objects from packages in object browser
 - show tooltip information on objects in object browser

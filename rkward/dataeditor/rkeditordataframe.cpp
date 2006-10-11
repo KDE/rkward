@@ -162,12 +162,10 @@ void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
 	command = getObject ()->getFullName ();
 	command.append (" <- data.frame (");
 	
-	QString na_vector = "=rep (NA, " + QString::number (getColObject (0)->getLength ()) + ")";
+	QString na_vector = "=as.numeric (rep (NA, " + QString::number (getColObject (0)->getLength ()) + "))";
 	for (int col=0; col < table->numTrueCols (); col++) {
+		if (col != 0) command.append (", ");
 		command.append (getColObject (col)->getShortName () + na_vector);
-		if (col < (table->numTrueCols ()-1)) {
-			command.append (", ");
-		}
 	}
 	command.append (")");
 
