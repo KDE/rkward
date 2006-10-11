@@ -63,6 +63,19 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 	return (name + "$" + short_child_name);
 }
 
+RObject *REnvironmentObject::createNewChild (const QString &name, RKEditor *creator, bool container, bool data_frame) {
+	RK_TRACE (OBJECTS);
+
+	RObject *obj = RContainerObject::createNewChild (name, creator, container, data_frame);
+
+	if (type & GlobalEnv) {
+		RKGlobals::rInterface ()->issueCommand (".rk.watch.symbol (" + rQuote (name) + ")", RCommand::App | RCommand::Sync, QString::null, 0);
+	}
+
+	return obj;
+}
+
+
 void REnvironmentObject::writeMetaData (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 
