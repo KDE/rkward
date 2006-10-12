@@ -4,12 +4,12 @@
   <code file="normal_probabilities.php" />
   <dialog label="Normal probabilities" >
     <tabbook>
-	<tab label="Normal probabilities" >
+      <tab label="Normal probabilities" >
           <row>
             <column>
-	     <spinbox max_precision="2" default_precision="2" type="real" initial="0.95" id="q" label="Variable value(s)"/>
-             <spinbox max_precision="2" default_precision="2" type="real" initial="0" id="mean" label="mu (mean)"/>
-             <spinbox max_precision="2" default_precision="2" type="real" initial="1" id="sd" label="sigma (standard deviation)"/>
+             <input id="q" label="Vector of quantiles"/>
+             <spinbox default_precision="2" type="real" initial="0" id="mean" label="mu (mean)"/>
+             <spinbox default_precision="2" type="real" initial="1" id="sd" label="sigma (standard deviation)"/>
             </column>
             <column>
               <radio id="tail" label="Choose type of probability" >

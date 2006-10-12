@@ -1,25 +1,26 @@
 <?
-	function preprocess () {
-	}
-	
-	function calculate () {
-?>
-rk.temp = (qnorm (p = <? getRK ("p"); ?>, mean = <? getRK ("mean"); ?>, sd = <? getRK ("sd"); ?>, <? getRK ("tail"); ?>))
-<?
-	}
-	
-	function printout () {
+function preprocess () {
+}
 
-		//produce the output
+function calculate () {
+	global $p;
+	$p = "c (" . preg_replace ("/[, ]+/", ", ", getRK_val ("p")) . ")";
 ?>
-rk.header ("Normal quantile", list ("Probabilities [0,1]", "<? getRK ("p"); ?>", "mu", "<? getRK ("mean"); ?>", "sigma", "<? getRK ("sd"); ?>", "Tail", "<? getRK ("tail"); ?>"));
+rk.temp = (qnorm (p = <? echo ($p); ?>, mean = <? getRK ("mean"); ?>, sd = <? getRK ("sd"); ?>, <? getRK ("tail"); ?>))
+<?
+}
+
+function printout () {
+	global $p;
+?>
+rk.header ("Normal quantile", list ("Probabilities [0,1]", "<? echo ($p); ?>", "mu", "<? getRK ("mean"); ?>", "sigma", "<? getRK ("sd"); ?>", "Tail", "<? getRK ("tail"); ?>"));
 cat ("<h3>Normal quantile:  ", rk.temp, "</h3>")
 <?
-	}
-	
-	function cleanup () {
+}
+
+function cleanup () {
 ?>
 rm (rk.temp)
 <?
-	}
+}
 ?>

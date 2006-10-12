@@ -8,9 +8,9 @@
       <tab label="Binomial quantile" >
           <row>
             <column>
-              <spinbox max_precision="2" default_precision="2" type="real" initial="0.95" id="p" min="0" max="1" label="Probability"/>
-              <spinbox max_precision="2" default_precision="2" type="real" initial="0" id="size" min="1" label="Binomial trials"/>
-              <spinbox max_precision="2" default_precision="2" type="real" initial="0.5" id="prob" min="0" max="1" label="Probability of success"/>
+              <input id="p" min="0" max="1" label="Probability"/>
+              <spinbox default_precision="2" type="real" initial="0" id="size" min="1" label="Binomial trials"/>
+              <spinbox default_precision="2" type="real" initial="0.5" id="prob" min="0" max="1" label="Probability of success"/>
             </column>
             <column>
               <radio id="tail" label="Choose type of probability" >

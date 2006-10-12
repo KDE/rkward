@@ -7,9 +7,9 @@
       <tab label="Normal quantile" >
           <row>
             <column>
-              <spinbox max_precision="4" default_precision="4" type="real" initial="0.95" id="p" min="0" max="1" label="probability [0,1]" />
-              <spinbox max_precision="2" default_precision="2" type="real" initial="0" id="mean" label="mu (mean)" />
-              <spinbox max_precision="2" default_precision="2" type="real" initial="1" id="sd" label="sigma (standard deviation)" />
+              <input id="p" min="0" max="1" label="probability [0,1]" />
+              <spinbox default_precision="2" type="real" initial="0" id="mean" label="mu (mean)" />
+              <spinbox default_precision="2" type="real" initial="1" id="sd" label="sigma (standard deviation)" />
             </column>
             <column>
               <radio id="tail" label="Choose type of probability" >
