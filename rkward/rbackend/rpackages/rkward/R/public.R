@@ -161,3 +161,32 @@
 	ret <- sprintf ("%s)", ret)
 	ret
 }
+
+# utility to convert the rkward meta data of objects created in rkward < 0.4.0
+# keep for a few months after 0.4.0 is out
+"rk.convert.pre040" <- function (x) {
+	if (missing (x)) {
+		x <- list ()
+		lst <- ls (all.names=TRUE, envir=globalenv ())
+		for (childname in lst) {
+	        	assign (childname, rk.convert.pre040 (get (childname, envir = globalenv ())), envir=globalenv ())
+		}
+		return (invisible ())
+	}
+
+	if (is.list (x)) {
+		oa <- attributes (x)
+		x <- lapply (x, function (X) rk.convert.pre040 (X))
+		attributes (x) <- oa
+	}
+
+	a <- attr (x, ".rk.meta")
+	if (is.null (a)) return (x)
+	if (!is.data.frame (a)) return (x)
+	if (length (a) < 1) return (x)
+	an <- as.character (a[[1]])
+	names (an) <- row.names (a)
+	attr (x, ".rk.meta") <- an
+
+	x
+}
