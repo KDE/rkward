@@ -28,7 +28,7 @@ function readsubs ($dir, $prefix) {
 				}
 			}
 		}  else {
-			if (($file != ".") && ($file != "..") && ($file != "CVS")) {
+			if (($file != ".") && ($file != "..") && ($file != ".svn")) {
 				array_push ($subdirs, $file);
 			} 
 		}
