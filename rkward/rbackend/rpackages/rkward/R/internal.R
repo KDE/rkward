@@ -286,7 +286,10 @@
 		return (invisible (list (name, type, classes, meta, dims, sub)))
 	} else if (fun) {	# a function
 		argnames <- as.character (names (formals (x)))
-		argvalues <- as.character (lapply (formals (x), function (v) deparse (v)))
+		argvalues <- as.character (lapply (formals (x), function (v) {
+					if (is.character (v)) return (paste ("\"", v, "\"", sep=""))
+					else return (v)
+				} ))
 		return (invisible (list (name, type, classes, meta, dims, argnames, argvalues)))
 	}
 	return (invisible (list (name, type, classes, meta, dims)))
