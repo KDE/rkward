@@ -7,7 +7,7 @@
       <tab label="Normal probabilities" >
           <row>
             <column>
-             <input id="q" label="Vector of quantiles"/>
+             <input initial="0.95" id="q" label="Vector of quantiles"/>
              <spinbox default_precision="2" type="real" initial="0" id="mean" label="mu (mean)"/>
              <spinbox default_precision="2" type="real" initial="1" id="sd" label="sigma (standard deviation)"/>
             </column>
