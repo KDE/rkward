@@ -1,56 +1,32 @@
 <!DOCTYPE rkplugin>
-<!--This is the "Quntile plugin"
-Description
-	The generic function quantile produces sample quantiles corresponding to the given probabilities. The smallest observation corresponds to a probability of 0 and the largest to a probability of 1. 
+<!--This is the "Poisson probabilities" plugin-->
 
-Usage
-	quantile(x, ...)
-
-## Default S3 method:
-quantile(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
-         names = TRUE, type = 7, ...)
-
---><document>
-  <code file="poisson_probabilities.php" />
-  <dialog label="Descriptive Statistics" >
+<document>
+<code file="poisson_probabilities.php" />
+<dialog label="Poisson probabilities" >
     <tabbook>
-      <tab label="Vairable(s)" >
-        <row>
-          <column>
-            <varselector id="vars" />
-          </column>
-          <column>
-            <varslot multi="true" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
-          </column>
-        </row>
-      </tab>
-      <tab label="Arguments" >
-        <frame label="Options" >
+	    <tab label="Poisson probabilities" >
           <row>
             <column>
-              <checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="names" label="Names" />
-              <checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="narm" label="Remove Missing Values" />
+                <input initial="0.95" id="q" label="Vector of quantiles"/>
+                <spinbox default_precision="2" type="real" initial="1" id="lambda" label="Lambda"/>
             </column>
-       </row>
-        </frame>
-        <radio id="samplequantile" label="Sample Quantile Types" >
-          <option value="1" label="Inverse of empirical distribution function" />
-          <option value="2" label="Similar to type 1 but with averaging at discontinuities" />
-          <option value="3" label="SAS definition: nearest even order statistic" />
-          <option value="4" label="p(k) = k / n (linear interpolation of the empirical cdf)" />
-          <option value="5" label="p(k) = (k - 0.5) / n (piecewise linear function where the knots are the values midway through the steps of the empirical cdf)" />
-          <option value="6" label="p(k) = k / (n + 1). Thus p(k) = E[F(x[k])] (used by Minitab and by SPSS)" />
-          <option value="7" label="p(k) = (k - 1) / (n - 1). In this case, p(k) = mode[F(x[k])] (used by S)" />
-          <option checked="true" value="8" label="p(k) = (k - 1/3) / (n + 1/3). Then p(k) =~ median[F(x[k])] (resulting quantile estimates are approximately median-unbiased regardless of the distribution of x)" />
-          <option value="9" label="p(k) = (k - 3/8) / (n + 1/4) (resulting quantile estimates are approximately unbiased if x is normally distributed" />
-        </radio>
-      </tab>
-      <tab label="Probabilities" >
-        <frame label="numeric vector of probabilities with values in [0,1]" >
-          <spinbox max_precision="2" default_precision="2" type="real" min="0" id="probs1" initial="0" max="1" label="Lower" />
-          <spinbox max_precision="2" default_precision="2" type="real" min="0" id="probs2" initial="1" max="1" label="Mid" />
-          <spinbox max_precision="2" default_precision="2" type="real" min="0" id="probs3" initial="0.25" max="1" label="Upper" />
-        </frame>
+            <column>
+                <row>
+                    <radio id="tail" label="Choose type of probability" >
+                        <option value="lower.tail=TRUE" label="lower tail" />
+                        <option value="lower.tail=FALSE" label="upper tail" />
+                    </radio>
+                </row>
+                <row>
+                    <radio id="logp" label="probabilities p are given as:" >
+                      <option value="log.p = FALSE" label="not log(p)" />
+                      <option value="log.p = TRUE" label="log(p)" />
+                  </radio>
+                </row>
+              <stretch/>
+            </column>
+          </row>
       </tab>
     </tabbook>
   </dialog>
