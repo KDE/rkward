@@ -2,7 +2,7 @@
 			rkward.h  -  description
 			-------------------
 begin                : Tue Oct 29 20:06:08 CET 2002 
-copyright            : (C) 2002 by Thomas Friedrichsmeier 
+copyright            : (C) 2002, 2005, 2006 by Thomas Friedrichsmeier 
 email                : tfry@users.sourceforge.net
 ***************************************************************************/
 
