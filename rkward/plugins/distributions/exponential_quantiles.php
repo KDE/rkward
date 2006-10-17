@@ -6,7 +6,7 @@ function calculate () {
 	global $p;
 	$p = "c (" . preg_replace ("/[, ]+/", ", ", getRK_val ("p")) . ")";
 ?>
-rk.temp = (pexp (p = <? echo ($p); ?>, rate = <? getRK ("rate"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
+rk.temp = (qexp (p = <? echo ($p); ?>, rate = <? getRK ("rate"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
 <?
 }
 

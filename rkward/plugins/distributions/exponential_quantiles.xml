@@ -9,7 +9,7 @@
           <row>
             <column>
               <input initial="0.95" id="q" label="Vector of probabilities"/>
-              <spinbox default_precision="2" type="real" min="0" initial="0.5" id="rate" label="vector of rates"/>
+              <spinbox default_precision="2" type="real" min="0" initial="1" id="rate" label="vector of rates"/>
             </column>
             <column>
                 <row>

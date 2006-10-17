@@ -1,15 +1,16 @@
 <!DOCTYPE rkplugin>
-<!--This is the "Exponential probabilities" plugin-->
+<!--This is the "Wilcoxon Rank Sum probabilities" plugin-->
 
 <document>
-<code file="exponential_probabilities.php" />
-<dialog label="Exponential probabilities" >
+<code file="wilcoxon_probabilities.php" />
+<dialog label="Wilcoxon Rank Sum probabilities" >
     <tabbook>
-     <tab label="Exponential probabilities" >
+       <tab label="Wilcoxon Rank Sum probabilities" >
           <row>
             <column>
                 <input initial="0.95" id="q" label="Vector of quantiles"/>
-                <spinbox default_precision="2" type="real" min="0" initial="1" id="rate" label="vector of rates"/>
+                <spinbox type="integer" min="0" initial="1" id="m" label="m (Numbers of observations in the first sample)"/>
+                <spinbox type="integer" min="0" initial="1" id="n" label="n (Numbers of observations in the econd sample)"/>
             </column>
             <column>
                 <row>

@@ -100,7 +100,11 @@ dist_pluginsXdistributions_DATA = \
 	distributions/weibull_probabilities.php \
 	distributions/weibull_probabilities.xml \
 	distributions/weibull_quantiles.php \
-	distributions/weibull_quantiles.xml
+	distributions/weibull_quantiles.xml \
+	distributions/wilcoxon_probabilities.php \
+	distributions/wilcoxon_probabilities.xml \
+	distributions/wilcoxon_quantiles.php \
+	distributions/wilcoxon_quantiles.xml
 
 pluginsXwritetabledir = $(kde_datadir)/rkward/writetable
 dist_pluginsXwritetable_DATA = \

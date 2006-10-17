@@ -13,7 +13,7 @@ rk.temp = log(qweibull (p = <? echo ($p); ?>, shape = <? getRK ("shape"); ?>, sc
 function printout () {
 	global $p;
 ?>
-rk.header ("Gumbel quantiles", list ("Vector of probabilities", "<? echo ($p); ?>", "Shape", "<? getRK ("shape"); ?>", "Scale", "<? getRK ("scale"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
+rk.header ("Gumbel quantile", list ("Vector of probabilities", "<? echo ($p); ?>", "Shape", "<? getRK ("shape"); ?>", "Scale", "<? getRK ("scale"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
 cat ("<h3>Gumbel quantiles:  ", rk.temp, "</h3>")
 <?
 }

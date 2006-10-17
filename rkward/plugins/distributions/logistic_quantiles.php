@@ -13,7 +13,7 @@ rk.temp = (qlogis (p = <? echo ($p); ?>, location = <? getRK ("location"); ?>, s
 function printout () {
 	global $p;
 ?>
-rk.header ("Logistic quantiles", list ("Vector of probabilities", "<? echo ($p); ?>", "Location", "<? getRK ("location"); ?>", "Scale", "<? getRK ("scale"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
+rk.header ("Logistic quantile", list ("Vector of probabilities", "<? echo ($p); ?>", "Location", "<? getRK ("location"); ?>", "Scale", "<? getRK ("scale"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
 cat ("<h3>Logistic quantiles:  ", rk.temp, "</h3>")
 <?
 }

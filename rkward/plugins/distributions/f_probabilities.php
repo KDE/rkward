@@ -13,8 +13,8 @@ rk.temp <- (pf (q = <? echo ($q); ?>, df1 = <? getRK ("df1"); ?>, df2 = <? getRK
 function printout () {
 	global $q;
 ?>
-rk.header ("F probability", list ("Variable value", "<? echo ($q); ?>", "Numerator degrees of freedom", "<? getRK ("df1"); ?>", "Denominator degrees of freedom", "<? getRK ("df2"); ?>", "non-centrality parameter", "<? getRK ("ncp"); ?>", "Tail", "<? getRK ("tail"); ?>"));
-cat ("<h3>F probability:  ", rk.temp, "</h3>")
+rk.header ("F probability", list ("Vector of quantiles", "<? echo ($q); ?>", "Numerator degrees of freedom", "<? getRK ("df1"); ?>", "Denominator degrees of freedom", "<? getRK ("df2"); ?>", "non-centrality parameter", "<? getRK ("ncp"); ?>", "Tail", "<? getRK ("tail"); ?>"));
+cat ("<h3>F probabilities:  ", rk.temp, "</h3>")
 <?
 }
 

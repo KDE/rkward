@@ -13,8 +13,8 @@ rk.temp = (qt (p = <? echo ($p); ?>, df = <? getRK ("df"); ?>, <? getRK ("tail")
 function printout () {
 	global $p;
 ?>
-rk.header ("t quantile", list ("Probabilities [0,1]", "<? echo ($p); ?>", "Degrees of freedom", "<? getRK ("df"); ?>", "Tail", "<? getRK ("tail"); ?>"));
-cat ("<h3>t quantile:  ", rk.temp, "</h3>")
+rk.header ("t quantile", list ("Vector of probabilities", "<? echo ($p); ?>", "Degrees of freedom", "<? getRK ("df"); ?>", "Tail", "<? getRK ("tail"); ?>"));
+cat ("<h3>t quantiles:  ", rk.temp, "</h3>")
 <?
 }
 

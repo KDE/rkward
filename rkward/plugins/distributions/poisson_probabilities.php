@@ -13,7 +13,7 @@ rk.temp = (ppois (q = <? echo ($q); ?>, lambda = <? getRK ("lambda"); ?>, <? get
 function printout () {
 	global $q;
 ?>
-rk.header ("Poisson probabilities", list ("Vector of quantiles", "<? echo ($q); ?>", "Lambda", "<? getRK ("lambda"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
+rk.header ("Poisson probability", list ("Vector of quantiles", "<? echo ($q); ?>", "Lambda", "<? getRK ("lambda"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
 cat ("<h3>Poisson probabilities:  ", rk.temp, "</h3>")
 <?
 }

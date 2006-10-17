@@ -7,7 +7,6 @@
 		<component type="standard" id="beta_probabilities" file="beta_probabilities.xml" label="Beta probabilities" />
 	
 		<component type="standard" id="binomial_quantiles" file="binomial_quantiles.xml" label="Binomial quantils" />
-		<component type="standard" id="binomial_probabilities" file="binomial_probabilities.xml" label="Binomial probabilities" />
 		<component type="standard" id="binomial_tail_probabilities" file="binomial_tail_probabilities.xml" label="Binomial tail probabilities" />
 		<component type="standard" id="plot_binomial_distribution" file="plot_binomial_distribution.xml" label="Plot binomial distribution" />
 		
@@ -62,6 +61,9 @@
 
 		<component type="standard" id="weibull_quantiles" file="weibull_quantiles.xml" label="Weibull quantiles" />
 		<component type="standard" id="weibull_probabilities" file="weibull_probabilities.xml" label="Weibull probabilities" />
+
+                <component type="standard" id="wilcoxon_quantiles" file="wilcoxon_quantiles.xml" label=" Wilcoxon Rank Sum quantiles" />
+                <component type="standard" id="wilcoxon_probabilities" file="wilcoxon_probabilities.xml" label=" Wilcoxon Rank Sum probabilities" />
 		
 	</components>
 
@@ -125,14 +127,17 @@
 					<entry component="weibull_quantiles" label="Weibull quantiles" index="1"/>
 					<entry component="weibull_probabilities" label="Weibull probabilities" index="0"/>
 				</menu>
+                                <menu id="wilcoxon_distribution" label="Wilcoxon Rank Sum Distribution" index="13">
+                                        <entry component="wilcoxon_quantiles" label="Wilcoxon Rank Sum quantiles" index="1"/>
+					<entry component="wilcoxon_probabilities" label="Wilcoxon Rank Sum probabilities" index="0"/>
+				</menu>
 			</menu>
 
 			<menu id="univariate_discrete_distributions" label="Univariate discrete distributions" index="1">
 				<menu id="binomial_distribution" label="Binomial Distribution" index="0">
 					<entry component="binomial_quantiles" label="Binomial quantils" index="1"/>
-					<entry component="binomial_probabilities" label="Binomial probabilities" index="0"/>
-					<entry component="binomial_tail_probabilities" label="Binomial tail probabilities" index="2"/>
-					<entry component="plot_binomial_distribution" label="Plot binomial distribution" index="3"/>
+					<entry component="binomial_tail_probabilities" label="Binomial tail probabilities" index="0"/>
+					<entry component="plot_binomial_distribution" label="Plot binomial distribution" index="2"/>
 				</menu>
 				<menu id="geom_distribution" label="Geometric Distribution" index="1">
 					<entry component="geom_probabilities" label="Geometric probabilities" index="0"/>

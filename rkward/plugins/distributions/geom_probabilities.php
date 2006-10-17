@@ -13,7 +13,7 @@ rk.temp = (pgeom (q = <? echo ($q); ?>, prob = <? getRK ("prob"); ?>, <? getRK (
 function printout () {
 	global $q;
 ?>
-rk.header ("Geometric probabilities", list ("Vector of quantiles", "<? echo ($q); ?>", "Probability of success in each trial", "<? getRK ("prob"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
+rk.header ("Geometric probability", list ("Vector of quantiles", "<? echo ($q); ?>", "Probability of success in each trial", "<? getRK ("prob"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
 cat ("<h3>Geometric probabilities:  ", rk.temp, "</h3>")
 <?
 }
