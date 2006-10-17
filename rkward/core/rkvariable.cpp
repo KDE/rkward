@@ -584,7 +584,6 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 			else myData ()->cell_states[row] = 0;
 
 			if (isnan (data[i])) {
-				qDebug ("nan");
 				myData ()->cell_states[row] |= RKVarEditData::NA;
 			} else {
 				myData ()->cell_states[row] |= RKVarEditData::Valid;
