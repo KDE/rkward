@@ -21,7 +21,7 @@
 #include <qwidget.h>
 #include <qmap.h>
 
-class QTabBar;
+class KTabBar;
 class QWidgetStack;
 class RKMDIWindow;
 
@@ -61,8 +61,9 @@ public slots:
 	void setPage (int page);
 /** called when the caption of a window changes. Updates the tab-label, and - if appropriate - the caption of this widget */
 	void childCaptionChanged (RKMDIWindow *widget);
+	void closePage (int index);
 private:
-	QTabBar *tabs;
+	KTabBar *tabs;
 	QWidgetStack *widgets;
 	typedef QMap<int, RKMDIWindow*> PageMap;
 	PageMap pages;

@@ -17,7 +17,8 @@
 
 #include "rkworkplaceview.h"
 
-#include <qtabbar.h>
+#include <ktabbar.h>
+
 #include <qwidgetstack.h>
 #include <qapplication.h>
 #include <qevent.h>
@@ -32,9 +33,11 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QWidget (parent) {
 	RK_TRACE (APP);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
-	tabs = new QTabBar (this);
+	tabs = new KTabBar (this);
+	tabs->setHoverCloseButton (true);
 	tabs->hide ();
 	connect (tabs, SIGNAL (selected (int)), this, SLOT (setPage (int)));
+	connect (tabs, SIGNAL (closeRequest (int)), this, SLOT (closePage (int)));
 	vbox->addWidget (tabs);
 
 	widgets = new QWidgetStack (this);
@@ -121,6 +124,15 @@ QString RKWorkplaceView::activeCaption () {
 	RKMDIWindow *window = activePage ();
 	if (!window) return QString ();
 	return window->shortCaption ();
+}
+
+void RKWorkplaceView::closePage (int index) {
+	RK_TRACE (APP);
+	int page = tabs->tabAt (index)->identifier ();
+	RK_ASSERT (pages.find (page) != pages.end ());
+
+	RKMDIWindow *window = pages[page];
+	window->close (true);
 }
 
 void RKWorkplaceView::setPage (int page) {
