@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-05 17:19+0200\n"
+"POT-Creation-Date: 2006-10-17 13:05+0200\n"
 "PO-Revision-Date: 2006-02-09 01:02+0000\n"
 "Last-Translator: Stefan Joerg Roediger <stefan_roediger@gmx.de>\n"
 "Language-Team: Deutsch <rkward-devel@lists.sourceforge.net>\n"
@@ -102,7 +102,7 @@ msgid "Inserting clipboard contents..."
 msgstr "Zwischenablageinhalt einfügen..."
 
 #: dataeditor/editlabelsdialog.cpp:49 dataeditor/twintable.cpp:62
-#: misc/rkobjectlistview.cpp:53 misc/rkobjectlistview.cpp:393
+#: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:424
 msgid "Label"
 msgstr "Kennzeichen"
 
@@ -122,7 +122,7 @@ msgid "Levels / Value labels for '%1'"
 msgstr "Levels / Label-Werte für '%1'"
 
 #: dataeditor/twintable.cpp:63 windows/rcontrolwindow.cpp:57
-#: misc/rkobjectlistview.cpp:54 misc/rkobjectlistview.cpp:392
+#: misc/rkobjectlistview.cpp:56 misc/rkobjectlistview.cpp:423
 msgid "Type"
 msgstr "Typ"
 
@@ -135,9 +135,9 @@ msgid "Format"
 msgstr "Format"
 
 #: dataeditor/twintable.cpp:66 plugin/rkformula.cpp:74 plugin/rkvarslot.cpp:57
-#: dialogs/rkloadlibsdialog.cpp:237 dialogs/rkloadlibsdialog.cpp:256
-#: dialogs/rkloadlibsdialog.cpp:429 dialogs/rkloadlibsdialog.cpp:577
-#: misc/rkobjectlistview.cpp:52
+#: dialogs/rkloadlibsdialog.cpp:253 dialogs/rkloadlibsdialog.cpp:272
+#: dialogs/rkloadlibsdialog.cpp:445 dialogs/rkloadlibsdialog.cpp:595
+#: misc/rkobjectlistview.cpp:54
 msgid "Name"
 msgstr "Name"
 
@@ -161,11 +161,11 @@ msgstr "Füge oberhalb ein neuen Fall ein"
 msgid "Insert new case below"
 msgstr "Füge unterhalb ein neuen Fall ein"
 
-#: dataeditor/twintable.cpp:251
+#: dataeditor/twintable.cpp:253
 msgid "Delete marked rows (%1-%2)"
 msgstr ""
 
-#: dataeditor/twintable.cpp:258
+#: dataeditor/twintable.cpp:260
 #, fuzzy
 msgid "Delete this row (%1)"
 msgstr "Lösche diesen Fall"
@@ -276,7 +276,7 @@ msgstr "Erledigt"
 msgid "Loading Workspace ..."
 msgstr "Lade Workspace"
 
-#: agents/rkloadagent.cpp:74
+#: agents/rkloadagent.cpp:70
 msgid ""
 "There has been an error opening file '%1':\n"
 "%2"
@@ -284,7 +284,7 @@ msgstr ""
 "Ein Fehler ist aufgetreten beim öffnen einer Datei'%1':\n"
 "%2"
 
-#: agents/rkloadagent.cpp:74
+#: agents/rkloadagent.cpp:70
 msgid "Error loading workspace"
 msgstr "Fehler beim Laden des Workspace "
 
@@ -321,6 +321,78 @@ msgstr "Objekt entfernen?"
 msgid ""
 "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr "Wollen Sie das Objekt '"
+
+#: core/robject.cpp:109
+#, fuzzy
+msgid "Full location:"
+msgstr "Führe Auswahl aus"
+
+#: core/robject.cpp:111
+#, fuzzy
+msgid "Label:"
+msgstr "Kennzeichen"
+
+#: core/robject.cpp:112
+#, fuzzy
+msgid "Type:"
+msgstr "Typ"
+
+#: core/robject.cpp:115
+#, fuzzy
+msgid "Function"
+msgstr "Führe Auswahl aus"
+
+#: core/robject.cpp:116
+msgid "Usage: "
+msgstr ""
+
+#: core/robject.cpp:118
+msgid "Data frame"
+msgstr ""
+
+#: core/robject.cpp:120
+msgid "Array"
+msgstr ""
+
+#: core/robject.cpp:122
+msgid "Matrix"
+msgstr ""
+
+#: core/robject.cpp:124
+msgid "List"
+msgstr ""
+
+#: core/robject.cpp:126
+#, fuzzy
+msgid "Variable"
+msgstr "Zeige Datei(en) "
+
+#: core/robject.cpp:127
+msgid "Data Type:"
+msgstr ""
+
+#: core/robject.cpp:129
+#, fuzzy
+msgid "Environment"
+msgstr "Alignment"
+
+#: core/robject.cpp:134
+msgid "Length: "
+msgstr ""
+
+#: core/robject.cpp:136
+#, fuzzy
+msgid "Dimensions: "
+msgstr ""
+"\n"
+"Dimensionen:"
+
+#: core/robject.cpp:144
+#, fuzzy
+msgid "Class(es):"
+msgstr ""
+"\n"
+"Klasse:"
 
 #: windows/rkcommandeditorwindowpart.cpp:49
 msgid "Run all"
@@ -993,37 +1065,37 @@ msgstr "<<Öffne eine andere Datei>>"
 msgid "Always do this on startup"
 msgstr "Immer beim Start ausführen"
 
-#: dialogs/rkloadlibsdialog.cpp:44 rkward.cpp:296
+#: dialogs/rkloadlibsdialog.cpp:50 rkward.cpp:296
 msgid "Configure Packages"
 msgstr "Konfiguriere Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:48
+#: dialogs/rkloadlibsdialog.cpp:54
 msgid "Local packages"
 msgstr "Lokale Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:52 robjectbrowser.cpp:54
+#: dialogs/rkloadlibsdialog.cpp:58 robjectbrowser.cpp:55
 msgid "Update"
 msgstr "Aktualisierung"
 
-#: dialogs/rkloadlibsdialog.cpp:56
+#: dialogs/rkloadlibsdialog.cpp:62
 msgid "Install"
 msgstr "Installieren"
 
-#: dialogs/rkloadlibsdialog.cpp:60
+#: dialogs/rkloadlibsdialog.cpp:66
 msgid "Configure Repositories"
 msgstr "Konfiguriere Repositories"
 
-#: dialogs/rkloadlibsdialog.cpp:186
+#: dialogs/rkloadlibsdialog.cpp:202
 #, fuzzy
 msgid "Please stand by while installing selected packages"
 msgstr "Bitte warten warten Sie während die Pakete installiert werden."
 
-#: dialogs/rkloadlibsdialog.cpp:186
+#: dialogs/rkloadlibsdialog.cpp:202
 #, fuzzy
 msgid "Installing packages"
 msgstr "Installiere Pakete..."
 
-#: dialogs/rkloadlibsdialog.cpp:226
+#: dialogs/rkloadlibsdialog.cpp:242
 #, fuzzy
 msgid ""
 "There are no safeguards against removing essential packages. For example, "
@@ -1034,46 +1106,46 @@ msgstr ""
 "das Entfernen von \"rkward\" wird ein korrektes funktionieren der Anwendung "
 "unterbinden. Bitte seien Sie vorsichtig beim entfernen von Paketen."
 
-#: dialogs/rkloadlibsdialog.cpp:235
+#: dialogs/rkloadlibsdialog.cpp:251
 msgid "Installed packages"
 msgstr "Installierte Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:238 khelpdlg.cpp:68 khelpdlg.cpp:94
+#: dialogs/rkloadlibsdialog.cpp:254 khelpdlg.cpp:68 khelpdlg.cpp:94
 msgid "Title"
 msgstr "Titel"
 
-#: dialogs/rkloadlibsdialog.cpp:239 dialogs/rkloadlibsdialog.cpp:578
+#: dialogs/rkloadlibsdialog.cpp:255 dialogs/rkloadlibsdialog.cpp:596
 msgid "Version"
 msgstr "Version"
 
-#: dialogs/rkloadlibsdialog.cpp:240 dialogs/rkloadlibsdialog.cpp:430
+#: dialogs/rkloadlibsdialog.cpp:256 dialogs/rkloadlibsdialog.cpp:446
 msgid "Location"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:245
+#: dialogs/rkloadlibsdialog.cpp:261
 msgid "Load"
 msgstr "Laden"
 
-#: dialogs/rkloadlibsdialog.cpp:247
+#: dialogs/rkloadlibsdialog.cpp:263
 msgid "Unload"
 msgstr "Entfernen"
 
-#: dialogs/rkloadlibsdialog.cpp:254
+#: dialogs/rkloadlibsdialog.cpp:270
 msgid "Loaded packages"
 msgstr "Geladene Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:365
+#: dialogs/rkloadlibsdialog.cpp:381
 msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:365
+#: dialogs/rkloadlibsdialog.cpp:381
 #, fuzzy
 msgid "Error while handling packages"
 msgstr "Fehler beim bearbeiten der Paket"
 
-#: dialogs/rkloadlibsdialog.cpp:422
+#: dialogs/rkloadlibsdialog.cpp:438
 msgid ""
 "In order to find out, which of your installed packaged have an update "
 "available, click \"Fetch List\". This feature requires a working internet "
@@ -1082,44 +1154,46 @@ msgstr ""
 "Um herauszufinden von welchen Paketen ein Update verfügbar ist wählen Sie "
 "bitte \"Hole Liste\". Diese Funktion setzt eine Internetverbindung voraus."
 
-#: dialogs/rkloadlibsdialog.cpp:431
+#: dialogs/rkloadlibsdialog.cpp:447
 #, fuzzy
 msgid "Local Version"
 msgstr "Version"
 
-#: dialogs/rkloadlibsdialog.cpp:432
+#: dialogs/rkloadlibsdialog.cpp:448
 #, fuzzy
 msgid "Online Version"
 msgstr "Version"
 
-#: dialogs/rkloadlibsdialog.cpp:437 dialogs/rkloadlibsdialog.cpp:583
+#: dialogs/rkloadlibsdialog.cpp:453 dialogs/rkloadlibsdialog.cpp:601
 msgid "Fetch list"
 msgstr "Hole Liste"
 
-#: dialogs/rkloadlibsdialog.cpp:439
+#: dialogs/rkloadlibsdialog.cpp:455
 msgid "Update Selected"
 msgstr "Aktualisiere Auswahl"
 
-#: dialogs/rkloadlibsdialog.cpp:441
+#: dialogs/rkloadlibsdialog.cpp:457
 msgid "Update All"
 msgstr "Aktualisiere Alle"
 
-#: dialogs/rkloadlibsdialog.cpp:496
+#: dialogs/rkloadlibsdialog.cpp:514
 msgid "[No updates available]"
 msgstr "[Keine aktuellere Version verfügbar]"
 
-#: dialogs/rkloadlibsdialog.cpp:545
+#: dialogs/rkloadlibsdialog.cpp:563
+#, fuzzy
 msgid ""
-"Please stand by while determining, which package have an update available "
+"Please stand by while determining, which packages have an update available "
 "online."
 msgstr ""
+"Bitte haben Sie etwas Geduld während die Pakete heruntergeladen werden."
 
-#: dialogs/rkloadlibsdialog.cpp:545 dialogs/rkloadlibsdialog.cpp:674
+#: dialogs/rkloadlibsdialog.cpp:563 dialogs/rkloadlibsdialog.cpp:692
 #, fuzzy
 msgid "Fetching list"
 msgstr "Hole Liste"
 
-#: dialogs/rkloadlibsdialog.cpp:571
+#: dialogs/rkloadlibsdialog.cpp:589
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories (click \"Configure Repositories\" to add more sources). "
@@ -1131,42 +1205,42 @@ msgstr ""
 "verfügbar. Klicke \"Hole Liste\" um herauszufinden welche Pakete verfügbar "
 "sind. Diese Funktion setzt eine Internetverbindung voraus. "
 
-#: dialogs/rkloadlibsdialog.cpp:585
+#: dialogs/rkloadlibsdialog.cpp:603
 msgid "Install Selected"
 msgstr "Installiere Auswahl"
 
-#: dialogs/rkloadlibsdialog.cpp:636
+#: dialogs/rkloadlibsdialog.cpp:654
 msgid "[No packages available]"
 msgstr "[Keine Pakete verfügbar]"
 
-#: dialogs/rkloadlibsdialog.cpp:674
+#: dialogs/rkloadlibsdialog.cpp:692
 #, fuzzy
 msgid "Please stand by while downloading the list of available packages."
 msgstr ""
 "Bitte haben Sie etwas Geduld während die Pakete heruntergeladen werden."
 
-#: dialogs/rkloadlibsdialog.cpp:694
+#: dialogs/rkloadlibsdialog.cpp:712
 msgid ""
 "The package requested by the backend (\"%1\") was not found in the package "
 "repositories. Maybe the package name was mis-spelled. Or maybe you need to "
 "add additional repositories via the \"Configure Repositories\"-button."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:694
+#: dialogs/rkloadlibsdialog.cpp:712
 #, fuzzy
 msgid "Package not available"
 msgstr "[Keine Pakete verfügbar]"
 
-#: dialogs/rkloadlibsdialog.cpp:718
+#: dialogs/rkloadlibsdialog.cpp:736
 #, fuzzy
 msgid "Install packages to:"
 msgstr "Installierte Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:723
+#: dialogs/rkloadlibsdialog.cpp:741
 msgid "Include dependencies"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:755
+#: dialogs/rkloadlibsdialog.cpp:773
 msgid ""
 "The directory you are trying to install to (%1) is not writable with your "
 "current user permissions. If you are the adminitstrator of this machine, you "
@@ -1177,11 +1251,11 @@ msgid ""
 "packages to)."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:755
+#: dialogs/rkloadlibsdialog.cpp:773
 msgid "Selected library location not writable"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:755
+#: dialogs/rkloadlibsdialog.cpp:773
 msgid "Become root"
 msgstr ""
 
@@ -1286,48 +1360,48 @@ msgstr "Runter"
 msgid "Browse"
 msgstr "Browse"
 
-#: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:394
+#: misc/rkobjectlistview.cpp:57 misc/rkobjectlistview.cpp:425
 msgid "Class"
 msgstr "Klasse"
 
-#: misc/rkobjectlistview.cpp:60
+#: misc/rkobjectlistview.cpp:62
 #, fuzzy
 msgid "Show Objects"
 msgstr "Zeige versteckte Objekte"
 
-#: misc/rkobjectlistview.cpp:61
+#: misc/rkobjectlistview.cpp:63
 #, fuzzy
 msgid "Show Fields"
 msgstr "Felder:"
 
-#: misc/rkobjectlistview.cpp:62
+#: misc/rkobjectlistview.cpp:64
 #, fuzzy
 msgid "Configure Defaults"
 msgstr "Konfiguriere Erscheinungsbild"
 
-#: misc/rkobjectlistview.cpp:287
+#: misc/rkobjectlistview.cpp:319
 msgid "[Objects]"
 msgstr "[Objekte]"
 
-#: misc/rkobjectlistview.cpp:384
+#: misc/rkobjectlistview.cpp:415
 #, fuzzy
 msgid "All Environments"
 msgstr "Alignment"
 
-#: misc/rkobjectlistview.cpp:385
+#: misc/rkobjectlistview.cpp:416
 msgid "Objects with children"
 msgstr ""
 
-#: misc/rkobjectlistview.cpp:386
+#: misc/rkobjectlistview.cpp:417
 msgid "Variables"
 msgstr ""
 
-#: misc/rkobjectlistview.cpp:387 robjectbrowser.cpp:199
+#: misc/rkobjectlistview.cpp:418 robjectbrowser.cpp:209
 #, fuzzy
 msgid "Functions"
 msgstr "Führe Auswahl aus"
 
-#: misc/rkobjectlistview.cpp:389
+#: misc/rkobjectlistview.cpp:420
 #, fuzzy
 msgid "Hidden Objects"
 msgstr "Zeige versteckte Objekte"
@@ -1377,7 +1451,7 @@ msgstr ""
 "von Neuem starten um zu überprüfen ob es mit anderen Einstellungen "
 "funktioniert."
 
-#: rbackend/rinterface.cpp:195
+#: rbackend/rinterface.cpp:196
 msgid ""
 "There was a problem starting the R backend. The following error(s) "
 "occurred:\n"
@@ -1385,7 +1459,7 @@ msgstr ""
 "Es gab ein Problem beim Start vom R Backend. Die folgenden Fehler traten "
 "auf:\n"
 
-#: rbackend/rinterface.cpp:197
+#: rbackend/rinterface.cpp:198
 msgid ""
 "\t- The 'rkward' R-library could not be loaded. This library is needed for "
 "communication between R and RKWard and many things will not work properly if "
@@ -1403,7 +1477,7 @@ msgstr ""
 "nochmals und schauen Sie nochmals nach irgendwelchen Fehlern.Sie sollten "
 "RKWard nun beenden.\n"
 
-#: rbackend/rinterface.cpp:200
+#: rbackend/rinterface.cpp:201
 msgid ""
 "\t-There was a problem opening the files needed for communication with R. "
 "Most likely this is due to an incorrect setting for the location of these "
@@ -1416,7 +1490,7 @@ msgstr ""
 "den den Speicherort der log-files (Einstellungen->Konfiguriere Einstellungen-"
 ">Logfiles) konfiguriert haben und starten Sie RKWard erneut.\n"
 
-#: rbackend/rinterface.cpp:203
+#: rbackend/rinterface.cpp:204
 #, fuzzy
 msgid ""
 "\t-An unspecified error occured that is not yet handled by RKWard. Likely "
@@ -1426,11 +1500,11 @@ msgstr ""
 "gehandhabt werden kann. Wahrscheinlich wird RKWard nicht richtig "
 "funktionieren. Bitte überprüfen Sie ihre Einstellungen.\n"
 
-#: rbackend/rinterface.cpp:205
+#: rbackend/rinterface.cpp:206
 msgid "Error starting R"
 msgstr "Fehler beim Starten von R"
 
-#: rbackend/rinterface.cpp:327
+#: rbackend/rinterface.cpp:328
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We'll open the "
@@ -1441,24 +1515,24 @@ msgstr ""
 "durchzuführen. Es wird das Paket-Management-Tool geöffnet. Von dort können "
 "Sie versuchen das benötigte Paket zu finden und zu installieren."
 
-#: rbackend/rinterface.cpp:327
+#: rbackend/rinterface.cpp:328
 msgid "Require package '%1'"
 msgstr "Benötige weitere Pakete '%1'"
 
-#: rbackend/rinterface.cpp:361
+#: rbackend/rinterface.cpp:362
 msgid "Message from the R backend"
 msgstr "Benachrichtigung vom R Backend"
 
-#: rbackend/rinterface.cpp:365
+#: rbackend/rinterface.cpp:366
 #, fuzzy
 msgid "R backend requests information"
 msgstr "Das R Backend benötigt Informationen"
 
-#: rbackend/rinterface.cpp:397
+#: rbackend/rinterface.cpp:394
 msgid "The R engine has encountered a fatal error:\n"
 msgstr "In der R-Engine ist ein fataler Fehler aufgetreten:\n"
 
-#: rbackend/rinterface.cpp:398
+#: rbackend/rinterface.cpp:395
 msgid ""
 "It will be shut down immediately. This means, you can not use any more "
 "functions that rely on the R backend. I.e. you can do hardly anything at "
@@ -1473,16 +1547,16 @@ msgstr ""
 "allerdings jegliche offene Befehls-Dateien, Ausgaben, oder Daten aus dem "
 "offenen Daten-Editoren sichern. Beenden Sie RKWard hiernach. Sorry!"
 
-#: rbackend/rinterface.cpp:399 rbackend/rinterface.cpp:404
+#: rbackend/rinterface.cpp:396 rbackend/rinterface.cpp:401
 #, fuzzy
 msgid "R engine has died"
 msgstr "R Engine ist 'gestorben'"
 
-#: rbackend/rinterface.cpp:402
+#: rbackend/rinterface.cpp:399
 msgid "The R engine has shut down with status: "
 msgstr "Die R Engine wurde beendet mit dem Status:"
 
-#: rbackend/rinterface.cpp:403
+#: rbackend/rinterface.cpp:400
 msgid ""
 "\n"
 "It will be shut down immediately. This means, you can not use any more "
@@ -1505,7 +1579,7 @@ msgstr ""
 "aussagekräftige E-Mail mit der Beschreibung was passierte an rkward-"
 "devel@lists.sourceforge.net. Entschuldigung!"
 
-#: rbackend/rthread.cpp:391
+#: rbackend/rthread.cpp:404
 msgid "R Startup"
 msgstr ""
 
@@ -1758,13 +1832,13 @@ msgstr "Neues Datenset "
 msgid "Enter name for the new dataset"
 msgstr "Geben Sie einen Namen für das Datenset an"
 
-#: rkward.cpp:517 robjectbrowser.cpp:105 robjectbrowser.cpp:143
+#: rkward.cpp:517 robjectbrowser.cpp:113 robjectbrowser.cpp:151
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
 "Der Name den Sie angegeben haben wird bereits verwendet oder ist nicht "
 "zulässig. Umbenannt zu %1"
 
-#: rkward.cpp:517 robjectbrowser.cpp:105 robjectbrowser.cpp:143
+#: rkward.cpp:517 robjectbrowser.cpp:113 robjectbrowser.cpp:151
 msgid "Invalid Name"
 msgstr "Unzulässiger Name"
 
@@ -1880,7 +1954,7 @@ msgstr "Finde: "
 msgid "Fields:"
 msgstr "Felder:"
 
-#: khelpdlg.cpp:65 khelpdlg.cpp:76 robjectbrowser.cpp:197
+#: khelpdlg.cpp:65 khelpdlg.cpp:76 robjectbrowser.cpp:207
 msgid "All"
 msgstr "Alle"
 
@@ -1920,70 +1994,75 @@ msgstr "Paket"
 msgid "Help search"
 msgstr "Suche in Hilfe"
 
-#: khelpdlg.cpp:204
+#: khelpdlg.cpp:206
 msgid ""
 "No help found on '%1'. Maybe the corresponding package is not installed/"
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
 "more options."
 msgstr ""
 
-#: khelpdlg.cpp:204
+#: khelpdlg.cpp:206
 msgid "No help found"
 msgstr ""
 
-#: robjectbrowser.cpp:57
+#: robjectbrowser.cpp:58
 msgid "Objects in the R workspace"
 msgstr "Objekte im R Workspace"
 
-#: robjectbrowser.cpp:61
+#: robjectbrowser.cpp:60
+#, fuzzy
+msgid "Search Help"
+msgstr "R Hilfe"
+
+#: robjectbrowser.cpp:63
 msgid "Rename"
 msgstr "Umbenennen"
 
-#: robjectbrowser.cpp:62
+#: robjectbrowser.cpp:64
 msgid "Copy to new symbol"
 msgstr ""
 
-#: robjectbrowser.cpp:63
+#: robjectbrowser.cpp:65
 msgid "Copy to .GlobalEnv"
 msgstr ""
 
-#: robjectbrowser.cpp:101
+#: robjectbrowser.cpp:109
 #, fuzzy
 msgid "Copy object"
 msgstr "Auswahl zu kopieren"
 
-#: robjectbrowser.cpp:101
+#: robjectbrowser.cpp:109
 #, fuzzy
 msgid "Enter the name to copy to"
 msgstr "Gebe den neuen Namen ein"
 
-#: robjectbrowser.cpp:119
+#: robjectbrowser.cpp:127
 msgid ""
 "An object named '%1' already exists in the GlobalEnv. Created the copy as '%"
 "2' instead."
 msgstr ""
 
-#: robjectbrowser.cpp:119
+#: robjectbrowser.cpp:127
 msgid "Name already in use"
 msgstr ""
 
-#: robjectbrowser.cpp:139
+#: robjectbrowser.cpp:147
 msgid "Rename object"
 msgstr "Benenn Objekt um"
 
-#: robjectbrowser.cpp:139
+#: robjectbrowser.cpp:147
 msgid "Enter the new name"
 msgstr "Gebe den neuen Namen ein"
 
-#: robjectbrowser.cpp:198
+#: robjectbrowser.cpp:208
 msgid "Non-Functions"
 msgstr ""
 
-#: robjectbrowser.cpp:206
+#: robjectbrowser.cpp:216
 msgid "Show All Environments"
 msgstr ""
 
-#: robjectbrowser.cpp:210
+#: robjectbrowser.cpp:220
 #, fuzzy
 msgid "Show Hidden Objects"
 msgstr "Zeige versteckte Objekte"
