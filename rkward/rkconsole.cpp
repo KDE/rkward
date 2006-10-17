@@ -174,7 +174,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	
 	if (para < doc->numLines() - 1 || pos < prefix.length ()){
 		int t=(int)pos;if(prefix.length()>pos) t=prefix.length();
-		view->	setCursorPosition (doc->numLines() -1, t);
+		view->setCursorPosition (doc->numLines() -1, t);
 		return(TRUE);
 	}
 	
@@ -257,19 +257,30 @@ bool RKConsole::eventFilter( QObject *o, QEvent *e )
 		QMouseEvent *m = (QMouseEvent *)e;
 		if (m->button() == Qt::RightButton) {
 			createPopupMenu(m->globalPos());
-			return(TRUE);
+			return (true);
 		}
-		return(FALSE);
+		return (false);
 	} else if (e->type () == QEvent::MouseButtonRelease){
 		QMouseEvent *m = (QMouseEvent *)e;
 		if (m->button() == Qt::MidButton) {
 			QClipboard *cb = QApplication::clipboard ();
 			submitBatch (cb->text (QClipboard::Selection));
 			return (true);
-		}
-		return(FALSE);
+		} /* else if (m->button () == Qt::LeftButton) {
+			// prevent cursor from leaving last line
+			uint para=0; uint p=0;
+			view->cursorPosition (&para, &p);
+			if (para != doc->numLines () - 1) {
+				int y = view->y ();
+				view->setCursorPosition (doc->numLines() -1, p);
+				int y2 = view->y ();
+				qDebug ("%d, %d", y, y2);
+				view->scroll (0, y - y2);
+			}
+		} */ // not good, yet: always jumps to bottom of view
+		return (false);
 	} else {
-		return FALSE;
+		return false;
 	}
 }
 
