@@ -35,6 +35,7 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QWidget (parent) {
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	tabs = new KTabBar (this);
 	tabs->setHoverCloseButton (true);
+	tabs->setFocusPolicy (QWidget::NoFocus);
 	tabs->hide ();
 	connect (tabs, SIGNAL (selected (int)), this, SLOT (setPage (int)));
 	connect (tabs, SIGNAL (closeRequest (int)), this, SLOT (closePage (int)));
@@ -149,10 +150,6 @@ void RKWorkplaceView::setPage (int page) {
 	widgets->raiseWidget (window);
 
 	window->setFocus ();
-/*	// a slightly more convoluted version of window->setFocus, which set's the focus after the window has been shown, but unfortunately it does not work either
-	QFocusEvent *focus = new QFocusEvent (QEvent::FocusIn);
-	focus->setReason (QFocusEvent::Mouse);
-	qApp->postEvent (window, focus); */
 
 	emit (pageChanged (window));
 	setCaption (window->shortCaption ());

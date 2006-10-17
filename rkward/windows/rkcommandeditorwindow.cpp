@@ -72,6 +72,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	RKCommonFunctions::moveContainer (m_doc, "Menu", "tools", "edit", true);
 
 	m_doc->insertChildClient (new RKCommandEditorWindowPart (m_view, this));
+	setFocusProxy (m_view);
 
 	QHBoxLayout *pLayout = new QHBoxLayout( this, 0, -1, "layout");
 	pLayout->addWidget(m_view);

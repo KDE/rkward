@@ -45,6 +45,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow:
 	
 	khtmlpart = new KHTMLPart (this, 0, 0, 0, KHTMLPart::BrowserViewGUI);
 	khtmlpart->setSelectable (true);
+	setFocusProxy (khtmlpart->widget ());
 	
 	khtmlpart->widget ()->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding);
 	QHBoxLayout *pLayout = new QHBoxLayout (this, 0, -1, "layout");
