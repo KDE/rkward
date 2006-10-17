@@ -2,8 +2,8 @@
 - many new distribution plugins
 - all distribution plugins now use a free-text field, allowing you to enter a vector of probabilties / quantiles
 - another fix to cancelling during readline () calls
-- invalid values are stored in a separate attribute instead of changing the storage mode back and forth -> TODO
-- storage mode for RKWard meta data was changed -> TODO
+- invalid values are stored in a separate attribute instead of changing the storage mode back and forth
+- storage mode for RKWard meta data was changed
 - RMB option to search help on objects from packages in object browser
 - show tooltip information on objects in object browser
 - do not crash on call to "browser ()"

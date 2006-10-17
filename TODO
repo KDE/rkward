@@ -43,11 +43,15 @@ UI-stuff
 			- this will be very hard to do with the current Qt. We'd really need several checkboxes *within* a QListViewItem. Tackle this when/after porting to Qt4
 	- RObjectListView
 		- use better icons to mark up the different base types
+	- Workplace
+		- use KTabBar for tabs with close icon?
 	- RKConsole:
 		- Console should start a command chain when submitting a batch of pasted commands
 		- Better yet, the commands might be autosplit in the backend. Need to think about how to design this correctly, though
 		- hide tabs in console
 		- tabs should do name completion!
+		- Allow pasting at other positions than line end
+		- Prevent cursor from venturing into lines other than the last line
 	- Script editor:
 		- allow to pipe scripts to the console (console might have to be made smarter about large pasted commands, first)
 	- RKConsole / Script editor:
