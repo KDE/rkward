@@ -41,8 +41,8 @@ clean:
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
-	# remove any CVS subdir included by accident
-	rm -rf $(CURDIR)/debian/CVS
+	# remove any .svn subdir included by accident
+	rm -rf $(CURDIR)/debian/.svn
 
 	# Add here commands to clean up after the build process.
 	-$(MAKE) distclean
@@ -66,9 +66,7 @@ install: build
 	# dirty hack to get rid of conflicting r.xml file without adjusting all makefiles
 	rm -vf $(CURDIR)/debian/rkward/usr/share/apps/katepart/syntax/r.xml
 	
-	# install the rkward R package to installation directory
-	dh_installdirs usr/lib/R/site-library
-	/usr/bin/R CMD INSTALL -l $(CURDIR)/debian/rkward/usr/lib/R/site-library rkward/rbackend/rpackages/rkward
+	# remove unneeded R package files
 	rm -vf $(CURDIR)/debian/rkward/usr/lib/R/site-library/R.css $(CURDIR)/debian/rkward/usr/lib/R/site-library/rkward/COPYING
 
 # Build architecture-independent files here.

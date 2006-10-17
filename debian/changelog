@@ -1,3 +1,11 @@
+rkward (0.4.0-1) unstable; urgency=low
+
+  * new upstream release
+  * remove obsoleted workaround for installation of rkward R package
+  * cope with switch from CVS to SVN
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 17 Oct 2006 14:40:00 +0200
+
 rkward (0.3.7-1) unstable; urgency=low
 
   * new upstream release
