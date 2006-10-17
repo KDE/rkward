@@ -48,7 +48,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow:
 	setFocusProxy (khtmlpart->widget ());
 	
 	khtmlpart->widget ()->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding);
-	QHBoxLayout *pLayout = new QHBoxLayout (this, 0, -1, "layout");
+	QHBoxLayout *pLayout = new QHBoxLayout (this);
 	pLayout->addWidget (khtmlpart->widget ());
 
 	// We have to connect this in order to allow browsing.
@@ -61,6 +61,9 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow:
 
 RKHTMLWindow::~RKHTMLWindow () {
 	RK_TRACE (APP);
+
+	delete khtmlpart;
+	khtmlpart = 0;	// in case we try to redelete in a parent class
 }
 
 QString RKHTMLWindow::getRDescription () {
@@ -203,6 +206,9 @@ RKOutputWindow::~RKOutputWindow () {
 	if (this == current_output) {
 		current_output = 0;
 	}
+
+	delete khtmlpart;
+	khtmlpart = 0;	// in case we try to redelete in a parent class
 }
 
 QString RKOutputWindow::getRDescription () {
@@ -316,6 +322,8 @@ RKHelpWindow::RKHelpWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUICli
 
 RKHelpWindow::~RKHelpWindow () {
 	RK_TRACE (APP);
+	delete khtmlpart;
+	khtmlpart = 0;	// in case we try to redelete in a parent class
 }
 
 #include "rkhtmlwindow.moc"

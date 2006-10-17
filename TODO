@@ -43,8 +43,6 @@ UI-stuff
 			- this will be very hard to do with the current Qt. We'd really need several checkboxes *within* a QListViewItem. Tackle this when/after porting to Qt4
 	- RObjectListView
 		- use better icons to mark up the different base types
-	- Workplace
-		- use KTabBar for tabs with close icon?
 	- RKConsole:
 		- Console should start a command chain when submitting a batch of pasted commands
 		- Better yet, the commands might be autosplit in the backend. Need to think about how to design this correctly, though
@@ -60,6 +58,10 @@ UI-stuff
 	- RKHelpDlg:
 		- in the mid term, this should probably be renamed and moved to windows
 		- call .rk.get.installed.packages, and update package selection drop down on every show, but not on startup? Really? Maybe both.
+	- RKVarslot:
+		- allow "save as" selection mode (i.e. new object names, or selection of existing symbol)
+	- RKVarselector:
+		- pop-up-able selectors (maybe more generic, not only for varselectors)
 	- RKwatch:
 		- optionally keep a file log!
 	- hot-key/permanent icon to cancel current command / hold processing. Perhaps in the busy/idle indicator?

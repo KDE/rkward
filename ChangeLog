@@ -1,3 +1,4 @@
+- fixed: back / forward buttons would sometimes remain after closing a help window 
 - fix some focus problems
 - provide close buttons in tab bar
 
