@@ -1,3 +1,4 @@
+--- Version 0.4.0 - Oct-17-2006
 - many new distribution plugins
 - all distribution plugins now use a free-text field, allowing you to enter a vector of probabilties / quantiles
 - another fix to cancelling during readline () calls
