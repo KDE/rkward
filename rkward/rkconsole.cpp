@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -269,8 +269,6 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		QString text = e->text ();
 		if (text == "(") {
 			tryShowFunctionArgHints ();
-		} else if (text == ",") {
-			tryShowFunctionArgHints ();
 		} else if (text == ")") {
 			tryShowFunctionArgHints ();
 		}
@@ -287,17 +285,21 @@ void RKConsole::tryShowFunctionArgHints () {
 void RKConsole::realTryShowFunctionArgHints () {
 	RK_TRACE (APP);
 
-	QString current_line = currentCommand ();
+	QString current_context = currentCommand ();
 	int cursor_pos = currentCursorPositionInCommand ();
+	if (command_incomplete) {
+		current_context.prepend (incomplete_command);
+		cursor_pos += incomplete_command.length ();
+	}
 	int matching_left_brace_pos;
 
 	// find the corrresponding opening brace
 	int brace_level = 1;
 	int i;
 	for (i = cursor_pos; i >= 0; --i) {
-		if (current_line.at (i) == QChar (')')) {
+		if (current_context.at (i) == QChar (')')) {
 			brace_level++;
-		} else if (current_line.at (i) == QChar ('(')) {
+		} else if (current_context.at (i) == QChar ('(')) {
 			brace_level--;
 			if (!brace_level) break;
 		}
@@ -310,16 +312,16 @@ void RKConsole::realTryShowFunctionArgHints () {
 
 	// now find where the symbol to the left ends
 	int potential_symbol_end = matching_left_brace_pos - 1;
-	while ((potential_symbol_end >= 0) && current_line.at (potential_symbol_end).isSpace ()) {
+	while ((potential_symbol_end >= 0) && current_context.at (potential_symbol_end).isSpace ()) {
 		--potential_symbol_end;
 	}
-	if (current_line.at (potential_symbol_end).isSpace ()) {
+	if (current_context.at (potential_symbol_end).isSpace ()) {
 		arghints_popup->hide ();
 		return;
 	}
 
-	// now identify the symbol (if any)
-	QString effective_symbol = RKCommonFunctions::getCurrentSymbol (current_line, potential_symbol_end);
+	// now identify the symbol and object (if any)
+	QString effective_symbol = RKCommonFunctions::getCurrentSymbol (current_context, potential_symbol_end);
 	if (effective_symbol.isEmpty ()) {
 		arghints_popup->hide ();
 		return;
@@ -331,6 +333,7 @@ void RKConsole::realTryShowFunctionArgHints () {
 		return;
 	}
 
+	// initialize and show popup
 	arghints_popup_text->setText (effective_symbol + " (" + static_cast<RFunctionObject*> (object)->printArgs () + ")");
 	arghints_popup->resize (arghints_popup_text->sizeHint () + QSize (2, 2));
 	arghints_popup->move (mapToGlobal (view->cursorCoordinates () + QPoint (0, arghints_popup->height ())));
@@ -419,10 +422,7 @@ bool RKConsole::eventFilter (QObject *, QEvent *e) {
 
 QString RKConsole::currentCommand () {
 	RK_TRACE (APP);
-	QString s = editInterface(doc)->textLine (doc->numLines() -1).right (doc->lineLength (doc->numLines() -1) - prefix.length () + 1);
-	s = s.stripWhiteSpace ();
-	
-	return (s);
+	return (doc->textLine (doc->numLines () - 1).mid (prefix.length ()));
 }
 
 void RKConsole::setCurrentCommand (QString command) {
