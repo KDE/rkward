@@ -55,6 +55,9 @@ public:
 	/** reimplemented from RContainerObject to search the environments in search order */
 	RObject *findObject (const QString &name, bool canonified=false);
 
+	/** reimplemented from RContainerObject to search the environments in search order */
+	void findObjectsMatching (const QString &partial_name, RObjectMap *current_list, bool name_is_canonified=false);
+
 	/** reimplemented from RContainerObject to create the child in the .GlobalEnv */
 	RObject *createNewChild (const QString &name, RKEditor *creator=0, bool container=false, bool data_frame=false);
 

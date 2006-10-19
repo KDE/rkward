@@ -67,6 +67,11 @@ QString RObject::getFullName () {
 	return parent->makeChildName (RObject::name, type & Misplaced);
 }
 
+QString RObject::getBaseName () {
+	RK_TRACE (OBJECTS);
+	return parent->makeChildBaseName (RObject::name);
+}
+
 QString RObject::getLabel () {
 	RK_TRACE (OBJECTS);
 	return getMetaProperty ("label");
@@ -75,6 +80,11 @@ QString RObject::getLabel () {
 RObject *RObject::findObject (const QString &, bool) {
 	RK_TRACE (OBJECTS);
 	return 0;
+}
+
+void RObject::findObjectsMatching (const QString &, RObjectMap *, bool) {
+	RK_TRACE (OBJECTS);
+	return;
 }
 
 QString RObject::getMetaProperty (const QString &id) {
@@ -206,6 +216,11 @@ bool RObject::inherits (const QString &class_name) {
 QString RObject::makeChildName (const QString &short_child_name, bool) {
 	RK_TRACE (OBJECTS);
 	return (getFullName () + "[[" + rQuote (short_child_name) + "]]");
+}
+
+QString RObject::makeChildBaseName (const QString &short_child_name){
+	RK_TRACE (OBJECTS);
+	return (getBaseName () + "[[" + rQuote (short_child_name) + "]]");
 }
 
 void RObject::writeMetaData (RCommandChain *chain) {
@@ -510,6 +525,14 @@ QString RObject::rQuote (const QString &string) {
 	// TODO: this is not entirely correct, yet (let alone efficient)!
 	QString copy = string;
 	return ("\"" + copy.replace (QRegExp ("\""), "\\\"") + "\"");
+}
+
+// static
+QString RObject::canonifyName (const QString &from) {
+	RK_TRACE (OBJECTS);
+
+	QString copy = from;
+	return (copy.replace ("[\"", "$").replace ('[', "").replace ("\"]", "").replace (']', ""));
 }
 
 RKEditor *RObject::objectOpened () {

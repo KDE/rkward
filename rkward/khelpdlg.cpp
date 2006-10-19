@@ -25,7 +25,6 @@
 #include <qcombobox.h>
 #include <qlistview.h>
 #include <qlineedit.h>
-#include <qregexp.h>
 #include <qlayout.h>
 #include <qlabel.h>
 
@@ -34,6 +33,7 @@
 #include "debug.h"
 #include "rkglobals.h"
 #include "rkward.h"
+#include "misc/rkcommonfunctions.h"
 
 #define GET_HELP_URL 1
 #define HELP_SEARCH 2
@@ -106,23 +106,10 @@ KHelpDlg::~KHelpDlg () {
 }
 
 void KHelpDlg::getContextHelp (const QString &context_line, int cursor_pos) {
-	if (context_line.isEmpty () || context_line.isNull ()) return;
+	QString result = RKCommonFunctions::getCurrentSymbol (context_line, cursor_pos);
+	if (result.isEmpty ()) return;
 
-	// step 1: find out word under cursor
-	// We want to match any valid R name, that is, everything composed of letters, 0-9, '.'s and '_'s..
-	QRegExp rx_no_word ("[^A-Za-z0-9\\._]");
-
-	// find out the next non-word stuff left and right of the current cursor position
-	int current_word_start = context_line.findRev (rx_no_word, cursor_pos-1) + 1;
-	int current_word_end = context_line.find (rx_no_word, cursor_pos);
-
-	// if both return the same position, we're on a non-word.
-	if (current_word_start == current_word_end) return;
-
-	QString result = context_line.mid (current_word_start, current_word_end - current_word_start);
-
-	// step 2: retrieve help
-	RKGlobals::rInterface ()->issueCommand ("help(\"" + result + "\", htmlhelp=TRUE)[1]", RCommand::App | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
+	getFunctionHelp (result);
 }
 
 void KHelpDlg::getFunctionHelp (const QString &function_name) {

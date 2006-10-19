@@ -211,10 +211,7 @@ RObject *RContainerObject::findObject (const QString &name, bool is_canonified) 
 	RK_TRACE (OBJECTS);
 
 	QString canonified = name;
-	if (!is_canonified) {
-		// yeah, ok, this could be made more efficient relatively easily ...
-		canonified = canonified.replace ("[\"", "$").replace ('[', "").replace ("\"]", "").replace (']', "");
-	}
+	if (!is_canonified) canonified = canonifyName (name);
 
 	// TODO: there could be objects with "$" in their names!
 	QString current_level = canonified.section (QChar ('$'), 0, 0);
@@ -227,6 +224,38 @@ RObject *RContainerObject::findObject (const QString &name, bool is_canonified) 
 	if (remainder.isEmpty ()) return found;
 
 	return (found->findObject (remainder, true));
+}
+
+void RContainerObject::findObjectsMatching (const QString &partial_name, RObjectMap *current_list, bool name_is_canonified) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (current_list);
+
+	QString canonified = partial_name;
+	if (!name_is_canonified) canonified = canonifyName (partial_name);
+
+	// TODO: there could be objects with "$" in their names!
+	QString current_level = canonified.section (QChar ('$'), 0, 0);
+	QString remainder = canonified.section (QChar ('$'), 1);
+
+	if (remainder.isEmpty ()) {
+		for (RObjectMap::const_iterator it = childmap.constBegin (); it != childmap.constEnd (); ++it) {
+			if (it.key ().startsWith (current_level)) {
+				QString base_name = it.data ()->getBaseName ();
+				if (current_list->contains (base_name)) {
+					current_list->insert (it.data ()->getFullName (), it.data ());
+				} else {
+					current_list->insert (base_name, it.data ());
+				}
+			}
+		}
+	} else {
+		RObjectMap::iterator it = childmap.find (current_level);
+
+		if (it == childmap.end ()) return;
+
+		RObject *found = it.data ();
+		found->findObjectsMatching (remainder, current_list, true);
+	}
 }
 
 RObject *RContainerObject::createNewChild (const QString &name, RKEditor *creator, bool container, bool data_frame) {

@@ -79,6 +79,7 @@ public:
 	
 	QString getShortName ();
 	virtual QString getFullName ();
+	virtual QString getBaseName ();
 	virtual QString getLabel ();
 	virtual QString getMetaProperty (const QString &id);
 	virtual QString getDescription ();
@@ -153,17 +154,14 @@ public:
 	static QString rQuote (const QString &string);
 /** Returns a pretty description of the object, and its most important properties. TODO should this be virtual or not? I suppose, it's a close call. For now, we do all work here with casts */
 	QString getObjectDescription ();
-// UNIMPLEMENTED
 /** Returns a canonified name given a non-canoified name. Warning! This is not (necessarily) suitable for submission to
 R, only for internal lookup. For submission to R, always use RObject::getFullName (), as it will apply more complicated (and correct) rules depending on object type */
-//	static QString canonifyName (const QString &from);
+	static QString canonifyName (const QString &from);
 /** Function for code completion: given the partial name, find all objects matching this partial name
 @param partial_name The partial name to look up
 @param current_list A pointer to a valid (but probably initially empty) RObjectMap. Matches will be added to this list
 @param name_is_canonified internal parameter. Set to true, if the name to match is already canonfied (else it will be canonified internally) */
-//	virtual void findObjectsMatching (const QString &partial_name, RObjectMap *current_list, bool name_is_canonified=false);
-// UNIMPLEMENTED END
-
+	virtual void findObjectsMatching (const QString &partial_name, RObjectMap *current_list, bool name_is_canonified=false);
 
 /** If the object is being edited, returns that editor (in the future probably a list of editors). Else returns 0 */
 	RKEditor *objectOpened ();
@@ -199,6 +197,7 @@ protected:
 
 /** generates a (full) name for a child of this object with the given name. */
 	virtual QString makeChildName (const QString &short_child_name, bool misplaced=false);
+	virtual QString makeChildBaseName (const QString &short_child_name);
 
 /** Update object to reflect the structure passed in the new_data argument. If the data is mismatching (i.e. can not be accommodated by this type of object) false is returned (calls canAccommodateStructure () internally). In this case you should delete the object, and create a new one.
 @returns true if the changes could be done, false if this  */

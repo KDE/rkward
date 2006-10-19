@@ -167,9 +167,7 @@ RObject *RObjectList::findObject (const QString &name, bool is_canonified) {
 	RK_TRACE (OBJECTS);
 
 	QString canonified = name;
-	if (!is_canonified) {
-		canonified = canonified.replace ("[\"", "$").replace ('[', "").replace ("\"]", "").replace (']', "");
-	}
+	if (!is_canonified) canonified = canonifyName (name);
 
 	// TODO: there could be objects with "::" in their names!
 	if (canonified.contains ("::")) {
@@ -183,19 +181,38 @@ RObject *RObjectList::findObject (const QString &name, bool is_canonified) {
 		return (found->findObject (remainder, true));
 	}
 
-	// no environment specified, do regular search:
-	// TODO: there could be objects with "$" in their names!
-	QString current_level = canonified.section (QChar ('$'), 0, 0);
-	QString remainder = canonified.section (QChar ('$'), 1);
-
+	// no "::"-qualification given, do normal search in all environments, return first match
 	for (unsigned int i = 0; i < num_toplevel_environments; ++i) {
-		RObject *found = toplevel_environments[i]->findObject (current_level, true);
-		if (found) {
-			if (remainder.isEmpty ()) return (found);
-			return (found->findObject (remainder, true));
-		}
+		RObject *found = toplevel_environments[i]->findObject (canonified, true);
+		if (found) return found;
 	}
 	return 0;
+}
+
+void RObjectList::findObjectsMatching (const QString &partial_name, RObjectMap *current_list, bool name_is_canonified) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (current_list);
+
+	QString canonified = partial_name;
+	if (!name_is_canonified) canonified = canonifyName (partial_name);
+
+	// TODO: there could be objects with "::" in their names!
+	if (canonified.contains ("::")) {
+		QString env = canonified.section ("::", 0, 0);
+		QString remainder = canonified.section ("::", 1);
+
+		RObjectMap::iterator it = childmap.find (env);
+		if (it == childmap.end ()) return;
+
+		RObject *found = it.data ();
+		found->findObjectsMatching (remainder, current_list, true);
+		return;
+	}
+
+	// no "::"-qualification given, do normal search in all environments.
+	for (unsigned int i = 0; i < num_toplevel_environments; ++i) {
+		toplevel_environments[i]->findObjectsMatching (canonified, current_list, true);
+	}
 }
 
 RObject *RObjectList::createNewChild (const QString &name, RKEditor *creator, bool container, bool data_frame) {

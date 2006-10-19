@@ -61,6 +61,7 @@ public:
 	bool hasSelectedText ();
 /** interrupt the current incomplete command (if any) */
 	void resetIncompleteCommand ();
+	void doTabCompletion ();
 protected:
 /** Constructor. Protected. Construct an RKConsolePart instead */
 	RKConsole ();

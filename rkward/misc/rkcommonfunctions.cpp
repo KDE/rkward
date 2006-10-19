@@ -18,6 +18,7 @@
 
 #include <qstringlist.h>
 #include <qdom.h>
+#include <qregexp.h>
 
 #include <kxmlguiclient.h>
 
@@ -94,6 +95,40 @@ namespace RKCommonFunctions {
 				}
 			}
 		}
+	}
+
+	QString getCurrentSymbol (const QString &context_line, int cursor_pos, bool strict) {
+		if (context_line.isEmpty ()) return (QString ());
+
+		int current_word_start;
+		int current_word_end;
+		getCurrentSymbolOffset (context_line, cursor_pos, strict, &current_word_start, &current_word_end);
+	
+		// if both return the same position, we're on a non-word.
+		if (current_word_start == current_word_end) return (QString ());
+	
+		return (context_line.mid (current_word_start, current_word_end - current_word_start));
+	}
+
+	void getCurrentSymbolOffset (const QString &context_line, int cursor_pos, bool strict, int *start, int *end) {
+		if (context_line.isEmpty ()) {
+			*start = 0;
+			*end = 0;
+			return;
+		}
+
+		// step 1: find out word under cursor
+		// We want to match any valid R name, that is, everything composed of letters, 0-9, '.'s and '_'s..
+		QRegExp rx_no_word;
+		if (strict) {
+			rx_no_word = QRegExp ("[^A-Za-z0-9\\._]");
+		} else {
+			rx_no_word = QRegExp ("[^A-Za-z0-9\\._\\$\\:\\[\"\\]]");
+		}
+
+		// find out the next non-word stuff left and right of the current cursor position
+		*start = context_line.findRev (rx_no_word, cursor_pos-1) + 1;
+		*end = context_line.find (rx_no_word, cursor_pos);
 	}
 
 }	// namespace

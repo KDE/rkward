@@ -36,6 +36,7 @@ public:
 
 	QString getFullName ();
 	QString makeChildName (const QString &short_child_name, bool misplaced=false);
+	QString makeChildBaseName (const QString &short_child_name);
 /** reimplemented from RContainerObject: If this is an environment var, call RContainerObject::writeMetaData (). Else, do nothing. An environment has no meta data. */
 	void writeMetaData (RCommandChain *chain);
 protected:

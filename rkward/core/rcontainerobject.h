@@ -63,6 +63,9 @@ public:
 
 	/** reimplemented from RObject to actually search for the object */
 	virtual RObject *findObject (const QString &name, bool is_canonified=false);
+
+	/** reimplemented from RObject to actually search for matching objects */
+	void findObjectsMatching (const QString &partial_name, RObjectMap *current_list, bool name_is_canonified=false);
 protected:
 	void updateChildren (RData *new_children);
 	RObjectMap childmap;

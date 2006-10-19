@@ -28,7 +28,6 @@
 #include <kactioncollection.h>
 #include <kconfig.h>
 
-
 #include "rkglobals.h"
 #include "rkward.h"
 #include "khelpdlg.h"
@@ -36,9 +35,8 @@
 #include "rbackend/rinterface.h"
 #include "rbackend/rcommand.h"
 #include "settings/rksettingsmoduleconsole.h"
-
-
-
+#include "misc/rkcommonfunctions.h"
+#include "core/robjectlist.h"
 
 RKConsole::RKConsole () : QWidget (0) {
 	RK_TRACE (APP);
@@ -59,7 +57,6 @@ RKConsole::RKConsole () : QWidget (0) {
 
 	view->setDynWordWrap (false);
 
-	
 	setFocusProxy (view);
 	setFocusPolicy (QWidget::WheelFocus);
 	
@@ -74,7 +71,6 @@ RKConsole::RKConsole () : QWidget (0) {
 	KActionCollection* ac=0;
 	QWidget* Kvi=0; //here we store the KateViewInternal of the view, so we can uplug actions from it
 	
-
 	while ((obj = it.current()) != 0) {
 		++it;
 		obj->installEventFilter (this);
@@ -84,7 +80,6 @@ RKConsole::RKConsole () : QWidget (0) {
 			Kvi= (QWidget*) obj;
 		}
 	}
-	
 
 	if (ac) {
 		unplugAction("move_line_up", ac);
@@ -236,6 +231,10 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 			return TRUE;
 		}
 	}
+	else if (e->key () == Qt::Key_Tab){
+		doTabCompletion ();
+		return TRUE;
+	}
 	else if (e->key () == Qt::Key_Home){
 		cursorAtTheBeginning ();
 		return TRUE;
@@ -248,8 +247,24 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	return FALSE;
 }
 
-bool RKConsole::eventFilter( QObject *o, QEvent *e )
-{
+void RKConsole::doTabCompletion () {
+	RK_TRACE (APP);
+
+	QString current_symbol = RKCommonFunctions::getCurrentSymbol (currentCommand (), currentCursorPositionInCommand (), false);
+	if (!current_symbol.isEmpty ()) {
+		RObject::RObjectMap map;
+		RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
+		QValueList<KTextEditor::CompletionEntry> list;
+		for (RObject::RObjectMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
+			KTextEditor::CompletionEntry entry;
+			entry.text = it.key ();
+			list.append (entry);
+		}
+		view->showCompletionBox (list);
+	}
+}
+
+bool RKConsole::eventFilter (QObject *, QEvent *e) {
 	if (e->type () == QEvent::KeyPress) {
 		QKeyEvent *k = (QKeyEvent *)e;
 		return handleKeyPress (k);

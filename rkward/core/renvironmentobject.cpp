@@ -63,6 +63,15 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 	return (name + "$" + short_child_name);
 }
 
+QString REnvironmentObject::makeChildBaseName (const QString &short_child_name) {
+	RK_TRACE (OBJECTS);
+
+	if (type & ToplevelEnv) {
+		return (short_child_name);
+	}
+	return (name + "$" + short_child_name);
+}
+
 void REnvironmentObject::writeMetaData (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 
