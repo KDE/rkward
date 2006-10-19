@@ -27,6 +27,7 @@
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kconfig.h>
+#include <kapplication.h>
 
 #include "rkglobals.h"
 #include "rkward.h"
@@ -130,6 +131,7 @@ RKConsole::RKConsole () : QWidget (0) {
 	commands_history_position = commands_history.constEnd ();
 
 	current_command = 0;
+	tab_key_pressed_before = false;
 }
 
 
@@ -190,7 +192,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 
 	if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
 		submitCommand ();
-		return TRUE;
+		return true;
 	}
 	else if (e->state () == Qt::ShiftButton && e->key () == Qt::Key_Home){
 		if(hasSelectedText())
@@ -207,13 +209,13 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 			return FALSE;
 		}
 	}
-	else if (e->key () == Qt::Key_Up){
+	else if (e->key () == Qt::Key_Up) {
 		commandsListUp ();
-		return TRUE;
+		return true;
 	}
-	else if (e->key () == Qt::Key_Down){
+	else if (e->key () == Qt::Key_Down) {
 		commandsListDown ();
-		return TRUE;
+		return true;
 	}
 	else if (e->key () == Qt::Key_Left){
 		if(pos<=prefix.length ()){
@@ -250,18 +252,46 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 void RKConsole::doTabCompletion () {
 	RK_TRACE (APP);
 
-	QString current_symbol = RKCommonFunctions::getCurrentSymbol (currentCommand (), currentCursorPositionInCommand (), false);
+	QString current_line = currentCommand ();
+	int word_start;
+	int word_end;
+	int cursor_pos = currentCursorPositionInCommand ();
+	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &word_start, &word_end);
+
+	QString current_symbol = current_line.mid (word_start, word_end - word_start);
 	if (!current_symbol.isEmpty ()) {
 		RObject::RObjectMap map;
+		RObject::RObjectMap::const_iterator it;
 		RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
 		QValueList<KTextEditor::CompletionEntry> list;
-		for (RObject::RObjectMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
-			KTextEditor::CompletionEntry entry;
-			entry.text = it.key ();
-			list.append (entry);
+		int count = map.count ();
+
+		if (count == 1) {
+			int current_line = doc->numLines () - 1;
+			int offset = prefix.length ();
+			it = map.constBegin ();
+			doc->removeText (current_line, offset + word_start, current_line, offset + word_end);
+			doc->insertText (current_line, offset + word_start, it.key ());
+		} else if (count == 0) {
+			KApplication::kApplication ()->beep ();
+		} else if (tab_key_pressed_before) {
+			int i=0;
+			for (it = map.constBegin (); it != map.constEnd (); ++it) {
+				if (i % 3) {
+					doc->insertText (doc->numLines () - 1, 0, it.key ().leftJustify (35));
+				} else {
+					doc->insertText (doc->numLines (), 0, it.key ());
+				}
+				++i;
+			}
+			doc->insertText (doc->numLines (),  0, prefix + current_line);
+			cursorAtTheEnd ();
+		} else {
+			tab_key_pressed_before = true;
+			return;
 		}
-		view->showCompletionBox (list);
 	}
+	tab_key_pressed_before = false;
 }
 
 bool RKConsole::eventFilter (QObject *, QEvent *e) {

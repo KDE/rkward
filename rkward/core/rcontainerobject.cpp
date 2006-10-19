@@ -237,6 +237,17 @@ void RContainerObject::findObjectsMatching (const QString &partial_name, RObject
 	QString current_level = canonified.section (QChar ('$'), 0, 0);
 	QString remainder = canonified.section (QChar ('$'), 1);
 
+	if (canonified.endsWith (QChar ('$'))) {
+		RObjectMap::iterator it = childmap.find (current_level);
+		
+		if (it == childmap.end ()) return;
+		
+		RObject *found = it.data ();
+		found->findObjectsMatching (QString (), current_list, true);
+
+		return;
+	}
+
 	if (remainder.isEmpty ()) {
 		for (RObjectMap::const_iterator it = childmap.constBegin (); it != childmap.constEnd (); ++it) {
 			if (it.key ().startsWith (current_level)) {

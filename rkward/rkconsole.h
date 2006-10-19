@@ -30,7 +30,7 @@
 class QStringList;
 class KAction;
 class RCommand;
-
+class KateCodeCompletion;
 
 /**
 ** 	\brief Provides an R-like console.
@@ -131,6 +131,7 @@ bool eventFilter( QObject *o, QEvent *e );
 	Kate::Document *doc;
 	Kate::View *view;
 
+	bool tab_key_pressed_before;
 public slots:
 /** We intercept paste commands and get them executed through submitBatch.
 @sa submitBatch */
