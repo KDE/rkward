@@ -57,6 +57,7 @@ public:
 
 	/** reimplemented from RContainerObject to create the child in the .GlobalEnv */
 	RObject *createNewChild (const QString &name, RKEditor *creator=0, bool container=false, bool data_frame=false);
+
 	/** reimplemented from RContainerObject to validize the name in .GlobalEnv */
 	QString validizeName (const QString &child_name);
 

@@ -281,6 +281,7 @@ bool RObject::updateStructure (RData *new_data) {
 
 	if (properties_change) RKGlobals::tracker ()->objectMetaChanged (this);
 	if (data && (data->dirty)) updateDataFromR (0);
+	if (data) data->pending = false;
 
 	return true;
 }
@@ -550,6 +551,7 @@ void RObject::setCreatedInEditor (RKEditor *editor) {
 		initializeEditDataToEmpty ();
 	}
 	data->editor = editor;
+	data->pending = true;
 }
 
 // virtual
@@ -561,6 +563,14 @@ void RObject::allocateEditData () {
 	
 	data = new EditData;
 	data->dirty = false;
+	data->pending = false;
+}
+
+bool RObject::isPending () {
+	RK_TRACE (OBJECTS);
+
+	if (!data) return false;
+	return (data->pending);
 }
 
 // virtual

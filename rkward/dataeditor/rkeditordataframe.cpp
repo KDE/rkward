@@ -75,10 +75,15 @@ void RKEditorDataFrame::openObject (RObject *object, bool initialize_to_empty) {
 	RK_TRACE (EDITOR);
 	flushEdit ();
 	RKEditor::object = object;
-	object->setObjectOpened (this, true);
+	if (initialize_to_empty) {
+		object->setCreatedInEditor (this);
+	} else {
+		object->setObjectOpened (this, true);
+	}
 
 	enableEditing (false);
 	open_chain = RKGlobals::rInterface ()->startChain (open_chain);
+
 	if (initialize_to_empty) {
 		for (int i=0; i < numTrueCols (); ++i) {
 			RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName ("var"), this);
@@ -94,6 +99,8 @@ void RKEditorDataFrame::openObject (RObject *object, bool initialize_to_empty) {
 	}
 
 	// actually, given the object, we already know the child-names. We don't know their order, however, so we better fetch the name-row again.
+	object->markDataDirty ();
+	object->updateFromR (open_chain);
 	RCommand *command = new RCommand ("names (" + object->getFullName () + ")", RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_NAMES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, open_chain);
 
@@ -110,27 +117,15 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 			deleteColumn (0);
 		}
 
-		// this is really just a very preliminary HACK. If stringVectorLength () is 0, this can not be a data.frame any longer.
-		// abort in order to avoid crash.
-		// TODO: actually, we should have a true check for object type each time before opening an object.
-		if (!len) {
-			open_chain = RKGlobals::rInterface ()->closeChain (open_chain);
-			delete this;
-			return;
-		}
+		RK_ASSERT (len);
 
 		// set the names and meta-information
 		for (int col = 0; col < len; ++col) {
 			if (numTrueCols () <= col) {
 				insertNewColumn ();
 			}
-			// TODO: make clean
 			RKVariable *current_child = static_cast<RKVariable *> (static_cast <RContainerObject*> (getObject ())->findChild (command->getStringVector ()[col]));
-			// this is really just a very preliminary HACK. If we find new children now exist, create them now in order to avoid crash..
-			// TODO: actually, we should have a true check for object type/structure each time before opening an object.
-			if (!current_child) {
-				current_child = static_cast<RKVariable *> (static_cast<RContainerObject *> (getObject ())->createNewChild (command->getStringVector ()[col], this));
-			}
+			RK_ASSERT (current_child);
 			if (current_child->isVariable ()) {
 				if (!getColObject (col)) {		// if we initialized the table to empty, the object may already exist in our map
 					setColObject (col, current_child);

@@ -13,6 +13,12 @@ Bugs:
 		- Probably the RKConsole is to blame (run outside console -> no significant increase)
 			- Maybe the kate-part needs to be reset (syntax parse tree) every once in a while?
 	- rnorm () and friends auto-print value only once. R_Visible is 0 on subsequent calls (what in the world is going on, here?)
+	- RKEditorDataFrame:
+		- sometimes the current cell idicator (the box around the current cell) gets lost.
+			- Navigation and editing is still fine
+			- seems to happen more often with larger data frames
+			- more precisely: seems to happen after scrolling
+			- no idea, why this happens
 
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org

@@ -72,7 +72,7 @@ public:
 protected:
 friend class RKWorkplace;
 /// opens the given object. Implement in the child-classes
-	virtual void openObject (RObject *object, bool initialize_to_empty=false) = 0;
+	virtual void openObject (RObject *object, bool initialize_to_empty) = 0;
 
 	RObject *object;
 

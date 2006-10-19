@@ -53,7 +53,7 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 	} else {
 		if (just_created) {
 			RK_ASSERT (false);
-			RK_DO (qDebug (child->getFullName ().latin1 ()), OBJECTS, DL_ERROR);
+			RK_DO (qDebug ("%s", child->getFullName ().latin1 ()), OBJECTS, DL_ERROR);
 			delete child;
 			return 0;
 		} else {
@@ -160,7 +160,11 @@ void RContainerObject::updateChildren (RData *new_children) {
 		QString child_string = it.key ();
 
 		if (new_childmap.find (child_string) == new_childmap.end ()) {
-			removed_list.append (it.data ());
+			if (it.data ()->isPending ()) {
+				new_childmap.insert (child_string, it.data ());
+			} else {
+				removed_list.append (it.data ());
+			}
 		}
 	}
 

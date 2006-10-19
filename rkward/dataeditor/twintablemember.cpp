@@ -80,15 +80,15 @@ bool TwinTableMember::eventFilter (QObject *object, QEvent *event) {
 			mouse_at = mouseEvent->globalPos ();
 			if (object == horizontalHeader ()) {
 				emit headerRightClick (-1, horizontalHeader ()->sectionAt (contentsX () + mouseEvent->x ()));
-                return (true); // got it
-            }
+				return (true); // got it
+			}
 			if (object == verticalHeader ()) {
 				emit headerRightClick (verticalHeader ()->sectionAt (contentsY () + mouseEvent->y ()), -1);
-                return (true); // got it
-            }
-        }
+				return (true); // got it
+			}
+		}
 		setFocus ();
-    }
+	}
 
     // default processing
     return (QTable::eventFilter (object, event));

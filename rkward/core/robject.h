@@ -236,6 +236,7 @@ In subclasses like RKVariable, the struct is extended to additionally hold the d
 	struct EditData {
 		RKEditor *editor;
 		bool dirty;
+		bool pending;		// maybe move to type instead
 	};
 /** see EditData. 0 if the object is not being edited. */
 	EditData *data;
@@ -245,6 +246,8 @@ In subclasses like RKVariable, the struct is extended to additionally hold the d
 	virtual void initializeEditDataToEmpty ();
 /** see above */
 	virtual void discardEditData ();
+
+	bool isPending ();
 
 	void rCommandDone (RCommand *command);
 };
