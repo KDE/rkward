@@ -162,13 +162,6 @@ void RInterface::customEvent (QCustomEvent *e) {
 		RKwardApp::getApp ()->setRStatus (false);	
 	} else if ((e->type () == RBUSY_EVENT)) {
 		RKwardApp::getApp ()->setRStatus (true);
-	} else if ((e->type () == RSEARCHLIST_CHANGED_EVENT)) {
-		RK_DO (qDebug ("triggering update of object list"), RBACKEND, DL_DEBUG);
-		RObjectList::getObjectList ()->updateFromR (0);
-	} else if ((e->type () == RGLOBALENV_SYMBOLS_CHANGED_EVENT)) {
-		RK_DO (qDebug ("triggering update of globalenv"), RBACKEND, DL_DEBUG);
-		// TODO: maybe this should be put inside a chain
-		RObjectList::getGlobalEnv ()->updateFromR (0);
 	} else if ((e->type () == R_EVAL_REQUEST_EVENT)) {
 		r_thread->pauseOutput (false); // we may be recursing downwards into event loops here. Hence we need to make sure, we don't create a deadlock
 		processREvalRequest (static_cast<REvalRequest *> (e->data ()));
@@ -302,6 +295,26 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 				obj->updateFromR (request->in_chain);
 			} else {
 				RK_DO (qDebug ("lookup failed for changed symbol %s", object_name.latin1 ()), RBACKEND, DL_WARNING);
+			}
+		}
+	} else if (call == "syncall") {
+		RK_ASSERT (request->call_length == 1);
+
+		RK_DO (qDebug ("triggering update of object list"), RBACKEND, DL_DEBUG);
+		RObjectList::getObjectList ()->updateFromR (request->in_chain);
+	} else if (call == "syncglobal") {
+		RK_ASSERT (request->call_length == 1);
+
+		RK_DO (qDebug ("triggering update of globalenv"), RBACKEND, DL_DEBUG);
+		RObjectList::getGlobalEnv ()->updateFromR (request->in_chain);
+	} else if (call == "edit") {
+		RK_ASSERT (request->call_length >= 2);
+
+		for (int i = 1; i < request->call_length; ++i) {
+			QString object_name = request->call[i];
+			RObject *obj = RObjectList::getObjectList ()->findObject (object_name);
+			if (!(obj && RKWorkplace::mainWorkplace()->editObject (obj, false))) {
+				KMessageBox::information (0, i18n ("The object '%1', could not be opened for editing. Either it does not exist, or RKWard does not support editing this type of object, yet.").arg (object_name), i18n ("Cannot edit '%1'").arg (object_name));
 			}
 		}
 	} else if (call == "require") {

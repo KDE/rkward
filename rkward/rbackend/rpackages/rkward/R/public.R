@@ -82,6 +82,11 @@
 	.rk.do.call ("sync", object)
 }
 
+"rk.edit" <- function (x) {
+	object <- deparse (substitute (x))
+	.rk.do.call ("edit", object)
+}
+
 "rk.get.tempfile.name" <- function (prefix="image", extension=".jpg") {
 	return (.rk.do.call ("get.tempfile.name", c (prefix, extension)))
 }

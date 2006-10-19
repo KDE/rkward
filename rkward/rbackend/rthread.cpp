@@ -84,6 +84,10 @@ void RThread::run () {
 	while (locked) {
 		msleep (10);
 	}
+
+	MUTEX_LOCK;
+	checkObjectUpdatesNeeded (true);
+	MUTEX_UNLOCK;
 	
 	while (1) {
 		MUTEX_LOCK;
@@ -449,11 +453,10 @@ int RThread::initialize () {
 	if (error) status |= OtherFail;
 	// TODO: error-handling?
 
-	checkObjectUpdatesNeeded (true);
-
 	MUTEX_LOCK;
 	flushOutput ();
 	MUTEX_UNLOCK;
+
 	QCustomEvent *event = new QCustomEvent (RCOMMAND_OUT_EVENT);
 	event->setData (current_command);
 	qApp->postEvent (RKGlobals::rInterface (), event);
@@ -517,11 +520,15 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 		global_env_toplevel_count = count;
 	
 		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
-			QCustomEvent *event = new QCustomEvent (RSEARCHLIST_CHANGED_EVENT);
-			qApp->postEvent (RKGlobals::rInterface (), event);
+			QString call = "syncall";
+			MUTEX_UNLOCK;
+			handleSubstackCall (&call, 1);
+			MUTEX_LOCK;
 		} else if (globalenv_update_needed) {
-			QCustomEvent *event = new QCustomEvent (RGLOBALENV_SYMBOLS_CHANGED_EVENT);
-			qApp->postEvent (RKGlobals::rInterface (), event);
+			QString call = "syncglobal";
+			MUTEX_UNLOCK;
+			handleSubstackCall (&call, 1);
+			MUTEX_LOCK;
 		}
 	}
 

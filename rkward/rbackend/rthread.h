@@ -38,8 +38,6 @@ struct ROutput;
 #define R_CALLBACK_REQUEST_EVENT 12002
 // don't use the numbers following RSTARTUP_ERROR_EVENT, because an error code will be added!
 #define RSTARTUP_ERROR_EVENT 13000
-#define RSEARCHLIST_CHANGED_EVENT 14000
-#define RGLOBALENV_SYMBOLS_CHANGED_EVENT 14001
 
 /** This class represents the thread the R backend is running in. So to speak, this is where the "eventloop" of R is running. The main thing happening
 in this class, is that an infinite loop is running. Whenever there are commands to be executed, those get evaluated. Also, at regular intervals,
