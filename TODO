@@ -102,8 +102,6 @@ Internal stuff:
 				rm (x); x <- function () {}
 				(object list remains the same, watch was not active, but symbol changed)
 				- will need to put an extra notification inside .rk.watch.globalenv ()? Will that get run?
-			- deal with data changes in edited objects
-			- object (list) updates should be run in a substack to ensure they are done in time
 	- RExpressionObject as an abstraction for R-Expressions (i.e. manually edited expressions).
 		- It will be possible to "store" these in the RObjectList and select them just like any other object
 		- RKVarslot will allow editing the selected value by hand (or just typing the name in)

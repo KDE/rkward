@@ -61,6 +61,9 @@ public:
 	virtual QString getRDescription () = 0;
 /** Reimplemented from QWidget::setCaption () to emit the signal captionChanged () when the caption is changed. */
 	void setCaption (const QString &caption);
+/** Is this window attached (or detached)?
+@returns true if attached, false if detached */
+	bool isAttached () { return (state == Attached); };
 signals:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */

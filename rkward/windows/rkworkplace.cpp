@@ -157,25 +157,22 @@ RKEditor *RKWorkplace::editObject (RObject *object, bool initialize_to_empty) {
 	RObject *iobj = object;
 	RKEditor *ed = 0;
 	RKEditorDataFramePart *part = 0;
-	if (!object->objectOpened ()) {
+	RKEditor *existing_editor = object->objectOpened ();
+	if (!existing_editor) {
 		if (object->isDataFrame ()) {
 			part = new RKEditorDataFramePart (0);		// TODO: reverse creation logic, just as in the other classes!
 			ed = part->getEditor ();
 			// TODO: add child objects, too?
 			ed->openObject (object, initialize_to_empty);
 		} else if (object->isVariable () && object->getContainer ()->isDataFrame ()) {
-			if (!object->getContainer ()->objectOpened ()) { 
+			existing_editor = object->getContainer ()->objectOpened ();
+			if (!existing_editor) {
 				iobj = object->getContainer ();
 				part = new RKEditorDataFramePart (0);
 				ed = part->getEditor ();
 				// TODO: add child objects, too?
 				ed->openObject (iobj, initialize_to_empty);
 				// ed->focusObject (obj);
-			} else {
-				if (object->getContainer ()->objectOpened ()) {
-					object->getContainer ()->objectOpened ()->show ();
-					object->getContainer ()->objectOpened ()->raise ();
-				}
 			}
 		}
 
@@ -185,9 +182,15 @@ RKEditor *RKWorkplace::editObject (RObject *object, bool initialize_to_empty) {
 			addWindow (ed);
 			ed->setFocus ();		// somehow we need to call this explicitely
 		}
-	} else {
-		object->objectOpened ()->show ();
-		object->objectOpened ()->raise ();
+	}
+
+	if (existing_editor) {		// not strictly an else. existing_editor may be reset inside the above if
+		if (existing_editor->isAttached ()) {
+			view ()->setActivePage (existing_editor);
+		} else {
+			object->getContainer ()->objectOpened ()->show ();
+			object->getContainer ()->objectOpened ()->raise ();
+		}
 	}
 	
 	return ed;
