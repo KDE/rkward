@@ -110,9 +110,8 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	///////////////////////////////////////////////////////////////////
 	// build the interface
 
-	// use the absolute path to your rkwardui.rc file for testing purpose in createGUI();
-	setXMLFile( "rkwardui.rc" );
-	createShellGUI ( true );
+	setXMLFile ("rkwardui.rc");
+	createShellGUI (true);
 
 	connect (this, SIGNAL (childWindowCloseRequest (KMdiChildView *)), this, SLOT (slotChildWindowCloseRequest (KMdiChildView *)));
 
@@ -121,9 +120,7 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 
 	initial_url = load_url;
 
-	startup_timer = new QTimer (this);
-	startup_timer->start (50);
-	connect (startup_timer, SIGNAL (timeout ()), this, SLOT (doPostInit ()));
+	QTimer::singleShot (50, this, SLOT (doPostInit ()));
 
 	part_manager = new KParts::PartManager( this );
 	// When the manager says the active part changes,
@@ -138,10 +135,6 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	new RKWorkplace (dummy);
 	layout->addWidget (RKWorkplace::mainWorkplace ()->view ());
 	connect (RKWorkplace::mainWorkplace ()->view (), SIGNAL (captionChanged (const QString &)), this, SLOT (setCaption (const QString &)));
-
-/*	// a few calls to setCaption too many result from the lines below, but it seems to be the only way to catch all cases where the caption should be changed
-	connect (this, SIGNAL (viewActivated (KMdiChildView *)), this, SLOT (viewChanged (KMdiChildView *)));
-	connect (this, SIGNAL (viewDeactivated (KMdiChildView *)), this, SLOT (viewChanged (KMdiChildView *))); */
 
 	if (!kapp->dcopClient ()->isRegistered ()) {
 		kapp->dcopClient ()->registerAs ("rkward");
@@ -160,7 +153,6 @@ RKwardApp::~RKwardApp() {
 
 void RKwardApp::doPostInit () {
 	RK_TRACE (APP);
-	delete startup_timer;
 
 	readOptions();
 	object_browser = new RObjectBrowser ();

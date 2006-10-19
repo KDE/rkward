@@ -44,7 +44,6 @@ class RKWardDCOPInterface : virtual public DCOPObject {
 #include <kurl.h>
 #include <kparts/partmanager.h>
 
-class QTimer;
 class QLabel;
 // forward declaration of the RKward classes
 class RSettings;
@@ -238,9 +237,6 @@ private:
 	/** Finds plugins and inserts them into the menu-structure */
 	void initPlugins ();
 
-	/** Used to receive a signal during startup AFTER the exec loop was entered */
-	QTimer *startup_timer;
-	
 	RObjectBrowser *object_browser;
 	
 	KURL *initial_url;
