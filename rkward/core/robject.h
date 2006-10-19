@@ -93,7 +93,11 @@ public:
 	bool hasMetaObject () { return (type & HasMetaObject); };
 
 /** trigger an update of this and all descendent objects */
-	virtual void updateFromR ();
+	virtual void updateFromR (RCommandChain *chain);
+/** fetch updated data from the backend. Default implementation does nothing except clearing the dirty flag */
+	virtual void updateDataFromR (RCommandChain *chain);
+/** mark the data of this object and all of its children as dirty (recursively). Dirty data will be updated *after* the new structure update (if the object is opened for editing) */
+	void markDataDirty ();
 
 	bool canEdit ();
 	bool canRead ();
@@ -227,18 +231,18 @@ protected:
 @param new_data The command. Make sure it really is the dims field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
 @returns whether this caused any changes */
 	bool updateDimensions (RData *new_data);
-
 /** an instance of this struct is created, when the object is opened for editing. For one thing, it keeps track of which editor(s) are working on the object.
 In subclasses like RKVariable, the struct is extended to additionally hold the data of the object, etc. */
 	struct EditData {
 		RKEditor *editor;
+		bool dirty;
 	};
 /** see EditData. 0 if the object is not being edited. */
 	EditData *data;
 /** see EditData. Allocates the data member. To be reimplemented in classes that need more information in the EditData struct */
 	virtual void allocateEditData ();
-/** companion to allocateEditData (). Fetches all necessary information (data) for this object if to_empty==false. Else initializes the data to empty (NA). Default implementation does nothing. Reimplemented in derived classes. */
-	virtual void initializeEditData (bool to_empty=false);
+/** companion to allocateEditData (). Initializes the data to empty (NA). Default implementation does nothing. Reimplemented in derived classes. */
+	virtual void initializeEditDataToEmpty ();
 /** see above */
 	virtual void discardEditData ();
 

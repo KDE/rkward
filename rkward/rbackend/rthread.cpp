@@ -103,6 +103,7 @@ void RThread::run () {
 			if (command) {
 				// mutex will be unlocked inside
 				doCommand (command);
+				checkObjectUpdatesNeeded (command->type () & (RCommand::User | RCommand::ObjectListUpdate));
 				processX11Events ();
 			}
 		
@@ -212,9 +213,6 @@ void RThread::doCommand (RCommand *command) {
 
 		flushOutput ();
 	}
-
-	// step 3: cleanup
-	checkObjectUpdatesNeeded (command->type () & (RCommand::User | RCommand::ObjectListUpdate));
 
 	// notify GUI-thread that command was finished
 	event = new QCustomEvent (RCOMMAND_OUT_EVENT);
@@ -530,17 +528,24 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 	if (search_update_needed || globalenv_update_needed) {
 		RK_DO (qDebug ("checkObjectUpdatesNeeded: updating watches"), RBACKEND, DL_TRACE);
 		runCommandInternal (".rk.watch.globalenv ()\n", &error);
-	} else {
-		// TODO: maybe this has to be done outside the parent if: We may want to also check wether the modified objects are opened, and, if so, update their data
-		if (!changed_symbol_names.isEmpty ()) {
-			QStringList *copy = new QStringList (changed_symbol_names);
-			QCustomEvent *event = new QCustomEvent (RINDIVIDUAL_SYMBOLS_CHANGED_EVENT);
-			event->setData (copy);
-			qApp->postEvent (RKGlobals::rInterface (), event);
-		}
 	}
 
-	changed_symbol_names.clear ();
+	if (!changed_symbol_names.isEmpty ()) {
+		int call_length = changed_symbol_names.count () + 1;
+		QString *call = new QString[call_length];
+		call[0] = "sync";
+		int i = 1;
+		for (QStringList::const_iterator it = changed_symbol_names.constBegin (); it != changed_symbol_names.constEnd (); ++it) {
+			call[i++] = *it;
+		}
+		RK_ASSERT (i == call_length);
+		MUTEX_UNLOCK;
+		handleSubstackCall (call, call_length);
+		MUTEX_LOCK;
+		delete call;
+		changed_symbol_names.clear ();
+	}
+
 }
 
 QString *stringsToStringList (char **strings, int count) {

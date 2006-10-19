@@ -235,11 +235,11 @@ void RObject::writeMetaData (RCommandChain *chain) {
 	type |= HasMetaObject;
 }
 
-void RObject::updateFromR () {
+void RObject::updateFromR (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 
 	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RObjectList::getObjectList ()->getUpdateCommandChain ());
+	RKGlobals::rInterface ()->issueCommand (command, chain);
 }
 
 void RObject::rCommandDone (RCommand *command) {
@@ -280,8 +280,29 @@ bool RObject::updateStructure (RData *new_data) {
 	properties_change = updateDimensions (new_data->getStructureVector ()[4]);
 
 	if (properties_change) RKGlobals::tracker ()->objectMetaChanged (this);
+	if (data && (data->dirty)) updateDataFromR (0);
 
 	return true;
+}
+
+//virtual
+void RObject::updateDataFromR (RCommandChain *) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (data);
+	data->dirty = false;
+}
+
+void RObject::markDataDirty () {
+	RK_TRACE (OBJECTS);
+
+	if (data) data->dirty = true;
+	unsigned int ccount = numChildren ();
+	if (!ccount) return;
+
+	RObject **childcopy = children ();
+	for (unsigned int i = 0; i < ccount; ++i) {
+		childcopy[i]->markDataDirty ();
+	}
 }
 
 bool RObject::canAccommodateStructure (RData *new_data) {
@@ -510,7 +531,7 @@ void RObject::setObjectOpened (RKEditor *editor, bool opened) {
 	if (opened) {
 		if (!data) {
 			allocateEditData ();
-			initializeEditData (false);
+			updateDataFromR (0);
 		}
 		data->editor = editor;
 	} else {
@@ -526,7 +547,7 @@ void RObject::setCreatedInEditor (RKEditor *editor) {
 
 	if (!data) {
 		allocateEditData ();
-		initializeEditData (true);
+		initializeEditDataToEmpty ();
 	}
 	data->editor = editor;
 }
@@ -539,10 +560,11 @@ void RObject::allocateEditData () {
 	RK_ASSERT (!data);
 	
 	data = new EditData;
+	data->dirty = false;
 }
 
 // virtual
-void RObject::initializeEditData (bool) {
+void RObject::initializeEditDataToEmpty () {
 	RK_TRACE (OBJECTS);
 }
 

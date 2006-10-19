@@ -122,7 +122,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 		RK_ASSERT (levels->getDataType () == RData::StringVector);
 		unsigned int levels_len = levels->getDataLength ();
 		RK_ASSERT (levels_len >= 1);
-		RK_ASSERT (!myData ()->value_labels);
+		delete myData ()->value_labels;
 		myData ()->value_labels = new RObject::ValueLabels;
 		if ((levels_len == 1) && levels->getStringVector ()[0].isEmpty ()) {
 			// no levels
@@ -151,6 +151,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 		}
 
 		// now set the invalid fields (only if they are still NAs in the R data)
+		myData ()->invalid_fields.clear ();
 		if (invalids->getDataLength () <= 1) {
 			// no invalids
 		} else {
@@ -165,12 +166,14 @@ void RKVariable::rCommandDone (RCommand *command) {
 				}
 			}
 		}
+		myData ()->formatting_options = parseFormattingOptionsString (getMetaProperty ("format"));
 
 		ChangeSet *set = new ChangeSet;
 		set->from_index = 0;
 		set->to_index = getLength ();
 		RKGlobals::tracker ()->objectDataChanged (this, set);
 		RKGlobals::tracker ()->objectMetaChanged (this);
+		myData ()->dirty = false;
 		setSyncing (true);
 	} else {
 		RK_ASSERT (false);
@@ -208,7 +211,8 @@ void RKVariable::allocateEditData () {
 	myData ()->formatting_options = 0;
 	myData ()->previously_valid = true;
 	myData ()->invalid_fields.setAutoDelete (true);
-	
+	myData ()->dirty = false;
+
 	extendToLength (getLength ());
 
 	for (int i = 0; i < getLength (); ++i) {
@@ -232,18 +236,20 @@ bool RKVariable::updateType (RData *new_data) {
 }
 
 // virtual
-void RKVariable::initializeEditData (bool to_empty) {
+void RKVariable::initializeEditDataToEmpty () {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (myData ());
 	
-	if (to_empty) {
-		for (int row=0; row < getLength (); ++row) {
-			myData ()->cell_states[row] = RKVarEditData::NA;
-		}
-	} else {
-		RKGlobals::rInterface ()->issueCommand (".rk.get.vector.data (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, GET_DATA_COMMAND);
-		myData ()->formatting_options = parseFormattingOptionsString (getMetaProperty ("format"));
+	for (int row=0; row < getLength (); ++row) {
+		myData ()->cell_states[row] = RKVarEditData::NA;
 	}
+}
+
+void RKVariable::updateDataFromR (RCommandChain *chain) {
+	RK_TRACE (OBJECTS);
+	RK_ASSERT (myData ());
+
+	RKGlobals::rInterface ()->issueCommand (".rk.get.vector.data (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, GET_DATA_COMMAND, chain);
 }
 
 // virtual

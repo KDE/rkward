@@ -86,7 +86,7 @@ void RObjectBrowser::initialize () {
 
 void RObjectBrowser::updateButtonClicked () {
 	RK_TRACE (APP);
-	RObjectList::getObjectList ()->updateFromR ();
+	RObjectList::getObjectList ()->updateFromR (0);
 }
 
 void RObjectBrowser::popupHelp () {
@@ -113,7 +113,7 @@ void RObjectBrowser::popupCopy () {
 		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1").arg (valid), i18n ("Invalid Name"));
 		RObject *copy = RObjectList::getGlobalEnv ()->createNewChild (valid, 0, true, true);
 		RKGlobals::rInterface ()->issueCommand (RObject::rQuote (valid) + " <- " + object->getFullName (), RCommand::App | RCommand::ObjectListUpdate);
-		copy->updateFromR ();
+		copy->updateFromR (0);
 	}
 }
 
@@ -127,7 +127,7 @@ void RObjectBrowser::popupCopyToGlobalEnv () {
 	if (valid != name) KMessageBox::sorry (this, i18n ("An object named '%1' already exists in the GlobalEnv. Created the copy as '%2' instead.").arg (name).arg (valid), i18n ("Name already in use"));
 	RObject *copy = RObjectList::getGlobalEnv ()->createNewChild (valid, 0, true, true);
 	RKGlobals::rInterface ()->issueCommand (RObject::rQuote (valid) + " <- " + object->getFullName (), RCommand::App | RCommand::ObjectListUpdate);
-	copy->updateFromR ();
+	copy->updateFromR (0);
 }
 
 void RObjectBrowser::popupView () {

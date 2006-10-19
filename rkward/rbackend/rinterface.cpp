@@ -164,25 +164,11 @@ void RInterface::customEvent (QCustomEvent *e) {
 		RKwardApp::getApp ()->setRStatus (true);
 	} else if ((e->type () == RSEARCHLIST_CHANGED_EVENT)) {
 		RK_DO (qDebug ("triggering update of object list"), RBACKEND, DL_DEBUG);
-		RObjectList::getObjectList ()->updateFromR ();
+		RObjectList::getObjectList ()->updateFromR (0);
 	} else if ((e->type () == RGLOBALENV_SYMBOLS_CHANGED_EVENT)) {
 		RK_DO (qDebug ("triggering update of globalenv"), RBACKEND, DL_DEBUG);
 		// TODO: maybe this should be put inside a chain
-		RObjectList::getGlobalEnv ()->updateFromR ();
-	} else if ((e->type () == RINDIVIDUAL_SYMBOLS_CHANGED_EVENT)) {
-		RK_DO (qDebug ("triggering update of some symbols"), RBACKEND, DL_DEBUG);
-		QStringList *list = static_cast <QStringList *> (e->data ());
-		for (QStringList::const_iterator it = list->constBegin (); it != list->constEnd (); ++it) {
-			RObject *obj = RObjectList::getGlobalEnv ()->findObject (*it);
-			if (obj) {
-				// TODO: maybe this should be put inside a chain
-				RK_DO (qDebug ("update triggered for %s", (*it).latin1 ()), RBACKEND, DL_DEBUG);
-				obj->updateFromR ();
-			} else {
-				RK_DO (qDebug ("lookup failed for changed symbol %s", (*it).latin1 ()), RBACKEND, DL_WARNING);
-			}
-		}
-		delete list;
+		RObjectList::getGlobalEnv ()->updateFromR (0);
 	} else if ((e->type () == R_EVAL_REQUEST_EVENT)) {
 		r_thread->pauseOutput (false); // we may be recursing downwards into event loops here. Hence we need to make sure, we don't create a deadlock
 		processREvalRequest (static_cast<REvalRequest *> (e->data ()));
@@ -280,6 +266,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 	// clear reply object
 	issueCommand (".rk.rkreply <- NULL", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 	if (!request->call_length) {
+		RK_ASSERT (false);
 		closeChain (request->in_chain);
 		return;
 	}
@@ -304,22 +291,18 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		// TODO: make more generic, get filename sanely
 		issueCommand (".rk.rkreply <- \"" + dir.filePath ("rk_out.html") + "\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 	} else if (call == "sync") {
-		RObject *obj = 0;
-		if (request->call_length >= 2) {
-			QString object_name = request->call[1];
-			obj = RObjectList::getObjectList ()->findObject (object_name);
-		}
-		if (obj) {
-			RObject::ChangeSet *set = new RObject::ChangeSet;
-			set->from_index = -1;
-			set->to_index = -1;
-			// for now a complete update is needed, in case new objects were added
-			RObjectList::getObjectList ()->updateFromR ();
-			RKGlobals::tracker ()->objectDataChanged (obj, set);
-			
-			issueCommand (".rk.rkreply <- \"Sync scheduled for object '" + obj->getFullName () + "'\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
-		} else {
-			issueCommand (".rk.rkreply <- \"Object not recognized or not specified in call to sync. Ignoring\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+		RK_ASSERT (request->call_length >= 2);
+
+		for (int i = 1; i < request->call_length; ++i) {
+			QString object_name = request->call[i];
+			RObject *obj = RObjectList::getObjectList ()->findObject (object_name);
+			if (obj) {
+				RK_DO (qDebug ("triggering update for symbol %s", object_name.latin1 ()), RBACKEND, DL_DEBUG);
+				obj->markDataDirty ();
+				obj->updateFromR (request->in_chain);
+			} else {
+				RK_DO (qDebug ("lookup failed for changed symbol %s", object_name.latin1 ()), RBACKEND, DL_WARNING);
+			}
 		}
 	} else if (call == "require") {
 		if (request->call_length >= 2) {

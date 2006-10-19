@@ -32,7 +32,7 @@ public:
 	REnvironmentObject (RContainerObject *parent, const QString &name);
 	~REnvironmentObject ();
 
-	void updateFromR ();
+	void updateFromR (RCommandChain *chain);
 
 	QString getFullName ();
 	QString makeChildName (const QString &short_child_name, bool misplaced=false);

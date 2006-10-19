@@ -36,7 +36,6 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	addChild ("available", available = new RKComponentPropertyRObjects (this, false));
 	addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
 
-	RObjectList::getObjectList ()->updateFromR ();
 	QVBoxLayout  *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 	
 	QLabel *label = new QLabel (element.attribute ("label", "Select Variable(s)"), this);

@@ -57,6 +57,8 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	void setSyncing (bool immediate);
 /** syncs pending data changes to the backend */
 	void syncDataToR ();
+/** reimplemented from RObject */
+	void updateDataFromR (RCommandChain *chain);
 	
 /** get the value at the given row in text-form - regardless of the storage mode.
 @param pretty: get the text in pretty form, e.g. rounding numbers to a certain number of digits, replacing numeric values with value labels if available, etc. Formatting is done according to the meta-information stored in the RObject and global user preferences */
@@ -168,7 +170,7 @@ protected:
 /** reimplemented from RObject */
 	void allocateEditData ();
 /** reimplemented from RObject */
-	void initializeEditData (bool to_empty=false);
+	void initializeEditDataToEmpty ();
 /** reimplemented from RObject */
 	void discardEditData ();
 private:

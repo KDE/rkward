@@ -104,7 +104,7 @@ void CellEditor::keyPressEvent (QKeyEvent *e) {
 				return;
 			}
 		} else if (e->key () == Qt::Key_Right) {
-			if (cursorPosition () >= text ().length ()) {
+			if (cursorPosition () >= (int) text ().length ()) {
 				table->keyPressEvent (e);
 				return;
 			}

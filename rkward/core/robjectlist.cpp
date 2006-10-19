@@ -60,7 +60,7 @@ RObjectList::~RObjectList () {
 	RK_TRACE (OBJECTS);
 }
 
-void RObjectList::updateFromR () {
+void RObjectList::updateFromR (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 	if (update_chain) {
 		// gee, looks like another update is still on the way. lets schedule one for later:
@@ -70,7 +70,7 @@ void RObjectList::updateFromR () {
 	}
 
 	emit (updateStarted ());
-	update_chain = RKGlobals::rInterface ()->startChain (0);
+	update_chain = RKGlobals::rInterface ()->startChain (chain);
 
 	RCommand *command = new RCommand ("search ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, ROBJECTLIST_UDPATE_ENVIRONMENTS_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, update_chain);
@@ -133,7 +133,7 @@ void RObjectList::updateEnvironments (QString *env_names, unsigned int env_count
 			RObject *obj = childmap[name];
 			// for now, we only update the .GlobalEnv. All others we assume to be static
 			if (obj->isType (GlobalEnv)) {
-				obj->updateFromR ();
+				obj->updateFromR (update_chain);
 			}
 		}
 	}
@@ -158,7 +158,7 @@ REnvironmentObject *RObjectList::createTopLevelEnvironment (const QString &name)
 
 	childmap.insert (name, envobj);
 	RKGlobals::tracker ()->addObject (envobj, 0);
-	envobj->updateFromR ();
+	envobj->updateFromR (update_chain);
 
 	return envobj;
 }
@@ -221,7 +221,7 @@ bool RObjectList::updateStructure (RData *) {
 void RObjectList::timeout () {
 	RK_TRACE (OBJECTS);
 
-	updateFromR ();
+	updateFromR (0);
 }
 
 QString RObjectList::renameChildCommand (RObject *object, const QString &new_name) {

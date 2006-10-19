@@ -70,14 +70,14 @@ void REnvironmentObject::writeMetaData (RCommandChain *chain) {
 	RContainerObject::writeMetaData (chain);
 }
 
-void REnvironmentObject::updateFromR () {
+void REnvironmentObject::updateFromR (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 	QString options;
 	if (type & GlobalEnv) options = ", envlevel=-1";	// in the .GlobalEnv recurse one more level
 	if (type & ToplevelEnv) options.append (", namespacename=" + rQuote (namespace_name));
 
 	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + options + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RObjectList::getObjectList ()->getUpdateCommandChain ());
+	RKGlobals::rInterface ()->issueCommand (command, chain);
 }
 
 bool REnvironmentObject::updateStructure (RData *new_data) {

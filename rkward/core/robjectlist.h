@@ -45,15 +45,13 @@ public:
 	RObjectList ();
 	~RObjectList ();
 
-	void updateFromR ();
+	void updateFromR (RCommandChain *chain);
 	
 	QString getFullName () { return QString::null; };
 	QString makeChildName (const QString &short_child_name, bool) { return short_child_name; };
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
 	void writeMetaData (RCommandChain *) {};
 	
-	RCommandChain *getUpdateCommandChain () { return update_chain; };
-
 	/** reimplemented from RContainerObject to search the environments in search order */
 	RObject *findObject (const QString &name, bool canonified=false);
 
