@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -34,6 +34,7 @@
 #include <qapplication.h>
 #include <qtabwidget.h>
 #include <qfile.h>
+#include <qtimer.h>
 
 #include <klocale.h>
 #include <kmenubar.h>
@@ -46,7 +47,7 @@
 #include <kiconloader.h>
 
 #include "../misc/rkcommonfunctions.h"
-#include "../core/robject.h"
+#include "../core/robjectlist.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "../khelpdlg.h"
@@ -81,6 +82,11 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 
 	connect (m_doc, SIGNAL (fileNameChanged ()), this, SLOT (updateCaption ()));
 	connect (m_doc, SIGNAL (modifiedChanged ()), this, SLOT (updateCaption ()));		// of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
+	connect (m_doc, SIGNAL (textChanged ()), this, SLOT (tryCompletionProxy ()));
+	connect (m_view, SIGNAL (filterInsertString (KTextEditor::CompletionEntry *, QString *)), this, SLOT (fixCompletion (KTextEditor::CompletionEntry *, QString *)));
+	completion_timer = new QTimer (this);
+	connect (completion_timer, SIGNAL (timeout ()), this, SLOT (tryCompletion()));
+
 	if (use_r_highlighting) setRHighlighting ();
 
 	updateCaption ();	// initialize
@@ -164,7 +170,7 @@ bool RKCommandEditorWindow::openURL (const KURL &url, bool use_r_highlighting, b
 
 bool RKCommandEditorWindow::isModified() {
 	RK_TRACE (COMMANDEDITOR);
-    return m_doc->isModified();
+	return m_doc->isModified();
 }
 
 void RKCommandEditorWindow::insertText (const QString &text) {
@@ -196,6 +202,53 @@ void RKCommandEditorWindow::showHelp () {
 	QString line = m_view->currentTextLine() + " ";
 
 	RKGlobals::helpDialog ()->getContextHelp (line, p);
+}
+
+void RKCommandEditorWindow::tryCompletionProxy () {
+	completion_timer->start (100, true);
+}
+
+void RKCommandEditorWindow::tryCompletion () {
+	// TODO: merge this with RKConsole::doTabCompletion () somehow
+	RK_TRACE (COMMANDEDITOR);
+
+	uint para=0; uint cursor_pos=0;
+	m_view->cursorPosition (&para, &cursor_pos);
+	QString current_line = getLine ();
+
+	QString current_symbol = RKCommonFunctions::getCurrentSymbol (current_line, cursor_pos, false);
+	if (current_symbol.length () >= 2) {
+		RObject::RObjectMap map;
+		RObject::RObjectMap::const_iterator it;
+		RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
+
+		if (!map.isEmpty ()) {
+			QValueList<KTextEditor::CompletionEntry> list;
+	
+			for (it = map.constBegin (); it != map.constEnd (); ++it) {
+				KTextEditor::CompletionEntry entry;
+				entry.text = it.key ();
+				list.append (entry);
+			}
+
+			m_view->showCompletionBox (list);
+		}
+	}
+}
+
+void RKCommandEditorWindow::fixCompletion (KTextEditor::CompletionEntry *, QString *) {
+	RK_TRACE (COMMANDEDITOR);
+
+	uint current_line_num=0; uint cursor_pos=0;
+	m_view->cursorPosition (&current_line_num, &cursor_pos);
+	QString current_line = getLine ();
+
+	int word_start;
+	int word_end;
+	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &word_start, &word_end);
+
+	// remove the start of the word, as the whole string will be inserted by katepart
+	m_doc->removeText (current_line_num, word_start, current_line_num, word_end);
 }
 
 #include "rkcommandeditorwindow.moc"

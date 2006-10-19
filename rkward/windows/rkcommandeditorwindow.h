@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -25,6 +25,8 @@
 #include <kurl.h>
 
 #include "../windows/rkmdiwindow.h"
+
+class QTimer;
 
 /**
 	\brief Provides an editor window for R-commands, as well as a text-editor window in general.
@@ -68,6 +70,9 @@ public:
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if approriate */
 	void updateCaption ();
+	void tryCompletionProxy ();
+	void tryCompletion ();
+	void fixCompletion (KTextEditor::CompletionEntry *, QString *);
 protected:
 /** reimplemented from KMdiChildView: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e);
@@ -75,6 +80,7 @@ private:
 	Kate::Document *m_doc;
 	Kate::View *m_view;
 
+	QTimer *completion_timer;
 /** set syntax highlighting-mode to R syntax */
 	void setRHighlighting ();
 };

@@ -354,15 +354,14 @@ void RKConsole::doTabCompletion () {
 		RObject::RObjectMap map;
 		RObject::RObjectMap::const_iterator it;
 		RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
-		QValueList<KTextEditor::CompletionEntry> list;
 		int count = map.count ();
 
 		if (count == 1) {
-			int current_line = doc->numLines () - 1;
+			int current_line_num = doc->numLines () - 1;
 			int offset = prefix.length ();
 			it = map.constBegin ();
-			doc->removeText (current_line, offset + word_start, current_line, offset + word_end);
-			doc->insertText (current_line, offset + word_start, it.key ());
+			doc->removeText (current_line_num, offset + word_start, current_line_num, offset + word_end);
+			doc->insertText (current_line_num, offset + word_start, it.key ());
 		} else if (count == 0) {
 			KApplication::kApplication ()->beep ();
 		} else if (tab_key_pressed_before) {
