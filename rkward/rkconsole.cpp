@@ -22,6 +22,10 @@
 #include <qapplication.h>
 #include <qobjectlist.h>
 #include <qevent.h>
+#include <qregexp.h>
+#include <qvbox.h>
+#include <qlabel.h>
+#include <qtimer.h>
 
 #include <klocale.h>
 #include <kaction.h>
@@ -38,6 +42,7 @@
 #include "settings/rksettingsmoduleconsole.h"
 #include "misc/rkcommonfunctions.h"
 #include "core/robjectlist.h"
+#include "core/rfunctionobject.h"
 
 RKConsole::RKConsole () : QWidget (0) {
 	RK_TRACE (APP);
@@ -132,12 +137,19 @@ RKConsole::RKConsole () : QWidget (0) {
 
 	current_command = 0;
 	tab_key_pressed_before = false;
-}
 
+	arghints_popup = new QVBox (0, 0, WType_Popup);
+	arghints_popup->setFrameStyle (QFrame::Box | QFrame::Plain);
+	arghints_popup->setLineWidth (1);
+	arghints_popup_text = new QLabel (arghints_popup);
+	arghints_popup->hide ();
+	arghints_popup->setFocusProxy (this);
+}
 
 RKConsole::~RKConsole () {
 	RK_TRACE (APP);
 
+	delete arghints_popup;
 	RKSettingsModuleConsole::saveCommandHistory (commands_history);
 }
 
@@ -191,10 +203,12 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	}
 
 	if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
+		arghints_popup->hide ();
 		submitCommand ();
 		return true;
 	}
 	else if (e->state () == Qt::ShiftButton && e->key () == Qt::Key_Home){
+		arghints_popup->hide ();
 		if(hasSelectedText())
 			pos=selectionInterfaceExt(doc)->selEndCol (); //There is already a selection, we take it into account.
 		selectionInterface(doc)->setSelection(doc->numLines()-1,prefix.length (),doc->numLines()-1, pos);
@@ -202,6 +216,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		return TRUE;
 	}
 	else if (e->state () == Qt::ShiftButton && e->key () == Qt::Key_Left){
+		arghints_popup->hide ();
 		if(pos<=prefix.length ()){
 			return TRUE;
 		} else {
@@ -210,14 +225,17 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		}
 	}
 	else if (e->key () == Qt::Key_Up) {
+		arghints_popup->hide ();
 		commandsListUp ();
 		return true;
 	}
 	else if (e->key () == Qt::Key_Down) {
+		arghints_popup->hide ();
 		commandsListDown ();
 		return true;
 	}
 	else if (e->key () == Qt::Key_Left){
+		arghints_popup->hide ();
 		if(pos<=prefix.length ()){
 			return TRUE;
 		} else {
@@ -226,6 +244,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		}
 	}
 	else if (e->key () == Qt::Key_Backspace){
+		tryShowFunctionArgHints ();
 		if(pos<=prefix.length ()){
 			return TRUE;
 		} else {
@@ -238,15 +257,84 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		return TRUE;
 	}
 	else if (e->key () == Qt::Key_Home){
+		arghints_popup->hide ();
 		cursorAtTheBeginning ();
 		return TRUE;
 	}
 	else if (e->key() == Qt::Key_Delete) {
+		tryShowFunctionArgHints ();
 		view->keyDelete();
 		return TRUE;
+	} else {
+		QString text = e->text ();
+		if (text == "(") {
+			tryShowFunctionArgHints ();
+		} else if (text == ",") {
+			tryShowFunctionArgHints ();
+		} else if (text == ")") {
+			tryShowFunctionArgHints ();
+		}
 	}
 
 	return FALSE;
+}
+
+void RKConsole::tryShowFunctionArgHints () {
+	// wait for the keypress to become effective first
+	QTimer::singleShot (0, this, SLOT (realTryShowFunctionArgHints ()));
+}
+
+void RKConsole::realTryShowFunctionArgHints () {
+	RK_TRACE (APP);
+
+	QString current_line = currentCommand ();
+	int cursor_pos = currentCursorPositionInCommand ();
+	int matching_left_brace_pos;
+
+	// find the corrresponding opening brace
+	int brace_level = 1;
+	int i;
+	for (i = cursor_pos; i >= 0; --i) {
+		if (current_line.at (i) == QChar (')')) {
+			brace_level++;
+		} else if (current_line.at (i) == QChar ('(')) {
+			brace_level--;
+			if (!brace_level) break;
+		}
+	}
+	if (!brace_level) matching_left_brace_pos = i;
+	else {
+		arghints_popup->hide ();
+		return;
+	}
+
+	// now find where the symbol to the left ends
+	int potential_symbol_end = matching_left_brace_pos - 1;
+	while ((potential_symbol_end >= 0) && current_line.at (potential_symbol_end).isSpace ()) {
+		--potential_symbol_end;
+	}
+	if (current_line.at (potential_symbol_end).isSpace ()) {
+		arghints_popup->hide ();
+		return;
+	}
+
+	// now identify the symbol (if any)
+	QString effective_symbol = RKCommonFunctions::getCurrentSymbol (current_line, potential_symbol_end);
+	if (effective_symbol.isEmpty ()) {
+		arghints_popup->hide ();
+		return;
+	}
+
+	RObject *object = RObjectList::getObjectList ()->findObject (effective_symbol);
+	if ((!object) || (!object->isType (RObject::Function))) {
+		arghints_popup->hide ();
+		return;
+	}
+
+	arghints_popup_text->setText (effective_symbol + " (" + static_cast<RFunctionObject*> (object)->printArgs () + ")");
+	arghints_popup->resize (arghints_popup_text->sizeHint () + QSize (2, 2));
+	arghints_popup->move (mapToGlobal (view->cursorCoordinates () + QPoint (0, arghints_popup->height ())));
+	arghints_popup->show ();
 }
 
 void RKConsole::doTabCompletion () {

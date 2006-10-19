@@ -28,6 +28,8 @@
 #include "rbackend/rcommandreceiver.h"
 
 class QStringList;
+class QVBox;
+class QLabel;
 class KAction;
 class RCommand;
 class KateCodeCompletion;
@@ -125,6 +127,8 @@ bool eventFilter( QObject *o, QEvent *e );
 \param ac the action collection from which to retrieve the KAction*/
 	void unplugAction (QString action, KActionCollection* ac);
 
+	void tryShowFunctionArgHints ();
+
 	bool output_continuation;
 
 	RCommand *current_command;
@@ -132,11 +136,14 @@ bool eventFilter( QObject *o, QEvent *e );
 	Kate::View *view;
 
 	bool tab_key_pressed_before;
+	QVBox *arghints_popup;
+	QLabel *arghints_popup_text;
 public slots:
 /** We intercept paste commands and get them executed through submitBatch.
 @sa submitBatch */
 	void paste ();
 	void copy ();
+	void realTryShowFunctionArgHints ();
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality
