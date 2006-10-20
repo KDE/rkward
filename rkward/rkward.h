@@ -128,6 +128,10 @@ public slots:
 	void showHelpSearch ();
 	/** Invokes R help (help.start ()) */
 	void invokeRHelp ();
+	/** show instructions on reporting bugs in rkward */
+	void reportRKWardBug ();
+	/** not quite sure, why I have to reimplement this from KMainWindow */
+	void showAboutApplication ();
 	/** raises the watch window */
 	void raiseWatch ();
 	/** creates a new (empty) data.frame */

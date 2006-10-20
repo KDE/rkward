@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.3.3">
+<kpartgui name="rkward" version="0.4.0">
 <MenuBar>
 	<Menu name="file"><text>&amp;File</text>
 		<Menu name="new_data"><text>&amp;New</text>
@@ -45,6 +45,7 @@
 	<Menu name="help"><text>&amp;Help</text>
 		<Action name="invoke_r_help"/>
 		<Action name="show_help_search"/>
+		<Merge/>
 	</Menu>
 
 </MenuBar>

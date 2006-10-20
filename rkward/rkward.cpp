@@ -24,6 +24,7 @@
 #include <qtimer.h>
 
 // include files for KDE
+#include <kaboutapplication.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
@@ -110,6 +111,7 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	///////////////////////////////////////////////////////////////////
 	// build the interface
 
+	setHelpMenuEnabled (false);
 	setXMLFile ("rkwardui.rc");
 	createShellGUI (true);
 
@@ -298,6 +300,11 @@ void RKwardApp::initActions()
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT (slotConfigure ()), actionCollection (), "configure");
 	help_invoke_r_help = new KAction (i18n ("Help on R"), 0, 0, this, SLOT (invokeRHelp ()), actionCollection (), "invoke_r_help");
 	KAction *show_help_search = new KAction (i18n ("Search R Help"), 0, 0, this, SLOT (showHelpSearch ()), actionCollection (), "show_help_search");
+
+	KStdAction::helpContents (this, SLOT (appHelpActivated ()), actionCollection ());
+	KStdAction::aboutApp (this, SLOT (showAboutApplication ()), actionCollection ());
+	KStdAction::whatsThis (this, SLOT (whatsThis ()), actionCollection ());
+	KStdAction::reportBug (this, SLOT (reportRKWardBug ()), actionCollection ());
 
 	new_data_frame->setStatusText (i18n ("Creates new empty dataset and opens it for editing"));
 	fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
@@ -490,6 +497,21 @@ void RKwardApp::invokeRHelp () {
 	RK_TRACE (APP);
 
 	RKGlobals::rInterface ()->issueCommand ("help.start ()", RCommand::App);
+}
+
+void RKwardApp::reportRKWardBug () {
+	RK_TRACE (APP);
+
+// TOOD: something pretty
+	KMessageBox::information (this, i18n ("Please submit your bug reports or wishes at http://sourceforge.net/tracker/?group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge.net"));
+}
+
+void RKwardApp::showAboutApplication () {
+	RK_TRACE (APP);
+
+	KAboutApplication *about = new KAboutApplication ();
+	about->exec ();
+	delete about;
 }
 
 void RKwardApp::showHelpSearch () {
