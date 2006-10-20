@@ -247,7 +247,7 @@ void RKWorkplace::windowDestroyed (QObject *object) {
 	RKMDIWindow *window = static_cast<RKMDIWindow *> (object);
 
 	RK_ASSERT (windows.find (window) != windows.end ());
-	view ()->removePage (window, true);
+	if (window->isAttached ()) view ()->removePage (window, true);
 	windows.remove (window);
 }
 

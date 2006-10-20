@@ -14,7 +14,7 @@ Bugs:
 			- Maybe the kate-part needs to be reset (syntax parse tree) every once in a while?
 	- rnorm () and friends auto-print value only once. R_Visible is 0 on subsequent calls (what in the world is going on, here?)
 	- RKEditorDataFrame:
-		- sometimes the current cell idicator (the box around the current cell) gets lost.
+		- sometimes the current cell indicator (the box around the current cell) gets lost.
 			- Navigation and editing is still fine
 			- seems to happen more often with larger data frames
 			- more precisely: seems to happen after scrolling
@@ -34,7 +34,7 @@ UI-stuff
 			- if we find out we've already pasted 100 rows, first check, how many more are to come and add this many both to the variable and to the R workspace. Can potentially avoid *lots* of work
 	- Twintable/RKEditorDataFrame
 		- merge the two classes
-		- more efficient syncing: fetch only the values actually needed instead of the whole table
+		- more efficient syncing: fetch only the values actually needed instead of the whole table. How?
 		- make configurable:
 			- invalid color (global and per variable)
 			- unused color (global and per variable)
@@ -52,14 +52,12 @@ UI-stuff
 	- RKConsole:
 		- Console should start a command chain when submitting a batch of pasted commands
 		- Better yet, the commands might be autosplit in the backend. Need to think about how to design this correctly, though
-		- hide tabs in console
-		- tabs should do name completion!
 		- Allow pasting at other positions than line end
 		- Prevent cursor from venturing into lines other than the last line
 	- Script editor:
 		- allow to pipe scripts to the console (console might have to be made smarter about large pasted commands, first)
 	- RKConsole / Script editor:
-		- syntax tool tips / code completion
+		- function arg hints in script editor
 		- highlight only valid function names
 	- RKHelpDlg:
 		- in the mid term, this should probably be renamed and moved to windows
