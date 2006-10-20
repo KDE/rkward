@@ -145,7 +145,7 @@ void RKWorkplaceView::setPage (int page) {
 		return;		// will get here again via signal from tabs
 	}
 
-	RK_DO (qDebug ("setting page %d: %d", page, (int) pages[page]), APP, DL_DEBUG);
+	RK_DO (qDebug ("setting page %d: %p", page, pages[page]), APP, DL_DEBUG);
 	RKMDIWindow *window = pages[page];
 	widgets->raiseWidget (window);
 
