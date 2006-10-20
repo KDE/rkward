@@ -111,7 +111,7 @@ void RKWorkplaceView::setActivePage (RKMDIWindow *widget) {
 
 RKMDIWindow *RKWorkplaceView::activePage () {
 	RK_TRACE (APP);
-	RK_DO (qDebug ("active page %d: %d, visible: %d", tabs->currentTab (), (int) pages[tabs->currentTab ()], (int) widgets->visibleWidget ()), APP, DL_DEBUG);
+	RK_DO (qDebug ("active page %d: %p, visible: %p", tabs->currentTab (), pages[tabs->currentTab ()], widgets->visibleWidget ()), APP, DL_DEBUG);
 
 	if (tabs->currentTab () == -1) return 0;
 	// The assert below can in fact fail temporarily, as the widgetstack (widgets) does not update immediately after widgets->raiseWidget ().
