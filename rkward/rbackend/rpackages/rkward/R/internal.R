@@ -279,7 +279,7 @@
 				i <- 0
 				for (child in x) {
 					i <- i+1
-					sub[[nms[i]]] <- .rk.get.structure (child, nms[i])
+					sub[[nms[i]]] <- .rk.get.structure (child, nms[i], envlevel)
 				}
 			}
 		}
