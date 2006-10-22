@@ -1,3 +1,6 @@
+- on startup, show window maximized if not size stored (i.e. very first startup)
+- prevent infinite recursion when parsing structure of environments
+- fix for compilation on 64bit architectures
 - remove misleading "About KDE" dialog, and replace report Bug dialog with correct information
 - don't crash when closing a detached window
 - as you type completion of R symbol names in the script editor

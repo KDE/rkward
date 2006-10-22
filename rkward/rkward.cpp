@@ -389,10 +389,11 @@ void RKwardApp::readOptions () {
 
 // TODO: WORKAROUND: Actually applyMainWindowSettings could/should do this, but apparently this just does not work for maximized windows. Therefore we use our own version instead.
 	config->setGroup("General Options");
-	QSize size=config->readSizeEntry ("Geometry");
-	if(!size.isEmpty ()) {
-		resize (size);
+	QSize size = config->readSizeEntry ("Geometry");
+	if (size.isEmpty ()) {
+		size = QApplication::desktop ()->availableGeometry ().size ();
 	}
+	resize (size);
 
 	// initialize the recent file list
 	fileOpenRecentWorkspace->loadEntries (config,"Recent Files");
