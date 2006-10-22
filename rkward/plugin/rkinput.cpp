@@ -45,12 +45,18 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 
 	textedit = new QTextEdit (this);
 	int size = xml->getMultiChoiceAttribute (element, "size", "small;medium;large", 1, DL_INFO);
+	int lheight = textedit->fontMetrics ().lineSpacing ();
+	int margin = textedit->height () - textedit->visibleHeight () + textedit->fontMetrics ().descent () + 2;
 	if (size == 0) {
-		textedit->setFixedSize (100, 25);
+		textedit->setFixedSize (100, lheight + margin);
+		textedit->setHScrollBarMode (QScrollView::AlwaysOff);
+		textedit->setVScrollBarMode (QScrollView::AlwaysOff);
 	} else if (size == 1) {
-		textedit->setFixedSize (250, 25);
+		textedit->setFixedSize (250, lheight + margin);
+		textedit->setHScrollBarMode (QScrollView::AlwaysOff);
+		textedit->setVScrollBarMode (QScrollView::AlwaysOff);
 	} else if (size == 2) {
-		textedit->setMinimumSize (250, 100);
+		textedit->setMinimumSize (250, lheight * 4 + margin);
 	}
 	vbox->addWidget (textedit);
 	connect (textedit, SIGNAL (textChanged ()), SLOT (textChanged ()));
