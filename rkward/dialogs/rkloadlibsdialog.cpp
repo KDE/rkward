@@ -53,7 +53,9 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	
 	QFrame *page = addPage (i18n ("Local packages"));
 	QVBoxLayout *layout = new QVBoxLayout (page, 0, KDialog::spacingHint ());
-	layout->addWidget (new LoadUnloadWidget (this, page));
+	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this, page);
+	connect (this, SIGNAL (installedPackagesChanged ()), luwidget, SLOT (updateInstalledPackages ()));
+	layout->addWidget (luwidget);
 	
 	page = addPage (i18n ("Update"));
 	layout = new QVBoxLayout (page, 0, KDialog::spacingHint ());
@@ -210,6 +212,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 	file.remove ();
 	delete proc;
 
+	emit (installedPackagesChanged ());
 	return true;
 }
 
@@ -273,16 +276,13 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	loaded_view->setSelectionMode (QListView::Extended);
 	loadedvbox->addWidget (label);
 	loadedvbox->addWidget (loaded_view);
-	
-	setEnabled (false);
-	
-	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, GET_INSTALLED_PACKAGES, dialog->chain);
-	RKGlobals::rInterface ()->issueCommand (".packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_LOADED_PACKAGES, dialog->chain);
-	
+
 	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
 	connect (dialog, SIGNAL (apply ()), this, SLOT (apply ()));
 	connect (dialog, SIGNAL (cancelClicked ()), this, SLOT (cancel ()));
 	connect (this, SIGNAL (destroyed ()), dialog, SLOT (childDeleted ()));
+
+	updateInstalledPackages ();
 }
 
 LoadUnloadWidget::~LoadUnloadWidget () {
@@ -293,6 +293,8 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 	RK_TRACE (DIALOGS);
 	if (command->getFlags () == GET_INSTALLED_PACKAGES) {
 		RK_ASSERT (command->getDataLength () == 4);
+
+		installed_view->clear ();
 
 		RData *package = command->getStructureVector ()[0];
 		RData *title = command->getStructureVector ()[1];
@@ -308,6 +310,9 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 		}
 	} else if (command->getFlags () == GET_LOADED_PACKAGES) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
+
+		loaded_view->clear ();
+
 		for (unsigned int i=0; i < command->getDataLength (); ++i) {
 			new QListViewItem (loaded_view, command->getStringVector ()[i]);
 		}
@@ -318,6 +323,15 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 	} else {
 		RK_ASSERT (false);
 	}
+}
+
+void LoadUnloadWidget::updateInstalledPackages () {
+	RK_TRACE (DIALOGS);
+
+	setEnabled (false);
+	
+	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, GET_INSTALLED_PACKAGES, parent->chain);
+	RKGlobals::rInterface ()->issueCommand (".packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_LOADED_PACKAGES, parent->chain);
 }
 
 void LoadUnloadWidget::loadButtonClicked () {

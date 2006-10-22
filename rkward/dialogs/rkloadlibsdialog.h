@@ -64,6 +64,7 @@ signals:
 	void libraryLocationsChanged (const QStringList &);
 	void installationOutput (const QString &output);
 	void installationError (const QString &error);
+	void installedPackagesChanged ();
 protected:
 	void rCommandDone (RCommand *command);
 	void closeEvent (QCloseEvent *e);
@@ -113,6 +114,7 @@ public slots:
 	void ok ();
 	void apply ();
 	void cancel ();
+	void updateInstalledPackages ();
 protected:
 	void rCommandDone (RCommand *command);
 private:
