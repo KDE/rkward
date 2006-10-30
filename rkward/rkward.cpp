@@ -389,7 +389,11 @@ void RKwardApp::readOptions () {
 	RK_TRACE (APP);
 	KConfig *config = kapp->config ();
 
+#if !KDE_IS_VERSION(3,3,0)
+	applyMainWindowSettings (kapp->config (), "main window options");
+#else
 	applyMainWindowSettings (kapp->config (), "main window options", true);
+#endif
 
 // TODO: WORKAROUND: Actually applyMainWindowSettings could/should do this, but apparently this just does not work for maximized windows. Therefore we use our own version instead.
 	config->setGroup("General Options");
