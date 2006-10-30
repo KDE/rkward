@@ -35,6 +35,10 @@ public:
 	RKScriptContextProvider () {};
 	~RKScriptContextProvider () {};
 
+	/** to be implemented in subclasses. Provide some context (probably a line, but you may provide chunks in arbitrary size). If line_rev is 0, provide the line, the cursor is in. If line_rev is greater than 0, provide context before that.
+	@param context Place the context here
+	@param cursor_position if line_rev is 0, set this to the current column of the cursor, else set to -1
+	@returns whether context was available or not */
 	virtual bool provideContext (unsigned int line_rev, QString *context, int *cursor_position) = 0;
 };
 
@@ -45,12 +49,16 @@ public:
 	RKFunctionArgHinter (RKScriptContextProvider *provider, Kate::View* view);
 	~RKFunctionArgHinter ();
 
+	/** Try to show an arg hint now */
 	void tryArgHint ();
+	/** Hide the arg hint (if shown) */
 	void hideArgHint ();
 public slots:
+	/** Internal worker function for tryArgHint () */
 	void tryArgHintNow ();
 protected:
-	bool eventFilter (QObject *o, QEvent *e);
+	/** The (keypress) events of the view are filtered to determine, when to show / hide an argument hint */
+	bool eventFilter (QObject *, QEvent *e);
 private:
 	RKScriptContextProvider *provider;
 	Kate::View *view;
