@@ -99,10 +99,14 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	rkward_app = this;
 	RKGlobals::rinter = 0;
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
-	
+
+#if !KDE_IS_VERSION(3,3,0)
+	setIDEAlModeStyle (KMultiTabBar::KDEV3);
+#else
 	// Nice docks a la Kdevelop.
-	setToolviewStyle(KMultiTabBar::KDEV3ICON);
-	
+	setToolviewStyle (KMultiTabBar::KDEV3ICON);
+#endif
+
 	///////////////////////////////////////////////////////////////////
 	// call inits to invoke all other construction parts
 	initActions();
