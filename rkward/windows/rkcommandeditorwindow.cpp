@@ -398,9 +398,8 @@ void RKFunctionArgHinter::hideArgHint () {
 }
 
 bool RKFunctionArgHinter::eventFilter (QObject *, QEvent *e) {
-	RK_TRACE (COMMANDEDITOR);
-
 	if (e->type () == QEvent::KeyPress || e->type () == QEvent::AccelOverride) {
+		RK_TRACE (COMMANDEDITOR);	// avoid loads of empty traces, putting this here
 		QKeyEvent *k = static_cast<QKeyEvent *> (e);
 
 		if (k->key() == Qt::Key_Enter || k->key() == Qt::Key_Return || k->key () == Qt::Key_Up || k->key () == Qt::Key_Down || k->key () == Qt::Key_Left || k->key () == Qt::Key_Right || k->key () == Qt::Key_Home || k->key () == Qt::Key_Tab) {
@@ -417,7 +416,7 @@ bool RKFunctionArgHinter::eventFilter (QObject *, QEvent *e) {
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
 #include "rkcommandeditorwindow.moc"
