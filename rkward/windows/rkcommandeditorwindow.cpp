@@ -142,7 +142,7 @@ void RKCommandEditorWindow::setRHighlighting () {
 
 QString RKCommandEditorWindow::getSelection () {
 	RK_TRACE (COMMANDEDITOR);
-	return selectionInterface (m_doc)->selection ();
+	return m_doc->selection ();
 }
 
 QString RKCommandEditorWindow::getLine () {
@@ -152,7 +152,7 @@ QString RKCommandEditorWindow::getLine () {
 
 QString RKCommandEditorWindow::getText () {
 	RK_TRACE (COMMANDEDITOR);
-	return editInterface (m_doc)->text ();
+	return m_doc->text ();
 }
 
 void RKCommandEditorWindow::copy () {

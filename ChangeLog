@@ -1,3 +1,4 @@
+- fix (some?) compilation problems with KDE 3.2
 - when packages have been newly installed, show them in the load / unload packages tab immediately
 - fix to plugin input lines sizing, and visibility of scrollbars
 - on startup, show window maximized if not size stored (i.e. very first startup)

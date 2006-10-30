@@ -57,7 +57,6 @@ UI-stuff
 	- Script editor:
 		- allow to pipe scripts to the console (console might have to be made smarter about large pasted commands, first)
 	- RKConsole / Script editor:
-		- function arg hints in script editor
 		- highlight only valid function names
 	- RKHelpDlg:
 		- in the mid term, this should probably be renamed and moved to windows
