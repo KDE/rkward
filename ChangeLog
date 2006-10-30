@@ -5,8 +5,8 @@
 - fix for compilation on 64bit architectures
 - remove misleading "About KDE" dialog, and replace report Bug dialog with correct information
 - don't crash when closing a detached window
+- function argument hinting in the console and script editor
 - as you type completion of R symbol names in the script editor
-- function argument hinting in the console
 - tab completion of R symbol names in the console
 - added R function rk.edit (x) to open object x for editing in rkward
 - fixed: an empty table created before the object list was updated (esp. at startup) would be thought to have been removed in the workspace

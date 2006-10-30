@@ -39,6 +39,7 @@ public:
 	QString makeChildBaseName (const QString &short_child_name);
 /** reimplemented from RContainerObject: If this is an environment var, call RContainerObject::writeMetaData (). Else, do nothing. An environment has no meta data. */
 	void writeMetaData (RCommandChain *chain);
+	QString namespaceName () { return namespace_name; };
 protected:
 	bool updateStructure (RData *new_data);
 /** reimplemented from RContainerObject to raise an assert if this is not the isGlobalEnv (). Otherwise calls "remove (objectname)" instead of objectname <- NULL" */

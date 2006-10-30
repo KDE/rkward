@@ -26,13 +26,11 @@
 #include <qptrlist.h>
 
 #include "rbackend/rcommandreceiver.h"
+#include "windows/rkcommandeditorwindow.h"
 
 class QStringList;
-class QVBox;
-class QLabel;
 class KAction;
 class RCommand;
-class KateCodeCompletion;
 
 /**
 ** 	\brief Provides an R-like console.
@@ -47,7 +45,7 @@ class KateCodeCompletion;
 ** @author Pierre Ecochard
 **/
 
-class RKConsole : public QWidget, public RCommandReceiver {
+class RKConsole : public QWidget, public RCommandReceiver, public RKScriptContextProvider {
 Q_OBJECT
 public:
 /** Submits a batch of commands, line by line.
@@ -64,6 +62,7 @@ public:
 /** interrupt the current incomplete command (if any) */
 	void resetIncompleteCommand ();
 	void doTabCompletion ();
+	bool provideContext (unsigned int line_rev, QString *context, int *cursor_position);
 protected:
 /** Constructor. Protected. Construct an RKConsolePart instead */
 	RKConsole ();
@@ -83,7 +82,7 @@ signals:
 	void fetchPopupMenu (QPopupMenu **menu);
 private:
 friend class RKConsolePart;
-bool eventFilter( QObject *o, QEvent *e );
+	bool eventFilter (QObject *o, QEvent *e);
 /** set syntax-highlighting for R */
 	void setRHighlighting ();
 	QString incomplete_command;
@@ -127,23 +126,19 @@ bool eventFilter( QObject *o, QEvent *e );
 \param ac the action collection from which to retrieve the KAction*/
 	void unplugAction (QString action, KActionCollection* ac);
 
-	void tryShowFunctionArgHints ();
-
 	bool output_continuation;
 
 	RCommand *current_command;
 	Kate::Document *doc;
 	Kate::View *view;
+	RKFunctionArgHinter *hinter;
 
 	bool tab_key_pressed_before;
-	QVBox *arghints_popup;
-	QLabel *arghints_popup_text;
 public slots:
 /** We intercept paste commands and get them executed through submitBatch.
 @sa submitBatch */
 	void paste ();
 	void copy ();
-	void realTryShowFunctionArgHints ();
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality

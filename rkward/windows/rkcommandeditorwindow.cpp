@@ -87,13 +87,19 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	completion_timer = new QTimer (this);
 	connect (completion_timer, SIGNAL (timeout ()), this, SLOT (tryCompletion()));
 
-	if (use_r_highlighting) setRHighlighting ();
+	if (use_r_highlighting) {
+		setRHighlighting ();
+		hinter = new RKFunctionArgHinter (this, m_view);
+	} else {
+		hinter = 0;
+	}
 
 	updateCaption ();	// initialize
 }
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
+	delete hinter;
 	delete m_doc;
 }
 
@@ -236,8 +242,10 @@ void RKCommandEditorWindow::tryCompletion () {
 	}
 }
 
-void RKCommandEditorWindow::fixCompletion (KTextEditor::CompletionEntry *, QString *) {
+void RKCommandEditorWindow::fixCompletion (KTextEditor::CompletionEntry *entry, QString *string) {
 	RK_TRACE (COMMANDEDITOR);
+
+	*string = entry->text;	// why, oh, why, isn't this always the case?
 
 	uint current_line_num=0; uint cursor_pos=0;
 	m_view->cursorPosition (&current_line_num, &cursor_pos);
@@ -249,6 +257,167 @@ void RKCommandEditorWindow::fixCompletion (KTextEditor::CompletionEntry *, QStri
 
 	// remove the start of the word, as the whole string will be inserted by katepart
 	m_doc->removeText (current_line_num, word_start, current_line_num, word_end);
+}
+
+bool RKCommandEditorWindow::provideContext (unsigned int line_rev, QString *context, int *cursor_position) {
+	RK_TRACE (COMMANDEDITOR);
+
+	uint current_line_num=0; uint cursor_pos=0;
+	m_view->cursorPosition (&current_line_num, &cursor_pos);
+
+	if (line_rev > current_line_num) return false;
+
+	if (line_rev == 0) {
+		*cursor_position = cursor_pos;
+	} else {
+		*cursor_position = -1;
+	}
+	*context = m_doc->textLine (current_line_num - line_rev);
+
+	return true;
+}
+
+//////////////////////// RKFunctionArgHinter //////////////////////////////
+
+#include <qobjectlist.h>
+#include <qvbox.h>
+
+#include "../core/rfunctionobject.h"
+
+RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, Kate::View* view) {
+	RK_TRACE (COMMANDEDITOR);
+
+	RKFunctionArgHinter::provider = provider;
+	RKFunctionArgHinter::view = view;
+
+	const QObjectList *children = view->children ();
+	QObjectListIt it (*children);
+	QObject *obj;
+	while ((obj = it.current()) != 0) {
+		++it;
+		obj->installEventFilter (this);
+	}
+
+	arghints_popup = new QVBox (0, 0, WType_Popup);
+	arghints_popup->setFrameStyle (QFrame::Box | QFrame::Plain);
+	arghints_popup->setLineWidth (1);
+	arghints_popup_text = new QLabel (arghints_popup);
+	arghints_popup->hide ();
+	arghints_popup->setFocusProxy (view);
+}
+
+RKFunctionArgHinter::~RKFunctionArgHinter () {
+	RK_TRACE (COMMANDEDITOR);
+}
+
+void RKFunctionArgHinter::tryArgHint () {
+	RK_TRACE (COMMANDEDITOR);
+
+	// do this in the next event cycle to make sure any inserted characters have truely been inserted
+	QTimer::singleShot (0, this, SLOT (tryArgHintNow ()));
+}
+
+void RKFunctionArgHinter::tryArgHintNow () {
+	RK_TRACE (COMMANDEDITOR);
+
+	int line_rev;
+	int cursor_pos;
+	QString current_context;
+	QString current_line;
+
+	// fetch the most immediate context line. More will be fetched later, if appropriate
+	bool have_context = provider->provideContext (line_rev = 0, &current_line, &cursor_pos);
+	RK_ASSERT (have_context);
+	RK_ASSERT (cursor_pos >= 0);
+	current_context = current_line;
+
+	// find the corrresponding opening brace
+	int matching_left_brace_pos;
+	int brace_level = 1;
+	int i = cursor_pos;
+
+	while (true) {
+		if (current_context.at (i) == QChar (')')) {
+			brace_level++;
+		} else if (current_context.at (i) == QChar ('(')) {
+			brace_level--;
+			if (!brace_level) break;
+		}
+
+		--i;
+		if (i < 0) {
+			bool have_context = provider->provideContext (++line_rev, &current_line, &cursor_pos);
+			if (!have_context) break;
+
+			RK_ASSERT (cursor_pos < 0);
+			current_context.prepend (current_line);
+			i = current_line.length () - 1;
+		}
+	}
+
+	if (!brace_level) matching_left_brace_pos = i;
+	else {
+		hideArgHint ();
+		return;
+	}
+
+	// now find where the symbol to the left ends
+	// there cannot be a line-break between the opening brace, and the symbol name (or can there?), so no need to fetch further context
+	int potential_symbol_end = matching_left_brace_pos - 1;
+	while ((potential_symbol_end > 0) && current_context.at (potential_symbol_end).isSpace ()) {
+		--potential_symbol_end;
+	}
+	if (current_context.at (potential_symbol_end).isSpace ()) {
+		hideArgHint ();
+		return;
+	}
+
+	// now identify the symbol and object (if any)
+	QString effective_symbol = RKCommonFunctions::getCurrentSymbol (current_context, potential_symbol_end+1);
+	if (effective_symbol.isEmpty ()) {
+		hideArgHint ();
+		return;
+	}
+
+	RObject *object = RObjectList::getObjectList ()->findObject (effective_symbol);
+	if ((!object) || (!object->isType (RObject::Function))) {
+		hideArgHint ();
+		return;
+	}
+
+	// initialize and show popup
+	arghints_popup_text->setText (effective_symbol + " (" + static_cast<RFunctionObject*> (object)->printArgs () + ")");
+	arghints_popup->resize (arghints_popup_text->sizeHint () + QSize (2, 2));
+	arghints_popup->move (view->mapToGlobal (view->cursorCoordinates () + QPoint (0, arghints_popup->height ())));
+	arghints_popup->show ();
+}
+
+void RKFunctionArgHinter::hideArgHint () {
+	RK_TRACE (COMMANDEDITOR);
+	arghints_popup->hide ();
+}
+
+bool RKFunctionArgHinter::eventFilter (QObject *, QEvent *e) {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (e->type () == QEvent::KeyPress || e->type () == QEvent::AccelOverride) {
+		QKeyEvent *k = static_cast<QKeyEvent *> (e);
+
+		if (k->key() == Qt::Key_Enter || k->key() == Qt::Key_Return || k->key () == Qt::Key_Up || k->key () == Qt::Key_Down || k->key () == Qt::Key_Left || k->key () == Qt::Key_Right || k->key () == Qt::Key_Home || k->key () == Qt::Key_Tab) {
+			hideArgHint ();
+		} else if (k->key () == Qt::Key_Backspace || k->key () == Qt::Key_Delete){
+			tryArgHint ();
+		} else {
+			QString text = k->text ();
+			if (text == "(") {
+				tryArgHint ();
+			} else if (text == ")") {
+				tryArgHint ();
+			}
+		}
+	}
+
+	return FALSE;
 }
 
 #include "rkcommandeditorwindow.moc"

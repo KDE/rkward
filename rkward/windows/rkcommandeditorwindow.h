@@ -26,16 +26,49 @@
 
 #include "../windows/rkmdiwindow.h"
 
+class QVBox;
+class QLabel;
+
+/** classes wishing to use RKFunctionArgHinter should derive from this, and implement provideContext () */
+class RKScriptContextProvider {
+public:
+	RKScriptContextProvider () {};
+	~RKScriptContextProvider () {};
+
+	virtual bool provideContext (unsigned int line_rev, QString *context, int *cursor_position) = 0;
+};
+
+/** function argument hinting for RKCommandEditorWindow and RKConsole */
+class RKFunctionArgHinter : public QObject {
+	Q_OBJECT
+public:
+	RKFunctionArgHinter (RKScriptContextProvider *provider, Kate::View* view);
+	~RKFunctionArgHinter ();
+
+	void tryArgHint ();
+	void hideArgHint ();
+public slots:
+	void tryArgHintNow ();
+protected:
+	bool eventFilter (QObject *o, QEvent *e);
+private:
+	RKScriptContextProvider *provider;
+	Kate::View *view;
+
+	QVBox *arghints_popup;
+	QLabel *arghints_popup_text;
+};
+
 class QTimer;
 
 /**
 	\brief Provides an editor window for R-commands, as well as a text-editor window in general.
 
-While being called RKCommandEditorWindow, this class handles all sort of text-files, both read/write and read-only. It is an MDI child that is added to the main window, based on KatePart.
+While being called RKCommandEditorWindow, this class handles all sorts of text-files, both read/write and read-only. It is an MDI window that is added to the main window, based on KatePart.
 
 @author Pierre Ecochard
 */
-class RKCommandEditorWindow : public RKMDIWindow {
+class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider {
 // we need the Q_OBJECT thing for some inherits ("RKCommandEditorWindow")-calls in rkward.cpp.
 	Q_OBJECT
 public:
@@ -67,11 +100,16 @@ public:
 
 	QString getRDescription ();
 	KParts::Part *getPart () { return m_doc; };
+
+	bool provideContext (unsigned int line_rev, QString *context, int *cursor_position);
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if approriate */
 	void updateCaption ();
+/** called whenever it might be appropriate to show a code completion box. The box is not shown immediately, but only after a timeout (if at all) */
 	void tryCompletionProxy ();
+/** show a code completion box if appropriate. Use tryCompletionProxy () instead, which will call this function after a timeout */
 	void tryCompletion ();
+/** called by the Kate part, if an entry was selected from the code completion box. Will remove the current symbol, as the kate part is about to re-add it (in completed form) */
 	void fixCompletion (KTextEditor::CompletionEntry *, QString *);
 protected:
 /** reimplemented from KMdiChildView: give the editor window a chance to object to being closed (if unsaved) */
@@ -79,6 +117,7 @@ protected:
 private:
 	Kate::Document *m_doc;
 	Kate::View *m_view;
+	RKFunctionArgHinter *hinter;
 
 	QTimer *completion_timer;
 /** set syntax highlighting-mode to R syntax */

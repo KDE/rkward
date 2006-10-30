@@ -174,10 +174,15 @@ RObject *RObjectList::findObject (const QString &name, bool is_canonified) {
 		QString env = canonified.section ("::", 0, 0);
 		QString remainder = canonified.section ("::", 1);
 
-		RObjectMap::iterator it = childmap.find (env);
-		if (it == childmap.end ()) return 0;
+		RObject *found = 0;
+		for (unsigned int i = 0; i < num_toplevel_environments; ++i) {
+			if (toplevel_environments[i]->namespaceName () == env) {
+				found = toplevel_environments[i];
+				break;
+			}
+		}
+		if (!found) return 0;
 
-		RObject *found = it.data ();
 		return (found->findObject (remainder, true));
 	}
 
@@ -201,10 +206,15 @@ void RObjectList::findObjectsMatching (const QString &partial_name, RObjectMap *
 		QString env = canonified.section ("::", 0, 0);
 		QString remainder = canonified.section ("::", 1);
 
-		RObjectMap::iterator it = childmap.find (env);
-		if (it == childmap.end ()) return;
-
-		RObject *found = it.data ();
+		RObject *found = 0;
+		for (unsigned int i = 0; i < num_toplevel_environments; ++i) {
+			if (toplevel_environments[i]->namespaceName () == env) {
+				found = toplevel_environments[i];
+				break;
+			}
+		}
+		if (!found) return;
+		
 		found->findObjectsMatching (remainder, current_list, true);
 		return;
 	}

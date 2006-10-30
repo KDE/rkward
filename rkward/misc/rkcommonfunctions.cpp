@@ -106,7 +106,7 @@ namespace RKCommonFunctions {
 	
 		// if both return the same position, we're on a non-word.
 		if (current_word_start == current_word_end) return (QString ());
-	
+
 		return (context_line.mid (current_word_start, current_word_end - current_word_start));
 	}
 
