@@ -16,25 +16,13 @@
 	<tab label="Options" >
 		<row>
 			<column>
-				<radio id="notch" label="Notch" >
-				<option value="TRUE" label="True" />
-				<option checked="true" value="FALSE" label="False" />
-				</radio>
 				<radio id="orientation" label="orientation" >
-				<option value="TRUE" label="horizontal" />
-				<option checked="true" value="FALSE" label="vertical" />
+					<option value="TRUE" label="horizontal" />
+					<option checked="true" value="FALSE" label="vertical" />
 				</radio>
-				<radio id="outline" label="Outline" >
-				<option value="TRUE" label="True" />
-				<option checked="true" value="FALSE" label="False" />
-				</radio>
-			</column>
-			<column>
-				<row>
-					<checkbox value_unchecked="0" checked="false" value="1" id="x.scale" label="X-Scale" />
-					<checkbox value_unchecked="0" checked="false" value="1" id="y.scale" label="Y-Scale" />
-				</row>
-				<checkbox value_unchecked="0" checked="false" value="1" id="use" label="Define Histogram" />
+				<checkbox id="notch" label="Draw Notches" checked="false" value="TRUE" value_unchecked="FALSE" />
+				<checkbox id="outline" label="Outline" checked="true" value="TRUE" value_unchecked="FALSE" />
+				
 				<stretch/>
 				<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 				<stretch/>
