@@ -6,7 +6,7 @@ function calculate () {
 }
 
 function printout () {
-	$log; $xaxt; $yaxt; $xlim; $ylim; $xlab; $ylab;
+	$log; $xaxt; $yaxt; $xlim; $ylim; $xlab; $ylab; $main; $sub;
 
 	$xvars = split ("\n", getRK_val ("xvar"));
 	if (count ($xvars) > 1) {
@@ -65,7 +65,6 @@ function printout () {
 		$ylab = "\"" . $ylab . "\"";
 	}
 	if ($ylab != "") $ylab = ", ylab=" . $ylab;
-
 	$yminvalue = getRK_val ("yminvalue");
 	$ymaxvalue = getRK_val ("ymaxvalue");
 	if (($yminvalue != "") || ($ymaxvalue != "")) {
@@ -85,8 +84,29 @@ function printout () {
 	$type = getRK_val ("pointtype");
 	if (!empty ($type)) $type = ", type=\"" . $type . "\"";
 
+	///Begin of Additions by Stefan Roediger
+	//add a main (on top) to the plot
+	$main = getRK_val ("main");
+	if (($main != "") && (getRK_val ("mainisexp") != "1")) {
+		$main = "\"" . $main . "\"";
+	}
+	if ($main != "") $main = ", main=" . $main;
+	
+	//add a subtitle (at bottom) to the plot
+	$sub = getRK_val ("sub");
+	if (($sub != "") && (getRK_val ("subisexp") != "1")) {
+		$sub = "\"" . $sub . "\"";
+	}
+	if ($sub != "") $sub = ", sub=" . $sub;
+
+	//define the aspect y/x of the plot
+	$asp = getRK_val ("asp");
+	if ($asp != 0) $asp = ", asp=" . $asp;
+	else $asp = "";
+	///End of Additions by Stefan Roediger
+
 	// make option string
-	$options = $type . $xaxt . $yaxt . $log . $xlim . $ylim . $xlab . $ylab;
+	$options = $type . $xaxt . $yaxt . $log . $xlim . $ylim . $xlab . $ylab . $main . $sub . $asp;
 
 	echo ($options);
 }

@@ -7,18 +7,33 @@
 
 		<convert id="ylabfilled" mode="notequals" sources="ylab.text" standard="" />
 		<connect client="ylabisexp.enabled" governor="ylabfilled" />
-
+		
 		<connect client="xlog.visible" governor="allow_log"/>
 		<connect client="ylog.visible" governor="allow_log"/>
+		<connect client="aspectratio.visible" governor="allow_aspect"/>
 		<connect client="pointtypepage.visible" governor="allow_type"/>
 
 		<external id="xvar" />
 		<external id="yvar" />
 		<external id="allow_log" default="true" />
 		<external id="allow_type" default="true" />
+		<external id="allow_aspect" default="false" />
 	</logic>
 	<dialog label="Default plot options" >
 		<tabbook>
+			<tab label="Title">
+				<column>
+					<frame label="Main title">
+						<input id="main" label="Main title (on top). Leave empty for default title" />
+						<checkbox id="mainisexp" label="Interpret this label as an R expression (as opposed to a literal string)?" value="1" />
+					</frame>
+					<frame label="Subtitle">
+						<input id="sub" label="Sub-title (at bottom). Leave empty for default title" />
+						<checkbox id="subisexp" label="Interpret this label as an R expression (as opposed to a literal string)?" value="1" />
+					</frame>
+					<stretch/>
+				</column>
+			</tab>
 			<tab label="Axes" >
 				<column>
 					<frame id="axistypes" label="Axis types">
@@ -52,6 +67,7 @@
 							<input id="ymaxvalue" label="Max Y value" />
 						</row>
 					</frame>
+					<stretch/>
 				</column>
 			</tab>
 			<tab id="pointtypepage" label="Points / Lines">
@@ -66,6 +82,14 @@
 					<option value="S" label="Step-function plots: the right edge defines the point" />
 				</radio>
 			<stretch/>
+			</tab>
+			<tab id="aspectratio" label="Aspect ratio y/x">
+				<column>
+					<spinbox type="real" label="Aspect ratio" id="asp" initial="0"/>
+					<text>Note that if Aspect is a finite positive value then the window is set up so that one data unit in the x direction is equal in length to asp * one data unit in the y direction.</text>
+					<text>The special case Aspect == 1 produces plots where distances between points are represented accurately on screen. Values with Aspect > 1 can be used to produce more accurate maps when using latitufile and longitude.</text>
+					<stretch/>
+				</column>
 			</tab>
 		</tabbook>
 	</dialog>
