@@ -549,7 +549,7 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 		MUTEX_UNLOCK;
 		handleSubstackCall (call, call_length);
 		MUTEX_LOCK;
-		delete call;
+		delete [] call;
 		changed_symbol_names.clear ();
 	}
 
