@@ -1,7 +1,9 @@
+- allow specification of title/subtitle in plot options plugin (currently used by boxplot, and histogram)
+- fix bug in beta probabilities plugin
 - fix (some?) compilation problems with KDE 3.2
 - when packages have been newly installed, show them in the load / unload packages tab immediately
 - fix to plugin input lines sizing, and visibility of scrollbars
-- on startup, show window maximized if not size stored (i.e. very first startup)
+- on startup, show window maximized if no size stored (i.e. very first startup)
 - prevent infinite recursion when parsing structure of environments
 - fix for compilation on 64bit architectures
 - remove misleading "About KDE" dialog, and replace report Bug dialog with correct information

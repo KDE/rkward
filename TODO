@@ -71,6 +71,9 @@ UI-stuff
 	- find out how to save toolbar states properly in parts-GUI
 	- David's usability items
 	- use RKGlobals::marginHint (), RKGlobals::spacingHint () everywhere
+	- from Ralf:
+		- A workmate misses very much an command/key to clean up the console/log
+		- another nifty feature would be - if F8 would work also in the console/log.
 
 Internal stuff:
 	RKVariable:
@@ -85,6 +88,10 @@ Internal stuff:
 			- Does R_ResetConsole play any role in this?
 			- maybe (but this would really be taking chances) do so by determining, if the buffer belongs to the main Repl_Console (currently that buffer always remains the same during one loop, but can we be certain, this never changes?). Same buffer is used while inside do_browser ().
 			- RBusy is set to 0 just before the command data is read! (but also while inside do_browser ())
+				- These patterns may emerge after a call to R_ReplDLLdo1 ():
+					- first: R_Busy (0), second: R_Busy (1), ... : Between first and second, the R_ReadConsole is a request for code
+					- first: R_Busy (1), ...: No code is requested
+				- hence, as soon as R_Busy (1) is set after a call to R_ReplDLLdo1 (), the following R_ReadConsole calls are for user input, not code
 		- Where would we jump after a SIGINT? I suppose we'd have to make sure to clear the buffer before signalling (another mutex)
 		- Is it UTF-8 safe?
 	RCommandReceiver:
