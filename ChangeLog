@@ -1,3 +1,4 @@
+--- Version 0.4.1 - Nov-05-2006
 - allow specification of title/subtitle in plot options plugin (currently used by boxplot, and histogram)
 - fix bug in beta probabilities plugin
 - fix (some?) compilation problems with KDE 3.2
