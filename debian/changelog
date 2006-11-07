@@ -1,3 +1,10 @@
+rkward (0.4.1-1) unstable; urgency=low
+
+  * new upstream release
+  * depend on either php4-cli or php5-cli
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 06 Nov 2006 16:30:00 +0200
+
 rkward (0.4.0-2) unstable; urgency=low
 
   * fix automatic build on 64bit architectures
