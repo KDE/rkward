@@ -1,6 +1,14 @@
 #!/bin/sh
 # Shell wrapper for rkward executable.
 
+## make sure, we always run in a tty. Otherwise R would go into non-interactive mode and behaves strangely.
+if tty -s; then
+  :
+else
+  konsole -e $0
+  exit
+fi
+
 R_HOME_DIR=###R_HOME_DIR###
 R_binary="$R_HOME_DIR/bin/R"
 

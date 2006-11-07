@@ -19,13 +19,22 @@ Bugs:
 			- seems to happen more often with larger data frames
 			- more precisely: seems to happen after scrolling
 			- no idea, why this happens
+	- crash when there are user defined active bindings in .GlobalEnv
+		- does not happen, if symbol update is prevented:
+			- x <- 1
+			- rm (x); makeActiveBinding ("x", something, .GlobalEnv);
+		- why?
+	- deal with user defined active bindings correctly (i.e. copy them "actively" in .rk.watch.symbol, or override makeActiveBinding () (and bindingIsActive ()) to do the right thing)
 
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org
 
 UI-stuff
+	- Access to dev.copy (), dev.print (), and a function to copy gaphics to rkward output
+		- probably in Windows-menu for now
 	"First-run wizard"
 		- pre-install R packages
+	- Check for existence of php binary on startup, not only when loading a plugin
 	- RKEditorDataFrame
 		- undo/redo
 			- KDE4
@@ -116,7 +125,6 @@ Internal stuff:
 	- in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
 	- Object editing / modification tracking:
 		- functions to set double/int/string-vectors directly. Use in paste-operations
-	- check whether we're running in a PTY, and warn otherwise. Currently the R backend needs this.
 	- on exit, check whether there are still RCommands left in the backend and wait/request user-interaction before tearing down the thread. After all, the last command might have been a "save"!
 		- How about always doing exiting via a "q ()" command in the backend, instead? That way we could always be sure, all previous commands have been completed before the q ()!
 	- error-handling/raising in .rk.do.call
@@ -145,6 +153,7 @@ R plugins:
 		- find out why an error in the backend often leads to a subsequent crash
 	- plugins (general)
 		- add import-filter plugins
+		- ODS filter (try to find someone to implement one in R)
 	- formula-widget:
 		- use smart sorting, esp. of generated string
 		- add labels, add "up to level" option
