@@ -158,9 +158,9 @@
 # override makeActiveBinding: If active bindings are created in globalenv (), watch them properly
 "makeActiveBinding" <- function (sym, fun, env, ...) {
 	if (identical (env, globalenv ())) {
-		base::makeActiveBinding (sym, fun, .rk.watched.symbols)
+		base::makeActiveBinding (sym, fun, .rk.watched.symbols, ...)
 		f <- .rk.make.watch.f (sym)
-		base::makeActiveBinding (sym, f, globalenv ())
+		base::makeActiveBinding (sym, f, globalenv (), ...)
 	} else {
 		base::makeActiveBinding (sym, fun, env, ...)
 	}
