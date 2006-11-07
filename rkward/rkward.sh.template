@@ -5,7 +5,7 @@
 if tty -s; then
   :
 else
-  konsole -e $0
+  konsole -e $0 "$@"
   exit
 fi
 
