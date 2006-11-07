@@ -45,8 +45,11 @@ Here are some more notes I have taken on the subject of catching R's x11 windows
 	- proceed like in Plan A
 	- less preferable as C-plugins might be able to call do_X11 directly (can they?)
 - Plan C:
-	- modify at R level (override x11 ())
+	- modify at R level (override X11 ())
+		- notify app right before device is created
+		- notify app right after device is created
 	- least preferable solution as we can not be sure we catch every use.
+		- but definitely most. This is dispatched via CurrentDevice ()->options("device"), and then evalued in R_GlobalEnv
 - remaining problem: how to get the window id given the device id?
 	- http://tronche.com/gui/x/xlib/events/window-state-change/create.html#XCreateWindowEvent
 	- we may catch this using KApplication::installlX11EventFilter

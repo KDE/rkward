@@ -147,15 +147,24 @@
 #"x11" <- function (display = "", width = 7, height = 7, pointsize = 12, gamma = 1, colortype = getOption("X11colortype"), maxcubesize = 256, bg #= "transparent", canvas = "white", fonts = getOption("X11fonts")) {
 #	.rk.do.call ("startOpenX11", as.character (dev.cur ()));
 #
-#	if (display == "" && .Platform$GUI == "AQUA" && Sys.getenv("DISPLAY") == "")
-#		Sys.putenv (DISPLAY = ":0")
-#	.Internal(X11(display, width, height, pointsize, gamma, colortype, maxcubesize, bg, canvas, fonts, NA))
+#	base::X11()
 #
 #	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
 #}
 
 # these functions can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a backup environment, removing it, and replacing it by an active binding to the backup location
 ".rk.watched.symbols" <- new.env ()
+
+# override makeActiveBinding: If active bindings are created in globalenv (), watch them properly
+"makeActiveBinding" <- function (sym, fun, env, ...) {
+	if (identical (env, globalenv ())) {
+		base::makeActiveBinding (sym, fun, .rk.watched.symbols)
+		f <- .rk.make.watch.f (sym)
+		base::makeActiveBinding (sym, f, globalenv ())
+	} else {
+		base::makeActiveBinding (sym, fun, env, ...)
+	}
+}
 
 ".rk.make.watch.f" <- function (k) {
 	function (value) {
@@ -174,7 +183,7 @@
 	assign (k, get (k, envir=globalenv ()), envir=.rk.watched.symbols)
 	rm (list=k, envir=globalenv ())
 
-	makeActiveBinding (k, f, globalenv ())
+	base::makeActiveBinding (k, f, globalenv ())
 
 	invisible (TRUE)
 }

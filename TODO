@@ -19,12 +19,6 @@ Bugs:
 			- seems to happen more often with larger data frames
 			- more precisely: seems to happen after scrolling
 			- no idea, why this happens
-	- crash when there are user defined active bindings in .GlobalEnv
-		- does not happen, if symbol update is prevented:
-			- x <- 1
-			- rm (x); makeActiveBinding ("x", something, .GlobalEnv);
-		- why?
-	- deal with user defined active bindings correctly (i.e. copy them "actively" in .rk.watch.symbol, or override makeActiveBinding () (and bindingIsActive ()) to do the right thing)
 
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org
@@ -85,6 +79,7 @@ UI-stuff
 		- another nifty feature would be - if F8 would work also in the console/log.
 
 Internal stuff:
+	- should we override bindingIsActive()?
 	RKVariable:
 		- Need to add a conversion script. See .rk.get.meta (). Both should be changed at the same time.
 			- Or was it already broken, before?
