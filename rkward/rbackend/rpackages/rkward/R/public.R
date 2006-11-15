@@ -1,9 +1,9 @@
 # retrieve the rkward label (if any) of the given object
 "rk.get.label" <- function (x) {
 	if (is.call (x) || is.name (x)) {
-		as.vector (attr (eval (x), ".rk.meta")[row.names (attr (eval (x), ".rk.meta")) == "label",1])
+		as.vector (attr (eval (x), ".rk.meta")[names (attr (eval (x), ".rk.meta")) == "label"])
 	} else {
-		as.vector (attr (x, ".rk.meta")[row.names (attr (x, ".rk.meta")) == "label",1])
+		as.vector (attr (x, ".rk.meta")[names (attr (x, ".rk.meta")) == "label"])
 	}
 }
 
