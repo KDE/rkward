@@ -5,6 +5,7 @@
 	function calculate () {
 		$vars = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val ("x"))) . ")";
 		$trim = getRK_val ("trim"); //the fraction (0 to 0.5) of observations to be trimmed from each end of x before the mean is computed
+		$constMad = getRK_val ("constMad");
 		$low = getRK_val ("low");
 		$high = getRK_val ("high");
 
@@ -15,13 +16,13 @@ i=0; for (var in list (<? echo ($vars); ?>)) {
 	i = i+1
 	rk.temp.results[[i]] <- list ()
 	rk.temp.results[[i]]$object <- rk.get.description (var, is.substitute=TRUE)
-	if (rk.temp.options$domean) try (rk.temp.results[[i]]$mean <- mean (eval (var), <?echo ($trim) ;?>, na.rm=TRUE))
+	if (rk.temp.options$domean) try (rk.temp.results[[i]]$mean <- mean (eval (var), trim = <?echo ($trim) ;?>, na.rm=TRUE))
 	if (rk.temp.options$domedian) try (rk.temp.results[[i]]$median <- median (eval (var), na.rm=TRUE))
 	if (rk.temp.options$dorange) try (rk.temp.results[[i]]$range <- range (eval (var), na.rm=TRUE))
 	if (rk.temp.options$dosd) try (rk.temp.results[[i]]$sd <- sd (eval (var), na.rm=TRUE))
 	if (rk.temp.options$dosum) try (rk.temp.results[[i]]$sum <- sum (eval (var), na.rm=TRUE))
 	if (rk.temp.options$doprod) try (rk.temp.results[[i]]$prod <- prod (eval (var), na.rm=TRUE))
-	if (rk.temp.options$domad) try (rk.temp.results[[i]]$mad <- mad (eval (var), <?echo ($low) ;?>, <?echo ($high) ;?>, na.rm=TRUE))
+	if (rk.temp.options$domad) try (rk.temp.results[[i]]$mad <- mad (eval (var), constant = <?echo ($constMad) ;?>, <?echo ($low) ;?>, <?echo ($high) ;?>, na.rm=TRUE))
 	if (rk.temp.options$dolength) try (rk.temp.results[[i]]$length <- length (eval (var)))
 	if (rk.temp.options$donacount) try (rk.temp.results[[i]]$nacount <- length (which(is.na(eval (var)))))
 }<?
