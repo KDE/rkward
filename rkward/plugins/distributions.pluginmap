@@ -3,10 +3,10 @@
 <document base_prefix="distributions/" namespace="rkward">
 	<components>
 
-		<component type="standard" id="beta_quantiles" file="beta_quantiles.xml" label="Beta quantils" />
+		<component type="standard" id="beta_quantiles" file="beta_quantiles.xml" label="Beta quantiles" />
 		<component type="standard" id="beta_probabilities" file="beta_probabilities.xml" label="Beta probabilities" />
 	
-		<component type="standard" id="binomial_quantiles" file="binomial_quantiles.xml" label="Binomial quantils" />
+		<component type="standard" id="binomial_quantiles" file="binomial_quantiles.xml" label="Binomial quantiles" />
 		<component type="standard" id="binomial_tail_probabilities" file="binomial_tail_probabilities.xml" label="Binomial tail probabilities" />
 		<component type="standard" id="plot_binomial_distribution" file="plot_binomial_distribution.xml" label="Plot binomial distribution" />
 		
@@ -56,6 +56,9 @@
 		<component type="standard" id="t_probabilities" file="t_probabilities.xml" label="t probabilities" />
 		<component type="standard" id="plot_t_distribution" file="plot_t_distribution.xml" label="Plot t distribution" />
 
+		<component type="standard" id="tukey_probabilities" file="tukey_probabilities.xml" label="Studentized Range probabilities (Tukey)" />
+		<component type="standard" id="tukey_quantiles" file="tukey_quantiles.xml" label="Studentized Range quantiles (Tukey)" />
+
 		<component type="standard" id="uniform_quantiles" file="uniform_quantiles.xml" label="Uniform quantiles" />
 		<component type="standard" id="uniform_probabilities" file="uniform_probabilities.xml" label="Uniform probabilities" />
 
@@ -72,37 +75,37 @@
 
 			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="0">
 				<menu id="beta_distribution" label="Beta Distribution" index="0">
-					<entry component="beta_quantiles" label="Beta quantils" index="1"/>
+					<entry component="beta_quantiles" label="Beta quantiles" index="1"/>
 					<entry component="beta_probabilities" label="Beta probabilities" index="0"/>
 				</menu>
 				<menu id="cauchy_distribution" label="Cauchy Distribution" index="1">
-					<entry component="cauchy_quantiles" label="Cauchy quantils" index="1"/>
+					<entry component="cauchy_quantiles" label="Cauchy quantiles" index="1"/>
 					<entry component="cauchy_probabilities" label="Cauchy probabilities" index="0"/>
 				</menu>
 				<menu id="chi_squared_distribution" label="Chi-squared Distribution" index="2">
-					<entry component="chi_squared_quantiles" label="Chi-squared quantils" index="1"/>
+					<entry component="chi_squared_quantiles" label="Chi-squared quantiles" index="1"/>
 					<entry component="chi_squared_probabilities" label="Chi-squared probabilities" index="0"/>
 					<entry component="plot_chi_squared_distribution" label="Plot Chi-squared distribution" index="2"/>
 				</menu>
 				<menu id="exponential_distribution" label="Exponential Distribution" index="3">
-					<entry component="exponential_quantiles" label="Exponential quantils" index="1"/>
+					<entry component="exponential_quantiles" label="Exponential quantiles" index="1"/>
 					<entry component="exponential_probabilities" label="Exponential probabilities" index="0"/>
 				</menu>
 				<menu id="f_distribution" label="F Distribution" index="4">
-					<entry component="f_quantiles" label="F quantils" index="1"/>
+					<entry component="f_quantiles" label="F quantiles" index="1"/>
 					<entry component="f_probabilities" label="F probabilities" index="0"/>
 					<entry component="plot_f_distribution" label="Plot F distribution" index="2"/>
 				</menu>
 				<menu id="gamma_distribution" label="Gamma Distribution" index="5">
-					<entry component="gamma_quantiles" label="Gamma quantils" index="1"/>
+					<entry component="gamma_quantiles" label="Gamma quantiles" index="1"/>
 					<entry component="gamma_probabilities" label="Gamma probabilities" index="0"/>
 				</menu>
 				<menu id="gumbel_distribution" label="Gumbel Distribution" index="6">
-					<entry component="gumbel_quantiles" label="Gumbel quantils" index="1"/>
+					<entry component="gumbel_quantiles" label="Gumbel quantiles" index="1"/>
 					<entry component="gumbel_probabilities" label="Gumbel probabilities" index="0"/>
 				</menu>
 				<menu id="logistic_distribution" label="Logistic Distribution" index="7">
-					<entry component="logistic_quantiles" label="Logistic quantils" index="1"/>
+					<entry component="logistic_quantiles" label="Logistic quantiles" index="1"/>
 					<entry component="logistic_probabilities" label="Logistic probabilities" index="0"/>
 				</menu>
 				<menu id="log_normal_distribution" label="Log Normal Distribution" index="8">
@@ -113,21 +116,25 @@
 					<entry component="normal_quantiles" label="Normal quantiles" index="1"/>
 					<entry component="normal_probabilities" label="Normal probabilities" index="0"/>
 					<entry component="plot_normal_distribution" label="Plot Normal distribution" index="2"/>
+				</menu>	
+				<menu id="tukey_distribution" label="Studentized Range Distribution (Tukey)" index="11">
+					<entry component="tukey_probabilities" label="Studentized Range probabilities (Tukey)" index="0"/>
+					<entry component="tukey_quantiles" label="Studentized Range quantiles (Tukey)" index="1"/>
 				</menu>
 				<menu id="t_distribution" label="t Distribution" index="10">
 					<entry component="t_quantiles" label="t quantiles" index="1"/>
 					<entry component="t_probabilities" label="t probabilities" index="0"/>
 					<entry component="plot_t_distribution" label="Plot t distribution" index="2"/>
 				</menu>
-				<menu id="uniform_distribution" label="Uniform Distribution" index="11">
+				<menu id="uniform_distribution" label="Uniform Distribution" index="12">
 					<entry component="uniform_quantiles" label="Uniform quantiles" index="1"/>
 					<entry component="uniform_probabilities" label="Uniform probabilities" index="0"/>
 				</menu>
-				<menu id="weibull_distribution" label="Weibull Distribution" index="12">
+				<menu id="weibull_distribution" label="Weibull Distribution" index="13">
 					<entry component="weibull_quantiles" label="Weibull quantiles" index="1"/>
 					<entry component="weibull_probabilities" label="Weibull probabilities" index="0"/>
 				</menu>
-                                <menu id="wilcoxon_distribution" label="Wilcoxon Rank Sum Distribution" index="13">
+                                <menu id="wilcoxon_distribution" label="Wilcoxon Rank Sum Distribution" index="14">
                                         <entry component="wilcoxon_quantiles" label="Wilcoxon Rank Sum quantiles" index="1"/>
 					<entry component="wilcoxon_probabilities" label="Wilcoxon Rank Sum probabilities" index="0"/>
 				</menu>
@@ -135,7 +142,7 @@
 
 			<menu id="univariate_discrete_distributions" label="Univariate discrete distributions" index="1">
 				<menu id="binomial_distribution" label="Binomial Distribution" index="0">
-					<entry component="binomial_quantiles" label="Binomial quantils" index="1"/>
+					<entry component="binomial_quantiles" label="Binomial quantiles" index="1"/>
 					<entry component="binomial_tail_probabilities" label="Binomial tail probabilities" index="0"/>
 					<entry component="plot_binomial_distribution" label="Plot binomial distribution" index="2"/>
 				</menu>
