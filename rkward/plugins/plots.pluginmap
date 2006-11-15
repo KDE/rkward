@@ -3,6 +3,7 @@
 <document base_prefix="plots/" namespace="rkward">
 	<components>
 		<component type="standard" id="box_plot" file="box_plot.xml" label="Box Plot" />
+		<component type="standard" id="ecdf_plot" file="ecdf_plot.xml" label="ECDF Plot" />
 		<component type="standard" id="histogram" file="histogram.xml" label="Histogram" />
 		
 
@@ -11,6 +12,7 @@
 	<hierarchy>
 		<menu id="plots" label="Plots" index="5">
 			<entry component="box_plot" />
+			<entry component="ecdf_plot" />
 			<entry component="histogram" />
 		</menu>
 	</hierarchy>

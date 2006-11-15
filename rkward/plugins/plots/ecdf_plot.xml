@@ -1,0 +1,24 @@
+<!DOCTYPE rkplugin>
+<document>
+<code file="ecdf_plot.php" />
+<logic>
+	<connect client="plotoptions.xvar" governor="x.available"/>
+	<set id="plotoptions.allow_log" to="false"/>
+	<set id="plotoptions.allow_type" to="false"/>
+	<set id="plotoptions.allow_asp" to="true"/>
+</logic>
+<dialog label="Empirical Distribution Function" >
+	<tabbook>
+	<tab label="Variable(s)" >
+		<row>
+		<varselector id="vars" />
+		<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
+		</row>
+	</tab>
+	<tab label="Options" >
+		<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
+		<stretch/>
+	</tab>
+	</tabbook>
+</dialog>
+</document>
