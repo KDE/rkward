@@ -221,6 +221,7 @@ void RKCommandEditorWindow::tryCompletion () {
 	uint para=0; uint cursor_pos=0;
 	m_view->cursorPosition (&para, &cursor_pos);
 	QString current_line = getLine ();
+	if (current_line.findRev ("#", cursor_pos) >= 0) return;	// do not hint while in comments
 
 	QString current_symbol = RKCommonFunctions::getCurrentSymbol (current_line, cursor_pos, false);
 	if (current_symbol.length () >= 2) {
