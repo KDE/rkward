@@ -1,3 +1,9 @@
+- added basic plot facility for ECDF (Empirical Cumulative Distribution Function) (menu plots)
+- added  ptukey and qtukey (Studentized Range Distribution (Tukey)) (menu distributions)
+- spelling corrections in distributions menu
+- reorganized "Descriptive Statistics" plugin to use tabs for better usability
+- added constant for mad in descriptive statistics plugin
+- fix bug in rk.get.label
 - in script editor, do not provide symbol name completion while in comments
 - properly support active bindings in globalenv ()
 - if not started in a tty, spawn a konsole. R will go into non-interactive mode otherwise
