@@ -1885,11 +1885,11 @@ msgid ""
 "Result of 'print ("
 msgstr ""
 "\n"
-"Sortie de \'print ("
+"Sortie de 'print ("
 
 #: robjectviewer.cpp:56
 msgid ")':\n"
-msgstr ")\' :\n"
+msgstr ")' :\n"
 
 #: robjectviewer.cpp:61
 msgid "Object Viewer: "
