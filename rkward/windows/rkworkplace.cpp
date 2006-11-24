@@ -101,8 +101,7 @@ bool RKWorkplace::openScriptEditor (const KURL &url, bool use_r_highlighting, bo
 			if ((*it)->type == RKMDIWindow::CommandEditorWindow) {
 				KURL ourl = static_cast<RKCommandEditorWindow *> (*it)->url ();
 				if (url.equals (ourl, true)) {
-					(*it)->topLevelWidget ()->raise ();
-					if ((*it)->isAttached ()) view ()->setActivePage (*it);
+					(*it)->activate ();
 					return true;
 				}
 			}
@@ -199,12 +198,8 @@ RKEditor *RKWorkplace::editObject (RObject *object, bool initialize_to_empty) {
 	}
 
 	if (existing_editor) {		// not strictly an else. existing_editor may be reset inside the above if
-		if (existing_editor->isAttached ()) {
-			view ()->setActivePage (existing_editor);
-		} else {
-			existing_editor->topLevelWidget ()->show ();
-			existing_editor->topLevelWidget ()->raise ();
-		}
+		existing_editor->activate ();
+		ed = existing_editor;
 	}
 	
 	return ed;
@@ -269,12 +264,6 @@ RKMDIWindow *RKWorkplace::activeAttachedWindow () {
 	RK_TRACE (APP);
 
 	return (static_cast<RKMDIWindow *> (view ()->activePage ()));
-}
-
-void RKWorkplace::activateWindow (RKMDIWindow *window) {
-	RK_TRACE (APP);
-
-	window->raise ();		// Does this do the trick?
 }
 
 void RKWorkplace::saveWorkplace (RCommandChain *chain) {

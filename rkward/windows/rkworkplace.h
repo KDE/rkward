@@ -58,9 +58,6 @@ public:
 	void detachWindow (RKMDIWindow *window);
 /** @returns a pointer to the current window. Detached windows are not considered, only those attached to the workplace(view) */
 	RKMDIWindow *activeAttachedWindow ();
-/** Activate the given window. TODO: is this needed? Does it work? 
-@param window the window to activate */
-	void activateWindow (RKMDIWindow *window);
 
 /** Opens a new script editor
 @param url URL to load. Default option is to open an empty document

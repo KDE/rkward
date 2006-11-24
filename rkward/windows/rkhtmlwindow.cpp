@@ -245,7 +245,7 @@ void RKOutputWindow::refreshOutput (bool show, bool raise) {
 
 	if (current_output) {
 		if (raise) {
-			RKWorkplace::mainWorkplace ()->activateWindow (current_output);
+			current_output->activate ();
 		}
 		current_output->refresh ();
 	} else {

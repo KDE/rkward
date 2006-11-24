@@ -64,6 +64,8 @@ public:
 /** Is this window attached (or detached)?
 @returns true if attached, false if detached */
 	bool isAttached () { return (state == Attached); };
+/** Activate (raise) this window, regardless of whether it is attached or detached */
+	void activate ();
 signals:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */

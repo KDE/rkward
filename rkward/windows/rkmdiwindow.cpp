@@ -18,6 +18,7 @@
 #include "rkmdiwindow.h"
 
 #include "rkworkplace.h"
+#include "rkworkplaceview.h"
 
 #include "../debug.h"
 
@@ -49,6 +50,17 @@ void RKMDIWindow::setCaption (const QString &caption) {
 	RK_TRACE (APP);
 	QWidget::setCaption (caption);
 	emit (captionChanged (this));
+}
+
+void RKMDIWindow::activate () {
+	RK_TRACE (APP);
+
+	if (isAttached ()) {
+		RKWorkplace::mainWorkplace ()->view ()->setActivePage (this);
+	} else {
+		topLevelWidget ()->show ();
+		topLevelWidget ()->raise ();
+	}
 }
 
 #include "rkmdiwindow.moc"
