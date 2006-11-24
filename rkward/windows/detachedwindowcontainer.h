@@ -22,6 +22,7 @@
 #include <kparts/mainwindow.h>
 
 class RKMDIWindow;
+class QCloseEvent;
 
 /** This class is used to host a (KPart enabled) window detached from the main window. @see RKWorkplace::detachWindow ().
 
@@ -43,6 +44,9 @@ public slots:
 	void slotReattach ();
 /** update own caption, when the window's caption has changed */
 	void updateCaption (RKMDIWindow *);
+protected:
+/** when receiving a close event, dispatch to the embedded window */
+	void closeEvent (QCloseEvent *e);
 };
 
 #endif

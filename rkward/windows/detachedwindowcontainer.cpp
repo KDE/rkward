@@ -55,7 +55,8 @@ DetachedWindowContainer::~DetachedWindowContainer () {
 void DetachedWindowContainer::viewDestroyed (QObject *) {
 	RK_TRACE (APP);
 
-	delete this;
+	hide ();
+	deleteLater ();
 }
 
 void DetachedWindowContainer::updateCaption (RKMDIWindow *widget) {
@@ -69,10 +70,27 @@ void DetachedWindowContainer::slotReattach () {
 	RK_TRACE (APP);
 
 	RKMDIWindow *window = static_cast<RKMDIWindow *> (centralWidget ());
+// we will not handle any more signals from the window
+	disconnect (window, SIGNAL (destroyed (QObject *)), this, SLOT (viewDestroyed (QObject *)));
+	disconnect (window, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (updateCaption (RKMDIWindow *)));
+
 	window->reparent (0, QPoint (0, 0));
 	RKWorkplace::mainWorkplace ()->attachWindow (window);
 
-	delete this;
+	hide ();
+	deleteLater ();
 }
+
+void DetachedWindowContainer::closeEvent (QCloseEvent *e) {
+	RK_TRACE (APP);
+
+	RKMDIWindow *window = static_cast<RKMDIWindow *> (centralWidget ());
+	if (window->close ()) {
+		e->accept ();
+	} else {
+		e->ignore ();
+	}
+}
+
 
 #include "detachedwindowcontainer.moc"
