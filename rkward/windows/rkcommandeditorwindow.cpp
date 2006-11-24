@@ -174,6 +174,13 @@ bool RKCommandEditorWindow::openURL (const KURL &url, bool use_r_highlighting, b
 	return false;
 }
 
+KURL RKCommandEditorWindow::url () {
+	RK_TRACE (COMMANDEDITOR);
+
+	return (m_doc->url ());
+}
+
+
 bool RKCommandEditorWindow::isModified() {
 	RK_TRACE (COMMANDEDITOR);
 	return m_doc->isModified();

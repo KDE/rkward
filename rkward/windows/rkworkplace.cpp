@@ -95,6 +95,20 @@ void RKWorkplace::addWindow (RKMDIWindow *window) {
 bool RKWorkplace::openScriptEditor (const KURL &url, bool use_r_highlighting, bool read_only, const QString &force_caption) {
 	RK_TRACE (APP);
 
+// is this url already opened?
+	if (!url.isEmpty ()) {
+		for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
+			if ((*it)->type == RKMDIWindow::CommandEditorWindow) {
+				KURL ourl = static_cast<RKCommandEditorWindow *> (*it)->url ();
+				if (url.equals (ourl, true)) {
+					(*it)->topLevelWidget ()->raise ();
+					if ((*it)->isAttached ()) view ()->setActivePage (*it);
+					return true;
+				}
+			}
+		}
+	}
+
 	RKCommandEditorWindow *editor = new RKCommandEditorWindow (view (), use_r_highlighting);
 
 	if (!url.isEmpty ()) {
@@ -188,8 +202,8 @@ RKEditor *RKWorkplace::editObject (RObject *object, bool initialize_to_empty) {
 		if (existing_editor->isAttached ()) {
 			view ()->setActivePage (existing_editor);
 		} else {
-			object->getContainer ()->objectOpened ()->show ();
-			object->getContainer ()->objectOpened ()->raise ();
+			existing_editor->topLevelWidget ()->show ();
+			existing_editor->topLevelWidget ()->raise ();
 		}
 	}
 	

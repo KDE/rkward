@@ -1,3 +1,4 @@
+- do not open the same script url twice (instead the corresponding window is raised on the second attempt)
 - fixed: when closing a detached script editor window, you would not be asked to save changes (if any)
 - fixed: occasional crash when re-attaching a script editor window
 - new translation: Greek
