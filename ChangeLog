@@ -1,4 +1,7 @@
-- updated translations: German
+- fixed: when closing a detached script editor window, you would not be asked to save changes (if any)
+- fixed: occasional crash when re-attaching a script editor window
+- new translation: Greek
+- updated translations: German, French
 - added basic plot facility for ECDF (Empirical Cumulative Distribution Function) (menu plots)
 - added ptukey and qtukey (Studentized Range Distribution (Tukey)) (menu distributions)
 - spelling corrections in distributions menu
