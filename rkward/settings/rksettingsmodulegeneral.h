@@ -22,6 +22,7 @@
 
 class GetFileNameWidget;
 class QComboBox;
+class QButtonGroup;
 
 /**
 @author Thomas Friedrichsmeier
@@ -29,10 +30,16 @@ class QComboBox;
 class RKSettingsModuleGeneral : public RKSettingsModule {
 	Q_OBJECT
 public:
-    RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent);
+	RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent);
 
-    ~RKSettingsModuleGeneral ();
-	
+	~RKSettingsModuleGeneral ();
+
+	enum WorkplaceSaveMode {	// don't change the int values of this enum, or you'll ruin users saved settings. Append new values at the end
+		SaveWorkplaceWithWorkspace=0,
+		SaveWorkplaceWithSession=1,
+		DontSaveWorkplace=2
+	};
+
 	bool hasChanges ();
 	void applyChanges ();
 	void save (KConfig *config);
@@ -46,17 +53,23 @@ public:
 	static QString &filesPath () { return files_path; };
 	static StartupDialog::Result startupAction () { return startup_action; };
 	static void setStartupAction (StartupDialog::Result action) { startup_action = action; };
+	static WorkplaceSaveMode workplaceSaveMode () { return workplace_save_mode; };
+/** retrieve the saved workplace description. Meaningful only is workplaceSaveMode () == SaveWorkplaceWithSession */
+	static QString getSavedWorkplace ();
+	static void setSavedWorkplace (const QString &description);
 public slots:
 	void pathChanged ();
 	void boxChanged (int);
 private:
 	GetFileNameWidget *files_choser;
 	QComboBox *startup_action_choser;
+	QButtonGroup *workplace_save_chooser;
 
 	static StartupDialog::Result startup_action;
 	static QString files_path;
 /** since changing the files_path can not easily be done while in an active session, the setting should only take effect on the next start. This string stores a changed setting, while keeping the old one intact as long as RKWard is running */
 	static QString new_files_path;
+	static WorkplaceSaveMode workplace_save_mode;
 };
 
 #endif

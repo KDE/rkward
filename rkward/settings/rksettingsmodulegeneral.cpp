@@ -25,6 +25,8 @@
 #include <qlabel.h>
 #include <qdir.h>
 #include <qcombobox.h>
+#include <qbuttongroup.h>
+#include <qradiobutton.h>
 
 #include "../misc/getfilenamewidget.h"
 #include "../rkglobals.h"
@@ -34,6 +36,7 @@
 QString RKSettingsModuleGeneral::files_path;
 QString RKSettingsModuleGeneral::new_files_path;
 StartupDialog::Result RKSettingsModuleGeneral::startup_action;
+RKSettingsModuleGeneral::WorkplaceSaveMode RKSettingsModuleGeneral::workplace_save_mode;
 
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -56,6 +59,25 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	startup_action_choser->setCurrentItem (startup_action);
 	connect (startup_action_choser, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
 	main_vbox->addWidget (startup_action_choser);
+
+	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+
+	label = new QLabel (i18n ("The workplace layout (i.e. which script-, data-, help-windows are open) may be saved (and loaded) per R workspace, or independent of the R workspace. Which do you prefer?"), this);
+	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+	main_vbox->addWidget (label);
+
+	workplace_save_chooser = new QButtonGroup (this);
+	workplace_save_chooser->setColumnLayout (0, Qt::Vertical);
+	workplace_save_chooser->layout()->setSpacing (6);
+	workplace_save_chooser->layout()->setMargin (11);
+	QVBoxLayout *group_layout = new QVBoxLayout(workplace_save_chooser->layout());
+	group_layout->addWidget (new QRadioButton (i18n ("Save/restore with R workspace, when saving/loading R workspace"), workplace_save_chooser));
+	group_layout->addWidget (new QRadioButton (i18n ("Save/restore independent of R workspace (save at end of RKWard session, restore at next start)"), workplace_save_chooser));
+	group_layout->addWidget (new QRadioButton (i18n ("Do not save/restore workplace layout"), workplace_save_chooser));
+	workplace_save_chooser->setButton (static_cast<int> (workplace_save_mode));
+	connect (workplace_save_chooser, SIGNAL (clicked (int)), this, SLOT (boxChanged (int)));
+	main_vbox->addWidget (workplace_save_chooser);
+	#warning option unfinished!
 
 	main_vbox->addStretch ();
 }
@@ -103,6 +125,9 @@ void RKSettingsModuleGeneral::saveSettings (KConfig *config) {
 
 	config->setGroup ("General");
 	config->writeEntry ("startup action", (int) startup_action);
+
+	config->setGroup ("Workplace");
+	config->writeEntry ("save mode", (int) workplace_save_mode);
 }
 
 void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
@@ -113,6 +138,9 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 
 	config->setGroup ("General");
 	startup_action = (StartupDialog::Result) config->readNumEntry ("startup action", StartupDialog::NoSavedSetting);
+
+	config->setGroup ("Workplace");
+	workplace_save_mode = (WorkplaceSaveMode) config->readNumEntry ("save mode", SaveWorkplaceWithWorkspace);
 }
 
 #include "rksettingsmodulegeneral.moc"
