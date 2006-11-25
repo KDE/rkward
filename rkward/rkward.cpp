@@ -78,6 +78,7 @@
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
 #include "dialogs/rkreadlinedialog.h"	// TODO: see below: needed purely for linking!
 #include "windows/detachedwindowcontainer.h"	// TODO: see below: needed purely for linking!
+#include "windows/qxembedcopy.h"	// TODO: see below: needed purely for linking!
 #include "dataeditor/rkeditordataframepart.h"	// TODO: see below: needed purely for linking!
 
 // This nevers gets called. It's needed to trick ld into linking correctly. Nothing else.
@@ -87,6 +88,7 @@ void bogusCalls () {
 	new RKEditorDataFramePart (0);
 	DetachedWindowContainer (0);
 	new RKWorkplaceView (0);
+	new QXEmbedCopy (0);
 }
 
 //static

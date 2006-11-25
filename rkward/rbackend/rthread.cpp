@@ -323,6 +323,10 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 			return;
 		}
 	}
+	if (call[0] == "catchWindow") {
+		qDebug ("here");
+		x11events_disabled = true;
+	}
 
 	RCommand *prev_command = current_command;
 	REvalRequest *request = new REvalRequest;
@@ -363,6 +367,7 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 		msleep (10);
 	}
 
+	x11events_disabled = false;
 	delete reply_stack;
 }
 

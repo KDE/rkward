@@ -18,7 +18,7 @@
 #ifndef RKWINDOWCATCHER_H
 #define RKWINDOWCATCHER_H
 
-#define DISABLE_RKWINDOWCATCHER
+//#define DISABLE_RKWINDOWCATCHER
 #ifndef DISABLE_RKWINDOWCATCHER
 
 #include <qwidget.h>
@@ -69,6 +69,8 @@ public:
 /*	void start (int prev_cur_device);
 	void stop (int new_cur_device); */
 	void catchWindow (const QString &title_start, int corresponding_device_number);
+public slots:
+	void windowLost ();
 private:
 //	int last_cur_device;
 };

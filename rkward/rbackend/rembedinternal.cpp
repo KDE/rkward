@@ -224,6 +224,7 @@ int REditFile (char *buf) {
 // ############## R Standard callback overrides END ####################
 
 char *REmbedInternal::na_char_internal = new char;
+bool REmbedInternal::x11events_disabled = false;
 
 REmbedInternal::REmbedInternal () {
 }
@@ -288,6 +289,8 @@ static int timeout_counter = 0;
 void REmbedInternal::processX11Events () {
 /* what we do here is walk the list of objects, that have told R, they're listening for events.
 We figure out which ones look for X11-events and tell those to do their stuff (regardless of whether events actually occurred) */
+	if (x11events_disabled) return;
+
 	extern InputHandler *R_InputHandlers;
 	InputHandler *handler = R_InputHandlers;
 	while (handler) {
@@ -297,7 +300,7 @@ We figure out which ones look for X11-events and tell those to do their stuff (r
 		handler = handler->next;
 	}
 
-/* I don't really understand what I'm doing here, but apparently this is necessary for Tcl-Tk windows to function properly. */
+	/* I don't really understand what I'm doing here, but apparently this is necessary for Tcl-Tk windows to function properly. */
 	R_PolledEvents ();
 	
 /* Maybe we also need to also call R_timeout_handler once in a while? Obviously this is extremely crude code! 
