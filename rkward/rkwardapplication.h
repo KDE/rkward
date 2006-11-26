@@ -20,6 +20,8 @@
 
 #include <kapplication.h>
 
+#include <qmap.h>
+
 /** The purpose of subclassing KApplication as RKWardApplication, is to obtain raw access to X11 events. This is needed to detect the creation of new toplevel windows (R X11 windows). */
 
 class RKWardApplication : public KApplication {
@@ -35,10 +37,15 @@ public:
 
 	void startWindowCreationDetection ();
 	WId endWindowCreationDetection ();
+
+	void registerNameWatcher (WId watched, QWidget *watcher);
+	void unregisterNameWatcher (WId watched);
 private:
 	static RKWardApplication *rkapp;
 	bool detect_x11_creations;
 	WId created_window;
+
+	QMap<WId, QWidget*> name_watchers_list;
 };
 
 #endif

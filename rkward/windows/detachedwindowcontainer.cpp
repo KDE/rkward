@@ -33,7 +33,7 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 
 // create own GUI
 	setXMLFile ("detachedwindowcontainer.rc");
-	KStdAction::close (widget_to_capture, SLOT (close ()), actionCollection (), "dwindow_close");
+	KStdAction::close (this, SLOT (close ()), actionCollection (), "dwindow_close");
 	new KAction (i18n ("Attach to main window"), 0, this, SLOT (slotReattach ()), actionCollection (), "dwindow_attach");
 	createShellGUI ();
 

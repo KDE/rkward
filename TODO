@@ -27,6 +27,7 @@ UI-stuff
 	- Access to dev.copy (), dev.print (), and a function to copy gaphics to rkward output
 		- probably in Windows-menu for now
 		- also allow scroll-bar mode
+		- When attaching an X11 window, it should always go into fixed scroll-bar mode
 	- Output window should gain some sort of auto-update functionality:
 		- After user commands, should check, whether the output file was modified. If so, reload
 	- Option to save workplace per session instead of per workspace

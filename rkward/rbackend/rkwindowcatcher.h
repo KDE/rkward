@@ -74,10 +74,40 @@ private:
 	int last_cur_device;
 };
 
-/*
+#include "../windows/rkmdiwindow.h"
+
+class RKCatchedX11WindowPart;
+
+/** An R X11 device window managed by rkward */
 class RKCatchedX11Window : public RKMDIWindow {
+	Q_OBJECT
+public:
+	RKCatchedX11Window (WId window_to_embed, int device_number);
+
+	~RKCatchedX11Window ();
+
+	KParts::Part *getPart ();
+	QString getRDescription () { return "unimplemtend"; };
+	bool isModified () { return false; };
+private:
+	int device_number;
+	WId embedded;
+	RKCatchedX11WindowPart *part;
 };
-*/
+
+class RKCatchedX11WindowPart : public KParts::Part {
+	Q_OBJECT
+public:
+/** constructor.
+@param console The console for this part */
+	RKCatchedX11WindowPart (RKCatchedX11Window *window);
+/** destructor */
+	~RKCatchedX11WindowPart ();
+public slots:
+// TODO
+private:
+	RKCatchedX11Window *window;
+};
 
 #endif //DISABLE_RKWINDOWCATCHER
 #endif

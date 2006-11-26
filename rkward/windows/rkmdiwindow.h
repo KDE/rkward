@@ -33,6 +33,7 @@ public:
 		CommandEditorWindow=2,
 		OutputWindow=4,
 		HelpWindow=8,
+		X11Window=16,
 		AnyType=DataEditorWindow | CommandEditorWindow | OutputWindow | HelpWindow
 	};
 
@@ -75,7 +76,7 @@ friend class RKWorkplace;
 /** type of this window */
 	Type type;
 private:
-/** state of this window (attached / detached). This is set from the RKWorkplace */
+/** state of this window (attached / detached). This is usually set from the RKWorkplace */
 	State state;
 };
 

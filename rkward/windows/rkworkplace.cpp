@@ -34,6 +34,7 @@
 #include "../dataeditor/rkeditordataframepart.h"
 #include "../settings/rksettingsmoduleoutput.h"
 #include "../rbackend/rinterface.h"
+#include "../rbackend/rkwindowcatcher.h"
 #include "../rbackend/rcommand.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
@@ -70,26 +71,29 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ());
 }
 
-void RKWorkplace::detachWindow (RKMDIWindow *window) {
+void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
 	RK_TRACE (APP);
-	RK_ASSERT (windows.find (window) != windows.end ());		// Can't detach a window that is not attached
+	RK_ASSERT (windows.find (window) != windows.end ());		// Can't detach a window that is not registered
 
 	window->state = RKMDIWindow::Detached;
 
 	RK_ASSERT (window->getPart ());
-	RKWardMainWindow::getMain ()->partManager ()->removePart (window->getPart ());
-	view ()->removePage (window);
+	if (was_attached) {
+		RKWardMainWindow::getMain ()->partManager ()->removePart (window->getPart ());
+		view ()->removePage (window);
+	}
 
 	DetachedWindowContainer *detached = new DetachedWindowContainer (window);
 	detached->show ();
 }
 
-void RKWorkplace::addWindow (RKMDIWindow *window) {
+void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	RK_TRACE (APP);
 
 	windows.append (window);
 	connect (window, SIGNAL (destroyed (QObject *)), this, SLOT (windowDestroyed (QObject *)));
-	attachWindow (window);
+	if (attached) attachWindow (window);
+	else detachWindow (window, false);
 }
 
 bool RKWorkplace::openScriptEditor (const KURL &url, bool use_r_highlighting, bool read_only, const QString &force_caption) {
@@ -151,6 +155,14 @@ void RKWorkplace::newOutput () {
 			addWindow (RKOutputWindow::getCurrentOutput ());
 		}
 	}
+}
+
+void RKWorkplace::newX11Window (WId window_to_embed, int device_number) {
+	RK_TRACE (APP);
+
+	RKCatchedX11Window *window = new RKCatchedX11Window (window_to_embed, device_number);
+	window->state = RKMDIWindow::Detached;
+	addWindow (window, false);
 }
 
 bool RKWorkplace::canEditObject (RObject *object) {

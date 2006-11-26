@@ -1,0 +1,9 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="rkward" version="0.4.2">
+	<MenuBar>
+		<Menu name="plot" noMerge="1"><text>&amp;Plot</text>
+			<Action name="close"/>
+			<Merge/>
+		</Menu>
+	</MenuBar>
+</kpartgui>

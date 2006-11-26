@@ -55,7 +55,7 @@ public:
 /** Attach an already created window. */
 	void attachWindow (RKMDIWindow *window);
 /** Dettach a window (it is removed from the view (), and placed in a top-level DetachedWindowContainer instead. */
-	void detachWindow (RKMDIWindow *window);
+	void detachWindow (RKMDIWindow *window, bool was_attached=true);
 /** @returns a pointer to the current window. Detached windows are not considered, only those attached to the workplace(view) */
 	RKMDIWindow *activeAttachedWindow ();
 
@@ -75,6 +75,8 @@ public:
 /** signal there was new output, show/raise/refresh the output window as appropriate.
 TODO: this should be obsoleted somehow */
 	void newOutput ();
+
+	void newX11Window (WId window_to_embed, int device_number);
 
 /** @returns true if there is a known editor for this type of object, false otherwise */
 	bool canEditObject (RObject *object);
@@ -125,7 +127,7 @@ private:
 /** the view. @See view () */ 
 	RKWorkplaceView *wview;
 /** Internal function to add an existing window to the list of mdi windows */
-	void addWindow (RKMDIWindow *window);
+	void addWindow (RKMDIWindow *window, bool attached=true);
 /** static pointer to the workplace. @See mainWorkplace () */
 	static RKWorkplace *main_workplace;
 };

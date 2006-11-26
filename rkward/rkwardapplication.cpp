@@ -27,6 +27,7 @@
 
 //static
 RKWardApplication *RKWardApplication::rkapp = 0;
+Atom wm_name_property;
 
 RKWardApplication::RKWardApplication () : KApplication () {
 	RK_TRACE (APP);
@@ -34,6 +35,8 @@ RKWardApplication::RKWardApplication () : KApplication () {
 
 	rkapp = this;
 	detect_x11_creations = false;
+
+	wm_name_property = XInternAtom (qt_xdisplay (), "WM_NAME", true);
 }
 
 RKWardApplication::~RKWardApplication () {
@@ -61,8 +64,24 @@ WId RKWardApplication::endWindowCreationDetection () {
 	RK_ASSERT (detect_x11_creations);
 
 	detect_x11_creations = false;
-	XSelectInput (qt_xdisplay (), qt_xrootwin (), 0);
+	XSelectInput (qt_xdisplay (), qt_xrootwin (), NoEventMask);
 	return created_window;
+}
+
+void RKWardApplication::registerNameWatcher (WId watched, QWidget *watcher) {
+	RK_TRACE (APP);
+	RK_ASSERT (!name_watchers_list.contains (watched));
+
+	XSelectInput (qt_xdisplay (), watched, PropertyChangeMask);
+	name_watchers_list.insert (watched, watcher);
+}
+
+void RKWardApplication::unregisterNameWatcher (WId watched) {
+	RK_TRACE (APP);
+	RK_ASSERT (name_watchers_list.contains (watched));
+
+	XSelectInput (qt_xdisplay (), watched, NoEventMask);
+	name_watchers_list.remove (watched);
 }
 
 bool RKWardApplication::x11EventFilter (XEvent *e) {
@@ -77,6 +96,16 @@ bool RKWardApplication::x11EventFilter (XEvent *e) {
 				}
 			} else {
 				RK_ASSERT (false);
+			}
+		}
+	}
+
+	if (e->type == PropertyNotify) {
+		if (e->xproperty.atom == wm_name_property) {
+			if (name_watchers_list.contains (e->xproperty.window)) {
+				KWin::WindowInfo wininfo = KWin::windowInfo (e->xproperty.window);
+				name_watchers_list[e->xproperty.window]->setCaption (wininfo.name ());
+				return true;
 			}
 		}
 	}
