@@ -32,7 +32,7 @@
 #include "../windows/rcontrolwindow.h"
 #include "../windows/rkworkplace.h"
 
-#include "rkwindowcatcher.h"
+#include "../windows/rkwindowcatcher.h"
 #ifndef DISABLE_RKWINDOWCATCHER
 // putting this here instead of the class-header so I'm able to mess with it often without long recompiles. Fix when it works!
 RKWindowCatcher *window_catcher;

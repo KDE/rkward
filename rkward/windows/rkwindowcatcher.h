@@ -2,7 +2,7 @@
                           rwindowcatcher.h  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -74,7 +74,7 @@ private:
 	int last_cur_device;
 };
 
-#include "../windows/rkmdiwindow.h"
+#include "rkmdiwindow.h"
 
 class RKCatchedX11WindowPart;
 

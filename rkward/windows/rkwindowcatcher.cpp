@@ -2,7 +2,7 @@
                           rwindowcatcher.cpp  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -27,8 +27,8 @@
 #include <kwin.h>
 
 #include "../rkwardapplication.h"
-#include "../windows/rkworkplace.h"
-#include "../windows/qxembedcopy.h"
+#include "rkworkplace.h"
+#include "qxembedcopy.h"
 #include "../debug.h"
 
 RKWindowCatcher::RKWindowCatcher (QWidget *parent) : QWidget (parent) {

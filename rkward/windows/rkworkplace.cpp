@@ -34,7 +34,7 @@
 #include "../dataeditor/rkeditordataframepart.h"
 #include "../settings/rksettingsmoduleoutput.h"
 #include "../rbackend/rinterface.h"
-#include "../rbackend/rkwindowcatcher.h"
+#include "../windows/rkwindowcatcher.h"
 #include "../rbackend/rcommand.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
