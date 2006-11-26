@@ -105,16 +105,16 @@ void RKWindowCatcher::catchWindow (const QString &title_start, int corresponding
 	}
 }
 
-/*
 void RKWindowCatcher::start (int prev_cur_device) {
 	RK_DO (qDebug ("Window Catcher activated"), RBACKEND, DL_DEBUG);
 
 	last_cur_device = prev_cur_device;
+	new_windows.clear ();
 }
 
 void RKWindowCatcher::stop (int new_cur_device) {
 	RK_DO (qDebug ("Window Catcher deactivated"), RBACKEND, DL_DEBUG);
-
+/*
 	if (new_cur_device != last_cur_device) {
 		QString dummy = "R Graphics: Device ";
 		//dummy.append (QString::number (new_cur_device));
@@ -128,8 +128,8 @@ void RKWindowCatcher::stop (int new_cur_device) {
 			capture->show ();
 		}
 	}
-	last_cur_device = new_cur_device;
-} */
+	last_cur_device = new_cur_device; */
+}
 
 #include "rkwindowcatcher.moc"
 

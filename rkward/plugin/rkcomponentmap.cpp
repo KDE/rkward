@@ -225,7 +225,7 @@ bool RKComponentHandle::isPlugin () {
 
 #include "rkstandardcomponent.h"
 
-RKStandardComponentHandle::RKStandardComponentHandle (const QString &filename, RKComponentType type) : QObject (RKwardApp::getApp ()), RKComponentHandle (filename, type) {
+RKStandardComponentHandle::RKStandardComponentHandle (const QString &filename, RKComponentType type) : QObject (RKWardMainWindow::getMain ()), RKComponentHandle (filename, type) {
 	RK_TRACE (PLUGIN);
 }
 

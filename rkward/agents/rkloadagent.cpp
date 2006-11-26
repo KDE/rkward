@@ -35,18 +35,18 @@
 
 RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
 	RK_TRACE (APP);
-	RKwardApp::getApp ()->slotSetStatusBarText (i18n ("Loading Workspace ..."));
+	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Loading Workspace ..."));
 
 #if !KDE_IS_VERSION (3, 2, 0)
 	KIO::NetAccess::download (url, tmpfile);
 #else
-	KIO::NetAccess::download (url, tmpfile, RKwardApp::getApp ());
+	KIO::NetAccess::download (url, tmpfile, RKWardMainWindow::getMain ());
 #endif
 
 	RCommand *command;
 	
 	if (!merge) {
-		RKwardApp::getApp ()->slotCloseAllEditors ();
+		RKWardMainWindow::getMain ()->slotCloseAllEditors ();
 		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App | RCommand::ObjectListUpdate);
 		RKGlobals::rInterface ()->issueCommand (command);
 	}
@@ -73,8 +73,8 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 			RKWorkplace::mainWorkplace ()->restoreWorkplace ();
 			RKWorkplace::mainWorkplace ()->clearWorkplaceDescription ();
 		}
-		RKwardApp::getApp ()->slotSetStatusReady ();
-		RKwardApp::getApp ()->setCaption (QString::null);	// trigger update of caption
+		RKWardMainWindow::getMain ()->slotSetStatusReady ();
+		RKWardMainWindow::getMain ()->setCaption (QString::null);	// trigger update of caption
 
 		delete this;
 		return;

@@ -25,7 +25,7 @@ email                : tfry@users.sourceforge.net
 
 #include <dcopobject.h>
 
-/** This base provides the DCOP-Interface for RKWardApp */
+/** This base provides the DCOP-Interface for RKWardMainWindow */
 class RKWardDCOPInterface : virtual public DCOPObject {
 	K_DCOP
 	k_dcop:
@@ -62,14 +62,14 @@ The main class of rkward. This is where all strings are tied togther, controlls 
 */
 
 
-class RKwardApp : public KMdiMainFrm, virtual public KParts::PartBase, virtual public RKWardDCOPInterface {
+class RKWardMainWindow : public KMdiMainFrm, virtual public KParts::PartBase, virtual public RKWardDCOPInterface {
 	Q_OBJECT
 public:
 /** construtor
 @param load_url The workspace file to load on startup. If 0, show a dialog asking what to do. */
-	RKwardApp (KURL *load_url=0);
+	RKWardMainWindow (KURL *load_url=0);
 /** destructor */
-	~RKwardApp ();
+	~RKWardMainWindow ();
 
 /** initialize the backend */
 	void startR ();
@@ -87,7 +87,7 @@ public:
 	RKMenuList* getMenuList () { return menu_list; };
 	KParts::PartManager *partManager () { return part_manager; };
 
-	static RKwardApp *getApp () { return rkward_app; };
+	static RKWardMainWindow *getMain () { return rkward_mainwin; };
 protected:
 	void openWorkspace (const KURL &url);
 	/** save Options/Settings. Includes general Options like all bar positions and status as well as the geometry and the recent file list */
@@ -236,7 +236,7 @@ private:
 	
 	RKMenuList *menu_list;
 
-	static RKwardApp *rkward_app;
+	static RKWardMainWindow *rkward_mainwin;
 
 	friend class RInterface;
 /** set the R status message ("R engine idel/busy") to idle or busy */

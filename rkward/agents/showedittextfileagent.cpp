@@ -33,7 +33,7 @@
 
 #include "../debug.h"
 
-ShowEditTextFileAgent::ShowEditTextFileAgent (RCallbackArgs *args, const QString &text, const QString &caption) : QObject (RKwardApp::getApp ()) {
+ShowEditTextFileAgent::ShowEditTextFileAgent (RCallbackArgs *args, const QString &text, const QString &caption) : QObject (RKWardMainWindow::getMain ()) {
 	RK_TRACE (APP);
 
 	ShowEditTextFileAgent::args = args;

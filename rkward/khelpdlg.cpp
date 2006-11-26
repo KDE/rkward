@@ -187,7 +187,7 @@ void KHelpDlg::rCommandDone (RCommand *command) {
 		RK_ASSERT (command->getDataLength ());
 		url.setPath(command->getStringVector ()[0]);
 		if (QFile::exists (url.path ())) {
-			RKwardApp::getApp ()->openHTML (url);
+			RKWardMainWindow::getMain ()->openHTML (url);
 			return;
 		} else {
 			KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.").arg (command->command ().section ("\"", 1, 1)), i18n ("No help found"));

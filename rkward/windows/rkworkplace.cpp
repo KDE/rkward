@@ -67,7 +67,7 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	view ()->addPage (window);
 
 	RK_ASSERT (window->getPart ());
-	RKwardApp::getApp ()->partManager ()->addPart (window->getPart ());
+	RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ());
 }
 
 void RKWorkplace::detachWindow (RKMDIWindow *window) {
@@ -77,7 +77,7 @@ void RKWorkplace::detachWindow (RKMDIWindow *window) {
 	window->state = RKMDIWindow::Detached;
 
 	RK_ASSERT (window->getPart ());
-	RKwardApp::getApp ()->partManager ()->removePart (window->getPart ());
+	RKWardMainWindow::getMain ()->partManager ()->removePart (window->getPart ());
 	view ()->removePage (window);
 
 	DetachedWindowContainer *detached = new DetachedWindowContainer (window);

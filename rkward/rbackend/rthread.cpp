@@ -324,7 +324,7 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 		}
 	}
 	if (call[0] == "catchWindow") {
-		qDebug ("here");
+		// maybe this is not needed after all, put requires some testing. For now, we disable all R X11 updates while capturing the window.
 		x11events_disabled = true;
 	}
 

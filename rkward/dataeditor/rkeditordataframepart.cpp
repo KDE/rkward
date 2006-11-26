@@ -64,18 +64,18 @@ void RKEditorDataFramePart::initializeActions () {
 void RKEditorDataFramePart::slotEditCut () {
 	RK_TRACE (EDITOR);
 	
-	RKwardApp::getApp ()->slotSetStatusBarText (i18n ("Cutting selection..."));
+	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Cutting selection..."));
 	slotEditCopy ();
 	editor->clearSelected ();
-	RKwardApp::getApp ()->slotSetStatusReady ();
+	RKWardMainWindow::getMain ()->slotSetStatusReady ();
 }
 
 void RKEditorDataFramePart::slotEditCopy() {
 	RK_TRACE (EDITOR);
 	
-	RKwardApp::getApp ()->slotSetStatusBarText (i18n ("Copying selection to clipboard..."));
+	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Copying selection to clipboard..."));
 	QApplication::clipboard()->setData(editor->makeDrag ());
-	RKwardApp::getApp ()->slotSetStatusReady ();
+	RKWardMainWindow::getMain ()->slotSetStatusReady ();
 }
 
 
@@ -103,7 +103,7 @@ void RKEditorDataFramePart::slotEditPasteToSelection() {
 void RKEditorDataFramePart::doPaste () {
 	RK_TRACE (EDITOR);
 
-	RKwardApp::getApp ()->slotSetStatusBarText(i18n("Inserting clipboard contents..."));
+	RKWardMainWindow::getMain ()->slotSetStatusBarText(i18n("Inserting clipboard contents..."));
 
 	// actually, we don't care, whether tsv or plain gets pasted - it's both
 	// treated the same. We should however encourage external senders to
@@ -118,7 +118,7 @@ void RKEditorDataFramePart::doPaste () {
 		editor->paste (data);
 	}
 
-	RKwardApp::getApp ()->slotSetStatusReady ();
+	RKWardMainWindow::getMain ()->slotSetStatusReady ();
 }
 
 #include "rkeditordataframepart.moc"

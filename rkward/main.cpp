@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
 	
 	KApplication app;
 	if (app.isRestored ()) {
-		RESTORE(RKwardApp);	// well, whatever this is supposed to do -> TODO
+		RESTORE(RKWardMainWindow);	// well, whatever this is supposed to do -> TODO
 	} else {
 		KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 		RK_Debug_Level = 5 - QString (args->getOption ("debug-level")).toInt ();
@@ -118,7 +118,7 @@ int main(int argc, char *argv[]) {
 		}
 		args->clear();
 		
-		new RKwardApp(open_url);
+		new RKWardMainWindow(open_url);
 	}
 
 	// do it!

@@ -93,7 +93,7 @@ void RKSaveAgent::rCommandDone (RCommand *command) {
 		}
 	} else {
 		RObjectList::getObjectList ()->setWorkspaceURL (save_url);
-		RKwardApp::getApp ()->setCaption (QString::null);	// trigger update of caption
+		RKWardMainWindow::getMain ()->setCaption (QString::null);	// trigger update of caption
 		done ();
 		return;
 	}
@@ -105,10 +105,10 @@ void RKSaveAgent::done () {
 		RKGlobals::rInterface ()->closeChain (save_chain);
 	}
 	if (when_done == Quit) {
-		delete RKwardApp::getApp ();
+		delete RKWardMainWindow::getMain ();
 		qApp->quit ();
 	} else if (when_done == Load) {
-		RKwardApp::getApp ()->fileOpenNoSave (load_url);
+		RKWardMainWindow::getMain ()->fileOpenNoSave (load_url);
 		delete this;
 	} else {
 		delete this;

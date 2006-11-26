@@ -92,13 +92,13 @@ void bogusCalls () {
 }
 
 //static
-RKwardApp *RKwardApp::rkward_app = 0;
+RKWardMainWindow *RKWardMainWindow::rkward_mainwin = 0;
 
-RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
+RKWardMainWindow::RKWardMainWindow (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
 	RK_TRACE (APP);
-	RK_ASSERT (rkward_app == 0);
+	RK_ASSERT (rkward_mainwin == 0);
 
-	rkward_app = this;
+	rkward_mainwin = this;
 	RKGlobals::rinter = 0;
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
 
@@ -150,7 +150,7 @@ RKwardApp::RKwardApp (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0
 	}
 }
 
-RKwardApp::~RKwardApp() {
+RKWardMainWindow::~RKWardMainWindow() {
 	RK_TRACE (APP);
 	closeAllViews ();
 	delete RKGlobals::rInterface ();
@@ -159,7 +159,7 @@ RKwardApp::~RKwardApp() {
 	delete RKGlobals::tracker ();
 }
 
-void RKwardApp::doPostInit () {
+void RKWardMainWindow::doPostInit () {
 	RK_TRACE (APP);
 
 	readOptions();
@@ -221,7 +221,7 @@ void RKwardApp::doPostInit () {
 	setCaption (QString::null);	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 }
 
-void RKwardApp::initPlugins () {
+void RKWardMainWindow::initPlugins () {
 	RK_TRACE (APP);
 	slotSetStatusBarText(i18n("Setting up plugins..."));
 	
@@ -243,7 +243,7 @@ void RKwardApp::initPlugins () {
 	slotSetStatusReady ();
 }
 
-void RKwardApp::startR () {
+void RKWardMainWindow::startR () {
 	RK_TRACE (APP);
 	RK_ASSERT (!RKGlobals::rInterface ());
 	
@@ -266,11 +266,11 @@ void RKwardApp::startR () {
 	object_browser->initialize ();
 }
 
-void RKwardApp::slotConfigure () {
+void RKWardMainWindow::slotConfigure () {
 	RKSettings::configureSettings (RKSettings::NoPage, this);
 }
 
-void RKwardApp::initActions()
+void RKWardMainWindow::initActions()
 {  
 	RK_TRACE (APP);
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
@@ -325,7 +325,7 @@ void RKwardApp::initActions()
 	actionCollection ()->setHighlightingEnabled (true);
 }
 
-void RKwardApp::partAdded (KParts::Part *part) {
+void RKWardMainWindow::partAdded (KParts::Part *part) {
 	RK_TRACE (APP);
 
 	if (!part->actionCollection ()) {
@@ -338,7 +338,7 @@ void RKwardApp::partAdded (KParts::Part *part) {
 	connect (part->actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
 }
 
-void RKwardApp::partRemoved (KParts::Part *part) {
+void RKWardMainWindow::partRemoved (KParts::Part *part) {
 	RK_TRACE (APP);
 
 	if (!part->actionCollection ()) {
@@ -350,7 +350,7 @@ void RKwardApp::partRemoved (KParts::Part *part) {
 	disconnect (part->actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
 }
 
-void RKwardApp::initStatusBar () {
+void RKWardMainWindow::initStatusBar () {
 	RK_TRACE (APP);
 
 	r_status_label = new QLabel (i18n ("starting R engine"), statusBar ());
@@ -361,7 +361,7 @@ void RKwardApp::initStatusBar () {
 	connect (actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
 }
 
-void RKwardApp::openWorkspace (const KURL &url) {
+void RKWardMainWindow::openWorkspace (const KURL &url) {
 	RK_TRACE (APP);
 	if (url.isEmpty ()) return;
 
@@ -369,7 +369,7 @@ void RKwardApp::openWorkspace (const KURL &url) {
 	fileOpenRecentWorkspace->addURL (url);
 }
 
-void RKwardApp::saveOptions () {
+void RKWardMainWindow::saveOptions () {
 	RK_TRACE (APP);
 	KConfig *config = kapp->config ();
 
@@ -387,7 +387,7 @@ void RKwardApp::saveOptions () {
 }
 
 
-void RKwardApp::readOptions () {
+void RKWardMainWindow::readOptions () {
 	RK_TRACE (APP);
 	KConfig *config = kapp->config ();
 
@@ -417,7 +417,7 @@ void RKwardApp::readOptions () {
 	if (mditask) mditask->hide ();
 }
 
-void RKwardApp::saveProperties(KConfig *_cfg)
+void RKWardMainWindow::saveProperties(KConfig *_cfg)
 {
 	RK_TRACE (APP);
 /*  if(doc->URL().fileName()!=i18n("Untitled") && !doc->isModified())
@@ -438,7 +438,7 @@ void RKwardApp::saveProperties(KConfig *_cfg)
 }
 
 
-void RKwardApp::readProperties(KConfig* _cfg)
+void RKWardMainWindow::readProperties(KConfig* _cfg)
 {
 	RK_TRACE (APP);
 /*  QString filename = _cfg->readEntry("filename", "");
@@ -466,7 +466,7 @@ void RKwardApp::readProperties(KConfig* _cfg)
   } */
 }
 
-bool RKwardApp::queryClose () {
+bool RKWardMainWindow::queryClose () {
 	RK_TRACE (APP);
 
 	slotSetStatusBarText (i18n ("Exiting..."));
@@ -495,7 +495,7 @@ bool RKwardApp::queryClose () {
 	return true;
 }
 
-void RKwardApp::raiseWatch () {
+void RKWardMainWindow::raiseWatch () {
 	RK_TRACE (APP);
 	watch_view->show ();
 	KMdiChildView *window = activeWindow ();
@@ -504,20 +504,20 @@ void RKwardApp::raiseWatch () {
 	}
 }
 
-void RKwardApp::invokeRHelp () {
+void RKWardMainWindow::invokeRHelp () {
 	RK_TRACE (APP);
 
 	RKGlobals::rInterface ()->issueCommand ("help.start ()", RCommand::App);
 }
 
-void RKwardApp::reportRKWardBug () {
+void RKWardMainWindow::reportRKWardBug () {
 	RK_TRACE (APP);
 
 // TOOD: something pretty
 	KMessageBox::information (this, i18n ("Please submit your bug reports or wishes at http://sourceforge.net/tracker/?group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge.net"));
 }
 
-void RKwardApp::showAboutApplication () {
+void RKWardMainWindow::showAboutApplication () {
 	RK_TRACE (APP);
 
 	KAboutApplication *about = new KAboutApplication ();
@@ -525,13 +525,13 @@ void RKwardApp::showAboutApplication () {
 	delete about;
 }
 
-void RKwardApp::showHelpSearch () {
+void RKWardMainWindow::showHelpSearch () {
 	RK_TRACE (APP);
 
 	search_help_view->show ();
 }
 
-void RKwardApp::slotNewDataFrame () {
+void RKWardMainWindow::slotNewDataFrame () {
 	RK_TRACE (APP);
 	bool ok;
 
@@ -546,7 +546,7 @@ void RKwardApp::slotNewDataFrame () {
 	
 }
 
-void RKwardApp::fileOpenNoSave (const KURL &url) {
+void RKWardMainWindow::fileOpenNoSave (const KURL &url) {
 	RK_TRACE (APP);
 
 	slotCloseAllEditors ();
@@ -562,7 +562,7 @@ void RKwardApp::fileOpenNoSave (const KURL &url) {
 	slotSetStatusReady ();
 }
 
-void RKwardApp::fileOpenAskSave (const KURL &url) {
+void RKWardMainWindow::fileOpenAskSave (const KURL &url) {
 	RK_TRACE (APP);
 	if (RObjectList::getObjectList ()->isEmpty ()) {
 		fileOpenNoSave (url);
@@ -579,34 +579,34 @@ void RKwardApp::fileOpenAskSave (const KURL &url) {
 	// else: cancel. Don't do anything
 }
 
-void RKwardApp::slotFileOpenWorkspace () {
+void RKWardMainWindow::slotFileOpenWorkspace () {
 	RK_TRACE (APP);
 	fileOpenAskSave (QString::null);
 }
 
-void RKwardApp::slotFileOpenRecentWorkspace(const KURL& url)
+void RKWardMainWindow::slotFileOpenRecentWorkspace(const KURL& url)
 {
 	RK_TRACE (APP);
 	fileOpenAskSave (url);
 }
 
-void RKwardApp::slotFileLoadLibs () {
+void RKWardMainWindow::slotFileLoadLibs () {
 	RK_TRACE (APP);
 	RKLoadLibsDialog *dial = new RKLoadLibsDialog (this, 0);
 	dial->show ();
 }
 
-void RKwardApp::slotFileSaveWorkspace () {
+void RKWardMainWindow::slotFileSaveWorkspace () {
 	RK_TRACE (APP);
 	new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL ());
 }
 
-void RKwardApp::slotFileSaveWorkspaceAs () {
+void RKWardMainWindow::slotFileSaveWorkspaceAs () {
 	RK_TRACE (APP);
 	new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), true);
 }
 
-void RKwardApp::slotSetStatusBarText (const QString &text) {
+void RKWardMainWindow::slotSetStatusBarText (const QString &text) {
 	RK_TRACE (APP);
 
 	QString ntext = text.stripWhiteSpace ();
@@ -618,31 +618,31 @@ void RKwardApp::slotSetStatusBarText (const QString &text) {
 	}
 }
 
-void RKwardApp::slotCloseWindow () {
+void RKWardMainWindow::slotCloseWindow () {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->closeActiveWindow ();
 }
 
-void RKwardApp::slotCloseAllWindows () {
+void RKWardMainWindow::slotCloseAllWindows () {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->closeAll ();
 }
 
-void RKwardApp::slotCloseAllEditors () {
+void RKWardMainWindow::slotCloseAllEditors () {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->closeAll (RKMDIWindow::DataEditorWindow);
 }
 
-void RKwardApp::slotDetachWindow () {
+void RKWardMainWindow::slotDetachWindow () {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->detachWindow (RKWorkplace::mainWorkplace ()->activeAttachedWindow ());
 }
 
-void RKwardApp::setRStatus (bool busy) {
+void RKWardMainWindow::setRStatus (bool busy) {
 	RK_TRACE (APP);
 	if (busy) {
 		r_status_label->setText (i18n ("R engine busy"));
@@ -654,13 +654,13 @@ void RKwardApp::setRStatus (bool busy) {
 }
 
 
-void RKwardApp::slotNewCommandEditor () {
+void RKWardMainWindow::slotNewCommandEditor () {
 	RK_TRACE (APP);
 
 	slotOpenCommandEditor (KURL ());
 }
 
-void RKwardApp::slotOpenCommandEditor (const KURL &url) {
+void RKWardMainWindow::slotOpenCommandEditor (const KURL &url) {
 	RK_TRACE (APP);
 
 	if (RKWorkplace::mainWorkplace ()->openScriptEditor (url)) {
@@ -668,7 +668,7 @@ void RKwardApp::slotOpenCommandEditor (const KURL &url) {
 	}
 };
 
-void RKwardApp::slotOpenCommandEditor () {
+void RKWardMainWindow::slotOpenCommandEditor () {
 	RK_TRACE (APP);
 	KURL::List urls;
 	KURL::List::const_iterator it;
@@ -680,30 +680,30 @@ void RKwardApp::slotOpenCommandEditor () {
 	}
 };
 
-void RKwardApp::slotChildWindowCloseRequest (KMdiChildView * window) {
+void RKWardMainWindow::slotChildWindowCloseRequest (KMdiChildView * window) {
 	RK_TRACE (APP);
 
 	closeWindow (window);
 }
 
-void RKwardApp::openHTML (const KURL &url) {
+void RKWardMainWindow::openHTML (const KURL &url) {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->openHelpWindow (url);
 }
 
-void RKwardApp::openHTMLHelp (const QString & url) {
+void RKWardMainWindow::openHTMLHelp (const QString & url) {
 	RK_TRACE (APP);
 	openHTML (url);
 }
 
-void RKwardApp::slotOutputShow () {
+void RKWardMainWindow::slotOutputShow () {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->openOutputWindow (KURL ());
 }
 
-void RKwardApp::setCaption (const QString &) {
+void RKWardMainWindow::setCaption (const QString &) {
 	RK_TRACE (APP);
 
 	QString wcaption = RObjectList::getObjectList ()->getWorkspaceURL ().fileName ();

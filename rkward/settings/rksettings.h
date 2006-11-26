@@ -25,7 +25,7 @@ class RKSettingsModule;
 class QTabWidget;
 class QPushButton;
 class KConfig;
-class RKwardApp;
+class RKWardMainWindow;
 class RKSettingsTracker;
 class RCommandChain;
 
@@ -62,7 +62,7 @@ private:
 	ModuleList modules;
 	
 	static RKSettings *settings_dialog;
-friend class RKwardApp;
+friend class RKWardMainWindow;
 	static RKSettingsTracker *settings_tracker;
 };
 

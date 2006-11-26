@@ -61,7 +61,7 @@ public slots:
 /** when an object in the list is double clicked, insert its name in the current RKCommandEditor window */
 	void slotListDoubleClicked (QListViewItem *item, const QPoint &pos, int);
 private:
-	friend class RKwardApp;
+	friend class RKWardMainWindow;
 	void initialize ();
 
 	QPushButton *update_button;

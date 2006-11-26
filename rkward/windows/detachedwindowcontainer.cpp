@@ -28,7 +28,7 @@
 #include "../rkglobals.h"
 #include "../debug.h"
 
-DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture) : KParts::MainWindow  (RKwardApp::getApp ()) {
+DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture) : KParts::MainWindow  (RKWardMainWindow::getMain ()) {
 	RK_TRACE (APP);
 
 // create own GUI

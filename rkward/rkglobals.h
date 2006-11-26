@@ -17,7 +17,7 @@
 #ifndef RKGLOBALS_H
 #define RKGLOBALS_H
 
-class RKwardApp;
+class RKWardMainWindow;
 class RInterface;
 class RObjectList;
 class RKModificationTracker;
@@ -62,7 +62,7 @@ public:
 	static void deleteStrings (QString **strings, int count);
 
 private:
-	friend class RKwardApp;
+	friend class RKWardMainWindow;
 	static RInterface *rinter;
 	static RKModificationTracker *mtracker;
 	static RKComponentMap *cmap;

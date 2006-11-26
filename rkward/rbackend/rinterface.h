@@ -34,7 +34,7 @@
 
 class RKwatch;
 class RCommand;
-class RKwardApp;
+class RKWardMainWindow;
 struct RCallbackArgs;
 class QTimer;
 class RThread;
@@ -102,7 +102,7 @@ private:
 //	void processRGetValueRequest (RGetValueRequest);
 /** See \ref RThread::doStandardCallback (). Does the actual job. */
 	void processRCallbackRequest (RCallbackArgs *args);
-friend class RKwardApp;
+friend class RKWardMainWindow;
 friend class RCommand;
 /** pointer to the RKwatch. TODO: (re-)move this pointer */
 	RKwatch *watch;
@@ -332,7 +332,7 @@ There are a few special type-modifiers you can specify when creating an RCommand
 This one tells the backend, that the command does not really need to be executed, and does not contain anything. You'll rarely need this flag, but sometimes it is useful to submit an empty command simply to find out when it is finished.
 
 - RCommand::DirectToOutput
-This is typically used in plugins: When you specify this modifier, the plain text result of this command (i.e. whatever R prints out when evaluating the command) will be added to the HTML output file. Remember to call RKwardApp::newOutput in order to refresh the output-window once the command has finished.
+This is typically used in plugins: When you specify this modifier, the plain text result of this command (i.e. whatever R prints out when evaluating the command) will be added to the HTML output file. Remember to call RKWardMainWindow::newOutput in order to refresh the output-window once the command has finished.
 
 - RCommand::GetIntVector, RCommand::GetStringVector, RCommand::GetRealVector
 These are special modifiers helpful when transferring data from R to RKWard (used primarily in the editor classes and in conjunction with RCommand::Sync): They tell the backend to try to fetch the result as an array of int, char*, or double, respectively. For instance, if you know object "myobject" is an integer vector, you may get the data using
