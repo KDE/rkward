@@ -77,6 +77,10 @@ private:
 #include "rkmdiwindow.h"
 
 class RKCatchedX11WindowPart;
+class KToggleAction;
+class QXEmbedCopy;
+class QScrollView;
+class QVBox;
 
 /** An R X11 device window managed by rkward */
 class RKCatchedX11Window : public RKMDIWindow {
@@ -89,10 +93,27 @@ public:
 	KParts::Part *getPart ();
 	QString getRDescription () { return "unimplemtend"; };
 	bool isModified () { return false; };
+
+	void prepareToBeAttached ();
+	void prepareToBeDetached ();
+public slots:
+	/** Do not invoke directly. Meant to be called from the toggle action */
+	void toggleFixedSize ();
+	void setFixedSize1 ();
+	void setFixedSize2 ();
+	void setFixedSize3 ();
+	void setFixedSizeManual ();
 private:
+	friend class RKCatchedX11WindowPart;
 	int device_number;
 	WId embedded;
 	RKCatchedX11WindowPart *part;
+	QVBox *xembed_container;
+	QScrollView *scroll_widget;
+	QVBox *box_widget;
+
+	bool dynamic_size;
+	KToggleAction *dynamic_size_action;
 };
 
 class RKCatchedX11WindowPart : public KParts::Part {

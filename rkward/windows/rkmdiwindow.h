@@ -67,6 +67,10 @@ public:
 	bool isAttached () { return (state == Attached); };
 /** Activate (raise) this window, regardless of whether it is attached or detached */
 	void activate ();
+/** If your mdi window should perform any adjustments before being attached, reimplement this function */
+	virtual void prepareToBeAttached () {};
+/** If your mdi window should perform any adjustments before being detached, reimplement this function */
+	virtual void prepareToBeDetached () {};
 signals:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */

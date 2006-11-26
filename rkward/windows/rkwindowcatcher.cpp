@@ -66,6 +66,13 @@ void RKWindowCatcher::stop (int new_cur_device) {
 
 
 
+#include <qscrollview.h>
+#include <qvbox.h>
+#include <qlabel.h>
+
+#include <kactionclasses.h>
+#include <kdialogbase.h>
+#include <knuminput.h>
 
 RKCatchedX11Window::RKCatchedX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
 	RK_TRACE (MISC);
@@ -77,10 +84,18 @@ RKCatchedX11Window::RKCatchedX11Window (WId window_to_embed, int device_number) 
 	RKCatchedX11Window::device_number = device_number;
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
-	QXEmbedCopy *capture = new QXEmbedCopy (this);
+	box_widget = new QVBox (this);
+	layout->addWidget (box_widget);
+	scroll_widget = new QScrollView (this);
+	scroll_widget->hide ();
+	layout->addWidget (scroll_widget);
+	xembed_container = new QVBox (box_widget);
+	dynamic_size = true;
+	dynamic_size_action->setChecked (true);
+
+	QXEmbedCopy *capture = new QXEmbedCopy (xembed_container);
 	capture->setProtocol (QXEmbedCopy::XPLAIN);
 	connect (capture, SIGNAL (embeddedWindowDestroyed ()), this, SLOT (deleteLater ()));
-	layout->addWidget (capture);
 
 	KWin::WindowInfo wininfo = KWin::windowInfo (window_to_embed);
 	setGeometry (wininfo.frameGeometry ());
@@ -104,6 +119,91 @@ KParts::Part *RKCatchedX11Window::getPart () {
 	return part;
 }
 
+void RKCatchedX11Window::prepareToBeAttached () {
+	RK_TRACE (MISC);
+
+	dynamic_size_action->setChecked (false);
+	toggleFixedSize ();
+	dynamic_size_action->setEnabled (false);
+}
+
+void RKCatchedX11Window::prepareToBeDetached () {
+	RK_TRACE (MISC);
+
+	dynamic_size_action->setEnabled (true);
+}
+
+void RKCatchedX11Window::toggleFixedSize () {
+	RK_TRACE (MISC);
+
+	if (dynamic_size == dynamic_size_action->isChecked ()) return;
+	dynamic_size = dynamic_size_action->isChecked ();
+
+	if (dynamic_size_action->isChecked ()) {
+		scroll_widget->removeChild (xembed_container);
+		xembed_container->reparent (box_widget, QPoint (0, 0), true);
+		scroll_widget->hide ();
+		box_widget->show ();
+		xembed_container->setMinimumSize (5, 5);
+		xembed_container->setMaximumSize (32767, 32767);
+	} else {
+		xembed_container->setFixedSize (xembed_container->size ());
+		xembed_container->reparent (scroll_widget->viewport (), QPoint (0, 0), true);
+		scroll_widget->addChild (xembed_container);
+		box_widget->hide ();
+		scroll_widget->show ();
+	}
+}
+
+void RKCatchedX11Window::setFixedSize1 () {
+	RK_TRACE (MISC);
+
+	dynamic_size_action->setChecked (false);
+	toggleFixedSize ();		// apparently KToggleAction::setChecked () does not invoke the slot!
+	xembed_container->setFixedSize (500, 500);
+}
+
+void RKCatchedX11Window::setFixedSize2 () {
+	RK_TRACE (MISC);
+
+	dynamic_size_action->setChecked (false);
+	toggleFixedSize ();		// see setFixedSize1 () above
+	xembed_container->setFixedSize (1000, 1000);
+}
+
+void RKCatchedX11Window::setFixedSize3 () {
+	RK_TRACE (MISC);
+
+	dynamic_size_action->setChecked (false);
+	toggleFixedSize ();		// see setFixedSize1 () above
+	xembed_container->setFixedSize (2000, 2000);
+}
+
+void RKCatchedX11Window::setFixedSizeManual () {
+	RK_TRACE (MISC);
+
+// TODO: not very pretty, yet
+	KDialogBase *dialog = new KDialogBase (this, 0, true, i18n ("Specify fixed size"), KDialogBase::Ok|KDialogBase::Cancel);
+	QVBox *page = dialog->makeVBoxMainWidget ();
+
+	QLabel *label = new QLabel (i18n ("Width"), page);
+	KIntSpinBox *width = new KIntSpinBox (5, 32767, 1, xembed_container->width (), 10, page);
+
+	label = new QLabel (i18n ("Height"), page);
+	KIntSpinBox *height = new KIntSpinBox (5, 32767, 1, xembed_container->height (), 10, page);
+
+	dialog->exec ();
+
+	if (dialog->result () == QDialog::Accepted) {
+		dynamic_size_action->setChecked (false);
+		toggleFixedSize ();		// see setFixedSize1 () above
+
+		xembed_container->setFixedSize (width->value (), height->value ());
+	}
+
+	delete dialog;
+}
+
 
 
 
@@ -117,6 +217,14 @@ RKCatchedX11WindowPart::RKCatchedX11WindowPart (RKCatchedX11Window *window) : KP
 	RKCatchedX11WindowPart::window = window;
 
 	setXMLFile ("rkcatchedx11windowpart.rc");
+
+	window->dynamic_size_action = new KToggleAction (i18n ("Draw area follows size of window"), 0, window, SLOT (toggleFixedSize ()), actionCollection (), "toggle_fixed_size");
+
+	new KAction (i18n ("Set fixed size 500x500"), 0, window, SLOT (setFixedSize1 ()), actionCollection (), "set_fixed_size_1");
+	new KAction (i18n ("Set fixed size 1000x1000"), 0, window, SLOT (setFixedSize2 ()), actionCollection (), "set_fixed_size_2");
+	new KAction (i18n ("Set fixed size 2000x2000"), 0, window, SLOT (setFixedSize3 ()), actionCollection (), "set_fixed_size_3");
+	new KAction (i18n ("Set specified fixed size..."), 0, window, SLOT (setFixedSizeManual ()), actionCollection (), "set_fixed_size_manual");
+
 }
 
 RKCatchedX11WindowPart::~RKCatchedX11WindowPart () {

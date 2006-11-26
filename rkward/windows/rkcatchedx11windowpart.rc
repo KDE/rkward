@@ -1,9 +1,24 @@
 <!DOCTYPE kpartgui>
 <kpartgui name="rkward" version="0.4.2">
 	<MenuBar>
-		<Menu name="plot" noMerge="1"><text>&amp;Plot</text>
-			<Action name="close"/>
+		<Menu name="plot"><text>&amp;Plot Device</text>
+			<Action name="device_activate"/>
+			<Separator/>
+			<Action name="device_print"/>
+			<Action name="device_copy_to_output"/>
+			<Action name="device_copy_to_r_object"/>
+			<Action name="device_copy_to_file"/>
 			<Merge/>
 		</Menu>
+		<Menu name="view"><text>&amp;View</text>
+			<Action name="toggle_fixed_size"/>
+			<Separator/>
+			<Action name="set_fixed_size_1"/>
+			<Action name="set_fixed_size_2"/>
+			<Action name="set_fixed_size_3"/>
+			<Action name="set_fixed_size_manual"/>
+			<Merge/>
+		</Menu>
+		<Merge/>
 	</MenuBar>
 </kpartgui>

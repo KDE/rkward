@@ -64,6 +64,7 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	RK_TRACE (APP);
 	RK_ASSERT (windows.find (window) != windows.end ());		// This should not happen for now.
 
+	window->prepareToBeAttached ();
 	window->state = RKMDIWindow::Attached;
 	view ()->addPage (window);
 
@@ -75,6 +76,7 @@ void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
 	RK_TRACE (APP);
 	RK_ASSERT (windows.find (window) != windows.end ());		// Can't detach a window that is not registered
 
+	window->prepareToBeDetached ();
 	window->state = RKMDIWindow::Detached;
 
 	RK_ASSERT (window->getPart ());
