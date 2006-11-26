@@ -21,7 +21,6 @@
 //#define DISABLE_RKWINDOWCATCHER
 #ifndef DISABLE_RKWINDOWCATCHER
 
-#include <qvaluelist.h>
 #include <qwidget.h>
 
 /** This class will be used to find out, when R opens a new X11-device, find out the id of that device and embed it into a QWidget.
@@ -71,13 +70,14 @@ public:
 	
 	void start (int prev_cur_device);
 	void stop (int new_cur_device);
-	void catchWindow (const QString &title_start, int corresponding_device_number);
-public slots:
-	void windowLost ();
 private:
 	int last_cur_device;
-	QValueList<WId> new_windows;
 };
+
+/*
+class RKCatchedX11Window : public RKMDIWindow {
+};
+*/
 
 #endif //DISABLE_RKWINDOWCATCHER
 #endif

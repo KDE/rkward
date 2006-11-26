@@ -323,10 +323,6 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 			return;
 		}
 	}
-	if (call[0] == "catchWindow") {
-		// maybe this is not needed after all, put requires some testing. For now, we disable all R X11 updates while capturing the window.
-		x11events_disabled = true;
-	}
 
 	RCommand *prev_command = current_command;
 	REvalRequest *request = new REvalRequest;
@@ -367,7 +363,6 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 		msleep (10);
 	}
 
-	x11events_disabled = false;
 	delete reply_stack;
 }
 

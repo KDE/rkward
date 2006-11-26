@@ -50,10 +50,6 @@
 **
 */
 
-
-
-
-
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <klocale.h>
@@ -61,6 +57,8 @@
 #include <qstring.h>
 
 #include "rkward.h"
+#include "rkwardapplication.h"
+
 #include "config.h"
 
 #include "debug.h"
@@ -103,7 +101,7 @@ int main(int argc, char *argv[]) {
 	KCmdLineArgs::init( argc, argv, &aboutData );
 	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 	
-	KApplication app;
+	RKWardApplication app;
 	if (app.isRestored ()) {
 		RESTORE(RKWardMainWindow);	// well, whatever this is supposed to do -> TODO
 	} else {

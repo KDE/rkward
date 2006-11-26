@@ -23,11 +23,11 @@ bin_PROGRAMS = rkward.bin
 
 rkward_bin_SOURCES = rkwatch.cpp rkward.cpp main.cpp \
 	rkglobals.cpp robjectbrowser.cpp robjectviewer.cpp \
-	khelpdlg.cpp rkconsole.cpp rkward.skel
+	khelpdlg.cpp rkconsole.cpp rkward.skel rkwardapplication.cpp
 
 noinst_HEADERS = rkwatch.h rkward.h debug.h \
 	rkglobals.h robjectbrowser.h robjectviewer.h \
-	khelpdlg.h rkconsole.h
+	khelpdlg.h rkconsole.h rkwardapplication.h
 
 rkward_bin_LDADD = $(top_builddir)/rkward/windows/libwindows.a \
 	$(top_builddir)/rkward/agents/libagents.a $(top_builddir)/rkward/dialogs/libdialogs.a \

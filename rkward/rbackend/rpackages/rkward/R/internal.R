@@ -139,18 +139,16 @@
 #	.Internal (.addCondHands (c ("message", "warning", "error"), list (function (m) { .Call ("rk.do.condition", c ("m", conditionMessage (m))) }, function (w) { .Call ("rk.do.condition", c ("w", conditionMessage (w))) }, function (e) { .Call ("rk.do.condition", c ("e", conditionMessage (e))) }), globalenv (), NULL, TRUE))
 #}
 
-".rk.catch.window" <- function (title_begin, corresponding_device) {
-	.rk.do.call ("catchWindow", c (as.character (title_begin), as.character (corresponding_device)))
+# overriding x11 to get informed, when a new x11 window is opened
+"x11" <- function (...) {
+	.rk.do.call ("startOpenX11", as.character (dev.cur ()));
+
+	grDevices::X11 (...)
+
+	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
 }
 
-# overriding x11 to get informed, when a new x11 window is opened
-#"x11" <- function (...) {
-#	.rk.do.call ("startOpenX11", as.character (dev.cur ()));
-#
-#	base::X11 (...)
-#
-#	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
-#}
+"X11" <- x11
 
 # these functions can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a backup environment, removing it, and replacing it by an active binding to the backup location
 ".rk.watched.symbols" <- new.env ()

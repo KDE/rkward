@@ -332,12 +332,18 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		// if we're still alive, quitting was cancelled
 		issueCommand (".rk.rkreply <- \"Quitting was cancelled\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 #ifndef DISABLE_RKWINDOWCATCHER
- // does not work, yet :-( R crashes.
-	} else if (call == "catchWindow") {
+ 	} else if (call == "startOpenX11") {
 		// TODO: error checking/handling (wrong parameter count/type)
-		if (request->call_length >= 3) {
+		if (request->call_length >= 2) {
 			MUTEX_LOCK;
-			window_catcher->catchWindow (request->call[1], QString (request->call[2]).toInt ());
+			window_catcher->start (QString (request->call[1]).toInt ());
+			MUTEX_UNLOCK;
+		}
+ 	} else if (call == "endOpenX11") {
+		// TODO: error checking/handling (wrong parameter count/type)
+		if (request->call_length >= 2) {
+			MUTEX_LOCK;
+			window_catcher->stop (QString (request->call[1]).toInt ());
 			MUTEX_UNLOCK;
 		}
 #endif // DISABLE_RKWINDOWCATCHER
