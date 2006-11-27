@@ -62,8 +62,7 @@ RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
 	
 #ifndef DISABLE_RKWINDOWCATCHER
-	window_catcher = new RKWindowCatcher (0);
-	window_catcher->hide ();
+	window_catcher = new RKWindowCatcher ();
 #endif // DISABLE_RKWINDOWCATCHER
 	
 // If R_HOME is not set, most certainly the user called the binary without the wrapper script
@@ -108,6 +107,7 @@ RInterface::~RInterface(){
 
 	delete flush_timer;
 	delete watch;
+	delete window_catcher;
 }
 
 void RInterface::startThread () {

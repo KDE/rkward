@@ -26,6 +26,7 @@ Compilation / technical
 UI-stuff
 	- Access to dev.copy (), dev.print (), and a function to copy gaphics to rkward output
 		- probably in Windows-menu for now
+		- cleanup DISABLE_RKWINDOWCATCHER (either get rid of it, or do it right)
 	- Output window should gain some sort of auto-update functionality:
 		- After user commands, should check, whether the output file was modified. If so, reload
 	- Option to save workplace per session instead of per workspace
@@ -177,9 +178,6 @@ Configuration:
 
 
 ################## Some internal notes below ##############
-
-Notes for x11-window capturing:
-- See deactived class-header rbackend/rkwindowcatcher.h
 
 ################## menu structure file/workspace ###########
 File

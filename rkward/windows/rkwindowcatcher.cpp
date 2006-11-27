@@ -31,7 +31,7 @@
 #include "qxembedcopy.h"
 #include "../debug.h"
 
-RKWindowCatcher::RKWindowCatcher (QWidget *parent) : QWidget (parent) {
+RKWindowCatcher::RKWindowCatcher () {
 	RK_TRACE (MISC);
 }
 
@@ -58,12 +58,15 @@ void RKWindowCatcher::stop (int new_cur_device) {
 			RKWorkplace::mainWorkplace ()->newX11Window (w, new_cur_device);
 			//new RKCatchedX11Window (w, new_cur_device);
 		} else {
-			KMessageBox::sorry (0, i18n ("You have created a new X11 device window in R. Usually, RKWard tries to detect such windows, to take control of them, and add a menu-bar to them. This time, however, RKWard failed to detect, which window was created, and so can not embed it.\nIf you created the window on a different screen or X11 display, that is to be expected. You might want to consider changing options(\"display\"), then.\nIf you can see the X11 window on the same screen as this message, then RKWard should do better. In this case, please contact us at rkward-devel@lists.sourceforge.net with details on your setup, so we can try to fix this in future versions of RKWard."), i18n ("Could not embed R X11 window"));
+			KMessageBox::information (0, i18n ("You have created a new X11 device window in R. Usually, RKWard tries to detect such windows, to take control of them, and add a menu-bar to them. This time, however, RKWard failed to detect, which window was created, and so can not embed it.\nIf you created the window on a different screen or X11 display, that is to be expected. You might want to consider changing options(\"display\"), then.\nIf you can see the X11 window on the same screen as this message, then RKWard should do better. In this case, please contact us at rkward-devel@lists.sourceforge.net with details on your setup, so we can try to fix this in future versions of RKWard."), i18n ("Could not embed R X11 window"), "failure_to_detect_x11_device");
 		}
 	}
 	last_cur_device = new_cur_device;
 }
 
+///////////////////////////////// END RKWindowCatcher //////////////////////////////////
+/**************************************************************************************/
+//////////////////////////////// BEGIN RKCatchedX11Window //////////////////////////////
 
 
 #include <qscrollview.h>
@@ -73,6 +76,9 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #include <kactionclasses.h>
 #include <kdialogbase.h>
 #include <knuminput.h>
+
+#include "../rkglobals.h"
+#include "../rbackend/rinterface.h"
 
 RKCatchedX11Window::RKCatchedX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
 	RK_TRACE (MISC);
@@ -206,7 +212,46 @@ void RKCatchedX11Window::setFixedSizeManual () {
 	delete dialog;
 }
 
+void RKCatchedX11Window::activateDevice () {
+	RK_TRACE (MISC);
 
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")", RCommand::App, i18n ("Activate graphics device number %1").arg (QString::number (device_number)));
+}
+
+void RKCatchedX11Window::copyDeviceToOutput () {
+	RK_TRACE (MISC);
+
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=rk.graph.on)\nrk.graph.off ()", RCommand::App | RCommand::DirectToOutput, i18n ("Copy contents of graphics device number %1 to output").arg (QString::number (device_number)));
+}
+
+void RKCatchedX11Window::printDevice () {
+	RK_TRACE (MISC);
+
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.print ()", RCommand::App, i18n ("Print contents of graphics device number %1").arg (QString::number (device_number)));
+
+	#warning TODO: options ("printcmd") should be made configurable, and set to kprinter by default
+}
+
+void RKCatchedX11Window::copyDeviceToRObject () {
+	RK_TRACE (MISC);
+
+	KMessageBox::information (0, i18n ("Not yet implemented"), i18n ("Not yet implemented"));
+
+	#warning implement or deactivate action
+}
+
+void RKCatchedX11Window::copyDeviceToFile () {
+	RK_TRACE (MISC);
+
+	KMessageBox::information (0, i18n ("Not yet implemented"), i18n ("Not yet implemented"));
+
+	#warning implement or deactivate action
+}
+
+
+///////////////////////////////// END RKWindowCatchedWindow ////////////////////////////
+/**************************************************************************************/
+//////////////////////////////// BEGIN RKCatchedX11WindowPart //////////////////////////
 
 
 RKCatchedX11WindowPart::RKCatchedX11WindowPart (RKCatchedX11Window *window) : KParts::Part (0) {
@@ -227,6 +272,11 @@ RKCatchedX11WindowPart::RKCatchedX11WindowPart (RKCatchedX11Window *window) : KP
 	new KAction (i18n ("Set fixed size 2000x2000"), 0, window, SLOT (setFixedSize3 ()), actionCollection (), "set_fixed_size_3");
 	new KAction (i18n ("Set specified fixed size..."), 0, window, SLOT (setFixedSizeManual ()), actionCollection (), "set_fixed_size_manual");
 
+	new KAction (i18n ("Make active"), 0, window, SLOT (activateDevice ()), actionCollection (), "device_activate");
+	new KAction (i18n ("Copy to output"), 0, window, SLOT (copyDeviceToOutput ()), actionCollection (), "device_copy_to_output");
+	new KAction (i18n ("Print"), 0, window, SLOT (printDevice ()), actionCollection (), "device_print");
+	new KAction (i18n ("Store as R object"), 0, window, SLOT (copyDeviceToRObject ()), actionCollection (), "device_copy_to_r_object");
+	new KAction (i18n ("Export"), 0, window, SLOT (copyDeviceToFile ()), actionCollection (), "device_copy_to_file");
 }
 
 RKCatchedX11WindowPart::~RKCatchedX11WindowPart () {
