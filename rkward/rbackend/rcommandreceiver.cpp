@@ -2,7 +2,7 @@
                           rcommandreceiver  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004,2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -20,6 +20,8 @@
 
 RCommandReceiver::RCommandReceiver () {
 	RK_TRACE (RBACKEND);
+
+	delete_when_done = false;
 }
 
 RCommandReceiver::~RCommandReceiver () {
@@ -46,4 +48,16 @@ void RCommandReceiver::addCommand (RCommand *command) {
 void RCommandReceiver::delCommand (RCommand *command) {
 	RK_TRACE (RBACKEND);
 	outstanding_commands.remove (command);
+
+	if (delete_when_done && outstanding_commands.isEmpty ()) delete this;
+}
+
+void RCommandReceiver::autoDeleteWhenDone () {
+	RK_TRACE (RBACKEND);
+
+	if (outstanding_commands.isEmpty ()) {
+		delete this;
+		return;
+	}
+	delete_when_done = true;
 }

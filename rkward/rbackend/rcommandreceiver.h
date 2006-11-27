@@ -2,7 +2,7 @@
                           rcommandreceiver  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004,2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -38,9 +38,11 @@ typedef QValueList<RCommand*> RCommandList;
 class RCommandReceiver {
 public:
 /** constructor. No args */
-    RCommandReceiver ();
+	RCommandReceiver ();
 /** destructor */
-    virtual ~RCommandReceiver ();
+	virtual ~RCommandReceiver ();
+/** Causes the receiver to wait until all outstanding_commands (if any) are finished, then deletes itself */
+	void autoDeleteWhenDone ();
 protected:
 	friend class RCommand;
 	friend class RInterface;
@@ -54,6 +56,7 @@ protected:
 protected:
 	RCommandList outstanding_commands;
 private:
+	bool delete_when_done;
 	void addCommand (RCommand *command);
 	void delCommand (RCommand *command);
 };

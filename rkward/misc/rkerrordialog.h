@@ -2,7 +2,7 @@
                           rkerrordialog  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -59,7 +59,7 @@ private:
 };
 
 #include "../rbackend/rcommandreceiver.h"
-/** A subclass of RKErrorDialog, that has special helper functions to deal with RCommands. It can be set as the receiver of RCommands, or can be fed RCommands, and will extract any errors associated with those commands. If you use the RKRErrorDialog as a command receiver, be sure to always call deleteThis () instead of delete, so pending commands don't go to a destroyed object. */
+/** A subclass of RKErrorDialog, that has special helper functions to deal with RCommands. It can be set as the receiver of RCommands, or can be fed RCommands, and will extract any errors associated with those commands. */
 class RKRErrorDialog : public RKErrorDialog, public RCommandReceiver {
 public:
 /** constructor. See RKErrorDialog::RKErrorDialog () for details */
@@ -67,7 +67,7 @@ public:
 /** constructor. See RKErrorDialog::~RKErrorDialog () for details */
 	~RKRErrorDialog ();
 
-/** Use this mechanism to feed RCommands to the RKRErrorDialog manually. The alternative is to simply specify the error-dialog as the receiver of your RCommands (but then you'll never see tehm first). Errors contained in the command will be extracted. */
+/** Use this mechanism to feed RCommands to the RKRErrorDialog manually. The alternative is to simply specify the error-dialog as the receiver of your RCommands (but then you'll never see them first). Errors contained in the command will be extracted. */
 	void addRCommand (RCommand *command);
 protected:
 	void rCommandDone (RCommand *command);
