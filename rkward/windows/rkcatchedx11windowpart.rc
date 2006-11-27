@@ -1,7 +1,7 @@
 <!DOCTYPE kpartgui>
 <kpartgui name="rkward" version="0.4.2">
 	<MenuBar>
-		<Menu name="plot"><text>&amp;Plot Device</text>
+		<Menu name="plot"><text>&amp;Device</text>
 			<Action name="device_activate"/>
 			<Action name="device_duplicate"/>
 			<Separator/>

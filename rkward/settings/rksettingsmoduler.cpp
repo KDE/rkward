@@ -45,6 +45,7 @@ bool RKSettingsModuleR::options_keepsourcepkgs;
 int RKSettingsModuleR::options_expressions;
 int RKSettingsModuleR::options_digits;
 bool RKSettingsModuleR::options_checkbounds;
+QString RKSettingsModuleR::options_printcmd;
 
 RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -129,6 +130,11 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	connect (checkbounds_input, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
 	grid->addWidget (checkbounds_input, row, 1);
 
+	grid->addWidget (new QLabel (i18n ("Command used to send file to printer"), this), ++row, 0);
+	printcmd_input = new QLineEdit (options_printcmd, this);
+	connect (printcmd_input, SIGNAL (textChanged (const QString &)), this, SLOT (textChanged (const QString &)));
+	grid->addWidget (printcmd_input, row, 1);
+
 	main_vbox->addStretch ();
 }
 
@@ -173,6 +179,7 @@ void RKSettingsModuleR::applyChanges () {
 	options_expressions = expressions_input->value ();
 	options_digits = digits_input->value ();
 	options_checkbounds = (checkbounds_input->currentItem () == 0);
+	options_printcmd = printcmd_input->text ();
 
 // apply run time options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
@@ -198,6 +205,7 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	list.append ("options (digits=" + QString::number (options_digits) + ")\n");
 	if (options_checkbounds) tf = "TRUE"; else tf = "FALSE";
 	list.append ("options (checkbounds=" + tf + ")\n");
+	list.append ("options (printcmd=\"" + options_printcmd + "\")\n");
 
 	return list;
 }
@@ -222,6 +230,7 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	config->writeEntry ("expressions", options_expressions);
 	config->writeEntry ("digits", options_digits);
 	config->writeEntry ("check.bounds", options_checkbounds);
+	config->writeEntry ("printcmd", options_printcmd);
 }
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
@@ -238,6 +247,7 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	options_expressions = config->readNumEntry ("expressions", 5000);
 	options_digits = config->readNumEntry ("digits", 7);
 	options_checkbounds = config->readNumEntry ("check.bounds", false);
+	options_printcmd = config->readEntry ("printcmd", "kprinter");
 }
 
 //#################################################

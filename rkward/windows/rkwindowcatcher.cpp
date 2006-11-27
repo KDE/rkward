@@ -228,8 +228,6 @@ void RKCatchedX11Window::printDevice () {
 	RK_TRACE (MISC);
 
 	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.print ()", RCommand::App, i18n ("Print contents of graphics device number %1").arg (QString::number (device_number)));
-
-	#warning TODO: options ("printcmd") should be made configurable, and set to kprinter by default
 }
 
 void RKCatchedX11Window::copyDeviceToRObject () {

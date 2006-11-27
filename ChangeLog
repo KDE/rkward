@@ -1,7 +1,9 @@
+- add options ("printcmd") to settings
 - fix help menu for detached windows
 - R X11 device windows are now managed by rkward, with the following initial features:
 - R X11 device windows: attach to / detach from workplace (they start detached)
 - R X11 device windows: toggle between normal resize mode and (settable) fixed size with scrollbars
+
 - fixed: selecting Window->Close in a detached window would only close the internal view, not the window
 - when detaching a window, give it a more reasonable size
 - do not open the same script url twice (instead the corresponding window is raised on the second attempt)
