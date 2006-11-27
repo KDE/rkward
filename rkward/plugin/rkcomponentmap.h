@@ -26,6 +26,7 @@ enum RKComponentType {
 #include <qstring.h>
 
 class RKComponent;
+class RKComponentMap;
 class QWidget;
 /** This simple class keeps the most basic information about a component in RKWard. Most work is done in RKComponentMap.
 
@@ -41,7 +42,7 @@ public:
 	RKComponentType getType () { return type; };
 	bool isPlugin ();
 
-	static RKComponentHandle* createComponentHandle (const QString &filename, RKComponentType type, const QString& id, const QString& label);
+	static RKComponentHandle* createComponentHandle (const QString &filename, RKComponentType type, const QString& id, const QString& label, RKComponentMap *map);
 /** invoke the component (standalone or embedded) */
 	virtual RKComponent *invoke (RKComponent *parent_component, QWidget *parent_widget) = 0;
 private:
@@ -72,12 +73,16 @@ public:
 
 /** adds all Plugins / components in a .pluginmap-file. Also takes care of creating the menu-items, etc.
 @returns number of plugins (i.e. stand-alone components/menu-entries) added successfully */
-	int addPluginMap (const QString& plugin_map_file);
+	static int addPluginMap (const QString& plugin_map_file);
+
 /** clears out (and deletes) all components / plugins */
-	void clear ();
+	static void clearAll ();
 
 /** returns the component identified by id */
-	RKComponentHandle* getComponentHandle (const QString &id);
+	static RKComponentHandle* getComponentHandle (const QString &id);
+	static RKComponentMap *getRegularMap () { return regular_component_map; };
+	static RKComponentMap *getX11DeviceMap () { return x11_device_component_map; };
+	static void initializeMaps ();
 private:
 /** recurse into a lower menu-level 
 @param parent the parent menu (in the KXMLGUI)
@@ -97,6 +102,14 @@ private:
 	typedef QMap<QString, RKComponentHandle*> ComponentMap;
 /** the actual map of components */
 	ComponentMap components;
+
+	RKComponentHandle* getComponentHandleLocal (const QString &id);
+	int addPluginMapLocal (const QString& plugin_map_file, const QDomElement &document_element);
+
+	void clearLocal ();
+
+	static RKComponentMap *regular_component_map;
+	static RKComponentMap *x11_device_component_map;
 };
 
 #include <qobject.h>

@@ -20,7 +20,6 @@
 
 RInterface *RKGlobals::rinter;
 RKModificationTracker *RKGlobals::mtracker;
-RKComponentMap *RKGlobals::cmap;
 KHelpDlg *RKGlobals::helpdlg;
 RControlWindow *RKGlobals::rcontrol;
 

@@ -493,7 +493,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			widget = new RKText (e, component (), parent_widget);
 		} else if (e.tagName () == "embed") {
 			QString component_id = xml->getStringAttribute (e, "component", QString::null, DL_ERROR);
-			RKComponentHandle *handle = RKGlobals::componentMap ()->getComponentHandle (component_id);
+			RKComponentHandle *handle = RKComponentMap::getComponentHandle (component_id);
 			if (handle) {
 				if (xml->getBoolAttribute (e, "as_button", false, DL_INFO)) {
 					widget = handle->invoke (component (), 0);

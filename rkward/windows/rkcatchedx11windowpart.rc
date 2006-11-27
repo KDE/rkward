@@ -1,14 +1,13 @@
 <!DOCTYPE kpartgui>
 <kpartgui name="rkward" version="0.4.2">
 	<MenuBar>
-		<Menu name="plot"><text>&amp;Device</text>
+		<Menu name="device"><text>&amp;Device</text>
 			<Action name="device_activate"/>
 			<Action name="device_duplicate"/>
 			<Separator/>
 			<Action name="device_print"/>
 			<Action name="device_copy_to_output"/>
 			<Action name="device_copy_to_r_object"/>
-			<Action name="device_copy_to_file"/>
 			<Merge/>
 		</Menu>
 		<Menu name="view"><text>&amp;View</text>

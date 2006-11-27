@@ -26,6 +26,19 @@
 #include "../rkglobals.h"
 #include "../rkward.h"
 
+// static members
+RKComponentMap *RKComponentMap::regular_component_map = 0;
+RKComponentMap *RKComponentMap::x11_device_component_map = 0;;
+
+void RKComponentMap::initializeMaps () {
+	RK_TRACE (PLUGIN);
+
+	RK_ASSERT (regular_component_map == 0);
+	RK_ASSERT (x11_device_component_map == 0);
+	regular_component_map = new RKComponentMap ();
+	x11_device_component_map = new RKComponentMap ();
+}
+
 RKComponentMap::RKComponentMap () : KXMLGUIClient () {
 	RK_TRACE (PLUGIN);
 }
@@ -33,10 +46,10 @@ RKComponentMap::RKComponentMap () : KXMLGUIClient () {
 RKComponentMap::~RKComponentMap () {
 	RK_TRACE (PLUGIN);
 
-	clear ();
+	clearLocal ();
 }
 
-void RKComponentMap::clear () {
+void RKComponentMap::clearLocal () {
 	RK_TRACE (PLUGIN);
 
 	actionCollection ()->clear ();
@@ -52,10 +65,30 @@ void RKComponentMap::clear () {
 	setXMLGUIBuildDocument (doc);
 }
 
+void RKComponentMap::clearAll () {
+	RK_TRACE (PLUGIN);
+
+	getRegularMap ()->clearLocal ();
+	getX11DeviceMap ()->clearLocal ();
+}
+
 RKComponentHandle* RKComponentMap::getComponentHandle (const QString &id) {
 	RK_TRACE (PLUGIN);
 
-	return (components[id]);
+	RKComponentHandle *handle = getRegularMap ()->getComponentHandleLocal (id);
+	if (handle) return handle;
+	handle = getX11DeviceMap ()->getComponentHandleLocal (id);
+	if (handle) return handle;
+
+	RK_DO (qDebug ("no such component %s", id.latin1 ()), PLUGIN, DL_WARNING);
+	return (0);
+}
+
+RKComponentHandle* RKComponentMap::getComponentHandleLocal (const QString &id) {
+	RK_TRACE (PLUGIN);
+
+	if (components.contains (id)) return (components[id]);
+	return 0;
 }
 
 //static
@@ -133,6 +166,18 @@ int RKComponentMap::addPluginMap (const QString& plugin_map_file) {
 	QDomElement document_element = xml->openXMLFile (plugin_map_file, DL_ERROR);
 	if (xml->highestError () >= DL_ERROR) return (0);
 
+	int type = xml->getMultiChoiceAttribute (document_element, "type", "regular;x11", 0, DL_INFO);
+	if (type == 0) return getRegularMap()->addPluginMapLocal (plugin_map_file, document_element);
+	else return getX11DeviceMap()->addPluginMapLocal (plugin_map_file, document_element);
+}
+
+int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file, const QDomElement &document_element) {
+	RK_TRACE (PLUGIN);
+
+	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	QDomElement element;
+	XMLChildList list;	
+
 	QString prefix = QFileInfo (plugin_map_file).dirPath (true) + "/" + xml->getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
 	QString cnamespace = xml->getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";
 
@@ -151,7 +196,7 @@ int RKComponentMap::addPluginMap (const QString& plugin_map_file) {
 		} else if (!QFileInfo (filename).isReadable ()) {
 			RK_DO (qDebug ("Specified file '%s' for component id \"%s\" does not exist or is not readable. Ignoring.", filename.latin1 (), id.latin1 ()), PLUGIN, DL_ERROR);
 		} else {
-			components.insert (id, RKComponentHandle::createComponentHandle (filename, (RKComponentType) type, id, label));
+			components.insert (id, RKComponentHandle::createComponentHandle (filename, (RKComponentType) type, id, label, this));
 		}
 	}
 
@@ -198,10 +243,10 @@ RKComponentHandle::~RKComponentHandle () {
 }
 
 //static 
-RKComponentHandle* RKComponentHandle::createComponentHandle (const QString &filename, RKComponentType type, const QString& id, const QString& label) {
+RKComponentHandle* RKComponentHandle::createComponentHandle (const QString &filename, RKComponentType type, const QString& id, const QString& label, RKComponentMap *map) {
 	if (type == (int) Standard) {
 		RKStandardComponentHandle *ret = new RKStandardComponentHandle (filename, type);
-		new KAction (label, 0, ret, SLOT (activated ()), RKGlobals::componentMap ()->actionCollection (), id.latin1 ());
+		new KAction (label, 0, ret, SLOT (activated ()), map->actionCollection (), id.latin1 ());
 		return (ret);
 	}
 	// TODO: create an RKPluginHandle instead!

@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="" namespace="rkward">
+<document base_prefix="" namespace="rkward" type="regular">
 	<components>
 		<component type="standard" id="independent_samples_t_test" file="00means/00ttests/00independent_samples/description.xml" label="Independent Samples" />
 
@@ -55,5 +55,6 @@
 
 	<include file="distributions.pluginmap"/>
 	<include file="plots.pluginmap"/>
+	<include file="x11device.pluginmap"/>
 </document>
  

@@ -53,7 +53,15 @@ void RKWorkplaceView::addPage (RKMDIWindow *widget) {
 	RK_TRACE (APP);
 
 	widgets->addWidget (widget);
-	int id = tabs->addTab (new QTab (*(widget->icon ()), widget->shortCaption ()));
+	int id;
+	if (widget->icon ()) {
+		id = tabs->addTab (new QTab (*(widget->icon ()), widget->shortCaption ()));
+	} else if (widget->topLevelWidget ()->icon ()) {
+		id = tabs->addTab (new QTab (*(widget->topLevelWidget ()->icon ()), widget->shortCaption ()));
+	} else {
+		RK_ASSERT (false);
+		id = tabs->addTab (new QTab (widget->shortCaption ()));
+	}
 	pages.insert (id, widget);
 	connect (widget, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (childCaptionChanged (RKMDIWindow *)));
 	widget->show ();

@@ -119,7 +119,6 @@ public slots:
 	void copyDeviceToOutput ();
 	void printDevice ();
 	void copyDeviceToRObject ();
-	void copyDeviceToFile ();
 	void duplicateDevice ();
 private:
 	friend class RKCatchedX11WindowPart;	// needs access to the actions

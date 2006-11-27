@@ -1,0 +1,13 @@
+<!DOCTYPE rkpluginmap>
+
+<document base_prefix="x11device/" namespace="rkward" type="x11">
+	<components>
+		<component type="standard" id="export_x11_device" file="export.xml" label="Export..." />
+	</components>
+
+	<hierarchy>
+		<menu id="device" label="Device" index="1">
+			<entry component="export_x11_device" />
+		</menu>
+	</hierarchy>
+</document>

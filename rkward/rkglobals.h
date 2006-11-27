@@ -21,7 +21,6 @@ class RKWardMainWindow;
 class RInterface;
 class RObjectList;
 class RKModificationTracker;
-class RKComponentMap;
 class KHelpDlg;
 class RControlWindow;
 class QString;
@@ -44,8 +43,6 @@ public:
 	static RInterface *rInterface () { return rinter; };
 /// static pointer to the RKModificationTracker
 	static RKModificationTracker *tracker () { return mtracker; };
-/// static pointer to the RKComponentMap
-	static RKComponentMap *componentMap () { return cmap; };
 /// static pointer to the RKHelpDlg
 	static KHelpDlg *helpDialog () { return helpdlg; };
 /// static pointer to the RControlWindow
@@ -65,7 +62,6 @@ private:
 	friend class RKWardMainWindow;
 	static RInterface *rinter;
 	static RKModificationTracker *mtracker;
-	static RKComponentMap *cmap;
 	static KHelpDlg *helpdlg;
 	static RControlWindow *rcontrol;
 };
