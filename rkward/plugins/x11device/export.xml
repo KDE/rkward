@@ -1,0 +1,17 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="export.php" />
+	<logic>
+		<convert id="formatother" mode="equals" sources="format.string" standard="other" />
+		<connect client="specifiedformat.enabled" governor="formatother" />
+	</logic>
+	<dialog label="Export contents of graphics device">
+		<browser size="small" id="file" label="File name" initial="Rplot.pdf" />
+		<radio id="format" label="Output format" >
+			<option value="pdf" label="PDF" />
+			<option value="postscript" label="PostScript" />
+			<option value="other" label="Other (specify):" />
+		</radio>
+		<input label="Ghostscript format id" id="specifiedformat" initial="png16m" size="small"/>
+	</dialog>
+</document>

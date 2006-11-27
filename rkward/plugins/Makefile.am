@@ -2,7 +2,8 @@ pluginsdir = $(kde_datadir)/rkward/
 dist_plugins_DATA = \
 	all.pluginmap \
 	plots.pluginmap \
-	distributions.pluginmap
+	distributions.pluginmap \
+	x11device.pluginmap
 
 pluginsXplotsdir = $(kde_datadir)/rkward/plots
 dist_pluginsXplots_DATA = \
@@ -11,7 +12,9 @@ dist_pluginsXplots_DATA = \
 	plots/box_plot.xml \
 	plots/plot_options.xml \
 	plots/box_plot.php \
-	plots/histogram.xml
+	plots/histogram.xml \
+	plots/ecdf_plot.php \
+	plots/ecdf_plot.xml
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
@@ -101,6 +104,10 @@ dist_pluginsXdistributions_DATA = \
 	distributions/weibull_probabilities.xml \
 	distributions/weibull_quantiles.php \
 	distributions/weibull_quantiles.xml \
+	distributions/tukey_probabilities.php \
+	distributions/tukey_probabilities.xml \
+	distributions/tukey_quantiles.php \
+	distributions/tukey_quantiles.xml \
 	distributions/wilcoxon_probabilities.php \
 	distributions/wilcoxon_probabilities.xml \
 	distributions/wilcoxon_quantiles.php \
@@ -176,4 +183,21 @@ pluginsX00saveloadXsaveXsavedir = $(kde_datadir)/rkward/00saveload/save/save
 dist_pluginsX00saveloadXsaveXsave_DATA = \
 	00saveload/save/save/code.php \
 	00saveload/save/save/description.xml
+
+pluginsXtempdir = $(kde_datadir)/rkward/temp
+pluginsXtempXcommit151106dir = $(kde_datadir)/rkward/temp/commit151106
+dist_pluginsXtempXcommit151106_DATA = \
+	temp/commit151106/code.php \
+	temp/commit151106/description.xml
+
+pluginsXtempXcommit151106Xtukeydir = $(kde_datadir)/rkward/temp/commit151106/tukey
+pluginsXtempXcommit151106X20dudir = $(kde_datadir)/rkward/temp/commit151106/20du
+dist_pluginsXtempXcommit151106X20du_DATA = \
+	temp/commit151106/20du/code.php \
+	temp/commit151106/20du/description.xml
+
+pluginsXx11devicedir = $(kde_datadir)/rkward/x11device
+dist_pluginsXx11device_DATA = \
+	x11device/export.xml \
+	x11device/export.php
 
