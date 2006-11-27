@@ -162,7 +162,7 @@ void RKWorkplace::newOutput () {
 void RKWorkplace::newX11Window (WId window_to_embed, int device_number) {
 	RK_TRACE (APP);
 
-	RKCatchedX11Window *window = new RKCatchedX11Window (window_to_embed, device_number);
+	RKCaughtX11Window *window = new RKCaughtX11Window (window_to_embed, device_number);
 	window->state = RKMDIWindow::Detached;
 	addWindow (window, false);
 }

@@ -65,7 +65,7 @@ public:
 /** call this function to start looking out for new R X11 device windows.
 @param prev_cur_device the device number that was active before a new device window was (potentially) created */
 	void start (int prev_cur_device);
-/** end looking out for new R X11 windows. If a new window was in fact created, this is captured by creating an RKCatchedX11Window
+/** end looking out for new R X11 windows. If a new window was in fact created, this is captured by creating an RKCaughtX11Window
 @param new_cur_device the new active device number, i.e. the device number of the created window */
 	void stop (int new_cur_device);
 private:
@@ -75,23 +75,23 @@ private:
 
 #include "rkmdiwindow.h"
 
-class RKCatchedX11WindowPart;
+class RKCaughtX11WindowPart;
 class KToggleAction;
 class QXEmbedCopy;
 class QScrollView;
 class QVBox;
 class RKRErrorDialog;
 
-/** An R X11 device window managed by rkward. Should actually be called RKCaughtX11Window... */
-class RKCatchedX11Window : public RKMDIWindow {
+/** An R X11 device window managed by rkward. */
+class RKCaughtX11Window : public RKMDIWindow {
 	Q_OBJECT
 public:
 /** ctor
 @param window_to_embed the Window id of the R X11 device window to embed
 @param device_number the device number corresponding to that window */
-	RKCatchedX11Window (WId window_to_embed, int device_number);
+	RKCaughtX11Window (WId window_to_embed, int device_number);
 /** dtor */
-	~RKCatchedX11Window ();
+	~RKCaughtX11Window ();
 
 	KParts::Part *getPart ();
 /** TODO */
@@ -121,10 +121,10 @@ public slots:
 	void copyDeviceToRObject ();
 	void duplicateDevice ();
 private:
-	friend class RKCatchedX11WindowPart;	// needs access to the actions
+	friend class RKCaughtX11WindowPart;	// needs access to the actions
 	int device_number;
 	WId embedded;
-	RKCatchedX11WindowPart *part;
+	RKCaughtX11WindowPart *part;
 	QVBox *xembed_container;
 	QScrollView *scroll_widget;
 	QVBox *box_widget;
@@ -134,16 +134,16 @@ private:
 	KToggleAction *dynamic_size_action;
 };
 
-/** Provides a KPart interface for RKCatchedX11Window. */
-class RKCatchedX11WindowPart : public KParts::Part {
+/** Provides a KPart interface for RKCaughtX11Window. */
+class RKCaughtX11WindowPart : public KParts::Part {
 public:
 /** constructor.
 @param window The RKCatehdX11Window for this part */
-	RKCatchedX11WindowPart (RKCatchedX11Window *window);
+	RKCaughtX11WindowPart (RKCaughtX11Window *window);
 /** destructor */
-	~RKCatchedX11WindowPart ();
+	~RKCaughtX11WindowPart ();
 private:
-	RKCatchedX11Window *window;
+	RKCaughtX11Window *window;
 };
 
 #endif //DISABLE_RKWINDOWCATCHER

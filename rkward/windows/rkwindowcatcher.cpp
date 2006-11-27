@@ -56,7 +56,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 
 		if (w) {
 			RKWorkplace::mainWorkplace ()->newX11Window (w, new_cur_device);
-			//new RKCatchedX11Window (w, new_cur_device);
+			//new RKCaughtX11Window (w, new_cur_device);
 		} else {
 			KMessageBox::information (0, i18n ("You have created a new X11 device window in R. Usually, RKWard tries to detect such windows, to take control of them, and add a menu-bar to them. This time, however, RKWard failed to detect, which window was created, and so can not embed it.\nIf you created the window on a different screen or X11 display, that is to be expected. You might want to consider changing options(\"display\"), then.\nIf you can see the X11 window on the same screen as this message, then RKWard should do better. In this case, please contact us at rkward-devel@lists.sourceforge.net with details on your setup, so we can try to fix this in future versions of RKWard."), i18n ("Could not embed R X11 window"), "failure_to_detect_x11_device");
 		}
@@ -66,7 +66,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 
 ///////////////////////////////// END RKWindowCatcher //////////////////////////////////
 /**************************************************************************************/
-//////////////////////////////// BEGIN RKCatchedX11Window //////////////////////////////
+//////////////////////////////// BEGIN RKCaughtX11Window //////////////////////////////
 
 
 #include <qscrollview.h>
@@ -83,15 +83,15 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #include "../misc/rkerrordialog.h"
 #include "../misc/rksaveobjectchooser.h"
 
-RKCatchedX11Window::RKCatchedX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
+RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
 	RK_TRACE (MISC);
 
 	error_dialog = new RKRErrorDialog (i18n ("An error occurred"), i18n ("An error occurred"));
-	part = new RKCatchedX11WindowPart (this);
+	part = new RKCaughtX11WindowPart (this);
 	setFocusPolicy (QWidget::ClickFocus);
 
 	embedded = window_to_embed;
-	RKCatchedX11Window::device_number = device_number;
+	RKCaughtX11Window::device_number = device_number;
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	box_widget = new QVBox (this);
@@ -116,20 +116,20 @@ RKCatchedX11Window::RKCatchedX11Window (WId window_to_embed, int device_number) 
 	RKWardApplication::getApp ()->registerNameWatcher (window_to_embed, this);
 }
 
-RKCatchedX11Window::~RKCatchedX11Window () {
+RKCaughtX11Window::~RKCaughtX11Window () {
 	RK_TRACE (MISC);
 
 	RKWardApplication::getApp ()->unregisterNameWatcher (embedded);
 	error_dialog->autoDeleteWhenDone ();
 }
 
-KParts::Part *RKCatchedX11Window::getPart () {
+KParts::Part *RKCaughtX11Window::getPart () {
 	RK_TRACE (MISC);
 
 	return part;
 }
 
-void RKCatchedX11Window::prepareToBeAttached () {
+void RKCaughtX11Window::prepareToBeAttached () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setChecked (false);
@@ -137,13 +137,13 @@ void RKCatchedX11Window::prepareToBeAttached () {
 	dynamic_size_action->setEnabled (false);
 }
 
-void RKCatchedX11Window::prepareToBeDetached () {
+void RKCaughtX11Window::prepareToBeDetached () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setEnabled (true);
 }
 
-void RKCatchedX11Window::fixedSizeToggled () {
+void RKCaughtX11Window::fixedSizeToggled () {
 	RK_TRACE (MISC);
 
 	if (dynamic_size == dynamic_size_action->isChecked ()) return;
@@ -165,7 +165,7 @@ void RKCatchedX11Window::fixedSizeToggled () {
 	}
 }
 
-void RKCatchedX11Window::setFixedSize1 () {
+void RKCaughtX11Window::setFixedSize1 () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setChecked (false);
@@ -173,7 +173,7 @@ void RKCatchedX11Window::setFixedSize1 () {
 	xembed_container->setFixedSize (500, 500);
 }
 
-void RKCatchedX11Window::setFixedSize2 () {
+void RKCaughtX11Window::setFixedSize2 () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setChecked (false);
@@ -181,7 +181,7 @@ void RKCatchedX11Window::setFixedSize2 () {
 	xembed_container->setFixedSize (1000, 1000);
 }
 
-void RKCatchedX11Window::setFixedSize3 () {
+void RKCaughtX11Window::setFixedSize3 () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setChecked (false);
@@ -189,7 +189,7 @@ void RKCatchedX11Window::setFixedSize3 () {
 	xembed_container->setFixedSize (2000, 2000);
 }
 
-void RKCatchedX11Window::setFixedSizeManual () {
+void RKCaughtX11Window::setFixedSizeManual () {
 	RK_TRACE (MISC);
 
 // TODO: not very pretty, yet
@@ -215,25 +215,25 @@ void RKCatchedX11Window::setFixedSizeManual () {
 	delete dialog;
 }
 
-void RKCatchedX11Window::activateDevice () {
+void RKCaughtX11Window::activateDevice () {
 	RK_TRACE (MISC);
 
 	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")", RCommand::App, i18n ("Activate graphics device number %1").arg (QString::number (device_number)), error_dialog);
 }
 
-void RKCatchedX11Window::copyDeviceToOutput () {
+void RKCaughtX11Window::copyDeviceToOutput () {
 	RK_TRACE (MISC);
 
 	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=rk.graph.on)\nrk.graph.off ()", RCommand::App | RCommand::DirectToOutput, i18n ("Copy contents of graphics device number %1 to output").arg (QString::number (device_number)), error_dialog);
 }
 
-void RKCatchedX11Window::printDevice () {
+void RKCaughtX11Window::printDevice () {
 	RK_TRACE (MISC);
 
 	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.print ()", RCommand::App, i18n ("Print contents of graphics device number %1").arg (QString::number (device_number)), error_dialog);
 }
 
-void RKCatchedX11Window::copyDeviceToRObject () {
+void RKCaughtX11Window::copyDeviceToRObject () {
 	RK_TRACE (MISC);
 
 // TODO: not very pretty, yet
@@ -257,26 +257,26 @@ void RKCatchedX11Window::copyDeviceToRObject () {
 	delete dialog;
 }
 
-void RKCatchedX11Window::duplicateDevice () {
+void RKCaughtX11Window::duplicateDevice () {
 	RK_TRACE (MISC);
 
 	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=x11)", RCommand::App, i18n ("Duplicate graphics device number %1").arg (QString::number (device_number)), error_dialog);
 }
 
 
-///////////////////////////////// END RKCatchedX11Window ///////////////////////////////
+///////////////////////////////// END RKCaughtX11Window ///////////////////////////////
 /**************************************************************************************/
-//////////////////////////////// BEGIN RKCatchedX11WindowPart //////////////////////////
+//////////////////////////////// BEGIN RKCaughtX11WindowPart //////////////////////////
 
 
-RKCatchedX11WindowPart::RKCatchedX11WindowPart (RKCatchedX11Window *window) : KParts::Part (0) {
+RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KParts::Part (0) {
 	RK_TRACE (MISC);
 
 	KInstance* instance = new KInstance ("rkward");
 	setInstance (instance);
 
 	setWidget (window);
-	RKCatchedX11WindowPart::window = window;
+	RKCaughtX11WindowPart::window = window;
 
 	setXMLFile ("rkcatchedx11windowpart.rc");
 
@@ -294,7 +294,7 @@ RKCatchedX11WindowPart::RKCatchedX11WindowPart (RKCatchedX11Window *window) : KP
 	new KAction (i18n ("Duplicate"), 0, window, SLOT (duplicateDevice ()), actionCollection (), "device_duplicate");
 }
 
-RKCatchedX11WindowPart::~RKCatchedX11WindowPart () {
+RKCaughtX11WindowPart::~RKCaughtX11WindowPart () {
 	RK_TRACE (MISC);
 }
 
