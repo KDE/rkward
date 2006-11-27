@@ -75,6 +75,8 @@ void GetFileNameWidget::browseButtonClicked () {
 		temp = KFileDialog::getExistingDirectory (location_edit->text (), this, caption);
 	} else if (mode == ExistingFile) {
 		temp = KFileDialog::getOpenFileName (location_edit->text (), _filter, this, caption);
+	} else if (mode == SaveFile) {
+		temp = KFileDialog::getSaveFileName (location_edit->text (), _filter, this, caption);
 	} else {
 		RK_ASSERT (false);
 	}

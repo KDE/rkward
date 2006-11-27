@@ -31,7 +31,7 @@ Simple convenience class used to get a file/directoryname from the user. Basical
 class GetFileNameWidget : public QWidget {
 	Q_OBJECT
 public:
-	enum FileType { ExistingFile=0, ExistingDirectory=1 };
+	enum FileType { ExistingFile=0, ExistingDirectory=1, SaveFile=2 };
     
 	GetFileNameWidget (QWidget *parent, FileType mode, const QString &label, const QString &caption, const QString &initial);
 	~GetFileNameWidget ();
