@@ -104,8 +104,8 @@ public:
 /** see prepareToBeAttached (). Reenable the dynamic_size_action */
 	void prepareToBeDetached ();
 public slots:
-/** Do not invoke directly. Meant to be called from the toggle action */
-	void toggleFixedSize ();
+/** Fixed size action was (potentially) toggled. Update to the new state */
+	void fixedSizeToggled ();
 /** Switch to fixed size mode, and set size1 (currently 500*500) */
 	void setFixedSize1 ();
 /** Switch to fixed size mode, and set size2 (currently 1000*1000) */

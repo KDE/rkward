@@ -114,8 +114,6 @@ RKCatchedX11Window::RKCatchedX11Window (WId window_to_embed, int device_number) 
 	capture->embed (window_to_embed);
 
 	RKWardApplication::getApp ()->registerNameWatcher (window_to_embed, this);
-
-	show ();
 }
 
 RKCatchedX11Window::~RKCatchedX11Window () {
@@ -135,7 +133,7 @@ void RKCatchedX11Window::prepareToBeAttached () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setChecked (false);
-	toggleFixedSize ();
+	fixedSizeToggled ();
 	dynamic_size_action->setEnabled (false);
 }
 
@@ -145,7 +143,7 @@ void RKCatchedX11Window::prepareToBeDetached () {
 	dynamic_size_action->setEnabled (true);
 }
 
-void RKCatchedX11Window::toggleFixedSize () {
+void RKCatchedX11Window::fixedSizeToggled () {
 	RK_TRACE (MISC);
 
 	if (dynamic_size == dynamic_size_action->isChecked ()) return;
@@ -171,7 +169,7 @@ void RKCatchedX11Window::setFixedSize1 () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setChecked (false);
-	toggleFixedSize ();		// apparently KToggleAction::setChecked () does not invoke the slot!
+	fixedSizeToggled ();		// apparently KToggleAction::setChecked () does not invoke the slot!
 	xembed_container->setFixedSize (500, 500);
 }
 
@@ -179,7 +177,7 @@ void RKCatchedX11Window::setFixedSize2 () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setChecked (false);
-	toggleFixedSize ();		// see setFixedSize1 () above
+	fixedSizeToggled ();		// see setFixedSize1 () above
 	xembed_container->setFixedSize (1000, 1000);
 }
 
@@ -187,7 +185,7 @@ void RKCatchedX11Window::setFixedSize3 () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setChecked (false);
-	toggleFixedSize ();		// see setFixedSize1 () above
+	fixedSizeToggled ();		// see setFixedSize1 () above
 	xembed_container->setFixedSize (2000, 2000);
 }
 
@@ -209,7 +207,7 @@ void RKCatchedX11Window::setFixedSizeManual () {
 
 	if (dialog->result () == QDialog::Accepted) {
 		dynamic_size_action->setChecked (false);
-		toggleFixedSize ();		// see setFixedSize1 () above
+		fixedSizeToggled ();		// see setFixedSize1 () above
 
 		xembed_container->setFixedSize (width->value (), height->value ());
 	}
@@ -274,7 +272,7 @@ void RKCatchedX11Window::duplicateDevice () {
 }
 
 
-///////////////////////////////// END RKWindowCatchedWindow ////////////////////////////
+///////////////////////////////// END RKCatchedX11Window ///////////////////////////////
 /**************************************************************************************/
 //////////////////////////////// BEGIN RKCatchedX11WindowPart //////////////////////////
 
@@ -290,7 +288,7 @@ RKCatchedX11WindowPart::RKCatchedX11WindowPart (RKCatchedX11Window *window) : KP
 
 	setXMLFile ("rkcatchedx11windowpart.rc");
 
-	window->dynamic_size_action = new KToggleAction (i18n ("Draw area follows size of window"), 0, window, SLOT (toggleFixedSize ()), actionCollection (), "toggle_fixed_size");
+	window->dynamic_size_action = new KToggleAction (i18n ("Draw area follows size of window"), 0, window, SLOT (fixedSizeToggled ()), actionCollection (), "toggle_fixed_size");
 
 	new KAction (i18n ("Set fixed size 500x500"), 0, window, SLOT (setFixedSize1 ()), actionCollection (), "set_fixed_size_1");
 	new KAction (i18n ("Set fixed size 1000x1000"), 0, window, SLOT (setFixedSize2 ()), actionCollection (), "set_fixed_size_2");
@@ -300,8 +298,8 @@ RKCatchedX11WindowPart::RKCatchedX11WindowPart (RKCatchedX11Window *window) : KP
 	new KAction (i18n ("Make active"), 0, window, SLOT (activateDevice ()), actionCollection (), "device_activate");
 	new KAction (i18n ("Copy to output"), 0, window, SLOT (copyDeviceToOutput ()), actionCollection (), "device_copy_to_output");
 	new KAction (i18n ("Print"), 0, window, SLOT (printDevice ()), actionCollection (), "device_print");
-	new KAction (i18n ("Store as R object"), 0, window, SLOT (copyDeviceToRObject ()), actionCollection (), "device_copy_to_r_object");
-	new KAction (i18n ("Export"), 0, window, SLOT (copyDeviceToFile ()), actionCollection (), "device_copy_to_file");
+	new KAction (i18n ("Store as R object..."), 0, window, SLOT (copyDeviceToRObject ()), actionCollection (), "device_copy_to_r_object");
+	new KAction (i18n ("Export..."), 0, window, SLOT (copyDeviceToFile ()), actionCollection (), "device_copy_to_file");
 	new KAction (i18n ("Duplicate"), 0, window, SLOT (duplicateDevice ()), actionCollection (), "device_duplicate");
 }
 
