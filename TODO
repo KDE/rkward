@@ -22,10 +22,9 @@ Bugs:
 
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org
+	- cleanup DISABLE_RKWINDOWCATCHER (either get rid of it, or do it right)
 
 UI-stuff
-	- Access to dev.copy (), dev.print (), and a function to copy gaphics to rkward output
-		- cleanup DISABLE_RKWINDOWCATCHER (either get rid of it, or do it right)
 	- Output window should gain some sort of auto-update functionality:
 		- After user commands, should check, whether the output file was modified. If so, reload
 	- Option to save workplace per session instead of per workspace
@@ -84,8 +83,6 @@ UI-stuff
 Internal stuff:
 	- should we override bindingIsActive()?
 	RKVariable:
-		- Need to add a conversion script. See .rk.get.meta (). Both should be changed at the same time.
-			- Or was it already broken, before?
 		- True Support for Logicals
 		- In the current design, RKVariable would not handle storage mode changes from outside well at all
 		- use QIntDict instead of string-map for value-labels / factor levels? Qt4: QHash
