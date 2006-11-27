@@ -248,6 +248,12 @@ void RKCatchedX11Window::copyDeviceToFile () {
 	#warning implement or deactivate action
 }
 
+void RKCatchedX11Window::duplicateDevice () {
+	RK_TRACE (MISC);
+
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=x11)", RCommand::App, i18n ("Duplicate graphics device number %1").arg (QString::number (device_number)));
+}
+
 
 ///////////////////////////////// END RKWindowCatchedWindow ////////////////////////////
 /**************************************************************************************/
@@ -277,6 +283,7 @@ RKCatchedX11WindowPart::RKCatchedX11WindowPart (RKCatchedX11Window *window) : KP
 	new KAction (i18n ("Print"), 0, window, SLOT (printDevice ()), actionCollection (), "device_print");
 	new KAction (i18n ("Store as R object"), 0, window, SLOT (copyDeviceToRObject ()), actionCollection (), "device_copy_to_r_object");
 	new KAction (i18n ("Export"), 0, window, SLOT (copyDeviceToFile ()), actionCollection (), "device_copy_to_file");
+	new KAction (i18n ("Duplicate"), 0, window, SLOT (duplicateDevice ()), actionCollection (), "device_duplicate");
 }
 
 RKCatchedX11WindowPart::~RKCatchedX11WindowPart () {

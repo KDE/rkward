@@ -3,6 +3,7 @@
 	<MenuBar>
 		<Menu name="plot"><text>&amp;Plot Device</text>
 			<Action name="device_activate"/>
+			<Action name="device_duplicate"/>
 			<Separator/>
 			<Action name="device_print"/>
 			<Action name="device_copy_to_output"/>

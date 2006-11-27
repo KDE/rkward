@@ -25,11 +25,11 @@ Compilation / technical
 
 UI-stuff
 	- Access to dev.copy (), dev.print (), and a function to copy gaphics to rkward output
-		- probably in Windows-menu for now
 		- cleanup DISABLE_RKWINDOWCATCHER (either get rid of it, or do it right)
 	- Output window should gain some sort of auto-update functionality:
 		- After user commands, should check, whether the output file was modified. If so, reload
 	- Option to save workplace per session instead of per workspace
+	- Fix help menu on RKMDIWindows
 	"First-run wizard"
 		- pre-install R packages
 	- Check for existence of php binary on startup, not only when loading a plugin
