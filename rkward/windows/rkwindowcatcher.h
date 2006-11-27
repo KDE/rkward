@@ -82,7 +82,7 @@ class QXEmbedCopy;
 class QScrollView;
 class QVBox;
 
-/** An R X11 device window managed by rkward */
+/** An R X11 device window managed by rkward. Should actually be called RKCaughtX11Window... */
 class RKCatchedX11Window : public RKMDIWindow {
 	Q_OBJECT
 public:
@@ -117,15 +117,12 @@ private:
 };
 
 class RKCatchedX11WindowPart : public KParts::Part {
-	Q_OBJECT
 public:
 /** constructor.
 @param console The console for this part */
 	RKCatchedX11WindowPart (RKCatchedX11Window *window);
 /** destructor */
 	~RKCatchedX11WindowPart ();
-public slots:
-// TODO
 private:
 	RKCatchedX11Window *window;
 };

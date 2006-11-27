@@ -87,9 +87,10 @@ RKCatchedX11Window::RKCatchedX11Window (WId window_to_embed, int device_number) 
 	box_widget = new QVBox (this);
 	layout->addWidget (box_widget);
 	scroll_widget = new QScrollView (this);
+	scroll_widget->setFrameStyle (QFrame::NoFrame);
 	scroll_widget->hide ();
 	layout->addWidget (scroll_widget);
-	xembed_container = new QVBox (box_widget);
+	xembed_container = new QVBox (box_widget);	// QXEmbed can not be reparented (between the box_widget, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead
 	dynamic_size = true;
 	dynamic_size_action->setChecked (true);
 
@@ -188,6 +189,7 @@ void RKCatchedX11Window::setFixedSizeManual () {
 
 	QLabel *label = new QLabel (i18n ("Width"), page);
 	KIntSpinBox *width = new KIntSpinBox (5, 32767, 1, xembed_container->width (), 10, page);
+	width->setEditFocus (true);
 
 	label = new QLabel (i18n ("Height"), page);
 	KIntSpinBox *height = new KIntSpinBox (5, 32767, 1, xembed_container->height (), 10, page);
