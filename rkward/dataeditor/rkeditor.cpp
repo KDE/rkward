@@ -27,11 +27,11 @@ RKEditor::~RKEditor () {
 	getObject ()->setObjectOpened (this, false);
 }
 
-QString RKEditor::getRDescription () {
+QString RKEditor::getDescription () {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (getObject ());
-//TODO: is this quoted correctly?
-	return (RObject::rQuote ("data:" + getObject ()->getFullName ()));
+
+	return ("data:" + getObject ()->getFullName ());
 }
 
 #include "rkeditor.moc"

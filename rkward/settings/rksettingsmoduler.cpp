@@ -130,7 +130,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	connect (checkbounds_input, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
 	grid->addWidget (checkbounds_input, row, 1);
 
-	grid->addWidget (new QLabel (i18n ("Command used to send file to printer"), this), ++row, 0);
+	grid->addWidget (new QLabel (i18n ("Command used to send files to printer"), this), ++row, 0);
 	printcmd_input = new QLineEdit (options_printcmd, this);
 	connect (printcmd_input, SIGNAL (textChanged (const QString &)), this, SLOT (textChanged (const QString &)));
 	grid->addWidget (printcmd_input, row, 1);

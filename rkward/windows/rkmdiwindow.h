@@ -58,8 +58,8 @@ public:
 /** @returns The corresponding KPart for this window */
 	virtual KParts::Part *getPart () = 0;
 /** This is used in RKWorkplace::saveWorkplace () to save the info about the workplace. Make sure to add corresponding code to RKWorkplace::restoreWorkplace (), so your window(s) get restored when loading a Workspace
-@returns An internal descriptive string suitable for storage in R. */
-	virtual QString getRDescription () = 0;
+@returns An internal descriptive string. */
+	virtual QString getDescription () = 0;
 /** Reimplemented from QWidget::setCaption () to emit the signal captionChanged () when the caption is changed. */
 	void setCaption (const QString &caption);
 /** Is this window attached (or detached)?

@@ -77,7 +77,6 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	workplace_save_chooser->setButton (static_cast<int> (workplace_save_mode));
 	connect (workplace_save_chooser, SIGNAL (clicked (int)), this, SLOT (boxChanged (int)));
 	main_vbox->addWidget (workplace_save_chooser);
-	#warning option unfinished!
 
 	main_vbox->addStretch ();
 }
@@ -110,6 +109,7 @@ void RKSettingsModuleGeneral::applyChanges () {
 	RK_TRACE (SETTINGS);
 	new_files_path = files_choser->getLocation ();
 	startup_action = (StartupDialog::Result) startup_action_choser->currentItem ();
+	workplace_save_mode = (WorkplaceSaveMode) workplace_save_chooser->selectedId ();
 }
 
 void RKSettingsModuleGeneral::save (KConfig *config) {
@@ -141,6 +141,20 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 
 	config->setGroup ("Workplace");
 	workplace_save_mode = (WorkplaceSaveMode) config->readNumEntry ("save mode", SaveWorkplaceWithWorkspace);
+}
+
+QString RKSettingsModuleGeneral::getSavedWorkplace (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
+	config->setGroup ("Workplace");
+	return (config->readEntry ("last saved layout", QString::null));
+}
+
+void RKSettingsModuleGeneral::setSavedWorkplace (const QString &description, KConfig *config) {
+	RK_TRACE (SETTINGS);
+
+	config->setGroup ("Workplace");
+	config->writeEntry ("last saved layout", description);
 }
 
 #include "rksettingsmodulegeneral.moc"

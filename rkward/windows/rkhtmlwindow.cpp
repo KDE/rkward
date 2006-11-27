@@ -32,7 +32,6 @@
 
 #include "../rkglobals.h"
 #include "../rkward.h"
-#include "../core/robject.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../windows/rkworkplace.h"
@@ -66,10 +65,10 @@ RKHTMLWindow::~RKHTMLWindow () {
 	khtmlpart = 0;	// in case we try to redelete in a parent class
 }
 
-QString RKHTMLWindow::getRDescription () {
+QString RKHTMLWindow::getDescription () {
 	RK_TRACE (APP);
 
-	return (RObject::rQuote ("help:" + khtmlpart->url ().url ()));
+	return ("help:" + khtmlpart->url ().url ());
 }
 
 bool RKHTMLWindow::isModified () {
@@ -211,10 +210,10 @@ RKOutputWindow::~RKOutputWindow () {
 	khtmlpart = 0;	// in case we try to redelete in a parent class
 }
 
-QString RKOutputWindow::getRDescription () {
+QString RKOutputWindow::getDescription () {
 	RK_TRACE (APP);
 
-	return (RObject::rQuote ("output:" + output_url.url ()));
+	return ("output:" + output_url.url ());
 }
 
 bool RKOutputWindow::openURL (const KURL &url) {

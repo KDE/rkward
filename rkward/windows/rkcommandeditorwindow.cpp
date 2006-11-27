@@ -103,10 +103,10 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	delete m_doc;
 }
 
-QString RKCommandEditorWindow::getRDescription () {
+QString RKCommandEditorWindow::getDescription () {
 	RK_TRACE (COMMANDEDITOR);
 
-	return (RObject::rQuote ("script:" + m_doc->url ().url ()));
+	return ("script:" + m_doc->url ().url ());
 }
 
 void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {

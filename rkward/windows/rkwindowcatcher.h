@@ -95,7 +95,7 @@ public:
 
 	KParts::Part *getPart ();
 /** TODO */
-	QString getRDescription () { return "unimplemented"; };
+	QString getDescription () { return "x11:unimplemented"; };
 /** TODO? */
 	bool isModified () { return false; };
 

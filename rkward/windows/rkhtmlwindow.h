@@ -56,7 +56,7 @@ public:
 @param action_collection A KActionCollection to insert actions in. */
 	void addCommonActions (KActionCollection *action_collection);
 
-	QString getRDescription ();
+	QString getDescription ();
 	bool isModified ();
 	KParts::Part *getPart ();
 public slots:
@@ -110,7 +110,7 @@ public:
 /** return a pointer to the current output. If there is no output window, one will be created (and shown) automatically */
 	static RKOutputWindow* getCurrentOutput ();
 
-	QString getRDescription ();
+	QString getDescription ();
 public slots:
 /** flush current output. */
 	void flushOutput ();

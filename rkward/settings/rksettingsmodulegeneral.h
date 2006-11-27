@@ -55,8 +55,9 @@ public:
 	static void setStartupAction (StartupDialog::Result action) { startup_action = action; };
 	static WorkplaceSaveMode workplaceSaveMode () { return workplace_save_mode; };
 /** retrieve the saved workplace description. Meaningful only is workplaceSaveMode () == SaveWorkplaceWithSession */
-	static QString getSavedWorkplace ();
-	static void setSavedWorkplace (const QString &description);
+	static QString getSavedWorkplace (KConfig *config);
+/** set the saved workplace description. Meaningful only is workplaceSaveMode () == SaveWorkplaceWithSession */
+	static void setSavedWorkplace (const QString &description, KConfig *config);
 public slots:
 	void pathChanged ();
 	void boxChanged (int);

@@ -66,7 +66,7 @@ public:
 /** Tell the editor to (unconditionally) update its representation of the object data (in the range given in the ChangeSet) */
 	virtual void updateObjectData (RObject *object, RObject::ChangeSet *changes) = 0;
 
-	QString getRDescription ();
+	QString getDescription ();
 	bool isModified () { return false; };
 	KParts::Part *getPart () { return part; };
 protected:

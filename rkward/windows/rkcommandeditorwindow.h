@@ -106,7 +106,7 @@ public:
 /** copy current selection. Wrapper for use by external classes */
 	void copy ();
 
-	QString getRDescription ();
+	QString getDescription ();
 	KParts::Part *getPart () { return m_doc; };
 
 /** Return current url */

@@ -978,7 +978,7 @@ void QXEmbedCopy::embed(WId w)
                     Window parent = 0;
                     get_parent(w, &parent);
                     if (parent == qt_xrootwin()) break;
-                    else qDebug ("not really withdrawn, yet in loop #%d", i);
+                    else if ((i%20) == 0) qDebug ("not really withdrawn, yet in loop #%d", i);
                 }
                 USLEEP(1000);
             }

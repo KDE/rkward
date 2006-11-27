@@ -218,6 +218,10 @@ void RKWardMainWindow::doPostInit () {
 		delete result;
 	}
 
+	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
+		RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (kapp->config ()));
+	}
+
 	setCaption (QString::null);	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 }
 
@@ -477,6 +481,9 @@ bool RKWardMainWindow::queryClose () {
 
 	slotSetStatusBarText (i18n ("Exiting..."));
 	saveOptions ();
+	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
+		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription (), kapp->config ());
+	}
 
 	if (!RObjectList::getGlobalEnv ()->isEmpty ()) {
 		int res;

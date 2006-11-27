@@ -33,6 +33,7 @@
 #include "../dataeditor/rkeditordataframe.h"
 #include "../dataeditor/rkeditordataframepart.h"
 #include "../settings/rksettingsmoduleoutput.h"
+#include "../settings/rksettingsmodulegeneral.h"
 #include "../rbackend/rinterface.h"
 #include "../windows/rkwindowcatcher.h"
 #include "../rbackend/rcommand.h"
@@ -280,8 +281,22 @@ RKMDIWindow *RKWorkplace::activeAttachedWindow () {
 	return (static_cast<RKMDIWindow *> (view ()->activePage ()));
 }
 
+QString RKWorkplace::makeWorkplaceDescription () {
+	RK_TRACE (APP);
+
+	QString workplace_description;
+	bool first = true;
+	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
+		if (first) first = false;
+		else workplace_description.append ("\n");
+		workplace_description.append ((*it)->getDescription ());
+	}
+	return workplace_description;
+}
+
 void RKWorkplace::saveWorkplace (RCommandChain *chain) {
 	RK_TRACE (APP);
+	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
 	QString workplace_description = "c (";
 
@@ -289,22 +304,32 @@ void RKWorkplace::saveWorkplace (RCommandChain *chain) {
 	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
 		if (first) first = false;
 		else workplace_description.append (", ");
-		workplace_description.append ((*it)->getRDescription ());
+		workplace_description.append (RObject::rQuote ((*it)->getDescription ()));
 	}
 	workplace_description = ".rk.workplace.save <- " + workplace_description + ")";
-
 
 	RKGlobals::rInterface ()->issueCommand (workplace_description, RCommand::App | RCommand::Sync, i18n ("Save Workplace layout"), 0, 0, chain); 
 }
 
 void RKWorkplace::restoreWorkplace (RCommandChain *chain) {
 	RK_TRACE (APP);
+	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
 	RKGlobals::rInterface ()->issueCommand (".rk.workplace.save", RCommand::App | RCommand::Sync | RCommand::GetStringVector, i18n ("Restore Workplace layout"), this, RESTORE_WORKPLACE_COMMAND, chain);
 }
 
+void RKWorkplace::restoreWorkplace (const QString &description) {
+	RK_TRACE (APP);
+
+	QStringList list = QStringList::split ("\n", description);
+	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
+		restoreWorkplaceItem (*it);
+	}
+}
+
 void RKWorkplace::clearWorkplaceDescription (RCommandChain *chain) {
 	RK_TRACE (APP);
+	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
 	RKGlobals::rInterface ()->issueCommand ("remove (.rk.workplace.save)", RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, QString::null, 0, 0, chain); 
 }
@@ -314,23 +339,29 @@ void RKWorkplace::rCommandDone (RCommand *command) {
 
 	RK_ASSERT (command->getFlags () == RESTORE_WORKPLACE_COMMAND);
 	for (unsigned int i = 0; i < command->getDataLength (); ++i) {
-		QString desc = command->getStringVector ()[i];
-		QString type = desc.section (QChar (':'), 0, 0);
-		QString specification = desc.section (QChar (':'), 1);
-
-		if (type == "data") {
-			RObject *object = RObjectList::getObjectList ()->findObject (specification);
-			if (object) editObject (object, false);
-		} else if (type == "script") {
-			openScriptEditor (specification);
-		} else if (type == "output") {
-			openOutputWindow (specification);
-		} else if (type == "help") {
-			openHelpWindow (specification);
-		} else {
-			RK_ASSERT (false);
-		}
+		restoreWorkplaceItem (command->getStringVector ()[i]);
 	}
 }
+
+void RKWorkplace::restoreWorkplaceItem (const QString &desc) {
+	RK_TRACE (APP);
+
+	QString type = desc.section (QChar (':'), 0, 0);
+	QString specification = desc.section (QChar (':'), 1);
+
+	if (type == "data") {
+		RObject *object = RObjectList::getObjectList ()->findObject (specification);
+		if (object) editObject (object, false);
+	} else if (type == "script") {
+		openScriptEditor (specification);
+	} else if (type == "output") {
+		openOutputWindow (specification);
+	} else if (type == "help") {
+		openHelpWindow (specification);
+	} else {
+		RK_ASSERT (false);
+	}
+}
+
 
 #include "rkworkplace.moc"
