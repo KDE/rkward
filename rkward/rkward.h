@@ -88,6 +88,8 @@ public:
 	KParts::PartManager *partManager () { return part_manager; };
 
 	static RKWardMainWindow *getMain () { return rkward_mainwin; };
+
+	void makeRKWardHelpMenu (QWidget *for_window, KActionCollection *ac);
 protected:
 	void openWorkspace (const KURL &url);
 	/** save Options/Settings. Includes general Options like all bar positions and status as well as the geometry and the recent file list */
@@ -215,8 +217,6 @@ private:
 	KAction* window_close;
 	KAction* window_close_all;
 	KAction* window_detach;
-
-	KAction* help_invoke_r_help;
 	
 	KAction* configure;
 

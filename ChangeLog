@@ -1,3 +1,4 @@
+- fix help menu for detached windows
 - R X11 device windows are now managed by rkward, with the following initial features:
 - R X11 device windows: attach to / detach from workplace (they start detached)
 - R X11 device windows: toggle between normal resize mode and (settable) fixed size with scrollbars

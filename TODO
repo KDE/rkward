@@ -29,7 +29,6 @@ UI-stuff
 	- Output window should gain some sort of auto-update functionality:
 		- After user commands, should check, whether the output file was modified. If so, reload
 	- Option to save workplace per session instead of per workspace
-	- Fix help menu on RKMDIWindows
 	"First-run wizard"
 		- pre-install R packages
 	- Check for existence of php binary on startup, not only when loading a plugin

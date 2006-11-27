@@ -304,13 +304,8 @@ void RKWardMainWindow::initActions()
 	window_detach = new KAction (i18n ("Detach"), 0, 0, this, SLOT (slotDetachWindow ()), actionCollection (), "window_detach");
 	outputShow= new KAction (i18n ("Show &Output"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT (slotConfigure ()), actionCollection (), "configure");
-	help_invoke_r_help = new KAction (i18n ("Help on R"), 0, 0, this, SLOT (invokeRHelp ()), actionCollection (), "invoke_r_help");
-	KAction *show_help_search = new KAction (i18n ("Search R Help"), 0, 0, this, SLOT (showHelpSearch ()), actionCollection (), "show_help_search");
 
-	KStdAction::helpContents (this, SLOT (appHelpActivated ()), actionCollection ());
-	KStdAction::aboutApp (this, SLOT (showAboutApplication ()), actionCollection ());
-	KStdAction::whatsThis (this, SLOT (whatsThis ()), actionCollection ());
-	KStdAction::reportBug (this, SLOT (reportRKWardBug ()), actionCollection ());
+	makeRKWardHelpMenu (this, actionCollection ());
 
 	new_data_frame->setStatusText (i18n ("Creates new empty dataset and opens it for editing"));
 	fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
@@ -319,10 +314,21 @@ void RKWardMainWindow::initActions()
 	fileSaveWorkspaceAs->setStatusText(i18n("Saves the actual document as..."));
 	close_all_editors->setStatusText (i18n ("Closes all open data editors"));
 	fileQuit->setStatusText(i18n("Quits the application"));
-	help_invoke_r_help->setStatusText (i18n ("Shows the R help index"));
-	show_help_search->setStatusText (i18n ("Shows/raises the R Help Search window"));
 
 	actionCollection ()->setHighlightingEnabled (true);
+}
+
+void RKWardMainWindow::makeRKWardHelpMenu (QWidget *for_window, KActionCollection *ac) {
+	KAction *help_invoke_r_help = new KAction (i18n ("Help on R"), 0, 0, this, SLOT (invokeRHelp ()), ac, "invoke_r_help");
+	KAction *show_help_search = new KAction (i18n ("Search R Help"), 0, 0, this, SLOT (showHelpSearch ()), ac, "show_help_search");
+
+	KStdAction::helpContents (this, SLOT (appHelpActivated ()), ac);
+	KStdAction::aboutApp (this, SLOT (showAboutApplication ()), ac);
+	KStdAction::whatsThis (for_window, SLOT (whatsThis ()), ac);
+	KStdAction::reportBug (this, SLOT (reportRKWardBug ()), ac);
+
+	help_invoke_r_help->setStatusText (i18n ("Shows the R help index"));
+	show_help_search->setStatusText (i18n ("Shows/raises the R Help Search window"));
 }
 
 void RKWardMainWindow::partAdded (KParts::Part *part) {
@@ -508,6 +514,7 @@ void RKWardMainWindow::invokeRHelp () {
 	RK_TRACE (APP);
 
 	RKGlobals::rInterface ()->issueCommand ("help.start ()", RCommand::App);
+	topLevelWidget ()->raise ();
 }
 
 void RKWardMainWindow::reportRKWardBug () {
@@ -529,6 +536,7 @@ void RKWardMainWindow::showHelpSearch () {
 	RK_TRACE (APP);
 
 	search_help_view->show ();
+	search_help_view->wrapperWidget ()->topLevelWidget ()->raise ();
 }
 
 void RKWardMainWindow::slotNewDataFrame () {

@@ -31,10 +31,12 @@
 DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture) : KParts::MainWindow  (RKWardMainWindow::getMain ()) {
 	RK_TRACE (APP);
 
+	setHelpMenuEnabled (false);
 // create own GUI
 	setXMLFile ("detachedwindowcontainer.rc");
 	KStdAction::close (this, SLOT (close ()), actionCollection (), "dwindow_close");
 	new KAction (i18n ("Attach to main window"), 0, this, SLOT (slotReattach ()), actionCollection (), "dwindow_attach");
+	RKWardMainWindow::getMain ()->makeRKWardHelpMenu (this, actionCollection ());
 	createShellGUI ();
 
 // capture widget
