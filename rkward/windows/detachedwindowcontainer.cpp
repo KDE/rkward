@@ -40,7 +40,7 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	createShellGUI ();
 
 // capture widget
-	resize (widget_to_capture->size ());
+	setGeometry (widget_to_capture->frameGeometry ());
 	widget_to_capture->reparent (this, QPoint (0, 0));
 	setCentralWidget (widget_to_capture);
 	createGUI (widget_to_capture->getPart ());
