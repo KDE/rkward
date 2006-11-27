@@ -79,7 +79,9 @@ void RKWindowCatcher::stop (int new_cur_device) {
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
+#include "../core/robject.h"
 #include "../misc/rkerrordialog.h"
+#include "../misc/rksaveobjectchooser.h"
 
 RKCatchedX11Window::RKCatchedX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
 	RK_TRACE (MISC);
@@ -236,9 +238,25 @@ void RKCatchedX11Window::printDevice () {
 void RKCatchedX11Window::copyDeviceToRObject () {
 	RK_TRACE (MISC);
 
-	KMessageBox::information (0, i18n ("Not yet implemented"), i18n ("Not yet implemented"));
+// TODO: not very pretty, yet
+	KDialogBase *dialog = new KDialogBase (this, 0, true, i18n ("Specify R object"), KDialogBase::Ok|KDialogBase::Cancel);
+	QVBox *page = dialog->makeVBoxMainWidget ();
 
-	#warning implement or deactivate action
+	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (page, true, "my.plot", i18n ("Specify the R object name, you want to save the graph to"));
+	connect (chooser, SIGNAL (okStatusChanged (bool)), dialog, SLOT (enableButtonOK (bool)));
+	if (!chooser->isOk ()) dialog->enableButtonOK (false);
+
+	dialog->exec ();
+
+	if (dialog->result () == QDialog::Accepted) {
+		RK_ASSERT (chooser->isOk ());
+
+		QString name = chooser->validizedSelectedObjectName ();
+
+		RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\n" + RObject::rQuote (name) + " <- recordPlot ()", RCommand::App | RCommand::ObjectListUpdate, i18n ("Save contents of graphics device number %1 to object '%2'").arg (QString::number (device_number)).arg (name), error_dialog);
+	}
+
+	delete dialog;
 }
 
 void RKCatchedX11Window::copyDeviceToFile () {

@@ -353,16 +353,18 @@ bool RContainerObject::isParentOf (RObject *object, bool recursive) {
 	return false;
 }
 
-QString RContainerObject::validizeName (const QString &child_name) {
+QString RContainerObject::validizeName (const QString &child_name, bool unique) {
 	RK_TRACE (OBJECTS);
 	QString ret = child_name;
 	ret = ret.replace (QRegExp ("[^a-zA-Z0-9]"), ".");
 	ret = ret.replace (QRegExp ("^\\.*[0-9]+"), ".");
 	if (ret.isEmpty ()) ret = "var";
 	int i=-1;
+
+	if (!unique) return ret;
 	QString postfix;
 	while (childmap.contains (ret + postfix)) {
 		postfix.setNum (++i);
 	}
-	return (ret +postfix);
+	return (ret + postfix);
 }

@@ -62,7 +62,7 @@ public:
 	RObject *createNewChild (const QString &name, RKEditor *creator=0, bool container=false, bool data_frame=false);
 
 	/** reimplemented from RContainerObject to validize the name in .GlobalEnv */
-	QString validizeName (const QString &child_name);
+	QString validizeName (const QString &child_name, bool unique=true);
 
 	KURL getWorkspaceURL () { return current_url; };
 

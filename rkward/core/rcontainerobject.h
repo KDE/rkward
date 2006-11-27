@@ -59,7 +59,7 @@ public:
 	bool isEmpty () { return childmap.isEmpty (); };
 
 	/** given child_name, constructs a name which is as close as possible to the orginial but valid (i.e. not alreay in use, not contaning illegal characters */
-	virtual QString validizeName (const QString &child_name);
+	virtual QString validizeName (const QString &child_name, bool unique=true);
 
 	/** reimplemented from RObject to actually search for the object */
 	virtual RObject *findObject (const QString &name, bool is_canonified=false);

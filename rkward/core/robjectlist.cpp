@@ -231,10 +231,10 @@ RObject *RObjectList::createNewChild (const QString &name, RKEditor *creator, bo
 	return (getGlobalEnv ()->createNewChild (name, creator, container, data_frame));
 }
 
-QString RObjectList::validizeName (const QString &child_name) {
+QString RObjectList::validizeName (const QString &child_name, bool unique) {
 	RK_TRACE (OBJECTS);
 
-	return (getGlobalEnv ()->validizeName (child_name));
+	return (getGlobalEnv ()->validizeName (child_name, unique));
 }
 
 bool RObjectList::updateStructure (RData *) {
