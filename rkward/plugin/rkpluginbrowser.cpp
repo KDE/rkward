@@ -38,12 +38,14 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 
-	int intmode = xml->getMultiChoiceAttribute (element, "type", "file;dir", 0, DL_INFO);
+	int intmode = xml->getMultiChoiceAttribute (element, "type", "file;dir;savefile", 0, DL_INFO);
 	GetFileNameWidget::FileType mode;
 	if (intmode == 0) {
 		mode = GetFileNameWidget::ExistingFile;
-	} else {
+	} else if (intmode == 0) {
 		mode = GetFileNameWidget::ExistingDirectory;
+	} else {
+		mode = GetFileNameWidget::SaveFile;
 	}
 	selector = new GetFileNameWidget (this, mode, xml->getStringAttribute (element, "label", i18n ("Enter filename"), DL_INFO), i18n ("Select"), xml->getStringAttribute (element, "initial", QString::null, DL_INFO));
 	selector->setFilter (xml->getStringAttribute (element, "filter", QString::null, DL_INFO));
