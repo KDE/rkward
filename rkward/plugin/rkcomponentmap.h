@@ -80,9 +80,8 @@ public:
 
 /** returns the component identified by id */
 	static RKComponentHandle* getComponentHandle (const QString &id);
-	static RKComponentMap *getRegularMap () { return regular_component_map; };
-	static RKComponentMap *getX11DeviceMap () { return x11_device_component_map; };
-	static void initializeMaps ();
+	static RKComponentMap *getMap () { return component_map; };
+	static void initialize ();
 private:
 /** recurse into a lower menu-level 
 @param parent the parent menu (in the KXMLGUI)
@@ -104,12 +103,11 @@ private:
 	ComponentMap components;
 
 	RKComponentHandle* getComponentHandleLocal (const QString &id);
-	int addPluginMapLocal (const QString& plugin_map_file, const QDomElement &document_element);
+	int addPluginMapLocal (const QString& plugin_map_file);
 
 	void clearLocal ();
 
-	static RKComponentMap *regular_component_map;
-	static RKComponentMap *x11_device_component_map;
+	static RKComponentMap *component_map;
 };
 
 #include <qobject.h>

@@ -268,7 +268,6 @@ void RKCatchedX11Window::duplicateDevice () {
 /**************************************************************************************/
 //////////////////////////////// BEGIN RKCatchedX11WindowPart //////////////////////////
 
-#include "../plugin/rkcomponentmap.h"
 
 RKCatchedX11WindowPart::RKCatchedX11WindowPart (RKCatchedX11Window *window) : KParts::Part (0) {
 	RK_TRACE (MISC);
@@ -293,8 +292,6 @@ RKCatchedX11WindowPart::RKCatchedX11WindowPart (RKCatchedX11Window *window) : KP
 	new KAction (i18n ("Print"), 0, window, SLOT (printDevice ()), actionCollection (), "device_print");
 	new KAction (i18n ("Store as R object..."), 0, window, SLOT (copyDeviceToRObject ()), actionCollection (), "device_copy_to_r_object");
 	new KAction (i18n ("Duplicate"), 0, window, SLOT (duplicateDevice ()), actionCollection (), "device_duplicate");
-
-	insertChildClient (RKComponentMap::getX11DeviceMap ());
 }
 
 RKCatchedX11WindowPart::~RKCatchedX11WindowPart () {

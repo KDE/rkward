@@ -124,7 +124,7 @@ RKWardMainWindow::RKWardMainWindow (KURL *load_url) : DCOPObject ("rkwardapp"), 
 	connect (this, SIGNAL (childWindowCloseRequest (KMdiChildView *)), this, SLOT (slotChildWindowCloseRequest (KMdiChildView *)));
 
 	RKGlobals::mtracker = new RKModificationTracker (this);
-	RKComponentMap::initializeMaps ();
+	RKComponentMap::initialize ();
 
 	initial_url = load_url;
 
@@ -225,7 +225,7 @@ void RKWardMainWindow::initPlugins () {
 	RK_TRACE (APP);
 	slotSetStatusBarText(i18n("Setting up plugins..."));
 	
-	factory ()->removeClient (RKComponentMap::getRegularMap ());
+	factory ()->removeClient (RKComponentMap::getMap ());
 	RKComponentMap::clearAll ();
 
 	QStringList list = RKSettingsModulePlugins::pluginMaps ();
@@ -238,7 +238,7 @@ void RKWardMainWindow::initPlugins () {
 		KMessageBox::information (0, i18n ("Plugins are needed: you may manage these through \"Settings->Configure RKWard\".\n"), i18n ("No (valid) plugins found"));
 	}
 
-	factory ()->addClient (RKComponentMap::getRegularMap ());
+	factory ()->addClient (RKComponentMap::getMap ());
 
 	slotSetStatusReady ();
 }

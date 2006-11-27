@@ -27,16 +27,13 @@
 #include "../rkward.h"
 
 // static members
-RKComponentMap *RKComponentMap::regular_component_map = 0;
-RKComponentMap *RKComponentMap::x11_device_component_map = 0;;
+RKComponentMap *RKComponentMap::component_map = 0;
 
-void RKComponentMap::initializeMaps () {
+void RKComponentMap::initialize () {
 	RK_TRACE (PLUGIN);
 
-	RK_ASSERT (regular_component_map == 0);
-	RK_ASSERT (x11_device_component_map == 0);
-	regular_component_map = new RKComponentMap ();
-	x11_device_component_map = new RKComponentMap ();
+	RK_ASSERT (component_map == 0);
+	component_map = new RKComponentMap ();
 }
 
 RKComponentMap::RKComponentMap () : KXMLGUIClient () {
@@ -68,16 +65,13 @@ void RKComponentMap::clearLocal () {
 void RKComponentMap::clearAll () {
 	RK_TRACE (PLUGIN);
 
-	getRegularMap ()->clearLocal ();
-	getX11DeviceMap ()->clearLocal ();
+	getMap ()->clearLocal ();
 }
 
 RKComponentHandle* RKComponentMap::getComponentHandle (const QString &id) {
 	RK_TRACE (PLUGIN);
 
-	RKComponentHandle *handle = getRegularMap ()->getComponentHandleLocal (id);
-	if (handle) return handle;
-	handle = getX11DeviceMap ()->getComponentHandleLocal (id);
+	RKComponentHandle *handle = getMap ()->getComponentHandleLocal (id);
 	if (handle) return handle;
 
 	RK_DO (qDebug ("no such component %s", id.latin1 ()), PLUGIN, DL_WARNING);
@@ -159,24 +153,18 @@ int RKComponentMap::addSubMenu (QDomElement& parent, const QDomElement& descript
 int RKComponentMap::addPluginMap (const QString& plugin_map_file) {
 	RK_TRACE (PLUGIN);
 
+	return getMap()->addPluginMapLocal (plugin_map_file);
+}
+
+int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
+	RK_TRACE (PLUGIN);
+
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
 	QDomElement element;
 	XMLChildList list;
 
 	QDomElement document_element = xml->openXMLFile (plugin_map_file, DL_ERROR);
 	if (xml->highestError () >= DL_ERROR) return (0);
-
-	int type = xml->getMultiChoiceAttribute (document_element, "type", "regular;x11", 0, DL_INFO);
-	if (type == 0) return getRegularMap()->addPluginMapLocal (plugin_map_file, document_element);
-	else return getX11DeviceMap()->addPluginMapLocal (plugin_map_file, document_element);
-}
-
-int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file, const QDomElement &document_element) {
-	RK_TRACE (PLUGIN);
-
-	XMLHelper* xml = XMLHelper::getStaticHelper ();
-	QDomElement element;
-	XMLChildList list;	
 
 	QString prefix = QFileInfo (plugin_map_file).dirPath (true) + "/" + xml->getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
 	QString cnamespace = xml->getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";

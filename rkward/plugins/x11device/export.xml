@@ -6,6 +6,7 @@
 		<connect client="specifiedformat.enabled" governor="formatother" />
 	</logic>
 	<dialog label="Export contents of graphics device">
+		<text>This plugin is bogus/unfinished. Do not use!</text>
 		<browser size="small" id="file" label="File name" initial="Rplot.pdf" />
 		<radio id="format" label="Output format" >
 			<option value="pdf" label="PDF" />

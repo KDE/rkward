@@ -151,6 +151,7 @@ R plugins:
 		- find out why an error in the backend often leads to a subsequent crash
 	- plugins (general)
 		- add import-filter plugins
+			- also export plugins, export x11 plugins, and probably more
 		- ODS filter (try to find someone to implement one in R)
 	- formula-widget:
 		- use smart sorting, esp. of generated string
