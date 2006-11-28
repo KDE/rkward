@@ -18,7 +18,7 @@
 #include "rcommand.h"
 #include "rcommandreceiver.h"
 #include "rinterface.h"
-#include "../rkwatch.h"
+#include "../windows/rkcommandlog.h"
 
 #include "../debug.h"
 #include "../rkglobals.h"
@@ -44,7 +44,7 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 	RCommand::receivers = new RCommandReceiver* [MAX_RECEIVERS];
 	num_receivers = 0;
 	addReceiver (receiver);
-	addReceiver (RKGlobals::rInterface ()->watch);
+	addReceiver (RKCommandLog::getLog ());
 }
 
 RCommand::~RCommand(){

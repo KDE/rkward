@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rkwatch.h  -  description
+                          rkcommandlog  -  description
                              -------------------
     begin                : Sun Nov 3 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -15,13 +15,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RKWATCH_H
-#define RKWATCH_H
+#ifndef RKCOMMANDLOG_H
+#define RKCOMMANDLOG_H
 
 #include <qstring.h>
 #include <kmdichildview.h>
 
-#include "rbackend/rcommandreceiver.h"
+#include "../rbackend/rcommandreceiver.h"
 
 class RCommand;
 class ROutput;
@@ -35,21 +35,25 @@ class QBoxLayout;
 @author Thomas Friedrichsmeier
 */
 
-class RKwatch : public KMdiChildView, public RCommandReceiver {
+class RKCommandLog : public KMdiChildView, public RCommandReceiver {
 	Q_OBJECT
 public: 
-	RKwatch ();
-	~RKwatch ();
 /** Adds input to the watch-window (i.e. commands issued) */
 	void addInput (RCommand *command);
 /** Adds output to the watch-window (i.e. replies received) */
 	void newOutput (RCommand *command, ROutput *output_fragment);
+
+	static void create ();
+	static void destroy ();
+	static RKCommandLog *getLog () { return rkcommand_log; };
 signals:
 /** the watch emits this, when it should be raised (apparently this can only be done from the main frame) */
 	void raiseWatch ();
 protected:
 /** Command has finished. If the command has failed, it may be neccessary to print some more information */
 	void rCommandDone (RCommand *command);
+	RKCommandLog ();
+	~RKCommandLog ();
 public slots:
 /** configures the watch-window */
 	void configureWatch ();
@@ -68,6 +72,8 @@ private:
 
 	QTextEdit *watch;
 	QBoxLayout* pLayout;
+
+	static RKCommandLog *rkcommand_log;
 };
 
 #endif

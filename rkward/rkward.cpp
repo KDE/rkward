@@ -52,7 +52,6 @@
 // application specific includes
 #include "rkward.h"
 #include "core/rkmodificationtracker.h"
-#include "rkwatch.h"
 #include "plugin/rkcomponentmap.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleplugins.h"
@@ -71,6 +70,7 @@
 #include "windows/rkhtmlwindow.h"
 #include "windows/rkworkplaceview.h"
 #include "windows/rkworkplace.h"
+#include "windows/rkcommandlog.h"
 #include "khelpdlg.h"
 #include "rkconsole.h"
 #include "debug.h"
@@ -180,10 +180,10 @@ void RKWardMainWindow::doPostInit () {
 	object_browser->setIcon(SmallIcon("view_tree"));
 	addToolWindow(object_browser,KDockWidget::DockLeft, getMainDockWidget(), 30 , i18n ("Existing objects in your workspace.") , i18n ("Workspace"));
 	
-	RKGlobals::rInterface ()->watch->setName ("Command log");
-	RKGlobals::rInterface ()->watch->setIcon (SmallIcon ("text_block"));
-	watch_view = addToolWindow (RKGlobals::rInterface ()->watch, KDockWidget::DockBottom, getMainDockWidget (), 10);
-	connect (RKGlobals::rInterface ()->watch, SIGNAL (raiseWatch ()), this, SLOT (raiseWatch ()));
+	RKCommandLog::getLog ()->setName ("Command log");		// TODO: move to RKCommandLog
+	RKCommandLog::getLog ()->setIcon (SmallIcon ("text_block"));	// TODO: move to RKCommandLog
+	watch_view = addToolWindow (RKCommandLog::getLog (), KDockWidget::DockBottom, getMainDockWidget (), 10);
+	connect (RKCommandLog::getLog (), SIGNAL (raiseWatch ()), this, SLOT (raiseWatch ()));
 
 	RKGlobals::rcontrol->setCaption (i18n ("Pending Jobs"));
 	RKGlobals::rcontrol->setName ("rcontrol");

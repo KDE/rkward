@@ -21,11 +21,11 @@
 
 bin_PROGRAMS = rkward.bin
 
-rkward_bin_SOURCES = rkwatch.cpp rkward.cpp main.cpp \
+rkward_bin_SOURCES = rkward.cpp main.cpp \
 	rkglobals.cpp robjectbrowser.cpp robjectviewer.cpp \
 	khelpdlg.cpp rkconsole.cpp rkward.skel rkwardapplication.cpp
 
-noinst_HEADERS = rkwatch.h rkward.h debug.h \
+noinst_HEADERS = rkward.h debug.h \
 	rkglobals.h robjectbrowser.h robjectviewer.h \
 	khelpdlg.h rkconsole.h rkwardapplication.h
 

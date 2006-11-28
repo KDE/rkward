@@ -17,7 +17,6 @@
 
 #include "rinterface.h"
 
-#include "../rkwatch.h"
 #include "rthread.h"
 #include "rcommandstack.h"
 #include "../rkward.h"
@@ -31,6 +30,7 @@
 #include "../agents/showedittextfileagent.h"
 #include "../windows/rcontrolwindow.h"
 #include "../windows/rkworkplace.h"
+#include "../windows/rkcommandlog.h"
 
 #include "../windows/rkwindowcatcher.h"
 #ifndef DISABLE_RKWINDOWCATCHER
@@ -72,10 +72,9 @@ RInterface::RInterface () {
 
 	RCommandStack::regular_stack = new RCommandStack ();
 	running_command_canceled = 0;
-	
-	r_thread = new RThread ();
 
-	watch = new RKwatch ();
+	RKCommandLog::create ();
+	r_thread = new RThread ();
 
 	flush_timer = new QTimer (this);
 	connect (flush_timer, SIGNAL (timeout ()), this, SLOT (flushOutput ()));
@@ -106,7 +105,7 @@ RInterface::~RInterface(){
 	}
 
 	delete flush_timer;
-	delete watch;
+	RKCommandLog::destroy ();
 	delete window_catcher;
 }
 
@@ -134,7 +133,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 			r_thread->pauseOutput (false);
 		}
 	} else if (e->type () == RCOMMAND_IN_EVENT) {
-		watch->addInput (static_cast <RCommand *> (e->data ()));
+		RKCommandLog::getLog ()->addInput (static_cast <RCommand *> (e->data ()));
 		RKGlobals::controlWindow ()->setCommandRunning (static_cast <RCommand *> (e->data ()));
 	} else if (e->type () == RCOMMAND_OUT_EVENT) {
 		RCommand *command = static_cast <RCommand *> (e->data ());

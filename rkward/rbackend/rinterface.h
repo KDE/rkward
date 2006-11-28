@@ -32,7 +32,6 @@
 #define MUTEX_UNLOCK RInterface::mutex.unlock ();
 #endif
 
-class RKwatch;
 class RCommand;
 class RKWardMainWindow;
 struct RCallbackArgs;
@@ -104,8 +103,6 @@ private:
 	void processRCallbackRequest (RCallbackArgs *args);
 friend class RKWardMainWindow;
 friend class RCommand;
-/** pointer to the RKwatch. TODO: (re-)move this pointer */
-	RKwatch *watch;
 /** Used (once!) to start the RThread. Need to make this separate to avoid race conditions */
 	void startThread ();
 protected:

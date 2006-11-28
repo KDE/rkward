@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rkwatch.cpp  -  description
+                          rkcommandlog  -  description
                              -------------------
     begin                : Sun Nov 3 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -15,13 +15,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "rkwatch.h"
+#include "rkcommandlog.h"
 
-#include "rbackend/rinterface.h"
-#include "rkglobals.h"
-#include "settings/rksettingsmodulewatch.h"
-#include "settings/rksettings.h"
-#include "windows/rkcommandeditorwindow.h"
+#include "../rbackend/rinterface.h"
+#include "../rkglobals.h"
+#include "../settings/rksettingsmodulewatch.h"
+#include "../settings/rksettings.h"
+#include "rkcommandeditorwindow.h"
 
 #include <qtextedit.h>
 #include <qpushbutton.h>
@@ -33,12 +33,29 @@
 #include <klocale.h>
 #include <kmenubar.h>
 
-#include "debug.h"
+#include "../debug.h"
 
-RKwatch::RKwatch () : KMdiChildView () {
+//static
+RKCommandLog *RKCommandLog::rkcommand_log = 0;
+
+void RKCommandLog::create () {
 	RK_TRACE (APP);
-	
-	
+	RK_ASSERT (!rkcommand_log);
+
+	rkcommand_log = new RKCommandLog;
+}
+
+void RKCommandLog::destroy () {
+	RK_TRACE (APP);
+	RK_ASSERT (rkcommand_log);
+
+	delete rkcommand_log;
+	rkcommand_log = 0;
+}
+
+RKCommandLog::RKCommandLog () : KMdiChildView () {
+	RK_TRACE (APP);
+
 	watch = new QTextEdit (this);
 	watch->setTextFormat (PlainText);
 	watch->setUndoRedoEnabled (false);
@@ -55,11 +72,11 @@ RKwatch::RKwatch () : KMdiChildView () {
 	command_input_shown = 0;
 }
 
-RKwatch::~RKwatch(){
+RKCommandLog::~RKCommandLog(){
 	RK_TRACE (APP);
 }
 
-void RKwatch::addInput (RCommand *command) {
+void RKCommandLog::addInput (RCommand *command) {
 	RK_TRACE (APP);
 	if (!RKSettingsModuleWatch::shouldShowInput (command)) return;
 
@@ -69,7 +86,7 @@ void RKwatch::addInput (RCommand *command) {
 	addInputNoCheck (command);
 }
 
-void RKwatch::addInputNoCheck (RCommand *command) {
+void RKCommandLog::addInputNoCheck (RCommand *command) {
 	RK_TRACE (APP);
 	if (command->id () == command_input_shown) return;		// already shown
 
@@ -94,7 +111,7 @@ void RKwatch::addInputNoCheck (RCommand *command) {
 	command_input_shown = command->id ();
 }
 
-void RKwatch::addOutputNoCheck (RCommand *command, const QString &output) {
+void RKCommandLog::addOutputNoCheck (RCommand *command, const QString &output) {
 	RK_TRACE (APP);
 
 	if (command->type () & RCommand::User) {
@@ -116,7 +133,7 @@ void RKwatch::addOutputNoCheck (RCommand *command, const QString &output) {
 	watch->setColor (Qt::black);
 }
 
-void RKwatch::checkRaiseWatch (RCommand *command) {
+void RKCommandLog::checkRaiseWatch (RCommand *command) {
 	// called during output. do not trace
 	if (command->id () == last_raised_command) return;
 	if (!RKSettingsModuleWatch::shouldRaiseWindow (command)) return;
@@ -126,7 +143,7 @@ void RKwatch::checkRaiseWatch (RCommand *command) {
 	emit (raiseWatch ());
 }
 
-void RKwatch::newOutput (RCommand *command, ROutput *output_fragment) {
+void RKCommandLog::newOutput (RCommand *command, ROutput *output_fragment) {
 	RK_TRACE (APP);
 
 	if (!RKSettingsModuleWatch::shouldShowOutput (command)) return;
@@ -136,7 +153,7 @@ void RKwatch::newOutput (RCommand *command, ROutput *output_fragment) {
 	addOutputNoCheck (command, output_fragment->output);
 }
 
-void RKwatch::rCommandDone (RCommand *command) {
+void RKCommandLog::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 
 	if (command->type () & RCommand::Console) {
@@ -163,7 +180,7 @@ void RKwatch::rCommandDone (RCommand *command) {
 	if (RKSettingsModuleWatch::shouldShowOutput (command)) watch->append ("\n");
 }
 
-void RKwatch::linesAdded () {
+void RKCommandLog::linesAdded () {
 	RK_TRACE (APP);
 
 // limit number of lines shown
@@ -183,12 +200,12 @@ void RKwatch::linesAdded () {
 	watch->scrollToBottom ();
 }
 
-void RKwatch::configureWatch () {
+void RKCommandLog::configureWatch () {
 	RK_TRACE (APP);
 	RKSettings::configureSettings (RKSettings::Watch, this);
 }
 
-void RKwatch::clearWatch () {
+void RKCommandLog::clearWatch () {
 	RK_TRACE (APP);
 
 	watch->setText (QString::null);
@@ -199,4 +216,4 @@ void RKwatch::clearWatch () {
 	watch->setWordWrap (QTextEdit::NoWrap);
 }
 
-#include "rkwatch.moc"
+#include "rkcommandlog.moc"
