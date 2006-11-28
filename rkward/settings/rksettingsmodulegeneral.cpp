@@ -108,8 +108,12 @@ bool RKSettingsModuleGeneral::hasChanges () {
 void RKSettingsModuleGeneral::applyChanges () {
 	RK_TRACE (SETTINGS);
 	new_files_path = files_choser->getLocation ();
-	startup_action = (StartupDialog::Result) startup_action_choser->currentItem ();
-	workplace_save_mode = (WorkplaceSaveMode) workplace_save_chooser->selectedId ();
+	startup_action = static_cast<StartupDialog::Result> (startup_action_choser->currentItem ());
+#if QT_VERSION < 0x030200
+	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->id (workplace_save_chooser->selected ()));
+#else
+	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->selectedId ());
+#endif
 }
 
 void RKSettingsModuleGeneral::save (KConfig *config) {

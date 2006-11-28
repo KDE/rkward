@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="" namespace="rkward" type="regular">
+<document base_prefix="" namespace="rkward">
 	<components>
 		<component type="standard" id="independent_samples_t_test" file="00means/00ttests/00independent_samples/description.xml" label="Independent Samples" />
 

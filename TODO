@@ -149,6 +149,7 @@ R plugins:
 	- plugins (general)
 		- add import-filter plugins
 			- also export plugins, export x11 plugins, and probably more
+			- maybe this can be generalized as "context sensitive plugins"
 		- ODS filter (try to find someone to implement one in R)
 	- formula-widget:
 		- use smart sorting, esp. of generated string
