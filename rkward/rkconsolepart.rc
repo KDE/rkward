@@ -24,5 +24,7 @@
 		<Action name="interrupt"></Action>
 		<Separator/>
 		<Action name="rkconsole_clear"></Action>
+		<Separator/>
+		<Action name="rkconsole_configure"></Action>
 	</Menu>
 </kpartgui>

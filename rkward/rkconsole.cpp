@@ -33,13 +33,15 @@
 #include "rkglobals.h"
 #include "rkward.h"
 #include "khelpdlg.h"
-#include "debug.h"
 #include "rbackend/rinterface.h"
 #include "rbackend/rcommand.h"
+#include "settings/rksettings.h"
 #include "settings/rksettingsmoduleconsole.h"
 #include "misc/rkcommonfunctions.h"
 #include "core/robjectlist.h"
 #include "core/rfunctionobject.h"
+
+#include "debug.h"
 
 RKConsole::RKConsole () : QWidget (0) {
 	RK_TRACE (APP);
@@ -565,6 +567,10 @@ void RKConsole::resetIncompleteCommand () {
 	tryNextInBatch (true);
 }
 
+void RKConsole::configure () {
+	RK_TRACE (APP);
+	RKSettings::configureSettings (RKSettings::Console, this);
+}
 
 ///################### END RKConsole ########################
 ///################### BEGIN RKConsolePart ####################
@@ -588,10 +594,10 @@ RKConsolePart::RKConsolePart () : KParts::Part (0) {
 	interrupt_command->setShortcut ("Ctrl+C");
 
 	copy = new KAction (i18n ("Copy selection"), 0, console, SLOT (copy ()), actionCollection (), "rkconsole_copy");
-	clear = new KAction (i18n ("Clear Console"), 0, console, SLOT (clear ()), actionCollection (), "rkconsole_clear");
-	paste = new KAction (i18n ("Paste"), KShortcut ("Ctrl+V"), console, SLOT (paste ()), actionCollection (), "rkconsole_paste");
-// same HACK here
-	paste->setShortcut ("Ctrl+V");
+	KStdAction::clear (console, SLOT (clear ()), actionCollection (), "rkconsole_clear");
+	paste = KStdAction::paste (console, SLOT (paste ()), actionCollection (), "rkconsole_paste");
+	new KAction (i18n ("Configure"), 0, console, SLOT (configure ()), actionCollection (), "rkconsole_configure");
+
 	connect (console, SIGNAL (popupMenuRequest (const QPoint &)), this, SLOT (makePopupMenu (const QPoint &)));
 }
 

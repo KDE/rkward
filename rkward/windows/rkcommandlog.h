@@ -19,6 +19,7 @@
 #define RKCOMMANDLOG_H
 
 #include <qstring.h>
+#include <qtextedit.h>
 #include <kmdichildview.h>
 
 #include "../rbackend/rcommandreceiver.h"
@@ -29,6 +30,8 @@ class QPushButton;
 class QTextEdit;
 class RKCommandEditor;
 class QBoxLayout;
+class RKCommandLogView;
+class RKCommandLogPart;
 
 /**
 	\brief This widget shows all executed commands and their result
@@ -46,6 +49,9 @@ public:
 	static void create ();
 	static void destroy ();
 	static RKCommandLog *getLog () { return rkcommand_log; };
+
+	RKCommandLogView *getView () { return log_view; };
+	RKCommandLogPart *getPart () { return part; };
 signals:
 /** the log_view emits this, when it should be raised (apparently this can only be done from the main frame) */
 	void raiseWindow ();
@@ -70,9 +76,42 @@ private:
 /** On a given command, the log_view should not be raised more than once */
 	int last_raised_command;
 
-	QTextEdit *log_view;
+	RKCommandLogView *log_view;
+	RKCommandLogPart *part;
 
 	static RKCommandLog *rkcommand_log;
+};
+
+/** Simply subclass of QTextEdit to override context menu handling */
+class RKCommandLogView : public QTextEdit {
+	Q_OBJECT
+public:
+	RKCommandLogView (RKCommandLog *parent);
+	~RKCommandLogView ();
+public slots:
+	void selectAll ();
+signals:
+	void popupMenuRequest (const QPoint &pos);
+protected:
+	bool eventFilter (QObject *o, QEvent *e);
+};
+
+#include <kparts/part.h>
+
+class KAction;
+
+/** Provides a part interface for the RKCommandLog */
+class RKCommandLogPart : public KParts::Part {
+	Q_OBJECT
+public:
+	RKCommandLogPart (RKCommandLog *for_log);
+	~RKCommandLogPart ();
+public slots:
+	void doPopupMenu (const QPoint &pos);
+private:
+	RKCommandLog *log;
+
+	KAction *copy;
 };
 
 #endif

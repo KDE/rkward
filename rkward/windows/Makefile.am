@@ -9,4 +9,4 @@ libwindows_a_SOURCES = rkcommandeditorwindow.cpp rkcommandeditorwindowpart.cpp \
 	rkworkplaceview.cpp rkworkplace.cpp qxembedcopy.cpp rkwindowcatcher.cpp rkcommandlog.cpp
 rcdir = $(kde_datadir)/rkward
 rc_DATA = rkcommandeditorwindowpart.rc rkoutputwindow.rc rkhelpwindow.rc detachedwindowcontainer.rc \
-	rkcatchedx11windowpart.rc
+	rkcatchedx11windowpart.rc rkcommandlogpart.rc

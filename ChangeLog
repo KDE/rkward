@@ -1,5 +1,5 @@
 - add RMB menu to script editor windows
-- add option to clear console in the console RMB menu
+- add options to "clear" and "configure" in the console RMB menu, and the command log RMB menu
 - add option to save workplace layout not per workspace, but at the end of the session
 - add options ("printcmd") to settings
 - fix help menu for detached windows

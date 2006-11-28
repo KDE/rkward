@@ -23,15 +23,15 @@
 #include "../settings/rksettings.h"
 #include "rkcommandeditorwindow.h"
 
-#include <qtextedit.h>
 #include <qpushbutton.h>
 #include <qfont.h>
 #include <qlayout.h>
 #include <qsplitter.h>
 #include <qpopupmenu.h>
+#include <qobjectlist.h>
 
 #include <klocale.h>
-#include <kmenubar.h>
+#include <kstdaction.h>
 
 #include "../debug.h"
 
@@ -56,7 +56,7 @@ void RKCommandLog::destroy () {
 RKCommandLog::RKCommandLog () : KMdiChildView () {
 	RK_TRACE (APP);
 
-	log_view = new QTextEdit (this);
+	log_view = new RKCommandLogView (this);
 	log_view->setTextFormat (PlainText);
 	log_view->setUndoRedoEnabled (false);
 	log_view->setReadOnly (true);
@@ -70,6 +70,8 @@ RKCommandLog::RKCommandLog () : KMdiChildView () {
 
 	last_raised_command = 0;
 	command_input_shown = 0;
+
+	part = new RKCommandLogPart (this);
 }
 
 RKCommandLog::~RKCommandLog(){
@@ -214,6 +216,87 @@ void RKCommandLog::clearLog () {
 	QFont font ("Courier");
 	log_view->setCurrentFont (font);
 	log_view->setWordWrap (QTextEdit::NoWrap);
+}
+
+////////////////////////// END RKCommandLog ///////////////////////////
+/////////////////////// BEGIN RKCommandLogView ////////////////////////
+
+
+RKCommandLogView::RKCommandLogView (RKCommandLog *parent) : QTextEdit (parent) {
+	RK_TRACE (APP);
+
+	const QObjectList *list = children ();
+	QObjectListIt it (*list);
+	QObject *obj;
+	
+	while ((obj = it.current()) != 0) {
+		++it;
+		obj->installEventFilter (this);
+	}
+}
+
+RKCommandLogView::~RKCommandLogView () {
+	RK_TRACE (APP);
+}
+
+bool RKCommandLogView::eventFilter (QObject *o, QEvent *e) {
+	if (e->type () == QEvent::MouseButtonPress){
+		QMouseEvent *m = (QMouseEvent *)e;
+		if (m->button() == Qt::RightButton) {
+			emit (popupMenuRequest (m->globalPos ()));
+			return (true);
+		}
+	}
+
+	return QTextEdit::eventFilter (o, e);
+}
+
+void RKCommandLogView::selectAll () {
+	RK_TRACE (APP);
+
+	QTextEdit::selectAll (true);
+}
+
+//////////////////////// END RKCommandLogView /////////////////////////
+/////////////////////// BEGIN RKCommandLogPart ////////////////////////
+
+#include <kxmlguifactory.h>
+
+RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
+	RK_TRACE (APP);
+
+	KInstance* instance = new KInstance ("rkward");
+	setInstance (instance);
+
+	setWidget (log = for_log);
+
+	setXMLFile ("rkcommandlogpart.rc");
+
+	copy = KStdAction::copy (log->getView (), SLOT (copy ()), actionCollection (), "log_copy");
+	KStdAction::clear (log, SLOT (clearLog ()), actionCollection (), "log_clear");
+	KStdAction::selectAll (log->getView (), SLOT (selectAll ()), actionCollection (), "log_select_all");
+	new KAction (i18n ("Configure"), 0, log, SLOT (configureLog ()), actionCollection (), "log_configure");
+
+	connect (log->getView (), SIGNAL (popupMenuRequest (const QPoint &)), this, SLOT (doPopupMenu (const QPoint &)));
+}
+
+RKCommandLogPart::~RKCommandLogPart () {
+	RK_TRACE (APP);
+}
+
+void RKCommandLogPart::doPopupMenu (const QPoint &pos) {
+	RK_TRACE (APP);
+
+	QPopupMenu *menu = static_cast<QPopupMenu *> (factory ()->container ("rkcommandlog_context_menu", this));
+	copy->setEnabled (log->getView ()->hasSelectedText ());
+
+	if (!menu) {
+		RK_ASSERT (false);
+		return;
+	}
+	menu->exec (pos);
+
+	copy->setEnabled (true);
 }
 
 #include "rkcommandlog.moc"

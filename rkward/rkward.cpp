@@ -184,6 +184,7 @@ void RKWardMainWindow::doPostInit () {
 	RKCommandLog::getLog ()->setIcon (SmallIcon ("text_block"));	// TODO: move to RKCommandLog
 	watch_view = addToolWindow (RKCommandLog::getLog (), KDockWidget::DockBottom, getMainDockWidget (), 10);
 	connect (RKCommandLog::getLog (), SIGNAL (raiseWindow ()), this, SLOT (raiseWatch ()));
+	partManager ()->addPart (RKCommandLog::getLog ()->getPart (), false);
 
 	RKGlobals::rcontrol->setCaption (i18n ("Pending Jobs"));
 	RKGlobals::rcontrol->setName ("rcontrol");

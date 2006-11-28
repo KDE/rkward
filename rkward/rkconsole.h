@@ -33,16 +33,15 @@ class KAction;
 class RCommand;
 
 /**
-** 	\brief Provides an R-like console.
-**
-** This class provides a console, which is very similar to the classic R console. It is mainly used by RKwatch to allow
-** the user to enter commands manualy. It is basically just a modified KTextEdit.
-** 
-	Do not construct directly. Construct an RKConsolePart instead.
-	
-** \sa RKwatch, KTextEdit
-** 
-** @author Pierre Ecochard
+\brief Provides an R-like console.
+
+This class provides a console, which is very similar to the classic R console. It is based on a heavily modified KatePart.
+
+Do not construct directly. Construct an RKConsolePart instead.
+
+\sa RKCommandLog
+
+@author Pierre Ecochard
 **/
 
 class RKConsole : public QWidget, public RCommandReceiver, public RKScriptContextProvider {
@@ -94,7 +93,6 @@ friend class RKConsolePart;
 /** A list to store a commands batch that will be executed one line at a time */
 	QStringList commands_batch;
 /** Sets the cursor position to the end of the last line. */
-
 	void cursorAtTheEnd ();
 /** Submits the current command */
 	void submitCommand ();
@@ -136,7 +134,8 @@ public slots:
 	void paste ();
 	void copy ();
 /** Clear the view, and add a prompt at the top. */
-	void clear();
+	void clear ();
+	void configure ();
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality
