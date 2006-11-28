@@ -321,7 +321,7 @@ bool RKConsole::eventFilter (QObject *, QEvent *e) {
 	} else if (e->type () == QEvent::MouseButtonPress){
 		QMouseEvent *m = (QMouseEvent *)e;
 		if (m->button() == Qt::RightButton) {
-			createPopupMenu(m->globalPos());
+			emit (popupMenuRequest (m->globalPos ()));
 			return (true);
 		}
 		return (false);
@@ -526,15 +526,6 @@ void RKConsole::addCommandToHistory (const QString &command) {
 	}
 }
 
-void RKConsole::createPopupMenu (const QPoint &pos) {
-	RK_TRACE (APP);
-	QPopupMenu *mp;
-	emit (fetchPopupMenu (&mp));
-	if (mp) {
-		mp->exec(pos);
-	}
-}
-
 void RKConsole::copy () {
 	RK_TRACE (APP);
 	view->copy();
@@ -597,10 +588,11 @@ RKConsolePart::RKConsolePart () : KParts::Part (0) {
 	interrupt_command->setShortcut ("Ctrl+C");
 
 	copy = new KAction (i18n ("Copy selection"), 0, console, SLOT (copy ()), actionCollection (), "rkconsole_copy");
+	clear = new KAction (i18n ("Clear Console"), 0, console, SLOT (clear ()), actionCollection (), "rkconsole_clear");
 	paste = new KAction (i18n ("Paste"), KShortcut ("Ctrl+V"), console, SLOT (paste ()), actionCollection (), "rkconsole_paste");
 // same HACK here
 	paste->setShortcut ("Ctrl+V");
-	connect (console, SIGNAL (fetchPopupMenu (QPopupMenu**)), this, SLOT (makePopupMenu (QPopupMenu**)));
+	connect (console, SIGNAL (popupMenuRequest (const QPoint &)), this, SLOT (makePopupMenu (const QPoint &)));
 }
 
 RKConsolePart::~RKConsolePart () {
@@ -632,21 +624,18 @@ void RKConsolePart::slotInterruptCommand () {
 	setDoingCommand (false);
 }
 
-void RKConsolePart::makePopupMenu (QPopupMenu **menu) {
+void RKConsolePart::makePopupMenu (const QPoint &pos) {
 	RK_TRACE (APP);
 
-/*	// won't work, as both the factory (), and the KTextEdit will think, they own the menu -> crash
-	*menu = static_cast<QPopupMenu *>(factory ()->container ("rkconsole_context_menu", this));
-	factory ()->resetContainer ("rkconsole_context_menu"); */
-	*menu = new QPopupMenu (console);
-	copy->plug (*menu, 9);
-	
+	QPopupMenu *menu = static_cast<QPopupMenu *> (factory ()->container ("rkconsole_context_menu", this));
 	copy->setEnabled (console->hasSelectedText ());
-	paste->plug (*menu, 10);
-	(*menu)->insertSeparator (11);
-	context_help->plug (*menu, 12);
-	(*menu)->insertSeparator (13);
-	interrupt_command->plug (*menu, 14);
+
+	if (!menu) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	menu->exec (pos);
 }
 
 #include "rkconsole.moc"

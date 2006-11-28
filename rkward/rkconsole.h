@@ -73,13 +73,11 @@ protected:
 \param e the QKeyEvent */
 	bool handleKeyPress (QKeyEvent * e);
 	void rCommandDone (RCommand *command);
-/** provides our own context menu */
-	void createPopupMenu (const QPoint &pos);
 /** reimplemented from RCommandReceiver::newOutput () to handle output of console commands */
 	void newOutput (RCommand *command, ROutput *output);
 signals:
 	void doingCommand (bool busy);
-	void fetchPopupMenu (QPopupMenu **menu);
+	void popupMenuRequest (const QPoint &pos);
 private:
 friend class RKConsolePart;
 	bool eventFilter (QObject *o, QEvent *e);
@@ -106,8 +104,6 @@ friend class RKConsolePart;
 	void commandsListDown ();
 /** Sets the cursor position to the beginning of the last line. */
 	void cursorAtTheBeginning ();
-/** Clear the view, and add a prompt at the top. */
-	void clear();
 /** Sets the current command. This is used from commandsListUp (), and commandsListDown ();
 \param command the new command */
 	void setCurrentCommand (QString command);
@@ -139,6 +135,8 @@ public slots:
 @sa submitBatch */
 	void paste ();
 	void copy ();
+/** Clear the view, and add a prompt at the top. */
+	void clear();
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality
@@ -159,12 +157,13 @@ public slots:
 	void setDoingCommand (bool busy);
 /** interrupt current command. */
 	void slotInterruptCommand ();
-	void makePopupMenu (QPopupMenu **menu);
+	void makePopupMenu (const QPoint &pos);
 private:
 	KAction* context_help;
 	KAction* interrupt_command;
 	KAction* copy;
 	KAction* paste;
+	KAction* clear;
 
 	RKConsole *console;
 };
