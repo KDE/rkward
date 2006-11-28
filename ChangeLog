@@ -1,3 +1,4 @@
+- add RMB menu to command editor
 - add option to clear console in the console RMB menu
 - add option to save workplace layout not per workspace, but at the end of the session
 - add options ("printcmd") to settings

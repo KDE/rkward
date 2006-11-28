@@ -90,4 +90,3 @@ void RKCommandEditorWindowPart::slotFunctionReference () {
 }
 
 #include "rkcommandeditorwindowpart.moc"
-
