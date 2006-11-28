@@ -76,6 +76,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #include <kactionclasses.h>
 #include <kdialogbase.h>
 #include <knuminput.h>
+#include <kiconloader.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -111,6 +112,7 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	KWin::WindowInfo wininfo = KWin::windowInfo (window_to_embed);
 	setGeometry (wininfo.frameGeometry ());
 	setCaption (wininfo.name ());
+	setIcon (SmallIcon ("kcmx"));			// looks like an X, here
 	capture->embed (window_to_embed);
 
 	RKWardApplication::getApp ()->registerNameWatcher (window_to_embed, this);
