@@ -2,7 +2,7 @@
                           rkcommandlog  -  description
                              -------------------
     begin                : Sun Nov 3 2002
-    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005 2006 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -56,17 +56,17 @@ void RKCommandLog::destroy () {
 RKCommandLog::RKCommandLog () : KMdiChildView () {
 	RK_TRACE (APP);
 
-	watch = new QTextEdit (this);
-	watch->setTextFormat (PlainText);
-	watch->setUndoRedoEnabled (false);
-	watch->setReadOnly (true);
+	log_view = new QTextEdit (this);
+	log_view->setTextFormat (PlainText);
+	log_view->setUndoRedoEnabled (false);
+	log_view->setReadOnly (true);
 
-	pLayout = new QHBoxLayout( this, 0, -1, "layout");
-	pLayout->addWidget(watch);
+	QHBoxLayout *layout = new QHBoxLayout (this, 0, -1, "layout");
+	layout->addWidget (log_view);
 
 	setCaption (i18n ("Command log"));
 	
-	clearWatch ();
+	clearLog ();
 
 	last_raised_command = 0;
 	command_input_shown = 0;
@@ -92,21 +92,21 @@ void RKCommandLog::addInputNoCheck (RCommand *command) {
 
 // TODO: make colors/styles configurable
 	if (command->type () & RCommand::User) {
-		watch->setColor (Qt::red);
+		log_view->setColor (Qt::red);
 	} else if (command->type () & RCommand::Sync) {
-		watch->setColor (Qt::gray);
+		log_view->setColor (Qt::gray);
 	} else if (command->type () & RCommand::Plugin) {
-		watch->setColor (Qt::blue);
+		log_view->setColor (Qt::blue);
 	}
 
-	watch->setItalic (true);
+	log_view->setItalic (true);
 
-	watch->append (command->command () + "\n");
+	log_view->append (command->command () + "\n");
 
-	checkRaiseWatch (command);
+	checkRaiseWindow (command);
 	linesAdded ();
 
-	watch->setItalic (false);
+	log_view->setItalic (false);
 
 	command_input_shown = command->id ();
 }
@@ -115,32 +115,32 @@ void RKCommandLog::addOutputNoCheck (RCommand *command, const QString &output) {
 	RK_TRACE (APP);
 
 	if (command->type () & RCommand::User) {
-		watch->setColor (Qt::red);
+		log_view->setColor (Qt::red);
 	} else if (command->type () & RCommand::Sync) {
-		watch->setColor (Qt::gray);
+		log_view->setColor (Qt::gray);
 	} else if (command->type () & RCommand::Plugin) {
-		watch->setColor (Qt::blue);
+		log_view->setColor (Qt::blue);
 	}
 
-    watch->setBold (true);
+    log_view->setBold (true);
 
-	watch->insert (output);
+	log_view->insert (output);
 
-	checkRaiseWatch (command);
+	checkRaiseWindow (command);
 	linesAdded ();
 
-	watch->setBold (false);
-	watch->setColor (Qt::black);
+	log_view->setBold (false);
+	log_view->setColor (Qt::black);
 }
 
-void RKCommandLog::checkRaiseWatch (RCommand *command) {
+void RKCommandLog::checkRaiseWindow (RCommand *command) {
 	// called during output. do not trace
 	if (command->id () == last_raised_command) return;
 	if (!RKSettingsModuleWatch::shouldRaiseWindow (command)) return;
 	if (command->type () & RCommand::Console) return;
 
 	last_raised_command = command->id ();
-	emit (raiseWatch ());
+	emit (raiseWindow ());
 }
 
 void RKCommandLog::newOutput (RCommand *command, ROutput *output_fragment) {
@@ -177,7 +177,7 @@ void RKCommandLog::rCommandDone (RCommand *command) {
 		}
 	}
 
-	if (RKSettingsModuleWatch::shouldShowOutput (command)) watch->append ("\n");
+	if (RKSettingsModuleWatch::shouldShowOutput (command)) log_view->append ("\n");
 }
 
 void RKCommandLog::linesAdded () {
@@ -185,35 +185,35 @@ void RKCommandLog::linesAdded () {
 
 // limit number of lines shown
 	if (RKSettingsModuleWatch::maxLogLines ()) {
-		uint c = (uint) watch->paragraphs ();
+		uint c = (uint) log_view->paragraphs ();
 		if (c > RKSettingsModuleWatch::maxLogLines ()) {
-			watch->setUpdatesEnabled (false);			// major performance boost while removing lines!
-			watch->setSelection (0, 0, c - RKSettingsModuleWatch::maxLogLines (), 0, 1);
-			watch->removeSelectedText (1);
-			watch->setUpdatesEnabled (true);
-			watch->update ();
+			log_view->setUpdatesEnabled (false);			// major performance boost while removing lines!
+			log_view->setSelection (0, 0, c - RKSettingsModuleWatch::maxLogLines (), 0, 1);
+			log_view->removeSelectedText (1);
+			log_view->setUpdatesEnabled (true);
+			log_view->update ();
 		}
 	}
 
 // scroll to bottom
-	watch->moveCursor (QTextEdit::MoveEnd, false);
-	watch->scrollToBottom ();
+	log_view->moveCursor (QTextEdit::MoveEnd, false);
+	log_view->scrollToBottom ();
 }
 
-void RKCommandLog::configureWatch () {
+void RKCommandLog::configureLog () {
 	RK_TRACE (APP);
 	RKSettings::configureSettings (RKSettings::Watch, this);
 }
 
-void RKCommandLog::clearWatch () {
+void RKCommandLog::clearLog () {
 	RK_TRACE (APP);
 
-	watch->setText (QString::null);
+	log_view->setText (QString::null);
 
 	// set a fixed width font
 	QFont font ("Courier");
-	watch->setCurrentFont (font);
-	watch->setWordWrap (QTextEdit::NoWrap);
+	log_view->setCurrentFont (font);
+	log_view->setWordWrap (QTextEdit::NoWrap);
 }
 
 #include "rkcommandlog.moc"
