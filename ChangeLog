@@ -1,4 +1,4 @@
-- add RMB menu to command editor
+- add RMB menu to script editor windows
 - add option to clear console in the console RMB menu
 - add option to save workplace layout not per workspace, but at the end of the session
 - add options ("printcmd") to settings
@@ -12,7 +12,7 @@
 - do not open the same script url twice (instead the corresponding window is raised on the second attempt)
 - fixed: when closing a detached script editor window, you would not be asked to save changes (if any)
 - fixed: occasional crash when re-attaching a script editor window
-- new translation: Greek
+- new translation: Greek, Catalan
 - updated translations: German, French
 - added basic plot facility for ECDF (Empirical Cumulative Distribution Function) (menu plots)
 - added ptukey and qtukey (Studentized Range Distribution (Tukey)) (menu distributions)
