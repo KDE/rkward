@@ -122,6 +122,8 @@ public slots:
 	void tryCompletion ();
 /** called by the Kate part, if an entry was selected from the code completion box. Will remove the current symbol, as the kate part is about to re-add it (in completed form) */
 	void fixCompletion (KTextEditor::CompletionEntry *, QString *);
+	void setPopupMenu (Kate::View *);
+	void setPopupMenu ();
 protected:
 /** reimplemented from KMdiChildView: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e);

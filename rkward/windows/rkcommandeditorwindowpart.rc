@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.3.6">
+<kpartgui name="rkward" version="0.4.2">
 	<MenuBar>
 		<Menu name="edit" noMerge="1"><text>&amp;Edit</text>
 			<Menu name="tools"><text>&amp;Tools Move</text>
@@ -23,4 +23,13 @@
 		<Action name="run_selection"/>
 		<Action name="run_all"/>
 	</ToolBar>
+	<Menu name="ktexteditor_popup">
+		<Merge/>
+		<Separator/>
+		<Action name="run_line"/>
+		<Action name="run_selection"/>
+		<Action name="run_all"/>
+		<Separator/>
+		<Action name="function_reference"/>
+	</Menu>
 </kpartgui>

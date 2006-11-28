@@ -23,7 +23,6 @@
 class RKCommandEditorWindow;
 class KAction;
 
-
 /** This class provides a KPart interface to RKCommandEditorWindow. Basically, it is responsible for creating the menu-entries the RKCommandEditorWindow provides, and keeps the corresponding Actions. The reason to use this, is so the required menus/menu-items can be merged in on the fly.
 
 @author Thomas Friedrichsmeier
@@ -34,7 +33,6 @@ public:
 	RKCommandEditorWindowPart (QWidget *parent, RKCommandEditorWindow *editor_widget);
 
 	~RKCommandEditorWindowPart ();
-
 public slots:
 	void slotRunSelection ();
 	void slotRunLine ();

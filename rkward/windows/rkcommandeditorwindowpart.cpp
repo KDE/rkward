@@ -20,6 +20,9 @@
 #include <kinstance.h>
 #include <klocale.h>
 #include <kaction.h>
+#include <kxmlguifactory.h>
+
+#include <qpopupmenu.h>
 
 #include "rkcommandeditorwindow.h"
 #include "../rkglobals.h"

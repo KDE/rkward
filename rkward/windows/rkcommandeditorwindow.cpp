@@ -35,6 +35,7 @@
 #include <qtabwidget.h>
 #include <qfile.h>
 #include <qtimer.h>
+#include <qobjectlist.h>
 
 #include <klocale.h>
 #include <kmenubar.h>
@@ -84,6 +85,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	connect (m_doc, SIGNAL (modifiedChanged ()), this, SLOT (updateCaption ()));		// of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 	connect (m_doc, SIGNAL (textChanged ()), this, SLOT (tryCompletionProxy ()));
 	connect (m_view, SIGNAL (filterInsertString (KTextEditor::CompletionEntry *, QString *)), this, SLOT (fixCompletion (KTextEditor::CompletionEntry *, QString *)));
+	connect (m_view, SIGNAL (gotFocus (Kate::View *)), this, SLOT (setPopupMenu (Kate::View *)));
 	completion_timer = new QTimer (this);
 	connect (completion_timer, SIGNAL (timeout ()), this, SLOT (tryCompletion()));
 
@@ -95,12 +97,24 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	}
 
 	updateCaption ();	// initialize
+	QTimer::singleShot (0, this, SLOT (setPopupMenu ()));
 }
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
 	delete hinter;
 	delete m_doc;
+}
+
+void RKCommandEditorWindow::setPopupMenu () {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (!m_view->factory ()) return;
+	m_view->installPopup (static_cast<QPopupMenu *> (m_view->factory ()->container ("ktexteditor_popup", m_view)));
+}
+
+void RKCommandEditorWindow::setPopupMenu (Kate::View*) {
+	setPopupMenu ();
 }
 
 QString RKCommandEditorWindow::getDescription () {
@@ -287,7 +301,6 @@ bool RKCommandEditorWindow::provideContext (unsigned int line_rev, QString *cont
 
 //////////////////////// RKFunctionArgHinter //////////////////////////////
 
-#include <qobjectlist.h>
 #include <qvbox.h>
 
 #include "../core/rfunctionobject.h"
