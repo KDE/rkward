@@ -634,8 +634,9 @@ void RKConsolePart::makePopupMenu (const QPoint &pos) {
 		RK_ASSERT (false);
 		return;
 	}
-
 	menu->exec (pos);
+
+	copy->setEnabled (true);
 }
 
 #include "rkconsole.moc"
