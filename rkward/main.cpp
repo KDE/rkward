@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
 	aboutData.addCredit ("Yves Jacolin", I18N_NOOP ("New website"), 0);
 	aboutData.addCredit ("Marco Martin", I18N_NOOP ("A cool icon"), 0);
 	aboutData.addCredit ("Daniele Medri", I18N_NOOP ("RKWard logo, many suggestions, help on wording"), 0);
-	aboutData.addCredit ("Stefan Roediger", I18N_NOOP ("Several plugins, and suggestions"), 0);
+	aboutData.addCredit ("Stefan Roediger", I18N_NOOP ("Many plugins, suggestions, marketing"), 0);
 	aboutData.addCredit ("David Sibai", I18N_NOOP ("Several valuable comments, hints and patches"), 0);
 	aboutData.addCredit ("Ralf Tautenhahn", I18N_NOOP ("Many comments, useful suggestions, and bug reports"), 0);
 	aboutData.addCredit (I18N_NOOP ("Many more people on rkward-devel@lists.sourceforge.net"), I18N_NOOP ("Sorry, if we forgot to list you. Please contact us to get added"), 0);
