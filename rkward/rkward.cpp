@@ -201,6 +201,8 @@ void RKWardMainWindow::doPostInit () {
 	RKGlobals::helpDialog ()->setIcon (SmallIcon ("help"));
 	search_help_view = addToolWindow (RKGlobals::helpDialog (), KDockWidget::DockBottom, getMainDockWidget (), 10);
 
+	RKOutputWindow::initialize ();
+
 	if (initial_url) {
 		openWorkspace (*initial_url);
 		delete initial_url;

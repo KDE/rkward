@@ -144,18 +144,18 @@ void RKWorkplace::openHelpWindow (const KURL &url) {
 void RKWorkplace::openOutputWindow (const KURL &url) {
 	RK_TRACE (APP);
 
-	RKOutputWindow::refreshOutput (true, true);
+	RKOutputWindow::refreshOutput (true, true, false);
 	if (windows.find (RKOutputWindow::getCurrentOutput ()) == windows.end ()) {
 		addWindow (RKOutputWindow::getCurrentOutput ());
 	}
 }
 
-void RKWorkplace::newOutput () {
+void RKWorkplace::newOutput (bool only_if_modified) {
 	RK_TRACE (APP);
-	RKOutputWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise ());
-	if (RKSettingsModuleOutput::autoShow ()) {
-		if (windows.find (RKOutputWindow::getCurrentOutput ()) == windows.end ()) {
-			addWindow (RKOutputWindow::getCurrentOutput ());
+	RKOutputWindow *window = RKOutputWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise (), only_if_modified);
+	if (window) {
+		if (windows.find (window) == windows.end ()) {
+			addWindow (window);
 		}
 	}
 }

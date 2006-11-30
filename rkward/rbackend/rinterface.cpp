@@ -154,7 +154,9 @@ void RInterface::customEvent (QCustomEvent *e) {
 		RKGlobals::controlWindow ()->removeCommand (command);
 		command->finished ();
 		if (command->type () & RCommand::DirectToOutput) {
-			RKWorkplace::mainWorkplace ()->newOutput ();
+			RKWorkplace::mainWorkplace ()->newOutput (false);
+		} else if (command->type () & RCommand::User) {
+			RKWorkplace::mainWorkplace ()->newOutput (true);
 		}
 		delete command;
 	} else if ((e->type () == RIDLE_EVENT)) {

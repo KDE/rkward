@@ -74,7 +74,7 @@ public:
 	void openOutputWindow (const KURL &url=KURL ());
 /** signal there was new output, show/raise/refresh the output window as appropriate.
 TODO: this should be obsoleted somehow */
-	void newOutput ();
+	void newOutput (bool only_if_modified);
 
 	void newX11Window (WId window_to_embed, int device_number);
 

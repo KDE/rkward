@@ -25,7 +25,7 @@
 #include <krun.h>
 #include <kparts/partmanager.h>
 
-#include <qfile.h>
+#include <qfileinfo.h>
 #include <qwidget.h>
 #include <qlayout.h>
 #include <qtimer.h>
@@ -172,6 +172,7 @@ void RKHTMLWindow::loadDone () {
 //##################### BEGIN RKOutputWindow #####################
 //static 
 RKOutputWindow* RKOutputWindow::current_output = 0;
+QDateTime RKOutputWindow::last_refresh_time;
 
 RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUIClient () {
 	RK_TRACE (APP);
@@ -199,6 +200,14 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 	if (action) action->setText (i18n ("Save Output as HTML"));
 }
 
+//static
+void RKOutputWindow::initialize () {
+	RK_TRACE (APP);
+
+	QFileInfo out_file (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
+	last_refresh_time = out_file.lastModified ();
+}
+
 RKOutputWindow::~RKOutputWindow () {
 	RK_TRACE (APP);
 
@@ -220,10 +229,11 @@ bool RKOutputWindow::openURL (const KURL &url) {
 	RK_TRACE (APP);
 
 	output_url = url;
-	QFile out_file (url.path ());
+	QFileInfo out_file (url.path ());
 	bool ok = out_file.exists();
 	if (ok)  {
 		RKHTMLWindow::openURL (url);
+		last_refresh_time = out_file.lastModified ();
 	} else {
 		showOutputEmptyMessage ();
 	}
@@ -239,8 +249,13 @@ void RKOutputWindow::refresh () {
 }
 
 //static
-void RKOutputWindow::refreshOutput (bool show, bool raise) {
+RKOutputWindow* RKOutputWindow::refreshOutput (bool show, bool raise, bool only_if_modified) {
 	RK_TRACE (APP);
+
+	if (only_if_modified) {
+		QFileInfo out_file (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
+		if (out_file.lastModified () <= last_refresh_time) return current_output;
+	}
 
 	if (current_output) {
 		if (raise) {
@@ -253,6 +268,8 @@ void RKOutputWindow::refreshOutput (bool show, bool raise) {
 			getCurrentOutput ();
 		}
 	}
+
+	return current_output;
 }
 
 //static
@@ -276,14 +293,14 @@ void RKOutputWindow::flushOutput () {
 	if (res==KMessageBox::Yes) {
 		QFile out_file (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
 		out_file.remove ();
-		refreshOutput (false, false);
+		refreshOutput (false, false, false);
 	}
 }
 
 void RKOutputWindow::refreshOutput () {
 	RK_TRACE (APP);
 
-	refreshOutput (true, true);
+	refreshOutput (true, true, false);
 }
 
 void RKOutputWindow::showOutputEmptyMessage () {

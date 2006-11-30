@@ -1,3 +1,4 @@
+- if a user command results in the output html file to be modified, auto-refresh output
 - add RMB menu to script editor windows
 - add options "clear" and "configure" in the console RMB menu, and the command log RMB menu
 - add option to save workplace layout not per workspace, but at the end of the session

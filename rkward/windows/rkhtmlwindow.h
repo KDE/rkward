@@ -105,16 +105,18 @@ public:
 /** refresh output window.
 @param show Show the window, if not currently shown (this actually means: it is created if not currently existant)
 @param raise Raise the window (if currently shown, or show==true) */
-	static void refreshOutput (bool show, bool raise);
+	static RKOutputWindow* refreshOutput (bool show, bool raise, bool only_if_modified);
 
 /** return a pointer to the current output. If there is no output window, one will be created (and shown) automatically */
 	static RKOutputWindow* getCurrentOutput ();
+
+	static void initialize ();
 
 	QString getDescription ();
 public slots:
 /** flush current output. */
 	void flushOutput ();
-/** refresh current output. Slot Wrapper around refresh. */
+/** Slot wrapper around refreshOutput (bool, bool, bool). */
 	void refreshOutput ();
 protected:
 /** reimplemented to never change the caption (it's always "Output") */
@@ -129,6 +131,7 @@ private:
 	static RKOutputWindow* current_output;
 /** In case the output is empty (i.e. output file does not exist), we need to store, where the output *would* be, if it existed, so we can properly refresh the output */
 	KURL output_url;
+	static QDateTime last_refresh_time;
 };
 
 /**
