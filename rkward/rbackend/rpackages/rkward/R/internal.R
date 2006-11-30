@@ -143,9 +143,11 @@
 "x11" <- function (...) {
 	.rk.do.call ("startOpenX11", as.character (dev.cur ()));
 
-	grDevices::X11 (...)
+	x <- grDevices::X11 (...)
 
 	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
+
+	invisible (x)
 }
 
 "X11" <- x11
