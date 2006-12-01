@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-28 14:04+0100\n"
+"POT-Creation-Date: 2006-12-01 11:22+0100\n"
 "PO-Revision-Date: 2005-07-17 18:06+0200\n"
 "Last-Translator: Daniele Medri <daniele@medri.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -370,7 +370,7 @@ msgstr "Esegui selezione"
 msgid "Run current line"
 msgstr "Esegui la linea corrente"
 
-#: windows/rkcommandeditorwindowpart.cpp:58 rkconsole.cpp:583
+#: windows/rkcommandeditorwindowpart.cpp:58 rkconsole.cpp:589
 msgid "&Function reference"
 msgstr "Riferimento &funzioni"
 
@@ -385,37 +385,37 @@ msgstr ""
 msgid "Open in default application?"
 msgstr "Termina l'applicazione"
 
-#: windows/rkhtmlwindow.cpp:190 settings/rksettingsmoduleoutput.cpp:65
+#: windows/rkhtmlwindow.cpp:191 settings/rksettingsmoduleoutput.cpp:65
 msgid "Output"
 msgstr "Risultato"
 
-#: windows/rkhtmlwindow.cpp:192
+#: windows/rkhtmlwindow.cpp:193
 msgid "&Flush"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:193
+#: windows/rkhtmlwindow.cpp:194
 msgid "&Refresh"
 msgstr "&Aggiorna"
 
-#: windows/rkhtmlwindow.cpp:195
+#: windows/rkhtmlwindow.cpp:196
 #, fuzzy
 msgid "Print Output"
 msgstr "Risultato"
 
-#: windows/rkhtmlwindow.cpp:199
+#: windows/rkhtmlwindow.cpp:200
 msgid "Save Output as HTML"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:275
+#: windows/rkhtmlwindow.cpp:292
 msgid ""
 "Do you really want to flush the ouput? It won't be possible to restore it."
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:275
+#: windows/rkhtmlwindow.cpp:292
 msgid "Flush output?"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:291
+#: windows/rkhtmlwindow.cpp:308
 #, fuzzy
 msgid ""
 "<HTML><BODY><H1>RKWard output</H1>\n"
@@ -425,12 +425,12 @@ msgstr ""
 "<HTML><BODY><H1>Risultati di RKWard</H1><P>Nessun risultato.</P></BODY></"
 "HTML>"
 
-#: windows/rkhtmlwindow.cpp:309
+#: windows/rkhtmlwindow.cpp:326
 #, fuzzy
 msgid "Print Help"
 msgstr "&Stampa"
 
-#: windows/rkhtmlwindow.cpp:319
+#: windows/rkhtmlwindow.cpp:336
 msgid "R Help"
 msgstr ""
 
@@ -540,6 +540,22 @@ msgstr "Salva area di lavoro"
 #: windows/rkworkplace.cpp:318
 msgid "Restore Workplace layout"
 msgstr ""
+
+#: windows/rkcommandlog.cpp:67 settings/rksettingsmodulewatch.cpp:277
+msgid "Command log"
+msgstr "Storico comandi"
+
+#: windows/rkcommandlog.cpp:172
+msgid "Incomplete statement.\n"
+msgstr ""
+
+#: windows/rkcommandlog.cpp:174
+msgid "Syntax error.\n"
+msgstr "Errore di sintassi.\n"
+
+#: windows/rkcommandlog.cpp:176
+msgid "An unspecified error occured while running the command.\n"
+msgstr "Un errore indefinito è apparso durante l'esecuzione del comando.\n"
 
 #: windows/rkwindowcatcher.cpp:61
 msgid ""
@@ -1116,10 +1132,6 @@ msgstr "Comandi di sincronizzazione"
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
 msgstr ""
 
-#: settings/rksettingsmodulewatch.cpp:277 rkwatch.cpp:50
-msgid "Command log"
-msgstr "Storico comandi"
-
 #: settings/rksettings.cpp:61
 msgid "Settings"
 msgstr "Impostazioni"
@@ -1148,7 +1160,7 @@ msgstr "<<Apri un altro file>>"
 msgid "Always do this on startup"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:50 rkward.cpp:300
+#: dialogs/rkloadlibsdialog.cpp:50 rkward.cpp:303
 msgid "Configure Packages"
 msgstr "Configura pacchetti"
 
@@ -1406,7 +1418,7 @@ msgstr ""
 msgid "Errors / Warnings:"
 msgstr "Errore durante l'avvio di R"
 
-#: misc/rkerrordialog.cpp:117 rkconsole.cpp:415
+#: misc/rkerrordialog.cpp:117 rkconsole.cpp:417
 #, fuzzy
 msgid "Syntax error"
 msgstr "Errore di sintassi.\n"
@@ -1517,7 +1529,7 @@ msgid ""
 "it works with different settings."
 msgstr ""
 
-#: rbackend/rinterface.cpp:175
+#: rbackend/rinterface.cpp:176
 msgid ""
 "There was a problem starting the R backend. The following error(s) "
 "occurred:\n"
@@ -1525,7 +1537,7 @@ msgstr ""
 "C'è stato un problema durante l'avvio del backend di R. Sono successi i "
 "seguenti errori:\n"
 
-#: rbackend/rinterface.cpp:177
+#: rbackend/rinterface.cpp:178
 msgid ""
 "\t- The 'rkward' R-library could not be loaded. This library is needed for "
 "communication between R and RKWard and many things will not work properly if "
@@ -1535,7 +1547,7 @@ msgid ""
 "again and check for any errors. You should quit RKWard now.\n"
 msgstr ""
 
-#: rbackend/rinterface.cpp:180
+#: rbackend/rinterface.cpp:181
 msgid ""
 "\t-There was a problem opening the files needed for communication with R. "
 "Most likely this is due to an incorrect setting for the location of these "
@@ -1543,7 +1555,7 @@ msgid ""
 "files (Settings->Configure Settings->Logfiles) and restart RKWard.\n"
 msgstr ""
 
-#: rbackend/rinterface.cpp:183
+#: rbackend/rinterface.cpp:184
 msgid ""
 "\t-An unspecified error occured that is not yet handled by RKWard. Likely "
 "RKWard will not function properly. Please check your setup.\n"
@@ -1552,21 +1564,21 @@ msgstr ""
 "RKWard non funzionerà propriamente. Per piacere controlla le tue "
 "impostazioni.\n"
 
-#: rbackend/rinterface.cpp:185
+#: rbackend/rinterface.cpp:186
 msgid "Error starting R"
 msgstr "Errore durante l'avvio di R"
 
-#: rbackend/rinterface.cpp:317
+#: rbackend/rinterface.cpp:318
 msgid ""
 "The object '%1', could not be opened for editing. Either it does not exist, "
 "or RKWard does not support editing this type of object, yet."
 msgstr ""
 
-#: rbackend/rinterface.cpp:317
+#: rbackend/rinterface.cpp:318
 msgid "Cannot edit '%1'"
 msgstr ""
 
-#: rbackend/rinterface.cpp:324
+#: rbackend/rinterface.cpp:325
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We'll open the "
@@ -1574,23 +1586,23 @@ msgid ""
 "needed package."
 msgstr ""
 
-#: rbackend/rinterface.cpp:324
+#: rbackend/rinterface.cpp:325
 msgid "Require package '%1'"
 msgstr "Richiede il pacchetto '%1'"
 
-#: rbackend/rinterface.cpp:364
+#: rbackend/rinterface.cpp:365
 msgid "Message from the R backend"
 msgstr ""
 
-#: rbackend/rinterface.cpp:368
+#: rbackend/rinterface.cpp:369
 msgid "R backend requests information"
 msgstr ""
 
-#: rbackend/rinterface.cpp:396
+#: rbackend/rinterface.cpp:397
 msgid "The R engine has encountered a fatal error:\n"
 msgstr ""
 
-#: rbackend/rinterface.cpp:397
+#: rbackend/rinterface.cpp:398
 msgid ""
 "It will be shut down immediately. This means, you can not use any more "
 "functions that rely on the R backend. I.e. you can do hardly anything at "
@@ -1599,16 +1611,16 @@ msgid ""
 "RKWard after that. Sorry!"
 msgstr ""
 
-#: rbackend/rinterface.cpp:398 rbackend/rinterface.cpp:403
+#: rbackend/rinterface.cpp:399 rbackend/rinterface.cpp:404
 #, fuzzy
 msgid "R engine has died"
 msgstr "Motore R in attesa"
 
-#: rbackend/rinterface.cpp:401
+#: rbackend/rinterface.cpp:402
 msgid "The R engine has shut down with status: "
 msgstr ""
 
-#: rbackend/rinterface.cpp:402
+#: rbackend/rinterface.cpp:403
 msgid ""
 "\n"
 "It will be shut down immediately. This means, you can not use any more "
@@ -1624,18 +1636,6 @@ msgstr ""
 #: rbackend/rthread.cpp:406
 msgid "R Startup"
 msgstr ""
-
-#: rkwatch.cpp:153
-msgid "Incomplete statement.\n"
-msgstr ""
-
-#: rkwatch.cpp:155
-msgid "Syntax error.\n"
-msgstr "Errore di sintassi.\n"
-
-#: rkwatch.cpp:157
-msgid "An unspecified error occured while running the command.\n"
-msgstr "Un errore indefinito è apparso durante l'esecuzione del comando.\n"
 
 #: main.cpp:70 main.cpp:82
 msgid "RKWard"
@@ -1686,7 +1686,7 @@ msgstr "RKWard logo, suggerimenti, wording"
 
 #: main.cpp:91
 #, fuzzy
-msgid "Several plugins, and suggestions"
+msgid "Many plugins, suggestions, marketing"
 msgstr "Numerosi commenti utili e discussioni"
 
 #: main.cpp:92
@@ -1723,19 +1723,19 @@ msgstr ""
 msgid "Existing objects in your workspace."
 msgstr "Oggetti nell'area di lavoro."
 
-#: rkward.cpp:188
+#: rkward.cpp:189
 msgid "Pending Jobs"
 msgstr ""
 
-#: rkward.cpp:214
+#: rkward.cpp:217
 msgid "my.data"
 msgstr "mio.dataset"
 
-#: rkward.cpp:230
+#: rkward.cpp:233
 msgid "Setting up plugins..."
 msgstr "Impostazione dei plugin..."
 
-#: rkward.cpp:242
+#: rkward.cpp:245
 #, fuzzy
 msgid ""
 "Plugins are needed: you may manage these through \"Settings->Configure RKWard"
@@ -1744,199 +1744,194 @@ msgstr ""
 "I plugin sono necessari: puoi configurarli tramite \"Impostazioni->Configura "
 "RKWard\".\n"
 
-#: rkward.cpp:242
+#: rkward.cpp:245
 #, fuzzy
 msgid "No (valid) plugins found"
 msgstr "Nessun plugin trovato"
 
-#: rkward.cpp:281
+#: rkward.cpp:284
 msgid "Dataset"
 msgstr "Dataset"
 
-#: rkward.cpp:284
+#: rkward.cpp:287
 msgid "Script File"
 msgstr ""
 
-#: rkward.cpp:288
+#: rkward.cpp:291
 #, fuzzy
 msgid "Open R Script File"
 msgstr "Apri file..."
 
-#: rkward.cpp:292
+#: rkward.cpp:295
 msgid "Open Workspace"
 msgstr "Apri area di lavoro"
 
-#: rkward.cpp:295
+#: rkward.cpp:298
 msgid "Save Workspace"
 msgstr "Salva area di lavoro"
 
-#: rkward.cpp:297
+#: rkward.cpp:300
 msgid "Save Workspace As"
 msgstr "Salva area di lavoro con nome"
 
-#: rkward.cpp:305
+#: rkward.cpp:308
 #, fuzzy
 msgid "Close All Data"
 msgstr "Chiudi tutti gli editor"
 
-#: rkward.cpp:307
+#: rkward.cpp:310
 #, fuzzy
 msgid "Close All"
 msgstr "Chiudi tutti gli editor"
 
-#: rkward.cpp:308
+#: rkward.cpp:311
 msgid "Detach"
 msgstr ""
 
-#: rkward.cpp:309
+#: rkward.cpp:312
 #, fuzzy
 msgid "Show &Output"
 msgstr "&Risultato"
 
-#: rkward.cpp:310
+#: rkward.cpp:313
 msgid "Configure RKWard"
 msgstr "Configura RKWard"
 
-#: rkward.cpp:314
+#: rkward.cpp:317
 msgid "Creates new empty dataset and opens it for editing"
 msgstr "Crea un nuovo data.frame vuoto e lo apre per la modifica"
 
-#: rkward.cpp:315
+#: rkward.cpp:318
 msgid "Opens an existing document"
 msgstr "Apre un documento esistente"
 
-#: rkward.cpp:316
+#: rkward.cpp:319
 msgid "Opens a recently used file"
 msgstr "Apre un file utilizzato recentemente"
 
-#: rkward.cpp:317
+#: rkward.cpp:320
 msgid "Saves the actual document"
 msgstr "Salva il documento corrente"
 
-#: rkward.cpp:318
+#: rkward.cpp:321
 msgid "Saves the actual document as..."
 msgstr "Salva il documento corrente con nome..."
 
-#: rkward.cpp:319
+#: rkward.cpp:322
 msgid "Closes all open data editors"
 msgstr "Chiude tutti gli editor dei dati"
 
-#: rkward.cpp:320
+#: rkward.cpp:323
 msgid "Quits the application"
 msgstr "Termina l'applicazione"
 
-#: rkward.cpp:326
+#: rkward.cpp:329
 msgid "Help on R"
 msgstr ""
 
-#: rkward.cpp:327
+#: rkward.cpp:330
 msgid "Search R Help"
 msgstr ""
 
-#: rkward.cpp:334
+#: rkward.cpp:337
 msgid "Shows the R help index"
 msgstr ""
 
-#: rkward.cpp:335
+#: rkward.cpp:338
 msgid "Shows/raises the R Help Search window"
 msgstr ""
 
-#: rkward.cpp:366
+#: rkward.cpp:369
 msgid "starting R engine"
 msgstr "avvio in corso del motore R"
 
-#: rkward.cpp:482
+#: rkward.cpp:485
 msgid "Exiting..."
 msgstr "Uscita..."
 
-#: rkward.cpp:490
+#: rkward.cpp:493
 msgid ""
 "Quitting RKWard: Do you want to save the workspace?\n"
 "RKWard will remain open if you press Cancel"
 msgstr ""
 
-#: rkward.cpp:490 rkward.cpp:588
+#: rkward.cpp:493 rkward.cpp:591
 msgid "Save Workspace?"
 msgstr "Salva area di lavoro?"
 
-#: rkward.cpp:531
+#: rkward.cpp:534
 msgid ""
 "Please submit your bug reports or wishes at http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
 "net"
 msgstr ""
 
-#: rkward.cpp:553
+#: rkward.cpp:556
 msgid "New dataset"
 msgstr "Nuovo dataset"
 
-#: rkward.cpp:553
+#: rkward.cpp:556
 msgid "Enter name for the new dataset"
 msgstr "Inserisci il nome per il nuovo dataset"
 
-#: rkward.cpp:557 robjectbrowser.cpp:113 robjectbrowser.cpp:147
+#: rkward.cpp:560 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr "Il nome indicato era già utilizzato o non è valido. Rinominato in %1"
 
-#: rkward.cpp:557 robjectbrowser.cpp:113 robjectbrowser.cpp:147
+#: rkward.cpp:560 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "Invalid Name"
 msgstr "Nome non valido"
 
-#: rkward.cpp:569
+#: rkward.cpp:572
 msgid "Opening workspace..."
 msgstr "Apertura dell'area di lavoro..."
 
-#: rkward.cpp:572
+#: rkward.cpp:575
 msgid "*|All files"
 msgstr "*|Tutti i file"
 
-#: rkward.cpp:572
+#: rkward.cpp:575
 msgid "Open File..."
 msgstr "Apri file..."
 
-#: rkward.cpp:588
+#: rkward.cpp:591
 msgid "Do you want to save the current workspace?"
 msgstr "Desideri salvare l'attuale area di lavoro?"
 
-#: rkward.cpp:630
+#: rkward.cpp:633
 msgid "Ready."
 msgstr "Pronto."
 
-#: rkward.cpp:663
+#: rkward.cpp:666
 msgid "R engine busy"
 msgstr "Motore R occupato"
 
-#: rkward.cpp:666
+#: rkward.cpp:669
 msgid "R engine idle"
 msgstr "Motore R in attesa"
 
-#: rkward.cpp:691
+#: rkward.cpp:694
 #, fuzzy
 msgid "Open command file(s)"
 msgstr "Apri file file di comandi"
 
-#: rkward.cpp:726
+#: rkward.cpp:729
 #, fuzzy
 msgid "[Unnamed Workspace]"
 msgstr "Salva area di lavoro"
 
-#: rkconsole.cpp:123
+#: rkconsole.cpp:125
 msgid "R Console"
 msgstr "Console"
 
-#: rkconsole.cpp:584
+#: rkconsole.cpp:590
 msgid "Interrupt running command"
 msgstr "Interrompi comando in esecuzione"
 
-#: rkconsole.cpp:590
+#: rkconsole.cpp:596
 #, fuzzy
 msgid "Copy selection"
 msgstr "Esegui selezione"
-
-#: rkconsole.cpp:591
-#, fuzzy
-msgid "Clear Console"
-msgstr "Console"
 
 #: robjectviewer.cpp:43
 msgid "Object name: "
@@ -2150,6 +2145,10 @@ msgid ""
 "_: EMAIL OF TRANSLATORS\n"
 "Your emails"
 msgstr "daniele@medri.org"
+
+#, fuzzy
+#~ msgid "Clear Console"
+#~ msgstr "Console"
 
 #, fuzzy
 #~ msgid ""
