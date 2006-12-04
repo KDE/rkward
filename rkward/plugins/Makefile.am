@@ -180,8 +180,6 @@ dist_pluginsX00saveloadXsaveXsave_DATA = \
 	00saveload/save/save/code.php \
 	00saveload/save/save/description.xml
 
-pluginsX02plotsdir = $(kde_datadir)/rkward/02plots
-pluginsX02plotsXscatterplotdir = $(kde_datadir)/rkward/02plots/scatterplot
 pluginsXx11devicedir = $(kde_datadir)/rkward/x11device
 dist_pluginsXx11device_DATA = \
 	x11device/export.xml \
