@@ -50,7 +50,7 @@ rk.temp$pch <- rep (<? echo ($pch); ?>, length.out=length (rk.temp$Xvar));
 function printout () {
 	
 ?>
-if (rk.temp$ok) stop ()
+if (!rk.temp$ok) stop ()
 
 rk.graph.on()
 
