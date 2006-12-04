@@ -1,4 +1,4 @@
-- add (comment) captions to the sections of commands produced by plugins
+- add comment headers to the sections of commands produced by plugins
 - if a user command results in the output html file to be modified, auto-refresh output
 - add RMB menu to script editor windows
 - add options "clear" and "configure" in the console RMB menu, and the command log RMB menu
