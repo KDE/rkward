@@ -240,21 +240,5 @@ A duplicate option has to be tested-->
 				</column>
 			</row>
 		</page>
-	<!-- avant apr?-->
-		<page>
-			<text>
-			Everything cannot be here handled : R is too flexibel as concerns plots. Nonetheless, you can add extra code before and after the code of the plugin if you want to add whatever. This will allow you to modify if you want before par() and after to add low-level graphs. Please refer to 'R : an introduction' 
-			</text>
-			<frame label="Advanced options" >
-				<!-- doesn't work very well TODO
-				<checkbox value_unchecked=" " checked="true" value="rk.graph.on()" id="rkgraphson" label="Enter 'rk.graph.on()'" />
-			-->
-				<input size="big" id="before" label="Before plot" />
-			<!-- doesn't work very well TODO
-				<checkbox value_unchecked=" " checked="true" value="rk.graph.off()" id="rkgraphsoff" label="Enter 'rk.graph.off()'" />
-			-->
-				<input size="big" id="after" label="After plot" />
-			</frame>
-		</page>
 	</wizard>
 </document>
