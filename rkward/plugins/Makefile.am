@@ -125,12 +125,6 @@ dist_pluginsX00meansX00ttestsX00independentUsamples_DATA = \
 	00means/00ttests/00independent_samples/code.php \
 	00means/00ttests/00independent_samples/description.xml
 
-pluginsX02plotsdir = $(kde_datadir)/rkward/02plots
-pluginsX02plotsXscatterplotdir = $(kde_datadir)/rkward/02plots/scatterplot
-dist_pluginsX02plotsXscatterplot_DATA = \
-	02plots/scatterplot/code.php \
-	02plots/scatterplot/description.xml
-
 pluginsX20descriptivedir = $(kde_datadir)/rkward/20descriptive
 dist_pluginsX20descriptive_DATA = \
 	20descriptive/code.php \
@@ -184,17 +178,11 @@ dist_pluginsX00saveloadXsaveXsave_DATA = \
 	00saveload/save/save/code.php \
 	00saveload/save/save/description.xml
 
-pluginsXtempdir = $(kde_datadir)/rkward/temp
-pluginsXtempXcommit151106dir = $(kde_datadir)/rkward/temp/commit151106
-dist_pluginsXtempXcommit151106_DATA = \
-	temp/commit151106/code.php \
-	temp/commit151106/description.xml
-
-pluginsXtempXcommit151106Xtukeydir = $(kde_datadir)/rkward/temp/commit151106/tukey
-pluginsXtempXcommit151106X20dudir = $(kde_datadir)/rkward/temp/commit151106/20du
-dist_pluginsXtempXcommit151106X20du_DATA = \
-	temp/commit151106/20du/code.php \
-	temp/commit151106/20du/description.xml
+pluginsX02plotsdir = $(kde_datadir)/rkward/02plots
+pluginsX02plotsXscatterplotdir = $(kde_datadir)/rkward/02plots/scatterplot
+dist_pluginsX02plotsXscatterplot_DATA = \
+	02plots/scatterplot/code.php \
+	02plots/scatterplot/description.xml
 
 pluginsXx11devicedir = $(kde_datadir)/rkward/x11device
 dist_pluginsXx11device_DATA = \
