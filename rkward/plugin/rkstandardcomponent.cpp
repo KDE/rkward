@@ -83,7 +83,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	connect (backend, SIGNAL (haveError ()), this, SLOT (hide ()));
 	connect (backend, SIGNAL (haveError ()), this, SLOT (removeFromParent ()));
 	connect (backend, SIGNAL (haveError ()), this, SLOT (deleteLater ()));
-	if (!backend->initialize (dummy, code)) return;
+	if (!backend->initialize (dummy, code, parent_component == 0)) return;
 
 	connect (qApp, SIGNAL (aboutToQuit ()), this, SLOT (deleteLater ()));
 

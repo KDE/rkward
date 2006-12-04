@@ -40,7 +40,7 @@ public:
 
 	~PHPBackend ();
 
-	bool initialize (const QString &filename, RKComponentPropertyCode *code_property=0);
+	bool initialize (const QString &filename, RKComponentPropertyCode *code_property=0, bool add_headings=true);
 	void destroy ();
 	
 	void preprocess (int flags) { callFunction ("preprocess ();", flags, Preprocess); };

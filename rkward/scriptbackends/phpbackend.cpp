@@ -42,7 +42,7 @@ PHPBackend::~PHPBackend() {
 	destroy ();
 }
 
-bool PHPBackend::initialize (const QString &filename, RKComponentPropertyCode *code_property) {
+bool PHPBackend::initialize (const QString &filename, RKComponentPropertyCode *code_property, bool add_headings) {
 	RK_TRACE (PHP);
 
 	if (php_process && php_process->isRunning ()) {
@@ -73,6 +73,7 @@ bool PHPBackend::initialize (const QString &filename, RKComponentPropertyCode *c
 	callFunction ("include (\"" + filename + "\");", 0, Ignore);
 
 	PHPBackend::code_property = code_property;
+	PHPBackend::add_headings = add_headings;
 	return true;
 }
 
@@ -239,16 +240,20 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int len) {
 				if (code_property) {
 					if (_output.isNull ()) _output = "";			// must not be null for the code property!
 					if (current_type == Preprocess) {
-						code_property->setPreprocess (retrieveOutput ());
+						if (add_headings) code_property->setPreprocess (i18n ("## Prepare\n") + retrieveOutput ());
+						else code_property->setPreprocess (retrieveOutput ());
 						resetOutput ();
 					} else if (current_type == Calculate) {
-						code_property->setCalculate (retrieveOutput ());
+						if (add_headings) code_property->setCalculate (i18n ("## Compute\n") + retrieveOutput ());
+						else code_property->setCalculate (retrieveOutput ());
 						resetOutput ();
 					} else if (current_type == Printout) {
-						code_property->setPrintout (retrieveOutput ());
+						if (add_headings) code_property->setPrintout (i18n ("## Print result\n") + retrieveOutput ());
+						else code_property->setPrintout (retrieveOutput ());
 						resetOutput ();
 					} else if (current_type == Cleanup) {
-						code_property->setCleanup (retrieveOutput ());
+						if (add_headings) code_property->setCleanup (i18n ("## Clean up\n") + retrieveOutput ());
+						else code_property->setCleanup (retrieveOutput ());
 						resetOutput ();
 					} else {
 						emit (commandDone (current_flags));

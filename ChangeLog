@@ -1,3 +1,4 @@
+- add (comment) captions to the sections of commands produced by plugins
 - if a user command results in the output html file to be modified, auto-refresh output
 - add RMB menu to script editor windows
 - add options "clear" and "configure" in the console RMB menu, and the command log RMB menu
@@ -13,7 +14,7 @@
 - do not open the same script url twice (instead the corresponding window is raised on the second attempt)
 - fixed: when closing a detached script editor window, you would not be asked to save changes (if any)
 - fixed: occasional crash when re-attaching a script editor window
-- new translation: Greek, Catalan
+- new translations: Greek, Catalan
 - updated translations: German, French
 - added basic plot facility for ECDF (Empirical Cumulative Distribution Function) (menu plots)
 - added ptukey and qtukey (Studentized Range Distribution (Tukey)) (menu distributions)
