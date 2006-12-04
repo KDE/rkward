@@ -14,7 +14,9 @@ dist_pluginsXplots_DATA = \
 	plots/box_plot.php \
 	plots/histogram.xml \
 	plots/ecdf_plot.php \
-	plots/ecdf_plot.xml
+	plots/ecdf_plot.xml \
+	plots/scatterplot.xml \
+	plots/scatterplot.php
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
@@ -180,10 +182,6 @@ dist_pluginsX00saveloadXsaveXsave_DATA = \
 
 pluginsX02plotsdir = $(kde_datadir)/rkward/02plots
 pluginsX02plotsXscatterplotdir = $(kde_datadir)/rkward/02plots/scatterplot
-dist_pluginsX02plotsXscatterplot_DATA = \
-	02plots/scatterplot/code.php \
-	02plots/scatterplot/description.xml
-
 pluginsXx11devicedir = $(kde_datadir)/rkward/x11device
 dist_pluginsXx11device_DATA = \
 	x11device/export.xml \

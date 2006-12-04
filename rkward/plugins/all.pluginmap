@@ -13,7 +13,7 @@
 		<component type="standard" id="save_variables" file="00saveload/save/write/description.xml" label="Save variables" />
 		<component type="standard" id="save_table" file="writetable/description.xml" label="Save as table" />
 
-		<component type="standard" id="plots_scatterplot" file="02plots/scatterplot/description.xml" label="Scatterplot" />
+		<component type="standard" id="plots_scatterplot" file="plots/scatterplot.xml" label="Scatterplot" />
 		<component type="standard" id="plot_options" file="plots/plot_options.xml" label="Plot Options" />
 
 		<component type="standard" id="descriptive" file="20descriptive/description.xml" label="Descriptive Statistics" />
