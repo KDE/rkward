@@ -30,7 +30,7 @@ RKWardApplication *RKWardApplication::rkapp = 0;
 Atom wm_name_property;
 
 RKWardApplication::RKWardApplication () : KApplication () {
-	RK_TRACE (APP);
+	//RK_TRACE (APP);	// would be called before initialization of debug-level
 	RK_ASSERT (!rkapp);
 
 	rkapp = this;
