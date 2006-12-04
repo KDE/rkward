@@ -1,3 +1,4 @@
+# translation of de.po to German
 # translation of de.po to
 # translation of rkward.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -12,9 +13,9 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-12-01 11:22+0100\n"
-"PO-Revision-Date: 2006-12-01 13:46+0100\n"
-"Last-Translator: Thomas Friedrichsmeier <tfry@users.sourceforge.net>\n"
-"Language-Team:  <de@li.org>\n"
+"PO-Revision-Date: 2006-12-04 23:40+0100\n"
+"Last-Translator: SJR <stefan_roediger@gmx.de>\n"
+"Language-Team: German <rkward-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -488,12 +489,12 @@ msgid ""
 "loss of data. These commands have _not_ been cancelled."
 msgstr ""
 "Einige Kommandos die Sie versuchen zurückzunehmen wurden als \"sync"
-"\" (Buchstabe 'S' in Typ-Spalte). Zurücknehemen solcher Kommandos könnte zu "
+"\" (Buchstabe 'S' in Typ-Spalte). Abbrechen solcher Kommandos könnte zu "
 "Datenverlußt führen. Diese Kommandos sind nicht zurückgenommen wurden."
 
 #: windows/rcontrolwindow.cpp:269
 msgid "Some commands not cancelled"
-msgstr "Einige Kommandos wurden nicht zurückgenommen"
+msgstr "Einige Kommandos wurden nicht abgebrochen"
 
 #: windows/rcontrolwindow.cpp:282
 msgid "Resume execution"
@@ -592,11 +593,8 @@ msgid "Could not embed R X11 window"
 msgstr "Konnte X11 Grafikfenster nicht einbinden."
 
 #: windows/rkwindowcatcher.cpp:90
-#, fuzzy
 msgid "An error occurred"
-msgstr ""
-"\n"
-"Einige Fehler sind aufgetreten:"
+msgstr "Einige Fehler sind aufgetreten:"
 
 #: windows/rkwindowcatcher.cpp:198
 msgid "Specify fixed size"
@@ -836,7 +834,7 @@ msgstr "Workspace"
 #: settings/rksettingsmodulegeneral.cpp:45
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
 msgstr ""
-"Einstellungen die mit einem (*) markiert sind werden erst nach einem "
+"Einstellungen die mit einem (*) markiert sind, werden erst nach einem "
 "Neustart von RKWard wirksam"
 
 #: settings/rksettingsmodulegeneral.cpp:49
@@ -849,11 +847,11 @@ msgstr "StartUp Aktion (*)"
 
 #: settings/rksettingsmodulegeneral.cpp:55 dialogs/startupdialog.cpp:60
 msgid "Start with an empty workspace"
-msgstr "Starte mit einem leeren Workspace"
+msgstr "Starte mit leerem Workspace"
 
 #: settings/rksettingsmodulegeneral.cpp:56 dialogs/startupdialog.cpp:61
 msgid "Start with an empty table"
-msgstr "Starte mit einer leeren Tabelle"
+msgstr "Starte mit leerer Tabelle"
 
 #: settings/rksettingsmodulegeneral.cpp:57
 msgid "Ask for a file to open"
@@ -1086,9 +1084,8 @@ msgid "R-Packages"
 msgstr "R-Pakete"
 
 #: settings/rksettingsmoduleconsole.cpp:43
-#, fuzzy
 msgid "Load/Save command history"
-msgstr "Lade/Speichere Befehls Verlauf"
+msgstr "Lade/Speichere Befehlsverlauf"
 
 #: settings/rksettingsmoduleconsole.cpp:48
 msgid "Maximum length of command history"
@@ -1131,9 +1128,8 @@ msgid "show errors"
 msgstr "Zeige Fehler"
 
 #: settings/rksettingsmodulewatch.cpp:136
-#, fuzzy
 msgid "show/raise window"
-msgstr "zeige/hebe Fenster an"
+msgstr "Fenster anzeige/hebe"
 
 #: settings/rksettingsmodulewatch.cpp:140
 msgid "User commands"
@@ -1517,9 +1513,8 @@ msgid "Hidden Objects"
 msgstr "Versteckte Objekte"
 
 #: misc/rksaveobjectchooser.cpp:40
-#, fuzzy
 msgid "Object name to save to"
-msgstr "Objektname:"
+msgstr "Objektname wohin gespeichert werden soll:"
 
 #: misc/rksaveobjectchooser.cpp:49
 msgid "The given symbol already exists"
@@ -1613,18 +1608,17 @@ msgstr ""
 ">Logfiles) konfiguriert haben und starten Sie RKWard erneut.\n"
 
 #: rbackend/rinterface.cpp:184
-#, fuzzy
 msgid ""
 "\t-An unspecified error occured that is not yet handled by RKWard. Likely "
 "RKWard will not function properly. Please check your setup.\n"
 msgstr ""
 "\t-Ein nicht spezifizierter Fehler ist aufgetreten der noch nicht von RKWard "
 "gehandhabt werden kann. Wahrscheinlich wird RKWard nicht richtig "
-"funktionieren. Bitte überprüfen Sie ihre Einstellungen.\n"
+"funktionieren. Bitte überprüfen Sie ihr Setup.\n"
 
 #: rbackend/rinterface.cpp:186
 msgid "Error starting R"
-msgstr "Fehler beim Starten von R"
+msgstr "Fehler beim Start von R"
 
 #: rbackend/rinterface.cpp:318
 msgid ""
@@ -1656,9 +1650,8 @@ msgid "Message from the R backend"
 msgstr "Benachrichtigung vom R Backend"
 
 #: rbackend/rinterface.cpp:369
-#, fuzzy
 msgid "R backend requests information"
-msgstr "Das R Backend benötigt Informationen"
+msgstr "R Backend erbittet Informationen"
 
 #: rbackend/rinterface.cpp:397
 msgid "The R engine has encountered a fatal error:\n"
