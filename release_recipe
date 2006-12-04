@@ -3,8 +3,8 @@ This procedure helps working around a number of strange problems while creating 
 make clean
 make dist
 unpack tarball and cd there
-rm -r admin/CVS (not yet tested)
-make -f Makefile.cvs
+rm -rf admin/.svn
+make -f Makefile.svn
 rm rkward/rkward_skel.cpp
 touch config.h.in
 rm -r autom4te.cache
