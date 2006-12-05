@@ -6,7 +6,7 @@ function calculate () {
 	global $p;
 	$p = "c (" . preg_replace ("/[, ]+/", ", ", getRK_val ("p")) . ")";
 ?>
-rk.temp = (qgeom (p = <? echo ($p); ?>, prob = <? getRK ("prob"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
+rk.temp <- (qgeom (p = <? echo ($p); ?>, prob = <? getRK ("prob"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
 <?
 }
 

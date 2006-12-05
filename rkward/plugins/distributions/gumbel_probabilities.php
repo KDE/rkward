@@ -6,7 +6,7 @@ function calculate () {
 	global $q;
 	$q = "c (" . preg_replace ("/[, ]+/", ", ", getRK_val ("q")) . ")";
 ?>
-rk.temp = (pweibull (q = exp(<? echo ($q); ?>), shape = <? getRK ("shape"); ?>, scale = <? getRK ("scale"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
+rk.temp <- (pweibull (q = exp(<? echo ($q); ?>), shape = <? getRK ("shape"); ?>, scale = <? getRK ("scale"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
 <?
 }
 

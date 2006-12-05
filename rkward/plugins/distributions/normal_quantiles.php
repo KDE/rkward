@@ -6,7 +6,7 @@ function calculate () {
 	global $p;
 	$p = "c (" . preg_replace ("/[, ]+/", ", ", getRK_val ("p")) . ")";
 ?>
-rk.temp = (qnorm (p = <? echo ($p); ?>, mean = <? getRK ("mean"); ?>, sd = <? getRK ("sd"); ?>, <? getRK ("tail"); ?>, <? getRK ("logp"); ?>))
+rk.temp <- (qnorm (p = <? echo ($p); ?>, mean = <? getRK ("mean"); ?>, sd = <? getRK ("sd"); ?>, <? getRK ("tail"); ?>, <? getRK ("logp"); ?>))
 <?
 }
 

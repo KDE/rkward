@@ -6,7 +6,7 @@ function calculate () {
 	global $p;
 	$p = "c (" . preg_replace ("/[, ]+/", ", ", getRK_val ("p")) . ")";
 ?>
-rk.temp = (qwilcox (p = <? echo ($p); ?>, m = <? getRK ("m"); ?>, n = <? getRK ("n"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
+rk.temp <- (qwilcox (p = <? echo ($p); ?>, m = <? getRK ("m"); ?>, n = <? getRK ("n"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
 <?
 	}
 	

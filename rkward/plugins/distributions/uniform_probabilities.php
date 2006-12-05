@@ -6,7 +6,7 @@ function calculate () {
 	global $q;
 	$q = "c (" . preg_replace ("/[, ]+/", ", ", getRK_val ("q")) . ")";
 ?>
-rk.temp = (punif (q = <? echo ($q); ?>, min = <? getRK ("min"); ?>, max = <? getRK ("max"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
+rk.temp <- (punif (q = <? echo ($q); ?>, min = <? getRK ("min"); ?>, max = <? getRK ("max"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
 <?
 }
 

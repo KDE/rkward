@@ -6,7 +6,7 @@ function calculate () {
 	global $p;
 	$p = "c (" . preg_replace ("/[, ]+/", ", ", getRK_val ("p")) . ")";
 ?>
-rk.temp = (qtukey (p = <? echo ($p); ?>, nmeans = <? getRK ("nmeans"); ?>, df = <? getRK ("df"); ?>, nranges = <? getRK ("nranges"); ?>, <? getRK ("tail"); ?>, <? getRK ("logp"); ?>))
+rk.temp <- (qtukey (p = <? echo ($p); ?>, nmeans = <? getRK ("nmeans"); ?>, df = <? getRK ("df"); ?>, nranges = <? getRK ("nranges"); ?>, <? getRK ("tail"); ?>, <? getRK ("logp"); ?>))
 <?
 }
 

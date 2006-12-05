@@ -6,7 +6,7 @@ function calculate () {
 	global $q;
 	$q = "c (" . preg_replace ("/[, ]+/", ", ", getRK_val ("q")) . ")";
 ?>
-rk.temp = (phyper (q = <? echo ($q); ?>, m = <? getRK ("m"); ?>, n = <? getRK ("n"); ?>, k = <? getRK ("k"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
+rk.temp <- (phyper (q = <? echo ($q); ?>, m = <? getRK ("m"); ?>, n = <? getRK ("n"); ?>, k = <? getRK ("k"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
 <?
 }
 

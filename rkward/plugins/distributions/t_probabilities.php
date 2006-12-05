@@ -6,7 +6,7 @@ function calculate () {
 	global $q;
 	$q = "c (" . preg_replace ("/[, ]+/", ", ", getRK_val ("q")) . ")";
 ?>
-rk.temp = (pt (q = <? echo ($q); ?>, df = <? getRK ("df"); ?>, <? getRK ("tail"); ?>))
+rk.temp <- (pt (q = <? echo ($q); ?>, df = <? getRK ("df"); ?>, <? getRK ("tail"); ?>))
 <?
 }
 

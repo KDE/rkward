@@ -7,7 +7,7 @@ function calculate () {
 	$p = "c (" . preg_replace ("/[, ]+/", ", ", getRK_val ("p")) . ")";
 
 ?>
-rk.temp = (qbeta (p = <? echo ($p); ?>, shape1 = <? getRK ("shape1"); ?>, shape2 = <? getRK ("shape2"); ?>, ncp = <? getRK ("ncp"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
+rk.temp <- (qbeta (p = <? echo ($p); ?>, shape1 = <? getRK ("shape1"); ?>, shape2 = <? getRK ("shape2"); ?>, ncp = <? getRK ("ncp"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
 <?
 }
 
