@@ -25,8 +25,6 @@ Compilation / technical
 	- cleanup DISABLE_RKWINDOWCATCHER (either get rid of it, or do it right)
 
 UI-stuff
-	- Output window should gain some sort of auto-update functionality:
-		- After user commands, should check, whether the output file was modified. If so, reload
 	"First-run wizard"
 		- pre-install R packages
 	- Check for existence of php binary on startup, not only when loading a plugin
@@ -79,6 +77,8 @@ UI-stuff
 		- another nifty feature would be - if F8 would work also in the console/log.
 
 Internal stuff:
+	- Look at package odfWeave, and find out, how to use this
+		- replace remaining direct HTML fragments in plugins with wrapper calls
 	- should we override bindingIsActive()?
 	RKVariable:
 		- True Support for Logicals
