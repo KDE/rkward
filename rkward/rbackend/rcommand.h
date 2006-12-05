@@ -195,6 +195,7 @@ public:
 	void addReceiver (RCommandReceiver *receiver);
 /** Remove a receiver from the list. This may be needed when a listener wants to self-destruct, to make sure we don't try to send any further info there */
 	void removeReceiver (RCommandReceiver *receiver);
+	void addTypeFlag (int flag) { _type |= flag; };
 private:
 friend class RThread;
 friend class RInterface;

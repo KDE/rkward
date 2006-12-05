@@ -29,6 +29,7 @@
 #include <kactioncollection.h>
 #include <kconfig.h>
 #include <kapplication.h>
+#include <kmessagebox.h>
 
 #include "rkglobals.h"
 #include "rkward.h"
@@ -42,6 +43,9 @@
 #include "core/rfunctionobject.h"
 
 #include "debug.h"
+
+// static
+RKConsole* RKConsole::main_console = 0;
 
 RKConsole::RKConsole () : QWidget (0) {
 	RK_TRACE (APP);
@@ -123,7 +127,9 @@ RKConsole::RKConsole () : QWidget (0) {
 	hinter = new RKFunctionArgHinter (this, view);
 	
 	setCaption (i18n ("R Console"));
-	
+	part = new RKConsolePart (this);
+	initializeActions (part->actionCollection ());
+
 	nprefix = "> ";
 	iprefix = "+ ";
 	prefix = nprefix;
@@ -323,7 +329,7 @@ bool RKConsole::eventFilter (QObject *, QEvent *e) {
 	} else if (e->type () == QEvent::MouseButtonPress){
 		QMouseEvent *m = (QMouseEvent *)e;
 		if (m->button() == Qt::RightButton) {
-			emit (popupMenuRequest (m->globalPos ()));
+			doPopupMenu (m->globalPos ());
 			return (true);
 		}
 		return (false);
@@ -388,7 +394,7 @@ void RKConsole::submitCommand () {
 	if (!currentCommand ().isEmpty ()) {
 		current_command = new RCommand (c, RCommand::User | RCommand::Console, QString::null, this);
 		RKGlobals::rInterface ()->issueCommand (current_command);
-		emit (doingCommand (true));
+		interrupt_command_action->setEnabled (true);
 	} else {
 		tryNextInBatch ();
 	}
@@ -495,7 +501,7 @@ void RKConsole::tryNextInBatch (bool add_new_line) {
 	}
 
 	current_command = 0;
-	emit (doingCommand (false));
+	interrupt_command_action->setEnabled (false);
 }
 
 void RKConsole::paste () {
@@ -572,77 +578,109 @@ void RKConsole::configure () {
 	RKSettings::configureSettings (RKSettings::Console, this);
 }
 
+void RKConsole::slotInterruptCommand () {
+	RK_TRACE (APP);
+	RK_ASSERT (current_command || command_incomplete);
+	RK_DO (qDebug("received interrupt signal in console"), APP, DL_DEBUG);
+
+	commands_batch.clear ();
+	if (command_incomplete) {
+		resetIncompleteCommand ();
+	} else {
+		RKGlobals::rInterface ()->cancelCommand (current_command);
+	}
+}
+
+void RKConsole::showContextHelp () {
+	RK_TRACE (APP);
+	RKGlobals::helpDialog ()->getContextHelp (currentCommand (), currentCursorPositionInCommand ());
+}
+
+void RKConsole::initializeActions (KActionCollection *ac) {
+	RK_TRACE (APP);
+
+	context_help_action = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT (showContextHelp ()), ac, "function_reference");
+	interrupt_command_action = new KAction (i18n ("Interrupt running command"), KShortcut ("Ctrl+C"), this, SLOT (slotInterruptCommand ()), ac, "interrupt");
+	interrupt_command_action->setIcon ("player_stop");
+	interrupt_command_action->setEnabled (false);
+// ugly HACK: we need this to override the default Ctrl+C binding
+	interrupt_command_action->setShortcut ("Ctrl+C");
+
+	copy_action = new KAction (i18n ("Copy selection"), 0, this, SLOT (copy ()), ac, "rkconsole_copy");
+	KStdAction::clear (this, SLOT (clear ()), ac, "rkconsole_clear");
+	paste_action = KStdAction::paste (this, SLOT (paste ()), ac, "rkconsole_paste");
+	new KAction (i18n ("Configure"), 0, this, SLOT (configure ()), ac, "rkconsole_configure");
+}
+
+void RKConsole::pipeUserCommand (RCommand *command) {
+	RK_TRACE (APP);
+
+	if (RKSettingsModuleConsole::pipeUserCommandsThroughConsole ()) {
+		RKConsole::mainConsole ()->pipeCommandThroughConsoleLocal (command);
+	} else {
+		RKGlobals::rInterface ()->issueCommand (command);
+	}
+}
+
+void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
+	RK_TRACE (APP);
+
+	emit (raiseWindow ());
+	if (isBusy () || (!currentCommand ().isEmpty ())) {
+		int res = KMessageBox::questionYesNo (this, i18n ("You have configured RKWrad to run script commands through the console. However, the console is currently busy (either a command is running, or you have started to enter text in the console). Do you want to bypass the console this one time, or do you want to try again later?"), i18n ("Console is busy"), KGuiItem (i18n ("Bypass console")), KGuiItem (i18n ("Cancel")));
+		if (res == KMessageBox::Yes) {
+			RKGlobals::rInterface ()->issueCommand (command);
+		}
+	} else {
+		QString text = command->command ();
+		text.replace ("\n", QString ("\n") + iprefix);
+		doc->insertText (doc->numLines () - 1, QString (nprefix).length (), text);
+		command->addReceiver (this);
+		command->addTypeFlag (RCommand::Console);
+		current_command = command;
+		RKGlobals::rInterface ()->issueCommand (command);
+	}
+}
+
+void RKConsole::doPopupMenu (const QPoint &pos) {
+	RK_TRACE (APP);
+
+	copy_action->setEnabled (hasSelectedText ());
+
+	part->showPopupMenu (pos);
+
+	copy_action->setEnabled (true);
+}
+
 ///################### END RKConsole ########################
 ///################### BEGIN RKConsolePart ####################
 
-RKConsolePart::RKConsolePart () : KParts::Part (0) {
+
+RKConsolePart::RKConsolePart (RKConsole *console) : KParts::Part (0) {
 	RK_TRACE (APP);
 
 	KInstance* instance = new KInstance ("rkward");
 	setInstance (instance);
 
-	setWidget (RKConsolePart::console = new RKConsole ());
-	connect (console, SIGNAL (doingCommand (bool)), this, SLOT (setDoingCommand (bool)));
+	setWidget (console);
 
 	setXMLFile ("rkconsolepart.rc");
-
-	context_help = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT (showContextHelp ()), actionCollection (), "function_reference");
-	interrupt_command = new KAction (i18n ("Interrupt running command"), KShortcut ("Ctrl+C"), this, SLOT (slotInterruptCommand ()), actionCollection (), "interrupt");
-	interrupt_command->setIcon ("player_stop");
-	interrupt_command->setEnabled (false);
-// ugly HACK: we need this to override the default Ctrl+C binding
-	interrupt_command->setShortcut ("Ctrl+C");
-
-	copy = new KAction (i18n ("Copy selection"), 0, console, SLOT (copy ()), actionCollection (), "rkconsole_copy");
-	KStdAction::clear (console, SLOT (clear ()), actionCollection (), "rkconsole_clear");
-	paste = KStdAction::paste (console, SLOT (paste ()), actionCollection (), "rkconsole_paste");
-	new KAction (i18n ("Configure"), 0, console, SLOT (configure ()), actionCollection (), "rkconsole_configure");
-
-	connect (console, SIGNAL (popupMenuRequest (const QPoint &)), this, SLOT (makePopupMenu (const QPoint &)));
 }
 
 RKConsolePart::~RKConsolePart () {
 	RK_TRACE (APP);
 }
 
-void RKConsolePart::showContextHelp () {
-	RK_TRACE (APP);
-	RKGlobals::helpDialog ()->getContextHelp (console->currentCommand (), console->currentCursorPositionInCommand ());
-}
-
-void RKConsolePart::setDoingCommand (bool busy) {
-	RK_TRACE (APP);
-
-	interrupt_command->setEnabled (busy || console->command_incomplete);
-}
-
-void RKConsolePart::slotInterruptCommand () {
-	RK_TRACE (APP);
-	RK_ASSERT (console->current_command || console->command_incomplete);
-	RK_DO (qDebug("received interrupt signal in console"), APP, DL_DEBUG);
-
-	console->commands_batch.clear ();
-	if (console->command_incomplete) {
-		console->resetIncompleteCommand ();
-	} else {
-		RKGlobals::rInterface ()->cancelCommand (console->current_command);
-	}
-	setDoingCommand (false);
-}
-
-void RKConsolePart::makePopupMenu (const QPoint &pos) {
+void RKConsolePart::showPopupMenu (const QPoint &pos) {
 	RK_TRACE (APP);
 
 	QPopupMenu *menu = static_cast<QPopupMenu *> (factory ()->container ("rkconsole_context_menu", this));
-	copy->setEnabled (console->hasSelectedText ());
 
 	if (!menu) {
 		RK_ASSERT (false);
 		return;
 	}
 	menu->exec (pos);
-
-	copy->setEnabled (true);
 }
 
 #include "rkconsole.moc"

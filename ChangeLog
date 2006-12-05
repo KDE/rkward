@@ -1,3 +1,4 @@
+- Script editor commands are piped through the console (by default; this is configurable)
 - (Cleanups: scatterplot plugin moved to plots, use "<-" instead of "=")
 
 --- Version 0.4.2 - Dec-04-2006

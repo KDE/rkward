@@ -31,6 +31,8 @@
 class QStringList;
 class KAction;
 class RCommand;
+class KActionCollection;
+class RKConsolePart;
 
 /**
 \brief Provides an R-like console.
@@ -47,6 +49,11 @@ Do not construct directly. Construct an RKConsolePart instead.
 class RKConsole : public QWidget, public RCommandReceiver, public RKScriptContextProvider {
 Q_OBJECT
 public:
+/** Constructor. */
+	RKConsole ();
+/** Destructor */
+	~RKConsole ();
+
 /** Submits a batch of commands, line by line.
 \param batch a QString containing the batch of commands to be executed */
 	void submitBatch (QString batch);
@@ -62,21 +69,24 @@ public:
 	void resetIncompleteCommand ();
 	void doTabCompletion ();
 	bool provideContext (unsigned int line_rev, QString *context, int *cursor_position);
-protected:
-/** Constructor. Protected. Construct an RKConsolePart instead */
-	RKConsole ();
-/** Destructor */
-	~RKConsole ();
 
+	static RKConsole *mainConsole () { return main_console; };
+	static void setMainConsole (RKConsole *console) { main_console = console; };
+
+	bool isBusy () { return (current_command || command_incomplete); };
+/** Run a user command (through console, if applicable */
+	static void pipeUserCommand (RCommand *command);
+
+	RKConsolePart *getPart () { return part; };
+signals:
+	void raiseWindow ();
+protected:
 /** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
 \param e the QKeyEvent */
 	bool handleKeyPress (QKeyEvent * e);
 	void rCommandDone (RCommand *command);
 /** reimplemented from RCommandReceiver::newOutput () to handle output of console commands */
 	void newOutput (RCommand *command, ROutput *output);
-signals:
-	void doingCommand (bool busy);
-	void popupMenuRequest (const QPoint &pos);
 private:
 friend class RKConsolePart;
 	bool eventFilter (QObject *o, QEvent *e);
@@ -127,7 +137,21 @@ friend class RKConsolePart;
 	Kate::View *view;
 	RKFunctionArgHinter *hinter;
 
+	static RKConsole *main_console;
+
 	bool tab_key_pressed_before;
+
+	KAction* context_help_action;
+	KAction* interrupt_command_action;
+	KAction* copy_action;
+	KAction* paste_action;
+
+	void initializeActions (KActionCollection *ac);
+	void pipeCommandThroughConsoleLocal (RCommand *command);
+
+	RKConsolePart *part;
+
+	void doPopupMenu (const QPoint &pos);
 public slots:
 /** We intercept paste commands and get them executed through submitBatch.
 @sa submitBatch */
@@ -136,6 +160,10 @@ public slots:
 /** Clear the view, and add a prompt at the top. */
 	void clear ();
 	void configure ();
+/** show context help on the current word */
+	void showContextHelp ();
+/** interrupt current command. */
+	void slotInterruptCommand ();
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality
@@ -143,28 +171,15 @@ public slots:
 @author Thomas Friedrichsmeier */
 
 class RKConsolePart : public KParts::Part {
-	Q_OBJECT
-public:
-/** constructor.
+friend class RKConsole;
+protected:
+/** constructor. Protected. Meant to the created by the RKConsole itself
 @param console The console for this part */
-	RKConsolePart ();
+	RKConsolePart (RKConsole *console);
 /** destructor */
 	~RKConsolePart ();
-public slots:
-/** show context help on the current word */
-	void showContextHelp ();
-	void setDoingCommand (bool busy);
-/** interrupt current command. */
-	void slotInterruptCommand ();
-	void makePopupMenu (const QPoint &pos);
-private:
-	KAction* context_help;
-	KAction* interrupt_command;
-	KAction* copy;
-	KAction* paste;
-	KAction* clear;
 
-	RKConsole *console;
+	void showPopupMenu (const QPoint &pos);
 };
 
 #endif

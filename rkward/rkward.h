@@ -136,6 +136,8 @@ public slots:
 	void showAboutApplication ();
 	/** raises the watch window */
 	void raiseWatch ();
+	/** raises the console window */
+	void raiseConsole ();
 	/** creates a new (empty) data.frame */
 	void slotNewDataFrame ();
 	/** open a file and load it into the document*/
@@ -221,6 +223,7 @@ private:
 	KAction* configure;
 
 	KMdiToolViewAccessor *watch_view;
+	KMdiToolViewAccessor *console_view;
 	KMdiToolViewAccessor *search_help_view;
 	
 	friend class RKSettingsModule;

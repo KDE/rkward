@@ -191,11 +191,13 @@ void RKWardMainWindow::doPostInit () {
 	addToolWindow (RKGlobals::rcontrol, KDockWidget::DockBottom, getMainDockWidget (), 10);
 	RKGlobals::rcontrol->hide ();		// this line is important! RControlWindow must do some initializations on first show, and be hidden until then.
 
-	RKConsolePart *consolepart = new RKConsolePart ();
-	consolepart->widget ()->setIcon (SmallIcon ("konsole"));
-	consolepart->widget ()->setName ("r_console");
-	addToolWindow (consolepart->widget (), KDockWidget::DockBottom, getMainDockWidget (), 10);
-	partManager ()->addPart (consolepart, false);
+	RKConsole *console = new RKConsole ();
+	console->setIcon (SmallIcon ("konsole"));
+	console->setName ("r_console");
+	console_view = addToolWindow (console, KDockWidget::DockBottom, getMainDockWidget (), 10);
+	connect (console, SIGNAL (raiseWindow ()), this, SLOT (raiseConsole ()));
+	partManager ()->addPart (console->getPart (), false);
+	RKConsole::setMainConsole (console);
 	
 	RKGlobals::helpdlg = new KHelpDlg (0);
 	RKGlobals::helpDialog ()->setIcon (SmallIcon ("help"));
@@ -514,6 +516,15 @@ bool RKWardMainWindow::queryClose () {
 void RKWardMainWindow::raiseWatch () {
 	RK_TRACE (APP);
 	watch_view->show ();
+	KMdiChildView *window = activeWindow ();
+	if (window) {
+		window->activate ();
+	}
+}
+
+void RKWardMainWindow::raiseConsole () {
+	RK_TRACE (APP);
+	console_view->show ();
 	KMdiChildView *window = activeWindow ();
 	if (window) {
 		window->activate ();

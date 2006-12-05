@@ -45,6 +45,7 @@ public:
 	static bool saveHistory () { return save_history; };
 	static uint maxHistoryLength () { return max_history_length; };
 	static uint maxConsoleLines () { return max_console_lines; };
+	static bool pipeUserCommandsThroughConsole () { return pipe_user_commands_through_console; };
 
 	static QStringList loadCommandHistory ();
 	static void saveCommandHistory (const QStringList &list);
@@ -56,8 +57,10 @@ private:
 	static bool save_history;
 	static uint max_history_length;
 	static uint max_console_lines;
+	static bool pipe_user_commands_through_console;
 
 	QCheckBox *save_history_box;
+	QCheckBox *pipe_user_commands_through_console_box;
 	KIntSpinBox *max_history_length_spinner;
 	KIntSpinBox *max_console_lines_spinner;
 };
