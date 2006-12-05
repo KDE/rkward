@@ -394,6 +394,7 @@ void RKConsole::submitCommand () {
 	if (!currentCommand ().isEmpty ()) {
 		current_command = new RCommand (c, RCommand::User | RCommand::Console, QString::null, this);
 		RKGlobals::rInterface ()->issueCommand (current_command);
+		doc->insertText (doc->numLines () - 1, editInterface (doc)->lineLength (doc->numLines () -1), "\n");
 		interrupt_command_action->setEnabled (true);
 	} else {
 		tryNextInBatch ();
@@ -433,6 +434,7 @@ void RKConsole::rCommandDone (RCommand *command) {
 		incomplete_command = QString::null;
 	}
 
+	if (output_continuation) doc->insertLine (doc->numLines (), "");
 	output_continuation = false;
 	commands_history_position = commands_history.constEnd ();
 	tryNextInBatch ();
@@ -444,9 +446,9 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 // TODO: handle different types of output, once we can differentiate between them
 //	insertAt (output->output, doc->numLines()-1, paragraphLength (doc->numLines() - 1));
 	if (output_continuation) {
-		editInterface (doc)->insertText (doc->numLines () -1,  editInterface (doc)->lineLength (doc->numLines () -1), output->output);
+		editInterface (doc)->insertText (doc->numLines () -1, editInterface (doc)->lineLength (doc->numLines () -1), output->output);
 	} else {
-		editInterface (doc)->insertText (doc->numLines (), 0, output->output);
+		editInterface (doc)->insertText (doc->numLines () -1, 0, output->output);
 	}
 
 	if (RKSettingsModuleConsole::maxConsoleLines ()) {
@@ -483,7 +485,7 @@ void RKConsole::tryNextInBatch (bool add_new_line) {
 			}
 			setUpdatesEnabled (true);
 		}
-		editInterface(doc)->insertLine(doc->numLines(), prefix);		// somehow, it seems to be safer to do this after removing superflous lines, than before
+		editInterface(doc)->insertText (doc->numLines ()-1, 0, prefix);		// somehow, it seems to be safer to do this after removing superflous lines, than before
 		cursorAtTheEnd ();
 	}
 
@@ -513,6 +515,7 @@ void RKConsole::paste () {
 void RKConsole::clear () {
 	RK_TRACE (APP);
 	doc->clear ();
+	doc->insertLine (doc->numLines (), "");
 	tryNextInBatch ();
 	// need this HACK to remove empty line at start
 	selectionInterface (doc)->setSelection (0, 0, 1, 0);
