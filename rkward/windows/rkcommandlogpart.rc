@@ -2,6 +2,7 @@
 <kpartgui name="rkward" version="0.4.2">
 	<Menu name="rkcommandlog_context_menu">
 		<Action name="log_copy"/>
+		<Action name="log_run_selection"/>
 		<Separator/>
 		<Action name="log_select_all"/>
 		<Separator/>

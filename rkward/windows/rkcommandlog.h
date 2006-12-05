@@ -65,6 +65,7 @@ public slots:
 	void configureLog ();
 /** clears the log_view-window */
 	void clearLog ();
+	void runSelection ();
 private:
 	void addInputNoCheck (RCommand *command);
 	void addOutputNoCheck (RCommand *command, const QString &output);
@@ -111,6 +112,7 @@ public slots:
 private:
 	RKCommandLog *log;
 
+	KAction *run_selection;
 	KAction *copy;
 };
 

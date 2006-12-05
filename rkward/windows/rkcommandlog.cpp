@@ -19,6 +19,7 @@
 
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
+#include "../rkconsole.h"
 #include "../settings/rksettingsmodulewatch.h"
 #include "../settings/rksettings.h"
 #include "rkcommandeditorwindow.h"
@@ -218,6 +219,12 @@ void RKCommandLog::clearLog () {
 	log_view->setWordWrap (QTextEdit::NoWrap);
 }
 
+void RKCommandLog::runSelection () {
+	RK_TRACE (APP);
+
+	RKConsole::pipeUserCommand (new RCommand (getView ()->selectedText (), RCommand::User, QString::null));
+}
+
 ////////////////////////// END RKCommandLog ///////////////////////////
 /////////////////////// BEGIN RKCommandLogView ////////////////////////
 
@@ -276,6 +283,8 @@ RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
 	KStdAction::clear (log, SLOT (clearLog ()), actionCollection (), "log_clear");
 	KStdAction::selectAll (log->getView (), SLOT (selectAll ()), actionCollection (), "log_select_all");
 	new KAction (i18n ("Configure"), 0, log, SLOT (configureLog ()), actionCollection (), "log_configure");
+	run_selection = new KAction (i18n ("Run selection"), KShortcut ("F8"), log, SLOT (runSelection ()), actionCollection (), "log_run_selection");
+	run_selection->setIcon("player_play");
 
 	connect (log->getView (), SIGNAL (popupMenuRequest (const QPoint &)), this, SLOT (doPopupMenu (const QPoint &)));
 }
@@ -289,6 +298,7 @@ void RKCommandLogPart::doPopupMenu (const QPoint &pos) {
 
 	QPopupMenu *menu = static_cast<QPopupMenu *> (factory ()->container ("rkcommandlog_context_menu", this));
 	copy->setEnabled (log->getView ()->hasSelectedText ());
+	run_selection->setEnabled (log->getView ()->hasSelectedText ());
 
 	if (!menu) {
 		RK_ASSERT (false);
@@ -297,6 +307,7 @@ void RKCommandLogPart::doPopupMenu (const QPoint &pos) {
 	menu->exec (pos);
 
 	copy->setEnabled (true);
+	run_selection->setEnabled (true);
 }
 
 #include "rkcommandlog.moc"
