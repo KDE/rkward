@@ -384,17 +384,18 @@ void RKConsole::cursorAtTheBeginning () {
 void RKConsole::submitCommand () {
 	RK_TRACE (APP);
 
-	QString c = currentCommand ();
-	addCommandToHistory (c);
+	QString current_line = currentCommand ();
+	QString command = current_line;
+	addCommandToHistory (current_line);
 	
 	if (command_incomplete) {
-		c.prepend (incomplete_command + "\n");
+		command.prepend (incomplete_command + "\n");
 	}
 
-	if (!currentCommand ().isEmpty ()) {
-		current_command = new RCommand (c, RCommand::User | RCommand::Console, QString::null, this);
+	doc->insertText (doc->numLines () - 1, editInterface (doc)->lineLength (doc->numLines () -1), "\n");
+	if (!current_line.isEmpty ()) {
+		current_command = new RCommand (command, RCommand::User | RCommand::Console, QString::null, this);
 		RKGlobals::rInterface ()->issueCommand (current_command);
-		doc->insertText (doc->numLines () - 1, editInterface (doc)->lineLength (doc->numLines () -1), "\n");
 		interrupt_command_action->setEnabled (true);
 	} else {
 		tryNextInBatch ();
@@ -503,7 +504,7 @@ void RKConsole::tryNextInBatch (bool add_new_line) {
 	}
 
 	current_command = 0;
-	interrupt_command_action->setEnabled (false);
+	interrupt_command_action->setEnabled (isBusy ());
 }
 
 void RKConsole::paste () {
@@ -572,6 +573,7 @@ void RKConsole::resetIncompleteCommand () {
 	prefix = nprefix;
 	command_incomplete = false;
 	incomplete_command = QString::null;
+	doc->insertLine (doc->numLines (), "");
 
 	tryNextInBatch (true);
 }
