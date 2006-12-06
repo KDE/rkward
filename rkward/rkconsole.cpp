@@ -639,7 +639,7 @@ void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 	} else {
 		QString text = command->command ();
 		text.replace ("\n", QString ("\n") + iprefix);
-		doc->insertText (doc->numLines () - 1, QString (nprefix).length (), text);
+		doc->insertText (doc->numLines () - 1, QString (nprefix).length (), text + "\n");
 		command->addReceiver (this);
 		command->addTypeFlag (RCommand::Console);
 		current_command = command;
