@@ -73,6 +73,7 @@
 		<context attribute="String" lineEndContext="#stay" name="string">
 			<IncludeRules context="CommandContinuationCheck"/>
 			<DetectChar attribute="String" context="#pop" char="&quot;"/>
+			<DetectChar attribute="String" context="#pop" char="'"/>
 			<HlCStringChar attribute="String Char" context="#stay"/>
 		</context>
 
@@ -91,6 +92,7 @@
 		<!-- This context is not really used, but contains the common rules -->
 		<context attribute="Normal Text" name="CommonRules" lineEndContext="#stay">
 			<DetectChar attribute="String" context="string" char="&quot;"/>
+			<DetectChar attribute="String" context="string" char="'"/>
 			<keyword attribute="Control Structure" context="#stay" String="controls"/>
 			<keyword attribute="Reserved Words" context="#stay" String="words"/>
 			<Float attribute="Float" context="#stay"/>

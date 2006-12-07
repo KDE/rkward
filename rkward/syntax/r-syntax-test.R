@@ -45,5 +45,6 @@ myList <- list( a = 1, a2 = 2, a2_b = 3 )
 
 x <- 1
 print ("hi", quote=(x==1))
+cat ("normal quote", 'single quoted', "with escapes \"\'", 'with escapes 2 \'\"')
 
 cat( "\nNo Errors!\n" )
