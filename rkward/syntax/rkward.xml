@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
 <!-- Kate 2.0 (KDE 3.0) highlighting module for RKWard
-	version 0.2: (c) 2006 P. Ecochard
+	version 2.0: (c) 2006 P. Ecochard
 	lincense: GPL v2
-	Based on the highlighting module for R version 0.4: (c) 2006 Thomas Friedrichsmeier, Arne Henningsen, and the RKWard Team
+	Based on the highlighting module for R version 2.0: (c) 2006 Thomas Friedrichsmeier, Arne Henningsen, and the RKWard Team
 	
 	Kate   : http://kate.kde.org/
 	R      : http://www.r-project.org/
 	RKWard : http://rkward.sourceforge.net/
 	-->
-<language version="0.2" kateversion="2.1" name="RKWard output" section="Scripts" extensions="" mimetype="" author="P. Ecochard" license="GPL">
+<language version="2.01" kateversion="2.5" name="RKWard output" section="Scripts" extensions="" mimetype="" author="P. Ecochard" license="GPL">
 <highlighting>
 	<list name="controls">
 	<item> for </item>
