@@ -63,6 +63,11 @@
 			<DetectChar attribute="String" context="#pop" char="'"/>
 			<HlCStringChar attribute="String Char" context="#stay"/>
 		</context>
+		
+		<context attribute="Identifier" lineEndContext="#stay" name="backquotedsymbol">
+			<DetectChar attribute="String" context="#pop" char="`"/>
+			<HlCStringChar attribute="String Char" context="#stay"/>
+		</context>
 
 		<context attribute="Headline" lineEndContext="#pop" name="Headline"/>
 		<context attribute="Comment" lineEndContext="#pop" name="Comment"/>
@@ -71,6 +76,7 @@
 		<context name="CommonRules" lineEndContext="#stay" attribute="Normal Text" >
 			<DetectChar attribute="String" context="string" char="&quot;"/>
 			<DetectChar attribute="String" context="string" char="'"/>
+			<DetectChar attribute="String" context="backquotedsymbol" char="`"/>
 			<keyword attribute="Control Structure" context="#stay" String="controls"/>
 			<keyword attribute="Reserved Words" context="#stay" String="words"/>
 			<Float attribute="Float" context="#stay"/>
