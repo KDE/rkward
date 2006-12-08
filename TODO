@@ -71,6 +71,7 @@ UI-stuff
 		- optionally keep a file log!
 	- hot-key/permanent icon to cancel current command / hold processing. Perhaps in the busy/idle indicator?
 	- find out how to save toolbar states properly in parts-GUI
+		- also setting the toolbar state for all windows with that toolbar
 	- David's usability items
 	- use RKGlobals::marginHint (), RKGlobals::spacingHint () everywhere
 	- from Ralf:

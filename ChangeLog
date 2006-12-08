@@ -1,3 +1,4 @@
+- small improvements to syntax highlighting definition
 - in console, make cursor go to empty next line after pressing enter, before there is output (more like in the real console)
 - add "run selection" option to command log
 - script editor commands are piped through the console (by default; this is configurable)
