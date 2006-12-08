@@ -60,6 +60,10 @@
 
 		<context attribute="String" lineEndContext="#stay" name="string">
 			<DetectChar attribute="String" context="#pop" char="&quot;"/>
+			<HlCStringChar attribute="String Char" context="#stay"/>
+		</context>
+		
+		<context attribute="String" lineEndContext="#stay" name="string2">
 			<DetectChar attribute="String" context="#pop" char="'"/>
 			<HlCStringChar attribute="String Char" context="#stay"/>
 		</context>
@@ -75,7 +79,7 @@
 		<!-- This context is not really used, but contains the common rules -->
 		<context name="CommonRules" lineEndContext="#stay" attribute="Normal Text" >
 			<DetectChar attribute="String" context="string" char="&quot;"/>
-			<DetectChar attribute="String" context="string" char="'"/>
+			<DetectChar attribute="String" context="string2" char="'"/>
 			<DetectChar attribute="String" context="backquotedsymbol" char="`"/>
 			<keyword attribute="Control Structure" context="#stay" String="controls"/>
 			<keyword attribute="Reserved Words" context="#stay" String="words"/>

@@ -47,7 +47,7 @@ x <- 1
 print ("hi", quote=(x==1))
 
 # quotes:
-cat ("normal quote", 'single quoted', "with escapes \"\'", 'with escapes 2 \'\"')
+cat ("normal quote", 'single quoted', "with escapes \" ' ", 'with escapes 2 \' " ')
 `backquoted symbol name` <- 1
 "backquoted symbol name"	# This will print the string
 `backquoted symbol name`	# This will print the value (1)
