@@ -23,7 +23,7 @@
 #define QXEMBED_H
 
 #include <qwidget.h>
-#include <kdelibs_export.h>
+//#include <kdelibs_export.h>		// this line changed against original QXEmbed
 
 #ifdef Q_WS_X11
 
@@ -55,7 +55,7 @@ class QXEmbedCopyData;
  *
  * @short The QXEmbedCopy widget is a graphical socket that can embed an external X-Window.
 */
-class KDEUI_EXPORT QXEmbedCopy : public QWidget
+class QXEmbedCopy : public QWidget		// this line changed against original QXEmbed
 {
     Q_OBJECT
 

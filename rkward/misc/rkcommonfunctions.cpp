@@ -98,14 +98,14 @@ namespace RKCommonFunctions {
 	}
 
 	QString getCurrentSymbol (const QString &context_line, int cursor_pos, bool strict) {
-		if (context_line.isEmpty ()) return (QString ());
+		if (context_line.isEmpty ()) return (QString::null);
 
 		int current_word_start;
 		int current_word_end;
 		getCurrentSymbolOffset (context_line, cursor_pos, strict, &current_word_start, &current_word_end);
 	
 		// if both return the same position, we're on a non-word.
-		if (current_word_start == current_word_end) return (QString ());
+		if (current_word_start == current_word_end) return (QString::null);
 
 		return (context_line.mid (current_word_start, current_word_end - current_word_start));
 	}
