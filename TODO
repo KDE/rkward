@@ -51,6 +51,7 @@ UI-stuff
 			- this will be very hard to do with the current Qt. We'd really need several checkboxes *within* a QListViewItem. Tackle this when/after porting to Qt4
 	- RObjectListView
 		- use better icons to mark up the different base types
+		- double click action should be configurable: View, Edit, insert name into current script, insert name into console, nothing
 	- RKConsole:
 		- Console should start a command chain when submitting a batch of pasted commands
 		- Better yet, the commands might be autosplit in the backend. Need to think about how to design this correctly, though
@@ -76,6 +77,10 @@ UI-stuff
 	- use RKGlobals::marginHint (), RKGlobals::spacingHint () everywhere
 	- from Ralf:
 		- another nifty feature would be - if F8 would work also in the console/log.
+		- show first few values of vectors/scalars in tool-tip in workspace browser
+	- Debugging functionality
+		- ideally the whole thing: setting breakpoints, etc.
+		- realistically, maybe we can override browser () or do_browser with something nicer
 
 Internal stuff:
 	- Look at package odfWeave, and find out, how to use this
