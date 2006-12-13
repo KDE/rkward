@@ -1,3 +1,10 @@
+rkward (0.4.2-3) unstable; urgency=low
+
+  * this version is not meant to be uploaded to the main archives!
+  * fix compilation on sarge
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 13 Dec 2006 17:30:00 +0200
+
 rkward (0.4.2-2) unstable; urgency=low
 
   * migrate to unstable
