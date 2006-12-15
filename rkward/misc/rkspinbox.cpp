@@ -86,6 +86,10 @@ void RKSpinBox::setIntMode (int min, int max, int initial) {
 	QValidator *new_validator = new QIntValidator (min, max, this);
 
 	int range_power = (int) (log10 (max - min));
+	int range_power_limit = (int) (log10 (initial)) + 2;
+	if (range_power > range_power_limit) {
+		range_power = range_power_limit;
+	}
 	if (range_power <= 0) {
 		range_power = 1;
 	}
