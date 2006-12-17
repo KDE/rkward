@@ -968,6 +968,24 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	</variablelist></listitem>
 </varlistentry>
 <varlistentry>
+<term>&lt;input&gt;</term>
+<listitem>Defines a free text input field. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>&lt;label&gt;</term>
+	<listitem>Label for the input field (required)</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;initial&gt;</term>
+	<listitem>Initial text of the text field (optional, defaults to "", i.e. an empty string)</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;size&gt;</term>
+	<listitem>One of "small", "medium", or "large". "large" defines a multi-line input field, "small", and "medium" are single line fields (optional, defaults to "medium")</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
 <term>&lt;spinbox&gt;</term>
 <listitem>A spinbox in which the user can select a numeric value, using either direct keyboard input or small up/down arrows. Attributes:
 	<variablelist>
@@ -1215,6 +1233,16 @@ In addition to this, some elements have additional properties you can connect to
 	<varlistentry>
 	<term>state</term>
 	<listitem>State of the checkbox (on or off) (boolean)</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;input&gt;</term>
+<listitem>Default property is "text"
+	<variablelist>
+	<varlistentry>
+	<term>text</term>
+	<listitem>Current text in the input field (string)</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
