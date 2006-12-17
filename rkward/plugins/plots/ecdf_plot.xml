@@ -1,24 +1,46 @@
 <!DOCTYPE rkplugin>
 <document>
-<code file="ecdf_plot.php" />
-<logic>
-	<connect client="plotoptions.xvar" governor="x.available"/>
-	<set id="plotoptions.allow_log" to="false"/>
-	<set id="plotoptions.allow_type" to="false"/>
-	<set id="plotoptions.allow_asp" to="true"/>
-</logic>
-<dialog label="Empirical Distribution Function" >
-	<tabbook>
-	<tab label="Variable(s)" >
-		<row>
-		<varselector id="vars" />
-		<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
-		</row>
-	</tab>
-	<tab label="Options" >
-		<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
-		<stretch/>
-	</tab>
-	</tabbook>
-</dialog>
+	<code file="ecdf_plot.php" />
+	<logic>
+		<connect client="plotoptions.xvar" governor="x.available"/>
+		<set id="plotoptions.allow_log" to="false"/>
+		<set id="plotoptions.allow_type" to="false"/>
+		<set id="plotoptions.allow_asp" to="true"/>
+	</logic>
+	<dialog label="Empirical Distribution Function" >
+		<tabbook>
+			<tab label="Variable(s)" >
+				<row>
+					<column>
+						<varselector id="vars" />
+					</column>
+					<column>
+						<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
+					</column>
+					<stretch/>
+				</row>
+			</tab>
+			<tab label="Options" >
+				<row>
+					<column>
+						<radio id="dopoints" label="dopoints">
+							<option value="do.points = TRUE" label="Do Points TRUE"/>
+							<option value="do.points = FALSE" label="Do Points FALSE"/>
+						</radio>
+						<radio id="verticals" label="vertical">
+							<option value="verticals = FALSE" label="Verticals False"/>
+							<option value="verticals = TRUE" label="Verticals TRUE"/>
+						</radio>
+						<input id="col" initial="red" label="Color of Theoretical Normal Distribution"/>
+						<text>R provides you a broad range of colors to use. To change the current just type another like 'blue'. Please refere to the R-help for others than the default (red).
+						</text>
+					</column>
+					<column>
+						<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
+					</column>
+					<stretch/>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
 </document>
