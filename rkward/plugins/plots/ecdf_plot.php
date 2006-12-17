@@ -15,7 +15,7 @@
 ?>
 rk.header ("ECDF", list ("Variable", rk.get.description (<? echo ($x); ?>), "Minimum", rk.min, "Maximum", rk.max, "Length", rk.length))
 rk.graph.on ()
-plot.ecdf (<? echo ($x); ?>, <? getRK ("plotoptions.code.printout"); ?>, <? getRK ("dopoints"); ?>, <? getRK ("vertical"); ?>, datadensity="rug")
+plot.ecdf (<? echo ($x); ?>, <? getRK ("plotoptions.code.printout"); ?>, <? getRK ("dopoints"); ?>, <? getRK ("vertical"); ?>)
 curve(pnorm, from= rk.min, to= rk.max, add=TRUE, col="<? echo ($col); ?>")
 rug(<? echo ($x); ?>)
 rk.graph.off ()
