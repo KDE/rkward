@@ -31,6 +31,7 @@
 							<option value="verticals = FALSE" label="Verticals False"/>
 							<option value="verticals = TRUE" label="Verticals TRUE"/>
 						</radio>
+						<checkbox value_unchecked="0" value="1" checked="true" id="th_pnorm" label="Theoretical Normal Distribution" />
 						<input id="col" initial="red" label="Color of Theoretical Normal Distribution"/>
 						<text>R provides you a broad range of colors to use. To change the current just type another like 'blue'. Please refere to the R-help for others than the default (red).
 						</text>

@@ -3,9 +3,11 @@
 	}
 	
 	function calculate () {
-?>	rk.min = min (<? getRK("x"); ?>)
-	rk.max = max (<? getRK("x"); ?>)
-	rk.length = length (<? getRK ("x"); ?>)
+?>
+	rk.min <- min (<? getRK("x"); ?>);
+	rk.max <- max (<? getRK("x"); ?>);
+	rk.length <- length (<? getRK ("x"); ?>);
+	doth_pnrom <- <? getRK ("th_pnorm"); ?>;
 <?
 	}
 	
@@ -15,9 +17,9 @@
 ?>
 rk.header ("ECDF", list ("Variable", rk.get.description (<? echo ($x); ?>), "Minimum", rk.min, "Maximum", rk.max, "Length", rk.length))
 rk.graph.on ()
-plot.ecdf (<? echo ($x); ?>, <? getRK ("plotoptions.code.printout"); ?>, <? getRK ("dopoints"); ?>, <? getRK ("vertical"); ?>)
-curve(pnorm, from= rk.min, to= rk.max, add=TRUE, col="<? echo ($col); ?>")
-rug(<? echo ($x); ?>)
+plot.ecdf (<? echo ($x); ?>, <? getRK ("dopoints"); ?>, <? getRK ("verticals"); ?> <? getRK ("plotoptions.code.printout"); ?>)
+if (doth_pnrom) cat (paste (curve(pnorm, from= rk.min, to= rk.max, add=TRUE, col="<? echo ($col); ?>")))
+rug (<? getRK ("x"); ?>)
 rk.graph.off ()
 <?
 	}
@@ -26,6 +28,7 @@ rk.graph.off ()
 ?>	rm (rk.min)
 	rm (rk.max)
 	rm (rk.length)
+	rm (doth_pnrom)
 <?
 	}
 ?>
