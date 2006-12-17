@@ -154,6 +154,7 @@ R plugins:
 		- add import-filter plugins
 			- also export plugins, export x11 plugins, and probably more
 			- maybe this can be generalized as "context sensitive plugins"
+				- this context could also hold additional info such as filename to open, or device number
 		- ODS filter (try to find someone to implement one in R)
 	- formula-widget:
 		- use smart sorting, esp. of generated string
@@ -161,6 +162,14 @@ R plugins:
 		- add constant term option
 	- create a spinbox, that can really deal with real numbers
 	- add a help system
+		- some thoughts:
+			- this should use XML files, which contain mostly html, but also tags like <related component_id="..." component_namespace="..."/> (for related plugins / components), and <rhelp topic="..."/> (for linking to R help on functions / constants / topics). Potentially more tags for a consistent way of marking up option names, headers, etc. (but first check what's needed). Potentially a special link type for links to the rkward user manual
+			- overview pages would be a component not added to any menus (and without any GUI, just containing a <help file="..."/> tag
+			- the XML files would be read in, the mentioned tags replaced by HTML-code, header/footer added, written to an HTML cache (if a cached file already exists, and is newer, simply use that)
+			- the links will work by having a protocol of rkward://[rhelp|component]/[component|library|empty]/name
+				- since we need to do all openURL () calls manually in RKHTMLWindow, anyway, we can just analyse the URL for this protocol, and translate it to a real HTML url on the fly
+		- on first startup (or until disabled), a help page giving a rough overview of the main components / features should be shown
+		- different help icons for R help, and RKWard help?
 
 Documentation:
 	- add an example to show rkward-specific commands (rk.print, rk.graph)
