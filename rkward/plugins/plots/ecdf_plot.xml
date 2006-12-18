@@ -30,17 +30,34 @@
 						<radio id="verticals" label="vertical">
 							<option value="verticals = FALSE" label="Verticals False"/>
 							<option value="verticals = TRUE" label="Verticals TRUE"/>
-						</radio>
-						<checkbox value_unchecked="0" value="1" checked="true" id="th_pnorm" label="Theoretical Normal Distribution" />
-						<input id="col" initial="red" label="Color of Theoretical Normal Distribution"/>
-						<text>R provides you a broad range of colors to use. To change the current just type another like 'blue'. Please refere to the R-help for others than the default (red).
-						</text>
+						</radio>						
+						<frame label="Theoretical Normal Distribution">
+							<checkbox value_unchecked="0" value="1" checked="true" id="th_pnorm" label="Theoretical Normal Distribution" />
+							<input id="col" initial="red" label="Color of Theoretical Normal Distribution"/>
+							<text>To change the coulor type another like 'blue' (please refere to R-help for more information).
+							</text>
+						</frame>
+						<stretch/>
 					</column>
 					<column>
-						<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
+						<frame label="Add Rug to Plot">
+							<checkbox value_unchecked="0" value="1" checked="true" id="rug" label="Rug" />
+							<spinbox initial="0.03" id="ticksize" label="Ticksize" />
+							<spinbox initial="0.5" id="lwd" label="Line width of ticks" />
+							<radio label="Side of Rug" id="side">
+								<option value="side = 1" label="Rug on Bottom" />
+								<option value="side = 3" label="Rug on Top" />
+							</radio>
+							<input id="col_rug" initial="black" label="Color of ticks"/>
+						</frame>
+						<stretch/>
 					</column>
-					<stretch/>
 				</row>
+			</tab>
+			<tab label="Title/Axis">
+				<column>
+					<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
+				</column>
 			</tab>
 		</tabbook>
 	</dialog>
