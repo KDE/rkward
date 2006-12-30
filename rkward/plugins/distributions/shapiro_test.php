@@ -52,6 +52,7 @@ cat ("</table>")
 
 ?>
 	rm (rk.temp.results)
+	rm (rk.temp.options)
 	rm (var)
 <?
         }
