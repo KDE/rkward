@@ -1,0 +1,81 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="density_plot.php" />
+	<logic>
+		<connect client="plotoptions.xvar" governor="x.available"/>
+		<set id="plotoptions.allow_log" to="false"/>
+		<set id="plotoptions.allow_type" to="false"/>
+	</logic>
+	<dialog label="Density Plot" >
+		<tabbook>
+			<tab label="Variable(s)" >
+				<row>
+					<varselector id="vars" />
+					<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
+				</row>
+			</tab>
+			<tab label="Options" >
+				<row>
+					<column>
+						<checkbox value_unchecked="0" value="1" checked="true" id="dodensity_plot" label="Highest density regions" />
+						<checkbox value_unchecked="0" value="1" checked="false" id="dohdrcde_plot" label="Highest density regions" />
+						<radio id="bw" label="Bandwidth">
+							<option value="nrd0" label="nrd0"/>
+							<option value="nrd" label="nrd"/>
+							<option value="ucv" label="ucv"/>
+							<option value="bcv" label="bcv"/>
+							<option value="SJ-ste" label="SJ-ste"/>
+							<option value="SJ-dpi" label="SJ-dpi"/>
+						</radio>		
+						<spinbox type="real" id="adjust" label="Adjust Bandwidth" initial="1"/>
+					</column>
+					<column>
+						<radio id="narm" label="Remove Missing Values">
+							<option value="na.rm = TRUE" label="TRUE"/>
+							<option value="na.rm = FALSE" label="FALSE"/>
+						</radio>
+						<column>
+							<row>
+								<radio id="giveRkern" label="Estimate Density">
+									<option value="give.Rkern = FALSE" label="Density estimated"/>
+									<option value="give.Rkern = TRUE" label="Density not estimated"/>
+								</radio>						
+								<spinbox id="n" initial="512" label="n" />
+							</row>
+							<stretch/>
+						</column>
+						<radio id="kern" label="Smoothing Kernel">
+							<option value="gaussian" label="gaussian (default)"/>
+							<option value="rectangular" label="rectangular"/>
+							<option value="triangular" label="triangular"/>
+							<option value="epanechnikov" label="epanechnikov"/>
+							<option value="biweight" label="biweight"/>
+							<option value="cosine" label="cosine"/>
+							<option value="optcosine" label="optcosine"/>
+						</radio>
+						<stretch/>
+					</column>
+					<column>
+						<frame label="Rug">
+							<checkbox value_unchecked="0" value="1" checked="false" id="rug_density" label="Rug Density" />
+							<checkbox value_unchecked="0" value="1" checked="false" id="rug_hdrcde" label="Rug Highest density regions" />
+							<spinbox initial="0.03" id="ticksize" label="Ticksize" />
+							<spinbox initial="0.5" id="lwd" label="Line width of ticks" />
+							<radio label="Side of Rug" id="side">
+								<option value="side = 1" label="Rug on Bottom" />
+								<option value="side = 3" label="Rug on Top" />
+							</radio>
+							<input id="col_rug" initial="black" label="Color of ticks"/>
+						</frame>
+					</column>
+				</row>
+			</tab>
+			<tab label="Axis/Title">
+				<row>
+					<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
+					<stretch/>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

@@ -3,6 +3,13 @@
 <document base_prefix="distributions/" namespace="rkward">
 	<components>
 
+		<component type="standard" id="shapiro_test" file="shapiro_test.xml" label="Shapiro-Wilk Normality Test" />
+		<component type="standard" id="ad_test" file="ad_test.xml" label="Anderson-Darling Normality Test" />
+		<component type="standard" id="cvm_test" file="cvm_test.xml" label="Cramer-von Mises Normality Test" />
+		<component type="standard" id="pearson_test" file="pearson_test.xml" label="Pearson chi-square Normality Test" />
+		<component type="standard" id="sf_test" file="sf_test.xml" label="Shapiro-Francia Normality Test" />
+		<component type="standard" id="lillie_test" file="lillie_test.xml" label="Lilliefors (Kolmogorov-Smirnov) Normality Test" />
+
 		<component type="standard" id="beta_quantiles" file="beta_quantiles.xml" label="Beta quantiles" />
 		<component type="standard" id="beta_probabilities" file="beta_probabilities.xml" label="Beta probabilities" />
 	
@@ -72,8 +79,15 @@
 
 	<hierarchy>
 		<menu id="distributions" label="Distributions" index="7">
-
-			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="0">
+			<menu id="distribution_analysis" label="Distribution Analysis" index="0">				
+				<entry component="ad_test" label="Anderson-Darling Normality Test" index="0"/>
+				<entry component="cvm_test" label="Cramer-von Mises Normality Test" index="1"/>
+				<entry component="lillie_test" label="Lilliefors (Kolmogorov-Smirnov) Normality Test" index="2"/>
+				<entry component="pearson_test" label="Pearson chi-square Normality Test" index="3"/>
+				<entry component="sf_test" label="Shapiro-Francia Normality Test" index="4"/>
+				<entry component="shapiro_test" label="Shapiro-Wilk Normality Test" index="5"/>
+			</menu>
+			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="1">
 				<menu id="beta_distribution" label="Beta Distribution" index="0">
 					<entry component="beta_quantiles" label="Beta quantiles" index="1"/>
 					<entry component="beta_probabilities" label="Beta probabilities" index="0"/>
@@ -140,7 +154,7 @@
 				</menu>
 			</menu>
 
-			<menu id="univariate_discrete_distributions" label="Univariate discrete distributions" index="1">
+			<menu id="univariate_discrete_distributions" label="Univariate discrete distributions" index="2">
 				<menu id="binomial_distribution" label="Binomial Distribution" index="0">
 					<entry component="binomial_quantiles" label="Binomial quantiles" index="1"/>
 					<entry component="binomial_tail_probabilities" label="Binomial tail probabilities" index="0"/>
