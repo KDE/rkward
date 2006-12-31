@@ -4,7 +4,6 @@
 
 	function calculate () {
 	$vars = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val ("x"))) . ")";
-	$nclasses = getRK_val ("nclasses");
 	$adjust =  getRK_val ("adjust");
 
 ?>
@@ -17,7 +16,7 @@
 	i = i+1
 	rk.temp.results[[i]] <- list ()
 	rk.temp.results[[i]]$object <- rk.get.description (var, is.substitute=TRUE)
-	rk.temp.results[[i]]$pearson_test <- pearson.test (eval (var), n.classes = <? echo $nclasses ?>, <? echo $adjust ?> )
+	rk.temp.results[[i]]$pearson_test <- pearson.test (eval (var), <? echo $adjust ?> )
 	if (rk.temp.options$dolength) try (rk.temp.results[[i]]$length <- length (eval (var)))
 	if (rk.temp.options$donacount) try (rk.temp.results[[i]]$nacount <- length (which(is.na(eval (var)))))
 }

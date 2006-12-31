@@ -21,7 +21,6 @@
 			</tab>
 			<tab label="Options">
 				<frame>
-				<input id="nclasses" label="Number of Classes" initial="ceiling(2 * (n^(2/5)))" />
 				<radio id="adjust" label="p-value from chi^2-distribution from:">
 					<option value="adjust = TRUE" label="n.classes-3 degrees of freedom" />
 					<option value="adjust = FALSE" label="n.classes-1 degrees of freedom" />
