@@ -12,7 +12,7 @@
 						<varselector id="vars"/>
 					</column>
 					<column>
-						<frame label="The number of the selcted values must be between 3 and 5000">
+						<frame label="Variable(s)">
 							<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
 						</frame>
 						<stretch/>

@@ -20,6 +20,7 @@
 		<component type="standard" id="corr_matrix" file="corr_matrix/description.xml" label="Correlation Matrix" />
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
 		<component type="standard" id="basic_statistics" file="uni1.2/description.xml" label="Basic Statistics" />
+		<component type="standard" id="skewness_kurtosis" file="20descriptive/skewness_kurtosis_test.xml" label="Skewness and Kurtosis" />
 
 	</components>
 
@@ -34,6 +35,7 @@
 			<entry component="corr_matrix" index="3"/>
 			<entry component="descriptive" index="0"/>
 			<entry component="simple_anova" index="4"/>
+			<entry component="skewness_kurtosis" index="5"/>
 		</menu>
 		<menu id="file" label="File">
 			<menu id="import" label="Import" index="4">
