@@ -1,3 +1,4 @@
+- allow varslots to request objects of specified dimensionality and length
 - fixed: integer spinboxes with starting values greater than 1 would get unreasonable change steps
 - fix compilation with some versions of KDE / GCC
 - small improvements to syntax highlighting definition

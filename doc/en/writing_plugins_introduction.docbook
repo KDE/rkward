@@ -915,6 +915,18 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<term>&lt;types&gt;</term>
 	<listitem>If you specify one or more variables types (separated by spaced (" ")), here, the varslot will only accept objects of those types. Valid types are "unknown", "number", "string", "factor", "invalid". (Optional, <emphasis>use with great care</emphasis>, the user should not be prevented from making valid choices, and rkward does not always know the type of a variable)</listitem>
 	</varlistentry>
+	<varlistentry>
+	<term>&lt;num_dimensions&gt;</term>
+	<listitem>The number of dimensions, an object needs to have. "0" (the default) means, any number of dimensions is acceptable. (optional, defaults to "0")</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;min_length&gt;</term>
+	<listitem>The minimum length, an object needs to have in order to be acceptable. (optional, defaults to "0")</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;max_length&gt;</term>
+	<listitem>The maximum length, an object needs to have in order to be acceptable. (optional, defaults to the largest integer number representable on the system)</listitem>
+	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
 <varlistentry>
