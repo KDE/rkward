@@ -24,7 +24,8 @@
 <?
         }
 	function printout () {
-?>	cat ("<h1>Lilliefors (Kolmogorov-Smirnov) Normality test</h1>\n")
+?>	
+	rk.header ("Lilliefors (Kolmogorov-Smirnov) Normality test")
 
 cat ("<table border=\"1\">")
 	cat ("<tbody>")
