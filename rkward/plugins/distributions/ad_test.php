@@ -1,61 +1,47 @@
 <?
-        function preprocess () {
-        }
+function preprocess () {
+}
 
-	function calculate () {
-	$vars = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val ("x"))) . ")";
+function calculate () {
+$vars = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val ("x"))) . ")";
 
 ?>
-	require(nortest)
-	
-	rk.temp.options <- list (dolength=<? getRK ("length"); ?>, donacount=<? getRK ("nacount"); ?>)
+require(nortest)
 
-	rk.temp.results <- list ()
-	i=0; for (var in list (<? echo ($vars); ?>)) {
+rk.temp.options <- list (dolength=<? getRK ("length"); ?>, donacount=<? getRK ("nacount"); ?>)
+
+rk.temp.vars <- list (<? echo ($vars); ?>)
+rk.temp.results <- data.frame (object=rep (NA, length (rk.temp.vars)))
+
+i=0;
+for (rk.temp.var in rk.temp.vars) {
 	i = i+1
-	rk.temp.results[[i]] <- list ()
-	rk.temp.results[[i]]$object <- rk.get.description (var, is.substitute=TRUE)
-	rk.temp.results[[i]]$ad_test <- ad.test (eval (var))
-	if (rk.temp.options$dolength) try (rk.temp.results[[i]]$length <- length (eval (var)))
-	if (rk.temp.options$donacount) try (rk.temp.results[[i]]$nacount <- length (which(is.na(eval (var)))))
+	rk.temp.results$object[i] <- rk.get.description (rk.temp.var, is.substitute=TRUE)
+	if (rk.temp.options$dolength) try (rk.temp.results$length[i] <- length (eval (rk.temp.var)))
+	if (rk.temp.options$donacount) try (rk.temp.results$nacount[i] <- length (which(is.na(eval (rk.temp.var)))))
+	rk.temp.test <- ad.test (eval (rk.temp.var))
+	rk.temp.results$statistic[i] <- paste (names (rk.temp.test$statistic), rk.temp.test$statistic, sep=" = ")
+	rk.temp.results$p.value[i] <- rk.temp.test$p.value
 }
 
-
 <?
-        }
-	function printout () {
-?>	cat ("<h1>Anderson-Darling Normality Test</h1>\n")
-
-cat ("<table border=\"1\">")
-	cat ("<tbody>")
-		cat ("<tr>")
-			cat ("<td>Variable Name</td>")
-			if (rk.temp.options$dolength) cat ("<td>Length</td>")
-			if (rk.temp.options$donacount) cat ("<td>NAs</td>")
-			cat ("<td>W</td>")
-			cat ("<td>p-value</td>")
-			cat ("<td>Test</td>")
-			cat ("<td>variable</td>")
-		cat ("</tr>")
-for (i in 1:length (rk.temp.results)) {
-		cat ("<tr><td>", rk.temp.results[[i]]$object, "</td>")
-		if (rk.temp.options$dolength) cat ("<td>", rk.temp.results[[i]]$length, "</td>")
-		if (rk.temp.options$donacount) cat ("<td>", rk.temp.results[[i]]$nacount, "</td>")
-		cat (paste ("<td>", rk.temp.results[[i]]$ad_test,"</td>"))
-		cat ("</tr>")
 }
-	cat ("</tbody>")
-cat ("</table>")
 
+function printout () {
+?>
+rk.header ("Anderson-Darling Normality Test")
 
+rk.results (rk.temp.results, c ("Variable Name", if (rk.temp.options$dolength) "Length", if (rk.temp.options$donacount) "NAs", "Statistic", "p-value"))
 <?
-        }
-	function cleanup () {
+}
+
+function cleanup () {
 
 ?>
-	rm (rk.temp.results)
-	rm (rk.temp.options)
-	rm (var)
+rm (rk.temp.results)
+rm (rk.temp.options)
+rm (rk.temp.var)
+rm (rk.temp.test)
 <?
-        }
+}
 ?>
