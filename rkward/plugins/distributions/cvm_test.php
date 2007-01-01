@@ -24,7 +24,8 @@
 <?
         }
 	function printout () {
-?>	cat ("<h1>Cramer-von Mises Normality Test</h1>\n")
+?>	
+	rk.header ("Cramer-von Mises Normality Test")
 
 cat ("<table border=\"1\">")
 	cat ("<tbody>")
