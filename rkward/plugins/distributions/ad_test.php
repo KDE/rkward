@@ -31,7 +31,7 @@ function printout () {
 ?>
 rk.header ("Anderson-Darling Normality Test")
 
-rk.results (rk.temp.results, c ("Variable Name", if (rk.temp.options$dolength) "Length", if (rk.temp.options$donacount) "NAs", "Statistic", "p-value"))
+rk.results (rk.temp.results, titles=c ("Variable Name", if (rk.temp.options$dolength) "Length", if (rk.temp.options$donacount) "NAs", "Statistic", "p-value"))
 <?
 }
 
