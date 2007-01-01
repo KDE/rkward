@@ -25,7 +25,8 @@
 <?
         }
 	function printout () {
-?>	cat ("<h1>D'Agostino test for skewness in normally distributed data</h1>\n")
+?>	
+	rk.header ("D'Agostino test for skewness in normally distributed data")
 
 cat ("<table border=\"1\">")
 	cat ("<tbody>")
