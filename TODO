@@ -81,6 +81,14 @@ UI-stuff
 	- Debugging functionality
 		- ideally the whole thing: setting breakpoints, etc.
 		- realistically, maybe we can override browser () or do_browser with something nicer
+	- Preview of plots
+		- add a preview-enabling widget (checkbox)
+		- plugins wanting to provide previews, will have to define a preview () function in the template
+		- when calling this from PHPBackend, use function_exits () to check, first, to keep this optional
+			- this might also be used to make the other definitions optional?
+		- if preview-box is checked, and settings are valid, preview code is generated and evaluated at once
+		- plugins will need to keep track of whether a preview device window was created, and also clean this up
+			- probably some simple helper function(s) should be created for this purpose
 
 Internal stuff:
 	- Look at package odfWeave, and find out, how to use this
