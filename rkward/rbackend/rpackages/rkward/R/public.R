@@ -146,6 +146,38 @@
 	cat ("<br>\n")
 }
 
+"rk.results" <- function (x, titles=NULL) {
+	if (is.list (x)) {	# or a data.frame
+		if (is.null (titles)) {
+			titles <- names (x)
+		}
+
+		if (is.data.frame (a)) {
+			cat ("<table border=\"1\">\n<tr>")
+			for (i in 1:length (x)) {
+				cat ("<td>", titles[i], "</td>", sep="")
+			}
+			cat ("</tr>\n")
+			for (row in 1:dim (x)[1]) {
+				cat ("<tr>")
+				for (col in 1:dim (x)[2]) {
+					cat ("<td>", x[row, col], "</td>", sep="")
+				}
+				cat ("</tr>\n")
+			}
+			cat ("</table>\n")
+		} else {
+			stop ("uninmplemented")
+			# TODO: handling for regular lists. 
+			# Should probably output a <ul></ul>
+		}
+	} else {
+		stop ("uninmplemented")
+		# TODO: handling for vectors. 
+		# Should probably output a <ul></ul>
+	}
+}
+
 "rk.make.repos.string" <- function () {
 	x <- options ("repos")$repos
 	len <- length (x)
