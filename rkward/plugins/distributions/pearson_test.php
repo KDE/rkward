@@ -25,8 +25,8 @@
 <?
         }
 	function printout () {
-?>	cat ("<h1>Pearson chi-square Normality Test</h1>\n")
-
+?>	
+	rk.header ("Pearson chi-square Normality Test")
 cat ("<table border=\"1\">")
 	cat ("<tbody>")
 		cat ("<tr>")
