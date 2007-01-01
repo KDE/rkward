@@ -24,7 +24,8 @@
 <?
         }
 	function printout () {
-?>	cat ("<h1>Shapiro-Francia Normality Test</h1>\n")
+?>	
+	rk.header ("Shapiro-Francia Normality Test")
 
 cat ("<table border=\"1\">")
 	cat ("<tbody>")
