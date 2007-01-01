@@ -26,7 +26,8 @@
 <?
         }
 	function printout () {
-?>	cat ("<h1>Skewness and Kurtosis</h1>\n")
+?>	
+	 rk.header("Skewness and Kurtosis")
 
 cat ("<table border=\"1\">")
 	cat ("<tbody>")
