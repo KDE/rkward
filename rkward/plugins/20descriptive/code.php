@@ -69,10 +69,8 @@ rk.results (rk.temp.results,
 	}
 	
 	function cleanup () {
-?>rm (rk.temp.options)
-rm (rk.temp.results)
-rm (rk.temp.vars)
-rm (rk.temp.var)
+?>
+rm (list=grep ("rk.temp", ls (), value=TRUE))
 <?
 	}
 ?>

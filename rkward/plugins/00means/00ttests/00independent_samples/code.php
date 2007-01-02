@@ -41,11 +41,8 @@ rk.results (list (
 	}
 	
 	function cleanup () {
-?>rm (rk.temp)
-rm (rk.temp.print.conf.level)
-rm (rk.temp.var.equal)
-rm (rk.temp.x)
-rm (rk.temp.y)
+?>
+rm (list=grep ("rk.temp", ls (), value=TRUE))
 <?
 	}
 ?>
