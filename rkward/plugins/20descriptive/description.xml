@@ -10,7 +10,7 @@
 						<varselector id="vars" />
 					</column>
 					<column>
-						<varslot multi="true" type="numeric" source="vars" id="x" label="variable(s):" required="true" />
+						<varslot multi="true" type="numeric" source="vars" id="x" num_dimensions="1" label="variable(s):" required="true" />
 					</column>
 				</row>
 			</tab>
@@ -32,13 +32,10 @@
 					<frame label="Median Absolute Deviation (mad)" >
 						<checkbox value_unchecked="0" value="1" id="mad" label="mad" />
 						<spinbox type="real" initial="1.4628" id="constMad" label="Constant" />
-						<radio id="low" label="lo-median" >
-							<option value="low = FALSE" label="FALSE" />
-							<option value="low = TRUE" label="TRUE" />
-						</radio>
-						<radio id="high" label="hi-median" >
-							<option value="high = FALSE" label="FALSE" />
-							<option value="high = TRUE" label="TRUE" />
+						<radio id="mad_type" label="Treatment of even sample sizes" >
+							<option value="low" label="use lo-median" />
+							<option value="average" label="use average" checked="true" />
+							<option value="high" label="use hi-median" />
 						</radio>
 					</frame>
 					<stretch/>
