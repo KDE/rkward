@@ -1,10 +1,11 @@
 # retrieve the rkward label (if any) of the given object
 "rk.get.label" <- function (x) {
 	if (is.call (x) || is.name (x)) {
-		as.vector (attr (eval (x), ".rk.meta")[names (attr (eval (x), ".rk.meta")) == "label"])
+		ret <- attr (eval (x), ".rk.meta")[names (attr (eval (x), ".rk.meta")) == "label"]
 	} else {
-		as.vector (attr (x, ".rk.meta")[names (attr (x, ".rk.meta")) == "label"])
+		ret <- attr (x, ".rk.meta")[names (attr (x, ".rk.meta")) == "label"]
 	}
+	as.character (as.vector (ret))
 }
 
 # get a short name for the given object
@@ -50,7 +51,7 @@
 			shortname <- .rk.make.short.name (argnames[i])
 		}
 
-		if (is.null (lbl)) descript[i] <- shortname
+		if (is.null (lbl) || (length (lbl) < 1)) descript[i] <- shortname
 		else descript[i] <- paste (shortname, " (", lbl, ")", sep="")
 	}
 
@@ -152,12 +153,13 @@
 			titles <- names (x)
 		}
 
+		cat ("<table border=\"1\">\n<tr>")
+		for (i in 1:length (x)) {
+			cat ("<td>", titles[i], "</td>", sep="")
+		}
+		cat ("</tr>\n")
+
 		if (is.data.frame (x)) {
-			cat ("<table border=\"1\">\n<tr>")
-			for (i in 1:length (x)) {
-				cat ("<td>", titles[i], "</td>", sep="")
-			}
-			cat ("</tr>\n")
 			for (row in 1:dim (x)[1]) {
 				cat ("<tr>")
 				for (col in 1:dim (x)[2]) {
@@ -165,12 +167,20 @@
 				}
 				cat ("</tr>\n")
 			}
-			cat ("</table>\n")
-		} else {
-			stop ("uninmplemented")
-			# TODO: handling for regular lists. 
-			# Should probably output a <ul></ul>
+		} else {		# generic list
+			cat ("<tr>")
+			for (col in x) {
+				col <- as.vector (col)
+				cat ("<td>")
+				for (row in 1:length (col)) {
+					if (row != 1) cat ("\n<br/>")
+					cat (col[row])
+				}
+				cat ("</td>")
+			}
+			cat ("</tr>\n")
 		}
+		cat ("</table>\n")
 	} else {
 		stop ("uninmplemented")
 		# TODO: handling for vectors. 
