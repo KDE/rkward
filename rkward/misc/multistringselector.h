@@ -32,7 +32,7 @@ class QPushButton;
 class MultiStringSelector : public QWidget {
 Q_OBJECT
 public:
-	MultiStringSelector (const QString& label, QWidget* parent = 0);
+	explicit MultiStringSelector (const QString& label, QWidget* parent = 0);
 
 	~MultiStringSelector ();
 

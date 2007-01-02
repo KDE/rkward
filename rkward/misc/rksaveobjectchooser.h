@@ -28,7 +28,7 @@ class QLabel;
 class RKSaveObjectChooser : public QWidget {
 	Q_OBJECT
 public:
-	RKSaveObjectChooser (QWidget *parent, bool allow_overwrite, const QString &initial, QString prompt = QString::null);
+	RKSaveObjectChooser (QWidget *parent, bool allow_overwrite, const QString &initial, const QString &prompt = QString::null);
 	~RKSaveObjectChooser ();
 
 	QString validizedSelectedObjectName ();

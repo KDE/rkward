@@ -54,7 +54,7 @@ When calling this function, highestError () will be reset to 0.
 @param parent the element whose children to return
 @param name the tag-name to look for (if none given, will return all children)
 @param debug_level level of debug message to generate in case of failure
-@returns a list of child elements (you'll have to call toElement () on the list items), in the order of occurence in the XML file */
+@returns a list of child elements (you'll have to call toElement () on the list items), in the order of occurrence in the XML file */
 	XMLChildList getChildElements (const QDomElement &parent, const QString &name, int debug_level);
 
 /** like getChildElements, but tries to retrieve exactly one element. Throws an error, if no such element, or more than one such element was found.

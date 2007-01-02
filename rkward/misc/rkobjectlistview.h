@@ -36,7 +36,7 @@ This class provides the common functionality for the list-views in the RObjectBr
 class RKObjectListView : public QListView {
 	Q_OBJECT
 public:
-	RKObjectListView (QWidget *parent);
+	explicit RKObjectListView (QWidget *parent);
 	
 	~RKObjectListView ();
 

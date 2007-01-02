@@ -22,8 +22,8 @@
 class RCommand;
 
 /**
-A simple modal dialog which can be shown during a lengthy operation (which has to be carried out synchronously) and allows the user to cancel said operation. Connect a signal to the complete ()-slot to signal the operation is done. Returns QDialog::Accepted if succesful or QDialog::rejected, if the user pressed cancel before the operation was completed.
-If you specify an associated_commands in the constructor, RKCanceldialog, if cancelled, will also take care of cancelling that RCommand.
+A simple modal dialog which can be shown during a lengthy operation (which has to be carried out synchronously) and allows the user to cancel said operation. Connect a signal to the complete ()-slot to signal the operation is done. Returns QDialog::Accepted if successful or QDialog::rejected, if the user pressed cancel before the operation was completed.
+If you specify an associated_commands in the constructor, RKCanceldialog, if cancelled, will also take care of canceling that RCommand.
 Use the static member showCancelDialog () to make it a single-liner.
 @author Thomas Friedrichsmeier
 */

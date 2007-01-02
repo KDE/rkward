@@ -28,7 +28,7 @@
 
 #include "../debug.h"
 
-RKSaveObjectChooser::RKSaveObjectChooser (QWidget *parent, bool allow_overwrite, const QString &initial, QString prompt) : QWidget (parent) {
+RKSaveObjectChooser::RKSaveObjectChooser (QWidget *parent, bool allow_overwrite, const QString &initial, const QString &prompt) : QWidget (parent) {
 	RK_TRACE (MISC);
 
 	RKSaveObjectChooser::allow_overwrite = allow_overwrite;
@@ -37,8 +37,7 @@ RKSaveObjectChooser::RKSaveObjectChooser (QWidget *parent, bool allow_overwrite,
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 
-	if (prompt.isNull ()) prompt = i18n ("Object name to save to");
-	QLabel *label = new QLabel (prompt, this);
+	QLabel *label = new QLabel (prompt.isNull () ? i18n ("Object name to save to") : prompt, this);
 	layout->addWidget (label);
 
 	name_edit = new QLineEdit (this);
