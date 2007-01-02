@@ -220,7 +220,7 @@ void RKCaughtX11Window::setFixedSizeManual () {
 void RKCaughtX11Window::activateDevice () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")", RCommand::App, i18n ("Activate graphics device number %1").arg (QString::number (device_number)), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ')', RCommand::App, i18n ("Activate graphics device number %1").arg (QString::number (device_number)), error_dialog);
 }
 
 void RKCaughtX11Window::copyDeviceToOutput () {

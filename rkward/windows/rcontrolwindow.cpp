@@ -355,14 +355,14 @@ void RControlWindowListViewItem::update (RCommand *command) {
 	setText (0, dummy);
 
 	dummy = "";
-	if (command->type () & RCommand::User) dummy += "U";
-	if (command->type () & RCommand::Plugin) dummy += "P";
-	if (command->type () & RCommand::PluginCom) dummy += "C";
-	if (command->type () & RCommand::App) dummy += "A";
-	if (command->type () & RCommand::Sync) dummy += "S";
-	if (command->type () & RCommand::EmptyCommand) dummy += "E";
-	if (command->type () & (RCommand::GetIntVector | RCommand::GetRealVector | RCommand::GetStringVector)) dummy += "D";
-	if (command->type () & RCommand::DirectToOutput) dummy += "O";
+	if (command->type () & RCommand::User) dummy += 'U';
+	if (command->type () & RCommand::Plugin) dummy += 'P';
+	if (command->type () & RCommand::PluginCom) dummy += 'C';
+	if (command->type () & RCommand::App) dummy += 'A';
+	if (command->type () & RCommand::Sync) dummy += 'S';
+	if (command->type () & RCommand::EmptyCommand) dummy += 'E';
+	if (command->type () & (RCommand::GetIntVector | RCommand::GetRealVector | RCommand::GetStringVector)) dummy += 'D';
+	if (command->type () & RCommand::DirectToOutput) dummy += 'O';
 	setText (1, dummy);
 
 	if (command->getStatus () & RCommand::Canceled) setText (2, i18n ("Cancelled"));

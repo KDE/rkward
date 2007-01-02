@@ -51,7 +51,7 @@ friend class RControlWindowPart;
 protected:
 /** constructor. Protected. Do not create an instance of this class directly. Rather, create a RControlWindowPart.
 @param parent parent QWidget, usually RKGlobals::rkApp () or similar */
-	RControlWindow (QWidget *parent = 0);
+	explicit RControlWindow (QWidget *parent = 0);
 /** destructor */
 	~RControlWindow ();
 public:
@@ -125,9 +125,9 @@ A listview-item with a convenience constructor, and storing some additional info
 class RControlWindowListViewItem : public QListViewItem {
 public:
 /** constructor. */
-	RControlWindowListViewItem (QListViewItem *parent);
+	explicit RControlWindowListViewItem (QListViewItem *parent);
 /** constructor. */
-	RControlWindowListViewItem (QListView *parent);
+	explicit RControlWindowListViewItem (QListView *parent);
 /** destructor */
 	~RControlWindowListViewItem ();
 

@@ -208,7 +208,7 @@ RKEditor *RKWorkplace::editObject (RObject *object, bool initialize_to_empty) {
 			ed->setCaption (iobj->getShortName ());		// TODO: move to editor
 			ed->setIcon (SmallIcon ("spreadsheet"));
 			addWindow (ed);
-			ed->setFocus ();		// somehow we need to call this explicitely
+			ed->setFocus ();		// somehow we need to call this explicitly
 		}
 	}
 
@@ -298,7 +298,7 @@ void RKWorkplace::saveWorkplace (RCommandChain *chain) {
 	RK_TRACE (APP);
 	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
-	QString workplace_description = "c (";
+	QString workplace_description;
 
 	bool first = true;
 	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
@@ -306,7 +306,7 @@ void RKWorkplace::saveWorkplace (RCommandChain *chain) {
 		else workplace_description.append (", ");
 		workplace_description.append (RObject::rQuote ((*it)->getDescription ()));
 	}
-	workplace_description = ".rk.workplace.save <- " + workplace_description + ")";
+	workplace_description = ".rk.workplace.save <- c (" + workplace_description + ')';
 
 	RKGlobals::rInterface ()->issueCommand (workplace_description, RCommand::App | RCommand::Sync, i18n ("Save Workplace layout"), 0, 0, chain); 
 }

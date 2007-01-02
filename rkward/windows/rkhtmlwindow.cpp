@@ -289,7 +289,7 @@ RKOutputWindow* RKOutputWindow::getCurrentOutput () {
 void RKOutputWindow::flushOutput () {
 	RK_TRACE (APP);
 
-	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to flush the ouput? It won't be possible to restore it."), i18n ("Flush output?"));
+	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to flush the output? It will not be possible to restore it."), i18n ("Flush output?"));
 	if (res==KMessageBox::Yes) {
 		QFile out_file (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
 		out_file.remove ();

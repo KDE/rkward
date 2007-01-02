@@ -34,7 +34,7 @@ Catch R X11 device windows
 	- this wrapper could watch the list of devices (curDevice, numDevices), see also addDevice to find out how the list is kept internally
 	- if a new device gets added grab its winId and capture
 - Plan B:
-	- it looks like there's no way to get acces to R_setX11Routines or at least the needed struct R_X11Routines. (?)
+	- it looks like there's no way to get access to R_setX11Routines or at least the needed struct R_X11Routines. (?)
 	- the level above that seems to be do_X11
 	- maybe we can modify the mapping from .Internal (X11) to do_X11 and insert wrapper from Plan A -> R_FunTab
 	- proceed like in Plan A
@@ -139,7 +139,7 @@ class RKCaughtX11WindowPart : public KParts::Part {
 public:
 /** constructor.
 @param window The RKCatehdX11Window for this part */
-	RKCaughtX11WindowPart (RKCaughtX11Window *window);
+	explicit RKCaughtX11WindowPart (RKCaughtX11Window *window);
 /** destructor */
 	~RKCaughtX11WindowPart ();
 private:

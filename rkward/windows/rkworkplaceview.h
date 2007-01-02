@@ -31,7 +31,7 @@ class RKWorkplaceView : public QWidget {
 public:
 /** constructor
 @param parent parent QWidget */
-	RKWorkplaceView (QWidget *parent);
+	explicit RKWorkplaceView (QWidget *parent);
 	~RKWorkplaceView ();
 
 /** add the given window to the view */

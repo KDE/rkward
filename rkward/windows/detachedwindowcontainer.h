@@ -33,8 +33,8 @@ class DetachedWindowContainer : public KParts::MainWindow {
 public:
 /** constructor.
 @param widget_to_capture The window to reparent into the detached window */
-	DetachedWindowContainer (RKMDIWindow *widget_to_capture);
-/** destructor. Usually you don't call this explicitely, but rather delete/close the child view. The DetachedWindowContainer will then self destruct via viewDestroyed () */
+	explicit DetachedWindowContainer (RKMDIWindow *widget_to_capture);
+/** destructor. Usually you don't call this explicitly, but rather delete/close the child view. The DetachedWindowContainer will then self destruct via viewDestroyed () */
 	~DetachedWindowContainer ();
 
 public slots:

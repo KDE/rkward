@@ -39,7 +39,7 @@ class RKWorkplace : public QObject, public RCommandReceiver {
 public:
 /** ctor.
 @param parent: The parent widget for the workspace view (see view ()) */
-	RKWorkplace (QWidget *parent);
+	explicit RKWorkplace (QWidget *parent);
 	~RKWorkplace ();
 
 /** @returns a pointer to the view of the workplace. Since possibly the workplace layout might change, better not rely on this pointer being valid for long */
@@ -86,7 +86,7 @@ TODO: this should be obsoleted somehow */
 @returns a pointer to the editor */
 	RKEditor *editObject (RObject *object, bool initialize_to_empty=false);
 
-/** tell all DataEditorWindow s to syncronize changes to the R backend
+/** tell all DataEditorWindow s to synchronize changes to the R backend
 // TODO: add RCommandChain parameter */
 	void flushAllData ();
 /** Close the active (attached) window. Safe to call even if there is no current active window (no effect in that case) */

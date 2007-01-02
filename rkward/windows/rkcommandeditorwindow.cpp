@@ -226,7 +226,7 @@ void RKCommandEditorWindow::showHelp () {
 	uint para=0; uint p=0;
 	m_view->cursorPosition (&para, &p);
 
-	QString line = m_view->currentTextLine() + " ";
+	QString line = m_view->currentTextLine() + ' ';
 
 	RKGlobals::helpDialog ()->getContextHelp (line, p);
 }
@@ -334,7 +334,7 @@ RKFunctionArgHinter::~RKFunctionArgHinter () {
 void RKFunctionArgHinter::tryArgHint () {
 	RK_TRACE (COMMANDEDITOR);
 
-	// do this in the next event cycle to make sure any inserted characters have truely been inserted
+	// do this in the next event cycle to make sure any inserted characters have truly been inserted
 	QTimer::singleShot (0, this, SLOT (tryArgHintNow ()));
 }
 
@@ -407,7 +407,7 @@ void RKFunctionArgHinter::tryArgHintNow () {
 	}
 
 	// initialize and show popup
-	arghints_popup_text->setText (effective_symbol + " (" + static_cast<RFunctionObject*> (object)->printArgs () + ")");
+	arghints_popup_text->setText (effective_symbol + " (" + static_cast<RFunctionObject*> (object)->printArgs () + ')');
 	arghints_popup->resize (arghints_popup_text->sizeHint () + QSize (2, 2));
 	arghints_popup->move (view->mapToGlobal (view->cursorCoordinates () + QPoint (0, arghints_popup->height ())));
 	arghints_popup->show ();

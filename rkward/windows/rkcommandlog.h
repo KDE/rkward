@@ -56,7 +56,7 @@ signals:
 /** the log_view emits this, when it should be raised (apparently this can only be done from the main frame) */
 	void raiseWindow ();
 protected:
-/** Command has finished. If the command has failed, it may be neccessary to print some more information */
+/** Command has finished. If the command has failed, it may be necessary to print some more information */
 	void rCommandDone (RCommand *command);
 	RKCommandLog ();
 	~RKCommandLog ();
@@ -105,7 +105,7 @@ class KAction;
 class RKCommandLogPart : public KParts::Part {
 	Q_OBJECT
 public:
-	RKCommandLogPart (RKCommandLog *for_log);
+	explicit RKCommandLogPart (RKCommandLog *for_log);
 	~RKCommandLogPart ();
 public slots:
 	void doPopupMenu (const QPoint &pos);

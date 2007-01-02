@@ -104,7 +104,7 @@ void RKCommandLog::addInputNoCheck (RCommand *command) {
 
 	log_view->setItalic (true);
 
-	log_view->append (command->command () + "\n");
+	log_view->append (command->command () + '\n');
 
 	checkRaiseWindow (command);
 	linesAdded ();
@@ -174,7 +174,7 @@ void RKCommandLog::rCommandDone (RCommand *command) {
 				} else if (command->errorSyntax ()) {
 					addOutputNoCheck (command, i18n ("Syntax error.\n"));
 				} else {
-					addOutputNoCheck (command, i18n ("An unspecified error occured while running the command.\n"));
+					addOutputNoCheck (command, i18n ("An unspecified error occurred while running the command.\n"));
 				}
 			}
 		}
