@@ -11,61 +11,59 @@
 
 ?>
 rk.temp.options <- list (domean=<? getRK ("mean"); ?>, domedian=<? getRK ("median"); ?>, dorange=<? getRK ("range"); ?>, dosd=<? getRK ("sd"); ?>, dosum=<? getRK ("sum"); ?>, doprod=<? getRK ("prod"); ?>, domad=<? getRK ("mad"); ?>, dolength=<? getRK ("length"); ?>, donacount=<? getRK ("nacount"); ?>)
-rk.temp.results <- list ()
-i=0; for (var in list (<? echo ($vars); ?>)) {
+rk.temp.vars <- list (<? echo ($vars); ?>)
+rk.temp.results <- data.frame (object=rep (NA, length (rk.temp.vars)))
+i=0;
+for (rk.temp.var in rk.temp.vars) {
 	i = i+1
-	rk.temp.results[[i]] <- list ()
-	rk.temp.results[[i]]$object <- rk.get.description (var, is.substitute=TRUE)
-	if (rk.temp.options$domean) try (rk.temp.results[[i]]$mean <- mean (eval (var), trim = <?echo ($trim) ;?>, na.rm=TRUE))
-	if (rk.temp.options$domedian) try (rk.temp.results[[i]]$median <- median (eval (var), na.rm=TRUE))
-	if (rk.temp.options$dorange) try (rk.temp.results[[i]]$range <- range (eval (var), na.rm=TRUE))
-	if (rk.temp.options$dosd) try (rk.temp.results[[i]]$sd <- sd (eval (var), na.rm=TRUE))
-	if (rk.temp.options$dosum) try (rk.temp.results[[i]]$sum <- sum (eval (var), na.rm=TRUE))
-	if (rk.temp.options$doprod) try (rk.temp.results[[i]]$prod <- prod (eval (var), na.rm=TRUE))
-	if (rk.temp.options$domad) try (rk.temp.results[[i]]$mad <- mad (eval (var), constant = <?echo ($constMad) ;?>, <?echo ($low) ;?>, <?echo ($high) ;?>, na.rm=TRUE))
-	if (rk.temp.options$dolength) try (rk.temp.results[[i]]$length <- length (eval (var)))
-	if (rk.temp.options$donacount) try (rk.temp.results[[i]]$nacount <- length (which(is.na(eval (var)))))
+	rk.temp.results$object[i] <- rk.get.description (rk.temp.var, is.substitute=TRUE)
+	if (rk.temp.options$domean) rk.temp.results$mean[i] <- try (mean (eval (rk.temp.var), trim = <?echo ($trim) ;?>, na.rm=TRUE))
+	if (rk.temp.options$domedian) rk.temp.results$median[i] <- try (median (eval (rk.temp.var), na.rm=TRUE))
+	if (rk.temp.options$dorange) {
+		rk.temp.results$min[i] <- NA
+		rk.temp.results$max[i] <- NA
+		try ({
+			rk.temp.range <- try (range (eval (rk.temp.var), na.rm=TRUE))
+			rk.temp.results$min[i] <- rk.temp.range[1]
+			rk.temp.results$max[i] <- rk.temp.range[2]
+		})
+	}
+	if (rk.temp.options$dosd) rk.temp.results$sd[i] <- try (sd (eval (rk.temp.var), na.rm=TRUE))
+	if (rk.temp.options$dosum) rk.temp.results$sum[i] <- try (sum (eval (rk.temp.var), na.rm=TRUE))
+	if (rk.temp.options$doprod) rk.temp.results$prod[i] <- try (prod (eval (rk.temp.var), na.rm=TRUE))
+	if (rk.temp.options$domad) rk.temp.results$mad[i] <- try (mad (eval (rk.temp.var), constant = <?echo ($constMad) ;?>, <?echo ($low) ;?>, <?echo ($high) ;?>, na.rm=TRUE))
+	if (rk.temp.options$dolength) rk.temp.results$length[i] <- try (length (eval (rk.temp.var)))
+	if (rk.temp.options$donacount) rk.temp.results$nacount[i] <- try (length (which(is.na(eval (rk.temp.var)))))
 }<?
 	}
 	
 	function printout () {
 ?>
-cat ("<h1>Descriptive statistics</h1>")
-cat ("<h2>Parmeters</h2>")
-cat (paste ("<h3>Trim of mean", <?getRK ("trim") ;?>, "</h3>\n"))
-if (rk.temp.options$domad) cat (paste ("<h3>Median Absolute Deviation:", "lo-median is", <?getRK ("low") ;?>, "and  hi-median is", <? getRK ("high") ;?>,"</h3>\n"))
-cat ("<table border=\"1\"><tr><td>Variable</td>")
-if (rk.temp.options$domean) cat ("<td>mean</td>")
-if (rk.temp.options$domedian) cat ("<td>median</td>")
-if (rk.temp.options$dorange) cat ("<td>min</td><td>max</td>")
-if (rk.temp.options$dosd) cat ("<td>standard deviation</td>")
-if (rk.temp.options$dosum) cat ("<td>sum</td>")
-if (rk.temp.options$doprod) cat ("<td>product</td>")
-if (rk.temp.options$domad) cat ("<td>mad</td>")
-if (rk.temp.options$dolength) cat ("<td>length of sample</td>")
-if (rk.temp.options$donacount) cat ("<td>number of NAs</td>")
-cat ("</tr>")
+rk.header ("Descriptive statistics", parameters=list ("Trim of mean", <?getRK ("trim") ;?>,
+					if (rk.temp.options$domad) "Median Absolute Deviation",
+					if (rk.temp.options$domad) paste ("constant:", <?echo ($constMad) ;?>, "lo-median:", <?getRK ("low") ;?>, "hi-median:", <? getRK ("high") ;?>)))
 
-for (i in 1:length (rk.temp.results)) {
-	cat ("<tr><td>", rk.temp.results[[i]]$object, "</td>")
-	if (rk.temp.options$domean) cat ("<td>", rk.temp.results[[i]]$mean, "</td>")
-	if (rk.temp.options$domedian) cat ("<td>", rk.temp.results[[i]]$median, "</td>")
-	if (rk.temp.options$dorange) cat ("<td>", rk.temp.results[[i]]$range[1], "</td>", "<td>", rk.temp.results[[i]]$range[2], "</td>")
-	if (rk.temp.options$dosd) cat ("<td>", rk.temp.results[[i]]$sd, "</td>")
-	if (rk.temp.options$dosum) cat ("<td>", rk.temp.results[[i]]$sum, "</td>")
-	if (rk.temp.options$doprod) cat ("<td>", rk.temp.results[[i]]$prod, "</td>")
-	if (rk.temp.options$domad) cat ("<td>", rk.temp.results[[i]]$mad, "</td>")
-	if (rk.temp.options$dolength) cat ("<td>", rk.temp.results[[i]]$length, "</td>")
-	if (rk.temp.options$donacount) cat ("<td>", rk.temp.results[[i]]$nacount, "</td>")
-	cat ("</tr>")
-}
-cat ("</table>")
+rk.results (rk.temp.results,
+	titles = c ("Object",
+		if (rk.temp.options$domean) "mean",
+		if (rk.temp.options$domedian) "median",
+		if (rk.temp.options$dorange) "min",
+		if (rk.temp.options$dorange) "max",
+		if (rk.temp.options$dosd) "standard deviation",
+		if (rk.temp.options$dosum) "sum",
+		if (rk.temp.options$doprod) "product",
+		if (rk.temp.options$domad) "mad",
+		if (rk.temp.options$dolength) "length of sample",
+		if (rk.temp.options$donacount) "number of NAs"))
+
 <?
 	}
 	
 	function cleanup () {
 ?>rm (rk.temp.options)
 rm (rk.temp.results)
+rm (rk.temp.vars)
+rm (rk.temp.var)
 <?
 	}
 ?>
