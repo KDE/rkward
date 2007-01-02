@@ -179,7 +179,7 @@ automatically take care of fetching its data. When closed by all editors, takes 
 
 /** try to find the object as a child object of this object. Default implementation always returns 0, as this is not a container
 @param name of the object (relative to this object)
-@param is_canonified the object name may usually have to be canonified. Since this function may be called recursively, canonification may already have occured on a higher level. In this case the argument is set to true to avoid some duplicate work. When calling from outside always leave the default false.
+@param is_canonified the object name may usually have to be canonified. Since this function may be called recursively, canonification may already have occurred on a higher level. In this case the argument is set to true to avoid some duplicate work. When calling from outside always leave the default false.
 @returns a pointer to the object (if found) or 0 if not found */
 	virtual RObject *findObject (const QString &name, bool is_canonified=false);
 protected:

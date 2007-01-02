@@ -254,13 +254,13 @@ void RObjectList::timeout () {
 QString RObjectList::renameChildCommand (RObject *object, const QString &new_name) {
 	RK_TRACE (OBJECTS);
 
-	return (makeChildName (new_name, false) + " <- " + object->getFullName () + "\n" + removeChildCommand (object));
+	return (makeChildName (new_name, false) + " <- " + object->getFullName () + '\n' + removeChildCommand (object));
 }
 
 QString RObjectList::removeChildCommand (RObject *object) {
 	RK_TRACE (OBJECTS);
 
-	return ("remove (" + object->getFullName () + ")");
+	return ("remove (" + object->getFullName () + ')');
 }
 
 void RObjectList::removeChild (RObject *object, bool removed_in_workspace) {

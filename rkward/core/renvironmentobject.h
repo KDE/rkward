@@ -23,7 +23,7 @@ class RCommand;
 class RCommandChain;
 
 /**
-This class roughly corresponds to an enviroment in R. It keeps a list of all objects in that environment.
+This class roughly corresponds to an environment in R. It keeps a list of all objects in that environment.
 
 @author Thomas Friedrichsmeier
 */

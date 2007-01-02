@@ -95,7 +95,7 @@ QString RObject::getMetaProperty (const QString &id) {
 			return (it.data ());
 		}
 	}
-	return QString::null;
+	return QString ();
 }
 
 QString RObject::getDescription () {
@@ -103,7 +103,7 @@ QString RObject::getDescription () {
 	if (meta_map) {
 		RObject::MetaMap::iterator it;
 		if ((it = meta_map->find ("label")) != meta_map->end ()) {
-			return (getShortName () + " (" + it.data () + ")");
+			return (getShortName () + " (" + it.data () + ')');
 		}
 	}
 	return getShortName ();;
@@ -123,7 +123,7 @@ QString RObject::getObjectDescription () {
 
 	if (isType (Function)) {
 		ret.append (i18n ("Function"));
-		ret.append ("<br><b>" + i18n ("Usage: ") + " </b>" + getShortName ().ESCS + "(" + static_cast<RFunctionObject *> (this)->printArgs ().ESCS + ")");
+		ret.append ("<br><b>" + i18n ("Usage: ") + " </b>" + getShortName ().ESCS + '(' + static_cast<RFunctionObject *> (this)->printArgs ().ESCS + ')');
 	} else if (isType (DataFrame)) {
 		ret.append (i18n ("Data frame"));
 	} else if (isType (Array)) {
@@ -240,7 +240,7 @@ void RObject::writeMetaData (RCommandChain *chain) {
 		if (it != meta_map->constBegin ()) {
 			command_string.append (", ");
 		}
-		command_string.append (rQuote (it.key ()) + "=" + rQuote (it.data ()));
+		command_string.append (rQuote (it.key ()) + '=' + rQuote (it.data ()));
 	}
 	command_string.append ("))");
 	
@@ -253,7 +253,7 @@ void RObject::writeMetaData (RCommandChain *chain) {
 void RObject::updateFromR (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 
-	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
+	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 }
 

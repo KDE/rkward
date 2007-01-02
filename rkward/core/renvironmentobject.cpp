@@ -58,9 +58,9 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 /* Some items are placed outside of their native namespace. E.g. in package:boot item "motor". It can be retrieved using as.environment ("package:boot")$motor. This is extremly ugly. We need to give them (and only them) this special treatment. */
 // TODO: hopefully one day operator "::" will work even in those cases. So check back later, and remove after a sufficient amount of backwards compatibility time
 		if ((type & PackageEnv) && (!misplaced)) return (namespace_name + "::" + RObject::rQuote (short_child_name));
-		return (getFullName () + "$" + RObject::rQuote (short_child_name));
+		return (getFullName () + '$' + RObject::rQuote (short_child_name));
 	}
-	return (name + "$" + short_child_name);
+	return (name + '$' + short_child_name);
 }
 
 QString REnvironmentObject::makeChildBaseName (const QString &short_child_name) {
@@ -69,7 +69,7 @@ QString REnvironmentObject::makeChildBaseName (const QString &short_child_name) 
 	if (type & ToplevelEnv) {
 		return (short_child_name);
 	}
-	return (name + "$" + short_child_name);
+	return (name + '$' + short_child_name);
 }
 
 void REnvironmentObject::writeMetaData (RCommandChain *chain) {
@@ -85,7 +85,7 @@ void REnvironmentObject::updateFromR (RCommandChain *chain) {
 	if (type & GlobalEnv) options = ", envlevel=-1";	// in the .GlobalEnv recurse one more level
 	if (type & ToplevelEnv) options.append (", namespacename=" + rQuote (namespace_name));
 
-	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + options + ")", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
+	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + options + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 }
 
@@ -133,11 +133,11 @@ void REnvironmentObject::removeChild (RObject *object, bool removed_in_workspace
 QString REnvironmentObject::renameChildCommand (RObject *object, const QString &new_name) {
 	RK_TRACE (OBJECTS);
 
-	return (makeChildName (new_name) + " <- " + object->getFullName () + "\n" + removeChildCommand (object));
+	return (makeChildName (new_name) + " <- " + object->getFullName () + '\n' + removeChildCommand (object));
 }
 
 QString REnvironmentObject::removeChildCommand (RObject *object) {
 	RK_TRACE (OBJECTS);
 
-	return ("remove (" + object->getFullName () + ")");
+	return ("remove (" + object->getFullName () + ')');
 }
