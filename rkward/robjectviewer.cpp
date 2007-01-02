@@ -55,7 +55,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : QWidget (paren
 	}
 	view_area->append (i18n("\nResult of 'print (") + object->getFullName () + i18n(")':\n"));
 	
-	RCommand *command = new RCommand ("print (" + object->getFullName () + ")", RCommand::App, QString::null, this);
+	RCommand *command = new RCommand ("print (" + object->getFullName () + ')', RCommand::App, QString::null, this);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 	
 	caption = i18n("Object Viewer: ") + object->getShortName ();
@@ -72,7 +72,7 @@ void RObjectViewer::rCommandDone (RCommand *command) {
 	
 	view_area->append (command->output ());
 	if (command->hasError ()) {
-		view_area->append (i18n("\nSome errors occured: ") + command->error ());
+		view_area->append (i18n("\nSome errors occurred: ") + command->error ());
 	}
 }
 

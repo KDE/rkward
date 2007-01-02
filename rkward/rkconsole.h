@@ -56,7 +56,7 @@ public:
 
 /** Submits a batch of commands, line by line.
 \param batch a QString containing the batch of commands to be executed */
-	void submitBatch (QString batch);
+	void submitBatch (const QString &batch);
 /** Returns the command currently being edited (not executed yet) */
 	QString currentCommand ();
 /** Returns the current cursor position. Returns the column on which is the cursor.  */
@@ -114,7 +114,7 @@ friend class RKConsolePart;
 	void cursorAtTheBeginning ();
 /** Sets the current command. This is used from commandsListUp (), and commandsListDown ();
 \param command the new command */
-	void setCurrentCommand (QString command);
+	void setCurrentCommand (const QString &command);
 /** Add a new line, and try to submit the next item in a batch of (pasted) commands. If there is no batch, only add the new line. */
 	void tryNextInBatch (bool add_new_line = true);
 /** Add given command to command history. Also checks, wether the history is longer than max length, and chops it if so. */
@@ -128,7 +128,7 @@ friend class RKConsolePart;
 /** This function unplugs a KAction
 \param action the KAction to be unplugged
 \param ac the action collection from which to retrieve the KAction*/
-	void unplugAction (QString action, KActionCollection* ac);
+	void unplugAction (const QString &action, KActionCollection* ac);
 
 	bool output_continuation;
 

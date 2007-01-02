@@ -184,12 +184,12 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	if (para < doc->numLines() - 1 || pos < prefix.length ()){
 		int t=(int)pos;if(prefix.length()>pos) t=prefix.length();
 		view->setCursorPosition (doc->numLines() -1, t);
-		return(TRUE);
+		return(true);
 	}
 	
 	if (current_command) {
 		e->ignore ();
-		return TRUE;
+		return true;
 	}
 
 	if (hasSelectedText() 
@@ -199,7 +199,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 			copy();
 		}
 		
-		return TRUE;
+		return true;
 	}
 
 	if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
@@ -212,14 +212,14 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 			pos=selectionInterfaceExt(doc)->selEndCol (); //There is already a selection, we take it into account.
 		selectionInterface(doc)->setSelection(doc->numLines()-1,prefix.length (),doc->numLines()-1, pos);
 		cursorAtTheBeginning ();
-		return TRUE;
+		return true;
 	}
 	else if (e->state () == Qt::ShiftButton && e->key () == Qt::Key_Left){
 		if(pos<=prefix.length ()){
-			return TRUE;
+			return true;
 		} else {
 			view->shiftCursorLeft ();
-			return FALSE;
+			return false;
 		}
 	}
 	else if (e->key () == Qt::Key_Up) {
@@ -232,34 +232,34 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	}
 	else if (e->key () == Qt::Key_Left){
 		if(pos<=prefix.length ()){
-			return TRUE;
+			return true;
 		} else {
 			view->cursorLeft();
-			return TRUE;
+			return true;
 		}
 	}
 	else if (e->key () == Qt::Key_Backspace){
 		if(pos<=prefix.length ()){
-			return TRUE;
+			return true;
 		} else {
 			view->backspace();
-			return TRUE;
+			return true;
 		}
 	}
 	else if (e->key () == Qt::Key_Tab){
 		doTabCompletion ();
-		return TRUE;
+		return true;
 	}
 	else if (e->key () == Qt::Key_Home){
 		cursorAtTheBeginning ();
-		return TRUE;
+		return true;
 	}
 	else if (e->key() == Qt::Key_Delete) {
 		view->keyDelete();
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 bool RKConsole::provideContext (unsigned int line_rev, QString *context, int *cursor_position) {
@@ -362,7 +362,7 @@ QString RKConsole::currentCommand () {
 	return (doc->textLine (doc->numLines () - 1).mid (prefix.length ()));
 }
 
-void RKConsole::setCurrentCommand (QString command) {
+void RKConsole::setCurrentCommand (const QString &command) {
 	RK_TRACE (APP);
 	editInterface(doc)->removeText (doc->numLines() - 1, 0, doc->numLines() - 1, editInterface(doc)->textLine(doc->numLines() - 1).length());
 	editInterface(doc)->insertText (doc->numLines() - 1, 0, prefix + command);
@@ -389,7 +389,7 @@ void RKConsole::submitCommand () {
 	addCommandToHistory (current_line);
 	
 	if (command_incomplete) {
-		command.prepend (incomplete_command + "\n");
+		command.prepend (incomplete_command + '\n');
 	}
 
 	doc->insertText (doc->numLines () - 1, editInterface (doc)->lineLength (doc->numLines () -1), "\n");
@@ -456,7 +456,7 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 		uint c = (uint) doc->numLines();
 // TODO: WORKAROUND: Somehow, when removing paragraph 0, the QTextEdit scrolls to the top in between (yes, this also happens when using removeParagaph (0)). Since this may happen very often in newOutput, we're a bit sloppy, and only remove lines after a certain threshold (20) is exceeded. When the command is finished, this will be cleaned up automatically.
 		if (c > (RKSettingsModuleConsole::maxConsoleLines () + 20)) {
-			view->setUpdatesEnabled (false);		// major performace boost while removing lines!
+			view->setUpdatesEnabled (false);		// major performance boost while removing lines!
 			//TODO : deal with the case when there is already a selection
 			selectionInterface (doc)->setSelection (0, 0, c - RKSettingsModuleConsole::maxConsoleLines (), 0);
 			selectionInterface (doc)->removeSelectedText ();
@@ -467,7 +467,7 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 	output_continuation = true;
 }
 
-void RKConsole::submitBatch (QString batch) {
+void RKConsole::submitBatch (const QString &batch) {
 	RK_TRACE (APP);
 	// splitting batch, not allowing empty entries.
 	// TODO: hack something so we can have empty entries.
@@ -486,7 +486,7 @@ void RKConsole::tryNextInBatch (bool add_new_line) {
 			}
 			setUpdatesEnabled (true);
 		}
-		editInterface(doc)->insertText (doc->numLines ()-1, 0, prefix);		// somehow, it seems to be safer to do this after removing superflous lines, than before
+		editInterface(doc)->insertText (doc->numLines ()-1, 0, prefix);		// somehow, it seems to be safer to do this after removing superfluous lines, than before
 		cursorAtTheEnd ();
 	}
 
@@ -554,7 +554,7 @@ bool RKConsole::hasSelectedText () {
 	return (selectionInterface (doc)->hasSelection ());
 }
 
-void RKConsole::unplugAction(QString action, KActionCollection* ac) {
+void RKConsole::unplugAction(const QString &action, KActionCollection* ac) {
 	KAction* a = ac->action(action.latin1 ());
 	if( a ){
 		a->setEnabled(false);
@@ -639,7 +639,7 @@ void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 	} else {
 		QString text = command->command ();
 		text.replace ("\n", QString ("\n") + iprefix);
-		doc->insertText (doc->numLines () - 1, QString (nprefix).length (), text + "\n");
+		doc->insertText (doc->numLines () - 1, QString (nprefix).length (), text + '\n');
 		command->addReceiver (this);
 		command->addTypeFlag (RCommand::Console);
 		current_command = command;
