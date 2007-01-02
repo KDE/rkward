@@ -41,7 +41,7 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 	for (unsigned int i=0; i < lines.count (); i++) {
 		QString line = lines[i].stripWhiteSpace ();
 		if (!line.isEmpty ()) {
-			initial_text.append (line + "\n");
+			initial_text.append (line + '\n');
 		}
 	}
 

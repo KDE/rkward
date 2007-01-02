@@ -20,7 +20,7 @@
 
 #include <qobject.h>
 
-/* we need these foward declarations for now, due to cylcic includes. TODO: fix this */
+/* we need these forward declarations for now, due to cylcic includes. TODO: fix this */
 class RKComponentPropertyBase;
 class RKComponentPropertyBool;
 #include "rkcomponent.h"
@@ -97,7 +97,7 @@ private:
 /** helper function. Sets the value without emitting change signal */
 	void internalSetValue (bool new_value);
 /** helper function. Sets the value without emitting change signal */
-	void internalSetValue (QString new_value);
+	void internalSetValue (const QString &new_value);
 	bool default_value;
 	bool current_value;
 	QString value_true;
@@ -144,7 +144,7 @@ private:
 /** helper function. Sets the value without emitting change signal */
 	void internalSetValue (int new_value);
 /** helper function. Sets the value without emitting change signal */
-	void internalSetValue (QString new_value);
+	void internalSetValue (const QString &new_value);
 	int default_value;
 	int current_value;
 /** we could do without the validator, and create the logic on our own. Using Qt's validator, however, a) saves some typing b) allows to provide a validator object in use in lineedits, etc. (see getValidator ()) */
@@ -193,7 +193,7 @@ private:
 /** helper function. Sets the value without emitting change signal */
 	void internalSetValue (double new_value);
 /** helper function. Sets the value without emitting change signal */
-	void internalSetValue (QString new_value);
+	void internalSetValue (const QString &new_value);
 	double default_value;
 	double current_value;
 /** we could do without the validator, and create the logic on our own. Using Qt's validator, however, a) saves some typing b) allows to provide a validator object in use in lineedits, etc. (see getValidator ()) */

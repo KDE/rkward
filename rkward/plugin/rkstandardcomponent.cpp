@@ -74,7 +74,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 
 	// initialize the PHP-backend with the code-template
 	QDomElement element = xml->getChildElement (doc_element, "code", DL_WARNING);
-	QString dummy = QFileInfo (filename).dirPath () + "/" + xml->getStringAttribute (element, "file", "code.php", DL_WARNING);
+	QString dummy = QFileInfo (filename).dirPath () + '/' + xml->getStringAttribute (element, "file", "code.php", DL_WARNING);
 	backend = new PHPBackend ();
 	connect (backend, SIGNAL (idle ()), this, SLOT (backendIdle ()));
 	connect (backend, SIGNAL (requestValue (const QString&)), this, SLOT (getValue (const QString&)));
@@ -577,9 +577,9 @@ void RKComponentBuilder::addConnection (const QString &client_id, const QString 
 
 	RKComponentPropertyConnection conn;
 	conn.client_property = client_id;
-	if (!client_property.isEmpty ()) conn.client_property += "." + client_property;
+	if (!client_property.isEmpty ()) conn.client_property += '.' + client_property;
 	conn.governor_property = governor_id;
-	if (!governor_property.isEmpty ()) conn.governor_property += "." + governor_property;
+	if (!governor_property.isEmpty ()) conn.governor_property += '.' + governor_property;
 	conn.reconcile = reconcile;
 	conn.origin = origin;
 	connection_list.append (conn);

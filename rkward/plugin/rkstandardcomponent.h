@@ -107,7 +107,7 @@ Notes: How does building work?
 
 Calls parent_component->addChild () for built child-components. As an exception, this may be omitted for passive components (e.g. layouting components) that do not specify an id
 
-Reminder to the twisted brain: Typically inside a standard-component, *all* child components, even if nested in layouting components, etc. have the same standard-component as parent! Only embedded full-fledged components are a truely separate unit!
+Reminder to the twisted brain: Typically inside a standard-component, *all* child components, even if nested in layouting components, etc. have the same standard-component as parent! Only embedded full-fledged components are a truly separate unit!
 
 @author Thomas Friedrichsmeier */
 class RKComponentBuilder {

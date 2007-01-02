@@ -166,7 +166,7 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	QDomElement document_element = xml->openXMLFile (plugin_map_file, DL_ERROR);
 	if (xml->highestError () >= DL_ERROR) return (0);
 
-	QString prefix = QFileInfo (plugin_map_file).dirPath (true) + "/" + xml->getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
+	QString prefix = QFileInfo (plugin_map_file).dirPath (true) + '/' + xml->getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
 	QString cnamespace = xml->getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";
 
 	// step 1: create (list of) components

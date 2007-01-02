@@ -28,7 +28,7 @@
 class RKStandardComponentStack: public QWidgetStack {
 public:
 /** constructor. */
-	RKStandardComponentStack (QWidget *parent);
+	explicit RKStandardComponentStack (QWidget *parent);
 	~RKStandardComponentStack ();
 /** see RKStandardComponent::havePage () */
 	bool havePage (bool next);
@@ -39,7 +39,7 @@ public:
 /** go to the first page (call after creation) */
 	void goToFirstPage ();
 
-/** for use during construction. Adds a new page. Subsequent calls to addComponentToCurrentPage work on the new page. Even the first page has to be added explicitely!
+/** for use during construction. Adds a new page. Subsequent calls to addComponentToCurrentPage work on the new page. Even the first page has to be added explicitly!
 @param parent The RKComponent acting as parent for the newly created page */
 	RKComponent *addPage (RKComponent *parent);
 

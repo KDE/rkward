@@ -168,9 +168,9 @@ void RKFormula::makeModelString () {
 	}
 	if (multitable) {
 		table_string = "data.frame (";
-		if (dep_var) table_string.append (mangleName (dep_var) + "=" + dep_var->getFullName ());
+		if (dep_var) table_string.append (mangleName (dep_var) + '=' + dep_var->getFullName ());
 		for (ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
-			table_string.append (", " + mangleName ((*it)) + "=" + (*it)->getFullName ());
+			table_string.append (", " + mangleName ((*it)) + '=' + (*it)->getFullName ());
 		}
 		table_string.append (")");
 	} else {
@@ -223,7 +223,7 @@ void RKFormula::makeModelString () {
 
 QString RKFormula::mangleName (RObject *var) {
 	RK_TRACE (PLUGIN);
-	if (!var) return QString::null;
+	if (!var) return QString ();
 		
 	QString dummy = var->getShortName ();
 	QString dummy2 = dummy;

@@ -76,7 +76,7 @@ Each property holds two important pieces of information: RKComponentPropertyBase
 
 The parent components will be invalid, if any of their children is not satisfied. They may however be satisfied, if they - in turn - are not required.
 
-Typically properties are owned by RKComponent (s), but this is not technically neccessary.
+Typically properties are owned by RKComponent (s), but this is not technically necessary.
 
 Properties and components share much common functionality. See RKComponentBase.
 
@@ -111,7 +111,7 @@ QString RKComponentPropertyBase::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 	if (!modifier.isEmpty ()) {
 		warnModifierNotRecognized (modifier);
-		return QString::null;
+		return QString ();
 	}
 	return _value;
 }
@@ -173,7 +173,7 @@ void RKComponentPropertyBool::internalSetValue (bool new_value) {
 	is_valid = true;
 }
 
-void RKComponentPropertyBool::internalSetValue (QString new_value) {
+void RKComponentPropertyBool::internalSetValue (const QString &new_value) {
 	RK_TRACE (PLUGIN);
 
 	_value = new_value;
@@ -218,7 +218,7 @@ QString RKComponentPropertyBool::value (const QString &modifier) {
 	}
 
 	warnModifierNotRecognized (modifier);
-	return QString::null;
+	return QString ();
 }
 
 bool RKComponentPropertyBool::setValue (const QString &string) {
@@ -334,7 +334,7 @@ QString RKComponentPropertyInt::value (const QString &modifier) {
 
 	if (!modifier.isEmpty ()) {
 		warnModifierNotRecognized (modifier);
-		return QString::null;
+		return QString ();
 	}
 	return _value;
 }
@@ -409,7 +409,7 @@ void RKComponentPropertyInt::internalSetValue (int new_value) {
 	if (!is_valid) current_value = default_value;
 }
 
-void RKComponentPropertyInt::internalSetValue (QString new_value) {
+void RKComponentPropertyInt::internalSetValue (const QString &new_value) {
 	current_value = new_value.toInt (&is_valid);
 	if (!is_valid) {
 		_value = new_value;
@@ -499,7 +499,7 @@ QString RKComponentPropertyDouble::value (const QString &modifier) {
 
 	if (!modifier.isEmpty ()) {
 		warnModifierNotRecognized (modifier);
-		return QString::null;
+		return QString ();
 	}
 	return _value;
 }
@@ -576,7 +576,7 @@ void RKComponentPropertyDouble::internalSetValue (double new_value) {
 	if (!is_valid) current_value = default_value;
 }
 
-void RKComponentPropertyDouble::internalSetValue (QString new_value) {
+void RKComponentPropertyDouble::internalSetValue (const QString &new_value) {
 	RK_TRACE (PLUGIN);
 
 	current_value = new_value.toDouble (&is_valid);
@@ -1003,7 +1003,7 @@ bool RKComponentPropertyRObjects::atMaxLength () {
 RKComponentPropertyCode::RKComponentPropertyCode (QObject *parent, bool required) : RKComponentPropertyBase (parent, required) {
 	RK_TRACE (PLUGIN);
 
-	preprocess_code = calculate_code = printout_code = cleanup_code = QString::null;
+	preprocess_code = calculate_code = printout_code = cleanup_code = QString ();
 }
 
 RKComponentPropertyCode::~RKComponentPropertyCode () {

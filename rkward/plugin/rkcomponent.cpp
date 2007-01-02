@@ -52,7 +52,7 @@ void RKComponentBase::fetchPropertyValuesRecursive (QMap<QString, QString> *list
 					list->insert (prefix + it.currentKey (), it.current ()->value ());
 				}
 			} else {
-				it.current ()->fetchPropertyValuesRecursive (list, true, prefix + it.currentKey () + ".");
+				it.current ()->fetchPropertyValuesRecursive (list, true, prefix + it.currentKey () + '.');
 			}
 		}
 	}
@@ -83,7 +83,7 @@ QString RKComponentBase::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
 	RK_DO (qDebug ("Component type %d does not have a value. Remaining modifier is: '%s'", type (), modifier.latin1 ()), PLUGIN, DL_WARNING);
-	return QString::null;
+	return QString ();
 }
 
 bool RKComponentBase::isSatisfied () {
@@ -219,7 +219,7 @@ void RKComponent::removeFromParent () {
 			QString key = it.currentKey ();
 	// unfortunately, several items might hvae the same key, and there seems to be no way to selectively remove the current item only.
 	// however, this function should only ever be called in cases of emergency and to prevent crashes. So we make extra sure to remove the child,
-	// even if we remove a little more than neccessary along the way.
+	// even if we remove a little more than necessary along the way.
 			while (parentComponent ()->child_map.remove (key));
 			return;
 		}
