@@ -6,14 +6,14 @@
 #
 # Stefan Rodiger <stefan_roediger@gmx.de>, 2006.
 # Stefan Joerg Roediger <stefan_roediger@gmx.de>, 2006.
-# SJR <stefan_roediger@gmx.de>, 2006.
+# SJR <stefan_roediger@gmx.de>, 2006, 2007.
 # Thomas Friedrichsmeier <tfry@users.sourceforge.net>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-12-01 11:22+0100\n"
-"PO-Revision-Date: 2006-12-25 15:23+0100\n"
+"PO-Revision-Date: 2007-01-02 04:31+0100\n"
 "Last-Translator: SJR <stefan_roediger@gmx.de>\n"
 "Language-Team: German <rkward-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -1764,12 +1764,12 @@ msgstr "Viele Kommentare, nützliche Vorschläge und Fehlerberichte"
 
 #: main.cpp:94
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
-msgstr "Viel mehr Leute bei rkward-devel@lists.sourceforge.net"
+msgstr "All jene bei rkward-devel@lists.sourceforge.net"
 
 #: main.cpp:94
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
-"Sorry, falls Sie nicht erwähnt wurden. Bitte kontaktieren Sie mich falls Sie "
+"Sorry, falls Sie nicht erwähnt wurden. Bitte kontaktieren Sie uns falls Sie "
 "ihren Namen hier nicht finden."
 
 #: rkward.cpp:173
@@ -1931,7 +1931,7 @@ msgid ""
 "Please submit your bug reports or wishes at http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
 "net"
-msgstr "Bitte geben Sie Fehlermeldungen oder Wünsche unter http://sourceforge.net/tracker/?group_id=50231&atid=459007 ein, oder schicken Sie uns eine E-Mail an rkward-devel@lists.sourceforge.net"
+msgstr "Bitte senden Sie Fehlermeldungen oder Wünsche unter http://sourceforge.net/tracker/?group_id=50231&atid=459007 ein, oder schicken Sie uns eine E-Mail an rkward-devel@lists.sourceforge.net"
 
 #: rkward.cpp:556
 msgid "New dataset"
@@ -2033,7 +2033,7 @@ msgid ""
 "Result of 'print ("
 msgstr ""
 "\n"
-"Ergebnis des Druck ("
+"Ergebnis von 'print ("
 
 #: robjectviewer.cpp:56
 msgid ")':\n"
