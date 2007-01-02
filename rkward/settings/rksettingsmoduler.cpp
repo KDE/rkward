@@ -54,7 +54,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	QLabel *label = new QLabel (i18n ("The following settings mostly affect R behavior in the console. It's generally safe to keep these unchanged."), this);
+	QLabel *label = new QLabel (i18n ("The following settings mostly affect R behavior in the console. It is generally safe to keep these unchanged."), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	main_vbox->addWidget (label);
 

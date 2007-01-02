@@ -140,7 +140,7 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 	user_filter_boxes = addFilterSettings (this, grid, 1, i18n ("User commands"), user_filter);
 	plugin_filter_boxes = addFilterSettings (this, grid, 2, i18n ("Plugin generated commands"), plugin_filter);
 	app_filter_boxes = addFilterSettings (this, grid, 3, i18n ("Application commands"), app_filter);
-	sync_filter_boxes = addFilterSettings (this, grid, 4, i18n ("Synchronisation commands"), sync_filter);
+	sync_filter_boxes = addFilterSettings (this, grid, 4, i18n ("Synchronization commands"), sync_filter);
 
 	vbox->addSpacing (2*RKGlobals::spacingHint ());
 
