@@ -42,7 +42,7 @@ rk.results (list (
 	
 	function cleanup () {
 ?>
-rm (list=grep ("rk.temp", ls (), value=TRUE))
+rm (list=grep ("^rk.temp", ls (), value=TRUE))
 <?
 	}
 ?>
