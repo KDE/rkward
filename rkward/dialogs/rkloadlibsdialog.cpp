@@ -183,9 +183,9 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 		if (as_root) {
 #ifdef __FreeBSD__
 			struct passwd *passe = getpwuid(getuid ());
-			stream << QString ("system (\"chown ") + passe->pw_name + " " + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "/*\")\n";
+			stream << QString ("system (\"chown ") + passe->pw_name + ' ' + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "/*\")\n";
 #else
-			stream << QString ("system (\"chown ") + cuserid (0) + " " + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "/*\")\n";
+			stream << QString ("system (\"chown ") + cuserid (0) + ' ' + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "/*\")\n";
 #endif
 		}
 		stream << "q ()\n";
@@ -419,7 +419,7 @@ void LoadUnloadWidget::doLoadUnload () {
 			loaded = next;
 		}
 		if (!found) {
-			RCommand *command = new RCommand ("detach (package:" + (*it) + ")", RCommand::App | RCommand::ObjectListUpdate, QString::null, this, LOAD_PACKAGE_COMMAND);
+			RCommand *command = new RCommand ("detach (package:" + (*it) + ')', RCommand::App | RCommand::ObjectListUpdate, QString::null, this, LOAD_PACKAGE_COMMAND);
 			control->addRCommand (command);
 			RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 		}
