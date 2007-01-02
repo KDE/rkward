@@ -101,7 +101,7 @@ void RKEditorDataFrame::openObject (RObject *object, bool initialize_to_empty) {
 	// actually, given the object, we already know the child-names. We don't know their order, however, so we better fetch the name-row again.
 	object->markDataDirty ();
 	object->updateFromR (open_chain);
-	RCommand *command = new RCommand ("names (" + object->getFullName () + ")", RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_NAMES_COMMAND);
+	RCommand *command = new RCommand ("names (" + object->getFullName () + ')', RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_NAMES_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, open_chain);
 
 	// since communication is asynchronous, the rest is done inside
@@ -206,12 +206,12 @@ void RKEditorDataFrame::columnAdded (int col) {
 
 void RKEditorDataFrame::aboutToAddRow (int row) {
 	RK_TRACE (EDITOR);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.row (" + getObject ()->getFullName () + ", " + QString ().setNum (row+1) + ")", RCommand::App | RCommand::Sync));
+	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.row (" + getObject ()->getFullName () + ", " + QString ().setNum (row+1) + ')', RCommand::App | RCommand::Sync));
 }
 
 void RKEditorDataFrame::aboutToRemoveRow (int row) {
 	RK_TRACE (EDITOR);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.delete.row (" + getObject ()->getFullName () + ", " + QString ().setNum (row+1) + ")", RCommand::App | RCommand::Sync));
+	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.delete.row (" + getObject ()->getFullName () + ", " + QString ().setNum (row+1) + ')', RCommand::App | RCommand::Sync));
 }
 
 void RKEditorDataFrame::removeObject (RObject *object) {

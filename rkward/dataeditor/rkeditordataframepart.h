@@ -30,7 +30,7 @@ class KAction;
 class RKEditorDataFramePart : public KParts::Part {
 	Q_OBJECT
 public:
-	RKEditorDataFramePart (QWidget *parent);
+	explicit RKEditorDataFramePart (QWidget *parent);
 
 	~RKEditorDataFramePart ();
 public slots:

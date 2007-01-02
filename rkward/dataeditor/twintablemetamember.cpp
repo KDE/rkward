@@ -128,7 +128,7 @@ QString TwinTableMetaMember::text (int row, int col) const {
 	RKVariable *var = table->getColObject (col);
 	if (!var) {
 		RK_ASSERT (false);
-		return QString::null;
+		return QString ();
 	}
 	if (row == NAME_ROW) {
 		return var->getShortName ();
@@ -141,7 +141,7 @@ QString TwinTableMetaMember::text (int row, int col) const {
 	} else if (row == LEVELS_ROW) {
 		return var->getValueLabelString ();
 	}
-	return QString::null;
+	return QString ();
 }
 
 QString TwinTableMetaMember::formattedText (int row, int col) const {
@@ -149,7 +149,7 @@ QString TwinTableMetaMember::formattedText (int row, int col) const {
 	RKVariable *var = table->getColObject (col);
 	if (!var) {
 		RK_ASSERT (false);
-		return QString::null;
+		return QString ();
 	}
 	if (row == NAME_ROW) {
 		return var->getShortName ();
@@ -162,7 +162,7 @@ QString TwinTableMetaMember::formattedText (int row, int col) const {
 	} else if (row == LEVELS_ROW) {
 		return var->getValueLabelString ();
 	}
-	return QString::null;
+	return QString ();
 }
 
 #include "twintablemetamember.moc"

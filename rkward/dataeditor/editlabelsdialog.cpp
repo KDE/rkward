@@ -145,7 +145,7 @@ QString LevelsTable::text (int row, int) const {
 	if (row < numTrueRows ()) {
 		return ((*storage)[QString::number (row+1)]);
 	}
-	return QString::null;
+	return QString ();
 }
 
 void LevelsTable::paintCell (QPainter *p, int row, int col, const QRect &cr, bool selected, const QColorGroup &cg) {
