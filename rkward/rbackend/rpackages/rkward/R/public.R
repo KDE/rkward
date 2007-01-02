@@ -152,7 +152,7 @@
 			titles <- names (x)
 		}
 
-		if (is.data.frame (a)) {
+		if (is.data.frame (x)) {
 			cat ("<table border=\"1\">\n<tr>")
 			for (i in 1:length (x)) {
 				cat ("<td>", titles[i], "</td>", sep="")
