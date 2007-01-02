@@ -23,8 +23,11 @@
 		<Action name="file_load_libs"/>
 	</Menu>
 
-	<Merge/>
-
+	<!-- These menus are actually defined in KParts. We also declare them here, to avoid menus jumping around -->
+	<Menu name="edit"><text>&amp;Edit</text><Separator/><Merge/></Menu>
+	<Menu name="view"><text>&amp;View</text><Separator/><Merge/></Menu>
+	<Menu name="run"><text>&amp;Run</text><Separator/><Merge/></Menu>
+	
 	<Merge name="rkwardcomponents" />
 
 	<Menu name="windows"><text>&amp;Windows</text>
@@ -54,5 +57,7 @@
 		<Action name="new_command_editor"/>
 		<Action name="file_openy"/>
 		<Action name="file_open_recenty"/>
+</ToolBar>
+<ToolBar fullWidth="true" name="runToolBar">
 </ToolBar>
 </kpartgui>
