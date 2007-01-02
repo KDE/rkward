@@ -86,7 +86,7 @@ backend thread does not proceed with further commands, before the main thread ta
 more errors/crashes. @see unlock @see RInterface::cancelCommand @see RInterface::pauseProcessing
 @param reason As there are several reasons to lock the thread, and more than one reason may be in place at a given time, a reason needs to be specified for both lock () and unlock (). Only if all "reasons are unlocked ()", processing continues. */
 	void lock (LockType reason) { locked |= reason; };
-/** Unlocks the thread.  Also the thread may get locked when cancelling the currently running command. @see lock */
+/** Unlocks the thread.  Also the thread may get locked when canceling the currently running command. @see lock */
 	void unlock (LockType reason) { locked -= (locked & reason); };
 /** "Kills" the thread. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
 	void kill () { killed = true; };
@@ -184,7 +184,7 @@ private:
 	unsigned int global_env_toplevel_count;
 /** A list of symbols that have been assigned new values during the current command */
 	QStringList changed_symbol_names;
-/** check wether the object list / global environemnt / individual symbols have changed, and updates them, if needed */
+/** check wether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
 };
 

@@ -124,7 +124,7 @@ public:
 @param receiver The RCommandReceiver this command should be passed on to, when finished.
 @param flags A freely assignable integer, that you can use to identify what the command was all about. Only the RCommandReceiver handling the results will have to know what exactly the flags mean.
 */
-	RCommand (const QString &command, int type = 0, const QString &rk_equiv = QString::null, RCommandReceiver *receiver=0, int flags=0);
+	explicit RCommand (const QString &command, int type = 0, const QString &rk_equiv = QString::null, RCommandReceiver *receiver=0, int flags=0);
 /** destructor. Note: you should not delete RCommands manually. This is done in RInterface. TODO: make protected */
 	~RCommand();
 /** @returns the type as specified in RCommand::RCommand */
@@ -172,7 +172,7 @@ public:
 		HasWarnings=16,			/**< command has warning-message(s) retrievable via RCommand::warnings () */
 		ErrorIncomplete=512,		/**< backend rejected command as being incomplete */
 		ErrorSyntax=1024,			/**< backend rejected command as having a syntax error */
-		ErrorOther=2048,			/**< another error (not incomplete, not syntax error) has occured while trying to execute the command */
+		ErrorOther=2048,			/**< another error (not incomplete, not syntax error) has occurred while trying to execute the command */
 		Canceled=8192				/**< Command was cancelled. */
 	};
 /** the command has been passed to the backend. */

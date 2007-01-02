@@ -93,7 +93,7 @@ private:
 	RThread *r_thread;
 /** Timer to trigger flushing output */
 	QTimer *flush_timer;
-/** cancelling the command that is (or seems to be) currently running is tricky: In order to do so, we need to signal an interrupt to the RThread. We need this pointer to find out, when the command has actually been interrupted, and we can resume processing. */
+/** canceling the command that is (or seems to be) currently running is tricky: In order to do so, we need to signal an interrupt to the RThread. We need this pointer to find out, when the command has actually been interrupted, and we can resume processing. */
 	RCommand *running_command_canceled;
 
 /** See \ref RThread::doSubstack (). Does the actual job. */
@@ -134,7 +134,7 @@ RKGlobals::rInterface ()->issueCommand ("print (\"hello world!\")", RCommand::Us
 \endcode
 
 You will note, that actually there are two RInterface::issueCommand functions, this one is obviously the one taking a QString and several further
-parameters as argument. It is actually quite similar to the other RInterface::issueCommand function which takes an RCommand as a paramter. This convenience class basically just creates an RCommand with the same parameters as the constructor of RCommand (RCommand::RCommand), and then submits this RCommand. We'll discuss what an RCommand really is further down below. For now a good enough explanations is, that it's simply a container for a command.
+parameters as argument. It is actually quite similar to the other RInterface::issueCommand function which takes an RCommand as a parameter. This convenience class basically just creates an RCommand with the same parameters as the constructor of RCommand (RCommand::RCommand), and then submits this RCommand. We'll discuss what an RCommand really is further down below. For now a good enough explanations is, that it's simply a container for a command.
 
 The first parameter here is fairly obvious, the command-string the R backend should evaluate.
 
@@ -144,7 +144,7 @@ the R-command log (currently class RKwatch), whether the command can be cancelle
 
 \section UsingTheInterfaceToRHandlingReturns A slightly more realistic example: Handling the result of an RCommand
 
-Most of the time you don't just want to run a command, but you also want to know the result. Now, this is a tad bit more difficult than one might expect at first glance. The reason for this is that the R backend runs in a separate thread. Hence, whenever you submit a command, it generally does not get executed right away - or at least you just don't know, when exactly it gets executed, and when the result is available. This is neccessary, so (expensive) commands running in the backend do not block operations in the GUI/frontend.
+Most of the time you don't just want to run a command, but you also want to know the result. Now, this is a tad bit more difficult than one might expect at first glance. The reason for this is that the R backend runs in a separate thread. Hence, whenever you submit a command, it generally does not get executed right away - or at least you just don't know, when exactly it gets executed, and when the result is available. This is necessary, so (expensive) commands running in the backend do not block operations in the GUI/frontend.
 
 Ok, so how do you get informed, when your command was completed? Using RCommandReceiver. What you will want to do is inherit the class you
 want to handle the results of RCommands from RCommandReceiver. When finished, the RCommand will be submitted to the (pure virtual) RCommandReceiver::rCommandDone function, which of course you'll have to implement in a meaningful way in your derived class.

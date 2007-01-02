@@ -181,7 +181,7 @@ void RInterface::customEvent (QCustomEvent *e) {
 			message.append (i18n ("\t-There was a problem opening the files needed for communication with R. Most likely this is due to an incorrect setting for the location of these files. Check whether you have correctly configured the location of the log-files (Settings->Configure Settings->Logfiles) and restart RKWard.\n"));
 		}
 		if (err & RThread::OtherFail) {
-			message.append (i18n ("\t-An unspecified error occured that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.\n"));
+			message.append (i18n ("\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.\n"));
 		}
 		KMessageBox::error (0, message, i18n ("Error starting R"));
 		r_thread->unlock (RThread::Startup);
@@ -322,7 +322,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		if (request->call_length >= 2) {
 			QString lib_name = request->call[1];
 			issueCommand (".rk.rkreply <- NULL", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
-			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We'll open the package-management tool, and there you can try to locate and install the needed package.").arg (lib_name), i18n ("Require package '%1'").arg (lib_name));
+			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.").arg (lib_name), i18n ("Require package '%1'").arg (lib_name));
 			RKLoadLibsDialog::showInstallPackagesModal (0, request->in_chain, lib_name);
 			issueCommand (".rk.rkreply <- \"\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		} else {
