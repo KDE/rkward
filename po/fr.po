@@ -1,24 +1,24 @@
-# translation of fr.po to français
-# translation of fr.po to Français
+# translation of fr.po to German
 # translation of fr.po to
 # This file is distributed under the same license as the RKWard package.
 # Copyright (C) 2005 Thomas Friedrichsmeier.
+#
 # Pierre Ecochard <ecoch@users.sourceforge.net>, 2005.
 # Frederic Daniel Luc LEHOBEY <Frederic.Lehobey@free.fr>, 2006.
 # Jacolin Yves <yjacolin@free.fr>, 2006.
-#
+# SJR <stefan_roediger@gmx.de>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-12-01 11:22+0100\n"
-"PO-Revision-Date: 2006-11-18 16:13+0100\n"
-"Last-Translator: Jacolin Yves <yjacolin@free.fr>\n"
-"Language-Team: français <fr@li.org>\n"
+"PO-Revision-Date: 2007-01-02 05:47+0100\n"
+"Last-Translator: SJR <stefan_roediger@gmx.de>\n"
+"Language-Team: German <rkward-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: dataeditor/editformatdialog.cpp:44
 msgid "Alignment"
@@ -167,13 +167,11 @@ msgid "Delete marked rows (%1-%2)"
 msgstr "Éffacer les lignes notées (%1-%2)"
 
 #: dataeditor/twintable.cpp:260
-#, fuzzy
 msgid "Delete this row (%1)"
-msgstr "Supprimer cette case"
+msgstr "Supprimer cette ligne (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Aucun nom de fichier n'a été fourni. Les données N'ont PAS été enregistrées. "
 "Voulez vous poursuivre quand même ?"
@@ -300,13 +298,12 @@ msgid "Restore object?"
 msgstr "Restaurer l'objet ?"
 
 #: core/rkmodificationtracker.cpp:57
-#, fuzzy
 msgid ""
 "Do you really want to remove the object '%1'? The object is currently opened "
 "for editing, it will be removed in the editor, too. There's no way to get it "
 "back."
 msgstr ""
-"\" ? Cet objet est actuellement ouvert pour édition, et va être supprimé de "
+"Voulez-vous vraiment éliminer l'objet '%1 '? Cet objet est actuellement ouvert pour édition, et va être supprimé de "
 "l'éditeur également. Il ne pourra plus être récupéré."
 
 #: core/rkmodificationtracker.cpp:57 core/rkmodificationtracker.cpp:62
@@ -314,8 +311,7 @@ msgid "Remove object?"
 msgstr "Supprimer l'objet ?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "Voulez-vous vraiment supprimer l'objet '%1' ? Il n'y a aucun moyen de le "
 "récupérer."
@@ -336,9 +332,8 @@ msgid "Type:"
 msgstr "Type :"
 
 #: core/robject.cpp:125
-#, fuzzy
 msgid "Function"
-msgstr "Lancer la sélection"
+msgstr "Fonction"
 
 #: core/robject.cpp:126
 msgid "Usage: "
@@ -361,36 +356,28 @@ msgid "List"
 msgstr "Liste"
 
 #: core/robject.cpp:136
-#, fuzzy
 msgid "Variable"
-msgstr "Affichage du/des fichier(s)"
+msgstr "Variable"
 
 #: core/robject.cpp:137
 msgid "Data Type:"
 msgstr "Type de données :"
 
 #: core/robject.cpp:139
-#, fuzzy
 msgid "Environment"
-msgstr "Alignement"
+msgstr "Environnement"
 
 #: core/robject.cpp:144
 msgid "Length: "
 msgstr "Longueur :"
 
 #: core/robject.cpp:146
-#, fuzzy
 msgid "Dimensions: "
-msgstr ""
-"\n"
-"Dimensions : "
+msgstr "Dimensions : "
 
 #: core/robject.cpp:154
-#, fuzzy
 msgid "Class(es):"
-msgstr ""
-"\n"
-"Classe(s) : "
+msgstr "Classe(s) : "
 
 #: windows/rkcommandeditorwindowpart.cpp:52
 msgid "Run all"
@@ -441,10 +428,8 @@ msgid "Save Output as HTML"
 msgstr "Sauvegarder la sortie en HTML"
 
 #: windows/rkhtmlwindow.cpp:292
-msgid ""
-"Do you really want to flush the ouput? It won't be possible to restore it."
-msgstr ""
-"Voulez-vous vraiment vider les sorties ? Il sera impossible de les restaurer."
+msgid "Do you really want to flush the ouput? It won't be possible to restore it."
+msgstr "Voulez-vous vraiment vider les sorties ? Il sera impossible de les restaurer."
 
 #: windows/rkhtmlwindow.cpp:292
 msgid "Flush output?"
@@ -582,8 +567,7 @@ msgstr "Erreur de syntaxe.\n"
 
 #: windows/rkcommandlog.cpp:176
 msgid "An unspecified error occured while running the command.\n"
-msgstr ""
-"Une erreur inconnue s'est produite pendant l'exécution de la commande.\n"
+msgstr "Une erreur inconnue s'est produite pendant l'exécution de la commande.\n"
 
 #: windows/rkwindowcatcher.cpp:61
 msgid ""
@@ -602,40 +586,35 @@ msgstr ""
 
 #: windows/rkwindowcatcher.cpp:61
 msgid "Could not embed R X11 window"
-msgstr ""
+msgstr "Ne pourrait pas encadrer la fenêtre de R X11"
 
 #: windows/rkwindowcatcher.cpp:90
-#, fuzzy
 msgid "An error occurred"
-msgstr ""
-"\n"
-"Certaines erreurs se sont produites : "
+msgstr "Certaines erreurs se sont produites : "
 
 #: windows/rkwindowcatcher.cpp:198
-#, fuzzy
 msgid "Specify fixed size"
-msgstr "Définissez un model"
+msgstr "Définissez fixe taille"
 
 #: windows/rkwindowcatcher.cpp:223
 msgid "Activate graphics device number %1"
-msgstr ""
+msgstr "Activez le dispositif de graphiques numéro %1"
 
 #: windows/rkwindowcatcher.cpp:229
 msgid "Copy contents of graphics device number %1 to output"
-msgstr ""
+msgstr "Copier contenu du dispositif de graphiques numéro %1 au sorties"
 
 #: windows/rkwindowcatcher.cpp:235
 msgid "Print contents of graphics device number %1"
-msgstr ""
+msgstr "Imprimer contenu du dispositif de graphiques numéro %1 au rendement"
 
 #: windows/rkwindowcatcher.cpp:242
-#, fuzzy
 msgid "Specify R object"
-msgstr "Définissez un model"
+msgstr "Définissez d'objet R"
 
 #: windows/rkwindowcatcher.cpp:245
 msgid "Specify the R object name, you want to save the graph to"
-msgstr ""
+msgstr "Définissez le nom d'objet de R, vous veulent sauver le graphique à"
 
 #: windows/rkwindowcatcher.cpp:256
 msgid "Save contents of graphics device number %1 to object '%2'"
@@ -643,7 +622,7 @@ msgstr ""
 
 #: windows/rkwindowcatcher.cpp:265
 msgid "Duplicate graphics device number %1"
-msgstr ""
+msgstr "Double dispositif de graphiques numéro %1"
 
 #: windows/rkwindowcatcher.cpp:285
 msgid "Draw area follows size of window"
@@ -651,15 +630,15 @@ msgstr ""
 
 #: windows/rkwindowcatcher.cpp:287
 msgid "Set fixed size 500x500"
-msgstr ""
+msgstr "Définissez fixe taille 500x500"
 
 #: windows/rkwindowcatcher.cpp:288
 msgid "Set fixed size 1000x1000"
-msgstr ""
+msgstr "Définissez fixe taille 1000x1000"
 
 #: windows/rkwindowcatcher.cpp:289
 msgid "Set fixed size 2000x2000"
-msgstr ""
+msgstr "Définissez fixe taille 2000x2000"
 
 #: windows/rkwindowcatcher.cpp:290
 msgid "Set specified fixed size..."
@@ -667,20 +646,19 @@ msgstr ""
 
 #: windows/rkwindowcatcher.cpp:292
 msgid "Make active"
-msgstr ""
+msgstr "Active"
 
 #: windows/rkwindowcatcher.cpp:293
 msgid "Copy to output"
-msgstr ""
+msgstr "Copier au rendement"
 
 #: windows/rkwindowcatcher.cpp:295
-#, fuzzy
 msgid "Store as R object..."
-msgstr "Restaurer l'objet ?"
+msgstr "Enregistrer sous l'objet R?"
 
 #: windows/rkwindowcatcher.cpp:296
 msgid "Duplicate"
-msgstr ""
+msgstr "Doubler"
 
 #: plugin/rkpluginspinbox.cpp:43
 msgid "Enter value:"
@@ -829,9 +807,8 @@ msgid "Show functions"
 msgstr "Montrer les fonctions"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:52
-#, fuzzy
 msgid "Show variables"
-msgstr "Affichage du/des fichier(s)"
+msgstr "Affichage variable"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:57
 #, fuzzy
@@ -902,9 +879,8 @@ msgid ""
 msgstr ""
 
 #: settings/rksettingsmodulegeneral.cpp:76
-#, fuzzy
 msgid "Do not save/restore workplace layout"
-msgstr "Restaurer l'espace de travail"
+msgstr "Ne pas restaurer/enregistrer l'espace de travail"
 
 #: settings/rksettingsmodulegeneral.cpp:100
 msgid "General"
@@ -955,9 +931,8 @@ msgstr ""
 "chemin par défaut (recommandé) ?"
 
 #: settings/rksettingsmoduleplugins.cpp:132
-#, fuzzy
 msgid "Configuration change"
-msgstr "Configuration des paquets"
+msgstr ""
 
 #: settings/rksettingsmodulephp.cpp:39
 msgid "Changes in this section take effect the next time you start a plugin"
@@ -1366,14 +1341,12 @@ msgstr ""
 "ajouter des dépôts additionnels à l'aide du bouton \"Configurer les dépôts\"."
 
 #: dialogs/rkloadlibsdialog.cpp:726
-#, fuzzy
 msgid "Package not available"
-msgstr "[Aucun paquet disponible]"
+msgstr "Aucun paquet disponible"
 
 #: dialogs/rkloadlibsdialog.cpp:750
-#, fuzzy
 msgid "Install packages to:"
-msgstr "Paquets installés"
+msgstr "Paquets installés à:"
 
 #: dialogs/rkloadlibsdialog.cpp:755
 msgid "Include dependencies"
@@ -1432,8 +1405,7 @@ msgstr "Attribut '%1' non fourni. '%2' supposé"
 
 #: misc/xmlhelper.cpp:128
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr ""
-"Valeur d'attribut interdite. Les valeurs possibles sont seulement parmi '%1'."
+msgstr "Valeur d'attribut interdite. Les valeurs possibles sont seulement parmi '%1'."
 
 #: misc/xmlhelper.cpp:142
 msgid "Illegal attribute value. Only integer numbers are allowed."
@@ -1454,10 +1426,8 @@ msgid "XML-parsing '%1' "
 msgstr "Analyse du XML '%1' "
 
 #: misc/rkprogresscontrol.cpp:202
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
-msgstr ""
-"<b>Il y a eut des erreurs et / ou des avertissements ! Lisez ce qui suit</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgstr "<b>Il y a eut des erreurs et / ou des avertissements ! Lisez ce qui suit</b>"
 
 #: misc/rkprogresscontrol.cpp:212
 msgid "Show Output"
@@ -1760,8 +1730,7 @@ msgstr "Prolixité des messages de trace (0-5)"
 
 #: main.cpp:76
 msgid "Mask for components to debug as a binary number (see debug.h)"
-msgstr ""
-"Masque en tant que nombre binaire (voir debug.h) des composants à tracer"
+msgstr "Masque en tant que nombre binaire (voir debug.h) des composants à tracer"
 
 #: main.cpp:83
 msgid "Project leader"
@@ -1802,8 +1771,7 @@ msgstr "Des commentaires utiles, des conseils et des correctifs"
 
 #: main.cpp:93
 msgid "Many comments, useful suggestions, and bug reports"
-msgstr ""
-"De nombreux commentaires, des suggestions utiles, et des rapports de bug"
+msgstr "De nombreux commentaires, des suggestions utiles, et des rapports de bug"
 
 #: main.cpp:94
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
@@ -1988,8 +1956,7 @@ msgstr "Entrer le nom de la nouvelle table"
 
 #: rkward.cpp:560 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "The name you specified was already in use or not valid. Renamed to %1"
-msgstr ""
-"Le nom que vous avez choisi est déjà utilisé ou est incorrect. Renommé en %1"
+msgstr "Le nom que vous avez choisi est déjà utilisé ou est incorrect. Renommé en %1"
 
 #: rkward.cpp:560 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "Invalid Name"
@@ -2267,6 +2234,3 @@ msgstr ""
 "Frederic.Lehobey@free.fr\n"
 "yjacolin@free.fr"
 
-#, fuzzy
-#~ msgid "Clear Console"
-#~ msgstr "Terminal R"
