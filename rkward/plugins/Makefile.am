@@ -16,7 +16,11 @@ dist_pluginsXplots_DATA = \
 	plots/ecdf_plot.php \
 	plots/ecdf_plot.xml \
 	plots/scatterplot.xml \
-	plots/scatterplot.php
+	plots/scatterplot.php \
+	plots/stripchart_plot.xml \
+	plots/density_plot.php \
+	plots/stripchart_plot.php \
+	plots/density_plot.xml
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
@@ -110,6 +114,20 @@ dist_pluginsXdistributions_DATA = \
 	distributions/tukey_probabilities.xml \
 	distributions/tukey_quantiles.php \
 	distributions/tukey_quantiles.xml \
+	distributions/agostino_test.xml \
+	distributions/shapiro_test.xml \
+	distributions/pearson_test.xml \
+	distributions/lillie_test.xml \
+	distributions/ad_test.xml \
+	distributions/cvm_test.xml \
+	distributions/sf_test.php \
+	distributions/agostino_test.php \
+	distributions/shapiro_test.php \
+	distributions/pearson_test.php \
+	distributions/lillie_test.php \
+	distributions/sf_test.xml \
+	distributions/ad_test.php \
+	distributions/cvm_test.php \
 	distributions/wilcoxon_probabilities.php \
 	distributions/wilcoxon_probabilities.xml \
 	distributions/wilcoxon_quantiles.php \
@@ -130,7 +148,9 @@ dist_pluginsX00meansX00ttestsX00independentUsamples_DATA = \
 pluginsX20descriptivedir = $(kde_datadir)/rkward/20descriptive
 dist_pluginsX20descriptive_DATA = \
 	20descriptive/code.php \
-	20descriptive/description.xml
+	20descriptive/description.xml \
+	20descriptive/skewness_kurtosis_test.xml \
+	20descriptive/skewness_kurtosis_test.php
 
 pluginsXcorrUmatrixdir = $(kde_datadir)/rkward/corr_matrix
 dist_pluginsXcorrUmatrix_DATA = \
