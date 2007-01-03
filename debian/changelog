@@ -1,3 +1,8 @@
+  * provide entry in debian menu (Apps/Math)	TODO: test this!!!
+    closes: #405376
+
+
+
 rkward (0.4.2-3) unstable; urgency=low
 
   * this version is not meant to be uploaded to the main archives!
