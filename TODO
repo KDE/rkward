@@ -57,6 +57,7 @@ UI-stuff
 		- Better yet, the commands might be autosplit in the backend. Need to think about how to design this correctly, though
 		- Allow pasting at other positions than line end
 		- Prevent cursor from venturing into lines other than the last line
+		- When inside a string, should offer tab-completion for system paths (will maybe have to wait for KDE4, when we get better clues, what context we are currently in)
 	- Script editor:
 		- allow to pipe scripts to the console (console might have to be made smarter about large pasted commands, first)
 	- RKConsole / Script editor:
@@ -89,6 +90,11 @@ UI-stuff
 		- if preview-box is checked, and settings are valid, preview code is generated and evaluated at once
 		- plugins will need to keep track of whether a preview device window was created, and also clean this up
 			- probably some simple helper function(s) should be created for this purpose
+	- Graphics Device List window
+		- (see http://sourceforge.net/mailarchive/message.php?msg_id=37825223)
+		- par (no.readonly=TRUE) and par () to fetch available parameters and determine read-only state
+		- device list would only be fetched when opening the window, not kept up to date?
+		- access to graphics device plugins
 
 Internal stuff:
 	- Look at package odfWeave, and find out, how to use this
