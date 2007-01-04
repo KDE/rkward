@@ -1,3 +1,7 @@
+- plug-in for skewness and kurtosis added
+- plug-ins for distribution analysis added
+- plug-ins for new plots (stripchart & density plot)
+- enhancements to existing plot plug-ins
 - Experimental (might still be removed):
 	- Always show all top level menus
 	- new function rk.results () for use in plugins
