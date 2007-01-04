@@ -14,7 +14,7 @@
 ?>
 rk.temp.options <- list (domean=<? getRK ("mean"); ?>, domedian=<? getRK ("median"); ?>, dorange=<? getRK ("range"); ?>, dosd=<? getRK ("sd"); ?>, dosum=<? getRK ("sum"); ?>, doprod=<? getRK ("prod"); ?>, domad=<? getRK ("mad"); ?>, dolength=<? getRK ("length"); ?>, donacount=<? getRK ("nacount"); ?>)
 rk.temp.vars <- list (<? echo ($vars); ?>)
-rk.temp.results <- data.frame (object=rep (NA, length (rk.temp.vars)))
+rk.temp.results <- data.frame ('Object'=rep (NA, length (rk.temp.vars)))
 i=0;
 for (rk.temp.var in rk.temp.vars) {
 	i = i+1
@@ -30,14 +30,14 @@ for (rk.temp.var in rk.temp.vars) {
 			rk.temp.results$max[i] <- rk.temp.range[2]
 		})
 	}
-	if (rk.temp.options$dosd) rk.temp.results$sd[i] <- try (sd (eval (rk.temp.var), na.rm=TRUE))
+	if (rk.temp.options$dosd) rk.temp.results$'standard deviation'[i] <- try (sd (eval (rk.temp.var), na.rm=TRUE))
 	if (rk.temp.options$dosum) rk.temp.results$sum[i] <- try (sum (eval (rk.temp.var), na.rm=TRUE))
 	if (rk.temp.options$doprod) rk.temp.results$prod[i] <- try (prod (eval (rk.temp.var), na.rm=TRUE))
-	if (rk.temp.options$domad) rk.temp.results$mad[i] <- try (mad (eval (rk.temp.var), constant = <? echo ($constMad);
+	if (rk.temp.options$domad) rk.temp.results$'Median Absolute Deviation'[i] <- try (mad (eval (rk.temp.var), constant = <? echo ($constMad);
 		if ($mad_type == "low") echo (", low=TRUE");
 		elseif ($mad_type == "high") echo (", high=TRUE"); ?>, na.rm=TRUE))
-	if (rk.temp.options$dolength) rk.temp.results$length[i] <- try (length (eval (rk.temp.var)))
-	if (rk.temp.options$donacount) rk.temp.results$nacount[i] <- try (length (which(is.na(eval (rk.temp.var)))))
+	if (rk.temp.options$dolength) rk.temp.results$'length of sample'[i] <- try (length (eval (rk.temp.var)))
+	if (rk.temp.options$donacount) rk.temp.results$'number of NAs'[i] <- try (length (which(is.na(eval (rk.temp.var)))))
 }<?
 	}
 	
@@ -52,19 +52,7 @@ rk.header ("Descriptive statistics", parameters=list ("Trim of mean", <?getRK ("
 						elseif ($mad_type == '"hi-median"');
 						else echo ('"average"'); ?>)))
 
-rk.results (rk.temp.results,
-	titles = c ("Object",
-		if (rk.temp.options$domean) "mean",
-		if (rk.temp.options$domedian) "median",
-		if (rk.temp.options$dorange) "min",
-		if (rk.temp.options$dorange) "max",
-		if (rk.temp.options$dosd) "standard deviation",
-		if (rk.temp.options$dosum) "sum",
-		if (rk.temp.options$doprod) "product",
-		if (rk.temp.options$domad) "mad",
-		if (rk.temp.options$dolength) "length of sample",
-		if (rk.temp.options$donacount) "number of NAs"))
-
+rk.results (rk.temp.results)
 <?
 	}
 	
