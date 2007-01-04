@@ -232,6 +232,7 @@ bool RKOutputWindow::openURL (const KURL &url) {
 	QFileInfo out_file (url.path ());
 	bool ok = out_file.exists();
 	if (ok)  {
+		khtmlpart->browserExtension ()->setURLArgs (KParts::URLArgs (true, 0, 0));	// this forces the next openURL to reload all images
 		RKHTMLWindow::openURL (url);
 		last_refresh_time = out_file.lastModified ();
 	} else {
