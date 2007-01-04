@@ -422,7 +422,7 @@ void RKConsole::commandsListDown () {
 void RKConsole::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 	if (command->errorSyntax ()) {
-		editInterface(doc)->insertLine(doc->numLines(), i18n ("Syntax error"));
+		editInterface(doc)->insertLine(doc->numLines()-1, i18n ("Syntax error\n"));
 	}
 
 	if (command->errorIncomplete ()) {
