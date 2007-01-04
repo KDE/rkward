@@ -121,6 +121,7 @@
 }
 
 "rk.graph.off" <- function(){
+	cat ("\n", file = rk.get.output.html.file(), append = TRUE)	# so the output will be auto-refreshed
 	dev.off()
 }
 
