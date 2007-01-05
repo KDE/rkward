@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <!-- This is a simple example, of how a "plugin" might be configured. --><document>
-	<code file="code.php"/>
+	<code file="descriptive_statistics.php"/>
 	<logic>
 		<connect client="constMad.enabled" governor="mad.state" />
 		<connect client="pourcent.enabled" governor="trim.state" />

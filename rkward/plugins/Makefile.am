@@ -147,10 +147,10 @@ dist_pluginsX00meansX00ttestsX00independentUsamples_DATA = \
 
 pluginsX20descriptivedir = $(kde_datadir)/rkward/20descriptive
 dist_pluginsX20descriptive_DATA = \
-	20descriptive/code.php \
-	20descriptive/description.xml \
 	20descriptive/skewness_kurtosis_test.xml \
-	20descriptive/skewness_kurtosis_test.php
+	20descriptive/skewness_kurtosis_test.php \
+	20descriptive/descriptive_statistics.xml \
+	20descriptive/descriptive_statistics.php
 
 pluginsXcorrUmatrixdir = $(kde_datadir)/rkward/corr_matrix
 dist_pluginsXcorrUmatrix_DATA = \

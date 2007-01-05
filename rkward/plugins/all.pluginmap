@@ -16,7 +16,7 @@
 		<component type="standard" id="plots_scatterplot" file="plots/scatterplot.xml" label="Scatterplot" />
 		<component type="standard" id="plot_options" file="plots/plot_options.xml" label="Plot Options" />
 
-		<component type="standard" id="descriptive" file="20descriptive/description.xml" label="Descriptive Statistics" />
+		<component type="standard" id="descriptive" file="20descriptive/descriptive_statistics.xml" label="Descriptive Statistics" />
 		<component type="standard" id="corr_matrix" file="corr_matrix/description.xml" label="Correlation Matrix" />
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
 		<component type="standard" id="basic_statistics" file="uni1.2/description.xml" label="Basic Statistics" />
