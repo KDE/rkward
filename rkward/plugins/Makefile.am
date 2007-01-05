@@ -145,13 +145,6 @@ dist_pluginsX00meansX00ttestsX00independentUsamples_DATA = \
 	00means/00ttests/00independent_samples/code.php \
 	00means/00ttests/00independent_samples/description.xml
 
-pluginsX20descriptivedir = $(kde_datadir)/rkward/20descriptive
-dist_pluginsX20descriptive_DATA = \
-	20descriptive/skewness_kurtosis_test.xml \
-	20descriptive/skewness_kurtosis_test.php \
-	20descriptive/descriptive_statistics.xml \
-	20descriptive/descriptive_statistics.php
-
 pluginsXcorrUmatrixdir = $(kde_datadir)/rkward/corr_matrix
 dist_pluginsXcorrUmatrix_DATA = \
 	corr_matrix/code.php \
@@ -199,6 +192,13 @@ pluginsX00saveloadXsaveXsavedir = $(kde_datadir)/rkward/00saveload/save/save
 dist_pluginsX00saveloadXsaveXsave_DATA = \
 	00saveload/save/save/code.php \
 	00saveload/save/save/description.xml
+
+pluginsXdescriptivedir = $(kde_datadir)/rkward/descriptive
+dist_pluginsXdescriptive_DATA = \
+	descriptive/descriptive_statistics.php \
+	descriptive/descriptive_statistics.xml \
+	descriptive/skewness_kurtosis_test.xml \
+	descriptive/skewness_kurtosis_test.php
 
 pluginsXx11devicedir = $(kde_datadir)/rkward/x11device
 dist_pluginsXx11device_DATA = \
