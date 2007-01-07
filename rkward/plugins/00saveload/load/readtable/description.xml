@@ -35,7 +35,7 @@
 					<option value="'\t'" label="Tab" />
 					<option value="';'" label="';'" />
 					<option value="','" label="','" />
-					<option value="' '" label="Coma" />
+					<option value="' '" label="Space" />
 				</radio>
 			</tab>
 			<tab label="Rows" >
