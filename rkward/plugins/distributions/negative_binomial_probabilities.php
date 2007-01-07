@@ -15,7 +15,7 @@ function printout () {
 	global $q;
 ?>
 rk.header ("Negative Binomial probability", list ("Vector of quantiles", "<? echo ($q); ?>", "Size", "<? getRK ("size"); ?>", "Probability of success in each trial", "<? getRK ("prob"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
-cat ("<h3>Negative Binomial probabilities:  ", rk.temp, "</h3>")
+rk.results (rk.temp, titles="Negative Binomial probabilities")
 <?
 }
 

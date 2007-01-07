@@ -14,7 +14,7 @@ function printout () {
 	global $q;
 ?>
 rk.header ("Normal probability", list ("Vector of quantiles", "<? echo ($q); ?>", "mu", "<? getRK ("mean"); ?>", "sigma", "<? getRK ("sd"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"));
-cat ("<h3>Normal probabilities:  ", rk.temp, "</h3>")
+rk.results (rk.temp, titles="Normal probabilities")
 <?
 }
 
