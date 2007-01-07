@@ -22,7 +22,7 @@
 				</row>
 			</tab>
 			<tab label="Options">
-				<checkbox id="varequal" label="assume equal variances" value="TRUE" value_unchecked="FALSE"/>
+				<checkbox id="varequal" label="assume equal variances" value="1" value_unchecked="0"/>
 				<frame label="Confidence Interval">
 					<checkbox id="confint" label="print confidence interval" value="1" checked="true"/>
 					<spinbox type="real" id="conflevel" label="confidence level" min="0" max="1" initial="0.95"/>

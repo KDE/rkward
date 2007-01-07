@@ -5,8 +5,9 @@
 	function calculate () {
 ?>rk.temp.x <- substitute (<? getRK ("x"); ?>)
 rk.temp.y <- substitute (<? getRK ("y"); ?>)
-rk.temp.var.equal <- <? getRK ("varequal"); ?> 
-rk.temp <- t.test (eval (rk.temp.x), eval (rk.temp.y), "<? getRK ("hypothesis"); ?>", var.equal=rk.temp.var.equal<?; if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $conflevel); ?>)
+rk.temp <- t.test (eval (rk.temp.x), eval (rk.temp.y), "<? getRK ("hypothesis"); ?>"<?
+if (getRK_val ("varequal")) echo (", var.equal=TRUE");
+if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $conflevel); ?>)
 rk.temp.print.conf.level <- <? if (getRK_val ("confint")) echo "TRUE"; else echo "FALSE"; ?>
 
 <?
@@ -22,21 +23,17 @@ rk.header ("T-test (independent samples)",
 		paste (rk.get.short.name (rk.temp.x), "is greater than", rk.get.short.name (rk.temp.y))
 	      else
 		paste (rk.get.short.name (rk.temp.x), "and", rk.get.short.name (rk.temp.y), "differ"),
-	"Equal variances:", if (rk.temp.var.equal) "assumed" else "not assumed"))
+	"Equal variances:", "<? if (!getRK_val ("varequal")) echo "not"; ?> assumed"))
 
 rk.results (list (
-	rk.get.description (rk.temp.x),
-	rk.temp$estimate,
-	rk.temp$parameter,
-	rk.temp$statistic,
-	rk.temp$p.value,
-	if (rk.temp.print.conf.level) rk.temp$conf.int),
-	titles=c ("Variable",
-	"estimated mean",
-	"degrees of freedom",
-	"t",
-	"p",
-	if (rk.temp.print.conf.level) paste ("confidence interval of difference (", 100 * attr(rk.temp$conf.int, "conf.level"), "%)")))
+	'Variable Name'=rk.get.description (rk.temp.x),
+	'estimated mean'=rk.temp$estimate,
+	'degrees of freedom'=rk.temp$parameter,
+	t=rk.temp$statistic,
+	p=rk.temp$p.value<?
+	if (getRK_val ("confint")) { ?>,
+	'confidence interval percent'=(100 * attr(rk.temp$conf.int, "conf.level")),
+	'confidence interval of difference'=rk.temp$conf.int <? } ?>))
 <?
 	}
 	

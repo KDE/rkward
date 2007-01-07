@@ -3,7 +3,7 @@
 	}
 	
 	function calculate () {
-getRK("name") ; ?> <- read.table(file =  "<? getRK("file") ; ?>", header = <? getRK("header") ?>, sep = <? getRK("sep") ?> , dec = <? getRK("dec") ?>, <? # doing row names (what a pity...) 
+getRK("name"); ?> <- read.table (file="<? getRK("file"); ?>", header=<? getRK("header"); ?>, sep=<? getRK("sep"); ?>, dec=<? getRK("dec") ?>, <? # doing row names (what a pity...) 
 if (getRK_val("isrow")=="true") {
 	echo( "row.names = ");
 	if (getRK_val("rowname")=="NULL") echo (getRK_val("rowname") . ",");

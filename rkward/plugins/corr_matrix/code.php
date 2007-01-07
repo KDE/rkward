@@ -6,37 +6,21 @@
 		$vars = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val ("x"))) . ")";
 
 ?>rk.temp.objects <- list (<? echo ($vars); ?>)
-rk.temp.options <- list (method="<? getRK ("method"); ?>", use="<? getRK ("use"); ?>")
 
-rk.temp.frame <- list ()
-for (i in 1:length (rk.temp.objects)) rk.temp.frame[[i]] <- eval (rk.temp.objects[[i]])
-rk.temp.frame <- data.frame (rk.temp.frame)
+# cor requires all object to be inside the same data.frame.
+# Here we construct such a temporary frame from the input variables
+rk.temp.frame <- data.frame (lapply (rk.temp.objects, eval))
 
-rk.temp <- cor (rk.temp.frame, use=rk.temp.options$use, method=rk.temp.options$method)
+rk.temp <- cor (rk.temp.frame, use="<? getRK ("use"); ?>", method="<? getRK ("method"); ?>")
 <?
 	}
 	
 	function printout () {
 ?>
-rk.temp <- as.data.frame (rk.temp)
+rk.header ("Correlation Matrix", parameters=list ("Method", "<? getRK ("method"); ?>", "Exclusion", "<? getRK ("use"); ?>"))
+rk.temp <- data.frame (I (sapply (rk.temp.objects, FUN=function (x) { rk.get.description (x, is.substitute=TRUE)})), as.data.frame (rk.temp))
 
-cat ("<h1>Correlation Matrix</h1>")
-cat (paste ("<h2>TODO: describe in verbatim:", rk.temp.options$method, rk.temp.options$use, "</h2>"))
-
-cat ("<table border=\"1\">\n<tr>\n<td>Variable</td>")
-for (i in 1:dim (rk.temp)[2]) {
-	cat (paste ("<td>", rk.get.short.name (rk.temp.objects[[i]]), "</td>"))
-}
-cat ("</tr>\n")
-
-for (i in 1:dim (rk.temp)) {
-	cat (paste ("<tr><td>", rk.get.description (rk.temp.objects[[i]]), "</td>"))
-	for (j in 1:dim (rk.temp)) {
-		cat (paste ("<td>", rk.temp[i,j], "</td>"))
-	}
-	cat ("</tr>\n")
-}
-cat ("</table>")
+rk.results (rk.temp, titles=c ('Variable Name', sapply (rk.temp.objects, rk.get.short.name)))
 <?
 	}
 	

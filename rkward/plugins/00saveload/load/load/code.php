@@ -4,7 +4,7 @@
 	
 	function calculate () {
 ?>
-load(file =  "<? getRK("file") ; ?>" )
+load (file="<? getRK("file"); ?>")
 <?
 	}
 	
