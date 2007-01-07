@@ -133,7 +133,7 @@
 }
 
 "rk.header" <- function (title, parameters=list ()) {
-	cat (paste ("<h1>", title, "<h1>\n", sep=""))
+	cat (paste ("<h1>", title, "</h1>\n", sep=""))
 	if (length (parameters)) {
 		cat ("<h2>Parameters</h2>\n<ul>")
 		len <- length (parameters)
