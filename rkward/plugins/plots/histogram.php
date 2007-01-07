@@ -1,15 +1,12 @@
 <?
-	function preprocess () {
-	}
-	
-	function calculate () {
-	}
-	
-	function printout () {
-?>
-	dodensity <- <? getRK ("density"); ?>;
-	
-<?	$breaks = getRK_val ("breaks");
+function preprocess () {
+}
+
+function calculate () {
+}
+
+function printout () {
+	$breaks = getRK_val ("breaks");
 	$scale = getRK_val ("scale");
 	$bw =  getRK_val ("bw");
 	$adjust = getRK_val ("adjust");
@@ -26,13 +23,13 @@
 rk.header ("Histogram", list ("Frequency", "<? echo $scale; ?>", "Breaks algorithm", <? echo ("\"" . $breaks . "\""); ?>, "Variable", rk.get.description (<? echo ($x); ?>)))
 rk.graph.on ()
 hist (<? echo ($x); ?>, <? echo ($breaksopt); ?>, freq = <? echo $scale; ?><? getRK ("plotoptions.code.printout"); ?>)
-if ((dodensity) && (<? echo $scale ?> == FALSE)) lines(density(<? echo ($x); ?>, bw="<? echo ($bw); ?>", adjust = <? echo ($adjust); ?>, <? echo ($giveRkern); ?>, <? echo ($narm); ?>, n = <? getRK ("n"); ?>), col= "<? getRK ("col_density"); ?>")
+<?	if (($scale=="FALSE") && getRK_val ("density")) { ?>
+lines(density(<? echo ($x); ?>, bw="<? echo ($bw); ?>", adjust = <? echo ($adjust); ?>, <? echo ($giveRkern); ?>, <? echo ($narm); ?>, n = <? getRK ("n"); ?>), col= "<? getRK ("col_density"); ?>")
+<?	} ?>
 rk.graph.off ()
 <?
-	}
-	
-	function cleanup () {
-?>	rm (dodensity)
-<?
-	}
+}
+
+function cleanup () {
+}
 ?>

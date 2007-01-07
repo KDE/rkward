@@ -5,6 +5,9 @@
 		<connect client="plotoptions.xvar" governor="x.available"/>
 		<set id="plotoptions.allow_log" to="false"/>
 		<set id="plotoptions.allow_type" to="false"/>
+		
+		<convert id="densityscaled" mode="equals" sources="scale.string" standard="FALSE" />
+		<connect client="densityoptions.enabled" governor="densityscaled" />
 	</logic>
 	<dialog label="Histogram" >
 		<tabbook>
@@ -28,7 +31,7 @@
 				<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 				<stretch/>
 			</tab>
-			<tab label="Density">
+			<tab label="Density" id="densityoptions">
 				<row>
 					<column>
 						<checkbox value_unchecked="0" value="1" checked="false" id="density" label="Density" />
