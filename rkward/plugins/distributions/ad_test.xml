@@ -12,9 +12,10 @@
 						<varselector id="vars"/>
 					</column>
 					<column>
-						<frame label="The number of the selcted values must be greater than 7">
-							<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
-						</frame>
+						<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):" min_length="8"/>
+						<text>
+							Note: Objects must have at least 8 values
+						</text>
 						<stretch/>
 					</column>
 				</row>
@@ -22,6 +23,7 @@
 			<tab label="Options">
 				<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
 				<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="false" />
+				<stretch/>
 			</tab>
 		</tabbook>
 	</dialog>

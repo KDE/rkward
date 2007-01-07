@@ -6,57 +6,41 @@
 	$vars = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val ("x"))) . ")";
 
 ?>
-	
-	require(moments)
+require(moments)
 
-	rk.temp.options <- list (doskewness=<? getRK ("skewness"); ?>, dokurtosis=<? getRK ("kurtosis"); ?>, dolength=<? getRK ("length"); ?>, donacount=<? getRK ("nacount"); ?>)
-
-	rk.temp.results <- list ()
-	i=0; for (var in list (<? echo ($vars); ?>)) {
+rk.temp.objects <- list (<? echo ($vars); ?>)
+rk.temp.results <- data.frame ('Variable Name'=rep (NA, length (rk.temp.objects)), check.names=FALSE)
+i=0;
+for (var in rk.temp.objects) {
 	i = i+1
-	rk.temp.results[[i]] <- list ()
-	rk.temp.results[[i]]$object <- rk.get.description (var, is.substitute=TRUE)
-	if (rk.temp.options$doskewness) try (rk.temp.results[[i]]$skewness <- skewness (eval (var), <? getRK ("narm_skewness"); ?>))
-	if (rk.temp.options$dokurtosis) try (rk.temp.results[[i]]$kurtosis <- kurtosis (eval (var), <? getRK ("narm_kurtosis"); ?>))
-	if (rk.temp.options$dolength) try (rk.temp.results[[i]]$length <- length (eval (var)))
-	if (rk.temp.options$donacount) try (rk.temp.results[[i]]$nacount <- length (which(is.na(eval (var)))))
+	rk.temp.results$'Variable Name'[i] <- rk.get.description (var, is.substitute=TRUE)
+	<? 
+	if (getRK_val ("skewness")) { ?>
+	try (rk.temp.results$'Skewness'[i] <- skewness (eval (var), <? getRK ("narm_skewness"); ?>))
+	<? }
+	if (getRK_val ("kurtosis")) { ?>
+	try (rk.temp.results$'Kurtosis'[i] <- kurtosis (eval (var), <? getRK ("narm_kurtosis"); ?>))
+	<? }
+	if (getRK_val ("length")) { ?>
+	try (rk.temp.results$'Length'[i] <- length (eval (var)))
+	<? }
+	if (getRK_val ("nacount")) { ?>
+	try (rk.temp.results$'NAs'[i] <- length (which(is.na(eval (var)))))
+	<? } ?>
 }
-
-
 <?
         }
 	function printout () {
-?>	
-	 rk.header("Skewness and Kurtosis")
-
-cat ("<table border=\"1\">")
-	cat ("<tbody>")
-		cat ("<tr>")
-			cat ("<td>Variable Name</td>")
-			if (rk.temp.options$dolength) cat ("<td>Length</td>")
-			if (rk.temp.options$donacount) cat ("<td>NAs</td>")
-			if (rk.temp.options$doskewness) cat ("<td>Skewness</td>")
-			if (rk.temp.options$dokurtosis) cat ("<td>Kurtosis</td>")
-		cat ("</tr>")
-for (i in 1:length (rk.temp.results)) {
-		cat ("<tr><td>", rk.temp.results[[i]]$object, "</td>")
-		if (rk.temp.options$dolength) cat ("<td>", rk.temp.results[[i]]$length, "</td>")
-		if (rk.temp.options$donacount) cat ("<td>", rk.temp.results[[i]]$nacount, "</td>")
-		if (rk.temp.options$doskewness) cat (paste ("<td>", rk.temp.results[[i]]$skewness,"</td>"))
-		if (rk.temp.options$dokurtosis) cat (paste ("<td>", rk.temp.results[[i]]$kurtosis,"</td>"))
-		cat ("</tr>")
-}
-	cat ("</tbody>")
-cat ("</table>")
-
-
+?>
+rk.header ("Skewness and Kurtosis")
+rk.results (rk.temp.results)
 <?
         }
 	function cleanup () {
 
 ?>
 	rm (rk.temp.results)
-	rm (rk.temp.options)
+	rm (rk.temp.objects)
 	rm (var)
 <?
         }
