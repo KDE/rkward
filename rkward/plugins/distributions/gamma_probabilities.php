@@ -14,7 +14,7 @@ function printout () {
 	global $q;
 ?>
 rk.header ("Gamma probability", list ("Vector of quantiles", "<? echo ($q); ?>", "Shape", "<? getRK ("shape"); ?>", "Rate", "<? getRK ("rate"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
-cat ("<h3>Gamma probabilities:  ", rk.temp, "</h3>")
+rk.results (rk.temp, titles="Gamma probabilities")
 <?
 }
 

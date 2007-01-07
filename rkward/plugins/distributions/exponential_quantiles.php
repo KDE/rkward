@@ -14,7 +14,7 @@ function printout () {
 	global $p;
 ?>
 rk.header ("Exponential quantiles", list ("Vector of probabilities", "<? echo ($p); ?>", "Rate", "<? getRK ("rate"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
-cat ("<h3>Exponential quantiles:  ", rk.temp, "</h3>")
+rk.results (rk.temp, titles="Exponential quantiles")
 <?
 }
 

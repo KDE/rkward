@@ -14,7 +14,7 @@ function printout () {
 	global $p;
 ?>
 rk.header ("Gumbel quantile", list ("Vector of probabilities", "<? echo ($p); ?>", "Shape", "<? getRK ("shape"); ?>", "Scale", "<? getRK ("scale"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
-cat ("<h3>Gumbel quantiles:  ", rk.temp, "</h3>")
+rk.results (rk.temp, titles="Gumbel quantiles")
 <?
 }
 
