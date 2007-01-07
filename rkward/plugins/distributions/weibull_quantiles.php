@@ -14,7 +14,7 @@ function printout () {
 	global $p;
 ?>
 rk.header ("Weibull quantile", list ("Vector of probabilities", "<? echo ($p); ?>", "Shape", "<? getRK ("shape"); ?>", "Scale", "<? getRK ("scale"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
-cat ("<h3>Weibull quantiles:  ", rk.temp, "</h3>")
+rk.results (rk.temp, titles="Weibull quantiles")
 <?
 }
 

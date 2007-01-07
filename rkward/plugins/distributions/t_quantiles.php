@@ -14,7 +14,7 @@ function printout () {
 	global $p;
 ?>
 rk.header ("t quantile", list ("Vector of probabilities", "<? echo ($p); ?>", "Degrees of freedom", "<? getRK ("df"); ?>", "Tail", "<? getRK ("tail"); ?>"));
-cat ("<h3>t quantiles:  ", rk.temp, "</h3>")
+rk.results (rk.temp, titles="t quantiles")
 <?
 }
 

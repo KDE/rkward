@@ -14,7 +14,7 @@ function printout () {
 	global $p;
 ?>
 rk.header ("Wilcoxon Rank Sum quantile", list ("Vector of probabilities", "<? echo ($p); ?>", "m (Numbers of observations in the first sample)", "<? getRK ("m"); ?>", "n (Numbers of observations in the second sample)", "<? getRK ("n"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
-cat ("<h3>Wilcoxon Rank Sum quantiles:  ", rk.temp, "</h3>")
+rk.results (rk.temp, titles="Wilcoxon Rank Sum quantiles")
 <?
 	}
 	

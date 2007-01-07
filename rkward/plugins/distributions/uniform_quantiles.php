@@ -14,7 +14,7 @@ function printout () {
 	global $p;
 ?>
 rk.header ("Uniform quantile", list ("Vector of probabilities", "<? echo ($p); ?>", "Lower limits of the distribution", "<? getRK ("min"); ?>", "Upper limits of the distribution", "<? getRK ("max"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
-cat ("<h3>Uniform quantiles:  ", rk.temp, "</h3>")
+rk.results (rk.temp, titles="Uniform quantiles")
 <?
 }
 
