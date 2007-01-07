@@ -10,7 +10,6 @@ else $name = "na.rm=FALSE";
 rk.temp.vars <- list (<? echo ($vars); ?>)
 rk.temp.results <- data.frame ('Variable Name'=rep (NA, length (rk.temp.vars)), check.names=FALSE)
 
-rk.temp.option <- NA
 rk.temp.i <- 0
 for (rk.temp.var in rk.temp.vars)  {
 	rk.temp.i <- rk.temp.i + 1
@@ -59,8 +58,8 @@ for (rk.temp.var in rk.temp.vars)  {
 	rk.temp.results[['Quartiles']][rk.temp.i] <- paste (names (rk.temp.temp), rk.temp.temp, sep=": ", collapse=" ")
 <?	}
 	if (($nautre = getRK_val ("autre")) != "0") { ?>
-	rk.temp.temp <- quantile (rk.temp.var, probs=seq (0, 1, lenght.out=<? echo ($nautre); ?>), <? echo ($narm); ?>)
-	rk.temp.results[['Quantiles']][rk.temp.i] <- paste (names (rk.temp.temp), rk.temp.temp, sep=": ", 
+	rk.temp.temp <- quantile (rk.temp.var, probs=seq (0, 1, length.out=<? echo ($nautre); ?>), <? echo ($narm); ?>)
+	rk.temp.results[['Quantiles']][rk.temp.i] <- paste (names (rk.temp.temp), rk.temp.temp, sep=": ", collapse=" ")
 <?	} ?>
 	
 	#robust statistics
@@ -73,10 +72,12 @@ for (rk.temp.var in rk.temp.vars)  {
 	if (getRK_val ("huber") == "1") { ?>
 	require ("MASS")
 	rk.temp.temp <- list (c('Location Estimate','Mad scale estimate'), c(NA,NA))
-	try(rk.temp.temp[[2]] <- hubers (rk.temp.var, k = "<? getRK ("winsor"); ?>",tol="<? getRK ("tol"); ?>"<?
-	if (getRK_val(customMu)=="1") echo (",mu=".getRK_val("mu"));
-	if (getRK_val(customS)=="1") echo (",s=".getRK_val("s"));
-	if (getRK_val ("huber") == "1") echo (",initmu =".getRK_val("initmu")."(rk.temp.var)))") ?>))
+	try({
+		rk.temp.temp[[2]] <- hubers (rk.temp.var, k = <? getRK ("winsor"); ?>,tol=<? getRK ("tol"); ?><?
+	if (getRK_val("customMu")=="1") echo (", mu=".getRK_val("mu"));
+	if (getRK_val("customS")=="1") echo (", s=".getRK_val("s"));
+	echo (",initmu =".getRK_val("initmu")."(rk.temp.var)") ?>)
+	})
 	rk.temp.results[['Huber M-Estimator']][rk.temp.i] <- paste (rk.temp.temp[[1]], rk.temp.temp[[2]], sep=": ", collapse=" ")
 <?	} ?>
 }
@@ -102,7 +103,7 @@ rk.header ("Univariate statistics", parameters=list (
 	if (getRK_val("huber")=="1") { ?>
 , "Winsorized values for Huber estimator", "<? getRK ("winsor"); ?>"
 , "Tolerance in Huber estimator", "<? getRK ("tol"); ?>"
-<?		if (getRK_val ("customMU")=="1") { ?>
+<?		if (getRK_val ("customMu")=="1") { ?>
 , "Mu for Huber estimator", "<? getRK ("mu"); ?>"
 <?		}
 		if (getRK_val ("customS")=="1") { ?>

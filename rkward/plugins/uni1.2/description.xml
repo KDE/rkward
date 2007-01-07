@@ -96,7 +96,7 @@
 						</row>
 						<row>
 							<column>
-								<input size="small" intial="1e-6" id="tol" label="Tolerance" />
+								<spinbox type="real" intial="1e-6" max_precision="6" min="0" max="1" id="tol" label="Tolerance" />
 							</column>
 							<column>
 								<radio id="initmu" label="Initial value" >
@@ -110,9 +110,9 @@
 			</tab>
 			<tab id="option" label="Options" >
 				<checkbox value_unchecked="0" checked="true" value="1" id="narm" label="Omit missing values" />
-				<checkbox checked="false" value="1" id="option" label="Print options in output" />
 				<checkbox checked="false" value="1" id="result" label="Get the result in the console" />
 				<input size="medium" intial="rk.univariate" id="nom" label="Name of the result" />
+				<stretch/>
 			</tab>
 		</tabbook>
 	</dialog>
