@@ -29,7 +29,7 @@ rk.temp$Yvar <- list(<? echo ($y) ;?>)
 rk.temp$Xval <- <? if (getRK_val("columns") == "custoCol" ) echo (getRK_val("Xscale") . "\n"); else echo ("c(" . $x . ")\n"); ?>
 rk.temp$Yval <- <? if (getRK_val("rows") == "custoRow" ) echo (getRK_val("Yscale") . "\n"); else echo ("c(" . $y . ")\n"); ?>
 
-<? # verification (chiant mais doit être fait)?>
+<? # verification (is this needed?) ?>
 rk.temp$ok <- TRUE
 if (length(rk.temp$Xvar) != length(rk.temp$Yvar)) {
 	rk.temp$ok <- FALSE ;
@@ -37,8 +37,8 @@ if (length(rk.temp$Xvar) != length(rk.temp$Yvar)) {
 }
 
 # find range of X/Y values needed
-rk.temp$Xdef <- c(min(rk.temp$Xval,na.rm=TRUE), max(rk.temp$Xval,na.rm=TRUE))
-rk.temp$Ydef <- c(min(rk.temp$Yval,na.rm=TRUE), max(rk.temp$Yval,na.rm=TRUE))
+rk.temp$Xdef <- range (rk.temp$Xval, na.rm=TRUE)
+rk.temp$Ydef <- range (rk.temp$Yval, na.rm=TRUE)
 
 rk.temp$type <- rep (<? echo ($type_string); ?>, length.out=length (rk.temp$Xvar));
 rk.temp$col <- rep (<? echo ($col); ?>, length.out=length (rk.temp$Xvar));

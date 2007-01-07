@@ -10,7 +10,8 @@ rk.temp.anova = anova (rk.temp.glm)
 	}
 	
 	function printout () {
-?>cat ("<h1>TODO: format Output</h1>")
+?>
+rk.header ("Simple Anova")
 rk.print (rk.temp.anova)
 <?
 	}

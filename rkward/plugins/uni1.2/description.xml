@@ -109,7 +109,7 @@
 				</column>
 			</tab>
 			<tab id="option" label="Options" >
-				<checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="NA" label="Omit missing values in calculs" />
+				<checkbox value_unchecked="0" checked="true" value="1" id="narm" label="Omit missing values" />
 				<checkbox checked="false" value="1" id="option" label="Print options in output" />
 				<checkbox checked="false" value="1" id="result" label="Get the result in the console" />
 				<input size="medium" intial="rk.univariate" id="nom" label="Name of the result" />
