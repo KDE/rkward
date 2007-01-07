@@ -14,7 +14,7 @@ function printout () {
 	global $q;
 ?>
 rk.header ("Binomial tail probability", list ("Vector of quantiles", "<? echo ($q); ?>", "Binomial trials", "<? getRK ("size"); ?>", "Probability of success", "<? getRK ("prob"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"));
-cat ("<h3>Binomial tail probabilities:  ", rk.temp, "</h3>")<?
+rk.results (rk.temp, titles="Binomial tail probabilities")
 }
 
 function cleanup () {

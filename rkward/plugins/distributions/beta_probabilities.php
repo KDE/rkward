@@ -14,7 +14,7 @@ function printout () {
 	global $q;
 ?>
 rk.header ("Beta probability", list ("Vector of quantiles", "<? echo ($q); ?>", "Shape 1", "<? getRK ("shape1"); ?>", "Shape 2", "<? getRK ("shape2"); ?>", "non-centrality parameter (ncp)", "<? getRK ("ncp"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"));
-cat ("<h3>Beta probability:  ", rk.temp, "</h3>")
+rk.results (rk.temp, titles="Beta probability")
 <?
 }
 

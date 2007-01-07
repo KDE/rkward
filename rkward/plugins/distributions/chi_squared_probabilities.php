@@ -14,7 +14,7 @@ function printout () {
 	global $q;
 ?>
 rk.header ("Chi-squared probability", list ("Vector of quantiles", "<? echo ($q); ?>", "Degrees of Freedom", "<? getRK ("df"); ?>", "non-centrality parameter", "<? getRK ("ncp"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"));
-cat ("<h3>Chi-squared probailities:  ", rk.temp, "</h3>")
+rk.results (rk.temp, titles="Chi-squared probailities")
 <?
 }
 

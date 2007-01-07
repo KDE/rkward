@@ -15,7 +15,7 @@ function printout () {
 	//produce the output
 ?>
 rk.header ("Binomial tail probability", list ("Variable value", "<? echo ($q); ?>", "Binomial trials", "<? getRK ("size"); ?>", "Probability of success", "<? getRK ("prob"); ?>", "Tail", "<? getRK ("tail"); ?>"));
-cat ("<h3>Binomial tail probability:  ", rk.temp, "</h3>")
+rk.results (rk.temp, titles="Binomial tail probability")
 <?
 }
 
