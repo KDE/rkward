@@ -14,7 +14,7 @@ function printout () {
 	global $q;
 ?>
 rk.header ("Poisson probability", list ("Vector of quantiles", "<? echo ($q); ?>", "Lambda", "<? getRK ("lambda"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
-cat ("<h3>Poisson probabilities:  ", rk.temp, "</h3>")
+rk.results (rk.temp, "Poisson probabilities")
 <?
 }
 

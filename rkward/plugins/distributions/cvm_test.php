@@ -8,8 +8,6 @@
 ?>
 require(nortest)
 
-rk.temp.options <- list (dolength=<? getRK ("length"); ?>, donacount=<? getRK ("nacount"); ?>)
-
 rk.temp.vars <- list (<? echo ($vars); ?>)
 rk.temp.results <- data.frame ('Variable Name'=rep (NA, length (rk.temp.vars)), check.names=FALSE)
 i=0;
