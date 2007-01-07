@@ -155,37 +155,41 @@
 		}
 
 		cat ("<table border=\"1\">\n<tr>")
-		for (i in 1:length (x)) {
-			cat ("<td>", titles[i], "</td>", sep="")
-		}
-		cat ("</tr>\n")
-
-		if (is.data.frame (x)) {
-			for (row in 1:dim (x)[1]) {
+		try ({	# if anything fails, make sure the "</table>" is still printed
+			for (i in 1:length (x)) {
+				cat ("<td>", titles[i], "</td>", sep="")
+			}
+			cat ("</tr>\n")
+	
+			if (is.data.frame (x)) {
+				for (row in 1:dim (x)[1]) {
+					cat ("<tr>")
+					for (col in 1:dim (x)[2]) {
+						cat ("<td>", x[row, col], "</td>", sep="")
+					}
+					cat ("</tr>\n")
+				}
+			} else {		# generic list
 				cat ("<tr>")
-				for (col in 1:dim (x)[2]) {
-					cat ("<td>", x[row, col], "</td>", sep="")
+				for (col in x) {
+					col <- as.vector (col)
+					cat ("<td>")
+					for (row in 1:length (col)) {
+						if (row != 1) cat ("\n<br/>")
+						cat (col[row])
+					}
+					cat ("</td>")
 				}
 				cat ("</tr>\n")
 			}
-		} else {		# generic list
-			cat ("<tr>")
-			for (col in x) {
-				col <- as.vector (col)
-				cat ("<td>")
-				for (row in 1:length (col)) {
-					if (row != 1) cat ("\n<br/>")
-					cat (col[row])
-				}
-				cat ("</td>")
-			}
-			cat ("</tr>\n")
-		}
+		})
 		cat ("</table>\n")
+	} else if (is.vector (x)) {
+		cat ("<h3>", titles[1], ": ", sep="")
+		cat (x)
+		cat ("</h3>")
 	} else {
 		stop ("uninmplemented")
-		# TODO: handling for vectors. 
-		# Should probably output a <ul></ul>
 	}
 }
 
