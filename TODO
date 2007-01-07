@@ -187,6 +187,7 @@ R plugins:
 	- create a spinbox, that can really deal with real numbers
 		- whenever the value changes (user entered text, or clicked up/down), the value will be translated into an integer number, and an integer exponent (in mapTextToValue(), and mapValueToText ()?)
 		- step size will be auto-adjusted logarithmically (e.g. always third most significant digit)
+	- create a drop down list in addition to a radio box
 	- add a help system
 		- some thoughts:
 			- this should use XML files, which contain mostly html, but also tags like <related component_id="..." component_namespace="..."/> (for related plugins / components), and <rhelp topic="..."/> (for linking to R help on functions / constants / topics). Potentially more tags for a consistent way of marking up option names, headers, etc. (but first check what's needed). Potentially a special link type for links to the rkward user manual
