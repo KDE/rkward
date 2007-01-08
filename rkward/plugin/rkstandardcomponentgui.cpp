@@ -103,6 +103,7 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	vbox->addStretch (1);
 	
 	help_button = new QPushButton (i18n ("Help"), upper_widget);
+	help_button->setEnabled (component->haveHelp ());
 	connect (help_button, SIGNAL (clicked ()), this, SLOT (help ()));
 	vbox->addWidget (help_button);
 	

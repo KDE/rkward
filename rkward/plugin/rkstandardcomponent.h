@@ -65,6 +65,7 @@ public:
 /** return the filename of the xml file */
 	QString getFilename () { return filename; };
 	RKComponentHandle *getHandle () { return handle; };
+	bool haveHelp () { return have_help; };
 public slots:
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */
@@ -83,6 +84,7 @@ private:
 /** The property holding the generated code. Note that this member is tightly controlled by the ScriptBackend */
 	RKComponentPropertyCode *code;
 	QString filename;
+	bool have_help;	// TODO: replace by filename, once we use the help more
 	ScriptBackend *backend;
 	RKStandardComponentGUI *gui;
 	RKComponentHandle *handle;

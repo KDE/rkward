@@ -86,6 +86,11 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	connect (backend, SIGNAL (haveError ()), this, SLOT (deleteLater ()));
 	if (!backend->initialize (dummy, code, parent_component == 0)) return;
 
+	// check for existance of help file
+	element = xml->getChildElement (doc_element, "help", DL_WARNING);
+	dummy = QFileInfo (filename).dirPath () + '/' + xml->getStringAttribute (element, "file", "::nosuchfile::", DL_INFO);
+	have_help = QFileInfo (dummy).exists ();
+
 	connect (qApp, SIGNAL (aboutToQuit ()), this, SLOT (deleteLater ()));
 
 // construct the GUI
