@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -138,6 +138,7 @@ private:
 };
 
 class QDomElement;
+class RKComponentHandle;
 
 /**
 	\brief Show html help files.
@@ -161,6 +162,7 @@ private:
 	bool renderRKHelp (const KURL &url);
 	QString renderHelpFragment (QDomElement &fragment);
 	void prepareHelpLink (QDomElement *link_element);
+	RKComponentHandle *componentPathToHandle (QString path);
 };
 
 #endif

@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -362,43 +362,46 @@ bool RKHelpWindow::openURL (const KURL &url) {
 	// TODO: real error handling
 	bool ok = true;
 	qDebug ("here1 %s", url.prettyURL ().latin1 ());
-	if (url.protocol () == "rkcomponent") {
-		ok = renderRKHelp (url);
-	} else if (url.protocol () == "rhelp") {
-		// TODO: find a nice solution to render this in the current window
-		RKGlobals::helpDialog ()->getFunctionHelp (url.path ());
-	} else if (url.protocol () == "rkhelp") {
-		ok = renderRKHelp (url);
+	if (url.protocol () == "rkward") {
+		if (url.host () == "component") {
+			ok = renderRKHelp (url);
+		} else if (url.host () == "rhelp") {
+			// TODO: find a nice solution to render this in the current window
+			RKGlobals::helpDialog ()->getFunctionHelp (url.path ().mid (1));
+			return true;
+		} else if (url.host () == "page") {
+			ok = renderRKHelp (url);
+		}
+
+		if (!ok) {
+			khtmlpart->begin (url);
+			khtmlpart->write ("<html><body><h1>" + i18n ("Page does not exist or is broken") + "</h1></body></html>");
+			khtmlpart->end ();
+		}
+	
+		changeURL (url);
+		return ok;
 	} else {
 		return (RKHTMLWindow::openURL (url));
 	}
-
-	if (!ok) {
-		khtmlpart->begin (url);
-		khtmlpart->write ("<html><body><h1>" + i18n ("Page does not exist or is broken") + "</h1></body></html>");
-		khtmlpart->end ();
-	}
-
-	changeURL (url);
-	return ok;
 }
 
 bool RKHelpWindow::renderRKHelp (const KURL &url) {
 	RK_TRACE (APP);
 
+	if (url.protocol () != "rkward") {
+		RK_ASSERT (false);
+		return (false);
+	}
+
 	qDebug ("here2 %s", url.path ().latin1 ());
-	if (url.protocol () == "rkcomponent") {
+	if (url.host () == "component") {
 		bool success = false;
 		XMLHelper *component_xml = new XMLHelper ();
 		XMLHelper *help_xml = new XMLHelper ();
 
 		while (true) {		// dirty hack to streamline exit code: breaking from this while, before success is set to true will cause the XMLHelpers to be deleted, and false returned.
-			QStringList path_segments = QStringList::split ('/', url.path ());
-			if (path_segments.count () > 2) break;
-			if (path_segments.count () < 1) break;
-			if (path_segments.count () == 1) path_segments.push_front ("rkward");
-			RK_ASSERT (path_segments.count () == 2);
-			RKComponentHandle *chandle = RKComponentMap::getComponentHandle (path_segments.join ("::"));
+			RKComponentHandle *chandle = componentPathToHandle (url.path ());
 			if (!chandle) break;
 
 			qDebug ("here3");
@@ -434,6 +437,11 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 
 			// TODO: handle settings section
 
+			element = help_xml->getChildElement (help_doc_element, "related", DL_WARNING);
+			if (!element.isNull ()) {
+				khtmlpart->write ("<h2>" + i18n ("Related functions and pages") + "</h2>\n");
+				khtmlpart->write (renderHelpFragment (element));
+			}
 			// TODO: handle related section
 
 			khtmlpart->end ();
@@ -468,7 +476,9 @@ QString RKHelpWindow::renderHelpFragment (QDomElement &fragment) {
 	ret.prepend ("<p>");
 	ret.append ("</p>");
 	ret.replace ("\n\n", "</p>\n<p>");
+	// TOOD: prettification: the fragment's old tag (e.g. <summary> is still present inthe output)
 
+	qDebug ("%s", ret.latin1 ());
 	return ret;
 }
 
@@ -477,9 +487,32 @@ void RKHelpWindow::prepareHelpLink (QDomElement *link_element) {
 	qDebug ("link");
 
 	link_element->setTagName ("a");
-	if (link_element->text ().isNull ()) {
-		link_element->appendChild (link_element->ownerDocument ().createTextNode ("TODO: determine link title"));
+	if (link_element->text ().isEmpty ()) {
+		QString text;
+		KURL url = link_element->attribute ("href");
+		if (url.protocol () == "rkward") {
+			if (url.host () == "component") {
+				RKComponentHandle *chandle = componentPathToHandle (url.path ());
+				chandle ? text = chandle->getLabel () : text = i18n ("BROKEN REFERENCE");
+			} else if (url.host () == "rhelp") {
+				text = i18n ("R Reference on '%1'").arg (url.path ().mid (1));
+			} else if (url.host () == "page") {
+				text = "TODO: some help page";
+			}
+			link_element->appendChild (link_element->ownerDocument ().createTextNode (text));
+		}
 	}
+}
+
+RKComponentHandle *RKHelpWindow::componentPathToHandle (QString path) {
+	RK_TRACE (APP);
+
+	QStringList path_segments = QStringList::split ('/', path);
+	if (path_segments.count () > 2) return 0;
+	if (path_segments.count () < 1) return 0;
+	if (path_segments.count () == 1) path_segments.push_front ("rkward");
+	RK_ASSERT (path_segments.count () == 2);
+	return (RKComponentMap::getComponentHandle (path_segments.join ("::")));
 }
 
 #include "rkhtmlwindow.moc"
