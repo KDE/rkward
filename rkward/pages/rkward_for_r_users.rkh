@@ -1,0 +1,58 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>RKWard for R Users</title>
+	<summary>
+	Briefly explains the main components of RKWard, assuming the user is already familiar with basic concepts of R.
+	</summary>
+	<section title="The Console">
+	First things first: An emulation of the standard R console can be found at the bottom on the screen. There you will notice several buttons, one of which is labelled "R Console" and has a console icon.
+
+	This console works almost exactly like the regular R text console, so you can start working right away. Differences include:
+
+	<ul>
+		<li>Syntax highlighting</li>
+		<li>Pressing the Tab key will not complete local file paths (at the moment), but the names of R symbols and functions</li>
+		<li>While typing function calls, a list of arguments to that function is shown in a box (argument hinting)</li>
+		<li>While the cursor is on an R symbol or function, pressing F2 will search the R help for that symbol. Also available from the Help menu, or the right mouse button menu</li>
+	</ul>
+	</section>
+	<section title="Script Editors">
+	Often it is more conventient to write scripts in a separate file, instead of typing them directly in the console. To open a new script editor (with syntax highlighting, and many more features), chose File->New->Script File, or open an already existing Script file using File->Open R Script File.
+
+	You will note that the editor opens in a new window in the main workplace (the area of the window, that you are most likely reading this text, in). You can open any number of Script editor windows at the same time.
+
+	To run the code in a script editor window, either copy and paste it to the console, or chose one of the actions in the Run menu. such as Run All or Run Selection. Note: The contents of the menus may change according to the type of active window. Hence, if you look at the Run menu while reading this, there will be no entries.
+	</section>
+	<section title="Workspace View">
+	RKWard comes with a "workspace view" or "object browser". By default this is available by clicking on "Workspace" on the left side of the application window. This allows you to examine and manipulate all objects in the R workspace. In case you are not familiar with this aspect of R (usually not directly visible): All the symbols you create are children of the so-called ".GlobalEnv" environment. Symbols defined in loaded libraries are located in their own environments.
+
+	The object browser provides function to select with types of object are shown (on the top). Hovering the mouse over an item will show some additional information on the symbol. Right-clicking on an item will show available actions.
+	</section>
+	<section title="R Help">
+	By default R help pages are shown as HTML, inside RKWard. You can invoke the help in the usual way by running e.g. "?print" or "help (print)" or "help.start ()" in the console. Additionally, there is a tool window to search your installed R help pages. This is accessible using a button located at the bottom of the window (next to the console button). To view a help page found using this tool, double click on it.
+	</section>
+	<section title="Managing installed and loaded Libraries">
+	RKWard provides an advanced dialog to have installation, updating, and loading of packages. This is available from Workspace->Configure Packages.
+	</section>
+	<section title="Window management">
+	All windows shown in the main view area can be detached to a separate top level window using Windows->Detach. Similarily, detached windows can be attached to the main workplace using Window->Attach.
+
+	Windows can be closed using Windows->Close (Ctrl+W by default).
+
+	Tool windows (e.g. the R Console) can be detached and re-attached using the arrow-icon in their window border.
+	</section>
+	<section title="Editing data">
+	RKWard provides a buit-in editor for data.frames. In fact, you can edit many data.frames at the same time, and even while running lengthy calculations. Still the data is stored as a regular data.frame in R. To explore the data editor, either chose File->New->Dataset, or right click a data.frame in the Workspace browser, and chose Edit from the menu.
+
+	Support for adding other types of data, esp. single vectors is planned, but not currently supported.
+	</section>
+	<section title="Everything else">
+	You will notice that RKWard provides a lot of further menu options. These provide access to functionality in R. In fact, they do so by generating R syntax from settings made in a graphical dialog. For instance, select Analysis->Descriptive Statistics. You will notice a small window at the bottom (can be toggled on or off using the "Code" button) that contains the R code needed to generate these statistics. This way, even if you prefer to script your code by hand, you can use dialogs to gain snippets of code for functions you are less familiar with in R.
+
+	Also, all commands that are executed get shown in the Command Log, available as a tool window next to the R Console.
+	</section>
+
+	<related>
+		<link href="rkward://page/rkward_for_new_users"/>
+	</related>
+</document>
