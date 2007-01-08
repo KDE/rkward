@@ -17,8 +17,6 @@
 #include "rkobjectlistview.h"
 
 #include <klocale.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
 #include <kiconloader.h>
 
 #include <qpopupmenu.h>
@@ -33,6 +31,7 @@
 #include "../core/rkmodificationtracker.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmoduleobjectbrowser.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
 
 // static
@@ -44,8 +43,8 @@ QPixmap *RKObjectListView::environment = 0;
 RKObjectListView::RKObjectListView (QWidget *parent) : QListView (parent) {
 	RK_TRACE (APP);
 	if (icon_function == 0) {
-		icon_function = new QPixmap (QImage (KGlobal::dirs ()->findResourceDir ("data", "rkward/phpfiles/common.php") + "rkward/icons/function.png"));
-		icon_list = new QPixmap (QImage (KGlobal::dirs ()->findResourceDir ("data", "rkward/phpfiles/common.php") + "rkward/icons/list.png"));
+		icon_function = new QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/function.png"));
+		icon_list = new QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/list.png"));
 		package_environment = new QPixmap (SmallIcon ("ark", 12));
 		environment = new QPixmap (SmallIcon ("konqueror", 12));
 	}

@@ -33,10 +33,9 @@
 	#include <kactionclasses.h>
 #endif
 #include <klocale.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
 
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
 
 StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRecentFilesAction *recent_files) : QDialog (parent, 0, true) {
@@ -47,7 +46,7 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	
-	logo = new QPixmap (KGlobal::dirs ()->findResourceDir ("data", "rkward/phpfiles/common.php") + "rkward/icons/rkward_logo.png");
+	logo = new QPixmap (RKCommonFunctions::getRKWardDataDir () + "icons/rkward_logo.png");
 	QLabel *pic = new QLabel (this);
 	pic->setPixmap (*logo);
 	vbox->addWidget (pic);

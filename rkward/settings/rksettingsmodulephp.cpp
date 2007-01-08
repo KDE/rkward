@@ -18,13 +18,12 @@
 
 #include <klocale.h>
 #include <kconfig.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
 
 #include "../misc/getfilenamewidget.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../rkglobals.h"
 #include "../debug.h"
 
@@ -98,7 +97,7 @@ void RKSettingsModulePHP::loadSettings (KConfig *config) {
 
 	config->setGroup ("PHP Settings");
 	php_bin = config->readEntry ("PHP binary", "/usr/bin/php");
-	files_path = config->readEntry ("support files dir", KGlobal::dirs ()->findResourceDir ("data", "rkward/phpfiles/common.php") + "rkward/phpfiles/");
+	files_path = config->readEntry ("support files dir", RKCommonFunctions::getRKWardDataDir () + "phpfiles/");
 }
 
 #include "rksettingsmodulephp.moc"
