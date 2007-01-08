@@ -24,7 +24,7 @@
 	To run the code in a script editor window, either copy and paste it to the console, or chose one of the actions in the Run menu. such as Run All or Run Selection. Note: The contents of the menus may change according to the type of active window. Hence, if you look at the Run menu while reading this, there will be no entries.
 	</section>
 	<section title="Workspace View">
-	RKWard comes with a "workspace view" or "object browser". By default this is available by clicking on "Workspace" on the left side of the application window. This allows you to examine and manipulate all objects in the R workspace. In case you are not familiar with this aspect of R (usually not directly visible): All the symbols you create are children of the so-called ".GlobalEnv" environment. Symbols defined in loaded libraries are located in their own environments.
+	RKWard comes with a "workspace view" or "object browser". By default this is available by clicking on "Workspace" on the left side of the application window. This allows you to examine and manipulate all objects in the R workspace. In case you are not familiar with this aspect of R (usually not directly visible): All the symbols you create are children of the so-called ".GlobalEnv" environment (see <link href="rkward://rhelp/.GlobalEnv"/>). Symbols defined in loaded libraries are located in their own environments.
 
 	The object browser provides function to select with types of object are shown (on the top). Hovering the mouse over an item will show some additional information on the symbol. Right-clicking on an item will show available actions.
 	</section>
