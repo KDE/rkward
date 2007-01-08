@@ -1,5 +1,6 @@
 - TODO: test auto-detection of pluginmap path!
 
+- new Console RMB actions: "copy selection cleaned" and "run selection"
 - added a basic help system, and some introductory help pages
 - plug-in for skewness and kurtosis added
 - plug-ins for distribution analysis added

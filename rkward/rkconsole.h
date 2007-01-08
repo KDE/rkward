@@ -130,6 +130,8 @@ friend class RKConsolePart;
 \param ac the action collection from which to retrieve the KAction*/
 	void unplugAction (const QString &action, KActionCollection* ac);
 
+	QString cleanedSelection ();
+
 	bool output_continuation;
 
 	RCommand *current_command;
@@ -142,8 +144,10 @@ friend class RKConsolePart;
 	bool tab_key_pressed_before;
 
 	KAction* context_help_action;
+	KAction* run_selection_action;
 	KAction* interrupt_command_action;
 	KAction* copy_action;
+	KAction* copy_literal_action;
 	KAction* paste_action;
 
 	void initializeActions (KActionCollection *ac);
@@ -157,6 +161,7 @@ public slots:
 @sa submitBatch */
 	void paste ();
 	void copy ();
+	void literalCopy ();
 /** Clear the view, and add a prompt at the top. */
 	void clear ();
 	void configure ();
@@ -164,6 +169,7 @@ public slots:
 	void showContextHelp ();
 /** interrupt current command. */
 	void slotInterruptCommand ();
+	void runSelection ();
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality

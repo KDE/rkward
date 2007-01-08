@@ -538,7 +538,26 @@ void RKConsole::addCommandToHistory (const QString &command) {
 	}
 }
 
+QString RKConsole::cleanedSelection () {
+	RK_TRACE (APP);
+
+	QString ret = doc->selection ();
+	ret.replace ('\n' + QString (nprefix), "\n");
+	ret.replace ('\n' + QString (iprefix), "\n");
+	if (ret.startsWith (nprefix)) {
+		ret = ret.mid (QString (nprefix).length ());
+	}
+
+	return ret;
+}
+
 void RKConsole::copy () {
+	RK_TRACE (APP);
+
+	QApplication::clipboard()->setText (cleanedSelection ());
+}
+
+void RKConsole::literalCopy () {
 	RK_TRACE (APP);
 	view->copy();
 }
@@ -596,6 +615,13 @@ void RKConsole::slotInterruptCommand () {
 	}
 }
 
+void RKConsole::runSelection () {
+	RK_TRACE (APP);
+
+	QString command = cleanedSelection ();
+	pipeUserCommand (new RCommand (command, RCommand::User));
+}
+
 void RKConsole::showContextHelp () {
 	RK_TRACE (APP);
 	RKGlobals::helpDialog ()->getContextHelp (currentCommand (), currentCursorPositionInCommand ());
@@ -605,13 +631,17 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	RK_TRACE (APP);
 
 	context_help_action = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT (showContextHelp ()), ac, "function_reference");
+	run_selection_action = new KAction (i18n ("Run selection"), KShortcut ("F8"), this, SLOT (runSelection ()), ac, "run_selection");
+	run_selection_action->setIcon ("player_play");
+
 	interrupt_command_action = new KAction (i18n ("Interrupt running command"), KShortcut ("Ctrl+C"), this, SLOT (slotInterruptCommand ()), ac, "interrupt");
 	interrupt_command_action->setIcon ("player_stop");
 	interrupt_command_action->setEnabled (false);
 // ugly HACK: we need this to override the default Ctrl+C binding
 	interrupt_command_action->setShortcut ("Ctrl+C");
 
-	copy_action = new KAction (i18n ("Copy selection"), 0, this, SLOT (copy ()), ac, "rkconsole_copy");
+	copy_action = new KAction (i18n ("Copy selection cleaned"), 0, this, SLOT (copy ()), ac, "rkconsole_copy");
+	copy_literal_action = new KAction (i18n ("Copy selection literally"), 0, this, SLOT (literalCopy ()), ac, "rkconsole_copy_literal");
 	KStdAction::clear (this, SLOT (clear ()), ac, "rkconsole_clear");
 	paste_action = KStdAction::paste (this, SLOT (paste ()), ac, "rkconsole_paste");
 	new KAction (i18n ("Configure"), 0, this, SLOT (configure ()), ac, "rkconsole_configure");
@@ -651,9 +681,13 @@ void RKConsole::doPopupMenu (const QPoint &pos) {
 	RK_TRACE (APP);
 
 	copy_action->setEnabled (hasSelectedText ());
+	copy_literal_action->setEnabled (hasSelectedText ());
+	run_selection_action->setEnabled (hasSelectedText ());
 
 	part->showPopupMenu (pos);
 
+	run_selection_action->setEnabled (true);
+	copy_literal_action->setEnabled (true);
 	copy_action->setEnabled (true);
 }
 

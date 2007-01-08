@@ -4,6 +4,7 @@
 		<Menu name="run"><text>&amp;Run</text>
 			<Merge/>
 			<Separator/>
+			<Action name="run_selection"/>
 			<Action name="interrupt"/>
 		</Menu>
 		<Menu name="help"><text>&amp;Help</text>
@@ -17,10 +18,12 @@
 	</ToolBar>
 	<Menu name="rkconsole_context_menu">
 		<Action name="rkconsole_copy"></Action>
+		<Action name="rkconsole_copy_literal"></Action>
 		<Action name="rkconsole_paste"></Action>
 		<Separator/>
 		<Action name="function_reference"></Action>
 		<Separator/>
+		<Action name="run_selection"/>
 		<Action name="interrupt"></Action>
 		<Separator/>
 		<Action name="rkconsole_clear"></Action>
