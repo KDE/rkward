@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-01 11:22+0100\n"
+"POT-Creation-Date: 2007-01-08 23:54+0100\n"
 "PO-Revision-Date: 2006-09-01 16:22+0300\n"
 "Last-Translator: Harun Hurma <h.hurma@gmail.com>\n"
 "Language-Team: Türkçe <tr@li.org>\n"
@@ -42,7 +42,7 @@ msgid "Fixed precision:"
 msgstr "Düzeltilmiş duyarlılık:"
 
 #: dataeditor/editformatdialog.cpp:69 dataeditor/editlabelsdialog.cpp:241
-#: dialogs/startupdialog.cpp:85
+#: dialogs/startupdialog.cpp:84
 msgid "Ok"
 msgstr "Tamam"
 
@@ -98,7 +98,7 @@ msgid "Inserting clipboard contents..."
 msgstr "Pano içerikleri ilave ediliyor..."
 
 #: dataeditor/editlabelsdialog.cpp:49 dataeditor/twintable.cpp:62
-#: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:424
+#: misc/rkobjectlistview.cpp:54 misc/rkobjectlistview.cpp:423
 msgid "Label"
 msgstr "Başlık"
 
@@ -117,7 +117,7 @@ msgid "Levels / Value labels for '%1'"
 msgstr "'%1' için Düzeyler / Değer başlıkları"
 
 #: dataeditor/twintable.cpp:63 windows/rcontrolwindow.cpp:57
-#: misc/rkobjectlistview.cpp:56 misc/rkobjectlistview.cpp:423
+#: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:422
 msgid "Type"
 msgstr "Tip"
 
@@ -132,7 +132,7 @@ msgstr "Biçim"
 #: dataeditor/twintable.cpp:66 plugin/rkformula.cpp:74 plugin/rkvarslot.cpp:57
 #: dialogs/rkloadlibsdialog.cpp:256 dialogs/rkloadlibsdialog.cpp:275
 #: dialogs/rkloadlibsdialog.cpp:459 dialogs/rkloadlibsdialog.cpp:609
-#: misc/rkobjectlistview.cpp:54
+#: misc/rkobjectlistview.cpp:53
 msgid "Name"
 msgstr "İsim"
 
@@ -255,7 +255,7 @@ msgstr ""
 "Yukarıdaki dosyaların okunabilir olmayanı ve açılmayanı şudur:\n"
 "\n"
 
-#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:317
+#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:326
 #: misc/rkprogresscontrol.cpp:272
 msgid "Done"
 msgstr "Bitti"
@@ -383,23 +383,24 @@ msgstr ""
 "\n"
 "Sınıf(lar): "
 
-#: windows/rkcommandeditorwindowpart.cpp:52
+#: windows/rkcommandeditorwindowpart.cpp:53
 msgid "Run all"
 msgstr "Hepsini çalıştır"
 
-#: windows/rkcommandeditorwindowpart.cpp:54
+#: windows/rkcommandeditorwindowpart.cpp:55 windows/rkcommandlog.cpp:286
+#: rkconsole.cpp:634
 msgid "Run selection"
 msgstr "Seçileni çalıştır"
 
-#: windows/rkcommandeditorwindowpart.cpp:56
+#: windows/rkcommandeditorwindowpart.cpp:57
 msgid "Run current line"
 msgstr "Şu anki satırı çalıştır"
 
-#: windows/rkcommandeditorwindowpart.cpp:58 rkconsole.cpp:589
+#: windows/rkcommandeditorwindowpart.cpp:59 rkconsole.cpp:633
 msgid "&Function reference"
 msgstr "&Fonksiyon başvuru"
 
-#: windows/rkhtmlwindow.cpp:126
+#: windows/rkhtmlwindow.cpp:133
 msgid ""
 "The url you are trying to open ('%1') is not a local file. Do you want to "
 "open the url in the default application?"
@@ -407,42 +408,46 @@ msgstr ""
 "Açmaya çalıştığınız adres ('%1') yerel bir dosya değildir. Varsayılan "
 "uygulama içide bu adresi açmak istiyor musunuz?"
 
-#: windows/rkhtmlwindow.cpp:126
+#: windows/rkhtmlwindow.cpp:133
 msgid "Open in default application?"
 msgstr "Varsayılan uygulama ile aç?"
 
-#: windows/rkhtmlwindow.cpp:191 settings/rksettingsmoduleoutput.cpp:65
+#: windows/rkhtmlwindow.cpp:204 settings/rksettingsmoduleoutput.cpp:65
 msgid "Output"
 msgstr "Çıktı"
 
-#: windows/rkhtmlwindow.cpp:193
-msgid "&Flush"
-msgstr "&Temizle"
+#: windows/rkhtmlwindow.cpp:206
+#, fuzzy
+msgid "&Flush Output"
+msgstr "Uç birim çıktısı?"
 
-#: windows/rkhtmlwindow.cpp:194
-msgid "&Refresh"
+#: windows/rkhtmlwindow.cpp:207
+#, fuzzy
+msgid "&Refresh Output"
 msgstr "&Yenile"
 
-#: windows/rkhtmlwindow.cpp:196
+#: windows/rkhtmlwindow.cpp:209
 msgid "Print Output"
 msgstr "Yazıcı Çıktısı"
 
-#: windows/rkhtmlwindow.cpp:200
+#: windows/rkhtmlwindow.cpp:213
 msgid "Save Output as HTML"
 msgstr "HTML olarak kaydet"
 
-#: windows/rkhtmlwindow.cpp:292
+#: windows/rkhtmlwindow.cpp:306
+#, fuzzy
 msgid ""
-"Do you really want to flush the ouput? It won't be possible to restore it."
+"Do you really want to flush the output? It will not be possible to restore "
+"it."
 msgstr ""
 "Çıktıyı gerçekten temizlemek istiyor musunuz? Onu geri getirmek mümkün "
 "olmayanilir."
 
-#: windows/rkhtmlwindow.cpp:292
+#: windows/rkhtmlwindow.cpp:306
 msgid "Flush output?"
 msgstr "Uç birim çıktısı?"
 
-#: windows/rkhtmlwindow.cpp:308
+#: windows/rkhtmlwindow.cpp:322
 msgid ""
 "<HTML><BODY><H1>RKWard output</H1>\n"
 "<P>The output is empty.</P>\n"
@@ -452,13 +457,52 @@ msgstr ""
 "<P>Çıktı Yok.</P>\n"
 "</BODY></HTML>"
 
-#: windows/rkhtmlwindow.cpp:326
+#: windows/rkhtmlwindow.cpp:340
 msgid "Print Help"
 msgstr "Yazıcı Yardımı"
 
-#: windows/rkhtmlwindow.cpp:336
+#: windows/rkhtmlwindow.cpp:350
 msgid "R Help"
 msgstr "R Yardım"
+
+#: windows/rkhtmlwindow.cpp:376
+msgid "Page does not exist or is broken"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:434
+#, fuzzy
+msgid "No Title"
+msgstr "Başlık"
+
+#: windows/rkhtmlwindow.cpp:460 windows/rkhtmlwindow.cpp:463
+msgid "Summary"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:469 windows/rkhtmlwindow.cpp:472
+msgid "Usage"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:491 windows/rkhtmlwindow.cpp:515
+#, fuzzy
+msgid "GUI settings"
+msgstr "Ayarlar"
+
+#: windows/rkhtmlwindow.cpp:499
+msgid "Unnamed GUI element"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:523 windows/rkhtmlwindow.cpp:526
+#, fuzzy
+msgid "Related functions and pages"
+msgstr "Eklentiler ve yamalar"
+
+#: windows/rkhtmlwindow.cpp:602
+msgid "R Reference on '%1'"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:617
+msgid "BROKEN REFERENCE"
+msgstr ""
 
 #: windows/rcontrolwindow.cpp:41
 msgid "Configure R backend"
@@ -559,20 +603,21 @@ msgstr "Çalışma alanını kaydet"
 msgid "Restore Workplace layout"
 msgstr ""
 
-#: windows/rkcommandlog.cpp:67 settings/rksettingsmodulewatch.cpp:277
+#: windows/rkcommandlog.cpp:68 settings/rksettingsmodulewatch.cpp:277
 msgid "Command log"
 msgstr "Komut kayıtları"
 
-#: windows/rkcommandlog.cpp:172
+#: windows/rkcommandlog.cpp:173
 msgid "Incomplete statement.\n"
 msgstr "Tamamlanmamış ifade.\n"
 
-#: windows/rkcommandlog.cpp:174
+#: windows/rkcommandlog.cpp:175
 msgid "Syntax error.\n"
 msgstr "Sözdizimi hatası.\n"
 
-#: windows/rkcommandlog.cpp:176
-msgid "An unspecified error occured while running the command.\n"
+#: windows/rkcommandlog.cpp:177
+#, fuzzy
+msgid "An unspecified error occurred while running the command.\n"
 msgstr "Komut çalışırken belirlenemeyen bir hata oluştu.\n"
 
 #: windows/rkwindowcatcher.cpp:61
@@ -712,7 +757,7 @@ msgstr "Terim"
 msgid "Specify model"
 msgstr "Modeli belirle"
 
-#: plugin/rkstandardcomponent.cpp:69
+#: plugin/rkstandardcomponent.cpp:70
 #, fuzzy
 msgid ""
 "There has been an error while trying to parse the description of this plugin "
@@ -721,15 +766,16 @@ msgstr ""
 "Bu eklentinin ('%1') tanımı incelenirken hata oluştu. Lütfen detaylar için "
 "stdout'a bakın."
 
-#: plugin/rkstandardcomponent.cpp:69
+#: plugin/rkstandardcomponent.cpp:70
 msgid "Could not create plugin"
 msgstr "Eklenti oluşturulamadı"
 
-#: plugin/rkstandardcomponentgui.cpp:44
+#: plugin/rkstandardcomponentgui.cpp:47
+#, fuzzy
 msgid ""
 "The R-backend has reported one or more error(s) while processing the plugin "
 "'%1'.\n"
-"This may lead to an incorrect ouput and is likely due to a bug in the "
+"This may lead to an incorrect output and is likely due to a bug in the "
 "plugin.\n"
 "A transcript of the error message(s) is shown below."
 msgstr ""
@@ -738,27 +784,27 @@ msgstr ""
 "Eklentideki sorundan dolayı çıktı yanlış olabilir. \n"
 "Hata mesajının ayrıntısı aşağıda gösterilmiştir."
 
-#: plugin/rkstandardcomponentgui.cpp:44
+#: plugin/rkstandardcomponentgui.cpp:47
 msgid "R-Error"
 msgstr "R-Hata"
 
-#: plugin/rkstandardcomponentgui.cpp:92 plugin/rkstandardcomponentgui.cpp:336
+#: plugin/rkstandardcomponentgui.cpp:95 plugin/rkstandardcomponentgui.cpp:345
 msgid "Submit"
 msgstr "Gönder"
 
-#: plugin/rkstandardcomponentgui.cpp:107
+#: plugin/rkstandardcomponentgui.cpp:111
 msgid "Use Wizard"
 msgstr "Kurulum Sihirbazı kullan"
 
-#: plugin/rkstandardcomponentgui.cpp:113
+#: plugin/rkstandardcomponentgui.cpp:117
 msgid "Code"
 msgstr "Kod"
 
-#: plugin/rkstandardcomponentgui.cpp:194
+#: plugin/rkstandardcomponentgui.cpp:203
 msgid "Processing. Please wait"
 msgstr "Sürdürülüyor: Lütfen bekleyin"
 
-#: plugin/rkstandardcomponentgui.cpp:261
+#: plugin/rkstandardcomponentgui.cpp:270
 msgid ""
 "Below you can see the command(s) corresponding to the settings you made. "
 "Click 'Submit' to run the command(s)."
@@ -766,15 +812,15 @@ msgstr ""
 "Yaptığınız ayarlara karşılık gelen komutları aşağıda görebilirsiniz. Komut"
 "(lar) çalıştırmak için 'Gönder' tuşuna basın."
 
-#: plugin/rkstandardcomponentgui.cpp:313 plugin/rkstandardcomponentgui.cpp:331
+#: plugin/rkstandardcomponentgui.cpp:322 plugin/rkstandardcomponentgui.cpp:340
 msgid "Next >"
 msgstr "İleri >"
 
-#: plugin/rkstandardcomponentgui.cpp:323 plugin/rkstandardcomponentgui.cpp:341
+#: plugin/rkstandardcomponentgui.cpp:332 plugin/rkstandardcomponentgui.cpp:350
 msgid "< Back"
 msgstr "< Geri"
 
-#: plugin/rkstandardcomponentgui.cpp:344
+#: plugin/rkstandardcomponentgui.cpp:353
 msgid "Use Dialog"
 msgstr "Diyalog kullan"
 
@@ -790,7 +836,7 @@ msgstr "Birini seç:"
 msgid "Enter text"
 msgstr "Metin girişi"
 
-#: plugin/rkcomponentmap.cpp:128 plugin/rkcomponentmap.cpp:180
+#: plugin/rkcomponentmap.cpp:148 plugin/rkcomponentmap.cpp:200
 msgid "(no label)"
 msgstr "(başlık yok)"
 
@@ -841,62 +887,66 @@ msgstr "Sınıf alanı"
 msgid "Workspace"
 msgstr "Çalışma alanı"
 
-#: settings/rksettingsmodulegeneral.cpp:45
+#: settings/rksettingsmodulegeneral.cpp:47
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
 msgstr ""
 "(*) ile işaretlenen ayarlar, RKWard yeniden başlatılıncaya kadar etkili olmaz"
 
-#: settings/rksettingsmodulegeneral.cpp:49
+#: settings/rksettingsmodulegeneral.cpp:51
 msgid "Directory where the logfiles should be kept (*)"
 msgstr "Kayıt dosyalarının saklandığı klasör (*)"
 
-#: settings/rksettingsmodulegeneral.cpp:53
+#: settings/rksettingsmodulegeneral.cpp:55
 msgid "Startup Action (*)"
 msgstr "Başlangıç Eylemi (*)"
 
-#: settings/rksettingsmodulegeneral.cpp:55 dialogs/startupdialog.cpp:60
+#: settings/rksettingsmodulegeneral.cpp:57 dialogs/startupdialog.cpp:59
 msgid "Start with an empty workspace"
 msgstr "Boş bir çalışma alanı ile başla"
 
-#: settings/rksettingsmodulegeneral.cpp:56 dialogs/startupdialog.cpp:61
+#: settings/rksettingsmodulegeneral.cpp:58 dialogs/startupdialog.cpp:60
 msgid "Start with an empty table"
 msgstr "Boş bir tablo ile başla"
 
-#: settings/rksettingsmodulegeneral.cpp:57
+#: settings/rksettingsmodulegeneral.cpp:59
 msgid "Ask for a file to open"
 msgstr "Bir dosya açmak için sor"
 
-#: settings/rksettingsmodulegeneral.cpp:58
+#: settings/rksettingsmodulegeneral.cpp:60
 msgid "Show selection dialog (default)"
 msgstr "Seçme diyaloğunu göster (Varsayılan)"
 
 #: settings/rksettingsmodulegeneral.cpp:65
+msgid "Show RKWard Help on Startup"
+msgstr ""
+
+#: settings/rksettingsmodulegeneral.cpp:72
 msgid ""
 "The workplace layout (i.e. which script-, data-, help-windows are open) may "
 "be saved (and loaded) per R workspace, or independent of the R workspace. "
 "Which do you prefer?"
 msgstr ""
 
-#: settings/rksettingsmodulegeneral.cpp:74
+#: settings/rksettingsmodulegeneral.cpp:81
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr ""
 
-#: settings/rksettingsmodulegeneral.cpp:75
+#: settings/rksettingsmodulegeneral.cpp:82
 msgid ""
 "Save/restore independent of R workspace (save at end of RKWard session, "
 "restore at next start)"
 msgstr ""
 
-#: settings/rksettingsmodulegeneral.cpp:76
+#: settings/rksettingsmodulegeneral.cpp:83
 #, fuzzy
 msgid "Do not save/restore workplace layout"
 msgstr "Çalışma alanını kaydet"
 
-#: settings/rksettingsmodulegeneral.cpp:100
+#: settings/rksettingsmodulegeneral.cpp:107
 msgid "General"
 msgstr "Genel"
 
-#: settings/rksettingsmoduleplugins.cpp:44
+#: settings/rksettingsmoduleplugins.cpp:43
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
@@ -905,31 +955,31 @@ msgstr ""
 "Bazı eklentiler hem kurulum sihirbazına hem de geleneksel diyalog arayüzüne "
 "uygundur. Eğer her ikisi de uygunsa hangi gösterim modunu tercih edersiniz?"
 
-#: settings/rksettingsmoduleplugins.cpp:53
+#: settings/rksettingsmoduleplugins.cpp:52
 msgid "Always prefer dialogs"
 msgstr "Daima diyalogları tercih et"
 
-#: settings/rksettingsmoduleplugins.cpp:54
+#: settings/rksettingsmoduleplugins.cpp:53
 msgid "Prefer recommended interface"
 msgstr "Daima önerilen arayüzü tercih et"
 
-#: settings/rksettingsmoduleplugins.cpp:55
+#: settings/rksettingsmoduleplugins.cpp:54
 msgid "Always prefer wizards"
 msgstr "Daima sihirbazları tercih et"
 
-#: settings/rksettingsmoduleplugins.cpp:62
+#: settings/rksettingsmoduleplugins.cpp:61
 msgid "Select .pluginmap file(s)"
 msgstr "pluginmap dosyası(ları) seç"
 
-#: settings/rksettingsmoduleplugins.cpp:83
+#: settings/rksettingsmoduleplugins.cpp:82
 msgid "Select .pluginmap-file"
 msgstr "pluginmap-dosya seç"
 
-#: settings/rksettingsmoduleplugins.cpp:87
+#: settings/rksettingsmoduleplugins.cpp:86
 msgid "Plugins"
 msgstr "Eklentiler"
 
-#: settings/rksettingsmoduleplugins.cpp:132
+#: settings/rksettingsmoduleplugins.cpp:124
 msgid ""
 "You appear to have an old configuration for the plugin-paths. The default "
 "configuration was changed between rkward 0.3.4 and rkward 0.3.5. Should the "
@@ -939,25 +989,25 @@ msgstr ""
 "Varsayılan yapılandırma rkward 0.3.4 ve rkward 0.3.5 arasında değiştirildi. "
 "Yapılandırma yeni varsayılana göre ayarlı mı (önerilen)?"
 
-#: settings/rksettingsmoduleplugins.cpp:132
+#: settings/rksettingsmoduleplugins.cpp:124
 msgid "Configuration change"
 msgstr "Yapılandırmayı değiştir"
 
-#: settings/rksettingsmodulephp.cpp:39
+#: settings/rksettingsmodulephp.cpp:38
 msgid "Changes in this section take effect the next time you start a plugin"
 msgstr ""
 "Bu bölümdeki değişiklikler eklentinin bir sonraki başlamasında etkin "
 "olacaktır"
 
-#: settings/rksettingsmodulephp.cpp:45
+#: settings/rksettingsmodulephp.cpp:44
 msgid "File-location of the PHP binary"
 msgstr "PHP ikili dosyasının yeri"
 
-#: settings/rksettingsmodulephp.cpp:51
+#: settings/rksettingsmodulephp.cpp:50
 msgid "Directory, where the PHP support files are located"
 msgstr "PHP destek dosyalarının bulunduğu klasör"
 
-#: settings/rksettingsmodulephp.cpp:69
+#: settings/rksettingsmodulephp.cpp:68
 msgid "PHP backend"
 msgstr ""
 
@@ -966,8 +1016,9 @@ msgid "Output Window options"
 msgstr "Çıktı penceresi seçenekleri"
 
 #: settings/rksettingsmoduler.cpp:57
+#, fuzzy
 msgid ""
-"The following settings mostly affect R behavior in the console. It's "
+"The following settings mostly affect R behavior in the console. It is "
 "generally safe to keep these unchanged."
 msgstr ""
 "Aşağıdaki ayarlar çoğu kez konsol içinde R davranışını etkiler. Bu ayarları "
@@ -1088,25 +1139,29 @@ msgstr ""
 msgid "R-Packages"
 msgstr "Paket"
 
-#: settings/rksettingsmoduleconsole.cpp:43
+#: settings/rksettingsmoduleconsole.cpp:44
 msgid "Load/Save command history"
 msgstr "Komut geçmişini Yükle/Kaydet "
 
-#: settings/rksettingsmoduleconsole.cpp:48
+#: settings/rksettingsmoduleconsole.cpp:49
 msgid "Maximum length of command history"
 msgstr "Komut geçmişinin maksimum uzunluğu"
 
-#: settings/rksettingsmoduleconsole.cpp:50
-#: settings/rksettingsmoduleconsole.cpp:56
+#: settings/rksettingsmoduleconsole.cpp:51
+#: settings/rksettingsmoduleconsole.cpp:57
 #: settings/rksettingsmodulewatch.cpp:149
 msgid "Unlimited"
 msgstr "Sınırsız"
 
-#: settings/rksettingsmoduleconsole.cpp:54
+#: settings/rksettingsmoduleconsole.cpp:55
 msgid "Maximum number of paragraphs/lines to display in the console"
 msgstr "Konsolda görmek için paragrafların/satırların maksimum sayısı"
 
-#: settings/rksettingsmoduleconsole.cpp:137
+#: settings/rksettingsmoduleconsole.cpp:63
+msgid "Run commands from script editor through console"
+msgstr ""
+
+#: settings/rksettingsmoduleconsole.cpp:148
 msgid "Console"
 msgstr "Konsol"
 
@@ -1147,7 +1202,8 @@ msgid "Application commands"
 msgstr "Uygulama komutları"
 
 #: settings/rksettingsmodulewatch.cpp:143
-msgid "Synchronisation commands"
+#, fuzzy
+msgid "Synchronization commands"
 msgstr "Eşleştirme komutları"
 
 #: settings/rksettingsmodulewatch.cpp:147
@@ -1162,27 +1218,27 @@ msgstr "Ayarlar"
 msgid "Context:"
 msgstr ""
 
-#: dialogs/startupdialog.cpp:46
+#: dialogs/startupdialog.cpp:45
 msgid "What would you like to do?"
 msgstr "Ne yapmak istiyorsunuz?"
 
-#: dialogs/startupdialog.cpp:62
+#: dialogs/startupdialog.cpp:61
 msgid "Load an existing workspace:"
 msgstr "Varolan çalışma alanını yükle:"
 
-#: dialogs/startupdialog.cpp:68 misc/multistringselector.cpp:42
+#: dialogs/startupdialog.cpp:67 misc/multistringselector.cpp:42
 msgid "Filename"
 msgstr "Dosya ismi"
 
-#: dialogs/startupdialog.cpp:70
+#: dialogs/startupdialog.cpp:69
 msgid "<<Open another file>>"
 msgstr "<<Diğer dosyayı aç>>"
 
-#: dialogs/startupdialog.cpp:80
+#: dialogs/startupdialog.cpp:79
 msgid "Always do this on startup"
 msgstr "Bu cevabı hatırla"
 
-#: dialogs/rkloadlibsdialog.cpp:50 rkward.cpp:303
+#: dialogs/rkloadlibsdialog.cpp:50 rkward.cpp:309
 msgid "Configure Packages"
 msgstr "Paketleri yapılandır"
 
@@ -1397,28 +1453,28 @@ msgstr "Geçersiz öğenin sonucu düzeltilmeye çalışılıyor"
 msgid "Expected exactly one element '%1' but found %2"
 msgstr "Kesinlikle '%1' bir öğe beklendi fakat %2 bulundu"
 
-#: misc/xmlhelper.cpp:110
+#: misc/xmlhelper.cpp:153
 msgid "'%1'-attribute not given. Assuming '%2'"
 msgstr "'%1'-özellik verilmemiş. '%2' farzediliyor"
 
-#: misc/xmlhelper.cpp:128
+#: misc/xmlhelper.cpp:171
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
 msgstr "Geçersiz nitelik değeri. İzin verilen değerler sadece '%1' in biridir."
 
-#: misc/xmlhelper.cpp:142
+#: misc/xmlhelper.cpp:185
 msgid "Illegal attribute value. Only integer numbers are allowed."
 msgstr "Geçersiz nitelik değeri. Sadece tam sayılara izin verilir."
 
-#: misc/xmlhelper.cpp:158
+#: misc/xmlhelper.cpp:201
 msgid "Illegal attribute value. Only real numbers are allowed."
 msgstr "Geçersiz nitelik değeri. Sadece gerçek sayılara izin verilir."
 
-#: misc/xmlhelper.cpp:176
+#: misc/xmlhelper.cpp:219
 msgid "Illegal attribute value. Allowed values are 'true' or 'false', only."
 msgstr ""
 "Geçersiz nitelik değeri. İzin verilen değerler sadece 'true' ya da 'false'."
 
-#: misc/xmlhelper.cpp:187
+#: misc/xmlhelper.cpp:230
 msgid "XML-parsing '%1' "
 msgstr "XML-inceleme '%1'"
 
@@ -1455,7 +1511,7 @@ msgstr ""
 msgid "Errors / Warnings:"
 msgstr "R başlarken hata"
 
-#: misc/rkerrordialog.cpp:117 rkconsole.cpp:417
+#: misc/rkerrordialog.cpp:117
 msgid "Syntax error"
 msgstr "söz dizimi hatası"
 
@@ -1475,49 +1531,49 @@ msgstr "Aşağı"
 msgid "Browse"
 msgstr "Aç"
 
-#: misc/rkobjectlistview.cpp:57 misc/rkobjectlistview.cpp:425
+#: misc/rkobjectlistview.cpp:56 misc/rkobjectlistview.cpp:424
 msgid "Class"
 msgstr "Sınıf"
 
-#: misc/rkobjectlistview.cpp:62
+#: misc/rkobjectlistview.cpp:61
 #, fuzzy
 msgid "Show Objects"
 msgstr "Gizli nesneleri göster"
 
-#: misc/rkobjectlistview.cpp:63
+#: misc/rkobjectlistview.cpp:62
 #, fuzzy
 msgid "Show Fields"
 msgstr "Alanlar:"
 
-#: misc/rkobjectlistview.cpp:64
+#: misc/rkobjectlistview.cpp:63
 #, fuzzy
 msgid "Configure Defaults"
 msgstr "Görünümü yapılandır"
 
-#: misc/rkobjectlistview.cpp:319
+#: misc/rkobjectlistview.cpp:318
 msgid "[Objects]"
 msgstr "[Nesneler]"
 
-#: misc/rkobjectlistview.cpp:415
+#: misc/rkobjectlistview.cpp:414
 #, fuzzy
 msgid "All Environments"
 msgstr "Sıralama"
 
-#: misc/rkobjectlistview.cpp:416
+#: misc/rkobjectlistview.cpp:415
 msgid "Objects with children"
 msgstr ""
 
-#: misc/rkobjectlistview.cpp:417
+#: misc/rkobjectlistview.cpp:416
 #, fuzzy
 msgid "Variables"
 msgstr "Değişken:"
 
-#: misc/rkobjectlistview.cpp:418 robjectbrowser.cpp:205
+#: misc/rkobjectlistview.cpp:417 robjectbrowser.cpp:205
 #, fuzzy
 msgid "Functions"
 msgstr "Seçileni çalıştır"
 
-#: misc/rkobjectlistview.cpp:420
+#: misc/rkobjectlistview.cpp:419
 #, fuzzy
 msgid "Hidden Objects"
 msgstr "Gizli nesneleri göster"
@@ -1527,11 +1583,11 @@ msgstr "Gizli nesneleri göster"
 msgid "Object name to save to"
 msgstr "Nesne ismi: "
 
-#: misc/rksaveobjectchooser.cpp:49
+#: misc/rksaveobjectchooser.cpp:48
 msgid "The given symbol already exists"
 msgstr ""
 
-#: misc/rksaveobjectchooser.cpp:53
+#: misc/rksaveobjectchooser.cpp:52
 msgid "Overwrite?"
 msgstr ""
 
@@ -1545,12 +1601,12 @@ msgstr ""
 "yapılandırmadığınızı kontrol ediniz (Ayarlar->Yapılandırma Ayarları->PHP-"
 "backend)"
 
-#: scriptbackends/phpbackend.cpp:64 scriptbackends/phpbackend.cpp:224
-#: scriptbackends/phpbackend.cpp:286
+#: scriptbackends/phpbackend.cpp:64 scriptbackends/phpbackend.cpp:225
+#: scriptbackends/phpbackend.cpp:291
 msgid "PHP-Error"
 msgstr "Php-hata"
 
-#: scriptbackends/phpbackend.cpp:224
+#: scriptbackends/phpbackend.cpp:225
 msgid ""
 "There has been an error\n"
 "(\"%1\")\n"
@@ -1564,7 +1620,24 @@ msgstr ""
 "geçersiz ayarlanmasından dolayı olabilir.Ayarları kontrol edin (Ayarlar-"
 ">Yapılandırma ayarları->PHP backend) ve tekrar deneyin."
 
-#: scriptbackends/phpbackend.cpp:286
+#: scriptbackends/phpbackend.cpp:243
+msgid "## Prepare\n"
+msgstr ""
+
+#: scriptbackends/phpbackend.cpp:247
+msgid "## Compute\n"
+msgstr ""
+
+#: scriptbackends/phpbackend.cpp:251
+#, fuzzy
+msgid "## Print result\n"
+msgstr "Yazıcı Yardımı"
+
+#: scriptbackends/phpbackend.cpp:255
+msgid "## Clean up\n"
+msgstr ""
+
+#: scriptbackends/phpbackend.cpp:291
 msgid ""
 "The PHP-backend has reported an error\n"
 "(\"%1\")\n"
@@ -1614,8 +1687,9 @@ msgstr ""
 ">KayıtDosyaları) ve RKWard'ı yeniden başlatınız.\n"
 
 #: rbackend/rinterface.cpp:184
+#, fuzzy
 msgid ""
-"\t-An unspecified error occured that is not yet handled by RKWard. Likely "
+"\t-An unspecified error occurred that is not yet handled by RKWard. Likely "
 "RKWard will not function properly. Please check your setup.\n"
 msgstr ""
 "\t-RKWard tarafından henüz elden geçirilmeyen belirlenmemiş bir hata oluştu."
@@ -1636,9 +1710,10 @@ msgid "Cannot edit '%1'"
 msgstr ""
 
 #: rbackend/rinterface.cpp:325
+#, fuzzy
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
-"needs the package '%1', which is not currently installed. We'll open the "
+"needs the package '%1', which is not currently installed. We will open the "
 "package-management tool, and there you can try to locate and install the "
 "needed package."
 msgstr ""
@@ -1803,15 +1878,15 @@ msgstr "Çalışma alanınızda varolan nesneler."
 msgid "Pending Jobs"
 msgstr "Bekleyen işler"
 
-#: rkward.cpp:217
+#: rkward.cpp:219
 msgid "my.data"
 msgstr "my.data"
 
-#: rkward.cpp:233
+#: rkward.cpp:239
 msgid "Setting up plugins..."
 msgstr "Eklentiler ayarlanıyor..."
 
-#: rkward.cpp:245
+#: rkward.cpp:251
 msgid ""
 "Plugins are needed: you may manage these through \"Settings->Configure RKWard"
 "\".\n"
@@ -1819,108 +1894,118 @@ msgstr ""
 "İhtiyaç duyulan eklentiler: Eklentileri \"Ayarlar->Rkward'ı yapılandır \"."
 "yoluyla yönetebilirsiniz.\n"
 
-#: rkward.cpp:245
+#: rkward.cpp:251
 msgid "No (valid) plugins found"
 msgstr "(Uygun) Eklenti yok"
 
-#: rkward.cpp:284
+#: rkward.cpp:290
 msgid "Dataset"
 msgstr "Veri seti"
 
-#: rkward.cpp:287
+#: rkward.cpp:293
 msgid "Script File"
 msgstr "Betik Dosyası"
 
-#: rkward.cpp:291
+#: rkward.cpp:297
 msgid "Open R Script File"
 msgstr "R Betik dosyası aç"
 
-#: rkward.cpp:295
+#: rkward.cpp:301
 msgid "Open Workspace"
 msgstr "Çalışma alanı aç"
 
-#: rkward.cpp:298
+#: rkward.cpp:304
 msgid "Save Workspace"
 msgstr "Çalışma alanını kaydet"
 
-#: rkward.cpp:300
+#: rkward.cpp:306
 msgid "Save Workspace As"
 msgstr "Çalışma alanını farklı kaydet"
 
-#: rkward.cpp:308
+#: rkward.cpp:314
 msgid "Close All Data"
 msgstr "Bütün verileri kapat"
 
-#: rkward.cpp:310
+#: rkward.cpp:316
 msgid "Close All"
 msgstr "Hepsini kapat"
 
-#: rkward.cpp:311
+#: rkward.cpp:317
 msgid "Detach"
 msgstr "Ayır"
 
-#: rkward.cpp:312
+#: rkward.cpp:318
 msgid "Show &Output"
 msgstr "&Çıktıyı Göster"
 
-#: rkward.cpp:313
+#: rkward.cpp:319
 msgid "Configure RKWard"
 msgstr "Rkward'ı yapılandır"
 
-#: rkward.cpp:317
+#: rkward.cpp:323
 msgid "Creates new empty dataset and opens it for editing"
 msgstr "Yeni boş veri seti oluşturur ve düzenleme için onu açar"
 
-#: rkward.cpp:318
+#: rkward.cpp:324
 msgid "Opens an existing document"
 msgstr "Varolan dosyayı açar"
 
-#: rkward.cpp:319
+#: rkward.cpp:325
 msgid "Opens a recently used file"
 msgstr "En son kullanılan dosyayı açar"
 
-#: rkward.cpp:320
+#: rkward.cpp:326
 msgid "Saves the actual document"
 msgstr "Güncel dosyayı kaydeder"
 
-#: rkward.cpp:321
+#: rkward.cpp:327
 msgid "Saves the actual document as..."
 msgstr "Güncel dosyayı farklı kaydeder..."
 
-#: rkward.cpp:322
+#: rkward.cpp:328
 msgid "Closes all open data editors"
 msgstr "Tüm açık veri düzenleyicilerini kapatır"
 
-#: rkward.cpp:323
+#: rkward.cpp:329
 msgid "Quits the application"
 msgstr "Uygulamadan çıkar"
 
-#: rkward.cpp:329
+#: rkward.cpp:335
 msgid "Help on R"
 msgstr "R hakkında yardım"
 
-#: rkward.cpp:330
+#: rkward.cpp:336
 msgid "Search R Help"
 msgstr "R yardımda ara"
 
 #: rkward.cpp:337
+#, fuzzy
+msgid "Help on RKWard"
+msgstr "R hakkında yardım"
+
+#: rkward.cpp:344
 msgid "Shows the R help index"
 msgstr "R yardım dizinini gösterir"
 
-#: rkward.cpp:338
+#: rkward.cpp:345
 #, fuzzy
 msgid "Shows/raises the R Help Search window"
 msgstr "R yardım dizinini gösterir"
 
-#: rkward.cpp:369
+#: rkward.cpp:346
+#, fuzzy
+msgid "Show help on RKWard"
+msgstr "RKWard'dan beklenti ne"
+
+#: rkward.cpp:377
 msgid "starting R engine"
 msgstr "R engine başlıyor"
 
-#: rkward.cpp:485
+#: rkward.cpp:493
 msgid "Exiting..."
 msgstr "Çıkılıyor..."
 
-#: rkward.cpp:493
+#: rkward.cpp:501
 #, fuzzy
 msgid ""
 "Quitting RKWard: Do you want to save the workspace?\n"
@@ -1929,82 +2014,111 @@ msgstr ""
 "RkWard kapatılıyor: Çalışma alanını kaydetmek istiyor musunuz?\n"
 "Eğer çıkmak istemiyorsanız \"İptal\" tuşuna basın"
 
-#: rkward.cpp:493 rkward.cpp:591
+#: rkward.cpp:501 rkward.cpp:615
 msgid "Save Workspace?"
 msgstr "Çalışma alanı kaydedilsin mi?"
 
-#: rkward.cpp:534
+#: rkward.cpp:551
 msgid ""
 "Please submit your bug reports or wishes at http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
 "net"
 msgstr ""
 
-#: rkward.cpp:556
+#: rkward.cpp:580
 msgid "New dataset"
 msgstr "Yeni veri seti"
 
-#: rkward.cpp:556
+#: rkward.cpp:580
 msgid "Enter name for the new dataset"
 msgstr "Yeni veri setinin ismini girin"
 
-#: rkward.cpp:560 robjectbrowser.cpp:113 robjectbrowser.cpp:147
+#: rkward.cpp:584 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
 "Belirttiğiniz isim kullanımda ya da geçerli değil. %1 olarak yeniden "
 "isimlendirin"
 
-#: rkward.cpp:560 robjectbrowser.cpp:113 robjectbrowser.cpp:147
+#: rkward.cpp:584 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "Invalid Name"
 msgstr "Geçersiz isim"
 
-#: rkward.cpp:572
+#: rkward.cpp:596
 msgid "Opening workspace..."
 msgstr "Çalışma alanı açılıyor..."
 
-#: rkward.cpp:575
+#: rkward.cpp:599
 msgid "*|All files"
 msgstr "*|Bütün dosyalar"
 
-#: rkward.cpp:575
+#: rkward.cpp:599
 msgid "Open File..."
 msgstr "Dosya aç..."
 
-#: rkward.cpp:591
+#: rkward.cpp:615
 msgid "Do you want to save the current workspace?"
 msgstr "Şu anki çalışma alanını kaydetmek istiyor musunuz?"
 
-#: rkward.cpp:633
+#: rkward.cpp:657
 msgid "Ready."
 msgstr "Hazır."
 
-#: rkward.cpp:666
+#: rkward.cpp:690
 msgid "R engine busy"
 msgstr "R engine meşgul"
 
-#: rkward.cpp:669
+#: rkward.cpp:693
 msgid "R engine idle"
 msgstr "R engine boşta"
 
-#: rkward.cpp:694
+#: rkward.cpp:718
 msgid "Open command file(s)"
 msgstr "Komut dosyası(ları) aç"
 
-#: rkward.cpp:729
+#: rkward.cpp:753
 msgid "[Unnamed Workspace]"
 msgstr "[İsimsiz Çalışma alanı]"
 
-#: rkconsole.cpp:125
+#: rkconsole.cpp:129
 msgid "R Console"
 msgstr "R konsol"
 
-#: rkconsole.cpp:590
+#: rkconsole.cpp:425
+#, fuzzy
+msgid "Syntax error\n"
+msgstr "Sözdizimi hatası.\n"
+
+#: rkconsole.cpp:637
 msgid "Interrupt running command"
 msgstr "Çalışan komutu durdur"
 
-#: rkconsole.cpp:596
-msgid "Copy selection"
+#: rkconsole.cpp:643
+#, fuzzy
+msgid "Copy selection cleaned"
 msgstr "Seçileni kopyala"
+
+#: rkconsole.cpp:644
+#, fuzzy
+msgid "Copy selection literally"
+msgstr "Seçileni kopyala"
+
+#: rkconsole.cpp:665
+msgid ""
+"You have configured RKWrad to run script commands through the console. "
+"However, the console is currently busy (either a command is running, or you "
+"have started to enter text in the console). Do you want to bypass the "
+"console this one time, or do you want to try again later?"
+msgstr ""
+
+#: rkconsole.cpp:665
+#, fuzzy
+msgid "Console is busy"
+msgstr "Konsol"
+
+#: rkconsole.cpp:665
+#, fuzzy
+msgid "Bypass console"
+msgstr "R konsol"
 
 #: robjectviewer.cpp:43
 msgid "Object name: "
@@ -2055,9 +2169,10 @@ msgid " - Waiting for results from R..."
 msgstr " - R'den sonuçlar bekleniyor..."
 
 #: robjectviewer.cpp:75
+#, fuzzy
 msgid ""
 "\n"
-"Some errors occured: "
+"Some errors occurred: "
 msgstr ""
 "\n"
 "Bazı hatalar oluştu: "
@@ -2184,7 +2299,8 @@ msgid "Show Hidden Objects"
 msgstr "Gizli nesneleri göster"
 
 #. i18n: file rkconsolepart.rc line 4
-#: rc.cpp:3
+#. i18n: file rkwardui.rc line 29
+#: rc.cpp:3 rc.cpp:24
 #, no-c-format
 msgid "&Run"
 msgstr "&Çalıştır"
@@ -2201,8 +2317,8 @@ msgstr "&Yeni"
 msgid "&Workspace"
 msgstr "&Çalışma alanı"
 
-#. i18n: file rkwardui.rc line 30
-#: rc.cpp:18
+#. i18n: file rkwardui.rc line 33
+#: rc.cpp:27
 #, no-c-format
 msgid "&Windows"
 msgstr "&Pencereler"
@@ -2222,6 +2338,9 @@ msgid ""
 msgstr ""
 "Çevirenlerin posta adresleri \n"
 "h.hurma@gmail.com"
+
+#~ msgid "&Flush"
+#~ msgstr "&Temizle"
 
 #, fuzzy
 #~ msgid "Clear Console"
