@@ -493,7 +493,7 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 				for (XMLChildList::iterator it = setting_elements.begin (); it != setting_elements.end (); ++it) {
 					if ((*it).tagName () == "setting") {
 						QString id = help_xml->getStringAttribute (*it, "id", QString (), DL_WARNING);
-						QString title = help_xml->getStringAttribute (*it, "title", QString (), DL_WARNING);
+						QString title = help_xml->getStringAttribute (*it, "title", QString (), DL_INFO);
 						if (title.isEmpty ()) {
 							QDomElement source_element = component_xml->findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
 							title = component_xml->getStringAttribute (source_element, "label", i18n ("Unnamed GUI element"), DL_WARNING);

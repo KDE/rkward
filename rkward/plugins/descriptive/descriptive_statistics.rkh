@@ -21,7 +21,7 @@
 		<caption id="tab_median_mad"/>
 		<setting id="median">Should the median value be computed?</setting>
 		<setting id="mad">Compute the median absolute deviation, i.e., the (lo-/hi-) median of the absolute deviations from the median, and (by default) adjust by a factor for asymptotically normal consistency (see <link href="rhelp://mad"/>).</setting>
-		<setting id="constant">Scale factor to use when computing the median absolute deviation</setting>
+		<setting id="constMad">Scale factor to use when computing the median absolute deviation</setting>
 		<setting id="mad_type">How to treat even size samples: Average the two middle values, take the lower, or take the higher</setting>
 		<caption id="tab_range_etc"/>
 		<setting id="range">Compute the range, i.e. lowest and highest value</setting>
