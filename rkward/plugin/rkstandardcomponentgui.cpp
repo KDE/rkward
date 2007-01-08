@@ -19,6 +19,7 @@
 
 #include <klocale.h>
 #include <kaction.h>
+#include <kurl.h>
 
 #include <qtimer.h>
 #include <qsplitter.h>
@@ -28,6 +29,8 @@
 #include <qpushbutton.h>
 #include <qlabel.h>
 
+#include "rkcomponentmap.h"
+#include "../windows/rkworkplace.h"
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
 #include "../misc/rkerrordialog.h"
@@ -159,6 +162,11 @@ void RKStandardComponentGUI::copyCode () {
 
 void RKStandardComponentGUI::help () {
 	RK_TRACE (PLUGIN);
+
+	QString id = RKComponentMap::getComponentId (component->getHandle ());
+
+	QString path = QStringList::split ("::", id).join ("/");
+	RKWorkplace::mainWorkplace ()->openHelpWindow (KURL ("rkcomponent:///" + path));
 }
 
 void RKStandardComponentGUI::closeEvent (QCloseEvent *e) {

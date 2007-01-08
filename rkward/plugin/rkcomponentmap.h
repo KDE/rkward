@@ -34,11 +34,12 @@ class QWidget;
 */
 class RKComponentHandle {
 public:
-	RKComponentHandle (const QString &filename, RKComponentType type);
+	RKComponentHandle (const QString &filename, const QString &label, RKComponentType type);
 
 	virtual ~RKComponentHandle ();
 
 	QString getFilename () { return filename; };
+	QString getLabel () { return label; };
 	RKComponentType getType () { return type; };
 	bool isPlugin ();
 
@@ -48,6 +49,7 @@ public:
 private:
 /** The filename of the description file for this component */
 	QString filename;
+	QString label;
 	RKComponentType type;
 };
 
@@ -80,6 +82,7 @@ public:
 
 /** returns the component identified by id */
 	static RKComponentHandle* getComponentHandle (const QString &id);
+	static QString getComponentId (RKComponentHandle* by_component);
 	static RKComponentMap *getMap () { return component_map; };
 	static void initialize ();
 private:
@@ -103,6 +106,7 @@ private:
 	ComponentMap components;
 
 	RKComponentHandle* getComponentHandleLocal (const QString &id);
+	QString getComponentIdLocal (RKComponentHandle* component);
 	int addPluginMapLocal (const QString& plugin_map_file);
 
 	void clearLocal ();
@@ -118,7 +122,7 @@ private:
 class RKStandardComponentHandle : public QObject, public RKComponentHandle {
 	Q_OBJECT
 public:
-	RKStandardComponentHandle (const QString &filename, RKComponentType type);
+	RKStandardComponentHandle (const QString &filename, const QString &label, RKComponentType type);
 
 	~RKStandardComponentHandle ();
 

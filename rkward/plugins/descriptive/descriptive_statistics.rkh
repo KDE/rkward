@@ -1,0 +1,25 @@
+<!DOCTYPE rkhelp>
+<document>
+	<!-- title can be ommitted, as this is the help page for a plugin
+	<title>alskfa</title>
+	-->
+	<summary>
+		Compute the most common descriptive statistics for one or more numeric vectors
+	</summary>
+	<usage>
+		If there are general usage instruction, not tied to an option, specify them here (see <link href="rkcomponent:///basic_statistics">testtitle</link>)
+
+		Next paragraph
+		Same paragraph
+	</usage>
+	<settings>
+		<setting id="x">Select one or more numeric vectors to analyse</setting>
+		<setting id="mean">Should the mean value be computed?</setting>
+		<setting id="trim">Trim of the mean. See <link href="rhelp:///mean"/></setting>
+	</settings>
+	<related>
+		<link href="rhelp:///mean"/>
+		<link href="rkcomponent:///basic_statistics"/>
+		<link href="rkhelp:///basic_functions"/>
+	</related>
+</document>

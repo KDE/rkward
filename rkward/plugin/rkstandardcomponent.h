@@ -23,6 +23,7 @@
 #include <qdom.h>
 
 class RKStandardComponentGUI;
+class RKComponentHandle;
 class RKStandardComponentStack;
 class ScriptBackend;
 
@@ -36,7 +37,7 @@ public:
 @param parent_component Parent component (or 0, if this is going to be a top-level component)
 @param parent_widget Parent widget (typically 0, if this is going to be a top-level component)
 @param filename Filename of the XML-file to construct this component from */
-	RKStandardComponent (RKComponent *parent_component, QWidget *parent_widget, const QString &filename);
+	RKStandardComponent (RKComponent *parent_component, QWidget *parent_widget, const QString &filename, RKComponentHandle *handle);
 /** destructor */
 	~RKStandardComponent ();
 /** reimplemented to update code on changes*/
@@ -63,6 +64,7 @@ public:
 	void setCaption (const QString &caption);
 /** return the filename of the xml file */
 	QString getFilename () { return filename; };
+	RKComponentHandle *getHandle () { return handle; };
 public slots:
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */
@@ -83,6 +85,7 @@ private:
 	QString filename;
 	ScriptBackend *backend;
 	RKStandardComponentGUI *gui;
+	RKComponentHandle *handle;
 	RKStandardComponentStack *wizard;
 /** Avoid updating code-display, etc. until the component is fully created */
 	bool created;

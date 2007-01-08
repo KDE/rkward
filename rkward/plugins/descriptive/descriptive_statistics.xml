@@ -2,6 +2,8 @@
 <!-- This is a simple example, of how a "plugin" might be configured. -->
 <document>
 	<code file="descriptive_statistics.php" />
+	<help file="descriptive_statistics.rkh" />
+
 	<dialog label="Descriptive Statistics" >
 		<tabbook>
 			<tab label="Variables">

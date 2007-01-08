@@ -52,10 +52,11 @@
 #include "../debug.h"
 
 
-RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget *parent_widget, const QString &filename) : RKComponent (parent_component, parent_widget) {
+RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget *parent_widget, const QString &filename, RKComponentHandle *handle) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
 	RKStandardComponent::filename = filename;
+	RKStandardComponent::handle = handle;
 	backend = 0;
 	gui = 0;
 	wizard = 0;

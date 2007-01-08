@@ -75,6 +75,8 @@ protected:
 	KHTMLPart * khtmlpart;
 /** update caption according to given URL */
 	virtual void updateCaption (const KURL &url);
+/** called from openURL. Takes care of updating caption, and updating back/forward actions, if available */
+	void changeURL (const KURL &url);
 protected:
 	QPtrList<KURL> url_history;
 	KAction *back;
@@ -134,6 +136,8 @@ private:
 	static QDateTime last_refresh_time;
 };
 
+class QDomElement;
+
 /**
 	\brief Show html help files.
 
@@ -150,6 +154,12 @@ public:
 	RKHelpWindow (QWidget *parent = 0);
 /** destructor */
 	~RKHelpWindow ();
+/** reimplemented to handle our special protocols component://, rhelp://, and rkhelp:// in addition to the regular protocols */
+	bool openURL (const KURL &url);
+private:
+	bool renderRKHelp (const KURL &url);
+	QString renderHelpFragment (QDomElement &fragment);
+	void prepareHelpLink (QDomElement *link_element);
 };
 
 #endif

@@ -29,11 +29,15 @@
 #include <qwidget.h>
 #include <qlayout.h>
 #include <qtimer.h>
+#include <qdir.h>
 
 #include "../rkglobals.h"
+#include "../khelpdlg.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/xmlhelper.h"
+#include "../plugin/rkcomponentmap.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkworkplaceview.h"
 #include "../debug.h"
@@ -99,6 +103,7 @@ void RKHTMLWindow::slotForward () {
 
 	url_history.next ();
 	RK_ASSERT (url_history.current ());
+qDebug ("Error is here");
 	khtmlpart->openURL (*(url_history.current ()));
 	updateCaption (*(url_history.current ()));
 
@@ -111,6 +116,7 @@ void RKHTMLWindow::slotBack () {
 
 	url_history.prev ();
 	RK_ASSERT (url_history.current ());
+qDebug ("Error is here");
 	khtmlpart->openURL (*(url_history.current ()));
 	updateCaption (*(url_history.current ()));
 
@@ -132,6 +138,12 @@ bool RKHTMLWindow::openURL (const KURL &url) {
 	}
 
 	khtmlpart->openURL (url);
+	changeURL (url);
+
+	return true;
+}
+
+void RKHTMLWindow::changeURL (const KURL &url) {
 	updateCaption (url);
 
 	if (back && forward) {
@@ -144,8 +156,6 @@ bool RKHTMLWindow::openURL (const KURL &url) {
 		back->setEnabled (url_history.count () > 1);
 		forward->setEnabled (false);
 	}
-
-	return true;
 }
 
 void RKHTMLWindow::updateCaption (const KURL &url) {
@@ -341,6 +351,132 @@ RKHelpWindow::~RKHelpWindow () {
 	RK_TRACE (APP);
 	delete khtmlpart;
 	khtmlpart = 0;	// in case we try to redelete in a parent class
+}
+
+bool RKHelpWindow::openURL (const KURL &url) {
+	RK_TRACE (APP);
+
+	// TODO: real error handling
+	bool ok = true;
+	qDebug ("here1 %s", url.prettyURL ().latin1 ());
+	if (url.protocol () == "rkcomponent") {
+		ok = renderRKHelp (url);
+	} else if (url.protocol () == "rhelp") {
+		// TODO: find a nice solution to render this in the current window
+		RKGlobals::helpDialog ()->getFunctionHelp (url.path ());
+	} else if (url.protocol () == "rkhelp") {
+		ok = renderRKHelp (url);
+	} else {
+		ok = RKHTMLWindow::openURL (url);
+	}
+
+	if (!ok) {
+		khtmlpart->begin (url);
+		khtmlpart->write ("<html><body><h1>" + i18n ("Page does not exist or is broken") + "</h1></body></html>");
+		khtmlpart->end ();
+	}
+
+	changeURL (url);
+	return ok;
+}
+
+bool RKHelpWindow::renderRKHelp (const KURL &url) {
+	RK_TRACE (APP);
+
+	qDebug ("here2 %s", url.path ().latin1 ());
+	if (url.protocol () == "rkcomponent") {
+		bool success = false;
+		XMLHelper *component_xml = new XMLHelper ();
+		XMLHelper *help_xml = new XMLHelper ();
+
+		while (true) {		// dirty hack to streamline exit code: breaking from this while, before success is set to true will cause the XMLHelpers to be deleted, and false returned.
+			QStringList path_segments = QStringList::split ('/', url.path ());
+			if (path_segments.count () > 2) break;
+			if (path_segments.count () < 1) break;
+			if (path_segments.count () == 1) path_segments.push_front ("rkward");
+			RK_ASSERT (path_segments.count () == 2);
+			RKComponentHandle *chandle = RKComponentMap::getComponentHandle (path_segments.join ("::"));
+			if (!chandle) break;
+
+			qDebug ("here3");
+			QDomElement component_doc_element = component_xml->openXMLFile (chandle->getFilename (), DL_ERROR);
+			if (component_doc_element.isNull ()) break;
+			QDomElement element = component_xml->getChildElement (component_doc_element, "help", DL_ERROR);
+			if (element.isNull ()) break;
+			QString help_file_name = component_xml->getStringAttribute (element, "file", QString::null, DL_ERROR);
+			if (help_file_name.isNull ()) break;
+			help_file_name = QFileInfo (chandle->getFilename ()).dir (true).filePath (help_file_name);
+	
+			qDebug ("here4");
+			QDomElement help_doc_element = help_xml->openXMLFile (help_file_name, DL_ERROR);
+			if (help_doc_element.isNull ()) break;
+
+			khtmlpart->begin (url);
+			khtmlpart->write ("<html><head><title>" + chandle->getLabel () + "</title></head>\n<body>\n<h1>" + chandle->getLabel () + "</h1>\n");
+
+			qDebug ("here5");
+			element = help_xml->getChildElement (help_doc_element, "summary", DL_WARNING);
+			if (!element.isNull ()) {
+				khtmlpart->write ("<h2>" + i18n ("Summary") + "</h2>\n");
+				khtmlpart->write (renderHelpFragment (element));
+			}
+
+			element = help_xml->getChildElement (help_doc_element, "usage", DL_WARNING);
+			if (!element.isNull ()) {
+				khtmlpart->write ("<h2>" + i18n ("Usage") + "</h2>\n");
+				khtmlpart->write (renderHelpFragment (element));
+			}
+
+			// TODO: handle some generic sections
+
+			// TODO: handle settings section
+
+			// TODO: handle related section
+
+			khtmlpart->end ();
+			success = true;
+			break;
+		}
+
+		delete (component_xml);
+		delete (help_xml);
+		return (success);
+	}
+
+	return false;
+}
+
+QString RKHelpWindow::renderHelpFragment (QDomElement &fragment) {
+	RK_TRACE (APP);
+
+	QDomNodeList link_nodes = fragment.elementsByTagName ("link");
+	for (int i=link_nodes.count (); i >= 0; --i) {
+		QDomElement element = link_nodes.item (i).toElement ();
+		if (element.isNull ()) continue;
+
+		prepareHelpLink (&element);
+		qDebug ("fragment");
+	}
+
+	QString ret;
+	QTextOStream stream (&ret);
+	fragment.save (stream, 0);
+
+	ret.prepend ("<p>");
+	ret.append ("</p>");
+	ret.replace ("\n\n", "</p>\n<p>");
+
+	return ret;
+}
+
+void RKHelpWindow::prepareHelpLink (QDomElement *link_element) {
+	RK_TRACE (APP);
+	qDebug ("link");
+
+	link_element->setTagName ("a");
+	if (link_element->text ().isNull ()) {
+		link_element->appendChild (link_element->ownerDocument ().createTextNode ("TODO: determine link title"));
+	}
 }
 
 #include "rkhtmlwindow.moc"
