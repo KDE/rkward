@@ -8,17 +8,17 @@
 	By default, this page is shown each time RKWard is started. You can disable / re-enable this behavior under Settings->Configure RKWard->General.
 	</summary>
 
-	<section title="Introduction to RKWard">
+	<section title="Introduction to RKWard" id="introduction">
 	RKWard is a GUI frontend and IDE to <link href="http://www.r-project.org">R</link>, a powerful scripting language for statistical computing. It aims to provide useful features both to experienced users of R, wishing to exploit R's scripting capabilities, as well as to users new to R, looking for an easy way to do carry out statistical computation tasks.
 	</section>
 
-	<section title="Getting Started">
+	<section title="Getting Started" id="getting_started">
 	Due to the large differences in prior knowledge of R, we provide two different guides for getting started with RKWard. The first is aimed at users with some knowledge of the R language, and focuses on introducing the IDE features of RKWard: <link href="rkward://page/rkward_for_r_users" />.
 
 	The second gives a more hands on introduction to getting started with RKWard, but does not go quite as deep. If you have never users R or RKWard before, you should start with this guide, then later read the page linked to above: <link href="rkward://page/rkward_for_new_users" />.
 	</section>
 
-	<section title="General Information">
+	<section title="General Information" id="further_info">
 	For more general information on RKWard, who writes it, how to help, further questions, etc. refer to <link href="http://rkward.sourceforge.net/">the project homepage</link>.
 	</section>
 </document>

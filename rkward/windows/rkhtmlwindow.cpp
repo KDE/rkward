@@ -55,7 +55,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow:
 	pLayout->addWidget (khtmlpart->widget ());
 
 	// We have to connect this in order to allow browsing.
-	connect (khtmlpart->browserExtension (), SIGNAL(openURLRequest (const KURL &, const KParts::URLArgs &)), this, SLOT (slotOpenURLRequest (const KURL &, const KParts::URLArgs &)));
+	connect (khtmlpart->browserExtension (), SIGNAL (openURLRequestDelayed (const KURL &, const KParts::URLArgs &)), this, SLOT (slotOpenURLRequest (const KURL &, const KParts::URLArgs &)));
 	connect (khtmlpart, SIGNAL (completed ()), this, SLOT (loadDone ()));
 
 	url_history.setAutoDelete (true);
@@ -398,13 +398,15 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 	bool success = false;
 	XMLHelper *component_xml = new XMLHelper ();
 	XMLHelper *help_xml = new XMLHelper ();
+	QStringList anchors, anchornames;
 
 	while (true) {		// dirty hack to streamline exit code: breaking from this while, before success is set to true will cause the XMLHelpers to be deleted, and false returned.
 		RKComponentHandle *chandle = 0;
 		QString help_file_name;
 		QDomElement element;
 		QDomElement component_doc_element;
-		QString help_base_dir;
+		QString help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
+		QString css_filename = "file://" + help_base_dir + "rkward_help.css";
 
 		// determine help file, and prepare
 		if (for_component) {
@@ -419,8 +421,6 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 			if (help_file_name.isNull ()) break;
 			help_file_name = QFileInfo (chandle->getFilename ()).dir (true).filePath (help_file_name);
 		} else {
-			help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
-
 			help_file_name = help_base_dir + url.path () + ".rkh";
 		}
 		RK_DO (qDebug ("rendering help page for local file %s", help_file_name.latin1 ()), APP, DL_DEBUG);
@@ -440,7 +440,7 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 				page_title = element.text ();
 			}
 		}
-		khtmlpart->write ("<html><head><title>" + page_title + "</title></head>\n<body>\n<h1>" + page_title + "</h1>\n");
+		khtmlpart->write ("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\"></head>\n<body><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
 
 		// fix all elements containing an "src" attribute
 		QDir base_path (QFileInfo (help_file_name).dirPath (true));
@@ -456,26 +456,38 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 		// render the sections
 		element = help_xml->getChildElement (help_doc_element, "summary", DL_INFO);
 		if (!element.isNull ()) {
+			khtmlpart->write (makeAnchor ("summary"));
 			khtmlpart->write ("<h2>" + i18n ("Summary") + "</h2>\n");
 			khtmlpart->write (renderHelpFragment (element));
+			anchors.append ("summary");
+			anchornames.append (i18n ("Summary"));
 		}
 
 		element = help_xml->getChildElement (help_doc_element, "usage", DL_INFO);
 		if (!element.isNull ()) {
+			khtmlpart->write (makeAnchor ("usage"));
 			khtmlpart->write ("<h2>" + i18n ("Usage") + "</h2>\n");
 			khtmlpart->write (renderHelpFragment (element));
+			anchors.append ("usage");
+			anchornames.append (i18n ("Usage"));
 		}
 
 		XMLChildList section_elements = help_xml->getChildElements (help_doc_element, "section", DL_INFO);
 		for (XMLChildList::iterator it = section_elements.begin (); it != section_elements.end (); ++it) {
-			khtmlpart->write ("<h2>" + help_xml->getStringAttribute (*it, "title", QString (), DL_WARNING) + "</h2>\n");
+			QString title = help_xml->getStringAttribute (*it, "title", QString (), DL_WARNING);
+			QString id = help_xml->getStringAttribute (*it, "id", QString (), DL_WARNING);
+			khtmlpart->write (makeAnchor (id));
+			khtmlpart->write ("<h2>" + title + "</h2>\n");
 			khtmlpart->write (renderHelpFragment (*it));
+			anchors.append (id);
+			anchornames.append (title);
 		}
 
 		// the section "settings" is the most complicated, as the labels of the individual GUI items has to be fetched from the component description. Of course it is only meaningful for component help, and not rendered for top level help pages.
 		if (for_component) {
 			element = help_xml->getChildElement (help_doc_element, "settings", DL_INFO);
 			if (!element.isNull ()) {
+				khtmlpart->write (makeAnchor ("settings"));
 				khtmlpart->write ("<h2>" + i18n ("GUI settings") + "</h2>\n");
 				XMLChildList setting_elements = help_xml->getChildElements (element, QString (), DL_WARNING);
 				for (XMLChildList::iterator it = setting_elements.begin (); it != setting_elements.end (); ++it) {
@@ -498,17 +510,47 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 						help_xml->displayError (&(*it), "Tag not allowed, here", DL_WARNING);
 					}
 				}
+
+				anchors.append ("settings");
+				anchornames.append (i18n ("GUI settings"));
 			}
 		}
 
+		// "related" section
 		element = help_xml->getChildElement (help_doc_element, "related", DL_INFO);
 		if (!element.isNull ()) {
+			khtmlpart->write (makeAnchor ("related"));
 			khtmlpart->write ("<h2>" + i18n ("Related functions and pages") + "</h2>\n");
 			khtmlpart->write (renderHelpFragment (element));
+			anchors.append ("related");
+			anchornames.append (i18n ("Related functions and pages"));
 		}
 
+		// create a navigation bar
+		KURL url_copy = url;
+		QString navigation;
+		QStringList::const_iterator names_it = anchornames.constBegin ();
+		for (QStringList::const_iterator it = anchors.constBegin (); it != anchors.constEnd (); ++it) {
+			if (!((*it).isNull () || (*names_it).isNull ())) {
+				url_copy.setRef (*it);
+				navigation.append ("<p><a href=\"" + url_copy.url () + "\">" + *names_it + "</a></p>\n");
+			}
+
+			if (names_it != anchornames.constEnd ()) {
+				++names_it;
+			} else {
+				RK_ASSERT (false);
+			}
+		}
+		khtmlpart->write ("</div><div id=\"navigation\">" + navigation + "</div>");
 		khtmlpart->write ("</body></html>\n");
 		khtmlpart->end ();
+
+		QString ref = url.ref ();
+		if (!ref.isEmpty ()) {
+			khtmlpart->gotoAnchor (ref);
+		}
+
 		success = true;
 		break;
 	}
@@ -591,5 +633,10 @@ RKComponentHandle *RKHelpWindow::componentPathToHandle (QString path) {
 	RK_ASSERT (path_segments.count () == 2);
 	return (RKComponentMap::getComponentHandle (path_segments.join ("::")));
 }
+
+QString RKHelpWindow::makeAnchor (const QString &name) {
+	return ("<a name=\"" + name + "\">");
+}
+
 
 #include "rkhtmlwindow.moc"

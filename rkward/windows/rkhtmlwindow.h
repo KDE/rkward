@@ -164,6 +164,7 @@ private:
 	QString renderHelpFragment (QDomElement &fragment);
 	void prepareHelpLink (QDomElement *link_element);
 	RKComponentHandle *componentPathToHandle (QString path);
+	QString makeAnchor (const QString &name);
 };
 
 #endif
