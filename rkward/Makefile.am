@@ -38,7 +38,7 @@ rkward_bin_LDADD = $(top_builddir)/rkward/windows/libwindows.a \
 	$(LIBSOCKET) -L$(R_HOMEDIR)/lib -lR $(R_LAPACK_FLAG) $(R_BLAS_FLAG) -lkatepartinterfaces
 
 SUBDIRS = plugins dataeditor settings plugin agents rbackend dialogs scriptbackends \
-	misc core icons windows syntax
+	misc core icons windows syntax pages
 
 install-data-local:
 	$(mkinstalldirs) $(kde_appsdir)/Applications/

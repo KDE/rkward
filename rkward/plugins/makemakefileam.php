@@ -8,12 +8,16 @@
 # ../plugins/makemakefileam.php pages > Makefile.am
 
 if ($argc < 2) {
+	$base_dir = "";
 	readsubs ("", "plugins");
 } else {
+	$base_dir = $argv[1];
 	readsubs ("", $argv[1]);
 }
 
 function readsubs ($dir, $prefix) {
+	global $base_dir;
+
 	if ($dir == "") {
 		$thisdir = opendir (".");
 		$ndir = "";
@@ -24,7 +28,7 @@ function readsubs ($dir, $prefix) {
 	$subdirs = array ();
 	$files = array ();
 	
-	echo (strtr ($prefix, "/", "X") . "dir = $(kde_datadir)/rkward/" . $dir . "\n");
+	echo (strtr ($prefix, "/", "X") . "dir = $(kde_datadir)/rkward/" . $base_dir . $dir . "\n");
 	
 	while (false !== ($file = readdir($thisdir))) {
 		if (!is_dir ($ndir . $file)) {

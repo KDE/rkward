@@ -18,8 +18,6 @@
 
 #include <klocale.h>
 #include <kconfig.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 
@@ -31,6 +29,7 @@
 #include "../rkward.h"
 #include "../rkglobals.h"
 #include "../misc/multistringselector.h"
+#include "../misc/rkcommonfunctions.h"
 
 // static members
 QStringList RKSettingsModulePlugins::plugin_maps;
@@ -80,7 +79,7 @@ void RKSettingsModulePlugins::buttonClicked (int) {
 }
 
 void RKSettingsModulePlugins::browseRequest (QStringList* strings) {
-	(*strings) = KFileDialog::getOpenFileNames (KGlobal::dirs()->findResourceDir("plugins", "standard_plugins.pluginmap"), "*.pluginmap", this, i18n ("Select .pluginmap-file"));
+	(*strings) = KFileDialog::getOpenFileNames (RKCommonFunctions::getRKWardDataDir (), "*.pluginmap", this, i18n ("Select .pluginmap-file"));
 }
 
 QString RKSettingsModulePlugins::caption () {
@@ -115,14 +114,7 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	config->setGroup ("Plugin Settings");
 	plugin_maps = config->readListEntry ("Plugin Maps");
 	if (!plugin_maps.count ()) {
-		QString dummy = KGlobal::dirs()->findResourceDir ("data", "rkward/all.pluginmap");
-		if (dummy.isEmpty ()) {
-			// try our luck with a relative path
-			dummy = "plugins";
-		} else {
-			dummy.append ("rkward");
-		}
-		plugin_maps.append (dummy + "/all.pluginmap");
+		plugin_maps.append (RKCommonFunctions::getRKWardDataDir () + "/all.pluginmap");
 	}
 // TODO: this code is only needed for transition from rkward 0.3.4 to rkward 0.3.5. Remove some version later!
 // BEGIN
@@ -134,14 +126,7 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	}
 	if (fix) {
 		plugin_maps.clear ();
-		QString dummy = KGlobal::dirs()->findResourceDir ("data", "rkward/all.pluginmap");
-		if (dummy.isEmpty ()) {
-			// try our luck with a relative path
-			dummy = "plugins";
-		} else {
-			dummy.append ("rkward");
-		}
-		plugin_maps.append (dummy + "/all.pluginmap");
+		plugin_maps.append (RKCommonFunctions::getRKWardDataDir () + "/all.pluginmap");
 	}
 // END
 

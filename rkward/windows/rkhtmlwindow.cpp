@@ -24,7 +24,6 @@
 #include <kmessagebox.h>
 #include <krun.h>
 #include <kparts/partmanager.h>
-#include <kstandarddirs.h>
 
 #include <qfileinfo.h>
 #include <qwidget.h>
@@ -422,8 +421,7 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 			if (help_file_name.isNull ()) break;
 			help_file_name = QFileInfo (chandle->getFilename ()).dir (true).filePath (help_file_name);
 		} else {
-			help_base_dir = KGlobal::dirs()->findResourceDir ("pages", "rkward/pages/rkward_welcome.rkh");
-			help_base_dir.append ("rkward/pages");
+			help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
 
 			help_file_name = help_base_dir + url.path () + ".rkh";
 		}

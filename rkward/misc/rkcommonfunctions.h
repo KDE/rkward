@@ -2,7 +2,7 @@
                           rkcommonfunctions  -  description
                              -------------------
     begin                : Mon Oct 17 2005
-    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -34,6 +34,9 @@ namespace RKCommonFunctions {
 	void removeContainers (KXMLGUIClient *from, const QStringList &names, bool recursive);
 /** move container (action, menu, etc.) with tagname "tagname" and attribute 'name="..."' to be a child node of the tag with tagname=tagname and attribute name=to_name. Can be used to make a top-level menu a sub-menu of another menu instead */
 	void moveContainer (KXMLGUIClient *client, const QString &tagname, const QString &name, const QString &to_name, bool recursive);
+
+/** Get the base directory where RKWard data files are stored */
+	QString getRKWardDataDir ();
 
 /** given the context line, find what looks like an R symbol */
 	QString getCurrentSymbol (const QString &context_line, int cursor_pos, bool strict=true);

@@ -21,6 +21,8 @@
 #include <qregexp.h>
 
 #include <kxmlguiclient.h>
+#include <kglobal.h>
+#include <kstandarddirs.h>
 
 namespace RKCommonFunctions {
 	void removeNamedElementsRecursive (const QStringList &names, QDomNode &parent) {
@@ -130,6 +132,10 @@ namespace RKCommonFunctions {
 		*start = context_line.findRev (rx_no_word, cursor_pos-1) + 1;
 		*end = context_line.find (rx_no_word, cursor_pos);
 		if (*end < 0) *end = context_line.length ();
+	}
+
+	QString getRKWardDataDir () {
+		return (KGlobal::dirs ()->findResourceDir ("data", "rkward/all.pluginmap") + "rkward/");
 	}
 
 }	// namespace
