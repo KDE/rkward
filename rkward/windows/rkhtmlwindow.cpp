@@ -204,8 +204,8 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 	setIcon (SmallIcon ("text_block"));
 	setCaption (i18n ("Output"));
 
-	outputFlush = new KAction (i18n ("&Flush"), 0, 0, this, SLOT (flushOutput ()), actionCollection (), "output_flush");
-	outputRefresh = new KAction (i18n ("&Refresh"), 0, 0, this, SLOT (refreshOutput ()), actionCollection (), "output_refresh");
+	outputFlush = new KAction (i18n ("&Flush Output"), 0, 0, this, SLOT (flushOutput ()), actionCollection (), "output_flush");
+	outputRefresh = new KAction (i18n ("&Refresh Output"), 0, 0, this, SLOT (refreshOutput ()), actionCollection (), "output_refresh");
 	print = KStdAction::print (this, SLOT (slotPrint ()), actionCollection (), "print_output");
 	print->setText (i18n ("Print Output"));
 	addCommonActions (actionCollection ());

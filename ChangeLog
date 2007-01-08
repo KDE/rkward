@@ -4,8 +4,11 @@
 - enhancements to existing plot plug-ins
 - Experimental (might still be removed):
 	- Always show all top level menus
-	- new function rk.results () for use in plugins
 
+- removed the "output" menu; entries were moved to "Edit" and "View"
+- always show all top level menus
+- code generated for most plugins cleaned and simplified
+- new function rk.results () for use in plugins
 - fix: the output window would not refresh changed plot images (unless closed and reopened)
 - fix several minor issues as identified by the "krazy" source code checker
 - allow varslots to request objects of specified dimensionality and length
