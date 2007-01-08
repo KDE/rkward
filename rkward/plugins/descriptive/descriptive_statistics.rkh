@@ -13,9 +13,13 @@
 		Same paragraph
 	</usage>
 	<settings>
+		<caption id="tab_variables"/>
 		<setting id="x">Select one or more numeric vectors to analyse</setting>
+		<caption id="tab_mean_sd"/>
 		<setting id="mean">Should the mean value be computed?</setting>
 		<setting id="trim">Trim of the mean. See <link href="rkward://rhelp/mean"/></setting>
+		<caption id="tab_median_mad"/>
+		<caption id="tab_range_etc"/>
 	</settings>
 	<related>
 		<ul>

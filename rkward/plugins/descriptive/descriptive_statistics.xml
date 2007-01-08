@@ -6,7 +6,7 @@
 
 	<dialog label="Descriptive Statistics" >
 		<tabbook>
-			<tab label="Variables">
+			<tab label="Variables" id="tab_variables">
 				<row>
 					<column>
 						<varselector id="vars" />
@@ -16,7 +16,7 @@
 					</column>
 				</row>
 			</tab>
-			<tab label="Mean Standard Deviation">				
+			<tab label="Mean Standard Deviation" id="tab_mean_sd">
 				<column>
 					<checkbox value_unchecked="0" checked="true" value="1" id="mean" label="mean" />
 					<spinbox type="real" initial="0" min="0" id="trim" max="0.5" label="trim" />
@@ -26,7 +26,7 @@
 				</column>
 				<stretch/>
 			</tab>
-			<tab label="Median, MAD">
+			<tab label="Median, MAD" id="tab_median_mad">
 				<column>
 					<frame label="Median, Range" >
 						<checkbox value_unchecked="0" value="1" id="median" label="median" />
@@ -43,7 +43,7 @@
 					<stretch/>
 				</column>
 			</tab>
-			<tab label="Range, Sum, Product and Length">
+			<tab label="Range, Sum, Product and Length" id="tab_range_etc">
 				<row>
 					<column>
 						<frame>

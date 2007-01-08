@@ -435,14 +435,37 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 
 			// TODO: handle some generic sections
 
-			// TODO: handle settings section
+			element = help_xml->getChildElement (help_doc_element, "settings", DL_WARNING);
+			if (!element.isNull ()) {
+				khtmlpart->write ("<h2>" + i18n ("GUI settings") + "</h2>\n");
+				XMLChildList setting_elements = help_xml->getChildElements (element, QString (), DL_WARNING);
+				for (XMLChildList::iterator it = setting_elements.begin (); it != setting_elements.end (); ++it) {
+					if ((*it).tagName () == "setting") {
+						QString id = help_xml->getStringAttribute (*it, "id", QString (), DL_WARNING);
+						QString title = help_xml->getStringAttribute (*it, "title", QString (), DL_WARNING);
+						if (title.isEmpty ()) {
+							QDomElement source_element = component_xml->findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
+							title = component_xml->getStringAttribute (source_element, "label", i18n ("Unnamed GUI element"), DL_WARNING);
+						}
+						khtmlpart->write ("<h4>" + title + "</h4>");
+						khtmlpart->write (renderHelpFragment (*it));
+					} else if ((*it).tagName () == "caption") {
+						QString id = help_xml->getStringAttribute (*it, "id", QString (), DL_WARNING);
+						QString title = help_xml->getStringAttribute (*it, "title", QString (), DL_INFO);
+						QDomElement source_element = component_xml->findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
+						title = component_xml->getStringAttribute (source_element, "label", title, DL_WARNING);
+						khtmlpart->write ("<h3>" + title + "</h3>");
+					} else {
+						help_xml->displayError (&(*it), "Tag not allowed, here", DL_WARNING);
+					}
+				}
+			}
 
 			element = help_xml->getChildElement (help_doc_element, "related", DL_WARNING);
 			if (!element.isNull ()) {
 				khtmlpart->write ("<h2>" + i18n ("Related functions and pages") + "</h2>\n");
 				khtmlpart->write (renderHelpFragment (element));
 			}
-			// TODO: handle related section
 
 			khtmlpart->end ();
 			success = true;
@@ -466,17 +489,17 @@ QString RKHelpWindow::renderHelpFragment (QDomElement &fragment) {
 		if (element.isNull ()) continue;
 
 		prepareHelpLink (&element);
-		qDebug ("fragment");
 	}
 
 	QString ret;
 	QTextOStream stream (&ret);
-	fragment.save (stream, 0);
+	for (QDomNode node = fragment.firstChild (); !node.isNull (); node = node.nextSibling ()) {
+		node.save (stream, 0);
+	}
 
 	ret.prepend ("<p>");
 	ret.append ("</p>");
 	ret.replace ("\n\n", "</p>\n<p>");
-	// TOOD: prettification: the fragment's old tag (e.g. <summary> is still present inthe output)
 
 	qDebug ("%s", ret.latin1 ());
 	return ret;
@@ -484,7 +507,6 @@ QString RKHelpWindow::renderHelpFragment (QDomElement &fragment) {
 
 void RKHelpWindow::prepareHelpLink (QDomElement *link_element) {
 	RK_TRACE (APP);
-	qDebug ("link");
 
 	link_element->setTagName ("a");
 	if (link_element->text ().isEmpty ()) {
@@ -493,7 +515,11 @@ void RKHelpWindow::prepareHelpLink (QDomElement *link_element) {
 		if (url.protocol () == "rkward") {
 			if (url.host () == "component") {
 				RKComponentHandle *chandle = componentPathToHandle (url.path ());
-				chandle ? text = chandle->getLabel () : text = i18n ("BROKEN REFERENCE");
+				if (chandle) text = chandle->getLabel ();
+				else {
+					text = i18n ("BROKEN REFERENCE");
+					RK_DO (qDebug ("Broken component reference to %s", url.path ().latin1 ()), APP, DL_WARNING);
+				}
 			} else if (url.host () == "rhelp") {
 				text = i18n ("R Reference on '%1'").arg (url.path ().mid (1));
 			} else if (url.host () == "page") {

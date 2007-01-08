@@ -2,7 +2,7 @@
                           xmlhelper.cpp  -  description
                              -------------------
     begin                : Fri May 6 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -102,6 +102,27 @@ QDomElement XMLHelper::getChildElement (const QDomElement &parent, const QString
 
 	return list.first ();
 }
+
+QDomElement XMLHelper::findElementWithAttribute (const QDomElement &parent, const QString &attribute_name, const QString &attribute_value, bool recursive, int debug_level) {
+	RK_TRACE (XML);
+
+	XMLChildList list = getChildElements (parent, QString (), debug_level);
+	for (XMLChildList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
+		if ((*it).hasAttribute (attribute_name)) {
+			if (((*it).attribute (attribute_name)) == attribute_value) {
+				return (*it);
+			}
+		}
+		if (recursive) {
+			QDomElement found = findElementWithAttribute (*it, attribute_name, attribute_value, true, debug_level);
+			if (!found.isNull ()) return found;
+		}
+	}
+
+	QDomElement dummy;
+	return dummy;
+}
+
 
 QString XMLHelper::getStringAttribute (const QDomElement &element, const QString &name, const QString &def, int debug_level) {
 	RK_TRACE (XML);

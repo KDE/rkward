@@ -2,7 +2,7 @@
                           xmlhelper.h  -  description
                              -------------------
     begin                : Fri May 6 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -63,6 +63,15 @@ When calling this function, highestError () will be reset to 0.
 @param debug_level level of debug message to generate in case of failure
 @returns the element found */
 	QDomElement getChildElement (const QDomElement &parent, const QString &name, int debug_level);
+
+/** find the first child element of parent, that has a certain attribute
+@param parent the element whose children to search
+@param attribute_name the attribute name of the attribute to search for
+@param attribute_value the attribute value of the attribute to search for
+@param recursive do a recursive search? If false, only direct children will be looked at
+@param debug_level level of debug message to generate in case of failure
+@returns the element found */
+	QDomElement findElementWithAttribute (const QDomElement &parent, const QString &attribute_name, const QString &attribute_value, bool recursive, int debug_level);
 
 /** returns the value of a string attribute (Note: most get...Attribute functions use this function internally)
 @param element the element whose attributes to search
