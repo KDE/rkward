@@ -139,6 +139,7 @@ private:
 
 class QDomElement;
 class RKComponentHandle;
+class XMLHelper;
 
 /**
 	\brief Show html help files.

@@ -128,6 +128,8 @@ signals:
 public slots:
 	/** Raise the help search window */
 	void showHelpSearch ();
+	/** Show the starting page of RKWard help */
+	void showRKWardHelp ();
 	/** Invokes R help (help.start ()) */
 	void invokeRHelp ();
 	/** show instructions on reporting bugs in rkward */

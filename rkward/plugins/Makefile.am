@@ -198,7 +198,8 @@ dist_pluginsXdescriptive_DATA = \
 	descriptive/descriptive_statistics.php \
 	descriptive/descriptive_statistics.xml \
 	descriptive/skewness_kurtosis_test.xml \
-	descriptive/skewness_kurtosis_test.php
+	descriptive/skewness_kurtosis_test.php \
+	descriptive/descriptive_statistics.rkh
 
 pluginsXx11devicedir = $(kde_datadir)/rkward/x11device
 dist_pluginsXx11device_DATA = \

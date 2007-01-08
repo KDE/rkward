@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -25,6 +25,7 @@
 #include <qlabel.h>
 #include <qdir.h>
 #include <qcombobox.h>
+#include <qcheckbox.h>
 #include <qbuttongroup.h>
 #include <qradiobutton.h>
 
@@ -37,6 +38,7 @@ QString RKSettingsModuleGeneral::files_path;
 QString RKSettingsModuleGeneral::new_files_path;
 StartupDialog::Result RKSettingsModuleGeneral::startup_action;
 RKSettingsModuleGeneral::WorkplaceSaveMode RKSettingsModuleGeneral::workplace_save_mode;
+bool RKSettingsModuleGeneral::show_help_on_startup;
 
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -59,6 +61,11 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	startup_action_choser->setCurrentItem (startup_action);
 	connect (startup_action_choser, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
 	main_vbox->addWidget (startup_action_choser);
+
+	show_help_on_startup_box = new QCheckBox (i18n ("Show RKWard Help on Startup"), this);
+	show_help_on_startup_box->setChecked (show_help_on_startup);
+	connect (show_help_on_startup_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
+	main_vbox->addWidget (show_help_on_startup_box);
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
@@ -109,6 +116,7 @@ void RKSettingsModuleGeneral::applyChanges () {
 	RK_TRACE (SETTINGS);
 	new_files_path = files_choser->getLocation ();
 	startup_action = static_cast<StartupDialog::Result> (startup_action_choser->currentItem ());
+	show_help_on_startup = show_help_on_startup_box->isChecked ();
 #if QT_VERSION < 0x030200
 	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->id (workplace_save_chooser->selected ()));
 #else
@@ -129,6 +137,7 @@ void RKSettingsModuleGeneral::saveSettings (KConfig *config) {
 
 	config->setGroup ("General");
 	config->writeEntry ("startup action", (int) startup_action);
+	config->writeEntry ("show help on startup", show_help_on_startup);
 
 	config->setGroup ("Workplace");
 	config->writeEntry ("save mode", (int) workplace_save_mode);
@@ -142,6 +151,7 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 
 	config->setGroup ("General");
 	startup_action = (StartupDialog::Result) config->readNumEntry ("startup action", StartupDialog::NoSavedSetting);
+	show_help_on_startup = config->readBoolEntry ("show help on startup", true);
 
 	config->setGroup ("Workplace");
 	workplace_save_mode = (WorkplaceSaveMode) config->readNumEntry ("save mode", SaveWorkplaceWithWorkspace);

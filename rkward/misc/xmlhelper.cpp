@@ -109,7 +109,7 @@ QDomElement XMLHelper::findElementWithAttribute (const QDomElement &parent, cons
 	XMLChildList list = getChildElements (parent, QString (), debug_level);
 	for (XMLChildList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
 		if ((*it).hasAttribute (attribute_name)) {
-			if (((*it).attribute (attribute_name)) == attribute_value) {
+			if (attribute_value.isNull () || ((*it).attribute (attribute_name) == attribute_value)) {
 				return (*it);
 			}
 		}
@@ -121,6 +121,28 @@ QDomElement XMLHelper::findElementWithAttribute (const QDomElement &parent, cons
 
 	QDomElement dummy;
 	return dummy;
+}
+
+XMLChildList XMLHelper::findElementsWithAttribute (const QDomElement &parent, const QString &attribute_name, const QString &attribute_value, bool recursive, int debug_level) {
+	RK_TRACE (XML);
+
+	XMLChildList ret;
+	XMLChildList list = getChildElements (parent, QString (), debug_level);
+	for (XMLChildList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
+		if ((*it).hasAttribute (attribute_name)) {
+			if (attribute_value.isNull () || ((*it).attribute (attribute_name) == attribute_value)) {
+				ret.append (*it);
+			}
+		}
+		if (recursive) {
+			XMLChildList subret = findElementsWithAttribute (*it, attribute_name, attribute_value, true, debug_level);
+			for (XMLChildList::const_iterator it = subret.constBegin (); it != subret.constEnd (); ++it) {
+				ret.append (*it);
+			}
+		}
+	}
+
+	return ret;
 }
 
 

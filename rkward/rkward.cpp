@@ -227,6 +227,10 @@ void RKWardMainWindow::doPostInit () {
 		RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (kapp->config ()));
 	}
 
+	if (RKSettingsModuleGeneral::showHelpOnStartup ()) {
+		showRKWardHelp ();
+	}
+
 	setCaption (QString::null);	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 }
 
@@ -330,6 +334,7 @@ void RKWardMainWindow::initActions()
 void RKWardMainWindow::makeRKWardHelpMenu (QWidget *for_window, KActionCollection *ac) {
 	KAction *help_invoke_r_help = new KAction (i18n ("Help on R"), 0, 0, this, SLOT (invokeRHelp ()), ac, "invoke_r_help");
 	KAction *show_help_search = new KAction (i18n ("Search R Help"), 0, 0, this, SLOT (showHelpSearch ()), ac, "show_help_search");
+	KAction *show_rkward_help = new KAction (i18n ("Help on RKWard"), 0, 0, this, SLOT (showRKWardHelp ()), ac, "rkward_help");
 
 	KStdAction::helpContents (this, SLOT (appHelpActivated ()), ac);
 	KStdAction::aboutApp (this, SLOT (showAboutApplication ()), ac);
@@ -338,6 +343,7 @@ void RKWardMainWindow::makeRKWardHelpMenu (QWidget *for_window, KActionCollectio
 
 	help_invoke_r_help->setStatusText (i18n ("Shows the R help index"));
 	show_help_search->setStatusText (i18n ("Shows/raises the R Help Search window"));
+	show_rkward_help->setStatusText (i18n ("Show help on RKWard"));
 }
 
 void RKWardMainWindow::partAdded (KParts::Part *part) {
@@ -558,6 +564,13 @@ void RKWardMainWindow::showHelpSearch () {
 
 	search_help_view->show ();
 	search_help_view->wrapperWidget ()->topLevelWidget ()->raise ();
+}
+
+void RKWardMainWindow::showRKWardHelp () {
+	RK_TRACE (APP);
+
+	RKWorkplace::mainWorkplace ()->openHelpWindow ("rkward://page/rkward_welcome");
+	topLevelWidget ()->raise ();
 }
 
 void RKWardMainWindow::slotNewDataFrame () {

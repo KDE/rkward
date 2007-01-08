@@ -1,0 +1,16 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>Welcome to RKWard</title>
+
+	<summary>
+	This help page gives a rough overview over the most important parts of RKWard.
+
+	By default, this page is shown each time RKWard is started. You can disable / re-enable this behavior under Settings->Configure RKWard->General.
+	</summary>
+
+	<section title="Introduction to RKWard">
+	</section>
+
+	<section title="Getting Started">
+	</section>
+</document>

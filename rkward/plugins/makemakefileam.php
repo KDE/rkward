@@ -1,11 +1,17 @@
 #!/usr/bin/php
 <?
 
-# filthy script to generate a Makefile.am for the plugins-directory, installing all plugins as found.
+# filthy script to generate a Makefile.am for the plugins, and pages directories, installing all plugins and help pages as found.
 # usage: (in plugins dir)
 # ./makemakefileam.php > Makefile.am
+# usage: (in pages dir)
+# ../plugins/makemakefileam.php pages > Makefile.am
 
-readsubs ("", "plugins");
+if ($argc < 2) {
+	readsubs ("", "plugins");
+} else {
+	readsubs ("", $argv[1]);
+}
 
 function readsubs ($dir, $prefix) {
 	if ($dir == "") {
@@ -22,7 +28,7 @@ function readsubs ($dir, $prefix) {
 	
 	while (false !== ($file = readdir($thisdir))) {
 		if (!is_dir ($ndir . $file)) {
-			if ((substr ($file, -4) == ".xml") || (substr ($file, -4) == ".php") || (substr ($file, -10) == ".pluginmap")) {
+			if ((substr ($file, -4) == ".xml") || (substr ($file, -4) == ".php") || (substr ($file, -10) == ".pluginmap") || (substr ($file, -4) == ".rkh")) {
 				if ($file != "makemakefileam.php") {
 					array_push ($files, $file);
 				}

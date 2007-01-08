@@ -67,11 +67,20 @@ When calling this function, highestError () will be reset to 0.
 /** find the first child element of parent, that has a certain attribute
 @param parent the element whose children to search
 @param attribute_name the attribute name of the attribute to search for
-@param attribute_value the attribute value of the attribute to search for
+@param attribute_value the attribute value of the attribute to search for. If this a null string, each element containing the attribute qualifies
 @param recursive do a recursive search? If false, only direct children will be looked at
 @param debug_level level of debug message to generate in case of failure
 @returns the element found */
 	QDomElement findElementWithAttribute (const QDomElement &parent, const QString &attribute_name, const QString &attribute_value, bool recursive, int debug_level);
+
+/** like findElementWithAttribute, but returns all such elements
+@param parent the element whose children to search
+@param attribute_name the attribute name of the attribute to search for
+@param attribute_value the attribute value of the attribute to search for. If this a null string, each element containing the attribute qualifies
+@param recursive do a recursive search? If false, only direct children will be looked at
+@param debug_level level of debug message to generate in case of failure
+@returns the element found */
+	XMLChildList findElementsWithAttribute (const QDomElement &parent, const QString &attribute_name, const QString &attribute_value, bool recursive, int debug_level);
 
 /** returns the value of a string attribute (Note: most get...Attribute functions use this function internally)
 @param element the element whose attributes to search
