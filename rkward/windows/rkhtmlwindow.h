@@ -82,6 +82,7 @@ protected:
 	KAction *back;
 	KAction *forward;
 	KAction *print;
+	bool url_change_is_from_history;	// dirty!!!
 };
 
 /**

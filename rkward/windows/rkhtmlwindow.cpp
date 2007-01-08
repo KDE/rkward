@@ -60,6 +60,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow:
 
 	url_history.setAutoDelete (true);
 	back = forward = print = 0;		// initialization done in subclasses
+	url_change_is_from_history = false;
 }
 
 RKHTMLWindow::~RKHTMLWindow () {
@@ -101,27 +102,27 @@ void RKHTMLWindow::slotPrint () {
 void RKHTMLWindow::slotForward () {
 	RK_TRACE (APP);
 
+	url_change_is_from_history = true;
 	url_history.next ();
 	RK_ASSERT (url_history.current ());
-qDebug ("Error is here");
-	khtmlpart->openURL (*(url_history.current ()));
-	updateCaption (*(url_history.current ()));
+	openURL (*(url_history.current ()));
 
 	back->setEnabled (true);
 	forward->setEnabled (url_history.current () != url_history.getLast ());
+	url_change_is_from_history = false;
 }
 
 void RKHTMLWindow::slotBack () {
 	RK_TRACE (APP);
 
+	url_change_is_from_history = true;
 	url_history.prev ();
 	RK_ASSERT (url_history.current ());
-qDebug ("Error is here");
-	khtmlpart->openURL (*(url_history.current ()));
-	updateCaption (*(url_history.current ()));
+	openURL (*(url_history.current ()));
 
 	forward->setEnabled (true);
 	back->setEnabled (url_history.current () != url_history.getFirst ());
+	url_change_is_from_history = false;
 }
 
 bool RKHTMLWindow::openURL (const KURL &url) {
@@ -146,15 +147,17 @@ bool RKHTMLWindow::openURL (const KURL &url) {
 void RKHTMLWindow::changeURL (const KURL &url) {
 	updateCaption (url);
 
-	if (back && forward) {
-		KURL *current_url = url_history.current ();
-		while (current_url != url_history.getLast ()) {
-			url_history.removeLast ();
+	if (!url_change_is_from_history) {
+		if (back && forward) {
+			KURL *current_url = url_history.current ();
+			while (current_url != url_history.getLast ()) {
+				url_history.removeLast ();
+			}
+			KURL *url_copy = new KURL (url);
+			url_history.append (url_copy);
+			back->setEnabled (url_history.count () > 1);
+			forward->setEnabled (false);
 		}
-		KURL *url_copy = new KURL (url);
-		url_history.append (url_copy);
-		back->setEnabled (url_history.count () > 1);
-		forward->setEnabled (false);
 	}
 }
 
@@ -367,7 +370,7 @@ bool RKHelpWindow::openURL (const KURL &url) {
 	} else if (url.protocol () == "rkhelp") {
 		ok = renderRKHelp (url);
 	} else {
-		ok = RKHTMLWindow::openURL (url);
+		return (RKHTMLWindow::openURL (url));
 	}
 
 	if (!ok) {
