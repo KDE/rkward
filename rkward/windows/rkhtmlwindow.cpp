@@ -359,9 +359,7 @@ RKHelpWindow::~RKHelpWindow () {
 bool RKHelpWindow::openURL (const KURL &url) {
 	RK_TRACE (APP);
 
-	// TODO: real error handling
 	bool ok = true;
-	qDebug ("here1 %s", url.prettyURL ().latin1 ());
 	if (url.protocol () == "rkward") {
 		if (url.host () == "component") {
 			ok = renderRKHelp (url);
@@ -450,7 +448,7 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 		for (XMLChildList::iterator it = src_elements.begin (); it != src_elements.end (); ++it) {
 			QString src = (*it).attribute ("src");
 			if (KURL::isRelativeURL (src)) {
-				src = QDir::cleanDirPath (base_path.filePath (src));
+				src = "file://" + QDir::cleanDirPath (base_path.filePath (src));
 				(*it).setAttribute ("src", src);
 			}
 		}
@@ -542,7 +540,7 @@ QString RKHelpWindow::renderHelpFragment (QDomElement &fragment) {
 	ret.append ("</p>");
 	ret.replace ("\n\n", "</p>\n<p>");
 
-	qDebug ("%s", ret.latin1 ());
+	RK_DO (qDebug ("%s", ret.latin1 ()), APP, DL_DEBUG);
 	return ret;
 }
 
@@ -564,7 +562,16 @@ void RKHelpWindow::prepareHelpLink (QDomElement *link_element) {
 			} else if (url.host () == "rhelp") {
 				text = i18n ("R Reference on '%1'").arg (url.path ().mid (1));
 			} else if (url.host () == "page") {
-				text = "TODO: some help page";
+				QString help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
+		
+				QString help_file_name = help_base_dir + url.path () + ".rkh";
+				XMLHelper *xml = new XMLHelper ();
+
+				QDomElement doc_element = xml->openXMLFile (help_file_name, DL_WARNING);
+				QDomElement title_element = xml->getChildElement (doc_element, "title", DL_WARNING);
+				text = title_element.text ();
+
+				delete xml;
 			}
 			link_element->appendChild (link_element->ownerDocument ().createTextNode (text));
 		}
