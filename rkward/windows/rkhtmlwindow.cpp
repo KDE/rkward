@@ -423,7 +423,7 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 
 			help_file_name = help_base_dir + url.path () + ".rkh";
 		}
-		qDebug ("%s", help_file_name.latin1 ());
+		RK_DO (qDebug ("rendering help page for local file %s", help_file_name.latin1 ()), APP, DL_DEBUG);
 
 		// open help file
 		QDomElement help_doc_element = help_xml->openXMLFile (help_file_name, DL_ERROR);
@@ -472,6 +472,7 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 			khtmlpart->write (renderHelpFragment (*it));
 		}
 
+		// the section "settings" is the most complicated, as the labels of the individual GUI items has to be fetched from the component description. Of course it is only meaningful for component help, and not rendered for top level help pages.
 		if (for_component) {
 			element = help_xml->getChildElement (help_doc_element, "settings", DL_INFO);
 			if (!element.isNull ()) {
@@ -555,10 +556,6 @@ void RKHelpWindow::prepareHelpLink (QDomElement *link_element) {
 			if (url.host () == "component") {
 				RKComponentHandle *chandle = componentPathToHandle (url.path ());
 				if (chandle) text = chandle->getLabel ();
-				else {
-					text = i18n ("BROKEN REFERENCE");
-					RK_DO (qDebug ("Broken component reference to %s", url.path ().latin1 ()), APP, DL_WARNING);
-				}
 			} else if (url.host () == "rhelp") {
 				text = i18n ("R Reference on '%1'").arg (url.path ().mid (1));
 			} else if (url.host () == "page") {
@@ -573,6 +570,12 @@ void RKHelpWindow::prepareHelpLink (QDomElement *link_element) {
 
 				delete xml;
 			}
+
+			if (text.isEmpty ()) {
+				text = i18n ("BROKEN REFERENCE");
+				RK_DO (qDebug ("Broken reference to %s", url.path ().latin1 ()), APP, DL_WARNING);
+			}
+
 			link_element->appendChild (link_element->ownerDocument ().createTextNode (text));
 		}
 	}
