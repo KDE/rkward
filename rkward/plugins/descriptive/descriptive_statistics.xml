@@ -28,7 +28,7 @@
 			</tab>
 			<tab label="Median, MAD" id="tab_median_mad">
 				<column>
-					<frame label="Median, Range" >
+					<frame label="Median" >
 						<checkbox value_unchecked="0" value="1" id="median" label="median" />
 					</frame>
 					<frame label="Median Absolute Deviation (mad)" >
