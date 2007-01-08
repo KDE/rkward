@@ -32,7 +32,7 @@ function readsubs ($dir, $prefix) {
 	
 	while (false !== ($file = readdir($thisdir))) {
 		if (!is_dir ($ndir . $file)) {
-			if ((substr ($file, -4) == ".xml") || (substr ($file, -4) == ".php") || (substr ($file, -10) == ".pluginmap") || (substr ($file, -4) == ".rkh")) {
+			if ((substr ($file, -4) == ".xml") || (substr ($file, -4) == ".php") || (substr ($file, -10) == ".pluginmap") || (substr ($file, -4) == ".rkh") || (substr ($file, -4) == ".png")) {
 				if ($file != "makemakefileam.php") {
 					array_push ($files, $file);
 				}
