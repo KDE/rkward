@@ -2,13 +2,13 @@
 # Greek translation of Rkward.
 # This file is put in the public domain.
 #
-# Ilias Soumpasis <isoumpasis@gmail.com>, 2006.
+# Ilias Soumpasis <isoumpasis@gmail.com>, 2006, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-08 23:54+0100\n"
-"PO-Revision-Date: 2006-11-29 21:29+0200\n"
+"PO-Revision-Date: 2007-01-09 10:26+0200\n"
 "Last-Translator: Ilias Soumpasis <isoumpasis@gmail.com>\n"
 "Language-Team: Ελληνικά <el@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -166,8 +166,7 @@ msgid "Delete this row (%1)"
 msgstr "Διαγραφή αυτής της σειράς (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Δεν δόθηκε όνομα αρχείου. Τα δεδομένα σας δεν αποθηκεύτηκαν. Θέλετε να "
 "συνεχίσετε;"
@@ -310,8 +309,7 @@ msgid "Remove object?"
 msgstr "Αφαίρεση αντικειμένου;"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "Θέλετε πραγματικά να διαγράψετε το αντικείμενο '%1'; Δεν θα υπάρχει τρόπος "
 "να το ανακτήσετε."
@@ -410,14 +408,12 @@ msgid "Output"
 msgstr "Παράθυρο αποτελεσμάτων"
 
 #: windows/rkhtmlwindow.cpp:206
-#, fuzzy
 msgid "&Flush Output"
-msgstr "Εκκαθάριση παραθύρου αποτελεσμάτων;"
+msgstr "&Εκκαθάριση Παραθύρου Αποτελεσμάτων"
 
 #: windows/rkhtmlwindow.cpp:207
-#, fuzzy
 msgid "&Refresh Output"
-msgstr "&Ανανέωση"
+msgstr "&Ανανέωση Παραθύρου Αποτελεσμάτων"
 
 #: windows/rkhtmlwindow.cpp:209
 msgid "Print Output"
@@ -428,7 +424,6 @@ msgid "Save Output as HTML"
 msgstr "Αποθήκευση αποτελεσμάτων ως ιστοσελίδα"
 
 #: windows/rkhtmlwindow.cpp:306
-#, fuzzy
 msgid ""
 "Do you really want to flush the output? It will not be possible to restore "
 "it."
@@ -460,43 +455,39 @@ msgstr "Βοήθεια R"
 
 #: windows/rkhtmlwindow.cpp:376
 msgid "Page does not exist or is broken"
-msgstr ""
+msgstr "Η σελίδα δεν υπάρχει ή είναι προβληματική "
 
 #: windows/rkhtmlwindow.cpp:434
-#, fuzzy
 msgid "No Title"
-msgstr "Τίτλος"
+msgstr "Χωρίς τίτλο"
 
 #: windows/rkhtmlwindow.cpp:460 windows/rkhtmlwindow.cpp:463
 msgid "Summary"
-msgstr ""
+msgstr "Περίληψη"
 
 #: windows/rkhtmlwindow.cpp:469 windows/rkhtmlwindow.cpp:472
-#, fuzzy
 msgid "Usage"
-msgstr "Χρήση: "
+msgstr "Χρήση"
 
 #: windows/rkhtmlwindow.cpp:491 windows/rkhtmlwindow.cpp:515
-#, fuzzy
 msgid "GUI settings"
-msgstr "Ρυθμίσεις"
+msgstr "Ρυθμίσεις GUI"
 
 #: windows/rkhtmlwindow.cpp:499
 msgid "Unnamed GUI element"
-msgstr ""
+msgstr "Στοιχείο του GUI χωρίς όνομα"
 
 #: windows/rkhtmlwindow.cpp:523 windows/rkhtmlwindow.cpp:526
-#, fuzzy
 msgid "Related functions and pages"
-msgstr "Πρόσθετα και προσθήκες"
+msgstr "Σχετικές λειτουργίες και σελίδες"
 
 #: windows/rkhtmlwindow.cpp:602
 msgid "R Reference on '%1'"
-msgstr ""
+msgstr "Αναφορά του R για το '%1'"
 
 #: windows/rkhtmlwindow.cpp:617
 msgid "BROKEN REFERENCE"
-msgstr ""
+msgstr "ΠΡΟΒΛΗΜΑΤΙΚΗ ΑΝΑΦΟΡΑ"
 
 #: windows/rcontrolwindow.cpp:41
 msgid "Configure R backend"
@@ -609,7 +600,6 @@ msgid "Syntax error.\n"
 msgstr "Σφάλμα σύνταξης.\n"
 
 #: windows/rkcommandlog.cpp:177
-#, fuzzy
 msgid "An unspecified error occurred while running the command.\n"
 msgstr "Ένα απροσδιόριστο σφάλμα συνέβη κατά την εκτέλεση της εντολής.\n"
 
@@ -672,13 +662,11 @@ msgstr "Προσδιορισμός αντικειμένου R"
 
 #: windows/rkwindowcatcher.cpp:245
 msgid "Specify the R object name, you want to save the graph to"
-msgstr ""
-"Επιλέξτε το όνομα του αντικειμένου R με το οποίο θέλετε να σώσετε το γράφημα"
+msgstr "Επιλέξτε το όνομα του αντικειμένου R με το οποίο θέλετε να σώσετε το γράφημα"
 
 #: windows/rkwindowcatcher.cpp:256
 msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr ""
-"Αποθήκευση περιεχομένων της συσκευής γραφικών νούμερο %1 στο αντικείμενο '%2'"
+msgstr "Αποθήκευση περιεχομένων της συσκευής γραφικών νούμερο %1 στο αντικείμενο '%2'"
 
 #: windows/rkwindowcatcher.cpp:265
 msgid "Duplicate graphics device number %1"
@@ -773,7 +761,6 @@ msgid "Could not create plugin"
 msgstr "Αδύνατη η δημιουργία προσθέτου"
 
 #: plugin/rkstandardcomponentgui.cpp:47
-#, fuzzy
 msgid ""
 "The R-backend has reported one or more error(s) while processing the plugin "
 "'%1'.\n"
@@ -785,7 +772,7 @@ msgstr ""
 "επεξεργασίας του προσθέτου '%1'.\n"
 "Αυτό μπορεί να οδηγήσει σε λάθος αποτελέσματα και πιθανόν να οφείλετε σε "
 "κάποιο bug στο πρόσθετο.\n"
-"Μία περιγραφή του σφάλματος φαίνεται παρακάτω."
+"Μία περιγραφή του σφάλματος φαίνεται παρακάτω. "
 
 #: plugin/rkstandardcomponentgui.cpp:47
 msgid "R-Error"
@@ -919,7 +906,7 @@ msgstr "Προβολή διαλόγου επιλογής (προεπιλεγμέ
 
 #: settings/rksettingsmodulegeneral.cpp:65
 msgid "Show RKWard Help on Startup"
-msgstr ""
+msgstr "Προβολή της βοήθειας του RKWard κατά την εκκίνηση"
 
 #: settings/rksettingsmodulegeneral.cpp:72
 msgid ""
@@ -1024,12 +1011,11 @@ msgid "Output Window options"
 msgstr "Επιλογές παραθύρου αποτελεσμάτων"
 
 #: settings/rksettingsmoduler.cpp:57
-#, fuzzy
 msgid ""
 "The following settings mostly affect R behavior in the console. It is "
 "generally safe to keep these unchanged."
 msgstr ""
-"Οι ακόλουθες ρυθμίσεις επηρεάζουν περισσότερο την συμπεριφορά του R στο "
+"Οι ακόλουθες ρυθμίσεις επηρεάζουν κυρίως την συμπεριφορά του R στο "
 "τερματικό . Είναι γενικά ασφαλές να μην αλλάξετε αυτές τις ρυθμίσεις."
 
 #: settings/rksettingsmoduler.cpp:65
@@ -1118,8 +1104,7 @@ msgstr "Αρχικοποίηση μεταφορτομένων πακέτων "
 
 #: settings/rksettingsmoduler.cpp:283
 msgid "R Library locations  (where libraries get installed to, locally)"
-msgstr ""
-"Τοποθεσίες βιβλιοθηκών R (εκεί όπου οι βιβλιοθήκες εγκαθιστώνται τοπικά)"
+msgstr "Τοποθεσίες βιβλιοθηκών R (εκεί όπου οι βιβλιοθήκες εγκαθιστώνται τοπικά)"
 
 #: settings/rksettingsmoduler.cpp:288
 msgid ""
@@ -1167,7 +1152,7 @@ msgstr "Μέγιστος αριθμός παραγράγων/γραμμών πρ
 
 #: settings/rksettingsmoduleconsole.cpp:63
 msgid "Run commands from script editor through console"
-msgstr ""
+msgstr "Εκτέλεση εντολών από τον επεξεργαστή σεναρίων στο τερματικό"
 
 #: settings/rksettingsmoduleconsole.cpp:148
 msgid "Console"
@@ -1210,14 +1195,12 @@ msgid "Application commands"
 msgstr "Εντολές εφαρμογής"
 
 #: settings/rksettingsmodulewatch.cpp:143
-#, fuzzy
 msgid "Synchronization commands"
-msgstr "Εντολές συγχρονισμού"
+msgstr "Εντολές συγχρονισμού "
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr ""
-"Μέγιστος αριθμός παραγράγων/γραμμών προβολής στο αρχείο καταγραφής εντολών"
+msgstr "Μέγιστος αριθμός παραγράγων/γραμμών προβολής στο αρχείο καταγραφής εντολών"
 
 #: settings/rksettings.cpp:61
 msgid "Settings"
@@ -1472,8 +1455,7 @@ msgstr "'%1'- Δεν δόθηκε τιμή ιδιότητας. Υποτίθετ�
 
 #: misc/xmlhelper.cpp:171
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr ""
-"Μη επιτρεπόμενη τιμής ιδιότητας. Επιτρεπόμενες τιμές είναι μόνο μία από '%1'."
+msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Επιτρεπόμενες τιμές είναι μόνο μία από '%1'."
 
 #: misc/xmlhelper.cpp:185
 msgid "Illegal attribute value. Only integer numbers are allowed."
@@ -1481,8 +1463,7 @@ msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο α
 
 #: misc/xmlhelper.cpp:201
 msgid "Illegal attribute value. Only real numbers are allowed."
-msgstr ""
-"Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο πραγματικοί αριθμοί επιτρέπονται."
+msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο πραγματικοί αριθμοί επιτρέπονται."
 
 #: misc/xmlhelper.cpp:219
 msgid "Illegal attribute value. Allowed values are 'true' or 'false', only."
@@ -1495,8 +1476,7 @@ msgid "XML-parsing '%1' "
 msgstr "Ανάλυση XML '%1' "
 
 #: misc/rkprogresscontrol.cpp:202
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>Υπήρξαν σφάλματα ή / και προειδοποιήσεις! Δείτε παρακάτω για μια "
 "περιγραφή</b>"
@@ -1629,20 +1609,19 @@ msgstr ""
 
 #: scriptbackends/phpbackend.cpp:243
 msgid "## Prepare\n"
-msgstr ""
+msgstr "## Ετοιμάζεται\n"
 
 #: scriptbackends/phpbackend.cpp:247
 msgid "## Compute\n"
-msgstr ""
+msgstr "## Υπολογισμός\n"
 
 #: scriptbackends/phpbackend.cpp:251
-#, fuzzy
 msgid "## Print result\n"
-msgstr "Εκτύπωση Βοήθειας"
+msgstr "## Εκτύπωση Βοήθειας\n"
 
 #: scriptbackends/phpbackend.cpp:255
 msgid "## Clean up\n"
-msgstr ""
+msgstr "## Εκκαθάριση\n"
 
 #: scriptbackends/phpbackend.cpp:291
 msgid ""
@@ -1697,14 +1676,13 @@ msgstr ""
 "επανεκκινήσετε RKWard.\n"
 
 #: rbackend/rinterface.cpp:184
-#, fuzzy
 msgid ""
 "\t-An unspecified error occurred that is not yet handled by RKWard. Likely "
 "RKWard will not function properly. Please check your setup.\n"
 msgstr ""
-"\t-Ακαθόριστο σφάλμα το οποίο δεν είναι σε θέση να χειριστεί το RKWard. "
+"\t-Συνέβη ένα ακαθόριστο σφάλμα το οποίο δεν είναι σε θέση να χειριστεί το RKWard. "
 "Πιθανόν το RKWard να μην λειτουργεί σωστά. Παρακαλώ ελέγξτε τις ρυθμίσεις "
-"σας. \n"
+"σας.\n"
 
 #: rbackend/rinterface.cpp:186
 msgid "Error starting R"
@@ -1724,7 +1702,6 @@ msgid "Cannot edit '%1'"
 msgstr "Δεν μπορεί να γίνει επεξεργασία του'%1'"
 
 #: rbackend/rinterface.cpp:325
-#, fuzzy
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1734,7 +1711,7 @@ msgstr ""
 "Το σύστημα υποστήριξης έχει υποδείξει ότι για να προχωρήσει με αυτήν την "
 "εργασία απαιτείται το πακέτο '%1', το οποίο δεν είναι εγκατεστημένο. Θα "
 "ανοίξει το εργαλείο διαχείρισης πακέτων, και εκεί μπορείτε να εντοπίσετε και "
-"να εγκαταστήσετε το πακέτο."
+"να εγκαταστήσετε το πακέτο. "
 
 #: rbackend/rinterface.cpp:325
 msgid "Require package '%1'"
@@ -1851,9 +1828,8 @@ msgid "RKWard logo, many suggestions, help on wording"
 msgstr "Λογότυπο  RKWard, πολλές προτάσεις, βοηθήστε στις λέξεις"
 
 #: main.cpp:91
-#, fuzzy
 msgid "Many plugins, suggestions, marketing"
-msgstr "Διάφορα πρόσθετα και προτάσεις"
+msgstr "Διάφορα πρόσθετα, προτάσεις και μάρκετινγκ"
 
 #: main.cpp:92
 msgid "Several valuable comments, hints and patches"
@@ -2003,9 +1979,8 @@ msgid "Search R Help"
 msgstr "Αναζήτηση βοήθειας R"
 
 #: rkward.cpp:337
-#, fuzzy
 msgid "Help on RKWard"
-msgstr "Βοήθεια στο R"
+msgstr "Βοήθεια στο R "
 
 #: rkward.cpp:344
 msgid "Shows the R help index"
@@ -2016,9 +1991,8 @@ msgid "Shows/raises the R Help Search window"
 msgstr "Προβάλει/εμφανίζει το παράθυρο αναζήτησης βοήθειας του R"
 
 #: rkward.cpp:346
-#, fuzzy
 msgid "Show help on RKWard"
-msgstr "Τι να περιμένετε από το RKWard"
+msgstr "Προβολή βοήθειας του RKWard"
 
 #: rkward.cpp:377
 msgid "starting R engine"
@@ -2060,8 +2034,7 @@ msgstr "Εισάγετε το όνομα για το νέο πακέτο δεδ�
 
 #: rkward.cpp:584 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "The name you specified was already in use or not valid. Renamed to %1"
-msgstr ""
-"Το όνομα που δώσατε ήδη υπάρχει ή δεν είναι έγκυρο. Μετονομάστηκε σε %1"
+msgstr "Το όνομα που δώσατε ήδη υπάρχει ή δεν είναι έγκυρο. Μετονομάστηκε σε %1"
 
 #: rkward.cpp:584 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "Invalid Name"
@@ -2108,7 +2081,6 @@ msgid "R Console"
 msgstr "Τερματικό R"
 
 #: rkconsole.cpp:425
-#, fuzzy
 msgid "Syntax error\n"
 msgstr "Σφάλμα σύνταξης.\n"
 
@@ -2117,14 +2089,12 @@ msgid "Interrupt running command"
 msgstr "Διακοπή εντολής που εκτελείται"
 
 #: rkconsole.cpp:643
-#, fuzzy
 msgid "Copy selection cleaned"
-msgstr "Αντιγραφή επιλογής"
+msgstr "Η αντιγραφή επιλογής εκκαθαρίστηκε"
 
 #: rkconsole.cpp:644
-#, fuzzy
 msgid "Copy selection literally"
-msgstr "Αντιγραφή επιλογής"
+msgstr "Αντιγραφή επιλογής κυριολεκτικά"
 
 #: rkconsole.cpp:665
 msgid ""
@@ -2132,17 +2102,15 @@ msgid ""
 "However, the console is currently busy (either a command is running, or you "
 "have started to enter text in the console). Do you want to bypass the "
 "console this one time, or do you want to try again later?"
-msgstr ""
+msgstr "Έχετε ρυθμίσει το RKWard να εκτελεί τις εντολές των σεναρίων μέσω του τερματικού. Παρόλα αυτά, το τερματικό είναι προσωρινά απασχολημένο (είτε εκτελείται μία εντολή ή εσείς έχετε αρχίσει να πληκτρολογείτε κείμενο στο τερματικό). Θέλετε να παρακάμψετε το τερματικό αυτήν την φορά, ή θέλετε να προσπαθήσετε αργότερα?"
 
 #: rkconsole.cpp:665
-#, fuzzy
 msgid "Console is busy"
-msgstr "Τερματικό"
+msgstr "Το τερματικό είναι απασχολημένο"
 
 #: rkconsole.cpp:665
-#, fuzzy
 msgid "Bypass console"
-msgstr "Τερματικό R"
+msgstr "Παράκαμψη τερματικού"
 
 #: robjectviewer.cpp:43
 msgid "Object name: "
@@ -2193,7 +2161,6 @@ msgid " - Waiting for results from R..."
 msgstr " - Αναμονή αποτελεσμάτων από το R..."
 
 #: robjectviewer.cpp:75
-#, fuzzy
 msgid ""
 "\n"
 "Some errors occurred: "
@@ -2365,8 +2332,3 @@ msgstr ""
 "_: EMAIL OF TRANSLATORS\n"
 "isoumpasis@gmail.con, isoumpasis@yahoo.gr"
 
-#~ msgid "&Flush"
-#~ msgstr "&Εκκαθάριση"
-
-#~ msgid "Clear Console"
-#~ msgstr "Εκκαθάριση τερματικού"
