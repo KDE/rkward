@@ -40,8 +40,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2006-03-24</date>
-<releaseinfo>0.3.5.00</releaseinfo>
+<date>2007-01-09</date>
+<releaseinfo>0.4.5.00</releaseinfo>
 
 <abstract>
 <para>
@@ -62,7 +62,7 @@ This is a guide to writing plugins for &rkward;.
 <title>Introduction</title>
 
 <para>
-Documentation as of &kapp; release 0.3.5.
+Documentation as of &kapp; release 0.4.5.
 </para>
 <para>
 This document describes how to write your own plugins. Note, that at the time of this writing, none of the concepts are set it stone. Therefore, this document should be regarded as an introduction to the current approach, and as a basis for discussion. All sorts of comments are welcome.
@@ -100,7 +100,7 @@ Also, none of the chapters shows all options, but rather only the basic concepts
 Of course the first question you might have is: What portions of &kapp; functionality is realized using plugins? Or: What can plugins do?
 </para>
 <para>
-One way to answer this is: Deselect all .pluginmap-files under Settings->Configure &kapp;->Plugins, and see what's missing. A slightly more helpful answer: Most acutal statistics functions accessable via the GUI are realized using plugins. Also, you can create fairly flexible GUIs for all kinds of operations using plugins.
+One way to answer this is: Deselect all .pluginmap-files under Settings->Configure &kapp;->Plugins, and see what's missing. A slightly more helpful answer: Most actual statistics functions accessible via the GUI are realized using plugins. Also, you can create fairly flexible GUIs for all kinds of operations using plugins.
 </para>
 <para>
 The basic paradigm behind &kapp; plugins is the one we'll walk you through in this document: An xml-file describes what the GUI looks like. An additional PHP-file is used to generate R syntax from the GUI settings. That is, plugins do not really have to perform any statistical calculations. Rather plugins generate the R syntax needed to run those calculations. The R syntax is then sent to the R backend for evaluation, and typically a result is shown in the output window.
@@ -357,7 +357,7 @@ Inside the &lt;frame&gt; we place another &lt;checkbox&gt; (using checked="true"
 	&lt;/dialog&gt;
 </programlisting>
 <para>
-That all for the second page of the &lt;tabbook&gt;, all pages in the &lt;tabbook&gt; and all elements in the &lt;dialog&gt;. We're finished defining what the dialog looks like. Actually we don't have to define an additional &lt;wizard&gt;-interface, but here's how that would be done. Things should be fairly self-explanatory be now, so I leave that part without comments:
+That's all for the second page of the &lt;tabbook&gt;, all pages in the &lt;tabbook&gt; and all elements in the &lt;dialog&gt;. We're finished defining what the dialog looks like. Actually we don't have to define an additional &lt;wizard&gt;-interface, but here's how that would be done. Things should be fairly self-explanatory be now, so I leave that part without comments:
 </para>
 <programlisting>
 	&lt;wizard label="Independent Samples T-Test"&gt;
@@ -438,20 +438,34 @@ rk.temp &lt;- t.test (
 as plain text. Next we need to fill in the value, the user selected as the first variable. Hence we enter PHP-mode again (&lt;?) and call 'getRK ("x");'. This prints out the value of the GUI-element with id "x": our first &lt;varslot&gt;. Next we leave PHP-mode again, print a ', ', and do the same to fetch the value of the element "y" - the second &lt;varslot&gt;. For the hypothesis (the &lt;radio&gt;-group), and the equal variances-&lt;checkbox&gt;, the procedure is very similar.
 </para>
 <para>
-It gets a little more tricky for the confidence level. For reasons of aestethics, we don't want to explicitly specify the confidence level to use, if it corresponds to the default value. Hence, instead of printing the value with 'getRK', we fetch it silently using 'getRK_val' and assign it to a PHP-variable. We then check, whether that variable differs from "0.95" and if so print out an additional argument.
+It gets a little more tricky for the confidence level. For reasons of aestethics, we don't want to explicitly specify the confidence level to use, if it corresponds to the default value. Hence, instead of printing the value with 'getRK', we fetch it silently using 'getRK_val' and assign it to a PHP-variable. Then we check, whether that variable differs from "0.95" and if so print out an additional argument.
 Finally, we leave PHP-mode again, print a last ')', and that's it for the calculate-function.
 </para>
 <programlisting>
 	function printout () {
-?&gt;rk.print (rk.temp);
+?&gt;rk.header ("Independent samples t test")
+rk.print (rk.temp)
 &lt;?
 	}
 </programlisting>
 <para>
-And this was all there is to the printout function in most cases. rk.print utilizes the R2HTML package to provide HTML formatted output. You could also excert greater control over the generated output. For this, you'll generate an R syntax, that consists esp. of "cat ()" commands, piecing together an HTML output. If in doubt, just use rk.print (), and be done with.
+And this was all there is to the printout function in most cases. rk.header () prints a standard headline for the results. You can also add some more information to this, if you like, e.g.:
+</para>
+<programlisting>
+	function printout () {
+?&gt;rk.header ("Independent samples t test", parameters=list ("Assume equal variances", &lt;? getRK ("varequal"); ?&gt;, "Confidence level", &lt;? getRK ("conflevel"); ?&gt;))
+rk.print (rk.temp)
+&lt;?
+	}
+</programlisting>
+<para>
+The list of parameters is given as pairs of "Description", "Value". This will also be printed in a standard way.
 </para>
 <para>
-Note: At the time of this writing, I plan to add an rk.print.header () function to print out some information about what kind of analysis was done, when, what parameters, etc. Check back with this document, soon.
+rk.print () utilizes the R2HTML package to provide HTML formatted output. Another helpful function is rk.results (), which can also output different kinds of result tables. If in doubt, however, just use rk.print (), and be done with.
+</para>
+<para>
+Note that internally, the output is just a plain HTML document at this point of time. Therefore you might be tempted to add custom HTML using cat (). While this will work, please don't do this. The output format may change (e.g. to ODF) in the future, so it's best not to introduce HTML specific code. Rather keep things simple with rk.header (), rk.print (), and rk.results (). If those don't seem to satisfy your formatting needs, contact us on the mailing list for help.
 </para>
 <programlisting>
 	function cleanup () {
@@ -464,8 +478,113 @@ Note: At the time of this writing, I plan to add an rk.print.header () function 
 Finally, in the function cleanup we discard the temporary object(s) we left in the R-workspace. You should always clean up all objects created while running the plugin, except if the user explicitely requested otherwise.
 </para>
 <para>
-Congratulations! You created your first plugin. Read on in the next chapters for more advanced concepts
+Congratulations! You created your first plugin. Read on in the next chapters for more advanced concepts.
 </para>
+
+<section id="phpconventions">
+<title>Conventions and policies</title>
+<para>
+There are many ways to write R code for a certain task, and there are even more ways to generate this R code from PHP. How exactly you do it, is left up to you. Still there are a number of considerations that you should follow.
+</para>
+
+<section id="policyvariablenaming">
+<title>Variable naming</title>
+<para>
+More often than not you will have to create one or more temporary R objects in the code generated by your plugin. When doing so, please name all objects rk.tempX, where X can be any name you like. So, just prefix the variable names with "rk.temp".
+</para>
+<para>
+The reason for this policy is, that plugin code is executed directly in the user's R workspace. If an object happens to be left over (because there was an error, or you forgot to state it the in cleanup () section), it should not be easy to confuse with the other objects the user has. More importantly, if the user has a symbol "x" in the workspace, and you name a variable "x" in your plugin, the user's variable will be overwritten without prompting! Obviously this should be strictly avoided.
+</para>
+<para>
+One exception to this rule is, that if the user explicitely asked for an object to be stored in the workspace, that is ok, of course.
+</para>
+</section>
+
+<section id="policyformatting">
+<title>Code formatting</title>
+<para>
+The most important thing is for your generated R code to work. But please also keep an eye on formatting. Some considerations:
+</para>
+<para>
+Normal top-level R statements should be left aligned.
+</para>
+<para>
+Statements in a lower block should be indented with one tab (see example below).
+</para>
+<para>
+If you do very complex calculations, add a comment here and there, esp. to mark up logical sections.
+</para>
+<para>
+For example, generated code might look like this. The same code without indentation or comments would be pretty hard to read, despite its modest complexity:
+</para>
+<programlisting>
+# first determine the wobble and rotation
+rk.temp.wobble &lt;- wobble (x, y)
+rk.temp.rotation &lt;- wobble.rotation (wobble, z)
+
+# boggling method needs to be chosen according to rotation
+if (rk.temp.rotation &gt; wobble.rotation.limit (x)) {
+	rk.temp.method &lt;- "foo"
+	rk.temp.result &lt;- boggle.foo (rk.temp.wobble, rk.temp.rotation)
+} else {
+	rk.temp.method &lt;- "bar"
+	rk.temp.result &lt;- boggle.bar (rk.temp.wobble, rk.temp.rotation)
+}
+</programlisting>
+</section>
+
+<section id="policysimplicity">
+<title>Dealing with complex options</title>
+<para>
+Many plugins can do more than one thing. For instance, the "Descriptive Statistics" plugin can compute mean, range, sum, product, median, length, etc. However, typically the user will only chose to have some of those calculations performed. In this case, please try to keep the generated code as simple as possible. It should only contain portions relevant to the options that are actually selected. To achieve this, here is an example of a common design patterns as you would use it (in PHP):
+</para>
+<programlisting>
+	function calculate () { ?&gt;
+rk.temp.var &lt;- &lt;? getRK ("x");
+rk.temp.results &lt;- list () ?&gt;
+&lt;?
+		if (getRK_val ("domean")) { ?&gt;
+rk.temp.results$'Mean value' &lt;- mean (rk.temp.var)
+&lt;?		}
+		if (getRK_val ("domedian")) { ?&gt;
+rk.temp.results$'Median' &lt;- median (rk.temp.var)
+&lt;?		}
+		if (getRK_val ("dosd")) { ?&gt;
+rk.temp.results$'Standard deviation' &lt;- sd (rk.temp.var)
+&lt;?		}
+		//...
+	}
+</programlisting>
+</section>
+
+</section>
+
+<section id="phptips">
+<title>Tips and tricks</title>
+<para>
+Here are a few assorted tricks which may make writing plugins less tedious:
+</para>
+<para>
+If you need the value of a GUI setting at several places in you plugin's code, consider assigning it to a PHP variable, and using that instead of fetching it again and again with getRK. This is faster, more readable, and less typing all at the same time:
+</para>
+<programlisting>
+function calculate () {
+	if (getRK_val ("remove_nas") == "1") {
+		$narm = ", na.rm=TRUE";
+	} else {
+		$narm = "";	// na.rm=FALSE is the default in all functions below
+	}
+?&gt;
+# ...
+rk.temp.results$foo &lt;- foo (rk.temp.x&lt;? echo ($narm); ?&gt;)
+rk.temp.results$bar &lt;- bar (rk.temp.x&lt;? echo ($narm); ?&gt;)
+rk.temp.results$foobar &lt;- foobar (rk.temp.x&lt;? echo ($narm); ?&gt;)
+# ...
+&lt;?
+}
+</programlisting>
+</section>
+
 </chapter>
 
 <chapter id="logic">

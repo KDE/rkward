@@ -5,16 +5,6 @@ All in all, this TODO list is mostly for internal purposes, and many parts may n
 Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
 
-NEXT RELEASE:
-	- Documentation:
-		- Remove examples showing direct generation of HTML. Rather show examples of rk.header, rk.result
-			- State policy and reasoning
-		- Check what we write on file-names
-		- New section "conventions and policies"
-			- Variable naming
-			- dealing with multiple actions per plugin
-			- alignment, etc.
-
 Bugs:
 	- There seems to be a race condition at startup, leading to a crash in doPostInit () in rkward.cpp. (Un-)Fortunately it triggers only rarely, and I have not yet figured out, when it occurs. Is this still the case? I've fixed one potential race condition a while ago, and have not seen this crash in a while (2006/09/27)
 	- "cannot create html package index" when installing package as a regular user (due to R.home ("doc") not writable)
