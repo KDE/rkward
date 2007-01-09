@@ -90,6 +90,9 @@ Some advanced concepts may be used in those three steps, but are dealt with in s
 </itemizedlist>
 </para>
 <para>
+Finally, there is a chapter on <link linkend="pluginhelp">adding a help page</link> to your plugin.
+</para>
+<para>
 Also, none of the chapters shows all options, but rather only the basic concepts. A complete <link linkend="reference">reference</link> of options is provided separately.
 </para>
 </chapter>
@@ -255,10 +258,16 @@ The doctype is not really interpreted, yet. Set it to rkplugin, anyway.
 </para>
 <programlisting>
 &lt;document&gt;
-	&lt;code file="code.php"/&gt;
+	&lt;code file="t_test.php"/&gt;
 </programlisting>
 <para>
-All plugins generate some code. Currently the only way to do so is using PHP, as detailed in <link linkend="phptemplate">the next chapter</link>. This defines, where to look for the PHP-code. The filname is relative to the directory the plugin-xml is in.
+All plugins generate some code. Currently the only way to do so is using PHP, as detailed in <link linkend="phptemplate">the next chapter</link>. This defines, where to look for the PHP-code. The filename is relative to the directory the plugin-xml is in.
+</para>
+<programlisting>
+	&lt;help file="t_test.rkh"/&gt;
+</programlisting>
+<para>
+It is usually a good idea, to also provide a help page for your plugin. The filename of that help page is given, here, relative to the directory, the plugin-xml is in. Writing help pages is documented <link linkend="pluginhelp">here</link>. If you do not provide a help file, omit this line.
 </para>
 <programlisting>
 	&lt;dialog label="Independent Samples T-Test"&gt;
@@ -801,6 +810,104 @@ This is nothing new in principle, we've covered &lt;connect&gt; statements in th
 </section>
 </chapter>
 
+<chapter id="pluginhelp">
+<title>Writing a help page</title>
+<para>
+When your plugin basically works, the time has come to provide a help page. While typically you will not want to explain all the underlying concepts in depth, you may want to add some more explanation for some of the options, and link to related plugins and R functions.
+</para>
+<para>
+You may recall putting this inside your plugin-xml (if you haven't put this in, do so now):
+</para>
+<programlisting>
+&lt;document&gt;
+	[...]
+	&lt;help file="filename.rkh" /&gt;
+	[...]
+&lt;/document&gt;
+</programlisting>
+<para>
+Where, obviously, you'd replace "filename" with a more appropriate name. Now it's time to create this .rkh file. Here is a self-descriptive example:
+</para>
+<programlisting>
+&lt;!DOCTYPE rkhelp&gt;
+&lt;document&gt;
+	&lt;summary&gt;
+In this section, you'll put some short, very basic information about what the plugin does.
+This section will always show up on the very top of the help page.
+	&lt;/summary&gt;
+
+	&lt;usage&gt;
+The usage section may contain a little more practical information. It does not explain all
+the settings in detail (that's done in the "settings" section), however.
+
+To start a new paragraph, insert an empty line, as shown above.
+This line, in contrast, will be in the same paragraph.
+
+In all sections you can insert some simple HTML code, such as &lt;b&gt;bold&lt;/b&gt; or
+&lt;i&gt;italic&lt;/i&gt; text. Please keep formatting to the minimum needed, however.
+
+The usage section is always the second section shown in a help page.
+	&lt;/usage&gt;
+
+	&lt;section id="sectionid" title="Generic section"&gt;
+If you need to, you can add additional sections between the usage and settings sections.
+However, usually, you will not need this while documenting plugins. The "id"-attribute
+provides an anchor point to jump to this section from the navigation menu.
+
+In any section you may want to insert links to further information. You do this by adding
+
+&lt;link href="URL"&gt;link name&lt;/link&gt;
+
+Where URL could be an external link such as http://rkward.sourceforge.net .
+Several special URLs are supported in the help pages:
+
+&lt;link href="rkward://page/path/page_id"/&gt;
+
+This links to a top level rkward help page (not for a plugin).
+
+&lt;link href="rkward://component/[namespace/]component_id"/&gt;
+
+This links to the help page of another plugin. The [namespace/] part may be omitted
+(in this case, rkward is assumed as the standard namespace). The component_id is the
+same that you specified in the <link linkend="pluginmap">.pluginmap</link>.
+
+&lt;link href="rkward://rhelp/rfunction"/&gt;
+
+Links to the R help page on "rfunction".
+
+Note that the link names will be generated automatically for these types of links.
+	&lt;/section&gt;
+
+	&lt;settings&gt;
+		&lt;caption id="id_of_tab_or_frame"/&gt;
+		&lt;setting id="id_of_elementa"&gt;
+Description of the GUI element identified by the given id
+		&lt;/setting&gt;
+		&lt;setting id="id_of_elementb" title="description"&gt;
+Usually the title of the GUI element will be extracted from the
+<link linkend="mainxml">XML definition of the plugin</link>, automatically. However,
+for some GUI elements, this description may not be enough to identify them, reliably.
+In this case, you can add an explicit title using the "title" attribute.
+		&lt;/setting&gt;
+		&lt;setting id="id_of_elementc"&gt;
+Description of the GUI element identified by "id_of_elementc"
+		&lt;/setting&gt;
+		[...]
+	&lt;/settings&gt;
+
+	&lt;related&gt;
+The related section (always last) typically just contains some links, such as:
+
+&lt;ul&gt;
+	&lt;li&gt;&lt;link href="rkward://rhelp/mean"/&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;link href="rkward://rhelp/median"/&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;link href="rkward://component/related_component"/&gt;&lt;/li&gt;
+&lt;/ul&gt;
+	&lt;/related&gt;
+&lt;/document&gt;
+</programlisting>
+</chapter>
+
 <appendix id="reference">
 <title>Reference</title>
 
@@ -902,6 +1009,26 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 <varlistentry>
 <term>&lt;document&gt;</term>
 <listitem>Needs to be present in each description.xml-file as the root-node. No special function. No attributes</listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;code&gt;</term>
+<listitem>Defines where to look for the PHP template to the plugin. Use only once per file, as a direct child of the document-tag. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>&lt;file&gt;</term>
+	<listitem>Filename of the PHP template, relative to the directory the plugin-xml is in</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;help&gt;</term>
+<listitem>Defines where to look for the help file for the plugin. Use only once per file, as a direct child of the document-tag. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>&lt;file&gt;</term>
+	<listitem>Filename of the help file, relative to the directory the plugin-xml is in</listitem>
+	</varlistentry>
+	</variablelist></listitem>
 </varlistentry>
 </variablelist>
 </section>
