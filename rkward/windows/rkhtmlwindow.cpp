@@ -456,39 +456,29 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 		// render the sections
 		element = help_xml->getChildElement (help_doc_element, "summary", DL_INFO);
 		if (!element.isNull ()) {
-			khtmlpart->write (makeAnchor ("summary"));
-			khtmlpart->write ("<h2>" + i18n ("Summary") + "</h2>\n");
+			khtmlpart->write (startSection ("summary", i18n ("Summary"), &anchors, &anchornames));
 			khtmlpart->write (renderHelpFragment (element));
-			anchors.append ("summary");
-			anchornames.append (i18n ("Summary"));
 		}
 
 		element = help_xml->getChildElement (help_doc_element, "usage", DL_INFO);
 		if (!element.isNull ()) {
-			khtmlpart->write (makeAnchor ("usage"));
-			khtmlpart->write ("<h2>" + i18n ("Usage") + "</h2>\n");
+			khtmlpart->write (startSection ("usage", i18n ("Usage"), &anchors, &anchornames));
 			khtmlpart->write (renderHelpFragment (element));
-			anchors.append ("usage");
-			anchornames.append (i18n ("Usage"));
 		}
 
 		XMLChildList section_elements = help_xml->getChildElements (help_doc_element, "section", DL_INFO);
 		for (XMLChildList::iterator it = section_elements.begin (); it != section_elements.end (); ++it) {
 			QString title = help_xml->getStringAttribute (*it, "title", QString (), DL_WARNING);
 			QString id = help_xml->getStringAttribute (*it, "id", QString (), DL_WARNING);
-			khtmlpart->write (makeAnchor (id));
-			khtmlpart->write ("<h2>" + title + "</h2>\n");
+			khtmlpart->write (startSection (id, title, &anchors, &anchornames));
 			khtmlpart->write (renderHelpFragment (*it));
-			anchors.append (id);
-			anchornames.append (title);
 		}
 
 		// the section "settings" is the most complicated, as the labels of the individual GUI items has to be fetched from the component description. Of course it is only meaningful for component help, and not rendered for top level help pages.
 		if (for_component) {
 			element = help_xml->getChildElement (help_doc_element, "settings", DL_INFO);
 			if (!element.isNull ()) {
-				khtmlpart->write (makeAnchor ("settings"));
-				khtmlpart->write ("<h2>" + i18n ("GUI settings") + "</h2>\n");
+				khtmlpart->write (startSection ("settings", i18n ("GUI settings"), &anchors, &anchornames));
 				XMLChildList setting_elements = help_xml->getChildElements (element, QString (), DL_WARNING);
 				for (XMLChildList::iterator it = setting_elements.begin (); it != setting_elements.end (); ++it) {
 					if ((*it).tagName () == "setting") {
@@ -510,20 +500,14 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 						help_xml->displayError (&(*it), "Tag not allowed, here", DL_WARNING);
 					}
 				}
-
-				anchors.append ("settings");
-				anchornames.append (i18n ("GUI settings"));
 			}
 		}
 
 		// "related" section
 		element = help_xml->getChildElement (help_doc_element, "related", DL_INFO);
 		if (!element.isNull ()) {
-			khtmlpart->write (makeAnchor ("related"));
-			khtmlpart->write ("<h2>" + i18n ("Related functions and pages") + "</h2>\n");
+			khtmlpart->write (startSection ("related", i18n ("Related functions and pages"), &anchors, &anchornames));
 			khtmlpart->write (renderHelpFragment (element));
-			anchors.append ("related");
-			anchornames.append (i18n ("Related functions and pages"));
 		}
 
 		// create a navigation bar
@@ -634,8 +618,12 @@ RKComponentHandle *RKHelpWindow::componentPathToHandle (QString path) {
 	return (RKComponentMap::getComponentHandle (path_segments.join ("::")));
 }
 
-QString RKHelpWindow::makeAnchor (const QString &name) {
-	return ("<a name=\"" + name + "\">");
+QString RKHelpWindow::startSection (const QString &name, const QString &title, QStringList *anchors, QStringList *anchor_names) {
+	QString ret = "<a name=\"" + name + "\">";
+	ret.append ("<h2>" + title + "</h2>\n");
+	anchors->append (name);
+	anchor_names->append (title);
+	return (ret);
 }
 
 
