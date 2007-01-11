@@ -1,6 +1,8 @@
 --- Version 0.4.5 - DATE
 - TODO: test auto-detection of pluginmap path!
 
+- fixed: non-local workspaces would not be loaded
+- fixed: specifying a workspace to load on the command line would only work for full urls
 - new Console RMB actions: "copy selection cleaned" and "run selection"
 - added a basic help system, and some introductory help pages
 - plug-in for skewness and kurtosis added

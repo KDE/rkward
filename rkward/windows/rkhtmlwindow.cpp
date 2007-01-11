@@ -144,6 +144,15 @@ bool RKHTMLWindow::openURL (const KURL &url) {
 	return true;
 }
 
+KURL RKHTMLWindow::url () {
+	if (khtmlpart) {
+		return khtmlpart->url ();
+	} else {
+		RK_ASSERT (false);
+		return KURL ();
+	}
+}
+
 void RKHTMLWindow::changeURL (const KURL &url) {
 	updateCaption (url);
 

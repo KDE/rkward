@@ -2,7 +2,7 @@
                           rkloadagent  -  description
                              -------------------
     begin                : Sun Sep 5 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -37,11 +37,18 @@ RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
 	RK_TRACE (APP);
 	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Loading Workspace ..."));
 
+	QString filename;
+	if (!url.isLocalFile ()) {
 #if !KDE_IS_VERSION (3, 2, 0)
-	KIO::NetAccess::download (url, tmpfile);
+		KIO::NetAccess::download (url, tmpfile);
 #else
-	KIO::NetAccess::download (url, tmpfile, RKWardMainWindow::getMain ());
+		KIO::NetAccess::download (url, tmpfile, RKWardMainWindow::getMain ());
 #endif
+		filename = tmpfile;
+	} else {
+		filename = url.path ();
+	}
+	
 
 	RCommand *command;
 	
@@ -51,7 +58,7 @@ RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
 		RKGlobals::rInterface ()->issueCommand (command);
 	}
 
-	command = new RCommand ("load (\"" + url.path () + "\")", RCommand::App | RCommand::ObjectListUpdate, QString::null, this, WORKSPACE_LOAD_COMMAND);
+	command = new RCommand ("load (\"" + filename + "\")", RCommand::App | RCommand::ObjectListUpdate, QString::null, this, WORKSPACE_LOAD_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command);
 
 	RObjectList::getObjectList ()->setWorkspaceURL (url);
@@ -65,7 +72,7 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 	
 	if (command->getFlags () == WORKSPACE_LOAD_COMMAND) {
-		KIO::NetAccess::removeTempFile (tmpfile);
+		if (!tmpfile.isEmpty ()) KIO::NetAccess::removeTempFile (tmpfile);
 		if (command->failed ()) {
 			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2").arg (RObjectList::getObjectList ()->getWorkspaceURL ().path ()).arg (command->error ()), i18n ("Error loading workspace"));
 			RObjectList::getObjectList ()->setWorkspaceURL (QString::null);

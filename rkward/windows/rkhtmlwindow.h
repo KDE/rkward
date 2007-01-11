@@ -59,6 +59,8 @@ public:
 	QString getDescription ();
 	bool isModified ();
 	KParts::Part *getPart ();
+/** Return current url */
+	KURL url ();
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
 	void slotOpenURLRequest (const KURL &url, const KParts::URLArgs &);

@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -67,8 +67,9 @@ public:
 @returns false if a local url could not be opened, true for all remote urls, and on success */
 	bool openScriptEditor (const KURL &url=KURL (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString::null);
 /** Opens a new help window, starting at the given url
-@param url URL to open */
-	void openHelpWindow (const KURL &url=KURL ());
+@param url URL to open
+@param only_once if true, checks whether any help window already shows this URL. If so, raise it, but do not open a new window. Else show the new window */
+	void openHelpWindow (const KURL &url=KURL (), bool only_once=false);
 /** Opens a new output window. Currently only a single output window will ever be created. Subsequent calls to the function will not create additional windows right now (but will raise / refresh the output window
 @param url currently ignored! */
 	void openOutputWindow (const KURL &url=KURL ());

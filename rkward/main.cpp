@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
 		
 		KURL *open_url = 0;
 		if (args->count ()) {
-			open_url = new KURL (args->arg (0));
+			open_url = new KURL (args->makeURL (args->arg (0)));
 		}
 		args->clear();
 		
