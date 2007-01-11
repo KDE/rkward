@@ -25,27 +25,27 @@ rk.header ("Highest density regions", list ("Variable", rk.get.description (<? e
 <?	} ?>	
 
 rk.graph.on ()
-
+try ({
 <?	if ($dohdrcde_plot && $dodensity_plot) { ?>
-par(mfrow=c(1,2))
+	par(mfrow=c(1,2))
 <?	} ?>
 
 <?	if ($dodensity_plot) { ?>
-plot (density(<? echo ($x); ?>, bw = "<? echo ($bw); ?>", adjust = <? echo ($adjust); ?>, <? echo ($giveRkern); ?>, kern = <? echo ($kern); ?>, n = <? getRK ("n"); ?>, <? echo ($narm); ?><? getRK ("plotoptions.code.printout"); ?>))
+	plot (density(<? echo ($x); ?>, bw = "<? echo ($bw); ?>", adjust = <? echo ($adjust); ?>, <? echo ($giveRkern); ?>, kern = <? echo ($kern); ?>, n = <? getRK ("n"); ?>, <? echo ($narm); ?><? getRK ("plotoptions.code.printout"); ?>))
 <?	} ?>
 
 <?	if ($dorug_density) { ?>
-rug(<? echo ($x); ?>, <? getRK ("ticksize"); ?>, <? getRK ("lwd"); ?>, <? getRK ("side"); ?>, col ="<? getRK ("col_rug"); ?>")
+	rug(<? echo ($x); ?>, <? getRK ("ticksize"); ?>, <? getRK ("lwd"); ?>, <? getRK ("side"); ?>, col ="<? getRK ("col_rug"); ?>")
 <?	}
 
 	if ($dohdrcde_plot) { ?>
-require(hdrcde)
-hdr.den(<? echo ($x); ?><? getRK ("plotoptions.code.printout"); ?>)
+	require(hdrcde)
+	hdr.den(<? echo ($x); ?><? getRK ("plotoptions.code.printout"); ?>)
 <?	}
 	if ($dorug_hdrcde) { ?>
-rug(<? echo ($x); ?>, <? getRK ("ticksize"); ?>, <? getRK ("lwd"); ?>, <? getRK ("side"); ?>, col ="<? getRK ("col_rug"); ?>")
+	rug(<? echo ($x); ?>, <? getRK ("ticksize"); ?>, <? getRK ("lwd"); ?>, <? getRK ("side"); ?>, col ="<? getRK ("col_rug"); ?>")
 	<? } ?>
-
+})
 rk.graph.off ()
 <?
 	}

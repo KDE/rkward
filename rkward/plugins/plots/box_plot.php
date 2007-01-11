@@ -10,7 +10,7 @@
 ?>
 rk.header ("Boxplot", list ("Variable(s)", rk.get.description (<?echo ($xvarsstring); ?>, paste.sep=", ")))
 rk.graph.on()
-boxplot (list (<? echo ($xvarsstring); ?>), notch = <? getRK ("notch") ?>, outline = <? getRK("outline")?>, horizontal = <? getRK("orientation") ?><? getRK ("plotoptions.code.printout"); ?>)
+try (boxplot (list (<? echo ($xvarsstring); ?>), notch = <? getRK ("notch") ?>, outline = <? getRK("outline")?>, horizontal = <? getRK("orientation") ?><? getRK ("plotoptions.code.printout"); ?>))
 rk.graph.off ()
 <?
 	}
