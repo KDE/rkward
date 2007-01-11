@@ -14,4 +14,8 @@
 			<Action name="output_refresh"/>
 		</Menu>
 	</MenuBar>
+	<ToolBar fullWidth="true" name="mainToolBar">
+		<Action name="output_flush"/>
+		<Action name="output_refresh"/>
+	</ToolBar>
 </kpartgui>

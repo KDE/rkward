@@ -23,7 +23,7 @@ rk.header ("T-test (independent samples)",
 		paste (rk.get.short.name (rk.temp.x), "is greater than", rk.get.short.name (rk.temp.y))
 	      else
 		paste (rk.get.short.name (rk.temp.x), "and", rk.get.short.name (rk.temp.y), "differ"),
-	"Equal variances:", "<? if (!getRK_val ("varequal")) echo "not"; ?> assumed"))
+	"Equal variances", "<? if (!getRK_val ("varequal")) echo "not"; ?> assumed"))
 
 rk.results (list (
 	'Variable Name'=rk.get.description (rk.temp.x),

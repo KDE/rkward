@@ -14,7 +14,7 @@ function printout () {
 	$giveRkern =  getRK_val ("giveRkern");
 	$x = getRK_val ("x");
 	if ($breaks == "int") {
-		$breaksopt = "breaks =seq (as.integer (min (" . $x . "))-0.5, as.integer (max (" . $x ."))+ 0.5)";
+		$breaksopt = "breaks =seq (floor (min (" . $x . "))-0.5, ceiling (max (" . $x ."))+0.5)";
 		$breaks = "Integers";
 	} else if (!empty ($breaks)) {
 		$breaksopt = "breaks=\"" . $breaks . "\"";

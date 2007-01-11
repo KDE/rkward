@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -130,11 +130,20 @@ bool RKWorkplace::openScriptEditor (const KURL &url, bool use_r_highlighting, bo
 	return true;
 }
 
-void RKWorkplace::openHelpWindow (const KURL &url) {
+void RKWorkplace::openHelpWindow (const KURL &url, bool only_once) {
 	RK_TRACE (APP);
 
 	RKHelpWindow *hw = new RKHelpWindow (view ());
 	if (!url.isEmpty ()) {
+		if (only_once) {
+			RKWorkplaceObjectList help_windows = getObjectList (RKMDIWindow::HelpWindow, RKMDIWindow::AnyState);
+			for (RKWorkplaceObjectList::const_iterator it = help_windows.constBegin (); it != help_windows.constEnd (); ++it) {
+				if (static_cast<RKHelpWindow *> (*it)->url ().equals (url, true)) {
+					(*it)->activate ();
+					return;
+				}
+			}
+		}
 		hw->openURL (url);
 	}
 
@@ -357,7 +366,7 @@ void RKWorkplace::restoreWorkplaceItem (const QString &desc) {
 	} else if (type == "output") {
 		openOutputWindow (specification);
 	} else if (type == "help") {
-		openHelpWindow (specification);
+		openHelpWindow (specification, true);
 	} else {
 		RK_ASSERT (false);
 	}

@@ -144,6 +144,15 @@ bool RKHTMLWindow::openURL (const KURL &url) {
 	return true;
 }
 
+KURL RKHTMLWindow::url () {
+	if (khtmlpart) {
+		return khtmlpart->url ();
+	} else {
+		RK_ASSERT (false);
+		return KURL ();
+	}
+}
+
 void RKHTMLWindow::changeURL (const KURL &url) {
 	updateCaption (url);
 
@@ -203,8 +212,8 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 	setIcon (SmallIcon ("text_block"));
 	setCaption (i18n ("Output"));
 
-	outputFlush = new KAction (i18n ("&Flush Output"), 0, 0, this, SLOT (flushOutput ()), actionCollection (), "output_flush");
-	outputRefresh = new KAction (i18n ("&Refresh Output"), 0, 0, this, SLOT (refreshOutput ()), actionCollection (), "output_refresh");
+	outputFlush = new KAction (i18n ("&Flush Output"), "editclear", 0, this, SLOT (flushOutput ()), actionCollection (), "output_flush");
+	outputRefresh = new KAction (i18n ("&Refresh Output"), "reload", 0, this, SLOT (refreshOutput ()), actionCollection (), "output_refresh");
 	print = KStdAction::print (this, SLOT (slotPrint ()), actionCollection (), "print_output");
 	print->setText (i18n ("Print Output"));
 	addCommonActions (actionCollection ());
