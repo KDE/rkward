@@ -1,3 +1,4 @@
+--- Version 0.4.5 - DATE
 - TODO: test auto-detection of pluginmap path!
 
 - new Console RMB actions: "copy selection cleaned" and "run selection"
@@ -6,6 +7,7 @@
 - plug-ins for distribution analysis added
 - plug-ins for new plots (stripchart & density plot)
 - enhancements to existing plot plug-ins
+- added refresh output and flush output as toolbar actions
 - removed the "output" menu; entries were moved to "Edit" and "View"
 - always show all top level menus
 - code generated for most plugins cleaned and simplified
