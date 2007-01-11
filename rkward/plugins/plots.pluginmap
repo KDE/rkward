@@ -7,6 +7,7 @@
 		<component type="standard" id="ecdf_plot" file="ecdf_plot.xml" label="ECDF Plot" />
 		<component type="standard" id="histogram" file="histogram.xml" label="Histogram" />
 		<component type="standard" id="stripchart" file="stripchart_plot.xml" label="Stripchart" />
+		<component type="standard" id="cor_graph" file="cor_graph.xml" label="Correlation Matrix Plot" />
 
 	</components>
 
@@ -17,6 +18,7 @@
 			<entry component="ecdf_plot" />
 			<entry component="histogram" />
 			<entry component="stripchart" />
+			<entry component="cor_graph" />
 		</menu>
 	</hierarchy>
 </document>

@@ -1,0 +1,12 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="cor_graph.php" />
+
+	<dialog label="Correlation Matrix Graph" >		
+				<row>
+					<varselector id="vars"/>
+					<varslot type="numeric" min_vars="1" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
+				</row>			
+	</dialog>
+
+</document>
