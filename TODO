@@ -78,7 +78,6 @@ UI-stuff
 	- David's usability items
 	- use RKGlobals::marginHint (), RKGlobals::spacingHint () everywhere
 	- from Ralf:
-		- another nifty feature would be - if F8 would work also in the console/log.
 		- show first few values of vectors/scalars in tool-tip in workspace browser
 	- Debugging functionality
 		- ideally the whole thing: setting breakpoints, etc.
@@ -138,6 +137,9 @@ Internal stuff:
 			- How to do this nicely UI wise?
 	- RKCancelDialog / RKErrorDialog:
 		- remove these classes. Port to use RKProgressControl instead
+	- RThread:
+		- Detection of commands that run for a suspiciously long time
+			- Show "do you want to cancel ..." option after configurable amount of time
 	- use R_DirtyImage to determine, whether workspace needs to be saved
 	- in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
 	- Object editing / modification tracking:
