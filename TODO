@@ -49,6 +49,7 @@ UI-stuff
 	- Rework package management dialog
 		- the UI should probably be simplified somehow. But how? All in a single list with "filter"? Ask for ideas/look at other apps
 			- this will be very hard to do with the current Qt. We'd really need several checkboxes *within* a QListViewItem. Tackle this when/after porting to Qt4
+		- add option to remove packages
 	- RObjectListView
 		- use better icons to mark up the different base types
 		- double click action should be configurable: View, Edit, insert name into current script, insert name into console, nothing
