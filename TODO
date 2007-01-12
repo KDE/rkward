@@ -183,6 +183,10 @@ R plugins:
 	- create a spinbox, that can really deal with real numbers
 		- whenever the value changes (user entered text, or clicked up/down), the value will be translated into an integer number, and an integer exponent (in mapTextToValue(), and mapValueToText ()?)
 		- step size will be auto-adjusted logarithmically (e.g. always third most significant digit)
+	- multi-object option group:
+		- provide the set of enclosed options for each of the selected variables
+		- will provide dynamic properties based on which variables are selected in the source
+		- how to determine default values?
 
 Documentation:
 	- add an example to show rkward-specific commands (rk.print, rk.graph)

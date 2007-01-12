@@ -208,7 +208,7 @@ A duplicate option has to be tested-->
 	<!--type
 	-->
 		<page>
-			<radio id="type" label="Type of graphics" >
+			<dropdown id="type" label="Type of graphics" >
 				<option value="'p'" label="Plot individual points " />
 				<option value="'l'" label="Plot lines " />
 				<option value="b" label="Plot points connected by lines (both)" />
@@ -217,7 +217,7 @@ A duplicate option has to be tested-->
 				<option value="'s'" label="Step-function plots : the top of the vertical defines the point" />
 				<option value="'S'" label="Step-function plots : the bottom of the vertical defines the point" />
 				<option value="custoType" label="Customize" />
-			</radio>
+			</dropdown>
 			<input size="medium" id="typeCusto" label="Give a character vector eg : c('p','l')" />
 		</page>
 		<!--titre-->
