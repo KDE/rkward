@@ -54,6 +54,7 @@ public:
 		ComponentBrowser = 2010,
 		ComponentText = 2011,
 		ComponentTab = 2012,
+		ComponentDropDown = 2013,
 		ComponentStandard = 2100,
 		ComponentUser = 3000	/**< for user expansion */
 	};

@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rkradio.cpp  -  description
+                          rkdropdown.h  -  description
                              -------------------
-    begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
+    begin                : Fri Jan 12 2007
+    copyright            : (C) 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -15,13 +15,12 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "rkradio.h"
+#include "rkdropdown.h"
 
 #include <qdom.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
+#include <qcombobox.h>
 
 #include <klocale.h>
 
@@ -29,7 +28,7 @@
 #include "../misc/xmlhelper.h"
 #include "../debug.h"
 
-RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
+RKDropDown::RKDropDown (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
 	// create and register properties
@@ -44,46 +43,41 @@ RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWi
 	// create layout
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 
-	// create ButtonGroup
-	group = new QButtonGroup (xml->getStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
+	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
+	vbox->addWidget (label);
 
-	// create internal layout for the buttons in the ButtonGroup
-	group->setColumnLayout (0, Qt::Vertical);
-	group->layout()->setSpacing (RKGlobals::spacingHint ());
-	group->layout()->setMargin (RKGlobals::marginHint ());
-	QVBoxLayout *group_layout = new QVBoxLayout (group->layout(), RKGlobals::spacingHint ());
+	// create ComboBox
+	box = new QComboBox (false, this);
 
 	// create all the options
 	XMLChildList option_elements = xml->getChildElements (element, "option", DL_ERROR);	
-	int checked = 0;
+	int selected = 0;
 	int i = 0;
 	for (XMLChildList::const_iterator it = option_elements.begin (); it != option_elements.end (); ++it) {
-		QRadioButton *button = new QRadioButton (xml->getStringAttribute (*it, "label", QString::null, DL_ERROR), group);
+		box->insertItem (xml->getStringAttribute (*it, "label", QString::null, DL_ERROR));
 		options.insert (i, xml->getStringAttribute (*it, "value", QString::null, DL_WARNING));
-		group_layout->addWidget (button);
 
 		if (xml->getBoolAttribute (*it, "checked", false, DL_INFO)) {
-			button->setChecked (true);
-			checked = i;
+			selected = i;
 		}
 
 		++i;
 	}
 
-	vbox->addWidget (group);
-	connect (group, SIGNAL (clicked (int)), this, SLOT (buttonClicked (int)));
-
 	updating = false;
-	number->setIntValue (checked);			// will also take care of checking the correct button
+	number->setIntValue (selected);			// will also take care of activating the corret item
 	number->setMin (0);
 	number->setMax (i-1);
+
+	vbox->addWidget (box);
+	connect (box, SIGNAL (activated (int)), this, SLOT (itemSelected (int)));
 }
 
-RKRadio::~RKRadio(){
+RKDropDown::~RKDropDown(){
 	RK_TRACE (PLUGIN);
 }
 
-void RKRadio::propertyChanged (RKComponentPropertyBase *property) {
+void RKDropDown::propertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
 	if (updating) return;
@@ -98,20 +92,20 @@ void RKRadio::propertyChanged (RKComponentPropertyBase *property) {
 	}
 
 	updating = true;
-	group->setButton (new_id);
+	box->setCurrentItem (new_id);
 	updating = false;
 
 	changed ();
 }
 
-void RKRadio::buttonClicked (int id) {
+void RKDropDown::itemSelected (int id) {
 	RK_TRACE (PLUGIN);
 
 	string->setValue (options[id]);
 	number->setIntValue (id);
 }
 
-int RKRadio::findOption (const QString &option_string) {
+int RKDropDown::findOption (const QString &option_string) {
 	RK_TRACE (PLUGIN);
 
 	for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
@@ -120,4 +114,4 @@ int RKRadio::findOption (const QString &option_string) {
 	return -1;
 }  
 
-#include "rkradio.moc"
+#include "rkdropdown.moc"

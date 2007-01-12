@@ -40,6 +40,7 @@
 #include "rkvarslot.h"
 #include "rkformula.h"
 #include "rkradio.h"
+#include "rkdropdown.h"
 #include "rkcheckbox.h"
 #include "rkpluginspinbox.h"
 #include "rkinput.h"
@@ -487,6 +488,8 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			addConnection (id, "fixed_factors", xml->getStringAttribute (e, "fixed_factors", "#noid#", DL_INFO), "available", false, e);
 		} else if (e.tagName () == "radio") {
 			widget = new RKRadio (e, component (), parent_widget);
+		} else if (e.tagName () == "dropdown") {
+			widget = new RKDropDown (e, component (), parent_widget);
 		} else if (e.tagName () == "checkbox") {
 			widget = new RKCheckBox (e, component (), parent_widget);
 		} else if (e.tagName () == "spinbox") {
