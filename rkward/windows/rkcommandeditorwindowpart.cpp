@@ -50,11 +50,9 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 void RKCommandEditorWindowPart::initializeActions () {
 	RK_TRACE (COMMANDEDITOR);
 
-	runAll = new KAction (i18n ("Run all"), KShortcut ("F9"), this, SLOT (slotRunAll ()), actionCollection (), "run_all");
-	runAll->setIcon("player_fwd");
-	runSelection = new KAction (i18n ("Run selection"), KShortcut ("F8"), this, SLOT (slotRunSelection ()), actionCollection (), "run_selection");
-	runSelection->setIcon("player_play");
-	runLine = new KAction (i18n ("Run current line"), KShortcut ("Ctrl+L"), this, SLOT (slotRunLine ()), actionCollection (), "run_line");
+	runAll = new KAction (i18n ("Run all"), "player_fwd", KShortcut ("F9"), this, SLOT (slotRunAll ()), actionCollection (), "run_all");
+	runSelection = new KAction (i18n ("Run selection"), "player_play", KShortcut ("F8"), this, SLOT (slotRunSelection ()), actionCollection (), "run_selection");
+	runLine = new KAction (i18n ("Run current line"), "player_end", KShortcut ("Ctrl+L"), this, SLOT (slotRunLine ()), actionCollection (), "run_line");
 
 	helpFunction = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT (slotFunctionReference ()), actionCollection (), "function_reference");
 }

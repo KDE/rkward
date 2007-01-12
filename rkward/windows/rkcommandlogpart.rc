@@ -1,5 +1,18 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.4.2">
+<kpartgui name="rkward" version="0.4.5">
+	<Menubar>
+		<Menu name="edit">
+			<Action name="log_select_all"/>
+			<Action name="log_copy"/>
+			<Action name="log_clear"/>
+		</Menu>
+		<Menu name="run">
+			<Action name="log_run_selection"/>
+		</Menu>
+		<Menu name="settings">
+			<Action name="log_configure"/>
+		</Menu>
+	</Menubar>
 	<Menu name="rkcommandlog_context_menu">
 		<Action name="log_copy"/>
 		<Action name="log_run_selection"/>
@@ -10,4 +23,7 @@
 		<Separator/>
 		<Action name="log_configure"/>
 	</Menu>
+	<ToolBar fullWidth="true" name="runToolBar">
+		<Action name="log_run_selection"/>
+	</ToolBar>
 </kpartgui>
