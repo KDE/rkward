@@ -2,11 +2,35 @@
 <document>
 	<code file="cor_graph.php" />
 
-	<dialog label="Correlation Matrix Graph" >		
+	<dialog label="Correlation Matrix Plot" >		
+		<tabbook>
+			<tab label="variables">
 				<row>
 					<varselector id="vars"/>
 					<varslot type="numeric" min_vars="1" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
-				</row>			
+				</row>
+			</tab>
+			<tab label="options">
+				<radio id="method" label="Method">
+					<option value="pearson" label="Pearson"/>
+					<option value="kendall" label="Kendall"/>
+					<option value="spearman" label="Spearman"/>
+				</radio>
+				<radio id="use" label="Exclude missing values">
+					<option value="complete.obs" label="whole cases"/>
+					<option value="pairwise.complete.obs" label="pairwise" checked="true"/>
+				</radio>
+				<radio id="digits" label="Precision">
+					<option value="1" label="1"/>
+					<option value="2" label="2"/>
+					<option value="3" label="3" checked="true"/>
+				</radio>
+				<radio id="scale" label="Scale text">
+					<option value="yes" label="Yes" checked="true"/>
+					<option value="no" label="No"/>
+				</radio>
+			</tab>
+		</tabbook>			
 	</dialog>
 
 </document>
