@@ -67,7 +67,7 @@ RKConsole::RKConsole () : QWidget (0) {
 	view->setDynWordWrap (false);
 
 	setFocusProxy (view);
-	setFocusPolicy (QWidget::WheelFocus);
+	setFocusPolicy (QWidget::StrongFocus);
 	
 	/* We need to unplug kactions that were pluged to the KateViewInternal in kateview.cpp.
 	These actions incluse Key_Up, Key_Down, etc.
