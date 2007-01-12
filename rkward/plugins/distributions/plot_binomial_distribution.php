@@ -31,7 +31,7 @@
 ?>rk.header ("Plot binomial <? echo ($label); ?>", list ("Lowest quantile", "<? echo ($min); ?>", "Largest quantile", "<? echo ($min + ($nq * $space)); ?>", "Quantile spacing", "<? echo ($space); ?>", "Number of trials", "<? echo ($size); ?>", "Probability of success on each trial", "<? echo ($prob); ?>", "Function", "<? getRK ("function"); ?>", "Scaling", "<? echo ($log_label); ?>"));
 
 rk.graph.on ()
-plot (<? getRK ("function"); ?> (seq (<? echo ($min); ?>, <? echo ($min + ($nq * $space)); ?>, by=<? echo ($space); ?>) , size=<? echo ($size); ?>, prob=<? echo ($prob); echo ($log); ?>))
+try (plot (<? getRK ("function"); ?> (seq (<? echo ($min); ?>, <? echo ($min + ($nq * $space)); ?>, by=<? echo ($space); ?>) , size=<? echo ($size); ?>, prob=<? echo ($prob); echo ($log); ?>)))
 rk.graph.off ()
 <?
 	}
