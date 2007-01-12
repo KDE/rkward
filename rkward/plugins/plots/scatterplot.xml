@@ -52,7 +52,7 @@ A duplicate option has to be tested-->
 				</row>
 			</tab>
 			<tab label="Type" >
-				<radio id="type" label="Type of graphics" >
+				<dropdown id="type" label="Type of graphics" >
 					<option value="'p'" label="Plot individual dots" />
 					<option value="'l'" label="Plot lines" />
 					<option value="'b'" label="Plot dots connected by lines (both)" />
@@ -61,7 +61,7 @@ A duplicate option has to be tested-->
 					<option value="'s'" label="Stair steps: the top of the vertical defines the point" />
 					<option value="'S'" label="Stair steps: the bottom of the vertical defines the point" />
 					<option value="custoType" label="Customize" />
-				</radio>
+				</dropdown>
 				<input size="medium" id="typeCusto" label="Give a character vector eg : c('p','l')" />
 			</tab>
 			<tab label="Names" >
