@@ -184,7 +184,16 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		if (prefix.length()>pos) t=prefix.length ();
 		view->setCursorPosition (doc->numLines () -1, t);
 	}
-	
+
+	if (hasSelectedText () && (selectionInterfaceExt(doc)->selStartCol () < (int) prefix.length () || selectionInterfaceExt (doc)->selStartLine () < (int) doc->numLines () -1)) { // There is a selection outside the command line
+		// Eat the key and beep (unless it's just a modifier key). Otherwise it might overwrite or delete the selection
+		if (e->state () == e->stateAfter ()) {
+			KApplication::kApplication ()->beep ();
+			e->ignore ();
+		}
+		return true;
+	}
+
 	if (current_command) {
 		e->ignore ();
 		return true;
