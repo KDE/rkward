@@ -33,6 +33,7 @@ as Authors, publish date, the abstract, and Keywords -->
 
 <copyright>
 <year>2006</year>
+<year>2007</year>
 <holder>Thomas Friedrichsmeier</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
@@ -40,7 +41,7 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2007-01-09</date>
+<date>2007-01-12</date>
 <releaseinfo>0.4.5.00</releaseinfo>
 
 <abstract>
