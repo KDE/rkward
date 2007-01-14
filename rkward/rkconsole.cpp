@@ -176,15 +176,13 @@ void RKConsole::setRHighlighting () {
 
 bool RKConsole::handleKeyPress (QKeyEvent *e) {
 
-	uint para=0; uint p=0;
-	view->cursorPosition (&para, &p);
-	uint pos = p;
-	
-	
-	if (para < doc->numLines() - 1 || pos < prefix.length ()){
-		int t=(int)pos;if(prefix.length()>pos) t=prefix.length();
-		view->setCursorPosition (doc->numLines() -1, t);
-		return(true);
+	uint para=0; uint pos=0;
+	view->cursorPosition (&para, &pos);
+
+	if (para < doc->numLines() - 1 || pos < prefix.length ()) {	// not inside the last line?
+		int t = (int) pos;					// adjust position before interpreting keystroke
+		if (prefix.length()>pos) t=prefix.length ();
+		view->setCursorPosition (doc->numLines () -1, t);
 	}
 	
 	if (current_command) {
