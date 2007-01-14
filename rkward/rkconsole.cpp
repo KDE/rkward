@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -202,6 +202,16 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		return true;
 	}
 
+	if (e->key () == Qt::Key_Up) {
+		commandsListUp (e->state() & Qt::ShiftButton);
+		return true;
+	}
+	else if (e->key () == Qt::Key_Down) {
+		commandsListDown (e->state() & Qt::ShiftButton);
+		return true;
+	}
+	command_edited = true; // all other keys are considered as "editing" the current comand
+
 	if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
 		hinter->hideArgHint ();
 		submitCommand ();
@@ -221,14 +231,6 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 			view->shiftCursorLeft ();
 			return false;
 		}
-	}
-	else if (e->key () == Qt::Key_Up) {
-		commandsListUp ();
-		return true;
-	}
-	else if (e->key () == Qt::Key_Down) {
-		commandsListDown ();
-		return true;
 	}
 	else if (e->key () == Qt::Key_Left){
 		if(pos<=prefix.length ()){
@@ -402,21 +404,68 @@ void RKConsole::submitCommand () {
 	}
 }
 
-void RKConsole::commandsListUp () {
+void RKConsole::commandsListUp (bool context_sensitive) {
 	RK_TRACE (APP);
-	if (commands_history.constBegin () == commands_history_position) return;	// already at topmost item
-	if (commands_history.constEnd () == commands_history_position) history_editing_line = currentCommand ();
-	--commands_history_position;
 
-	setCurrentCommand (*commands_history_position);
+	// if we are at the last line, i.e. not yet navigating the command history, store the current command
+	if (commands_history.constEnd () == commands_history_position) history_editing_line = currentCommand ();
+
+	if (context_sensitive) {
+		if (command_edited) {
+			command_history_context = currentCommand ();
+			commands_history_position = commands_history.constEnd ();
+			command_edited = false;
+		}
+	} else {
+		command_edited = true;
+	}
+
+	bool found = false;
+	QStringList::const_iterator it = commands_history_position;
+	while (it != commands_history.constBegin ()) {
+		--it;
+	  	if ((!context_sensitive) || (*it).startsWith (command_history_context)) { // we found a match or previous line
+			found = true;
+			break;
+		}
+	}
+
+	if (found) {		// if we did not find a previous matching line, do not touch the commands_history_position
+		commands_history_position = it;
+		setCurrentCommand (*commands_history_position);
+	} else {
+		KApplication::kApplication ()->beep ();
+	}
 }
 
-void RKConsole::commandsListDown () {
+void RKConsole::commandsListDown (bool context_sensitive) {
 	RK_TRACE (APP);
-	if (commands_history.constEnd () == commands_history_position) return;		// already at bottommost item
-	++commands_history_position;
+
+	if (context_sensitive) {
+		if (command_edited) {
+			command_history_context = currentCommand ();
+	  		commands_history_position = commands_history.constEnd ();
+	  		command_edited = false;
+	  		return; // back at bottommost item
+		}
+	} else {
+		command_edited = true;
+	}
+
+	if (commands_history.constEnd () == commands_history_position) {		// already at bottommost item
+		KApplication::kApplication ()->beep ();
+		return;
+	}
+
+	while (commands_history_position != commands_history.constEnd ()) {
+		++commands_history_position;
+		if ((!context_sensitive) || (*commands_history_position).startsWith (command_history_context)) { // we found a match or next line
+			break;
+		}
+	}
+
 	if (commands_history.constEnd () == commands_history_position) setCurrentCommand (history_editing_line);
- 	else setCurrentCommand (*commands_history_position);
+	else setCurrentCommand (*commands_history_position);
 }
 
 void RKConsole::rCommandDone (RCommand *command) {
@@ -525,7 +574,7 @@ void RKConsole::clear () {
 
 void RKConsole::addCommandToHistory (const QString &command) {
 	RK_TRACE (APP);
-	if (command.isEmpty ()) return;			// don't add empty lines
+	if (command.isEmpty () || commands_history.last() == command) return; // don't add empty or duplicate lines
 
 	commands_history.append (command);
 	history_editing_line = QString::null;

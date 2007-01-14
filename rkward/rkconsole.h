@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -98,18 +98,24 @@ friend class RKConsolePart;
 	QStringList commands_history;
 /** current position in the commands history */
 	QStringList::const_iterator commands_history_position;
+/** A flag to indicate wheter the command was edited while scrolling in the history */ 
+	bool command_edited;
 /** The last line in the history is special, in that it is stored before it is submitted, but not permanently so */
 	QString history_editing_line;
+/** The context to look out for, if doing a context search in the command history */
+	QString command_history_context;
 /** A list to store a commands batch that will be executed one line at a time */
 	QStringList commands_batch;
 /** Sets the cursor position to the end of the last line. */
 	void cursorAtTheEnd ();
 /** Submits the current command */
 	void submitCommand ();
-/** Set the current command to the previous command in the command list */
-	void commandsListUp ();
-/** Set the current command to the next command in the command list */
-	void commandsListDown ();
+/** Set the current command to the previous command in the command list
+@param context_sensitive if set to true, history lines that do not start with command_history_context are ignored (leading to context sensitive navigation of the command history) */
+	void commandsListUp (bool context_sensitive=false);
+/** Set the current command to the next command in the command list
+@param context_sensitive if set to true, history lines that do not start with command_history_context are ignored (leading to context sensitive navigation of the command history) */
+	void commandsListDown (bool context_sensitive=false);
 /** Sets the cursor position to the beginning of the last line. */
 	void cursorAtTheBeginning ();
 /** Sets the current command. This is used from commandsListUp (), and commandsListDown ();
