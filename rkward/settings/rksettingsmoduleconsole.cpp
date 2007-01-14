@@ -2,7 +2,7 @@
                           rksettingsmoduleconsole  -  description
                              -------------------
     begin                : Sun Oct 16 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -35,6 +35,7 @@ bool RKSettingsModuleConsole::save_history;
 uint RKSettingsModuleConsole::max_history_length;
 uint RKSettingsModuleConsole::max_console_lines;
 bool RKSettingsModuleConsole::pipe_user_commands_through_console;
+bool RKSettingsModuleConsole::context_sensitive_history_by_default;
 
 RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -65,6 +66,13 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 	connect (pipe_user_commands_through_console_box, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
 	vbox->addWidget (pipe_user_commands_through_console_box);
 
+	vbox->addSpacing (2*RKGlobals::spacingHint ());
+
+	reverse_context_mode_box = new QCheckBox (i18n ("Command history is context sensitive by default"), this);
+	connect (reverse_context_mode_box, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
+	reverse_context_mode_box->setChecked (context_sensitive_history_by_default);
+	vbox->addWidget (reverse_context_mode_box);
+
 	vbox->addStretch ();
 }
 
@@ -78,6 +86,14 @@ void RKSettingsModuleConsole::changedSetting (int) {
 }
 
 //static
+bool RKSettingsModuleConsole::shouldDoHistoryContextSensitive (Qt::ButtonState current_state) {
+	RK_TRACE (SETTINGS);
+
+	if (current_state & ShiftButton) return (!context_sensitive_history_by_default);
+	return context_sensitive_history_by_default;
+}
+
+//static
 void RKSettingsModuleConsole::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
@@ -86,6 +102,7 @@ void RKSettingsModuleConsole::saveSettings (KConfig *config) {
 	config->writeEntry ("max history length", max_history_length);
 	config->writeEntry ("max console lines", max_console_lines);
 	config->writeEntry ("pipe user commands through console", pipe_user_commands_through_console);
+	config->writeEntry ("command history defaults to context sensitive", context_sensitive_history_by_default);
 }
 
 //static
@@ -97,6 +114,7 @@ void RKSettingsModuleConsole::loadSettings (KConfig *config) {
 	max_history_length = config->readNumEntry ("max history length", 100);
 	max_console_lines = config->readNumEntry ("max console lines", 500);
 	pipe_user_commands_through_console = config->readBoolEntry ("pipe user commands through console", true);
+	context_sensitive_history_by_default = config->readBoolEntry ("command history defaults to context sensitive", false);
 }
 
 //static
@@ -134,6 +152,7 @@ void RKSettingsModuleConsole::applyChanges () {
 	max_history_length = max_history_length_spinner->value ();
 	max_console_lines = max_console_lines_spinner->value ();
 	pipe_user_commands_through_console = pipe_user_commands_through_console_box->isChecked ();
+	context_sensitive_history_by_default = reverse_context_mode_box->isChecked ();
 }
 
 void RKSettingsModuleConsole::save (KConfig *config) {

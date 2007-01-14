@@ -2,7 +2,7 @@
                           rksettingsmoduleconsole  -  description
                              -------------------
     begin                : Sun Oct 16 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,6 +18,8 @@
 #define RKSETTINGSMODULECONSOLE_H
 
 #include "rksettingsmodule.h"
+
+#include <qnamespace.h>
 
 class QCheckBox;
 class KIntSpinBox;
@@ -46,6 +48,10 @@ public:
 	static uint maxHistoryLength () { return max_history_length; };
 	static uint maxConsoleLines () { return max_console_lines; };
 	static bool pipeUserCommandsThroughConsole () { return pipe_user_commands_through_console; };
+	/** Given the button state, return whether the command history should be navigated context sensitive or insensitive
+	@param current_state the current button state
+	@returns true, if a the search should be context sensitive, false for a normal search */
+	static bool shouldDoHistoryContextSensitive (Qt::ButtonState current_state);
 
 	static QStringList loadCommandHistory ();
 	static void saveCommandHistory (const QStringList &list);
@@ -58,8 +64,10 @@ private:
 	static uint max_history_length;
 	static uint max_console_lines;
 	static bool pipe_user_commands_through_console;
+	static bool context_sensitive_history_by_default;
 
 	QCheckBox *save_history_box;
+	QCheckBox *reverse_context_mode_box;
 	QCheckBox *pipe_user_commands_through_console_box;
 	KIntSpinBox *max_history_length_spinner;
 	KIntSpinBox *max_console_lines_spinner;

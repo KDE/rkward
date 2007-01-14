@@ -200,11 +200,11 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	}
 
 	if (e->key () == Qt::Key_Up) {
-		commandsListUp (e->state() & Qt::ShiftButton);
+		commandsListUp (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (e->state ()));
 		return true;
 	}
 	else if (e->key () == Qt::Key_Down) {
-		commandsListDown (e->state() & Qt::ShiftButton);
+		commandsListDown (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (e->state ()));
 		return true;
 	}
 	command_edited = true; // all other keys are considered as "editing" the current comand
