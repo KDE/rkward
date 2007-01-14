@@ -176,29 +176,26 @@ void RKConsole::setRHighlighting () {
 
 bool RKConsole::handleKeyPress (QKeyEvent *e) {
 
-	uint para=0; uint p=0;
-	view->cursorPosition (&para, &p);
-	uint pos = p;
-	
-	
-	if (para < doc->numLines() - 1 || pos < prefix.length ()){
-		int t=(int)pos;if(prefix.length()>pos) t=prefix.length();
-		view->setCursorPosition (doc->numLines() -1, t);
-		return(true);
+	uint para=0; uint pos=0;
+	view->cursorPosition (&para, &pos);
+
+	if (para < doc->numLines() - 1 || pos < prefix.length ()) {	// not inside the last line?
+		int t = (int) pos;					// adjust position before interpreting keystroke
+		if (prefix.length()>pos) t=prefix.length ();
+		view->setCursorPosition (doc->numLines () -1, t);
 	}
-	
-	if (current_command) {
-		e->ignore ();
+
+	if (hasSelectedText () && (selectionInterfaceExt(doc)->selStartCol () < (int) prefix.length () || selectionInterfaceExt (doc)->selStartLine () < (int) doc->numLines () -1)) { // There is a selection outside the command line
+		// Eat the key and beep (unless it's just a modifier key). Otherwise it might overwrite or delete the selection
+		if (e->state () == e->stateAfter ()) {
+			KApplication::kApplication ()->beep ();
+			e->ignore ();
+		}
 		return true;
 	}
 
-	if (hasSelectedText() 
-		   && (selectionInterfaceExt(doc)->selStartCol () < (int)prefix.length() 
-		   ||selectionInterfaceExt(doc)->selStartLine ()< (int)doc->numLines() -1)){ // The selection is wider than the current command
-		if (e->key () == Qt::Key_C && e->state () == Qt::ControlButton){ // We only allow to copy
-			copy();
-		}
-		
+	if (current_command) {
+		e->ignore ();
 		return true;
 	}
 
