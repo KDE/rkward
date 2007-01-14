@@ -1028,7 +1028,7 @@ msgstr "Καταστολή προειδοποιήσεων"
 
 #: settings/rksettingsmoduler.cpp:68
 msgid "Print warnings later (default)"
-msgstr "Εμφάνιση προειδοποιήσεων αργότερα (προκαθοσριμένο)"
+msgstr "Εμφάνιση προειδοποιήσεων αργότερα (προκαθορισμένο)"
 
 #: settings/rksettingsmoduler.cpp:69
 msgid "Print warnings immediately"
@@ -1072,7 +1072,7 @@ msgstr "ΑΛΗΘΕΣ)"
 
 #: settings/rksettingsmoduler.cpp:107 settings/rksettingsmoduler.cpp:128
 msgid "FALSE (default)"
-msgstr "ΨΕΥΔΕΣ (προκαθοσιμένο)"
+msgstr "ΨΕΥΔΕΣ (προκαθορισμένο)"
 
 #: settings/rksettingsmoduler.cpp:113
 msgid "Maximum level of nested expressions"
@@ -1980,7 +1980,7 @@ msgstr "Αναζήτηση βοήθειας R"
 
 #: rkward.cpp:337
 msgid "Help on RKWard"
-msgstr "Βοήθεια στο R "
+msgstr "Βοήθεια στο RKWard"
 
 #: rkward.cpp:344
 msgid "Shows the R help index"
