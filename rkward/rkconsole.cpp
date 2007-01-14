@@ -192,16 +192,6 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		return true;
 	}
 
-	if (hasSelectedText() 
-		   && (selectionInterfaceExt(doc)->selStartCol () < (int)prefix.length() 
-		   ||selectionInterfaceExt(doc)->selStartLine ()< (int)doc->numLines() -1)){ // The selection is wider than the current command
-		if (e->key () == Qt::Key_C && e->state () == Qt::ControlButton){ // We only allow to copy
-			copy();
-		}
-		
-		return true;
-	}
-
 	if (e->key () == Qt::Key_Up) {
 		commandsListUp (e->state() & Qt::ShiftButton);
 		return true;
