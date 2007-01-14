@@ -20,15 +20,8 @@
 					<option value="complete.obs" label="whole cases"/>
 					<option value="pairwise.complete.obs" label="pairwise" checked="true"/>
 				</radio>
-				<radio id="digits" label="Precision">
-					<option value="1" label="1"/>
-					<option value="2" label="2"/>
-					<option value="3" label="3" checked="true"/>
-				</radio>
-				<radio id="scale" label="Scale text">
-					<option value="yes" label="Yes" checked="true"/>
-					<option value="no" label="No"/>
-				</radio>
+				<spinbox id="digits" label="Precision" type="integer" min="0" max="5" initial="3"/> 
+				<checkbox id="scale" label="Scale text" value="TRUE" value_unchecked="FALSE" checked="true"/>
 			</tab>
 		</tabbook>			
 	</dialog>
