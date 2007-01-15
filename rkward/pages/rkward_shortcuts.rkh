@@ -1,0 +1,40 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>RKWard Shortcut keys</title>
+	<summary>
+	You can control RKWard in many situations without using a mouse device, using only the keyboard.
+	</summary>
+	<section title="Default Shortcut keys" id="default_shortcut_keys">
+		<table>
+			<tr colspan="2"><td><b>File Menu</b></td></tr>
+			<tr><td>Create new script</td><td>Ctrl + N</td></tr>
+			<tr><td>Print</td><td>Ctrl + P</td></tr>
+			<tr><td>Quit RKWard</td><td>Shift + Q</td></tr>
+			<tr><td>Open existing Script</td><td>Ctrl + O</td></tr>
+
+			<tr colspan="2"><td><b>Edit Menu</b></td></tr>
+			<tr><td>Copy</td><td>Ctrl + C</td></tr>
+			<tr><td>Find</td><td>Ctrl + F</td></tr>
+			<tr><td>Find Previous</td><td>Shift + F3</td></tr>
+			<tr><td>Find Next</td><td>F3</td></tr>
+			<tr><td>Select All</td><td>Ctrl + A</td></tr>
+
+			<tr colspan="2"><td><b>View Menu</b></td></tr>
+			<tr><td>Decrease font size</td><td>Ctrl + -</td></tr>
+			<tr><td>Increase font size</td><td>Ctrl + +</td></tr>
+			<tr><td>Show Document Information</td><td>Ctrl + I</td></tr>
+			<tr><td>View Source</td><td>Ctrl + U</td></tr>
+
+			<tr colspan="2"><td><b>Workspace Menu</b></td></tr>
+			<tr><td>Open Workspace</td><td>Ctrl + O</td></tr>
+			<tr><td>Save Workspace</td><td>Ctrl + S</td></tr>
+
+			<tr colspan="2"><td><b>Windows Menu</b></td></tr>
+			<tr><td>Close Window</td><td>Ctrl + W</td></tr>
+
+			<tr colspan="2"><td><b>Help Menu</b></td></tr>
+			<tr><td>Start Help</td><td>F1</td></tr>
+			<tr><td>What's this</td><td>Shift + F1</td></tr>
+		</table>
+	</section>
+</document>

@@ -53,8 +53,11 @@
 	</section>
 
 	<related>
-		<link href="rkward://page/rkward_for_new_users"/>
+<ul>
+	<li><link href="rkward://page/rkward_for_new_users"/> For an introduction to some more basic concepts</li>
+	<li><link href="rkward://page/rkward_shortcuts"/></li>
+</ul>
 
-		TODO: Each of the above sections should eventually get a dedicated page of its own with more detailed information
+TODO: Each of the above sections should eventually get a dedicated page of its own with more detailed information
 	</related>
 </document>
