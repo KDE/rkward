@@ -50,6 +50,8 @@ UI-stuff
 		- the UI should probably be simplified somehow. But how? All in a single list with "filter"? Ask for ideas/look at other apps
 			- this will be very hard to do with the current Qt. We'd really need several checkboxes *within* a QListViewItem. Tackle this when/after porting to Qt4
 		- add option to remove packages
+		- smooth handling of updating packages installed in different repositories
+		- auto-updating functionality (every x days, every new session, never; see https://sourceforge.net/mailarchive/message.php?msg_id=37960665)
 	- RObjectListView
 		- use better icons to mark up the different base types
 		- double click action should be configurable: View, Edit, insert name into current script, insert name into console, nothing
@@ -60,7 +62,7 @@ UI-stuff
 		- Prevent cursor from venturing into lines other than the last line
 		- When inside a string, should offer tab-completion for system paths (will maybe have to wait for KDE4, when we get better clues, what context we are currently in)
 	- Script editor:
-		- allow to pipe scripts to the console (console might have to be made smarter about large pasted commands, first)
+		- new action "Run Toplevel expression" (see https://sourceforge.net/mailarchive/forum.php?thread_id=31463482&forum_id=12970)
 	- RKConsole / Script editor:
 		- highlight only valid function names
 	- RKHelpDlg:

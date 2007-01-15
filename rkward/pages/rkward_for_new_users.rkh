@@ -2,8 +2,33 @@
 <document>
 	<title>RKWard for new Users</title>
 	<summary>
-	This page has not yet been written. Therefore, you may want to refer to <link href="rkward://page/rkward_for_r_users"/> instead, for now.
+Provide some starting points for users new to R and RKWard. For a more in depth guide see
+<link href="rkward://page/rkward_for_r_users"/>.
 	</summary>
+
+	<section id="datawhere" title="Where's my data?">
+If you have previously used different statistics tools, you may be accustomed to the idea, that all your data is basically stored in one single spreadsheet, and that spreadsheet is visible all of the time. While, of course, R can deal with this sort of data (technically called a "data.frame"), it is much more flexible, and may be slightly confusing at first.
+
+R - and hence RKWard - can deal with a large number of different types of data: The well known spreadsheets, but also single vectors of data (like a column in a spreadsheet), so called "list"s of different vectors or other objects that may have different lengths, single data points, etc. Even most of the language itself, the functions, are stored just like data and can also be edited.
+
+At the same time, R is not confined to working with just one piece of data at a time, but rather you have a "Workspace", where all your different variables, tables, etc. are accessible. You can have many data.frames at once, and additional data of other types. At the left side of the application window, there should be an icon labelled "Workspace". You can click on this to see all the objects present in your workspace. All the objects you create or modify will be visible inside the ".GlobalEnv". Most other objects are predefined in libraries, such as "package:base".
+
+You do not need to worry about all these details. To create a new spreadsheet (data.frame), chose File->New->Dataset from the menu. All you need to do is to assign a name to this table, then you can start editing. To work with pre-existing data, chose File->Import->Load data, to load data in CSV (comma separated value) format.
+	</section>
+
+	<section id="basic_stats" title="Basic Analyses">
+In order to familiarize yourself with RKWard (or with your data), one of the first things to do might be to chose Analysis->Descriptive Statistics from the Menu. You will be presented with a dialog that allows you to select one or more variables to analyse. This looks similar to the workspace browser introduced above. On the additional tabs you can chose which types of descriptive statistics should be calculated.
+
+At the lower right of the dialog, there is a button labelled "Code". Using this, you can show/hide a text area. If you look at the contents of this text area (you may have to resize the window to view it more comfortably), you can see the text changing according to the settings you chose in the dialog. This text is actually R syntax. It is the code that is needed to perform these calculations in R. Most of RKWard is based on generating this code for you, and then running it inside R. Later, when you feel more comfortable, have specific needs not covered by RKWard, or you want to automate repetitive tasks, you can use this syntax to literally program your analyses.
+
+For now, just click submit, once you've made your choices, and watch the results show up in a new window.
+	</section>
+
+	<section id="more" title="So much more">
+The purpose of RKWard is to make the power of the R language easily accessible to the user, without having to learn a full programming language, first. However, for advanced needs, you may want to make use of the full flexibility of the R language. RKWard offers a lot of tools to make this easier, both for users new to R, and R experts. Read on in <link href="rkward://page/rkward_for_r_users"/> for more on this.
+
+Also, you may want to select Help->Help on R from the menu for some starting points in learning R.
+	</section>
 
 	<related>
 		<link href="rkward://page/rkward_for_r_users"/>

@@ -101,6 +101,7 @@ void RKRadio::propertyChanged (RKComponentPropertyBase *property) {
 
 	updating = true;
 	group->setButton (new_id);
+	buttonClicked (new_id);		// unfortunately, this slot is not called when the option is changed programatically!
 	updating = false;
 
 	changed ();
