@@ -93,6 +93,7 @@ void RKDropDown::propertyChanged (RKComponentPropertyBase *property) {
 
 	updating = true;
 	box->setCurrentItem (new_id);
+	itemSelected (new_id);		// slot not called automatically on programmed changes!
 	updating = false;
 
 	changed ();
