@@ -8,7 +8,7 @@
 		<component type="standard" id="ecdf_plot" file="ecdf_plot.xml" label="ECDF Plot" />
 		<component type="standard" id="histogram" file="histogram.xml" label="Histogram" />
 		<component type="standard" id="stripchart" file="stripchart_plot.xml" label="Stripchart" />
-
+		<component type="standard" id="scatterplot_matrix" file="scatterplot_matrix.xml" label="Scatterplot Matrix" />
 	</components>
 
 	<hierarchy>
@@ -19,6 +19,7 @@
 			<entry component="ecdf_plot" />
 			<entry component="histogram" />
 			<entry component="stripchart" />
+			<entry component="scatterplot_matrix" />
 		</menu>
 	</hierarchy>
 </document>
