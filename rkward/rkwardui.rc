@@ -19,8 +19,6 @@
 		<Action name="file_open_recentx"/>
 		<Action name="file_savex"/>
 		<Action name="file_save_asx"/>
-		<Separator/>
-		<Action name="file_load_libs"/>
 	</Menu>
 
 	<!-- These menus are actually defined in KParts. We also declare them here, to avoid menus jumping around -->
