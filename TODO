@@ -25,6 +25,7 @@ Compilation / technical
 	- cleanup DISABLE_RKWINDOWCATCHER (either get rid of it, or do it right)
 
 UI-stuff
+	- find/create a set of menu icons (https://sourceforge.net/mailarchive/message.php?msg_id=37891606)
 	"First-run wizard"
 		- pre-install R packages
 	- Check for existence of php binary on startup, not only when loading a plugin
@@ -166,6 +167,8 @@ General code:
 			- static members should be moved to the respective classes. Much cleaner!
 
 R plugins:
+	- create a (simple) color option plugin (~ 30 colors) for embedding
+	- build SPSS import plugin
 	- use SVG device for graphics output
 	- provide context menu / other UI to export to different formats / edit
 	- PHP-backend:
