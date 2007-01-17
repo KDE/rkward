@@ -34,7 +34,6 @@ extern "C" {
 #include "Rdevices.h"
 #include "Rversion.h"
 #include "R_ext/Parse.h"
-#include "R_ext/Utils.h"
 
 #include <dlfcn.h>
 #include <stdlib.h>
@@ -669,6 +668,20 @@ void REmbedInternal::runCommandInternal (const char *command, RKWardRError *erro
 		runCommandInternalBase (command, error);
 	} else {		// run a user command
 #ifdef USE_R_REPLDLLDO1
+/* Using R_ReplDLLdo1 () is a pain, but it seems to be the only entry point for evaluating a command as if it had been entered on a plain R console (with auto-printing if not invisible, etc.). Esp. since R_Visible is no longer exported in R 2.5.0, as it seems as of today (2007-01-17).
+
+Problems to deal with:
+- R_ReplDLLdo1 () may do a jump on an error. Hence we need R_ToplevelExec (public sind R 2.4.0)
+	- this is why runUserCommandInternal needs to be a separate function
+- R_ReplDLLdo1 () expects to receive the code input via R_ReadConsole. The same R_ReadConsole that commands like readline () or browser () will use to get their input.
+	- hence we need some state variables to figure out, when a call to R_ReadConsole originates directly from R_ReplDLLdo1 (), or some R statement. R_Busy () is our friend, here.
+- R_ReplDLLdo1 () will only ever evaluate one statement, even if several statements have already been transfered to the buffer. In fact, it will even return once after each ';' or '\n', even if the statement is not complete, but more is already in the buffer
+	- Hence we need two loops around R_ReplDLLdo1 (): one to make sure it continues reading until a statement is actually complete, another to continue if there is a second (complete or incomplete) statement in the command
+	- Also, in case the command was too long to fit inside the buffer at once (repldll_buffer_transfer_finished)
+- Some more state variables are used for figuring out, which type of error occurred, if any, since we don't get any decent return value
+
+This is the logic spread out over the following section, runUserCommandInternal (), and RReadConsole (). */
+
 		R_ReplDLLinit ();		// resets the parse buffer (things might be left over from a previous incomplete parse)
 		bool prev_iteration_was_incomplete = false;
 
