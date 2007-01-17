@@ -20,7 +20,7 @@
 
 // static
 REmbedInternal *REmbedInternal::this_pointer = 0; 
- 
+
 extern "C" {
 #define R_INTERFACE_PTRS 1
 
@@ -34,6 +34,7 @@ extern "C" {
 #include "Rdevices.h"
 #include "Rversion.h"
 #include "R_ext/Parse.h"
+#include "R_ext/Utils.h"
 
 #include <dlfcn.h>
 #include <stdlib.h>
@@ -52,6 +53,14 @@ extern "C" {
 #define R_2_4
 #endif
 
+#if (R_VERSION > R_Version(2, 4, 9))
+#define R_2_5
+#endif
+
+#ifdef R_2_4
+#define USE_R_REPLDLLDO1
+#endif
+
 #ifdef R_2_4
 #include "Rembedded.h"
 #else
@@ -60,7 +69,6 @@ extern void R_ReplDLLinit (void);
 
 // some functions we need that are not declared
 extern int Rf_initEmbeddedR(int argc, char **argv);
-extern SEXP R_ParseVector(SEXP, int, ParseStatus*);
 extern void Rf_PrintWarnings (void);
 extern int R_interrupts_pending;
 #ifdef R_2_3
@@ -68,11 +76,24 @@ extern int Rf_initialize_R(int ac, char **av);
 extern void setup_Rmainloop(void); /* in main.c */
 extern unsigned long R_CStackLimit;
 #endif
+#ifndef USE_R_REPLDLLDO1
 extern Rboolean R_Visible;
+#endif
+#ifndef R_2_5
+extern SEXP R_ParseVector(SEXP, int, ParseStatus*);
+#endif
 }
 
 #include "../rkglobals.h"
 #include "rdata.h"
+
+#ifdef USE_R_REPLDLLDO1
+const char *current_buffer = 0;
+bool repldlldo1_wants_code = false;
+bool repldll_buffer_transfer_finished = false;
+int repldll_result = 0;		/* -2: error; -1: incomplete; 0: nothing, yet 1: ok 2: incomplete statement, while buffer not empty. Should not happen */
+bool repldll_last_parse_successful = false;
+#endif
 
 // ############## R Standard callback overrides BEGIN ####################
 void RSuicide (char* message) {
@@ -91,6 +112,31 @@ void RShowMessage (char* message) {
 }
 
 int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
+#ifdef USE_R_REPLDLLDO1
+	// handle requests for new code
+	if (repldlldo1_wants_code) {
+		//Rprintf ("wants code, buffsize: %d\n", buflen);
+		if (repldll_buffer_transfer_finished) {
+			return 0;
+		}
+
+		int pos = 0;		// fgets emulation
+		while (pos < (buflen-1)) {
+			buf[pos] = *current_buffer;
+			if (*current_buffer == '\0') {
+				repldll_buffer_transfer_finished = true;
+				break;
+			}
+			++current_buffer;
+			++pos;
+		}
+		if (repldll_buffer_transfer_finished) buf[pos] = '\n';
+		buf[++pos] = '\0';
+		//Rprintf ("buffer now: '%s'\n", buf);
+		return 1;
+	}
+#endif
+	// here, we handle readline calls and such, i.e. not the regular prompt for code
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RReadConsole;
 	args.chars_a = &prompt;
@@ -133,11 +179,6 @@ In order to prevent R from doing silly things, we still override this function a
 void RClearerrConsole () {
 // we leave this un-implemented on purpose! We simply don't want that sort of thing to be done.
 }
-
-/*
-void RBusy (int which) {
-// I guess this is not any better (actually worse) than rkward's own busy indikator
-} */
 
 void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	if (saveact != SA_SUICIDE) {
@@ -221,6 +262,16 @@ int REditFile (char *buf) {
 	return REditFiles (1, &buf, &title, editor);
 }
 
+#ifdef USE_R_REPLDLLDO1
+void RBusy (int busy) {
+	// R_ReplDLLDo1 calls R_Busy (1) after reading in code (if needed), parsing it, and right before evaluating it.
+	if (busy) {
+		repldlldo1_wants_code = false;
+		repldll_last_parse_successful = true;
+	}
+}
+#endif
+
 // ############## R Standard callback overrides END ####################
 
 char *REmbedInternal::na_char_internal = new char;
@@ -246,7 +297,9 @@ void REmbedInternal::connectCallbacks () {
 	ptr_R_ResetConsole = RResetConsole;
 	ptr_R_FlushConsole = RFlushConsole;
 	ptr_R_ClearerrConsole = RClearerrConsole;
-//	ptr_R_Busy = RBusy;				// probably we don't have any use for this
+#ifdef USE_R_REPLDLLDO1
+	ptr_R_Busy = RBusy;
+#endif
 	ptr_R_CleanUp = RCleanUp;			// unfortunately, it seems, we can't safely cancel quitting anymore, here!
 	ptr_R_ShowFiles = RShowFiles;
 	ptr_R_ChooseFile = RChooseFile;
@@ -498,8 +551,12 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 	PROTECT(cv=allocVector(STRSXP, 1));
 	SET_VECTOR_ELT(cv, 0, mkChar(command));  
 
-	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails
+	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails. Nope: not exported API
+#ifdef R_2_5
+	pr=R_ParseVector(cv, -1, &status, NILSXP);
+#else
 	pr=R_ParseVector(cv, -1, &status);
+#endif
 	UNPROTECT(1);
 
 	if ((!pr) || (TYPEOF (pr) == NILSXP)) {
@@ -561,6 +618,7 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 	return exp;
 }
 
+#ifndef USE_R_REPLDLLDO1
 /* Basically a safe version of Rf_PrintValue, as yes, Rf_PrintValue may lead to an error and long_jump->crash!
 For example in help (function, htmlhelp=TRUE), when no HTML-help is installed!
 SEXP exp should be PROTECTed prior to calling this function.
@@ -587,11 +645,62 @@ void tryPrintValue (SEXP exp, REmbedInternal::RKWardRError *error) {
 		*error = REmbedInternal::NoError;
 	}
 }
+#endif
+
+#ifdef USE_R_REPLDLLDO1
+void runUserCommandInternal (void *) {
+/* R_ReplDLLdo1 return codes:
+-1: EOF
+1: normal prompt
+2: continuation prompt (parse incomplete) */
+	do {
+		//Rprintf ("iteration status: %d\n", repldll_result);
+		repldll_result = -2;
+		repldlldo1_wants_code = true;
+		repldll_last_parse_successful = false;
+	} while (((repldll_result = R_ReplDLLdo1 ()) == 2) && (!repldll_buffer_transfer_finished));	// keep iterating while the statement is incomplete, and we still have more in the buffer to transfer
+	//Rprintf ("iteration complete, status: %d\n", repldll_result);
+	PROTECT (R_LastvalueSymbol);		// why do we need this? No idea, but R_ToplevelExec tries to unprotect something
+}
+#endif
 
 void REmbedInternal::runCommandInternal (const char *command, RKWardRError *error, bool print_result) {
 	if (!print_result) {
 		runCommandInternalBase (command, error);
-	} else {
+	} else {		// run a user command
+#ifdef USE_R_REPLDLLDO1
+		R_ReplDLLinit ();		// resets the parse buffer (things might be left over from a previous incomplete parse)
+		bool prev_iteration_was_incomplete = false;
+
+		current_buffer = command;
+		repldll_buffer_transfer_finished = false;
+		Rboolean ok = (Rboolean) 1;	// set to false, if there is a jump during the R_ToplevelExec (i.e.. some sort of error)
+
+		repldll_result = 0;
+		while ((ok != FALSE) && ((!repldll_buffer_transfer_finished) || (repldll_result != -1))) {
+			// we always need to iterate until the parse returned an EOF AND we have no more code in the buffer to supply.
+			// However, if this happens right after we last received an INCOMPLETE, this means the parse really was incomplete.
+			// Otherwise, there's simply nothing more to parse.
+			prev_iteration_was_incomplete = (repldll_result == 2);
+			ok = R_ToplevelExec (runUserCommandInternal, 0);
+		}
+		if (ok == FALSE) {
+			if (repldll_last_parse_successful) {
+				*error = REmbedInternal::OtherError;
+			} else {
+				*error = REmbedInternal::SyntaxError;
+			}
+		} else {
+			if (prev_iteration_was_incomplete) {
+				*error = REmbedInternal::Incomplete;
+			} else {
+				*error = REmbedInternal::NoError;
+			}
+		}
+		repldlldo1_wants_code = false;		// make sure we don't get confused in RReadConsole
+
+#else
+
 		R_Visible = (Rboolean) 0;
 
 		SEXP exp;
@@ -611,6 +720,7 @@ void REmbedInternal::runCommandInternal (const char *command, RKWardRError *erro
 		Rprintf ("");
 
 		Rf_PrintWarnings ();
+#endif
 	}
 }
 

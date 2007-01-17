@@ -110,18 +110,7 @@ Internal stuff:
 		- True Support for Logicals
 		- In the current design, RKVariable would not handle storage mode changes from outside well at all
 		- use QIntDict instead of string-map for value-labels / factor levels? Qt4: QHash
-	- maybe we can do stuff like auto-printing, (toplevel handlers: no, not those, they are not called in R_ReplDLLdo1 ()), syntax error information by using R_ReplDLLdo1 () for user/console commands. The command-text would be fed in via R_ReadConsole (would need to keep a buffer).
-		- How to differentiate readline calls to get new command data from readline calls to get user info?! The prompt may not be realiable enough. Is there other info?
-			- the hist parameter may be a hint, but is also set in do_browser
-			- Does R_ResetConsole play any role in this?
-			- maybe (but this would really be taking chances) do so by determining, if the buffer belongs to the main Repl_Console (currently that buffer always remains the same during one loop, but can we be certain, this never changes?). Same buffer is used while inside do_browser ().
-			- RBusy is set to 0 just before the command data is read! (but also while inside do_browser ())
-				- These patterns may emerge after a call to R_ReplDLLdo1 ():
-					- first: R_Busy (0), second: R_Busy (1), ... : Between first and second, the R_ReadConsole is a request for code
-					- first: R_Busy (1), ...: No code is requested
-				- hence, as soon as R_Busy (1) is set after a call to R_ReplDLLdo1 (), the following R_ReadConsole calls are for user input, not code
-		- Where would we jump after a SIGINT? I suppose we'd have to make sure to clear the buffer before signalling (another mutex)
-		- Is it UTF-8 safe?
+	- call toplevel handlers for user/console commands?
 	RCommandReceiver:
 		- add virtual rCommandStarted () function, so receivers can find out, when their command becomes active
 	REmbedInternal:
@@ -263,9 +252,6 @@ File
 - printutils.c->481 Rvprintf: can we get at the standard out-connection and give it a fake vprintf (or better write?!) and fake fflush?
 	- see also: connections.c line 3246ff InitConnections
 	- seems ok now. But maybe we could still use this to catch immediate warning messages (which go to R_Consolefile)?
-
-- still mysterious in warning-handling: 'help (doesnotexist); print ("stuff");'. Why is the order wrong?!
-	- because first both are evaluated, then the warnings are printed. R_ReplIteration works differently in that it stops at each ";" and "\n"
 
 tryCatch (message ("a"), error=function (x) {print ("e"); x$message}, warning=function (y) {print ("w"); conditionMessage(y)}, message=function (z) {print ("m"); conditionCall (z)})
 withCallingHandlers ({message ("a"); stop ("b");}, error=function (x) {print ("e"); x$message}, warning=function (y) {print ("w"); conditionMessage(y)}, message=function (z) {print ("c"); conditionCall (z)})

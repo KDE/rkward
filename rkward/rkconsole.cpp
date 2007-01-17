@@ -467,7 +467,7 @@ void RKConsole::commandsListDown (bool context_sensitive) {
 
 void RKConsole::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
-	if (command->errorSyntax ()) {
+	if (command->errorSyntax () && command->error ().isEmpty ()) {
 		editInterface(doc)->insertLine(doc->numLines()-1, i18n ("Syntax error\n"));
 	}
 
