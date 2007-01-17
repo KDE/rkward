@@ -552,7 +552,7 @@ SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *
 
 	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails. Nope: not exported API
 #ifdef R_2_5
-	pr=R_ParseVector(cv, -1, &status, NILSXP);
+	pr=R_ParseVector(cv, -1, &status, R_NilValue);
 #else
 	pr=R_ParseVector(cv, -1, &status);
 #endif
@@ -664,6 +664,8 @@ void runUserCommandInternal (void *) {
 #endif
 
 void REmbedInternal::runCommandInternal (const char *command, RKWardRError *error, bool print_result) {
+	connectCallbacks ();		// sorry, but we will not play nicely with additional frontends trying to override our callbacks. (Unless they start their own R event loop, then they should be fine)
+
 	if (!print_result) {
 		runCommandInternalBase (command, error);
 	} else {		// run a user command
