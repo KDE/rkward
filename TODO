@@ -168,6 +168,23 @@ R plugins:
 			- also export plugins, export x11 plugins, and probably more
 			- maybe this can be generalized as "context sensitive plugins"
 				- this context could also hold additional info such as filename to open, or device number
+			- Plan on context dependent actions:
+				- RKComponentMap additionally has a map of contexts (name -> context class)
+				- The contextclass (RKContextMap) is a map of RKComponentHandle (or id?)->Context parameters (such as filter name filter for import plugins, but may be empty for many others. Maybe a simple QString, for now)
+					- maybe a contextmap really IS an RKComponentMap!
+						- This would provide the benefit of already having a XMLGUI for pluggin into menus/contexts (but do we really need this? Probably only for some contexts such as X11 (where context info is already known) but not in others such as Import (where context info will have to be asked for, somewhere). OTOH, the context includer can decide, whether or not (and where) to merge the context)
+				- or maybe the attributes are a map, as well (attribute-name->attribute-value)
+				- in a pluginmap, the definition may look like:
+				<context id="...">
+					<entry component_id="..." parameters="...::..."/>
+				</context>
+				- components may be placed in multiple contexts, and even both inside and outside a context, if they can deal with all those contexts.
+				- RKComponentHandle will need an additional function invokeWithContext()
+				- RKStandardComponent needs that context as a parameter
+				- The context will simply be a list(Map) of RKComponentProperties, to copy into the RKStandardComponent (should they also be owned, there?)
+				- An RKContextMap can be asked to provide an RKContextInstance, i.e. a class of actions (given an action collection) that can be plugged into a menu (with a structure?), and the context properties
+				- This context map will also have a single slot to receive the activation signals of all actions.
+					- By investigating QObject::sender (), and looking up the corresponding handle, it will dispatch to the correct RKStandardComponentHandle::invokeWithContext()
 		- ODS filter (try to find someone to implement one in R)
 	- formula-widget:
 		- use smart sorting, esp. of generated string
