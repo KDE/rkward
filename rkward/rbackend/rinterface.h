@@ -2,7 +2,7 @@
                           rinterface.h  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -85,6 +85,9 @@ not be interrupted. */
 
 /** returns the command currently running in the thread. Be careful when using the returned pointer! */
 	RCommand *runningCommand ();
+
+	bool backendIsDead ();
+	bool backendIsIdle ();
 public slots:
 /** called periodically to flush output buffer in RThread */
 	void flushOutput ();

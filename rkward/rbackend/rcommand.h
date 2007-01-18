@@ -162,7 +162,8 @@ public:
 		GetRealVector=2048,		/**< Try to fetch result as an array of doubles */
 		GetStructuredData=4096,		/**< Try to fetch result as an RData structure */
 		DirectToOutput=8192,		/**< Append command output to the HTML-output file */
-		ObjectListUpdate=16384		/**< The command may change the list of objects available. Do an update */
+		ObjectListUpdate=16384,		/**< The command may change the list of objects available. Do an update */
+		QuitCommand=32768		/**< The R backend should be killed */
 	};
 	enum CommandStatus {
 		WasTried=1,						/**< the command has been passed to the backend. */

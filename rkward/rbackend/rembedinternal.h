@@ -154,6 +154,7 @@ Otherwise it is very similar to handleSubstackCall (), esp. in that is implement
 /** only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++ */
 	static REmbedInternal *this_pointer;
 	static char *na_char_internal;
+	bool r_running;
 
 /** Flags used to classify output. */
 //	static bool output_is_warning;

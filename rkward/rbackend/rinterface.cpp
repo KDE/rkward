@@ -2,7 +2,7 @@
                           rinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -64,7 +64,7 @@ RInterface::RInterface () {
 #ifndef DISABLE_RKWINDOWCATCHER
 	window_catcher = new RKWindowCatcher ();
 #endif // DISABLE_RKWINDOWCATCHER
-	
+
 // If R_HOME is not set, most certainly the user called the binary without the wrapper script
 	if (!getenv ("R_HOME")) {
 		RK_DO (qDebug ("No R_HOME environment variable set. RKWard will quit in a moment. Always start rkward in the default way unless you know what you're doing."), RBACKEND, DL_ERROR);
@@ -88,25 +88,38 @@ void RInterface::issueCommand (const QString &command, int type, const QString &
 
 RInterface::~RInterface(){
 	RK_TRACE (RBACKEND);
-	
-	// kill the thread gracefully
-	MUTEX_LOCK
-	r_thread->kill ();
-	MUTEX_UNLOCK
-	r_thread->wait (5000);
-	
-	// timeout in wait? Try a little harder
-	if (r_thread->running ()) {
-		MUTEX_LOCK
-		r_thread->interruptProcessing (true);
-		MUTEX_UNLOCK
-		r_thread->wait (10000);
-		// if the thread did not exit, yet - bad luck.
-	}
 
+	if (r_thread->running ()) {
+		RK_DO (qDebug ("Waiting for R thread to finish up..."), RBACKEND, DL_INFO);
+		r_thread->interruptProcessing (true);
+		r_thread->kill ();
+		r_thread->wait (1000);
+		if (r_thread->running ()) {
+			RK_DO (qDebug ("Backend thread is still running. It will be killed, now."), RBACKEND, DL_WARNING);
+			r_thread->terminate ();
+			RK_ASSERT (false);
+		}
+	}
+	delete r_thread;
 	delete flush_timer;
 	RKCommandLog::destroy ();
 	delete window_catcher;
+}
+
+bool RInterface::backendIsDead () {
+	RK_TRACE (RBACKEND);
+
+	return (!r_thread->running ());
+}
+
+bool RInterface::backendIsIdle () {
+	RK_TRACE (RBACKEND);
+
+	bool idle;
+	MUTEX_LOCK;
+	idle = (RCommandStack::regular_stack->isEmpty() && (!r_thread->current_command));
+	MUTEX_UNLOCK;
+	return (idle);
 }
 
 void RInterface::startThread () {
@@ -397,12 +410,12 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		QString message = i18n ("The R engine has encountered a fatal error:\n") + QString (*(args->chars_a));
 		message += i18n ("It will be shut down immediately. This means, you can not use any more functions that rely on the R backend. I.e. you can do hardly anything at all, not even save the workspace. What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
 		KMessageBox::error (0, message, i18n ("R engine has died"));
-		r_thread->terminate ();
+		r_thread->kill ();
 	} else if (type ==RCallbackArgs::RCleanUp) {
 		QString message = i18n ("The R engine has shut down with status: ") + QString::number (args->int_a);
 		message += i18n ("\nIt will be shut down immediately. This means, you can not use any more functions that rely on the R backend. I.e. you can do hardly anything at all, not even save the workspace. Hopefully, however, R has already saved the workspace. What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that.\nSince this should never happen, please write a mail to rkward-devel@lists.sourceforge.net, and tell us, what you were trying to do, when this happened. Sorry!");
 		KMessageBox::error (0, message, i18n ("R engine has died"));
-		r_thread->terminate ();
+		r_thread->kill ();
 	}
 
 	args->done = true;

@@ -66,6 +66,7 @@
 #include "dialogs/rkloadlibsdialog.h"
 #include "agents/rksaveagent.h"
 #include "agents/rkloadagent.h"
+#include "agents/rkquitagent.h"
 #include "windows/rcontrolwindow.h"
 #include "windows/rkhtmlwindow.h"
 #include "windows/rkworkplaceview.h"
@@ -157,6 +158,19 @@ RKWardMainWindow::~RKWardMainWindow() {
 	delete RObjectList::getObjectList ();
 	delete object_browser;
 	delete RKGlobals::tracker ();
+}
+
+void RKWardMainWindow::closeEvent (QCloseEvent *e) {
+	RK_TRACE (APP);
+
+	if (RKQuitAgent::quittingInProgress ()) {
+		KMdiMainFrm::closeEvent (e);
+		return;
+	}
+
+	if (doQueryQuit ()) {
+		new RKQuitAgent (this);
+	}
 }
 
 void RKWardMainWindow::doPostInit () {
@@ -487,7 +501,7 @@ void RKWardMainWindow::readProperties(KConfig* _cfg)
   } */
 }
 
-bool RKWardMainWindow::queryClose () {
+bool RKWardMainWindow::doQueryQuit () {
 	RK_TRACE (APP);
 
 	slotSetStatusBarText (i18n ("Exiting..."));
@@ -500,7 +514,7 @@ bool RKWardMainWindow::queryClose () {
 		int res;
 		res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?\nRKWard will remain open if you press Cancel"), i18n ("Save Workspace?"));
 		if (res == KMessageBox::Yes) {
-			new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Quit);
+			new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), false, RKSaveAgent::DoNothing);
 		} else if (res != KMessageBox::No) {
 			slotSetStatusReady ();
 			return false;

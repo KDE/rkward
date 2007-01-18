@@ -90,6 +90,7 @@ more errors/crashes. @see unlock @see RInterface::cancelCommand @see RInterface:
 	void unlock (LockType reason) { locked -= (locked & reason); };
 /** "Kills" the thread. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
 	void kill () { killed = true; };
+	bool isKilled () { return killed; };
 /** Pause output by placing it in a delay loop, until unpaused again */
 	void pauseOutput (bool paused) { output_paused = paused; };
 /** the internal counterpart to pauseOutput () */

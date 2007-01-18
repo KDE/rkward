@@ -1,3 +1,4 @@
+- safer destruction of R backend on quitting
 - fix compilation for the upcoming R 2.5.0		TODO: check again
 							TODO: update debian dependencies:
 							- the old depends + :

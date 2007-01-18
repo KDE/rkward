@@ -104,10 +104,7 @@ void RKSaveAgent::done () {
 	if (save_chain) {
 		RKGlobals::rInterface ()->closeChain (save_chain);
 	}
-	if (when_done == Quit) {
-		delete RKWardMainWindow::getMain ();
-		qApp->quit ();
-	} else if (when_done == Load) {
+	if (when_done == Load) {
 		RKWardMainWindow::getMain ()->fileOpenNoSave (load_url);
 		delete this;
 	} else {

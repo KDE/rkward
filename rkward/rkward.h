@@ -90,6 +90,9 @@ public:
 	static RKWardMainWindow *getMain () { return rkward_mainwin; };
 
 	void makeRKWardHelpMenu (QWidget *for_window, KActionCollection *ac);
+
+/** (try to) close all windows, and ask whether it is ok to quit */
+	bool doQueryQuit ();
 protected:
 	void openWorkspace (const KURL &url);
 	/** save Options/Settings. Includes general Options like all bar positions and status as well as the geometry and the recent file list */
@@ -101,13 +104,8 @@ protected:
 	/** sets up the statusbar for the main window by initialzing a statuslabel.
 	*/
 	void initStatusBar();
-	/** queryClose is called by KTMainWindow on each closeEvent of a window. Against the
-	* default implementation (only returns true), this calles saveModified() on the document object to ask if the document shall
-	* be saved if Modified; on cancel the closeEvent is rejected.
-	* @see KTMainWindow#queryClose
-	* @see KTMainWindow#closeEvent
-	*/
-	virtual bool queryClose();
+	/** reimplemented from KMainWindow to call our doQueryClose (), and then (if quitting was not cancelled), invoke an RKQuitAgent to wait for the R-backend to finish up before actually quitting. */
+	virtual void closeEvent (QCloseEvent *e);
 	/** saves the window properties for each open window during session end to the session config file, including saving the currently
 	* opened file by a temporary filename provided by KApplication.
 	* @see KTMainWindow#saveProperties

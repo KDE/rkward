@@ -2,7 +2,7 @@
                           rkprogresscontol  -  description
                              -------------------
     begin                : Sun Sep 10 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 

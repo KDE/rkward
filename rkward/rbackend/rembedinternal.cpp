@@ -276,6 +276,7 @@ void RBusy (int busy) {
 char *REmbedInternal::na_char_internal = new char;
 
 REmbedInternal::REmbedInternal () {
+	r_running = false;
 }
 
 void REmbedInternal::connectCallbacks () {
@@ -314,7 +315,9 @@ REmbedInternal::~REmbedInternal () {
 }
 
 void REmbedInternal::shutdown (bool suicidal) {
-// Code-recipe below essentially copied from http://stat.ethz.ch/R-manual/R-devel/doc/manual/R-exts.html#Linking-GUIs-and-other-front_002dends-to-R
+	if (!REmbedInternal::this_pointer->r_running) return;		// already shut down
+
+// Code-recipe below essentially copied from http://stat.ethz.ch/R-manual/R-devel/doc/manual/R-exts.html#Linking-GUIs-and-other-front_ends-to-R
 // modified quite a bit for our needs.
 	char *tmpdir;
 
@@ -333,11 +336,14 @@ void REmbedInternal::shutdown (bool suicidal) {
 	/* close all the graphics devices */
 	if (!suicidal) KillAllDevices ();
 	fpu_setup ((Rboolean) FALSE);
+
+	REmbedInternal::this_pointer->r_running = false;
 }
 
 static int timeout_counter = 0;
 
 void REmbedInternal::processX11Events () {
+	if (!this_pointer->r_running) return;
 /* what we do here is walk the list of objects, that have told R, they're listening for events.
 We figure out which ones look for X11-events and tell those to do their stuff (regardless of whether events actually occurred) */
 	extern InputHandler *R_InputHandlers;
@@ -511,6 +517,7 @@ SEXP doSubstackCall (SEXP call) {
 }
 
 bool REmbedInternal::startR (int argc, char** argv) {
+	r_running = true;
 #ifdef R_2_3
 	Rf_initialize_R (argc, argv);
 	R_CStackLimit = (unsigned long) -1;

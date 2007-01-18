@@ -117,7 +117,7 @@ void RThread::run () {
 				return;
 			}
 		}
-		
+
 		if (!previously_idle) {
 			if (RCommandStack::regular_stack->isEmpty ()) {
 				qApp->postEvent (RKGlobals::rInterface (), new QCustomEvent (RIDLE_EVENT));
@@ -216,6 +216,13 @@ void RThread::doCommand (RCommand *command) {
 		RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
 
 		flushOutput ();
+	} else {
+		if (command->type () & RCommand::QuitCommand) {
+			killed = true;
+			MUTEX_UNLOCK;
+			shutdown (false);
+			MUTEX_LOCK;
+		}
 	}
 
 	// notify GUI-thread that command was finished
@@ -344,6 +351,11 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 		processX11Events ();
 		// while commands are in queue, don't wait
 		while (reply_stack->isActive () && !locked) {
+			if (killed) {
+				done = true;
+				break;
+			}
+
 			RCommand *command = reply_stack->pop ();
 			
 			if (command) {
@@ -466,6 +478,7 @@ int RThread::initialize () {
 
 void RThread::checkObjectUpdatesNeeded (bool check_list) {
 	RK_TRACE (RBACKEND);
+	if (killed) return;
 
 	/* NOTE: We're keeping separate lists of the items on the search path, and the toplevel symbols in .GlobalEnv here.
 	This info is also present in RObjectList (and it's children). However: a) in a less convenient form, b) in the other thread. To avoid locking, and other complexity, keeping separate lists seems an ok solution. Keep in mind that only the names of only the toplevel objects are kept, here, so the memory overhead should be minimal */
