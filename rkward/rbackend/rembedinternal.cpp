@@ -195,14 +195,6 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 				if (RunLast) R_dot_Last ();
 		}
 
-		// clean up temp directory
-		char *tmpdir;
-		if((tmpdir = getenv ("R_SESSION_TMPDIR"))) {
-			char buf[1024];
-			snprintf ((char *) buf, 1024, "rm -rf %s", tmpdir);
-			R_system ((char *) buf);
-		}
-
 		REmbedInternal::this_pointer->shutdown (false);
 	}
 	/*else {
@@ -319,7 +311,6 @@ void REmbedInternal::shutdown (bool suicidal) {
 
 // Code-recipe below essentially copied from http://stat.ethz.ch/R-manual/R-devel/doc/manual/R-exts.html#Linking-GUIs-and-other-front_ends-to-R
 // modified quite a bit for our needs.
-	char *tmpdir;
 
 	if (!suicidal) {
 		R_dot_Last ();
@@ -327,11 +318,16 @@ void REmbedInternal::shutdown (bool suicidal) {
 
 	R_RunExitFinalizers();
 
+#ifdef R_2_4
+	R_CleanTempDir ();
+#else
+	char *tmpdir;
 	if((tmpdir = getenv("R_SESSION_TMPDIR"))) {
 		char buf[1024];
 		snprintf((char *)buf, 1024, "rm -rf %s", tmpdir);
 		R_system((char *)buf);
 	}
+#endif
 
 	/* close all the graphics devices */
 	if (!suicidal) KillAllDevices ();
