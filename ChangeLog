@@ -11,19 +11,17 @@
 - add ability to search command history context sensitively
 - add possibility to use dropdown lists in plugins
 
---- Version 0.4.5 - DATE
-- TODO: test auto-detection of pluginmap path!
-
+--- Version 0.4.5 - Jan-21-2007
 - change shortcuts for Open/Save Workspace to Ctrl+Shift+O/S to avoid clash with Open/Save Script File
 - remove "Configure Packages" option from Workspace menu, as it is also in Settings menu
 - fixed: non-local workspaces would not be loaded
 - fixed: specifying a workspace to load on the command line would only work for full urls
 - new Console RMB actions: "copy selection cleaned" and "run selection"
 - added a basic help system, and some introductory help pages
-- plug-in for skewness and kurtosis added
-- plug-ins for distribution analysis added
-- plug-ins for new plots (stripchart & density plot)
-- enhancements to existing plot plug-ins
+- added plugin for skewness and kurtosis
+- added several plugins for distribution analysis
+- added plugins for stripchart & density plot
+- enhancements to existing plot plugins
 - added refresh output and flush output as toolbar actions
 - removed the "output" menu; entries were moved to "Edit" and "View"
 - always show all top level menus
