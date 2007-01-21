@@ -1,21 +1,22 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="scatterplot_matrix.php" />
+	<help file="scatterplot_matrix.rkh" />
 
 	<dialog label="Scatterplot Matrix" >
 		<tabbook>
-			<tab label="variables">		
+			<tab label="Variables" id="tab_variables">		
 				<row>
 					<varselector id="vars"/>
 					<varslot type="numeric" min_vars="1" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
 				</row>
 			</tab>
-			<tab label="options">
+			<tab label="Options" id="tab_options">
 				<radio id="diag" label="Diagonal panels">
 					<option value="density" label="Density plot"/>
 					<option value="boxplot" label="Boxplot"/>
 					<option checked="true" value="histogram" label="Histogram"/>
-					<option value="oned" label="Oned"/>	
+					<option value="oned" label="oneD"/>	
 					<option value="qqplot" label="QQplot"/>
 					<option value="none" label="No plot"/>
 				</radio>

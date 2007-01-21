@@ -13,7 +13,7 @@ require(car)
 ?>
 rk.temp.x <- data.frame (<? echo ($vars); ?>)
 
-rk.header ("Scatterplot Matrix", parameters=list ("Diagonal Panels", "<? getRK("diag") ?>", "Plot points", "<? getRK ("plot_points"); ?>", "Smooth", "<? getRK ("smooth"); ?>", "Ellipses", "<? getRK ("ellipse"); ?> at 0.5 and 0.9 (normal) probability or confidence levels."))
+rk.header ("Scatterplot Matrix", parameters=list ("Diagonal Panels", "<? getRK("diag") ?>", "Plot points", "<? getRK ("plot_points"); ?>", "Smooth", "<? getRK ("smooth"); ?>", "Ellipses", "<? getRK ("ellipse"); ?> at 0.5 and 0.9 levels."))
 
 rk.graph.on ()
 try (scatterplot.matrix(rk.temp.x, diagonal="<? getRK("diag") ?>", plot.points=<? getRK ("plot_points"); ?>, smooth=<? getRK ("smooth"); ?>, ellipse=<? getRK ("ellipse"); ?>))

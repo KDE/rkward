@@ -22,7 +22,11 @@ dist_pluginsXplots_DATA = \
 	plots/stripchart_plot.php \
 	plots/density_plot.xml \
 	plots/cor_graph.php \
-	plots/cor_graph.xml 
+	plots/cor_graph.xml \
+	plots/scatterplot_matrix.php \
+	plots/scatterplot_matrix.xml \
+	plots/cor_graph.rkh \
+	plots/scatterplot_matrix.rkh
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
