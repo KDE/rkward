@@ -2,6 +2,7 @@
 - TODO: message merge!
 - TODO: test auto-detection of pluginmap path!
 
+- change shortcuts for Open/Save Workspace to Ctrl+Shift+O/S to avoid clash with Open/Save Script File
 - remove "Configure Packages" option from Workspace menu, as it is also in Settings menu
 - fixed: non-local workspaces would not be loaded
 - fixed: specifying a workspace to load on the command line would only work for full urls

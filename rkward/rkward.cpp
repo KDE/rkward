@@ -299,9 +299,11 @@ void RKWardMainWindow::initActions()
 	
 	fileOpenWorkspace = KStdAction::open(this, SLOT(slotFileOpenWorkspace()), actionCollection(), "file_openx");
 	fileOpenWorkspace->setText (i18n ("Open Workspace"));
+	fileOpenWorkspace->setShortcut (KShortcut ("Ctrl+Shift+O"));
 	fileOpenRecentWorkspace = KStdAction::openRecent(this, SLOT(slotFileOpenRecentWorkspace(const KURL&)), actionCollection(), "file_open_recentx");
 	fileSaveWorkspace = KStdAction::save(this, SLOT(slotFileSaveWorkspace()), actionCollection(), "file_savex");
 	fileSaveWorkspace->setText (i18n ("Save Workspace"));
+	fileSaveWorkspace->setShortcut (KShortcut ("Ctrl+Shift+S"));
 	fileSaveWorkspaceAs = KStdAction::saveAs(this, SLOT(slotFileSaveWorkspaceAs()), actionCollection(), "file_save_asx");
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
 

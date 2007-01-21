@@ -167,6 +167,7 @@ General code:
 			- static members should be moved to the respective classes. Much cleaner!
 
 R plugins:
+	- create grid() plugin
 	- create a (simple) color option plugin (~ 30 colors) for embedding
 	- build SPSS import plugin
 	- use SVG device for graphics output
