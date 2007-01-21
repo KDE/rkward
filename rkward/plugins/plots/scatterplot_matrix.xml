@@ -15,8 +15,7 @@
 				<radio id="diag" label="Diagonal panels">
 					<option value="density" label="Density plot"/>
 					<option value="boxplot" label="Boxplot"/>
-					<option checked="true" value="histogram" label="Histogram"/>
-					<option value="oned" label="oneD"/>	
+					<option checked="true" value="histogram" label="Histogram"/>	
 					<option value="qqplot" label="QQplot"/>
 					<option value="none" label="No plot"/>
 				</radio>
