@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-08 23:54+0100\n"
+"POT-Creation-Date: 2007-01-21 17:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -237,13 +237,13 @@ msgstr ""
 msgid "Loading Workspace ..."
 msgstr ""
 
-#: agents/rkloadagent.cpp:70
+#: agents/rkloadagent.cpp:77
 msgid ""
 "There has been an error opening file '%1':\n"
 "%2"
 msgstr ""
 
-#: agents/rkloadagent.cpp:70
+#: agents/rkloadagent.cpp:77
 msgid "Error loading workspace"
 msgstr ""
 
@@ -331,225 +331,6 @@ msgstr ""
 
 #: core/robject.cpp:154
 msgid "Class(es):"
-msgstr ""
-
-#: windows/rkcommandeditorwindowpart.cpp:53
-msgid "Run all"
-msgstr ""
-
-#: windows/rkcommandeditorwindowpart.cpp:55 windows/rkcommandlog.cpp:286
-#: rkconsole.cpp:634
-msgid "Run selection"
-msgstr ""
-
-#: windows/rkcommandeditorwindowpart.cpp:57
-msgid "Run current line"
-msgstr ""
-
-#: windows/rkcommandeditorwindowpart.cpp:59 rkconsole.cpp:633
-msgid "&Function reference"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:133
-msgid ""
-"The url you are trying to open ('%1') is not a local file. Do you want to "
-"open the url in the default application?"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:133
-msgid "Open in default application?"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:204 settings/rksettingsmoduleoutput.cpp:65
-msgid "Output"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:206
-msgid "&Flush Output"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:207
-msgid "&Refresh Output"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:209
-msgid "Print Output"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:213
-msgid "Save Output as HTML"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:306
-msgid ""
-"Do you really want to flush the output? It will not be possible to restore "
-"it."
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:306
-msgid "Flush output?"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:322
-msgid ""
-"<HTML><BODY><H1>RKWard output</H1>\n"
-"<P>The output is empty.</P>\n"
-"</BODY></HTML>"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:340
-msgid "Print Help"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:350
-msgid "R Help"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:376
-msgid "Page does not exist or is broken"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:434
-msgid "No Title"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:460 windows/rkhtmlwindow.cpp:463
-msgid "Summary"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:469 windows/rkhtmlwindow.cpp:472
-msgid "Usage"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:491 windows/rkhtmlwindow.cpp:515
-msgid "GUI settings"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:499
-msgid "Unnamed GUI element"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:523 windows/rkhtmlwindow.cpp:526
-msgid "Related functions and pages"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:602
-msgid "R Reference on '%1'"
-msgstr ""
-
-#: windows/rkhtmlwindow.cpp:617
-msgid "BROKEN REFERENCE"
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:41
-msgid "Configure R backend"
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:46 windows/rcontrolwindow.cpp:278
-msgid "Pause execution"
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:51
-msgid "Cancel selected commands"
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:56
-msgid "Command"
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:58
-msgid "Flags"
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:59
-msgid "Description"
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:203
-msgid "Command Stack"
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:269
-msgid ""
-"Some of the commands you were trying to cancel are marked as \"sync"
-"\" (letter 'S' in the type column). Cancelling such commands could lead to "
-"loss of data. These commands have _not_ been cancelled."
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:269
-msgid "Some commands not cancelled"
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:282
-msgid "Resume execution"
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:368
-msgid "Cancelled"
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:380
-msgid "Chain"
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:382
-msgid "Closed"
-msgstr ""
-
-#: windows/rcontrolwindow.cpp:384
-msgid "Open (Waiting)"
-msgstr ""
-
-#: windows/rkcommandeditorwindow.cpp:128
-msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr ""
-
-#: windows/rkcommandeditorwindow.cpp:128
-msgid "File not saved"
-msgstr ""
-
-#: windows/rkcommandeditorwindow.cpp:218
-msgid "Unnamed"
-msgstr ""
-
-#: windows/rkcommandeditorwindow.cpp:219
-msgid " [modified]"
-msgstr ""
-
-#: windows/detachedwindowcontainer.cpp:38
-msgid "Attach to main window"
-msgstr ""
-
-#: windows/rkworkplace.cpp:123
-msgid "Unable to open \"%1\""
-msgstr ""
-
-#: windows/rkworkplace.cpp:123
-msgid "Could not open command file"
-msgstr ""
-
-#: windows/rkworkplace.cpp:311
-msgid "Save Workplace layout"
-msgstr ""
-
-#: windows/rkworkplace.cpp:318
-msgid "Restore Workplace layout"
-msgstr ""
-
-#: windows/rkcommandlog.cpp:68 settings/rksettingsmodulewatch.cpp:277
-msgid "Command log"
-msgstr ""
-
-#: windows/rkcommandlog.cpp:173
-msgid "Incomplete statement.\n"
-msgstr ""
-
-#: windows/rkcommandlog.cpp:175
-msgid "Syntax error.\n"
-msgstr ""
-
-#: windows/rkcommandlog.cpp:177
-msgid "An unspecified error occurred while running the command.\n"
 msgstr ""
 
 #: windows/rkwindowcatcher.cpp:61
@@ -641,6 +422,225 @@ msgstr ""
 
 #: windows/rkwindowcatcher.cpp:296
 msgid "Duplicate"
+msgstr ""
+
+#: windows/rkcommandeditorwindowpart.cpp:53
+msgid "Run all"
+msgstr ""
+
+#: windows/rkcommandeditorwindowpart.cpp:54 windows/rkcommandlog.cpp:286
+#: rkconsole.cpp:631
+msgid "Run selection"
+msgstr ""
+
+#: windows/rkcommandeditorwindowpart.cpp:55
+msgid "Run current line"
+msgstr ""
+
+#: windows/rkcommandeditorwindowpart.cpp:57 rkconsole.cpp:630
+msgid "&Function reference"
+msgstr ""
+
+#: windows/rkcommandeditorwindow.cpp:128
+msgid "The document \"%1\" has been modified. Close it anyway?"
+msgstr ""
+
+#: windows/rkcommandeditorwindow.cpp:128
+msgid "File not saved"
+msgstr ""
+
+#: windows/rkcommandeditorwindow.cpp:218
+msgid "Unnamed"
+msgstr ""
+
+#: windows/rkcommandeditorwindow.cpp:219
+msgid " [modified]"
+msgstr ""
+
+#: windows/rkcommandlog.cpp:68 settings/rksettingsmodulewatch.cpp:277
+msgid "Command log"
+msgstr ""
+
+#: windows/rkcommandlog.cpp:173
+msgid "Incomplete statement.\n"
+msgstr ""
+
+#: windows/rkcommandlog.cpp:175
+msgid "Syntax error.\n"
+msgstr ""
+
+#: windows/rkcommandlog.cpp:177
+msgid "An unspecified error occurred while running the command.\n"
+msgstr ""
+
+#: windows/rkworkplace.cpp:123
+msgid "Unable to open \"%1\""
+msgstr ""
+
+#: windows/rkworkplace.cpp:123
+msgid "Could not open command file"
+msgstr ""
+
+#: windows/rkworkplace.cpp:320
+msgid "Save Workplace layout"
+msgstr ""
+
+#: windows/rkworkplace.cpp:327
+msgid "Restore Workplace layout"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:133
+msgid ""
+"The url you are trying to open ('%1') is not a local file. Do you want to "
+"open the url in the default application?"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:133
+msgid "Open in default application?"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:213 settings/rksettingsmoduleoutput.cpp:65
+msgid "Output"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:215
+msgid "&Flush Output"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:216
+msgid "&Refresh Output"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:218
+msgid "Print Output"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:222
+msgid "Save Output as HTML"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:315
+msgid ""
+"Do you really want to flush the output? It will not be possible to restore "
+"it."
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:315
+msgid "Flush output?"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:331
+msgid ""
+"<HTML><BODY><H1>RKWard output</H1>\n"
+"<P>The output is empty.</P>\n"
+"</BODY></HTML>"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:349
+msgid "Print Help"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:359
+msgid "R Help"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:385
+msgid "Page does not exist or is broken"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:443
+msgid "No Title"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:469 windows/rkhtmlwindow.cpp:472
+msgid "Summary"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:478 windows/rkhtmlwindow.cpp:481
+msgid "Usage"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:500 windows/rkhtmlwindow.cpp:524
+msgid "GUI settings"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:508
+msgid "Unnamed GUI element"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:532 windows/rkhtmlwindow.cpp:535
+msgid "Related functions and pages"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:611
+msgid "R Reference on '%1'"
+msgstr ""
+
+#: windows/rkhtmlwindow.cpp:626
+msgid "BROKEN REFERENCE"
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:41
+msgid "Configure R backend"
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:46 windows/rcontrolwindow.cpp:278
+msgid "Pause execution"
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:51
+msgid "Cancel selected commands"
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:56
+msgid "Command"
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:58
+msgid "Flags"
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:59
+msgid "Description"
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:203
+msgid "Command Stack"
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:269
+msgid ""
+"Some of the commands you were trying to cancel are marked as \"sync"
+"\" (letter 'S' in the type column). Cancelling such commands could lead to "
+"loss of data. These commands have _not_ been cancelled."
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:269
+msgid "Some commands not cancelled"
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:282
+msgid "Resume execution"
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:368
+msgid "Cancelled"
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:380
+msgid "Chain"
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:382
+msgid "Closed"
+msgstr ""
+
+#: windows/rcontrolwindow.cpp:384
+msgid "Open (Waiting)"
+msgstr ""
+
+#: windows/detachedwindowcontainer.cpp:38
+msgid "Attach to main window"
 msgstr ""
 
 #: plugin/rkpluginspinbox.cpp:43
@@ -1133,7 +1133,7 @@ msgstr ""
 msgid "Always do this on startup"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:50 rkward.cpp:309
+#: dialogs/rkloadlibsdialog.cpp:50 rkward.cpp:311
 msgid "Configure Packages"
 msgstr ""
 
@@ -1376,6 +1376,18 @@ msgstr ""
 msgid "Errors / Warnings:"
 msgstr ""
 
+#: misc/rksaveobjectchooser.cpp:40
+msgid "Object name to save to"
+msgstr ""
+
+#: misc/rksaveobjectchooser.cpp:48
+msgid "The given symbol already exists"
+msgstr ""
+
+#: misc/rksaveobjectchooser.cpp:52
+msgid "Overwrite?"
+msgstr ""
+
 #: misc/rkerrordialog.cpp:117
 msgid "Syntax error"
 msgstr ""
@@ -1434,18 +1446,6 @@ msgstr ""
 
 #: misc/rkobjectlistview.cpp:419
 msgid "Hidden Objects"
-msgstr ""
-
-#: misc/rksaveobjectchooser.cpp:40
-msgid "Object name to save to"
-msgstr ""
-
-#: misc/rksaveobjectchooser.cpp:48
-msgid "The given symbol already exists"
-msgstr ""
-
-#: misc/rksaveobjectchooser.cpp:52
-msgid "Overwrite?"
 msgstr ""
 
 #: scriptbackends/phpbackend.cpp:64
@@ -1715,160 +1715,160 @@ msgstr ""
 msgid "Open Workspace"
 msgstr ""
 
-#: rkward.cpp:304
+#: rkward.cpp:305
 msgid "Save Workspace"
 msgstr ""
 
-#: rkward.cpp:306
+#: rkward.cpp:308
 msgid "Save Workspace As"
 msgstr ""
 
-#: rkward.cpp:314
+#: rkward.cpp:316
 msgid "Close All Data"
 msgstr ""
 
-#: rkward.cpp:316
+#: rkward.cpp:318
 msgid "Close All"
 msgstr ""
 
-#: rkward.cpp:317
+#: rkward.cpp:319
 msgid "Detach"
 msgstr ""
 
-#: rkward.cpp:318
+#: rkward.cpp:320
 msgid "Show &Output"
 msgstr ""
 
-#: rkward.cpp:319
+#: rkward.cpp:321
 msgid "Configure RKWard"
 msgstr ""
 
-#: rkward.cpp:323
+#: rkward.cpp:325
 msgid "Creates new empty dataset and opens it for editing"
 msgstr ""
 
-#: rkward.cpp:324
+#: rkward.cpp:326
 msgid "Opens an existing document"
 msgstr ""
 
-#: rkward.cpp:325
+#: rkward.cpp:327
 msgid "Opens a recently used file"
 msgstr ""
 
-#: rkward.cpp:326
+#: rkward.cpp:328
 msgid "Saves the actual document"
 msgstr ""
 
-#: rkward.cpp:327
+#: rkward.cpp:329
 msgid "Saves the actual document as..."
 msgstr ""
 
-#: rkward.cpp:328
+#: rkward.cpp:330
 msgid "Closes all open data editors"
 msgstr ""
 
-#: rkward.cpp:329
+#: rkward.cpp:331
 msgid "Quits the application"
 msgstr ""
 
-#: rkward.cpp:335
+#: rkward.cpp:337
 msgid "Help on R"
 msgstr ""
 
-#: rkward.cpp:336
+#: rkward.cpp:338
 msgid "Search R Help"
 msgstr ""
 
-#: rkward.cpp:337
+#: rkward.cpp:339
 msgid "Help on RKWard"
 msgstr ""
 
-#: rkward.cpp:344
+#: rkward.cpp:346
 msgid "Shows the R help index"
 msgstr ""
 
-#: rkward.cpp:345
+#: rkward.cpp:347
 msgid "Shows/raises the R Help Search window"
 msgstr ""
 
-#: rkward.cpp:346
+#: rkward.cpp:348
 msgid "Show help on RKWard"
 msgstr ""
 
-#: rkward.cpp:377
+#: rkward.cpp:379
 msgid "starting R engine"
 msgstr ""
 
-#: rkward.cpp:493
+#: rkward.cpp:495
 msgid "Exiting..."
 msgstr ""
 
-#: rkward.cpp:501
+#: rkward.cpp:503
 msgid ""
 "Quitting RKWard: Do you want to save the workspace?\n"
 "RKWard will remain open if you press Cancel"
 msgstr ""
 
-#: rkward.cpp:501 rkward.cpp:615
+#: rkward.cpp:503 rkward.cpp:617
 msgid "Save Workspace?"
 msgstr ""
 
-#: rkward.cpp:551
+#: rkward.cpp:553
 msgid ""
 "Please submit your bug reports or wishes at http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
 "net"
 msgstr ""
 
-#: rkward.cpp:580
+#: rkward.cpp:582
 msgid "New dataset"
 msgstr ""
 
-#: rkward.cpp:580
+#: rkward.cpp:582
 msgid "Enter name for the new dataset"
 msgstr ""
 
-#: rkward.cpp:584 robjectbrowser.cpp:113 robjectbrowser.cpp:147
+#: rkward.cpp:586 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
 
-#: rkward.cpp:584 robjectbrowser.cpp:113 robjectbrowser.cpp:147
+#: rkward.cpp:586 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "Invalid Name"
 msgstr ""
 
-#: rkward.cpp:596
+#: rkward.cpp:598
 msgid "Opening workspace..."
 msgstr ""
 
-#: rkward.cpp:599
+#: rkward.cpp:601
 msgid "*|All files"
 msgstr ""
 
-#: rkward.cpp:599
+#: rkward.cpp:601
 msgid "Open File..."
 msgstr ""
 
-#: rkward.cpp:615
+#: rkward.cpp:617
 msgid "Do you want to save the current workspace?"
 msgstr ""
 
-#: rkward.cpp:657
+#: rkward.cpp:659
 msgid "Ready."
 msgstr ""
 
-#: rkward.cpp:690
+#: rkward.cpp:692
 msgid "R engine busy"
 msgstr ""
 
-#: rkward.cpp:693
+#: rkward.cpp:695
 msgid "R engine idle"
 msgstr ""
 
-#: rkward.cpp:718
+#: rkward.cpp:720
 msgid "Open command file(s)"
 msgstr ""
 
-#: rkward.cpp:753
+#: rkward.cpp:755
 msgid "[Unnamed Workspace]"
 msgstr ""
 
@@ -1876,23 +1876,23 @@ msgstr ""
 msgid "R Console"
 msgstr ""
 
-#: rkconsole.cpp:425
+#: rkconsole.cpp:422
 msgid "Syntax error\n"
 msgstr ""
 
-#: rkconsole.cpp:637
+#: rkconsole.cpp:634
 msgid "Interrupt running command"
 msgstr ""
 
-#: rkconsole.cpp:643
+#: rkconsole.cpp:640
 msgid "Copy selection cleaned"
 msgstr ""
 
-#: rkconsole.cpp:644
+#: rkconsole.cpp:641
 msgid "Copy selection literally"
 msgstr ""
 
-#: rkconsole.cpp:665
+#: rkconsole.cpp:662
 msgid ""
 "You have configured RKWrad to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -1900,11 +1900,11 @@ msgid ""
 "console this one time, or do you want to try again later?"
 msgstr ""
 
-#: rkconsole.cpp:665
+#: rkconsole.cpp:662
 msgid "Console is busy"
 msgstr ""
 
-#: rkconsole.cpp:665
+#: rkconsole.cpp:662
 msgid "Bypass console"
 msgstr ""
 
@@ -2071,8 +2071,8 @@ msgstr ""
 msgid "Show Hidden Objects"
 msgstr ""
 
-#. i18n: file rkconsolepart.rc line 4
-#. i18n: file rkwardui.rc line 29
+#. i18n: file rkconsolepart.rc line 11
+#. i18n: file rkwardui.rc line 27
 #: rc.cpp:3 rc.cpp:24
 #, no-c-format
 msgid "&Run"
@@ -2090,7 +2090,7 @@ msgstr ""
 msgid "&Workspace"
 msgstr ""
 
-#. i18n: file rkwardui.rc line 33
+#. i18n: file rkwardui.rc line 31
 #: rc.cpp:27
 #, no-c-format
 msgid "&Windows"
