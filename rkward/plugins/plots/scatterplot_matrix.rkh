@@ -16,7 +16,6 @@ Choose one or more objects to be plotted. Choose the diagonal plot and how the s
 		<li>Density plot. See <link href="rkward://rhelp/density"/></li>
 		<li>Boxplot. See <link href="rkward://rhelp/boxplot"/></li>
 		<li>Histogram. See <link href="rkward://rhelp/histogram"/></li>
-		<li>oneD. One Dimension Plot. Plots data in icreasing order</li>
 		<li>QQplot. See <link href="rkward://rhelp/qqplot"/></li>
 		<li>No plot. Do not plot anything in the diagonal</li>
 		</setting>
