@@ -1,0 +1,70 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>Using the RKWard R Console</title>
+	<summary>
+Describe features and settings regarding the RKWard R Console.
+
+The console can - by default - be found at the bottom of the application window. Press the tool button labelled "R Console" to invoke it.
+	</summary>
+
+	<section id="whatisit" title="What is the console?">
+RKWard is based on the R language for statistical computing. The console allows you to enter R commands directly. Obviously, to use this, you need to know some basics of the R language. Select Help->Help on R for some introductory information.
+
+The console is meant for interactive use and small commands. For editing complex commands / scripts, using the Script File Editor (File->New->Script File) is much more comfortable.
+
+Many console features are available from the context menu. To invoke the context menu, click the right mouse button inside the console window.
+	</section>
+
+	<section id="interrupt" title="Interrupting commands">
+To interrupt a running command, press Ctrl+C, or chose "Interrupt running command" from the context menu. Note that the command will not necessarily end immediately. If there are several other commands running at the same time (e.g. some action you invoked from the Analysis menu), the console will only become available again, when the R backend becomes idle.
+	</section>
+
+	<section id="running_selection" title="Re-running selected commands">
+To re-run (a sequence of) selected commands, select them using the mouse. Then chose "Run selection" from the context menu (default shortcut is F8). Leading "> " and "+ " on the selected lines will be removed automatically.
+	</section>
+
+	<section id="copy" title="Copying commands / output">
+There are two copy modes available from the context menu (or the Edit menu). One allows you to copy the selection literally, i.e. including the prompts "> " and "+ ". In contrast, "Copy selection cleaned" will remove the prompts from the text copied into the clipboard.
+
+Note that the customary shortcut for copying text - Ctrl+C - does NOT work in the console, as Ctrl+C already means interrupting the current command.
+	</section>
+
+	<section id="function_reference" title="Function reference">
+Pressing F2 (or selecting "Function reference" from the context menu) will try to look up the R help page for whichever keyword the cursor is currently on.
+	</section>
+
+	<section id="command_history" title="Navigating the command history">
+The console provides a mechanism to recall recent commands, similar to the readline functionality offered in R or most shells.
+
+To recall the previous command, simply press the up arrow. Press the up arrow repeatedly to recall the command before that, and so on. Similarily, pressing the down arrow goes downwards in the command history. Of course, you can also edit a recalled command line.
+
+It is also possible to search the command history for lines starting with a specified string. To use this, enter - for example - "print" in the console. Now use Shift+Up / Shift+Down. You will note, that only those recent command lines that started with "print" will be shown.
+
+It is possible to make the second mode of searching the command history the default. In this case, pressing Shift+Up/Down will navigate all commands, while pressing Up/Down without the Shift key will show only matching lines. (see <link href="#settings">Section settings</link>).
+	</section>
+
+	<section id="completion" title="Object name completion">
+Pressing the Tab key while typing the name of an R object will try to complete the name of that R object. If several objects start with the typed characters, a list of all those objects will be shown.
+
+For an example, enter "base::pa" in the console, then press Tab. This will list all objects from package base starting with "pa". Now append an "s", and press Tab again. The word will be changed to "paste", as that is the only matching object name.
+	</section>
+
+	<section id="settings" title="Configurable Settings">
+To configure the behavior of the console, select "Configure" from the context menu. The following options are configurable:
+
+<ul>
+	<li><b>Load/save command history</b>: Whether the <link href="#command_history">command history</link> is saved when closing RKWard, and reloaded when next starting RKWard again. If this is not checked, each session of RKWard will start out with an empty command history.</li>
+	<li><b>Maximum length command history</b>: Only this many lines are kept in the <link href="#command_history">command history</link>.</li>
+	<li><b>Maximum number of paragraphs/lines to display in the console</b>: No more than this many total lines (commands and output) will be shown in the console. When this number of lines is exceeded, lines will be removed at the top of the console window. To clear the console entirely, chose "Clear" from the context menu or the Edit menu.</li>
+	<li><b>Run commands from script editor throught the console</b>: Commands coming from script editors may be sent through the console, i.e. the commands and their results will be shown in the console. If this option is not checked, the commands will only be visible in the Command log, but not in the console.</li>
+	<li><b>Command history is context sensitive by default</b>: If this is checked, the context sensitive mode of navigating the <link href="#command_history">command history</link> is the default, i.e. available with Up/Down without Shift. Else the key binding for this is Shift+Up/Down.</li>
+</ul>
+	</section>
+
+	<related>
+<ul>
+	<li><link href="rkward://page/rkward_for_r_users"/></li>
+	<li><link href="rkward://page/rkward_shortcuts"/></li>
+</ul>
+	</related>
+</document>

@@ -15,6 +15,8 @@
 		<li>While typing function calls, a list of arguments to that function is shown in a box (argument hinting)</li>
 		<li>While the cursor is on an R symbol or function, pressing F2 will search the R help for that symbol. Also available from the Help menu, or the right mouse button menu</li>
 	</ul>
+
+	See <link href="rkward://page/rkward_console"/> for more details.
 	</section>
 	<section title="Script Editors" id="script_editor">
 	Often it is more conventient to write scripts in a separate file, instead of typing them directly in the console. To open a new script editor (with syntax highlighting, and many more features), chose File->New->Script File, or open an already existing Script file using File->Open R Script File.
