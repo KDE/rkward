@@ -1,0 +1,37 @@
+<!DOCTYPE rkplugin>
+
+<!-- This is a simple example, of how a "plugin" might be configured. -->
+
+<document>
+	<code file="wilcoxon_exact_test.php"/>
+
+	<dialog label="Wilcoxon exact test">
+		<tabbook>
+			<tab label="Basic settings">
+				<row>
+					<varselector id="vars"/>
+					<column>
+						<varslot type="numeric" id="x" source="vars" required="true" label="compare"/>
+						<varslot type="numeric" id="y" source="vars" required="true" label="against"/>
+						<radio id="hypothesis" label="using test hypothesis">
+							<option value="two.sided" label="Two-sided"/>
+							<option value="greater" label="First is greater"/>
+							<option value="less" label="Second is greater"/>
+						</radio>
+					</column>
+				</row>
+			</tab>
+			<tab label="Options">
+				<frame label="Confidence Interval">
+					<checkbox id="confint" label="compute confidence interval" checked="false" value="FALSE" value_unchecked="TRUE" />
+					<spinbox type="real" id="conflevel" label="confidence level" min="0" max="1" initial="0.95"/>
+				</frame>
+				<spinbox id="mu" label="mu" initial="0"/>
+				<checkbox id="paired" label="paired test" checked="true" value="FALSE" value_unchecked="TRUE"/>
+				<checkbox id="exact" label="compute exact p-value" checked="true" value="NULL" value_unchecked="FALSE"/>
+				<checkbox id="correct" label="apply continuity correction" checked="true" value="TRUE" value_unchecked="FALSE"/>
+			</tab>
+		</tabbook>
+	</dialog>
+	
+</document>
