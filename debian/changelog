@@ -1,5 +1,6 @@
 rkward (0.4.5-1) unstable; urgency=low
 
+  * new upstream release
   * provide entry in debian menu (Apps/Math)
     closes: #405376
 

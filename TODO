@@ -182,6 +182,8 @@ R plugins:
 				- RKComponentHandle will need an additional function invokeWithContext()
 				- RKStandardComponent needs that context as a parameter
 				- The context will simply be a list(Map) of RKComponentProperties, to copy into the RKStandardComponent (should they also be owned, there?)
+					- why not just set some RKComponentProperties directly?
+					- showing RKStandardComponents should be delayed using a 0 timer to call show
 				- An RKContextMap can be asked to provide an RKContextInstance, i.e. a class of actions (given an action collection) that can be plugged into a menu (with a structure?), and the context properties
 				- This context map will also have a single slot to receive the activation signals of all actions.
 					- By investigating QObject::sender (), and looking up the corresponding handle, it will dispatch to the correct RKStandardComponentHandle::invokeWithContext()
