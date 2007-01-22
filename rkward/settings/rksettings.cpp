@@ -2,7 +2,7 @@
                           rksettings  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -20,6 +20,8 @@
 
 #include <klocale.h>
 #include <kapplication.h>
+
+#include "../windows/rkworkplace.h"
 
 // modules
 #include "rksettingsmoduleplugins.h"
@@ -58,18 +60,20 @@ void RKSettings::dialogClosed () {
 	settings_dialog = 0;
 }
 
-RKSettings::RKSettings (QWidget *parent, const char *name) : KDialogBase (KDialogBase::Tabbed, i18n ("Settings"), KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel, KDialogBase::Ok, parent, name, false) {
+RKSettings::RKSettings (QWidget *parent, const char *name) : KDialogBase (KDialogBase::Tabbed, i18n ("Settings"), KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel | KDialogBase::Help, KDialogBase::Ok, parent, name, false) {
 	RK_TRACE (SETTINGS);
 	setWFlags (getWFlags () | QWidget::WDestructiveClose);
 
 	initModules ();
+
+	connect (this, SIGNAL (aboutToShowPage (QWidget *)), this, SLOT (pageAboutToBeShown (QWidget *)));
 }
 
 RKSettings::~RKSettings() {
 	RK_TRACE (SETTINGS);
 
-	ModuleList::iterator it;
-	for (it = modules.begin (); it != modules.end (); ++it) {
+	ModuleList::const_iterator it;
+	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
 		delete *it;
 	}
 	modules.clear ();
@@ -90,10 +94,10 @@ void RKSettings::initModules () {
 	modules.append (new RKSettingsModuleConsole (this, this));
 	modules.append (new RKSettingsModuleObjectBrowser (this, this));
 	
-	ModuleList::iterator it;
+	ModuleList::const_iterator it;
 	QFrame *page;
 	QVBoxLayout *layout;
-	for (it = modules.begin (); it != modules.end (); ++it) {
+	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
 		page = addPage ((*it)->caption ());
 		layout = new QVBoxLayout (page, 0, KDialog::spacingHint ());
 // this is somewhat ugly, but works fine
@@ -110,11 +114,38 @@ void RKSettings::raisePage (SettingsPage page) {
 	}
 }
 
+void RKSettings::pageAboutToBeShown (QWidget *page) {
+	RK_TRACE (SETTINGS);
+
+	// which module is it?
+	RKSettingsModule *new_module = 0;
+	for (ModuleList::const_iterator it = modules.constBegin (); it != modules.constEnd (); ++it) {
+		QWidget *pwidget = *it;
+		while (pwidget) {
+			if (pwidget == page) {
+				new_module = *it;
+				break;
+			}
+			pwidget = pwidget->parentWidget ();
+		}
+		if (new_module) break;
+	}
+
+	bool has_help;
+	if (!new_module) {
+		RK_ASSERT (false);
+		has_help = false;
+	} else {
+		has_help = !(new_module->helpURL ().isEmpty ());
+	}
+	enableButton (KDialogBase::Help, has_help);
+}
+
 void RKSettings::slotApply () {
 	RK_TRACE (SETTINGS);
 
-	ModuleList::iterator it;
-	for (it = modules.begin (); it != modules.end (); ++it) {
+	ModuleList::const_iterator it;
+	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
 		if ((*it)->hasChanges ()) {
 			(*it)->applyChanges ();
 			(*it)->save (kapp->config ());
@@ -134,6 +165,16 @@ void RKSettings::slotOk () {
 void RKSettings::slotCancel () {
 	RK_TRACE (SETTINGS);
 	QDialog::reject ();
+}
+
+void RKSettings::slotHelp () {
+	RK_TRACE (SETTINGS);
+
+	// which page are we on?
+	RKSettingsModule *current_module = modules[activePageIndex ()];
+	RK_ASSERT (current_module);
+
+	RKWorkplace::mainWorkplace ()->openHelpWindow (current_module->helpURL ());
 }
 
 void RKSettings::enableApply () {

@@ -2,7 +2,7 @@
                           rksettingsmodule  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -43,6 +43,8 @@ public:
 /** Some settings modules execute R commands on "apply". If an RCommandChain is specified for the RKSettings-dialog, those commands should
 be inserted into this chain. It's safe to use this unconditionally, as if there is no chain, this will return 0, which corresponds to using the top-level chain */
 	RCommandChain *commandChain () { return chain; };
+
+	virtual QString helpURL () { return QString (); };
 protected:
 	void change ();
 

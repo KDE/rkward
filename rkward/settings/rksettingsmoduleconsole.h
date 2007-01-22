@@ -57,6 +57,8 @@ public:
 	static void saveCommandHistory (const QStringList &list);
 
 	QString caption ();
+
+	QString helpURL () { return ("rkward://page/rkward_console#settings"); };
 public slots:
 	void changedSetting (int);
 private:

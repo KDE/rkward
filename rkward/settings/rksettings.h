@@ -2,7 +2,7 @@
                           rksettings  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -22,8 +22,6 @@
 #include <qvaluelist.h>
 
 class RKSettingsModule;
-class QTabWidget;
-class QPushButton;
 class KConfig;
 class RKWardMainWindow;
 class RKSettingsTracker;
@@ -35,6 +33,7 @@ The main settings-dialog. Contains subsections (tabs) for different modules. Use
 @author Thomas Friedrichsmeier
 */
 class RKSettings : public KDialogBase {
+	Q_OBJECT
 public:
 	enum SettingsPage { NoPage=0, Plugins=1, R=2, RPackages=3, PHP=4, General=5, Output=6, Watch=7, Console=8, ObjectBrowser=9 };
 
@@ -46,10 +45,13 @@ public:
 	void enableApply ();
 	
 	static RKSettingsTracker* tracker () { return settings_tracker; };
+public slots:
+	void pageAboutToBeShown (QWidget *page);
 protected:
 	void slotApply ();
 	void slotOk ();
 	void slotCancel ();
+	void slotHelp ();
 protected:
 	RKSettings (QWidget *parent = 0, const char *name = 0);
 	~RKSettings ();
