@@ -61,6 +61,7 @@ public:
 	KParts::Part *getPart ();
 /** Return current url */
 	KURL url ();
+	void doGotoAnchor (const QString &anchor_name);
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
 	void slotOpenURLRequest (const KURL &url, const KParts::URLArgs &);
@@ -70,6 +71,7 @@ public slots:
 private slots:
 /** This slot is called when the new page has finished loading. Sets scroll position to scroll_position */
 	void loadDone ();
+	void doGotoAnchorNow ();
 protected:
 /** Here we store the position of the scroll bar before refresh. Used to scroll to the same position after a reload */
 	int scroll_position;
@@ -85,6 +87,7 @@ protected:
 	KAction *forward;
 	KAction *print;
 	bool url_change_is_from_history;	// dirty!!!
+	QString goto_anchor_name;
 };
 
 /**

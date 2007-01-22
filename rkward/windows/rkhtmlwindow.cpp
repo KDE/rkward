@@ -44,7 +44,7 @@
 
 RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow::HelpWindow) {
 	RK_TRACE (APP);
-	scroll_position=0;
+	scroll_position=-1;
 	
 	khtmlpart = new KHTMLPart (this, 0, 0, 0, KHTMLPart::BrowserViewGUI);
 	khtmlpart->setSelectable (true);
@@ -91,6 +91,19 @@ void RKHTMLWindow::addCommonActions (KActionCollection *action_collection) {
 
 	// enable copy
 	KStdAction::copy (khtmlpart->browserExtension (), SLOT (copy ()), action_collection, "copy");
+}
+
+void RKHTMLWindow::doGotoAnchor (const QString &anchor_name) {
+	RK_TRACE (APP);
+
+	goto_anchor_name = anchor_name;
+	QTimer::singleShot (0, this, SLOT (doGotoAnchorNow ()));
+}
+
+void RKHTMLWindow::doGotoAnchorNow () {
+	RK_TRACE (APP);
+
+	khtmlpart->gotoAnchor (goto_anchor_name);
 }
 
 void RKHTMLWindow::slotPrint () {
@@ -188,7 +201,7 @@ void RKHTMLWindow::refresh () {
 
 void RKHTMLWindow::loadDone () {
 	RK_TRACE (APP);
-	khtmlpart->view()->setContentsPos (0, scroll_position);
+	if (scroll_position >= 0) khtmlpart->view()->setContentsPos (0, scroll_position);
 }
 
 //##################### BEGIN RKOutputWindow #####################
@@ -541,7 +554,7 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 
 		QString ref = url.ref ();
 		if (!ref.isEmpty ()) {
-			khtmlpart->gotoAnchor (ref);
+			doGotoAnchor (ref);
 		}
 
 		success = true;
