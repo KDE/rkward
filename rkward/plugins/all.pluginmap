@@ -18,6 +18,8 @@
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
 		<component type="standard" id="basic_statistics" file="uni1.2/description.xml" label="Basic Statistics" />
 		<component type="standard" id="skewness_kurtosis" file="descriptive/skewness_kurtosis_test.xml" label="Skewness and Kurtosis" />
+		<component type="standard" id="wilcoxon_test" file="wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
+		<component type="standard" id="wilcoxon_exact_test" file="wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
 
 	</components>
 
@@ -33,6 +35,10 @@
 			<entry component="descriptive" index="0"/>
 			<entry component="simple_anova" index="4"/>
 			<entry component="skewness_kurtosis" index="5"/>
+			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="6">
+				<entry component="wilcoxon_test" />
+				<entry component="wilcoxon_exact_test" />
+			</menu>
 		</menu>
 		<menu id="file" label="File">
 			<menu id="import" label="Import" index="4">
