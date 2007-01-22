@@ -23,8 +23,10 @@
 
 #include "../debug.h"
 
-RKContextMap::RKContextMap () : RKComponentGUIXML () {
+RKContextMap::RKContextMap (const QString &id) : RKComponentGUIXML () {
 	RK_TRACE (PLUGIN);
+
+	RKContextMap::id = id;
 }
 
 RKContextMap::~RKContextMap () {
@@ -42,7 +44,7 @@ int RKContextMap::create (const QDomElement &context_element, const QString &com
 RKContextHandler *RKContextMap::makeContextHandler (QObject *parent) {
 	RK_TRACE (PLUGIN);
 
-	RKContextHandler *handler = new RKContextHandler (parent, gui_xml);
+	RKContextHandler *handler = new RKContextHandler (parent, gui_xml, id);
 	for (QStringList::const_iterator it = component_ids.constBegin (); it != component_ids.constEnd (); ++it) {
 		RKComponentHandle *handle = RKComponentMap::getComponentHandle (*it);
 		if (handle->isPlugin ()) {
@@ -61,12 +63,14 @@ void RKContextMap::addedEntry (const QString &id, RKComponentHandle *) {
 /////////////////// END RKContextMap /////////////////////
 //////////////// BEGIN RKContextHandler //////////////////
 
-RKContextHandler::RKContextHandler (QObject *parent, const QDomDocument &gui_xml) : QObject (parent), RKComponentBase (), KXMLGUIClient () {
+RKContextHandler::RKContextHandler (QObject *parent, const QDomDocument &gui_xml, const QString &id) : QObject (parent), RKComponentBase (), KXMLGUIClient () {
 	RK_TRACE (PLUGIN);
 
 	setXMLGUIBuildDocument (gui_xml);
 
-	addChild ("incontext", new RKComponentPropertyBool (this, false, true));
+	RKComponentPropertyBase *incontext = new RKComponentPropertyBase (this, false);
+	incontext->setValue (id);
+	addChild ("incontext", incontext);
 }
 
 RKContextHandler::~RKContextHandler () {

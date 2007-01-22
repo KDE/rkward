@@ -264,7 +264,7 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	list = xml->getChildElements (document_element, "context", DL_INFO);
 	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
 		QString id = xml->getStringAttribute (*it, "id", QString::null, DL_ERROR);
-		RKContextMap *context = new RKContextMap ();
+		RKContextMap *context = new RKContextMap (id);
 		counter += context->create (*it, cnamespace);
 		contexts.insert (id, context);
 	}

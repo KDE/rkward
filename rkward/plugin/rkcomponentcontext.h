@@ -28,7 +28,7 @@ class RKContextHandler;
 
 class RKContextMap : public RKComponentGUIXML {
 public:
-	RKContextMap ();
+	RKContextMap (const QString &id);
 	~RKContextMap ();
 
 	int create (const QDomElement &context_element, const QString &component_namespace);
@@ -37,6 +37,7 @@ protected:
 	void addedEntry (const QString &id, RKComponentHandle * /* handle */);
 private:
 	QStringList component_ids;
+	QString id;
 };
 
 
@@ -45,7 +46,7 @@ class RKContextHandler : public QObject, public RKComponentBase, public KXMLGUIC
 	Q_OBJECT
 friend class RKContextMap;
 protected:
-	RKContextHandler (QObject *parent, const QDomDocument &gui_xml);
+	RKContextHandler (QObject *parent, const QDomDocument &gui_xml, const QString &id);
 	~RKContextHandler ();
 
 	void addAction (const QString &id, RKStandardComponentHandle *handle);
