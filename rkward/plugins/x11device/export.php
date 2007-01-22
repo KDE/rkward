@@ -7,8 +7,9 @@ function calculate () {
 <?
 }
 	
-function printout () {
-?>## TODO: need to set the correct device!
+function printout () { ?>
+print ("Device number is <? getRK ("devnum"); ?>")
+print ("In context: <? getRK ("incontext"); ?>")
 <?
 }
 	

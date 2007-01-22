@@ -28,6 +28,7 @@ enum RKComponentType {
 class RKComponent;
 class RKComponentMap;
 class QWidget;
+class KActionCollection;
 /** This simple class keeps the most basic information about a component in RKWard. Most work is done in RKComponentMap.
 
 @author Thomas Friedrichsmeier
@@ -43,10 +44,10 @@ public:
 	RKComponentType getType () { return type; };
 	bool isPlugin ();
 
-	static RKComponentHandle* createComponentHandle (const QString &filename, RKComponentType type, const QString& id, const QString& label, RKComponentMap *map);
+	static RKComponentHandle* createComponentHandle (const QString &filename, RKComponentType type, const QString& label);
 /** invoke the component (standalone or embedded) */
 	virtual RKComponent *invoke (RKComponent *parent_component, QWidget *parent_widget) = 0;
-private:
+protected:
 /** The filename of the description file for this component */
 	QString filename;
 	QString label;
@@ -57,7 +58,42 @@ private:
 #include <kxmlguiclient.h>
 
 class QDomElement;
-class RKMenu;
+
+class RKComponentGUIXML {
+protected:
+	RKComponentGUIXML ();
+	~RKComponentGUIXML ();
+
+	void clearGUIDescription ();
+
+/** build XMLGUI menus
+@param parent the parent menu (or tag) (in the KXMLGUI)
+@param hierarchy_description the QDomElement containing the description for the new menu hierarchy
+@returns number of plugins/menu-entries added successfully */
+	int createMenus (QDomElement& parent, const QDomElement& hierarchy_description, const QString& cnamespace);
+
+/** recurse into a lower menu-level 
+@param parent the parent menu (in the KXMLGUI)
+@param description the QDomElement containing the description for the new submenu
+@returns number of plugins/menu-entries added successfully */
+	int addSubMenu (QDomElement& parent, const QDomElement& description, const QString& cnamespace);
+
+/** helper function: Find a specified element, and return it. If the element could not be found, it is created instead. The first three parameters are used as search parameters (all have to match). The additional two parameters only take effect, if a new element is created.
+@param parent the QDomElement whose children to search through
+@param tagname the tagname to look for
+@param name value of the "name"-attribute to look for
+@param label the label to assign to the new element (if no existing match could be found)
+@param index the index position where to insert the new element in the list of children (if no existing match could be found). -1 means insert at the end of the list. */
+	QDomElement findOrCreateElement (QDomElement& parent, const QString& tagname, const QString& name, const QString& label, int index);
+
+/** an entry was added to the menu(s) somewhere. Reimplement, if you want to create a KAction for this */
+	virtual void addedEntry (const QString & /* id */, RKComponentHandle * /* handle */) {};
+
+	QDomDocument gui_xml;
+};
+
+
+class RKContextMap;
 
 /** This class (only a single instance should ever be needed) keeps a list of named components, which can be made accessible via the menu-structure
 or included in other plugins. What this class does is rather simple: It basically maps a two piece name (namespace, component name) to a short description of the component (RKComponentHandle). The most important part of that description is the filename where a more elaborate definition of
@@ -67,7 +103,7 @@ The RKComponentMap provides convenience functions for adding or removing a .plug
 
 @author Thomas Friedrichsmeier
 */
-class RKComponentMap : public KXMLGUIClient {
+class RKComponentMap : public RKComponentGUIXML, public KXMLGUIClient {
 public:
 	RKComponentMap ();
 
@@ -85,21 +121,8 @@ public:
 	static QString getComponentId (RKComponentHandle* by_component);
 	static RKComponentMap *getMap () { return component_map; };
 	static void initialize ();
+	static RKContextMap *getContext (const QString &id);
 private:
-/** recurse into a lower menu-level 
-@param parent the parent menu (in the KXMLGUI)
-@param description the QDomElement containing the description for the new submenu
-@returns number of plugins/menu-entries added successfully */
-	int addSubMenu (QDomElement& parent, const QDomElement& description, const QString& cnamespace);
-
-/** helper function: Find a specified element, and return it. If the element could not be found, it is created instead. The first three parameters are used as search parameters (all have to match). The additional two parameters only take effect, if a new element is created.
-@param parent the QDomElement whose children to search through
-@param tagname the tagname to look for
-@param name value of the "name"-attribute to look for
-@param label the label to assign to the new element (if no existing match could be found)
-@param index the index position where to insert the new element in the list of children (if no existing match could be found). -1 means insert at the end of the list. */
-	QDomElement findOrCreateElement (QDomElement& parent, const QString& tagname, const QString& name, const QString& label, int index);
-
 /** typedef for easy reference to iterator */
 	typedef QMap<QString, RKComponentHandle*> ComponentMap;
 /** the actual map of components */
@@ -107,11 +130,18 @@ private:
 
 	RKComponentHandle* getComponentHandleLocal (const QString &id);
 	QString getComponentIdLocal (RKComponentHandle* component);
+	RKContextMap *getContextLocal (const QString &id);
 	int addPluginMapLocal (const QString& plugin_map_file);
 
 	void clearLocal ();
+	void makeActions ();
+
+	typedef QMap<QString, RKContextMap*> RKComponentContextMap;
+	RKComponentContextMap contexts;
 
 	static RKComponentMap *component_map;
+protected:
+	void addedEntry (const QString &id, RKComponentHandle *handle);
 };
 
 #include <qobject.h>
@@ -128,7 +158,7 @@ public:
 
 	RKComponent *invoke (RKComponent *parent_component, QWidget *parent_widget);
 public slots:
-/** Slot called, when the menu-item for this widget is selected. Responsible for creating the GUI. */
+/** Slot called, when the menu-item for this component is selected. Responsible for creating the GUI. */
 	void activated ();
 };
 

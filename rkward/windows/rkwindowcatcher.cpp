@@ -2,7 +2,7 @@
                           rwindowcatcher.cpp  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -83,16 +83,17 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #include "../core/robject.h"
 #include "../misc/rkerrordialog.h"
 #include "../misc/rksaveobjectchooser.h"
+#include "../plugin/rkcomponentcontext.h"
 
 RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
 	RK_TRACE (MISC);
 
+	embedded = window_to_embed;
+	RKCaughtX11Window::device_number = device_number;
+
 	error_dialog = new RKRErrorDialog (i18n ("An error occurred"), i18n ("An error occurred"));
 	part = new RKCaughtX11WindowPart (this);
 	setFocusPolicy (QWidget::ClickFocus);
-
-	embedded = window_to_embed;
-	RKCaughtX11Window::device_number = device_number;
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	box_widget = new QVBox (this);
@@ -294,6 +295,15 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	new KAction (i18n ("Print"), 0, window, SLOT (printDevice ()), actionCollection (), "device_print");
 	new KAction (i18n ("Store as R object..."), 0, window, SLOT (copyDeviceToRObject ()), actionCollection (), "device_copy_to_r_object");
 	new KAction (i18n ("Duplicate"), 0, window, SLOT (duplicateDevice ()), actionCollection (), "device_duplicate");
+
+	// initialize context for plugins
+	RKContextMap *context = RKComponentMap::getContext ("x11");
+	if (!context) return;
+	RKContextHandler *context_handler = context->makeContextHandler (this);
+	insertChildClient (context_handler);
+	RKComponentPropertyInt *devnum_property = new RKComponentPropertyInt (this, false, 0);
+	devnum_property->setIntValue (window->device_number);
+	context_handler->addChild ("devnum", devnum_property);
 }
 
 RKCaughtX11WindowPart::~RKCaughtX11WindowPart () {

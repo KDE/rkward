@@ -4,6 +4,9 @@
 	<logic>
 		<convert id="formatother" mode="equals" sources="format.string" standard="other" />
 		<connect client="specifiedformat.enabled" governor="formatother" />
+		
+		<external id="devnum"/>
+		<external id="incontext"/>
 	</logic>
 	<dialog label="Export contents of graphics device">
 		<text>This plugin is bogus/unfinished. Do not use!</text>

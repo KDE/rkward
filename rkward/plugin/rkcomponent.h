@@ -2,7 +2,7 @@
                           rkcomponent  -  description
                              -------------------
     begin                : Tue Dec 13 2005
-    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -77,9 +77,9 @@ public:
 	virtual bool isValid () { return true; };
 /** set to required: will only be satisfied if it is valid. Else: always satisfied (but subclasses might override to always be dissatisfied on really bad values. By default RKComponentBase is required at construction */
 	void setRequired (bool require) { required = require; };
-protected:
 /** simple convenience function to add a child to the map of children */
 	void addChild (const QString &id, RKComponentBase *child);
+protected:
 	QDict<RKComponentBase> child_map;
 	bool required;
 /** recursively fetch the current values of all properties present as direct or indirect children of this component. Used to transfer values e.g. when switching interfaces (or to store settings per plugin in the future). Values are placed in the dictionary provided (be sure to create one first!).

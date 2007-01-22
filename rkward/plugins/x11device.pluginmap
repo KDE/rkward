@@ -5,9 +5,9 @@
 		<component type="standard" id="export_x11_device" file="export.xml" label="Export..." />
 	</components>
 
-	<hierarchy>
+	<context id="x11">
 		<menu id="device" label="Device" index="1">
 			<entry component="export_x11_device" />
 		</menu>
-	</hierarchy>
+	</context>
 </document>
