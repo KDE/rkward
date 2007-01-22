@@ -212,3 +212,10 @@ dist_pluginsXx11device_DATA = \
 	x11device/export.xml \
 	x11device/export.php
 
+pluginsXwilcoxondir = $(kde_datadir)/rkward/wilcoxon
+dist_pluginsXwilcoxon_DATA = \
+	wilcoxon/wilcoxon_test.php \
+	wilcoxon/wilcoxon_test.xml \
+	wilcoxon/wilcoxon_exact_test.xml \
+	wilcoxon/wilcoxon_exact_test.php 
+
