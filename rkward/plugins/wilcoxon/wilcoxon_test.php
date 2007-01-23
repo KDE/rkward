@@ -3,9 +3,11 @@
 	}
 	
 	function calculate () {
-?>rk.temp.x <- substitute (<? getRK ("x"); ?>)
+?>
+rk.temp.length.x <- length (<? getRK ("x"); ?>)
+rk.temp.x <- substitute (<? getRK ("x"); ?>)
 rk.temp.y <- substitute (<? getRK ("y"); ?>)
-rk.temp <- t.test (eval (rk.temp.x), eval (rk.temp.y), alternative = c("<? getRK ("hypothesis"); ?>"), mu = <? getRK ("mu"); ?>, paired = <? getRK ("paired"); ?>, exact = <? getRK ("exact"); ?>, correct = <? getRK ("correct"); ?>, conf.int = <? getRK ("confint"); ?> <?
+rk.temp <- wilcox.test (eval (rk.temp.x), eval (rk.temp.y), alternative = c("<? getRK ("hypothesis"); ?>"), mu = <? getRK ("mu"); ?>, paired = <? getRK ("paired"); ?>, exact = <? getRK ("exact"); ?>, correct = <? getRK ("correct"); ?>, conf.int = <? getRK ("confint"); ?> <?
 if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $conflevel); ?>)
 rk.temp.print.conf.level <- <? if (getRK_val ("confint")) echo "TRUE"; else echo "FALSE"; ?>
 
@@ -14,14 +16,15 @@ rk.temp.print.conf.level <- <? if (getRK_val ("confint")) echo "TRUE"; else echo
 	
 	function printout () {
 ?>
-rk.header ("Wilcoxon Test", 
+rk.header ("Wilcoxon Test",
 	parameters=list ("Comparing", paste (rk.get.description (rk.temp.x, is.substitute=TRUE), "against", rk.get.description (rk.temp.y, is.substitute=TRUE)),
 	"H1", if (rk.temp$alternative == "less")
 		paste (rk.get.short.name (rk.temp.y), "is greater than", rk.get.short.name (rk.temp.x))
 	      else if (rk.temp$alternative == "greater")
 		paste (rk.get.short.name (rk.temp.x), "is greater than", rk.get.short.name (rk.temp.y))
 	      else
-		paste (rk.get.short.name (rk.temp.x), "and", rk.get.short.name (rk.temp.y), "differ")))
+		paste (rk.get.short.name (rk.temp.x), "and", rk.get.short.name (rk.temp.y), "differ"),
+ 	"Note", if (rk.temp.length.x < 50) paste ("You have less then 50 values. Consider to perform an exact test.") else paste("Length is", (rk.temp.length.x))))
 
 rk.results (list (
 	'Variable Name'=rk.get.description (rk.temp.x),
