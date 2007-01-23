@@ -144,7 +144,6 @@ private:
 	int addPluginMapLocal (const QString& plugin_map_file);
 
 	void clearLocal ();
-	void makeActions ();
 
 	typedef QMap<QString, RKContextMap*> RKComponentContextMap;
 	RKComponentContextMap contexts;
