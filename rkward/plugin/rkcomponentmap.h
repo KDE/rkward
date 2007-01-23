@@ -59,11 +59,18 @@ protected:
 
 class QDomElement;
 
+/** This class keeps a QDomDocument that is a represenation of the GUI using KDEs XML-GUI format (a ui.rc). Use createMenus () to have it parse the menu descriptions from a .pluginmap file. It will adjust the XML description accordingly. When done, you can use to generated gui_xml to set it as the xmlGUIBuildDocument of a KXMLGUIClient. 
+
+This class represents the common functionality between RKComponentMap and RKContextMap.
+
+@author Thomas Friedrichsmeier
+*/
 class RKComponentGUIXML {
 protected:
 	RKComponentGUIXML ();
 	~RKComponentGUIXML ();
 
+/** reset the xml file */
 	void clearGUIDescription ();
 
 /** build XMLGUI menus
@@ -86,9 +93,10 @@ protected:
 @param index the index position where to insert the new element in the list of children (if no existing match could be found). -1 means insert at the end of the list. */
 	QDomElement findOrCreateElement (QDomElement& parent, const QString& tagname, const QString& name, const QString& label, int index);
 
-/** an entry was added to the menu(s) somewhere. Reimplement, if you want to create a KAction for this */
+/** an entry was added to the menu(s) somewhere. Reimplement, if you want to e.g. create a KAction for this */
 	virtual void addedEntry (const QString & /* id */, RKComponentHandle * /* handle */) {};
 
+/** The generated XML GUI description in KDEs ui.rc format */
 	QDomDocument gui_xml;
 };
 
@@ -116,11 +124,13 @@ public:
 /** clears out (and deletes) all components / plugins */
 	static void clearAll ();
 
-/** returns the component identified by id */
+/** returns the component identified by id, 0 if not found */
 	static RKComponentHandle* getComponentHandle (const QString &id);
+/** look up the id of a component, empty string, if not found */
 	static QString getComponentId (RKComponentHandle* by_component);
 	static RKComponentMap *getMap () { return component_map; };
 	static void initialize ();
+/** returns the context identified by id */
 	static RKContextMap *getContext (const QString &id);
 private:
 /** typedef for easy reference to iterator */
