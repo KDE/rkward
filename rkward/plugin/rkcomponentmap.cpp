@@ -252,7 +252,7 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 		} else if (!QFileInfo (filename).isReadable ()) {
 			RK_DO (qDebug ("Specified file '%s' for component id \"%s\" does not exist or is not readable. Ignoring.", filename.latin1 (), id.latin1 ()), PLUGIN, DL_ERROR);
 		} else {
-			components.insert (id, RKComponentHandle::createComponentHandle (filename, (RKComponentType) type, label));
+			components.insert (id, new RKComponentHandle (filename, label, (RKComponentType) type));
 		}
 	}
 
@@ -296,14 +296,16 @@ void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {
 	RK_TRACE (PLUGIN);
 
 	if (handle->isPlugin ()) {
-		new KAction (handle->getLabel (), 0, static_cast<RKStandardComponentHandle *>(handle), SLOT (activated ()), actionCollection (), id.latin1 ());
+		new KAction (handle->getLabel (), 0, handle, SLOT (activated ()), actionCollection (), id.latin1 ());
 	}
 }
 
 ///########################### END RKComponentMap ###############################
 ///########################### BEGIN RKComponentHandle ############################
 
-RKComponentHandle::RKComponentHandle (const QString &filename, const QString &label, RKComponentType type) {
+#include "rkstandardcomponent.h"
+
+RKComponentHandle::RKComponentHandle (const QString &filename, const QString &label, RKComponentType type) : QObject (RKWardMainWindow::getMain ()) {
 	RK_TRACE (PLUGIN);
 
 	RKComponentHandle::type = type;
@@ -315,20 +317,6 @@ RKComponentHandle::~RKComponentHandle () {
 	RK_TRACE (PLUGIN);
 }
 
-//static 
-RKComponentHandle* RKComponentHandle::createComponentHandle (const QString &filename, RKComponentType type, const QString& label) {
-	if (type == (int) Standard) {
-		RKStandardComponentHandle *ret = new RKStandardComponentHandle (filename, label, type);
-		return (ret);
-	}
-	// TODO: create an RKPluginHandle instead!
-
-	// TODO: more ifs, special handling for sepcial components
-
-	RK_ASSERT (false);
-	return 0;
-}
-
 bool RKComponentHandle::isPlugin () {
 	if (type != Standard) {
 		return false;
@@ -336,30 +324,19 @@ bool RKComponentHandle::isPlugin () {
 	return true;
 }
 
-
-///########################### END RKComponentHandle ###############################
-///########################### BEGIN RKStandardComponentHandle ############################
-
-#include "rkstandardcomponent.h"
-
-RKStandardComponentHandle::RKStandardComponentHandle (const QString &filename, const QString &label, RKComponentType type) : QObject (RKWardMainWindow::getMain ()), RKComponentHandle (filename, label, type) {
+RKComponent *RKComponentHandle::invoke (RKComponent *parent_component, QWidget *parent_widget) {
 	RK_TRACE (PLUGIN);
-}
-
-RKStandardComponentHandle::~RKStandardComponentHandle () {
-	RK_TRACE (PLUGIN);
-}
-
-RKComponent *RKStandardComponentHandle::invoke (RKComponent *parent_component, QWidget *parent_widget) {
-	RK_TRACE (PLUGIN);
+	RK_ASSERT (isPlugin ());
 
 	return (new RKStandardComponent (parent_component, parent_widget, getFilename (), this));
 }
 
-void RKStandardComponentHandle::activated () {
+void RKComponentHandle::activated () {
 	RK_TRACE (PLUGIN);
 
 	invoke (0, 0);
 }
+
+///########################### END RKComponentHandle ###############################
 
 #include "rkcomponentmap.moc"

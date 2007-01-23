@@ -48,7 +48,7 @@ RKContextHandler *RKContextMap::makeContextHandler (QObject *parent) {
 	for (QStringList::const_iterator it = component_ids.constBegin (); it != component_ids.constEnd (); ++it) {
 		RKComponentHandle *handle = RKComponentMap::getComponentHandle (*it);
 		if (handle->isPlugin ()) {
-			handler->addAction (*it, static_cast<RKStandardComponentHandle *> (handle));
+			handler->addAction (*it, handle);
 		}
 	}
 	return handler;
@@ -77,7 +77,7 @@ RKContextHandler::~RKContextHandler () {
 	RK_TRACE (PLUGIN);
 }
 
-void RKContextHandler::addAction (const QString &id, RKStandardComponentHandle *handle) {
+void RKContextHandler::addAction (const QString &id, RKComponentHandle *handle) {
 	RK_TRACE (PLUGIN);
 
 	action_map.insert (new KAction (handle->getLabel (), 0, this, SLOT (componentActionActivated ()), actionCollection (), id.latin1 ()), handle);
@@ -87,7 +87,7 @@ void RKContextHandler::componentActionActivated () {
 	RK_TRACE (PLUGIN);
 
 	// find handle that triggered action
-	RKStandardComponentHandle *handle = 0;
+	RKComponentHandle *handle = 0;
 	const KAction *action = dynamic_cast<const KAction *> (sender ());
 	if (action_map.contains (action)) handle = action_map[action];
 	if (!handle) {

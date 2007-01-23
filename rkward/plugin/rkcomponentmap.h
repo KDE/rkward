@@ -24,6 +24,7 @@ enum RKComponentType {
 };
 
 #include <qstring.h>
+#include <qobject.h>
 
 class RKComponent;
 class RKComponentMap;
@@ -33,7 +34,8 @@ class KActionCollection;
 
 @author Thomas Friedrichsmeier
 */
-class RKComponentHandle {
+class RKComponentHandle : public QObject {
+	Q_OBJECT
 public:
 	RKComponentHandle (const QString &filename, const QString &label, RKComponentType type);
 
@@ -44,9 +46,10 @@ public:
 	RKComponentType getType () { return type; };
 	bool isPlugin ();
 
-	static RKComponentHandle* createComponentHandle (const QString &filename, RKComponentType type, const QString& label);
-/** invoke the component (standalone or embedded) */
-	virtual RKComponent *invoke (RKComponent *parent_component, QWidget *parent_widget) = 0;
+	RKComponent *invoke (RKComponent *parent_component, QWidget *parent_widget);
+public slots:
+/** Slot called, when the menu-item for this component is selected. Responsible for creating the GUI. */
+	void activated ();
 protected:
 /** The filename of the description file for this component */
 	QString filename;
@@ -151,24 +154,6 @@ private:
 	static RKComponentMap *component_map;
 protected:
 	void addedEntry (const QString &id, RKComponentHandle *handle);
-};
-
-#include <qobject.h>
-
-/**
-@author Thomas Friedrichsmeier
-*/
-class RKStandardComponentHandle : public QObject, public RKComponentHandle {
-	Q_OBJECT
-public:
-	RKStandardComponentHandle (const QString &filename, const QString &label, RKComponentType type);
-
-	~RKStandardComponentHandle ();
-
-	RKComponent *invoke (RKComponent *parent_component, QWidget *parent_widget);
-public slots:
-/** Slot called, when the menu-item for this component is selected. Responsible for creating the GUI. */
-	void activated ();
 };
 
 #endif

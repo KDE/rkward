@@ -69,12 +69,12 @@ protected:
 /** desctructor. Should be called automatically, as this is QObject */
 	~RKContextHandler ();
 /** add a KAction to the context. To be called from RKContext::makeContextHandler(). */
-	void addAction (const QString &id, RKStandardComponentHandle *handle);
+	void addAction (const QString &id, RKComponentHandle *handle);
 private slots:
 /** slot to handle plugin activation */
 	void componentActionActivated ();
 private:
-	typedef QMap<const KAction *, RKStandardComponentHandle *> ActionMap;
+	typedef QMap<const KAction *, RKComponentHandle *> ActionMap;
 	ActionMap action_map;
 };
 
