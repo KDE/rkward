@@ -1,3 +1,4 @@
+- new plugin: Wilcoxon Rank Sum test and Wilcoxon Exact Rank Sum test
 - new plugin: scatterplot matrix
 - new plugin: correlation matrix plot
 - safer destruction of R backend on quitting
