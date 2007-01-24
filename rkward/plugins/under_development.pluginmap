@@ -2,6 +2,7 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
+		<component type="standard" id="export_x11_device" file="x11device/export.xml" label="Export..." />
 	</components>
 
 	<hierarchy>
@@ -18,5 +19,11 @@
 		<menu id="distributions" label="Distributions" index="7">
 		</menu>
 	</hierarchy>
+
+	<context id="x11">
+		<menu id="device" label="Device" index="1">
+			<entry component="export_x11_device" />
+		</menu>
+	</context>
 </document>
  
