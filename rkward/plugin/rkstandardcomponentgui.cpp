@@ -144,6 +144,7 @@ void RKStandardComponentGUI::cancel () {
 
 	hide ();
 	if (!enslaved) {
+		qDebug ("triggering destruct");
 		component->deleteLater ();
 	}
 }

@@ -2,7 +2,7 @@
                           rkcomponentproperties  -  description
                              -------------------
     begin                : Fri Nov 25 2005
-    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -310,6 +310,8 @@ public:
 	QString printout () { return printout_code; };
 /** the cleanup code */
 	QString cleanup () { return cleanup_code; };
+/** the preview code */
+	QString preview () { return preview_code; };
 
 	QString value (const QString &modifier=QString::null);
 
@@ -322,6 +324,8 @@ public:
 	void setPrintout (const QString &code) { printout_code = code; emit (valueChanged (this)); };
 /** see setPreprocess () */
 	void setCleanup (const QString &code) { cleanup_code = code; emit (valueChanged (this)); };
+/** see setPreview () */
+	void setPreview (const QString &code) { preview_code = code; emit (valueChanged (this)); };
 
 	bool isValid () { return (!(preprocess_code.isNull () || calculate_code.isNull () || printout_code.isNull () || cleanup_code.isNull ())); };
 
@@ -332,6 +336,7 @@ private:
 	QString calculate_code;
 	QString printout_code;
 	QString cleanup_code;
+	QString preview_code;
 };
 
 class RKComponent;	// what the ... why do I need this?

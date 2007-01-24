@@ -14,7 +14,10 @@
 			<tab label="Variable(s)" >
 				<row>
 					<varselector id="vars" />
-					<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
+					<column>
+						<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
+						<preview id="preview"/>
+					</column>
 				</row>
 			</tab>
 			<tab label="Options" >

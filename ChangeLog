@@ -1,3 +1,4 @@
+- plugins can now be context sensitive (e.g. work on a particular x11 device)		TODO: document
 - new plugin: Wilcoxon Rank Sum test and Wilcoxon Exact Rank Sum test
 - new plugin: scatterplot matrix
 - new plugin: correlation matrix plot

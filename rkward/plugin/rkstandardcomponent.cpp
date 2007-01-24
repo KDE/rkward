@@ -45,6 +45,7 @@
 #include "rkpluginspinbox.h"
 #include "rkinput.h"
 #include "rkpluginbrowser.h"
+#include "rkpreviewbox.h"
 #include "rktext.h"
 #include "rktabpage.h"
 
@@ -62,7 +63,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	gui = 0;
 	wizard = 0;
 	created = false;
-	addChild ("code", code = new RKComponentPropertyCode (this, true));
+	addChild ("code", code = new RKComponentPropertyCode (this, true));		// do not change this name!
 	
 	// open the main description file for parsing
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
@@ -139,6 +140,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 RKStandardComponent::~RKStandardComponent () {
 	RK_TRACE (PLUGIN);
 
+	qDebug ("sc detor");
 	delete backend;
 }
 
@@ -300,6 +302,7 @@ void RKStandardComponent::changed () {
 	backend->calculate (0);
 	backend->printout (0);
 	backend->cleanup (0);
+	backend->preview (0);
 
 	if (gui) {
 		gui->updateCode ();
@@ -498,6 +501,8 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			widget = new RKPluginBrowser (e, component (), parent_widget);
 		} else if (e.tagName () == "text") {
 			widget = new RKText (e, component (), parent_widget);
+		} else if (e.tagName () == "preview") {
+			widget = new RKPreviewBox (e, component (), parent_widget);
 		} else if (e.tagName () == "embed") {
 			QString component_id = xml->getStringAttribute (e, "component", QString::null, DL_ERROR);
 			RKComponentHandle *handle = RKComponentMap::getComponentHandle (component_id);

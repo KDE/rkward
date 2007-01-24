@@ -255,6 +255,10 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int len) {
 						if (add_headings) code_property->setCleanup (i18n ("## Clean up\n") + retrieveOutput ());
 						else code_property->setCleanup (retrieveOutput ());
 						resetOutput ();
+					} else if (current_type == Preview) {
+						// no heading for the preview code (not shown in the code box)
+						code_property->setPreview (retrieveOutput ());
+						resetOutput ();
 					} else {
 						emit (commandDone (current_flags));
 					}

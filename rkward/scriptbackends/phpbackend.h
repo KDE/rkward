@@ -47,7 +47,7 @@ public:
 	void calculate (int flags) { callFunction ("calculate ();", flags, Calculate); };
 	void printout (int flags) { callFunction ("printout ();", flags, Printout); };
 	void cleanup (int flags) { callFunction ("cleanup ();", flags, Cleanup); };
-	void preview (int flags) { callFunction ("doPreview ();", flags, Preview); };
+	void preview (int flags) { callFunction ("getPreview ();", flags, Preview); };
 	void writeData (const QString &data);
 public slots:
 	void gotOutput (KProcess *proc, char* buf, int len);

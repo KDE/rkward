@@ -337,3 +337,24 @@
 
 	ret
 }
+
+".rk.preview.devices" <- list ();
+
+".rk.startPreviewDevice" <- function (x) {
+	if (is.null (.rk.preview.devices[[x]])) {
+		a <- dev.cur ()
+		x11 ()
+		if (a != dev.cur ()) {
+			.rk.preview.devices[[x]] <<- dev.cur ()
+		}
+	}
+}
+
+".rk.killPreviewDevice" <- function (x) {
+	a <- .rk.preview.devices[[x]]
+	if (!is.null (a)) {
+		.rk.preview.devices[[x]] <<- NULL
+		dev.set (a)
+		dev.off ()
+	}
+}
