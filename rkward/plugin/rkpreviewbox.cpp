@@ -72,7 +72,6 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 RKPreviewBox::~RKPreviewBox () {
 	RK_TRACE (PLUGIN);
 
-	qDebug ("dtor");
 	killPreview ();
 }
 
