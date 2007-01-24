@@ -9,6 +9,7 @@
 		<component type="standard" id="histogram" file="histogram.xml" label="Histogram" />
 		<component type="standard" id="scatterplot" file="scatterplot.xml" label="Scatterplot" />
 		<component type="standard" id="scatterplot_matrix" file="scatterplot_matrix.xml" label="Scatterplot Matrix" />
+		<component type="standard" id="barplot" file="barplot.xml" label="Barplot" />
 		<component type="standard" id="stripchart" file="stripchart_plot.xml" label="Stripchart" />
 
 		<component type="standard" id="plot_options" file="plot_options.xml" label="Plot Options" />
@@ -16,6 +17,7 @@
 
 	<hierarchy>
 		<menu id="plots" label="Plots" index="5">
+			<entry component="barplot" />
 			<entry component="box_plot" />
 			<entry component="cor_graph" />
 			<entry component="density_plot" />
