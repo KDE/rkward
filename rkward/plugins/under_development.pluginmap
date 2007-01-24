@@ -3,6 +3,13 @@
 <document base_prefix="" namespace="rkward">
 	<components>
 		<component type="standard" id="export_x11_device" file="x11device/export.xml" label="Export..." />
+
+		<component type="standard" id="wilcoxon_test" file="wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
+		<component type="standard" id="wilcoxon_exact_test" file="wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
+
+		<component type="standard" id="barplot" file="barplot.xml" label="Barplot" />
+		<component type="standard" id="cor_graph" file="cor_graph.xml" label="Correlation Matrix Plot" />
+		<component type="standard" id="scatterplot_matrix" file="scatterplot_matrix.xml" label="Scatterplot Matrix" />
 	</components>
 
 	<hierarchy>
@@ -13,8 +20,15 @@
 			</menu>
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
+			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="6">
+				<entry component="wilcoxon_test" />
+				<entry component="wilcoxon_exact_test" />
+			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
+			<entry component="barplot" />
+			<entry component="cor_graph" />
+			<entry component="scatterplot_matrix" />
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
 		</menu>

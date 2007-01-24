@@ -6,5 +6,6 @@
 	<include file="distributions.pluginmap"/>
 	<include file="plots.pluginmap"/>
 	<include file="x11device.pluginmap"/>
+	<include file="under_development.pluginmap"/>
 </document>
  
