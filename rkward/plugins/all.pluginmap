@@ -1,60 +1,8 @@
 <!DOCTYPE rkpluginmap>
 
 <document base_prefix="" namespace="rkward">
-	<components>
-		<component type="standard" id="independent_samples_t_test" file="00means/00ttests/00independent_samples/description.xml" label="Independent Samples" />
-
-		<component type="standard" id="load_r_object" file="00saveload/load/load/description.xml" label="Load an R Object" />
-		<component type="standard" id="load_readtable" file="00saveload/load/readtable/description.xml" label="Load data" />
-		<component type="standard" id="load_source" file="00saveload/load/source/description.xml" label="Load R source" />
-
-		<component type="standard" id="save_r_object" file="00saveload/save/save/description.xml" label="Save an R Object" />
-		<component type="standard" id="save_skeleton" file="00saveload/save/skeleton/description.xml" label="Save package" />
-		<component type="standard" id="save_variables" file="00saveload/save/write/description.xml" label="Save variables" />
-		<component type="standard" id="save_table" file="writetable/description.xml" label="Save as table" />
-
-		<component type="standard" id="descriptive" file="descriptive/descriptive_statistics.xml" label="Descriptive Statistics" />
-		<component type="standard" id="corr_matrix" file="corr_matrix/description.xml" label="Correlation Matrix" />
-		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
-		<component type="standard" id="basic_statistics" file="uni1.2/description.xml" label="Basic Statistics" />
-		<component type="standard" id="skewness_kurtosis" file="descriptive/skewness_kurtosis_test.xml" label="Skewness and Kurtosis" />
-		<component type="standard" id="wilcoxon_test" file="wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
-		<component type="standard" id="wilcoxon_exact_test" file="wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
-
-	</components>
-
-	<hierarchy>
-		<menu id="analysis" label="Analysis" index="4">
-			<menu id="means" label="Means" index="1">
-				<menu id="ttests" label="T-Tests" index="0">
-					<entry component="independent_samples_t_test" />
-				</menu>
-			</menu>
-			<entry component="basic_statistics" index="2"/>
-			<entry component="corr_matrix" index="3"/>
-			<entry component="descriptive" index="0"/>
-			<entry component="simple_anova" index="4"/>
-			<entry component="skewness_kurtosis" index="5"/>
-			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="6">
-				<entry component="wilcoxon_test" />
-				<entry component="wilcoxon_exact_test" />
-			</menu>
-		</menu>
-		<menu id="file" label="File">
-			<menu id="import" label="Import" index="4">
-				<entry component="load_r_object" />
-				<entry component="load_readtable" />
-				<entry component="load_source" />
-			</menu>
-			<menu id="export" label="Export" index="5">
-				<entry component="save_r_object" />
-				<entry component="save_skeleton" />
-				<entry component="save_variables" />
-				<entry component="save_table" />
-			</menu>
-		</menu>
-	</hierarchy>
-
+	<include file="import_export.pluginmap"/>
+	<include file="analysis.pluginmap"/>
 	<include file="distributions.pluginmap"/>
 	<include file="plots.pluginmap"/>
 	<include file="x11device.pluginmap"/>
