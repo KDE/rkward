@@ -140,7 +140,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 RKStandardComponent::~RKStandardComponent () {
 	RK_TRACE (PLUGIN);
 
-	gui->deleteLater ();
+	if (gui) gui->deleteLater ();
 	delete backend;
 }
 
