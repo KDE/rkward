@@ -23,12 +23,12 @@ try ({
 		}
 		else {
 		rk.temp.barplot <- barplot((rk.temp.x), beside=<? getRK ("beside"); ?>, legend.text=<? getRK ("legend"); ?>,  ylim = range(rk.temp.x) * c(0, 1.2))
-	}
-	if(<? getRK ("labels"); ?>) text(rk.temp.barplot, rk.temp.x, labels=rk.temp.x, pos=<? getRK ("place"); ?>, offset=.5)
+		}
+		if(<? getRK ("labels"); ?>) text(rk.temp.barplot, rk.temp.x, labels=rk.temp.x, pos=<? getRK ("place"); ?>, offset=.5)
 	}
 	else {
-	if(<? getRK ("rainbow"); ?>) barplot((rk.temp.x), col=rainbow(rk.temp.x), legend.text=<? getRK ("legend"); ?>)
-	else barplot((rk.temp.x), legend.text=<? getRK ("legend"); ?>)
+		if(<? getRK ("rainbow"); ?>) barplot((rk.temp.x), col=rainbow(rk.temp.x), legend.text=<? getRK ("legend"); ?>)
+		else barplot((rk.temp.x), legend.text=<? getRK ("legend"); ?>)
 	}
 })
 rk.graph.off ()
