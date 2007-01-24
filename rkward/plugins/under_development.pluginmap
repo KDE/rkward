@@ -1,0 +1,22 @@
+<!DOCTYPE rkpluginmap>
+
+<document base_prefix="" namespace="rkward">
+	<components>
+	</components>
+
+	<hierarchy>
+		<menu id="file" label="File">
+			<menu id="import" label="Import" index="4">
+			</menu>
+			<menu id="export" label="Export" index="5">
+			</menu>
+		</menu>
+		<menu id="analysis" label="Analysis" index="4">
+		</menu>
+		<menu id="plots" label="Plots" index="5">
+		</menu>
+		<menu id="distributions" label="Distributions" index="7">
+		</menu>
+	</hierarchy>
+</document>
+ 
