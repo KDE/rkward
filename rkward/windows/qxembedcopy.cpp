@@ -973,14 +973,14 @@ void QXEmbedCopy::embed(WId w)
             XWithdrawWindow(qt_xdisplay(), window, qt_xscreen());
             QApplication::flushX();
             // L1711: See L1610
-            for (int i=0; i < 10000; ++i) {	// this section changed from original QXEmbed
+            for (int i=0; i < 100000; ++i) {	// this section changed from original QXEmbed
                 if (wstate_withdrawn(window)) {
                     Window parent = 0;
                     get_parent(w, &parent);
                     if (parent == qt_xrootwin()) break;
-                    else if ((i%20) == 0) qDebug ("not really withdrawn, yet in loop #%d", i);
+                    else if ((i%500) == 0) qDebug ("not really withdrawn, yet in loop #%d", i);
                 }
-                USLEEP(1000);
+                USLEEP(10);
             }
         }
 
