@@ -1,0 +1,41 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="barplot.php" />
+	<help file="barplot.rkh" />
+	<logic>
+		<convert id="besidevalue" mode="equals" sources="beside.string" standard="TRUE" />
+		<connect client="labels.enabled" governor="besidevalue" />
+		<convert id="labelsvalue" mode="equals" sources="labels.string" standard="TRUE" />
+		<connect client="place.enabled" governor="labelsvalue" />
+	</logic>
+	<dialog label="Correlation Matrix Plot" >		
+		<tabbook>
+			<tab label="Variables" id="tab_variables">
+				<row>
+					<varselector id="vars"/>
+					<column>
+					<varslot type="numeric" min_vars="1" id="x" source="vars" required="true" label="Matrix or Factor"/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Options" id="tab_options">
+				<checkbox id="legend" label="Legend" value="TRUE" value_unchecked="FALSE" checked="false"/>
+				<checkbox id="rainbow" label="Rainbow colors" value="TRUE" value_unchecked="FALSE" checked="false"/>
+				<radio id="beside" label="Type" >
+					<option value="TRUE" label="Juxtaposed" checked="true"/>
+					<option value="FALSE" label="Stacked"/>
+				</radio>
+				<radio id="labels" label="Label values" >
+					<option value="TRUE" label="Display" />
+					<option value="FALSE" label="Do not Display" checked="true"/>					
+				</radio>
+				<radio id="place" label="Display label values">
+					<option value="3" label="Above Bars" checked="true"/>
+					<option value="2" label="Beside Bars"/>
+					<option value="1" label="Inside Bars"/>
+				</radio>
+			</tab>
+		</tabbook>			
+	</dialog>
+
+</document>

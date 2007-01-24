@@ -1,0 +1,30 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Creates a bar plot with vertical bars.
+	</summary>
+
+	<usage>
+Choose a matrix or a factor to be plotted. Choose if you want stacked bars, legend, and rainbow colors. Also you can choose if you want to display or not bar values (labels) and in what place.
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select a data matrix or a factor to be plotted.</setting>
+		<caption id="tab_options"/>
+		<setting id="legend">Select if you want to add a legend to the barplot. The row names of height will be used as labels if they are non-null. By default there is no legend.</setting>
+		<setting id="rainbow">Select between grey and rainbow collors. Default is grey colors.</setting>
+		<setting id="beside">Select a type between juxtaposed bars and stacked bars. If you select stacked bars you can not display bar values (labels). </setting>
+		<setting id="labels">Select if you want to display bar values (labels). By default the values sould not be displayed.</setting>
+		<setting id="place">If you have selected to display bar values (labels) you can select where should they be displayed:
+		<li> Above the bars (default)</li>
+		<li> Beside the bars </li>
+		<li> Inside the bars </li>
+		</setting>		
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/barplot"/></li>
+		</ul>
+	</related>
+</document>
