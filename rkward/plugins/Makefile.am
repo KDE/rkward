@@ -26,7 +26,10 @@ dist_pluginsXplots_DATA = \
 	plots/scatterplot_matrix.php \
 	plots/scatterplot_matrix.xml \
 	plots/cor_graph.rkh \
-	plots/scatterplot_matrix.rkh
+	plots/scatterplot_matrix.rkh \
+	plots/barplot.php \
+	plots/barplot.xml \
+	plots/barplot.rkh
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
