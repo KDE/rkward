@@ -3,6 +3,8 @@ dist_plugins_DATA = \
 	all.pluginmap \
 	plots.pluginmap \
 	distributions.pluginmap \
+	analysis.pluginmap \
+	import_export.pluginmap \
 	x11device.pluginmap
 
 pluginsXplotsdir = $(kde_datadir)/rkward/plots
