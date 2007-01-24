@@ -7,9 +7,9 @@
 		<component type="standard" id="wilcoxon_test" file="wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
 		<component type="standard" id="wilcoxon_exact_test" file="wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
 
-		<component type="standard" id="barplot" file="barplot.xml" label="Barplot" />
-		<component type="standard" id="cor_graph" file="cor_graph.xml" label="Correlation Matrix Plot" />
-		<component type="standard" id="scatterplot_matrix" file="scatterplot_matrix.xml" label="Scatterplot Matrix" />
+		<component type="standard" id="barplot" file="plots/barplot.xml" label="Barplot" />
+		<component type="standard" id="cor_graph" file="plots/cor_graph.xml" label="Correlation Matrix Plot" />
+		<component type="standard" id="scatterplot_matrix" file="plots/scatterplot_matrix.xml" label="Scatterplot Matrix" />
 	</components>
 
 	<hierarchy>
