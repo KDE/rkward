@@ -4,9 +4,9 @@ dist_plugins_DATA = \
 	plots.pluginmap \
 	distributions.pluginmap \
 	analysis.pluginmap \
+	x11device.pluginmap \
 	import_export.pluginmap \
-	under_development.pluginmap \
-	x11device.pluginmap
+	under_development.pluginmap
 
 pluginsXplotsdir = $(kde_datadir)/rkward/plots
 dist_pluginsXplots_DATA = \
@@ -26,13 +26,13 @@ dist_pluginsXplots_DATA = \
 	plots/density_plot.xml \
 	plots/cor_graph.php \
 	plots/cor_graph.xml \
+	plots/barplot.rkh \
+	plots/barplot.php \
+	plots/barplot.xml \
 	plots/scatterplot_matrix.php \
 	plots/scatterplot_matrix.xml \
 	plots/cor_graph.rkh \
-	plots/scatterplot_matrix.rkh \
-	plots/barplot.php \
-	plots/barplot.xml \
-	plots/barplot.rkh
+	plots/scatterplot_matrix.rkh
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
@@ -205,6 +205,13 @@ dist_pluginsX00saveloadXsaveXsave_DATA = \
 	00saveload/save/save/code.php \
 	00saveload/save/save/description.xml
 
+pluginsXwilcoxondir = $(kde_datadir)/rkward/wilcoxon
+dist_pluginsXwilcoxon_DATA = \
+	wilcoxon/wilcoxon_test.xml \
+	wilcoxon/wilcoxon_exact_test.xml \
+	wilcoxon/wilcoxon_test.php \
+	wilcoxon/wilcoxon_exact_test.php
+
 pluginsXdescriptivedir = $(kde_datadir)/rkward/descriptive
 dist_pluginsXdescriptive_DATA = \
 	descriptive/descriptive_statistics.php \
@@ -216,12 +223,6 @@ dist_pluginsXdescriptive_DATA = \
 pluginsXx11devicedir = $(kde_datadir)/rkward/x11device
 dist_pluginsXx11device_DATA = \
 	x11device/export.xml \
-	x11device/export.php
-
-pluginsXwilcoxondir = $(kde_datadir)/rkward/wilcoxon
-dist_pluginsXwilcoxon_DATA = \
-	wilcoxon/wilcoxon_test.php \
-	wilcoxon/wilcoxon_test.xml \
-	wilcoxon/wilcoxon_exact_test.xml \
-	wilcoxon/wilcoxon_exact_test.php 
+	x11device/export.php \
+	x11device/export.rkh
 

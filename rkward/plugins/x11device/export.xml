@@ -1,6 +1,7 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="export.php" />
+	<help file="export.rkh" />
 	<logic>
 		<external id="devnum"/>
 		
@@ -23,7 +24,7 @@
 				<browser size="small" id="file" label="File name" initial="Rplot.pdf" />
 				<dropdown id="format" label="Output format" >
 					<option value="pdfwrite" label="PDF" />
-					<option value="postscript" label="PostScript" />
+					<option value="pswrite" label="PostScript" />
 					<option value="pngmono" label="PNG (b/w)" />
 					<option value="pnggray" label="PNG (grayscale)" />
 					<option value="png256" label="PNG (256 colors)" />
