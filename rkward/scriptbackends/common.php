@@ -1,14 +1,4 @@
 <?
-// rename to getR
-function callR_val ($call) {
-	return (getInput ("requesting rcall:" . $call));
-}
-
-// rename to printR
-function callR ($call) {
-	echo (callR_val ($call));
-}
-
 // rename to getRK
 function getRK_val ($id) {
 	return (getInput ("requesting data:" . $id));
@@ -19,8 +9,10 @@ function getRK ($id) {
 	echo (getRK_val ($id));
 }
 
-function getRVector ($call) {
-	return (explode ("\t", getInput ("requesting rvector:" . $call)));
+function getPreview () {
+	if (function_exists ("preview")) {
+		preview ();
+	}
 }
 
 function getInput ($prompt) {

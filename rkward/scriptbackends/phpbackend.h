@@ -2,7 +2,7 @@
                           phpbackend  -  description
                              -------------------
     begin                : Mon Jul 26 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -47,6 +47,7 @@ public:
 	void calculate (int flags) { callFunction ("calculate ();", flags, Calculate); };
 	void printout (int flags) { callFunction ("printout ();", flags, Printout); };
 	void cleanup (int flags) { callFunction ("cleanup ();", flags, Cleanup); };
+	void preview (int flags) { callFunction ("doPreview ();", flags, Preview); };
 	void writeData (const QString &data);
 public slots:
 	void gotOutput (KProcess *proc, char* buf, int len);

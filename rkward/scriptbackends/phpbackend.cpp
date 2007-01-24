@@ -2,7 +2,7 @@
                           phpbackend  -  description
                              -------------------
     begin                : Mon Jul 26 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -273,18 +273,6 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int len) {
 			emit (requestValue (requested_object));
 			busy = true;
 //			writeData (res + eot_string);
-		} else if (request.startsWith ("requesting rcall:")) {
-			QString requested_call = request.remove ("requesting rcall:");
-			RK_DO (qDebug ("requested rcall: \"%s\"", requested_call.latin1 ()), PHP, DL_DEBUG);
-			emit (requestRCall (requested_call));
-			busy = true;
-//			_responsible->doRCall (requested_call);
-		} else if (request.startsWith ("requesting rvector:")) {
-			QString requested_call = request.remove ("requesting rvector:");
-			RK_DO (qDebug ("requested rvector: \"%s\"", requested_call.latin1 ()), PHP, DL_DEBUG);
-			emit (requestRVector (requested_call));
-			busy = true;
-//			_responsible->getRVector (requested_call);
 		} else if (request.startsWith ("PHP-Error")) {
 				QString error = request.remove ("PHP-Error");
 				php_process->detach ();

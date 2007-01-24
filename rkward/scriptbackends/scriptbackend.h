@@ -2,7 +2,7 @@
                           scriptbackend  -  description
                              -------------------
     begin                : Sun Aug 15 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -40,8 +40,9 @@ public:
 		Calculate = 1,
 		Printout = 2,
 		Cleanup = 3,
-		Ignore = 4,
-		User = 5
+		Preview = 4,
+		Ignore = 5,
+		User = 6
 	};
 
 /** initialize backend
@@ -56,6 +57,7 @@ public:
 	virtual void calculate (int flags) = 0;
 	virtual void printout (int flags) = 0;
 	virtual void cleanup (int flags) = 0;
+	virtual void preview (int flags) = 0;
 	
 	virtual bool isBusy () { return busy; };
 	
@@ -67,8 +69,6 @@ signals:
 	void commandDone (int);
 	void idle ();
 	void requestValue (const QString &);
-	void requestRCall (const QString &);
-	void requestRVector (const QString &);
 	void haveError ();
 protected:
 	RKComponentPropertyCode *code_property;

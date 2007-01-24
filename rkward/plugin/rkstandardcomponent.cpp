@@ -80,8 +80,6 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	backend = new PHPBackend ();
 	connect (backend, SIGNAL (idle ()), this, SLOT (backendIdle ()));
 	connect (backend, SIGNAL (requestValue (const QString&)), this, SLOT (getValue (const QString&)));
-//	connect (backend, SIGNAL (requestRCall (const QString&)), this, SLOT (doRCall (const QString&)));
-//	connect (backend, SIGNAL (requestRVector (const QString&)), this, SLOT (getRVector (const QString&)));
 	connect (backend, SIGNAL (haveError ()), this, SLOT (hide ()));
 	connect (backend, SIGNAL (haveError ()), this, SLOT (removeFromParent ()));
 	connect (backend, SIGNAL (haveError ()), this, SLOT (deleteLater ()));
