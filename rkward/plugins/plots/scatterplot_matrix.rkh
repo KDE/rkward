@@ -19,9 +19,9 @@ Choose one or more objects to be plotted. Choose the diagonal plot and how the s
 		<li>QQplot. See <link href="rkward://rhelp/qqplot"/></li>
 		<li>No plot. Do not plot anything in the diagonal</li>
 		</setting>
-		<setting id="plot_points">Select it if you want points to be plotted in scatterplots. It is selected by default.</setting>
-		<setting id="smooth">Select it if you want a lowess smooth to be plotted in scatterplots. It is selected by default.</setting>
-		<setting id="ellipse">Select it if you want data-concentration ellipses to be plotted in scatterplots. The ellipses are plotted at levels 0.5 and 0.9. It is selected by default.</setting>
+		<setting id="plot_points">Select it if you want points to be plotted in scatterplots. </setting>
+		<setting id="smooth">Select it if you want a lowess smooth to be plotted in scatterplots. </setting>
+		<setting id="ellipse">Select it if you want data-concentration ellipses to be plotted in scatterplots. The ellipses are plotted at levels 0.5 and 0.9. </setting>
 	</settings>
 	<related>
 		<ul>
