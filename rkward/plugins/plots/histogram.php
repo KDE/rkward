@@ -6,43 +6,18 @@ function calculate () {
 }
 
 function printout () {
-	global $scale;
-	global $bw;
-	global $adjust;
-	global $narm;
-	global $giveRkern;
-	global $x;
-	global $breaksopt;
-
-	preparedata ();
-?>
-rk.header ("Histogram", list ("Frequency", "<? echo $scale; ?>", "Breaks algorithm", <? echo ("\"" . $breaks . "\""); ?>, "Variable", rk.get.description (<? echo ($x); ?>)))
-rk.graph.on ()
-<?	makeplotcommand (); ?>
-rk.graph.off ()
-<?
+	doPrintout (true);
 }
 
 function cleanup () {
 }
 
 function preview () {
-	preparedata ();
-	makeplotcommand ();
+	doPrintout (false);
 }
 
-
-
-// internal helper functions below;
-function preparedata () {
-	global $scale;
-	global $bw;
-	global $adjust;
-	global $narm;
-	global $giveRkern;
-	global $x;
-	global $breaksopt;
-
+// internal helper functions
+function doPrintout ($final) {
 	$breaks = getRK_val ("breaks");
 	$scale = getRK_val ("scale");
 	$bw =  getRK_val ("bw");
@@ -56,16 +31,12 @@ function preparedata () {
 	} else if (!empty ($breaks)) {
 		$breaksopt = "breaks=\"" . $breaks . "\"";
 	}
-}
 
-function makeplotcommand () {
-	global $scale;
-	global $bw;
-	global $adjust;
-	global $narm;
-	global $giveRkern;
-	global $x;
-	global $breaksopt;
+	if ($final) { ?>
+rk.header ("Histogram", list ("Frequency", "<? echo $scale; ?>", "Breaks algorithm", <? echo ("\"" . $breaks . "\""); ?>, "Variable", rk.get.description (<? echo ($x); ?>)))
+
+rk.graph.on ()
+<?	}
 ?>
 try ({
 	hist (<? echo ($x); ?>, <? echo ($breaksopt); ?>, freq = <? echo $scale; ?><? getRK ("plotoptions.code.printout"); ?>)
@@ -73,7 +44,9 @@ try ({
 	lines(density(<? echo ($x); ?>, bw="<? echo ($bw); ?>", adjust = <? echo ($adjust); ?>, <? echo ($giveRkern); ?>, <? echo ($narm); ?>, n = <? getRK ("n"); ?>), col= "<? getRK ("col_density"); ?>")
 <?	} ?>
 })
-<?
+<?	if ($final) { ?>
+rk.graph.off ()
+<?	}
 }
 
 ?>
