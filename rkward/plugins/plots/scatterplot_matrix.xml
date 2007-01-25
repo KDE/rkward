@@ -8,7 +8,10 @@
 			<tab label="Variables" id="tab_variables">		
 				<row>
 					<varselector id="vars"/>
-					<varslot type="numeric" min_vars="1" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
+					<column>
+						<varslot type="numeric" min_vars="1" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
+						<preview id="preview"/>
+					</column>
 				</row>
 			</tab>
 			<tab label="Options" id="tab_options">

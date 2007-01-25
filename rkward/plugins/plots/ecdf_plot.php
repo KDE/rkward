@@ -31,8 +31,8 @@ rm (rk.temp.range)
 	
 		if ($final) { ?>
 rk.header ("Empirical Cumulative Distribution Function", list ("Variable", rk.get.description (<? echo ($x); ?>), "Minimum", rk.temp.range[1], "Maximum", rk.temp.range[2]))
-rk.graph.on ()
 
+rk.graph.on ()
 <?		} ?>
 try ({
 	plot.ecdf (<? echo ($x); ?>, <? getRK ("dopoints"); ?>, <? getRK ("verticals"); ?> <? getRK ("plotoptions.code.printout"); ?>)
