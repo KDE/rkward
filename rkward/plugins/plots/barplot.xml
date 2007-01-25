@@ -6,7 +6,8 @@
 		<convert id="besidevalue" mode="equals" sources="beside.string" standard="TRUE" />
 		<connect client="labels.enabled" governor="besidevalue" />
 		<convert id="labelsvalue" mode="equals" sources="labels.string" standard="TRUE" />
-		<connect client="place.enabled" governor="labelsvalue" />
+		<convert id="labelsvalue2" mode="and" sources="labelsvalue;labels.enabled" />
+		<connect client="place.enabled" governor="labelsvalue2" />
 	</logic>
 	<dialog label="Correlation Matrix Plot" >		
 		<tabbook>
@@ -14,7 +15,7 @@
 				<row>
 					<varselector id="vars"/>
 					<column>
-					<varslot type="numeric" min_vars="1" id="x" source="vars" required="true" label="Matrix or Factor"/>
+					<varslot min_vars="1" id="x" source="vars" required="true" label="Matrix or Factor"/>
 					</column>
 				</row>
 			</tab>
