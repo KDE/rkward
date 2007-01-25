@@ -20,7 +20,8 @@ rk.temp.cor.graph <- function(x) {
 
 	pairs(x, lower.panel=panel.smooth, upper.panel=panel.cor)
 }
-	<?		}
+<?
+	}
 	
 	function calculate () {
 	}
@@ -42,9 +43,8 @@ print("Signif. codes:  0 '***', 0.001 '**', 0.01 '*', 0.05 '.'', 0.1 ' ', 1")
 <?
 	}
 	
-	function cleanup () {
-	?>
+	function cleanup () { ?>
 rm(rk.temp.cor.graph, rk.temp.x)
-	<?
+<?
 	}
 ?>
