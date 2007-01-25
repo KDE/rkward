@@ -15,7 +15,7 @@
 				<row>
 					<varselector id="vars"/>
 					<column>
-					<varslot min_vars="1" id="x" source="vars" required="true" label="Matrix or Factor"/>
+					<varslot min_vars="1" id="x" source="vars" required="true" label="Matrix, Vector or Factor"/>
 					</column>
 				</row>
 			</tab>

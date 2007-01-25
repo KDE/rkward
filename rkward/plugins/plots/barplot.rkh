@@ -5,12 +5,12 @@ Creates a bar plot with vertical bars.
 	</summary>
 
 	<usage>
-Choose a matrix or a factor to be plotted. Choose if you want stacked bars, legend, and rainbow colors. Also you can choose if you want to display or not bar values (labels) and in what place.
+Choose a matrix, vector or a factor to be plotted. Choose if you want stacked bars, legend, and rainbow colors. Also you can choose if you want to display or not bar values (labels) and in what place.
 	</usage>
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Select a data matrix or a factor to be plotted.</setting>
+		<setting id="x">Select a data matrix, a vector or a factor to be plotted.</setting>
 		<caption id="tab_options"/>
 		<setting id="legend">Select if you want to add a legend to the barplot. The row names of height will be used as labels if they are non-null.</setting>
 		<setting id="rainbow">Select between grey and rainbow collors.</setting>
