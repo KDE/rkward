@@ -35,7 +35,8 @@ rk.results (list (
 	p=rk.temp$p.value<?
 	if (getRK_val ("confint")) { ?>,
 	'confidence interval percent'=(100 * attr(rk.temp$conf.int, "conf.level")),
-	'confidence interval of difference'=rk.temp$conf.int <? } ?>))
+	'confidence interval of difference'=rk.temp$conf.int <? } ?>,
+	'estimate' = rk.temp$estimate))
 <?
 	}
 	
