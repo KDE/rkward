@@ -11,11 +11,10 @@
 		<tabbook>
 			<tab label="Variable(s)" >
 				<row>
-					<column>
-						<varselector id="vars" />
-					</column>
+					<varselector id="vars" />
 					<column>
 						<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
+						<preview id="preview"/>
 					</column>
 					<stretch/>
 				</row>

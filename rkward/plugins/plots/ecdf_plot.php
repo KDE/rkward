@@ -9,11 +9,31 @@ rk.temp.range <- range (<? getRK("x"); ?>, na.rm=TRUE)
 	}
 	
 	function printout () {
-	$x = getRK_val ("x");
-	$col = getRK_val ("col");
+		doPrintout (true);
+	}
+	
+	function cleanup () {
 ?>
+rm (rk.temp.range)
+<?
+	}
+
+	function preview () {
+		preprocess ();
+		calculate ();
+		doPrintout (false);
+		cleanup ();
+	}
+
+	function doPrintout ($final) {
+		$x = getRK_val ("x");
+		$col = getRK_val ("col");
+	
+		if ($final) { ?>
 rk.header ("Empirical Cumulative Distribution Function", list ("Variable", rk.get.description (<? echo ($x); ?>), "Minimum", rk.temp.range[1], "Maximum", rk.temp.range[2]))
 rk.graph.on ()
+
+<?		} ?>
 try ({
 	plot.ecdf (<? echo ($x); ?>, <? getRK ("dopoints"); ?>, <? getRK ("verticals"); ?> <? getRK ("plotoptions.code.printout"); ?>)
 <?	if (getRK_val ("th_pnorm")) { ?>
@@ -23,13 +43,9 @@ try ({
 	rug (<? echo ($x); ?>, <? getRK ("ticksize"); ?>, <? getRK ("lwd"); ?>, <? getRK ("side"); ?>, col ="<? getRK ("col_rug"); ?>")
 <?	} ?>
 })
+<?		if ($final) { ?>
 rk.graph.off ()
-<?
+<?		}
 	}
-	
-	function cleanup () {
-?>
-rm (rk.temp.range)
-<?
-	}
+
 ?>

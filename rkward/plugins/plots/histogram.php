@@ -13,7 +13,10 @@ function cleanup () {
 }
 
 function preview () {
-	doPrintout (false);
+	preprocess ();
+	calculate ();
+	doPrintout (false);	// only this one actually needed...
+	cleanup ();
 }
 
 // internal helper functions

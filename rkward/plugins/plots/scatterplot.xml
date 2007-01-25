@@ -30,8 +30,13 @@ A duplicate option has to be tested-->
 			<tab label="Variables" >
 				<row>
 					<varselector id="vars" />
-					<varslot multi="true" duplicate="true" types="number unknown" id="x" source="vars" label="'X' variables" required="true" />
-					<varslot multi="true" duplicate="true" types="number unknown" id="y" source="vars" label="'Y' variables" required="true" />
+					<column>
+						<row>
+							<varslot multi="true" duplicate="true" types="number unknown" id="x" source="vars" label="'X' variables" required="true" />
+							<varslot multi="true" duplicate="true" types="number unknown" id="y" source="vars" label="'Y' variables" required="true" />
+						</row>
+						<preview id="preview"/>
+					</column>
 				</row>
 			</tab>
 			<tab label="Axes" >
@@ -136,8 +141,13 @@ A duplicate option has to be tested-->
 		<page>
 			<row>
 				<varselector id="vars" />
-				<varslot multi="true" duplicate="true" types="number unknown" id="x" source="vars" label="'X' variables" required="true" />
-				<varslot multi="true" duplicate="true" duplicate="true" types="number unknown" id="y" source="vars" label="'Y' variables" required="true" />
+				<column>
+					<row>
+						<varslot multi="true" duplicate="true" types="number unknown" id="x" source="vars" label="'X' variables" required="true" />
+						<varslot multi="true" duplicate="true" types="number unknown" id="y" source="vars" label="'Y' variables" required="true" />
+					</row>
+					<preview id="preview"/>
+				</column>
 			</row>
 		</page>
 	<!-- axes-->

@@ -1,7 +1,7 @@
 <?
 function preprocess () {
 ?>
-	rk.temp <- list ()
+rk.temp <- list ()
 <?
 }
 
@@ -48,12 +48,30 @@ rk.temp$pch <- rep (<? echo ($pch); ?>, length.out=length (rk.temp$Xvar));
 }
 
 function printout () {
-	
+	doPrintout (true);
+}
+
+function cleanup () {
 ?>
+rm(rk.temp)
+rm(rk.temp.iterator)
+<?
+}
+
+function preview () {
+	preprocess ();
+	calculate ();
+	doPrintout (false);
+	cleanup ();
+}
+
+function doPrintout ($final) { ?>
 if (!rk.temp$ok) stop ()
 
+<? if ($final) { ?>
 rk.graph.on()
 
+<?	} ?>
 try ({
 	# make frame and axes
 	plot(rk.temp$Xdef, rk.temp$Ydef, type="n", xlab = "<? echo ($Xname); ?>", ylab = "<? echo ($Yname); ?>", main = "<? echo ($main); ?>", sub = "<? echo ($sub); ?>", axes = <? getRK("axes") ;?>, log = "<? getRK("logX") ; getRK("logY") ; ?>")
@@ -71,15 +89,8 @@ try ({
 	}
 })
 
+<? if ($final) { ?>
 rk.graph.off()
-
-<?
-}
-
-function cleanup () {
-?>
-rm(rk.temp)
-rm(rk.temp.iterator)
-<?
+<?	}
 }
 ?>
