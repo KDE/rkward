@@ -271,7 +271,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 	RKGlobals::controlWindow()->addChain (request->in_chain);
 
 	// clear reply object
-	issueCommand (".rk.rkreply <- NULL", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+	issueCommand (".rk.set.reply (NULL)", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 	if (!request->call_length) {
 		RK_ASSERT (false);
 		closeChain (request->in_chain);
@@ -289,14 +289,14 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			while (dir.exists (file_prefix + QString::number (i) + file_extension)) {
 				i++;
 			}
-			issueCommand (".rk.rkreply <- \"" + dir.filePath (file_prefix + QString::number (i) + file_extension) + "\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+			issueCommand (".rk.set.reply (\"" + dir.filePath (file_prefix + QString::number (i) + file_extension) + "\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		} else {
-			issueCommand (".rk.rkreply <- \"Too few arguments in call to get.tempfile.name.\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+			issueCommand (".rk.set.reply (\"Too few arguments in call to get.tempfile.name.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		}
 	} else if (call == "get.output.html.file") {
 		QDir dir (RKSettingsModuleGeneral::filesPath ());
 		// TODO: make more generic, get filename sanely
-		issueCommand (".rk.rkreply <- \"" + dir.filePath ("rk_out.html") + "\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+		issueCommand (".rk.set.reply (\"" + dir.filePath ("rk_out.html") + "\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 	} else if (call == "sync") {
 		RK_ASSERT (request->call_length >= 2);
 
@@ -334,17 +334,16 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 	} else if (call == "require") {
 		if (request->call_length >= 2) {
 			QString lib_name = request->call[1];
-			issueCommand (".rk.rkreply <- NULL", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.").arg (lib_name), i18n ("Require package '%1'").arg (lib_name));
 			RKLoadLibsDialog::showInstallPackagesModal (0, request->in_chain, lib_name);
-			issueCommand (".rk.rkreply <- \"\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+			issueCommand (".rk.set.reply (\"\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		} else {
-			issueCommand (".rk.rkreply <- \"Too few arguments in call to require.\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+			issueCommand (".rk.set.reply (\"Too few arguments in call to require.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		}
 	} else if (call == "quit") {
 		RKWardMainWindow::getMain ()->close ();
 		// if we're still alive, quitting was cancelled
-		issueCommand (".rk.rkreply <- \"Quitting was cancelled\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+		issueCommand (".rk.set.reply (\"Quitting was cancelled\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 #ifndef DISABLE_RKWINDOWCATCHER
  	} else if (call == "startOpenX11") {
 		// TODO: error checking/handling (wrong parameter count/type)
@@ -362,7 +361,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		}
 #endif // DISABLE_RKWINDOWCATCHER
 	} else {
-		issueCommand (".rk.rkreply <- \"Unrecognized call '" + call + "'. Ignoring\"", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+		issueCommand (".rk.set.reply (\"Unrecognized call '" + call + "'. Ignoring\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 	}
 	
 	closeChain (request->in_chain);

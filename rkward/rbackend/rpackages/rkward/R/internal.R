@@ -84,10 +84,11 @@
 	return(c(as.vector(H$topic),as.vector(H$title),as.vector(H$Package)))
 }
 
+".rk.available.packages.cache" <- NULL
 # This function works like available.packages (with no arguments), but does simple caching of the result, and of course uses a cache if available. Cache is only used, if it is less than 1 hour old, and options("repos") is unchanged.
 ".rk.cached.available.packages" <- function () {
 	x <- NULL
-	if (exists (".rk.available.packages.cache")) {
+	if (exists (".rk.available.packages.cache") && (!is.null (.rk.available.packages.cache))) {
 		if (.rk.available.packages.cache$timestamp > (Sys.time () - 3600)) {
 			if (all (.rk.available.packages.cache$repos$repos == options ("repos")$repos)) {
 				x <- .rk.available.packages.cache$cache
@@ -337,6 +338,10 @@
 
 	ret
 }
+
+".rk.rkreply" <- NULL
+
+".rk.set.reply" <- function (x) .rk.rkreply <<- x
 
 ".rk.preview.devices" <- list ();
 
