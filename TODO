@@ -6,7 +6,6 @@ Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
 
 Bugs:
-	- There seems to be a race condition at startup, leading to a crash in doPostInit () in rkward.cpp. (Un-)Fortunately it triggers only rarely, and I have not yet figured out, when it occurs. Is this still the case? I've fixed one potential race condition a while ago, and have not seen this crash in a while (2006/09/27)
 	- "cannot create html package index" when installing package as a regular user (due to R.home ("doc") not writable)
 	- There is definitely a memory leak in handling output!
 		- Produce lots and lots of output -> watch mem usage grow
@@ -86,13 +85,10 @@ UI-stuff
 		- ideally the whole thing: setting breakpoints, etc.
 		- realistically, maybe we can override browser () or do_browser with something nicer
 	- Preview of plots
-		- add a preview-enabling widget (checkbox)
-		- plugins wanting to provide previews, will have to define a preview () function in the template
-		- when calling this from PHPBackend, use function_exits () to check, first, to keep this optional
-			- this might also be used to make the other definitions optional?
-		- if preview-box is checked, and settings are valid, preview code is generated and evaluated at once
-		- plugins will need to keep track of whether a preview device window was created, and also clean this up
-			- probably some simple helper function(s) should be created for this purpose
+		- document
+		- Maybe use a button (along the submit / close / etc. buttons instead)?
+		- The preview window should be a specialized RKCaughtWindow
+			- It should show info on state (up to date / updating / error / etc).
 	- Graphics Device List window
 		- (see http://sourceforge.net/mailarchive/message.php?msg_id=37825223)
 		- par (no.readonly=TRUE) and par () to fetch available parameters and determine read-only state
