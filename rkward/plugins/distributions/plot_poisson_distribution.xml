@@ -1,5 +1,5 @@
 <!DOCTYPE rkplugin>
-<document>
+<!--This is the simple "Plot Poisson probabilities" plugin--><document>
 	<code file="plot_poisson_distribution.php" />
 	<dialog label="Plot Poisson probabilities" >
 		<tabbook>
@@ -8,19 +8,21 @@
 					<column>
 						<row>
 							<frame label="Range" >
-							<spinbox type="real" min="0" id="min" initial="0" label="Minimum" />
-							<spinbox type="real" min="0" id="max" initial="12" label="Maximum" />
+								<spinbox type="integer" min = "0" id="min" initial="0" label="Lower quantile" />
+								<spinbox type="integer" min = "0" id="max" initial="12" label="Upper quantile" />
 							</frame>
 						</row>
 						<row>
-							<spinbox type="real" id="mean" initial="0" label="mean" />
+							<spinbox type="real" id="mean" min="0" initial="5" label="Mean" />
 						</row>
-						</column>
-						<column>
+					</column>
+					<column>
 						<radio id="function" label="Choose type of function plot" >
 							<option value="dpois" label="Plot density function" />
 							<option value="ppois" label="Plot distribution" />
 						</radio>
+						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
+						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
 					</column>
 				</row>
