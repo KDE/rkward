@@ -4,8 +4,10 @@
 	<components>
 		<component type="standard" id="export_x11_device" file="x11device/export.xml" label="Export..." />
 
-		<component type="standard" id="wilcoxon_test" file="wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
-		<component type="standard" id="wilcoxon_exact_test" file="wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
+		<component type="standard" id="wilcoxon_test" file="analysis/wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
+		<component type="standard" id="wilcoxon_exact_test" file="analysis/wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
+		<component type="standard" id="ansari_bradley_test" file="analysis/ansari_bradley/ansari_bradley_test.xml" label="Ansari-Bradley two-sample test" />
+		<component type="standard" id="ansari_bradley_exact_test" file="analysis/ansari_bradley/ansari_bradley_exact_test.xml" label="Ansari-Bradley two-sample exact test" />
 
 		<component type="standard" id="barplot" file="plots/barplot.xml" label="Barplot" />
 		<component type="standard" id="cor_graph" file="plots/cor_graph.xml" label="Correlation Matrix Plot" />
@@ -28,6 +30,10 @@
 			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="6">
 				<entry component="wilcoxon_test" />
 				<entry component="wilcoxon_exact_test" />
+			</menu>
+			<menu id="ansari_bradley" label="Ansari-Bradley Tests" index="7">
+				<entry component="ansari_bradley_test" />
+				<entry component="ansari_bradley_exact_test" />
 			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
