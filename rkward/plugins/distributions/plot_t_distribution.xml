@@ -1,35 +1,33 @@
 <!DOCTYPE rkplugin>
-<!--This is the simple "Plot t probabilities" plugin-->
-
 <document>
-  <code file="plot_t_distribution.php" />
-  <dialog label="Plot t probabilities" >
-    <tabbook>
-      <tab label="Plot t probabilities" >
-          <row>
-            <column>
-              <row>
-                <spinbox max_precision="2" default_precision="2" type="real" id="n" initial="100" label="Number of Observations" />
-              </row>
-              <row>
-                <frame label="Range" >
-			<spinbox max_precision="2" default_precision="2" type="real" id="min" initial="-12.924" label="Minimum" />
-			<spinbox max_precision="2" default_precision="2" type="real" id="max" initial="12.924" label="Maximum" />
-                </frame>
-              </row>
-              <row>
-                <spinbox max_precision="2" default_precision="2" type="real" id="df" initial="0.01" label="Degrees of freedom" />
-              </row>
-            </column>
-            <column>
-              <radio id="function" label="Choose type of function plot" >
-                <option value="dt" label="Plot density function" />
-		<option value="pt" label="Plot distribution" />
-              </radio>
-	      <stretch/>
-            </column>
-          </row>
-      </tab>
-    </tabbook>
-  </dialog>
+	<code file="plot_t_distribution.php" />
+	<dialog label="Plot t probabilities" >
+		<tabbook>
+			<tab label="Plot t probabilities" >
+				<row>
+				<column>
+				<row>
+					<spinbox max_precision="2" default_precision="2" type="real" id="n" initial="100" label="Number of Observations" />
+				</row>
+				<row>
+					<frame label="Range" >
+						<spinbox max_precision="2" default_precision="2" type="real" id="min" initial="-12.924" label="Minimum" />
+						<spinbox max_precision="2" default_precision="2" type="real" id="max" initial="12.924" label="Maximum" />
+					</frame>
+				</row>
+				<row>
+					<spinbox max_precision="2" default_precision="2" type="real" id="df" initial="0.01" label="Degrees of freedom" />
+				</row>
+				</column>
+				<column>
+				<radio id="function" label="Choose type of function plot" >
+					<option value="dt" label="Plot density function" />
+					<option value="pt" label="Plot distribution" />
+				</radio>
+				<stretch/>
+				</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
 </document>

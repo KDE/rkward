@@ -1,5 +1,6 @@
 <!DOCTYPE rkplugin>
-<!--This is the simple "Plot binomial probabilities" plugin--><document>
+<!--This is the simple "Plot binomial probabilities" plugin-->
+<document>
 <code file="plot_binomial_distribution.php" />
 <dialog label="Plot binomial probabilities" >
 	<tabbook>

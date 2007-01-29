@@ -1,34 +1,34 @@
 <!DOCTYPE rkplugin>
-<!--This is the simple "Plot F probabilities" plugin--><document>
-  <code file="plot_f_distribution.php" />
-  <dialog label="Plot F probabilities" >
-    <tabbook>
-      <tab label="Plot F probabilities" >
-          <row>
-            <column>
-              <row>
-                <spinbox max_precision="2" default_precision="2" type="real" id="n" initial="100" label="Number of Observations" />
-              </row>
-              <row>
-                <frame label="Range" >
-			<spinbox max_precision="6" default_precision="2" type="real" min="0.001" id="min" initial="0.001" label="Minimum" />
-			<spinbox max_precision="6" default_precision="2" type="real" min="0.001" id="max" initial="1999" label="Maximum" />
-                </frame>
-              </row>
-              <row>
-                <spinbox type="integer" min="1" id="df1" initial="1" label="Numerator degrees of freedom" />
-		<spinbox type="integer" min="1" id="df2" initial="1" label="Denominator degrees of freedom" />
-              </row>
-            </column>
-            <column>
-              <radio id="function" label="Choose type of function plot" >
-		      <option value="df" label="Plot density function" />
-		<option value="pf" label="Plot distribution" />
-              </radio>
-			  <stretch/>
-            </column>
-          </row>
-      </tab>
-    </tabbook>
-  </dialog>
+<document>
+	<code file="plot_f_distribution.php" />
+	<dialog label="Plot F probabilities" >
+		<tabbook>
+			<tab label="Plot F probabilities" >
+				<row>
+					<column>
+						<row>
+							<spinbox max_precision="2" default_precision="2" type="real" id="n" initial="100" label="Number of Observations" />
+						</row>
+						<row>
+							<frame label="Range" >
+								<spinbox max_precision="6" default_precision="2" type="real" min="0.001" id="min" initial="0.001" label="Minimum" />
+								<spinbox max_precision="6" default_precision="2" type="real" min="0.001" id="max" initial="1999" label="Maximum" />
+							</frame>
+						</row>
+						<row>
+							<spinbox type="integer" min="1" id="df1" initial="1" label="Numerator degrees of freedom" />
+							<spinbox type="integer" min="1" id="df2" initial="1" label="Denominator degrees of freedom" />
+						</row>
+					</column>
+					<column>
+						<radio id="function" label="Choose type of function plot" >
+							<option value="df" label="Plot density function" />
+							<option value="pf" label="Plot distribution" />
+						</radio>
+						<stretch/>
+					</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
 </document>

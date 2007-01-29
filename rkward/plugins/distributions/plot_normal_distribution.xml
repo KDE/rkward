@@ -1,34 +1,34 @@
 <!DOCTYPE rkplugin>
-<!--This is the simple "Plot normal probabilities" plugin--><document>
-  <code file="plot_normal_distribution.php" />
-  <dialog label="Plot normal probabilities" >
-    <tabbook>
-      <tab label="Plot normal probabilities" >
-          <row>
-            <column>
-              <row>
-                <spinbox max_precision="2" default_precision="2" type="real" id="n" initial="100" label="Number of Observations" />
-              </row>
-              <row>
-                <frame label="Range" >
-                  <spinbox max_precision="2" default_precision="2" type="real" id="min" initial="-3.291" label="Minimum" />
-                  <spinbox max_precision="2" default_precision="2" type="real" id="max" initial="3.291" label="Maximum" />
-                </frame>
-              </row>
-              <row>
-                <spinbox max_precision="2" default_precision="2" type="real" id="mean" initial="0" label="mu (mean)" />
-		<spinbox max_precision="2" default_precision="2" type="real" id="sd" initial="1" label="sigma (standard deviation)" label="standard deviation" />
-              </row>
-            </column>
-            <column>
-              <radio id="function" label="Choose type of function plot" >
-                <option value="dnorm" label="Plot density function" />
-		<option value="pnorm" label="Plot distribution" />
-              </radio>
-			  <stretch/>
-            </column>
-          </row>
-      </tab>
-    </tabbook>
-  </dialog>
+<document>
+	<code file="plot_normal_distribution.php" />
+	<dialog label="Plot normal probabilities" >
+		<tabbook>
+			<tab label="Plot normal probabilities" >
+				<row>
+					<column>
+						<row>
+							<spinbox max_precision="2" default_precision="2" type="real" id="n" initial="100" label="Number of Observations" />
+						</row>
+						<row>
+							<frame label="Range" >
+							<spinbox max_precision="2" default_precision="2" type="real" id="min" initial="-3.291" label="Minimum" />
+							<spinbox max_precision="2" default_precision="2" type="real" id="max" initial="3.291" label="Maximum" />
+							</frame>
+						</row>
+						<row>
+							<spinbox max_precision="2" default_precision="2" type="real" id="mean" initial="0" label="mu (mean)" />
+							<spinbox max_precision="2" default_precision="2" type="real" id="sd" initial="1" label="sigma (standard deviation)" label="standard deviation" />
+						</row>
+					</column>
+					<column>
+						<radio id="function" label="Choose type of function plot" >
+							<option value="dnorm" label="Plot density function" />
+							<option value="pnorm" label="Plot distribution" />
+						</radio>
+						<stretch/>
+					</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
 </document>

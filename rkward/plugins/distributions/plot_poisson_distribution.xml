@@ -1,30 +1,30 @@
 <!DOCTYPE rkplugin>
-<!--This is the simple "Plot Poisson probabilities" plugin--><document>
-  <code file="plot_poisson_distribution.php" />
-  <dialog label="Plot Poisson probabilities" >
-    <tabbook>
-	    <tab label="Plot Poisson probabilities" >
-          <row>
-            <column>
-              <row>
-                <frame label="Range" >
-                  <spinbox type="real" min="0" id="min" initial="0" label="Minimum" />
-                  <spinbox type="real" min="0" id="max" initial="12" label="Maximum" />
-                </frame>
-              </row>
-              <row>
-                <spinbox type="real" id="mean" initial="0" label="mean" />
-              </row>
-            </column>
-            <column>
-              <radio id="function" label="Choose type of function plot" >
-		      <option value="dpois" label="Plot density function" />
-		      <option value="ppois" label="Plot distribution" />
-              </radio>
-			  <stretch/>
-            </column>
-          </row>
-      </tab>
-    </tabbook>
-  </dialog>
+<document>
+	<code file="plot_poisson_distribution.php" />
+	<dialog label="Plot Poisson probabilities" >
+		<tabbook>
+			<tab label="Plot Poisson probabilities" >
+				<row>
+					<column>
+						<row>
+							<frame label="Range" >
+							<spinbox type="real" min="0" id="min" initial="0" label="Minimum" />
+							<spinbox type="real" min="0" id="max" initial="12" label="Maximum" />
+							</frame>
+						</row>
+						<row>
+							<spinbox type="real" id="mean" initial="0" label="mean" />
+						</row>
+						</column>
+						<column>
+						<radio id="function" label="Choose type of function plot" >
+							<option value="dpois" label="Plot density function" />
+							<option value="ppois" label="Plot distribution" />
+						</radio>
+						<stretch/>
+					</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
 </document>
