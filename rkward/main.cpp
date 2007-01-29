@@ -80,18 +80,20 @@ static KCmdLineOptions options[] =
 
 int main(int argc, char *argv[]) {
 	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), version, description, KAboutData::License_GPL, "(c) 2002, 2004, 2005, 2006", 0, "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
-	aboutData.addAuthor ("Thomas Friedrichsmeier", I18N_NOOP ("Project leader"), 0);
-	aboutData.addAuthor ("Pierre Ecochard",  I18N_NOOP ("Core coder since 0.2.9"), 0);
+	aboutData.addAuthor ("Thomas Friedrichsmeier", I18N_NOOP ("Project leader / main developer"), 0);
+	aboutData.addAuthor ("Pierre Ecochard",  I18N_NOOP ("C++ coder since 0.2.9"), 0);
 	aboutData.addCredit ("Contributors in alphabetical order", 0, 0);
 	aboutData.addCredit ("Philippe Grosjean", I18N_NOOP ("Several helpful comments and discussions"), 0);
 	aboutData.addCredit ("Adrien d'Hardemare", I18N_NOOP ("Plugins and patches"), 0);
 	aboutData.addCredit ("Yves Jacolin", I18N_NOOP ("New website"), 0);
+	aboutData.addCredit ("Prasenjit Kapat", I18N_NOOP ("Several plugins"), 0);
 	aboutData.addCredit ("Marco Martin", I18N_NOOP ("A cool icon"), 0);
 	aboutData.addCredit ("Daniele Medri", I18N_NOOP ("RKWard logo, many suggestions, help on wording"), 0);
 	aboutData.addCredit ("Stefan Roediger", I18N_NOOP ("Many plugins, suggestions, marketing, translations"), 0);
 	aboutData.addCredit ("David Sibai", I18N_NOOP ("Several valuable comments, hints and patches"), 0);
 	aboutData.addCredit ("Ilias Soumpasis", I18N_NOOP ("Translation, Suggestions, plugins"), 0);
 	aboutData.addCredit ("Ralf Tautenhahn", I18N_NOOP ("Many comments, useful suggestions, and bug reports"), 0);
+	aboutData.addCredit ("Roland Vollgraf", I18N_NOOP ("Some patches"), 0);
 	aboutData.addCredit (I18N_NOOP ("Many more people on rkward-devel@lists.sourceforge.net"), I18N_NOOP ("Sorry, if we forgot to list you. Please contact us to get added"), 0);
 
 	// before initializing the commandline args, remove the ".bin" from "rkward.bin".
