@@ -10,6 +10,11 @@
 		<component type="standard" id="barplot" file="plots/barplot.xml" label="Barplot" />
 		<component type="standard" id="cor_graph" file="plots/cor_graph.xml" label="Correlation Matrix Plot" />
 		<component type="standard" id="scatterplot_matrix" file="plots/scatterplot_matrix.xml" label="Scatterplot Matrix" />
+
+		<component type="standard" id="plot_negbinomial_distribution" file="distributions/plot_negbinomial_distribution.xml" label="Plot negative binomial distribution" />
+		<component type="standard" id="plot_hypergeometric_distribution" file="distributions/plot_hypergeometric_distribution.xml" label="Plot hypergeometric distribution" />
+		<component type="standard" id="plot_geometric_distribution" file="distributions/plot_geometric_distribution.xml" label="Plot geometric distribution" />
+		<component type="standard" id="plot_gamma_distribution" file="distributions/plot_gamma_distribution.xml" label="Plot Gamma distribution" />
 	</components>
 
 	<hierarchy>
@@ -31,6 +36,24 @@
 			<entry component="scatterplot_matrix" />
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
+			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="1">
+				<menu id="gamma_distribution" label="Gamma Distribution" index="5">
+					<entry component="gamma_quantiles" label="Gamma quantiles" index="1"/>
+					<entry component="gamma_probabilities" label="Gamma probabilities" index="0"/>
+					<entry component="plot_gamma_distribution" label="Plot Gamma distribution" index="2"/>
+				</menu>
+			</menu>
+			<menu id="univariate_discrete_distributions" label="Univariate discrete distributions" index="2">
+				<menu id="geom_distribution" label="Geometric Distribution" index="1">
+					<entry component="plot_geometric_distribution" label="Plot geometric distribution" index="2"/>
+				</menu>
+				<menu id="hypergeometric_distribution" label="Hypergeometric Distribution" index="2">
+					<entry component="plot_hypergeometric_distribution" label="Plot hypergeometric distribution" index="2"/>
+				</menu>
+				<menu id="negative_binomial_distribution" label="Negative Binomial Distribution" index="3">
+					<entry component="plot_negbinomial_distribution" label="Plot negative binomial distribution" index="2"/>
+				</menu>
+			</menu>
 		</menu>
 	</hierarchy>
 
