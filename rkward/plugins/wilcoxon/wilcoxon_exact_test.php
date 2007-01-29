@@ -7,7 +7,7 @@
 require(exactRankTests)
 rk.temp.x <- substitute (<? getRK ("x"); ?>)
 rk.temp.y <- substitute (<? getRK ("y"); ?>)
-rk.temp <- wilcox.exact (eval (rk.temp.x), eval (rk.temp.y), alternative = c("<? getRK ("hypothesis"); ?>"), mu = <? getRK ("mu"); ?>, paired = <? getRK ("paired"); ?>, exact = <? getRK ("exact"); ?>, correct = <? getRK ("correct"); ?>, conf.int = <? getRK ("confint"); ?> <?
+rk.temp <- wilcox.exact (eval (rk.temp.x), eval (rk.temp.y), alternative = c("<? getRK ("alternative"); ?>"), mu = <? getRK ("mu"); ?>, paired = <? getRK ("paired"); ?>, exact = <? getRK ("exact"); ?>, correct = <? getRK ("correct"); ?>, conf.int = <? getRK ("confint"); ?> <?
 if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $conflevel); ?>)
 rk.temp.print.conf.level <- <? if (getRK_val ("confint")) echo "TRUE"; else echo "FALSE"; ?>
 
@@ -23,14 +23,14 @@ rk.header ("Wilcoxon exact test",
 	      else if (rk.temp$alternative == "greater")
 		paste (rk.get.short.name (rk.temp.x), "is greater than", rk.get.short.name (rk.temp.y))
 	      else
-		paste (rk.get.short.name (rk.temp.x), "and", rk.get.short.name (rk.temp.y), "differ")))
+		paste (rk.get.short.name (rk.temp.x), "and", rk.get.short.name (rk.temp.y), "differ"),"Confidence Interval", "<? getRK ("confint"); ?>", "Continuity correction in normal approximation for p-value", "<? getRK ("correct"); ?>","mu", "<? getRK ("mu"); ?>"))
 
 rk.results (list (
-	'Variable Name'=rk.get.description (rk.temp.x),
+	'Variable Name'=rk.temp$data.name,
 	'statistic'=rk.temp$statistic,
-	'degrees of freedom'=rk.temp$parameter,
+	'parameter'=rk.temp$parameter,
 	'mu'=rk.temp$null.value,
-	'alternative'=rk.temp$alternative,
+	'Hypothesis'=rk.temp$alternative,
 	p=rk.temp$p.value<?
 	if (getRK_val ("confint")) { ?>,
 	'confidence interval percent'=(100 * attr(rk.temp$conf.int, "conf.level")),
