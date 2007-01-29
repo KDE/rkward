@@ -1,5 +1,5 @@
 <!DOCTYPE rkplugin>
-<document>
+<!--This is the simple "Plot gamma probabilities" plugin--><document>
 	<code file="plot_gamma_distribution.php" />
 	<dialog label="Plot gamma probabilities" >
 		<tabbook>
