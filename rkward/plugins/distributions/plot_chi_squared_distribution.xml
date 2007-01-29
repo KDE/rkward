@@ -1,6 +1,5 @@
 <!DOCTYPE rkplugin>
-<!--This is the simple "Plot Chi-squared probabilities" plugin-->
-<document>
+<!--This is the simple "Plot Chi-squared probabilities" plugin--><document>
 	<code file="plot_chi_squared_distribution.php" />
 	<dialog label="Plot Chi-squared probabilities" >
 		<tabbook>
@@ -16,15 +15,20 @@
 								<spinbox default_precision="4" type="real" id="max" initial="24.103" label="Maximum" />
 							</frame>
 						</row>
-						<row>
-							<spinbox max_precision="1" default_precision="1" type="real" id="df" initial="0.1" label="Degrees of freedom" />
-						</row>
+							<row>
+						<frame label="Parameters">
+								<spinbox max_precision="2" default_precision="2" type="real" min="0.01" id="df" initial="4.0" label="Degrees of freedom" />
+								<spinbox max_precision="2" default_precision="2" type="real" min="0" id="ncp" initial="0" label="Non-centrality parameter" />
+						</frame>
+							</row>
 					</column>
 					<column>
 						<radio id="function" label="Choose type of function plot" >
 							<option value="dchisq" label="Plot density function" />
 							<option value="pchisq" label="Plot distribution" />
 						</radio>
+						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
+						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
 					</column>
 				</row>

@@ -1,19 +1,38 @@
 <?
 	function preprocess () {
 	}
-	
+
 	function calculate () {
 	}
-	
+
 	function printout () {
-?>rk.header ("Plot density <? getRK ("function"); ?>", list ("Number of Observations", "<? getRK ("n"); ?>", "Minimum", "<? getRK ("min"); ?>", "Maximum", "<? getRK ("max"); ?>", "Degrees of freedom", "<? getRK ("df"); ?>", "Function", "<? getRK ("function"); ?>"));
+
+	$fun = getRK_val ("function");
+	if ($fun == "dchisq") {
+		$label = "density";
+		$lower_tag = "";
+		$tail_tag = "";
+	} else {
+		$label = "distribution";
+		if (getRK_val("lower") == "1") {
+			$lower_tag = ", lower.tail = 1";
+			$tail_tag = ", \"Tail\",\"Lower\"";
+		} else {
+			$lower_tag = ", lower.tail = 0";
+			$tail_tag = ", \"Tail\",\"Upper\"";
+		}
+	}
+	if (getRK_val ("log") == "1") $log_label="logarithmic";
+	else $log_label="normal";
+
+?>rk.header ("Chisquare <? echo ($label); ?> function", list ("Number of Observations", "<? getRK ("n"); ?>", "Lower quantile", "<? getRK ("min"); ?>", "Upper quantile", "<? getRK ("max"); ?>", "Degrees of freedom", "<? getRK ("df"); ?>", "Non-centrality", "<? getRK ("ncp"); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? getRK ("function"); ?>"));
 
 rk.graph.on ()
-try (plot (<? getRK ("function"); ?> (seq(<? getRK ("min"); ?> ,<? getRK ("max"); ?>, length= <? getRK ("n"); ?>) , df = <? getRK ("df"); ?>), xlab=expression(chi^2)))
+try (plot (function (x) <? getRK ("function"); ?> (x, df = <? getRK ("df"); ?>, ncp = <? getRK ("ncp"); ?>, log = <? getRK ("log"); ?><? echo ($lower_tag); ?>), from=<? getRK ("min"); ?>, to=<? getRK ("max"); ?>, n=<? getRK ("n"); ?>))
 rk.graph.off ()
 <?
 	}
-	
+
 	function cleanup () {
 	}
 ?>
