@@ -1,4 +1,5 @@
 <!DOCTYPE rkplugin>
+<!--This is the simple "Plot t probabilities" plugin-->
 <document>
 	<code file="plot_t_distribution.php" />
 	<dialog label="Plot t probabilities" >
@@ -7,7 +8,7 @@
 				<row>
 					<column>
 						<row>
-							<spinbox max_precision="2" default_precision="2" type="real" id="n" initial="100" label="Number of Observations" />
+							<spinbox type="integer" id="n" initial="100" label="Number of Observations" />
 						</row>
 						<row>
 							<frame label="Range" >
@@ -16,7 +17,10 @@
 							</frame>
 						</row>
 						<row>
-							<spinbox max_precision="2" default_precision="2" type="real" id="df" initial="0.01" label="Degrees of freedom" />
+							<frame label="Parameters">
+								<spinbox max_precision="2" default_precision="2" type="real" id="df" min="0.01" initial="1" label="Degrees of freedom" />
+								<spinbox max_precision="2" default_precision="2" type="real" id="ncp" min="0" initial="0" label="Non-centrality parameters" />
+							</frame>
 						</row>
 					</column>
 					<column>
@@ -24,6 +28,8 @@
 							<option value="dt" label="Plot density function" />
 							<option value="pt" label="Plot distribution" />
 						</radio>
+						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
+						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
 					</column>
 				</row>
