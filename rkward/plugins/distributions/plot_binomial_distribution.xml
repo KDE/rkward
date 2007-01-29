@@ -1,32 +1,32 @@
 <!DOCTYPE rkplugin>
 <!--This is the simple "Plot binomial probabilities" plugin-->
 <document>
-<code file="plot_binomial_distribution.php" />
-<dialog label="Plot binomial probabilities" >
-	<tabbook>
-	<tab label="Plot binomial probabilities" >
-		<row>
-			<column>
-				<frame label="Quantiles">
-					<spinbox  type="integer" id="min" initial="0" label="lowest quantile" />
-					<spinbox  type="integer" id="space" initial="1" min="1" label="quantile spacing" />
-					<spinbox  type="integer" id="nq" initial="100" min="1" label="number of quantiles" />
-				</frame>
+	<code file="plot_binomial_distribution.php" />
+	<dialog label="Plot binomial probabilities" >
+		<tabbook>
+			<tab label="Plot binomial probabilities" >
 				<row>
-					<spinbox type="integer" id="size" initial="100" min="0" label="Number of trials" />
-					<spinbox max_precision="4" default_precision="2" type="real" id="prob" initial="0.5" min="0" max="1" label="Probability of success on each trial" />
+					<column>
+						<frame label="Range" >
+							<spinbox type="integer" min = "0" id="min" initial="0" label="Lower quantile" />
+							<spinbox type="integer" min = "0" id="max" initial="12" label="Upper quantile" />
+						</frame>
+						<frame label="Parameters">
+							<spinbox type="integer" id="size" min="0" initial="12" label="Number of trials" />
+							<spinbox max_precision="4" default_precision="2" type="real" id="prob" initial="0.5" min="0" max="1" label="Probability of success on each trial" />
+						</frame>
+					</column>
+					<column>
+						<radio id="function" label="Choose type of function plot" >
+							<option value="dbinom" label="Plot density function" />
+							<option value="pbinom" label="Plot distribution" />
+						</radio>
+						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
+						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
+						<stretch/>
+					</column>
 				</row>
-			</column>
-			<column>
-				<radio id="function" label="Choose type of function plot" >
-					<option value="dbinom" label="Plot density function" />
-					<option value="pbinom" label="Plot distribution" />
-				</radio>
-				<checkbox id="log" label="Logarithmic" value="1"/>
-			<stretch/>
-			</column>
-		</row>
-	</tab>
-	</tabbook>
-</dialog>
+			</tab>
+		</tabbook>
+	</dialog>
 </document>
