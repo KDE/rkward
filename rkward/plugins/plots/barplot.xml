@@ -9,13 +9,14 @@
 		<convert id="labelsvalue2" mode="and" sources="labelsvalue;labels.enabled" />
 		<connect client="place.enabled" governor="labelsvalue2" />
 	</logic>
-	<dialog label="Correlation Matrix Plot" >		
+	<dialog label="Barplot" >		
 		<tabbook>
 			<tab label="Variables" id="tab_variables">
 				<row>
 					<varselector id="vars"/>
 					<column>
 					<varslot min_vars="1" id="x" source="vars" required="true" label="Matrix, Vector or Factor"/>
+					<preview id="preview"/>
 					</column>
 				</row>
 			</tab>

@@ -1,5 +1,5 @@
 <?
-	function preprocess () { ?>
+function preprocess () { ?>
 rk.temp.cor.graph <- function(x) {
 	panel.cor <- function(x, y, digits=<? getRK ("digits"); ?>, cex.cor, use="<? getRK ("use"); ?>", method="<? getRK ("method"); ?>", scale=<? getRK ("scale"); ?>) {
 		usr <- par("usr"); on.exit(par(usr))
@@ -21,30 +21,48 @@ rk.temp.cor.graph <- function(x) {
 	pairs(x, lower.panel=panel.smooth, upper.panel=panel.cor)
 }
 <?
+}
+	
+function calculate () {
+}
+
+function printout () {
+	doPrintout (true);
+}
+	
+function cleanup () { ?>
+rm(rk.temp.cor.graph, rk.temp.x)
+<?
 	}
 	
-	function calculate () {
-	}
+function preview () {
+	preprocess ();
+	calculate ();
+	doPrintout (false);	// only this one actually needed...
+	cleanup ();
+}
 
-	function printout () {
+function doPrintout ($final) {
 	$vars = str_replace ("\n", ",", trim (getRK_val ("x"))) ;
 ?>
 rk.temp.x <- data.frame (<? echo ($vars); ?>)
 
+<? 
+	if ($final) { ?>
 rk.header ("Correlation Matrix Plot", parameters=list ("Method", "<? getRK ("method"); ?>", "Exclusion", "<? getRK ("use"); ?>", "Precision", "<? getRK ("digits"); ?> digits", "Scale text", "<? getRK ("scale"); ?>"))
 
 rk.graph.on ()
+<?
+} ?>
 try ({
 	rk.temp.cor.graph (rk.temp.x)
 })
+<? 
+	if ($final) { ?>
 rk.graph.off ()
 
 print("Signif. codes:  0 '***', 0.001 '**', 0.01 '*', 0.05 '.'', 0.1 ' ', 1")
-<?
-	}
-	
-	function cleanup () { ?>
-rm(rk.temp.cor.graph, rk.temp.x)
-<?
-	}
+<?  }
+
+}
 ?>
