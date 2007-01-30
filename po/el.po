@@ -858,7 +858,7 @@ msgstr "Ενημέρωση προεπισκόπησης"
 
 #: plugin/rkpreviewbox.cpp:174
 msgid "Preview not (yet) possible"
-msgstr "Η προεπισκόπηση δεν είναι (ακόμη) δυνατή"
+msgstr "Μη διαθέσιμη προεπισκόπηση"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:41
 msgid "Which objects should be shown by default?"
