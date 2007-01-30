@@ -40,7 +40,7 @@ public:
 /** A menu entries to the context map from a .pluginmap file */
 	int create (const QDomElement &context_element, const QString &component_namespace);
 /** Create a context handler for this context. */
-	RKContextHandler *makeContextHandler (QObject *parent);
+	RKContextHandler *makeContextHandler (QObject *parent, bool create_actions=true);
 	QStringList components () { return component_ids; };
 protected:
 	void addedEntry (const QString &id, RKComponentHandle * /* handle */);
@@ -64,6 +64,8 @@ The last part (providing context information) is the most important one in this 
 class RKContextHandler : public QObject, public RKComponentBase, public KXMLGUIClient {
 	Q_OBJECT
 friend class RKContextMap;
+public:
+	void invokeComponent (RKComponentHandle *handle);
 protected:
 /** constructor. Protected. Use RKContextMap::makeContextHandler() instead. */
 	RKContextHandler (QObject *parent, const QDomDocument &gui_xml, const QString &id);

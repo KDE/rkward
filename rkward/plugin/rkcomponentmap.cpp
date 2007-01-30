@@ -323,6 +323,8 @@ RKComponentHandle::RKComponentHandle (const QString &filename, const QString &la
 
 RKComponentHandle::~RKComponentHandle () {
 	RK_TRACE (PLUGIN);
+
+	delete attributes;
 }
 
 bool RKComponentHandle::isPlugin () {

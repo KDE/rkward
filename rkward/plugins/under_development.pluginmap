@@ -7,6 +7,9 @@
 		<component type="standard" id="import_spss" file="00saveload/import/import_spss.xml" label="Import SPSS">
 			<attribute id="format" value="*.sav" label="SPSS data files"/>
 		</component>
+		<component type="standard" id="import_csv" file="00saveload/import/import_spss.xml" label="Import SPSS">
+			<attribute id="format" value="*.txt *.csv" label="Comma Separate Values"/>
+		</component>
 
 		<component type="standard" id="wilcoxon_test" file="analysis/wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
 		<component type="standard" id="wilcoxon_exact_test" file="analysis/wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
@@ -76,6 +79,7 @@
 	<context id="import">
 		<menu id="import" label="Import">
 			<entry component="import_spss"/>
+			<entry component="import_csv"/>
 		</menu>
 	</context>
 </document>

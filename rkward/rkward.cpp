@@ -53,7 +53,6 @@
 #include "rkward.h"
 #include "core/rkmodificationtracker.h"
 #include "plugin/rkcomponentmap.h"
-#include "plugin/rkcomponentcontext.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleplugins.h"
 #include "settings/rksettingsmodulegeneral.h"
@@ -65,6 +64,7 @@
 #include "robjectbrowser.h"
 #include "dialogs/startupdialog.h"
 #include "dialogs/rkloadlibsdialog.h"
+#include "dialogs/rkimportdialog.h"
 #include "agents/rksaveagent.h"
 #include "agents/rkloadagent.h"
 #include "agents/rkquitagent.h"
@@ -717,27 +717,7 @@ void RKWardMainWindow::setRStatus (bool busy) {
 void RKWardMainWindow::importData () {
 	RK_TRACE (APP);
 
-	RKContextMap *import_context = RKComponentMap::getContext ("import");
-	if (!import_context) {
-		KMessageBox::sorry (this, i18n ("No import plugins defined"));
-		return;
-	}
-
-	QStringList ids = import_context->components ();
-	QString formats = "*|" + i18n ("All Files") + " (*)\n";
-	for (QStringList::const_iterator it = ids.constBegin (); it != ids.constEnd (); ++it) {
-		RKComponentHandle *handle = RKComponentMap::getComponentHandle (*it);
-		if (!handle) {
-			RK_ASSERT (false);
-			continue;
-		}
-		QString filter = handle->getAttributeValue ("format");
-		formats.append (filter + '|' + handle->getAttributeLabel ("format") + " (" + filter + ")\n");
-	}
-
-	// this is not correct! we need a customized class for this, as we need to select the import filter to use at the same time
-	QString filename = KFileDialog::getOpenFileName (QString::null, formats, this);
-#warning TODO
+	new RKImportDialog ("import", this);
 }
 
 void RKWardMainWindow::slotNewCommandEditor () {

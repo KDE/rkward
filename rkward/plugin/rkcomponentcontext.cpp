@@ -41,14 +41,16 @@ int RKContextMap::create (const QDomElement &context_element, const QString &com
 	return (createMenus (element, context_element, component_namespace));
 }
 
-RKContextHandler *RKContextMap::makeContextHandler (QObject *parent) {
+RKContextHandler *RKContextMap::makeContextHandler (QObject *parent, bool create_actions) {
 	RK_TRACE (PLUGIN);
 
 	RKContextHandler *handler = new RKContextHandler (parent, gui_xml, id);
-	for (QStringList::const_iterator it = component_ids.constBegin (); it != component_ids.constEnd (); ++it) {
-		RKComponentHandle *handle = RKComponentMap::getComponentHandle (*it);
-		if (handle->isPlugin ()) {
-			handler->addAction (*it, handle);
+	if (create_actions) {
+		for (QStringList::const_iterator it = component_ids.constBegin (); it != component_ids.constEnd (); ++it) {
+			RKComponentHandle *handle = RKComponentMap::getComponentHandle (*it);
+			if (handle->isPlugin ()) {
+				handler->addAction (*it, handle);
+			}
 		}
 	}
 	return handler;
@@ -94,6 +96,13 @@ void RKContextHandler::componentActionActivated () {
 		RK_ASSERT (false);
 		return;
 	}
+
+	invokeComponent (handle);
+}
+
+void RKContextHandler::invokeComponent (RKComponentHandle *handle) {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (handle);
 
 	// create component
 	RKComponent *component = handle->invoke (0, 0);

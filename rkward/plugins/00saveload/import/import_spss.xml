@@ -1,0 +1,23 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="import_spss.php" />
+	<logic>
+		<external id="filename"/>
+		<connect governor="filename" client="file.selection"/>
+		
+		<connect governor="use_labels.state" client="labels_limit.enabled"/>
+		<connect governor="use_labels.state" client="trim_labels.enabled"/>
+	</logic>
+	<dialog label="Import SPSS file">
+		<browser size="small" id="file" label="File name" />
+		<stretch/>
+		<text>TODO: add selector for object to save to, here</text>
+		<stretch/>
+		<checkbox id="data_frame" checked="true" label="Import as a data.frame"/>
+		<frame label="Labels">
+			<checkbox id="use_labels" checked="true" label="Use value labels"/>
+			<spinbox id="labels_limit" type="integer" initial="1000000" min="1" label="Maximum number of labels per object" />
+			<checkbox id="trim_labels" checked="false" label="Trim white space"/>
+		</frame>
+	</dialog>
+</document>
