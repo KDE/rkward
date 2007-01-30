@@ -26,7 +26,7 @@ rk.header ("T-test (independent samples)",
 	"Equal variances", "<? if (!getRK_val ("varequal")) echo "not"; ?> assumed"))
 
 rk.results (list (
-	'Variable Name'=rk.get.description (rk.temp.x),
+	'Variable Name'=rk.get.description (rk.temp.x, rk.temp.y),
 	'estimated mean'=rk.temp$estimate,
 	'degrees of freedom'=rk.temp$parameter,
 	t=rk.temp$statistic,
