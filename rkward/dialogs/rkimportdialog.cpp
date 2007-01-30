@@ -89,10 +89,10 @@ void RKImportDialog::filterChanged () {
 	}
 }
 
-void RKImportDialog::slotOk () {
+void RKImportDialog::accept () {
 	RK_TRACE (DIALOGS);
 
-	KFileDialog::slotOk ();
+	KFileDialog::accept ();
 
 	int index = format_combo->currentItem ();
 	QString cid = component_ids[index];
@@ -112,10 +112,10 @@ void RKImportDialog::slotOk () {
 	deleteLater ();
 }
 
-void RKImportDialog::slotCancel () {
+void RKImportDialog::reject () {
 	RK_TRACE (DIALOGS);
 
-	KFileDialog::slotCancel ();
+	KFileDialog::reject ();
 	deleteLater ();
 }
 

@@ -1,3 +1,4 @@
+- new plugin element to select name of an R object to save to				TODO: document
 - analysis folder for analysis plugins (Wilcoxon and Ansari-Bradley tests moved to analysis)
 - new plugin: Ansari-Bradley two-sample test						TODO: document, make it stable
 - place internal objects .rk.rkreply and .rk.available.packages.cache into rkward package environment

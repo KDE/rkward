@@ -1,5 +1,5 @@
 /***************************************************************************
-                          rkimportdialog  -  description
+                          rkpluginsaveobject  -  description
                              -------------------
     begin                : Tue Jan 30 2007
     copyright            : (C) 2007 by Thomas Friedrichsmeier
@@ -15,35 +15,38 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RKIMPORTDIALOG_H
-#define RKIMPORTDIALOG_H
+#ifndef RKPLUGINSAVEOBJECT_H
+#define RKPLUGINSAVEOBJECT_H
 
-#include <kfiledialog.h>
+#include "rkcomponent.h"
 
-#include <qstringlist.h>
+#include "rkcomponentproperties.h"
 
-class QHBox;
-class QComboBox;
-class RKContextMap;
+class RKSaveObjectChooser;
+class QDomElement;
 
-class RKImportDialog : public KFileDialog {
+/** RKComponent to select an object name to save something to
+
+@author Thomas Friedrichsmeier
+*/
+
+class RKPluginSaveObject : public RKComponent {
 	Q_OBJECT
 public:
-	RKImportDialog (const QString &context_id, QWidget *parent);
-	~RKImportDialog ();
+	RKPluginSaveObject (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+	~RKPluginSaveObject ();
+
+	RKComponentPropertyBase *selection;
+	QString value (const QString &modifier) { return (selection->value (modifier)); };
+	int type () { return ComponentSaveObject; };
+	bool isValid ();
 public slots:
-	void filterChanged ();
-protected:
-	void accept ();
-	void reject ();
+	void selectionChanged ();
+	void selectionChanged (bool);
+	void selectionChanged (RKComponentPropertyBase *);
 private:
-	int format_count;
-	QHBox *format_selection_box;
-	QComboBox *format_combo;
-	QStringList format_labels;
-	QStringList filters;
-	QStringList component_ids;
-	RKContextMap *context;
+	RKSaveObjectChooser *selector;
+	bool updating;
 };
 
 #endif

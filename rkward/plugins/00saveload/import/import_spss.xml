@@ -11,7 +11,7 @@
 	<dialog label="Import SPSS file">
 		<browser size="small" id="file" label="File name" />
 		<stretch/>
-		<text>TODO: add selector for object to save to, here</text>
+		<saveobject id="saveto" initial="my.spss.data" label="Object to save to"/>
 		<stretch/>
 		<checkbox id="data_frame" checked="true" label="Import as a data.frame"/>
 		<frame label="Labels">

@@ -45,6 +45,7 @@
 #include "rkpluginspinbox.h"
 #include "rkinput.h"
 #include "rkpluginbrowser.h"
+#include "rkpluginsaveobject.h"
 #include "rkpreviewbox.h"
 #include "rktext.h"
 #include "rktabpage.h"
@@ -503,6 +504,8 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			widget = new RKText (e, component (), parent_widget);
 		} else if (e.tagName () == "preview") {
 			widget = new RKPreviewBox (e, component (), parent_widget);
+		} else if (e.tagName () == "saveobject") {
+			widget = new RKPluginSaveObject (e, component (), parent_widget);
 		} else if (e.tagName () == "embed") {
 			QString component_id = xml->getStringAttribute (e, "component", QString::null, DL_ERROR);
 			RKComponentHandle *handle = RKComponentMap::getComponentHandle (component_id);

@@ -2,7 +2,7 @@
                           rksaveobjectchooser  -  description
                              -------------------
     begin                : Mon Nov 27 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -33,11 +33,14 @@ public:
 
 	QString validizedSelectedObjectName ();
 	bool isOk () const;
+	void setObjectName (const QString &name);
+	void setBackgroundColor (const QColor &color);
 public slots:
 	void nameEditChanged (const QString &);
-	void overwriteConfirmChanged (int checked);
+	void overwriteConfirmChanged (int);
 signals:
 	void okStatusChanged (bool);
+	void changed ();
 private:
 	bool allow_overwrite;
 	bool object_exists;

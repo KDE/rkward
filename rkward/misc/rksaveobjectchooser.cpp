@@ -2,7 +2,7 @@
                           rksaveobjectchooser  -  description
                              -------------------
     begin                : Mon Nov 27 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -61,6 +61,13 @@ RKSaveObjectChooser::~RKSaveObjectChooser () {
 	RK_TRACE (MISC);
 }
 
+void RKSaveObjectChooser::setObjectName (const QString &name) {
+	RK_TRACE (MISC);
+
+	name_edit->setText (name);
+	nameEditChanged (name);
+}
+
 QString RKSaveObjectChooser::validizedSelectedObjectName () {
 	RK_TRACE (MISC);
 
@@ -94,12 +101,19 @@ void RKSaveObjectChooser::nameEditChanged (const QString &) {
 		prev_ok = isOk ();
 		emit (okStatusChanged (isOk ()));
 	}
+	emit (changed ());
 }
 
-void RKSaveObjectChooser::overwriteConfirmChanged (int checked) {
+void RKSaveObjectChooser::overwriteConfirmChanged (int) {
 	RK_TRACE (MISC);
 
 	nameEditChanged (QString ());
+}
+
+void RKSaveObjectChooser::setBackgroundColor (const QColor &color) {
+	RK_TRACE (MISC);
+
+	name_edit->setBackgroundColor (color);
 }
 
 #include "rksaveobjectchooser.moc"
