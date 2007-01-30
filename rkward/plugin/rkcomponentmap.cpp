@@ -252,7 +252,13 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 		} else if (!QFileInfo (filename).isReadable ()) {
 			RK_DO (qDebug ("Specified file '%s' for component id \"%s\" does not exist or is not readable. Ignoring.", filename.latin1 (), id.latin1 ()), PLUGIN, DL_ERROR);
 		} else {
-			components.insert (id, new RKComponentHandle (filename, label, (RKComponentType) type));
+			// create and initialize component handle
+			RKComponentHandle *handle = new RKComponentHandle (filename, label, (RKComponentType) type);
+			XMLChildList attributes_list = xml->getChildElements (*it, "attribute", DL_DEBUG);
+			for (XMLChildList::const_iterator ait=attributes_list.begin (); ait != attributes_list.end (); ++ait) {
+				handle->addAttribute (xml->getStringAttribute (*ait, "id", "noid", DL_WARNING), xml->getStringAttribute (*ait, "value", QString::null, DL_ERROR), xml->getStringAttribute (*ait, "label", QString::null, DL_ERROR));
+			}
+			components.insert (id, handle);
 		}
 	}
 
@@ -311,6 +317,8 @@ RKComponentHandle::RKComponentHandle (const QString &filename, const QString &la
 	RKComponentHandle::type = type;
 	RKComponentHandle::filename = filename;
 	RKComponentHandle::label = label;
+
+	attributes = 0;
 }
 
 RKComponentHandle::~RKComponentHandle () {
@@ -335,6 +343,41 @@ void RKComponentHandle::activated () {
 	RK_TRACE (PLUGIN);
 
 	invoke (0, 0);
+}
+
+QString RKComponentHandle::getAttributeValue (const QString &attribute_id) {
+	RK_TRACE (PLUGIN);
+
+	if (!attributes) return QString ();
+	AttributeMap::const_iterator it = attributes->find (attribute_id);
+	if (it == attributes->constEnd ()) return QString ();
+	return ((*it).first);
+}
+
+QString RKComponentHandle::getAttributeLabel (const QString &attribute_id) {
+	RK_TRACE (PLUGIN);
+
+	if (!attributes) return QString ();
+	AttributeMap::const_iterator it = attributes->find (attribute_id);
+	if (it == attributes->constEnd ()) return QString ();
+	return ((*it).second);
+}
+
+bool RKComponentHandle::hasAttribute (const QString &attribute_id) {
+	RK_TRACE (PLUGIN);
+
+	if (!attributes) return false;
+	return (attributes->contains (attribute_id));
+}
+
+void RKComponentHandle::addAttribute (const QString &id, const QString &value, const QString &label) {
+	RK_TRACE (PLUGIN);
+
+	if (!attributes) {
+		attributes = new AttributeMap;
+	}
+	AttributeValue value_p (value, label);
+	attributes->insert (id, value_p);
 }
 
 ///########################### END RKComponentHandle ###############################

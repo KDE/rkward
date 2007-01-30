@@ -150,6 +150,8 @@ public slots:
 	void slotFileSaveWorkspaceAs();
 	/** shows the dialog to install/load/unload packages */
 	void slotFileLoadLibs ();
+	/** shows the dialog to import data */
+	void importData ();
 	/** close all editor windows */
 	void slotCloseAllEditors ();
 	/** Reimplemented from KParts::MainWindow to be more pretty

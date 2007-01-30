@@ -41,6 +41,7 @@ public:
 	int create (const QDomElement &context_element, const QString &component_namespace);
 /** Create a context handler for this context. */
 	RKContextHandler *makeContextHandler (QObject *parent);
+	QStringList components () { return component_ids; };
 protected:
 	void addedEntry (const QString &id, RKComponentHandle * /* handle */);
 private:

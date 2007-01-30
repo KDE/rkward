@@ -53,6 +53,7 @@
 #include "rkward.h"
 #include "core/rkmodificationtracker.h"
 #include "plugin/rkcomponentmap.h"
+#include "plugin/rkcomponentcontext.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleplugins.h"
 #include "settings/rksettingsmodulegeneral.h"
@@ -310,7 +311,8 @@ void RKWardMainWindow::initActions()
 	fileOpen = KStdAction::open(this, SLOT(slotOpenCommandEditor()), actionCollection(), "file_openy");
 	fileOpen->setText (i18n ("Open R Script File"));
 	fileOpenRecent = KStdAction::openRecent(this, SLOT(slotOpenCommandEditor (const KURL&)), actionCollection(), "file_open_recenty");
-	
+	KAction *import_data = new KAction (i18n ("Import Data"), 0, 0, this, SLOT (importData ()), actionCollection (), "import_data");
+
 	fileOpenWorkspace = KStdAction::open(this, SLOT(slotFileOpenWorkspace()), actionCollection(), "file_openx");
 	fileOpenWorkspace->setText (i18n ("Open Workspace"));
 	fileOpenWorkspace->setShortcut (KShortcut ("Ctrl+Shift+O"));
@@ -337,6 +339,7 @@ void RKWardMainWindow::initActions()
 	makeRKWardHelpMenu (this, actionCollection ());
 
 	new_data_frame->setStatusText (i18n ("Creates new empty dataset and opens it for editing"));
+	import_data->setStatusText (i18n ("Import data from a variety of file formats"));
 	fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
 	fileOpenRecentWorkspace->setStatusText(i18n("Opens a recently used file"));
 	fileSaveWorkspace->setStatusText(i18n("Saves the actual document"));
@@ -711,6 +714,31 @@ void RKWardMainWindow::setRStatus (bool busy) {
 	}
 }
 
+void RKWardMainWindow::importData () {
+	RK_TRACE (APP);
+
+	RKContextMap *import_context = RKComponentMap::getContext ("import");
+	if (!import_context) {
+		KMessageBox::sorry (this, i18n ("No import plugins defined"));
+		return;
+	}
+
+	QStringList ids = import_context->components ();
+	QString formats = "*|" + i18n ("All Files") + " (*)\n";
+	for (QStringList::const_iterator it = ids.constBegin (); it != ids.constEnd (); ++it) {
+		RKComponentHandle *handle = RKComponentMap::getComponentHandle (*it);
+		if (!handle) {
+			RK_ASSERT (false);
+			continue;
+		}
+		QString filter = handle->getAttributeValue ("format");
+		formats.append (filter + '|' + handle->getAttributeLabel ("format") + " (" + filter + ")\n");
+	}
+
+	// this is not correct! we need a customized class for this, as we need to select the import filter to use at the same time
+	QString filename = KFileDialog::getOpenFileName (QString::null, formats, this);
+#warning TODO
+}
 
 void RKWardMainWindow::slotNewCommandEditor () {
 	RK_TRACE (APP);

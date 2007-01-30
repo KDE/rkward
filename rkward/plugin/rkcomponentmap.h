@@ -47,6 +47,11 @@ public:
 	bool isPlugin ();
 
 	RKComponent *invoke (RKComponent *parent_component, QWidget *parent_widget);
+
+	QString getAttributeValue (const QString &attribute_id);
+	QString getAttributeLabel (const QString &attribute_id);
+	bool hasAttribute (const QString &attribute_id);
+	void addAttribute (const QString &id, const QString &value, const QString &label);
 public slots:
 /** Slot called, when the menu-item for this component is selected. Responsible for creating the GUI. */
 	void activated ();
@@ -55,6 +60,10 @@ protected:
 	QString filename;
 	QString label;
 	RKComponentType type;
+
+	typedef QPair<QString, QString> AttributeValue;
+	typedef QMap<QString, AttributeValue> AttributeMap;
+	AttributeMap *attributes;
 };
 
 #include <qmap.h>
