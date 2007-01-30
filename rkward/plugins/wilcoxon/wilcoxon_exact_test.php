@@ -26,16 +26,15 @@ rk.header ("Wilcoxon exact test",
 		paste (rk.get.short.name (rk.temp.x), "and", rk.get.short.name (rk.temp.y), "differ"),"Confidence Interval", "<? getRK ("confint"); ?>", "Continuity correction in normal approximation for p-value", "<? getRK ("correct"); ?>","mu", "<? getRK ("mu"); ?>"))
 
 rk.results (list (
-	'Variable Name'=rk.temp$data.name,
+	'Variable Names'=rk.get.description (rk.temp.x, rk.temp.y, is.substitute=TRUE),
 	'statistic'=rk.temp$statistic,
-	'parameter'=rk.temp$parameter,
-	'mu'=rk.temp$null.value,
+	'Location Shift'=rk.temp$null.value,
 	'Hypothesis'=rk.temp$alternative,
 	p=rk.temp$p.value<?
 	if (getRK_val ("confint")) { ?>,
 	'confidence interval percent'=(100 * attr(rk.temp$conf.int, "conf.level")),
 	'confidence interval of difference'=rk.temp$conf.int <? } ?>,
-	'estimate' = rk.temp$estimate))
+	<? if (getRK_val ("confint")) { ?> 'Difference in Location' = rk.temp$estimate <?}?>))
 <?
 	}
 	
