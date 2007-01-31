@@ -183,11 +183,6 @@ dist_pluginsX00meansX00ttestsX00independentUsamples_DATA = \
 	00means/00ttests/00independent_samples/code.php \
 	00means/00ttests/00independent_samples/description.xml
 
-pluginsXcorrUmatrixdir = $(kde_datadir)/rkward/analysis/corr_matrix
-dist_pluginsXcorrUmatrix_DATA = \
-	analysis/corr_matrix/code.php \
-	analysis/corr_matrix/description.xml
-
 pluginsXuni1D2dir = $(kde_datadir)/rkward/uni1.2
 dist_pluginsXuni1D2_DATA = \
 	uni1.2/code.php \
@@ -238,16 +233,23 @@ dist_pluginsX00saveloadXimport_DATA = \
 
 pluginsXanalysisdir = $(kde_datadir)/rkward/analysis
 pluginsXanalysisXansariUbradleydir = $(kde_datadir)/rkward/analysis/ansari_bradley
-pluginsXwilcoxondir = $(kde_datadir)/rkward/analysis/wilcoxon
-dist_pluginsXwilcoxon_DATA = \
-	analysis/wilcoxon/wilcoxon_test.xml \
-	analysis/wilcoxon/wilcoxon_exact_test.xml \
-	analysis/wilcoxon/wilcoxon_test.php \
-	analysis/wilcoxon/wilcoxon_exact_test.php \
-	analysis/ansari_bradley/ansari_bradley_test.xml \
+dist_pluginsXanalysisXansariUbradley_DATA = \
 	analysis/ansari_bradley/ansari_bradley_exact_test.xml \
 	analysis/ansari_bradley/ansari_bradley_test.php \
-	analysis/ansari_bradley/ansari_bradley_exact_test.php
+	analysis/ansari_bradley/ansari_bradley_exact_test.php \
+	analysis/ansari_bradley/ansari_bradley_test.xml
+
+pluginsXanalysisXcorrUmatrixdir = $(kde_datadir)/rkward/analysis/corr_matrix
+dist_pluginsXanalysisXcorrUmatrix_DATA = \
+	analysis/corr_matrix/code.php \
+	analysis/corr_matrix/description.xml
+
+pluginsXanalysisXwilcoxondir = $(kde_datadir)/rkward/analysis/wilcoxon
+dist_pluginsXanalysisXwilcoxon_DATA = \
+	analysis/wilcoxon/wilcoxon_exact_test.xml \
+	analysis/wilcoxon/wilcoxon_test.xml \
+	analysis/wilcoxon/wilcoxon_exact_test.php \
+	analysis/wilcoxon/wilcoxon_test.php
 
 pluginsXdescriptivedir = $(kde_datadir)/rkward/descriptive
 dist_pluginsXdescriptive_DATA = \
