@@ -150,10 +150,6 @@
 					<entry component="weibull_quantiles" label="Weibull quantiles" index="1"/>
 					<entry component="weibull_probabilities" label="Weibull probabilities" index="0"/>
 				</menu>
-                                <menu id="wilcoxon_distribution" label="Wilcoxon Rank Sum Distribution" index="14">
-                                        <entry component="wilcoxon_quantiles" label="Wilcoxon Rank Sum quantiles" index="1"/>
-					<entry component="wilcoxon_probabilities" label="Wilcoxon Rank Sum probabilities" index="0"/>
-				</menu>
 			</menu>
 
 			<menu id="univariate_discrete_distributions" label="Univariate discrete distributions" index="2">
@@ -178,6 +174,10 @@
 					<entry component="poisson_probabilities" label="Poisson probabilities" index="0"/>
 					<entry component="poisson_quantiles" label="Poisson quantiles" index="1"/>
 					<entry component="plot_poisson_distribution" label="Plot Poisson distribution" index="2"/>
+				</menu>
+                                <menu id="wilcoxon_distribution" label="Wilcoxon Rank Sum Distribution" index="14">
+                                        <entry component="wilcoxon_quantiles" label="Wilcoxon Rank Sum quantiles" index="1"/>
+					<entry component="wilcoxon_probabilities" label="Wilcoxon Rank Sum probabilities" index="0"/>
 				</menu>
 			</menu>	
 		</menu>
