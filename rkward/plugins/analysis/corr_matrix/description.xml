@@ -1,0 +1,28 @@
+<!DOCTYPE rkplugin>
+
+<document>
+	<code file="code.php"/>
+	
+	<dialog label="Correlation matrix">
+		<tabbook>
+			<tab label="variables">
+				<row>
+					<varselector id="vars"/>
+					<varslot type="numeric" min_vars="2" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
+				</row>
+			</tab>
+			<tab label="options">
+				<radio id="method" label="Method">
+					<option value="pearson" label="Pearson"/>
+					<option value="kendall" label="Kendall"/>
+					<option value="spearman" label="Spearman"/>
+				</radio>
+				<radio id="use" label="Exclude missing values">
+					<option value="complete.obs" label="whole cases"/>
+					<option value="pairwise.complete.obs" label="pairwise" checked="true"/>
+				</radio>
+			</tab>
+		</tabbook>
+	</dialog>
+
+</document>
