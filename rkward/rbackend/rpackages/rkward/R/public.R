@@ -8,6 +8,17 @@
 	as.character (as.vector (ret))
 }
 
+# set rkward label
+"rk.set.label" <- function (x, label) {
+	if (is.call (x) || is.name (x)) {
+		meta <- attr (eval (x), ".rk.meta")
+	} else {
+		meta <- attr (x, ".rk.meta")
+	}
+	meta[["label"]] <- as.character (label)
+	eval (substitute (attr (x, ".rk.meta") <<- meta))
+}
+
 # get a short name for the given object
 "rk.get.short.name" <- function (x) {
 	if (is.call (x) || is.name (x)) {

@@ -13,11 +13,11 @@
 		<stretch/>
 		<saveobject id="saveto" initial="my.spss.data" label="Object to save to"/>
 		<stretch/>
-		<checkbox id="data_frame" checked="true" label="Import as a data.frame"/>
+		<checkbox id="data_frame" checked="true" label="Import as a data.frame" value="1" value_unchecked="0"/>
 		<frame label="Labels">
-			<checkbox id="use_labels" checked="true" label="Use value labels"/>
+			<checkbox id="use_labels" checked="true" label="Use value labels" value="1" value_unchecked="0"/>
 			<spinbox id="labels_limit" type="integer" initial="1000000" min="1" label="Maximum number of labels per object" />
-			<checkbox id="trim_labels" checked="false" label="Trim white space"/>
+			<checkbox id="trim_labels" checked="false" label="Trim white space" value="1" value_unchecked="0"/>
 		</frame>
 	</dialog>
 </document>

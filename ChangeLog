@@ -1,3 +1,5 @@
+- new plugin: import SPSS files								TODO: document
+- new documentation pages: console
 - improvements to distribution plot plugins
 - new plugins: distribution plots 							TODO: list them
 - fixed: installing packages as root would not work, when $R_HOME is not defined
