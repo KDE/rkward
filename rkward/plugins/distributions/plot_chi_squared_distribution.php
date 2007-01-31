@@ -6,33 +6,57 @@
 	}
 
 	function printout () {
+	doPrintout (true);
+}
+
+function cleanup () {
+}
+
+function preview () {
+	preprocess ();
+	calculate ();
+	doPrintout (false);
+	cleanup ();
+}
+
+function doPrintout ($final) {
 
 	$fun = getRK_val ("function");
+	$log_option = "";
 	if ($fun == "dchisq") {
 		$label = "density";
 		$lower_tag = "";
 		$tail_tag = "";
+		if (getRK_val ("log")) $log_option = ", log=TRUE";
 	} else {
 		$label = "distribution";
 		if (getRK_val("lower") == "1") {
-			$lower_tag = ", lower.tail = 1";
+			$lower_tag = ", lower.tail = TRUE";
 			$tail_tag = ", \"Tail\",\"Lower\"";
 		} else {
-			$lower_tag = ", lower.tail = 0";
+			$lower_tag = ", lower.tail = FALSE";
 			$tail_tag = ", \"Tail\",\"Upper\"";
 		}
+		if (getRK_val ("log")) $log_option = ", log.p=TRUE";
 	}
 	if (getRK_val ("log") == "1") $log_label="logarithmic";
 	else $log_label="normal";
+	$n = getRK_val ("n");
+	$min = getRK_val ("min");
+	$max = getRK_val ("max");
+  $ncp = getRK_val ("ncp");
+	$df = getRK_val ("df");
 
-?>rk.header ("Chisquare <? echo ($label); ?> function", list ("Number of Observations", "<? getRK ("n"); ?>", "Lower quantile", "<? getRK ("min"); ?>", "Upper quantile", "<? getRK ("max"); ?>", "Degrees of freedom", "<? getRK ("df"); ?>", "Non-centrality", "<? getRK ("ncp"); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? getRK ("function"); ?>"));
+	if ($final) { ?>
+rk.header ("Chisquare <? echo ($label); ?> function", list ("Number of Observations", "<? echo ($n); ?>", "Lower quantile", "<? echo ($min); ?>", "Upper quantile", "<? echo ($max); ?>", "Degrees of freedom", "<? echo ($df); ?>", "Non-centrality", "<? echo ($ncp); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
 
 rk.graph.on ()
-try (plot (function (x) <? getRK ("function"); ?> (x, df = <? getRK ("df"); ?>, ncp = <? getRK ("ncp"); ?>, log = <? getRK ("log"); ?><? echo ($lower_tag); ?>), from=<? getRK ("min"); ?>, to=<? getRK ("max"); ?>, n=<? getRK ("n"); ?>))
-rk.graph.off ()
-<?
-	}
+<? }
+?>
+try (plot (function (x) <? echo ($fun); ?> (x, df = <? echo ($df); ?>, ncp = <? echo ($ncp); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?>))
 
-	function cleanup () {
-	}
+<?	if ($final) { ?>
+rk.graph.off ()
+<? }
+}
 ?>

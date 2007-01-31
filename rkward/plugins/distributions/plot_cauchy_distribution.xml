@@ -1,9 +1,9 @@
 <!DOCTYPE rkplugin>
-<!--This is the simple "Plot normal probabilities" plugin--><document>
-	<code file="plot_normal_distribution.php" />
-	<dialog label="Plot Normal probabilities" >
+<!--This is the simple "Plot cauchy probabilities" plugin--><document>
+	<code file="plot_cauchy_distribution.php" />
+	<dialog label="Plot Cauchy probabilities" >
 		<tabbook>
-			<tab label="Plot Normal probabilities" >
+			<tab label="Plot Cauchy probabilities" >
 				<row>
 					<column>
 						<row>
@@ -16,16 +16,16 @@
 							</frame>
 						</row>
 						<row>
-							<frame label="Parameter">
-							<spinbox max_precision="2" default_precision="2" type="real" id="mean" initial="0" label="Mean (mu)" />
-							<spinbox max_precision="2" default_precision="2" type="real" id="sd" min="0.01" initial="1" label="Standard deviation (sigma)" label="standard deviation" />
+							<frame label="Parameters">
+							<spinbox max_precision="2" default_precision="2" type="real" id="loc" initial="0" label="Location" />
+							<spinbox max_precision="2" default_precision="2" type="real" id="scale" initial="1" min="0.01" label="Scale" />
 						</frame>
 						</row>
 					</column>
 					<column>
 						<radio id="function" label="Choose type of function plot" >
-							<option value="dnorm" label="Plot density function" />
-							<option value="pnorm" label="Plot distribution" />
+							<option value="dcauchy" label="Plot density function" />
+							<option value="pcauchy" label="Plot distribution" />
 						</radio>
 						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
@@ -37,7 +37,7 @@
 		</tabbook>
 	</dialog>
 	<logic>
-		<convert id="dodist" mode="equals" sources="function.string" standard="pnorm" />
+		<convert id="dodist" mode="equals" sources="function.string" standard="pcauchy" />
 		<connect client="lower.enabled" governor="dodist" />
 	</logic>
 </document>

@@ -6,20 +6,38 @@
 	}
 
 	function printout () {
+	doPrintout (true);
+}
+
+function cleanup () {
+}
+
+function preview () {
+	preprocess ();
+	calculate ();
+	doPrintout (false);
+	cleanup ();
+}
+
+function doPrintout ($final) {
+
 	$fun = getRK_val ("function");
+	$log_option = "";
 	if ($fun == "dnbinom") {
 		$label = "mass";
 		$lower_tag = "";
 		$tail_tag = "";
+		if (getRK_val ("log")) $log_option = ", log=TRUE";
 	} else {
 		$label = "distribution";
 		if (getRK_val("lower") == "1") {
-			$lower_tag = ", lower.tail = 1";
+			$lower_tag = ", lower.tail = TRUE";
 			$tail_tag = ", \"Tail\",\"Lower\"";
 		} else {
-			$lower_tag = ", lower.tail = 0";
+			$lower_tag = ", lower.tail = FALSE";
 			$tail_tag = ", \"Tail\",\"Upper\"";
 		}
+		if (getRK_val ("log")) $log_option = ", log.p=TRUE";
 	}
 	$min = getRK_val ("min");
 	$max = getRK_val ("max");
@@ -38,14 +56,16 @@
 	if (getRK_val ("log") == "1") $log_label="logarithmic";
 	else $log_label="normal";
 
-?>rk.header ("Negative Binomial <? echo ($label); ?> function", list ("Lower quantile", "<? getRK ("min"); ?>", "Upper quantile", "<? getRK ("max"); ?>", "Target for number of successful trials", "<? echo ($size); ?>", "<? echo ($paramLabel); ?>", "<? echo ($paramVal); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? getRK ("function"); ?>"));
+	if ($final) { ?>
+rk.header ("Negative Binomial <? echo ($label); ?> function", list ("Lower quantile", "<? echo ($min); ?>", "Upper quantile", "<? echo ($max); ?>", "Target for number of successful trials", "<? echo ($size); ?>", "<? echo ($paramLabel); ?>", "<? echo ($paramVal); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
 
 rk.graph.on ()
-try (plot (function (x) <? getRK ("function"); ?> (x, size = <? getRK ("size"); ?><? echo ($paramTag); ?><? echo ($paramVal); ?>, log = <? getRK ("log"); ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($max - $min + 1); ?>, type="p"))
-rk.graph.off ()
-<?
-	}
+<? }
+?>
+try (plot (function (x) <? echo ($fun); ?> (x, size = <? echo ($size); ?><? echo ($paramTag); ?><? echo ($paramVal); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($max - $min + 1); ?>, type="p"))
 
-	function cleanup () {
-	}
+<?	if ($final) { ?>
+rk.graph.off ()
+<? }
+}
 ?>

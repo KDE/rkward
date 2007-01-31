@@ -1,0 +1,44 @@
+<!DOCTYPE rkplugin>
+<!--This is the simple "Plot beta probabilities" plugin--><document>
+	<code file="plot_beta_distribution.php" />
+	<dialog label="Plot Beta probabilities" >
+		<tabbook>
+			<tab label="Plot Beta probabilities" >
+				<row>
+					<column>
+						<row>
+							<spinbox type="integer" id="n" min="2" initial="100" label="Number of Observations" />
+						</row>
+						<row>
+							<frame label="Range" >
+								<spinbox max_precision="2" default_precision="2" type="real" id="min" initial="0.00" min="0" max="1" label="Lower quantile" />
+								<spinbox max_precision="2" default_precision="2" type="real" id="max" initial="1.00" min="0" max="1" label="Upper quantile" />
+							</frame>
+						</row>
+						<row>
+							<frame label="Parameters">
+							<spinbox max_precision="2" default_precision="2" type="real" id="a" initial="2" min="0.01" label="Shape1 (a)" />
+							<spinbox max_precision="2" default_precision="2" type="real" id="b" initial="2" min="0.01" label="Shape2 (b)" />
+							<spinbox max_precision="2" default_precision="2" type="real" id="ncp" initial="0" min="0" label="Non-centrality parameter (ncp)" />
+						</frame>
+						</row>
+					</column>
+					<column>
+						<radio id="function" label="Choose type of function plot" >
+							<option value="dbeta" label="Plot density function" />
+							<option value="pbeta" label="Plot distribution" />
+						</radio>
+						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
+						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
+						<stretch/>
+						<preview id="preview"/>
+					</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="pbeta" />
+		<connect client="lower.enabled" governor="dodist" />
+	</logic>
+</document>

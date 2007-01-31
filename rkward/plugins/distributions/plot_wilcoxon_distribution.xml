@@ -1,0 +1,41 @@
+<!DOCTYPE rkplugin>
+<!--This is the simple "Plot wilcoxon probabilities" plugin-->
+<document>
+	<code file="plot_wilcoxon_distribution.php" />
+	<dialog label="Plot Wilcoxon Rank Sum statistic probabilities" >
+		<tabbook>
+			<tab label="Plot Wilcoxon Rank Sum statistic probabilities" >
+				<row>
+					<column>
+<!--						<row>
+							<frame label="Range" >
+								<spinbox default_precision="0" type="integer" id="min" initial="0" min = "0" label="Lower quantile" />
+								<spinbox type="integer" id="max" initial="6" min="0" label="Upper quantile" />
+							</frame>
+						</row>-->
+						<row>
+							<frame label="Parameters">
+							<spinbox type="integer" id="nm" min="1" initial="2" label="Number of Observations in first sample" />
+							<spinbox type="integer" id="nn" min="1" initial="3" label="Number of Observations in second sample" />
+						</frame>
+						</row>
+					</column>
+					<column>
+						<radio id="function" label="Choose type of function plot" >
+							<option value="dwilcox" label="Plot density function" />
+							<option value="pwilcox" label="Plot distribution" />
+						</radio>
+						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
+						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
+						<stretch/>
+						<preview id="preview"/>
+					</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="pwilcox" />
+		<connect client="lower.enabled" governor="dodist" />
+	</logic>
+</document>

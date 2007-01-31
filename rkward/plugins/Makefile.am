@@ -140,10 +140,36 @@ dist_pluginsXdistributions_DATA = \
 	distributions/sf_test.xml \
 	distributions/ad_test.php \
 	distributions/cvm_test.php \
+	distributions/plot_wilcoxon_distribution.php \
+	distributions/plot_gamma_distribution.php \
+	distributions/plot_gamma_distribution.xml \
+	distributions/plot_geometric_distribution.php \
+	distributions/plot_geometric_distribution.xml \
+	distributions/plot_hypergeometric_distribution.php \
+	distributions/plot_hypergeometric_distribution.xml \
+	distributions/plot_negbinomial_distribution.php \
+	distributions/plot_negbinomial_distribution.xml \
+	distributions/plot_beta_distribution.xml \
+	distributions/plot_cauchy_distribution.xml \
+	distributions/plot_exponential_distribution.xml \
+	distributions/plot_lognormal_distribution.xml \
+	distributions/plot_tukey_distribution.php \
+	distributions/plot_uniform_distribution.php \
+	distributions/plot_beta_distribution.php \
+	distributions/plot_cauchy_distribution.php \
+	distributions/plot_logistic_distribution.xml \
+	distributions/plot_exponential_distribution.php \
+	distributions/plot_lognormal_distribution.php \
+	distributions/plot_weibull_distribution.xml \
+	distributions/plot_wilcoxon_distribution.xml \
+	distributions/plot_logistic_distribution.php \
 	distributions/wilcoxon_probabilities.php \
 	distributions/wilcoxon_probabilities.xml \
 	distributions/wilcoxon_quantiles.php \
-	distributions/wilcoxon_quantiles.xml
+	distributions/wilcoxon_quantiles.xml \
+	distributions/plot_weibull_distribution.php \
+	distributions/plot_tukey_distribution.xml \
+	distributions/plot_uniform_distribution.xml
 
 pluginsXwritetabledir = $(kde_datadir)/rkward/writetable
 dist_pluginsXwritetable_DATA = \
@@ -205,6 +231,13 @@ dist_pluginsX00saveloadXsaveXsave_DATA = \
 	00saveload/save/save/code.php \
 	00saveload/save/save/description.xml
 
+pluginsX00saveloadXimportdir = $(kde_datadir)/rkward/00saveload/import
+dist_pluginsX00saveloadXimport_DATA = \
+	00saveload/import/import_spss.xml \
+	00saveload/import/import_spss.php
+
+pluginsXanalysisdir = $(kde_datadir)/rkward/analysis
+pluginsXanalysisXansariUbradleydir = $(kde_datadir)/rkward/analysis/ansari_bradley
 pluginsXwilcoxondir = $(kde_datadir)/rkward/wilcoxon
 dist_pluginsXwilcoxon_DATA = \
 	wilcoxon/wilcoxon_test.xml \

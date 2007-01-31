@@ -1,0 +1,43 @@
+<!DOCTYPE rkplugin>
+<!--This is the simple "Plot uniform probabilities" plugin--><document>
+	<code file="plot_uniform_distribution.php" />
+	<dialog label="Plot Uniform probabilities" >
+		<tabbook>
+			<tab label="Plot Uniform probabilities" >
+				<row>
+					<column>
+						<row>
+							<spinbox type="integer" id="n" min="2" initial="100" label="Number of Observations" />
+						</row>
+						<row>
+							<frame label="Range" >
+								<spinbox max_precision="2" default_precision="2" type="real" id="min" initial="-1" label="Lower quantile" />
+								<spinbox max_precision="2" default_precision="2" type="real" id="max" initial="2" label="Upper quantile" />
+							</frame>
+						</row>
+						<row>
+							<frame label="Parameters">
+							<spinbox max_precision="2" default_precision="2" type="real" id="llim" initial="0" label="Lower limit" />
+							<spinbox max_precision="2" default_precision="2" type="real" id="ulim" initial="1" label="Upper limit" />
+						</frame>
+						</row>
+					</column>
+					<column>
+						<radio id="function" label="Choose type of function plot" >
+							<option value="dunif" label="Plot density function" />
+							<option value="punif" label="Plot distribution" />
+						</radio>
+						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
+						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
+						<stretch/>
+						<preview id="preview"/>
+					</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="punif" />
+		<connect client="lower.enabled" governor="dodist" />
+	</logic>
+</document>

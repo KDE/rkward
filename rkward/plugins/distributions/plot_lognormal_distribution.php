@@ -23,8 +23,8 @@ function doPrintout ($final) {
 
 	$fun = getRK_val ("function");
 	$log_option = "";
-	if ($fun == "dhyper") {
-		$label = "mass";
+	if ($fun == "dlnorm") {
+		$label = "density";
 		$lower_tag = "";
 		$tail_tag = "";
 		if (getRK_val ("log")) $log_option = ", log=TRUE";
@@ -39,21 +39,20 @@ function doPrintout ($final) {
 		}
 		if (getRK_val ("log")) $log_option = ", log.p=TRUE";
 	}
-	$min = getRK_val ("min");
-	$max = getRK_val ("max");
 	if (getRK_val ("log") == "1") $log_label="logarithmic";
 	else $log_label="normal";
 	$n = getRK_val ("n");
-	$m = getRK_val ("m");
-	$k = getRK_val ("k");
-
+	$min = getRK_val ("min");
+	$max = getRK_val ("max");
+	$sd = getRK_val ("sd");
+  $mean = getRK_val ("mean");
 	if ($final) { ?>
-rk.header ("Hypergeometric <? echo ($label); ?> function", list ("Lower quantile", "<? echo ($min); ?>", "Upper quantile", "<? echo ($max); ?>", "Number of white balls", "<? echo ($m); ?>",  "Number of black balls", "<? echo ($n); ?>", "Number of balls drawn", "<? echo ($k); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
+rk.header ("Lognormal <? echo ($label); ?> function", list ("Number of Observations", "<? echo ($n); ?>", "Lower quantile", "<? echo ($min); ?>","Upper quantile", "<? echo ($max); ?>", "Mean", "<? echo ($mean); ?>", "Standard deviation", "<? echo ($sd); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
 
 rk.graph.on ()
 <? }
 ?>
-try (plot (function (x) <? echo ($fun); ?> (x, m = <? echo ($m); ?>, n = <? echo ($n); ?>, k = <? echo ($k); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($max - $min + 1); ?>, type="p"))
+try (plot (function (x) <? echo ($fun); ?> (x, meanlog = <? echo ($mean); ?>, sdlog = <? echo ($sd); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?>))
 
 <?	if ($final) { ?>
 rk.graph.off ()

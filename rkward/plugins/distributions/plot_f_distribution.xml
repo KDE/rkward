@@ -11,8 +11,8 @@
 						</row>
 						<row>
 							<frame label="Range" >
-								<spinbox max_precision="4" default_precision="2" type="real" min="0.001" id="min" initial="0.001" label="Minimum" />
-								<spinbox max_precision="4" default_precision="2" type="real" min="0.001" id="max" initial="25" label="Maximum" />
+								<spinbox max_precision="4" default_precision="2" type="real" min="0.001" id="min" initial="0.001" label="Lower quantile" />
+								<spinbox max_precision="4" default_precision="2" type="real" min="0.001" id="max" initial="25" label="Upper quantile" />
 							</frame>
 						</row>
 						<frame label="Parameters">
@@ -20,9 +20,9 @@
 								<spinbox max_precision="2" default_precision="2" type="real" min="0.01" id="df1" initial="5" label="Numerator degrees of freedom" />
 								<spinbox max_precision="2" default_precision="2" type="real" min="0.01" id="df2" initial="5" label="Denominator degrees of freedom" />
 							</row>
-							<row>
+<!-- 							<row> -->
 								<spinbox max_precision="2" default_precision="0" type="real" min="0" id="ncp" initial="0" label="Non-centrality parameter" />
-							</row>
+<!-- 							</row> -->
 						</frame>
 					</column>
 					<column>
@@ -33,9 +33,14 @@
 						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
+						<preview id="preview"/>
 					</column>
 				</row>
 			</tab>
 		</tabbook>
 	</dialog>
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="pf" />
+		<connect client="lower.enabled" governor="dodist" />
+	</logic>
 </document>

@@ -2,9 +2,9 @@
 <!--This is the simple "Plot t probabilities" plugin-->
 <document>
 	<code file="plot_t_distribution.php" />
-	<dialog label="Plot t probabilities" >
+	<dialog label="Plot Student T probabilities" >
 		<tabbook>
-			<tab label="Plot t probabilities" >
+			<tab label="Plot Student T probabilities" >
 				<row>
 					<column>
 						<row>
@@ -12,8 +12,8 @@
 						</row>
 						<row>
 							<frame label="Range" >
-								<spinbox max_precision="2" default_precision="2" type="real" id="min" initial="-12.924" label="Minimum" />
-								<spinbox max_precision="2" default_precision="2" type="real" id="max" initial="12.924" label="Maximum" />
+								<spinbox max_precision="2" default_precision="2" type="real" id="min" initial="-12.924" label="Lower quantile" />
+								<spinbox max_precision="2" default_precision="2" type="real" id="max" initial="12.924" label="Upper quantile" />
 							</frame>
 						</row>
 						<row>
@@ -31,9 +31,14 @@
 						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
+						<preview id="preview"/>
 					</column>
 				</row>
 			</tab>
 		</tabbook>
 	</dialog>
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="pt" />
+		<connect client="lower.enabled" governor="dodist" />
+	</logic>
 </document>

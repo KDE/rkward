@@ -6,33 +6,57 @@
 	}
 
 	function printout () {
+	doPrintout (true);
+}
+
+function cleanup () {
+}
+
+function preview () {
+	preprocess ();
+	calculate ();
+	doPrintout (false);
+	cleanup ();
+}
+
+function doPrintout ($final) {
 
 	$fun = getRK_val ("function");
-	if ($fun == "dchisq") {
-		$label = "mass";
+	$log_option = "";
+	if ($fun == "dgamma") {
+		$label = "density";
 		$lower_tag = "";
 		$tail_tag = "";
+		if (getRK_val ("log")) $log_option = ", log=TRUE";
 	} else {
 		$label = "distribution";
 		if (getRK_val("lower") == "1") {
-			$lower_tag = ", lower.tail = 1";
+			$lower_tag = ", lower.tail = TRUE";
 			$tail_tag = ", \"Tail\",\"Lower\"";
 		} else {
-			$lower_tag = ", lower.tail = 0";
+			$lower_tag = ", lower.tail = FALSE";
 			$tail_tag = ", \"Tail\",\"Upper\"";
 		}
+		if (getRK_val ("log")) $log_option = ", log.p=TRUE";
 	}
 	if (getRK_val ("log") == "1") $log_label="logarithmic";
 	else $log_label="normal";
+	$n = getRK_val ("n");
+	$min = getRK_val ("min");
+	$max = getRK_val ("max");
+	$shape = getRK_val ("shape");
+	$rate = getRK_val ("rate");
 
-?>rk.header ("Plot density <? getRK ("function"); ?>", list ("Number of Observations", "<? getRK ("n"); ?>", "Minimum", "<? getRK ("min"); ?>","Maximum", "<? getRK ("max"); ?>", "Shape", "<? getRK ("shape"); ?>", "Rate", "<? getRK ("rate"); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? getRK ("function"); ?>"));
+	if ($final) { ?>
+rk.header ("Gamma <? echo ($label); ?> function", list ("Number of Observations", "<? echo ($n); ?>", "Lower quantile", "<? echo ($min); ?>","Upper quantile", "<? echo ($max); ?>", "Shape", "<? echo ($shape); ?>", "Rate", "<? echo ($rate); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
 
 rk.graph.on ()
-try (plot (<? getRK ("function"); ?> (seq(<? getRK ("min"); ?> ,<? getRK ("max"); ?>, length= <? getRK ("n"); ?>) , shape = <? getRK ("shape"); ?>, rate = <? getRK ("rate"); ?>)))
-rk.graph.off ()
-<?
-	}
+<? }
+?>
+try (plot (function (x) <? echo ($fun); ?> (x, shape = <? echo ($shape); ?>, rate = <? echo ($rate); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?>))
 
-	function cleanup () {
-	}
+<?	if ($final) { ?>
+rk.graph.off ()
+<? }
+}
 ?>

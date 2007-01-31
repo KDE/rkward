@@ -35,9 +35,18 @@
 						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
+						<preview id="preview"/>
 					</column>
 				</row>
 			</tab>
 		</tabbook>
 	</dialog>
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="pnbinom" />
+		<connect client="lower.enabled" governor="dodist" />
+		<convert id="useprob" mode="equals" sources="param.string" standard="pprob" />
+		<connect client="prob.enabled" governor="useprob" />
+		<convert id="usemu" mode="equals" sources="param.string" standard="pmu" />
+		<connect client="mu.enabled" governor="usemu" />
+	</logic>
 </document>

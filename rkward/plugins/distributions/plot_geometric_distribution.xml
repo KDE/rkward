@@ -23,9 +23,14 @@
 						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
+						<preview id="preview"/>
 					</column>
 				</row>
 			</tab>
 		</tabbook>
 	</dialog>
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="pgeom" />
+		<connect client="lower.enabled" governor="dodist" />
+	</logic>
 </document>

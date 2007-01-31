@@ -1,0 +1,43 @@
+<!DOCTYPE rkplugin>
+<!--This is the simple "Plot weibullprobabilities" plugin--><document>
+	<code file="plot_weibull_distribution.php" />
+	<dialog label="Plot Weibull probabilities" >
+		<tabbook>
+			<tab label="Plot Weibull probabilities" >
+				<row>
+					<column>
+						<row>
+							<spinbox type="integer" id="n" min="2" initial="100" label="Number of Observations" />
+						</row>
+						<row>
+							<frame label="Range" >
+								<spinbox max_precision="2" default_precision="2" type="real" id="min" initial="0" min="0" label="Lower quantile" />
+								<spinbox max_precision="2" default_precision="2" type="real" id="max" initial="5" min="0" label="Upper quantile" />
+							</frame>
+						</row>
+						<row>
+							<frame label="Parameter">
+							<spinbox max_precision="2" default_precision="2" type="real" id="shape" initial="2" min ="0.01" label="Shape" />
+							<spinbox max_precision="2" default_precision="2" type="real" id="scale" initial="1" min ="0.01" label="Scale" />
+						</frame>
+						</row>
+					</column>
+					<column>
+						<radio id="function" label="Choose type of function plot" >
+							<option value="dweibull" label="Plot density function" />
+							<option value="pweibull" label="Plot distribution" />
+						</radio>
+						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
+						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
+						<stretch/>
+						<preview id="preview"/>
+					</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="pweibull" />
+		<connect client="lower.enabled" governor="dodist" />
+	</logic>
+</document>
