@@ -17,8 +17,6 @@
 		<component type="standard" id="ansari_bradley_exact_test" file="analysis/ansari_bradley/ansari_bradley_exact_test.xml" label="Ansari-Bradley two-sample exact test" />
 
 		<component type="standard" id="barplot" file="plots/barplot.xml" label="Barplot" />
-		<component type="standard" id="cor_graph" file="plots/cor_graph.xml" label="Correlation Matrix Plot" />
-		<component type="standard" id="scatterplot_matrix" file="plots/scatterplot_matrix.xml" label="Scatterplot Matrix" />
 
 					<component type="standard" id="plot_beta_distribution" file="distributions/plot_beta_distribution.xml" label="Plot Beta distribution" />
 					<component type="standard" id="plot_cauchy_distribution" file="distributions/plot_cauchy_distribution.xml" label="Plot Cauchy distribution" />
@@ -54,8 +52,6 @@
 		</menu>
 		<menu id="plots" label="Plots" index="5">
 			<entry component="barplot" />
-			<entry component="cor_graph" />
-			<entry component="scatterplot_matrix" />
 		</menu>
 
 				<menu id="distributions" label="Distributions" index="7">
