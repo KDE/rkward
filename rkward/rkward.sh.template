@@ -10,7 +10,7 @@ else
 fi
 
 R_HOME_DIR=###R_HOME_DIR###
-R_binary="$R_HOME_DIR/bin/R"
+export R_binary="$R_HOME_DIR/bin/R"
 
 ## Location of R may have moved, so check
 if test -x "${R_binary}"; then

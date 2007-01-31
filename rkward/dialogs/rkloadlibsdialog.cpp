@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -192,10 +192,11 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 		file.close();
 	}
 
+	QString R_binary (getenv ("R_binary"));
 	KProcess *proc = new KProcess;
 	if (as_root) *proc << "kdesu" << "-t";
 	else *proc << "sh" << "-c";
-	*proc << "$R_HOME/bin/R --no-save < " + file.name ();
+	*proc << R_binary + " CMD R --no-save < " + file.name ();
 
 	connect (proc, SIGNAL (processExited (KProcess *)), this, SLOT (processExited (KProcess *)));
 	connect (proc, SIGNAL (receivedStdout (KProcess *, char *, int)), this, SLOT (installationProcessOutput (KProcess *, char *, int)));
