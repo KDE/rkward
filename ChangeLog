@@ -1,3 +1,5 @@
+- improvements to distribution plot plugins
+- new plugins: distribution plots 							TODO: list them
 - fixed: installing packages as root would not work, when $R_HOME is not defined
 - new plugin element to select name of an R object to save to				TODO: document
 - analysis folder for analysis plugins (Wilcoxon and Ansari-Bradley tests moved to analysis)
@@ -5,6 +7,7 @@
 - place internal objects .rk.rkreply and .rk.available.packages.cache into rkward package environment
 - support for preview functionality in graphing plugins					TODO: document
 - new plugin: barplot
+- new plugin: export contents of an X11 device to several different file formats
 - plugins can now be context sensitive (e.g. work on a particular x11 device)		TODO: document
 - new plugin: Wilcoxon Rank Sum test and Wilcoxon Exact Rank Sum test			TODO: document, make it stable
 - new plugin: scatterplot matrix
