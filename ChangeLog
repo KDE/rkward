@@ -10,7 +10,7 @@
 - analysis folder for analysis plugins (Wilcoxon and Ansari-Bradley tests moved to analysis)
 - new plugin: Ansari-Bradley two-sample test						TODO: document, make it stable
 - place internal objects .rk.rkreply and .rk.available.packages.cache into rkward package environment
-- support for preview functionality in graphing plugins					TODO: document
+- support for preview functionality in graphing plugins
 - new plugin: barplot
 - new plugin: export contents of an X11 device to several different file formats
 - plugins can now be context sensitive (e.g. work on a particular x11 device)		TODO: document

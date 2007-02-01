@@ -44,7 +44,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 
 	// create checkbox
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
-	toggle_preview_box = new QCheckBox (xml->getStringAttribute (element, "label", i18n ("Preview"), DL_WARNING), this);
+	toggle_preview_box = new QCheckBox (xml->getStringAttribute (element, "label", i18n ("Preview"), DL_INFO), this);
 	vbox->addWidget (toggle_preview_box);
 	toggle_preview_box->setChecked (preview_active);
 	connect (toggle_preview_box, SIGNAL (stateChanged (int)), this, SLOT (changedState (int)));
