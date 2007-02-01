@@ -515,16 +515,16 @@ bool RKWardMainWindow::doQueryQuit () {
 		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription (), kapp->config ());
 	}
 
-	if (!RObjectList::getGlobalEnv ()->isEmpty ()) {
-		int res;
-		res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?\nRKWard will remain open if you press Cancel"), i18n ("Save Workspace?"));
-		if (res == KMessageBox::Yes) {
-			new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), false, RKSaveAgent::DoNothing);
-		} else if (res != KMessageBox::No) {
-			slotSetStatusReady ();
-			return false;
-		}
+//	if (!RObjectList::getGlobalEnv ()->isEmpty ()) {
+	int res;
+	res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?\nRKWard will remain open if you press Cancel"), i18n ("Save Workspace?"));
+	if (res == KMessageBox::Yes) {
+		new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), false, RKSaveAgent::DoNothing);
+	} else if (res != KMessageBox::No) {
+		slotSetStatusReady ();
+		return false;
 	}
+//	}
 
 	RKWorkplace::RKWorkplaceObjectList map = RKWorkplace::mainWorkplace ()->getObjectList ();
 	for (RKWorkplace::RKWorkplaceObjectList::const_iterator it = map.constBegin (); it != map.constEnd (); ++it){
