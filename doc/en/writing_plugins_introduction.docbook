@@ -843,10 +843,10 @@ This chapter contains information on some topics that are useful only to certain
 	<title>Preview functionality for graphing plugins</title>
 	<para>
 A very useful feature for all plugins generating a plot / graph is to provide an automatically updating preview. To do so, you will need two things: Adding a &lt;preview&gt;-checkbox to your <link linkend="mainxml">GUI definition</link>, and adjusting the <link linkend="phptemplate">generated code</link> for the preview. We will deal with both in turn.
-	<para>
+	</para>
 	<para>
 Adding a &lt;preview&gt;-checkbox is simple. Just place the following somewhere in your GUI. It will take care of all the behind-the-scenes magic of creating a preview device, updaing the preview whenever the setting have changed, etc. Example:
-	<para>
+	</para>
 	<programlisting>
 &lt;document&gt;
 	[...]
@@ -944,7 +944,7 @@ To use a plugin in the context of an x11 device - that is place it in the menu b
 		</programlisting>
 		<para>
 However, you do not need to define it in the hierarchy (you can, if it is also meaningful as a top-level plugin):
-		<para>
+		</para>
 		<programlisting>
 	&lt;hierarchy&gt;
 		[...]
@@ -952,7 +952,7 @@ However, you do not need to define it in the hierarchy (you can, if it is also m
 		</programlisting>
 		<para>
 Instead, add a definition of the "x11" context, and add it to the menus there:
-		<para>
+		</para>
 		<programlisting>
 	&lt;context id="x11"&gt;
 		[...]
