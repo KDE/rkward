@@ -1274,6 +1274,54 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<term>&lt;size&gt;</term>
 	<listitem>One of "small", "medium", or "large". "large" defines a multi-line input field, "small", and "medium" are single line fields (optional, defaults to "medium")</listitem>
 	</varlistentry>
+	<varlistentry>
+	<term>&lt;required&gt;</term>
+	<listitem>Whether - for submitting the code - it is required that this input is not empty. See <link linkend="elementproperties">required-property</link> (optional, defaults to false)</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;browser&gt;</term>
+<listitem>An element designed to select a single filename (or directory name). Note that this field will take any string, even though it is meant to be used for files, only:
+	<variablelist>
+	<varlistentry>
+	<term>&lt;label&gt;</term>
+	<listitem>Label for the browser (optinal, defaults to "Enter filename")</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;initial&gt;</term>
+	<listitem>Initial text of the browser (optional, defaults to "", i.e. an empty string)</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;type&gt;</term>
+	<listitem>One of "file", "dir", or "savefile". To select an existing file, existing directory, or non-existing file, respectively (optional, defaults to "file")</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;filter&gt;</term>
+	<listitem>File type filter, e.g. ("*.txt *.csv" for .txt and .csv files. Try not to induce limits unless absolutely needed, though) (optional, defaults to "", i.e. all files)</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;required&gt;</term>
+	<listitem>Whether - for submitting the code - it is required that the field is not empty. Note that this does not necessarily mean, the selected filename is valid! See <link linkend="elementproperties">required-property</link> (optional, defaults to true)</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;saveobject&gt;</term>
+<listitem>An element designed to select the name of an R object to save to (i.e. generally not already existing, in contrast to a varslot):
+	<variablelist>
+	<varlistentry>
+	<term>&lt;label&gt;</term>
+	<listitem>Label for the input (optinal, defaults to "Save to:")</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;initial&gt;</term>
+	<listitem>Initial text of the input (optional, defaults to "my.data")</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;required&gt;</term>
+	<listitem>Whether - for submitting the code - it is required that the field holds a permissible object name. See <link linkend="elementproperties">required-property</link> (optional, defaults to true)</listitem>
+	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
 <varlistentry>
@@ -1306,7 +1354,7 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;max_precision&gt;</term>
-	<listitem>Unfortunately, spinboxes do not yet accept true floating point numbers, but only numbers of a fixed precision. This specifies, how many decimal places will be available as a maximum (optional, defaults to "4")</listitem>
+	<listitem>The maximum number of digits that can be meaningfully represented (optional, defaults to "6")</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
@@ -1548,6 +1596,26 @@ In addition to this, some elements have additional properties you can connect to
 	<varlistentry>
 	<term>text</term>
 	<listitem>Current text in the input field (string)</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;browser&gt;</term>
+<listitem>Default property is "selection"
+	<variablelist>
+	<varlistentry>
+	<term>selection</term>
+	<listitem>Current text (selected file name) in the browser (string)</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;saveobject&gt;</term>
+<listitem>Default property is "selection"
+	<variablelist>
+	<varlistentry>
+	<term>selection</term>
+	<listitem>Current text (selected object name) (string)</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>

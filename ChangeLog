@@ -1,5 +1,4 @@
 - improvements to spinbox: step size is adjusted dynamically, and no arbitrary limits in real mode
-- input elements and browser elements can be made required 				TODO: don't list this, but document!
 - fixed problem with specifying y axis limits in several plugins
 - simplified CSV import plugin
 - new plugin: import SPSS files								TODO: document
@@ -7,7 +6,7 @@
 - improvements to distribution plot plugins
 - new plugins: distribution plots 							TODO: list them
 - fixed: installing packages as root would not work, when $R_HOME is not defined
-- new plugin element to select name of an R object to save to				TODO: document
+- new plugin element to select name of an R object to save to
 - analysis folder for analysis plugins (Wilcoxon and Ansari-Bradley tests moved to analysis)
 - new plugin: Ansari-Bradley two-sample test						TODO: document, make it stable
 - place internal objects .rk.rkreply and .rk.available.packages.cache into rkward package environment
