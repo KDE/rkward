@@ -2,7 +2,7 @@
                           rkspinbox  -  description
                              -------------------
     begin                : Wed Aug 11 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -17,6 +17,7 @@
 #include "rkspinbox.h"
 
 #include <qvalidator.h>
+#include <qlineedit.h>
 
 #include <math.h>
 
@@ -25,7 +26,8 @@
 RKSpinBox::RKSpinBox (QWidget *parent) : QSpinBox (parent) {
 	validator = 0;
 	mode = Integer;
-	divisor = 1;
+	updating = updating_b = false;
+	real_value = 0;
 }
 
 RKSpinBox::~RKSpinBox () {
@@ -33,41 +35,62 @@ RKSpinBox::~RKSpinBox () {
 }
 
 void RKSpinBox::setRealValue (double new_value) {
-	setValue ((int) round (new_value * divisor));
+	real_value = new_value;
+	setValue (0);
 };
 
-int RKSpinBox::mapTextToValue (bool *ok) {
+void RKSpinBox::interpretText () {
+	if (updating) return;
+	updating = true;
+
 	if (mode == Real) {
-		RK_DO (qDebug ("ttv %s -> %d", text ().latin1 (), (int) (divisor * text ().toFloat (ok))), PLUGIN, DL_DEBUG);
-		return ((int) round (divisor * text ().toFloat (ok)));
+		bool ok;
+		double new_value = text ().toFloat (&ok);
+		if (ok) real_value = new_value;
+		valueChange ();
 	} else {
-		return QSpinBox::mapTextToValue (ok);
+		QSpinBox::interpretText ();
 	}
+
+	updating = false;
 }
 
-QString RKSpinBox::mapValueToText (int v) {
+void RKSpinBox::updateDisplay () {
+	if (updating_b) return;
+	updating_b = true;
+
 	if (mode == Real) {
-		QString dummy;
-		RK_DO (qDebug ("vtt %d", v), PLUGIN, DL_DEBUG);
-		RK_DO (qDebug ("%s", QString ("%1.%2").arg (v / divisor).arg (v % divisor, 2).latin1 ()), PLUGIN, DL_DEBUG);
-		return (QString ().setNum ((double) v / double (divisor)));
+		if (value () != 0) {
+			int change = value ();
+			setValue (0);
+
+			int power = (int) log10 (real_value) - default_precision;
+			if (power < (-default_precision)) power = -default_precision;
+			if (power > 10) power = 10;
+			double step = pow (10, power);
+
+			real_value += change * step;
+			if (real_value > real_max) real_value = real_max;
+			if (real_value < real_min) real_value = real_min;
+		}
+		setUpdatesEnabled (false);
+		QSpinBox::updateDisplay ();	// need this to enable/disable the button correctly
+		editor ()->setText (QString ().setNum (real_value));
+		setUpdatesEnabled (true);
 	} else {
-		return QSpinBox::mapValueToText (v);
+		QSpinBox::updateDisplay ();
+
+		int power = (int) log10 (value ());
+		int step = (int) pow (10, power-1);
+		if (step < 1) step = 1;
+		setSteps (step, 10*step);
 	}
+
+	updating_b = false;
 }
 
 void RKSpinBox::setRealMode (double min, double max, double initial, int default_precision, int max_precision) {
-	RK_ASSERT ((max_precision >= default_precision) && (max_precision <= 6) && (default_precision >= 0));
-	RK_DO (qDebug ("min %f max %f initial %f defp %d maxp %d", min, max, initial, default_precision, max_precision), PLUGIN, DL_DEBUG);
-
-	divisor = (int) (pow (10, max_precision));
-
-	double max_max = (double) INT_MAX / (double) divisor;
-	double min_min = (double) (-(INT_MAX-1)) / (double) divisor;
-	if (max > max_max) max = max_max;
-	if (max < min_min) max = min_min;
-	if (min < min_min) min = min_min;
-	if (min > max_max) min = max_max;
+	RK_ASSERT ((max_precision >= default_precision) && (max_precision <= 8));
 
 	mode = Real;
 	QValidator *new_validator = new QDoubleValidator (min, max, max_precision, this);
@@ -75,34 +98,31 @@ void RKSpinBox::setRealMode (double min, double max, double initial, int default
 	delete validator;
 	validator = new_validator;
 
-	setMinValue ((int) (min * divisor));
-	setMaxValue ((int) (max * divisor));
-	setSteps ((int) (pow (10, default_precision)), (int) (pow (10, default_precision + 1)));
-	setValue ((int) round ((double) initial * divisor));
-	RK_DO (qDebug ("minint %d maxint %d stepint %d pageint %d initialint %d", minValue (), maxValue (), lineStep (), pageStep (), (int) round (initial * divisor)), PLUGIN, DL_DEBUG);
+	setMinValue (-1000);
+	setMaxValue (1000);
+	setSteps (1, 10);
+
+	real_value = initial;
+	real_min = min;
+	real_max = max;
+	RKSpinBox::default_precision = default_precision;
+
+	setValue (0);
 }
 
 void RKSpinBox::setIntMode (int min, int max, int initial) {
 	QValidator *new_validator = new QIntValidator (min, max, this);
 
-	int range_power = (int) (log10 (max - min));
-	int range_power_limit = (int) (log10 (initial)) + 2;
-	if (range_power > range_power_limit) {
-		range_power = range_power_limit;
-	}
-	if (range_power <= 0) {
-		range_power = 1;
-	}
 	setMinValue (min);
 	setMaxValue (max);
-	setSteps ((int) (pow (10, range_power-1)), (int) (pow (10, range_power)));
 	setValue (initial);
 
 	setValidator (new_validator);
 	delete validator;
 	validator = new_validator;
 	mode = Integer;
-	divisor = 1;
+
+	updateDisplay ();
 }
 
 #include "rkspinbox.moc"
