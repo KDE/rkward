@@ -922,13 +922,88 @@ That's it, your plugin should now be preview-enabled.
 
 <section id="contextualized_plugins">
 	<title>Context-dependent plugins</title>
+	<para>
+So far we have assumed, all plugins are always meaningful, and all placed in the main menu. However, some plugins are meaningful only (or additionally) in a certain context. For instance a plugin to export the contents of an R X11 graphics device is obviously most useful, when placed in the menu of an X11 device, not in the main menubar. Also, such a plugin should know about the device number that it should operate on, without having to ask the user about this.
+	</para>
+	<para>
+We call such plugins context-dependent. Correspondingly, in the <link linkend="pluginmap">.pluginmap file</link>, they are not (or not only) placed in the main &lt;hierarchy&gt; but rather into a &lt;context&gt; element. So far only two different contexts are supported (more will come later): x11 and file import. We'll deal with those in turn. Even if you are only interested in the import context, please also read the section on the x11 context, as this is slightly more elaborate.
+	</para>
 
 	<section id="context_x11">
 		<title>X11 device context</title>
+		<para>
+To use a plugin in the context of an x11 device - that is place it in the menu bar of the window you get when you call "x11 ()" in the cosonle, first declare it as usual in the <link linkend="pluginmap">.pluginmap file</link>:
+		</para>
+		<programlisting>
+&lt;document [...]&gt;
+	&lt;components&gt;
+		[...]
+		&lt;component id="my_x11_plugin" file="my_x11_plugin.xml" label="An X11 context plugin"/&gt;
+		[...]
+	&lt;/components&gt;
+		</programlisting>
+		<para>
+However, you do not need to define it in the hierarchy (you can, if it is also meaningful as a top-level plugin):
+		<para>
+		<programlisting>
+	&lt;hierarchy&gt;
+		[...]
+	&lt;/hierarchy&gt;
+		</programlisting>
+		<para>
+Instead, add a definition of the "x11" context, and add it to the menus there:
+		<para>
+		<programlisting>
+	&lt;context id="x11"&gt;
+		[...]
+		&lt;menu id="edit"&gt;
+			[...]
+			&lt;entry id="my_x11_plugin"/&gt;
+		&lt;/menu&gt;
+	&lt;/context&gt;
+&lt;/document&gt;
+		</programlisting>
+		<para>
+In the <link linkend="logic">logic section of the plugin xml</link>, you can now declare two &lt;external&gt; properties: "devnum" and "context". Context (if declared) will be set to "x11" when the plugin is invoked in this context. "devnum" will be set to the number of the graphics device to operate on. And that's all.
+		</para>
 	</section>
 
 	<section id="context_import">
 		<title>Import data context</title>
+		<para>
+Before reading this section, please make sure to read the section on the <link linkend="context_x11">X11 device context</link>, as that explains the basic concepts.
+		</para>
+		<para>
+The "import" context is used to declare import file filter plugins. You simply place those in a context with id="import" in the .pluginmap file. However, there is one additional twist when declaring these plugins: In order to offer a unified file selection dialog for all supported file types, you need to declare one additional bit of information on your component:
+		</para>
+		<programlisting>
+&lt;document [...]&gt;
+	&lt;components&gt;
+		[...]
+		&lt;component id="my_xyz_import_plugin" file="my_xyz_import_plugin.xml" label="Import XYZ files"&gt;
+			&lt;attribute id="format" value="*.xyz *.zyx" label="XYZ data files"/&gt;
+		&lt;/component&gt;
+		[...]
+	&lt;/components&gt;
+	&lt;hierarchy&gt;
+		[...]
+	&lt;/hierarchy&gt;
+	&lt;context id="import"&gt;
+		[...]
+		&lt;menu id="import"&gt;
+			[...]
+			&lt;entry id="my_xyz_import_plugin"/&gt;
+		&lt;/menu&gt;
+	&lt;/context&gt;
+	[...]
+&lt;/document&gt;
+		</programlisting>
+		<para>
+The attribute line simply says, that the associate filename extensions for XYZ files are *.xyz or *.zyx, and that the filter should be labelled "XYZ data files" in the file selection dialog.
+		</para>
+		<para>
+You can declare two &lt;external&gt; properties in your plugin. "filename" will be set to the selected file name, and "context" will be set to "import".
+		</para>
 	</section>
 </section>
 
@@ -1102,7 +1177,7 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
-	<listitem>Returns the entire code, i.e. all the sections below concatenated to one string.</listitem>
+	<listitem>Returns the full code, i.e. the sections "preprocess", "calculate", "printout", and "cleanup" (but not "preview") concatenated to one string.</listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"preprocess"</term>
@@ -1119,6 +1194,10 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<varlistentry>
 	<term>"cleanup"</term>
 	<listitem>Returns only the cleanup section of the code</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>"preview"</term>
+	<listitem>Returns the preview section of the code</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
@@ -1836,6 +1915,24 @@ In addition to this, some elements have additional properties you can connect to
 	</variablelist></listitem>
 </varlistentry>
 <varlistentry>
+<term>&lt;attribute&gt;</term>
+<listitem>Defines an attribute of a component. Only meaningful for <link linkend="context_import">import plugins</link> so far. Only allowed as a direct child of &lt;component&gt;. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>id</term>
+	<listitem>Id of the attribute</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>value</term>
+	<listitem>Value of the attribute</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>labels</term>
+	<listitem>Label associated with the attribute</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
 <term>&lt;hierarchy&gt;</term>
 <listitem>Needs to be present exactly once as a direct child of the &lt;document&gt; element. Described where the components declared above should be placed in the menu hierarchy. Accepts only &lt;menu&gt; elements as direct children. No attributes.</listitem>
 </varlistentry>
@@ -1868,6 +1965,16 @@ In addition to this, some elements have additional properties you can connect to
 	<varlistentry>
 	<term>index</term>
 	<listitem>See &lt;menu index="..."&gt; above.</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;context&gt;</term>
+<listitem>Declares the entries in a <link linkend="contextualized_plugins">context</link>. Only allowed as a direct child of the &lt;document&gt; tag. Accepts only &lt;menu&gt; tags as direct children. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>id</term>
+	<listitem>The id of the context. Only two contexts are implemented so far: "x11" and "import".</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>

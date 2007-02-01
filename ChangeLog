@@ -13,7 +13,7 @@
 - support for preview functionality in graphing plugins
 - new plugin: barplot
 - new plugin: export contents of an X11 device to several different file formats
-- plugins can now be context sensitive (e.g. work on a particular x11 device)		TODO: document
+- plugins can now be context sensitive (e.g. work on a particular x11 device)
 - new plugin: Wilcoxon Rank Sum test and Wilcoxon Exact Rank Sum test			TODO: document, make it stable
 - new plugin: scatterplot matrix
 - new plugin: correlation matrix plot
