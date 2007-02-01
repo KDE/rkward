@@ -7,17 +7,37 @@
 		
 		<connect governor="use_labels.state" client="labels_limit.enabled"/>
 		<connect governor="use_labels.state" client="trim_labels.enabled"/>
+		
+		<connect governor="do_locale_conversion.state" client="encoding.enabled" />
+		<convert id="other_encoding" mode="equals" standard="other" sources="encoding.string" />
+		<convert id="other_encoding2" mode="and" sources="other_encoding;do_locale_conversion.state" />
+		<connect governor="other_encoding2" client="user_encoding.enabled" />
+		<connect governor="other_encoding2" client="user_encoding.required" />
 	</logic>
 	<dialog label="Import SPSS file">
-		<browser size="small" id="file" label="File name" />
-		<stretch/>
-		<saveobject id="saveto" initial="my.spss.data" label="Object to save to"/>
-		<stretch/>
-		<checkbox id="data_frame" checked="true" label="Import as a data.frame" value="1" value_unchecked="0"/>
-		<frame label="Labels">
-			<checkbox id="use_labels" checked="true" label="Use value labels" value="1" value_unchecked="0"/>
-			<spinbox id="labels_limit" type="integer" initial="1000000" min="1" label="Maximum number of labels per object" />
-			<checkbox id="trim_labels" checked="false" label="Trim white space" value="1" value_unchecked="0"/>
-		</frame>
+		<tabbook>
+			<tab id="tab_general" label="General">
+				<browser size="small" id="file" label="File name" />
+				<stretch/>
+				<saveobject id="saveto" initial="my.spss.data" label="Object to save to"/>
+				<stretch/>
+				<checkbox id="data_frame" checked="true" label="Import as a data.frame" value="1" value_unchecked="0"/>
+				<frame label="Labels">
+					<checkbox id="convert_var_labels" checked="true" label="Convert Variable labels to RKWard format" value="1" value_unchecked="0"/>
+					<checkbox id="use_labels" checked="true" label="Use value labels" value="1" value_unchecked="0"/>
+					<spinbox id="labels_limit" type="integer" initial="1000000" min="1" label="Maximum number of labels per object" />
+					<checkbox id="trim_labels" checked="false" label="Trim white space" value="1" value_unchecked="0"/>
+				</frame>
+			</tab>
+			<tab id="tab_encoding" label="Encoding">
+				<checkbox id="do_locale_conversion" checked="false" label="Convert string encoding" value="1" value_unchecked="0"/>
+				<radio id="encoding" label="Convert from:">
+					<option value="latin1" label="Latin 1"/>
+					<option value="UTF-8" label="UTF-8"/>
+					<option value="other" label="Other (specify below)"/>
+				</radio>
+				<input id="user_encoding" label="Other encoding" />
+			</tab>
+		</tabbook>
 	</dialog>
 </document>

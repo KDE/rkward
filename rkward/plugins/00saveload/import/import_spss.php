@@ -1,7 +1,21 @@
 <?php
 function preprocess () { ?>
 require (foreign)
-<?
+<?	if (getRK_val ("do_locale_conversion")) { ?>
+
+# helper function to convert all strings to the current encoding
+rk.temp.convert <- function (x, from) {
+	attribs <- attributes (x);
+	if (is.character (x)) {
+		x <- iconv (x, from=from, to="", sub="")
+	} else if (is.list (x)) {
+		x <- lapply (x, function (sub) rk.temp.convert (sub, from))
+	}
+	# convert factor levels and all other attributes
+	attributes (x) <- lapply (attribs, function (sub) rk.temp.convert (sub, from))
+	x
+}
+<?	}
 }
 
 function calculate () {
@@ -19,10 +33,17 @@ function calculate () {
 	$object = getRK_val ("saveto");
 ?>
 <? echo ($object); ?> <- read.spss ("<? getRK ("file"); ?>"<? echo ($data_frame_opt); echo ($labels_opt); ?>)
+<?	if (getRK_val ("do_locale_conversion")) {
+		$from_locale = getRK_val ("encoding");
+		if ($from_locale == "other") {
+			$from_locale = getRK_val ("user_encoding");
+		} ?>
 
-<?	if ($data_frame) { 
-// actually, this should not only happen for a data.frame (the alternative is a list), but maybe according to an option (or always)
-?>
+# convert all strings to the current encoding
+<? echo ($object); ?> <- rk.temp.convert (<? echo ($object); ?>, from="<? echo ($from_locale); ?>")
+<?	}
+	if (getRK_val ("convert_var_labels")) { ?>
+
 # set variable labels for use in RKWard
 rk.temp.labels <- attr (<? echo ($object); ?>, "variable.labels");
 if (!is.null (rk.temp.labels)) {
@@ -36,10 +57,10 @@ if (!is.null (rk.temp.labels)) {
 <?	} ?>
 <?
 }
-	
+
 function printout () {
 }
-	
+
 function cleanup () { ?>
 rm (list=grep ("^rk.temp", ls (), value=TRUE))
 <?
