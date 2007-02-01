@@ -32,11 +32,26 @@
 			</tab>
 			<tab id="tab_encoding" label="Encoding">
 				<checkbox id="do_locale_conversion" checked="false" label="Convert string encoding" value="1" value_unchecked="0"/>
-				<radio id="encoding" label="Convert from:">
-					<option value="latin1" label="Latin 1"/>
+				<dropdown id="encoding" label="Convert from:">
+					<option value="latin1" label="Latin 1" checked="true"/>
 					<option value="UTF-8" label="UTF-8"/>
+					<option value="ISO8859-1" label="ISO8859-1 Latin-1 Western European"/>
+					<option value="ISO8859-2" label="ISO8859-2 Latin-2 Central European"/>
+					<option value="ISO8859-3" label="ISO8859-3 Latin-3 South European"/>
+					<option value="ISO8859-4" label="ISO8859-4 Latin-4 North European"/>
+					<option value="ISO8859-5" label="ISO8859-5 Latin/Cyrillic"/>
+					<option value="ISO8859-6" label="ISO8859-6 Latin/Arabic"/>
+					<option value="ISO8859-7" label="ISO8859-7 Latin/Greek"/>
+					<option value="ISO8859-8" label="ISO8859-8 Latin/Hebrew"/>
+					<option value="ISO8859-9" label="ISO8859-9 Latin-5 Turkish"/>
+					<option value="ISO8859-10" label="ISO8859-10 Latin-6 Nordic"/>
+					<option value="ISO8859-11" label="ISO8859-11 Latin/Thai"/>
+					<option value="ISO8859-13" label="ISO8859-13 Latin-7 Baltic Rim"/>
+					<option value="ISO8859-14" label="ISO8859-14 Latin-8 Celtic"/>
+					<option value="ISO8859-15" label="ISO8859-15 Latin-9 Western Europen (EUR)"/>
+					<option value="ISO8859-16" label="ISO8859-16 Latin-10 South-Eastern European"/>
 					<option value="other" label="Other (specify below)"/>
-				</radio>
+				</dropdown>
 				<input id="user_encoding" label="Other encoding" />
 			</tab>
 		</tabbook>
