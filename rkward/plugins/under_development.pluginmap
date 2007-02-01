@@ -36,6 +36,11 @@
 	<hierarchy>
 		<menu id="file" label="File">
 			<menu id="import" label="Import" index="4">
+				<!-- Do we want this? -->
+				<menu id="import_format" label="Import format" index="0">
+					<entry component="import_spss"/>
+					<entry component="import_csv"/>
+				</menu>
 			</menu>
 			<menu id="export" label="Export" index="5">
 			</menu>

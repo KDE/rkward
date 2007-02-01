@@ -26,7 +26,7 @@
 	</logic>
 	<dialog label="Import CSV data" >
 		<tabbook>
-			<tab label="Load" >
+			<tab id="tab_general" label="General" >
 				<browser size="small" id="file" label="File name" />
 				<saveobject id="name" initial="my.csv.data" label="Object to save to"/>
 				<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="true" label="First row contains column names"/>
@@ -43,7 +43,7 @@
 					</radio>
 				</row>
 			</tab>
-			<tab label="Rows" >
+			<tab id="tab_rows" label="Rows" >
 				<checkbox value_unchecked="false" checked="false" value="true" id="isrow" label="Customize row names" />
 				<radio id="rowname" label="Rows names" >
 					<option value="NULL" label="Number" />
@@ -53,7 +53,7 @@
 				<input size="small" id="nomrow" initial="1" label="Column number or variable name" />
 				<input id="rownames" label="Vector of row names (quoted)" />
 			</tab>
-			<tab label="Columns" >
+			<tab id="tab_columns"  label="Columns" >
 				<radio id="colname" label="Column names" >
 					<option value="" label="Default" />
 					<option value="custoCol" label="Use a character vector" />
@@ -65,7 +65,7 @@
 				</radio>
 				<input id="custoClasses" label="Vector of column classes (quoted)" />
 			</tab>
-			<tab label="Options" >
+			<tab id="tab_further_options" label="Further Options" >
 				<row>
 					<input size="small" initial="0" id="skip" label="Skip x lines at the start of the file" />
 					<input size="small" initial="-1" id="nrows" label="Max number of lines to read (-1 for no limit)" />

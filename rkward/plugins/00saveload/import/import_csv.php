@@ -4,11 +4,10 @@
 	
 	function calculate () {
 getRK("name"); ?> <- read.table (file="<? getRK("file"); ?>", header=<? getRK("header"); ?>, sep=<? getRK("sep"); ?>, dec=<? getRK("dec") ?>, <? # doing row names (what a pity...) 
-if (getRK_val("isrow")=="true") {
+if (getRK_val("rowname")!="NULL") {
 	echo( "row.names = ");
-	if (getRK_val("rowname")=="NULL") echo (getRK_val("rowname") . ",");
-	else if (getRK_val("rowname")=="rowcol") echo (getRK("nomrow") . ",");
-	else if (getRK_val("rowname")=="custoRow") echo (getRK_val("rownames") . ",");
+	if (getRK_val("rowname")=="rowcol") echo (getRK("nomrow") . ",");
+	else echo (getRK_val("rownames") . ",");
 }
 # doing col names (what a pity...)
 if (getRK_val("colname") == "custoCol") echo ( "col.names = " . getRK_val ("colnames") . ",");

@@ -26,6 +26,7 @@ Choose the SPSS file to import. An R object containing the SPSS data will be cre
 	</settings>
 	<related>
 		<ul>
+			<li><link href="rkward://component/import_csv"/></li>
 			<li><link href="rkward://rhelp/read.spss"/></li>
 			<li><link href="rkward://rhelp/iconv"/></li>
 		</ul>
