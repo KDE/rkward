@@ -1455,7 +1455,7 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;max_precision&gt;</term>
-	<listitem>The maximum number of digits that can be meaningfully represented (optional, defaults to "6")</listitem>
+	<listitem>The maximum number of digits that can be meaningfully represented (optional, defaults to "8")</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
