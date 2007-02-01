@@ -40,7 +40,7 @@ try ({
 	<?
 	if (getRK_val ("beside") == "TRUE") {
 	?>
-rk.temp.barplot <-barplot((rk.temp.x)<? if (getRK_val ("rainbow")=="TRUE") { ?>, col=rainbow( if(is.matrix(rk.temp.x)) dim(rk.temp.x) else rk.temp.x) <? } ?>, beside=<? getRK ("beside"); ?>, legend.text=<? getRK ("legend"); ?>,  ylim = range(rk.temp.x) * c(0, 1.2))
+rk.temp.barplot <-barplot((rk.temp.x)<? if (getRK_val ("rainbow")=="TRUE") { ?>, col=rainbow( if(is.matrix(rk.temp.x)) dim(rk.temp.x) else length(rk.temp.x)) <? } ?>, beside=<? getRK ("beside"); ?>, legend.text=<? getRK ("legend"); ?>,  ylim = range(rk.temp.x) * c(0, 1.2))
 	<?
 	}
 	if ((getRK_val ("beside") == "TRUE") && getRK_val ("labels")=="TRUE") { 
@@ -49,7 +49,7 @@ text(rk.temp.barplot, rk.temp.x, labels=rk.temp.x, pos=<? getRK ("place"); ?>, o
 	<? } 
 	if (getRK_val ("beside") == "FALSE") { 
 	?> 
-barplot((rk.temp.x)<? if (getRK_val ("rainbow")=="TRUE") { ?>, col=rainbow( if(is.matrix(rk.temp.x)) dim(rk.temp.x) else rk.temp.x) <? } ?>, legend.text=<? getRK ("legend"); ?>)
+barplot((rk.temp.x)<? if (getRK_val ("rainbow")=="TRUE") { ?>, col=rainbow( if(is.matrix(rk.temp.x)) dim(rk.temp.x) else length(rk.temp.x)) <? } ?>, legend.text=<? getRK ("legend"); ?>)
 	<? } 
 	?>
 })
