@@ -1,6 +1,12 @@
 <!DOCTYPE rkplugin>
 <document> 
+	<code file="import_csv.php"/>
+	<help file="import_csv.rkh"/>
 	<logic>
+		<external id="filename" />
+		<connect governor="filename" client="file.selection"/>
+
+
 		<connect client="rowname.enabled" governor="isrow.state" />
 
 		<convert id="userow" mode="equals" sources="rowname.string" standard="rowcol" />
@@ -9,7 +15,6 @@
 		<connect client="nomrow.required" governor="userow" />
 		<connect client="rownames.enabled" governor="customizerow" />
 		<connect client="rownames.required" governor="customizerow" />
-		<connect client="varname.enabled" governor="customizerow" />
 
 		<convert id="customizecol" mode="equals" sources="colname.string" standard="custoCol" />
 		<connect client="colnames.enabled" governor="customizecol" />
@@ -17,55 +22,52 @@
 		<convert id="customizeclasses" mode="equals" sources="colclass.string" standard="custoClass" />
 		<connect client="custoClasses.enabled" governor="customizeclasses" />
 		<connect client="custoClasses.required" governor="customizeclasses" />
-		<convert id="customizecolclass" mode="or" sources="colnames.enabled;custoClasses.enabled" />
-		<connect client="varnames.enabled" governor="customizecolclass" />
 	</logic>
-	<code file="code.php"/>
-	<dialog label="Load data" >
+	<dialog label="Import CSV data" >
 		<tabbook>
 			<tab label="Load" >
 				<browser size="small" id="file" label="File name" />
-				<input label="Table name" id="name" initial="rk.temp.table" size="small"/>
+				<saveobject id="name" initial="my.csv.data" label="Object to save to"/>
 				<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="true" label="First row contains column names"/>
-				<radio id="dec" label="Character used decimal points" >
-					<option value="'.'" label="'.'" />
-					<option value="','" label="','" />
-				</radio>
-				<radio id="sep" label="Field separator character" >
-					<option value="'\t'" label="Tab" />
-					<option value="';'" label="';'" />
-					<option value="','" label="','" />
-					<option value="' '" label="Space" />
-				</radio>
+				<row>
+					<radio id="dec" label="Decimal point character" >
+						<option value="'.'" label="'.'" />
+						<option value="','" label="','" />
+					</radio>
+					<radio id="sep" label="Field separator character" >
+						<option value="'\t'" label="Tab" />
+						<option value="';'" label="';'" />
+						<option value="','" label="','" />
+						<option value="' '" label="Space" />
+					</radio>
+				</row>
 			</tab>
 			<tab label="Rows" >
 				<checkbox value_unchecked="false" checked="false" value="true" id="isrow" label="Customize row names" />
 				<radio id="rowname" label="Rows names" >
 					<option value="NULL" label="Number" />
-					<option value="rowcol" label="Use a column" />
+					<option value="rowcol" label="As specified in column x:" />
 					<option value="custoRow" label="Use a vector" />
 				</radio>
 				<input size="small" id="nomrow" initial="1" label="Column number or variable name" />
-				<varslot multi="false" classes="character" id="rownames" source="varname" label="Row names character vector" />
-				<varselector id="varname" />
+				<input id="rownames" label="Vector of row names (quoted)" />
 			</tab>
-				<tab label="Columns" >
-				<radio id="colname" label="Columns names" >
+			<tab label="Columns" >
+				<radio id="colname" label="Column names" >
 					<option value="" label="Default" />
 					<option value="custoCol" label="Use a character vector" />
 				</radio>
-				<varslot multi="false" classes="character" id="colnames" source="varnames" label="Column names character vector" />
+				<input id="colnames" label="Vector of column names (quoted)" />
 				<radio id="colclass" label="Classes of columns" >
 					<option value="" label="Default" />
 					<option value="custoClass" label="Use a character vector" />
 				</radio>
-				<varslot multi="false" classes="character" id="custoClasses" source="varnames" label="Column names character vector" />
-				<varselector id="varnames" />
+				<input id="custClasses" label="Vector of column classes (quoted)" />
 			</tab>
 			<tab label="Options" >
 				<row>
-					<input size="small" initial="0" id="skip" label="Number of lines" />
-					<input size="small" initial="-1" id="nrows" label="Max number of lines" />
+					<input size="small" initial="0" id="skip" label="Skip x lines at the start of the file" />
+					<input size="small" initial="-1" id="nrows" label="Max number of lines to read (-1 for no limit)" />
 				</row>
 				<row>
 					<input size="small" initial="NA" id="na" label="Character for missing values" />
