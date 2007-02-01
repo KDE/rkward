@@ -206,10 +206,6 @@ dist_pluginsX00saveloadXloadXsource_DATA = \
 	00saveload/load/source/description.xml
 
 pluginsX00saveloadXloadXreadtabledir = $(kde_datadir)/rkward/00saveload/load/readtable
-dist_pluginsX00saveloadXloadXreadtable_DATA = \
-	00saveload/load/readtable/code.php \
-	00saveload/load/readtable/description.xml
-
 pluginsX00saveloadXsavedir = $(kde_datadir)/rkward/00saveload/save
 pluginsX00saveloadXsaveXskeletondir = $(kde_datadir)/rkward/00saveload/save/skeleton
 dist_pluginsX00saveloadXsaveXskeleton_DATA = \
@@ -230,7 +226,9 @@ pluginsX00saveloadXimportdir = $(kde_datadir)/rkward/00saveload/import
 dist_pluginsX00saveloadXimport_DATA = \
 	00saveload/import/import_spss.xml \
 	00saveload/import/import_spss.php \
-	00saveload/import/import_spss.rkh
+	00saveload/import/import_spss.rkh \
+	00saveload/import/import_csv.php \
+	00saveload/import/import_csv.xml
 
 pluginsXanalysisdir = $(kde_datadir)/rkward/analysis
 pluginsXanalysisXansariUbradleydir = $(kde_datadir)/rkward/analysis/ansari_bradley

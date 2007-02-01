@@ -2,7 +2,7 @@
                           getfilenamewidget  -  description
                              -------------------
     begin                : Tue Aug 24 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -32,7 +32,7 @@ class GetFileNameWidget : public QWidget {
 	Q_OBJECT
 public:
 	enum FileType { ExistingFile=0, ExistingDirectory=1, SaveFile=2 };
-    
+
 	GetFileNameWidget (QWidget *parent, FileType mode, const QString &label, const QString &caption, const QString &initial);
 	~GetFileNameWidget ();
 
@@ -40,6 +40,8 @@ public:
 	void setFilter (const QString &filter) { _filter = filter; };
 /** set the filename/location from outside */
 	void setLocation (const QString &new_location);
+
+	void setBackgroundColor (const QColor & color);
 
 /** retrieves the current location */
 	QString getLocation ();

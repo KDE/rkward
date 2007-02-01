@@ -11,6 +11,7 @@
 
 		<convert id="userow" mode="equals" sources="rowname.string" standard="rowcol" />
 		<convert id="customizerow" mode="equals" sources="rowname.string" standard="custoRow" />
+		<convert id="customizerow2" mode="and" sources="isrow.state;customizerow" standard="custoRow" />
 		<connect client="nomrow.enabled" governor="userow" />
 		<connect client="nomrow.required" governor="userow" />
 		<connect client="rownames.enabled" governor="customizerow" />
@@ -62,7 +63,7 @@
 					<option value="" label="Default" />
 					<option value="custoClass" label="Use a character vector" />
 				</radio>
-				<input id="custClasses" label="Vector of column classes (quoted)" />
+				<input id="custoClasses" label="Vector of column classes (quoted)" />
 			</tab>
 			<tab label="Options" >
 				<row>

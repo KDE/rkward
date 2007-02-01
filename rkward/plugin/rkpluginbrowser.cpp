@@ -2,7 +2,7 @@
                           rkpluginbrowser  -  description
                              -------------------
     begin                : Sat Mar 10 2005
-    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -36,6 +36,9 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 	addChild ("selection", selection = new RKComponentPropertyBase (this, true));
 	connect (selection, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (textChanged (RKComponentPropertyBase *)));
 
+	setRequired (xml->getBoolAttribute (element, "required", true, DL_INFO));
+	connect (requirednessProperty (), SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (requirednessChanged(RKComponentPropertyBase*)));
+
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 
 	int intmode = xml->getMultiChoiceAttribute (element, "type", "file;dir;savefile", 0, DL_INFO);
@@ -54,9 +57,8 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 	vbox->addWidget (selector);
 
 	// initialize
-	updating = true;
-	textChanged ();
 	updating = false;
+	textChanged ();
 }
 
 RKPluginBrowser::~RKPluginBrowser () {
@@ -70,6 +72,7 @@ void RKPluginBrowser::textChanged (RKComponentPropertyBase *) {
 	updating = true;
 
 	selector->setLocation (selection->value ());
+	updateColor ();
 
 	updating = false;
 	changed ();
@@ -79,6 +82,30 @@ void RKPluginBrowser::textChanged () {
 	RK_TRACE (PLUGIN);
 
 	selection->setValue (selector->getLocation ());
+}
+
+bool RKPluginBrowser::isValid () {
+	return (!(selection->value ().isEmpty ()));
+}
+
+void RKPluginBrowser::requirednessChanged (RKComponentPropertyBase *) {
+	RK_TRACE (PLUGIN);
+
+	updateColor ();
+}
+
+void RKPluginBrowser::updateColor () {
+	RK_TRACE (PLUGIN);
+
+	if (isEnabled ()) {
+		if (isSatisfied ()) {
+			selector->setBackgroundColor (QColor (255, 255, 255));
+		} else {
+			selector->setBackgroundColor (QColor (255, 0, 0));
+		}
+	} else {
+		selector->setBackgroundColor (QColor (200, 200, 200));
+	}
 }
 
 #include "rkpluginbrowser.moc"

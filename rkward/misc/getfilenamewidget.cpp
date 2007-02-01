@@ -2,7 +2,7 @@
                           getfilenamewidget  -  description
                              -------------------
     begin                : Tue Aug 24 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -88,6 +88,12 @@ void GetFileNameWidget::browseButtonClicked () {
 
 QString GetFileNameWidget::getLocation () {
 	return location_edit->text ();
+}
+
+void GetFileNameWidget::setBackgroundColor (const QColor & color) {
+	RK_TRACE (MISC);
+
+	location_edit->setBackgroundColor (color);
 }
 
 #include "getfilenamewidget.moc"
