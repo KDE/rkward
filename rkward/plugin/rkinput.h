@@ -2,7 +2,7 @@
                           rkinput  -  description
                              -------------------
     begin                : Sat Mar 10 2005
-    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -40,13 +40,16 @@ public:
 	RKComponentPropertyBase *text;
 	QString value (const QString &modifier) { return (text->value (modifier)); };
 	int type () { return ComponentInput; };
+	bool isValid ();
 public slots:
 	void textChanged ();
 	void textChanged (RKComponentPropertyBase *);
+	void requirednessChanged (RKComponentPropertyBase *);
 protected:
 /** Grey out input when disabled */
 	void enabledChange (bool old);
 private:
+	void updateColor ();
 	bool updating;
 	QTextEdit *textedit;
 };

@@ -2,6 +2,31 @@
 <document>
 	<code file="plot_options.php" />
 	<logic>
+		<external id="xvar" default="" />
+		<external id="yvar" default="" />
+		<external id="allow_log" default="true" />
+		<external id="allow_type" default="true" />
+		<external id="allow_aspect" default="false" />
+		
+		<convert id="no_xvar" mode="equals" sources="xvar" standard="" />
+		<convert id="no_yvar" mode="equals" sources="yvar" standard="" />
+
+		<!-- If we do not have an xvar specified, it is not possible to specify one xlimit but not the other -->
+		<convert id="xmin_specified" mode="notequals" sources="xminvalue.text" standard="" />
+		<convert id="xmax_specified" mode="notequals" sources="xmaxvalue.text" standard="" />
+		<convert id="xmin_required" mode="and" sources="xmax_specified;no_xvar" />
+		<convert id="xmax_required" mode="and" sources="xmin_specified;no_xvar" />
+		<connect client="xminvalue.required" governor="xmin_required" />
+		<connect client="xmaxvalue.required" governor="xmax_required" />
+		<!-- Same for y -->
+		<convert id="ymin_specified" mode="notequals" sources="yminvalue.text" standard="" />
+		<convert id="ymax_specified" mode="notequals" sources="ymaxvalue.text" standard="" />
+		<convert id="ymin_required" mode="and" sources="ymax_specified;no_yvar" />
+		<convert id="ymax_required" mode="and" sources="ymin_specified;no_yvar" />
+		<connect client="yminvalue.required" governor="ymin_required" />
+		<connect client="ymaxvalue.required" governor="ymax_required" />
+
+
 		<convert id="xlabfilled" mode="notequals" sources="xlab.text" standard="" />
 		<connect client="xlabisexp.enabled" governor="xlabfilled" />
 
@@ -12,12 +37,6 @@
 		<connect client="ylog.visible" governor="allow_log"/>
 		<connect client="aspectratio.visible" governor="allow_aspect"/>
 		<connect client="pointtypepage.visible" governor="allow_type"/>
-
-		<external id="xvar" />
-		<external id="yvar" />
-		<external id="allow_log" default="true" />
-		<external id="allow_type" default="true" />
-		<external id="allow_aspect" default="false" />
 	</logic>
 	<dialog label="Default plot options" >
 		<tabbook>

@@ -45,9 +45,8 @@ RKPluginSaveObject::RKPluginSaveObject (const QDomElement &element, RKComponent 
 	vbox->addWidget (selector);
 
 	// initialize
-	updating = true;
-	selectionChanged ();
 	updating = false;
+	selectionChanged ();
 }
 
 RKPluginSaveObject::~RKPluginSaveObject () {

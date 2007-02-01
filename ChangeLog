@@ -1,3 +1,5 @@
+- input elements can be made required 							TODO: don't list this, but document!
+- fixed problem with specifying y axis limits in several plugins
 - new plugin: import SPSS files								TODO: document
 - new documentation pages: console
 - improvements to distribution plot plugins
