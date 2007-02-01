@@ -887,7 +887,7 @@ function preview () {
 	// we call all stages of the general code. Only the printout () function need to be slightly different
 	preprocess ();
 	calculate ();
-	doPrintout (false);	// true in this case means: We want all the headers that should be printed in the output
+	doPrintout (false);
 	cleanup ();
 }
 
