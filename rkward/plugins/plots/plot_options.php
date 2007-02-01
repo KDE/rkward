@@ -70,7 +70,7 @@ function printout () {
 	if (($yminvalue != "") || ($ymaxvalue != "")) {
 		$ylim = ", ylim=c (";
 		if ($yminvalue == "") $ylim .= "min (" . $yvar . ")";
-		else $ylim .= $yminvalue . ", ";
+		else $ylim .= $yminvalue;
 		$ylim .= ", ";
 		if ($ymaxvalue == "") $ylim .= "max (" . $yvar . ")";
 		else $ylim .= $ymaxvalue;

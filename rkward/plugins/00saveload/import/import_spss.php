@@ -20,7 +20,9 @@ function calculate () {
 ?>
 <? echo ($object); ?> <- read.spss ("<? getRK ("file"); ?>"<? echo ($data_frame_opt); echo ($labels_opt); ?>)
 
-<?	if ($data_frame) { ?>
+<?	if ($data_frame) { 
+// actually, this should not only happen for a data.frame (the alternative is a list), but maybe according to an option (or always)
+?>
 # set variable labels for use in RKWard
 rk.temp.labels <- attr (<? echo ($object); ?>, "variable.labels");
 if (!is.null (rk.temp.labels)) {
