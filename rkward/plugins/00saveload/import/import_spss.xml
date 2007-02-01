@@ -1,6 +1,7 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="import_spss.php" />
+	<help file="import_spss.rkh" />
 	<logic>
 		<external id="filename"/>
 		<connect governor="filename" client="file.selection"/>

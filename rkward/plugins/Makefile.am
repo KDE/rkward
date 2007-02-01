@@ -229,7 +229,8 @@ dist_pluginsX00saveloadXsaveXsave_DATA = \
 pluginsX00saveloadXimportdir = $(kde_datadir)/rkward/00saveload/import
 dist_pluginsX00saveloadXimport_DATA = \
 	00saveload/import/import_spss.xml \
-	00saveload/import/import_spss.php
+	00saveload/import/import_spss.php \
+	00saveload/import/import_spss.rkh
 
 pluginsXanalysisdir = $(kde_datadir)/rkward/analysis
 pluginsXanalysisXansariUbradleydir = $(kde_datadir)/rkward/analysis/ansari_bradley

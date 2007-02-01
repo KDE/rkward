@@ -1,0 +1,33 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Import SPSS data files.
+	</summary>
+
+	<usage>
+Choose the SPSS file to import. An R object containing the SPSS data will be created. This can either be a data.frame, or a list. Several options deal with handling labels and character encoding. See <link href="rkward://rhelp/read.spss" />.
+	</usage>
+
+	<settings>
+		<caption id="tab_general"/>
+		<setting id="file">The filename of the file to import</setting>
+		<setting id="saveto">The name of an R object to store the imported data in. If you chose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
+		<setting id="data_frame">Whether to save the data as a data.frame. The alternative is saving as a list (useful, if the columns in your SPSS data have different lengths)</setting>
+
+		<setting id="convert_var_labels">RKWard can display SPSS like variable labels. Check this option, if you would like to convert the SPSS variable labels to RKWard format. If you leave the option unchecked, the SPSS variable labels will still be available as an attribute "variable.labels" (see <link href="rkward://rhelp/read.spss" />)</setting>
+		<setting id="use_labels">Should SPSS variables with value labels be converted to R factors with those levels?</setting>
+		<setting id="labels_limit">Maximum number of factor levels to use (see <link href="rkward://rhelp/read.spss" />)</setting>
+		<setting id="trim_labels">Trim trailing white space from labels?</setting>
+
+		<caption id="tab_encoding"/>
+		<setting id="do_locale_conversion">If special character (e.g. umlauts) do not show up correctly, the SPSS file probably uses a different locale than your R session. In this case, check this option, and specify the correct character encoding below.</setting>
+		<setting id="encoding">Select character encoding to convert from. The option above needs to be checked, for this to be enabled.</setting>
+		<setting id="user_encoding">If none of the encodings above matches, you can specify an encoding here. Note that the available encodings may differ from platform to platform. See <link href="rkward://rhelp/iconvlist" /> for a list of available encodings.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/read.spss"/></li>
+			<li><link href="rkward://rhelp/iconv"/></li>
+		</ul>
+	</related>
+</document>
