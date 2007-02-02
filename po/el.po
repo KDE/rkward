@@ -202,7 +202,7 @@ msgid ""
 "\n"
 msgstr ""
 "Γιαυτό το λόγο η επεξεργασία έχει σταματήσει προς το παρόν. Πιέστε το κουμπί "
-"\"Εντάξει\", ή κλείστε το παράθυρο διαλόγου όταν νομίζετε ότι είναι ασφαλές "
+"\"Έγινε\", ή κλείστε το παράθυρο διαλόγου όταν νομίζετε ότι είναι ασφαλές "
 "να συνεχίσετε.\n"
 "\n"
 
@@ -263,7 +263,7 @@ msgstr ""
 #: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:326
 #: misc/rkprogresscontrol.cpp:273
 msgid "Done"
-msgstr "Ολοκληρώθηκε"
+msgstr "Έγινε"
 
 #: agents/rkloadagent.cpp:38
 msgid "Loading Workspace ..."
