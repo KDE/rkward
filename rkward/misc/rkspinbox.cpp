@@ -98,6 +98,10 @@ void RKSpinBox::setRealMode (double min, double max, double initial, int default
 	delete validator;
 	validator = new_validator;
 
+	/* the integer value and boundaries are mostly meaningless in real mode. Effectively, what we do is:
+		1) set the value to 0
+		2) whenever the value has changed, change the real value by that many steps (updateDisplay ())
+		3) goto 1 */
 	setMinValue (-1000);
 	setMaxValue (1000);
 	setSteps (1, 10);

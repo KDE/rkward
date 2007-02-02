@@ -25,7 +25,7 @@
 class RKSaveObjectChooser;
 class QDomElement;
 
-/** RKComponent to select an object name to save something to
+/** RKComponent to select an R object name to save something to
 
 @author Thomas Friedrichsmeier
 */
