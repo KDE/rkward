@@ -7,9 +7,18 @@
 		<external id="allow_log" default="true" />
 		<external id="allow_type" default="true" />
 		<external id="allow_aspect" default="false" />
+		<external id="allow_xlim" default="true" />
+		<external id="allow_ylim" default="true" />
 		
 		<convert id="no_xvar" mode="equals" sources="xvar" standard="" />
 		<convert id="no_yvar" mode="equals" sources="yvar" standard="" />
+
+		<connect client="xminvalue.visible" governor="allow_xlim" />
+		<connect client="xmaxvalue.visible" governor="allow_xlim" />
+		<connect client="yminvalue.visible" governor="allow_ylim" />
+		<connect client="ymaxvalue.visible" governor="allow_ylim" />
+		<convert id="have_scale" mode="or" sources="xminvalue.visible;xmaxvalue.visible;yminvalue.visible;ymaxvalue.visible" />
+		<connect client="scale.visible" governor="have_scale" />
 
 		<!-- If we do not have an xvar specified, it is not possible to specify one xlimit but not the other -->
 		<convert id="xmin_specified" mode="notequals" sources="xminvalue.text" standard="" />
