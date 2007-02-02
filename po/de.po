@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-29 14:52+0100\n"
-"PO-Revision-Date: 2007-01-09 02:11+0100\n"
+"PO-Revision-Date: 2007-02-02 09:35+0100\n"
 "Last-Translator: SJR <stefan_roediger@gmx.de>\n"
 "Language-Team: German <rkward-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -171,8 +171,7 @@ msgid "Delete this row (%1)"
 msgstr "Lösche diese Zeile (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Kein Dateiname angegeben. Ihre Daten wurden NICHT gespeichert. Möchten Sie "
 "dennoch fortfahren?"
@@ -294,7 +293,7 @@ msgstr ""
 
 #: agents/rkquitagent.cpp:41
 msgid "Waiting for R to finish"
-msgstr ""
+msgstr "Warte auf Beenden von R"
 
 #: core/rkmodificationtracker.cpp:50
 msgid ""
@@ -324,8 +323,7 @@ msgid "Remove object?"
 msgstr "Objekt entfernen?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "Wollen Sie das Objekt '%1' wirklich entfernen? Es gibt keine Möglichkeit es "
 "wieder herzustellen."
@@ -572,8 +570,7 @@ msgstr "Öffnen (Warten)"
 
 #: windows/rkcommandeditorwindow.cpp:128
 msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr ""
-"Das Dokument \"%1\" wurde verändert. Soll es dennoch gespeichert werden?"
+msgstr "Das Dokument \"%1\" wurde verändert. Soll es dennoch gespeichert werden?"
 
 #: windows/rkcommandeditorwindow.cpp:128
 msgid "File not saved"
@@ -856,23 +853,23 @@ msgstr "(kein Label)"
 
 #: plugin/rkpreviewbox.cpp:47
 msgid "Preview"
-msgstr ""
+msgstr "Vorschau"
 
 #: plugin/rkpreviewbox.cpp:165
 msgid "Preview disabled"
-msgstr ""
+msgstr "Vorschau aktiviert"
 
 #: plugin/rkpreviewbox.cpp:169
 msgid "Preview up to date"
-msgstr ""
+msgstr "Vorschau aktuell"
 
 #: plugin/rkpreviewbox.cpp:171
 msgid "Preview updating"
-msgstr ""
+msgstr "Aktualisiere Vorschau"
 
 #: plugin/rkpreviewbox.cpp:174
 msgid "Preview not (yet) possible"
-msgstr ""
+msgstr "Vorschau ist (noch) nicht möglich"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:41
 msgid "Which objects should be shown by default?"
@@ -1210,7 +1207,7 @@ msgstr "Führe Befehle vom Skripteditor durch Konsole aus"
 
 #: settings/rksettingsmoduleconsole.cpp:71
 msgid "Command history is context sensitive by default"
-msgstr ""
+msgstr "Der Verlauf der Kommandozeile ist kontextsensitiv"
 
 #: settings/rksettingsmoduleconsole.cpp:167
 msgid "Console"
@@ -1259,8 +1256,7 @@ msgstr "Synchronisation Befehle"
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr ""
-"Maximale Anzahl von Absätzen/Zeile die im Command Log angezeigt werden sollen"
+msgstr "Maximale Anzahl von Absätzen/Zeile die im Command Log angezeigt werden sollen"
 
 #: settings/rksettings.cpp:63
 msgid "Settings"
@@ -1312,8 +1308,7 @@ msgstr "Konfiguriere Repositories"
 
 #: dialogs/rkloadlibsdialog.cpp:204
 msgid "Please stand by while installing selected packages"
-msgstr ""
-"Bitte warten warten Sie während die gewählten Pakete installiert werden."
+msgstr "Bitte warten warten Sie während die gewählten Pakete installiert werden."
 
 #: dialogs/rkloadlibsdialog.cpp:204
 msgid "Installing packages"
@@ -1528,16 +1523,14 @@ msgstr "Illegaler Attributwert. Nur Dezimalzahlen sind erlaubt."
 
 #: misc/xmlhelper.cpp:219
 msgid "Illegal attribute value. Allowed values are 'true' or 'false', only."
-msgstr ""
-"Illegaler Attributwert. Nur die Werte 'wahr' oder 'falsch' sind zulässig."
+msgstr "Illegaler Attributwert. Nur die Werte 'wahr' oder 'falsch' sind zulässig."
 
 #: misc/xmlhelper.cpp:230
 msgid "XML-parsing '%1' "
 msgstr "XML-parsing '%1' "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>Es gab Fehler und / oder Warnungen! Betrachten Sie das Transkript "
 "unterhalb</b>"
@@ -1884,7 +1877,7 @@ msgstr "Neue Website"
 
 #: main.cpp:89
 msgid "Several plugins"
-msgstr ""
+msgstr "Verschiedene Plug-ins"
 
 #: main.cpp:90
 msgid "A cool icon"
@@ -1895,18 +1888,16 @@ msgid "RKWard logo, many suggestions, help on wording"
 msgstr "RKWard Logo, viele Vorschläge, Wortwahl"
 
 #: main.cpp:92
-#, fuzzy
 msgid "Many plugins, suggestions, marketing, translations"
-msgstr "Viele Plug-Ins, Vorschläge und Marketing"
+msgstr "Viele Plug-Ins, Vorschläge, Marketing und Übersetzungen"
 
 #: main.cpp:93
 msgid "Several valuable comments, hints and patches"
 msgstr "Verschiedene wertvolle Kommentare, Hinweise und Patches"
 
 #: main.cpp:94
-#, fuzzy
 msgid "Translation, Suggestions, plugins"
-msgstr "Viele Plug-Ins, Vorschläge und Marketing"
+msgstr "Übersetzungen, Vorschläge und Plug-ins"
 
 #: main.cpp:95
 msgid "Many comments, useful suggestions, and bug reports"
@@ -1914,7 +1905,7 @@ msgstr "Viele Kommentare, nützliche Vorschläge und Fehlerberichte"
 
 #: main.cpp:96
 msgid "Some patches"
-msgstr ""
+msgstr "Einige Patches"
 
 #: main.cpp:97
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
@@ -2410,3 +2401,4 @@ msgid ""
 "_: EMAIL OF TRANSLATORS\n"
 "Your emails"
 msgstr "stefan_roediger@gmx.de"
+
