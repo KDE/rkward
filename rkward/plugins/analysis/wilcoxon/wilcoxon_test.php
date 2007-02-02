@@ -24,7 +24,7 @@ rk.header ("Wilcoxon Test",
 		paste (rk.get.short.name (rk.temp.x), "is greater than", rk.get.short.name (rk.temp.y))
 	      else
 		paste (rk.get.short.name (rk.temp.x), "and", rk.get.short.name (rk.temp.y), "differ"),
- 	"Note", if (rk.temp.length.x < 50) paste ("You have less then 50 values. An exact test is recommended.") else paste("Length is", (rk.temp.length.x)),"Confidence Interval", "<? getRK ("confint"); ?>", "Continuity correction in normal approximation for p-value", "<? getRK ("correct"); ?>","mu", "<? getRK ("mu"); ?>"))
+ 	"Note", if (rk.temp.length.x < 50) paste ("You have less then 50 values. An exact test is recommended.") else paste ("Length is", (rk.temp.length.x)),"Compute Confidence Interval", "<? getRK ("confint"); ?>", "Continuity correction in normal approximation for p-value", "<? getRK ("correct"); ?>", "Compute exact p-value", "<? getRK ("exact"); ?>","mu", "<? getRK ("mu"); ?>"))
 
 rk.results (list (
 	'Variable Names'=rk.get.description (rk.temp.x, rk.temp.y, is.substitute=TRUE),
@@ -32,10 +32,10 @@ rk.results (list (
 	'Location Shift'=rk.temp$null.value,
 	'Hypothesis'=rk.temp$alternative,
 	p=rk.temp$p.value<?
-	if (getRK_val ("confint")) { ?>,
+	if (getRK_val ("confint")== "TRUE") { ?>,
 	'confidence interval percent'=(100 * attr(rk.temp$conf.int, "conf.level")),
-	'confidence interval of difference'=rk.temp$conf.int <? } ?>,
-	'Difference in Location' = rk.temp$estimate))
+	'confidence interval of difference'=rk.temp$conf.int,
+	'Difference in Location' = rk.temp$estimate <? } ?>))
 <?
 	}
 	
