@@ -30,7 +30,14 @@
 
 #include "../debug.h"
 
-RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KFileDialog (QString::null, QString::null, parent, 0, false) {
+RKImportDialogFormatSelector::RKImportDialogFormatSelector () {
+	RK_TRACE (DIALOGS);
+
+	new QLabel (i18n ("File format: "), this);
+	combo = new QComboBox (this);
+}
+
+RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KFileDialog (QString::null, QString::null, parent, 0, false, format_selector=new RKImportDialogFormatSelector ()) {
 	RK_TRACE (DIALOGS);
 
 	context = RKComponentMap::getContext (context_id);
@@ -59,14 +66,11 @@ RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KF
 	}
 
 	// file format selection box
-	format_selection_box = new QHBox ();
-	new QLabel (i18n ("File format: "), format_selection_box);
-	format_combo = new QComboBox (format_selection_box);
-	format_combo->insertStringList (format_labels);
+	format_selector->combo->insertStringList (format_labels);
 
 	// initialize
 	setMode (KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
-	init (QString::null, formats, format_selection_box);
+	setFilter (formats);
 	connect (filterWidget, SIGNAL (filterChanged ()), this, SLOT (filterChanged ()));
 	filterChanged ();
 	show ();
@@ -82,10 +86,10 @@ void RKImportDialog::filterChanged () {
 	int index = filters.findIndex (filterWidget->currentFilter ());
 
 	if (index < 0) {		// All files
-		format_combo->setEnabled (true);
+		format_selector->combo->setEnabled (true);
 	} else {
-		format_combo->setEnabled (false);
-		format_combo->setCurrentItem (index);
+		format_selector->combo->setEnabled (false);
+		format_selector->combo->setCurrentItem (index);
 	}
 }
 
@@ -94,7 +98,7 @@ void RKImportDialog::accept () {
 
 	KFileDialog::accept ();
 
-	int index = format_combo->currentItem ();
+	int index = format_selector->combo->currentItem ();
 	QString cid = component_ids[index];
 	RKComponentHandle *handle = RKComponentMap::getComponentHandle (cid);
 	RKContextHandler *chandler = context->makeContextHandler (this, false);

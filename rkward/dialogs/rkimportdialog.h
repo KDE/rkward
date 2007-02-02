@@ -21,10 +21,11 @@
 #include <kfiledialog.h>
 
 #include <qstringlist.h>
+#include <qhbox.h>
 
-class QHBox;
 class QComboBox;
 class RKContextMap;
+class RKImportDialogFormatSelector;
 
 class RKImportDialog : public KFileDialog {
 	Q_OBJECT
@@ -38,12 +39,20 @@ protected:
 	void reject ();
 private:
 	int format_count;
-	QHBox *format_selection_box;
-	QComboBox *format_combo;
+	RKImportDialogFormatSelector *format_selector;
 	QStringList format_labels;
 	QStringList filters;
 	QStringList component_ids;
 	RKContextMap *context;
+};
+
+class RKImportDialogFormatSelector : public QHBox {
+friend class RKImportDialog;
+private:
+	RKImportDialogFormatSelector ();
+	~RKImportDialogFormatSelector () {};
+
+	QComboBox *combo;
 };
 
 #endif
