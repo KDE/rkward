@@ -32,7 +32,7 @@ rk.results (list (
 	'Hypothesis'=rk.temp$alternative,
 	'null.value'=rk.temp$null.value,
 	p=rk.temp$p.value<?
-	if (getRK_val ("confint")) { ?>,
+	if (getRK_val ("confint")== "TRUE") { ?>,
 	'confidence interval percent'=(100 * attr(rk.temp$conf.int, "conf.level")),
 	'confidence interval of difference'=rk.temp$conf.int <? } ?>))
 <?

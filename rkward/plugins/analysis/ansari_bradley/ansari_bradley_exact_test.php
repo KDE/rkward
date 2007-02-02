@@ -23,7 +23,7 @@ rk.header ("Ansari-Bradley two-sample exact test",
 	      else if (rk.temp$alternative == "greater")
 		paste (rk.get.short.name (rk.temp.x), "is greater than", rk.get.short.name (rk.temp.y))
 	      else
-		paste (rk.get.short.name (rk.temp.x), "and", rk.get.short.name (rk.temp.y), "differ"),"Confidence Interval", "<? getRK ("confint"); ?>","Compute exact p-value", "<? getRK ("exact"); ?>"))
+		paste (rk.get.short.name (rk.temp.x), "and", rk.get.short.name (rk.temp.y), "differ"),"Confidence Interval", "<? getRK ("confint"); ?>", "Confidence Level","Compute exact p-value", "<? getRK ("exact"); ?>"))
 
 rk.results (list (
 	'Variable Names'=rk.get.description (rk.temp.x, rk.temp.y, is.substitute=TRUE),
@@ -31,7 +31,7 @@ rk.results (list (
 	'null.value'=rk.temp$null.value,
 	'Hypothesis'=rk.temp$alternative,
 	p=rk.temp$p.value<?
-	if (getRK_val ("confint")) { ?>,
+	if (getRK_val ("confint")== "TRUE") { ?>,
 	'confidence interval percent'=(100 * attr(rk.temp$conf.int, "conf.level")),
 	'confidence interval of difference'=rk.temp$conf.int <? } ?>))
 <?
