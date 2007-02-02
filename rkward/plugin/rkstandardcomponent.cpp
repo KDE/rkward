@@ -442,7 +442,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "row") {
-			RKComponent *widget = new RKComponent (component (), parent_widget);		// wrapping this (and column, frame below) inside an RKComponent has the benefit, that it can have an id, and hence can be set to visibile/hidden, enabled/disabled
+			widget = new RKComponent (component (), parent_widget);		// wrapping this (and column, frame below) inside an RKComponent has the benefit, that it can have an id, and hence can be set to visibile/hidden, enabled/disabled
 			QVBoxLayout *layout = new QVBoxLayout (widget);
 			QHBox *box = new QHBox (widget);
 			box->setSpacing (RKGlobals::spacingHint ());
@@ -452,14 +452,14 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			QWidget *stretch = new QWidget (parent_widget);
 			stretch->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 		} else if (e.tagName () == "column") {
-			RKComponent *widget = new RKComponent (component (), parent_widget);
+			widget = new RKComponent (component (), parent_widget);
 			QVBoxLayout *layout = new QVBoxLayout (widget);
 			QVBox *box = new QVBox (widget);
 			box->setSpacing (RKGlobals::spacingHint ());
 			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "frame") {
-			RKComponent *widget = new RKComponent (component (), parent_widget);
+			widget = new RKComponent (component (), parent_widget);
 			QVBoxLayout *layout = new QVBoxLayout (widget);
 			QGroupBox *box = new QGroupBox (1, Qt::Horizontal, e.attribute ("label"), widget);
 			box->setInsideSpacing (RKGlobals::spacingHint ());
