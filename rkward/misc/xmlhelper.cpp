@@ -216,7 +216,7 @@ bool XMLHelper::getBoolAttribute (const QDomElement &element, const QString &nam
 	if (res == "true") return true;
 	if (res == "false") return false;
 
-	displayError (&element, i18n ("Illegal attribute value. Allowed values are 'true' or 'false', only."), debug_level, DL_ERROR);
+	displayError (&element, i18n ("Illegal attribute value. Allowed values are '%1' or '%2', only.").arg ("true").arg ("false"), debug_level, DL_ERROR);
 	return def;
 }
 
