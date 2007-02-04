@@ -85,7 +85,6 @@ UI-stuff
 		- ideally the whole thing: setting breakpoints, etc.
 		- realistically, maybe we can override browser () or do_browser with something nicer
 	- Preview of plots
-		- document
 		- Maybe use a button (along the submit / close / etc. buttons instead)?
 		- The preview window should be a specialized RKCaughtWindow
 			- It should show info on state (up to date / updating / error / etc).
@@ -152,7 +151,7 @@ General code:
 R plugins:
 	- create grid() plugin
 	- create a (simple) color option plugin (~ 30 colors) for embedding
-	- build SPSS import plugin
+	- a function rk.describe.alternative() for use in hypothesis test plugins
 	- use SVG device for graphics output
 	- provide context menu / other UI to export to different formats / edit
 	- PHP-backend:

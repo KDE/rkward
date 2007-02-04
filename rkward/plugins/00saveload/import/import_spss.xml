@@ -42,6 +42,7 @@
 					<option value="ISO8859-5" label="ISO8859-5 Latin/Cyrillic"/>
 					<option value="ISO8859-6" label="ISO8859-6 Latin/Arabic"/>
 					<option value="ISO8859-7" label="ISO8859-7 Latin/Greek"/>
+					<option value="MS-GREEK" label="MS-GREEK"/>
 					<option value="ISO8859-8" label="ISO8859-8 Latin/Hebrew"/>
 					<option value="ISO8859-9" label="ISO8859-9 Latin-5 Turkish"/>
 					<option value="ISO8859-10" label="ISO8859-10 Latin-6 Nordic"/>
