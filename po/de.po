@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-02-04 18:54+0100\n"
-"PO-Revision-Date: 2007-02-04 18:51+0100\n"
+"PO-Revision-Date: 2007-02-04 20:43+0100\n"
 "Last-Translator: SJR <stefan_roediger@gmx.de>\n"
 "Language-Team: German <rkward-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -171,8 +171,7 @@ msgid "Delete this row (%1)"
 msgstr "Lösche diese Zeile (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Kein Dateiname angegeben. Ihre Daten wurden NICHT gespeichert. Möchten Sie "
 "dennoch fortfahren?"
@@ -326,8 +325,7 @@ msgid "Remove object?"
 msgstr "Objekt entfernen?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "Wollen Sie das Objekt '%1' wirklich entfernen? Es gibt keine Möglichkeit es "
 "wieder herzustellen."
@@ -573,8 +571,7 @@ msgstr "Öffnen (Warten)"
 
 #: windows/rkcommandeditorwindow.cpp:128
 msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr ""
-"Das Dokument \"%1\" wurde verändert. Soll es dennoch gespeichert werden?"
+msgstr "Das Dokument \"%1\" wurde verändert. Soll es dennoch gespeichert werden?"
 
 #: windows/rkcommandeditorwindow.cpp:128
 msgid "File not saved"
@@ -881,7 +878,7 @@ msgstr "meine.daten"
 
 #: plugin/rkpluginsaveobject.cpp:41
 msgid "Save to:"
-msgstr ""
+msgstr "Speichere als:"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:41
 msgid "Which objects should be shown by default?"
@@ -1267,8 +1264,7 @@ msgstr "Synchronisations Befehle"
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr ""
-"Maximale Anzahl von Absätzen/Zeile die im Command Log angezeigt werden sollen"
+msgstr "Maximale Anzahl von Absätzen/Zeile die im Command Log angezeigt werden sollen"
 
 #: settings/rksettings.cpp:63
 msgid "Settings"
@@ -1320,8 +1316,7 @@ msgstr "Konfiguriere Repositories"
 
 #: dialogs/rkloadlibsdialog.cpp:205
 msgid "Please stand by while installing selected packages"
-msgstr ""
-"Bitte warten warten Sie während die gewählten Pakete installiert werden."
+msgstr "Bitte warten warten Sie während die gewählten Pakete installiert werden."
 
 #: dialogs/rkloadlibsdialog.cpp:205
 msgid "Installing packages"
@@ -1499,18 +1494,16 @@ msgid "Become root"
 msgstr "Werden sie root"
 
 #: dialogs/rkimportdialog.cpp:36
-#, fuzzy
 msgid "File format: "
-msgstr "Format"
+msgstr "Dateiformat"
 
 #: dialogs/rkimportdialog.cpp:45
 msgid "No plugins defined for context '%1'"
-msgstr ""
+msgstr "Für den Kontext '%1' wurde kein Plug-In definiert"
 
 #: dialogs/rkimportdialog.cpp:50
-#, fuzzy
 msgid "All Files"
-msgstr "*|Alle Dateien"
+msgstr "Alle Dateien"
 
 #: misc/xmlhelper.cpp:61
 msgid "Could not open file for reading"
@@ -1550,16 +1543,14 @@ msgstr "Illegaler Attributwert. Nur Dezimalzahlen sind erlaubt."
 
 #: misc/xmlhelper.cpp:219
 msgid "Illegal attribute value. Allowed values are 'true' or 'false', only."
-msgstr ""
-"Illegaler Attributwert. Nur die Werte 'wahr' oder 'falsch' sind zulässig."
+msgstr "Illegaler Attributwert. Nur die Werte 'wahr' oder 'falsch' sind zulässig."
 
 #: misc/xmlhelper.cpp:230
 msgid "XML-parsing '%1' "
 msgstr "XML-parsing '%1' "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>Es gab Fehler und / oder Warnungen! Betrachten Sie das Transkript "
 "unterhalb</b>"
@@ -1881,7 +1872,7 @@ msgstr "&Neu"
 #: rc.cpp:15
 #, no-c-format
 msgid "&Import"
-msgstr ""
+msgstr "&Import"
 
 #. i18n: file rkwardui.rc line 22
 #: rc.cpp:18
@@ -2043,7 +2034,7 @@ msgstr "Öffne R-Skriptdatei..."
 
 #: rkward.cpp:314
 msgid "Import Data"
-msgstr ""
+msgstr "Datenimport"
 
 #: rkward.cpp:317
 msgid "Open Workspace"
@@ -2083,7 +2074,7 @@ msgstr "Erzeuge ein neues leeres Datenset und öffne es zur Bearbeitung"
 
 #: rkward.cpp:342
 msgid "Import data from a variety of file formats"
-msgstr ""
+msgstr "Importiere Daten von verschiedenen Dateiformaten"
 
 #: rkward.cpp:343
 msgid "Opens an existing document"
@@ -2222,9 +2213,8 @@ msgid "R Console"
 msgstr "R Konsole"
 
 #: rkconsole.cpp:471
-#, fuzzy
 msgid "Syntax error\n"
-msgstr "Syntax Fehler.\n"
+msgstr "Syntaxfehler\n"
 
 #: rkconsole.cpp:683
 msgid "Interrupt running command"
@@ -2437,3 +2427,4 @@ msgstr "Zeige alle Umgebungen"
 #: robjectbrowser.cpp:216
 msgid "Show Hidden Objects"
 msgstr "Zeige versteckte Objekte"
+
