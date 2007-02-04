@@ -56,6 +56,7 @@ thanks ;-).
 
 <copyright>
 <year>2006</year>
+<year>2007</year>
 <holder>Thomas Friedrichsmeier &amp; the RKWard Team</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
@@ -70,8 +71,8 @@ Please respect the format of the date (DD/MM/YYYY) and of the version
 (V.MM.LL), it could be used by automation scripts.
 Do NOT change these in the translation. -->
 
-<date>20/04/2006</date>
-<releaseinfo>0.3.6</releaseinfo>
+<date>04/02/2007</date>
+<releaseinfo>0.4.6</releaseinfo>
 
 <!-- Abstract about this handbook -->
 
@@ -106,69 +107,15 @@ Please at least include KDE, the KDE package it is in, the name
 <title>Using &kapp;</title>
 
 <para>
-Documentation efforts have only just started. The most useful guide to getting started with &kapp; to this date is <ulink url="http://rkward.sourceforge.net/wiki/index.php?title=Getting_Started_Using_RKWard">Getting Started Section in the &kapp; wiki</ulink>.
+Most documentation is available from inside RKWard itself by selecting Help->Help on RKWard from the Menu, NOT in this document!
+</para>
+<para>
+A useful guide to getting started with &kapp; is <ulink url="http://rkward.sourceforge.net/wiki/index.php?title=Getting_Started_Using_RKWard">Getting Started Section in the &kapp; wiki</ulink>.
 </para>
 <para>
 Please go there for an introduction to &kapp;, and contact us, if you can help with creating user documentation.
 </para>
 
-</chapter>
-
-<chapter id="commands">
-<title>Command Reference</title>
-<para>
-TODO
-</para>
-<!-- (OPTIONAL, BUT RECOMMENDED) This chapter should list all of the
-application windows and their menubar and toolbar commands for easy reference.
-Also include any keys that have a special function but have no equivalent in the
-menus or toolbars. This may not be necessary for small apps or apps with no tool
-or menu bars. -->
-<!--
-<sect1 id="kapp-mainwindow">
-<title>The main RKward window</title>
-<para></para>
-
-<sect2>
-<title>The File Menu</title>
-<para>
-<variablelist>
-<varlistentry>
-<term><menuchoice>
-<shortcut>
-<keycombo><keycap>Ctrl</keycap><keycap>n</keycap></keycombo>
-</shortcut>
-<guimenu>File</guimenu>
-<guimenuitem>New</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Creates a new document</action></para></listitem>
-</varlistentry>
-<varlistentry>
-<term><menuchoice>
-<shortcut>
-<keycombo><keycap>Ctrl</keycap><keycap>s</keycap></keycombo>
-</shortcut>
-<guimenu>File</guimenu>
-<guimenuitem>Save</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Saves the document</action></para></listitem>
-</varlistentry>
-<varlistentry>
-<term><menuchoice>
-<shortcut>
-<keycombo><keycap>Ctrl</keycap><keycap>q</keycap></keycombo>
-</shortcut>
-<guimenu>File</guimenu>
-<guimenuitem>Quit</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Quits</action> &kapp;</para></listitem>
-</varlistentry>
-</variablelist>
-</para>
-
-</sect2>
-
-</sect1> -->
 </chapter>
 
 <chapter id="developers">

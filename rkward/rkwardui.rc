@@ -49,7 +49,6 @@
 	</Menu>
 
 	<Menu name="help"><text>&amp;Help</text>
-		<Action name="rkward_help"/>
 		<Action name="invoke_r_help"/>
 		<Action name="show_help_search"/>
 		<Merge/>

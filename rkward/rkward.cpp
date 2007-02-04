@@ -353,9 +353,9 @@ void RKWardMainWindow::initActions()
 void RKWardMainWindow::makeRKWardHelpMenu (QWidget *for_window, KActionCollection *ac) {
 	KAction *help_invoke_r_help = new KAction (i18n ("Help on R"), 0, 0, this, SLOT (invokeRHelp ()), ac, "invoke_r_help");
 	KAction *show_help_search = new KAction (i18n ("Search R Help"), 0, 0, this, SLOT (showHelpSearch ()), ac, "show_help_search");
-	KAction *show_rkward_help = new KAction (i18n ("Help on RKWard"), 0, 0, this, SLOT (showRKWardHelp ()), ac, "rkward_help");
+	KAction *show_rkward_help = KStdAction::helpContents (this, SLOT (showRKWardHelp ()), ac);
+	show_rkward_help->setText (i18n ("Help on RKWard"));
 
-	KStdAction::helpContents (this, SLOT (appHelpActivated ()), ac);
 	KStdAction::aboutApp (this, SLOT (showAboutApplication ()), ac);
 	KStdAction::whatsThis (for_window, SLOT (whatsThis ()), ac);
 	KStdAction::reportBug (this, SLOT (reportRKWardBug ()), ac);
