@@ -44,10 +44,10 @@ function printout () {
 	$xmaxvalue = getRK_val ("xmaxvalue");
 	if (($xminvalue != "") || ($xmaxvalue != "")) {
 		$xlim = ", xlim=c (";
-		if ($xminvalue == "") $xlim .= "min (" . $xvar . ")";
+		if (($xminvalue == "") && ($xvar != "")) $xlim .= "min (" . $xvar . ")";
 		else $xlim .= $xminvalue;
 		$xlim .= ", ";
-		if ($xmaxvalue == "") $xlim .= "max (" . $xvar . ")";
+		if (($xmaxvalue == "") && ($xvar != "")) $xlim .= "max (" . $xvar . ")";
 		else $xlim .= $xmaxvalue;
 		$xlim .= ")";
 	}
@@ -69,10 +69,10 @@ function printout () {
 	$ymaxvalue = getRK_val ("ymaxvalue");
 	if (($yminvalue != "") || ($ymaxvalue != "")) {
 		$ylim = ", ylim=c (";
-		if ($yminvalue == "") $ylim .= "min (" . $yvar . ")";
+		if (($yminvalue == "") && ($yvar != "")) $ylim .= "min (" . $yvar . ")";
 		else $ylim .= $yminvalue;
 		$ylim .= ", ";
-		if ($ymaxvalue == "") $ylim .= "max (" . $yvar . ")";
+		if (($ymaxvalue == "") && ($yvar != "")) $ylim .= "max (" . $yvar . ")";
 		else $ylim .= $ymaxvalue;
 		$ylim .= ")";
 	}
