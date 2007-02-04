@@ -2,7 +2,7 @@
                           rthread  -  description
                              -------------------
     begin                : Mon Aug 2 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -105,9 +105,11 @@ void RThread::run () {
 			RCommand *command = RCommandStack::regular_stack->pop ();
 			
 			if (command) {
+				// store type. Inside doCommand, command may be deleted (if the other thread gets called)!
+				bool check_list = (command->type () & (RCommand::User | RCommand::ObjectListUpdate));
 				// mutex will be unlocked inside
 				doCommand (command);
-				checkObjectUpdatesNeeded (command->type () & (RCommand::User | RCommand::ObjectListUpdate));
+				checkObjectUpdatesNeeded (check_list);
 				processX11Events ();
 			}
 		
