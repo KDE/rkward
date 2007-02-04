@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-29 14:52+0100\n"
-"PO-Revision-Date: 2007-02-02 09:35+0100\n"
+"PO-Revision-Date: 2007-02-04 18:51+0100\n"
 "Last-Translator: SJR <stefan_roediger@gmx.de>\n"
 "Language-Team: German <rkward-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -289,7 +289,7 @@ msgstr "Fehler beim Laden des Workspace "
 msgid ""
 "Waiting for remaining R commands to finish. To quit immediately, press "
 "Cancel (WARNING: This may result in loss of data)"
-msgstr ""
+msgstr "Bitte warten bis noch laufende R-Kommandos beendet sind. Um jetzt zu beenden bitte Cancel wählen (Warnung: Das könnte zu Datenverlußt führen)"
 
 #: agents/rkquitagent.cpp:41
 msgid "Waiting for R to finish"
@@ -438,12 +438,11 @@ msgid "Save Output as HTML"
 msgstr "Speichere Ausgabe als HTML"
 
 #: windows/rkhtmlwindow.cpp:328
-#, fuzzy
 msgid ""
 "Do you really want to flush the output? It will not be possible to restore "
 "it."
 msgstr ""
-"Möchten Sie die Ausgabe wirklich leeren? Eine Wiederherstellung ist "
+"Möchten Sie die Ausgabe wirklich leeren? Eine Wiederherstellung wird"
 "unmöglich sein."
 
 #: windows/rkhtmlwindow.cpp:328
@@ -1250,9 +1249,8 @@ msgid "Application commands"
 msgstr "Anwendungsbefehle"
 
 #: settings/rksettingsmodulewatch.cpp:143
-#, fuzzy
 msgid "Synchronization commands"
-msgstr "Synchronisation Befehle"
+msgstr "Synchronisations Befehle"
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
@@ -1854,14 +1852,12 @@ msgstr ""
 "debug.h)"
 
 #: main.cpp:83
-#, fuzzy
 msgid "Project leader / main developer"
-msgstr "Projekt Leiter"
+msgstr "Projekt Leiter / Hauptentwickler"
 
 #: main.cpp:84
-#, fuzzy
 msgid "C++ coder since 0.2.9"
-msgstr "Hauptentwickler seit 0.2.9"
+msgstr "C++ Entwickler seit 0.2.9"
 
 #: main.cpp:86
 msgid "Several helpful comments and discussions"
@@ -2235,13 +2231,12 @@ msgid " - Waiting for results from R..."
 msgstr " - Warte auf Ergebnisse von R..."
 
 #: robjectviewer.cpp:75
-#, fuzzy
 msgid ""
 "\n"
 "Some errors occurred: "
 msgstr ""
 "\n"
-"Einige Fehler sind aufgetreten:"
+"Einige Fehler sind aufgetreten: "
 
 #: khelpdlg.cpp:48
 msgid "Find:"
