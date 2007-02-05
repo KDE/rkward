@@ -23,11 +23,11 @@
 							<spinbox type="integer" min = "0" id="max" initial="24" label="Upper quantile" />
 						</frame>
 						<frame label="Parameters">
-							<spinbox max_precision="2" default_precision="0" type="real" id="size" min="0.01" initial="12" label="Target number of successful trials" />
+							<spinbox default_precision="0" type="real" id="size" min="0.01" initial="12" label="Target number of successful trials" />
 							<row>
 							<column>
-							<spinbox max_precision="2" default_precision="2" type="real" id="prob" initial="0.75" min="0" max="1" label="Probability of success on each trial" />
-							<spinbox max_precision="2" default_precision="2" type="real" id="mu" initial="4" min="0.01" label="Mean (alternate parameter, mu)" />
+							<spinbox default_precision="2" type="real" id="prob" initial="0.75" min="0" max="1" label="Probability of success on each trial" />
+							<spinbox default_precision="2" type="real" id="mu" initial="4" min="0.01" label="Mean (alternate parameter, mu)" />
 						</column>
 						<column>
 						<radio id="param" label="Choose the type of Parameterization" >

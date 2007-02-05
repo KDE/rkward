@@ -23,8 +23,8 @@
 						</row>
 							<row>
 						<frame label="Parameters">
-								<spinbox max_precision="2" default_precision="2" type="real" min="0.01" id="df" initial="4.0" label="Degrees of freedom" />
-								<spinbox max_precision="2" default_precision="2" type="real" min="0" id="ncp" initial="0" label="Non-centrality parameter" />
+								<spinbox default_precision="2" type="real" min="0.01" id="df" initial="4.0" label="Degrees of freedom" />
+								<spinbox default_precision="2" type="real" min="0" id="ncp" initial="0" label="Non-centrality parameter" />
 						</frame>
 							</row>
 					</column>

@@ -19,14 +19,14 @@
 						</row>
 						<row>
 							<frame label="Range" >
-								<spinbox max_precision="2" default_precision="2" type="real" id="min" initial="-1" min="-1" label="Lower quantile" />
-								<spinbox max_precision="2" default_precision="2" type="real" id="max" initial="8" label="Upper quantile" />
+								<spinbox default_precision="2" type="real" id="min" initial="-1" min="-1" label="Lower quantile" />
+								<spinbox default_precision="2" type="real" id="max" initial="8" label="Upper quantile" />
 							</frame>
 						</row>
 						<row>
 							<frame label="Parameters">
 							<spinbox type="integer" id="nmeans" min="1" initial="6" label="Sample size for range (same for each group)" />
-							<spinbox max_precision="2" default_precision="2" type="real" id="df" initial="5" min="0" label="Degrees of freedom for s" />
+							<spinbox default_precision="2" type="real" id="df" initial="5" min="0" label="Degrees of freedom for s" />
 							<spinbox type="integer" id="nranges" min="1" initial="1" label="Number of groups whose maximum range is considered" />
 						</frame>
 						</row>

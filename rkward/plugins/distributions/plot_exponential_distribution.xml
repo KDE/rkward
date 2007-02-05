@@ -17,13 +17,13 @@
 						</row>
 						<row>
 							<frame label="Range" >
-								<spinbox max_precision="2" default_precision="2" type="real" id="min" initial="0" min="0" label="Lower quantile" />
-								<spinbox max_precision="2" default_precision="2" type="real" id="max" initial="10" label="Upper quantile" />
+								<spinbox default_precision="2" type="real" id="min" initial="0" min="0" label="Lower quantile" />
+								<spinbox default_precision="2" type="real" id="max" initial="10" label="Upper quantile" />
 							</frame>
 						</row>
 						<row>
 							<frame label="Parameters">
-							<spinbox max_precision="2" default_precision="2" type="real" id="rate" initial="1" min="0.01" label="Rate" />
+							<spinbox default_precision="2" type="real" id="rate" initial="1" min="0.01" label="Rate" />
 						</frame>
 						</row>
 					</column>
