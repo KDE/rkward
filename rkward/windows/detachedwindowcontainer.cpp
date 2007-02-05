@@ -2,7 +2,7 @@
                           detachedwindowcontainer  -  description
                              -------------------
     begin                : Wed Oct 21 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -28,7 +28,7 @@
 #include "../rkglobals.h"
 #include "../debug.h"
 
-DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture) : KParts::MainWindow  (RKWardMainWindow::getMain ()) {
+DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture) : KParts::MainWindow  () {
 	RK_TRACE (APP);
 
 	setHelpMenuEnabled (false);
@@ -88,12 +88,11 @@ void DetachedWindowContainer::closeEvent (QCloseEvent *e) {
 	RK_TRACE (APP);
 
 	RKMDIWindow *window = static_cast<RKMDIWindow *> (centralWidget ());
-	if (window->close ()) {
+	if (window->close (true)) {
 		e->accept ();
 	} else {
 		e->ignore ();
 	}
 }
-
 
 #include "detachedwindowcontainer.moc"

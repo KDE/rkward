@@ -36,7 +36,6 @@ public:
 	explicit DetachedWindowContainer (RKMDIWindow *widget_to_capture);
 /** destructor. Usually you don't call this explicitly, but rather delete/close the child view. The DetachedWindowContainer will then self destruct via viewDestroyed () */
 	~DetachedWindowContainer ();
-
 public slots:
 /** self-destruct, when child view is destroyed */
 	void viewDestroyed (QObject *view);

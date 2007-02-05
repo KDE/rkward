@@ -75,6 +75,7 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 
 void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
 	RK_TRACE (APP);
+	if (!window) return;
 	RK_ASSERT (windows.find (window) != windows.end ());		// Can't detach a window that is not registered
 
 	window->prepareToBeDetached ();
@@ -133,20 +134,23 @@ bool RKWorkplace::openScriptEditor (const KURL &url, bool use_r_highlighting, bo
 void RKWorkplace::openHelpWindow (const KURL &url, bool only_once) {
 	RK_TRACE (APP);
 
-	RKHelpWindow *hw = new RKHelpWindow (view ());
-	if (!url.isEmpty ()) {
-		if (only_once) {
-			RKWorkplaceObjectList help_windows = getObjectList (RKMDIWindow::HelpWindow, RKMDIWindow::AnyState);
-			for (RKWorkplaceObjectList::const_iterator it = help_windows.constBegin (); it != help_windows.constEnd (); ++it) {
-				if (static_cast<RKHelpWindow *> (*it)->url ().equals (url, true)) {
-					(*it)->activate ();
-					return;
-				}
-			}
-		}
-		hw->openURL (url);
+	if (url.isEmpty ()) {
+		RK_ASSERT (false);
+		return;
 	}
 
+	if (only_once) {
+		RKWorkplaceObjectList help_windows = getObjectList (RKMDIWindow::HelpWindow, RKMDIWindow::AnyState);
+		for (RKWorkplaceObjectList::const_iterator it = help_windows.constBegin (); it != help_windows.constEnd (); ++it) {
+			if (static_cast<RKHelpWindow *> (*it)->url ().equals (url, true)) {
+				(*it)->activate ();
+				return;
+			}
+		}
+	}
+
+	RKHelpWindow *hw = new RKHelpWindow (view ());
+	hw->openURL (url);
 	addWindow (hw);
 }
 

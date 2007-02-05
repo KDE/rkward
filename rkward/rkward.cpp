@@ -528,7 +528,7 @@ bool RKWardMainWindow::doQueryQuit () {
 
 	RKWorkplace::RKWorkplaceObjectList map = RKWorkplace::mainWorkplace ()->getObjectList ();
 	for (RKWorkplace::RKWorkplaceObjectList::const_iterator it = map.constBegin (); it != map.constEnd (); ++it){
-		if (!(*it)->close ()) {
+		if (!(*it)->close (true)) {
 			// If a child refuses to close, we return false.
 			slotSetStatusReady ();
 			return false;
@@ -589,7 +589,6 @@ void RKWardMainWindow::showRKWardHelp () {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->openHelpWindow ("rkward://page/rkward_welcome", true);
-	topLevelWidget ()->raise ();
 }
 
 void RKWardMainWindow::slotNewDataFrame () {
