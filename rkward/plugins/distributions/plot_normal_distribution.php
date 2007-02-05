@@ -41,6 +41,7 @@ function doPrintout ($final) {
 	if (getRK_val ("log") == "1") $log_label="logarithmic";
 	else $log_label="normal";
 	$n = getRK_val ("n");
+	$mean = getRK_val ("mean");
 	$min = getRK_val ("min");
 	$max = getRK_val ("max");
 	$sd = getRK_val ("sd");
