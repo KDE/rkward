@@ -666,6 +666,7 @@ void RKConsole::runSelection () {
 
 	QString command = cleanedSelection ();
 	pipeUserCommand (new RCommand (command, RCommand::User));
+	setFocus ();
 }
 
 void RKConsole::showContextHelp () {
