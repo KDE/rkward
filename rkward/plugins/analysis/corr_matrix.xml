@@ -1,7 +1,7 @@
 <!DOCTYPE rkplugin>
 
 <document>
-	<code file="code.php"/>
+	<code file="corr_matrix.php"/>
 	
 	<dialog label="Correlation matrix">
 		<tabbook>
