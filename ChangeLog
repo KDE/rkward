@@ -1,7 +1,9 @@
+- fix several small problems with detached windows
+- fix a problem with keeping the list of objects up to date
 - improvements to spinbox: step size is adjusted dynamically, and no arbitrary limits in real mode
 - fixed problem with specifying y axis limits in several plugins
 - simplified CSV import plugin
-- new plugin: import SPSS files								TODO: document
+- new plugin: import SPSS files
 - new documentation pages: console
 - improvements to distribution plot plugins
 - new plugins: distribution plots 							TODO: list them
