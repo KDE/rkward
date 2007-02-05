@@ -2,16 +2,17 @@
 
 <document>
 	<code file="corr_matrix.php"/>
+	<help file="corr_matrix.rkh"/>
 
 	<dialog label="Correlation matrix">
 		<tabbook>
-			<tab label="variables">
+			<tab id="tab_variables" label="Variables">
 				<row>
 					<varselector id="vars"/>
 					<varslot type="numeric" min_vars="2" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
 				</row>
 			</tab>
-			<tab label="options">
+			<tab id="tab_options" label="Options">
 				<checkbox id="do_p" label="Calculate p values" checked="true"/>
 				<radio id="method" label="Method">
 					<option value="pearson" label="Pearson"/>
