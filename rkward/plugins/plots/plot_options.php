@@ -85,7 +85,12 @@ function printout () {
 	if (empty ($type)) $type = getRK_val ("default_pointtype");
 	if (!empty ($type)) $type = ", type=\"" . $type . "\"";
 
-	///Begin of Additions by Stefan Roediger
+	//color of points / lines
+	$col = getRK_val ("pointcolor");
+	if (empty ($col)) $col = getRK_val ("default_pointcolor");
+	if (!empty ($col)) $col = ", col=\"" . $col . "\"";
+	
+
 	//add a main (on top) to the plot
 	$main = getRK_val ("main");
 	if (($main != "") && (getRK_val ("mainisexp") != "1")) {
@@ -104,10 +109,9 @@ function printout () {
 	$asp = getRK_val ("asp");
 	if ($asp != 0) $asp = ", asp=" . $asp;
 	else $asp = "";
-	///End of Additions by Stefan Roediger
 
 	// make option string
-	$options = $type . $xaxt . $yaxt . $log . $xlim . $ylim . $xlab . $ylab . $main . $sub . $asp;
+	$options = $type . $col . $xaxt . $yaxt . $log . $xlim . $ylim . $xlab . $ylab . $main . $sub . $asp;
 
 	echo ($options);
 }
