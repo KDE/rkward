@@ -1,6 +1,7 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="plot_options.php" />
+	<help file="plot_options.rkh" />
 	<logic>
 		<external id="xvar" default="" />
 		<external id="yvar" default="" />
@@ -9,7 +10,7 @@
 		<external id="allow_aspect" default="false" />
 		<external id="allow_xlim" default="true" />
 		<external id="allow_ylim" default="true" />
-		
+
 		<convert id="no_xvar" mode="equals" sources="xvar" standard="" />
 		<convert id="no_yvar" mode="equals" sources="yvar" standard="" />
 
@@ -41,7 +42,7 @@
 
 		<convert id="ylabfilled" mode="notequals" sources="ylab.text" standard="" />
 		<connect client="ylabisexp.enabled" governor="ylabfilled" />
-		
+
 		<connect client="xlog.visible" governor="allow_log"/>
 		<connect client="ylog.visible" governor="allow_log"/>
 		<connect client="aspectratio.visible" governor="allow_aspect"/>
@@ -49,7 +50,7 @@
 	</logic>
 	<dialog label="Default plot options" >
 		<tabbook>
-			<tab label="Title">
+			<tab  id="titlepage" label="Title">
 				<column>
 					<frame label="Main title">
 						<input id="main" label="Main title (on top). Leave empty for default title" />
@@ -62,7 +63,7 @@
 					<stretch/>
 				</column>
 			</tab>
-			<tab label="Axes" >
+			<tab id="axespage" label="Axes" >
 				<column>
 					<frame id="axistypes" label="Axis types">
 						<row>
