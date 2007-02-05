@@ -1,0 +1,32 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Distribution function plot for the Studentized Range (Tukey) distribution.
+	</summary>
+
+	<usage>
+Choose appropriate values for the various parameters of the distribution and select the type of function. The "Submit" button will export the plot to the "Output" window. To dynamically visualise the plot check the "Preview" box. The default values should produce a plot of the "standard" distribution.
+	</usage>
+
+	<settings>
+		<setting id="function">Only the distribution function can be plotted for the Tukey distribution.</setting>
+		<setting id="n">Number of observations (points) for constructing the plot (n).</setting>
+		<setting id="min">Smallest value at which the function is to be plotted.</setting>
+		<setting id="max">Largest value at which the function is to be plotted. So, the function will be evaluated at 'n' equally spaced points between the lower quantile and the upper quantile (inclusive of end points).</setting>
+		<setting id="nmeans">See R reference on Tukey distribution.</setting>
+		<setting id="df">See R reference on Tukey distribution.</setting>
+		<setting id="nranges">See R reference on Tukey distribution.</setting>
+		<setting id="log">See the description given on Plot Beta distribution help page.</setting>
+		<setting id="lower">See the description given on Plot Beta  distribution help page.</setting>
+		<setting id="preview">See the description given on Plot Beta  distribution help page.</setting>
+		<setting id="plotoptions">Various plotting parameter settings for the plot. See the help page of "Plot Options" for more details.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/Tukey"/></li>
+			<li><link href="rkward://component/plot_beta_distribution"/></li>
+			<li><link href="rkward://component/plot_options"/></li>
+			<li><link href="rkward://rhelp/curve"/></li>
+		</ul>
+	</related>
+</document>

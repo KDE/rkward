@@ -1,0 +1,35 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Density and distribution function plots for the Beta distribution.
+	</summary>
+
+	<usage>
+Choose appropriate values for the various parameters of the distribution and select the type of function. The "Submit" button will export the plot to the "Output" window. To dynamically visualise the plot check the "Preview" box. The default values should produce a plot of the "standard" distribution.
+	</usage>
+
+	<settings>
+		<setting id="function">
+			<li> Density Function, or </li>
+			<li> Distribution Function </li>
+		</setting>
+		<setting id="n">Number of observations (points) for constructing the plot (n).</setting>
+		<setting id="min">Smallest value at which the function is to be plotted.</setting>
+		<setting id="max">Largest value at which the function is to be plotted. So, the function will be evaluated at 'n' equally spaced points between the lower quantile and the upper quantile (inclusive of end points).</setting>
+		<setting id="a"> shape1 paramter of the Beta distributoin.</setting>
+		<setting id="b"> shape2 paramter of the Beta distributoin.</setting>
+		<setting id="ncp">Non-centrality paramter of the Beta distribution.</setting>
+		<setting id="log">Check this box if log of the function values are to be plotted.</setting>
+		<setting id="lower">This option is valid only for plotting the distribution function. Uncheck this box if the upper tail of the distribution function (P[X > x]) is to be plotted.</setting>
+		<setting id="preview">Check this box for previewing the function plot. A new graphics window will pop up and it will be dynamically updated based on the choice of parameters. It may take a while for the window to show up. Sometimes, only an empty graphics device may get displayed, in which case, close the device (dev.off() or may be even graphics.off()), uncheck the box, wait for a while and try again. If it still persists, use only the "Submit" button to view the exported plot in the Output window.</setting>
+		<setting id="plotoptions">Various plotting parameter settings for the plot. See the help page of "Plot Options" for more details.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/Beta"/></li>
+			<li><link href="rkward://component/plot_beta_distribution"/></li>
+			<li><link href="rkward://component/plot_options"/></li>
+			<li><link href="rkward://rhelp/curve"/></li>
+		</ul>
+	</related>
+</document>

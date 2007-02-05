@@ -1,0 +1,34 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Density and distribution function plots for the Normal distribution.
+	</summary>
+
+	<usage>
+Choose appropriate values for the various parameters of the distribution and select the type of function. The "Submit" button will export the plot to the "Output" window. To dynamically visualise the plot check the "Preview" box. The default values should produce a plot of the "standard" distribution.
+	</usage>
+
+	<settings>
+		<setting id="function">
+			<li> Density Function, or </li>
+			<li> Distribution Function </li>
+		</setting>
+		<setting id="n">Number of observations (points) for constructing the plot (n).</setting>
+		<setting id="min">Smallest value at which the function is to be plotted.</setting>
+		<setting id="max">Largest value at which the function is to be plotted. So, the function will be evaluated at 'n' equally spaced points between the lower quantile and the upper quantile (inclusive of end points).</setting>
+		<setting id="mean">See R reference on Normal distribution.</setting>
+		<setting id="sd">See R reference on Normal distribution.</setting>
+		<setting id="log">See the description given on Plot Beta distribution help page.</setting>
+		<setting id="lower">See the description given on Plot Beta  distribution help page.</setting>
+		<setting id="preview">See the description given on Plot Beta  distribution help page.</setting>
+		<setting id="plotoptions">Various plotting parameter settings for the plot. See the help page of "Plot Options" for more details.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/Normal"/></li>
+			<li><link href="rkward://component/plot_beta_distribution"/></li>
+			<li><link href="rkward://component/plot_options"/></li>
+			<li><link href="rkward://rhelp/curve"/></li>
+		</ul>
+	</related>
+</document>
