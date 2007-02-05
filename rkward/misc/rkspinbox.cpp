@@ -64,9 +64,14 @@ void RKSpinBox::updateDisplay () {
 			int change = value ();
 			setValue (0);
 
-			int power = (int) log10 (real_value) - default_precision;
-			if (power < (-default_precision)) power = -default_precision;
-			if (power > 10) power = 10;
+			int power;
+			if (real_value != 0) {
+				power = (int) log10 (real_value) - default_precision;
+				if (power < (-default_precision)) power = -default_precision;
+				if (power > 10) power = 10;
+			} else {
+				power = -default_precision;
+			}
 			double step = pow (10, power);
 
 			real_value += change * step;
@@ -80,7 +85,9 @@ void RKSpinBox::updateDisplay () {
 	} else {
 		QSpinBox::updateDisplay ();
 
-		int power = (int) log10 (value ());
+		int power;
+		if (value () != 0) power = (int) log10 (value ());
+		else power = 1;
 		int step = (int) pow (10, power-1);
 		if (step < 1) step = 1;
 		setSteps (step, 10*step);
