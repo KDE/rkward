@@ -2,7 +2,7 @@
 <!--This is the "Cauchy  probabilities" plugin-->
 
 <document>
-<code file="cauchy _probabilities.php" />
+<code file="cauchy_probabilities.php" />
 <dialog label="Cauchy probabilities" >
     <tabbook>
      <tab label="Cauchy probabilities" >
