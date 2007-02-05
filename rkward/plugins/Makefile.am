@@ -241,8 +241,8 @@ dist_pluginsXanalysisXansariUbradley_DATA = \
 
 pluginsXanalysisXcorrUmatrixdir = $(kde_datadir)/rkward/analysis/corr_matrix
 dist_pluginsXanalysisXcorrUmatrix_DATA = \
-	analysis/corr_matrix/code.php \
-	analysis/corr_matrix/description.xml
+	analysis/corr_matrix.php \
+	analysis/corr_matrix.xml
 
 pluginsXanalysisXwilcoxondir = $(kde_datadir)/rkward/analysis/wilcoxon
 dist_pluginsXanalysisXwilcoxon_DATA = \
