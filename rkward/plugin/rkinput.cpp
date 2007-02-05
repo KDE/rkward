@@ -51,14 +51,15 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 	int margin = textedit->height () - textedit->visibleHeight () + textedit->fontMetrics ().descent () + 2;
 	if (size == 0) {
 		textedit->setFixedSize (100, lheight + margin);
-		textedit->setHScrollBarMode (QScrollView::AlwaysOff);
-		textedit->setVScrollBarMode (QScrollView::AlwaysOff);
 	} else if (size == 1) {
 		textedit->setFixedSize (250, lheight + margin);
-		textedit->setHScrollBarMode (QScrollView::AlwaysOff);
-		textedit->setVScrollBarMode (QScrollView::AlwaysOff);
 	} else if (size == 2) {
 		textedit->setMinimumSize (250, lheight * 4 + margin);
+	}
+	if (size < 2) {
+		textedit->setHScrollBarMode (QScrollView::AlwaysOff);
+		textedit->setVScrollBarMode (QScrollView::AlwaysOff);
+		textedit->setTabChangesFocus (true);
 	}
 	vbox->addWidget (textedit);
 	connect (textedit, SIGNAL (textChanged ()), SLOT (textChanged ()));
