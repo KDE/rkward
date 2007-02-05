@@ -39,14 +39,15 @@
 					<column>
 						<checkbox value_unchecked="0" value="1" checked="false" id="density" label="Density" />
 						<input id="col_density" initial="black" label="Color of Density"/>
-						<radio id="bw" label="Bandwidth">
+						<dropdown id="bw" label="Bandwidth">
 							<option value="nrd0" label="nrd0"/>
 							<option value="nrd" label="nrd"/>
 							<option value="ucv" label="ucv"/>
 							<option value="bcv" label="bcv"/>
 							<option value="SJ-ste" label="SJ-ste"/>
 							<option value="SJ-dpi" label="SJ-dpi"/>
-						</radio>		
+						</dropdown>
+						<stretch/>
 						<spinbox type="real" id="adjust" label="Adjust Bandwidth" initial="1"/>
 					</column>
 					<column>

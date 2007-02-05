@@ -19,14 +19,14 @@
 					<column>
 						<checkbox value_unchecked="0" value="1" checked="true" id="dodensity_plot" label="Highest density regions" />
 						<checkbox value_unchecked="0" value="1" checked="false" id="dohdrcde_plot" label="Highest density regions" />
-						<radio id="bw" label="Bandwidth">
+						<dropdown id="bw" label="Bandwidth">
 							<option value="nrd0" label="nrd0"/>
 							<option value="nrd" label="nrd"/>
 							<option value="ucv" label="ucv"/>
 							<option value="bcv" label="bcv"/>
 							<option value="SJ-ste" label="SJ-ste"/>
 							<option value="SJ-dpi" label="SJ-dpi"/>
-						</radio>		
+						</dropdown>
 						<spinbox type="real" id="adjust" label="Adjust Bandwidth" initial="1"/>
 					</column>
 					<column>
@@ -44,7 +44,7 @@
 							</row>
 							<stretch/>
 						</column>
-						<radio id="kern" label="Smoothing Kernel">
+						<dropdown id="kern" label="Smoothing Kernel">
 							<option value="gaussian" label="gaussian (default)"/>
 							<option value="rectangular" label="rectangular"/>
 							<option value="triangular" label="triangular"/>
@@ -52,8 +52,8 @@
 							<option value="biweight" label="biweight"/>
 							<option value="cosine" label="cosine"/>
 							<option value="optcosine" label="optcosine"/>
-						</radio>
-						<stretch/>
+						</dropdown>
+					<stretch/>
 					</column>
 					<column>
 						<frame label="Rug">
