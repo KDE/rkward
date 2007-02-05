@@ -41,9 +41,9 @@ function doPrintout ($final) {
 	if (getRK_val ("log") == "1") $log_label="logarithmic";
 	else $log_label="normal";
 	$n = getRK_val ("n");
-	$mean = getRK_val ("mean");
 	$min = getRK_val ("min");
 	$max = getRK_val ("max");
+	$mean = getRK_val ("mean");
 	$sd = getRK_val ("sd");
 
 	if ($final) { ?>
@@ -52,7 +52,7 @@ rk.header ("Normal <? echo ($label); ?> function", list ("Number of Observations
 rk.graph.on ()
 <? }
 ?>
-try (plot (function (x) <? echo ($fun); ?> (x, mean = <? echo ($mean); ?>, sd = <? echo ($sd); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?>))
+try (curve (<? echo ($fun); ?> (x, mean = <? echo ($mean); ?>, sd = <? echo ($sd); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?><? getRK ("plotoptions.code.printout"); ?>))
 
 <?	if ($final) { ?>
 rk.graph.off ()

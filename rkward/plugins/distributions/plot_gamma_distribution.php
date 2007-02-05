@@ -53,7 +53,7 @@ rk.header ("Gamma <? echo ($label); ?> function", list ("Number of Observations"
 rk.graph.on ()
 <? }
 ?>
-try (plot (function (x) <? echo ($fun); ?> (x, shape = <? echo ($shape); ?>, rate = <? echo ($rate); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?>))
+try (curve (<? echo ($fun); ?> (x, shape = <? echo ($shape); ?>, rate = <? echo ($rate); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?><? getRK ("plotoptions.code.printout"); ?>))
 
 <?	if ($final) { ?>
 rk.graph.off ()

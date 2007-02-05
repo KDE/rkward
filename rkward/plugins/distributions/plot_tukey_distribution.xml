@@ -1,23 +1,31 @@
 <!DOCTYPE rkplugin>
 <!--This is the simple "Plot tukey probabilities" plugin--><document>
 	<code file="plot_tukey_distribution.php" />
+	<help file="plot_tukey_distribution.rkh" />
+	<logic>
+		<convert id="disablefunction" mode="range" sources="n.int" max="0" />
+		<connect client="function.enabled" governor="disablefunction" />
+		<convert id="dodist" mode="equals" sources="function.string" standard="ptukey" />
+		<connect client="lower.enabled" governor="dodist" />
+		<set id="plotoptions.allow_log" to="false"/>
+	</logic>
 	<dialog label="Plot Studentized Range (Tukey) probabilities" >
 		<tabbook>
 			<tab label="Plot Studentized Range (Tukey) probabilities" >
 				<row>
 					<column>
 						<row>
-							<spinbox type="integer" id="n" min="2" initial="100" label="Number of Observations" />
+							<spinbox type="integer" id="n" min="2" initial="101" label="Number of Observations" />
 						</row>
 						<row>
 							<frame label="Range" >
-								<spinbox max_precision="2" default_precision="2" type="real" id="min" initial="0" min="0" label="Lower quantile" />
-								<spinbox max_precision="2" default_precision="2" type="real" id="max" initial="4" label="Upper quantile" />
+								<spinbox max_precision="2" default_precision="2" type="real" id="min" initial="-1" min="-1" label="Lower quantile" />
+								<spinbox max_precision="2" default_precision="2" type="real" id="max" initial="8" label="Upper quantile" />
 							</frame>
 						</row>
 						<row>
 							<frame label="Parameters">
-							<spinbox type="integer" id="nmeans" min="1" initial="30" label="Sample size for range (same for each group)" />
+							<spinbox type="integer" id="nmeans" min="1" initial="6" label="Sample size for range (same for each group)" />
 							<spinbox max_precision="2" default_precision="2" type="real" id="df" initial="5" min="0" label="Degrees of freedom for s" />
 							<spinbox type="integer" id="nranges" min="1" initial="1" label="Number of groups whose maximum range is considered" />
 						</frame>
@@ -28,19 +36,15 @@
 							<option value="dtukey" label="Plot density function" />
 							<option value="ptukey" label="Plot distribution" checked="true"/>
 						</radio>
+						<text>Only the distribution function can be plotted for the Tukey distribution.</text>
 						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
-						<preview id="preview"/>
+						<preview id="preview" label="Preview"/>
+						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 					</column>
 				</row>
 			</tab>
 		</tabbook>
 	</dialog>
-	<logic>
-		<convert id="disablefunction" mode="range" sources="n.int" max="0" />
-		<connect client="function.enabled" governor="disablefunction" />
-		<convert id="dodist" mode="equals" sources="function.string" standard="ptukey" />
-		<connect client="lower.enabled" governor="dodist" />
-	</logic>
 </document>

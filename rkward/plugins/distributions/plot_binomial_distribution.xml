@@ -2,6 +2,13 @@
 <!--This is the simple "Plot binomial probabilities" plugin-->
 <document>
 	<code file="plot_binomial_distribution.php" />
+	<help file="plot_binomial_distribution.rkh" />
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="pbinom" />
+		<connect client="lower.enabled" governor="dodist" />
+		<set id="plotoptions.allow_log" to="false"/>
+		<set id="plotoptions.pointtype.string" to="p"/>
+	</logic>
 	<dialog label="Plot binomial probabilities" >
 		<tabbook>
 			<tab label="Plot binomial probabilities" >
@@ -24,14 +31,11 @@
 						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
-						<preview id="preview"/>
+						<preview id="preview" label="Preview"/>
+						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 					</column>
 				</row>
 			</tab>
 		</tabbook>
 	</dialog>
-	<logic>
-		<convert id="dodist" mode="equals" sources="function.string" standard="pbinom" />
-		<connect client="lower.enabled" governor="dodist" />
-	</logic>
 </document>

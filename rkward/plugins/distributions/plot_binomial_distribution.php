@@ -43,9 +43,11 @@ function doPrintout ($final) {
 	$size = getRK_val ("size");
 	$prob = getRK_val ("prob");
 	$max = getRK_val ("max");
-
 	if (getRK_val ("log") == "1") $log_label="logarithmic";
 	else $log_label="normal";
+// 	$type = getRK_val ("plotoptions.pointtype.string");
+	$type_tag = "";
+// 	if ($type == "")  $type_tag = ", type=\"p\"";
 
 	if ($final) { ?>
 rk.header ("Binomial <? echo ($label); ?> function", list ("Lower quantile", "<? echo ($min); ?>", "Upper quantile", "<? echo ($max); ?>", "Number of trials", "<? echo ($size); ?>", "Probability of success on each trial", "<? echo ($prob); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
@@ -53,7 +55,7 @@ rk.header ("Binomial <? echo ($label); ?> function", list ("Lower quantile", "<?
 rk.graph.on ()
 <? }
 ?>
-try (plot (function (x) <? echo ($fun); ?> (x, size = <? echo ($size); ?>, prob=<? echo ($prob); ?><? echo ($log_option); ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($max - $min + 1); ?>, type="p"))
+try (curve (<? echo ($fun); ?> (x, size = <? echo ($size); ?>, prob=<? echo ($prob); ?><? echo ($log_option); ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($max - $min + 1); ?><? getRK ("plotoptions.code.printout"); ?><? echo ($type_tag); ?>))
 
 <?	if ($final) { ?>
 rk.graph.off ()

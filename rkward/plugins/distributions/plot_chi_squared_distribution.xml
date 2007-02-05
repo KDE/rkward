@@ -1,6 +1,12 @@
 <!DOCTYPE rkplugin>
 <!--This is the simple "Plot Chi-squared probabilities" plugin--><document>
 	<code file="plot_chi_squared_distribution.php" />
+	<help file="plot_chi_squared_distribution.rkh" />
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="pchisq" />
+		<connect client="lower.enabled" governor="dodist" />
+		<set id="plotoptions.allow_log" to="false"/>
+	</logic>
 	<dialog label="Plot Chi-squared probabilities" >
 		<tabbook>
 			<tab label="Plot Chi-squared probabilities" >
@@ -11,8 +17,8 @@
 						</row>
 						<row>
 							<frame label="Range" >
-								<spinbox default_precision="4" type="real" id="min" initial="0.299" label="Minimum" />
-								<spinbox default_precision="4" type="real" id="max" initial="24.103" label="Maximum" />
+								<spinbox default_precision="4" type="real" id="min" initial="0.299" label="Lower quantile" />
+								<spinbox default_precision="4" type="real" id="max" initial="24.103" label="Upper quantile" />
 							</frame>
 						</row>
 							<row>
@@ -30,14 +36,11 @@
 						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
-						<preview id="preview"/>
+						<preview id="preview" label="Preview"/>
+						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 					</column>
 				</row>
 			</tab>
 		</tabbook>
 	</dialog>
-	<logic>
-		<convert id="dodist" mode="equals" sources="function.string" standard="pchisq" />
-		<connect client="lower.enabled" governor="dodist" />
-	</logic>
 </document>

@@ -1,6 +1,12 @@
 <!DOCTYPE rkplugin>
 <!--This is the simple "Plot beta probabilities" plugin--><document>
 	<code file="plot_beta_distribution.php" />
+	<help file="plot_beta_distribution.rkh" />
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="pbeta" />
+		<connect client="lower.enabled" governor="dodist" />
+		<set id="plotoptions.allow_log" to="false"/>
+	</logic>
 	<dialog label="Plot Beta probabilities" >
 		<tabbook>
 			<tab label="Plot Beta probabilities" >
@@ -31,14 +37,11 @@
 						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
-						<preview id="preview"/>
+						<preview id="preview" label="Preview"/>
+						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 					</column>
 				</row>
 			</tab>
 		</tabbook>
 	</dialog>
-	<logic>
-		<convert id="dodist" mode="equals" sources="function.string" standard="pbeta" />
-		<connect client="lower.enabled" governor="dodist" />
-	</logic>
 </document>

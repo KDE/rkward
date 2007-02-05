@@ -2,17 +2,27 @@
 <!--This is the simple "Plot negative binomial probabilities" plugin-->
 <document>
 	<code file="plot_negbinomial_distribution.php" />
+	<help file="plot_negbinomial_distribution.rkh" />
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="pnbinom" />
+		<connect client="lower.enabled" governor="dodist" />
+		<convert id="useprob" mode="equals" sources="param.string" standard="pprob" />
+		<connect client="prob.enabled" governor="useprob" />
+		<convert id="usemu" mode="equals" sources="param.string" standard="pmu" />
+		<connect client="mu.enabled" governor="usemu" />
+		<set id="plotoptions.allow_log" to="false"/>
+	</logic>
 	<dialog label="Plot negative binomial probabilities" >
 		<tabbook>
 			<tab label="Plot negative binomial probabilities" >
 				<row>
 					<column>
 						<frame label="Range" >
-							<spinbox type="integer" min = "0" id="min" initial="12" label="Lower quantile (at least size)" />
+							<spinbox type="integer" min = "0" id="min" initial="0" label="Lower quantile" />
 							<spinbox type="integer" min = "0" id="max" initial="24" label="Upper quantile" />
 						</frame>
 						<frame label="Parameters">
-							<spinbox max_precision="2" default_precision="0" type="real" id="size" min="0.01" initial="12" label="Target number of successful trials (size)" />
+							<spinbox max_precision="2" default_precision="0" type="real" id="size" min="0.01" initial="12" label="Target number of successful trials" />
 							<row>
 							<column>
 							<spinbox max_precision="2" default_precision="2" type="real" id="prob" initial="0.75" min="0" max="1" label="Probability of success on each trial" />
@@ -35,18 +45,11 @@
 						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
-						<preview id="preview"/>
+						<preview id="preview" label="Preview"/>
+						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 					</column>
 				</row>
 			</tab>
 		</tabbook>
 	</dialog>
-	<logic>
-		<convert id="dodist" mode="equals" sources="function.string" standard="pnbinom" />
-		<connect client="lower.enabled" governor="dodist" />
-		<convert id="useprob" mode="equals" sources="param.string" standard="pprob" />
-		<connect client="prob.enabled" governor="useprob" />
-		<convert id="usemu" mode="equals" sources="param.string" standard="pmu" />
-		<connect client="mu.enabled" governor="usemu" />
-	</logic>
 </document>

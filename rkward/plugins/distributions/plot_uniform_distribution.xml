@@ -1,6 +1,12 @@
 <!DOCTYPE rkplugin>
 <!--This is the simple "Plot uniform probabilities" plugin--><document>
 	<code file="plot_uniform_distribution.php" />
+	<help file="plot_uniform_distribution.rkh" />
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="punif" />
+		<connect client="lower.enabled" governor="dodist" />
+		<set id="plotoptions.allow_log" to="false"/>
+	</logic>
 	<dialog label="Plot Uniform probabilities" >
 		<tabbook>
 			<tab label="Plot Uniform probabilities" >
@@ -17,8 +23,8 @@
 						</row>
 						<row>
 							<frame label="Parameters">
-							<spinbox max_precision="2" default_precision="2" type="real" id="llim" initial="0" label="Lower limit" />
-							<spinbox max_precision="2" default_precision="2" type="real" id="ulim" initial="1" label="Upper limit" />
+							<spinbox max_precision="2" default_precision="2" type="real" id="llim" initial="0" label="Minimum" />
+							<spinbox max_precision="2" default_precision="2" type="real" id="ulim" initial="1" label="Maximum" />
 						</frame>
 						</row>
 					</column>
@@ -30,14 +36,11 @@
 						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
-						<preview id="preview"/>
+						<preview id="preview" label="Preview"/>
+						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 					</column>
 				</row>
 			</tab>
 		</tabbook>
 	</dialog>
-	<logic>
-		<convert id="dodist" mode="equals" sources="function.string" standard="punif" />
-		<connect client="lower.enabled" governor="dodist" />
-	</logic>
 </document>

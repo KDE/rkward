@@ -53,7 +53,7 @@ rk.header ("Student t <? echo ($label); ?> function", list ("Number of Observati
 rk.graph.on ()
 <? }
 ?>
-try (plot (function (x) <? echo ($fun); ?> (x, df = <? echo ($df); ?>, ncp = <? echo ($ncp); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?>))
+try (curve (<? echo ($fun); ?> (x, df = <? echo ($df); ?>, ncp = <? echo ($ncp); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?><? getRK ("plotoptions.code.printout"); ?>))
 
 <?	if ($final) { ?>
 rk.graph.off ()

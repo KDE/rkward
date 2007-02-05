@@ -46,6 +46,9 @@ function doPrintout ($final) {
 	$n = getRK_val ("n");
 	$m = getRK_val ("m");
 	$k = getRK_val ("k");
+	$type = getRK_val ("plotoptions.pointtype.string");
+	$type_tag = "";
+	if ($type == "")  $type_tag = ", type=\"p\"";
 
 	if ($final) { ?>
 rk.header ("Hypergeometric <? echo ($label); ?> function", list ("Lower quantile", "<? echo ($min); ?>", "Upper quantile", "<? echo ($max); ?>", "Number of white balls", "<? echo ($m); ?>",  "Number of black balls", "<? echo ($n); ?>", "Number of balls drawn", "<? echo ($k); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
@@ -53,7 +56,7 @@ rk.header ("Hypergeometric <? echo ($label); ?> function", list ("Lower quantile
 rk.graph.on ()
 <? }
 ?>
-try (plot (function (x) <? echo ($fun); ?> (x, m = <? echo ($m); ?>, n = <? echo ($n); ?>, k = <? echo ($k); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($max - $min + 1); ?>, type="p"))
+try (curve (<? echo ($fun); ?> (x, m = <? echo ($m); ?>, n = <? echo ($n); ?>, k = <? echo ($k); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($max - $min + 1); ?><? getRK ("plotoptions.code.printout"); ?><? echo ($type_tag); ?>))
 
 <?	if ($final) { ?>
 rk.graph.off ()

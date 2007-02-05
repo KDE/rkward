@@ -1,6 +1,12 @@
 <!DOCTYPE rkplugin>
 <!--This is the simple "Plot gamma probabilities" plugin--><document>
 	<code file="plot_gamma_distribution.php" />
+	<help file="plot_gamma_distribution.rkh" />
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="pgamma" />
+		<connect client="lower.enabled" governor="dodist" />
+		<set id="plotoptions.allow_log" to="false"/>
+	</logic>
 	<dialog label="Plot Gamma probabilities" >
 		<tabbook>
 			<tab label="Plot Gamma probabilities" >
@@ -17,8 +23,8 @@
 						</row>
 						<row>
 							<frame label="Parameters">
-							<spinbox max_precision="2" default_precision="2" type="real" id="shape" initial="1" min="0.01" label="Shape (a)" />
-							<spinbox max_precision="2" default_precision="2" type="real" id="rate" initial="1" min="0.01" label="Rate (lambda)" label="rate or 1/scale" />
+							<spinbox max_precision="2" default_precision="2" type="real" id="shape" initial="1" min="0.01" label="Shape" />
+							<spinbox max_precision="2" default_precision="2" type="real" id="rate" initial="1" min="0.01" label="Rate (lambda)" label="Rate or 1/Scale" />
 						</frame>
 						</row>
 					</column>
@@ -30,14 +36,11 @@
 						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
-						<preview id="preview"/>
+						<preview id="preview" label="Preview"/>
+						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 					</column>
 				</row>
 			</tab>
 		</tabbook>
 	</dialog>
-	<logic>
-		<convert id="dodist" mode="equals" sources="function.string" standard="pgamma" />
-		<connect client="lower.enabled" governor="dodist" />
-	</logic>
 </document>

@@ -52,7 +52,7 @@ rk.header ("Exponential <? echo ($label); ?> function", list ("Number of Observa
 rk.graph.on ()
 <? }
 ?>
-try (plot (function (x) <? echo ($fun); ?> (x, rate = <? echo ($rate); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?>))
+try (curve (<? echo ($fun); ?> (x, rate = <? echo ($rate); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?><? getRK ("plotoptions.code.printout"); ?>))
 
 <?	if ($final) { ?>
 rk.graph.off ()

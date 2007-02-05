@@ -1,6 +1,12 @@
 <!DOCTYPE rkplugin>
 <!--This is the simple "Plot exponential probabilities" plugin--><document>
 	<code file="plot_exponential_distribution.php" />
+	<help file="plot_exponential_distribution.rkh" />
+	<logic>
+		<convert id="dodist" mode="equals" sources="function.string" standard="pexp" />
+		<connect client="lower.enabled" governor="dodist" />
+		<set id="plotoptions.allow_log" to="false"/>
+	</logic>
 	<dialog label="Plot Exponential probabilities" >
 		<tabbook>
 			<tab label="Plot Exponential probabilities" >
@@ -29,14 +35,11 @@
 						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
 						<stretch/>
-						<preview id="preview"/>
+						<preview id="preview" label="Preview"/>
+						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 					</column>
 				</row>
 			</tab>
 		</tabbook>
 	</dialog>
-	<logic>
-		<convert id="dodist" mode="equals" sources="function.string" standard="pexp" />
-		<connect client="lower.enabled" governor="dodist" />
-	</logic>
 </document>
