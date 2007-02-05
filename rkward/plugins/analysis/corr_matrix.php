@@ -38,7 +38,7 @@ local ({
 			if (i != j) {
 				t <- cor.test (rk.temp.frame[[i]], rk.temp.frame[[j]], method="<? getRK ("method"); ?>")
 				rk.temp.p[i, j] <<- t$p.value
-				rk.temp.p[j, i] <<- t$parameter["df"]
+				rk.temp.p[j, i] <<- sum (complete.cases (rk.temp.frame[[i]], rk.temp.frame[[j]]))
 			}
 		}
 	}
@@ -55,7 +55,7 @@ rk.results (rk.temp, titles=c ('Coefficient', sapply (rk.temp.objects, rk.get.sh
 
 <?	if (getRK_val ("do_p")) { ?>
 rk.temp.p <- data.frame (I (sapply (rk.temp.objects, FUN=function (x) rk.get.description (x, is.substitute=TRUE))), as.data.frame (rk.temp.p))
-rk.results (rk.temp.p, titles=c ('df \\ p', sapply (rk.temp.objects, rk.get.short.name)))
+rk.results (rk.temp.p, titles=c ('n \\ p', sapply (rk.temp.objects, rk.get.short.name)))
 <?	}
 }
 
