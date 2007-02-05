@@ -39,12 +39,14 @@
 		<connect client="yminvalue.required" governor="ymin_required" />
 		<connect client="ymaxvalue.required" governor="ymax_required" />
 
-
 		<convert id="xlabfilled" mode="notequals" sources="xlab.text" standard="" />
 		<connect client="xlabisexp.enabled" governor="xlabfilled" />
-
 		<convert id="ylabfilled" mode="notequals" sources="ylab.text" standard="" />
 		<connect client="ylabisexp.enabled" governor="ylabfilled" />
+		<convert id="mainfilled" mode="notequals" sources="main.text" standard="" />
+		<connect client="mainisexp.enabled" governor="mainfilled" />
+		<convert id="subfilled" mode="notequals" sources="sub.text" standard="" />
+		<connect client="subisexp.enabled" governor="subfilled" />
 
 		<connect client="xlog.visible" governor="allow_log"/>
 		<connect client="ylog.visible" governor="allow_log"/>
