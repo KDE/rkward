@@ -2,7 +2,7 @@
 
 <document>
 	<code file="corr_matrix.php"/>
-	
+
 	<dialog label="Correlation matrix">
 		<tabbook>
 			<tab label="variables">
@@ -19,8 +19,8 @@
 					<option value="spearman" label="Spearman"/>
 				</radio>
 				<radio id="use" label="Exclude missing values">
-					<option value="complete.obs" label="whole cases"/>
-					<option value="pairwise.complete.obs" label="pairwise" checked="true"/>
+					<option value="complete" label="whole cases"/>
+					<option value="pairwise" label="pairwise" checked="true"/>
 				</radio>
 			</tab>
 		</tabbook>
