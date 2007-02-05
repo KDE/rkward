@@ -24,6 +24,7 @@ dist_pluginsXplots_DATA = \
 	plots/density_plot.php \
 	plots/stripchart_plot.php \
 	plots/density_plot.xml \
+	plots/plot_options.rkh \
 	plots/cor_graph.php \
 	plots/cor_graph.xml \
 	plots/barplot.rkh \
@@ -169,7 +170,26 @@ dist_pluginsXdistributions_DATA = \
 	distributions/wilcoxon_quantiles.xml \
 	distributions/plot_weibull_distribution.php \
 	distributions/plot_tukey_distribution.xml \
-	distributions/plot_uniform_distribution.xml
+	distributions/plot_uniform_distribution.xml \
+	distributions/plot_tukey_distribution.rkh \
+	distributions/plot_uniform_distribution.rkh \
+	distributions/plot_negbinomial_distribution.rkh \
+	distributions/plot_chi_squared_distribution.rkh \
+	distributions/plot_normal_distribution.rkh \
+	distributions/plot_beta_distribution.rkh \
+	distributions/plot_cauchy_distribution.rkh \
+	distributions/plot_exponential_distribution.rkh \
+	distributions/plot_hypergeometric_distribution.rkh \
+	distributions/plot_binomial_distribution.rkh \
+	distributions/plot_lognormal_distribution.rkh \
+	distributions/plot_t_distribution.rkh \
+	distributions/plot_geometric_distribution.rkh \
+	distributions/plot_gamma_distribution.rkh \
+	distributions/plot_f_distribution.rkh \
+	distributions/plot_logistic_distribution.rkh \
+	distributions/plot_weibull_distribution.rkh \
+	distributions/plot_wilcoxon_distribution.rkh \
+	distributions/plot_poisson_distribution.rkh
 
 pluginsXwritetabledir = $(kde_datadir)/rkward/writetable
 dist_pluginsXwritetable_DATA = \
@@ -232,17 +252,17 @@ dist_pluginsX00saveloadXimport_DATA = \
 	00saveload/import/import_csv.rkh
 
 pluginsXanalysisdir = $(kde_datadir)/rkward/analysis
+dist_pluginsXanalysis_DATA = \
+	analysis/corr_matrix.php \
+	analysis/corr_matrix.xml \
+	analysis/corr_matrix.rkh
+
 pluginsXanalysisXansariUbradleydir = $(kde_datadir)/rkward/analysis/ansari_bradley
 dist_pluginsXanalysisXansariUbradley_DATA = \
 	analysis/ansari_bradley/ansari_bradley_exact_test.xml \
 	analysis/ansari_bradley/ansari_bradley_test.php \
 	analysis/ansari_bradley/ansari_bradley_exact_test.php \
 	analysis/ansari_bradley/ansari_bradley_test.xml
-
-pluginsXanalysisXcorrUmatrixdir = $(kde_datadir)/rkward/analysis/corr_matrix
-dist_pluginsXanalysisXcorrUmatrix_DATA = \
-	analysis/corr_matrix.php \
-	analysis/corr_matrix.xml
 
 pluginsXanalysisXwilcoxondir = $(kde_datadir)/rkward/analysis/wilcoxon
 dist_pluginsXanalysisXwilcoxon_DATA = \
