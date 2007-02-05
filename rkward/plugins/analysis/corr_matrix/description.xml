@@ -12,6 +12,7 @@
 				</row>
 			</tab>
 			<tab label="options">
+				<checkbox id="do_p" label="Calculate p values" checked="true"/>
 				<radio id="method" label="Method">
 					<option value="pearson" label="Pearson"/>
 					<option value="kendall" label="Kendall"/>
