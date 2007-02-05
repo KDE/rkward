@@ -5,6 +5,9 @@
 	<logic>
 		<external id="xvar" default="" />
 		<external id="yvar" default="" />
+		
+		<external id="default_pointtype" default="" />
+		
 		<external id="allow_log" default="true" />
 		<external id="allow_type" default="true" />
 		<external id="allow_aspect" default="false" />
@@ -47,6 +50,7 @@
 		<connect client="ylog.visible" governor="allow_log"/>
 		<connect client="aspectratio.visible" governor="allow_aspect"/>
 		<connect client="pointtypepage.visible" governor="allow_type"/>
+		<connect client="pointtype.string" governor="default_pointtype" />
 	</logic>
 	<dialog label="Default plot options" >
 		<tabbook>

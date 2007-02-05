@@ -7,6 +7,7 @@
 		<convert id="dodist" mode="equals" sources="function.string" standard="phyper" />
 		<connect client="lower.enabled" governor="dodist" />
 		<set id="plotoptions.allow_log" to="false"/>
+		<set id="plotoptions.default_pointtype" to="p"/>
 	</logic>
 	<dialog label="Plot hypergeometric probabilities" >
 		<tabbook>

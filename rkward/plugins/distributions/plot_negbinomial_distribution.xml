@@ -11,6 +11,7 @@
 		<convert id="usemu" mode="equals" sources="param.string" standard="pmu" />
 		<connect client="mu.enabled" governor="usemu" />
 		<set id="plotoptions.allow_log" to="false"/>
+		<set id="plotoptions.default_pointtype" to="p"/>
 	</logic>
 	<dialog label="Plot negative binomial probabilities" >
 		<tabbook>

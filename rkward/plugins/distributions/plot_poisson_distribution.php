@@ -44,9 +44,6 @@ function doPrintout ($final) {
 	if (getRK_val ("log") == "1") $log_label="logarithmic";
 	else $log_label="normal";
 	$mean = getRK_val ("mean");
-	$type = getRK_val ("plotoptions.pointtype.string");
-	$type_tag = "";
-	if ($type == "")  $type_tag = ", type=\"p\"";
 
 	if ($final) { ?>
 rk.header ("Poisson <? echo ($label); ?> function", list ("Lower quantile", "<? echo ($min); ?>", "Upper quantile", "<? echo ($max); ?>", "Mean", "<? echo ($mean); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
@@ -54,7 +51,7 @@ rk.header ("Poisson <? echo ($label); ?> function", list ("Lower quantile", "<? 
 rk.graph.on ()
 <? }
 ?>
-try (curve (<? echo ($fun); ?> (x, lambda = <? echo ($mean); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($max - $min + 1); ?><? getRK ("plotoptions.code.printout"); ?><? echo ($type_tag); ?>))
+try (curve (<? echo ($fun); ?> (x, lambda = <? echo ($mean); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($max - $min + 1); ?><? getRK ("plotoptions.code.printout"); ?>))
 
 <?	if ($final) { ?>
 rk.graph.off ()

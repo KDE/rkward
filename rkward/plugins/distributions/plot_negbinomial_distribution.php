@@ -55,9 +55,6 @@ function doPrintout ($final) {
 	}
 	if (getRK_val ("log") == "1") $log_label="logarithmic";
 	else $log_label="normal";
-	$type = getRK_val ("plotoptions.pointtype.string");
-	$type_tag = "";
-	if ($type == "")  $type_tag = ", type=\"p\"";
 
 	if ($final) { ?>
 rk.header ("Negative Binomial <? echo ($label); ?> function", list ("Lower quantile", "<? echo ($min); ?>", "Upper quantile", "<? echo ($max); ?>", "Target for number of successful trials", "<? echo ($size); ?>", "<? echo ($paramLabel); ?>", "<? echo ($paramVal); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
@@ -65,7 +62,7 @@ rk.header ("Negative Binomial <? echo ($label); ?> function", list ("Lower quant
 rk.graph.on ()
 <? }
 ?>
-try (curve (<? echo ($fun); ?> (x, size = <? echo ($size); ?><? echo ($paramTag); ?><? echo ($paramVal); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($max - $min + 1); ?><? getRK ("plotoptions.code.printout"); ?><? echo ($type_tag); ?>))
+try (curve (<? echo ($fun); ?> (x, size = <? echo ($size); ?><? echo ($paramTag); ?><? echo ($paramVal); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($max - $min + 1); ?><? getRK ("plotoptions.code.printout"); ?>))
 
 <?	if ($final) { ?>
 rk.graph.off ()

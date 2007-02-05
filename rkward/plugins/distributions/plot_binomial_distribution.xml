@@ -7,7 +7,7 @@
 		<convert id="dodist" mode="equals" sources="function.string" standard="pbinom" />
 		<connect client="lower.enabled" governor="dodist" />
 		<set id="plotoptions.allow_log" to="false"/>
-		<set id="plotoptions.pointtype.string" to="p"/>
+		<set id="plotoptions.default_pointtype" to="p"/>
 	</logic>
 	<dialog label="Plot binomial probabilities" >
 		<tabbook>

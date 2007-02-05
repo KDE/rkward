@@ -82,6 +82,7 @@ function printout () {
 	if ($log != "") $log = ", log=\"" . $log . "\"";
 
 	$type = getRK_val ("pointtype");
+	if (empty ($type)) $type = getRK_val ("default_pointtype");
 	if (!empty ($type)) $type = ", type=\"" . $type . "\"";
 
 	///Begin of Additions by Stefan Roediger
