@@ -4,7 +4,6 @@ function preprocess () {
 	
 function calculate () {
 	global $use;
-	global $exclude_whole;
 
 	$vars = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val ("x"))) . ")";
 	$use = getRK_val ("use");
@@ -28,11 +27,11 @@ rk.temp <- cor (rk.temp.frame, use=<? echo ($use); ?>, method="<? getRK ("method
 # calculate matrix of probabilities
 rk.temp.p <- matrix (nrow = length (rk.temp.frame), ncol = length (rk.temp.frame))
 local ({
-<?	if ($exclude_whole) { ?>
+<?		if ($exclude_whole) { ?>
 	# as we need to do pairwise comparisons for technical reasons,
 	# we need to exclude incomplete cases first to match the use="complete.obs" parameter to cor()
 	rk.temp.frame <- rk.temp.frame[complete.cases (rk.temp.frame),]
-<?	} ?>
+<?		} ?>
 	for (i in 1:length (rk.temp.frame)) {
 		for (j in i:length (rk.temp.frame)) {
 			if (i != j) {
@@ -47,8 +46,9 @@ local ({
 }
 
 function printout () {
+	global $use;
 ?>
-rk.header ("Correlation Matrix", parameters=list ("Method", "<? getRK ("method"); ?>", "Exclusion", "<? getRK ("use"); ?>"))
+rk.header ("Correlation Matrix", parameters=list ("Method", "<? getRK ("method"); ?>", "Exclusion", <? echo ($use); ?>))
 
 rk.temp <- data.frame (I (sapply (rk.temp.objects, FUN=function (x) rk.get.description (x, is.substitute=TRUE))), as.data.frame (rk.temp))
 rk.results (rk.temp, titles=c ('Coefficient', sapply (rk.temp.objects, rk.get.short.name)))

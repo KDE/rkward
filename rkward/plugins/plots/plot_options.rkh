@@ -28,7 +28,7 @@
 		<setting id="pointtype">Choose one of the listed point/line types for the plot. To let the calling function use its default plotting type, choose the 'default' option. This is the <i>type</i> argument to <b>plot.default</b>.</setting>
 
 		<caption id="pointcolorpage"/>
-		<setting id="pointcolor">Choose one of the listed point/line colors for the plot. To let the calling function use its default plotting color, choose the 'default' option. This is the <i>color</i> argument to <b>plot.default</b>.</setting>
+		<setting id="pointcolor">Choose one of the listed point/line colors for the plot. To let the calling function use its default plotting color, choose the 'default' option. This is the <i>col</i> argument to <b>plot.default</b>.</setting>
 
 		<caption id="aspectratio"/>
 		<setting id="asp">This is the <i>asp</i> argument to <b>plot.default</b>.</setting>
