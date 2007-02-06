@@ -48,7 +48,7 @@ local ({
 
 function printout () {
 ?>
-rk.header ("Correlation Matrix", parameters=list ("Method", "<? getRK ("method"); ?>", "Exclusion", <? echo ($use); ?>))
+rk.header ("Correlation Matrix", parameters=list ("Method", "<? getRK ("method"); ?>", "Exclusion", "<? getRK ("use"); ?>"))
 
 rk.temp <- data.frame (I (sapply (rk.temp.objects, FUN=function (x) rk.get.description (x, is.substitute=TRUE))), as.data.frame (rk.temp))
 rk.results (rk.temp, titles=c ('Coefficient', sapply (rk.temp.objects, rk.get.short.name)))
