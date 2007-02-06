@@ -26,6 +26,7 @@ class RKStandardComponentGUI;
 class RKComponentHandle;
 class RKStandardComponentStack;
 class ScriptBackend;
+class QTimer;
 
 /** The standard type of component (i.e. stand-alone), previously known as "plugin". This is the type of component described by an XML-file
 
@@ -80,6 +81,7 @@ public slots:
 	void hide ();
 /** for enslaved components */
 	void showGUI ();
+	void handleChange ();
 private:
 /** The property holding the generated code. Note that this member is tightly controlled by the ScriptBackend */
 	RKComponentPropertyCode *code;
@@ -89,6 +91,7 @@ private:
 	RKStandardComponentGUI *gui;
 	RKComponentHandle *handle;
 	RKStandardComponentStack *wizard;
+	QTimer *handle_change_timer;
 /** Avoid updating code-display, etc. until the component is fully created */
 	bool created;
 	bool createTopLevel (const QDomElement &doc_element, int force_mode=0, bool enslaved=false);

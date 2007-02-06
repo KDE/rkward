@@ -26,6 +26,7 @@
 #include <qtabwidget.h>
 #include <qlabel.h>
 #include <qapplication.h>
+#include <qtimer.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -93,6 +94,8 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	have_help = QFileInfo (dummy).exists ();
 
 	connect (qApp, SIGNAL (aboutToQuit ()), this, SLOT (deleteLater ()));
+	handle_change_timer = new QTimer (this);
+	connect (handle_change_timer, SIGNAL (timeout ()), this, SLOT (handleChange ()));
 
 // construct the GUI
 	if (!parent_component) {					// top-level
@@ -298,6 +301,14 @@ void RKStandardComponent::changed () {
 	RK_TRACE (PLUGIN);
 
 	if (!created) return;
+	if (gui) gui->enableSubmit (false);
+
+	// delay actual handling, until all changes have run up
+	handle_change_timer->start (10, true);
+}
+
+void RKStandardComponent::handleChange () {
+	RK_TRACE (PLUGIN);
 
 	backend->preprocess (0);
 	backend->calculate (0);
@@ -306,8 +317,7 @@ void RKStandardComponent::changed () {
 	backend->preview (0);
 
 	if (gui) {
-		gui->updateCode ();
-		gui->enableSubmit (isSatisfied ());
+		gui->updateCode ();	// will read "processing, please wait", or similar
 	}
 
 	RKComponent::changed ();
@@ -318,7 +328,7 @@ bool RKStandardComponent::isReady () {
 	RK_ASSERT (backend);
 
 	return (!(backend->isBusy ()));
-};
+}
 
 void RKStandardComponent::backendIdle () {
 	RK_TRACE (PLUGIN);

@@ -27,6 +27,7 @@
 class QCheckBox;
 class QDomElement;
 class QLabel;
+class QTimer;
 
 /**
 This RKComponent provides a (togglable) automatic graphical preview. WARNING: This component violates some standards of "good component behavior", esp. by assuming several things about the nature of the parent component. So please do not take this as an example for basing other components on.
@@ -56,6 +57,7 @@ private:
 	void tryPreview ();
 	void killPreview ();
 	void updateStatusLabel ();
+	QTimer *update_timer;
 	QCheckBox *toggle_preview_box;
 	QLabel *status_label;
 	RKComponentPropertyCode *code_property;

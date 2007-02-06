@@ -110,16 +110,16 @@ void PHPBackend::callFunction (const QString &function, int flags, int type) {
 	if (code_property) {
 		if (type == Preprocess) {
 			code_property->setPreprocess (QString::null);
-			invalidateCalls (Preprocess);
 		} else if (type == Calculate) {
 			code_property->setCalculate (QString::null);
-			invalidateCalls (Calculate);
 		} else if (type == Printout) {
 			code_property->setPrintout (QString::null);
-			invalidateCalls (Printout);
 		} else if (type == Cleanup) {
 			code_property->setCleanup (QString::null);
+		} else if (type == Preview) {
+			code_property->setPreview (QString::null);
 		}
+		invalidateCalls (type);
 	}
 
 	command_stack.append (command);
@@ -278,12 +278,12 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int len) {
 			busy = true;
 //			writeData (res + eot_string);
 		} else if (request.startsWith ("PHP-Error")) {
-				QString error = request.remove ("PHP-Error");
-				php_process->detach ();
-				KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"%1\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings.").arg (error.stripWhiteSpace ()), i18n ("PHP-Error"));
-				emit (haveError ());
-				destroy ();
-				return;
+			QString error = request.remove ("PHP-Error");
+			php_process->detach ();
+			KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"%1\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings.").arg (error.stripWhiteSpace ()), i18n ("PHP-Error"));
+			emit (haveError ());
+			destroy ();
+			return;
 		}
 		return;
 	}
