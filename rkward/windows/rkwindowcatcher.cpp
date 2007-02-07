@@ -51,9 +51,8 @@ void RKWindowCatcher::stop (int new_cur_device) {
 	RK_TRACE (MISC);
 	RK_DO (qDebug ("Window Catcher deactivated"), RBACKEND, DL_DEBUG);
 
+	WId w = RKWardApplication::getApp ()->endWindowCreationDetection ();
 	if (new_cur_device != last_cur_device) {
-		WId w = RKWardApplication::getApp ()->endWindowCreationDetection ();
-
 		if (w) {
 			RKWorkplace::mainWorkplace ()->newX11Window (w, new_cur_device);
 			//new RKCaughtX11Window (w, new_cur_device);
