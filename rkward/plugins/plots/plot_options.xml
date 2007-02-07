@@ -41,13 +41,13 @@
 		<connect client="ymaxvalue.required" governor="ymax_required" />
 
 		<convert id="xlabfilled" mode="notequals" sources="xlab.text" standard="" />
-		<connect client="xlabisexp.enabled" governor="xlabfilled" />
+		<connect client="xlabisquote.enabled" governor="xlabfilled" />
 		<convert id="ylabfilled" mode="notequals" sources="ylab.text" standard="" />
-		<connect client="ylabisexp.enabled" governor="ylabfilled" />
+		<connect client="ylabisquote.enabled" governor="ylabfilled" />
 		<convert id="mainfilled" mode="notequals" sources="main.text" standard="" />
-		<connect client="mainisexp.enabled" governor="mainfilled" />
+		<connect client="mainisquote.enabled" governor="mainfilled" />
 		<convert id="subfilled" mode="notequals" sources="sub.text" standard="" />
-		<connect client="subisexp.enabled" governor="subfilled" />
+		<connect client="subisquote.enabled" governor="subfilled" />
 
 		<connect client="xlog.visible" governor="allow_log"/>
 		<connect client="ylog.visible" governor="allow_log"/>
@@ -57,15 +57,15 @@
 	</logic>
 	<dialog label="Default plot options" >
 		<tabbook>
-			<tab  id="titlepage" label="Title">
+			<tab id="titlepage" label="Title">
 				<column>
 					<frame label="Main title">
 						<input id="main" label="Main title (on top). Leave empty for default title" />
-						<checkbox id="mainisexp" label="Interpret this label as an R expression (as opposed to a literal string)?" value="1" />
+						<checkbox id="mainisquote" label="Interpret this label as literal (quoted) string" checked="true" value="1" />
 					</frame>
 					<frame label="Subtitle">
 						<input id="sub" label="Sub-title (at bottom). Leave empty for default title" />
-						<checkbox id="subisexp" label="Interpret this label as an R expression (as opposed to a literal string)?" value="1" />
+						<checkbox id="subisquote" label="Interpret this label as literal (quoted) string" checked="true" value="1" />
 					</frame>
 					<stretch/>
 				</column>
@@ -87,10 +87,10 @@
 							<input id="xlab" label="X axis label" />
 							<input id="ylab" label="Y axis label" />
 						</row>
-						<text>Interpret these labels be as R expressions (as opposed to string literals)?</text>
+						<text>Interpret these labels as literal (quoted) strings?</text>
 						<row>
-							<checkbox id="xlabisexp" label="interpret as expression" value="1" />
-							<checkbox id="ylabisexp" label="interpret as expression" value="1" />
+							<checkbox id="xlabisquote" label="interpret as string" value="1" checked="true" />
+							<checkbox id="ylabisquote" label="interpret as string" value="1" checked="true" />
 						</row>
 					</frame>
 					<frame id="scale" label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic">

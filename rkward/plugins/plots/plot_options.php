@@ -35,7 +35,7 @@ function printout () {
 	$log .= getRK_val ("xlog");
 
 	$xlab = getRK_val ("xlab");
-	if (($xlab != "") && (getRK_val ("xlabisexp") != "1")) {
+	if (($xlab != "") && (getRK_val ("xlabisquote") == "1")) {
 		$xlab = "\"" . $xlab . "\"";
 	}
 	if ($xlab != "") $xlab = ", xlab=" . $xlab;
@@ -61,7 +61,7 @@ function printout () {
 	$log .= getRK_val ("ylog");
 
 	$ylab = getRK_val ("ylab");
-	if (($ylab != "") && (getRK_val ("ylabisexp") != "1")) {
+	if (($ylab != "") && (getRK_val ("ylabisquote") == "1")) {
 		$ylab = "\"" . $ylab . "\"";
 	}
 	if ($ylab != "") $ylab = ", ylab=" . $ylab;
@@ -93,14 +93,14 @@ function printout () {
 
 	//add a main (on top) to the plot
 	$main = getRK_val ("main");
-	if (($main != "") && (getRK_val ("mainisexp") != "1")) {
+	if (($main != "") && (getRK_val ("mainisquote") == "1")) {
 		$main = "\"" . $main . "\"";
 	}
 	if ($main != "") $main = ", main=" . $main;
 	
 	//add a subtitle (at bottom) to the plot
 	$sub = getRK_val ("sub");
-	if (($sub != "") && (getRK_val ("subisexp") != "1")) {
+	if (($sub != "") && (getRK_val ("subisquote") == "1")) {
 		$sub = "\"" . $sub . "\"";
 	}
 	if ($sub != "") $sub = ", sub=" . $sub;

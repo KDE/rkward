@@ -11,9 +11,9 @@
 	<settings>
 		<caption id="titlepage"/>
 		<setting id="main">This is the <i>main</i> argument to plot.default. See R reference on <b>plot.default</b>.</setting>
-		<setting id="mainisexp">Check this box to evaluate the <i>main</i> title as an R expression.</setting>
+		<setting id="mainisquote">If this box is checked, the <i>main</i> title will be used literally (quoted). Otherwise is will be interpreted as an R statement</setting>
 		<setting id="sub">This is the <i>sub</i> argument to plot.default. See R reference on <b>plot.default</b>.	</setting>
-		<setting id="subisexp">Check this box to evaluate the <i>sub</i> title as an R expression.</setting>
+		<setting id="subisquote">If this box is checked, the <i>sub</i> title will be used literally (quoted). Otherwise is will be interpreted as an R statement</setting>
 
 		<caption id="axespage"/>
 		<setting id="xaxt">Uncheck this box to avoid drawing the X axis. This is the <i>xaxt</i> argument to par. See R reference on <b>par</b>.</setting>
@@ -21,13 +21,12 @@
 		<setting id="xlog">This specifies the <i>log</i> argument to plot.default. Check this box to set <i>log="x"</i>. See R reference on <b>plot.default</b>.</setting>
 		<setting id="ylog">This specifies the <i>log</i> argument to plot.default. Check this box to set <i>log="y"</i>. Check both the boxes to set <i>log="xy"</i>. See R reference on <b>plot.default</b>.</setting>
 
-		<setting id="axislabels">The X and Y axis labels. These are the <i>xlab</i> and <i>ylab</i> arguments to <b>plot.default</b>, respectively. The checkboxes enable or disable the labels being evaluated as R expressions.</setting>
+		<setting id="axislabels">The X and Y axis labels. These are the <i>xlab</i> and <i>ylab</i> arguments to <b>plot.default</b>, respectively. The checkboxes enable or disable the labels being evaluated as literal (quoted) strings.</setting>
 		<setting id="scale">The X and Y axis limits. These are the <i>xlim</i> and <i>ylim</i> arguments to <b>plot.default</b> respectively. For automatic evaluation of the limits, leave these blank.</setting>
 
 		<caption id="pointtypepage"/>
 		<setting id="pointtype">Choose one of the listed point/line types for the plot. To let the calling function use its default plotting type, choose the 'default' option. This is the <i>type</i> argument to <b>plot.default</b>.</setting>
 
-		<caption id="pointcolorpage"/>
 		<setting id="pointcolor">Choose one of the listed point/line colors for the plot. To let the calling function use its default plotting color, choose the 'default' option. This is the <i>col</i> argument to <b>plot.default</b>.</setting>
 
 		<caption id="aspectratio"/>
