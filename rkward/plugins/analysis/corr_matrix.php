@@ -22,7 +22,7 @@ function calculate () {
 
 ?>rk.temp.objects <- list (<? echo ($vars); ?>)
 
-# cor requires all object to be inside the same data.frame.
+# cor requires all objects to be inside the same data.frame.
 # Here we construct such a temporary frame from the input variables
 rk.temp.frame <- data.frame (lapply (rk.temp.objects, function (x) eval (x, envir=globalenv ())))
 

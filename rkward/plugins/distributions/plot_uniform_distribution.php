@@ -44,6 +44,8 @@ function doPrintout ($final) {
 	$n = getRK_val ("n");
 	$min = getRK_val ("min");
 	$max = getRK_val ("max");
+	$llim = getRK_val ("llim");
+	$ulim = getRK_val ("ulim");
 
 	if ($final) { ?>
 rk.header ("Uniform <? echo ($label); ?> function", list ("Number of Observations", "<? echo ($n); ?>", "Lower quantile", "<? echo ($min); ?>","Upper quantile", "<? echo ($max); ?>", "Domain", "[<? echo ($llim); ?>, <? echo ($ulim); ?>]", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
