@@ -22,7 +22,11 @@
 				</row>
 			</tab>
 			<tab label="Options">
-				<checkbox id="exact" label="compute exact p-value" checked="true" value="NULL" value_unchecked="FALSE"/>
+				<radio id="exact" label="compute exact p-value">
+					<option label="Always" value="yes" />
+					<option label="Automatic" value="automatic" checked="true" />
+					<option label="Never" value="no" />
+				</radio>
 				<frame label="Confidence Interval">
 					<checkbox id="confint" label="compute confidence interval" checked="false" value="TRUE" value_unchecked="FALSE" />
 					<spinbox type="real" id="conflevel" label="confidence level" min="0" max="1" initial="0.95"/>
