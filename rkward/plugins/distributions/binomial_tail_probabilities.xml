@@ -8,7 +8,7 @@
       <tab label="Binomial tail probability" >
           <row>
             <column>
-              <input initial="0.95" id="q" label="Vector of quantiles"/>
+              <input required="true" initial="0.95" id="q" label="Vector of quantiles"/>
               <spinbox default_precision="2" type="real" initial="1" id="size" min="0" label="Binomial trials"/>
               <spinbox default_precision="2" type="real" initial="0.5" id="prob" min="0" max="1" label="Probability of success"/>
             </column>

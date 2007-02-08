@@ -7,7 +7,7 @@
       <tab label="t quantile" >
           <row>
             <column>
-              <input initial="0.95" id="p" min="0" max="1" label="Probability"/>
+              <input required="true" initial="0.95" id="p" min="0" max="1" label="Probability"/>
               <spinbox default_precision="2" type="real" initial="1" id="df" min="0" label="Degrees of Freedom"/>
             </column>
             <column>

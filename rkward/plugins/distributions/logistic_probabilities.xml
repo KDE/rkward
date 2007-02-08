@@ -8,7 +8,7 @@
      <tab label="Logistic probabilities" >
           <row>
             <column>
-                <input initial="0.95" id="q" label="Vector of quantiles"/>
+                <input required="true" initial="0.95" id="q" label="Vector of quantiles"/>
                 <spinbox default_precision="2" type="real" initial="1" id="location" label="Location"/>
                 <spinbox default_precision="2" type="real" min="1" initial="1" id="scale" label="Scale"/>
             </column>

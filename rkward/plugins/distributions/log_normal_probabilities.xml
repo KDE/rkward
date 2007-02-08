@@ -7,7 +7,7 @@
          <tab label="Log Normal probabilities" >
             <row>
                <column>
-                  <input initial="0.95" id="q" label="Vector of quantiles"/>
+                  <input required="true" initial="0.95" id="q" label="Vector of quantiles"/>
                   <spinbox default_precision="2" type="real" initial="0" id="meanlog" label="meanlog (mean of the distribution on the log scale)"/>
                   <spinbox default_precision="2" type="real" initial="1" id="sdlog" label="sdlog (standard deviation of the distribution on the log scale)"/>
                </column>

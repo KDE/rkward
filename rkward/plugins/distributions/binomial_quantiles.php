@@ -16,10 +16,10 @@ function printout () {
 ?>
 rk.header ("Binomial quantile", list ("Vector of quantiles probabilities", "<? echo ($p); ?>", "Binomial trials", "<? getRK ("size"); ?>", "Probability of success", "<? getRK ("prob"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"));
 rk.results (rk.temp, titles="Binomial quantiles")
+<?
 }
 
-function cleanup () {
-?>
+function cleanup () { ?>
 rm (rk.temp)
 <?
 }

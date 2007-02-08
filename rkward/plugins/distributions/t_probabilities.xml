@@ -7,7 +7,7 @@
       <tab label="t probability" >
           <row>
             <column>
-              <input initial="0.95" id="q" label="Vector of quantiles"/>
+              <input required="true" initial="0.95" id="q" label="Vector of quantiles"/>
               <spinbox default_precision="2" type="real" initial="0" id="df" min="0" label="Degree of Freedom"/>
             </column>
             <column>

@@ -8,7 +8,7 @@
      <tab label="Negative Binomial probabilities" >
           <row>
             <column>
-                <input initial="0.95" id="q" label="Vector of quantiles"/>
+                <input required="true" initial="0.95" id="q" label="Vector of quantiles"/>
                 <spinbox default_precision="2" type="real" min="0" initial="1" id="size" label="Target for number of successful trials"/>
                 <spinbox default_precision="2" type="real" min="0" initial="1" max="1" id="prob" label="Probability of success in each trial"/>
             </column>

@@ -8,7 +8,7 @@
       <tab label="Poisson quantiles" >
           <row>
             <column>
-                <input initial="0.95" id="p" label="Vector of probabilities"/>
+                <input required="true" initial="0.95" id="p" label="Vector of probabilities"/>
                 <spinbox default_precision="2" type="real" initial="1" id="lambda" label="Lambda"/>
             </column>
             <column>
