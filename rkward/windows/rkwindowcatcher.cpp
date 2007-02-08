@@ -242,7 +242,7 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 	KDialogBase *dialog = new KDialogBase (this, 0, true, i18n ("Specify R object"), KDialogBase::Ok|KDialogBase::Cancel);
 	QVBox *page = dialog->makeVBoxMainWidget ();
 
-	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (page, true, "my.plot", i18n ("Specify the R object name, you want to save the graph to"));
+	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (page, "my.plot", i18n ("Specify the R object name, you want to save the graph to"));
 	connect (chooser, SIGNAL (okStatusChanged (bool)), dialog, SLOT (enableButtonOK (bool)));
 	if (!chooser->isOk ()) dialog->enableButtonOK (false);
 
