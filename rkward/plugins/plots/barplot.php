@@ -17,7 +17,7 @@ rm (list=grep ("^rk.temp", ls (), value=TRUE))
 function preview () {
 	preprocess ();
 	calculate ();
-	doPrintout (false);	// only this one actually needed...
+	doPrintout (false);
 	cleanup ();
 }
 	
