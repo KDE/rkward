@@ -9,8 +9,9 @@
 - simplified CSV import plugin
 - new plugin: import SPSS files
 - new documentation pages: console
-- improvements to distribution plot plugins
-- new plugins: distribution plots 							TODO: list them
+- various improvements to existing distribution and distribution plot plugins
+- new plugins: distribution plots: beta, binomial, cauchy, exponential, gamma, geometric, hypergeometric,
+		logistics, lognormal, negative binomail, tukey, uniform, weibull, wilcoxon
 - fixed: installing packages as root would not work, when $R_HOME is not defined
 - new plugin element to select name of an R object to save to
 - new plugin: Ansari-Bradley two-sample test						TODO: document, make it stable
