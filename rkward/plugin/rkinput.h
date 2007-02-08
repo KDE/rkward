@@ -23,6 +23,7 @@
 #include "rkcomponentproperties.h"
 
 class QTextEdit;
+class QLineEdit;
 class QDomElement;
 
 /** A component to enter plain text
@@ -43,6 +44,7 @@ public:
 	bool isValid ();
 public slots:
 	void textChanged ();
+	void textChanged (const QString &new_text);
 	void textChanged (RKComponentPropertyBase *);
 	void requirednessChanged (RKComponentPropertyBase *);
 protected:
@@ -52,6 +54,7 @@ private:
 	void updateColor ();
 	bool updating;
 	QTextEdit *textedit;
+	QLineEdit *lineedit;
 };
 
 #endif
