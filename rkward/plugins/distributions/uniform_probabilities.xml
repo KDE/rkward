@@ -8,9 +8,9 @@
      <tab label="Uniform probabilities" >
           <row>
             <column>
-                <input initial="0.95" id="q" label="Vector of quantiles"/>
-                <spinbox default_precision="2" type="real" initial="1" id="min" label="Lower limits of the distribution"/>
-                <spinbox default_precision="2" type="real" initial="1" id="max" label="Upper limits of the distribution"/>
+                <input required="true" initial="0.95" id="q" label="Vector of quantiles"/>
+                <spinbox default_precision="2" type="real" initial="0" id="min" label="Lower limit of the distribution"/>
+                <spinbox default_precision="2" type="real" initial="1" id="max" label="Upper limit of the distribution"/>
             </column>
             <column>
                 <row>

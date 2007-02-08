@@ -13,12 +13,12 @@
 				<row>
 					<column>
 						<row>
-							<spinbox default_precision="4" type="real" id="n" initial="100" label="Number of Observations" />
+							<spinbox type="integer" id="n" initial="100" min="1" label="Number of Observations" />
 						</row>
 						<row>
 							<frame label="Range" >
-								<spinbox default_precision="2" type="real" id="min" initial="0.30" label="Lower quantile" />
-								<spinbox default_precision="2" type="real" id="max" initial="24.10" label="Upper quantile" />
+								<spinbox default_precision="2" type="real" id="min" min="0" initial="0.30" label="Lower quantile" />
+								<spinbox default_precision="2" type="real" id="max" min="0" initial="24.10" label="Upper quantile" />
 							</frame>
 						</row>
 							<row>

@@ -1,19 +1,25 @@
 <?
-	function preprocess () {
+function preprocess () {
+}
+
+function calculate () {
+	$exact_setting = getRK_val ("exact");
+	if ($exact_setting == "yes") {
+		$exact_opt = ", exact=TRUE";
+	} else if ($exact_setting == "no") {
+		$exact_opt = ", exact=FALSE";
 	}
-	
-	function calculate () {
 ?>
 require(exactRankTests)
 rk.temp.x <- substitute (<? getRK ("x"); ?>)
 rk.temp.y <- substitute (<? getRK ("y"); ?>)
-rk.temp <- wilcox.exact (eval (rk.temp.x), eval (rk.temp.y), alternative = c("<? getRK ("alternative"); ?>"), mu = <? getRK ("mu"); ?>, paired = <? getRK ("paired"); ?>, exact = <? getRK ("exact"); ?>, correct = <? getRK ("correct"); ?>, conf.int = <? getRK ("confint"); ?> <?
+rk.temp <- wilcox.exact (eval (rk.temp.x), eval (rk.temp.y), alternative = "<? getRK ("alternative"); ?>", mu = <? getRK ("mu"); ?>, paired = <? getRK ("paired"); ?><? echo ($exact_opt); ?>, correct = <? getRK ("correct"); ?>, conf.int = <? getRK ("confint"); ?> <?
 if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $conflevel); ?>)
 
 <?
-	}
-	
-	function printout () {
+}
+
+function printout () {
 ?>
 rk.header ("Wilcoxon exact test", 
 	parameters=list ("Comparing", paste (rk.get.description (rk.temp.x, is.substitute=TRUE), "against", rk.get.description (rk.temp.y, is.substitute=TRUE)),
@@ -35,11 +41,11 @@ rk.results (list (
 	'confidence interval of difference'=rk.temp$conf.int,
 	'Difference in Location' = rk.temp$estimate <? } ?>))
 <?
-	}
-	
-	function cleanup () {
+}
+
+function cleanup () {
 ?>
 rm (list=grep ("^rk.temp", ls (), value=TRUE))
 <?
-	}
+}
 ?>

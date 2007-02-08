@@ -38,7 +38,7 @@ RKPluginSaveObject::RKPluginSaveObject (const QDomElement &element, RKComponent 
 
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
 
-	selector = new RKSaveObjectChooser (this, true, xml->getStringAttribute (element, "initial", i18n ("my.data"), DL_INFO), xml->getStringAttribute (element, "label", i18n ("Save to:"), DL_INFO));
+	selector = new RKSaveObjectChooser (this, xml->getStringAttribute (element, "initial", i18n ("my.data"), DL_INFO), xml->getStringAttribute (element, "label", i18n ("Save to:"), DL_INFO));
 	connect (selector, SIGNAL (changed ()), SLOT (selectionChanged ()));
 	connect (selector, SIGNAL (okStatusChanged (bool)), SLOT (selectionChanged (bool)));
 

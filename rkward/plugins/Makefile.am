@@ -43,7 +43,6 @@ dist_pluginsXdistributions_DATA = \
 	distributions/plot_t_distribution.php \
 	distributions/plot_poisson_distribution.xml \
 	distributions/t_quantiles.xml \
-	distributions/binomial_probabilities.php \
 	distributions/f_probabilities.xml \
 	distributions/normal_probabilities.xml \
 	distributions/f_quantiles.php \
@@ -64,7 +63,6 @@ dist_pluginsXdistributions_DATA = \
 	distributions/poisson_probabilities.php \
 	distributions/chi_squared_probabilities.xml \
 	distributions/plot_t_distribution.xml \
-	distributions/binomial_probabilities.xml \
 	distributions/t_probabilities.php \
 	distributions/chi_squared_quantiles.php \
 	distributions/binomial_quantiles.php \

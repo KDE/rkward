@@ -28,10 +28,9 @@
 
 #include "../debug.h"
 
-RKSaveObjectChooser::RKSaveObjectChooser (QWidget *parent, bool allow_overwrite, const QString &initial, const QString &prompt) : QWidget (parent) {
+RKSaveObjectChooser::RKSaveObjectChooser (QWidget *parent, const QString &initial, const QString &prompt) : QWidget (parent) {
 	RK_TRACE (MISC);
 
-	RKSaveObjectChooser::allow_overwrite = allow_overwrite;
 	prev_ok = true;
 	object_exists = false;
 
@@ -45,13 +44,8 @@ RKSaveObjectChooser::RKSaveObjectChooser (QWidget *parent, bool allow_overwrite,
 	connect (name_edit, SIGNAL (textChanged (const QString &)), this, SLOT (nameEditChanged (const QString &)));
 	layout->addWidget (name_edit);
 
-	inuse_label = new QLabel (i18n ("The given symbol already exists"), this);
-	inuse_label->hide ();
-	layout->addWidget (inuse_label);
-
-	overwrite_confirm = new QCheckBox (i18n ("Overwrite?"), this);
+	overwrite_confirm = new QCheckBox (this);
 	connect (overwrite_confirm, SIGNAL (stateChanged (int)), this, SLOT (overwriteConfirmChanged (int)));
-	overwrite_confirm->hide ();
 	layout->addWidget (overwrite_confirm);
 
 	nameEditChanged (QString ());	// initialize
@@ -77,7 +71,7 @@ QString RKSaveObjectChooser::validizedSelectedObjectName () {
 bool RKSaveObjectChooser::isOk () const {
 	RK_TRACE (MISC);
 
-	return ((!object_exists) || (allow_overwrite && overwrite_confirm->isChecked ()));
+	return ((!object_exists) || (overwrite_confirm->isChecked ()));
 }
 
 void RKSaveObjectChooser::nameEditChanged (const QString &) {
@@ -86,15 +80,13 @@ void RKSaveObjectChooser::nameEditChanged (const QString &) {
 	RObject *object = RObjectList::getObjectList ()->findObject (validizedSelectedObjectName ());
 	if (object) {
 		object_exists = true;
-		inuse_label->show ();
-		if (allow_overwrite) overwrite_confirm->show ();
+		overwrite_confirm->setText (i18n ("Overwrite? (The given object name already exists)"));
+		overwrite_confirm->setEnabled (true);
 	} else {
 		object_exists = false;
-		inuse_label->hide ();
-		if (allow_overwrite) {
-			overwrite_confirm->hide ();
-			overwrite_confirm->setChecked (false);
-		}
+		overwrite_confirm->setText (i18n ("Overwrite?"));
+		overwrite_confirm->setEnabled (false);
+		overwrite_confirm->setChecked (false);
 	}
 
 	if (isOk () != prev_ok) {

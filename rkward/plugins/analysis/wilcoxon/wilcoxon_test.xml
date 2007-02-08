@@ -28,7 +28,11 @@
 				</frame>
 				<spinbox id="mu" label="mu" initial="0"/>
 				<checkbox id="paired" label="paired test" checked="true" value="FALSE" value_unchecked="TRUE"/>
-				<checkbox id="exact" label="compute exact p-value" checked="true" value="TRUE" value_unchecked="FALSE"/>
+				<radio id="exact" label="compute exact p-value">
+					<option label="Always" value="yes" />
+					<option label="Automatic" value="automatic" checked="true" />
+					<option label="Never" value="no" />
+				</radio>
 				<checkbox id="correct" label="apply continuity correction" checked="true" value="TRUE" value_unchecked="FALSE"/>
 			</tab>
 		</tabbook>

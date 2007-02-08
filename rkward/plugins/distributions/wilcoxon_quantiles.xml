@@ -8,9 +8,9 @@
        <tab label="Wilcoxon Rank Sum quantiles" >
           <row>
             <column>
-                <input default_precision="2" type="real" min="0" initial="0.95" max="1" id="p" label="Vector of probabilities"/>
-                <spinbox type="integer" min="0" initial="1" id="m" label="m (Numbers of observations in the first sample)"/>
-                <spinbox type="integer" min="0" initial="1" id="n" label="n (Numbers of observations in the econd sample)"/>
+                <input required="true" initial="0.95" id="p" label="Vector of probabilities"/>
+                <spinbox type="integer" min="1" initial="1" id="m" label="m (Numbers of observations in the first sample)"/>
+                <spinbox type="integer" min="1" initial="1" id="n" label="n (Numbers of observations in the second sample)"/>
             </column>
             <column>
                 <row>

@@ -1,3 +1,4 @@
+- single line input fields in plugins no longer accept new-lines
 - support for calculating p-values in correlation matrix plugin
 - fixed: pressing F8 in the console would remove input focus from the console
 - pressing tab changes focus while in a single line text input field
@@ -8,11 +9,11 @@
 - simplified CSV import plugin
 - new plugin: import SPSS files
 - new documentation pages: console
-- improvements to distribution plot plugins
-- new plugins: distribution plots 							TODO: list them
+- various improvements to existing distribution and distribution plot plugins
+- new plugins: distribution plots: beta, binomial, cauchy, exponential, gamma, geometric, hypergeometric,
+		logistics, lognormal, negative binomail, tukey, uniform, weibull, wilcoxon
 - fixed: installing packages as root would not work, when $R_HOME is not defined
 - new plugin element to select name of an R object to save to
-- analysis folder for analysis plugins (Wilcoxon and Ansari-Bradley tests moved to analysis)
 - new plugin: Ansari-Bradley two-sample test						TODO: document, make it stable
 - place internal objects .rk.rkreply and .rk.available.packages.cache into rkward package environment
 - support for preview functionality in graphing plugins

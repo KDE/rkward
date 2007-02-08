@@ -19,6 +19,7 @@
 
 #include <qlayout.h>
 #include <qtextedit.h>
+#include <qlineedit.h>
 #include <qlabel.h>
 
 #include <klocale.h>
@@ -30,12 +31,15 @@
 RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
+	textedit = 0;
+	lineedit = 0;
+
 	// get xml-helper
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	// create and add property
 	addChild ("text", text = new RKComponentPropertyBase (this, false));
-	connect (text, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (textChanged ( RKComponentPropertyBase *)));
+	connect (text, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (textChanged (RKComponentPropertyBase *)));
 
 	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
 	connect (requirednessProperty (), SIGNAL (valueChanged (RKComponentPropertyBase*)), this, SLOT (requirednessChanged (RKComponentPropertyBase*)));
@@ -45,30 +49,27 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Enter text"), DL_INFO), this);
 	vbox->addWidget (label);
 
-	textedit = new QTextEdit (this);
 	int size = xml->getMultiChoiceAttribute (element, "size", "small;medium;large", 1, DL_INFO);
-	int lheight = textedit->fontMetrics ().lineSpacing ();
-	int margin = textedit->height () - textedit->visibleHeight () + textedit->fontMetrics ().descent () + 2;
-	if (size == 0) {
-		textedit->setFixedSize (100, lheight + margin);
-	} else if (size == 1) {
-		textedit->setFixedSize (250, lheight + margin);
-	} else if (size == 2) {
+	if (size == 2) {
+		textedit = new QTextEdit (this);
+		int lheight = textedit->fontMetrics ().lineSpacing ();
+		int margin = textedit->height () - textedit->visibleHeight () + textedit->fontMetrics ().descent () + 2;
 		textedit->setMinimumSize (250, lheight * 4 + margin);
+
+		vbox->addWidget (textedit);
+		connect (textedit, SIGNAL (textChanged ()), SLOT (textChanged ()));
+	} else {
+		lineedit = new QLineEdit (this);
+		vbox->addWidget (lineedit);
+		connect (lineedit, SIGNAL (textChanged (const QString&)), SLOT (textChanged (const QString&)));
 	}
-	if (size < 2) {
-		textedit->setHScrollBarMode (QScrollView::AlwaysOff);
-		textedit->setVScrollBarMode (QScrollView::AlwaysOff);
-		textedit->setTabChangesFocus (true);
-	}
-	vbox->addWidget (textedit);
-	connect (textedit, SIGNAL (textChanged ()), SLOT (textChanged ()));
 
 	vbox->addStretch (1);		// to keep the label attached
 
 	// initialize
 	updating = false;
-	text->setValue (xml->getStringAttribute (element, "initial", QString::null, DL_INFO));
+	// DO NOT replace "" with QString::null, here! it is important, that this is actually an empty string, not a null string.
+	text->setValue (xml->getStringAttribute (element, "initial", "", DL_INFO));
 }
 
 RKInput::~RKInput () {
@@ -86,14 +87,18 @@ void RKInput::enabledChange (bool old) {
 void RKInput::updateColor () {
 	RK_TRACE (PLUGIN);
 
+	QWidget *widget = lineedit;
+	if (!widget) widget = textedit;
+	RK_ASSERT (widget);
+
 	if (isEnabled ()) {
 		if (isSatisfied ()) {
-			textedit->setPaletteBackgroundColor (QColor (255, 255, 255));
+			widget->setPaletteBackgroundColor (QColor (255, 255, 255));
 		} else {
-			textedit->setPaletteBackgroundColor (QColor (255, 0, 0));
+			widget->setPaletteBackgroundColor (QColor (255, 0, 0));
 		}
 	} else {
-		textedit->setPaletteBackgroundColor (QColor (200, 200, 200));
+		widget->setPaletteBackgroundColor (QColor (200, 200, 200));
 	}
 }
 
@@ -109,7 +114,22 @@ void RKInput::textChanged (RKComponentPropertyBase *) {
 	if (updating) return;
 	updating = true;
 
-	textedit->setText (text->value ());
+	RK_ASSERT (textedit || lineedit);
+	if (textedit) textedit->setText (text->value ());
+	else lineedit->setText (text->value ());
+
+	updateColor ();
+
+	updating = false;
+	changed ();
+}
+
+void RKInput::textChanged (const QString &new_text) {
+	RK_TRACE (PLUGIN);
+
+	updating = true;
+
+	text->setValue (new_text);
 	updateColor ();
 
 	updating = false;
@@ -119,13 +139,8 @@ void RKInput::textChanged (RKComponentPropertyBase *) {
 void RKInput::textChanged () {
 	RK_TRACE (PLUGIN);
 
-	updating = true;
-
-	text->setValue (textedit->text ());
-	updateColor ();
-
-	updating = false;
-	changed ();
+	RK_ASSERT (textedit);
+	textChanged (textedit->text ());
 }
 
 bool RKInput::isValid () {

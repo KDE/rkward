@@ -123,6 +123,7 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	
 	// code display
 	code_display = new RKCommandEditorWindow (splitter, true);
+	splitter->setResizeMode (code_display, QSplitter::Stretch);
 	if (enslaved) code_display->hide ();
 }
 

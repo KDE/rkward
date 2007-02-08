@@ -20,7 +20,7 @@
 						<row>
 							<frame label="Range" >
 								<spinbox default_precision="2" type="real" id="min" initial="-1" min="-1" label="Lower quantile" />
-								<spinbox default_precision="2" type="real" id="max" initial="8" label="Upper quantile" />
+								<spinbox default_precision="2" type="real" id="max" initial="8" min="0" label="Upper quantile" />
 							</frame>
 						</row>
 						<row>

@@ -27,7 +27,6 @@ Choose appropriate values for the various parameters of the distribution and sel
 	<related>
 		<ul>
 			<li><link href="rkward://rhelp/Beta"/></li>
-			<li><link href="rkward://component/plot_beta_distribution"/></li>
 			<li><link href="rkward://component/plot_options"/></li>
 			<li><link href="rkward://rhelp/curve"/></li>
 		</ul>

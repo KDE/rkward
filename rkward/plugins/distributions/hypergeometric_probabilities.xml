@@ -8,7 +8,7 @@
      <tab label="Hypergeometric probabilities" >
           <row>
             <column>
-                <input initial="0.95" id="q" label="Vector of quantiles"/>
+                <input required="true" initial="0.95" id="q" label="Vector of quantiles"/>
                 <spinbox type="integer" min="0" initial="1" id="m" label="m (Number of white balls in the urn)"/>
                 <spinbox type="integer" min="0" initial="1" id="n" label="n (Number of black balls in the urn)"/>
                 <spinbox type="integer" min="0" initial="1" id="k" label="k (Number of balls drawn from the urn)"/>

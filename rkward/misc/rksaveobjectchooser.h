@@ -22,13 +22,12 @@
 
 class QLineEdit;
 class QCheckBox;
-class QLabel;
 
 /** Simple helper widget to select an R symbol name to write something to. */
 class RKSaveObjectChooser : public QWidget {
 	Q_OBJECT
 public:
-	RKSaveObjectChooser (QWidget *parent, bool allow_overwrite, const QString &initial, const QString &prompt = QString::null);
+	RKSaveObjectChooser (QWidget *parent, const QString &initial, const QString &prompt = QString::null);
 	~RKSaveObjectChooser ();
 
 	QString validizedSelectedObjectName ();
@@ -42,13 +41,11 @@ signals:
 	void okStatusChanged (bool);
 	void changed ();
 private:
-	bool allow_overwrite;
 	bool object_exists;
 	bool prev_ok;
 
 	QLineEdit *name_edit;
 	QCheckBox *overwrite_confirm;
-	QLabel *inuse_label;
 };
 
 #endif
