@@ -13,7 +13,7 @@
 				<row>
 					<column>
 						<row>
-							<spinbox type="integer" id="n" initial="100" label="Number of Observations" />
+							<spinbox type="integer" id="n" initial="100" min="1" label="Number of Observations" />
 						</row>
 						<row>
 							<frame label="Range" >

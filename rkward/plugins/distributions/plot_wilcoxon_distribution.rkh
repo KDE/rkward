@@ -5,7 +5,7 @@ Density and distribution function plots for the Wilcoxon distribution.
 	</summary>
 
 	<usage>
-Choose appropriate values for the various parameters of the distribution and select the type of function. The "Submit" button will export the plot to the "Output" window. To dynamically visualise the plot check the "Preview" box. The default values should produce a plot of the "standard" distribution.
+Choose appropriate values for the various parameters of the distribution and select the type of function. The "Submit" button will export the plot to the "Output" window. To dynamically visualise the plot check the "Preview" box.
 	</usage>
 
 	<settings>
