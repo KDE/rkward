@@ -80,11 +80,11 @@ void RKSaveObjectChooser::nameEditChanged (const QString &) {
 	RObject *object = RObjectList::getObjectList ()->findObject (validizedSelectedObjectName ());
 	if (object) {
 		object_exists = true;
-		overwrite_confirm->setText ("Overwrite? (The given object name already exists)");
+		overwrite_confirm->setText (i18n ("Overwrite? (The given object name already exists)"));
 		overwrite_confirm->setEnabled (true);
 	} else {
 		object_exists = false;
-		overwrite_confirm->setText ("Overwrite?");
+		overwrite_confirm->setText (i18n ("Overwrite?"));
 		overwrite_confirm->setEnabled (false);
 		overwrite_confirm->setChecked (false);
 	}
