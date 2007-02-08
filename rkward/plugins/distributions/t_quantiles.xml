@@ -9,6 +9,7 @@
             <column>
               <input required="true" initial="0.95" id="p" min="0" max="1" label="Probability"/>
               <spinbox default_precision="2" type="real" initial="1" id="df" min="0" label="Degrees of Freedom"/>
+              <spinbox default_precision="2" type="real" initial="0" id="ncp" min="0" label="non-centrality parameter"/>
             </column>
             <column>
               <radio id="tail" label="Choose type of probability" >

@@ -10,7 +10,7 @@
             <column>
                 <input required="true" initial="0.95" id="p" label="Vector of probabilities"/>
                 <spinbox default_precision="2" type="real" initial="1" id="location" label="Location"/>
-                <spinbox default_precision="2" type="real" min="1" initial="1" id="scale" label="Scale"/>
+                <spinbox default_precision="2" type="real" min="0" initial="1" id="scale" label="Scale"/>
             </column>
             <column>
                 <row>

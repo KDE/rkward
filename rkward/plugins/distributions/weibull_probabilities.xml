@@ -10,7 +10,7 @@
             <column>
                 <input required="true" initial="0.95" id="q" label="Vector of quantiles"/>
                 <spinbox default_precision="2" type="real" min="0" initial="1" id="shape" label="Shape"/>
-                <spinbox default_precision="2" type="real" min="1" initial="1" id="scale" label="Scale"/>
+                <spinbox default_precision="2" type="real" min="0.000001" initial="1" id="scale" label="Scale"/>
             </column>
             <column>
                 <row>

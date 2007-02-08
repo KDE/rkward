@@ -11,7 +11,7 @@
                   <input required="true" initial="0.95" id="q" label="Vector of quantiles"/>
                   <spinbox type="real" initial="1" id="shape1" min="0" label="Shape 1"/>
                   <spinbox type="real" initial="1" id="shape2" min="0" label="Shape 2"/>
-                  <spinbox type="real" initial="1" id="ncp" label="non-centrality parameter (ncp)"/>
+                  <spinbox type="real" min="0" initial="0" id="ncp" label="non-centrality parameter (ncp)"/>
                </column>
                <column>
                   <row>
