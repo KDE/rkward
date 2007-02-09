@@ -2,124 +2,23 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
-		<component type="standard" id="export_x11_device" file="x11device/export.xml" label="Export..." />
-		<!-- The entry below is bogus for now, still testing some concepts with it -->
-		<component type="standard" id="import_spss" file="00saveload/import/import_spss.xml" label="Import SPSS">
-			<attribute id="format" value="*.sav *.por" label="SPSS data files"/>
-		</component>
-		<component type="standard" id="import_csv" file="00saveload/import/import_csv.xml" label="Import CSV data">
-			<attribute id="format" value="*.txt *.csv" label="Comma Separated Values"/>
-		</component>
 
-		<component type="standard" id="wilcoxon_test" file="analysis/wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
-		<component type="standard" id="wilcoxon_exact_test" file="analysis/wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
-		<component type="standard" id="ansari_bradley_test" file="analysis/ansari_bradley/ansari_bradley_test.xml" label="Ansari-Bradley two-sample test" />
-		<component type="standard" id="ansari_bradley_exact_test" file="analysis/ansari_bradley/ansari_bradley_exact_test.xml" label="Ansari-Bradley two-sample exact test" />
-
-		<component type="standard" id="barplot" file="plots/barplot.xml" label="Barplot" />
-
-					<component type="standard" id="plot_beta_distribution" file="distributions/plot_beta_distribution.xml" label="Plot Beta distribution" />
-					<component type="standard" id="plot_cauchy_distribution" file="distributions/plot_cauchy_distribution.xml" label="Plot Cauchy distribution" />
-					<component type="standard" id="plot_exponential_distribution" file="distributions/plot_exponential_distribution.xml" label="Plot Exponential distribution" />
-					<component type="standard" id="plot_gamma_distribution" file="distributions/plot_gamma_distribution.xml" label="Plot Gamma distribution" />
-					<component type="standard" id="plot_geometric_distribution" file="distributions/plot_geometric_distribution.xml" label="Plot Geometric distribution" />
-					<component type="standard" id="plot_hypergeometric_distribution" file="distributions/plot_hypergeometric_distribution.xml" label="Plot Hypergeometric distribution" />
-					<component type="standard" id="plot_logistic_distribution" file="distributions/plot_logistic_distribution.xml" label="Plot Logistic distribution" />
-					<component type="standard" id="plot_lognormal_distribution" file="distributions/plot_lognormal_distribution.xml" label="Plot Lognormal distribution" />
-					<component type="standard" id="plot_negbinomial_distribution" file="distributions/plot_negbinomial_distribution.xml" label="Plot Negative Binomial distribution" />
-					<component type="standard" id="plot_tukey_distribution" file="distributions/plot_tukey_distribution.xml" label="Plot Studentized Range (Tukey) distribution" />
-					<component type="standard" id="plot_uniform_distribution" file="distributions/plot_uniform_distribution.xml" label="Plot Uniform distribution" />
-					<component type="standard" id="plot_weibull_distribution" file="distributions/plot_weibull_distribution.xml" label="Plot Weibull distribution" />
-					<component type="standard" id="plot_wilcoxon_distribution" file="distributions/plot_wilcoxon_distribution.xml" label="Plot Wilcoxon Rank Sum distribution" />
 	</components>
 
 	<hierarchy>
 		<menu id="file" label="File">
 			<menu id="import" label="Import" index="4">
-				<!-- Do we want this? -->
-				<menu id="import_format" label="Import format" index="0">
-					<entry component="import_spss"/>
-					<entry component="import_csv"/>
-				</menu>
 			</menu>
 			<menu id="export" label="Export" index="5">
 			</menu>
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
-			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="6">
-				<entry component="wilcoxon_test" />
-				<entry component="wilcoxon_exact_test" />
-			</menu>
-			<menu id="ansari_bradley" label="Ansari-Bradley Tests" index="7">
-				<entry component="ansari_bradley_test" />
-				<entry component="ansari_bradley_exact_test" />
-			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
-			<entry component="barplot" />
 		</menu>
 
-				<menu id="distributions" label="Distributions" index="7">
-					<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="1">
-						<menu id="beta_distribution" label="Beta Distribution" index="0">
-								<entry component="plot_beta_distribution" label="Plot Beta distribution" index="2"/>
-						</menu>
-						<menu id="cauchy_distribution" label="Cauchy Distribution" index="1">
-								<entry component="plot_cauchy_distribution" label="Plot Cauchy distribution" index="2"/>
-						</menu>
-						<menu id="exponential_distribution" label="Exponential Distribution" index="3">
-								<entry component="plot_exponential_distribution" label="Plot Exponential distribution" index="2"/>
-						</menu>
-						<menu id="gamma_distribution" label="Gamma Distribution" index="5">
-								<entry component="plot_gamma_distribution" label="Plot Gamma distribution" index="2"/>
-						</menu>
-						<menu id="logistic_distribution" label="Logistic Distribution" index="7">
-								<entry component="plot_logistic_distribution" label="Plot Logistic distribution" index="2"/>
-						</menu>
-						<menu id="log_normal_distribution" label="Log Normal Distribution" index="8">
-								<entry component="plot_lognormal_distribution" label="Plot Lognormal distribution" index="2"/>
-						</menu>
-						<menu id="tukey_distribution" label="Studentized Range Distribution (Tukey)" index="11">
-								<entry component="plot_tukey_distribution" label="Plot Studentized Range (Tukey) distribution" index="2"/>
-						</menu>
-						<menu id="uniform_distribution" label="Uniform Distribution" index="12">
-								<entry component="plot_uniform_distribution" label="Plot Uniform distribution" index="2"/>
-						</menu>
-						<menu id="weibull_distribution" label="Weibull Distribution" index="13">
-								<entry component="plot_weibull_distribution" label="Plot Weibull distribution" index="2"/>
-						</menu>
-					</menu>
-
-					<menu id="univariate_discrete_distributions" label="Univariate discrete distributions" index="2">
-						<menu id="geom_distribution" label="Geometric Distribution" index="1">
-								<entry component="plot_geometric_distribution" label="Plot Geometric distribution" index="2"/>
-						</menu>
-						<menu id="hypergeometric_distribution" label="Hypergeometric Distribution" index="2">
-								<entry component="plot_hypergeometric_distribution" label="Plot Hypergeometric distribution" index="2"/>
-						</menu>
-						<menu id="negative_binomial_distribution" label="Negative Binomial Distribution" index="3">
-								<entry component="plot_negbinomial_distribution" label="Plot Negative Binomial distribution" index="2"/>
-						</menu>
-						<menu id="wilcoxon_distribution" label="Wilcoxon Rank Sum Distribution" index="5">
-								<entry component="wilcoxon_quantiles" label="Wilcoxon Rank Sum quantiles" index="1"/>
-								<entry component="wilcoxon_probabilities" label="Wilcoxon Rank Sum probabilities" index="0"/>
-								<entry component="plot_wilcoxon_distribution" label="Plot Wilcoxon Rank Sum distribution" index="2"/>
-						</menu>
-					</menu>
-				</menu>
+		<menu id="distributions" label="Distributions" index="7">
+		</menu>
 	</hierarchy>
-
-	<context id="x11">
-		<menu id="device" label="Device" index="1">
-			<entry component="export_x11_device" />
-		</menu>
-	</context>
-
-	<context id="import">
-		<menu id="import" label="Import">
-			<entry component="import_spss"/>
-			<entry component="import_csv"/>
-		</menu>
-	</context>
 </document>
 
