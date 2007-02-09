@@ -13,6 +13,7 @@
 
 		<component type="standard" id="beta_quantiles" file="beta_quantiles.xml" label="Beta quantiles" />
 		<component type="standard" id="beta_probabilities" file="beta_probabilities.xml" label="Beta probabilities" />
+		<component type="standard" id="plot_beta_distribution" file="plot_beta_distribution.xml" label="Plot Beta distribution" />
 
 		<component type="standard" id="binomial_quantiles" file="binomial_quantiles.xml" label="Binomial quantiles" />
 		<component type="standard" id="binomial_tail_probabilities" file="binomial_tail_probabilities.xml" label="Binomial tail probabilities" />
@@ -20,12 +21,15 @@
 
 		<component type="standard" id="cauchy_quantiles" file="cauchy_quantiles.xml" label="Cauchy quantiles" />
 		<component type="standard" id="cauchy_probabilities" file="cauchy_probabilities.xml" label="Cauchy probabilities" />
+		<component type="standard" id="plot_cauchy_distribution" file="plot_cauchy_distribution.xml" label="Plot Cauchy distribution" />
 
 		<component type="standard" id="chi_squared_quantiles" file="chi_squared_quantiles.xml" label="Chi-squared quantiles" />
 		<component type="standard" id="chi_squared_probabilities" file="chi_squared_probabilities.xml" label="Chi-squared probabilities" />
 		<component type="standard" id="plot_chi_squared_distribution" file="plot_chi_squared_distribution.xml" label="Plot Chi-squared distribution" />
+
 		<component type="standard" id="exponential_quantiles" file="exponential_quantiles.xml" label="Exponential quantiles" />
 		<component type="standard" id="exponential_probabilities" file="exponential_probabilities.xml" label="Exponential probabilities" />
+		<component type="standard" id="plot_exponential_distribution" file="plot_exponential_distribution.xml" label="Plot Exponential distribution" />
 
 		<component type="standard" id="f_quantiles" file="f_quantiles.xml" label="F quantiles" />
 		<component type="standard" id="f_probabilities" file="f_probabilities.xml" label="F probabilities" />
@@ -33,24 +37,30 @@
 
 		<component type="standard" id="gamma_quantiles" file="gamma_quantiles.xml" label="Gamma quantiles" />
 		<component type="standard" id="gamma_probabilities" file="gamma_probabilities.xml" label="Gamma probabilities" />
+		<component type="standard" id="plot_gamma_distribution" file="plot_gamma_distribution.xml" label="Plot Gamma distribution" />
 
 		<component type="standard" id="geom_quantiles" file="geom_quantiles.xml" label="Geometric quantiles" />
 		<component type="standard" id="geom_probabilities" file="geom_probabilities.xml" label="Geometric probabilities" />
+		<component type="standard" id="plot_geometric_distribution" file="plot_geometric_distribution.xml" label="Plot Geometric distribution" />
 
 		<component type="standard" id="gumbel_quantiles" file="gumbel_quantiles.xml" label="Gumbel quantiles" />
 		<component type="standard" id="gumbel_probabilities" file="gumbel_probabilities.xml" label="Gumbel probabilities" />
 
 		<component type="standard" id="hypergeometric_quantiles" file="hypergeometric_quantiles.xml" label="Hypergeometric quantiles" />
 		<component type="standard" id="hypergeometric_probabilities" file="hypergeometric_probabilities.xml" label="Hypergeometric probabilities" />
+		<component type="standard" id="plot_hypergeometric_distribution" file="plot_hypergeometric_distribution.xml" label="Plot Hypergeometric distribution" />
 
 		<component type="standard" id="logistic_quantiles" file="logistic_quantiles.xml" label="Logistic quantiles" />
 		<component type="standard" id="logistic_probabilities" file="logistic_probabilities.xml" label="Logistic probabilities" />
+		<component type="standard" id="plot_logistic_distribution" file="plot_logistic_distribution.xml" label="Plot Logistic distribution" />
 
 		<component type="standard" id="log_normal_quantiles" file="log_normal_quantiles.xml" label="Log Normal quantiles" />
 		<component type="standard" id="log_normal_probabilities" file="log_normal_probabilities.xml" label="Log Normal probabilities" />
+		<component type="standard" id="plot_lognormal_distribution" file="plot_lognormal_distribution.xml" label="Plot Lognormal distribution" />
 
 		<component type="standard" id="negative_binomial_quantiles" file="negative_binomial_quantiles.xml" label="Negative Binomial quantiles" />
 		<component type="standard" id="negative_binomial_probabilities" file="negative_binomial_probabilities.xml" label="Negative Binomial probabilities" />
+		<component type="standard" id="plot_negbinomial_distribution" file="plot_negbinomial_distribution.xml" label="Plot Negative Binomial distribution" />
 
 		<component type="standard" id="normal_quantiles" file="normal_quantiles.xml" label="Normal quantiles" />
 		<component type="standard" id="normal_probabilities" file="normal_probabilities.xml" label="Normal probabilities" />
@@ -66,15 +76,19 @@
 
 		<component type="standard" id="tukey_probabilities" file="tukey_probabilities.xml" label="Studentized Range probabilities (Tukey)" />
 		<component type="standard" id="tukey_quantiles" file="tukey_quantiles.xml" label="Studentized Range quantiles (Tukey)" />
+		<component type="standard" id="plot_tukey_distribution" file="plot_tukey_distribution.xml" label="Plot Studentized Range (Tukey) distribution" />
 
 		<component type="standard" id="uniform_quantiles" file="uniform_quantiles.xml" label="Uniform quantiles" />
 		<component type="standard" id="uniform_probabilities" file="uniform_probabilities.xml" label="Uniform probabilities" />
+		<component type="standard" id="plot_uniform_distribution" file="plot_uniform_distribution.xml" label="Plot Uniform distribution" />
 
 		<component type="standard" id="weibull_quantiles" file="weibull_quantiles.xml" label="Weibull quantiles" />
 		<component type="standard" id="weibull_probabilities" file="weibull_probabilities.xml" label="Weibull probabilities" />
+		<component type="standard" id="plot_weibull_distribution" file="plot_weibull_distribution.xml" label="Plot Weibull distribution" />
 
 		<component type="standard" id="wilcoxon_quantiles" file="wilcoxon_quantiles.xml" label="Wilcoxon Rank Sum quantiles" />
 		<component type="standard" id="wilcoxon_probabilities" file="wilcoxon_probabilities.xml" label="Wilcoxon Rank Sum probabilities" />
+		<component type="standard" id="plot_wilcoxon_distribution" file="plot_wilcoxon_distribution.xml" label="Plot Wilcoxon Rank Sum distribution" />
 
 	</components>
 
@@ -93,10 +107,12 @@
 				<menu id="beta_distribution" label="Beta" index="0">
 					<entry component="beta_quantiles" label="Beta quantiles" index="1"/>
 					<entry component="beta_probabilities" label="Beta probabilities" index="0"/>
+					<entry component="plot_beta_distribution" label="Plot Beta distribution" index="2"/>
 				</menu>
 				<menu id="cauchy_distribution" label="Cauchy" index="1">
 					<entry component="cauchy_quantiles" label="Cauchy quantiles" index="1"/>
 					<entry component="cauchy_probabilities" label="Cauchy probabilities" index="0"/>
+					<entry component="plot_cauchy_distribution" label="Plot Cauchy distribution" index="2"/>
 				</menu>
 				<menu id="chi_squared_distribution" label="Chi-squared" index="2">
 					<entry component="chi_squared_quantiles" label="Chi-squared quantiles" index="1"/>
@@ -106,6 +122,7 @@
 				<menu id="exponential_distribution" label="Exponential" index="3">
 					<entry component="exponential_quantiles" label="Exponential quantiles" index="1"/>
 					<entry component="exponential_probabilities" label="Exponential probabilities" index="0"/>
+					<entry component="plot_exponential_distribution" label="Plot Exponential distribution" index="2"/>
 				</menu>
 				<menu id="f_distribution" label="F" index="4">
 					<entry component="f_quantiles" label="F quantiles" index="1"/>
@@ -115,6 +132,7 @@
 				<menu id="gamma_distribution" label="Gamma" index="5">
 					<entry component="gamma_quantiles" label="Gamma quantiles" index="1"/>
 					<entry component="gamma_probabilities" label="Gamma probabilities" index="0"/>
+					<entry component="plot_gamma_distribution" label="Plot Gamma distribution" index="2"/>
 				</menu>
 				<menu id="gumbel_distribution" label="Gumbel" index="6">
 					<entry component="gumbel_quantiles" label="Gumbel quantiles" index="1"/>
@@ -123,10 +141,12 @@
 				<menu id="logistic_distribution" label="Logistic" index="7">
 					<entry component="logistic_quantiles" label="Logistic quantiles" index="1"/>
 					<entry component="logistic_probabilities" label="Logistic probabilities" index="0"/>
+					<entry component="plot_logistic_distribution" label="Plot Logistic distribution" index="2"/>
 				</menu>
 				<menu id="log_normal_distribution" label="Log Normal" index="8">
 					<entry component="log_normal_quantiles" label="Log Normal quantiles" index="1"/>
 					<entry component="log_normal_probabilities" label="Log Normal probabilities" index="0"/>
+					<entry component="plot_lognormal_distribution" label="Plot Lognormal distribution" index="2"/>
 				</menu>
 				<menu id="normal_distribution" label="Normal" index="9">
 					<entry component="normal_quantiles" label="Normal quantiles" index="1"/>
@@ -136,6 +156,7 @@
 				<menu id="tukey_distribution" label="Tukey" index="11">
 					<entry component="tukey_probabilities" label="Tukey probabilities" index="0"/>
 					<entry component="tukey_quantiles" label="Tukey quantiles" index="1"/>
+					<entry component="plot_tukey_distribution" label="Plot Studentized Range (Tukey) distribution" index="2"/>
 				</menu>
 				<menu id="t_distribution" label="t" index="10">
 					<entry component="t_quantiles" label="t quantiles" index="1"/>
@@ -145,10 +166,12 @@
 				<menu id="uniform_distribution" label="Uniform" index="12">
 					<entry component="uniform_quantiles" label="Uniform quantiles" index="1"/>
 					<entry component="uniform_probabilities" label="Uniform probabilities" index="0"/>
+					<entry component="plot_uniform_distribution" label="Plot Uniform distribution" index="2"/>
 				</menu>
 				<menu id="weibull_distribution" label="Weibull" index="13">
 					<entry component="weibull_quantiles" label="Weibull quantiles" index="1"/>
 					<entry component="weibull_probabilities" label="Weibull probabilities" index="0"/>
+					<entry component="plot_weibull_distribution" label="Plot Weibull distribution" index="2"/>
 				</menu>
 			</menu>
 
@@ -161,14 +184,17 @@
 				<menu id="geom_distribution" label="Geometric" index="1">
 					<entry component="geom_probabilities" label="Geometric probabilities" index="0"/>
 					<entry component="geom_quantiles" label="Geometric quantiles" index="1"/>
+					<entry component="plot_geometric_distribution" label="Plot Geometric distribution" index="2"/>
 				</menu>
 				<menu id="hypergeometric_distribution" label="Hypergeometric" index="2">
 					<entry component="hypergeometric_probabilities" label="Hypergeometric probabilities" index="0"/>
 					<entry component="hypergeometric_quantiles" label="Hypergeometric quantiles" index="1"/>
+					<entry component="plot_hypergeometric_distribution" label="Plot Hypergeometric distribution" index="2"/>
 				</menu>
 				<menu id="negative_binomial_distribution" label="Negative Binomial" index="3">
 					<entry component="negative_binomial_probabilities" label="Negative Binomial probabilities" index="0"/>
 					<entry component="negative_binomial_quantiles" label="Hypergeometric quantiles" index="1"/>
+					<entry component="plot_negbinomial_distribution" label="Plot Negative Binomial distribution" index="2"/>
 				</menu>
 				<menu id="poisson_distribution" label="Poisson" index="4">
 					<entry component="poisson_probabilities" label="Poisson probabilities" index="0"/>
@@ -176,11 +202,11 @@
 					<entry component="plot_poisson_distribution" label="Plot Poisson distribution" index="2"/>
 				</menu>
 				<menu id="wilcoxon_distribution" label="Wilcoxon Rank Sum" index="14">
-                                        <entry component="wilcoxon_quantiles" label="Wilcoxon Rank Sum quantiles" index="1"/>
+					<entry component="wilcoxon_quantiles" label="Wilcoxon Rank Sum quantiles" index="1"/>
 					<entry component="wilcoxon_probabilities" label="Wilcoxon Rank Sum probabilities" index="0"/>
+					<entry component="plot_wilcoxon_distribution" label="Plot Wilcoxon Rank Sum distribution" index="2"/>
 				</menu>
 			</menu>
 		</menu>
 	</hierarchy>
 </document>
-
