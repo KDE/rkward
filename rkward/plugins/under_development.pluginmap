@@ -2,65 +2,23 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
-		<component type="standard" id="export_x11_device" file="x11device/export.xml" label="Export..." />
-		<!-- The entry below is bogus for now, still testing some concepts with it -->
-		<component type="standard" id="import_spss" file="00saveload/import/import_spss.xml" label="Import SPSS">
-			<attribute id="format" value="*.sav *.por" label="SPSS data files"/>
-		</component>
-		<component type="standard" id="import_csv" file="00saveload/import/import_csv.xml" label="Import CSV data">
-			<attribute id="format" value="*.txt *.csv" label="Comma Separated Values"/>
-		</component>
-
-		<component type="standard" id="wilcoxon_test" file="analysis/wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
-		<component type="standard" id="wilcoxon_exact_test" file="analysis/wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
-		<component type="standard" id="ansari_bradley_test" file="analysis/ansari_bradley/ansari_bradley_test.xml" label="Ansari-Bradley two-sample test" />
-		<component type="standard" id="ansari_bradley_exact_test" file="analysis/ansari_bradley/ansari_bradley_exact_test.xml" label="Ansari-Bradley two-sample exact test" />
-
-		<component type="standard" id="barplot" file="plots/barplot.xml" label="Barplot" />
 
 	</components>
 
 	<hierarchy>
 		<menu id="file" label="File">
 			<menu id="import" label="Import" index="4">
-				<!-- Do we want this? -->
-				<menu id="import_format" label="Import format" index="0">
-					<entry component="import_spss"/>
-					<entry component="import_csv"/>
-				</menu>
 			</menu>
 			<menu id="export" label="Export" index="5">
 			</menu>
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
-			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="6">
-				<entry component="wilcoxon_test" />
-				<entry component="wilcoxon_exact_test" />
-			</menu>
-			<menu id="ansari_bradley" label="Ansari-Bradley Tests" index="7">
-				<entry component="ansari_bradley_test" />
-				<entry component="ansari_bradley_exact_test" />
-			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
-			<entry component="barplot" />
 		</menu>
 
 		<menu id="distributions" label="Distributions" index="7">
 		</menu>
 	</hierarchy>
-
-	<context id="x11">
-		<menu id="device" label="Device" index="1">
-			<entry component="export_x11_device" />
-		</menu>
-	</context>
-
-	<context id="import">
-		<menu id="import" label="Import">
-			<entry component="import_spss"/>
-			<entry component="import_csv"/>
-		</menu>
-	</context>
 </document>
 

@@ -10,6 +10,10 @@
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
 		<component type="standard" id="skewness_kurtosis" file="descriptive/skewness_kurtosis_test.xml" label="Skewness and Kurtosis" />
 
+		<component type="standard" id="wilcoxon_test" file="analysis/wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
+		<component type="standard" id="wilcoxon_exact_test" file="analysis/wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
+		<component type="standard" id="ansari_bradley_test" file="analysis/ansari_bradley/ansari_bradley_test.xml" label="Ansari-Bradley two-sample test" />
+		<component type="standard" id="ansari_bradley_exact_test" file="analysis/ansari_bradley/ansari_bradley_exact_test.xml" label="Ansari-Bradley two-sample exact test" />
 	</components>
 
 	<hierarchy>
@@ -27,6 +31,14 @@
 			</menu>
 			<entry component="simple_anova" index="4"/>
 			<entry component="skewness_kurtosis" index="5"/>
+			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="6">
+				<entry component="wilcoxon_test" />
+				<entry component="wilcoxon_exact_test" />
+			</menu>
+			<menu id="ansari_bradley" label="Ansari-Bradley Tests" index="7">
+				<entry component="ansari_bradley_test" />
+				<entry component="ansari_bradley_exact_test" />
+			</menu>
 		</menu>
 	</hierarchy>
 </document>
