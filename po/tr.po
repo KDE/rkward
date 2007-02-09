@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-04 18:54+0100\n"
+"POT-Creation-Date: 2007-02-09 11:51+0100\n"
 "PO-Revision-Date: 2007-01-28 15:02+0200\n"
 "Last-Translator: Harun Hurma <h.hurma@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -255,7 +255,7 @@ msgstr ""
 "Yukarıdaki dosyaların okunabilir olmayanı ve açılmayanı şudur:\n"
 "\n"
 
-#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:326
+#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:327
 #: misc/rkprogresscontrol.cpp:273
 msgid "Done"
 msgstr "Bitti"
@@ -383,7 +383,7 @@ msgid "Run all"
 msgstr "Hepsini çalıştır"
 
 #: windows/rkcommandeditorwindowpart.cpp:54 windows/rkcommandlog.cpp:286
-#: rkconsole.cpp:680
+#: rkconsole.cpp:681
 msgid "Run selection"
 msgstr "Seçileni çalıştır"
 
@@ -391,7 +391,7 @@ msgstr "Seçileni çalıştır"
 msgid "Run current line"
 msgstr "Şu anki satırı çalıştır"
 
-#: windows/rkcommandeditorwindowpart.cpp:57 rkconsole.cpp:679
+#: windows/rkcommandeditorwindowpart.cpp:57 rkconsole.cpp:680
 msgid "&Function reference"
 msgstr "&Fonksiyon başvuru"
 
@@ -571,23 +571,23 @@ msgstr "İsimsiz"
 msgid " [modified]"
 msgstr " [değiştirilmiş]"
 
-#: windows/detachedwindowcontainer.cpp:38
+#: windows/detachedwindowcontainer.cpp:39
 msgid "Attach to main window"
 msgstr "Ana pencereye ekle"
 
-#: windows/rkworkplace.cpp:123
+#: windows/rkworkplace.cpp:124
 msgid "Unable to open \"%1\""
 msgstr "\"%1\" açılamıyor"
 
-#: windows/rkworkplace.cpp:123
+#: windows/rkworkplace.cpp:124
 msgid "Could not open command file"
 msgstr "Komut dosyası açılmadı"
 
-#: windows/rkworkplace.cpp:320
+#: windows/rkworkplace.cpp:324
 msgid "Save Workplace layout"
 msgstr "Çalışma alanı düzenini kaydet"
 
-#: windows/rkworkplace.cpp:327
+#: windows/rkworkplace.cpp:331
 msgid "Restore Workplace layout"
 msgstr "ÇAlışma alanı düzenini geri koy"
 
@@ -607,7 +607,7 @@ msgstr "Sözdizimi hatası.\n"
 msgid "An unspecified error occurred while running the command.\n"
 msgstr "Komut çalışırken belirlenemeyen bir hata oluştu.\n"
 
-#: windows/rkwindowcatcher.cpp:61
+#: windows/rkwindowcatcher.cpp:60
 msgid ""
 "You have created a new X11 device window in R. Usually, RKWard tries to "
 "detect such windows, to take control of them, and add a menu-bar to them. "
@@ -631,79 +631,79 @@ msgstr ""
 "rkward-devel@lists.sourceforge.net de bizimle iletişim kurunuz. RKWard'ın "
 "ileriki sürümlerine bunu düzeltmeye çalışacağız."
 
-#: windows/rkwindowcatcher.cpp:61
+#: windows/rkwindowcatcher.cpp:60
 msgid "Could not embed R X11 window"
 msgstr "R X11 penceresini içine koyamıyor"
 
-#: windows/rkwindowcatcher.cpp:94
+#: windows/rkwindowcatcher.cpp:93
 msgid "An error occurred"
 msgstr "Bazı hatalar oluştu"
 
-#: windows/rkwindowcatcher.cpp:199
+#: windows/rkwindowcatcher.cpp:198
 msgid "Specify fixed size"
 msgstr "Düzeltilmiş büyüklüğü belirt"
 
-#: windows/rkwindowcatcher.cpp:224
+#: windows/rkwindowcatcher.cpp:223
 msgid "Activate graphics device number %1"
 msgstr "Grafik aygıtı %1 i etkinleştir"
 
-#: windows/rkwindowcatcher.cpp:230
+#: windows/rkwindowcatcher.cpp:229
 msgid "Copy contents of graphics device number %1 to output"
 msgstr "Grafik aygıtı %1 in içeriğini çıktıya kopyala"
 
-#: windows/rkwindowcatcher.cpp:236
+#: windows/rkwindowcatcher.cpp:235
 msgid "Print contents of graphics device number %1"
 msgstr "Grafik aygıtı %1 için içeriğini yazdır"
 
-#: windows/rkwindowcatcher.cpp:243
+#: windows/rkwindowcatcher.cpp:242
 msgid "Specify R object"
 msgstr "R nesnesi belirt"
 
-#: windows/rkwindowcatcher.cpp:246
+#: windows/rkwindowcatcher.cpp:245
 msgid "Specify the R object name, you want to save the graph to"
 msgstr "R nesnesi ismi belirt, grafiği kaydetmek isterseniz"
 
-#: windows/rkwindowcatcher.cpp:257
+#: windows/rkwindowcatcher.cpp:256
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr "Grafik aygıtı %1 in içeriğini nesne %2 ye kaydet"
 
-#: windows/rkwindowcatcher.cpp:266
+#: windows/rkwindowcatcher.cpp:265
 msgid "Duplicate graphics device number %1"
 msgstr "Grafik aygıtı %1 in kopyasını yap"
 
-#: windows/rkwindowcatcher.cpp:286
+#: windows/rkwindowcatcher.cpp:285
 msgid "Draw area follows size of window"
 msgstr "Çizim alanı pencerenin büyüklüğü kadardır"
 
-#: windows/rkwindowcatcher.cpp:288
+#: windows/rkwindowcatcher.cpp:287
 msgid "Set fixed size 500x500"
 msgstr "Büyüklüğü 500x500 olarak ayarla"
 
-#: windows/rkwindowcatcher.cpp:289
+#: windows/rkwindowcatcher.cpp:288
 msgid "Set fixed size 1000x1000"
 msgstr "Büyüklüğü 1000x1000 olarak ayarla"
 
-#: windows/rkwindowcatcher.cpp:290
+#: windows/rkwindowcatcher.cpp:289
 msgid "Set fixed size 2000x2000"
 msgstr "Büyüklüğü 2000x2000 olarak ayarla"
 
-#: windows/rkwindowcatcher.cpp:291
+#: windows/rkwindowcatcher.cpp:290
 msgid "Set specified fixed size..."
 msgstr "Belirtilen büyüklüğü ayarla..."
 
-#: windows/rkwindowcatcher.cpp:293
+#: windows/rkwindowcatcher.cpp:292
 msgid "Make active"
 msgstr "Etkin yap"
 
-#: windows/rkwindowcatcher.cpp:294
+#: windows/rkwindowcatcher.cpp:293
 msgid "Copy to output"
 msgstr "Çıktıya kopyala"
 
-#: windows/rkwindowcatcher.cpp:296
+#: windows/rkwindowcatcher.cpp:295
 msgid "Store as R object..."
 msgstr "R nesnesi olarak sakla..."
 
-#: windows/rkwindowcatcher.cpp:297
+#: windows/rkwindowcatcher.cpp:296
 msgid "Duplicate"
 msgstr "İkile"
 
@@ -747,7 +747,7 @@ msgstr "Terim"
 msgid "Specify model"
 msgstr "Modeli belirle"
 
-#: plugin/rkstandardcomponent.cpp:73
+#: plugin/rkstandardcomponent.cpp:74
 msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
@@ -755,7 +755,7 @@ msgstr ""
 "Bu eklentinin ('%1') tanımı incelenirken hata oluştu. Lütfen detaylar için "
 "stdout a bakın."
 
-#: plugin/rkstandardcomponent.cpp:73
+#: plugin/rkstandardcomponent.cpp:74
 msgid "Could not create plugin"
 msgstr "Eklenti oluşturulamadı"
 
@@ -776,7 +776,7 @@ msgstr ""
 msgid "R-Error"
 msgstr "R-Hata"
 
-#: plugin/rkstandardcomponentgui.cpp:95 plugin/rkstandardcomponentgui.cpp:345
+#: plugin/rkstandardcomponentgui.cpp:95 plugin/rkstandardcomponentgui.cpp:346
 msgid "Submit"
 msgstr "Gönder"
 
@@ -788,11 +788,11 @@ msgstr "Sihirbazı kullan"
 msgid "Code"
 msgstr "Kod"
 
-#: plugin/rkstandardcomponentgui.cpp:203
+#: plugin/rkstandardcomponentgui.cpp:204
 msgid "Processing. Please wait"
 msgstr "Sürdürülüyor: Lütfen bekleyin"
 
-#: plugin/rkstandardcomponentgui.cpp:270
+#: plugin/rkstandardcomponentgui.cpp:271
 msgid ""
 "Below you can see the command(s) corresponding to the settings you made. "
 "Click 'Submit' to run the command(s)."
@@ -800,15 +800,15 @@ msgstr ""
 "Yaptığınız ayarlara karşılık gelen komutları aşağıda görebilirsiniz. Komut"
 "(lar) çalıştırmak için 'Gönder' tuşuna basın."
 
-#: plugin/rkstandardcomponentgui.cpp:322 plugin/rkstandardcomponentgui.cpp:340
+#: plugin/rkstandardcomponentgui.cpp:323 plugin/rkstandardcomponentgui.cpp:341
 msgid "Next >"
 msgstr "İleri >"
 
-#: plugin/rkstandardcomponentgui.cpp:332 plugin/rkstandardcomponentgui.cpp:350
+#: plugin/rkstandardcomponentgui.cpp:333 plugin/rkstandardcomponentgui.cpp:351
 msgid "< Back"
 msgstr "< Geri"
 
-#: plugin/rkstandardcomponentgui.cpp:353
+#: plugin/rkstandardcomponentgui.cpp:354
 msgid "Use Dialog"
 msgstr "Diyalog kullan"
 
@@ -820,7 +820,7 @@ msgstr "Değişken:"
 msgid "Select one:"
 msgstr "Birini seç:"
 
-#: plugin/rkinput.cpp:45
+#: plugin/rkinput.cpp:49
 msgid "Enter text"
 msgstr "Metin girişi"
 
@@ -832,19 +832,19 @@ msgstr "(başlık yok)"
 msgid "Preview"
 msgstr ""
 
-#: plugin/rkpreviewbox.cpp:165
+#: plugin/rkpreviewbox.cpp:167
 msgid "Preview disabled"
 msgstr ""
 
-#: plugin/rkpreviewbox.cpp:169
+#: plugin/rkpreviewbox.cpp:171
 msgid "Preview up to date"
 msgstr ""
 
-#: plugin/rkpreviewbox.cpp:171
+#: plugin/rkpreviewbox.cpp:173
 msgid "Preview updating"
 msgstr ""
 
-#: plugin/rkpreviewbox.cpp:174
+#: plugin/rkpreviewbox.cpp:176
 msgid "Preview not (yet) possible"
 msgstr ""
 
@@ -1502,9 +1502,9 @@ msgid "Illegal attribute value. Only real numbers are allowed."
 msgstr "Geçersiz nitelik değeri. Sadece gerçek sayılara izin verilir."
 
 #: misc/xmlhelper.cpp:219
-msgid "Illegal attribute value. Allowed values are 'true' or 'false', only."
-msgstr ""
-"Geçersiz nitelik değeri. İzin verilen değerler sadece 'true' ya da 'false'."
+#, fuzzy
+msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
+msgstr "Geçersiz nitelik değeri. İzin verilen değerler sadece '%1' in biridir."
 
 #: misc/xmlhelper.cpp:230
 msgid "XML-parsing '%1' "
@@ -1599,15 +1599,16 @@ msgstr "Fonksiyonlar"
 msgid "Hidden Objects"
 msgstr "Gizli Nesneler"
 
-#: misc/rksaveobjectchooser.cpp:40
+#: misc/rksaveobjectchooser.cpp:39
 msgid "Object name to save to"
 msgstr "Kaydetmek için dosya adı"
 
-#: misc/rksaveobjectchooser.cpp:48
-msgid "The given symbol already exists"
+#: misc/rksaveobjectchooser.cpp:83
+#, fuzzy
+msgid "Overwrite? (The given object name already exists)"
 msgstr "Verilen simge zaten var"
 
-#: misc/rksaveobjectchooser.cpp:52
+#: misc/rksaveobjectchooser.cpp:87
 msgid "Overwrite?"
 msgstr "Üzerine yazılsın mı?"
 
@@ -1799,56 +1800,9 @@ msgstr ""
 "Bununla ilgili rkward-devel@lists.sourceforge.net'e e-posta atabilir ve "
 "çözüm arayabilirsiniz. Üzgünüz!"
 
-#: rbackend/rthread.cpp:418
+#: rbackend/rthread.cpp:420
 msgid "R Startup"
 msgstr "R Başlangıç"
-
-#. i18n: file rkconsolepart.rc line 11
-#. i18n: file rkwardui.rc line 32
-#: rc.cpp:3 rc.cpp:27
-#, no-c-format
-msgid "&Run"
-msgstr "&Çalıştır"
-
-#. i18n: file rkwardui.rc line 5
-#: rc.cpp:12
-#, no-c-format
-msgid "&New"
-msgstr "&Yeni"
-
-#. i18n: file rkwardui.rc line 12
-#: rc.cpp:15
-#, no-c-format
-msgid "&Import"
-msgstr ""
-
-#. i18n: file rkwardui.rc line 22
-#: rc.cpp:18
-#, no-c-format
-msgid "&Workspace"
-msgstr "&Çalışma alanı"
-
-#. i18n: file rkwardui.rc line 36
-#: rc.cpp:30
-#, no-c-format
-msgid "&Windows"
-msgstr "&Pencereler"
-
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr ""
-"Çevirenlerin isimleri \n"
-"Harun Hurma"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr ""
-"_: Çevirenlerin posta adresleri\n"
-"h.hurma@gmail.com"
 
 #: main.cpp:70 main.cpp:82
 msgid "RKWard"
@@ -2061,7 +2015,7 @@ msgstr "R hakkında yardım"
 msgid "Search R Help"
 msgstr "R yardımda ara"
 
-#: rkward.cpp:356
+#: rkward.cpp:357
 msgid "Help on RKWard"
 msgstr "R hakkında yardım"
 
@@ -2093,7 +2047,7 @@ msgstr ""
 "RkWard kapatılıyor: Çalışma alanını kaydetmek istiyor musunuz?\n"
 "Eğer çıkmak istemiyorsanız \"İptal\" tuşuna basın"
 
-#: rkward.cpp:520 rkward.cpp:634
+#: rkward.cpp:520 rkward.cpp:633
 msgid "Save Workspace?"
 msgstr "Çalışma alanı kaydedilsin mi?"
 
@@ -2107,57 +2061,57 @@ msgstr ""
 "group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
 "net 'e iletin"
 
-#: rkward.cpp:599
+#: rkward.cpp:598
 msgid "New dataset"
 msgstr "Yeni veri seti"
 
-#: rkward.cpp:599
+#: rkward.cpp:598
 msgid "Enter name for the new dataset"
 msgstr "Yeni veri setinin ismini girin"
 
-#: rkward.cpp:603 robjectbrowser.cpp:113 robjectbrowser.cpp:147
+#: rkward.cpp:602 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
 "Belirttiğiniz isim kullanımda ya da geçerli değil. %1 olarak yeniden "
 "isimlendirin"
 
-#: rkward.cpp:603 robjectbrowser.cpp:113 robjectbrowser.cpp:147
+#: rkward.cpp:602 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "Invalid Name"
 msgstr "Geçersiz isim"
 
-#: rkward.cpp:615
+#: rkward.cpp:614
 msgid "Opening workspace..."
 msgstr "Çalışma alanı açılıyor..."
 
-#: rkward.cpp:618
+#: rkward.cpp:617
 msgid "*|All files"
 msgstr "*|Bütün dosyalar"
 
-#: rkward.cpp:618
+#: rkward.cpp:617
 msgid "Open File..."
 msgstr "Dosya aç..."
 
-#: rkward.cpp:634
+#: rkward.cpp:633
 msgid "Do you want to save the current workspace?"
 msgstr "Şu anki çalışma alanını kaydetmek istiyor musunuz?"
 
-#: rkward.cpp:676
+#: rkward.cpp:675
 msgid "Ready."
 msgstr "Hazır."
 
-#: rkward.cpp:709
+#: rkward.cpp:708
 msgid "R engine busy"
 msgstr "R engine meşgul"
 
-#: rkward.cpp:712
+#: rkward.cpp:711
 msgid "R engine idle"
 msgstr "R engine boşta"
 
-#: rkward.cpp:742
+#: rkward.cpp:741
 msgid "Open command file(s)"
 msgstr "Komut dosyası(ları) aç"
 
-#: rkward.cpp:777
+#: rkward.cpp:776
 msgid "[Unnamed Workspace]"
 msgstr "[İsimsiz Çalışma alanı]"
 
@@ -2169,19 +2123,19 @@ msgstr "R konsol"
 msgid "Syntax error\n"
 msgstr "Sözdizimi hatası\n"
 
-#: rkconsole.cpp:683
+#: rkconsole.cpp:684
 msgid "Interrupt running command"
 msgstr "Çalışan komutu durdur"
 
-#: rkconsole.cpp:689
+#: rkconsole.cpp:690
 msgid "Copy selection cleaned"
 msgstr "Silinen seçimi kopyala"
 
-#: rkconsole.cpp:690
+#: rkconsole.cpp:691
 msgid "Copy selection literally"
 msgstr "Tam olarak seçimi kopyala"
 
-#: rkconsole.cpp:711
+#: rkconsole.cpp:712
 msgid ""
 "You have configured RKWrad to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -2193,11 +2147,11 @@ msgstr ""
 "başlattınız). Şu ana konsol uygulamasından vazgeçmek istiyor musunuz veya "
 "daha sonra tekrar dener misiniz?"
 
-#: rkconsole.cpp:711
+#: rkconsole.cpp:712
 msgid "Console is busy"
 msgstr "Konsol meşgul"
 
-#: rkconsole.cpp:711
+#: rkconsole.cpp:712
 msgid "Bypass console"
 msgstr "Konsolu pas geç"
 
@@ -2376,3 +2330,55 @@ msgstr "Tüm Çevreleri Göster"
 #: robjectbrowser.cpp:216
 msgid "Show Hidden Objects"
 msgstr "Gizli Nesneleri Göster"
+
+#. i18n: file rkconsolepart.rc line 11
+#. i18n: file rkwardui.rc line 32
+#: rc.cpp:3 rc.cpp:27
+#, no-c-format
+msgid "&Run"
+msgstr "&Çalıştır"
+
+#. i18n: file rkwardui.rc line 5
+#: rc.cpp:12
+#, no-c-format
+msgid "&New"
+msgstr "&Yeni"
+
+#. i18n: file rkwardui.rc line 12
+#: rc.cpp:15
+#, no-c-format
+msgid "&Import"
+msgstr ""
+
+#. i18n: file rkwardui.rc line 22
+#: rc.cpp:18
+#, no-c-format
+msgid "&Workspace"
+msgstr "&Çalışma alanı"
+
+#. i18n: file rkwardui.rc line 36
+#: rc.cpp:30
+#, no-c-format
+msgid "&Windows"
+msgstr "&Pencereler"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+"Çevirenlerin isimleri \n"
+"Harun Hurma"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+"_: Çevirenlerin posta adresleri\n"
+"h.hurma@gmail.com"
+
+#~ msgid "Illegal attribute value. Allowed values are 'true' or 'false', only."
+#~ msgstr ""
+#~ "Geçersiz nitelik değeri. İzin verilen değerler sadece 'true' ya da "
+#~ "'false'."

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-04 18:54+0100\n"
+"POT-Creation-Date: 2007-02-09 11:51+0100\n"
 "PO-Revision-Date: 2007-01-19 16:10+0100\n"
 "Last-Translator: Pep Roca <griera@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -273,7 +273,7 @@ msgstr ""
 "pas:\n"
 "\n"
 
-#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:326
+#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:327
 #: misc/rkprogresscontrol.cpp:273
 msgid "Done"
 msgstr "Fet"
@@ -410,7 +410,7 @@ msgid "Run all"
 msgstr "Executa-ho tot"
 
 #: windows/rkcommandeditorwindowpart.cpp:54 windows/rkcommandlog.cpp:286
-#: rkconsole.cpp:680
+#: rkconsole.cpp:681
 msgid "Run selection"
 msgstr "Executa la selecció"
 
@@ -420,7 +420,7 @@ msgstr "Executa la línia actual"
 
 # fr.po: "&Aide sur la fonction"
 # es.po: "Referencia de la &Función"
-#: windows/rkcommandeditorwindowpart.cpp:57 rkconsole.cpp:679
+#: windows/rkcommandeditorwindowpart.cpp:57 rkconsole.cpp:680
 msgid "&Function reference"
 msgstr "&Funció: Ajuda"
 
@@ -607,26 +607,26 @@ msgstr "Sense nom"
 msgid " [modified]"
 msgstr " [modicat]"
 
-#: windows/detachedwindowcontainer.cpp:38
+#: windows/detachedwindowcontainer.cpp:39
 msgid "Attach to main window"
 msgstr "Ajunta amb la finestra principal"
 
-#: windows/rkworkplace.cpp:123
+#: windows/rkworkplace.cpp:124
 msgid "Unable to open \"%1\""
 msgstr "No es pot obrir \"%1\""
 
-#: windows/rkworkplace.cpp:123
+#: windows/rkworkplace.cpp:124
 msgid "Could not open command file"
 msgstr "No s'ha pogut obrir el fitxer d'ordres"
 
 # fr.po: Enregistrer l'espace de travail
 # es.po: Guardar Espacio de Trabajo
 #  Thomas Friedrichsmeier: Workplace is the windows (script editors / data editors / help files / output) managed by rkward
-#: windows/rkworkplace.cpp:320
+#: windows/rkworkplace.cpp:324
 msgid "Save Workplace layout"
 msgstr "Desa el lloc de treball del RkWard"
 
-#: windows/rkworkplace.cpp:327
+#: windows/rkworkplace.cpp:331
 msgid "Restore Workplace layout"
 msgstr "Restableix el lloc de treball del RKWard"
 
@@ -647,7 +647,7 @@ msgstr "Error de sintaxi.\n"
 msgid "An unspecified error occurred while running the command.\n"
 msgstr "S'ha produït un error desconegut mentre s'executava l'ordre.\n"
 
-#: windows/rkwindowcatcher.cpp:61
+#: windows/rkwindowcatcher.cpp:60
 msgid ""
 "You have created a new X11 device window in R. Usually, RKWard tries to "
 "detect such windows, to take control of them, and add a menu-bar to them. "
@@ -674,81 +674,81 @@ msgstr ""
 "la vostra configuració a fi que intentem arreglar això en les futures "
 "versions de RKWard."
 
-#: windows/rkwindowcatcher.cpp:61
+#: windows/rkwindowcatcher.cpp:60
 msgid "Could not embed R X11 window"
 msgstr "No s'ha pogut incrustar la finestra X11 del R"
 
-#: windows/rkwindowcatcher.cpp:94
+#: windows/rkwindowcatcher.cpp:93
 msgid "An error occurred"
 msgstr "S'ha produït un error"
 
 # ??? Per revisar
-#: windows/rkwindowcatcher.cpp:199
+#: windows/rkwindowcatcher.cpp:198
 msgid "Specify fixed size"
 msgstr "Especifiqueu la mida fixa"
 
-#: windows/rkwindowcatcher.cpp:224
+#: windows/rkwindowcatcher.cpp:223
 msgid "Activate graphics device number %1"
 msgstr "S'ha activat el dispositiu gràfic nombre %1"
 
-#: windows/rkwindowcatcher.cpp:230
+#: windows/rkwindowcatcher.cpp:229
 msgid "Copy contents of graphics device number %1 to output"
 msgstr "Copia el contingut del dispositiu gràfic número %1 als resultats"
 
-#: windows/rkwindowcatcher.cpp:236
+#: windows/rkwindowcatcher.cpp:235
 msgid "Print contents of graphics device number %1"
 msgstr "Imprimeix el contingit del dispositiu gràfic nombre %1"
 
-#: windows/rkwindowcatcher.cpp:243
+#: windows/rkwindowcatcher.cpp:242
 msgid "Specify R object"
 msgstr "Especifiqueu l'objecte R"
 
 # ??? Per revisar
-#: windows/rkwindowcatcher.cpp:246
+#: windows/rkwindowcatcher.cpp:245
 msgid "Specify the R object name, you want to save the graph to"
 msgstr "Especifiqueu el nom de l'objecte R on voleu desar el gràfic"
 
-#: windows/rkwindowcatcher.cpp:257
+#: windows/rkwindowcatcher.cpp:256
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr "Desa el contingut del dispositiu gràfic número %1 a l'objecte '%2'"
 
-#: windows/rkwindowcatcher.cpp:266
+#: windows/rkwindowcatcher.cpp:265
 msgid "Duplicate graphics device number %1"
 msgstr "Duplica el dispositiu gràfic nombre %1"
 
-#: windows/rkwindowcatcher.cpp:286
+#: windows/rkwindowcatcher.cpp:285
 msgid "Draw area follows size of window"
 msgstr "Adapta l'àrea del dibuix a la mida de la finestra"
 
-#: windows/rkwindowcatcher.cpp:288
+#: windows/rkwindowcatcher.cpp:287
 msgid "Set fixed size 500x500"
 msgstr "Estableix una mida fixa de 500x500"
 
-#: windows/rkwindowcatcher.cpp:289
+#: windows/rkwindowcatcher.cpp:288
 msgid "Set fixed size 1000x1000"
 msgstr "Estableix una mida fixa de 1000x1000"
 
-#: windows/rkwindowcatcher.cpp:290
+#: windows/rkwindowcatcher.cpp:289
 msgid "Set fixed size 2000x2000"
 msgstr "Estableix una mida fixa de 2000x2000"
 
-#: windows/rkwindowcatcher.cpp:291
+#: windows/rkwindowcatcher.cpp:290
 msgid "Set specified fixed size..."
 msgstr "Estableix una mida especificada..."
 
-#: windows/rkwindowcatcher.cpp:293
+#: windows/rkwindowcatcher.cpp:292
 msgid "Make active"
 msgstr "Fes-la activa"
 
-#: windows/rkwindowcatcher.cpp:294
+#: windows/rkwindowcatcher.cpp:293
 msgid "Copy to output"
 msgstr "Copia els resultats"
 
-#: windows/rkwindowcatcher.cpp:296
+#: windows/rkwindowcatcher.cpp:295
 msgid "Store as R object..."
 msgstr "Guarda com un objecte R..."
 
-#: windows/rkwindowcatcher.cpp:297
+#: windows/rkwindowcatcher.cpp:296
 msgid "Duplicate"
 msgstr "Duplicat"
 
@@ -798,7 +798,7 @@ msgid "Specify model"
 msgstr "Especifiqueu el model"
 
 # parse: anàlisi sintàctica (Vocabulari d'informàtica. © Gabinet de Llengua Catalana. Universitat Autònoma de Barcelona)
-#: plugin/rkstandardcomponent.cpp:73
+#: plugin/rkstandardcomponent.cpp:74
 msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
@@ -806,7 +806,7 @@ msgstr ""
 "S'ha produït un error a l'analitzar la descripció d'aquest endollable ('%"
 "1'). Per a més detalls, reviseu la sortida estàndard."
 
-#: plugin/rkstandardcomponent.cpp:73
+#: plugin/rkstandardcomponent.cpp:74
 msgid "Could not create plugin"
 msgstr "No s'ha pogut crear l'endollable"
 
@@ -830,7 +830,7 @@ msgstr "Error de R"
 
 # fr.po: Exécuter
 # es.po: Enviar
-#: plugin/rkstandardcomponentgui.cpp:95 plugin/rkstandardcomponentgui.cpp:345
+#: plugin/rkstandardcomponentgui.cpp:95 plugin/rkstandardcomponentgui.cpp:346
 msgid "Submit"
 msgstr "Envia"
 
@@ -844,11 +844,11 @@ msgstr "Utilitza l'assistent"
 msgid "Code"
 msgstr "Codi"
 
-#: plugin/rkstandardcomponentgui.cpp:203
+#: plugin/rkstandardcomponentgui.cpp:204
 msgid "Processing. Please wait"
 msgstr "S'està processant. Espereu"
 
-#: plugin/rkstandardcomponentgui.cpp:270
+#: plugin/rkstandardcomponentgui.cpp:271
 msgid ""
 "Below you can see the command(s) corresponding to the settings you made. "
 "Click 'Submit' to run the command(s)."
@@ -856,15 +856,15 @@ msgstr ""
 "En la part inferior podeu veure les ordres que corresponen a la configuració "
 "que heu fet. Feu clic sobre 'Envia' per executar-les."
 
-#: plugin/rkstandardcomponentgui.cpp:322 plugin/rkstandardcomponentgui.cpp:340
+#: plugin/rkstandardcomponentgui.cpp:323 plugin/rkstandardcomponentgui.cpp:341
 msgid "Next >"
 msgstr "Següent >"
 
-#: plugin/rkstandardcomponentgui.cpp:332 plugin/rkstandardcomponentgui.cpp:350
+#: plugin/rkstandardcomponentgui.cpp:333 plugin/rkstandardcomponentgui.cpp:351
 msgid "< Back"
 msgstr "< Enrere"
 
-#: plugin/rkstandardcomponentgui.cpp:353
+#: plugin/rkstandardcomponentgui.cpp:354
 msgid "Use Dialog"
 msgstr "Utilitza el diàleg"
 
@@ -876,7 +876,7 @@ msgstr "Variable:"
 msgid "Select one:"
 msgstr "Selecciona un:"
 
-#: plugin/rkinput.cpp:45
+#: plugin/rkinput.cpp:49
 msgid "Enter text"
 msgstr "Introduïu el text"
 
@@ -888,19 +888,19 @@ msgstr "(cap etiqueta)"
 msgid "Preview"
 msgstr ""
 
-#: plugin/rkpreviewbox.cpp:165
+#: plugin/rkpreviewbox.cpp:167
 msgid "Preview disabled"
 msgstr ""
 
-#: plugin/rkpreviewbox.cpp:169
+#: plugin/rkpreviewbox.cpp:171
 msgid "Preview up to date"
 msgstr ""
 
-#: plugin/rkpreviewbox.cpp:171
+#: plugin/rkpreviewbox.cpp:173
 msgid "Preview updating"
 msgstr ""
 
-#: plugin/rkpreviewbox.cpp:174
+#: plugin/rkpreviewbox.cpp:176
 msgid "Preview not (yet) possible"
 msgstr ""
 
@@ -1598,10 +1598,12 @@ msgstr "El valor de l'atribut està prohibit. Només es permeten nombres enters.
 msgid "Illegal attribute value. Only real numbers are allowed."
 msgstr "El valor de l'atribut està prohibit. Només es permeten nombres reals."
 
+# fr.po: Valeur d'attribut interdite. Les valeurs possibles sont seulement parmi '%1'.
 #: misc/xmlhelper.cpp:219
-msgid "Illegal attribute value. Allowed values are 'true' or 'false', only."
+#, fuzzy
+msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
 msgstr ""
-"El valor de l'atribut està prohibit. Només es permet 'verdader o 'fals'."
+"El valor de l'atribut està prohibit. Només es permet un dels valors de '%1'."
 
 #: misc/xmlhelper.cpp:230
 msgid "XML-parsing '%1' "
@@ -1699,15 +1701,16 @@ msgstr "Funcions"
 msgid "Hidden Objects"
 msgstr "Objectes ocults"
 
-#: misc/rksaveobjectchooser.cpp:40
+#: misc/rksaveobjectchooser.cpp:39
 msgid "Object name to save to"
 msgstr "Introduïu el nom de l'objecte"
 
-#: misc/rksaveobjectchooser.cpp:48
-msgid "The given symbol already exists"
+#: misc/rksaveobjectchooser.cpp:83
+#, fuzzy
+msgid "Overwrite? (The given object name already exists)"
 msgstr "El símbol proporcionat ja existeix"
 
-#: misc/rksaveobjectchooser.cpp:52
+#: misc/rksaveobjectchooser.cpp:87
 msgid "Overwrite?"
 msgstr "Sobreescric?"
 
@@ -1909,52 +1912,9 @@ msgstr ""
 "rkward-devel@lists.sourceforge.net explicant el que intentaveu fer quan s'ha "
 "produït això."
 
-#: rbackend/rthread.cpp:418
+#: rbackend/rthread.cpp:420
 msgid "R Startup"
 msgstr "Engegada del R"
-
-#. i18n: file rkconsolepart.rc line 11
-#. i18n: file rkwardui.rc line 32
-#: rc.cpp:3 rc.cpp:27
-#, no-c-format
-msgid "&Run"
-msgstr "&Executa"
-
-#. i18n: file rkwardui.rc line 5
-#: rc.cpp:12
-#, no-c-format
-msgid "&New"
-msgstr "&Nou"
-
-#. i18n: file rkwardui.rc line 12
-#: rc.cpp:15
-#, no-c-format
-msgid "&Import"
-msgstr ""
-
-#. i18n: file rkwardui.rc line 22
-#: rc.cpp:18
-#, no-c-format
-msgid "&Workspace"
-msgstr "&Espai de treball"
-
-#. i18n: file rkwardui.rc line 36
-#: rc.cpp:30
-#, no-c-format
-msgid "&Windows"
-msgstr "&Finestres"
-
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr "Pep Roca"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr "griera@gmail.com"
 
 #: main.cpp:70 main.cpp:82
 msgid "RKWard"
@@ -2178,7 +2138,7 @@ msgstr "Ajuda sobre el R"
 msgid "Search R Help"
 msgstr "Cerca ajuda del R"
 
-#: rkward.cpp:356
+#: rkward.cpp:357
 msgid "Help on RKWard"
 msgstr "Ajuda sobre el RKWard"
 
@@ -2211,7 +2171,7 @@ msgstr ""
 "Esteu sortint del RKWard. Voleu desar l'espai de treball?\n"
 "RKWard seguirà obert si premeu Cancel·lar"
 
-#: rkward.cpp:520 rkward.cpp:634
+#: rkward.cpp:520 rkward.cpp:633
 msgid "Save Workspace?"
 msgstr "Deso l'espai de treball?"
 
@@ -2225,57 +2185,57 @@ msgstr ""
 "sourceforge.net/tracker/?group_id=50231&atid=459007 o envieu un missatge a "
 "rkward-devel@lists.sourceforge.net"
 
-#: rkward.cpp:599
+#: rkward.cpp:598
 msgid "New dataset"
 msgstr "Nou conjunt de dades"
 
-#: rkward.cpp:599
+#: rkward.cpp:598
 msgid "Enter name for the new dataset"
 msgstr "Introduïu el nom pel nou conjunt de dades"
 
-#: rkward.cpp:603 robjectbrowser.cpp:113 robjectbrowser.cpp:147
+#: rkward.cpp:602 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
 "El nom que heu escollit ja s'està utilitzant o és incorrecte. S'ha "
 "reanomenat a %1"
 
-#: rkward.cpp:603 robjectbrowser.cpp:113 robjectbrowser.cpp:147
+#: rkward.cpp:602 robjectbrowser.cpp:113 robjectbrowser.cpp:147
 msgid "Invalid Name"
 msgstr "Nom no vàlid"
 
-#: rkward.cpp:615
+#: rkward.cpp:614
 msgid "Opening workspace..."
 msgstr "S'està obrint l'espai de treball..."
 
-#: rkward.cpp:618
+#: rkward.cpp:617
 msgid "*|All files"
 msgstr "*|Tots els fitxers"
 
-#: rkward.cpp:618
+#: rkward.cpp:617
 msgid "Open File..."
 msgstr "Obre el fitxer..."
 
-#: rkward.cpp:634
+#: rkward.cpp:633
 msgid "Do you want to save the current workspace?"
 msgstr "Voleu desar l'espai de treball actual?"
 
-#: rkward.cpp:676
+#: rkward.cpp:675
 msgid "Ready."
 msgstr "Llest."
 
-#: rkward.cpp:709
+#: rkward.cpp:708
 msgid "R engine busy"
 msgstr "El motor R està ocupat"
 
-#: rkward.cpp:712
+#: rkward.cpp:711
 msgid "R engine idle"
 msgstr "El motor R està inactiu"
 
-#: rkward.cpp:742
+#: rkward.cpp:741
 msgid "Open command file(s)"
 msgstr "Obra el(s) fitxer(s) d'ordres"
 
-#: rkward.cpp:777
+#: rkward.cpp:776
 msgid "[Unnamed Workspace]"
 msgstr "[Espai de treball sense nom]"
 
@@ -2288,19 +2248,19 @@ msgid "Syntax error\n"
 msgstr "Error de sintaxi\n"
 
 # fr.po: Interrompre l'exécution de la commande
-#: rkconsole.cpp:683
+#: rkconsole.cpp:684
 msgid "Interrupt running command"
 msgstr "Interromp l'execució de l'ordre"
 
-#: rkconsole.cpp:689
+#: rkconsole.cpp:690
 msgid "Copy selection cleaned"
 msgstr ""
 
-#: rkconsole.cpp:690
+#: rkconsole.cpp:691
 msgid "Copy selection literally"
 msgstr "Copia la selecció literalment"
 
-#: rkconsole.cpp:711
+#: rkconsole.cpp:712
 msgid ""
 "You have configured RKWrad to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -2312,11 +2272,11 @@ msgstr ""
 "començat a escriure-hi text a la consola). Voleu evitar la consola ara, o ho "
 "voleu intentar de nou més tard?"
 
-#: rkconsole.cpp:711
+#: rkconsole.cpp:712
 msgid "Console is busy"
 msgstr "La consola és ocupada"
 
-#: rkconsole.cpp:711
+#: rkconsole.cpp:712
 msgid "Bypass console"
 msgstr "Evita la consola"
 
@@ -2500,3 +2460,50 @@ msgstr "Mostra tots els entorns"
 #: robjectbrowser.cpp:216
 msgid "Show Hidden Objects"
 msgstr "Mostra els objectes ocults"
+
+#. i18n: file rkconsolepart.rc line 11
+#. i18n: file rkwardui.rc line 32
+#: rc.cpp:3 rc.cpp:27
+#, no-c-format
+msgid "&Run"
+msgstr "&Executa"
+
+#. i18n: file rkwardui.rc line 5
+#: rc.cpp:12
+#, no-c-format
+msgid "&New"
+msgstr "&Nou"
+
+#. i18n: file rkwardui.rc line 12
+#: rc.cpp:15
+#, no-c-format
+msgid "&Import"
+msgstr ""
+
+#. i18n: file rkwardui.rc line 22
+#: rc.cpp:18
+#, no-c-format
+msgid "&Workspace"
+msgstr "&Espai de treball"
+
+#. i18n: file rkwardui.rc line 36
+#: rc.cpp:30
+#, no-c-format
+msgid "&Windows"
+msgstr "&Finestres"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Pep Roca"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "griera@gmail.com"
+
+#~ msgid "Illegal attribute value. Allowed values are 'true' or 'false', only."
+#~ msgstr ""
+#~ "El valor de l'atribut està prohibit. Només es permet 'verdader o 'fals'."
