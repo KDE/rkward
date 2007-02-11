@@ -21,11 +21,11 @@ Choose the CSV file to import. An R object containing the data will be created. 
 		<caption id="tab_rows"/>
 		<setting id="rowname">How to determine row names? Either the rows can be numbered 1...n. Or you can specify a single column containing the row names (typically the first). Or you can provide a character vector of names.</setting>
 		<setting id="nomrow">See above. The column containing the row names, given either as a number, or as a column name (in the latter case, make sure to quote the name)</setting>
-		<setting id="rownames">See above. A vector of column names  (e.g. c ("row1", "row2", ...,  "rown"))</setting>
+		<setting id="rownames">See above. A vector of column names  (e.g. c ("row1", "row2", ...,  "rown"), but you can also specify the name of an R object containing the names to use)</setting>
 
 		<caption id="tab_columns"/>
 		<setting id="colname">Use default column names (possibly read from first row of file), or use specific names?</setting>
-		<setting id="colnames">See above. Specify a character vector of column names (e.g. c ("col1", "col2", ..., "coln"))</setting>
+		<setting id="colnames">See above. Specify a character vector of column names (e.g. c ("col1", "col2", ..., "coln"), but you can also specify the name of an R object containing the names to use)</setting>
 		<setting id="flush">Should additional columns (not specified above, and not within the first five rows of input) be skipped? See parameter flush in <link href="rkward://rhelp/read.table"/>.</setting>
 		<setting id="colclass">Should be class of each column be determined automatically, or specified?</setting>
 		<setting id="custoClasses">See above. Specify a character vector with the names of the classes to use for each column.</setting>
