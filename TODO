@@ -98,6 +98,10 @@ UI-stuff
 		- open link in new tab, etc.
 
 Internal stuff:
+	- Handling locales:
+		- RThread should define an own QTextCodec.
+		- this should be updated whenever Sys.setlocale() is called
+		- Should be used for all conversion to and from local8Bit for data passed to / from the backend
 	- Look at package odfWeave, and find out, how to use this
 		- replace remaining direct HTML fragments in plugins with wrapper calls
 	- should we override bindingIsActive()?
