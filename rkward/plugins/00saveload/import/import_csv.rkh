@@ -14,24 +14,33 @@ Choose the CSV file to import. An R object containing the data will be created. 
 		<setting id="name">The name of an R object to store the imported data in. If you chose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
 		<setting id="header">Whether the first row of the file contains should be interpreted as column names</setting>
 		<setting id="dec">Decimal character used in the imported file</setting>
+		<setting id="custom_dec">If you selected "other" above, specify the character, here.</setting>
 		<setting id="sep">The separator character used in the imported file</setting>
+		<setting id="custom_sep">If you selected "other" above, specify the character, here.</setting>
 
 		<caption id="tab_rows"/>
 		<setting id="rowname">How to determine row names? Either the rows can be numbered 1...n. Or you can specify a single column containing the row names (typically the first). Or you can provide a character vector of names.</setting>
 		<setting id="nomrow">See above. The column containing the row names, given either as a number, or as a column name (in the latter case, make sure to quote the name)</setting>
-		<setting id="rownames">See above. A vector of column names  (e.g. c ("row1", "row2", ... "rown"))</setting>
+		<setting id="rownames">See above. A vector of column names  (e.g. c ("row1", "row2", ...,  "rown"))</setting>
 
 		<caption id="tab_columns"/>
 		<setting id="colname">Use default column names (possibly read from first row of file), or use specific names?</setting>
-		<setting id="colnames">See above. Specify a character vector of column names (e.g. c ("col1", "col2", ... "coln"))</setting>
+		<setting id="colnames">See above. Specify a character vector of column names (e.g. c ("col1", "col2", ..., "coln"))</setting>
+		<setting id="flush">Should additional columns (not specified above, and not within the first five rows of input) be skipped? See parameter flush in <link href="rkward://rhelp/read.table"/>.</setting>
 		<setting id="colclass">Should be class of each column be determined automatically, or specified?</setting>
-		<setting id="custoClasses">See above. Specify a character vector with the names of the classes to use for each column</setting>
+		<setting id="custoClasses">See above. Specify a character vector with the names of the classes to use for each column.</setting>
+
+		<caption id="tab_strings"/>
+		<setting id="allow_escapes">Should a backslash ('\') followed by a character be treated as an escaped character? Otherwise the sequence is read literally.</setting>
+		<setting id="strings_as_factors">Should columns containing character data be converted to factors in R, or should they be read as character vectors?</setting>
+		<setting id="quote">String delimiter character(s) used in the file</setting>
+		<setting id="custom_quote">If you selected "other" above, you can specify which quoting character to use, here. Simply enter all character to use (without spaces or comma, e.g. "'@ to use ", ', and @ as string delimiters).</setting>
 
 		<caption id="tab_further_options"/>
 		<setting id="skip">This many rows will be skipped at the start of the file. Use, for instance, if the file contains a text header.</setting>
 		<setting id="nrows">Maximum number of rows to read (-1 to read all lines)</setting>
 		<setting id="na">How are missing values (NAs) written in the file to be imported?</setting>
-		<setting id="commentchar">If you enter a single character, here, everything after that character in a line will be ignored. Leave blank to disable detection of comments</setting>
+		<setting id="commentchar">If you enter a single character, here, everything after that character in a line will be ignored. Leave blank to disable detection of comments.</setting>
 		<setting id="fill">If checked, and the rows have differing length, they will be padded with empty values in the imported data.</setting>
 		<setting id="checkname">Should column names be checked for validity?</setting>
 		<setting id="stripwhite">Should leading and trailing white space be removed from character fields?</setting>
