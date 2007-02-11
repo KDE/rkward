@@ -35,7 +35,7 @@
 		<connect client="custoClasses.enabled" governor="customizeclasses" />
 		<connect client="custoClasses.required" governor="customizeclasses" />
 	</logic>
-	<dialog label="Import CSV data" >
+	<dialog label="Import Text / CSV data" >
 		<tabbook>
 			<tab id="tab_general" label="General" >
 				<browser size="small" id="file" label="File name" />
