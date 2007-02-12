@@ -554,10 +554,9 @@ void RObject::setObjectOpened (RKEditor *editor, bool opened) {
 
 	if (opened) {
 		if (!data) {
-			allocateEditData ();
+			allocateEditData (editor);
 			updateDataFromR (0);
 		}
-		data->editor = editor;
 	} else {
 		discardEditData ();
 	}
@@ -570,21 +569,21 @@ void RObject::setCreatedInEditor (RKEditor *editor) {
 	RK_ASSERT (!data);
 
 	if (!data) {
-		allocateEditData ();
+		allocateEditData (editor);
 		initializeEditDataToEmpty ();
 	}
-	data->editor = editor;
 	data->pending = true;
 }
 
 // virtual
-void RObject::allocateEditData () {
+void RObject::allocateEditData (RKEditor *editor) {
 	RK_TRACE (OBJECTS);
 
 	// this assert should stay even when more than one editor is allowed per object. After all, the edit-data should only ever be allocated once!
 	RK_ASSERT (!data);
 	
 	data = new EditData;
+	data->editor = editor;
 	data->dirty = false;
 	data->pending = false;
 }
