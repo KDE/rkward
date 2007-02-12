@@ -56,7 +56,6 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 	// if the variable is currently opened for editing, all values need to be rechecked / resynced
 	if (myData ()) {
 		bool internal_sync = myData ()->immediate_sync;
-		setSyncing (false);
 		// quick and dirty approach! TODO: make more efficient
 		QStringList list;
 		for (int i=0; i < getLength (); ++i) {
@@ -72,6 +71,7 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 		setDataType (new_type);
 		allocateEditData (editor);
 
+		setSyncing (false);
 		int i = 0;
 		for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
 			setText (i, *it);
