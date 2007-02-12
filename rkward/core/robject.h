@@ -240,7 +240,7 @@ In subclasses like RKVariable, the struct is extended to additionally hold the d
 /** see EditData. 0 if the object is not being edited. */
 	EditData *data;
 /** see EditData. Allocates the data member. To be reimplemented in classes that need more information in the EditData struct */
-	virtual void allocateEditData ();
+	virtual void allocateEditData (RKEditor *editor);
 /** companion to allocateEditData (). Initializes the data to empty (NA). Default implementation does nothing. Reimplemented in derived classes. */
 	virtual void initializeEditDataToEmpty ();
 /** see above */

@@ -1,4 +1,5 @@
 --- Version 0.4.6 - Feb-15-2007
+- fix crash after changing storage type of an object in the data editor
 - single line input fields in plugins no longer accept new-lines
 - support for calculating p-values in correlation matrix plugin
 - fixed: pressing F8 in the console would remove input focus from the console

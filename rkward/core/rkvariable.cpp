@@ -56,28 +56,22 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 	// if the variable is currently opened for editing, all values need to be rechecked / resynced
 	if (myData ()) {
 		bool internal_sync = myData ()->immediate_sync;
-		setSyncing (false);
 		// quick and dirty approach! TODO: make more efficient
 		QStringList list;
 		for (int i=0; i < getLength (); ++i) {
 			list.append (getText (i));
 		}
 
-		setDataType (new_type);
-		if (new_type == RObject::DataCharacter) {
-			if (myData ()->cell_strings == 0) {
-				delete [] (myData ()->cell_doubles);
-				myData ()->cell_doubles = 0;
-				myData ()->cell_strings = new QString[getLength ()];
-			}
-		} else {
-			if (myData ()->cell_doubles == 0) {
-				delete [] (myData ()->cell_strings);
-				myData ()->cell_strings = 0;
-				myData ()->cell_doubles = new double[getLength ()];
-			}
+		if (myData ()->changes) {	// all pending changes are moot
+			delete myData ()->changes;
+			myData ()->changes = 0;
 		}
+		RKEditor *editor = myData ()->editor;
+		discardEditData ();
+		setDataType (new_type);
+		allocateEditData (editor);
 
+		setSyncing (false);
 		int i = 0;
 		for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
 			setText (i, *it);
@@ -194,13 +188,14 @@ void RKVariable::setLength (int len) {
 }
 
 // virtual
-void RKVariable::allocateEditData () {
+void RKVariable::allocateEditData (RKEditor *editor) {
 	RK_TRACE (OBJECTS);
 
 	// this assert should stay even when more than one editor is allowed per object. After all, the edit-data should only ever be allocated once!
 	RK_ASSERT (!myData ());
 	
 	data = new RKVarEditData;
+	myData ()->editor = editor;
 	myData ()->cell_strings = 0;
 	myData ()->cell_doubles = 0;
 	myData ()->cell_states = 0;
@@ -212,6 +207,7 @@ void RKVariable::allocateEditData () {
 	myData ()->previously_valid = true;
 	myData ()->invalid_fields.setAutoDelete (true);
 	myData ()->dirty = false;
+	myData ()->pending = false;
 
 	extendToLength (getLength ());
 

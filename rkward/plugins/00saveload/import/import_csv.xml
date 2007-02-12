@@ -6,8 +6,19 @@
 		<external id="filename" />
 		<connect governor="filename" client="file.selection"/>
 
-
 		<connect client="rowname.enabled" governor="isrow.state" />
+
+		<convert id="customsep" mode="equals" sources="sep.string" standard="other" />
+		<connect client="custom_sep.enabled" governor="customsep" />
+		<connect client="custom_sep.required" governor="custom_sep.enabled" />
+
+		<convert id="customdec" mode="equals" sources="dec.string" standard="other" />
+		<connect client="custom_dec.enabled" governor="customdec" />
+		<connect client="custom_dec.required" governor="custom_dec.enabled" />
+		
+		<convert id="customquote" mode="equals" sources="quote.string" standard="other" />
+		<connect client="custom_quote.enabled" governor="customquote" />
+		<connect client="custom_quote.required" governor="custom_quote.enabled" />
 
 		<convert id="userow" mode="equals" sources="rowname.string" standard="rowcol" />
 		<convert id="customizerow" mode="equals" sources="rowname.string" standard="custoRow" />
@@ -24,23 +35,31 @@
 		<connect client="custoClasses.enabled" governor="customizeclasses" />
 		<connect client="custoClasses.required" governor="customizeclasses" />
 	</logic>
-	<dialog label="Import CSV data" >
+	<dialog label="Import Text / CSV data" >
 		<tabbook>
 			<tab id="tab_general" label="General" >
 				<browser size="small" id="file" label="File name" />
 				<saveobject id="name" initial="my.csv.data" label="Object to save to"/>
 				<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="true" label="First row contains column names"/>
 				<row>
-					<radio id="dec" label="Decimal point character" >
-						<option value="'.'" label="'.'" />
-						<option value="','" label="','" />
-					</radio>
-					<radio id="sep" label="Field separator character" >
-						<option value="'\t'" label="Tab" />
-						<option value="';'" label="';'" />
-						<option value="','" label="','" />
-						<option value="' '" label="Space" />
-					</radio>
+					<column>
+						<radio id="dec" label="Decimal point character" >
+							<option value="'.'" label="'.'" />
+							<option value="','" label="','" />
+							<option value="other" label="Other (specify below)" />
+						</radio>
+						<input id="custom_dec" label="Specify decimal point character" />
+					</column>
+					<column>
+						<radio id="sep" label="Field separator character" >
+							<option value="'\t'" label="Tab" />
+							<option value="';'" label="';'" />
+							<option value="','" label="','" />
+							<option value="' '" label="Space" />
+							<option value="other" label="Other (specify below)" />
+						</radio>
+						<input id="custom_sep" label="Specify field separator character" />
+					</column>
 				</row>
 			</tab>
 			<tab id="tab_rows" label="Rows" >
@@ -54,16 +73,37 @@
 				<input id="rownames" label="Vector of row names (quoted)" />
 			</tab>
 			<tab id="tab_columns"  label="Columns" >
-				<radio id="colname" label="Column names" >
-					<option value="" label="Default" />
-					<option value="custoCol" label="Use a character vector" />
+				<frame label="Column names">
+					<radio id="colname" label="Column names" >
+						<option value="" label="Default" />
+						<option value="custoCol" label="Use a character vector" />
+					</radio>
+					<input id="colnames" label="Vector of column names (quoted)" />
+				</frame>
+				<checkbox id="flush" label="Skip any further fields" value=", flush=TRUE" value_unchecked="" />
+				<frame label="Column classes">
+					<radio id="colclass" label="Classes of columns" >
+						<option value="" label="Default" />
+						<option value="custoClass" label="Use a character vector" />
+					</radio>
+					<input id="custoClasses" label="Vector of column classes (quoted)" />
+				</frame>
+			</tab>
+			<tab id="tab_strings"  label="Strings" >
+				<checkbox id="allow_escapes" label="Allow escaped characters" value=", allowEscapes=TRUE" value_unchecked="" />
+				<radio id="strings_as_factors" label="Convert character columns to factors" >
+					<option value=", stringsAsFactors=TRUE" label="Convert to factor" />
+					<option value="" label="Default" checked="true" />
+					<option value=", stringsAsFactors=FALSE" label="Do not convert" />
 				</radio>
-				<input id="colnames" label="Vector of column names (quoted)" />
-				<radio id="colclass" label="Classes of columns" >
-					<option value="" label="Default" />
-					<option value="custoClass" label="Use a character vector" />
+				<radio id="quote" label="String delimiter" >
+					<option value="'&quot;'" label="&quot; only" />
+					<option value="'\''" label="' only" />
+					<option value="'&quot;\''" label="&quot; and '" checked="true"/>
+					<option value="''" label="None / disabled" />
+					<option value="other" label="Other (specify below)" />
 				</radio>
-				<input id="custoClasses" label="Vector of column classes (quoted)" />
+				<input id="custom_quote" label="Specify quoting character(s)" />
 			</tab>
 			<tab id="tab_further_options" label="Further Options" >
 				<row>

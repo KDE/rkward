@@ -168,7 +168,7 @@ protected:
 		QIntDict<QString> invalid_fields;
 	};
 /** reimplemented from RObject */
-	void allocateEditData ();
+	void allocateEditData (RKEditor *editor);
 /** reimplemented from RObject */
 	void initializeEditDataToEmpty ();
 /** reimplemented from RObject */
