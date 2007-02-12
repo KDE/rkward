@@ -11,17 +11,17 @@ function calculate () {
 	$options = "";
 	if (!getRK_val ("autowidth")) $options .= ", width=" . getRK_val ("width");
 	if (!getRK_val ("autoheight")) $options .= ", height=" . getRK_val ("height");
-	$options = ", res=" . getRK_val ("resolution");
-	if (!getRK_val ("autopointsize")) $options = ", pointsize=" . getRK_val ("pointsize");
+	$options .= ", res=" . getRK_val ("resolution");
+	if (!getRK_val ("autopointsize")) $options .= ", pointsize=" . getRK_val ("pointsize");
 ?>
 dev.set (<? getRK ("devnum"); ?>)
 dev2bitmap ("<? getRK ("file"); ?>", type="<? echo ($type); ?>"<? echo ($options); ?>)
 <?
 }
-	
+
 function printout () {
 }
-	
+
 function cleanup () {
 ?><?
 }
