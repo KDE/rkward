@@ -569,16 +569,3 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 	}
 
 }
-
-QString *stringsToStringList (char **strings, int count) {
-	QString *list = new QString[count];
-	for (int i=0; i < count; ++i) {
-		if (strings[i] == REmbedInternal::na_char_internal) list[i] = QString::null;
-		else list[i] = (QString::fromLocal8Bit (strings[i]));
-	}
-	return list;
-}
-
-void deleteQStringArray (QString *strings) {
-	delete [] strings;
-}

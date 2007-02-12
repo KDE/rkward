@@ -21,6 +21,13 @@
 // static
 REmbedInternal *REmbedInternal::this_pointer = 0; 
 
+#define QT_NO_COMPAT
+#define TRUE (const bool)0
+#define FALSE (const bool)!0
+#include <qstring.h>
+#undef TRUE
+#undef FALSE
+
 extern "C" {
 #define R_INTERFACE_PTRS 1
 
@@ -365,8 +372,6 @@ TODO: verify we really need this. */
 
 /** This function is the R side wrapper around stringsToStringList */
 QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
-	char **strings = 0;
-	
 	// bad format? coerce the vector first
 	if (TYPEOF (from_exp) != STRSXP) {
 		SEXP strexp;
@@ -378,23 +383,21 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 
 	// format already good? Avoid coercion (and associated copying)
 	*count = length (from_exp);
-	strings = new char* [*count];
+	QString *list = new QString[*count];
 	unsigned int i = 0;
 	for (; i < *count; ++i) {
 		SEXP dummy = VECTOR_ELT (from_exp, i);
 
 		if (TYPEOF (dummy) != CHARSXP) {
-			strings[i] = strdup ("not defined");	// can this ever happen?
+			list[i] = QString::fromLocal8Bit ("not defined");	// can this ever happen?
 		} else {
 			if (dummy == NA_STRING) {
-				strings[i] = REmbedInternal::na_char_internal;
+				list[i] = QString::null;
 			} else {
-				strings[i] = (char *) STRING_PTR (dummy);
+				list[i] = QString::fromLocal8Bit ((char *) STRING_PTR (dummy));
 			}
 		}
 	}
-	QString *list = stringsToStringList (strings, i);
-	delete [] strings;
 
 	return list;
 }
@@ -492,7 +495,7 @@ SEXP doError (SEXP call) {
 	unsigned int count;
 	QString *strings = SEXPToStringList (call, &count);
 	REmbedInternal::this_pointer->handleError (strings, count);
-	deleteQStringArray (strings);
+	delete [] strings;
 	return R_NilValue;
 }
 
@@ -508,7 +511,7 @@ SEXP doSubstackCall (SEXP call) {
 	unsigned int count;
 	QString *strings = SEXPToStringList (call, &count);
 	REmbedInternal::this_pointer->handleSubstackCall (strings, count);
-	deleteQStringArray (strings);
+	delete [] strings;
 	return R_NilValue;
 }
 
