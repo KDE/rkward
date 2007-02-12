@@ -1,4 +1,3 @@
-# translation of de.po to German
 # translation of de.po to
 # translation of rkward.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -7,15 +6,15 @@
 # Stefan Rodiger <stefan_roediger@gmx.de>, 2006.
 # Stefan Joerg Roediger <stefan_roediger@gmx.de>, 2006.
 # SJR <stefan_roediger@gmx.de>, 2006, 2007.
-# Thomas Friedrichsmeier <tfry@users.sourceforge.net>, 2006.
+# Thomas Friedrichsmeier <tfry@users.sourceforge.net>, 2006, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-02-09 11:51+0100\n"
-"PO-Revision-Date: 2007-02-04 20:43+0100\n"
-"Last-Translator: SJR <stefan_roediger@gmx.de>\n"
-"Language-Team: German <rkward-devel@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2007-02-12 17:46+0100\n"
+"Last-Translator: Thomas Friedrichsmeier <tfry@users.sourceforge.net>\n"
+"Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,7 +23,7 @@ msgstr ""
 
 #: dataeditor/editformatdialog.cpp:44
 msgid "Alignment"
-msgstr "Anordnung"
+msgstr "Ausrichtung"
 
 #: dataeditor/editformatdialog.cpp:49
 msgid "Default for type '%1'"
@@ -73,7 +72,7 @@ msgstr "Kopiert den gewählten Abschnitt in die Zwischenablage"
 
 #: dataeditor/rkeditordataframepart.cpp:59
 msgid "Pastes the clipboard contents to actual position"
-msgstr "Füge den Inhalt der Zwischenablage in die aktuelle Position ein"
+msgstr "Fügt den Inhalt der Zwischenablage in die aktuelle Position ein"
 
 #: dataeditor/rkeditordataframepart.cpp:60
 msgid ""
@@ -114,8 +113,8 @@ msgid ""
 "index column is read only). To remove levels at the end of the list, just "
 "set them to empty."
 msgstr ""
-"Levels können nur aufeinander folgend Integer die mit 1 beginnen zugewiesen "
-"werden. Warnung: Wenn Sie ein Level entfernen können die Indizes anderer "
+"Levels können nur aufeinander folgende Ganzzahlen, beginnend mit 1, zugewiesen "
+"werden. Warnung: Wenn Sie ein Level entfernen, können sich die Indizes anderer "
 "Level verändern und folglich die Werte der Faktoren verändern!"
 
 #: dataeditor/editlabelsdialog.cpp:249
@@ -171,8 +170,7 @@ msgid "Delete this row (%1)"
 msgstr "Lösche diese Zeile (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Kein Dateiname angegeben. Ihre Daten wurden NICHT gespeichert. Möchten Sie "
 "dennoch fortfahren?"
@@ -198,7 +196,7 @@ msgid ""
 "Saving to file '%1' failed. Do you want to try saving to a different "
 "filename?"
 msgstr ""
-"Speichern zur Datei '%1' gescheitert. Wollen Sie versuchen die Datei unter "
+"Speichern in Datei '%1' gescheitert. Wollen Sie versuchen, die Datei unter "
 "einem anderen Dateinamen zu speichern?"
 
 #: agents/showedittextfileagent.cpp:59
@@ -208,8 +206,8 @@ msgid ""
 "\n"
 msgstr ""
 " Aus diesem Grund wurde die Ausführung vorerst gestoppt. Drücken Sie den "
-"\"Erledigt\"-Button, oder um diesen Dialog zu schließen, sobald Sie denken "
-"das es sicher ist fortzufahren.\n"
+"\"Erledigt\"-Button, oder um diesen Dialog zu schließen, sobald Sie denken,"
+"dass es sicher ist, fortzufahren.\n"
 "\n"
 
 #: agents/showedittextfileagent.cpp:60
@@ -291,8 +289,8 @@ msgid ""
 "Waiting for remaining R commands to finish. To quit immediately, press "
 "Cancel (WARNING: This may result in loss of data)"
 msgstr ""
-"Bitte warten bis noch laufende R-Kommandos beendet sind. Um jetzt zu beenden "
-"bitte Cancel wählen (Warnung: Das könnte zu Datenverlußt führen)"
+"Bitte warten, bis noch laufende R-Kommandos beendet sind. Um sofort zu beenden "
+"bitte Cancel wählen (Warnung: Das könnte zu Datenverlust führen)"
 
 #: agents/rkquitagent.cpp:41
 msgid "Waiting for R to finish"
@@ -326,8 +324,7 @@ msgid "Remove object?"
 msgstr "Objekt entfernen?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "Wollen Sie das Objekt '%1' wirklich entfernen? Es gibt keine Möglichkeit es "
 "wieder herzustellen."
@@ -407,7 +404,7 @@ msgstr "Führe aktuelle Befehlszeile aus"
 
 #: windows/rkcommandeditorwindowpart.cpp:57 rkconsole.cpp:680
 msgid "&Function reference"
-msgstr "&Funktions Bezug"
+msgstr "&Funktions Referenz"
 
 #: windows/rkhtmlwindow.cpp:146
 msgid ""
@@ -496,16 +493,14 @@ msgid "Unnamed GUI element"
 msgstr "Unbenanntes GUI-Element"
 
 #: windows/rkhtmlwindow.cpp:531
-#, fuzzy
 msgid "Related functions and pages"
-msgstr "Ähnliche Funktionen und Seiten"
+msgstr "Verwandte Funktionen und Seiten"
 
 #: windows/rkhtmlwindow.cpp:608
 msgid "R Reference on '%1'"
 msgstr "R Referenz bei '%1'"
 
 #: windows/rkhtmlwindow.cpp:623
-#, fuzzy
 msgid "BROKEN REFERENCE"
 msgstr "DEFEKTE REFERENZ"
 
@@ -573,8 +568,7 @@ msgstr "Öffnen (Warten)"
 
 #: windows/rkcommandeditorwindow.cpp:128
 msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr ""
-"Das Dokument \"%1\" wurde verändert. Soll es dennoch gespeichert werden?"
+msgstr "Das Dokument \"%1\" wurde verändert. Soll es dennoch gespeichert werden?"
 
 #: windows/rkcommandeditorwindow.cpp:128
 msgid "File not saved"
@@ -1067,12 +1061,11 @@ msgid "Output Window options"
 msgstr "Eigenschaften des Ausgabefensters"
 
 #: settings/rksettingsmoduler.cpp:57
-#, fuzzy
 msgid ""
 "The following settings mostly affect R behavior in the console. It is "
 "generally safe to keep these unchanged."
 msgstr ""
-"Die folgenden Einstellung beeinflussen meistens das Verhalten von R in der "
+"Die folgenden Einstellung beeinflussen im Wesentlichen das Verhalten von R in der "
 "Konsole. Diese sollten unverändert belassen werden."
 
 #: settings/rksettingsmoduler.cpp:65
@@ -1267,8 +1260,7 @@ msgstr "Synchronisations Befehle"
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr ""
-"Maximale Anzahl von Absätzen/Zeile die im Command Log angezeigt werden sollen"
+msgstr "Maximale Anzahl von Absätzen/Zeile die im Command Log angezeigt werden sollen"
 
 #: settings/rksettings.cpp:63
 msgid "Settings"
@@ -1320,8 +1312,7 @@ msgstr "Konfiguriere Repositories"
 
 #: dialogs/rkloadlibsdialog.cpp:205
 msgid "Please stand by while installing selected packages"
-msgstr ""
-"Bitte warten warten Sie während die gewählten Pakete installiert werden."
+msgstr "Bitte warten warten Sie während die gewählten Pakete installiert werden."
 
 #: dialogs/rkloadlibsdialog.cpp:205
 msgid "Installing packages"
@@ -1547,17 +1538,15 @@ msgid "Illegal attribute value. Only real numbers are allowed."
 msgstr "Illegaler Attributwert. Nur Dezimalzahlen sind erlaubt."
 
 #: misc/xmlhelper.cpp:219
-#, fuzzy
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
-msgstr "Illegaler Attributwert. Erlaubt sind nur Werte einer von '%1'."
+msgstr "Illegaler Attributwert. Erlaubt sind nur Werte die Werte '%1' und '%2'."
 
 #: misc/xmlhelper.cpp:230
 msgid "XML-parsing '%1' "
 msgstr "XML-parsing '%1' "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>Es gab Fehler und / oder Warnungen! Betrachten Sie das Transkript "
 "unterhalb</b>"
@@ -1651,9 +1640,8 @@ msgid "Object name to save to"
 msgstr "Objektname wohin gespeichert werden soll:"
 
 #: misc/rksaveobjectchooser.cpp:83
-#, fuzzy
 msgid "Overwrite? (The given object name already exists)"
-msgstr "Diese Objekt existiert bereits"
+msgstr "Überschreiben? (Das Objekt existiert bereits)"
 
 #: misc/rksaveobjectchooser.cpp:87
 msgid "Overwrite?"
@@ -1786,7 +1774,6 @@ msgid "Cannot edit '%1'"
 msgstr "Kann Objekt '%1' nicht editieren"
 
 #: rbackend/rinterface.cpp:337
-#, fuzzy
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1795,7 +1782,7 @@ msgid ""
 msgstr ""
 "Das R-Backend fragt nach den Paket '%1'um die aktuelle Aufgabe "
 "durchzuführen. Es wird das Paket-Management-Tool geöffnet. Von dort können "
-"Sie versuchen das benötigte Paket zu finden und zu installieren."
+"Sie versuchen, das benötigte Paket zu finden und zu installieren."
 
 #: rbackend/rinterface.cpp:337
 msgid "Require package '%1'"
@@ -2186,12 +2173,10 @@ msgid "Interrupt running command"
 msgstr "Unterbreche laufendes Kommando"
 
 #: rkconsole.cpp:690
-#, fuzzy
 msgid "Copy selection cleaned"
-msgstr "Kopierauswahl gereinigt"
+msgstr "Kopiere Auswahl bereinigt"
 
 #: rkconsole.cpp:691
-#, fuzzy
 msgid "Copy selection literally"
 msgstr "Kopiere Auswahl wörtlich"
 
@@ -2375,7 +2360,7 @@ msgstr "Name wird bereits benutzt"
 
 #: robjectbrowser.cpp:143
 msgid "Rename object"
-msgstr "Benenn Objekt um"
+msgstr "Benenne Objekt um"
 
 #: robjectbrowser.cpp:143
 msgid "Enter the new name"
@@ -2398,7 +2383,7 @@ msgstr "Zeige versteckte Objekte"
 #: rc.cpp:3 rc.cpp:27
 #, no-c-format
 msgid "&Run"
-msgstr "&Los"
+msgstr "&Ausführen"
 
 #. i18n: file rkwardui.rc line 5
 #: rc.cpp:12
@@ -2436,6 +2421,3 @@ msgid ""
 "Your emails"
 msgstr "stefan_roediger@gmx.de"
 
-#~ msgid "Illegal attribute value. Allowed values are 'true' or 'false', only."
-#~ msgstr ""
-#~ "Illegaler Attributwert. Nur die Werte 'wahr' oder 'falsch' sind zulässig."
