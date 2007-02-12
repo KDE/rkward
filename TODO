@@ -2,6 +2,9 @@ The following list of TODO-items is NOT complete!
 Also, plans change frequently. If something is listed for a specific release, that's no more than a rough plan.
 All in all, this TODO list is mostly for internal purposes, and many parts may not necessarily be intellegible to anybody but the authors.
 
+Important:
+	- Around March 1st, write to R-devel to achieve having IS_UTF8 and IS_LATIN1 in public API (if not already available, then).
+
 Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
 

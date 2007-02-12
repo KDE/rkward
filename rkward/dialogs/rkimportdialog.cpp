@@ -60,7 +60,12 @@ RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KF
 
 		QString filter = handle->getAttributeValue ("format");
 		QString label = handle->getAttributeLabel ("format");
-		formats.append (filter + '|' + label + " (" + filter + ')');
+
+		QString elabel = label;
+		elabel.replace ('/', "\\/");
+		elabel.replace ('|', "\\|");
+		formats.append (filter + '|' + elabel + " (" + filter + ')');
+
 		format_labels.append (label);
 		filters.append (filter);
 	}
