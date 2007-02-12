@@ -24,6 +24,7 @@ Bugs:
 		- converting objects to a different type is broken (works in the editor, but the type remains unchanged in the backend)
 			- maybe we could do the change in the backend, and then sync
 				- function rk.change.vector.mode() to change the mode, keeping attributed, and adding invalid values where needed
+				- sync using updateFromR(), updateDataFromR()
 
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org

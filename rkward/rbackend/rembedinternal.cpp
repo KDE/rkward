@@ -81,6 +81,7 @@ extern int R_interrupts_pending;
 extern int Rf_initialize_R(int ac, char **av);
 extern void setup_Rmainloop(void); /* in main.c */
 extern unsigned long R_CStackLimit;
+extern Rboolean R_Interactive;
 #endif
 #ifndef USE_R_REPLDLLDO1
 extern Rboolean R_Visible;
@@ -522,6 +523,7 @@ bool REmbedInternal::startR (int argc, char** argv) {
 	R_CStackLimit = (unsigned long) -1;
 	setup_Rmainloop ();
 	RKGlobals::na_double = NA_REAL;
+	R_Interactive = (Rboolean) TRUE;
 	R_ReplDLLinit ();
 	return true;
 #else

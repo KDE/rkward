@@ -2,6 +2,7 @@
 # Shell wrapper for rkward executable.
 
 ## make sure, we always run in a tty. Otherwise R would go into non-interactive mode and behaves strangely.
+## this can be removed later. For R versions 2.3.0 and greater, we set R_Interactive from C
 if tty -s; then
   :
 else
