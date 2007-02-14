@@ -5,17 +5,17 @@
 # Copyright (C) 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 # This file is put in the public domain.
 # 28-11-2006: v 1.00
-# Pep Roca <griera@gmail.com>, 2006.
+# griera@gmail.com, 2006.
 # Núria Asensio <nasensio.germanstrias@gencat.net>, 2006.
-# Pep Roca <griera@gmail.com>, 2007.
+# Pep Roca <pep.roca@gmail.com>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-02-09 11:51+0100\n"
-"PO-Revision-Date: 2007-01-19 16:10+0100\n"
-"Last-Translator: Pep Roca <griera@gmail.com>\n"
+"PO-Revision-Date: 2007-02-13 22:48+0100\n"
+"Last-Translator: Pep Roca <pep.roca@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -181,8 +181,7 @@ msgid "Delete this row (%1)"
 msgstr "Esborra aquesta fila (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "No heu proporcionat cap nom de fitxer. Les dades NO s'han desat. Voleu "
 "continuar malgrat això?"
@@ -299,10 +298,12 @@ msgid ""
 "Waiting for remaining R commands to finish. To quit immediately, press "
 "Cancel (WARNING: This may result in loss of data)"
 msgstr ""
+"S'està esperant que finalitzin les ordres restants. Per sortir immediatament, "
+"prémer Cancel·lar (AVÍS: Això pot provocar pèrdua de dades)"
 
 #: agents/rkquitagent.cpp:41
 msgid "Waiting for R to finish"
-msgstr ""
+msgstr "S'està esperant que R finalitzi"
 
 #: core/rkmodificationtracker.cpp:50
 msgid ""
@@ -331,8 +332,7 @@ msgid "Remove object?"
 msgstr "Elimino l'objecte?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr "Realment voleu eliminar l'objecte '%1'? No podrà recuperar-se mai més."
 
 #: core/robject.cpp:119
@@ -508,7 +508,7 @@ msgstr "Arranjaments de la IGU"
 
 #: windows/rkhtmlwindow.cpp:511
 msgid "Unnamed GUI element"
-msgstr ""
+msgstr "Element de la IGU sense nom"
 
 #: windows/rkhtmlwindow.cpp:531
 msgid "Related functions and pages"
@@ -684,6 +684,7 @@ msgstr "S'ha produït un error"
 
 # ??? Per revisar
 #: windows/rkwindowcatcher.cpp:198
+#, fuzzy
 msgid "Specify fixed size"
 msgstr "Especifiqueu la mida fixa"
 
@@ -705,6 +706,7 @@ msgstr "Especifiqueu l'objecte R"
 
 # ??? Per revisar
 #: windows/rkwindowcatcher.cpp:245
+#, fuzzy
 msgid "Specify the R object name, you want to save the graph to"
 msgstr "Especifiqueu el nom de l'objecte R on voleu desar el gràfic"
 
@@ -886,23 +888,27 @@ msgstr "(cap etiqueta)"
 
 #: plugin/rkpreviewbox.cpp:47
 msgid "Preview"
-msgstr ""
+msgstr "Previsualització"
 
 #: plugin/rkpreviewbox.cpp:167
 msgid "Preview disabled"
-msgstr ""
+msgstr "Previsualització deshabilitat"
 
 #: plugin/rkpreviewbox.cpp:171
+# ??? Per revisar
+#, fuzzy
 msgid "Preview up to date"
-msgstr ""
+msgstr "Previsualitza la darrera versió"
 
 #: plugin/rkpreviewbox.cpp:173
 msgid "Preview updating"
-msgstr ""
+msgstr "S'està actualitzant la previsualització"
 
 #: plugin/rkpreviewbox.cpp:176
+# ??? Per revisar
+#, fuzzy
 msgid "Preview not (yet) possible"
-msgstr ""
+msgstr "Encara no és possible la previsualització"
 
 #: plugin/rkpluginsaveobject.cpp:41 rkward.cpp:234
 msgid "my.data"
@@ -910,7 +916,7 @@ msgstr "Dades.meves"
 
 #: plugin/rkpluginsaveobject.cpp:41
 msgid "Save to:"
-msgstr ""
+msgstr "Desar com:"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:41
 msgid "Which objects should be shown by default?"
@@ -960,8 +966,7 @@ msgstr "Espai de treball"
 # Recull de termes de Softcatalà: settings - m pl paràmetres
 #: settings/rksettingsmodulegeneral.cpp:47
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
-msgstr ""
-"Els arranjaments marcats amb un (*) només s'aplicaran si reengegueu RKWard"
+msgstr "Els arranjaments marcats amb un (*) només s'aplicaran si reengegueu RKWard"
 
 #: settings/rksettingsmodulegeneral.cpp:51
 msgid "Directory where the logfiles should be kept (*)"
@@ -1201,11 +1206,11 @@ msgstr "Arxiva els paquets descarregats"
 
 #: settings/rksettingsmoduler.cpp:283
 msgid "R Library locations  (where libraries get installed to, locally)"
-msgstr ""
-"Ubicació de les biblioteques R (on localment s'instal·len les biblioteques)"
+msgstr "Ubicació de les biblioteques R (on localment s'instal·len les biblioteques)"
 
 # ??? Per revisar
 #: settings/rksettingsmoduler.cpp:288
+#, fuzzy
 msgid ""
 "Note: The startup defaults will always be used in addition to the locations "
 "you specify in this list"
@@ -1258,8 +1263,10 @@ msgid "Run commands from script editor through console"
 msgstr "Executar les ordres del editor de seqüències a través de la consola"
 
 #: settings/rksettingsmoduleconsole.cpp:71
+#, fuzzy
+# ??? Per revisar
 msgid "Command history is context sensitive by default"
-msgstr ""
+msgstr "El historial d'ordres és, per omissió, sensible al context"
 
 #: settings/rksettingsmoduleconsole.cpp:167
 msgid "Console"
@@ -1547,18 +1554,16 @@ msgid "Become root"
 msgstr "Convertir-se en root"
 
 #: dialogs/rkimportdialog.cpp:36
-#, fuzzy
 msgid "File format: "
-msgstr "Format"
+msgstr "Format de fitxer:"
 
 #: dialogs/rkimportdialog.cpp:45
 msgid "No plugins defined for context '%1'"
-msgstr ""
+msgstr "No existeixen endollables definits pel context '%1'"
 
 #: dialogs/rkimportdialog.cpp:50
-#, fuzzy
 msgid "All Files"
-msgstr "*|Tots els fitxers"
+msgstr "Tots els fitxers"
 
 #: misc/xmlhelper.cpp:61
 msgid "Could not open file for reading"
@@ -1587,8 +1592,7 @@ msgstr "No heu especificat l'atribut '%1'. S'assumeix '%2'"
 # fr.po: Valeur d'attribut interdite. Les valeurs possibles sont seulement parmi '%1'.
 #: misc/xmlhelper.cpp:171
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr ""
-"El valor de l'atribut està prohibit. Només es permet un dels valors de '%1'."
+msgstr "El valor de l'atribut està prohibit. Només es permet un dels valors de '%1'."
 
 #: misc/xmlhelper.cpp:185
 msgid "Illegal attribute value. Only integer numbers are allowed."
@@ -1600,18 +1604,15 @@ msgstr "El valor de l'atribut està prohibit. Només es permeten nombres reals."
 
 # fr.po: Valeur d'attribut interdite. Les valeurs possibles sont seulement parmi '%1'.
 #: misc/xmlhelper.cpp:219
-#, fuzzy
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
-msgstr ""
-"El valor de l'atribut està prohibit. Només es permet un dels valors de '%1'."
+msgstr "El valor de l'atribut està prohibit. Només es permeten els valors '%1' o '%2'."
 
 #: misc/xmlhelper.cpp:230
 msgid "XML-parsing '%1' "
 msgstr "S'està analitzant el XML '%1' "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>S'han produït errors i / o avisos! Una transcripció dels missatges es "
 "mostra aquí sota</b>"
@@ -1706,9 +1707,8 @@ msgid "Object name to save to"
 msgstr "Introduïu el nom de l'objecte"
 
 #: misc/rksaveobjectchooser.cpp:83
-#, fuzzy
 msgid "Overwrite? (The given object name already exists)"
-msgstr "El símbol proporcionat ja existeix"
+msgstr "Sobreescric? (El nom del objecte ja existeix)"
 
 #: misc/rksaveobjectchooser.cpp:87
 msgid "Overwrite?"
@@ -1933,18 +1933,16 @@ msgstr "Nivell d'informació dels missatges de depuració (0-5)"
 # es.po: Máscara para los componentes a depurar como números binarios (mirar en debug. "h)"
 #: main.cpp:76
 msgid "Mask for components to debug as a binary number (see debug.h)"
-msgstr ""
-"Màscara per als components a depurar com a nombre binaris (mireu en depura.h)"
+msgstr "Màscara per als components a depurar com a nombre binaris (mireu en depura.h)"
 
 #: main.cpp:83
-#, fuzzy
 msgid "Project leader / main developer"
-msgstr "Líder del projecte"
+msgstr "Líder del projecte / desenvolupador principal"
 
 #: main.cpp:84
-#, fuzzy
+# Softcatalà: coder: codificador
 msgid "C++ coder since 0.2.9"
-msgstr "Programador del nucli des de 0.2.9"
+msgstr "Codificador C++ des de 0.2.9"
 
 #: main.cpp:86
 msgid "Several helpful comments and discussions"
@@ -1960,7 +1958,7 @@ msgstr "Nova pàgina web"
 
 #: main.cpp:89
 msgid "Several plugins"
-msgstr ""
+msgstr "Alguns endollables"
 
 #: main.cpp:90
 msgid "A cool icon"
@@ -1971,18 +1969,16 @@ msgid "RKWard logo, many suggestions, help on wording"
 msgstr "El logotip de RKWard, molts suggeriments, ajudes en la redacció"
 
 #: main.cpp:92
-#, fuzzy
 msgid "Many plugins, suggestions, marketing, translations"
-msgstr "Alguns endollables, suggeriments i màrqueting"
+msgstr "Molts endollables, suggeriments, màrqueting, traduccions"
 
 #: main.cpp:93
 msgid "Several valuable comments, hints and patches"
 msgstr "Alguns valuosos commentaris, consells i pedaços"
 
 #: main.cpp:94
-#, fuzzy
 msgid "Translation, Suggestions, plugins"
-msgstr "Alguns endollables, suggeriments i màrqueting"
+msgstr "Traduccions, suggeriments, endollables"
 
 #: main.cpp:95
 msgid "Many comments, useful suggestions, and bug reports"
@@ -1990,7 +1986,7 @@ msgstr "Molts comentaris, suggeriments útils i informes d'errors"
 
 #: main.cpp:96
 msgid "Some patches"
-msgstr ""
+msgstr "Alguns pedaços"
 
 #: main.cpp:97
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
@@ -2021,10 +2017,9 @@ msgstr ""
 msgid "What to expect of RKWard"
 msgstr "Què podeu esperar de RKWard?"
 
-# ??? Per revisar
 #: rkward.cpp:196
 msgid "Existing objects in your workspace."
-msgstr "Objectes en el seu espai de treball."
+msgstr "Hi han objectes en l'espai de treball."
 
 #: rkward.cpp:204
 msgid "Pending Jobs"
@@ -2063,7 +2058,7 @@ msgstr "Obre el fitxer de seqüència R"
 
 #: rkward.cpp:314
 msgid "Import Data"
-msgstr ""
+msgstr "Importar dades"
 
 #: rkward.cpp:317
 msgid "Open Workspace"
@@ -2103,7 +2098,7 @@ msgstr "Crea un nou conjunt de dades buit i obre'l per editar-lo"
 
 #: rkward.cpp:342
 msgid "Import data from a variety of file formats"
-msgstr ""
+msgstr "Importar dades des d'una varietat de formats"
 
 #: rkward.cpp:343
 msgid "Opens an existing document"
@@ -2253,8 +2248,10 @@ msgid "Interrupt running command"
 msgstr "Interromp l'execució de l'ordre"
 
 #: rkconsole.cpp:690
+# Thomas Friedrichsmeier:
+# Console action: Copy the selection, but remove any leading "> " or "+ " on the copied lines, so it is easier to re-use commands from the console.
 msgid "Copy selection cleaned"
-msgstr ""
+msgstr "Còpia la selecció de forma neta"
 
 #: rkconsole.cpp:691
 msgid "Copy selection literally"
@@ -2450,8 +2447,9 @@ msgid "Enter the new name"
 msgstr "Entreu el nou nom"
 
 #: robjectbrowser.cpp:204
+# Thomas Friedrichsmeier: While "Non-Functions" really is the most precise description, "Data" would probably be close enough. Another option might be to translate as "Other", since "Functions" and "Non-Functions" are shown side-by-side in the Workspace browser.
 msgid "Non-Functions"
-msgstr ""
+msgstr "Dades i altres"
 
 #: robjectbrowser.cpp:212
 msgid "Show All Environments"
@@ -2478,7 +2476,7 @@ msgstr "&Nou"
 #: rc.cpp:15
 #, no-c-format
 msgid "&Import"
-msgstr ""
+msgstr "&Importar"
 
 #. i18n: file rkwardui.rc line 22
 #: rc.cpp:18
@@ -2502,8 +2500,5 @@ msgstr "Pep Roca"
 msgid ""
 "_: EMAIL OF TRANSLATORS\n"
 "Your emails"
-msgstr "griera@gmail.com"
+msgstr "pep.roca@gmail.com"
 
-#~ msgid "Illegal attribute value. Allowed values are 'true' or 'false', only."
-#~ msgstr ""
-#~ "El valor de l'atribut està prohibit. Només es permet 'verdader o 'fals'."
