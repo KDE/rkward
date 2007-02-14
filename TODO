@@ -25,6 +25,7 @@ Bugs:
 			- maybe we could do the change in the backend, and then sync
 				- function rk.change.vector.mode() to change the mode, keeping attributed, and adding invalid values where needed
 				- sync using updateFromR(), updateDataFromR()
+	- Quitting via q() in the R console will often lead to a segfault during shutdown
 
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org
