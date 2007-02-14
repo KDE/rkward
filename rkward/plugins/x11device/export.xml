@@ -39,21 +39,21 @@
 					<row>
 						<column>
 							<checkbox id="autowidth" value="1" value_unchecked="0" checked="true" label="Automatic Width"/>
-							<spinbox id="width" label="Width in inches" min="0" initial="6"  default_precision="0"/>
+							<spinbox id="width" label="Width in inches" min="0" initial="6" default_precision="1"/>
 						</column>
 						<column>
 							<checkbox id="autoheight" value="1" value_unchecked="0" checked="true" label="Automatic Height"/>
-							<spinbox id="height" label="Height in inches" min="0" initial="6"  default_precision="0"/>
+							<spinbox id="height" label="Height in inches" min="0" initial="6" default_precision="1" />
 						</column>
 					</row>
 				</frame>
 				<frame>
 					<checkbox id="autopointsize" value="1" value_unchecked="0" checked="true" label="Automatic Font size"/>
-					<spinbox id="pointsize" label="Point size" min="0" initial="12" default_precision="0"/>
+					<spinbox id="pointsize" label="Point size" min="0" initial="12"  default_precision="1"/>
 				</frame>
 				<frame>
 					<text>Resolution is only meaningful for bitmap formats</text>
-					<spinbox id="resolution" label="Resolution (dpi)" min="0" initial="72" default_precision="0"/>
+					<spinbox id="resolution" label="Resolution (dpi)" min="0" initial="72" default_precision="1"/>
 				</frame>
 			</tab>
 		</tabbook>
