@@ -27,7 +27,7 @@
 - new plugin: scatterplot matrix
 - new plugin: correlation matrix plot
 - safer destruction of R backend on quitting
-- fix compilation for the upcoming R 2.5.0						TODO: check again
+- fix compilation for the upcoming R 2.5.0
 - show full error message for syntax errors (only if compiled with R 2.4.0 or newer)
 - more correct auto-printing of values for user commands (only if compiled with R 2.4.0 or newer)
 - more correct handling of user commands consisting of several statements (only if compiled with R 2.4.0 or newer)
