@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-09 11:51+0100\n"
+"POT-Creation-Date: 2007-02-15 19:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -121,7 +121,7 @@ msgstr ""
 msgid "Format"
 msgstr ""
 
-#: dataeditor/twintable.cpp:66 plugin/rkformula.cpp:74 plugin/rkvarslot.cpp:57
+#: dataeditor/twintable.cpp:66 plugin/rkvarslot.cpp:57 plugin/rkformula.cpp:74
 #: dialogs/rkloadlibsdialog.cpp:257 dialogs/rkloadlibsdialog.cpp:276
 #: dialogs/rkloadlibsdialog.cpp:460 dialogs/rkloadlibsdialog.cpp:610
 #: misc/rkobjectlistview.cpp:53
@@ -154,6 +154,16 @@ msgstr ""
 
 #: dataeditor/twintable.cpp:260
 msgid "Delete this row (%1)"
+msgstr ""
+
+#: agents/rkquitagent.cpp:41
+msgid ""
+"Waiting for remaining R commands to finish. To quit immediately, press "
+"Cancel (WARNING: This may result in loss of data)"
+msgstr ""
+
+#: agents/rkquitagent.cpp:41
+msgid "Waiting for R to finish"
 msgstr ""
 
 #: agents/rksaveagent.cpp:60
@@ -247,16 +257,6 @@ msgstr ""
 msgid "Error loading workspace"
 msgstr ""
 
-#: agents/rkquitagent.cpp:41
-msgid ""
-"Waiting for remaining R commands to finish. To quit immediately, press "
-"Cancel (WARNING: This may result in loss of data)"
-msgstr ""
-
-#: agents/rkquitagent.cpp:41
-msgid "Waiting for R to finish"
-msgstr ""
-
 #: core/rkmodificationtracker.cpp:50
 msgid ""
 "The object '%1' was removed from workspace or changed to a different type of "
@@ -343,6 +343,97 @@ msgstr ""
 msgid "Class(es):"
 msgstr ""
 
+#: windows/rkwindowcatcher.cpp:60
+msgid ""
+"You have created a new X11 device window in R. Usually, RKWard tries to "
+"detect such windows, to take control of them, and add a menu-bar to them. "
+"This time, however, RKWard failed to detect, which window was created, and "
+"so can not embed it.\n"
+"If you created the window on a different screen or X11 display, that is to "
+"be expected. You might want to consider changing options(\"display\"), "
+"then.\n"
+"If you can see the X11 window on the same screen as this message, then "
+"RKWard should do better. In this case, please contact us at rkward-"
+"devel@lists.sourceforge.net with details on your setup, so we can try to fix "
+"this in future versions of RKWard."
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:60
+msgid "Could not embed R X11 window"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:93
+msgid "An error occurred"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:198
+msgid "Specify fixed size"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:223
+msgid "Activate graphics device number %1"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:229
+msgid "Copy contents of graphics device number %1 to output"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:235
+msgid "Print contents of graphics device number %1"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:242
+msgid "Specify R object"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:245
+msgid "Specify the R object name, you want to save the graph to"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:256
+msgid "Save contents of graphics device number %1 to object '%2'"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:265
+msgid "Duplicate graphics device number %1"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:285
+msgid "Draw area follows size of window"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:287
+msgid "Set fixed size 500x500"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:288
+msgid "Set fixed size 1000x1000"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:289
+msgid "Set fixed size 2000x2000"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:290
+msgid "Set specified fixed size..."
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:292
+msgid "Make active"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:293
+msgid "Copy to output"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:295
+msgid "Store as R object..."
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:296
+msgid "Duplicate"
+msgstr ""
+
 #: windows/rkcommandeditorwindowpart.cpp:53
 msgid "Run all"
 msgstr ""
@@ -358,6 +449,54 @@ msgstr ""
 
 #: windows/rkcommandeditorwindowpart.cpp:57 rkconsole.cpp:680
 msgid "&Function reference"
+msgstr ""
+
+#: windows/rkcommandeditorwindow.cpp:128
+msgid "The document \"%1\" has been modified. Close it anyway?"
+msgstr ""
+
+#: windows/rkcommandeditorwindow.cpp:128
+msgid "File not saved"
+msgstr ""
+
+#: windows/rkcommandeditorwindow.cpp:218
+msgid "Unnamed"
+msgstr ""
+
+#: windows/rkcommandeditorwindow.cpp:219
+msgid " [modified]"
+msgstr ""
+
+#: windows/rkcommandlog.cpp:68 settings/rksettingsmodulewatch.cpp:277
+msgid "Command log"
+msgstr ""
+
+#: windows/rkcommandlog.cpp:173
+msgid "Incomplete statement.\n"
+msgstr ""
+
+#: windows/rkcommandlog.cpp:175
+msgid "Syntax error.\n"
+msgstr ""
+
+#: windows/rkcommandlog.cpp:177
+msgid "An unspecified error occurred while running the command.\n"
+msgstr ""
+
+#: windows/rkworkplace.cpp:124
+msgid "Unable to open \"%1\""
+msgstr ""
+
+#: windows/rkworkplace.cpp:124
+msgid "Could not open command file"
+msgstr ""
+
+#: windows/rkworkplace.cpp:324
+msgid "Save Workplace layout"
+msgstr ""
+
+#: windows/rkworkplace.cpp:331
+msgid "Restore Workplace layout"
 msgstr ""
 
 #: windows/rkhtmlwindow.cpp:146
@@ -510,187 +649,12 @@ msgstr ""
 msgid "Open (Waiting)"
 msgstr ""
 
-#: windows/rkcommandeditorwindow.cpp:128
-msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr ""
-
-#: windows/rkcommandeditorwindow.cpp:128
-msgid "File not saved"
-msgstr ""
-
-#: windows/rkcommandeditorwindow.cpp:218
-msgid "Unnamed"
-msgstr ""
-
-#: windows/rkcommandeditorwindow.cpp:219
-msgid " [modified]"
-msgstr ""
-
 #: windows/detachedwindowcontainer.cpp:39
 msgid "Attach to main window"
 msgstr ""
 
-#: windows/rkworkplace.cpp:124
-msgid "Unable to open \"%1\""
-msgstr ""
-
-#: windows/rkworkplace.cpp:124
-msgid "Could not open command file"
-msgstr ""
-
-#: windows/rkworkplace.cpp:324
-msgid "Save Workplace layout"
-msgstr ""
-
-#: windows/rkworkplace.cpp:331
-msgid "Restore Workplace layout"
-msgstr ""
-
-#: windows/rkcommandlog.cpp:68 settings/rksettingsmodulewatch.cpp:277
-msgid "Command log"
-msgstr ""
-
-#: windows/rkcommandlog.cpp:173
-msgid "Incomplete statement.\n"
-msgstr ""
-
-#: windows/rkcommandlog.cpp:175
-msgid "Syntax error.\n"
-msgstr ""
-
-#: windows/rkcommandlog.cpp:177
-msgid "An unspecified error occurred while running the command.\n"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:60
-msgid ""
-"You have created a new X11 device window in R. Usually, RKWard tries to "
-"detect such windows, to take control of them, and add a menu-bar to them. "
-"This time, however, RKWard failed to detect, which window was created, and "
-"so can not embed it.\n"
-"If you created the window on a different screen or X11 display, that is to "
-"be expected. You might want to consider changing options(\"display\"), "
-"then.\n"
-"If you can see the X11 window on the same screen as this message, then "
-"RKWard should do better. In this case, please contact us at rkward-"
-"devel@lists.sourceforge.net with details on your setup, so we can try to fix "
-"this in future versions of RKWard."
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:60
-msgid "Could not embed R X11 window"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:93
-msgid "An error occurred"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:198
-msgid "Specify fixed size"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:223
-msgid "Activate graphics device number %1"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:229
-msgid "Copy contents of graphics device number %1 to output"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:235
-msgid "Print contents of graphics device number %1"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:242
-msgid "Specify R object"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:245
-msgid "Specify the R object name, you want to save the graph to"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:256
-msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:265
-msgid "Duplicate graphics device number %1"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:285
-msgid "Draw area follows size of window"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:287
-msgid "Set fixed size 500x500"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:288
-msgid "Set fixed size 1000x1000"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:289
-msgid "Set fixed size 2000x2000"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:290
-msgid "Set specified fixed size..."
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:292
-msgid "Make active"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:293
-msgid "Copy to output"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:295
-msgid "Store as R object..."
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:296
-msgid "Duplicate"
-msgstr ""
-
 #: plugin/rkpluginspinbox.cpp:43
 msgid "Enter value:"
-msgstr ""
-
-#: plugin/rkpluginbrowser.cpp:53
-msgid "Enter filename"
-msgstr ""
-
-#: plugin/rkpluginbrowser.cpp:53
-msgid "Select"
-msgstr ""
-
-#: plugin/rkformula.cpp:66
-msgid "Full Model"
-msgstr ""
-
-#: plugin/rkformula.cpp:67
-msgid "Main Effects only"
-msgstr ""
-
-#: plugin/rkformula.cpp:68
-msgid "Custom Model:"
-msgstr ""
-
-#: plugin/rkformula.cpp:90
-msgid "Main effects"
-msgstr ""
-
-#: plugin/rkformula.cpp:95
-msgid "Level"
-msgstr ""
-
-#: plugin/rkformula.cpp:96
-msgid "Term"
-msgstr ""
-
-#: plugin/rkformula.cpp:103
-msgid "Specify model"
 msgstr ""
 
 #: plugin/rkstandardcomponent.cpp:74
@@ -750,22 +714,6 @@ msgstr ""
 msgid "Use Dialog"
 msgstr ""
 
-#: plugin/rkvarslot.cpp:45
-msgid "Variable:"
-msgstr ""
-
-#: plugin/rkradio.cpp:48 plugin/rkdropdown.cpp:46
-msgid "Select one:"
-msgstr ""
-
-#: plugin/rkinput.cpp:49
-msgid "Enter text"
-msgstr ""
-
-#: plugin/rkcomponentmap.cpp:97 plugin/rkcomponentmap.cpp:248
-msgid "(no label)"
-msgstr ""
-
 #: plugin/rkpreviewbox.cpp:47
 msgid "Preview"
 msgstr ""
@@ -786,12 +734,64 @@ msgstr ""
 msgid "Preview not (yet) possible"
 msgstr ""
 
+#: plugin/rkvarslot.cpp:45
+msgid "Variable:"
+msgstr ""
+
+#: plugin/rkpluginbrowser.cpp:53
+msgid "Enter filename"
+msgstr ""
+
+#: plugin/rkpluginbrowser.cpp:53
+msgid "Select"
+msgstr ""
+
 #: plugin/rkpluginsaveobject.cpp:41 rkward.cpp:234
 msgid "my.data"
 msgstr ""
 
 #: plugin/rkpluginsaveobject.cpp:41
 msgid "Save to:"
+msgstr ""
+
+#: plugin/rkformula.cpp:66
+msgid "Full Model"
+msgstr ""
+
+#: plugin/rkformula.cpp:67
+msgid "Main Effects only"
+msgstr ""
+
+#: plugin/rkformula.cpp:68
+msgid "Custom Model:"
+msgstr ""
+
+#: plugin/rkformula.cpp:90
+msgid "Main effects"
+msgstr ""
+
+#: plugin/rkformula.cpp:95
+msgid "Level"
+msgstr ""
+
+#: plugin/rkformula.cpp:96
+msgid "Term"
+msgstr ""
+
+#: plugin/rkformula.cpp:103
+msgid "Specify model"
+msgstr ""
+
+#: plugin/rkdropdown.cpp:46 plugin/rkradio.cpp:48
+msgid "Select one:"
+msgstr ""
+
+#: plugin/rkinput.cpp:49
+msgid "Enter text"
+msgstr ""
+
+#: plugin/rkcomponentmap.cpp:97 plugin/rkcomponentmap.cpp:248
+msgid "(no label)"
 msgstr ""
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:41
@@ -1430,6 +1430,18 @@ msgstr ""
 msgid "Errors / Warnings:"
 msgstr ""
 
+#: misc/rksaveobjectchooser.cpp:39
+msgid "Object name to save to"
+msgstr ""
+
+#: misc/rksaveobjectchooser.cpp:83
+msgid "Overwrite? (The given object name already exists)"
+msgstr ""
+
+#: misc/rksaveobjectchooser.cpp:87
+msgid "Overwrite?"
+msgstr ""
+
 #: misc/rkerrordialog.cpp:117
 msgid "Syntax error"
 msgstr ""
@@ -1488,18 +1500,6 @@ msgstr ""
 
 #: misc/rkobjectlistview.cpp:419
 msgid "Hidden Objects"
-msgstr ""
-
-#: misc/rksaveobjectchooser.cpp:39
-msgid "Object name to save to"
-msgstr ""
-
-#: misc/rksaveobjectchooser.cpp:83
-msgid "Overwrite? (The given object name already exists)"
-msgstr ""
-
-#: misc/rksaveobjectchooser.cpp:87
-msgid "Overwrite?"
 msgstr ""
 
 #: scriptbackends/phpbackend.cpp:64
