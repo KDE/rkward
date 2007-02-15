@@ -50,7 +50,7 @@
 		</page>
 		<page>
 			<text>Below are some advanced options. It's generally safe not to assume the variables have equal variances. An appropriate correction will be applied then. Chosing "assume equal variances" may increase test-strength, however.</text>
-			<checkbox id="varequal" label="assume equal variances" value="TRUE" value_unchecked="FALSE"/>
+			<checkbox id="varequal" label="assume equal variances" value="1" value_unchecked="0"/>
 			<text>Sometimes it's helpful to get an estimate of the confidence interval of the difference in means. Below you can specify whether one should be shown, and which confidence-level should be applied (95% corresponds to a 5% level of significance).</text>
 			<frame label="Confidence Interval">
 				<checkbox id="confint" label="print confidence interval" value="1" checked="true"/>
