@@ -26,6 +26,8 @@ Bugs:
 			- maybe we could do the change in the backend, and then sync
 				- function rk.change.vector.mode() to change the mode, keeping attributed, and adding invalid values where needed
 				- sync using updateFromR(), updateDataFromR()
+				- this would be done from TwinTableMetaMember::setText()
+				- we should find a way to disable the var (set it to gray color group, do not allow editing) during this operation
 	- Quitting via q() in the R console will often lead to a segfault during shutdown
 
 Compilation / technical
