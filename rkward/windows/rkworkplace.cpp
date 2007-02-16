@@ -200,24 +200,34 @@ RKEditor *RKWorkplace::editObject (RObject *object, bool initialize_to_empty) {
 	RKEditorDataFramePart *part = 0;
 	RKEditor *existing_editor = object->objectOpened ();
 	if (!existing_editor) {
+		bool create_editor = false;
 		if (object->isDataFrame ()) {
-			part = new RKEditorDataFramePart (0);		// TODO: reverse creation logic, just as in the other classes!
-			ed = part->getEditor ();
-			// TODO: add child objects, too?
-			ed->openObject (object, initialize_to_empty);
+			create_editor = true;
 		} else if (object->isVariable () && object->getContainer ()->isDataFrame ()) {
 			existing_editor = object->getContainer ()->objectOpened ();
 			if (!existing_editor) {
+				create_editor = true;
 				iobj = object->getContainer ();
-				part = new RKEditorDataFramePart (0);
-				ed = part->getEditor ();
-				// TODO: add child objects, too?
-				ed->openObject (iobj, initialize_to_empty);
-				// ed->focusObject (obj);
 			}
 		}
 
-		if (ed) {
+		if (create_editor) {
+			unsigned long size = 1;
+			for (unsigned int i = 0; i < iobj->numDimensions (); ++i) {
+				size *= iobj->getDimension (i);
+			}
+			if (size > 250000) {
+#warning: make limit configurable
+				if (KMessageBox::warningContinueCancel (view (), i18n ("You are about to edit object \"%1\", which is very large (%2 fields). RKWard is not optimized to handle very large objects in the built in data editor. This will use a lot of memory, and - depending on your system - might be very slow. For large objects it is generally recommended to edit then using command line means. On the other hand, if you have enough memory, or the data is simple enough (numeric data is easier to handle, than factor), editing may not be a problem at all. You can configure / turn of this warning under Settings->Somewhere TODO.\nReally edit object?").arg (iobj->getFullName ()).arg (QString::number (size)), i18n ("About to edit very large object")) != KMessageBox::Continue) {
+					return 0;
+				}
+			}
+
+			part = new RKEditorDataFramePart (0);		// TODO: reverse creation logic, just as in the other classes!
+			ed = part->getEditor ();
+			// TODO: add child objects, too?
+			ed->openObject (iobj, initialize_to_empty);
+
 			ed->setCaption (iobj->getShortName ());		// TODO: move to editor
 			ed->setIcon (SmallIcon ("spreadsheet"));
 			addWindow (ed);

@@ -1,3 +1,4 @@
+- warn when opening very large objects								TODO: make limit / warning configurable
 - add a "copy" tag to facilitate writing plugins with both dialog and wizard interfaces		TODO: document, convert all wizards to use this
 - fixed: graph previews would stop working when the interface is switched from dialog to wizard or vice versa
 - new options for plugin dialogs: Configure whether code display is by default, and at what size
