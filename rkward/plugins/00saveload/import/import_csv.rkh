@@ -12,6 +12,7 @@ Choose the CSV file to import. An R object containing the data will be created. 
 		<caption id="tab_general"/>
 		<setting id="file">The filename of the file to import</setting>
 		<setting id="name">The name of an R object to store the imported data in. If you chose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
+		<setting id="doedit">Whether the object should be opened for editing after it was imported</setting>
 		<setting id="header">Whether the first row of the file contains should be interpreted as column names</setting>
 		<setting id="dec">Decimal character used in the imported file</setting>
 		<setting id="custom_dec">If you selected "other" above, specify the character, here.</setting>

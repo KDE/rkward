@@ -54,8 +54,11 @@ if (!is.null (rk.temp.labels)) {
 		}
 	}
 }
-<?	} ?>
-<?
+<?	}
+	if (getRK_val ("doedit") && $data_frame) { ?>
+
+rk.edit (<? echo ($object); ?>)
+<?	}
 }
 
 function printout () {

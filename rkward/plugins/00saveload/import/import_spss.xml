@@ -6,6 +6,8 @@
 		<external id="filename"/>
 		<connect governor="filename" client="file.selection"/>
 		
+		<connect governor="data_frame.state" client="doedit.enabled" />
+		
 		<connect governor="use_labels.state" client="labels_limit.enabled"/>
 		<connect governor="use_labels.state" client="trim_labels.enabled"/>
 		
@@ -20,7 +22,10 @@
 			<tab id="tab_general" label="General">
 				<browser size="small" id="file" label="File name" />
 				<stretch/>
-				<saveobject id="saveto" initial="my.spss.data" label="Object to save to"/>
+				<row>
+					<saveobject id="saveto" initial="my.spss.data" label="Object to save to"/>
+					<checkbox id="doedit" value="1" value_unchecked="0" label="Edit Object" checked="true" />
+				</row>
 				<stretch/>
 				<checkbox id="data_frame" checked="true" label="Import as a data.frame" value="1" value_unchecked="0"/>
 				<frame label="Labels">

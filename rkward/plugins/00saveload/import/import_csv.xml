@@ -39,7 +39,10 @@
 		<tabbook>
 			<tab id="tab_general" label="General" >
 				<browser size="small" id="file" label="File name" />
-				<saveobject id="name" initial="my.csv.data" label="Object to save to"/>
+				<row>
+					<saveobject id="name" initial="my.csv.data" label="Object to save to"/>
+					<checkbox id="doedit" value="1" value_unchecked="0" label="Edit Object" checked="true" />
+				</row>
 				<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="true" label="First row contains column names"/>
 				<row>
 					<column>

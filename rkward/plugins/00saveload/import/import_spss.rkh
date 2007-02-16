@@ -12,6 +12,7 @@ Choose the SPSS file to import. An R object containing the SPSS data will be cre
 		<caption id="tab_general"/>
 		<setting id="file">The filename of the file to import</setting>
 		<setting id="saveto">The name of an R object to store the imported data in. If you chose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
+		<setting id="doedit">Whether the object should be opened for editing after it was imported. Currently, this is only possible, if the object is saved as a data.frame (see next option).</setting>
 		<setting id="data_frame">Whether to save the data as a data.frame. The alternative is saving as a list (useful, if the columns in your SPSS data have different lengths)</setting>
 
 		<setting id="convert_var_labels">RKWard can display SPSS like variable labels. Check this option, if you would like to convert the SPSS variable labels to RKWard format. If you leave the option unchecked, the SPSS variable labels will still be available as an attribute "variable.labels" (see <link href="rkward://rhelp/read.spss" />)</setting>

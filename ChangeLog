@@ -1,7 +1,8 @@
+- import SPSS and import CSV plugins gain option to open object for editing, automatically (checked by default)
 - warn when opening very large objects (with more than 250000 fields; this limit is configurable)
 - add a "copy" tag to facilitate writing plugins with both dialog and wizard interfaces		TODO: document, convert all wizards to use this
 - fixed: graph previews would stop working when the interface is switched from dialog to wizard or vice versa
-- new options for plugin dialogs: Configure whether code display is by default, and at what size
+- new options for plugin dialogs: Configure whether code display is shown by default, and at what size
 
 --- Version 0.4.6 - Feb-15-2007
 - make sure any LC_ALL environment setting will not be applied by SCIM plugin (if installed on the system)
