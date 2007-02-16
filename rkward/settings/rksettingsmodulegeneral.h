@@ -24,6 +24,7 @@ class GetFileNameWidget;
 class QComboBox;
 class QCheckBox;
 class QButtonGroup;
+class RKSpinBox;
 
 /**
 @author Thomas Friedrichsmeier
@@ -60,6 +61,7 @@ public:
 	static QString getSavedWorkplace (KConfig *config);
 /** set the saved workplace description. Meaningful only is workplaceSaveMode () == SaveWorkplaceWithSession */
 	static void setSavedWorkplace (const QString &description, KConfig *config);
+	static unsigned long warnLargeObjectThreshold () { return warn_size_object_edit; };
 public slots:
 	void pathChanged ();
 	void boxChanged (int);
@@ -68,6 +70,7 @@ private:
 	QComboBox *startup_action_choser;
 	QButtonGroup *workplace_save_chooser;
 	QCheckBox *show_help_on_startup_box;
+	RKSpinBox *warn_size_object_edit_box;
 
 	static StartupDialog::Result startup_action;
 	static QString files_path;
@@ -75,6 +78,7 @@ private:
 	static QString new_files_path;
 	static WorkplaceSaveMode workplace_save_mode;
 	static bool show_help_on_startup;
+	static int warn_size_object_edit;
 };
 
 #endif

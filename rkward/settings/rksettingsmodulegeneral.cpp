@@ -30,6 +30,7 @@
 #include <qradiobutton.h>
 
 #include "../misc/getfilenamewidget.h"
+#include "../misc/rkspinbox.h"
 #include "../rkglobals.h"
 #include "../debug.h"
 
@@ -39,6 +40,7 @@ QString RKSettingsModuleGeneral::new_files_path;
 StartupDialog::Result RKSettingsModuleGeneral::startup_action;
 RKSettingsModuleGeneral::WorkplaceSaveMode RKSettingsModuleGeneral::workplace_save_mode;
 bool RKSettingsModuleGeneral::show_help_on_startup;
+int RKSettingsModuleGeneral::warn_size_object_edit;
 
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -85,6 +87,16 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	connect (workplace_save_chooser, SIGNAL (clicked (int)), this, SLOT (boxChanged (int)));
 	main_vbox->addWidget (workplace_save_chooser);
 
+	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+
+	label = new QLabel (i18n ("Warn when editing objects with more than this number of fields (0 for no limit):"), this);
+	warn_size_object_edit_box = new RKSpinBox (this);
+	warn_size_object_edit_box->setIntMode (0, INT_MAX, warn_size_object_edit);
+	warn_size_object_edit_box->setSpecialValueText (i18n ("No limit"));
+	connect (warn_size_object_edit_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
+	main_vbox->addWidget (label);
+	main_vbox->addWidget (warn_size_object_edit_box);
+
 	main_vbox->addStretch ();
 }
 
@@ -122,6 +134,7 @@ void RKSettingsModuleGeneral::applyChanges () {
 #else
 	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->selectedId ());
 #endif
+	warn_size_object_edit = warn_size_object_edit_box->value ();
 }
 
 void RKSettingsModuleGeneral::save (KConfig *config) {
@@ -141,6 +154,9 @@ void RKSettingsModuleGeneral::saveSettings (KConfig *config) {
 
 	config->setGroup ("Workplace");
 	config->writeEntry ("save mode", (int) workplace_save_mode);
+
+	config->setGroup ("Editor");
+	config->writeEntry ("large object warning limit", warn_size_object_edit);
 }
 
 void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
@@ -155,6 +171,9 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 
 	config->setGroup ("Workplace");
 	workplace_save_mode = (WorkplaceSaveMode) config->readNumEntry ("save mode", SaveWorkplaceWithWorkspace);
+
+	config->setGroup ("Editor");
+	warn_size_object_edit = config->readNumEntry ("large object warning limit", 250000);
 }
 
 QString RKSettingsModuleGeneral::getSavedWorkplace (KConfig *config) {

@@ -216,9 +216,8 @@ RKEditor *RKWorkplace::editObject (RObject *object, bool initialize_to_empty) {
 			for (unsigned int i = 0; i < iobj->numDimensions (); ++i) {
 				size *= iobj->getDimension (i);
 			}
-			if (size > 250000) {
-#warning: make limit configurable
-				if (KMessageBox::warningContinueCancel (view (), i18n ("You are about to edit object \"%1\", which is very large (%2 fields). RKWard is not optimized to handle very large objects in the built in data editor. This will use a lot of memory, and - depending on your system - might be very slow. For large objects it is generally recommended to edit then using command line means. On the other hand, if you have enough memory, or the data is simple enough (numeric data is easier to handle, than factor), editing may not be a problem at all. You can configure / turn of this warning under Settings->Somewhere TODO.\nReally edit object?").arg (iobj->getFullName ()).arg (QString::number (size)), i18n ("About to edit very large object")) != KMessageBox::Continue) {
+			if ((RKSettingsModuleGeneral::warnLargeObjectThreshold () != 0) && (size > RKSettingsModuleGeneral::warnLargeObjectThreshold ())) {
+				if (KMessageBox::warningContinueCancel (view (), i18n ("You are about to edit object \"%1\", which is very large (%2 fields). RKWard is not optimized to handle very large objects in the built in data editor. This will use a lot of memory, and - depending on your system - might be very slow. For large objects it is generally recommended to edit using command line means or to split into smaller chunks before editing. On the other hand, if you have enough memory, or the data is simple enough (numeric data is easier to handle, than factor), editing may not be a problem at all. You can configure / turn of this warning under Settings->Configure RKWard->General.\nReally edit object?").arg (iobj->getFullName ()).arg (QString::number (size)), i18n ("About to edit very large object")) != KMessageBox::Continue) {
 					return 0;
 				}
 			}
