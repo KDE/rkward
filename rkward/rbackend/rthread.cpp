@@ -362,7 +362,9 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 			
 			if (command) {
 				// mutex will be unlocked inside
+				bool object_update_forced = (command->type () & RCommand::ObjectListUpdate);
 				doCommand (command);
+				if (object_update_forced) checkObjectUpdatesNeeded (true);
 				processX11Events ();
 			}
 		}

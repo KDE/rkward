@@ -28,6 +28,7 @@
 #include "../dialogs/rkloadlibsdialog.h"
 #include "../dialogs/rkreadlinedialog.h"
 #include "../agents/showedittextfileagent.h"
+#include "../agents/rkeditobjectagent.h"
 #include "../windows/rcontrolwindow.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandlog.h"
@@ -324,13 +325,11 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 	} else if (call == "edit") {
 		RK_ASSERT (request->call_length >= 2);
 
+		QStringList object_list;
 		for (int i = 1; i < request->call_length; ++i) {
-			QString object_name = request->call[i];
-			RObject *obj = RObjectList::getObjectList ()->findObject (object_name);
-			if (!(obj && RKWorkplace::mainWorkplace()->editObject (obj, false))) {
-				KMessageBox::information (0, i18n ("The object '%1', could not be opened for editing. Either it does not exist, or RKWard does not support editing this type of object, yet.").arg (object_name), i18n ("Cannot edit '%1'").arg (object_name));
-			}
+			object_list.append (request->call[i]);
 		}
+		new RKEditObjectAgent (object_list, request->in_chain);
 	} else if (call == "require") {
 		if (request->call_length >= 2) {
 			QString lib_name = request->call[1];
