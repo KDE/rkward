@@ -280,7 +280,7 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
 
 	// create a builder
-	RKComponentBuilder *builder = new RKComponentBuilder (this);
+	RKComponentBuilder *builder = new RKComponentBuilder (this, doc_element);
 
 	// go
 	builder->buildElement (gui_element, parent_widget, build_wizard);
@@ -294,7 +294,9 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	delete builder;
 	created = true;
 	if (gui && (!enslaved)) {
-		gui->show ();
+		// somehow, when switching the interface, and we show before the old GUI has been fully deleted (it is deleted via deleteLater (), then there may be strange graphical glitches until the GUI is first redrawn completely.
+		// Likely a difficult bug in Qt. Delaying the show until the next event loop solves the problem.
+		QTimer::singleShot (0, gui, SLOT (show ()));
 	}
 	changed ();
 }
@@ -426,13 +428,50 @@ void RKStandardComponent::addComponentToCurrentPage (RKComponent *component) {
 
 #include <qpushbutton.h>
 
-RKComponentBuilder::RKComponentBuilder (RKStandardComponent *parent_component) {
+RKComponentBuilder::RKComponentBuilder (RKStandardComponent *parent_component, const QDomElement &document_element) {
 	RK_TRACE (PLUGIN);
 	parent = parent_component;
+	doc_elem = document_element;
 }
 
 RKComponentBuilder::~RKComponentBuilder () {
 	RK_TRACE (PLUGIN);
+}
+
+QDomElement RKComponentBuilder::doElementCopy (const QString id, const QDomElement &copy) {
+	RK_TRACE (PLUGIN);
+
+	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	QDomElement res;
+
+	if (id.isEmpty ()) {
+		xml->displayError (&copy, "no id given for copy element", DL_ERROR, DL_ERROR);
+		return res;	// null
+	}
+
+	// find matching element to copy from
+	XMLChildList candidates = xml->findElementsWithAttribute (doc_elem, "id", id, true, DL_ERROR);
+	XMLChildList::const_iterator it;
+	for (it = candidates.constBegin (); it != candidates.constEnd (); ++it) {
+		if ((*it).tagName () == "copy") continue;
+		res = (*it).cloneNode ().toElement ();
+		break;
+	}
+	if (res.isNull ()) {
+		xml->displayError (&copy, "no matching element found to copy from", DL_ERROR, DL_ERROR);
+		return res;
+	}
+
+	// copy overridden attributes
+	QDomNamedNodeMap attribs = copy.attributes ();
+	int len = attribs.count ();
+	for (int i=0; i < len; ++i) {
+		QDomAttr attr = attribs.item (i).toAttr ();
+		if (attr.name () == "copy_element_tag_name") res.setTagName (attr.value ());
+		else res.setAttribute (attr.name (), attr.value ());
+	}
+
+	return res;
 }
 
 void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *parent_widget, bool allow_pages) {
@@ -446,6 +485,10 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 		RKComponent *widget = 0;
 		QDomElement e = *it;		// shorthand
 		QString id = xml->getStringAttribute (e, "id", QString::null, DL_INFO);
+
+		if (e.tagName () == "copy") {
+			e = doElementCopy (id, e);
+		}	// no else, here. e may be changed to some entirely different element, now.
 
 		if (allow_pages && (e.tagName () == "page")) {
 			widget = component ()->addPage ();

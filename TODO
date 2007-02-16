@@ -164,6 +164,12 @@ General code:
 			- static members should be moved to the respective classes. Much cleaner!
 
 R plugins:
+	- import plugins:
+		- standardized? checkbox to open imported object for editing
+			- would be nice, if this box could be affected (default) by a global setting
+	- multiple interfaces (dialog and wizard)
+		- create a new tag <copy id="..."/> to "copy" an entire element from <dialog> to <wizard> or vice versa. Perhaps additional arguments could be specified, and those would override the ones in the other definition (but maybe this isn't even needed).
+		- should make it much easier to keep the interfaces in sync
 	- Generalized preview:
 		- E.g. for data import plugins
 	- Ability to pre-select some default values with a single option

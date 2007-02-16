@@ -120,7 +120,7 @@ Reminder to the twisted brain: Typically inside a standard-component, *all* chil
 @author Thomas Friedrichsmeier */
 class RKComponentBuilder {
 public:
-	RKComponentBuilder (RKStandardComponent *parent_component);
+	RKComponentBuilder (RKStandardComponent *parent_component, const QDomElement &document_element);
 	~RKComponentBuilder ();
 	void buildElement (const QDomElement &element, QWidget *parent_widget, bool allow_pages);
 	void parseLogic (const QDomElement &element);
@@ -129,6 +129,8 @@ public:
 private:
 /** internal convenience function to schedule a property connection */
 	void addConnection (const QString &client_id, const QString &client_property, const QString &governor_id, const QString &governor_property, bool reconcile, const QDomElement &origin);
+	QDomElement doElementCopy (const QString id, const QDomElement &copy);
+	QDomElement doc_elem;
 	RKStandardComponent *parent;
 	struct RKComponentPropertyConnection {
 		QString governor_property;

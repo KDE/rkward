@@ -27,7 +27,7 @@ A duplicate option has to be tested-->
 	</logic>
 	<dialog label="Scatterplot" >
 		<tabbook>
-			<tab label="Variables" >
+			<tab label="Variables" id="variables_tab">
 				<row>
 					<varselector id="vars" />
 					<column>
@@ -39,7 +39,7 @@ A duplicate option has to be tested-->
 					</column>
 				</row>
 			</tab>
-			<tab label="Axes" >
+			<tab label="Axes" id="axes_tab">
 				<row>
 					<varselector id="varname" />
 					<column>
@@ -56,7 +56,7 @@ A duplicate option has to be tested-->
 					</column>
 				</row>
 			</tab>
-			<tab label="Type" >
+			<tab label="Type" id="type_tab">
 				<dropdown id="type" label="Type of graphics" >
 					<option value="'p'" label="Plot individual dots" />
 					<option value="'l'" label="Plot lines" />
@@ -69,7 +69,7 @@ A duplicate option has to be tested-->
 				</dropdown>
 				<input size="medium" id="typeCusto" label="Give a character vector eg : c('p','l')" />
 			</tab>
-			<tab label="Names" >
+			<tab label="Names" id="names_tab">
 				<row>
 					<column>
 						<checkbox checked="false" value="1" id="isXaxis" label="Give a name to 'X' axis" />
@@ -88,7 +88,7 @@ A duplicate option has to be tested-->
 					</column>
 				</row>
 			</tab>
-			<tab label="Options" >
+			<tab label="Options" id="options_tab">
 				<frame>
 					<row>
 						<radio id="color" label="Color" >
@@ -136,119 +136,11 @@ A duplicate option has to be tested-->
 		</tabbook>
 	</dialog>
 	<wizard label="Scatterplot">
-	<!--variable
-	-->
-		<page>
-			<row>
-				<varselector id="vars" />
-				<column>
-					<row>
-						<varslot multi="true" duplicate="true" types="number unknown" id="x" source="vars" label="'X' variables" required="true" />
-						<varslot multi="true" duplicate="true" types="number unknown" id="y" source="vars" label="'Y' variables" required="true" />
-					</row>
-					<preview id="preview"/>
-				</column>
-			</row>
-		</page>
-	<!-- axes-->
-		<page>
-			<row>
-				<varselector id="varname" />
-				<column>
-					<radio id="columns" label="Value for 'X' scale" >
-						<option value="FALSE" label="Default" />
-						<option value="custoCol" label="Customize" />
-					</radio>
-					<varslot multi="false" types="number unknown" source="varname" id="Xscale" />
-					<radio id="rows" label="Value for 'Y' scale" >
-						<option value="FALSE" id="temp2" label="Default" />
-						<option value="custoRow" label="Customize" />
-					</radio>
-					<varslot multi="false" types="number unknown" id="Yscale" source="varname" />
-				</column>
-			</row>
-		</page>
-	<!--couleur
-	-->
-		<page>
-			<frame>
-				<row>
-					<radio id="color" label="Color" >
-						<option value="all" label="Same color for all variables" />
-						<option value="each" label="Different for each variable" />
-					</radio>
-					<column>
-						<text>
-				Enter value - for diff.col. enter a vector -
-				eg:  c(1,2) or c('red','green')
-						</text>
-						<input size="small" id="col" initial="'black'" label=" " />
-					</column>
-				</row>
-			</frame>
-			<frame>
-				<row>
-					<radio id="isCex" label="Size" >
-						<option value="all" label="Same for all variables" />
-						<option value="each" label="Different for each variable" />
-					</radio>
-					<column>
-						<text>
-				A numerical value giving the amount by which plotting text and symbols should be scaled relative to the default. 
-						</text>
-						<input size="small" id="cex" initial="1" label="Enter value - for diff.size. enter a vector -" />
-					</column>
-				</row>
-			</frame>
-			<frame>
-				<row>
-					<radio id="isPch" label="Symbol" >
-						<option value="all" label="Same for all variables" />
-						<option value="each" label="Different for each variable" />
-					</radio>
-					<column>
-						<text>
-				Either an integer specifying a symbol or a single character to be used as the default in plotting points.
-						</text>
-						<input size="small" id="pch" initial="1" label="Enter value - for diff.symbol. enter a vector -" />
-					</column>
-				</row>
-			</frame>
-		</page>
-	<!--type
-	-->
-		<page>
-			<dropdown id="type" label="Type of graphics" >
-				<option value="'p'" label="Plot individual points " />
-				<option value="'l'" label="Plot lines " />
-				<option value="'b'" label="Plot points connected by lines (both)" />
-				<option value="'o'" label="Plot points overlaid by lines " />
-				<option value="'h'" label="Plot vertical lines from points to the zero axis (high-density)" />
-				<option value="'s'" label="Step-function plots : the top of the vertical defines the point" />
-				<option value="'S'" label="Step-function plots : the bottom of the vertical defines the point" />
-				<option value="custoType" label="Customize" />
-			</dropdown>
-			<input size="medium" id="typeCusto" label="Give a character vector eg : c('p','l')" />
-		</page>
-		<!--titre-->
-		<page>
-			<row>
-				<column>
-					<checkbox checked="false" value="1" id="isXaxis" label="Give a name to 'X' axis" />
-					<input size="medium" id="Xname" initial="X" label="Name for X axis" />
-					<checkbox checked="false" value="1" id="isYaxis" label="Give a name to Y axis" />
-					<input size="medium" id="Yname" initial="Y" label="Name of Y axis" />
-					<checkbox checked="false" value="1" id="isTitle" label="Give a title" />
-					<input size="medium" id="main" />
-					<checkbox checked="false" value="1" id="isSub" label="Give a subtitle" />
-					<input size="medium" id="sub" />
-				</column>
-				<column>
-					<checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="axes" label="Generate axes" />
-					<checkbox value_unchecked="" checked="false" value="x" id="logX" label="X as logarythm" />
-					<checkbox value_unchecked="" checked="false" value="y" id="logY" label="Y as logarythm" />
-				</column>
-			</row>
-		</page>
+	<!-- This wizard is somewhat pointless, as all it's really just a copy of the dialog tabs, with one tab per page. But so what, maybe it still "looks" friendlier, while it does not really change anything -->
+		<copy id="variables_tab" copy_element_tag_name="page" />
+		<copy id="axes_tab" copy_element_tag_name="page" />
+		<copy id="type_tab" copy_element_tag_name="page" />
+		<copy id="names_tab" copy_element_tag_name="page" />
+		<copy id="options_tab" copy_element_tag_name="page" />
 	</wizard>
 </document>
