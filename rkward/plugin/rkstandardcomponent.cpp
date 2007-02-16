@@ -258,6 +258,7 @@ void RKStandardComponent::discard () {
 	gui = 0;
 	wizard = 0;
 
+	// clear all properties. Not the code property, as the script backend relies on it
 	for (QDictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
 		if (it.current () != code) {
 			if (it.current ()->isProperty ()) {
@@ -268,7 +269,9 @@ void RKStandardComponent::discard () {
 		}
 	}
 	child_map.clear ();
-	createDefaultProperties ();
+	addChild ("code", code);
+
+	createDefaultProperties ();	// enabledness, requiredness, visibility
 }
 
 void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, const QDomElement &gui_element, QWidget *parent_widget, bool build_wizard, bool enslaved) {

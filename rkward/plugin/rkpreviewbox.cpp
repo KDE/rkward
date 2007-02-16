@@ -60,7 +60,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 		code_property = static_cast<RKComponentPropertyCode *> (cp);
 		connect (code_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (changedCode (RKComponentPropertyBase *)));
 	} else {
-		RK_DO (qDebug ("Could not find code property in preview box"), PLUGIN, DL_WARNING);
+		RK_DO (qDebug ("Could not find code property in preview box (remainder: %s)", dummy.latin1()), PLUGIN, DL_WARNING);
 		code_property = 0;
 	}
 
