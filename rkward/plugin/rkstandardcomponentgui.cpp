@@ -34,14 +34,16 @@
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
 #include "../misc/rkerrordialog.h"
+#include "../settings/rksettingsmoduleplugins.h"
 #include "../rkglobals.h"
 #include "../debug.h"
-
 
 /////////////////////////////////////// RKStandardComponentGUI ////////////////////////////////////////////////
 
 RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved) {
 	RK_TRACE (PLUGIN);
+
+	splitter = 0;
 
 	// create an error-dialog
 	error_dialog = new RKRErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin '%1'.\nThis may lead to an incorrect output and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below.").arg (component->getFilename ()), i18n ("R-Error"), false);
@@ -116,15 +118,19 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	
 	toggle_code_button = new QPushButton (i18n ("Code"), upper_widget);
 	toggle_code_button->setToggleButton (true);
-	toggle_code_button->setOn (true);
+	toggle_code_button->setOn (RKSettingsModulePlugins::showCodeByDefault ());
 	connect (toggle_code_button, SIGNAL (clicked ()), this, SLOT (toggleCode ()));
 	vbox->addWidget (toggle_code_button);
 	if (enslaved) toggle_code_button->hide ();
 	
 	// code display
 	code_display = new RKCommandEditorWindow (splitter, true);
+	code_display->setMinimumHeight (RKSettingsModulePlugins::defaultCodeHeight ());
 	splitter->setResizeMode (code_display, QSplitter::Stretch);
-	if (enslaved) code_display->hide ();
+	code_display->hide ();
+	if (!enslaved) {
+		QTimer::singleShot (0, this, SLOT (toggleCode ()));
+	}
 }
 
 void RKStandardComponentGUI::ok () {
@@ -151,8 +157,20 @@ void RKStandardComponentGUI::cancel () {
 
 void RKStandardComponentGUI::toggleCode () {
 	RK_TRACE (PLUGIN);
+	RK_ASSERT (splitter);
 
-	code_display->setShown (toggle_code_button->isOn ());
+	QValueList<int> splitter_sizes = splitter->sizes ();
+	splitter_sizes.pop_back ();
+
+	if (toggle_code_button->isOn ()) {
+		splitter_sizes.append (RKSettingsModulePlugins::defaultCodeHeight ());
+		code_display->show ();
+	} else {
+		splitter_sizes.append (0);
+		code_display->hide ();
+	}
+	splitter->setSizes (splitter_sizes);
+
 	updateCode ();
 }
 

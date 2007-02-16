@@ -1,3 +1,5 @@
+- new options for plugin dialogs: Configure whether code display is by default, and at what size
+
 --- Version 0.4.6 - Feb-15-2007
 - make sure any LC_ALL environment setting will not be applied by SCIM plugin (if installed on the system)
 - fix crash after changing storage type of an object in the data editor

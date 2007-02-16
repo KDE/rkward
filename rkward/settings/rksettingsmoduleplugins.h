@@ -2,7 +2,7 @@
                           rksettingsmoduleplugins  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -23,6 +23,8 @@
 
 class MultiStringSelector;
 class QButtonGroup;
+class QCheckBox;
+class RKSpinBox;
 
 /** The settings-module for plugin specific settings
 @author Thomas Friedrichsmeier
@@ -47,16 +49,22 @@ public:
 	
 	static QStringList &pluginMaps () { return plugin_maps; };
 	static PluginPrefs getInterfacePreference () { return interface_pref; };
+	static bool showCodeByDefault () { return show_code; };
+	static int defaultCodeHeight () { return code_size; };
 public slots:
 	void pathsChanged ();
-	void buttonClicked (int);
+	void settingChanged (int);
 	void browseRequest (QStringList* strings);
 private:
 	MultiStringSelector *map_choser;
 	QButtonGroup *button_group;
+	QCheckBox *show_code_box;
+	RKSpinBox *code_size_box;
 	
 	static QStringList plugin_maps;
 	static PluginPrefs interface_pref;
+	static bool show_code;
+	static int code_size;
 };
 
 #endif
