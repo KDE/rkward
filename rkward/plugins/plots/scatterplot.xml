@@ -49,7 +49,7 @@ A duplicate option has to be tested-->
 						</radio>
 						<varslot multi="false" types="number unknown" source="varname" id="Xscale" />
 						<radio id="rows" label="Value for 'Y' scale" >
-							<option value="FALSE" id="temp2" label="Default" />
+							<option value="FALSE" label="Default" />
 							<option value="custoRow" label="Customize" />
 						</radio>
 						<varslot multi="false" types="number unknown" id="Yscale" source="varname" />
@@ -106,7 +106,7 @@ A duplicate option has to be tested-->
 				</frame>
 				<frame>
 					<row>
-						<radio id="isCe" label="Size" >
+						<radio id="isCex" label="Size" >
 							<option value="all" label="Same for all variables" />
 							<option value="each" label="Different for each variable" />
 						</radio>
@@ -221,8 +221,8 @@ A duplicate option has to be tested-->
 			<dropdown id="type" label="Type of graphics" >
 				<option value="'p'" label="Plot individual points " />
 				<option value="'l'" label="Plot lines " />
-				<option value="b" label="Plot points connected by lines (both)" />
-				<option value="1" label="Plot points overlaid by lines " />
+				<option value="'b'" label="Plot points connected by lines (both)" />
+				<option value="'o'" label="Plot points overlaid by lines " />
 				<option value="'h'" label="Plot vertical lines from points to the zero axis (high-density)" />
 				<option value="'s'" label="Step-function plots : the top of the vertical defines the point" />
 				<option value="'S'" label="Step-function plots : the bottom of the vertical defines the point" />
