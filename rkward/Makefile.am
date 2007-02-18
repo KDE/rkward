@@ -67,7 +67,7 @@ rc_DATA = rkwardui.rc rkconsolepart.rc
 bin_SCRIPTS = rkward
 
 # all the perl script does is fill in the placeholder for R_HOMEDIR and friends
-rkward:
+rkward: makerkwardscript.pl rkward.sh.template
 	perl ./makerkwardscript.pl rkward.sh.template "$(R_HOMEDIR)" > rkward; \
 	chmod 744 rkward
 
