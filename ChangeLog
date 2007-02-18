@@ -1,3 +1,4 @@
+- fixed: plugin browser type="dir" would not work correctly
 - import SPSS and import CSV plugins gain option to open object for editing, automatically (checked by default)
 - warn when opening very large objects (with more than 250000 fields; this limit is configurable)
 - add a "copy" tag to facilitate writing plugins with both dialog and wizard interfaces		TODO: document, convert all wizards to use this
