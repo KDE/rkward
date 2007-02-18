@@ -6,6 +6,11 @@ rk.temp <- list ()
 }
 
 function calculate () {
+	global $Xname;
+	global $Yname;
+	global $main;
+	global $sub;
+
 	$x = str_replace ("\n", ",", trim (getRK_val ("x"))) ;
 	$y = str_replace ("\n", ",", trim (getRK_val ("y"))) ;
 	
@@ -65,7 +70,12 @@ function preview () {
 	cleanup ();
 }
 
-function doPrintout ($final) { ?>
+function doPrintout ($final) {
+	global $Xname;
+	global $Yname;
+	global $main;
+	global $sub;
+?>
 if (!rk.temp$ok) stop ()
 
 <? if ($final) { ?>
