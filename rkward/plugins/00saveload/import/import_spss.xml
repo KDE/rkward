@@ -20,7 +20,7 @@
 	<dialog label="Import SPSS file">
 		<tabbook>
 			<tab id="tab_general" label="General">
-				<browser size="small" id="file" label="File name" />
+				<browser type="file" id="file" label="File name" />
 				<stretch/>
 				<row>
 					<saveobject id="saveto" initial="my.spss.data" label="Object to save to"/>
