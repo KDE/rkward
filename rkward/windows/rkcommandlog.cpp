@@ -73,6 +73,7 @@ RKCommandLog::RKCommandLog () : KMdiChildView () {
 	command_input_shown = 0;
 
 	part = new RKCommandLogPart (this);
+//	initializeActivationSignals ();
 }
 
 RKCommandLog::~RKCommandLog(){

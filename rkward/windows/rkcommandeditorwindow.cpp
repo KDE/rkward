@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -74,6 +74,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	RKCommonFunctions::moveContainer (m_doc, "Menu", "tools", "edit", true);
 
 	m_doc->insertChildClient (new RKCommandEditorWindowPart (m_view, this));
+	initializeActivationSignals ();
 	setFocusProxy (m_view);
 
 	QHBoxLayout *pLayout = new QHBoxLayout( this, 0, -1, "layout");

@@ -128,6 +128,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, char *name) : RKMDIWind
 	
 	setCaption (i18n ("R Console"));
 	part = new RKConsolePart (this);
+	initializeActivationSignals ();
 	initializeActions (part->actionCollection ());
 
 	nprefix = "> ";
@@ -326,7 +327,11 @@ void RKConsole::doTabCompletion () {
 	tab_key_pressed_before = false;
 }
 
-bool RKConsole::eventFilter (QObject *, QEvent *e) {
+bool RKConsole::eventFilter (QObject *o, QEvent *e) {
+	if (o == getPart ()) {
+		return RKMDIWindow::eventFilter (o, e);
+	}
+
 	if (e->type () == QEvent::KeyPress) {
 		QKeyEvent *k = (QKeyEvent *)e;
 		return handleKeyPress (k);

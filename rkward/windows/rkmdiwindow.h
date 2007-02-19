@@ -86,11 +86,13 @@ public:
 	virtual bool close (bool also_delete);
 /** For tool windows only (and perhaps for KDE3 only): set the wrapper widget that should be shown/raised on activation */
 	void setToolWrapper (KMdiToolViewAccessor *wrapper_widget) { wrapper = wrapper_widget; };
+	bool eventFilter (QObject *watched, QEvent *e);
 signals:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */
 	void captionChanged (RKMDIWindow *);
 protected:
+	void initializeActivationSignals ();
 friend class RKWorkplace;
 /** type of this window */
 	Type type;

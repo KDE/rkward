@@ -19,6 +19,8 @@
 
 #include <qapplication.h>
 
+#include <kparts/event.h>
+
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
 
@@ -104,6 +106,29 @@ void RKMDIWindow::prepareToBeDetached () {
 	RK_TRACE (APP);
 
 	RK_ASSERT (!isToolWindow ());
+}
+
+bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
+	RK_TRACE (APP);
+
+#warning TODO
+	RK_ASSERT (watched == getPart ());
+	if (KParts::PartActivateEvent::test (e)) {
+		KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *> (e);
+		if (ev->activated ()) {
+			qDebug ("activated: %s", getDescription ().latin1 ());
+		} else {
+			qDebug ("deactivated: %s", getDescription ().latin1 ());
+		}
+	}
+	return FALSE;
+}
+
+void RKMDIWindow::initializeActivationSignals () {
+	RK_TRACE (APP);
+
+	RK_ASSERT (getPart ());
+	getPart ()->installEventFilter (this);
 }
 
 #include "rkmdiwindow.moc"

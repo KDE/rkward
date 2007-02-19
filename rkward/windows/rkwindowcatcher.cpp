@@ -92,6 +92,7 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 
 	error_dialog = new RKRErrorDialog (i18n ("An error occurred"), i18n ("An error occurred"));
 	part = new RKCaughtX11WindowPart (this);
+	initializeActivationSignals ();
 	setFocusPolicy (QWidget::ClickFocus);
 
 	QVBoxLayout *layout = new QVBoxLayout (this);

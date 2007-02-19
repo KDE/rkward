@@ -47,6 +47,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow:
 	scroll_position=-1;
 	
 	khtmlpart = new KHTMLPart (this, 0, 0, 0, KHTMLPart::BrowserViewGUI);
+	initializeActivationSignals ();
 	khtmlpart->setSelectable (true);
 	setFocusProxy (khtmlpart->widget ());
 	
