@@ -47,7 +47,7 @@
 // static
 RKConsole* RKConsole::main_console = 0;
 
-RKConsole::RKConsole () : QWidget (0) {
+RKConsole::RKConsole (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, RKMDIWindow::ConsoleWindow, tool_window, name) {
 	RK_TRACE (APP);
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
@@ -151,6 +151,11 @@ RKConsole::~RKConsole () {
 
 	delete hinter;
 	RKSettingsModuleConsole::saveCommandHistory (commands_history);
+}
+
+KParts::Part *RKConsole::getPart () {
+	RK_TRACE (APP);
+	return part;
 }
 
 void RKConsole::setRHighlighting () {
@@ -666,7 +671,6 @@ void RKConsole::runSelection () {
 
 	QString command = cleanedSelection ();
 	pipeUserCommand (new RCommand (command, RCommand::User));
-	setFocus ();
 }
 
 void RKConsole::showContextHelp () {
@@ -707,7 +711,7 @@ void RKConsole::pipeUserCommand (RCommand *command) {
 void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 	RK_TRACE (APP);
 
-	emit (raiseWindow ());
+	activate (false);
 	if (isBusy () || (!currentCommand ().isEmpty ())) {
 		int res = KMessageBox::questionYesNo (this, i18n ("You have configured RKWrad to run script commands through the console. However, the console is currently busy (either a command is running, or you have started to enter text in the console). Do you want to bypass the console this one time, or do you want to try again later?"), i18n ("Console is busy"), KGuiItem (i18n ("Bypass console")), KGuiItem (i18n ("Cancel")));
 		if (res == KMessageBox::Yes) {

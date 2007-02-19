@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -17,16 +17,20 @@
 
 #include "rkmdiwindow.h"
 
+#include <qapplication.h>
+
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
 
 #include "../debug.h"
 
-RKMDIWindow::RKMDIWindow (QWidget *parent, Type type) : QWidget (parent) {
+RKMDIWindow::RKMDIWindow (QWidget *parent, Type type, bool tool_window, char *name) : QWidget (parent, name) {
 	RK_TRACE (APP);
 
 	RKMDIWindow::type = type;
-	state = Attached;
+	if (tool_window) state = ToolWindow;
+	else state = Attached;
+	wrapper = 0;
 }
 
 RKMDIWindow::~RKMDIWindow () {
@@ -52,15 +56,54 @@ void RKMDIWindow::setCaption (const QString &caption) {
 	emit (captionChanged (this));
 }
 
-void RKMDIWindow::activate () {
+void RKMDIWindow::activate (bool with_focus) {
 	RK_TRACE (APP);
 
-	if (isAttached ()) {
-		RKWorkplace::mainWorkplace ()->view ()->setActivePage (this);
+	// WORKAROUND for KMDI: it will always grab focus, so we need to make sure to release it again, if needed
+	QWidget *old_focus = qApp->focusWidget ();
+
+	if (isToolWindow ()) {
+		RK_ASSERT (wrapper);
+		wrapper->wrapperWidget ()->topLevelWidget ()->show ();
+		wrapper->wrapperWidget ()->topLevelWidget ()->raise ();
+		wrapper->show ();
 	} else {
-		topLevelWidget ()->show ();
-		topLevelWidget ()->raise ();
+		if (isAttached ()) {
+			RKWorkplace::mainWorkplace ()->view ()->setActivePage (this);
+		} else {
+			topLevelWidget ()->show ();
+			topLevelWidget ()->raise ();
+		}
 	}
+
+	if (with_focus) setFocus ();
+	else {
+		if (old_focus) old_focus->setFocus ();
+	}
+}
+
+bool RKMDIWindow::close (bool also_delete) {
+	RK_TRACE (APP);
+
+	if (isToolWindow ()) {
+		RK_ASSERT (wrapper);
+		wrapper->hide ();
+		return true;
+	}
+
+	return QWidget::close (also_delete);
+}
+
+void RKMDIWindow::prepareToBeAttached () {
+	RK_TRACE (APP);
+
+	RK_ASSERT (!isToolWindow ());
+}
+
+void RKMDIWindow::prepareToBeDetached () {
+	RK_TRACE (APP);
+
+	RK_ASSERT (!isToolWindow ());
 }
 
 #include "rkmdiwindow.moc"

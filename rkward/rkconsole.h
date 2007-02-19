@@ -27,6 +27,7 @@
 
 #include "rbackend/rcommandreceiver.h"
 #include "windows/rkcommandeditorwindow.h"
+#include "windows/rkmdiwindow.h"
 
 class QStringList;
 class KAction;
@@ -46,11 +47,11 @@ Do not construct directly. Construct an RKConsolePart instead.
 @author Pierre Ecochard
 **/
 
-class RKConsole : public QWidget, public RCommandReceiver, public RKScriptContextProvider {
+class RKConsole : public RKMDIWindow, public RCommandReceiver, public RKScriptContextProvider {
 Q_OBJECT
 public:
 /** Constructor. */
-	RKConsole ();
+	RKConsole (QWidget *parent, bool tool_window, char *name=0);
 /** Destructor */
 	~RKConsole ();
 
@@ -77,9 +78,7 @@ public:
 /** Run a user command (through console, if applicable */
 	static void pipeUserCommand (RCommand *command);
 
-	RKConsolePart *getPart () { return part; };
-signals:
-	void raiseWindow ();
+	KParts::Part *getPart ();
 protected:
 /** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
 \param e the QKeyEvent */

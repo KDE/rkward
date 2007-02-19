@@ -50,7 +50,7 @@ public:
 /** Returns a list of all windows in the workplace. */
 	RKWorkplaceObjectList getObjectList () { return windows; };
 /** Returns a list of all windows with a given type and state */
-	RKWorkplaceObjectList getObjectList (int type, int state=RKMDIWindow::AnyState);
+	RKWorkplaceObjectList getObjectList (int type, int state=RKMDIWindow::AnyWindowState);
 
 /** Attach an already created window. */
 	void attachWindow (RKMDIWindow *window);
@@ -98,7 +98,7 @@ TODO: this should be obsoleted somehow */
 /** Closes all windows of the given type(s). Default call (no arguments) closes all windows
 @param type: A bitwise OR of RKWorkplaceObjectType
 @param state: A bitwise OR of RKWorkplaceObjectState */
-	void closeAll (int type=RKMDIWindow::AnyType, int state=RKMDIWindow::AnyState);
+	void closeAll (int type=RKMDIWindow::AnyType, int state=RKMDIWindow::AnyWindowState);
 
 /** Write a description of all current windows to the R backend. This can later be read by restoreWorkplace (). Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
 @param chain command chain to place the command in */
@@ -120,6 +120,7 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** In the current design there is only ever one workplace. Use this static function to reference it.
 @returns a pointer to the workplace */
 	static RKWorkplace *mainWorkplace () { return main_workplace; };
+	void registerToolWindow (RKMDIWindow *window);
 signals:
 /** TODO: For future expansion. This signal is neither emitted nor used so far. It could be used to deactivate some options in the "Window" menu. Or maybe it can be removed? */
 	void lastWindowClosed ();

@@ -65,9 +65,11 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	RK_TRACE (APP);
 	RK_ASSERT (windows.find (window) != windows.end ());		// This should not happen for now.
 
-	window->prepareToBeAttached ();
-	window->state = RKMDIWindow::Attached;
-	view ()->addPage (window);
+	if (!window->isToolWindow ()) {
+		window->prepareToBeAttached ();
+		window->state = RKMDIWindow::Attached;
+		view ()->addPage (window);
+	}
 
 	RK_ASSERT (window->getPart ());
 	RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ());
@@ -98,6 +100,13 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	connect (window, SIGNAL (destroyed (QObject *)), this, SLOT (windowDestroyed (QObject *)));
 	if (attached) attachWindow (window);
 	else detachWindow (window, false);
+}
+
+void RKWorkplace::registerToolWindow (RKMDIWindow *window) {
+	RK_TRACE (APP);
+
+	RK_ASSERT (window->isToolWindow ());
+	addWindow (window, true);
 }
 
 bool RKWorkplace::openScriptEditor (const KURL &url, bool use_r_highlighting, bool read_only, const QString &force_caption) {
@@ -140,7 +149,7 @@ void RKWorkplace::openHelpWindow (const KURL &url, bool only_once) {
 	}
 
 	if (only_once) {
-		RKWorkplaceObjectList help_windows = getObjectList (RKMDIWindow::HelpWindow, RKMDIWindow::AnyState);
+		RKWorkplaceObjectList help_windows = getObjectList (RKMDIWindow::HelpWindow, RKMDIWindow::AnyWindowState);
 		for (RKWorkplaceObjectList::const_iterator it = help_windows.constBegin (); it != help_windows.constEnd (); ++it) {
 			if (static_cast<RKHelpWindow *> (*it)->url ().equals (url, true)) {
 				(*it)->activate ();
