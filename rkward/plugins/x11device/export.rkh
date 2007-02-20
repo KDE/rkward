@@ -1,7 +1,7 @@
 <!DOCTYPE rkhelp>
 <document>
 	<summary>
-		Export the current contents of a graphics device to a graphics file
+		Export the current contents of a graphics device to a graphics file.
 	</summary>
 	<usage>
 		Chose a filename and filetype to save to. Additional options for size and resolution are available. Exporting is done using ghostscript. You need to have ghostscript installed for this to work.
@@ -10,7 +10,7 @@
 	</usage>
 	<settings>
 		<caption id="file_and_type"/>
-		<setting id="file">The filename to save to</setting>
+		<setting id="file">The filename to save to.</setting>
 		<setting id="format">File format to use. Only the most common ones are listed, but many more are supported by ghostscript. Select "Other" and see the option below to use these formats.</setting>
 		<setting id="specifiedformat">Select "Other" in the option above to use this setting. Specify the device identifier as used by ghostscript. Running "ghostscript --help" in a terminal should give a list of available devices.</setting>
 		<caption id="size_resolution"/>
@@ -26,4 +26,4 @@
 		</ul>
 	</related>
 </document>
- 
+

@@ -2,6 +2,7 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
+		<component type="standard" id="setworkdir" file="00saveload/setworkdir.xml" label="Set Working Directory" />
 
 	</components>
 
@@ -15,6 +16,9 @@
 		<menu id="analysis" label="Analysis" index="4">
 		</menu>
 		<menu id="plots" label="Plots" index="5">
+		</menu>
+		<menu id="workspace" label="Workspace" index="5">
+			<entry component="setworkdir" />
 		</menu>
 
 		<menu id="distributions" label="Distributions" index="7">
