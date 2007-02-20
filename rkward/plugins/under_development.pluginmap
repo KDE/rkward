@@ -5,6 +5,8 @@
 		<component type="standard" id="export_x11_device_new" file="x11device/export_new.xml" label="Export (new)" />
 		<component type="standard" id="setworkdir" file="00saveload/setworkdir.xml" label="Set Working Directory" />
 
+    <component type="standard" id="plot_binomial_clt" file="distributions/plot_binomial_clt.xml" label="Binomial CLT" />
+    <component type="standard" id="plot_beta_clt" file="distributions/plot_beta_clt.xml" label="Beta CLT" />
 	</components>
 
 	<hierarchy>
@@ -23,6 +25,16 @@
 		</menu>
 
 		<menu id="distributions" label="Distributions" index="7">
+			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="2">
+				<menu id="beta_distribution" label="Beta" index="0">
+					<entry component="plot_beta_clt" label="Beta CLT" index="2"/>
+				</menu>
+      </menu>
+			<menu id="univariate_discrete_distributions" label="Univariate discrete distributions" index="2">
+				<menu id="binomial_distribution" label="Binomial" index="0">
+					<entry component="plot_binomial_clt" label="Binomial CLT" index="2"/>
+				</menu>
+      </menu>
 		</menu>
 	</hierarchy>
 
