@@ -1,0 +1,40 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		Export the current contents of a graphics device to a postscript/pdf/png/jpeg file. [postscript and pdf exports are yet to be implemented]
+	</summary>
+	<usage>
+		Chose a filename and filetype to save to. Additional options for size and resolution etc. are also available. Exporting is done using dev.print. Most of the exporting parameters are directly sent to the exporting function (postscript or pdf of png or jpeg) by dev.print.
+
+		This plugin is only available in the context of a graphics device.
+	</usage>
+	<settings>
+		<caption id="file_and_type"/>
+		<setting id="file">The filename to save to. After checking for file extension, this is the <i>file</i> parameter to dev.print.</setting>
+    <setting id="autoextension">Check this box to let RKWard detect the file extension automatically. If the filename specified in the filename box already has the relevant extension, then nothing is done, that is, the entire filename is used. Otherwise the relevant extension is appended to the filename above to construct the full filename.</setting>
+		<setting id="format">Choose whether to use postscript or pdf or png or jpeg for exporting the file. This is the <i>device</i> parameter to dev.print.</setting>
+		<caption id="pngjpeg_options"/>
+		<setting id="autowidth">Should the width be determined automatically? If yes, R will decide the appropriate width from the graphics device.</setting>
+		<setting id="width">Width in pixels. Uncheck the option above to use this.  This is the <i>width</i> parameter to dev.print.</setting>
+		<setting id="autoheight">See width options above.</setting>
+		<setting id="height">See width options above. This is the <i>height</i> parameter to dev.print.</setting>
+		<setting id="autobg">Should the default background color be used? If yes, this is "white".</setting>
+		<setting id="bg">Background color for exporting the device. The "transparent" choice works only for exporting to png. Unceck the above option to use this. This is the <i>bg</i> parameter to dev.print.</setting>
+		<setting id="pointsize">This is the <i>pointsize</i> parameter to dev.print.</setting>
+		<setting id="resolution">This is the <i>res</i> parameter to dev.print.</setting>
+		<setting id="quality">Set the quality for exporting to JPEG. This options is disabled for exporting to PNG. This is the <i>quality</i> parameter to dev.print.</setting>
+		<caption id="pdf_options"/>
+		<caption id="ps_options"/>
+		<caption id="x11_options"/>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/dev.print"/></li>
+			<li><link href="rkward://rhelp/postscript"/></li>
+			<li><link href="rkward://rhelp/pdf"/></li>
+			<li><link href="rkward://rhelp/png"/></li>
+			<li><link href="rkward://rhelp/jpeg"/></li>
+		</ul>
+	</related>
+</document>
+

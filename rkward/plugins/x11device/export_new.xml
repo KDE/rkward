@@ -1,0 +1,197 @@
+<!DOCTYPE rkplugin>
+<document>
+  <code file="export_new.php" />
+  <help file="export_new.rkh" />
+  <logic>
+    <external id="devnum"/>
+
+    <convert id="isPS" mode="equals" sources="format.string" standard="postscript" />
+    <convert id="isPDF" mode="equals" sources="format.string" standard="pdf" />
+    <convert id="isJPEG" mode="equals" sources="format.string" standard="jpeg" />
+    <convert id="isPNG" mode="equals" sources="format.string" standard="png" />
+    <convert id="isJPEGPNG" mode="or" sources="isPNG;isJPEG" />
+
+    <connect client="pngjpeg_options.enabled" governor="isJPEGPNG" />
+    <connect client="pdf_options.enabled" governor="isPDF" />
+
+
+    <connect client="quality.enabled" governor="isJPEG" />
+    <connect client="autoquality.enabled" governor="isJPEG" />
+
+    <convert id="userwidth0" mode="equals" sources="autowidth.state" standard="0" />
+    <convert id="userwidth" mode="and" sources="userwidth0;isJPEGPNG" />
+    <connect client="width.enabled" governor="userwidth"/>
+
+    <convert id="userheight0" mode="equals" sources="autoheight.state" standard="0" />
+    <convert id="userheight" mode="and" sources="userheight0;isJPEGPNG" />
+    <connect client="height.enabled" governor="userheight"/>
+
+    <convert id="userpointsize0" mode="equals" sources="autopointsize.state" standard="0" />
+    <convert id="userpointsize" mode="and" sources="userpointsize0;isJPEGPNG" />
+    <connect client="pointsize.enabled" governor="userpointsize"/>
+
+    <convert id="userres0" mode="equals" sources="autores.state" standard="0" />
+    <convert id="userres" mode="and" sources="userres0;isJPEGPNG" />
+    <connect client="resolution.enabled" governor="userres"/>
+
+    <convert id="userbg0" mode="equals" sources="autobg.state" standard="0" />
+    <convert id="userbg" mode="and" sources="userbg0;isJPEGPNG" />
+    <connect client="bg.enabled" governor="userbg"/>
+
+    <convert id="userquality0" mode="equals" sources="autoquality.state" standard="0" />
+    <convert id="userquality" mode="and" sources="userquality0;autoquality.enabled" />
+    <connect client="quality.enabled" governor="userquality"/>
+  </logic>
+  <dialog label="Export contents of graphics device to png/jpeg format">
+    <tabbook>
+      <tab id="file_and_type" label="Filename/Type">
+        <row>
+          <column>
+<!--             <frame> -->
+              <browser size="medium" id="file" label="File name" initial="Rplot" />
+              <checkbox id="autoextension" value="1" value_unchecked="0" checked="true" label="Automatic File extension"/>
+<!--             </frame> -->
+          </column>
+          <column>
+            <radio id="format" label="Output format" >
+              <option value="postscript" label="Postscript" />
+              <option value="pdf" label="PDF" />
+              <option value="png" label="PNG" />
+              <option value="jpeg" label="JPEG" />
+            </radio>
+          </column>
+          <stretch/>
+        </row>
+      <stretch/>
+      </tab>
+      <tab id="pngjpeg_options" label="PNG/JPEG">
+        <row>
+          <frame>
+            <row>
+              <column>
+                <checkbox id="autowidth" value="1" value_unchecked="0" checked="true" label="Automatic Width"/>
+                <spinbox id="width" label="Width in pixels" min="20" initial="480" default_precision="1"/>
+                <!--             </frame> -->
+            </column>
+            <column>
+              <!--             <frame> -->
+                <checkbox id="autoheight" value="1" value_unchecked="0" checked="true" label="Automatic Height"/>
+                <spinbox id="height" label="Height in pixels" min="20" initial="480" default_precision="1" />
+              </column>
+            </row>
+          </frame>
+          <column>
+            <frame>
+              <checkbox id="autobg" value="1" value_unchecked="0" checked="true" label="Default Background"/>
+              <dropdown id="bg" label="Background">
+                <option value="transparent" label="Transparent" />
+                <option value="azure" label="Azure" />
+                <option value="black" label="Black" />
+                <option value="blue" label="Blue" />
+                <option value="blue1" label="Blue1" />
+                <option value="blue2" label="Blue2" />
+                <option value="blue3" label="Blue3" />
+                <option value="blue4" label="Blue4" />
+                <option value="brown" label="Brown" />
+                <option value="cyan" label="Cyan" />
+                <option value="darkviolet" label="Darkviolet" />
+                <option value="gold" label="Gold" />
+                <option value="gray" label="Gray" />
+                <option value="gray1" label="Gray1" />
+                <option value="gray2" label="Gray2" />
+                <option value="gray3" label="Gray3" />
+                <option value="gray4" label="Gray4" />
+                <option value="green" label="Green" />
+                <option value="green1" label="Green1" />
+                <option value="green2" label="Green2" />
+                <option value="green3" label="Green3" />
+                <option value="green4" label="Green4" />
+                <option value="grey" label="Grey" />
+                <option value="grey1" label="Grey1" />
+                <option value="grey2" label="Grey2" />
+                <option value="grey3" label="Grey3" />
+                <option value="grey4" label="Grey4" />
+                <option value="lawngreen" label="Lawngreen" />
+                <option value="limegreen" label="Limegreen" />
+                <option value="linen" label="Linen" />
+                <option value="magenta" label="Magenta" />
+                <option value="magenta1" label="Magenta1" />
+                <option value="magenta2" label="Magenta2" />
+                <option value="magenta3" label="Magenta3" />
+                <option value="magenta4" label="Magenta4" />
+                <option value="mintcream" label="Mintcream" />
+                <option value="mistyrose" label="Mistyrose" />
+                <option value="navajowhite" label="Navajowhite" />
+                <option value="orange" label="Orange" />
+                <option value="orchid" label="Orchid" />
+                <option value="palegreen" label="Palegreen" />
+                <option value="papayawhip" label="Papayawhip" />
+                <option value="peachpuff" label="Peachpuff" />
+                <option value="pink" label="Pink" />
+                <option value="red" label="Red" />
+                <option value="red1" label="Red1" />
+                <option value="red2" label="Red1" />
+                <option value="red3" label="Red3" />
+                <option value="red4" label="Red4" />
+                <option value="royalblue" label="Royalblue" />
+                <option value="salmon" label="Salmon" />
+                <option value="sandybrown" label="Sandybrown" />
+                <option value="seagreen" label="Seagreen" />
+                <option value="sienna" label="Sienna" />
+                <option value="skyblue" label="Skyblue" />
+                <option value="slategrey" label="Slategrey" />
+                <option value="snow" label="Snow" />
+                <option value="springgreen" label="Springgreen" />
+                <option value="steelblue" label="Steelblue" />
+                <option value="tan" label="Tan" />
+                <option value="thistle" label="Thistle" />
+                <option value="tomato" label="Tomato" />
+                <option value="violet" label="Violet" />
+                <option value="violetred1" label="Violetred1" />
+                <option value="violetred2" label="Violetred2" />
+                <option value="violetred3" label="Violetred3" />
+                <option value="violetred4" label="Violetred4" />
+                <option value="wheat" label="Wheat" />
+                <option value="white" label="White" checked="true" />
+                <option value="yellow" label="Yellow" />
+                <option value="yellow1" label="Yellow1" />
+                <option value="yellow2" label="Yellow2" />
+                <option value="yellow3" label="Yellow3" />
+                <option value="yellow4" label="Yellow4" />
+                <option value="yellowgreen" label="Yellowgreen" />
+              </dropdown>
+              <!--               <input id="bg" label="Background" size="medium" initial="'white'"/> -->
+            </frame>
+          </column>
+        </row>
+<!--         <row> -->
+            <frame><row>
+          <column>
+              <checkbox id="autopointsize" value="1" value_unchecked="0" checked="true" label="Default Font size"/>
+              <spinbox id="pointsize" label="Point size" min="0" initial="12"  default_precision="1"/>
+          </column>
+          <column>
+              <checkbox id="autores" value="1" value_unchecked="0" checked="true" label="Default Resolution"/>
+              <spinbox id="resolution" label="Resolution (dpi)" min="0" initial="72" default_precision="1"/>
+          </column>
+          <column>
+              <checkbox id="autoquality" value="1" value_unchecked="0" checked="true" label="Default Quality"/>
+              <spinbox label="JPEG Quality" id="quality" min="0" max="100" initial="75" default_precision="1"/>
+          </column>
+            </row></frame>
+<!--         </row> -->
+      </tab>
+
+      <tab id="pdf_options" label="PDF">
+        <text>Not yet implemented!</text>
+      </tab>
+      <tab id="ps_options" label="Postscript">
+        <text>Not yet implemented!</text>
+      </tab>
+      <tab id="x11_options" label="X11">
+        <text>Not yet implemented!</text>
+      </tab>
+
+    </tabbook>
+  </dialog>
+</document>

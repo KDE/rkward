@@ -2,6 +2,7 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
+		<component type="standard" id="export_x11_device_new" file="x11device/export_new.xml" label="Export (new)" />
 		<component type="standard" id="setworkdir" file="00saveload/setworkdir.xml" label="Set Working Directory" />
 
 	</components>
@@ -24,5 +25,11 @@
 		<menu id="distributions" label="Distributions" index="7">
 		</menu>
 	</hierarchy>
+
+  <context id="x11">
+    <menu id="device" label="device" index="1">
+      <entry component="export_x11_device_new" />
+    </menu>
+  </context>
 </document>
 
