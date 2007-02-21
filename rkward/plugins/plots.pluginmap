@@ -10,7 +10,9 @@
 		<component type="standard" id="scatterplot" file="scatterplot.xml" label="Scatterplot" />
 		<component type="standard" id="scatterplot_matrix" file="scatterplot_matrix.xml" label="Scatterplot Matrix" />
 		<component type="standard" id="stripchart" file="stripchart_plot.xml" label="Stripchart" />
+
 		<component type="standard" id="plot_options" file="plot_options.xml" label="Plot Options" />
+		<component type="standard" id="color_chooser" file="color_chooser.xml" label="Color Chooser" />
 	</components>
 
 	<hierarchy>

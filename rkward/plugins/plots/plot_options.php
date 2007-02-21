@@ -86,10 +86,7 @@ function printout () {
 	if (!empty ($type)) $type = ", type=\"" . $type . "\"";
 
 	//color of points / lines
-	$col = getRK_val ("pointcolor");
-	if (empty ($col)) $col = getRK_val ("default_pointcolor");
-	if (!empty ($col)) $col = ", col=\"" . $col . "\"";
-	
+	$col = getRK_val ("pointcolor.code.printout");
 
 	//add a main (on top) to the plot
 	$main = getRK_val ("main");
