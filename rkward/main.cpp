@@ -73,7 +73,7 @@ static KCmdLineOptions options[] =
 {
   { "+[File]", I18N_NOOP ("file to open"), 0 },
   { "debug-level <level>", I18N_NOOP ("Verbosity of debug messages (0-5)"), "2"}, 
-  { "debug-flags <flags>", I18N_NOOP ("Mask for components to debug as a binary number (see debug.h)"), "1111111111111" }, 
+  { "debug-flags <flags>", I18N_NOOP ("Mask for components to debug (see debug.h)"), "8191" }, 
   { 0, 0, 0 }
   // INSERT YOUR COMMANDLINE OPTIONS HERE
 };
@@ -110,8 +110,7 @@ int main(int argc, char *argv[]) {
 	} else {
 		KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 		RK_Debug_Level = 5 - QString (args->getOption ("debug-level")).toInt ();
-		RK_Debug_Flags = QString (args->getOption ("debug-flags")).toInt (0, 2);
-		qDebug ("Debug-flags as decimal: %d", RK_Debug_Flags);
+		RK_Debug_Flags = QString (args->getOption ("debug-flags")).toInt ();
 		
 		KURL *open_url = 0;
 		if (args->count ()) {
