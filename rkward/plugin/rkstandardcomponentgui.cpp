@@ -22,7 +22,6 @@
 #include <kurl.h>
 
 #include <qtimer.h>
-#include <qsplitter.h>
 #include <qlayout.h>
 #include <qvbox.h>
 #include <qhbox.h>
@@ -42,8 +41,6 @@
 
 RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved) {
 	RK_TRACE (PLUGIN);
-
-	splitter = 0;
 
 	// create an error-dialog
 	error_dialog = new RKRErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin '%1'.\nThis may lead to an incorrect output and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below.").arg (component->getFilename ()), i18n ("R-Error"), false);
@@ -73,10 +70,8 @@ RKStandardComponentGUI::~RKStandardComponentGUI () {
 void RKStandardComponentGUI::createDialog (bool switchable) {
 	RK_TRACE (PLUGIN);
 
-	QGridLayout *main_grid = new QGridLayout (this, 1, 1);
-	splitter = new QSplitter (QSplitter::Vertical, this);
-	main_grid->addWidget (splitter, 0, 0);
-	QWidget *upper_widget = new QWidget (splitter);
+	QVBoxLayout *main_vbox = new QVBoxLayout (this);
+	QWidget *upper_widget = new QWidget (this);
 	
 	QHBoxLayout *hbox = new QHBoxLayout (upper_widget, RKGlobals::marginHint (), RKGlobals::spacingHint ());
 	QVBoxLayout *vbox = new QVBoxLayout (hbox, RKGlobals::spacingHint ());
@@ -118,17 +113,20 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	
 	toggle_code_button = new QPushButton (i18n ("Code"), upper_widget);
 	toggle_code_button->setToggleButton (true);
-	toggle_code_button->setOn (RKSettingsModulePlugins::showCodeByDefault ());
 	connect (toggle_code_button, SIGNAL (clicked ()), this, SLOT (toggleCode ()));
 	vbox->addWidget (toggle_code_button);
 	if (enslaved) toggle_code_button->hide ();
 	
 	// code display
-	code_display = new RKCommandEditorWindow (splitter, true);
+	code_display = new RKCommandEditorWindow (this, true);
 	code_display->setMinimumHeight (RKSettingsModulePlugins::defaultCodeHeight ());
-	splitter->setResizeMode (code_display, QSplitter::Stretch);
 	code_display->hide ();
-	if (!enslaved) {
+
+	main_vbox->addWidget (upper_widget);
+	main_vbox->addWidget (code_display);
+
+	if (!enslaved && RKSettingsModulePlugins::showCodeByDefault ()) {
+		toggle_code_button->setOn (true);
 		QTimer::singleShot (0, this, SLOT (toggleCode ()));
 	}
 }
@@ -157,19 +155,21 @@ void RKStandardComponentGUI::cancel () {
 
 void RKStandardComponentGUI::toggleCode () {
 	RK_TRACE (PLUGIN);
-	RK_ASSERT (splitter);
 
-	QValueList<int> splitter_sizes = splitter->sizes ();
-	splitter_sizes.pop_back ();
+	int new_height = height ();
 
-	if (toggle_code_button->isOn ()) {
-		splitter_sizes.append (RKSettingsModulePlugins::defaultCodeHeight ());
+	if (!code_display->isShown ()) {
+		new_height += RKSettingsModulePlugins::defaultCodeHeight ();
 		code_display->show ();
 	} else {
-		splitter_sizes.append (0);
+		new_height -= code_display->height ();
 		code_display->hide ();
 	}
-	splitter->setSizes (splitter_sizes);
+
+	if (isVisible ()) {
+		layout ()->activate ();
+		resize (width (), new_height);
+	}
 
 	updateCode ();
 }

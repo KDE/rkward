@@ -98,7 +98,6 @@ private:
 
 	// widgets for dialog only
 	QPushButton *toggle_code_button;
-	QSplitter *splitter;
 	QPushButton *ok_button;
 protected:
 	void closeEvent (QCloseEvent *e);
