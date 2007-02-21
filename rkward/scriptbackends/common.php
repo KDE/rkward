@@ -16,7 +16,7 @@ function getPreview () {
 }
 
 function getInput ($prompt) {
-	fputs (STDOUT, "#RKEND#\n" . $prompt);
+	fputs (STDOUT, "#RKEND#\n" . $prompt . "#RKQEND#\n");
 	fflush (STDOUT);
 	while (1) {
 		if (feof (STDIN)) die ();			// if the parent process exits unexpectedly, make sure the PHP-process gets killed

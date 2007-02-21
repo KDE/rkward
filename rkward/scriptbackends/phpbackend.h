@@ -57,8 +57,10 @@ private:
 	void tryNextFunction ();
 	void tryWriteData ();
 	KProcess *php_process;
-/// The string singalling the end of transmission to PHP. TODO: make static
+/// The string singalling the end of transmission to/from PHP. TODO: make static
 	QString eot_string;
+/// The string singalling the end of request from PHP. TODO: make static
+	QString eoq_string;
 /** actually only one piece of data gets requested at a time. However, sometimes it takes a while until we realize (via doneWriting ()) that the last piece was transmitted ok (we have to keep a write buffer until then). So it may happen, that a new piece of information was requested, before we have completed the process for the previous one. Hence we use a FIFO stack just like for the commands (though it's handled slightly differently). */
 	QStringList data_stack;
 /// write buffer for the current command
@@ -66,6 +68,7 @@ private:
 	bool busy_writing;
 	bool doing_command;
 	bool startup_done;
+	QString output_raw_buffer;
 	
 	struct PHPCommand {
 	/// the command string

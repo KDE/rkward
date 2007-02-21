@@ -32,6 +32,7 @@ PHPBackend::PHPBackend() {
 
 	php_process = 0;
 	eot_string="#RKEND#\n";
+	eoq_string="#RKQEND#\n";
 	busy_writing = false;
 	busy = false;
 }
@@ -196,42 +197,53 @@ void PHPBackend::doneWriting (KProcess *) {
 void PHPBackend::gotOutput (KProcess *, char* buf, int len) {
 	RK_TRACE (PHP);
 
-	QString output = buf;
+	RK_DO (qDebug ("PHP transmission:\n%s", buf), PHP, DL_DEBUG);
+
+	output_raw_buffer += buf;
 	QString request;
 	QString data;
-	int i;
-	bool have_data = true;;
+	int i, j;
+	bool have_data = true;
 	bool have_request = false;
-	
+
 	// is there a request in the output stream?
-	if ((i = output.find (eot_string)) >= 0) {
-		have_request = true;
-		// is there also pending data?
-		if (i) {
-			data = output.left (i);
-		} else {
-			have_data = false;
+	if ((i = output_raw_buffer.find (eot_string)) >= 0) {
+		if ((j = output_raw_buffer.find (eoq_string, i)) >= 0) {
+			have_request = true;
+			// is there also pending data?
+			if (i) {
+				data = output_raw_buffer.left (i);
+			} else {
+				have_data = false;
+			}
+			int start = i + eot_string.length ();
+			request = output_raw_buffer.mid (start, j - start);
+			output_raw_buffer = QString::null;
 		}
-		request = output.mid (i + eot_string.length (), len);
 	} else {
-		data = output;
+		data = output_raw_buffer;
 	}
-	RK_DO (qDebug ("request: %s\ndata: %s", request.latin1 (), data.latin1 ()), PHP, DL_DEBUG);
 	
 	// pending data is always first in a stream, so process it first, too
 	if (have_data) {
 		if (!startup_done) {
 				php_process->detach ();
-				KMessageBox::error (0, i18n ("There has been an error\n(\"%1\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKWard or an invalid setting for the location of the PHP support files. Check the settings (Settings->Configure Settings->PHP backend) and try again.").arg (data.stripWhiteSpace ()), i18n ("PHP-Error"));
+				KMessageBox::error (0, i18n ("There has been an error\n(\"%1\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKWard or an invalid setting for the location of the PHP support files. Check the settings (Settings->Configure Settings->PHP backend) and try again.").arg (output_raw_buffer.stripWhiteSpace ()), i18n ("PHP-Error"));
 				emit (haveError ());
 				destroy ();
 				return;
 		}
-		
-		_output.append (data);
 	}
-	
-	if (have_request) {
+
+	if (!have_request) {
+		// output is not finished, yet.
+		// return and wait for more data to come in
+		RK_DO (qDebug ("PHP transmission not complete, yet"), PHP, DL_DEBUG);
+		return;
+	} else {
+		_output.append (data);
+		RK_DO (qDebug ("request: %s\ndata: %s", request.latin1 (), data.latin1 ()), PHP, DL_DEBUG);
+
 		if (request == "requesting code") {
 			startup_done = true;
 			busy = false;
@@ -284,8 +296,9 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int len) {
 			emit (haveError ());
 			destroy ();
 			return;
+		} else {
+			RK_DO (qDebug ("unrecognized request from PHP backend: \"%s\"", request), PHP, DL_ERROR);
 		}
-		return;
 	}
 }
 
