@@ -16,7 +16,7 @@ for (var in rk.temp.objects) {
 	rk.temp.results$'Variable Name'[i] <- rk.get.description (var, is.substitute=TRUE)
 	try ({
 		rk.temp.t <- anscombe.test (eval (var), alternative = "<? getRK ("alternative"); ?>")
-		rk.temp.results$'kurtosis estimator (tau)'[i] <- rk.temp.t$statistic["tau"]
+		rk.temp.results$'kurtosis estimator (tau)'[i] <- rk.temp.t$statistic["kurt"]
 		rk.temp.results$'transformation (z)'[i] <- rk.temp.t$statistic["z"]
 		rk.temp.results$'p-value'[i] <- rk.temp.t$p.value
 	})
