@@ -1,197 +1,213 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="export_new.php" />
-  <help file="export_new.rkh" />
-  <logic>
-    <external id="devnum"/>
+	<code file="export_new.php" />
+	<help file="export_new.rkh" />
+	<logic>
+		<external id="devnum"/>
 
-    <convert id="isPS" mode="equals" sources="format.string" standard="postscript" />
-    <convert id="isPDF" mode="equals" sources="format.string" standard="pdf" />
-    <convert id="isJPEG" mode="equals" sources="format.string" standard="jpeg" />
-    <convert id="isPNG" mode="equals" sources="format.string" standard="png" />
-    <convert id="isJPEGPNG" mode="or" sources="isPNG;isJPEG" />
+		<convert id="isPS" mode="equals" sources="format.string" standard="postscript" />
+		<convert id="isPDF" mode="equals" sources="format.string" standard="pdf" />
+		<convert id="isPSPDF" mode="or" sources="isPS;isPDF" />
+		<convert id="isJPEG" mode="equals" sources="format.string" standard="jpeg" />
+		<convert id="isPNG" mode="equals" sources="format.string" standard="png" />
+		<convert id="isJPEGPNG" mode="or" sources="isPNG;isJPEG" />
 
-    <connect client="pngjpeg_options.enabled" governor="isJPEGPNG" />
-    <connect client="pdf_options.enabled" governor="isPDF" />
+		<connect client="tab_pngjpeg_options.enabled" governor="isJPEGPNG" />
+		<connect client="tab_pspdf_options.enabled" governor="isPSPDF" />
 
+		<connect client="quality.enabled" governor="isJPEG" />
+		<connect client="autoquality.enabled" governor="isJPEG" />
 
-    <connect client="quality.enabled" governor="isJPEG" />
-    <connect client="autoquality.enabled" governor="isJPEG" />
+		<convert id="userwidth0" mode="equals" sources="autowidth.state" standard="0" />
 
-    <convert id="userwidth0" mode="equals" sources="autowidth.state" standard="0" />
-    <convert id="userwidth" mode="and" sources="userwidth0;isJPEGPNG" />
-    <connect client="width.enabled" governor="userwidth"/>
+		<convert id="userwidth_isJPEGPNG" mode="and" sources="userwidth0;isJPEGPNG" />
+		<connect client="width_px.enabled" governor="userwidth_isJPEGPNG"/>
+		<connect client="width_px.visible" governor="isJPEGPNG"/>
 
-    <convert id="userheight0" mode="equals" sources="autoheight.state" standard="0" />
-    <convert id="userheight" mode="and" sources="userheight0;isJPEGPNG" />
-    <connect client="height.enabled" governor="userheight"/>
+		<convert id="userwidth_isPSPDF" mode="and" sources="userwidth0;isPSPDF" />
+		<connect client="width_in.enabled" governor="userwidth_isPSPDF"/>
+		<connect client="width_in.visible" governor="isPSPDF"/>
 
-    <convert id="userpointsize0" mode="equals" sources="autopointsize.state" standard="0" />
-    <convert id="userpointsize" mode="and" sources="userpointsize0;isJPEGPNG" />
-    <connect client="pointsize.enabled" governor="userpointsize"/>
+		<convert id="userheight0" mode="equals" sources="autoheight.state" standard="0" />
 
-    <convert id="userres0" mode="equals" sources="autores.state" standard="0" />
-    <convert id="userres" mode="and" sources="userres0;isJPEGPNG" />
-    <connect client="resolution.enabled" governor="userres"/>
+		<convert id="userheight_isJPEGPNG" mode="and" sources="userheight0;isJPEGPNG" />
+		<connect client="height_px.enabled" governor="userheight_isJPEGPNG"/>
+		<connect client="height_px.visible" governor="isJPEGPNG"/>
 
-    <convert id="userbg0" mode="equals" sources="autobg.state" standard="0" />
-    <convert id="userbg" mode="and" sources="userbg0;isJPEGPNG" />
-    <connect client="bg.enabled" governor="userbg"/>
+		<convert id="userheight_isPSPDF" mode="and" sources="userheight0;isPSPDF" />
+		<connect client="height_in.enabled" governor="userheight_isPSPDF"/>
+		<connect client="height_in.visible" governor="isPSPDF"/>
 
-    <convert id="userquality0" mode="equals" sources="autoquality.state" standard="0" />
-    <convert id="userquality" mode="and" sources="userquality0;autoquality.enabled" />
-    <connect client="quality.enabled" governor="userquality"/>
-  </logic>
-  <dialog label="Export contents of graphics device to png/jpeg format">
-    <tabbook>
-      <tab id="file_and_type" label="Filename/Type">
-        <row>
-          <column>
+		<convert id="userwidth0ORheight0" mode="or" sources="userheight0;userwidth0"/>
+		<convert id="userwidth0ORheight0_isJPEGPNG" mode="and" sources="userwidth0ORheight0;isJPEGPNG"/>
+		<convert id="truestate" mode="or" sources="userwidth0ORheight0_isJPEGPNG;isPS;isPDF" require_true="true"/>
+		<convert id="wh_both1" mode="and" sources="autoheight.state;autowidth.state;isJPEGPNG" />
+		<convert id="wh_both_not1" sources="wh_both1" mode="notequals" standard="true"/>
+<!--		<connect client="wh_txt_2.visible" governor="userwidth0ORheight0"/>-->
+		<connect client="wh_txt_1.visible" governor="wh_both1"/>
+		<connect client="wh_txt_2.visible" governor="wh_both_not1"/>
+
+		<convert id="userpointsize0" mode="equals" sources="autopointsize.state" standard="0" />
+		<connect client="pointsize.enabled" governor="userpointsize0"/>
+
+		<convert id="userres0" mode="equals" sources="autores.state" standard="0" />
+		<convert id="userres" mode="and" sources="userres0;isJPEGPNG" />
+		<connect client="resolution.enabled" governor="userres"/>
+
+<!-- 		<convert id="userbg0" mode="equals" sources="autobg.state" standard="0" /> -->
+<!-- 		<convert id="usertransparent0" mode="equals" sources="color_transparent.state" standard="0" /> -->
+<!--		<convert id="userbg" mode="and" sources="userbg0;isJPEGPNG" />
+		<connect client="color_transparent.enabled" governor="userbg"/>
+		<convert id="userbgtransparent" mode="and" sources="userbg;usertransparent0" />-->
+<!-- 		<connect client="bg.color_enabled" governor="usertransparent0"/> -->
+<!-- 		<set id="bg.argument" to=", bg="/> -->
+<!-- 		<set id="bg.default_color" to="white"/> -->
+
+		<convert id="userquality0" mode="equals" sources="autoquality.state" standard="0" />
+		<convert id="userquality" mode="and" sources="userquality0;autoquality.enabled" />
+		<connect client="quality.enabled" governor="userquality"/>
+
+		<convert id="usertitle0" mode="equals" sources="autotitle.state" standard="0" />
+		<connect client="title.enabled" governor="usertitle0"/>
+
+		<connect client="ps_horiz.enabled" governor="isPS"/>
+	</logic>
+	<dialog label="Export contents of graphics device to png/jpeg format">
+		<tabbook>
+			<tab id="tab_file_and_type" label="Filename/Type">
+				<row>
+					<column>
 <!--             <frame> -->
-              <browser size="medium" id="file" label="File name" initial="Rplot" />
-              <checkbox id="autoextension" value="1" value_unchecked="0" checked="true" label="Automatic File extension"/>
+							<browser size="medium" id="file" label="File name" initial="Rplot" />
+							<checkbox id="autoextension" value="1" value_unchecked="0" checked="true" label="Automatic File extension"/>
 <!--             </frame> -->
-          </column>
-          <column>
-            <radio id="format" label="Output format" >
-              <option value="postscript" label="Postscript" />
-              <option value="pdf" label="PDF" />
-              <option value="png" label="PNG" />
-              <option value="jpeg" label="JPEG" />
-            </radio>
-          </column>
-          <stretch/>
-        </row>
-      <stretch/>
-      </tab>
-      <tab id="pngjpeg_options" label="PNG/JPEG">
-        <row>
-          <frame>
-            <row>
-              <column>
-                <checkbox id="autowidth" value="1" value_unchecked="0" checked="true" label="Automatic Width"/>
-                <spinbox id="width" label="Width in pixels" min="20" initial="480" default_precision="1"/>
-                <!--             </frame> -->
-            </column>
-            <column>
-              <!--             <frame> -->
-                <checkbox id="autoheight" value="1" value_unchecked="0" checked="true" label="Automatic Height"/>
-                <spinbox id="height" label="Height in pixels" min="20" initial="480" default_precision="1" />
-              </column>
-            </row>
-          </frame>
-          <column>
-            <frame>
-              <checkbox id="autobg" value="1" value_unchecked="0" checked="true" label="Default Background"/>
-              <dropdown id="bg" label="Background">
-                <option value="transparent" label="Transparent" />
-                <option value="azure" label="Azure" />
-                <option value="black" label="Black" />
-                <option value="blue" label="Blue" />
-                <option value="blue1" label="Blue1" />
-                <option value="blue2" label="Blue2" />
-                <option value="blue3" label="Blue3" />
-                <option value="blue4" label="Blue4" />
-                <option value="brown" label="Brown" />
-                <option value="cyan" label="Cyan" />
-                <option value="darkviolet" label="Darkviolet" />
-                <option value="gold" label="Gold" />
-                <option value="gray" label="Gray" />
-                <option value="gray1" label="Gray1" />
-                <option value="gray2" label="Gray2" />
-                <option value="gray3" label="Gray3" />
-                <option value="gray4" label="Gray4" />
-                <option value="green" label="Green" />
-                <option value="green1" label="Green1" />
-                <option value="green2" label="Green2" />
-                <option value="green3" label="Green3" />
-                <option value="green4" label="Green4" />
-                <option value="grey" label="Grey" />
-                <option value="grey1" label="Grey1" />
-                <option value="grey2" label="Grey2" />
-                <option value="grey3" label="Grey3" />
-                <option value="grey4" label="Grey4" />
-                <option value="lawngreen" label="Lawngreen" />
-                <option value="limegreen" label="Limegreen" />
-                <option value="linen" label="Linen" />
-                <option value="magenta" label="Magenta" />
-                <option value="magenta1" label="Magenta1" />
-                <option value="magenta2" label="Magenta2" />
-                <option value="magenta3" label="Magenta3" />
-                <option value="magenta4" label="Magenta4" />
-                <option value="mintcream" label="Mintcream" />
-                <option value="mistyrose" label="Mistyrose" />
-                <option value="navajowhite" label="Navajowhite" />
-                <option value="orange" label="Orange" />
-                <option value="orchid" label="Orchid" />
-                <option value="palegreen" label="Palegreen" />
-                <option value="papayawhip" label="Papayawhip" />
-                <option value="peachpuff" label="Peachpuff" />
-                <option value="pink" label="Pink" />
-                <option value="red" label="Red" />
-                <option value="red1" label="Red1" />
-                <option value="red2" label="Red1" />
-                <option value="red3" label="Red3" />
-                <option value="red4" label="Red4" />
-                <option value="royalblue" label="Royalblue" />
-                <option value="salmon" label="Salmon" />
-                <option value="sandybrown" label="Sandybrown" />
-                <option value="seagreen" label="Seagreen" />
-                <option value="sienna" label="Sienna" />
-                <option value="skyblue" label="Skyblue" />
-                <option value="slategrey" label="Slategrey" />
-                <option value="snow" label="Snow" />
-                <option value="springgreen" label="Springgreen" />
-                <option value="steelblue" label="Steelblue" />
-                <option value="tan" label="Tan" />
-                <option value="thistle" label="Thistle" />
-                <option value="tomato" label="Tomato" />
-                <option value="violet" label="Violet" />
-                <option value="violetred1" label="Violetred1" />
-                <option value="violetred2" label="Violetred2" />
-                <option value="violetred3" label="Violetred3" />
-                <option value="violetred4" label="Violetred4" />
-                <option value="wheat" label="Wheat" />
-                <option value="white" label="White" checked="true" />
-                <option value="yellow" label="Yellow" />
-                <option value="yellow1" label="Yellow1" />
-                <option value="yellow2" label="Yellow2" />
-                <option value="yellow3" label="Yellow3" />
-                <option value="yellow4" label="Yellow4" />
-                <option value="yellowgreen" label="Yellowgreen" />
-              </dropdown>
-              <!--               <input id="bg" label="Background" size="medium" initial="'white'"/> -->
-            </frame>
-          </column>
-        </row>
-<!--         <row> -->
-            <frame><row>
-          <column>
-              <checkbox id="autopointsize" value="1" value_unchecked="0" checked="true" label="Default Font size"/>
-              <spinbox id="pointsize" label="Point size" min="0" initial="12"  default_precision="1"/>
-          </column>
-          <column>
-              <checkbox id="autores" value="1" value_unchecked="0" checked="true" label="Default Resolution"/>
-              <spinbox id="resolution" label="Resolution (dpi)" min="0" initial="72" default_precision="1"/>
-          </column>
-          <column>
-              <checkbox id="autoquality" value="1" value_unchecked="0" checked="true" label="Default Quality"/>
-              <spinbox label="JPEG Quality" id="quality" min="0" max="100" initial="75" default_precision="1"/>
-          </column>
-            </row></frame>
-<!--         </row> -->
-      </tab>
+					</column>
+					<column>
+						<radio id="format" label="Output format" >
+							<option value="postscript" label="Postscript" checked="true"/>
+							<option value="pdf" label="PDF" />
+							<option value="png" label="PNG" />
+							<option value="jpeg" label="JPEG" />
+						</radio>
+					</column>
+				</row>
+				<row>
+					<frame id="generic_options" label="Generic Export Options">
+						<text id="wh_txt_1">Either Width or Height has to be provided for PNG/JPEG export!!</text>
+						<text id="wh_txt_2">                                                               </text>
+						<row>
+							<column>
+								<checkbox id="autowidth" value="1" value_unchecked="0" checked="false" label="Automatic Width"/>
+								<spinbox id="width_px" label="Width in pixels" min="20" initial="480" default_precision="1"/>
+								<spinbox id="width_in" label="Width in inches" min="0" initial="6" default_precision="1"/>
+							</column>
+							<column>
+								<checkbox id="autoheight" value="1" value_unchecked="0" checked="false" label="Automatic Height"/>
+								<spinbox id="height_px" label="Height in pixels" min="20" initial="480" default_precision="1" />
+								<spinbox id="height_in" label="Height in inches" min="0" initial="6" default_precision="1" />
+							</column>
+							<column>
+								<checkbox id="autopointsize" value="1" value_unchecked="0" checked="true" label="Default pointsize"/>
+								<spinbox id="pointsize" label="Point size" min="0" initial="12"  default_precision="1"/>
+							</column>
+						</row>
+					</frame>
+				</row>
+				<stretch/>
+			</tab>
 
-      <tab id="pdf_options" label="PDF">
-        <text>Not yet implemented!</text>
-      </tab>
-      <tab id="ps_options" label="Postscript">
-        <text>Not yet implemented!</text>
-      </tab>
-      <tab id="x11_options" label="X11">
-        <text>Not yet implemented!</text>
-      </tab>
+			<tab id="tab_pspdf_options" label="Postscript/PDF">
+<!-- 				<frame id="page_properties" label="Page properties"> -->
+					<row>
+						<column>
+				<dropdown id="paper" label="Paper Size">
+					<option value="" label="None" checked="true"/>
+					<option value="a4" label="A4"/>
+					<option value="letter" label="Letter"/>
+					<option value="legal" label="Legal"/>
+					<option value="executive" label="Executive"/>
+					<option value="special" label="Special"/>
+					<option value="default" label="Use 'papersize' definition"/>
+				</dropdown>
+						</column>
+						<column>
+							<frame>
+					<checkbox id="pagecentre" value="1" value_unchecked="0" checked="true" label="Pagecentre"/>
+					<checkbox id="ps_horiz" value="1" value_unchecked="0" checked="true" label="Horizontal (postscript only)"/>
+							</frame>
+						</column>
+					</row>
+<!-- 				</frame> -->
+					<frame id="font_properties" label="Font properties">
+						<row>
+				<dropdown id="family" label="Font family">
+					<option value="" label="None" checked="true"/>
+					<option value="AvantGarde" label="AvantGarde"/>
+					<option value="Bookman" label="Bookman"/>
+					<option value="Courier" label="Courier"/>
+					<option value="Helvectica" label="Helvectica"/>
+					<option value="Helvectica-Narrow" label="Helvectica Narrow"/>
+					<option value="mono" label="Mono"/>
+					<option value="NewCenturySchoolbook" label="New Century Schoolbook"/>
+					<option value="Palatino" label="Palatino"/>
+					<option value="sans" label="Sans"/>
+					<option value="serif" label="Serif"/>
+					<option value="symbol" label="Symbol"/>
+					<option value="Times" label="Times"/>
+					<option value="CenturySch" label="CenturySch (URW)"/>
+					<option value="NimbusMon" label="NimbusMon (URW)"/>
+					<option value="NimbusSanCond" label="NimbusSanCond (URW)"/>
+					<option value="URWBookman" label="URWBookman"/>
+					<option value="URWHelvectica" label="URWHelvectica"/>
+					<option value="URWGothic" label="URWGothic"/>
+					<option value="URWPalladio" label="URWPalladio"/>
+					<option value="URWTimes" label="URWTimes"/>
+				</dropdown>
+				<dropdown id="encoding" label="Font Encoding">
+					<option value="" label="None" checked="true"/>
+					<option value="ISOLatin1.enc" label="ISOLatin1"/>
+					<option value="ISOLatin2.enc" label="ISOLatin2"/>
+					<option value="CP1250.enc" label="CP1250"/>
+					<option value="ISOLatin7.enc" label="ISOLatin7"/>
+					<option value="CP1257.enc" label="CP1257"/>
+					<option value="ISOLatin9.enc" label="ISOLatin9"/>
+					<option value="PDFDoc.enc" label="PDFDoc"/>
+				</dropdown>
+			</row>
+			</frame>
+			<frame id="title_properties" label="Title embeded in file">
+				<row>
+					<column>
+					<checkbox id="autotitle" value="1" value_unchecked="0" checked="true" label="Default Title"/>
+				</column>
+					<column>
+					<input id="title" size="small" initial="R Graphics Output"/>
+				</column>
+				</row>
+			</frame>
+			</tab>
 
-    </tabbook>
-  </dialog>
+			<tab id="tab_pngjpeg_options" label="PNG/JPEG">
+<!-- 					<column> -->
+<!-- 						<frame> -->
+<!-- 							<checkbox id="autobg" value="1" value_unchecked="0" checked="true" label="Default Background"/> -->
+<!-- 							<checkbox id="color_transparent" value="1" value_unchecked="0" checked="false" label="Transparent Background"/> -->
+<!-- 							<embed id="bg" component="rkward::color_chooser" label="Background"/> -->
+<!-- 						</frame> -->
+<!-- 					</column> -->
+					<frame>
+						<row>
+							<column>
+								<checkbox id="autores" value="1" value_unchecked="0" checked="true" label="Default Resolution"/>
+								<spinbox id="resolution" label="Resolution (dpi)" min="0" initial="72" default_precision="1"/>
+							</column>
+							<column>
+								<checkbox id="autoquality" value="1" value_unchecked="0" checked="true" label="Default Quality"/>
+								<spinbox label="JPEG Quality" id="quality" min="0" max="100" initial="75" default_precision="1"/>
+							</column>
+						</row>
+					</frame>
+			</tab>
+		</tabbook>
+	</dialog>
 </document>
