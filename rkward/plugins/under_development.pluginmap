@@ -7,6 +7,7 @@
 
     <component type="standard" id="plot_binomial_clt" file="distributions/plot_binomial_clt.xml" label="Binomial CLT" />
     <component type="standard" id="plot_beta_clt" file="distributions/plot_beta_clt.xml" label="Beta CLT" />
+    <component type="standard" id="pareto" file="plots/pareto.xml" label="Pareto Chart" />
 	</components>
 
 	<hierarchy>
@@ -23,7 +24,9 @@
 		<menu id="workspace" label="Workspace" index="5">
 			<entry component="setworkdir" />
 		</menu>
-
+		<menu id="plots" label="Plots" index="5">
+			<entry component="pareto" />
+		</menu>		
 		<menu id="distributions" label="Distributions" index="7">
 			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="2">
 				<menu id="beta_distribution" label="Beta" index="0">
