@@ -30,7 +30,7 @@ function doPrintout ($final) {
 rk.temp.x <- (<? echo ($vars); ?>)
 if(is.factor(rk.temp.x)) {
 	rk.temp.x <- summary(rk.temp.x)
-} else rk.temp.x
+} 
 
 <? 
 	if ($final) { ?>
