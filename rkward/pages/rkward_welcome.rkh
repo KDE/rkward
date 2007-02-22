@@ -21,4 +21,7 @@
 	<section title="General Information" id="further_info">
 	For more general information on RKWard, who writes it, how to help, further questions, etc. refer to <link href="http://rkward.sourceforge.net/">the project homepage</link>.
 	</section>
+	<section title="Trouble Shooting" id="Trouble Shooting">
+	If you encounter problems please feel free to search in <link href="rkward://page/rkward_trouble_shooting">Trouble Shooting<link/> first.
+	</section>
 </document>
