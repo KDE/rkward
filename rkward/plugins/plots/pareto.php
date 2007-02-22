@@ -41,10 +41,7 @@ rk.graph.on ()
 <?	}
 ?>
 try ({
-<?	if ($final && $descriptives) { ?>
-	rk.temp.descriptives <- <?
-	} else echo ("\t"); ?>
-pareto.chart(rk.temp.x<? getRK ("plotoptions.code.printout"); ?>)
+	rk.temp.descriptives <- pareto.chart(rk.temp.x<? getRK ("plotoptions.code.printout"); ?>)
 <?	if ($final && $descriptives) { ?>
 	rk.print(xtable(rk.temp.descriptives))
 <?	} ?>
