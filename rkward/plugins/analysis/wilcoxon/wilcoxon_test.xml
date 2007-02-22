@@ -4,6 +4,7 @@
 
 <document>
 	<code file="wilcoxon_test.php"/>
+	<help file="wilcoxon_test.rkh"/>
 
 	<dialog label="Wilcoxon test">
 		<tabbook>
