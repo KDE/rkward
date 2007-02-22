@@ -1,0 +1,50 @@
+<!DOCTYPE rkplugin>
+
+<!-- This is the skewness and kurtosis plug-in-->
+
+<document>
+	<code file="skewness_kurtosis_test.php"/>
+	<help file="skewness_kurtosis_test.rkh" />
+	<dialog label="Skewness and Kurtosis">
+		<tabbook>
+			<tab label="Select Variables" >
+				<row>
+					<column>
+						<varselector id="vars"/>
+					</column>
+					<column>
+						<frame>
+							<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
+						</frame>
+						<stretch/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Options">
+				<frame label="Skewness">
+					<checkbox id="skewness" label="Skewness" value_unchecked="0" value="1" checked="true" />
+					<radio id="narm_skewness" label="Remove missing values for Skewness calculation">
+						<option value="na.rm = FALSE" label="No (FALSE)"/>
+						<option value="na.rm = TRUE" label="Yes (TRUE)"/>
+					</radio>
+				</frame>
+				<frame label="Kurtosis">
+					<checkbox id="kurtosis" label="Kurtosis" value_unchecked="0" value="1" checked="true" />
+					<radio id="narm_kurtosis" label="Remove missing values for Kurtosis calculation">
+						<option value="na.rm = FALSE" label="No (FALSE)"/>
+						<option value="na.rm = TRUE" label="Yes (TRUE)"/>
+					</radio>
+				</frame>
+				<frame label="Geary's kurtosis">
+					<checkbox id="geary" label="Geary's kurtosis" value_unchecked="0" value="1" checked="false" />
+					<radio id="narm_geary_kurtosis" label="Remove missing values for Geary's kurtosis calculation">
+						<option value="na.rm = FALSE" label="No (FALSE)"/>
+						<option value="na.rm = TRUE" label="Yes (TRUE)"/>
+					</radio>
+				</frame>
+				<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="false" />
+				<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="false" />
+			</tab>
+		</tabbook>
+	</dialog>
+</document>
