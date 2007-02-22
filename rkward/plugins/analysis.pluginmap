@@ -8,17 +8,16 @@
 		<component type="standard" id="descriptive" file="descriptive/descriptive_statistics.xml" label="Descriptive Statistics" />
 		<component type="standard" id="independent_samples_t_test" file="00means/00ttests/00independent_samples/description.xml" label="Independent Samples" />
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
-		<component type="standard" id="skewness_kurtosis" file="descriptive/skewness_kurtosis_test.xml" label="Skewness and Kurtosis" />
-
 		<component type="standard" id="wilcoxon_test" file="analysis/wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
 		<component type="standard" id="wilcoxon_exact_test" file="analysis/wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
 		<component type="standard" id="ansari_bradley_test" file="analysis/ansari_bradley/ansari_bradley_test.xml" label="Ansari-Bradley two-sample test" />
 		<component type="standard" id="ansari_bradley_exact_test" file="analysis/ansari_bradley/ansari_bradley_exact_test.xml" label="Ansari-Bradley two-sample exact test" />
+
 	</components>
 
 	<hierarchy>
 		<menu id="analysis" label="Analysis" index="4">
-			<entry component="basic_statistics" index="0"/>
+			<entry component="basic_statistics" index="1"/>
 			<menu id="correlation" label="Correlation" index="1">
 				<entry component="corr_matrix" />
 				<entry component="cor_graph" />
@@ -29,13 +28,12 @@
 					<entry component="independent_samples_t_test" />
 				</menu>
 			</menu>
-			<entry component="simple_anova" index="4"/>
-			<entry component="skewness_kurtosis" index="5"/>
+			<entry component="simple_anova" index="5"/>
 			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="6">
 				<entry component="wilcoxon_test" />
 				<entry component="wilcoxon_exact_test" />
 			</menu>
-			<menu id="ansari_bradley" label="Ansari-Bradley Tests" index="7">
+			<menu id="ansari_bradley" label="Ansari-Bradley Tests" index="0">
 				<entry component="ansari_bradley_test" />
 				<entry component="ansari_bradley_exact_test" />
 			</menu>
