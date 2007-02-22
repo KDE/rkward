@@ -1,0 +1,20 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Creates a pareto chart and prints the values.
+	</summary>
+
+	<usage>
+Choose a vector or a factor to be plotted. The Frequency, Cum.Frequency, Percentage and Cum.Percentage will be printed under the plot.
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select a data vector or a factor to be plotted.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/pareto.chart"/></li>
+		</ul>
+	</related>
+</document>

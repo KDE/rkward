@@ -1,0 +1,19 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="pareto.php" />
+	<help file="pareto.rkh" />
+	<dialog label="Pareto chart" >		
+		<tabbook>
+			<tab label="Variables" id="tab_variables">
+				<row>
+					<varselector id="vars"/>
+					<column>
+					<varslot min_vars="1" id="x" source="vars" required="true" label="Vector or Factor"/>
+					<preview id="preview"/>
+					</column>
+				</row>
+			</tab>	
+		</tabbook>			
+	</dialog>
+
+</document>
