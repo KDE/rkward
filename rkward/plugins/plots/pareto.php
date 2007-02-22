@@ -25,7 +25,8 @@ function preview () {
 }
 	
 function doPrintout ($final) {
-	$vars = str_replace ("\n", ",", trim (getRK_val ("x"))) ;
+	$vars = (getRK_val ("x")) ;
+	$descriptives = (getRK_val ("descriptives")=="TRUE") ;
 ?>
 rk.temp.x <- (<? echo ($vars); ?>)
 if(is.factor(rk.temp.x)) {
@@ -39,12 +40,13 @@ rk.header ("Pareto chart")
 rk.graph.on ()
 <?	}
 ?>
-try ({ 
+try (
 <?
-if ($final) { ?>
-rk.print(<?}?>xtable(pareto.chart(rk.temp.x, main="")) <? if ($final) { ?>)<?}
+if ($final && $descriptives) { ?>
+rk.print(xtable(<?}?>pareto.chart(rk.temp.x, main="")<? if ($final && $descriptives) { ?>))
+<?}
 ?>
-})
+)
 <?	if ($final) { ?>
 rk.graph.off ()
 <? }

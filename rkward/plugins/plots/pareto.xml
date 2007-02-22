@@ -9,6 +9,7 @@
 					<varselector id="vars"/>
 					<column>
 					<varslot min_vars="1" id="x" source="vars" required="true" label="Vector or Factor"/>
+					<checkbox id="descriptives" label="Print descriptives" value="TRUE" value_unchecked="FALSE" checked="true"/>
 					<preview id="preview"/>
 					</column>
 				</row>
