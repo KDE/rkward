@@ -1,3 +1,5 @@
+- support of all tests from moments package
+- new help related page "Trouble Shooting"
 - fixed: plugin browser type="dir" would not work correctly
 - import SPSS and import CSV plugins gain option to open object for editing, automatically (checked by default)
 - warn when opening very large objects (with more than 250000 fields; this limit is configurable)
