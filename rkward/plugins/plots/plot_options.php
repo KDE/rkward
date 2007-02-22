@@ -6,7 +6,7 @@ function prepareLabel ($labelname) {
 		$label = getRK_val ("default_" . $labelname);
 		$quoted = true;
 	}
-	if (($label != "") && ($quoted)) $label = "\"" . $label . "\"";
+	if (($label != "") && ($quoted)) $label = "\"" . strtr ($label, array ('"' => '\\"')) . "\"";
 	if ($label != "") $label = ", " . $labelname . "=" . $label;
 
 	return $label;
