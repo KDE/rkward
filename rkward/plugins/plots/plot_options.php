@@ -1,4 +1,17 @@
 <?
+function prepareLabel ($labelname) {
+	$quoted = (getRK_val ($labelname . "isquote") == "1");
+	$label = getRK_val ($labelname);
+	if ($label == "") {
+		$label = getRK_val ("default_" . $labelname);
+		$quoted = true;
+	}
+	if (($label != "") && ($quoted)) $label = "\"" . $label . "\"";
+	if ($label != "") $label = ", " . $labelname . "=" . $label;
+
+	return $label;
+}
+
 function preprocess () {
 }
 
@@ -34,12 +47,7 @@ function printout () {
 	}
 	$log .= getRK_val ("xlog");
 
-	$xlab = getRK_val ("xlab");
-	if (($xlab != "") && (getRK_val ("xlabisquote") == "1")) {
-		$xlab = "\"" . $xlab . "\"";
-	}
-	if ($xlab != "") $xlab = ", xlab=" . $xlab;
-
+	$xlab = prepareLabel ("xlab");
 	$xminvalue = getRK_val ("xminvalue");
 	$xmaxvalue = getRK_val ("xmaxvalue");
 	if (($xminvalue != "") || ($xmaxvalue != "")) {
@@ -60,11 +68,7 @@ function printout () {
 	}
 	$log .= getRK_val ("ylog");
 
-	$ylab = getRK_val ("ylab");
-	if (($ylab != "") && (getRK_val ("ylabisquote") == "1")) {
-		$ylab = "\"" . $ylab . "\"";
-	}
-	if ($ylab != "") $ylab = ", ylab=" . $ylab;
+	$ylab = prepareLabel ("ylab");
 	$yminvalue = getRK_val ("yminvalue");
 	$ymaxvalue = getRK_val ("ymaxvalue");
 	if (($yminvalue != "") || ($ymaxvalue != "")) {
@@ -88,19 +92,9 @@ function printout () {
 	//color of points / lines
 	$col = getRK_val ("pointcolor.code.printout");
 
-	//add a main (on top) to the plot
-	$main = getRK_val ("main");
-	if (($main != "") && (getRK_val ("mainisquote") == "1")) {
-		$main = "\"" . $main . "\"";
-	}
-	if ($main != "") $main = ", main=" . $main;
-	
-	//add a subtitle (at bottom) to the plot
-	$sub = getRK_val ("sub");
-	if (($sub != "") && (getRK_val ("subisquote") == "1")) {
-		$sub = "\"" . $sub . "\"";
-	}
-	if ($sub != "") $sub = ", sub=" . $sub;
+	// main and subtitle to the plot
+	$main = prepareLabel ("main");
+	$sub = prepareLabel ("sub");
 
 	//define the aspect y/x of the plot
 	$asp = getRK_val ("asp");

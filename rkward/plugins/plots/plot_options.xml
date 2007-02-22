@@ -8,6 +8,10 @@
 		
 		<external id="default_pointtype" default="" />
 		<external id="default_pointcolor" default="" />
+		<external id="default_main" default="" />
+		<external id="default_sub" default="" />
+		<external id="default_xlab" default="" />
+		<external id="default_ylab" default="" />
 		
 		<external id="allow_log" default="true" />
 		<external id="allow_type" default="true" />
