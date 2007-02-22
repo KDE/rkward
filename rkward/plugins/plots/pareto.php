@@ -42,7 +42,7 @@ rk.graph.on ()
 try ({ 
 <?
 if ($final) { ?>
-rk.print(<?}?>pareto.chart(rk.temp.x, main="") <? if ($final) { ?>)<?}
+rk.print(<?}?>xtable(pareto.chart(rk.temp.x, main="")) <? if ($final) { ?>)<?}
 ?>
 })
 <?	if ($final) { ?>
