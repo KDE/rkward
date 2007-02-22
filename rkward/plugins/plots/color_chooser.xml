@@ -1,6 +1,7 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="color_chooser.php" />
+	<help file="color_chooser.rkh" />
 	<logic>
 		<external id="argument" default=", col=" />
 		<external id="default_color" default="" />

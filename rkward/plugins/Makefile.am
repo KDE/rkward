@@ -32,8 +32,11 @@ dist_pluginsXplots_DATA = \
 	plots/barplot.xml \
 	plots/scatterplot_matrix.php \
 	plots/scatterplot_matrix.xml \
+	plots/color_chooser.php \
 	plots/cor_graph.rkh \
-	plots/scatterplot_matrix.rkh
+	plots/scatterplot_matrix.rkh \
+	plots/color_chooser.xml \
+	plots/color_chooser.rkh
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
@@ -187,7 +190,11 @@ dist_pluginsXdistributions_DATA = \
 	distributions/plot_logistic_distribution.rkh \
 	distributions/plot_weibull_distribution.rkh \
 	distributions/plot_wilcoxon_distribution.rkh \
-	distributions/plot_poisson_distribution.rkh
+	distributions/plot_poisson_distribution.rkh \
+	distributions/plot_binomial_clt.xml \
+	distributions/plot_beta_clt.php \
+	distributions/plot_binomial_clt.php \
+	distributions/plot_beta_clt.xml
 
 pluginsXwritetabledir = $(kde_datadir)/rkward/writetable
 dist_pluginsXwritetable_DATA = \
@@ -212,6 +219,11 @@ dist_pluginsXsimpleUanova_DATA = \
 	simple_anova/description.xml
 
 pluginsX00saveloaddir = $(kde_datadir)/rkward/00saveload
+dist_pluginsX00saveload_DATA = \
+	00saveload/setworkdir.rkh \
+	00saveload/setworkdir.php \
+	00saveload/setworkdir.xml
+
 pluginsX00saveloadXloaddir = $(kde_datadir)/rkward/00saveload/load
 pluginsX00saveloadXloadXloaddir = $(kde_datadir)/rkward/00saveload/load/load
 dist_pluginsX00saveloadXloadXload_DATA = \
@@ -281,5 +293,8 @@ pluginsXx11devicedir = $(kde_datadir)/rkward/x11device
 dist_pluginsXx11device_DATA = \
 	x11device/export.xml \
 	x11device/export.php \
-	x11device/export.rkh
+	x11device/export.rkh \
+	x11device/export_new.php \
+	x11device/export_new.xml \
+	x11device/export_new.rkh
 
