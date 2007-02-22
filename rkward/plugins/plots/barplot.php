@@ -22,8 +22,8 @@ function preview () {
 }
 	
 function doPrintout ($final) {
-	$vars = (getRK_val ("x")) ;
-	$labels = (getRK_val ("labels")=="TRUE");
+	$vars = getRK_val ("x") ;
+	$labels = getRK_val ("labels")=="TRUE";
 ?>
 rk.temp.x <- (<? echo ($vars); ?>)
 if(is.factor(rk.temp.x)) {

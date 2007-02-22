@@ -25,8 +25,8 @@ function preview () {
 }
 	
 function doPrintout ($final) {
-	$vars = (getRK_val ("x")) ;
-	$descriptives = (getRK_val ("descriptives")=="TRUE") ;
+	$vars = getRK_val ("x");
+	$descriptives = getRK_val ("descriptives")=="TRUE";
 ?>
 rk.temp.x <- (<? echo ($vars); ?>)
 if(is.factor(rk.temp.x)) {
