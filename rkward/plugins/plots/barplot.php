@@ -22,7 +22,7 @@ function preview () {
 }
 	
 function doPrintout ($final) {
-	$vars = str_replace ("\n", ",", trim (getRK_val ("x"))) ;
+	$vars = (getRK_val ("x")) ;
 	$labels = (getRK_val ("labels")=="TRUE");
 ?>
 rk.temp.x <- (<? echo ($vars); ?>)
