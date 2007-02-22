@@ -4,10 +4,17 @@
 	<components>
 		<component type="standard" id="export_x11_device_new" file="x11device/export_new.xml" label="Export (new)" />
 		<component type="standard" id="setworkdir" file="00saveload/setworkdir.xml" label="Set Working Directory" />
+		
+		<component type="standard" id="plot_binomial_clt" file="distributions/plot_binomial_clt.xml" label="Binomial CLT" />
+		<component type="standard" id="plot_beta_clt" file="distributions/plot_beta_clt.xml" label="Beta CLT" />
+		<component type="standard" id="pareto" file="plots/pareto.xml" label="Pareto Chart" />
 
-    <component type="standard" id="plot_binomial_clt" file="distributions/plot_binomial_clt.xml" label="Binomial CLT" />
-    <component type="standard" id="plot_beta_clt" file="distributions/plot_beta_clt.xml" label="Beta CLT" />
-    <component type="standard" id="pareto" file="plots/pareto.xml" label="Pareto Chart" />
+		<component type="standard" id="moment" file="analysis/moments/moment.xml" label="Moment" />
+		<component type="standard" id="bonett_test" file="analysis/moments/bonett_test.xml" label="Bonett-Seier test of Geary's kurtosis" />
+		<component type="standard" id="agostino_test" file="analysis/moments/agostino_test.xml" label="D'Agostino test of skewness" />
+		<component type="standard" id="anscombe_test" file="analysis/moments/anscombe_test.xml" label="Anscombe-Glynn test of kurtosis" />
+		<component type="standard" id="skewness_kurtosis" file="analysis/moments/skewness_kurtosis_test.xml" label="Skewness and Kurtosis" />
+
 	</components>
 
 	<hierarchy>
@@ -18,6 +25,13 @@
 			</menu>
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
+			<menu id="moments" label="Moments" index="4">
+				<entry component="anscombe_test" index="0"/>
+				<entry component="bonett_test" index="1"/>
+				<entry component="agostino_test" index="2"/>
+				<entry component="moment" index="3"/>
+				<entry component="skewness_kurtosis" index="4"/>
+			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
 		</menu>
