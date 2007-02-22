@@ -128,14 +128,12 @@ dist_pluginsXdistributions_DATA = \
 	distributions/tukey_probabilities.xml \
 	distributions/tukey_quantiles.php \
 	distributions/tukey_quantiles.xml \
-	distributions/agostino_test.xml \
 	distributions/shapiro_test.xml \
 	distributions/pearson_test.xml \
 	distributions/lillie_test.xml \
 	distributions/ad_test.xml \
 	distributions/cvm_test.xml \
 	distributions/sf_test.php \
-	distributions/agostino_test.php \
 	distributions/shapiro_test.php \
 	distributions/pearson_test.php \
 	distributions/lillie_test.php \
@@ -279,14 +277,31 @@ dist_pluginsXanalysisXwilcoxon_DATA = \
 	analysis/wilcoxon/wilcoxon_exact_test.xml \
 	analysis/wilcoxon/wilcoxon_test.xml \
 	analysis/wilcoxon/wilcoxon_exact_test.php \
-	analysis/wilcoxon/wilcoxon_test.php
+	analysis/wilcoxon/wilcoxon_test.php \
+	analysis/wilcoxon/wilcoxon_test.rkh
+
+pluginsXanalysisXmomentsdir = $(kde_datadir)/rkward/analysis/moments
+dist_pluginsXanalysisXmoments_DATA = \
+	analysis/moments/agostino_test.xml \
+	analysis/moments/agostino_test.php \
+	analysis/moments/agostino_test.rkh \
+	analysis/moments/anscombe_test.xml \
+	analysis/moments/anscombe_test.php \
+	analysis/moments/anscombe_test.rkh \
+	analysis/moments/bonett_test.xml \
+	analysis/moments/bonett_test.php \
+	analysis/moments/bonett_test.rkh \
+	analysis/moments/moment.php \
+	analysis/moments/moment.xml \
+	analysis/moments/moment.rkh \
+	analysis/moments/skewness_kurtosis_test.xml \
+	analysis/moments/skewness_kurtosis_test.php \
+	analysis/moments/skewness_kurtosis_test.rkh
 
 pluginsXdescriptivedir = $(kde_datadir)/rkward/descriptive
 dist_pluginsXdescriptive_DATA = \
 	descriptive/descriptive_statistics.php \
 	descriptive/descriptive_statistics.xml \
-	descriptive/skewness_kurtosis_test.xml \
-	descriptive/skewness_kurtosis_test.php \
 	descriptive/descriptive_statistics.rkh
 
 pluginsXx11devicedir = $(kde_datadir)/rkward/x11device
