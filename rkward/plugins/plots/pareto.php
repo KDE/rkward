@@ -43,7 +43,7 @@ rk.graph.on ()
 try (
 <?
 if ($final && $descriptives) { ?>
-rk.print(xtable(<?}?>pareto.chart(rk.temp.x, main="")<? if ($final && $descriptives) { ?>))
+rk.print(xtable(<?}?>pareto.chart(rk.temp.x <? getRK ("plotoptions.code.printout"); ?>)<? if ($final && $descriptives){ ?>))
 <?}
 ?>
 )

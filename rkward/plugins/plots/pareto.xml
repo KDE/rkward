@@ -2,6 +2,13 @@
 <document>
 	<code file="pareto.php" />
 	<help file="pareto.rkh" />
+	<logic>
+		<connect client="plotoptions.default_main" governor="x" />
+		<set id="plotoptions.allow_type" to="false"/>
+		<set id="plotoptions.allow_xlim" to="false"/>
+		<set id="plotoptions.allow_ylim" to="false"/>
+		<set id="plotoptions.allow_log" to="false"/>
+	</logic>
 	<dialog label="Pareto chart" >		
 		<tabbook>
 			<tab label="Variables" id="tab_variables">
@@ -13,8 +20,13 @@
 					<preview id="preview"/>
 					</column>
 				</row>
-			</tab>	
-		</tabbook>			
+			</tab>
+			<tab label="Plot Options" >
+				<row>
+					<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
+					<stretch/>
+				</row>
+			</tab>
+		</tabbook>
 	</dialog>
-
 </document>
