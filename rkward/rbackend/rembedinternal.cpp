@@ -1,4 +1,3 @@
-
 /***************************************************************************
                           rembedinternal  -  description
                              -------------------
@@ -50,6 +49,7 @@ extern "C" {
 //#include <signal.h>
 //#include <unistd.h>
 #include <math.h>
+#include <pthread.h>
 
 #if (R_VERSION > R_Version(2, 2, 9))
 #define R_2_3
@@ -80,7 +80,8 @@ extern int R_interrupts_pending;
 #ifdef R_2_3
 extern int Rf_initialize_R(int ac, char **av);
 extern void setup_Rmainloop(void); /* in main.c */
-extern unsigned long R_CStackLimit;
+extern uintptr_t R_CStackLimit;
+extern uintptr_t R_CStackStart;
 extern Rboolean R_Interactive;
 #endif
 #ifndef USE_R_REPLDLLDO1
@@ -519,12 +520,21 @@ SEXP doSubstackCall (SEXP call) {
 bool REmbedInternal::startR (int argc, char** argv) {
 	r_running = true;
 #ifdef R_2_3
+	pthread_attr_t attr;
+	size_t stacksize;
+	void *stackstart;
+	pthread_getattr_np (pthread_self (), &attr);
+	pthread_attr_getstack (&attr, &stackstart, &stacksize);
+
 	Rf_initialize_R (argc, argv);
-	R_CStackLimit = (unsigned long) -1;
+	R_CStackStart = (uintptr_t) stackstart;
+	R_CStackLimit = stacksize;
 	setup_Rmainloop ();
 	RKGlobals::na_double = NA_REAL;
 	R_Interactive = (Rboolean) TRUE;
 	R_ReplDLLinit ();
+
+	pthread_attr_destroy (&attr);
 	return true;
 #else
 	bool ok = (Rf_initEmbeddedR (argc, argv) >= 0);
