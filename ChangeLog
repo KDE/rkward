@@ -1,5 +1,7 @@
+- support R's mechanism for checking the C stack limits (only with R 2.3.x or greater, and not on all platforms)
 - support of all tests from moments package
 - new help related page "Trouble Shooting"
+- fixed: depending on some buffer sizes, plugins could get stuck while generating code
 - fixed: plugin browser type="dir" would not work correctly
 - import SPSS and import CSV plugins gain option to open object for editing, automatically (checked by default)
 - warn when opening very large objects (with more than 250000 fields; this limit is configurable)

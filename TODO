@@ -24,7 +24,7 @@ Bugs:
 			- no idea, why this happens
 		- converting objects to a different type is broken (works in the editor, but the type remains unchanged in the backend)
 			- maybe we could do the change in the backend, and then sync
-				- function rk.change.vector.mode() to change the mode, keeping attributed, and adding invalid values where needed
+				- function rk.change.vector.mode() to change the mode, keeping attributes, and adding invalid values where needed
 				- sync using updateFromR(), updateDataFromR()
 				- this would be done from TwinTableMetaMember::setText()
 				- we should find a way to disable the var (set it to gray color group, do not allow editing) during this operation
@@ -111,6 +111,7 @@ UI-stuff
 		- option to change working directory (https://sourceforge.net/mailarchive/forum.php?thread_id=31671703&forum_id=12970)
 			- find a good way to show current working dir info somewhere (title / statusbar)
 				- keep up to date (override setwd ()).
+				- also show this info in <browser>
 
 Internal stuff:
 	- Handling locales:
