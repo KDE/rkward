@@ -5,8 +5,10 @@ function preprocess () {
 function calculate () {
 	$type = getRK_val ("format");
 	$jpegpng = (($type == "jpeg") | ($type == "png"));
-
 	$file = getRK_val ("file");
+
+	// Does the filename end with .ps/.eps or .pdf or .png or .jpeg/.jpg?
+	// If not, add the appropriate extension.
 	if (getRK_val ("autoextension")) {
 		if ($type == "jpeg") {
 			if (!( ereg("\.jpeg$",$file)|ereg("\.jpg$",$file) )) $file .= ".jpg";
@@ -16,26 +18,33 @@ function calculate () {
 			$ext = "." . $type;
 			if (!ereg($ext."$",$file)) $file .= $ext;
 		}
-/*		$possible_ext = substr($file, -4);
-		if (strcasecmp($ext, $possible_ext) != 0) $file .= $ext;*/
-// 		if (!ereg($ext."$",$file)) $file .= $ext;
-	}
-	$options = "";
-	if ($jpegpng) {
-		$width = getRK_val ("width_px");
-		$height = getRK_val ("height_px");
-	} else {
-		$width = getRK_val ("width_in");
-		$height = getRK_val ("height_in");
 	}
 
-	if (!getRK_val ("autowidth")) $options .= ", width=" . $width;
-	if (!getRK_val ("autoheight")) $options .= ", height=" . $height;
+	$options = "";
+
+	// set $resolution appropriately:
+	if ($jpegpng) {
+		$autores = getRK_val ("autores");
+		if ($autores) $resolution = 96;
+		else $resolution = getRK_val ("resolution");
+	} else $resolution = 1;
+
+	$autoW = getRK_val ("autowidth");	$autoH = getRK_val ("autoheight");
+
+	// jpeg()/png() need at least one of width/height. For jpeg()/png() the width/height parameter (in pixels)
+	// is calculated using width/height (in inches) times the resolution. For postscript()/pdf() $resolution is set to 1.
+	if ($jpegpng && $autoW && $autoH) $options .= ", width=par(\"din\")[1]*" . $resolution;
+	else {
+		if(!$autoW) $options .= ", width=" . getRK_val ("width")*$resolution;
+		if(!$autoH) $options .= ", height=" . getRK_val ("height")*$resolution;
+	}
+
+	// pointsize, resolution and quality parameters:
 	if (!getRK_val ("autopointsize")) $options .= ", pointsize=" . getRK_val ("pointsize");
-	if (($type == "jpeg") & (!getRK_val ("autoquality"))) $options .= ", quality=" . getRK_val ("quality");
-/*	if (!getRK_val ("color_transparent")) $options .= getRK_val ("bg.code.printout");
-	else $options .= ", bg=\"transparent\"";*/
-	if ($jpegpng & !getRK_val ("autores")) $options .= ", res=" . getRK_val ("resolution");
+	if ($jpegpng && !$autores)	$options .= ", res=" . $resolution;
+	if (($type == "jpeg") && (!getRK_val ("autoquality"))) $options .= ", quality=" . getRK_val ("quality");
+
+	// For ps/pdf: page, pagecentre, horizontal, family, encoding and title parameters:
 	if (!$jpegpng) {
 		$paper = getRK_val ("paper");
 		if (!empty ($paper)) $options .= ", paper=" . "\"" . $paper . "\"";

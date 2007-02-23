@@ -15,22 +15,24 @@
 		<connect client="tab_pngjpeg_options.enabled" governor="isJPEGPNG" />
 		<connect client="tab_pspdf_options.enabled" governor="isPSPDF" />
 
-		<connect client="quality.enabled" governor="isJPEG" />
 		<connect client="autoquality.enabled" governor="isJPEG" />
+		<connect client="ps_horiz.enabled" governor="isPS"/>
 
 		<convert id="userwidth0" mode="equals" sources="autowidth.state" standard="0" />
+		<connect client="width.enabled" governor="userwidth0"/>
 
-		<convert id="userwidth_isJPEGPNG" mode="and" sources="userwidth0;isJPEGPNG" />
+		<!--		<convert id="userwidth_isJPEGPNG" mode="and" sources="userwidth0;isJPEGPNG" />
 		<connect client="width_px.enabled" governor="userwidth_isJPEGPNG"/>
 		<connect client="width_px.visible" governor="isJPEGPNG"/>
 
 		<convert id="userwidth_isPSPDF" mode="and" sources="userwidth0;isPSPDF" />
 		<connect client="width_in.enabled" governor="userwidth_isPSPDF"/>
-		<connect client="width_in.visible" governor="isPSPDF"/>
+		<connect client="width_in.visible" governor="isPSPDF"/>-->
 
 		<convert id="userheight0" mode="equals" sources="autoheight.state" standard="0" />
+		<connect client="height.enabled" governor="userheight0"/>
 
-		<convert id="userheight_isJPEGPNG" mode="and" sources="userheight0;isJPEGPNG" />
+		<!--		<convert id="userheight_isJPEGPNG" mode="and" sources="userheight0;isJPEGPNG" />
 		<connect client="height_px.enabled" governor="userheight_isJPEGPNG"/>
 		<connect client="height_px.visible" governor="isJPEGPNG"/>
 
@@ -42,10 +44,10 @@
 		<convert id="userwidth0ORheight0_isJPEGPNG" mode="and" sources="userwidth0ORheight0;isJPEGPNG"/>
 		<convert id="truestate" mode="or" sources="userwidth0ORheight0_isJPEGPNG;isPS;isPDF" require_true="true"/>
 		<convert id="wh_both1" mode="and" sources="autoheight.state;autowidth.state;isJPEGPNG" />
-		<convert id="wh_both_not1" sources="wh_both1" mode="notequals" standard="true"/>
-<!--		<connect client="wh_txt_2.visible" governor="userwidth0ORheight0"/>-->
-		<connect client="wh_txt_1.visible" governor="wh_both1"/>
-		<connect client="wh_txt_2.visible" governor="wh_both_not1"/>
+		<convert id="wh_both_not1" sources="wh_both1" mode="notequals" standard="true"/>-->
+		<!--		<connect client="wh_txt_2.visible" governor="userwidth0ORheight0"/>-->
+		<!--		<connect client="wh_txt_1.visible" governor="wh_both1"/>
+		<connect client="wh_txt_2.visible" governor="wh_both_not1"/>-->
 
 		<convert id="userpointsize0" mode="equals" sources="autopointsize.state" standard="0" />
 		<connect client="pointsize.enabled" governor="userpointsize0"/>
@@ -54,14 +56,14 @@
 		<convert id="userres" mode="and" sources="userres0;isJPEGPNG" />
 		<connect client="resolution.enabled" governor="userres"/>
 
-<!-- 		<convert id="userbg0" mode="equals" sources="autobg.state" standard="0" /> -->
-<!-- 		<convert id="usertransparent0" mode="equals" sources="color_transparent.state" standard="0" /> -->
-<!--		<convert id="userbg" mode="and" sources="userbg0;isJPEGPNG" />
+		<!-- 		<convert id="userbg0" mode="equals" sources="autobg.state" standard="0" /> -->
+		<!-- 		<convert id="usertransparent0" mode="equals" sources="color_transparent.state" standard="0" /> -->
+		<!--		<convert id="userbg" mode="and" sources="userbg0;isJPEGPNG" />
 		<connect client="color_transparent.enabled" governor="userbg"/>
 		<convert id="userbgtransparent" mode="and" sources="userbg;usertransparent0" />-->
-<!-- 		<connect client="bg.color_enabled" governor="usertransparent0"/> -->
-<!-- 		<set id="bg.argument" to=", bg="/> -->
-<!-- 		<set id="bg.default_color" to="white"/> -->
+		<!-- 		<connect client="bg.color_enabled" governor="usertransparent0"/> -->
+		<!-- 		<set id="bg.argument" to=", bg="/> -->
+		<!-- 		<set id="bg.default_color" to="white"/> -->
 
 		<convert id="userquality0" mode="equals" sources="autoquality.state" standard="0" />
 		<convert id="userquality" mode="and" sources="userquality0;autoquality.enabled" />
@@ -69,18 +71,15 @@
 
 		<convert id="usertitle0" mode="equals" sources="autotitle.state" standard="0" />
 		<connect client="title.enabled" governor="usertitle0"/>
-
-		<connect client="ps_horiz.enabled" governor="isPS"/>
 	</logic>
+
 	<dialog label="Export contents of graphics device to png/jpeg format">
 		<tabbook>
 			<tab id="tab_file_and_type" label="Filename/Type">
 				<row>
 					<column>
-<!--             <frame> -->
-							<browser size="medium" id="file" label="File name" initial="Rplot" />
-							<checkbox id="autoextension" value="1" value_unchecked="0" checked="true" label="Automatic File extension"/>
-<!--             </frame> -->
+						<browser size="medium" id="file" label="File name" initial="~/Rplot" filter="*.ps *.eps *.pdf *.png *.jpg *.jpeg"/>
+						<checkbox id="autoextension" value="1" value_unchecked="0" checked="true" label="Automatic File extension"/>
 					</column>
 					<column>
 						<radio id="format" label="Output format" >
@@ -93,22 +92,24 @@
 				</row>
 				<row>
 					<frame id="generic_options" label="Generic Export Options">
-						<text id="wh_txt_1">Either Width or Height has to be provided for PNG/JPEG export!!</text>
-						<text id="wh_txt_2">                                                               </text>
+						<!--						<text id="wh_txt_1">Either Width or Height has to be provided for PNG/JPEG export!!</text>
+						<text id="wh_txt_2">                                                               </text>-->
 						<row>
 							<column>
-								<checkbox id="autowidth" value="1" value_unchecked="0" checked="false" label="Automatic Width"/>
-								<spinbox id="width_px" label="Width in pixels" min="20" initial="480" default_precision="1"/>
-								<spinbox id="width_in" label="Width in inches" min="0" initial="6" default_precision="1"/>
+								<checkbox id="autowidth" value="1" value_unchecked="0" checked="true" label="Automatic Width"/>
+								<!--								<spinbox id="width_px" label="Width in pixels" min="20" initial="480" default_precision="1"/>
+								<spinbox id="width_in" label="Width in inches" min="0" initial="6" default_precision="1"/>-->
+								<spinbox id="width" label="Width in inches" min="0" initial="6" default_precision="1"/>
 							</column>
 							<column>
-								<checkbox id="autoheight" value="1" value_unchecked="0" checked="false" label="Automatic Height"/>
-								<spinbox id="height_px" label="Height in pixels" min="20" initial="480" default_precision="1" />
-								<spinbox id="height_in" label="Height in inches" min="0" initial="6" default_precision="1" />
+								<checkbox id="autoheight" value="1" value_unchecked="0" checked="true" label="Automatic Height"/>
+								<!--								<spinbox id="height_px" label="Height in pixels" min="20" initial="480" default_precision="1" />
+								<spinbox id="height_in" label="Height in inches" min="0" initial="6" default_precision="1" />-->
+								<spinbox id="height" label="Height in inches" min="0" initial="6" default_precision="1" />
 							</column>
 							<column>
 								<checkbox id="autopointsize" value="1" value_unchecked="0" checked="true" label="Default pointsize"/>
-								<spinbox id="pointsize" label="Point size" min="0" initial="12"  default_precision="1"/>
+								<spinbox id="pointsize" label="Point size" min="0" initial="12"  default_precision="1" />
 							</column>
 						</row>
 					</frame>
@@ -117,96 +118,84 @@
 			</tab>
 
 			<tab id="tab_pspdf_options" label="Postscript/PDF">
-<!-- 				<frame id="page_properties" label="Page properties"> -->
-					<row>
-						<column>
-				<dropdown id="paper" label="Paper Size">
-					<option value="" label="None" checked="true"/>
-					<option value="a4" label="A4"/>
-					<option value="letter" label="Letter"/>
-					<option value="legal" label="Legal"/>
-					<option value="executive" label="Executive"/>
-					<option value="special" label="Special"/>
-					<option value="default" label="Use 'papersize' definition"/>
-				</dropdown>
-						</column>
-						<column>
-							<frame>
-					<checkbox id="pagecentre" value="1" value_unchecked="0" checked="true" label="Pagecentre"/>
-					<checkbox id="ps_horiz" value="1" value_unchecked="0" checked="true" label="Horizontal (postscript only)"/>
-							</frame>
-						</column>
-					</row>
-<!-- 				</frame> -->
-					<frame id="font_properties" label="Font properties">
-						<row>
-				<dropdown id="family" label="Font family">
-					<option value="" label="None" checked="true"/>
-					<option value="AvantGarde" label="AvantGarde"/>
-					<option value="Bookman" label="Bookman"/>
-					<option value="Courier" label="Courier"/>
-					<option value="Helvectica" label="Helvectica"/>
-					<option value="Helvectica-Narrow" label="Helvectica Narrow"/>
-					<option value="mono" label="Mono"/>
-					<option value="NewCenturySchoolbook" label="New Century Schoolbook"/>
-					<option value="Palatino" label="Palatino"/>
-					<option value="sans" label="Sans"/>
-					<option value="serif" label="Serif"/>
-					<option value="symbol" label="Symbol"/>
-					<option value="Times" label="Times"/>
-					<option value="CenturySch" label="CenturySch (URW)"/>
-					<option value="NimbusMon" label="NimbusMon (URW)"/>
-					<option value="NimbusSanCond" label="NimbusSanCond (URW)"/>
-					<option value="URWBookman" label="URWBookman"/>
-					<option value="URWHelvectica" label="URWHelvectica"/>
-					<option value="URWGothic" label="URWGothic"/>
-					<option value="URWPalladio" label="URWPalladio"/>
-					<option value="URWTimes" label="URWTimes"/>
-				</dropdown>
-				<dropdown id="encoding" label="Font Encoding">
-					<option value="" label="None" checked="true"/>
-					<option value="ISOLatin1.enc" label="ISOLatin1"/>
-					<option value="ISOLatin2.enc" label="ISOLatin2"/>
-					<option value="CP1250.enc" label="CP1250"/>
-					<option value="ISOLatin7.enc" label="ISOLatin7"/>
-					<option value="CP1257.enc" label="CP1257"/>
-					<option value="ISOLatin9.enc" label="ISOLatin9"/>
-					<option value="PDFDoc.enc" label="PDFDoc"/>
-				</dropdown>
-			</row>
-			</frame>
-			<frame id="title_properties" label="Title embeded in file">
 				<row>
 					<column>
-					<checkbox id="autotitle" value="1" value_unchecked="0" checked="true" label="Default Title"/>
-				</column>
+						<dropdown id="paper" label="Paper Size">
+							<option value="" label="Default" checked="true"/>
+							<option value="a4" label="A4"/>
+							<option value="letter" label="Letter"/>
+							<option value="legal" label="Legal"/>
+							<option value="executive" label="Executive"/>
+							<option value="special" label="Special"/>
+						</dropdown>
+					</column>
 					<column>
-					<input id="title" size="small" initial="R Graphics Output"/>
-				</column>
+						<frame>
+							<checkbox id="pagecentre" value="1" value_unchecked="0" checked="true" label="Pagecentre"/>
+							<checkbox id="ps_horiz" value="1" value_unchecked="0" checked="true" label="Horizontal (postscript only)"/>
+						</frame>
+					</column>
 				</row>
-			</frame>
+				<frame id="font_properties" label="Font properties">
+					<row>
+						<dropdown id="family" label="Font family">
+							<option value="" label="Default" checked="true"/>
+							<option value="AvantGarde" label="AvantGarde"/>
+							<option value="Bookman" label="Bookman"/>
+							<option value="Courier" label="Courier"/>
+							<option value="Helvectica" label="Helvectica"/>
+							<option value="Helvectica-Narrow" label="Helvectica Narrow"/>
+							<option value="mono" label="Mono"/>
+							<option value="NewCenturySchoolbook" label="New Century Schoolbook"/>
+							<option value="Palatino" label="Palatino"/>
+							<option value="sans" label="Sans"/>
+							<option value="serif" label="Serif"/>
+							<option value="symbol" label="Symbol"/>
+							<option value="Times" label="Times"/>
+							<option value="CenturySch" label="CenturySch (URW)"/>
+							<option value="NimbusMon" label="NimbusMon (URW)"/>
+							<option value="NimbusSanCond" label="NimbusSanCond (URW)"/>
+							<option value="URWBookman" label="URWBookman"/>
+							<option value="URWHelvectica" label="URWHelvectica"/>
+							<option value="URWGothic" label="URWGothic"/>
+							<option value="URWPalladio" label="URWPalladio"/>
+							<option value="URWTimes" label="URWTimes"/>
+						</dropdown>
+						<dropdown id="encoding" label="Font Encoding">
+							<option value="" label="Default" checked="true"/>
+							<option value="ISOLatin1.enc" label="ISOLatin1"/>
+							<option value="ISOLatin2.enc" label="ISOLatin2"/>
+							<option value="CP1250.enc" label="CP1250"/>
+							<option value="ISOLatin7.enc" label="ISOLatin7"/>
+							<option value="CP1257.enc" label="CP1257"/>
+							<option value="ISOLatin9.enc" label="ISOLatin9"/>
+							<option value="PDFDoc.enc" label="PDFDoc"/>
+						</dropdown>
+					</row>
+				</frame>
+				<frame id="title_properties" label="Title embeded in file">
+					<row>
+						<column>
+							<checkbox id="autotitle" value="1" value_unchecked="0" checked="true" label="Default Title"/>
+						</column>
+						<column>
+							<input id="title" size="small" initial="R Graphics Output"/>
+						</column>
+					</row>
+				</frame>
 			</tab>
 
 			<tab id="tab_pngjpeg_options" label="PNG/JPEG">
-<!-- 					<column> -->
-<!-- 						<frame> -->
-<!-- 							<checkbox id="autobg" value="1" value_unchecked="0" checked="true" label="Default Background"/> -->
-<!-- 							<checkbox id="color_transparent" value="1" value_unchecked="0" checked="false" label="Transparent Background"/> -->
-<!-- 							<embed id="bg" component="rkward::color_chooser" label="Background"/> -->
-<!-- 						</frame> -->
-<!-- 					</column> -->
-					<frame>
-						<row>
-							<column>
-								<checkbox id="autores" value="1" value_unchecked="0" checked="true" label="Default Resolution"/>
-								<spinbox id="resolution" label="Resolution (dpi)" min="0" initial="72" default_precision="1"/>
-							</column>
-							<column>
-								<checkbox id="autoquality" value="1" value_unchecked="0" checked="true" label="Default Quality"/>
-								<spinbox label="JPEG Quality" id="quality" min="0" max="100" initial="75" default_precision="1"/>
-							</column>
-						</row>
-					</frame>
+				<row>
+					<column>
+						<checkbox id="autores" value="1" value_unchecked="0" checked="true" label="Default Resolution"/>
+						<spinbox id="resolution" label="Resolution (dpi)" type="integer" min="0" initial="96" default_precision="1"/>
+					</column>
+					<column>
+						<checkbox id="autoquality" value="1" value_unchecked="0" checked="true" label="Default Quality"/>
+						<spinbox label="JPEG Quality" id="quality" min="0" max="100" initial="75" default_precision="1"/>
+					</column>
+				</row>
 			</tab>
 		</tabbook>
 	</dialog>
