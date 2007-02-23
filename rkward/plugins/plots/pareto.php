@@ -30,8 +30,8 @@ function doPrintout ($final) {
 	$descriptives = getRK_val ("descriptives")=="TRUE";
 ?>
 rk.temp.x <- (<? echo ($vars); ?>)
-if(is.factor(rk.temp.x)) {
-	rk.temp.x <- summary(rk.temp.x)
+if(!is.table(rk.temp.x)) {
+       rk.temp.x <- table(rk.temp.x)
 } 
 
 <?	if ($final) { ?>
