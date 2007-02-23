@@ -7,7 +7,7 @@
 	
 	<dialog label="Anscombe-Glynn test of kurtosis">
 		<tabbook>
-			<tab label="Basic settings">
+			<tab id="tab_variables" label="Basic settings">
 				<row>
 					<varselector id="vars"/>
 					<column>
@@ -20,11 +20,9 @@
 					</column>
 				</row>
 			</tab>
-			<tab label="Options">
-				<frame label="additional settings">
-					<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
-					<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="false" />
-				</frame>
+			<tab id="tab_options" label="Options">
+				<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
+				<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="false" />
 			</tab>
 		</tabbook>
 	</dialog>
