@@ -18,6 +18,8 @@
 #ifndef R_EMBED_H
 #define R_EMBED_H
 
+#include <stddef.h>
+
 /** This struct is an ugly hack that allows us to pass all R standard callbacks to the main thread and back using the same mechanism.
 Basically, it contains enough space for all arguments and return values ever used. However, of course, it is inherently totally unsafe.
 All rests on having the handling functions know exactly, how these variables are used. So be extremely careful with modifications!
@@ -83,8 +85,10 @@ public:
 protected:
 /** low-level initialization of R
 @param argc Number of arguments as would be passed on the commandline to R
-@param argv Arguments as would be passed on the commandline to R */
-	bool startR (int argc, char **argv);
+@param argv Arguments as would be passed on the commandline to R
+@param stacksize Stacksize to use in the R thread
+@param stackstart Base of stack to use in the R thread */
+	bool startR (int argc, char **argv, size_t stacksize, void *stackstart);
 /** low-level running of a command.
 @param command char* of the command to be run
 @param error this will be set to a value in RKWardError depending on success/failure of the command

@@ -49,7 +49,6 @@ extern "C" {
 //#include <signal.h>
 //#include <unistd.h>
 #include <math.h>
-#include <pthread.h>
 
 #if (R_VERSION > R_Version(2, 2, 9))
 #define R_2_3
@@ -517,16 +516,9 @@ SEXP doSubstackCall (SEXP call) {
 	return R_NilValue;
 }
 
-bool REmbedInternal::startR (int argc, char** argv) {
+bool REmbedInternal::startR (int argc, char** argv, size_t stacksize, void *stackstart) {
 	r_running = true;
 #ifdef R_2_3
-	// see http://source.winehq.org/source/loader/pthread.c?v=wine-0.9.26 for a portable way of getting stack limits. Now, how to write configure checks for that?
-	pthread_attr_t attr;
-	size_t stacksize;
-	void *stackstart;
-	pthread_getattr_np (pthread_self (), &attr);
-	pthread_attr_getstack (&attr, &stackstart, &stacksize);
-
 	Rf_initialize_R (argc, argv);
 	R_CStackStart = (uintptr_t) stackstart;
 	R_CStackLimit = stacksize;
@@ -534,8 +526,6 @@ bool REmbedInternal::startR (int argc, char** argv) {
 	RKGlobals::na_double = NA_REAL;
 	R_Interactive = (Rboolean) TRUE;
 	R_ReplDLLinit ();
-
-	pthread_attr_destroy (&attr);
 	return true;
 #else
 	bool ok = (Rf_initEmbeddedR (argc, argv) >= 0);

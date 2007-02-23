@@ -18,6 +18,7 @@
 
 #include "rinterface.h"
 #include "rcommandstack.h"
+#include "rkpthreadsupport.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../rkglobals.h"
@@ -424,7 +425,10 @@ int RThread::initialize () {
 	int argc = 2;
 	char* argv[2] = { qstrdup ("--slave"), qstrdup ("--no-save") };
 
-	startR (argc, argv);
+	size_t stacksize;
+	void *stackstart;
+	RKGetCurrentThreadStackLimits (&stacksize, &stackstart);
+	startR (argc, argv, stacksize, stackstart);
 
 	connectCallbacks ();
 
