@@ -36,6 +36,21 @@
 /* Define if your system needs _NSGetEnviron to set up the environment */
 #undef HAVE_NSGETENVIRON
 
+/* Define to 1 if you have the `pthread_attr_get_np' function. */
+#undef HAVE_PTHREAD_ATTR_GET_NP
+
+/* Define to 1 if you have the `pthread_getattr_np' function. */
+#undef HAVE_PTHREAD_GETATTR_NP
+
+/* Define to 1 if you have the `pthread_get_stackaddr_np' function. */
+#undef HAVE_PTHREAD_GET_STACKADDR_NP
+
+/* Define to 1 if you have the `pthread_get_stacksize_np' function. */
+#undef HAVE_PTHREAD_GET_STACKSIZE_NP
+
+/* Define to 1 if you have the <pthread_np.h> header file. */
+#undef HAVE_PTHREAD_NP_H
+
 /* Define if you have res_init */
 #undef HAVE_RES_INIT
 
