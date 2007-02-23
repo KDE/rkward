@@ -520,6 +520,7 @@ SEXP doSubstackCall (SEXP call) {
 bool REmbedInternal::startR (int argc, char** argv) {
 	r_running = true;
 #ifdef R_2_3
+	// see http://source.winehq.org/source/loader/pthread.c?v=wine-0.9.26 for a portable way of getting stack limits. Now, how to write configure checks for that?
 	pthread_attr_t attr;
 	size_t stacksize;
 	void *stackstart;
