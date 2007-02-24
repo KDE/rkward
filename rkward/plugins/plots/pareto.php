@@ -28,11 +28,18 @@ function preview () {
 function doPrintout ($final) {
 	$vars = getRK_val ("x");
 	$descriptives = getRK_val ("descriptives")=="TRUE";
-?>
-rk.temp.x <- (<? echo ($vars); ?>)
-if(!is.table(rk.temp.x)) {
-       rk.temp.x <- table(rk.temp.x)
-} 
+	$tabulate= getRK_val ("tabulate")=="TRUE";
+
+if($tabulate) {?>
+rk.temp.x <- table (<? echo ($vars); ?>, exclude=NULL)
+<?      } else { ?>
+rk.temp.x <- <? echo ($vars); ?>
+
+if (!is.numeric (rk.temp.x)) {
+       rk.print ("Data may not be numeric, but proceeding as requested.\nDid you
+forget to check the tabulate option?")
+}
+<?      } ?>
 
 <?	if ($final) { ?>
 rk.header ("Pareto chart")
