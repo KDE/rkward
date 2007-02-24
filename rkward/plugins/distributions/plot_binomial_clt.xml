@@ -1,121 +1,71 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="plot_binomial_clt.php" />
-  <help file="plot_binomial_clt.rkh" />
-  <logic>
-    <set id="plotoptions.allow_log" to="false"/>
-    <set id="plotoptions.allow_type" to="false"/>
-    <set id="plotoptions.main.text" to="Histogram for Binomial"/>
-    <set id="plotoptions.xlab.text" to="Samples"/>
+	<code file="plot_binomial_clt.php" />
+	<help file="plot_binomial_clt.rkh" />
+	<logic>
+		<set id="plotoptions.allow_log" to="false"/>
+		<set id="plotoptions.allow_type" to="false"/>
+		<set id="plotoptions.main.text" to="Histogram for Binomial"/>
+		<set id="plotoptions.xlab.text" to="Samples"/>
 
-    <convert id="isbreaks_cells" sources="histbreaksFunction.string" mode="equals" standard="cells"/>
-    <connect client="histbreaks_ncells.enabled" governor="isbreaks_cells"/>
+		<set id="normlinecol.default_color" to="red" />
 
-    <convert id="isdensityGT0" mode="range" sources="density.int" min="1" />
-    <connect client="angle.enabled" governor="isdensityGT0"/>
+		<set id="histogram_opt.varname" to="rk.temp.cltdistrib$avg" />
+		<set id="histogram_opt.allow_freq" to="false" />
+		<set id="histogram_opt.allow_barlabels" to="true" />
+		<set id="histogram_opt.allow_addtoplot" to="false" />
 
-    <convert id="ishistlty_notblank" sources="histlinetype.string" mode="notequals" standard="blank" />
-    <connect client="density.enabled" governor="ishistlty_notblank"/>
-    <connect client="histbordercol.enabled" governor="ishistlty_notblank"/>
-    <connect client="histfillcol.enabled" governor="ishistlty_notblank"/>
+		<convert id="isHistogram" sources="function.string" mode="equals" standard="hist"/>
+		<connect client="tab_histoptions.enabled" governor="isHistogram"/>
 
-    <convert id="isdensityGT0ishistlty_notblank" mode="and" sources="isdensityGT0;ishistlty_notblank" />
-    <connect client="angle.enabled" governor="isdensityGT0ishistlty_notblank"/>
-
-    <convert id="isHistogram" sources="function.string" mode="equals" standard="hist"/>
-    <connect client="moreohistptions.enabled" governor="isHistogram"/>
-
-    <convert id="show_NormalCurveOptions" mode="and" sources="isHistogram;drawnorm.state"/>
-    <connect client="lineoptionsFrame.enabled" governor="show_NormalCurveOptions"/>
-  </logic>
-  <dialog label="Central Limit Theorem: Binomial to Normal" >
-    <tabbook>
-      <tab id="plot_binom_clt" label="Parameters" >
-        <row>
-          <column>
-            <frame label="CLT Samples" >
-              <spinbox type="integer" min = "1" id="nAvg" initial="10" label="Samples for Average" />
-              <spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
-            </frame>
-            <frame label="Binomial Parameters">
-              <spinbox type="integer" id="size" min="1" initial="12" label="Number of trials" />
-              <spinbox default_precision="2" type="real" id="prob" initial="0.5" min="0" max="1" label="Probability of success on each trial" />
-            </frame>
-          </column>
-          <column>
-            <radio id="function" label="Choose type of function plot" >
-              <option value="hist" label="Plot Histogram" />
-              <option value="dist" label="Plot distribution" />
-              <option value="qq" label="Plot QQ-plot" />
-            </radio>
-            <checkbox id="scalenorm" label="Use normalised random variable" value="1" value_unchecked="0"/>
-            <checkbox id="drawnorm" label="Draw normal curve" value="1" value_unchecked="0" checked="true"/>
-            <stretch/>
-            <preview id="preview" label="Preview"/>
-            <embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
-          </column>
-        </row>
-      </tab>
-      <tab id="moreohistptions" label="More Histogram Options">
-        <row>
-          <column>
-            <radio id="histbreaksFunction" label="Method of setting breakpoints" >
-              <option value="Sturges" label="Sturges"  checked="true" />
-              <option value="Scott" label="Scott" />
-              <option value="FD" label="Friedman-Diaconis" />
-              <option value="cells" label="Equally spaced cells" />
-            </radio>
-            <spinbox id="histbreaks_ncells" label="Suggested number of cells" type="integer" min="1" initial="10"/>
-            <frame id="lineoptionsFrame" label="Nomral Curve Options">
-              <dropdown id="normpointtype" label="Type of points/lines" >
-                <option value="p" label="Plot individual points " />
-                <option value="l" label="Plot lines" checked="true"/>
-                <option value="b" label="Plot points connected by lines (both)" />
-                <option value="o" label="Plot points overlaid by lines " />
-                <option value="h" label="Plot vertical lines (high-density)" />
-                <option value="s" label="Step-function plots: left edge" />
-                <option value="S" label="Step-function plots: right edge" />
-              </dropdown>
-              <dropdown id="normlinecol" label="Normal curve color">
-                <option value="azure" label="Azure" />
-                <option value="black" label="Black" />
-                <option value="blue" label="Blue" />
-                <option value="red" label="Red" checked="true"/>
-              </dropdown>
-            </frame>
-          </column>
-          <column>
-            <frame id="histoptions" label="Histogram plot options">
-              <dropdown id="histlinetype" label="Line type for histogram" >
-                <option value="blank" label="Blank (No lines)" />
-                <option value="solid" label="Solid" checked="true"/>
-                <option value="dashed" label="Dashed" />
-                <option value="dotted" label="Dotted" />
-                <option value="dotdash" label="Dot-Dash" />
-                <option value="longdash" label="Long-dash" />
-                <option value="twodash" label="Two-dash" />
-              </dropdown>
-              <spinbox id="density" label="Density of shading lines" type="integer" min="-1" initial="-1" default_precision="1"/>
-              <spinbox id="angle" label="Angle of shading lines" min="0" max = "360" initial="45" default_precision="0"/>
-              <dropdown id="histbordercol" label="Histogram border color">
-                <option value="FALSE" label="Supress borders" />
-                <option value="TRUE" label="Use fill color" checked="true" />
-                <option value="azure" label="Azure" />
-                <option value="black" label="Black" />
-                <option value="blue" label="Blue" />
-                <option value="red" label="Red" />
-              </dropdown>
-              <dropdown id="histfillcol" label="Histogram fill color">
-                <option value="NULL" label="Do not fill" checked="true"/>
-                <option value="azure" label="Azure" />
-                <option value="black" label="Black" />
-                <option value="blue" label="Blue" />
-                <option value="red" label="Red" />
-              </dropdown>
-            </frame>
-          </column>
-        </row>
-      </tab>
-    </tabbook>
-  </dialog>
+		<connect client="normpointtype.enabled" governor="drawnorm.state"/>
+		<connect client="normlinecol.color.enabled" governor="drawnorm.state"/>
+	</logic>
+	<dialog label="Central Limit Theorem: Binomial to Normal" >
+		<tabbook>
+			<tab id="tab_plot_distrib_clt" label="Parameters" >
+				<row>
+					<column>
+						<frame label="CLT Samples" >
+							<spinbox type="integer" min = "1" id="nAvg" initial="10" label="Samples for Average" />
+							<spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
+						</frame>
+						<frame id="frame_binomparam" label="Binomial Parameters">
+							<spinbox type="integer" id="size" min="1" initial="12" label="Number of trials" />
+							<spinbox default_precision="2" type="real" id="prob" initial="0.5" min="0" max="1" label="Probability of success on each trial" />
+						</frame>
+					</column>
+					<column>
+						<radio id="function" label="Choose type of function plot" >
+							<option value="hist" label="Plot Histogram" />
+							<option value="dist" label="Plot distribution" />
+							<option value="qq" label="Plot QQ-plot" />
+						</radio>
+						<checkbox id="scalenorm" label="Use normalised random variable" value="1" value_unchecked="0"/>
+						<frame id="frame_lineoptions" label="Nomral Curve Options">
+							<checkbox id="drawnorm" label="Draw normal curve" value="1" value_unchecked="0" checked="true"/>
+							<dropdown id="normpointtype" label="Type of points/lines" >
+								<option value="p" label="Individual points " />
+								<option value="l" label="Lines" checked="true"/>
+								<option value="b" label="Points connected by lines (both)" />
+								<option value="o" label="Points overlaid by lines " />
+								<option value="h" label="Vertical lines (high-density)" />
+								<option value="s" label="Step-function on left edge" />
+								<option value="S" label="Step-function on right edge" />
+							</dropdown>
+							<embed id="normlinecol" component="rkward::color_chooser" label="Color" />
+						</frame>
+					</column>
+				</row>
+			<stretch/>
+				<row>
+					<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
+					<preview id="preview" label="Preview"/>
+				</row>
+			</tab>
+			<tab id="tab_histoptions" label="Histogram">
+				<embed id="histogram_opt" component="rkward::histogram_options" label="Histogram Options"/>
+			</tab>
+		</tabbook>
+	</dialog>
 </document>
