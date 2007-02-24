@@ -34,9 +34,12 @@ function calculate () {
 	// jpeg()/png() need at least one of width/height. For jpeg()/png() the width/height parameter (in pixels)
 	// is calculated using width/height (in inches) times the resolution. For postscript()/pdf() $resolution is set to 1.
 	if ($jpegpng && $autoW && $autoH) $options .= ", width=par(\"din\")[1]*" . $resolution;
-	else {
-		if(!$autoW) $options .= ", width=" . getRK_val ("width")*$resolution;
-		if(!$autoH) $options .= ", height=" . getRK_val ("height")*$resolution;
+	elseif ($jpegpng) {
+		if(!$autoW) $options .= ", width=" . round(getRK_val ("width")*$resolution);
+		if(!$autoH) $options .= ", height=" . round(getRK_val ("height")*$resolution);
+	}	else {
+		if(!$autoW) $options .= ", width=" . getRK_val ("width");
+		if(!$autoH) $options .= ", height=" . getRK_val ("height");
 	}
 
 	// pointsize, resolution and quality parameters:

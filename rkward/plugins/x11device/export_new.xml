@@ -78,7 +78,7 @@
 			<tab id="tab_file_and_type" label="Filename/Type">
 				<row>
 					<column>
-						<browser size="medium" id="file" label="File name" initial="Rplot" filter="*.ps *.eps *.pdf *.png *.jpg *.jpeg"/>
+						<browser type="savefile" id="file" label="File name" initial="Rplot" filter="*.ps *.eps *.pdf *.png *.jpg *.jpeg"/>
 						<checkbox id="autoextension" value="1" value_unchecked="0" checked="true" label="Automatic File extension"/>
 					</column>
 					<column>
