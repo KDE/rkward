@@ -1,40 +1,43 @@
 <!DOCTYPE rkhelp>
 <document>
 	<summary>
-		Export the current contents of a graphics device to a postscript/pdf/png/jpeg file.
+		Export the current contents of a graphics device to a postscript/pdf/png/jpeg file either using the native functions or using ghostscript.
 	</summary>
 	<usage>
-		Chose an exporting function and a filename to save to. Additional options for size and resolution etc. are also available (see below). Exporting is done using <b>dev.print</b>. Most of the exporting parameters are directly sent to the exporting function (<b>postscript</b> or <b>pdf</b> or <b>png</b> or <b>jpeg</b>) by dev.print. Note that there are no 'color' options (like background or foreground color) in this plugin. This is because dev.print simply prints the current graphics (mostly on X11) to the spedified file in the chosen format. To set background (or foreground) colors, these will need to be provided when calling the plotting function, mostly using <b>par</b>().
+		Chose an exporting function and a filename to save to. Additional options for size and resolution etc. are also available (see below). Exporting is done using <b>dev.print</b>. For exporting using ghostscript, <b>dev2bitmap</b> is used, which needs Ghostscript. Most of the exporting parameters are directly sent to the exporting function (<b>postscript</b> or <b>pdf</b> or <b>png</b> or <b>jpeg</b>) by dev.print. Note that there are no 'color' options (like background or foreground color) in this plugin. This is because dev.print simply prints the current graphics (mostly on X11) to the spedified file in the chosen format. To set background (or foreground) colors, these will need to be provided when calling the plotting function, mostly using <b>par</b>(). Note that all the parameters to postscript are also valid parameters to dev2bitmap.
 
 		This plugin is only available in the context of a graphics device.
 	</usage>
 	<settings>
 		<caption id="tab_file_and_type"/>
-		<setting id="file">The filename to save to. By default the file will be saved in the directory from where RKWard was started, which is the user's home directory when started from K-menu. After checking for a proper file extension, this is the <i>file</i> parameter to dev.print.</setting>
-    <setting id="autoextension">Check this box to let RKWard detect the file extension automatically. If the filename specified in the 'File name' box already has a relevant extension, then nothing is done, that is, the specified filename is used. Otherwise a relevant extension is appended to the filename above to construct the full filename.</setting>
-		<setting id="format">Choose whether to use postscript or pdf or png or jpeg for exporting the file. This is the <i>device</i> parameter to dev.print.</setting>
-		<setting id="autowidth">Check this box to let the export function determine the width automatically.</setting>
-<!--		<setting id="autowidth">Check this box to let the export function determine the width from the graphcis device. Uncheck this box to provide a width parameter to the exporting function. For JPEG/PNG formatting, the width is to be provided in pixels and at least one of width or height parameters has to be provided. For Postscript/PDF formatting, the width is provided in inches.
 
-			This determines the <i>width</i> parameter to the exporting function.</setting>-->
+		<caption id="frame_dimensions"/>
+		<setting id="file">The filename to save to. By default the file will be saved in the directory from where RkWard was started, which is the user's home directory when started from K-menu. After checking for a proper file extension, this is the <i>file</i> parameter to dev.print. For exporting via ghostscript provide a suitable extension.</setting>
+    <setting id="autoextension">Check this box to let RKWard detect the file extension automatically. If the filename specified in the 'File name' box already has a relevant extension, then nothing is done, that is, the specified filename is used. Otherwise a relevant extension is appended to the filename above to construct the full filename. This option is disabled for export via ghostscript.</setting>
+		<setting id="format">Choose whether to use postscript or pdf or png or jpeg for exporting the file. This is the <i>device</i> parameter to dev.print. If 'via Ghostscript' is chosen then the output format of the ghostscript device will need to be provided (see below under 'Ghostscript specific options').</setting>
+		<setting id="autowidth">Check this box to let the export function determine the width automatically.</setting>
 		<setting id="autoheight">This is similar to 'Automatic Width', but for height.</setting>
-		<setting id="width">This is the <i>width</i> parameter to the exporting function. This is specified in inches. For JPEG/PNG exports (which require width in pixels), the actual width is evaluated by multiplying the width value provided in inches with the resolution (in dpi, 'dots per inch'). So, width_pixels = width_inches * resolution_dpi. If resolution is set to 'Default Resolution' (see below under JPEG/PNG), then a value of 96 is used as the default resolution for exporting to jpeg or png. Otherwise the provided resolution value is used. None of these matter for exporting to Postscript/PDF where the width parameter is provided in inches.
+		<setting id="width">This is the <i>width</i> parameter to the exporting function. This is specified in inches. For JPEG/PNG exports (which require width in pixels), the actual width is evaluated by multiplying the width value provided in inches with the resolution (in dpi, 'dots per inch'). So, width_pixels = width_inches * resolution_dpi. If resolution is set to 'Default Resolution', then a value of 96 is used as the default resolution for exporting to jpeg or png and a value of 72 is used for exporting via ghostscript. Otherwise the provided resolution value is used. None of these matter for exporting to Postscript/PDF where the width parameter is provided in inches.
 
 		<b>jpeg</b> or <b>png</b> functions need at least one of width/height to be provided. We override this restriction by reading in the width (in inches) from <b>par("din")[1]</b> and then setting 'par("din")[1] * resolution' as the width (in pixels) parameter value. Again, none of these are required for exporting to Postscript/PDF.</setting>
 		<setting id="height">This is the <i>height</i> parameter to the exporting function. Similar to 'Width'.</setting>
-		<setting id="pointsize">This is the <i>pointsize</i> parameter to dev.print.</setting>
 
-		<caption id="tab_pspdf_options"/>
+		<caption id="frame_generic_options"/>
+		<setting id="pointsize">This is the <i>pointsize</i> parameter to dev.print.</setting>
+		<setting id="resolution">Available only for PNG/JPEG, this is the <i>res</i> parameter to dev.print. This value is used in converting from width/height in pixels to inches as described above (under 'Width'). The default resolution (when 'Default Resolution' is checked) is 96.</setting>
+		<setting id="quality">Available only for JPEG, this is the <i>quality</i> parameter to <b>jpeg</b>. Sets the quality for JPEG exporting. The default quality is 75.</setting>
+
+		<caption id="tab_more_options"/>
 		<setting id="paper">Use this to set the papersize for export. Choose 'Default' to not specify any paper option. Other options are explained in R reference for <b>postscript</b>. This is available only for Postscript/PDF exports. This is the <i>paper</i> option to the exporting function.</setting>
 		<setting id="pagecentre">Uncheck this for NOT centering the image on the page. This is the <i>pagecentre</i> parameter.</setting>
-		<setting id="ps_horiz">Available only for Postscript exporting, this is the <i>horizontal</i> parameter.</setting>
+		<setting id="ps_horiz">Available only for Postscript/Ghostscript exporting, this is the <i>horizontal</i> parameter.</setting>
 		<setting id="family">This is the <i>family</i> parameter to <b>postscript</b>. Be sure to chooe a family that is available on the machine. The 'URW' class of font families require ghostscript. When in doubt leave this as 'Default', the default family (Helvectica) will be used. See the R reference on postscript for more details.</setting>
 		<setting id="encoding">This is the <i>encoding</i> parameter to <b>postscript</b>. Be sure to chooe an encoding compatible with the chosen font family. When in doubt leave this as 'Default', the default encoding (ISOLatin1) will be used. See the R reference on postscript for more details.</setting>
 		<setting id="autotitle">Uncheck this box, to specify a custom title to the graphics file. Note that this is not displayed on the plot, but rather it is embeded inside the grpahics file. This is the <i>title</i> parameter to <b>postscript</b>.</setting>
 
-		<caption id="tab_pngjpeg_options"/>
-		<setting id="resolution">Available only for PNG/JPEG, this is the <i>res</i> parameter to dev.print. This value is used in converting from width/height in pixels to inches as described above (under 'Width'). The default resolution (when 'Default Resolution' is checked) is 96.</setting>
-		<setting id="quality">Available only for JPEG, this is the <i>quality</i> parameter to <b>jpeg</b>. Sets the quality for JPEG exporting. The default quality is 75.</setting>
+		<caption id="frame_gsoptions"/>
+		<setting id="gsformat">File format to use. Only the most common ones are listed, but many more are supported by ghostscript. Select "Other" and see the option below to use these formats.</setting>
+		<setting id="gs_specifiedformat">Select "Other" in the option above to use this setting. Specify the device identifier as used by ghostscript. Running "ghostscript --help" (or "gs --help") in a terminal should give a list of available devices.</setting>
 	</settings>
 	<related>
 		<ul>
@@ -44,6 +47,7 @@
 			<li><link href="rkward://rhelp/png"/></li>
 			<li><link href="rkward://rhelp/jpeg"/></li>
 			<li><link href="rkward://rhelp/par"/></li>
+			<li><link href="rkward://rhelp/dev2bitmap"/></li>
 		</ul>
 	</related>
 </document>

@@ -4,30 +4,37 @@ function preprocess () {
 
 function calculate () {
 	$type = getRK_val ("format");
-	$jpegpng = (($type == "jpeg") | ($type == "png"));
 	$file = getRK_val ("file");
 
-	// Does the filename end with .ps/.eps or .pdf or .png or .jpeg/.jpg?
-	// If not, add the appropriate extension.
-	if (getRK_val ("autoextension")) {
-		if ($type == "jpeg") {
-			if (!( ereg("\.jpeg$",$file)|ereg("\.jpg$",$file) )) $file .= ".jpg";
-		} elseif ($type == "postscript") {
-			if (!( ereg("\.ps$",$file)|ereg("\.eps$",$file) )) $file .= ".eps";
-		} else {
-			$ext = "." . $type;
-			if (!ereg($ext."$",$file)) $file .= $ext;
+	if ($type == "gs" ) {
+		$gstype = getRK_val ("gsformat");
+		if ($gstype == "other") $gstype = getRK_val ("gs_specifiedformat");
+	} else {
+		$jpegpng = (($type == "jpeg") | ($type == "png"));
+
+		// Does the filename end with .ps/.eps or .pdf or .png or .jpeg/.jpg?
+		// If not, add the appropriate extension.
+		if (getRK_val ("autoextension")) {
+			if ($type == "jpeg") {
+				if (!( ereg("\.jpeg$",$file)|ereg("\.jpg$",$file) )) $file .= ".jpg";
+			} elseif ($type == "postscript") {
+				if (!( ereg("\.ps$",$file)|ereg("\.eps$",$file) )) $file .= ".eps";
+			} else {
+				$ext = "." . $type;
+				if (!ereg($ext."$",$file)) $file .= $ext;
+			}
 		}
 	}
-
 	$options = "";
 
 	// set $resolution appropriately:
-	if ($jpegpng) {
+	if ($jpegpng || ($type == "gs")) {
 		$autores = getRK_val ("autores");
-		if ($autores) $resolution = 96;
-		else $resolution = getRK_val ("resolution");
-	} else $resolution = 1;
+		if ($autores) {
+			if ($jpegpng) $resolution = 96;
+			else  $resolution = 72;
+		}	else $resolution = getRK_val ("resolution");
+	}
 
 	$autoW = getRK_val ("autowidth");	$autoH = getRK_val ("autoheight");
 
@@ -44,7 +51,7 @@ function calculate () {
 
 	// pointsize, resolution and quality parameters:
 	if (!getRK_val ("autopointsize")) $options .= ", pointsize=" . getRK_val ("pointsize");
-	if ($jpegpng && !$autores)	$options .= ", res=" . $resolution;
+	if (($jpegpng && !$autores)	|| ($type == "gs"))  $options .= ", res=" . $resolution;
 	if (($type == "jpeg") && (!getRK_val ("autoquality"))) $options .= ", quality=" . getRK_val ("quality");
 
 	// For ps/pdf: page, pagecentre, horizontal, family, encoding and title parameters:
@@ -63,8 +70,11 @@ function calculate () {
 	}
 ?>
 dev.set (<? getRK ("devnum"); ?>)
-dev.print (device=<? echo ($type); ?>, file="<? echo ($file); ?>"<? echo ($options); ?>)
-<?
+<? if ($type == "gs") {?>
+dev2bitmap ("<? echo($file); ?>", type="<? echo ($gstype); ?>"<? echo ($options); ?>);
+<? } else {?>
+dev.print (device=<? echo ($type); ?>, file="<? echo ($file); ?>"<? echo ($options); ?>);
+<? }
 }
 
 function printout () {

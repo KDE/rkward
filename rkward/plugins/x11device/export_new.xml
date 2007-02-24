@@ -7,63 +7,37 @@
 
 		<convert id="isPS" mode="equals" sources="format.string" standard="postscript" />
 		<convert id="isPDF" mode="equals" sources="format.string" standard="pdf" />
-		<convert id="isPSPDF" mode="or" sources="isPS;isPDF" />
 		<convert id="isJPEG" mode="equals" sources="format.string" standard="jpeg" />
 		<convert id="isPNG" mode="equals" sources="format.string" standard="png" />
+		<convert id="isGS" mode="equals" sources="format.string" standard="gs" />
+		<convert id="isPSPDF" mode="or" sources="isPS;isPDF" />
 		<convert id="isJPEGPNG" mode="or" sources="isPNG;isJPEG" />
+		<convert id="isPSPDFGS" mode="or" sources="isPSPDF;isGS" />
+		<convert id="isJPEGPNGGS" mode="or" sources="isJPEGPNG;isGS" />
+		<convert id="isPSGS" mode="or" sources="isPS;isGS" />
+		<convert id="isnotGS" mode="or" sources="isPSPDF;isJPEGPNG" />
 
-		<connect client="tab_pngjpeg_options.enabled" governor="isJPEGPNG" />
-		<connect client="tab_pspdf_options.enabled" governor="isPSPDF" />
+		<connect client="autoextension.state" governor="isnotGS"/>
+		<connect client="autoextension.enabled" governor="isnotGS"/>
+
+		<connect client="tab_more_options.enabled" governor="isPSPDFGS" />
 
 		<connect client="autoquality.enabled" governor="isJPEG" />
-		<connect client="ps_horiz.enabled" governor="isPS"/>
+		<connect client="ps_horiz.enabled" governor="isPSGS"/>
 
 		<convert id="userwidth0" mode="equals" sources="autowidth.state" standard="0" />
 		<connect client="width.enabled" governor="userwidth0"/>
 
-		<!--		<convert id="userwidth_isJPEGPNG" mode="and" sources="userwidth0;isJPEGPNG" />
-		<connect client="width_px.enabled" governor="userwidth_isJPEGPNG"/>
-		<connect client="width_px.visible" governor="isJPEGPNG"/>
-
-		<convert id="userwidth_isPSPDF" mode="and" sources="userwidth0;isPSPDF" />
-		<connect client="width_in.enabled" governor="userwidth_isPSPDF"/>
-		<connect client="width_in.visible" governor="isPSPDF"/>-->
-
 		<convert id="userheight0" mode="equals" sources="autoheight.state" standard="0" />
 		<connect client="height.enabled" governor="userheight0"/>
-
-		<!--		<convert id="userheight_isJPEGPNG" mode="and" sources="userheight0;isJPEGPNG" />
-		<connect client="height_px.enabled" governor="userheight_isJPEGPNG"/>
-		<connect client="height_px.visible" governor="isJPEGPNG"/>
-
-		<convert id="userheight_isPSPDF" mode="and" sources="userheight0;isPSPDF" />
-		<connect client="height_in.enabled" governor="userheight_isPSPDF"/>
-		<connect client="height_in.visible" governor="isPSPDF"/>
-
-		<convert id="userwidth0ORheight0" mode="or" sources="userheight0;userwidth0"/>
-		<convert id="userwidth0ORheight0_isJPEGPNG" mode="and" sources="userwidth0ORheight0;isJPEGPNG"/>
-		<convert id="truestate" mode="or" sources="userwidth0ORheight0_isJPEGPNG;isPS;isPDF" require_true="true"/>
-		<convert id="wh_both1" mode="and" sources="autoheight.state;autowidth.state;isJPEGPNG" />
-		<convert id="wh_both_not1" sources="wh_both1" mode="notequals" standard="true"/>-->
-		<!--		<connect client="wh_txt_2.visible" governor="userwidth0ORheight0"/>-->
-		<!--		<connect client="wh_txt_1.visible" governor="wh_both1"/>
-		<connect client="wh_txt_2.visible" governor="wh_both_not1"/>-->
 
 		<convert id="userpointsize0" mode="equals" sources="autopointsize.state" standard="0" />
 		<connect client="pointsize.enabled" governor="userpointsize0"/>
 
 		<convert id="userres0" mode="equals" sources="autores.state" standard="0" />
-		<convert id="userres" mode="and" sources="userres0;isJPEGPNG" />
+		<convert id="userres" mode="and" sources="userres0;isJPEGPNGGS;autores.enabled" />
 		<connect client="resolution.enabled" governor="userres"/>
-
-		<!-- 		<convert id="userbg0" mode="equals" sources="autobg.state" standard="0" /> -->
-		<!-- 		<convert id="usertransparent0" mode="equals" sources="color_transparent.state" standard="0" /> -->
-		<!--		<convert id="userbg" mode="and" sources="userbg0;isJPEGPNG" />
-		<connect client="color_transparent.enabled" governor="userbg"/>
-		<convert id="userbgtransparent" mode="and" sources="userbg;usertransparent0" />-->
-		<!-- 		<connect client="bg.color_enabled" governor="usertransparent0"/> -->
-		<!-- 		<set id="bg.argument" to=", bg="/> -->
-		<!-- 		<set id="bg.default_color" to="white"/> -->
+		<connect client="autores.state" governor="isnotGS"/>
 
 		<convert id="userquality0" mode="equals" sources="autoquality.state" standard="0" />
 		<convert id="userquality" mode="and" sources="userquality0;autoquality.enabled" />
@@ -71,15 +45,31 @@
 
 		<convert id="usertitle0" mode="equals" sources="autotitle.state" standard="0" />
 		<connect client="title.enabled" governor="usertitle0"/>
+
+		<convert id="formatother" mode="equals" sources="gsformat.string" standard="other" />
+		<connect client="gs_specifiedformat.enabled" governor="formatother" />
+		<connect client="frame_gsoptions.enabled" governor="isGS" />
 	</logic>
 
 	<dialog label="Export contents of graphics device to png/jpeg format">
 		<tabbook>
-			<tab id="tab_file_and_type" label="Filename/Type">
+			<tab id="tab_file_and_type" label="Filename and Generic options">
 				<row>
 					<column>
-						<browser type="savefile" id="file" label="File name" initial="Rplot" filter="*.ps *.eps *.pdf *.png *.jpg *.jpeg"/>
+						<browser type="savefile" id="file" label="File name" initial="Rplot" filter="*.ps *.eps *.pdf *.png *.jpg *.jpeg *.bmp" />
 						<checkbox id="autoextension" value="1" value_unchecked="0" checked="true" label="Automatic File extension"/>
+						<frame id="frame_dimensions" label="Dimensions">
+							<row>
+								<column>
+									<checkbox id="autowidth" value="1" value_unchecked="0" checked="true" label="Automatic Width"/>
+									<spinbox id="width" label="Width in inches" min="0" initial="6" default_precision="1"/>
+								</column>
+								<column>
+									<checkbox id="autoheight" value="1" value_unchecked="0" checked="true" label="Automatic Height"/>
+									<spinbox id="height" label="Height in inches" min="0" initial="6" default_precision="1" />
+								</column>
+							</row>
+						</frame>
 					</column>
 					<column>
 						<radio id="format" label="Output format" >
@@ -87,39 +77,33 @@
 							<option value="pdf" label="PDF" />
 							<option value="png" label="PNG" />
 							<option value="jpeg" label="JPEG" />
+							<option value="gs" label="via Ghostscript" />
 						</radio>
 					</column>
 				</row>
 				<row>
-					<frame id="generic_options" label="Generic Export Options">
-						<!--						<text id="wh_txt_1">Either Width or Height has to be provided for PNG/JPEG export!!</text>
-						<text id="wh_txt_2">                                                               </text>-->
+					<frame id="frame_generic_options" label="Generic Export Options">
 						<row>
-							<column>
-								<checkbox id="autowidth" value="1" value_unchecked="0" checked="true" label="Automatic Width"/>
-								<!--								<spinbox id="width_px" label="Width in pixels" min="20" initial="480" default_precision="1"/>
-								<spinbox id="width_in" label="Width in inches" min="0" initial="6" default_precision="1"/>-->
-								<spinbox id="width" label="Width in inches" min="0" initial="6" default_precision="1"/>
-							</column>
-							<column>
-								<checkbox id="autoheight" value="1" value_unchecked="0" checked="true" label="Automatic Height"/>
-								<!--								<spinbox id="height_px" label="Height in pixels" min="20" initial="480" default_precision="1" />
-								<spinbox id="height_in" label="Height in inches" min="0" initial="6" default_precision="1" />-->
-								<spinbox id="height" label="Height in inches" min="0" initial="6" default_precision="1" />
-							</column>
 							<column>
 								<checkbox id="autopointsize" value="1" value_unchecked="0" checked="true" label="Default pointsize"/>
 								<spinbox id="pointsize" label="Point size" min="0" initial="12"  default_precision="1" />
 							</column>
+							<column>
+								<checkbox id="autores" value="1" value_unchecked="0" checked="true" label="Default Resolution"/>
+								<spinbox id="resolution" label="Resolution (dpi)" type="integer" min="0" initial="96" default_precision="1"/>
+							</column>
+							<column>
+								<checkbox id="autoquality" value="1" value_unchecked="0" checked="true" label="Default Quality"/>
+								<spinbox label="JPEG Quality" id="quality" min="0" max="100" initial="75" default_precision="1"/>
+							</column>
 						</row>
 					</frame>
 				</row>
-				<stretch/>
 			</tab>
 
-			<tab id="tab_pspdf_options" label="Postscript/PDF">
-				<row>
-					<column>
+			<tab id="tab_more_options" label="Postscript/PDF/Ghostscript Options">
+				<frame id="frame_paperprop" label="Paper properties">
+					<row>
 						<dropdown id="paper" label="Paper Size">
 							<option value="" label="Default" checked="true"/>
 							<option value="a4" label="A4"/>
@@ -128,14 +112,12 @@
 							<option value="executive" label="Executive"/>
 							<option value="special" label="Special"/>
 						</dropdown>
-					</column>
-					<column>
-						<frame>
+						<column>
 							<checkbox id="pagecentre" value="1" value_unchecked="0" checked="true" label="Pagecentre"/>
-							<checkbox id="ps_horiz" value="1" value_unchecked="0" checked="true" label="Horizontal (postscript only)"/>
-						</frame>
-					</column>
-				</row>
+							<checkbox id="ps_horiz" value="1" value_unchecked="0" checked="true" label="Horizontal (ps/gs)"/>
+						</column>
+					</row>
+				</frame>
 				<frame id="font_properties" label="Font properties">
 					<row>
 						<dropdown id="family" label="Font family">
@@ -183,19 +165,21 @@
 						</column>
 					</row>
 				</frame>
-			</tab>
-
-			<tab id="tab_pngjpeg_options" label="PNG/JPEG">
-				<row>
-					<column>
-						<checkbox id="autores" value="1" value_unchecked="0" checked="true" label="Default Resolution"/>
-						<spinbox id="resolution" label="Resolution (dpi)" type="integer" min="0" initial="96" default_precision="1"/>
-					</column>
-					<column>
-						<checkbox id="autoquality" value="1" value_unchecked="0" checked="true" label="Default Quality"/>
-						<spinbox label="JPEG Quality" id="quality" min="0" max="100" initial="75" default_precision="1"/>
-					</column>
-				</row>
+				<frame id="frame_gsoptions" label="Ghostscript  specific options">
+					<row>
+						<dropdown id="gsformat" label="GS Output device" >
+							<option value="pdfwrite" label="PDF" />
+							<option value="pswrite" label="PostScript" />
+							<option value="pngmono" label="PNG (b/w)" />
+							<option value="pnggray" label="PNG (grayscale)" />
+							<option value="png256" label="PNG (256 colors)" />
+							<option value="png16m" label="PNG (16M colors)" />
+							<option value="jpeg" label="JPEG" />
+							<option value="other" label="Other (specify here):" />
+						</dropdown>
+						<input label="Ghostscript device" id="gs_specifiedformat" initial="png16m" size="medium"/>
+					</row>
+				</frame>
 			</tab>
 		</tabbook>
 	</dialog>
