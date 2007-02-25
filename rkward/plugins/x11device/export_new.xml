@@ -35,9 +35,9 @@
 		<connect client="pointsize.enabled" governor="userpointsize0"/>
 
 		<convert id="userres0" mode="equals" sources="autores.state" standard="0" />
-		<convert id="userres" mode="and" sources="userres0;isJPEGPNGGS;autores.enabled" />
+		<connect client="autores.enabled" governor="isJPEGPNGGS"/>
+		<convert id="userres" mode="and" sources="userres0;autores.enabled" />
 		<connect client="resolution.enabled" governor="userres"/>
-		<connect client="autores.state" governor="isnotGS"/>
 
 		<convert id="userquality0" mode="equals" sources="autoquality.state" standard="0" />
 		<convert id="userquality" mode="and" sources="userquality0;autoquality.enabled" />

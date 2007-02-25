@@ -32,7 +32,7 @@ function calculate () {
 		$autores = getRK_val ("autores");
 		if ($autores) {
 			if ($jpegpng) $resolution = 96;
-			else  $resolution = 72;
+			else $resolution = 72;
 		}	else $resolution = getRK_val ("resolution");
 	}
 
