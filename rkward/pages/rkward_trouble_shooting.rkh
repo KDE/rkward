@@ -7,25 +7,27 @@
 	<section title="People tend to ask me what RKWard means. What should I answer?" id="the_name_problems">
 		Yes, it's a very odd name. ;) However, R comes obviously from the <link href="http://www.r-project.org/">R-language</link> which is the statistical basis of RKWard. K is derived from <link href="http://kde.org/">KDE</link> which delivered the basic GUI technologies for RKWard. And <link href="http://en.wikipedia.org/wiki/Ward">Ward</link>? That's another story.
 	</section>
-	<section title="Sometimes I enter a command short after the start of RKWard but it is not processt. What's wrong?" id="not_yet_ready_problems">
+	<section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?" id="not_yet_ready_problems">
 		This happens because RKWard starts first and subsequent R is started in the background. Depending on the speed of your machine it can take some time to start R. In any case you can check the state of R within RKWard. Just look at the little box on the right bottom corner of RKWard. If it is green you can go ahead.
+
+		You can start submitting commands while the backend has not yet started, or while another lengthy calculation is still taking place. In this case your commands will be placed into a queue, first, and executed as soon as the backend becomes available, again.
 	</section>
 	<section title="RKWard says it needs a package. Was the installation of RKWard not complete?" id="package_problems">
-		RKWard has basically all the functionality which comes with the standard packages of R. But RKWard is at the same time rather extensible. Many developers made use of this and thus some of the procedures in RKWard depend on "external" packages (obtained from <link href="http://cran.r-project.org/">The Comprehensive R Archive Network (CRAN)</link>) to perfrom a task.
+		RKWard has basically all the functionality which comes with the standard packages of R. But RKWard is at the same time rather extensible. Many developers made use of this and thus some of the procedures in RKWard depend on "external" packages (obtained from <link href="http://cran.r-project.org/">The Comprehensive R Archive Network (CRAN)</link>) to perform a task.
 
 		Here is an example. All tests related to <link href="rkward://rhelp/moments">skewness</link> and <link href="rkward://rhelp/moments">kurtosis</link> (which you would certainly expect to be shipped as a base package of R) are performed from an external package. If you read this the first time or restarted RKWard after you installed it and try to follow the link you will be out of luck. First you need to run a test from Analysis->Moment in order to achieve this.
 
 		Typically you would call them from R via <link href="rkward://rhelp/update.packages">update.packages</link> and <link href="rkward://rhelp/library">library</link> to achieve this. But RKWard simplifies this for you. You'll be guided through the install procedure for the required package. Please note you need root privileges in certain situations.
 	</section>
-	<section title="RKWard is running since ages. Did it hung up? What is the reason for?" id="hung_up_problems">
+	<section title="RKWard is running since ages. Has it hung up?" id="hung_up_problems">
 		This depends. Some test and plots just need some time if you have huge amounts of data or sophisticated calculations. Therefore patience is sometimes needed.
 
-		But some statistical test are rather memory and stack hungry and even can crash R if the stack limit is totally exceeded. This is neither a bug of RKWard (most likely at least) nor of R but due to the statistical test itself.
+		But some statistical test are rather memory and stack hungry and can make the entire system unresponsive, if there is a lot of swapping. This is neither a bug in RKWard (most likely at least) nor in R but due to the statistical test itself.
 
-		An example of very memory hungry test are the <link href="rkward://rhelp/wilcox.test">Wilcoxon Rank Sum and Signed Rank Tests<link/>.
+		An example of very memory hungry tests are the <link href="rkward://rhelp/wilcox.test">Wilcoxon Rank Sum and Signed Rank Tests</link>.
 
 		In any case you can check the state of R within RKWard. Just look at the little box on the right bottom corner of RKWard. Red means there is still something to calculate or plot. If it's green you can go ahead.
 
-		Therefore it's important you know the test. Moreover it's very important to save the workspace and other sections you worked on before you do such operations. There is currently no recovery functionality within RKWard in case of a crash! You can find build-in tests from R to address this memory issue but these work on Windows(TM) platforms only (see: <link href="rkward://rhelp/memory.size">Memory Size</link> and <link href="rkward://rhelp/limit">Memory Limit</link>). Sorry to say, this means there is no way for the RKWard developers to build a routine which does a "memory check" this before a test is run.
+		Therefore it's important you know the test. Moreover it's very important to save the workspace and other sections you worked on before you do such operations. There is currently no recovery functionality within RKWard in case of a crash! You can find build-in tests from R to address this memory issue but these work on Windows(TM) platforms only (see: <link href="rkward://rhelp/memory.size">Memory Size</link> and <link href="rkward://rhelp/limit">Memory Limit</link>). Sorry to say, this means there is no way for the RKWard developers to build a routine which does a "memory check" before a test is run.
 	</section>
 </document>
