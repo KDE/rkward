@@ -11,10 +11,12 @@ Choose a vector or a factor to be plotted. The Frequency, Cum.Frequency, Percent
 	<settings>
 		<caption id="tab_variables"/>
 		<setting id="x">Select a data vector or a factor to be plotted.</setting>
+		<setting id="tabulate">Use tabulate option mainly for factor variables or wherever else applicable</setting>
 	</settings>
 	<related>
 		<ul>
 			<li><link href="rkward://rhelp/pareto.chart"/></li>
+			<li><link href="rkward://rhelp/table"/></li>
 		</ul>
 	</related>
 </document>
