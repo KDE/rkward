@@ -273,22 +273,29 @@ void RThread::flushOutput () {
 	if (!current_output) return;		// avoid creating loads of traces
 	RK_TRACE (RBACKEND);
 
-	current_command->output_list.append (current_output);
-	if (current_output->type == ROutput::Output) {
-		current_command->status |= RCommand::HasOutput;
-	} else if (current_output->type == ROutput::Error) {
-		current_command->status |= RCommand::HasError;
+	if (current_command) {
+		current_command->output_list.append (current_output);
+		if (current_output->type == ROutput::Output) {
+			current_command->status |= RCommand::HasOutput;
+		} else if (current_output->type == ROutput::Error) {
+			current_command->status |= RCommand::HasError;
+		}
+
+		// pass a signal to the main thread for real-time update of output
+		QCustomEvent *event = new QCustomEvent (RCOMMAND_OUTPUT_EVENT);
+		ROutputContainer *outc = new ROutputContainer;
+		outc->output = current_output;
+		outc->command = current_command;
+		event->setData (outc);
+		qApp->postEvent (RKGlobals::rInterface (), event);
+
+		RK_DO (qDebug ("output '%s'", current_output->output.latin1 ()), RBACKEND, DL_DEBUG);
+	} else {
+		// running Rcmdr, eh?
+		RK_DO (qDebug ("output without receiver'%s'", current_output->output.latin1 ()), RBACKEND, DL_WARNING);
+		delete current_output;
 	}
 
-// pass a signal to the main thread for real-time update of output
-	QCustomEvent *event = new QCustomEvent (RCOMMAND_OUTPUT_EVENT);
-	ROutputContainer *outc = new ROutputContainer;
-	outc->output = current_output;
-	outc->command = current_command;
-	event->setData (outc);
-	qApp->postEvent (RKGlobals::rInterface (), event);
-
-	RK_DO (qDebug ("output '%s'", current_output->output.latin1 ()), RBACKEND, DL_DEBUG);
 // forget output
 	current_output = 0;
 	out_buf_len = 0;
@@ -314,8 +321,10 @@ void RThread::handleError (QString *call, int call_length) {
 	MUTEX_LOCK;
 	// Unfortunately, errors still get printed to the output. We try this crude method for the time being:
 	flushOutput ();
-	current_command->output_list.last ()->type = ROutput::Error;
-	current_command->status |= RCommand::HasError;
+	if (current_command) {
+		current_command->output_list.last ()->type = ROutput::Error;
+		current_command->status |= RCommand::HasError;
+	}
 
 	RK_DO (qDebug ("error '%s'", call[0].latin1 ()), RBACKEND, DL_DEBUG);
 	MUTEX_UNLOCK;

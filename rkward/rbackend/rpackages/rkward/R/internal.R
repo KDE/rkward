@@ -363,8 +363,7 @@
 	if (!is.null (a)) {
 		.rk.preview.devices[[x]] <<- NULL
 		if (a %in% dev.list ()) {
-			dev.set (a)
-			dev.off ()
+			dev.off (a)
 		}
 	}
 }
