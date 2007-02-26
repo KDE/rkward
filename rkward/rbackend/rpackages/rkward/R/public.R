@@ -204,6 +204,10 @@
 	}
 }
 
+"rk.print.literal" <- function (x) {
+	cat ("<pre>", paste (x, collapse="\n"), "</pre>\n", sep="", file=rk.get.output.html.file(), append=TRUE);
+}
+
 "rk.make.repos.string" <- function () {
 	x <- options ("repos")$repos
 	len <- length (x)
