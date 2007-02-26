@@ -15,6 +15,7 @@
 				<row>
 					<varselector id="vars"/>
 					<column>
+					<checkbox id="tabulate" label="Tabulate for factor variables" value="TRUE" value_unchecked="FALSE" checked="false" />
 					<varslot min_vars="1" id="x" source="vars" required="true" label="Matrix, Vector or Factor"/>
 					<preview id="preview"/>
 					</column>

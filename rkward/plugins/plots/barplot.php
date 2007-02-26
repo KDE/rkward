@@ -24,16 +24,18 @@ function preview () {
 function doPrintout ($final) {
 	$vars = getRK_val ("x") ;
 	$labels = getRK_val ("labels")=="TRUE";
+	$tabulate= getRK_val ("tabulate")=="TRUE";
+	
 ?>
 rk.temp.x <- (<? echo ($vars); ?>)
-if(is.factor(rk.temp.x)) {
-	rk.temp.x <- summary(rk.temp.x)
-} else {
+<? 
+if($tabulate) {?>
+	rk.temp.x <- table(rk.temp.x, exclude=NULL)
+<?      } else { ?>
 	# barplot is a bit picky about attributes, so we need to convert to vector explicitely
 	if(!is.matrix(rk.temp.x)) rk.temp.x <- as.vector(rk.temp.x)
-}
+<? } 
 
-<? 
 	if ($final) { ?>
 rk.header ("Barplot", parameters=list ("Rainbow colors", "<? getRK ("rainbow"); ?>", "Beside", "<? getRK ("beside"); ?>", "Legend", "<? getRK ("legend"); ?>"))
 
