@@ -1,0 +1,45 @@
+<!DOCTYPE rkplugin>
+
+
+<document>
+	<code file="chisq_out_test.php"/>
+	<help file="chisq_out_test.rkh"/>
+	
+	<dialog label="Chi-squared test for outlier">
+		<tabbook>
+			<tab id="tab_variables" label="Basic settings">
+				<row>
+					<varselector id="vars"/>
+					<column>
+						<varslot type="numeric" id="x" multi="true" source="vars" required="true" label="variable(s):"/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Options" id="tab_options">
+				<frame label="test specific settings">
+					<radio id="opposite" label="Opposite">
+						<option value="FALSE" label="NO"/>
+						<option value="TRUE" label="YES"/>
+					</radio>
+				</frame>
+				<frame label="additional settings">
+					<row>
+						<column>
+							<checkbox id="mean" label="Show mean" value_unchecked="0" value="1" checked="false" />
+							<checkbox id="sd" label="Show standard deviation" value_unchecked="0" value="1" checked="false" />
+							<checkbox id="median" label="Show median" value_unchecked="0" value="1" checked="false" />
+						</column>
+						<column>
+							<checkbox id="min" label="Show Minimum" value_unchecked="0" value="1" checked="false" />
+							<checkbox id="max" label="Show Maximum" value_unchecked="0" value="1" checked="false" />
+							<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
+							<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="true" />
+						</column>
+						<stretch/>
+					</row>
+				</frame>
+			</tab>
+		</tabbook>
+	</dialog>
+	
+</document>

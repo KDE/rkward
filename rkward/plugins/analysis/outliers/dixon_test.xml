@@ -1,0 +1,48 @@
+<!DOCTYPE rkplugin>
+
+
+<document>
+	<code file="dixon_test.php"/>
+	<help file="dixon_test.rkh"/>
+	
+	<dialog label="Dixon tests for outlier">
+		<tabbook>
+			<tab id="tab_variables" label="Basic settings">
+				<row>
+					<varselector id="vars"/>
+					<column>
+						<varslot type="numeric" id="x" multi="true" source="vars" required="true" label="variable(s):"/>
+					</column>
+				</row>
+			</tab>
+			<tab id="tab_options" label="Options">
+				<column>
+					<frame label="test specific settings">
+						<dropdown id="type" label="Variant of test">
+							<option value="0" label="0"/>
+							<option value="10" label="10"/>
+							<option value="11" label="11"/>
+							<option value="12" label="12"/>
+							<option value="20" label="20"/>
+							<option value="21" label="21"/>
+						</dropdown>
+						<radio id="opposite" label="Opposite">
+							<option value="FALSE" label="NO"/>
+							<option value="TRUE" label="YES"/>
+						</radio>
+						<radio id="two_sided" label="two-sided (default)">
+							<option value="TRUE" label="YES"/>
+							<option value="FALSE" label="NO"/>
+						</radio>
+					</frame>
+					<frame label="additional settings">
+						<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
+						<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="false" />
+					</frame>
+				</column>
+				<stretch/>
+			</tab>
+		</tabbook>
+	</dialog>
+	
+</document>

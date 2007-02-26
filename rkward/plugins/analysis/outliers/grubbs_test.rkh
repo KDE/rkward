@@ -1,0 +1,28 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This test performs the Grubbs tests for one or two outliers in data sample.
+	</summary>
+
+	<usage>
+		Chose the data to perform the Grubbs tests for one or two outliers in data sample. You can chose multiple data. See <link href="rkward://rhelp/grubbs.test"/>.
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length but 30 is the limit.</setting>
+		<caption id="tab_options"/>
+		<setting id="type">This is specyfying the variant of test to be performed. Please refere to the R-help here.</setting>
+		<setting id="two_sided">Here you can specify the alternative hypothesis. It must be one of "two-sided" or "not two-sided"</setting>
+		<setting id="opposite">Here you can define if you want to check not the value with largest difference from the mean, but opposite.</setting>
+		<setting id="length">If checked, the length of the data vectors will be shown. However, this will not effect your results but is just an optional information.</setting>
+		<setting id="nacount">If checked, and in case of missing values this will show you the number of those. However, this will not effect your results but is just an optional information.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/chisq.out.test"/></li>
+			<li><link href="rkward://rhelp/dixon.test"/></li>
+		</ul>
+
+	</related>
+</document>
