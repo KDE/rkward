@@ -362,7 +362,9 @@
 	a <- .rk.preview.devices[[x]]
 	if (!is.null (a)) {
 		.rk.preview.devices[[x]] <<- NULL
-		dev.set (a)
-		dev.off ()
+		if (a %in% dev.list ()) {
+			dev.set (a)
+			dev.off ()
+		}
 	}
 }
