@@ -39,10 +39,15 @@
 		The following external tags are provided for use in the embeding plugin.
 		<ul>
 			<li><i>varname</i>: For linking to the variable name for which histogram is being plotted. This is used in the 'Integer numbers' option for breaks.</li>
-			<li><i>allow_freq</i>: Setting this to "true" ("false") enables ("disables") the display of the 'Frequency' checkbox.</li>
-			<li><i>allow_barlabels</i>: Setting this to "true" ("false") enables ("disables") the display of the 'Bar labels' checkbox.</li>
-			<li><i>allow_addtoplot</i>: Setting this to "true" ("false") enables ("disables") the display of the 'Add bars to current plot' checkbox.</li>
+			<li><i>allow_freq</i>: Setting this to "true" ("false") enables (disables) the display of the 'Frequency' checkbox.</li>
+			<li><i>allow_barlabels</i>: Setting this to "true" ("false") enables (disables) the display of the 'Bar labels' checkbox.</li>
+			<li><i>allow_addtoplot</i>: Setting this to "true" ("false") enables (disables) the display of the 'Add bars to current plot' checkbox.</li>
 		</ul>
-			A special string, <b>HIST_STRING_SPLITTER</b> has been embeded in the plugin printout for demarcating the <i>breaks</i> options from other plot.histogram options. Use it to split the <i>code.printout</i> string from the embeding plugin's php file.
+		In order to allow flexible use, the generated options are separated into three different sections:
+		<ul>
+			<li><i>code.preprocess</i>: Options suitable for use in a call to rk.header(). These are safe to ignore, if you do not need them.</li>
+			<li><i>code.calculate</i>: This contains only the <i>breaks</i>-option.</li>
+			<li><i>code.printout</i>: This contains all the other options determining the look of the plot.</li>
+		</ul>
 	</section>
 </document>

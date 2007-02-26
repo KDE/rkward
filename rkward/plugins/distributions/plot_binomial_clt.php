@@ -44,9 +44,8 @@ function doPrintout ($final) {
 	}
 
 	if ($fun == "hist") {
-		$all_hist_code = explode (getRK_val ("histogram_opt.options_splitter_string"), getRK_val ("histogram_opt.code.printout"));
-		$histbreaksoptions = $all_hist_code[0];
-		$histoptions = $all_hist_code[1];
+		$histbreaksoptions = getRK_val ("histogram_opt.code.calculate");
+		$histoptions = getRK_val ("histogram_opt.code.printout");
 		$histoptions .= getRK_val("plotoptions.code.printout");
 	}
 ?>

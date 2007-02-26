@@ -4,8 +4,6 @@
 	<help file="histogram_options.rkh"/>
 	<logic>
 		<external id="varname" default=""/>
-		<external id="options_splitter_string" default=""/>
-		<external id="make_header_options" default="1" />
 		<external id="allow_freq" default="true"/>
 		<external id="allow_barlabels" default="true"/>
 		<external id="allow_addtoplot" default="true"/>
