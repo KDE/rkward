@@ -47,22 +47,23 @@
 				<checkbox id="addtoplot" label="Add bars to current plot" checked="false"/>
 				<checkbox id="freq" label="Frequency" checked="false" value_unchecked="0" />
 				<checkbox id="barlabels" label="Bar labels" checked="false"/>
-				<checkbox id="rightclosed" label="Right closed" checked="true"/>
-				<checkbox id="include_lowest" label="Include in lowest cell" checked="true"/>
+				<stretch/>
 				<frame id="frame_breaks" label="Histogram Breakpoints">
-				<radio id="histbreaksFunction" label="Method" >
-					<option value="Sturges" label="Sturges"  checked="true" />
-					<option value="Scott" label="Scott" />
-					<option value="FD" label="Friedman-Diaconis" />
-					<option value="cells" label="A single number" />
-					<option value="int" label="Integer numbers" />
-					<option value="vec" label="Vector of break points" />
-				</radio>
-				<row>
-				<spinbox id="histbreaks_ncells" label="Suggested cells" type="integer" min="1" initial="10"/>
-				<spinbox id="histbreaks_veclength" label="Vector length" type="integer" min="1" initial="10"/>
-			</row>
-			</frame>
+					<radio id="histbreaksFunction" label="Method" >
+						<option value="Sturges" label="Sturges"  checked="true" />
+						<option value="Scott" label="Scott" />
+						<option value="FD" label="Friedman-Diaconis" />
+						<option value="cells" label="A single number" />
+						<option value="int" label="Integer numbers" />
+						<option value="vec" label="Vector of break points" />
+					</radio>
+					<row>
+						<spinbox id="histbreaks_ncells" label="Suggested cells" type="integer" min="1" initial="10"/>
+						<spinbox id="histbreaks_veclength" label="Vector length" type="integer" min="1" initial="10"/>
+					</row>
+					<checkbox id="rightclosed" label="Right closed" checked="true"/>
+					<checkbox id="include_lowest" label="Include in lowest cell" checked="true"/>
+				</frame>
 			</column>
 			<column>
 				<frame id="frame_histlineoptions" label="Histogram Line options">
