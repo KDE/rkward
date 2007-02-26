@@ -6,7 +6,12 @@
 		<set id="plotoptions.allow_log" to="false"/>
 		<set id="plotoptions.allow_type" to="false"/>
 		
-		<convert id="densityscaled" mode="equals" sources="scale.string" standard="FALSE" />
+		<connect client="histogram_opt.varname" governor="x" />
+		<set id="histogram_opt.allow_freq" to="true" />
+		<set id="histogram_opt.allow_barlabels" to="true" />
+		<set id="histogram_opt.allow_addtoplot" to="false" />
+		
+		<convert id="densityscaled" mode="not" sources="histogram_opt.freq.state" />
 		<connect client="densityoptions.enabled" governor="densityscaled" />
 	</logic>
 	<dialog label="Histogram" >
@@ -16,29 +21,20 @@
 					<varselector id="vars" />
 					<column>
 						<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
+						<stretch/>
 						<preview id="preview"/>
+						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Generic Plot Options" />
 					</column>
 				</row>
 			</tab>
-			<tab label="Options" >
-				<radio id="breaks" label="Method of setting breakpoints" >
-					<option value="Sturges" label="Sturges" />
-					<option value="Scott" label="Scott" />
-					<option value="FD" label="Friedman-Diaconis" />
-					<option checked="true" value="int" label="Integer numbers" />
-				</radio>
-				<radio id="scale" label="Y Scale" >
-					<option value="TRUE" label="Frequency" />
-					<option value="FALSE" label="Density" />
-				</radio>
-				<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
-				<stretch/>
+			<tab label="Histogram Options" >
+				<embed id="histogram_opt" component="rkward::histogram_options" as_button="false" />
 			</tab>
 			<tab label="Density" id="densityoptions">
 				<row>
 					<column>
-						<checkbox value_unchecked="0" value="1" checked="false" id="density" label="Density" />
-						<input id="col_density" initial="black" label="Color of Density"/>
+						<checkbox value_unchecked="0" value="1" checked="false" id="density" label="Plot Density curve" />
+						<embed id="col_density" component="rkward::color_chooser" label="Color" />
 						<dropdown id="bw" label="Bandwidth">
 							<option value="nrd0" label="nrd0"/>
 							<option value="nrd" label="nrd"/>
@@ -47,7 +43,6 @@
 							<option value="SJ-ste" label="SJ-ste"/>
 							<option value="SJ-dpi" label="SJ-dpi"/>
 						</dropdown>
-						<stretch/>
 						<spinbox type="real" id="adjust" label="Adjust Bandwidth" initial="1"/>
 					</column>
 					<column>
@@ -63,6 +58,7 @@
 						<stretch/>
 					</column>
 				</row>
+				<stretch/>
 			</tab>
 		</tabbook>
 	</dialog>

@@ -13,17 +13,17 @@ function makeCodes () {
 	$headeroptions .= ', Breaks, "';
 	if ($histbreaks == "cells") {
 		$histbreaksoptions .= getRK_val ("histbreaks_ncells");
-		$header_options .= getRK_val ("histbreaks_ncells") . 'cells"';
+		$headeroptions .= getRK_val ("histbreaks_ncells") . 'cells"';
 	} else if ($histbreaks == "int") {
 		$histbreaksoptions .= "seq (floor (min (" . $varname . ", na.rm=TRUE))-0.5, ceiling (max (" . $varname . ", na.rm=TRUE))+0.5)";
-		$header_options .= 'integers"';
+		$headeroptions .= 'integers"';
 	}
 	else if ($histbreaks == "vec") {
 		$histbreaksoptions .= "(function(x) {y = extendrange(x,f=0.1); seq(from=y[1], to=y[2], length=" . getRK_val ("histbreaks_veclength") . ")})(" . $varname . ")";
-		$header_options .= 'vector length ' . getRK_val ("histbreaks_veclength") . '"';
+		$headeroptions .= 'vector length ' . getRK_val ("histbreaks_veclength") . '"';
 	} else {
 		$histbreaksoptions .= "\"" . $histbreaks . "\"";
-		$header_options .= $histbreaks . '"';
+		$headeroptions .= $histbreaks . '"';
 	}
 
 	$addbars = getRK_val ("addtoplot");

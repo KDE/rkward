@@ -6,14 +6,12 @@
 		<component type="standard" id="box_plot" file="box_plot.xml" label="Box Plot" />
 		<component type="standard" id="density_plot" file="density_plot.xml" label="Density Plot" />
 		<component type="standard" id="ecdf_plot" file="ecdf_plot.xml" label="ECDF Plot" />
-		<component type="standard" id="histogram" file="histogram.xml" label="Histogram" />
 		<component type="standard" id="scatterplot" file="scatterplot.xml" label="Scatterplot" />
 		<component type="standard" id="scatterplot_matrix" file="scatterplot_matrix.xml" label="Scatterplot Matrix" />
 		<component type="standard" id="stripchart" file="stripchart_plot.xml" label="Stripchart" />
 
 		<component type="standard" id="plot_options" file="plot_options.xml" label="Plot Options" />
 		<component type="standard" id="color_chooser" file="color_chooser.xml" label="Color Chooser" />
-		<component type="standard" id="histogram_options" file="histogram_options.xml" label="Histogram Options" />
 	</components>
 
 	<hierarchy>
@@ -22,7 +20,6 @@
 			<entry component="box_plot" />
 			<entry component="density_plot" />
 			<entry component="ecdf_plot" />
-			<entry component="histogram" />
 			<entry component="scatterplot" />
 			<entry component="scatterplot_matrix" />
 			<entry component="stripchart" />

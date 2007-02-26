@@ -21,30 +21,23 @@ function preview () {
 
 // internal helper functions
 function doPrintout ($final) {
-	$breaks = getRK_val ("breaks");
-	$scale = getRK_val ("scale");
+	$densityscaled = getRK_val ("densityscaled");
 	$bw =  getRK_val ("bw");
 	$adjust = getRK_val ("adjust");
 	$narm =  getRK_val ("narm");
 	$giveRkern =  getRK_val ("giveRkern");
 	$x = getRK_val ("x");
-	if ($breaks == "int") {
-		$breaksopt = "breaks =seq (floor (min (" . $x . ", na.rm=TRUE))-0.5, ceiling (max (" . $x .", na.rm=TRUE))+0.5)";
-		$breaks = "Integers";
-	} else if (!empty ($breaks)) {
-		$breaksopt = "breaks=\"" . $breaks . "\"";
-	}
 
 	if ($final) { ?>
-rk.header ("Histogram", list ("Frequency", "<? echo $scale; ?>", "Breaks algorithm", <? echo ("\"" . $breaks . "\""); ?>, "Variable", rk.get.description (<? echo ($x); ?>)))
+rk.header ("Histogram", list ("Variable", rk.get.description (<? echo ($x); ?>)<? getRK ("histogram_opt.code.preprocess"); ?>))
 
 rk.graph.on ()
 <?	}
 ?>
 try ({
-	hist (<? echo ($x); ?>, <? echo ($breaksopt); ?>, freq = <? echo $scale; ?><? getRK ("plotoptions.code.printout"); ?>)
-<?	if (($scale=="FALSE") && getRK_val ("density")) { ?>
-	lines(density(<? echo ($x); ?>, bw="<? echo ($bw); ?>", adjust = <? echo ($adjust); ?>, <? echo ($giveRkern); ?>, <? echo ($narm); ?>, n = <? getRK ("n"); ?>), col= "<? getRK ("col_density"); ?>")
+	hist (<? echo ($x); getRK ("histogram_opt.code.calculate"); getRK ("histogram_opt.code.printout"); getRK ("plotoptions.code.printout"); ?>)
+<?	if (($densityscaled) && getRK_val ("density")) { ?>
+	lines(density(<? echo ($x); ?>, bw="<? echo ($bw); ?>", adjust = <? echo ($adjust); ?>, <? echo ($giveRkern); ?>, <? echo ($narm); ?>, n = <? getRK ("n"); ?>)<? getRK ("col_density.code.printout"); ?>)
 <?	} ?>
 })
 <?	if ($final) { ?>
