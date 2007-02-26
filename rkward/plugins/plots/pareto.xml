@@ -16,7 +16,6 @@
 					<column>
 					<varslot min_vars="1" id="x" source="vars" required="true" label="Vector or Factor"/>
 					<checkbox id="tabulate" label="Tabulate" value="TRUE" value_unchecked="FALSE" checked="false" />
-					<stretch/>
 					<checkbox id="descriptives" label="Print descriptives" value="TRUE" value_unchecked="FALSE" checked="true"/>
 					<stretch/>
 					<preview id="preview"/>

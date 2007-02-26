@@ -10,8 +10,9 @@ Choose a vector or a factor to be plotted. The Frequency, Cum.Frequency, Percent
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Select a data vector or a factor to be plotted.</setting>
+		<setting id="x">Select a data vector or a factor to be plotted</setting>
 		<setting id="tabulate">Use tabulate option mainly for factor variables or wherever else applicable</setting>
+		<setting id="descriptives">Select if you want to print the Frequency, Cum.Frequency, Percentage and Cum.Percentage below the pareto chart in the output window </setting>
 	</settings>
 	<related>
 		<ul>
