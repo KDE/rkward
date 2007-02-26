@@ -507,6 +507,9 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 		} else if (e.tagName () == "stretch") {
 			QWidget *stretch = new QWidget (parent_widget);
 			stretch->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+			QHBox *box = dynamic_cast<QHBox *> (parent_widget);
+			RK_ASSERT (box);
+			if (box) box->setStretchFactor (stretch, 100);
 		} else if (e.tagName () == "column") {
 			widget = new RKComponent (component (), parent_widget);
 			QVBoxLayout *layout = new QVBoxLayout (widget);

@@ -40,7 +40,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	// basic layout
-	QGridLayout *g_layout = new QGridLayout (this, 4, 3, RKGlobals::spacingHint ());
+	QGridLayout *g_layout = new QGridLayout (this, 3, 3, RKGlobals::spacingHint ());
 
 	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Variable:"), DL_INFO), this);
 	g_layout->addWidget (label, 0, 2);
