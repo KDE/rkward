@@ -31,6 +31,7 @@ function getInput ($prompt) {
 	}
 }
 
+ini_set ("display_errors", "1");
 ini_set ("error_prepend_string", "#RKEND#\nPHP-Error");
 ini_set ("error_append_string", "#RKQEND#\n");
 
