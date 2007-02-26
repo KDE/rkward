@@ -7,7 +7,7 @@
 	
 	<dialog label="sample moment">
 		<tabbook>
-			<tab label="Basic settings">
+			<tab id="tab_variables" label="Basic settings">
 				<row>
 					<varselector id="vars"/>
 					<column>
@@ -15,7 +15,7 @@
 					</column>
 				</row>
 			</tab>
-			<tab label="Options">
+			<tab id="tab_options" label="Options">
 				<spinbox type="integer" id="order" label="Order" initial="1"/>
 				<frame label="specific test settings">
 					<checkbox id="central" label="compute central moments" checked="false" value="TRUE" value_unchecked="FALSE" />

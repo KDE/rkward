@@ -7,7 +7,7 @@
 	<help file="skewness_kurtosis_test.rkh" />
 	<dialog label="Skewness and Kurtosis">
 		<tabbook>
-			<tab label="Select Variables" >
+			<tab id="tab_variables" label="Select Variables" >
 				<row>
 					<column>
 						<varselector id="vars"/>
@@ -20,7 +20,7 @@
 					</column>
 				</row>
 			</tab>
-			<tab label="Options">
+			<tab label="Options" id="tab_options">
 				<frame label="Skewness">
 					<checkbox id="skewness" label="Skewness" value_unchecked="0" value="1" checked="true" />
 					<radio id="narm_skewness" label="Remove missing values for Skewness calculation">

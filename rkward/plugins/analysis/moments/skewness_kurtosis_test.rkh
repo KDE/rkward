@@ -5,7 +5,7 @@
 	</summary>
 
 	<usage>
-		Chose the data to compute the kurtosis and/or skewness. You can chose multiple data.
+		Chose the data to compute the kurtosis and/or skewness. You can chose multiple data. See <link href="rkward://rhelp/skewness"/>, <link href="rkward://rhelp/kurtosis"/> and <link href="rkward://rhelp/geary"/>.
 	</usage>
 
 	<settings>
@@ -23,9 +23,6 @@
 	</settings>
 	<related>
 		<ul>
-			<li><link href="rkward://rhelp/skewness"/></li>
-			<li><link href="rkward://rhelp/geary"/></li>
-			<li><link href="rkward://rhelp/kurtosis"/></li>
 			<li><link href="rkward://rhelp/agostino.test"/></li>
 			<li><link href="rkward://rhelp/moment"/></li>
 			<li><link href="rkward://rhelp/anscombe.test"/></li>

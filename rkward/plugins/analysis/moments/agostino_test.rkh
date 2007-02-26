@@ -5,19 +5,19 @@
 	</summary>
 
 	<usage>
-		Chose the data to perform the D'Agostino test for skewness in normally distributed data. You can chose multiple data.
+		Chose the data to perform the D'Agostino test for skewness in normally distributed data. You can chose multiple data. See <link href="rkward://rhelp/agostino.test"/>.
 	</usage>
 
 	<settings>
 		<caption id="tab_variables"/>
 		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length.</setting>
 		<setting id="alternative">Here you can specify the alternative hypothesis. It must be one of "two sided", "greater" or "less".</setting>
+		<caption id="tab_options"/>
 		<setting id="length">If checked, the length of the data vectors will be shown. However, this will not effect your results but is just an optional information.</setting>
 		<setting id="nacount">If checked, and in case of missing values this will show you the number of those. However, this will not effect your results but is just an optional information.</setting>
 	</settings>
 	<related>
 		<ul>
-			<li><link href="rkward://rhelp/agostino.test"/></li>
 			<li><link href="rkward://rhelp/bonett.test"/></li>
 			<li><link href="rkward://rhelp/skewness"/></li>
 			<li><link href="rkward://rhelp/geary"/></li>

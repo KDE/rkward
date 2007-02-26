@@ -5,7 +5,7 @@ This test computes the sample moment of specified order.
 	</summary>
 
 	<usage>
-Chose the data to computes the sample moments. You can chose multiple data.
+Chose the data to computes the sample moments. You can chose multiple data. See <link href="rkward://rhelp/moment"/>.
 	</usage>
 
 	<settings>
@@ -20,7 +20,6 @@ Chose the data to computes the sample moments. You can chose multiple data.
 	</settings>
 	<related>
 		<ul>
-			<li><link href="rkward://rhelp/moment"/></li>
 			<li><link href="rkward://rhelp/skewness"/></li>
 			<li><link href="rkward://rhelp/geary"/></li>
 			<li><link href="rkward://rhelp/kurtosis"/></li>

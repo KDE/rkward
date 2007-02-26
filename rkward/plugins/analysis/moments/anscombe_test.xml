@@ -23,7 +23,6 @@
 			<tab id="tab_options" label="Options">
 				<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
 				<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="false" />
-				<stretch/>
 			</tab>
 		</tabbook>
 	</dialog>
