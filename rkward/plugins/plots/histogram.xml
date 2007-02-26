@@ -6,12 +6,12 @@
 		<set id="plotoptions.allow_log" to="false"/>
 		<set id="plotoptions.allow_type" to="false"/>
 		
-		<connect client="histogram_opt.varname" governor="x" />
+		<connect client="histogram_opt.varname" governor="x.available" />
 		<set id="histogram_opt.allow_freq" to="true" />
 		<set id="histogram_opt.allow_barlabels" to="true" />
 		<set id="histogram_opt.allow_addtoplot" to="false" />
 		
-		<convert id="densityscaled" mode="not" sources="histogram_opt.freq.state" />
+		<convert id="densityscaled" mode="equals" sources="histogram_opt.freq.state" standard="0" />
 		<connect client="densityoptions.enabled" governor="densityscaled" />
 	</logic>
 	<dialog label="Histogram" >

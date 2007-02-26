@@ -45,7 +45,7 @@
 		<row>
 			<column>
 				<checkbox id="addtoplot" label="Add bars to current plot" checked="false"/>
-				<checkbox id="freq" label="Frequency" checked="false"/>
+				<checkbox id="freq" label="Frequency" checked="false" value_unchecked="0" />
 				<checkbox id="barlabels" label="Bar labels" checked="false"/>
 				<checkbox id="rightclosed" label="Right closed" checked="true"/>
 				<checkbox id="include_lowest" label="Include in lowest cell" checked="true"/>

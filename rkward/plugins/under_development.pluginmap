@@ -14,8 +14,8 @@
 		<component type="standard" id="anscombe_test" file="analysis/moments/anscombe_test.xml" label="Anscombe-Glynn test of kurtosis" />
 		<component type="standard" id="skewness_kurtosis" file="analysis/moments/skewness_kurtosis_test.xml" label="Skewness and Kurtosis" />
 
-		<component type="standard" id="histogram" file="histogram.xml" label="Histogram" />
-		<component type="standard" id="histogram_options" file="histogram_options.xml" label="Histogram Options" />
+		<component type="standard" id="histogram" file="plots/histogram.xml" label="Histogram" />
+		<component type="standard" id="histogram_options" file="plots/histogram_options.xml" label="Histogram Options" />
 
 	</components>
 
