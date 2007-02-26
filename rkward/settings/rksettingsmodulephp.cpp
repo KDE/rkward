@@ -29,7 +29,6 @@
 
 // static members
 QString RKSettingsModulePHP::php_bin;
-QString RKSettingsModulePHP::files_path;
 
 RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -44,12 +43,6 @@ RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, QWidget *parent) : RK
 	bin_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, i18n ("File-location of the PHP binary"), QString::null, php_bin);
 	connect (bin_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
 	main_vbox->addWidget (bin_choser);
-
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
-
-	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, i18n ("Directory, where the PHP support files are located"), QString::null, files_path);
-	connect (files_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
-	main_vbox->addWidget (files_choser);
 
 	main_vbox->addStretch ();
 }
@@ -76,7 +69,6 @@ bool RKSettingsModulePHP::hasChanges () {
 void RKSettingsModulePHP::applyChanges () {
 	RK_TRACE (SETTINGS);
 	php_bin = bin_choser->getLocation ();
-	files_path = files_choser->getLocation ();
 }
 
 void RKSettingsModulePHP::save (KConfig *config) {
@@ -89,7 +81,6 @@ void RKSettingsModulePHP::saveSettings (KConfig *config) {
 
 	config->setGroup ("PHP Settings");
 	config->writeEntry ("PHP binary", php_bin);
-	config->writeEntry ("support files dir", files_path);
 }
 
 void RKSettingsModulePHP::loadSettings (KConfig *config) {
@@ -97,7 +88,6 @@ void RKSettingsModulePHP::loadSettings (KConfig *config) {
 
 	config->setGroup ("PHP Settings");
 	php_bin = config->readEntry ("PHP binary", "/usr/bin/php");
-	files_path = config->readEntry ("support files dir", RKCommonFunctions::getRKWardDataDir () + "phpfiles/");
 }
 
 #include "rksettingsmodulephp.moc"

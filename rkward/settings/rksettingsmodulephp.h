@@ -44,16 +44,12 @@ public:
 
 /// returns the filename of the php-binary
 	static QString &phpBin () { return php_bin; };
-/// returns the directory-name where supporting files such as the "common.php" reside
-	static QString &filesPath () { return files_path; };
 public slots:
 	void pathChanged ();
 private:
 	GetFileNameWidget *bin_choser;
-	GetFileNameWidget *files_choser;
 
 	static QString php_bin;
-	static QString files_path;
 };
 
 #endif

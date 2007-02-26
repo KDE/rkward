@@ -19,10 +19,13 @@
 #include "stdio.h"
 
 #include <qfile.h>
+#include <qfileinfo.h>
+#include <qdir.h>
 
 #include <kmessagebox.h>
 #include <klocale.h>
 
+#include "../misc/rkcommonfunctions.h"
 #include "../settings/rksettingsmodulephp.h"
 #include "../plugin/rkcomponentproperties.h"
 #include "../debug.h"
@@ -51,10 +54,19 @@ bool PHPBackend::initialize (const QString &filename, RKComponentPropertyCode *c
 		return false;
 	}
 
+	QDir files_path (RKCommonFunctions::getRKWardDataDir () + "phpfiles/");
+	QString common_php = files_path.filePath ("common.php", false);
+	QString php_ini = files_path.filePath ("php_ini", false);
+	if (!QFileInfo (common_php).isReadable ()) {
+		KMessageBox::error (0, i18n ("The support file \"%1\" could not be found or is not readable. Please check your installation.").arg (common_php), i18n ("PHP-Error"));
+		emit (haveError ());
+		return false;
+	}
+
 	php_process = new KProcess ();
 	*php_process << RKSettingsModulePHP::phpBin();
-	*php_process << "-c" << RKSettingsModulePHP::filesPath() + "/php.ini";	// set correct options
-	*php_process << (RKSettingsModulePHP::filesPath() + "/common.php");
+	*php_process << "-c" << php_ini;	// set correct options
+	*php_process << common_php;
 	
 	// we have to be connect at all times! Otherwise the connection will be gone for good.
 	//connect (php_process, SIGNAL (receivedStderr (KProcess *, char*, int)), this, SLOT (gotError (KProcess *, char*, int)));
