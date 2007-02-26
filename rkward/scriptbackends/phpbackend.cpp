@@ -60,6 +60,7 @@ bool PHPBackend::initialize (const QString &filename, RKComponentPropertyCode *c
 	//connect (php_process, SIGNAL (receivedStderr (KProcess *, char*, int)), this, SLOT (gotError (KProcess *, char*, int)));
 	connect (php_process, SIGNAL (wroteStdin (KProcess *)), this, SLOT (doneWriting (KProcess* )));
 	connect (php_process, SIGNAL (receivedStdout (KProcess *, char*, int)), this, SLOT (gotOutput (KProcess *, char*, int)));
+	connect (php_process, SIGNAL (processExited (KProcess *)), this, SLOT (processDied (KProcess*)));
 	
 	if (!php_process->start (KProcess::NotifyOnExit, KProcess::All)) {
 		KMessageBox::error (0, i18n ("The PHP backend could not be started. Check whether you have correctly configured the location of the PHP-binary (Settings->Configure Settings->PHP backend)"), i18n ("PHP-Error"));
@@ -83,9 +84,9 @@ void PHPBackend::destroy () {
 
 	if (php_process) {
 		php_process->detach ();
+		php_process->deleteLater ();
+		php_process = 0;
 	}
-	php_process->deleteLater ();
-	php_process = 0;
 	
 	busy_writing = false;
 	busy = false;
@@ -194,7 +195,7 @@ void PHPBackend::doneWriting (KProcess *) {
 	tryNextFunction ();
 }
 
-void PHPBackend::gotOutput (KProcess *, char* buf, int len) {
+void PHPBackend::gotOutput (KProcess *, char* buf, int) {
 	RK_TRACE (PHP);
 
 	RK_DO (qDebug ("PHP transmission:\n%s", buf), PHP, DL_DEBUG);
@@ -297,9 +298,19 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int len) {
 			destroy ();
 			return;
 		} else {
-			RK_DO (qDebug ("unrecognized request from PHP backend: \"%s\"", request), PHP, DL_ERROR);
+			RK_DO (qDebug ("unrecognized request from PHP backend: \"%s\"", request.latin1()), PHP, DL_ERROR);
 		}
 	}
 }
+
+void PHPBackend::processDied (KProcess *) {
+	RK_TRACE (PHP);
+
+	php_process->detach ();
+	KMessageBox::error (0, i18n ("The PHP-backend has died unexpectedly. The current output buffer is shown below:\n%1").arg (output_raw_buffer), i18n ("PHP Process exited"));
+	emit (haveError ());
+	destroy ();
+}
+
 
 #include "phpbackend.moc"

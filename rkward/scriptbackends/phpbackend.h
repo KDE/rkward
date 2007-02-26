@@ -52,6 +52,7 @@ public:
 public slots:
 	void gotOutput (KProcess *proc, char* buf, int len);
 	//void gotError (KProcess *proc, char* buf, int len);
+	void processDied (KProcess *proc);
 	void doneWriting (KProcess *proc);
 private:
 	void tryNextFunction ();
