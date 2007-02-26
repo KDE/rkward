@@ -14,6 +14,11 @@
 		<component type="standard" id="anscombe_test" file="analysis/moments/anscombe_test.xml" label="Anscombe-Glynn test of kurtosis" />
 		<component type="standard" id="skewness_kurtosis" file="analysis/moments/skewness_kurtosis_test.xml" label="Skewness and Kurtosis" />
 
+		<component type="standard" id="chisq_out_test" file="analysis/outliers/chisq_out_test.xml" label="Chi-squared test for outlier" />
+		<component type="standard" id="dixon_test" file="analysis/outliers/dixon_test.xml" label="Dixon tests" />
+		<component type="standard" id="outlier" file="analysis/outliers/outlier.xml" label="Outlier" />
+		<component type="standard" id="grubbs_test" file="analysis/outliers/grubbs_test.xml" label="Grubbs tests" />
+
 		<component type="standard" id="histogram" file="plots/histogram.xml" label="Histogram" />
 		<component type="standard" id="histogram_options" file="plots/histogram_options.xml" label="Histogram Options" />
 
@@ -33,6 +38,12 @@
 				<entry component="agostino_test" index="2"/>
 				<entry component="moment" index="3"/>
 				<entry component="skewness_kurtosis" index="4"/>
+			</menu>
+			<menu id="outliers" label="Outlier Tests" index="6">
+				<entry component="chisq_out_test" index="0"/>
+				<entry component="dixon_test" index="1"/>
+				<entry component="grubbs_test" index="2"/>
+				<entry component="outlier" index="3"/>
 			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">

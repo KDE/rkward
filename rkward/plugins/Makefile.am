@@ -55,6 +55,21 @@ dist_pluginsXanalysisXmoments_DATA = \
 	analysis/moments/bonett_test.rkh \
 	analysis/moments/moment.xml
 
+pluginsXanalysisXoutliersdir = $(kde_datadir)/rkward/analysis/outliers
+dist_pluginsXanalysisXoutliers_DATA = \
+	analysis/outliers/chisq_out_test.php \
+	analysis/outliers/chisq_out_test.xml \
+	analysis/outliers/chisq_out_test.rkh \
+	analysis/outliers/dixon_test.php \
+	analysis/outliers/dixon_test.xml \
+	analysis/outliers/dixon_test.rkh \
+	analysis/outliers/grubbs_test.php \
+	analysis/outliers/grubbs_test.xml \
+	analysis/outliers/grubbs_test.rkh \
+	analysis/outliers/outlier.php \
+	analysis/outliers/outlier.xml \
+	analysis/outliers/outlier.rkh
+
 pluginsXx11devicedir = $(kde_datadir)/rkward/x11device
 dist_pluginsXx11device_DATA = \
 	x11device/export.xml \
