@@ -19,7 +19,7 @@ function getInput ($prompt) {
 	fputs (STDOUT, "#RKEND#\n" . $prompt . "#RKQEND#\n");
 	fflush (STDOUT);
 	while (1) {
-		if (feof (STDIN)) die ();			// if the parent process exits unexpectedly, make sure the PHP-process gets killed
+		if (feof (STDIN)) die ("STDIN is at eof");			// if the parent process exits unexpectedly, make sure the PHP-process gets killed
 		$inp = fgets (STDIN, 4096);
 		if ($inp != "") {
 			$input .= $inp;
