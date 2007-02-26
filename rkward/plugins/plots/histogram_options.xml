@@ -4,13 +4,15 @@
 	<help file="histogram_options.rkh"/>
 	<logic>
 		<external id="varname" default=""/>
+		<external id="options_splitter_string" default=""/>
+		<external id="make_header_options" default="1" />
 		<external id="allow_freq" default="true"/>
 		<external id="allow_barlabels" default="true"/>
 		<external id="allow_addtoplot" default="true"/>
 
-		<connect client="freq.enabled" governor="allow_freq"/>
-		<connect client="barlabels.enabled" governor="allow_barlabels"/>
-		<connect client="addtoplot.enabled" governor="allow_addtoplot"/>
+		<connect client="freq.visible" governor="allow_freq"/>
+		<connect client="barlabels.visible" governor="allow_barlabels"/>
+		<connect client="addtoplot.visible" governor="allow_addtoplot"/>
 
 		<set id="histbordercol.argument" to=", border="/>
 
@@ -56,7 +58,7 @@
 					<option value="FD" label="Friedman-Diaconis" />
 					<option value="cells" label="A single number" />
 					<option value="int" label="Integer numbers" />
-					<option value="vec" label="Vecor of break points" />
+					<option value="vec" label="Vector of break points" />
 				</radio>
 				<row>
 				<spinbox id="histbreaks_ncells" label="Suggested cells" type="integer" min="1" initial="10"/>
