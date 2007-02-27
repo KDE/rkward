@@ -2,7 +2,7 @@
                           rkreadlinedialog  -  description
                              -------------------
     begin                : Fri Sep 15 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -31,11 +31,6 @@ This dialog displays the question asked, the output context (as often times the 
 */
 class RKReadLineDialog : public KDialogBase {
 public:
-	/** ctor. Use the static readLine() instead. */
-	RKReadLineDialog (QWidget *parent, const QString &caption, const QString &prompt, RCommand *command);
-	/** destructor */
-	~RKReadLineDialog ();
-
 	/** Construct and run modal RKReadLineDialog.
 	@param parent QWidget to center the modal dialog on (0 for application)
 	@param prompt The question
@@ -43,8 +38,14 @@ public:
 	@param result The answer to the question (the line read) will be stored in this string
 	@returns true if ok was pressed (or the dialog was closed), false if cancel was pressed (i.e. the command should be cancelled) */
 	static bool readLine (QWidget *parent, const QString &caption, const QString &prompt, RCommand *command, QString *result);
+protected:
+	/** ctor. Use the static readLine() instead. */
+	RKReadLineDialog (QWidget *parent, const QString &caption, const QString &prompt, RCommand *command);
+	/** destructor */
+	~RKReadLineDialog ();
 private:
 	QLineEdit *input;
+	static QRect stored_geom;
 };
 
 #endif

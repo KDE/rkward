@@ -2,7 +2,7 @@
                           rkreadlinedialog  -  description
                              -------------------
     begin                : Fri Sep 15 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -29,6 +29,8 @@
 #include "../rbackend/rcommand.h"
 
 #include "../debug.h"
+
+QRect RKReadLineDialog::stored_geom;
 
 RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, const QString &prompt, RCommand *command) : KDialogBase (parent, 0, true, caption, KDialogBase::Ok | KDialogBase::Cancel) {
 	RK_TRACE (DIALOGS);
@@ -74,8 +76,10 @@ bool RKReadLineDialog::readLine (QWidget *parent, const QString &caption, const 
 	RK_ASSERT (result);
 
 	RKReadLineDialog *dialog = new RKReadLineDialog (parent, caption, prompt, command);
+	if (!stored_geom.isNull ()) dialog->setGeometry (stored_geom);
 	int res = dialog->exec ();
 	*result = dialog->input->text ();
+	stored_geom = dialog->frameGeometry ();
 	delete dialog;
 
 	return (res != QDialog::Rejected);
