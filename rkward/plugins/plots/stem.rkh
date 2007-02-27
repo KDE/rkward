@@ -1,0 +1,24 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This produces a stem-and-leaf plot.
+	</summary>
+
+	<usage>
+		Chose the data to produce the stem-and-leaf plot. See <link href="rkward://rhelp/stem"/>. For a more sophisticated stem-and-leaf plot refere to the <link href="http://cran.r-project.org/src/contrib/Descriptions/Rcmdr.html">Rcmdr package</link>.
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric.</setting>
+		<caption id="tab_options"/>
+		<setting id="scale">This controls the length of the plot. A scale of 2 will make the plot roughly twice as long as the default.</setting>
+		<setting id="width">This controls the width of the plot.</setting>
+		<setting id="atom">This defines the tolerance.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/HTMLstem"/></li>
+		</ul>
+	</related>
+</document>
