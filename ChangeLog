@@ -1,3 +1,5 @@
+- new plugin pareto chart
+- new plugin stem-and-leaf plot
 - make readline dialog store last size and position
 - new outlier test (chisq.out.test, dixon.test, grubbs.test, outlier)
 - support R's mechanism for checking the C stack limits (only with R 2.3.x or greater, and not on all platforms)
