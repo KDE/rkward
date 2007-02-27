@@ -155,7 +155,10 @@ dist_pluginsXplots_DATA = \
 	plots/pareto.php \
 	plots/histogram_options.php \
 	plots/pareto.xml \
-	plots/pareto.rkh
+	plots/pareto.rkh \
+	plots/stem.xml \
+	plots/stem.php \
+	plots/stem.rkh
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \

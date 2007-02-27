@@ -22,6 +22,8 @@
 		<component type="standard" id="histogram" file="plots/histogram.xml" label="Histogram" />
 		<component type="standard" id="histogram_options" file="plots/histogram_options.xml" label="Histogram Options" />
 
+		<component type="standard" id="stem" file="plots/stem.xml" label="Stem-and-Leaf Plot" />
+
 	</components>
 
 	<hierarchy>
@@ -48,6 +50,7 @@
 		</menu>
 		<menu id="plots" label="Plots" index="5">
 			<entry component="histogram" />
+			<entry component="stem" />
 		</menu>
 		<menu id="workspace" label="Workspace" index="5">
 			<entry component="setworkdir" />
