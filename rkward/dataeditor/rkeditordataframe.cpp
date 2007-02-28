@@ -40,6 +40,7 @@ RKEditorDataFrame::RKEditorDataFrame (QWidget *parent, KParts::Part* part) : Twi
 	RK_TRACE (EDITOR);
 
 	RKEditorDataFrame::part = part;
+	initializeActivationSignals ();
 
 	open_chain = 0;
 }

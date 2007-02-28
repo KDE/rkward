@@ -48,6 +48,7 @@ public slots:
 	void next ();
 	void prev ();
 	void windowActivated (RKMDIWindow *window);
+	void windowDestroyed (QObject *window);
 private:
 	void updateActions ();
 

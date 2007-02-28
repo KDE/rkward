@@ -106,6 +106,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	windows.append (window);
 	connect (window, SIGNAL (destroyed (QObject *)), this, SLOT (windowDestroyed (QObject *)));
 	connect (window, SIGNAL (windowActivated(RKMDIWindow*)), history, SLOT (windowActivated(RKMDIWindow*)));
+	connect (window, SIGNAL (destroyed (QObject *)), history, SLOT (windowDestroyed (QObject *)));
 	if (attached) attachWindow (window);
 	else detachWindow (window, false);
 }
@@ -411,6 +412,8 @@ RKMDIWindowHistory::RKMDIWindowHistory (QObject *parent) : QObject (parent) {
 
 RKMDIWindowHistory::~RKMDIWindowHistory () {
 	RK_TRACE (APP);
+
+	RK_DO (qDebug ("Remaining windows in history: forward: %d, backward: %d", forward_list.count (), back_list.count ()), APP, DL_DEBUG);
 }
 
 void RKMDIWindowHistory::addActions (KActionCollection *ac, const char *prev_id, const char *next_id) {
@@ -484,6 +487,15 @@ void RKMDIWindowHistory::updateActions () {
 	if (prev_action) {
 		prev_action->setEnabled (havePrev ());
 	}
+}
+
+void RKMDIWindowHistory::windowDestroyed (QObject *window) {
+	RK_TRACE (APP);
+
+	back_list.remove (static_cast<RKMDIWindow *> (window));
+	forward_list.remove (static_cast<RKMDIWindow *> (window));
+	if (current == window) current = 0;
+	updateActions ();
 }
 
 #include "rkworkplace.moc"
