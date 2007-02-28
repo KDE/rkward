@@ -26,8 +26,8 @@ rk.header ("Ansari-Bradley two-sample test",
 rk.results (list (
 	'Variable Names'=rk.get.description (rk.temp.x, rk.temp.y, is.substitute=TRUE),
 	'statistic'=rk.temp$statistic,
-	'Hypothesis'=rk.temp$alternative,
 	'null.value'=rk.temp$null.value,
+	'Alternative Hypothesis'=rk.describe.alternative(rk.temp),
 	p=rk.temp$p.value<?
 	if (getRK_val ("confint")== "TRUE") { ?>,
 	'confidence interval percent'=(100 * attr(rk.temp$conf.int, "conf.level")),
