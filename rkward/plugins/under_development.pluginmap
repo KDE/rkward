@@ -15,13 +15,13 @@
 		<component type="standard" id="skewness_kurtosis" file="analysis/moments/skewness_kurtosis_test.xml" label="Skewness and Kurtosis" />
 
 		<component type="standard" id="chisq_out_test" file="analysis/outliers/chisq_out_test.xml" label="Chi-squared test for outlier" />
-		<component type="standard" id="dixon_test" file="analysis/outliers/dixon_test.xml" label="Dixon tests" />
+		<component type="standard" id="dixon_test" file="analysis/outliers/dixon_test.xml" label="Dixon test" />
 		<component type="standard" id="outlier" file="analysis/outliers/outlier.xml" label="Outlier" />
-		<component type="standard" id="grubbs_test" file="analysis/outliers/grubbs_test.xml" label="Grubbs tests" />
+		<component type="standard" id="grubbs_test" file="analysis/outliers/grubbs_test.xml" label="Grubbs test" />
 
-		<component type="standard" id="F_test" file="analysis/variances/F_test.xml" label="F tests" />
-		<component type="standard" id="fligner_test" file="analysis/variances/fligner_test.xml" label="Fligner-Killeen tests" />
-		<component type="standard" id="bartlett_test" file="analysis/variances/bartlett_test.xml" label="Bartlett tests" />
+		<component type="standard" id="F_test" file="analysis/variances/F_test.xml" label="F test" />
+		<component type="standard" id="fligner_test" file="analysis/variances/fligner_test.xml" label="Fligner-Killeen test" />
+		<component type="standard" id="bartlett_test" file="analysis/variances/bartlett_test.xml" label="Bartlett test" />
 
 		<component type="standard" id="mood_test" file="analysis/TESTS/mood_test.xml" label="Mood Two-Sample Test" />
 		<component type="standard" id="PP_test" file="analysis/TESTS/PP_test.xml" label="Phillips-Perron Test" />
