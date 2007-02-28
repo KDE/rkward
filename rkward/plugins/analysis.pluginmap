@@ -17,6 +17,10 @@
 
 	<hierarchy>
 		<menu id="analysis" label="Analysis" index="4">
+			<menu id="ansari_bradley" label="Ansari-Bradley Tests" index="0">
+				<entry component="ansari_bradley_test" />
+				<entry component="ansari_bradley_exact_test" />
+			</menu>
 			<entry component="basic_statistics" index="1"/>
 			<menu id="correlation" label="Correlation" index="1">
 				<entry component="corr_matrix" />
@@ -28,14 +32,10 @@
 					<entry component="independent_samples_t_test" />
 				</menu>
 			</menu>
-			<entry component="simple_anova" index="5"/>
-			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="6">
+			<entry component="simple_anova" index="6"/>
+			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="9">
 				<entry component="wilcoxon_test" />
 				<entry component="wilcoxon_exact_test" />
-			</menu>
-			<menu id="ansari_bradley" label="Ansari-Bradley Tests" index="0">
-				<entry component="ansari_bradley_test" />
-				<entry component="ansari_bradley_exact_test" />
 			</menu>
 		</menu>
 	</hierarchy>

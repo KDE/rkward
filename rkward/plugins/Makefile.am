@@ -27,7 +27,17 @@ dist_pluginsXanalysisXansariUbradley_DATA = \
 	analysis/ansari_bradley/ansari_bradley_exact_test.xml \
 	analysis/ansari_bradley/ansari_bradley_test.php \
 	analysis/ansari_bradley/ansari_bradley_exact_test.php \
-	analysis/ansari_bradley/ansari_bradley_test.xml
+	analysis/ansari_bradley/ansari_bradley_test.xml \
+	analysis/ansari_bradley/ansari_bradley_test.rkh
+
+pluginsXanalysisXTESTSdir = $(kde_datadir)/rkward/analysis/TESTS
+dist_pluginsXanalysisXTESTS_DATA = \
+	analysis/TESTS/mood_test.xml \
+	analysis/TESTS/mood_test.php \
+	analysis/TESTS/mood_test.rkh \
+	analysis/TESTS/PP_test.xml \
+	analysis/TESTS/PP_test.php \
+	analysis/TESTS/PP_test.rkh
 
 pluginsXanalysisXwilcoxondir = $(kde_datadir)/rkward/analysis/wilcoxon
 dist_pluginsXanalysisXwilcoxon_DATA = \
@@ -69,6 +79,18 @@ dist_pluginsXanalysisXoutliers_DATA = \
 	analysis/outliers/outlier.php \
 	analysis/outliers/outlier.xml \
 	analysis/outliers/outlier.rkh
+
+pluginsXanalysisXvariancesdir = $(kde_datadir)/rkward/analysis/variances
+dist_pluginsXanalysisXvariances_DATA = \
+	analysis/variances/bartlett_test.php \
+	analysis/variances/bartlett_test.xml \
+	analysis/variances/bartlett_test.rkh \
+	analysis/variances/F_test.php \
+	analysis/variances/F_test.xml \
+	analysis/variances/F_test.rkh \
+	analysis/variances/fligner_test.php \
+	analysis/variances/fligner_test.xml \
+	analysis/variances/fligner_test.rkh
 
 pluginsXx11devicedir = $(kde_datadir)/rkward/x11device
 dist_pluginsXx11device_DATA = \

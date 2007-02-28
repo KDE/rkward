@@ -19,6 +19,13 @@
 		<component type="standard" id="outlier" file="analysis/outliers/outlier.xml" label="Outlier" />
 		<component type="standard" id="grubbs_test" file="analysis/outliers/grubbs_test.xml" label="Grubbs tests" />
 
+		<component type="standard" id="F_test" file="analysis/variances/F_test.xml" label="F tests" />
+		<component type="standard" id="fligner_test" file="analysis/variances/fligner_test.xml" label="Fligner-Killeen tests" />
+		<component type="standard" id="bartlett_test" file="analysis/variances/bartlett_test.xml" label="Bartlett tests" />
+
+		<component type="standard" id="mood_test" file="analysis/TESTS/mood_test.xml" label="Mood Two-Sample Test" />
+		<component type="standard" id="PP_test" file="analysis/TESTS/PP_test.xml" label="Phillips-Perron Test" />
+
 		<component type="standard" id="histogram" file="plots/histogram.xml" label="Histogram" />
 		<component type="standard" id="histogram_options" file="plots/histogram_options.xml" label="Histogram Options" />
 
@@ -41,11 +48,20 @@
 				<entry component="moment" index="3"/>
 				<entry component="skewness_kurtosis" index="4"/>
 			</menu>
-			<menu id="outliers" label="Outlier Tests" index="6">
+			<menu id="TESTS" label="TESTS" index="5">
+				<entry component="mood_test" index="0"/>
+				<entry component="PP_test" index="1"/>
+			</menu>
+			<menu id="outliers" label="Outlier Tests" index="7">
 				<entry component="chisq_out_test" index="0"/>
 				<entry component="dixon_test" index="1"/>
 				<entry component="grubbs_test" index="2"/>
 				<entry component="outlier" index="3"/>
+			</menu>
+			<menu id="variances" label="Variances" index="8">
+				<entry component="bartlett_test" index="0"/>
+				<entry component="F_test" index="1"/>
+				<entry component="fligner_test" index="2"/>
 			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
