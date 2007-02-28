@@ -1,0 +1,23 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This test performs the Mood Two-Sample Test of Scale.
+	</summary>
+
+	<usage>
+		Select two data sets to test for a difference in scale parameters by the Mood Two-Sample Test. For this test the samples need to be numeric vectors (see below for details).
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric.</setting>
+		<setting id="y">Select the data to be computed. The vectors need to be numeric.</setting>
+		<setting id="alternative">Here you can specify the alternative hypothesis. It must be one of "two sided", "greater" or "less".</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/mood.test"/></li>
+		</ul>
+
+	</related>
+</document>

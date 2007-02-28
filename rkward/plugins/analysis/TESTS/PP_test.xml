@@ -1,0 +1,22 @@
+<!DOCTYPE rkplugin>
+
+
+<document>
+	<code file="PP_test.php"/>
+	<help file="PP_test.rkh"/>
+	
+	<dialog label="Phillips-Perron Test for Unit Roots">
+		<tabbook>
+			<tab id="tab_variables" label="Basic settings">
+				<row>
+					<varselector id="vars"/>
+					<column>
+						<varslot type="numeric" id="x" multi="true" source="vars" required="true" label="variable(s):"/>
+						<checkbox id="lshort" label="short or long truncation lag parameter" value_unchecked="FALSE" value="TRUE" checked="true" />
+					</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+	
+</document>
