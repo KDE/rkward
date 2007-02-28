@@ -213,10 +213,12 @@ void RKWardMainWindow::doPostInit () {
 	console->setToolWrapper (addToolWindow (console, KDockWidget::DockBottom, getMainDockWidget (), 10));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (console);
 	RKConsole::setMainConsole (console);
-	
-	RKGlobals::helpdlg = new KHelpDlg (0);
-	RKGlobals::helpDialog ()->setIcon (SmallIcon ("help"));
-	search_help_view = addToolWindow (RKGlobals::helpDialog (), KDockWidget::DockBottom, getMainDockWidget (), 10);
+
+	RKHelpSearchWindow *help_search = new RKHelpSearchWindow (0, true, "r_help");
+	help_search->setIcon (SmallIcon ("help"));
+	help_search->setToolWrapper (addToolWindow (help_search, KDockWidget::DockBottom, getMainDockWidget (), 10));
+	RKWorkplace::mainWorkplace ()->registerToolWindow (help_search);
+	RKHelpSearchWindow::main_help_search = help_search;
 
 	RKOutputWindow::initialize ();
 
@@ -572,8 +574,7 @@ void RKWardMainWindow::showAboutApplication () {
 void RKWardMainWindow::showHelpSearch () {
 	RK_TRACE (APP);
 
-	search_help_view->show ();
-	search_help_view->wrapperWidget ()->topLevelWidget ()->raise ();
+	RKHelpSearchWindow::mainHelpSearch ()->activate ();
 }
 
 void RKWardMainWindow::showRKWardHelp () {

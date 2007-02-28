@@ -155,7 +155,7 @@ RKConsole::~RKConsole () {
 }
 
 KParts::Part *RKConsole::getPart () {
-	RK_TRACE (APP);
+	//RK_TRACE (APP);
 	return part;
 }
 
@@ -680,7 +680,7 @@ void RKConsole::runSelection () {
 
 void RKConsole::showContextHelp () {
 	RK_TRACE (APP);
-	RKGlobals::helpDialog ()->getContextHelp (currentCommand (), currentCursorPositionInCommand ());
+	RKHelpSearchWindow::mainHelpSearch ()->getContextHelp (currentCommand (), currentCursorPositionInCommand ());
 }
 
 void RKConsole::initializeActions (KActionCollection *ac) {

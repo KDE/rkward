@@ -109,7 +109,7 @@ void RKMDIWindow::prepareToBeDetached () {
 }
 
 bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
-	RK_TRACE (APP);
+	//RK_TRACE (APP);
 
 #warning TODO
 // TODO: use partmanager's activePartChanged in rkward.cpp instead. There will have to be special handling in DetachedWindowContainer, anyway

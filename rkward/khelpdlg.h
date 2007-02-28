@@ -15,14 +15,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef KHELPDLG_H
-#define KHELPDLG_H
+#ifndef RKHELPSEARCHWINDOW_H
+#define RKHELPSEARCHWINDOW_H
 
 #include <qwidget.h>
 
 #include "rbackend/rcommandreceiver.h"
-
-//#include "helpdlg.h"
+#include "windows/rkmdiwindow.h"
 
 class QComboBox;
 class QCheckBox;
@@ -35,19 +34,21 @@ class RCommandChain;
 /** Provides a UI interface for help-search.
 
 @author Pierre Ecochard */
-class KHelpDlg : public QWidget, public RCommandReceiver {
+class RKHelpSearchWindow : public RKMDIWindow, public RCommandReceiver {
 	Q_OBJECT
 public:
-	KHelpDlg (QWidget* parent = 0, const char* name = 0);
-	~KHelpDlg ();
+	RKHelpSearchWindow (QWidget *parent, bool tool_window, char *name=0);
+	~RKHelpSearchWindow ();
 	void rCommandDone (RCommand *command);
 
+	KParts::Part *getPart () { return part; };
 /** small convenience function to get context help for RKCommandEditorWindow and RKConsole.
 @param context_line The current line
 @param cursor_pos cursor position in the current line
 Will figure out the word under the cursor, and provide help on that (if there is such a word, and such help exists) */
 	void getContextHelp (const QString &context_line, int cursor_pos);
 	void getFunctionHelp (const QString &function_name);
+	static RKHelpSearchWindow *mainHelpSearch () { return main_help_search; };
 public slots:
 	void slotFindButtonClicked();
 	void slotResultsListDblClicked( QListViewItem *item, const QPoint &, int );
@@ -59,7 +60,9 @@ private:
 	QCheckBox* fuzzyCheckBox;
 	QPushButton* findButton;
 	QListView* resultsList;
+	KParts::Part *part;
+friend class RKWardMainWindow;
+	static RKHelpSearchWindow *main_help_search;
 };
 
 #endif
-

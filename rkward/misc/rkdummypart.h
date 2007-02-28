@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rkglobals  -  description
+                          rkdummypart  -  description
                              -------------------
-    begin                : Wed Aug 18 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    begin                : Wed Feb 28 2007
+    copyright            : (C) 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -14,30 +14,15 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rkglobals.h"
+#ifndef RKDUMMYPART_H
+#define RKDUMMYPART_H
 
-#include <qstring.h>
+#include <kparts/part.h>
 
-RInterface *RKGlobals::rinter;
-RKModificationTracker *RKGlobals::mtracker;
-RControlWindow *RKGlobals::rcontrol;
+class RKDummyPart : public KParts::Part {
+public:
+	RKDummyPart (QObject *parent, QWidget *widget);
+	~RKDummyPart ();
+};
 
-double RKGlobals::na_double;
-
-RKGlobals::RKGlobals () {
-}
-
-
-RKGlobals::~RKGlobals () {
-}
-
-#include <kdialog.h>
-
-int RKGlobals::marginHint () {
-	return KDialog::marginHint ();
-}
-
-int RKGlobals::spacingHint () {
-	return KDialog::spacingHint ();
-}
-
+#endif

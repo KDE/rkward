@@ -92,7 +92,7 @@ void RObjectBrowser::updateButtonClicked () {
 void RObjectBrowser::popupHelp () {
 	RK_TRACE (APP);
 
-	if (list_view->menuObject ()) RKGlobals::helpDialog ()->getFunctionHelp (list_view->menuObject ()->getShortName ());
+	if (list_view->menuObject ()) RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (list_view->menuObject ()->getShortName ());
 }
 
 void RObjectBrowser::popupEdit () {

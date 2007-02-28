@@ -223,7 +223,6 @@ private:
 	KAction* configure;
 
 	KMdiToolViewAccessor *watch_view;
-	KMdiToolViewAccessor *search_help_view;
 	
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;

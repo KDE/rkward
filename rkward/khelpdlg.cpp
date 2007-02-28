@@ -34,15 +34,22 @@
 #include "rkglobals.h"
 #include "rkward.h"
 #include "misc/rkcommonfunctions.h"
+#include "misc/rkdummypart.h"
 
 #define GET_HELP_URL 1
 #define HELP_SEARCH 2
 #define GET_INSTALLED_PACKAGES 3
 
-KHelpDlg::KHelpDlg (QWidget* parent, const char* name) : QWidget (parent, name) {
+RKHelpSearchWindow* RKHelpSearchWindow::main_help_search = 0;
+
+RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, SearchHelpWindow, tool_window, name) {
+	RK_TRACE (APP);
+	part = new RKDummyPart (0, this);
+	setFocusPolicy (QWidget::ClickFocus);
+	initializeActivationSignals ();
+
 	QVBoxLayout* main_layout = new QVBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
 	QHBoxLayout* selection_layout = new QHBoxLayout (main_layout, RKGlobals::spacingHint ());
-
 
 	QVBoxLayout* labels_layout = new QVBoxLayout (selection_layout, RKGlobals::spacingHint ());
 	QLabel *label = new QLabel (i18n ("Find:"), this);
@@ -51,7 +58,6 @@ KHelpDlg::KHelpDlg (QWidget* parent, const char* name) : QWidget (parent, name) 
 	label = new QLabel (i18n ("Fields:"), this);
 	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
 	labels_layout->addWidget (label);
-
 
 	QVBoxLayout* main_settings_layout = new QVBoxLayout (selection_layout, RKGlobals::spacingHint ());
 	field = new QComboBox (true, this);
@@ -76,7 +82,6 @@ KHelpDlg::KHelpDlg (QWidget* parent, const char* name) : QWidget (parent, name) 
 	packagesList->insertItem (i18n("All"));
 	fields_packages_layout->addWidget (packagesList);
 
-
 	QVBoxLayout* checkboxes_layout = new QVBoxLayout (selection_layout, RKGlobals::spacingHint ());
 	caseSensitiveCheckBox = new QCheckBox (i18n ("Case sensitive"), this);
 	checkboxes_layout->addWidget (caseSensitiveCheckBox);
@@ -96,27 +101,30 @@ KHelpDlg::KHelpDlg (QWidget* parent, const char* name) : QWidget (parent, name) 
 	connect (resultsList, SIGNAL (doubleClicked (QListViewItem*, const QPoint&, int)), this, SLOT (slotResultsListDblClicked (QListViewItem*, const QPoint&, int)));
 	main_layout->addWidget (resultsList);
 
-
 	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()[[1]]", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_INSTALLED_PACKAGES, 0);
 
 	setCaption (i18n ("Help search"));
 }
 
-KHelpDlg::~KHelpDlg () {
+RKHelpSearchWindow::~RKHelpSearchWindow () {
+	RK_TRACE (APP);
 }
 
-void KHelpDlg::getContextHelp (const QString &context_line, int cursor_pos) {
+void RKHelpSearchWindow::getContextHelp (const QString &context_line, int cursor_pos) {
+	RK_TRACE (APP);
 	QString result = RKCommonFunctions::getCurrentSymbol (context_line, cursor_pos);
 	if (result.isEmpty ()) return;
 
 	getFunctionHelp (result);
 }
 
-void KHelpDlg::getFunctionHelp (const QString &function_name) {
+void RKHelpSearchWindow::getFunctionHelp (const QString &function_name) {
+	RK_TRACE (APP);
 	RKGlobals::rInterface ()->issueCommand ("help(\"" + function_name + "\", htmlhelp=TRUE)[1]", RCommand::App | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
 }
 
-void KHelpDlg::slotFindButtonClicked () {
+void RKHelpSearchWindow::slotFindButtonClicked () {
+	RK_TRACE (APP);
 
 	if (field->currentText ().isEmpty ()) {
 		return;
@@ -156,7 +164,8 @@ void KHelpDlg::slotFindButtonClicked () {
 	field->insertItem (field->currentText ());
 }
 
-void KHelpDlg::slotResultsListDblClicked (QListViewItem * item, const QPoint &, int) {
+void RKHelpSearchWindow::slotResultsListDblClicked (QListViewItem * item, const QPoint &, int) {
+	RK_TRACE (APP);
 	if (item == NULL) {
 		return;
 	}
@@ -173,7 +182,8 @@ void KHelpDlg::slotResultsListDblClicked (QListViewItem * item, const QPoint &, 
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
 }
 
-void KHelpDlg::rCommandDone (RCommand *command) {
+void RKHelpSearchWindow::rCommandDone (RCommand *command) {
+	RK_TRACE (APP);
 	KURL url;
 	if (command->getFlags () == HELP_SEARCH) {
 		resultsList->clear ();

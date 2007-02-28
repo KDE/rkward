@@ -43,8 +43,6 @@ public:
 	static RInterface *rInterface () { return rinter; };
 /// static pointer to the RKModificationTracker
 	static RKModificationTracker *tracker () { return mtracker; };
-/// static pointer to the RKHelpDlg
-	static KHelpDlg *helpDialog () { return helpdlg; };
 /// static pointer to the RControlWindow
 	static RControlWindow *controlWindow () { return rcontrol; };
 
@@ -62,7 +60,6 @@ private:
 	friend class RKWardMainWindow;
 	static RInterface *rinter;
 	static RKModificationTracker *mtracker;
-	static KHelpDlg *helpdlg;
 	static RControlWindow *rcontrol;
 };
 

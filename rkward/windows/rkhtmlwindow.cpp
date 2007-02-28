@@ -388,7 +388,7 @@ bool RKHelpWindow::openURL (const KURL &url) {
 			ok = renderRKHelp (url);
 		} else if (url.host () == "rhelp") {
 			// TODO: find a nice solution to render this in the current window
-			RKGlobals::helpDialog ()->getFunctionHelp (url.path ().mid (1));
+			RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (url.path ().mid (1));
 			return true;
 		} else if (url.host () == "page") {
 			ok = renderRKHelp (url);

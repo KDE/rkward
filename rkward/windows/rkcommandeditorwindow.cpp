@@ -229,7 +229,7 @@ void RKCommandEditorWindow::showHelp () {
 
 	QString line = m_view->currentTextLine() + ' ';
 
-	RKGlobals::helpDialog ()->getContextHelp (line, p);
+	RKHelpSearchWindow::mainHelpSearch ()->getContextHelp (line, p);
 }
 
 void RKCommandEditorWindow::tryCompletionProxy () {
