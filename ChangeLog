@@ -1,3 +1,7 @@
+- new functions rk.describe.alternative () and rk.print.literal () for use in plugins
+- new Phillips-Perron test
+- new Mood test
+- new variance tests (F test (aka var.test), Bartlett test, Flingner test)
 - new plugin pareto chart
 - new plugin stem-and-leaf plot
 - make readline dialog store last size and position
