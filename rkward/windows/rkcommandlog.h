@@ -22,6 +22,7 @@
 #include <qtextedit.h>
 #include <kmdichildview.h>
 
+#include "rkmdiwindow.h"
 #include "../rbackend/rcommandreceiver.h"
 
 class RCommand;
@@ -38,7 +39,7 @@ class RKCommandLogPart;
 @author Thomas Friedrichsmeier
 */
 
-class RKCommandLog : public KMdiChildView, public RCommandReceiver {
+class RKCommandLog : public RKMDIWindow, public RCommandReceiver {
 	Q_OBJECT
 public: 
 /** Adds input to the log_view-window (i.e. commands issued) */
@@ -46,19 +47,14 @@ public:
 /** Adds output to the log_view-window (i.e. replies received) */
 	void newOutput (RCommand *command, ROutput *output_fragment);
 
-	static void create ();
-	static void destroy ();
 	static RKCommandLog *getLog () { return rkcommand_log; };
 
 	RKCommandLogView *getView () { return log_view; };
-	RKCommandLogPart *getPart () { return part; };
-signals:
-/** the log_view emits this, when it should be raised (apparently this can only be done from the main frame) */
-	void raiseWindow ();
+	KParts::Part *getPart ();
 protected:
 /** Command has finished. If the command has failed, it may be necessary to print some more information */
 	void rCommandDone (RCommand *command);
-	RKCommandLog ();
+	RKCommandLog (QWidget *parent, bool tool_window, char *name=0);
 	~RKCommandLog ();
 public slots:
 /** configures the log_view-window */
@@ -79,7 +75,7 @@ private:
 
 	RKCommandLogView *log_view;
 	RKCommandLogPart *part;
-
+friend class RKWardMainWindow;
 	static RKCommandLog *rkcommand_log;
 };
 

@@ -39,22 +39,7 @@
 //static
 RKCommandLog *RKCommandLog::rkcommand_log = 0;
 
-void RKCommandLog::create () {
-	RK_TRACE (APP);
-	RK_ASSERT (!rkcommand_log);
-
-	rkcommand_log = new RKCommandLog;
-}
-
-void RKCommandLog::destroy () {
-	RK_TRACE (APP);
-	RK_ASSERT (rkcommand_log);
-
-	delete rkcommand_log;
-	rkcommand_log = 0;
-}
-
-RKCommandLog::RKCommandLog () : KMdiChildView () {
+RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, CommandLogWindow, tool_window, name) {
 	RK_TRACE (APP);
 
 	log_view = new RKCommandLogView (this);
@@ -73,11 +58,15 @@ RKCommandLog::RKCommandLog () : KMdiChildView () {
 	command_input_shown = 0;
 
 	part = new RKCommandLogPart (this);
-//	initializeActivationSignals ();
+	initializeActivationSignals ();
 }
 
 RKCommandLog::~RKCommandLog(){
 	RK_TRACE (APP);
+}
+
+KParts::Part *RKCommandLog::getPart () {
+	return part;
 }
 
 void RKCommandLog::addInput (RCommand *command) {
@@ -144,7 +133,7 @@ void RKCommandLog::checkRaiseWindow (RCommand *command) {
 	if (command->type () & RCommand::Console) return;
 
 	last_raised_command = command->id ();
-	emit (raiseWindow ());
+	activate (false);
 }
 
 void RKCommandLog::newOutput (RCommand *command, ROutput *output_fragment) {

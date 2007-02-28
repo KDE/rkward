@@ -185,6 +185,12 @@ void RKWardMainWindow::doPostInit () {
 	RControlWindowPart *rcpart = new RControlWindowPart ();		// the control window needs to be initialized before startR () is called.
 	RKGlobals::rcontrol = static_cast<RControlWindow *> (rcpart->widget ());
 
+	RKCommandLog *log = new RKCommandLog (0, true, "Command log");
+	log->setIcon (SmallIcon ("text_block"));	
+	log->setToolWrapper (addToolWindow (log, KDockWidget::DockBottom, getMainDockWidget (), 10));
+	RKWorkplace::mainWorkplace ()->registerToolWindow (log);
+	RKCommandLog::rkcommand_log = log;
+
 	startR ();
 
 	QString dummy = i18n ("Please note that RKWard is still far from being finished. We feel it is already helpful for a number of tasks, but many features are lacking or buggy. You can help us by filing bug reports, feature requests, or providing feedback in any other form. Please visit http://rkward.sourceforge.net for contact information.");
@@ -197,12 +203,6 @@ void RKWardMainWindow::doPostInit () {
 	object_browser->setIcon(SmallIcon("view_tree"));
 	addToolWindow(object_browser,KDockWidget::DockLeft, getMainDockWidget(), 30 , i18n ("Existing objects in your workspace.") , i18n ("Workspace"));
 	
-	RKCommandLog::getLog ()->setName ("Command log");		// TODO: move to RKCommandLog
-	RKCommandLog::getLog ()->setIcon (SmallIcon ("text_block"));	// TODO: move to RKCommandLog
-	watch_view = addToolWindow (RKCommandLog::getLog (), KDockWidget::DockBottom, getMainDockWidget (), 10);
-	connect (RKCommandLog::getLog (), SIGNAL (raiseWindow ()), this, SLOT (raiseWatch ()));
-	partManager ()->addPart (RKCommandLog::getLog ()->getPart (), false);
-
 	RKGlobals::rcontrol->setCaption (i18n ("Pending Jobs"));
 	RKGlobals::rcontrol->setName ("rcontrol");
 	addToolWindow (RKGlobals::rcontrol, KDockWidget::DockBottom, getMainDockWidget (), 10);
@@ -538,15 +538,6 @@ bool RKWardMainWindow::doQueryQuit () {
 	}
 
 	return true;
-}
-
-void RKWardMainWindow::raiseWatch () {
-	RK_TRACE (APP);
-	watch_view->show ();
-	KMdiChildView *window = activeWindow ();
-	if (window) {
-		window->activate ();
-	}
 }
 
 void RKWardMainWindow::invokeRHelp () {

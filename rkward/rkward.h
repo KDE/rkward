@@ -134,8 +134,6 @@ public slots:
 	void reportRKWardBug ();
 	/** not quite sure, why I have to reimplement this from KMainWindow */
 	void showAboutApplication ();
-	/** raises the watch window */
-	void raiseWatch ();
 	/** creates a new (empty) data.frame */
 	void slotNewDataFrame ();
 	/** open a file and load it into the document*/
@@ -221,8 +219,6 @@ private:
 	KAction* window_detach;
 	
 	KAction* configure;
-
-	KMdiToolViewAccessor *watch_view;
 	
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;

@@ -74,7 +74,6 @@ RInterface::RInterface () {
 	RCommandStack::regular_stack = new RCommandStack ();
 	running_command_canceled = 0;
 
-	RKCommandLog::create ();
 	r_thread = new RThread ();
 
 	flush_timer = new QTimer (this);
@@ -103,7 +102,6 @@ RInterface::~RInterface(){
 	}
 	delete r_thread;
 	delete flush_timer;
-	RKCommandLog::destroy ();
 	delete window_catcher;
 }
 
