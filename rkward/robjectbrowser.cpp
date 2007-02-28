@@ -29,7 +29,7 @@
 #include <kmessagebox.h>
 
 #include "rkward.h"
-#include "khelpdlg.h"
+#include "windows/rkhelpsearchwindow.h"
 #include "windows/rkcommandeditorwindow.h"
 #include "rkglobals.h"
 #include "core/robjectlist.h"

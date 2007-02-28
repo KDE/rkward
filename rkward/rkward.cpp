@@ -73,7 +73,7 @@
 #include "windows/rkworkplaceview.h"
 #include "windows/rkworkplace.h"
 #include "windows/rkcommandlog.h"
-#include "khelpdlg.h"
+#include "windows/rkhelpsearchwindow.h"
 #include "rkconsole.h"
 #include "debug.h"
 

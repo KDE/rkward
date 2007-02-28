@@ -20,8 +20,8 @@
 
 #include <qwidget.h>
 
-#include "rbackend/rcommandreceiver.h"
-#include "windows/rkmdiwindow.h"
+#include "../rbackend/rcommandreceiver.h"
+#include "rkmdiwindow.h"
 
 class QComboBox;
 class QCheckBox;

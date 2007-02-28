@@ -51,7 +51,7 @@
 #include "../core/robjectlist.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
-#include "../khelpdlg.h"
+#include "rkhelpsearchwindow.h"
 #include "rkcommandeditorwindowpart.h"
 
 #include "../debug.h"

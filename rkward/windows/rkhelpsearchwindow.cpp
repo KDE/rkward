@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "khelpdlg.h"
+#include "rkhelpsearchwindow.h"
 
 #include <klocale.h>
 #include <kurl.h>
@@ -28,13 +28,13 @@
 #include <qlayout.h>
 #include <qlabel.h>
 
-#include "rbackend/rinterface.h"
-#include "rbackend/rcommandreceiver.h"
-#include "debug.h"
-#include "rkglobals.h"
-#include "rkward.h"
-#include "misc/rkcommonfunctions.h"
-#include "misc/rkdummypart.h"
+#include "../rbackend/rinterface.h"
+#include "../rbackend/rcommandreceiver.h"
+#include "../debug.h"
+#include "../rkglobals.h"
+#include "../rkward.h"
+#include "../misc/rkcommonfunctions.h"
+#include "../misc/rkdummypart.h"
 
 #define GET_HELP_URL 1
 #define HELP_SEARCH 2
@@ -213,4 +213,4 @@ void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 	}
 }
 
-#include "khelpdlg.moc"
+#include "rkhelpsearchwindow.moc"

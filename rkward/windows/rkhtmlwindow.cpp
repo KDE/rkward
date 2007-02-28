@@ -32,7 +32,7 @@
 #include <qdir.h>
 
 #include "../rkglobals.h"
-#include "../khelpdlg.h"
+#include "rkhelpsearchwindow.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
