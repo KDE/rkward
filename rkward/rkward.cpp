@@ -182,8 +182,8 @@ void RKWardMainWindow::doPostInit () {
 	readOptions();
 	object_browser = new RObjectBrowser ();
 
-	RControlWindowPart *rcpart = new RControlWindowPart ();		// the control window needs to be initialized before startR () is called.
-	RKGlobals::rcontrol = static_cast<RControlWindow *> (rcpart->widget ());
+	RKGlobals::rcontrol = new RControlWindow (0, true, "rcontrol");		// the control window needs to be initialized before startR () is called.
+	RKGlobals::rcontrol->hide ();		// this line is important! RControlWindow must do some initializations on first show, and be hidden until then.
 
 	RKCommandLog *log = new RKCommandLog (0, true, "Command log");
 	log->setIcon (SmallIcon ("text_block"));	
@@ -204,9 +204,8 @@ void RKWardMainWindow::doPostInit () {
 	addToolWindow(object_browser,KDockWidget::DockLeft, getMainDockWidget(), 30 , i18n ("Existing objects in your workspace.") , i18n ("Workspace"));
 	
 	RKGlobals::rcontrol->setCaption (i18n ("Pending Jobs"));
-	RKGlobals::rcontrol->setName ("rcontrol");
-	addToolWindow (RKGlobals::rcontrol, KDockWidget::DockBottom, getMainDockWidget (), 10);
-	RKGlobals::rcontrol->hide ();		// this line is important! RControlWindow must do some initializations on first show, and be hidden until then.
+	RKGlobals::rcontrol->setToolWrapper (addToolWindow (RKGlobals::rcontrol, KDockWidget::DockBottom, getMainDockWidget (), 10));
+	RKWorkplace::mainWorkplace ()->registerToolWindow (RKGlobals::rcontrol);
 
 	RKConsole *console = new RKConsole (0, true, "r_console");
 	console->setIcon (SmallIcon ("konsole"));

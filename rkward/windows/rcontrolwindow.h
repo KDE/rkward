@@ -2,7 +2,7 @@
                           rcontrolwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -19,17 +19,19 @@
 #define RCONTROLWINDOW_H
 
 #include <kparts/part.h>
-#include <kmdichildview.h>
 
 #include <qmap.h>
 #include <qlabel.h>
 #include <qlistview.h>
+
+#include "rkmdiwindow.h"
 
 class QPushButton;
 class RCommand;
 class RCommandChain;
 class RChainOrCommand;
 class RControlWindowListViewItem;
+class RControlWindowPart;
 
 /**
 	\brief Interface to control R command execution
@@ -45,16 +47,14 @@ to allow reuse
 
 @author Thomas Friedrichsmeier
 */
-class RControlWindow : public KMdiChildView {
+class RControlWindow : public RKMDIWindow {
 	Q_OBJECT
-friend class RControlWindowPart;
-protected:
-/** constructor. Protected. Do not create an instance of this class directly. Rather, create a RControlWindowPart.
+public:
+/** constructor.
 @param parent parent QWidget, usually RKGlobals::rkApp () or similar */
-	explicit RControlWindow (QWidget *parent = 0);
+	RControlWindow (QWidget *parent, bool tool_window, char *name=0);
 /** destructor */
 	~RControlWindow ();
-public:
 /** Add new chain to the RControlWindow. Has no effect unless RControlWindow::isShown () */
 	void addChain (RCommandChain *chain);
 /** Add new command to the RControlWindow. The command is added to the given parent chain. Has no effect unless RControlWindow::isShown () */
@@ -67,6 +67,8 @@ public:
 	void removeCommand (RCommand *command);
 /** Set given command as running. Has no effect unless RControlWindow::isShown ()*/
 	void setCommandRunning (RCommand *command);
+
+	KParts::Part *getPart ();
 
 /** reimplemented to refresh list of commands when showing. This is needed, as the RControlWindow is only kept up to date as long as it is shown. Hence, if it was hidden, and then gets shown, it will have to update the entire list. */
 	void show ();
@@ -97,6 +99,8 @@ private:
 	QMap <RCommand *, RControlWindowListViewItem *> command_map;
 	QMap <RCommandChain *, RControlWindowListViewItem *> chain_map;
 
+	RControlWindowPart *part;
+
 	bool paused;
 };
 
@@ -109,9 +113,10 @@ Part interface to RControlWindow
 */
 class RControlWindowPart : public KParts::Part {
 	Q_OBJECT
-public:
+friend class RControlWindow;
+protected:
 /** constructor. */
-	RControlWindowPart ();
+	RControlWindowPart (RControlWindow *widget);
 /** destructor */
 	~RControlWindowPart ();
 };

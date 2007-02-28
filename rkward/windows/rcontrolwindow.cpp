@@ -2,7 +2,7 @@
                           rcontrolwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -32,8 +32,10 @@
 #include "../rkward.h"
 #include "../debug.h"
 
-RControlWindow::RControlWindow (QWidget *parent) : KMdiChildView (parent) {
+RControlWindow::RControlWindow (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, PendingJobsWindow, tool_window, name) {
 	RK_TRACE (APP);
+	part = new RControlWindowPart (this);
+	initializeActivationSignals ();
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 	QHBoxLayout *button_hbox = new QHBoxLayout (main_vbox, RKGlobals::spacingHint ());
@@ -69,10 +71,14 @@ RControlWindow::~RControlWindow () {
 	RK_TRACE (APP);
 }
 
+KParts::Part *RControlWindow::getPart () {
+	return part;
+}
+
 void RControlWindow::show () {
 	RK_TRACE (APP);
 
-	KMdiChildView::show ();
+	RKMDIWindow::show ();
 	MUTEX_LOCK;
 	refreshCommands ();
 	MUTEX_UNLOCK;
@@ -293,9 +299,9 @@ void RControlWindow::configureButtonClicked () {
 //############# END RContolWindow #######################
 //############# BEGIN RContolWindowPart ###################
 
-RControlWindowPart::RControlWindowPart () : KParts::Part () {
+RControlWindowPart::RControlWindowPart (RControlWindow *widget) : KParts::Part () {
 	RK_TRACE (APP);
-	setWidget (new RControlWindow (0));
+	setWidget (widget);
 }
 
 RControlWindowPart::~RControlWindowPart () {

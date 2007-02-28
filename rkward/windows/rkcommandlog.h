@@ -2,7 +2,7 @@
                           rkcommandlog  -  description
                              -------------------
     begin                : Sun Nov 3 2002
-    copyright            : (C) 2002, 2004, 2005, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
