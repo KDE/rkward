@@ -31,6 +31,32 @@ class RObject;
 class RCommandChain;
 class RKWorkplaceView;
 class RKEditor;
+class KActionCollection;
+class KAction;
+
+/** Simple class to store the history of recently used RKMDIWindow */
+class RKMDIWindowHistory : public QObject {
+	Q_OBJECT
+public:
+	RKMDIWindowHistory (QObject *parent);
+	~RKMDIWindowHistory ();
+
+	void addActions (KActionCollection *ac, const char *prev_id, const char *next_id);
+	bool haveNext ();
+	bool havePrev ();
+public slots:
+	void next ();
+	void prev ();
+	void windowActivated (RKMDIWindow *window);
+private:
+	void updateActions ();
+
+	RKMDIWindow *current;
+	QValueList<RKMDIWindow *> back_list;
+	QValueList<RKMDIWindow *> forward_list;
+	KAction *next_action;
+	KAction *prev_action;
+};
 
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the workplace, which are detached, etc. Also it is responsible for creating and manipulating those windows.
 It also provides a QWidget (RKWorkplace::view ()), which actually manages the document windows (only those, so far. I.e. this is a half-replacement for KMdi, which will be gone in KDE 4). Currently layout of the document windows is always tabbed. */
@@ -41,6 +67,7 @@ public:
 @param parent: The parent widget for the workspace view (see view ()) */
 	explicit RKWorkplace (QWidget *parent);
 	~RKWorkplace ();
+	void initActions (KActionCollection *ac, const char *prev_id, const char *next_id);
 
 /** @returns a pointer to the view of the workplace. Since possibly the workplace layout might change, better not rely on this pointer being valid for long */
 	RKWorkplaceView *view () { return wview; };
@@ -141,6 +168,7 @@ private:
 	static RKWorkplace *main_workplace;
 
 	void restoreWorkplaceItem (const QString &desc);
+	RKMDIWindowHistory *history;
 };
 
 #endif

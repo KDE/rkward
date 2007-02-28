@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.4.6">
+<kpartgui name="rkward" version="0.4.7">
 <MenuBar>
 	<Menu name="file"><text>&amp;File</text>
 		<Menu name="new_data"><text>&amp;New</text>
@@ -39,6 +39,9 @@
 		<Action name="window_close"/>
 		<Action name="window_close_all"/>
 		<Action name="close_all_editors"/>
+		<Separator/>
+		<Action name="next_window"/>
+		<Action name="prev_window"/>
 		<Separator/>
 		<Action name="window_detach"/>
 	</Menu>

@@ -111,12 +111,11 @@ void RKMDIWindow::prepareToBeDetached () {
 bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
 	//RK_TRACE (APP);
 
-#warning TODO
-// TODO: use partmanager's activePartChanged in rkward.cpp instead. There will have to be special handling in DetachedWindowContainer, anyway
 	RK_ASSERT (watched == getPart ());
 	if (KParts::PartActivateEvent::test (e)) {
 		KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *> (e);
 		if (ev->activated ()) {
+			emit (windowActivated (this));
 			qDebug ("activated: %s", getDescription ().latin1 ());
 		} else {
 			qDebug ("deactivated: %s", getDescription ().latin1 ());

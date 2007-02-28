@@ -91,6 +91,8 @@ signals:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */
 	void captionChanged (RKMDIWindow *);
+/** This signal is emitted, when the window was activated *with* focus */
+	void windowActivated (RKMDIWindow *);
 protected:
 	void initializeActivationSignals ();
 friend class RKWorkplace;

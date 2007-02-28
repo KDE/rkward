@@ -53,12 +53,19 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QObject (parent) {
 
 	main_workplace = this;
 	wview = new RKWorkplaceView (parent);
+	history = new RKMDIWindowHistory (this);
 }
 
 RKWorkplace::~RKWorkplace () {
 	RK_TRACE (APP);
 
 //	closeAll ();	// not needed, as the windows will autodelete themselves using QObject mechanism. Of course, closeAll () should be called *before* quitting.
+}
+
+void RKWorkplace::initActions (KActionCollection *ac, const char *prev_id, const char *next_id) {
+	RK_TRACE (APP);
+
+	history->addActions (ac, prev_id, next_id);
 }
 
 void RKWorkplace::attachWindow (RKMDIWindow *window) {
@@ -98,6 +105,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 
 	windows.append (window);
 	connect (window, SIGNAL (destroyed (QObject *)), this, SLOT (windowDestroyed (QObject *)));
+	connect (window, SIGNAL (windowActivated(RKMDIWindow*)), history, SLOT (windowActivated(RKMDIWindow*)));
 	if (attached) attachWindow (window);
 	else detachWindow (window, false);
 }
@@ -390,5 +398,92 @@ void RKWorkplace::restoreWorkplaceItem (const QString &desc) {
 	}
 }
 
+
+///////////////////////// END RKWorkplace ////////////////////////////
+///////////////////// BEGIN RKMDIWindowHistory ///////////////////////
+
+RKMDIWindowHistory::RKMDIWindowHistory (QObject *parent) : QObject (parent) {
+	RK_TRACE (APP);
+
+	current = 0;
+	prev_action = next_action = 0;
+}
+
+RKMDIWindowHistory::~RKMDIWindowHistory () {
+	RK_TRACE (APP);
+}
+
+void RKMDIWindowHistory::addActions (KActionCollection *ac, const char *prev_id, const char *next_id) {
+	RK_TRACE (APP);
+
+	prev_action = new KAction (i18n ("Previous Window"), 0, 0, this, SLOT (prev ()), ac, prev_id);
+	next_action = new KAction (i18n ("Next Window"), 0, 0, this, SLOT (next ()), ac, next_id);
+	updateActions ();
+}
+
+void RKMDIWindowHistory::windowActivated (RKMDIWindow *window) {
+	RK_TRACE (APP);
+
+	if (!window) return;
+	if (window == current) return;
+
+	forward_list.clear ();
+	if (current) back_list.append (current);
+
+	current = window;
+	updateActions ();
+}
+
+void RKMDIWindowHistory::next () {
+	RK_TRACE (APP);
+
+	if (!haveNext ()) return;
+	back_list.append (current);
+	current = forward_list.first ();
+	forward_list.pop_front ();
+
+	updateActions ();
+
+	RK_ASSERT (current);
+	current->activate ();
+}
+
+void RKMDIWindowHistory::prev () {
+	RK_TRACE (APP);
+
+	if (!havePrev ()) return;
+	forward_list.push_front (current);
+	current = back_list.last ();
+	back_list.pop_back ();
+
+	updateActions ();
+
+	RK_ASSERT (current);
+	current->activate ();
+}
+
+bool RKMDIWindowHistory::haveNext () {
+	RK_TRACE (APP);
+
+	return (!forward_list.isEmpty ());
+}
+
+bool RKMDIWindowHistory::havePrev () {
+	RK_TRACE (APP);
+
+	return (!back_list.isEmpty ());
+}
+
+void RKMDIWindowHistory::updateActions () {
+	RK_TRACE (APP);
+
+	if (next_action) {
+		next_action->setEnabled (haveNext ());
+	}
+
+	if (prev_action) {
+		prev_action->setEnabled (havePrev ());
+	}
+}
 
 #include "rkworkplace.moc"

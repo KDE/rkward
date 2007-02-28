@@ -118,6 +118,14 @@ RKWardMainWindow::RKWardMainWindow (KURL *load_url) : DCOPObject ("rkwardapp"), 
 	initActions();
 	initStatusBar();
 
+	KMdiChildView *dummy = new KMdiChildView (this);
+	QVBoxLayout *layout = new QVBoxLayout (dummy);
+	addWindow (dummy);
+	new RKWorkplace (dummy);
+	RKWorkplace::mainWorkplace ()->initActions (actionCollection (), "prev_window", "next_window");
+	layout->addWidget (RKWorkplace::mainWorkplace ()->view ());
+	connect (RKWorkplace::mainWorkplace ()->view (), SIGNAL (captionChanged (const QString &)), this, SLOT (setCaption (const QString &)));
+
 	///////////////////////////////////////////////////////////////////
 	// build the interface
 
@@ -140,13 +148,6 @@ RKWardMainWindow::RKWardMainWindow (KURL *load_url) : DCOPObject ("rkwardapp"), 
 	connect (partManager (), SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
 	connect (partManager (), SIGNAL (partAdded (KParts::Part *)), this, SLOT (partAdded (KParts::Part *)));
 	connect (partManager (), SIGNAL (partRemoved (KParts::Part *)), this, SLOT (partRemoved (KParts::Part *)));
-
-	KMdiChildView *dummy = new KMdiChildView (this);
-	QVBoxLayout *layout = new QVBoxLayout (dummy);
-	addWindow (dummy);
-	new RKWorkplace (dummy);
-	layout->addWidget (RKWorkplace::mainWorkplace ()->view ());
-	connect (RKWorkplace::mainWorkplace ()->view (), SIGNAL (captionChanged (const QString &)), this, SLOT (setCaption (const QString &)));
 
 	if (!kapp->dcopClient ()->isRegistered ()) {
 		kapp->dcopClient ()->registerAs ("rkward");
