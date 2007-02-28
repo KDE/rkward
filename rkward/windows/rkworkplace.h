@@ -115,7 +115,7 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 @param cahin command chain to place the command in */
 	void clearWorkplaceDescription (RCommandChain *chain=0);
 
-	QString makeWorkplaceDescription ();
+	QString makeWorkplaceDescription (const QString &sep, bool quote);
 
 /** In the current design there is only ever one workplace. Use this static function to reference it.
 @returns a pointer to the workplace */

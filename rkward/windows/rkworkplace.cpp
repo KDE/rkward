@@ -312,15 +312,19 @@ RKMDIWindow *RKWorkplace::activeAttachedWindow () {
 	return (static_cast<RKMDIWindow *> (view ()->activePage ()));
 }
 
-QString RKWorkplace::makeWorkplaceDescription () {
+QString RKWorkplace::makeWorkplaceDescription (const QString &sep, bool quote) {
 	RK_TRACE (APP);
 
 	QString workplace_description;
 	bool first = true;
 	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
+		if ((*it)->isToolWindow ()) continue;
+
 		if (first) first = false;
-		else workplace_description.append ("\n");
-		workplace_description.append ((*it)->getDescription ());
+		else workplace_description.append (sep);
+
+		if (!quote) workplace_description.append ((*it)->getDescription ());
+		else workplace_description.append (RObject::rQuote ((*it)->getDescription ()));
 	}
 	return workplace_description;
 }
@@ -329,15 +333,7 @@ void RKWorkplace::saveWorkplace (RCommandChain *chain) {
 	RK_TRACE (APP);
 	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
-	QString workplace_description;
-
-	bool first = true;
-	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
-		if (first) first = false;
-		else workplace_description.append (", ");
-		workplace_description.append (RObject::rQuote ((*it)->getDescription ()));
-	}
-	workplace_description = ".rk.workplace.save <- c (" + workplace_description + ')';
+	QString workplace_description = ".rk.workplace.save <- c (" + makeWorkplaceDescription (", ", true) + ')';
 
 	RKGlobals::rInterface ()->issueCommand (workplace_description, RCommand::App | RCommand::Sync, i18n ("Save Workplace layout"), 0, 0, chain); 
 }

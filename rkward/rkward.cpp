@@ -513,7 +513,7 @@ bool RKWardMainWindow::doQueryQuit () {
 	slotSetStatusBarText (i18n ("Exiting..."));
 	saveOptions ();
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
-		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription (), kapp->config ());
+		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ("\n", false), kapp->config ());
 	}
 
 //	if (!RObjectList::getGlobalEnv ()->isEmpty ()) {
