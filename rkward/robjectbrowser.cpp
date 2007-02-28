@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -37,14 +37,17 @@
 #include "core/rkmodificationtracker.h"
 #include "rbackend/rinterface.h"
 #include "misc/rkobjectlistview.h"
+#include "misc/rkdummypart.h"
 #include "windows/rkworkplace.h"
 #include "dataeditor/rkeditor.h"
 #include "robjectviewer.h"
 
 #include "debug.h"
 
-RObjectBrowser::RObjectBrowser () : QWidget () {
+RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, WorkspaceBrowserWindow, tool_window, name) {
 	RK_TRACE (APP);
+	part = new RKDummyPart (0, this);
+	initializeActivationSignals ();
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 

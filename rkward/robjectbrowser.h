@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -17,7 +17,7 @@
 #ifndef ROBJECTBROWSER_H
 #define ROBJECTBROWSER_H
 
-#include <qwidget.h>
+#include "windows/rkmdiwindow.h"
 
 class RKObjectListView;
 class RKObjectListViewSettings;
@@ -31,21 +31,20 @@ class QPopupMenu;
 class RObject;
 class RKCommandEditorWindow;
 
-
 /**
 This widget provides a browsable list of all objects in the R workspace
 
 @author Thomas Friedrichsmeier
 */
-class RObjectBrowser : public QWidget {
+class RObjectBrowser : public RKMDIWindow {
 Q_OBJECT
 public:
-    RObjectBrowser ();
+	RObjectBrowser (QWidget *parent, bool tool_window, char *name=0);
+	~RObjectBrowser ();
 
-    ~RObjectBrowser ();
-	
 	enum PopupItems { Help=1, Edit=2, View=3, Rename=4, Copy=5, CopyToGlobalEnv=6, Delete=7 };
-	
+
+	KParts::Part *getPart () { return part; };
 public slots:
 	void updateButtonClicked ();
 	void contextMenuCallback (RKListViewItem *item, bool *suppress);
@@ -65,7 +64,8 @@ private:
 	void initialize ();
 
 	QPushButton *update_button;
-	RKObjectListView *list_view;	
+	RKObjectListView *list_view;
+	KParts::Part *part;
 };
 
 /** This class provides a widget to switch quickly between the most important RKObjectListViewSettings */

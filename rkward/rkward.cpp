@@ -180,7 +180,8 @@ void RKWardMainWindow::doPostInit () {
 	RK_TRACE (APP);
 
 	readOptions();
-	object_browser = new RObjectBrowser ();
+	//It's necessary to give a different name to all tool windows, or they won't be properly displayed
+	object_browser = new RObjectBrowser (0, true, "workspace");
 
 	RKGlobals::rcontrol = new RControlWindow (0, true, "rcontrol");		// the control window needs to be initialized before startR () is called.
 	RKGlobals::rcontrol->hide ();		// this line is important! RControlWindow must do some initializations on first show, and be hidden until then.
@@ -198,11 +199,10 @@ void RKWardMainWindow::doPostInit () {
 	
 	initPlugins ();
 
-	//It's necessary to give a different name to all tool windows, or they won't be properly displayed
-	object_browser->setName("workspace"); 
 	object_browser->setIcon(SmallIcon("view_tree"));
-	addToolWindow(object_browser,KDockWidget::DockLeft, getMainDockWidget(), 30 , i18n ("Existing objects in your workspace.") , i18n ("Workspace"));
-	
+	object_browser->setToolWrapper (addToolWindow(object_browser,KDockWidget::DockLeft, getMainDockWidget(), 30, i18n ("Existing objects in your workspace."), i18n ("Workspace")));
+	RKWorkplace::mainWorkplace ()->registerToolWindow (object_browser);
+
 	RKGlobals::rcontrol->setCaption (i18n ("Pending Jobs"));
 	RKGlobals::rcontrol->setToolWrapper (addToolWindow (RKGlobals::rcontrol, KDockWidget::DockBottom, getMainDockWidget (), 10));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (RKGlobals::rcontrol);
