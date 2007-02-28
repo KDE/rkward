@@ -1,0 +1,30 @@
+<!DOCTYPE rkplugin>
+
+<document>
+	<code file="F_test.php"/>
+	<help file="F_test.rkh"/>
+	
+	<dialog label="F test">
+		<tabbook>
+			<tab label="Basic settings" id="tab_variables">
+				<row>
+					<varselector id="vars"/>
+					<column>
+						<varslot type="numeric" id="x" source="vars" required="true" label="compare"/>
+						<varslot type="numeric" id="y" source="vars" required="true" label="against"/>
+						<radio id="alternative" label="using test hypothesis">
+							<option value="two.sided" label="Two-sided"/>
+							<option value="greater" label="First is greater"/>
+							<option value="less" label="Second is greater"/>
+						</radio>
+					</column>
+				</row>
+			</tab>
+			<tab label="Options" id="tab_options">
+				<spinbox id="ratio" type="real" label="ratio" initial="1"/>
+				<spinbox  id="conflevel" type="real" label="confidence level" min="0" max="1" initial="0.95"/>
+			</tab>
+		</tabbook>
+	</dialog>
+	
+</document>

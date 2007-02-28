@@ -1,0 +1,27 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This test performs the F Test to compare two variances.
+	</summary>
+
+	<usage>
+		Select two samples from normal populations to compare the variances by the F test. For this test the samples need to be numeric vectors (see below for details).
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric.</setting>
+		<setting id="y">Select the data to be computed. The vectors need to be numeric.</setting>
+		<setting id="alternative">Here you can specify the alternative hypothesis. It must be one of "two sided", "greater" or "less".</setting>
+		<caption id="tab_options"/>
+		<setting id="ratio">Defines the hypothesized ratio of the population variances.</setting>
+		<setting id="conflevel">Here you can define the confidence level of the interval (95% is typical).</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/var.test"/></li>
+			<li><link href="rkward://component/ansari_bradley_test"/></li>
+		</ul>
+
+	</related>
+</document>

@@ -1,0 +1,21 @@
+<!DOCTYPE rkplugin>
+
+<document>
+	<code file="fligner_test.php"/>
+	<help file="fligner_test.rkh"/>
+	
+	<dialog label="Fligner-Killeen Test of Homogeneity of Variances">
+		<tabbook>
+			<tab label="Basic settings" id="tab_variables">
+				<row>
+					<varselector id="vars"/>
+					<column>
+						<varslot type="numeric" id="x" source="vars" required="true" label="samples"/>
+						<varslot type="factor" id="y" source="vars" required="true" label="group"/>
+					</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+	
+</document>

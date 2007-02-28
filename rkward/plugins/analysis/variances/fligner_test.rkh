@@ -1,0 +1,24 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This test performs the Fligner-Killeen Test of Homogeneity of Variances.
+	</summary>
+
+	<usage>
+		Select the data to perform the Fligner-Killeen (median) test of the null that the variances in each of the groups (samples) are the same. For this test the samples need to be numeric vectors (see below for details).
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric.</setting>
+		<setting id="y">Select the data to be computed. The vectors need to be a factor.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/fligner.test"/></li>
+			<li><link href="rkward://component/F_test"/></li>
+			<li><link href="rkward://component/ansari_bradley_test"/></li>
+		</ul>
+
+	</related>
+</document>
