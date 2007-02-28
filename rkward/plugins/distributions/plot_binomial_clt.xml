@@ -18,6 +18,9 @@
 		<convert id="isHistogram" sources="function.string" mode="equals" standard="hist"/>
 		<connect client="tab_histoptions.enabled" governor="isHistogram"/>
 
+		<convert id="isDist" sources="function.string" mode="equals" standard="dist"/>
+		<connect client="tab_distfunction.enabled" governor="isDist"/>
+
 		<connect client="normpointtype.enabled" governor="drawnorm.state"/>
 		<connect client="normlinecol.color.enabled" governor="drawnorm.state"/>
 	</logic>
@@ -65,6 +68,9 @@
 			</tab>
 			<tab id="tab_histoptions" label="Histogram">
 				<embed id="histogram_opt" component="rkward::histogram_options" label="Histogram Options"/>
+			</tab>
+			<tab id="tab_distfunction" label="Distribution function">
+				<checkbox id="dist_lowertail" label="Lower tail" checked="true"/>
 			</tab>
 		</tabbook>
 	</dialog>

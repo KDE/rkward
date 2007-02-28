@@ -20,6 +20,10 @@
 		<convert id="isbreaks_vec" sources="histbreaksFunction.string" mode="equals" standard="vec"/>
 		<connect client="histbreaks_veclength.enabled" governor="isbreaks_vec"/>
 
+		<convert id="isbreaks_int" sources="histbreaksFunction.string" mode="equals" standard="int"/>
+		<convert id="isbreaks_intORvec" mode="or" sources="isbreaks_int;isbreaks_vec"/>
+		<connect client="include_lowest.enabled" governor="isbreaks_intORvec"/>
+
 		<convert id="isdensityGT0" mode="range" sources="density.int" min="1" />
 		<convert id="ishistlty_notblank" sources="histlinetype.string" mode="notequals" standard="blank" />
 		<convert id="ishistlty_blank" sources="histlinetype.string" mode="equals" standard="blank" />
@@ -62,7 +66,10 @@
 						<spinbox id="histbreaks_veclength" label="Vector length" type="integer" min="1" initial="10"/>
 					</row>
 					<checkbox id="rightclosed" label="Right closed" checked="true"/>
+					<row>
 					<checkbox id="include_lowest" label="Include in lowest cell" checked="true"/>
+					<text id="inclow_text">(For vector valued breaks)</text>
+				</row>
 				</frame>
 			</column>
 			<column>

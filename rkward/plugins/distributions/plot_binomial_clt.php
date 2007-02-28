@@ -44,9 +44,9 @@ function doPrintout ($final) {
 	}
 
 	if ($fun == "hist") {
-		$histbreaksoptions = getRK_val ("histogram_opt.code.calculate");
-		$histoptions = getRK_val ("histogram_opt.code.printout");
-		$histoptions .= getRK_val("plotoptions.code.printout");
+		$histcalcoptions = getRK_val ("histogram_opt.code.calculate");
+		$histplotoptions = getRK_val ("histogram_opt.code.printout");
+		$histplotoptions .= getRK_val("plotoptions.code.printout");
 	}
 ?>
 rk.temp.cltdistrib <- list()
@@ -65,9 +65,9 @@ rk.graph.on ()
 <? }
   if ($fun == "hist") {
 ?>
-rk.temp.cltdistrib$hist <- hist(rk.temp.cltdistrib$avg, plot=FALSE<? echo ($histbreaksoptions); ?>);
+rk.temp.cltdistrib$hist <- hist(rk.temp.cltdistrib$avg, plot=FALSE<? echo ($histcalcoptions); ?>);
 rk.temp.cltdistrib$ylim <- c(0,max(c(rk.temp.cltdistrib$hist$density, rk.temp.cltdistrib$normY)));
-try( plot(rk.temp.cltdistrib$hist, ylim=rk.temp.cltdistrib$ylim<? echo ($histoptions); ?>) );
+try( plot(rk.temp.cltdistrib$hist, ylim=rk.temp.cltdistrib$ylim<? echo ($histplotoptions); ?>) );
 <?
   }
 ?>
