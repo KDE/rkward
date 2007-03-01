@@ -15,7 +15,7 @@ rk.temp <- fligner.test (eval (rk.temp.x), eval (rk.temp.y))
 function printout () {
 ?>
 rk.header ("Fligner-Killeen Test of Homogeneity of Variances",
-	parameters=list ("Sample", paste (rk.get.description (rk.temp.x, is.substitute=TRUE), "Group", rk.get.description (rk.temp.y, is.substitute=TRUE))))
+	parameters=list ("Compare", paste (rk.get.description (rk.temp.x, is.substitute=TRUE), "and", rk.get.description (rk.temp.y, is.substitute=TRUE))))
 
 rk.results (list (
 	'Variables'=rk.get.description (rk.temp.x, rk.temp.y, is.substitute=TRUE),
