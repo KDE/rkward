@@ -7,7 +7,7 @@ function calculate () {
 ?>
 rk.temp.x <- substitute (<? getRK ("x"); ?>)
 rk.temp.y <- substitute (<? getRK ("y"); ?>)
-rk.temp <- var.test (eval (rk.temp.x), eval (rk.temp.y), alternative = "<? getRK ("alternative"); ?>")
+rk.temp <- mood.test (eval (rk.temp.x), eval (rk.temp.y), alternative = "<? getRK ("alternative"); ?>")
 
 <?
 }
