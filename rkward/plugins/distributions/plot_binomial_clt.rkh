@@ -19,7 +19,13 @@
 		<setting id="plotoptions">Various plot options.</setting>
 		<setting id="preview">Preview button.</setting>
 		<caption id="tab_histoptions"/>
-		<setting id="histogram_opt">The 'Frequency' checkbox has been disabled because, in this situation, drawing the histogram with <i>freq=TRUE</i> doesnot make sense. Also, since histogram is the main plot, 'Add to current plot' checkbox has also been disabled. See RkWard help on <link href="rkward://component/histogram_options"/> for other histogram centric details.</setting>
+		<setting id="histogram_opt">The 'Frequency' checkbox is unavailable because, in this situation, drawing the histogram with <i>freq=TRUE</i> doesnot make sense. Also, since histogram is the main plot, 'Add to current plot' checkbox has also been disabled. See RkWard help on <link href="rkward://component/histogram_options"/> for other histogram centric details.</setting>
+		<caption id="tab_distfunction"/>
+		<setting id="dist_stepfun" label="Stepfunction options">See the help on step-function options plugin. The 'Add to current plot' option is unavailable.</setting>
+		<setting id="frame_col_y0"></setting>
+		<setting id="frame_col_y1"> The above two options are used to set the color for the horizontal lines at y = 0 and y = 1 respectively. Specifically, this is the <i>col.01line</i> argument to <b>ecdf</b>. If only the one is provided (i.e the other is set as 'Default') then both the line are of the specified color. Otherwise (i.e., when both the colors are provided) both the colors are provided as a character vector.</setting>
+		<caption id="frame_rug"/>
+		<setting id="addRugtoplot"> Check this option to add a <b>rug</b> to the current plot. See the R reference on 'rug' for more detials. All the available options, namely, 'Side of Rug', 'Tick size', Tick width' and 'Color' are self evident.</setting>
 	</settings>
 	<related>
 		<ul>
@@ -28,6 +34,8 @@
 			<li><link href="rkward://rhelp/Normal"/></li>
 			<li><link href="rkward://rhelp/hist"/></li>
 			<li><link href="rkward://rhelp/rect"/></li>
+			<li><link href="rkward://component/plot_stepfun_options"/></li>
+			<li><link href="rkward://rhelp/rug"/></li>
 		</ul>
 	</related>
 </document>

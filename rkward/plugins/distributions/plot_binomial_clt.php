@@ -43,11 +43,35 @@ function doPrintout ($final) {
 	 $normSigma = sqrt($distVar);
 	}
 
+	$plotoptions = getRK_val("plotoptions.code.printout");
 	if ($fun == "hist") {
+		$normFun = "dnorm";
 		$histcalcoptions = getRK_val ("histogram_opt.code.calculate");
 		$histplotoptions = getRK_val ("histogram_opt.code.printout");
-		$histplotoptions .= getRK_val("plotoptions.code.printout");
+		$histplotoptions .= $plotoptions;
+	} elseif ($fun == "dist") {
+		$ecdfoptions = "";
+		$col_y0 = getRK_val ("col_y0.code.printout");
+		$col_y1 = getRK_val ("col_y1.code.printout");
+		if (($col_y0 != "") && ($col_y1 != "")) {
+			$ecdfoptions .= ", col.01line=c({$col_y0},{$col_y1})";
+		} elseif (($col_y0 != "") || ($col_y1 != "")) {
+			$ecdfoptions .= ", col.01line={$col_y0}{$col_y1}";
+		}
+
+		$addRugtoplot = getRK_val ("addRugtoplot");
+		if ($addRugtoplot) {
+			$rugoptions  = ', ticksize=' . round(getRK_val ("rug_ticksize"),2);
+			$rugoptions .= ', lwd=' . round(getRK_val ("rug_lwd"),2);
+			$rugoptions .= ', side=' . getRK_val ("rug_side");
+			$rugoptions .= getRK_val ("col_rug.code.printout");
+		}
+
+		$normFun = "pnorm";
+		$plotoptions .= $ecdfoptions . getRK_val ("dist_stepfun.code.printout");
 	}
+
+	$yLim = "";
 ?>
 rk.temp.cltdistrib <- list()
 rk.temp.cltdistrib$data <- matrix(rbinom(n=<? echo ($nAvg*$nDist); ?>, size = <? echo ($size); ?>, prob=<? echo ($prob); ?>), nrow=<? echo ($nAvg); ?>);
@@ -56,25 +80,29 @@ rk.temp.cltdistrib$mean <- <? echo ($distExp); ?>;
 rk.temp.cltdistrib$var <- <? echo ($distVar); ?>;
 <? if ($scalenorm) { ?>
 rk.temp.cltdistrib$avg <- (rk.temp.cltdistrib$avg - rk.temp.cltdistrib$mean)/sqrt(rk.temp.cltdistrib$var);
-<? } ?>
+<? }
+ if ($drawnorm) { ?>
 rk.temp.cltdistrib$normX <- seq(from=min(rk.temp.cltdistrib$avg), to=max(rk.temp.cltdistrib$avg), length=<? echo ($nDist); ?>);
-rk.temp.cltdistrib$normY <- dnorm (rk.temp.cltdistrib$normX, mean = <? echo ($normMu); ?>, sd = <? echo ($normSigma); ?>);
-<?
+rk.temp.cltdistrib$normY <- <? echo ($normFun); ?> (rk.temp.cltdistrib$normX, mean = <? echo ($normMu); ?>, sd = <? echo ($normSigma); ?>);
+<? }
 	if ($final) { ?>
 rk.graph.on ()
 <? }
   if ($fun == "hist") {
 ?>
 rk.temp.cltdistrib$hist <- hist(rk.temp.cltdistrib$avg, plot=FALSE<? echo ($histcalcoptions); ?>);
-rk.temp.cltdistrib$ylim <- c(0,max(c(rk.temp.cltdistrib$hist$density, rk.temp.cltdistrib$normY)));
-try( plot(rk.temp.cltdistrib$hist, ylim=rk.temp.cltdistrib$ylim<? echo ($histplotoptions); ?>) );
-<?
-  }
-?>
 <? if ($drawnorm) { ?>
+rk.temp.cltdistrib$ylim <- c(0,max(c(rk.temp.cltdistrib$hist$density, rk.temp.cltdistrib$normY)));
+<? $yLim = ', ylim=rk.temp.cltdistrib$ylim'; } ?>
+try( plot(rk.temp.cltdistrib$hist<? echo ($yLim); echo ($histplotoptions); ?>) );
+<?  } elseif ($fun == "dist") {?>
+try( plot(ecdf(rk.temp.cltdistrib$avg)<? echo ($plotoptions); ?>) );
+<?	if ($addRugtoplot) { ?>	rug (rk.temp.cltdistrib$avg<? echo ($rugoptions); ?>)
+<? } }
+ if ($drawnorm) { ?>
   try (lines (x=rk.temp.cltdistrib$normX, y=rk.temp.cltdistrib$normY, type="<? getRK ("normpointtype"); ?>"<? getRK ("normlinecol.code.printout"); ?>));
-<? } ?>
-<?	if ($final) { ?>
+<? }
+	if ($final) { ?>
 rk.graph.off ()
 <? }
 }

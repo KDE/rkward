@@ -1,0 +1,48 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="plot_stepfun_options.php"/>
+	<help file="plot_stepfun_options.rkh"/>
+	<logic>
+		<external id="varname" default=""/>
+		<external id="allow_addtoplot" default="true"/>
+		<external id="default_verticals" default="true"/>
+
+		<set id="col_vert.argument" to=", col.vert="/>
+		<set id="col_points.argument" to=", col.points="/>
+		<set id="col_hor.argument" to=", col.hor="/>
+
+		<connect client="addtoplot.visible" governor="allow_addtoplot"/>
+
+		<connect client="col_vert.color.enabled" governor="verticals.state"/>
+		<connect client="col_points.color.enabled" governor="do_points.state"/>
+	</logic>
+	<dialog label="Step function plot options">
+		<row>
+			<frame id="frame_opt" label="Options">
+				<checkbox id="addtoplot" label="Add to current plot" checked="false"/>
+				<dropdown id="linetype" label="Line type for all lines" >
+					<option value="" label="Default" checked="true"/>
+					<option value="solid" label="Solid"/>
+					<option value="dashed" label="Dashed" />
+					<option value="dotted" label="Dotted" />
+					<option value="dotdash" label="Dot-Dash" />
+					<option value="longdash" label="Long-dash" />
+					<option value="twodash" label="Two-dash" />
+				</dropdown>
+			</frame>
+			<frame id="frame_points" label="Points">
+				<checkbox id="do_points" label="Draw points" checked="true"/>
+				<embed id="col_points" component="rkward::color_chooser" label="Color"/>
+			</frame>
+		</row>
+		<row>
+			<frame id="frame_col_horiz" label="Horizontal Lines">
+				<embed id="col_hor" component="rkward::color_chooser" label="Color"/>
+			</frame>
+			<frame id="frame_vert" label="Vertical lines">
+				<checkbox id="verticals" label="Draw vertical lines" />
+				<embed id="col_vert" component="rkward::color_chooser" label="Color"/>
+			</frame>
+		</row>
+	</dialog>
+</document>

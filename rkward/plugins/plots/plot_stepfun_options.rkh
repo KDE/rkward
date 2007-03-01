@@ -1,0 +1,24 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		Various graphical parameters for <b>plot.stepfun</b>. For detailed description of the individual parameters see the R reference on 'plot.stepfun'.
+	</summary>
+	<usage>
+		This is supposed to be used as an embeded plugin. All the elements are arguments to the plot.stepfun function. This plugin is useful in constructing <b>ecdf</b> plots.
+	</usage>
+	<settings>
+		<setting id="addtoplot">This is the <i>add</i> argument. This option might be disabled by the embedding plugin.</setting>
+		<setting id="linetype">This is the <i>lty</i> argument.</setting>
+		<setting id="do_points">This is the <i>do.points</i> argument. Uncheck this option if points are NOT to be drawn.</setting>
+		<setting id="col_points">This is the <i>col.points</i> argument. Leave this as 'default' for using the standard color settings from par().</setting>
+		<setting id="col_horiz">This is the <i>col.hor</i> argument.</setting>
+		<setting id="verticals">This is the <i>verticals</i> arguments. Uncheck this option if vertical lines are NOT to be drawn.</setting>
+		<setting id="col_vert">This is the <i>col.vert</i> argument.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/plot.stepfun"/></li>
+		</ul>
+	</related>
+</document>
+

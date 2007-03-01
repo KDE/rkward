@@ -5,8 +5,8 @@
 	<logic>
 		<set id="plotoptions.allow_log" to="false"/>
 		<set id="plotoptions.allow_type" to="false"/>
-		<set id="plotoptions.main.text" to="Histogram for Binomial"/>
-		<set id="plotoptions.xlab.text" to="Samples"/>
+		<set id="plotoptions.main.text" to="Binomial"/>
+		<set id="plotoptions.xlab.text" to="Sample Averages"/>
 
 		<set id="normlinecol.default_color" to="red" />
 
@@ -23,7 +23,18 @@
 
 		<connect client="normpointtype.enabled" governor="drawnorm.state"/>
 		<connect client="normlinecol.color.enabled" governor="drawnorm.state"/>
-	</logic>
+
+		<set id="dist_stepfun.allow_addtoplot" to="false" />
+		<set id="dist_stepfun.default_verticals" to="false" />
+
+		<connect client="rug_side.enabled" governor="addRugtoplot.state" />
+		<connect client="rug_ticksize.enabled" governor="addRugtoplot.state"/>
+		<connect client="rug_lwd.enabled" governor="addRugtoplot.state"/>
+		<connect client="col_rug.color.enabled" governor="addRugtoplot.state"/>
+
+		<set id="col_y0.argument" to=""/>
+		<set id="col_y1.argument" to=""/>
+</logic>
 	<dialog label="Central Limit Theorem: Binomial to Normal" >
 		<tabbook>
 			<tab id="tab_plot_distrib_clt" label="Parameters" >
@@ -40,9 +51,8 @@
 					</column>
 					<column>
 						<radio id="function" label="Choose type of function plot" >
-							<option value="hist" label="Plot Histogram" />
-							<option value="dist" label="Plot distribution" />
-							<option value="qq" label="Plot QQ-plot" />
+							<option value="hist" label="Histogram and Density" />
+							<option value="dist" label="ECDF and Distribution" />
 						</radio>
 						<checkbox id="scalenorm" label="Use normalised random variable" value="1" value_unchecked="0"/>
 						<frame id="frame_lineoptions" label="Nomral Curve Options">
@@ -66,12 +76,42 @@
 					<preview id="preview" label="Preview"/>
 				</row>
 			</tab>
+
 			<tab id="tab_histoptions" label="Histogram">
 				<embed id="histogram_opt" component="rkward::histogram_options" label="Histogram Options"/>
 			</tab>
-			<tab id="tab_distfunction" label="Distribution function">
-				<checkbox id="dist_lowertail" label="Lower tail" checked="true"/>
+
+			<tab id="tab_distfunction" label="ECDF options">
+				<embed id="dist_stepfun" component="rkward::plot_stepfun_options" label=""/>
+				<row>
+					<frame id="frame_rug" label="Rug options">
+						<row>
+							<column>
+								<checkbox id="addRugtoplot" label="Add Rug" />
+								<radio id="rug_side" label="Side of Rug">
+									<option value="1" label="Bottom" />
+									<option value="3" label="Top" />
+								</radio>
+							</column>
+							<column>
+								<spinbox id="rug_ticksize" min="0" initial="0.03" label="Tick size"/>
+								<spinbox id="rug_lwd" min="0" initial="0.5" label="Tick width" />
+								<embed id="col_rug" component="rkward::color_chooser" label="Color"/>
+							</column>
+						</row>
+					</frame>
+					<column>
+						<frame id="frame_col_y0" label="For y = 0 line">
+							<embed id="col_y0" component="rkward::color_chooser" label="Color"/>
+						</frame>
+						<frame id="frame_col_y1" label="For y = 1 line">
+							<embed id="col_y1" component="rkward::color_chooser" label="Color"/>
+						</frame>
+					</column>
+				</row>
+				<stretch/>
 			</tab>
+
 		</tabbook>
 	</dialog>
 </document>

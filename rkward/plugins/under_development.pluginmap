@@ -31,6 +31,9 @@
 
 		<component type="standard" id="stem" file="plots/stem.xml" label="Stem-and-Leaf Plot" />
 
+		<component type="standard" id="plot_stepfun_options" file="plots/plot_stepfun_options.xml" label="Step Function plot options" />
+		<component type="standard" id="x11grid" file="x11device/grid.xml" label="Draw Grid" />
+
 	</components>
 
 	<hierarchy>
@@ -88,6 +91,9 @@
   <context id="x11">
     <menu id="device" label="device" index="1">
       <entry component="export_x11_device_new" />
+    </menu>
+    <menu id="view" label="View" index="2">
+      <entry component="x11grid" />
     </menu>
   </context>
 </document>
