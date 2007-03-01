@@ -19,7 +19,7 @@ rk.header ("Mood Two-Sample Test of Scale",
 
 rk.results (list (
 	'Variables'=rk.get.description (rk.temp.x, rk.temp.y, is.substitute=TRUE),
-	'Z'=rk.temp$statistic["Z"],
+	'Z'=rk.temp$statistic,
 	'p-value'=rk.temp$p.value,
 	'Alternative Hypothesis'=rk.describe.alternative(rk.temp)
 	))
