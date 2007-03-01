@@ -7,7 +7,7 @@ function calculate () {
 ?>
 rk.temp.x <- substitute (<? getRK ("x"); ?>)
 rk.temp.y <- substitute (<? getRK ("y"); ?>)
-rk.temp <- bartlett.test (eval (rk.temp.x), eval (rk.temp.y))
+rk.temp <- fligner.test (eval (rk.temp.x), eval (rk.temp.y))
 
 <?
 }
