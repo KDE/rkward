@@ -66,23 +66,37 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, char *name) :
 	main_vbox->addWidget (commands_view);
 
 	paused = false;
+	initialized = false;
 }
 
 RControlWindow::~RControlWindow () {
 	RK_TRACE (APP);
 }
 
+bool RControlWindow::isActive () {
+	// don't trace!
+	return (initialized && isShown ());
+}
+
+void RControlWindow::initialize () {
+	RK_TRACE (APP);
+	initialized = true;
+
+	if (isShown ()) show ();	// refreshes the commands
+}
+
 void RControlWindow::show () {
 	RK_TRACE (APP);
 
 	RKMDIWindow::show ();
+	if (!initialized) return;
 	MUTEX_LOCK;
 	refreshCommands ();
 	MUTEX_UNLOCK;
 }
 
 void RControlWindow::addChain (RCommandChain *chain) {
-	if (!isShown ()) return;	// do expensive GUI stuff only when visible
+	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
 	RChainOrCommand *dummy = new RChainOrCommand;
@@ -93,7 +107,7 @@ void RControlWindow::addChain (RCommandChain *chain) {
 }
 
 void RControlWindow::addCommand (RCommand *command, RCommandChain *parent) {
-	if (!isShown ()) return;	// do expensive GUI stuff only when visible
+	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
 	if (!parent) parent = RCommandStack::regular_stack;
@@ -101,7 +115,7 @@ void RControlWindow::addCommand (RCommand *command, RCommandChain *parent) {
 }
 
 void RControlWindow::updateChain (RCommandChain *chain) {
-	if (!isShown ()) return;	// do expensive GUI stuff only when visible
+	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
 	RControlWindowListViewItem *chainitem = chain_map[chain];
@@ -110,7 +124,7 @@ void RControlWindow::updateChain (RCommandChain *chain) {
 }
 
 void RControlWindow::updateCommand (RCommand *command) {
-	if (!isShown ()) return;	// do expensive GUI stuff only when visible
+	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
 	RControlWindowListViewItem *item = command_map[command];
@@ -124,7 +138,7 @@ void RControlWindow::updateCommand (RCommand *command) {
 }
 
 void RControlWindow::removeCommand (RCommand *command) {
-	if (!isShown ()) return;	// do expensive GUI stuff only when visible
+	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
 	RControlWindowListViewItem *item = command_map[command];
@@ -142,7 +156,7 @@ void RControlWindow::removeCommand (RCommand *command) {
 }
 
 void RControlWindow::checkCleanChain (RControlWindowListViewItem *chain) {
-	if (!isShown ()) return;	// do expensive GUI stuff only when visible
+	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
 	while (chain && chain->chain_closed && chain->parent () && (!chain->firstChild ())) {
@@ -154,7 +168,7 @@ void RControlWindow::checkCleanChain (RControlWindowListViewItem *chain) {
 }
 
 void RControlWindow::setCommandRunning (RCommand *command) {
-	if (!isShown ()) return;	// do expensive GUI stuff only when visible
+	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
 	RControlWindowListViewItem *item = command_map[command];

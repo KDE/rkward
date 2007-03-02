@@ -185,7 +185,6 @@ void RKWardMainWindow::doPostInit () {
 	object_browser = new RObjectBrowser (0, true, "workspace");
 
 	RKGlobals::rcontrol = new RControlWindow (0, true, "rcontrol");		// the control window needs to be initialized before startR () is called.
-	RKGlobals::rcontrol->hide ();		// this line is important! RControlWindow must do some initializations on first show, and be hidden until then.
 
 	RKCommandLog *log = new RKCommandLog (0, true, "Command log");
 	log->setIcon (SmallIcon ("text_block"));	
@@ -221,6 +220,7 @@ void RKWardMainWindow::doPostInit () {
 	RKHelpSearchWindow::main_help_search = help_search;
 
 	RKOutputWindow::initialize ();
+	RKGlobals::rcontrol->initialize ();
 
 	if (initial_url) {
 		openWorkspace (*initial_url);
