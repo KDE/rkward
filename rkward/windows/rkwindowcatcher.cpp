@@ -91,7 +91,7 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	RKCaughtX11Window::device_number = device_number;
 
 	error_dialog = new RKRErrorDialog (i18n ("An error occurred"), i18n ("An error occurred"));
-	part = new RKCaughtX11WindowPart (this);
+	setPart (new RKCaughtX11WindowPart (this));
 	initializeActivationSignals ();
 	setFocusPolicy (QWidget::ClickFocus);
 
@@ -124,12 +124,6 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 
 	RKWardApplication::getApp ()->unregisterNameWatcher (embedded);
 	error_dialog->autoDeleteWhenDone ();
-}
-
-KParts::Part *RKCaughtX11Window::getPart () {
-	RK_TRACE (MISC);
-
-	return part;
 }
 
 void RKCaughtX11Window::prepareToBeAttached () {

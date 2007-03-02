@@ -92,8 +92,6 @@ public:
 	RKCaughtX11Window (WId window_to_embed, int device_number);
 /** dtor */
 	~RKCaughtX11Window ();
-
-	KParts::Part *getPart ();
 /** TODO */
 	QString getDescription () { return "x11:unimplemented"; };
 /** TODO? */
@@ -124,7 +122,6 @@ private:
 	friend class RKCaughtX11WindowPart;	// needs access to the actions
 	int device_number;
 	WId embedded;
-	RKCaughtX11WindowPart *part;
 	QVBox *xembed_container;
 	QScrollView *scroll_widget;
 	QVBox *box_widget;
