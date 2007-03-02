@@ -39,7 +39,7 @@
 RKEditorDataFrame::RKEditorDataFrame (QWidget *parent, KParts::Part* part) : TwinTable (parent) {
 	RK_TRACE (EDITOR);
 
-	RKEditorDataFrame::part = part;
+	setPart (part);
 	initializeActivationSignals ();
 
 	open_chain = 0;

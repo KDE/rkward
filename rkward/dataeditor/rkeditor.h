@@ -68,15 +68,12 @@ public:
 
 	QString getDescription ();
 	bool isModified () { return false; };
-	KParts::Part *getPart () { return part; };
 protected:
 friend class RKWorkplace;
 /// opens the given object. Implement in the child-classes
 	virtual void openObject (RObject *object, bool initialize_to_empty) = 0;
 
 	RObject *object;
-
-	KParts::Part *part;
 };
 
 #endif
