@@ -34,8 +34,9 @@
 
 RControlWindow::RControlWindow (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, PendingJobsWindow, tool_window, name) {
 	RK_TRACE (APP);
-	part = new RControlWindowPart (this);
+	setPart (new RControlWindowPart (this));
 	initializeActivationSignals ();
+	setFocusPolicy (QWidget::ClickFocus);
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 	QHBoxLayout *button_hbox = new QHBoxLayout (main_vbox, RKGlobals::spacingHint ());
@@ -69,10 +70,6 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, char *name) :
 
 RControlWindow::~RControlWindow () {
 	RK_TRACE (APP);
-}
-
-KParts::Part *RControlWindow::getPart () {
-	return part;
 }
 
 void RControlWindow::show () {

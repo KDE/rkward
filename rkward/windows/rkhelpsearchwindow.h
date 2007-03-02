@@ -40,8 +40,6 @@ public:
 	RKHelpSearchWindow (QWidget *parent, bool tool_window, char *name=0);
 	~RKHelpSearchWindow ();
 	void rCommandDone (RCommand *command);
-
-	KParts::Part *getPart () { return part; };
 /** small convenience function to get context help for RKCommandEditorWindow and RKConsole.
 @param context_line The current line
 @param cursor_pos cursor position in the current line
@@ -60,7 +58,6 @@ private:
 	QCheckBox* fuzzyCheckBox;
 	QPushButton* findButton;
 	QListView* resultsList;
-	KParts::Part *part;
 friend class RKWardMainWindow;
 	static RKHelpSearchWindow *main_help_search;
 };

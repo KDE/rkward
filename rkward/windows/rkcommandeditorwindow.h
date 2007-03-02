@@ -107,7 +107,6 @@ public:
 	void copy ();
 
 	QString getDescription ();
-	KParts::Part *getPart () { return m_doc; };
 
 /** Return current url */
 	KURL url ();

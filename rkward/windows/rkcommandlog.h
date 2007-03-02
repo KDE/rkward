@@ -50,7 +50,6 @@ public:
 	static RKCommandLog *getLog () { return rkcommand_log; };
 
 	RKCommandLogView *getView () { return log_view; };
-	KParts::Part *getPart ();
 protected:
 /** Command has finished. If the command has failed, it may be necessary to print some more information */
 	void rCommandDone (RCommand *command);
@@ -74,7 +73,6 @@ private:
 	int last_raised_command;
 
 	RKCommandLogView *log_view;
-	RKCommandLogPart *part;
 friend class RKWardMainWindow;
 	static RKCommandLog *rkcommand_log;
 };

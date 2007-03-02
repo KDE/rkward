@@ -58,7 +58,6 @@ public:
 
 	QString getDescription ();
 	bool isModified ();
-	KParts::Part *getPart ();
 /** Return current url */
 	KURL url ();
 	void doGotoAnchor (const QString &anchor_name);

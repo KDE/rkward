@@ -180,8 +180,6 @@ R plugins:
 	- Spinbox:
 		- find a solution for "pending changes". Currently, if the user enters a value, manually, then presses submit, the old value will be used (the new value is only set, when the focus changes to another widget). Probably the RKSpinbox should emit signals for "pending" and "ready". The plugin spinbox should listen to those and not be satisfied as long as a change is pending. Maybe mark the spinbox in yellow, while a change is pending.
 		- options min_inclusive / max_inclusive for real number spinboxes (defaulting to true)
-	- create grid() plugin
-	- create a (simple) color option plugin (~ 30 colors) for embedding
 	- a function rk.describe.alternative() for use in hypothesis test plugins
 	- use SVG device for graphics output
 	- provide context menu / other UI to export to different formats / edit

@@ -127,9 +127,10 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, char *name) : RKMDIWind
 	hinter = new RKFunctionArgHinter (this, view);
 	
 	setCaption (i18n ("R Console"));
-	part = new RKConsolePart (this);
+	console_part = new RKConsolePart (this);
+	setPart (console_part);
 	initializeActivationSignals ();
-	initializeActions (part->actionCollection ());
+	initializeActions (getPart ()->actionCollection ());
 
 	nprefix = "> ";
 	iprefix = "+ ";
@@ -152,11 +153,6 @@ RKConsole::~RKConsole () {
 
 	delete hinter;
 	RKSettingsModuleConsole::saveCommandHistory (commands_history);
-}
-
-KParts::Part *RKConsole::getPart () {
-	//RK_TRACE (APP);
-	return part;
 }
 
 void RKConsole::setRHighlighting () {
@@ -740,7 +736,7 @@ void RKConsole::doPopupMenu (const QPoint &pos) {
 	copy_literal_action->setEnabled (hasSelectedText ());
 	run_selection_action->setEnabled (hasSelectedText ());
 
-	part->showPopupMenu (pos);
+	console_part->showPopupMenu (pos);
 
 	run_selection_action->setEnabled (true);
 	copy_literal_action->setEnabled (true);

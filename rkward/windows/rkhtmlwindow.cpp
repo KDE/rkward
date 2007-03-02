@@ -47,6 +47,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow:
 	scroll_position=-1;
 	
 	khtmlpart = new KHTMLPart (this, 0, 0, 0, KHTMLPart::BrowserViewGUI);
+	setPart (khtmlpart);
 	initializeActivationSignals ();
 	khtmlpart->setSelectable (true);
 	setFocusProxy (khtmlpart->widget ());
@@ -80,11 +81,6 @@ QString RKHTMLWindow::getDescription () {
 bool RKHTMLWindow::isModified () {
 	RK_TRACE (APP);
 	return false;
-}
-
-KParts::Part *RKHTMLWindow::getPart () {
-	RK_TRACE (APP);
-	return khtmlpart;
 }
 
 void RKHTMLWindow::addCommonActions (KActionCollection *action_collection) {

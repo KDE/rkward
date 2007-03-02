@@ -64,7 +64,7 @@ public:
 /** @returns A short caption (e.g. only the filename without the path). Default implementation simply calls QWidget::caption () */
 	virtual QString shortCaption ();
 /** @returns The corresponding KPart for this window */
-	virtual KParts::Part *getPart () = 0;
+	KParts::Part *getPart () { return part; };
 /** This is used in RKWorkplace::saveWorkplace () to save the info about the workplace. Make sure to add corresponding code to RKWorkplace::restoreWorkplace (), so your window(s) get restored when loading a Workspace
 @returns An internal descriptive string. */
 	virtual QString getDescription () { return QString (); };
@@ -94,12 +94,14 @@ signals:
 /** This signal is emitted, when the window was activated *with* focus */
 	void windowActivated (RKMDIWindow *);
 protected:
+	void setPart (KParts::Part *p) { part = p; };
 	void initializeActivationSignals ();
 friend class RKWorkplace;
 /** type of this window */
 	Type type;
 private:
 /** state of this window (attached / detached). This is usually set from the RKWorkplace */
+	KParts::Part *part;
 	State state;
 	KMdiToolViewAccessor *wrapper;
 };

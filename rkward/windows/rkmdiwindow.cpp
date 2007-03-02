@@ -33,10 +33,13 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, Type type, bool tool_window, char *na
 	if (tool_window) state = ToolWindow;
 	else state = Attached;
 	wrapper = 0;
+	part = 0;
 }
 
 RKMDIWindow::~RKMDIWindow () {
 	RK_TRACE (APP);
+
+	qDebug ("off");
 }
 
 //virtual
@@ -109,16 +112,16 @@ void RKMDIWindow::prepareToBeDetached () {
 }
 
 bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
-	//RK_TRACE (APP);
+	// WARNING: The derived object and the part may both the destroyed at this point of time!
+	// Make sure not to call any virtual function on this object!
 
 	RK_ASSERT (watched == getPart ());
 	if (KParts::PartActivateEvent::test (e)) {
+		RK_TRACE (APP);		// trace only the "interesting" calls to this function
+
 		KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *> (e);
 		if (ev->activated ()) {
 			emit (windowActivated (this));
-			qDebug ("activated: %s", getDescription ().latin1 ());
-		} else {
-			qDebug ("deactivated: %s", getDescription ().latin1 ());
 		}
 	}
 	return FALSE;

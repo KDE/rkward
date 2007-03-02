@@ -77,8 +77,6 @@ public:
 	bool isBusy () { return (current_command || command_incomplete); };
 /** Run a user command (through console, if applicable */
 	static void pipeUserCommand (RCommand *command);
-
-	KParts::Part *getPart ();
 protected:
 /** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
 \param e the QKeyEvent */
@@ -158,7 +156,7 @@ friend class RKConsolePart;
 	void initializeActions (KActionCollection *ac);
 	void pipeCommandThroughConsoleLocal (RCommand *command);
 
-	RKConsolePart *part;
+	RKConsolePart *console_part;
 
 	void doPopupMenu (const QPoint &pos);
 public slots:

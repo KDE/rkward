@@ -44,9 +44,9 @@ RKHelpSearchWindow* RKHelpSearchWindow::main_help_search = 0;
 
 RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, SearchHelpWindow, tool_window, name) {
 	RK_TRACE (APP);
-	part = new RKDummyPart (0, this);
-	setFocusPolicy (QWidget::ClickFocus);
+	setPart (new RKDummyPart (0, this));
 	initializeActivationSignals ();
+	setFocusPolicy (QWidget::ClickFocus);
 
 	QVBoxLayout* main_layout = new QVBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
 	QHBoxLayout* selection_layout = new QHBoxLayout (main_layout, RKGlobals::spacingHint ());

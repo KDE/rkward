@@ -43,8 +43,6 @@ public:
 	~RObjectBrowser ();
 
 	enum PopupItems { Help=1, Edit=2, View=3, Rename=4, Copy=5, CopyToGlobalEnv=6, Delete=7 };
-
-	KParts::Part *getPart () { return part; };
 public slots:
 	void updateButtonClicked ();
 	void contextMenuCallback (RKListViewItem *item, bool *suppress);
@@ -65,7 +63,6 @@ private:
 
 	QPushButton *update_button;
 	RKObjectListView *list_view;
-	KParts::Part *part;
 };
 
 /** This class provides a widget to switch quickly between the most important RKObjectListViewSettings */

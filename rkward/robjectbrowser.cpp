@@ -46,7 +46,7 @@
 
 RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, WorkspaceBrowserWindow, tool_window, name) {
 	RK_TRACE (APP);
-	part = new RKDummyPart (0, this);
+	setPart (new RKDummyPart (0, this));
 	initializeActivationSignals ();
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);

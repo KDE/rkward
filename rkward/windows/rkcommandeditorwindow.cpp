@@ -74,6 +74,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	RKCommonFunctions::moveContainer (m_doc, "Menu", "tools", "edit", true);
 
 	m_doc->insertChildClient (new RKCommandEditorWindowPart (m_view, this));
+	setPart (m_doc);
 	initializeActivationSignals ();
 	setFocusProxy (m_view);
 

@@ -57,16 +57,13 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, char *name) : RKM
 	last_raised_command = 0;
 	command_input_shown = 0;
 
-	part = new RKCommandLogPart (this);
+	setPart (new RKCommandLogPart (this));
 	initializeActivationSignals ();
+	setFocusPolicy (QWidget::ClickFocus);
 }
 
 RKCommandLog::~RKCommandLog(){
 	RK_TRACE (APP);
-}
-
-KParts::Part *RKCommandLog::getPart () {
-	return part;
 }
 
 void RKCommandLog::addInput (RCommand *command) {

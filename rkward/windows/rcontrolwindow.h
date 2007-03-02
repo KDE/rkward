@@ -68,8 +68,6 @@ public:
 /** Set given command as running. Has no effect unless RControlWindow::isShown ()*/
 	void setCommandRunning (RCommand *command);
 
-	KParts::Part *getPart ();
-
 /** reimplemented to refresh list of commands when showing. This is needed, as the RControlWindow is only kept up to date as long as it is shown. Hence, if it was hidden, and then gets shown, it will have to update the entire list. */
 	void show ();
 public slots:
@@ -98,8 +96,6 @@ private:
 
 	QMap <RCommand *, RControlWindowListViewItem *> command_map;
 	QMap <RCommandChain *, RControlWindowListViewItem *> chain_map;
-
-	RControlWindowPart *part;
 
 	bool paused;
 };
