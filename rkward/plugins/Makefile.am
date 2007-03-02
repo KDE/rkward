@@ -30,15 +30,6 @@ dist_pluginsXanalysisXansariUbradley_DATA = \
 	analysis/ansari_bradley/ansari_bradley_test.xml \
 	analysis/ansari_bradley/ansari_bradley_test.rkh
 
-pluginsXanalysisXTESTSdir = $(kde_datadir)/rkward/analysis/TESTS
-dist_pluginsXanalysisXTESTS_DATA = \
-	analysis/TESTS/mood_test.xml \
-	analysis/TESTS/mood_test.php \
-	analysis/TESTS/mood_test.rkh \
-	analysis/TESTS/PP_test.xml \
-	analysis/TESTS/PP_test.php \
-	analysis/TESTS/PP_test.rkh
-
 pluginsXanalysisXwilcoxondir = $(kde_datadir)/rkward/analysis/wilcoxon
 dist_pluginsXanalysisXwilcoxon_DATA = \
 	analysis/wilcoxon/wilcoxon_test.xml \
@@ -67,30 +58,39 @@ dist_pluginsXanalysisXmoments_DATA = \
 
 pluginsXanalysisXoutliersdir = $(kde_datadir)/rkward/analysis/outliers
 dist_pluginsXanalysisXoutliers_DATA = \
-	analysis/outliers/chisq_out_test.php \
-	analysis/outliers/chisq_out_test.xml \
-	analysis/outliers/chisq_out_test.rkh \
-	analysis/outliers/dixon_test.php \
 	analysis/outliers/dixon_test.xml \
-	analysis/outliers/dixon_test.rkh \
-	analysis/outliers/grubbs_test.php \
+	analysis/outliers/chisq_out_test.rkh \
 	analysis/outliers/grubbs_test.xml \
-	analysis/outliers/grubbs_test.rkh \
-	analysis/outliers/outlier.php \
 	analysis/outliers/outlier.xml \
-	analysis/outliers/outlier.rkh
+	analysis/outliers/chisq_out_test.php \
+	analysis/outliers/dixon_test.rkh \
+	analysis/outliers/dixon_test.php \
+	analysis/outliers/grubbs_test.rkh \
+	analysis/outliers/outlier.rkh \
+	analysis/outliers/grubbs_test.php \
+	analysis/outliers/outlier.php \
+	analysis/outliers/chisq_out_test.xml
+
+pluginsXanalysisXTESTSdir = $(kde_datadir)/rkward/analysis/TESTS
+dist_pluginsXanalysisXTESTS_DATA = \
+	analysis/TESTS/mood_test.rkh \
+	analysis/TESTS/PP_test.rkh \
+	analysis/TESTS/mood_test.php \
+	analysis/TESTS/PP_test.php \
+	analysis/TESTS/mood_test.xml \
+	analysis/TESTS/PP_test.xml
 
 pluginsXanalysisXvariancesdir = $(kde_datadir)/rkward/analysis/variances
 dist_pluginsXanalysisXvariances_DATA = \
-	analysis/variances/bartlett_test.php \
 	analysis/variances/bartlett_test.xml \
-	analysis/variances/bartlett_test.rkh \
-	analysis/variances/F_test.php \
 	analysis/variances/F_test.xml \
-	analysis/variances/F_test.rkh \
-	analysis/variances/fligner_test.php \
+	analysis/variances/bartlett_test.rkh \
 	analysis/variances/fligner_test.xml \
-	analysis/variances/fligner_test.rkh
+	analysis/variances/bartlett_test.php \
+	analysis/variances/F_test.rkh \
+	analysis/variances/fligner_test.rkh \
+	analysis/variances/F_test.php \
+	analysis/variances/fligner_test.php
 
 pluginsXx11devicedir = $(kde_datadir)/rkward/x11device
 dist_pluginsXx11device_DATA = \
@@ -99,7 +99,10 @@ dist_pluginsXx11device_DATA = \
 	x11device/export.php \
 	x11device/export_new.php \
 	x11device/export_new.rkh \
-	x11device/export_new.xml
+	x11device/export_new.xml \
+	x11device/grid.xml \
+	x11device/grid.php \
+	x11device/grid.rkh
 
 pluginsX00saveloaddir = $(kde_datadir)/rkward/00saveload
 dist_pluginsX00saveload_DATA = \
@@ -178,9 +181,13 @@ dist_pluginsXplots_DATA = \
 	plots/histogram_options.php \
 	plots/pareto.xml \
 	plots/pareto.rkh \
+	plots/histogram_options.rkh \
+	plots/stem.rkh \
 	plots/stem.xml \
 	plots/stem.php \
-	plots/stem.rkh
+	plots/plot_stepfun_options.rkh \
+	plots/plot_stepfun_options.php \
+	plots/plot_stepfun_options.xml
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
@@ -332,10 +339,13 @@ dist_pluginsXdistributions_DATA = \
 	distributions/t_probabilities.php \
 	distributions/sf_test.xml \
 	distributions/plot_poisson_distribution.rkh \
-	distributions/plot_uniform_distribution.xml \
-	distributions/plot_binomial_clt.xml \
-	distributions/plot_binomial_clt.php \
-	distributions/plot_binomial_clt.rkh
+	distributions/plot_uniform_distribution.xml
+
+pluginsXdistributionsXcltdir = $(kde_datadir)/rkward/distributions/clt
+dist_pluginsXdistributionsXclt_DATA = \
+	distributions/clt/plot_binomial_clt.php \
+	distributions/clt/plot_binomial_clt.rkh \
+	distributions/clt/plot_binomial_clt.xml
 
 pluginsXwritetabledir = $(kde_datadir)/rkward/writetable
 dist_pluginsXwritetable_DATA = \

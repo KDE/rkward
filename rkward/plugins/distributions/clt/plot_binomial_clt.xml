@@ -52,7 +52,7 @@
 					<column>
 						<radio id="function" label="Choose type of function plot" >
 							<option value="hist" label="Histogram and Density" />
-							<option value="dist" label="ECDF and Distribution" />
+							<option value="dist" label="ECDF and Distribution" checked="true"/>
 						</radio>
 						<checkbox id="scalenorm" label="Use normalised random variable" value="1" value_unchecked="0"/>
 						<frame id="frame_lineoptions" label="Nomral Curve Options">
