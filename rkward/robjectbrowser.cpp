@@ -48,6 +48,7 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, char *name) :
 	RK_TRACE (APP);
 	setPart (new RKDummyPart (0, this));
 	initializeActivationSignals ();
+	setFocusPolicy (QWidget::ClickFocus);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 

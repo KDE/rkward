@@ -38,8 +38,6 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, Type type, bool tool_window, char *na
 
 RKMDIWindow::~RKMDIWindow () {
 	RK_TRACE (APP);
-
-	qDebug ("off");
 }
 
 //virtual
