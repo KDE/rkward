@@ -92,7 +92,7 @@
     <menu id="device" label="device" index="1">
       <entry component="export_x11_device_new" />
     </menu>
-    <menu id="view" label="View" index="2">
+    <menu id="edit" label="Edit" index="3">
       <entry component="x11grid" />
     </menu>
   </context>
