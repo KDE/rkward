@@ -194,7 +194,7 @@ void RKWardMainWindow::doPostInit () {
 
 	startR ();
 
-	QString dummy = i18n ("Please note that RKWard is still far from being finished. We feel it is already helpful for a number of tasks, but many features are lacking or buggy. You can help us by filing bug reports, feature requests, or providing feedback in any other form. Please visit http://rkward.sourceforge.net for contact information.");
+	QString dummy = i18n ("RKWard has made great progress in the past few months and it is already helpful for many tasks, but some features may be lacking. You can help us by filing bug reports, feature requests, or providing feedback in any other form. Please visit http://rkward.sourceforge.net for more information.");
 	KMessageBox::information (this, dummy, i18n("What to expect of RKWard"), "state_of_rkward");
 	
 	initPlugins ();
