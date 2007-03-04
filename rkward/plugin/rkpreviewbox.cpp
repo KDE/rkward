@@ -131,7 +131,7 @@ void RKPreviewBox::tryPreviewNow () {
 	preview_active = true;
 	QString dummy;
 	RKGlobals::rInterface ()->issueCommand (dummy.sprintf (".rk.startPreviewDevice (\"%p\")", this), RCommand::Plugin | RCommand::Sync);
-	RKGlobals::rInterface ()->issueCommand (code_property->preview (), RCommand::Plugin | RCommand::Sync, QString::null, this);
+	RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString::null, this);
 
 	last_plot_done = false;
 	new_plot_pending = false;

@@ -135,13 +135,13 @@ void RKStandardComponentGUI::ok () {
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (code_property->isValid ());
-	
-	RCommandChain *chain = RKGlobals::rInterface ()->startChain ();
-	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->preprocess (), RCommand::Plugin | RCommand::DirectToOutput, QString::null, error_dialog), chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->calculate (), RCommand::Plugin | RCommand::DirectToOutput, QString::null, error_dialog), chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->printout (), RCommand::Plugin | RCommand::DirectToOutput, QString::null, error_dialog), chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand (code_property->cleanup (), RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate, QString::null, error_dialog), chain);
-	RKGlobals::rInterface ()->closeChain (chain);
+
+	QString command = "local({\n";
+	command.append (code_property->preprocess ());
+	command.append (code_property->calculate ());
+	command.append (code_property->printout ());
+	command.append ("})\n");
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput, QString::null, error_dialog));
 }
 
 void RKStandardComponentGUI::cancel () {
@@ -220,9 +220,9 @@ void RKStandardComponentGUI::updateCodeNow () {
 
 	if (!code_property->isValid ()) {
 		code_display->setText (i18n ("Processing. Please wait"));
-		RK_DO (qDebug ("code not ready to be displayed: pre %d, cal %d, pri %d, cle %d", !code_property->preprocess ().isNull (), !code_property->calculate ().isNull (), !code_property->printout ().isNull (), !code_property->cleanup ().isNull ()), PLUGIN, DL_DEBUG);
+		RK_DO (qDebug ("code not ready to be displayed: pre %d, cal %d, pri %d", !code_property->preprocess ().isNull (), !code_property->calculate ().isNull (), !code_property->printout ().isNull ()), PLUGIN, DL_DEBUG);
 	} else {
-		code_display->setText (code_property->preprocess () + code_property->calculate () + code_property->printout () + code_property->cleanup ());
+		code_display->setText ("local({\n" + code_property->preprocess () + code_property->calculate () + code_property->printout () + "})\n");
 	}
 }
 

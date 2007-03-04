@@ -57,6 +57,7 @@ if (!is.null (rk.temp.labels)) {
 <?	}
 	if (getRK_val ("doedit") && $data_frame) { ?>
 
+<? echo ($object); ?> <<- <? echo ($object); ?>		# assign to globalenv()
 rk.edit (<? echo ($object); ?>)
 <?	}
 }

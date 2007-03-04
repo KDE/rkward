@@ -9,14 +9,14 @@
 }
 
 # set rkward label
-"rk.set.label" <- function (x, label) {
+"rk.set.label" <- function (x, label, envir=parent.frame()) {
 	if (is.call (x) || is.name (x)) {
-		meta <- attr (eval (x), ".rk.meta")
+		meta <- attr (eval (x, envir=envir), ".rk.meta")
 	} else {
 		meta <- attr (x, ".rk.meta")
 	}
 	meta[["label"]] <- as.character (label)
-	eval (substitute (attr (x, ".rk.meta") <<- meta))
+	eval(substitute(attr(x, ".rk.meta") <- meta), envir = envir)
 }
 
 # get a short name for the given object
@@ -109,12 +109,12 @@
 
 # renames a named object in a data.frame/list without changing it's position
 # TODO: create a generic function instead, that can handle all kinds of renames
-"rk.rename.in.container" <- function (x, old_name, new_name) {
+"rk.rename.in.container" <- function (x, old_name, new_name, envir=parent.frame()) {
 	temp <- (names (x) == old_name)
 	i = 1;
 	for (val in temp) {
 		if (val) {
-			eval (substitute (names (x)[i] <<- new_name))
+			eval (substitute (names (x)[i] <- new_name), envir=envir)
 			return ()
 		}
 		i = i+1;

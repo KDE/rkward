@@ -15,7 +15,7 @@ function calculate () {
 	$quote = getRK_val ("quote");
 	if ($quote == "other") $quote = quoteString (getRK_val ("custom_quote"));
 
-getRK("name"); ?> <- read.table (file="<? getRK("file"); ?>", header=<? getRK("header"); ?>, sep=<? echo ($sep); ?>, quote=<? echo ($quote); ?>, dec=<? echo ($dec); ?>, <? # doing row names (what a pity...) 
+getRK("name"); ?> <<- read.table (file="<? getRK("file"); ?>", header=<? getRK("header"); ?>, sep=<? echo ($sep); ?>, quote=<? echo ($quote); ?>, dec=<? echo ($dec); ?>, <? # doing row names (what a pity...) 
 	if (getRK_val("rowname")!="NULL") {
 		echo( "row.names = ");
 		if (getRK_val("rowname")=="rowcol") echo (getRK("nomrow") . ",");
