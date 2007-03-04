@@ -22,6 +22,8 @@
 #include <klocale.h>
 #include <kiconloader.h>
 
+#include <qimage.h>
+
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
 #include "rkhtmlwindow.h"
@@ -37,6 +39,7 @@
 #include "../rbackend/rinterface.h"
 #include "../windows/rkwindowcatcher.h"
 #include "../rbackend/rcommand.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 
@@ -419,8 +422,8 @@ RKMDIWindowHistory::~RKMDIWindowHistory () {
 void RKMDIWindowHistory::addActions (KActionCollection *ac, const char *prev_id, const char *next_id) {
 	RK_TRACE (APP);
 
-	prev_action = new KAction (i18n ("Previous Window"), 0, 0, this, SLOT (prev ()), ac, prev_id);
-	next_action = new KAction (i18n ("Next Window"), 0, 0, this, SLOT (next ()), ac, next_id);
+	prev_action = new KAction (i18n ("Previous Window"), QIconSet (QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"))), KShortcut ("Ctrl+<"), this, SLOT (prev ()), ac, prev_id);
+	next_action = new KAction (i18n ("Next Window"), QIconSet (QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"))), KShortcut ("Ctrl+>"), this, SLOT (next ()), ac, next_id);
 	updateActions ();
 }
 

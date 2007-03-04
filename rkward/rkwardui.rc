@@ -40,8 +40,8 @@
 		<Action name="window_close_all"/>
 		<Action name="close_all_editors"/>
 		<Separator/>
-		<Action name="next_window"/>
 		<Action name="prev_window"/>
+		<Action name="next_window"/>
 		<Separator/>
 		<Action name="window_detach"/>
 	</Menu>
@@ -63,6 +63,9 @@
 		<Action name="new_command_editor"/>
 		<Action name="file_openy"/>
 		<Action name="file_open_recenty"/>
+		<Separator/>
+		<Action name="prev_window"/>
+		<Action name="next_window"/>
 </ToolBar>
 <ToolBar fullWidth="true" name="runToolBar">
 </ToolBar>
