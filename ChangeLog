@@ -1,3 +1,4 @@
+- new shortcuts for window navigations: next/previous window, activate console, activate command log, etc.
 - new functions rk.describe.alternative () and rk.print.literal () for use in plugins
 - new Phillips-Perron test
 - new Mood test
