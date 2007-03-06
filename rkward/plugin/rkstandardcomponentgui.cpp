@@ -33,6 +33,7 @@
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
 #include "../misc/rkerrordialog.h"
+#include "../rkward.h"
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../rkglobals.h"
 #include "../debug.h"
@@ -48,6 +49,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 	RKStandardComponentGUI::component = component;
 	RKStandardComponentGUI::code_property = code_property;
 	connect (code_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (codeChanged (RKComponentPropertyBase *)));
+	connect (RKWardMainWindow::getMain(), SIGNAL (aboutToQuitRKWard()), this, SLOT (cancel()));
 
 	RKStandardComponentGUI::enslaved = enslaved;
 

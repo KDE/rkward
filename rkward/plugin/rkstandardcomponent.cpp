@@ -93,7 +93,6 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	dummy = QFileInfo (filename).dirPath () + '/' + xml->getStringAttribute (element, "file", "::nosuchfile::", DL_INFO);
 	have_help = QFileInfo (dummy).exists ();
 
-	connect (qApp, SIGNAL (aboutToQuit ()), this, SLOT (deleteLater ()));
 	handle_change_timer = new QTimer (this);
 	connect (handle_change_timer, SIGNAL (timeout ()), this, SLOT (handleChange ()));
 

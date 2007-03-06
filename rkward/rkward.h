@@ -121,7 +121,8 @@ protected:
 	virtual void readProperties(KConfig *_cfg);
 signals:
 /** no idea, why we have to declare this explicitly, but somehow we do. */
-       void childWindowCloseRequest (KMdiChildView *);
+	void childWindowCloseRequest (KMdiChildView *);
+	void aboutToQuitRKWard ();
 public slots:
 	/** Raise the help search window */
 	void showHelpSearch ();
