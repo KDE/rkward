@@ -422,8 +422,8 @@ RKMDIWindowHistory::~RKMDIWindowHistory () {
 void RKMDIWindowHistory::addActions (KActionCollection *ac, const char *prev_id, const char *next_id) {
 	RK_TRACE (APP);
 
-	prev_action = new KAction (i18n ("Previous Window"), QIconSet (QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"))), KShortcut ("Ctrl+<"), this, SLOT (prev ()), ac, prev_id);
-	next_action = new KAction (i18n ("Next Window"), QIconSet (QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"))), KShortcut ("Ctrl+>"), this, SLOT (next ()), ac, next_id);
+	prev_action = new KAction (i18n ("Previous Window"), QIconSet (QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"))), KShortcut ("Alt+<"), this, SLOT (prev ()), ac, prev_id);
+	next_action = new KAction (i18n ("Next Window"), QIconSet (QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"))), KShortcut ("Alt+>"), this, SLOT (next ()), ac, next_id);
 	updateActions ();
 }
 
