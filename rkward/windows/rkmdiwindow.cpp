@@ -67,9 +67,9 @@ void RKMDIWindow::activate (bool with_focus) {
 
 	if (isToolWindow ()) {
 		RK_ASSERT (wrapper);
+		wrapper->show ();
 		wrapper->wrapperWidget ()->topLevelWidget ()->show ();
 		wrapper->wrapperWidget ()->topLevelWidget ()->raise ();
-		wrapper->show ();
 	} else {
 		if (isAttached ()) {
 			RKWorkplace::mainWorkplace ()->view ()->setActivePage (this);

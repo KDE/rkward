@@ -342,11 +342,11 @@ void RKWardMainWindow::initActions()
 	window_detach = new KAction (i18n ("Detach"), 0, 0, this, SLOT (slotDetachWindow ()), actionCollection (), "window_detach");
 	outputShow= new KAction (i18n ("Show &Output"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
 
-	new KAction (i18n ("Show Workspace Browser"), 0, KShortcut ("Alt+1"), this, SLOT (showWorkspace()), actionCollection (), "window_show_workspace");
-	new KAction (i18n ("Show Command Log"), 0, KShortcut ("Alt+2"), this, SLOT (showCommandLog()), actionCollection (), "window_show_commandlog");
-	new KAction (i18n ("Show Pending Jobs"), 0, KShortcut ("Alt+3"), this, SLOT (showPendingJobs()), actionCollection (), "window_show_pendingjobs");
-	new KAction (i18n ("Show Console"), 0, KShortcut ("Alt+4"), this, SLOT (showConsole()), actionCollection (), "window_show_console");
-	new KAction (i18n ("Show R Help Search"), 0, KShortcut ("Alt+5"), this, SLOT (showHelpSearch()), actionCollection (), "window_show_helpsearch");
+	new KAction (i18n ("Show/Hide Workspace Browser"), 0, KShortcut ("Alt+1"), this, SLOT (toggleWorkspace()), actionCollection (), "window_show_workspace");
+	new KAction (i18n ("Show/Hide Command Log"), 0, KShortcut ("Alt+2"), this, SLOT (toggleCommandLog()), actionCollection (), "window_show_commandlog");
+	new KAction (i18n ("Show/Hide Pending Jobs"), 0, KShortcut ("Alt+3"), this, SLOT (togglePendingJobs()), actionCollection (), "window_show_pendingjobs");
+	new KAction (i18n ("Show/Hide Console"), 0, KShortcut ("Alt+4"), this, SLOT (toggleConsole()), actionCollection (), "window_show_console");
+	new KAction (i18n ("Show/Hide R Help Search"), 0, KShortcut ("Alt+5"), this, SLOT (toggleHelpSearch()), actionCollection (), "window_show_helpsearch");
 	new KAction (i18n ("Activate Document view"), 0, KShortcut ("Alt+0"), this, SLOT (activateDocumentView()), actionCollection (), "window_activate_docview");
 
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT (slotConfigure ()), actionCollection (), "configure");
@@ -575,34 +575,52 @@ void RKWardMainWindow::showAboutApplication () {
 	delete about;
 }
 
+void RKWardMainWindow::toggleToolView (RKMDIWindow *tool_window) {
+	RK_TRACE (APP);
+	RK_ASSERT (tool_window);
+
+	if (tool_window->hasFocus ()) {
+		tool_window->close (false);
+		setFocus ();
+		activateDocumentView ();
+	}
+	else tool_window->activate ();
+}
+
 void RKWardMainWindow::showHelpSearch () {
 	RK_TRACE (APP);
 
 	RKHelpSearchWindow::mainHelpSearch ()->activate ();
 }
 
-void RKWardMainWindow::showConsole () {
+void RKWardMainWindow::toggleHelpSearch () {
 	RK_TRACE (APP);
 
-	RKConsole::mainConsole ()->activate ();
+	toggleToolView (RKHelpSearchWindow::mainHelpSearch ());
 }
 
-void RKWardMainWindow::showCommandLog () {
+void RKWardMainWindow::toggleConsole () {
 	RK_TRACE (APP);
 
-	RKCommandLog::getLog ()->activate ();
+	toggleToolView (RKConsole::mainConsole ());
 }
 
-void RKWardMainWindow::showPendingJobs () {
+void RKWardMainWindow::toggleCommandLog () {
 	RK_TRACE (APP);
 
-	RControlWindow::getControl ()->activate ();
+	toggleToolView (RKCommandLog::getLog ());
 }
 
-void RKWardMainWindow::showWorkspace () {
+void RKWardMainWindow::togglePendingJobs () {
 	RK_TRACE (APP);
 
-	RObjectBrowser::mainBrowser ()->activate ();
+	toggleToolView (RControlWindow::getControl ());
+}
+
+void RKWardMainWindow::toggleWorkspace () {
+	RK_TRACE (APP);
+
+	toggleToolView (RObjectBrowser::mainBrowser ());
 }
 
 void RKWardMainWindow::activateDocumentView () {

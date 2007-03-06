@@ -56,6 +56,7 @@ class RKEditorManager;
 class RKMenuList;
 class RKCommandEditorWindow;
 class KMdiToolViewAccessor;
+class RKMDIWindow;
 
 /**
 The main class of rkward. This is where all strings are tied togther, controlls the initialization, and there are some of the most important slots for user actions. All real work is done elsewhere.
@@ -124,14 +125,16 @@ signals:
 public slots:
 	/** Raise the help search window */
 	void showHelpSearch ();
-	/** Raise the console window */
-	void showConsole ();
-	/** Raise the command log window */
-	void showCommandLog ();
-	/** Raise the pending jobs window */
-	void showPendingJobs ();
-	/** Raise the workspace browser window */
-	void showWorkspace ();
+	/** Toggle the help search window */
+	void toggleHelpSearch ();
+	/** Toggle the console window */
+	void toggleConsole ();
+	/** Toggle the command log window */
+	void toggleCommandLog ();
+	/** Toggle the pending jobs window */
+	void togglePendingJobs ();
+	/** Toggle the workspace browser window */
+	void toggleWorkspace ();
 	/** Activate the current (non tools) window in the workspace */
 	void activateDocumentView ();
 
@@ -201,6 +204,8 @@ public slots:
 /** connected to m_manager->partAdded (). Disconnects statusbar notifications */
 	void partRemoved (KParts::Part *part);
 private:
+	void toggleToolView (RKMDIWindow *tool_window);
+
 	QLabel* r_status_label;
 	KParts::PartManager *part_manager;
 
