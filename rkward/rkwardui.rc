@@ -40,8 +40,18 @@
 		<Action name="window_close_all"/>
 		<Action name="close_all_editors"/>
 		<Separator/>
-		<Action name="prev_window"/>
-		<Action name="next_window"/>
+		<Menu name="window_activate"><text>&amp;Activate</text>
+			<Action name="prev_window"/>
+			<Action name="next_window"/>
+			<Separator/>
+			<Action name="window_show_workspace"/>
+			<Action name="window_show_commandlog"/>
+			<Action name="window_show_pendingjobs"/>
+			<Action name="window_show_console"/>
+			<Action name="window_show_helpsearch"/>
+			<Separator/>
+			<Action name="window_activate_docview"/>
+		</Menu>
 		<Separator/>
 		<Action name="window_detach"/>
 	</Menu>

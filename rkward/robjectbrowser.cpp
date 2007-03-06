@@ -44,6 +44,9 @@
 
 #include "debug.h"
 
+// static
+RObjectBrowser* RObjectBrowser::object_browser = 0;
+
 RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, WorkspaceBrowserWindow, tool_window, name) {
 	RK_TRACE (APP);
 	setPart (new RKDummyPart (0, this));

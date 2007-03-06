@@ -83,8 +83,6 @@ public:
 /** opens the given url, assuming it is an HTML-help page. */
 	void openHTML (const KURL &url);
 
-/** returns a pointer to the menu-list (in essence the menu-bar) */
-	RKMenuList* getMenuList () { return menu_list; };
 	KParts::PartManager *partManager () { return part_manager; };
 
 	static RKWardMainWindow *getMain () { return rkward_mainwin; };
@@ -126,6 +124,17 @@ signals:
 public slots:
 	/** Raise the help search window */
 	void showHelpSearch ();
+	/** Raise the console window */
+	void showConsole ();
+	/** Raise the command log window */
+	void showCommandLog ();
+	/** Raise the pending jobs window */
+	void showPendingJobs ();
+	/** Raise the workspace browser window */
+	void showWorkspace ();
+	/** Activate the current (non tools) window in the workspace */
+	void activateDocumentView ();
+
 	/** Show the starting page of RKWard help */
 	void showRKWardHelp ();
 	/** Invokes R help (help.start ()) */
@@ -227,11 +236,7 @@ private:
 	/** Finds plugins and inserts them into the menu-structure */
 	void initPlugins ();
 
-	RObjectBrowser *object_browser;
-	
 	KURL *initial_url;
-	
-	RKMenuList *menu_list;
 
 	static RKWardMainWindow *rkward_mainwin;
 

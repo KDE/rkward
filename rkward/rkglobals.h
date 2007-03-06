@@ -43,8 +43,6 @@ public:
 	static RInterface *rInterface () { return rinter; };
 /// static pointer to the RKModificationTracker
 	static RKModificationTracker *tracker () { return mtracker; };
-/// static pointer to the RControlWindow
-	static RControlWindow *controlWindow () { return rcontrol; };
 
 /// a NA double
 	static double na_double;
@@ -60,7 +58,6 @@ private:
 	friend class RKWardMainWindow;
 	static RInterface *rinter;
 	static RKModificationTracker *mtracker;
-	static RControlWindow *rcontrol;
 };
 
 #endif

@@ -20,7 +20,6 @@
 
 RInterface *RKGlobals::rinter;
 RKModificationTracker *RKGlobals::mtracker;
-RControlWindow *RKGlobals::rcontrol;
 
 double RKGlobals::na_double;
 

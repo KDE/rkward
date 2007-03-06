@@ -72,6 +72,8 @@ public:
 	void show ();
 /** Call this once, when the RInterface is ready, and it is ok to try showing commands */
 	void initialize ();
+/** Static reference to the control window */
+	static RControlWindow* getControl () { return control_window; };
 public slots:
 /** command selection was changed. Automatically select sub-items of selected chains. Enable/disable "Cancel" button */
 	void commandSelectionChanged ();
@@ -102,6 +104,8 @@ private:
 	bool paused;
 	bool isActive ();
 	bool initialized;
+friend class RKWardMainWindow;
+	static RControlWindow *control_window;
 };
 
 /**

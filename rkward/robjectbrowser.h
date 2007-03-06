@@ -43,6 +43,7 @@ public:
 	~RObjectBrowser ();
 
 	enum PopupItems { Help=1, Edit=2, View=3, Rename=4, Copy=5, CopyToGlobalEnv=6, Delete=7 };
+	static RObjectBrowser *mainBrowser () { return object_browser; };
 public slots:
 	void updateButtonClicked ();
 	void contextMenuCallback (RKListViewItem *item, bool *suppress);
@@ -58,11 +59,12 @@ public slots:
 /** when an object in the list is double clicked, insert its name in the current RKCommandEditor window */
 	void slotListDoubleClicked (QListViewItem *item, const QPoint &pos, int);
 private:
-	friend class RKWardMainWindow;
-	void initialize ();
-
 	QPushButton *update_button;
 	RKObjectListView *list_view;
+
+	friend class RKWardMainWindow;
+	void initialize ();
+	static RObjectBrowser *object_browser;
 };
 
 /** This class provides a widget to switch quickly between the most important RKObjectListViewSettings */

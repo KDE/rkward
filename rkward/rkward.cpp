@@ -158,9 +158,14 @@ RKWardMainWindow::RKWardMainWindow (KURL *load_url) : DCOPObject ("rkwardapp"), 
 RKWardMainWindow::~RKWardMainWindow() {
 	RK_TRACE (APP);
 	closeAllViews ();
+
+	// these would not be strictly necessary, as we're exiting the app, anyway.
 	delete RKGlobals::rInterface ();
 	delete RObjectList::getObjectList ();
-	delete object_browser;
+	delete RObjectBrowser::mainBrowser ();
+	delete RKCommandLog::getLog ();
+	delete RKConsole::mainConsole ();
+	delete RKHelpSearchWindow::mainHelpSearch ();
 	delete RKGlobals::tracker ();
 }
 
@@ -182,9 +187,9 @@ void RKWardMainWindow::doPostInit () {
 
 	readOptions();
 	//It's necessary to give a different name to all tool windows, or they won't be properly displayed
-	object_browser = new RObjectBrowser (0, true, "workspace");
+	RObjectBrowser::object_browser = new RObjectBrowser (0, true, "workspace");
 
-	RKGlobals::rcontrol = new RControlWindow (0, true, "rcontrol");		// the control window needs to be initialized before startR () is called.
+	RControlWindow::control_window = new RControlWindow (0, true, "rcontrol");		// the control window needs to be initialized before startR () is called.
 
 	RKCommandLog *log = new RKCommandLog (0, true, "Command log");
 	log->setIcon (SmallIcon ("text_block"));	
@@ -199,13 +204,13 @@ void RKWardMainWindow::doPostInit () {
 	
 	initPlugins ();
 
-	object_browser->setIcon(SmallIcon("view_tree"));
-	object_browser->setToolWrapper (addToolWindow(object_browser,KDockWidget::DockLeft, getMainDockWidget(), 30, i18n ("Existing objects in your workspace."), i18n ("Workspace")));
-	RKWorkplace::mainWorkplace ()->registerToolWindow (object_browser);
+	RObjectBrowser::mainBrowser ()->setIcon(SmallIcon("view_tree"));
+	RObjectBrowser::mainBrowser ()->setToolWrapper (addToolWindow(RObjectBrowser::mainBrowser (), KDockWidget::DockLeft, getMainDockWidget(), 30, i18n ("Existing objects in your workspace."), i18n ("Workspace")));
+	RKWorkplace::mainWorkplace ()->registerToolWindow (RObjectBrowser::mainBrowser ());
 
-	RKGlobals::rcontrol->setCaption (i18n ("Pending Jobs"));
-	RKGlobals::rcontrol->setToolWrapper (addToolWindow (RKGlobals::rcontrol, KDockWidget::DockBottom, getMainDockWidget (), 10));
-	RKWorkplace::mainWorkplace ()->registerToolWindow (RKGlobals::rcontrol);
+	RControlWindow::getControl ()->setCaption (i18n ("Pending Jobs"));
+	RControlWindow::getControl ()->setToolWrapper (addToolWindow (RControlWindow::getControl (), KDockWidget::DockBottom, getMainDockWidget (), 10));
+	RKWorkplace::mainWorkplace ()->registerToolWindow (RControlWindow::getControl ());
 
 	RKConsole *console = new RKConsole (0, true, "r_console");
 	console->setIcon (SmallIcon ("konsole"));
@@ -220,7 +225,7 @@ void RKWardMainWindow::doPostInit () {
 	RKHelpSearchWindow::main_help_search = help_search;
 
 	RKOutputWindow::initialize ();
-	RKGlobals::rcontrol->initialize ();
+	RControlWindow::getControl ()->initialize ();
 
 	if (initial_url) {
 		openWorkspace (*initial_url);
@@ -293,7 +298,7 @@ void RKWardMainWindow::startR () {
 
 	RKGlobals::rInterface ()->startThread ();
 
-	object_browser->initialize ();
+	RObjectBrowser::mainBrowser ()->initialize ();
 }
 
 void RKWardMainWindow::slotConfigure () {
@@ -336,6 +341,14 @@ void RKWardMainWindow::initActions()
 	window_close_all = new KAction (i18n ("Close All"), 0, 0, this, SLOT (slotCloseAllWindows ()), actionCollection (), "window_close_all");
 	window_detach = new KAction (i18n ("Detach"), 0, 0, this, SLOT (slotDetachWindow ()), actionCollection (), "window_detach");
 	outputShow= new KAction (i18n ("Show &Output"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
+
+	new KAction (i18n ("Show Workspace Browser"), 0, KShortcut ("Alt+1"), this, SLOT (showWorkspace()), actionCollection (), "window_show_workspace");
+	new KAction (i18n ("Show Command Log"), 0, KShortcut ("Alt+2"), this, SLOT (showCommandLog()), actionCollection (), "window_show_commandlog");
+	new KAction (i18n ("Show Pending Jobs"), 0, KShortcut ("Alt+3"), this, SLOT (showPendingJobs()), actionCollection (), "window_show_pendingjobs");
+	new KAction (i18n ("Show Console"), 0, KShortcut ("Alt+4"), this, SLOT (showConsole()), actionCollection (), "window_show_console");
+	new KAction (i18n ("Show R Help Search"), 0, KShortcut ("Alt+5"), this, SLOT (showHelpSearch()), actionCollection (), "window_show_helpsearch");
+	new KAction (i18n ("Activate Document view"), 0, KShortcut ("Alt+0"), this, SLOT (activateDocumentView()), actionCollection (), "window_activate_docview");
+
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT (slotConfigure ()), actionCollection (), "configure");
 
 	makeRKWardHelpMenu (this, actionCollection ());
@@ -566,6 +579,37 @@ void RKWardMainWindow::showHelpSearch () {
 	RK_TRACE (APP);
 
 	RKHelpSearchWindow::mainHelpSearch ()->activate ();
+}
+
+void RKWardMainWindow::showConsole () {
+	RK_TRACE (APP);
+
+	RKConsole::mainConsole ()->activate ();
+}
+
+void RKWardMainWindow::showCommandLog () {
+	RK_TRACE (APP);
+
+	RKCommandLog::getLog ()->activate ();
+}
+
+void RKWardMainWindow::showPendingJobs () {
+	RK_TRACE (APP);
+
+	RControlWindow::getControl ()->activate ();
+}
+
+void RKWardMainWindow::showWorkspace () {
+	RK_TRACE (APP);
+
+	RObjectBrowser::mainBrowser ()->activate ();
+}
+
+void RKWardMainWindow::activateDocumentView () {
+	RK_TRACE (APP);
+
+	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->activeAttachedWindow ();
+	if (window) window->activate ();
 }
 
 void RKWardMainWindow::showRKWardHelp () {

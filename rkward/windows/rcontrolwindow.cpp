@@ -32,6 +32,9 @@
 #include "../rkward.h"
 #include "../debug.h"
 
+//static
+RControlWindow *RControlWindow::control_window = 0;
+
 RControlWindow::RControlWindow (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, PendingJobsWindow, tool_window, name) {
 	RK_TRACE (APP);
 	setPart (new RControlWindowPart (this));
