@@ -26,7 +26,7 @@
 class RKWorkplace;
 
 /** Base class for rkward document mdi windows */
-class RKMDIWindow : public QWidget {
+class RKMDIWindow : public QFrame {
 	Q_OBJECT
 public:
 	enum Type {
@@ -96,6 +96,7 @@ signals:
 protected:
 	void setPart (KParts::Part *p) { part = p; };
 	void initializeActivationSignals ();
+	void paintEvent (QPaintEvent *e);
 friend class RKWorkplace;
 /** type of this window */
 	Type type;
@@ -104,6 +105,7 @@ private:
 	KParts::Part *part;
 	State state;
 	KMdiToolViewAccessor *wrapper;
+	bool active;
 };
 
 #endif

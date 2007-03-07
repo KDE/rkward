@@ -18,6 +18,7 @@
 #include "rkmdiwindow.h"
 
 #include <qapplication.h>
+#include <qpainter.h>
 
 #include <kparts/event.h>
 
@@ -26,7 +27,7 @@
 
 #include "../debug.h"
 
-RKMDIWindow::RKMDIWindow (QWidget *parent, Type type, bool tool_window, char *name) : QWidget (parent, name) {
+RKMDIWindow::RKMDIWindow (QWidget *parent, Type type, bool tool_window, char *name) : QFrame (parent, name) {
 	RK_TRACE (APP);
 
 	RKMDIWindow::type = type;
@@ -34,6 +35,7 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, Type type, bool tool_window, char *na
 	else state = Attached;
 	wrapper = 0;
 	part = 0;
+	active = false;
 }
 
 RKMDIWindow::~RKMDIWindow () {
@@ -120,7 +122,14 @@ bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
 		KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *> (e);
 		if (ev->activated ()) {
 			emit (windowActivated (this));
+			active = true;
+		} else {
+			active = false;
 		}
+		if (layout()->margin () < 1) {
+			layout()->setMargin (1);
+		}
+		update ();
 	}
 	return FALSE;
 }
@@ -130,6 +139,21 @@ void RKMDIWindow::initializeActivationSignals () {
 
 	RK_ASSERT (getPart ());
 	getPart ()->installEventFilter (this);
+}
+
+void RKMDIWindow::paintEvent (QPaintEvent *e) {
+	// RK_TRACE (APP); Do not trace!
+
+	QFrame::paintEvent (e);
+
+	if (active) {
+		QPainter paint (this);
+		paint.setPen (QColor (255, 0, 0));
+		paint.drawLine (0, 0, 0, height ()-1);
+		paint.drawLine (0, height ()-1, width ()-1, height ()-1);
+		paint.drawLine (0, 0, width ()-1, 0);
+		paint.drawLine (width ()-1, 0, width ()-1, height ()-1);
+	}
 }
 
 #include "rkmdiwindow.moc"
