@@ -422,8 +422,13 @@ RKMDIWindowHistory::~RKMDIWindowHistory () {
 void RKMDIWindowHistory::addActions (KActionCollection *ac, const char *prev_id, const char *next_id) {
 	RK_TRACE (APP);
 
-	prev_action = new KAction (i18n ("Previous Window"), QIconSet (QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"))), KShortcut ("Alt+<"), this, SLOT (prev ()), ac, prev_id);
-	next_action = new KAction (i18n ("Next Window"), QIconSet (QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"))), KShortcut ("Alt+>"), this, SLOT (next ()), ac, next_id);
+	KShortcut prev_short ("Alt+<");
+	prev_short.append (KKey (Qt::ALT | Qt::Key_Comma));	// "Alt+," does not work, as "," has a special meaning.
+	prev_action = new KAction (i18n ("Previous Window"), QIconSet (QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"))), prev_short, this, SLOT (prev ()), ac, prev_id);
+
+	KShortcut next_short ("Alt+>");
+	next_short.append ("Alt+.");
+	next_action = new KAction (i18n ("Next Window"), QIconSet (QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"))), next_short, this, SLOT (next ()), ac, next_id);
 	updateActions ();
 }
 
