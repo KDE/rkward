@@ -268,6 +268,8 @@ void RKCommandEditorWindow::tryCompletion () {
 
 void RKCommandEditorWindow::fixCompletion (KTextEditor::CompletionEntry *entry, QString *string) {
 	RK_TRACE (COMMANDEDITOR);
+	RK_ASSERT (entry);
+	RK_ASSERT (string);
 
 	*string = entry->text;	// why, oh, why, isn't this always the case?
 
