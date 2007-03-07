@@ -227,6 +227,25 @@
 	ret
 }
 
+# Change storage type of x to mode newmode.
+# Most attributes will be kept, but the data is erased!
+".rk.set.vector.mode" <- function (x, fun, envir=parent.frame ()) {
+	old_attr <- attributes (x)
+	old_attr$class <- NULL
+	old_attr[[".rk.invalid.fields"]] <- list ()	# will be reset, anyway!
+
+	y <- fun (rep (NA, length.out=length (x)))
+
+	# merge old attributes with new ones
+	newattrs <- attributes (y)
+	for (nattr in names (newattrs)) {
+		old_attr[[nattr]] <- newattrs[[nattr]]
+	}
+
+	attributes (y) <- old_attr
+	eval (substitute (x <- y), envir=envir)
+}
+
 ".rk.get.structure" <- function (x, name, envlevel=0, namespacename=NULL, misplaced=FALSE) {
 	fun <- FALSE
 	cont <- FALSE

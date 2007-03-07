@@ -22,12 +22,6 @@ Bugs:
 			- seems to happen more often with larger data frames
 			- more precisely: seems to happen after scrolling
 			- no idea, why this happens
-		- converting objects to a different type is broken (works in the editor, but the type remains unchanged in the backend)
-			- maybe we could do the change in the backend, and then sync
-				- function rk.change.vector.mode() to change the mode, keeping attributes, and adding invalid values where needed
-				- sync using updateFromR(), updateDataFromR()
-				- this would be done from TwinTableMetaMember::setText()
-				- we should find a way to disable the var (set it to gray color group, do not allow editing) during this operation
 	- Quitting via q() in the R console will often lead to a segfault during shutdown
 
 Compilation / technical
@@ -54,6 +48,7 @@ UI-stuff
 			- default alignment (per var type)
 			- default precision
 			- display of factor level labels (global and per variable)
+				- might default to "only for factors"
 			- delay of factor-level popup
 		- highlighting of value ranges
 	- Create an editor for single vectors/factors, or rework RKEditorDataFrame to handle those as well

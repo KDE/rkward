@@ -66,11 +66,24 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 			delete myData ()->changes;
 			myData ()->changes = 0;
 		}
+
+		// store what we want to keep of the edit data
 		RKEditor *editor = myData ()->editor;
+		ValueLabels *value_labels = myData ()->value_labels;
+		myData ()->value_labels = 0;	// prevent destruction
+		FormattingOptions *formatting_options = myData ()->formatting_options;
+		myData ()->formatting_options = 0;	// prevent destruction
+
+		// destroy and re-allocate edit data
 		discardEditData ();
 		setDataType (new_type);
 		allocateEditData (editor);
 
+		// re-set presistent aspects of the edit data
+		myData ()->value_labels = value_labels;
+		myData ()->formatting_options = formatting_options;
+
+		// re-set all data
 		setSyncing (false);
 		int i = 0;
 		for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
@@ -78,6 +91,14 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 			i++;
 		}
 		if (sync) {
+			QString command = ".rk.set.vector.mode(" + getFullName () + ", ";
+			if (new_type == RObject::DataCharacter) command += "as.character";
+			else if (new_type == RObject::DataNumeric) command += "as.numeric";
+			else if (new_type == RObject::DataLogical) command += "as.logical";
+			else if (new_type == RObject::DataFactor) command += "as.factor";
+			command += ")";
+			RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::Sync, QString::null);
+
 			syncDataToR ();
 		}
 		setSyncing (internal_sync);
