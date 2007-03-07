@@ -2,7 +2,7 @@
                           rkobjectlistview  -  description
                              -------------------
     begin                : Wed Sep 1 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -53,6 +53,9 @@ from your custom menu items, to figure out, which object you should operate on. 
 	RObject *menuObject () { return menu_object; };
 
 	RKObjectListViewSettings *getSettings () { return settings; };
+
+/** Scrolls so that the item representing object becomes visible, and makes it current */
+	void setObjectCurrent (RObject *object, bool only_if_none_current=false);
 signals:
 	void listChanged ();
 /** This signal is emitted just before the context-menu is shown. If you connect to this signal, you can make some adjustments to the context-menu.

@@ -58,6 +58,9 @@ public slots:
 	void popupRename ();
 /** when an object in the list is double clicked, insert its name in the current RKCommandEditor window */
 	void slotListDoubleClicked (QListViewItem *item, const QPoint &pos, int);
+protected:
+/** reimplemnented from QWidget to make show the globalenv object when activated (other than by mouse click) */
+	void focusInEvent (QFocusEvent *e);
 private:
 	QPushButton *update_button;
 	RKObjectListView *list_view;

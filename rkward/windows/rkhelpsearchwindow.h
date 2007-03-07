@@ -49,7 +49,10 @@ Will figure out the word under the cursor, and provide help on that (if there is
 	static RKHelpSearchWindow *mainHelpSearch () { return main_help_search; };
 public slots:
 	void slotFindButtonClicked();
-	void slotResultsListDblClicked( QListViewItem *item, const QPoint &, int );
+	void slotResultsListDblClicked (QListViewItem *item, const QPoint &, int);
+protected:
+/** reimplemnented from QWidget to make the input focus default to the input field */
+	void focusInEvent (QFocusEvent *e);
 private:
 	QComboBox* field;
 	QComboBox* fieldsList;

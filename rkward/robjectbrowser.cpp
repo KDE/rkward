@@ -83,6 +83,14 @@ RObjectBrowser::~RObjectBrowser () {
 	RK_TRACE (APP);
 }
 
+void RObjectBrowser::focusInEvent (QFocusEvent *e) {
+	RK_TRACE (APP);
+
+	if (e->reason () != QFocusEvent::Mouse) {
+		list_view->setObjectCurrent (RObjectList::getGlobalEnv (), true);
+	}
+}
+
 void RObjectBrowser::initialize () {
 	RK_TRACE (APP);
 

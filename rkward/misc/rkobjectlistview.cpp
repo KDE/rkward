@@ -2,7 +2,7 @@
                           rkobjectlistview  -  description
                              -------------------
     begin                : Wed Sep 1 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -73,6 +73,19 @@ RKObjectListView::~RKObjectListView () {
 	RK_TRACE (APP);
 
 	delete tip;
+}
+
+void RKObjectListView::setObjectCurrent (RObject *object, bool only_if_none_current) {
+	RK_TRACE (APP);
+
+	if (!object) return;
+	RKListViewItem *item = findObjectItem (object);
+
+	if (!item) return;		// this may happen during initialization!
+	if (only_if_none_current && selectedItem ()) return;
+
+	ensureItemVisible (item);
+	setCurrentItem (item);
 }
 
 void RKObjectListView::objectBrowserSettingsChanged () {

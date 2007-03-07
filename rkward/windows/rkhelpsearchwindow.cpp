@@ -110,6 +110,14 @@ RKHelpSearchWindow::~RKHelpSearchWindow () {
 	RK_TRACE (APP);
 }
 
+void RKHelpSearchWindow::focusInEvent (QFocusEvent *e) {
+	RK_TRACE (APP);
+
+	if (e->reason () != QFocusEvent::Mouse) {
+		field->setFocus ();
+	}
+}
+
 void RKHelpSearchWindow::getContextHelp (const QString &context_line, int cursor_pos) {
 	RK_TRACE (APP);
 	QString result = RKCommonFunctions::getCurrentSymbol (context_line, cursor_pos);
