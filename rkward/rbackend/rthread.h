@@ -110,7 +110,7 @@ Note that you should call initialize only once in a application */
 
 /** this function is public for technical reasons, only. Don't use except from REmbedInternal! Called from REmbedInternal when the R backend
 generates standard output. @see REmbedInternal::handleOutput () */
-	void handleOutput (char *buf, int buf_length);
+	void handleOutput (const QString &output, int buf_length, bool regular);
 
 /** Flushes current output buffer. Lock the mutex before calling this function! It is called from both threads and is not re-entrant */
 	void flushOutput ();

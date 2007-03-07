@@ -152,10 +152,9 @@ void RThread::doCommand (RCommand *command) {
 		RKWardRError error;
 		
 		int ctype = command->type ();
-		QCString localc = command->command ().local8Bit ();		// needed so the string below does not go out of scope
-		const char *ccommand = localc;
+		QString ccommand = command->command ();		// easier typing below
 		
-		RK_DO (qDebug ("running command: %s", ccommand), RBACKEND, DL_DEBUG);
+		RK_DO (qDebug ("running command: %s", ccommand.latin1()), RBACKEND, DL_DEBUG);
 	
 		if (command->type () & RCommand::DirectToOutput) {
 			runCommandInternal (QString ("sink (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\", append=TRUE, split=TRUE)\n").local8Bit (), &error);
@@ -241,7 +240,7 @@ void RThread::waitIfOutputPaused () {
 	}
 }
 
-void RThread::handleOutput (char *buf, int buf_length) {
+void RThread::handleOutput (const QString &output, int buf_length, bool regular) {
 	RK_TRACE (RBACKEND);
 
 // TODO: output sometimes arrives in small chunks. Maybe it would be better to keep an internal buffer, and only append it to the output, when R_FlushConsole gets called?
@@ -250,17 +249,24 @@ void RThread::handleOutput (char *buf, int buf_length) {
 	waitIfOutputPaused ();
 
 	MUTEX_LOCK;
+	ROutput::ROutputType output_type;
+	if (regular) {
+		output_type = ROutput::Output;
+	} else {
+		output_type = ROutput::Warning;
+	}
+
 	if (current_output) {
-		if (current_output->type != ROutput::Output) {
+		if (current_output->type != output_type) {
 			flushOutput ();
 		}
 	}
 	if (!current_output) {	// not an else, might have been set to 0 in the above if
 		current_output = new ROutput;
-		current_output->type = ROutput::Output;
+		current_output->type = output_type;
 		current_output->output.reserve (MAX_BUF_LENGTH + 50);
 	}
-	current_output->output.append (QString::fromLocal8Bit (buf));
+	current_output->output.append (output);
 
 	if ((out_buf_len += buf_length) > MAX_BUF_LENGTH) {
 		RK_DO (qDebug ("Output buffer has %d characters. Forcing flush", out_buf_len), RBACKEND, DL_DEBUG);

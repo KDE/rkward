@@ -168,7 +168,7 @@ void RWriteConsole (char *buf, int buflen) {
 	args.chars_a = &buf;
 	args.int_a = buflen;
 	REmbedInternal::this_pointer->handleStandardCallback (&args); */
-	REmbedInternal::this_pointer->handleOutput (buf, buflen);
+	REmbedInternal::this_pointer->handleOutput (QString::fromLocal8Bit (buf, buflen), buflen, true);
 }
 
 void RResetConsole () {
@@ -550,11 +550,14 @@ bool REmbedInternal::registerFunctions (const char *library_path) {
 	return true;
 }
 
-SEXP runCommandInternalBase (const char *command, REmbedInternal::RKWardRError *error) {
+SEXP runCommandInternalBase (const QString &command_qstring, REmbedInternal::RKWardRError *error) {
 // some copying from RServe below
 	int r_error = 0;
 	ParseStatus status = PARSE_NULL;
 	SEXP cv, pr, exp;
+
+	QCString localc = command_qstring.local8Bit ();		// needed so the string below does not go out of scope
+	const char *command = localc;
 
 	PROTECT(cv=allocVector(STRSXP, 1));
 	SET_VECTOR_ELT(cv, 0, mkChar(command));  
@@ -672,11 +675,11 @@ void runUserCommandInternal (void *) {
 }
 #endif
 
-void REmbedInternal::runCommandInternal (const char *command, RKWardRError *error, bool print_result) {
+void REmbedInternal::runCommandInternal (const QString &command_qstring, RKWardRError *error, bool print_result) {
 	connectCallbacks ();		// sorry, but we will not play nicely with additional frontends trying to override our callbacks. (Unless they start their own R event loop, then they should be fine)
 
 	if (!print_result) {
-		runCommandInternalBase (command, error);
+		runCommandInternalBase (command_qstring, error);
 	} else {		// run a user command
 #ifdef USE_R_REPLDLLDO1
 /* Using R_ReplDLLdo1 () is a pain, but it seems to be the only entry point for evaluating a command as if it had been entered on a plain R console (with auto-printing if not invisible, etc.). Esp. since R_Visible is no longer exported in R 2.5.0, as it seems as of today (2007-01-17).
@@ -696,7 +699,9 @@ This is the logic spread out over the following section, runUserCommandInternal 
 		R_ReplDLLinit ();		// resets the parse buffer (things might be left over from a previous incomplete parse)
 		bool prev_iteration_was_incomplete = false;
 
-		current_buffer = command;
+		QCString localc = command_qstring.local8Bit ();		// needed so the string below does not go out of scope
+		current_buffer = localc;
+
 		repldll_buffer_transfer_finished = false;
 		Rboolean ok = (Rboolean) 1;	// set to false, if there is a jump during the R_ToplevelExec (i.e.. some sort of error)
 
@@ -748,7 +753,7 @@ This is the logic spread out over the following section, runUserCommandInternal 
 	}
 }
 
-QString *REmbedInternal::getCommandAsStringVector (const char *command, uint *count, RKWardRError *error) {	
+QString *REmbedInternal::getCommandAsStringVector (const QString &command, uint *count, RKWardRError *error) {	
 	SEXP exp;
 	QString *list = 0;
 	
@@ -767,7 +772,7 @@ QString *REmbedInternal::getCommandAsStringVector (const char *command, uint *co
 	return list;
 }
 
-double *REmbedInternal::getCommandAsRealVector (const char *command, uint *count, RKWardRError *error) {
+double *REmbedInternal::getCommandAsRealVector (const QString &command, uint *count, RKWardRError *error) {
 	SEXP exp;
 	double *reals = 0;
 	
@@ -786,7 +791,7 @@ double *REmbedInternal::getCommandAsRealVector (const char *command, uint *count
 	return reals;
 }
 
-int *REmbedInternal::getCommandAsIntVector (const char *command, uint *count, RKWardRError *error) {
+int *REmbedInternal::getCommandAsIntVector (const QString &command, uint *count, RKWardRError *error) {
 	SEXP exp;
 	int *integers = 0;
 	
@@ -805,7 +810,7 @@ int *REmbedInternal::getCommandAsIntVector (const char *command, uint *count, RK
 	return integers;
 }
 
-RData *REmbedInternal::getCommandAsRData (const char *command, RKWardRError *error) {
+RData *REmbedInternal::getCommandAsRData (const QString &command, RKWardRError *error) {
 	SEXP exp;
 	RData *data = 0;
 	

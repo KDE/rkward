@@ -49,6 +49,7 @@ struct RCallbackArgs {
 
 class QString;
 class RData;
+class QTextCodec;
 /** This function converts a list of strings to a QStringList (locale aware), and returns the pointer. Needed to keep R and Qt includes separate. The strings can be deleted afterwards. Implementation is in rthread.cpp */
 QString *stringsToStringList (char **strings, int count);
 /** Function to delete an array of Qstring. Does delete [] strings, nothing more. But can not inline this in this class due to conflicting R and Qt includes. Implementation is in rthread.cpp */
@@ -90,47 +91,47 @@ protected:
 @param stackstart Base of stack to use in the R thread */
 	bool startR (int argc, char **argv, size_t stacksize, void *stackstart);
 /** low-level running of a command.
-@param command char* of the command to be run
+@param command command to be run
 @param error this will be set to a value in RKWardError depending on success/failure of the command
 @param print_result whether the R_Visible flag should be set. If true, R will behave mostly as if in a regular console session. Otherwise values
 will only be printed if called for expressedly with print ("...") or similar. */
-	void runCommandInternal (const char *command, RKWardRError *error, bool print_result=false);
+	void runCommandInternal (const QString &command, RKWardRError *error, bool print_result=false);
 /** basically a wrapper to runCommandInternal (). Tries to convert the result of the command to an array of char* after running the command. Since
 this will not ever be done for user commands, the R_Visible flag will never be set.
-@param command char* of the command to be run 
+@param command command to be run 
 @param count length of list returned
 @param error this will be set to a value in RKWardError depending on success/failure of the command
 @returns an array of QString or 0 on failure
 @see RCommand::GetStringVector */
-	QString *getCommandAsStringVector (const char *command, unsigned int *count, RKWardRError *error);
+	QString *getCommandAsStringVector (const QString &command, unsigned int *count, RKWardRError *error);
 /** basically a wrapper to runCommandInternal (). Tries to convert the result of the command to an array of double after running the command. Since
 this will not ever be done for user commands, the R_Visible flag will never be set.
-@param command char* of the command to be run 
+@param command command to be run 
 @param count length of array returned
 @param error this will be set to a value in RKWardError depending on success/failure of the command
 @returns an array of double or 0 on failure
 @see RCommand::GetRealVector */
-	double *getCommandAsRealVector (const char *command, unsigned int *count, RKWardRError *error);
+	double *getCommandAsRealVector (const QString &command, unsigned int *count, RKWardRError *error);
 /** basically a wrapper to runCommandInternal (). Tries to convert the result of the command to an array of int after running the command. Since
 this will not ever be done for user commands, the R_Visible flag will never be set.
-@param command char* of the command to be run 
+@param command command to be run 
 @param count length of array returned
 @param error this will be set to a value in RKWardError depending on success/failure of the command
 @returns an array of int or 0 on failure
 @see RCommand::GetIntVector */
-	int *getCommandAsIntVector (const char *command, unsigned int *count, RKWardRError *error);
+	int *getCommandAsIntVector (const QString &command, unsigned int *count, RKWardRError *error);
 /** basically a wrapper to runCommandInternal (). Tries to convert the result of the command to an RData structure after running the command. Since this will not ever be done for user commands, the R_Visible flag will never be set.
-@param command char* of the command to be run 
+@param command command to be run 
 @param error this will be set to a value in RKWardError depending on success/failure of the command
 @returns an array of int or 0 on failure
 @see RCommand::GetStructuredData */
-	RData *getCommandAsRData (const char *command, RKWardRError *error);
+	RData *getCommandAsRData (const QString &command, RKWardRError *error);
 public:
 /** call this periodically to make R's x11 windows process their events */
 	static void processX11Events ();
 
 /** This gets called on normal R output (R_WriteConsole). Used to get at output. */
-	virtual void handleOutput (char *buf, int buf_length) = 0;
+	virtual void handleOutput (const QString &output, int len, bool regular) = 0;
 
 /** This gets called, when the console is flushed */
 	virtual void flushOutput () = 0;
@@ -167,6 +168,7 @@ Otherwise it is very similar to handleSubstackCall (), esp. in that is implement
 private:
 // can't declare this as part of the class, as it would confuse REmbed
 //	SEXPREC *runCommandInternalBase (const char *command, bool *error);
+	QTextCodec *current_locale_codec;
 };
  
 #endif
