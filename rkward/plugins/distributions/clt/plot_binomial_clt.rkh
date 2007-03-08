@@ -15,17 +15,15 @@
 		<setting id="scalenorm">Should the sample averages be normalised, by subtracting the mean, E(D), of D and dividing by the standard deviation, S(D)/sqrt(nAvg), where S(D) is the standard deviation of D? If done so, then the target Normal distribution is taken to be the standard one, that is, with mean 0 and variance 1. Otherwise the target distribution is Normal with the mean E(D) and standard deviation S(D)/sqrt(nAvg).</setting>
 		<setting id="drawnorm">Should a Normal curve be drawn? For the case of 'Histogram', nDist random samples are drawn from the target Normal distribution and their density values are plotted.</setting>
 		<setting id="normpointtype">Pointtype for the Normal curve.</setting>
-		<setting id="normlinecol">Color of the Normal curve, defaults to 'red'.</setting>
+		<setting id="normlinecol">Color of the Normal curve.</setting>
 		<setting id="plotoptions">Various plot options.</setting>
 		<setting id="preview">Preview button.</setting>
 		<caption id="tab_histoptions"/>
 		<setting id="histogram_opt">The 'Frequency' checkbox is unavailable because, in this situation, drawing the histogram with <i>freq=TRUE</i> doesnot make sense. Also, since histogram is the main plot, 'Add to current plot' checkbox has also been disabled. See RKWard help on <link href="rkward://component/histogram_options"/> for other histogram centric details.</setting>
 		<caption id="tab_distfunction"/>
-		<setting id="dist_stepfun" label="Stepfunction options">See the help on step-function options plugin. The 'Add to current plot' option is unavailable.</setting>
+		<setting id="dist_stepfun" label="Stepfunction options">See the help on the <link href="rkward://component/plot_stepfun_options"/> plugin. The 'Add to current plot' option is unavailable.</setting>
 		<setting id="frame_col_y0"></setting>
 		<setting id="frame_col_y1"> The above two options are used to set the color for the horizontal lines at y = 0 and y = 1 respectively. Specifically, this is the <i>col.01line</i> argument to <b>ecdf</b>. If only the one is provided (i.e the other is set as 'Default') then both the line are of the specified color. Otherwise (i.e., when both the colors are provided) both the colors are provided as a character vector.</setting>
-		<caption id="frame_rug"/>
-		<setting id="addRugtoplot"> Check this option to add a <b>rug</b> to the current plot. See the R reference on 'rug' for more detials. All the available options, namely, 'Side of Rug', 'Tick size', Tick width' and 'Color' are self evident.</setting>
 	</settings>
 	<related>
 		<ul>

@@ -1,19 +1,19 @@
 <?php
-	function preprocess () {
-	}
+function preprocess () {
+}
 
-	function calculate () {
-	}
+function calculate () {
+}
 
-	function printout () {
+function printout () {
 	doPrintout (true);
-  }
+}
 
-  function cleanup () {
+function cleanup () {
 ?>
 rm(rk.temp.cltdistrib)
 <?
-	}
+}
 
 function preview () {
 	preprocess ();
@@ -36,11 +36,11 @@ function doPrintout ($final) {
 	$distVar = $size*$prob*(1-$prob)/$nAvg; // variance of the distribution of sample averages
 
 	if ($scalenorm) {
-	 $normMu = 0; // mean for normal
-	 $normSigma = 1; // std dev for normal
+		$normMu = 0; // mean for normal
+		$normSigma = 1; // std dev for normal
 	} else {
-	 $normMu = $distExp;
-	 $normSigma = sqrt($distVar);
+		$normMu = $distExp;
+		$normSigma = sqrt($distVar);
 	}
 
 	$plotoptions = getRK_val("plotoptions.code.printout");
@@ -88,7 +88,7 @@ rk.temp.cltdistrib$normX <- seq(from=min(rk.temp.cltdistrib$avg), to=max(rk.temp
 rk.temp.cltdistrib$normY <- <? echo ($normFun); ?> (rk.temp.cltdistrib$normX, mean = <? echo ($normMu); ?>, sd = <? echo ($normSigma); ?>);
 <?
 	}
-  if ($fun == "hist") {
+	if ($fun == "hist") {
 ?>
 rk.temp.cltdistrib$hist <- hist(rk.temp.cltdistrib$avg, plot=FALSE<? echo ($histcalcoptions); ?>);
 <?

@@ -27,11 +27,6 @@
 		<set id="dist_stepfun.allow_addtoplot" to="false" />
 		<set id="dist_stepfun.default_verticals" to="false" />
 
-		<connect client="rug_side.enabled" governor="addRugtoplot.state" />
-		<connect client="rug_ticksize.enabled" governor="addRugtoplot.state"/>
-		<connect client="rug_lwd.enabled" governor="addRugtoplot.state"/>
-		<connect client="col_rug.color.enabled" governor="addRugtoplot.state"/>
-
 		<set id="col_y0.argument" to=""/>
 		<set id="col_y1.argument" to=""/>
 </logic>
