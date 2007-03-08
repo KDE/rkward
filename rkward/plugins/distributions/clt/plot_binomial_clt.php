@@ -103,21 +103,21 @@ rk.temp.cltdistrib$ylim <- c(0,max(c(rk.temp.cltdistrib$hist$density, rk.temp.cl
 	if ($final) {
 ?>
 rk.graph.on ()
+try ({
 <?
 	}
-  if ($fun == "hist") {
+  	if ($fun == "hist") {
 ?>
-try( plot(rk.temp.cltdistrib$hist<? echo ($yLim); echo ($histplotoptions); ?>) );
+	plot(rk.temp.cltdistrib$hist<? echo ($yLim); echo ($histplotoptions); ?>)
 <?
 	} elseif ($fun == "dist") {
 ?>
-try( plot(ecdf(rk.temp.cltdistrib$avg)<? echo ($plotoptions); ?>) );
+	plot(ecdf(rk.temp.cltdistrib$avg)<? echo ($plotoptions); ?>)
 <?
-		}
 	}
 	if ($drawnorm) {
 ?>
-try (lines (x=rk.temp.cltdistrib$normX, y=rk.temp.cltdistrib$normY, type="<? getRK ("normpointtype"); ?>"<? getRK ("normlinecol.code.printout"); ?>));
+	lines (x=rk.temp.cltdistrib$normX, y=rk.temp.cltdistrib$normY, type="<? getRK ("normpointtype"); ?>"<? getRK ("normlinecol.code.printout"); ?>)
 <?
 	}
 	if ($final) {
