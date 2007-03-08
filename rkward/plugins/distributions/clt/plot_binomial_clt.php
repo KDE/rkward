@@ -59,14 +59,6 @@ function doPrintout ($final) {
 			$ecdfoptions .= ", col.01line={$col_y0}{$col_y1}";
 		} // col.01line option to plot.ecdf()
 
-		$addRugtoplot = getRK_val ("addRugtoplot");
-		if ($addRugtoplot) {
-			$rugoptions  = ', ticksize=' . round(getRK_val ("rug_ticksize"),2);
-			$rugoptions .= ', lwd=' . round(getRK_val ("rug_lwd"),2);
-			$rugoptions .= ', side=' . getRK_val ("rug_side");
-			$rugoptions .= getRK_val ("col_rug.code.printout");
-		}
-
 		$normFun = "pnorm"; // draw normal cdf on the ecdf plot
 		$plotoptions .= $ecdfoptions . getRK_val ("dist_stepfun.code.printout"); // plot.ecdf() and plot.stepfun() options
 	}
@@ -120,10 +112,6 @@ try( plot(rk.temp.cltdistrib$hist<? echo ($yLim); echo ($histplotoptions); ?>) )
 	} elseif ($fun == "dist") {
 ?>
 try( plot(ecdf(rk.temp.cltdistrib$avg)<? echo ($plotoptions); ?>) );
-<?
-		if ($addRugtoplot) {
-?>
-try (rug (rk.temp.cltdistrib$avg<? echo ($rugoptions); ?>));
 <?
 		}
 	}
