@@ -580,12 +580,13 @@ void RKWardMainWindow::toggleToolView (RKMDIWindow *tool_window) {
 	RK_TRACE (APP);
 	RK_ASSERT (tool_window);
 
-	if (tool_window->hasFocus ()) {
+	if (tool_window->isActive ()) {
 		tool_window->close (false);
-		setFocus ();
+		setFocus ();	// in case there is no active document window, focus the main window
 		activateDocumentView ();
+	} else {
+		tool_window->activate ();
 	}
-	else tool_window->activate ();
 }
 
 void RKWardMainWindow::showHelpSearch () {

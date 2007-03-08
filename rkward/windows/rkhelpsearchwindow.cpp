@@ -113,6 +113,7 @@ RKHelpSearchWindow::~RKHelpSearchWindow () {
 void RKHelpSearchWindow::focusInEvent (QFocusEvent *e) {
 	RK_TRACE (APP);
 
+	RKMDIWindow::focusInEvent (e);
 	if (e->reason () != QFocusEvent::Mouse) {
 		field->setFocus ();
 	}

@@ -146,7 +146,7 @@ void RKMDIWindow::paintEvent (QPaintEvent *e) {
 
 	QFrame::paintEvent (e);
 
-	if (active) {
+	if (isActive ()) {
 		QPainter paint (this);
 		paint.setPen (QColor (255, 0, 0));
 		paint.drawLine (0, 0, 0, height ()-1);

@@ -2,7 +2,7 @@
                           rembedinternal  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -168,7 +168,7 @@ Otherwise it is very similar to handleSubstackCall (), esp. in that is implement
 private:
 // can't declare this as part of the class, as it would confuse REmbed
 //	SEXPREC *runCommandInternalBase (const char *command, bool *error);
-	QTextCodec *current_locale_codec;
+	QTextCodec *current_locale_codec;		// steal from QTextCodec::setupLocaleMapper to initialize
 };
  
 #endif

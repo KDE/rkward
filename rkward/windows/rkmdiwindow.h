@@ -87,6 +87,8 @@ public:
 /** For tool windows only (and perhaps for KDE3 only): set the wrapper widget that should be shown/raised on activation */
 	void setToolWrapper (KMdiToolViewAccessor *wrapper_widget) { wrapper = wrapper_widget; };
 	bool eventFilter (QObject *watched, QEvent *e);
+/** Whether the window is active. This seems to be more reliable than hasFocus () */
+	bool isActive () { return active; };
 signals:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */
