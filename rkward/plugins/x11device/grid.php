@@ -20,7 +20,7 @@ function calculate () {
 	if (!getRK_val("equilogs")) $gridoptions .= ', equilogs=FALSE';
 ?>
 dev.set (<? getRK ("devnum"); ?>)
-try(grid(<? echo ($gridoptions); ?>));
+grid(<? echo ($gridoptions); ?>);
 <?
 }
 function printout () {

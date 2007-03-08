@@ -1,25 +1,25 @@
 <!DOCTYPE rkhelp>
 <document>
 	<summary>
-		Various parameters for the <b>grid</b>. For detailed description of the individual parameters see the R reference on 'plot.stepfun'.
+		Various parameters for the <b>grid</b>. For detailed description of the individual parameters see the R reference on 'grid'.
 	</summary>
 	<usage>
-		This may or maynot be used as an embeded plugin.
+		This may or may not be used as an embeded plugin.
 	</usage>
 	<settings>
-		<setting id="nx">This is the <i>nx</i> argument. The default is NULL, in which case, the vertical lines are drawn at the xaxis ticks. Select None to not draw the vertical lines. Select 'Specify below' to provide the required number of vertical lines in the grid.</setting>
-		<setting id="nx_cells">This is the <i>nx</i> argument, when 'Specify below' was selected in the above option list.</setting>
-		<setting id="ny">This is the <i>ny</i> argument. See above.</setting>
-		<setting id="ny_cells">This is the <i>ny</i> argument. See above.</setting>
+		<setting id="nx">This is the <i>nx</i> argument. The default is NULL, in which case, the vertical lines are drawn at the xaxis ticks. Select None to not draw the vertical lines. Select 'Specify below' to provide a specified (to be specified below) number of vertical lines in the grid.</setting>
+		<setting id="nx_cells">This is the <i>nx</i> argument, when 'Specify below' is selected in the above option list.</setting>
+		<setting id="ny">This is the <i>ny</i> argument. Similar to <i>nx</i>. See the explanation on number of x cells above.</setting>
+		<setting id="ny_cells">This is the <i>ny</i> argument when a specified (by the user) number of y cells are to be used. Similar to x cells.</setting>
 		<setting id="custlwd">Check this option to use a custom line width. In which case, provide the width below.</setting>
-		<setting id="lwd">This is the <i>lwd</i> arguments. Check the above option to use this.</setting>
-		<setting id="linetype">This is the <i>lty</i> argument.</setting>
-		<setting id="col">This is the <i>col</i> argument.</setting>
+		<setting id="lwd">This is the <i>lwd</i> argument. Check the above option to use this.</setting>
+		<setting id="linetype">This is the <i>lty</i> argument. Choosing Default will not add any arguments to the grid function call, hence the default line type will be used.</setting>
+		<setting id="col">This is the <i>col</i> argument. The Default option is similar to that of Line type (see above).</setting>
 		<setting id="equilogs">This is the <i>equilogs</i> argument. Uncheck this option to set <i>equilogs=FALSE</i>.</setting>
 	</settings>
 	<related>
 		<ul>
-			<li><link href="rkward://rhelp/plot.stepfun"/></li>
+			<li><link href="rkward://rhelp/grid"/></li>
 		</ul>
 	</related>
 </document>
