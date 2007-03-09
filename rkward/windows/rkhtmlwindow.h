@@ -168,7 +168,7 @@ private:
 	QString renderHelpFragment (QDomElement &fragment);
 	void prepareHelpLink (QDomElement *link_element);
 	RKComponentHandle *componentPathToHandle (QString path);
-	QString startSection (const QString &name, const QString &title, QStringList *anchors, QStringList *anchor_names);
+	QString startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names);
 };
 
 #endif

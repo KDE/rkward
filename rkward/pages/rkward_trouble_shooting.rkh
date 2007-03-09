@@ -4,22 +4,22 @@
 	<summary>
 	RKWard is far from complete and certainly there are many issues that need to be fixed. However, some of the things you notice are not due to the nature of RKWard but R or something else. This section will try to cover some common issues.
 	</summary>
-	<section title="People tend to ask me what RKWard means. What should I answer?" id="the_name_problems">
+	<section title="People tend to ask me what RKWard means. What should I answer?" shorttitle="What does &quot;RKWard&quot; mean?" id="the_name_problems">
 		Yes, it's a very odd name. ;) However, R comes obviously from the <link href="http://www.r-project.org/">R-language</link> which is the statistical basis of RKWard. K is derived from <link href="http://kde.org/">KDE</link> which delivered the basic GUI technologies for RKWard. And <link href="http://en.wikipedia.org/wiki/Ward">Ward</link>? That's another story.
 	</section>
-	<section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?" id="not_yet_ready_problems">
+	<section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?" shorttitle="Commands not processing" id="not_yet_ready_problems">
 		This happens because RKWard starts first and subsequent R is started in the background. Depending on the speed of your machine it can take some time to start R. In any case you can check the state of R within RKWard. Just look at the little box on the right bottom corner of RKWard. If it is green you can go ahead.
 
 		You can start submitting commands while the backend has not yet started, or while another lengthy calculation is still taking place. In this case your commands will be placed into a queue, first, and executed as soon as the backend becomes available, again.
 	</section>
-	<section title="RKWard says it needs a package. Was the installation of RKWard not complete?" id="package_problems">
+	<section title="RKWard says it needs a package. Was the installation of RKWard not complete?" shorttitle="Missing packages" id="package_problems">
 		RKWard has basically all the functionality which comes with the standard packages of R. But RKWard is at the same time rather extensible. Many developers made use of this and thus some of the procedures in RKWard depend on "external" packages (obtained from <link href="http://cran.r-project.org/">The Comprehensive R Archive Network (CRAN)</link>) to perform a task.
 
 		Here is an example. All tests related to <link href="rkward://rhelp/moments">skewness</link> and <link href="rkward://rhelp/moments">kurtosis</link> (which you would certainly expect to be shipped as a base package of R) are performed from an external package. If you read this the first time or restarted RKWard after you installed it and try to follow the link you will be out of luck. First you need to run a test from Analysis->Moment in order to achieve this.
 
 		Typically you would call them from R via <link href="rkward://rhelp/update.packages">update.packages</link> and <link href="rkward://rhelp/library">library</link> to achieve this. But RKWard simplifies this for you. You'll be guided through the install procedure for the required package. Please note you need root privileges in certain situations.
 	</section>
-	<section title="RKWard is running since ages. Has it hung up?" id="hung_up_problems">
+	<section title="RKWard is running since ages. Has it hung up?" shorttitle="RKWard seems to hang" id="hung_up_problems">
 		This depends. Some test and plots just need some time if you have huge amounts of data or sophisticated calculations. Therefore patience is sometimes needed.
 
 		But some statistical test are rather memory and stack hungry and can make the entire system unresponsive, if there is a lot of swapping. Please refere to <link href="http://cran.r-project.org/doc/Rnews/Rnews_2001-1.pdf">RNews 2001/1, pg. 10</link> for more information. Therefore, this is neither a bug in RKWard (most likely at least) nor in R but due to the statistical test itself.
@@ -30,7 +30,7 @@
 
 		Therefore it's important you know the test. Moreover it's very important to save the workspace and other sections you worked on before you do such operations. There is currently no recovery functionality within RKWard in case of a crash! You can find build-in tests from R to address this memory issue but these work on Windows(TM) platforms only (see: <link href="rkward://rhelp/memory.size">Memory Size</link>, <link href="rkward://rhelp/limit">Memory Limit</link> and <link href="http://finzi.psych.upenn.edu/R/library/base/html/Memory.html">Memory Available for Data Storage</link>). Sorry to say, this means there is no way for the RKWard developers to build a routine which does a "memory check" before a test is run.
 	</section>
-	<section title="I think I did something wrong? Where is 'Undo' and 'Redo'?" id="undo_redo_problems">
+	<section title="I think I did something wrong? Where is 'Undo' and 'Redo'?" shorttitle="Undo/Redo" id="undo_redo_problems">
 		Right now RKWard doesn't have any "undo" or "redo" functionality. Therefore it's important that you know what you do before you start. It's recommended to use copies of original data and to give everything a meaningful name.
 
 		However, RKWard tries to give you as much information as possible about things you have done. For example all test and plots show the specific settings in combination with the creation date. Moreover you can check and copy any code generated for your documentation purposes

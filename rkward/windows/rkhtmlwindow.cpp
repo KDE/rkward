@@ -475,21 +475,22 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 		// render the sections
 		element = help_xml->getChildElement (help_doc_element, "summary", DL_INFO);
 		if (!element.isNull ()) {
-			khtmlpart->write (startSection ("summary", i18n ("Summary"), &anchors, &anchornames));
+			khtmlpart->write (startSection ("summary", i18n ("Summary"), QString (), &anchors, &anchornames));
 			khtmlpart->write (renderHelpFragment (element));
 		}
 
 		element = help_xml->getChildElement (help_doc_element, "usage", DL_INFO);
 		if (!element.isNull ()) {
-			khtmlpart->write (startSection ("usage", i18n ("Usage"), &anchors, &anchornames));
+			khtmlpart->write (startSection ("usage", i18n ("Usage"), QString (), &anchors, &anchornames));
 			khtmlpart->write (renderHelpFragment (element));
 		}
 
 		XMLChildList section_elements = help_xml->getChildElements (help_doc_element, "section", DL_INFO);
 		for (XMLChildList::iterator it = section_elements.begin (); it != section_elements.end (); ++it) {
 			QString title = help_xml->getStringAttribute (*it, "title", QString (), DL_WARNING);
+			QString shorttitle = help_xml->getStringAttribute (*it, "shorttitle", QString (), DL_DEBUG);
 			QString id = help_xml->getStringAttribute (*it, "id", QString (), DL_WARNING);
-			khtmlpart->write (startSection (id, title, &anchors, &anchornames));
+			khtmlpart->write (startSection (id, title, shorttitle, &anchors, &anchornames));
 			khtmlpart->write (renderHelpFragment (*it));
 		}
 
@@ -497,7 +498,7 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 		if (for_component) {
 			element = help_xml->getChildElement (help_doc_element, "settings", DL_INFO);
 			if (!element.isNull ()) {
-				khtmlpart->write (startSection ("settings", i18n ("GUI settings"), &anchors, &anchornames));
+				khtmlpart->write (startSection ("settings", i18n ("GUI settings"), QString (), &anchors, &anchornames));
 				XMLChildList setting_elements = help_xml->getChildElements (element, QString (), DL_WARNING);
 				for (XMLChildList::iterator it = setting_elements.begin (); it != setting_elements.end (); ++it) {
 					if ((*it).tagName () == "setting") {
@@ -525,7 +526,7 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 		// "related" section
 		element = help_xml->getChildElement (help_doc_element, "related", DL_INFO);
 		if (!element.isNull ()) {
-			khtmlpart->write (startSection ("related", i18n ("Related functions and pages"), &anchors, &anchornames));
+			khtmlpart->write (startSection ("related", i18n ("Related functions and pages"), QString (), &anchors, &anchornames));
 			khtmlpart->write (renderHelpFragment (element));
 		}
 
@@ -637,11 +638,12 @@ RKComponentHandle *RKHelpWindow::componentPathToHandle (QString path) {
 	return (RKComponentMap::getComponentHandle (path_segments.join ("::")));
 }
 
-QString RKHelpWindow::startSection (const QString &name, const QString &title, QStringList *anchors, QStringList *anchor_names) {
+QString RKHelpWindow::startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names) {
 	QString ret = "<a name=\"" + name + "\">";
 	ret.append ("<h2>" + title + "</h2>\n");
 	anchors->append (name);
-	anchor_names->append (title);
+	if (!shorttitle.isNull ()) anchor_names->append (shorttitle);
+	else anchor_names->append (title);
 	return (ret);
 }
 
