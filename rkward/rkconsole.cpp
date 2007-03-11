@@ -30,6 +30,7 @@
 #include <kconfig.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
+#include <kshellcompletion.h>
 
 #include "rkglobals.h"
 #include "rkward.h"
@@ -279,48 +280,100 @@ bool RKConsole::provideContext (unsigned int line_rev, QString *context, int *cu
 	return true;
 }
 
+bool RKConsole::doTabCompletionHelper (int line_num, const QString &line, int word_start, int word_end, const QStringList &entries) {
+	RK_TRACE (APP);
+
+	int count = entries.count ();
+	QStringList::const_iterator it;
+	if (!count) return false;
+
+	if (count == 1) {
+		int offset = prefix.length ();
+		it = entries.constBegin ();
+		doc->removeText (line_num, offset + word_start, line_num, offset + word_end);
+		doc->insertText (line_num, offset + word_start, *it);
+	} else if (tab_key_pressed_before) {
+		int i=0;
+		for (it = entries.constBegin (); it != entries.constEnd (); ++it) {
+			if (i % 3) {
+				doc->insertText (doc->numLines () - 1, 0, (*it).leftJustify (35));
+			} else {
+				doc->insertText (doc->numLines (), 0, *it);
+			}
+			++i;
+		}
+		doc->insertText (doc->numLines (), 0, prefix + line);
+		cursorAtTheEnd ();
+	} else {
+		tab_key_pressed_before = true;
+		return true;
+	}
+	tab_key_pressed_before = false;
+	return true;
+}
+
+
 void RKConsole::doTabCompletion () {
 	RK_TRACE (APP);
 
 	QString current_line = currentCommand ();
+	int current_line_num = doc->numLines () - 1;
 	int word_start;
 	int word_end;
 	int cursor_pos = currentCursorPositionInCommand ();
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &word_start, &word_end);
 
-	QString current_symbol = current_line.mid (word_start, word_end - word_start);
-	if (!current_symbol.isEmpty ()) {
-		RObject::RObjectMap map;
-		RObject::RObjectMap::const_iterator it;
-		RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
-		int count = map.count ();
 
-		if (count == 1) {
-			int current_line_num = doc->numLines () - 1;
-			int offset = prefix.length ();
-			it = map.constBegin ();
-			doc->removeText (current_line_num, offset + word_start, current_line_num, offset + word_end);
-			doc->insertText (current_line_num, offset + word_start, it.key ());
-		} else if (count == 0) {
-			KApplication::kApplication ()->beep ();
-		} else if (tab_key_pressed_before) {
-			int i=0;
-			for (it = map.constBegin (); it != map.constEnd (); ++it) {
-				if (i % 3) {
-					doc->insertText (doc->numLines () - 1, 0, it.key ().leftJustify (35));
-				} else {
-					doc->insertText (doc->numLines (), 0, it.key ());
-				}
-				++i;
-			}
-			doc->insertText (doc->numLines (),  0, prefix + current_line);
-			cursorAtTheEnd ();
-		} else {
-			tab_key_pressed_before = true;
-			return;
+	QStringList entries;
+	QString current_symbol = current_line.mid (word_start, word_end - word_start);
+
+	// should we try a file name completion? Let's do some heuristics
+	bool do_file_completion = false;
+	int quote_start = current_line.findRev ('"', cursor_pos - 1);
+	if (quote_start < 0) quote_start = current_line.findRev ('\'', cursor_pos - 1);
+
+	if (quote_start >= 0) {
+		// we found a quoting char at some earlier position on the line, we might need a filename completion
+		do_file_completion = true;
+
+		// however, some characters around quotes signify it's probably not really filename string
+		char char_before_quote = current_line.at (quote_start - 1).latin1();
+		char char_after_quote = current_line.at (quote_start + 1).latin1();
+		// these signifiy it might be an object in a list somewhere, e.g. my.data$"varname"
+		if ((char_before_quote == '[') || (char_before_quote == '$') || (char_before_quote == ':')) do_file_completion = false;
+		// these indicate, the quote has likely ended rather that started
+		if ((char_after_quote == ',') || (char_after_quote == ')') || (char_after_quote == ' ') || (char_after_quote == ';')) do_file_completion = false;
+
+		if (do_file_completion) {
+			int quote_end = current_line.find ('"', cursor_pos);
+			if (quote_end < 0) quote_end = current_line.find ('\'', cursor_pos);
+			if (quote_end < 0) quote_end = current_line.length ();
+	
+			QString current_name = current_line.mid (quote_start + 1, quote_end - quote_start);
+			qDebug ("%s %d %d", current_name.latin1 (), quote_start, quote_end);
+			KURLCompletion comp (KURLCompletion::FileCompletion);
+			QString test = comp.makeCompletion (current_name);
+			qDebug ("%s", test.latin1());
+	
+			if (doTabCompletionHelper (current_line_num, current_line, quote_start+1, quote_end, comp.allMatches ())) return;
 		}
 	}
-	tab_key_pressed_before = false;
+
+	if (!do_file_completion) {
+		if (!current_symbol.isEmpty ()) {		// try object name completion first
+			RObject::RObjectMap map;
+			RObject::RObjectMap::const_iterator it;
+			RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
+	
+			for (it = map.constBegin (); it != map.constEnd (); ++it) {
+				entries.append (it.key ());
+			}
+			if (doTabCompletionHelper (current_line_num, current_line, word_start, word_end, entries)) return;
+		}
+	}
+
+	// no completion was possible
+	KApplication::kApplication ()->beep ();
 }
 
 bool RKConsole::eventFilter (QObject *o, QEvent *e) {

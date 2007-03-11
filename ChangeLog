@@ -1,3 +1,7 @@
+- also support filename completion in the console (mode of completion is determined by heuristic means)
+- initial support for R's Sys.setlocale(), and Encoding of CHARSXPs
+- in help files, a short title for sections (for the navigation bar) can be defined		TODO: document
+- the currently active window is now highlighted using a thin red border
 - fixed: changing the type of a column in the data editor was broken
 - fixed: quitting while a plugin was still active would sometimes crash rkward
 - new shortcuts for window navigations: next/previous window, activate console, activate command log, etc.
