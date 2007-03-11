@@ -165,10 +165,10 @@ Otherwise it is very similar to handleSubstackCall (), esp. in that is implement
 //	static bool output_is_warning;
 /** Flags used to classify output. */
 //	static bool next_output_is_error;
+	QTextCodec *current_locale_codec;
 private:
 // can't declare this as part of the class, as it would confuse REmbed
 //	SEXPREC *runCommandInternalBase (const char *command, bool *error);
-	QTextCodec *current_locale_codec;		// steal from QTextCodec::setupLocaleMapper to initialize
 };
  
 #endif

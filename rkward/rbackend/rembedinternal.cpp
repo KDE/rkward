@@ -24,11 +24,23 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #define TRUE (const bool)0
 #define FALSE (const bool)!0
 #include <qstring.h>
+#include <qtextcodec.h>
+#include "../debug.h"
 #undef TRUE
 #undef FALSE
 
+#include "rklocalesupport.h"
+
 extern "C" {
 #define R_INTERFACE_PTRS 1
+
+// needed to detect CHARSXP encoding
+#define USE_RINTERNALS 1
+#define UTF8_MASK (1<<3)
+#define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
+#define LATIN1_MASK (1<<2)
+#define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
+// end
 
 #include "Rdefines.h"
 #include "R_ext/Rdynload.h"
@@ -104,6 +116,8 @@ bool repldll_last_parse_successful = false;
 
 // ############## R Standard callback overrides BEGIN ####################
 void RSuicide (char* message) {
+	RK_TRACE (RBACKEND);
+
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RSuicide;
 	args.chars_a = &message;
@@ -112,6 +126,8 @@ void RSuicide (char* message) {
 }
 
 void RShowMessage (char* message) {
+	RK_TRACE (RBACKEND);
+
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RShowMessage;
 	args.chars_a = &message;
@@ -119,6 +135,8 @@ void RShowMessage (char* message) {
 }
 
 int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
+	RK_TRACE (RBACKEND);
+
 #ifdef USE_R_REPLDLLDO1
 	// handle requests for new code
 	if (repldlldo1_wants_code) {
@@ -163,19 +181,25 @@ int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
 }
 
 void RWriteConsole (char *buf, int buflen) {
+	RK_TRACE (RBACKEND);
+
 /*	RCallbackArgs args;
 	args.type = RCallbackArgs::RWriteConsole;
 	args.chars_a = &buf;
 	args.int_a = buflen;
 	REmbedInternal::this_pointer->handleStandardCallback (&args); */
-	REmbedInternal::this_pointer->handleOutput (QString::fromLocal8Bit (buf, buflen), buflen, true);
+	REmbedInternal::this_pointer->handleOutput (REmbedInternal::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, true);
 }
 
 void RResetConsole () {
+	RK_TRACE (RBACKEND);
+
 // we leave this un-implemented on purpose! We simply don't want that sort of thing to be done.
 }
 
 void RFlushConsole () {
+	RK_TRACE (RBACKEND);
+
 /* nope, we're not going to do the line below after all. Two reasons:
 1) We'd still have to add mutex protection around this call (ok, doable of course)
 2) I don't think we need it at all: We do our own flushing, and R rarely flushes, for obscure reasons, anyway.
@@ -184,10 +208,14 @@ In order to prevent R from doing silly things, we still override this function a
 }
 
 void RClearerrConsole () {
+	RK_TRACE (RBACKEND);
+
 // we leave this un-implemented on purpose! We simply don't want that sort of thing to be done.
 }
 
 void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
+	RK_TRACE (RBACKEND);
+
 	if (saveact != SA_SUICIDE) {
 		RCallbackArgs args;
 		args.type = RCallbackArgs::RCleanUp;
@@ -211,6 +239,8 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 }
 
 int RShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean del, char *pager) {
+	RK_TRACE (RBACKEND);
+
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RShowFiles;
 	args.int_a = nfile;
@@ -227,6 +257,8 @@ int RShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean d
 }
 
 int RChooseFile (int isnew, char *buf, int len) {
+	RK_TRACE (RBACKEND);
+
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RChooseFile;
 	args.int_a = isnew;
@@ -240,6 +272,8 @@ int RChooseFile (int isnew, char *buf, int len) {
 }
 
 int REditFiles (int nfile, char **file, char **title, char *editor) {
+	RK_TRACE (RBACKEND);
+
 	RCallbackArgs args;
 	args.type = RCallbackArgs::REditFiles;
 	args.int_a = nfile;
@@ -254,6 +288,8 @@ int REditFiles (int nfile, char **file, char **title, char *editor) {
 }
 
 int REditFile (char *buf) {
+	RK_TRACE (RBACKEND);
+
 	char *editor = "none";
 	char *title = "";
 
@@ -263,6 +299,8 @@ int REditFile (char *buf) {
 
 #ifdef USE_R_REPLDLLDO1
 void RBusy (int busy) {
+	RK_TRACE (RBACKEND);
+
 	// R_ReplDLLDo1 calls R_Busy (1) after reading in code (if needed), parsing it, and right before evaluating it.
 	if (busy) {
 		repldlldo1_wants_code = false;
@@ -276,10 +314,15 @@ void RBusy (int busy) {
 char *REmbedInternal::na_char_internal = new char;
 
 REmbedInternal::REmbedInternal () {
+	RK_TRACE (RBACKEND);
+
+	current_locale_codec = QTextCodec::codecForLocale ();
 	r_running = false;
 }
 
 void REmbedInternal::connectCallbacks () {
+	RK_TRACE (RBACKEND);
+
 // R standard callback pointers.
 // Rinterface.h thinks this can only ever be done on aqua, apparently. Here, we define it the other way around, i.e. #ifndef instead of #ifdef
 // No, does not work -> undefined reference! -> TODO: nag R-devels
@@ -312,9 +355,12 @@ void REmbedInternal::connectCallbacks () {
 }
 
 REmbedInternal::~REmbedInternal () {
+	RK_TRACE (RBACKEND);
 }
 
 void REmbedInternal::shutdown (bool suicidal) {
+	RK_TRACE (RBACKEND);
+
 	if (!REmbedInternal::this_pointer->r_running) return;		// already shut down
 
 // Code-recipe below essentially copied from http://stat.ethz.ch/R-manual/R-devel/doc/manual/R-exts.html#Linking-GUIs-and-other-front_ends-to-R
@@ -373,6 +419,8 @@ TODO: verify we really need this. */
 
 /** This function is the R side wrapper around stringsToStringList */
 QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
+	RK_TRACE (RBACKEND);
+
 	// bad format? coerce the vector first
 	if (TYPEOF (from_exp) != STRSXP) {
 		SEXP strexp;
@@ -390,12 +438,18 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 		SEXP dummy = VECTOR_ELT (from_exp, i);
 
 		if (TYPEOF (dummy) != CHARSXP) {
-			list[i] = QString::fromLocal8Bit ("not defined");	// can this ever happen?
+			list[i] = QString ("not defined");	// can this ever happen?
 		} else {
 			if (dummy == NA_STRING) {
 				list[i] = QString::null;
 			} else {
-				list[i] = QString::fromLocal8Bit ((char *) STRING_PTR (dummy));
+				if (IS_UTF8 (dummy)) {
+					list[i] = QString::fromUtf8 ((char *) STRING_PTR (dummy));
+				} else if (IS_LATIN1 (dummy)) {
+					list[i] = QString::fromLatin1 ((char *) STRING_PTR (dummy));
+				} else {
+					list[i] = REmbedInternal::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy));
+				}
 			}
 		}
 	}
@@ -404,6 +458,8 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 }
 
 int *SEXPToIntArray (SEXP from_exp, unsigned int *count) {
+	RK_TRACE (RBACKEND);
+
 	int *integers;
 
 	// bad format? coerce the vector first
@@ -426,6 +482,8 @@ int *SEXPToIntArray (SEXP from_exp, unsigned int *count) {
 }
 
 double *SEXPToRealArray (SEXP from_exp, unsigned int *count) {
+	RK_TRACE (RBACKEND);
+
 	double *reals;
 
 	// bad format? coerce the vector first
@@ -448,6 +506,8 @@ double *SEXPToRealArray (SEXP from_exp, unsigned int *count) {
 }
 
 RData *SEXPToRData (SEXP from_exp) {
+	RK_TRACE (RBACKEND);
+
 	RData *data = new RData;
 
 	unsigned int count;
@@ -493,6 +553,8 @@ RData *SEXPToRData (SEXP from_exp) {
 }
 
 SEXP doError (SEXP call) {
+	RK_TRACE (RBACKEND);
+
 	unsigned int count;
 	QString *strings = SEXPToStringList (call, &count);
 	REmbedInternal::this_pointer->handleError (strings, count);
@@ -509,6 +571,8 @@ SEXP doCondition (SEXP call) {
 } */
 
 SEXP doSubstackCall (SEXP call) {
+	RK_TRACE (RBACKEND);
+
 	unsigned int count;
 	QString *strings = SEXPToStringList (call, &count);
 	REmbedInternal::this_pointer->handleSubstackCall (strings, count);
@@ -517,6 +581,8 @@ SEXP doSubstackCall (SEXP call) {
 }
 
 bool REmbedInternal::startR (int argc, char** argv, size_t stacksize, void *stackstart) {
+	RK_TRACE (RBACKEND);
+
 	r_running = true;
 #ifdef R_2_3
 	Rf_initialize_R (argc, argv);
@@ -535,7 +601,19 @@ bool REmbedInternal::startR (int argc, char** argv, size_t stacksize, void *stac
 #endif
 }
 
+SEXP doUpdateLocale () {
+	RK_TRACE (RBACKEND);
+
+	RK_DO (qDebug ("Changing locale"), RBACKEND, DL_WARNING);
+	REmbedInternal::this_pointer->current_locale_codec = RKGetCurrentLocaleCodec ();
+	RK_DO (qDebug ("New locale codec is %s", REmbedInternal::this_pointer->current_locale_codec->name ()), RBACKEND, DL_WARNING);
+
+	return R_NilValue;
+}
+
 bool REmbedInternal::registerFunctions (const char *library_path) {
+	RK_TRACE (RBACKEND);
+
 	DllInfo *info = R_getDllInfo (library_path);
 	if (!info) return false;
 
@@ -543,6 +621,7 @@ bool REmbedInternal::registerFunctions (const char *library_path) {
 //		{ "rk.do.condition", (DL_FUNC) &doCondition, 1 },
 		{ "rk.do.error", (DL_FUNC) &doError, 1 },
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
+		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (info, NULL, callMethods, NULL, NULL);
@@ -551,12 +630,15 @@ bool REmbedInternal::registerFunctions (const char *library_path) {
 }
 
 SEXP runCommandInternalBase (const QString &command_qstring, REmbedInternal::RKWardRError *error) {
+	RK_TRACE (RBACKEND);
+
 // some copying from RServe below
 	int r_error = 0;
 	ParseStatus status = PARSE_NULL;
 	SEXP cv, pr, exp;
 
-	QCString localc = command_qstring.local8Bit ();		// needed so the string below does not go out of scope
+	int len = -1;
+	QCString localc = REmbedInternal::this_pointer->current_locale_codec->fromUnicode (command_qstring, len);		// needed so the string below does not go out of scope
 	const char *command = localc;
 
 	PROTECT(cv=allocVector(STRSXP, 1));
@@ -637,6 +719,8 @@ SEXP exp should be PROTECTed prior to calling this function.
 //TODO: this is not entirely correct. See PrintValueEnv (), which is what Repl_Console uses (but is hidden)
 */
 void tryPrintValue (SEXP exp, REmbedInternal::RKWardRError *error) {
+	RK_TRACE (RBACKEND);
+
 	int ierror = 0;
 	SEXP tryprint, e;
 
@@ -660,6 +744,8 @@ void tryPrintValue (SEXP exp, REmbedInternal::RKWardRError *error) {
 
 #ifdef USE_R_REPLDLLDO1
 void runUserCommandInternal (void *) {
+	RK_TRACE (RBACKEND);
+
 /* R_ReplDLLdo1 return codes:
 -1: EOF
 1: normal prompt
@@ -676,6 +762,8 @@ void runUserCommandInternal (void *) {
 #endif
 
 void REmbedInternal::runCommandInternal (const QString &command_qstring, RKWardRError *error, bool print_result) {
+	RK_TRACE (RBACKEND);
+
 	connectCallbacks ();		// sorry, but we will not play nicely with additional frontends trying to override our callbacks. (Unless they start their own R event loop, then they should be fine)
 
 	if (!print_result) {
@@ -699,7 +787,8 @@ This is the logic spread out over the following section, runUserCommandInternal 
 		R_ReplDLLinit ();		// resets the parse buffer (things might be left over from a previous incomplete parse)
 		bool prev_iteration_was_incomplete = false;
 
-		QCString localc = command_qstring.local8Bit ();		// needed so the string below does not go out of scope
+		int len = -1;
+		QCString localc = current_locale_codec->fromUnicode (command_qstring, len);		// needed so the string below does not go out of scope
 		current_buffer = localc;
 
 		repldll_buffer_transfer_finished = false;
@@ -729,7 +818,6 @@ This is the logic spread out over the following section, runUserCommandInternal 
 		repldlldo1_wants_code = false;		// make sure we don't get confused in RReadConsole
 
 #else
-
 		R_Visible = (Rboolean) 0;
 
 		SEXP exp;
@@ -754,6 +842,8 @@ This is the logic spread out over the following section, runUserCommandInternal 
 }
 
 QString *REmbedInternal::getCommandAsStringVector (const QString &command, uint *count, RKWardRError *error) {	
+	RK_TRACE (RBACKEND);
+
 	SEXP exp;
 	QString *list = 0;
 	
@@ -773,6 +863,8 @@ QString *REmbedInternal::getCommandAsStringVector (const QString &command, uint 
 }
 
 double *REmbedInternal::getCommandAsRealVector (const QString &command, uint *count, RKWardRError *error) {
+	RK_TRACE (RBACKEND);
+
 	SEXP exp;
 	double *reals = 0;
 	
@@ -792,6 +884,8 @@ double *REmbedInternal::getCommandAsRealVector (const QString &command, uint *co
 }
 
 int *REmbedInternal::getCommandAsIntVector (const QString &command, uint *count, RKWardRError *error) {
+	RK_TRACE (RBACKEND);
+
 	SEXP exp;
 	int *integers = 0;
 	
@@ -811,6 +905,8 @@ int *REmbedInternal::getCommandAsIntVector (const QString &command, uint *count,
 }
 
 RData *REmbedInternal::getCommandAsRData (const QString &command, RKWardRError *error) {
+	RK_TRACE (RBACKEND);
+
 	SEXP exp;
 	RData *data = 0;
 	
@@ -824,4 +920,3 @@ RData *REmbedInternal::getCommandAsRData (const QString &command, RKWardRError *
 	
 	return data;
 }
-

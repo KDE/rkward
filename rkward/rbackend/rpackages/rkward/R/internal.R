@@ -386,3 +386,19 @@
 		}
 	}
 }
+
+"Sys.setlocale" <- function (category = "LC_ALL", locale = "", ...) {
+	if (category == "LC_ALL" || category == "LC_CTYPE" || category == "LANG") {
+		.rk.do.call ("preLocaleChange", NULL);
+		if (!is.null (.rk.rkreply)) {
+			if (.rk.rkreply == FALSE) stop ("Changing the locale was cancelled by user");
+		}
+
+		ret <- base::Sys.setlocale (category, locale, ...)
+
+		.Call ("rk.update.locale")
+		ret
+	} else {
+		base::Sys.setlocale (category, locale, ...)
+	}
+}
