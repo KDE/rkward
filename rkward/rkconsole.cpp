@@ -322,9 +322,6 @@ void RKConsole::doTabCompletion () {
 	int word_end;
 	int cursor_pos = currentCursorPositionInCommand ();
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &word_start, &word_end);
-
-
-	QStringList entries;
 	QString current_symbol = current_line.mid (word_start, word_end - word_start);
 
 	// should we try a file name completion? Let's do some heuristics
@@ -350,10 +347,8 @@ void RKConsole::doTabCompletion () {
 			if (quote_end < 0) quote_end = current_line.length ();
 	
 			QString current_name = current_line.mid (quote_start + 1, quote_end - quote_start);
-			qDebug ("%s %d %d", current_name.latin1 (), quote_start, quote_end);
 			KURLCompletion comp (KURLCompletion::FileCompletion);
 			QString test = comp.makeCompletion (current_name);
-			qDebug ("%s", test.latin1());
 	
 			if (doTabCompletionHelper (current_line_num, current_line, quote_start+1, quote_end, comp.allMatches ())) return;
 		}
@@ -365,6 +360,7 @@ void RKConsole::doTabCompletion () {
 			RObject::RObjectMap::const_iterator it;
 			RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
 	
+			QStringList entries;
 			for (it = map.constBegin (); it != map.constEnd (); ++it) {
 				entries.append (it.key ());
 			}
