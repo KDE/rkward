@@ -128,8 +128,6 @@ void PHPBackend::callFunction (const QString &function, int flags, int type) {
 			code_property->setCalculate (QString::null);
 		} else if (type == Printout) {
 			code_property->setPrintout (QString::null);
-		} else if (type == Cleanup) {
-			code_property->setCleanup (QString::null);
 		} else if (type == Preview) {
 			code_property->setPreview (QString::null);
 		}
@@ -275,10 +273,6 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int) {
 					} else if (current_type == Printout) {
 						if (add_headings) code_property->setPrintout (i18n ("## Print result\n") + retrieveOutput ());
 						else code_property->setPrintout (retrieveOutput ());
-						resetOutput ();
-					} else if (current_type == Cleanup) {
-						if (add_headings) code_property->setCleanup (i18n ("## Clean up\n") + retrieveOutput ());
-						else code_property->setCleanup (retrieveOutput ());
 						resetOutput ();
 					} else if (current_type == Preview) {
 						// no heading for the preview code (not shown in the code box)

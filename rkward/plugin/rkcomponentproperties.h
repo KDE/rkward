@@ -294,7 +294,7 @@ private:
 
 ///////////////////////////////////////////////// Code ////////////////////////////////////////////////////////
 
-/** special type of RKComponentProperty used to contain R code. All stand-alone RKComponents have this. The great thing about this, is that code can be made available to embedding RKComponents by just fetching the component.code.preprocess (or .calculate, .printout, .cleanup) value */
+/** special type of RKComponentProperty used to contain R code. All stand-alone RKComponents have this. The great thing about this, is that code can be made available to embedding RKComponents by just fetching the component.code.preprocess (or .calculate, .printout) value */
 class RKComponentPropertyCode : public RKComponentPropertyBase {
 	Q_OBJECT
 public:
@@ -308,8 +308,6 @@ public:
 	QString calculate () { return calculate_code; };
 /** the printout code */		// TODO, maybe we can abstract this away. A component should _either_ do calculation _or_ printout, hence it could all be calculate () only, as well.
 	QString printout () { return printout_code; };
-/** the cleanup code */
-	QString cleanup () { return cleanup_code; };
 /** the preview code */
 	QString preview () { return preview_code; };
 
@@ -322,12 +320,10 @@ public:
 	void setCalculate (const QString &code) { calculate_code = code; emit (valueChanged (this)); };
 /** see setPreprocess () */
 	void setPrintout (const QString &code) { printout_code = code; emit (valueChanged (this)); };
-/** see setPreprocess () */
-	void setCleanup (const QString &code) { cleanup_code = code; emit (valueChanged (this)); };
 /** see setPreview () */
 	void setPreview (const QString &code) { preview_code = code; emit (valueChanged (this)); };
 
-	bool isValid () { return (!(preprocess_code.isNull () || calculate_code.isNull () || printout_code.isNull () || cleanup_code.isNull ())); };
+	bool isValid () { return (!(preprocess_code.isNull () || calculate_code.isNull () || printout_code.isNull ())); };
 
 /** RTTI */
 	int type () { return PropertyCode; };
@@ -335,7 +331,6 @@ private:
 	QString preprocess_code;
 	QString calculate_code;
 	QString printout_code;
-	QString cleanup_code;
 	QString preview_code;
 };
 

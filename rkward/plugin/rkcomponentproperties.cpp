@@ -1003,7 +1003,7 @@ bool RKComponentPropertyRObjects::atMaxLength () {
 RKComponentPropertyCode::RKComponentPropertyCode (QObject *parent, bool required) : RKComponentPropertyBase (parent, required) {
 	RK_TRACE (PLUGIN);
 
-	preprocess_code = calculate_code = printout_code = cleanup_code = QString ();
+	preprocess_code = calculate_code = printout_code = QString ();
 }
 
 RKComponentPropertyCode::~RKComponentPropertyCode () {
@@ -1016,10 +1016,9 @@ QString RKComponentPropertyCode::value (const QString &modifier) {
 	if (modifier == "preprocess") return preprocess ();
 	if (modifier == "calculate") return calculate ();
 	if (modifier == "printout") return printout ();
-	if (modifier == "cleanup") return cleanup ();
 	if (!modifier.isEmpty ()) warnModifierNotRecognized (modifier);
 
-	return (preprocess () + calculate () + printout () + cleanup ());
+	return (preprocess () + calculate () + printout ());
 }
 
 /////////////////////////////////////////// Convert ////////////////////////////////////////////////

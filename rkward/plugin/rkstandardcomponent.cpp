@@ -317,7 +317,6 @@ void RKStandardComponent::handleChange () {
 	backend->preprocess (0);
 	backend->calculate (0);
 	backend->printout (0);
-	backend->cleanup (0);
 	backend->preview (0);
 
 	if (gui) {

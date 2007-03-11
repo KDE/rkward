@@ -39,7 +39,6 @@ public:
 		Preprocess = 0,
 		Calculate = 1,
 		Printout = 2,
-		Cleanup = 3,
 		Preview = 4,
 		Ignore = 5,
 		User = 6
@@ -56,7 +55,6 @@ public:
 	virtual void preprocess (int flags) = 0;
 	virtual void calculate (int flags) = 0;
 	virtual void printout (int flags) = 0;
-	virtual void cleanup (int flags) = 0;
 	virtual void preview (int flags) = 0;
 	
 	virtual bool isBusy () { return busy; };

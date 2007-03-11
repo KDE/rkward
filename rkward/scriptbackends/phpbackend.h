@@ -46,7 +46,6 @@ public:
 	void preprocess (int flags) { callFunction ("preprocess ();", flags, Preprocess); };
 	void calculate (int flags) { callFunction ("calculate ();", flags, Calculate); };
 	void printout (int flags) { callFunction ("printout ();", flags, Printout); };
-	void cleanup (int flags) { callFunction ("cleanup ();", flags, Cleanup); };
 	void preview (int flags) { callFunction ("getPreview ();", flags, Preview); };
 	void writeData (const QString &data);
 public slots:
