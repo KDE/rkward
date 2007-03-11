@@ -733,7 +733,7 @@ This is the logic spread out over the following section, runUserCommandInternal 
 		R_Visible = (Rboolean) 0;
 
 		SEXP exp;
-		PROTECT (exp = runCommandInternalBase (command, error));
+		PROTECT (exp = runCommandInternalBase (command_qstring, error));
 /*		char dummy[100];
 		sprintf (dummy, "type: %d", TYPEOF (exp));
 		Rprintf (dummy, 100); */
