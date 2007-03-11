@@ -43,10 +43,12 @@ It is also possible to search the command history for lines starting with a spec
 It is possible to make the second mode of searching the command history the default. In this case, pressing Shift+Up/Down will navigate all commands, while pressing Up/Down without the Shift key will show only matching lines. (see <link href="#settings">Section settings</link>).
 	</section>
 
-	<section id="completion" title="Object name completion">
+	<section id="completion" title="Filename and Object name completion">
 Pressing the Tab key while typing the name of an R object will try to complete the name of that R object. If several objects start with the typed characters, a list of all those objects will be shown.
 
 For an example, enter "base::pa" in the console, then press Tab. This will list all objects from package base starting with "pa". Now append an "s", and press Tab again. The word will be changed to "paste", as that is the only matching object name.
+
+Based on some simple heuristics, RKWard will try to complete file names instead of object names, where appropriate. This is done, when the cursor seems to be inside a quoted string that does not seem to be part of an object name.
 	</section>
 
 	<section id="settings" title="Configurable Settings">
