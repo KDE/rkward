@@ -78,6 +78,10 @@ extern "C" {
 #define USE_R_REPLDLLDO1
 #endif
 
+#ifdef R_2_5
+#define USE_ENCODING_HINTS
+#endif
+
 #ifdef R_2_4
 #include "Rembedded.h"
 #else
@@ -443,6 +447,7 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 			if (dummy == NA_STRING) {
 				list[i] = QString::null;
 			} else {
+#ifdef USE_ENCODING_HINTS
 				if (IS_UTF8 (dummy)) {
 					list[i] = QString::fromUtf8 ((char *) STRING_PTR (dummy));
 				} else if (IS_LATIN1 (dummy)) {
@@ -450,6 +455,9 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 				} else {
 					list[i] = REmbedInternal::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy));
 				}
+#else
+			list[i] = REmbedInternal::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy));
+#endif
 			}
 		}
 	}
