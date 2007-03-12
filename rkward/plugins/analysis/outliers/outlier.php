@@ -16,7 +16,7 @@ local({
 		i = i+1
 		rk.temp.results$'Variable Name'[i] <<- rk.get.description (var, is.substitute=TRUE)
 		try ({
-			rk.temp.t <- outlier (eval (var), opposite = <? getRK ("opposite"); ?>, logical = <? getRK ("logical"); ?>)
+			rk.temp.t <- outlier (eval (var), opposite = <? getRK ("opposite"); ?>)
 			rk.temp.results$'Outlier'[i] <<- rk.temp.t
 		})
 		<? if (getRK_val ("mean")) { ?>
@@ -48,7 +48,7 @@ local({
 function printout () {
 ?>
 rk.header ("Outlier",
-	parameters=list ("Opposite", "<? getRK ("opposite"); ?>", "Logical", "<? getRK ("logical"); ?>"))
+	parameters=list ("Opposite", "<? getRK ("opposite"); ?>"))
 rk.results (rk.temp.results)
 <?
 }
