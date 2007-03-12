@@ -63,7 +63,7 @@ public slots:
 	void runSelection ();
 private:
 	void addInputNoCheck (RCommand *command);
-	void addOutputNoCheck (RCommand *command, const QString &output);
+	void addOutputNoCheck (RCommand *command, ROutput *output);
 	void checkRaiseWindow (RCommand *command);
 /** internal helper function, called whenever a line/lines have been added. Check whether log is longer than maximum setting. Scroll to the bottom */
 	void linesAdded ();

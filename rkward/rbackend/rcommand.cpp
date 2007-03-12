@@ -2,7 +2,7 @@
                           rcommand.cpp  -  description
                              -------------------
     begin                : Mon Nov 11 2002
-    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -113,7 +113,7 @@ QString RCommand::error () {
 	RK_TRACE (RBACKEND);
 
 	QString ret;
-	for (QValueList<ROutput*>::const_iterator it = output_list.begin (); it != output_list.end (); ++it) {
+	for (ROutputList::const_iterator it = output_list.begin (); it != output_list.end (); ++it) {
 		if ((*it)->type == ROutput::Error) {
 			ret.append ((*it)->output);
 		}
@@ -125,7 +125,7 @@ QString RCommand::output () {
 	RK_TRACE (RBACKEND);
 
 	QString ret;
-	for (QValueList<ROutput*>::const_iterator it = output_list.begin (); it != output_list.end (); ++it) {
+	for (ROutputList::const_iterator it = output_list.begin (); it != output_list.end (); ++it) {
 		if ((*it)->type == ROutput::Output) {
 			ret.append ((*it)->output);
 		}
@@ -137,7 +137,7 @@ QString RCommand::warnings () {
 	RK_TRACE (RBACKEND);
 
 	QString ret;
-	for (QValueList<ROutput*>::const_iterator it = output_list.begin (); it != output_list.end (); ++it) {
+	for (ROutputList::const_iterator it = output_list.begin (); it != output_list.end (); ++it) {
 		if ((*it)->type == ROutput::Warning) {
 			ret.append ((*it)->output);
 		}
@@ -149,7 +149,7 @@ QString RCommand::fullOutput () {
 	RK_TRACE (RBACKEND);
 
 	QString ret;
-	for (QValueList<ROutput*>::const_iterator it = output_list.begin (); it != output_list.end (); ++it) {
+	for (ROutputList::const_iterator it = output_list.begin (); it != output_list.end (); ++it) {
 		ret.append ((*it)->output);
 	}
 	return ret;

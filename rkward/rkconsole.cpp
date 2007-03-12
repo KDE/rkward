@@ -545,12 +545,17 @@ void RKConsole::rCommandDone (RCommand *command) {
 void RKConsole::newOutput (RCommand *, ROutput *output) {
 	RK_TRACE (APP);
 
-// TODO: handle different types of output, once we can differentiate between them
-//	insertAt (output->output, doc->numLines()-1, paragraphLength (doc->numLines() - 1));
+	int start_line = doc->numLines () -1;
 	if (output_continuation) {
 		editInterface (doc)->insertText (doc->numLines () -1, editInterface (doc)->lineLength (doc->numLines () -1), output->output);
 	} else {
 		editInterface (doc)->insertText (doc->numLines () -1, 0, output->output);
+	}
+	int end_line = doc->numLines () -1;
+	if (output->type != ROutput::Output) {
+		for (int line = start_line; line < end_line; ++line) {
+			doc->addMark (line, KTextEditor::MarkInterface::BreakpointActive);
+		}
 	}
 
 	if (RKSettingsModuleConsole::maxConsoleLines ()) {

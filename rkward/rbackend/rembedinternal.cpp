@@ -184,16 +184,19 @@ int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
 	return 0;
 }
 
+#ifdef R_2_5
+void RWriteConsoleEx (char *buf, int buflen, int type) {
+	RK_TRACE (RBACKEND);
+
+	REmbedInternal::this_pointer->handleOutput (REmbedInternal::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0);
+}
+#else
 void RWriteConsole (char *buf, int buflen) {
 	RK_TRACE (RBACKEND);
 
-/*	RCallbackArgs args;
-	args.type = RCallbackArgs::RWriteConsole;
-	args.chars_a = &buf;
-	args.int_a = buflen;
-	REmbedInternal::this_pointer->handleStandardCallback (&args); */
 	REmbedInternal::this_pointer->handleOutput (REmbedInternal::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, true);
 }
+#endif
 
 void RResetConsole () {
 	RK_TRACE (RBACKEND);
@@ -340,7 +343,12 @@ void REmbedInternal::connectCallbacks () {
 	ptr_R_Suicide = RSuicide;
 	ptr_R_ShowMessage = RShowMessage;			// when exactly does this ever get used?
 	ptr_R_ReadConsole = RReadConsole;
+#ifdef R_2_5
+	ptr_R_WriteConsoleEx = RWriteConsoleEx;
+	ptr_R_WriteConsole = 0;
+#else
 	ptr_R_WriteConsole = RWriteConsole;
+#endif
 	ptr_R_ResetConsole = RResetConsole;
 	ptr_R_FlushConsole = RFlushConsole;
 	ptr_R_ClearerrConsole = RClearerrConsole;

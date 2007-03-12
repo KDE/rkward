@@ -2,7 +2,7 @@
                           rcommand.h  -  description
                              -------------------
     begin                : Mon Nov 11 2002
-    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -71,11 +71,13 @@ struct ROutput {
 	enum ROutputType {
 		Output,			/**< normal output */
 		Warning,		/**< R warning */
-		Error				/**< R error */
+		Error			/**< R error */
 	};
 	ROutputType type;
 	QString output;
 };
+
+typedef QValueList<ROutput*> ROutputList;
 
 /*
 struct RGetValueRequest {
@@ -197,6 +199,7 @@ public:
 /** Remove a receiver from the list. This may be needed when a listener wants to self-destruct, to make sure we don't try to send any further info there */
 	void removeReceiver (RCommandReceiver *receiver);
 	void addTypeFlag (int flag) { _type |= flag; };
+	ROutputList &getOutput () { return output_list; };
 private:
 friend class RThread;
 friend class RInterface;
@@ -204,7 +207,7 @@ friend class RInterface;
 	void finished ();
 /** new output was generated. Pass on to receiver(s) */
 	void newOutput (ROutput *output);
-	QValueList<ROutput*> output_list;
+	ROutputList output_list;
 	QString _command;
 	int _type;
 	int _flags;

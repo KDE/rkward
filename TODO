@@ -201,8 +201,8 @@ API documentation:
 	- RCommandStack
 
 Configuration:
-	- additional console options:
-		- color highlighting for warnings/errors (once we can identify them reliably)
+	- additional console/log options:
+		- color highlighting for warnings/errors
 	- additional R engine options:
 		- stack size (commandline arg --map-ppsize)
 		- disable html help

@@ -1,3 +1,4 @@
+- warnings and errors are highlighted in command log / console (warnings only for R >= 2.5.x)
 - plugin generated commands are run in a local() environment, allowing for more consise code		TODO: document, adjust examples, adjust plugins, etc.
 - also support filename completion in the console (mode of completion is determined by heuristic means)
 - initial support for R's Sys.setlocale(), and Encoding of CHARSXPs

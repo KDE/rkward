@@ -2,7 +2,7 @@
                           rkcommandlog  -  description
                              -------------------
     begin                : Sun Nov 3 2002
-    copyright            : (C) 2002, 2004, 2005 2006,2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -101,7 +101,7 @@ void RKCommandLog::addInputNoCheck (RCommand *command) {
 	command_input_shown = command->id ();
 }
 
-void RKCommandLog::addOutputNoCheck (RCommand *command, const QString &output) {
+void RKCommandLog::addOutputNoCheck (RCommand *command, ROutput *output) {
 	RK_TRACE (APP);
 
 	if (command->type () & RCommand::User) {
@@ -111,16 +111,21 @@ void RKCommandLog::addOutputNoCheck (RCommand *command, const QString &output) {
 	} else if (command->type () & RCommand::Plugin) {
 		log_view->setColor (Qt::blue);
 	}
+	log_view->setBold (true);
+	if (output->type != ROutput::Output) {
+		log_view->setParagraphBackgroundColor (log_view->paragraphs () - 1, QColor (255, 200, 200));
+	}
 
-    log_view->setBold (true);
+	log_view->insert (output->output);
 
-	log_view->insert (output);
+	if (output->type != ROutput::Output) {
+		log_view->setParagraphBackgroundColor (log_view->paragraphs () - 1, QColor (255, 255, 255));
+	}
+	log_view->setBold (false);
+	log_view->setColor (Qt::black);
 
 	checkRaiseWindow (command);
 	linesAdded ();
-
-	log_view->setBold (false);
-	log_view->setColor (Qt::black);
 }
 
 void RKCommandLog::checkRaiseWindow (RCommand *command) {
@@ -140,7 +145,7 @@ void RKCommandLog::newOutput (RCommand *command, ROutput *output_fragment) {
 
 	if (RKSettingsModuleWatch::shouldShowInput (command)) addInputNoCheck (command);
 
-	addOutputNoCheck (command, output_fragment->output);
+	addOutputNoCheck (command, output_fragment);
 }
 
 void RKCommandLog::rCommandDone (RCommand *command) {
@@ -154,15 +159,23 @@ void RKCommandLog::rCommandDone (RCommand *command) {
 	if (command->failed ()) {
 		if (RKSettingsModuleWatch::shouldShowError (command)) {
 			if (!RKSettingsModuleWatch::shouldShowInput (command)) addInputNoCheck (command);
-			if (!RKSettingsModuleWatch::shouldShowOutput (command)) addOutputNoCheck (command, command->fullOutput ());
-			if (command->error ().isEmpty ()) {
-				if (command->errorIncomplete ()) {
-					addOutputNoCheck (command, i18n ("Incomplete statement.\n"));
-				} else if (command->errorSyntax ()) {
-					addOutputNoCheck (command, i18n ("Syntax error.\n"));
-				} else {
-					addOutputNoCheck (command, i18n ("An unspecified error occurred while running the command.\n"));
+			if (!RKSettingsModuleWatch::shouldShowOutput (command)) {
+				ROutputList out_list = command->getOutput ();
+				for (ROutputList::const_iterator it = out_list.constBegin (); it != out_list.constEnd (); ++it) {
+					addOutputNoCheck (command, *it);
 				}
+			}
+			if (command->error ().isEmpty ()) {
+				ROutput dummy_output;
+				dummy_output.type = ROutput::Error;
+				if (command->errorIncomplete ()) {
+					dummy_output.output = i18n ("Incomplete statement.\n");
+				} else if (command->errorSyntax ()) {
+					dummy_output.output = i18n ("Syntax error.\n");
+				} else {
+					dummy_output.output = i18n ("An unspecified error occurred while running the command.\n");
+				}
+				addOutputNoCheck (command, &dummy_output);
 			}
 		}
 	}
