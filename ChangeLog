@@ -8,16 +8,16 @@
 - fixed: quitting while a plugin was still active would sometimes crash rkward
 - new shortcuts for window navigations: next/previous window, activate console, activate command log, etc.
 - new functions rk.describe.alternative () and rk.print.literal () for use in plugins
-- new Phillips-Perron test
-- new Mood test
-- new variance tests (F test (aka var.test), Bartlett test, Flingner test)
-- new plugin pareto chart
-- new plugin stem-and-leaf plot
+- new plugin: Phillips-Perron test
+- new plugin: Mood test
+- new plugins: variance tests (F test (aka var.test), Bartlett test, Flingner test)
+- new plugin: plugin pareto chart
+- new plugin: plugin stem-and-leaf plot
 - make readline dialog store last size and position
-- new outlier test (chisq.out.test, dixon.test, grubbs.test, outlier)
+- new plugins: outlier tests (chisq.out.test, dixon.test, grubbs.test, outlier)
 - support R's mechanism for checking the C stack limits (only with R 2.3.x or greater, and not on all platforms)
 - support of all tests from moments package
-- new help related page "Trouble Shooting"
+- new help page: "Trouble Shooting"
 - better error handling in PHP backend
 - fixed: depending on some buffer sizes, plugins could get stuck while generating code
 - fixed: plugin browser type="dir" would not work correctly
