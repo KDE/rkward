@@ -10,7 +10,7 @@
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length but 30 is the limit.</setting>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric.</setting>
 		<caption id="tab_options"/>
 		<setting id="opposite">Set to give the opposite value. If the largest value has maximum difference from the mean, it gives smallest and vice versa.</setting>
 		<setting id="mean">If checked this will calculate you the mean (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
