@@ -17,10 +17,7 @@
 			</tab>
 			<tab label="Options" id="tab_options">
 				<frame label="test specific settings">
-					<radio id="opposite" label="Opposite">
-						<option value="FALSE" label="NO"/>
-						<option value="TRUE" label="YES"/>
-					</radio>
+					<checkbox id="opposite" label="Opposite" value_unchecked="FALSE" value="TRUE" checked="false" />
 				</frame>
 				<frame label="additional settings">
 					<row>

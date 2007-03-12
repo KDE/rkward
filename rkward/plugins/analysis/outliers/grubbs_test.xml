@@ -19,18 +19,12 @@
 				<column>
 					<frame label="test specific settings">
 						<radio id="type" label="Variant of test">
-							<option value="10" label="10"/>
-							<option value="11" label="11"/>
-							<option value="21" label="21"/>
+							<option value="10" label="10 equals test for one outlier"/>
+							<option value="11" label="11 equals test for two outliers on opposite tails "/>
+							<option value="20" label="20 equals test for two outliers in one tail"/>
 						</radio>
-						<radio id="opposite" label="Opposite">
-							<option value="FALSE" label="NO"/>
-							<option value="TRUE" label="YES"/>
-						</radio>
-						<radio id="two_sided" label="two-sided (default)">
-							<option value="TRUE" label="YES"/>
-							<option value="FALSE" label="NO"/>
-						</radio>
+						<checkbox id="opposite" label="Opposite" value_unchecked="FALSE" value="TRUE" checked="false" />
+						<checkbox id="two_sided" label="two-sided (default)" value_unchecked="FALSE" value="TRUE" checked="true" />
 					</frame>
 					<frame label="additional settings">
 						<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
