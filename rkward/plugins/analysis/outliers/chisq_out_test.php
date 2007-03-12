@@ -16,8 +16,8 @@ local({
 		i = i+1
 		rk.temp.results$'Variable Name'[i] <<- rk.get.description (var, is.substitute=TRUE)
 		try ({
-			rk.temp.t <- chisq.out.test (eval (var), opposite = <? getRK ("opposite"); ?>, variance = var (eval 	(var)))
-			rk.temp.variance <- var (eval (var))
+			rk.temp.t <- chisq.out.test (na.omit(eval (var)), opposite = <? getRK ("opposite"); ?>, variance = var (na.omit(eval (var))))
+			rk.temp.variance <- var (na.omit(eval (var)))
 			rk.temp.results$'X-squared'[i] <<- rk.temp.t$statistic
 			rk.temp.results$'p-value'[i] <<- rk.temp.t$p.value
 			rk.temp.results$'Alternative Hypothesis'[i] <<- rk.describe.alternative(rk.temp.t)
