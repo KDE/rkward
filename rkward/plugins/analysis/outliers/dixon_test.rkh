@@ -13,8 +13,13 @@
 		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length but 30 is the limit.</setting>
 		<caption id="tab_options"/>
 		<setting id="type">This is specyfying the variant of test to be performed.</setting>
-		<setting id="two_sided">Here you can specify the alternative hypothesis. It must be one of "two-sided" or "not two-sided"</setting>
+		<setting id="two_sided">Here you can specify the alternative hypothesis. It must be one of "two-sided" or "not two-sided".</setting>
 		<setting id="opposite">Here you can define if you want to check not the value with largest difference from the mean, but opposite.</setting>
+		<setting id="mean">If checked this will calculate you the arithmetic mean is an additional out put. However, this will not effect your results but is just an optional information.</setting>
+		<setting id="sd">If checked this will calculate you the standard deviation (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
+		<setting id="median">If checked this will calculate you the median (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
+		<setting id="min">If checked this will calculate you the minimum (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
+		<setting id="max">If checked this will calculate you the maximum (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
 		<setting id="length">If checked, the length of the data vectors will be shown. However, this will not effect your results but is just an optional information.</setting>
 		<setting id="nacount">If checked, and in case of missing values this will show you the number of those. However, this will not effect your results but is just an optional information.</setting>
 	</settings>

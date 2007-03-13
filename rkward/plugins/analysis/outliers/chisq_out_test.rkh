@@ -10,10 +10,10 @@
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length but 30 is the limit.</setting>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length but 30 is the limit. For the calculation missing values are removed from the data.</setting>
 		<caption id="tab_options"/>
 		<setting id="opposite">Check if you want not the value with largest difference from the mean, but opposite (lowest, if most suspicious is highest etc.).</setting>
-		<setting id="mean">If checked this will calculate you the mean (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
+		<setting id="mean">If checked this will calculate you the arithmetic mean is an additional out put. However, this will not effect your results but is just an optional information.</setting>
 		<setting id="sd">If checked this will calculate you the standard deviation (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
 		<setting id="median">If checked this will calculate you the median (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
 		<setting id="min">If checked this will calculate you the minimum (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
