@@ -31,7 +31,7 @@
 
 			<tr colspan="2"><td><b>Windows Menu</b></td></tr>
 			<tr><td>Close Window</td><td>Ctrl + W</td></tr>
-			<tr><td>Previous Window</td><td>Alt + </td></tr>
+			<tr><td>Previous Window</td><td>Alt + &lt;</td></tr>
 			<tr><td>Next Window</td><td>Alt + ></td></tr>
 			<tr><td>Activate Document view</td><td>Alt + 0</td></tr><tr>
 			<tr><td>Show/Hide Workspace Browser</td><td>Alt + 1</td></tr><tr>
