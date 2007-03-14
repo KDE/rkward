@@ -200,6 +200,8 @@ public:
 	void removeReceiver (RCommandReceiver *receiver);
 	void addTypeFlag (int flag) { _type |= flag; };
 	ROutputList &getOutput () { return output_list; };
+/** modify the command string. DO NOT CALL THIS after the command has been submitted! */
+	void setCommand (const QString &command) { _command = command; };
 private:
 friend class RThread;
 friend class RInterface;

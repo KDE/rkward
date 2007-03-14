@@ -1,3 +1,4 @@
+- make sure not to run parts of an incomplete user command. It would lead to all sorts of subtle problems
 - if an incomplete command was piped through the console, the console does not become blocked for piping
 - make "run current line" advance the cursor to next line after running
 - warnings and errors are highlighted in command log / console (warnings only for R >= 2.5.x)

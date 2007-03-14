@@ -94,7 +94,8 @@ protected:
 @param command command to be run
 @param error this will be set to a value in RKWardError depending on success/failure of the command
 @param print_result whether the R_Visible flag should be set. If true, R will behave mostly as if in a regular console session. Otherwise values
-will only be printed if called for expressedly with print ("...") or similar. */
+will only be printed if called for expressedly with print ("...") or similar.
+@param suppress_incomplete make sure never to run an incomplete command */
 	void runCommandInternal (const QString &command, RKWardRError *error, bool print_result=false);
 /** basically a wrapper to runCommandInternal (). Tries to convert the result of the command to an array of char* after running the command. Since
 this will not ever be done for user commands, the R_Visible flag will never be set.

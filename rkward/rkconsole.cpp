@@ -775,12 +775,18 @@ void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 			RKGlobals::rInterface ()->issueCommand (command);
 		}
 	} else {
-		QString text = command->command ();
+		QString command_string = command->command ();
+		QString text = command_string;
 		text.replace ("\n", QString ("\n") + iprefix);
 		doc->insertText (doc->numLines () - 1, QString (nprefix).length (), text + '\n');
 		command->addReceiver (this);
 		command->addTypeFlag (RCommand::Console);
 		current_command = command;
+		if (command_incomplete) {
+			RK_ASSERT (command_was_piped);
+			command_string.prepend (incomplete_command);
+			command->setCommand (command_string);
+		}
 		command_was_piped = true;
 		RKGlobals::rInterface ()->issueCommand (command);
 	}

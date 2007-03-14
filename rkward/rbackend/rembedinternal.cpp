@@ -645,13 +645,11 @@ bool REmbedInternal::registerFunctions (const char *library_path) {
 	return true;
 }
 
-SEXP runCommandInternalBase (const QString &command_qstring, REmbedInternal::RKWardRError *error) {
+SEXP parseCommand (const QString &command_qstring, REmbedInternal::RKWardRError *error) {
 	RK_TRACE (RBACKEND);
 
-// some copying from RServe below
-	int r_error = 0;
 	ParseStatus status = PARSE_NULL;
-	SEXP cv, pr, exp;
+	SEXP cv, pr;
 
 	int len = -1;
 	QCString localc = REmbedInternal::this_pointer->current_locale_codec->fromUnicode (command_qstring, len);		// needed so the string below does not go out of scope
@@ -686,33 +684,42 @@ SEXP runCommandInternalBase (const QString &command_qstring, REmbedInternal::RKW
 		} else { // PARSE_NULL
 			*error = REmbedInternal::OtherError;
 		}
-		exp = R_NilValue;
-	} else {			// no error during parsing, let's try to evaluate the command
-		PROTECT (pr);
-		exp=R_NilValue;
-
-		if (TYPEOF(pr)==EXPRSXP && LENGTH(pr)>0) {
-			int bi=0;
-			while (bi<LENGTH(pr)) {
-				SEXP pxp=VECTOR_ELT(pr, bi);
-				exp=R_tryEval(pxp, R_GlobalEnv, &r_error);
-				bi++;
-				if (r_error) {
-					break;
-				}
-			}
-		} else {
-			exp=R_tryEval(pr, R_GlobalEnv, &r_error);
-		}
-
-		if (r_error) {
-			*error = REmbedInternal::OtherError;
-		} else {
-			*error = REmbedInternal::NoError;
-		}
-
-		UNPROTECT(1); /* pr */
+		pr = R_NilValue;
 	}
+
+	return pr;
+}
+
+SEXP runCommandInternalBase (SEXP pr, REmbedInternal::RKWardRError *error) {
+	RK_TRACE (RBACKEND);
+
+	SEXP exp;
+	int r_error = 0;
+
+	PROTECT (pr);
+	exp=R_NilValue;
+
+	if (TYPEOF(pr)==EXPRSXP && LENGTH(pr)>0) {
+		int bi=0;
+		while (bi<LENGTH(pr)) {
+			SEXP pxp=VECTOR_ELT(pr, bi);
+			exp=R_tryEval(pxp, R_GlobalEnv, &r_error);
+			bi++;
+			if (r_error) {
+				break;
+			}
+		}
+	} else {
+		exp=R_tryEval(pr, R_GlobalEnv, &r_error);
+	}
+
+	if (r_error) {
+		*error = REmbedInternal::OtherError;
+	} else {
+		*error = REmbedInternal::NoError;
+	}
+
+	UNPROTECT(1); /* pr */
 
 	// for safety, let's protect exp for the two print calls below.
 	// TODO: this is not good. It causes an additional PROTECT and UPROTECT. Need to (re-)move printing
@@ -782,9 +789,13 @@ void REmbedInternal::runCommandInternal (const QString &command_qstring, RKWardR
 
 	connectCallbacks ();		// sorry, but we will not play nicely with additional frontends trying to override our callbacks. (Unless they start their own R event loop, then they should be fine)
 
+	*error = NoError;
 	if (!print_result) {
-		runCommandInternalBase (command_qstring, error);
+		SEXP parsed = parseCommand (command_qstring, error);
+		if (*error == NoError) runCommandInternalBase (parsed, error);
 	} else {		// run a user command
+		SEXP parsed = parseCommand (command_qstring, error);
+		if ((*error != NoError)) return;
 #ifdef USE_R_REPLDLLDO1
 /* Using R_ReplDLLdo1 () is a pain, but it seems to be the only entry point for evaluating a command as if it had been entered on a plain R console (with auto-printing if not invisible, etc.). Esp. since R_Visible is no longer exported in R 2.5.0, as it seems as of today (2007-01-17).
 
@@ -837,10 +848,8 @@ This is the logic spread out over the following section, runUserCommandInternal 
 		R_Visible = (Rboolean) 0;
 
 		SEXP exp;
-		PROTECT (exp = runCommandInternalBase (command_qstring, error));
-/*		char dummy[100];
-		sprintf (dummy, "type: %d", TYPEOF (exp));
-		Rprintf (dummy, 100); */
+		PROTECT (exp = runCommandInternalBase (parsed, error));
+
 		if (*error == NoError) {
 			SET_SYMVALUE (R_LastvalueSymbol, exp);
 			if (R_Visible) {
@@ -862,8 +871,10 @@ QString *REmbedInternal::getCommandAsStringVector (const QString &command, uint 
 
 	SEXP exp;
 	QString *list = 0;
-	
-	PROTECT (exp = runCommandInternalBase (command, error));
+
+	*error = NoError;
+	SEXP parsed = parseCommand (command, error);
+	if (*error == NoError) PROTECT (exp = runCommandInternalBase (parsed, error));
 	
 	if (*error == NoError) {
 		list = SEXPToStringList (exp, count);
@@ -884,7 +895,9 @@ double *REmbedInternal::getCommandAsRealVector (const QString &command, uint *co
 	SEXP exp;
 	double *reals = 0;
 	
-	PROTECT (exp = runCommandInternalBase (command, error));
+	*error = NoError;
+	SEXP parsed = parseCommand (command, error);
+	if (*error == NoError) PROTECT (exp = runCommandInternalBase (parsed, error));
 	
 	if (*error == NoError) {
 		reals = SEXPToRealArray (exp, count);
@@ -905,7 +918,9 @@ int *REmbedInternal::getCommandAsIntVector (const QString &command, uint *count,
 	SEXP exp;
 	int *integers = 0;
 	
-	PROTECT (exp = runCommandInternalBase (command, error));
+	*error = NoError;
+	SEXP parsed = parseCommand (command, error);
+	if (*error == NoError) PROTECT (exp = runCommandInternalBase (parsed, error));
 	
 	if (*error == NoError) {
 		integers = SEXPToIntArray (exp, count);
@@ -926,7 +941,9 @@ RData *REmbedInternal::getCommandAsRData (const QString &command, RKWardRError *
 	SEXP exp;
 	RData *data = 0;
 	
-	PROTECT (exp = runCommandInternalBase (command, error));
+	*error = NoError;
+	SEXP parsed = parseCommand (command, error);
+	if (*error == NoError) PROTECT (exp = runCommandInternalBase (parsed, error));
 	
 	if (*error == NoError) {
 		data = SEXPToRData (exp);
