@@ -464,7 +464,7 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 					list[i] = REmbedInternal::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy));
 				}
 #else
-			list[i] = REmbedInternal::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy));
+				list[i] = REmbedInternal::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy));
 #endif
 			}
 		}
