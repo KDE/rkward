@@ -156,6 +156,7 @@ friend class RKConsolePart;
 
 	void initializeActions (KActionCollection *ac);
 	void pipeCommandThroughConsoleLocal (RCommand *command);
+	bool command_was_piped;
 
 	RKConsolePart *console_part;
 

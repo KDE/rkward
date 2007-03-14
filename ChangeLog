@@ -1,3 +1,5 @@
+- if an incomplete command was piped through the console, the console does not become blocked for piping
+- make "run current line" advance the cursor to next line after running
 - warnings and errors are highlighted in command log / console (warnings only for R >= 2.5.x)
 - plugin generated commands are run in a local() environment, allowing for more consise code		TODO: document, adjust examples, adjust plugins, etc.
 - also support filename completion in the console (mode of completion is determined by heuristic means)
@@ -6,7 +8,7 @@
 - the currently active window is now highlighted using a thin red border
 - fixed: changing the type of a column in the data editor was broken
 - fixed: quitting while a plugin was still active would sometimes crash rkward
-- new shortcuts for window navigations: next/previous window, activate console, activate command log, etc.
+- new shortcuts for window navigation: next/previous window, activate console, activate command log, etc.
 - new functions rk.describe.alternative () and rk.print.literal () for use in plugins
 - new plugin: Phillips-Perron test
 - new plugin: Mood test
