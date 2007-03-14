@@ -38,16 +38,8 @@
 #include <kinputdialog.h>
 #include <kdockwidget.h>
 #include <kmultitabbar.h>
+#include <ksqueezedtextlabel.h>
 #include <dcopclient.h>
-
-// include files for the kate part. Some may not be useful
-#include <ktexteditor/configinterface.h>
-#include <ktexteditor/sessionconfiginterface.h>
-#include <ktexteditor/viewcursorinterface.h>
-#include <ktexteditor/printinterface.h>
-#include <ktexteditor/encodinginterface.h>
-#include <ktexteditor/editorchooser.h>
-#include <ktexteditor/popupmenuinterface.h>
 
 // application specific includes
 #include "rkward.h"
@@ -409,9 +401,22 @@ void RKWardMainWindow::partRemoved (KParts::Part *part) {
 void RKWardMainWindow::initStatusBar () {
 	RK_TRACE (APP);
 
-	r_status_label = new QLabel (i18n ("starting R engine"), statusBar ());
-	r_status_label->setPaletteBackgroundColor (QColor (255, 255, 0));
-	statusBar ()->addWidget (r_status_label, 0, true);
+	// why do we need this QHBox, when the statusbar already does horizontal layout?
+	// Well, apparently the stretch factors do not survive a hide/show, so we need some way to work around this
+	QHBox *statusbar_hbox = new QHBox (statusBar ());
+	statusbar_action = new KSqueezedTextLabel (statusbar_hbox);
+	statusbar_action->hide ();
+	statusbar_ready = new QLabel (i18n ("Ready."), statusbar_hbox);
+	statusbar_cwd = new KSqueezedTextLabel (statusbar_hbox);
+	statusbar_cwd->setAlignment (QLabel::AlignRight);
+	statusbar_hbox->setStretchFactor (statusbar_cwd, 1);
+	updateCWD ();
+	statusBar ()->addWidget (statusbar_hbox, 1);
+
+	statusbar_r_status = new QLabel (i18n ("starting R engine"), statusBar ());
+	statusbar_r_status->setPaletteBackgroundColor (QColor (255, 255, 0));
+	statusbar_r_status->setFixedHeight (statusBar ()->fontMetrics ().height () + 2);
+	statusBar ()->addWidget (statusbar_r_status, 0, true);
 
 	connect (actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
 	connect (actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
@@ -713,15 +718,26 @@ void RKWardMainWindow::slotFileSaveWorkspaceAs () {
 	new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), true);
 }
 
+void RKWardMainWindow::updateCWD () {
+	RK_TRACE (APP);
+
+	statusbar_cwd->setText (QDir::currentDirPath ());
+}
+
 void RKWardMainWindow::slotSetStatusBarText (const QString &text) {
 	RK_TRACE (APP);
 
 	QString ntext = text.stripWhiteSpace ();
 	ntext.replace ("<qt>", "");	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
 	if (ntext.isEmpty ()) {
-		statusBar ()->message (i18n ("Ready."));
+		statusbar_action->hide ();
+		statusbar_ready->show ();
+		statusbar_cwd->show ();
 	} else {
-		statusBar ()->message (ntext);
+		statusbar_action->show ();
+		statusbar_ready->hide ();
+		statusbar_cwd->hide ();
+		statusbar_action->setText (ntext);
 	}
 }
 
@@ -752,11 +768,11 @@ void RKWardMainWindow::slotDetachWindow () {
 void RKWardMainWindow::setRStatus (bool busy) {
 	RK_TRACE (APP);
 	if (busy) {
-		r_status_label->setText (i18n ("R engine busy"));
-		r_status_label->setPaletteBackgroundColor (QColor (255, 0, 0));
+		statusbar_r_status->setText (i18n ("R engine busy"));
+		statusbar_r_status->setPaletteBackgroundColor (QColor (255, 0, 0));
 	} else {
-		r_status_label->setText (i18n ("R engine idle"));
-		r_status_label->setPaletteBackgroundColor (QColor (0, 255, 0));
+		statusbar_r_status->setText (i18n ("R engine idle"));
+		statusbar_r_status->setPaletteBackgroundColor (QColor (0, 255, 0));
 	}
 }
 

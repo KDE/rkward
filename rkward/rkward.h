@@ -57,6 +57,7 @@ class RKMenuList;
 class RKCommandEditorWindow;
 class KMdiToolViewAccessor;
 class RKMDIWindow;
+class QHBox;
 
 /**
 The main class of rkward. This is where all strings are tied togther, controlls the initialization, and there are some of the most important slots for user actions. All real work is done elsewhere.
@@ -207,7 +208,10 @@ public slots:
 private:
 	void toggleToolView (RKMDIWindow *tool_window);
 
-	QLabel* r_status_label;
+	QLabel* statusbar_r_status;
+	QLabel* statusbar_cwd;
+	QLabel* statusbar_ready;
+	QLabel* statusbar_action;
 	KParts::PartManager *part_manager;
 
 	// KAction pointers to enable/disable actions
@@ -249,6 +253,8 @@ private:
 	friend class RInterface;
 /** set the R status message ("R engine idel/busy") to idle or busy */
 	void setRStatus (bool busy);
+/** update the display for the current working directory */
+	void updateCWD ();
 };
 
 #endif // RKWARD_H
