@@ -754,6 +754,13 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	new KAction (i18n ("Configure"), 0, this, SLOT (configure ()), ac, "rkconsole_configure");
 }
 
+void RKConsole::pipeUserCommand (const QString &command) {
+	RK_TRACE (APP);
+
+	RCommand *cmd = new RCommand (command, RCommand::User);
+	pipeUserCommand (cmd);
+}
+
 void RKConsole::pipeUserCommand (RCommand *command) {
 	RK_TRACE (APP);
 
@@ -772,6 +779,8 @@ void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 		int res = KMessageBox::questionYesNo (this, i18n ("You have configured RKWrad to run script commands through the console. However, the console is currently busy (either a command is running, or you have started to enter text in the console). Do you want to bypass the console this one time, or do you want to try again later?"), i18n ("Console is busy"), KGuiItem (i18n ("Bypass console")), KGuiItem (i18n ("Cancel")));
 		if (res == KMessageBox::Yes) {
 			RKGlobals::rInterface ()->issueCommand (command);
+		} else {
+			delete command;
 		}
 	} else {
 		QString command_string = command->command ();

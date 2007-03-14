@@ -315,7 +315,7 @@ void RKCommandEditorWindow::runAll() {
 	QString command = m_doc->text ();
 	if (command.isEmpty ()) return;
 
-	RKConsole::pipeUserCommand (new RCommand (command, RCommand::User, QString::null));
+	RKConsole::pipeUserCommand (command);
 }
 
 

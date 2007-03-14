@@ -77,6 +77,8 @@ public:
 	bool isBusy () { return (current_command || command_incomplete); };
 /** Run a user command (through console, if applicable */
 	static void pipeUserCommand (RCommand *command);
+/** Overload for the above function: Use this, if you just need to run a string with no specials */
+	static void pipeUserCommand (const QString &command);
 protected:
 /** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
 \param e the QKeyEvent */

@@ -2,7 +2,7 @@
                           rkeditordataframepart  -  description
                              -------------------
     begin                : Wed Sep 14 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 

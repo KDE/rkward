@@ -34,6 +34,7 @@
 #include "../rkglobals.h"
 #include "rkhelpsearchwindow.h"
 #include "../rkward.h"
+#include "../rkconsole.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/xmlhelper.h"
@@ -61,7 +62,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow:
 	connect (khtmlpart, SIGNAL (completed ()), this, SLOT (loadDone ()));
 
 	url_history.setAutoDelete (true);
-	back = forward = print = 0;		// initialization done in subclasses
+	back = forward = print = run_selection = 0;		// initialization done in subclasses
 	url_change_is_from_history = false;
 }
 
@@ -88,6 +89,30 @@ void RKHTMLWindow::addCommonActions (KActionCollection *action_collection) {
 
 	// enable copy
 	KStdAction::copy (khtmlpart->browserExtension (), SLOT (copy ()), action_collection, "copy");
+
+	// run selection
+	run_selection = new KAction (i18n ("Run selection"), QIconSet (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), this, SLOT (runSelection ()), action_collection, "run_selection");
+
+	// needed to enable / disable the run selection action
+	connect (khtmlpart, SIGNAL (selectionChanged()), this, SLOT (selectionChanged()));
+	selectionChanged ();
+}
+
+void RKHTMLWindow::selectionChanged () {
+	RK_TRACE (APP);
+
+	if (!run_selection) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	run_selection->setEnabled (khtmlpart->hasSelection ());
+}
+
+void RKHTMLWindow::runSelection () {
+	RK_TRACE (APP);
+
+	RKConsole::pipeUserCommand (khtmlpart->selectedText ());
 }
 
 void RKHTMLWindow::doGotoAnchor (const QString &anchor_name) {

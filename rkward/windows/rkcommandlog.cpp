@@ -223,7 +223,7 @@ void RKCommandLog::clearLog () {
 void RKCommandLog::runSelection () {
 	RK_TRACE (APP);
 
-	RKConsole::pipeUserCommand (new RCommand (getView ()->selectedText (), RCommand::User, QString::null));
+	RKConsole::pipeUserCommand (getView ()->selectedText ());
 }
 
 ////////////////////////// END RKCommandLog ///////////////////////////

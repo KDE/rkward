@@ -1,3 +1,4 @@
+- add run selection action to all HTML windows
 - add custom icons for run line/selection/all
 - make sure not to run parts of an incomplete user command. It would lead to all sorts of subtle problems
 - if an incomplete command was piped through the console, the console does not become blocked for piping

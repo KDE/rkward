@@ -67,6 +67,8 @@ public slots:
 	void slotPrint ();
 	void slotForward ();
 	void slotBack ();
+	void selectionChanged ();
+	void runSelection ();
 private slots:
 /** This slot is called when the new page has finished loading. Sets scroll position to scroll_position */
 	void loadDone ();
@@ -85,6 +87,7 @@ protected:
 	KAction *back;
 	KAction *forward;
 	KAction *print;
+	KAction *run_selection;
 	bool url_change_is_from_history;	// dirty!!!
 	QString goto_anchor_name;
 };
