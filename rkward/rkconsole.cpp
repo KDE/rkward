@@ -739,8 +739,7 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	RK_TRACE (APP);
 
 	context_help_action = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT (showContextHelp ()), ac, "function_reference");
-	run_selection_action = new KAction (i18n ("Run selection"), KShortcut ("F8"), this, SLOT (runSelection ()), ac, "run_selection");
-	run_selection_action->setIcon ("player_play");
+	run_selection_action = new KAction (i18n ("Run selection"), QIconSet (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), this, SLOT (runSelection ()), ac, "run_selection");
 
 	interrupt_command_action = new KAction (i18n ("Interrupt running command"), KShortcut ("Ctrl+C"), this, SLOT (slotInterruptCommand ()), ac, "interrupt");
 	interrupt_command_action->setIcon ("player_stop");

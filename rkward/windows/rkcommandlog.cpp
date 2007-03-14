@@ -22,6 +22,7 @@
 #include "../rkconsole.h"
 #include "../settings/rksettingsmodulewatch.h"
 #include "../settings/rksettings.h"
+#include "../misc/rkcommonfunctions.h"
 #include "rkcommandeditorwindow.h"
 
 #include <qpushbutton.h>
@@ -283,8 +284,7 @@ RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
 	KStdAction::clear (log, SLOT (clearLog ()), actionCollection (), "log_clear");
 	KStdAction::selectAll (log->getView (), SLOT (selectAll ()), actionCollection (), "log_select_all");
 	new KAction (i18n ("Configure"), 0, log, SLOT (configureLog ()), actionCollection (), "log_configure");
-	run_selection = new KAction (i18n ("Run selection"), KShortcut ("F8"), log, SLOT (runSelection ()), actionCollection (), "log_run_selection");
-	run_selection->setIcon("player_play");
+	run_selection = new KAction (i18n ("Run selection"), QIconSet (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), log, SLOT (runSelection ()), actionCollection (), "log_run_selection");
 
 	connect (log->getView (), SIGNAL (popupMenuRequest (const QPoint &)), this, SLOT (doPopupMenu (const QPoint &)));
 }
