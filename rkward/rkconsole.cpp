@@ -348,7 +348,7 @@ void RKConsole::doTabCompletion () {
 			if (quote_end < 0) quote_end = current_line.find ('\'', cursor_pos);
 			if (quote_end < 0) quote_end = current_line.length ();
 	
-			QString current_name = current_line.mid (quote_start + 1, quote_end - quote_start);
+			QString current_name = current_line.mid (quote_start + 1, quote_end - quote_start - 1);
 			KURLCompletion comp (KURLCompletion::FileCompletion);
 			QString test = comp.makeCompletion (current_name);
 	
