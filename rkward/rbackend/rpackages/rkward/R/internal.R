@@ -402,3 +402,9 @@
 		base::Sys.setlocale (category, locale, ...)
 	}
 }
+
+"setwd" <- function () {
+	eval (body (base::setwd))
+	.rk.do.call ("wdChange", NULL);
+}
+formals (setwd) <- formals (base::setwd)
