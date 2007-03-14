@@ -25,9 +25,6 @@
 #include <qpopupmenu.h>
 
 #include "rkcommandeditorwindow.h"
-#include "../rkglobals.h"
-#include "../rkconsole.h"
-#include "../rbackend/rinterface.h"
 #include "../debug.h"
 
 RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent, RKCommandEditorWindow *editor_widget) : KParts::Part (parent) {
@@ -50,42 +47,11 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 void RKCommandEditorWindowPart::initializeActions () {
 	RK_TRACE (COMMANDEDITOR);
 
-	runAll = new KAction (i18n ("Run all"), "player_fwd", KShortcut ("F9"), this, SLOT (slotRunAll ()), actionCollection (), "run_all");
-	runSelection = new KAction (i18n ("Run selection"), "player_play", KShortcut ("F8"), this, SLOT (slotRunSelection ()), actionCollection (), "run_selection");
-	runLine = new KAction (i18n ("Run current line"), "player_end", KShortcut ("Ctrl+L"), this, SLOT (slotRunLine ()), actionCollection (), "run_line");
+	runAll = new KAction (i18n ("Run all"), "player_fwd", KShortcut ("F9"), command_editor, SLOT (runAll()), actionCollection (), "run_all");
+	runSelection = new KAction (i18n ("Run selection"), "player_play", KShortcut ("F8"), command_editor, SLOT (runSelection()), actionCollection (), "run_selection");
+	runLine = new KAction (i18n ("Run current line"), "player_end", KShortcut ("Ctrl+L"), command_editor, SLOT (runLine()), actionCollection (), "run_line");
 
-	helpFunction = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT (slotFunctionReference ()), actionCollection (), "function_reference");
-}
-
-void RKCommandEditorWindowPart::slotRunSelection() {
-	RK_TRACE (COMMANDEDITOR);
-
-	if (command_editor->getSelection ().isEmpty () || command_editor->getSelection ().isNull ()) return;
-
-	RKConsole::pipeUserCommand (new RCommand (command_editor->getSelection (), RCommand::User, QString::null));
-}
-
-void RKCommandEditorWindowPart::slotRunLine() {
-	RK_TRACE (COMMANDEDITOR);
-
-	if (command_editor->getLine ().isEmpty () || command_editor->getLine().isNull ()) return;
-
-	RKConsole::pipeUserCommand (new RCommand (command_editor->getLine (), RCommand::User, QString::null));
-}
-
-
-void RKCommandEditorWindowPart::slotRunAll() {
-	RK_TRACE (COMMANDEDITOR);
-
-	if (command_editor->getText ().isEmpty () || command_editor->getText ().isNull ()) return;
-
-	RKConsole::pipeUserCommand (new RCommand (command_editor->getText (), RCommand::User, QString::null));
-}
-
-void RKCommandEditorWindowPart::slotFunctionReference () {
-	RK_TRACE (COMMANDEDITOR);
-
-	command_editor->showHelp ();
+	helpFunction = new KAction (i18n ("&Function reference"), KShortcut ("F2"), command_editor, SLOT (showHelp()), actionCollection (), "function_reference");
 }
 
 #include "rkcommandeditorwindowpart.moc"

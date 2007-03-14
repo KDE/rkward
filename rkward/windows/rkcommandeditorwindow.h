@@ -85,12 +85,6 @@ public:
 	RKCommandEditorWindow (QWidget *parent = 0, bool use_r_highlighting=true);
 /** destructor */
 	~RKCommandEditorWindow ();
-/** return text of current selection */
-	QString getSelection ();
-/** return text in current line */
-	QString getLine ();
-/** return entire text */
-	QString getText ();
 /** open given URL. 
 @param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file
 @param read_only Open the file in read-only mode */
@@ -99,8 +93,6 @@ public:
 	bool isModified ();
 /** insert the given text into the document at the current cursor position. Additionally, focuses the view */
 	void insertText (const QString &text);
-/** Show help about the current word. */
-	void showHelp ();
 /** set the current text (clear all previous text, and sets new text) */
 	void setText (const QString &text);
 /** copy current selection. Wrapper for use by external classes */
@@ -123,6 +115,14 @@ public slots:
 	void fixCompletion (KTextEditor::CompletionEntry *, QString *);
 	void setPopupMenu (Kate::View *);
 	void setPopupMenu ();
+/** Show help about the current word. */
+	void showHelp ();
+/** run the currently selected command(s) */
+	void runSelection ();
+/** run the current line */
+	void runLine ();
+/** run the entire script */
+	void runAll ();
 protected:
 /** reimplemented from KMdiChildView: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e);

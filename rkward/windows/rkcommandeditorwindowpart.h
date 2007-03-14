@@ -33,16 +33,11 @@ public:
 	RKCommandEditorWindowPart (QWidget *parent, RKCommandEditorWindow *editor_widget);
 
 	~RKCommandEditorWindowPart ();
-public slots:
-	void slotRunSelection ();
-	void slotRunLine ();
-	void slotRunAll ();
-	void slotFunctionReference ();
 private:
 	RKCommandEditorWindow *command_editor;
 
 	void initializeActions ();
-
+// TODO: move these to RKCommandEditorWindow as well, disable runSelection, when there is no selection
 	KAction* runAll;
 	KAction* runSelection;
 	KAction* runLine;

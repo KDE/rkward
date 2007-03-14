@@ -49,6 +49,7 @@
 
 #include "../misc/rkcommonfunctions.h"
 #include "../core/robjectlist.h"
+#include "../rkconsole.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
@@ -156,21 +157,6 @@ void RKCommandEditorWindow::setRHighlighting () {
 	}
 }
 
-QString RKCommandEditorWindow::getSelection () {
-	RK_TRACE (COMMANDEDITOR);
-	return m_doc->selection ();
-}
-
-QString RKCommandEditorWindow::getLine () {
-	RK_TRACE (COMMANDEDITOR);
-	return m_view->currentTextLine ();
-}
-
-QString RKCommandEditorWindow::getText () {
-	RK_TRACE (COMMANDEDITOR);
-	return m_doc->text ();
-}
-
 void RKCommandEditorWindow::copy () {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -195,7 +181,6 @@ KURL RKCommandEditorWindow::url () {
 
 	return (m_doc->url ());
 }
-
 
 bool RKCommandEditorWindow::isModified() {
 	RK_TRACE (COMMANDEDITOR);
@@ -243,7 +228,7 @@ void RKCommandEditorWindow::tryCompletion () {
 
 	uint para=0; uint cursor_pos=0;
 	m_view->cursorPosition (&para, &cursor_pos);
-	QString current_line = getLine ();
+	QString current_line = m_view->currentTextLine ();
 	if (current_line.findRev ("#", cursor_pos) >= 0) return;	// do not hint while in comments
 
 	QString current_symbol = RKCommonFunctions::getCurrentSymbol (current_line, cursor_pos, false);
@@ -275,7 +260,7 @@ void RKCommandEditorWindow::fixCompletion (KTextEditor::CompletionEntry *entry, 
 
 	uint current_line_num=0; uint cursor_pos=0;
 	m_view->cursorPosition (&current_line_num, &cursor_pos);
-	QString current_line = getLine ();
+	QString current_line = m_view->currentTextLine ();
 
 	int word_start;
 	int word_end;
@@ -302,6 +287,37 @@ bool RKCommandEditorWindow::provideContext (unsigned int line_rev, QString *cont
 
 	return true;
 }
+
+void RKCommandEditorWindow::runSelection() {
+	RK_TRACE (COMMANDEDITOR);
+
+	QString command = m_doc->selection ();
+	if (command.isEmpty ()) return;
+
+	RKConsole::pipeUserCommand (new RCommand (command, RCommand::User, QString::null));
+}
+
+void RKCommandEditorWindow::runLine() {
+	RK_TRACE (COMMANDEDITOR);
+
+	QString command = m_view->currentTextLine ();
+	if (command.isEmpty ()) return;
+
+	RKConsole::pipeUserCommand (new RCommand (command, RCommand::User, QString::null));
+
+	m_view->down ();		// advance to next line
+}
+
+
+void RKCommandEditorWindow::runAll() {
+	RK_TRACE (COMMANDEDITOR);
+
+	QString command = m_doc->text ();
+	if (command.isEmpty ()) return;
+
+	RKConsole::pipeUserCommand (new RCommand (command, RCommand::User, QString::null));
+}
+
 
 //////////////////////// RKFunctionArgHinter //////////////////////////////
 
