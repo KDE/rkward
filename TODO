@@ -103,10 +103,7 @@ UI-stuff
 		- find a good way to open R help pages in the same window
 		- open link in new tab, etc.
 	- Working directory
-		- option to change working directory (https://sourceforge.net/mailarchive/forum.php?thread_id=31671703&forum_id=12970)
-			- find a good way to show current working dir info somewhere (title / statusbar)
-				- keep up to date (override setwd ()).
-				- also show this info in <browser>
+		- show current wd in <browser>, somewhere
 
 Internal stuff:
 	- Handling locales:
