@@ -122,6 +122,7 @@ try ({
 	}
 	if ($final) {
 ?>
+	})
 rk.graph.off ()
 <?
 	}
