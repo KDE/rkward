@@ -44,6 +44,9 @@
 			<Action name="prev_window"/>
 			<Action name="next_window"/>
 			<Separator/>
+			<Action name="left_window"/>
+			<Action name="right_window"/>
+			<Separator/>
 			<Action name="window_show_workspace"/>
 			<Action name="window_show_commandlog"/>
 			<Action name="window_show_pendingjobs"/>

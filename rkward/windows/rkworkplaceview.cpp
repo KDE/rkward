@@ -2,7 +2,7 @@
                           rkworkplaceview  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,6 +18,7 @@
 #include "rkworkplaceview.h"
 
 #include <ktabbar.h>
+#include <klocale.h>
 
 #include <qwidgetstack.h>
 #include <qapplication.h>
@@ -47,6 +48,61 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QWidget (parent) {
 
 RKWorkplaceView::~RKWorkplaceView () {
 	RK_TRACE (APP);
+}
+
+void RKWorkplaceView::initActions (KActionCollection *ac, const char *id_left, const char *id_right) {
+	RK_TRACE (APP);
+
+	KShortcut left_short (KKey ("Ctrl+<"));
+	left_short.append (KKey (Qt::CTRL | Qt::Key_Comma));
+	action_page_left = new KAction (i18n ("Window Left"), 0, left_short, this, SLOT (pageLeft ()), ac, id_left);
+
+	KShortcut right_short (KKey ("Ctrl+>"));
+	right_short.append (KKey (Qt::CTRL | Qt::Key_Period));
+	action_page_right = new KAction (i18n ("Window Right"), 0, right_short, this, SLOT (pageRight ()), ac, id_right);
+
+	updateActions ();
+}
+
+void RKWorkplaceView::updateActions () {
+	RK_TRACE (APP);
+
+	int index = currentIndex ();
+	action_page_left->setEnabled (index > 0);
+	action_page_right->setEnabled (index < (tabs->count () - 1));
+}
+
+void RKWorkplaceView::pageLeft () {
+	RK_TRACE (APP);
+
+	int index = currentIndex ();
+	RK_ASSERT (index > 0);
+	setPageByIndex (index - 1);
+}
+
+void RKWorkplaceView::pageRight () {
+	RK_TRACE (APP);
+
+	int index = currentIndex ();
+	RK_ASSERT (index < (tabs->count () - 1));
+	setPageByIndex (index + 1);
+}
+
+int RKWorkplaceView::currentIndex () {
+	RK_TRACE (APP);
+	return (tabs->indexOf (tabs->currentTab ()));
+}
+
+void RKWorkplaceView::setPageByIndex (int index) {
+	RK_TRACE (APP);
+
+	QTab *new_tab = tabs->tabAt (index);
+	if (!new_tab) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	setPage (new_tab->identifier ());
 }
 
 void RKWorkplaceView::addPage (RKMDIWindow *widget) {
@@ -80,7 +136,7 @@ void RKWorkplaceView::removePage (RKMDIWindow *widget, bool destroyed) {
 	RK_DO (if (id == -1) qDebug ("did not find page in RKWorkplaceView::removePage"), APP, DL_WARNING);
 	if (!destroyed) disconnect (widget, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (childCaptionChanged (RKMDIWindow *)));
 
-	int oldindex = tabs->indexOf (tabs->currentTab ());	// which page will have to be activated later?
+	int oldindex = currentIndex ();	// which page will have to be activated later?
 	int oldcount = tabs->count ();
 	QTab *new_tab = tabs->tabAt (oldindex);
 	if (widget == activePage ()) {
@@ -161,6 +217,7 @@ void RKWorkplaceView::setPage (int page) {
 
 	emit (pageChanged (window));
 	setCaption (window->shortCaption ());
+	updateActions ();
 }
 
 void RKWorkplaceView::childCaptionChanged (RKMDIWindow *widget) {

@@ -41,7 +41,7 @@ public:
 	RKMDIWindowHistory (QObject *parent);
 	~RKMDIWindowHistory ();
 
-	void addActions (KActionCollection *ac, const char *prev_id, const char *next_id);
+	void initActions (KActionCollection *ac, const char *prev_id, const char *next_id);
 	bool haveNext ();
 	bool havePrev ();
 public slots:
@@ -68,7 +68,7 @@ public:
 @param parent: The parent widget for the workspace view (see view ()) */
 	explicit RKWorkplace (QWidget *parent);
 	~RKWorkplace ();
-	void initActions (KActionCollection *ac, const char *prev_id, const char *next_id);
+	void initActions (KActionCollection *ac, const char *prev_id, const char *next_id, const char *left_id, const char *right_id);
 
 /** @returns a pointer to the view of the workplace. Since possibly the workplace layout might change, better not rely on this pointer being valid for long */
 	RKWorkplaceView *view () { return wview; };

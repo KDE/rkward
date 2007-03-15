@@ -63,10 +63,11 @@ RKWorkplace::~RKWorkplace () {
 //	closeAll ();	// not needed, as the windows will autodelete themselves using QObject mechanism. Of course, closeAll () should be called *before* quitting.
 }
 
-void RKWorkplace::initActions (KActionCollection *ac, const char *prev_id, const char *next_id) {
+void RKWorkplace::initActions (KActionCollection *ac, const char *prev_id, const char *next_id, const char *left_id, const char *right_id) {
 	RK_TRACE (APP);
 
-	history->addActions (ac, prev_id, next_id);
+	history->initActions (ac, prev_id, next_id);
+	wview->initActions (ac, left_id, right_id);
 }
 
 void RKWorkplace::attachWindow (RKMDIWindow *window) {
@@ -417,7 +418,7 @@ RKMDIWindowHistory::~RKMDIWindowHistory () {
 	RK_DO (qDebug ("Remaining windows in history: forward: %d, backward: %d", forward_list.count (), back_list.count ()), APP, DL_DEBUG);
 }
 
-void RKMDIWindowHistory::addActions (KActionCollection *ac, const char *prev_id, const char *next_id) {
+void RKMDIWindowHistory::initActions (KActionCollection *ac, const char *prev_id, const char *next_id) {
 	RK_TRACE (APP);
 
 	KShortcut prev_short ("Alt+<");
@@ -425,7 +426,7 @@ void RKMDIWindowHistory::addActions (KActionCollection *ac, const char *prev_id,
 	prev_action = new KAction (i18n ("Previous Window"), QIconSet (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"), prev_short, this, SLOT (prev ()), ac, prev_id);
 
 	KShortcut next_short ("Alt+>");
-	next_short.append ("Alt+.");
+	next_short.append (KKey (Qt::ALT | Qt::Key_Period));
 	next_action = new KAction (i18n ("Next Window"), QIconSet (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"), next_short, this, SLOT (next ()), ac, next_id);
 	updateActions ();
 }

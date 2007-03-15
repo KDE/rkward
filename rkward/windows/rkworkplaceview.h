@@ -2,7 +2,7 @@
                           rkworkplaceview  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,6 +24,8 @@
 class KTabBar;
 class QWidgetStack;
 class RKMDIWindow;
+class KAction;
+class KActionCollection;
 
 /** The widget containing all the MDI document windows. Right now it mostly acts as a QTabWidget (is not one, as unfortunately, QTabWidget always has a sunken frame), but might be extended to allow switching between different view modes */
 class RKWorkplaceView : public QWidget {
@@ -49,6 +51,8 @@ public:
 	QString activeCaption ();
 /** reimplemented form QWidget::setCaption () to emit captionChanged () when the caption changes */
 	void setCaption (const QString &caption);
+/** initialize the window left/right actions */
+	void initActions (KActionCollection *ac, const char *id_left, const char *id_right);
 signals:
 /** a new page / window was activated
 @param widget the newly activated window */
@@ -62,7 +66,17 @@ public slots:
 /** called when the caption of a window changes. Updates the tab-label, and - if appropriate - the caption of this widget */
 	void childCaptionChanged (RKMDIWindow *widget);
 	void closePage (int index);
+/** Active the page left of the current tab */
+	void pageLeft ();
+/** Active the page right of the current tab */
+	void pageRight ();
 private:
+	void updateActions ();
+/** Index of current tab (might be negative, if there are no tabs! */
+	int currentIndex ();
+	void setPageByIndex (int index);
+	KAction *action_page_left;
+	KAction *action_page_right;
 	KTabBar *tabs;
 	QWidgetStack *widgets;
 	typedef QMap<int, RKMDIWindow*> PageMap;

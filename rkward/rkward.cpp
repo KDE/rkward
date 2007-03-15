@@ -114,7 +114,7 @@ RKWardMainWindow::RKWardMainWindow (KURL *load_url) : DCOPObject ("rkwardapp"), 
 	QVBoxLayout *layout = new QVBoxLayout (dummy);
 	addWindow (dummy);
 	new RKWorkplace (dummy);
-	RKWorkplace::mainWorkplace ()->initActions (actionCollection (), "prev_window", "next_window");
+	RKWorkplace::mainWorkplace ()->initActions (actionCollection (), "prev_window", "next_window", "left_window", "right_window");
 	layout->addWidget (RKWorkplace::mainWorkplace ()->view ());
 	connect (RKWorkplace::mainWorkplace ()->view (), SIGNAL (captionChanged (const QString &)), this, SLOT (setCaption (const QString &)));
 
