@@ -438,11 +438,12 @@ void RKMDIWindowHistory::windowActivated (RKMDIWindow *window) {
 	if (window == current) return;
 	if (window->isToolWindow ()) return;		// exclude tool windows for now. Make configurable?
 
-	forward_list.clear ();
+	// update lists
 	back_list.remove (window);		// remove dupes
+	forward_list.clear ();
 	if (current) back_list.append (current);
-
 	current = window;
+
 	updateActions ();
 }
 
