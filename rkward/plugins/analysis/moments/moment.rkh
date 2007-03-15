@@ -13,8 +13,8 @@ Chose the data to computes the sample moments. You can chose multiple data. See 
 		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length.</setting>
 		<caption id="tab_options"/>
 		<setting id="central">If checked,  central moments are computed.</setting>
-		<setting id="absolute">If checked, absolute moments are computed</setting>
-		<setting id="narm">If checked, missing values will be excluded from calculation.</setting>
+		<setting id="absolute">If checked, absolute moments are computed.</setting>
+		<setting id="narm">If checked, missing values will be excluded from calculation (default setting in RKWard).</setting>
 		<setting id="length">If checked, the length of the data vectors will be shown. However, this will not effect your results but is just an optional information.</setting>
 		<setting id="nacount">If checked, and in case of missing values this will show you the number of those. However, this will not effect your results but is just an optional information.</setting>
 	</settings>

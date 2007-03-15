@@ -28,7 +28,7 @@ local({
 		})
 	<?	}
 		if (getRK_val ("geary")) { ?>
-		try (rk.temp.results$'Geary kurtosis'[i] <<- geary (eval (var)<? echo ($narm); ?>))
+		try (rk.temp.results$'Geary Kurtosis'[i] <<- geary (eval (var)<? echo ($narm); ?>))
 	<?	}
 		if (getRK_val ("length")) { ?>
 		try (rk.temp.results$'Length'[i] <<- length (eval (var)))

@@ -20,7 +20,7 @@
 				<frame label="specific test settings">
 					<checkbox id="central" label="compute central moments" checked="false" value="TRUE" value_unchecked="FALSE" />
 					<checkbox id="absolute" label="compute absolute moments" checked="false" value="TRUE" value_unchecked="FALSE" />
-					<checkbox id="narm" label="remove missing values" checked="false" value="TRUE" value_unchecked="FALSE" />
+					<checkbox id="narm" label="remove missing values" checked="true" value="TRUE" value_unchecked="FALSE" />
 				</frame>
 				<frame label="additional settings">
 					<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="false" />
