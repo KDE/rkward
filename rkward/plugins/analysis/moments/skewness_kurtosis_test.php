@@ -49,9 +49,7 @@ rk.results (rk.temp.results)
 
 function cleanup () {
 ?>
-rm (rk.temp.results)
-rm (rk.temp.objects)
-rm (var)
+rm (list=grep ("^rk.temp", ls (), value=TRUE))
 <?
        }
 ?>
