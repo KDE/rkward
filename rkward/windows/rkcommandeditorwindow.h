@@ -100,6 +100,8 @@ public:
 
 	QString getDescription ();
 
+	void setReadOnly (bool ro);
+
 /** Return current url */
 	KURL url ();
 

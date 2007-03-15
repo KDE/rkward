@@ -220,12 +220,14 @@ void RKStandardComponentGUI::updateCode () {
 void RKStandardComponentGUI::updateCodeNow () {
 	RK_TRACE (PLUGIN);
 
+	code_display->setReadOnly (false);	// sigh. The kate part does not allow setting text programatically, when it is read only
 	if (!code_property->isValid ()) {
 		code_display->setText (i18n ("Processing. Please wait"));
 		RK_DO (qDebug ("code not ready to be displayed: pre %d, cal %d, pri %d", !code_property->preprocess ().isNull (), !code_property->calculate ().isNull (), !code_property->printout ().isNull ()), PLUGIN, DL_DEBUG);
 	} else {
 		code_display->setText ("local({\n" + code_property->preprocess () + code_property->calculate () + code_property->printout () + "})\n");
 	}
+	code_display->setReadOnly (true);
 }
 
 ///////////////////////////////// RKStandardComponentWizard /////////////////////////////////

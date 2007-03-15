@@ -163,11 +163,17 @@ void RKCommandEditorWindow::copy () {
 	m_view->copy ();
 }
 
+void RKCommandEditorWindow::setReadOnly (bool ro) {
+	RK_TRACE (COMMANDEDITOR);
+
+	m_doc->setReadWrite (!ro);
+}
+
 bool RKCommandEditorWindow::openURL (const KURL &url, bool use_r_highlighting, bool read_only){
 	RK_TRACE (COMMANDEDITOR);
 	if (m_doc->openURL (url)){
 		if (use_r_highlighting) setRHighlighting ();
-		m_doc->setReadWrite (!read_only);
+		setReadOnly (read_only);
 
 		updateCaption ();
 
