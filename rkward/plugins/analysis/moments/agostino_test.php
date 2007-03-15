@@ -16,6 +16,7 @@ for (var in objects) {
 	results[i, 'Variable Name'] <- rk.get.description (var, is.substitute=TRUE)
 	var <- eval (var)
 	results[i, 'Error'] <- tryCatch ({
+		# This is the core of the calculation
 		t <- agostino.test (var, alternative = "<? getRK ("alternative"); ?>")
 		results[i, 'skewness estimator (skew)'] <- t$statistic["skew"]
 		results[i, 'transformation (z)'] <- t$statistic["z"]
