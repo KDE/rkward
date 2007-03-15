@@ -46,9 +46,6 @@ public:
 	void setActivePage (RKMDIWindow *widget);
 /** @returns the currently active window */
 	RKMDIWindow *activePage ();
-/** Like activePage ()->shortCaption, but safe even if there is no active window
-@returns the caption of the currently active window. */
-	QString activeCaption ();
 /** reimplemented form QWidget::setCaption () to emit captionChanged () when the caption changes */
 	void setCaption (const QString &caption);
 /** initialize the window left/right actions */

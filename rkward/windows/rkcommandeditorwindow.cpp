@@ -120,6 +120,18 @@ void RKCommandEditorWindow::setPopupMenu (Kate::View*) {
 	setPopupMenu ();
 }
 
+QString RKCommandEditorWindow::fullCaption () {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (m_doc->url ().isEmpty ()) {
+		return (shortCaption ());
+	} else {
+		QString cap = m_doc->url ().url ();
+		if (isModified ()) cap.append (i18n (" [modified]"));
+		return (cap);
+	}
+}
+
 QString RKCommandEditorWindow::getDescription () {
 	RK_TRACE (COMMANDEDITOR);
 

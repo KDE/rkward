@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -99,6 +99,9 @@ public:
 	void copy ();
 
 	QString getDescription ();
+
+/** reimplemented from RKMDIWindow to return full path of file (if any) */
+	QString fullCaption ();
 
 	void setReadOnly (bool ro);
 

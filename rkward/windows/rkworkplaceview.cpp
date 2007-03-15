@@ -183,14 +183,6 @@ RKMDIWindow *RKWorkplaceView::activePage () {
 	return (pages[tabs->currentTab ()]);
 }
 
-QString RKWorkplaceView::activeCaption () {
-	RK_TRACE (APP);
-
-	RKMDIWindow *window = activePage ();
-	if (!window) return QString ();
-	return window->shortCaption ();
-}
-
 void RKWorkplaceView::closePage (int index) {
 	RK_TRACE (APP);
 	int page = tabs->tabAt (index)->identifier ();

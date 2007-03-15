@@ -837,7 +837,8 @@ void RKWardMainWindow::setCaption (const QString &) {
 	QString wcaption = RObjectList::getObjectList ()->getWorkspaceURL ().fileName ();
 	if (wcaption.isEmpty ()) wcaption = RObjectList::getObjectList ()->getWorkspaceURL ().prettyURL ();
 	if (wcaption.isEmpty ()) wcaption = i18n ("[Unnamed Workspace]");
-	wcaption.append (" - " + RKWorkplace::mainWorkplace ()->view ()->activeCaption ());
+	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->activeAttachedWindow ();
+	if (window) wcaption.append (" - " + window->fullCaption ());
 	KMdiMainFrm::setCaption (wcaption);
 }
 
