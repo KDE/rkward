@@ -1,7 +1,7 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="export_new.php" />
-	<help file="export_new.rkh" />
+	<code file="export.php" />
+	<help file="export.rkh" />
 	<logic>
 		<external id="devnum"/>
 
