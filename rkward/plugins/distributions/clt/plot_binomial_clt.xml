@@ -10,7 +10,7 @@
 
 		<set id="normlinecol.default_color" to="red" />
 
-		<set id="histogram_opt.varname" to="rk.temp.cltdistrib$avg" />
+		<set id="histogram_opt.varname" to="avg" />
 		<set id="histogram_opt.allow_freq" to="false" />
 		<set id="histogram_opt.allow_barlabels" to="true" />
 		<set id="histogram_opt.allow_addtoplot" to="false" />

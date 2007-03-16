@@ -58,39 +58,38 @@ function doPrintout ($final) {
 
 	$yLim = ""; // initialise the ylim option
 ?>
-rk.temp.cltdistrib <- list()
 # generate the entire data:
-rk.temp.cltdistrib$data <- matrix(rbinom(n=<? echo ($nAvg*$nDist); ?>, size = <? echo ($size); ?>, prob=<? echo ($prob); ?>), nrow=<? echo ($nAvg); ?>);
+data <- matrix(rbinom(n=<? echo ($nAvg*$nDist); ?>, size = <? echo ($size); ?>, prob=<? echo ($prob); ?>), nrow=<? echo ($nAvg); ?>);
 # get the sample averages:
-rk.temp.cltdistrib$avg <- colMeans(rk.temp.cltdistrib$data);
+avg <- colMeans(data);
 <?
 	if ($scalenorm) {
 ?>
 # mean for the sample averages:
-rk.temp.cltdistrib$mean <- <? echo ($distExp); ?>;
+dist.mean <- <? echo ($distExp); ?>;
 # variance for the sample averages:
-rk.temp.cltdistrib$var <- <? echo ($distVar); ?>;
+dist.var <- <? echo ($distVar); ?>;
 # normalise the variables:
-rk.temp.cltdistrib$avg <- (rk.temp.cltdistrib$avg - rk.temp.cltdistrib$mean)/sqrt(rk.temp.cltdistrib$var);
+avg <- (avg - dist.mean)/sqrt(dist.var);
 <?
 	}
 	if ($drawnorm) {
 ?>
 # generate random normal samples:
-rk.temp.cltdistrib$normX <- seq(from=min(rk.temp.cltdistrib$avg), to=max(rk.temp.cltdistrib$avg), length=<? echo ($nDist); ?>);
-rk.temp.cltdistrib$normY <- <? echo ($normFun); ?> (rk.temp.cltdistrib$normX, mean = <? echo ($normMu); ?>, sd = <? echo ($normSigma); ?>);
+normX <- seq(from=min(avg), to=max(avg), length=<? echo ($nDist); ?>);
+normY <- <? echo ($normFun); ?> (normX, mean = <? echo ($normMu); ?>, sd = <? echo ($normSigma); ?>);
 <?
 	}
 	if ($fun == "hist") {
 ?>
-rk.temp.cltdistrib$hist <- hist(rk.temp.cltdistrib$avg, plot=FALSE<? echo ($histcalcoptions); ?>);
+dist.hist <- hist(avg, plot=FALSE<? echo ($histcalcoptions); ?>);
 <?
 	if ($drawnorm) {
 ?>
 # calculate the ylims appropriately:
-rk.temp.cltdistrib$ylim <- c(0,max(c(rk.temp.cltdistrib$hist$density, rk.temp.cltdistrib$normY)));
+ylim <- c(0,max(c(dist.hist$density, normY)));
 <?
-		$yLim = ', ylim=rk.temp.cltdistrib$ylim';
+		$yLim = ', ylim=ylim';
 		}
 	}
 	if ($final) {
@@ -101,16 +100,16 @@ try ({
 	}
   	if ($fun == "hist") {
 ?>
-	plot(rk.temp.cltdistrib$hist<? echo ($yLim); echo ($histplotoptions); ?>)
+	plot(dist.hist<? echo ($yLim); echo ($histplotoptions); ?>)
 <?
 	} elseif ($fun == "dist") {
 ?>
-	plot(ecdf(rk.temp.cltdistrib$avg)<? echo ($plotoptions); ?>)
+	plot(ecdf(avg)<? echo ($plotoptions); ?>)
 <?
 	}
 	if ($drawnorm) {
 ?>
-	lines (x=rk.temp.cltdistrib$normX, y=rk.temp.cltdistrib$normY, type="<? getRK ("normpointtype"); ?>"<? getRK ("normlinecol.code.printout"); ?>)
+	lines (x=normX, y=normY, type="<? getRK ("normpointtype"); ?>"<? getRK ("normlinecol.code.printout"); ?>)
 <?
 	}
 	if ($final) {
