@@ -1,18 +1,20 @@
 <!DOCTYPE rkhelp>
 <document>
 	<summary>
-Creates a pareto chart and prints the values.
+Creates a pareto chart, and (optionally) prints the values.
 	</summary>
 
 	<usage>
-Choose a vector or a factor to be plotted. The Frequency, Cum.Frequency, Percentage and Cum.Percentage will be printed under the plot.
+Choose a vector or a factor to be plotted. The frequency, cumulative frequency, percentage and cumulative percentage will be printed under the plot.
 	</usage>
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Select a data vector or a factor to be plotted</setting>
-		<setting id="tabulate">Use tabulate option mainly for factor variables or wherever else applicable</setting>
-		<setting id="descriptives">Select if you want to print the Frequency, Cum.Frequency, Percentage and Cum.Percentage below the pareto chart in the output window </setting>
+		<setting id="x">Select a data vector or a factor to be plotted.</setting>
+		<setting id="tabulate">Whether to tabulate the data before plotting. You will generally use this, if a vector contains raw observations instead of counts of different categories.</setting>
+		<setting id="descriptives">Whether to print the frequency, cumulative frequency, percentage and cumulative percentage below the plot in the output window.</setting>
+		<caption id="tab_plot_options"/>
+		<setting id="plotoptions">Further options for the plot. Refer to <link href="rkward://component/plot_options"/> for details.</setting>
 	</settings>
 	<related>
 		<ul>

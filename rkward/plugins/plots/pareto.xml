@@ -22,7 +22,7 @@
 					</column>
 				</row>
 			</tab>
-			<tab label="Plot Options" >
+			<tab label="Plot Options" id="tab_plot_options">
 				<row>
 					<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
 					<stretch/>
