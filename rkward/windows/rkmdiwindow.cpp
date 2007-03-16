@@ -122,8 +122,10 @@ bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
 		KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *> (e);
 		if (ev->activated ()) {
 			emit (windowActivated (this));
+			setFocus ();		// designed to aid the kate part
 			active = true;
 		} else {
+			clearFocus ();		// designed to aid the kate part
 			active = false;
 		}
 		if (layout()->margin () < 1) {
