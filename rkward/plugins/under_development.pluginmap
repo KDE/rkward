@@ -2,9 +2,6 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
-		<component type="standard" id="export_x11_device_new" file="x11device/export_new.xml" label="Export (new)" />
-		<component type="standard" id="setworkdir" file="00saveload/setworkdir.xml" label="Set Working Directory" />
-
 		<component type="standard" id="plot_binomial_clt" file="distributions/clt/plot_binomial_clt.xml" label="Binomial CLT" />
 		<component type="standard" id="pareto" file="plots/pareto.xml" label="Pareto Chart" />
 
@@ -71,9 +68,6 @@
 			<entry component="histogram" />
 			<entry component="stem" />
 		</menu>
-		<menu id="workspace" label="Workspace" index="5">
-			<entry component="setworkdir" />
-		</menu>
 		<menu id="plots" label="Plots" index="5">
 			<entry component="pareto" />
 		</menu>
@@ -89,9 +83,6 @@
 	</hierarchy>
 
   <context id="x11">
-    <menu id="device" label="device" index="1">
-      <entry component="export_x11_device_new" />
-    </menu>
     <menu id="edit" label="Edit" index="3">
       <entry component="x11grid" />
     </menu>

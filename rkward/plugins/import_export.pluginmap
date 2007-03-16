@@ -16,6 +16,8 @@
 		<component type="standard" id="import_csv" file="00saveload/import/import_csv.xml" label="Import Text / CSV data">
 			<attribute id="format" value="*.txt *.csv" label="Text / Comma Separated Values"/>
 		</component>
+
+		<component type="standard" id="setworkdir" file="00saveload/setworkdir.xml" label="Set Working Directory" />
 	</components>
 
 	<hierarchy>
@@ -34,6 +36,9 @@
 				<entry component="save_variables" />
 				<entry component="save_table" />
 			</menu>
+		</menu>
+		<menu id="workspace" label="Workspace" index="5">
+			<entry component="setworkdir" />
 		</menu>
 	</hierarchy>
 
