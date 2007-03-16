@@ -48,7 +48,8 @@ dist_pluginsXplots_DATA = \
 	plots/stem.php \
 	plots/plot_stepfun_options.rkh \
 	plots/plot_stepfun_options.xml \
-	plots/plot_stepfun_options.php
+	plots/plot_stepfun_options.php \
+	plots/histogram.rkh
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
