@@ -319,9 +319,7 @@ void RKCommandEditorWindow::runLine() {
 	RK_TRACE (COMMANDEDITOR);
 
 	QString command = m_view->currentTextLine ();
-	if (command.isEmpty ()) return;
-
-	RKConsole::pipeUserCommand (new RCommand (command, RCommand::User, QString::null));
+	if (!command.isEmpty ()) RKConsole::pipeUserCommand (new RCommand (command, RCommand::User, QString::null));
 
 	m_view->down ();		// advance to next line
 }
