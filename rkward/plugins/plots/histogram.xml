@@ -50,10 +50,6 @@
 							<option value="na.rm = TRUE" label="TRUE"/>
 							<option value="na.rm = FALSE" label="FALSE"/>
 						</radio>
-						<radio id="giveRkern" label="Estimate Density">
-							<option value="give.Rkern = FALSE" label="Estimate Density"/>
-							<option value="give.Rkern = TRUE" label="No density is estimated"/>
-						</radio>
 						<spinbox id="n" initial="512" label="number of equally spaced points at which the density is to be estimated" />
 						<stretch/>
 					</column>
