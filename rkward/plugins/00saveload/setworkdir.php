@@ -9,6 +9,4 @@ setwd("<? echo ($dir); ?>")
 }
 function printout () {
 }
-function cleanup () {
-}
 ?>

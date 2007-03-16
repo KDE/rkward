@@ -96,7 +96,4 @@ function printout () {
 
 	echo ($histplotoptions);
 }
-
-function cleanup () {
-}
 ?>

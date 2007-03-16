@@ -9,17 +9,10 @@ function printout () {
 	doPrintout (true);
 }
 
-function cleanup () {
-?>
-rm(rk.temp.cltdistrib)
-<?
-}
-
 function preview () {
 	preprocess ();
 	calculate ();
 	doPrintout (false);
-	cleanup ();
 }
 
 function doPrintout ($final) {

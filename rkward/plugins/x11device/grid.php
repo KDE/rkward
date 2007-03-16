@@ -25,6 +25,4 @@ grid(<? echo ($gridoptions); ?>);
 }
 function printout () {
 }
-function cleanup () {
-}
 ?>

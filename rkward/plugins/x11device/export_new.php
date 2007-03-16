@@ -79,8 +79,4 @@ dev.print (device=<? echo ($type); ?>, file="<? echo ($file); ?>"<? echo ($optio
 
 function printout () {
 }
-
-function cleanup () {
-?><?
-}
 ?>
