@@ -11,10 +11,11 @@
 	<settings>
 		<caption id="tab_file_and_type"/>
 
-		<caption id="frame_dimensions"/>
 		<setting id="file">The filename to save to. By default the file will be saved in the directory from where RkWard was started, which is the user's home directory when started from K-menu. After checking for a proper file extension, this is the <i>file</i> parameter to dev.print. For exporting via ghostscript provide a suitable extension.</setting>
-    <setting id="autoextension">Check this box to let RKWard detect the file extension automatically. If the filename specified in the 'File name' box already has a relevant extension, then nothing is done, that is, the specified filename is used. Otherwise a relevant extension is appended to the filename above to construct the full filename. This option is disabled for export via ghostscript.</setting>
+    <setting id="autoextension">Check this box to let RKWard detect the file extension automatically. If the filename specified in the 'File name' box already has a relevant extension, then nothing is done, that is, the specified filename is used. Otherwise a relevant extension is appended to the filename above to construct the full filename. This option is disabled for exporting via ghostscript.</setting>
 		<setting id="format">Choose whether to use postscript or pdf or png or jpeg for exporting the file. This is the <i>device</i> parameter to dev.print. If 'via Ghostscript' is chosen then the output format of the ghostscript device will need to be provided (see below under 'Ghostscript specific options').</setting>
+
+		<caption id="frame_dimensions"/>
 		<setting id="autowidth">Check this box to let the export function determine the width automatically.</setting>
 		<setting id="autoheight">This is similar to 'Automatic Width', but for height.</setting>
 		<setting id="width">This is the <i>width</i> parameter to the exporting function. This is specified in inches. For JPEG/PNG exports (which require width in pixels), the actual width is evaluated by multiplying the width value provided in inches with the resolution (in dpi, 'dots per inch'). So, width_pixels = width_inches * resolution_dpi. If resolution is set to 'Default Resolution', then a value of 96 is used as the default resolution for exporting to jpeg or png and a value of 72 is used for exporting via ghostscript. Otherwise the provided resolution value is used. None of these matter for exporting to Postscript/PDF where the width parameter is provided in inches.
@@ -24,7 +25,7 @@
 
 		<caption id="frame_generic_options"/>
 		<setting id="pointsize">This is the <i>pointsize</i> parameter to dev.print.</setting>
-		<setting id="resolution">Available only for PNG/JPEG, this is the <i>res</i> parameter to dev.print. This value is used in converting from width/height in pixels to inches as described above (under 'Width'). The default resolution (when 'Default Resolution' is checked) is 96.</setting>
+		<setting id="resolution">Available only for PNG/JPEG/Ghostscript, this is the <i>res</i> parameter to dev.print or dev2bitmap. This value is used in converting from width/height in pixels to inches as described above (under 'Width'). The default resolution (when 'Default Resolution' is checked) is 96 for PNG/JPEG exports and it is 72 for Ghostscript exports.</setting>
 		<setting id="quality">Available only for JPEG, this is the <i>quality</i> parameter to <b>jpeg</b>. Sets the quality for JPEG exporting. The default quality is 75.</setting>
 
 		<caption id="tab_more_options"/>

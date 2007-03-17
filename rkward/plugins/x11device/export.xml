@@ -94,7 +94,7 @@
 							</column>
 							<column>
 								<checkbox id="autoquality" value="1" value_unchecked="0" checked="true" label="Default Quality"/>
-								<spinbox label="JPEG Quality" id="quality" min="0" max="100" initial="75" default_precision="1"/>
+								<spinbox label="JPEG Quality" type="integer" id="quality" min="0" max="100" initial="75"/>
 							</column>
 						</row>
 					</frame>
@@ -177,7 +177,7 @@
 							<option value="jpeg" label="JPEG" />
 							<option value="other" label="Other (specify here):" />
 						</dropdown>
-						<input label="Ghostscript device" id="gs_specifiedformat" initial="png16m" size="medium"/>
+						<input label="Other Ghostscript device" id="gs_specifiedformat" initial="pcxgray" size="medium"/>
 					</row>
 				</frame>
 			</tab>

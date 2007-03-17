@@ -10,8 +10,8 @@
 		<caption id="tab_plot_distrib_clt"/>
 		<setting id="frame_binomparam">See RKWard help on <link href="rkward://component/plot_binomial_distribution"/>.</setting>
 		<setting id="nAvg">These many samples (nAvg) are used to calculate sample average. For a fixed value of the parameters, one would be interested in seeing how the distribution of the sample averages change as this number increases.</setting>
-		<setting id="nDist">These many sets-of-samples (nDist) are used to get some idea about the distribution of the sample averages. Each set provides an average. Then these averages are used to construct the 'Histogram' or the 'QQplot' or the 'Distribution function'.</setting>
-		<setting id="function">Choose one of 'Histogram', 'QQplot' or 'Distribution function' to compare the distribution of the sample averages of D with that of Normal distribution. As of now, only 'Histogram' has been implemented.</setting>
+		<setting id="nDist">These many sets-of-samples (nDist) are used to get some idea about the distribution of the sample averages. Each set provides an average. Then these averages are used to construct the 'Histogram' or the 'Distribution function'.</setting>
+		<setting id="function">Choose one of 'Histogram' or 'Distribution function' to compare the distribution of the sample averages of D with that of Normal distribution. As of now, only 'Histogram' has been implemented.</setting>
 		<setting id="scalenorm">Should the sample averages be normalised, by subtracting the mean, E(D), of D and dividing by the standard deviation, S(D)/sqrt(nAvg), where S(D) is the standard deviation of D? If done so, then the target Normal distribution is taken to be the standard one, that is, with mean 0 and variance 1. Otherwise the target distribution is Normal with the mean E(D) and standard deviation S(D)/sqrt(nAvg).</setting>
 		<setting id="drawnorm">Should a Normal curve be drawn? For the case of 'Histogram', nDist random samples are drawn from the target Normal distribution and their density values are plotted.</setting>
 		<setting id="normpointtype">Pointtype for the Normal curve.</setting>
