@@ -179,7 +179,7 @@
 					<entry component="binomial_tail_probabilities" label="Binomial tail probabilities" index="0"/>
 					<entry component="plot_binomial_distribution" label="Plot binomial distribution" index="2"/>
 				</menu>
-				<menu id="geom_distribution" label="Geometric" index="1">
+				<menu id="geometric_distribution" label="Geometric" index="1">
 					<entry component="geom_probabilities" label="Geometric probabilities" index="0"/>
 					<entry component="geom_quantiles" label="Geometric quantiles" index="1"/>
 					<entry component="plot_geometric_distribution" label="Plot Geometric distribution" index="2"/>

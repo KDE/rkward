@@ -3,6 +3,7 @@
 <document base_prefix="" namespace="rkward">
 	<components>
 		<component type="standard" id="plot_binomial_clt" file="distributions/clt/plot_binomial_clt.xml" label="Binomial CLT" />
+		<component type="standard" id="plot_geometric_clt" file="distributions/clt/plot_geometric_clt.xml" label="Geometric CLT" />
 
 		<component type="standard" id="moment" file="analysis/moments/moment.xml" label="Moment" />
 		<component type="standard" id="bonett_test" file="analysis/moments/bonett_test.xml" label="Bonett-Seier test of Geary's kurtosis" />
@@ -69,19 +70,22 @@
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
 			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="2">
-      </menu>
+			</menu>
 			<menu id="univariate_discrete_distributions" label="Univariate discrete distributions" index="2">
 				<menu id="binomial_distribution" label="Binomial" index="0">
 					<entry component="plot_binomial_clt" label="Binomial CLT" index="2"/>
 				</menu>
-      </menu>
+				<menu id="geometric_distribution" label="Geometric" index="1">
+					<entry component="plot_geometric_clt" label="Geometric CLT" index="2"/>
+				</menu>
+			</menu>
 		</menu>
 	</hierarchy>
 
-  <context id="x11">
-    <menu id="edit" label="Edit" index="3">
-      <entry component="x11grid" />
-    </menu>
-  </context>
+	<context id="x11">
+		<menu id="edit" label="Edit" index="3">
+			<entry component="x11grid" />
+		</menu>
+	</context>
 </document>
 
