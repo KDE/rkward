@@ -41,8 +41,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2007-02-01</date>
-<releaseinfo>0.4.6.00</releaseinfo>
+<date>2007-03-18</date>
+<releaseinfo>0.4.7.00</releaseinfo>
 
 <abstract>
 <para>
@@ -63,7 +63,7 @@ This is a guide to writing plugins for &rkward;.
 <title>Introduction</title>
 
 <para>
-Documentation as of &kapp; release 0.4.5.
+Documentation as of &kapp; release 0.4.7.
 </para>
 <para>
 This document describes how to write your own plugins. Note, that at the time of this writing, none of the concepts are set it stone. Therefore, this document should be regarded as an introduction to the current approach, and as a basis for discussion. All sorts of comments are welcome.
@@ -284,10 +284,10 @@ As you know, plugins may have either a dialog or a wizard-interface or both. Her
 GUI-elements can be organized using a tabbook. Here we define a tabbook as the first element in the dialog. Use &lt;tabbook&gt;[...]&lt;/tabbook&gt; to define the tabbook and then for each page in the tabbook use &lt;tab&gt;[...]&lt;/tab&gt;. The "label"-attribute in the &lt;tab&gt;-element allows you to specify a caption for that page of the tabbook.
 </para>
 <programlisting>
-				&lt;row&gt;
+				&lt;row id="main_settings_row"&gt;
 </programlisting>
 <para>
-The &lt;row&gt; and &lt;column&gt; tags specify the layout of the GUI elements. Here you say, that you'd like to place some elements side-by-side (left to right) and the first of these elements is to be a:
+The &lt;row&gt; and &lt;column&gt; tags specify the layout of the GUI elements. Here you say, that you'd like to place some elements side-by-side (left to right). The "id"-attribute is not strictly necessary, but we'll use it later on, when adding a wizard interface to our plugin. The first element to place in the row, is:
 </para>
 <programlisting>
 					&lt;varselector id="vars"/&gt;
@@ -348,10 +348,10 @@ Note that we have not specified the "Submit", "Close", etc. buttons or the code-
 By default elements will be placed top-to-bottom like in a &lt;column&gt;. Since that is what we want here, we don't have to explicitly state a &lt;row&gt; or &lt;column&gt;-layout. The first element we define is a checkbox. Just like the &lt;radio&gt;&lt;option&gt;s, the checkbox has a "label" and a "value". The "value" is what gets returned, if the checkbox is checked. Of course the checkbox also needs an "id".
 </para>
 <programlisting>
-				&lt;frame label="Confidence Interval"&gt;
+				&lt;frame label="Confidence Interval" id="frame_conf_int"&gt;
 </programlisting>
 <para>
-Here's yet another layout-element: In order to signal that the two elements below  belong together, we draw a &lt;frame&gt; (box). That frame may have a caption. Since the frame is just a passive layout-element, it does not need an "id".
+Here's yet another layout-element: In order to signal that the two elements below  belong together, we draw a &lt;frame&gt; (box). That frame may have a caption. Since the frame is just a passive layout-element, it does not need an "id", we still define one, here, as we'll refer to it later, when defining an additional wizard interface.
 </para>
 <programlisting>
 					&lt;checkbox id="confint" label="print confidence interval" value="1" checked="true"/&gt;
@@ -367,67 +367,69 @@ Inside the &lt;frame&gt; we place another &lt;checkbox&gt; (using checked="true"
 	&lt;/dialog&gt;
 </programlisting>
 <para>
-That's all for the second page of the &lt;tabbook&gt;, all pages in the &lt;tabbook&gt; and all elements in the &lt;dialog&gt;. We're finished defining what the dialog looks like. Actually we don't have to define an additional &lt;wizard&gt;-interface, but here's how that would be done. Things should be fairly self-explanatory be now, so I leave that part without comments:
-</para>
-<programlisting>
-	&lt;wizard label="Independent Samples T-Test"&gt;
-		&lt;page id="firstpage"&gt;
-			&lt;text&gt;As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater.&lt;/text&gt;
-			&lt;row&gt;
-				&lt;column&gt;
-					&lt;varselector id="vars"/&gt;
-				&lt;/column&gt;
-				&lt;column&gt;
-					&lt;varslot type="numeric" id="x" source="vars" required="true" label="compare"/&gt;
-					&lt;varslot type="numeric" id="y" source="vars" required="true" label="against"/&gt;
-					&lt;radio id="hypothesis" label="using test hypothesis"&gt;
-						&lt;option value="two.sided" label="Two-sided"/&gt;
-						&lt;option value="greater" label="First is greater"/&gt;
-						&lt;option value="less" label="Second is greater"/&gt;
-					&lt;/radio&gt;
-				&lt;/column&gt;
-			&lt;/row&gt;
-		&lt;/page&gt;
-		&lt;page id="secondpage"&gt;
-			&lt;text&gt;Below are some advanced options. It's generally safe not to assume the variables have equal variances. An appropriate correction will be applied then. Chosing "assume equal variances" may increase test-strength, however.&lt;/text&gt;
-			&lt;checkbox id="varequal" label="assume equal variances" value=", var.equal=TRUE"/&gt;
-			&lt;text&gt;Sometimes it's helpful to get an estimate of the confidence interval of the difference in means. Below you can specify whether one should be shown, and which confidence-level should be applied (95% corresponds to a 5% level of significance).&lt;/text&gt;
-			&lt;frame label="Confidence Interval"&gt;
-				&lt;checkbox id="confint" label="print confidence interval" value="1" checked="true"/&gt;
-				&lt;spinbox type="real" id="conflevel" label="confidence level" min="0" max="1" initial="0.95"/&gt;
-			&lt;/frame&gt;
-		&lt;/page&gt;
-	&lt;/wizard&gt;
-</programlisting>
-<para>
-As you see, all of this is mostly a duplication of what has been defined for the dialog-interface. You may of course make the wizard-interface look very different to the plain dialog. Be sure, however, to assign corresponding elements the same "id" in both interfaces. This is not only used to transfer settings from the dialog-interface to the wizard-interface and back, when the user switches interfaces (which does not yet happen in the current version of RKWard), but also simplifies writing your code-template (see below). 
+That's all for the second page of the &lt;tabbook&gt;, all pages in the &lt;tabbook&gt; and all elements in the &lt;dialog&gt;. We're finished defining what the dialog looks like.
 </para>
 <programlisting>
 &lt;/document&gt;
 </programlisting>
 <para>
-Finally we close the &lt;document&gt;-tag, and that's it. The GUI is defined. You can save the file now. But how does R-syntax get generated from the GUI-settings? I'll deal with that in the <link linkend="phptemplate">next chapter</link>.
+Finally we close the &lt;document&gt;-tag, and that's it. The GUI is defined. You can save the file now.
+But how does R-syntax get generated from the GUI-settings? I'll deal with that in the <link linkend="phptemplate">next chapter</link>. First, however, we'll look into adding a wizard interface, and some general considerations.
 </para>
 
-<section id="mainxmltips">
-<title>Some considerations on GUI design</title>
-<para>
-This section contains some general considerations on which GUI elements to use where. If this is your first attempt of creating a plugin, feel free to skip over this section, as it isn't relevant to getting a basic GUI working. Come back here, later, to see, whether you can refine your plugin's GUI in some way or another.
-</para>
-
-<section id="radio_vs_checkbox_vs_dropdown">
-<title>&lt;radio&gt; vs. &lt;checkbox&gt; vs. &lt;dropdown&gt;</title>
-<para>
-The three elements &lt;radio&gt;, &lt;checkbox&gt;, &lt;dropdown&gt;, all serve a similar function: To select one out of a several options. Obviously, a checkbox only allows to chose between two options: checked or not checked, so you can't use it, if there are more than two options to chose from. But when to use which of the elements? Some rules of thumb:
-</para>
-<para>
-If you find yourself creating a &lt;radio&gt; or &lt;dropdown&gt; with only two options, ask yourself, whether the question is essentially a yes / no type of question. E.g. a choice between "adjust results" and "do not adjust results", or between "remove missing values" and "keep missing values". In this case a &lt;checkbox&gt; is the best choice: It uses little space, will have the least words of labels, and is easiest to read for the user. There are very few situations where you should chose a &lt;radio&gt; over a &lt;checkbox&gt;, when there are only two options. An example of that might be: "Method of calculation: 'pearson'/'spearman'". Here, more methods might be thinkable, and they don't really form a pair of opposites.
-</para>
-<para>
-Chosing between a &lt;radio&gt; and a &lt;dropdown&gt; is mostly a question of space. The &lt;dropdown&gt; has the advantage of using little space, even if there are a lot of options to chose from. On the other hand, a &lt;radio&gt; has the advantage of making all possible choices visible to the user at once, without clicking on the dropdown arrow. Generally, if there are six or more options to chose from, a &lt;dropdown&gt; is preferrable. If there are five or less options, a &lt;radio&gt; is the better choice.
-</para>
+<section id="wizard_interface">
+	<title>Adding a wizard interface</title>
+	<para>
+	Actually we don't have to define an additional &lt;wizard&gt;-interface, but here's how that would be done. To add a wizard interface, you'll add a &lt;wizard&gt; tag at the same level as the &lt;dialog&gt; tag:
+	</para>
+	<programlisting>
+		&lt;wizard label="Independent Samples T-Test"&gt;
+			&lt;page id="firstpage"&gt;
+				&lt;text&gt;As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater.&lt;/text&gt;
+				&lt;copy id="main_settings_row/&gt;
+			&lt;/page&gt;
+	</programlisting>
+	<para>
+	Some of this is pretty self explanatory: We add a &lt;wizard&gt; tag with a label for the wizard. Since a wizard can hold several pages that are shown one after another, we next define the first page, and put an explanatory text note in there. Then we use a &lt;copy&gt;-tag. What this does, is really it saves us having to define yet again, what we already wrote for the &lt;dialog&gt;: The copy tag looks for another tag with the same "id" earlier in the .xml. This happens to be defined in the &lt;dialog&gt; section, and is a &lt;row&gt; in which there are the &lt;varselector&gt;, &lt;varslots&gt; and the "hypothesis" &lt;radio&gt;-control. All of this is copied 1:1 and inserted right at the &lt;copy&gt; element.
+	</para>
+	<para>
+	Now to the second page:
+	</para>
+	<programlisting/>
+			&lt;page id="secondpage"&gt;
+				&lt;text&gt;Below are some advanced options. It's generally safe not to assume the variables have equal variances. An appropriate correction will be applied then. Chosing "assume equal variances" may increase test-strength, however.&lt;/text&gt;
+				&lt;copy id="varequal"/&gt;
+				&lt;text&gt;Sometimes it's helpful to get an estimate of the confidence interval of the difference in means. Below you can specify whether one should be shown, and which confidence-level should be applied (95% corresponds to a 5% level of significance).&lt;/text&gt;
+				&lt;copy id="frame_conf_int"/&gt;
+			&lt;/page&gt;
+		&lt;/wizard&gt;
+	</programlisting>
+	<para>
+	Much of the same thing here. We add some texts, and in between that &lt;copy&gt; further sections from the dialog interface.
+	</para>
+	<para>
+	You may of course make the wizard-interface look very different to the plain dialog, and not use the &lt;copy&gt; tag at all. Be sure, however, to assign corresponding elements the same "id" in both interfaces. This is not only used to transfer settings from the dialog-interface to the wizard-interface and back, when the user switches interfaces (which does not yet happen in the current version of RKWard), but also simplifies writing your code-template (see below). 
+	</para>
 </section>
 
+<section id="mainxmltips">
+	<title>Some considerations on GUI design</title>
+	<para>
+	This section contains some general considerations on which GUI elements to use where. If this is your first attempt of creating a plugin, feel free to skip over this section, as it isn't relevant to getting a basic GUI working. Come back here, later, to see, whether you can refine your plugin's GUI in some way or another.
+	</para>
+	
+	<section id="radio_vs_checkbox_vs_dropdown">
+		<title>&lt;radio&gt; vs. &lt;checkbox&gt; vs. &lt;dropdown&gt;</title>
+		<para>
+		The three elements &lt;radio&gt;, &lt;checkbox&gt;, &lt;dropdown&gt;, all serve a similar function: To select one out of a several options. Obviously, a checkbox only allows to chose between two options: checked or not checked, so you can't use it, if there are more than two options to chose from. But when to use which of the elements? Some rules of thumb:
+		</para>
+		<para>
+		If you find yourself creating a &lt;radio&gt; or &lt;dropdown&gt; with only two options, ask yourself, whether the question is essentially a yes / no type of question. E.g. a choice between "adjust results" and "do not adjust results", or between "remove missing values" and "keep missing values". In this case a &lt;checkbox&gt; is the best choice: It uses little space, will have the least words of labels, and is easiest to read for the user. There are very few situations where you should chose a &lt;radio&gt; over a &lt;checkbox&gt;, when there are only two options. An example of that might be: "Method of calculation: 'pearson'/'spearman'". Here, more methods might be thinkable, and they don't really form a pair of opposites.
+		</para>
+		<para>
+		Chosing between a &lt;radio&gt; and a &lt;dropdown&gt; is mostly a question of space. The &lt;dropdown&gt; has the advantage of using little space, even if there are a lot of options to chose from. On the other hand, a &lt;radio&gt; has the advantage of making all possible choices visible to the user at once, without clicking on the dropdown arrow. Generally, if there are six or more options to chose from, a &lt;dropdown&gt; is preferrable. If there are five or less options, a &lt;radio&gt; is the better choice.
+		</para>
+	</section>	
 </section>
 
 </chapter>
@@ -447,24 +449,24 @@ For the independent samples t-test, the code.php file looks as follows (with com
 This is a sort of opening tag in PHP. Everything between &lt;? and ?&gt; will be interpreted as PHP-code. Everything outside of these tags will simply be returned as plain text. See below for examples.
 </para>
 <programlisting>
-	function preprocess () {
-	}
+function preprocess () {
+}
 </programlisting>
 <para>
 The PHP-file is organized into four separate functions: preprocess, calculate, printout and cleanup. This is because not all code is needed at all stages. Currently the preprocess-function is not really used.
 </para>
 <programlisting>
-	function calculate () {
-?&gt;rk.temp &lt;- t.test (&lt;? getRK ("x"); ?&gt;, &lt;? getRK ("y"); ?&gt;, "&lt;? getRK ("hypothesis"); ?&gt;"&lt;? getRK ("varequal"); if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $conflevel); ?&gt;)
+function calculate () {
+?&gt;res &lt;- t.test (&lt;? getRK ("x"); ?&gt;, &lt;? getRK ("y"); ?&gt;, "&lt;? getRK ("hypothesis"); ?&gt;"&lt;? getRK ("varequal"); if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $conflevel); ?&gt;)
 &lt;?
-	}
+}
 </programlisting>
 <para>
 This function generates the actual R-syntax to be run from the GUI-settings. Let's look at this in detail:
 First we leave the PHP-mode (?&gt;) and hence return
 </para>
 <screen>
-rk.temp &lt;- t.test (
+res &lt;- t.test (
 </screen>
 <para>
 as plain text. Next we need to fill in the value, the user selected as the first variable. Hence we enter PHP-mode again (&lt;?) and call 'getRK ("x");'. This prints out the value of the GUI-element with id "x": our first &lt;varslot&gt;. Next we leave PHP-mode again, print a ', ', and do the same to fetch the value of the element "y" - the second &lt;varslot&gt;. For the hypothesis (the &lt;radio&gt;-group), and the equal variances-&lt;checkbox&gt;, the procedure is very similar.
@@ -474,21 +476,21 @@ It gets a little more tricky for the confidence level. For reasons of aestethics
 Finally, we leave PHP-mode again, print a last ')', and that's it for the calculate-function.
 </para>
 <programlisting>
-	function printout () {
+function printout () {
 ?&gt;rk.header ("Independent samples t test")
-rk.print (rk.temp)
+rk.print (res)
 &lt;?
-	}
+}
 </programlisting>
 <para>
 And this was all there is to the printout function in most cases. rk.header () prints a standard headline for the results. You can also add some more information to this, if you like, e.g.:
 </para>
 <programlisting>
-	function printout () {
+function printout () {
 ?&gt;rk.header ("Independent samples t test", parameters=list ("Assume equal variances", &lt;? getRK ("varequal"); ?&gt;, "Confidence level", &lt;? getRK ("conflevel"); ?&gt;))
-rk.print (rk.temp)
+rk.print (res)
 &lt;?
-	}
+}
 </programlisting>
 <para>
 The list of parameters is given as pairs of "Description", "Value". This will also be printed in a standard way.
@@ -499,36 +501,23 @@ rk.print () utilizes the R2HTML package to provide HTML formatted output. Anothe
 <para>
 Note that internally, the output is just a plain HTML document at this point of time. Therefore you might be tempted to add custom HTML using cat (). While this will work, please don't do this. The output format may change (e.g. to ODF) in the future, so it's best not to introduce HTML specific code. Rather keep things simple with rk.header (), rk.print (), and rk.results (). If those don't seem to satisfy your formatting needs, contact us on the mailing list for help.
 </para>
-<programlisting>
-	function cleanup () {
-?&gt;rm (rk.temp)
-&lt;?
-	}
-?&gt;
-</programlisting>
-<para>
-Finally, in the function cleanup we discard the temporary object(s) we left in the R-workspace. You should always clean up all objects created while running the plugin, except if the user explicitely requested otherwise.
-</para>
 <para>
 Congratulations! You created your first plugin. Read on in the next chapters for more advanced concepts.
 </para>
 
 <section id="phpconventions">
-<title>Conventions and policies</title>
+<title>Conventions, policies, and background</title>
 <para>
-There are many ways to write R code for a certain task, and there are even more ways to generate this R code from PHP. How exactly you do it, is left up to you. Still there are a number of considerations that you should follow.
+There are many ways to write R code for a certain task, and there are even more ways to generate this R code from PHP. How exactly you do it, is left up to you. Still there are a number of considerations that you should follow, and background information you should understand.
 </para>
 
-<section id="policyvariablenaming">
-<title>Variable naming</title>
+<section id="policylocal">
+<title>Understanding the local() environment</title>
 <para>
-More often than not you will have to create one or more temporary R objects in the code generated by your plugin. When doing so, please name all objects rk.tempX, where X can be any name you like. So, just prefix the variable names with "rk.temp".
+More often than not you will have to create one or more temporary R objects in the code generated by your plugin. Normally, you do not want those to be placed in the user's workspace, potentially even overwriting user variables. Hence, all plugin generated code is run in a local() environment (see R help page on function local()). This means, all variables you create are temporary and will not be saved permanently.
 </para>
 <para>
-The reason for this policy is, that plugin code is executed directly in the user's R workspace. If an object happens to be left over (because there was an error, or you forgot to state it the in cleanup () section), it should not be easy to confuse with the other objects the user has. More importantly, if the user has a symbol "x" in the workspace, and you name a variable "x" in your plugin, the user's variable will be overwritten without prompting! Obviously this should be strictly avoided.
-</para>
-<para>
-One exception to this rule is, that if the user explicitely asked for an object to be stored in the workspace, that is ok, of course.
+If the user explicitely asks for a variable to be saved, you will need to assign to that object with the "&lt;&lt;-" operator.
 </para>
 </section>
 
@@ -551,16 +540,16 @@ For example, generated code might look like this. The same code without indentat
 </para>
 <programlisting>
 # first determine the wobble and rotation
-rk.temp.wobble &lt;- wobble (x, y)
-rk.temp.rotation &lt;- wobble.rotation (wobble, z)
+my.wobble &lt;- wobble (x, y)
+my.rotation &lt;- wobble.rotation (my.wobble, z)
 
 # boggling method needs to be chosen according to rotation
-if (rk.temp.rotation &gt; wobble.rotation.limit (x)) {
-	rk.temp.method &lt;- "foo"
-	rk.temp.result &lt;- boggle.foo (rk.temp.wobble, rk.temp.rotation)
+if (my.rotation &gt; wobble.rotation.limit (x)) {
+	method &lt;- "foo"
+	result &lt;- boggle.foo (my.wobble, my.rotation)
 } else {
-	rk.temp.method &lt;- "bar"
-	rk.temp.result &lt;- boggle.bar (rk.temp.wobble, rk.temp.rotation)
+	method &lt;- "bar"
+	result &lt;- boggle.bar (my.wobble, my.rotation)
 }
 </programlisting>
 </section>
@@ -571,21 +560,21 @@ if (rk.temp.rotation &gt; wobble.rotation.limit (x)) {
 Many plugins can do more than one thing. For instance, the "Descriptive Statistics" plugin can compute mean, range, sum, product, median, length, etc. However, typically the user will only chose to have some of those calculations performed. In this case, please try to keep the generated code as simple as possible. It should only contain portions relevant to the options that are actually selected. To achieve this, here is an example of a common design patterns as you would use it (in PHP):
 </para>
 <programlisting>
-	function calculate () { ?&gt;
-rk.temp.var &lt;- &lt;? getRK ("x");
-rk.temp.results &lt;- list () ?&gt;
+function calculate () { ?&gt;
+x &lt;- &lt;? getRK ("x");
+results &lt;- list () ?&gt;
 &lt;?
-		if (getRK_val ("domean")) { ?&gt;
-rk.temp.results$'Mean value' &lt;- mean (rk.temp.var)
-&lt;?		}
-		if (getRK_val ("domedian")) { ?&gt;
-rk.temp.results$'Median' &lt;- median (rk.temp.var)
-&lt;?		}
-		if (getRK_val ("dosd")) { ?&gt;
-rk.temp.results$'Standard deviation' &lt;- sd (rk.temp.var)
-&lt;?		}
-		//...
-	}
+	if (getRK_val ("domean")) { ?&gt;
+results$'Mean value' &lt;- mean (x)
+&lt;?	}
+	if (getRK_val ("domedian")) { ?&gt;
+results$'Median' &lt;- median (x)
+&lt;?	}
+	if (getRK_val ("dosd")) { ?&gt;
+results$'Standard deviation' &lt;- sd (x)
+&lt;?	}
+	//...
+}
 </programlisting>
 </section>
 
@@ -608,9 +597,9 @@ function calculate () {
 	}
 ?&gt;
 # ...
-rk.temp.results$foo &lt;- foo (rk.temp.x&lt;? echo ($narm); ?&gt;)
-rk.temp.results$bar &lt;- bar (rk.temp.x&lt;? echo ($narm); ?&gt;)
-rk.temp.results$foobar &lt;- foobar (rk.temp.x&lt;? echo ($narm); ?&gt;)
+results$foo &lt;- foo (x&lt;? echo ($narm); ?&gt;)
+results$bar &lt;- bar (x&lt;? echo ($narm); ?&gt;)
+results$foobar &lt;- foobar (x&lt;? echo ($narm); ?&gt;)
 # ...
 &lt;?
 }
@@ -1048,10 +1037,13 @@ In all sections you can insert some simple HTML code, such as &lt;b&gt;bold&lt;/
 The usage section is always the second section shown in a help page.
 	&lt;/usage&gt;
 
-	&lt;section id="sectionid" title="Generic section"&gt;
+	&lt;section id="sectionid" title="Generic section" short_title="Generic"&gt;
 If you need to, you can add additional sections between the usage and settings sections.
 However, usually, you will not need this while documenting plugins. The "id"-attribute
-provides an anchor point to jump to this section from the navigation menu.
+provides an anchor point to jump to this section from the navigation menu. The "short_title"
+attribute provides a short title to use in the navigation bar. This is optional, by default
+the main "title" will be used both as a heading to the section, and as the link name in the
+navigation bar.
 
 In any section you may want to insert links to further information. You do this by adding
 
@@ -1230,6 +1222,20 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<varlistentry>
 	<term>&lt;file&gt;</term>
 	<listitem>Filename of the help file, relative to the directory the plugin-xml is in</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;copy&gt;</term>
+<listitem>Can be used as a child (direct or indirect) of the main layout elements, i.e. &lt;dialog&gt; and &lt;wizard&gt;. This is used to copy an entire block a xml elements 1:1. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>&lt;id&gt;</term>
+	<listitem>The id to look for. The &lt;copy&gt; tag will look for a previous XML element that has been given the same id, and copy it including all descendent elements.</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;copy_element_tag_name&gt;</term>
+	<listitem>In some few cases, you will want an almost literal copy, but change the tag-name of the element to copy. The most important example of this is, when you want to copy an entire &lt;tab&gt; from a dialog interface to the &lt;page&gt; of a wizard interface. In this case, you'd set coyp_elemnent_tag_name="page" to do this conversion automatically.</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>

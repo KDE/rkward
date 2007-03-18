@@ -5,10 +5,10 @@
 - if an incomplete command was piped through the console, the console does not become blocked for piping
 - make "run current line" advance the cursor to next line after running
 - warnings and errors are highlighted in command log / console (warnings only for R >= 2.5.x)
-- plugin generated commands are run in a local() environment, allowing for more consise code		TODO: document, adjust examples, adjust plugins, etc.
+- plugin generated commands are run in a local() environment, allowing for more consise code		TODO: adjust plugins, etc.
 - also support filename completion in the console (mode of completion is determined by heuristic means)
 - initial support for R's Sys.setlocale(), and Encoding of CHARSXPs
-- in help files, a short title for sections (for the navigation bar) can be defined		TODO: document
+- in help files, a short title for sections (for the navigation bar) can be defined
 - the currently active window is now highlighted using a thin red border
 - fixed: changing the type of a column in the data editor was broken
 - fixed: quitting while a plugin was still active would sometimes crash rkward
@@ -29,7 +29,7 @@
 - fixed: plugin browser type="dir" would not work correctly
 - import SPSS and import CSV plugins gain option to open object for editing, automatically (checked by default)
 - warn when opening very large objects (with more than 250000 fields; this limit is configurable)
-- add a "copy" tag to facilitate writing plugins with both dialog and wizard interfaces		TODO: document, convert all wizards to use this
+- add a "copy" tag to facilitate writing plugins with both dialog and wizard interfaces		TODO: convert all wizards to use this
 - fixed: graph previews would stop working when the interface is switched from dialog to wizard or vice versa
 - new options for plugin dialogs: Configure whether code display is shown by default, and at what size
 
