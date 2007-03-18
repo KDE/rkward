@@ -1,17 +1,14 @@
 <?
-	function preprocess () {
-	}
+function preprocess () {
+}
 	
-	function calculate () {
+function calculate () {
 ?>
-load (file="<? getRK("file"); ?>")
+load (file="<? getRK("file"); ?>", envir=globalenv())
 <?
-	}
-	
-	function printout () {
-	// produce the output
-	}
-	
-	function cleanup () {
-	}
+}
+
+function printout () {
+}
+
 ?>
