@@ -3,7 +3,6 @@
 	<code file="plot_stepfun_options.php"/>
 	<help file="plot_stepfun_options.rkh"/>
 	<logic>
-		<external id="varname" default=""/>
 		<external id="allow_addtoplot" default="true"/>
 		<external id="default_verticals" default="false"/>
 
