@@ -106,10 +106,6 @@ UI-stuff
 		- show current wd in <browser>, somewhere
 
 Internal stuff:
-	- Handling locales:
-		- RThread should define an own QTextCodec.
-		- this should be updated whenever Sys.setlocale() is called
-		- Should be used for all conversion to and from local8Bit for data passed to / from the backend
 	- Handling fonts:
 		- http://sourceforge.net/mailarchive/forum.php?thread_id=31631211&forum_id=12970
 	- Look at package odfWeave, and find out, how to use this

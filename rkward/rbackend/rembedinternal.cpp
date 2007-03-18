@@ -795,7 +795,10 @@ void REmbedInternal::runCommandInternal (const QString &command_qstring, RKWardR
 		if (*error == NoError) runCommandInternalBase (parsed, error);
 	} else {		// run a user command
 		SEXP parsed = parseCommand (command_qstring, error);
-		if ((*error != NoError)) return;
+		// do not run incomplete commands, but *do* run commands with syntax errors if USE_R_REPLDLLDO1. Why? Because this is the only way to get a syntax error messages, so far.
+		if ((*error != NoError)) {
+			if (*error != SyntaxError) return;
+		}
 #ifdef USE_R_REPLDLLDO1
 /* Using R_ReplDLLdo1 () is a pain, but it seems to be the only entry point for evaluating a command as if it had been entered on a plain R console (with auto-printing if not invisible, etc.). Esp. since R_Visible is no longer exported in R 2.5.0, as it seems as of today (2007-01-17).
 
@@ -845,6 +848,9 @@ This is the logic spread out over the following section, runUserCommandInternal 
 		repldlldo1_wants_code = false;		// make sure we don't get confused in RReadConsole
 
 #else
+		// in the non USE_R_REPLDLLDO1 case, any error is fatal, and we should not try running the command at all.
+		if ((*error) != NoError) return;
+
 		R_Visible = (Rboolean) 0;
 
 		SEXP exp;
