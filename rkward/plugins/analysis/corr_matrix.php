@@ -20,33 +20,31 @@ function calculate () {
 	}
 	$method = "\"" . getRK_val ("method") . "\"";
 
-?>rk.temp.objects <- list (<? echo ($vars); ?>)
+?>objects <- list (<? echo ($vars); ?>)
 
 # cor requires all objects to be inside the same data.frame.
 # Here we construct such a temporary frame from the input variables
-rk.temp.frame <- data.frame (lapply (rk.temp.objects, function (x) eval (x, envir=globalenv ())))
+data <- data.frame (lapply (objects, function (x) eval (x, envir=globalenv ())))
 
 # calculate correlation matrix
-rk.temp <- cor (rk.temp.frame, use=<? echo ($use); ?>, method=<? echo ($method); ?>)
+result <- cor (data, use=<? echo ($use); ?>, method=<? echo ($method); ?>)
 <?	if ($do_p) { ?>
 # calculate matrix of probabilities
-rk.temp.p <- matrix (nrow = length (rk.temp.frame), ncol = length (rk.temp.frame))
-local ({
+result.p <- matrix (nrow = length (data), ncol = length (data))
 <?		if ($exclude_whole) { ?>
-	# as we need to do pairwise comparisons for technical reasons,
-	# we need to exclude incomplete cases first to match the use="complete.obs" parameter to cor()
-	rk.temp.frame <- rk.temp.frame[complete.cases (rk.temp.frame),]
+# as we need to do pairwise comparisons for technical reasons,
+# we need to exclude incomplete cases first to match the use="complete.obs" parameter to cor()
+data <- data[complete.cases (data),]
 <?		} ?>
-	for (i in 1:length (rk.temp.frame)) {
-		for (j in i:length (rk.temp.frame)) {
-			if (i != j) {
-				t <- cor.test (rk.temp.frame[[i]], rk.temp.frame[[j]], method=<? echo ($method); ?>)
-				rk.temp.p[i, j] <<- t$p.value
-				rk.temp.p[j, i] <<- sum (complete.cases (rk.temp.frame[[i]], rk.temp.frame[[j]]))
-			}
+for (i in 1:length (data)) {
+	for (j in i:length (data)) {
+		if (i != j) {
+			t <- cor.test (data[[i]], data[[j]], method=<? echo ($method); ?>)
+			result.p[i, j] <- t$p.value
+			result.p[j, i] <- sum (complete.cases (data[[i]], data[[j]]))
 		}
 	}
-})
+}
 <?	}
 }
 
@@ -57,17 +55,13 @@ function printout () {
 ?>
 rk.header ("Correlation Matrix", parameters=list ("Method", <? echo ($method); ?>, "Exclusion", <? echo ($use); ?>))
 
-rk.temp <- data.frame (I (sapply (rk.temp.objects, FUN=function (x) rk.get.description (x, is.substitute=TRUE))), as.data.frame (rk.temp))
-rk.results (rk.temp, titles=c ('Coefficient', sapply (rk.temp.objects, rk.get.short.name)))
+result <- data.frame (I (sapply (objects, FUN=function (x) rk.get.description (x, is.substitute=TRUE))), as.data.frame (result))
+rk.results (result, titles=c ('Coefficient', sapply (objects, rk.get.short.name)))
 
 <?	if ($do_p) { ?>
-rk.temp.p <- data.frame (I (sapply (rk.temp.objects, FUN=function (x) rk.get.description (x, is.substitute=TRUE))), as.data.frame (rk.temp.p))
-rk.results (rk.temp.p, titles=c ('n \\ p', sapply (rk.temp.objects, rk.get.short.name)))
+result.p <- data.frame (I (sapply (objects, FUN=function (x) rk.get.description (x, is.substitute=TRUE))), as.data.frame (result.p))
+rk.results (result.p, titles=c ('n \\ p', sapply (objects, rk.get.short.name)))
 <?	}
 }
 
-function cleanup () {
-?>rm (list=grep ("^rk.temp", ls (), value=TRUE))
-<?
-}
 ?>
