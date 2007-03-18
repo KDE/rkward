@@ -6,7 +6,7 @@
 		<component type="standard" id="corr_matrix" file="analysis/corr_matrix.xml" label="Correlation Matrix" />
 		<component type="standard" id="cor_graph" file="plots/cor_graph.xml" label="Correlation Matrix Plot" />
 		<component type="standard" id="descriptive" file="descriptive/descriptive_statistics.xml" label="Descriptive Statistics" />
-		<component type="standard" id="independent_samples_t_test" file="00means/00ttests/00independent_samples/description.xml" label="Independent Samples" />
+		<component type="standard" id="t_test_two_samples" file="analysis/t_test_two_samples.xml" label="Two Sample t-test" />
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
 		<component type="standard" id="wilcoxon_test" file="analysis/wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
 		<component type="standard" id="wilcoxon_exact_test" file="analysis/wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
@@ -28,8 +28,8 @@
 			</menu>
 			<entry component="descriptive" index="2"/>
 			<menu id="means" label="Means" index="3">
-				<menu id="ttests" label="T-Tests" index="0">
-					<entry component="independent_samples_t_test" />
+				<menu id="ttests" label="t-Tests" index="0">
+					<entry component="t_test_two_samples" />
 				</menu>
 			</menu>
 			<entry component="simple_anova" index="6"/>
