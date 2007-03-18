@@ -221,9 +221,6 @@ dist_pluginsXwritetable_DATA = \
 	writetable/code.php \
 	writetable/description.xml
 
-pluginsX00meansdir = $(kde_datadir)/rkward/00means
-pluginsX00meansX00ttestsdir = $(kde_datadir)/rkward/00means/00ttests
-pluginsX00meansX00ttestsX00independentUsamplesdir = $(kde_datadir)/rkward/00means/00ttests/00independent_samples
 pluginsXuni1D2dir = $(kde_datadir)/rkward/uni1.2
 dist_pluginsXuni1D2_DATA = \
 	uni1.2/code.php \
@@ -251,7 +248,6 @@ dist_pluginsX00saveloadXloadXsource_DATA = \
 	00saveload/load/source/code.php \
 	00saveload/load/source/description.xml
 
-pluginsX00saveloadXloadXreadtabledir = $(kde_datadir)/rkward/00saveload/load/readtable
 pluginsX00saveloadXsavedir = $(kde_datadir)/rkward/00saveload/save
 pluginsX00saveloadXsaveXskeletondir = $(kde_datadir)/rkward/00saveload/save/skeleton
 dist_pluginsX00saveloadXsaveXskeleton_DATA = \
