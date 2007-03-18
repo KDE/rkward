@@ -321,7 +321,9 @@ void RKCommandEditorWindow::runLine() {
 	QString command = m_view->currentTextLine ();
 	if (!command.isEmpty ()) RKConsole::pipeUserCommand (new RCommand (command, RCommand::User, QString::null));
 
-	m_view->down ();		// advance to next line
+	uint para=0; uint p=0;			// advance to next line (NOTE: m_view->down () won't work on auto-wrapped lines
+	m_view->cursorPosition (&para, &p);
+	m_view->setCursorPosition (para+1, p);
 }
 
 
