@@ -1,0 +1,28 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Two variable t-test (paired or independent samples).
+	</summary>
+
+	<usage>
+Chose two numeric vectors to compare against each other. Specify, whether the variables are paired or independent samples. For details, see below.
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">A numeric vector for the first variable</setting>
+		<setting id="y">A numeric vector for the second variable</setting>
+		<setting id="hypothesis">Alternative hypothesis (H1) of the test.</setting>
+		<setting id="paired">Whether the samples are paired (repeated measurements on the same subject) or independent. For a paired test, if the two vectors are not of equal length, there will be an error.</setting>
+		<caption id="tab_options"/>
+		<setting id="varequal">Whether to assume equal variances for the two samples. This option is implied for a paired test.</setting>
+		<setting id="conflevel">Confidence level to use.</setting>
+		<setting id="confint">Whether to print the confidence interval of the estimated mean.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/cor"/></li>
+			<li><link href="rkward://rhelp/cor.test"/></li>
+		</ul>
+	</related>
+</document>
