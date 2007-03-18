@@ -1,7 +1,7 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="t_test_two_samples.php"/>
-	<help file="t_test_two_samples.rkh"/>
+	<code file="t_test_two_vars.php"/>
+	<help file="t_test_two_vars.rkh"/>
 
 	<logic>
 		<convert id="notpaired" mode="equals" sources="paired.state" standard="0"/>
@@ -21,7 +21,7 @@
 							<option value="greater" label="First is greater"/>
 							<option value="less" label="Second is greater"/>
 						</radio>
-						<checkbox id="paired" label="Samples are paired" value="1" value_unchecked="0" />
+						<checkbox id="paired" label="Paired sample" value="1" value_unchecked="0" />
 					</column>
 				</row>
 			</tab>
