@@ -49,7 +49,8 @@ dist_pluginsXplots_DATA = \
 	plots/plot_stepfun_options.rkh \
 	plots/plot_stepfun_options.xml \
 	plots/plot_stepfun_options.php \
-	plots/histogram.rkh
+	plots/histogram.rkh \
+	plots/ecdf_plot.rkh
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
@@ -207,7 +208,13 @@ pluginsXdistributionsXcltdir = $(kde_datadir)/rkward/distributions/clt
 dist_pluginsXdistributionsXclt_DATA = \
 	distributions/clt/plot_binomial_clt.php \
 	distributions/clt/plot_binomial_clt.xml \
-	distributions/clt/plot_binomial_clt.rkh
+	distributions/clt/plot_binomial_clt.rkh \
+	distributions/clt/plot_geometric_clt.rkh \
+	distributions/clt/plot_geometric_clt.php \
+	distributions/clt/plot_hypergeometric_clt.xml \
+	distributions/clt/plot_hypergeometric_clt.rkh \
+	distributions/clt/plot_hypergeometric_clt.php \
+	distributions/clt/plot_geometric_clt.xml
 
 pluginsXwritetabledir = $(kde_datadir)/rkward/writetable
 dist_pluginsXwritetable_DATA = \
@@ -217,10 +224,6 @@ dist_pluginsXwritetable_DATA = \
 pluginsX00meansdir = $(kde_datadir)/rkward/00means
 pluginsX00meansX00ttestsdir = $(kde_datadir)/rkward/00means/00ttests
 pluginsX00meansX00ttestsX00independentUsamplesdir = $(kde_datadir)/rkward/00means/00ttests/00independent_samples
-dist_pluginsX00meansX00ttestsX00independentUsamples_DATA = \
-	00means/00ttests/00independent_samples/code.php \
-	00means/00ttests/00independent_samples/description.xml
-
 pluginsXuni1D2dir = $(kde_datadir)/rkward/uni1.2
 dist_pluginsXuni1D2_DATA = \
 	uni1.2/code.php \
@@ -278,7 +281,10 @@ pluginsXanalysisdir = $(kde_datadir)/rkward/analysis
 dist_pluginsXanalysis_DATA = \
 	analysis/corr_matrix.php \
 	analysis/corr_matrix.xml \
-	analysis/corr_matrix.rkh
+	analysis/corr_matrix.rkh \
+	analysis/t_test_two_vars.rkh \
+	analysis/t_test_two_vars.xml \
+	analysis/t_test_two_vars.php
 
 pluginsXanalysisXansariUbradleydir = $(kde_datadir)/rkward/analysis/ansari_bradley
 dist_pluginsXanalysisXansariUbradley_DATA = \

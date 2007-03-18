@@ -13,7 +13,7 @@ Chose two numeric vectors to compare against each other. Specify, whether the va
 		<setting id="x">A numeric vector for the first variable</setting>
 		<setting id="y">A numeric vector for the second variable</setting>
 		<setting id="hypothesis">Alternative hypothesis (H1) of the test.</setting>
-		<setting id="paired">Whether the samples are paired (repeated measurements on the same subject) or independent. For a paired test, if the two vectors are not of equal length, there will be an error.</setting>
+		<setting id="paired">Whether the variables are paired (repeated measurements on the same subject) or independent samples. For a paired test, if the two vectors are not of equal length, there will be an error.</setting>
 		<caption id="tab_options"/>
 		<setting id="varequal">Whether to assume equal variances for the two samples. This option is implied for a paired test.</setting>
 		<setting id="conflevel">Confidence level to use.</setting>
@@ -21,8 +21,8 @@ Chose two numeric vectors to compare against each other. Specify, whether the va
 	</settings>
 	<related>
 		<ul>
-			<li><link href="rkward://rhelp/cor"/></li>
-			<li><link href="rkward://rhelp/cor.test"/></li>
+			<li><link href="rkward://component/F_test"/></li>
+			<li><link href="rkward://rhelp/t.test"/></li>
 		</ul>
 	</related>
 </document>

@@ -10,7 +10,7 @@
 
 	<dialog label="Two Variable t-Test">
 		<tabbook>
-			<tab label="Basic settings">
+			<tab label="Basic settings" id="tab_variables">
 				<row id="basic_settings_row">
 					<varselector id="vars"/>
 					<column>
@@ -25,7 +25,7 @@
 					</column>
 				</row>
 			</tab>
-			<tab label="Options">
+			<tab label="Options" id="tab_options">
 				<checkbox id="varequal" label="assume equal variances" value="1" value_unchecked="0"/>
 				<frame label="Confidence Interval" id="confint_frame">
 					<spinbox type="real" id="conflevel" label="confidence level" min="0" max="1" initial="0.95"/>

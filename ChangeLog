@@ -1,3 +1,4 @@
+- t-test plugin now also allows to calculate a paired test
 - show current working directory in the statusbar
 - add run selection action to all HTML windows
 - add custom icons for run line/selection/all
