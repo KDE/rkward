@@ -1,15 +1,25 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="ecdf_plot.php" />
+	<help file="ecdf_plot.rkh" />
 	<logic>
 		<connect client="plotoptions.xvar" governor="x.available"/>
 		<set id="plotoptions.allow_log" to="false"/>
 		<set id="plotoptions.allow_type" to="false"/>
 		<set id="plotoptions.allow_asp" to="true"/>
+		
+		<set id="stepfun_options.allow_addtoplot" to="false"/>
+		
+		<connect client="col_thnorm.enabled" governor="th_pnorm.state"/>
+		
+		<connect client="side.enabled" governor="rug.state"/>
+		<connect client="ticksize.enabled" governor="rug.state"/>
+		<connect client="lwd.enabled" governor="rug.state"/>
+		<connect client="col_rug.enabled" governor="rug.state"/>
 	</logic>
 	<dialog label="Empirical Distribution Function" >
 		<tabbook>
-			<tab label="Variable(s)" >
+			<tab label="Variable(s)" id="tab_variables">
 				<row>
 					<varselector id="vars" />
 					<column>
@@ -19,41 +29,32 @@
 					<stretch/>
 				</row>
 			</tab>
-			<tab label="Options" >
-				<row>
-					<column>
-						<radio id="dopoints" label="dopoints">
-							<option value="do.points = TRUE" label="Do Points TRUE"/>
-							<option value="do.points = FALSE" label="Do Points FALSE"/>
+			<tab label="Step function options" id="tab_stepfun_opts">
+				<embed id="stepfun_options" component="rkward::plot_stepfun_options" label="Step function plot options"/>
+				<stretch/>
+			</tab>
+			<tab label="Futher options" id="tab_further_opts">
+				<frame label="Theoretical Normal Distribution">
+					<checkbox value_unchecked="0" value="1" checked="true" id="th_pnorm" label="Draw Theoretical Normal Distribution" />
+					<embed id="col_thnorm" component="rkward::color_chooser" label="Color"/>
+				</frame>
+				<frame label="Rug">
+					<checkbox value_unchecked="0" value="1" checked="true" id="rug" label="Add rug to plot" />
+					<row>
+						<radio label="Side of Rug" id="side">
+							<option value="side = 1" label="Rug on bottom" />
+							<option value="side = 3" label="Rug on top" />
 						</radio>
-						<radio id="verticals" label="vertical">
-							<option value="verticals = FALSE" label="Verticals False"/>
-							<option value="verticals = TRUE" label="Verticals TRUE"/>
-						</radio>						
-						<frame label="Theoretical Normal Distribution">
-							<checkbox value_unchecked="0" value="1" checked="true" id="th_pnorm" label="Theoretical Normal Distribution" />
-							<input id="col" initial="red" label="Color of Theoretical Normal Distribution"/>
-							<text>To change the coulor type another like 'blue' (please refere to R-help for more information).
-							</text>
-						</frame>
-						<stretch/>
-					</column>
-					<column>
-						<frame label="Add Rug to Plot">
-							<checkbox value_unchecked="0" value="1" checked="true" id="rug" label="Rug" />
+						<column>
 							<spinbox initial="0.03" id="ticksize" label="Ticksize" />
 							<spinbox initial="0.5" id="lwd" label="Line width of ticks" />
-							<radio label="Side of Rug" id="side">
-								<option value="side = 1" label="Rug on Bottom" />
-								<option value="side = 3" label="Rug on Top" />
-							</radio>
-							<input id="col_rug" initial="black" label="Color of ticks"/>
-						</frame>
-						<stretch/>
-					</column>
-				</row>
+							<embed id="col_rug" component="rkward::color_chooser" label="Color"/>
+						</column>
+					</row>
+				</frame>
+				<stretch/>
 			</tab>
-			<tab label="Title/Axis">
+			<tab label="Title/Axis" id="tab_plot_opts">
 				<column>
 					<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
 				</column>

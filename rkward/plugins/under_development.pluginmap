@@ -30,6 +30,7 @@
 		<component type="standard" id="stem" file="plots/stem.xml" label="Stem-and-Leaf Plot" />
 
 		<component type="standard" id="plot_stepfun_options" file="plots/plot_stepfun_options.xml" label="Step Function plot options" />
+		<component type="standard" id="ecdf_plot" file="plots/ecdf_plot.xml" label="ECDF Plot" />
 		<component type="standard" id="x11grid" file="x11device/grid.xml" label="Draw Grid" />
 
 	</components>
@@ -66,6 +67,7 @@
 			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
+			<entry component="ecdf_plot" />
 			<entry component="histogram" />
 			<entry component="stem" />
 		</menu>

@@ -5,7 +5,7 @@
 	<logic>
 		<external id="varname" default=""/>
 		<external id="allow_addtoplot" default="true"/>
-		<external id="default_verticals" default="true"/>
+		<external id="default_verticals" default="false"/>
 
 		<set id="col_vert.argument" to=", col.vert="/>
 		<set id="col_points.argument" to=", col.points="/>
@@ -13,6 +13,8 @@
 
 		<connect client="addtoplot.visible" governor="allow_addtoplot"/>
 
+		<convert id="default_verticalsb" sources="default_verticals" mode="equals" standard="true"/>
+		<connect client="verticals.state" governor="default_verticalsb"/>
 		<connect client="col_vert.color.enabled" governor="verticals.state"/>
 		<connect client="col_points.color.enabled" governor="do_points.state"/>
 	</logic>
