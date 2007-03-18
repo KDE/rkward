@@ -519,6 +519,21 @@ More often than not you will have to create one or more temporary R objects in t
 <para>
 If the user explicitely asks for a variable to be saved, you will need to assign to that object with the "&lt;&lt;-" operator.
 </para>
+<para>
+One important pitfall is using eval() to evaluate substitutes. Here, you need to note that eval will by default use the current environment for evaluation, i.e. the local one. This will work well most of the times, but if you define any temporary variables in the local environment, and you are trying to fetch user variables of the same name using eval, you will get errors. For example:
+</para>
+<programlisting>
+# "objects" is the name of both a local temporary variable, and a user selected variable
+objects &lt;- substitute (user.var1, user.var2, objects, user.var4)
+# this will fail: objects[3] is "the object named 'objects'", but this now refers to your
+# temporary variable, instead of the user variable
+third &lt;- eval (objects[3])
+# instead, use this:
+third &lt;- eval (objects[3], envir=globalenv())
+</programlisting>
+<para>
+To solve this, specify the evaluation environment explicitely, as shown above. This will generally be globalenv(), i.e. evaluate as if working in the global environment.
+</para>
 </section>
 
 <section id="policyformatting">
