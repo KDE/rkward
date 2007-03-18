@@ -3,7 +3,7 @@
 <!-- This is a simple example, of how a "plugin" might be configured. -->
 
 <document>
-	<code file="code.php"/>
+	<code file="t_test_two_samples.php"/>
 
 	<dialog label="Independed Samples T-Test">
 		<tabbook>
