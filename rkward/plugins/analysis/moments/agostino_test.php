@@ -20,6 +20,7 @@ for (i in 1:length(objects)) {
 		results[i, 'skewness estimator (skew)'] <- t$statistic["skew"]
 		results[i, 'transformation (z)'] <- t$statistic["z"]
 		results[i, 'p-value'] <- t$p.value
+		results[i, 'Alternative Hypothesis']<- rk.describe.alternative (t)
 <?	if (getRK_val ("length")) { ?>
 		results[i, 'Length'] <- length (var)
 <?	}
