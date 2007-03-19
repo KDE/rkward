@@ -9,12 +9,12 @@ function calculate () {
 
 ?>
 
-objects <- list (<? echo ($vars); ?>)
-results <- data.frame ('Variable Name'=rep (NA, length (objects)), check.names=FALSE)
+vars <- list (<? echo ($vars); ?>)
+results <- data.frame ('Variable Name'=rep (NA, length (vars)), check.names=FALSE)
 
-for (i in 1:length(objects)) {
-	results[i, 'Variable Name'] <- rk.get.description (objects[[i]], is.substitute=TRUE)
-	var <- eval(objects[[i]])
+for (i in 1:length(vars)) {
+	results[i, 'Variable Name'] <- rk.get.description (vars[[i]], is.substitute=TRUE)
+	var <- eval (vars[[i]], envir=globalenv ())
 	results[i, 'Error'] <- tryCatch ({
 		t <- bonett.test (var, alternative = "<? getRK ("alternative"); ?>")
 		results[i, 'Kurtosis estimator (tau)'] <- t$statistic["tau"]
