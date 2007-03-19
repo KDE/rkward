@@ -6,6 +6,7 @@
 		<component type="standard" id="plot_geometric_clt" file="distributions/clt/plot_geometric_clt.xml" label="Geometric CLT" />
 		<component type="standard" id="plot_hypergeometric_clt" file="distributions/clt/plot_hypergeometric_clt.xml" label="Hypergeometric CLT" />
 		<component type="standard" id="plot_negbinomial_clt" file="distributions/clt/plot_negbinomial_clt.xml" label="Negative Binomial CLT" />
+		<component type="standard" id="plot_poisson_clt" file="distributions/clt/plot_poisson_clt.xml" label="Poisson CLT" />
 
 		<component type="standard" id="moment" file="analysis/moments/moment.xml" label="Moment" />
 		<component type="standard" id="bonett_test" file="analysis/moments/bonett_test.xml" label="Bonett-Seier test of Geary's kurtosis" />
@@ -87,6 +88,9 @@
 				</menu>
 				<menu id="negative_binomial_distribution" label="Negative Binomial">
 					<entry component="plot_negbinomial_clt" label="Negative Binomial CLT" index="2"/>
+				</menu>
+				<menu id="poisson_distribution" label="Poisson">
+					<entry component="plot_poisson_clt" label="Poisson CLT" index="2"/>
 				</menu>
 			</menu>
 		</menu>
