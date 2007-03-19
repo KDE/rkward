@@ -1,5 +1,6 @@
 <!DOCTYPE rkplugin>
-<!-- This is a simple example, of how a "plugin" might be configured. --><document>
+<!-- TODO: This plugin should really be split up. It is overly complex. -->
+<document>
 	<code file="code.php"/>
 	<logic>
 		<connect client="constMad.enabled" governor="mad.state" />
@@ -37,9 +38,9 @@
 				</frame>
 				<frame label="Moments" >
 					<row>
-						<checkbox value_unchecked="0" checked="false" value="1" id="moyenne" label="Mean" />
+						<checkbox value_unchecked="0" checked="false" value="1" id="mean" label="Mean" />
 						<checkbox value_unchecked="0" checked="false" value="1" id="vari" label="Variance" />
-						<checkbox value_unchecked="0" checked="false" value="1" id="ecartt" label="Sd" />
+						<checkbox value_unchecked="0" checked="false" value="1" id="sd" label="Sd" />
 					</row>
 				</frame>
 				<frame label="extrema" >
@@ -56,7 +57,7 @@
 				</frame>
 				<frame label="Quantile" >
 					<row>
-						<checkbox value_unchecked="0" checked="false" value="1" id="mediane" label="Median" />
+						<checkbox value_unchecked="0" checked="false" value="1" id="median" label="Median" />
 						<checkbox value_unchecked="0" checked="false" value="1" id="irq" label="Interquartile Range" />
 						<checkbox value_unchecked="0" checked="false" value="1" id="quartile" label="Quartile" />
 					</row>
@@ -70,7 +71,7 @@
 					<frame label="Dispersion" >
 						<row>
 							<checkbox checked="false" value="1" id="mad" label="Median Absolute Deviation" />
-							<input size="small" intial="1.4628" id="constMad" label="Constant" />
+							<spinbox type="real" initial="1.4628" id="constMad" label="Constant" />
 						</row>
 					</frame>
 					<frame label="Robust mean" >
@@ -110,8 +111,8 @@
 			</tab>
 			<tab id="option" label="Options" >
 				<checkbox value_unchecked="0" checked="true" value="1" id="narm" label="Omit missing values" />
-				<checkbox checked="false" value="1" id="result" label="Get the result in the console" />
-				<input size="medium" intial="rk.univariate" id="nom" label="Name of the result" />
+				<checkbox checked="false" value="1" id="result" label="Store results" />
+				<saveobject intial="rk.univariate" id="nom" label="Name of the result" />
 				<stretch/>
 			</tab>
 		</tabbook>
