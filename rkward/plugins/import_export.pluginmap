@@ -2,8 +2,8 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
-		<component type="standard" id="load_r_object" file="00saveload/load/load/description.xml" label="Load an R Object" />
-		<component type="standard" id="load_source" file="00saveload/load/source/description.xml" label="Load R source" />
+		<component type="standard" id="load_r_object" file="00saveload/import/load_data.xml" label="Load an R Object" />
+		<component type="standard" id="load_source" file="00saveload/import/source.xml" label="Load R source" />
 
 		<component type="standard" id="save_r_object" file="00saveload/save/save/description.xml" label="Save an R Object" />
 		<component type="standard" id="save_skeleton" file="00saveload/save/skeleton/description.xml" label="Save package" />
