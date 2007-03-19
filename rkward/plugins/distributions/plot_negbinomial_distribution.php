@@ -41,14 +41,15 @@ function doPrintout ($final) {
 	}
 	$min = getRK_val ("min");
 	$max = getRK_val ("max");
-	$size = getRK_val ("size");
 	$paramTag = "";
 	$paramVal = "";
  	if (getRK_val ("param") == "pprob") {
+		$size = getRK_val ("size_trial");
 		$paramTag = ", prob=";
 		$paramVal = getRK_val ("prob");
 		$paramLabel = "Probability of success in each trial";
 	} else {
+		$size = getRK_val ("size_disp");
 		$paramTag = ", mu=";
 		$paramVal = getRK_val ("mu");
 		$paramLabel = "Alternative parameter, mu";

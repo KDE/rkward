@@ -8,8 +8,10 @@
 		<connect client="lower.enabled" governor="dodist" />
 		<convert id="useprob" mode="equals" sources="param.string" standard="pprob" />
 		<connect client="prob.enabled" governor="useprob" />
+		<connect client="size_trial.visible" governor="useprob" />
 		<convert id="usemu" mode="equals" sources="param.string" standard="pmu" />
 		<connect client="mu.enabled" governor="usemu" />
+		<connect client="size_disp.visible" governor="usemu" />
 		<set id="plotoptions.allow_log" to="false"/>
 		<set id="plotoptions.default_pointtype" to="p"/>
 	</logic>
@@ -23,14 +25,15 @@
 							<spinbox type="integer" min = "0" id="max" initial="24" label="Upper quantile" />
 						</frame>
 						<frame label="Parameters">
-							<spinbox type="integer" id="size" min="1" initial="12" label="Target number of successful trials" />
+							<spinbox type="integer" id="size_trial" min="1" initial="12" label="Target number of successful trials" />
+							<spinbox id="size_disp" min="0.01" initial="12.00" label="Dispersion (Size)"/>
 							<row>
 							<column>
 							<spinbox default_precision="2" type="real" id="prob" initial="0.75" min="0" max="1" label="Probability of success on each trial" />
 							<spinbox default_precision="2" type="real" id="mu" initial="4" min="0.01" label="Mean (alternate parameter, mu)" />
 						</column>
 						<column>
-						<radio id="param" label="Choose the type of Parameterization" >
+						<radio id="param" label="Type of Parameterization" >
 							<option value="pprob" label="Success probability" />
 							<option value="pmu" label="Mean (mu)" />
 						</radio>

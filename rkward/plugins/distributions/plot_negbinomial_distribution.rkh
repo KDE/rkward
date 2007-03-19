@@ -15,7 +15,8 @@ Choose appropriate values for the various parameters of the distribution and sel
 		</setting>
 		<setting id="min">Smallest value at which the function is to be plotted.</setting>
 		<setting id="max">Largest value at which the function is to be plotted. Since this is a discrete distribution the function will be evaluated at all the integers between the lower quantile and the upper quantile (inclusive of the end points).</setting>
-		<setting id="size">See R reference on Negative Binomial distribution.</setting>
+		<setting id="size_trial">This is the <i>size</i> parameter when the 'probability' form of the parameterisation is used. This is always a non-negative integer. See R reference on Negative Binomial distribution.</setting>
+		<setting id="size_disp">This is the <i>size</i> parameter when the 'mu' form of the parameterisation is used. This is a non-negative real number. See R reference on Negative Binomial distribution.</setting>
 		<setting id="prob">See R reference on Negative Binomial distribution.</setting>
 		<setting id="mu">See R reference on Negative Binomial distribution.</setting>
 		<setting id="param">The type of the parameterization to be used. See R reference on Negative Binomial distribution.</setting>
