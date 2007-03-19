@@ -1,6 +1,6 @@
 <?
 function preprocess () { ?>
-rk.temp.cor.graph <- function(x) {
+cor.graph <- function(x) {
 	panel.cor <- function(x, y, digits=<? getRK ("digits"); ?>, cex.cor, use="<? getRK ("use"); ?>", method="<? getRK ("method"); ?>", scale=<? getRK ("scale"); ?>) {
 		usr <- par("usr"); on.exit(par(usr))
 		par(usr = c(0, 1, 0, 1))
@@ -29,23 +29,17 @@ function calculate () {
 function printout () {
 	doPrintout (true);
 }
-	
-function cleanup () { ?>
-rm(rk.temp.cor.graph, rk.temp.x)
-<?
-	}
-	
+
 function preview () {
 	preprocess ();
 	calculate ();
-	doPrintout (false);	// only this one actually needed...
-	cleanup ();
+	doPrintout (false);
 }
 
 function doPrintout ($final) {
 	$vars = str_replace ("\n", ",", trim (getRK_val ("x"))) ;
 ?>
-rk.temp.x <- data.frame (<? echo ($vars); ?>)
+data <- data.frame (<? echo ($vars); ?>)
 
 <? 
 	if ($final) { ?>
@@ -55,7 +49,7 @@ rk.graph.on ()
 <?
 } ?>
 try ({
-	rk.temp.cor.graph (rk.temp.x)
+	cor.graph (data)
 })
 <? 
 	if ($final) { ?>
@@ -63,6 +57,5 @@ rk.graph.off ()
 
 print("Signif. codes:  0 '***', 0.001 '**', 0.01 '*', 0.05 '.'', 0.1 ' ', 1")
 <?  }
-
 }
 ?>
