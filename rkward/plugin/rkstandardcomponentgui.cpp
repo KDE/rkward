@@ -143,7 +143,7 @@ void RKStandardComponentGUI::ok () {
 	command.append (code_property->calculate ());
 	command.append (code_property->printout ());
 	command.append ("})\n");
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput, QString::null, error_dialog));
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate, QString::null, error_dialog));
 }
 
 void RKStandardComponentGUI::cancel () {
