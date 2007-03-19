@@ -142,18 +142,6 @@ dist_pluginsXdistributions_DATA = \
 	distributions/tukey_probabilities.xml \
 	distributions/tukey_quantiles.php \
 	distributions/tukey_quantiles.xml \
-	distributions/shapiro_test.xml \
-	distributions/pearson_test.xml \
-	distributions/lillie_test.xml \
-	distributions/ad_test.xml \
-	distributions/cvm_test.xml \
-	distributions/sf_test.php \
-	distributions/shapiro_test.php \
-	distributions/pearson_test.php \
-	distributions/lillie_test.php \
-	distributions/sf_test.xml \
-	distributions/ad_test.php \
-	distributions/cvm_test.php \
 	distributions/plot_wilcoxon_distribution.php \
 	distributions/plot_gamma_distribution.php \
 	distributions/plot_gamma_distribution.xml \
@@ -224,6 +212,21 @@ dist_pluginsXdistributionsXclt_DATA = \
 	distributions/clt/plot_negbinomial_clt.rkh \
 	distributions/clt/plot_negbinomial_clt.php \
 	distributions/clt/plot_poisson_clt.rkh
+
+pluginsXdistributionsXtestsdir = $(kde_datadir)/rkward/distributions/tests
+dist_pluginsXdistributionsXtests_DATA = \
+	distributions/tests/ad_test.php \
+	distributions/tests/ad_test.xml \
+	distributions/tests/lillie_test.xml \
+	distributions/tests/lillie_test.php \
+	distributions/tests/cvm_test.php \
+	distributions/tests/cvm_test.xml \
+	distributions/tests/sf_test.xml \
+	distributions/tests/sf_test.php \
+	distributions/tests/shapiro_test.php \
+	distributions/tests/shapiro_test.xml \
+	distributions/tests/pearson_test.php \
+	distributions/tests/pearson_test.xml
 
 pluginsXuni1D2dir = $(kde_datadir)/rkward/uni1.2
 dist_pluginsXuni1D2_DATA = \

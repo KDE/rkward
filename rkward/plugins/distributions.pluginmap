@@ -3,12 +3,12 @@
 <document base_prefix="distributions/" namespace="rkward">
 	<components>
 
-		<component type="standard" id="shapiro_test" file="shapiro_test.xml" label="Shapiro-Wilk Normality Test" />
-		<component type="standard" id="ad_test" file="ad_test.xml" label="Anderson-Darling Normality Test" />
-		<component type="standard" id="cvm_test" file="cvm_test.xml" label="Cramer-von Mises Normality Test" />
-		<component type="standard" id="pearson_test" file="pearson_test.xml" label="Pearson chi-square Normality Test" />
-		<component type="standard" id="sf_test" file="sf_test.xml" label="Shapiro-Francia Normality Test" />
-		<component type="standard" id="lillie_test" file="lillie_test.xml" label="Lilliefors (Kolmogorov-Smirnov) Normality Test" />
+		<component type="standard" id="shapiro_test" file="tests/shapiro_test.xml" label="Shapiro-Wilk Normality Test" />
+		<component type="standard" id="ad_test" file="tests/ad_test.xml" label="Anderson-Darling Normality Test" />
+		<component type="standard" id="cvm_test" file="tests/cvm_test.xml" label="Cramer-von Mises Normality Test" />
+		<component type="standard" id="pearson_test" file="tests/pearson_test.xml" label="Pearson chi-square Normality Test" />
+		<component type="standard" id="sf_test" file="tests/sf_test.xml" label="Shapiro-Francia Normality Test" />
+		<component type="standard" id="lillie_test" file="tests/lillie_test.xml" label="Lilliefors (Kolmogorov-Smirnov) Normality Test" />
 
 		<component type="standard" id="beta_quantiles" file="beta_quantiles.xml" label="Beta quantiles" />
 		<component type="standard" id="beta_probabilities" file="beta_probabilities.xml" label="Beta probabilities" />
