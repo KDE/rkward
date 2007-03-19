@@ -10,11 +10,10 @@ function calculate () {
 
 objects <- list (<? echo ($vars); ?>)
 results <- data.frame ('Variable Name'=rep (NA, length (objects)), check.names=FALSE)
-i=0;
-for (var in objects) {
-	i = i+1
-	results[i, 'Variable Name'] <- rk.get.description (var, is.substitute=TRUE)
-	var <- eval (var)
+
+for (i in 1:length(objects)) {
+	results[i, 'Variable Name'] <- rk.get.description (objects[[i]], is.substitute=TRUE)
+	var <- eval(objects[[i]])
 	results[i, 'Error'] <- tryCatch ({
 		# This is the core of the calculation
 		t <- agostino.test (var, alternative = "<? getRK ("alternative"); ?>")
