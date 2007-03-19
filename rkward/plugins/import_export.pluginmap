@@ -1,23 +1,23 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="" namespace="rkward">
+<document base_prefix="00saveload/" namespace="rkward">
 	<components>
-		<component type="standard" id="load_r_object" file="00saveload/import/load_data.xml" label="Load an R Object" />
-		<component type="standard" id="load_source" file="00saveload/import/source.xml" label="Load R source" />
+		<component type="standard" id="load_r_object" file="import/load_data.xml" label="Load an R Object" />
+		<component type="standard" id="load_source" file="import/source.xml" label="Load R source" />
 
-		<component type="standard" id="save_r_object" file="00saveload/save/save/description.xml" label="Save an R Object" />
-		<component type="standard" id="save_skeleton" file="00saveload/save/skeleton/description.xml" label="Save package" />
-		<component type="standard" id="save_variables" file="00saveload/save/write/description.xml" label="Save variables" />
-		<component type="standard" id="save_table" file="writetable/description.xml" label="Save as table" />
+		<component type="standard" id="save_r_object" file="save/save/description.xml" label="Save an R Object" />
+		<component type="standard" id="save_skeleton" file="save/skeleton/description.xml" label="Save package" />
+		<component type="standard" id="save_variables" file="save/write/description.xml" label="Save variables" />
+		<component type="standard" id="save_table" file="save/write_table.xml" label="Save as table" />
 
-		<component type="standard" id="import_spss" file="00saveload/import/import_spss.xml" label="Import SPSS">
+		<component type="standard" id="import_spss" file="import/import_spss.xml" label="Import SPSS">
 			<attribute id="format" value="*.sav *.por" label="SPSS data files"/>
 		</component>
-		<component type="standard" id="import_csv" file="00saveload/import/import_csv.xml" label="Import Text / CSV data">
+		<component type="standard" id="import_csv" file="import/import_csv.xml" label="Import Text / CSV data">
 			<attribute id="format" value="*.txt *.csv" label="Text / Comma Separated Values"/>
 		</component>
 
-		<component type="standard" id="setworkdir" file="00saveload/setworkdir.xml" label="Set Working Directory" />
+		<component type="standard" id="setworkdir" file="setworkdir.xml" label="Set Working Directory" />
 	</components>
 
 	<hierarchy>
