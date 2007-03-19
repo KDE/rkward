@@ -9,9 +9,10 @@
 	<tabbook>
 	<tab label="Variable(s)" >
 		<row>
-		<varselector id="vars" />
-		<varslot multi="true" type="numeric" source="vars" id="x" label="variable(s):" required="true" />
+			<varselector id="vars" />
+			<varslot multi="true" type="numeric" source="vars" id="x" label="variable(s):" required="true" />
 		</row>
+		<preview id="preview"/>
 	</tab>
 	<tab label="Options" >
 		<row>
