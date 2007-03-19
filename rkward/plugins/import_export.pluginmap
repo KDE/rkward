@@ -2,10 +2,10 @@
 
 <document base_prefix="00saveload/" namespace="rkward">
 	<components>
-		<component type="standard" id="load_r_object" file="import/load_data.xml" label="Load an R Object" />
+		<component type="standard" id="load_r_object" file="import/load_data.xml" label="Load R data file" />
 		<component type="standard" id="load_source" file="import/source.xml" label="Load R source" />
 
-		<component type="standard" id="save_r_object" file="save/save/description.xml" label="Save an R Object" />
+		<component type="standard" id="save_r" file="save/save/description.xml" label="Save an R Object" />
 		<component type="standard" id="save_skeleton" file="save/skeleton/description.xml" label="Save package" />
 		<component type="standard" id="save_variables" file="save/write/description.xml" label="Save variables" />
 		<component type="standard" id="save_table" file="save/write_table.xml" label="Save as table" />
@@ -31,7 +31,7 @@
 				<entry component="load_source" />
 			</menu>
 			<menu id="export" label="Export" index="5">
-				<entry component="save_r_object" />
+				<entry component="save_r" />
 				<entry component="save_skeleton" />
 				<entry component="save_variables" />
 				<entry component="save_table" />

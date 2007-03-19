@@ -214,12 +214,16 @@ dist_pluginsXdistributionsXclt_DATA = \
 	distributions/clt/plot_hypergeometric_clt.xml \
 	distributions/clt/plot_hypergeometric_clt.rkh \
 	distributions/clt/plot_hypergeometric_clt.php \
-	distributions/clt/plot_geometric_clt.xml
-
-pluginsXwritetabledir = $(kde_datadir)/rkward/writetable
-dist_pluginsXwritetable_DATA = \
-	writetable/code.php \
-	writetable/description.xml
+	distributions/clt/plot_geometric_clt.xml \
+	distributions/clt/plot_poisson_clt.php \
+	distributions/clt/plot_negbinomial_clt.xml \
+	distributions/clt/plot_wilcoxon_clt.rkh \
+	distributions/clt/plot_wilcoxon_clt.php \
+	distributions/clt/plot_poisson_clt.xml \
+	distributions/clt/plot_wilcoxon_clt.xml \
+	distributions/clt/plot_negbinomial_clt.rkh \
+	distributions/clt/plot_negbinomial_clt.php \
+	distributions/clt/plot_poisson_clt.rkh
 
 pluginsXuni1D2dir = $(kde_datadir)/rkward/uni1.2
 dist_pluginsXuni1D2_DATA = \
@@ -237,18 +241,11 @@ dist_pluginsX00saveload_DATA = \
 	00saveload/setworkdir.php \
 	00saveload/setworkdir.xml
 
-pluginsX00saveloadXloaddir = $(kde_datadir)/rkward/00saveload/load
-pluginsX00saveloadXloadXloaddir = $(kde_datadir)/rkward/00saveload/load/load
-dist_pluginsX00saveloadXloadXload_DATA = \
-	00saveload/load/load/code.php \
-	00saveload/load/load/description.xml
-
-pluginsX00saveloadXloadXsourcedir = $(kde_datadir)/rkward/00saveload/load/source
-dist_pluginsX00saveloadXloadXsource_DATA = \
-	00saveload/load/source/code.php \
-	00saveload/load/source/description.xml
-
 pluginsX00saveloadXsavedir = $(kde_datadir)/rkward/00saveload/save
+dist_pluginsX00saveloadXsave_DATA = \
+	00saveload/save/write_table.php \
+	00saveload/save/write_table.xml
+
 pluginsX00saveloadXsaveXskeletondir = $(kde_datadir)/rkward/00saveload/save/skeleton
 dist_pluginsX00saveloadXsaveXskeleton_DATA = \
 	00saveload/save/skeleton/code.php \
@@ -271,7 +268,13 @@ dist_pluginsX00saveloadXimport_DATA = \
 	00saveload/import/import_spss.rkh \
 	00saveload/import/import_csv.php \
 	00saveload/import/import_csv.xml \
-	00saveload/import/import_csv.rkh
+	00saveload/import/import_csv.rkh \
+	00saveload/import/load_data.php \
+	00saveload/import/load_data.xml \
+	00saveload/import/source.xml \
+	00saveload/import/source.php \
+	00saveload/import/load_data.rkh \
+	00saveload/import/source.rkh
 
 pluginsXanalysisdir = $(kde_datadir)/rkward/analysis
 dist_pluginsXanalysis_DATA = \
