@@ -1,6 +1,7 @@
 <!DOCTYPE rkplugin>
 <document> 
-	<code file="code.php"/>
+	<code file="source.php"/>
+
 	<logic>
 		<connect client="maxdeparselength.enabled" governor="echo.state" />
 	</logic>

@@ -1,6 +1,7 @@
 <!DOCTYPE rkplugin>
 <document> 
-	<code file="code.php"/>
+	<code file="load_data.php"/>
+
 	<dialog label="Load an R object">
 		<tabbook>
 			<tab label="Select variables" >
