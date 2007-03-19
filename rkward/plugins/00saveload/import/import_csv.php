@@ -26,7 +26,7 @@ getRK("name"); ?> <<- read.table (file="<? getRK("file"); ?>", header=<? getRK("
 	# doing col class (what a pity...)
 	if (getRK_val("colclass") == "custoClass") echo( "colClasses = " . getRK_val ("custoClasses") . ",");
 	#doing what is left
-?> na.strings = "<? getRK("na")  ?>", nrows = <? getRK("nrows") ; ?>, skip =  <? getRK("skip") ; ?>, check.names = <? getRK("checkname") ; ?>, fill = <? getRK("fill") ; ?>, strip.white = <? getRK("stripwhite") ; ?>, blank.lines.skip = <? getRK("blanklinesskip") ; ?>, comment.char=<? echo (quoteString (getRK_val("commentchar"))); ?><? getRK("allow_escapes"); ?><? getRK("flush"); ?><? getRK("strings_as_factors"); ?>)
+?> na.strings = "<? getRK("na")  ?>", nrows = <? getRK("nrows") ; ?>, skip = <? getRK("skip") ; ?>, check.names = <? getRK("checkname") ; ?>, fill = <? getRK("fill") ; ?>, strip.white = <? getRK("stripwhite") ; ?>, blank.lines.skip = <? getRK("blanklinesskip") ; ?>, comment.char=<? echo (quoteString (getRK_val("commentchar"))); ?><? getRK("allow_escapes"); ?><? getRK("flush"); ?><? getRK("strings_as_factors"); ?>)
 <?	if (getRK_val ("doedit")) { ?>
 
 rk.edit (<? getRK ("name"); ?>)
@@ -34,9 +34,5 @@ rk.edit (<? getRK ("name"); ?>)
 }
 
 function printout () {
-// produce the output
-}
-
-function cleanup () {
 }
 ?>

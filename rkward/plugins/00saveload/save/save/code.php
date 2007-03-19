@@ -1,17 +1,14 @@
 <?
-	function preprocess () {
-	}
-	
-	function calculate () {
+function preprocess () {
+}
+
+function calculate () {
 $vars = str_replace ("\n", ",", trim (getRK_val ("data"))) ;
 ?>
 save (<? echo ($vars); ?>, file="<? getRK("file"); ?>", ascii=<? getRK("ascii"); ?>, compress=<? getRK("compress"); ?>)
 <?
-	}
-	
-	function printout () {
-	}
-	
-	function cleanup () {
-	}
+}
+
+function printout () {
+}
 ?>

@@ -4,15 +4,15 @@ require (foreign)
 <?	if (getRK_val ("do_locale_conversion")) { ?>
 
 # helper function to convert all strings to the current encoding
-rk.temp.convert <- function (x, from) {
+iconv.recursive <- function (x, from) {
 	attribs <- attributes (x);
 	if (is.character (x)) {
 		x <- iconv (x, from=from, to="", sub="")
 	} else if (is.list (x)) {
-		x <- lapply (x, function (sub) rk.temp.convert (sub, from))
+		x <- lapply (x, function (sub) iconv.recursive (sub, from))
 	}
 	# convert factor levels and all other attributes
-	attributes (x) <- lapply (attribs, function (sub) rk.temp.convert (sub, from))
+	attributes (x) <- lapply (attribs, function (sub) iconv.recursive (sub, from))
 	x
 }
 <?	}
@@ -40,17 +40,17 @@ function calculate () {
 		} ?>
 
 # convert all strings to the current encoding
-<? echo ($object); ?> <- rk.temp.convert (<? echo ($object); ?>, from="<? echo ($from_locale); ?>")
+<? echo ($object); ?> <- iconv.recursive (<? echo ($object); ?>, from="<? echo ($from_locale); ?>")
 <?	}
 	if (getRK_val ("convert_var_labels")) { ?>
 
 # set variable labels for use in RKWard
-rk.temp.labels <- attr (<? echo ($object); ?>, "variable.labels");
-if (!is.null (rk.temp.labels)) {
-	for (rk.temp.i in 1:length (rk.temp.labels)) {
-		rk.temp.col <- make.names (names (rk.temp.labels[rk.temp.i]))
-		if (!is.null (rk.temp.col)) {
-			rk.set.label (<? echo ($object); ?>[[rk.temp.col]], rk.temp.labels[rk.temp.i])
+labels <- attr (<? echo ($object); ?>, "variable.labels");
+if (!is.null (labels)) {
+	for (i in 1:length (labels)) {
+		col <- make.names (names (labels[i]))
+		if (!is.null (col)) {
+			rk.set.label (<? echo ($object); ?>[[col]], labels[i])
 		}
 	}
 }
@@ -63,10 +63,5 @@ rk.edit (<? echo ($object); ?>)
 }
 
 function printout () {
-}
-
-function cleanup () { ?>
-rm (list=grep ("^rk.temp", ls (), value=TRUE))
-<?
 }
 ?>
