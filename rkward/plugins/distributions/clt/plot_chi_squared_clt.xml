@@ -1,0 +1,94 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="plot_chi_squared_clt.php" />
+	<help file="plot_chi_squared_clt.rkh" />
+	<logic>
+		<set id="plotoptions.allow_log" to="false"/>
+		<set id="plotoptions.allow_type" to="false"/>
+		<set id="plotoptions.default_main" to="Chi-Squared"/>
+		<set id="plotoptions.default_xlab" to="Sample Averages"/>
+
+		<set id="normlinecol.default_color" to="red" />
+
+		<set id="histogram_opt.varname" to="avg" />
+		<set id="histogram_opt.allow_freq" to="false" />
+		<set id="histogram_opt.allow_barlabels" to="true" />
+		<set id="histogram_opt.allow_addtoplot" to="false" />
+
+		<convert id="isHistogram" sources="function.string" mode="equals" standard="hist"/>
+		<connect client="tab_histoptions.enabled" governor="isHistogram"/>
+
+		<convert id="isDist" sources="function.string" mode="equals" standard="dist"/>
+		<connect client="tab_distfunction.enabled" governor="isDist"/>
+
+		<connect client="normpointtype.enabled" governor="drawnorm.state"/>
+		<connect client="normlinecol.color.enabled" governor="drawnorm.state"/>
+
+		<set id="dist_stepfun.allow_addtoplot" to="false" />
+		<set id="dist_stepfun.default_verticals" to="false" />
+
+		<set id="col_y0.argument" to=""/>
+		<set id="col_y1.argument" to=""/>
+</logic>
+	<dialog label="Central Limit Theorem: Chi squared to Normal" >
+		<tabbook>
+			<tab id="tab_plot_distrib_clt" label="Parameters" >
+				<row>
+					<column>
+						<frame label="CLT Samples" >
+							<spinbox type="integer" min = "1" id="nAvg" initial="10" label="Samples for Average" />
+							<spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
+						</frame>
+						<frame id="frame_chisqparam" label="Chi squared Parameters">
+							<spinbox default_precision="2" type="real" min="0.01" id="df" initial="4.0" label="Degrees of freedom" />
+							<spinbox default_precision="2" type="real" min="0" id="ncp" initial="0" label="Non-centrality parameter" />
+						</frame>
+					</column>
+					<column>
+						<radio id="function" label="Choose type of function plot" >
+							<option value="hist" label="Histogram and Density"  checked="true"/>
+							<option value="dist" label="ECDF and Distribution"/>
+						</radio>
+						<checkbox id="scalenorm" label="Use normalised random variable" value="1" value_unchecked="0"/>
+						<frame id="frame_lineoptions" label="Nomral Curve Options">
+							<checkbox id="drawnorm" label="Draw normal curve" value="1" value_unchecked="0" checked="true"/>
+							<dropdown id="normpointtype" label="Type of points/lines" >
+								<option value="p" label="Individual points " />
+								<option value="l" label="Lines" checked="true"/>
+								<option value="b" label="Points connected by lines (both)" />
+								<option value="o" label="Points overlaid by lines " />
+								<option value="h" label="Vertical lines (high-density)" />
+								<option value="s" label="Step-function on left edge" />
+								<option value="S" label="Step-function on right edge" />
+							</dropdown>
+							<embed id="normlinecol" component="rkward::color_chooser" label="Color" />
+						</frame>
+					</column>
+				</row>
+			<stretch/>
+				<row>
+					<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
+					<preview id="preview" label="Preview"/>
+				</row>
+			</tab>
+
+			<tab id="tab_histoptions" label="Histogram">
+				<embed id="histogram_opt" component="rkward::histogram_options" label="Histogram Options"/>
+			</tab>
+
+			<tab id="tab_distfunction" label="ECDF options">
+				<embed id="dist_stepfun" component="rkward::plot_stepfun_options" label=""/>
+				<row>
+						<frame id="frame_col_y0" label="For y = 0 line">
+							<embed id="col_y0" component="rkward::color_chooser" label="Color"/>
+						</frame>
+						<frame id="frame_col_y1" label="For y = 1 line">
+							<embed id="col_y1" component="rkward::color_chooser" label="Color"/>
+						</frame>
+				</row>
+				<stretch/>
+			</tab>
+
+		</tabbook>
+	</dialog>
+</document>

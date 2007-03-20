@@ -9,6 +9,16 @@
 		<component type="standard" id="plot_poisson_clt" file="distributions/clt/plot_poisson_clt.xml" label="Poisson CLT" />
 		<component type="standard" id="plot_wilcoxon_clt" file="distributions/clt/plot_wilcoxon_clt.xml" label="Wilcoxon CLT" />
 
+		<component type="standard" id="plot_beta_clt" file="distributions/clt/plot_beta_clt.xml" label="Beta CLT" />
+		<component type="standard" id="plot_chi_squared_clt" file="distributions/clt/plot_chi_squared_clt.xml" label="Chi-squared CLT" />
+		<component type="standard" id="plot_exponential_clt" file="distributions/clt/plot_exponential_clt.xml" label="Exponential CLT" />
+		<component type="standard" id="plot_f_clt" file="distributions/clt/plot_f_clt.xml" label="F CLT" />
+		<component type="standard" id="plot_gamma_clt" file="distributions/clt/plot_gamma_clt.xml" label="Gamma CLT" />
+		<component type="standard" id="plot_logistic_clt" file="distributions/clt/plot_logistic_clt.xml" label="Logistic CLT" />
+		<component type="standard" id="plot_log_normal_clt" file="distributions/clt/plot_lognormal_clt.xml" label="Log Normal CLT" />
+		<component type="standard" id="plot_normal_clt" file="distributions/clt/plot_normal_clt.xml" label="Normal CLT" />
+		<component type="standard" id="plot_uniform_clt" file="distributions/clt/plot_uniform_clt.xml" label="Uniform CLT" />
+
 		<component type="standard" id="moment" file="analysis/moments/moment.xml" label="Moment" />
 		<component type="standard" id="bonett_test" file="analysis/moments/bonett_test.xml" label="Bonett-Seier test of Geary's kurtosis" />
 		<component type="standard" id="agostino_test" file="analysis/moments/agostino_test.xml" label="D'Agostino test of skewness" />
@@ -76,6 +86,33 @@
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
 			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="2">
+				<menu id="beta_distribution" label="Beta">
+					<entry component="plot_beta_clt" label="Beta CLT" index="2"/>
+				</menu>
+				<menu id="chi_squared_distribution" label="Chi-squared">
+					<entry component="plot_chi_squared_clt" label="Chi-squared CLT" index="2"/>
+				</menu>
+				<menu id="exponential_distribution" label="Exponential">
+					<entry component="plot_exponential_clt" label="Exponential CLT" index="2"/>
+				</menu>
+				<menu id="f_distribution" label="F">
+					<entry component="plot_f_clt" label="F CLT" index="2"/>
+				</menu>
+				<menu id="gamma_distribution" label="Gamma">
+					<entry component="plot_gamma_clt" label="Gamma CLT" index="2"/>
+				</menu>
+				<menu id="logistic_distribution" label="Logistic">
+					<entry component="plot_logistic_clt" label="Logistic CLT" index="2"/>
+				</menu>
+				<menu id="log_normal_distribution" label="Log Normal">
+					<entry component="plot_log_normal_clt" label="Log Normal CLT" index="2"/>
+				</menu>
+				<menu id="normal_distribution" label="Normal">
+					<entry component="plot_normal_clt" label="Normal CLT" index="2"/>
+				</menu>
+				<menu id="uniform_distribution" label="Uniform">
+					<entry component="plot_uniform_clt" label="Uniform CLT" index="2"/>
+				</menu>
 			</menu>
 			<menu id="univariate_discrete_distributions" label="Univariate discrete distributions" index="2">
 				<menu id="binomial_distribution" label="Binomial" index="0">
