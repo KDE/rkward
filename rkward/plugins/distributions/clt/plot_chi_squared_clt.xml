@@ -25,7 +25,8 @@
 		<connect client="normlinecol.color.enabled" governor="drawnorm.state"/>
 
 		<set id="dist_stepfun.allow_addtoplot" to="false" />
-		<set id="dist_stepfun.default_verticals" to="false" />
+		<set id="dist_stepfun.default_dopoints" to="false" />
+		<set id="dist_stepfun.default_verticals" to="true" />
 
 		<set id="col_y0.argument" to=""/>
 		<set id="col_y1.argument" to=""/>

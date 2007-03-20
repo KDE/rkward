@@ -8,7 +8,7 @@
 	</usage>
 	<settings>
 		<caption id="tab_plot_distrib_clt"/>
-		<setting id="frame_fparam">See RKWard help on <link href="rkward://component/plot_f_distribution"/>.</setting>
+		<setting id="frame_fparam">See RKWard help on <link href="rkward://component/plot_f_distribution"/>. For variance to exist we need the 'Denominator degrees of freedom' parameter to be greater than 4.</setting>
 		<setting id="nAvg"></setting>
 		<setting id="nDist"></setting>
 		<setting id="function"></setting>
