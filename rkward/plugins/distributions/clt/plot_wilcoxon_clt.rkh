@@ -29,11 +29,8 @@
 		<ul>
 			<li><link href="rkward://component/plot_binomial_clt"/></li>
 			<li><link href="rkward://component/plot_wilcoxon_distribution"/></li>
-			<li><link href="rkward://component/plot_stepfun_options"/></li>
 			<li><link href="rkward://rhelp/Wilcoxon"/></li>
 			<li><link href="rkward://rhelp/Normal"/></li>
-			<li><link href="rkward://rhelp/hist"/></li>
-			<li><link href="rkward://rhelp/rect"/></li>
 		</ul>
 	</related>
 </document>
