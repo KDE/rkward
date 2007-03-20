@@ -22,7 +22,7 @@
 
 class QComboBox;
 
-/** This RKPluginWidget provides a group of radio-buttons.
+/** This RKPluginWidget provides a drop down list of options for use in plugins
 @author Thomas Friedrichsmeier
 */
 class RKDropDown : public RKAbstractOptionSelector {
@@ -32,7 +32,7 @@ public:
 	~RKDropDown ();
 	int type () { return ComponentDropDown; };
 public slots:
-	// workaround for a qt bug
+	// workaround for a qt bug (3.3.7)
 	void comboItemActivated (int id);
 protected:
 	void setItemInGUI (int id);
