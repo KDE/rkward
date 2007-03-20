@@ -11,7 +11,7 @@
 		<setting id="freq">This is the <i>freq</i> parameter.</setting>
 		<setting id="barlabels">This is the <i>label</i> parameter.</setting>
 		<setting id="rightclosed">This is the <i>right</i> parameter.</setting>
-		<setting id="include.lowest">This is the <i>include.lowest</i> parameter.</setting>
+		<setting id="include_lowest">This is the <i>include.lowest</i> parameter.</setting>
 		<caption id="frame_breaks"/>
 		<setting id="histbreaksFunction">This is the <i>breaks</i> parameter to <b>hist</b>, unless either 'Integer numbers' or 'Vector of break points' is chosen. The 'Integer numbers' options sets the break points as the integers between the minimum and the maximum of the variable. The 'Vector of break points' options sets equally spaced break points in the range of the variable. The number of break points in this case is provided by 'Vector length' (see below).</setting>
 		<setting id="histbreaks_ncells">If 'A single number' is chosen in the above field, then this provides a suggestion to the number of cells. This is the <i>breaks</i> parameter with a single number argument.</setting>

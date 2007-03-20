@@ -29,6 +29,7 @@
 		<ul>
 			<li><link href="rkward://component/plot_binomial_distribution"/></li>
 			<li><link href="rkward://component/plot_stepfun_options"/></li>
+			<li><link href="rkward://component/histogram_options"/></li>
 			<li><link href="rkward://rhelp/Binomial"/></li>
 			<li><link href="rkward://rhelp/Normal"/></li>
 			<li><link href="rkward://rhelp/hist"/></li>
