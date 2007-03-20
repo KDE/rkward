@@ -19,8 +19,8 @@
 - new plugin: Phillips-Perron test
 - new plugin: Mood test
 - new plugins: variance tests (F test (aka var.test), Bartlett test, Flingner test)
-- new plugin: plugin pareto chart
-- new plugin: plugin stem-and-leaf plot
+- new plugin: pareto chart
+- new plugin: stem-and-leaf plot
 - make readline dialog store last size and position
 - new plugins: outlier tests (chisq.out.test, dixon.test, grubbs.test, outlier)
 - support R's mechanism for checking the C stack limits (only with R 2.3.x or greater, and not on all platforms)

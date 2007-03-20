@@ -23,9 +23,8 @@
 class QComboBox;
 
 /** This RKPluginWidget provides a group of radio-buttons.
-  *@author Thomas Friedrichsmeier
-  */
-
+@author Thomas Friedrichsmeier
+*/
 class RKDropDown : public RKAbstractOptionSelector {
 	Q_OBJECT
 public: 
@@ -38,6 +37,20 @@ protected:
 	void setItemEnabledInGUI (int id, bool enabled);
 private:
 	QComboBox *box;
+};
+
+#include <qlistbox.h>
+
+#define ID_RKDROPDOWNLISTITEM 1001
+
+/** Item used in RKDropDown. The difference to a regular QListBoxText is that the item looks different when disabled */
+class RKDropDownListItem : public QListBoxText {
+public:
+	RKDropDownListItem (QListBox *listbox, const QString &text);
+	~RKDropDownListItem () {};
+	int rtti () const { return ID_RKDROPDOWNLISTITEM; };
+protected:
+	void paint (QPainter *painter);
 };
 
 #endif

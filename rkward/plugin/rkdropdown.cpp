@@ -73,10 +73,35 @@ void RKDropDown::addOptionToGUI (const QString &label, int id) {
 void RKDropDown::setItemEnabledInGUI (int id, bool enabled) {
 	RK_TRACE (PLUGIN);
 
-	QListBoxItem *item = box->listBox ()->item (id);
+	QListBox *list = box->listBox ();
+	RK_ASSERT (list);
+	QListBoxItem *item = list->item (id);
 	RK_ASSERT (item);
 
+	if (item->rtti () != ID_RKDROPDOWNLISTITEM) {
+		// this item won't show whether it is enabled or not. We need to replace it.
+		item = new RKDropDownListItem (0, list->text (id));
+		list->changeItem (item, id);
+	}
+
 	item->setSelectable (enabled);
+}
+
+////////////////// RKDropDownListItem ////////////////////////
+
+#include <qpainter.h>
+
+RKDropDownListItem::RKDropDownListItem (QListBox *listbox, const QString &text) : QListBoxText (listbox, text) {
+	RK_TRACE (PLUGIN);
+}
+
+void RKDropDownListItem::paint (QPainter *painter) {
+	// no trace!
+	if (!isSelectable ()) {
+		painter->setPen (QColor (150, 150, 150));
+	}
+
+	QListBoxText::paint (painter);
 }
 
 #include "rkdropdown.moc"
