@@ -15,7 +15,12 @@ At the same time, R is not confined to working with just one piece of data at a 
 
 You do not need to worry about all these details. To create a new spreadsheet (data.frame), chose File->New->Dataset from the menu. All you need to do is to assign a name to this table, then you can start editing. To work with pre-existing data, chose File->Import->Load data, to load data in CSV (comma separated value) format.
 	</section>
+	<section id="use_output_external" title="How can I make use of my results in an external application?">
+In this section you will learn about some basic methods how to make use of your results in external applications.
 
+Suppose you produced a textual output from tests you performed. Such will be presented in the "output window" of RKWard. It's easy to keep track on your work since a standard of RKWard is to show everything in chronological order together with the date of creation. Important to know it that the output is HTML. From now on you have several options to process you results. You can save the complete output via "File->Save output as HTML" as HTML file to a location you want. This is the best way to keep the output, including images and tables, as it is (moreover you can view your results on any web browser). Now go to the external application and open the HTML file there.
+You can also copy and paste the area of interrest. To copy and paste it mark the desired section with the mouse. Than use the shortcut "Ctrl+C (or from the menu "Edit") to copy the selection and go to application, e.g. OpenOffice.org, and paste it there via "Ctrl+V" (or by the corresponding menu entry in the external application). Please refere to the help of the external application who to import HTML correctly.
+	</section>
 	<section id="basic_stats" title="Basic Analyses">
 In order to familiarize yourself with RKWard (or with your data), one of the first things to do might be to chose Analysis->Descriptive Statistics from the Menu. You will be presented with a dialog that allows you to select one or more variables to analyse. This looks similar to the workspace browser introduced above. On the additional tabs you can chose which types of descriptive statistics should be calculated.
 
