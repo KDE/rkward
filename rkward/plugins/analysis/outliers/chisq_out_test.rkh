@@ -10,7 +10,7 @@
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length but 30 is the limit. For the calculation missing values are removed from the data.</setting>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length. For the calculation missing values are removed from the data.</setting>
 		<caption id="tab_options"/>
 		<setting id="opposite">Check if you want not the value with largest difference from the mean, but opposite (lowest, if most suspicious is highest etc.).</setting>
 		<setting id="mean">If checked this will calculate you the arithmetic mean is an additional out put. However, this will not effect your results but is just an optional information.</setting>
