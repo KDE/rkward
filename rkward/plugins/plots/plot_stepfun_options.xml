@@ -4,6 +4,7 @@
 	<help file="plot_stepfun_options.rkh"/>
 	<logic>
 		<external id="allow_addtoplot" default="true"/>
+		<external id="default_dopoints" default="true"/>
 		<external id="default_verticals" default="false"/>
 
 		<set id="col_vert.argument" to=", col.vert="/>
@@ -15,6 +16,9 @@
 		<convert id="default_verticalsb" sources="default_verticals" mode="equals" standard="true"/>
 		<connect client="verticals.state" governor="default_verticalsb"/>
 		<connect client="col_vert.color.enabled" governor="verticals.state"/>
+
+		<convert id="default_dopointsb" sources="default_dopoints" mode="equals" standard="true"/>
+		<connect client="do_points.state" governor="default_dopointsb"/>
 		<connect client="col_points.color.enabled" governor="do_points.state"/>
 	</logic>
 	<dialog label="Step function plot options">
