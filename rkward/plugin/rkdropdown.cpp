@@ -51,11 +51,23 @@ RKDropDown::RKDropDown (const QDomElement &element, RKComponent *parent_componen
 	addOptionsAndInit (element);
 
 	vbox->addWidget (box);
-	connect (box, SIGNAL (activated (int)), this, SLOT (itemSelected (int)));
+	connect (box, SIGNAL (activated (int)), this, SLOT (comboItemActivated (int)));
 }
 
 RKDropDown::~RKDropDown(){
 	RK_TRACE (PLUGIN);
+}
+
+void RKDropDown::comboItemActivated (int id) {
+	RK_TRACE (PLUGIN);
+
+	QListBox *list = box->listBox ();
+	RK_ASSERT (list);
+	QListBoxItem *item = list->item (id);
+	RK_ASSERT (item);
+	if (!item->isSelectable ()) return;		// yes, apparently not selectable items can be "activated"
+
+	itemSelected (id);
 }
 
 void RKDropDown::setItemInGUI (int id) {

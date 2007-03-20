@@ -31,6 +31,9 @@ public:
 	RKDropDown (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKDropDown ();
 	int type () { return ComponentDropDown; };
+public slots:
+	// workaround for a qt bug
+	void comboItemActivated (int id);
 protected:
 	void setItemInGUI (int id);
 	void addOptionToGUI (const QString &label, int id);
