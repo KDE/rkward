@@ -12,7 +12,9 @@ vars <- list (<? echo ($vars); ?>)
 results <- data.frame ('Variable Name'=rep (NA, length (vars)), check.names=FALSE)
 for (i in 1:length(vars)) {
 	results[i, 'Variable Name'] <- rk.get.description (vars[[i]], is.substitute=TRUE)
-	var <- eval (vars[[i]], envir=globalenv ())
+	var <- na.omit(eval (vars[[i]], envir=globalenv ()))
+	# var_w_na is similiar to var but NAs are not removed
+	var_w_na <- eval (vars[[i]], envir=globalenv ())
 	results[i, 'Error'] <- tryCatch ({
 		# This is the core of the calculation
 		t <- dixon.test (var, type = <? getRK ("type"); ?>, opposite = <? getRK ("opposite"); ?>, two.sided = <? getRK ("two_sided"); ?>)
@@ -38,7 +40,7 @@ for (i in 1:length(vars)) {
 		results[i, 'Length'] <- length (var)
 <?	}
 	if (getRK_val ("nacount")) { ?>
-		results[i, 'NAs'] <- length (which(is.na(var)))
+		results[i, 'NAs'] <- length (which(is.na(var_w_na)))
 <? 	} ?>
 		NA				# no error
 	}, error=function (e) e$message)	# catch any errors

@@ -1,62 +1,58 @@
 <?
-	function preprocess () {
-	}
-
-	function calculate () {
-	$vars = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val ("x"))) . ")";
-
-?>
+function preprocess () { ?>
 require(outliers)
-
-rk.temp.objects <- list (<? echo ($vars); ?>)
-rk.temp.results <- data.frame ('Variable Name'=rep (NA, length (rk.temp.objects)), check.names=FALSE)
-local({
-	i=0;
-	for (sub in rk.temp.objects) {
-		i = i+1
-		rk.temp.results$'Variable Name'[i] <<- rk.get.description (sub, is.substitute=TRUE)
-		var <- na.omit (eval (sub))
-		try ({
-			rk.temp.t <- outlier (var, opposite = <? getRK ("opposite"); ?>)
-			rk.temp.results$'Outlier'[i] <<- rk.temp.t
-		})
-		<? if (getRK_val ("mean")) { ?>
-		try (rk.temp.results$'Mean'[i] <<- mean (var))
-		<? } ?>
-		<? if (getRK_val ("sd")) { ?>
-		try (rk.temp.results$'Standard Deviation'[i] <<- sd (var))
-		<? } ?>
-		<? if (getRK_val ("median")) { ?>
-		try (rk.temp.results$'Median'[i] <<- median (var))
-		<? } ?>
-		<? if (getRK_val ("min")) { ?>
-		try (rk.temp.results$'Minimum'[i] <<- min (var))
-		<? } ?>
-		<? if (getRK_val ("max")) { ?>
-		try (rk.temp.results$'Maximum'[i] <<- max (var))
-		<? } ?>
-		<? if (getRK_val ("length")) { ?>
-		try (rk.temp.results$'Length'[i] <<- length (eval (sub)))
-		<? }
-		if (getRK_val ("nacount")) { ?>
-		try (rk.temp.results$'NAs'[i] <<- length (which(is.na(eval (sub)))))
-		<? } ?>
-	}
-})
 <?
-        }
+}
+
+function calculate () {
+	$vars = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val ("x"))) . ")";
+?>
+
+vars <- list (<? echo ($vars); ?>)
+results <- data.frame ('Variable Name'=rep (NA, length (vars)), check.names=FALSE)
+for (i in 1:length(vars)) {
+	results[i, 'Variable Name'] <- rk.get.description (vars[[i]], is.substitute=TRUE)
+	var <- na.omit(eval (vars[[i]], envir=globalenv ()))
+	# var_w_na is similiar to var but NAs are not removed
+	var_w_na <- eval (vars[[i]], envir=globalenv ())
+	results[i, 'Error'] <- tryCatch ({
+		# This is the core of the calculation
+		t <- outlier (var, opposite = <? getRK ("opposite"); ?>)
+		results[i, 'Outlier'] <- t
+<?	if (getRK_val ("mean")) { ?>
+		results[i, 'Mean'] <- mean (var)
+<?	} ?>
+<?	if (getRK_val ("sd")) { ?>
+		results[i, 'Standard Deviation'] <-  sd (var)
+<?	} ?>
+<?	if (getRK_val ("median")) { ?>
+		results[i, 'Median'] <- median (var)
+<?	} ?>
+<?	if (getRK_val ("min")) { ?>
+		results[i, 'Minimum'] <- min (var)
+<?	} ?>
+<?	if (getRK_val ("max")) { ?>
+		results[i, 'Maximum'] <- max (var)
+<?	} ?>
+<?	if (getRK_val ("length")) { ?>
+		results[i, 'Length'] <- length (var)
+<?	}
+	if (getRK_val ("nacount")) { ?>
+		results[i, 'NAs'] <- length (which(is.na(var_w_na)))
+<? 	} ?>
+		NA				# no error
+	}, error=function (e) e$message)	# catch any errors
+}
+if (all (is.na (results$'Error'))) results$'Error' <- NULL
+<?
+}
 
 function printout () {
 ?>
 rk.header ("Outlier",
 	parameters=list ("Opposite", "<? getRK ("opposite"); ?>"))
-rk.results (rk.temp.results)
+rk.results (results)
 <?
 }
 
-function cleanup () {
-?>
-rm (list=grep ("^rk.temp", ls (), value=TRUE))
-<?
-}
 ?>
