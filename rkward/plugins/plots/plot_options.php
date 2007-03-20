@@ -107,6 +107,4 @@ function printout () {
 	echo ($options);
 }
 
-function cleanup () {
-}
 ?>

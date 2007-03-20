@@ -30,8 +30,7 @@ x <- table (<? echo ($vars); ?>, exclude=NULL)
 x <- <? echo ($vars); ?>
 
 if (!is.numeric (x)) {
-       rk.print ("Data may not be numeric, but proceeding as requested.\nDid you
-forget to check the tabulate option?")
+       rk.print ("Data may not be numeric, but proceeding as requested.\nDid you forget to check the tabulate option?")
 }
 <?      } ?>
 
