@@ -6,14 +6,8 @@
 		<set id="plotoptions.allow_log" to="false"/>
 		<set id="plotoptions.allow_type" to="false"/>
 
-		<convert id="regular_density_plot" mode="equals" sources="plot_type.string" standard="density_plot"/>
-		<connect client="kern.enabled" governor="regular_density_plot"/>
 		<convert id="gaussian_kernel" mode="equals" sources="kern.string" standard="gaussian"/>
-		<convert id="bw_type_enabled" mode="and" sources="kern.enabled;gaussian_kernel"/>
-		<connect client="bw.enabled" governor="bw_type_enabled"/>
-		<connect client="adjust.enabled" governor="regular_density_plot"/>
-		<connect client="narm.enabled" governor="regular_density_plot"/>
-		<connect client="n.enabled" governor="regular_density_plot"/>
+		<connect client="bw.enabled" governor="gaussian_kernel"/>
 
 		<connect client="rug_ticksize.enabled" governor="rug.state"/>
 		<connect client="rug_lwd.enabled" governor="rug.state"/>

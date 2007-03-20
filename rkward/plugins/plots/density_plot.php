@@ -33,6 +33,10 @@ function doPrintout ($final) {
 	}
 	$dorug = getRK_val ("rug");
 
+	$density_call = "density(" . $x;
+	if (!empty ($bw)) $density_call .= ", bw=\"" . $bw . "\"";
+	$density_call .= ", adjust=" . $adjust . ", kern=\"" . $kern . "\", n=" . $resolution . ", " . $narm . ")";
+
 	if ($final) {
 		if ($dodensity_plot) { ?>
 rk.header ("Density Plot", list ("Variable", rk.get.description (<? echo ($x); ?>)<? if (!empty ($bw)) { ?>, "Band Width", "<? echo ($bw); ?>"<? } ?>, "Adjust", <? echo ($adjust) ?>, "Remove Missing Values", <? echo ($narm) ?>, "Length", length (<? echo ($x); ?>), "Resolution", <? echo ($resolution); ?>, "Smoothing Kernel", "<? echo ($kern); ?>"))
@@ -45,9 +49,9 @@ rk.graph.on ()
 		?>
 try ({
 <?	if ($dodensity_plot) { ?>
-	plot (density(<? echo ($x); if (!empty ($bw)) echo (", bw=\"" . $bw . "\""); ?>, adjust = <? echo ($adjust); ?>, kern = "<? echo ($kern); ?>", n = <? echo ($resolution); ?>, <? echo ($narm); ?>)<? getRK ("plotoptions.code.printout"); ?>)
+	plot(<? echo ($density_call); getRK ("plotoptions.code.printout"); ?>)
 <?	} else { ?>
-	hdr.den(<? echo ($x); ?><? getRK ("plotoptions.code.printout"); ?>)
+	hdr.den(<? echo ($x); ?>, den=<? echo ($density_call); getRK ("plotoptions.code.printout"); ?>)
 <?	}
 	if ($dorug) { ?>
 	rug(<? echo ($x); ?>, <? getRK ("rug_ticksize"); ?>, <? getRK ("rug_lwd"); ?>, <? getRK ("rug_side"); ?><? getRK ("rug_col.code.printout"); ?>)
