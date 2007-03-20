@@ -19,12 +19,12 @@
 		<setting id="kern">Smoothing kernel to use. See <link href="rkward://rhelp/density"/> for details on the available kernels.</setting>
 		<setting id="bw">Mode of chosing bandwith. This is only applicable for gaussian smoothing kernels. This is the <i>bw</i> option of <link href="rkward://rhelp/density">density()</link>.</setting>
 		<setting id="adjust">Factor to adjust the bandwith by.</setting>
-		<setting id="narm">Whether missing values should be removed. Otherwise there will be an error during density estimation.</setting>
-		<setting id="n">Resolution of the density estimation, i.e. the number of points at which the density is estimated.</setting>
+		<setting id="narm">Whether missing values should be removed. Otherwise missing values lead to an error during density estimation.</setting>
+		<setting id="n">Resolution of the density estimation, i.e. the number of (equally spaced) points at which the density is estimated.</setting>
 
 		<caption id="frame_rug"/>
 		<setting id="rug">Should a rug be added to the plot?</setting>
-		<setting id="rug_ticksize">Height of the rug ticks, where 1 corresponds to the height of the plot window.</setting>
+		<setting id="rug_ticksize">Height of the rug ticks, where 1 corresponds to the height of the entire plot.</setting>
 		<setting id="rug_lwd">Line width of the rug.</setting>
 		<setting id="rug_side">Should the rug be shown at the top or at the bottom of the plot?</setting>
 		<setting id="rug_col">Color to use for drawing the rug.</setting>
