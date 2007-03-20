@@ -10,7 +10,7 @@
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length but 30 is the limit.</setting>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length but there is a limit.</setting>
 		<caption id="tab_options"/>
 		<setting id="type">This is specyfying the variant of test to be performed. Please refere to the R-help here.</setting>
 		<setting id="two_sided">Here you can specify the alternative hypothesis. It must be one of "two-sided" or "not two-sided"</setting>
