@@ -21,6 +21,7 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qcombobox.h>
+#include <qlistbox.h>
 
 #include <klocale.h>
 
@@ -28,14 +29,8 @@
 #include "../misc/xmlhelper.h"
 #include "../debug.h"
 
-RKDropDown::RKDropDown (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
+RKDropDown::RKDropDown (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKAbstractOptionSelector (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
-
-	// create and register properties
-	addChild ("string", string = new RKComponentPropertyBase (this, false));
-	connect (string, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyChanged (RKComponentPropertyBase *)));
-	addChild ("number", number = new RKComponentPropertyInt (this, true, -1));
-	connect (number, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyChanged (RKComponentPropertyBase *)));
 
 	// get xml-helper
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
@@ -48,26 +43,12 @@ RKDropDown::RKDropDown (const QDomElement &element, RKComponent *parent_componen
 
 	// create ComboBox
 	box = new QComboBox (false, this);
-
-	// create all the options
-	XMLChildList option_elements = xml->getChildElements (element, "option", DL_ERROR);	
-	int selected = 0;
-	int i = 0;
-	for (XMLChildList::const_iterator it = option_elements.begin (); it != option_elements.end (); ++it) {
-		box->insertItem (xml->getStringAttribute (*it, "label", QString::null, DL_ERROR));
-		options.insert (i, xml->getStringAttribute (*it, "value", QString::null, DL_WARNING));
-
-		if (xml->getBoolAttribute (*it, "checked", false, DL_INFO)) {
-			selected = i;
-		}
-
-		++i;
+	if (!(box->listBox ())) {
+		// make sure the combo box uses a list box internally
+		box->setListBox (new QListBox (this));
 	}
 
-	updating = false;
-	number->setIntValue (selected);			// will also take care of activating the corret item
-	number->setMin (0);
-	number->setMax (i-1);
+	addOptionsAndInit (element);
 
 	vbox->addWidget (box);
 	connect (box, SIGNAL (activated (int)), this, SLOT (itemSelected (int)));
@@ -77,42 +58,25 @@ RKDropDown::~RKDropDown(){
 	RK_TRACE (PLUGIN);
 }
 
-void RKDropDown::propertyChanged (RKComponentPropertyBase *property) {
+void RKDropDown::setItemInGUI (int id) {
 	RK_TRACE (PLUGIN);
 
-	if (updating) return;
-
-	int new_id = -1;
-	if (property == string) {
-		new_id = findOption (string->value ());
-	} else if (property == number) {
-		new_id = number->intValue ();
-	} else {
-		RK_ASSERT (false);
-	}
-
-	updating = true;
-	box->setCurrentItem (new_id);
-	itemSelected (new_id);		// slot not called automatically on programmed changes!
-	updating = false;
-
-	changed ();
+	box->setCurrentItem (id);
 }
 
-void RKDropDown::itemSelected (int id) {
+void RKDropDown::addOptionToGUI (const QString &label, int id) {
 	RK_TRACE (PLUGIN);
 
-	string->setValue (options[id]);
-	number->setIntValue (id);
+	box->insertItem (label, id);
 }
 
-int RKDropDown::findOption (const QString &option_string) {
+void RKDropDown::setItemEnabledInGUI (int id, bool enabled) {
 	RK_TRACE (PLUGIN);
 
-	for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
-		if (it.data () == option_string) return (it.key ());
-	}
-	return -1;
-}  
+	QListBoxItem *item = box->listBox ()->item (id);
+	RK_ASSERT (item);
+
+	item->setSelectable (enabled);
+}
 
 #include "rkdropdown.moc"
