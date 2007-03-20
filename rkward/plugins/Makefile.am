@@ -37,6 +37,7 @@ dist_pluginsXplots_DATA = \
 	plots/scatterplot_matrix.rkh \
 	plots/color_chooser.xml \
 	plots/color_chooser.rkh \
+	plots/density_plot.rkh \
 	plots/pareto.php \
 	plots/pareto.xml \
 	plots/pareto.rkh \

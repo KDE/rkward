@@ -1,6 +1,8 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="density_plot.php" />
+	<help file="density_plot.rkh" />
+	
 	<logic>
 		<connect client="plotoptions.xvar" governor="x.available"/>
 		<set id="plotoptions.allow_log" to="false"/>
@@ -25,7 +27,7 @@
 	</logic>
 	<dialog label="Density Plot" >
 		<tabbook>
-			<tab label="Variable(s)" >
+			<tab label="Variable(s)" id="tab_vars">
 				<row>
 					<varselector id="vars" />
 					<column>
@@ -35,14 +37,14 @@
 					</column>
 				</row>
 			</tab>
-			<tab label="Options" >
+			<tab label="Options" id="tab_options">
 				<row>
 					<column>
 						<radio id="plot_type" label="type of plot">
 							<option value="density_plot" checked="true" label="plot normal density"/>
 							<option value="hdr_plot" label="plot highest density regions"/>
 						</radio>
-						<frame id="normal_density_opts" label="density estimation options">
+						<frame id="frame_density_opts" label="density estimation options">
 							<row>
 								<column>
 									<dropdown id="kern" label="Smoothing Kernel">
@@ -62,7 +64,7 @@
 										<option value="SJ-ste" label="SJ-ste"/>
 										<option value="SJ-dpi" label="SJ-dpi"/>
 									</dropdown>
-									<spinbox type="real" id="adjust" label="Adjust Bandwidth" initial="1"/>
+									<spinbox type="real" min="0.00001" id="adjust" label="Adjust Bandwidth" initial="1"/>
 									<stretch/>
 								</column>
 								<column>
@@ -74,10 +76,10 @@
 						</frame>
 					</column>
 					<column>
-						<frame label="Rug">
+						<frame label="Rug" id="frame_rug">
 							<checkbox value_unchecked="0" value="1" checked="false" id="rug" label="Add rug" />
-							<spinbox initial="0.03" id="rug_ticksize" label="Ticksize" />
-							<spinbox initial="0.5" id="rug_lwd" label="Line width of ticks" />
+							<spinbox min="0" initial="0.03" id="rug_ticksize" label="Ticksize" />
+							<spinbox min="0" initial="0.5" id="rug_lwd" label="Line width of ticks" default_precision="0"/>
 							<radio label="Side of Rug" id="rug_side">
 								<option value="side = 1" label="Rug on Bottom" />
 								<option value="side = 3" label="Rug on Top" />
@@ -88,7 +90,7 @@
 					</column>
 				</row>
 			</tab>
-			<tab label="Axis/Title">
+			<tab label="Axis/Title" id="tab_plotoptions">
 				<row>
 					<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
 					<stretch/>
