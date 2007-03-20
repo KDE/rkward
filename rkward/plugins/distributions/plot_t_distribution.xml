@@ -24,7 +24,7 @@
 						<row>
 							<frame label="Parameters">
 								<spinbox default_precision="2" type="real" id="df" min="0.01" initial="1" label="Degrees of freedom" />
-								<spinbox default_precision="2" type="real" id="ncp" min="0" initial="0" label="Non-centrality parameter" />
+								<spinbox default_precision="2" type="real" id="ncp" initial="0" label="Non-centrality parameter" />
 							</frame>
 						</row>
 					</column>
