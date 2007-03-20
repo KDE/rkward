@@ -37,12 +37,11 @@ function doPrintout ($final) {
 	if (!empty ($bw)) $density_call .= ", bw=\"" . $bw . "\"";
 	$density_call .= ", adjust=" . $adjust . ", kern=\"" . $kern . "\", n=" . $resolution . ", " . $narm . ")";
 
-	if ($final) {
-		if ($dodensity_plot) { ?>
-rk.header ("Density Plot", list ("Variable", rk.get.description (<? echo ($x); ?>)<? if (!empty ($bw)) { ?>, "Band Width", "<? echo ($bw); ?>"<? } ?>, "Adjust", <? echo ($adjust) ?>, "Remove Missing Values", <? echo ($narm) ?>, "Length", length (<? echo ($x); ?>), "Resolution", <? echo ($resolution); ?>, "Smoothing Kernel", "<? echo ($kern); ?>"))
-<?		} else { ?>
-rk.header ("Highest density regions", list ("Variable", rk.get.description (<? echo ($x); ?>)))
-<?		} ?>
+	if ($dodensity_plot) $title = "Density Plot";
+	else $title = "Highest density regions";
+
+	if ($final) { ?>
+rk.header ("<? echo ($title); ?>", list ("Variable", rk.get.description (<? echo ($x); ?>)<? if (!empty ($bw)) { ?>, "Band Width", "<? echo ($bw); ?>"<? } ?>, "Adjust", <? echo ($adjust) ?>, "Remove Missing Values", <? echo ($narm) ?>, "Length", length (<? echo ($x); ?>), "Resolution", <? echo ($resolution); ?>, "Smoothing Kernel", "<? echo ($kern); ?>"))
 
 rk.graph.on ()
 <?	}
@@ -51,7 +50,7 @@ try ({
 <?	if ($dodensity_plot) { ?>
 	plot(<? echo ($density_call); getRK ("plotoptions.code.printout"); ?>)
 <?	} else { ?>
-	hdr.den(<? echo ($x); ?>, den=<? echo ($density_call); getRK ("plotoptions.code.printout"); ?>)
+	hdr.den(den=<? echo ($density_call); getRK ("plotoptions.code.printout"); ?>)
 <?	}
 	if ($dorug) { ?>
 	rug(<? echo ($x); ?>, <? getRK ("rug_ticksize"); ?>, <? getRK ("rug_lwd"); ?>, <? getRK ("rug_side"); ?><? getRK ("rug_col.code.printout"); ?>)

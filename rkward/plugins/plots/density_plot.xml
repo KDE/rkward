@@ -6,6 +6,15 @@
 		<set id="plotoptions.allow_log" to="false"/>
 		<set id="plotoptions.allow_type" to="false"/>
 
+		<!-- only gaussian kernel works for highest density regions plot -->
+		<convert id="is_normal_density_plot" mode="equals" sources="plot_type.string" standard="density_plot"/>
+		<connect client="kern.rectangular.enabled" governor="is_normal_density_plot"/>
+		<connect client="kern.triangular.enabled" governor="is_normal_density_plot"/>
+		<connect client="kern.epanechnikov.enabled" governor="is_normal_density_plot"/>
+		<connect client="kern.biweight.enabled" governor="is_normal_density_plot"/>
+		<connect client="kern.cosine.enabled" governor="is_normal_density_plot"/>
+		<connect client="kern.optcosine.enabled" governor="is_normal_density_plot"/>
+
 		<convert id="gaussian_kernel" mode="equals" sources="kern.string" standard="gaussian"/>
 		<connect client="bw.enabled" governor="gaussian_kernel"/>
 
@@ -38,12 +47,12 @@
 								<column>
 									<dropdown id="kern" label="Smoothing Kernel">
 										<option value="gaussian" label="gaussian (default)"/>
-										<option value="rectangular" label="rectangular"/>
-										<option value="triangular" label="triangular"/>
-										<option value="epanechnikov" label="epanechnikov"/>
-										<option value="biweight" label="biweight"/>
-										<option value="cosine" label="cosine"/>
-										<option value="optcosine" label="optcosine"/>
+										<option id="rectangular" value="rectangular" label="rectangular"/>
+										<option id="triangular" value="triangular" label="triangular"/>
+										<option id="epanechnikov" value="epanechnikov" label="epanechnikov"/>
+										<option id="biweight" value="biweight" label="biweight"/>
+										<option id="cosine" value="cosine" label="cosine"/>
+										<option id="optcosine" value="optcosine" label="optcosine"/>
 									</dropdown>
 									<dropdown id="bw" label="Bandwidth">
 										<option value="nrd0" label="nrd0"/>
