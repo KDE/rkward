@@ -3,8 +3,10 @@
 	<title>RKWard Shortcut keys</title>
 	<summary>
 	You can control RKWard in many situations without using a mouse device, using only the keyboard.
+
+	Besides the (currently) static RKWard specific short cuts you can optionally configure those in RKWards script editor. The script editor uses <link href="http://kate-editor.org/katepart">KatePart</link> as basic technology and thus makes it a very powerfull editor. If the script editor is open go to menu 'Settings->Edit editor->Short cuts' and configure the editor according to your needs.
 	</summary>
-	<section title="Default Shortcut keys" id="default_shortcut_keys">
+	<section title="RKWard Default Shortcut keys" id="default_shortcut_keys">
 		<table>
 			<tr colspan="2"><td><b>File Menu</b></td></tr>
 			<tr><td>Create new script</td><td>Ctrl + N</td></tr>
