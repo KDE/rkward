@@ -24,7 +24,7 @@ function doPrintout ($final) {
 	$vertical = getRK_val ("vertical");
 
 	if ($final) { ?>
-rk.header ("Stripchart", list ("Variable", rk.get.description (<? echo ($x); ?>), "Method", <? echo ($method); ?>, "Jitter", <? echo ($jitter); ?>, "Plot drawn vertically", <? echo ($vertical); ?>, "Offset", <? echo ($offset); ?>))
+rk.header ("Stripchart", list ("Variable", rk.get.description (<? echo ($x); ?>), "Group", rk.get.description (<? echo ($g); ?>), "Method", <? echo ($method); ?>, "Jitter", <? echo ($jitter); ?>, "Plot drawn vertically", <? echo ($vertical); ?>, "Offset", <? echo ($offset); ?>))
 
 rk.graph.on ()
 <?	} ?>
