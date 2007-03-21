@@ -35,7 +35,7 @@
 				<embed id="stepfun_options" component="rkward::plot_stepfun_options" label="Step function plot options"/>
 				<stretch/>
 			</tab>
-			<tab label="Futher options" id="tab_further_opts">
+			<tab label="Further options" id="tab_further_opts">
 				<frame label="Theoretical Normal Distribution">
 					<checkbox value_unchecked="0" value="1" checked="true" id="th_pnorm" label="Draw Theoretical Normal Distribution" />
 					<embed id="col_thnorm" component="rkward::color_chooser" label="Color"/>
