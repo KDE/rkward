@@ -26,7 +26,7 @@
 
 		<set id="dist_stepfun.allow_addtoplot" to="false" />
 		<set id="dist_stepfun.default_dopoints" to="false" />
-		<set id="dist_stepfun.default_verticals" to="true" />
+		<set id="dist_stepfun.visible_col01line" to="true"/>
 
 		<set id="col_y0.argument" to=""/>
 		<set id="col_y1.argument" to=""/>
@@ -78,14 +78,6 @@
 
 			<tab id="tab_distfunction" label="ECDF options">
 				<embed id="dist_stepfun" component="rkward::plot_stepfun_options" label=""/>
-				<row>
-						<frame id="frame_col_y0" label="For y = 0 line">
-							<embed id="col_y0" component="rkward::color_chooser" label="Color"/>
-						</frame>
-						<frame id="frame_col_y1" label="For y = 1 line">
-							<embed id="col_y1" component="rkward::color_chooser" label="Color"/>
-						</frame>
-				</row>
 				<stretch/>
 			</tab>
 
