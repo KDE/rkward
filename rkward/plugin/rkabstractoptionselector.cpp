@@ -72,9 +72,9 @@ void RKAbstractOptionSelector::addOptionsAndInit (const QDomElement &element) {
 	}
 
 	updating = false;
-	number->setIntValue (selected);		// will also take care of activating the correct item
 	number->setMin (0);
 	number->setMax (i-1);
+	number->setIntValue (selected);		// will also take care of activating the correct item
 }
 
 RKComponentBase* RKAbstractOptionSelector::lookupComponent (const QString &identifier, QString *remainder) {
@@ -115,6 +115,10 @@ void RKAbstractOptionSelector::propertyChanged (RKComponentPropertyBase *propert
 		new_id = number->intValue ();
 	} else {
 		RK_ASSERT (false);
+	}
+	if (new_id < 0) {
+		RK_DO (qDebug ("no such option"), PLUGIN, DL_ERROR);
+		return;
 	}
 
 	updating = true;
