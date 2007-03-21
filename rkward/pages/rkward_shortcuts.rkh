@@ -37,12 +37,12 @@
 			<tr><td>Next Window</td><td>Alt + > or Alt + .</td></tr>
 			<tr><td>Left Window</td><td>Ctrl + &lt; or Ctrl + ,</td></tr>
 			<tr><td>Right Window</td><td>Ctrl + > or Ctrl + .</td></tr>
-			<tr><td>Activate Document view</td><td>Alt + 0</td></tr><tr>
-			<tr><td>Show/Hide Workspace Browser</td><td>Alt + 1</td></tr><tr>
-			<tr><td>Show/Hide Command Log</td><td>Alt + 2</td></tr><tr>
-			<tr><td>Show/Hide Pending Jobs</td><td>Alt + 3</td></tr><tr>
-			<tr><td>Show/Hide Console</td><td>Alt + 4</td></tr><tr>
-			<tr><td>Show/Hide R Help Search</td><td>Alt + 5</td></tr><tr>
+			<tr><td>Activate Document view</td><td>Alt + 0</td></tr>
+			<tr><td>Show/Hide Workspace Browser</td><td>Alt + 1</td></tr>
+			<tr><td>Show/Hide Command Log</td><td>Alt + 2</td></tr>
+			<tr><td>Show/Hide Pending Jobs</td><td>Alt + 3</td></tr>
+			<tr><td>Show/Hide Console</td><td>Alt + 4</td></tr>
+			<tr><td>Show/Hide R Help Search</td><td>Alt + 5</td></tr>
 
 			<tr colspan="2"><td><b>Help Menu</b></td></tr>
 			<tr><td>Start Help</td><td>F1</td></tr>
