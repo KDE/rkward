@@ -4,7 +4,9 @@
 	<help file="grid.rkh" />
 	<logic>
 		<external id="devnum"/>
-		<external id="is_embed" default="false"/>
+		<external id="context" default=""/>
+		<!-- if we're not in the X11 context, we're embedded -->
+		<convert id="is_embed" mode="equals" sources="context" standard=""/>
 
 		<convert id="nx_other" sources="nx.string" mode="equals" standard="other"/>
 		<connect client="nx_cells.enabled" governor="nx_other"/>

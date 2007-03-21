@@ -1,12 +1,14 @@
 <?php
 function preprocess () {
+	if (getRK_val ("is_embed")) { ?>
+dev.set (<? getRK ("devnum"); ?>)
+<?	}
 }
+
 function calculate () {
-	global $gridoptions;
-	global $is_embed;
+}
 
-	$is_embed = getRK_val ("is_embed");
-
+function printout () {
 	$nx = getRK_val ("nx");
 	if ($nx == "other") $gridoptions = 'nx=' . getRK_val ("nx_cells");
 	else $gridoptions = 'nx=' . $nx;
@@ -23,16 +25,8 @@ function calculate () {
 	if ($lty != "") $gridoptions .= ", lty=\"{$lty}\"";
 
 	if (!getRK_val("equilogs")) $gridoptions .= ', equilogs=FALSE';
-	if ($is_embed=="false") {
 ?>
-dev.set (<? getRK ("devnum"); ?>)
 grid(<? echo ($gridoptions); ?>);
 <?
-	}
-}
-function printout () {
-	global $gridoptions;
-	global $is_embed;
-	if ($is_embed=="true") echo ("grid(" . $gridoptions . ")");
 }
 ?>

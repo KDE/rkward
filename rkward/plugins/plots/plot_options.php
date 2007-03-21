@@ -16,6 +16,9 @@ function preprocess () {
 }
 
 function calculate () {
+	if (getRK_val ("grid_enable") == "true") {
+		getRK ("grid_options.code.printout");
+	}
 }
 
 function printout () {
