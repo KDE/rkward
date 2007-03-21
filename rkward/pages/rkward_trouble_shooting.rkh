@@ -30,7 +30,7 @@
 		Therefore it's important you know the test. Moreover it's very important to save the workspace and other sections you worked on before you do such operations. There is currently no recovery functionality within RKWard in case of a crash! You can find build-in tests from R to address this memory issue (see: <link href="rkward://rhelp/mem.limits" />, and <link href="rkward://rhelp/memory.limit" />).
 	</section>
 	<section title="I think I did something wrong? Where is 'Undo' and 'Redo'?" shorttitle="Undo/Redo" id="undo_redo_problems">
-		Right now RKWard doesn't have any "undo" or "redo" functionality. Therefore it's important that you know what you do before you start. It's recommended to use copies of original data and to give everything a meaningful name.
+		Right now RKWard doesn't have any "undo" or "redo" functionality in all places. For example there is such functionality for the script editor. But there is no undo or redo for finished plots or tests. Therefore it's important that you know what you do before you start. It's recommended to use copies of original data and to give everything a meaningful name.
 
 		However, RKWard tries to give you as much information as possible about things you have done. For example all test and plots show the specific settings in combination with the creation date. Moreover you can check and copy any code generated for your documentation purposes
 
