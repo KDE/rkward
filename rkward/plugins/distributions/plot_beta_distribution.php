@@ -1,11 +1,14 @@
 <?
-	function preprocess () {
-	}
+function preprocess () {
+}
 
-	function calculate () {
-	}
+function calculate () {
+	global $gridoptions;
+	$gridoptions = "";
+	if (getRK_val ("plotoptions.add_grid")) $gridoptions = "try(" . getRK_val ("plotoptions.grid_options.code.printout") . ")";
+}
 
-	function printout () {
+function printout () {
 	doPrintout (true);
 }
 
@@ -20,6 +23,7 @@ function preview () {
 }
 
 function doPrintout ($final) {
+	global $gridoptions;
 
 	$fun = getRK_val ("function");
 	$log_option = "";
@@ -55,6 +59,7 @@ rk.graph.on ()
 <? }
 ?>
 try (curve (<? echo ($fun); ?> (x, shape1 = <? echo ($a); ?>, shape2 = <? echo ($b); ?>, ncp = <? echo ($ncp); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?><? getRK ("plotoptions.code.printout"); ?>))
+<? echo ($gridoptions); ?>
 
 <?	if ($final) { ?>
 rk.graph.off ()

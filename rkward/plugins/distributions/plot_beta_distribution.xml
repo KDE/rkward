@@ -6,6 +6,7 @@
 		<convert id="dodist" mode="equals" sources="function.string" standard="pbeta" />
 		<connect client="lower.enabled" governor="dodist" />
 		<set id="plotoptions.allow_log" to="false"/>
+		<set id="plotoptions.allow_grid" to="true"/>
 	</logic>
 	<dialog label="Plot Beta probabilities" >
 		<tabbook>

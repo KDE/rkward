@@ -5,14 +5,14 @@
 	<logic>
 		<external id="xvar" default="" />
 		<external id="yvar" default="" />
-		
+
 		<external id="default_pointtype" default="" />
 		<external id="default_pointcolor" default="" />
 		<external id="default_main" default="" />
 		<external id="default_sub" default="" />
 		<external id="default_xlab" default="" />
 		<external id="default_ylab" default="" />
-		
+
 		<external id="allow_log" default="true" />
 		<external id="allow_type" default="true" />
 		<external id="allow_aspect" default="false" />
@@ -58,8 +58,15 @@
 		<connect client="aspectratio.visible" governor="allow_aspect"/>
 		<connect client="pointtypepage.visible" governor="allow_type"/>
 		<connect client="pointtype.string" governor="default_pointtype" />
-		
+
 		<connect client="pointcolor.default_color" governor="default_pointcolor" />
+
+		<external id="allow_grid" default="false" />
+		<connect client="add_grid.visible" governor="allow_grid"/>
+		<connect client="tab_grid.visible" governor="allow_grid"/>
+		<convert id="tab_grid_enable" sources="allow_grid;add_grid.state" mode="and" standard="true"/>
+		<connect client="tab_grid.enabled" governor="tab_grid_enable" />
+		<set id="grid_options.is_embed" to="true"/>
 	</logic>
 	<dialog label="Default plot options" >
 		<tabbook>
@@ -124,6 +131,7 @@
 					<option value="S" label="Step-function plots: the right edge defines the point" />
 				</dropdown>
 				<embed id="pointcolor" component="rkward::color_chooser" label="Color" />
+				<checkbox id="add_grid" label="Add Grid to the plot" value="1" value_unchecked="0"/>
 				<stretch/>
 			</tab>
 			<tab id="aspectratio" label="Aspect ratio y/x">
@@ -133,6 +141,9 @@
 					<text>The special case Aspect == 1 produces plots where distances between points are represented accurately on screen. Values with Aspect > 1 can be used to produce more accurate maps when using latitufile and longitude.</text>
 					<stretch/>
 				</column>
+			</tab>
+			<tab id="tab_grid" label="Grid">
+				<embed id="grid_options" component="rkward::x11grid"/>
 			</tab>
 		</tabbook>
 	</dialog>

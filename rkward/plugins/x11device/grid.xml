@@ -4,6 +4,7 @@
 	<help file="grid.rkh" />
 	<logic>
 		<external id="devnum"/>
+		<external id="is_embed" default="false"/>
 
 		<convert id="nx_other" sources="nx.string" mode="equals" standard="other"/>
 		<connect client="nx_cells.enabled" governor="nx_other"/>
@@ -36,7 +37,7 @@
 				<checkbox id="equilogs" label="Equilogs" checked="true"/>
 		</row>
 		<row>
-				<spinbox id="lwd" label="Line width" min="0" initial="0.1"/>
+				<spinbox id="lwd" type="integer" label="Line width" min="1" initial="1"/>
 				<dropdown id="linetype" label="Line type" >
 					<option value="" label="Default" checked="true"/>
 					<option value="solid" label="Solid"/>
@@ -48,5 +49,6 @@
 				</dropdown>
 				<embed id="col" component="rkward::color_chooser" label="Color"/>
 		</row>
+	<stretch/>
 	</dialog>
 </document>
