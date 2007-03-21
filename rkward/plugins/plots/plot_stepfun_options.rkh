@@ -11,7 +11,7 @@
 		<setting id="linetype">This is the <i>lty</i> argument.</setting>
 		<setting id="do_points">This is the <i>do.points</i> argument. Uncheck this option if points are NOT to be drawn.</setting>
 		<setting id="col_points">This is the <i>col.points</i> argument. Leave this as 'default' for using the standard color settings from par().</setting>
-		<setting id="col_horiz">This is the <i>col.hor</i> argument.</setting>
+		<setting id="frame_col_horiz">This is the <i>col.hor</i> argument.</setting>
 		<setting id="verticals">This is the <i>verticals</i> arguments. Uncheck this option if vertical lines are NOT to be drawn.</setting>
 		<setting id="col_vert">This is the <i>col.vert</i> argument.</setting>
 		<setting id="frame_col_y0"></setting>

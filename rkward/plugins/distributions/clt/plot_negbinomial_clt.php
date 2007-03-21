@@ -52,17 +52,8 @@ function doPrintout ($final) {
 		$histplotoptions = getRK_val ("histogram_opt.code.printout"); // options that goes into plot.histogram()
 		$histplotoptions .= $plotoptions; // generic plot options
 	} elseif ($fun == "dist") {
-		$ecdfoptions = "";
-		$col_y0 = getRK_val ("col_y0.code.printout");
-		$col_y1 = getRK_val ("col_y1.code.printout");
-		if (($col_y0 != "") && ($col_y1 != "")) {
-			$ecdfoptions .= ", col.01line=c({$col_y0},{$col_y1})";
-		} elseif (($col_y0 != "") || ($col_y1 != "")) {
-			$ecdfoptions .= ", col.01line={$col_y0}{$col_y1}";
-		} // col.01line option to plot.ecdf()
-
 		$normFun = "pnorm"; // draw normal cdf on the ecdf plot
-		$plotoptions .= $ecdfoptions . getRK_val ("dist_stepfun.code.printout"); // plot.ecdf() and plot.stepfun() options
+		$plotoptions .= getRK_val ("dist_stepfun.code.printout"); // plot.ecdf() and plot.stepfun() options
 	}
 
 	$yLim = ""; // initialise the ylim option

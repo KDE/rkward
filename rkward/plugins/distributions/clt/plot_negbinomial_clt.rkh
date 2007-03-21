@@ -22,8 +22,6 @@
 		<setting id="histogram_opt">See Binomial CLT for details.</setting>
 		<caption id="tab_distfunction"/>
 		<setting id="dist_stepfun">See Binomial CLT for details.</setting>
-		<setting id="frame_col_y0"></setting>
-		<setting id="frame_col_y1">See Binomial CLT for details.</setting>
 	</settings>
 	<related>
 		<ul>

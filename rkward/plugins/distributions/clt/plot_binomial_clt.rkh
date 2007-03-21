@@ -22,8 +22,6 @@
 		<setting id="histogram_opt">The 'Frequency' checkbox is unavailable because, in this situation, drawing the histogram with <i>freq=TRUE</i> doesnot make sense. Also, since histogram is the main plot, 'Add to current plot' checkbox has also been disabled. See RKWard help on <link href="rkward://component/histogram_options"/> for other histogram centric details.</setting>
 		<caption id="tab_distfunction"/>
 		<setting id="dist_stepfun" label="Stepfunction options">See the help on the <link href="rkward://component/plot_stepfun_options"/> plugin. The 'Add to current plot' option is unavailable.</setting>
-		<setting id="frame_col_y0"></setting>
-		<setting id="frame_col_y1"> The above two options are used to set the color for the horizontal lines at y = 0 and y = 1 respectively. Specifically, this is the <i>col.01line</i> argument to <b>ecdf</b>. If only the one is provided (i.e the other is set as 'Default') then both the line are of the specified color. Otherwise (i.e., when both the colors are provided) both the colors are provided as a character vector.</setting>
 	</settings>
 	<related>
 		<ul>
