@@ -15,6 +15,7 @@
 		<caption id="tab_options"/>
 		<setting id="length">If checked, the length of the data vectors will be shown. However, this will not effect your results but is just an optional information.</setting>
 		<setting id="nacount">If checked, and in case of missing values this will show you the number of those. However, this will not effect your results but is just an optional information.</setting>
+		<setting id="show_alternative">If checked, a verbose description of the alternative hypothesis will be shown along with the results</setting>
 	</settings>
 	<related>
 		<ul>

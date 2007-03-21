@@ -14,15 +14,17 @@
 						<varslot type="numeric" id="x" multi="true" source="vars" required="true" label="variable(s):"/>
 						<radio id="alternative" label="using test hypothesis">
 							<option value="two.sided" label="Two-sided"/>
-							<option value="greater" label="First is greater"/>
-							<option value="less" label="Second is greater"/>
+							<option value="greater" label="greater"/>
+							<option value="less" label="less"/>
 						</radio>
 					</column>
 				</row>
 			</tab>
 			<tab id="tab_options" label="Options">
 				<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
-				<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="false" />
+				<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="true" />
+				<checkbox id="show_alternative" label="Verbose alternative hypothesis" value_unchecked="0" value="1" checked="true"/>
+				<stretch/>
 			</tab>
 		</tabbook>
 	</dialog>
