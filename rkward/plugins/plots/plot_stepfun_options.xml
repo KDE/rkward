@@ -5,7 +5,8 @@
 	<logic>
 		<external id="allow_addtoplot" default="true"/>
 		<external id="default_dopoints" default="true"/>
-		<external id="default_verticals" default="false"/>
+		<external id="default_verticals" default="true"/>
+		<external id="visible_col01line" default="false"/>
 
 		<set id="col_vert.argument" to=", col.vert="/>
 		<set id="col_points.argument" to=", col.points="/>
@@ -20,6 +21,12 @@
 		<convert id="default_dopointsb" sources="default_dopoints" mode="equals" standard="true"/>
 		<connect client="do_points.state" governor="default_dopointsb"/>
 		<connect client="col_points.color.enabled" governor="do_points.state"/>
+
+		<convert id="visible_col01line_TRUE" sources="visible_col01line" mode="equals" standard="true"/>
+		<connect client="frame_col_y0.visible" governor="visible_col01line_TRUE"/>
+		<connect client="frame_col_y1.visible" governor="visible_col01line_TRUE"/>
+		<set id="col_y0.argument" to=""/>
+		<set id="col_y1.argument" to=""/>
 	</logic>
 	<dialog label="Step function plot options">
 		<row>
@@ -47,6 +54,14 @@
 			<frame id="frame_vert" label="Vertical lines">
 				<checkbox id="verticals" label="Draw vertical lines" />
 				<embed id="col_vert" component="rkward::color_chooser" label="Color"/>
+			</frame>
+		</row>
+		<row>
+			<frame id="frame_col_y0" label="For y = 0 line">
+				<embed id="col_y0" component="rkward::color_chooser" label="Color"/>
+			</frame>
+			<frame id="frame_col_y1" label="For y = 1 line">
+				<embed id="col_y1" component="rkward::color_chooser" label="Color"/>
 			</frame>
 		</row>
 	</dialog>
