@@ -153,8 +153,6 @@ void RKComponent::updateEnablednessRecursive () {
 		enabled = false;
 	}
 
-	qDebug ("old %d, new %d", isEnabled (), enabled);
-
 	if (enabled != isEnabled ()) {
 		setEnabled (enabled);
 		for (QDictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
