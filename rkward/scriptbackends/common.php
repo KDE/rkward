@@ -1,4 +1,9 @@
 <?
+function printIndented ($indentation, $lines) {
+	$out = ereg_replace ("\n.", "\\1\n" . $indentation, $lines);
+	echo ($indentation . $out);
+}
+
 // rename to getRK
 function getRK_val ($id) {
 	return (getInput ("requesting data:" . $id));

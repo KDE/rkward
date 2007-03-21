@@ -55,12 +55,15 @@ rk.header ("Beta <? echo ($label); ?> function", list ("Number of Observations",
 rk.graph.on ()
 <? }
 ?>
-try (curve (<? echo ($fun); ?> (x, shape1 = <? echo ($a); ?>, shape2 = <? echo ($b); ?>, ncp = <? echo ($ncp); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?><? getRK ("plotoptions.code.printout"); ?>))
-<?	if (!empty ($plot_adds)) {
-		echo ("\n\t" . strtr ($plot_adds, array ("\n" => "\n\t")));
-	}
+try ({
+	curve (<? echo ($fun); ?> (x, shape1 = <? echo ($a); ?>, shape2 = <? echo ($b); ?>, ncp = <? echo ($ncp); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?><? getRK ("plotoptions.code.printout"); ?>)
+<?	if (!empty ($plot_adds)) { ?>
 
-	if ($final) { ?>
+<?
+		printIndented ("\t", $plot_adds);
+	} ?>
+})
+<?	if ($final) { ?>
 rk.graph.off ()
 <? }
 }
