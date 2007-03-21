@@ -4,7 +4,7 @@
 	<summary>
 	You can control RKWard in many situations without using a mouse device, using only the keyboard.
 
-	Besides the (currently) static RKWard specific short cuts you can optionally configure those in RKWards script editor. The script editor uses <link href="http://kate-editor.org/katepart">KatePart</link> as basic technology and thus makes it a very powerfull editor. If the script editor is open go to menu 'Settings->Edit editor->Short cuts' and configure the editor according to your needs.
+	Most shortcuts are not yet configurable (this will be added in a future release), but you can configure most shortcuts of the script editor. To do so, open a script editor window, then choose 'Settings->Configure editor->Short cuts' from the menu.
 	</summary>
 	<section title="RKWard Default Shortcut keys" id="default_shortcut_keys">
 		<table>
@@ -33,8 +33,10 @@
 
 			<tr colspan="2"><td><b>Windows Menu</b></td></tr>
 			<tr><td>Close Window</td><td>Ctrl + W</td></tr>
-			<tr><td>Previous Window</td><td>Alt + &lt;</td></tr>
-			<tr><td>Next Window</td><td>Alt + ></td></tr>
+			<tr><td>Previous Window</td><td>Alt + &lt; or Alt + ,</td></tr>
+			<tr><td>Next Window</td><td>Alt + > or Alt + .</td></tr>
+			<tr><td>Left Window</td><td>Ctrl + &lt; or Ctrl + ,</td></tr>
+			<tr><td>Right Window</td><td>Ctrl + > or Ctrl + .</td></tr>
 			<tr><td>Activate Document view</td><td>Alt + 0</td></tr><tr>
 			<tr><td>Show/Hide Workspace Browser</td><td>Alt + 1</td></tr><tr>
 			<tr><td>Show/Hide Command Log</td><td>Alt + 2</td></tr><tr>
