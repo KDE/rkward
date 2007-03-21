@@ -555,6 +555,13 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 			khtmlpart->write (renderHelpFragment (element));
 		}
 
+		// "technical" section
+		element = help_xml->getChildElement (help_doc_element, "technical", DL_INFO);
+		if (!element.isNull ()) {
+			khtmlpart->write (startSection ("technical", i18n ("Technical details"), QString (), &anchors, &anchornames));
+			khtmlpart->write (renderHelpFragment (element));
+		}
+
 		// create a navigation bar
 		KURL url_copy = url;
 		QString navigation;

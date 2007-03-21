@@ -1102,7 +1102,7 @@ Description of the GUI element identified by "id_of_elementc"
 	&lt;/settings&gt;
 
 	&lt;related&gt;
-The related section (always last) typically just contains some links, such as:
+The related section typically just contains some links, such as:
 
 &lt;ul&gt;
 	&lt;li&gt;&lt;link href="rkward://rhelp/mean"/&gt;&lt;/li&gt;
@@ -1110,6 +1110,14 @@ The related section (always last) typically just contains some links, such as:
 	&lt;li&gt;&lt;link href="rkward://component/related_component"/&gt;&lt;/li&gt;
 &lt;/ul&gt;
 	&lt;/related&gt;
+
+	&lt;technical&gt;
+The technical section (optional, always last) may contain some technical details of the plugin
+implementation, which are of interest only to RKWard developers. This is particularily relevant
+for plugins that are designed to be embedded in many other plugins, and could detail, which
+options are available to customize the embedded plugin, and which code sections contain which
+R code.
+	&lt;/technical&gt;
 &lt;/document&gt;
 </programlisting>
 </chapter>

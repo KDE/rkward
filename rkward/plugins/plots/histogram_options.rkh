@@ -35,8 +35,10 @@
 			<li><link href="rkward://rhelp/extendrange"/></li>
 		</ul>
 	</related>
-	<section id="techdetails" title="Techinical details">General users may skip this section of help, this is primarily for developers.
-		The following external tags are provided for use in the embeding plugin.
+	<technical>
+		General users may skip this section of help, this is primarily for developers.
+
+		The following external tags are provided for use in the embedding plugin.
 		<ul>
 			<li><i>varname</i>: For linking to the variable name for which histogram is being plotted. This is used in the 'Integer numbers' option for breaks.</li>
 			<li><i>allow_freq</i>: Setting this to "true" ("false") enables (disables) the display of the 'Frequency' checkbox.</li>
@@ -49,5 +51,5 @@
 			<li><i>code.calculate</i>: This contains only the <i>breaks</i>-option.</li>
 			<li><i>code.printout</i>: This contains all the other options determining the look of the plot.</li>
 		</ul>
-	</section>
+	</technical>
 </document>
