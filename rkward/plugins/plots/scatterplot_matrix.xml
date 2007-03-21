@@ -23,8 +23,8 @@
 					<option value="none" label="No plot"/>
 				</radio>
 				<checkbox id="plot_points" label="Plot points" value="TRUE" value_unchecked="FALSE" checked="true"/>
-				<checkbox id="smooth" label="Smooth" value="TRUE" value_unchecked="FALSE" checked="true"/>
-				<checkbox id="ellipse" label="Ellipse" value="TRUE" value_unchecked="FALSE" checked="true"/>
+				<checkbox id="smooth" label="Smooth" value="TRUE" value_unchecked="FALSE" checked="false"/>
+				<checkbox id="ellipse" label="Ellipse" value="TRUE" value_unchecked="FALSE" checked="false"/>
 			</tab>
 		</tabbook>
 	</dialog>
