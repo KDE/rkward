@@ -9,14 +9,10 @@ function printout () {
 	doPrintout (true);
 }
 
-function cleanup () {
-}
-
 function preview () {
 	preprocess ();
 	calculate ();
 	doPrintout (false);
-	cleanup ();
 }
 
 function doPrintout ($final) {
@@ -32,7 +28,7 @@ rk.header ("Stripchart", list ("Variable", rk.get.description (<? echo ($x); ?>)
 
 rk.graph.on ()
 <?	} ?>
-try (stripchart (<? echo ($x); ?> ~ (<? echo ($g); ?>), vertical=<? echo ($vertical); ?>, method = <? echo ($method); ?>, jitter = <? echo ($jitter); ?>, offset = <? echo ($offset); ?> <? getRK ("plotoptions.code.printout"); ?>))
+try (stripchart (<? echo ($x); ?> ~ (<? echo ($g); ?>), vertical=<? echo ($vertical); ?>, method = <? echo ($method); ?>, jitter = <? echo ($jitter); ?>, offset = <? echo ($offset); ?><? getRK ("plotoptions.code.printout"); ?>))
 <?	if ($final) { ?>
 rk.graph.off ()
 <?	}
