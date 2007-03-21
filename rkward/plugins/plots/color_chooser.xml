@@ -5,9 +5,6 @@
 	<logic>
 		<external id="argument" default=", col=" />
 		<external id="default_color" default="" />
-
-		<!-- This is just a dirty workaround. Actually, this should be solved at the C++ level, somehow -->
-		<connect client="color.enabled" governor="enabled"/>
 	</logic>
 	<dialog label="Choose color" >
 		<dropdown id="color" label="Color">

@@ -73,6 +73,7 @@ public:
 	virtual QString value (const QString &modifier=QString::null);
 /** returns true, if this is a property */
 	bool isProperty () { return (type () <= PropertyEnd); };
+	bool isComponent () { return (type () >= ComponentBase); };
 /** returns satisfaction state. see setRequired () */
 	virtual bool isSatisfied ();
 /** currently valid (i.e. satisfied, even if required)? default implementation always returns true */
@@ -161,6 +162,8 @@ protected:
 	RKComponent *_parent;
 /** usually happens during construction, so you don't need to call this - unless you're RKStandardComponent, and discard the children at some point of time */
 	void createDefaultProperties ();
+/** This function is needed internally, to set the Qt enabledness of this widget, and all child component widgets. Note that the enabledness as stored in the enabledness_property is not necessarily the same as the enabledness in the GUI (and is not affected by this call). In general, a component is enabled in the GUI, if and only if both it's enabledness_property is set to true, and the its parent widget is enabled in Qt. */
+	void updateEnablednessRecursive ();
 };
 
 #endif

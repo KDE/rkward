@@ -136,14 +136,32 @@ void RKComponent::propertyValueChanged (RKComponentPropertyBase *property) {
 			if (isShown ()) hide ();
 		}
 	} else if (property == enabledness_property) {
-		if (enabledness_property->boolValue ()) {
-			if (!isEnabled ()) setEnabled (true);
-		} else {
-			if (isEnabled ()) setEnabled (false);
-		}
+		updateEnablednessRecursive ();
 	} else if (property == requiredness_property) {
 		required = requiredness_property->boolValue ();
 		changed ();
+	}
+}
+
+void RKComponent::updateEnablednessRecursive () {
+	RK_TRACE (PLUGIN);
+
+	bool enabled;
+	if (enabledness_property->boolValue ()) {
+		enabled = ((!parentComponent ()) || (parentComponent ()->isEnabled ()));
+	} else {
+		enabled = false;
+	}
+
+	qDebug ("old %d, new %d", isEnabled (), enabled);
+
+	if (enabled != isEnabled ()) {
+		setEnabled (enabled);
+		for (QDictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
+			if (it.current ()->isComponent()) {
+				static_cast<RKComponent*> (it.current ())->updateEnablednessRecursive ();
+			}
+		}
 	}
 }
 
