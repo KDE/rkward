@@ -17,7 +17,7 @@
 				<browser filter="*.R *.r" id="file" label="File name" />
 				<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="chdir" label="Use directory of source file as working directory" />
 				<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="local" label="Run in a local environment" />
-				<text id="run_global_warning">WARNING: This may overwrite existing objects without prompting!</text>
+				<text id="run_global_warning" type="warning">WARNING: This may overwrite existing objects without prompting!</text>
 				<stretch/>
 			</tab>
 			<tab label="Output options" id="tab_further">

@@ -1335,7 +1335,13 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 </varlistentry>
 <varlistentry>
 <term>&lt;text&gt;</term>
-<listitem>Shows the text enclosed in this tag in the GUI. Linebreaks are interpreted as hard linebreaks!</listitem>
+<listitem>Shows the text enclosed in this tag in the GUI. Linebreaks are interpreted as hard linebreaks! Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>&lt;type&gt;</term>
+	<listitem>Type of the text. One of "normal", "warning" or "error". This influences the look of the text (optional, defaults to normal)</listitem>
+	</varlistentry>
+	</variablelist></listitem>
 </varlistentry>
 </variablelist>
 </section>

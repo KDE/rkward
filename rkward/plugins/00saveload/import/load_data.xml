@@ -11,9 +11,9 @@
 	</logic>
 	<dialog label="Load an R data file">
 		<browser size="small" id="file" label="R data file to load" filter="*.RData" />
-		<text id="globalenv_warning">WARNING: This may overwrite existing objects in .GlobalEnv. Be sure to save your workspace, first.</text>
+		<text id="globalenv_warning" type="warning">WARNING: This may overwrite existing objects in .GlobalEnv. Be sure to save your workspace, first.</text>
 		<checkbox id="other_env" label="Save to specified environment" value="1" value_unchecked="0"/>
 		<saveobject id="envir" label="Environment to save to" initial="my.env"/>
-		<text id="otherenv_warning">WARNING: If the environment already exists, all objects inside it will be lost.</text>
+		<text id="otherenv_warning" type="warning">WARNING: If the environment already exists, all objects inside it will be lost.</text>
 	</dialog>
 </document>

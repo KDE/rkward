@@ -2,7 +2,7 @@
                           rktext.cpp  -  description
                              -------------------
     begin                : Sun Nov 10 2002
-    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,10 +24,14 @@
 #include <qdom.h>
 
 #include "../rkglobals.h"
+#include "../misc/xmlhelper.h"
 #include "../debug.h"
 
 RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
+
+	// get xml-helper
+	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	// create layout and label
 	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
@@ -43,6 +47,19 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 		if (!line.isEmpty ()) {
 			initial_text.append (line + '\n');
 		}
+	}
+
+	int type = xml->getMultiChoiceAttribute (element, "type", "normal;warning;error", 0, DL_INFO);
+	if (type != 0) {
+		QFont font = label->font ();
+		if (type == 1) {		// warning
+			label->setPaletteForegroundColor (QColor (255, 100, 0));
+			font.setWeight (QFont::Bold);
+		} else if (type == 2) {		// error
+			label->setPaletteForegroundColor (QColor (255, 0, 0));
+			font.setWeight (QFont::Bold);
+		}
+		label->setFont (font);
 	}
 
 	// strip final newline
