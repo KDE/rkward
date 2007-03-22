@@ -8,10 +8,6 @@
 		<set id="plotoptions.default_main" to="F"/>
 		<set id="plotoptions.default_xlab" to="Sample Averages"/>
 
-		<convert id="is_df2_gt4" sources="df2.real" mode="range" min="4.01" require_true="true"/>
-		<convert id="is_df2_leq4" sources="is_df2_gt4" mode="equals" standard="false"/>
-		<connect client="df2_gt4_err.visible" governor="is_df2_leq4"/>
-
 		<set id="normlinecol.default_color" to="red" />
 
 		<set id="histogram_opt.varname" to="avg" />
@@ -53,7 +49,7 @@
 							<option value="dist" label="ECDF and Distribution"/>
 						</radio>
 						<checkbox id="scalenorm" label="Use normalised random variable" value="1" value_unchecked="0"/>
-						<frame id="frame_lineoptions" label="Nomral Curve Options">
+						<frame id="frame_lineoptions" label="Normal Curve Options">
 							<checkbox id="drawnorm" label="Draw normal curve" value="1" value_unchecked="0" checked="true"/>
 							<dropdown id="normpointtype" label="Type of points/lines" >
 								<option value="p" label="Individual points " />
@@ -68,7 +64,7 @@
 						</frame>
 					</column>
 				</row>
-				<text id="df2_gt4_err" type="error">ERROR: For a F distribution variance exists only when its denominator degress of freedom > 4.</text>
+				<text id="df2_gt4_err">Note: For a F distribution variance exists only when its denominator degress of freedom > 4.</text>
 			<stretch/>
 				<row>
 					<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />

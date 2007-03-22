@@ -8,10 +8,6 @@
 		<set id="plotoptions.default_main" to="t"/>
 		<set id="plotoptions.default_xlab" to="Sample Averages"/>
 
-		<convert id="is_var_gt2" sources="df.real" mode="range" min="2.01" require_true="true"/>
-		<convert id="is_var_leq2" sources="is_var_gt2" mode="equals" standard="false"/>
-		<connect client="var_gt2_warn.visible" governor="is_var_leq2"/>
-
 		<set id="normlinecol.default_color" to="red" />
 
 		<set id="histogram_opt.varname" to="avg" />
@@ -52,7 +48,7 @@
 							<option value="dist" label="ECDF and Distribution"/>
 						</radio>
 						<checkbox id="scalenorm" label="Use normalised random variable" value="1" value_unchecked="0"/>
-						<frame id="frame_lineoptions" label="Nomral Curve Options">
+						<frame id="frame_lineoptions" label="Normal Curve Options">
 							<checkbox id="drawnorm" label="Draw normal curve" value="1" value_unchecked="0" checked="true"/>
 							<dropdown id="normpointtype" label="Type of points/lines" >
 								<option value="p" label="Individual points " />
@@ -67,7 +63,7 @@
 						</frame>
 					</column>
 				</row>
-				<text id="var_gt2_warn" type="error">ERROR: For a t distribution variance exists only when its degress of freedom > 2.</text>
+				<text id="var_gt2_warn">Note: For a t distribution variance exists only when its degress of freedom > 2.</text>
 			<stretch/>
 				<row>
 					<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />

@@ -37,7 +37,7 @@ avg.var <- (scale^2*gamma(1+2/shape) - avg.exp^2)/<? echo ($nAvg); ?>
 	}
 	// Mean and Std.deviantion of Normal distribution:
 	if ($scalenorm) $normMuSigma_tag = "";
-	else	$normMuSigma_tag = ", mean = avg.exp, sd = sqrt(avg.var)";
+	else $normMuSigma_tag = ", mean = avg.exp, sd = sqrt(avg.var)";
 
 	$plotoptions = getRK_val("plotoptions.code.printout");
 	if ($fun == "hist") {
@@ -88,7 +88,7 @@ rk.graph.on ()
 try ({
 <?
 	}
-  if ($fun == "hist") {
+	if ($fun == "hist") {
 ?>
 	plot(dist.hist<? echo ($yLim); echo ($histplotoptions); ?>)
 <?
@@ -104,7 +104,7 @@ try ({
 	}
 	if ($final) {
 ?>
-	})
+})
 rk.graph.off ()
 <?
 	}

@@ -48,7 +48,7 @@ avg.var <- (df*(1+ncp^2)/(df-2) - ncp^2*df*tmp.var^2/2)/<? echo($nAvg); ?>
 	}
 	// Mean and Std.deviantion of Normal distribution:
 	if ($scalenorm) $normMuSigma_tag = "";
-	else	$normMuSigma_tag = ", mean = avg.exp, sd = sqrt(avg.var)";
+	else $normMuSigma_tag = ", mean = avg.exp, sd = sqrt(avg.var)";
 
 	$plotoptions = getRK_val("plotoptions.code.printout");
 	if ($fun == "hist") {
@@ -115,7 +115,7 @@ try ({
 	}
 	if ($final) {
 ?>
-	})
+})
 rk.graph.off ()
 <?
 	}

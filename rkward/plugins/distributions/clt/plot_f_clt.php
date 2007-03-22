@@ -38,7 +38,7 @@ avg.var <- (2*df2^2*((df1+ncp)^2  + (df1+2*ncp)*(df2-2)) / (df1^2*(df2-2)^2*(df2
 	}
 	// Mean and Std.deviantion of Normal distribution:
 	if ($scalenorm) $normMuSigma_tag = "";
-	else	$normMuSigma_tag = ", mean = avg.exp, sd = sqrt(avg.var)";
+	else $normMuSigma_tag = ", mean = avg.exp, sd = sqrt(avg.var)";
 
 	$plotoptions = getRK_val("plotoptions.code.printout");
 	if ($fun == "hist") {
@@ -89,7 +89,7 @@ rk.graph.on ()
 try ({
 <?
 	}
-  if ($fun == "hist") {
+	if ($fun == "hist") {
 ?>
 	plot(dist.hist<? echo ($yLim); echo ($histplotoptions); ?>)
 <?
@@ -105,7 +105,7 @@ try ({
 	}
 	if ($final) {
 ?>
-	})
+})
 rk.graph.off ()
 <?
 	}

@@ -47,7 +47,7 @@
 							<option value="dist" label="ECDF and Distribution"/>
 						</radio>
 						<checkbox id="scalenorm" label="Use normalised random variable" value="1" value_unchecked="0"/>
-						<frame id="frame_lineoptions" label="Nomral Curve Options">
+						<frame id="frame_lineoptions" label="Normal Curve Options">
 							<checkbox id="drawnorm" label="Draw normal curve" value="1" value_unchecked="0" checked="true"/>
 							<dropdown id="normpointtype" label="Type of points/lines" >
 								<option value="p" label="Individual points " />
