@@ -1,0 +1,34 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		Normal approximation to t Sample averages. For any generic option refer to the RKWard help page on <link href="rkward://component/plot_binomial_clt"/> for detailed descriptions.
+	</summary>
+	<usage>
+		Choose the t parameter, the sample sizes needed for CLT and a choice of function.
+	</usage>
+	<settings>
+		<caption id="tab_plot_distrib_clt"/>
+		<setting id="frame_tparam">See RKWard help on <link href="rkward://component/plot_t_distribution"/>. For the variance to exist, the 'Degrees of freedom' parameter has to be greater than 2.</setting>
+		<setting id="nAvg"></setting>
+		<setting id="nDist"></setting>
+		<setting id="function"></setting>
+		<setting id="scalenorm"></setting>
+		<setting id="drawnorm">For all the above see 'Binomial CLT'.</setting>
+		<setting id="normpointtype">Pointtype for the Normal curve.</setting>
+		<setting id="normlinecol">Color of the Normal curve.</setting>
+		<setting id="plotoptions">Various plot options.</setting>
+		<setting id="preview">Preview button.</setting>
+		<caption id="tab_histoptions"/>
+		<setting id="histogram_opt">See Binomial CLT for details.</setting>
+		<caption id="tab_distfunction"/>
+		<setting id="dist_stepfun">See Binomial CLT for details.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://component/plot_binomial_clt"/></li>
+			<li><link href="rkward://component/plot_t_distribution"/></li>
+			<li><link href="rkward://rhelp/TDist"/></li>
+			<li><link href="rkward://rhelp/Normal"/></li>
+		</ul>
+	</related>
+</document>

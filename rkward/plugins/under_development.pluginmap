@@ -17,7 +17,9 @@
 		<component type="standard" id="plot_logistic_clt" file="distributions/clt/plot_logistic_clt.xml" label="Logistic CLT" />
 		<component type="standard" id="plot_log_normal_clt" file="distributions/clt/plot_lognormal_clt.xml" label="Log Normal CLT" />
 		<component type="standard" id="plot_normal_clt" file="distributions/clt/plot_normal_clt.xml" label="Normal CLT" />
+		<component type="standard" id="plot_t_clt" file="distributions/clt/plot_t_clt.xml" label="t CLT" />
 		<component type="standard" id="plot_uniform_clt" file="distributions/clt/plot_uniform_clt.xml" label="Uniform CLT" />
+		<component type="standard" id="plot_weibull_clt" file="distributions/clt/plot_weibull_clt.xml" label="Weibull CLT" />
 
 		<component type="standard" id="moment" file="analysis/moments/moment.xml" label="Moment" />
 		<component type="standard" id="bonett_test" file="analysis/moments/bonett_test.xml" label="Bonett-Seier test of Geary's kurtosis" />
@@ -110,8 +112,14 @@
 				<menu id="normal_distribution" label="Normal">
 					<entry component="plot_normal_clt" label="Normal CLT" index="2"/>
 				</menu>
+				<menu id="t_distribution" label="t">
+					<entry component="plot_t_clt" label="t CLT" index="2"/>
+				</menu>
 				<menu id="uniform_distribution" label="Uniform">
 					<entry component="plot_uniform_clt" label="Uniform CLT" index="2"/>
+				</menu>
+				<menu id="weibull_distribution" label="Weibull">
+					<entry component="plot_weibull_clt" label="Weibull CLT" index="2"/>
 				</menu>
 			</menu>
 			<menu id="univariate_discrete_distributions" label="Univariate discrete distributions" index="2">
