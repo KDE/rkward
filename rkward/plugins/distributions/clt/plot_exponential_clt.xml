@@ -27,9 +27,6 @@
 		<set id="dist_stepfun.allow_addtoplot" to="false" />
 		<set id="dist_stepfun.default_dopoints" to="false" />
 		<set id="dist_stepfun.visible_col01line" to="true"/>
-
-		<set id="col_y0.argument" to=""/>
-		<set id="col_y1.argument" to=""/>
 </logic>
 	<dialog label="Central Limit Theorem: Exponential to Normal" >
 		<tabbook>
