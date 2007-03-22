@@ -312,10 +312,12 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int) {
 void PHPBackend::processDied (KProcess *) {
 	RK_TRACE (PHP);
 
-	php_process->detach ();
-	KMessageBox::error (0, i18n ("The PHP-backend has died unexpectedly. The current output buffer is shown below:\n%1").arg (output_raw_buffer), i18n ("PHP Process exited"));
-	emit (haveError ());
-	destroy ();
+	if (php_process) {		// if the php_process is already 0, this means, we have caught an error message before the process died, have already shown a message, emitted haveError(), and called destroy()
+		php_process->detach ();
+		KMessageBox::error (0, i18n ("The PHP-backend has died unexpectedly. The current output buffer is shown below:\n%1").arg (output_raw_buffer), i18n ("PHP Process exited"));
+		emit (haveError ());
+		destroy ();
+	}
 }
 
 
