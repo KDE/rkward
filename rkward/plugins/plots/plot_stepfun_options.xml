@@ -6,7 +6,7 @@
 		<external id="allow_addtoplot" default="true"/>
 		<external id="default_dopoints" default="true"/>
 		<external id="default_verticals" default="true"/>
-		<external id="visible_col01line" default="false"/>
+		<external id="allow_col01line" default="false"/>
 
 		<set id="col_vert.argument" to=", col.vert="/>
 		<set id="col_points.argument" to=", col.points="/>
@@ -22,9 +22,9 @@
 		<connect client="do_points.state" governor="default_dopointsb"/>
 		<connect client="col_points.color.enabled" governor="do_points.state"/>
 
-		<convert id="visible_col01line_TRUE" sources="visible_col01line" mode="equals" standard="true"/>
-		<connect client="frame_col_y0.visible" governor="visible_col01line_TRUE"/>
-		<connect client="frame_col_y1.visible" governor="visible_col01line_TRUE"/>
+		<convert id="allow_col01line_TRUE" sources="allow_col01line" mode="equals" standard="true"/>
+		<connect client="frame_col_y0.visible" governor="allow_col01line_TRUE"/>
+		<connect client="frame_col_y1.visible" governor="allow_col01line_TRUE"/>
 		<set id="col_y0.argument" to=""/>
 		<set id="col_y1.argument" to=""/>
 	</logic>

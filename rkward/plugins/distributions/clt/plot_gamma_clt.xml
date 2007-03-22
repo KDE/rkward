@@ -26,7 +26,7 @@
 
 		<set id="dist_stepfun.allow_addtoplot" to="false" />
 		<set id="dist_stepfun.default_dopoints" to="false" />
-		<set id="dist_stepfun.visible_col01line" to="true"/>
+		<set id="dist_stepfun.allow_col01line" to="true"/>
 </logic>
 	<dialog label="Central Limit Theorem: Gamma to Normal" >
 		<tabbook>

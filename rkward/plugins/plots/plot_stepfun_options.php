@@ -27,7 +27,7 @@ function printout () {
 	$col_hor = getRK_val ("col_hor.code.printout");
 	if (!($col_hor == "")) $options .= getRK_val ("col_hor.code.printout");
 
-	if (getRK_val ("visible_col01line")) {
+	if (getRK_val ("allow_col01line")) {
 		$col_y0 = getRK_val ("col_y0.code.printout");
 		$col_y1 = getRK_val ("col_y1.code.printout");
 		if (($col_y0 != "") && ($col_y1 != "")) {

@@ -31,7 +31,7 @@
 			<li><i>allow_addtoplot</i>: Setting this to "true" ("false") enables (disables) the display of the 'Add to current plot' checkbox.</li>
 			<li><i>default_dopoints</i>: Setting this to "true" ("false") toggles the state of the 'Draw points' checkbox.</li>
 			<li><i>default_verticals</i>: Setting this to "true" ("false") toggles the state of the 'Draw verticals' checkbox.</li>
-			<li><i>visible_col01line</i>: Setting this to "true" ("false") enables (disables) the display of the two frames ('For y = 0 line' and 'For y = 1 line') for <i>col.01line</i> option to ecdf.</li>
+			<li><i>allow_col01line</i>: Setting this to "true" ("false") enables (disables) the display of the two frames ('For y = 0 line' and 'For y = 1 line') for <i>col.01line</i> option to ecdf.</li>
 		</ul>
 	</technical>
 </document>

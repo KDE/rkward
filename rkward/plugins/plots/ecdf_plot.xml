@@ -10,7 +10,7 @@
 
 		<set id="stepfun_options.allow_addtoplot" to="false"/>
 		<set id="stepfun_options.default_verticals" to="false"/>
-		<set id="stepfun_options.visible_col01line" to="true"/>
+		<set id="stepfun_options.allow_col01line" to="true"/>
 
 		<connect client="col_thnorm.enabled" governor="th_pnorm.state"/>
 
