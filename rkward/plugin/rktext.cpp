@@ -54,7 +54,7 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 		QFont font = label->font ();
 		if (type == 1) {		// warning
 			label->setPaletteForegroundColor (QColor (255, 100, 0));
-			font.setWeight (QFont::Bold);
+			font.setWeight (QFont::DemiBold);
 		} else if (type == 2) {		// error
 			label->setPaletteForegroundColor (QColor (255, 0, 0));
 			font.setWeight (QFont::Bold);
