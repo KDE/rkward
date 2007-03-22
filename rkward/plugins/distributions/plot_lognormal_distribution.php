@@ -1,22 +1,18 @@
 <?
-	function preprocess () {
-	}
-
-	function calculate () {
-	}
-
-	function printout () {
-	doPrintout (true);
+function preprocess () {
 }
 
-function cleanup () {
+function calculate () {
+}
+
+function printout () {
+	doPrintout (true);
 }
 
 function preview () {
 	preprocess ();
 	calculate ();
 	doPrintout (false);
-	cleanup ();
 }
 
 function doPrintout ($final) {
@@ -45,7 +41,7 @@ function doPrintout ($final) {
 	$min = getRK_val ("min");
 	$max = getRK_val ("max");
 	$sd = getRK_val ("sd");
-  $mean = getRK_val ("mean");
+	$mean = getRK_val ("mean");
 	if ($final) { ?>
 rk.header ("Lognormal <? echo ($label); ?> function", list ("Number of Observations", "<? echo ($n); ?>", "Lower quantile", "<? echo ($min); ?>","Upper quantile", "<? echo ($max); ?>", "Mean", "<? echo ($mean); ?>", "Standard deviation", "<? echo ($sd); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
 

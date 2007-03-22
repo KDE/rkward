@@ -9,14 +9,10 @@ function printout () {
 	doPrintout (true);
 }
 
-function cleanup () {
-}
-
 function preview () {
 	preprocess ();
 	calculate ();
 	doPrintout (false);
-	cleanup ();
 }
 
 function doPrintout ($final) {

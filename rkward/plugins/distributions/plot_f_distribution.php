@@ -1,22 +1,18 @@
 <?
-	function preprocess () {
-	}
-
-	function calculate () {
-	}
-
-	function printout () {
-	doPrintout (true);
+function preprocess () {
 }
 
-function cleanup () {
+function calculate () {
+}
+
+function printout () {
+	doPrintout (true);
 }
 
 function preview () {
 	preprocess ();
 	calculate ();
 	doPrintout (false);
-	cleanup ();
 }
 
 function doPrintout ($final) {
@@ -44,7 +40,7 @@ function doPrintout ($final) {
 	$n = getRK_val ("n");
 	$min = getRK_val ("min");
 	$max = getRK_val ("max");
-  $ncp = getRK_val ("ncp");
+	$ncp = getRK_val ("ncp");
 	$df1 = getRK_val ("df1");
 	$df2 = getRK_val ("df2");
 

@@ -6,7 +6,7 @@ function calculate () {
 	global $q;
 	$q = "c (" . preg_replace ("/[, ]+/", ", ", getRK_val ("q")) . ")";
 ?>
-rk.temp <- (pgamma (q = <? echo ($q); ?>, shape = <? getRK ("shape"); ?>, rate = <? getRK ("rate"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
+result <- (pgamma (q = <? echo ($q); ?>, shape = <? getRK ("shape"); ?>, rate = <? getRK ("rate"); ?>, <? getRK ("tail"); ?>, <? getRK("logp"); ?>))
 <?
 }
 
@@ -14,13 +14,7 @@ function printout () {
 	global $q;
 ?>
 rk.header ("Gamma probability", list ("Vector of quantiles", "<? echo ($q); ?>", "Shape", "<? getRK ("shape"); ?>", "Rate", "<? getRK ("rate"); ?>", "Tail", "<? getRK ("tail"); ?>", "Probabilities p are given as", "<? getRK ("logp"); ?>"))
-rk.results (rk.temp, titles="Gamma probabilities")
-<?
-}
-
-function cleanup () {
-?>
-rm (rk.temp)
+rk.results (result, titles="Gamma probabilities")
 <?
 }
 ?>

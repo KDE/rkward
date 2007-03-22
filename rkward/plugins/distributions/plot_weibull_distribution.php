@@ -1,22 +1,18 @@
 <?
-	function preprocess () {
-	}
-
-	function calculate () {
-	}
-
-	function printout () {
-	doPrintout (true);
+function preprocess () {
 }
 
-function cleanup () {
+function calculate () {
+}
+
+function printout () {
+	doPrintout (true);
 }
 
 function preview () {
 	preprocess ();
 	calculate ();
 	doPrintout (false);
-	cleanup ();
 }
 
 function doPrintout ($final) {
