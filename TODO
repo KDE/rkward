@@ -159,6 +159,12 @@ General code:
 			- static members should be moved to the respective classes. Much cleaner!
 
 R plugins:
+	- distribution plugins (probabilities and quantiles)
+		- probably all these could use an option "Store result (to name) / Print result / print and store"
+		- when changing this, they should first be changed to use common base functionality:
+			- the tail, log, and print options would be in a single embedded plugin
+			- a common PHP file would be included that generates uniform code (a small set of options would be needed to define the parts that are different across distributions)
+			- something similar should be done for the plots
 	- import plugins:
 		- standardized? checkbox to open imported object for editing
 			- would be nice, if this box could be affected (default) by a global setting
