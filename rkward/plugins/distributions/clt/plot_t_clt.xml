@@ -42,8 +42,8 @@
 							<spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
 						</frame>
 						<frame id="frame_tparam" label="t Parameters">
-								<spinbox default_precision="2" type="real" id="df" min="0.01" initial="2.01" label="Degrees of freedom" />
-								<spinbox default_precision="2" type="real" id="ncp" initial="0" label="Non-centrality parameter" />
+								<spinbox default_precision="1" type="real" id="df" min="0.00001" initial="3" label="Degrees of freedom" />
+								<spinbox default_precision="1" type="real" id="ncp" initial="0" label="Non-centrality parameter" />
 						</frame>
 					</column>
 					<column>
@@ -67,7 +67,7 @@
 						</frame>
 					</column>
 				</row>
-				<text id="var_gt2_warn">ERROR: Variance for t distribution exists only when the degress freedom > 2.</text>
+				<text id="var_gt2_warn" type="error">ERROR: For a t distribution variance exists only when its degress of freedom > 2.</text>
 			<stretch/>
 				<row>
 					<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />

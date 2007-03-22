@@ -38,8 +38,8 @@
 							<spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
 						</frame>
 						<frame id="frame_weibullparam" label="Weibull Parameters">
-							<spinbox default_precision="2" type="real" id="shape" initial="2" min ="0.01" label="Shape" />
-							<spinbox default_precision="2" type="real" id="scale" initial="1" min ="0.01" label="Scale" />
+							<spinbox default_precision="1" type="real" id="shape" initial="2" min ="0.00001" label="Shape" />
+							<spinbox default_precision="1" type="real" id="scale" initial="1" min ="0.00001" label="Scale" />
 						</frame>
 					</column>
 					<column>

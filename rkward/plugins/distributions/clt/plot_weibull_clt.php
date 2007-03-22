@@ -25,8 +25,7 @@ function doPrintout ($final) {
 
 ?>
 # parameters:
-scale <- <? echo(getRK_val ("scale")."\n"); ?>
-shape <- <? echo(getRK_val ("shape")."\n"); ?>
+scale <- <? echo(getRK_val ("scale")); ?>; shape <- <? echo(getRK_val ("shape")); ?>;
 <?
 	if ($scalenorm || $drawnorm) {
 ?>
@@ -75,12 +74,12 @@ normY <- <? echo ($normFun); ?> (normX<? echo ($normMuSigma_tag); ?>);
 ?>
 dist.hist <- hist(avg, plot=FALSE<? echo ($histcalcoptions); ?>);
 <?
-	if ($drawnorm) {
+		if ($drawnorm) {
 ?>
 # calculate the ylims appropriately:
 ylim <- c(0,max(c(dist.hist$density, normY)));
 <?
-		$yLim = ', ylim=ylim';
+			$yLim = ', ylim=ylim';
 		}
 	}
 	if ($final) {
@@ -89,7 +88,7 @@ rk.graph.on ()
 try ({
 <?
 	}
-  	if ($fun == "hist") {
+  if ($fun == "hist") {
 ?>
 	plot(dist.hist<? echo ($yLim); echo ($histplotoptions); ?>)
 <?

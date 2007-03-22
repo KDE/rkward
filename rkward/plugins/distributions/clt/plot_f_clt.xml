@@ -8,6 +8,10 @@
 		<set id="plotoptions.default_main" to="F"/>
 		<set id="plotoptions.default_xlab" to="Sample Averages"/>
 
+		<convert id="is_df2_gt4" sources="df2.real" mode="range" min="4.01" require_true="true"/>
+		<convert id="is_df2_leq4" sources="is_df2_gt4" mode="equals" standard="false"/>
+		<connect client="df2_gt4_err.visible" governor="is_df2_leq4"/>
+
 		<set id="normlinecol.default_color" to="red" />
 
 		<set id="histogram_opt.varname" to="avg" />
@@ -38,10 +42,9 @@
 							<spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
 						</frame>
 						<frame id="frame_fparam" label="F Parameters">
-							<spinbox default_precision="2" type="real" min="0.01" id="df1" initial="5" label="Numerator degrees of freedom" />
-<!-- 						For variance we need df2 > 4	 -->
-							<spinbox default_precision="2" type="real" min="4.01" id="df2" initial="5" label="Denominator degrees of freedom" />
-							<spinbox default_precision="0" type="real" min="0" id="ncp" initial="0" label="Non-centrality parameter" />
+							<spinbox default_precision="1" type="real" min="0.00001" id="df1" initial="5" label="Numerator degrees of freedom" />
+							<spinbox default_precision="1" type="real" min="0.00001" id="df2" initial="5" label="Denominator degrees of freedom" />
+							<spinbox default_precision="1" type="real" min="0" id="ncp" initial="0" label="Non-centrality parameter" />
 						</frame>
 					</column>
 					<column>
@@ -65,6 +68,7 @@
 						</frame>
 					</column>
 				</row>
+				<text id="df2_gt4_err" type="error">ERROR: For a F distribution variance exists only when its denominator degress of freedom > 4.</text>
 			<stretch/>
 				<row>
 					<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />

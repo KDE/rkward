@@ -17,6 +17,7 @@ function preview () {
 
 function doPrintout ($final) {
 	$fun = getRK_val ("function");
+	$ncp = getRK_val ("ncp");
 	$nAvg = getRK_val ("nAvg"); // number of observations to calculate the averages
 	$nDist = getRK_val ("nDist"); // number of sample to construct the distribution
 
@@ -26,11 +27,10 @@ function doPrintout ($final) {
 	// We need df>2 for variance to exist. Taken care of in xml file: using "is_var_gt2" in <logic>
 ?>
 # parameters:
-df <- <? echo(getRK_val ("df")."\n"); ?>
-ncp <- <? echo(getRK_val ("ncp")."\n"); ?>
+df <- <? echo(getRK_val ("df")); ?>; ncp <- <? echo($ncp."\n"); ?>
 <?
 	if ($scalenorm || $drawnorm) {
-		if ($ncp == "0") { // mean and variance of the distribution of sample averages
+		if ($ncp == 0) { // mean and variance of the distribution of sample averages
 ?>
 # mean and variances of the distribution of sample averages:
 avg.exp <- 0;
@@ -42,6 +42,7 @@ avg.var <- df/((df-2)*<? echo($nAvg); ?>)
 tmp.var <- gamma((df-1)/2)/gamma(df/2)
 avg.exp <- ncp*sqrt(df/2)*tmp.var
 avg.var <- (df*(1+ncp^2)/(df-2) - ncp^2*df*tmp.var^2/2)/<? echo($nAvg); ?>
+
 <?
 		}
 	}
@@ -84,12 +85,12 @@ normY <- <? echo ($normFun); ?> (normX<? echo ($normMuSigma_tag); ?>);
 ?>
 dist.hist <- hist(avg, plot=FALSE<? echo ($histcalcoptions); ?>);
 <?
-	if ($drawnorm) {
+		if ($drawnorm) {
 ?>
 # calculate the ylims appropriately:
 ylim <- c(0,max(c(dist.hist$density, normY)));
 <?
-		$yLim = ', ylim=ylim';
+			$yLim = ', ylim=ylim';
 		}
 	}
 	if ($final) {
@@ -98,7 +99,7 @@ rk.graph.on ()
 try ({
 <?
 	}
-  	if ($fun == "hist") {
+	if ($fun == "hist") {
 ?>
 	plot(dist.hist<? echo ($yLim); echo ($histplotoptions); ?>)
 <?
