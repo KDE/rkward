@@ -15,9 +15,7 @@ for (i in 1:length (vars)) {
 	var <- eval (vars[[i]], envir=globalenv ())
 <?	if (getRK_val ("length")) { ?>
 	results[i, 'Length'] <- length (var)
-<?	}
-	if (getRK_val ("nacount")) { ?>
-	results[i, 'NAs'] <- length (which(is.na(var)))
+	results[i, 'NAs'] <- sum (is.na(var))
 <?	} ?>
 	try ({
 		test <- ad.test (var)

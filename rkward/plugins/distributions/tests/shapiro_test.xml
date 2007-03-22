@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 
-<!-- This is the Shapiro-Wilk’s test for Normality -->
+<!-- This is the Shapiro-Wilk test for Normality -->
 
 <document>
 	<code file="shapiro_test.php"/>
@@ -21,8 +21,7 @@
 				</row>
 			</tab>
 			<tab label="Options">
-				<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
-				<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="false" />
+				<checkbox id="length" label="Show Length and NAs" value_unchecked="0" value="1" checked="true" />
 				<stretch/>
 			</tab>
 		</tabbook>

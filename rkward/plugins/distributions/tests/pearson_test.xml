@@ -25,8 +25,7 @@
 					<option value="adjust = TRUE" label="n.classes-3 degrees of freedom" />
 					<option value="adjust = FALSE" label="n.classes-1 degrees of freedom" />
 				</radio>
-				<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
-				<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="false" />
+				<checkbox id="length" label="Show Length and NAs" value_unchecked="0" value="1" checked="true" />
 				<stretch/>
 			</tab>
 		</tabbook>
