@@ -165,6 +165,9 @@ R plugins:
 			- the tail, log, and print options would be in a single embedded plugin
 			- a common PHP file would be included that generates uniform code (a small set of options would be needed to define the parts that are different across distributions)
 			- something similar should be done for the plots
+	- plugin help files:
+		- It would be nice to add the <id="..."> fetaure like <settings id=".."> in the technical section too. Also may be add something like <tag=".."> for the tags or variable which can be in italics, grey color.
+		- Find a way to make help searchable, preferentially within the R help search window
 	- import plugins:
 		- standardized? checkbox to open imported object for editing
 			- would be nice, if this box could be affected (default) by a global setting
