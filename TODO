@@ -104,6 +104,8 @@ UI-stuff
 		- open link in new tab, etc.
 	- Working directory
 		- show current wd in <browser>, somewhere
+	- Settings UI:
+		- see mail by PK on 2007/03/23 (need to put in the link, once it becomes available in the archive)
 
 Internal stuff:
 	- Handling fonts:
@@ -159,6 +161,8 @@ General code:
 			- static members should be moved to the respective classes. Much cleaner!
 
 R plugins:
+	- modularization of the xml using includes or snippets
+		- see mail thread "need a little help..." around 2007/03/23 (need to put in the link, once it becomes available in the archive)
 	- distribution plugins (probabilities and quantiles)
 		- probably all these could use an option "Store result (to name) / Print result / print and store"
 		- when changing this, they should first be changed to use common base functionality:
