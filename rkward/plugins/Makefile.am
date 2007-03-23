@@ -198,6 +198,9 @@ dist_pluginsXdistributionsXclt_DATA = \
 	distributions/clt/plot_binomial_clt.php \
 	distributions/clt/plot_binomial_clt.xml \
 	distributions/clt/plot_binomial_clt.rkh \
+	distributions/clt/plot_gamma_clt.xml \
+	distributions/clt/plot_exponential_clt.xml \
+	distributions/clt/plot_chi_squared_clt.xml \
 	distributions/clt/plot_geometric_clt.rkh \
 	distributions/clt/plot_geometric_clt.php \
 	distributions/clt/plot_hypergeometric_clt.xml \
@@ -212,7 +215,38 @@ dist_pluginsXdistributionsXclt_DATA = \
 	distributions/clt/plot_wilcoxon_clt.xml \
 	distributions/clt/plot_negbinomial_clt.rkh \
 	distributions/clt/plot_negbinomial_clt.php \
-	distributions/clt/plot_poisson_clt.rkh
+	distributions/clt/plot_poisson_clt.rkh \
+	distributions/clt/plot_lognormal_clt.xml \
+	distributions/clt/plot_beta_clt.rkh \
+	distributions/clt/plot_logistic_clt.php \
+	distributions/clt/plot_uniform_clt.php \
+	distributions/clt/plot_f_clt.rkh \
+	distributions/clt/plot_gamma_clt.php \
+	distributions/clt/plot_beta_clt.xml \
+	distributions/clt/plot_normal_clt.rkh \
+	distributions/clt/plot_exponential_clt.php \
+	distributions/clt/plot_chi_squared_clt.php \
+	distributions/clt/plot_lognormal_clt.php \
+	distributions/clt/plot_f_clt.xml \
+	distributions/clt/plot_normal_clt.xml \
+	distributions/clt/plot_logistic_clt.rkh \
+	distributions/clt/plot_beta_clt.php \
+	distributions/clt/plot_uniform_clt.rkh \
+	distributions/clt/plot_gamma_clt.rkh \
+	distributions/clt/plot_exponential_clt.rkh \
+	distributions/clt/plot_chi_squared_clt.rkh \
+	distributions/clt/plot_f_clt.php \
+	distributions/clt/plot_logistic_clt.xml \
+	distributions/clt/plot_lognormal_clt.rkh \
+	distributions/clt/plot_normal_clt.php \
+	distributions/clt/plot_uniform_clt.xml \
+	distributions/clt/plot_weibull_clt.rkh \
+	distributions/clt/plot_t_clt.php \
+	distributions/clt/plot_weibull_clt.xml \
+	distributions/clt/plot_t_clt.rkh \
+	distributions/clt/plot_weibull_clt.php \
+	distributions/clt/plot_t_clt.xml \
+	distributions/clt/plot_clt_common.php
 
 pluginsXdistributionsXtestsdir = $(kde_datadir)/rkward/distributions/tests
 dist_pluginsXdistributionsXtests_DATA = \
@@ -363,8 +397,6 @@ pluginsXdescriptivedir = $(kde_datadir)/rkward/descriptive
 dist_pluginsXdescriptive_DATA = \
 	descriptive/descriptive_statistics.php \
 	descriptive/descriptive_statistics.xml \
-	descriptive/skewness_kurtosis_test.xml \
-	descriptive/skewness_kurtosis_test.php \
 	descriptive/descriptive_statistics.rkh
 
 pluginsXx11devicedir = $(kde_datadir)/rkward/x11device
