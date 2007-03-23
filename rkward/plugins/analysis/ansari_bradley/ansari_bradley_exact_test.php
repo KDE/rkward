@@ -1,5 +1,9 @@
 <?
-function preprocess () {
+function preprocess () { ?>
+require(exactRankTests)
+
+names <- rk.get.description (<? getRK ("x"); ?>, <? getRK ("y"); ?>)
+<?
 }
 
 function calculate () {
@@ -10,10 +14,7 @@ function calculate () {
 		$exact_opt = ", exact=FALSE";
 	}
 ?>
-require(exactRankTests)
-rk.temp.x <- substitute (<? getRK ("x"); ?>)
-rk.temp.y <- substitute (<? getRK ("y"); ?>)
-rk.temp <- ansari.exact (eval (rk.temp.x), eval (rk.temp.y), alternative = "<? getRK ("alternative"); ?>"<? echo ($exact_opt); ?>, conf.int = <? getRK ("confint"); ?> <?
+result <- ansari.exact (<? getRK ("x"); ?>, <? getRK ("y"); ?>, alternative = "<? getRK ("alternative"); ?>"<? echo ($exact_opt); ?>, conf.int = <? getRK ("confint"); ?> <?
 if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $conflevel); ?>)
 
 <?
@@ -21,24 +22,19 @@ if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $c
 
 function printout () {
 ?>
-rk.header ("Ansari-Bradley two-sample exact test", 
-	parameters=list ("Comparing", paste (rk.get.description (rk.temp.x, is.substitute=TRUE), "against", rk.get.description (rk.temp.y, is.substitute=TRUE)),"Confidence Interval", "<? getRK ("confint"); ?>", "Confidence Level",<? getRK ("conflevel"); ?>, "Compute exact p-value", "<? getRK ("exact"); ?>"))
+rk.header (result$method,
+	parameters=list ("Comparing", paste (names[1], "against", names[2]),
+	'H1', rk.describe.alternative (result),
+	"Compute exact p-value", "<? getRK ("exact"); ?>"))
 
 rk.results (list (
-	'Variable Names'=rk.get.description (rk.temp.x, rk.temp.y, is.substitute=TRUE),
-	'statistic'=rk.temp$statistic,
-	'null.value'=rk.temp$null.value,
-	'Hypothesis'=rk.temp$alternative,
-	p=rk.temp$p.value<?
+	'Variable Names'=names,
+	'statistic'=result$statistic,
+	'null.value'=result$null.value,
+	p=result$p.value<?
 	if (getRK_val ("confint")== "TRUE") { ?>,
-	'confidence interval percent'=(100 * attr(rk.temp$conf.int, "conf.level")),
-	'confidence interval of difference'=rk.temp$conf.int <? } ?>))
-<?
-}
-
-function cleanup () {
-?>
-rm (list=grep ("^rk.temp", ls (), value=TRUE))
+	'confidence interval percent'=(100 * attr(result$conf.int, "conf.level")),
+	'confidence interval of difference'=result$conf.int<? } ?>))
 <?
 }
 ?>
