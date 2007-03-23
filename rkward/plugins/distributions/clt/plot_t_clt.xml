@@ -38,7 +38,7 @@
 							<spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
 						</frame>
 						<frame id="frame_tparam" label="t Parameters">
-								<spinbox default_precision="1" type="real" id="df" min="0.00001" initial="3" label="Degrees of freedom" />
+								<spinbox default_precision="1" type="real" id="df" min="2.01" initial="3" label="Degrees of freedom" />
 								<spinbox default_precision="1" type="real" id="ncp" initial="0" label="Non-centrality parameter" />
 						</frame>
 					</column>

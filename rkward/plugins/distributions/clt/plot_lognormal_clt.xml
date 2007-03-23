@@ -38,7 +38,7 @@
 							<spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
 						</frame>
 						<frame id="frame_lnormparam" label="Lognormal Parameters (in log-scale)">
-							<spinbox default_precision="2" type="real" id="mean" initial="0" label="Mean" />
+							<spinbox default_precision="1" type="real" id="mean" initial="0" label="Mean" />
 							<spinbox default_precision="2" type="real" id="sd" initial="1" min="0.01" label="Standard deviation" />
 						</frame>
 					</column>

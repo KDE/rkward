@@ -38,8 +38,8 @@
 							<spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
 						</frame>
 						<frame id="frame_unifparam" label="Uniform Parameters">
-							<spinbox default_precision="2" type="real" id="llim" initial="0" label="Minimum" />
-							<spinbox default_precision="2" type="real" id="ulim" initial="1" label="Maximum" />
+							<spinbox default_precision="1" type="real" id="llim" initial="0" label="Minimum" />
+							<spinbox default_precision="1" type="real" id="ulim" initial="1" label="Maximum" />
 						</frame>
 					</column>
 					<column>

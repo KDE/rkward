@@ -38,8 +38,8 @@
 							<spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
 						</frame>
 						<frame id="frame_fparam" label="F Parameters">
-							<spinbox default_precision="1" type="real" min="0.00001" id="df1" initial="5" label="Numerator degrees of freedom" />
-							<spinbox default_precision="1" type="real" min="0.00001" id="df2" initial="5" label="Denominator degrees of freedom" />
+							<spinbox default_precision="1" type="real" min="0.01" id="df1" initial="5" label="Numerator degrees of freedom" />
+							<spinbox default_precision="1" type="real" min="4.01" id="df2" initial="5" label="Denominator degrees of freedom" />
 							<spinbox default_precision="1" type="real" min="0" id="ncp" initial="0" label="Non-centrality parameter" />
 						</frame>
 					</column>

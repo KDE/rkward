@@ -38,8 +38,8 @@
 							<spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
 						</frame>
 						<frame id="frame_betaparam" label="Beta Parameters">
-							<spinbox default_precision="2" type="real" id="a" initial="2" min="0.01" label="Shape1 (a)" />
-							<spinbox default_precision="2" type="real" id="b" initial="2" min="0.01" label="Shape2 (b)" />
+							<spinbox default_precision="1" type="real" id="a" initial="2" min="0.01" label="Shape1 (a)" />
+							<spinbox default_precision="1" type="real" id="b" initial="2" min="0.01" label="Shape2 (b)" />
 						</frame>
 					</column>
 					<column>

@@ -38,8 +38,8 @@
 							<spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
 						</frame>
 						<frame id="frame_gammaparam" label="Gamma Parameters">
-							<spinbox default_precision="2" type="real" id="shape" initial="1" min="0.01" label="Shape" />
-							<spinbox default_precision="2" type="real" id="rate" initial="1" min="0.01" label="Rate (lambda)" label="Rate or 1/Scale" />
+							<spinbox default_precision="1" type="real" id="shape" initial="1" min="0.01" label="Shape" />
+							<spinbox default_precision="1" type="real" id="rate" initial="1" min="0.01" label="Rate (lambda)" label="Rate or 1/Scale" />
 						</frame>
 					</column>
 					<column>

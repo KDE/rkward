@@ -39,7 +39,7 @@
 							<spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
 						</frame>
 						<frame id="frame_poissonparam" label="Poisson Parameters">
-							<spinbox type="real" id="mean" min="0.01" initial="5" label="Mean" />
+							<spinbox default_precision="1" type="real" id="mean" min="0.01" initial="5" label="Mean" />
 						</frame>
 					</column>
 					<column>

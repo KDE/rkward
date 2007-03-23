@@ -38,8 +38,8 @@
 							<spinbox type="integer" min = "10" id="nDist" initial="1000" label="Samples for distribution" />
 						</frame>
 						<frame id="frame_logisparam" label="Logistic Parameters">
-							<spinbox default_precision="2" type="real" id="loc" initial="0" label="Location" />
-							<spinbox default_precision="2" type="real" id="scale" initial="1" min="0.01" label="Scale" />
+							<spinbox default_precision="1" type="real" id="loc" initial="0" label="Location" />
+							<spinbox default_precision="1" type="real" id="scale" initial="1" min="0.01" label="Scale" />
 						</frame>
 					</column>
 					<column>
