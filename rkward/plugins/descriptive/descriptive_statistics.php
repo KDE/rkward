@@ -48,10 +48,8 @@ for (i in 1:length (vars)) {
 		elseif ($mad_type == "high") echo (", high=TRUE"); ?>, na.rm=TRUE))
 <?	}
 	if (getRK_val ("length")) { ?>
-	results[i, 'length of sample'] <- try (length (var))
-<?	}
-	if (getRK_val ("nacount")) { ?>
-	results[i, 'number of NAs'] <- try (length (which(is.na(var))))
+	results[i, 'length of sample'] <- length (var)
+	results[i, 'number of NAs'] <- sum (is.na(var))
 <?	} ?>
 }
 <?

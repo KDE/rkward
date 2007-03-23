@@ -50,8 +50,7 @@
 							<checkbox value_unchecked="0" checked="true" value="1" id="range" label="range" />
 							<checkbox value_unchecked="0" value="1" id="sum" label="sum" />
 							<checkbox value_unchecked="0" value="1" id="prod" label="prod" />
-							<checkbox value_unchecked="0" value="1" id="length" label="length" />
-							<checkbox value_unchecked="0" value="1" id="nacount" label="Na count" />
+							<checkbox value_unchecked="0" value="1" id="length" label="Length and NAs" checked="true" />
 						</frame>
 						<stretch/>
 					</column>
