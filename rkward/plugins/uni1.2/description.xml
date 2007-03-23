@@ -32,8 +32,7 @@
 			<tab label="Statistics" >
 				<frame label="General" >
 					<row>
-						<checkbox value_unchecked="0" checked="false" value="1" id="nombre" label="Number of observations" />
-						<checkbox value_unchecked="0" checked="false" value="1" id="nbna" label="Number of missing values" />
+						<checkbox value_unchecked="0" checked="false" value="1" id="length" label="Length and NAs" />
 					</row>
 				</frame>
 				<frame label="Moments" >

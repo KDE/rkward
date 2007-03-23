@@ -14,11 +14,9 @@ for (i in 1:length (vars))  {
 	var <- eval (vars[[i]], envir=globalenv());
 	results[i, 'Variable Name'] <- rk.get.description(vars[[i]], is.substitute=TRUE)
 
-<?	if (getRK_val ("nombre")) { ?>
+<?	if (getRK_val ("length")) { ?>
 	results[i, 'Number of obs'] <- length(var)
-<?	}
-	if (getRK_val ("nbna")) { ?>
-	results[i, 'Number of missing values'] <- length(which(is.na(var)))
+	results[i, 'Number of missing values'] <- sum(is.na(var))
 <?	}
 	if (getRK_val ("mean")) { ?>
 	results[i, 'Mean'] <- mean(var,<? echo ($narm); ?>)
