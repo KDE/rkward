@@ -3,7 +3,7 @@ include ("plot_clt_common.php");
 
 function doParameters () {
 ?>
-m <- <? echo(getRK_val ("m")); ?>; k <- <? echo(getRK_val ("n")); ?>; k <- <? echo(getRK_val ("k")); ?>;
+m <- <? echo(getRK_val ("m")); ?>; n <- <? echo(getRK_val ("n")); ?>; k <- <? echo(getRK_val ("k")); ?>;
 <?
 }
 
