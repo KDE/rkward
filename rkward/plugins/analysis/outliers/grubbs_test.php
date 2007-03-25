@@ -20,7 +20,7 @@ for (i in 1:length(vars)) {
 
 	var <- na.omit (var) 	# omit NAs for all further calculations
 <? 	} else { ?>
-	var <- eval (vars[[i]], envir=globalenv ())
+	var <- na.omit (eval (vars[[i]], envir=globalenv ()))
 <?	} ?>
 
 	results[i, 'Error'] <- tryCatch ({
