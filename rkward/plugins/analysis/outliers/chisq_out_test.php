@@ -25,7 +25,7 @@ for (i in 1:length(vars)) {
 
 	results[i, 'Error'] <- tryCatch ({
 		# This is the core of the calculation
-		t <- chisq.out.test (var, opposite = <? getRK ("opposite"); ?>, variance = var (var))
+		t <- chisq.out.test (var, opposite = <? getRK ("opposite"); ?>)
 		results[i, 'X-squared'] <- t$statistic
 		results[i, 'p-value'] <- t$p.value
 		results[i, 'Alternative Hypothesis']<- rk.describe.alternative (t)
