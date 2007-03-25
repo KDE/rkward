@@ -2,6 +2,7 @@
 include ("plot_clt_common.php");
 
 function doParameters () {
+	global $paramTag;
  	if ( getRK_val ("param") == "pprob") {
 		$paramTag = ", prob=prob";
 ?>
@@ -24,6 +25,7 @@ avg.var <- (size*(1-prob)/prob^2)/<? echo ($nAvg); ?>;
 }
 
 function doGenerateData () {
+	global $paramTag;
 	global $nAvg;
 	global $nDist;
 ?>
