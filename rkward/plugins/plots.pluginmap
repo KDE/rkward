@@ -13,6 +13,8 @@
 		<!-- These are meant to be embedded, and are not shown in the menu -->
 		<component type="standard" id="plot_options" file="plot_options.xml" label="Plot Options" />
 		<component type="standard" id="color_chooser" file="color_chooser.xml" label="Color Chooser" />
+		<component type="standard" id="plot_stepfun_options" file="plot_stepfun_options.xml" label="Step Function plot options" />
+		<component type="standard" id="histogram_options" file="histogram_options.xml" label="Histogram Options" />
 	</components>
 
 	<hierarchy>

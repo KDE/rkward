@@ -40,11 +40,9 @@
 		<component type="standard" id="PP_test" file="analysis/TESTS/PP_test.xml" label="Phillips-Perron Test" />
 
 		<component type="standard" id="histogram" file="plots/histogram.xml" label="Histogram" />
-		<component type="standard" id="histogram_options" file="plots/histogram_options.xml" label="Histogram Options" />
 
 		<component type="standard" id="stem" file="plots/stem.xml" label="Stem-and-Leaf Plot" />
 
-		<component type="standard" id="plot_stepfun_options" file="plots/plot_stepfun_options.xml" label="Step Function plot options" />
 		<component type="standard" id="ecdf_plot" file="plots/ecdf_plot.xml" label="ECDF Plot" />
 		<component type="standard" id="x11grid" file="x11device/grid.xml" label="Draw Grid" />
 
