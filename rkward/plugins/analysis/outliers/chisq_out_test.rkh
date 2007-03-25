@@ -18,8 +18,7 @@
 		<setting id="median">If checked this will calculate you the median (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
 		<setting id="min">If checked this will calculate you the minimum (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
 		<setting id="max">If checked this will calculate you the maximum (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
-		<setting id="length">If checked, the length of the data vectors will be shown. However, this will not effect your results but is just an optional information.</setting>
-		<setting id="nacount">If checked, and in case of missing values this will show you the number of those. However, this will not effect your results but is just an optional information.</setting>
+		<setting id="length">Show the total length of the data, and the number of missing values (purely informational, does not affect the test)?</setting>
 	</settings>
 	<related>
 		<ul>

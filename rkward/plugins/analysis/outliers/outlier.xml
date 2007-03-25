@@ -30,7 +30,6 @@
 							<checkbox id="min" label="Show Minimum" value_unchecked="0" value="1" checked="false" />
 							<checkbox id="max" label="Show Maximum" value_unchecked="0" value="1" checked="false" />
 							<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
-							<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="true" />
 						</column>
 						<stretch/>
 					</row>
