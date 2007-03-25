@@ -98,6 +98,18 @@ void RControlWindow::show () {
 	MUTEX_UNLOCK;
 }
 
+RControlWindowListViewItem *RControlWindow::itemForCommand (RCommand *command) {
+	QMap <RCommand *, RControlWindowListViewItem *>::const_iterator it = command_map.find (command);
+	if (it == command_map.constEnd ()) return 0;
+	return (*it);
+}
+
+RControlWindowListViewItem *RControlWindow::itemForChain (RCommandChain *chain) {
+	QMap <RCommandChain *, RControlWindowListViewItem *>::const_iterator it = chain_map.find (chain);
+	if (it == chain_map.constEnd ()) return 0;
+	return (*it);
+}
+
 void RControlWindow::addChain (RCommandChain *chain) {
 	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
@@ -105,7 +117,7 @@ void RControlWindow::addChain (RCommandChain *chain) {
 	RChainOrCommand *dummy = new RChainOrCommand;
 	dummy->command = 0;
 	dummy->chain = chain;
-	addCommands (dummy, chain_map[chain->parent]);
+	addCommands (dummy, itemForChain (chain->parent));
 	delete dummy;
 }
 
@@ -114,14 +126,14 @@ void RControlWindow::addCommand (RCommand *command, RCommandChain *parent) {
 	RK_TRACE (APP);
 
 	if (!parent) parent = RCommandStack::regular_stack;
-	addCommand (command, chain_map[parent]);
+	addCommand (command, itemForChain (parent));
 }
 
 void RControlWindow::updateChain (RCommandChain *chain) {
 	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
-	RControlWindowListViewItem *chainitem = chain_map[chain];
+	RControlWindowListViewItem *chainitem = itemForChain (chain);
 	chainitem->update (chain);
 	checkCleanChain (chainitem);
 }
@@ -130,7 +142,7 @@ void RControlWindow::updateCommand (RCommand *command) {
 	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
-	RControlWindowListViewItem *item = command_map[command];
+	RControlWindowListViewItem *item = itemForCommand (command);
 	if (!item) {
 		RK_ASSERT (false);
 		// unfortunately, yes, this can happen! Namely when the command is in the reply stack. We do not find commands in (the) reply stack(s), in refreshCommands.
@@ -144,7 +156,7 @@ void RControlWindow::removeCommand (RCommand *command) {
 	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
-	RControlWindowListViewItem *item = command_map[command];
+	RControlWindowListViewItem *item = itemForCommand (command);
 	if (!item) {
 		RK_ASSERT (false);
 		// TODO: see updateCommand ()
@@ -174,7 +186,7 @@ void RControlWindow::setCommandRunning (RCommand *command) {
 	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
-	RControlWindowListViewItem *item = command_map[command];
+	RControlWindowListViewItem *item = itemForCommand (command);
 	if (!item) {
 		RK_ASSERT (false);
 		// TODO: see updateCommand ()

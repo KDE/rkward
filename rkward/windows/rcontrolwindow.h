@@ -88,6 +88,9 @@ private:
 	QPushButton *cancel_button;
 	QPushButton *pause_button;
 
+	RControlWindowListViewItem *itemForCommand (RCommand *command);
+	RControlWindowListViewItem *itemForChain (RCommandChain *chain);
+
 /** internal: recursively add commands/chains */
 	void addCommands (RChainOrCommand *coc, RControlWindowListViewItem *parent);
 /** internal: add single command */

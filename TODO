@@ -6,6 +6,10 @@ Important:
 	- Around March 1st, write to R-devel to achieve having IS_UTF8 and IS_LATIN1 in public API (if not already available, then).
 		- Is Rf_translateChar() what we are looking for?
 
+Should be fixed for 0.4.8:
+	- A way to define dependencies between pluginmaps
+		- Put the embeddable plugins a .pluginmap that is required by most others
+
 Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
 
