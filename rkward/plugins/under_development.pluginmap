@@ -22,8 +22,6 @@
 
 		<component type="standard" id="histogram" file="plots/histogram.xml" label="Histogram" />
 
-		<component type="standard" id="stem" file="plots/stem.xml" label="Stem-and-Leaf Plot" />
-
 		<component type="standard" id="ecdf_plot" file="plots/ecdf_plot.xml" label="ECDF Plot" />
 		<component type="standard" id="x11grid" file="x11device/grid.xml" label="Draw Grid" />
 
@@ -63,7 +61,6 @@
 		<menu id="plots" label="Plots" index="5">
 			<entry component="ecdf_plot" />
 			<entry component="histogram" />
-			<entry component="stem" />
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
 			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="2">
