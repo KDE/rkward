@@ -1435,7 +1435,7 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 </varlistentry>
 <varlistentry>
 <term>&lt;option&gt;</term>
-<listitem>Can only be used as a direct child of a &lt;radio&gt; or &lt;dropdown&gt; element. Represents one selectable option in a radio control or dropdown list. The &lt;option&gt; elements do not take an "id" attribute. Only the parent element (&lt;radio&gt; or &lt;dropdown&gt;) needs one. Attributes:
+<listitem>Can only be used as a direct child of a &lt;radio&gt; or &lt;dropdown&gt; element. Represents one selectable option in a radio control or dropdown list. Specifying the "id" parameter for the &lt;option&gt; elements is optional (and in fact it's recommended, not to set an "id", unless you plan to really use it to disable single options). Only the parent element (&lt;radio&gt; or &lt;dropdown&gt;) needs one. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
@@ -1801,6 +1801,16 @@ In addition to this, some elements have additional properties you can connect to
 	<varlistentry>
 	<term>number</term>
 	<listitem>The number of the currently selected option (options are numbered top-to-bottom, starting at 0) (integer)</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;option&gt;</term>
+<listitem>No default property. "enabled" is the *only* proptery. It does not have the "visible" or "required" properties.
+	<variablelist>
+	<varlistentry>
+	<term>enabled</term>
+	<listitem>Whether this single option should be enabled or disabled. In most cases you will enable/disable the entire &lt;radio&lt; or &lt;dropdown&lt;, instead. But this can be used to dynamically set the enabledness of a single option inside a &lt;radio&lt; or &lt;dropdown&lt; (bool)</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>

@@ -1,6 +1,6 @@
 - when flushing the output, also delete all graphs
 - add support for a "technical details" section in plugin help files
-- add option to enable / disable single options of a radio or dropdown control in plugins		TODO: document
+- add option to enable / disable single options of a radio or dropdown control in plugins
 - t-test plugin now also allows to calculate a paired test
 - show current working directory in the statusbar
 - add run selection action to all HTML windows
@@ -33,7 +33,7 @@
 - fixed: plugin browser type="dir" would not work correctly
 - import SPSS and import CSV plugins gain option to open object for editing, automatically (checked by default)
 - warn when opening very large objects (with more than 250000 fields; this limit is configurable)
-- add a "copy" tag to facilitate writing plugins with both dialog and wizard interfaces		TODO: convert all wizards to use this
+- add a "copy" tag to facilitate writing plugins with both dialog and wizard interfaces
 - fixed: graph previews would stop working when the interface is switched from dialog to wizard or vice versa
 - new options for plugin dialogs: Configure whether code display is shown by default, and at what size
 
