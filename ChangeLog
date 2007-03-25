@@ -1,3 +1,4 @@
+- when flushing the output, also delete all graphs
 - add support for a "technical details" section in plugin help files
 - add option to enable / disable single options of a radio or dropdown control in plugins		TODO: document
 - t-test plugin now also allows to calculate a paired test

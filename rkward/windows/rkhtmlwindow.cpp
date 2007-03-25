@@ -350,7 +350,16 @@ void RKOutputWindow::flushOutput () {
 	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to flush the output? It will not be possible to restore it."), i18n ("Flush output?"));
 	if (res==KMessageBox::Yes) {
 		QFile out_file (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
+		QDir out_dir = QFileInfo (out_file).dir (true);
 		out_file.remove ();
+
+		// remove all the graphs
+		out_dir.setNameFilter ("graph*.png");
+		QStringList graph_files = out_dir.entryList ();
+		for (QStringList::const_iterator it = graph_files.constBegin (); it != graph_files.constEnd (); ++it) {
+			QFile file (out_dir.absFilePath (*it, false));
+			file.remove ();
+		}
 		refreshOutput (false, false, false);
 	}
 }

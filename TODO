@@ -266,19 +266,12 @@ File
 
 ################## cryptic notes ######################
 
-- printutils.c->481 Rvprintf: can we get at the standard out-connection and give it a fake vprintf (or better write?!) and fake fflush?
-	- see also: connections.c line 3246ff InitConnections
-	- seems ok now. But maybe we could still use this to catch immediate warning messages (which go to R_Consolefile)?
-
-tryCatch (message ("a"), error=function (x) {print ("e"); x$message}, warning=function (y) {print ("w"); conditionMessage(y)}, message=function (z) {print ("m"); conditionCall (z)})
-withCallingHandlers ({message ("a"); stop ("b");}, error=function (x) {print ("e"); x$message}, warning=function (y) {print ("w"); conditionMessage(y)}, message=function (z) {print ("c"); conditionCall (z)})
-
-Not quite correct yet:
-	.Internal (.addCondHands (c ("error"), list (function (x) {print ("e"); print (conditionMessage (x))}), parent.frame (), NULL, TRUE))
-
-.Internal (.addCondHands (c ("warning"), list (function (x) {print ("w"); print (conditionCall (x))}), globalenv (), NULL, TRUE))
-
-condition handlers seem to be reset after an error!
-condition handlers do not seem to carry over two separate calls of R_tryEval ().
-
-http://slashdot.org/article.pl?sid=05/06/24/149231&tid=121&tid=188&tid=95&tid=1
+translation of plugins and help files (no, this is not good, yet. Not modular, order gets messed up, context information is lacking. We need a dedicated simple parser that will understand the files it deals with, and extracts the strings with relevant context info).
+in Makefil.am:
+# experimental: extract all messages. Probably it would make sense to split this up, however, perhaps per .pluginmap, or per directory!
+messages:
+	extractrc `find . -name \*.rkh` --tag=title --tag=summary --tag=usage --tag=section --tag=related --tag=technical > messages.cpp
+	extractattr `find . -name \*.rkh` --attr=section,title --attr=section,shorttitle >> messages.cpp
+	extractattr `find . -name \*.pluginmap` --attr=component,label --attr=menu,label --attr=entry,label >> messages.cpp
+	extractrc `find . -name \*.xml` --tag=text >> messages.cpp
+	extractattr `find . -name \*.xml` --attr=dialog,label --attr=wizard,label --attr=tab,label --attr=page,label --attr=frame,label --attr=varselector,label --attr=varslot,label --attr=radio,label --attr=dropdown,label --attr=option,label --attr=checkbox,label --attr=spinbox,label --attr=browser,label --attr=saveobject,label --attr=formula,label >> messages.cpp
