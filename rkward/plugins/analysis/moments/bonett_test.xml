@@ -21,8 +21,7 @@
 				</row>
 			</tab>
 			<tab label="Options" id="tab_options">
-				<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
-				<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="true" />
+				<checkbox id="length" label="Show Length and NAs" value_unchecked="0" value="1" checked="true" />
 				<checkbox id="show_alternative" label="Verbose alternative hypothesis" value_unchecked="0" value="1" checked="true"/>
 				<stretch/>
 			</tab>

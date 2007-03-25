@@ -28,10 +28,8 @@ for (i in 1:length(vars)) {
 		NA				# no error
 	}, error=function (e) e$message)	# catch any errors
 <?	if (getRK_val ("length")) { ?>
-		results[i, 'Length'] <- length (var)
-<?	}
-	if (getRK_val ("nacount")) { ?>
-		results[i, 'NAs'] <- length (which(is.na(var)))
+	results[i, 'Length'] <- length (var)
+	results[i, 'NAs'] <- length (which(is.na(var)))
 <? 	} ?>
 }
 if (all (is.na (results$'Error'))) results$'Error' <- NULL

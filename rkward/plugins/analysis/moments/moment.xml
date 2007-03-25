@@ -23,8 +23,7 @@
 					<checkbox id="narm" label="remove missing values" checked="true" value="TRUE" value_unchecked="FALSE" />
 				</frame>
 				<frame label="additional settings">
-					<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="false" />
-					<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="false" />
+					<checkbox id="length" label="Show Length and NAs" value_unchecked="0" value="1" checked="false" />
 				</frame>
 			</tab>
 		</tabbook>

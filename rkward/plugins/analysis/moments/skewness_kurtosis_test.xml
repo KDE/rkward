@@ -32,7 +32,6 @@
 					<checkbox id="geary" label="Geary's kurtosis" value_unchecked="0" value="1" checked="false" />
 				</frame>
 				<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="false" />
-				<checkbox id="nacount" label="Show Missing Values" value_unchecked="0" value="1" checked="false" />
 			</tab>
 		</tabbook>
 	</dialog>
