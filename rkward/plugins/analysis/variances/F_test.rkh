@@ -10,12 +10,12 @@
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Select the data to be computed. The vectors need to be numeric.</setting>
-		<setting id="y">Select the data to be computed. The vectors need to be numeric.</setting>
-		<setting id="alternative">Here you can specify the alternative hypothesis. It must be one of "two sided", "greater" or "less".</setting>
+		<setting id="x">First sample (numeric vector).</setting>
+		<setting id="y">Second sample (numeric vector).</setting>
+		<setting id="alternative">Alternative hypothesis of the test.</setting>
 		<caption id="tab_options"/>
 		<setting id="ratio">Defines the hypothesized ratio of the population variances.</setting>
-		<setting id="conflevel">Here you can define the confidence level of the interval (95% is typical).</setting>
+		<setting id="conflevel">Defines the confidence level of the interval (95% is typical).</setting>
 	</settings>
 	<related>
 		<ul>

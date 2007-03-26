@@ -3,17 +3,19 @@ function preprocess () {
 }
 
 function calculate () {
+	global $vars;
+	$vars = str_replace ("\n", ", ", trim (getRK_val ("x")));
 ?>
-result <- fligner.test (<? getRK ("x"); ?>, <? getRK ("x"); ?>)
+result <- fligner.test (list (<? echo ($vars); ?>))
 <?
 }
 
 function printout () {
+	global $vars;
 ?>
-names <- rk.get.description (<? getRK ("x"); ?>, <? getRK ("y"); ?>)
+names <- rk.get.description (<? echo ($vars); ?>)
 
-rk.header ("Fligner-Killeen Test of Homogeneity of Variances",
-	parameters=list ("Sample: ", paste (names[1], "grouped by:", names[2])))
+rk.header (result$method)
 
 rk.results (list (
 	'Variables'=names,

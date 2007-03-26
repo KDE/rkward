@@ -5,12 +5,11 @@
 	</summary>
 
 	<usage>
-		Select the data to perform the Fligner-Killeen (median) test of the null that the variances in each of the groups (samples) are the same. For this test the samples need to be numeric vectors (see below for details).
+		Select several numeric vectors to perform the Fligner-Killeen (median) test of the null that the variances in each of the samples are the same.
 	</usage>
 
 	<settings>
-		<setting id="x">Select the data to be computed. The vectors need to be numeric.</setting>
-		<setting id="y">Select the data to be computed. The vectors need to be a factor.</setting>
+		<setting id="x">The samples to be checked for equal variance. The vectors need to be numeric, but don't need to have the same length.</setting>
 	</settings>
 	<related>
 		<ul>

@@ -8,8 +8,7 @@
 		<row>
 			<varselector id="vars"/>
 			<column>
-				<varslot type="numeric" id="x" source="vars" required="true" label="samples"/>
-				<varslot type="factor" id="y" source="vars" required="true" label="group"/>
+				<varslot type="numeric" id="x" source="vars" multi="true" required="true" label="samples" min_vars="2"/>
 			</column>
 		</row>
 	</dialog>

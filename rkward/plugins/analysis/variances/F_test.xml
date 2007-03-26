@@ -21,8 +21,9 @@
 				</row>
 			</tab>
 			<tab label="Options" id="tab_options">
-				<spinbox id="ratio" type="real" label="ratio" initial="1"/>
+				<spinbox id="hypothesized ratio" type="real" label="ratio" initial="1"/>
 				<spinbox  id="conflevel" type="real" label="confidence level" min="0" max="1" initial="0.95"/>
+				<stretch/>
 			</tab>
 		</tabbook>
 	</dialog>
