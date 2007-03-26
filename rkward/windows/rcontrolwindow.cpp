@@ -134,6 +134,10 @@ void RControlWindow::updateChain (RCommandChain *chain) {
 	RK_TRACE (APP);
 
 	RControlWindowListViewItem *chainitem = itemForChain (chain);
+	if (!chainitem) {
+		RK_ASSERT (false);
+		return;
+	}
 	chainitem->update (chain);
 	checkCleanChain (chainitem);
 }

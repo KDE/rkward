@@ -9,6 +9,7 @@ Important:
 Should be fixed for 0.4.8:
 	- A way to define dependencies between pluginmaps
 		- Put the embeddable plugins a .pluginmap that is required by most others
+	- Find a solution for error handling in plugins
 
 Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
