@@ -6,5 +6,6 @@ dist_pages_DATA = \
 	rkward_for_r_users.rkh \
 	rkward_help.css \
 	rkward_shortcuts.rkh \
-	rkward_trouble_shooting.rkh
+	rkward_trouble_shooting.rkh \
+	rkward_output.rkh
 

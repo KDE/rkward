@@ -1,0 +1,17 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>RKWard Output</title>
+	<summary>
+Describe the RKWard output window, and how to make use of the generated output.
+
+TODO: This page is incomplete.
+	</summary>
+
+	<section title="Using the output in an office suite" id="integration_in_office_suite">
+One of the many goals of RKWard is to have a seamless integration with an office-suite. Future plans of RKWard include the usage of the "OASIS Open Document Format for Office Applications (ODF)". But right now there is only support for HTML output (including images as png) of your results. HTML can be read and worked on with any modern office suite.
+
+The easiest way to get output into your office suite, is to first select the relevant portions, copy them (Edit->Copy), then paste them. This works well, at least in OpenOffice. You can also drag and drop images from the output to an OpenOffice document.
+
+If you need access to the raw HTML and image files, these are stored in a hidden directory. By default this is a sub-folder called ".rkward" of your home directory (Settings->Configure RKWard->General). You'll want the files "rk_out.html" and the "graph*.png" files.
+	</section>
+</document>
