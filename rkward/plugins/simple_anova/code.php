@@ -1,25 +1,18 @@
 <?
-	function preprocess () {
-	}
-	
-	function calculate () {
-?>rk.temp.glm = glm (<? getRK ("model"); ?>, data=<? getRK ("model.table"); ?>)
-rk.temp.labels = <? getRK ("model.labels"); ?> 
-rk.temp.anova = anova (rk.temp.glm)
+function preprocess () {
+}
+
+function calculate () {
+?>model = glm (<? getRK ("model"); ?>, data=<? getRK ("model.table"); ?>)
+labels = <? getRK ("model.labels"); ?> 
+result = anova (model)
 <?
-	}
-	
-	function printout () {
+}
+
+function printout () {
 ?>
 rk.header ("Simple Anova")
-rk.print (rk.temp.anova)
+rk.print (result)
 <?
-	}
-	
-	function cleanup () {
-?>rm (rk.temp.glm)
-rm (rk.temp.labels)
-rm (rk.temp.anova)
-<?
-	}
+}
 ?>

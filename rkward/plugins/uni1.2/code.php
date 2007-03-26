@@ -72,7 +72,7 @@ for (i in 1:length (vars))  {
 		temp <- hubers (var, k = <? getRK ("winsor"); ?>,tol=<? getRK ("tol"); ?><?
 	if (getRK_val("customMu")=="1") echo (", mu=".getRK_val("mu"));
 	if (getRK_val("customS")=="1") echo (", s=".getRK_val("s"));
-	echo (",initmu =".getRK_val("initmu")."(rk.temp.var)") ?>)
+	echo (",initmu =".getRK_val("initmu")."(var)") ?>)
 	})
 	results[i, 'Huber M-Estimator'] <- paste (temp[[1]], temp[[2]], sep=": ", collapse=" ")
 <?	} ?>

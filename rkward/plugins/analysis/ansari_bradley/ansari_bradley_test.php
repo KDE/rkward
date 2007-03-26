@@ -36,10 +36,4 @@ rk.results (list (
 	'confidence interval of difference'=result$conf.int<? } ?>))
 <?
 }
-
-function cleanup () {
-?>
-rm (list=grep ("^rk.temp", ls (), value=TRUE))
-<?
-}
 ?>
