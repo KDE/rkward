@@ -1,42 +1,40 @@
 <?
-	function preprocess () {
-	}
+function preprocess () {
+}
 
-	function calculate () {
+function calculate () {
 	$vars = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val ("x"))) . ")";
 
 ?>
-require(outliers)
+objects <- list (<? echo ($vars); ?>)
+results <- data.frame ('Variable Name'=rep (NA, length (objects)), check.names=FALSE)
+for (i in 1:length (objects)) {
+	results[i, 'Variable Name'] <- rk.get.description (objects[[i]], is.substitute=TRUE)
+	var <- eval (objects[[i]], envir=globalenv ())
+<?	if (getRK_val ("length")) { ?>
+	results[i, 'Length'] <- length (var)
+	results[i, 'NAs'] <- sum (is.na(var))
 
-rk.temp.objects <- list (<? echo ($vars); ?>)
-rk.temp.results <- data.frame ('Variable Name'=rep (NA, length (rk.temp.objects)), check.names=FALSE)
-local ({
-	i=0;
-	for (var in rk.temp.objects) {
-		i = i+1
-		rk.temp.results$'Variable Name'[i] <<- rk.get.description (var, is.substitute=TRUE)
-		try ({
-			rk.temp.t <- PP.test (eval (var), lshort = <? getRK ("lshort"); ?>)
-			rk.temp.results$'Dickey-Fuller'[i] <<- rk.temp.t$statistic
-			rk.temp.results$'Truncation lag parameter'[i] <<- rk.temp.t$parameter
-			rk.temp.results$'p-value'[i] <<- rk.temp.t$p.value
-		})
-	}
-})
+<?	}
+	if (getRK_val ("narm")) { ?>
+	var <- var[!is.na (var)] 	# remove NAs
+<?	} ?>
+	try ({
+		test <- PP.test (var, lshort = <? getRK ("lshort"); ?>)
+		results[i, 'Dickey-Fuller'] <- test$statistic
+		results[i, 'Truncation lag parameter'] <- test$parameter
+		results[i, 'p-value'] <- test$p.value
+	})
+}
 <?
-        }
+}
 
 function printout () {
 ?>
 rk.header ("Phillips-Perron Test for Unit Roots",
 	parameters=list ("Truncation lag parameter short ('TRUE') or long ('FALSE')", "<? getRK ("lshort"); ?>"))
-rk.results (rk.temp.results)
-<?
-}
 
-function cleanup () {
-?>
-rm (list=grep ("^rk.temp", ls (), value=TRUE))
+rk.results (results)
 <?
 }
 ?>

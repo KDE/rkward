@@ -12,9 +12,17 @@
 					<varselector id="vars"/>
 					<column>
 						<varslot type="numeric" id="x" multi="true" source="vars" required="true" label="variable(s):"/>
-						<checkbox id="lshort" label="short or long truncation lag parameter" value_unchecked="FALSE" value="TRUE" checked="true" />
+						<radio id="lshort" label="version of truncation lag parameter">
+							<option label="short" value="TRUE"/>
+							<option label="long" value="FALSE"/>
+						</radio>
 					</column>
 				</row>
+			</tab>
+			<tab id="tab_options" label="Options">
+				<checkbox id="narm" checked="false" value="1" value_unchecked="0" label="Exclude missing values" />
+				<checkbox id="length" checked="true" value="1" value_unchecked="0" label="Show Length and NAs" />
+				<stretch/>
 			</tab>
 		</tabbook>
 	</dialog>

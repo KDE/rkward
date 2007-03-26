@@ -11,12 +11,14 @@
 	<settings>
 		<caption id="tab_variables"/>
 		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length.</setting>
-		<setting id="lshort">If checked (TRUE), the short version of the truncation lag parameter is used otherwise the long (FALSE).</setting>
+		<setting id="lshort">Which version of the truncation lag parameter should be used?</setting>
+		<caption id="tab_options"/>
+		<setting id="narm">Exclude missing values from calculation?</setting>
+		<setting id="length">Show the total length of the data, and the number of missing values (purely informational, does not affect the test)?</setting>
 	</settings>
 	<related>
 		<ul>
 			<li><link href="rkward://rhelp/PP.test"/></li>
 		</ul>
-
 	</related>
 </document>
