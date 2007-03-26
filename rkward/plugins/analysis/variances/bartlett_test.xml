@@ -5,17 +5,13 @@
 	<help file="bartlett_test.rkh"/>
 	
 	<dialog label="Bartlett Test of Homogeneity of Variances">
-		<tabbook>
-			<tab label="Basic settings" id="tab_variables">
-				<row>
-					<varselector id="vars"/>
-					<column>
-						<varslot type="numeric" id="x" source="vars" required="true" label="samples"/>
-						<varslot type="factor" id="y" source="vars" required="true" label="group"/>
-					</column>
-				</row>
-			</tab>
-		</tabbook>
+		<row>
+			<varselector id="vars"/>
+			<column>
+				<varslot type="numeric" id="x" source="vars" required="true" label="samples"/>
+				<varslot type="factor" id="y" source="vars" required="true" label="group"/>
+			</column>
+		</row>
 	</dialog>
 	
 </document>

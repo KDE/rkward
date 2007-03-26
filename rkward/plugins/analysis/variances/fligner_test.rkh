@@ -9,7 +9,6 @@
 	</usage>
 
 	<settings>
-		<caption id="tab_variables"/>
 		<setting id="x">Select the data to be computed. The vectors need to be numeric.</setting>
 		<setting id="y">Select the data to be computed. The vectors need to be a factor.</setting>
 	</settings>

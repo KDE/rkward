@@ -3,32 +3,24 @@ function preprocess () {
 }
 
 function calculate () {
-
 ?>
-rk.temp.x <- substitute (<? getRK ("x"); ?>)
-rk.temp.y <- substitute (<? getRK ("y"); ?>)
-rk.temp <- fligner.test (eval (rk.temp.x), eval (rk.temp.y))
-
+result <- fligner.test (<? getRK ("x"); ?>, <? getRK ("x"); ?>)
 <?
 }
 
 function printout () {
 ?>
+names <- rk.get.description (<? getRK ("x"); ?>, <? getRK ("y"); ?>)
+
 rk.header ("Fligner-Killeen Test of Homogeneity of Variances",
-	parameters=list ("Compare", paste (rk.get.description (rk.temp.x, is.substitute=TRUE), "and", rk.get.description (rk.temp.y, is.substitute=TRUE))))
+	parameters=list ("Sample: ", paste (names[1], "grouped by:", names[2])))
 
 rk.results (list (
-	'Variables'=rk.get.description (rk.temp.x, rk.temp.y, is.substitute=TRUE),
-	'Fligner-Killeen:med X^2 test statistic'=rk.temp$statistic,
-	'df'=rk.temp$parameter,
-	'p-value'=rk.temp$p.value
-	))
+	'Variables'=names,
+	'Fligner-Killeen:med X^2 test statistic'=result$statistic,
+	'df'=result$parameter,
+	'p-value'=result$p.value))
 <?
 }
 
-function cleanup () {
-?>
-rm (list=grep ("^rk.temp", ls (), value=TRUE))
-<?
-}
 ?>

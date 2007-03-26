@@ -14,8 +14,8 @@
 						<varslot type="numeric" id="y" source="vars" required="true" label="against"/>
 						<radio id="alternative" label="using test hypothesis">
 							<option value="two.sided" label="Two-sided"/>
-							<option value="greater" label="First is greater"/>
-							<option value="less" label="Second is greater"/>
+							<option value="greater" label="greater"/>
+							<option value="less" label="less"/>
 						</radio>
 					</column>
 				</row>
