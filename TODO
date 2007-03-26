@@ -74,6 +74,7 @@ UI-stuff
 		- When inside a string, should offer tab-completion for system paths (will maybe have to wait for KDE4, when we get better clues, what context we are currently in)
 	- Script editor:
 		- new action "Run Toplevel expression" (see https://sourceforge.net/mailarchive/forum.php?thread_id=31463482&forum_id=12970)
+		- new action "Source file"
 	- RKConsole / Script editor:
 		- highlight only valid function names
 	- RKHelpDlg:

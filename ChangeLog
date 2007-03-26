@@ -1,3 +1,4 @@
+- fix a crash that occurred during startup under some circumstances
 - when flushing the output, also delete all graphs
 - add support for a "technical details" section in plugin help files
 - add option to enable / disable single options of a radio or dropdown control in plugins
@@ -9,7 +10,7 @@
 - if an incomplete command was piped through the console, the console does not become blocked for piping
 - make "run current line" advance the cursor to next line after running
 - warnings and errors are highlighted in command log / console (warnings only for R >= 2.5.x)
-- plugin generated commands are run in a local() environment, allowing for more consise code		TODO: adjust plugins, etc.
+- plugin generated commands are run in a local() environment, allowing for more consise code
 - also support filename completion in the console (mode of completion is determined by heuristic means)
 - initial support for R's Sys.setlocale(), and Encoding of CHARSXPs
 - in help files, a short title for sections (for the navigation bar) can be defined
