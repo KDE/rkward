@@ -12,7 +12,4 @@ function printout () {
 
 	echo ($col);
 }
-
-function cleanup () {
-}
 ?>
