@@ -136,7 +136,7 @@ static QTextCodec * ru_RU_hack( const char * i ) {
 
 QTextCodec *RKGetCurrentLocaleCodec () {
 
-	QTextCodec *localeMapper;
+	QTextCodec *localeMapper = 0;
 
 #ifdef Q_OS_WIN32
     localeMapper = QTextCodec::codecForName( "System" );
