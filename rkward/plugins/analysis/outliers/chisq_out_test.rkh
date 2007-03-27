@@ -13,17 +13,14 @@
 		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length. For the calculation missing values are removed from the data.</setting>
 		<caption id="tab_options"/>
 		<setting id="opposite">Check if you want not the value with largest difference from the mean, but opposite (lowest, if most suspicious is highest etc.).</setting>
-		<setting id="mean">If checked this will calculate you the arithmetic mean is an additional out put. However, this will not effect your results but is just an optional information.</setting>
-		<setting id="sd">If checked this will calculate you the standard deviation (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
-		<setting id="median">If checked this will calculate you the median (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
-		<setting id="min">If checked this will calculate you the minimum (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
-		<setting id="max">If checked this will calculate you the maximum (regardless of missing values) is an additional out put. However, this will not effect your results but is just an optional information.</setting>
+		<setting id="descriptives">Print additional descriptive statistics (mean, sd, median, min, max) to help with interpretation of the test result (purely informational, does not affect the test). Missing values will be ignored.</setting>
 		<setting id="length">Show the total length of the data, and the number of missing values (purely informational, does not affect the test)?</setting>
 	</settings>
 	<related>
 		<ul>
-			<li><link href="rkward://rhelp/dixon.test"/></li>
-			<li><link href="rkward://rhelp/grubbs.test"/></li>
+			<li><link href="rkward://rhelp/chisq.out.test"/></li>
+			<li><link href="rkward://component/dixon_test"/></li>
+			<li><link href="rkward://component/grubbs_test"/></li>
 		</ul>
 
 	</related>

@@ -27,19 +27,11 @@ for (i in 1:length(vars)) {
 		# This is the core of the calculation
 		t <- outlier (var, opposite = <? getRK ("opposite"); ?>)
 		results[i, 'Outlier'] <- t
-<?	if (getRK_val ("mean")) { ?>
+<?	if (getRK_val ("descriptives")) { ?>
 		results[i, 'Mean'] <- mean (var)
-<?	}
-	if (getRK_val ("sd")) { ?>
-		results[i, 'Standard Deviation'] <-  sd (var)
-<?	}
-	if (getRK_val ("median")) { ?>
+		results[i, 'Standard Deviation'] <- sd (var)
 		results[i, 'Median'] <- median (var)
-<?	}
-	if (getRK_val ("min")) { ?>
 		results[i, 'Minimum'] <- min (var)
-<?	}
-	if (getRK_val ("max")) { ?>
 		results[i, 'Maximum'] <- max (var)
 <?	} ?>
 		NA				# no error

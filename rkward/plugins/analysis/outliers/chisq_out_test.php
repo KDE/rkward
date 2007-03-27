@@ -30,19 +30,11 @@ for (i in 1:length(vars)) {
 		results[i, 'p-value'] <- t$p.value
 		results[i, 'Alternative Hypothesis']<- rk.describe.alternative (t)
 		results[i, 'Variance'] <- var (var)
-<?	if (getRK_val ("mean")) { ?>
+<?	if (getRK_val ("descriptives")) { ?>
 		results[i, 'Mean'] <- mean (var)
-<?	}
-	if (getRK_val ("sd")) { ?>
-		results[i, 'Standard Deviation'] <-  sd (var)
-<?	}
-	if (getRK_val ("median")) { ?>
+		results[i, 'Standard Deviation'] <- sd (var)
 		results[i, 'Median'] <- median (var)
-<?	}
-	if (getRK_val ("min")) { ?>
 		results[i, 'Minimum'] <- min (var)
-<?	}
-	if (getRK_val ("max")) { ?>
 		results[i, 'Maximum'] <- max (var)
 <?	} ?>
 		NA				# no error
