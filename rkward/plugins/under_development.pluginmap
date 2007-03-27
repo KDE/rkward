@@ -10,9 +10,6 @@
 		<component type="standard" id="mood_test" file="analysis/TESTS/mood_test.xml" label="Mood Two-Sample Test" />
 		<component type="standard" id="PP_test" file="analysis/TESTS/PP_test.xml" label="Phillips-Perron Test" />
 
-		<component type="standard" id="histogram" file="plots/histogram.xml" label="Histogram" />
-
-		<component type="standard" id="ecdf_plot" file="plots/ecdf_plot.xml" label="ECDF Plot" />
 	</components>
 
 	<hierarchy>
@@ -35,8 +32,6 @@
 			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
-			<entry component="ecdf_plot" />
-			<entry component="histogram" />
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
 			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="2">
