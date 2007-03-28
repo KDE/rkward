@@ -21,7 +21,7 @@ function doPrintout ($final) {
 	$tabulate= getRK_val ("tabulate")=="TRUE";
 	
 ?>
-x <- <? echo ($var); ?>
+x <- <? echo ($var); ?> 
 <?
 	if($tabulate) { ?>
 x <- table(x, exclude=NULL)
