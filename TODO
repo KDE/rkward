@@ -111,7 +111,7 @@ UI-stuff
 	- Working directory
 		- show current wd in <browser>, somewhere
 	- Settings UI:
-		- see mail by PK on 2007/03/23 (need to put in the link, once it becomes available in the archive)
+		- see http://sourceforge.net/mailarchive/forum.php?thread_name=200703230304.43023.kapatp%40gmail.com&forum_name=rkward-devel
 
 Internal stuff:
 	- Handling fonts:
@@ -168,7 +168,7 @@ General code:
 
 R plugins:
 	- modularization of the xml using includes or snippets
-		- see mail thread "need a little help..." around 2007/03/23 (need to put in the link, once it becomes available in the archive)
+		- see https://sourceforge.net/mailarchive/message.php?msg_name=200703230012.26765.kapatp%40gmail.com . Note that <tags> are not displayed in the mail archive. Might have to look at the HTML source.
 	- distribution plugins (probabilities and quantiles)
 		- probably all these could use an option "Store result (to name) / Print result / print and store"
 		- when changing this, they should first be changed to use common base functionality:
@@ -187,7 +187,6 @@ R plugins:
 	- Spinbox:
 		- find a solution for "pending changes". Currently, if the user enters a value, manually, then presses submit, the old value will be used (the new value is only set, when the focus changes to another widget). Probably the RKSpinbox should emit signals for "pending" and "ready". The plugin spinbox should listen to those and not be satisfied as long as a change is pending. Maybe mark the spinbox in yellow, while a change is pending.
 		- options min_inclusive / max_inclusive for real number spinboxes (defaulting to true)
-	- a function rk.describe.alternative() for use in hypothesis test plugins
 	- use SVG device for graphics output
 	- provide context menu / other UI to export to different formats / edit
 	- PHP-backend:
