@@ -21,9 +21,9 @@ function doPrintout ($final) {
 	$tabulate= getRK_val ("tabulate")=="TRUE";
 	
 ?>
-x <- <? echo ($var); ?> 
+x <- <? echo ($var . "\n"); ?>
 <?
-	if($tabulate) { ?>
+	if ($tabulate) { ?>
 x <- table(x, exclude=NULL)
 <?      } else { ?>
 # barplot is a bit picky about attributes, so we need to convert to vector explicitely
