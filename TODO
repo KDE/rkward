@@ -10,6 +10,8 @@ Should be fixed for 0.4.8:
 	- A way to define dependencies between pluginmaps
 		- Put the embeddable plugins a .pluginmap that is required by most others
 	- Find a solution for error handling in plugins
+	- Do not use a sink in plugins. Rather, all printing code should print to the output file. Everything else will be added below the output.
+	- Separate plugin output by an <hr> or something (*after* a plugin has run, and *only if* it has produced some sort of output (or warnings/errors))
 
 Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
@@ -157,6 +159,8 @@ Internal stuff:
 	- .rk.get.available.packages ()
 		- use external (file) storage for cache to save mem
 	- can the mutex be made non-recursive? I think so, but don't recall
+	- RKComponentProperties:
+		- the whole idea about modifiers is flawed. Instead, a new property should be created, if, and only if the modifier is ever requested. Now, how to make sure this property always has the correct value?
 
 General code:
 	- use constBegin (), constEnd ()
