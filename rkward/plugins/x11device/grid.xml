@@ -14,7 +14,7 @@
 		<connect client="ny_cells.enabled" governor="ny_other"/>
 
 		<connect client="lwd.enabled" governor="custlwd.state"/>
-		<connect client="trellis_note.visible" governor="is_embed" />
+		<connect client="trellis_note.visible" governor="is_embed.not" />
 	</logic>
 	<dialog label="Grid options">
 		<row>
