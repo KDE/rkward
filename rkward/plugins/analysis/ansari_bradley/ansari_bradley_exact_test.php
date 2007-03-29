@@ -25,7 +25,7 @@ function printout () {
 rk.header (result$method,
 	parameters=list ("Comparing", paste (names[1], "against", names[2]),
 	'H1', rk.describe.alternative (result),
-	"Compute exact p-value", "<? getRK ("exact"); ?>"))
+	"Compute exact p-value", "<? getRK ("exact"); ?>", <? if (getRK_val ("confint")== "TRUE") {?> "Confidence Level", "<? getRK ("conflevel"); ?>" <?}?>))
 
 rk.results (list (
 	'Variable Names'=names,
@@ -34,7 +34,8 @@ rk.results (list (
 	p=result$p.value<?
 	if (getRK_val ("confint")== "TRUE") { ?>,
 	'confidence interval percent'=(100 * attr(result$conf.int, "conf.level")),
-	'confidence interval of difference'=result$conf.int<? } ?>))
+	'confidence interval of difference'=result$conf.int<? } ?>,
+	<? if (getRK_val ("confint")== "TRUE") {?> 'estimate of the ratio of scales'=result$estimate<?}?>))
 <?
 }
 ?>
