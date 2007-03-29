@@ -1,14 +1,14 @@
 <!DOCTYPE rkplugin>
-<document> 
+<document>
 	<code file="code.php"/>
-	
+
 	<dialog label="Save as R object" >
 		<tabbook>
 			<tab label="Select variables" >
 				<column>
 					<row>
-						<varselector id="vars" label="Select a variable" />
-						<varslot multi="true" classes="all" id="data" source="vars" label="Object" required="true" />
+						<varselector id="vars" />
+						<varslot multi="true" id="data" source="vars" label="Object" required="true" />
 					</row>
 				</column>
 				<frame label="Options" >
