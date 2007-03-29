@@ -34,8 +34,8 @@ rk.results (list (
 	p=result$p.value<?
 	if (getRK_val ("confint")== "TRUE") { ?>,
 	'confidence interval percent'=(100 * attr(result$conf.int, "conf.level")),
-	'confidence interval of difference'=result$conf.int<? } ?>,
-	<? if (getRK_val ("confint")== "TRUE") {?> 'estimate of the ratio of scales'=result$estimate<?}?>))
+	'confidence interval of difference'=result$conf.int,
+	'estimate of the ratio of scales'=result$estimate<? } ?>))
 <?
 }
 ?>
