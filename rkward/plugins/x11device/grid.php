@@ -26,8 +26,7 @@ function printout () {
 
 	if (!getRK_val("equilogs")) $gridoptions .= ', equilogs=FALSE';
 ?>
-# add grid only to standard graphics:
-if (!length(grid::getNames())) grid(<? echo ($gridoptions); ?>);
+grid(<? echo ($gridoptions); ?>);
 <?
 }
 ?>
