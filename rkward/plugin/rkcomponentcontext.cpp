@@ -72,7 +72,7 @@ RKContextHandler::RKContextHandler (QObject *parent, const QDomDocument &gui_xml
 
 	RKComponentPropertyBase *incontext = new RKComponentPropertyBase (this, false);
 	incontext->setValue (id);
-	addChild ("incontext", incontext);
+	addChild ("context", incontext);
 }
 
 RKContextHandler::~RKContextHandler () {
