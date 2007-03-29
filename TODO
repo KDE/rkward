@@ -161,6 +161,7 @@ Internal stuff:
 	- can the mutex be made non-recursive? I think so, but don't recall
 	- RKComponentProperties:
 		- the whole idea about modifiers is flawed. Instead, a new property should be created, if, and only if the modifier is ever requested. Now, how to make sure this property always has the correct value?
+			- thinking about it, only the boolean property modifiers "not" and "numeric" would really need to be changed.
 
 General code:
 	- use constBegin (), constEnd ()
