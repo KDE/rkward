@@ -41,7 +41,7 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2007-03-18</date>
+<date>2007-03-30</date>
 <releaseinfo>0.4.7.00</releaseinfo>
 
 <abstract>
@@ -1820,7 +1820,7 @@ In addition to this, some elements have additional properties you can connect to
 	<variablelist>
 	<varlistentry>
 	<term>state</term>
-	<listitem>State of the checkbox (on or off) (boolean)</listitem>
+	<listitem>State of the checkbox (on or off). Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>). (boolean)</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
@@ -1913,6 +1913,11 @@ In addition to this, some elements have additional properties you can connect to
 	<listitem>Whether the preview box is checked (not necessarily whether the preview has already been shown) (boolean)</listitem>
 	</varlistentry>
 	</variablelist></listitem>
+</varlistentry>
+</variablelist>
+<varlistentry>
+<term>&lt;convert&gt;</term>
+<listitem>This element (used in the &lt;logic&gt; section) is special, in that is technically *is* a property, instead of just holding one or more properties. It is of boolean kind. Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>)</listitem>
 </varlistentry>
 </variablelist>
 </section>
