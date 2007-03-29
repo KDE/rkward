@@ -5,7 +5,7 @@
 
 	<dialog label="Wilcoxon test">
 		<tabbook>
-			<tab label="Basic settings">
+			<tab label="Basic settings" id="tab_variables">
 				<row>
 					<varselector id="vars"/>
 					<column>
@@ -16,17 +16,17 @@
 							<option value="greater" label="greater"/>
 							<option value="less" label="less"/>
 						</radio>
+						<checkbox id="paired" label="paired test" checked="false" value="TRUE" value_unchecked="FALSE"/>
 						<stretch/>
 					</column>
 				</row>
 			</tab>
-			<tab label="Options">
+			<tab label="Options" id="tab_options">
 				<frame label="Confidence Interval">
 					<checkbox id="confint" label="Compute confidence interval" checked="false" value="TRUE" value_unchecked="FALSE" />
 					<spinbox type="real" id="conflevel" label="confidence level" min="0" max="1" initial="0.95"/>
 				</frame>
 				<spinbox id="mu" label="mu" initial="0"/>
-				<checkbox id="paired" label="paired test" checked="false" value="TRUE" value_unchecked="FALSE"/>
 				<radio id="exact" label="compute exact p-value">
 					<option label="Always" value="yes" />
 					<option label="Automatic" value="automatic" checked="true" />
