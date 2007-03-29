@@ -1,10 +1,10 @@
 <!DOCTYPE rkhelp>
 <document>
 	<summary>
-		Various parameters for the <b>grid</b>. For detailed description of the individual parameters see the R reference on 'grid'.
+		Various parameters for the <b>grid</b>. For detailed description of the individual parameters see the R reference on 'grid'. Note that this works only when standard (traditional S) graphics functions (see library(help="graphics")) are used to construct the plot. This does not work for trellis graphics devices (see <link href="rkward://rhelp/Lattice"/> for some information).
 	</summary>
 	<usage>
-		This may or may not be used as an embeded plugin.
+		This may or may not be used as an embeded plugin. When used on a trellis device nothing happens.
 	</usage>
 	<settings>
 		<setting id="nx">This is the <i>nx</i> argument. The default is NULL, in which case, the vertical lines are drawn at the xaxis ticks. Select None to not draw the vertical lines. Select 'Specify below' to provide a specified (to be specified below) number of vertical lines in the grid.</setting>
