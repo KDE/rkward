@@ -26,7 +26,7 @@ rk.header (result$method,
 	parameters=list ("Comparing", paste (names[1], "against", names[2]),
 	"H1", rk.describe.alternative (result),
 	"Continuity correction in normal approximation for p-value", "<? getRK ("correct"); ?>",
-	"Compute exact p-value", "<? getRK ("exact"); ?>",
+	"Compute exact p-value", "<? getRK ("exact"); ?>", "Paired test", "<? getRK ("paired"); ?>",
 	"mu", "<? getRK ("mu"); ?>"))
 
 rk.results (list (
