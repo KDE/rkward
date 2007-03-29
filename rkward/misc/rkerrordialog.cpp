@@ -109,6 +109,10 @@ void RKRErrorDialog::addRCommand (RCommand *command) {
 		RKErrorDialog::newOutput (command->output ());
 	}
 
+	if (command->hasWarnings ()) {
+		newError (command->warnings ());
+	}
+
 	if (command->hasError ()) {
 		newError (command->error ());
 	}

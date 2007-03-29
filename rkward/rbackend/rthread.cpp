@@ -244,7 +244,6 @@ void RThread::handleOutput (const QString &output, int buf_length, bool regular)
 	RK_TRACE (RBACKEND);
 
 // TODO: output sometimes arrives in small chunks. Maybe it would be better to keep an internal buffer, and only append it to the output, when R_FlushConsole gets called?
-
 	if (!buf_length) return;
 	waitIfOutputPaused ();
 
@@ -283,6 +282,8 @@ void RThread::flushOutput () {
 		current_command->output_list.append (current_output);
 		if (current_output->type == ROutput::Output) {
 			current_command->status |= RCommand::HasOutput;
+		} else if (current_output->type == ROutput::Warning) {
+			current_command->status |= RCommand::HasWarnings;
 		} else if (current_output->type == ROutput::Error) {
 			current_command->status |= RCommand::HasError;
 		}

@@ -157,7 +157,7 @@ void RKCommandLog::rCommandDone (RCommand *command) {
 	}
 
 // the case we have to deal with here, is that the command/output has not been shown, yet, but should, due to errors
-	if (command->failed ()) {
+	if (command->hasWarnings() || command->failed()) {
 		if (RKSettingsModuleWatch::shouldShowError (command)) {
 			if (!RKSettingsModuleWatch::shouldShowInput (command)) addInputNoCheck (command);
 			if (!RKSettingsModuleWatch::shouldShowOutput (command)) {
@@ -166,7 +166,7 @@ void RKCommandLog::rCommandDone (RCommand *command) {
 					addOutputNoCheck (command, *it);
 				}
 			}
-			if (command->error ().isEmpty ()) {
+			if (command->failed () && command->error ().isEmpty ()) {
 				ROutput dummy_output;
 				dummy_output.type = ROutput::Error;
 				if (command->errorIncomplete ()) {

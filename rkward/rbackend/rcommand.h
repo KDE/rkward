@@ -186,6 +186,8 @@ public:
 	bool succeeded () { return ((status & WasTried) && !(status & Failed)); };
 /** command has a string output retrievable via RCommand::output () */
 	bool hasOutput () { return (status & HasOutput); };
+/** command has a string output retrievable via RCommand::warnings () */
+	bool hasWarnings () { return (status & HasWarnings); };
 /** command has an error-message retrievable via RCommand::error () */
 	bool hasError () { return (status & HasError); };
 /** backend rejected command as being incomplete */
