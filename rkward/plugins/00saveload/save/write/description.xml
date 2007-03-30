@@ -1,13 +1,13 @@
 <!DOCTYPE rkplugin>
-<document> 
+<document>
 	<code file="code.php"/>
-	
+
 	<dialog label="Save variables" >
 		<tabbook>
 			<tab label="Select variables" >
 			<column>
 				<varselector id="vars" label="Select a variable" />
-				<varslot multi="false" classes="character numeric integer factor" id="data" source="vars" label="Data" required="true" />
+				<varslot multi="false" classes="character numeric integer factor matrix" id="data" source="vars" label="Data" required="true" />
 				<browser size="small" initial="data" id="file" label="File name" />
 			</column>
 			<frame label="Options" >
