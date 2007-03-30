@@ -162,6 +162,9 @@ Internal stuff:
 	- RKComponentProperties:
 		- the whole idea about modifiers is flawed. Instead, a new property should be created, if, and only if the modifier is ever requested. Now, how to make sure this property always has the correct value?
 			- thinking about it, only the boolean property modifiers "not" and "numeric" would really need to be changed.
+	- When saving workplace layout, save it relative to the workspace file. Allows to move the workspace, easier
+		- KURL::relativeUrl()
+		- How to deal with workplaces saved in the config (and not bound to a workspace file?)
 
 General code:
 	- use constBegin (), constEnd ()

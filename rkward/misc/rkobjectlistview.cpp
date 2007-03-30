@@ -149,6 +149,7 @@ void RKObjectListView::initialize () {
 	RKListViewItem *item = findObjectItem (RObjectList::getGlobalEnv ());
 	RK_ASSERT (item);
 	item->setOpen (true);
+	setMinimumHeight (item->height() * 5);
 
 	connect (RKGlobals::tracker (), SIGNAL (objectRemoved (RObject *)), this, SLOT (objectRemoved (RObject*)));
 	connect (RKGlobals::tracker (), SIGNAL (objectPropertiesChanged (RObject *)), this, SLOT (objectPropertiesChanged (RObject*)));

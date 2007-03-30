@@ -1,3 +1,4 @@
+- use maximum permissible width in the object viewer
 - fix a crash that occurred during startup under some circumstances
 - when flushing the output, also delete all graphs
 - add support for a "technical details" section in plugin help files
