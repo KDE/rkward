@@ -6,7 +6,7 @@
 		<component type="standard" id="load_source" file="import/source.xml" label="Source an R file" />
 
 		<component type="standard" id="save_r" file="save/save/description.xml" label="Save R Objects" />
-		<component type="standard" id="save_skeleton" file="save/skeleton/description.xml" label="Create package" />
+		<component type="standard" id="save_skeleton" file="save/skeleton/description.xml" label="Create package skeleton" />
 		<component type="standard" id="save_variables" file="save/write/description.xml" label="Write variables" />
 		<component type="standard" id="save_table" file="save/write_table.xml" label="Write as table" />
 
