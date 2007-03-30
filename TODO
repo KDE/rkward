@@ -68,6 +68,7 @@ UI-stuff
 	- RObjectListView
 		- use better icons to mark up the different base types
 		- double click action should be configurable: View, Edit, insert name into current script, insert name into console, nothing
+		- context menu action "detach" for package environments (probably with a warning, at least for base packages)
 	- RKConsole:
 		- Console should start a command chain when submitting a batch of pasted commands
 		- Better yet, the commands might be autosplit in the backend. Need to think about how to design this correctly, though
