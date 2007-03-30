@@ -2,7 +2,7 @@
                           robjectviewer  -  description
                              -------------------
     begin                : Tue Aug 24 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -54,8 +54,14 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : QWidget (paren
 		}
 	}
 	view_area->append (i18n("\nResult of 'print (") + object->getFullName () + i18n(")':\n"));
-	
-	RCommand *command = new RCommand ("print (" + object->getFullName () + ')', RCommand::App, QString::null, this);
+
+	// make sure to print as wide as possible
+	RCommand *command = new RCommand ("local({\n"
+	                                  "\trk.temp.width.save <- getOption(\"width\")\n"
+	                                  "\toptions(width=10000)\n"
+	                                  "\ton.exit(options(width=rk.temp.width.save))\n"
+	                                  "\tprint(" + object->getFullName () + ")\n"
+	                                  "})", RCommand::App, QString::null, this);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 	
 	caption = i18n("Object Viewer: ") + object->getShortName ();
