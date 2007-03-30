@@ -10,12 +10,12 @@
 		<connect client="colnames.enabled" governor="customizecol" />
 		<connect client="colnames.required" governor="customizecol" />
 	</logic>
-	<dialog label="Save as table">
+	<dialog label="Write as table">
 		<tabbook>
 			<tab label="Save as ..." >
 				<column>
 					<text>
-	Be careful : your data will be converted into a data frame. If you don't want that, use the plugin 'write' for mere variables. 
+	Be careful : your data will be converted into a data frame. If you don't want that, use the plugin 'write' for mere variables.
 					</text>
 					<varselector id="vars" label="Select a variable or a table" />
 					<varslot multi="false" classes="array data.frame matrix character numeric integer" source="vars" id="data" label="Data" required="true" />

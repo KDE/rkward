@@ -135,7 +135,7 @@
 				<column>
 					<spinbox type="real" label="Aspect ratio" id="asp" initial="0"/>
 					<text>Note that if Aspect is a finite positive value then the window is set up so that one data unit in the x direction is equal in length to asp * one data unit in the y direction.</text>
-					<text>The special case Aspect == 1 produces plots where distances between points are represented accurately on screen. Values with Aspect > 1 can be used to produce more accurate maps when using latitufile and longitude.</text>
+					<text>The special case Aspect == 1 produces plots where distances between points are represented accurately on screen. Values with Aspect > 1 can be used to produce more accurate maps when using latitude and longitude.</text>
 					<stretch/>
 				</column>
 			</tab>

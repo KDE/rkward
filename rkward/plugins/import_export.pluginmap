@@ -3,12 +3,12 @@
 <document base_prefix="00saveload/" namespace="rkward">
 	<components>
 		<component type="standard" id="load_r_object" file="import/load_data.xml" label="Load R data file" />
-		<component type="standard" id="load_source" file="import/source.xml" label="Load R source" />
+		<component type="standard" id="load_source" file="import/source.xml" label="Source an R file" />
 
-		<component type="standard" id="save_r" file="save/save/description.xml" label="Save an R Object" />
-		<component type="standard" id="save_skeleton" file="save/skeleton/description.xml" label="Save package" />
-		<component type="standard" id="save_variables" file="save/write/description.xml" label="Save variables" />
-		<component type="standard" id="save_table" file="save/write_table.xml" label="Save as table" />
+		<component type="standard" id="save_r" file="save/save/description.xml" label="Save R Objects" />
+		<component type="standard" id="save_skeleton" file="save/skeleton/description.xml" label="Create package" />
+		<component type="standard" id="save_variables" file="save/write/description.xml" label="Write variables" />
+		<component type="standard" id="save_table" file="save/write_table.xml" label="Write as table" />
 
 		<component type="standard" id="import_spss" file="import/import_spss.xml" label="Import SPSS">
 			<attribute id="format" value="*.sav *.por" label="SPSS data files"/>
@@ -32,9 +32,9 @@
 			</menu>
 			<menu id="export" label="Export" index="5">
 				<entry component="save_r" />
-				<entry component="save_skeleton" />
 				<entry component="save_variables" />
 				<entry component="save_table" />
+				<entry component="save_skeleton" />
 			</menu>
 		</menu>
 		<menu id="workspace" label="Workspace" index="5">
@@ -49,5 +49,5 @@
 		</menu>
 	</context>
 </document>
- 
- 
+
+

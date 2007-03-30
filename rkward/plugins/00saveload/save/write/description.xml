@@ -2,7 +2,7 @@
 <document>
 	<code file="code.php"/>
 
-	<dialog label="Save variables" >
+	<dialog label="Write variables" >
 		<tabbook>
 			<tab label="Select variables" >
 			<column>

@@ -1,5 +1,5 @@
 <!DOCTYPE rkplugin>
-<document> 
+<document>
 	<code file="source.php"/>
 	<help file="source.rkh"/>
 
@@ -11,7 +11,7 @@
 		<connect client="promptecho.enabled" governor="echo.state" />
 		<connect client="verbose.enabled" governor="echo.state" />
 	</logic>
-	<dialog label="Load R source file" >
+	<dialog label="Source an R file" >
 		<tabbook>
 			<tab label="Main options" id="tab_main">
 				<browser filter="*.R *.r" id="file" label="File name" />
