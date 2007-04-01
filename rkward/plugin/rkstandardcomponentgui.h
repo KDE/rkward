@@ -84,6 +84,8 @@ public:
 	void createDialog (bool switchable);
 	virtual void enableSubmit (bool enable);
 	virtual void updateCode ();
+/** reimplemented from QWidget to take care of showing the code display if needed */
+	void show ();
 public slots:
 	void ok ();
 	void cancel ();

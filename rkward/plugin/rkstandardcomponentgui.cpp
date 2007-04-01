@@ -43,6 +43,8 @@
 RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved) {
 	RK_TRACE (PLUGIN);
 
+	toggle_code_button = 0;
+
 	// create an error-dialog
 	error_dialog = new RKRErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin '%1'.\nThis may lead to an incorrect output and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below.").arg (component->getFilename ()), i18n ("R-Error"), false);
 
@@ -128,10 +130,20 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	main_vbox->addWidget (code_display);
 
 	if (!enslaved && RKSettingsModulePlugins::showCodeByDefault ()) {
-		toggle_code_button->setOn (true);
+		toggle_code_button->setOn (true);	// will trigger showing the code along with the dialog
+	}
+}
+
+void RKStandardComponentGUI::show () {
+	RK_TRACE (PLUGIN);
+
+	QWidget::show ();
+
+	if (toggle_code_button) {	// this is a dialog, not  wizard
 		QTimer::singleShot (0, this, SLOT (toggleCode ()));
 	}
 }
+
 
 void RKStandardComponentGUI::ok () {
 	RK_TRACE (PLUGIN);
@@ -157,10 +169,11 @@ void RKStandardComponentGUI::cancel () {
 
 void RKStandardComponentGUI::toggleCode () {
 	RK_TRACE (PLUGIN);
+	RK_ASSERT (toggle_code_button);
 
 	int new_height = height ();
 
-	if (!code_display->isShown ()) {
+	if (toggle_code_button->isOn()) {
 		new_height += RKSettingsModulePlugins::defaultCodeHeight ();
 		code_display->show ();
 	} else {
