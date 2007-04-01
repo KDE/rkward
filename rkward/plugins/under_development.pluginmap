@@ -2,14 +2,6 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
-		<component type="standard" id="chisq_out_test" file="analysis/outliers/chisq_out_test.xml" label="Chi-squared test for outlier" />
-		<component type="standard" id="dixon_test" file="analysis/outliers/dixon_test.xml" label="Dixon test" />
-		<component type="standard" id="outlier" file="analysis/outliers/outlier.xml" label="Outlier" />
-		<component type="standard" id="grubbs_test" file="analysis/outliers/grubbs_test.xml" label="Grubbs test" />
-
-		<component type="standard" id="mood_test" file="analysis/TESTS/mood_test.xml" label="Mood Two-Sample Test" />
-		<component type="standard" id="PP_test" file="analysis/TESTS/PP_test.xml" label="Phillips-Perron Test" />
-
 	</components>
 
 	<hierarchy>
@@ -20,16 +12,6 @@
 			</menu>
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
-			<menu id="TESTS" label="TESTS" index="5">
-				<entry component="mood_test" index="0"/>
-				<entry component="PP_test" index="1"/>
-			</menu>
-			<menu id="outliers" label="Outlier Tests" index="7">
-				<entry component="chisq_out_test" index="0"/>
-				<entry component="dixon_test" index="1"/>
-				<entry component="grubbs_test" index="2"/>
-				<entry component="outlier" index="3"/>
-			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
 		</menu>

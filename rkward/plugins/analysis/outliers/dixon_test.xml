@@ -20,11 +20,11 @@
 					<frame label="test specific settings">
 						<dropdown id="type" label="Variant of test">
 							<option value="0" label="0"/>
-							<option value="10" label="10 equals sample size 3-7"/>
-							<option value="11" label="11 equals sample size 8-10"/>
+							<option value="10" label="10 (sample size 3-7)"/>
+							<option value="11" label="11 (sample size 8-10)"/>
 							<option value="12" label="12"/>
-							<option value="20" label="20 equals sample size 11-13"/>
-							<option value="21" label="21 equals sample size 14 and more"/>
+							<option value="20" label="20 (sample size 11-13)"/>
+							<option value="21" label="21 (sample size 14 and more)"/>
 							<option value="22" label="22"/>
 						</dropdown>
 						<checkbox id="opposite" label="Opposite" value_unchecked="FALSE" value="TRUE" checked="false" />
