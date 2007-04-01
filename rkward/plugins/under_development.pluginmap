@@ -2,6 +2,7 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
+		<component type="standard" id="plot" file="plots/plot.xml" label="Simple Plot" />
 	</components>
 
 	<hierarchy>
@@ -14,6 +15,7 @@
 		<menu id="analysis" label="Analysis" index="4">
 		</menu>
 		<menu id="plots" label="Plots" index="5">
+			<entry component="plot"/>
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
 			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="2">
