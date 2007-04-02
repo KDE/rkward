@@ -26,6 +26,7 @@ function doPrintout ($final) {
 
 	if ($final) {
 ?>
+rk.header ("Generic Plot")
 rk.graph.on ()
 <?
 	}
