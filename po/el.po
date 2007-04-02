@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-27 14:11+0200\n"
+"POT-Creation-Date: 2007-04-02 21:41+0200\n"
 "PO-Revision-Date: 2007-04-01 21:01+0300\n"
 "Last-Translator: Ilias Soumpasis <isoumpasis@gmail.com>\n"
 "Language-Team: Ελληνικά <el@li.org>\n"
@@ -99,7 +99,7 @@ msgid "Inserting clipboard contents..."
 msgstr "Εισαγωγή περιεχομένων προχείρου..."
 
 #: dataeditor/editlabelsdialog.cpp:49 dataeditor/twintable.cpp:62
-#: misc/rkobjectlistview.cpp:54 misc/rkobjectlistview.cpp:436
+#: misc/rkobjectlistview.cpp:54 misc/rkobjectlistview.cpp:437
 msgid "Label"
 msgstr "Ετικέτα"
 
@@ -118,7 +118,7 @@ msgid "Levels / Value labels for '%1'"
 msgstr "Επίπεδα / Ετικέτες τιμών για το '%1'"
 
 #: dataeditor/twintable.cpp:63 windows/rcontrolwindow.cpp:63
-#: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:435
+#: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:436
 msgid "Type"
 msgstr "Τύπος"
 
@@ -260,7 +260,7 @@ msgstr ""
 "ανοίχθηκαν:\n"
 "\n"
 
-#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:349
+#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:362
 #: misc/rkprogresscontrol.cpp:273
 msgid "Done"
 msgstr "Έγινε"
@@ -897,7 +897,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr "Αδύνατη η δημιουργία προσθέτου"
 
-#: plugin/rkstandardcomponentgui.cpp:47
+#: plugin/rkstandardcomponentgui.cpp:49
 msgid ""
 "The R-backend has reported one or more error(s) while processing the plugin "
 "'%1'.\n"
@@ -911,27 +911,27 @@ msgstr ""
 "κάποιο bug στο πρόσθετο.\n"
 "Μία περιγραφή του σφάλματος φαίνεται παρακάτω. "
 
-#: plugin/rkstandardcomponentgui.cpp:47
+#: plugin/rkstandardcomponentgui.cpp:49
 msgid "R-Error"
 msgstr "Σφάλμα R"
 
-#: plugin/rkstandardcomponentgui.cpp:94 plugin/rkstandardcomponentgui.cpp:368
+#: plugin/rkstandardcomponentgui.cpp:96 plugin/rkstandardcomponentgui.cpp:381
 msgid "Submit"
 msgstr "Υποβολή"
 
-#: plugin/rkstandardcomponentgui.cpp:110
+#: plugin/rkstandardcomponentgui.cpp:112
 msgid "Use Wizard"
 msgstr "Χρήση μάγου"
 
-#: plugin/rkstandardcomponentgui.cpp:116
+#: plugin/rkstandardcomponentgui.cpp:118
 msgid "Code"
 msgstr "Κώδικας"
 
-#: plugin/rkstandardcomponentgui.cpp:225
+#: plugin/rkstandardcomponentgui.cpp:238
 msgid "Processing. Please wait"
 msgstr "Επεξεργασία. Παρακαλώ περιμένετε"
 
-#: plugin/rkstandardcomponentgui.cpp:293
+#: plugin/rkstandardcomponentgui.cpp:306
 msgid ""
 "Below you can see the command(s) corresponding to the settings you made. "
 "Click 'Submit' to run the command(s)."
@@ -939,15 +939,15 @@ msgstr ""
 "Παρακάτω μπορείτε να δείτε τις εντολές που αντιστοιχούν στις ρυθμίσεις που "
 "κάνατε. Πιέστε 'Υποβολή' για να εκτελέσετε τις εντολές."
 
-#: plugin/rkstandardcomponentgui.cpp:345 plugin/rkstandardcomponentgui.cpp:363
+#: plugin/rkstandardcomponentgui.cpp:358 plugin/rkstandardcomponentgui.cpp:376
 msgid "Next >"
 msgstr "Επόμενο >"
 
-#: plugin/rkstandardcomponentgui.cpp:355 plugin/rkstandardcomponentgui.cpp:373
+#: plugin/rkstandardcomponentgui.cpp:368 plugin/rkstandardcomponentgui.cpp:386
 msgid "< Back"
 msgstr "< Προηγούμενο"
 
-#: plugin/rkstandardcomponentgui.cpp:376
+#: plugin/rkstandardcomponentgui.cpp:389
 msgid "Use Dialog"
 msgstr "Χρήση διαλόγου"
 
@@ -1702,11 +1702,11 @@ msgstr "Απόκρυψη Σφαλμάτων / Προειδοποιήσεων"
 msgid "Errors / Warnings:"
 msgstr "Σφάλματα / Προειδοποιήσεις "
 
-#: misc/rkerrordialog.cpp:117
+#: misc/rkerrordialog.cpp:121
 msgid "Syntax error"
 msgstr "Σφάλμα σύνταξης"
 
-#: misc/rkerrordialog.cpp:119
+#: misc/rkerrordialog.cpp:123
 msgid "command incomplete"
 msgstr "μη ολοκληρωμένη εντολή "
 
@@ -1722,7 +1722,7 @@ msgstr "Κάτω"
 msgid "Browse"
 msgstr "Εξερεύνηση"
 
-#: misc/rkobjectlistview.cpp:56 misc/rkobjectlistview.cpp:437
+#: misc/rkobjectlistview.cpp:56 misc/rkobjectlistview.cpp:438
 msgid "Class"
 msgstr "Κλάση"
 
@@ -1738,27 +1738,27 @@ msgstr "Εμφάνιση πεδίων"
 msgid "Configure Defaults"
 msgstr "Ρύθμιση προκαθορισμένων"
 
-#: misc/rkobjectlistview.cpp:331
+#: misc/rkobjectlistview.cpp:332
 msgid "[Objects]"
 msgstr "[Αντικείμενα]"
 
-#: misc/rkobjectlistview.cpp:427
+#: misc/rkobjectlistview.cpp:428
 msgid "All Environments"
 msgstr "Όλα τα Περιβάλλοντα"
 
-#: misc/rkobjectlistview.cpp:428
+#: misc/rkobjectlistview.cpp:429
 msgid "Objects with children"
 msgstr "Αντικείμενα με απογόνους"
 
-#: misc/rkobjectlistview.cpp:429
+#: misc/rkobjectlistview.cpp:430
 msgid "Variables"
 msgstr "Μεταβλητές"
 
-#: misc/rkobjectlistview.cpp:430 robjectbrowser.cpp:221
+#: misc/rkobjectlistview.cpp:431 robjectbrowser.cpp:221
 msgid "Functions"
 msgstr "Συναρτήσεις"
 
-#: misc/rkobjectlistview.cpp:432
+#: misc/rkobjectlistview.cpp:433
 msgid "Hidden Objects"
 msgstr "Κρυφά Αντικείμενα"
 
@@ -1996,7 +1996,7 @@ msgstr ""
 "rkward-devel@lists.sourceforge.net, και πείτε μας τι προσπαθούσατε να κάνετε "
 "όταν συνέβη αυτό. Συγγνώμη!"
 
-#: rbackend/rthread.cpp:438
+#: rbackend/rthread.cpp:439
 msgid "R Startup"
 msgstr "Εκκίνηση R"
 
@@ -2036,6 +2036,22 @@ msgstr "&Παράθυρα"
 #, no-c-format
 msgid "&Activate"
 msgstr "&Ενεργοποίηση"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+"_: NAME OF TRANSLATORS\n"
+"Ηλίας Σούμπασης"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+"_: EMAIL OF TRANSLATORS\n"
+"isoumpasis@gmail.com, isoumpasis@yahoo.gr"
 
 #: main.cpp:70 main.cpp:82
 msgid "RKWard"
@@ -2448,37 +2464,21 @@ msgstr ""
 msgid ")':\n"
 msgstr ")':\n"
 
-#: robjectviewer.cpp:61
+#: robjectviewer.cpp:67
 msgid "Object Viewer: "
 msgstr "Προβολέας αντικειμένων"
 
-#: robjectviewer.cpp:62
+#: robjectviewer.cpp:68
 msgid " - Waiting for results from R..."
 msgstr " - Αναμονή αποτελεσμάτων από το R..."
 
-#: robjectviewer.cpp:75
+#: robjectviewer.cpp:81
 msgid ""
 "\n"
 "Some errors occurred: "
 msgstr ""
 "\n"
 "Υπήρξαν κάποια σφάλματα: "
-
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr ""
-"_: NAME OF TRANSLATORS\n"
-"Ηλίας Σούμπασης"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr ""
-"_: EMAIL OF TRANSLATORS\n"
-"isoumpasis@gmail.com, isoumpasis@yahoo.gr"
 
 #: robjectbrowser.cpp:65
 msgid "Objects in the R workspace"

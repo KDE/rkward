@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-27 14:11+0200\n"
+"POT-Creation-Date: 2007-04-02 21:41+0200\n"
 "PO-Revision-Date: 2006-02-24 18:07+0100\n"
 "Last-Translator: Mvillarino <mvillarino@users.sourceforge.net>\n"
 "Language-Team: galician <trasno@ceu.fi.udc.es>\n"
@@ -100,7 +100,7 @@ msgid "Inserting clipboard contents..."
 msgstr "Insertando el contenido del portapapeles..."
 
 #: dataeditor/editlabelsdialog.cpp:49 dataeditor/twintable.cpp:62
-#: misc/rkobjectlistview.cpp:54 misc/rkobjectlistview.cpp:436
+#: misc/rkobjectlistview.cpp:54 misc/rkobjectlistview.cpp:437
 msgid "Label"
 msgstr "Etiqueta"
 
@@ -120,7 +120,7 @@ msgid "Levels / Value labels for '%1'"
 msgstr "Etiquetas de Nivel / Valor para '%1'"
 
 #: dataeditor/twintable.cpp:63 windows/rcontrolwindow.cpp:63
-#: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:435
+#: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:436
 msgid "Type"
 msgstr "Tipo"
 
@@ -260,7 +260,7 @@ msgstr ""
 "Los siguientes archivos no son legibles y no han sido abiertos:\n"
 "\n"
 
-#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:349
+#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:362
 #: misc/rkprogresscontrol.cpp:273
 msgid "Done"
 msgstr "Hecho"
@@ -899,7 +899,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr ""
 
-#: plugin/rkstandardcomponentgui.cpp:47
+#: plugin/rkstandardcomponentgui.cpp:49
 #, fuzzy
 msgid ""
 "The R-backend has reported one or more error(s) while processing the plugin "
@@ -912,28 +912,28 @@ msgstr ""
 "bug en el plugin.\n"
 "Debajo se muestra una transcripción de los mensajes de error."
 
-#: plugin/rkstandardcomponentgui.cpp:47
+#: plugin/rkstandardcomponentgui.cpp:49
 msgid "R-Error"
 msgstr "Error de R"
 
-#: plugin/rkstandardcomponentgui.cpp:94 plugin/rkstandardcomponentgui.cpp:368
+#: plugin/rkstandardcomponentgui.cpp:96 plugin/rkstandardcomponentgui.cpp:381
 msgid "Submit"
 msgstr "Enviar"
 
-#: plugin/rkstandardcomponentgui.cpp:110
+#: plugin/rkstandardcomponentgui.cpp:112
 msgid "Use Wizard"
 msgstr ""
 
-#: plugin/rkstandardcomponentgui.cpp:116
+#: plugin/rkstandardcomponentgui.cpp:118
 #, fuzzy
 msgid "Code"
 msgstr "Cerrado"
 
-#: plugin/rkstandardcomponentgui.cpp:225
+#: plugin/rkstandardcomponentgui.cpp:238
 msgid "Processing. Please wait"
 msgstr ""
 
-#: plugin/rkstandardcomponentgui.cpp:293
+#: plugin/rkstandardcomponentgui.cpp:306
 msgid ""
 "Below you can see the command(s) corresponding to the settings you made. "
 "Click 'Submit' to run the command(s)."
@@ -941,15 +941,15 @@ msgstr ""
 "En la parte inferior puede ver los comandos que se corresponden con la "
 "configuración que ha hecho. Pulse 'Enviar' para ejecutarlos."
 
-#: plugin/rkstandardcomponentgui.cpp:345 plugin/rkstandardcomponentgui.cpp:363
+#: plugin/rkstandardcomponentgui.cpp:358 plugin/rkstandardcomponentgui.cpp:376
 msgid "Next >"
 msgstr "Siguiente >"
 
-#: plugin/rkstandardcomponentgui.cpp:355 plugin/rkstandardcomponentgui.cpp:373
+#: plugin/rkstandardcomponentgui.cpp:368 plugin/rkstandardcomponentgui.cpp:386
 msgid "< Back"
 msgstr ""
 
-#: plugin/rkstandardcomponentgui.cpp:376
+#: plugin/rkstandardcomponentgui.cpp:389
 msgid "Use Dialog"
 msgstr ""
 
@@ -1701,11 +1701,11 @@ msgstr ""
 msgid "Errors / Warnings:"
 msgstr "Error al arrancar R"
 
-#: misc/rkerrordialog.cpp:117
+#: misc/rkerrordialog.cpp:121
 msgid "Syntax error"
 msgstr "Error de Sintaxis"
 
-#: misc/rkerrordialog.cpp:119
+#: misc/rkerrordialog.cpp:123
 #, fuzzy
 msgid "command incomplete"
 msgstr "Archivo de Comandos"
@@ -1722,7 +1722,7 @@ msgstr "Abajo"
 msgid "Browse"
 msgstr "Navegar"
 
-#: misc/rkobjectlistview.cpp:56 misc/rkobjectlistview.cpp:437
+#: misc/rkobjectlistview.cpp:56 misc/rkobjectlistview.cpp:438
 msgid "Class"
 msgstr "Clase"
 
@@ -1741,29 +1741,29 @@ msgstr "Campos:"
 msgid "Configure Defaults"
 msgstr "Configurar vista"
 
-#: misc/rkobjectlistview.cpp:331
+#: misc/rkobjectlistview.cpp:332
 msgid "[Objects]"
 msgstr "[Objetos]"
 
-#: misc/rkobjectlistview.cpp:427
+#: misc/rkobjectlistview.cpp:428
 #, fuzzy
 msgid "All Environments"
 msgstr "Alineación"
 
-#: misc/rkobjectlistview.cpp:428
+#: misc/rkobjectlistview.cpp:429
 msgid "Objects with children"
 msgstr ""
 
-#: misc/rkobjectlistview.cpp:429
+#: misc/rkobjectlistview.cpp:430
 msgid "Variables"
 msgstr ""
 
-#: misc/rkobjectlistview.cpp:430 robjectbrowser.cpp:221
+#: misc/rkobjectlistview.cpp:431 robjectbrowser.cpp:221
 #, fuzzy
 msgid "Functions"
 msgstr "Ejecutar la selección"
 
-#: misc/rkobjectlistview.cpp:432
+#: misc/rkobjectlistview.cpp:433
 #, fuzzy
 msgid "Hidden Objects"
 msgstr "Mostrar objetos ocultos"
@@ -1997,7 +1997,7 @@ msgstr ""
 "correo a rkward-devel@lists.sourceforge.net, y nos diga que estaba "
 "intentando hacer cuando ha ocurrido esto. Lo sentimos."
 
-#: rbackend/rthread.cpp:438
+#: rbackend/rthread.cpp:439
 msgid "R Startup"
 msgstr ""
 
@@ -2037,6 +2037,18 @@ msgstr "&Ventanas"
 #, no-c-format
 msgid "&Activate"
 msgstr ""
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Marcelino Villarino"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "mvillarino@users.sourceforge.net"
 
 #: main.cpp:70 main.cpp:82
 msgid "RKWard"
@@ -2464,15 +2476,15 @@ msgstr ""
 msgid ")':\n"
 msgstr ")':\n"
 
-#: robjectviewer.cpp:61
+#: robjectviewer.cpp:67
 msgid "Object Viewer: "
 msgstr "Visor de objeto: "
 
-#: robjectviewer.cpp:62
+#: robjectviewer.cpp:68
 msgid " - Waiting for results from R..."
 msgstr " - Esperando resultados de R..."
 
-#: robjectviewer.cpp:75
+#: robjectviewer.cpp:81
 #, fuzzy
 msgid ""
 "\n"
@@ -2480,18 +2492,6 @@ msgid ""
 msgstr ""
 "\n"
 "Ha ocurrido algún error: "
-
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr "Marcelino Villarino"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr "mvillarino@users.sourceforge.net"
 
 #: robjectbrowser.cpp:65
 msgid "Objects in the R workspace"

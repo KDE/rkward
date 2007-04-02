@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-27 14:11+0200\n"
+"POT-Creation-Date: 2007-04-02 21:41+0200\n"
 "PO-Revision-Date: 2007-03-27 19:00+0200\n"
 "Last-Translator: Stefan Roediger <stefan_roediger@gmx.de>\n"
 "Language-Team: \n"
@@ -104,7 +104,7 @@ msgid "Inserting clipboard contents..."
 msgstr "Zwischenablageinhalt einfügen..."
 
 #: dataeditor/editlabelsdialog.cpp:49 dataeditor/twintable.cpp:62
-#: misc/rkobjectlistview.cpp:54 misc/rkobjectlistview.cpp:436
+#: misc/rkobjectlistview.cpp:54 misc/rkobjectlistview.cpp:437
 msgid "Label"
 msgstr "Kennzeichen"
 
@@ -124,7 +124,7 @@ msgid "Levels / Value labels for '%1'"
 msgstr "Levels / Label-Werte für '%1'"
 
 #: dataeditor/twintable.cpp:63 windows/rcontrolwindow.cpp:63
-#: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:435
+#: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:436
 msgid "Type"
 msgstr "Typ"
 
@@ -172,7 +172,8 @@ msgid "Delete this row (%1)"
 msgstr "Lösche diese Zeile (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid ""
+"No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Kein Dateiname angegeben. Ihre Daten wurden NICHT gespeichert. Möchten Sie "
 "dennoch fortfahren?"
@@ -265,7 +266,7 @@ msgstr ""
 "geöffnet:\n"
 "\n"
 
-#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:349
+#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:362
 #: misc/rkprogresscontrol.cpp:273
 msgid "Done"
 msgstr "Erledigt"
@@ -339,7 +340,8 @@ msgid "Remove object?"
 msgstr "Objekt entfernen?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid "Do you really want to remove the object '%1'? There's no way to get it back."
+msgid ""
+"Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "Wollen Sie das Objekt '%1' wirklich entfernen? Es gibt keine Möglichkeit es "
 "wieder herzustellen."
@@ -591,7 +593,8 @@ msgstr "[verändert]"
 
 #: windows/rkcommandeditorwindow.cpp:143
 msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr "Das Dokument \"%1\" wurde verändert. Soll es dennoch geschlossen werden?"
+msgstr ""
+"Das Dokument \"%1\" wurde verändert. Soll es dennoch geschlossen werden?"
 
 #: windows/rkcommandeditorwindow.cpp:143
 msgid "File not saved"
@@ -634,7 +637,15 @@ msgid ""
 "You can configure / turn of this warning under Settings->Configure RKWard-"
 ">General.\n"
 "Really edit object?"
-msgstr "Sie beabsichtigen das Objekt \"%1\" zu ändern, welches sehr groß ist (%2 Felder). RKWard wurde nicht optimiert um sehr große Objekte im eigenen Editor zu handhaben. Dies wird viel Arbeitsspeicher benötigen und kann (abhängig von Ihrem System) zehr langsam sein. Für große Objekte wird empfohlen mit der Kommandozeile zu arbeiten und die Daten in kleinere Stücke aufzuteilen. Andererseits, falls Sie genügend Arbeitsspeicher haben oder die Daten recht einfach sind (numerisch Daten sind einfacher zu handhaben als Faktoren) mag die Editierung kein Problem sein."
+msgstr ""
+"Sie beabsichtigen das Objekt \"%1\" zu ändern, welches sehr groß ist (%2 "
+"Felder). RKWard wurde nicht optimiert um sehr große Objekte im eigenen "
+"Editor zu handhaben. Dies wird viel Arbeitsspeicher benötigen und kann "
+"(abhängig von Ihrem System) zehr langsam sein. Für große Objekte wird "
+"empfohlen mit der Kommandozeile zu arbeiten und die Daten in kleinere Stücke "
+"aufzuteilen. Andererseits, falls Sie genügend Arbeitsspeicher haben oder die "
+"Daten recht einfach sind (numerisch Daten sind einfacher zu handhaben als "
+"Faktoren) mag die Editierung kein Problem sein."
 
 #: windows/rkworkplace.cpp:240
 msgid "About to edit very large object"
@@ -899,7 +910,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr "Konnte Plug-In nicht erzeugen"
 
-#: plugin/rkstandardcomponentgui.cpp:47
+#: plugin/rkstandardcomponentgui.cpp:49
 #, fuzzy
 msgid ""
 "The R-backend has reported one or more error(s) while processing the plugin "
@@ -914,27 +925,27 @@ msgstr ""
 "Bug im Plug-In zurückzuführen.\n"
 "Eine Kopie der Fehlermeldung(en) wird unten angezeigt."
 
-#: plugin/rkstandardcomponentgui.cpp:47
+#: plugin/rkstandardcomponentgui.cpp:49
 msgid "R-Error"
 msgstr "R-Fehler"
 
-#: plugin/rkstandardcomponentgui.cpp:94 plugin/rkstandardcomponentgui.cpp:368
+#: plugin/rkstandardcomponentgui.cpp:96 plugin/rkstandardcomponentgui.cpp:381
 msgid "Submit"
 msgstr "Übergeben"
 
-#: plugin/rkstandardcomponentgui.cpp:110
+#: plugin/rkstandardcomponentgui.cpp:112
 msgid "Use Wizard"
 msgstr "Nuzte Wizard"
 
-#: plugin/rkstandardcomponentgui.cpp:116
+#: plugin/rkstandardcomponentgui.cpp:118
 msgid "Code"
 msgstr "Code"
 
-#: plugin/rkstandardcomponentgui.cpp:225
+#: plugin/rkstandardcomponentgui.cpp:238
 msgid "Processing. Please wait"
 msgstr "Beim Ausführen. Bitte warten"
 
-#: plugin/rkstandardcomponentgui.cpp:293
+#: plugin/rkstandardcomponentgui.cpp:306
 msgid ""
 "Below you can see the command(s) corresponding to the settings you made. "
 "Click 'Submit' to run the command(s)."
@@ -942,15 +953,15 @@ msgstr ""
 "Unten können Sie die Befehle sehen die entsprechend Ihrer Einstellungen "
 "gemacht wurden. Klicken Sie 'Übergeben'um die Befehle auszuführen."
 
-#: plugin/rkstandardcomponentgui.cpp:345 plugin/rkstandardcomponentgui.cpp:363
+#: plugin/rkstandardcomponentgui.cpp:358 plugin/rkstandardcomponentgui.cpp:376
 msgid "Next >"
 msgstr "Nächstes >"
 
-#: plugin/rkstandardcomponentgui.cpp:355 plugin/rkstandardcomponentgui.cpp:373
+#: plugin/rkstandardcomponentgui.cpp:368 plugin/rkstandardcomponentgui.cpp:386
 msgid "< Back"
 msgstr "< Zurück"
 
-#: plugin/rkstandardcomponentgui.cpp:376
+#: plugin/rkstandardcomponentgui.cpp:389
 msgid "Use Dialog"
 msgstr "Nutze Dialog"
 
@@ -1110,7 +1121,9 @@ msgstr "Arbeitsplatzanordnung nicht speichern"
 msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
 "limit):"
-msgstr "Warnen wenn Objekte mit mehr als dieser Anzahl von Feldern bearbeitet werden sollen (0 für kein Limit):"
+msgstr ""
+"Warnen wenn Objekte mit mehr als dieser Anzahl von Feldern bearbeitet werden "
+"sollen (0 für kein Limit):"
 
 #: settings/rksettingsmodulegeneral.cpp:95
 msgid "No limit"
@@ -1399,7 +1412,8 @@ msgstr "Synchronisations Befehle"
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr "Maximale Anzahl von Absätzen/Zeile die im Command Log angezeigt werden sollen"
+msgstr ""
+"Maximale Anzahl von Absätzen/Zeile die im Command Log angezeigt werden sollen"
 
 #: settings/rksettings.cpp:63
 msgid "Settings"
@@ -1451,7 +1465,8 @@ msgstr "Konfiguriere Repositories"
 
 #: dialogs/rkloadlibsdialog.cpp:205
 msgid "Please stand by while installing selected packages"
-msgstr "Bitte warten warten Sie während die gewählten Pakete installiert werden."
+msgstr ""
+"Bitte warten warten Sie während die gewählten Pakete installiert werden."
 
 #: dialogs/rkloadlibsdialog.cpp:205
 msgid "Installing packages"
@@ -1674,14 +1689,16 @@ msgstr "Illegaler Attributwert. Nur Dezimalzahlen sind erlaubt."
 
 #: misc/xmlhelper.cpp:219
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
-msgstr "Illegaler Attributwert. Erlaubt sind nur Werte die Werte '%1' und '%2'."
+msgstr ""
+"Illegaler Attributwert. Erlaubt sind nur Werte die Werte '%1' und '%2'."
 
 #: misc/xmlhelper.cpp:230
 msgid "XML-parsing '%1' "
 msgstr "XML-parsing '%1' "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid ""
+"<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>Es gab Fehler und / oder Warnungen! Betrachten Sie das Transkript "
 "unterhalb</b>"
@@ -1710,11 +1727,11 @@ msgstr "Verberge Fehler / Warnungen"
 msgid "Errors / Warnings:"
 msgstr "Fehler / Warnungen:"
 
-#: misc/rkerrordialog.cpp:117
+#: misc/rkerrordialog.cpp:121
 msgid "Syntax error"
 msgstr "Syntax Fehler"
 
-#: misc/rkerrordialog.cpp:119
+#: misc/rkerrordialog.cpp:123
 msgid "command incomplete"
 msgstr "Befehl unvollständig"
 
@@ -1730,7 +1747,7 @@ msgstr "Runter"
 msgid "Browse"
 msgstr "Browse"
 
-#: misc/rkobjectlistview.cpp:56 misc/rkobjectlistview.cpp:437
+#: misc/rkobjectlistview.cpp:56 misc/rkobjectlistview.cpp:438
 msgid "Class"
 msgstr "Klasse"
 
@@ -1746,27 +1763,27 @@ msgstr "Zeige Felder"
 msgid "Configure Defaults"
 msgstr "Konfiguriere Defaults"
 
-#: misc/rkobjectlistview.cpp:331
+#: misc/rkobjectlistview.cpp:332
 msgid "[Objects]"
 msgstr "[Objekte]"
 
-#: misc/rkobjectlistview.cpp:427
+#: misc/rkobjectlistview.cpp:428
 msgid "All Environments"
 msgstr "Alle Umgebungen"
 
-#: misc/rkobjectlistview.cpp:428
+#: misc/rkobjectlistview.cpp:429
 msgid "Objects with children"
 msgstr "Objekt mit Children"
 
-#: misc/rkobjectlistview.cpp:429
+#: misc/rkobjectlistview.cpp:430
 msgid "Variables"
 msgstr "Variablen"
 
-#: misc/rkobjectlistview.cpp:430 robjectbrowser.cpp:221
+#: misc/rkobjectlistview.cpp:431 robjectbrowser.cpp:221
 msgid "Functions"
 msgstr "Funktionen"
 
-#: misc/rkobjectlistview.cpp:432
+#: misc/rkobjectlistview.cpp:433
 msgid "Hidden Objects"
 msgstr "Versteckte Objekte"
 
@@ -1787,7 +1804,9 @@ msgstr "Überschreiben?"
 msgid ""
 "The support file \"%1\" could not be found or is not readable. Please check "
 "your installation."
-msgstr "Die Datei \"%1\" konnte nicht gefunden werden oder ist nicht lesbar. Bitte überprüfen Sie ihre Installation."
+msgstr ""
+"Die Datei \"%1\" konnte nicht gefunden werden oder ist nicht lesbar. Bitte "
+"überprüfen Sie ihre Installation."
 
 #: scriptbackends/phpbackend.cpp:61 scriptbackends/phpbackend.cpp:78
 #: scriptbackends/phpbackend.cpp:242 scriptbackends/phpbackend.cpp:302
@@ -1851,7 +1870,8 @@ msgid ""
 "below:\n"
 "%1"
 msgstr ""
-"Das PHP-Backend wurde unerwartet beendet. Der gegenwärtige Ausgabepuffer wird unten angezeigt:\n"
+"Das PHP-Backend wurde unerwartet beendet. Der gegenwärtige Ausgabepuffer "
+"wird unten angezeigt:\n"
 "%1"
 
 #: scriptbackends/phpbackend.cpp:317
@@ -1938,8 +1958,15 @@ msgid ""
 "RKWard). In this case, please chose 'Cancel' now, then close the data "
 "windows, save, and retry."
 msgstr ""
-"Ein Befehl im R-Backend versucht die Zeichenkodierung zu ändern. RKWard unterstützt dies und wird versuchen die neue Lokalisierung anzupassen. Diese Operation kann heikle Fehler verursachen, wenn gegenwärtig Datenfenster geöffnet sind. Ferner wurde die Funktion nicht intensiv getestet und daher ist es ratsam den Workspace vor weiteren Schritten zu speichern.\n"
-"Falls noch Dateneditoren offen sind, wird empfohlen diese zunächst zu schließen (dies wird vermutlich in zukünftigen Version von RKWard automatisch geschehen). In diesem Fall wählen Sie bitte 'Abbrechen', dann schließen Sie das Datenfenster, sichern alles und versuchen es nochmals."
+"Ein Befehl im R-Backend versucht die Zeichenkodierung zu ändern. RKWard "
+"unterstützt dies und wird versuchen die neue Lokalisierung anzupassen. Diese "
+"Operation kann heikle Fehler verursachen, wenn gegenwärtig Datenfenster "
+"geöffnet sind. Ferner wurde die Funktion nicht intensiv getestet und daher "
+"ist es ratsam den Workspace vor weiteren Schritten zu speichern.\n"
+"Falls noch Dateneditoren offen sind, wird empfohlen diese zunächst zu "
+"schließen (dies wird vermutlich in zukünftigen Version von RKWard "
+"automatisch geschehen). In diesem Fall wählen Sie bitte 'Abbrechen', dann "
+"schließen Sie das Datenfenster, sichern alles und versuchen es nochmals."
 
 #: rbackend/rinterface.cpp:363
 msgid "Locale change"
@@ -2003,7 +2030,7 @@ msgstr ""
 "aussagekräftige E-Mail mit der Beschreibung was passierte an rkward-"
 "devel@lists.sourceforge.net. Entschuldigung!"
 
-#: rbackend/rthread.cpp:438
+#: rbackend/rthread.cpp:439
 msgid "R Startup"
 msgstr "R StartUp"
 
@@ -2044,6 +2071,18 @@ msgstr "&Fenster"
 msgid "&Activate"
 msgstr "&Aktiviere"
 
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Stefan Jörg Rödiger"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "stefan_roediger@gmx.de"
+
 #: main.cpp:70 main.cpp:82
 msgid "RKWard"
 msgstr "RKWard"
@@ -2058,9 +2097,7 @@ msgstr "Wortfülle der \"Debugger\" Nachricht (0-5)"
 
 #: main.cpp:76
 msgid "Mask for components to debug (see debug.h)"
-msgstr ""
-"Maskieren für Komponenten die debugt werden sollen (siehe "
-"debug.h)"
+msgstr "Maskieren für Komponenten die debugt werden sollen (siehe debug.h)"
 
 #: main.cpp:83
 msgid "Project leader / main developer"
@@ -2130,7 +2167,12 @@ msgid ""
 "helpful for many tasks, but some features may be lacking. You can help us by "
 "filing bug reports, feature requests, or providing feedback in any other "
 "form. Please visit http://rkward.sourceforge.net for more information."
-msgstr "RKWard hat in den vergangenen Monaten große Fortschritte gemacht und ist bereits sehr hilfreich für viele Aufgaben. Aber viele Funktionen fehlen noch. Sie können uns durch Übermittlung von Fehlerberichten, Feature Nachfragen oder Feedback in anderer Form helfen. Bitte besuchen Sie http://rkward.sourceforge.net für mehr Informationen."
+msgstr ""
+"RKWard hat in den vergangenen Monaten große Fortschritte gemacht und ist "
+"bereits sehr hilfreich für viele Aufgaben. Aber viele Funktionen fehlen "
+"noch. Sie können uns durch Übermittlung von Fehlerberichten, Feature "
+"Nachfragen oder Feedback in anderer Form helfen. Bitte besuchen Sie http://"
+"rkward.sourceforge.net für mehr Informationen."
 
 #: rkward.cpp:196
 msgid "What to expect of RKWard"
@@ -2452,33 +2494,21 @@ msgstr ""
 msgid ")':\n"
 msgstr ")':\n"
 
-#: robjectviewer.cpp:61
+#: robjectviewer.cpp:67
 msgid "Object Viewer: "
 msgstr "Objektbetrachter:"
 
-#: robjectviewer.cpp:62
+#: robjectviewer.cpp:68
 msgid " - Waiting for results from R..."
 msgstr " - Warte auf Ergebnisse von R..."
 
-#: robjectviewer.cpp:75
+#: robjectviewer.cpp:81
 msgid ""
 "\n"
 "Some errors occurred: "
 msgstr ""
 "\n"
 "Einige Fehler sind aufgetreten: "
-
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr "Stefan Jörg Rödiger"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr "stefan_roediger@gmx.de"
 
 #: robjectbrowser.cpp:65
 msgid "Objects in the R workspace"
@@ -2539,4 +2569,3 @@ msgstr "Zeige alle Umgebungen"
 #: robjectbrowser.cpp:232
 msgid "Show Hidden Objects"
 msgstr "Zeige versteckte Objekte"
-

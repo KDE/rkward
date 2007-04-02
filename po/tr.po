@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-27 14:11+0200\n"
+"POT-Creation-Date: 2007-04-02 21:41+0200\n"
 "PO-Revision-Date: 2007-01-28 15:02+0200\n"
 "Last-Translator: Harun Hurma <h.hurma@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -99,7 +99,7 @@ msgid "Inserting clipboard contents..."
 msgstr "Pano içerikleri ilave ediliyor..."
 
 #: dataeditor/editlabelsdialog.cpp:49 dataeditor/twintable.cpp:62
-#: misc/rkobjectlistview.cpp:54 misc/rkobjectlistview.cpp:436
+#: misc/rkobjectlistview.cpp:54 misc/rkobjectlistview.cpp:437
 msgid "Label"
 msgstr "Başlık"
 
@@ -118,7 +118,7 @@ msgid "Levels / Value labels for '%1'"
 msgstr "'%1' için Düzeyler / Değer başlıkları"
 
 #: dataeditor/twintable.cpp:63 windows/rcontrolwindow.cpp:63
-#: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:435
+#: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:436
 msgid "Type"
 msgstr "Tip"
 
@@ -255,7 +255,7 @@ msgstr ""
 "Yukarıdaki dosyaların okunabilir olmayanı ve açılmayanı şudur:\n"
 "\n"
 
-#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:349
+#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:362
 #: misc/rkprogresscontrol.cpp:273
 msgid "Done"
 msgstr "Bitti"
@@ -879,7 +879,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr "Eklenti oluşturulamadı"
 
-#: plugin/rkstandardcomponentgui.cpp:47
+#: plugin/rkstandardcomponentgui.cpp:49
 msgid ""
 "The R-backend has reported one or more error(s) while processing the plugin "
 "'%1'.\n"
@@ -892,27 +892,27 @@ msgstr ""
 "Eklentideki sorundan dolayı çıktı yanlış olabilir. \n"
 "Hata mesajının ayrıntısı aşağıda gösterilmiştir."
 
-#: plugin/rkstandardcomponentgui.cpp:47
+#: plugin/rkstandardcomponentgui.cpp:49
 msgid "R-Error"
 msgstr "R-Hata"
 
-#: plugin/rkstandardcomponentgui.cpp:94 plugin/rkstandardcomponentgui.cpp:368
+#: plugin/rkstandardcomponentgui.cpp:96 plugin/rkstandardcomponentgui.cpp:381
 msgid "Submit"
 msgstr "Gönder"
 
-#: plugin/rkstandardcomponentgui.cpp:110
+#: plugin/rkstandardcomponentgui.cpp:112
 msgid "Use Wizard"
 msgstr "Sihirbazı kullan"
 
-#: plugin/rkstandardcomponentgui.cpp:116
+#: plugin/rkstandardcomponentgui.cpp:118
 msgid "Code"
 msgstr "Kod"
 
-#: plugin/rkstandardcomponentgui.cpp:225
+#: plugin/rkstandardcomponentgui.cpp:238
 msgid "Processing. Please wait"
 msgstr "Sürdürülüyor: Lütfen bekleyin"
 
-#: plugin/rkstandardcomponentgui.cpp:293
+#: plugin/rkstandardcomponentgui.cpp:306
 msgid ""
 "Below you can see the command(s) corresponding to the settings you made. "
 "Click 'Submit' to run the command(s)."
@@ -920,15 +920,15 @@ msgstr ""
 "Yaptığınız ayarlara karşılık gelen komutları aşağıda görebilirsiniz. Komut"
 "(lar) çalıştırmak için 'Gönder' tuşuna basın."
 
-#: plugin/rkstandardcomponentgui.cpp:345 plugin/rkstandardcomponentgui.cpp:363
+#: plugin/rkstandardcomponentgui.cpp:358 plugin/rkstandardcomponentgui.cpp:376
 msgid "Next >"
 msgstr "İleri >"
 
-#: plugin/rkstandardcomponentgui.cpp:355 plugin/rkstandardcomponentgui.cpp:373
+#: plugin/rkstandardcomponentgui.cpp:368 plugin/rkstandardcomponentgui.cpp:386
 msgid "< Back"
 msgstr "< Geri"
 
-#: plugin/rkstandardcomponentgui.cpp:376
+#: plugin/rkstandardcomponentgui.cpp:389
 msgid "Use Dialog"
 msgstr "Diyalog kullan"
 
@@ -1675,11 +1675,11 @@ msgstr "Hataları/Uyarıları Gizle"
 msgid "Errors / Warnings:"
 msgstr "Hatalar/Uyarılar:"
 
-#: misc/rkerrordialog.cpp:117
+#: misc/rkerrordialog.cpp:121
 msgid "Syntax error"
 msgstr "Söz dizimi hatası"
 
-#: misc/rkerrordialog.cpp:119
+#: misc/rkerrordialog.cpp:123
 msgid "command incomplete"
 msgstr "komut tamamlanmadı"
 
@@ -1695,7 +1695,7 @@ msgstr "Aşağı"
 msgid "Browse"
 msgstr "Aç"
 
-#: misc/rkobjectlistview.cpp:56 misc/rkobjectlistview.cpp:437
+#: misc/rkobjectlistview.cpp:56 misc/rkobjectlistview.cpp:438
 msgid "Class"
 msgstr "Sınıf"
 
@@ -1711,27 +1711,27 @@ msgstr "Alanları Göster"
 msgid "Configure Defaults"
 msgstr "Varsayılanları Yapılandır"
 
-#: misc/rkobjectlistview.cpp:331
+#: misc/rkobjectlistview.cpp:332
 msgid "[Objects]"
 msgstr "[Nesneler]"
 
-#: misc/rkobjectlistview.cpp:427
+#: misc/rkobjectlistview.cpp:428
 msgid "All Environments"
 msgstr "Tüm Çevreler"
 
-#: misc/rkobjectlistview.cpp:428
+#: misc/rkobjectlistview.cpp:429
 msgid "Objects with children"
 msgstr "Alt elemanlarıyla nesneler"
 
-#: misc/rkobjectlistview.cpp:429
+#: misc/rkobjectlistview.cpp:430
 msgid "Variables"
 msgstr "Değişkenler"
 
-#: misc/rkobjectlistview.cpp:430 robjectbrowser.cpp:221
+#: misc/rkobjectlistview.cpp:431 robjectbrowser.cpp:221
 msgid "Functions"
 msgstr "Fonksiyonlar"
 
-#: misc/rkobjectlistview.cpp:432
+#: misc/rkobjectlistview.cpp:433
 msgid "Hidden Objects"
 msgstr "Gizli Nesneler"
 
@@ -1955,7 +1955,7 @@ msgstr ""
 "Bununla ilgili rkward-devel@lists.sourceforge.net'e e-posta atabilir ve "
 "çözüm arayabilirsiniz. Üzgünüz!"
 
-#: rbackend/rthread.cpp:438
+#: rbackend/rthread.cpp:439
 msgid "R Startup"
 msgstr "R Başlangıç"
 
@@ -1995,6 +1995,22 @@ msgstr "&Pencereler"
 #, no-c-format
 msgid "&Activate"
 msgstr ""
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+"Çevirenlerin isimleri \n"
+"Harun Hurma"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+"_: Çevirenlerin posta adresleri\n"
+"h.hurma@gmail.com"
 
 #: main.cpp:70 main.cpp:82
 msgid "RKWard"
@@ -2418,37 +2434,21 @@ msgstr ""
 msgid ")':\n"
 msgstr ")':\n"
 
-#: robjectviewer.cpp:61
+#: robjectviewer.cpp:67
 msgid "Object Viewer: "
 msgstr "Nesne Gösterici:"
 
-#: robjectviewer.cpp:62
+#: robjectviewer.cpp:68
 msgid " - Waiting for results from R..."
 msgstr " - R'den sonuçlar bekleniyor..."
 
-#: robjectviewer.cpp:75
+#: robjectviewer.cpp:81
 msgid ""
 "\n"
 "Some errors occurred: "
 msgstr ""
 "\n"
 "Bazı hatalar oluştu:"
-
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr ""
-"Çevirenlerin isimleri \n"
-"Harun Hurma"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr ""
-"_: Çevirenlerin posta adresleri\n"
-"h.hurma@gmail.com"
 
 #: robjectbrowser.cpp:65
 msgid "Objects in the R workspace"
