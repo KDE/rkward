@@ -30,6 +30,9 @@ dist_pluginsXplots_DATA = \
 	plots/barplot.rkh \
 	plots/barplot.php \
 	plots/barplot.xml \
+	plots/plot.php \
+	plots/plot.rkh \
+	plots/plot.xml \
 	plots/scatterplot_matrix.php \
 	plots/scatterplot_matrix.xml \
 	plots/color_chooser.php \
