@@ -1,3 +1,5 @@
+--- Version 0.4.7 - Apr-XX-2007
+- several existing plugins have been improved in various ways
 - use maximum permissible width in the object viewer
 - fix a crash that occurred during startup under some circumstances
 - when flushing the output, also delete all graphs
@@ -11,9 +13,9 @@
 - if an incomplete command was piped through the console, the console does not become blocked for piping
 - make "run current line" advance the cursor to next line after running
 - warnings and errors are highlighted in command log / console (warnings only for R >= 2.5.x)
-- plugin generated commands are run in a local() environment, allowing for more consise code
+- plugin generated commands are run in a local() environment, allowing for more concise code
 - also support filename completion in the console (mode of completion is determined by heuristic means)
-- initial support for R's Sys.setlocale(), and Encoding of CHARSXPs
+- initial support for R's Sys.setlocale(), and encoding of CHARSXPs
 - in help files, a short title for sections (for the navigation bar) can be defined
 - the currently active window is now highlighted using a thin red border
 - fixed: changing the type of a column in the data editor was broken
@@ -22,13 +24,16 @@
 - new functions rk.describe.alternative () and rk.print.literal () for use in plugins
 - new plugin: Phillips-Perron test
 - new plugin: Mood test
+- new plugins: CLT plots for most distributions
 - new plugins: variance tests (F test (var.test), Bartlett test, Fligner test)
+- new plugin: generic plot
+- new plugin: Add grid to plot
 - new plugin: pareto chart
 - new plugin: stem-and-leaf plot
 - make readline dialog store last size and position
 - new plugins: outlier tests (chisq.out.test, dixon.test, grubbs.test, outlier)
 - support R's mechanism for checking the C stack limits (only with R 2.3.x or greater, and not on all platforms)
-- support of all tests from moments package
+- new plugins: support of all tests from moments package
 - several new help pages
 - better error handling in PHP backend
 - fixed: depending on some buffer sizes, plugins could get stuck while generating code
