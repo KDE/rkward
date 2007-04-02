@@ -2,7 +2,7 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
-		<component type="standard" id="plot" file="plots/plot.xml" label="Simple Plot" />
+		<component type="standard" id="plot" file="plots/plot.xml" label="Generic Plot" />
 	</components>
 
 	<hierarchy>

@@ -7,7 +7,7 @@
 		<set id="plotoptions.allow_aspect" to="true"/>
 		<set id="plotoptions.allow_grid" to="true"/>
 	</logic>
-	<dialog label="Plot" >
+	<dialog label="Generic Plot">
 		<tabbook>
 			<tab label="Variables" id="tab_variables">
 				<row>
