@@ -45,6 +45,9 @@
 #include <pwd.h>
 #endif
 
+#include <stdlib.h>
+
+
 #define GET_CURRENT_LIBLOCS_COMMAND 1
 
 RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KDialogBase (KDialogBase::Tabbed, Qt::WStyle_DialogBorder, parent, 0, modal, i18n ("Configure Packages"), KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel | KDialogBase::User1) {

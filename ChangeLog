@@ -1,4 +1,5 @@
 --- Version 0.4.7 - Apr-XX-2007
+- some fixes for GCC 4.3
 - fixed: the presence of user objects called "missing", "assign", or "get" would confuse some RKWard internals
 - several existing plugins have been improved in various ways
 - use maximum permissible width in the object viewer
