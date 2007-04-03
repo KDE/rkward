@@ -176,6 +176,7 @@
 	missing <- base::missing
 	assign <- base::assign
 	.rk.do.call <- rkward::.rk.do.call
+	invisible <- base::invisible
 
 	function (value) {
 		if (!missing (value)) {
