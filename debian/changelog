@@ -1,3 +1,11 @@
+rkward (0.4.7-1) unstable; urgency=low
+
+  * new upstream release
+    closes: #415561 (filename completion)
+    closes: #417519 (FTBFS with GCC 4.3; thanks to Martin Michlmayer for the patch)		TODO!
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  XXX, XX Apr 2007 19:30:00 +0200
+
 rkward (0.4.6-1) unstable; urgency=low
 
   * new upstream release
