@@ -168,6 +168,15 @@
 }
 
 ".rk.make.watch.f" <- function (k) {
+	# we need to make sure, the functions we use are *not* looked up as symbols in .GlobalEnv.
+	# else, for instance, if the user names a symbol "missing", and we try to resolve it in the
+	# wrapper function below, evaluation would recurse to look up "missing" in the .GlobalEnv
+	# due to the call to "if (!missing(value))".
+	get <- base::get
+	missing <- base::missing
+	assign <- base::assign
+	.rk.do.call <- rkward::.rk.do.call
+
 	function (value) {
 		if (!missing (value)) {
 			assign (k, value, envir=.rk.watched.symbols)
