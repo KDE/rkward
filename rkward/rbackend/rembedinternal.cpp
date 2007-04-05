@@ -429,7 +429,6 @@ TODO: verify we really need this. */
 	}
 }
 
-/** This function is the R side wrapper around stringsToStringList */
 QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 	RK_TRACE (RBACKEND);
 
@@ -627,6 +626,19 @@ SEXP doUpdateLocale () {
 	return R_NilValue;
 }
 
+/* Testing code. TODO: clean up
+SEXP doTestType (SEXP name, SEXP envir) {
+	RK_TRACE (RBACKEND);
+
+	char *cname = (char*) STRING_PTR (VECTOR_ELT (name, 0));
+	SEXP val = findVar (install(CHAR(STRING_ELT(name, 0))), envir);
+	if (TYPEOF (val) == PROMSXP) {
+		qDebug ("name %s, type %d, unbound %d", cname, TYPEOF (val), PRVALUE(val) == R_UnboundValue);
+	}
+
+	return R_NilValue;
+} */
+
 bool REmbedInternal::registerFunctions (const char *library_path) {
 	RK_TRACE (RBACKEND);
 
@@ -638,6 +650,7 @@ bool REmbedInternal::registerFunctions (const char *library_path) {
 		{ "rk.do.error", (DL_FUNC) &doError, 1 },
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
+//		{ "rk.test.type", (DL_FUNC) &doTestType, 2 }, // Testing code. TODO: clean up
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (info, NULL, callMethods, NULL, NULL);

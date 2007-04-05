@@ -256,12 +256,16 @@
 	eval (substitute (x <- y), envir=envir)
 }
 
-".rk.get.structure" <- function (x, name, envlevel=0, namespacename=NULL, misplaced=FALSE) {
+".rk.get.structure" <- function (x, name, envlevel=0, namespacename=NULL, misplaced=FALSE, envir) {
 	fun <- FALSE
 	cont <- FALSE
 	type <- 0
 
 # Do not change the order! Make sure all fields exist, even if empty
+	if (missing (x)) {
+#		.Call ("rk.test.type", name, envir) # Testing code. TODO: clean up
+		x <- get (name, envir=envir)
+	}
 
 # 1: name should always be first
 	name <- as.character (name)
@@ -341,7 +345,7 @@
 		lst <- ls (x, all.names=TRUE)
 		if (is.null (namespacename)) {
 			for (childname in lst) {
-				ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname, envlevel)
+				ret[[childname]] <- .rk.get.structure (name=childname, envlevel=envlevel, envir=x)
 			}
 		} else {
 			# before R 2.4.0, operator "::" would only work on true namespaces, not on package names (operator "::" work, if there is a namespace, and that namespace has the symbol in it)
@@ -351,7 +355,7 @@
 				for (childname in lst) {
 					misplaced <- FALSE
 					if (is.null (ns) || (!exists (childname, envir=ns, inherits=FALSE))) misplaced <- TRUE
-					ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname, envlevel, misplaced=misplaced)
+					ret[[childname]] <- .rk.get.structure (name=childname, envlevel=envlevel, misplaced=misplaced, envir=x)
 				}
 			} else {
 			# for R 2.4.0 or greater: operator "::" works if package has no namespace at all, or has a namespace with the symbol in it
@@ -359,7 +363,7 @@
 				for (childname in lst) {
 					misplaced <- FALSE
 					if ((!is.null (ns)) && (!exists (childname, envir=ns, inherits=FALSE))) misplaced <- TRUE
-					ret[[childname]] <- .rk.get.structure (get (childname, envir=x), childname, envlevel, misplaced=misplaced)
+					ret[[childname]] <- .rk.get.structure (name=childname, envlevel=envlevel, misplaced=misplaced, envir=x)
 				}
 			}
 		}
