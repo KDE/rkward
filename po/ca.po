@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-02 21:41+0200\n"
-"PO-Revision-Date: 2007-02-13 22:48+0100\n"
+"PO-Revision-Date: 2007-04-05 15:35+0200\n"
 "Last-Translator: Pep Roca <pep.roca@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -181,8 +181,7 @@ msgid "Delete this row (%1)"
 msgstr "Esborra aquesta fila (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "No heu proporcionat cap nom de fitxer. Les dades NO s'han desat. Voleu "
 "continuar malgrat això?"
@@ -345,8 +344,7 @@ msgid "Remove object?"
 msgstr "Elimino l'objecte?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr "Realment voleu eliminar l'objecte '%1'? No podrà recuperar-se mai més."
 
 #: core/robject.cpp:119
@@ -530,7 +528,7 @@ msgstr "Funcions relacionades i pàgines"
 
 #: windows/rkhtmlwindow.cpp:570
 msgid "Technical details"
-msgstr ""
+msgstr "Detalls tècnics"
 
 #: windows/rkhtmlwindow.cpp:647
 msgid "R Reference on '%1'"
@@ -630,14 +628,18 @@ msgid "Attach to main window"
 msgstr "Ajunta amb la finestra principal"
 
 #: windows/rkworkplaceview.cpp:58
+# ¿O finestra esquerra?
+# ??? Per revisar
 #, fuzzy
 msgid "Window Left"
-msgstr "&Finestres"
+msgstr "Finestra a l'esquerra"
 
 #: windows/rkworkplaceview.cpp:62
+# ¿O finestra dreta?
+# ??? Per revisar
 #, fuzzy
 msgid "Window Right"
-msgstr "&Finestres"
+msgstr "Finestra a la dreta"
 
 #: windows/rkworkplace.cpp:144
 msgid "Unable to open \"%1\""
@@ -660,10 +662,21 @@ msgid ""
 ">General.\n"
 "Really edit object?"
 msgstr ""
+"Esteu a punt d'editar l'objecte \"%1\" que és molt gran (%2 camps). L'editor "
+"integrat de dades del RKWard no està optimitzat per manegar objectes grans. "
+"Això pot utilitzar molta memòria, i -depenent del vostre sistema- anar molt "
+"lent. Es recomana editar els objectes grans utilitzant els mètodes disponibles "
+"en la línia d'ordres o dividir-los en bocins més petits abans d'editar-los. "
+"D'altra banda, si teniu memòria suficient, o les dades són suficientment "
+"simples (les dades numèriques són més fàcils de manegar que els factors "
+"(variables categòriques)), poder es poden editar sense problemes. Podeu "
+"configurar aquest avís (o desactivar-lo del tot) a Arranjaments-> Configura "
+"RKWard->General.\n"
+"Edito l'objecte?"
 
 #: windows/rkworkplace.cpp:240
 msgid "About to edit very large object"
-msgstr ""
+msgstr "Quant a editar objectges molt grans"
 
 # fr.po: Enregistrer l'espace de travail
 # es.po: Guardar Espacio de Trabajo
@@ -678,12 +691,11 @@ msgstr "Restableix el lloc de treball del RKWard"
 
 #: windows/rkworkplace.cpp:426
 msgid "Previous Window"
-msgstr ""
+msgstr "Finestra anterior"
 
 #: windows/rkworkplace.cpp:430
-#, fuzzy
 msgid "Next Window"
-msgstr "&Finestres"
+msgstr "Finestra següent"
 
 # Termcat: diari  m. Registre cronològic de les operacions de processament de dades dutes a terme en un fitxer.
 #: windows/rkcommandlog.cpp:54 settings/rksettingsmodulewatch.cpp:277
@@ -759,9 +771,9 @@ msgstr "Imprimeix el contingit del dispositiu gràfic nombre %1"
 msgid "Specify R object"
 msgstr "Especifiqueu l'objecte R"
 
-# ??? Per revisar
 #: windows/rkwindowcatcher.cpp:240
-#, fuzzy
+# fr: Définissez le nom d'objet de R, vous veulent sauver le graphique à
+# ??? Per revisar
 msgid "Specify the R object name, you want to save the graph to"
 msgstr "Especifiqueu el nom de l'objecte R on voleu desar el gràfic"
 
@@ -1019,17 +1031,17 @@ msgstr "Previsualització deshabilitat"
 
 # ??? Per revisar
 #: plugin/rkpreviewbox.cpp:171
+# fr: Prévisualisation à jour
+# up-to-date: recents, al dia
 #, fuzzy
 msgid "Preview up to date"
-msgstr "Previsualitza la darrera versió"
+msgstr "Previsualitza el més recent"
 
 #: plugin/rkpreviewbox.cpp:173
 msgid "Preview updating"
 msgstr "S'està actualitzant la previsualització"
 
-# ??? Per revisar
 #: plugin/rkpreviewbox.cpp:176
-#, fuzzy
 msgid "Preview not (yet) possible"
 msgstr "Encara no és possible la previsualització"
 
@@ -1089,8 +1101,7 @@ msgstr "Espai de treball"
 # Recull de termes de Softcatalà: settings - m pl paràmetres
 #: settings/rksettingsmodulegeneral.cpp:49
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
-msgstr ""
-"Els arranjaments marcats amb un (*) només s'aplicaran si reengegueu RKWard"
+msgstr "Els arranjaments marcats amb un (*) només s'aplicaran si reengegueu RKWard"
 
 #: settings/rksettingsmodulegeneral.cpp:53
 msgid "Directory where the logfiles should be kept (*)"
@@ -1156,11 +1167,12 @@ msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
 "limit):"
 msgstr ""
+"Avisa al editar objectes amb més d'aquest nombre de camps (0 si no és vol "
+"cap límit)"
 
 #: settings/rksettingsmodulegeneral.cpp:95
-#, fuzzy
 msgid "No limit"
-msgstr "No títol"
+msgstr "Sense límits"
 
 #: settings/rksettingsmodulegeneral.cpp:119
 msgid "General"
@@ -1188,17 +1200,18 @@ msgid "Always prefer wizards"
 msgstr "Sempre prefereixo l'assistent"
 
 #: settings/rksettingsmoduleplugins.cpp:67
+#, fuzzy
+# ??? Per revisar
 msgid "R syntax display (in dialogs)"
-msgstr ""
+msgstr "Mostra la sintaxis de R (en els diàlegs)"
 
 #: settings/rksettingsmoduleplugins.cpp:68
-#, fuzzy
 msgid "Code shown by default"
-msgstr "Quins objectes s'ha de mostrar per omissió?"
+msgstr "Codi que s'ha de mostrar per omissió?"
 
 #: settings/rksettingsmoduleplugins.cpp:73
 msgid "Default height of code display (pixels)"
-msgstr ""
+msgstr "Alçada per defecte al mostrar el codi (píxels)"
 
 # Sembla ser el fitxer amb extenció *.pluginmap
 #: settings/rksettingsmoduleplugins.cpp:81
@@ -1350,12 +1363,9 @@ msgstr "Arxiva els paquets descarregats"
 
 #: settings/rksettingsmoduler.cpp:283
 msgid "R Library locations  (where libraries get installed to, locally)"
-msgstr ""
-"Ubicació de les biblioteques R (on localment s'instal·len les biblioteques)"
+msgstr "Ubicació de les biblioteques R (on localment s'instal·len les biblioteques)"
 
-# ??? Per revisar
 #: settings/rksettingsmoduler.cpp:288
-#, fuzzy
 msgid ""
 "Note: The startup defaults will always be used in addition to the locations "
 "you specify in this list"
@@ -1410,6 +1420,7 @@ msgstr "Executar les ordres del editor de seqüències a través de la consola"
 # ??? Per revisar
 #: settings/rksettingsmoduleconsole.cpp:71
 #, fuzzy
+# fr: La commande d'historique est sensible à la casse par défaut
 msgid "Command history is context sensitive by default"
 msgstr "El historial d'ordres és, per omissió, sensible al context"
 
@@ -1733,8 +1744,7 @@ msgstr "No heu especificat l'atribut '%1'. S'assumeix '%2'"
 # fr.po: Valeur d'attribut interdite. Les valeurs possibles sont seulement parmi '%1'.
 #: misc/xmlhelper.cpp:171
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr ""
-"El valor de l'atribut està prohibit. Només es permet un dels valors de '%1'."
+msgstr "El valor de l'atribut està prohibit. Només es permet un dels valors de '%1'."
 
 #: misc/xmlhelper.cpp:185
 msgid "Illegal attribute value. Only integer numbers are allowed."
@@ -1756,8 +1766,7 @@ msgid "XML-parsing '%1' "
 msgstr "S'està analitzant el XML '%1' "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>S'han produït errors i / o avisos! Una transcripció dels missatges es "
 "mostra aquí sota</b>"
@@ -1864,6 +1873,8 @@ msgid ""
 "The support file \"%1\" could not be found or is not readable. Please check "
 "your installation."
 msgstr ""
+"El fitxer de suport \"%1\" no es troba o no es llegible. Si us plau, "
+"verifiqueu la vostra instal·lació."
 
 #: scriptbackends/phpbackend.cpp:61 scriptbackends/phpbackend.cpp:78
 #: scriptbackends/phpbackend.cpp:242 scriptbackends/phpbackend.cpp:302
@@ -1927,10 +1938,13 @@ msgid ""
 "below:\n"
 "%1"
 msgstr ""
+"El dorsal-PHP s'ha aturat inesperadament. Els resultats que hi ha actualment "
+"en la memòria intermèdia es mostren a continuació:\n"
+"%1"
 
 #: scriptbackends/phpbackend.cpp:317
 msgid "PHP Process exited"
-msgstr ""
+msgstr "S'ha sortit del procés PHP"
 
 #: rbackend/rinterface.cpp:188
 msgid ""
@@ -2013,12 +2027,19 @@ msgid ""
 "RKWard). In this case, please chose 'Cancel' now, then close the data "
 "windows, save, and retry."
 msgstr ""
+"Una ordre del dorsal R està intentant canviar la codificació dels caràcters. "
+"Tot i que RKWard permet fer això, i s'intentarà ajustar a la localització "
+"nova, aquesta operació, si la finestra de dades està actualment oberta, pot "
+"provocar errors subtils. A demés aquesta funció encara no ha estat provada "
+"del tot, i es recomana guardar el vostre espai de travall abans de fer-ho.\n"
+"Si teniu algun editor de dades obert, o en cas de qualsevol dubte, es "
+"recomana primer tancar-lo (això probablement se auto-detectarà en les "
+"pròximes versions de RKWard). En aquest cas, si us plau, ara escolliu "
+"'Cancel·lar', després tanqueu a finestra de dades, guardeu i reintenteu."
 
-# fr.po: Paquets sur la machine locale
 #: rbackend/rinterface.cpp:363
-#, fuzzy
 msgid "Locale change"
-msgstr "Paquets locals"
+msgstr "Canvia els locals"
 
 #: rbackend/rinterface.cpp:381
 msgid "Message from the R backend"
@@ -2116,7 +2137,7 @@ msgstr "&Finestres"
 #: rc.cpp:33
 #, no-c-format
 msgid "&Activate"
-msgstr ""
+msgstr "&Activa"
 
 #: _translatorinfo.cpp:1
 msgid ""
@@ -2147,9 +2168,9 @@ msgstr "Nivell d'informació dels missatges de depuració (0-5)"
 # es.po: Máscara para los componentes a depurar como números binarios (mirar en debug. "h)"
 #: main.cpp:76
 #, fuzzy
+# fr: Masque en tant que nombre binaire (voir debug.h) des composants à tracer
 msgid "Mask for components to debug (see debug.h)"
-msgstr ""
-"Màscara per als components a depurar com a nombre binaris (mireu en depura.h)"
+msgstr "Màscara per als components a depurar com a nombre binaris (mireu en depura.h)"
 
 #: main.cpp:83
 msgid "Project leader / main developer"
@@ -2165,9 +2186,8 @@ msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Molts endollables, suggeriments, màrqueting, traduccions"
 
 #: main.cpp:86
-#, fuzzy
 msgid "Many plugins, suggestions"
-msgstr "Molts endollables, suggeriments, màrqueting, traduccions"
+msgstr "Molts endollables, suggeriments"
 
 #: main.cpp:88
 msgid "Several helpful comments and discussions"
@@ -2216,19 +2236,17 @@ msgstr ""
 "en contacte amb nosaltres per ser-hi inclòs"
 
 #: rkward.cpp:195
-#, fuzzy
 msgid ""
 "RKWard has made great progress in the past few months and it is already "
 "helpful for many tasks, but some features may be lacking. You can help us by "
 "filing bug reports, feature requests, or providing feedback in any other "
 "form. Please visit http://rkward.sourceforge.net for more information."
 msgstr ""
-"Si us plau, tingueu en compte que el RKWard encara està lluny d'estar "
-"acabat. Pensem que ja és útil per a un nombre de tasques, però nombroses "
-"funcionalitats o li falten o tenen errors. Ens podeu ajudar informant dels "
-"errors, demanant funcionalitats, o comunicat-nos les vostres impressions de "
+"RKWard ha millorat molt en els darrers mesos i ja és útil per moltes tasques, "
+"però falten algunes funcions. Ens podeu ajudar  informant dels errors, "
+"demanant funcionalitats, o comunicat-nos les vostres impressions de "
 "qualsevol altra forma. Si us plau, visiteu http://rkward.sourceforge.net per "
-"saber com contactar-nos."
+"més informació."
 
 #: rkward.cpp:196
 msgid "What to expect of RKWard"
@@ -2306,34 +2324,33 @@ msgid "Show &Output"
 msgstr "Mostra els &Resultats"
 
 #: rkward.cpp:338
-#, fuzzy
 msgid "Show/Hide Workspace Browser"
-msgstr "Anomena i desa l'espai de treball"
+msgstr "Mostra/Oculta el navegador de l'espai de treball"
 
 # Termcat: diari  m. Registre cronològic de les operacions de processament de dades dutes a terme en un fitxer.
 #: rkward.cpp:339
-#, fuzzy
 msgid "Show/Hide Command Log"
-msgstr "Bitàcola de les ordres"
+msgstr "Mostra/Oculta la bitàcola de les ordres"
 
 #: rkward.cpp:340
-#, fuzzy
 msgid "Show/Hide Pending Jobs"
-msgstr "Treballs pendents"
+msgstr "Mostra/Oculta els treballs pendents"
 
 #: rkward.cpp:341
-#, fuzzy
 msgid "Show/Hide Console"
-msgstr "Consola R"
+msgstr "Mostra/Oculta la consola R"
 
 #: rkward.cpp:342
-#, fuzzy
 msgid "Show/Hide R Help Search"
-msgstr "Mostra / alça la finestra per cercar l'ajuda de R"
+msgstr "Mostra/Oculta la finestra per cercar l'ajuda de R"
 
 #: rkward.cpp:343
+#, fuzzy
+# ??? Per revisar
+# Activa la visualització del document o 
+# Activa la visualització dels documents
 msgid "Activate Document view"
-msgstr ""
+msgstr "Activa la visualització del document"
 
 #: rkward.cpp:345
 msgid "Configure RKWard"
@@ -2644,11 +2661,3 @@ msgstr "Mostra tots els entorns"
 msgid "Show Hidden Objects"
 msgstr "Mostra els objectes ocults"
 
-#~ msgid "Directory, where the PHP support files are located"
-#~ msgstr "Directori on estan els fitxers de suport del PHP"
-
-#~ msgid "## Clean up\n"
-#~ msgstr "## Neteja\n"
-
-#~ msgid "Several plugins"
-#~ msgstr "Alguns endollables"
