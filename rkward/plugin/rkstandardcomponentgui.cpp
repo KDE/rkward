@@ -32,7 +32,6 @@
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
-#include "../misc/rkerrordialog.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../rkglobals.h"
@@ -44,9 +43,6 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 	RK_TRACE (PLUGIN);
 
 	toggle_code_button = 0;
-
-	// create an error-dialog
-	error_dialog = new RKRErrorDialog (i18n ("The R-backend has reported one or more error(s) while processing the plugin '%1'.\nThis may lead to an incorrect output and is likely due to a bug in the plugin.\nA transcript of the error message(s) is shown below.").arg (component->getFilename ()), i18n ("R-Error"), false);
 
 	RKStandardComponentGUI::component = component;
 	RKStandardComponentGUI::code_property = code_property;
@@ -67,8 +63,6 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 
 RKStandardComponentGUI::~RKStandardComponentGUI () {
 	RK_TRACE (PLUGIN);
-
-	delete error_dialog;
 }
 
 void RKStandardComponentGUI::createDialog (bool switchable) {
@@ -155,7 +149,7 @@ void RKStandardComponentGUI::ok () {
 	command.append (code_property->calculate ());
 	command.append (code_property->printout ());
 	command.append ("})\n");
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate, QString::null, error_dialog));
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate));
 }
 
 void RKStandardComponentGUI::cancel () {

@@ -149,6 +149,7 @@ void RThread::doCommand (RCommand *command) {
 
 	// step 2: actual handling
 	if (!((command->type () & RCommand::EmptyCommand) || (command->status & RCommand::Canceled))) {
+		all_current_commands.append (command);
 		RKWardRError error;
 		
 		int ctype = command->type ();
@@ -157,7 +158,8 @@ void RThread::doCommand (RCommand *command) {
 		RK_DO (qDebug ("running command: %s", ccommand.latin1()), RBACKEND, DL_DEBUG);
 	
 		if (command->type () & RCommand::DirectToOutput) {
-			runCommandInternal (QString ("sink (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\", append=TRUE, split=TRUE)\n").local8Bit (), &error);
+			runCommandInternal (".rk.cat.output (\"<hr>\\n\")", &error, false);
+			RK_ASSERT (!error);
 		}
 
 		MUTEX_UNLOCK;
@@ -205,10 +207,19 @@ void RThread::doCommand (RCommand *command) {
 		} else {
 			command->status |= RCommand::WasTried;
 		}
-	
-		RKWardRError dummy;
+
+		flushOutput ();
 		if (command->type () & RCommand::DirectToOutput) {
-			runCommandInternal ("sink ()\n", &dummy);
+			QString outp = command->fullOutput();
+
+			if (!outp.isEmpty ()) {
+				// all regular output was sink()ed, i.e. all remaining output is a message/warning/error
+				RKWardRError error;
+				runCommandInternal (".rk.cat.output (\"<h2>Messages, warnings, or errors:</h2>\\n\")", &error, false);
+				RK_ASSERT (!error);
+				runCommandInternal ("rk.print.literal (\"" + outp + "\")", &error, false);
+				RK_ASSERT (!error);
+			}
 		}
 	
 		if (error) {
@@ -216,8 +227,7 @@ void RThread::doCommand (RCommand *command) {
 	//		runCommandInternal (".rk.init.handlers ()\n", &dummy);
 		}
 		RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
-
-		flushOutput ();
+		all_current_commands.pop_back();
 	} else {
 		if (command->type () & RCommand::QuitCommand) {
 			killed = true;
@@ -279,22 +289,31 @@ void RThread::flushOutput () {
 	RK_TRACE (RBACKEND);
 
 	if (current_command) {
-		current_command->output_list.append (current_output);
-		if (current_output->type == ROutput::Output) {
-			current_command->status |= RCommand::HasOutput;
-		} else if (current_output->type == ROutput::Warning) {
-			current_command->status |= RCommand::HasWarnings;
-		} else if (current_output->type == ROutput::Error) {
-			current_command->status |= RCommand::HasError;
-		}
+		for (QValueList<RCommand*>::const_iterator it = all_current_commands.constBegin (); it != all_current_commands.constEnd(); ++it) {
+			ROutput *output = current_output;
+			if ((*it) != current_command) {		// this output belongs to several commands at once. So we need to copy it.
+				output = new ROutput;
+				output->type = current_output->type;
+				output->output = current_output->output;
+			}
 
-		// pass a signal to the main thread for real-time update of output
-		QCustomEvent *event = new QCustomEvent (RCOMMAND_OUTPUT_EVENT);
-		ROutputContainer *outc = new ROutputContainer;
-		outc->output = current_output;
-		outc->command = current_command;
-		event->setData (outc);
-		qApp->postEvent (RKGlobals::rInterface (), event);
+			(*it)->output_list.append (output);
+			if (output->type == ROutput::Output) {
+				(*it)->status |= RCommand::HasOutput;
+			} else if (output->type == ROutput::Warning) {
+				(*it)->status |= RCommand::HasWarnings;
+			} else if (output->type == ROutput::Error) {
+				(*it)->status |= RCommand::HasError;
+			}
+
+			// pass a signal to the main thread for real-time update of output
+			QCustomEvent *event = new QCustomEvent (RCOMMAND_OUTPUT_EVENT);
+			ROutputContainer *outc = new ROutputContainer;
+			outc->output = output;
+			outc->command = *it;
+			event->setData (outc);
+			qApp->postEvent (RKGlobals::rInterface (), event);
+		}
 
 		RK_DO (qDebug ("output '%s'", current_output->output.latin1 ()), RBACKEND, DL_DEBUG);
 	} else {
@@ -480,11 +499,11 @@ int RThread::initialize () {
 		}
 	}
 
-// error sink and help browser
+// error/output sink and help browser
 	runCommandInternal ("options (error=quote (.rk.do.error ()))\n", &error);
 	if (error) status |= SinkFail;
-/*	runCommandInternal (".rk.init.handlers ()\n", &error);
-	if (error) status |= SinkFail; */
+	runCommandInternal ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", &error);
+	if (error) status |= SinkFail;
 	runCommandInternal ("options (htmlhelp=TRUE); options (browser=\"dcop " + kapp->dcopClient ()->appId () + " rkwardapp openHTMLHelp \")", &error);
 	if (error) status |= OtherFail;
 	// TODO: error-handling?

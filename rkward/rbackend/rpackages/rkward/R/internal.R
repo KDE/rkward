@@ -372,6 +372,8 @@
 	ret
 }
 
+".rk.output.html.file" <- NULL
+
 ".rk.rkreply" <- NULL
 
 ".rk.set.reply" <- function (x) .rk.rkreply <<- x
@@ -422,3 +424,8 @@
 	.rk.do.call ("wdChange", NULL);
 }
 formals (setwd) <- formals (base::setwd)
+
+# hidden, as this is not portable to different output formats
+".rk.cat.output" <- function (x) {
+	cat (x, file = rk.get.output.html.file(), append = TRUE)
+}

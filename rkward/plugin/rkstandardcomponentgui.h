@@ -68,7 +68,6 @@ class RKCommandEditorWindow;
 class QPushButton;
 class QTimer;
 class QSplitter;
-class RKRErrorDialog;
 
 /** contains the standard GUI elements for a top-level RKStandardComponent. The base class creates a dialog interface. For a wizard interface use RKStandardComponentWizard. You *must* call createDialog () after construction, since I can't virualize this for reasons I don't understand!
 
@@ -105,7 +104,6 @@ protected:
 	void closeEvent (QCloseEvent *e);
 	RKStandardComponent *component;
 	QTimer *code_update_timer;
-	RKRErrorDialog *error_dialog;
 
 	// common widgets
 	QWidget *main_widget;

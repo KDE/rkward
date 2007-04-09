@@ -1,3 +1,5 @@
+- Messages, warnings, and errors for plugin commands are shown in the output, instead of in a dialog
+
 --- Version 0.4.7 - Apr-XX-2007
 - some fixes for GCC 4.3
 - fixed: the presence of user objects called "missing", "assign", or "get" would confuse some RKWard internals

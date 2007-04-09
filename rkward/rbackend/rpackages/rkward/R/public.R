@@ -104,7 +104,12 @@
 }
 
 "rk.get.output.html.file" <- function () {
-	return (.rk.do.call ("get.output.html.file", ""))
+	return (.rk.output.html.file)
+}
+
+"rk.set.output.html.file" <- function (x) {
+	stopifnot (is.character (x))
+	assign (".rk.output.html.file", x, as.environment ("package:rkward"))
 }
 
 # renames a named object in a data.frame/list without changing it's position
@@ -144,6 +149,9 @@
 }
 
 "rk.header" <- function (title, parameters=list ()) {
+	sink (rk.get.output.html.file(), append=TRUE)
+	on.exit (sink ())
+
 	cat (paste ("<h1>", title, "</h1>\n", sep=""))
 	if (length (parameters)) {
 		cat ("<h2>Parameters</h2>\n<ul>")
@@ -160,6 +168,9 @@
 }
 
 "rk.results" <- function (x, titles=NULL) {
+	sink (rk.get.output.html.file(), append=TRUE)
+	on.exit (sink ())
+
 	if (is.list (x)) {	# or a data.frame
 		if (is.null (titles)) {
 			titles <- names (x)
