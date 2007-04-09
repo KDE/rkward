@@ -30,7 +30,7 @@
 - new plugin: Mood test
 - new plugins: CLT plots for most distributions
 - new plugins: variance tests (F test (var.test), Bartlett test, Fligner test)
-- new plugin: generic plot				TODO: test and finalize, or remove
+- new plugin: generic plot
 - new plugin: Add grid to plot
 - new plugin: pareto chart
 - new plugin: stem-and-leaf plot
