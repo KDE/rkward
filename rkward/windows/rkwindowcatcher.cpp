@@ -80,7 +80,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
 #include "../core/robject.h"
-#include "../misc/rkerrordialog.h"
+#include "../misc/rkprogresscontrol.h"
 #include "../misc/rksaveobjectchooser.h"
 #include "../plugin/rkcomponentcontext.h"
 
@@ -90,7 +90,7 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	embedded = window_to_embed;
 	RKCaughtX11Window::device_number = device_number;
 
-	error_dialog = new RKRErrorDialog (i18n ("An error occurred"), i18n ("An error occurred"));
+	error_dialog = new RKProgressControl (0, i18n ("An error occurred"), i18n ("An error occurred"), RKProgressControl::DetailedError);
 	setPart (new RKCaughtX11WindowPart (this));
 	initializeActivationSignals ();
 	setFocusPolicy (QWidget::ClickFocus);

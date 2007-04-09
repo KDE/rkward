@@ -80,7 +80,7 @@ class KToggleAction;
 class QXEmbedCopy;
 class QScrollView;
 class QVBox;
-class RKRErrorDialog;
+class RKProgressControl;
 
 /** An R X11 device window managed by rkward. */
 class RKCaughtX11Window : public RKMDIWindow {
@@ -125,7 +125,7 @@ private:
 	QVBox *xembed_container;
 	QScrollView *scroll_widget;
 	QVBox *box_widget;
-	RKRErrorDialog *error_dialog;
+	RKProgressControl *error_dialog;
 
 	bool dynamic_size;
 	KToggleAction *dynamic_size_action;
