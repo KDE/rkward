@@ -6,6 +6,7 @@
 		<component type="standard" id="box_plot" file="box_plot.xml" label="Box Plot" />
 		<component type="standard" id="density_plot" file="density_plot.xml" label="Density Plot" />
 		<component type="standard" id="ecdf_plot" file="ecdf_plot.xml" label="ECDF Plot" />
+		<component type="standard" id="plot" file="plot.xml" label="Generic Plot" />
 		<component type="standard" id="histogram" file="histogram.xml" label="Histogram" />
 		<component type="standard" id="pareto" file="pareto.xml" label="Pareto Chart" />
 		<component type="standard" id="scatterplot" file="scatterplot.xml" label="Scatterplot" />
@@ -26,6 +27,7 @@
 			<entry component="box_plot" />
 			<entry component="density_plot" />
 			<entry component="ecdf_plot" />
+			<entry component="plot"/>
 			<entry component="histogram" />
 			<entry component="pareto" />
 			<entry component="scatterplot" />
