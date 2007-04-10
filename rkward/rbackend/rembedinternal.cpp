@@ -25,6 +25,7 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #define FALSE (const bool)!0
 #include <qstring.h>
 #include <qtextcodec.h>
+#include "../core/robject.h"
 #include "../debug.h"
 #undef TRUE
 #undef FALSE
@@ -626,18 +627,98 @@ SEXP doUpdateLocale () {
 	return R_NilValue;
 }
 
-/* Testing code. TODO: clean up
-SEXP doTestType (SEXP name, SEXP envir) {
+RData *getStructureWorker (SEXP value, SEXP name, SEXP namespacename, int envlevel, bool misplaced) {
+	bool is_function = false;
+	bool is_container = false;
+	unsigned int type = 0;
+	unsigned int count;
+	SEXP call;
+
+	// TODO: move all this logic to a separate file
+
+	// TODO: make name parameter a const QString&
+	// TODO: can namespacename be pre-resolved to a namespace environment? Not that it should matter too much, as it is only needed when recursing into environments, and only once, in there.
+
+	// TODO: manually resolve promises
+
+	// get name
+	RData *namedata = new RData;
+	namedata->data = SEXPToStringList (name, &count);
+	namedata->datatype = RData::StringVector;
+
+	// get classes (note that those are the third element in the RData for historical reasons, but we need to fetch them earlier, in order to find out, whether an object is a data.frame.
+	// TODO: resolve function "class_fun" only once
+	SEXP class_fun = Rf_findFun (Rf_install ("class"),  R_BaseEnv);;
+	PROTECT (class_fun);
+
+	call = allocVector (LANGSXP, 2);
+	PROTECT (call);
+	SETCAR (call, class_fun);
+	SETCAR (CDR (call), value);
+	SEXP classes_s = Rf_eval (call, R_GlobalEnv);
+	PROTECT (classes_s);
+	QString *classes = SEXPToStringList (classes_s, &count);
+	unsigned int num_classes = count;
+	UNPROTECT (2);	/* classes_s, call */
+	UNPROTECT (1);	/* class_fun */
+
+	// basic classification
+	for (unsigned int i = 0; i < num_classes; ++i) {
+		if (classes[i] == "data.frame") type |= RObject::DataFrame;
+	}
+
+	if (Rf_isMatrix (value)) type |= RObject::Matrix;
+	if (Rf_isArray (value)) type |= RObject::Array;
+	if (Rf_isList (value)) type |= RObject::List;
+	if (Rf_isNewList (value)) type |= RObject::List;
+
+	if (type != 0) {
+		is_container = true;
+	} else {
+		if (Rf_isFunction (value)) {
+			is_function = true;
+			type |= RObject::Function;
+		} else if (Rf_isEnvironment (value)) {
+			is_container = true;
+			type |= RObject::Environment;
+		} else {
+			type |= RObject::Variable;
+			if (Rf_isFactor (value)) type |= RObject::Factor;
+			else if (Rf_isNumeric (value)) type |= RObject::Numeric;
+			else if (Rf_isCharacter (value)) type |= RObject::Character;
+			else if (Rf_isLogical (value)) type |= RObject::Logical;
+		}
+	}
+	// TODO: does it have a meta attribute?
+	// TODO: is it misplaced?
+
+	// TODO: set type
+
+	// TODO: set classes
+
+	// TODO: get and set dims
+
+	if (is_container) {
+		// TODO: get and set children
+	} else if (is_function) {
+		// TODO: get and set arguments
+	}
+}
+
+SEXP doGetStructureTest (SEXP toplevel, SEXP name, SEXP namespacename) {
 	RK_TRACE (RBACKEND);
 
+	RData *data = getStructureWorker (toplevel, name, namespacename, 2, false);
+
+/*
 	char *cname = (char*) STRING_PTR (VECTOR_ELT (name, 0));
 	SEXP val = findVar (install(CHAR(STRING_ELT(name, 0))), envir);
 	if (TYPEOF (val) == PROMSXP) {
 		qDebug ("name %s, type %d, unbound %d", cname, TYPEOF (val), PRVALUE(val) == R_UnboundValue);
-	}
+	} */
 
 	return R_NilValue;
-} */
+}
 
 bool REmbedInternal::registerFunctions (const char *library_path) {
 	RK_TRACE (RBACKEND);
@@ -650,7 +731,7 @@ bool REmbedInternal::registerFunctions (const char *library_path) {
 		{ "rk.do.error", (DL_FUNC) &doError, 1 },
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
-//		{ "rk.test.type", (DL_FUNC) &doTestType, 2 }, // Testing code. TODO: clean up
+		{ "rk.get.structure.test", (DL_FUNC) &doGetStructureTest, 0 },
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (info, NULL, callMethods, NULL, NULL);
