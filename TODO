@@ -10,10 +10,6 @@ Should be fixed for 0.4.8:
 	- A way to define dependencies between pluginmaps
 		- Put the embeddable plugins a .pluginmap that is required by most others
 	- Find a solution for error handling in plugins
-	- Do not use a sink in plugins. Rather, all printing code should print to the output file. Everything else will be added below the output.
-	- Separate plugin output by an <hr> or something (*after* a plugin has run, and *only if* it has produced some sort of output (or warnings/errors))
-	- if there is a substack command, warnings may get attached to the wrong command (as Rf_PrintWarnings() is called for the substack-command, before it is called for the main command)! What to do?! Something like current_toplevel_command? Will this always work, right? Probably not.
-		- Maybe keep a list of *all* still active commands, and append output to all of those
 
 Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
@@ -154,8 +150,8 @@ Internal stuff:
 		- It will be possible to "store" these in the RObjectList and select them just like any other object
 		- RKVarslot will allow editing the selected value by hand (or just typing the name in)
 			- How to do this nicely UI wise?
-	- RKCancelDialog / RKErrorDialog:
-		- remove these classes. Port to use RKProgressControl instead
+	- RKCancelDialog:
+		- remove this class. Port to use RKProgressControl instead
 	- RThread:
 		- Detection of commands that run for a suspiciously long time
 			- Show "do you want to cancel ..." option after configurable amount of time

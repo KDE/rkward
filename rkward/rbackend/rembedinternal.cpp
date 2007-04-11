@@ -635,13 +635,14 @@ RData *getStructureWorker (SEXP value, SEXP name, SEXP namespacename, int envlev
 	SEXP call;
 
 	// TODO: move all this logic to a separate file
+	// TODO: instead of returning an RData, take the parent as parameter, and add to that. Why? Because this way we can tie up all the data earlier. Then, if there is an error (hopefully, there isn't, of course), most memory can be released easily, without the need for much bookkeeping).
 
 	// TODO: make name parameter a const QString&
-	// TODO: can namespacename be pre-resolved to a namespace environment? Not that it should matter too much, as it is only needed when recursing into environments, and only once, in there.
+	// TODO: can namespacename be pre-resolved to a namespace environment? Not that it should matter too much, as it is only needed when recursing into environments, and only once per env.
 
 	// TODO: manually resolve promises
 
-	// get name
+	// first field: get name
 	RData *namedata = new RData;
 	namedata->data = SEXPToStringList (name, &count);
 	namedata->datatype = RData::StringVector;
