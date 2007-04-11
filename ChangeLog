@@ -1,3 +1,4 @@
+- fixed: when executing commands line by line from the script editor, line breaks would be omitted
 - Messages, warnings, and errors for plugin commands are shown in the output, instead of in a dialog
 
 --- Version 0.4.7 - Apr-11-2007

@@ -792,7 +792,7 @@ void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 		current_command = command;
 		if (command_incomplete) {
 			RK_ASSERT (command_was_piped);
-			command_string.prepend (incomplete_command);
+			command_string.prepend (incomplete_command + '\n');
 			command->setCommand (command_string);
 		}
 		command_was_piped = true;
