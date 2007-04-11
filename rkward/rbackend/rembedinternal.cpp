@@ -649,7 +649,7 @@ bool REmbedInternal::registerFunctions (const char *library_path) {
 		{ "rk.do.error", (DL_FUNC) &doError, 1 },
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
-		{ "rk.get.structure.test", (DL_FUNC) &doGetStructureTest, 0 },
+		{ "rk.get.structure.test", (DL_FUNC) &doGetStructureTest, 3 },
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (info, NULL, callMethods, NULL, NULL);
