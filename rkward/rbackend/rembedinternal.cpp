@@ -686,7 +686,7 @@ RData *getStructureWorker (SEXP value, SEXP name, SEXP namespacename, int envlev
 			type |= RObject::Variable;
 			if (Rf_isFactor (value)) type |= RObject::Factor;
 			else if (Rf_isNumeric (value)) type |= RObject::Numeric;
-			else if (Rf_isCharacter (value)) type |= RObject::Character;
+//TODO:			else if (Rf_isCharacter (value)) type |= RObject::Character;
 			else if (Rf_isLogical (value)) type |= RObject::Logical;
 		}
 	}
