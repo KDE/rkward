@@ -1,0 +1,62 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="crosstab.php"/>
+		<logic>
+		<convert id="chisqvalue" mode="equals" sources="chisq.state" standard="TRUE" />
+		<connect client="chi_options.enabled" governor="chisqvalue" />
+		<convert id="barplotvalue" mode="equals" sources="barplot.state" standard="TRUE" />
+		<connect client="preview.enabled" governor="barplotvalue" />
+		<connect client="plot_options.enabled" governor="barplotvalue" />
+		<convert id="besidevalue" mode="equals" sources="beside.string" standard="TRUE" />
+		<connect client="labels.enabled" governor="besidevalue" />
+		<convert id="labelsvalue" mode="equals" sources="labels.string" standard="TRUE" />
+		<convert id="labelsvalue2" mode="and" sources="labelsvalue;labels.enabled" />
+		<connect client="place.enabled" governor="labelsvalue2" />
+		<convert id="montevalue" mode="equals" sources="monte.string" standard="TRUE" />
+		<connect client="B.enabled" governor="montevalue" />
+	</logic>
+	<dialog label="Crosstabs" >
+		<tabbook>
+			<tab label="Variables" id="variables_tab">
+				<row>
+					<varselector id="vars"/>
+					<column>						
+						<varslot multi="false" id="x" source="vars" label="variable" required="true" />
+						<varslot multi="false" id="y" source="vars" label="Group" required="true" />
+						<checkbox id="chisq" label="Chisquare" value="TRUE" value_unchecked="FALSE" checked="false" />		<checkbox id="barplot" label="Draw Barplot?" value="TRUE" value_unchecked="FALSE" checked="false" />						
+						<stretch/>
+						<preview id="preview"/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Chisquare Options" id="chi_options">
+				<radio id="monte" label="Method">
+					<option value="FALSE" label="Asymptotic"  checked="true" />				
+					<option value="TRUE" label="Monte Carlo" />
+				</radio>
+				<frame label="Number of replicates">
+					<input id="B" initial="10000" label="Number of replicates used in the Monte Carlo Method" />
+				</frame>
+				<stretch/>
+			</tab>
+			<tab label="Barplot Options" id="plot_options">
+				<checkbox id="legend" label="Legend" value="TRUE" value_unchecked="FALSE" checked="false"/>
+				<checkbox id="rainbow" label="Rainbow colors" value="TRUE" value_unchecked="FALSE" checked="true"/>
+				<radio id="beside" label="Type" >
+					<option value="TRUE" label="Juxtaposed" />
+					<option value="FALSE" label="Stacked" checked="true"/>
+				</radio>
+				<radio id="labels" label="Label values" >
+					<option value="TRUE" label="Display" />
+					<option value="FALSE" label="Do not Display" checked="true"/>					
+				</radio>
+				<radio id="place" label="Display label values">
+					<option value="3" label="Above Bars" checked="true"/>
+					<option value="2" label="Beside Bars"/>
+					<option value="1" label="Inside Bars"/>
+				</radio>
+			</tab>
+		</tabbook>			
+	</dialog>
+
+</document>
