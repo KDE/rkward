@@ -2,6 +2,7 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
+		<component type="standard" id="crosstab" file="analysis/crosstab.xml" label="Crosstabs" />
 	</components>
 
 	<hierarchy>
@@ -12,6 +13,7 @@
 			</menu>
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
+			<entry component="crosstab" index="11"/>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
 		</menu>
