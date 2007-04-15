@@ -1,18 +1,21 @@
-# translation of tr.po to Turkish
+# translation of yenitr.po to
+# translation of tr.po to
 # translation of rkward.po to
 # çevirisi of rkward.po to Türkçe
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Harun Hurma <h.hurma@gmail.com>, 2006, 2007.
+# Serdar Soytetir <tulliana@gmail.com>, 2007.
+# ertugrulerata <ertugrulerata@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: tr\n"
+"Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-02 21:41+0200\n"
-"PO-Revision-Date: 2007-01-28 15:02+0200\n"
-"Last-Translator: Harun Hurma <h.hurma@gmail.com>\n"
-"Language-Team: Turkish <tr@li.org>\n"
+"PO-Revision-Date: 2007-04-12 10:40+0300\n"
+"Last-Translator: ertugrulerata <ertugrulerata@gmail.com>\n"
+"Language-Team:  <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -75,8 +78,7 @@ msgstr "Pano içeriklerini asıl yerlerine yapıştırır"
 msgid ""
 "Pastes the clipboard contents to actual position, but not beyond the table's "
 "boundaries"
-msgstr ""
-"Pano içeriklerini asıl yerlerine yapıştırır, fakat tablonun sınırlarını aşmaz"
+msgstr "Pano içeriklerini asıl yerlerine yapıştırır, fakat tablonun sınırlarını aşmaz"
 
 #: dataeditor/rkeditordataframepart.cpp:61
 msgid ""
@@ -166,10 +168,8 @@ msgid "Delete this row (%1)"
 msgstr "Bu hücreyi (%1) sil "
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
-msgstr ""
-"Dosya ismi verilmemiş. Verileriniz KAYDEDİLMEDİ. Devam etmek istiyor musunuz?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgstr "Dosya ismi verilmemiş. Verileriniz KAYDEDİLMEDİ. Devam etmek istiyor musunuz?"
 
 #: agents/rksaveagent.cpp:73
 msgid "Saving to file '%1' failed. What do you want to do?"
@@ -281,10 +281,12 @@ msgid ""
 "Waiting for remaining R commands to finish. To quit immediately, press "
 "Cancel (WARNING: This may result in loss of data)"
 msgstr ""
+"Bitirmek için kalan R komutları bekleniyor. Hemen çıkmak için İptal "
+"düğmesine basın. (UYARI: İptal işlemi veri kaybetmenize neden olabilir.)"
 
 #: agents/rkquitagent.cpp:41
 msgid "Waiting for R to finish"
-msgstr ""
+msgstr "Bitirmek için R bekleniyor"
 
 #: agents/rkeditobjectagent.cpp:56
 msgid ""
@@ -324,8 +326,7 @@ msgid "Remove object?"
 msgstr "Nesneyi sil?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "Nesne '%1' gerçekten silmek istiyor musunuz? Silinmiş öğeler geri "
 "getirilemez."
@@ -499,7 +500,7 @@ msgstr "İlgili olan işlevler ve sayfalar"
 
 #: windows/rkhtmlwindow.cpp:570
 msgid "Technical details"
-msgstr ""
+msgstr "Teknik detaylar"
 
 #: windows/rkhtmlwindow.cpp:647
 msgid "R Reference on '%1'"
@@ -592,14 +593,12 @@ msgid "Attach to main window"
 msgstr "Ana pencereye ekle"
 
 #: windows/rkworkplaceview.cpp:58
-#, fuzzy
 msgid "Window Left"
-msgstr "&Pencereler"
+msgstr "Sol Pencere"
 
 #: windows/rkworkplaceview.cpp:62
-#, fuzzy
 msgid "Window Right"
-msgstr "&Pencereler"
+msgstr "Sağ Pencere"
 
 #: windows/rkworkplace.cpp:144
 msgid "Unable to open \"%1\""
@@ -625,7 +624,7 @@ msgstr ""
 
 #: windows/rkworkplace.cpp:240
 msgid "About to edit very large object"
-msgstr ""
+msgstr "Çok geniş nesne düzenleme hakkında"
 
 #: windows/rkworkplace.cpp:349
 msgid "Save Workplace layout"
@@ -633,16 +632,15 @@ msgstr "Çalışma alanı düzenini kaydet"
 
 #: windows/rkworkplace.cpp:356
 msgid "Restore Workplace layout"
-msgstr "ÇAlışma alanı düzenini geri koy"
+msgstr "Çalışma alanı düzenini geri koy"
 
 #: windows/rkworkplace.cpp:426
 msgid "Previous Window"
-msgstr ""
+msgstr "Önceki Pencere"
 
 #: windows/rkworkplace.cpp:430
-#, fuzzy
 msgid "Next Window"
-msgstr "&Pencereler"
+msgstr "Yeni Pencere"
 
 #: windows/rkcommandlog.cpp:54 settings/rksettingsmodulewatch.cpp:277
 msgid "Command log"
@@ -950,23 +948,23 @@ msgstr "(başlık yok)"
 
 #: plugin/rkpreviewbox.cpp:47
 msgid "Preview"
-msgstr ""
+msgstr "Önizleme"
 
 #: plugin/rkpreviewbox.cpp:167
 msgid "Preview disabled"
-msgstr ""
+msgstr "Önizleme pasifleştirildi"
 
 #: plugin/rkpreviewbox.cpp:171
 msgid "Preview up to date"
-msgstr ""
+msgstr "Önizlemeyi güncelle"
 
 #: plugin/rkpreviewbox.cpp:173
 msgid "Preview updating"
-msgstr ""
+msgstr "Önizleme güncelleniyor"
 
 #: plugin/rkpreviewbox.cpp:176
 msgid "Preview not (yet) possible"
-msgstr ""
+msgstr "Önizleme henüz olanaklı değil"
 
 #: plugin/rkpluginsaveobject.cpp:41 rkward.cpp:234
 msgid "my.data"
@@ -974,7 +972,7 @@ msgstr "my.data"
 
 #: plugin/rkpluginsaveobject.cpp:41
 msgid "Save to:"
-msgstr ""
+msgstr "Farklı kaydet:"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:41
 msgid "Which objects should be shown by default?"
@@ -1022,8 +1020,7 @@ msgstr "Çalışma alanı"
 
 #: settings/rksettingsmodulegeneral.cpp:49
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
-msgstr ""
-"(*) ile işaretlenen ayarlar, RKWard yeniden başlatılıncaya kadar etkili olmaz"
+msgstr "(*) ile işaretlenen ayarlar, RKWard yeniden başlatılıncaya kadar etkili olmaz"
 
 #: settings/rksettingsmodulegeneral.cpp:53
 msgid "Directory where the logfiles should be kept (*)"
@@ -1085,12 +1082,11 @@ msgstr "Çalışma alanı düzeni Kaydedilemedi/Yerine koyulamadı"
 msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
 "limit):"
-msgstr ""
+msgstr "Alanda kaç nesne düzenlenecek (Sınır koymamak için sıfır kullanın)"
 
 #: settings/rksettingsmodulegeneral.cpp:95
-#, fuzzy
 msgid "No limit"
-msgstr "Başlık Yok"
+msgstr "Sınır Yok"
 
 #: settings/rksettingsmodulegeneral.cpp:119
 msgid "General"
@@ -1119,16 +1115,15 @@ msgstr "Daima sihirbazları tercih et"
 
 #: settings/rksettingsmoduleplugins.cpp:67
 msgid "R syntax display (in dialogs)"
-msgstr ""
+msgstr "R sözdizimi görünümü "
 
 #: settings/rksettingsmoduleplugins.cpp:68
-#, fuzzy
 msgid "Code shown by default"
-msgstr "Hangi nesneler varsayılan olarak sütunlar gösterilsin?"
+msgstr "Hangi sütunlar varsayılan olarak gösterilsin?"
 
 #: settings/rksettingsmoduleplugins.cpp:73
 msgid "Default height of code display (pixels)"
-msgstr ""
+msgstr " Kod ekranının varsayılan yüksekliği(piksel)"
 
 #: settings/rksettingsmoduleplugins.cpp:81
 msgid "Select .pluginmap file(s)"
@@ -1322,7 +1317,7 @@ msgstr "Betik düzenleyicisinden konsola komutları çalıştır"
 
 #: settings/rksettingsmoduleconsole.cpp:71
 msgid "Command history is context sensitive by default"
-msgstr ""
+msgstr "Komut geçmişi öntanımlı olarak içinde bulunulan bağlama duyarlıdır."
 
 #: settings/rksettingsmoduleconsole.cpp:167
 msgid "Console"
@@ -1588,18 +1583,16 @@ msgid "Become root"
 msgstr "Yetkili kullanıcı olun"
 
 #: dialogs/rkimportdialog.cpp:36
-#, fuzzy
 msgid "File format: "
-msgstr "Biçim"
+msgstr "Dosya biçemi: "
 
 #: dialogs/rkimportdialog.cpp:45
 msgid "No plugins defined for context '%1'"
-msgstr ""
+msgstr "'%1' durumu için bir eklenti tanımlanmamış"
 
 #: dialogs/rkimportdialog.cpp:50
-#, fuzzy
 msgid "All Files"
-msgstr "*|Bütün dosyalar"
+msgstr "Bütün Dosyalar"
 
 #: misc/xmlhelper.cpp:61
 msgid "Could not open file for reading"
@@ -1638,17 +1631,17 @@ msgid "Illegal attribute value. Only real numbers are allowed."
 msgstr "Geçersiz nitelik değeri. Sadece gerçek sayılara izin verilir."
 
 #: misc/xmlhelper.cpp:219
-#, fuzzy
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
-msgstr "Geçersiz nitelik değeri. İzin verilen değerler sadece '%1' in biridir."
+msgstr ""
+"Geçersiz nitelik değeri. İzin verilen değerler sadece '%1' ya da '%2' "
+"değerleridir."
 
 #: misc/xmlhelper.cpp:230
 msgid "XML-parsing '%1' "
 msgstr "XML-inceleme '%1'"
 
 #: misc/rkprogresscontrol.cpp:203
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr "<b>Hatalar veya uyarılar var! Bir kopyası için aşağıya bakın</b>"
 
 #: misc/rkprogresscontrol.cpp:213
@@ -1740,9 +1733,8 @@ msgid "Object name to save to"
 msgstr "Kaydetmek için dosya adı"
 
 #: misc/rksaveobjectchooser.cpp:83
-#, fuzzy
 msgid "Overwrite? (The given object name already exists)"
-msgstr "Verilen simge zaten var"
+msgstr "Üzerine yazılsın mı? (Verilen nesne adı zaten var)"
 
 #: misc/rksaveobjectchooser.cpp:87
 msgid "Overwrite?"
@@ -1752,7 +1744,7 @@ msgstr "Üzerine yazılsın mı?"
 msgid ""
 "The support file \"%1\" could not be found or is not readable. Please check "
 "your installation."
-msgstr ""
+msgstr "Destek dosyası \"%1\" bulunamadı veya okunamıyor. Kurulumunuzu kontrol ediniz."
 
 #: scriptbackends/phpbackend.cpp:61 scriptbackends/phpbackend.cpp:78
 #: scriptbackends/phpbackend.cpp:242 scriptbackends/phpbackend.cpp:302
@@ -1815,10 +1807,12 @@ msgid ""
 "below:\n"
 "%1"
 msgstr ""
+"R backend  bir problemle sonlandı. Oluşan hatalar şunlar:\n"
+"%1"
 
 #: scriptbackends/phpbackend.cpp:317
 msgid "PHP Process exited"
-msgstr ""
+msgstr "PHP İşleminden çıkıldı"
 
 #: rbackend/rinterface.cpp:188
 msgid ""
@@ -1896,7 +1890,6 @@ msgid ""
 msgstr ""
 
 #: rbackend/rinterface.cpp:363
-#, fuzzy
 msgid "Locale change"
 msgstr "Yerel paketler"
 
@@ -1976,7 +1969,7 @@ msgstr "&Yeni"
 #: rc.cpp:15
 #, no-c-format
 msgid "&Import"
-msgstr ""
+msgstr "&İçeri Aktar"
 
 #. i18n: file rkwardui.rc line 22
 #: rc.cpp:18
@@ -1994,7 +1987,7 @@ msgstr "&Pencereler"
 #: rc.cpp:33
 #, no-c-format
 msgid "&Activate"
-msgstr ""
+msgstr "&Etkinleştir"
 
 #: _translatorinfo.cpp:1
 msgid ""
@@ -2025,29 +2018,24 @@ msgid "Verbosity of debug messages (0-5)"
 msgstr "Hata ayıklama mesajının gösterimi (0-5)"
 
 #: main.cpp:76
-#, fuzzy
 msgid "Mask for components to debug (see debug.h)"
-msgstr "İkili bir sayı olarak hata ayıklama unsurları için maske"
+msgstr "İkili bir sayı olarak hata ayıklama unsurları için maske "
 
 #: main.cpp:83
-#, fuzzy
 msgid "Project leader / main developer"
-msgstr "Proje lideri"
+msgstr "Proje lideri / ana geliştirici"
 
 #: main.cpp:84
-#, fuzzy
 msgid "C++ coder since 0.2.9"
-msgstr "0.2.9'dan beri  çekirdek kodlayıcı"
+msgstr "0.2.9 sürümünden beri C++ kod yazarı"
 
 #: main.cpp:85
-#, fuzzy
 msgid "Many plugins, suggestions, marketing, translations"
-msgstr "Çeşitli eklentiler, öneriler ve pazarlama"
+msgstr "Çeşitli eklentiler, öneriler ve tanıtım, yerelleştirme"
 
 #: main.cpp:86
-#, fuzzy
 msgid "Many plugins, suggestions"
-msgstr "Çeşitli eklentiler, öneriler ve pazarlama"
+msgstr "Çeşitli eklentiler, öneriler ve tanıtım, yerelleştirme"
 
 #: main.cpp:88
 msgid "Several helpful comments and discussions"
@@ -2074,9 +2062,8 @@ msgid "Several valuable comments, hints and patches"
 msgstr "Çeşitli değerli yorumlar, ipuçları ve yamalar"
 
 #: main.cpp:94
-#, fuzzy
 msgid "Translation, Suggestions, plugins"
-msgstr "Çeşitli eklentiler, öneriler ve pazarlama"
+msgstr "Çeşitli eklentiler, Öneriler, eklentiler"
 
 #: main.cpp:95
 msgid "Many comments, useful suggestions, and bug reports"
@@ -2084,7 +2071,7 @@ msgstr "Birçok yorum, faydalı öneriler ve hata bildirimi"
 
 #: main.cpp:96
 msgid "Some patches"
-msgstr ""
+msgstr "Bazı yamalar"
 
 #: main.cpp:97
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
@@ -2097,7 +2084,6 @@ msgstr ""
 "benimle iletişim kurunuz"
 
 #: rkward.cpp:195
-#, fuzzy
 msgid ""
 "RKWard has made great progress in the past few months and it is already "
 "helpful for many tasks, but some features may be lacking. You can help us by "
@@ -2151,7 +2137,7 @@ msgstr "R Betik dosyası aç"
 
 #: rkward.cpp:314
 msgid "Import Data"
-msgstr ""
+msgstr "İçeriye Veri Aktar"
 
 #: rkward.cpp:317
 msgid "Open Workspace"
@@ -2182,33 +2168,28 @@ msgid "Show &Output"
 msgstr "&Çıktıyı Göster"
 
 #: rkward.cpp:338
-#, fuzzy
 msgid "Show/Hide Workspace Browser"
-msgstr "Çalışma alanını farklı kaydet"
+msgstr "Çalışma alanını göster/gizle"
 
 #: rkward.cpp:339
-#, fuzzy
 msgid "Show/Hide Command Log"
-msgstr "Komut kayıtları"
+msgstr "Komut kayıtlarını göster/gizle"
 
 #: rkward.cpp:340
-#, fuzzy
 msgid "Show/Hide Pending Jobs"
-msgstr "Bekleyen işler"
+msgstr "Bekleyen işleri göster/gizle"
 
 #: rkward.cpp:341
-#, fuzzy
 msgid "Show/Hide Console"
-msgstr "R konsol"
+msgstr "R konsol göster/gizle"
 
 #: rkward.cpp:342
-#, fuzzy
 msgid "Show/Hide R Help Search"
-msgstr "R yardım arama penceresini gösterir/gizler"
+msgstr "R yardım arama penceresini göster/gizle"
 
 #: rkward.cpp:343
 msgid "Activate Document view"
-msgstr ""
+msgstr "Belge görünümünü etkinleştir."
 
 #: rkward.cpp:345
 msgid "Configure RKWard"
@@ -2220,7 +2201,7 @@ msgstr "Yeni boş veri seti oluşturur ve düzenleme için onu açar"
 
 #: rkward.cpp:350
 msgid "Import data from a variety of file formats"
-msgstr ""
+msgstr "Değişik dosya biçemlerindeki verileri içeri aktar"
 
 #: rkward.cpp:351
 msgid "Opens an existing document"
@@ -2482,8 +2463,7 @@ msgstr "Kopyalamak için isim girin"
 msgid ""
 "An object named '%1' already exists in the GlobalEnv. Created the copy as '%"
 "2' instead."
-msgstr ""
-"Nesne ismi '%1 GlobalEnv'de zaten var. '%2' olarak kopyası oluşturuldu."
+msgstr "Nesne ismi '%1 GlobalEnv'de zaten var. '%2' olarak kopyası oluşturuldu."
 
 #: robjectbrowser.cpp:141
 msgid "Name already in use"
@@ -2509,13 +2489,3 @@ msgstr "Tüm Çevreleri Göster"
 msgid "Show Hidden Objects"
 msgstr "Gizli Nesneleri Göster"
 
-#~ msgid "Directory, where the PHP support files are located"
-#~ msgstr "PHP destek dosyalarının bulunduğu klasör"
-
-#~ msgid "## Clean up\n"
-#~ msgstr "## Temizle\n"
-
-#~ msgid "Illegal attribute value. Allowed values are 'true' or 'false', only."
-#~ msgstr ""
-#~ "Geçersiz nitelik değeri. İzin verilen değerler sadece 'true' ya da "
-#~ "'false'."
