@@ -119,6 +119,8 @@ int repldll_result = 0;		/* -2: error; -1: incomplete; 0: nothing, yet 1: ok 2: 
 bool repldll_last_parse_successful = false;
 #endif
 
+SEXP RKWard_RData_Tag;
+
 // ############## R Standard callback overrides BEGIN ####################
 void RSuicide (char* message) {
 	RK_TRACE (RBACKEND);
@@ -557,6 +559,15 @@ RData *SEXPToRData (SEXP from_exp) {
 			data->datatype = RData::NoData;
 			count = 0;
 			break; */
+		case EXTPTRSXP:
+			if (R_ExternalPtrTag (from_exp) == RKWard_RData_Tag) {
+				delete data;
+				data = (RData*) R_ExternalPtrAddr (from_exp);
+//				R_SetExternalPtrAddr (from_exp, 0);
+qDebug ("data length %d", data->length);
+				count = data->length;
+				break;
+			}
 		case STRSXP:
 		default:
 			data->data = SEXPToStringList (from_exp, &count);
@@ -608,11 +619,13 @@ bool REmbedInternal::startR (int argc, char** argv, size_t stacksize, void *stac
 	RKGlobals::na_double = NA_REAL;
 	R_Interactive = (Rboolean) TRUE;
 	R_ReplDLLinit ();
+	RKWard_RData_Tag = Rf_install ("RKWard_RData_Tag");
 	return true;
 #else
 	bool ok = (Rf_initEmbeddedR (argc, argv) >= 0);
 	RKGlobals::na_double = NA_REAL;
 	R_ReplDLLinit ();
+	RKWard_RData_Tag = Rf_install ("RKWard_RData_Tag");
 	return ok;
 #endif
 }
@@ -634,8 +647,7 @@ SEXP doGetStructureTest (SEXP toplevel, SEXP name, SEXP namespacename) {
 
 	RKStructureGetter getter (false);
 	RData *ret = getter.getStructure (toplevel, name, namespacename);
-
-	return R_NilValue;
+	return R_MakeExternalPtr (ret, RKWard_RData_Tag, R_NilValue);
 }
 
 bool REmbedInternal::registerFunctions (const char *library_path) {

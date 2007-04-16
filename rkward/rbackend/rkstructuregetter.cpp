@@ -75,15 +75,15 @@ RKStructureGetter::RKStructureGetter (bool keep_evalled_promises) {
 	PROTECT (names_fun);
 	RK_ASSERT (!Rf_isNull (names_fun));
 
-	/* TODO:
-	formals-handling
-	*/
+	make_argvalues_fun = Rf_findFun (Rf_install (".rk.make.argvalues"), R_GlobalEnv);
+	PROTECT (make_argvalues_fun);
+	RK_ASSERT (!Rf_isNull (make_argvalues_fun));
 }
 
 RKStructureGetter::~RKStructureGetter () {
 	RK_TRACE (RBACKEND);
 
-	UNPROTECT (13); /* all the pre-resolved functions */
+	UNPROTECT (14); /* all the pre-resolved functions */
 }
 
 SEXP RKStructureGetter::callSimpleFun (SEXP fun, SEXP arg) {
@@ -107,6 +107,7 @@ bool RKStructureGetter::callSimpleBool (SEXP fun, SEXP arg) {
 RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP namespacename) {
 	RK_TRACE (RBACKEND);
 
+	// TODO: accept an envlevel parameter
 	envir_depth = 0;
 
 	unsigned int count;
@@ -234,6 +235,7 @@ qDebug ("resolved");
 
 	if (type != 0) {
 		is_container = true;
+		type |= RObject::Container;
 	} else {
 		if (callSimpleBool (is_function_fun, value)) {
 			is_function = true;
@@ -393,11 +395,15 @@ qDebug ("element %d of %d from environment %s", i, childcount, name.latin1());
 					getStructureWorker (child, childnames[i], false, children[i]);
 					CDR (value);
 				}
-			} else {				// new style list
+			} else if (Rf_isNewList (value)) {				// new style list
 				for (unsigned int i = 0; i < childcount; ++i) {
 					SEXP child = VECTOR_ELT(value, i);
 					getStructureWorker (child, childnames[i], false, children[i]);
 				}
+			} else {
+				// TODO: handle this case (an S4 object pretending to be a list; will need to use operator [[)
+				childdata->length = 0;
+qDebug ("TODO");
 			}
 		}
 		UNPROTECT (1);   /* childnames_s */
@@ -419,33 +425,23 @@ qDebug ("fun");
 		if (TYPEOF (value) == CLOSXP) {		// if it is not, it does not have any formals
 			SEXP formals_s = FORMALS (value);
 			PROTECT (formals_s);
-qDebug ("%d args", Rf_length (formals_s));
-qDebug ("fun1");
 			SEXP names_s = getAttrib (formals_s, R_NamesSymbol);
 			PROTECT (names_s);
-qDebug ("fun2");
+
+			// the argument names
 			funargsdata->data = SEXPToStringList (names_s, &(funargsdata->length));
-qDebug ("fun3");
-			// TODO: get and store argument values
-	
-			// convert argument values to character representation
-/*			unsigned int length = Rf_length (formals_s);
-			SEXP argvalues_char_s = Rf_allocVector (STRSXP, Rf_length (formals_s));
-			PROTECT (arg_values_char_s);
-			for (unsigned int i = 0; i < length; ++i) {
-				if (TYPEOF (VECTOR_ELT (formals_s, i)) == STRSXP) {
-					SET_VECTOR_ELT (formals_s, 
-				}
-			} */
+
+			// the default values
+			SEXP formals_string_s = callSimpleFun (make_argvalues_fun, formals_s);
+			PROTECT (formals_string_s);
 QString *dummy1;
-			funargvaluesdata->data = dummy1 = SEXPToStringList (formals_s, &(funargvaluesdata->length));
-qDebug ("fun4");
+			funargvaluesdata->data = dummy1 = SEXPToStringList (formals_string_s, &(funargvaluesdata->length));
 QString dummy;
 for (unsigned int i = 0; i < funargvaluesdata->length; ++i) {
 	dummy.append (dummy1[i] + "\t");
 }
 qDebug ("%s", dummy.latin1());
-			UNPROTECT (2); /* names_s, formals_s */
+			UNPROTECT (3); /* formals_string_s, names_s, formals_s */
 		} else {
 qDebug ("not a closure");
 		}

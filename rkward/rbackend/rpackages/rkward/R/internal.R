@@ -256,7 +256,7 @@
 	eval (substitute (x <- y), envir=envir)
 }
 
-".rk.get.structure" <- function (x, name, envlevel=0, namespacename=NULL, misplaced=FALSE, envir) {
+".rk.get.structure.old" <- function (x, name, envlevel=0, namespacename=NULL, misplaced=FALSE, envir) {
 	fun <- FALSE
 	cont <- FALSE
 	type <- 0
@@ -336,6 +336,21 @@
 		return (invisible (list (name, type, classes, meta, dims, argnames, argvalues)))
 	}
 	return (invisible (list (name, type, classes, meta, dims)))
+}
+
+".rk.get.structure.new" <- function (x, name, envlevel=0, namespacename=NULL) {
+	.Call ("rk.get.structure.test", x, name, namespacename)
+}
+
+".rk.get.structure" <- .rk.get.structure.old
+
+# use as .rk.make.argvalues (formals (fun))
+".rk.make.argvalues" <- function (x) {
+	as.character (lapply (x,
+			function (v) {
+				if (is.character (v)) return (encodeString (v, quote="\""))
+				else return (v)
+			} ))
 }
 
 ".rk.get.environment.children" <- function (x, envlevel=0, namespacename=NULL) {

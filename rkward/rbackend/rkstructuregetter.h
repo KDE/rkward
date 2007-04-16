@@ -50,6 +50,7 @@ private:
 	SEXP is_character_fun;
 	SEXP is_logical_fun;
 	SEXP names_fun;
+	SEXP make_argvalues_fun;
 
 	bool keep_evalled_promises;
 
