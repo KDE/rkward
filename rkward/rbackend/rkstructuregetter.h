@@ -28,15 +28,28 @@ public:
 
 	RData *getStructure (SEXP toplevel, SEXP name, SEXP namespacename);
 private:
-	void getStructureWorker (SEXP value, const QString &name, RData *storage);
+	void getStructureWorker (SEXP value, const QString &name, bool misplaced, RData *storage);
 	SEXP resolvePromise (SEXP from);
 
 	bool with_namespace;
 	SEXP namespace_envir;
 
+	static SEXP callSimpleFun (SEXP fun, SEXP arg);
+	static bool callSimpleBool (SEXP fun, SEXP arg);
+
 	SEXP class_fun;
 	SEXP meta_attrib;
 	SEXP get_meta_fun;
+	SEXP is_matrix_fun;
+	SEXP is_array_fun;
+	SEXP is_list_fun;
+	SEXP is_function_fun;
+	SEXP is_environment_fun;
+	SEXP is_factor_fun;
+	SEXP is_numeric_fun;
+	SEXP is_character_fun;
+	SEXP is_logical_fun;
+	SEXP names_fun;
 
 	bool keep_evalled_promises;
 

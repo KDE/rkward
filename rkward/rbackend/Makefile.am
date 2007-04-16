@@ -9,3 +9,5 @@ rdata.cpp rkpthreadsupport.cpp rklocalesupport.cpp
 noinst_HEADERS = rembedinternal.h rinterface.h rthread.h rcommand.h rcommandreceiver.h rcommandstack.h \
 rdata.h rkpthreadsupport.h rklocalesupport.h
 SUBDIRS =  rpackages
+
+rembedinternal.o: rkstructuregetter.cpp
