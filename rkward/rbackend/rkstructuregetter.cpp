@@ -35,43 +35,43 @@ RKStructureGetter::RKStructureGetter (bool keep_evalled_promises) {
 	RK_ASSERT (!Rf_isNull (get_meta_fun));
 
 // Why do we need all these? Because the is.xxx functions may do an internal dispatch, that we do not want to miss, but don't easily get by e.g. calling Rf_isFunction() directly.
-	is_matrix_fun = Rf_findFun (Rf_install ("is.matrix"),  R_BaseEnv);;
+	is_matrix_fun = Rf_install ("is.matrix");
 	PROTECT (is_matrix_fun);
 	RK_ASSERT (!Rf_isNull (is_matrix_fun));
 
-	is_array_fun = Rf_findFun (Rf_install ("is.array"),  R_BaseEnv);;
+	is_array_fun = Rf_install ("is.array");
 	PROTECT (is_array_fun);
 	RK_ASSERT (!Rf_isNull (is_array_fun));
 
-	is_list_fun = Rf_findFun (Rf_install ("is.list"),  R_BaseEnv);;
+	is_list_fun = Rf_install ("is.list");
 	PROTECT (is_list_fun);
 	RK_ASSERT (!Rf_isNull (is_list_fun));
 
-	is_function_fun = Rf_findFun (Rf_install ("is.function"),  R_BaseEnv);;
+	is_function_fun = Rf_install ("is.function");
 	PROTECT (is_function_fun);
 	RK_ASSERT (!Rf_isNull (is_function_fun));
 
-	is_environment_fun = Rf_findFun (Rf_install ("is.environment"),  R_BaseEnv);;
+	is_environment_fun = Rf_install ("is.environment");
 	PROTECT (is_environment_fun);
 	RK_ASSERT (!Rf_isNull (is_environment_fun));
 
-	is_factor_fun = Rf_findFun (Rf_install ("is.factor"),  R_BaseEnv);;
+	is_factor_fun = Rf_install ("is.factor");
 	PROTECT (is_factor_fun);
 	RK_ASSERT (!Rf_isNull (is_factor_fun));
 
-	is_numeric_fun = Rf_findFun (Rf_install ("is.numeric"),  R_BaseEnv);;
+	is_numeric_fun = Rf_install ("is.numeric");
 	PROTECT (is_numeric_fun);
 	RK_ASSERT (!Rf_isNull (is_numeric_fun));
 
-	is_character_fun = Rf_findFun (Rf_install ("is.character"),  R_BaseEnv);;
+	is_character_fun = Rf_install ("is.character");
 	PROTECT (is_character_fun);
 	RK_ASSERT (!Rf_isNull (is_character_fun));
 
-	is_logical_fun = Rf_findFun (Rf_install ("is.logical"),  R_BaseEnv);;
+	is_logical_fun = Rf_install ("is.logical");
 	PROTECT (is_logical_fun);
 	RK_ASSERT (!Rf_isNull (is_logical_fun));
 
-	names_fun = Rf_findFun (Rf_install ("names"),  R_BaseEnv);;
+	names_fun = Rf_findFun (Rf_install ("names"), R_BaseEnv);
 	PROTECT (names_fun);
 	RK_ASSERT (!Rf_isNull (names_fun));
 
@@ -146,6 +146,7 @@ RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP namespace
 		UNPROTECT (1);	/* namespace_envir */
 	}
 
+qDebug ("finished");
 	return ret;
 }
 
@@ -155,8 +156,8 @@ SEXP RKStructureGetter::resolvePromise (SEXP from) {
 	SEXP ret = from;
 qDebug ("resolving type: %d", TYPEOF (from));
 	if (TYPEOF (from) == PROMSXP) {
-qDebug ("resolving: is a promise");
 		if (PRVALUE(from) == R_UnboundValue) {
+qDebug ("resolving: is an unresolved promise");
 			PROTECT (from);
 			SET_PRSEEN(from, 1);
 qDebug ("resolve1");
@@ -196,9 +197,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	PROTECT (val);
 	// manually resolve any promises
 	SEXP value = resolvePromise (val);
-qDebug ("a");
 	UNPROTECT (1);		/* val */
-qDebug ("b");
 	PROTECT (value);
 
 qDebug ("resolved");
@@ -237,7 +236,6 @@ qDebug ("resolved");
 		is_container = true;
 	} else {
 		if (callSimpleBool (is_function_fun, value)) {
-qDebug ("funpre");
 			is_function = true;
 			type |= RObject::Function;
 		} else if (callSimpleBool (is_environment_fun, value)) {
@@ -383,17 +381,27 @@ qDebug ("%s", dummy.latin1());
 #					endif
 				}
 
+qDebug ("element %d of %d from environment %s", i, childcount, name.latin1());
 				getStructureWorker (child, childnames[i], child_misplaced, children[i]);
 				UNPROTECT (2); /* childname, child */
 			}
 		} else if (do_cont) {
 			qDebug ("recurse into list %s", name.latin1());
-			for (unsigned int i = 0; i < childcount; ++i) {
-				SEXP child = VECTOR_ELT(value, i);
-				getStructureWorker (child, childnames[i], false, children[i]);
+			if (Rf_isList (value)) {		// old style list
+				for (unsigned int i = 0; i < childcount; ++i) {
+					SEXP child = CAR (value);
+					getStructureWorker (child, childnames[i], false, children[i]);
+					CDR (value);
+				}
+			} else {				// new style list
+				for (unsigned int i = 0; i < childcount; ++i) {
+					SEXP child = VECTOR_ELT(value, i);
+					getStructureWorker (child, childnames[i], false, children[i]);
+				}
 			}
 		}
 		UNPROTECT (1);   /* childnames_s */
+qDebug ("leaving container %s", name.latin1());
 	} else if (is_function) {
 qDebug ("fun");
 		RData *funargsdata = new RData;
@@ -443,6 +451,7 @@ qDebug ("not a closure");
 		}
 	}
 
+qDebug ("object done %s", name.latin1());
 	UNPROTECT (1); /* value */
 }
 
