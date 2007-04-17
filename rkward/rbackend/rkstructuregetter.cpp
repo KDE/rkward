@@ -201,7 +201,6 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	bool is_environment = false;
 	unsigned int type = 0;
 	unsigned int count;
-	SEXP call;
 
 	RK_DO (qDebug ("fetching '%s': %p", name.latin1(), val), RBACKEND, DL_DEBUG);
 
@@ -360,7 +359,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		}
 
 		if (do_env) {
-			qDebug ("recurse into environment %s", name.latin1());
+			RK_DO (qDebug ("recurse into environment %s", name.latin1()), RBACKEND, DL_DEBUG);
 			for (unsigned int i = 0; i < childcount; ++i) {
 				SEXP current_childname = install(CHAR(STRING_ELT(childnames_s, i)));
 				PROTECT (current_childname);
@@ -391,7 +390,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 				UNPROTECT (2); /* childname, child */
 			}
 		} else if (do_cont) {
-			qDebug ("recurse into list %s", name.latin1());
+			RK_DO (qDebug ("recurse into list %s", name.latin1()), RBACKEND, DL_DEBUG);
 			if (Rf_isList (value)) {		// old style list
 				for (unsigned int i = 0; i < childcount; ++i) {
 					SEXP child = CAR (value);
@@ -404,14 +403,11 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 					getStructureWorker (child, childnames[i], false, children[i]);
 				}
 			} else {		// probably an S4 object disguised as a list
-// TODO: not entirely correct, yet. The child objects don't get detected properly
 				SEXP index = Rf_allocVector(INTSXP, 1);
 				PROTECT (index);
 				for (unsigned int i = 0; i < childcount; ++i) {
 					INTEGER (index)[0] = (i + 1);
-qDebug ("[[ in %s, index %d, childname %s", name.latin1(), i, childnames[i].latin1());
 					SEXP child = callSimpleFun2 (double_brackets_fun, value, index);
-qDebug ("got it");
 					getStructureWorker (child, childnames[i], false, children[i]);
 				}
 				UNPROTECT (1); /* index */
