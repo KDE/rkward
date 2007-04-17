@@ -17,6 +17,8 @@
 
 #include "rkstructuregetter.h"
 
+//#define qDebug
+
 RKStructureGetter::RKStructureGetter (bool keep_evalled_promises) {
 	RK_TRACE (RBACKEND);
 
@@ -71,19 +73,23 @@ RKStructureGetter::RKStructureGetter (bool keep_evalled_promises) {
 	PROTECT (is_logical_fun);
 	RK_ASSERT (!Rf_isNull (is_logical_fun));
 
+	double_brackets_fun = Rf_install ("[[");
+	PROTECT (double_brackets_fun);
+	RK_ASSERT (!Rf_isNull (double_brackets_fun));
+
 	names_fun = Rf_findFun (Rf_install ("names"), R_BaseEnv);
 	PROTECT (names_fun);
 	RK_ASSERT (!Rf_isNull (names_fun));
 
-	make_argvalues_fun = Rf_findFun (Rf_install (".rk.make.argvalues"), R_GlobalEnv);
-	PROTECT (make_argvalues_fun);
-	RK_ASSERT (!Rf_isNull (make_argvalues_fun));
+	get_formals_fun = Rf_findFun (Rf_install (".rk.get.formals"), R_GlobalEnv);
+	PROTECT (get_formals_fun);
+	RK_ASSERT (!Rf_isNull (get_formals_fun));
 }
 
 RKStructureGetter::~RKStructureGetter () {
 	RK_TRACE (RBACKEND);
 
-	UNPROTECT (14); /* all the pre-resolved functions */
+	UNPROTECT (15); /* all the pre-resolved functions */
 }
 
 SEXP RKStructureGetter::callSimpleFun (SEXP fun, SEXP arg) {
@@ -91,6 +97,19 @@ SEXP RKStructureGetter::callSimpleFun (SEXP fun, SEXP arg) {
 	PROTECT (call);
 	SETCAR (call, fun);
 	SETCAR (CDR (call), arg);
+
+	SEXP ret = eval (call, R_GlobalEnv);
+
+	UNPROTECT (1); /* call */
+	return ret;
+}
+
+SEXP RKStructureGetter::callSimpleFun2 (SEXP fun, SEXP arg1, SEXP arg2) {
+	SEXP call = allocVector (LANGSXP, 3);
+	PROTECT (call);
+	SETCAR (call, fun);
+	SETCAR (CDR (call), arg1);
+	SETCAR (CDDR (call), arg2);
 
 	SEXP ret = eval (call, R_GlobalEnv);
 
@@ -147,7 +166,6 @@ RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP namespace
 		UNPROTECT (1);	/* namespace_envir */
 	}
 
-qDebug ("finished");
 	return ret;
 }
 
@@ -155,28 +173,20 @@ SEXP RKStructureGetter::resolvePromise (SEXP from) {
 	RK_TRACE (RBACKEND);
 
 	SEXP ret = from;
-qDebug ("resolving type: %d", TYPEOF (from));
 	if (TYPEOF (from) == PROMSXP) {
 		if (PRVALUE(from) == R_UnboundValue) {
-qDebug ("resolving: is an unresolved promise");
+			RK_DO (qDebug ("temporarily resolving unbound promise"), RBACKEND, DL_DEBUG);
+
 			PROTECT (from);
 			SET_PRSEEN(from, 1);
-qDebug ("resolve1");
 			ret = eval(PRCODE(from), PRENV(from));
-qDebug ("resolve2");
 			SET_PRSEEN(from, 0);
-qDebug ("resolve3");
 			if (keep_evalled_promises) {
 				SET_PRVALUE(from, ret);
 				SET_PRENV(from, R_NilValue);
 			}
-qDebug ("resolve4");
 			UNPROTECT (1);
 		}
-	} else if (TYPEOF (from) == SYMSXP) {
-qDebug ("resolving: is a symbol");
-// TODO! (and do we actually need this?)
-		return R_NilValue;
 	}
 
 	return ret;
@@ -193,15 +203,13 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	unsigned int count;
 	SEXP call;
 
-	qDebug ("fetching '%s': %p", name.latin1(), val);
+	RK_DO (qDebug ("fetching '%s': %p", name.latin1(), val), RBACKEND, DL_DEBUG);
 
 	PROTECT (val);
 	// manually resolve any promises
 	SEXP value = resolvePromise (val);
 	UNPROTECT (1);		/* val */
 	PROTECT (value);
-
-qDebug ("resolved");
 
 	// first field: get name
 	RData *namedata = new RData;
@@ -289,7 +297,8 @@ qDebug ("resolved");
 	} else {
 		num_dims = 1;
 		dims = new int[1];
-		dims[0] = Rf_length (dims_s);
+// TODO: not correct for some types of lists
+		dims[0] = Rf_length (value);
 	}
 
 	// store dims
@@ -338,11 +347,6 @@ qDebug ("resolved");
 		}
 		PROTECT (childnames_s);
 		QString *childnames = SEXPToStringList (childnames_s, &childcount);
-QString dummy;
-for (unsigned int i = 0; i < childcount; ++i) {
-	dummy.append (childnames[i] + "\t");
-}
-qDebug ("%s", dummy.latin1());
 
 		childdata->length = childcount;
 		RData **children = new RData*[childcount];
@@ -383,7 +387,6 @@ qDebug ("%s", dummy.latin1());
 #					endif
 				}
 
-qDebug ("element %d of %d from environment %s", i, childcount, name.latin1());
 				getStructureWorker (child, childnames[i], child_misplaced, children[i]);
 				UNPROTECT (2); /* childname, child */
 			}
@@ -400,16 +403,22 @@ qDebug ("element %d of %d from environment %s", i, childcount, name.latin1());
 					SEXP child = VECTOR_ELT(value, i);
 					getStructureWorker (child, childnames[i], false, children[i]);
 				}
-			} else {
-				// TODO: handle this case (an S4 object pretending to be a list; will need to use operator [[)
-				childdata->length = 0;
-qDebug ("TODO");
+			} else {		// probably an S4 object disguised as a list
+// TODO: not entirely correct, yet. The child objects don't get detected properly
+				SEXP index = Rf_allocVector(INTSXP, 1);
+				PROTECT (index);
+				for (unsigned int i = 0; i < childcount; ++i) {
+					INTEGER (index)[0] = (i + 1);
+qDebug ("[[ in %s, index %d, childname %s", name.latin1(), i, childnames[i].latin1());
+					SEXP child = callSimpleFun2 (double_brackets_fun, value, index);
+qDebug ("got it");
+					getStructureWorker (child, childnames[i], false, children[i]);
+				}
+				UNPROTECT (1); /* index */
 			}
 		}
 		UNPROTECT (1);   /* childnames_s */
-qDebug ("leaving container %s", name.latin1());
 	} else if (is_function) {
-qDebug ("fun");
 		RData *funargsdata = new RData;
 		funargsdata->datatype = RData::StringVector;
 		funargsdata->length = 0;
@@ -422,32 +431,20 @@ qDebug ("fun");
 		funargvaluesdata->data = 0;
 		res[6] = funargvaluesdata;
 
-		if (TYPEOF (value) == CLOSXP) {		// if it is not, it does not have any formals
-			SEXP formals_s = FORMALS (value);
-			PROTECT (formals_s);
-			SEXP names_s = getAttrib (formals_s, R_NamesSymbol);
-			PROTECT (names_s);
+// TODO: this is still the major bottleneck, but no idea, how to improve on this
+		SEXP formals_s = callSimpleFun (get_formals_fun, value);
+		PROTECT (formals_s);
+		// the default values
+		funargvaluesdata->data = SEXPToStringList (formals_s, &(funargvaluesdata->length));
 
-			// the argument names
-			funargsdata->data = SEXPToStringList (names_s, &(funargsdata->length));
+		// the argument names
+		SEXP names_s = getAttrib (formals_s, R_NamesSymbol);
+		PROTECT (names_s);
+		funargsdata->data = SEXPToStringList (names_s, &(funargsdata->length));
 
-			// the default values
-			SEXP formals_string_s = callSimpleFun (make_argvalues_fun, formals_s);
-			PROTECT (formals_string_s);
-QString *dummy1;
-			funargvaluesdata->data = dummy1 = SEXPToStringList (formals_string_s, &(funargvaluesdata->length));
-QString dummy;
-for (unsigned int i = 0; i < funargvaluesdata->length; ++i) {
-	dummy.append (dummy1[i] + "\t");
-}
-qDebug ("%s", dummy.latin1());
-			UNPROTECT (3); /* formals_string_s, names_s, formals_s */
-		} else {
-qDebug ("not a closure");
-		}
+		UNPROTECT (2); /* names_s, formals_s */
 	}
 
-qDebug ("object done %s", name.latin1());
 	UNPROTECT (1); /* value */
 }
 

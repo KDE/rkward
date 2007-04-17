@@ -560,11 +560,10 @@ RData *SEXPToRData (SEXP from_exp) {
 			count = 0;
 			break; */
 		case EXTPTRSXP:
-			if (R_ExternalPtrTag (from_exp) == RKWard_RData_Tag) {
+			if (R_ExternalPtrTag (from_exp) == RKWard_RData_Tag) {		// our very own data
 				delete data;
 				data = (RData*) R_ExternalPtrAddr (from_exp);
-//				R_SetExternalPtrAddr (from_exp, 0);
-qDebug ("data length %d", data->length);
+				R_ClearExternalPtr (from_exp);
 				count = data->length;
 				break;
 			}

@@ -344,13 +344,14 @@
 
 ".rk.get.structure" <- .rk.get.structure.old
 
-# use as .rk.make.argvalues (formals (fun))
-".rk.make.argvalues" <- function (x) {
-	as.character (lapply (x,
-			function (v) {
-				if (is.character (v)) return (encodeString (v, quote="\""))
-				else return (v)
-			} ))
+".rk.get.formals" <- function (x) 
+{
+    f <- formals (x)
+    r <- as.character(lapply(f, function(v) {
+        if (is.character(v)) return(encodeString(v, quote = "\"")) else return(v)
+    }))
+    names (r) <- names (f)
+    r
 }
 
 ".rk.get.environment.children" <- function (x, envlevel=0, namespacename=NULL) {

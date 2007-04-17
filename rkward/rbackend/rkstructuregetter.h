@@ -35,6 +35,7 @@ private:
 	SEXP namespace_envir;
 
 	static SEXP callSimpleFun (SEXP fun, SEXP arg);
+	static SEXP callSimpleFun2 (SEXP fun, SEXP arg1, SEXP arg2);
 	static bool callSimpleBool (SEXP fun, SEXP arg);
 
 	SEXP class_fun;
@@ -50,7 +51,8 @@ private:
 	SEXP is_character_fun;
 	SEXP is_logical_fun;
 	SEXP names_fun;
-	SEXP make_argvalues_fun;
+	SEXP get_formals_fun;
+	SEXP double_brackets_fun;
 
 	bool keep_evalled_promises;
 
