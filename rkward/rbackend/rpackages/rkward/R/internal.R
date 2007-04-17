@@ -342,6 +342,10 @@
 	.Call ("rk.get.structure.test", x, name, namespacename)
 }
 
+".rk.try.get.namespace" <- function (name) {
+	tryCatch (asNamespace (namespacename), error = function(e) NULL)
+}
+
 ".rk.get.structure" <- .rk.get.structure.old
 
 ".rk.get.formals" <- function (x) 

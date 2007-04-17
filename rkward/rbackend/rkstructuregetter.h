@@ -31,12 +31,14 @@ private:
 	void getStructureWorker (SEXP value, const QString &name, bool misplaced, RData *storage);
 	SEXP resolvePromise (SEXP from);
 
+	SEXP prefetch_fun (char *name, bool from_base=true);
+
 	bool with_namespace;
 	SEXP namespace_envir;
 
-	static SEXP callSimpleFun (SEXP fun, SEXP arg);
-	static SEXP callSimpleFun2 (SEXP fun, SEXP arg1, SEXP arg2);
-	static bool callSimpleBool (SEXP fun, SEXP arg);
+	static SEXP callSimpleFun (SEXP fun, SEXP arg, SEXP env);
+	static SEXP callSimpleFun2 (SEXP fun, SEXP arg1, SEXP arg2, SEXP env);
+	static bool callSimpleBool (SEXP fun, SEXP arg, SEXP env);
 
 	SEXP class_fun;
 	SEXP meta_attrib;
@@ -53,6 +55,8 @@ private:
 	SEXP names_fun;
 	SEXP get_formals_fun;
 	SEXP double_brackets_fun;
+	SEXP length_fun;
+	int num_prefetched_funs;
 
 	bool keep_evalled_promises;
 
