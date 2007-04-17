@@ -166,6 +166,7 @@ SEXP RKStructureGetter::resolvePromise (SEXP from) {
 	return ret;
 }
 
+extern "C" {
 // TODO: split out some of the large blocks into helper functions, to make this easier to read
 void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool misplaced, RData *storage) {
 	RK_TRACE (RBACKEND);
@@ -191,16 +192,27 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	QString *name_dummy = new QString[1];
 	name_dummy[0] = name;
 	namedata->data = name_dummy;
-qDebug ("0");
 
-// TODO: will throw an error, if the object is a call!
 	// get classes
-	SEXP classes_s = callSimpleFun (class_fun, value, R_BaseEnv);
-	PROTECT (classes_s);
+	SEXP classes_s;
+
+	if (TYPEOF (value) == LANGSXP) {	// if it's a call, we should NEVER send it through eval
+		extern SEXP R_data_class (SEXP, Rboolean);
+		classes_s = R_data_class (value, (Rboolean) 0);
+
+		value = coerceVector (value, EXPRSXP);	// make sure the object is safe for everything to come
+		UNPROTECT (1); /* old value */
+
+		PROTECT (classes_s);
+		PROTECT (value);
+	} else {
+		classes_s = callSimpleFun (class_fun, value, R_BaseEnv);
+		PROTECT (classes_s);
+	}
+
 	QString *classes = SEXPToStringList (classes_s, &count);
 	unsigned int num_classes = count;
 	UNPROTECT (1);	/* classes_s */
-qDebug ("1");
 
 	// store classes
 	RData *classdata = new RData;
@@ -216,7 +228,6 @@ qDebug ("1");
 	if (callSimpleBool (is_matrix_fun, value, R_BaseEnv)) type |= RObject::Matrix;
 	if (callSimpleBool (is_array_fun, value, R_BaseEnv)) type |= RObject::Array;
 	if (callSimpleBool (is_list_fun, value, R_BaseEnv)) type |= RObject::List;
-qDebug ("2");
 
 	if (type != 0) {
 		is_container = true;
@@ -238,7 +249,6 @@ qDebug ("2");
 		}
 	}
 	if (misplaced) type |= RObject::Misplaced;
-qDebug ("3");
 
 	// get meta data, if any
 	RData *metadata = new RData;
@@ -257,7 +267,6 @@ qDebug ("3");
 		meta_dummy[0] = "";
 		metadata->data = meta_dummy;
 	}
-qDebug ("4");
 
 	// store type
 	RData *typedata = new RData;
@@ -292,7 +301,6 @@ qDebug ("4");
 			dims[0] = len;
 		}
 	}
-qDebug ("5");
 
 	// store dims
 	RData *dimdata = new RData;
@@ -438,3 +446,4 @@ qDebug ("5");
 	UNPROTECT (1); /* value */
 }
 
+}	/* extern "C" */
