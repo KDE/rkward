@@ -453,7 +453,7 @@ function preprocess () {
 }
 </programlisting>
 <para>
-The PHP-file is organized into four separate functions: preprocess, calculate, printout and cleanup. This is because not all code is needed at all stages. Currently the preprocess-function is not really used.
+The PHP-file is organized into three separate functions: preprocess, calculate, and printout. This is because not all code is needed at all stages. Currently the preprocess-function is not really used in many places.
 </para>
 <programlisting>
 function calculate () {
@@ -892,11 +892,6 @@ function preview () {
 	preprocess ();
 	calculate ();
 	doPrintout (false);
-	cleanup ();
-}
-
-function cleanup () {
-	// empty in this example
 }
 
 function doPrintout ($final) {
@@ -1152,7 +1147,7 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	</varlistentry>
 	<varlistentry>
 	<term>"not"</term>
-	<listitem>Return the string as if the property held its opposite value (i.e. false if true, true if false)</listitem>
+	<listitem>This actually returns another Boolean property, which is the reverse of the current (i.e. false if true, true if false)</listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"numeric"</term>
@@ -1192,7 +1187,7 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
-	<listitem>Returns the full code, i.e. the sections "preprocess", "calculate", "printout", and "cleanup" (but not "preview") concatenated to one string.</listitem>
+	<listitem>Returns the full code, i.e. the sections "preprocess", "calculate", "printout", and (but not "preview") concatenated to one string.</listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"preprocess"</term>
@@ -1205,10 +1200,6 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<varlistentry>
 	<term>"printout"</term>
 	<listitem>Returns only the printout section of the code</listitem>
-	</varlistentry>
-	<varlistentry>
-	<term>"cleanup"</term>
-	<listitem>Returns only the cleanup section of the code</listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"preview"</term>
