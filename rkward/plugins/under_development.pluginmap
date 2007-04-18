@@ -3,6 +3,7 @@
 <document base_prefix="" namespace="rkward">
 	<components>
 		<component type="standard" id="crosstab" file="analysis/crosstab.xml" label="Crosstabs" />
+		<component type="standard" id="piechart" file="plots/piechart.xml" label="Piechart" />
 	</components>
 
 	<hierarchy>
@@ -16,6 +17,7 @@
 			<entry component="crosstab" index="11"/>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
+			<entry component="piechart" index="11"/>
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
 			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="2">

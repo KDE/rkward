@@ -1,0 +1,19 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="piechart.php" />
+	<dialog label="Pie chart" >
+		<tabbook>
+			<tab label="Variables" id="tab_variables">
+				<row>
+					<varselector id="vars"/>
+					<column>
+					<varslot min_vars="1" id="x" source="vars" required="true" label="Variable"/>
+					<checkbox id="tabulate" label="Tabulate" value="TRUE" value_unchecked="FALSE" checked="false" />
+					<stretch/>
+					<preview id="preview"/>
+					</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>
