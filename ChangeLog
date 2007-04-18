@@ -1,3 +1,6 @@
+- add possibility to blacklist packages from fetching structure information. Package GO is blacklisted by default.
+- when fetching the structure of "promise" R objects, don't keep them in memory
+- optimize the function to retrieve the structure of R object (for display in the object browser, and completion)
 - tab-completion in the console will do partial completion, if all potential completion have a common start
 - fixed: file-name completion would always assume the home directory as the current directory
 - compilation fix for FreeBSD (thanks to Thierry Thomas)

@@ -16,8 +16,13 @@
  ***************************************************************************/
 
 #include "renvironmentobject.h"
+
+#include <kmessagebox.h>
+#include <klocale.h>
+
 #include "robjectlist.h"
 #include "../rbackend/rinterface.h"
+#include "../settings/rksettingsmoduleobjectbrowser.h"
 #include "../rkglobals.h"
 
 #include "../debug.h"
@@ -81,6 +86,13 @@ void REnvironmentObject::writeMetaData (RCommandChain *chain) {
 
 void REnvironmentObject::updateFromR (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
+	if (type & PackageEnv) {
+		if (RKSettingsModuleObjectBrowser::isPackageBlacklisted (namespace_name)) {
+			KMessageBox::information (0, i18n ("The package '%1' (probably you just loaded it) is currently blacklisted for retrieving structure information. Practically this means, the objects in this package will not appear in the object browser, and there will be no object name completion or function argument hinting for objects in this package.\nPackages will typically be blacklisted, if they contain huge amount of data, that would take too long to load. To unlist the package, visit Settings->Configure RKWard->Workspace.").arg (namespace_name), i18n("Package blacklisted"), "packageblacklist" + namespace_name);
+			return;
+		}
+	}
+
 	QString options;
 	if (type & GlobalEnv) options = ", envlevel=-1";	// in the .GlobalEnv recurse one more level
 	if (type & ToplevelEnv) options.append (", namespacename=" + rQuote (namespace_name));

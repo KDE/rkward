@@ -23,6 +23,7 @@
 #include "../misc/rkobjectlistview.h"
 
 class QCheckBox;
+class MultiStringSelector;
 
 /** Configuration module for instances of RObjectListView
 @see RKSettingsModule
@@ -50,10 +51,17 @@ public:
 	static void loadSettings (KConfig *config);
 
 	static bool isSettingActive (RKObjectListViewSettings::Settings setting);
+
+	static bool isPackageBlacklisted (const QString &package_name);
 public slots:
 /** called when a checkbox has been changed. Signals change to RKSettings dialog to enable apply button */
 	void boxChanged (int);
+	void listChanged ();
+	void addBlackList (QStringList *string_list);
 private:
+	MultiStringSelector *blacklist_choser;
+	static QStringList getstructure_blacklist;
+
 	QCheckBox **checkboxes;
 	static bool settings[RKObjectListViewSettings::SettingsCount];
 };

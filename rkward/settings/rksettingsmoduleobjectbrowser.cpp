@@ -19,17 +19,20 @@
 
 #include <klocale.h>
 #include <kconfig.h>
+#include <kinputdialog.h>
 
 #include <qlayout.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
 
 #include "../rkglobals.h"
+#include "../misc/multistringselector.h"
 #include "rksettings.h"
 #include "../debug.h"
 
 // static
 bool RKSettingsModuleObjectBrowser::settings[RKObjectListViewSettings::SettingsCount];
+QStringList RKSettingsModuleObjectBrowser::getstructure_blacklist;
 
 RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -69,6 +72,12 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, Q
 		checkboxes[i]->setChecked (settings[i]);
 		connect (checkboxes[i], SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
 	}
+
+	blacklist_choser = new MultiStringSelector (i18n ("Never fetch the structure of these packages:"), this);
+	blacklist_choser->setValues (getstructure_blacklist);
+	connect (blacklist_choser, SIGNAL (listChanged ()), this, SLOT (listChanged ()));
+	connect (blacklist_choser, SIGNAL (getNewStrings (QStringList*)), this, SLOT (addBlackList (QStringList*)));
+	layout->addWidget (blacklist_choser);
 }
 
 RKSettingsModuleObjectBrowser::~RKSettingsModuleObjectBrowser () {
@@ -79,6 +88,18 @@ RKSettingsModuleObjectBrowser::~RKSettingsModuleObjectBrowser () {
 bool RKSettingsModuleObjectBrowser::isSettingActive (RKObjectListViewSettings::Settings setting) {
 	RK_TRACE (SETTINGS);
 	return settings[setting];
+}
+
+//static
+bool RKSettingsModuleObjectBrowser::isPackageBlacklisted (const QString &package_name) {
+	RK_TRACE (SETTINGS);
+	return getstructure_blacklist.contains (package_name);
+}
+
+void RKSettingsModuleObjectBrowser::addBlackList (QStringList *string_list) {
+	RK_TRACE (SETTINGS);
+	QString new_string = KInputDialog::getText (i18n ("Add exclusion"), i18n ("Add the name of the package that no structure should be fetched for"), QString::null, 0, this);
+	(*string_list).append (new_string);
 }
 
 bool RKSettingsModuleObjectBrowser::hasChanges () {
@@ -92,6 +113,7 @@ void RKSettingsModuleObjectBrowser::applyChanges () {
 	for (int i = 0; i < RKObjectListViewSettings::SettingsCount; ++i) {
 		settings[i] = checkboxes[i]->isChecked ();
 	}
+	getstructure_blacklist = blacklist_choser->getValues();
 
 	RKSettings::tracker ()->settingsChangedObjectBrowser ();
 }
@@ -119,6 +141,8 @@ void RKSettingsModuleObjectBrowser::saveSettings (KConfig *config) {
 	config->writeEntry ("show label field", settings[RKObjectListViewSettings::ShowFieldsLabel]);
 	config->writeEntry ("show type field", settings[RKObjectListViewSettings::ShowFieldsType]);
 	config->writeEntry ("show class field", settings[RKObjectListViewSettings::ShowFieldsClass]);
+
+	config->writeEntry ("package blacklist", getstructure_blacklist);
 }
 
 //static
@@ -134,9 +158,19 @@ void RKSettingsModuleObjectBrowser::loadSettings (KConfig *config) {
 	settings[RKObjectListViewSettings::ShowFieldsLabel] = config->readBoolEntry ("show label field", true);
 	settings[RKObjectListViewSettings::ShowFieldsType] = config->readBoolEntry ("show type field", true);
 	settings[RKObjectListViewSettings::ShowFieldsClass] = config->readBoolEntry ("show class field", true);
+
+	getstructure_blacklist = config->readListEntry ("package blacklist");
+	if (!getstructure_blacklist.count ()) {
+		getstructure_blacklist.append ("GO");
+	}
 }
 
 void RKSettingsModuleObjectBrowser::boxChanged (int) {
+	RK_TRACE (SETTINGS);
+	change ();
+}
+
+void RKSettingsModuleObjectBrowser::listChanged () {
 	RK_TRACE (SETTINGS);
 	change ();
 }
