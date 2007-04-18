@@ -1,3 +1,4 @@
+- the modifier "not" for boolean properties returns a (negated) boolean sub-propery instead of just a string
 - add possibility to blacklist packages from fetching structure information. Package GO is blacklisted by default.
 - when fetching the structure of "promise" R objects, don't keep them in memory
 - optimize the function to retrieve the structure of R object (for display in the object browser, and completion)

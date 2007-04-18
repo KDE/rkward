@@ -115,15 +115,6 @@ UI-stuff
 		- see http://sourceforge.net/mailarchive/forum.php?thread_name=200703230304.43023.kapatp%40gmail.com&forum_name=rkward-devel
 
 Internal stuff:
-	- implement .rk.get.structure() in C
-		- Probably create an EXTPTRSXP to hold an RData object directly
-		- The real structure fetching is done in a separate tryEval() or R_ToplevelExec() (but check, since when this is available!), to guard against errors, and clean up the RData, if needed
-		- When encountering a promise, the following behaviors might be user configurable:
-			1: Don't fetch the structure for this object
-			2: Load the object and fetch the structure, but *do not* keep the data (see eval.c for what not to do with a PROMSXP, and how to still get the value)
-			3: Load the object in the usual way and fetch the structure
-		- Preinstall all used function calls - if possible - for maximum speed
-		- What kind of character encoding conversion will we need to do, and where? Probably we can simply use SEXPToStringList, though
 	- Handling fonts:
 		- http://sourceforge.net/mailarchive/forum.php?thread_id=31631211&forum_id=12970
 	- Look at package odfWeave, and find out, how to use this
@@ -167,9 +158,6 @@ Internal stuff:
 	- .rk.get.available.packages ()
 		- use external (file) storage for cache to save mem
 	- can the mutex be made non-recursive? I think so, but don't recall
-	- RKComponentProperties:
-		- the whole idea about modifiers is flawed. Instead, a new property should be created, if, and only if the modifier is ever requested. Now, how to make sure this property always has the correct value?
-			- thinking about it, only the boolean property modifiers "not" and "numeric" would really need to be changed.
 	- When saving workplace layout, save it relative to the workspace file. Allows to move the workspace, easier
 		- KURL::relativeUrl()
 		- How to deal with workplaces saved in the config (and not bound to a workspace file?)
