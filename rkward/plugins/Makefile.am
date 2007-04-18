@@ -54,7 +54,9 @@ dist_pluginsXplots_DATA = \
 	plots/plot_stepfun_options.xml \
 	plots/plot_stepfun_options.php \
 	plots/histogram.rkh \
-	plots/ecdf_plot.rkh
+	plots/ecdf_plot.rkh \
+	plots/piechart.php \
+	plots/piechart.xml
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
