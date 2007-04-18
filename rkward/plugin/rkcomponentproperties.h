@@ -79,6 +79,8 @@ public:
 	RKComponentPropertyBool (QObject *parent, bool required, bool default_state=true, const QString &value_true="true", const QString &value_false="false");
 /** destructor */
 	~RKComponentPropertyBool ();
+/** Set this property to the inverted, i.e. true if set to false and vice-versa. Used for the "not" sub-property. */
+	void setInverted (bool invert) { inverted = invert; };
 /** sets the bool value. Also takes care of notifying dependent components */
 	void setBoolValue (bool new_value);
 /** current value as bool */
@@ -93,6 +95,8 @@ public:
 	void governorValueChanged (RKComponentPropertyBase *property);
 /** RTTI */
 	int type () { return PropertyBool; };
+/** reimplemented to return a new negated boolean property if the identifier is "not" */
+	RKComponentBase* lookupComponent (const QString &identifier, QString *remainder);
 private:
 /** helper function. Sets the value without emitting change signal */
 	void internalSetValue (bool new_value);
@@ -100,6 +104,7 @@ private:
 	void internalSetValue (const QString &new_value);
 	bool default_value;
 	bool current_value;
+	bool inverted;
 	QString value_true;
 	QString value_false;
 };

@@ -161,11 +161,32 @@ RKComponentPropertyBool::~RKComponentPropertyBool () {
 	RK_TRACE (PLUGIN);
 }
 
+RKComponentBase* RKComponentPropertyBool::lookupComponent (const QString &identifier, QString *remainder) {
+	RK_TRACE (PLUGIN);
+
+	RKComponentBase *dummy = RKComponentPropertyBase::lookupComponent (identifier, remainder);
+	if (dummy != this) return dummy;
+
+	QString next = identifier.section (".", 0, 0);
+	if (next == "not") {
+		RKComponentPropertyBool *negated = new RKComponentPropertyBool (this, false, false, value_true, value_false);
+		negated->setInverted (true);
+		negated->connectToGovernor (this);
+		*remainder = identifier.section (".", 1);
+		addChild ("not", negated);		// so subsequent lookups will not recreate the negated property
+		return (negated);
+	}
+
+	return (this);
+}
+
 void RKComponentPropertyBool::internalSetValue (bool new_value) {
 	RK_TRACE (PLUGIN);
 
-	current_value = new_value;
-	if (new_value) {
+	if (inverted) current_value = !new_value;
+	else current_value = new_value;
+
+	if (current_value) {
 		_value = value_true;
 	} else {
 		_value = value_false;
@@ -176,14 +197,11 @@ void RKComponentPropertyBool::internalSetValue (bool new_value) {
 void RKComponentPropertyBool::internalSetValue (const QString &new_value) {
 	RK_TRACE (PLUGIN);
 
-	_value = new_value;
-
 // try to convert to bool
-	is_valid = true;
 	if (new_value == value_true) {
-		current_value = true;
+		internalSetValue (true);
 	} else if (new_value == value_false) {
-		current_value = false;
+		internalSetValue (false);
 	} else {
 		is_valid = false;
 	}
@@ -208,10 +226,6 @@ QString RKComponentPropertyBool::value (const QString &modifier) {
 	if (modifier.isEmpty ()) return _value;
 	if (modifier == "true") return value_true;
 	if (modifier == "false") return value_false;
-	if (modifier == "not") {
-		if (current_value) return value_false;
-		else return value_true;
-	}
 	if (modifier == "numeric") {
 		if (current_value) return "1";
 		else return "0";

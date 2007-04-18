@@ -23,13 +23,14 @@
 
 RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QString *remainder) {
 	RK_TRACE (PLUGIN);
+	RK_ASSERT (remainder);
 
 	if (identifier.isEmpty ()) return this;
 	RK_DO (qDebug ("looking up '%s'", identifier.latin1 ()), PLUGIN, DL_DEBUG);
 
 	RKComponentBase *child = child_map.find (identifier.section (".", 0, 0));
 	if (!child) {	// if we do not have such a child, return 0 unless this is a property
-		if (remainder) *remainder = identifier;
+		*remainder = identifier;
 		return this;
 	} else {	// else do recursive lookup
 		return child->lookupComponent (identifier.section (".", 1), remainder);
