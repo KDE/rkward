@@ -17,8 +17,6 @@
 
 #include "rkstructuregetter.h"
 
-//#define qDebug
-
 RKStructureGetter::RKStructureGetter (bool keep_evalled_promises) {
 	RK_TRACE (RBACKEND);
 
@@ -43,6 +41,7 @@ RKStructureGetter::RKStructureGetter (bool keep_evalled_promises) {
 	is_character_fun = prefetch_fun ("is.character");
 	is_logical_fun = prefetch_fun ("is.logical");
 	double_brackets_fun = prefetch_fun ("[[");
+	dims_fun = prefetch_fun ("dim");
 	names_fun = prefetch_fun ("names");
 	length_fun = prefetch_fun ("length");
 
@@ -102,11 +101,11 @@ bool RKStructureGetter::callSimpleBool (SEXP fun, SEXP arg, SEXP env) {
 	return ((bool) VECTOR_ELT (res, 0));
 }
 
-RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP namespacename) {
+RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename) {
 	RK_TRACE (RBACKEND);
 
 	// TODO: accept an envlevel parameter
-	envir_depth = 0;
+	envir_depth = INTEGER (envlevel)[0];
 
 	unsigned int count;
 	QString *name_dummy = SEXPToStringList (name, &count);
@@ -131,14 +130,39 @@ RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP namespace
 	}
 
 	RData *ret = new RData;
-	// TODO: wrap inside a toplevel exec
-	getStructureWorker (toplevel, name_string, false, ret);
+
+	getStructureSafe (toplevel, name_string, false, ret);
 
 	if (with_namespace) {
 		UNPROTECT (1);	/* namespace_envir */
 	}
 
 	return ret;
+}
+
+void RKStructureGetter::getStructureSafe (SEXP value, const QString &name, bool misplaced, RData *storage) {
+	RK_TRACE (RBACKEND);
+
+	GetStructureWorkerArgs args;
+	args.toplevel = value;
+	args.name = name;
+	args.misplaced = false;
+	args.storage = storage;
+	args.getter = this;
+
+	Rboolean ok = R_ToplevelExec ((void (*)(void*)) getStructureWrapper, &args);
+
+	if (ok != TRUE) {
+		storage->discardData();
+		Rf_warning ("failure to get object %s", name.latin1());
+		getStructureWorker (R_NilValue, name, misplaced, storage);
+	}
+}
+
+void RKStructureGetter::getStructureWrapper (GetStructureWorkerArgs *data) {
+	RK_TRACE (RBACKEND);
+
+	data->getter->getStructureWorker (data->toplevel, data->name, data->misplaced, data->storage);
 }
 
 SEXP RKStructureGetter::resolvePromise (SEXP from) {
@@ -279,7 +303,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	// get dims
 	int *dims;
 	unsigned int num_dims;
-	SEXP dims_s = Rf_getAttrib (value, R_DimSymbol);
+	SEXP dims_s = callSimpleFun (dims_fun, value, R_BaseEnv);
 	if (!Rf_isNull (dims_s)) {
 		dims = SEXPToIntArray (dims_s, &num_dims);
 	} else {
@@ -388,21 +412,21 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 #					endif
 				}
 
-				getStructureWorker (child, childnames[i], child_misplaced, children[i]);
+				getStructureSafe (child, childnames[i], child_misplaced, children[i]);
 				UNPROTECT (2); /* childname, child */
 			}
 		} else if (do_cont) {
 			RK_DO (qDebug ("recurse into list %s", name.latin1()), RBACKEND, DL_DEBUG);
-			if (Rf_isList (value)) {		// old style list
+			if (Rf_isList (value) && (!Rf_isObject (value))) {		// old style list
 				for (unsigned int i = 0; i < childcount; ++i) {
 					SEXP child = CAR (value);
-					getStructureWorker (child, childnames[i], false, children[i]);
+					getStructureSafe (child, childnames[i], false, children[i]);
 					CDR (value);
 				}
-			} else if (Rf_isNewList (value)) {				// new style list
+			} else if (Rf_isNewList (value) && (!Rf_isObject (value))) {				// new style list
 				for (unsigned int i = 0; i < childcount; ++i) {
 					SEXP child = VECTOR_ELT(value, i);
-					getStructureWorker (child, childnames[i], false, children[i]);
+					getStructureSafe (child, childnames[i], false, children[i]);
 				}
 			} else {		// probably an S4 object disguised as a list
 				SEXP index = Rf_allocVector(INTSXP, 1);
@@ -410,7 +434,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 				for (unsigned int i = 0; i < childcount; ++i) {
 					INTEGER (index)[0] = (i + 1);
 					SEXP child = callSimpleFun2 (double_brackets_fun, value, index, R_BaseEnv);
-					getStructureWorker (child, childnames[i], false, children[i]);
+					getStructureSafe (child, childnames[i], false, children[i]);
 				}
 				UNPROTECT (1); /* index */
 			}

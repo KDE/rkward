@@ -87,6 +87,7 @@ extern "C" {
 #include "Rembedded.h"
 #else
 extern void R_ReplDLLinit (void);
+extern Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
 #endif
 
 // some functions we need that are not declared
@@ -641,11 +642,11 @@ SEXP doUpdateLocale () {
 
 #include "rkstructuregetter.cpp"
 
-SEXP doGetStructureTest (SEXP toplevel, SEXP name, SEXP namespacename) {
+SEXP doGetStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename) {
 	RK_TRACE (RBACKEND);
 
 	RKStructureGetter getter (false);
-	RData *ret = getter.getStructure (toplevel, name, namespacename);
+	RData *ret = getter.getStructure (toplevel, name, envlevel, namespacename);
 	return R_MakeExternalPtr (ret, RKWard_RData_Tag, R_NilValue);
 }
 
@@ -660,7 +661,7 @@ bool REmbedInternal::registerFunctions (const char *library_path) {
 		{ "rk.do.error", (DL_FUNC) &doError, 1 },
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
-		{ "rk.get.structure.test", (DL_FUNC) &doGetStructureTest, 3 },
+		{ "rk.get.structure", (DL_FUNC) &doGetStructure, 4 },
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (info, NULL, callMethods, NULL, NULL);

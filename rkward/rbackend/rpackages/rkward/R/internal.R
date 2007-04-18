@@ -339,14 +339,14 @@
 }
 
 ".rk.get.structure.new" <- function (x, name, envlevel=0, namespacename=NULL) {
-	.Call ("rk.get.structure.test", x, name, namespacename)
+	.Call ("rk.get.structure", x, as.character (name), as.integer (envlevel), as.character (namespacename))
 }
 
 ".rk.try.get.namespace" <- function (name) {
 	tryCatch (asNamespace (namespacename), error = function(e) NULL)
 }
 
-".rk.get.structure" <- .rk.get.structure.old
+".rk.get.structure" <- .rk.get.structure.new
 
 ".rk.get.formals" <- function (x) 
 {

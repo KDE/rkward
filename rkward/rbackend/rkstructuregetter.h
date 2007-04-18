@@ -26,9 +26,20 @@ public:
 	RKStructureGetter (bool keep_evalled_promises);
 	~RKStructureGetter ();
 
-	RData *getStructure (SEXP toplevel, SEXP name, SEXP namespacename);
+	RData *getStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename);
 private:
+	struct GetStructureWorkerArgs {
+		SEXP toplevel;
+		QString name;
+		bool misplaced;
+		RData *storage;
+		RKStructureGetter *getter;
+	};
+
 	void getStructureWorker (SEXP value, const QString &name, bool misplaced, RData *storage);
+/** needed to wrap things inside an R_ToplevelExec */
+	static void getStructureWrapper (GetStructureWorkerArgs *data);
+	void getStructureSafe (SEXP value, const QString &name, bool misplaced, RData *storage);
 	SEXP resolvePromise (SEXP from);
 
 	SEXP prefetch_fun (char *name, bool from_base=true);
@@ -41,6 +52,7 @@ private:
 	static bool callSimpleBool (SEXP fun, SEXP arg, SEXP env);
 
 	SEXP class_fun;
+	SEXP dims_fun;
 	SEXP meta_attrib;
 	SEXP get_meta_fun;
 	SEXP is_matrix_fun;
