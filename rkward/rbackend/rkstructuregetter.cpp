@@ -146,7 +146,7 @@ void RKStructureGetter::getStructureSafe (SEXP value, const QString &name, bool 
 	GetStructureWorkerArgs args;
 	args.toplevel = value;
 	args.name = name;
-	args.misplaced = false;
+	args.misplaced = misplaced;
 	args.storage = storage;
 	args.getter = this;
 
@@ -400,14 +400,14 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 					if (Rf_isNull (namespace_envir)) {
 						child_misplaced = true;
 					} else {
-						SEXP dummy = Rf_findVar (current_childname, namespace_envir);
-						if (Rf_isNull (dummy)) child_misplaced = true;
+						SEXP dummy = Rf_findVarInFrame (namespace_envir, current_childname);
+						if (Rf_isNull (dummy) || (dummy == R_UnboundValue)) child_misplaced = true;
 					}
 					/* for R 2.4.0 or greater: operator "::" works if package has no namespace at all, or has a namespace with the symbol in it */
 #					else
 					if (!Rf_isNull (namespace_envir)) {
-						SEXP dummy = Rf_findVar (current_childname, namespace_envir);
-						if (Rf_isNull (dummy)) child_misplaced = true;
+						SEXP dummy = Rf_findVarInFrame (namespace_envir, current_childname);
+						if (Rf_isNull (dummy) || (dummy == R_UnboundValue)) child_misplaced = true;
 					}
 #					endif
 				}
