@@ -1,3 +1,10 @@
+rkward (0.4.8-pre1) unstable; urgency=low
+
+  * some experiments to make package work better
+  * this not meant to ever be uploaded
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 19 Apr 2007 12:00:00 +0200
+
 rkward (0.4.7-2) unstable; urgency=low
 
   * explicitely create installation directory for rkward R package
