@@ -59,17 +59,20 @@ class KMdiToolViewAccessor;
 class RKMDIWindow;
 class QHBox;
 
+struct RKWardStartupOptions {
+	KURL *initial_url;	/**< The workspace file to load on startup. If 0, show a dialog asking what to do. **/
+	bool no_stack_check;	/**< Disable R C stack checking */
+};
+
 /**
 The main class of rkward. This is where all strings are tied togther, controlls the initialization, and there are some of the most important slots for user actions. All real work is done elsewhere.
 */
-
-
 class RKWardMainWindow : public KMdiMainFrm, virtual public KParts::PartBase, virtual public RKWardDCOPInterface {
 	Q_OBJECT
 public:
 /** construtor
-@param load_url The workspace file to load on startup. If 0, show a dialog asking what to do. */
-	RKWardMainWindow (KURL *load_url=0);
+@param options Options from command line. RKWardMainWindow will take ownership of this pointer, and delete it, once not longer needed. */
+	RKWardMainWindow (RKWardStartupOptions *options = 0);
 /** destructor */
 	~RKWardMainWindow ();
 
@@ -90,6 +93,9 @@ public:
 	static RKWardMainWindow *getMain () { return rkward_mainwin; };
 
 	void makeRKWardHelpMenu (QWidget *for_window, KActionCollection *ac);
+
+/** return pointer to startup options. WARNING: The options are deleted shortly after startup */
+	static RKWardStartupOptions* getStartupOptions () { return getMain()->startup_options; };
 
 /** (try to) close all windows, and ask whether it is ok to quit */
 	bool doQueryQuit ();
@@ -246,7 +252,7 @@ private:
 	/** Finds plugins and inserts them into the menu-structure */
 	void initPlugins ();
 
-	KURL *initial_url;
+	RKWardStartupOptions *startup_options;
 
 	static RKWardMainWindow *rkward_mainwin;
 

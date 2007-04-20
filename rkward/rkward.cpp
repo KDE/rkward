@@ -90,7 +90,7 @@ void bogusCalls () {
 //static
 RKWardMainWindow *RKWardMainWindow::rkward_mainwin = 0;
 
-RKWardMainWindow::RKWardMainWindow (KURL *load_url) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
+RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
 	RK_TRACE (APP);
 	RK_ASSERT (rkward_mainwin == 0);
 
@@ -130,7 +130,13 @@ RKWardMainWindow::RKWardMainWindow (KURL *load_url) : DCOPObject ("rkwardapp"), 
 	RKGlobals::mtracker = new RKModificationTracker (this);
 	RKComponentMap::initialize ();
 
-	initial_url = load_url;
+	if (options) {
+		startup_options = options;
+	} else {
+		startup_options = new RKWardStartupOptions;
+		startup_options->no_stack_check = false;
+		startup_options->initial_url = 0;
+	}
 
 	QTimer::singleShot (50, this, SLOT (doPostInit ()));
 
@@ -220,9 +226,10 @@ void RKWardMainWindow::doPostInit () {
 	RKOutputWindow::initialize ();
 	RControlWindow::getControl ()->initialize ();
 
-	if (initial_url) {
-		openWorkspace (*initial_url);
-		delete initial_url;
+	if (startup_options->initial_url) {
+		openWorkspace (*(startup_options->initial_url));
+		delete (startup_options->initial_url);
+		startup_options->initial_url = 0;
 	} else {
 		StartupDialog::StartupDialogResult *result = StartupDialog::getStartupAction (this, fileOpenRecentWorkspace);
 		if (result->result == StartupDialog::EmptyWorkspace) {
@@ -247,6 +254,9 @@ void RKWardMainWindow::doPostInit () {
 	}
 
 	setCaption (QString::null);	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
+
+	delete startup_options;
+	startup_options = 0;
 }
 
 void RKWardMainWindow::initPlugins () {

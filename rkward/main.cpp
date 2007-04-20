@@ -74,6 +74,7 @@ static KCmdLineOptions options[] =
   { "+[File]", I18N_NOOP ("file to open"), 0 },
   { "debug-level <level>", I18N_NOOP ("Verbosity of debug messages (0-5)"), "2"}, 
   { "debug-flags <flags>", I18N_NOOP ("Mask for components to debug (see debug.h)"), "8191" }, 
+  { "disable-stack-check", I18N_NOOP ("Disable R C stack checking"), 0 }, 
   { 0, 0, 0 }
   // INSERT YOUR COMMANDLINE OPTIONS HERE
 };
@@ -103,23 +104,26 @@ int main(int argc, char *argv[]) {
 	argv[0] = qstrdup (QString (argv_zero_copy).remove (".bin").local8Bit ());
 	KCmdLineArgs::init( argc, argv, &aboutData );
 	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
-	
+
+	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+	RK_Debug_Level = 5 - QString (args->getOption ("debug-level")).toInt ();
+	RK_Debug_Flags = QString (args->getOption ("debug-flags")).toInt ();
+
+	RKWardStartupOptions *stoptions = new RKWardStartupOptions;
+	KURL *open_url = 0;
+	if (args->count ()) {
+		open_url = new KURL (args->makeURL (args->arg (0)));
+	}
+	stoptions->initial_url = open_url;
+	stoptions->no_stack_check = args->isSet ("disable-stack-check");
+
 	RKWardApplication app;
 	if (app.isRestored ()) {
 		RESTORE(RKWardMainWindow);	// well, whatever this is supposed to do -> TODO
 	} else {
-		KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-		RK_Debug_Level = 5 - QString (args->getOption ("debug-level")).toInt ();
-		RK_Debug_Flags = QString (args->getOption ("debug-flags")).toInt ();
-		
-		KURL *open_url = 0;
-		if (args->count ()) {
-			open_url = new KURL (args->makeURL (args->arg (0)));
-		}
-		args->clear();
-		
-		new RKWardMainWindow(open_url);
+		new RKWardMainWindow(stoptions);
 	}
+	args->clear();
 
 	// do it!
 	int status = app.exec ();

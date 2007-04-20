@@ -22,6 +22,7 @@
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../rkglobals.h"
+#include "../rkward.h"		// for startup options
 
 #include "../debug.h"
 
@@ -459,10 +460,17 @@ int RThread::initialize () {
 
 	int argc = 2;
 	char* argv[2] = { qstrdup ("--slave"), qstrdup ("--no-save") };
+	RKWardStartupOptions *options = RKWardMainWindow::getStartupOptions ();
+	RK_ASSERT (options);
 
 	size_t stacksize;
 	void *stackstart;
-	RKGetCurrentThreadStackLimits (&stacksize, &stackstart);
+	if (options->no_stack_check) {
+		stacksize = (unsigned long) -1;
+		stackstart = (void *) -1;
+	} else {
+		RKGetCurrentThreadStackLimits (&stacksize, &stackstart);
+	}
 	startR (argc, argv, stacksize, stackstart);
 
 	connectCallbacks ();

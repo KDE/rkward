@@ -39,6 +39,7 @@ class QTimer;
 class RThread;
 class RCommandReceiver;
 struct REvalRequest;
+struct RKWardStartupOptions;
 
 /** This class provides the main interface to the R-processor.
 
