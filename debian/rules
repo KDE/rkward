@@ -80,16 +80,7 @@ binary-arch: build install
 	dh_installchangelogs ChangeLog
 	dh_installdocs
 	dh_installexamples
-#	dh_install
 	dh_installmenu
-#	dh_installdebconf	
-#	dh_installlogrotate
-#	dh_installemacsen
-#	dh_installpam
-#	dh_installmime
-#	dh_installinit
-#	dh_installcron
-#	dh_installinfo
 	dh_installman debian/rkward.1
 	# Link manpage for rkward.bin to rkward
 	ln -sf rkward.1.gz debian/rkward/usr/share/man/man1/rkward.bin.1.gz
@@ -98,9 +89,6 @@ binary-arch: build install
 	# do not compress KDE HTML help
 	dh_compress -Xusr/share/doc/kde/HTML
 	dh_fixperms
-#	dh_perl
-#	dh_python
-#	dh_makeshlibs
 	dh_installdeb
 	dh_shlibdeps
 	# unfortunately, the r-base-core dependency can not be found by dh_shlibdeps, so we need to get at the version manually

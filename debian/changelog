@@ -1,7 +1,8 @@
 rkward (0.4.8-pre1) unstable; urgency=low
 
-  * some experiments to make package work better
-  * this not meant to ever be uploaded
+  * the code to generate the correct r-base-core dependencies should now be POSIX shell compliant
+  * remove unused (and uncommented) dh_* scripts from rules
+  * this version is not meant to ever be uploaded
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 19 Apr 2007 12:00:00 +0200
 
