@@ -184,6 +184,8 @@ void RKWardMainWindow::closeEvent (QCloseEvent *e) {
 void RKWardMainWindow::doPostInit () {
 	RK_TRACE (APP);
 
+	setUpdatesEnabled (false);
+
 	readOptions();
 	//It's necessary to give a different name to all tool windows, or they won't be properly displayed
 	RObjectBrowser::object_browser = new RObjectBrowser (0, true, "workspace");
@@ -222,6 +224,9 @@ void RKWardMainWindow::doPostInit () {
 	help_search->setToolWrapper (addToolWindow (help_search, KDockWidget::DockBottom, getMainDockWidget (), 10));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (help_search);
 	RKHelpSearchWindow::main_help_search = help_search;
+
+	dockManager->readConfig (kapp->config (), "tool window layout");
+	setUpdatesEnabled (true);
 
 	RKOutputWindow::initialize ();
 	RControlWindow::getControl ()->initialize ();
@@ -451,6 +456,8 @@ void RKWardMainWindow::saveOptions () {
 	config->writeEntry("Geometry", size ());
 	fileOpenRecentWorkspace->saveEntries(config, "Recent Files");
 	fileOpenRecent->saveEntries(config, "Recent Command Files");
+
+	dockManager->writeConfig (config, "tool window layout");
 
 	RKSettings::saveSettings (config);
 
