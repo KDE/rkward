@@ -113,6 +113,15 @@ UI-stuff
 		- show current wd in <browser>, somewhere
 	- Settings UI:
 		- see http://sourceforge.net/mailarchive/forum.php?thread_name=200703230304.43023.kapatp%40gmail.com&forum_name=rkward-devel
+	- UI geometry:
+		- see https://sourceforge.net/mailarchive/forum.php?thread_name=200704181922.07780.michellang%40gmail.com&forum_name=rkward-devel
+		- save size/proportions of R script file, R console, Workspace browser...
+		- save attach/detach status of the windows
+	- project/session handling: files, workspace, current working directory.
+	- file system browser tab
+		- open .R (.RData, .r, .S, .s ....) files within RKWard
+		- some way to open pdf/ps/jpg/png files directly using viewer applications externally (like Kile?).
+	- provide a menu action / shortcut to switch to the directory of the current script file.
 
 Internal stuff:
 	- Handling fonts:
