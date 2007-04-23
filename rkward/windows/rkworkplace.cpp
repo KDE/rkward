@@ -74,9 +74,11 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	RK_TRACE (APP);
 	RK_ASSERT (windows.find (window) != windows.end ());		// This should not happen for now.
 
+	if (!window->isAttached ()) window->prepareToBeAttached ();
+
+	// all the rest is done, even if the window was previously "Attached", as this may also mean it was freshly created
+	window->state = RKMDIWindow::Attached;
 	if (!window->isToolWindow ()) {
-		window->prepareToBeAttached ();
-		window->state = RKMDIWindow::Attached;
 		view ()->addPage (window);
 	}
 
@@ -95,7 +97,7 @@ void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
 	RK_ASSERT (window->getPart ());
 	if (was_attached) {
 		RKWardMainWindow::getMain ()->partManager ()->removePart (window->getPart ());
-		view ()->removePage (window);
+		if (!window->isToolWindow ()) view ()->removePage (window);
 	}
 
 	DetachedWindowContainer *detached = new DetachedWindowContainer (window);
@@ -284,7 +286,6 @@ void RKWorkplace::closeActiveWindow () {
 
 	RKMDIWindow *w = activeAttachedWindow ();
 	if (w) closeWindow (w);
-	else RK_ASSERT (false);		// this is benign, and maybe even ok, but I'd like to see when this happens
 }
 
 RKWorkplace::RKWorkplaceObjectList RKWorkplace::getObjectList (int type, int state) {
@@ -320,7 +321,17 @@ void RKWorkplace::windowDestroyed (QObject *object) {
 RKMDIWindow *RKWorkplace::activeAttachedWindow () {
 	RK_TRACE (APP);
 
-	return (static_cast<RKMDIWindow *> (view ()->activePage ()));
+	RKMDIWindow *ret = 0;
+	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
+		if (!(*it)->isAttached()) continue;
+
+		if ((*it)->isActive ()) {
+			ret = *it;
+			break;
+		}
+	}
+
+	return (ret);
 }
 
 QString RKWorkplace::makeWorkplaceDescription (const QString &sep, bool quote) {

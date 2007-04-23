@@ -341,7 +341,7 @@ bool RKConsole::doTabCompletionHelper (int line_num, const QString &line, int wo
 			++i;
 		}
 		if (i > 0) {
-			if (common.length() > (word_end - word_start)) {		// more than there already is
+			if ((int) common.length() > (word_end - word_start)) {		// more than there already is
 				insertCompletion (line_num, word_start, word_end, common);
 				return false;	// will beep to signal completion is not complete
 			}
@@ -428,7 +428,6 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 			doPopupMenu (m->globalPos ());
 			return (true);
 		}
-		return (false);
 	} else if (e->type () == QEvent::MouseButtonRelease){
 		QMouseEvent *m = (QMouseEvent *)e;
 		if (m->button() == Qt::MidButton) {
@@ -447,10 +446,10 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 				view->scroll (0, y - y2);
 			}
 		} */ // not good, yet: always jumps to bottom of view
-		return (false);
-	} else {
-		return false;
 	}
+
+	if (acceptsEventsFor (o)) return RKMDIWindow::eventFilter (o, e);
+	return false;
 }
 
 QString RKConsole::currentCommand () {

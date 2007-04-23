@@ -191,7 +191,7 @@ void RKWardMainWindow::doPostInit () {
 	RControlWindow::control_window = new RControlWindow (0, true, "rcontrol");		// the control window needs to be initialized before startR () is called.
 
 	RKCommandLog *log = new RKCommandLog (0, true, "Command log");
-	log->setIcon (SmallIcon ("text_block"));	
+	log->setIcon (SmallIcon ("text_block"));
 	log->setToolWrapper (addToolWindow (log, KDockWidget::DockBottom, getMainDockWidget (), 10));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (log);
 	RKCommandLog::rkcommand_log = log;

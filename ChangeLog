@@ -1,3 +1,5 @@
+- tool windows can be closed and detached in the same way as regular windows
+- fix a crash with detached tool windows
 - add command line option --disable-stack-check for systems where R C stack checking is buggy
 - the modifier "not" for boolean properties returns a (negated) boolean sub-propery instead of just a string
 - add possibility to blacklist packages from fetching structure information. Package GO is blacklisted by default.

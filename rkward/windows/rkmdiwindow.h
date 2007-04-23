@@ -40,15 +40,14 @@ public:
 		WorkspaceBrowserWindow=128,
 		SearchHelpWindow=256,
 		PendingJobsWindow=512,
-		AnyType=DataEditorWindow | CommandEditorWindow | OutputWindow | HelpWindow | ConsoleWindow | CommandLogWindow | WorkspaceBrowserWindow | SearchHelpWindow | PendingJobsWindow
+		ToolWindow = ConsoleWindow | CommandLogWindow | WorkspaceBrowserWindow | SearchHelpWindow | PendingJobsWindow,
+		AnyType=DataEditorWindow | CommandEditorWindow | OutputWindow | HelpWindow | ToolWindow
 	};
 
 	enum State {
 		Attached=1,
 		Detached=2,
-		AnyNormalWindow=Attached | Detached,
-		ToolWindow=4,
-		AnyWindowState=AnyNormalWindow | ToolWindow
+		AnyWindowState=Attached | Detached
 	};
 protected:
 /** constructor
@@ -74,7 +73,7 @@ public:
 @returns true if attached, false if detached */
 	bool isAttached () { return (state == Attached); };
 /** Is this a tool window? */
-	bool isToolWindow () { return (state == ToolWindow); };
+	bool isToolWindow () { return (type & ToolWindow); };
 /** Activate (raise) this window, regardless of whether it is attached or detached
 @param with_focus Should the window also get keyboard focus? */
 	void activate (bool with_focus=true);
@@ -85,8 +84,9 @@ public:
 /** Tool windows will only hide themselves, and ignore the also_delete flag */
 	virtual bool close (bool also_delete);
 /** For tool windows only (and perhaps for KDE3 only): set the wrapper widget that should be shown/raised on activation */
-	void setToolWrapper (KMdiToolViewAccessor *wrapper_widget) { wrapper = wrapper_widget; };
+	void setToolWrapper (KMdiToolViewAccessor *wrapper_widget);
 	bool eventFilter (QObject *watched, QEvent *e);
+	bool acceptsEventsFor (QObject *object);
 /** Whether the window is active. This seems to be more reliable than hasFocus () */
 	bool isActive () { return active; };
 signals:

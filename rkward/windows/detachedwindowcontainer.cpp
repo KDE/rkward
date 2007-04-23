@@ -45,6 +45,7 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	widget_to_capture->reparent (this, QPoint (0, 0));
 	setCentralWidget (widget_to_capture);
 	createGUI (widget_to_capture->getPart ());
+	captured = widget_to_capture;
 
 // should self-destruct, when child widget is destroyed
 	connect (widget_to_capture, SIGNAL (destroyed (QObject *)), this, SLOT (viewDestroyed (QObject *)));
@@ -65,7 +66,7 @@ void DetachedWindowContainer::viewDestroyed (QObject *) {
 
 void DetachedWindowContainer::updateCaption (RKMDIWindow *widget) {
 	RK_TRACE (APP);
-	RK_ASSERT (widget == centralWidget ());
+	RK_ASSERT (widget == captured);
 
 	setCaption (widget->fullCaption ());
 }
@@ -73,13 +74,12 @@ void DetachedWindowContainer::updateCaption (RKMDIWindow *widget) {
 void DetachedWindowContainer::slotReattach () {
 	RK_TRACE (APP);
 
-	RKMDIWindow *window = static_cast<RKMDIWindow *> (centralWidget ());
 // we will not handle any more signals from the window
-	disconnect (window, SIGNAL (destroyed (QObject *)), this, SLOT (viewDestroyed (QObject *)));
-	disconnect (window, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (updateCaption (RKMDIWindow *)));
+	disconnect (captured, SIGNAL (destroyed (QObject *)), this, SLOT (viewDestroyed (QObject *)));
+	disconnect (captured, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (updateCaption (RKMDIWindow *)));
 
-	window->reparent (0, QPoint (0, 0));
-	RKWorkplace::mainWorkplace ()->attachWindow (window);
+	captured->reparent (0, QPoint (0, 0));
+	RKWorkplace::mainWorkplace ()->attachWindow (captured);
 
 	hide ();
 	deleteLater ();
@@ -88,8 +88,7 @@ void DetachedWindowContainer::slotReattach () {
 void DetachedWindowContainer::closeEvent (QCloseEvent *e) {
 	RK_TRACE (APP);
 
-	RKMDIWindow *window = static_cast<RKMDIWindow *> (centralWidget ());
-	if (window->close (true)) {
+	if (captured->close (true)) {
 		e->accept ();
 	} else {
 		e->ignore ();

@@ -19,6 +19,7 @@
 
 #include <qapplication.h>
 #include <qpainter.h>
+#include <qtimer.h>
 
 #include <kparts/event.h>
 
@@ -31,8 +32,8 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, Type type, bool tool_window, char *na
 	RK_TRACE (APP);
 
 	RKMDIWindow::type = type;
-	if (tool_window) state = ToolWindow;
-	else state = Attached;
+	if (tool_window) RK_ASSERT (type & ToolWindow);
+	state = Attached;
 	wrapper = 0;
 	part = 0;
 	active = false;
@@ -67,21 +68,21 @@ void RKMDIWindow::activate (bool with_focus) {
 	// WORKAROUND for KMDI: it will always grab focus, so we need to make sure to release it again, if needed
 	QWidget *old_focus = qApp->focusWidget ();
 
-	if (isToolWindow ()) {
-		RK_ASSERT (wrapper);
-		wrapper->show ();
-		wrapper->wrapperWidget ()->topLevelWidget ()->show ();
-		wrapper->wrapperWidget ()->topLevelWidget ()->raise ();
-	} else {
-		if (isAttached ()) {
-			RKWorkplace::mainWorkplace ()->view ()->setActivePage (this);
+	if (isAttached ()) {
+		if (isToolWindow ()) {
+			RK_ASSERT (wrapper);
+			wrapper->show ();
+			wrapper->wrapperWidget ()->topLevelWidget ()->show ();
+			wrapper->wrapperWidget ()->topLevelWidget ()->raise ();
 		} else {
-			topLevelWidget ()->show ();
-			topLevelWidget ()->raise ();
+			RKWorkplace::mainWorkplace ()->view ()->setActivePage (this);
 		}
+	} else {
+		topLevelWidget ()->show ();
+		topLevelWidget ()->raise ();
 	}
 
-	if (with_focus) setFocus ();
+	if (with_focus) setFocus();
 	else {
 		if (old_focus) old_focus->setFocus ();
 	}
@@ -91,6 +92,12 @@ bool RKMDIWindow::close (bool also_delete) {
 	RK_TRACE (APP);
 
 	if (isToolWindow ()) {
+		if (!isAttached ()) {
+			topLevelWidget ()->deleteLater ();
+			// flee the dying DetachedWindowContainer
+			RKWorkplace::mainWorkplace ()->attachWindow (this);
+		}
+
 		RK_ASSERT (wrapper);
 		wrapper->hide ();
 		return true;
@@ -102,37 +109,65 @@ bool RKMDIWindow::close (bool also_delete) {
 void RKMDIWindow::prepareToBeAttached () {
 	RK_TRACE (APP);
 
-	RK_ASSERT (!isToolWindow ());
+	if (isToolWindow ()) {
+		static_cast<KDockWidget *>(wrapper->wrapperWidget ())->setWidget (this);
+		wrapper->show ();
+	}
 }
 
 void RKMDIWindow::prepareToBeDetached () {
 	RK_TRACE (APP);
 
-	RK_ASSERT (!isToolWindow ());
+	if (isToolWindow ()) {
+		wrapper->hide ();
+	}
 }
 
 bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
 	// WARNING: The derived object and the part may both the destroyed at this point of time!
 	// Make sure not to call any virtual function on this object!
+	RK_ASSERT (acceptsEventsFor (watched));
 
-	RK_ASSERT (watched == getPart ());
-	if (KParts::PartActivateEvent::test (e)) {
-		RK_TRACE (APP);		// trace only the "interesting" calls to this function
-
-		KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *> (e);
-		if (ev->activated ()) {
-			emit (windowActivated (this));
-			setFocus ();		// focus doesn't always work correctly for the kate part
-			active = true;
-		} else {
-			active = false;
+	if (watched == getPart ()) {
+		if (KParts::PartActivateEvent::test (e)) {
+			RK_TRACE (APP);		// trace only the "interesting" calls to this function
+	
+			KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *> (e);
+			if (ev->activated ()) {
+				emit (windowActivated (this));
+				setFocus ();		// focus doesn't always work correctly for the kate part
+				active = true;
+			} else {
+				active = false;
+			}
+			if (layout()->margin () < 1) {
+				layout()->setMargin (1);
+			}
+			update ();
 		}
-		if (layout()->margin () < 1) {
-			layout()->setMargin (1);
+	} else {
+		RK_ASSERT (isToolWindow ());
+		if (watched == wrapper->wrapperWidget ()) {
+			// don't show the wrapper if detached. Instead, show this window.
+			if (e->type () == QEvent::Show) {
+				if (!isAttached ()) {
+					// calling hide() on the wrapper directly is unsafe for some obscure reason
+					QTimer::singleShot (0, wrapper, SLOT (hide()));
+					activate (true);
+					return true;
+				}
+			}
 		}
-		update ();
 	}
-	return FALSE;
+	return false;
+}
+
+bool RKMDIWindow::acceptsEventsFor (QObject *object) {
+	// called very often. Don't trace
+
+	if (object == getPart ()) return true;
+	if (isToolWindow () && (object == wrapper->wrapperWidget ())) return true;
+	return false;
 }
 
 void RKMDIWindow::initializeActivationSignals () {
@@ -156,5 +191,14 @@ void RKMDIWindow::paintEvent (QPaintEvent *e) {
 		paint.drawLine (width ()-1, 0, width ()-1, height ()-1);
 	}
 }
+
+void RKMDIWindow::setToolWrapper (KMdiToolViewAccessor *wrapper_widget) {
+	RK_TRACE (APP);
+
+	wrapper = wrapper_widget;
+	wrapper->wrapperWidget ()->installEventFilter (this);
+	static_cast<KDockWidget *> (wrapper->wrapperWidget ())->setEnableDocking (KDockWidget::DockFullSite);
+}
+
 
 #include "rkmdiwindow.moc"

@@ -46,6 +46,8 @@ public slots:
 protected:
 /** when receiving a close event, dispatch to the embedded window */
 	void closeEvent (QCloseEvent *e);
+private:
+	RKMDIWindow *captured;
 };
 
 #endif
