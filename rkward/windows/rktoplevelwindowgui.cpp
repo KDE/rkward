@@ -36,7 +36,7 @@
 
 #include "../debug.h"
 
-RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : KXMLGUIClient () {
+RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : QObject (for_window), KXMLGUIClient () {
 	RK_TRACE (APP);
 
 	RKTopLevelWindowGUI::for_window = for_window;
@@ -72,8 +72,6 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : KXMLGUIClient (
 
 RKTopLevelWindowGUI::~RKTopLevelWindowGUI () {
 	RK_TRACE (APP);
-
-	qDebug ("destroyed");
 }
 
 void RKTopLevelWindowGUI::invokeRHelp () {
