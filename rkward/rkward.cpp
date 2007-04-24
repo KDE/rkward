@@ -66,6 +66,7 @@
 #include "windows/rkworkplace.h"
 #include "windows/rkcommandlog.h"
 #include "windows/rkhelpsearchwindow.h"
+#include "windows/rktoplevelwindowgui.h"
 #include "rkconsole.h"
 #include "debug.h"
 
@@ -123,6 +124,7 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : DCOPObject 
 
 	setHelpMenuEnabled (false);
 	setXMLFile ("rkwardui.rc");
+	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
 	createShellGUI (true);
 
 	connect (this, SIGNAL (childWindowCloseRequest (KMdiChildView *)), this, SLOT (slotChildWindowCloseRequest (KMdiChildView *)));
@@ -255,7 +257,7 @@ void RKWardMainWindow::doPostInit () {
 	}
 
 	if (RKSettingsModuleGeneral::showHelpOnStartup ()) {
-		showRKWardHelp ();
+		toplevel_actions->showRKWardHelp ();
 	}
 
 	setCaption (QString::null);	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
@@ -345,21 +347,11 @@ void RKWardMainWindow::initActions()
 	createStandardStatusBarAction ();
 
 	close_all_editors = new KAction (i18n ("Close All Data"), 0, 0, this, SLOT (slotCloseAllEditors ()), actionCollection (), "close_all_editors");
-	window_close = new KAction (i18n ("Close"), 0, KShortcut ("Ctrl+W"), this, SLOT (slotCloseWindow ()), actionCollection (), "window_close");
+	new KAction (i18n ("Close"), 0, KShortcut ("Ctrl+W"), this, SLOT (slotCloseWindow ()), actionCollection (), "window_close");
 	window_close_all = new KAction (i18n ("Close All"), 0, 0, this, SLOT (slotCloseAllWindows ()), actionCollection (), "window_close_all");
 	window_detach = new KAction (i18n ("Detach"), 0, 0, this, SLOT (slotDetachWindow ()), actionCollection (), "window_detach");
-	outputShow= new KAction (i18n ("Show &Output"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
-
-	new KAction (i18n ("Show/Hide Workspace Browser"), 0, KShortcut ("Alt+1"), this, SLOT (toggleWorkspace()), actionCollection (), "window_show_workspace");
-	new KAction (i18n ("Show/Hide Command Log"), 0, KShortcut ("Alt+2"), this, SLOT (toggleCommandLog()), actionCollection (), "window_show_commandlog");
-	new KAction (i18n ("Show/Hide Pending Jobs"), 0, KShortcut ("Alt+3"), this, SLOT (togglePendingJobs()), actionCollection (), "window_show_pendingjobs");
-	new KAction (i18n ("Show/Hide Console"), 0, KShortcut ("Alt+4"), this, SLOT (toggleConsole()), actionCollection (), "window_show_console");
-	new KAction (i18n ("Show/Hide R Help Search"), 0, KShortcut ("Alt+5"), this, SLOT (toggleHelpSearch()), actionCollection (), "window_show_helpsearch");
-	new KAction (i18n ("Activate Document view"), 0, KShortcut ("Alt+0"), this, SLOT (activateDocumentView()), actionCollection (), "window_activate_docview");
 
 	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT (slotConfigure ()), actionCollection (), "configure");
-
-	makeRKWardHelpMenu (this, actionCollection ());
 
 	new_data_frame->setStatusText (i18n ("Creates new empty dataset and opens it for editing"));
 	import_data->setStatusText (i18n ("Import data from a variety of file formats"));
@@ -371,21 +363,6 @@ void RKWardMainWindow::initActions()
 	fileQuit->setStatusText(i18n("Quits the application"));
 
 	actionCollection ()->setHighlightingEnabled (true);
-}
-
-void RKWardMainWindow::makeRKWardHelpMenu (QWidget *for_window, KActionCollection *ac) {
-	KAction *help_invoke_r_help = new KAction (i18n ("Help on R"), 0, 0, this, SLOT (invokeRHelp ()), ac, "invoke_r_help");
-	KAction *show_help_search = new KAction (i18n ("Search R Help"), 0, 0, this, SLOT (showHelpSearch ()), ac, "show_help_search");
-	KAction *show_rkward_help = KStdAction::helpContents (this, SLOT (showRKWardHelp ()), ac);
-	show_rkward_help->setText (i18n ("Help on RKWard"));
-
-	KStdAction::aboutApp (this, SLOT (showAboutApplication ()), ac);
-	KStdAction::whatsThis (for_window, SLOT (whatsThis ()), ac);
-	KStdAction::reportBug (this, SLOT (reportRKWardBug ()), ac);
-
-	help_invoke_r_help->setStatusText (i18n ("Shows the R help index"));
-	show_help_search->setStatusText (i18n ("Shows/raises the R Help Search window"));
-	show_rkward_help->setStatusText (i18n ("Show help on RKWard"));
 }
 
 void RKWardMainWindow::partAdded (KParts::Part *part) {
@@ -576,90 +553,6 @@ bool RKWardMainWindow::doQueryQuit () {
 	return true;
 }
 
-void RKWardMainWindow::invokeRHelp () {
-	RK_TRACE (APP);
-
-	RKGlobals::rInterface ()->issueCommand ("help.start ()", RCommand::App);
-	topLevelWidget ()->raise ();
-}
-
-void RKWardMainWindow::reportRKWardBug () {
-	RK_TRACE (APP);
-
-// TOOD: something pretty
-	KMessageBox::information (this, i18n ("Please submit your bug reports or wishes at http://sourceforge.net/tracker/?group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge.net"));
-}
-
-void RKWardMainWindow::showAboutApplication () {
-	RK_TRACE (APP);
-
-	KAboutApplication *about = new KAboutApplication ();
-	about->exec ();
-	delete about;
-}
-
-void RKWardMainWindow::toggleToolView (RKMDIWindow *tool_window) {
-	RK_TRACE (APP);
-	RK_ASSERT (tool_window);
-
-	if (tool_window->isActive ()) {
-		tool_window->close (false);
-		setFocus ();	// in case there is no active document window, focus the main window
-		activateDocumentView ();
-	} else {
-		tool_window->activate ();
-	}
-}
-
-void RKWardMainWindow::showHelpSearch () {
-	RK_TRACE (APP);
-
-	RKHelpSearchWindow::mainHelpSearch ()->activate ();
-}
-
-void RKWardMainWindow::toggleHelpSearch () {
-	RK_TRACE (APP);
-
-	toggleToolView (RKHelpSearchWindow::mainHelpSearch ());
-}
-
-void RKWardMainWindow::toggleConsole () {
-	RK_TRACE (APP);
-
-	toggleToolView (RKConsole::mainConsole ());
-}
-
-void RKWardMainWindow::toggleCommandLog () {
-	RK_TRACE (APP);
-
-	toggleToolView (RKCommandLog::getLog ());
-}
-
-void RKWardMainWindow::togglePendingJobs () {
-	RK_TRACE (APP);
-
-	toggleToolView (RControlWindow::getControl ());
-}
-
-void RKWardMainWindow::toggleWorkspace () {
-	RK_TRACE (APP);
-
-	toggleToolView (RObjectBrowser::mainBrowser ());
-}
-
-void RKWardMainWindow::activateDocumentView () {
-	RK_TRACE (APP);
-
-	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->view ()->activePage ();
-	if (window) window->activate ();
-}
-
-void RKWardMainWindow::showRKWardHelp () {
-	RK_TRACE (APP);
-
-	RKWorkplace::mainWorkplace ()->openHelpWindow ("rkward://page/rkward_welcome", true);
-}
-
 void RKWardMainWindow::slotNewDataFrame () {
 	RK_TRACE (APP);
 	bool ok;
@@ -840,12 +733,6 @@ void RKWardMainWindow::openHTML (const KURL &url) {
 void RKWardMainWindow::openHTMLHelp (const QString & url) {
 	RK_TRACE (APP);
 	openHTML (url);
-}
-
-void RKWardMainWindow::slotOutputShow () {
-	RK_TRACE (APP);
-
-	RKWorkplace::mainWorkplace ()->openOutputWindow (KURL ());
 }
 
 void RKWardMainWindow::setCaption (const QString &) {

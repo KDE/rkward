@@ -23,6 +23,7 @@
 #include <qlayout.h>
 #include <qwidget.h>
 
+#include "rktoplevelwindowgui.h"
 #include "../rkward.h"
 #include "rkworkplace.h"
 #include "../rkglobals.h"
@@ -37,7 +38,7 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	setXMLFile ("detachedwindowcontainer.rc");
 	KStdAction::close (this, SLOT (close ()), actionCollection (), "dwindow_close");
 	new KAction (i18n ("Attach to main window"), 0, this, SLOT (slotReattach ()), actionCollection (), "dwindow_attach");
-	RKWardMainWindow::getMain ()->makeRKWardHelpMenu (this, actionCollection ());
+	insertChildClient (new RKTopLevelWindowGUI (this));
 	createShellGUI ();
 
 // capture widget

@@ -81,6 +81,8 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	if (!window->isToolWindow ()) {
 		view ()->addPage (window);
 	}
+	view()->topLevelWidget ()->raise ();
+	view()->topLevelWidget ()->setActiveWindow ();
 
 	RK_ASSERT (window->getPart ());
 	RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ());

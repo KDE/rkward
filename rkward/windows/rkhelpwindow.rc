@@ -1,15 +1,16 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.3.4">
+<kpartgui name="rkward" version="0.4.8">
 	<MenuBar>
-		<Menu name="file">
+		<Menu name="file"><text>&amp;File</text>
 			<Action name="print_help"/>
 		</Menu>
-		<Menu name="edit">
+		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="copy"/>
 		</Menu>
-		<Menu name="run">
+		<Menu name="run"><text>&amp;Run</text>
 			<Action name="run_selection"/>
 		</Menu>
+		<Merge/>
 	</MenuBar>
 	<ToolBar fullWidth="true" name="navigation_toolbar">
 		<Action name="help_back"/>

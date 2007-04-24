@@ -1,0 +1,32 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="rkward" version="0.4.8">
+	<MenuBar>
+		<Merge/>
+		<Menu name="window"><text>&amp;Window</text>
+			<Merge/>
+			<Action name="output_show"/>
+			<Separator/>
+			<Menu name="window_activate"><text>&amp;Activate</text>
+				<Action name="window_show_workspace"/>
+				<Action name="window_show_commandlog"/>
+				<Action name="window_show_pendingjobs"/>
+				<Action name="window_show_console"/>
+				<Action name="window_show_helpsearch"/>
+				<Separator/>
+				<Action name="window_activate_docview"/>
+			</Menu>
+			<Merge/>
+		</Menu>
+		<Menu name="help"><text>&amp;Help</text>
+			<Action name="rkward_help"/>
+			<Action name="whats_this"/>
+			<Separator/>
+			<Action name="invoke_r_help"/>
+			<Action name="show_help_search"/>
+			<Action name="report_bug"/>
+			<Separator/>
+			<Action name="about_app"/>
+			<Merge/>
+		</Menu>
+	</MenuBar>
+</kpartgui>

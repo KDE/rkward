@@ -58,6 +58,7 @@ class RKCommandEditorWindow;
 class KMdiToolViewAccessor;
 class RKMDIWindow;
 class QHBox;
+class RKTopLevelWindowGUI;
 
 struct RKWardStartupOptions {
 	KURL *initial_url;	/**< The workspace file to load on startup. If 0, show a dialog asking what to do. **/
@@ -91,8 +92,6 @@ public:
 	KParts::PartManager *partManager () { return part_manager; };
 
 	static RKWardMainWindow *getMain () { return rkward_mainwin; };
-
-	void makeRKWardHelpMenu (QWidget *for_window, KActionCollection *ac);
 
 /** return pointer to startup options. WARNING: The options are deleted shortly after startup */
 	static RKWardStartupOptions* getStartupOptions () { return getMain()->startup_options; };
@@ -131,29 +130,6 @@ signals:
 	void childWindowCloseRequest (KMdiChildView *);
 	void aboutToQuitRKWard ();
 public slots:
-	/** Raise the help search window */
-	void showHelpSearch ();
-	/** Toggle the help search window */
-	void toggleHelpSearch ();
-	/** Toggle the console window */
-	void toggleConsole ();
-	/** Toggle the command log window */
-	void toggleCommandLog ();
-	/** Toggle the pending jobs window */
-	void togglePendingJobs ();
-	/** Toggle the workspace browser window */
-	void toggleWorkspace ();
-	/** Activate the current (non tools) window in the workspace */
-	void activateDocumentView ();
-
-	/** Show the starting page of RKWard help */
-	void showRKWardHelp ();
-	/** Invokes R help (help.start ()) */
-	void invokeRHelp ();
-	/** show instructions on reporting bugs in rkward */
-	void reportRKWardBug ();
-	/** not quite sure, why I have to reimplement this from KMainWindow */
-	void showAboutApplication ();
 	/** creates a new (empty) data.frame */
 	void slotNewDataFrame ();
 	/** open a file and load it into the document*/
@@ -193,15 +169,13 @@ public slots:
 /** a child window has received a close event. Check, whether data needs to be saved. Ask if necessary. Close only if safe. */
 	void slotChildWindowCloseRequest (KMdiChildView * window);
 
-/** close current window (Windows->Close). Note: the only reason we need to implement this, is so we can set a default shortcut (Ctrl+W). Usually, KMdiMainFrm would provide an action like this by itselt */
+/** close current window (Windows->Close). */
 	void slotCloseWindow ();
 /** close all windows (Windows->Close All) */
 	void slotCloseAllWindows ();
 /** detach current window (Windows->Detach) */
 	void slotDetachWindow ();
 
-/** ensure output window is shown. */
-	void slotOutputShow ();
 /** reimplemented from KMainWindow, to additionally include the workspace url. Actually, we also ignore the caption-parameter, as it sometimes is not the one we want. Rather we create one according to the active view */
 	void setCaption (const QString &caption);
 /** a view has been activated or deactivated. We should make sure to update the main caption to fix strange quirks */
@@ -212,8 +186,6 @@ public slots:
 /** connected to m_manager->partAdded (). Disconnects statusbar notifications */
 	void partRemoved (KParts::Part *part);
 private:
-	void toggleToolView (RKMDIWindow *tool_window);
-
 	QLabel* statusbar_r_status;
 	QLabel* statusbar_cwd;
 	QLabel* statusbar_ready;
@@ -237,9 +209,6 @@ private:
 	KAction* editUndo;
 	KAction* editRedo;
 
-	KAction* outputShow;
-
-	KAction* window_close;
 	KAction* window_close_all;
 	KAction* window_detach;
 	
@@ -261,6 +230,8 @@ private:
 	void setRStatus (bool busy);
 /** update the display for the current working directory */
 	void updateCWD ();
+
+	RKTopLevelWindowGUI *toplevel_actions;
 };
 
 #endif // RKWARD_H

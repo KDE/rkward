@@ -33,9 +33,8 @@
 	
 	<Merge name="rkwardcomponents" />
 
-	<Menu name="windows"><text>&amp;Windows</text>
-		<Action name="output_show"/>
-		<Separator/>
+	<Menu name="window"><text>&amp;Windows</text>
+		<Merge/>
 		<Action name="window_close"/>
 		<Action name="window_close_all"/>
 		<Action name="close_all_editors"/>
@@ -47,13 +46,7 @@
 			<Action name="left_window"/>
 			<Action name="right_window"/>
 			<Separator/>
-			<Action name="window_show_workspace"/>
-			<Action name="window_show_commandlog"/>
-			<Action name="window_show_pendingjobs"/>
-			<Action name="window_show_console"/>
-			<Action name="window_show_helpsearch"/>
-			<Separator/>
-			<Action name="window_activate_docview"/>
+			<Merge/>
 		</Menu>
 		<Separator/>
 		<Action name="window_detach"/>
@@ -65,8 +58,6 @@
 	</Menu>
 
 	<Menu name="help"><text>&amp;Help</text>
-		<Action name="invoke_r_help"/>
-		<Action name="show_help_search"/>
 		<Merge/>
 	</Menu>
 
