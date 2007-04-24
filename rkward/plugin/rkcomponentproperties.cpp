@@ -144,7 +144,7 @@ void RKComponentPropertyBase::governorValueChanged (RKComponentPropertyBase *pro
 
 void RKComponentPropertyBase::warnModifierNotRecognized (const QString &modifier) {
 	RK_TRACE (PLUGIN);
-	RK_DO (qDebug ("Modifier '%s' not recongnized.", modifier.latin1 ()), PLUGIN, DL_ERROR);
+	RK_DO (qDebug ("Modifier '%s' not recognized.", modifier.latin1 ()), PLUGIN, DL_ERROR);
 }
 
 ///////////////////////////////////////////// Bool //////////////////////////////////////////
@@ -154,6 +154,7 @@ RKComponentPropertyBool::RKComponentPropertyBool (QObject *parent, bool required
 	RKComponentPropertyBool::value_true = value_true;
 	RKComponentPropertyBool::value_false = value_false;
 	default_value = default_state;
+	inverted = false;
 	internalSetValue (default_state);
 }
 
@@ -172,9 +173,9 @@ RKComponentBase* RKComponentPropertyBool::lookupComponent (const QString &identi
 		RKComponentPropertyBool *negated = new RKComponentPropertyBool (this, false, false, value_true, value_false);
 		negated->setInverted (true);
 		negated->connectToGovernor (this);
-		*remainder = identifier.section (".", 1);
+		*remainder = QString::null;		// reset
 		addChild ("not", negated);		// so subsequent lookups will not recreate the negated property
-		return (negated);
+		return (negated->lookupComponent (identifier.section (".", 1), remainder));
 	}
 
 	return (this);
