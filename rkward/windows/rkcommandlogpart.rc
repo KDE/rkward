@@ -1,15 +1,15 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.4.5">
+<kpartgui name="rkward" version="0.4.8">
 	<Menubar>
-		<Menu name="edit">
+		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="log_select_all"/>
 			<Action name="log_copy"/>
 			<Action name="log_clear"/>
 		</Menu>
-		<Menu name="run">
+		<Menu name="run"><text>&amp;Run</text>
 			<Action name="log_run_selection"/>
 		</Menu>
-		<Menu name="settings">
+		<Menu name="settings"><text>&amp;Settings</text>
 			<Action name="log_configure"/>
 		</Menu>
 	</Menubar>

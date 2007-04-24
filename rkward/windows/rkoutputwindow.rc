@@ -1,15 +1,15 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.4.3">
+<kpartgui name="rkward" version="0.4.8">
 	<MenuBar>
-		<Menu name="file">
+		<Menu name="file"><text>&amp;File</text>
 			<Action name="print_output"/>
 		</Menu>
-		<Menu name="edit">
+		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="copy"/>
 			<Separator/>
 			<Action name="output_flush"/>
 		</Menu>
-		<Menu name="view">
+		<Menu name="view"><text>&amp;View</text>
 			<Separator/>
 			<Action name="output_refresh"/>
 		</Menu>
