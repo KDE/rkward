@@ -129,6 +129,10 @@ void RKWorkplaceView::addPage (RKMDIWindow *widget) {
 	setPage (id);		// active new window
 }
 
+bool RKWorkplaceView::hasPage (RKMDIWindow *widget) {
+	return (idOfWidget (widget) != -1);
+}
+
 void RKWorkplaceView::removePage (RKMDIWindow *widget, bool destroyed) {
 	RK_TRACE (APP);
 

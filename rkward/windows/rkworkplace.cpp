@@ -278,13 +278,16 @@ void RKWorkplace::closeWindow (RKMDIWindow *window) {
 	RK_TRACE (APP);
 	RK_ASSERT (windows.find (window) != windows.end ());
 
+	bool tool_window = window->isToolWindow ();
 	window->close (true);		// all the rest should happen in windowDestroyed ()
+	
+	if (tool_window) windowRemoved ();	// for regular windows, this happens in windowDestroyed(), already
 }
 
 void RKWorkplace::closeActiveWindow () {
 	RK_TRACE (APP);
 
-	RKMDIWindow *w = activeAttachedWindow ();
+	RKMDIWindow *w = activeWindow (RKMDIWindow::Attached);
 	if (w) closeWindow (w);
 }
 
@@ -313,17 +316,63 @@ void RKWorkplace::windowDestroyed (QObject *object) {
 	RK_TRACE (APP);
 	RKMDIWindow *window = static_cast<RKMDIWindow *> (object);
 
+	// WARNING: the window is dead. Don't call any functions on it.
+
 	RK_ASSERT (windows.find (window) != windows.end ());
-	if (window->isAttached ()) view ()->removePage (window, true);
+	if (view ()->hasPage (window)) view ()->removePage (window, true);
 	windows.remove (window);
+
+	windowRemoved ();
 }
 
-RKMDIWindow *RKWorkplace::activeAttachedWindow () {
+void RKWorkplace::windowRemoved () {
+	RK_TRACE (APP);
+
+	if (activeWindow (RKMDIWindow::AnyWindowState) != 0) return;	// something already active
+
+	// try to activate an attached document window, first
+	RKMDIWindow *window = view ()->activePage ();
+	if (window) {
+		window->activate (true);
+		return;
+	}
+
+	// some document window in the history? Try that.
+	if (history->haveNext ()) {
+		history->next ();
+		return;
+	} else if (history->havePrev ()) {
+		history->prev ();
+		return;
+	}
+
+	// now try to activate an attached (tool) window, if one is visible
+	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
+		if ((*it)->isAttached ()) {
+			if ((*it)->isVisible ()) {
+				(*it)->activate (true);
+				return;
+			}
+		}
+	}
+
+	// nothing, yet? Try *any* visible window
+	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
+		if ((*it)->isVisible ()) {
+			(*it)->activate (true);
+			return;
+		}
+	}
+
+	// give up
+}
+
+RKMDIWindow *RKWorkplace::activeWindow (RKMDIWindow::State state) {
 	RK_TRACE (APP);
 
 	RKMDIWindow *ret = 0;
 	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
-		if (!(*it)->isAttached()) continue;
+		if (!(state & ((*it)->state))) continue;
 
 		if ((*it)->isActive ()) {
 			ret = *it;

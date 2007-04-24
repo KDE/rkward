@@ -650,7 +650,7 @@ void RKWardMainWindow::toggleWorkspace () {
 void RKWardMainWindow::activateDocumentView () {
 	RK_TRACE (APP);
 
-	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->activeAttachedWindow ();
+	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->view ()->activePage ();
 	if (window) window->activate ();
 }
 
@@ -779,7 +779,7 @@ void RKWardMainWindow::slotCloseAllEditors () {
 void RKWardMainWindow::slotDetachWindow () {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->detachWindow (RKWorkplace::mainWorkplace ()->activeAttachedWindow ());
+	RKWorkplace::mainWorkplace ()->detachWindow (RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached));
 }
 
 void RKWardMainWindow::setRStatus (bool busy) {
@@ -854,7 +854,7 @@ void RKWardMainWindow::setCaption (const QString &) {
 	QString wcaption = RObjectList::getObjectList ()->getWorkspaceURL ().fileName ();
 	if (wcaption.isEmpty ()) wcaption = RObjectList::getObjectList ()->getWorkspaceURL ().prettyURL ();
 	if (wcaption.isEmpty ()) wcaption = i18n ("[Unnamed Workspace]");
-	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->activeAttachedWindow ();
+	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached);
 	if (window) wcaption.append (" - " + window->fullCaption ());
 	KMdiMainFrm::setCaption (wcaption);
 }

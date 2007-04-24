@@ -40,8 +40,9 @@ public:
 		WorkspaceBrowserWindow=128,
 		SearchHelpWindow=256,
 		PendingJobsWindow=512,
+		DocumentWindow = DataEditorWindow | CommandEditorWindow | OutputWindow | HelpWindow,
 		ToolWindow = ConsoleWindow | CommandLogWindow | WorkspaceBrowserWindow | SearchHelpWindow | PendingJobsWindow,
-		AnyType=DataEditorWindow | CommandEditorWindow | OutputWindow | HelpWindow | ToolWindow
+		AnyType= DocumentWindow | ToolWindow
 	};
 
 	enum State {

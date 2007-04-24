@@ -41,6 +41,8 @@ public:
 /** remove the given window to the view
 @param destroyed if the window is already destroyed, set this to true */
 	void removePage (RKMDIWindow *widget, bool destroyed=false);
+/** does this window exist in the view? */
+	bool hasPage (RKMDIWindow *widget);
 
 /** activate the given window */
 	void setActivePage (RKMDIWindow *widget);

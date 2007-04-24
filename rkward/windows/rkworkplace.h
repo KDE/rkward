@@ -84,8 +84,8 @@ public:
 	void attachWindow (RKMDIWindow *window);
 /** Dettach a window (it is removed from the view (), and placed in a top-level DetachedWindowContainer instead. */
 	void detachWindow (RKMDIWindow *window, bool was_attached=true);
-/** @returns a pointer to the current window. Detached windows are not considered, only those attached to the workplace(view) */
-	RKMDIWindow *activeAttachedWindow ();
+/** @returns a pointer to the current window. state specifies, which windows should be considered. */
+	RKMDIWindow *activeWindow (RKMDIWindow::State state);
 
 /** Opens a new script editor
 @param url URL to load. Default option is to open an empty document
@@ -167,6 +167,8 @@ private:
 	void addWindow (RKMDIWindow *window, bool attached=true);
 /** static pointer to the workplace. @See mainWorkplace () */
 	static RKWorkplace *main_workplace;
+/** a window was removed. Try to activate some other window. */
+	void windowRemoved ();
 
 	void restoreWorkplaceItem (const QString &desc);
 	RKMDIWindowHistory *history;

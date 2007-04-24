@@ -197,7 +197,7 @@ void RObjectBrowser::slotListDoubleClicked (QListViewItem *item, const QPoint &,
 	
 	if (!object) return;
 	if (object == RObjectList::getObjectList ()) return;
-	QWidget *w = RKWorkplace::mainWorkplace ()->activeAttachedWindow ();
+	QWidget *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached);
 	if (!w) return;
 	
 	if (w->inherits ("RKCommandEditorWindow")) {
