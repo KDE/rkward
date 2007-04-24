@@ -88,7 +88,7 @@ public:
 	bool eventFilter (QObject *watched, QEvent *e);
 	bool acceptsEventsFor (QObject *object);
 /** Whether the window is active. This seems to be more reliable than hasFocus () */
-	bool isActive () { return active; };
+	bool isActive ();
 signals:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */
@@ -99,6 +99,7 @@ protected:
 	void setPart (KParts::Part *p) { part = p; };
 	void initializeActivationSignals ();
 	void paintEvent (QPaintEvent *e);
+	void windowActivationChange (bool);
 friend class RKWorkplace;
 /** type of this window */
 	Type type;

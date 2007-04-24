@@ -62,6 +62,13 @@ void RKMDIWindow::setCaption (const QString &caption) {
 	emit (captionChanged (this));
 }
 
+bool RKMDIWindow::isActive () {
+	// don't trace, called pretty often
+
+	if (!topLevelWidget ()->isActiveWindow ()) return false;
+	return (active || (!isAttached ()));
+}
+
 void RKMDIWindow::activate (bool with_focus) {
 	RK_TRACE (APP);
 
@@ -82,8 +89,10 @@ void RKMDIWindow::activate (bool with_focus) {
 		topLevelWidget ()->raise ();
 	}
 
-	if (with_focus) setFocus();
-	else {
+	if (with_focus) {
+		topLevelWidget ()->setActiveWindow ();
+		setFocus();
+	} else {
 		if (old_focus) old_focus->setFocus ();
 	}
 }
@@ -200,5 +209,11 @@ void RKMDIWindow::setToolWrapper (KMdiToolViewAccessor *wrapper_widget) {
 	static_cast<KDockWidget *> (wrapper->wrapperWidget ())->setEnableDocking (KDockWidget::DockFullSite);
 }
 
+void RKMDIWindow::windowActivationChange (bool) {
+	RK_TRACE (APP);
+
+	// NOTE: active is NOT the same as isActive(). Active just means that this window *would* be active, if its toplevel window is active.
+	if (active || (!isAttached ())) update ();
+}
 
 #include "rkmdiwindow.moc"

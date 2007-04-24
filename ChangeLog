@@ -1,3 +1,4 @@
+- show the focus indication (thin red border) also for detached windows
 - tool windows can be closed and detached in the same way as regular windows
 - fix a crash with detached tool windows
 - add command line option --disable-stack-check for systems where R C stack checking is buggy
