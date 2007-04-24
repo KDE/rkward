@@ -125,6 +125,8 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : DCOPObject 
 	setHelpMenuEnabled (false);
 	setXMLFile ("rkwardui.rc");
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
+	connect (toplevel_actions->actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
+	connect (toplevel_actions->actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
 	createShellGUI (true);
 
 	connect (this, SIGNAL (childWindowCloseRequest (KMdiChildView *)), this, SLOT (slotChildWindowCloseRequest (KMdiChildView *)));

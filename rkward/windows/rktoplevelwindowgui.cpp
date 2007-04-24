@@ -66,6 +66,8 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : KXMLGUIClient (
 	new KAction (i18n ("Activate Document view"), 0, KShortcut ("Alt+0"), this, SLOT (activateDocumentView()), actionCollection (), "window_activate_docview");
 
 	new KAction (i18n ("Show &Output"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
+
+	actionCollection ()->setHighlightingEnabled (true);
 }
 
 RKTopLevelWindowGUI::~RKTopLevelWindowGUI () {
