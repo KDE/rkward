@@ -195,16 +195,14 @@ bool RKStandardComponent::createTopLevel (const QDomElement &doc_element, int fo
 	} else if (force_mode == 1) {
 		build_wizard = false;
 		if (dialog_element.isNull ()) {
+			build_wizard = true;
 			xml->displayError (&doc_element, "Dialog mode forced, but no dialog element given", DL_INFO);
-			deleteLater ();
-			return false;
 		}
 	} else if (force_mode == 2) {
 		build_wizard = true;
 		if (wizard_element.isNull ()) {
+			build_wizard = false;
 			xml->displayError (&doc_element, "Wizard mode forced, but no wizard element given", DL_INFO);
-			deleteLater ();
-			return false;
 		}
 	}
 
