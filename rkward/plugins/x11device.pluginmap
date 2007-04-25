@@ -3,18 +3,16 @@
 <document base_prefix="x11device/" namespace="rkward">
 	<components>
 		<component type="standard" id="export_x11_device" file="export.xml" label="Export..." />
-
-		<!-- This one is slightly misplaced right now. Since it can be embedded in plots, and works standalone as an x11device plugin, it does not really belong to either pluginmap. Fix this after 0.4.7 -->
-		<component type="standard" id="x11grid" file="grid.xml" label="Draw Grid" />
 	</components>
 
 	<context id="x11">
 		<menu id="device" label="Device" index="1">
 			<entry component="export_x11_device" />
 		</menu>
-		<!-- see above -->
 		<menu id="edit" label="Edit" index="3">
 			<entry component="x11grid" />
 		</menu>
 	</context>
+
+	<require file="../embedded.pluginmap"/>
 </document>

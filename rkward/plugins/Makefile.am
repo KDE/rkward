@@ -3,6 +3,7 @@ dist_plugins_DATA = \
 	all.pluginmap \
 	plots.pluginmap \
 	distributions.pluginmap \
+	embedded.pluginmap \
 	analysis.pluginmap \
 	x11device.pluginmap \
 	import_export.pluginmap \
@@ -30,6 +31,8 @@ dist_pluginsXplots_DATA = \
 	plots/barplot.rkh \
 	plots/barplot.php \
 	plots/barplot.xml \
+	plots/piechart.xml \
+	plots/piechart.php \
 	plots/plot.php \
 	plots/plot.rkh \
 	plots/plot.xml \
@@ -54,9 +57,7 @@ dist_pluginsXplots_DATA = \
 	plots/plot_stepfun_options.xml \
 	plots/plot_stepfun_options.php \
 	plots/histogram.rkh \
-	plots/ecdf_plot.rkh \
-	plots/piechart.php \
-	plots/piechart.xml
+	plots/ecdf_plot.rkh
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
@@ -323,12 +324,12 @@ pluginsXanalysisdir = $(kde_datadir)/rkward/analysis
 dist_pluginsXanalysis_DATA = \
 	analysis/corr_matrix.php \
 	analysis/corr_matrix.xml \
+	analysis/crosstab.xml \
 	analysis/corr_matrix.rkh \
+	analysis/crosstab.php \
 	analysis/t_test_two_vars.rkh \
 	analysis/t_test_two_vars.xml \
-	analysis/t_test_two_vars.php \
-	analysis/crosstab.php \
-	analysis/crosstab.xml
+	analysis/t_test_two_vars.php
 
 pluginsXanalysisXansariUbradleydir = $(kde_datadir)/rkward/analysis/ansari_bradley
 dist_pluginsXanalysisXansariUbradley_DATA = \

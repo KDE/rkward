@@ -1,9 +1,9 @@
 <!DOCTYPE rkpluginmap>
 
 <document base_prefix="" namespace="rkward">
-	<include file="import_export.pluginmap"/>
-	<include file="analysis.pluginmap"/>
-	<include file="distributions.pluginmap"/>
-	<include file="plots.pluginmap"/>
-	<include file="x11device.pluginmap"/>
+	<require file="import_export.pluginmap"/>
+	<require file="analysis.pluginmap"/>
+	<require file="distributions.pluginmap"/>
+	<require file="plots.pluginmap"/>
+	<require file="x11device.pluginmap"/>
 </document>

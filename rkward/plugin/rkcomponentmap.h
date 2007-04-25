@@ -18,12 +18,25 @@
 #ifndef RKCOMPONENTMAP_H
 #define RKCOMPONENTMAP_H
 
+#include <qstring.h>
+
+/** very simple helper class to keep track of .pluginmap files */
+class RKPluginMapFile {
+public:
+	RKPluginMapFile (const QString &basedir) { RKPluginMapFile::basedir = basedir; };
+	~RKPluginMapFile () {};
+
+	QString getBaseDir () { return basedir; };
+	QString makeFileName (const QString &filename);
+private:
+	QString basedir;
+};
+
 /** enum of different types of RKComponent */
 enum RKComponentType {
 	Standard=0		/// the only type available so far. Classifies a component that can be used standalone, and is not special in any way. Of course, as long as there is only one category of component, this is fairly meaningless. It's meant for future features.
 };
 
-#include <qstring.h>
 #include <qobject.h>
 
 class RKComponent;
@@ -37,11 +50,11 @@ class KActionCollection;
 class RKComponentHandle : public QObject {
 	Q_OBJECT
 public:
-	RKComponentHandle (const QString &filename, const QString &label, RKComponentType type);
+	RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label, RKComponentType type);
 
 	virtual ~RKComponentHandle ();
 
-	QString getFilename () { return filename; };
+	QString getFilename () { return plugin_map->makeFileName (filename); };
 	QString getLabel () { return label; };
 	RKComponentType getType () { return type; };
 	bool isPlugin ();
@@ -56,7 +69,9 @@ public slots:
 /** Slot called, when the menu-item for this component is selected. Responsible for creating the GUI. */
 	void activated ();
 protected:
-/** The filename of the description file for this component */
+/** The plugin map where this component was declared */
+	RKPluginMapFile *plugin_map;
+/** The filename relative to the pluginmap file */
 	QString filename;
 	QString label;
 	RKComponentType type;
@@ -159,6 +174,9 @@ private:
 
 	typedef QMap<QString, RKContextMap*> RKComponentContextMap;
 	RKComponentContextMap contexts;
+
+	typedef QMap<QString, RKPluginMapFile*> PluginMapFileMap;
+	PluginMapFileMap pluginmapfiles;
 
 	static RKComponentMap *component_map;
 protected:

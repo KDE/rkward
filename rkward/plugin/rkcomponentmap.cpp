@@ -18,6 +18,7 @@
 #include "rkcomponentmap.h"
 
 #include <qfileinfo.h>
+#include <qdir.h>
 
 #include <klocale.h>
 
@@ -26,6 +27,10 @@
 #include "../debug.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
+
+QString RKPluginMapFile::makeFileName (const QString &filename) {
+	return QDir (basedir).filePath (filename);
+}
 
 RKComponentGUIXML::RKComponentGUIXML () {
 	RK_TRACE (PLUGIN);
@@ -153,6 +158,11 @@ void RKComponentMap::clearLocal () {
 	}
 	components.clear ();
 
+	for (PluginMapFileMap::const_iterator it = pluginmapfiles.constBegin (); it != pluginmapfiles.constEnd (); ++it) {
+		delete (it.data ());
+	}
+	pluginmapfiles.clear ();
+
 	clearGUIDescription ();
 
 	setXMLGUIBuildDocument (gui_xml);
@@ -227,33 +237,58 @@ int RKComponentMap::addPluginMap (const QString& plugin_map_file) {
 int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	RK_TRACE (PLUGIN);
 
+	QString plugin_map_file_abs = QFileInfo (plugin_map_file).absFilePath ();
+	if (pluginmapfiles.contains (plugin_map_file_abs)) {
+		RK_DO (qDebug ("Plugin map file '%s' already loaded", plugin_map_file.latin1()), PLUGIN, DL_INFO);
+		return 0;
+	}
+
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
 	QDomElement element;
 	XMLChildList list;
 
-	QDomElement document_element = xml->openXMLFile (plugin_map_file, DL_ERROR);
+	QDomElement document_element = xml->openXMLFile (plugin_map_file_abs, DL_ERROR);
 	if (xml->highestError () >= DL_ERROR) return (0);
 
-	QString prefix = QFileInfo (plugin_map_file).dirPath (true) + '/' + xml->getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
+	QString prefix = QFileInfo (plugin_map_file_abs).dirPath (true) + '/' + xml->getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
 	QString cnamespace = xml->getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";
 
-	// step 1: create (list of) components
+	RKPluginMapFile *pluginmap_file_desc = new RKPluginMapFile (prefix);
+	pluginmapfiles.insert (QFileInfo (plugin_map_file).absFilePath (), pluginmap_file_desc);
+
+	// step 1: include required files
+	int counter;
+	QStringList includelist;
+	list = xml->getChildElements (document_element, "require", DL_INFO);
+	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
+		QString file = pluginmap_file_desc->makeFileName (xml->getStringAttribute (*it, "file", QString::null, DL_ERROR));
+		if (QFileInfo (file).isReadable ()) {
+			includelist.append (file);
+		} else {
+			RK_DO (qDebug ("Specified required file '%s' does not exist or is not readable. Ignoring.", file.latin1 ()), PLUGIN, DL_ERROR);
+		}
+	}
+	for (QStringList::const_iterator it = includelist.constBegin (); it != includelist.constEnd (); ++it) {
+		counter += addPluginMapLocal (*it);
+	}
+
+	// step 2: create (list of) components
 	element = xml->getChildElement (document_element, "components", DL_INFO);
 	list = xml->getChildElements (element, "component", DL_INFO);
 
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		QString filename = prefix + xml->getStringAttribute((*it), "file", QString::null, DL_WARNING);
+		QString filename = xml->getStringAttribute((*it), "file", QString::null, DL_WARNING);
 		QString id = cnamespace + xml->getStringAttribute((*it), "id", QString::null, DL_WARNING);
 		int type = xml->getMultiChoiceAttribute ((*it), "type", "standard", 0, DL_WARNING);
 		QString label = xml->getStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING);
 
 		if (components.contains (id)) {
 			RK_DO (qDebug ("RKComponentMap already contains a component with id \"%s\". Ignoring second entry.", id.latin1 ()), PLUGIN, DL_WARNING);
-		} else if (!QFileInfo (filename).isReadable ()) {
+		} else if (!QFileInfo (pluginmap_file_desc->makeFileName (filename)).isReadable ()) {
 			RK_DO (qDebug ("Specified file '%s' for component id \"%s\" does not exist or is not readable. Ignoring.", filename.latin1 (), id.latin1 ()), PLUGIN, DL_ERROR);
 		} else {
 			// create and initialize component handle
-			RKComponentHandle *handle = new RKComponentHandle (filename, label, (RKComponentType) type);
+			RKComponentHandle *handle = new RKComponentHandle (pluginmap_file_desc, filename, label, (RKComponentType) type);
 			XMLChildList attributes_list = xml->getChildElements (*it, "attribute", DL_DEBUG);
 			for (XMLChildList::const_iterator ait=attributes_list.begin (); ait != attributes_list.end (); ++ait) {
 				handle->addAttribute (xml->getStringAttribute (*ait, "id", "noid", DL_WARNING), xml->getStringAttribute (*ait, "value", QString::null, DL_ERROR), xml->getStringAttribute (*ait, "label", QString::null, DL_ERROR));
@@ -262,11 +297,11 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 		}
 	}
 
-	// step 2: create / insert into menus
+	// step 3: create / insert into menus
 	QDomElement xmlgui_menubar_element = xml->getChildElement (gui_xml.documentElement (), "MenuBar", DL_ERROR);
-	int counter = createMenus (xmlgui_menubar_element, xml->getChildElement (document_element, "hierarchy", DL_INFO), cnamespace);
+	counter = createMenus (xmlgui_menubar_element, xml->getChildElement (document_element, "hierarchy", DL_INFO), cnamespace);
 
-	// step 3: create and register contexts
+	// step 4: create and register contexts
 	list = xml->getChildElements (document_element, "context", DL_INFO);
 	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
 		QString id = xml->getStringAttribute (*it, "id", QString::null, DL_ERROR);
@@ -277,21 +312,6 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 			contexts.insert (id, context);
 		}
 		counter += context->create (*it, cnamespace);
-	}
-
-	// step 4: included files
-	QStringList includelist;
-	list = xml->getChildElements (document_element, "include", DL_INFO);
-	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
-		QString file = prefix + xml->getStringAttribute (*it, "file", QString::null, DL_ERROR);
-		if (QFileInfo (file).isReadable ()) {
-			includelist.append (file);
-		} else {
-			RK_DO (qDebug ("Specified include file '%s' does not exist or is not readable. Ignoring.", file.latin1 ()), PLUGIN, DL_ERROR);
-		}
-	}
-	for (QStringList::const_iterator it = includelist.constBegin (); it != includelist.constEnd (); ++it) {
-		counter += addPluginMap (*it);
 	}
 
 	setXMLGUIBuildDocument (gui_xml);
@@ -311,12 +331,13 @@ void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {
 
 #include "rkstandardcomponent.h"
 
-RKComponentHandle::RKComponentHandle (const QString &filename, const QString &label, RKComponentType type) : QObject (RKWardMainWindow::getMain ()) {
+RKComponentHandle::RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label, RKComponentType type) : QObject (RKWardMainWindow::getMain ()) {
 	RK_TRACE (PLUGIN);
 
 	RKComponentHandle::type = type;
-	RKComponentHandle::filename = filename;
+	RKComponentHandle::filename = rel_filename;
 	RKComponentHandle::label = label;
+	RKComponentHandle::plugin_map = pluginmap;
 
 	attributes = 0;
 }

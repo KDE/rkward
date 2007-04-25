@@ -41,8 +41,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2007-03-30</date>
-<releaseinfo>0.4.7.00</releaseinfo>
+<date>2007-04-25</date>
+<releaseinfo>0.4.8.00</releaseinfo>
 
 <abstract>
 <para>
@@ -63,7 +63,7 @@ This is a guide to writing plugins for &rkward;.
 <title>Introduction</title>
 
 <para>
-Documentation as of &kapp; release 0.4.7.
+Documentation as of &kapp; release 0.4.8.
 </para>
 <para>
 This document describes how to write your own plugins. Note, that at the time of this writing, none of the concepts are set it stone. Therefore, this document should be regarded as an introduction to the current approach, and as a basis for discussion. All sorts of comments are welcome.
@@ -2020,8 +2020,8 @@ In addition to this, some elements have additional properties you can connect to
 	</variablelist></listitem>
 </varlistentry>
 <varlistentry>
-<term>&lt;include&gt;</term>
-<listitem>Include another .pluginmap file. The most important use case is to provide a "default" selection of plugins in the &kapp; distribution, even if these plugins are defined in several separate .pluginmap files (see all.pluginmap). &lt;include&gt;-elements are only allowed as direct children of the &lt;document&gt;-node. Attributes:
+<term>&lt;require&gt;</term>
+<listitem>Include another .pluginmap file. This .pluginmap file is only loaded once, even if it is &lt;require&gt;d from several other files. The most important use case is to include a pluginmap file, which declares some comopnents, which are embedded by components declared in this .pluginmap. &lt;require&gt;-elements are only allowed as direct children of the &lt;document&gt;-node. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>file</term>
