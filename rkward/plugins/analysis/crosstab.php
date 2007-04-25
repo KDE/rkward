@@ -21,29 +21,30 @@ function preview () {
 	
 function doPrintout ($final) {
 	$x = getRK_val ("x") ;
-	$y = getRK_val ("y") ;
+	$yvarsstring = join (", ", split ("\n", getRK_val ("y")));
 	$labels = getRK_val ("labels")=="TRUE";
 	
 ?>
 x <- (<? echo ($x); ?>)
-y <- (<? echo ($y); ?>)
+y <- cbind (<? echo ($yvarsstring); ?>)
 
-rk.header ("Crosstabs", list ("Variable", rk.get.description (<? echo ($x); ?>), "Group", rk.get.description (<? echo ($y); ?>)))
-xy<-table(x,y)
+for (i in 1:length(y)){
+xy<-table(x,y[,i])
+rk.header ("Crosstabs", list ("Dependent", rk.get.description (<? echo ($x); ?>), "Independent", rk.get.description (<? echo ($yvarsstring); ?>)[i]))
 
 <?	if ($final) { ?>
 rk.print(xtable(cbind(xy)))
 <?	if (getRK_val ("chisq") == "TRUE") { ?>
-rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Variable", rk.get.description (<? echo ($x); ?>), "Group", rk.get.description (<? echo ($y); ?>), "Monte Carlo", "<? getRK ("monte"); ?>" <? if (getRK_val ("monte") == "TRUE") { ?>,  "Number of replicates", <? getRK ("B"); }?> ))
+rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Dependent", rk.get.description (<? echo ($x); ?>), "Independent", rk.get.description (<? echo ($yvarsstring); ?>)[i], "Monte Carlo", "<? getRK ("monte"); ?>" <? if (getRK_val ("monte") == "TRUE") { ?>,  "Number of replicates", <? getRK ("B"); }?> ))
 xsquared<-cbind(
-chisq.test(x,y <?if (getRK_val ("monte") == "TRUE") { ?>,B=(<? getRK ("B"); ?>) <?}?> )$statistic,
- chisq.test(x,y <?if (getRK_val ("monte") == "TRUE") { ?>,B=(<? getRK ("B"); ?>) <?}?> )$parameter,
- chisq.test(x,y <?if (getRK_val ("monte") == "TRUE") { ?>,B=(<? getRK ("B"); ?>) <?}?> )$p.value)
+chisq.test(xy)$statistic,
+ chisq.test(xy)$parameter,
+ chisq.test(xy)$p.value)
  colnames(xsquared)<-c("Statistic", "df", "p-value")
  rk.print(xtable(xsquared))
 <? } ?>
 <?	if (getRK_val ("barplot") == "TRUE") { ?>
-rk.header ("Barplot for Crosstabs", list ("Variable", rk.get.description (<? echo ($x); ?>), "Group", rk.get.description (<? echo ($y); ?>) <?	if (getRK_val ("barplot") == "TRUE") { ?> , "Rainbow colors", "<? getRK ("rainbow"); ?>", "Beside", "<? getRK ("beside"); ?>", "Legend", "<? getRK ("legend"); ?>"<? } ?>)) 
+rk.header ("Barplot for Crosstabs", list ("Dependent", rk.get.description (<? echo ($x); ?>), "Independent", rk.get.description (<? echo ($yvarsstring); ?>)[i] <? if (getRK_val ("barplot") == "TRUE") { ?> , "Rainbow colors", "<? getRK ("rainbow"); ?>", "Beside", "<? getRK ("beside"); ?>", "Legend", "<? getRK ("legend"); ?>"<? } ?>)) 
 rk.graph.on ()
 <?	} 
 }
@@ -73,6 +74,7 @@ if ($final) { ?>
 <?	if (getRK_val ("barplot") == "TRUE") { ?>
 rk.graph.off ()
 <? } 
+} ?>
 }
-}
+<? }
 ?>

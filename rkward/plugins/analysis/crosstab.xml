@@ -5,7 +5,6 @@
 		<convert id="chisqvalue" mode="equals" sources="chisq.state" standard="TRUE" />
 		<connect client="chi_options.enabled" governor="chisqvalue" />
 		<convert id="barplotvalue" mode="equals" sources="barplot.state" standard="TRUE" />
-		<connect client="preview.enabled" governor="barplotvalue" />
 		<connect client="plot_options.enabled" governor="barplotvalue" />
 		<convert id="besidevalue" mode="equals" sources="beside.string" standard="TRUE" />
 		<connect client="labels.enabled" governor="besidevalue" />
@@ -21,11 +20,10 @@
 				<row>
 					<varselector id="vars"/>
 					<column>						
-						<varslot multi="false" id="x" source="vars" label="variable" required="true" />
-						<varslot multi="false" id="y" source="vars" label="Group" required="true" />
+						<varslot multi="false" id="x" source="vars" label="Dependent" required="true" />
+						<varslot min_vars="1" multi="true" id="y" source="vars" required="true" label="Independent"/>
 						<checkbox id="chisq" label="Chisquare" value="TRUE" value_unchecked="FALSE" checked="false" />		<checkbox id="barplot" label="Draw Barplot?" value="TRUE" value_unchecked="FALSE" checked="false" />						
 						<stretch/>
-						<preview id="preview"/>
 					</column>
 				</row>
 			</tab>
