@@ -19,6 +19,7 @@
 
 #include <klocale.h>
 #include <kstdaction.h>
+#include <kstatusbar.h>
 
 #include <qlayout.h>
 #include <qwidget.h>
@@ -38,7 +39,10 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	setXMLFile ("detachedwindowcontainer.rc");
 	KStdAction::close (this, SLOT (close ()), actionCollection (), "dwindow_close");
 	new KAction (i18n ("Attach to main window"), 0, this, SLOT (slotReattach ()), actionCollection (), "dwindow_attach");
-	insertChildClient (new RKTopLevelWindowGUI (this));
+	RKTopLevelWindowGUI *toplevel_actions = new RKTopLevelWindowGUI (this);
+	insertChildClient (toplevel_actions);
+	connect (toplevel_actions->actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
+	statusBar ()->hide ();
 	createShellGUI ();
 
 // capture widget
@@ -70,6 +74,16 @@ void DetachedWindowContainer::updateCaption (RKMDIWindow *widget) {
 	RK_ASSERT (widget == captured);
 
 	setCaption (widget->fullCaption ());
+}
+
+void DetachedWindowContainer::slotSetStatusBarText (const QString &text) {
+	RK_TRACE (APP);
+
+	QString ntext = text.stripWhiteSpace ();
+	ntext.replace ("<qt>", "");	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
+
+	statusBar ()->message (ntext);
+	statusBar ()->show ();
 }
 
 void DetachedWindowContainer::slotReattach () {

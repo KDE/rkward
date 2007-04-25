@@ -184,6 +184,7 @@ void RKMDIWindow::initializeActivationSignals () {
 
 	RK_ASSERT (getPart ());
 	getPart ()->installEventFilter (this);
+	getPart ()->actionCollection ()->setHighlightingEnabled (true);
 }
 
 void RKMDIWindow::paintEvent (QPaintEvent *e) {

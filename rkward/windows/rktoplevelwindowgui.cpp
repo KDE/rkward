@@ -67,6 +67,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : QObject (for_wi
 
 	new KAction (i18n ("Show &Output"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
 
+	actionCollection ()->setWidget (for_window);
 	actionCollection ()->setHighlightingEnabled (true);
 }
 

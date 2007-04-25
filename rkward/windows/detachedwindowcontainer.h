@@ -43,6 +43,7 @@ public slots:
 	void slotReattach ();
 /** update own caption, when the window's caption has changed */
 	void updateCaption (RKMDIWindow *);
+	void slotSetStatusBarText (const QString &text);
 protected:
 /** when receiving a close event, dispatch to the embedded window */
 	void closeEvent (QCloseEvent *e);
