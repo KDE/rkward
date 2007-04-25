@@ -229,7 +229,6 @@ void RKWardMainWindow::doPostInit () {
 	RKWorkplace::mainWorkplace ()->registerToolWindow (help_search);
 	RKHelpSearchWindow::main_help_search = help_search;
 
-	dockManager->readConfig (kapp->config (), "tool window layout");
 	setUpdatesEnabled (true);
 
 	RKOutputWindow::initialize ();
@@ -435,8 +434,6 @@ void RKWardMainWindow::saveOptions () {
 	config->writeEntry("Geometry", size ());
 	fileOpenRecentWorkspace->saveEntries(config, "Recent Files");
 	fileOpenRecent->saveEntries(config, "Recent Command Files");
-
-	dockManager->writeConfig (config, "tool window layout");
 
 	RKSettings::saveSettings (config);
 
