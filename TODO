@@ -122,6 +122,8 @@ UI-stuff
 		- open .R (.RData, .r, .S, .s ....) files within RKWard
 		- some way to open pdf/ps/jpg/png files directly using viewer applications externally (like Kile?).
 	- provide a menu action / shortcut to switch to the directory of the current script file.
+	- Quitting:
+		- instead of closing windows one by one, and asking to save changes if necessary, first list all windows that might need to be saved, let the user chose to save them, then close all windows without further questions.
 
 Internal stuff:
 	- Handling fonts:
