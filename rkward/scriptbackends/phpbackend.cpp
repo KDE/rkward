@@ -56,7 +56,7 @@ bool PHPBackend::initialize (const QString &filename, RKComponentPropertyCode *c
 
 	QDir files_path (RKCommonFunctions::getRKWardDataDir () + "phpfiles/");
 	QString common_php = files_path.filePath ("common.php", false);
-	QString php_ini = files_path.filePath ("php_ini", false);
+	QString php_ini = files_path.filePath ("php.ini", false);
 	if (!QFileInfo (common_php).isReadable ()) {
 		KMessageBox::error (0, i18n ("The support file \"%1\" could not be found or is not readable. Please check your installation.").arg (common_php), i18n ("PHP-Error"));
 		emit (haveError ());
@@ -68,7 +68,7 @@ bool PHPBackend::initialize (const QString &filename, RKComponentPropertyCode *c
 	*php_process << "-c" << php_ini;	// set correct options
 	*php_process << common_php;
 	
-	// we have to be connect at all times! Otherwise the connection will be gone for good.
+	// we have to be connected at all times! Otherwise the connection will be gone for good.
 	//connect (php_process, SIGNAL (receivedStderr (KProcess *, char*, int)), this, SLOT (gotError (KProcess *, char*, int)));
 	connect (php_process, SIGNAL (wroteStdin (KProcess *)), this, SLOT (doneWriting (KProcess* )));
 	connect (php_process, SIGNAL (receivedStdout (KProcess *, char*, int)), this, SLOT (gotOutput (KProcess *, char*, int)));
@@ -238,11 +238,11 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int) {
 	// pending data is always first in a stream, so process it first, too
 	if (have_data) {
 		if (!startup_done) {
-				php_process->detach ();
-				KMessageBox::error (0, i18n ("There has been an error\n(\"%1\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKWard or an invalid setting for the location of the PHP support files. Check the settings (Settings->Configure Settings->PHP backend) and try again.").arg (output_raw_buffer.stripWhiteSpace ()), i18n ("PHP-Error"));
-				emit (haveError ());
-				destroy ();
-				return;
+			php_process->detach ();
+			KMessageBox::error (0, i18n ("There has been an error\n(\"%1\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKWard or a problem with your PHP installation. Check the settings (Settings->Configure Settings->PHP backend) and try again.").arg (output_raw_buffer.stripWhiteSpace ()), i18n ("PHP-Error"));
+			emit (haveError ());
+			destroy ();
+			return;
 		}
 	}
 
