@@ -28,11 +28,15 @@
 
 #include "../debug.h"
 
-RKMDIWindow::RKMDIWindow (QWidget *parent, Type type, bool tool_window, char *name) : QFrame (parent, name) {
+RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, char *name) : QFrame (parent, name) {
 	RK_TRACE (APP);
 
+	if (tool_window) {
+		type |= ToolWindow;
+	} else {
+		type |= DocumentWindow;
+	}
 	RKMDIWindow::type = type;
-	if (tool_window) RK_ASSERT (type & ToolWindow);
 	state = Attached;
 	wrapper = 0;
 	part = 0;

@@ -40,9 +40,11 @@ public:
 		WorkspaceBrowserWindow=128,
 		SearchHelpWindow=256,
 		PendingJobsWindow=512,
-		DocumentWindow = DataEditorWindow | CommandEditorWindow | OutputWindow | HelpWindow,
-		ToolWindow = ConsoleWindow | CommandLogWindow | WorkspaceBrowserWindow | SearchHelpWindow | PendingJobsWindow,
-		AnyType= DocumentWindow | ToolWindow
+		FileBrowserWindow=1024,
+
+		DocumentWindow=2048,
+		ToolWindow=4096,
+		AnyType=DocumentWindow | ToolWindow
 	};
 
 	enum State {
@@ -53,8 +55,8 @@ public:
 protected:
 /** constructor
 @param parent parent widget
-@param type Type of window */
-	RKMDIWindow (QWidget *parent, Type type, bool tool_window=false, char *name=0);
+@param type Type of window (see RKMDIWindow::Type).*/
+	RKMDIWindow (QWidget *parent, int type, bool tool_window=false, char *name=0);
 	virtual ~RKMDIWindow ();
 public:
 /** @returns true, if the window's document was modified (and would need to be saved) */
@@ -77,7 +79,7 @@ public:
 	bool isToolWindow () { return (type & ToolWindow); };
 /** Activate (raise) this window, regardless of whether it is attached or detached
 @param with_focus Should the window also get keyboard focus? */
-	void activate (bool with_focus=true);
+	virtual void activate (bool with_focus=true);
 /** If your mdi window should perform any adjustments before being attached, reimplement this function. Default implementation does nothing, but raises an assert, if this is a tool window */
 	virtual void prepareToBeAttached ();
 /** If your mdi window should perform any adjustments before being detached, reimplement this function. Default implementation does nothing, but raises an assert, if this is a tool window */
@@ -103,7 +105,7 @@ protected:
 	void windowActivationChange (bool);
 friend class RKWorkplace;
 /** type of this window */
-	Type type;
+	int type;
 private:
 /** state of this window (attached / detached). This is usually set from the RKWorkplace */
 	KParts::Part *part;
