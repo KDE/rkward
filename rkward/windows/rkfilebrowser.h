@@ -20,9 +20,14 @@
 
 #include "rkmdiwindow.h"
 
-class KDirOperator;
-class QVBox;
+#include <qvbox.h>
 
+class KDirOperator;
+class RKFileBrowserWidget;
+class KURLComboBox;
+class KFileItem;
+
+/** The file browser (tool) window. In order to save some startup time, the file browser is not really created until it is first shown. Hence, this is mostly just a wrapper around RKFileBrowserWidget */
 class RKFileBrowser : public RKMDIWindow {
 	Q_OBJECT
 public:
@@ -31,13 +36,32 @@ public:
 
 /** reimplemented to create the real file browser widget only when the file browser is shown for the first time */
 	void show ();
-/** reimplemented to call close on the browser widget */
-	void hide ();
 public slots:
 	void currentWDChanged ();
 private:
-	KDirOperator *real_widget;
-	QVBox *wrapper;
+	RKFileBrowserWidget *real_widget;
+	QVBox *layout_widget;
+};
+
+/** The internal widget used in RKFileBrowser 
+TODO: KDE4: check whether there is a ready widget for this. Much of the implementation is a modified copy from Kate / kdevelop.
+*/
+class RKFileBrowserWidget : public QVBox {
+	Q_OBJECT
+public:
+	RKFileBrowserWidget (QWidget *widget);
+	~RKFileBrowserWidget ();
+
+	bool eventFilter (QObject *watched, QEvent *e);
+	void setURL (const QString &url);
+public slots:
+	void urlChangedInView (const KURL &url);
+	void urlChangedInCombo (const QString &url);
+	void urlChangedInCombo (const KURL &url);
+	void fileActivated (const KFileItem *item);
+private:
+	KDirOperator *dir;
+	KURLComboBox *urlbox;
 };
 
 #endif

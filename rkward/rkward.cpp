@@ -67,6 +67,7 @@
 #include "windows/rkcommandlog.h"
 #include "windows/rkhelpsearchwindow.h"
 #include "windows/rktoplevelwindowgui.h"
+#include "windows/rkfilebrowser.h"
 #include "rkconsole.h"
 #include "debug.h"
 
@@ -212,6 +213,11 @@ void RKWardMainWindow::doPostInit () {
 	RObjectBrowser::mainBrowser ()->setIcon(SmallIcon("view_tree"));
 	RObjectBrowser::mainBrowser ()->setToolWrapper (addToolWindow(RObjectBrowser::mainBrowser (), KDockWidget::DockLeft, getMainDockWidget(), 30, i18n ("Existing objects in your workspace."), i18n ("Workspace")));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (RObjectBrowser::mainBrowser ());
+
+	RKFileBrowser *file_browser = new RKFileBrowser (0, true, "file_browser");
+	file_browser->setIcon (SmallIcon ("fileopen"));
+	file_browser->setToolWrapper (addToolWindow (file_browser, KDockWidget::DockLeft, getMainDockWidget (), 10, i18n ("File-system Browser"), i18n ("Files")));
+	RKWorkplace::mainWorkplace ()->registerToolWindow (file_browser);
 
 	RControlWindow::getControl ()->setCaption (i18n ("Pending Jobs"));
 	RControlWindow::getControl ()->setToolWrapper (addToolWindow (RControlWindow::getControl (), KDockWidget::DockBottom, getMainDockWidget (), 10));
