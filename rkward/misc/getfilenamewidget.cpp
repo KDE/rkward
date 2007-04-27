@@ -17,12 +17,11 @@
 #include "getfilenamewidget.h"
 
 #include <qlayout.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
 #include <qlabel.h>
 
 #include <klocale.h>
-#include <kfiledialog.h>
+#include <klineedit.h>
+#include <kurlrequester.h>
 
 #include "../debug.h"
 
@@ -33,34 +32,40 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, const QStr
 
 	vbox->addWidget (new QLabel (label, this));
 
-	QHBoxLayout *hbox = new QHBoxLayout (vbox, 6);
+	edit = new KURLRequester (this);
+	connect (edit, SIGNAL (textChanged (const QString &)), this, SLOT (locationEditChanged (const QString &)));
+	vbox->addWidget (edit);
 
-	location_edit = new QLineEdit (this);
-	location_edit->setText (initial);
-	connect (location_edit, SIGNAL (textChanged (const QString &)), this, SLOT (locationEditChanged (const QString &)));
-	hbox->addWidget (location_edit);
-	
-	browse_button = new QPushButton (i18n ("Browse"), this);
-	connect (browse_button, SIGNAL (clicked ()), this, SLOT (browseButtonClicked ()));
-	hbox->addWidget (browse_button);
-	
-	GetFileNameWidget::mode = mode;
-	
-	if (caption.isEmpty ()) {
-		GetFileNameWidget::caption = label;
+	edit->setURL (initial);
+	if (mode == ExistingDirectory) {
+		edit->setMode (KFile::Directory | KFile::ExistingOnly);
+	} else if (mode == ExistingFile) {
+		edit->setMode (KFile::File | KFile::ExistingOnly);
+	} else if (mode == SaveFile) {
+		edit->setMode (KFile::File);
 	} else {
-		GetFileNameWidget::caption = caption;
+		RK_ASSERT (false);
 	}
+
+	if (caption.isEmpty ()) edit->setCaption (label);
+	else edit->setCaption (caption);
 }
 
 GetFileNameWidget::~GetFileNameWidget () {
 	RK_TRACE (MISC);
 }
 
+void GetFileNameWidget::setFilter (const QString &filter) {
+	RK_TRACE (MISC);
+
+	RK_ASSERT (edit);
+	edit->setFilter (filter);
+}
+
 void GetFileNameWidget::setLocation (const QString &new_location) {
 	RK_TRACE (MISC);
 
-	location_edit->setText (new_location);
+	edit->setURL (new_location);
 }
 
 void GetFileNameWidget::locationEditChanged (const QString &) {
@@ -68,32 +73,14 @@ void GetFileNameWidget::locationEditChanged (const QString &) {
 	emit (locationChanged ());
 }
 
-void GetFileNameWidget::browseButtonClicked () {
-	RK_TRACE (MISC);
-	QString temp;
-	if (mode == ExistingDirectory) {
-		temp = KFileDialog::getExistingDirectory (location_edit->text (), this, caption);
-	} else if (mode == ExistingFile) {
-		temp = KFileDialog::getOpenFileName (location_edit->text (), _filter, this, caption);
-	} else if (mode == SaveFile) {
-		temp = KFileDialog::getSaveFileName (location_edit->text (), _filter, this, caption);
-	} else {
-		RK_ASSERT (false);
-	}
-
-	if (!temp.isEmpty ()) {
-		location_edit->setText (temp);
-	}
-}
-
 QString GetFileNameWidget::getLocation () {
-	return location_edit->text ();
+	return edit->url ();
 }
 
 void GetFileNameWidget::setBackgroundColor (const QColor & color) {
 	RK_TRACE (MISC);
 
-	location_edit->setBackgroundColor (color);
+	edit->lineEdit ()->setBackgroundColor (color);
 }
 
 #include "getfilenamewidget.moc"

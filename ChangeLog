@@ -1,3 +1,5 @@
+- all file selection line edits gain filename-completion
+- add a basic file selector window
 - fixed: starting the scatterplot plugin in wizard mode would crash rkward
 - show the focus indication (thin red border) also for detached windows
 - tool windows can be closed and detached in the same way as regular windows

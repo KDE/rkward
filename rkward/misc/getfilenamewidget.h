@@ -20,11 +20,10 @@
 #include <qwidget.h>
 #include <qstring.h>
 
-class QLineEdit;
-class QPushButton;
+class KURLRequester;
 
 /**
-Simple convenience class used to get a file/directoryname from the user. Basically provides a line-edit and a "browse"-button.
+Simple convenience class used to get a file/directoryname from the user. Basically provides a wrapper around KURLRequester.
 
 @author Thomas Friedrichsmeier
 */
@@ -37,7 +36,7 @@ public:
 	~GetFileNameWidget ();
 
 /** set filename pattern filter, e.g. "*.cpp *.cc *.C|C++ Source Files\n*.h *.H|Header files" */
-	void setFilter (const QString &filter) { _filter = filter; };
+	void setFilter (const QString &filter);
 /** set the filename/location from outside */
 	void setLocation (const QString &new_location);
 
@@ -47,15 +46,10 @@ public:
 	QString getLocation ();
 public slots:
 	void locationEditChanged (const QString &);
-	void browseButtonClicked ();
 signals:
 	void locationChanged ();
 private:
-	QLineEdit *location_edit;
-	QPushButton *browse_button;
-	QString caption;
-	QString _filter;
-	FileType mode;
+	KURLRequester *edit;
 };
 
 #endif
