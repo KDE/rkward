@@ -28,6 +28,7 @@
 				</row>
 			</tab>
 			<tab label="Chisquare Options" id="chi_options">
+				<checkbox id="simpv" label="Simulate p value" value="TRUE" value_unchecked="FALSE" checked="false" />
 				<radio id="monte" label="Method">
 					<option value="FALSE" label="Asymptotic"  checked="true" />				
 					<option value="TRUE" label="Monte Carlo" />
