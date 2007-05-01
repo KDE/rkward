@@ -26,14 +26,14 @@ function doPrintout ($final) {
 	
 ?>
 x <- (<? echo ($x); ?>)
-y <- cbind (<? echo ($yvarsstring); ?>)
+y <- data.frame (<? echo ($yvarsstring); ?>)
 
 for (i in 1:dim(y)[2]){
-xy<-table(x,y[,i])
+xy<-table(y[,i],x)
 rk.header ("Crosstabs", list ("Dependent", rk.get.description (<? echo ($x); ?>), "Independent", rk.get.description (<? echo ($yvarsstring); ?>)[i]))
 
 <?	if ($final) { ?>
-rk.print(xtable(cbind(xy)))
+rk.print(xtable(cbind(xy), digits=0))
 <?	if (getRK_val ("chisq") == "TRUE") { ?>
 rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Dependent", rk.get.description (<? echo ($x); ?>), "Independent", rk.get.description (<? echo ($yvarsstring); ?>)[i], "Simulate p vlaue", "<? getRK ("simpv");?>", "Monte Carlo", "<? getRK ("monte"); ?>" <? if (getRK_val ("monte") == "TRUE") { ?>,  "Number of replicates", <? getRK ("B"); }?> ))
 xsquared<-cbind(
