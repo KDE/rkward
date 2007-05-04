@@ -257,7 +257,7 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	pluginmapfiles.insert (QFileInfo (plugin_map_file).absFilePath (), pluginmap_file_desc);
 
 	// step 1: include required files
-	int counter;
+	int counter = 0;
 	QStringList includelist;
 	list = xml->getChildElements (document_element, "require", DL_INFO);
 	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
@@ -299,7 +299,7 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 
 	// step 3: create / insert into menus
 	QDomElement xmlgui_menubar_element = xml->getChildElement (gui_xml.documentElement (), "MenuBar", DL_ERROR);
-	counter = createMenus (xmlgui_menubar_element, xml->getChildElement (document_element, "hierarchy", DL_INFO), cnamespace);
+	counter += createMenus (xmlgui_menubar_element, xml->getChildElement (document_element, "hierarchy", DL_INFO), cnamespace);
 
 	// step 4: create and register contexts
 	list = xml->getChildElements (document_element, "context", DL_INFO);
@@ -315,6 +315,7 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	}
 
 	setXMLGUIBuildDocument (gui_xml);
+	qDebug ("%s: %d", plugin_map_file.latin1(), counter);
 	return counter;
 }
 

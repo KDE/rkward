@@ -31,5 +31,5 @@
 		</menu>
 	</hierarchy>
 
-	<require file="../embedded.pluginmap"/>
+	<require file="embedded.pluginmap"/>
 </document>

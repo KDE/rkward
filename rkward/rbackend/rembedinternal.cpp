@@ -836,7 +836,14 @@ Problems to deal with:
 	- Also, in case the command was too long to fit inside the buffer at once (repldll_buffer_transfer_finished)
 - Some more state variables are used for figuring out, which type of error occurred, if any, since we don't get any decent return value
 
-This is the logic spread out over the following section, runUserCommandInternal (), and RReadConsole (). */
+This is the logic spread out over the following section, runUserCommandInternal (), and RReadConsole (). 
+
+NOTE from Deepayan Sarkar: Another possible simplification (which may not be worth doing
+ultimately): you distinguish between two types of calls to
+R_ReadConsole based on R_busy calls, but you may be able to use the
+second 'hist' argument. I didn't look too carefully, but it seems like
+hist == 1 iff R wants a parse-able input.
+*/
 
 		R_ReplDLLinit ();		// resets the parse buffer (things might be left over from a previous incomplete parse)
 		bool prev_iteration_was_incomplete = false;
