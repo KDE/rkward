@@ -315,7 +315,6 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	}
 
 	setXMLGUIBuildDocument (gui_xml);
-	qDebug ("%s: %d", plugin_map_file.latin1(), counter);
 	return counter;
 }
 
