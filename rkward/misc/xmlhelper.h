@@ -47,8 +47,13 @@ public:
 When calling this function, highestError () will be reset to 0.
 @param filename the name of the file to parse
 @param debug_level level of debug message to generate if opening/parsing fails
+@param with_includes should be helper take care of resolving "include" elements?
+@param with_snippets should be helper take care of resolving "insert" elements?
 @returns the document-element of the file. */
-	QDomElement openXMLFile (const QString &filename, int debug_level);
+	QDomElement openXMLFile (const QString &filename, int debug_level, bool with_includes=true, bool with_snippets=true);
+
+/** resolve "snippet" elements in the given element. It is assumed that the from element will contain a "snippets" section, i.e. it is generally a document. */
+	QDomElement resolveSnippets (QDomElement &from);
 
 /** returns all (direct) child elements with a given tag-name of the given parent
 @param parent the element whose children to return
@@ -137,6 +142,9 @@ When calling this function, highestError () will be reset to 0.
 /** @returns a pointer to the default instance of XMLHelper (if none has been created so far, this will happen automatically. */
 	static XMLHelper *getStaticHelper ();
 private:
+/** copy the node list into a child list. The main effect is that a child list is not updated according to document changes */
+	XMLChildList nodeListToChildList (const QDomNodeList &from);
+	void replaceWithChildren (QDomNode *replaced, const QDomElement &replacement_parent);
 	int highest_error;
 	static XMLHelper *static_xml_helper;
 	QString filename;

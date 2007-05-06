@@ -3,10 +3,11 @@
 	<code file="plot_t_distribution.php" />
 	<help file="plot_t_distribution.rkh" />
 	<logic>
-		<convert id="dodist" mode="equals" sources="function.string" standard="pt" />
-		<connect client="lower.enabled" governor="dodist" />
-		<set id="plotoptions.allow_log" to="false"/>
+		<insert snippet="common_logic"/>
 	</logic>
+	<snippets>
+		<include file="plot_dist_common.xml"/>
+	</snippets>
 	<dialog label="Plot Student T probabilities" >
 		<tabbook>
 			<tab label="Plot Student T probabilities" >
@@ -29,15 +30,7 @@
 						</row>
 					</column>
 					<column>
-						<radio id="function" label="Choose type of function plot" >
-							<option value="dt" label="Plot density function" />
-							<option value="pt" label="Plot distribution" />
-						</radio>
-						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
-						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
-						<stretch/>
-						<preview id="preview" label="Preview"/>
-						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
+						<insert snippet="common_options"/>
 					</column>
 				</row>
 			</tab>

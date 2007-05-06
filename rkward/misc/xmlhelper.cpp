@@ -21,6 +21,8 @@
 
 #include <qstringlist.h>
 #include <qfile.h>
+#include <qfileinfo.h>
+#include <qdir.h>
 
 #include "../debug.h"
 
@@ -47,7 +49,7 @@ XMLHelper *XMLHelper::getStaticHelper () {
 	return static_xml_helper;
 }
 
-QDomElement XMLHelper::openXMLFile (const QString &filename, int debug_level) {
+QDomElement XMLHelper::openXMLFile (const QString &filename, int debug_level, bool with_includes, bool with_snippets) {
 	RK_TRACE (XML);
 
 	int error_line, error_column;
@@ -64,7 +66,93 @@ QDomElement XMLHelper::openXMLFile (const QString &filename, int debug_level) {
 	}
 	f.close();
 
-	return doc.documentElement ();
+	QDomElement ret = doc.documentElement ();
+	if (with_includes) {
+		XMLChildList includes = nodeListToChildList (doc.elementsByTagName ("include"));
+		for (XMLChildList::const_iterator it = includes.constBegin (); it != includes.constEnd (); ++it) {
+			// resolve the file to include
+			QDomElement el = *it;
+
+			QString inc_filename = getStringAttribute (el, "file", QString::null, DL_ERROR);
+			QDir base = QFileInfo (filename).dir (true);
+			inc_filename = base.filePath (inc_filename);
+
+			// import
+			QDomElement included = openXMLFile (inc_filename, debug_level, true, false);
+			QDomElement copied = doc.importNode (included, true).toElement ();
+
+			// insert everything within the document tag
+			replaceWithChildren (&el, copied);
+		}
+	}
+
+	if (with_snippets) {
+		return (resolveSnippets (ret));
+	}
+
+	return (ret);
+}
+
+void XMLHelper::replaceWithChildren (QDomNode *replaced, const QDomElement &replacement_parent) {
+	RK_TRACE (XML);
+	RK_ASSERT (replaced);
+
+	QDomNode parent = replaced->parentNode ();
+	XMLChildList replacement_children = getChildElements (replacement_parent, QString::null, DL_WARNING);
+	for (XMLChildList::const_iterator it = replacement_children.constBegin (); it != replacement_children.constEnd (); ++it) {
+		parent.insertBefore (*it, *replaced);
+	}
+	parent.removeChild (*replaced);
+}
+
+XMLChildList XMLHelper::nodeListToChildList (const QDomNodeList &from) {
+	RK_TRACE (XML);
+
+	int count = from.count ();
+	XMLChildList ret;
+	for (int i = 0; i < count; ++i) {
+		ret.append (from.item (i).toElement ());
+	}
+	return ret;
+}
+
+QDomElement XMLHelper::resolveSnippets (QDomElement &from_doc) {
+	RK_TRACE (XML);
+
+	XMLChildList refs = nodeListToChildList (from_doc.elementsByTagName ("insert"));
+	int ref_count = refs.count ();
+
+	if (!ref_count) {	// nothing to resolve
+		return (from_doc);
+	}
+
+	QDomElement snippets_section = getChildElement (from_doc, "snippets", DL_ERROR);
+	XMLChildList snippets = getChildElements (snippets_section, "snippet", DL_ERROR);
+
+	for (XMLChildList::const_iterator it = refs.constBegin (); it != refs.constEnd (); ++it) {
+		QDomElement ref = *it;
+		QString id = getStringAttribute (ref, "snippet", QString::null, DL_ERROR);
+		displayError (&ref, "resolving snippet '" + id + "'", DL_DEBUG, DL_DEBUG);
+
+		// resolve the reference
+		QDomElement snippet;
+		for (XMLChildList::const_iterator it = snippets.constBegin(); it != snippets.constEnd (); ++it) {
+			if (getStringAttribute (*it, "id", QString::null, DL_ERROR) == id) {
+				snippet = *it;
+				break;
+			}
+		}
+		if (snippet.isNull ()) {
+			displayError (&ref, "no such snippet '" + id + "'", DL_ERROR, DL_ERROR);
+		}
+
+		// now insert it.
+		replaceWithChildren (&ref, snippet.cloneNode (true).toElement ());
+	}
+
+	qDebug ("%s", from_doc.ownerDocument().toString ().latin1 ());
+
+	return from_doc;
 }
 
 XMLChildList XMLHelper::getChildElements (const QDomElement &parent, const QString &name, int debug_level) {
