@@ -1,0 +1,22 @@
+<!DOCTYPE rkplugin>
+<document>
+	<snippet id="common_options">
+		<radio id="function" label="Choose type of function plot" >
+			<option value="dt" label="Plot density function" />
+			<option value="pt" label="Plot distribution" />
+		</radio>
+		<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
+		<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
+		<stretch/>
+		<preview id="preview" label="Preview"/>
+		<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
+	</snippet>
+	<snippet id="common_logic">
+		<convert id="dodist" mode="equals" sources="function.string" standard="pt" />
+		<connect client="lower.enabled" governor="dodist" />
+		<set id="plotoptions.allow_log" to="false"/>
+	</snippet>
+	<snippet id="common_obs">
+		<spinbox type="integer" id="n" initial="100" min="1" label="Number of Observations" />
+	</snippet>
+</document>

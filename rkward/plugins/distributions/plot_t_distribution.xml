@@ -6,7 +6,7 @@
 		<insert snippet="common_logic"/>
 	</logic>
 	<snippets>
-		<include file="plot_dist_common.xml"/>
+		<include file="plot_dist_common_snippets.xml"/>
 	</snippets>
 	<dialog label="Plot Student T probabilities" >
 		<tabbook>
@@ -14,7 +14,7 @@
 				<row>
 					<column>
 						<row>
-							<spinbox type="integer" id="n" initial="100" min="1" label="Number of Observations" />
+							<insert snippet="common_obs"/>
 						</row>
 						<row>
 							<frame label="Range" >
