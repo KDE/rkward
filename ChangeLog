@@ -12,10 +12,12 @@
 - Messages, warnings, and errors for plugin commands are shown in the output, instead of in a dialog
 
 --- Version 0.4.7a - May-07-2007
+- add sanity check for the detected stack limits
 - fixed: one some systems rkward would crash or not compile due to missing fortran symbols
 - fixed: starting the scatterplot plugin in wizard mode would crash rkward
 - tab-completion in the console will do partial completion, if all potential completions have a common start
 - fixed: file-name completion would always assume the home directory as the current directory
+- update turkish translation
 - compilation fix for FreeBSD (thanks to Thierry Thomas)
 - fixed: when executing commands line by line from the script editor, line breaks would be omitted
 
