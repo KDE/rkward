@@ -1,7 +1,6 @@
 - support for including files and snippets in xml files		TODO: document, use
 - all file selection line edits gain filename-completion
 - add a basic file selector window
-- fixed: starting the scatterplot plugin in wizard mode would crash rkward
 - show the focus indication (thin red border) also for detached windows
 - tool windows can be closed and detached in the same way as regular windows
 - fix a crash with detached tool windows
@@ -10,11 +9,15 @@
 - add possibility to blacklist packages from fetching structure information. Package GO is blacklisted by default.
 - when fetching the structure of "promise" R objects, don't keep them in memory
 - optimize the function to retrieve the structure of R object (for display in the object browser, and completion)
+- Messages, warnings, and errors for plugin commands are shown in the output, instead of in a dialog
+
+--- Version 0.4.7a - May-07-2007
+- fixed: one some systems rkward would crash or not compile due to missing fortran symbols
+- fixed: starting the scatterplot plugin in wizard mode would crash rkward
 - tab-completion in the console will do partial completion, if all potential completions have a common start
 - fixed: file-name completion would always assume the home directory as the current directory
 - compilation fix for FreeBSD (thanks to Thierry Thomas)
 - fixed: when executing commands line by line from the script editor, line breaks would be omitted
-- Messages, warnings, and errors for plugin commands are shown in the output, instead of in a dialog
 
 --- Version 0.4.7 - Apr-11-2007
 - some fixes for GCC 4.3
