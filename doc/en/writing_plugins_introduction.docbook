@@ -837,6 +837,145 @@ This is nothing new in principle, we've covered &lt;connect&gt; statements in th
 </section>
 </chapter>
 
+<chapter id="plugin_series">
+<title>Dealing with many similar plugins</title>
+<para>
+Sometimes, you may wish to develop plugins for a series of similar functions. As an example, consider the distribution plots. These generate fairly similar code, and of course it's desirable to make the graphical interfaces look similar to each other. Finally large sections of the help files can be identical. Only a few parameters are different for each plugin.
+</para>
+<para>
+The naive approach to this is to develop one plugin, then basically copy and paste the entire contents of the .php, .xml, and .rkh files, then changing the few portions that are different. However, what if sometime later you find a spelling mistake that has been copied and pasted to all plugins? What if you want to add support for a new feature? You'd have to visit all plugins again, and change each single one. A tiresome and tedious process.
+</para>
+<para>
+A second approach would be to use <link linkend="embedding">embedding</link>. However, in some cases this does not lend itself well to the problem at hand, mostly because the "chunks" you can embed are sometimes too large to be useful, and it places some constraints on the layout. For these cases, the concepts <link linkend="include_php">including .php files</link> <link linkend="include_xml">including .xml files</link> and <link linkend="snippets">snippets</link> can be very useful (but see the <link linkend="include_snippets_vs_embedding">thoughts on when it is preferrable to use embedding</link>).
+</para>
+	<section id="include_php">
+	<title>Using the PHP include statement</title>
+	<para>
+Perhaps one of the most important features of PHP is that you can easily include one script file inside another. The value of this becomes immediately obvious, if some sections of your PHP code are similar across plugins. You can simply define those sections in a separate .php file, and include this in all the plugin .php files. For example, as in:
+	</para>
+	<programlisting>
+&lt;?
+// this is a file called "common_functions.php"
+
+function doCommonStuff () {
+	// perhaps fetch some options, etc.
+	// ...
+?&gt;
+# This is R code you want in several different plugins
+&lt;?
+}
+?&gt;
+	</programlisting>
+	<programlisting>
+&lt;?
+// this is one of your regular plugin .php files
+
+// include the common functions
+include ("common_functions.php");
+
+function calculate () {
+	// do something
+	// ...
+
+	// insert the common code
+	doCommonStuff ();
+}
+?&gt;
+	</programlisting>
+	<para>
+Note that sometimes it's even more useful to reverse this, and define the "skeleton" of preproces(), calculate(), and printout() functions is a common file, and make these call back for those part which are different across plugins. E.g.:
+	</para>
+	<programlisting>
+&lt;?
+// this is a file called "common_functions.php"
+
+function calculate () {
+	// do some things which are the same in all plugins
+	// ...
+
+	// add in something that is different across plugins
+	getSpecifics ();
+
+	// ...
+}
+?&gt;
+	</programlisting>
+	<programlisting>
+&lt;?
+// this is one of your regular plugin .php files
+
+// include the common functions
+include ("common_functions.php");
+
+// note: no calculate() function is defined in here.
+// it in the common_functions.php, instead.
+
+function getSpecifics () {
+	// print some R code
+}
+?&gt;
+	</programlisting>
+	<para>
+One issue you should be aware of when using this technique is variable scoping. See the PHP manual on the keyword "global".
+	</para>
+	<para>
+This technique is heavily used in the distribution plot and distribution CLT plot plugins, so you may want to look there for examples.
+	</para>
+	</section>
+
+	<section id="include_xml">
+	<title>Including .xml files</title>
+	<para>
+Basically the same feature of including files that is standard in PHP is also available for use in the .xml and .rkh files. At any place in these files you can place an &lt;include&gt; tag as shown below. The effect is that the entire contents of that XML file (to be precise: everything within the &lt;document&gt; tag of that file) is included verbatim at this point in the file. Note that you can only include another XML file.
+	</para>
+	<programlisting>
+&lt;document&gt;
+	[...]
+	&lt;include file="another_xml_file.xml"/&gt;
+	[...]
+&lt;/document&gt;
+	</programlisting>
+	<para>
+The attribute "file" is the filename relative to the directory the current file is located in.
+	</para>
+	</section>
+
+	<section id="snippets">
+	<title>Using &lt;snippets&gt;</title>
+	<para>
+While including files as shown in the <link linkend="include_xml">previous section</link> is fairly powerful, it become most useful when used in combination with &lt;snippets&gt;. Snippets are really smaller sections which you can insert at another point in the file. An example illustrates this best:
+	</para>
+	<programlisting>
+	</programlisting>
+	<para>
+Hence, you define the snippet at one place at the top of the xml file, and then you &lt;insert&gt; it at any place you wish.
+	</para>
+	<para>
+While this example is not too useful in itself, think about combining this with an &lt;include&gt;d .xml file:
+	</para>
+	<programlisting>
+	</programlisting>
+	<programlisting>
+	</programlisting>
+	<para>
+Similar to <link linkend="include_php">inclusion in PHP</link>, the reverse approach is often even more useful:
+	</para>
+	<programlisting>
+	</programlisting>
+	<programlisting>
+	</programlisting>
+	</section>
+
+	<section id="include_snippets_vs_embedding">
+	<title>&lt;include&gt; and &lt;snippets&gt; vs. embedding</title>
+	<para>
+At first glance, &lt;include&gt; and &lt;snippets&gt; provides functionality rather similar to <link linkend="embedding">embedding</link>: It allows to reuse some portions of code across plugins. So what's the difference between these approaches, and when should you use which?
+	</para>
+	<para>
+	</para>
+	</section>
+</chapter>
+
 <chapter id="specialized_plugins">
 <title>Concepts for use in specialized plugins</title>
 <para>
