@@ -1,40 +1,26 @@
 <!DOCTYPE rkplugin>
-<!--This is the simple "Plot geometric probabilities" plugin-->
 <document>
 	<code file="plot_geometric_distribution.php" />
 	<help file="plot_geometric_distribution.rkh" />
 	<logic>
-		<convert id="dodist" mode="equals" sources="function.string" standard="pgeom" />
-		<connect client="lower.enabled" governor="dodist" />
-		<set id="plotoptions.allow_log" to="false"/>
+		<insert snippet="common_logic"/>
 		<set id="plotoptions.default_pointtype" to="p"/>
 	</logic>
+	<snippets>
+		<snippet id="range_options">
+			<frame label="Range" >
+				<spinbox type="integer" min = "0" id="min" initial="0" label="Lower quantile" />
+				<spinbox type="integer" min = "0" id="max" initial="12" label="Upper quantile" />
+			</frame>
+		</snippet>
+		<snippet id="dist_options">
+			<frame label="Parameters">
+				<spinbox default_precision="2" type="real" id="prob" initial="0.5" min="0" max="1" label="Probability of success on each trial" />
+			</frame>
+		</snippet>
+		<include file="plot_dist_common_snippets.xml"/>
+	</snippets>
 	<dialog label="Plot geometric probabilities" >
-		<tabbook>
-			<tab label="Plot geometric probabilities" >
-				<row>
-					<column>
-						<frame label="Range" >
-							<spinbox type="integer" min = "0" id="min" initial="0" label="Lower quantile" />
-							<spinbox type="integer" min = "0" id="max" initial="12" label="Upper quantile" />
-						</frame>
-						<frame label="Parameters">
-							<spinbox default_precision="2" type="real" id="prob" initial="0.5" min="0" max="1" label="Probability of success on each trial" />
-						</frame>
-					</column>
-					<column>
-						<radio id="function" label="Choose type of function plot" >
-							<option value="dgeom" label="Plot density function" />
-							<option value="pgeom" label="Plot distribution" />
-						</radio>
-						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
-						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
-						<stretch/>
-						<preview id="preview" label="Preview"/>
-						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
-					</column>
-				</row>
-			</tab>
-		</tabbook>
+		<include file="plot_dist_common_dialog_layout.xml"/>
 	</dialog>
 </document>

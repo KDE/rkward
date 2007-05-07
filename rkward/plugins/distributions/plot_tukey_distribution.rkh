@@ -16,7 +16,6 @@ Distribution function plot for the Studentized Range (Tukey) distribution.
 		<setting id="nmeans">See R reference on Tukey distribution.</setting>
 		<setting id="df">See R reference on Tukey distribution.</setting>
 		<setting id="nranges">See R reference on Tukey distribution.</setting>
-		<setting id="ncp">Non-centrality parameter of the Beta distribution.</setting>
 		<insert snippet="common_options_help"/>
 	</settings>
 

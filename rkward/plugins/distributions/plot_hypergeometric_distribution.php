@@ -1,58 +1,30 @@
 <?
-function preprocess () {
-}
+include ("plot_dist_common.php");
 
-function calculate () {
-}
+function getParameters () {
+	global $options;
 
-function printout () {
-	doPrintout (true);
-}
+	$options['n_val'] = getRK_val ("n_val");
+	$options['m'] = getRK_val ("m");
+	$options['k'] = getRK_val ("k");
+	getDiscontRangeParameters();
 
-function preview () {
-	preprocess ();
-	calculate ();
-	doPrintout (false);
-}
-
-function doPrintout ($final) {
-
-	$fun = getRK_val ("function");
-	$log_option = "";
-	if ($fun == "dhyper") {
-		$label = "mass";
-		$lower_tag = "";
-		$tail_tag = "";
-		if (getRK_val ("log")) $log_option = ", log=TRUE";
+	if ($options['is_density']) {
+		$options['fun'] = "dhyper";
 	} else {
-		$label = "distribution";
-		if (getRK_val("lower") == "1") {
-			$lower_tag = ", lower.tail = TRUE";
-			$tail_tag = ", \"Tail\",\"Lower\"";
-		} else {
-			$lower_tag = ", lower.tail = FALSE";
-			$tail_tag = ", \"Tail\",\"Upper\"";
-		}
-		if (getRK_val ("log")) $log_option = ", log.p=TRUE";
+		$options['fun'] = "phyper";
 	}
-	$min = getRK_val ("min");
-	$max = getRK_val ("max");
-	if (getRK_val ("log") == "1") $log_label="logarithmic";
-	else $log_label="normal";
-	$n = getRK_val ("n");
-	$m = getRK_val ("m");
-	$k = getRK_val ("k");
+}
 
-	if ($final) { ?>
-rk.header ("Hypergeometric <? echo ($label); ?> function", list ("Lower quantile", "<? echo ($min); ?>", "Upper quantile", "<? echo ($max); ?>", "Number of white balls", "<? echo ($m); ?>",  "Number of black balls", "<? echo ($n); ?>", "Number of balls drawn", "<? echo ($k); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
+function doHeader () {
+	global $options;
 
-rk.graph.on ()
-<? }
-?>
-try (curve (<? echo ($fun); ?> (x, m = <? echo ($m); ?>, n = <? echo ($n); ?>, k = <? echo ($k); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($max - $min + 1); ?><? getRK ("plotoptions.code.printout"); ?><? echo ($type_tag); ?>))
+	echo ('rk.header ("Hypergeometric ' . $options['label'] . ' function", list ("Lower quantile", "' . $options['min'] . '", "Upper quantile", "' . $options['max'] . '", "Number of white balls", "' . $options['m'] . '", "Number of black balls", "' . $options['n_val'] . '", "Number of balls drawn", "' . $options['k'] . '"' . $options['log_label'] . $options['tail_label'] . ', "Function", "' . $options['fun'] . '"));' . "\n");
+}
 
-<?	if ($final) { ?>
-rk.graph.off ()
-<? }
+function doFunCall () {
+	global $options;
+
+	echo ($options['fun'] . '(x, m=' . $options['m'] . ', n=' . $options['n_val'] . ', k=' . $options['k'] . $options['log_option'] . $options['tail_option'] . ')'); 
 }
 ?>

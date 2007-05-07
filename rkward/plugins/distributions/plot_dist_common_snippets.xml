@@ -42,4 +42,8 @@
 		<setting id="min">Smallest value at which the function is to be plotted.</setting>
 		<setting id="max">Largest value at which the function is to be plotted. So, the function will be evaluated at 'n' equally spaced points between the lower quantile and the upper quantile (inclusive of end points).</setting>
 	</snippet>
+	<snippet id="discont_range_help">
+		<setting id="min">Smallest value at which the function is to be plotted.</setting>
+		<setting id="max">Largest value at which the function is to be plotted. Since this is a discrete distribution the function will be evaluated at all the integers between the lower quantile and the upper quantile (inclusive of the end points).</setting>
+	</snippet>
 </document>

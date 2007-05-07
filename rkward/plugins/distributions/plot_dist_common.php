@@ -24,6 +24,15 @@ function getContRangeParameters () {
 	$options['max'] = getRK_val ("max");
 }
 
+// get the range parameters for the discontinuous distributions (it's all the same for these)
+function getDiscontRangeParameters () {
+	global $options;
+
+	$options['min'] = getRK_val ("min");
+	$options['max'] = getRK_val ("max");
+	$options['n'] = $options['max'] - $options['min'] + 1;
+}
+
 function doPrintout ($final) {
 	global $options;
 

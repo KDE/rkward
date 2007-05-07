@@ -1,42 +1,28 @@
 <!DOCTYPE rkplugin>
-<!--This is the simple "Plot hypergeometric probabilities" plugin-->
 <document>
 	<code file="plot_hypergeometric_distribution.php" />
 	<help file="plot_hypergeometric_distribution.rkh" />
 	<logic>
-		<convert id="dodist" mode="equals" sources="function.string" standard="phyper" />
-		<connect client="lower.enabled" governor="dodist" />
-		<set id="plotoptions.allow_log" to="false"/>
+		<insert snippet="common_logic"/>
 		<set id="plotoptions.default_pointtype" to="p"/>
 	</logic>
+	<snippets>
+		<snippet id="range_options">
+			<frame label="Range" >
+				<spinbox type="integer" min = "0" id="min" initial="0" label="Lower quantile" />
+				<spinbox type="integer" min = "0" id="max" initial="12" label="Upper quantile (at most k)" />
+			</frame>
+		</snippet>
+		<snippet id="dist_options">
+			<frame label="Parameters">
+				<spinbox type="integer" id="m" min="0" initial="12" label="Number of white balls (m)" />
+				<spinbox type="integer" id="n_val" min="0" initial="12" label="Number of black balls (n)" />
+				<spinbox type="integer" id="k" min="0" initial="15" label="Number of balls drawn (k)" />
+			</frame>
+		</snippet>
+		<include file="plot_dist_common_snippets.xml"/>
+	</snippets>
 	<dialog label="Plot hypergeometric probabilities" >
-		<tabbook>
-			<tab label="Plot hypergeometric probabilities" >
-				<row>
-					<column>
-						<frame label="Range" >
-							<spinbox type="integer" min = "0" id="min" initial="0" label="Lower quantile" />
-							<spinbox type="integer" min = "0" id="max" initial="12" label="Upper quantile (at most k)" />
-						</frame>
-						<frame label="Parameters">
-							<spinbox type="integer" id="m" min="0" initial="12" label="Number of white balls (m)" />
-							<spinbox type="integer" id="n" min="0" initial="12" label="Number of black balls (n)" />
-							<spinbox type="integer" id="k" min="0" initial="15" label="Number of balls drawn (k)" />
-						</frame>
-					</column>
-					<column>
-						<radio id="function" label="Choose type of function plot" >
-							<option value="dhyper" label="Plot density function" />
-							<option value="phyper" label="Plot distribution" />
-						</radio>
-						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
-						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
-						<stretch/>
-						<preview id="preview" label="Preview"/>
-						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
-					</column>
-				</row>
-			</tab>
-		</tabbook>
+		<include file="plot_dist_common_dialog_layout.xml"/>
 	</dialog>
 </document>

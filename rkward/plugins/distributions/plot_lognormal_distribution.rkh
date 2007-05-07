@@ -15,7 +15,6 @@ Density and distribution function plots for the Lognormal distribution.
 		<insert snippet="cont_range_help"/>
 		<setting id="mean">See R reference on Lognormal distribution.</setting>
 		<setting id="sd">See R reference on Lognormal distribution.</setting>
-		<setting id="ncp">Non-centrality parameter of the Beta distribution.</setting>
 		<insert snippet="common_options_help"/>
 	</settings>
 

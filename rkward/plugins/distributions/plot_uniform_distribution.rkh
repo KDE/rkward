@@ -15,7 +15,6 @@ Density and distribution function plots for the Uniform distribution.
 		<insert snippet="cont_range_help"/>
 		<setting id="llim">See R reference on Uniform distribution.</setting>
 		<setting id="ulim">See R reference on Uniform distribution.</setting>
-		<setting id="ncp">Non-centrality parameter of the Beta distribution.</setting>
 		<insert snippet="common_options_help"/>
 	</settings>
 
