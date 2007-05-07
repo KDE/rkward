@@ -1,60 +1,31 @@
 <?
-function preprocess () {
-}
+include ("plot_dist_common.php");
 
-function calculate () {
-}
+function getParameters () {
+	global $options;
 
-function printout () {
-	doPrintout (true);
-}
+	$options['df'] = getRK_val ("df");
+	$options['nmeans'] = getRK_val ("nmeans");
+	$options['nranges'] = getRK_val ("nranges");
+	getContRangeParameters ();
 
-function preview () {
-	preprocess ();
-	calculate ();
-	doPrintout (false);
-}
-
-function doPrintout ($final) {
-
-// 	$fun = getRK_val ("function");
-	$fun = "ptukey";
-	$log_option = "";
-	if ($fun == "dtukey") {
-		$label = "density";
-		$lower_tag = "";
-		$tail_tag = "";
-		if (getRK_val ("log")) $log_option = ", log=TRUE";
+	if ($options['is_density']) {
+		// actually, this can never happen in this case, but we add it here, for consistency with the other plugins
+		$options['fun'] = "dtukey";
 	} else {
-		$label = "distribution";
-		if (getRK_val("lower") == "1") {
-			$lower_tag = ", lower.tail = TRUE";
-			$tail_tag = ", \"Tail\",\"Lower\"";
-		} else {
-			$lower_tag = ", lower.tail = FALSE";
-			$tail_tag = ", \"Tail\",\"Upper\"";
-		}
-		if (getRK_val ("log")) $log_option = ", log.p=TRUE";
+		$options['fun'] = "ptukey";
 	}
-	if (getRK_val ("log") == "1") $log_label="logarithmic";
-	else $log_label="normal";
-	$n = getRK_val ("n");
-	$min = getRK_val ("min");
-	$max = getRK_val ("max");
-	$df = getRK_val ("df");
-	$nmeans = getRK_val ("nmeans");
-	$nranges = getRK_val ("nranges");
+}
 
-	if ($final) { ?>
-rk.header ("Tukey <? echo ($label); ?> function", list ("Number of Observations", "<? echo ($n); ?>", "Lower quantile", "<? echo ($min); ?>","Upper quantile", "<? echo ($max); ?>", "Sample size for range", "<? echo ($nmeans); ?>", "Degreed of freedom for s", "<? echo ($df); ?>", "Number of groups", "<? echo ($nranges); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
+function doHeader () {
+	global $options;
 
-rk.graph.on ()
-<? }
-?>
-try (curve (<? echo ($fun); ?> (x, nmeans = <? echo ($nmeans); ?>, df = <? echo ($df); ?>, nranges = <? echo ($nranges); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?><? getRK ("plotoptions.code.printout"); ?>))
+	echo ('rk.header ("Tukey ' . $options['label'] . ' function", list ("Number of Observations", "' . $options['n'] . '", "Lower quantile", "' . $options['min'] . '", "Upper quantile", "' . $options['max'] . '", "Sample size for range", "' . $options['nmeans'] . '", "Degreed of freedom for s", "' . $options['df'] . '", "Number of groups", "' . $options['nranges'] . '"' . $options['log_label'] . $options['tail_label'] . ', "Function", "' . $options['fun'] . '"));' . "\n");
+}
 
-<?	if ($final) { ?>
-rk.graph.off ()
-<? }
+function doFunCall () {
+	global $options;
+
+	echo ($options['fun'] . '(x, nmeans=' . $options['nmeans'] . ', df=' . $options['df'] . ', nranges=' . $options['nranges'] . $options['log_option'] . $options['tail_option'] . ')'); 
 }
 ?>
