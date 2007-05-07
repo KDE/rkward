@@ -19,6 +19,9 @@
 
 #include "../../config.h"
 
+#include <qstring.h>
+#include "../debug.h"
+
 #include <pthread.h>
 #ifdef HAVE_PTHREAD_NP_H
 #	include <pthread_np.h>
@@ -62,5 +65,12 @@ void RKGetCurrentThreadStackLimits (size_t *size, void **base) {
 	// switch base / top, if necessary
 	if (base_direction != direction) {
 		*base = ((char *) *base) + (direction * ((unsigned long) *size));
+	}
+
+	// sanity check, as on some systems the stack direction is mis-detected somehow.
+	long usage = direction * ((unsigned long) (*base) - (unsigned long) (&dummy));
+	if ((usage < 0) || (unsigned long) usage > (unsigned long) (*size)) {
+		RK_DO (qDebug ("Stack boundaries detection produced bad results. Disabling stack checking."), RBACKEND, DL_WARNING);
+		*size = (unsigned long) -1;
 	}
 }
