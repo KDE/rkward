@@ -1,46 +1,27 @@
 <!DOCTYPE rkplugin>
-<!--This is the simple "Plot gamma probabilities" plugin--><document>
+<document>
 	<code file="plot_gamma_distribution.php" />
 	<help file="plot_gamma_distribution.rkh" />
 	<logic>
-		<convert id="dodist" mode="equals" sources="function.string" standard="pgamma" />
-		<connect client="lower.enabled" governor="dodist" />
-		<set id="plotoptions.allow_log" to="false"/>
+		<insert snippet="common_logic"/>
 	</logic>
+	<snippets>
+		<snippet id="range_options">
+			<spinbox type="integer" id="n" min="2" initial="100" label="Number of Observations" />
+			<frame label="Range" >
+				<spinbox default_precision="2" type="real" id="min" initial="0.01" min="0.01" label="Lower quantile" />
+				<spinbox default_precision="2" type="real" id="max" initial="4.6" min="0.02" label="Upper quantile" />
+			</frame>
+		</snippet>
+		<snippet id="dist_options">
+			<frame label="Parameters">
+				<spinbox default_precision="2" type="real" id="shape" initial="1" min="0.01" label="Shape" />
+				<spinbox default_precision="2" type="real" id="rate" initial="1" min="0.01" label="Rate (lambda)" label="Rate or 1/Scale" />
+			</frame>
+		</snippet>
+		<include file="plot_dist_common_snippets.xml"/>
+	</snippets>
 	<dialog label="Plot Gamma probabilities" >
-		<tabbook>
-			<tab label="Plot Gamma probabilities" >
-				<row>
-					<column>
-						<row>
-							<spinbox type="integer" id="n" min="2" initial="100" label="Number of Observations" />
-						</row>
-						<row>
-							<frame label="Range" >
-								<spinbox default_precision="2" type="real" id="min" initial="0.01" min="0.01" label="Lower quantile" />
-								<spinbox default_precision="2" type="real" id="max" initial="4.6" min="0.02" label="Upper quantile" />
-							</frame>
-						</row>
-						<row>
-							<frame label="Parameters">
-							<spinbox default_precision="2" type="real" id="shape" initial="1" min="0.01" label="Shape" />
-							<spinbox default_precision="2" type="real" id="rate" initial="1" min="0.01" label="Rate (lambda)" label="Rate or 1/Scale" />
-						</frame>
-						</row>
-					</column>
-					<column>
-						<radio id="function" label="Choose type of function plot" >
-							<option value="dgamma" label="Plot density function" />
-							<option value="pgamma" label="Plot distribution" />
-						</radio>
-						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
-						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
-						<stretch/>
-						<preview id="preview" label="Preview"/>
-						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
-					</column>
-				</row>
-			</tab>
-		</tabbook>
+		<include file="plot_dist_common_dialog_layout.xml"/>
 	</dialog>
 </document>

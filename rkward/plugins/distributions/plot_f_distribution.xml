@@ -3,43 +3,26 @@
 	<code file="plot_f_distribution.php" />
 	<help file="plot_f_distribution.rkh" />
 	<logic>
-		<convert id="dodist" mode="equals" sources="function.string" standard="pf" />
-		<connect client="lower.enabled" governor="dodist" />
-		<set id="plotoptions.allow_log" to="false"/>
+		<insert snippet="common_logic"/>
 	</logic>
+	<snippets>
+		<snippet id="range_options">
+			<spinbox type="integer" id="n" initial="100" min="1" label="Number of Observations" />
+			<frame label="Range" >
+				<spinbox default_precision="2" type="real" min="0.001" id="min" initial="0.001" label="Lower quantile" />
+				<spinbox default_precision="2" type="real" min="0.001" id="max" initial="25" label="Upper quantile" />
+			</frame>
+		</snippet>
+		<snippet id="dist_options">
+			<frame label="Parameters">
+				<spinbox default_precision="2" type="real" min="0.01" id="df1" initial="5" label="Numerator degrees of freedom" />
+				<spinbox default_precision="2" type="real" min="0.01" id="df2" initial="5" label="Denominator degrees of freedom" />
+				<spinbox default_precision="0" type="real" min="0" id="ncp" initial="0" label="Non-centrality parameter" />
+			</frame>
+		</snippet>
+		<include file="plot_dist_common_snippets.xml"/>
+	</snippets>
 	<dialog label="Plot F probabilities" >
-		<tabbook>
-			<tab label="Plot F probabilities" >
-				<row>
-					<column>
-						<row>
-							<spinbox type="integer" id="n" initial="100" label="Number of Observations" />
-						</row>
-						<row>
-							<frame label="Range" >
-								<spinbox default_precision="2" type="real" min="0.001" id="min" initial="0.001" label="Lower quantile" />
-								<spinbox default_precision="2" type="real" min="0.001" id="max" initial="25" label="Upper quantile" />
-							</frame>
-						</row>
-						<frame label="Parameters">
-								<spinbox default_precision="2" type="real" min="0.01" id="df1" initial="5" label="Numerator degrees of freedom" />
-								<spinbox default_precision="2" type="real" min="0.01" id="df2" initial="5" label="Denominator degrees of freedom" />
-								<spinbox default_precision="0" type="real" min="0" id="ncp" initial="0" label="Non-centrality parameter" />
-						</frame>
-					</column>
-					<column>
-						<radio id="function" label="Choose type of function plot" >
-							<option value="df" label="Plot density function" />
-							<option value="pf" label="Plot distribution" />
-						</radio>
-						<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
-						<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
-						<stretch/>
-						<preview id="preview" label="Preview"/>
-						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
-					</column>
-				</row>
-			</tab>
-		</tabbook>
+		<include file="plot_dist_common_dialog_layout.xml"/>
 	</dialog>
 </document>
