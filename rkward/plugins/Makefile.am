@@ -151,7 +151,6 @@ dist_pluginsXdistributions_DATA = \
 	distributions/tukey_quantiles.xml \
 	distributions/plot_dist_common.php \
 	distributions/plot_dist_common_snippets.xml \
-	distributions/plot_dist_common_dialog_layout.xml \
 	distributions/plot_wilcoxon_distribution.php \
 	distributions/plot_gamma_distribution.php \
 	distributions/plot_gamma_distribution.xml \

@@ -23,6 +23,6 @@
 		<include file="plot_dist_common_snippets.xml"/>
 	</snippets>
 	<dialog label="Plot hypergeometric probabilities" >
-		<include file="plot_dist_common_dialog_layout.xml"/>
+		<insert snippet="dialog_layout"/>
 	</dialog>
 </document>

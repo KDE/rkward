@@ -18,6 +18,17 @@
 		<preview id="preview" label="Preview"/>
 		<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 	</snippet>
+	<snippet id="dialog_layout">
+		<row>
+			<column>
+				<insert snippet="range_options"/>
+				<insert snippet="dist_options"/>
+			</column>
+			<column>
+				<insert snippet="common_options"/>
+			</column>
+		</row>
+	</snippet>
 	
 	<!-- for the .rkh pages -->
 	<snippet id="common_options_help">

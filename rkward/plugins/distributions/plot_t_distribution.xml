@@ -22,6 +22,6 @@
 		</snippet>
 	</snippets>
 	<dialog label="Plot Student T probabilities" >
-		<include file="plot_dist_common_dialog_layout.xml"/>
+		<insert snippet="dialog_layout"/>
 	</dialog>
 </document>
