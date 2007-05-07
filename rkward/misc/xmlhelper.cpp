@@ -79,10 +79,13 @@ QDomElement XMLHelper::openXMLFile (const QString &filename, int debug_level, bo
 
 			// import
 			QDomElement included = openXMLFile (inc_filename, debug_level, true, false);
-			QDomElement copied = doc.importNode (included, true).toElement ();
 
-			// insert everything within the document tag
-			replaceWithChildren (&el, copied);
+			if (!included.isNull ()) {
+				QDomElement copied = doc.importNode (included, true).toElement ();
+	
+				// insert everything within the document tag
+				replaceWithChildren (&el, copied);
+			}
 		}
 	}
 
@@ -149,8 +152,6 @@ QDomElement XMLHelper::resolveSnippets (QDomElement &from_doc) {
 		// now insert it.
 		replaceWithChildren (&ref, snippet.cloneNode (true).toElement ());
 	}
-
-	qDebug ("%s", from_doc.ownerDocument().toString ().latin1 ());
 
 	return from_doc;
 }
