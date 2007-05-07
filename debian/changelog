@@ -1,10 +1,11 @@
-rkward (0.4.8-pre1) unstable; urgency=low
+rkward (0.4.7a-1) unstable; urgency=low
 
+  * new upstream release
+    closes: #422541
   * the code to generate the correct r-base-core dependencies should now be POSIX shell compliant
   * remove unused (and uncommented) dh_* scripts from rules
-  * this version is not meant to ever be uploaded
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 19 Apr 2007 12:00:00 +0200
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 07 May 2007 13:30:00 +0200
 
 rkward (0.4.7-2) unstable; urgency=low
 
