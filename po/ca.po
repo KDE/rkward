@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-11 12:56+0200\n"
+"POT-Creation-Date: 2007-05-07 12:58+0200\n"
 "PO-Revision-Date: 2007-04-05 15:35+0200\n"
 "Last-Translator: Pep Roca <pep.roca@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -531,7 +531,7 @@ msgid "Run all"
 msgstr "Executa-ho tot"
 
 #: windows/rkcommandeditorwindowpart.cpp:52 windows/rkcommandlog.cpp:287
-#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:742
+#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:782
 msgid "Run selection"
 msgstr "Executa la selecció"
 
@@ -541,7 +541,7 @@ msgstr "Executa la línia actual"
 
 # fr.po: "&Aide sur la fonction"
 # es.po: "Referencia de la &Función"
-#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:741
+#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:781
 msgid "&Function reference"
 msgstr "&Funció: Ajuda"
 
@@ -1898,12 +1898,13 @@ msgstr ""
 "arranjaments->dorsal PHP)"
 
 #: scriptbackends/phpbackend.cpp:242
+#, fuzzy
 msgid ""
 "There has been an error\n"
 "(\"%1\")\n"
 "while starting up the PHP backend. Most likely this is due to either a bug "
-"in RKWard or an invalid setting for the location of the PHP support files. "
-"Check the settings (Settings->Configure Settings->PHP backend) and try again."
+"in RKWard or a problem with your PHP installation. Check the settings "
+"(Settings->Configure Settings->PHP backend) and try again."
 msgstr ""
 "S'ha produït un error\n"
 "(\"%1\")\n"
@@ -2456,30 +2457,30 @@ msgstr "Obra el(s) fitxer(s) d'ordres"
 msgid "[Unnamed Workspace]"
 msgstr "[Espai de treball sense nom]"
 
-#: rkconsole.cpp:130
+#: rkconsole.cpp:131
 msgid "R Console"
 msgstr "Consola R"
 
-#: rkconsole.cpp:528
+#: rkconsole.cpp:568
 msgid "Syntax error\n"
 msgstr "Error de sintaxi\n"
 
 # fr.po: Interrompre l'exécution de la commande
-#: rkconsole.cpp:744
+#: rkconsole.cpp:784
 msgid "Interrupt running command"
 msgstr "Interromp l'execució de l'ordre"
 
 # Thomas Friedrichsmeier:
 # Console action: Copy the selection, but remove any leading "> " or "+ " on the copied lines, so it is easier to re-use commands from the console.
-#: rkconsole.cpp:750
+#: rkconsole.cpp:790
 msgid "Copy selection cleaned"
 msgstr "Còpia la selecció de forma neta"
 
-#: rkconsole.cpp:751
+#: rkconsole.cpp:791
 msgid "Copy selection literally"
 msgstr "Copia la selecció literalment"
 
-#: rkconsole.cpp:779
+#: rkconsole.cpp:819
 msgid ""
 "You have configured RKWrad to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -2491,11 +2492,11 @@ msgstr ""
 "començat a escriure-hi text a la consola). Voleu evitar la consola ara, o ho "
 "voleu intentar de nou més tard?"
 
-#: rkconsole.cpp:779
+#: rkconsole.cpp:819
 msgid "Console is busy"
 msgstr "La consola és ocupada"
 
-#: rkconsole.cpp:779
+#: rkconsole.cpp:819
 msgid "Bypass console"
 msgstr "Evita la consola"
 

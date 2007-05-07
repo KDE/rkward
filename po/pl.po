@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-11 12:56+0200\n"
+"POT-Creation-Date: 2007-05-07 12:58+0200\n"
 "PO-Revision-Date: 2004-11-19 00:00+0100\n"
 "Last-Translator: Andrzej Pruszynski\n"
 "Language-Team: LANG <LL@li.org>\n"
@@ -485,7 +485,7 @@ msgid "Run all"
 msgstr "Uruchom wszystko"
 
 #: windows/rkcommandeditorwindowpart.cpp:52 windows/rkcommandlog.cpp:287
-#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:742
+#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:782
 #, fuzzy
 msgid "Run selection"
 msgstr "Uruchom zaznaczone"
@@ -494,7 +494,7 @@ msgstr "Uruchom zaznaczone"
 msgid "Run current line"
 msgstr ""
 
-#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:741
+#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:781
 msgid "&Function reference"
 msgstr ""
 
@@ -1766,8 +1766,8 @@ msgid ""
 "There has been an error\n"
 "(\"%1\")\n"
 "while starting up the PHP backend. Most likely this is due to either a bug "
-"in RKWard or an invalid setting for the location of the PHP support files. "
-"Check the settings (Settings->Configure Settings->PHP backend) and try again."
+"in RKWard or a problem with your PHP installation. Check the settings "
+"(Settings->Configure Settings->PHP backend) and try again."
 msgstr ""
 
 #: scriptbackends/phpbackend.cpp:266
@@ -2246,31 +2246,31 @@ msgstr "Otwórz plik poleceń"
 msgid "[Unnamed Workspace]"
 msgstr "Zapisz przestrzeń roboczą"
 
-#: rkconsole.cpp:130
+#: rkconsole.cpp:131
 #, fuzzy
 msgid "R Console"
 msgstr "R-konsola"
 
-#: rkconsole.cpp:528
+#: rkconsole.cpp:568
 #, fuzzy
 msgid "Syntax error\n"
 msgstr "Błąd syntaktyczny.\n"
 
-#: rkconsole.cpp:744
+#: rkconsole.cpp:784
 msgid "Interrupt running command"
 msgstr "Przerwij uruchomione polecenie"
 
-#: rkconsole.cpp:750
+#: rkconsole.cpp:790
 #, fuzzy
 msgid "Copy selection cleaned"
 msgstr "Uruchom zaznaczone"
 
-#: rkconsole.cpp:751
+#: rkconsole.cpp:791
 #, fuzzy
 msgid "Copy selection literally"
 msgstr "Uruchom zaznaczone"
 
-#: rkconsole.cpp:779
+#: rkconsole.cpp:819
 msgid ""
 "You have configured RKWrad to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -2278,12 +2278,12 @@ msgid ""
 "console this one time, or do you want to try again later?"
 msgstr ""
 
-#: rkconsole.cpp:779
+#: rkconsole.cpp:819
 #, fuzzy
 msgid "Console is busy"
 msgstr "R-konsola"
 
-#: rkconsole.cpp:779
+#: rkconsole.cpp:819
 #, fuzzy
 msgid "Bypass console"
 msgstr "R-konsola"
