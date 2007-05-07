@@ -58,10 +58,11 @@ public:
 		ComponentPreviewBox = 2014,
 		ComponentSaveObject = 2015,
 		ComponentStandard = 2100,
+		ComponentContextHandler = 2900,
 		ComponentUser = 3000	/**< for user expansion */
 	};
 /** for RTTI. see RKComponentBase::RKComponentTypes */
-	virtual int type () { return ComponentBase; };
+	virtual int type () = 0;
 /** tries to locate a component (or property) described by identifier as a child (of any generation) of this RKComponentBase. If found, a pointer to this is returned. Also, the modifier parameter is set to hold any remaining modifier contained in the identifier.
 @param identifier The identifier string to look for (including a potential modifier suffix).
 @param remainder If a non null pointer to QString is given, this will be set to the value of the remaining modifier

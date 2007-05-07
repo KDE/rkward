@@ -60,6 +60,7 @@ void RKComponentBase::fetchPropertyValuesRecursive (QMap<QString, QString> *list
 
 void RKComponentBase::setPropertyValues (QMap<QString, QString> *list) {
 	RK_TRACE (PLUGIN);
+	// TODO: visibility enabledness and requiredness should be excluded, as those are not directly user settable. Perhaps even mark up all properties as user settable or not.
 
 	for (QMap<QString, QString>::const_iterator it = list->constBegin (); it != list->constEnd (); ++it) {
 		QString mod;

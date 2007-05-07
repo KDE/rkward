@@ -102,9 +102,7 @@ A duplicate option has to be tested-->
 	<wizard label="Scatterplot">
 	<!-- This wizard is somewhat pointless, as all it's really just a copy of the dialog tabs, with one tab per page. But so what, maybe it still "looks" friendlier, while it does not really change anything -->
 		<copy id="variables_tab" copy_element_tag_name="page" />
-		<copy id="axes_tab" copy_element_tag_name="page" />
-		<copy id="type_tab" copy_element_tag_name="page" />
-		<copy id="names_tab" copy_element_tag_name="page" />
 		<copy id="options_tab" copy_element_tag_name="page" />
+		<copy id="further_options_tab" copy_element_tag_name="page" />
 	</wizard>
 </document>

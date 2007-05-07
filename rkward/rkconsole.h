@@ -92,6 +92,8 @@ friend class RKConsolePart;
 /** set syntax-highlighting for R */
 	void setRHighlighting ();
 	bool doTabCompletionHelper (int line_num, const QString &line, int word_start, int word_end, const QStringList &entries);
+/** a helper function to doTabCompletionHelper */
+	void insertCompletion (int line_num, int word_start, int word_end, const QString &completion);
 	QString incomplete_command;
 	bool command_incomplete;
 /** A list to store previous commands */

@@ -17,9 +17,14 @@
 
 #include "rklocalesupport.h"
 
+// see https://sourceforge.net/tracker/?func=detail&atid=459009&aid=1698809&group_id=50231
+#ifdef __FreeBSD__
+# include <langinfo.h>
+#endif
+
 #include <qtextcodec.h>
 
-/* NOTE: This code in this file is an almost literal copy taken from setupLocaleMapper in qtextcodec.cpp in Qt 3.3.8 !*/
+/* NOTE: The code in this file is an almost literal copy taken from setupLocaleMapper in qtextcodec.cpp in Qt 3.3.8 !*/
 
 QTextCodec *checkForCodec(const char *name) {
     QTextCodec *c = QTextCodec::codecForName(name);

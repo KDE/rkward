@@ -17,6 +17,7 @@
 #include "rkconsole.h"
 
 #include <qfont.h>
+#include <qdir.h>
 #include <qstringlist.h>
 #include <qclipboard.h>
 #include <qapplication.h>
@@ -282,6 +283,14 @@ bool RKConsole::provideContext (unsigned int line_rev, QString *context, int *cu
 	return true;
 }
 
+void RKConsole::insertCompletion (int line_num, int word_start, int word_end, const QString &completion) {
+	RK_TRACE (APP);
+
+	int offset = prefix.length ();
+	doc->removeText (line_num, offset + word_start, line_num, offset + word_end);
+	doc->insertText (line_num, offset + word_start, completion);
+}
+
 bool RKConsole::doTabCompletionHelper (int line_num, const QString &line, int word_start, int word_end, const QStringList &entries) {
 	RK_TRACE (APP);
 
@@ -290,10 +299,8 @@ bool RKConsole::doTabCompletionHelper (int line_num, const QString &line, int wo
 	if (!count) return false;
 
 	if (count == 1) {
-		int offset = prefix.length ();
 		it = entries.constBegin ();
-		doc->removeText (line_num, offset + word_start, line_num, offset + word_end);
-		doc->insertText (line_num, offset + word_start, *it);
+		insertCompletion (line_num, word_start, word_end, *it);
 	} else if (tab_key_pressed_before) {
 		int i=0;
 		for (it = entries.constBegin (); it != entries.constEnd (); ++it) {
@@ -308,6 +315,38 @@ bool RKConsole::doTabCompletionHelper (int line_num, const QString &line, int wo
 		cursorAtTheEnd ();
 	} else {
 		tab_key_pressed_before = true;
+
+		// do all entries have a common start?
+		QString common;
+		bool done = false;
+		unsigned int i = 0;
+		while (!done) {
+			bool ok = true;
+			QChar current;
+			for (it = entries.constBegin (); it != entries.constEnd (); ++it) {
+				if (it == entries.constBegin ()) {
+					current = (*it).at(i);
+				}
+				QChar dummy = (*it).at(i);
+				if (dummy.isNull ()) {
+					ok = false;
+					break;
+				} else if (dummy != current) {
+					ok = false;
+					break;
+				}
+			}
+			if (ok) common.append (current);
+			else break;
+			++i;
+		}
+		if (i > 0) {
+			if (common.length() > (word_end - word_start)) {		// more than there already is
+				insertCompletion (line_num, word_start, word_end, common);
+				return false;	// will beep to signal completion is not complete
+			}
+		}
+
 		return true;
 	}
 	tab_key_pressed_before = false;
@@ -350,6 +389,7 @@ void RKConsole::doTabCompletion () {
 	
 			QString current_name = current_line.mid (quote_start + 1, quote_end - quote_start - 1);
 			KURLCompletion comp (KURLCompletion::FileCompletion);
+			comp.setDir (QDir::currentDirPath ());
 			QString test = comp.makeCompletion (current_name);
 	
 			if (doTabCompletionHelper (current_line_num, current_line, quote_start+1, quote_end, comp.allMatches ())) return;
@@ -792,7 +832,7 @@ void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 		current_command = command;
 		if (command_incomplete) {
 			RK_ASSERT (command_was_piped);
-			command_string.prepend (incomplete_command);
+			command_string.prepend (incomplete_command + '\n');
 			command->setCommand (command_string);
 		}
 		command_was_piped = true;
