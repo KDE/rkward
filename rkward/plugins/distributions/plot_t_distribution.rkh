@@ -12,9 +12,7 @@ Density and distribution function plots for the t distribution.
 
 	<settings>
 		<insert snippet="density_help"/>
-		<setting id="n">Number of observations (points) for constructing the plot (n).</setting>
-		<setting id="min">Smallest value at which the function is to be plotted.</setting>
-		<setting id="max">Largest value at which the function is to be plotted. So, the function will be evaluated at 'n' equally spaced points between the lower quantile and the upper quantile (inclusive of end points).</setting>
+		<insert snippet="cont_range_help"/>
 		<setting id="df">See R reference on t distribution.</setting>
 		<setting id="ncp">See R reference on t distribution.</setting>
 		<insert snippet="common_options_help"/>

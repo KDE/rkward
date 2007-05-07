@@ -37,4 +37,9 @@
 			<li> Distribution Function </li>
 		</setting>
 	</snippet>
+	<snippet id="cont_range_help">
+		<setting id="n">Number of observations (points) for constructing the plot (n).</setting>
+		<setting id="min">Smallest value at which the function is to be plotted.</setting>
+		<setting id="max">Largest value at which the function is to be plotted. So, the function will be evaluated at 'n' equally spaced points between the lower quantile and the upper quantile (inclusive of end points).</setting>
+	</snippet>
 </document>

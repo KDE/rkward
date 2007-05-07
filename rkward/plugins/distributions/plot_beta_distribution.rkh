@@ -12,12 +12,10 @@ Density and distribution function plots for the Beta distribution.
 
 	<settings>
 		<insert snippet="density_help"/>
-		<setting id="n">Number of observations (points) for constructing the plot (n).</setting>
-		<setting id="min">Smallest value at which the function is to be plotted.</setting>
-		<setting id="max">Largest value at which the function is to be plotted. So, the function will be evaluated at 'n' equally spaced points between the lower quantile and the upper quantile (inclusive of end points).</setting>
-		<setting id="a"> shape1 paramter of the Beta distribution.</setting>
-		<setting id="b"> shape2 paramter of the Beta distribution.</setting>
-		<setting id="ncp">Non-centrality paramter of the Beta distribution.</setting>
+		<insert snippet="cont_range_help"/>
+		<setting id="a"> shape1 parameter of the Beta distribution.</setting>
+		<setting id="b"> shape2 parameter of the Beta distribution.</setting>
+		<setting id="ncp">Non-centrality parameter of the Beta distribution.</setting>
 		<insert snippet="common_options_help"/>
 	</settings>
 	<related>
