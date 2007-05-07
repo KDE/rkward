@@ -1,9 +1,16 @@
 <!DOCTYPE rkplugin>
 <document>
+	<snippet id="common_logic">
+		<convert id="dodist" mode="equals" sources="function.string" standard="p" />
+		<connect client="lower.enabled" governor="dodist" />
+		<set id="plotoptions.allow_log" to="false"/>
+		<set id="plotoptions.allow_grid" to="true"/>
+	</snippet>
+
 	<snippet id="common_options">
 		<radio id="function" label="Choose type of function plot" >
-			<option value="dt" label="Plot density function" />
-			<option value="pt" label="Plot distribution" />
+			<option value="d" label="Plot density function" />
+			<option value="p" label="Plot distribution" />
 		</radio>
 		<checkbox id="log" label="Logarithmic" value="1" value_unchecked="0"/>
 		<checkbox id="lower" label="Lower Tail" value="1" value_unchecked="0" checked="true"/>
@@ -11,12 +18,23 @@
 		<preview id="preview" label="Preview"/>
 		<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 	</snippet>
-	<snippet id="common_logic">
-		<convert id="dodist" mode="equals" sources="function.string" standard="pt" />
-		<connect client="lower.enabled" governor="dodist" />
-		<set id="plotoptions.allow_log" to="false"/>
+	
+	<!-- for the .rkh pages -->
+	<snippet id="common_options_help">
+		<setting id="log">Check this box if log of the function values are to be plotted.</setting>
+		<setting id="lower">This option is valid only for plotting the distribution function. Uncheck this box if the upper tail of the distribution function (P[X > x]) is to be plotted.</setting>
+		<setting id="preview">Check this box for previewing the function plot. A new graphics window will pop up and it will be dynamically updated based on the choice of parameters. It may take a while for the window to show up. Sometimes, only an empty graphics device may get displayed, in which case, close the device (dev.off() or may be even graphics.off()), uncheck the box, wait for a while and try again. If it still persists, use only the "Submit" button to view the exported plot in the Output window.</setting>
+		<setting id="plotoptions">Various plotting parameter settings for the plot. See the help page of "Plot Options" for more details.</setting>
 	</snippet>
-	<snippet id="common_obs">
-		<spinbox type="integer" id="n" initial="100" min="1" label="Number of Observations" />
+	<snippet id="general_usage_help">
+		<usage>
+			Choose appropriate values for the various parameters of the distribution and select the type of function. The "Submit" button will export the plot to the "Output" window. To dynamically visualise the plot check the "Preview" box.
+		</usage>
+	</snippet>
+	<snippet id="density_help">
+		<setting id="function">
+			<li> Density Function, or </li>
+			<li> Distribution Function </li>
+		</setting>
 	</snippet>
 </document>

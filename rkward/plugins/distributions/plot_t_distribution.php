@@ -1,58 +1,29 @@
 <?
-function preprocess () {
-}
+include ("plot_dist_common.php");
 
-function calculate () {
-}
+function getParameters () {
+	global $options;
 
-function printout () {
-	doPrintout (true);
-}
+	$options['ncp'] = getRK_val ("ncp");
+	$options['df'] = getRK_val ("df");
+	getContRangeParameters ();
 
-function preview () {
-	preprocess ();
-	calculate ();
-	doPrintout (false);
-}
-
-function doPrintout ($final) {
-
-	$fun = getRK_val ("function");
-	$log_option = "";
-	if ($fun == "dt") {
-		$label = "density";
-		$lower_tag = "";
-		$tail_tag = "";
-		if (getRK_val ("log")) $log_option = ", log=TRUE";
+	if ($options['is_density']) {
+		$options['fun'] = "dt";
 	} else {
-		$label = "distribution";
-		if (getRK_val("lower") == "1") {
-			$lower_tag = ", lower.tail = TRUE";
-			$tail_tag = ", \"Tail\",\"Lower\"";
-		} else {
-			$lower_tag = ", lower.tail = FALSE";
-			$tail_tag = ", \"Tail\",\"Upper\"";
-		}
-		if (getRK_val ("log")) $log_option = ", log.p=TRUE";
+		$options['fun'] = "pt";
 	}
-	if (getRK_val ("log") == "1") $log_label="logarithmic";
-	else $log_label="normal";
-	$n = getRK_val ("n");
-	$min = getRK_val ("min");
-	$max = getRK_val ("max");
-	$ncp = getRK_val ("ncp");
-	$df = getRK_val ("df");
+}
 
-	if ($final) { ?>
-rk.header ("Student t <? echo ($label); ?> function", list ("Number of Observations", "<? echo ($n); ?>", "Minimum", "<? echo ($min); ?>", "Maximum", "<? echo ($max); ?>", "Degrees of freedom", "<? echo ($df); ?>", "Non-centrality", "<? echo ($ncp); ?>", "Scaling", "<? echo ($log_label); ?>"<? echo ($tail_tag); ?>, "Function", "<? echo ($fun); ?>"));
+function doHeader () {
+	global $options;
 
-rk.graph.on ()
-<? }
-?>
-try (curve (<? echo ($fun); ?> (x, df = <? echo ($df); ?>, ncp = <? echo ($ncp); ?><? echo ($log_option) ?><? echo ($lower_tag); ?>), from=<? echo ($min); ?>, to=<? echo ($max); ?>, n=<? echo ($n); ?><? getRK ("plotoptions.code.printout"); ?>))
+	echo ('rk.header ("Student t ' . $options['label'] . ' function", list ("Number of Observations", "' . $options['n'] . '", "Minimum", "' . $options['min'] . '", "Maximum", "' . $options['max'] . '", "Degrees of freedom", "' . $options['df'] . '", "Non-centrality", "' . $options['ncp'] . '"' . $options['log_label'] . $options['tail_label'] . ', "Function", "' . $options['fun'] . '"));' . "\n");
+}
 
-<?	if ($final) { ?>
-rk.graph.off ()
-<? }
+function doFunCall () {
+	global $options;
+
+	echo ($options['fun'] . '(x, df=' . $options['df'] . ', ncp=' . $options['ncp'] . $options['log_option'] . $options['tail_option'] . ')'); 
 }
 ?>

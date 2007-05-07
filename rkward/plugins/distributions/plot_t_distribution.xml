@@ -1,5 +1,5 @@
 <!DOCTYPE rkplugin>
-<!--This is the simple "Plot t probabilities" plugin--><document>
+<document>
 	<code file="plot_t_distribution.php" />
 	<help file="plot_t_distribution.rkh" />
 	<logic>
@@ -7,33 +7,21 @@
 	</logic>
 	<snippets>
 		<include file="plot_dist_common_snippets.xml"/>
+		<snippet id="range_options">
+			<spinbox type="integer" id="n" initial="100" min="1" label="Number of Observations" />
+			<frame label="Range" >
+				<spinbox default_precision="2" type="real" id="min" initial="-12.924" label="Lower quantile" />
+				<spinbox default_precision="2" type="real" id="max" initial="12.924" label="Upper quantile" />
+			</frame>
+		</snippet>
+		<snippet id="dist_options">
+			<frame label="Parameters">
+				<spinbox default_precision="2" type="real" id="df" min="0.01" initial="1" label="Degrees of freedom" />
+				<spinbox default_precision="2" type="real" id="ncp" initial="0" label="Non-centrality parameter" />
+			</frame>
+		</snippet>
 	</snippets>
 	<dialog label="Plot Student T probabilities" >
-		<tabbook>
-			<tab label="Plot Student T probabilities" >
-				<row>
-					<column>
-						<row>
-							<insert snippet="common_obs"/>
-						</row>
-						<row>
-							<frame label="Range" >
-								<spinbox default_precision="2" type="real" id="min" initial="-12.924" label="Lower quantile" />
-								<spinbox default_precision="2" type="real" id="max" initial="12.924" label="Upper quantile" />
-							</frame>
-						</row>
-						<row>
-							<frame label="Parameters">
-								<spinbox default_precision="2" type="real" id="df" min="0.01" initial="1" label="Degrees of freedom" />
-								<spinbox default_precision="2" type="real" id="ncp" initial="0" label="Non-centrality parameter" />
-							</frame>
-						</row>
-					</column>
-					<column>
-						<insert snippet="common_options"/>
-					</column>
-				</row>
-			</tab>
-		</tabbook>
+		<include file="plot_dist_common_dialog_layout.xml"/>
 	</dialog>
 </document>
