@@ -23,6 +23,7 @@
 #include <qcheckbox.h>
 #include <qradiobutton.h>
 #include <qbuttongroup.h>
+#include <qvbox.h>
 
 #include <klocale.h>
 #include <kinputdialog.h>
@@ -49,8 +50,57 @@ RObjectBrowser* RObjectBrowser::object_browser = 0;
 
 RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, WorkspaceBrowserWindow, tool_window, name) {
 	RK_TRACE (APP);
-	setPart (new RKDummyPart (0, this));
+
+	internal = 0;
+	locked = true;
+
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	layout_widget = new QVBox (this);
+	layout->addWidget (layout_widget);
+	layout_widget->setFocusPolicy (QWidget::StrongFocus);
+
+	RKDummyPart *part = new RKDummyPart (this, layout_widget);
+	setPart (part);
 	initializeActivationSignals ();
+}
+
+RObjectBrowser::~RObjectBrowser () {
+	RK_TRACE (APP);
+}
+
+void RObjectBrowser::unlock () {
+	RK_TRACE (APP);
+
+	locked = false;
+	if (isShown ()) {
+		initialize ();
+	}
+}
+
+void RObjectBrowser::show () {
+	RK_TRACE (APP);
+
+	initialize ();
+	RKMDIWindow::show ();
+}
+
+void RObjectBrowser::initialize () {
+	RK_TRACE (APP);
+
+	if (internal) return;
+	if (locked) return;
+
+	RK_DO (qDebug ("creating workspace browser"), APP, DL_INFO);
+
+	internal = new RObjectBrowserInternal (layout_widget);
+	layout_widget->setFocusProxy (internal);
+	setMinimumSize (internal->minimumSize ());
+}
+
+
+///////////////////////// RObjectBrowserInternal /////////////////////////////
+RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (parent) {
+	RK_TRACE (APP);
 	setFocusPolicy (QWidget::ClickFocus);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
@@ -78,60 +128,40 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, char *name) :
 	
 	resize (minimumSizeHint ().expandedTo (QSize (400, 480)));
 
-	initialized = false;
-	locked = true;
+	list_view->initialize ();
+	connect (update_button, SIGNAL (clicked ()), this, SLOT (updateButtonClicked ()));
 }
 
-RObjectBrowser::~RObjectBrowser () {
+RObjectBrowserInternal::~RObjectBrowserInternal () {
 	RK_TRACE (APP);
 }
 
-void RObjectBrowser::focusInEvent (QFocusEvent *e) {
+void RObjectBrowserInternal::focusInEvent (QFocusEvent *e) {
 	RK_TRACE (APP);
 
 	list_view->setFocus ();
 	if (e->reason () != QFocusEvent::Mouse) {
 		list_view->setObjectCurrent (RObjectList::getGlobalEnv (), true);
 	}
-	initialize ();
 }
 
-void RObjectBrowser::unlock () {
-	RK_TRACE (APP);
-
-	locked = false;
-	if (hasFocus ()) initialize ();
-}
-
-void RObjectBrowser::initialize () {
-	RK_TRACE (APP);
-	if (initialized) return;
-	if (locked) return;
-
-	list_view->initialize ();
-	
-	connect (update_button, SIGNAL (clicked ()), this, SLOT (updateButtonClicked ()));
-
-	initialized = true;
-}
-
-void RObjectBrowser::updateButtonClicked () {
+void RObjectBrowserInternal::updateButtonClicked () {
 	RK_TRACE (APP);
 	RObjectList::getObjectList ()->updateFromR (0);
 }
 
-void RObjectBrowser::popupHelp () {
+void RObjectBrowserInternal::popupHelp () {
 	RK_TRACE (APP);
 
 	if (list_view->menuObject ()) RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (list_view->menuObject ()->getShortName ());
 }
 
-void RObjectBrowser::popupEdit () {
+void RObjectBrowserInternal::popupEdit () {
 	RK_TRACE (APP);
 	if (list_view->menuObject ()) RKWorkplace::mainWorkplace ()->editObject (list_view->menuObject ());
 }
 
-void RObjectBrowser::popupCopy () {
+void RObjectBrowserInternal::popupCopy () {
 	RK_TRACE (APP);
 
 	bool ok;
@@ -146,7 +176,7 @@ void RObjectBrowser::popupCopy () {
 	}
 }
 
-void RObjectBrowser::popupCopyToGlobalEnv () {
+void RObjectBrowserInternal::popupCopyToGlobalEnv () {
 	RK_TRACE (APP);
 
 	RObject *object = list_view->menuObject ();
@@ -157,18 +187,18 @@ void RObjectBrowser::popupCopyToGlobalEnv () {
 	RKGlobals::rInterface ()->issueCommand (RObject::rQuote (valid) + " <- " + object->getFullName (), RCommand::App | RCommand::ObjectListUpdate);
 }
 
-void RObjectBrowser::popupView () {
+void RObjectBrowserInternal::popupView () {
 	RK_TRACE (APP);
 	RKWorkplace::mainWorkplace ()->flushAllData ();
 	new RObjectViewer (0, list_view->menuObject ());
 }
 
-void RObjectBrowser::popupDelete () {
+void RObjectBrowserInternal::popupDelete () {
 	RK_TRACE (APP);
 	RKGlobals::tracker ()->removeObject (list_view->menuObject ());
 }
 
-void RObjectBrowser::popupRename () {
+void RObjectBrowserInternal::popupRename () {
 	RK_TRACE (APP);
 	bool ok;
 	QString name = KInputDialog::getText (i18n ("Rename object"), i18n ("Enter the new name"), list_view->menuObject ()->getShortName (), &ok, this);
@@ -180,7 +210,7 @@ void RObjectBrowser::popupRename () {
 	}
 }
 
-void RObjectBrowser::contextMenuCallback (RKListViewItem *, bool *) {
+void RObjectBrowserInternal::contextMenuCallback (RKListViewItem *, bool *) {
 	RK_TRACE (APP);
 	RObject *object = list_view->menuObject ();
 	QPopupMenu *menu = list_view->contextMenu ();
@@ -206,7 +236,7 @@ void RObjectBrowser::contextMenuCallback (RKListViewItem *, bool *) {
 	menu->setItemVisible (Delete, object->canRemove ());
 }
 
-void RObjectBrowser::slotListDoubleClicked (QListViewItem *item, const QPoint &, int) {
+void RObjectBrowserInternal::slotListDoubleClicked (QListViewItem *item, const QPoint &, int) {
 	RK_TRACE (APP);
 	RObject *object = list_view->findItemObject (static_cast<RKListViewItem*> (item));
 	

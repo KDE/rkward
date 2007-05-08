@@ -30,22 +30,47 @@ class QCheckBox;
 class QPopupMenu;
 class RObject;
 class RKCommandEditorWindow;
+class RObjectBrowserInternal;
+class QVBox;
 
 /**
 This widget provides a browsable list of all objects in the R workspace
 
+Note: Most actual functionality is realized in RObjectBrowserInternal, which is created as soon as the RObjectBrowser is shown for the first time.
+
 @author Thomas Friedrichsmeier
 */
 class RObjectBrowser : public RKMDIWindow {
-Q_OBJECT
 public:
 	RObjectBrowser (QWidget *parent, bool tool_window, char *name=0);
 	~RObjectBrowser ();
+	void unlock ();
+	static RObjectBrowser *mainBrowser () { return object_browser; };
+/** reimplemented to create the real file browser widget only when the file browser is shown for the first time */
+	void show ();
+private:
+	RObjectBrowserInternal *internal;
+	QVBox *layout_widget;
+
+	bool locked;
+	friend class RKWardMainWindow;
+	static RObjectBrowser *object_browser;
+	void initialize ();
+};
+
+/**
+Provides most of the functionality of RObjectBrowser
+
+@author Thomas Friedrichsmeier
+*/
+class RObjectBrowserInternal : public QWidget {
+Q_OBJECT
+public:
+	RObjectBrowserInternal (QWidget *parent);
+	~RObjectBrowserInternal ();
 
 	enum PopupItems { Help=1, Edit=2, View=3, Rename=4, Copy=5, CopyToGlobalEnv=6, Delete=7 };
-	static RObjectBrowser *mainBrowser () { return object_browser; };
-	void unlock ();
-public slots:
+private slots:
 	void updateButtonClicked ();
 	void contextMenuCallback (RKListViewItem *item, bool *suppress);
 	
@@ -65,12 +90,6 @@ protected:
 private:
 	QPushButton *update_button;
 	RKObjectListView *list_view;
-	bool initialized;
-	bool locked;
-
-	void initialize ();
-	friend class RKWardMainWindow;
-	static RObjectBrowser *object_browser;
 };
 
 /** This class provides a widget to switch quickly between the most important RKObjectListViewSettings */

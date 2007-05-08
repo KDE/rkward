@@ -1,4 +1,5 @@
-- support for including files and snippets in xml files		TODO: document, use
+- create the workspace browser only when it is first shown
+- support for including files and snippets in xml files		TODO: use more
 - all file selection line edits gain filename-completion
 - add a basic file selector window
 - show the focus indication (thin red border) also for detached windows
