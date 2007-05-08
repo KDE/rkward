@@ -181,6 +181,7 @@ dist_pluginsXdistributions_DATA = \
 	distributions/plot_weibull_distribution.php \
 	distributions/plot_tukey_distribution.xml \
 	distributions/plot_uniform_distribution.xml \
+	distributions/dist_snippets.xml \
 	distributions/plot_tukey_distribution.rkh \
 	distributions/plot_uniform_distribution.rkh \
 	distributions/plot_negbinomial_distribution.rkh \
