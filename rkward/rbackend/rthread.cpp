@@ -218,6 +218,9 @@ void RThread::doCommand (RCommand *command) {
 				RKWardRError error;
 				runCommandInternal (".rk.cat.output (\"<h2>Messages, warnings, or errors:</h2>\\n\")", &error, false);
 				RK_ASSERT (!error);
+
+				outp.replace ('\\', "\\\\");
+				outp.replace ('"', "\\\"");
 				runCommandInternal ("rk.print.literal (\"" + outp + "\")", &error, false);
 				RK_ASSERT (!error);
 			}
