@@ -395,7 +395,7 @@ But how does R-syntax get generated from the GUI-settings? I'll deal with that i
 	<para>
 	Now to the second page:
 	</para>
-	<programlisting/>
+	<programlisting>
 			&lt;page id="secondpage"&gt;
 				&lt;text&gt;Below are some advanced options. It's generally safe not to assume the variables have equal variances. An appropriate correction will be applied then. Chosing "assume equal variances" may increase test-strength, however.&lt;/text&gt;
 				&lt;copy id="varequal"/&gt;
@@ -623,6 +623,116 @@ results$foobar &lt;- foobar (x&lt;? echo ($narm); ?&gt;)
 
 </chapter>
 
+<chapter id="pluginhelp">
+	<title>Writing a help page</title>
+	<para>
+	When your plugin basically works, the time has come to provide a help page. While typically you will not want to explain all the underlying concepts in depth, you may want to add some more explanation for some of the options, and link to related plugins and R functions.
+	</para>
+	<para>
+	You may recall putting this inside your plugin-xml (if you haven't put this in, do so now):
+	</para>
+	<programlisting>
+	&lt;document&gt;
+		[...]
+		&lt;help file="filename.rkh" /&gt;
+		[...]
+	&lt;/document&gt;
+	</programlisting>
+	<para>
+	Where, obviously, you'd replace "filename" with a more appropriate name. Now it's time to create this .rkh file. Here is a self-descriptive example:
+	</para>
+	<programlisting>
+	&lt;!DOCTYPE rkhelp&gt;
+	&lt;document&gt;
+		&lt;summary&gt;
+	In this section, you'll put some short, very basic information about what the plugin does.
+	This section will always show up on the very top of the help page.
+		&lt;/summary&gt;
+	
+		&lt;usage&gt;
+	The usage section may contain a little more practical information. It does not explain all
+	the settings in detail (that's done in the "settings" section), however.
+	
+	To start a new paragraph, insert an empty line, as shown above.
+	This line, in contrast, will be in the same paragraph.
+	
+	In all sections you can insert some simple HTML code, such as &lt;b&gt;bold&lt;/b&gt; or
+	&lt;i&gt;italic&lt;/i&gt; text. Please keep formatting to the minimum needed, however.
+	
+	The usage section is always the second section shown in a help page.
+		&lt;/usage&gt;
+	
+		&lt;section id="sectionid" title="Generic section" short_title="Generic"&gt;
+	If you need to, you can add additional sections between the usage and settings sections.
+	However, usually, you will not need this while documenting plugins. The "id"-attribute
+	provides an anchor point to jump to this section from the navigation menu. The "short_title"
+	attribute provides a short title to use in the navigation bar. This is optional, by default
+	the main "title" will be used both as a heading to the section, and as the link name in the
+	navigation bar.
+	
+	In any section you may want to insert links to further information. You do this by adding
+	
+	&lt;link href="URL"&gt;link name&lt;/link&gt;
+	
+	Where URL could be an external link such as http://rkward.sourceforge.net .
+	Several special URLs are supported in the help pages:
+	
+	&lt;link href="rkward://page/path/page_id"/&gt;
+	
+	This links to a top level rkward help page (not for a plugin).
+	
+	&lt;link href="rkward://component/[namespace/]component_id"/&gt;
+	
+	This links to the help page of another plugin. The [namespace/] part may be omitted
+	(in this case, rkward is assumed as the standard namespace, e.g.: &lt;link href="rkward://component/import_spss"/&gt; or &lt;link href="rkward://component/rkward/import_spss"/&gt; are equivalent). The component_id is the
+	same that you specified in the <link linkend="pluginmap">.pluginmap</link>.
+	
+	&lt;link href="rkward://rhelp/rfunction"/&gt;
+	
+	Links to the R help page on "rfunction".
+	
+	Note that the link names will be generated automatically for these types of links.
+		&lt;/section&gt;
+	
+		&lt;settings&gt;
+			&lt;caption id="id_of_tab_or_frame"/&gt;
+			&lt;setting id="id_of_elementa"&gt;
+	Description of the GUI element identified by the given id
+			&lt;/setting&gt;
+			&lt;setting id="id_of_elementb" title="description"&gt;
+	Usually the title of the GUI element will be extracted from the
+	<link linkend="mainxml">XML definition of the plugin</link>, automatically. However,
+	for some GUI elements, this description may not be enough to identify them, reliably.
+	In this case, you can add an explicit title using the "title" attribute.
+			&lt;/setting&gt;
+			&lt;setting id="id_of_elementc"&gt;
+	Description of the GUI element identified by "id_of_elementc"
+			&lt;/setting&gt;
+			[...]
+		&lt;/settings&gt;
+	
+		&lt;related&gt;
+	The related section typically just contains some links, such as:
+	
+	&lt;ul&gt;
+		&lt;li&gt;&lt;link href="rkward://rhelp/mean"/&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;link href="rkward://rhelp/median"/&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;link href="rkward://component/related_component"/&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+		&lt;/related&gt;
+	
+		&lt;technical&gt;
+	The technical section (optional, always last) may contain some technical details of the plugin
+	implementation, which are of interest only to RKWard developers. This is particularily relevant
+	for plugins that are designed to be embedded in many other plugins, and could detail, which
+	options are available to customize the embedded plugin, and which code sections contain which
+	R code.
+		&lt;/technical&gt;
+	&lt;/document&gt;
+	</programlisting>
+</chapter>
+
+
 <chapter id="logic">
 <title>GUI logic</title>
 <para>
@@ -848,6 +958,9 @@ The naive approach to this is to develop one plugin, then basically copy and pas
 <para>
 A second approach would be to use <link linkend="embedding">embedding</link>. However, in some cases this does not lend itself well to the problem at hand, mostly because the "chunks" you can embed are sometimes too large to be useful, and it places some constraints on the layout. For these cases, the concepts <link linkend="include_php">including .php files</link> <link linkend="include_xml">including .xml files</link> and <link linkend="snippets">snippets</link> can be very useful (but see the <link linkend="include_snippets_vs_embedding">thoughts on when it is preferrable to use embedding</link>).
 </para>
+<para>
+One word of caution, before you begin reading, though: These concepts can help making it simpler to deal with many similar plugins, and can improve maintainability and readability of those plugins. However, overdoing it can easily lead to the reverse effect. Use with some caution.
+</para>
 	<section id="include_php">
 	<title>Using the PHP include statement</title>
 	<para>
@@ -946,24 +1059,100 @@ The attribute "file" is the filename relative to the directory the current file 
 While including files as shown in the <link linkend="include_xml">previous section</link> is fairly powerful, it become most useful when used in combination with &lt;snippets&gt;. Snippets are really smaller sections which you can insert at another point in the file. An example illustrates this best:
 	</para>
 	<programlisting>
+&lt;document&gt;
+	&lt;snippets&gt;
+		&lt;snippet id="note"&gt;
+			&lt;frame&gt;
+				&lt;text&gt;
+		This will be inserted at two places in the GUI
+				&lt;/text&gt;
+			&lt;/frame&gt;
+		&lt;/snippet&gt;
+	&lt;/snippets&gt;
+	&lt;dialog label="test"&gt;
+		&lt;column&gt;
+			&lt;insert snippet="note"/&gt;
+			[...]
+			&lt;insert snippet="note"/&gt;
+		&lt;/column&gt;
+	&lt;/dialog&gt;
+&lt;/document&gt;
 	</programlisting>
 	<para>
-Hence, you define the snippet at one place at the top of the xml file, and then you &lt;insert&gt; it at any place you wish.
+Hence, you define the snippet at one place at the top of the xml file, and then you &lt;insert&gt; it at any place(s) you wish.
 	</para>
 	<para>
-While this example is not too useful in itself, think about combining this with an &lt;include&gt;d .xml file:
+While this example is not too useful in itself, think about combining this with an &lt;include&gt;d .xml file. Note, that you can also place snippets for the .rkh file in the same file. You'd simply &lt;include&gt; the file there as well, and &lt;insert&gt; the relevant snippet:
 	</para>
 	<programlisting>
+&lt;!-- This is a file called "common_snippets.xml" --&gt;
+&lt;document&gt;
+	&lt;snippet id="common_options"&gt;
+		&lt;spinbox id="something" [...]/&gt;
+		[...]
+	&lt;/snippet&gt;
+	&lt;snippet id="common_note"&gt;
+		&lt;text&gt;An important note for this type of plugin&lt;/text&gt;
+	&lt;/snippet&gt;
+
+	&lt;snippet id="common_help"&gt;
+		&lt;setting id="something"&gt;This does something&lt;/setting&gt;
+		[...]
+	&lt;/snippet&gt;
+&lt;/document&gt;
 	</programlisting>
 	<programlisting>
+&lt;!-- This is the .xml file of the plugin --&gt;
+&lt;document&gt;
+	&lt;snippets&gt;
+		&lt;!-- Import the common snippets --&gt;
+		&lt;include file="common_snippets.xml"/&gt;
+	&lt;/snippets&gt;
+
+	&lt;dialog label="test2"&gt;
+		&lt;insert snippet="common_note"/&gt;
+		&lt;spinbox id="something_plugin_specific" [...] /&gt;
+		&lt;insert snippet="common_options"/&gt;
+	&lt;/dialog&gt;
+&lt;/document&gt;
 	</programlisting>
 	<para>
 Similar to <link linkend="include_php">inclusion in PHP</link>, the reverse approach is often even more useful:
 	</para>
 	<programlisting>
+&lt;!-- This is a file called "common_layout.xml" --&gt;
+&lt;document&gt;
+	&lt;column&gt;
+		&lt;insert snippet="note"&gt;
+		[...]
+		&lt;insert snippet="plugin_parameters"&gt;
+	&lt;/column&gt;
+	[...]
+&lt;/document&gt;
 	</programlisting>
 	<programlisting>
+&lt;!-- This is the .xml file of the plugin --&gt;
+&lt;document&gt;
+	&lt;snippets&gt;
+		&lt;snippet id="note"&gt;
+			&lt;text&gt;The note used for this specific plugin&lt;/text&gt;
+		&lt;/snippet&gt;
+
+		&lt;snippet id="plugin_parameters"&gt;
+			&lt;frame label="Parameters specific to this plugin"&gt;
+				[...]
+			&lt;/frame&gt;
+		&lt;/snippet&gt;
+	&lt;/snippets&gt;
+
+	&lt;dialog label="test3"&gt;
+		&lt;include file="common_layout.xml"/&gt;
+	&lt;/dialog&gt;
+&lt;/document&gt;
 	</programlisting>
+	<para>
+Finally, it is also possible to &lt;insert&gt; snippets into other snippets, provided that: a) there is only one level of nesting, and b) the &lt;snippets&gt; section is placed at the top of the file (before a nested snippet is inserted); this is because &lt;insert&gt; statements are resolved from top to bottom.
+	</para>
 	</section>
 
 	<section id="include_snippets_vs_embedding">
@@ -972,6 +1161,13 @@ Similar to <link linkend="include_php">inclusion in PHP</link>, the reverse appr
 At first glance, &lt;include&gt; and &lt;snippets&gt; provides functionality rather similar to <link linkend="embedding">embedding</link>: It allows to reuse some portions of code across plugins. So what's the difference between these approaches, and when should you use which?
 	</para>
 	<para>
+The key difference between these concepts is that embeddable plugins are a more tight bundle. They combine a complete GUI, code to generate R code from this, and a help page. In contrast, include and insert allow much more fine grained control, but at the price of less modularity.
+	</para>
+	<para>
+That is, a plugin embedding another plugin will typically not need to know much about the internal details of the embedded plugin. A prime example is the plot_options plugin. Plugins wishing to embed this do not necessarily need to know about all the options provided, or how they are provided. This is a good thing, as otherwise a change in the plot_options plugin might make it necessary to adjust all plugins embedding this (a lot). In contrast, include and insert really exposes all the internal details, and plugins using this will - for example - need to know the exact ids and perhaps even the type of the elements used.
+	</para>
+	<para>
+Hence the rule of thumb is this: include and insert are great if the relevant options are only needed for a clearly limited group of plugins. Embedded plugins are better, if the group of plugins it may be useful to is not clearly defined, and if the functionality can easily be modularized. Another rule of thumb: If you can put the common portions into a single "chunk", then do so, and use embedding. If you need lots of small snippets to define the common portions - well, use &lt;snippets&gt;.
 	</para>
 	</section>
 </chapter>
@@ -1147,115 +1343,6 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 
 </chapter>
 
-<chapter id="pluginhelp">
-<title>Writing a help page</title>
-<para>
-When your plugin basically works, the time has come to provide a help page. While typically you will not want to explain all the underlying concepts in depth, you may want to add some more explanation for some of the options, and link to related plugins and R functions.
-</para>
-<para>
-You may recall putting this inside your plugin-xml (if you haven't put this in, do so now):
-</para>
-<programlisting>
-&lt;document&gt;
-	[...]
-	&lt;help file="filename.rkh" /&gt;
-	[...]
-&lt;/document&gt;
-</programlisting>
-<para>
-Where, obviously, you'd replace "filename" with a more appropriate name. Now it's time to create this .rkh file. Here is a self-descriptive example:
-</para>
-<programlisting>
-&lt;!DOCTYPE rkhelp&gt;
-&lt;document&gt;
-	&lt;summary&gt;
-In this section, you'll put some short, very basic information about what the plugin does.
-This section will always show up on the very top of the help page.
-	&lt;/summary&gt;
-
-	&lt;usage&gt;
-The usage section may contain a little more practical information. It does not explain all
-the settings in detail (that's done in the "settings" section), however.
-
-To start a new paragraph, insert an empty line, as shown above.
-This line, in contrast, will be in the same paragraph.
-
-In all sections you can insert some simple HTML code, such as &lt;b&gt;bold&lt;/b&gt; or
-&lt;i&gt;italic&lt;/i&gt; text. Please keep formatting to the minimum needed, however.
-
-The usage section is always the second section shown in a help page.
-	&lt;/usage&gt;
-
-	&lt;section id="sectionid" title="Generic section" short_title="Generic"&gt;
-If you need to, you can add additional sections between the usage and settings sections.
-However, usually, you will not need this while documenting plugins. The "id"-attribute
-provides an anchor point to jump to this section from the navigation menu. The "short_title"
-attribute provides a short title to use in the navigation bar. This is optional, by default
-the main "title" will be used both as a heading to the section, and as the link name in the
-navigation bar.
-
-In any section you may want to insert links to further information. You do this by adding
-
-&lt;link href="URL"&gt;link name&lt;/link&gt;
-
-Where URL could be an external link such as http://rkward.sourceforge.net .
-Several special URLs are supported in the help pages:
-
-&lt;link href="rkward://page/path/page_id"/&gt;
-
-This links to a top level rkward help page (not for a plugin).
-
-&lt;link href="rkward://component/[namespace/]component_id"/&gt;
-
-This links to the help page of another plugin. The [namespace/] part may be omitted
-(in this case, rkward is assumed as the standard namespace, e.g.: &lt;link href="rkward://component/import_spss"/&gt; or &lt;link href="rkward://component/rkward/import_spss"/&gt; are equivalent). The component_id is the
-same that you specified in the <link linkend="pluginmap">.pluginmap</link>.
-
-&lt;link href="rkward://rhelp/rfunction"/&gt;
-
-Links to the R help page on "rfunction".
-
-Note that the link names will be generated automatically for these types of links.
-	&lt;/section&gt;
-
-	&lt;settings&gt;
-		&lt;caption id="id_of_tab_or_frame"/&gt;
-		&lt;setting id="id_of_elementa"&gt;
-Description of the GUI element identified by the given id
-		&lt;/setting&gt;
-		&lt;setting id="id_of_elementb" title="description"&gt;
-Usually the title of the GUI element will be extracted from the
-<link linkend="mainxml">XML definition of the plugin</link>, automatically. However,
-for some GUI elements, this description may not be enough to identify them, reliably.
-In this case, you can add an explicit title using the "title" attribute.
-		&lt;/setting&gt;
-		&lt;setting id="id_of_elementc"&gt;
-Description of the GUI element identified by "id_of_elementc"
-		&lt;/setting&gt;
-		[...]
-	&lt;/settings&gt;
-
-	&lt;related&gt;
-The related section typically just contains some links, such as:
-
-&lt;ul&gt;
-	&lt;li&gt;&lt;link href="rkward://rhelp/mean"/&gt;&lt;/li&gt;
-	&lt;li&gt;&lt;link href="rkward://rhelp/median"/&gt;&lt;/li&gt;
-	&lt;li&gt;&lt;link href="rkward://component/related_component"/&gt;&lt;/li&gt;
-&lt;/ul&gt;
-	&lt;/related&gt;
-
-	&lt;technical&gt;
-The technical section (optional, always last) may contain some technical details of the plugin
-implementation, which are of interest only to RKWard developers. This is particularily relevant
-for plugins that are designed to be embedded in many other plugins, and could detail, which
-options are available to customize the embedded plugin, and which code sections contain which
-R code.
-	&lt;/technical&gt;
-&lt;/document&gt;
-</programlisting>
-</chapter>
-
 <appendix id="reference">
 <title>Reference</title>
 
@@ -1347,6 +1434,46 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	</variablelist></listitem>
 </varlistentry>
 </variablelist>
+</section>
+
+<section id="globalxmlelements">
+	<title>General purpose elements to be used in any XML file (.xml, .rkh, .pluginmap)</title>
+	<variablelist>
+	<varlistentry>
+	<term>&lt;snippets&gt;</term>
+	<listitem>Allowed as a direct child of the &lt;document&gt; node and only there. Should be placed near the top of the file. See <link linkend="snippets">section on using snippets</link>. Only one &lt;snippets&gt; element may be present. Optional, no attributes.</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;snippet&gt;</term>
+	<listitem>Defines a single snippet. Allowed only as a direct child of the &lt;snippets/&gt; element. Attributes:
+		<variablelist>
+		<varlistentry>
+		<term>&lt;id&gt;</term>
+		<listitem>An identifier string for the snippet. Required.</listitem>
+		</varlistentry>
+		</variablelist></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;insert&gt;</term>
+	<listitem>Insert the contents of a &lt;snippet&gt;. Allowed anywhere. Attributes:
+		<variablelist>
+		<varlistentry>
+		<term>&lt;snippet&gt;</term>
+		<listitem>The identifier string of the snippet to insert. Required.</listitem>
+		</varlistentry>
+		</variablelist></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;include&gt;</term>
+	<listitem>Include the contents of another xml file (everything inside the &lt;document&gt; element of that file). Allowed anywhere. Attributes:
+		<variablelist>
+		<varlistentry>
+		<term>&lt;file&gt;</term>
+		<listitem>The filename, relative to the directory, the current file is in. Required.</listitem>
+		</varlistentry>
+		</variablelist></listitem>
+	</varlistentry>
+	</variablelist>
 </section>
 
 <section id="xmlelements"><title>Elements to be used in the XML description of the plugin</title>
@@ -2044,7 +2171,6 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
-</variablelist>
 <varlistentry>
 <term>&lt;convert&gt;</term>
 <listitem>This element (used in the &lt;logic&gt; section) is special, in that is technically *is* a property, instead of just holding one or more properties. It is of boolean kind. Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>)</listitem>
