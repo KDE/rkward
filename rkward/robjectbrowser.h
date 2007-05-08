@@ -44,6 +44,7 @@ public:
 
 	enum PopupItems { Help=1, Edit=2, View=3, Rename=4, Copy=5, CopyToGlobalEnv=6, Delete=7 };
 	static RObjectBrowser *mainBrowser () { return object_browser; };
+	void unlock ();
 public slots:
 	void updateButtonClicked ();
 	void contextMenuCallback (RKListViewItem *item, bool *suppress);
@@ -64,9 +65,11 @@ protected:
 private:
 	QPushButton *update_button;
 	RKObjectListView *list_view;
+	bool initialized;
+	bool locked;
 
-	friend class RKWardMainWindow;
 	void initialize ();
+	friend class RKWardMainWindow;
 	static RObjectBrowser *object_browser;
 };
 

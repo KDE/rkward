@@ -155,7 +155,7 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	}
 // END
 
-	interface_pref = static_cast<PluginPrefs> (config->readNumEntry ("Interface Preferences", static_cast<int> (PreferWizard)));
+	interface_pref = static_cast<PluginPrefs> (config->readNumEntry ("Interface Preferences", static_cast<int> (PreferRecommended)));
 	show_code = config->readBoolEntry ("Code display default", true);
 	code_size = config->readNumEntry ("Code display size", 40);
 }

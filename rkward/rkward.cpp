@@ -315,7 +315,7 @@ void RKWardMainWindow::startR () {
 
 	RKGlobals::rInterface ()->startThread ();
 
-	RObjectBrowser::mainBrowser ()->initialize ();
+	RObjectBrowser::mainBrowser ()->unlock ();
 }
 
 void RKWardMainWindow::slotConfigure () {

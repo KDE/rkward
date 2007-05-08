@@ -77,6 +77,9 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, char *name) :
 	connect (list_view, SIGNAL (doubleClicked (QListViewItem *, const QPoint &, int )), this, SLOT (slotListDoubleClicked (QListViewItem *, const QPoint &, int)));
 	
 	resize (minimumSizeHint ().expandedTo (QSize (400, 480)));
+
+	initialized = false;
+	locked = true;
 }
 
 RObjectBrowser::~RObjectBrowser () {
@@ -90,14 +93,26 @@ void RObjectBrowser::focusInEvent (QFocusEvent *e) {
 	if (e->reason () != QFocusEvent::Mouse) {
 		list_view->setObjectCurrent (RObjectList::getGlobalEnv (), true);
 	}
+	initialize ();
+}
+
+void RObjectBrowser::unlock () {
+	RK_TRACE (APP);
+
+	locked = false;
+	if (hasFocus ()) initialize ();
 }
 
 void RObjectBrowser::initialize () {
 	RK_TRACE (APP);
+	if (initialized) return;
+	if (locked) return;
 
-	list_view->initializeLater ();
+	list_view->initialize ();
 	
 	connect (update_button, SIGNAL (clicked ()), this, SLOT (updateButtonClicked ()));
+
+	initialized = true;
 }
 
 void RObjectBrowser::updateButtonClicked () {
