@@ -1,34 +1,14 @@
 <!DOCTYPE rkplugin>
-<!--This is the "Binomial quantile" plugin-->
-
 <document>
-  <code file="binomial_quantiles.php" />
-  <dialog label="Binomial quantile" >
-    <tabbook>
-      <tab label="Binomial quantile" >
-          <row>
-            <column>
-              <input required="true" initial="0.95" id="p" min="0" max="1" label="Vector of probabilities"/>
-              <spinbox default_precision="2" type="real" initial="1" id="size" min="1" label="Binomial trials"/>
-              <spinbox default_precision="2" type="real" initial="0.5" id="prob" min="0" max="1" label="Probability of success"/>
-            </column>
-            <column>
-              <row>
-               <radio id="tail" label="Choose type of probability" >
-                <option value="lower.tail=TRUE" label="lower tail" />
-                <option value="lower.tail=FALSE" label="upper tail" />
-               </radio>
-              </row>
-              <row>
-               <radio id="logp" label="probabilities p are given as:" >
-                <option value="log.p = FALSE" label="not log(p)" />
-                <option value="log.p = TRUE" label="log(p)" />
-               </radio>
-              </row>
-              <stretch/>
-            </column>
-          </row>
-      </tab>
-    </tabbook>
-  </dialog>
+	<code file="binomial_quantiles.php" />
+	<snippets>
+		<snippet id="dist_options">
+			<spinbox default_precision="2" type="real" initial="1" id="size" min="1" label="Binomial trials"/>
+			<spinbox default_precision="2" type="real" initial="0.5" id="prob" min="0" max="1" label="Probability of success"/>
+		</snippet>
+		<include file="dist_snippets.xml"/>
+	</snippets>
+	<dialog label="Binomial quantiles" >
+		<insert snippet="quantiles_layout"/>
+	</dialog>
 </document>
