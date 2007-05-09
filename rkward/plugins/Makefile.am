@@ -256,7 +256,8 @@ dist_pluginsXdistributionsXclt_DATA = \
 	distributions/clt/plot_weibull_clt.php \
 	distributions/clt/plot_t_clt.xml \
 	distributions/clt/plot_clt_common.php \
-	distributions/clt/plot_clt_snippets.xml
+	distributions/clt/plot_clt_snippets.xml \
+	distributions/clt/plot_clt_help_snippets.xml
 
 pluginsXdistributionsXtestsdir = $(kde_datadir)/rkward/distributions/tests
 dist_pluginsXdistributionsXtests_DATA = \
