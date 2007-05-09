@@ -7,9 +7,6 @@ Important:
 		- Is Rf_translateChar() what we are looking for?
 
 Should be fixed for 0.4.8:
-	- A way to define dependencies between pluginmaps
-		- Put the embeddable plugins a .pluginmap that is required by most others
-	- Find a solution for error handling in plugins
 
 Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
@@ -218,6 +215,12 @@ R plugins:
 		- provide the set of enclosed options for each of the selected variables
 		- will provide dynamic properties based on which variables are selected in the source
 		- how to determine default values?
+	- RObjectViewer
+		- also show the summary for objects
+		- do some formatting to make it look nicer
+		- make it an MDI window
+		- add update buttons and such
+			- on updating: if object has changed, display a note to that effect in the window
 
 Documentation:
 	- add an example to show rkward-specific commands (rk.print, rk.graph)
