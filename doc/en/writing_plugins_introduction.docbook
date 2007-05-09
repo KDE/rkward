@@ -75,23 +75,22 @@ For questions and comments, please write to the &kapp; development mailing list.
 <emphasis>You do not need to read this in order to use &kapp;.</emphasis> This document is about extending &kapp;. It is targeted at advanced users, or people willing to help improve &kapp;.
 </para>
 <para>
-Writing a standard plugin is basically a three-step process:
+Writing a standard plugin is basically a four-step process:
 <itemizedlist>
 <listitem><link linkend="pluginmap">Placing a new Action in the menu-hierarchy</link></listitem>
 <listitem><link linkend="mainxml">Describing the looks and behavior of the plugin-GUI</link></listitem>
 <listitem><link linkend="phptemplate">Defining, how R-code is to be generated from the settings, the user makes in the GUI</link></listitem>
+<listitem><link linkend="pluginhelp">Adding a help page to your plugin</link></listitem>
 </itemizedlist>
 Those will be dealt with in turn.
 </para>
 <para>
-Some advanced concepts may be used in those three steps, but are dealt with in separate chapters, to keep things simple:
+Some advanced concepts may be used in those four steps, but are dealt with in separate chapters, to keep things simple:
 <itemizedlist>
 <listitem><link linkend="logic">GUI logic</link></listitem>
 <listitem><link linkend="embedding">Embedding Plugins into Plugins</link></listitem>
+<listitem><link linkend="plugin_series">Useful concepts for creating many series of similar plugins</link></listitem>
 </itemizedlist>
-</para>
-<para>
-Finally, there is a chapter on <link linkend="pluginhelp">adding a help page</link> to your plugin.
 </para>
 <para>
 Also, none of the chapters shows all options, but rather only the basic concepts. A complete <link linkend="reference">reference</link> of options is provided separately.
