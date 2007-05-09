@@ -128,7 +128,7 @@ The doctype is not really interpreted, but set it to "rkpluginmap" anyway.
 &lt;document base_prefix="" namespace="rkward"&gt;
 </programlisting>
 <para>
-The "base_prefix"-attribute can be used, if all your plugins reside in a common directory. Basically, then, you can omit that directory from the filenames specified below. As you will see below, all plugins get a unique identifier. The "namespace" is a way to organized those ids, and make it less likely to create a duplicate identifier accidentally. Internally, basically the namespace and then a "::" gets prepended to all the identifiers you specify below.
+The "base_prefix"-attribute can be used, if all your plugins reside in a common directory. Basically, then, you can omit that directory from the filenames specified below. As you will see below, all plugins get a unique identifier. The "namespace" is a way to organize those ids, and make it less likely to create a duplicate identifier accidentally. Internally, basically the namespace and then a "::" gets prepended to all the identifiers you specify below. If unsure, leave these at "" and "rkward".
 </para>
 <programlisting>
 	&lt;components&gt;
@@ -161,7 +161,7 @@ Ok, this was the first step. &kapp; now knows those plugins exist. But how to in
 		&lt;menu id="analysis" label="Analysis" index="4"&gt;
 </programlisting>
 <para>
-Right below the &lt;hierarchy&gt;-tag, you start describing, in which menu, your plugins should go. With the above line, you basically say, that your plugin should be in the "Analysis" menu (not necessarily directly there, but in a submenu). The "Analysis" menu is standard in &kapp;, so it does not acutally have to be created from scratch. However, if it did not exist yet, using the "label"-attribute you'd give it its name. The "index" attribute says, that the menu (if newly created) should be placed at the fourth position in the menubar.
+Right below the &lt;hierarchy&gt;-tag, you start describing, in which menu, your plugins should go. With the above line, you basically say, that your plugin should be in the "Analysis" menu (not necessarily directly there, but in a submenu). The "Analysis" menu is standard in &kapp;, so it does not actually have to be created from scratch. However, if it did not exist yet, using the "label"-attribute you'd give it its name. The "index" attribute says, that the menu (if newly created) should be placed at the fourth position in the menubar.
 Finally, the "id" once again identifies this menu. This is needed, so several .pluginmap-files can place their plugins in the same menus. They do this by looking for a menu with the given "id". If the id does not yet exist, a new menu will be created. Otherwise the entries will be added to the existing menu.
 </para>
 <programlisting>
@@ -238,7 +238,7 @@ That's how to do it. And this screenshot shows the result:
 	</mediaobject>
 </screenshot>
 <para>
-Confused? The easiest way to get started is probably taking some of the existing .plugin_map files shipped with the distribution, and modifying them to your needs. Also, if you need help, don't hesitate to write to the development mailing list.
+Confused? The easiest way to get started is probably taking some of the existing .pluginmap files shipped with the distribution, and modifying them to your needs. Also, if you need help, don't hesitate to write to the development mailing list.
 </para>
 </chapter>
 
@@ -267,7 +267,7 @@ All plugins generate some code. Currently the only way to do so is using PHP, as
 	&lt;help file="t_test.rkh"/&gt;
 </programlisting>
 <para>
-It is usually a good idea, to also provide a help page for your plugin. The filename of that help page is given, here, relative to the directory, the plugin-xml is in. Writing help pages is documented <link linkend="pluginhelp">here</link>. If you do not provide a help file, omit this line.
+It is usually a good idea to also provide a help page for your plugin. The filename of that help page is given, here, relative to the directory, the plugin-xml is in. Writing help pages is documented <link linkend="pluginhelp">here</link>. If you do not provide a help file, omit this line.
 </para>
 <programlisting>
 	&lt;dialog label="Independent Samples T-Test"&gt;
@@ -407,7 +407,7 @@ But how does R-syntax get generated from the GUI-settings? I'll deal with that i
 	Much of the same thing here. We add some texts, and in between that &lt;copy&gt; further sections from the dialog interface.
 	</para>
 	<para>
-	You may of course make the wizard-interface look very different to the plain dialog, and not use the &lt;copy&gt; tag at all. Be sure, however, to assign corresponding elements the same "id" in both interfaces. This is not only used to transfer settings from the dialog-interface to the wizard-interface and back, when the user switches interfaces (which does not yet happen in the current version of RKWard), but also simplifies writing your code-template (see below). 
+	You may of course make the wizard-interface look very different to the plain dialog, and not use the &lt;copy&gt; tag at all. Be sure, however, to assign corresponding elements the same "id" in both interfaces. This is not only used to transfer settings from the dialog-interface to the wizard-interface and back, when the user switches interfaces (which does not yet happen in the current version of RKWard), but also simplifies writing your code-template (see below).
 	</para>
 </section>
 
@@ -420,7 +420,7 @@ But how does R-syntax get generated from the GUI-settings? I'll deal with that i
 	<section id="radio_vs_checkbox_vs_dropdown">
 		<title>&lt;radio&gt; vs. &lt;checkbox&gt; vs. &lt;dropdown&gt;</title>
 		<para>
-		The three elements &lt;radio&gt;, &lt;checkbox&gt;, &lt;dropdown&gt;, all serve a similar function: To select one out of a several options. Obviously, a checkbox only allows to chose between two options: checked or not checked, so you can't use it, if there are more than two options to chose from. But when to use which of the elements? Some rules of thumb:
+		The three elements &lt;radio&gt;, &lt;checkbox&gt;, &lt;dropdown&gt;, all serve a similar function: To select one out of several options. Obviously, a checkbox only allows to chose between two options: checked or not checked, so you can't use it, if there are more than two options to chose from. But when to use which of the elements? Some rules of thumb:
 		</para>
 		<para>
 		If you find yourself creating a &lt;radio&gt; or &lt;dropdown&gt; with only two options, ask yourself, whether the question is essentially a yes / no type of question. E.g. a choice between "adjust results" and "do not adjust results", or between "remove missing values" and "keep missing values". In this case a &lt;checkbox&gt; is the best choice: It uses little space, will have the least words of labels, and is easiest to read for the user. There are very few situations where you should chose a &lt;radio&gt; over a &lt;checkbox&gt;, when there are only two options. An example of that might be: "Method of calculation: 'pearson'/'spearman'". Here, more methods might be thinkable, and they don't really form a pair of opposites.
@@ -2295,6 +2295,100 @@ In addition to this, some elements have additional properties you can connect to
 </varlistentry>
 </variablelist>
 </section>
+
+<section id="helpfileelements"><title>Elements for use in .rkh (help) files</title>
+<variablelist>
+<varlistentry>
+<term>&lt;document&gt;</term>
+<listitem>Needs to be present in each .rkh file as the root-node (exactly once). No attributes.</listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;title&gt;</term>
+<listitem>Title of the help page. This is <emphasis>not</emphasis> interpreted for help pages for a plugin (this takes the title from the plugin itself), only for stand-alone pages. No attributes. The text contained within the &lt;title&gt; tag will become the caption of the help page. May only be defined once, as a direct child of the &lt;document&gt; node.</listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;summary&gt;</term>
+<listitem>A short summary of the help page (or what this plugin is used for). This will always be shown at the top of the help page. No attributes. The text contained within the &lt;summary&gt; tag will be displayed. Recommended but not required. May only be defined once, as a direct child of the &lt;document&gt; node.</listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;usage&gt;</term>
+<listitem>A slightly more elaborate summary of the usage. This will always be shown directly after the &lt;summary&gt;. No attributes. The text contained within the &lt;usage&gt; tag will be displayed. Recommended for plugin help pages, but not required. May only be defined once, as a direct child of the &lt;document&gt; node.</listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;section&gt;</term>
+<listitem>
+	<variablelist>
+	<varlistentry>
+	<term>id</term>
+	<listitem></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>title</term>
+	<listitem></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>short_title</term>
+	<listitem></listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;settings&gt;</term>
+<listitem></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;setting&gt;</term>
+<listitem>
+	<variablelist>
+	<varlistentry>
+	<term>id</term>
+	<listitem></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>title</term>
+	<listitem></listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;caption&gt;</term>
+<listitem>
+	<variablelist>
+	<varlistentry>
+	<term>id</term>
+	<listitem></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>title</term>
+	<listitem></listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;related&gt;</term>
+<listitem></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;technical&gt;</term>
+<listitem></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;link&gt;</term>
+<listitem>
+	<variablelist>
+	<varlistentry>
+	<term>href</term>
+	<listitem></listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;various html tags&gt;</term>
+<listitem></listitem>
+</varlistentry>
+</variablelist>
+</section>
+
 </appendix>
 
 <appendix id="troubleshooting">
