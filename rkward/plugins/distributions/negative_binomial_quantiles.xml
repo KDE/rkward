@@ -1,34 +1,14 @@
 <!DOCTYPE rkplugin>
-<!--This is the "Negative Binomial quantiles" plugin-->
-
 <document>
-<code file="negative_binomial_quantiles.php" />
-<dialog label="Negative Binomial quantiles" >
-    <tabbook>
-     <tab label="Negative Binomial quantiles" >
-          <row>
-            <column>
-                <input required="true" initial="0.95" id="p" label="Vector of probabilities"/>
-                <spinbox type="integer" min="0" initial="1" id="size" label="Target for number of successful trials"/>
-                <spinbox default_precision="2" type="real" min="0" initial="0.5" max="1" id="prob" label="Probability of success in each trial"/>
-            </column>
-            <column>
-                <row>
-                    <radio id="tail" label="Choose type of probability" >
-                        <option value="lower.tail=TRUE" label="lower tail" />
-                        <option value="lower.tail=FALSE" label="upper tail" />
-                    </radio>
-                </row>
-                <row>
-                    <radio id="logp" label="probabilities p are given as:" >
-                      <option value="log.p = FALSE" label="not log(p)" />
-                      <option value="log.p = TRUE" label="log(p)" />
-                  </radio>
-                </row>
-              <stretch/>
-            </column>
-          </row>
-      </tab>
-    </tabbook>
-  </dialog>
+	<code file="negative_binomial_quantiles.php" />
+	<snippets>
+		<snippet id="dist_options">
+			<spinbox type="integer" min="0" initial="1" id="size" label="Target for number of successful trials"/>
+			<spinbox default_precision="2" type="real" min="0" initial="0.5" max="1" id="prob" label="Probability of success in each trial"/>
+		</snippet>
+		<include file="dist_snippets.xml"/>
+	</snippets>
+	<dialog label="Negative Binomial quantiles" >
+		<insert snippet="quantiles_layout"/>
+	</dialog>
 </document>

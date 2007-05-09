@@ -1,34 +1,14 @@
 <!DOCTYPE rkplugin>
-<!--This is the "Uniform probabilities" plugin-->
-
 <document>
-<code file="uniform_probabilities.php" />
-<dialog label="Uniform probabilities" >
-    <tabbook>
-     <tab label="Uniform probabilities" >
-          <row>
-            <column>
-                <input required="true" initial="0.95" id="q" label="Vector of quantiles"/>
-                <spinbox default_precision="2" type="real" initial="0" id="min" label="Lower limit of the distribution"/>
-                <spinbox default_precision="2" type="real" initial="1" id="max" label="Upper limit of the distribution"/>
-            </column>
-            <column>
-                <row>
-                    <radio id="tail" label="Choose type of probability" >
-                        <option value="lower.tail=TRUE" label="lower tail" />
-                        <option value="lower.tail=FALSE" label="upper tail" />
-                    </radio>
-                </row>
-                <row>
-                    <radio id="logp" label="probabilities p are given as:" >
-                      <option value="log.p = FALSE" label="not log(p)" />
-                      <option value="log.p = TRUE" label="log(p)" />
-                  </radio>
-                </row>
-              <stretch/>
-            </column>
-          </row>
-      </tab>
-    </tabbook>
-  </dialog>
+	<code file="uniform_probabilities.php" />
+	<snippets>
+		<snippet id="dist_options">
+			<spinbox default_precision="2" type="real" initial="0" id="min" label="Lower limit of the distribution"/>
+			<spinbox default_precision="2" type="real" initial="1" id="max" label="Upper limit of the distribution"/>
+		</snippet>
+		<include file="dist_snippets.xml"/>
+	</snippets>
+	<dialog label="Uniform probabilities" >
+		<insert snippet="probabilities_layout"/>
+	</dialog>
 </document>

@@ -1,34 +1,14 @@
 <!DOCTYPE rkplugin>
-<!--This is the "Gamma probabilities" plugin-->
-
 <document>
-<code file="gamma_probabilities.php" />
-<dialog label="Gamma probabilities" >
-    <tabbook>
-      <tab label="Gamma probabilities" >
-          <row>
-            <column>
-                <input required="true" initial="0.95" id="q" label="Vector of quantiles"/>
-                <spinbox default_precision="2" type="real" min="0" initial="1" id="shape" label="Shape"/>
-                <spinbox default_precision="2" type="real" min="0" initial="1" id="rate" label="Rate"/>
-            </column>
-            <column>
-                <row>
-                    <radio id="tail" label="Choose type of probability" >
-                        <option value="lower.tail=TRUE" label="lower tail" />
-                        <option value="lower.tail=FALSE" label="upper tail" />
-                    </radio>
-                </row>
-                <row>
-                    <radio id="logp" label="probabilities p are given as:" >
-                      <option value="log.p = FALSE" label="not log(p)" />
-                      <option value="log.p = TRUE" label="log(p)" />
-                  </radio>
-                </row>
-              <stretch/>
-            </column>
-          </row>
-      </tab>
-    </tabbook>
-  </dialog>
+	<code file="gamma_probabilities.php" />
+	<snippets>
+		<snippet id="dist_options">
+			<spinbox default_precision="2" type="real" min="0" initial="1" id="shape" label="Shape"/>
+			<spinbox default_precision="2" type="real" min="0" initial="1" id="rate" label="Rate"/>
+		</snippet>
+		<include file="dist_snippets.xml"/>
+	</snippets>
+	<dialog label="Gamma probabilities" >
+		<insert snippet="probabilities_layout"/>
+	</dialog>
 </document>
