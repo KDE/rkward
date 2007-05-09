@@ -41,7 +41,7 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2007-04-25</date>
+<date>2007-05-09</date>
 <releaseinfo>0.4.8.00</releaseinfo>
 
 <abstract>
@@ -1167,7 +1167,7 @@ The key difference between these concepts is that embeddable plugins are a more 
 That is, a plugin embedding another plugin will typically not need to know much about the internal details of the embedded plugin. A prime example is the plot_options plugin. Plugins wishing to embed this do not necessarily need to know about all the options provided, or how they are provided. This is a good thing, as otherwise a change in the plot_options plugin might make it necessary to adjust all plugins embedding this (a lot). In contrast, include and insert really exposes all the internal details, and plugins using this will - for example - need to know the exact ids and perhaps even the type of the elements used.
 	</para>
 	<para>
-Hence the rule of thumb is this: include and insert are great if the relevant options are only needed for a clearly limited group of plugins. Embedded plugins are better, if the group of plugins it may be useful to is not clearly defined, and if the functionality can easily be modularized. Another rule of thumb: If you can put the common portions into a single "chunk", then do so, and use embedding. If you need lots of small snippets to define the common portions - well, use &lt;snippets&gt;.
+Hence the rule of thumb is this: include and insert are great if the relevant options are only needed for a clearly limited group of plugins. Embedded plugins are better, if the group of plugins it may be useful to is not clearly defined, and if the functionality can easily be modularized. Another rule of thumb: If you can put the common portions into a single "chunk", then do so, and use embedding. If you need lots of small snippets to define the common portions - well, use &lt;snippets&gt;. A final way to look at it: If all plugins provide <emphasis>highly</emphasis> similar functionality, includes and inserts are probably a good idea. If they merely share one or two common "modules", embedding is likely better.
 	</para>
 	</section>
 </chapter>
