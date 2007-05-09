@@ -11,7 +11,7 @@
 					<option value="lower.tail=TRUE" label="lower tail" />
 					<option value="lower.tail=FALSE" label="upper tail" />
 				</radio>
-				<radio id="logp" label="probabilities p are given as:" >
+				<radio id="logp" label="return probabilities p as:" >
 					<option value="log.p = FALSE" label="not log(p)" />
 					<option value="log.p = TRUE" label="log(p)" />
 				</radio>
