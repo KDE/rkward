@@ -1,34 +1,15 @@
 <!DOCTYPE rkhelp>
 <document>
-	<summary>
-		Normal approximation to Beta Sample averages. For any generic option refer to the RKWard help page on <link href="rkward://component/plot_binomial_clt"/> for detailed descriptions.
-	</summary>
-	<usage>
-		Choose the Beta parameter, the sample sizes needed for CLT and a choice of function.
-	</usage>
-	<settings>
-		<caption id="tab_plot_distrib_clt"/>
-		<setting id="frame_betaparam">See RKWard help on <link href="rkward://component/plot_beta_distribution"/>.</setting>
-		<setting id="nAvg"></setting>
-		<setting id="nDist"></setting>
-		<setting id="function"></setting>
-		<setting id="scalenorm"></setting>
-		<setting id="drawnorm">For all the above see 'Binomial CLT'.</setting>
-		<setting id="normpointtype">Pointtype for the Normal curve.</setting>
-		<setting id="normlinecol">Color of the Normal curve.</setting>
-		<setting id="plotoptions">Various plot options.</setting>
-		<setting id="preview">Preview button.</setting>
-		<caption id="tab_histoptions"/>
-		<setting id="histogram_opt">See Binomial CLT for details.</setting>
-		<caption id="tab_distfunction"/>
-		<setting id="dist_stepfun">See Binomial CLT for details.</setting>
-	</settings>
-	<related>
-		<ul>
-			<li><link href="rkward://component/plot_binomial_clt"/></li>
+	<snippets>
+		<snippet id="dist_name"><span>Beta</span></snippet>
+		<snippet id="dist_related">
 			<li><link href="rkward://component/plot_beta_distribution"/></li>
 			<li><link href="rkward://rhelp/Beta"/></li>
-			<li><link href="rkward://rhelp/Normal"/></li>
-		</ul>
-	</related>
+		</snippet>
+		<snippet id="dist_options_help">
+			<setting id="frame_betaparam">See RKWard help on <link href="rkward://component/plot_beta_distribution"/>.</setting>
+		</snippet>
+		<include file="plot_clt_help_snippets.xml"/>
+	</snippets>
+	<insert snippet="clt_help_template"/>
 </document>
