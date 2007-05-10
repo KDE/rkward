@@ -2318,75 +2318,75 @@ In addition to this, some elements have additional properties you can connect to
 </varlistentry>
 <varlistentry>
 <term>&lt;section&gt;</term>
-<listitem>
+<listitem>A general purposes section. May be used any number of times as a direct child of the &lt;document&gt; node. These sections are displayed in the order of their definition, but all <emphasis>after</emphasis> the &lt;usage&gt; section and <emphasis>before</emphasis> the &lt;settings&gt; section. The text contained within the &lt;sectoin&gt; tag will be displayed.
 	<variablelist>
 	<varlistentry>
 	<term>id</term>
-	<listitem></listitem>
+	<listitem>An identifier needed to jump to this section from the navigation bar (or a link). Needs to be unique within the file. Required, no default.</listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>title</term>
-	<listitem></listitem>
+	<listitem>The title (caption) of this section. Required, no default.</listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>short_title</term>
-	<listitem></listitem>
+	<listitem>A short title suitable to be displayed in the navigation bar. Optional, defaults to the full title.</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;settings&gt;</term>
-<listitem></listitem>
+<listitem>Defines the section containing reference on the various GUI settings. Only meaningful and only used for plugin related help pages. Use as a direct child of the &lt;document&gt;. May contain only &lt;setting&gt; and &lt;caption&gt; elements as direct children. No attributes.</listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;setting&gt;</term>
-<listitem>
+<listitem>Explains a single setting in the GUI. Only allowed as a direct child of the &lt;settings&gt; element. The text contained within the element is displayed.
 	<variablelist>
 	<varlistentry>
 	<term>id</term>
-	<listitem></listitem>
+	<listitem>The id of the setting in the plugin .xml. Required, no default.</listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>title</term>
-	<listitem></listitem>
+	<listitem>An optional title for the setting. If omitted (omission is recommended in most cases), the title will be taken from the plugin .xml.</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;caption&gt;</term>
-<listitem>
+<listitem>A caption to visually group several settings. May only be used as a direct child of the &lt;settings&gt; element.
 	<variablelist>
 	<varlistentry>
 	<term>id</term>
-	<listitem></listitem>
+	<listitem>The id of the corresponding element (typically a &lt;frame&gt;, &lt;page&gt; or &lt;tab&gt;) in the plugin .xml.</listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>title</term>
-	<listitem></listitem>
+	<listitem>An optional title for the caption. If omitted (omission is recommended in most cases), the title will be taken from the plugin .xml.</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;related&gt;</term>
-<listitem></listitem>
+<listitem>Defines a section containing links to further related information. Will always be displayed after the &lt;settings&gt; section. Use as a direct child of the &lt;document&gt;. May contain only &lt;setting&gt; and &lt;caption&gt; elements as direct children. No attributes.</listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;technical&gt;</term>
-<listitem></listitem>
+<listitem>Defines a section containing technical information of no relevance to end users (such as internal structure of the plugin). Will always be displayed last in a help page. Use as a direct child of the &lt;document&gt;. May contain only &lt;setting&gt; and &lt;caption&gt; elements as direct children. No attributes.</listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;link&gt;</term>
-<listitem>
+<listitem>A link. Can be used in any of the sections described above.
 	<variablelist>
 	<varlistentry>
 	<term>href</term>
-	<listitem></listitem>
+	<listitem>The target url. Note that several rkward specific URLs are available. See <link linkend="pluginhelp">section on writing help pages</link> for details.</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;various html tags&gt;</term>
-<listitem></listitem>
+<listitem>Most basic html tags are allowed within the sections. Please keep manual formatting to a minimum, however.</listitem>
 </varlistentry>
 </variablelist>
 </section>
