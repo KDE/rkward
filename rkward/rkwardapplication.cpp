@@ -57,11 +57,18 @@ void RKWardApplication::startWindowCreationDetection () {
 	detect_x11_creations = true;
 
 	XSelectInput (qt_xdisplay (), qt_xrootwin (), SubstructureNotifyMask);
+	syncX ();	// this is to make sure we don't miss out on the window creation (if it happens very early). Testing shows, we really need this.
 }
 
 WId RKWardApplication::endWindowCreationDetection () {
 	RK_TRACE (APP);
 	RK_ASSERT (detect_x11_creations);
+
+	if (!created_window) {
+		// we did not see the window, yet? Maybe the event simply hasn't been processed, yet.
+		syncX();
+		processEvents ();
+	}
 
 	detect_x11_creations = false;
 	XSelectInput (qt_xdisplay (), qt_xrootwin (), NoEventMask);

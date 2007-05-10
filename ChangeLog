@@ -1,3 +1,4 @@
+- fixed: sometimes detecting created X11() windows would fail, esp. under high load
 - create the workspace browser only when it is first shown
 - support for including files and snippets in xml files		TODO: use more
 - all file selection line edits gain filename-completion
