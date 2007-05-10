@@ -24,7 +24,7 @@
 class RKComponentPropertyCode;
 
 /**
-Abstract base class for scripting-language backends. Mostly pure virtual functions only.
+Abstract base class for scripting-language backends. Mostly pure virtual functions only + some handling to make sure the processing is asynchronous.
 
 @author Thomas Friedrichsmeier
 */
@@ -45,11 +45,10 @@ public:
 	};
 
 /** initialize backend
-@param filename Filename of the template to work on
 @param code_property If you supply a pointer to an RKComponentPropertyCode, The backend will directly set values for this property in response to calls to preproces (), calculate (), printout (), and cleanup ().
 @param add_headings (Only meaningful, if code_property is not 0). If set to true, heading comments will be added to each section of the code (e.g. "## Do calculations")
 @returns true on successful initialization, false on errors */
-	virtual bool initialize (const QString &filename, RKComponentPropertyCode *code_property=0, bool add_headings=true) = 0;
+	virtual bool initialize (RKComponentPropertyCode *code_property=0, bool add_headings=true) = 0;
 	virtual void destroy () = 0;
 	
 	virtual void preprocess (int flags) = 0;
@@ -60,9 +59,6 @@ public:
 	virtual bool isBusy () { return busy; };
 	
 	virtual void writeData (const QString &data) = 0;
-	
-	QString retrieveOutput () { return _output; };
-	void resetOutput () { _output = QString::null; };
 signals:
 	void commandDone (int);
 	void idle ();
@@ -71,8 +67,30 @@ signals:
 protected:
 	RKComponentPropertyCode *code_property;
 	bool add_headings;
-	QString _output;
 	bool busy;
+
+	struct ScriptCommand {
+	/// the command string
+		QString command;
+	/// flags attached to this command by the parent
+		int flags;
+	/// internal type (used to find out, if this is a preproces, calculate, printout, or cleanup call)
+		int type;
+	/// whether command has finished
+		bool complete;
+	};
+	QValueList<ScriptCommand *> command_stack;
+
+	int current_flags;
+	int current_type;
+
+/** Invalidate all previous calls of the given type */
+	void invalidateCalls (int type);
+/** call a function on the current template. */
+	void callFunction (const QString &function, int flags, int type);
+
+	void commandFinished (const QString &output);
+	virtual void tryNextFunction () = 0;
 };
 
 #endif

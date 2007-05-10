@@ -33,6 +33,7 @@
 
 #include "rkstandardcomponentgui.h"
 #include "../scriptbackends/phpbackend.h"
+#include "../scriptbackends/simplebackend.h"
 #include "../misc/xmlhelper.h"
 #include "../settings/rksettingsmoduleplugins.h"
 
@@ -79,18 +80,27 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 
 	// initialize the PHP-backend with the code-template
 	QDomElement element = xml->getChildElement (doc_element, "code", DL_WARNING);
-	QString dummy = QFileInfo (filename).dirPath () + '/' + xml->getStringAttribute (element, "file", "code.php", DL_WARNING);
-	backend = new PHPBackend ();
+	if (element.hasAttribute ("file")) {
+		QString dummy = QFileInfo (filename).dirPath () + '/' + xml->getStringAttribute (element, "file", "code.php", DL_WARNING);
+		backend = new PHPBackend (dummy);
+	} else {
+		SimpleBackend *back = new SimpleBackend ();
+		back->setPreprocessTemplate (xml->getStringAttribute (element, "preprocess", QString::null, DL_INFO));
+		back->setPrintoutTemplate (xml->getStringAttribute (element, "printout", QString::null, DL_INFO));
+		back->setCalculateTemplate (xml->getStringAttribute (element, "calculate", QString::null, DL_INFO));
+		back->setPreviewTemplate (xml->getStringAttribute (element, "preview", QString::null, DL_INFO));
+		backend = back;
+	}
 	connect (backend, SIGNAL (idle ()), this, SLOT (backendIdle ()));
 	connect (backend, SIGNAL (requestValue (const QString&)), this, SLOT (getValue (const QString&)));
 	connect (backend, SIGNAL (haveError ()), this, SLOT (hide ()));
 	connect (backend, SIGNAL (haveError ()), this, SLOT (removeFromParent ()));
 	connect (backend, SIGNAL (haveError ()), this, SLOT (deleteLater ()));
-	if (!backend->initialize (dummy, code, parent_component == 0)) return;
+	if (!backend->initialize (code, parent_component == 0)) return;
 
 	// check for existance of help file
 	element = xml->getChildElement (doc_element, "help", DL_WARNING);
-	dummy = QFileInfo (filename).dirPath () + '/' + xml->getStringAttribute (element, "file", "::nosuchfile::", DL_INFO);
+	QString dummy = QFileInfo (filename).dirPath () + '/' + xml->getStringAttribute (element, "file", "::nosuchfile::", DL_INFO);
 	have_help = QFileInfo (dummy).exists ();
 
 	handle_change_timer = new QTimer (this);

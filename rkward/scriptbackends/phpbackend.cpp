@@ -30,14 +30,15 @@
 #include "../plugin/rkcomponentproperties.h"
 #include "../debug.h"
 
-PHPBackend::PHPBackend() {
+PHPBackend::PHPBackend (const QString &filename) : ScriptBackend () {
 	RK_TRACE (PHP);
 
 	php_process = 0;
 	eot_string="#RKEND#\n";
 	eoq_string="#RKQEND#\n";
 	busy_writing = false;
-	busy = false;
+
+	PHPBackend::filename = filename;
 }
 
 
@@ -46,7 +47,7 @@ PHPBackend::~PHPBackend() {
 	destroy ();
 }
 
-bool PHPBackend::initialize (const QString &filename, RKComponentPropertyCode *code_property, bool add_headings) {
+bool PHPBackend::initialize (RKComponentPropertyCode *code_property, bool add_headings) {
 	RK_TRACE (PHP);
 
 	if (php_process && php_process->isRunning ()) {
@@ -111,52 +112,6 @@ void PHPBackend::destroy () {
 	data_stack.clear ();
 }
 
-void PHPBackend::callFunction (const QString &function, int flags, int type) {
-	RK_TRACE (PHP);
-	RK_DO (qDebug ("callFunction %s", function.latin1 ()), PHP, DL_DEBUG);
-
-	PHPCommand *command = new PHPCommand;
-	command->command = function;
-	command->flags = flags;
-	command->type = type;
-	command->complete = false;
-
-	if (code_property) {
-		if (type == Preprocess) {
-			code_property->setPreprocess (QString::null);
-		} else if (type == Calculate) {
-			code_property->setCalculate (QString::null);
-		} else if (type == Printout) {
-			code_property->setPrintout (QString::null);
-		} else if (type == Preview) {
-			code_property->setPreview (QString::null);
-		}
-		invalidateCalls (type);
-	}
-
-	command_stack.append (command);
-	tryNextFunction ();
-}
-
-void PHPBackend::invalidateCalls (int type) {
-	RK_TRACE (PHP);
-
-	if (current_type == type) {
-		current_type = Ignore;
-	}
-
-	QValueList<PHPCommand *>::iterator it = command_stack.begin ();
-	while (it != command_stack.end ()) {
-		if ((*it)->type == type) {
-			delete (*it);
-			it = command_stack.erase (it);		// it now points to next item
-		} else {
-			++it;
-		}
-	}
-}
-
-
 void PHPBackend::tryNextFunction () {
 	RK_TRACE (PHP);
 
@@ -181,7 +136,7 @@ void PHPBackend::tryNextFunction () {
 
 void PHPBackend::writeData (const QString &data) {
 	RK_TRACE (PHP);
-	data_stack.append (data  + eot_string);
+	data_stack.append (data + eot_string);
 	tryWriteData ();
 }
 
@@ -257,39 +212,9 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int) {
 
 		if (request == "requesting code") {
 			startup_done = true;
-			busy = false;
 			RK_DO (qDebug ("got type: %d, stack %d", current_type, command_stack.count ()), PHP, DL_DEBUG);
-			if (current_type != Ignore) {
-				if (code_property) {
-					if (_output.isNull ()) _output = "";			// must not be null for the code property!
-					if (current_type == Preprocess) {
-						if (add_headings) code_property->setPreprocess (i18n ("## Prepare\n") + retrieveOutput ());
-						else code_property->setPreprocess (retrieveOutput ());
-						resetOutput ();
-					} else if (current_type == Calculate) {
-						if (add_headings) code_property->setCalculate (i18n ("## Compute\n") + retrieveOutput ());
-						else code_property->setCalculate (retrieveOutput ());
-						resetOutput ();
-					} else if (current_type == Printout) {
-						if (add_headings) code_property->setPrintout (i18n ("## Print result\n") + retrieveOutput ());
-						else code_property->setPrintout (retrieveOutput ());
-						resetOutput ();
-					} else if (current_type == Preview) {
-						// no heading for the preview code (not shown in the code box)
-						code_property->setPreview (retrieveOutput ());
-						resetOutput ();
-					} else {
-						emit (commandDone (current_flags));
-					}
-				} else {
-					emit (commandDone (current_flags));
-				}
-			}
-			tryNextFunction ();
-			if (!busy) {
-				emit (idle ());
-				return;
-			} 
+			commandFinished (_output);
+			_output = QString::null;
 		} else if (request.startsWith ("requesting data:")) {
 			QString requested_object = request.remove ("requesting data:");
 			RK_DO (qDebug ("requested data: \"%s\"", requested_object.latin1 ()), PHP, DL_DEBUG);

@@ -36,11 +36,11 @@ This class takes care of interfacing with PHP
 class PHPBackend : public ScriptBackend {
 	Q_OBJECT
 public:
-	PHPBackend ();
+	PHPBackend (const QString &filename);
 
 	~PHPBackend ();
 
-	bool initialize (const QString &filename, RKComponentPropertyCode *code_property=0, bool add_headings=true);
+	bool initialize (RKComponentPropertyCode *code_property=0, bool add_headings=true);
 	void destroy ();
 	
 	void preprocess (int flags) { callFunction ("preprocess ();", flags, Preprocess); };
@@ -69,27 +69,9 @@ private:
 	bool doing_command;
 	bool startup_done;
 	QString output_raw_buffer;
-	
-	struct PHPCommand {
-	/// the command string
-		QString command;
-	/// flags attached to this command by the parent
-		int flags;
-	/// internal type (used to find out, if this is a preproces, calculate, printout, or cleanup call)
-		int type;
-	/// whether command has finished
-		bool complete;
-	};
-	QValueList<PHPCommand *> command_stack;
 
-	int current_flags;
-	int current_type;
-
-/** Invalidate all previous calls of the given type */
-	void invalidateCalls (int type);
-
-/** call a PHP-function on the current template. */
-	void callFunction (const QString &function, int flags, int type);
+	QString _output;
+	QString filename;
 };
 
 #endif
