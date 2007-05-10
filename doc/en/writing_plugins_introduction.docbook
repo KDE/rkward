@@ -683,8 +683,10 @@ results$foobar &lt;- foobar (x&lt;? echo ($narm); ?&gt;)
 	&lt;link href="rkward://component/[namespace/]component_id"/&gt;
 	
 	This links to the help page of another plugin. The [namespace/] part may be omitted
-	(in this case, rkward is assumed as the standard namespace, e.g.: &lt;link href="rkward://component/import_spss"/&gt; or &lt;link href="rkward://component/rkward/import_spss"/&gt; are equivalent). The component_id is the
-	same that you specified in the <link linkend="pluginmap">.pluginmap</link>.
+	(in this case, rkward is assumed as the standard namespace, e.g.:
+	&lt;link href="rkward://component/import_spss"/&gt; or
+	&lt;link href="rkward://component/rkward/import_spss"/&gt; are equivalent).
+	The component_id is the same that you specified in the <link linkend="pluginmap">.pluginmap</link>.
 	
 	&lt;link href="rkward://rhelp/rfunction"/&gt;
 	

@@ -1,4 +1,7 @@
 <?
+/* NOTE: This file is currently not used by the color_chooser plugin. It remains here, as it illustrates the functionality better than the hack that is actually in effect.
+
+*/
 function preprocess () {
 }
 
