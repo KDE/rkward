@@ -29,6 +29,7 @@
 #include <qlistbox.h>
 
 #include "rkworkplace.h"
+#include "../rkward.h"
 #include "../misc/rkdummypart.h"
 
 #include "../debug.h"
@@ -161,7 +162,11 @@ void RKFileBrowserWidget::fileActivated (const KFileItem *item) {
 			RKWorkplace::mainWorkplace ()->openScriptEditor (item->url ());
 		}
 	} else {
-		new KRun (item->url (), item->mode (), item->isLocalFile ());
+		if (item->name (true).endsWith (".rdata")) {
+			RKWardMainWindow::getMain ()->fileOpenAskSave (item->url ());
+		} else {
+			new KRun (item->url (), item->mode (), item->isLocalFile ());
+		}
 	}
 }
 
