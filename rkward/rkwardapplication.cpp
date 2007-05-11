@@ -66,7 +66,7 @@ WId RKWardApplication::endWindowCreationDetection () {
 
 	if (!created_window) {
 		// we did not see the window, yet? Maybe the event simply hasn't been processed, yet.
-		syncX();
+		syncX ();
 		processEvents ();
 	}
 

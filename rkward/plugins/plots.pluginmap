@@ -3,6 +3,7 @@
 <document base_prefix="plots/" namespace="rkward">
 	<components>
 		<component type="standard" id="barplot" file="barplot.xml" label="Barplot" />
+		<component type="standard" id="barplot_options" file="barplot_options.xml" label="Barplot Options" />
 		<component type="standard" id="box_plot" file="box_plot.xml" label="Box Plot" />
 		<component type="standard" id="density_plot" file="density_plot.xml" label="Density Plot" />
 		<component type="standard" id="ecdf_plot" file="ecdf_plot.xml" label="ECDF Plot" />

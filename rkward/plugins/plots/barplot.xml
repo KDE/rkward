@@ -3,11 +3,7 @@
 	<code file="barplot.php" />
 	<help file="barplot.rkh" />
 	<logic>
-		<convert id="besidevalue" mode="equals" sources="beside.string" standard="TRUE" />
-		<connect client="labels.enabled" governor="besidevalue" />
-		<convert id="labelsvalue" mode="equals" sources="labels.string" standard="TRUE" />
-		<convert id="labelsvalue2" mode="and" sources="labelsvalue;labels.enabled" />
-		<connect client="place.enabled" governor="labelsvalue2" />
+		<set id="barplot_options.xvar" to="x"/>
 	</logic>
 	<dialog label="Barplot" >		
 		<tabbook>
@@ -23,21 +19,7 @@
 				</row>
 			</tab>
 			<tab label="Options" id="tab_options">
-				<checkbox id="legend" label="Legend" value="TRUE" value_unchecked="FALSE" checked="false"/>
-				<checkbox id="rainbow" label="Rainbow colors" value="TRUE" value_unchecked="FALSE" checked="false"/>
-				<radio id="beside" label="Type" >
-					<option value="TRUE" label="Juxtaposed" checked="true"/>
-					<option value="FALSE" label="Stacked"/>
-				</radio>
-				<radio id="labels" label="Label values" >
-					<option value="TRUE" label="Display" />
-					<option value="FALSE" label="Do not Display" checked="true"/>					
-				</radio>
-				<radio id="place" label="Display label values">
-					<option value="3" label="Above Bars" checked="true"/>
-					<option value="2" label="Beside Bars"/>
-					<option value="1" label="Inside Bars"/>
-				</radio>
+				<embed id="barplot_options" component="rkward::barplot_options"/>
 			</tab>
 		</tabbook>			
 	</dialog>

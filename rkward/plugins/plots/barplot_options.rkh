@@ -1,0 +1,32 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Options applicable to bar plots
+	</summary>
+
+	<usage>
+Choose if you want stacked bars, legend, and rainbow colors. Also you can choose if you want to display or not bar values (labels) and in what place.
+	</usage>
+
+	<settings>
+		<setting id="legend">Select if you want to add a legend to the barplot. The row names of height will be used as labels if they are non-null.</setting>
+		<setting id="colors">Select between grey and rainbow collors.</setting>
+		<setting id="type">Select a type between juxtaposed bars and stacked bars. If you select stacked bars you can not display bar values (labels). </setting>
+		<setting id="labels">Select if you want to display bar values (labels).</setting>
+		<setting id="place">If you have selected to display bar values (labels) you can select where should they be displayed:
+		<li> Above the bars </li>
+		<li> Beside the bars </li>
+		<li> Inside the bars </li>
+		</setting>		
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://component/barplot"/></li>
+			<li><link href="rkward://rhelp/barplot"/></li>
+			<li><link href="rkward://rhelp/table"/></li>
+		</ul>
+	</related>
+	<technical>
+		TODO: Write me
+	</technical>
+</document>

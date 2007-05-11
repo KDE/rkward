@@ -16,10 +16,11 @@ function preview () {
 }
 	
 function doPrintout ($final) {
-	$var = getRK_val ("x") ;
-	$labels = getRK_val ("labels")=="TRUE";
-	$tabulate= getRK_val ("tabulate")=="TRUE";
-	
+	$var = getRK_val ("x");
+
+	$barplot_header = getRK_val ("barplot_options.code.preprocess");
+	$barplot_main = getRK_val ("barplot_options.code.printout");
+
 ?>
 x <- <? echo ($var . "\n"); ?>
 <?
@@ -31,27 +32,15 @@ if(!is.matrix(x)) x <- as.vector(x)
 <? }
 
 	if ($final) { ?>
-rk.header ("Barplot", parameters=list ("Rainbow colors", "<? getRK ("rainbow"); ?>", "Beside", "<? getRK ("beside"); ?>", "Legend", "<? getRK ("legend"); ?>"))
+rk.header ("Barplot", parameters=list ("dummy", "dummy"<? echo ($barplot_header); ?>))
 
 rk.graph.on ()
 <?	}
 ?>
 try ({
-<?	if (getRK_val ("beside") == "TRUE") { ?>
-<?		if ($labels) { ?>
-	# adjust the range so that the labels will fit
-	yrange <- range (x, na.rm=TRUE) * 1.2
-	if (yrange[1] > 0) yrange[1] <- 0
-	if (yrange[2] < 0) yrange[2] <- 0
-<?		} ?>
-	bplot <- barplot(x<? if (getRK_val ("rainbow")=="TRUE") { ?>, col=rainbow( if(is.matrix(x)) dim(x) else length(x))<? } ?>, beside=<? getRK ("beside"); ?>, legend.text=<? getRK ("legend"); ?><? if ($labels) echo (", ylim = yrange"); ?>)
-<?		if ($labels) { ?>
-	text(bplot, x, labels=x, pos=<? getRK ("place"); ?>, offset=.5)
-<?		}
-	} else { ?>
-	barplot(x<? if (getRK_val ("rainbow")=="TRUE") { ?>, col=rainbow( if(is.matrix(x)) dim(x) else length(x))<? } ?>, legend.text=<? getRK ("legend"); ?>)
-<?	}
-	?>
+<?
+	printIndented ("\t", $barplot_main);
+?>
 })
 <?	if ($final) { ?>
 rk.graph.off ()

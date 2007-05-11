@@ -1,6 +1,6 @@
 <?
 function printIndented ($indentation, $lines) {
-	$out = ereg_replace ("\n.", "\\1\n" . $indentation, $lines);
+	$out = ereg_replace ("\n(.)", "\n" . $indentation . "\\1", $lines);
 	echo ($indentation . $out);
 }
 
