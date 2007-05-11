@@ -12,7 +12,7 @@
 					<varselector id="vars"/>
 					<column>
 					<varslot min_vars="1" id="x" source="vars" required="true" label="Matrix, Vector or Factor"/>
-					<checkbox id="tabulate" label="Tabulate" value="TRUE" value_unchecked="FALSE" checked="false" />
+					<checkbox id="tabulate" label="Tabulate" value="1" value_unchecked="0" checked="false" />
 					<stretch/>
 					<preview id="preview"/>
 					</column>

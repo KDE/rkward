@@ -185,8 +185,6 @@ General code:
 			- static members should be moved to the respective classes. Much cleaner!
 
 R plugins:
-	- modularization of the xml using includes or snippets
-		- see https://sourceforge.net/mailarchive/message.php?msg_name=200703230012.26765.kapatp%40gmail.com . Note that <tags> are not displayed in the mail archive. Might have to look at the HTML source.
 	- distribution plugins (probabilities and quantiles)
 		- probably all these could use an option "Store result (to name) / Print result / print and store"
 		- when changing this, they should first be changed to use common base functionality:
