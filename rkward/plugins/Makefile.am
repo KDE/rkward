@@ -336,6 +336,7 @@ dist_pluginsXanalysis_DATA = \
 	analysis/corr_matrix.rkh \
 	analysis/crosstab.php \
 	analysis/t_test_two_vars.rkh \
+	analysis/crosstab.rkh \
 	analysis/t_test_two_vars.xml \
 	analysis/t_test_two_vars.php
 

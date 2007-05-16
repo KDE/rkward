@@ -27,7 +27,7 @@ for (i in 1:length (yvars)) {
 # calculate chisquares
 chisquares <- list ()
 for (i in 1:length (results)) {
-	chisquares[[i]] <- chisq.test (results[[i]], simulate.p.value = <? getRK ("simpv");?> <?if (getRK_val ("monte") == "TRUE") { ?>,B=(<? getRK ("B"); ?>) <?}?>)
+	chisquares[[i]] <- chisq.test (results[[i]], simulate.p.value = <? getRK ("simpv");?><?if (getRK_val ("simpv") == "TRUE") { ?>,B=(<? getRK ("B"); ?>) <?}?>)
 }
 <?	}
 
@@ -50,7 +50,7 @@ for (i in 1:length (results)) {
 	rk.print (xtable (cbind (results[[i]]), digits=0))
 <?		if (getRK_val ("chisq") == "TRUE") { ?>
 
-	rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']], "Simulate p vlaue", "<? getRK ("simpv");?>", "Monte Carlo", "<? getRK ("monte"); ?>" <? if (getRK_val ("monte") == "TRUE") { ?>,  "Number of replicates", <? getRK ("B"); }?> ))
+	rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']], "Simulate p value", "<? getRK ("simpv");?>"<? if (getRK_val ("simpv") == "TRUE") { ?>,  "Number of replicates", <? getRK ("B"); }?> ))
 	rk.results (list ('Statistic'=chisquares[[i]][['statistic']], 'df'=chisquares[[i]][['parameter']], 'p'=chisquares[[i]][['p.value']]))
 <?		}
 
