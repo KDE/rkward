@@ -7,15 +7,15 @@ require(xtable)
 	
 function calculate () {
 	$x = getRK_val ("x") ;
-	$yvarsstring = join (", ", split ("\n", getRK_val ("y")));
+	$y = "substitute (" . str_replace ("\n", "), substitute (", trim (getRK_val ("y"))) . ")";
 ?>
 x <- <? echo ($x . "\n"); ?>
-yvars <- list (substitute (<? echo ($yvarsstring); ?>))
+yvars <- list (<? echo ($y); ?>)
 results <- list()
 descriptions <- list ()
 
 # calculate crosstabs
-for (i in length (yvars)) {
+for (i in 1:length (yvars)) {
 	yvar <- eval (yvars[[i]], envir=globalenv ())
 	results[[i]] <- table(x, yvar)
 
@@ -26,7 +26,7 @@ for (i in length (yvars)) {
 
 # calculate chisquares
 chisquares <- list ()
-for (i in length (results)) {
+for (i in 1:length (results)) {
 	chisquares[[i]] <- chisq.test (results[[i]], simulate.p.value = <? getRK ("simpv");?> <?if (getRK_val ("monte") == "TRUE") { ?>,B=(<? getRK ("B"); ?>) <?}?>)
 }
 <?	}

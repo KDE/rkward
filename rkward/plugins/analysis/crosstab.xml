@@ -20,7 +20,7 @@
 						<varslot min_vars="1" multi="true" id="y" source="vars" required="true" label="Independent"/>
 						<checkbox id="chisq" label="Chisquare" value="TRUE" value_unchecked="FALSE" checked="false" />
 						<checkbox id="barplot" label="Draw Barplot" value="TRUE" value_unchecked="FALSE" checked="false" />
-						<preview id="preview" label="Preview"/>
+						<preview id="preview" label="Preview (for barplot)"/>
 						<stretch/>
 					</column>
 				</row>
