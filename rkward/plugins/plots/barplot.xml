@@ -3,7 +3,7 @@
 	<code file="barplot.php" />
 	<help file="barplot.rkh" />
 	<logic>
-		<set id="barplot_options.xvar" to="x"/>
+		<set id="barplot_embed.xvar" to="x"/>
 	</logic>
 	<dialog label="Barplot" >		
 		<tabbook>
@@ -19,9 +19,9 @@
 				</row>
 			</tab>
 			<tab label="Options" id="tab_options">
-				<embed id="barplot_options" component="rkward::barplot_options"/>
+				<embed id="barplot_embed" component="rkward::barplot_embed"/>
 			</tab>
-		</tabbook>			
+		</tabbook>
 	</dialog>
 
 </document>

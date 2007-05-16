@@ -25,8 +25,8 @@ function doPrintout ($final) {
 		$tabulate_header = '"Tabulate:", "Yes"';
 	}
 
-	$barplot_header = getRK_val ("barplot_options.code.preprocess");
-	$barplot_main = getRK_val ("barplot_options.code.printout");
+	$barplot_header = getRK_val ("barplot_embed.code.preprocess");
+	$barplot_main = getRK_val ("barplot_embed.code.printout");
 
 ?>
 x <- <? echo ($var . "\n"); ?>

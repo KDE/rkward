@@ -4,7 +4,9 @@
 	<help file="barplot_options.rkh" />
 	<logic>
 		<external id="xvar" default=""/>
-		<!-- when adding plot_options, here, the pre and post could be connected to "external" variables -->
+		<set id="plotoptions.allow_ylim" to="false"/>
+		<set id="plotoptions.allow_xlim" to="false"/>
+		<set id="plotoptions.allow_type" to="false"/>
 
 		<convert id="juxtaposed" mode="equals" sources="type.string" standard="juxtaposed" />
 		<connect client="labels.enabled" governor="juxtaposed" />
@@ -29,5 +31,6 @@
 				<option value="1" label="Inside Bars"/>
 			</radio>
 		</frame>
+		<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options"/>
 	</dialog>	
 </document>

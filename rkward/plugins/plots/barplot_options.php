@@ -40,9 +40,15 @@ function printout () {
 	if ($options['juxtaposed']) $main_call .= ', beside=TRUE';
 	if ($options['legend']) $main_call .= ', legend.text=TRUE';
 	if ($options['labels']) $main_call .= ", ylim = yrange";
+	$main_call .= getRK_val ('plotoptions.code.printout');
 	$main_call .= ")\n";
 
+	$plot_pre = getRK_val ('plotoptions.code.preprocess');
+	$plot_adds = getRK_val ('plotoptions.code.calculate');
+
 	// now print everything as needed
+	echo ($plot_pre);
+
 	if ($options['labels']) { ?>
 # adjust the range so that the labels will fit
 yrange <- range (<? echo ($options['xvar']); ?>, na.rm=TRUE) * 1.2
@@ -58,5 +64,7 @@ if (yrange[2] < 0) yrange[2] <- 0
 		echo ('text (bplot,' . $options['xvar'] . ', labels=' . $options['xvar'] . ', pos=' . $options['place'] . ', offset=.5)');
 		echo ("\n");
 	}
+
+	echo ($plot_adds);
 }
 ?>

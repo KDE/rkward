@@ -13,11 +13,11 @@ Choose a matrix, vector or a factor to be plotted. Further options are available
 		<setting id="x">Select a data matrix, a vector or a factor to be plotted.</setting>
 		<setting id="tabulate">Use tabulate option mainly for factor variables or wherever else applicable</setting>
 		<caption id="tab_options"/>
-		<setting id="barplot_options">Since these settings are reused in further plugins, they are documented on a page of their own: See <link href="rkward://component/barplot_options"/>.</setting>
+		<setting id="barplot_embed" title="Barplot Options">Since these settings are reused in further plugins, they are documented on a page of their own: See <link href="rkward://component/barplot_embed"/>.</setting>
 	</settings>
 	<related>
 		<ul>
-			<li><link href="rkward://component/barplot_options"/></li>
+			<li><link href="rkward://component/barplot_embed"/></li>
 			<li><link href="rkward://rhelp/barplot"/></li>
 			<li><link href="rkward://rhelp/table"/></li>
 		</ul>
