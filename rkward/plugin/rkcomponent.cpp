@@ -155,8 +155,8 @@ void RKComponent::updateEnablednessRecursive () {
 		enabled = false;
 	}
 
+	setEnabled (enabled);	/* We do this, even if the state *seems* to be unchanged. This is needed, as isEnabled () also returns false, if the parent QWidget is not enabled. However, the parent QWidget may not always be the parent component. */
 	if (enabled != isEnabled ()) {
-		setEnabled (enabled);
 		for (QDictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
 			if (it.current ()->isComponent()) {
 				static_cast<RKComponent*> (it.current ())->updateEnablednessRecursive ();
