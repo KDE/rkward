@@ -50,7 +50,7 @@ for (i in 1:length (results)) {
 	rk.print (xtable (cbind (results[[i]]), digits=0))
 <?		if (getRK_val ("chisq") == "TRUE") { ?>
 
-	rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']], "Simulate p value", "<? getRK ("simpv");?>"<? if (getRK_val ("simpv") == "TRUE") { ?>,  "Number of replicates", <? getRK ("B"); }?> ))
+	rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']], "Method", chisquares[[i]][["method"]]))
 	rk.results (list ('Statistic'=chisquares[[i]][['statistic']], 'df'=chisquares[[i]][['parameter']], 'p'=chisquares[[i]][['p.value']]))
 <?		}
 

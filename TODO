@@ -126,6 +126,10 @@ UI-stuff
 		- make it an MDI window
 		- add update buttons and such
 			- on updating: if object has changed, display a note to that effect in the window
+	- Vignettes:
+		- Add a vignettes browser to the help menu
+		- Add context menu with vignettes to package environments in object browser
+			- likely, package environments should try to fetch vignettes, when "updating"
 
 Internal stuff:
 	- Handling fonts:

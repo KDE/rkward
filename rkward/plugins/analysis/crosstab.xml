@@ -32,7 +32,7 @@
 					<option value="TRUE" label="Monte Carlo" />
 				</radio>
 				<frame label="Number of replicates">
-					<input id="B" initial="2000" label="Number of replicates used in the Monte Carlo Method" />
+					<spinbox type="integer" min="1" id="B" initial="2000" label="Number of replicates used in the Monte Carlo Method" />
 				</frame>
 				<stretch/>
 			</tab>
