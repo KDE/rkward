@@ -29,7 +29,6 @@ Bugs:
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org
 	- cleanup DISABLE_RKWINDOWCATCHER (either get rid of it, or do it right)
-	- when linking against the R libraries, use the full path
 
 UI-stuff
 	- find/create a set of menu icons (https://sourceforge.net/mailarchive/message.php?msg_id=37891606)
@@ -209,6 +208,9 @@ R plugins:
 		- switch to KProcIO for easier logic
 		- http://de3.php.net/manual/en/function.call-user-func.php seems to be faster than eval
 		- find out why an error in the backend often leads to a subsequent crash
+		- it might be possible to create only one "master" PHP process, and fork off child processes as needed from that (pcntl_fork() in PHP).
+			- Do some timing, on how much faster this would actually be
+			- The main drawback is that communication could no longer go via stdin/out, but some other mechanism would be needed. This would also mean ditching KProcess, and using perhaps QTcpServer/Socket.
 	- plugins (general)
 		- ODS filter (try to find someone to implement one in R)
 	- formula-widget:

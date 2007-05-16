@@ -8,8 +8,6 @@ require(xtable)
 function calculate () {
 	$x = getRK_val ("x") ;
 	$yvarsstring = join (", ", split ("\n", getRK_val ("y")));
-	$labels = getRK_val ("labels")=="TRUE";
-
 ?>
 x <- <? echo ($x . "\n"); ?>
 yvars <- list (substitute (<? echo ($yvarsstring); ?>))
