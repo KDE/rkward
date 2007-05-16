@@ -104,7 +104,7 @@ void RKPreviewBox::changedState (int) {
 void RKPreviewBox::tryPreview () {
 	RK_TRACE (PLUGIN);
 
-	if (toggle_preview_box->isChecked ()) update_timer->start (10, true);
+	if (isEnabled () && toggle_preview_box->isChecked ()) update_timer->start (10, true);
 	else killPreview ();
 
 	updateStatusLabel ();
