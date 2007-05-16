@@ -1,16 +1,12 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="crosstab.php"/>
-		<logic>
-		<convert id="chisqvalue" mode="equals" sources="chisq.state" standard="TRUE" />
-		<connect client="chi_options.enabled" governor="chisqvalue" />
-		<convert id="barplotvalue" mode="equals" sources="barplot.state" standard="TRUE" />
-		<connect client="plot_options.enabled" governor="barplotvalue" />
-		<convert id="besidevalue" mode="equals" sources="beside.string" standard="TRUE" />
-		<connect client="labels.enabled" governor="besidevalue" />
-		<convert id="labelsvalue" mode="equals" sources="labels.string" standard="TRUE" />
-		<convert id="labelsvalue2" mode="and" sources="labelsvalue;labels.enabled" />
-		<connect client="place.enabled" governor="labelsvalue2" />
+	<logic>
+		<connect client="chi_options.enabled" governor="chisq.state" />
+		<connect client="barplot_options.enabled" governor="barplot.state" />
+		<connect client="preview.enabled" governor="barplot.state"/>
+		<set id="barplot_embed.xvar" to="results[[i]]"/>
+
 		<convert id="montevalue" mode="equals" sources="monte.string" standard="TRUE" />
 		<connect client="B.enabled" governor="montevalue" />
 	</logic>
@@ -19,10 +15,12 @@
 			<tab label="Variables" id="variables_tab">
 				<row>
 					<varselector id="vars"/>
-					<column>						
+					<column>
 						<varslot multi="false" id="x" source="vars" label="Dependent" required="true" />
 						<varslot min_vars="1" multi="true" id="y" source="vars" required="true" label="Independent"/>
-						<checkbox id="chisq" label="Chisquare" value="TRUE" value_unchecked="FALSE" checked="false" />		<checkbox id="barplot" label="Draw Barplot?" value="TRUE" value_unchecked="FALSE" checked="false" />						
+						<checkbox id="chisq" label="Chisquare" value="TRUE" value_unchecked="FALSE" checked="false" />
+						<checkbox id="barplot" label="Draw Barplot" value="TRUE" value_unchecked="FALSE" checked="false" />
+						<preview id="preview" label="Preview"/>
 						<stretch/>
 					</column>
 				</row>
@@ -30,7 +28,7 @@
 			<tab label="Chisquare Options" id="chi_options">
 				<checkbox id="simpv" label="Simulate p value" value="TRUE" value_unchecked="FALSE" checked="false" />
 				<radio id="monte" label="Method">
-					<option value="FALSE" label="Asymptotic"  checked="true" />				
+					<option value="FALSE" label="Asymptotic"  checked="true" />
 					<option value="TRUE" label="Monte Carlo" />
 				</radio>
 				<frame label="Number of replicates">
@@ -38,24 +36,10 @@
 				</frame>
 				<stretch/>
 			</tab>
-			<tab label="Barplot Options" id="plot_options">
-				<checkbox id="legend" label="Legend" value="TRUE" value_unchecked="FALSE" checked="false"/>
-				<checkbox id="rainbow" label="Rainbow colors" value="TRUE" value_unchecked="FALSE" checked="true"/>
-				<radio id="beside" label="Type" >
-					<option value="TRUE" label="Juxtaposed" />
-					<option value="FALSE" label="Stacked" checked="true"/>
-				</radio>
-				<radio id="labels" label="Label values" >
-					<option value="TRUE" label="Display" />
-					<option value="FALSE" label="Do not Display" checked="true"/>					
-				</radio>
-				<radio id="place" label="Display label values">
-					<option value="3" label="Above Bars" checked="true"/>
-					<option value="2" label="Beside Bars"/>
-					<option value="1" label="Inside Bars"/>
-				</radio>
+			<tab label="Barplot Options" id="barplot_options">
+				<embed id="barplot_embed" component="rkward::barplot_embed"/>
 			</tab>
-		</tabbook>			
+		</tabbook>
 	</dialog>
 
 </document>
