@@ -321,8 +321,8 @@ void RKWorkplace::windowDestroyed (QObject *object) {
 	// WARNING: the window is dead. Don't call any functions on it.
 
 	RK_ASSERT (windows.find (window) != windows.end ());
+	windows.remove (window);		// do this first! view()->removePage will call activePage() indirectly from setCaption, causing us to iterate over all known windows!
 	if (view ()->hasPage (window)) view ()->removePage (window, true);
-	windows.remove (window);
 
 	windowRemoved ();
 }
