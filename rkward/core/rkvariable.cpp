@@ -688,11 +688,18 @@ void RKVariable::removeRow (int row) {
 
 void RKVariable::removeRows (int from_row, int to_row) {
 	RK_TRACE (OBJECTS);
+	int offset = (to_row - from_row) + 1;
 	for (int row = from_row; row <= to_row; ++row) {
 		myData ()->invalid_fields.remove (row);
 	}
 
 	if (to_row < (myData ()->allocated_length - 1)) {	// not the last rows
+		for (int row = to_row; row < getLength (); ++row) {
+			QString *dummy = myData ()->invalid_fields.take (row);
+			if (dummy) {
+				myData ()->invalid_fields.replace (row - offset, dummy);
+			}
+		}
 		if (myData ()->cell_strings) {
 			qmemmove (&(myData ()->cell_strings[from_row]), &(myData ()->cell_strings[to_row+1]), (myData ()->allocated_length - to_row - 1) * sizeof (QString));
 		} else {
@@ -701,11 +708,11 @@ void RKVariable::removeRows (int from_row, int to_row) {
 		qmemmove (&(myData ()->cell_states[from_row]), &(myData ()->cell_states[to_row+1]), (myData ()->allocated_length - to_row - 1) * sizeof (int));
 	}
 
-	for (int row = (myData ()->allocated_length - 1 - (to_row - from_row)); row < myData ()->allocated_length; ++row) {
+	for (int row = (myData ()->allocated_length - offset); row < myData ()->allocated_length; ++row) {
 		myData ()->cell_states[myData ()->allocated_length - 1] = RKVarEditData::Unknown;
 	}
 
-	dimensions[0] -= (to_row - from_row) + 1;	
+	dimensions[0] -= offset;	
 	downSize ();
 }
 
@@ -717,7 +724,7 @@ void RKVariable::insertRow (int row) {
 void RKVariable::insertRows (int row, int count) {
 	RK_TRACE (OBJECTS);
 	int old_len = getLength ();
-	extendToLength (getLength () + count);
+	extendToLength (getLength () + count);		// getLength is the new length after this
 
 	for (int i=old_len; i <= row+count; ++i) {
 		myData ()->cell_states[i] = RKVarEditData::NA;
@@ -728,6 +735,12 @@ void RKVariable::insertRows (int row, int count) {
 		if (myData ()->cell_doubles) myData ()->cell_doubles[row+count] = myData ()->cell_doubles[row];
 		myData ()->cell_states[row+count] = myData ()->cell_states[row];
 	} else {
+		for (int i=getLength () - count; i >= row; --i) {
+			QString *dummy = myData ()->invalid_fields.take (i);
+			if (dummy) {
+				myData ()->invalid_fields.replace (i + count, dummy);
+			}
+		}
 		if (myData ()->cell_strings) qmemmove (&(myData ()->cell_strings[row+count]), &(myData ()->cell_strings[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (QString));
 		if (myData ()->cell_doubles) qmemmove (&(myData ()->cell_doubles[row+count]), &(myData ()->cell_doubles[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (double));
 		qmemmove (&(myData ()->cell_states[row+count]), &(myData ()->cell_states[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (int));
