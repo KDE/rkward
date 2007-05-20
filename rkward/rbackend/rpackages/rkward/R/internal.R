@@ -30,12 +30,12 @@
 ".rk.data.frame.delete.row" <- function (x, index) {
 	attriblist <- list ()
 	for (i in 1:dim (x)[2]) {
-		attriblist[[names (x)[i]]] <- attr (x[[i]], ".rk.meta")
+		attriblist[[names (x)[i]]] <- attributes (x[[i]])
 	}
 	eval (substitute (x <<- x[-index,]))
 	eval (substitute (row.names (x) <<- c (1:dim(x)[1])))
 	for (i in 1:dim (x)[2]) {
-		eval (substitute (attr (x[[i]], ".rk.meta") <<- attriblist[[names (x)[i]]]))
+		eval (substitute (attributes (x[[i]]) <<- attriblist[[names (x)[i]]]))
 	}
 }
 

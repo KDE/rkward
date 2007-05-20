@@ -88,9 +88,9 @@ numeric!  TODO: unused  */
 	void removeRow (int row);
 /** see removeRow (), but removes a range of rows (i.e. cells). Since data only needs to be copied once, this is more efficient than several single calls to removeRow (). Does not sync with the backend for technical reasons! You have to remove the row in the backend explicitly. */
 	void removeRows (int from_row, int to_row);
-/** inserts a row/cell (with empty value) just above the given index. Does not sync with the backend for technical reasons! You have to remove the row in the backend explicitly. */
+/** inserts a row/cell (with empty value) just above the given index. Does not sync with the backend for technical reasons! You have to insert the row in the backend explicitly. */
 	void insertRow (int row);
-/** like insertRow (), but inserts count rows. Does not sync with the backend for technical reasons! You have to remove the row in the backend explicitly. */
+/** like insertRow (), but inserts count rows. Does not sync with the backend for technical reasons! You have to insert the row in the backend explicitly. */
 	void insertRows (int row, int count);
 /** Tells the object it has (data) length len. Usually this will only be called directly after creating a new object */
 	void setLength (int len);

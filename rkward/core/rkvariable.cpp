@@ -510,7 +510,7 @@ void RKVariable::setText (int row, const QString &text) {
 	RK_ASSERT (row < getLength ());
 
 	if (myData ()->cell_states[row] & RKVarEditData::Invalid) {
-		myData ()->cell_states[row] = RKVarEditData::UnsyncedInvalidState;
+		myData ()->cell_states[row] = RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
 		myData ()->invalid_fields.remove (row);
 	} else {
 		myData ()->cell_states[row] = 0;
@@ -589,7 +589,7 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 	} else if (getDataType () == DataFactor) {
 		int i = 0;
 		for (int row=from_row; row <= to_row; ++row) {
-			if (myData ()->cell_states[row] & RKVarEditData::Invalid) myData ()->cell_states[row] = RKVarEditData::UnsyncedInvalidState;
+			if (myData ()->cell_states[row] & RKVarEditData::Invalid) myData ()->cell_states[row] = RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
 			else myData ()->cell_states[row] = 0;
 
 			if (isnan (data[i]) || (!myData ()->value_labels) || (!myData ()->value_labels->contains (QString::number (data[i])))) {
@@ -603,7 +603,7 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 	} else {
 		int i = 0;
 		for (int row=from_row; row <= to_row; ++row) {
-			if (myData ()->cell_states[row] & RKVarEditData::Invalid) myData ()->cell_states[row] = RKVarEditData::UnsyncedInvalidState;
+			if (myData ()->cell_states[row] & RKVarEditData::Invalid) myData ()->cell_states[row] = RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
 			else myData ()->cell_states[row] = 0;
 
 			if (isnan (data[i])) {
@@ -644,7 +644,7 @@ void RKVariable::setCharacter (int from_row, int to_row, QString *data) {
 	if (getDataType () == DataCharacter) {
 		int i=0;
 		for (int row=from_row; row <= to_row; ++row) {
-			if (myData ()->cell_states[row] & RKVarEditData::Invalid) myData ()->cell_states[row] = RKVarEditData::UnsyncedInvalidState;
+			if (myData ()->cell_states[row] & RKVarEditData::Invalid) myData ()->cell_states[row] = RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
 			else myData ()->cell_states[row] = 0;
 
 			if (data[i].isNull ()) myData ()->cell_states[row] |= RKVarEditData::NA;
@@ -688,18 +688,24 @@ void RKVariable::removeRow (int row) {
 
 void RKVariable::removeRows (int from_row, int to_row) {
 	RK_TRACE (OBJECTS);
+	QValueList<int> *changed_invalids = 0;
 	int offset = (to_row - from_row) + 1;
-	for (int row = from_row; row <= to_row; ++row) {
-		myData ()->invalid_fields.remove (row);
+
+	for (int row = from_row; row < getLength (); ++row) {
+		QString *dummy = myData ()->invalid_fields.take (row);
+		if (dummy) {
+			if (!changed_invalids) changed_invalids = new QValueList<int>;
+			changed_invalids->append (row);
+			if (row > to_row) {
+				changed_invalids->append (row - offset);
+				myData ()->invalid_fields.replace (row - offset, dummy);
+			} else {
+				delete dummy;
+			}
+		}
 	}
 
 	if (to_row < (myData ()->allocated_length - 1)) {	// not the last rows
-		for (int row = to_row; row < getLength (); ++row) {
-			QString *dummy = myData ()->invalid_fields.take (row);
-			if (dummy) {
-				myData ()->invalid_fields.replace (row - offset, dummy);
-			}
-		}
 		if (myData ()->cell_strings) {
 			qmemmove (&(myData ()->cell_strings[from_row]), &(myData ()->cell_strings[to_row+1]), (myData ()->allocated_length - to_row - 1) * sizeof (QString));
 		} else {
@@ -709,7 +715,14 @@ void RKVariable::removeRows (int from_row, int to_row) {
 	}
 
 	for (int row = (myData ()->allocated_length - offset); row < myData ()->allocated_length; ++row) {
-		myData ()->cell_states[myData ()->allocated_length - 1] = RKVarEditData::Unknown;
+		myData ()->cell_states[row] = RKVarEditData::Unknown;
+	}
+
+	if (changed_invalids) {
+		for (QValueList<int>::const_iterator it = changed_invalids->constBegin (); it != changed_invalids->constEnd (); ++it) {
+			writeInvalidField (*it, 0);
+		}
+		delete changed_invalids;
 	}
 
 	dimensions[0] -= offset;	
@@ -724,23 +737,28 @@ void RKVariable::insertRow (int row) {
 void RKVariable::insertRows (int row, int count) {
 	RK_TRACE (OBJECTS);
 	int old_len = getLength ();
-	extendToLength (getLength () + count);		// getLength is the new length after this
+	extendToLength (getLength () + count);		// getLength is the new length after this!
 
-	for (int i=old_len; i <= row+count; ++i) {
+	for (int i=old_len; i < getLength(); ++i) {
 		myData ()->cell_states[i] = RKVarEditData::NA;
 	}
 
-	if (row >= getLength () && (count == 1)) {		// important special case
-		if (myData ()->cell_strings) myData ()->cell_strings[row+count] = myData ()->cell_strings[row];
-		if (myData ()->cell_doubles) myData ()->cell_doubles[row+count] = myData ()->cell_doubles[row];
-		myData ()->cell_states[row+count] = myData ()->cell_states[row];
-	} else {
-		for (int i=getLength () - count; i >= row; --i) {
-			QString *dummy = myData ()->invalid_fields.take (i);
-			if (dummy) {
-				myData ()->invalid_fields.replace (i + count, dummy);
-			}
+	QValueList<int> *changed_invalids = 0;
+	for (int i = getLength () - count - 1; i >= row; --i) {
+		QString *dummy = myData ()->invalid_fields.take (i);
+		if (dummy) {
+			if (!changed_invalids) changed_invalids = new QValueList<int>;
+			changed_invalids->append (i);
+			changed_invalids->append (i + count);
+			myData ()->invalid_fields.replace (i + count, dummy);
 		}
+	}
+
+	if (row >= getLength () && (count == 1)) {		// important special case
+		if (myData ()->cell_strings) myData ()->cell_strings[row+count] = QString::null;
+		if (myData ()->cell_doubles) myData ()->cell_doubles[row+count] = 0.0;
+		myData ()->cell_states[row+count] = RKVarEditData::NA;
+	} else {
 		if (myData ()->cell_strings) qmemmove (&(myData ()->cell_strings[row+count]), &(myData ()->cell_strings[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (QString));
 		if (myData ()->cell_doubles) qmemmove (&(myData ()->cell_doubles[row+count]), &(myData ()->cell_doubles[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (double));
 		qmemmove (&(myData ()->cell_states[row+count]), &(myData ()->cell_states[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (int));
@@ -748,6 +766,13 @@ void RKVariable::insertRows (int row, int count) {
 	
 	for (int i=row+count-1; i >= row; --i) {
 		myData ()->cell_states[i] = RKVarEditData::NA;
+	}
+
+	if (changed_invalids) {
+		for (QValueList<int>::const_iterator it = changed_invalids->constBegin (); it != changed_invalids->constEnd (); ++it) {
+			writeInvalidField (*it, 0);
+		}
+		delete changed_invalids;
 	}
 }
 
