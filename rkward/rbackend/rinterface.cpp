@@ -246,10 +246,12 @@ void RInterface::cancelCommand (RCommand *command) {
 	if (!(command->type () & RCommand::Sync)) {
 		command->status |= RCommand::Canceled;
 		if (command == r_thread->current_command) {
-			RK_ASSERT (!running_command_canceled);
-			r_thread->lock (RThread::Cancel);
-			running_command_canceled = command;
-			r_thread->interruptProcessing (true);
+			if (running_command_canceled != command) {
+				RK_ASSERT (!running_command_canceled);
+				r_thread->lock (RThread::Cancel);
+				running_command_canceled = command;
+				r_thread->interruptProcessing (true);
+			}
 		}
 	} else {
 		RK_ASSERT (false);
