@@ -11,6 +11,7 @@ function calculate () {
 		if ($gstype == "other") $gstype = getRK_val ("gs_specifiedformat");
 	} else {
 		$jpegpng = (($type == "jpeg") | ($type == "png"));
+		$eps = ($type == "postscript") && (getRK_val ("formateps"));
 
 		// Does the filename end with .ps/.eps or .pdf or .png or .jpeg/.jpg?
 		// If not, add the appropriate extension.
@@ -18,7 +19,11 @@ function calculate () {
 			if ($type == "jpeg") {
 				if (!( ereg("\.jpeg$",$file)|ereg("\.jpg$",$file) )) $file .= ".jpg";
 			} elseif ($type == "postscript") {
-				if (!( ereg("\.ps$",$file)|ereg("\.eps$",$file) )) $file .= ".eps";
+				if ($eps) {
+					if (!( ereg("\.ps$",$file)|ereg("\.eps$",$file) )) $file .= ".eps";
+				} else {
+					if (!( ereg("\.ps$",$file)|ereg("\.eps$",$file) )) $file .= ".ps";
+				}
 			} else {
 				$ext = "." . $type;
 				if (!ereg($ext."$",$file)) $file .= $ext;
@@ -26,6 +31,7 @@ function calculate () {
 		}
 	}
 	$options = "";
+	if (($type == "postscript") && $eps) $options .= ", onefile=FALSE";
 
 	// set $resolution appropriately:
 	if ($jpegpng || ($type == "gs")) {
@@ -56,16 +62,23 @@ function calculate () {
 
 	// For ps/pdf: page, pagecentre, horizontal, family, encoding and title parameters:
 	if (!$jpegpng) {
-		$paper = getRK_val ("paper");
+		if (!($eps)) $paper = getRK_val ("paper");
+		else $paper = "special";
 		if (!empty ($paper)) $options .= ", paper=" . "\"" . $paper . "\"";
+
 		$pagecentre = getRK_val ("pagecentre");
 		if (!$pagecentre) $options .= ", pagecentre=FALSE";
-		$pshoriz = getRK_val ("ps_horiz");
+
+		if (!$eps) $pshoriz = getRK_val ("ps_horiz");
+		else $pshoriz = false;
 		if (!$pshoriz) $options .= ", horizontal=FALSE";
+
 		$family = getRK_val ("family");
 		if (!empty($family)) $options .= ", family=" . "\"" . $family . "\"";
+
 		$enc = getRK_val ("encoding");
 		if (!empty($enc)) $options .= ", encoding=" . "\"" . $enc . "\"";
+
 		if (!getRK_val("autotitle")) $options .= ", title=" . "\"" . getRK_val("title") . "\"";
 	}
 ?>

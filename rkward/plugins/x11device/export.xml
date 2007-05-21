@@ -17,13 +17,18 @@
 		<convert id="isPSGS" mode="or" sources="isPS;isGS" />
 		<convert id="isnotGS" mode="or" sources="isPSPDF;isJPEGPNG" />
 
+		<connect client="formateps.enabled" governor="isPS"/>
+		<convert id="isEPS" mode="and" sources="formateps.enabled;formateps.state"/>
+		<convert id="allowOrientation" mode="and" sources="isPSGS;isEPS.not"/>
+
 		<connect client="autoextension.state" governor="isnotGS"/>
 		<connect client="autoextension.enabled" governor="isnotGS"/>
 
 		<connect client="tab_more_options.enabled" governor="isPSPDFGS" />
 
 		<connect client="autoquality.enabled" governor="isJPEG" />
-		<connect client="ps_horiz.enabled" governor="isPSGS"/>
+		<connect client="ps_horiz.enabled" governor="allowOrientation"/>
+		<connect client="paper.enabled" governor="isEPS.not"/>
 
 		<convert id="userwidth0" mode="equals" sources="autowidth.state" standard="0" />
 		<connect client="width.enabled" governor="userwidth0"/>
@@ -79,6 +84,7 @@
 							<option value="jpeg" label="JPEG" />
 							<option value="gs" label="via Ghostscript" />
 						</radio>
+						<checkbox id="formateps" label="EPS compatible" checked="true" value="1" value_unchecked="0"/>
 					</column>
 				</row>
 				<row>

@@ -1,3 +1,5 @@
+- syntax highlighting is minimally faster for long outputs
+- graphics export plugin gains option for EPS compatibility
 - fixed: inserting / removing rows in the data editor in the presence of invalid fields in later rows would lead to a crash
 - fix some internal problems with enabledness/disabledness of plugin components
 - some complex plotting plugins now start up noticeably faster
