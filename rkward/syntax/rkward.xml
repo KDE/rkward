@@ -35,13 +35,13 @@
 	<contexts>
 		<!-- This context dispatches to the two main contexts output or command. -->
 		<context attribute="Prompt" lineEndContext="#stay" name="ctxbase">
-			<RegExpr attribute="Prompt" context="command0" String="^&gt; " beginRegion="commandRegion"/>
+			<Detect2Chars attribute="Prompt" context="command0" char="&gt;" char1=" " column="0" beginRegion="commandRegion"/>
 			<RegExpr attribute="Normal Text" context="output" String="^([^&gt;\+]|$)" lookAhead="true"/>
 		</context>
 
 		<!-- The output context does no highlighting. If a "> " is encountered at line start, pop back to ctxbase (and to command0 from there) --> 
 		<context attribute="Output" lineEndContext="#stay" name="output">
-			<RegExpr attribute="Prompt" context="#pop" String="^&gt; " lookAhead="true" endRegion="commandRegion"/>
+			<Detect2Chars attribute="Prompt" context="#pop" char="&gt;" char1=" " column="0" lookAhead="true" endRegion="commandRegion"/>
 		</context>
 
 		<!-- The base level context in command mode. Does not allow closing '}' -->
