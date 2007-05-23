@@ -509,8 +509,9 @@ void RKVariable::setText (int row, const QString &text) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (row < getLength ());
 
+	// clear previous state
 	if (myData ()->cell_states[row] & RKVarEditData::Invalid) {
-		myData ()->cell_states[row] = RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
+		myData ()->cell_states[row] = RKVarEditData::UnsyncedInvalidState;
 		myData ()->invalid_fields.remove (row);
 	} else {
 		myData ()->cell_states[row] = 0;
@@ -589,7 +590,7 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 	} else if (getDataType () == DataFactor) {
 		int i = 0;
 		for (int row=from_row; row <= to_row; ++row) {
-			if (myData ()->cell_states[row] & RKVarEditData::Invalid) myData ()->cell_states[row] = RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
+			if (myData ()->cell_states[row] & RKVarEditData::Invalid) myData ()->cell_states[row] =  RKVarEditData::UnsyncedInvalidState;
 			else myData ()->cell_states[row] = 0;
 
 			if (isnan (data[i]) || (!myData ()->value_labels) || (!myData ()->value_labels->contains (QString::number (data[i])))) {
@@ -603,7 +604,7 @@ void RKVariable::setNumeric (int from_row, int to_row, double *data) {
 	} else {
 		int i = 0;
 		for (int row=from_row; row <= to_row; ++row) {
-			if (myData ()->cell_states[row] & RKVarEditData::Invalid) myData ()->cell_states[row] = RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
+			if (myData ()->cell_states[row] & RKVarEditData::Invalid) myData ()->cell_states[row] = RKVarEditData::UnsyncedInvalidState;
 			else myData ()->cell_states[row] = 0;
 
 			if (isnan (data[i])) {
@@ -644,7 +645,7 @@ void RKVariable::setCharacter (int from_row, int to_row, QString *data) {
 	if (getDataType () == DataCharacter) {
 		int i=0;
 		for (int row=from_row; row <= to_row; ++row) {
-			if (myData ()->cell_states[row] & RKVarEditData::Invalid) myData ()->cell_states[row] = RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
+			if (myData ()->cell_states[row] & RKVarEditData::Invalid) myData ()->cell_states[row] = RKVarEditData::UnsyncedInvalidState;
 			else myData ()->cell_states[row] = 0;
 
 			if (data[i].isNull ()) myData ()->cell_states[row] |= RKVarEditData::NA;
