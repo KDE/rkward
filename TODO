@@ -110,6 +110,8 @@ UI-stuff
 		- show current wd in <browser>, somewhere
 	- Settings UI:
 		- see http://sourceforge.net/mailarchive/forum.php?thread_name=200703230304.43023.kapatp%40gmail.com&forum_name=rkward-devel
+		- R-Backend-Settings:
+			- the options should gain a "use default" checkbox to cope with changing R option defaults
 	- UI geometry:
 		- see https://sourceforge.net/mailarchive/forum.php?thread_name=200704181922.07780.michellang%40gmail.com&forum_name=rkward-devel
 		- save size/proportions of R script file, R console, Workspace browser...
@@ -207,6 +209,8 @@ R plugins:
 		- find a solution for "pending changes". Currently, if the user enters a value, manually, then presses submit, the old value will be used (the new value is only set, when the focus changes to another widget). Probably the RKSpinbox should emit signals for "pending" and "ready". The plugin spinbox should listen to those and not be satisfied as long as a change is pending. Maybe mark the spinbox in yellow, while a change is pending.
 		- options min_inclusive / max_inclusive for real number spinboxes (defaulting to true)
 	- use SVG device for graphics output
+	- X11->Export:
+		- provide SVG export option
 	- provide context menu / other UI to export to different formats / edit
 	- PHP-backend:
 		- switch to KProcIO for easier logic

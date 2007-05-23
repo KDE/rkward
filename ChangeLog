@@ -1,3 +1,4 @@
+- add max.print option to R-Backend settings dialog
 - syntax highlighting is minimally faster for long outputs
 - graphics export plugin gains option for EPS compatibility
 - fixed: inserting / removing rows in the data editor in the presence of invalid fields in later rows would lead to a crash

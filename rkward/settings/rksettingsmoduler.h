@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -60,6 +60,7 @@ private:
 	KIntSpinBox *width_input;
 	QComboBox *warn_input;
 	KIntSpinBox *warningslength_input;
+	KIntSpinBox *maxprint_input;
 	QComboBox *keepsource_input;
 	QComboBox *keepsourcepkgs_input;
 	KIntSpinBox *expressions_input;
@@ -71,6 +72,7 @@ private:
 	static int options_width;
 	static int options_warn;
 	static int options_warningslength;
+	static int options_maxprint;
 	static bool options_keepsource;
 	static bool options_keepsourcepkgs;
 	static int options_expressions;

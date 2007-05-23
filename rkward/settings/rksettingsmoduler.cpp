@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -40,6 +40,7 @@ QString RKSettingsModuleR::options_outdec;
 int RKSettingsModuleR::options_width;
 int RKSettingsModuleR::options_warn;
 int RKSettingsModuleR::options_warningslength;
+int RKSettingsModuleR::options_maxprint;
 bool RKSettingsModuleR::options_keepsource;
 bool RKSettingsModuleR::options_keepsourcepkgs;
 int RKSettingsModuleR::options_expressions;
@@ -84,6 +85,12 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	width_input = new KIntSpinBox (10, 10000, 1, options_width, 10, this);
 	connect (width_input, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
 	grid->addWidget (width_input, row, 1);
+
+	// options (max.print)
+	grid->addWidget (new QLabel (i18n ("Maximum number of elements shown in print"), this), ++row, 0);
+	maxprint_input = new KIntSpinBox (100, INT_MAX, 1, options_maxprint, 10, this);
+	connect (maxprint_input, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
+	grid->addWidget (maxprint_input, row, 1);
 
 	// options (warnings.length)
 	grid->addWidget (new QLabel (i18n ("Maximum length of warnings/errors to print"), this), ++row, 0);
@@ -174,6 +181,7 @@ void RKSettingsModuleR::applyChanges () {
 	options_width = width_input->value ();
 	options_warn = warn_input->currentItem () - 1;
 	options_warningslength = warningslength_input->value ();
+	options_maxprint = maxprint_input->value ();
 	options_keepsource = (keepsource_input->currentItem () == 0);
 	options_keepsourcepkgs = (keepsourcepkgs_input->currentItem () == 0);
 	options_expressions = expressions_input->value ();
@@ -196,6 +204,7 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	list.append ("options (OutDec=\"" + options_outdec.left (1) + "\")\n");
 	list.append ("options (width=" + QString::number (options_width) + ")\n");
 	list.append ("options (warn=" + QString::number (options_warn) + ")\n");
+	list.append ("options (max.print=" + QString::number (options_maxprint) + ")\n");
 	list.append ("options (warnings.length=" + QString::number (options_warningslength) + ")\n");
 	if (options_keepsource) tf = "TRUE"; else tf = "FALSE";
 	list.append ("options (keep.source=" + tf + ")\n");
@@ -224,6 +233,7 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	config->writeEntry ("OutDec", options_outdec);
 	config->writeEntry ("width", options_width);
 	config->writeEntry ("warn", options_warn);
+	config->writeEntry ("maxprint", options_maxprint);
 	config->writeEntry ("warnings.length", options_warningslength);
 	config->writeEntry ("keep.source", options_keepsource);
 	config->writeEntry ("keep.source.pkgs", options_keepsourcepkgs);
@@ -241,6 +251,7 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	options_outdec = config->readEntry ("OutDec", ".");
 	options_width = config->readNumEntry ("width", 80);
 	options_warn = config->readNumEntry ("warn", 0);
+	options_maxprint = config->readNumEntry ("max.print", 99999);
 	options_warningslength = config->readNumEntry ("warnings.length", 1000);
 	options_keepsource = config->readBoolEntry ("keep.source", true);
 	options_keepsourcepkgs = config->readBoolEntry ("keep.source.pkgs", false);
