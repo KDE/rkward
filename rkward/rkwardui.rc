@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.4.7">
+<kpartgui name="rkward" version="0.4.8">
 <MenuBar>
 	<Menu name="file"><text>&amp;File</text>
 		<Menu name="new_data"><text>&amp;New</text>

@@ -75,12 +75,22 @@ extern "C" {
 #define R_2_5
 #endif
 
+#if (R_VERSION > R_Version(2, 5, 9))
+#define R_2_6
+#endif
+
 #ifdef R_2_4
 #define USE_R_REPLDLLDO1
 #endif
 
 #ifdef R_2_5
 #define USE_ENCODING_HINTS
+#endif
+
+#ifdef R_2_6
+// hidden in Rinternals.h is USE_RINTERNALS is defined
+extern Rboolean (Rf_isNull)(SEXP s);
+extern Rboolean (Rf_isObject)(SEXP s);
 #endif
 
 #ifdef R_2_4
