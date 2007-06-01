@@ -1,6 +1,13 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="piechart.php" />
+	<help file="piechart.rkh" />
+	<logic>
+		<set id="plotoptions.allow_ylim" to="false"/>
+		<set id="plotoptions.allow_xlim" to="false"/>
+		<set id="plotoptions.allow_type" to="false"/>
+		<set id="plotoptions.allow_log" to="false"/>
+	</logic>
 	<dialog label="Pie chart" >
 		<tabbook>
 			<tab label="Variables" id="tab_variables">
@@ -13,6 +20,15 @@
 					<preview id="preview"/>
 					</column>
 				</row>
+			</tab>
+			<tab label="Options" id="tab_options">
+				<radio id="colors" label="Colors" >
+					<option value="default" label="Default (pastel)"/>
+					<option value="grayscale" label="Grayscale"/>
+					<option value="rainbow" label="Rainbow colors" checked="true"/>
+				</radio>
+				<spinbox id="radius" type="real" min="0.01" max="1" initial="0.8" label="Radius"/>
+				<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options"/>
 			</tab>
 		</tabbook>
 	</dialog>

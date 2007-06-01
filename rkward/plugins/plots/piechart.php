@@ -18,6 +18,17 @@ function preview () {
 function doPrintout ($final) {
 	$vars = getRK_val ("x");
 	$tabulate= getRK_val ("tabulate")=="TRUE";
+	$radius = getRK_val ("radius");
+	$col = getRK_val ("colors");
+
+	$options = "";
+	if ($radius != 0.8) $options .= ", radius=" . $radius;
+	if ($col == "rainbow") $options .= ", col=rainbow (if(is.matrix(x)) dim(x) else length(x))";
+	else if ($col == "grayscale") $options .= ", col=gray.colors (if(is.matrix(x)) dim(x) else length(x))";
+	$options .= getRK_val ("plotoptions.code.printout");
+
+	$plotpre = getRK_val ("plotoptions.code.preprocess");
+	$plotpost = getRK_val ("plotoptions.code.calculate");
 
 if($tabulate) {?>
 x <- table (<? echo ($vars); ?>, exclude=NULL)
@@ -36,7 +47,9 @@ rk.graph.on ()
 <?	}
 ?>
 try ({
-	pie(x, col=rainbow( if(is.matrix(x)) dim(x) else length(x)))
+<?	if (!empty ($plotpre)) printIndented ("\t", $plotpre); ?>
+	pie(x<? echo ($options); ?>)
+<?	if (!empty ($plotpost)) printIndented ("\t", $plotpost); ?>
 })
 <?	if ($final) { ?>
 rk.graph.off ()
