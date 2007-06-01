@@ -42,7 +42,9 @@ function doPrintout ($final) {
 	if ($scalenorm) $normMuSigma_tag = ""; // defaults to mean=0, sd=1.
 	else $normMuSigma_tag = ", mean = avg.exp, sd = sqrt(avg.var)";
 
+	$plotpre = getRK_val ("plotoptions.code.preprocess");
 	$plotoptions = getRK_val ("plotoptions.code.printout");
+	$plotadds = getRK_val ("plotoptions.code.calculate");
 	if ($fun == "hist") {
 		$normFun = "dnorm"; // draw normal density on the histogram
 		$histcalcoptions = getRK_val ("histogram_opt.code.calculate"); // options that goes into hist() function
@@ -95,6 +97,7 @@ rk.graph.on ()
 try ({
 <?
 	}
+	if (!empty ($plotpre)) printIndented ("\t", $plotpre);
 	if ($fun == "hist") {
 ?>
 	plot(dist.hist<? echo ($yLim); echo ($histplotoptions); ?>)
@@ -109,6 +112,7 @@ try ({
 	lines (x=normX, y=normY, type="<? getRK ("normpointtype"); ?>"<? getRK ("normlinecol.code.printout"); ?>)
 <?
 	}
+	if (!empty ($plotadds)) printIndented ("\t", $plotadds);
 	if ($final) {
 ?>
 })

@@ -4,6 +4,8 @@
 	<snippet id="clt_logic">
 		<set id="plotoptions.allow_log" to="false"/>
 		<set id="plotoptions.allow_type" to="false"/>
+		<set id="plotoptions.allow_grid" to="true"/>
+		<set id="plotoptions.allow_ylim" to="false"/>
 		<set id="plotoptions.default_xlab" to="Sample Averages"/>
 		
 		<set id="normlinecol.default_color" to="red" />
