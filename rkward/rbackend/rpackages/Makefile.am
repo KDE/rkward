@@ -6,6 +6,7 @@ install:
 	-mkdir -p tmp ; \
 	OLDTMP=$$TMPDIR ; \
 	export TMPDIR=`pwd`/tmp ; \
+	mkdir -p $(DESTDIR)/$(R_LIBDIR) ; \
 	${R_HOMEDIR}/bin/R CMD INSTALL -l $(DESTDIR)/$(R_LIBDIR) rkward ; \
 	export TMPDIR=$$OLDTMP
 uninstall:
