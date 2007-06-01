@@ -1,0 +1,26 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Draw a dot chart
+	</summary>
+
+	<usage>
+Choose a matrix, vector or a factor to be plotted. Further options are available on the second tab.
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Matrix, vector or a factor. Data needs to be numeric unless the tabulate option is checked, below.</setting>
+		<setting id="tabulate">Use tabulate option mainly for factor variables or wherever else applicable.</setting>
+		<caption id="tab_options"/>
+		<setting id="plotoptions">Generic plot options. See <link href="rkward://component/plot_options"/>.</setting>	
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://component/barplot"/></li>
+			<li><link href="rkward://component/plot_options"/></li>
+			<li><link href="rkward://rhelp/dotchart"/></li>
+			<li><link href="rkward://rhelp/table"/></li>
+		</ul>
+	</related>
+</document>

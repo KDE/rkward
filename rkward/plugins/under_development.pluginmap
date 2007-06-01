@@ -4,6 +4,7 @@
 	<components>
 		<component type="standard" id="crosstab" file="analysis/crosstab.xml" label="Crosstabs" />
 		<component type="standard" id="piechart" file="plots/piechart.xml" label="Piechart" />
+		<component type="standard" id="dotchart" file="plots/dotchart.xml" label="Dotchart" />
 	</components>
 
 	<hierarchy>
@@ -18,6 +19,7 @@
 		</menu>
 		<menu id="plots" label="Plots" index="5">
 			<entry component="piechart" index="11"/>
+			<entry component="dotchart" index="12"/>
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
 			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="2">

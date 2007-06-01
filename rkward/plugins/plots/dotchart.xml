@@ -1,0 +1,29 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="dotchart.php" />
+	<help file="dotchart.rkh" />
+	<logic>
+		<set id="plotoptions.allow_ylim" to="false"/>
+		<set id="plotoptions.allow_log" to="false"/>
+		<set id="plotoptions.allow_type" to="false"/>
+	</logic>
+	<dialog label="Dot chart" >
+		<tabbook>
+			<tab label="Variables" id="tab_variables">
+				<row>
+					<varselector id="vars"/>
+					<column>
+					<varslot min_vars="1" id="x" source="vars" required="true" label="Variable"/>
+					<checkbox id="tabulate" label="Tabulate" value="TRUE" value_unchecked="FALSE" checked="false" />
+					<stretch/>
+					<preview id="preview"/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Options" id="tab_options">
+				<stretch/>
+				<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options"/>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>
