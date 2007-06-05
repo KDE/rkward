@@ -15,6 +15,7 @@ Choose a matrix, vector or a factor to be plotted. Further options are available
 		<caption id="tab_options"/>
 		<setting id="colors">Type of colors to use.</setting>
 		<setting id="radius">Radius of the pie. For long labels it may be necessary to make the pie smaller than the default.</setting>
+		<setting id="clockwise">Define if slices should be drawn clockwise or counter clockwise.</setting>
 		<setting id="plotoptions">Generic plot options. See <link href="rkward://component/plot_options"/>.</setting>	
 	</settings>
 	<related>

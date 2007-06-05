@@ -20,8 +20,10 @@ function doPrintout ($final) {
 	$tabulate= getRK_val ("tabulate")=="TRUE";
 	$radius = getRK_val ("radius");
 	$col = getRK_val ("colors");
+	$clockwise = getRK_val ("clockwise");
 
 	$options = "";
+	$options .= ", clockwise =" . $clockwise;
 	if ($radius != 0.8) $options .= ", radius=" . $radius;
 	if ($col == "rainbow") $options .= ", col=rainbow (if(is.matrix(x)) dim(x) else length(x))";
 	else if ($col == "grayscale") $options .= ", col=gray.colors (if(is.matrix(x)) dim(x) else length(x))";
