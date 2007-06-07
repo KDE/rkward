@@ -1,3 +1,10 @@
+rkward (0.4.8-pre1) unstable; urgency=low
+
+  * new upstream release
+    closes: #417519
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Xxx, XX XXX 2007 15:30:00 +0200
+
 rkward (0.4.7a-1) unstable; urgency=low
 
   * new upstream release

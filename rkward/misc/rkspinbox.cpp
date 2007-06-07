@@ -20,6 +20,7 @@
 #include <qlineedit.h>
 
 #include <math.h>
+#include <stdlib.h>
 
 #include "../debug.h"
 

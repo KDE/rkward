@@ -18,9 +18,9 @@
 #include "rklocalesupport.h"
 
 // see https://sourceforge.net/tracker/?func=detail&atid=459009&aid=1698809&group_id=50231
-#ifdef __FreeBSD__
-# include <langinfo.h>
-#endif
+// seems to be needed for GCC 4.3 as well.
+#include <langinfo.h>
+#include <stdlib.h>
 
 #include <qtextcodec.h>
 

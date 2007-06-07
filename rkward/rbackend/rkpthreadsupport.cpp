@@ -47,7 +47,7 @@ void RKGetCurrentThreadStackLimits (size_t *size, void **base) {
 	*size = pthread_get_stacksize_np (pthread_self ());
 	*base = pthread_get_stackaddr_np (pthread_self ());
 #else
-#	warning Can't determine the stack limits of a pthread on this system
+#	warning Cannot determine the stack limits of a pthread on this system
 #	warning R C stack checking will be disabled
 	*base = &dummy;
 	*size = (unsigned long) -1;
