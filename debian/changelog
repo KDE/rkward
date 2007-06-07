@@ -2,6 +2,7 @@ rkward (0.4.8-pre1) unstable; urgency=low
 
   * new upstream release
     closes: #417519
+TODO: another test run with GCC 4.3
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Xxx, XX XXX 2007 15:30:00 +0200
 
