@@ -66,14 +66,24 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 	connect (update_button, SIGNAL (clicked ()), this, SLOT (update ()));
 	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
 
-	new QLabel (i18n("\nResult of 'summary (%1)':\n").arg (object->getFullName ()), box);
+	QHBox *row = new QHBox (box);
+	QLabel *label = new QLabel (i18n("\nResult of 'summary (%1)':\n").arg (object->getFullName ()), row);
+	row->setStretchFactor (label, 10);
+	toggle_summary_button = new QPushButton (i18n ("Hide"), row);
+	connect (toggle_summary_button, SIGNAL (clicked ()), this, SLOT (toggleSummary ()));
+
 	summary_area = new QTextEdit (box);
 	summary_area->setTextFormat (PlainText);
 	summary_area->setReadOnly (true);
 	summary_area->setCurrentFont (font);
 	summary_area->setWordWrap (QTextEdit::NoWrap);
 
-	new QLabel (i18n("\nResult of 'print (%1)':\n").arg (object->getFullName ()), box);
+	row = new QHBox (box);
+	label = new QLabel (i18n("\nResult of 'print (%1)':\n").arg (object->getFullName ()), row);
+	row->setStretchFactor (label, 10);
+	toggle_print_button = new QPushButton (i18n ("Hide"), row);
+	connect (toggle_print_button, SIGNAL (clicked ()), this, SLOT (togglePrint ()));
+
 	print_area = new QTextEdit (box);
 	print_area->setTextFormat (PlainText);
 	print_area->setReadOnly (true);
@@ -89,6 +99,28 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 
 RObjectViewer::~RObjectViewer () {
 	RK_TRACE (APP);
+}
+
+void RObjectViewer::toggleSummary () {
+	RK_TRACE (APP);
+
+	summary_area->setShown (!summary_area->isShown ());
+	if (summary_area->isShown ()) {
+		toggle_summary_button->setText (i18n ("Hide"));
+	} else {
+		toggle_summary_button->setText (i18n ("Show"));
+	}
+}
+
+void RObjectViewer::togglePrint () {
+	RK_TRACE (APP);
+
+	print_area->setShown (!print_area->isShown ());
+	if (print_area->isShown ()) {
+		toggle_print_button->setText (i18n ("Hide"));
+	} else {
+		toggle_print_button->setText (i18n ("Show"));
+	}
 }
 
 void RObjectViewer::cancel () {

@@ -43,6 +43,8 @@ public:
 public slots:
 	void cancel ();
 	void update ();
+	void toggleSummary ();
+	void togglePrint ();
 	void objectRemoved (RObject *object);
 protected:
 	friend class RKWorkplace;
@@ -55,6 +57,8 @@ private:
 	QLabel *description_label;
 	QPushButton *update_button;
 	QPushButton *cancel_button;
+	QPushButton *toggle_summary_button;
+	QPushButton *toggle_print_button;
 	QTextEdit *print_area;
 	QTextEdit *summary_area;
 	QString caption;
