@@ -519,9 +519,6 @@ void RKObjectListViewTip::maybeTip (const QPoint &pos) {
 	RObject *object = view->findItemObject (item);
 	if (!object) return;
 
-	// TODO: move all this to RObject::getDescription () or something similar (and complete it)
-	// merge with age-old code in RObjectViewer
-
 	tip (view->itemRect (item), object->getObjectDescription ());
 }
 

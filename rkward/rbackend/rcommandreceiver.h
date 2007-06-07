@@ -2,7 +2,7 @@
                           rcommandreceiver  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -55,6 +55,7 @@ protected:
 	virtual void newOutput (RCommand *, ROutput *);
 protected:
 	RCommandList outstanding_commands;
+	void cancelOutstandingCommands ();
 private:
 	bool delete_when_done;
 	void addCommand (RCommand *command);

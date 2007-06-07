@@ -17,7 +17,10 @@
 #include "robjectviewer.h"
 
 #include <qlayout.h>
-
+#include <qscrollview.h>
+#include <qvbox.h>
+#include <qhbox.h>
+#include <qlabel.h>
 #include <qtextedit.h>
 #include <qfont.h>
 
@@ -27,64 +30,129 @@
 #include "rkglobals.h"
 #include "core/robject.h"
 #include "core/rcontainerobject.h"
+#include "misc/rkdummypart.h"
+#include "core/rkmodificationtracker.h"
 
-RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : QWidget (parent) {
-	QGridLayout *grid = new QGridLayout (this, 1, 1);
-	
-	view_area = new QTextEdit (this);
-	view_area->setTextFormat (PlainText);
-	view_area->setReadOnly (true);
-	view_area->setText (QString::null);
+#include "debug.h"
+
+#define SUMMARY_COMMAND 1
+#define PRINT_COMMAND 2
+
+RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (parent, RKMDIWindow::ObjectWindow, false) {
+	RK_TRACE (APP);
+	RK_ASSERT (object);
+	_object = object;
+
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	QScrollView *wrapper = new QScrollView (this);
+	wrapper->setResizePolicy (QScrollView::AutoOneFit);
+	QVBox *box = new QVBox (wrapper->viewport ());
+	wrapper->addChild (box);
+	layout->addWidget (wrapper);
+
+	wrapper->setFocusPolicy (QWidget::StrongFocus);
+	setPart (new RKDummyPart (this, wrapper));
+	initializeActivationSignals ();
+
 	QFont font ("Courier");
-	view_area->setCurrentFont (font);
-	view_area->setWordWrap (QTextEdit::NoWrap);
-	grid->addWidget (view_area, 0, 0);
-	
-	view_area->append (i18n("Object name: ") + object->getShortName ());
-	view_area->append (i18n("\nFull location: ") + object->getFullName ());
-	view_area->append (i18n("\nClass(es): ") + object->makeClassString (", "));
-	if (object->isContainer ()) {
-		RContainerObject *cobj = static_cast<RContainerObject*> (object);		// for convenience only
-		if (cobj->numDimensions ()) {
-			QString dummy = i18n("\nDimensions: ") + QString ().setNum (cobj->getDimension (0));
-			for (unsigned int i=1; i < cobj->numDimensions (); ++i) {
-				dummy.append (", " + QString ().setNum (cobj->getDimension (i)));
-			}
-			view_area->append (dummy);
-		}
-	}
-	view_area->append (i18n("\nResult of 'print (") + object->getFullName () + i18n(")':\n"));
 
-	// make sure to print as wide as possible
-	RCommand *command = new RCommand ("local({\n"
-	                                  "\trk.temp.width.save <- getOption(\"width\")\n"
-	                                  "\toptions(width=10000)\n"
-	                                  "\ton.exit(options(width=rk.temp.width.save))\n"
-	                                  "\tprint(" + object->getFullName () + ")\n"
-	                                  "})", RCommand::App, QString::null, this);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
-	
-	caption = i18n("Object Viewer: ") + object->getShortName ();
-	setCaption (caption + i18n(" - Waiting for results from R..."));
-	resize (minimumSizeHint ().expandedTo (QSize (640, 480)));
+	QHBox *toprow = new QHBox (box);
+	description_label = new QLabel (toprow);
+	QVBox *statusbox = new QVBox (toprow);
+	statusbox->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+	status_label = new QLabel (statusbox);
+	update_button = new QPushButton (i18n ("Update"), statusbox);
+	cancel_button = new QPushButton (i18n ("Cancel"), statusbox);
+	connect (update_button, SIGNAL (clicked ()), this, SLOT (update ()));
+	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
+
+	new QLabel (i18n("\nResult of 'summary (%1)':\n").arg (object->getFullName ()), box);
+	summary_area = new QTextEdit (box);
+	summary_area->setTextFormat (PlainText);
+	summary_area->setReadOnly (true);
+	summary_area->setCurrentFont (font);
+	summary_area->setWordWrap (QTextEdit::NoWrap);
+
+	new QLabel (i18n("\nResult of 'print (%1)':\n").arg (object->getFullName ()), box);
+	print_area = new QTextEdit (box);
+	print_area->setTextFormat (PlainText);
+	print_area->setReadOnly (true);
+	print_area->setCurrentFont (font);
+	print_area->setWordWrap (QTextEdit::NoWrap);
+
+	setCaption (i18n("Object Viewer: ") + object->getShortName ());
+	//resize (minimumSizeHint ().expandedTo (QSize (640, 480)));
+	update ();
+	connect (RKGlobals::tracker (), SIGNAL (objectRemoved(RObject*)), this, SLOT (objectRemoved(RObject*)));
 	show ();
 }
 
 RObjectViewer::~RObjectViewer () {
+	RK_TRACE (APP);
 }
 
-void RObjectViewer::rCommandDone (RCommand *command) {
-	setCaption (caption);
-	
-	view_area->append (command->output ());
-	if (command->hasError ()) {
-		view_area->append (i18n("\nSome errors occurred: ") + command->error ());
+void RObjectViewer::cancel () {
+	RK_TRACE (APP);
+
+	cancel_button->setEnabled (false);
+	update_button->setEnabled (true);
+	cancelOutstandingCommands ();
+}
+
+void RObjectViewer::update () {
+	RK_TRACE (APP);
+
+	status_label->setText (i18n ("Fetching information"));
+	cancel_button->setEnabled (true);
+	update_button->setEnabled (false);
+	description_label->setText (_object->getObjectDescription ());
+
+	summary_area->setText (QString::null);
+	print_area->setText (QString::null);
+
+	RCommand *command = new RCommand ("print(summary(" + _object->getFullName () + "))", RCommand::App, QString::null, this, SUMMARY_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command, 0);
+
+	// make sure to print as wide as possible
+	command = new RCommand ("local({\n"
+	                                  "\trk.temp.width.save <- getOption(\"width\")\n"
+	                                  "\toptions(width=10000)\n"
+	                                  "\ton.exit(options(width=rk.temp.width.save))\n"
+	                                  "\tprint(" + _object->getFullName () + ")\n"
+	                                  "})", RCommand::App, QString::null, this, PRINT_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command, 0);
+}
+
+void RObjectViewer::objectRemoved (RObject *object) {
+	RK_TRACE (APP);
+
+	if (object == _object) {
+		status_label->setText (i18n ("<b>Object was deleted!</b>"));
+		update_button->setEnabled (false);
 	}
 }
 
+void RObjectViewer::rCommandDone (RCommand *command) {
+	RK_TRACE (APP);
+	RK_ASSERT (command);
+
+	if (command->getFlags () == SUMMARY_COMMAND) {
+		summary_area->append (command->fullOutput ());
+	} else if (command->getFlags () == PRINT_COMMAND) {
+		print_area->append (command->fullOutput ());
+		status_label->setText (i18n ("Ready"));
+		update_button->setEnabled (true);
+		cancel_button->setEnabled (false);
+	} else {
+		RK_ASSERT (false);
+	}
+
+}
+
 void RObjectViewer::closeEvent (QCloseEvent *e) {
+	hide ();
 	e->accept ();
-	delete this;
+	deleteLater ();
 }
 
 #include "robjectviewer.moc"

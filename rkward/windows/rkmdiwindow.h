@@ -30,20 +30,21 @@ class RKMDIWindow : public QFrame {
 	Q_OBJECT
 public:
 	enum Type {
-		DataEditorWindow=1,
-		CommandEditorWindow=2,
-		OutputWindow=4,
-		HelpWindow=8,
-		X11Window=16,
-		ConsoleWindow=32,
-		CommandLogWindow=64,
-		WorkspaceBrowserWindow=128,
-		SearchHelpWindow=256,
-		PendingJobsWindow=512,
-		FileBrowserWindow=1024,
+		DataEditorWindow=1 << 0,
+		CommandEditorWindow=1 << 1,
+		OutputWindow=1 << 2,
+		HelpWindow=1 << 3,
+		X11Window=1 << 4,
+		ObjectWindow=1 << 5,
+		ConsoleWindow=1 << 10,
+		CommandLogWindow=1 << 11,
+		WorkspaceBrowserWindow=1 << 12,
+		SearchHelpWindow=1 << 13,
+		PendingJobsWindow=1 << 14,
+		FileBrowserWindow=1 << 15,
 
-		DocumentWindow=2048,
-		ToolWindow=4096,
+		DocumentWindow=1 << 20,
+		ToolWindow=1 << 21,
 		AnyType=DocumentWindow | ToolWindow
 	};
 

@@ -2,7 +2,7 @@
                           rcommandreceiver  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -15,6 +15,9 @@
  *                                                                         *
  ***************************************************************************/
 #include "rcommandreceiver.h"
+
+#include "../rkglobals.h"
+#include "rinterface.h"
 
 #include "../debug.h"
 
@@ -38,6 +41,14 @@ void RCommandReceiver::rCommandDone (RCommand *) {
 
 void RCommandReceiver::newOutput (RCommand *, ROutput *) {
 	RK_TRACE (RBACKEND);
+}
+
+void RCommandReceiver::cancelOutstandingCommands () {
+	RK_TRACE (RBACKEND);
+
+	for (RCommandList::const_iterator it = outstanding_commands.begin (); it != outstanding_commands.end (); ++it) {
+		RKGlobals::rInterface()->cancelCommand (*it);
+	}
 }
 
 void RCommandReceiver::addCommand (RCommand *command) {

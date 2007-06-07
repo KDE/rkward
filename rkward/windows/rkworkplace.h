@@ -44,11 +44,11 @@ public:
 	void initActions (KActionCollection *ac, const char *prev_id, const char *next_id);
 	bool haveNext ();
 	bool havePrev ();
+	void windowDestroyed (QObject *window);
 public slots:
 	void next ();
 	void prev ();
 	void windowActivated (RKMDIWindow *window);
-	void windowDestroyed (QObject *window);
 private:
 	void updateActions ();
 
@@ -106,6 +106,7 @@ TODO: this should be obsoleted somehow */
 	void newOutput (bool only_if_modified);
 
 	void newX11Window (WId window_to_embed, int device_number);
+	void newObjectViewer (RObject *object);
 
 /** @returns true if there is a known editor for this type of object, false otherwise */
 	bool canEditObject (RObject *object);

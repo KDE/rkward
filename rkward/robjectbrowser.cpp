@@ -41,7 +41,6 @@
 #include "misc/rkdummypart.h"
 #include "windows/rkworkplace.h"
 #include "dataeditor/rkeditor.h"
-#include "robjectviewer.h"
 
 #include "debug.h"
 
@@ -190,7 +189,7 @@ void RObjectBrowserInternal::popupCopyToGlobalEnv () {
 void RObjectBrowserInternal::popupView () {
 	RK_TRACE (APP);
 	RKWorkplace::mainWorkplace ()->flushAllData ();
-	new RObjectViewer (0, list_view->menuObject ());
+	RKWorkplace::mainWorkplace ()->newObjectViewer (list_view->menuObject ());
 }
 
 void RObjectBrowserInternal::popupDelete () {

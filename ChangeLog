@@ -1,3 +1,4 @@
+- object viewer also shows summary information, gains an update button, and MDI integration
 - CLT plugins allow drawing grid
 - add max.print option to R-Backend settings dialog
 - syntax highlighting is minimally faster for long outputs

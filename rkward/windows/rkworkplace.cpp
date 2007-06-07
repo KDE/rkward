@@ -32,6 +32,7 @@
 #include "../dataeditor/rkeditor.h"
 #include "../dataeditor/rkeditordataframe.h"
 #include "../dataeditor/rkeditordataframepart.h"
+#include "../robjectviewer.h"
 #include "../settings/rksettingsmoduleoutput.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../rbackend/rinterface.h"
@@ -112,7 +113,6 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	windows.append (window);
 	connect (window, SIGNAL (destroyed (QObject *)), this, SLOT (windowDestroyed (QObject *)));
 	connect (window, SIGNAL (windowActivated(RKMDIWindow*)), history, SLOT (windowActivated(RKMDIWindow*)));
-	connect (window, SIGNAL (destroyed (QObject *)), history, SLOT (windowDestroyed (QObject *)));
 	if (attached) attachWindow (window);
 	else detachWindow (window, false);
 }
@@ -203,6 +203,22 @@ void RKWorkplace::newX11Window (WId window_to_embed, int device_number) {
 	RKCaughtX11Window *window = new RKCaughtX11Window (window_to_embed, device_number);
 	window->state = RKMDIWindow::Detached;
 	addWindow (window, false);
+}
+
+void RKWorkplace::newObjectViewer (RObject *object) {
+	RK_TRACE (APP);
+	RK_ASSERT (object);
+
+	RKWorkplaceObjectList object_windows = getObjectList (RKMDIWindow::ObjectWindow, RKMDIWindow::AnyWindowState);
+	for (RKWorkplaceObjectList::const_iterator it = object_windows.constBegin (); it != object_windows.constEnd (); ++it) {
+		if (static_cast<RObjectViewer *> (*it)->object () == object) {
+			(*it)->activate ();
+			return;
+		}
+	}
+
+	RObjectViewer *ov = new RObjectViewer (view (), object);
+	addWindow (ov);
 }
 
 bool RKWorkplace::canEditObject (RObject *object) {
@@ -317,6 +333,9 @@ void RKWorkplace::closeAll (int type, int state) {
 void RKWorkplace::windowDestroyed (QObject *object) {
 	RK_TRACE (APP);
 	RKMDIWindow *window = static_cast<RKMDIWindow *> (object);
+
+	// remove from history first (otherwise, we might find it there, when trying to activate a new window)
+	history->windowDestroyed (window);
 
 	// WARNING: the window is dead. Don't call any functions on it.
 
@@ -513,7 +532,7 @@ void RKMDIWindowHistory::next () {
 	RK_TRACE (APP);
 
 	if (!haveNext ()) return;
-	back_list.append (current);
+	if (current) back_list.append (current);
 	current = forward_list.first ();
 	forward_list.pop_front ();
 
@@ -527,7 +546,7 @@ void RKMDIWindowHistory::prev () {
 	RK_TRACE (APP);
 
 	if (!havePrev ()) return;
-	forward_list.push_front (current);
+	if (current) forward_list.push_front (current);
 	current = back_list.last ();
 	back_list.pop_back ();
 
