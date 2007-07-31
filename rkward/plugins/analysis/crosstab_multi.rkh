@@ -10,7 +10,7 @@ Choose one or more objects to be crosstabulated.
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Select a data frame or more than one variables from a data matrix</setting>		
+		<setting id="x">Select a data frame or more than one variables from a data frame or with the same length </setting>		
 	</settings>
 	<related>
 		<ul>
