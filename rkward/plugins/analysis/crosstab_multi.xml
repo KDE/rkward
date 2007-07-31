@@ -1,0 +1,19 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="crosstab_multi.php" />
+	<help file="crosstab_multi.rkh" />
+
+	<dialog label="Multiple Crosstabulation" >
+		<tabbook>
+			<tab label="Variables" id="tab_variables">		
+				<row>
+					<varselector id="vars"/>
+					<column>
+						<varslot min_vars="1" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
+					</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+
+</document>

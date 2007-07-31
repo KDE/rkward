@@ -1,0 +1,20 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Multiple Crosstabulation where all the variables are crosstabulated with all the others.
+	</summary>
+
+	<usage>
+Choose one or more objects to be crosstabulated.
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select a data matrix or a data frame or more than one variables from a data matrix</setting>		
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/ftable"/></li>
+		</ul>
+	</related>
+</document>
