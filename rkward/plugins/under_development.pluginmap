@@ -2,7 +2,8 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
-		<component type="standard" id="crosstab" file="analysis/crosstab.xml" label="Crosstabs" />
+		<component type="standard" id="crosstab" file="analysis/crosstab.xml" label="One to one" />
+		<component type="standard" id="mcrosstab" file="analysis/crosstab_multi.xml" label="Multiple" />
 		<component type="standard" id="piechart" file="plots/piechart.xml" label="Piechart" />
 		<component type="standard" id="dotchart" file="plots/dotchart.xml" label="Dotchart" />
 	</components>
@@ -15,7 +16,10 @@
 			</menu>
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
-			<entry component="crosstab" index="11"/>
+			<menu id="crosstabs" label="Crosstabs" index="11">			
+				<entry component="crosstab" />
+				<entry component="mcrosstab" />
+			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
 			<entry component="piechart" index="11"/>
