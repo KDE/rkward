@@ -1,0 +1,29 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This test performs the Ansari-Bradley two-sample exact test to test for a difference in scale parameters.
+	</summary>
+
+	<usage>
+		Select two data sets for the Ansari-Bradley two-sample test. For this test the samples need to be numeric vectors (see below for details).
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric.</setting>
+		<setting id="y">Select the data to be computed. The vectors need to be numeric.</setting>
+		<setting id="alternative">Here you can specify the alternative hypothesis. It must be one of "two sided", "greater" or "less".</setting>
+		<caption id="tab_options"/>
+		<setting id="exact">Defines whether an exact p-value should be computed.</setting>
+		<setting id="confint">Check this if you want the confidence interval to be computed.</setting>
+		<setting id="conflevel">Here you can define the confidence level of the interval (95% is typical).</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/ansari.test"/></li>
+			<li><link href="rkward://rhelp/ansari.exact"/></li>
+			<li><link href="rkward://component/ansari_bradley_exact_test"/></li>
+		</ul>
+
+	</related>
+</document>

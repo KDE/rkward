@@ -1,6 +1,7 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="ansari_bradley_exact_test.php"/>
+	<help file="ansari_bradley_exact_test.rkh"/>
 
 	<dialog label="Ansari-Bradley two-sample exact test">
 		<tabbook>
