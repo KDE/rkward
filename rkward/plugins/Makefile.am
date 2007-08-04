@@ -350,7 +350,8 @@ dist_pluginsXanalysisXansariUbradley_DATA = \
 	analysis/ansari_bradley/ansari_bradley_test.php \
 	analysis/ansari_bradley/ansari_bradley_exact_test.php \
 	analysis/ansari_bradley/ansari_bradley_test.xml \
-	analysis/ansari_bradley/ansari_bradley_test.rkh
+	analysis/ansari_bradley/ansari_bradley_test.rkh \
+	analysis/ansari_bradley/ansari_bradley_exact_test.rkh
 
 pluginsXanalysisXmomentsdir = $(kde_datadir)/rkward/analysis/moments
 dist_pluginsXanalysisXmoments_DATA = \
@@ -397,10 +398,13 @@ pluginsXanalysisXTESTSdir = $(kde_datadir)/rkward/analysis/TESTS
 dist_pluginsXanalysisXTESTS_DATA = \
 	analysis/TESTS/mood_test.rkh \
 	analysis/TESTS/PP_test.rkh \
+	analysis/TESTS/Box_test.rkh \
 	analysis/TESTS/mood_test.php \
 	analysis/TESTS/PP_test.php \
 	analysis/TESTS/mood_test.xml \
-	analysis/TESTS/PP_test.xml
+	analysis/TESTS/PP_test.xml \
+	analysis/TESTS/Box_test.php \
+	analysis/TESTS/Box_test.xml
 
 pluginsXanalysisXvariancesdir = $(kde_datadir)/rkward/analysis/variances
 dist_pluginsXanalysisXvariances_DATA = \
