@@ -1,0 +1,23 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="linear_regression.php"/>
+	<help file="linear_regression.rkh"/>
+
+	<dialog label="Fitting Linear Models">
+		<tabbook>
+			<tab label="Basic settings" id="tab_variables">
+				<row>
+					<varselector id="vars"/>
+					<column>
+						<varslot type="numeric" id="y" source="vars" required="true" label="dependent variable"/>
+						<varslot type="numeric" id="x" source="vars" required="true" label="independent variable"/>
+						<stretch/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Options" id="tab_options">
+			</tab>
+		</tabbook>
+	</dialog>
+	
+</document>
