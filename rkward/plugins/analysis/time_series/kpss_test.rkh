@@ -1,0 +1,25 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This test computes the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test for the null hypothesis that x is level or trend stationary.
+	</summary>
+
+	<usage>
+		Select the data sets for which you want to perform the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test. For this test the samples need to be numeric vectors (see below for details).
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length.</setting>
+		<setting id="null">Indicates the null hypothesis and must be one of "Level" (default) or "Trend".</setting>
+		<setting id="lshort">Defines whether the short or long version of the truncation lag parameter is used.</setting>
+		<caption id="tab_options"/>
+		<setting id="narm">Exclude missing values from calculation?</setting>
+		<setting id="length">Show the total length of the data, and the number of missing values (purely informational, does not affect the test)?</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/kpss.test"/></li>
+		</ul>
+	</related>
+</document>
