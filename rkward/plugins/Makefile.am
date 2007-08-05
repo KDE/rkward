@@ -398,13 +398,19 @@ pluginsXanalysisXTESTSdir = $(kde_datadir)/rkward/analysis/TESTS
 dist_pluginsXanalysisXTESTS_DATA = \
 	analysis/TESTS/mood_test.rkh \
 	analysis/TESTS/PP_test.rkh \
-	analysis/TESTS/Box_test.rkh \
 	analysis/TESTS/mood_test.php \
 	analysis/TESTS/PP_test.php \
 	analysis/TESTS/mood_test.xml \
-	analysis/TESTS/PP_test.xml \
-	analysis/TESTS/Box_test.php \
-	analysis/TESTS/Box_test.xml
+	analysis/TESTS/PP_test.xml
+
+pluginsXanalysisXtime_seriesdir = $(kde_datadir)/rkward/analysis/time_series
+dist_pluginsXanalysisXtime_series_DATA = \
+	analysis/time_series/Box_test.xml \
+	analysis/time_series/Box_test.php \
+	analysis/time_series/Box_test.rkh \
+	analysis/time_series/kpss_test.xml \
+	analysis/time_series/kpss_test.php \
+	analysis/time_series/kpss_test.rkh
 
 pluginsXanalysisXvariancesdir = $(kde_datadir)/rkward/analysis/variances
 dist_pluginsXanalysisXvariances_DATA = \
