@@ -70,13 +70,13 @@
 				<entry component="grubbs_test"/>
 				<entry component="outlier"/>
 			</menu>
-			<entry component="simple_anova" index="7"/>
-			<menu id="variances" label="Variances" index="9">
+			<entry component="simple_anova" index="8"/>
+			<menu id="variances" label="Variances" index="10">
 				<entry component="bartlett_test"/>
 				<entry component="F_test"/>
 				<entry component="fligner_test"/>
 			</menu>
-			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="10">
+			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="11">
 				<entry component="wilcoxon_test" />
 				<entry component="wilcoxon_exact_test" />
 			</menu>

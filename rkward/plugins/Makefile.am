@@ -394,6 +394,12 @@ dist_pluginsXanalysisXoutliers_DATA = \
 	analysis/outliers/outlier.php \
 	analysis/outliers/chisq_out_test.xml
 
+pluginsXanalysisXregressiondir = $(kde_datadir)/rkward/analysis/regression
+dist_pluginsXanalysisXregression_DATA = \
+	analysis/regression/linear_regression.php \
+	analysis/regression/linear_regression.xml \
+	analysis/regression/linear_regression.rkh
+
 pluginsXanalysisXTESTSdir = $(kde_datadir)/rkward/analysis/TESTS
 dist_pluginsXanalysisXTESTS_DATA = \
 	analysis/TESTS/mood_test.rkh \
