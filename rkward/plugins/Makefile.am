@@ -342,7 +342,10 @@ dist_pluginsXanalysis_DATA = \
 	analysis/t_test_two_vars.rkh \
 	analysis/crosstab.rkh \
 	analysis/t_test_two_vars.xml \
-	analysis/t_test_two_vars.php
+	analysis/t_test_two_vars.php \
+	analysis/crosstab_multi.php \
+	analysis/crosstab_multi.xml \
+	analysis/crosstab_multi.rkh
 
 pluginsXanalysisXansariUbradleydir = $(kde_datadir)/rkward/analysis/ansari_bradley
 dist_pluginsXanalysisXansariUbradley_DATA = \
