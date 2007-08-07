@@ -30,6 +30,8 @@
 				</radio>
 				<checkbox id="clockwise" label="clockwise" value="TRUE" value_unchecked="FALSE" checked="false" />
 				<spinbox id="radius" type="real" min="0.01" max="1" initial="0.8" label="Radius"/>
+				<spinbox id="density" type="real" initial="NULL" label="density"/>
+				<spinbox id="angle" type="real" min="0" initial="45" max="360" label="angle"/>
 				<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options"/>
 			</tab>
 		</tabbook>

@@ -20,11 +20,15 @@ function doPrintout ($final) {
 	$names = getRK_val ("names");
 	$tabulate= getRK_val ("tabulate")=="TRUE";
 	$radius = getRK_val ("radius");
+	$angle = getRK_val ("angle");
+	$density = getRK_val ("density");
 	$col = getRK_val ("colors");
 	$clockwise = getRK_val ("clockwise");
 
 	$options = "";
 	$options .= ", clockwise =" . $clockwise;
+	$options .= ", density =" . $density;
+	$options .= ", angle =" . $angle;
 	if ($radius != 0.8) $options .= ", radius=" . $radius;
 	if ($col == "rainbow") $options .= ", col=rainbow (if(is.matrix(x)) dim(x) else length(x))";
 	else if ($col == "grayscale") $options .= ", col=gray.colors (if(is.matrix(x)) dim(x) else length(x))";
