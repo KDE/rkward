@@ -10,7 +10,9 @@ Choose a matrix, vector or a factor to be plotted. Further options are available
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Matrix, vector or a factor. Data needs to be numeric unless the tabulate option is checked, below.</setting>
+		<setting id="x">Matrix, vector or a factor. Data needs to be numeric unless the tabulate option is checked, below.
+		<setting id="names">Defines the names for the data. You can use the data set as input or enter names (must be type "string" in this case).
+	</setting>
 		<setting id="tabulate">Use tabulate option mainly for factor variables or wherever else applicable.</setting>
 		<caption id="tab_options"/>
 		<setting id="colors">Type of colors to use.</setting>

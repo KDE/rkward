@@ -17,6 +17,7 @@ function preview () {
 
 function doPrintout ($final) {
 	$vars = getRK_val ("x");
+	$names = getRK_val ("names");
 	$tabulate= getRK_val ("tabulate")=="TRUE";
 	$radius = getRK_val ("radius");
 	$col = getRK_val ("colors");
@@ -50,6 +51,7 @@ rk.graph.on ()
 ?>
 try ({
 <?	if (!empty ($plotpre)) printIndented ("\t", $plotpre); ?>
+	names (x) <- <? echo ($names); ?>;
 	pie(x<? echo ($options); ?>)
 <?	if (!empty ($plotpost)) printIndented ("\t", $plotpost); ?>
 })
