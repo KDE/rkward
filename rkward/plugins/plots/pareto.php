@@ -43,7 +43,7 @@ rk.graph.on ()
 try ({
 	descriptives <- pareto.chart(x<? getRK ("plotoptions.code.printout"); ?>)
 <?	if ($final && $descriptives) { ?>
-	rk.print(xtable(descriptives))
+	rk.results(xtable(descriptives))
 <?	} ?>
 })
 <?	if ($final) { ?>
