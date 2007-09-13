@@ -54,7 +54,7 @@ RKStructureGetter::~RKStructureGetter () {
 	UNPROTECT (num_prefetched_funs + 1); /* all the pre-resolved functions and the meta attribute */
 }
 
-SEXP RKStructureGetter::prefetch_fun (char *name, bool from_base) {
+SEXP RKStructureGetter::prefetch_fun (CONSTCHAR *name, bool from_base) {
 	SEXP ret;
 
 	if (from_base) {

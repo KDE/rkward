@@ -92,6 +92,10 @@ extern "C" {
 extern Rboolean (Rf_isNull)(SEXP s);
 extern Rboolean (Rf_isObject)(SEXP s);
 SEXP R_LastvalueSymbol;
+// most chars should be const char *, now
+#	define CONSTCHAR const char
+#else
+#	define CONSTCHAR char
 #endif
 
 #ifdef R_2_4
@@ -312,8 +316,8 @@ int REditFiles (int nfile, char **file, char **title, char *editor) {
 int REditFile (char *buf) {
 	RK_TRACE (RBACKEND);
 
-	char *editor = "none";
-	char *title = "";
+	char *editor = (char *) "none";
+	char *title = (char *) "";
 
 // does not exist in standard R 2.1.0, so no idea what to return.
 	return REditFiles (1, &buf, &title, editor);
@@ -765,7 +769,7 @@ SEXP runCommandInternalBase (SEXP pr, REmbedInternal::RKWardRError *error) {
 	PROTECT (exp);
 	/* Do NOT ask me why, but the line below is needed for warnings to be printed, while otherwise they would not be shown.
 	Apparently we need to print at least something in order to achieve this. Whatever really happens in Rprintf () to have such an effect, I did not bother to find out. */
-	Rprintf ("");
+	Rprintf ((char *) "");
 
 	Rf_PrintWarnings ();
 
@@ -833,7 +837,9 @@ void REmbedInternal::runCommandInternal (const QString &command_qstring, RKWardR
 		SEXP parsed = parseCommand (command_qstring, error);
 		if (*error == NoError) runCommandInternalBase (parsed, error);
 	} else {		// run a user command
+#ifndef USE_R_REPLDLLDO1
 		SEXP parsed = parseCommand (command_qstring, error);
+#endif
 		// do not run incomplete commands, but *do* run commands with syntax errors if USE_R_REPLDLLDO1. Why? Because this is the only way to get a syntax error messages, so far.
 		if ((*error != NoError)) {
 			if (*error != SyntaxError) return;

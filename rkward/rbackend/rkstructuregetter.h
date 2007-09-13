@@ -42,7 +42,7 @@ private:
 	void getStructureSafe (SEXP value, const QString &name, bool misplaced, RData *storage);
 	SEXP resolvePromise (SEXP from);
 
-	SEXP prefetch_fun (char *name, bool from_base=true);
+	SEXP prefetch_fun (CONSTCHAR *name, bool from_base=true);
 
 	bool with_namespace;
 	SEXP namespace_envir;
