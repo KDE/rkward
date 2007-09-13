@@ -499,6 +499,10 @@ QString RKVariable::getRText (int row) {
 		return (rQuote (getLabeled (row)));
 	} else if (getDataType () == DataCharacter) {
 		return (rQuote (getText (row)));
+	} else if (getDataType () == DataLogical) {
+		RK_ASSERT (myData ()->cell_doubles != 0);
+		if (myData ()->cell_doubles[row] == 0) return ("FALSE");
+		else return ("TRUE");
 	} else {
 		RK_ASSERT (myData ()->cell_doubles != 0);
 		return (QString::number (myData ()->cell_doubles[row], 'g', MAX_PRECISION));
