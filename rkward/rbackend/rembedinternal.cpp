@@ -91,6 +91,7 @@ extern "C" {
 // hidden in Rinternals.h is USE_RINTERNALS is defined
 extern Rboolean (Rf_isNull)(SEXP s);
 extern Rboolean (Rf_isObject)(SEXP s);
+SEXP R_LastvalueSymbol;
 #endif
 
 #ifdef R_2_4
@@ -636,6 +637,9 @@ bool REmbedInternal::startR (int argc, char** argv, size_t stacksize, void *stac
 	RKGlobals::na_double = NA_REAL;
 	R_ReplDLLinit ();
 	RKWard_RData_Tag = Rf_install ("RKWard_RData_Tag");
+#	ifdef R_2_6
+	R_LastvalueSymbol = Rf_install (".Last.value");
+#	endif
 	return ok;
 #endif
 }
