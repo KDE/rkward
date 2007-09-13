@@ -543,6 +543,7 @@ RData *SEXPToRData (SEXP from_exp) {
 	unsigned int count;
 	int type = TYPEOF (from_exp);
 	switch (type) {
+		case LGLSXP:
 		case INTSXP:
 			data->data = SEXPToIntArray (from_exp, &count);
 			data->datatype = RData::IntVector;
