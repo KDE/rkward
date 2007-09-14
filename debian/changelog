@@ -1,10 +1,11 @@
-rkward (0.4.8-pre1) unstable; urgency=low
+rkward (0.4.7a-2) unstable; urgency=low
 
-  * new upstream release
-    closes: #417519
-TODO: another test run with GCC 4.3
+  * force gcc 4.2 to match r-base-core
+    closes: #432377
+  * merge upstream fix for R 2.6
+    closes: #442059
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Xxx, XX XXX 2007 15:30:00 +0200
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Fri, 14 Sep 2007 13:30:00 +0200
 
 rkward (0.4.7a-1) unstable; urgency=low
 

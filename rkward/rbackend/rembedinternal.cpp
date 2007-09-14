@@ -88,7 +88,7 @@ extern "C" {
 #endif
 
 #ifdef R_2_6
-// hidden in Rinternals.h is USE_RINTERNALS is defined
+// hidden in Rinternals.h if USE_RINTERNALS is defined
 extern Rboolean (Rf_isNull)(SEXP s);
 extern Rboolean (Rf_isObject)(SEXP s);
 SEXP R_LastvalueSymbol;
@@ -316,6 +316,7 @@ int REditFiles (int nfile, char **file, char **title, char *editor) {
 int REditFile (char *buf) {
 	RK_TRACE (RBACKEND);
 
+// REditFiles (below) is takes non-const char** parameters, although it actually treats them as consts. TODO: fix this up, one day
 	char *editor = (char *) "none";
 	char *title = (char *) "";
 
