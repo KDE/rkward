@@ -1,7 +1,7 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="barplot_options.php" />
-	<help file="barplot_options.rkh" />
+	<code file="barplot_embed.php" />
+	<help file="barplot_embed.rkh" />
 	<logic>
 		<external id="xvar" default=""/>
 		<set id="plotoptions.allow_ylim" to="false"/>
