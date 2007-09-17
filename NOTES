@@ -1,6 +1,6 @@
-Notes about changes in rkward that existing users need to adapt to:
+Notes about changes in RKWard that existing users need to adapt to:
 
 *** From 0.4.7a to 0.4.8 ***
-- With the addition of the new filesystem browser, the shortcuts to show/hide the toolwindows have changed. The filesystem browser window can be toggled using Alt+2, the shortcuts for command log, pending jobs, console, and help search are now Alt+3 through 6, respectively, instead of Alt+2 through 5.
+- With the addition of the new filesystem browser, the shortcuts to show/hide the main tool windows have changed. The filesystem browser window can be toggled using Alt+2, the shortcuts for command log, pending jobs, console, and help search are now Alt+3 through 6, respectively, instead of Alt+2 through 5.
 
-*** Changes prior to 0.4.7a not list in this document. ***
+*** Changes prior to 0.4.7a not listed in this document. ***
