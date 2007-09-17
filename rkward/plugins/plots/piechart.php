@@ -17,13 +17,13 @@ function preview () {
 
 function doPrintout ($final) {
 	$vars = getRK_val ("x");
-	$names = getRK_val ("names");
 	$tabulate= getRK_val ("tabulate")=="TRUE";
 	$radius = getRK_val ("radius");
 	$angle = getRK_val ("angle");
 	$density = getRK_val ("density");
 	$col = getRK_val ("colors");
 	$clockwise = getRK_val ("clockwise");
+	$names_mode = getRK_val ("names_mode");
 
 	$options = "";
 	$options .= ", clockwise =" . $clockwise;
@@ -54,8 +54,13 @@ rk.graph.on ()
 <?	}
 ?>
 try ({
-<?	if (!empty ($plotpre)) printIndented ("\t", $plotpre); ?>
-	names (x) <- <? echo ($names); ?>;
+<?	if (!empty ($plotpre)) printIndented ("\t", $plotpre);
+	if ($names_mode == "rexp") {
+		echo ("\tnames(x) <- " . getRK_val ("names_exp") . "\n");
+	} else if ($names_mode == "custom") {
+		echo ("\tnames(x) <- c (\"" . str_replace (";", "\", \"", trim (getRK_val ("names_custom"))) . "\")\n");
+	}
+?>
 	pie(x<? echo ($options); ?>)
 <?	if (!empty ($plotpost)) printIndented ("\t", $plotpost); ?>
 })

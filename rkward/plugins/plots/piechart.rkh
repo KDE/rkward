@@ -11,11 +11,10 @@ Choose a matrix, vector or a factor to be plotted. Further options are available
 	<settings>
 		<caption id="tab_variables"/>
 		<setting id="x">Matrix, vector or a factor. Data needs to be numeric unless the tabulate option is checked, below.</setting>
-		<setting id="names">Defines the names for the data. You can use the data set as input or enter names (must be type "string" in this case).
-	</setting>
 		<setting id="tabulate">Use tabulate option mainly for factor variables or wherever else applicable.</setting>
 		<caption id="tab_options"/>
 		<setting id="colors">Type of colors to use.</setting>
+		<setting id="names_mode">Method for assigning labels to the plot. "default" means, the labels are chosen automatically. If no labels are available, this will generally print the values. The other options allow you to specify the labels as literal string, or as an R statement (e.g. if the names are stored in a different variable in the workspace).</setting>
 		<setting id="radius">Radius of the pie. For long labels it may be necessary to make the pie smaller than the default.</setting>
 		<setting id="angle">Slope of shading lines, given as an angle in degrees (counter-clockwise).</setting>
 		<setting id="density">Density of shading lines (lines per inch). The default value of NULL means no shading lines are drawn. Negative values also inhibit the drawing of shading lines.</setting>
