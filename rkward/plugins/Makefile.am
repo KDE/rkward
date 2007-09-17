@@ -47,12 +47,12 @@ dist_pluginsXplots_DATA = \
 	plots/pareto.php \
 	plots/pareto.xml \
 	plots/pareto.rkh \
-	plots/barplot_options.xml \
+	plots/barplot_embed.xml \
 	plots/histogram_options.php \
 	plots/histogram_options.rkh \
 	plots/histogram_options.xml \
-	plots/barplot_options.rkh \
-	plots/barplot_options.php \
+	plots/barplot_embed.rkh \
+	plots/barplot_embed.php \
 	plots/stem.rkh \
 	plots/stem.xml \
 	plots/stem.php \
