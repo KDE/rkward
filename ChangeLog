@@ -2,6 +2,7 @@
 - silence some GCC 4.2 warnings
 - fixed: crash when editing a data.frame with logicals (logicals are still mishandled, but less severe)
 - fixed: would not work with R 2.6
+- new translation: Simplified Chinese (contributed by Roy Qu)
 - more compilation fixes for GCC 4.3
 - object viewer also shows summary information, gains an update button, and MDI integration
 - CLT plugins allow drawing grid
