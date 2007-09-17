@@ -27,7 +27,7 @@ function doPrintout ($final) {
 
 	$options = "";
 	$options .= ", clockwise =" . $clockwise;
-	$options .= ", density =" . $density;
+	if ($density >= 0) $options .= ", density =" . $density;
 	$options .= ", angle =" . $angle;
 	if ($radius != 0.8) $options .= ", radius=" . $radius;
 	if ($col == "rainbow") $options .= ", col=rainbow (if(is.matrix(x)) dim(x) else length(x))";
