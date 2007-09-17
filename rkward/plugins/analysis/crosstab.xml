@@ -11,7 +11,7 @@
 		<convert id="montecarlo" mode="equals" sources="simpv.string" standard="TRUE" />
 		<connect client="B.enabled" governor="montecarlo" />
 	</logic>
-	<dialog label="Crosstabs" >
+	<dialog label="N to 1 Crosstabulation" >
 		<tabbook>
 			<tab label="Variables" id="variables_tab">
 				<row>

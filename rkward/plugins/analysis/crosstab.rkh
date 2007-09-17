@@ -6,6 +6,8 @@ Calculate two dimensional contingency tables for the count of occurrences of val
 
 	<usage>
 Specify the "dependent" variable. This variable will be present in all created tables. Specify one or more "independent" variables. Each of these will be cross-tabulated against the "dependent" variable. "Dependent" and "Independent", here, does not imply any inferential statistics. In each table, the occurrence of combinations of values in the "dependent" and "independent" variable is counted.
+
+For complete crosstabulation of three or more variables against each other (into a single table), use <link href="rkward://component/crosstab_multi"/>.
 	</usage>
 
 	<settings>
@@ -25,6 +27,7 @@ Specify the "dependent" variable. This variable will be present in all created t
 	</settings>
 	<related>
 		<ul>
+			<li><link href="rkward://component/crosstab_multi"/></li>
 			<li><link href="rkward://component/barplot"/></li>
 			<li><link href="rkward://rhelp/table"/></li>
 			<li><link href="rkward://rhelp/chisq.test"/></li>

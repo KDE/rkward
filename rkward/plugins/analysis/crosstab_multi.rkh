@@ -1,19 +1,21 @@
 <!DOCTYPE rkhelp>
 <document>
 	<summary>
-Multiple Crosstabulation where all the variables are crosstabulated with all the others.
+Multiple crosstabulation where all the variables are crosstabulated with all the others.
 	</summary>
 
 	<usage>
 Choose one or more objects to be crosstabulated.
+
+For the case of two variables, or when the occurrences of values should be counted only for one "dependent" variable, <link href="rkward://component/crosstab"/> may be more appropriate, and offers more options.
 	</usage>
 
 	<settings>
-		<caption id="tab_variables"/>
-		<setting id="x">Select a data frame or more than one variables from a data frame or with the same length </setting>		
+		<setting id="x">Select a data frame or more than one variables from a data frame or with the same length</setting>
 	</settings>
 	<related>
 		<ul>
+			<li><link href="rkward://component/crosstab"/></li>
 			<li><link href="rkward://rhelp/ftable"/></li>
 		</ul>
 	</related>

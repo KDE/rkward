@@ -13,9 +13,9 @@
 - some complex plotting plugins now start up noticeably faster
 - fixed: sometimes detecting created X11() windows would fail, esp. under high load
 - create the workspace browser only when it is first shown
-- support for including files and snippets in xml files		TODO: use more
+- support for including files and snippets in xml files
 - all file selection line edits gain filename-completion
-- add a basic file selector window				TODO: add window activation shortcut
+- add a basic file selector window
 - show the focus indication (thin red border) also for detached windows
 - tool windows can be closed and detached in the same way as regular windows
 - fix a crash with detached tool windows

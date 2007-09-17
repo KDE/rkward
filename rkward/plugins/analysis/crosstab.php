@@ -46,7 +46,7 @@ function preview () {
 function doPrintout ($final) {
 	if ($final) { ?>
 for (i in 1:length (results)) {
-	rk.header ("Crosstabs", parameters=list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']]))
+	rk.header ("Crosstabs (n to 1)", parameters=list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']]))
 	rk.print (xtable (cbind (results[[i]]), digits=0))
 <?		if (getRK_val ("chisq") == "TRUE") { ?>
 
