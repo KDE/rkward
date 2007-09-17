@@ -31,7 +31,7 @@ class KFileItem;
 class RKFileBrowser : public RKMDIWindow {
 	Q_OBJECT
 public:
-	RKFileBrowser (QWidget *parent, bool tool_window, char *name=0);
+	RKFileBrowser (QWidget *parent, bool tool_window, const char *name=0);
 	~RKFileBrowser ();
 
 /** reimplemented to create the real file browser widget only when the file browser is shown for the first time */

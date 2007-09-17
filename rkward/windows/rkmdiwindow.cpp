@@ -28,7 +28,7 @@
 
 #include "../debug.h"
 
-RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, char *name) : QFrame (parent, name) {
+RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const char *name) : QFrame (parent, name) {
 	RK_TRACE (APP);
 
 	if (tool_window) {

@@ -47,7 +47,7 @@
 // static
 RObjectBrowser* RObjectBrowser::object_browser = 0;
 
-RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, WorkspaceBrowserWindow, tool_window, name) {
+RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, WorkspaceBrowserWindow, tool_window, name) {
 	RK_TRACE (APP);
 
 	internal = 0;

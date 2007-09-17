@@ -57,7 +57,7 @@ protected:
 /** constructor
 @param parent parent widget
 @param type Type of window (see RKMDIWindow::Type).*/
-	RKMDIWindow (QWidget *parent, int type, bool tool_window=false, char *name=0);
+	RKMDIWindow (QWidget *parent, int type, bool tool_window=false, const char *name=0);
 	virtual ~RKMDIWindow ();
 public:
 /** @returns true, if the window's document was modified (and would need to be saved) */

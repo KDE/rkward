@@ -42,7 +42,7 @@ Note: Most actual functionality is realized in RObjectBrowserInternal, which is 
 */
 class RObjectBrowser : public RKMDIWindow {
 public:
-	RObjectBrowser (QWidget *parent, bool tool_window, char *name=0);
+	RObjectBrowser (QWidget *parent, bool tool_window, const char *name=0);
 	~RObjectBrowser ();
 	void unlock ();
 	static RObjectBrowser *mainBrowser () { return object_browser; };

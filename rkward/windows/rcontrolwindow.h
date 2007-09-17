@@ -52,7 +52,7 @@ class RControlWindow : public RKMDIWindow {
 public:
 /** constructor.
 @param parent parent QWidget, usually RKGlobals::rkApp () or similar */
-	RControlWindow (QWidget *parent, bool tool_window, char *name=0);
+	RControlWindow (QWidget *parent, bool tool_window, const char *name=0);
 /** destructor */
 	~RControlWindow ();
 /** Add new chain to the RControlWindow. Has no effect unless RControlWindow::isShown () */

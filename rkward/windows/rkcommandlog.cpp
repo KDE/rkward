@@ -40,7 +40,7 @@
 //static
 RKCommandLog *RKCommandLog::rkcommand_log = 0;
 
-RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, CommandLogWindow, tool_window, name) {
+RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, CommandLogWindow, tool_window, name) {
 	RK_TRACE (APP);
 
 	log_view = new RKCommandLogView (this);

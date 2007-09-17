@@ -51,7 +51,7 @@ class RKConsole : public RKMDIWindow, public RCommandReceiver, public RKScriptCo
 Q_OBJECT
 public:
 /** Constructor. */
-	RKConsole (QWidget *parent, bool tool_window, char *name=0);
+	RKConsole (QWidget *parent, bool tool_window, const char *name=0);
 /** Destructor */
 	~RKConsole ();
 

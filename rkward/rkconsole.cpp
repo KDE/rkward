@@ -49,7 +49,7 @@
 // static
 RKConsole* RKConsole::main_console = 0;
 
-RKConsole::RKConsole (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, RKMDIWindow::ConsoleWindow, tool_window, name) {
+RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, RKMDIWindow::ConsoleWindow, tool_window, name) {
 	RK_TRACE (APP);
 
 	QVBoxLayout *layout = new QVBoxLayout (this);

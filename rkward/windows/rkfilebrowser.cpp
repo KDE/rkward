@@ -37,7 +37,7 @@
 // static
 RKFileBrowser *RKFileBrowser::main_browser = 0;
 
-RKFileBrowser::RKFileBrowser (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, FileBrowserWindow, tool_window, name) {
+RKFileBrowser::RKFileBrowser (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, FileBrowserWindow, tool_window, name) {
 	RK_TRACE (APP);
 
 	real_widget = 0;
