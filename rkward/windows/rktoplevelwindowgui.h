@@ -45,6 +45,8 @@ public slots:
 	void togglePendingJobs ();
 	/** Toggle the workspace browser window */
 	void toggleWorkspace ();
+	/** Toggle the filesystem browser window */
+	void toggleFilebrowser ();
 	/** Activate the current (non tools) window in the workspace */
 	void activateDocumentView ();
 	/** ensure output window is shown. */

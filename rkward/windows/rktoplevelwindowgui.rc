@@ -8,6 +8,7 @@
 			<Separator/>
 			<Menu name="window_activate"><text>&amp;Activate</text>
 				<Action name="window_show_workspace"/>
+				<Action name="window_show_filebrowser"/>
 				<Action name="window_show_commandlog"/>
 				<Action name="window_show_pendingjobs"/>
 				<Action name="window_show_console"/>

@@ -36,11 +36,14 @@ public:
 
 /** reimplemented to create the real file browser widget only when the file browser is shown for the first time */
 	void show ();
+	static RKFileBrowser *getMainBrowser() { return main_browser; };
 public slots:
 	void currentWDChanged ();
 private:
 	RKFileBrowserWidget *real_widget;
 	QVBox *layout_widget;
+friend class RKWardMainWindow;
+	static RKFileBrowser *main_browser;
 };
 
 /** The internal widget used in RKFileBrowser 

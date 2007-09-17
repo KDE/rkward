@@ -34,6 +34,9 @@
 
 #include "../debug.h"
 
+// static
+RKFileBrowser *RKFileBrowser::main_browser = 0;
+
 RKFileBrowser::RKFileBrowser (QWidget *parent, bool tool_window, char *name) : RKMDIWindow (parent, FileBrowserWindow, tool_window, name) {
 	RK_TRACE (APP);
 

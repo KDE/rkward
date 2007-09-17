@@ -23,6 +23,7 @@
 
 #include "../rkconsole.h"
 #include "../robjectbrowser.h"
+#include "../windows/rkfilebrowser.h"
 #include "../windows/rcontrolwindow.h"
 #include "../windows/rkhtmlwindow.h"
 #include "../windows/rkworkplaceview.h"
@@ -59,10 +60,11 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : QObject (for_wi
 
 	// window menu
 	new KAction (i18n ("Show/Hide Workspace Browser"), 0, KShortcut ("Alt+1"), this, SLOT (toggleWorkspace()), actionCollection (), "window_show_workspace");
-	new KAction (i18n ("Show/Hide Command Log"), 0, KShortcut ("Alt+2"), this, SLOT (toggleCommandLog()), actionCollection (), "window_show_commandlog");
-	new KAction (i18n ("Show/Hide Pending Jobs"), 0, KShortcut ("Alt+3"), this, SLOT (togglePendingJobs()), actionCollection (), "window_show_pendingjobs");
-	new KAction (i18n ("Show/Hide Console"), 0, KShortcut ("Alt+4"), this, SLOT (toggleConsole()), actionCollection (), "window_show_console");
-	new KAction (i18n ("Show/Hide R Help Search"), 0, KShortcut ("Alt+5"), this, SLOT (toggleHelpSearch()), actionCollection (), "window_show_helpsearch");
+	new KAction (i18n ("Show/Hide Filesystem Browser"), 0, KShortcut ("Alt+2"), this, SLOT (toggleFilebrowser()), actionCollection (), "window_show_filebrowser");
+	new KAction (i18n ("Show/Hide Command Log"), 0, KShortcut ("Alt+3"), this, SLOT (toggleCommandLog()), actionCollection (), "window_show_commandlog");
+	new KAction (i18n ("Show/Hide Pending Jobs"), 0, KShortcut ("Alt+4"), this, SLOT (togglePendingJobs()), actionCollection (), "window_show_pendingjobs");
+	new KAction (i18n ("Show/Hide Console"), 0, KShortcut ("Alt+5"), this, SLOT (toggleConsole()), actionCollection (), "window_show_console");
+	new KAction (i18n ("Show/Hide R Help Search"), 0, KShortcut ("Alt+6"), this, SLOT (toggleHelpSearch()), actionCollection (), "window_show_helpsearch");
 	new KAction (i18n ("Activate Document view"), 0, KShortcut ("Alt+0"), this, SLOT (activateDocumentView()), actionCollection (), "window_activate_docview");
 
 	new KAction (i18n ("Show &Output"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
@@ -149,6 +151,12 @@ void RKTopLevelWindowGUI::toggleWorkspace () {
 	RK_TRACE (APP);
 
 	toggleToolView (RObjectBrowser::mainBrowser ());
+}
+
+void RKTopLevelWindowGUI::toggleFilebrowser () {
+	RK_TRACE (APP);
+
+	toggleToolView (RKFileBrowser::getMainBrowser ());
 }
 
 void RKTopLevelWindowGUI::activateDocumentView () {
