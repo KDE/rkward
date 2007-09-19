@@ -4,6 +4,7 @@ rkward (0.4.7a-2) unstable; urgency=low
     closes: #432377
   * merge upstream fix for R 2.6
     closes: #442059
+  * changed distclean rule in debian/rules to only ignore missing Makefiles 
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Fri, 14 Sep 2007 13:30:00 +0200
 
