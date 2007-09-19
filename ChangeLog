@@ -1,3 +1,4 @@
+- make wrapper script work, when konsole is not installed
 - correct syntax highlighting for ::: and NA_integer_ and others
 - silence some GCC 4.2 warnings
 - fixed: crash when editing a data.frame with logicals (logicals are still mishandled, but less severe)
@@ -24,7 +25,7 @@
 - the modifier "not" for boolean properties returns a (negated) boolean sub-propery instead of just a string
 - add possibility to blacklist packages from fetching structure information. Package GO is blacklisted by default.
 - when fetching the structure of "promise" R objects, don't keep them in memory
-- optimize the function to retrieve the structure of R object (for display in the object browser, and completion)
+- optimize the function to retrieve the structure of R objects (for display in the object browser, and completion)
 - Messages, warnings, and errors for plugin commands are shown in the output, instead of in a dialog
 
 --- Version 0.4.7a - May-07-2007

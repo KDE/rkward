@@ -6,8 +6,18 @@
 if tty -s; then
   :
 else
-  konsole -e $0 "$@"
-  exit
+  # not on a tty? Try to invoke a suitable xterm
+  if [ -z $RKWARD_NORECURSE ]; then
+    for xtrm in konsole x-terminal-emulator xterm
+    do
+      xtrmc=`which $xtrm`
+      if [ ! -z $xtrmc -a -x $xtrmc ]; then
+        RKWARD_NORECURSE=y $xtrmc -e $0 "$@"
+        exit
+      fi
+    done
+    exit
+  fi
 fi
 
 R_HOME_DIR=###R_HOME_DIR###
