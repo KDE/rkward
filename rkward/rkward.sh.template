@@ -16,7 +16,6 @@ else
         exit
       fi
     done
-    exit
   fi
 fi
 
