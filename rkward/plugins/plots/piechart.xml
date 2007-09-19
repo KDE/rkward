@@ -14,6 +14,10 @@
 		<connect client="names_custom.enabled" governor="custom_names"/>
 		<connect client="names_exp.visible" governor="rexp_names"/>
 		<connect client="names_exp.required" governor="rexp_names"/>
+
+		<convert id="density_0" mode="range" sources="density.real;density_inc.real" max="0"/>
+		<connect client="angle.enabled" governor="density_0.not"/>
+		<connect client="angle_inc.enabled" governor="density_0.not"/>
 	</logic>
 	<dialog label="Pie chart" >
 		<tabbook>
@@ -47,9 +51,16 @@
 				</row>
 				<checkbox id="clockwise" label="clockwise" value="TRUE" value_unchecked="FALSE" checked="false" />
 				<spinbox id="radius" type="real" min="0.01" max="1" initial="0.8" label="Radius"/>
-<!-- TODO: density and angle are a bit pointless, when given as a single option. Rather those should allow to enter/specify a vector! -->
-				<spinbox id="density" type="real" min="-1" max="10000" initial="-1" label="density" default_precision="0"/>
-				<spinbox id="angle" type="real" min="0" initial="45" max="360" label="angle"/>
+				<frame label="Shading">
+					<row>
+						<spinbox id="density" type="real" min="-1" max="10000" initial="-1" label="density" default_precision="0"/>
+						<spinbox id="density_inc" type="real" min="-10000" initial="0" max="10000" default_precision="0" label="increment in density"/>
+					</row>
+					<row>
+						<spinbox id="angle" type="real" min="0" initial="45" max="360" label="angle" default_precision="0"/>
+						<spinbox id="angle_inc" type="real" min="-360" initial="0" max="360" default_precision="0" label="increment in angle"/>
+					</row>
+				</frame>
 				<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options"/>
 			</tab>
 		</tabbook>
