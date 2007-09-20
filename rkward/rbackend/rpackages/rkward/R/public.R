@@ -29,13 +29,14 @@
 }
 
 # make a short name from the given arg (a character string)
+# e.g. return "b" for a[["b"]] (but 'a::"b"' for a::"b"
 ".rk.make.short.name" <- function (x) {
-	splt <- strsplit (x, "\"")[[1]]
+	splt <- strsplit (x, "[[\"", fixed=TRUE)[[1]]
 	spltlen <- length (splt)
 	if (spltlen == 1) {
 		splt[1]
 	} else {
-		splt[spltlen - 1]
+		strsplit (splt[spltlen], "\"]]", fixed=TRUE)[[1]][1]
 	}
 }
 
