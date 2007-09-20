@@ -19,6 +19,7 @@
 	</settings>
 	<related>
 		<ul>
+			<li><link href="rkward://component/Box_test"/></li>
 			<li><link href="rkward://rhelp/kpss.test"/></li>
 		</ul>
 	</related>
