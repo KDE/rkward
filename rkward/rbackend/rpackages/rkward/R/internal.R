@@ -191,7 +191,8 @@
 
 ".rk.watch.symbol" <- function (k) {
 	f <- .rk.make.watch.f (k)
-	assign (k, get (k, envir=globalenv ()), envir=.rk.watched.symbols)
+	.Call ("rk.copy.no.eval", k, globalenv(), .rk.watched.symbols);
+	#assign (k, get (k, envir=globalenv ()), envir=.rk.watched.symbols)
 	rm (list=k, envir=globalenv ())
 
 	base::makeActiveBinding (k, f, globalenv ())
