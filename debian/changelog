@@ -1,3 +1,11 @@
+rkward (0.4.8-1) unstable; urgency=low
+
+  * new upstream release
+    closes: #417519 			TODO: check that it really still does, before uploading
+  * adjust rkward.menu to new naming policy
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Xxx, XX Xxx 2007 13:30:00 +0200
+
 rkward (0.4.7a-2) unstable; urgency=low
 
   * force gcc 4.2 to match r-base-core
