@@ -12,6 +12,7 @@ Choose a matrix, vector or a factor to be plotted. Further options are available
 		<caption id="tab_variables"/>
 		<setting id="x">Select a data matrix, a vector or a factor to be plotted.</setting>
 		<setting id="tabulate">Use tabulate option mainly for factor variables or wherever else applicable</setting>
+		<setting id="names_mode">Method for assigning labels to the plot. "default" means, the labels are chosen automatically. If no labels are available, this will generally print the values. The other options allow you to specify the labels as literal string, or as an R statement (e.g. if the names are stored in a different variable in the workspace).</setting>
 		<caption id="tab_options"/>
 		<setting id="barplot_embed" title="Barplot Options">Since these settings are reused in further plugins, they are documented on a page of their own: See <link href="rkward://component/barplot_embed"/>.</setting>
 	</settings>
