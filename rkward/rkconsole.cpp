@@ -824,7 +824,13 @@ void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 	} else {
 		QString command_string = command->command ();
 		QString text = command_string;
-		text.replace ("\n", QString ("\n") + iprefix);
+		if (RKSettingsModuleConsole::addPipedCommandsToHistory()) {
+			QStringList lines = QStringList::split ('\n', text);
+			for (QStringList::const_iterator it = lines.constBegin (); it != lines.constEnd (); ++it) {
+				addCommandToHistory (*it);
+			}
+		}
+		text.replace ('\n', QString ("\n") + iprefix);
 		doc->insertText (doc->numLines () - 1, QString (nprefix).length (), text + '\n');
 		command->addReceiver (this);
 		command->addTypeFlag (RCommand::Console);
