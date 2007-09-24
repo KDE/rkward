@@ -21,9 +21,9 @@ function doPrintout ($final) {
 	$tabulate = getRK_val ("tabulate");
 
 	if ($tabulate) {
-		$tabulate_header = '"Tabulate:", "No"';
+		$tabulate_header = '"Tabulate", "Yes"';
 	} else {
-		$tabulate_header = '"Tabulate:", "Yes"';
+		$tabulate_header = '"Tabulate", "No"';
 	}
 
 	$barplot_header = getRK_val ("barplot_embed.code.preprocess");
@@ -46,7 +46,7 @@ if(!is.matrix(x)) x <- as.vector(x)
 	}
 
 	if ($final) { ?>
-rk.header ("Barplot", parameters=list (<? echo ($tabulate_header . $barplot_header); ?>))
+rk.header ("Barplot", list ("Variable", rk.get.description (<? echo ($var); ?>)), parameters=list (<? echo ($tabulate_header . $barplot_header); ?>))
 
 rk.graph.on ()
 <?	}
