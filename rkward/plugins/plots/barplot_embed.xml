@@ -16,8 +16,8 @@
 	<dialog label="Barplot Options">
 		<checkbox id="legend" label="Draw Legend" value="1" value_unchecked="0" checked="false"/>
 		<radio id="colors" label="Colors" >
-			<option value="default" label="Default (grayscale)"/>
-			<option value="rainbow" label="Rainbow colors" checked="true"/>
+			<option value="default" label="Default (grayscale)" checked="true" />
+			<option value="rainbow" label="Rainbow colors" />
 		</radio>
 		<radio id="type" label="Type" >
 			<option value="juxtaposed" label="Juxtaposed" checked="true"/>
