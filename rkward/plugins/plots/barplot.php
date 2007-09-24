@@ -46,7 +46,7 @@ if(!is.matrix(x)) x <- as.vector(x)
 	}
 
 	if ($final) { ?>
-rk.header ("Barplot", list ("Variable", rk.get.description (<? echo ($var); ?>)), parameters=list (<? echo ($tabulate_header . $barplot_header); ?>))
+rk.header ("Barplot", parameters=list ("Variable", rk.get.description (<? echo ($var); ?>), <? echo ($tabulate_header . $barplot_header); ?>))
 
 rk.graph.on ()
 <?	}
