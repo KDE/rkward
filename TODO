@@ -32,8 +32,12 @@ Compilation / technical
 
 UI-stuff
 	- find/create a set of menu icons (https://sourceforge.net/mailarchive/message.php?msg_id=37891606)
-	"First-run wizard"
+	- "First-run wizard"
 		- pre-install R packages
+	- Snippets library
+		- pre-defined snippets to base scripts on
+		- custom snippets
+		- can be categorized by keywords / search
 	- Check for existence of php binary on startup, not only when loading a plugin
 	- RKEditorDataFrame
 		- undo/redo
@@ -70,6 +74,7 @@ UI-stuff
 		- Allow pasting at other positions than line end
 		- Prevent cursor from venturing into lines other than the last line
 		- When inside a string, should offer tab-completion for system paths (will maybe have to wait for KDE4, when we get better clues, what context we are currently in)
+		- Allow multi-line command editing?
 	- Script editor:
 		- new action "Run Toplevel expression" (see https://sourceforge.net/mailarchive/forum.php?thread_id=31463482&forum_id=12970)
 		- new action "Source file"
