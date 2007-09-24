@@ -40,9 +40,9 @@ if(!is.matrix(x)) x <- as.vector(x)
 <?	}
 
 	if ($names_mode == "rexp") {
-		echo ("\tnames(x) <- " . getRK_val ("names_exp") . "\n");
+		echo ("names(x) <- " . getRK_val ("names_exp") . "\n");
 	} else if ($names_mode == "custom") {
-		echo ("\tnames(x) <- c (\"" . str_replace (";", "\", \"", trim (getRK_val ("names_custom"))) . "\")\n");
+		echo ("names(x) <- c (\"" . str_replace (";", "\", \"", trim (getRK_val ("names_custom"))) . "\")\n");
 	}
 
 	if ($final) { ?>
