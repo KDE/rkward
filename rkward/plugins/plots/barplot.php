@@ -34,15 +34,16 @@ x <- <? echo ($var . "\n"); ?>
 <?
 	if ($tabulate) { ?>
 x <- table(x, exclude=NULL)
-<?if ($names_mode == "rexp") {
-		echo ("\tnames(x) <- " . getRK_val ("names_exp") . "\n");
-	} else if ($names_mode == "custom") {
-		echo ("\tnames(x) <- c (\"" . str_replace (";", "\", \"", trim (getRK_val ("names_custom"))) . "\")\n");
-	} ?>
 <?      } else { ?>
 # barplot is a bit picky about attributes, so we need to convert to vector explicitely
 if(!is.matrix(x)) x <- as.vector(x)
-<? }
+<?	}
+
+	if ($names_mode == "rexp") {
+		echo ("\tnames(x) <- " . getRK_val ("names_exp") . "\n");
+	} else if ($names_mode == "custom") {
+		echo ("\tnames(x) <- c (\"" . str_replace (";", "\", \"", trim (getRK_val ("names_custom"))) . "\")\n");
+	}
 
 	if ($final) { ?>
 rk.header ("Barplot", parameters=list (<? echo ($tabulate_header . $barplot_header); ?>))
