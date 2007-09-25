@@ -17,7 +17,12 @@ function preview () {
 
 function doPrintout ($final) {
 	$vars = getRK_val ("x");
-	$tabulate= getRK_val ("tabulate")=="TRUE";
+	$tabulate= getRK_val ("tabulate");
+	if ($tabulate) {
+		$tabulate_header = '"Tabulate", "Yes"';
+	} else {
+		$tabulate_header = '"Tabulate", "No"';
+	}
 	$radius = getRK_val ("radius");
 	$angle = getRK_val ("angle");
 	$angle_inc = getRK_val ("angle_inc");
@@ -25,6 +30,11 @@ function doPrintout ($final) {
 	$density_inc = getRK_val ("density_inc");
 	$col = getRK_val ("colors");
 	$clockwise = getRK_val ("clockwise");
+	if ($clockwise) {
+		$clockwise_header = '"Clockwise", "Yes"';
+	} else {
+		$clockwise_header = '"Clockwise", "No"';
+	}
 	$names_mode = getRK_val ("names_mode");
 
 	$options = "";
@@ -54,7 +64,7 @@ if (!is.numeric (x)) {
 <?      } ?>
 
 <?	if ($final) { ?>
-rk.header ("Pie chart", list ("Variable", rk.get.description (<? echo ($vars); ?>)))
+rk.header ("Pie chart", parameters=list ("Variable", rk.get.description (<? echo ($vars); ?>), <? echo ($tabulate_header); ?>, <? echo ($clockwise_header); ?>))
 
 rk.graph.on ()
 <?	}
