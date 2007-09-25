@@ -11,7 +11,7 @@ If you have previously used different statistics tools, you may be accustomed to
 
 R - and hence RKWard - can deal with a large number of different types of data: The well known spreadsheets, but also single vectors of data (like a column in a spreadsheet), so called "list"s of different vectors or other objects that may have different lengths, single data points, etc. Even most of the language itself, the functions, are stored just like data and can also be edited.
 
-At the same time, R is not confined to working with just one piece of data at a time, but rather you have a "Workspace", where all your different variables, tables, etc. are accessible. You can have many data.frames at once, and additional data of other types. At the left side of the application window, there should be an icon labelled "Workspace". You can click on this to see all the objects present in your workspace. All the objects you create or modify will be visible inside the ".GlobalEnv". Most other objects are predefined in libraries, such as "package:base".
+At the same time, R is not confined to working with just one piece of data at a time, but rather you have a "Workspace", where all your different variables, tables, etc. are accessible. You can have many data.frames at once, and additional data of other types. At the left side of the application window, there should be an icon labelled "Workspace". You can click on this to see all the objects present in your workspace. All the objects you create or modify will be visible inside the ".GlobalEnv". Most other objects are predefined in libraries, such as "package:base". See <link href="rkward://page/rkward_workspace_browser"/> for details.
 
 You do not need to worry about all these details. To create a new spreadsheet (data.frame), chose File->New->Dataset from the menu. All you need to do is to assign a name to this table, then you can start editing. To work with pre-existing data, chose File->Import->Load data, to load data in CSV (comma separated value) format.
 	</section>
@@ -42,6 +42,7 @@ Also, you may want to select Help->Help on R from the menu for some starting poi
 	<li><link href="rkward://page/rkward_shortcuts"/></li>
 	<li><link href="rkward://page/rkward_trouble_shooting"/></li>
 	<li><link href="rkward://page/rkward_output"/></li>
+	<li><link href="rkward://page/rkward_workspace_browser"/></li>
 </ul>
 	</related>
 </document>

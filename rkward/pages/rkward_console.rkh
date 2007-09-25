@@ -59,6 +59,7 @@ To configure the behavior of the console, select "Configure" from the context me
 	<li><b>Maximum length command history</b>: Only this many lines are kept in the <link href="#command_history">command history</link>.</li>
 	<li><b>Maximum number of paragraphs/lines to display in the console</b>: No more than this many total lines (commands and output) will be shown in the console. When this number of lines is exceeded, lines will be removed at the top of the console window. To clear the console entirely, chose "Clear" from the context menu or the Edit menu.</li>
 	<li><b>Run commands from script editor throught the console</b>: Commands coming from script editors may be sent through the console, i.e. the commands and their results will be shown in the console. If this option is not checked, the commands will only be visible in the Command log, but not in the console.</li>
+	<li><b>Also add those commands to console history</b>: If the above option is checked, this affects, whether such commands are also added to the console history. Turning off this option may help to keep the console history "clean".</li>
 	<li><b>Command history is context sensitive by default</b>: If this is checked, the context sensitive mode of navigating the <link href="#command_history">command history</link> is the default, i.e. available with Up/Down without Shift. Else the key binding for this is Shift+Up/Down.</li>
 </ul>
 	</section>
