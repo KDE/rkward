@@ -53,6 +53,8 @@ public:
 	static bool isSettingActive (RKObjectListViewSettings::Settings setting);
 
 	static bool isPackageBlacklisted (const QString &package_name);
+
+	QString helpURL () { return ("rkward://page/rkward_workspace_browser#settings"); };
 public slots:
 /** called when a checkbox has been changed. Signals change to RKSettings dialog to enable apply button */
 	void boxChanged (int);

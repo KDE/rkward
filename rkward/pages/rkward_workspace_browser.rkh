@@ -38,4 +38,16 @@
 		<li><b>Rename / Delete</b>: These should be obvious.</li>
 	</ul>
 	</section>
+
+	<section title="Configurable Settings" id="settings">
+	Some default settings for the Workspace Browser can be configured using Settings->Configure RKWard->Workspace, or by selecting "Configure Defaults" from the context menu:
+
+	<ul>
+		<li><b>Show hidden objects / show all environments</b>: See <link href="#introduction">above</link>. In contrast to the settings made directly in the workspace browser, these configure the <i>default</i> settings in the workspace browser (i.e. those that are effectively after restarting RKWard).</li>
+		<li><b>Show objects with children</b>: Controls whether objects with children (such as environments, lists) are shown, even if they do not correspond to the current filter.</li>
+		<li><b>Show variables / functions</b>: Equivalent to the "All vs. Non-Function vs. Functions" control described <link href="#introduction">above</link>.</li>
+		<li><b>Label field / Type field / Class field</b>: Which columns are shown for each object?</li>
+		<li><b>Never fetch the structure of these packages</b>: Some (few) R packages contain <b>very</b> many small objects (tens of thousands). In the worst case, trying to fetch structure information on those (i.e. fetching the information to be shown in the workspace browser) can consume a lot of resources and make RKWard unresponsive. Package "GO" is one such package, and is "blacklisted" by default. If you note that loading a package takes exceedingly long, you may consider adding it to this list.</li>
+	</ul>
+	</section>
 </document>
