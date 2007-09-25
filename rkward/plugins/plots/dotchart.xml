@@ -38,7 +38,7 @@
 			</tab>
 			<tab label="Options" id="tab_options">
 				<stretch/>
-				<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options"/>
+				<embed id="plotoptions" component="rkward::plot_options" as_button="flase" label="Plot Options"/>
 			</tab>
 		</tabbook>
 	</dialog>
