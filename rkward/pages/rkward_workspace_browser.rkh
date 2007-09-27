@@ -1,0 +1,53 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>Workspace Browser</title>
+
+	<summary>
+	The workspace browser allows to view and manipulate R objects. This includes both your own objects (data, functions), and so-called "package environments". As a rough analogy, this is similar to a regular file-system browser, expect you browser R objects in your workspace, instead of files on your computer.
+
+	The workspace browser can be invoked using Windows->Activate->Show / Hide Workspace Browser (default shortcut is Alt+1), or by clicking on the "Workspace" icon, which is located on the top of the left window border, by default.
+	</summary>
+
+	<section title="What is shown" id="introduction">
+	Literally hundreds or even thousands of objects are present in a typical R session. This can be overwhelming at first, therefore the workspace browser offers to show only a certain subset of objects. The options here are "Show Hidden Objects", "All vs. Non-Functions vs. Functions", and "Show All Environments" (available at the top of the browser window, or chosing "Show Objects" from the context menu).
+
+	The first should be obvious. It controls whether objects whose name start with a dot ('.') are shown or not. Those are often used for internal objects, which are not meant for direct use, so it's generally safe to hide them from view.
+
+	The second allows to select by the type of object. "All" does not filter, while "Functions" shows only functions, and "Non-Functions" shows all other objects (typically data).
+
+	The "Show All Environments" option controls, whether package environments and their objects are shown. Roughly speaking, if you turn off this option, only your "own" objects are shown, while with the option turned on, all pre-defined objects are also shown. More technically speaking, when the option is turned off, only the .GlobalEnv (see <link href="rkward://rhelp/globalenv"/>) is shown, which is the environment, in which you create and edit your data.
+
+	Note that objects are organized in a hierarchy, i.e. some types of objects contain further "child" objects. This is indicated by a "+" symbol to the left of the object name. Clicking on this will expand the view to show all the children of the object.
+
+	Hovering the mouse pointer over an object will show a short summary of the objects' basic properties.
+	</section>
+
+	<section title="Available actions" id="actions">
+	Several actions are available from the context menu (by right-clicking on one of the objects), however some of these actions are only available for some types of objects. The most important actions for objects in package environments:
+
+	<ul>
+		<li><b>Search Help</b>: This will try to locate and show a relevant R help page on the object.</li>
+		<li><b>View</b>: Open a window with detailed information about the object. This will, among others, use the R commands <link href="rkward://rhelp/print">print</link> and <link href="rkward://rhelp/summary">summary</link> to show more information.</li>
+		<li><b>Copy to new symbol / Copy to .GlobalEnv</b>: In order to manipulate objects, you need to copy them to the .GlobalEnv. For instance, you could copy an object from the environment "package:datasets" into the .GlobalEnv, and in a second step, edit it.</li>
+	</ul>
+
+	Further actions available for objects in the .GlobalEnv:
+
+	<ul>
+		<li><b>Edit</b>: Open the object in a data editor. Currently editing is only supported for data.frames.</li>
+		<li><b>Rename / Delete</b>: These should be obvious.</li>
+	</ul>
+	</section>
+
+	<section title="Configurable Settings" id="settings">
+	Some default settings for the Workspace Browser can be configured using Settings->Configure RKWard->Workspace, or by selecting "Configure Defaults" from the context menu:
+
+	<ul>
+		<li><b>Show hidden objects / show all environments</b>: See <link href="#introduction">above</link>. In contrast to the settings made directly in the workspace browser, these configure the <i>default</i> settings in the workspace browser (i.e. those that are effectively after restarting RKWard).</li>
+		<li><b>Show objects with children</b>: Controls whether objects with children (such as environments, lists) are shown, even if they do not correspond to the current filter.</li>
+		<li><b>Show variables / functions</b>: Equivalent to the "All vs. Non-Function vs. Functions" control described <link href="#introduction">above</link>.</li>
+		<li><b>Label field / Type field / Class field</b>: Which columns are shown for each object?</li>
+		<li><b>Never fetch the structure of these packages</b>: Some (few) R packages contain <b>very</b> many small objects (tens of thousands). In the worst case, trying to fetch structure information on those (i.e. fetching the information to be shown in the workspace browser) can consume a lot of resources and make RKWard unresponsive. Package "GO" is one such package, and is "blacklisted" by default. If you note that loading a package takes exceedingly long, you may consider adding it to this list.</li>
+	</ul>
+	</section>
+</document>

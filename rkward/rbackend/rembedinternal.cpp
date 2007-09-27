@@ -670,6 +670,17 @@ SEXP doGetStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename
 	return R_MakeExternalPtr (ret, RKWard_RData_Tag, R_NilValue);
 }
 
+/** copy a symbol without touching it (esp. not forcing any promises) */
+SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
+	RK_TRACE (RBACKEND);
+
+	if(!isString (name) || length (name) != 1) error ("name is not a single string");
+	if(!isEnvironment (fromenv)) error ("fromenv is not an environment");
+	if(!isEnvironment (toenv)) error ("toenv is not an environment");
+	defineVar (Rf_install (CHAR (STRING_ELT (name, 0))), findVar (Rf_install (CHAR (STRING_ELT (name, 0))), fromenv), toenv);
+	return (R_NilValue);
+}
+
 bool REmbedInternal::registerFunctions (const char *library_path) {
 	RK_TRACE (RBACKEND);
 
@@ -682,6 +693,7 @@ bool REmbedInternal::registerFunctions (const char *library_path) {
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.get.structure", (DL_FUNC) &doGetStructure, 4 },
+		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 3 },
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (info, NULL, callMethods, NULL, NULL);

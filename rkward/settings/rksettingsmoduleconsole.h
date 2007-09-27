@@ -48,6 +48,7 @@ public:
 	static uint maxHistoryLength () { return max_history_length; };
 	static uint maxConsoleLines () { return max_console_lines; };
 	static bool pipeUserCommandsThroughConsole () { return pipe_user_commands_through_console; };
+	static bool addPipedCommandsToHistory () { return add_piped_commands_to_history; };
 	/** Given the button state, return whether the command history should be navigated context sensitive or insensitive
 	@param current_state the current button state
 	@returns true, if a the search should be context sensitive, false for a normal search */
@@ -66,11 +67,13 @@ private:
 	static uint max_history_length;
 	static uint max_console_lines;
 	static bool pipe_user_commands_through_console;
+	static bool add_piped_commands_to_history;
 	static bool context_sensitive_history_by_default;
 
 	QCheckBox *save_history_box;
 	QCheckBox *reverse_context_mode_box;
 	QCheckBox *pipe_user_commands_through_console_box;
+	QCheckBox *add_piped_commands_to_history_box;
 	KIntSpinBox *max_history_length_spinner;
 	KIntSpinBox *max_console_lines_spinner;
 };

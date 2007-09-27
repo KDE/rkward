@@ -1,16 +1,17 @@
-# translation of el.po to Ελληνικά
+# translation of el.po to Greek
 # Greek translation of Rkward.
 # This file is put in the public domain.
 #
 # Ilias Soumpasis <isoumpasis@gmail.com>, 2006, 2007.
+# Ilias <nono.231@gmail.com>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-19 21:39+0200\n"
-"PO-Revision-Date: 2007-04-01 21:01+0300\n"
-"Last-Translator: Ilias Soumpasis <isoumpasis@gmail.com>\n"
-"Language-Team: Ελληνικά <el@li.org>\n"
+"PO-Revision-Date: 2007-09-19 23:10+0100\n"
+"Last-Translator: Ilias <nono.231@gmail.com>\n"
+"Language-Team: Greek\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -166,8 +167,7 @@ msgid "Delete this row (%1)"
 msgstr "Διαγραφή αυτής της σειράς (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Δεν δόθηκε όνομα αρχείου. Τα δεδομένα σας δεν αποθηκεύτηκαν. Θέλετε να "
 "συνεχίσετε;"
@@ -336,8 +336,7 @@ msgid "Remove object?"
 msgstr "Αφαίρεση αντικειμένου;"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "Θέλετε πραγματικά να διαγράψετε το αντικείμενο '%1'; Δεν θα υπάρχει τρόπος "
 "να το ανακτήσετε."
@@ -412,12 +411,11 @@ msgid ""
 "Packages will typically be blacklisted, if they contain huge amount of data, "
 "that would take too long to load. To unlist the package, visit Settings-"
 ">Configure RKWard->Workspace."
-msgstr ""
+msgstr "Το πακέτο '%1' (πιθανόν μόλις το έχετε φορτώσει) είναι προσωρινά μπλοκαρισμένο για την λήψη πληροφοριών για την δομή του. Πρακτικά αυτό σημαίνει ότι τα αντικείμενα αυτού του πακέτου δεν θα εμφανιστούν στον χώρο εργασίας και καμία λειτουργία συμπλήρωσης του ονόματος του αντικειμένου ή τονισμού των μεταβλητών των συναρτήσεων για αυτό το πακέτο δεν θα είναι διαθέσιμη.\n Τα πακέτα τυπικά θα μπλοκάρονται εάν περιέχουν τεράστιο ποσό δεδομένων τα οποία θα έκαναν πολύ ώρα να φορτωθούν. Για να ξεμπλοκάρετε το πακέτο επισκεφθείτε το Ρυθμίσεις ->Ρύθμιση RKWard->Χώρος εργασίας"
 
 #: core/renvironmentobject.cpp:91
-#, fuzzy
 msgid "Package blacklisted"
-msgstr "Το πακέτο δεν είναι διαθέσιμο"
+msgstr "Το πακέτο είναι μπλοκαρισμένο"
 
 #: windows/rkcommandeditorwindowpart.cpp:51
 msgid "Run all"
@@ -637,7 +635,6 @@ msgid "Could not open command file"
 msgstr "Αδυναμία ανοίγματος του φακέλου εντολών"
 
 #: windows/rkworkplace.cpp:260
-#, fuzzy
 msgid ""
 "You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
 "is not optimized to handle very large objects in the built in data editor. "
@@ -652,7 +649,7 @@ msgid ""
 msgstr ""
 "Πρόκειται να επεξεργαστείτε το αντικείμενο \"%1\", το οποίο είναι πολύ "
 "μεγάλο (%2 πεδία). Το RKWard δεν είναι βελτιστοποιημένο να χειρίζεται πολύ "
-"μεγάλα αντικείμενα στο ενσωματωμένο επεξεργαστή. Αυτό θα χρησιμοποιήσει πολύ "
+"μεγάλα αντικείμενα στο ενσωματωμένο επεξεργαστή δεδομένων. Αυτό θα χρησιμοποιήσει πολύ "
 "μνήμη και-ανάλογα με το σύστημά σας- μπορεί να γίνει πολύ αργό. Για μεγάλα "
 "αντικείμενα συνίσταται γενικά να τα επεξεργαστείτε μέσω της γραμμής εντολών "
 "ή να τα χωρίσετε σε μικρότερα κομμάτια πριν τα επεξεργαστείτε. Από την άλλη "
@@ -758,13 +755,11 @@ msgstr "Προσδιορισμός αντικειμένου R"
 
 #: windows/rkwindowcatcher.cpp:240
 msgid "Specify the R object name, you want to save the graph to"
-msgstr ""
-"Επιλέξτε το όνομα του αντικειμένου R με το οποίο θέλετε να σώσετε το γράφημα"
+msgstr "Επιλέξτε το όνομα του αντικειμένου R με το οποίο θέλετε να σώσετε το γράφημα"
 
 #: windows/rkwindowcatcher.cpp:251
 msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr ""
-"Αποθήκευση περιεχομένων της συσκευής γραφικών νούμερο %1 στο αντικείμενο '%2'"
+msgstr "Αποθήκευση περιεχομένων της συσκευής γραφικών νούμερο %1 στο αντικείμενο '%2'"
 
 #: windows/rkwindowcatcher.cpp:260
 msgid "Duplicate graphics device number %1"
@@ -835,9 +830,8 @@ msgid "Show/Hide Workspace Browser"
 msgstr "Εμφάνιση/Απόκρυψη του περιηγητή του χώρου εργασίας"
 
 #: windows/rktoplevelwindowgui.cpp:63
-#, fuzzy
 msgid "Show/Hide Filesystem Browser"
-msgstr "Εμφάνιση/Απόκρυψη του περιηγητή του χώρου εργασίας"
+msgstr "Εμφάνιση/Απόκρυψη του περιηγητή αρχείων του συστήματος"
 
 #: windows/rktoplevelwindowgui.cpp:64
 msgid "Show/Hide Command Log"
@@ -1116,15 +1110,15 @@ msgstr "Πεδίο κλάσης"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:76
 msgid "Never fetch the structure of these packages:"
-msgstr ""
+msgstr "Να μην γίνεται ανάκτηση ποτέ της δομής αυτών των πακέτων"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:101
 msgid "Add exclusion"
-msgstr ""
+msgstr "Προσθέστε εξαίρεση"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:101
 msgid "Add the name of the package that no structure should be fetched for"
-msgstr ""
+msgstr "Προσθέστε το όνομα του πακέτου για το οποίο δεν μπόρεσε να βρεθεί η δομή"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:128 rkward.cpp:214
 msgid "Workspace"
@@ -1324,7 +1318,7 @@ msgstr "Πλάτος αποτελεσμάτων (χαρακτήρες)"
 
 #: settings/rksettingsmoduler.cpp:90
 msgid "Maximum number of elements shown in print"
-msgstr ""
+msgstr "Μέγιστος αριθμός εμφάνισης στοιχείων στην εντολή print"
 
 #: settings/rksettingsmoduler.cpp:96
 msgid "Maximum length of warnings/errors to print"
@@ -1384,8 +1378,7 @@ msgstr "Αρχικοποίηση μεταφορτομένων πακέτων "
 
 #: settings/rksettingsmoduler.cpp:294
 msgid "R Library locations  (where libraries get installed to, locally)"
-msgstr ""
-"Τοποθεσίες βιβλιοθηκών R (εκεί όπου οι βιβλιοθήκες εγκαθιστώνται τοπικά)"
+msgstr "Τοποθεσίες βιβλιοθηκών R (εκεί όπου οι βιβλιοθήκες εγκαθιστώνται τοπικά)"
 
 #: settings/rksettingsmoduler.cpp:299
 msgid ""
@@ -1487,8 +1480,7 @@ msgstr "Εντολές συγχρονισμού "
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr ""
-"Μέγιστος αριθμός παραγράφων/γραμμών προβολής στο αρχείο καταγραφής εντολών"
+msgstr "Μέγιστος αριθμός παραγράφων/γραμμών προβολής στο αρχείο καταγραφής εντολών"
 
 #: settings/rksettings.cpp:63
 msgid "Settings"
@@ -1751,8 +1743,7 @@ msgstr "'%1'- Δεν δόθηκε τιμή ιδιότητας. Υποτίθετ�
 
 #: misc/xmlhelper.cpp:260
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr ""
-"Μη επιτρεπόμενη τιμής ιδιότητας. Επιτρεπόμενες τιμές είναι μόνο μία από '%1'."
+msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Επιτρεπόμενες τιμές είναι μόνο μία από '%1'."
 
 #: misc/xmlhelper.cpp:274
 msgid "Illegal attribute value. Only integer numbers are allowed."
@@ -1760,8 +1751,7 @@ msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο α
 
 #: misc/xmlhelper.cpp:290
 msgid "Illegal attribute value. Only real numbers are allowed."
-msgstr ""
-"Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο πραγματικοί αριθμοί επιτρέπονται."
+msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο πραγματικοί αριθμοί επιτρέπονται."
 
 #: misc/xmlhelper.cpp:308
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
@@ -1774,8 +1764,7 @@ msgid "XML-parsing '%1' "
 msgstr "Ανάλυση XML '%1' "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>Υπήρξαν σφάλματα ή / και προειδοποιήσεις! Δείτε παρακάτω για μια "
 "περιγραφή</b>"
@@ -1888,7 +1877,6 @@ msgstr ""
 "υποστήριξης PHP)"
 
 #: scriptbackends/phpbackend.cpp:197
-#, fuzzy
 msgid ""
 "There has been an error\n"
 "(\"%1\")\n"
@@ -1896,11 +1884,10 @@ msgid ""
 "in RKWard or a problem with your PHP installation. Check the settings "
 "(Settings->Configure Settings->PHP backend) and try again."
 msgstr ""
-"Υπήρξε σφάλμα\n"
+"Υπήρξε ένα σφάλμα\n"
 "(\"%1\")\n"
 "κατά την έναρξη της μηχανής υποστήριξης PHP. Το πιο πιθανόν είναι να "
-"οφείλεται σε bug του rkward ή σε μη έγκυρη ρύθμιση της τοποθεσίας των "
-"βοηθητικών αρχείων της PHP. Ελέγξτε τις ρυθμίσεις (Ρυθμίσεις->Ρύθμιση-"
+"οφείλεται είτε σε σφάλμα (bug) του RKWard ή σε πρόβλημα στην εγκατάσταση της PHP. Ελέγξτε τις ρυθμίσεις (Ρυθμίσεις->Ρύθμιση-"
 ">Μηχανή υποστήριξης PHP) και προσπαθήστε ξανά."
 
 #: scriptbackends/phpbackend.cpp:227
@@ -2157,7 +2144,7 @@ msgstr "Μάσκα για τα συστατικά της αποσφαλμάτω�
 
 #: main.cpp:77
 msgid "Disable R C stack checking"
-msgstr ""
+msgstr "Απενεργοποίηση ελέγχου R C σωρού"
 
 #: main.cpp:84
 msgid "Project leader / main developer"
@@ -2245,7 +2232,7 @@ msgstr "Υπάρχοντα αντικείμενα στο χώρο εργασία
 
 #: rkward.cpp:219
 msgid "File-system Browser"
-msgstr ""
+msgstr "Περιηγητής συστήματος αρχείων"
 
 #: rkward.cpp:222
 msgid "Pending Jobs"
@@ -2379,8 +2366,7 @@ msgstr "Εισάγετε το όνομα για το νέο πακέτο δεδ�
 
 #: rkward.cpp:569 robjectbrowser.cpp:173 robjectbrowser.cpp:207
 msgid "The name you specified was already in use or not valid. Renamed to %1"
-msgstr ""
-"Το όνομα που δώσατε ήδη υπάρχει ή δεν είναι έγκυρο. Μετονομάστηκε σε %1"
+msgstr "Το όνομα που δώσατε ήδη υπάρχει ή δεν είναι έγκυρο. Μετονομάστηκε σε %1"
 
 #: rkward.cpp:569 robjectbrowser.cpp:173 robjectbrowser.cpp:207
 msgid "Invalid Name"
@@ -2460,27 +2446,25 @@ msgid "Bypass console"
 msgstr "Παράκαμψη τερματικού"
 
 #: robjectviewer.cpp:70
-#, fuzzy
 msgid ""
 "\n"
 "Result of 'summary (%1)':\n"
 msgstr ""
 "\n"
-"Αποτέλεσμα του print ("
+"Αποτέλεσμα του 'summary (%1)':\n"
 
 #: robjectviewer.cpp:72 robjectviewer.cpp:84 robjectviewer.cpp:109
 #: robjectviewer.cpp:120
 msgid "Hide"
-msgstr ""
+msgstr "Απόκρυψη"
 
 #: robjectviewer.cpp:82
-#, fuzzy
 msgid ""
 "\n"
 "Result of 'print (%1)':\n"
 msgstr ""
 "\n"
-"Αποτέλεσμα του print ("
+"Αποτέλεσμα του print (%1)':\n"
 
 #: robjectviewer.cpp:93
 msgid "Object Viewer: "
@@ -2488,21 +2472,19 @@ msgstr "Προβολέας αντικειμένων"
 
 #: robjectviewer.cpp:111 robjectviewer.cpp:122
 msgid "Show"
-msgstr ""
+msgstr "Προβολή"
 
 #: robjectviewer.cpp:137
-#, fuzzy
 msgid "Fetching information"
-msgstr "Ανάκτηση λίστας"
+msgstr "Ανάκτηση πληροφοριών"
 
 #: robjectviewer.cpp:162
 msgid "<b>Object was deleted!</b>"
-msgstr ""
+msgstr "<b>Το αντικείμενο έχει διαγραφεί!</b>"
 
 #: robjectviewer.cpp:175
-#, fuzzy
 msgid "Ready"
-msgstr "Έτοιμο."
+msgstr "Έτοιμο"
 
 #: _translatorinfo.cpp:1
 msgid ""
@@ -2580,64 +2562,3 @@ msgstr "Προβολή όλων των περιβάλλοντων"
 msgid "Show Hidden Objects"
 msgstr "Εμφάνιση κρυφών αντικειμένων"
 
-#~ msgid ""
-#~ "The R-backend has reported one or more error(s) while processing the "
-#~ "plugin '%1'.\n"
-#~ "This may lead to an incorrect output and is likely due to a bug in the "
-#~ "plugin.\n"
-#~ "A transcript of the error message(s) is shown below."
-#~ msgstr ""
-#~ "Η μηχανή υποστήριξης R ανέφερε ένα ή περισσότερα σφάλματα κατά τη "
-#~ "διάρκεια επεξεργασίας του προσθέτου '%1'.\n"
-#~ "Αυτό μπορεί να οδηγήσει σε λάθος αποτελέσματα και πιθανόν να οφείλετε σε "
-#~ "κάποιο bug στο πρόσθετο.\n"
-#~ "Μία περιγραφή του σφάλματος φαίνεται παρακάτω. "
-
-#~ msgid "R-Error"
-#~ msgstr "Σφάλμα R"
-
-#~ msgid "Syntax error"
-#~ msgstr "Σφάλμα σύνταξης"
-
-#~ msgid "command incomplete"
-#~ msgstr "μη ολοκληρωμένη εντολή "
-
-#~ msgid "Browse"
-#~ msgstr "Εξερεύνηση"
-
-#~ msgid "Object name: "
-#~ msgstr "Όνομα αντικειμένου: "
-
-#~ msgid ""
-#~ "\n"
-#~ "Full location: "
-#~ msgstr ""
-#~ "\n"
-#~ "Πλήρης διαδρομή τοποθεσίας: "
-
-#~ msgid ""
-#~ "\n"
-#~ "Class(es): "
-#~ msgstr ""
-#~ "\n"
-#~ "Κλάσεις: "
-
-#~ msgid ""
-#~ "\n"
-#~ "Dimensions: "
-#~ msgstr ""
-#~ "\n"
-#~ "Διαστάσεις: "
-
-#~ msgid ")':\n"
-#~ msgstr ")':\n"
-
-#~ msgid " - Waiting for results from R..."
-#~ msgstr " - Αναμονή αποτελεσμάτων από το R..."
-
-#~ msgid ""
-#~ "\n"
-#~ "Some errors occurred: "
-#~ msgstr ""
-#~ "\n"
-#~ "Υπήρξαν κάποια σφάλματα: "

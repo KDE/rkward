@@ -35,6 +35,7 @@ bool RKSettingsModuleConsole::save_history;
 uint RKSettingsModuleConsole::max_history_length;
 uint RKSettingsModuleConsole::max_console_lines;
 bool RKSettingsModuleConsole::pipe_user_commands_through_console;
+bool RKSettingsModuleConsole::add_piped_commands_to_history;
 bool RKSettingsModuleConsole::context_sensitive_history_by_default;
 
 RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
@@ -66,6 +67,12 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 	connect (pipe_user_commands_through_console_box, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
 	vbox->addWidget (pipe_user_commands_through_console_box);
 
+	add_piped_commands_to_history_box = new QCheckBox (i18n ("Also add those commands to console history"), this);
+	add_piped_commands_to_history_box->setChecked (add_piped_commands_to_history);
+	connect (add_piped_commands_to_history_box, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
+	add_piped_commands_to_history_box->setEnabled (pipe_user_commands_through_console_box->isChecked ());
+	vbox->addWidget (add_piped_commands_to_history_box);
+
 	vbox->addSpacing (2*RKGlobals::spacingHint ());
 
 	reverse_context_mode_box = new QCheckBox (i18n ("Command history is context sensitive by default"), this);
@@ -83,6 +90,8 @@ RKSettingsModuleConsole::~RKSettingsModuleConsole () {
 void RKSettingsModuleConsole::changedSetting (int) {
 	RK_TRACE (SETTINGS);
 	change ();
+
+	add_piped_commands_to_history_box->setEnabled (pipe_user_commands_through_console_box->isChecked ());
 }
 
 //static
@@ -102,6 +111,7 @@ void RKSettingsModuleConsole::saveSettings (KConfig *config) {
 	config->writeEntry ("max history length", max_history_length);
 	config->writeEntry ("max console lines", max_console_lines);
 	config->writeEntry ("pipe user commands through console", pipe_user_commands_through_console);
+	config->writeEntry ("add piped commands to history", add_piped_commands_to_history);
 	config->writeEntry ("command history defaults to context sensitive", context_sensitive_history_by_default);
 }
 
@@ -114,6 +124,7 @@ void RKSettingsModuleConsole::loadSettings (KConfig *config) {
 	max_history_length = config->readNumEntry ("max history length", 100);
 	max_console_lines = config->readNumEntry ("max console lines", 500);
 	pipe_user_commands_through_console = config->readBoolEntry ("pipe user commands through console", true);
+	add_piped_commands_to_history = config->readBoolEntry ("add piped commands to history", true);
 	context_sensitive_history_by_default = config->readBoolEntry ("command history defaults to context sensitive", false);
 }
 
@@ -152,6 +163,7 @@ void RKSettingsModuleConsole::applyChanges () {
 	max_history_length = max_history_length_spinner->value ();
 	max_console_lines = max_console_lines_spinner->value ();
 	pipe_user_commands_through_console = pipe_user_commands_through_console_box->isChecked ();
+	add_piped_commands_to_history = add_piped_commands_to_history_box->isChecked ();
 	context_sensitive_history_by_default = reverse_context_mode_box->isChecked ();
 }
 

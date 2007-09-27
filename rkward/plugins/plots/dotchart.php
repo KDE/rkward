@@ -17,7 +17,14 @@ function preview () {
 
 function doPrintout ($final) {
 	$vars = getRK_val ("x");
+	$names_mode = getRK_val ("names_mode");
 	$tabulate= getRK_val ("tabulate")=="TRUE";
+	$tabulate= getRK_val ("tabulate");
+	if ($tabulate) {
+		$tabulate_header = '"Tabulate", "Yes"';
+	} else {
+		$tabulate_header = '"Tabulate", "No"';
+	}
 
 	$options = getRK_val ("plotoptions.code.printout");
 
@@ -35,13 +42,18 @@ if (!is.numeric (x)) {
 <?      } ?>
 
 <?	if ($final) { ?>
-rk.header ("Dot chart", list ("Variable", rk.get.description (<? echo ($vars); ?>)))
+rk.header ("Dot chart", parameters=list ("Variable", rk.get.description (<? echo ($vars); ?>), <? echo ($tabulate_header); ?>))
 
 rk.graph.on ()
 <?	}
 ?>
 try ({
-<?	if (!empty ($plotpre)) printIndented ("\t", $plotpre); ?>
+<?	if ($names_mode == "rexp") {
+		echo ("names(x) <- " . getRK_val ("names_exp") . "\n");
+	} else if ($names_mode == "custom") {
+		echo ("names(x) <- c (\"" . str_replace (";", "\", \"", trim (getRK_val ("names_custom"))) . "\")\n");
+	}
+	if (!empty ($plotpre)) printIndented ("\t", $plotpre); ?>
 	dotchart(x<? echo ($options); ?>)
 <?	if (!empty ($plotpost)) printIndented ("\t", $plotpost); ?>
 })

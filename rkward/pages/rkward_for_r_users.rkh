@@ -28,7 +28,7 @@
 	<section title="Workspace View" id="workspace_browser">
 	RKWard comes with a "workspace view" or "object browser". By default this is available by clicking on "Workspace" on the left side of the application window. This allows you to examine and manipulate all objects in the R workspace. In case you are not familiar with this aspect of R (usually not directly visible): All the symbols you create are children of the so-called ".GlobalEnv" environment (see <link href="rkward://rhelp/.GlobalEnv"/>). Symbols defined in loaded libraries are located in their own environments.
 
-	The object browser provides function to select with types of object are shown (on the top). Hovering the mouse over an item will show some additional information on the symbol. Right-clicking on an item will show available actions.
+	The object browser provides function to select with types of object are shown (on the top). Hovering the mouse over an item will show some additional information on the symbol. Right-clicking on an item will show available actions. See <link href="rkward://page/rkward_workspace_browser"/> for details.
 	</section>
 	<section title="R Help" id="rhelp">
 	By default R help pages are shown as HTML, inside RKWard. You can invoke the help in the usual way by running e.g. "?print" or "help (print)" or "help.start ()" in the console. Additionally, there is a tool window to search your installed R help pages. This is accessible using a button located at the bottom of the window (next to the console button). To view a help page found using this tool, double click on it.
@@ -56,6 +56,8 @@
 
 	<related>
 <ul>
+	<li><link href="rkward://page/rkward_workspace_browser"/></li>
+	<li><link href="rkward://page/rkward_console"/></li>
 	<li><link href="rkward://page/rkward_for_new_users"/> For an introduction to some more basic concepts</li>
 	<li><link href="rkward://page/rkward_shortcuts"/></li>
 </ul>
