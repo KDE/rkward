@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 21:39+0200\n"
+"POT-Creation-Date: 2007-09-27 14:37+0200\n"
 "PO-Revision-Date: 2007-04-05 15:35+0200\n"
 "Last-Translator: Pep Roca <pep.roca@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -143,7 +143,7 @@ msgid "Format"
 msgstr "Format"
 
 # a es.po està traduit com "Renombrar"
-#: dataeditor/twintable.cpp:66 plugin/rkformula.cpp:74 plugin/rkvarslot.cpp:57
+#: dataeditor/twintable.cpp:66 plugin/rkvarslot.cpp:57 plugin/rkformula.cpp:74
 #: dialogs/rkloadlibsdialog.cpp:260 dialogs/rkloadlibsdialog.cpp:279
 #: dialogs/rkloadlibsdialog.cpp:463 dialogs/rkloadlibsdialog.cpp:613
 #: misc/rkobjectlistview.cpp:53
@@ -179,6 +179,30 @@ msgstr "Esborra les files seleccionades (%1-%2)"
 #: dataeditor/twintable.cpp:260
 msgid "Delete this row (%1)"
 msgstr "Esborra aquesta fila (%1)"
+
+#: agents/rkquitagent.cpp:41
+msgid ""
+"Waiting for remaining R commands to finish. To quit immediately, press "
+"Cancel (WARNING: This may result in loss of data)"
+msgstr ""
+"S'està esperant que finalitzin les ordres restants. Per sortir "
+"immediatament, prémer Cancel·lar (AVÍS: Això pot provocar pèrdua de dades)"
+
+#: agents/rkquitagent.cpp:41
+msgid "Waiting for R to finish"
+msgstr "S'està esperant que R finalitzi"
+
+#: agents/rkeditobjectagent.cpp:56
+msgid ""
+"The object '%1', could not be opened for editing. Either it does not exist, "
+"or RKWard does not support editing this type of object, yet."
+msgstr ""
+"L'objecte '%1', no s'ha pogut obrir per editar-lo. O bé no existeix, o bé el "
+"RKWard encara no permet editar aquest tipus d'ojectes."
+
+#: agents/rkeditobjectagent.cpp:56
+msgid "Cannot edit '%1'"
+msgstr "No es pot editar '%1'"
 
 #: agents/rksaveagent.cpp:60
 msgid ""
@@ -293,30 +317,6 @@ msgstr ""
 #: agents/rkloadagent.cpp:77
 msgid "Error loading workspace"
 msgstr "S'ha produït un error en obrir l'espai de treball"
-
-#: agents/rkquitagent.cpp:41
-msgid ""
-"Waiting for remaining R commands to finish. To quit immediately, press "
-"Cancel (WARNING: This may result in loss of data)"
-msgstr ""
-"S'està esperant que finalitzin les ordres restants. Per sortir "
-"immediatament, prémer Cancel·lar (AVÍS: Això pot provocar pèrdua de dades)"
-
-#: agents/rkquitagent.cpp:41
-msgid "Waiting for R to finish"
-msgstr "S'està esperant que R finalitzi"
-
-#: agents/rkeditobjectagent.cpp:56
-msgid ""
-"The object '%1', could not be opened for editing. Either it does not exist, "
-"or RKWard does not support editing this type of object, yet."
-msgstr ""
-"L'objecte '%1', no s'ha pogut obrir per editar-lo. O bé no existeix, o bé el "
-"RKWard encara no permet editar aquest tipus d'ojectes."
-
-#: agents/rkeditobjectagent.cpp:56
-msgid "Cannot edit '%1'"
-msgstr "No es pot editar '%1'"
 
 #: core/rkmodificationtracker.cpp:50
 msgid ""
@@ -436,12 +436,119 @@ msgstr ""
 msgid "Package blacklisted"
 msgstr "El paquet no està disponible"
 
+#: windows/rkwindowcatcher.cpp:60
+msgid ""
+"You have created a new X11 device window in R. Usually, RKWard tries to "
+"detect such windows, to take control of them, and add a menu-bar to them. "
+"This time, however, RKWard failed to detect, which window was created, and "
+"so can not embed it.\n"
+"If you created the window on a different screen or X11 display, that is to "
+"be expected. You might want to consider changing options(\"display\"), "
+"then.\n"
+"If you can see the X11 window on the same screen as this message, then "
+"RKWard should do better. In this case, please contact us at rkward-"
+"devel@lists.sourceforge.net with details on your setup, so we can try to fix "
+"this in future versions of RKWard."
+msgstr ""
+"Heu creat una nova finestra en R. Per regla general, el RKWard intenta "
+"detectar aquestes finestres, per controlar-les i afegir-les a la barra del "
+"menú. Tanmateix, aquesta vegada el RKWard ha fallat en la detecció de quina "
+"finestra s'ha creat, i, per tant, no l'ha pogut incrustar.\n"
+"Aquest és el comportament normal si heu creat la finestra en un altre "
+"escriptori o en una sessió X11 diferent. Si voleu, podeu intentar canviar "
+"les opcions(\"visualització\"). Llavors.\n"
+"si podeu veure la finestra X11 en el mateix escriptori que aquest missatge, "
+"aleshores el RKWard és millorable. En aquest cas, agrairíem que ens "
+"contacteu a rkward-devel@lists.sourceforge.net informant-nos dels detalls de "
+"la vostra configuració a fi que intentem arreglar això en les futures "
+"versions de RKWard."
+
+#: windows/rkwindowcatcher.cpp:60
+msgid "Could not embed R X11 window"
+msgstr "No s'ha pogut incrustar la finestra X11 del R"
+
+#: windows/rkwindowcatcher.cpp:93
+msgid "An error occurred"
+msgstr "S'ha produït un error"
+
+# ??? Per revisar
+#: windows/rkwindowcatcher.cpp:193
+#, fuzzy
+msgid "Specify fixed size"
+msgstr "Especifiqueu la mida fixa"
+
+#: windows/rkwindowcatcher.cpp:218
+msgid "Activate graphics device number %1"
+msgstr "S'ha activat el dispositiu gràfic nombre %1"
+
+#: windows/rkwindowcatcher.cpp:224
+msgid "Copy contents of graphics device number %1 to output"
+msgstr "Copia el contingut del dispositiu gràfic número %1 als resultats"
+
+#: windows/rkwindowcatcher.cpp:230
+msgid "Print contents of graphics device number %1"
+msgstr "Imprimeix el contingit del dispositiu gràfic nombre %1"
+
+#: windows/rkwindowcatcher.cpp:237
+msgid "Specify R object"
+msgstr "Especifiqueu l'objecte R"
+
+# fr: Définissez le nom d'objet de R, vous veulent sauver le graphique à
+# ??? Per revisar
+#: windows/rkwindowcatcher.cpp:240
+msgid "Specify the R object name, you want to save the graph to"
+msgstr "Especifiqueu el nom de l'objecte R on voleu desar el gràfic"
+
+#: windows/rkwindowcatcher.cpp:251
+msgid "Save contents of graphics device number %1 to object '%2'"
+msgstr "Desa el contingut del dispositiu gràfic número %1 a l'objecte '%2'"
+
+#: windows/rkwindowcatcher.cpp:260
+msgid "Duplicate graphics device number %1"
+msgstr "Duplica el dispositiu gràfic nombre %1"
+
+#: windows/rkwindowcatcher.cpp:280
+msgid "Draw area follows size of window"
+msgstr "Adapta l'àrea del dibuix a la mida de la finestra"
+
+#: windows/rkwindowcatcher.cpp:282
+msgid "Set fixed size 500x500"
+msgstr "Estableix una mida fixa de 500x500"
+
+#: windows/rkwindowcatcher.cpp:283
+msgid "Set fixed size 1000x1000"
+msgstr "Estableix una mida fixa de 1000x1000"
+
+#: windows/rkwindowcatcher.cpp:284
+msgid "Set fixed size 2000x2000"
+msgstr "Estableix una mida fixa de 2000x2000"
+
+#: windows/rkwindowcatcher.cpp:285
+msgid "Set specified fixed size..."
+msgstr "Estableix una mida especificada..."
+
+#: windows/rkwindowcatcher.cpp:287
+msgid "Make active"
+msgstr "Fes-la activa"
+
+#: windows/rkwindowcatcher.cpp:288
+msgid "Copy to output"
+msgstr "Copia els resultats"
+
+#: windows/rkwindowcatcher.cpp:290
+msgid "Store as R object..."
+msgstr "Guarda com un objecte R..."
+
+#: windows/rkwindowcatcher.cpp:291
+msgid "Duplicate"
+msgstr "Duplicat"
+
 #: windows/rkcommandeditorwindowpart.cpp:51
 msgid "Run all"
 msgstr "Executa-ho tot"
 
-#: windows/rkcommandeditorwindowpart.cpp:52 windows/rkhtmlwindow.cpp:94
-#: windows/rkcommandlog.cpp:287 rkconsole.cpp:781
+#: windows/rkcommandeditorwindowpart.cpp:52 windows/rkcommandlog.cpp:287
+#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:781
 msgid "Run selection"
 msgstr "Executa la selecció"
 
@@ -454,6 +561,254 @@ msgstr "Executa la línia actual"
 #: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:780
 msgid "&Function reference"
 msgstr "&Funció: Ajuda"
+
+#: windows/rkcommandeditorwindow.cpp:130 windows/rkcommandeditorwindow.cpp:224
+msgid " [modified]"
+msgstr " [modicat]"
+
+#: windows/rkcommandeditorwindow.cpp:143
+msgid "The document \"%1\" has been modified. Close it anyway?"
+msgstr "S'ha modificat el document \"%1\". Segur que el vol tancar?"
+
+#: windows/rkcommandeditorwindow.cpp:143
+msgid "File not saved"
+msgstr "El fitxer no s'ha desat"
+
+#: windows/rkcommandeditorwindow.cpp:223
+msgid "Unnamed"
+msgstr "Sense nom"
+
+#: windows/rkworkplace.cpp:148
+msgid "Unable to open \"%1\""
+msgstr "No es pot obrir \"%1\""
+
+#: windows/rkworkplace.cpp:148
+msgid "Could not open command file"
+msgstr "No s'ha pogut obrir el fitxer d'ordres"
+
+#: windows/rkworkplace.cpp:260
+#, fuzzy
+msgid ""
+"You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
+"is not optimized to handle very large objects in the built in data editor. "
+"This will use a lot of memory, and - depending on your system - might be "
+"very slow. For large objects it is generally recommended to edit using "
+"command line means or to split into smaller chunks before editing. On the "
+"other hand, if you have enough memory, or the data is simple enough (numeric "
+"data is easier to handle, than factor), editing may not be a problem at all. "
+"You can configure this warning (or turn it off entirely) under Settings-"
+">Configure RKWard->General.\n"
+"Really edit object?"
+msgstr ""
+"Esteu a punt d'editar l'objecte \"%1\" que és molt gran (%2 camps). L'editor "
+"integrat de dades del RKWard no està optimitzat per manegar objectes grans. "
+"Això pot utilitzar molta memòria, i -depenent del vostre sistema- anar molt "
+"lent. Es recomana editar els objectes grans utilitzant els mètodes "
+"disponibles en la línia d'ordres o dividir-los en bocins més petits abans "
+"d'editar-los. D'altra banda, si teniu memòria suficient, o les dades són "
+"suficientment simples (les dades numèriques són més fàcils de manegar que "
+"els factors (variables categòriques)), poder es poden editar sense "
+"problemes. Podeu configurar aquest avís (o desactivar-lo del tot) a "
+"Arranjaments-> Configura RKWard->General.\n"
+"Edito l'objecte?"
+
+#: windows/rkworkplace.cpp:260
+msgid "About to edit very large object"
+msgstr "Quant a editar objectges molt grans"
+
+# fr.po: Enregistrer l'espace de travail
+# es.po: Guardar Espacio de Trabajo
+#  Thomas Friedrichsmeier: Workplace is the windows (script editors / data editors / help files / output) managed by rkward
+#: windows/rkworkplace.cpp:430
+msgid "Save Workplace layout"
+msgstr "Desa el lloc de treball del RkWard"
+
+#: windows/rkworkplace.cpp:437
+msgid "Restore Workplace layout"
+msgstr "Restableix el lloc de treball del RKWard"
+
+#: windows/rkworkplace.cpp:507
+msgid "Previous Window"
+msgstr "Finestra anterior"
+
+#: windows/rkworkplace.cpp:511
+msgid "Next Window"
+msgstr "Finestra següent"
+
+#: windows/detachedwindowcontainer.cpp:41
+msgid "Attach to main window"
+msgstr "Ajunta amb la finestra principal"
+
+#: windows/rkhelpsearchwindow.cpp:55
+msgid "Find:"
+msgstr "Cerca:"
+
+#: windows/rkhelpsearchwindow.cpp:58
+msgid "Fields:"
+msgstr "Camps:"
+
+#: windows/rkhelpsearchwindow.cpp:71 windows/rkhelpsearchwindow.cpp:82
+#: robjectbrowser.cpp:263
+msgid "All"
+msgstr "Tot"
+
+#: windows/rkhelpsearchwindow.cpp:72
+msgid "All but keywords"
+msgstr "Tot menys les paraules claus"
+
+#: windows/rkhelpsearchwindow.cpp:73
+msgid "Keywords"
+msgstr "Paraules clau"
+
+#: windows/rkhelpsearchwindow.cpp:74 windows/rkhelpsearchwindow.cpp:99
+#: dialogs/rkloadlibsdialog.cpp:261
+msgid "Title"
+msgstr "Títol"
+
+#: windows/rkhelpsearchwindow.cpp:77
+msgid "Package:"
+msgstr "Paquet:"
+
+#: windows/rkhelpsearchwindow.cpp:86
+msgid "Case sensitive"
+msgstr "Sensible a majúscules"
+
+#: windows/rkhelpsearchwindow.cpp:88
+msgid "Fuzzy matching"
+msgstr "Emparellament inexacta"
+
+#: windows/rkhelpsearchwindow.cpp:92
+msgid "Find"
+msgstr "Cerca"
+
+#: windows/rkhelpsearchwindow.cpp:98
+msgid "Topic"
+msgstr "Tema"
+
+#: windows/rkhelpsearchwindow.cpp:100
+msgid "Package"
+msgstr "Paquet"
+
+#: windows/rkhelpsearchwindow.cpp:106
+msgid "Help search"
+msgstr "Busca ajuda"
+
+#: windows/rkhelpsearchwindow.cpp:212
+msgid ""
+"No help found on '%1'. Maybe the corresponding package is not installed/"
+"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
+"more options."
+msgstr ""
+"No s'ha trobat cap ajuda sobre '%1'. Potser el paquet corresponent no està "
+"instal·lat / carregat, o potser heu escrit malament l'ordre Per a més "
+"opcions, intenteu utilitzar Ajuda->Cerca ajuda del R."
+
+#: windows/rkhelpsearchwindow.cpp:212
+msgid "No help found"
+msgstr "No s'ha trobat l'ajuda"
+
+# Termcat: diari  m. Registre cronològic de les operacions de processament de dades dutes a terme en un fitxer.
+#: windows/rkcommandlog.cpp:54 settings/rksettingsmodulewatch.cpp:277
+msgid "Command log"
+msgstr "Bitàcola de les ordres"
+
+#: windows/rkcommandlog.cpp:173
+msgid "Incomplete statement.\n"
+msgstr "Sentència incompleta.\n"
+
+#: windows/rkcommandlog.cpp:175
+msgid "Syntax error.\n"
+msgstr "Error de sintaxi.\n"
+
+#: windows/rkcommandlog.cpp:177
+msgid "An unspecified error occurred while running the command.\n"
+msgstr "S'ha produït un error desconegut mentre s'executava l'ordre.\n"
+
+# ¿O finestra esquerra?
+# ??? Per revisar
+#: windows/rkworkplaceview.cpp:58
+#, fuzzy
+msgid "Window Left"
+msgstr "Finestra a l'esquerra"
+
+# ¿O finestra dreta?
+# ??? Per revisar
+#: windows/rkworkplaceview.cpp:62
+#, fuzzy
+msgid "Window Right"
+msgstr "Finestra a la dreta"
+
+#: windows/rktoplevelwindowgui.cpp:48
+msgid "Help on R"
+msgstr "Ajuda sobre el R"
+
+#: windows/rktoplevelwindowgui.cpp:49
+msgid "Search R Help"
+msgstr "Cerca ajuda del R"
+
+#: windows/rktoplevelwindowgui.cpp:51
+msgid "Help on RKWard"
+msgstr "Ajuda sobre el RKWard"
+
+#: windows/rktoplevelwindowgui.cpp:57
+msgid "Shows the R help index"
+msgstr "Mostra l'índex de l'ajuda R"
+
+#: windows/rktoplevelwindowgui.cpp:58
+msgid "Shows/raises the R Help Search window"
+msgstr "Mostra / alça la finestra per cercar l'ajuda de R"
+
+#: windows/rktoplevelwindowgui.cpp:59
+msgid "Show help on RKWard"
+msgstr "Mostra l'ajuda del RKWard"
+
+#: windows/rktoplevelwindowgui.cpp:62
+msgid "Show/Hide Workspace Browser"
+msgstr "Mostra/Oculta el navegador de l'espai de treball"
+
+#: windows/rktoplevelwindowgui.cpp:63
+#, fuzzy
+msgid "Show/Hide Filesystem Browser"
+msgstr "Mostra/Oculta el navegador de l'espai de treball"
+
+# Termcat: diari  m. Registre cronològic de les operacions de processament de dades dutes a terme en un fitxer.
+#: windows/rktoplevelwindowgui.cpp:64
+msgid "Show/Hide Command Log"
+msgstr "Mostra/Oculta la bitàcola de les ordres"
+
+#: windows/rktoplevelwindowgui.cpp:65
+msgid "Show/Hide Pending Jobs"
+msgstr "Mostra/Oculta els treballs pendents"
+
+#: windows/rktoplevelwindowgui.cpp:66
+msgid "Show/Hide Console"
+msgstr "Mostra/Oculta la consola R"
+
+#: windows/rktoplevelwindowgui.cpp:67
+msgid "Show/Hide R Help Search"
+msgstr "Mostra/Oculta la finestra per cercar l'ajuda de R"
+
+# ??? Per revisar
+# Activa la visualització del document o 
+# Activa la visualització dels documents
+#: windows/rktoplevelwindowgui.cpp:68
+#, fuzzy
+msgid "Activate Document view"
+msgstr "Activa la visualització del document"
+
+#: windows/rktoplevelwindowgui.cpp:70
+msgid "Show &Output"
+msgstr "Mostra els &Resultats"
+
+#: windows/rktoplevelwindowgui.cpp:91
+msgid ""
+"Please submit your bug reports or wishes at http://sourceforge.net/tracker/?"
+"group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
+"net"
+msgstr ""
+"Si us plau, trameteu els informes d'errors o els desitjos a http://"
+"sourceforge.net/tracker/?group_id=50231&atid=459007 o envieu un missatge a "
+"rkward-devel@lists.sourceforge.net"
 
 # default application: application par défaut (fr.po) aplicación predeterminada (es.po)
 #: windows/rkhtmlwindow.cpp:168
@@ -626,405 +981,9 @@ msgstr "Tancat"
 msgid "Open (Waiting)"
 msgstr "Obre (s'està a l'espera)"
 
-#: windows/rkcommandeditorwindow.cpp:130 windows/rkcommandeditorwindow.cpp:224
-msgid " [modified]"
-msgstr " [modicat]"
-
-#: windows/rkcommandeditorwindow.cpp:143
-msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr "S'ha modificat el document \"%1\". Segur que el vol tancar?"
-
-#: windows/rkcommandeditorwindow.cpp:143
-msgid "File not saved"
-msgstr "El fitxer no s'ha desat"
-
-#: windows/rkcommandeditorwindow.cpp:223
-msgid "Unnamed"
-msgstr "Sense nom"
-
-#: windows/detachedwindowcontainer.cpp:41
-msgid "Attach to main window"
-msgstr "Ajunta amb la finestra principal"
-
-# ¿O finestra esquerra?
-# ??? Per revisar
-#: windows/rkworkplaceview.cpp:58
-#, fuzzy
-msgid "Window Left"
-msgstr "Finestra a l'esquerra"
-
-# ¿O finestra dreta?
-# ??? Per revisar
-#: windows/rkworkplaceview.cpp:62
-#, fuzzy
-msgid "Window Right"
-msgstr "Finestra a la dreta"
-
-#: windows/rkworkplace.cpp:148
-msgid "Unable to open \"%1\""
-msgstr "No es pot obrir \"%1\""
-
-#: windows/rkworkplace.cpp:148
-msgid "Could not open command file"
-msgstr "No s'ha pogut obrir el fitxer d'ordres"
-
-#: windows/rkworkplace.cpp:260
-#, fuzzy
-msgid ""
-"You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
-"is not optimized to handle very large objects in the built in data editor. "
-"This will use a lot of memory, and - depending on your system - might be "
-"very slow. For large objects it is generally recommended to edit using "
-"command line means or to split into smaller chunks before editing. On the "
-"other hand, if you have enough memory, or the data is simple enough (numeric "
-"data is easier to handle, than factor), editing may not be a problem at all. "
-"You can configure this warning (or turn it off entirely) under Settings-"
-">Configure RKWard->General.\n"
-"Really edit object?"
-msgstr ""
-"Esteu a punt d'editar l'objecte \"%1\" que és molt gran (%2 camps). L'editor "
-"integrat de dades del RKWard no està optimitzat per manegar objectes grans. "
-"Això pot utilitzar molta memòria, i -depenent del vostre sistema- anar molt "
-"lent. Es recomana editar els objectes grans utilitzant els mètodes "
-"disponibles en la línia d'ordres o dividir-los en bocins més petits abans "
-"d'editar-los. D'altra banda, si teniu memòria suficient, o les dades són "
-"suficientment simples (les dades numèriques són més fàcils de manegar que "
-"els factors (variables categòriques)), poder es poden editar sense "
-"problemes. Podeu configurar aquest avís (o desactivar-lo del tot) a "
-"Arranjaments-> Configura RKWard->General.\n"
-"Edito l'objecte?"
-
-#: windows/rkworkplace.cpp:260
-msgid "About to edit very large object"
-msgstr "Quant a editar objectges molt grans"
-
-# fr.po: Enregistrer l'espace de travail
-# es.po: Guardar Espacio de Trabajo
-#  Thomas Friedrichsmeier: Workplace is the windows (script editors / data editors / help files / output) managed by rkward
-#: windows/rkworkplace.cpp:430
-msgid "Save Workplace layout"
-msgstr "Desa el lloc de treball del RkWard"
-
-#: windows/rkworkplace.cpp:437
-msgid "Restore Workplace layout"
-msgstr "Restableix el lloc de treball del RKWard"
-
-#: windows/rkworkplace.cpp:507
-msgid "Previous Window"
-msgstr "Finestra anterior"
-
-#: windows/rkworkplace.cpp:511
-msgid "Next Window"
-msgstr "Finestra següent"
-
-# Termcat: diari  m. Registre cronològic de les operacions de processament de dades dutes a terme en un fitxer.
-#: windows/rkcommandlog.cpp:54 settings/rksettingsmodulewatch.cpp:277
-msgid "Command log"
-msgstr "Bitàcola de les ordres"
-
-#: windows/rkcommandlog.cpp:173
-msgid "Incomplete statement.\n"
-msgstr "Sentència incompleta.\n"
-
-#: windows/rkcommandlog.cpp:175
-msgid "Syntax error.\n"
-msgstr "Error de sintaxi.\n"
-
-#: windows/rkcommandlog.cpp:177
-msgid "An unspecified error occurred while running the command.\n"
-msgstr "S'ha produït un error desconegut mentre s'executava l'ordre.\n"
-
-#: windows/rkwindowcatcher.cpp:60
-msgid ""
-"You have created a new X11 device window in R. Usually, RKWard tries to "
-"detect such windows, to take control of them, and add a menu-bar to them. "
-"This time, however, RKWard failed to detect, which window was created, and "
-"so can not embed it.\n"
-"If you created the window on a different screen or X11 display, that is to "
-"be expected. You might want to consider changing options(\"display\"), "
-"then.\n"
-"If you can see the X11 window on the same screen as this message, then "
-"RKWard should do better. In this case, please contact us at rkward-"
-"devel@lists.sourceforge.net with details on your setup, so we can try to fix "
-"this in future versions of RKWard."
-msgstr ""
-"Heu creat una nova finestra en R. Per regla general, el RKWard intenta "
-"detectar aquestes finestres, per controlar-les i afegir-les a la barra del "
-"menú. Tanmateix, aquesta vegada el RKWard ha fallat en la detecció de quina "
-"finestra s'ha creat, i, per tant, no l'ha pogut incrustar.\n"
-"Aquest és el comportament normal si heu creat la finestra en un altre "
-"escriptori o en una sessió X11 diferent. Si voleu, podeu intentar canviar "
-"les opcions(\"visualització\"). Llavors.\n"
-"si podeu veure la finestra X11 en el mateix escriptori que aquest missatge, "
-"aleshores el RKWard és millorable. En aquest cas, agrairíem que ens "
-"contacteu a rkward-devel@lists.sourceforge.net informant-nos dels detalls de "
-"la vostra configuració a fi que intentem arreglar això en les futures "
-"versions de RKWard."
-
-#: windows/rkwindowcatcher.cpp:60
-msgid "Could not embed R X11 window"
-msgstr "No s'ha pogut incrustar la finestra X11 del R"
-
-#: windows/rkwindowcatcher.cpp:93
-msgid "An error occurred"
-msgstr "S'ha produït un error"
-
-# ??? Per revisar
-#: windows/rkwindowcatcher.cpp:193
-#, fuzzy
-msgid "Specify fixed size"
-msgstr "Especifiqueu la mida fixa"
-
-#: windows/rkwindowcatcher.cpp:218
-msgid "Activate graphics device number %1"
-msgstr "S'ha activat el dispositiu gràfic nombre %1"
-
-#: windows/rkwindowcatcher.cpp:224
-msgid "Copy contents of graphics device number %1 to output"
-msgstr "Copia el contingut del dispositiu gràfic número %1 als resultats"
-
-#: windows/rkwindowcatcher.cpp:230
-msgid "Print contents of graphics device number %1"
-msgstr "Imprimeix el contingit del dispositiu gràfic nombre %1"
-
-#: windows/rkwindowcatcher.cpp:237
-msgid "Specify R object"
-msgstr "Especifiqueu l'objecte R"
-
-# fr: Définissez le nom d'objet de R, vous veulent sauver le graphique à
-# ??? Per revisar
-#: windows/rkwindowcatcher.cpp:240
-msgid "Specify the R object name, you want to save the graph to"
-msgstr "Especifiqueu el nom de l'objecte R on voleu desar el gràfic"
-
-#: windows/rkwindowcatcher.cpp:251
-msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr "Desa el contingut del dispositiu gràfic número %1 a l'objecte '%2'"
-
-#: windows/rkwindowcatcher.cpp:260
-msgid "Duplicate graphics device number %1"
-msgstr "Duplica el dispositiu gràfic nombre %1"
-
-#: windows/rkwindowcatcher.cpp:280
-msgid "Draw area follows size of window"
-msgstr "Adapta l'àrea del dibuix a la mida de la finestra"
-
-#: windows/rkwindowcatcher.cpp:282
-msgid "Set fixed size 500x500"
-msgstr "Estableix una mida fixa de 500x500"
-
-#: windows/rkwindowcatcher.cpp:283
-msgid "Set fixed size 1000x1000"
-msgstr "Estableix una mida fixa de 1000x1000"
-
-#: windows/rkwindowcatcher.cpp:284
-msgid "Set fixed size 2000x2000"
-msgstr "Estableix una mida fixa de 2000x2000"
-
-#: windows/rkwindowcatcher.cpp:285
-msgid "Set specified fixed size..."
-msgstr "Estableix una mida especificada..."
-
-#: windows/rkwindowcatcher.cpp:287
-msgid "Make active"
-msgstr "Fes-la activa"
-
-#: windows/rkwindowcatcher.cpp:288
-msgid "Copy to output"
-msgstr "Copia els resultats"
-
-#: windows/rkwindowcatcher.cpp:290
-msgid "Store as R object..."
-msgstr "Guarda com un objecte R..."
-
-#: windows/rkwindowcatcher.cpp:291
-msgid "Duplicate"
-msgstr "Duplicat"
-
-#: windows/rktoplevelwindowgui.cpp:48
-msgid "Help on R"
-msgstr "Ajuda sobre el R"
-
-#: windows/rktoplevelwindowgui.cpp:49
-msgid "Search R Help"
-msgstr "Cerca ajuda del R"
-
-#: windows/rktoplevelwindowgui.cpp:51
-msgid "Help on RKWard"
-msgstr "Ajuda sobre el RKWard"
-
-#: windows/rktoplevelwindowgui.cpp:57
-msgid "Shows the R help index"
-msgstr "Mostra l'índex de l'ajuda R"
-
-#: windows/rktoplevelwindowgui.cpp:58
-msgid "Shows/raises the R Help Search window"
-msgstr "Mostra / alça la finestra per cercar l'ajuda de R"
-
-#: windows/rktoplevelwindowgui.cpp:59
-msgid "Show help on RKWard"
-msgstr "Mostra l'ajuda del RKWard"
-
-#: windows/rktoplevelwindowgui.cpp:62
-msgid "Show/Hide Workspace Browser"
-msgstr "Mostra/Oculta el navegador de l'espai de treball"
-
-#: windows/rktoplevelwindowgui.cpp:63
-#, fuzzy
-msgid "Show/Hide Filesystem Browser"
-msgstr "Mostra/Oculta el navegador de l'espai de treball"
-
-# Termcat: diari  m. Registre cronològic de les operacions de processament de dades dutes a terme en un fitxer.
-#: windows/rktoplevelwindowgui.cpp:64
-msgid "Show/Hide Command Log"
-msgstr "Mostra/Oculta la bitàcola de les ordres"
-
-#: windows/rktoplevelwindowgui.cpp:65
-msgid "Show/Hide Pending Jobs"
-msgstr "Mostra/Oculta els treballs pendents"
-
-#: windows/rktoplevelwindowgui.cpp:66
-msgid "Show/Hide Console"
-msgstr "Mostra/Oculta la consola R"
-
-#: windows/rktoplevelwindowgui.cpp:67
-msgid "Show/Hide R Help Search"
-msgstr "Mostra/Oculta la finestra per cercar l'ajuda de R"
-
-# ??? Per revisar
-# Activa la visualització del document o 
-# Activa la visualització dels documents
-#: windows/rktoplevelwindowgui.cpp:68
-#, fuzzy
-msgid "Activate Document view"
-msgstr "Activa la visualització del document"
-
-#: windows/rktoplevelwindowgui.cpp:70
-msgid "Show &Output"
-msgstr "Mostra els &Resultats"
-
-#: windows/rktoplevelwindowgui.cpp:91
-msgid ""
-"Please submit your bug reports or wishes at http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
-"net"
-msgstr ""
-"Si us plau, trameteu els informes d'errors o els desitjos a http://"
-"sourceforge.net/tracker/?group_id=50231&atid=459007 o envieu un missatge a "
-"rkward-devel@lists.sourceforge.net"
-
-#: windows/rkhelpsearchwindow.cpp:55
-msgid "Find:"
-msgstr "Cerca:"
-
-#: windows/rkhelpsearchwindow.cpp:58
-msgid "Fields:"
-msgstr "Camps:"
-
-#: windows/rkhelpsearchwindow.cpp:71 windows/rkhelpsearchwindow.cpp:82
-#: robjectbrowser.cpp:263
-msgid "All"
-msgstr "Tot"
-
-#: windows/rkhelpsearchwindow.cpp:72
-msgid "All but keywords"
-msgstr "Tot menys les paraules claus"
-
-#: windows/rkhelpsearchwindow.cpp:73
-msgid "Keywords"
-msgstr "Paraules clau"
-
-#: windows/rkhelpsearchwindow.cpp:74 windows/rkhelpsearchwindow.cpp:99
-#: dialogs/rkloadlibsdialog.cpp:261
-msgid "Title"
-msgstr "Títol"
-
-#: windows/rkhelpsearchwindow.cpp:77
-msgid "Package:"
-msgstr "Paquet:"
-
-#: windows/rkhelpsearchwindow.cpp:86
-msgid "Case sensitive"
-msgstr "Sensible a majúscules"
-
-#: windows/rkhelpsearchwindow.cpp:88
-msgid "Fuzzy matching"
-msgstr "Emparellament inexacta"
-
-#: windows/rkhelpsearchwindow.cpp:92
-msgid "Find"
-msgstr "Cerca"
-
-#: windows/rkhelpsearchwindow.cpp:98
-msgid "Topic"
-msgstr "Tema"
-
-#: windows/rkhelpsearchwindow.cpp:100
-msgid "Package"
-msgstr "Paquet"
-
-#: windows/rkhelpsearchwindow.cpp:106
-msgid "Help search"
-msgstr "Busca ajuda"
-
-#: windows/rkhelpsearchwindow.cpp:212
-msgid ""
-"No help found on '%1'. Maybe the corresponding package is not installed/"
-"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
-"more options."
-msgstr ""
-"No s'ha trobat cap ajuda sobre '%1'. Potser el paquet corresponent no està "
-"instal·lat / carregat, o potser heu escrit malament l'ordre Per a més "
-"opcions, intenteu utilitzar Ajuda->Cerca ajuda del R."
-
-#: windows/rkhelpsearchwindow.cpp:212
-msgid "No help found"
-msgstr "No s'ha trobat l'ajuda"
-
 #: plugin/rkpluginspinbox.cpp:43
 msgid "Enter value:"
 msgstr "Introduïu el valor:"
-
-# fr.po: Entrer un nouveau nom
-# es.po: Introducir el nuevo nombre
-#: plugin/rkpluginbrowser.cpp:50
-msgid "Enter filename"
-msgstr "Introduïu el nom de fitxer"
-
-#: plugin/rkpluginbrowser.cpp:50
-msgid "Select"
-msgstr "Selecciona"
-
-# fr.po: Modèle complet
-#: plugin/rkformula.cpp:66
-msgid "Full Model"
-msgstr "Model complet"
-
-#: plugin/rkformula.cpp:67
-msgid "Main Effects only"
-msgstr "Només efectes principals"
-
-#: plugin/rkformula.cpp:68
-msgid "Custom Model:"
-msgstr "Model a mida:"
-
-# fr.po: Effets principaux seulement
-# es.po: Solo Efectos Principales
-#: plugin/rkformula.cpp:90
-msgid "Main effects"
-msgstr "Efectes principals"
-
-#: plugin/rkformula.cpp:95
-msgid "Level"
-msgstr "Nivell"
-
-#: plugin/rkformula.cpp:96
-msgid "Term"
-msgstr "Terme"
-
-#: plugin/rkformula.cpp:103
-msgid "Specify model"
-msgstr "Especifiqueu el model"
 
 # parse: anàlisi sintàctica (Vocabulari d'informàtica. © Gabinet de Llengua Catalana. Universitat Autònoma de Barcelona)
 #: plugin/rkstandardcomponent.cpp:75
@@ -1079,22 +1038,6 @@ msgstr "< Enrere"
 msgid "Use Dialog"
 msgstr "Utilitza el diàleg"
 
-#: plugin/rkvarslot.cpp:45
-msgid "Variable:"
-msgstr "Variable:"
-
-#: plugin/rkradio.cpp:42 plugin/rkdropdown.cpp:41
-msgid "Select one:"
-msgstr "Selecciona un:"
-
-#: plugin/rkinput.cpp:49
-msgid "Enter text"
-msgstr "Introduïu el text"
-
-#: plugin/rkcomponentmap.cpp:102 plugin/rkcomponentmap.cpp:283
-msgid "(no label)"
-msgstr "(cap etiqueta)"
-
 #: plugin/rkpreviewbox.cpp:47
 msgid "Preview"
 msgstr "Previsualització"
@@ -1119,6 +1062,20 @@ msgstr "S'està actualitzant la previsualització"
 msgid "Preview not (yet) possible"
 msgstr "Encara no és possible la previsualització"
 
+#: plugin/rkvarslot.cpp:45
+msgid "Variable:"
+msgstr "Variable:"
+
+# fr.po: Entrer un nouveau nom
+# es.po: Introducir el nuevo nombre
+#: plugin/rkpluginbrowser.cpp:50
+msgid "Enter filename"
+msgstr "Introduïu el nom de fitxer"
+
+#: plugin/rkpluginbrowser.cpp:50
+msgid "Select"
+msgstr "Selecciona"
+
 #: plugin/rkpluginsaveobject.cpp:41 rkward.cpp:255
 msgid "my.data"
 msgstr "Dades.meves"
@@ -1126,6 +1083,49 @@ msgstr "Dades.meves"
 #: plugin/rkpluginsaveobject.cpp:41
 msgid "Save to:"
 msgstr "Desar com:"
+
+# fr.po: Modèle complet
+#: plugin/rkformula.cpp:66
+msgid "Full Model"
+msgstr "Model complet"
+
+#: plugin/rkformula.cpp:67
+msgid "Main Effects only"
+msgstr "Només efectes principals"
+
+#: plugin/rkformula.cpp:68
+msgid "Custom Model:"
+msgstr "Model a mida:"
+
+# fr.po: Effets principaux seulement
+# es.po: Solo Efectos Principales
+#: plugin/rkformula.cpp:90
+msgid "Main effects"
+msgstr "Efectes principals"
+
+#: plugin/rkformula.cpp:95
+msgid "Level"
+msgstr "Nivell"
+
+#: plugin/rkformula.cpp:96
+msgid "Term"
+msgstr "Terme"
+
+#: plugin/rkformula.cpp:103
+msgid "Specify model"
+msgstr "Especifiqueu el model"
+
+#: plugin/rkdropdown.cpp:41 plugin/rkradio.cpp:42
+msgid "Select one:"
+msgstr "Selecciona un:"
+
+#: plugin/rkinput.cpp:49
+msgid "Enter text"
+msgstr "Introduïu el text"
+
+#: plugin/rkcomponentmap.cpp:102 plugin/rkcomponentmap.cpp:283
+msgid "(no label)"
+msgstr "(cap etiqueta)"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:44
 msgid "Which objects should be shown by default?"
@@ -1485,38 +1485,42 @@ msgstr ""
 msgid "R-Packages"
 msgstr "Paquets R"
 
-#: settings/rksettingsmoduleconsole.cpp:45
+#: settings/rksettingsmoduleconsole.cpp:46
 msgid "Load/Save command history"
 msgstr "Carrega/Desa l'historial d'ordres"
 
-#: settings/rksettingsmoduleconsole.cpp:50
+#: settings/rksettingsmoduleconsole.cpp:51
 msgid "Maximum length of command history"
 msgstr "Introduïu la longitud màxima de l'historial d'ordres"
 
-#: settings/rksettingsmoduleconsole.cpp:52
-#: settings/rksettingsmoduleconsole.cpp:58
+#: settings/rksettingsmoduleconsole.cpp:53
+#: settings/rksettingsmoduleconsole.cpp:59
 #: settings/rksettingsmodulewatch.cpp:149
 msgid "Unlimited"
 msgstr "Sense límit"
 
-#: settings/rksettingsmoduleconsole.cpp:56
+#: settings/rksettingsmoduleconsole.cpp:57
 msgid "Maximum number of paragraphs/lines to display in the console"
 msgstr ""
 "Introduïu el nombre màxim de línies / paràgrafs que s'han de mostrar en la "
 "consola"
 
-#: settings/rksettingsmoduleconsole.cpp:64
+#: settings/rksettingsmoduleconsole.cpp:65
 msgid "Run commands from script editor through console"
 msgstr "Executar les ordres del editor de seqüències a través de la consola"
 
+#: settings/rksettingsmoduleconsole.cpp:70
+msgid "Also add those commands to console history"
+msgstr ""
+
 # ??? Per revisar
 # fr: La commande d'historique est sensible à la casse par défaut
-#: settings/rksettingsmoduleconsole.cpp:71
+#: settings/rksettingsmoduleconsole.cpp:78
 #, fuzzy
 msgid "Command history is context sensitive by default"
 msgstr "El historial d'ordres és, per omissió, sensible al context"
 
-#: settings/rksettingsmoduleconsole.cpp:167
+#: settings/rksettingsmoduleconsole.cpp:179
 msgid "Console"
 msgstr "Consola"
 
@@ -1889,6 +1893,18 @@ msgstr "Oculta els errors / avisos"
 msgid "Errors / Warnings:"
 msgstr "Errors / Avisos:"
 
+#: misc/rksaveobjectchooser.cpp:39
+msgid "Object name to save to"
+msgstr "Introduïu el nom de l'objecte"
+
+#: misc/rksaveobjectchooser.cpp:83
+msgid "Overwrite? (The given object name already exists)"
+msgstr "Sobreescric? (El nom del objecte ja existeix)"
+
+#: misc/rksaveobjectchooser.cpp:87
+msgid "Overwrite?"
+msgstr "Sobreescric?"
+
 #: misc/multistringselector.cpp:58
 msgid "Up"
 msgstr "Amunt"
@@ -1937,18 +1953,6 @@ msgstr "Funcions"
 #: misc/rkobjectlistview.cpp:433
 msgid "Hidden Objects"
 msgstr "Objectes ocults"
-
-#: misc/rksaveobjectchooser.cpp:39
-msgid "Object name to save to"
-msgstr "Introduïu el nom de l'objecte"
-
-#: misc/rksaveobjectchooser.cpp:83
-msgid "Overwrite? (The given object name already exists)"
-msgstr "Sobreescric? (El nom del objecte ja existeix)"
-
-#: misc/rksaveobjectchooser.cpp:87
-msgid "Overwrite?"
-msgstr "Sobreescric?"
 
 #: scriptbackends/phpbackend.cpp:62
 msgid ""
@@ -2184,43 +2188,6 @@ msgstr ""
 #: rbackend/rthread.cpp:462
 msgid "R Startup"
 msgstr "Engegada del R"
-
-#. i18n: file rkconsolepart.rc line 11
-#. i18n: file rkwardui.rc line 32
-#: rc.cpp:6 rc.cpp:33
-#, no-c-format
-msgid "&Run"
-msgstr "&Executa"
-
-#. i18n: file rkwardui.rc line 5
-#: rc.cpp:18
-#, no-c-format
-msgid "&New"
-msgstr "&Nou"
-
-#. i18n: file rkwardui.rc line 12
-#: rc.cpp:21
-#, no-c-format
-msgid "&Import"
-msgstr "&Importar"
-
-#. i18n: file rkwardui.rc line 22
-#: rc.cpp:24
-#, no-c-format
-msgid "&Workspace"
-msgstr "&Espai de treball"
-
-#. i18n: file rkwardui.rc line 36
-#: rc.cpp:36
-#, no-c-format
-msgid "&Windows"
-msgstr "&Finestres"
-
-#. i18n: file rkwardui.rc line 42
-#: rc.cpp:39
-#, no-c-format
-msgid "&Activate"
-msgstr "&Activa"
 
 #: main.cpp:70 main.cpp:83
 msgid "RKWard"
@@ -2601,18 +2568,6 @@ msgstr ""
 msgid "Ready"
 msgstr "Llest."
 
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr "Pep Roca"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr "pep.roca@gmail.com"
-
 #: robjectbrowser.cpp:114
 msgid "Objects in the R workspace"
 msgstr "Objectes en l'espai de treball del R"
@@ -2674,6 +2629,55 @@ msgstr "Mostra tots els entorns"
 #: robjectbrowser.cpp:276
 msgid "Show Hidden Objects"
 msgstr "Mostra els objectes ocults"
+
+#. i18n: file rkconsolepart.rc line 11
+#. i18n: file rkwardui.rc line 32
+#: rc.cpp:6 rc.cpp:33
+#, no-c-format
+msgid "&Run"
+msgstr "&Executa"
+
+#. i18n: file rkwardui.rc line 5
+#: rc.cpp:18
+#, no-c-format
+msgid "&New"
+msgstr "&Nou"
+
+#. i18n: file rkwardui.rc line 12
+#: rc.cpp:21
+#, no-c-format
+msgid "&Import"
+msgstr "&Importar"
+
+#. i18n: file rkwardui.rc line 22
+#: rc.cpp:24
+#, no-c-format
+msgid "&Workspace"
+msgstr "&Espai de treball"
+
+#. i18n: file rkwardui.rc line 36
+#: rc.cpp:36
+#, no-c-format
+msgid "&Windows"
+msgstr "&Finestres"
+
+#. i18n: file rkwardui.rc line 42
+#: rc.cpp:39
+#, no-c-format
+msgid "&Activate"
+msgstr "&Activa"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Pep Roca"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "pep.roca@gmail.com"
 
 #~ msgid ""
 #~ "The R-backend has reported one or more error(s) while processing the "

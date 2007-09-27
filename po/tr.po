@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 21:39+0200\n"
+"POT-Creation-Date: 2007-09-27 14:37+0200\n"
 "PO-Revision-Date: 2007-04-12 10:40+0300\n"
 "Last-Translator: ertugrulerata <ertugrulerata@gmail.com>\n"
 "Language-Team:  <tr@li.org>\n"
@@ -133,7 +133,7 @@ msgstr "Düzeyler"
 msgid "Format"
 msgstr "Biçim"
 
-#: dataeditor/twintable.cpp:66 plugin/rkformula.cpp:74 plugin/rkvarslot.cpp:57
+#: dataeditor/twintable.cpp:66 plugin/rkvarslot.cpp:57 plugin/rkformula.cpp:74
 #: dialogs/rkloadlibsdialog.cpp:260 dialogs/rkloadlibsdialog.cpp:279
 #: dialogs/rkloadlibsdialog.cpp:463 dialogs/rkloadlibsdialog.cpp:613
 #: misc/rkobjectlistview.cpp:53
@@ -167,6 +167,30 @@ msgstr "İşaretli satırları (%1-%2) sil"
 #: dataeditor/twintable.cpp:260
 msgid "Delete this row (%1)"
 msgstr "Bu hücreyi (%1) sil "
+
+#: agents/rkquitagent.cpp:41
+msgid ""
+"Waiting for remaining R commands to finish. To quit immediately, press "
+"Cancel (WARNING: This may result in loss of data)"
+msgstr ""
+"Bitirmek için kalan R komutları bekleniyor. Hemen çıkmak için İptal "
+"düğmesine basın. (UYARI: İptal işlemi veri kaybetmenize neden olabilir.)"
+
+#: agents/rkquitagent.cpp:41
+msgid "Waiting for R to finish"
+msgstr "Bitirmek için R bekleniyor"
+
+#: agents/rkeditobjectagent.cpp:56
+msgid ""
+"The object '%1', could not be opened for editing. Either it does not exist, "
+"or RKWard does not support editing this type of object, yet."
+msgstr ""
+"Nesne '%1' düzenlemek için açılamadı. Ya dosya yok ya da RKWard bu nesneyi "
+"henüz düzenleyemiyor. "
+
+#: agents/rkeditobjectagent.cpp:56
+msgid "Cannot edit '%1'"
+msgstr "Düzenlenemez '%1'"
 
 #: agents/rksaveagent.cpp:60
 msgid ""
@@ -279,30 +303,6 @@ msgstr ""
 msgid "Error loading workspace"
 msgstr "Çalışma alanı yükleme hatası"
 
-#: agents/rkquitagent.cpp:41
-msgid ""
-"Waiting for remaining R commands to finish. To quit immediately, press "
-"Cancel (WARNING: This may result in loss of data)"
-msgstr ""
-"Bitirmek için kalan R komutları bekleniyor. Hemen çıkmak için İptal "
-"düğmesine basın. (UYARI: İptal işlemi veri kaybetmenize neden olabilir.)"
-
-#: agents/rkquitagent.cpp:41
-msgid "Waiting for R to finish"
-msgstr "Bitirmek için R bekleniyor"
-
-#: agents/rkeditobjectagent.cpp:56
-msgid ""
-"The object '%1', could not be opened for editing. Either it does not exist, "
-"or RKWard does not support editing this type of object, yet."
-msgstr ""
-"Nesne '%1' düzenlemek için açılamadı. Ya dosya yok ya da RKWard bu nesneyi "
-"henüz düzenleyemiyor. "
-
-#: agents/rkeditobjectagent.cpp:56
-msgid "Cannot edit '%1'"
-msgstr "Düzenlenemez '%1'"
-
 #: core/rkmodificationtracker.cpp:50
 msgid ""
 "The object '%1' was removed from workspace or changed to a different type of "
@@ -412,12 +412,112 @@ msgstr ""
 msgid "Package blacklisted"
 msgstr "Uygun paket yok"
 
+#: windows/rkwindowcatcher.cpp:60
+msgid ""
+"You have created a new X11 device window in R. Usually, RKWard tries to "
+"detect such windows, to take control of them, and add a menu-bar to them. "
+"This time, however, RKWard failed to detect, which window was created, and "
+"so can not embed it.\n"
+"If you created the window on a different screen or X11 display, that is to "
+"be expected. You might want to consider changing options(\"display\"), "
+"then.\n"
+"If you can see the X11 window on the same screen as this message, then "
+"RKWard should do better. In this case, please contact us at rkward-"
+"devel@lists.sourceforge.net with details on your setup, so we can try to fix "
+"this in future versions of RKWard."
+msgstr ""
+"R içinde yeni bir X11 penceresi oluşturdunuz. Genellikle RKWard bu gibi "
+"pencereleri kontrol etmek için bulur ve onları menü çubuğuna ekler. Ancak şu "
+"an, RKWard oluşturulan pencereyi bulamadı ve ekleyemedi.\n"
+"Bu durum farklı bir ekran veya X11 üzerinde pencere oluşturduysanız meydana "
+"gelir. Daha sonra seçenekleri değiştirebilirsiniz (\"display\"),\n"
+"Bu mesaj gibi aynı ekranda X11 penceresi görebiliyorsanız RKWard daha "
+"iyisini yapabilir. Bu durumda lütfen ayarlarınızdaki detaylarla birlikte  "
+"rkward-devel@lists.sourceforge.net de bizimle iletişim kurunuz. RKWard'ın "
+"ileriki sürümlerine bunu düzeltmeye çalışacağız."
+
+#: windows/rkwindowcatcher.cpp:60
+msgid "Could not embed R X11 window"
+msgstr "R X11 penceresini içine koyamıyor"
+
+#: windows/rkwindowcatcher.cpp:93
+msgid "An error occurred"
+msgstr "Bazı hatalar oluştu"
+
+#: windows/rkwindowcatcher.cpp:193
+msgid "Specify fixed size"
+msgstr "Düzeltilmiş büyüklüğü belirt"
+
+#: windows/rkwindowcatcher.cpp:218
+msgid "Activate graphics device number %1"
+msgstr "Grafik aygıtı %1 i etkinleştir"
+
+#: windows/rkwindowcatcher.cpp:224
+msgid "Copy contents of graphics device number %1 to output"
+msgstr "Grafik aygıtı %1 in içeriğini çıktıya kopyala"
+
+#: windows/rkwindowcatcher.cpp:230
+msgid "Print contents of graphics device number %1"
+msgstr "Grafik aygıtı %1 için içeriğini yazdır"
+
+#: windows/rkwindowcatcher.cpp:237
+msgid "Specify R object"
+msgstr "R nesnesi belirt"
+
+#: windows/rkwindowcatcher.cpp:240
+msgid "Specify the R object name, you want to save the graph to"
+msgstr "R nesnesi ismi belirt, grafiği kaydetmek isterseniz"
+
+#: windows/rkwindowcatcher.cpp:251
+msgid "Save contents of graphics device number %1 to object '%2'"
+msgstr "Grafik aygıtı %1 in içeriğini nesne %2 ye kaydet"
+
+#: windows/rkwindowcatcher.cpp:260
+msgid "Duplicate graphics device number %1"
+msgstr "Grafik aygıtı %1 in kopyasını yap"
+
+#: windows/rkwindowcatcher.cpp:280
+msgid "Draw area follows size of window"
+msgstr "Çizim alanı pencerenin büyüklüğü kadardır"
+
+#: windows/rkwindowcatcher.cpp:282
+msgid "Set fixed size 500x500"
+msgstr "Büyüklüğü 500x500 olarak ayarla"
+
+#: windows/rkwindowcatcher.cpp:283
+msgid "Set fixed size 1000x1000"
+msgstr "Büyüklüğü 1000x1000 olarak ayarla"
+
+#: windows/rkwindowcatcher.cpp:284
+msgid "Set fixed size 2000x2000"
+msgstr "Büyüklüğü 2000x2000 olarak ayarla"
+
+#: windows/rkwindowcatcher.cpp:285
+msgid "Set specified fixed size..."
+msgstr "Belirtilen büyüklüğü ayarla..."
+
+#: windows/rkwindowcatcher.cpp:287
+msgid "Make active"
+msgstr "Etkin yap"
+
+#: windows/rkwindowcatcher.cpp:288
+msgid "Copy to output"
+msgstr "Çıktıya kopyala"
+
+#: windows/rkwindowcatcher.cpp:290
+msgid "Store as R object..."
+msgstr "R nesnesi olarak sakla..."
+
+#: windows/rkwindowcatcher.cpp:291
+msgid "Duplicate"
+msgstr "İkile"
+
 #: windows/rkcommandeditorwindowpart.cpp:51
 msgid "Run all"
 msgstr "Hepsini çalıştır"
 
-#: windows/rkcommandeditorwindowpart.cpp:52 windows/rkhtmlwindow.cpp:94
-#: windows/rkcommandlog.cpp:287 rkconsole.cpp:781
+#: windows/rkcommandeditorwindowpart.cpp:52 windows/rkcommandlog.cpp:287
+#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:781
 msgid "Run selection"
 msgstr "Seçileni çalıştır"
 
@@ -428,6 +528,226 @@ msgstr "Şu anki satırı çalıştır"
 #: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:780
 msgid "&Function reference"
 msgstr "&Fonksiyon başvuru"
+
+#: windows/rkcommandeditorwindow.cpp:130 windows/rkcommandeditorwindow.cpp:224
+msgid " [modified]"
+msgstr " [değiştirilmiş]"
+
+#: windows/rkcommandeditorwindow.cpp:143
+msgid "The document \"%1\" has been modified. Close it anyway?"
+msgstr "Dosya \"%1\"değişmiş. Yine de kapatılsın mı?"
+
+#: windows/rkcommandeditorwindow.cpp:143
+msgid "File not saved"
+msgstr "Dosya kaydedilmedi"
+
+#: windows/rkcommandeditorwindow.cpp:223
+msgid "Unnamed"
+msgstr "İsimsiz"
+
+#: windows/rkworkplace.cpp:148
+msgid "Unable to open \"%1\""
+msgstr "\"%1\" açılamıyor"
+
+#: windows/rkworkplace.cpp:148
+msgid "Could not open command file"
+msgstr "Komut dosyası açılmadı"
+
+#: windows/rkworkplace.cpp:260
+msgid ""
+"You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
+"is not optimized to handle very large objects in the built in data editor. "
+"This will use a lot of memory, and - depending on your system - might be "
+"very slow. For large objects it is generally recommended to edit using "
+"command line means or to split into smaller chunks before editing. On the "
+"other hand, if you have enough memory, or the data is simple enough (numeric "
+"data is easier to handle, than factor), editing may not be a problem at all. "
+"You can configure this warning (or turn it off entirely) under Settings-"
+">Configure RKWard->General.\n"
+"Really edit object?"
+msgstr ""
+
+#: windows/rkworkplace.cpp:260
+msgid "About to edit very large object"
+msgstr "Çok geniş nesne düzenleme hakkında"
+
+#: windows/rkworkplace.cpp:430
+msgid "Save Workplace layout"
+msgstr "Çalışma alanı düzenini kaydet"
+
+#: windows/rkworkplace.cpp:437
+msgid "Restore Workplace layout"
+msgstr "Çalışma alanı düzenini geri koy"
+
+#: windows/rkworkplace.cpp:507
+msgid "Previous Window"
+msgstr "Önceki Pencere"
+
+#: windows/rkworkplace.cpp:511
+msgid "Next Window"
+msgstr "Yeni Pencere"
+
+#: windows/detachedwindowcontainer.cpp:41
+msgid "Attach to main window"
+msgstr "Ana pencereye ekle"
+
+#: windows/rkhelpsearchwindow.cpp:55
+msgid "Find:"
+msgstr "Bul:"
+
+#: windows/rkhelpsearchwindow.cpp:58
+msgid "Fields:"
+msgstr "Alanlar:"
+
+#: windows/rkhelpsearchwindow.cpp:71 windows/rkhelpsearchwindow.cpp:82
+#: robjectbrowser.cpp:263
+msgid "All"
+msgstr "Hepsi"
+
+#: windows/rkhelpsearchwindow.cpp:72
+msgid "All but keywords"
+msgstr "Hepsi fakat anahtar kelimeler"
+
+#: windows/rkhelpsearchwindow.cpp:73
+msgid "Keywords"
+msgstr "Anahtar kelimeler"
+
+#: windows/rkhelpsearchwindow.cpp:74 windows/rkhelpsearchwindow.cpp:99
+#: dialogs/rkloadlibsdialog.cpp:261
+msgid "Title"
+msgstr "Başlık"
+
+#: windows/rkhelpsearchwindow.cpp:77
+msgid "Package:"
+msgstr "Paket:"
+
+#: windows/rkhelpsearchwindow.cpp:86
+msgid "Case sensitive"
+msgstr "Büyük/küçük harf duyarlı"
+
+#: windows/rkhelpsearchwindow.cpp:88
+msgid "Fuzzy matching"
+msgstr "Bulanık karşılaştırma"
+
+#: windows/rkhelpsearchwindow.cpp:92
+msgid "Find"
+msgstr "Bul"
+
+#: windows/rkhelpsearchwindow.cpp:98
+msgid "Topic"
+msgstr "Konu"
+
+#: windows/rkhelpsearchwindow.cpp:100
+msgid "Package"
+msgstr "Paket"
+
+#: windows/rkhelpsearchwindow.cpp:106
+msgid "Help search"
+msgstr "Yardım ara"
+
+#: windows/rkhelpsearchwindow.cpp:212
+msgid ""
+"No help found on '%1'. Maybe the corresponding package is not installed/"
+"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
+"more options."
+msgstr ""
+"'%1' de yardım bulunamadı. Uygun paket kurulmamış/yüklenmemiş olabilir  veya "
+"komut doğru yazılmamış. Yardım->Daha fazla R yardımı kullanmayı deneyin."
+
+#: windows/rkhelpsearchwindow.cpp:212
+msgid "No help found"
+msgstr "Yardım bulunamadı"
+
+#: windows/rkcommandlog.cpp:54 settings/rksettingsmodulewatch.cpp:277
+msgid "Command log"
+msgstr "Komut kayıtları"
+
+#: windows/rkcommandlog.cpp:173
+msgid "Incomplete statement.\n"
+msgstr "Tamamlanmamış ifade.\n"
+
+#: windows/rkcommandlog.cpp:175
+msgid "Syntax error.\n"
+msgstr "Sözdizimi hatası.\n"
+
+#: windows/rkcommandlog.cpp:177
+msgid "An unspecified error occurred while running the command.\n"
+msgstr "Komut çalışırken belirlenemeyen bir hata oluştu.\n"
+
+#: windows/rkworkplaceview.cpp:58
+msgid "Window Left"
+msgstr "Sol Pencere"
+
+#: windows/rkworkplaceview.cpp:62
+msgid "Window Right"
+msgstr "Sağ Pencere"
+
+#: windows/rktoplevelwindowgui.cpp:48
+msgid "Help on R"
+msgstr "R hakkında yardım"
+
+#: windows/rktoplevelwindowgui.cpp:49
+msgid "Search R Help"
+msgstr "R yardımda ara"
+
+#: windows/rktoplevelwindowgui.cpp:51
+msgid "Help on RKWard"
+msgstr "R hakkında yardım"
+
+#: windows/rktoplevelwindowgui.cpp:57
+msgid "Shows the R help index"
+msgstr "R yardım dizinini gösterir"
+
+#: windows/rktoplevelwindowgui.cpp:58
+msgid "Shows/raises the R Help Search window"
+msgstr "R yardım arama penceresini gösterir/gizler"
+
+#: windows/rktoplevelwindowgui.cpp:59
+msgid "Show help on RKWard"
+msgstr "RKWard'da yardımı göster"
+
+#: windows/rktoplevelwindowgui.cpp:62
+msgid "Show/Hide Workspace Browser"
+msgstr "Çalışma alanını göster/gizle"
+
+#: windows/rktoplevelwindowgui.cpp:63
+#, fuzzy
+msgid "Show/Hide Filesystem Browser"
+msgstr "Çalışma alanını göster/gizle"
+
+#: windows/rktoplevelwindowgui.cpp:64
+msgid "Show/Hide Command Log"
+msgstr "Komut kayıtlarını göster/gizle"
+
+#: windows/rktoplevelwindowgui.cpp:65
+msgid "Show/Hide Pending Jobs"
+msgstr "Bekleyen işleri göster/gizle"
+
+#: windows/rktoplevelwindowgui.cpp:66
+msgid "Show/Hide Console"
+msgstr "R konsol göster/gizle"
+
+#: windows/rktoplevelwindowgui.cpp:67
+msgid "Show/Hide R Help Search"
+msgstr "R yardım arama penceresini göster/gizle"
+
+#: windows/rktoplevelwindowgui.cpp:68
+msgid "Activate Document view"
+msgstr "Belge görünümünü etkinleştir."
+
+#: windows/rktoplevelwindowgui.cpp:70
+msgid "Show &Output"
+msgstr "&Çıktıyı Göster"
+
+#: windows/rktoplevelwindowgui.cpp:91
+msgid ""
+"Please submit your bug reports or wishes at http://sourceforge.net/tracker/?"
+"group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
+"net"
+msgstr ""
+"Lütfen hata raporlarınızı veya isteklerinizi http://sourceforge.net/tracker/?"
+"group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
+"net 'e iletin"
 
 #: windows/rkhtmlwindow.cpp:168
 msgid ""
@@ -593,365 +913,9 @@ msgstr "Kapalı"
 msgid "Open (Waiting)"
 msgstr "Aç (Bekleniyor)"
 
-#: windows/rkcommandeditorwindow.cpp:130 windows/rkcommandeditorwindow.cpp:224
-msgid " [modified]"
-msgstr " [değiştirilmiş]"
-
-#: windows/rkcommandeditorwindow.cpp:143
-msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr "Dosya \"%1\"değişmiş. Yine de kapatılsın mı?"
-
-#: windows/rkcommandeditorwindow.cpp:143
-msgid "File not saved"
-msgstr "Dosya kaydedilmedi"
-
-#: windows/rkcommandeditorwindow.cpp:223
-msgid "Unnamed"
-msgstr "İsimsiz"
-
-#: windows/detachedwindowcontainer.cpp:41
-msgid "Attach to main window"
-msgstr "Ana pencereye ekle"
-
-#: windows/rkworkplaceview.cpp:58
-msgid "Window Left"
-msgstr "Sol Pencere"
-
-#: windows/rkworkplaceview.cpp:62
-msgid "Window Right"
-msgstr "Sağ Pencere"
-
-#: windows/rkworkplace.cpp:148
-msgid "Unable to open \"%1\""
-msgstr "\"%1\" açılamıyor"
-
-#: windows/rkworkplace.cpp:148
-msgid "Could not open command file"
-msgstr "Komut dosyası açılmadı"
-
-#: windows/rkworkplace.cpp:260
-msgid ""
-"You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
-"is not optimized to handle very large objects in the built in data editor. "
-"This will use a lot of memory, and - depending on your system - might be "
-"very slow. For large objects it is generally recommended to edit using "
-"command line means or to split into smaller chunks before editing. On the "
-"other hand, if you have enough memory, or the data is simple enough (numeric "
-"data is easier to handle, than factor), editing may not be a problem at all. "
-"You can configure this warning (or turn it off entirely) under Settings-"
-">Configure RKWard->General.\n"
-"Really edit object?"
-msgstr ""
-
-#: windows/rkworkplace.cpp:260
-msgid "About to edit very large object"
-msgstr "Çok geniş nesne düzenleme hakkında"
-
-#: windows/rkworkplace.cpp:430
-msgid "Save Workplace layout"
-msgstr "Çalışma alanı düzenini kaydet"
-
-#: windows/rkworkplace.cpp:437
-msgid "Restore Workplace layout"
-msgstr "Çalışma alanı düzenini geri koy"
-
-#: windows/rkworkplace.cpp:507
-msgid "Previous Window"
-msgstr "Önceki Pencere"
-
-#: windows/rkworkplace.cpp:511
-msgid "Next Window"
-msgstr "Yeni Pencere"
-
-#: windows/rkcommandlog.cpp:54 settings/rksettingsmodulewatch.cpp:277
-msgid "Command log"
-msgstr "Komut kayıtları"
-
-#: windows/rkcommandlog.cpp:173
-msgid "Incomplete statement.\n"
-msgstr "Tamamlanmamış ifade.\n"
-
-#: windows/rkcommandlog.cpp:175
-msgid "Syntax error.\n"
-msgstr "Sözdizimi hatası.\n"
-
-#: windows/rkcommandlog.cpp:177
-msgid "An unspecified error occurred while running the command.\n"
-msgstr "Komut çalışırken belirlenemeyen bir hata oluştu.\n"
-
-#: windows/rkwindowcatcher.cpp:60
-msgid ""
-"You have created a new X11 device window in R. Usually, RKWard tries to "
-"detect such windows, to take control of them, and add a menu-bar to them. "
-"This time, however, RKWard failed to detect, which window was created, and "
-"so can not embed it.\n"
-"If you created the window on a different screen or X11 display, that is to "
-"be expected. You might want to consider changing options(\"display\"), "
-"then.\n"
-"If you can see the X11 window on the same screen as this message, then "
-"RKWard should do better. In this case, please contact us at rkward-"
-"devel@lists.sourceforge.net with details on your setup, so we can try to fix "
-"this in future versions of RKWard."
-msgstr ""
-"R içinde yeni bir X11 penceresi oluşturdunuz. Genellikle RKWard bu gibi "
-"pencereleri kontrol etmek için bulur ve onları menü çubuğuna ekler. Ancak şu "
-"an, RKWard oluşturulan pencereyi bulamadı ve ekleyemedi.\n"
-"Bu durum farklı bir ekran veya X11 üzerinde pencere oluşturduysanız meydana "
-"gelir. Daha sonra seçenekleri değiştirebilirsiniz (\"display\"),\n"
-"Bu mesaj gibi aynı ekranda X11 penceresi görebiliyorsanız RKWard daha "
-"iyisini yapabilir. Bu durumda lütfen ayarlarınızdaki detaylarla birlikte  "
-"rkward-devel@lists.sourceforge.net de bizimle iletişim kurunuz. RKWard'ın "
-"ileriki sürümlerine bunu düzeltmeye çalışacağız."
-
-#: windows/rkwindowcatcher.cpp:60
-msgid "Could not embed R X11 window"
-msgstr "R X11 penceresini içine koyamıyor"
-
-#: windows/rkwindowcatcher.cpp:93
-msgid "An error occurred"
-msgstr "Bazı hatalar oluştu"
-
-#: windows/rkwindowcatcher.cpp:193
-msgid "Specify fixed size"
-msgstr "Düzeltilmiş büyüklüğü belirt"
-
-#: windows/rkwindowcatcher.cpp:218
-msgid "Activate graphics device number %1"
-msgstr "Grafik aygıtı %1 i etkinleştir"
-
-#: windows/rkwindowcatcher.cpp:224
-msgid "Copy contents of graphics device number %1 to output"
-msgstr "Grafik aygıtı %1 in içeriğini çıktıya kopyala"
-
-#: windows/rkwindowcatcher.cpp:230
-msgid "Print contents of graphics device number %1"
-msgstr "Grafik aygıtı %1 için içeriğini yazdır"
-
-#: windows/rkwindowcatcher.cpp:237
-msgid "Specify R object"
-msgstr "R nesnesi belirt"
-
-#: windows/rkwindowcatcher.cpp:240
-msgid "Specify the R object name, you want to save the graph to"
-msgstr "R nesnesi ismi belirt, grafiği kaydetmek isterseniz"
-
-#: windows/rkwindowcatcher.cpp:251
-msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr "Grafik aygıtı %1 in içeriğini nesne %2 ye kaydet"
-
-#: windows/rkwindowcatcher.cpp:260
-msgid "Duplicate graphics device number %1"
-msgstr "Grafik aygıtı %1 in kopyasını yap"
-
-#: windows/rkwindowcatcher.cpp:280
-msgid "Draw area follows size of window"
-msgstr "Çizim alanı pencerenin büyüklüğü kadardır"
-
-#: windows/rkwindowcatcher.cpp:282
-msgid "Set fixed size 500x500"
-msgstr "Büyüklüğü 500x500 olarak ayarla"
-
-#: windows/rkwindowcatcher.cpp:283
-msgid "Set fixed size 1000x1000"
-msgstr "Büyüklüğü 1000x1000 olarak ayarla"
-
-#: windows/rkwindowcatcher.cpp:284
-msgid "Set fixed size 2000x2000"
-msgstr "Büyüklüğü 2000x2000 olarak ayarla"
-
-#: windows/rkwindowcatcher.cpp:285
-msgid "Set specified fixed size..."
-msgstr "Belirtilen büyüklüğü ayarla..."
-
-#: windows/rkwindowcatcher.cpp:287
-msgid "Make active"
-msgstr "Etkin yap"
-
-#: windows/rkwindowcatcher.cpp:288
-msgid "Copy to output"
-msgstr "Çıktıya kopyala"
-
-#: windows/rkwindowcatcher.cpp:290
-msgid "Store as R object..."
-msgstr "R nesnesi olarak sakla..."
-
-#: windows/rkwindowcatcher.cpp:291
-msgid "Duplicate"
-msgstr "İkile"
-
-#: windows/rktoplevelwindowgui.cpp:48
-msgid "Help on R"
-msgstr "R hakkında yardım"
-
-#: windows/rktoplevelwindowgui.cpp:49
-msgid "Search R Help"
-msgstr "R yardımda ara"
-
-#: windows/rktoplevelwindowgui.cpp:51
-msgid "Help on RKWard"
-msgstr "R hakkında yardım"
-
-#: windows/rktoplevelwindowgui.cpp:57
-msgid "Shows the R help index"
-msgstr "R yardım dizinini gösterir"
-
-#: windows/rktoplevelwindowgui.cpp:58
-msgid "Shows/raises the R Help Search window"
-msgstr "R yardım arama penceresini gösterir/gizler"
-
-#: windows/rktoplevelwindowgui.cpp:59
-msgid "Show help on RKWard"
-msgstr "RKWard'da yardımı göster"
-
-#: windows/rktoplevelwindowgui.cpp:62
-msgid "Show/Hide Workspace Browser"
-msgstr "Çalışma alanını göster/gizle"
-
-#: windows/rktoplevelwindowgui.cpp:63
-#, fuzzy
-msgid "Show/Hide Filesystem Browser"
-msgstr "Çalışma alanını göster/gizle"
-
-#: windows/rktoplevelwindowgui.cpp:64
-msgid "Show/Hide Command Log"
-msgstr "Komut kayıtlarını göster/gizle"
-
-#: windows/rktoplevelwindowgui.cpp:65
-msgid "Show/Hide Pending Jobs"
-msgstr "Bekleyen işleri göster/gizle"
-
-#: windows/rktoplevelwindowgui.cpp:66
-msgid "Show/Hide Console"
-msgstr "R konsol göster/gizle"
-
-#: windows/rktoplevelwindowgui.cpp:67
-msgid "Show/Hide R Help Search"
-msgstr "R yardım arama penceresini göster/gizle"
-
-#: windows/rktoplevelwindowgui.cpp:68
-msgid "Activate Document view"
-msgstr "Belge görünümünü etkinleştir."
-
-#: windows/rktoplevelwindowgui.cpp:70
-msgid "Show &Output"
-msgstr "&Çıktıyı Göster"
-
-#: windows/rktoplevelwindowgui.cpp:91
-msgid ""
-"Please submit your bug reports or wishes at http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
-"net"
-msgstr ""
-"Lütfen hata raporlarınızı veya isteklerinizi http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
-"net 'e iletin"
-
-#: windows/rkhelpsearchwindow.cpp:55
-msgid "Find:"
-msgstr "Bul:"
-
-#: windows/rkhelpsearchwindow.cpp:58
-msgid "Fields:"
-msgstr "Alanlar:"
-
-#: windows/rkhelpsearchwindow.cpp:71 windows/rkhelpsearchwindow.cpp:82
-#: robjectbrowser.cpp:263
-msgid "All"
-msgstr "Hepsi"
-
-#: windows/rkhelpsearchwindow.cpp:72
-msgid "All but keywords"
-msgstr "Hepsi fakat anahtar kelimeler"
-
-#: windows/rkhelpsearchwindow.cpp:73
-msgid "Keywords"
-msgstr "Anahtar kelimeler"
-
-#: windows/rkhelpsearchwindow.cpp:74 windows/rkhelpsearchwindow.cpp:99
-#: dialogs/rkloadlibsdialog.cpp:261
-msgid "Title"
-msgstr "Başlık"
-
-#: windows/rkhelpsearchwindow.cpp:77
-msgid "Package:"
-msgstr "Paket:"
-
-#: windows/rkhelpsearchwindow.cpp:86
-msgid "Case sensitive"
-msgstr "Büyük/küçük harf duyarlı"
-
-#: windows/rkhelpsearchwindow.cpp:88
-msgid "Fuzzy matching"
-msgstr "Bulanık karşılaştırma"
-
-#: windows/rkhelpsearchwindow.cpp:92
-msgid "Find"
-msgstr "Bul"
-
-#: windows/rkhelpsearchwindow.cpp:98
-msgid "Topic"
-msgstr "Konu"
-
-#: windows/rkhelpsearchwindow.cpp:100
-msgid "Package"
-msgstr "Paket"
-
-#: windows/rkhelpsearchwindow.cpp:106
-msgid "Help search"
-msgstr "Yardım ara"
-
-#: windows/rkhelpsearchwindow.cpp:212
-msgid ""
-"No help found on '%1'. Maybe the corresponding package is not installed/"
-"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
-"more options."
-msgstr ""
-"'%1' de yardım bulunamadı. Uygun paket kurulmamış/yüklenmemiş olabilir  veya "
-"komut doğru yazılmamış. Yardım->Daha fazla R yardımı kullanmayı deneyin."
-
-#: windows/rkhelpsearchwindow.cpp:212
-msgid "No help found"
-msgstr "Yardım bulunamadı"
-
 #: plugin/rkpluginspinbox.cpp:43
 msgid "Enter value:"
 msgstr "Değer girin:"
-
-#: plugin/rkpluginbrowser.cpp:50
-msgid "Enter filename"
-msgstr "Dosya ismi girin"
-
-#: plugin/rkpluginbrowser.cpp:50
-msgid "Select"
-msgstr "Seç"
-
-#: plugin/rkformula.cpp:66
-msgid "Full Model"
-msgstr "Tüm Model"
-
-#: plugin/rkformula.cpp:67
-msgid "Main Effects only"
-msgstr "Sadece ana etkiler"
-
-#: plugin/rkformula.cpp:68
-msgid "Custom Model:"
-msgstr "Özel Model:"
-
-#: plugin/rkformula.cpp:90
-msgid "Main effects"
-msgstr "Ana etkiler"
-
-#: plugin/rkformula.cpp:95
-msgid "Level"
-msgstr "Düzey"
-
-#: plugin/rkformula.cpp:96
-msgid "Term"
-msgstr "Terim"
-
-#: plugin/rkformula.cpp:103
-msgid "Specify model"
-msgstr "Modeli belirle"
 
 #: plugin/rkstandardcomponent.cpp:75
 msgid ""
@@ -1001,22 +965,6 @@ msgstr "< Geri"
 msgid "Use Dialog"
 msgstr "Diyalog kullan"
 
-#: plugin/rkvarslot.cpp:45
-msgid "Variable:"
-msgstr "Değişken:"
-
-#: plugin/rkradio.cpp:42 plugin/rkdropdown.cpp:41
-msgid "Select one:"
-msgstr "Birini seç:"
-
-#: plugin/rkinput.cpp:49
-msgid "Enter text"
-msgstr "Metin girişi"
-
-#: plugin/rkcomponentmap.cpp:102 plugin/rkcomponentmap.cpp:283
-msgid "(no label)"
-msgstr "(başlık yok)"
-
 #: plugin/rkpreviewbox.cpp:47
 msgid "Preview"
 msgstr "Önizleme"
@@ -1037,6 +985,18 @@ msgstr "Önizleme güncelleniyor"
 msgid "Preview not (yet) possible"
 msgstr "Önizleme henüz olanaklı değil"
 
+#: plugin/rkvarslot.cpp:45
+msgid "Variable:"
+msgstr "Değişken:"
+
+#: plugin/rkpluginbrowser.cpp:50
+msgid "Enter filename"
+msgstr "Dosya ismi girin"
+
+#: plugin/rkpluginbrowser.cpp:50
+msgid "Select"
+msgstr "Seç"
+
 #: plugin/rkpluginsaveobject.cpp:41 rkward.cpp:255
 msgid "my.data"
 msgstr "my.data"
@@ -1044,6 +1004,46 @@ msgstr "my.data"
 #: plugin/rkpluginsaveobject.cpp:41
 msgid "Save to:"
 msgstr "Farklı kaydet:"
+
+#: plugin/rkformula.cpp:66
+msgid "Full Model"
+msgstr "Tüm Model"
+
+#: plugin/rkformula.cpp:67
+msgid "Main Effects only"
+msgstr "Sadece ana etkiler"
+
+#: plugin/rkformula.cpp:68
+msgid "Custom Model:"
+msgstr "Özel Model:"
+
+#: plugin/rkformula.cpp:90
+msgid "Main effects"
+msgstr "Ana etkiler"
+
+#: plugin/rkformula.cpp:95
+msgid "Level"
+msgstr "Düzey"
+
+#: plugin/rkformula.cpp:96
+msgid "Term"
+msgstr "Terim"
+
+#: plugin/rkformula.cpp:103
+msgid "Specify model"
+msgstr "Modeli belirle"
+
+#: plugin/rkdropdown.cpp:41 plugin/rkradio.cpp:42
+msgid "Select one:"
+msgstr "Birini seç:"
+
+#: plugin/rkinput.cpp:49
+msgid "Enter text"
+msgstr "Metin girişi"
+
+#: plugin/rkcomponentmap.cpp:102 plugin/rkcomponentmap.cpp:283
+msgid "(no label)"
+msgstr "(başlık yok)"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:44
 msgid "Which objects should be shown by default?"
@@ -1381,33 +1381,37 @@ msgstr ""
 msgid "R-Packages"
 msgstr "R-Paketleri"
 
-#: settings/rksettingsmoduleconsole.cpp:45
+#: settings/rksettingsmoduleconsole.cpp:46
 msgid "Load/Save command history"
 msgstr "Komut geçmişini Yükle/Kaydet "
 
-#: settings/rksettingsmoduleconsole.cpp:50
+#: settings/rksettingsmoduleconsole.cpp:51
 msgid "Maximum length of command history"
 msgstr "Komut geçmişinin maksimum uzunluğu"
 
-#: settings/rksettingsmoduleconsole.cpp:52
-#: settings/rksettingsmoduleconsole.cpp:58
+#: settings/rksettingsmoduleconsole.cpp:53
+#: settings/rksettingsmoduleconsole.cpp:59
 #: settings/rksettingsmodulewatch.cpp:149
 msgid "Unlimited"
 msgstr "Sınırsız"
 
-#: settings/rksettingsmoduleconsole.cpp:56
+#: settings/rksettingsmoduleconsole.cpp:57
 msgid "Maximum number of paragraphs/lines to display in the console"
 msgstr "Konsolda görmek için paragrafların/satırların maksimum sayısı"
 
-#: settings/rksettingsmoduleconsole.cpp:64
+#: settings/rksettingsmoduleconsole.cpp:65
 msgid "Run commands from script editor through console"
 msgstr "Betik düzenleyicisinden konsola komutları çalıştır"
 
-#: settings/rksettingsmoduleconsole.cpp:71
+#: settings/rksettingsmoduleconsole.cpp:70
+msgid "Also add those commands to console history"
+msgstr ""
+
+#: settings/rksettingsmoduleconsole.cpp:78
 msgid "Command history is context sensitive by default"
 msgstr "Komut geçmişi öntanımlı olarak içinde bulunulan bağlama duyarlıdır."
 
-#: settings/rksettingsmoduleconsole.cpp:167
+#: settings/rksettingsmoduleconsole.cpp:179
 msgid "Console"
 msgstr "Konsol"
 
@@ -1757,6 +1761,18 @@ msgstr "Hataları/Uyarıları Gizle"
 msgid "Errors / Warnings:"
 msgstr "Hatalar/Uyarılar:"
 
+#: misc/rksaveobjectchooser.cpp:39
+msgid "Object name to save to"
+msgstr "Kaydetmek için dosya adı"
+
+#: misc/rksaveobjectchooser.cpp:83
+msgid "Overwrite? (The given object name already exists)"
+msgstr "Üzerine yazılsın mı? (Verilen nesne adı zaten var)"
+
+#: misc/rksaveobjectchooser.cpp:87
+msgid "Overwrite?"
+msgstr "Üzerine yazılsın mı?"
+
 #: misc/multistringselector.cpp:58
 msgid "Up"
 msgstr "Yukarı"
@@ -1804,18 +1820,6 @@ msgstr "Fonksiyonlar"
 #: misc/rkobjectlistview.cpp:433
 msgid "Hidden Objects"
 msgstr "Gizli Nesneler"
-
-#: misc/rksaveobjectchooser.cpp:39
-msgid "Object name to save to"
-msgstr "Kaydetmek için dosya adı"
-
-#: misc/rksaveobjectchooser.cpp:83
-msgid "Overwrite? (The given object name already exists)"
-msgstr "Üzerine yazılsın mı? (Verilen nesne adı zaten var)"
-
-#: misc/rksaveobjectchooser.cpp:87
-msgid "Overwrite?"
-msgstr "Üzerine yazılsın mı?"
 
 #: scriptbackends/phpbackend.cpp:62
 msgid ""
@@ -2031,43 +2035,6 @@ msgstr ""
 #: rbackend/rthread.cpp:462
 msgid "R Startup"
 msgstr "R Başlangıç"
-
-#. i18n: file rkconsolepart.rc line 11
-#. i18n: file rkwardui.rc line 32
-#: rc.cpp:6 rc.cpp:33
-#, no-c-format
-msgid "&Run"
-msgstr "&Çalıştır"
-
-#. i18n: file rkwardui.rc line 5
-#: rc.cpp:18
-#, no-c-format
-msgid "&New"
-msgstr "&Yeni"
-
-#. i18n: file rkwardui.rc line 12
-#: rc.cpp:21
-#, no-c-format
-msgid "&Import"
-msgstr "&İçeri Aktar"
-
-#. i18n: file rkwardui.rc line 22
-#: rc.cpp:24
-#, no-c-format
-msgid "&Workspace"
-msgstr "&Çalışma alanı"
-
-#. i18n: file rkwardui.rc line 36
-#: rc.cpp:36
-#, no-c-format
-msgid "&Windows"
-msgstr "&Pencereler"
-
-#. i18n: file rkwardui.rc line 42
-#: rc.cpp:39
-#, no-c-format
-msgid "&Activate"
-msgstr "&Etkinleştir"
 
 #: main.cpp:70 main.cpp:83
 msgid "RKWard"
@@ -2430,22 +2397,6 @@ msgstr ""
 msgid "Ready"
 msgstr "Hazır."
 
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr ""
-"Çevirenlerin isimleri \n"
-"Harun Hurma"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr ""
-"_: Çevirenlerin posta adresleri\n"
-"h.hurma@gmail.com"
-
 #: robjectbrowser.cpp:114
 msgid "Objects in the R workspace"
 msgstr "R çalışma alanındaki nesneler"
@@ -2504,6 +2455,59 @@ msgstr "Tüm Çevreleri Göster"
 #: robjectbrowser.cpp:276
 msgid "Show Hidden Objects"
 msgstr "Gizli Nesneleri Göster"
+
+#. i18n: file rkconsolepart.rc line 11
+#. i18n: file rkwardui.rc line 32
+#: rc.cpp:6 rc.cpp:33
+#, no-c-format
+msgid "&Run"
+msgstr "&Çalıştır"
+
+#. i18n: file rkwardui.rc line 5
+#: rc.cpp:18
+#, no-c-format
+msgid "&New"
+msgstr "&Yeni"
+
+#. i18n: file rkwardui.rc line 12
+#: rc.cpp:21
+#, no-c-format
+msgid "&Import"
+msgstr "&İçeri Aktar"
+
+#. i18n: file rkwardui.rc line 22
+#: rc.cpp:24
+#, no-c-format
+msgid "&Workspace"
+msgstr "&Çalışma alanı"
+
+#. i18n: file rkwardui.rc line 36
+#: rc.cpp:36
+#, no-c-format
+msgid "&Windows"
+msgstr "&Pencereler"
+
+#. i18n: file rkwardui.rc line 42
+#: rc.cpp:39
+#, no-c-format
+msgid "&Activate"
+msgstr "&Etkinleştir"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+"Çevirenlerin isimleri \n"
+"Harun Hurma"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+"_: Çevirenlerin posta adresleri\n"
+"h.hurma@gmail.com"
 
 #~ msgid ""
 #~ "The R-backend has reported one or more error(s) while processing the "

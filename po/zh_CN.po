@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 21:39+0200\n"
+"POT-Creation-Date: 2007-09-27 14:37+0200\n"
 "PO-Revision-Date: 2007-07-26 20:34+0800\n"
 "Last-Translator: Roy Qu <quh@thunis.com>\n"
 "Language-Team:  <zh@li.org>\n"
@@ -123,7 +123,7 @@ msgstr "级别"
 msgid "Format"
 msgstr "格式"
 
-#: dataeditor/twintable.cpp:66 plugin/rkformula.cpp:74 plugin/rkvarslot.cpp:57
+#: dataeditor/twintable.cpp:66 plugin/rkvarslot.cpp:57 plugin/rkformula.cpp:74
 #: dialogs/rkloadlibsdialog.cpp:260 dialogs/rkloadlibsdialog.cpp:279
 #: dialogs/rkloadlibsdialog.cpp:463 dialogs/rkloadlibsdialog.cpp:613
 #: misc/rkobjectlistview.cpp:53
@@ -157,6 +157,30 @@ msgstr "删除标记的行(%1-%2)"
 #: dataeditor/twintable.cpp:260
 msgid "Delete this row (%1)"
 msgstr "删除此行(%1)"
+
+#: agents/rkquitagent.cpp:41
+msgid ""
+"Waiting for remaining R commands to finish. To quit immediately, press "
+"Cancel (WARNING: This may result in loss of data)"
+msgstr ""
+"正在等待剩下的R命令结束执行。如果想立即退出，请按“取消”键。（警告！这可能会导"
+"致数据丢失！）"
+
+#: agents/rkquitagent.cpp:41
+msgid "Waiting for R to finish"
+msgstr "等待R结束"
+
+#: agents/rkeditobjectagent.cpp:56
+msgid ""
+"The object '%1', could not be opened for editing. Either it does not exist, "
+"or RKWard does not support editing this type of object, yet."
+msgstr ""
+"无法打开要编辑的对象\"%1\"。这可能是因为该对象并不存在，也可能是因为RKWard目"
+"前尚不支持编辑此类对象。"
+
+#: agents/rkeditobjectagent.cpp:56
+msgid "Cannot edit '%1'"
+msgstr "无法编辑\"%1\""
 
 #: agents/rksaveagent.cpp:60
 msgid ""
@@ -262,30 +286,6 @@ msgstr ""
 #: agents/rkloadagent.cpp:77
 msgid "Error loading workspace"
 msgstr "载入工作区时出错"
-
-#: agents/rkquitagent.cpp:41
-msgid ""
-"Waiting for remaining R commands to finish. To quit immediately, press "
-"Cancel (WARNING: This may result in loss of data)"
-msgstr ""
-"正在等待剩下的R命令结束执行。如果想立即退出，请按“取消”键。（警告！这可能会导"
-"致数据丢失！）"
-
-#: agents/rkquitagent.cpp:41
-msgid "Waiting for R to finish"
-msgstr "等待R结束"
-
-#: agents/rkeditobjectagent.cpp:56
-msgid ""
-"The object '%1', could not be opened for editing. Either it does not exist, "
-"or RKWard does not support editing this type of object, yet."
-msgstr ""
-"无法打开要编辑的对象\"%1\"。这可能是因为该对象并不存在，也可能是因为RKWard目"
-"前尚不支持编辑此类对象。"
-
-#: agents/rkeditobjectagent.cpp:56
-msgid "Cannot edit '%1'"
-msgstr "无法编辑\"%1\""
 
 #: core/rkmodificationtracker.cpp:50
 msgid ""
@@ -394,12 +394,110 @@ msgstr ""
 msgid "Package blacklisted"
 msgstr "函数包不可用"
 
+#: windows/rkwindowcatcher.cpp:60
+msgid ""
+"You have created a new X11 device window in R. Usually, RKWard tries to "
+"detect such windows, to take control of them, and add a menu-bar to them. "
+"This time, however, RKWard failed to detect, which window was created, and "
+"so can not embed it.\n"
+"If you created the window on a different screen or X11 display, that is to "
+"be expected. You might want to consider changing options(\"display\"), "
+"then.\n"
+"If you can see the X11 window on the same screen as this message, then "
+"RKWard should do better. In this case, please contact us at rkward-"
+"devel@lists.sourceforge.net with details on your setup, so we can try to fix "
+"this in future versions of RKWard."
+msgstr ""
+"您已经在R中创建了一个新的X11设备窗口。通常，RKWard会试图自动检测此类窗口，接"
+"管对它们的控制，并在它们中添加菜单栏。 但是，现在，RKWard检测窗口创建的试图失"
+"败了，因此无法嵌入它。 如果您是在别的屏幕或X11显示器中创建了此窗口，就会出现"
+"这种情况。您应该考虑修改选项(\"显示器\")。 如果您在同一个屏幕中看到了X11窗口"
+"和本消息，这说明RKWard本身工作得还不够好。在这种情况下，请您通过 邮件列表"
+"rkward-devel@lists.sourceforge.net向我们说明具体情况，这样我们可以在以后的"
+"RKWard版本中对它进行改进。"
+
+#: windows/rkwindowcatcher.cpp:60
+msgid "Could not embed R X11 window"
+msgstr "无法嵌入R X11窗口"
+
+#: windows/rkwindowcatcher.cpp:93
+msgid "An error occurred"
+msgstr "有错误发生"
+
+#: windows/rkwindowcatcher.cpp:193
+msgid "Specify fixed size"
+msgstr "指定固定尺寸"
+
+#: windows/rkwindowcatcher.cpp:218
+msgid "Activate graphics device number %1"
+msgstr "激活图像设备号码%1"
+
+#: windows/rkwindowcatcher.cpp:224
+msgid "Copy contents of graphics device number %1 to output"
+msgstr "复制图像设备号码%1中的内容到输出"
+
+#: windows/rkwindowcatcher.cpp:230
+msgid "Print contents of graphics device number %1"
+msgstr "打印图像设备号码%1中的内容"
+
+#: windows/rkwindowcatcher.cpp:237
+msgid "Specify R object"
+msgstr "指定R对象"
+
+#: windows/rkwindowcatcher.cpp:240
+msgid "Specify the R object name, you want to save the graph to"
+msgstr "指定您想要保存图像内容到的R对象名"
+
+#: windows/rkwindowcatcher.cpp:251
+msgid "Save contents of graphics device number %1 to object '%2'"
+msgstr "保存图像设备号码%1中的内容到对象%2"
+
+#: windows/rkwindowcatcher.cpp:260
+msgid "Duplicate graphics device number %1"
+msgstr "复制图像设备号码%1"
+
+#: windows/rkwindowcatcher.cpp:280
+msgid "Draw area follows size of window"
+msgstr "绘图区遵循窗口的尺寸"
+
+#: windows/rkwindowcatcher.cpp:282
+msgid "Set fixed size 500x500"
+msgstr "设定固定尺寸500x500"
+
+#: windows/rkwindowcatcher.cpp:283
+msgid "Set fixed size 1000x1000"
+msgstr "设定固定尺寸1000x1000"
+
+#: windows/rkwindowcatcher.cpp:284
+msgid "Set fixed size 2000x2000"
+msgstr "设定固定尺寸2000x2000"
+
+#: windows/rkwindowcatcher.cpp:285
+msgid "Set specified fixed size..."
+msgstr "设定指定的固定尺寸..."
+
+#: windows/rkwindowcatcher.cpp:287
+msgid "Make active"
+msgstr "激活"
+
+#: windows/rkwindowcatcher.cpp:288
+msgid "Copy to output"
+msgstr "拷贝到输出"
+
+#: windows/rkwindowcatcher.cpp:290
+msgid "Store as R object..."
+msgstr "保存为R对象..."
+
+#: windows/rkwindowcatcher.cpp:291
+msgid "Duplicate"
+msgstr "复制"
+
 #: windows/rkcommandeditorwindowpart.cpp:51
 msgid "Run all"
 msgstr "运行全部"
 
-#: windows/rkcommandeditorwindowpart.cpp:52 windows/rkhtmlwindow.cpp:94
-#: windows/rkcommandlog.cpp:287 rkconsole.cpp:781
+#: windows/rkcommandeditorwindowpart.cpp:52 windows/rkcommandlog.cpp:287
+#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:781
 msgid "Run selection"
 msgstr "运行选中的部分"
 
@@ -410,6 +508,232 @@ msgstr "运行当前行"
 #: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:780
 msgid "&Function reference"
 msgstr "函数参考(&F)"
+
+#: windows/rkcommandeditorwindow.cpp:130 windows/rkcommandeditorwindow.cpp:224
+msgid " [modified]"
+msgstr "[有改动]"
+
+#: windows/rkcommandeditorwindow.cpp:143
+msgid "The document \"%1\" has been modified. Close it anyway?"
+msgstr "文档\"%1\"中存在未被保存的改动。仍要关闭它吗？"
+
+#: windows/rkcommandeditorwindow.cpp:143
+msgid "File not saved"
+msgstr "文件未保存"
+
+#: windows/rkcommandeditorwindow.cpp:223
+msgid "Unnamed"
+msgstr "未命名的"
+
+#: windows/rkworkplace.cpp:148
+msgid "Unable to open \"%1\""
+msgstr "无法打开\"%1\""
+
+#: windows/rkworkplace.cpp:148
+msgid "Could not open command file"
+msgstr "无法打开命令文件"
+
+#: windows/rkworkplace.cpp:260
+#, fuzzy
+msgid ""
+"You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
+"is not optimized to handle very large objects in the built in data editor. "
+"This will use a lot of memory, and - depending on your system - might be "
+"very slow. For large objects it is generally recommended to edit using "
+"command line means or to split into smaller chunks before editing. On the "
+"other hand, if you have enough memory, or the data is simple enough (numeric "
+"data is easier to handle, than factor), editing may not be a problem at all. "
+"You can configure this warning (or turn it off entirely) under Settings-"
+">Configure RKWard->General.\n"
+"Really edit object?"
+msgstr ""
+"您将要编辑一个很大的对象\"%1\"(有%2个字段)。RKWard内置的数据编辑器并未对处理"
+"很大对象的操作进行优化。这将会使用大量的内存，并且──根据您系统的具体配置情况"
+"──可能会很慢。 因此，对于大对象，最好使用命令行，或者将它们分割成小块之后再进"
+"行编辑。另一方面，如果您的内存足够大，或者对象里面的数据足够简单，编辑它们通"
+"常也不会有问题。您可以在\"设置\"->\"配置RKWard\"->\"常规\"中设置或关闭此警告"
+"信息。 真的要编辑此对象吗？"
+
+#: windows/rkworkplace.cpp:260
+msgid "About to edit very large object"
+msgstr "将要编辑非常大的对象"
+
+#: windows/rkworkplace.cpp:430
+msgid "Save Workplace layout"
+msgstr "保存工作区布局"
+
+#: windows/rkworkplace.cpp:437
+msgid "Restore Workplace layout"
+msgstr "恢复工作区布局"
+
+#: windows/rkworkplace.cpp:507
+msgid "Previous Window"
+msgstr "前一个窗口"
+
+#: windows/rkworkplace.cpp:511
+msgid "Next Window"
+msgstr "下一个窗口"
+
+#: windows/detachedwindowcontainer.cpp:41
+msgid "Attach to main window"
+msgstr "挂接到主窗口"
+
+#: windows/rkhelpsearchwindow.cpp:55
+msgid "Find:"
+msgstr "查找"
+
+#: windows/rkhelpsearchwindow.cpp:58
+msgid "Fields:"
+msgstr "字段:"
+
+#: windows/rkhelpsearchwindow.cpp:71 windows/rkhelpsearchwindow.cpp:82
+#: robjectbrowser.cpp:263
+msgid "All"
+msgstr "全部"
+
+#: windows/rkhelpsearchwindow.cpp:72
+msgid "All but keywords"
+msgstr "除关键字外的全部"
+
+#: windows/rkhelpsearchwindow.cpp:73
+msgid "Keywords"
+msgstr "关键字"
+
+#: windows/rkhelpsearchwindow.cpp:74 windows/rkhelpsearchwindow.cpp:99
+#: dialogs/rkloadlibsdialog.cpp:261
+msgid "Title"
+msgstr "标题"
+
+#: windows/rkhelpsearchwindow.cpp:77
+msgid "Package:"
+msgstr "包："
+
+#: windows/rkhelpsearchwindow.cpp:86
+msgid "Case sensitive"
+msgstr "大小写敏感"
+
+#: windows/rkhelpsearchwindow.cpp:88
+msgid "Fuzzy matching"
+msgstr "模糊匹配"
+
+#: windows/rkhelpsearchwindow.cpp:92
+msgid "Find"
+msgstr "差杂贺哦"
+
+#: windows/rkhelpsearchwindow.cpp:98
+msgid "Topic"
+msgstr "主题"
+
+#: windows/rkhelpsearchwindow.cpp:100
+msgid "Package"
+msgstr "包"
+
+#: windows/rkhelpsearchwindow.cpp:106
+msgid "Help search"
+msgstr "帮助查找"
+
+#: windows/rkhelpsearchwindow.cpp:212
+msgid ""
+"No help found on '%1'. Maybe the corresponding package is not installed/"
+"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
+"more options."
+msgstr ""
+"未找到关于\"%1\"的帮助。或许对应的函数包未被安装或载入。也可能是您输错了命"
+"令。 请使用\"帮助\"->\"查找R帮助\"以获取更多选项。"
+
+#: windows/rkhelpsearchwindow.cpp:212
+msgid "No help found"
+msgstr "未找到帮助信息"
+
+#: windows/rkcommandlog.cpp:54 settings/rksettingsmodulewatch.cpp:277
+msgid "Command log"
+msgstr "命令日志"
+
+#: windows/rkcommandlog.cpp:173
+msgid "Incomplete statement.\n"
+msgstr "不完整的指令。\n"
+
+#: windows/rkcommandlog.cpp:175
+msgid "Syntax error.\n"
+msgstr "语法错误。\n"
+
+#: windows/rkcommandlog.cpp:177
+msgid "An unspecified error occurred while running the command.\n"
+msgstr "在运行该命令时发生了一个没有特别指明的错误。\n"
+
+#: windows/rkworkplaceview.cpp:58
+msgid "Window Left"
+msgstr "窗口左侧"
+
+#: windows/rkworkplaceview.cpp:62
+msgid "Window Right"
+msgstr "窗口右侧"
+
+#: windows/rktoplevelwindowgui.cpp:48
+msgid "Help on R"
+msgstr "关于R的帮助"
+
+#: windows/rktoplevelwindowgui.cpp:49
+msgid "Search R Help"
+msgstr "查找R帮助"
+
+#: windows/rktoplevelwindowgui.cpp:51
+msgid "Help on RKWard"
+msgstr "关于RKWard的帮助"
+
+#: windows/rktoplevelwindowgui.cpp:57
+msgid "Shows the R help index"
+msgstr "显示R帮助索引"
+
+#: windows/rktoplevelwindowgui.cpp:58
+msgid "Shows/raises the R Help Search window"
+msgstr "显示/唤出R帮助查找窗口"
+
+#: windows/rktoplevelwindowgui.cpp:59
+msgid "Show help on RKWard"
+msgstr "显示关于RKWard的帮助"
+
+#: windows/rktoplevelwindowgui.cpp:62
+msgid "Show/Hide Workspace Browser"
+msgstr "显示/隐藏工作区浏览器"
+
+#: windows/rktoplevelwindowgui.cpp:63
+#, fuzzy
+msgid "Show/Hide Filesystem Browser"
+msgstr "显示/隐藏工作区浏览器"
+
+#: windows/rktoplevelwindowgui.cpp:64
+msgid "Show/Hide Command Log"
+msgstr "显示/隐藏命令日志"
+
+#: windows/rktoplevelwindowgui.cpp:65
+msgid "Show/Hide Pending Jobs"
+msgstr "显示/隐藏挂起的任务"
+
+#: windows/rktoplevelwindowgui.cpp:66
+msgid "Show/Hide Console"
+msgstr "显示/隐藏控制台"
+
+#: windows/rktoplevelwindowgui.cpp:67
+msgid "Show/Hide R Help Search"
+msgstr "显示/隐藏R帮助查找"
+
+#: windows/rktoplevelwindowgui.cpp:68
+msgid "Activate Document view"
+msgstr "激活文档视图"
+
+#: windows/rktoplevelwindowgui.cpp:70
+msgid "Show &Output"
+msgstr "显示输出(&O)"
+
+#: windows/rktoplevelwindowgui.cpp:91
+msgid ""
+"Please submit your bug reports or wishes at http://sourceforge.net/tracker/?"
+"group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
+"net"
+msgstr ""
+"请将您的bug报告或希望提交到http://sourceforge.net/tracker/?"
+"group_id=50231&atid=459007， 或者发送邮件到rkward-devel@lists.sourceforge.net"
 
 #: windows/rkhtmlwindow.cpp:168
 msgid ""
@@ -571,369 +895,9 @@ msgstr "已关闭"
 msgid "Open (Waiting)"
 msgstr "打开(正在等待)"
 
-#: windows/rkcommandeditorwindow.cpp:130 windows/rkcommandeditorwindow.cpp:224
-msgid " [modified]"
-msgstr "[有改动]"
-
-#: windows/rkcommandeditorwindow.cpp:143
-msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr "文档\"%1\"中存在未被保存的改动。仍要关闭它吗？"
-
-#: windows/rkcommandeditorwindow.cpp:143
-msgid "File not saved"
-msgstr "文件未保存"
-
-#: windows/rkcommandeditorwindow.cpp:223
-msgid "Unnamed"
-msgstr "未命名的"
-
-#: windows/detachedwindowcontainer.cpp:41
-msgid "Attach to main window"
-msgstr "挂接到主窗口"
-
-#: windows/rkworkplaceview.cpp:58
-msgid "Window Left"
-msgstr "窗口左侧"
-
-#: windows/rkworkplaceview.cpp:62
-msgid "Window Right"
-msgstr "窗口右侧"
-
-#: windows/rkworkplace.cpp:148
-msgid "Unable to open \"%1\""
-msgstr "无法打开\"%1\""
-
-#: windows/rkworkplace.cpp:148
-msgid "Could not open command file"
-msgstr "无法打开命令文件"
-
-#: windows/rkworkplace.cpp:260
-#, fuzzy
-msgid ""
-"You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
-"is not optimized to handle very large objects in the built in data editor. "
-"This will use a lot of memory, and - depending on your system - might be "
-"very slow. For large objects it is generally recommended to edit using "
-"command line means or to split into smaller chunks before editing. On the "
-"other hand, if you have enough memory, or the data is simple enough (numeric "
-"data is easier to handle, than factor), editing may not be a problem at all. "
-"You can configure this warning (or turn it off entirely) under Settings-"
-">Configure RKWard->General.\n"
-"Really edit object?"
-msgstr ""
-"您将要编辑一个很大的对象\"%1\"(有%2个字段)。RKWard内置的数据编辑器并未对处理"
-"很大对象的操作进行优化。这将会使用大量的内存，并且──根据您系统的具体配置情况"
-"──可能会很慢。 因此，对于大对象，最好使用命令行，或者将它们分割成小块之后再进"
-"行编辑。另一方面，如果您的内存足够大，或者对象里面的数据足够简单，编辑它们通"
-"常也不会有问题。您可以在\"设置\"->\"配置RKWard\"->\"常规\"中设置或关闭此警告"
-"信息。 真的要编辑此对象吗？"
-
-#: windows/rkworkplace.cpp:260
-msgid "About to edit very large object"
-msgstr "将要编辑非常大的对象"
-
-#: windows/rkworkplace.cpp:430
-msgid "Save Workplace layout"
-msgstr "保存工作区布局"
-
-#: windows/rkworkplace.cpp:437
-msgid "Restore Workplace layout"
-msgstr "恢复工作区布局"
-
-#: windows/rkworkplace.cpp:507
-msgid "Previous Window"
-msgstr "前一个窗口"
-
-#: windows/rkworkplace.cpp:511
-msgid "Next Window"
-msgstr "下一个窗口"
-
-#: windows/rkcommandlog.cpp:54 settings/rksettingsmodulewatch.cpp:277
-msgid "Command log"
-msgstr "命令日志"
-
-#: windows/rkcommandlog.cpp:173
-msgid "Incomplete statement.\n"
-msgstr "不完整的指令。\n"
-
-#: windows/rkcommandlog.cpp:175
-msgid "Syntax error.\n"
-msgstr "语法错误。\n"
-
-#: windows/rkcommandlog.cpp:177
-msgid "An unspecified error occurred while running the command.\n"
-msgstr "在运行该命令时发生了一个没有特别指明的错误。\n"
-
-#: windows/rkwindowcatcher.cpp:60
-msgid ""
-"You have created a new X11 device window in R. Usually, RKWard tries to "
-"detect such windows, to take control of them, and add a menu-bar to them. "
-"This time, however, RKWard failed to detect, which window was created, and "
-"so can not embed it.\n"
-"If you created the window on a different screen or X11 display, that is to "
-"be expected. You might want to consider changing options(\"display\"), "
-"then.\n"
-"If you can see the X11 window on the same screen as this message, then "
-"RKWard should do better. In this case, please contact us at rkward-"
-"devel@lists.sourceforge.net with details on your setup, so we can try to fix "
-"this in future versions of RKWard."
-msgstr ""
-"您已经在R中创建了一个新的X11设备窗口。通常，RKWard会试图自动检测此类窗口，接"
-"管对它们的控制，并在它们中添加菜单栏。 但是，现在，RKWard检测窗口创建的试图失"
-"败了，因此无法嵌入它。 如果您是在别的屏幕或X11显示器中创建了此窗口，就会出现"
-"这种情况。您应该考虑修改选项(\"显示器\")。 如果您在同一个屏幕中看到了X11窗口"
-"和本消息，这说明RKWard本身工作得还不够好。在这种情况下，请您通过 邮件列表"
-"rkward-devel@lists.sourceforge.net向我们说明具体情况，这样我们可以在以后的"
-"RKWard版本中对它进行改进。"
-
-#: windows/rkwindowcatcher.cpp:60
-msgid "Could not embed R X11 window"
-msgstr "无法嵌入R X11窗口"
-
-#: windows/rkwindowcatcher.cpp:93
-msgid "An error occurred"
-msgstr "有错误发生"
-
-#: windows/rkwindowcatcher.cpp:193
-msgid "Specify fixed size"
-msgstr "指定固定尺寸"
-
-#: windows/rkwindowcatcher.cpp:218
-msgid "Activate graphics device number %1"
-msgstr "激活图像设备号码%1"
-
-#: windows/rkwindowcatcher.cpp:224
-msgid "Copy contents of graphics device number %1 to output"
-msgstr "复制图像设备号码%1中的内容到输出"
-
-#: windows/rkwindowcatcher.cpp:230
-msgid "Print contents of graphics device number %1"
-msgstr "打印图像设备号码%1中的内容"
-
-#: windows/rkwindowcatcher.cpp:237
-msgid "Specify R object"
-msgstr "指定R对象"
-
-#: windows/rkwindowcatcher.cpp:240
-msgid "Specify the R object name, you want to save the graph to"
-msgstr "指定您想要保存图像内容到的R对象名"
-
-#: windows/rkwindowcatcher.cpp:251
-msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr "保存图像设备号码%1中的内容到对象%2"
-
-#: windows/rkwindowcatcher.cpp:260
-msgid "Duplicate graphics device number %1"
-msgstr "复制图像设备号码%1"
-
-#: windows/rkwindowcatcher.cpp:280
-msgid "Draw area follows size of window"
-msgstr "绘图区遵循窗口的尺寸"
-
-#: windows/rkwindowcatcher.cpp:282
-msgid "Set fixed size 500x500"
-msgstr "设定固定尺寸500x500"
-
-#: windows/rkwindowcatcher.cpp:283
-msgid "Set fixed size 1000x1000"
-msgstr "设定固定尺寸1000x1000"
-
-#: windows/rkwindowcatcher.cpp:284
-msgid "Set fixed size 2000x2000"
-msgstr "设定固定尺寸2000x2000"
-
-#: windows/rkwindowcatcher.cpp:285
-msgid "Set specified fixed size..."
-msgstr "设定指定的固定尺寸..."
-
-#: windows/rkwindowcatcher.cpp:287
-msgid "Make active"
-msgstr "激活"
-
-#: windows/rkwindowcatcher.cpp:288
-msgid "Copy to output"
-msgstr "拷贝到输出"
-
-#: windows/rkwindowcatcher.cpp:290
-msgid "Store as R object..."
-msgstr "保存为R对象..."
-
-#: windows/rkwindowcatcher.cpp:291
-msgid "Duplicate"
-msgstr "复制"
-
-#: windows/rktoplevelwindowgui.cpp:48
-msgid "Help on R"
-msgstr "关于R的帮助"
-
-#: windows/rktoplevelwindowgui.cpp:49
-msgid "Search R Help"
-msgstr "查找R帮助"
-
-#: windows/rktoplevelwindowgui.cpp:51
-msgid "Help on RKWard"
-msgstr "关于RKWard的帮助"
-
-#: windows/rktoplevelwindowgui.cpp:57
-msgid "Shows the R help index"
-msgstr "显示R帮助索引"
-
-#: windows/rktoplevelwindowgui.cpp:58
-msgid "Shows/raises the R Help Search window"
-msgstr "显示/唤出R帮助查找窗口"
-
-#: windows/rktoplevelwindowgui.cpp:59
-msgid "Show help on RKWard"
-msgstr "显示关于RKWard的帮助"
-
-#: windows/rktoplevelwindowgui.cpp:62
-msgid "Show/Hide Workspace Browser"
-msgstr "显示/隐藏工作区浏览器"
-
-#: windows/rktoplevelwindowgui.cpp:63
-#, fuzzy
-msgid "Show/Hide Filesystem Browser"
-msgstr "显示/隐藏工作区浏览器"
-
-#: windows/rktoplevelwindowgui.cpp:64
-msgid "Show/Hide Command Log"
-msgstr "显示/隐藏命令日志"
-
-#: windows/rktoplevelwindowgui.cpp:65
-msgid "Show/Hide Pending Jobs"
-msgstr "显示/隐藏挂起的任务"
-
-#: windows/rktoplevelwindowgui.cpp:66
-msgid "Show/Hide Console"
-msgstr "显示/隐藏控制台"
-
-#: windows/rktoplevelwindowgui.cpp:67
-msgid "Show/Hide R Help Search"
-msgstr "显示/隐藏R帮助查找"
-
-#: windows/rktoplevelwindowgui.cpp:68
-msgid "Activate Document view"
-msgstr "激活文档视图"
-
-#: windows/rktoplevelwindowgui.cpp:70
-msgid "Show &Output"
-msgstr "显示输出(&O)"
-
-#: windows/rktoplevelwindowgui.cpp:91
-msgid ""
-"Please submit your bug reports or wishes at http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
-"net"
-msgstr ""
-"请将您的bug报告或希望提交到http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007， 或者发送邮件到rkward-devel@lists.sourceforge.net"
-
-#: windows/rkhelpsearchwindow.cpp:55
-msgid "Find:"
-msgstr "查找"
-
-#: windows/rkhelpsearchwindow.cpp:58
-msgid "Fields:"
-msgstr "字段:"
-
-#: windows/rkhelpsearchwindow.cpp:71 windows/rkhelpsearchwindow.cpp:82
-#: robjectbrowser.cpp:263
-msgid "All"
-msgstr "全部"
-
-#: windows/rkhelpsearchwindow.cpp:72
-msgid "All but keywords"
-msgstr "除关键字外的全部"
-
-#: windows/rkhelpsearchwindow.cpp:73
-msgid "Keywords"
-msgstr "关键字"
-
-#: windows/rkhelpsearchwindow.cpp:74 windows/rkhelpsearchwindow.cpp:99
-#: dialogs/rkloadlibsdialog.cpp:261
-msgid "Title"
-msgstr "标题"
-
-#: windows/rkhelpsearchwindow.cpp:77
-msgid "Package:"
-msgstr "包："
-
-#: windows/rkhelpsearchwindow.cpp:86
-msgid "Case sensitive"
-msgstr "大小写敏感"
-
-#: windows/rkhelpsearchwindow.cpp:88
-msgid "Fuzzy matching"
-msgstr "模糊匹配"
-
-#: windows/rkhelpsearchwindow.cpp:92
-msgid "Find"
-msgstr "差杂贺哦"
-
-#: windows/rkhelpsearchwindow.cpp:98
-msgid "Topic"
-msgstr "主题"
-
-#: windows/rkhelpsearchwindow.cpp:100
-msgid "Package"
-msgstr "包"
-
-#: windows/rkhelpsearchwindow.cpp:106
-msgid "Help search"
-msgstr "帮助查找"
-
-#: windows/rkhelpsearchwindow.cpp:212
-msgid ""
-"No help found on '%1'. Maybe the corresponding package is not installed/"
-"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
-"more options."
-msgstr ""
-"未找到关于\"%1\"的帮助。或许对应的函数包未被安装或载入。也可能是您输错了命"
-"令。 请使用\"帮助\"->\"查找R帮助\"以获取更多选项。"
-
-#: windows/rkhelpsearchwindow.cpp:212
-msgid "No help found"
-msgstr "未找到帮助信息"
-
 #: plugin/rkpluginspinbox.cpp:43
 msgid "Enter value:"
 msgstr "输入值："
-
-#: plugin/rkpluginbrowser.cpp:50
-msgid "Enter filename"
-msgstr "输入文件名"
-
-#: plugin/rkpluginbrowser.cpp:50
-msgid "Select"
-msgstr "选择"
-
-#: plugin/rkformula.cpp:66
-msgid "Full Model"
-msgstr "完整模型"
-
-#: plugin/rkformula.cpp:67
-msgid "Main Effects only"
-msgstr "仅主效应"
-
-#: plugin/rkformula.cpp:68
-msgid "Custom Model:"
-msgstr "自定义模型："
-
-#: plugin/rkformula.cpp:90
-msgid "Main effects"
-msgstr "主效应"
-
-#: plugin/rkformula.cpp:95
-msgid "Level"
-msgstr "级别"
-
-#: plugin/rkformula.cpp:96
-msgid "Term"
-msgstr "项"
-
-#: plugin/rkformula.cpp:103
-msgid "Specify model"
-msgstr "指定模型"
 
 #: plugin/rkstandardcomponent.cpp:75
 msgid ""
@@ -979,22 +943,6 @@ msgstr "< 上一步"
 msgid "Use Dialog"
 msgstr "使用对话框"
 
-#: plugin/rkvarslot.cpp:45
-msgid "Variable:"
-msgstr "变量："
-
-#: plugin/rkradio.cpp:42 plugin/rkdropdown.cpp:41
-msgid "Select one:"
-msgstr "选择一个："
-
-#: plugin/rkinput.cpp:49
-msgid "Enter text"
-msgstr "输入文字："
-
-#: plugin/rkcomponentmap.cpp:102 plugin/rkcomponentmap.cpp:283
-msgid "(no label)"
-msgstr "(无标签)"
-
 #: plugin/rkpreviewbox.cpp:47
 msgid "Preview"
 msgstr "预览"
@@ -1015,6 +963,18 @@ msgstr "预览正在更新"
 msgid "Preview not (yet) possible"
 msgstr "尚无法预览"
 
+#: plugin/rkvarslot.cpp:45
+msgid "Variable:"
+msgstr "变量："
+
+#: plugin/rkpluginbrowser.cpp:50
+msgid "Enter filename"
+msgstr "输入文件名"
+
+#: plugin/rkpluginbrowser.cpp:50
+msgid "Select"
+msgstr "选择"
+
 #: plugin/rkpluginsaveobject.cpp:41 rkward.cpp:255
 msgid "my.data"
 msgstr "我的数据"
@@ -1022,6 +982,46 @@ msgstr "我的数据"
 #: plugin/rkpluginsaveobject.cpp:41
 msgid "Save to:"
 msgstr "保存到："
+
+#: plugin/rkformula.cpp:66
+msgid "Full Model"
+msgstr "完整模型"
+
+#: plugin/rkformula.cpp:67
+msgid "Main Effects only"
+msgstr "仅主效应"
+
+#: plugin/rkformula.cpp:68
+msgid "Custom Model:"
+msgstr "自定义模型："
+
+#: plugin/rkformula.cpp:90
+msgid "Main effects"
+msgstr "主效应"
+
+#: plugin/rkformula.cpp:95
+msgid "Level"
+msgstr "级别"
+
+#: plugin/rkformula.cpp:96
+msgid "Term"
+msgstr "项"
+
+#: plugin/rkformula.cpp:103
+msgid "Specify model"
+msgstr "指定模型"
+
+#: plugin/rkdropdown.cpp:41 plugin/rkradio.cpp:42
+msgid "Select one:"
+msgstr "选择一个："
+
+#: plugin/rkinput.cpp:49
+msgid "Enter text"
+msgstr "输入文字："
+
+#: plugin/rkcomponentmap.cpp:102 plugin/rkcomponentmap.cpp:283
+msgid "(no label)"
+msgstr "(无标签)"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:44
 msgid "Which objects should be shown by default?"
@@ -1346,33 +1346,37 @@ msgstr ""
 msgid "R-Packages"
 msgstr "R函数包"
 
-#: settings/rksettingsmoduleconsole.cpp:45
+#: settings/rksettingsmoduleconsole.cpp:46
 msgid "Load/Save command history"
 msgstr "载入/保存命令历史"
 
-#: settings/rksettingsmoduleconsole.cpp:50
+#: settings/rksettingsmoduleconsole.cpp:51
 msgid "Maximum length of command history"
 msgstr "命令历史的最大长度"
 
-#: settings/rksettingsmoduleconsole.cpp:52
-#: settings/rksettingsmoduleconsole.cpp:58
+#: settings/rksettingsmoduleconsole.cpp:53
+#: settings/rksettingsmoduleconsole.cpp:59
 #: settings/rksettingsmodulewatch.cpp:149
 msgid "Unlimited"
 msgstr "无限制"
 
-#: settings/rksettingsmoduleconsole.cpp:56
+#: settings/rksettingsmoduleconsole.cpp:57
 msgid "Maximum number of paragraphs/lines to display in the console"
 msgstr "在控制台中显示的最大段/行数。"
 
-#: settings/rksettingsmoduleconsole.cpp:64
+#: settings/rksettingsmoduleconsole.cpp:65
 msgid "Run commands from script editor through console"
 msgstr "在脚本编辑器中通过控制台运行命令"
 
-#: settings/rksettingsmoduleconsole.cpp:71
+#: settings/rksettingsmoduleconsole.cpp:70
+msgid "Also add those commands to console history"
+msgstr ""
+
+#: settings/rksettingsmoduleconsole.cpp:78
 msgid "Command history is context sensitive by default"
 msgstr "命令历史缺省对上下文敏感"
 
-#: settings/rksettingsmoduleconsole.cpp:167
+#: settings/rksettingsmoduleconsole.cpp:179
 msgid "Console"
 msgstr "控制台"
 
@@ -1712,6 +1716,18 @@ msgstr "隐藏错误/警告"
 msgid "Errors / Warnings:"
 msgstr "错误/警告："
 
+#: misc/rksaveobjectchooser.cpp:39
+msgid "Object name to save to"
+msgstr "要保存到的对象名"
+
+#: misc/rksaveobjectchooser.cpp:83
+msgid "Overwrite? (The given object name already exists)"
+msgstr "是否覆盖？(给出的对象名可能已存在)"
+
+#: misc/rksaveobjectchooser.cpp:87
+msgid "Overwrite?"
+msgstr "是否覆盖"
+
 #: misc/multistringselector.cpp:58
 msgid "Up"
 msgstr "上"
@@ -1759,18 +1775,6 @@ msgstr "函数"
 #: misc/rkobjectlistview.cpp:433
 msgid "Hidden Objects"
 msgstr "隐藏的对象"
-
-#: misc/rksaveobjectchooser.cpp:39
-msgid "Object name to save to"
-msgstr "要保存到的对象名"
-
-#: misc/rksaveobjectchooser.cpp:83
-msgid "Overwrite? (The given object name already exists)"
-msgstr "是否覆盖？(给出的对象名可能已存在)"
-
-#: misc/rksaveobjectchooser.cpp:87
-msgid "Overwrite?"
-msgstr "是否覆盖"
 
 #: scriptbackends/phpbackend.cpp:62
 msgid ""
@@ -1978,43 +1982,6 @@ msgstr ""
 #: rbackend/rthread.cpp:462
 msgid "R Startup"
 msgstr "R已启动"
-
-#. i18n: file rkconsolepart.rc line 11
-#. i18n: file rkwardui.rc line 32
-#: rc.cpp:6 rc.cpp:33
-#, no-c-format
-msgid "&Run"
-msgstr "运行(&R)"
-
-#. i18n: file rkwardui.rc line 5
-#: rc.cpp:18
-#, no-c-format
-msgid "&New"
-msgstr "新建(&N)"
-
-#. i18n: file rkwardui.rc line 12
-#: rc.cpp:21
-#, no-c-format
-msgid "&Import"
-msgstr "导入(&I)"
-
-#. i18n: file rkwardui.rc line 22
-#: rc.cpp:24
-#, no-c-format
-msgid "&Workspace"
-msgstr "工作空间(&W)"
-
-#. i18n: file rkwardui.rc line 36
-#: rc.cpp:36
-#, no-c-format
-msgid "&Windows"
-msgstr "窗口(&W)"
-
-#. i18n: file rkwardui.rc line 42
-#: rc.cpp:39
-#, no-c-format
-msgid "&Activate"
-msgstr "激活(&A)"
 
 #: main.cpp:70 main.cpp:83
 msgid "RKWard"
@@ -2370,18 +2337,6 @@ msgstr ""
 msgid "Ready"
 msgstr "就绪。"
 
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr "Roy Qu"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr "royqh1979@gmail.com"
-
 #: robjectbrowser.cpp:114
 msgid "Objects in the R workspace"
 msgstr "R工作空间中的对象"
@@ -2439,6 +2394,55 @@ msgstr "显示全部环境"
 #: robjectbrowser.cpp:276
 msgid "Show Hidden Objects"
 msgstr "显示隐藏对象"
+
+#. i18n: file rkconsolepart.rc line 11
+#. i18n: file rkwardui.rc line 32
+#: rc.cpp:6 rc.cpp:33
+#, no-c-format
+msgid "&Run"
+msgstr "运行(&R)"
+
+#. i18n: file rkwardui.rc line 5
+#: rc.cpp:18
+#, no-c-format
+msgid "&New"
+msgstr "新建(&N)"
+
+#. i18n: file rkwardui.rc line 12
+#: rc.cpp:21
+#, no-c-format
+msgid "&Import"
+msgstr "导入(&I)"
+
+#. i18n: file rkwardui.rc line 22
+#: rc.cpp:24
+#, no-c-format
+msgid "&Workspace"
+msgstr "工作空间(&W)"
+
+#. i18n: file rkwardui.rc line 36
+#: rc.cpp:36
+#, no-c-format
+msgid "&Windows"
+msgstr "窗口(&W)"
+
+#. i18n: file rkwardui.rc line 42
+#: rc.cpp:39
+#, no-c-format
+msgid "&Activate"
+msgstr "激活(&A)"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Roy Qu"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "royqh1979@gmail.com"
 
 #~ msgid ""
 #~ "The R-backend has reported one or more error(s) while processing the "
