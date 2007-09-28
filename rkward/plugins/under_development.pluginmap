@@ -2,6 +2,7 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
+		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
 	</components>
 
 	<hierarchy>
@@ -12,6 +13,7 @@
 			</menu>
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
+			<entry component="simple_anova" index="9"/>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
 		</menu>
