@@ -2,13 +2,6 @@
 
 <document base_prefix="" namespace="rkward">
 	<components>
-		<component type="standard" id="crosstab" file="analysis/crosstab.xml" label="N to 1 Crosstabulation" />
-		<component type="standard" id="crosstab_multi" file="analysis/crosstab_multi.xml" label="N to N Crosstabulation" />
-		<component type="standard" id="piechart" file="plots/piechart.xml" label="Piechart" />
-		<component type="standard" id="dotchart" file="plots/dotchart.xml" label="Dotchart" />
-		<component type="standard" id="Box_test" file="analysis/time_series/Box_test.xml" label="Box–Pierce or Ljung–Box Tests" />
-		<component type="standard" id="kpss_test" file="analysis/time_series/kpss_test.xml" label="KPSS Test for Stationarity" />
-		<component type="standard" id="linear_regression" file="analysis/regression/linear_regression.xml" label="Linear Regression" />
 	</components>
 
 	<hierarchy>
@@ -19,21 +12,8 @@
 			</menu>
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
-			<menu id="crosstabs" label="Crosstabs" index="11">			
-				<entry component="crosstab" />
-				<entry component="crosstab_multi" />
-			</menu>
-			<menu id="regression" label="Regression" index="7">
-				<entry component="linear_regression"/>
-			</menu>
-			<menu id="time_series" label="Time Series" index="9">
-				<entry component="Box_test"/>
-				<entry component="kpss_test"/>
-			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
-			<entry component="piechart" index="11"/>
-			<entry component="dotchart" index="12"/>
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
 			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="2">
