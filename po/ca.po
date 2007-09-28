@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 21:39+0200\n"
+"POT-Creation-Date: 2007-09-28 11:01+0200\n"
 "PO-Revision-Date: 2007-04-05 15:35+0200\n"
 "Last-Translator: Pep Roca <pep.roca@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -1485,38 +1485,42 @@ msgstr ""
 msgid "R-Packages"
 msgstr "Paquets R"
 
-#: settings/rksettingsmoduleconsole.cpp:45
+#: settings/rksettingsmoduleconsole.cpp:46
 msgid "Load/Save command history"
 msgstr "Carrega/Desa l'historial d'ordres"
 
-#: settings/rksettingsmoduleconsole.cpp:50
+#: settings/rksettingsmoduleconsole.cpp:51
 msgid "Maximum length of command history"
 msgstr "Introduïu la longitud màxima de l'historial d'ordres"
 
-#: settings/rksettingsmoduleconsole.cpp:52
-#: settings/rksettingsmoduleconsole.cpp:58
+#: settings/rksettingsmoduleconsole.cpp:53
+#: settings/rksettingsmoduleconsole.cpp:59
 #: settings/rksettingsmodulewatch.cpp:149
 msgid "Unlimited"
 msgstr "Sense límit"
 
-#: settings/rksettingsmoduleconsole.cpp:56
+#: settings/rksettingsmoduleconsole.cpp:57
 msgid "Maximum number of paragraphs/lines to display in the console"
 msgstr ""
 "Introduïu el nombre màxim de línies / paràgrafs que s'han de mostrar en la "
 "consola"
 
-#: settings/rksettingsmoduleconsole.cpp:64
+#: settings/rksettingsmoduleconsole.cpp:65
 msgid "Run commands from script editor through console"
 msgstr "Executar les ordres del editor de seqüències a través de la consola"
 
+#: settings/rksettingsmoduleconsole.cpp:70
+msgid "Also add those commands to console history"
+msgstr ""
+
 # ??? Per revisar
 # fr: La commande d'historique est sensible à la casse par défaut
-#: settings/rksettingsmoduleconsole.cpp:71
+#: settings/rksettingsmoduleconsole.cpp:78
 #, fuzzy
 msgid "Command history is context sensitive by default"
 msgstr "El historial d'ordres és, per omissió, sensible al context"
 
-#: settings/rksettingsmoduleconsole.cpp:167
+#: settings/rksettingsmoduleconsole.cpp:179
 msgid "Console"
 msgstr "Consola"
 
@@ -2185,43 +2189,6 @@ msgstr ""
 msgid "R Startup"
 msgstr "Engegada del R"
 
-#. i18n: file rkconsolepart.rc line 11
-#. i18n: file rkwardui.rc line 32
-#: rc.cpp:6 rc.cpp:33
-#, no-c-format
-msgid "&Run"
-msgstr "&Executa"
-
-#. i18n: file rkwardui.rc line 5
-#: rc.cpp:18
-#, no-c-format
-msgid "&New"
-msgstr "&Nou"
-
-#. i18n: file rkwardui.rc line 12
-#: rc.cpp:21
-#, no-c-format
-msgid "&Import"
-msgstr "&Importar"
-
-#. i18n: file rkwardui.rc line 22
-#: rc.cpp:24
-#, no-c-format
-msgid "&Workspace"
-msgstr "&Espai de treball"
-
-#. i18n: file rkwardui.rc line 36
-#: rc.cpp:36
-#, no-c-format
-msgid "&Windows"
-msgstr "&Finestres"
-
-#. i18n: file rkwardui.rc line 42
-#: rc.cpp:39
-#, no-c-format
-msgid "&Activate"
-msgstr "&Activa"
-
 #: main.cpp:70 main.cpp:83
 msgid "RKWard"
 msgstr "RKWard"
@@ -2601,18 +2568,6 @@ msgstr ""
 msgid "Ready"
 msgstr "Llest."
 
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr "Pep Roca"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr "pep.roca@gmail.com"
-
 #: robjectbrowser.cpp:114
 msgid "Objects in the R workspace"
 msgstr "Objectes en l'espai de treball del R"
@@ -2674,6 +2629,55 @@ msgstr "Mostra tots els entorns"
 #: robjectbrowser.cpp:276
 msgid "Show Hidden Objects"
 msgstr "Mostra els objectes ocults"
+
+#. i18n: file rkconsolepart.rc line 11
+#. i18n: file rkwardui.rc line 32
+#: rc.cpp:6 rc.cpp:33
+#, no-c-format
+msgid "&Run"
+msgstr "&Executa"
+
+#. i18n: file rkwardui.rc line 5
+#: rc.cpp:18
+#, no-c-format
+msgid "&New"
+msgstr "&Nou"
+
+#. i18n: file rkwardui.rc line 12
+#: rc.cpp:21
+#, no-c-format
+msgid "&Import"
+msgstr "&Importar"
+
+#. i18n: file rkwardui.rc line 22
+#: rc.cpp:24
+#, no-c-format
+msgid "&Workspace"
+msgstr "&Espai de treball"
+
+#. i18n: file rkwardui.rc line 36
+#: rc.cpp:36
+#, no-c-format
+msgid "&Windows"
+msgstr "&Finestres"
+
+#. i18n: file rkwardui.rc line 42
+#: rc.cpp:39
+#, no-c-format
+msgid "&Activate"
+msgstr "&Activa"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Pep Roca"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "pep.roca@gmail.com"
 
 #~ msgid ""
 #~ "The R-backend has reported one or more error(s) while processing the "

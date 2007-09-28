@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 21:39+0200\n"
+"POT-Creation-Date: 2007-09-28 11:01+0200\n"
 "PO-Revision-Date: 2007-07-26 20:34+0800\n"
 "Last-Translator: Roy Qu <quh@thunis.com>\n"
 "Language-Team:  <zh@li.org>\n"
@@ -1346,33 +1346,37 @@ msgstr ""
 msgid "R-Packages"
 msgstr "R函数包"
 
-#: settings/rksettingsmoduleconsole.cpp:45
+#: settings/rksettingsmoduleconsole.cpp:46
 msgid "Load/Save command history"
 msgstr "载入/保存命令历史"
 
-#: settings/rksettingsmoduleconsole.cpp:50
+#: settings/rksettingsmoduleconsole.cpp:51
 msgid "Maximum length of command history"
 msgstr "命令历史的最大长度"
 
-#: settings/rksettingsmoduleconsole.cpp:52
-#: settings/rksettingsmoduleconsole.cpp:58
+#: settings/rksettingsmoduleconsole.cpp:53
+#: settings/rksettingsmoduleconsole.cpp:59
 #: settings/rksettingsmodulewatch.cpp:149
 msgid "Unlimited"
 msgstr "无限制"
 
-#: settings/rksettingsmoduleconsole.cpp:56
+#: settings/rksettingsmoduleconsole.cpp:57
 msgid "Maximum number of paragraphs/lines to display in the console"
 msgstr "在控制台中显示的最大段/行数。"
 
-#: settings/rksettingsmoduleconsole.cpp:64
+#: settings/rksettingsmoduleconsole.cpp:65
 msgid "Run commands from script editor through console"
 msgstr "在脚本编辑器中通过控制台运行命令"
 
-#: settings/rksettingsmoduleconsole.cpp:71
+#: settings/rksettingsmoduleconsole.cpp:70
+msgid "Also add those commands to console history"
+msgstr ""
+
+#: settings/rksettingsmoduleconsole.cpp:78
 msgid "Command history is context sensitive by default"
 msgstr "命令历史缺省对上下文敏感"
 
-#: settings/rksettingsmoduleconsole.cpp:167
+#: settings/rksettingsmoduleconsole.cpp:179
 msgid "Console"
 msgstr "控制台"
 
@@ -1979,43 +1983,6 @@ msgstr ""
 msgid "R Startup"
 msgstr "R已启动"
 
-#. i18n: file rkconsolepart.rc line 11
-#. i18n: file rkwardui.rc line 32
-#: rc.cpp:6 rc.cpp:33
-#, no-c-format
-msgid "&Run"
-msgstr "运行(&R)"
-
-#. i18n: file rkwardui.rc line 5
-#: rc.cpp:18
-#, no-c-format
-msgid "&New"
-msgstr "新建(&N)"
-
-#. i18n: file rkwardui.rc line 12
-#: rc.cpp:21
-#, no-c-format
-msgid "&Import"
-msgstr "导入(&I)"
-
-#. i18n: file rkwardui.rc line 22
-#: rc.cpp:24
-#, no-c-format
-msgid "&Workspace"
-msgstr "工作空间(&W)"
-
-#. i18n: file rkwardui.rc line 36
-#: rc.cpp:36
-#, no-c-format
-msgid "&Windows"
-msgstr "窗口(&W)"
-
-#. i18n: file rkwardui.rc line 42
-#: rc.cpp:39
-#, no-c-format
-msgid "&Activate"
-msgstr "激活(&A)"
-
 #: main.cpp:70 main.cpp:83
 msgid "RKWard"
 msgstr "RKWard"
@@ -2370,18 +2337,6 @@ msgstr ""
 msgid "Ready"
 msgstr "就绪。"
 
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr "Roy Qu"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr "royqh1979@gmail.com"
-
 #: robjectbrowser.cpp:114
 msgid "Objects in the R workspace"
 msgstr "R工作空间中的对象"
@@ -2439,6 +2394,55 @@ msgstr "显示全部环境"
 #: robjectbrowser.cpp:276
 msgid "Show Hidden Objects"
 msgstr "显示隐藏对象"
+
+#. i18n: file rkconsolepart.rc line 11
+#. i18n: file rkwardui.rc line 32
+#: rc.cpp:6 rc.cpp:33
+#, no-c-format
+msgid "&Run"
+msgstr "运行(&R)"
+
+#. i18n: file rkwardui.rc line 5
+#: rc.cpp:18
+#, no-c-format
+msgid "&New"
+msgstr "新建(&N)"
+
+#. i18n: file rkwardui.rc line 12
+#: rc.cpp:21
+#, no-c-format
+msgid "&Import"
+msgstr "导入(&I)"
+
+#. i18n: file rkwardui.rc line 22
+#: rc.cpp:24
+#, no-c-format
+msgid "&Workspace"
+msgstr "工作空间(&W)"
+
+#. i18n: file rkwardui.rc line 36
+#: rc.cpp:36
+#, no-c-format
+msgid "&Windows"
+msgstr "窗口(&W)"
+
+#. i18n: file rkwardui.rc line 42
+#: rc.cpp:39
+#, no-c-format
+msgid "&Activate"
+msgstr "激活(&A)"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Roy Qu"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "royqh1979@gmail.com"
 
 #~ msgid ""
 #~ "The R-backend has reported one or more error(s) while processing the "

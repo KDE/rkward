@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 21:39+0200\n"
+"POT-Creation-Date: 2007-09-28 11:01+0200\n"
 "PO-Revision-Date: 2007-04-12 10:40+0300\n"
 "Last-Translator: ertugrulerata <ertugrulerata@gmail.com>\n"
 "Language-Team:  <tr@li.org>\n"
@@ -1381,33 +1381,37 @@ msgstr ""
 msgid "R-Packages"
 msgstr "R-Paketleri"
 
-#: settings/rksettingsmoduleconsole.cpp:45
+#: settings/rksettingsmoduleconsole.cpp:46
 msgid "Load/Save command history"
 msgstr "Komut geçmişini Yükle/Kaydet "
 
-#: settings/rksettingsmoduleconsole.cpp:50
+#: settings/rksettingsmoduleconsole.cpp:51
 msgid "Maximum length of command history"
 msgstr "Komut geçmişinin maksimum uzunluğu"
 
-#: settings/rksettingsmoduleconsole.cpp:52
-#: settings/rksettingsmoduleconsole.cpp:58
+#: settings/rksettingsmoduleconsole.cpp:53
+#: settings/rksettingsmoduleconsole.cpp:59
 #: settings/rksettingsmodulewatch.cpp:149
 msgid "Unlimited"
 msgstr "Sınırsız"
 
-#: settings/rksettingsmoduleconsole.cpp:56
+#: settings/rksettingsmoduleconsole.cpp:57
 msgid "Maximum number of paragraphs/lines to display in the console"
 msgstr "Konsolda görmek için paragrafların/satırların maksimum sayısı"
 
-#: settings/rksettingsmoduleconsole.cpp:64
+#: settings/rksettingsmoduleconsole.cpp:65
 msgid "Run commands from script editor through console"
 msgstr "Betik düzenleyicisinden konsola komutları çalıştır"
 
-#: settings/rksettingsmoduleconsole.cpp:71
+#: settings/rksettingsmoduleconsole.cpp:70
+msgid "Also add those commands to console history"
+msgstr ""
+
+#: settings/rksettingsmoduleconsole.cpp:78
 msgid "Command history is context sensitive by default"
 msgstr "Komut geçmişi öntanımlı olarak içinde bulunulan bağlama duyarlıdır."
 
-#: settings/rksettingsmoduleconsole.cpp:167
+#: settings/rksettingsmoduleconsole.cpp:179
 msgid "Console"
 msgstr "Konsol"
 
@@ -2032,43 +2036,6 @@ msgstr ""
 msgid "R Startup"
 msgstr "R Başlangıç"
 
-#. i18n: file rkconsolepart.rc line 11
-#. i18n: file rkwardui.rc line 32
-#: rc.cpp:6 rc.cpp:33
-#, no-c-format
-msgid "&Run"
-msgstr "&Çalıştır"
-
-#. i18n: file rkwardui.rc line 5
-#: rc.cpp:18
-#, no-c-format
-msgid "&New"
-msgstr "&Yeni"
-
-#. i18n: file rkwardui.rc line 12
-#: rc.cpp:21
-#, no-c-format
-msgid "&Import"
-msgstr "&İçeri Aktar"
-
-#. i18n: file rkwardui.rc line 22
-#: rc.cpp:24
-#, no-c-format
-msgid "&Workspace"
-msgstr "&Çalışma alanı"
-
-#. i18n: file rkwardui.rc line 36
-#: rc.cpp:36
-#, no-c-format
-msgid "&Windows"
-msgstr "&Pencereler"
-
-#. i18n: file rkwardui.rc line 42
-#: rc.cpp:39
-#, no-c-format
-msgid "&Activate"
-msgstr "&Etkinleştir"
-
 #: main.cpp:70 main.cpp:83
 msgid "RKWard"
 msgstr "RKWARD"
@@ -2430,22 +2397,6 @@ msgstr ""
 msgid "Ready"
 msgstr "Hazır."
 
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr ""
-"Çevirenlerin isimleri \n"
-"Harun Hurma"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr ""
-"_: Çevirenlerin posta adresleri\n"
-"h.hurma@gmail.com"
-
 #: robjectbrowser.cpp:114
 msgid "Objects in the R workspace"
 msgstr "R çalışma alanındaki nesneler"
@@ -2504,6 +2455,59 @@ msgstr "Tüm Çevreleri Göster"
 #: robjectbrowser.cpp:276
 msgid "Show Hidden Objects"
 msgstr "Gizli Nesneleri Göster"
+
+#. i18n: file rkconsolepart.rc line 11
+#. i18n: file rkwardui.rc line 32
+#: rc.cpp:6 rc.cpp:33
+#, no-c-format
+msgid "&Run"
+msgstr "&Çalıştır"
+
+#. i18n: file rkwardui.rc line 5
+#: rc.cpp:18
+#, no-c-format
+msgid "&New"
+msgstr "&Yeni"
+
+#. i18n: file rkwardui.rc line 12
+#: rc.cpp:21
+#, no-c-format
+msgid "&Import"
+msgstr "&İçeri Aktar"
+
+#. i18n: file rkwardui.rc line 22
+#: rc.cpp:24
+#, no-c-format
+msgid "&Workspace"
+msgstr "&Çalışma alanı"
+
+#. i18n: file rkwardui.rc line 36
+#: rc.cpp:36
+#, no-c-format
+msgid "&Windows"
+msgstr "&Pencereler"
+
+#. i18n: file rkwardui.rc line 42
+#: rc.cpp:39
+#, no-c-format
+msgid "&Activate"
+msgstr "&Etkinleştir"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+"Çevirenlerin isimleri \n"
+"Harun Hurma"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+"_: Çevirenlerin posta adresleri\n"
+"h.hurma@gmail.com"
 
 #~ msgid ""
 #~ "The R-backend has reported one or more error(s) while processing the "

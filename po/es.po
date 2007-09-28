@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 21:39+0200\n"
-"PO-Revision-Date: 2007-09-23 18:01-0500\n"
+"POT-Creation-Date: 2007-09-28 11:01+0200\n"
+"PO-Revision-Date: 2007-09-27 15:05-0500\n"
 "Last-Translator: Germán Márquez Mejía <gmarquez@javeriana.edu.co>\n"
 "Language-Team: español <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -169,7 +169,8 @@ msgid "Delete this row (%1)"
 msgstr "Borrar esta fila (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid ""
+"No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "No se ha indicado un nombre de archivo. Sus datos NO han sido guardados. "
 "¿Aun así desea continuar?"
@@ -330,7 +331,8 @@ msgid "Remove object?"
 msgstr "¿Eliminar objeto?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid "Do you really want to remove the object '%1'? There's no way to get it back."
+msgid ""
+"Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "¿Realmente desea eliminar el objeto «%1»? Esta operación no se puede "
 "deshacer."
@@ -406,8 +408,14 @@ msgid ""
 "that would take too long to load. To unlist the package, visit Settings-"
 ">Configure RKWard->Workspace."
 msgstr ""
-"El paquete «%1» (probablemente lo acaba de cargar) está en lista negra para obtener información de su estructura. En la práctica, esto significa que los objetos que contiene no aparecerán en el navegador de objetos, y que no habrá completado de nombres o ayuda con los argumentos de funciones para los objetos en este paquete.\n"
-"Comúnmente, los paquetes están en lista negra si contienen una gran cantidad de datos que tomaría mucho tiempo cargar. Para sacar el paquete de esta lista visite Preferencias->Configurar RKWard->Espacio de trabajo."
+"El paquete «%1» (probablemente lo acaba de cargar) está en lista negra para "
+"obtener información de su estructura. En la práctica, esto significa que los "
+"objetos que contiene no aparecerán en el navegador de objetos, y que no "
+"habrá completado de nombres o ayuda con los argumentos de funciones para los "
+"objetos en este paquete.\n"
+"Comúnmente, los paquetes están en lista negra si contienen una gran cantidad "
+"de datos que tomaría mucho tiempo cargar. Para sacar el paquete de esta "
+"lista visite Preferencias->Configurar RKWard->Espacio de trabajo."
 
 #: core/renvironmentobject.cpp:91
 msgid "Package blacklisted"
@@ -649,8 +657,8 @@ msgstr ""
 "más pequeñas antes de editar. Por otro lado, si cuenta con suficiente "
 "memoria, o los datos son lo bastante simples (los datos numéricos son más "
 "fáciles de manejar que los factores), editarlos no ha de representar un "
-"problema. Puede configurar este aviso (o desactivarlo completamente) en Preferencias->Configurar "
-"RKWard->General.\n"
+"problema. Puede configurar este aviso (o desactivarlo completamente) en "
+"Preferencias->Configurar RKWard->General.\n"
 "¿Realmente desea editar el objeto?"
 
 #: windows/rkworkplace.cpp:260
@@ -687,7 +695,8 @@ msgstr "Error de sintaxis.\n"
 
 #: windows/rkcommandlog.cpp:177
 msgid "An unspecified error occurred while running the command.\n"
-msgstr "Ha ocurrido un error no especificado durante la ejecución del comando.\n"
+msgstr ""
+"Ha ocurrido un error no especificado durante la ejecución del comando.\n"
 
 #: windows/rkwindowcatcher.cpp:60
 msgid ""
@@ -1115,7 +1124,8 @@ msgstr "Espacio de trabajo"
 
 #: settings/rksettingsmodulegeneral.cpp:49
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
-msgstr "Los ajustes marcados con (*) no tienen efecto hasta que se reinicia RKWard"
+msgstr ""
+"Los ajustes marcados con (*) no tienen efecto hasta que se reinicia RKWard"
 
 #: settings/rksettingsmodulegeneral.cpp:53
 msgid "Directory where the logfiles should be kept (*)"
@@ -1397,33 +1407,37 @@ msgstr ""
 msgid "R-Packages"
 msgstr "Paquetes de R"
 
-#: settings/rksettingsmoduleconsole.cpp:45
+#: settings/rksettingsmoduleconsole.cpp:46
 msgid "Load/Save command history"
 msgstr "Cargar/guardar el historial de comandos"
 
-#: settings/rksettingsmoduleconsole.cpp:50
+#: settings/rksettingsmoduleconsole.cpp:51
 msgid "Maximum length of command history"
 msgstr "Longitud máxima del historial de comandos"
 
-#: settings/rksettingsmoduleconsole.cpp:52
-#: settings/rksettingsmoduleconsole.cpp:58
+#: settings/rksettingsmoduleconsole.cpp:53
+#: settings/rksettingsmoduleconsole.cpp:59
 #: settings/rksettingsmodulewatch.cpp:149
 msgid "Unlimited"
 msgstr "Ilimitado"
 
-#: settings/rksettingsmoduleconsole.cpp:56
+#: settings/rksettingsmoduleconsole.cpp:57
 msgid "Maximum number of paragraphs/lines to display in the console"
 msgstr "Número máximo de párrafos/renglones a mostrar en la consola"
 
-#: settings/rksettingsmoduleconsole.cpp:64
+#: settings/rksettingsmoduleconsole.cpp:65
 msgid "Run commands from script editor through console"
 msgstr "Ejecutar comandos del editor de guiones a través de la consola"
 
-#: settings/rksettingsmoduleconsole.cpp:71
+#: settings/rksettingsmoduleconsole.cpp:70
+msgid "Also add those commands to console history"
+msgstr "Agregar también dichos comandos al historial de la consola"
+
+#: settings/rksettingsmoduleconsole.cpp:78
 msgid "Command history is context sensitive by default"
 msgstr "El historial de comandos depende del contexto por defecto"
 
-#: settings/rksettingsmoduleconsole.cpp:167
+#: settings/rksettingsmoduleconsole.cpp:179
 msgid "Console"
 msgstr "Consola"
 
@@ -1469,7 +1483,8 @@ msgstr "Comandos de sincronización"
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr "Número máximo de párrafos/renglones a mostrar en la bitácora de comandos"
+msgstr ""
+"Número máximo de párrafos/renglones a mostrar en la bitácora de comandos"
 
 #: settings/rksettings.cpp:63
 msgid "Settings"
@@ -1748,8 +1763,10 @@ msgid "XML-parsing '%1' "
 msgstr "Procesando XML «%1» "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
-msgstr "<b>¡Se han encontrado errores y/o avisos! Mire el reporte más abajo</b>"
+msgid ""
+"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgstr ""
+"<b>¡Se han encontrado errores y/o avisos! Mire el reporte más abajo</b>"
 
 #: misc/rkprogresscontrol.cpp:213
 msgid "Show Output"
@@ -1869,8 +1886,8 @@ msgstr ""
 "Ha ocurrido un error\n"
 "(«%1»)\n"
 "mientras se iniciaba el motor PHP. Probablemente se deba a un error en "
-"RKWard o a un problema con su instalación de PHP. Compruebe la configuración (Preferencias->Configurar RKWard-"
-">Motor PHP) e intente nuevamente."
+"RKWard o a un problema con su instalación de PHP. Compruebe la configuración "
+"(Preferencias->Configurar RKWard->Motor PHP) e intente nuevamente."
 
 #: scriptbackends/phpbackend.cpp:227
 msgid ""
@@ -2065,43 +2082,6 @@ msgstr ""
 #: rbackend/rthread.cpp:462
 msgid "R Startup"
 msgstr "Arranque de R"
-
-#. i18n: file rkconsolepart.rc line 11
-#. i18n: file rkwardui.rc line 32
-#: rc.cpp:6 rc.cpp:33
-#, no-c-format
-msgid "&Run"
-msgstr "&Ejecutar"
-
-#. i18n: file rkwardui.rc line 5
-#: rc.cpp:18
-#, no-c-format
-msgid "&New"
-msgstr "&Nuevo"
-
-#. i18n: file rkwardui.rc line 12
-#: rc.cpp:21
-#, no-c-format
-msgid "&Import"
-msgstr "&Importar"
-
-#. i18n: file rkwardui.rc line 22
-#: rc.cpp:24
-#, no-c-format
-msgid "&Workspace"
-msgstr "Espacio de &trabajo"
-
-#. i18n: file rkwardui.rc line 36
-#: rc.cpp:36
-#, no-c-format
-msgid "&Windows"
-msgstr "&Ventanas"
-
-#. i18n: file rkwardui.rc line 42
-#: rc.cpp:39
-#, no-c-format
-msgid "&Activate"
-msgstr "&Activar"
 
 #: main.cpp:70 main.cpp:83
 msgid "RKWard"
@@ -2463,18 +2443,6 @@ msgstr "<b>¡El objeto fue borrado!</b>"
 msgid "Ready"
 msgstr "Preparado"
 
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr "Marcelino Villarino, Germán Márquez Mejía"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr "mvillarino@users.sourceforge.net, gmarquez@javeriana.edu.co"
-
 #: robjectbrowser.cpp:114
 msgid "Objects in the R workspace"
 msgstr "Objetos en el espacio de trabajo de R"
@@ -2534,6 +2502,55 @@ msgstr "Mostrar todos los entornos"
 #: robjectbrowser.cpp:276
 msgid "Show Hidden Objects"
 msgstr "Mostrar objetos ocultos"
+
+#. i18n: file rkconsolepart.rc line 11
+#. i18n: file rkwardui.rc line 32
+#: rc.cpp:6 rc.cpp:33
+#, no-c-format
+msgid "&Run"
+msgstr "&Ejecutar"
+
+#. i18n: file rkwardui.rc line 5
+#: rc.cpp:18
+#, no-c-format
+msgid "&New"
+msgstr "&Nuevo"
+
+#. i18n: file rkwardui.rc line 12
+#: rc.cpp:21
+#, no-c-format
+msgid "&Import"
+msgstr "&Importar"
+
+#. i18n: file rkwardui.rc line 22
+#: rc.cpp:24
+#, no-c-format
+msgid "&Workspace"
+msgstr "Espacio de &trabajo"
+
+#. i18n: file rkwardui.rc line 36
+#: rc.cpp:36
+#, no-c-format
+msgid "&Windows"
+msgstr "&Ventanas"
+
+#. i18n: file rkwardui.rc line 42
+#: rc.cpp:39
+#, no-c-format
+msgid "&Activate"
+msgstr "&Activar"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Marcelino Villarino, Germán Márquez Mejía"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "mvillarino@users.sourceforge.net, gmarquez@javeriana.edu.co"
 
 #~ msgid ""
 #~ "The R-backend has reported one or more error(s) while processing the "
