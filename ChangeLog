@@ -1,3 +1,6 @@
+--- Version 0.4.8 - Oct-03-2007
+- New plugins: pie chart, dot chart, crosstabulation, two time-series tests, and basic linear regression
+- barplot plugin allow specification of custom labels
 - commands run through the console from the script editor will now be added to the command history (this can be turned off in the settings)
 - fixed: promise objects (created by delayedAssign()) directly in globalenv() would be forced early
 - make wrapper script work, when konsole is not installed
