@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-27 14:37+0200\n"
-"PO-Revision-Date: 2007-09-19 22:15+0200\n"
+"PO-Revision-Date: 2007-09-28 00:55+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -198,8 +198,7 @@ msgid "Cannot edit '%1'"
 msgstr "Kann Objekt '%1' nicht editieren"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Kein Dateiname angegeben. Ihre Daten wurden NICHT gespeichert. Möchten Sie "
 "dennoch fortfahren?"
@@ -341,8 +340,7 @@ msgid "Remove object?"
 msgstr "Objekt entfernen?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "Wollen Sie das Objekt '%1' wirklich entfernen? Es gibt keine Möglichkeit es "
 "wieder herzustellen."
@@ -560,8 +558,7 @@ msgstr "[verändert]"
 
 #: windows/rkcommandeditorwindow.cpp:143
 msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr ""
-"Das Dokument \"%1\" wurde verändert. Soll es dennoch geschlossen werden?"
+msgstr "Das Dokument \"%1\" wurde verändert. Soll es dennoch geschlossen werden?"
 
 #: windows/rkcommandeditorwindow.cpp:143
 msgid "File not saved"
@@ -1135,8 +1132,7 @@ msgstr "Ausnahme hinzufügen"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:101
 msgid "Add the name of the package that no structure should be fetched for"
-msgstr ""
-"Füge die Namen der Pakte hinzu, deren Struktur nicht abgerufen werden soll"
+msgstr "Füge die Namen der Pakte hinzu, deren Struktur nicht abgerufen werden soll"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:128 rkward.cpp:214
 msgid "Workspace"
@@ -1456,7 +1452,7 @@ msgstr "Führe Befehle vom Skripteditor durch Konsole aus"
 
 #: settings/rksettingsmoduleconsole.cpp:70
 msgid "Also add those commands to console history"
-msgstr ""
+msgstr "Füge auch diese Kommandos dem Verlauf der Konsole zu"
 
 #: settings/rksettingsmoduleconsole.cpp:78
 msgid "Command history is context sensitive by default"
@@ -1508,8 +1504,7 @@ msgstr "Synchronisations Befehle"
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr ""
-"Maximale Anzahl von Absätzen/Zeile die im Command Log angezeigt werden sollen"
+msgstr "Maximale Anzahl von Absätzen/Zeile die im Command Log angezeigt werden sollen"
 
 #: settings/rksettings.cpp:63
 msgid "Settings"
@@ -1561,8 +1556,7 @@ msgstr "Konfiguriere Repositories"
 
 #: dialogs/rkloadlibsdialog.cpp:208
 msgid "Please stand by while installing selected packages"
-msgstr ""
-"Bitte warten warten Sie während die gewählten Pakete installiert werden."
+msgstr "Bitte warten warten Sie während die gewählten Pakete installiert werden."
 
 #: dialogs/rkloadlibsdialog.cpp:208
 msgid "Installing packages"
@@ -1785,16 +1779,14 @@ msgstr "Illegaler Attributwert. Nur Dezimalzahlen sind erlaubt."
 
 #: misc/xmlhelper.cpp:308
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
-msgstr ""
-"Illegaler Attributwert. Erlaubt sind nur Werte die Werte '%1' und '%2'."
+msgstr "Illegaler Attributwert. Erlaubt sind nur Werte die Werte '%1' und '%2'."
 
 #: misc/xmlhelper.cpp:319
 msgid "XML-parsing '%1' "
 msgstr "XML-parsing '%1' "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>Es gab Fehler und / oder Warnungen! Betrachten Sie das Transkript "
 "unterhalb</b>"
@@ -2587,3 +2579,4 @@ msgid ""
 "_: EMAIL OF TRANSLATORS\n"
 "Your emails"
 msgstr "stefan_roediger@gmx.de"
+
