@@ -1,0 +1,24 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This plugin calculates a Jarque-Bera chi-squared statistic for a variable x and tests against the null hypothesis of normality
+	</summary>
+
+	<usage>
+		Select one or more numeric variables to test against normality. An individual test is run for each one of them. The output consists of the JB chi-squared statistic with 2 degrees of freedom and its correspondent p-value.
+		
+		The statistic's distribution is asynthotic, so this test performs better when working with big samples.
+
+		Make sure the data does not contain NAs, as this will usually prevent the test from succeeding.
+	</usage>
+
+	<settings>
+		<setting id="x">Select the data to be computed (one or more variables). The vectors need to be numeric and can be of different length. They must not contain NAs.</setting>
+		<setting id="length">Select if you want to include the number of observations in the output. (Default: YES)</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/jarque.bera.test"/></li>
+		</ul>
+	</related>
+</document>

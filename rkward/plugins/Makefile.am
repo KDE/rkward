@@ -47,12 +47,11 @@ dist_pluginsXplots_DATA = \
 	plots/pareto.php \
 	plots/pareto.xml \
 	plots/pareto.rkh \
-	plots/barplot_embed.xml \
+	plots/barplot_embed.rkh \
 	plots/histogram_options.php \
 	plots/histogram_options.rkh \
 	plots/histogram_options.xml \
-	plots/barplot_embed.rkh \
-	plots/barplot_embed.php \
+	plots/barplot_embed.xml \
 	plots/stem.rkh \
 	plots/stem.xml \
 	plots/stem.php \
@@ -64,7 +63,8 @@ dist_pluginsXplots_DATA = \
 	plots/dotchart.php \
 	plots/ecdf_plot.rkh \
 	plots/dotchart.xml \
-	plots/dotchart.rkh
+	plots/dotchart.rkh \
+	plots/barplot_embed.php
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
@@ -279,7 +279,10 @@ dist_pluginsXdistributionsXtests_DATA = \
 	distributions/tests/shapiro_test.php \
 	distributions/tests/shapiro_test.xml \
 	distributions/tests/pearson_test.php \
-	distributions/tests/pearson_test.xml
+	distributions/tests/pearson_test.xml \
+	distributions/tests/jb_test.php \
+	distributions/tests/jb_test.rkh \
+	distributions/tests/jb_test.xml
 
 pluginsXuni1D2dir = $(kde_datadir)/rkward/uni1.2
 dist_pluginsXuni1D2_DATA = \
@@ -353,8 +356,8 @@ dist_pluginsXanalysisXansariUbradley_DATA = \
 	analysis/ansari_bradley/ansari_bradley_test.php \
 	analysis/ansari_bradley/ansari_bradley_exact_test.php \
 	analysis/ansari_bradley/ansari_bradley_test.xml \
-	analysis/ansari_bradley/ansari_bradley_test.rkh \
-	analysis/ansari_bradley/ansari_bradley_exact_test.rkh
+	analysis/ansari_bradley/ansari_bradley_exact_test.rkh \
+	analysis/ansari_bradley/ansari_bradley_test.rkh
 
 pluginsXanalysisXmomentsdir = $(kde_datadir)/rkward/analysis/moments
 dist_pluginsXanalysisXmoments_DATA = \
@@ -397,12 +400,6 @@ dist_pluginsXanalysisXoutliers_DATA = \
 	analysis/outliers/outlier.php \
 	analysis/outliers/chisq_out_test.xml
 
-pluginsXanalysisXregressiondir = $(kde_datadir)/rkward/analysis/regression
-dist_pluginsXanalysisXregression_DATA = \
-	analysis/regression/linear_regression.php \
-	analysis/regression/linear_regression.xml \
-	analysis/regression/linear_regression.rkh
-
 pluginsXanalysisXTESTSdir = $(kde_datadir)/rkward/analysis/TESTS
 dist_pluginsXanalysisXTESTS_DATA = \
 	analysis/TESTS/mood_test.rkh \
@@ -411,15 +408,6 @@ dist_pluginsXanalysisXTESTS_DATA = \
 	analysis/TESTS/PP_test.php \
 	analysis/TESTS/mood_test.xml \
 	analysis/TESTS/PP_test.xml
-
-pluginsXanalysisXtime_seriesdir = $(kde_datadir)/rkward/analysis/time_series
-dist_pluginsXanalysisXtime_series_DATA = \
-	analysis/time_series/Box_test.xml \
-	analysis/time_series/Box_test.php \
-	analysis/time_series/Box_test.rkh \
-	analysis/time_series/kpss_test.xml \
-	analysis/time_series/kpss_test.php \
-	analysis/time_series/kpss_test.rkh
 
 pluginsXanalysisXvariancesdir = $(kde_datadir)/rkward/analysis/variances
 dist_pluginsXanalysisXvariances_DATA = \
@@ -432,6 +420,21 @@ dist_pluginsXanalysisXvariances_DATA = \
 	analysis/variances/fligner_test.rkh \
 	analysis/variances/F_test.php \
 	analysis/variances/fligner_test.php
+
+pluginsXanalysisXregressiondir = $(kde_datadir)/rkward/analysis/regression
+dist_pluginsXanalysisXregression_DATA = \
+	analysis/regression/linear_regression.php \
+	analysis/regression/linear_regression.xml \
+	analysis/regression/linear_regression.rkh
+
+pluginsXanalysisXtimeUseriesdir = $(kde_datadir)/rkward/analysis/time_series
+dist_pluginsXanalysisXtimeUseries_DATA = \
+	analysis/time_series/kpss_test.rkh \
+	analysis/time_series/kpss_test.php \
+	analysis/time_series/Box_test.xml \
+	analysis/time_series/Box_test.rkh \
+	analysis/time_series/Box_test.php \
+	analysis/time_series/kpss_test.xml
 
 pluginsXdescriptivedir = $(kde_datadir)/rkward/descriptive
 dist_pluginsXdescriptive_DATA = \

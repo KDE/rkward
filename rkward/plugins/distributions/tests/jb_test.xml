@@ -1,0 +1,23 @@
+<!DOCTYPE rkplugin>
+
+<!-- This is the Jarque-Bera test for Normality -->
+
+<document>
+	<code file="jb_test.php"/>
+	<help file="jb_test.rkh" />
+	<dialog label="Jarque-Bera Normality Test">
+				<row>
+					<column>
+						<varselector id="vars"/>
+					</column>
+					<column>
+						<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
+						<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
+						<text>
+							Note: Objects must not contain NAs
+						</text>
+						<stretch/>
+					</column>
+				</row>
+	</dialog>
+</document>

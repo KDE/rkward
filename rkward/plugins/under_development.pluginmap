@@ -3,6 +3,7 @@
 <document base_prefix="" namespace="rkward">
 	<components>
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
+		<component type="standard" id="jb_test" file="distributions/tests/jb_test.xml" label="Jarque-Bera Normality Test" />
 	</components>
 
 	<hierarchy>
@@ -18,43 +19,8 @@
 		<menu id="plots" label="Plots" index="5">
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
-			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="2">
-				<menu id="beta_distribution" label="Beta">
-				</menu>
-				<menu id="chi_squared_distribution" label="Chi-squared">
-				</menu>
-				<menu id="exponential_distribution" label="Exponential">
-				</menu>
-				<menu id="f_distribution" label="F">
-				</menu>
-				<menu id="gamma_distribution" label="Gamma">
-				</menu>
-				<menu id="logistic_distribution" label="Logistic">
-				</menu>
-				<menu id="log_normal_distribution" label="Log Normal">
-				</menu>
-				<menu id="normal_distribution" label="Normal">
-				</menu>
-				<menu id="t_distribution" label="t">
-				</menu>
-				<menu id="uniform_distribution" label="Uniform">
-				</menu>
-				<menu id="weibull_distribution" label="Weibull">
-				</menu>
-			</menu>
-			<menu id="univariate_discrete_distributions" label="Univariate discrete distributions" index="2">
-				<menu id="binomial_distribution" label="Binomial" index="0">
-				</menu>
-				<menu id="geometric_distribution" label="Geometric" index="1">
-				</menu>
-				<menu id="hypergeometric_distribution" label="Hypergeometric">
-				</menu>
-				<menu id="negative_binomial_distribution" label="Negative Binomial">
-				</menu>
-				<menu id="poisson_distribution" label="Poisson">
-				</menu>
-				<menu id="wilcoxon_distribution" label="Wilcoxon">
-				</menu>
+			<menu id="distribution_analysis" label="Distribution Analysis" index="0">
+				<entry component="jb_test" label="Jarque-Bera Normality Test"/>
 			</menu>
 		</menu>
 	</hierarchy>
