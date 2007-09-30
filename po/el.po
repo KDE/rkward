@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-28 11:01+0200\n"
-"PO-Revision-Date: 2007-09-19 23:10+0100\n"
+"PO-Revision-Date: 2007-09-29 08:23+0100\n"
 "Last-Translator: Ilias <nono.231@gmail.com>\n"
 "Language-Team: Greek\n"
 "MIME-Version: 1.0\n"
@@ -167,8 +167,7 @@ msgid "Delete this row (%1)"
 msgstr "Διαγραφή αυτής της σειράς (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Δεν δόθηκε όνομα αρχείου. Τα δεδομένα σας δεν αποθηκεύτηκαν. Θέλετε να "
 "συνεχίσετε;"
@@ -337,8 +336,7 @@ msgid "Remove object?"
 msgstr "Αφαίρεση αντικειμένου;"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "Θέλετε πραγματικά να διαγράψετε το αντικείμενο '%1'; Δεν θα υπάρχει τρόπος "
 "να το ανακτήσετε."
@@ -766,13 +764,11 @@ msgstr "Προσδιορισμός αντικειμένου R"
 
 #: windows/rkwindowcatcher.cpp:240
 msgid "Specify the R object name, you want to save the graph to"
-msgstr ""
-"Επιλέξτε το όνομα του αντικειμένου R με το οποίο θέλετε να σώσετε το γράφημα"
+msgstr "Επιλέξτε το όνομα του αντικειμένου R με το οποίο θέλετε να σώσετε το γράφημα"
 
 #: windows/rkwindowcatcher.cpp:251
 msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr ""
-"Αποθήκευση περιεχομένων της συσκευής γραφικών νούμερο %1 στο αντικείμενο '%2'"
+msgstr "Αποθήκευση περιεχομένων της συσκευής γραφικών νούμερο %1 στο αντικείμενο '%2'"
 
 #: windows/rkwindowcatcher.cpp:260
 msgid "Duplicate graphics device number %1"
@@ -1131,8 +1127,7 @@ msgstr "Προσθέστε εξαίρεση"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:101
 msgid "Add the name of the package that no structure should be fetched for"
-msgstr ""
-"Προσθέστε το όνομα του πακέτου για το οποίο δεν μπόρεσε να βρεθεί η δομή"
+msgstr "Προσθέστε το όνομα του πακέτου για το οποίο δεν μπόρεσε να βρεθεί η δομή"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:128 rkward.cpp:214
 msgid "Workspace"
@@ -1392,8 +1387,7 @@ msgstr "Αρχικοποίηση μεταφορτομένων πακέτων "
 
 #: settings/rksettingsmoduler.cpp:294
 msgid "R Library locations  (where libraries get installed to, locally)"
-msgstr ""
-"Τοποθεσίες βιβλιοθηκών R (εκεί όπου οι βιβλιοθήκες εγκαθιστώνται τοπικά)"
+msgstr "Τοποθεσίες βιβλιοθηκών R (εκεί όπου οι βιβλιοθήκες εγκαθιστώνται τοπικά)"
 
 #: settings/rksettingsmoduler.cpp:299
 msgid ""
@@ -1447,7 +1441,7 @@ msgstr "Εκτέλεση εντολών από τον επεξεργαστή σ�
 
 #: settings/rksettingsmoduleconsole.cpp:70
 msgid "Also add those commands to console history"
-msgstr ""
+msgstr "Προσθήκη επίσης αυτών των εντολών στο ιστορικό του τερματικού"
 
 #: settings/rksettingsmoduleconsole.cpp:78
 msgid "Command history is context sensitive by default"
@@ -1499,8 +1493,7 @@ msgstr "Εντολές συγχρονισμού "
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr ""
-"Μέγιστος αριθμός παραγράφων/γραμμών προβολής στο αρχείο καταγραφής εντολών"
+msgstr "Μέγιστος αριθμός παραγράφων/γραμμών προβολής στο αρχείο καταγραφής εντολών"
 
 #: settings/rksettings.cpp:63
 msgid "Settings"
@@ -1763,8 +1756,7 @@ msgstr "'%1'- Δεν δόθηκε τιμή ιδιότητας. Υποτίθετ�
 
 #: misc/xmlhelper.cpp:260
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr ""
-"Μη επιτρεπόμενη τιμής ιδιότητας. Επιτρεπόμενες τιμές είναι μόνο μία από '%1'."
+msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Επιτρεπόμενες τιμές είναι μόνο μία από '%1'."
 
 #: misc/xmlhelper.cpp:274
 msgid "Illegal attribute value. Only integer numbers are allowed."
@@ -1772,8 +1764,7 @@ msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο α
 
 #: misc/xmlhelper.cpp:290
 msgid "Illegal attribute value. Only real numbers are allowed."
-msgstr ""
-"Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο πραγματικοί αριθμοί επιτρέπονται."
+msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο πραγματικοί αριθμοί επιτρέπονται."
 
 #: misc/xmlhelper.cpp:308
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
@@ -1786,8 +1777,7 @@ msgid "XML-parsing '%1' "
 msgstr "Ανάλυση XML '%1' "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>Υπήρξαν σφάλματα ή / και προειδοποιήσεις! Δείτε παρακάτω για μια "
 "περιγραφή</b>"
@@ -2353,8 +2343,7 @@ msgstr "Εισάγετε το όνομα για το νέο πακέτο δεδ�
 
 #: rkward.cpp:569 robjectbrowser.cpp:173 robjectbrowser.cpp:207
 msgid "The name you specified was already in use or not valid. Renamed to %1"
-msgstr ""
-"Το όνομα που δώσατε ήδη υπάρχει ή δεν είναι έγκυρο. Μετονομάστηκε σε %1"
+msgstr "Το όνομα που δώσατε ήδη υπάρχει ή δεν είναι έγκυρο. Μετονομάστηκε σε %1"
 
 #: rkward.cpp:569 robjectbrowser.cpp:173 robjectbrowser.cpp:207
 msgid "Invalid Name"
@@ -2586,3 +2575,4 @@ msgid ""
 msgstr ""
 "_: EMAIL OF TRANSLATORS\n"
 "isoumpasis@gmail.com, isoumpasis@yahoo.gr"
+
