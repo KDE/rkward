@@ -7,7 +7,6 @@
 		<component type="standard" id="cor_graph" file="plots/cor_graph.xml" label="Correlation Matrix Plot" />
 		<component type="standard" id="descriptive" file="descriptive/descriptive_statistics.xml" label="Descriptive Statistics" />
 		<component type="standard" id="t_test_two_vars" file="analysis/t_test_two_vars.xml" label="Two Variable t-test" />
-		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
 		<component type="standard" id="wilcoxon_test" file="analysis/wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
 		<component type="standard" id="wilcoxon_exact_test" file="analysis/wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
 		<component type="standard" id="ansari_bradley_test" file="analysis/ansari_bradley/ansari_bradley_test.xml" label="Ansari-Bradley two-sample test" />
@@ -34,6 +33,17 @@
 		<!-- miscellanious tests -->
 		<component type="standard" id="mood_test" file="analysis/TESTS/mood_test.xml" label="Mood Two-Sample Test" />
 		<component type="standard" id="PP_test" file="analysis/TESTS/PP_test.xml" label="Phillips-Perron Test" />
+
+		<!-- crosstabulation -->
+		<component type="standard" id="crosstab" file="analysis/crosstab.xml" label="N to 1 Crosstabulation" />
+		<component type="standard" id="crosstab_multi" file="analysis/crosstab_multi.xml" label="N to N Crosstabulation" />
+
+		<!-- time series -->
+		<component type="standard" id="Box_test" file="analysis/time_series/Box_test.xml" label="Box-Pierce or Ljung-Box Tests" />
+		<component type="standard" id="kpss_test" file="analysis/time_series/kpss_test.xml" label="KPSS Test for Stationarity" />
+
+		<!-- regression -->
+		<component type="standard" id="linear_regression" file="analysis/regression/linear_regression.xml" label="Linear Regression" />
 	</components>
 
 	<hierarchy>
@@ -47,34 +57,44 @@
 				<entry component="corr_matrix" />
 				<entry component="cor_graph" />
 			</menu>
-			<entry component="descriptive" index="2"/>
-			<menu id="means" label="Means" index="3">
+			<menu id="crosstabs" label="Crosstabs" index="2">			
+				<entry component="crosstab" />
+				<entry component="crosstab_multi" />
+			</menu>
+			<entry component="descriptive" index="3"/>
+			<menu id="means" label="Means" index="4">
 				<menu id="ttests" label="t-Tests" index="0">
 					<entry component="t_test_two_vars" />
 				</menu>
 			</menu>
-			<menu id="misc_tests" label="Miscellaneous tests" index="4">
+			<menu id="misc_tests" label="Miscellaneous tests" index="5">
 				<entry component="mood_test"/>
 				<entry component="PP_test"/>
 			</menu>
-			<menu id="moments" label="Moments" index="5">
+			<menu id="moments" label="Moments" index="6">
 				<entry component="anscombe_test"/>
 				<entry component="bonett_test"/>
 				<entry component="agostino_test"/>
 				<entry component="moment"/>
 				<entry component="skewness_kurtosis"/>
 			</menu>
-			<menu id="outliers" label="Outlier Tests" index="6">
+			<menu id="outliers" label="Outlier Tests" index="7">
 				<entry component="chisq_out_test"/>
 				<entry component="dixon_test"/>
 				<entry component="grubbs_test"/>
 				<entry component="outlier"/>
 			</menu>
-			<entry component="simple_anova" index="8"/>
+			<menu id="regression" label="Regression" index="8">
+				<entry component="linear_regression"/>
+			</menu>
 			<menu id="variances" label="Variances" index="10">
 				<entry component="bartlett_test"/>
 				<entry component="F_test"/>
 				<entry component="fligner_test"/>
+			</menu>
+			<menu id="time_series" label="Time Series" index="10">
+				<entry component="Box_test"/>
+				<entry component="kpss_test"/>
 			</menu>
 			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="11">
 				<entry component="wilcoxon_test" />

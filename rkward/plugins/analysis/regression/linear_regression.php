@@ -1,7 +1,5 @@
 <?
-function preprocess () { ?>
-require(xtable)
-<?
+function preprocess () {
 }
 
 function calculate () {

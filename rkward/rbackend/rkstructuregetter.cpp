@@ -98,7 +98,7 @@ SEXP RKStructureGetter::callSimpleFun2 (SEXP fun, SEXP arg1, SEXP arg2, SEXP env
 bool RKStructureGetter::callSimpleBool (SEXP fun, SEXP arg, SEXP env) {
 	SEXP res = callSimpleFun (fun, arg, env);
 	RK_ASSERT (TYPEOF (res) == LGLSXP);
-	return ((bool) VECTOR_ELT (res, 0));
+	return ((bool) LOGICAL (res)[0]);
 }
 
 RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename) {
