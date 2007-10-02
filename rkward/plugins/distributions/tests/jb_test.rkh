@@ -1,7 +1,7 @@
 <!DOCTYPE rkhelp>
 <document>
 	<summary>
-		This plugin calculates a Jarque-Bera chi-squared statistic for a variable x and tests against the null hypothesis of normality
+		This plugin calculates a Jarque-Bera chi-squared statistic for a variable x and tests against the null hypothesis of normality.
 	</summary>
 
 	<usage>
@@ -9,12 +9,13 @@
 		
 		The statistic's distribution is asynthotic, so this test performs better when working with big samples.
 
-		Make sure the data does not contain NAs, as this will usually prevent the test from succeeding.
+		Make sure the data does not contain NAs or, if so, that the 'Exclude NAs' option is checked, as neglecting this will usually prevent the test from succeeding.
 	</usage>
 
 	<settings>
-		<setting id="x">Select the data to be computed (one or more variables). The vectors need to be numeric and can be of different length. They must not contain NAs.</setting>
-		<setting id="length">Select if you want to include the number of observations in the output. (Default: YES)</setting>
+		<setting id="x">Select the data to be computed (one or more variables). The vectors need to be numeric and can be of different length.</setting>
+		<setting id="length">Select if you want to include the number of observations and NAs in the output. (Default: YES)</setting>
+		<setting id="excludenas">Select if your data has missing values. The NAs are then omitted when performing the test. (Default: YES)</setting>
 	</settings>
 	<related>
 		<ul>

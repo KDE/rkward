@@ -6,18 +6,22 @@
 	<code file="jb_test.php"/>
 	<help file="jb_test.rkh" />
 	<dialog label="Jarque-Bera Normality Test">
+		<tabbook>
+			<tab label="Select Variables" >
 				<row>
 					<column>
 						<varselector id="vars"/>
 					</column>
 					<column>
 						<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
-						<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="true" />
-						<text>
-							Note: Objects must not contain NAs
-						</text>
-						<stretch/>
 					</column>
 				</row>
+			</tab>
+			<tab label="Options">
+				<checkbox id="length" label="Show Length and NAs" value_unchecked="0" value="1" checked="true" />
+				<checkbox id="excludenas" label="Exclude NAs (the test will not run otherwise if present)" value_unchecked="0" value="1" checked="true" />
+				<stretch/>
+			</tab>
+		</tabbook>
 	</dialog>
 </document>
