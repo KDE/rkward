@@ -1,26 +1,24 @@
-# translation of ca_061201.po to Catalan
-# translation of ca_bak3.po to Catalan
 # translation of ca.po to Catalan
-# translation of rkward.po to Catalan
 # Copyright (C) 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 # This file is put in the public domain.
 # 28-11-2006: v 1.00
+#
 # griera@gmail.com, 2006.
 # Núria Asensio <nasensio.germanstrias@gencat.net>, 2006.
 # Pep Roca <pep.roca@gmail.com>, 2007.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-28 11:01+0200\n"
-"PO-Revision-Date: 2007-04-05 15:35+0200\n"
+"PO-Revision-Date: 2007-10-02 16:56+0200\n"
 "Last-Translator: Pep Roca <pep.roca@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.9.1\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: dataeditor/editformatdialog.cpp:44
 msgid "Alignment"
@@ -120,7 +118,7 @@ msgstr ""
 "1. (la columna índex és només de lectura). Per eliminar els nivells al final "
 "de la llista, només cal que els deixeu buits. Atenció: si elimineu un "
 "nivell, els índex dels altres nivells poden canviar , i, per tant també es "
-"modificaran els valors de la variable factor!"
+"modificaran els valors de la variable factor."
 
 # És el nom de la finestra que s'obre al punxar sobre una casella "Lebels" de una taula de dades.
 # A fr.po: "Libellés de niveaux / valeurs pour '%1'"
@@ -181,8 +179,7 @@ msgid "Delete this row (%1)"
 msgstr "Esborra aquesta fila (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "No heu proporcionat cap nom de fitxer. Les dades NO s'han desat. Voleu "
 "continuar malgrat això?"
@@ -345,8 +342,7 @@ msgid "Remove object?"
 msgstr "Elimino l'objecte?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr "Realment voleu eliminar l'objecte '%1'? No podrà recuperar-se mai més."
 
 #: core/robject.cpp:119
@@ -420,6 +416,9 @@ msgid "Class(es):"
 msgstr "Classe(s):"
 
 #: core/renvironmentobject.cpp:91
+# ??? Per revisar
+# Completar i revisar amb fr.po i es.po
+#, fuzzy
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
 "retrieving structure information. Practically this means, the objects in "
@@ -430,11 +429,20 @@ msgid ""
 "that would take too long to load. To unlist the package, visit Settings-"
 ">Configure RKWard->Workspace."
 msgstr ""
+"El paquet '%1' (que probablement acabeu de carregar) està actualment en la "
+"llista negra per recuperar informació sobre la seva estructura. A la pràctica, "
+"això vol dir que els seus objectes no apareixaran en el navegador d'objectes. "
+"\n"
+"Habitualment un paquet es fica a la llista negra, si es trigaria molt en "
+"carregar per tenir una enorme quantitat de dades. Per treure'l de la llista, "
+"anar a Arranjaments->Configura RKWard->Espai de treball."
 
 #: core/renvironmentobject.cpp:91
+# ??? Per revisar
+# Revisar amb fr.po i es.po
 #, fuzzy
 msgid "Package blacklisted"
-msgstr "El paquet no està disponible"
+msgstr "El paquet està en la llista negra"
 
 #: windows/rkcommandeditorwindowpart.cpp:51
 msgid "Run all"
@@ -892,7 +900,7 @@ msgid "Show/Hide R Help Search"
 msgstr "Mostra/Oculta la finestra per cercar l'ajuda de R"
 
 # ??? Per revisar
-# Activa la visualització del document o 
+# Activa la visualització del document o
 # Activa la visualització dels documents
 #: windows/rktoplevelwindowgui.cpp:68
 #, fuzzy
@@ -1168,16 +1176,17 @@ msgid "Class field"
 msgstr "Camp de la classe"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:76
+# Softcatalà 4.0: fetch, to =  recollir
 msgid "Never fetch the structure of these packages:"
-msgstr ""
+msgstr "Mai recollis l'estructura d'aquests paquets:"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:101
 msgid "Add exclusion"
-msgstr ""
+msgstr "Afegir exclusió"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:101
 msgid "Add the name of the package that no structure should be fetched for"
-msgstr ""
+msgstr "Afegeixi el nom del paquet del que no vol recollir l'estructura"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:128 rkward.cpp:214
 msgid "Workspace"
@@ -1187,8 +1196,7 @@ msgstr "Espai de treball"
 # Recull de termes de Softcatalà: settings - m pl paràmetres
 #: settings/rksettingsmodulegeneral.cpp:49
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
-msgstr ""
-"Els arranjaments marcats amb un (*) només s'aplicaran si reengegueu RKWard"
+msgstr "Els arranjaments marcats amb un (*) només s'aplicaran si reengegueu RKWard"
 
 #: settings/rksettingsmodulegeneral.cpp:53
 msgid "Directory where the logfiles should be kept (*)"
@@ -1255,7 +1263,7 @@ msgid ""
 "limit):"
 msgstr ""
 "Avisa al editar objectes amb més d'aquest nombre de camps (0 si no és vol "
-"cap límit)"
+"cap límit):"
 
 #: settings/rksettingsmodulegeneral.cpp:95
 msgid "No limit"
@@ -1294,7 +1302,7 @@ msgstr "Mostra la sintaxis de R (en els diàlegs)"
 
 #: settings/rksettingsmoduleplugins.cpp:68
 msgid "Code shown by default"
-msgstr "Codi que s'ha de mostrar per omissió?"
+msgstr "Codi que s'ha de mostrar per omissió"
 
 #: settings/rksettingsmoduleplugins.cpp:73
 msgid "Default height of code display (pixels)"
@@ -1385,8 +1393,10 @@ msgid "Output width (characters)"
 msgstr "Ample dels resultats (caràcters)"
 
 #: settings/rksettingsmoduler.cpp:90
+# ??? Per revisar: és l'ordre print, no la impressió
+#, fuzzy
 msgid "Maximum number of elements shown in print"
-msgstr ""
+msgstr "Nombre màxim d'elements que s'han de mostrar en la impressió"
 
 #: settings/rksettingsmoduler.cpp:96
 msgid "Maximum length of warnings/errors to print"
@@ -1454,8 +1464,7 @@ msgstr "Arxiva els paquets descarregats"
 
 #: settings/rksettingsmoduler.cpp:294
 msgid "R Library locations  (where libraries get installed to, locally)"
-msgstr ""
-"Ubicació de les biblioteques R (on localment s'instal·len les biblioteques)"
+msgstr "Ubicació de les biblioteques R (on localment s'instal·len les biblioteques)"
 
 #: settings/rksettingsmoduler.cpp:299
 msgid ""
@@ -1511,7 +1520,7 @@ msgstr "Executar les ordres del editor de seqüències a través de la consola"
 
 #: settings/rksettingsmoduleconsole.cpp:70
 msgid "Also add those commands to console history"
-msgstr ""
+msgstr "Afegeix també aquestes ordres en l'historial de la consola"
 
 # ??? Per revisar
 # fr: La commande d'historique est sensible à la casse par défaut
@@ -1803,7 +1812,7 @@ msgstr "Convertir-se en root"
 
 #: dialogs/rkimportdialog.cpp:36
 msgid "File format: "
-msgstr "Format de fitxer:"
+msgstr "Format de fitxer: "
 
 #: dialogs/rkimportdialog.cpp:45
 msgid "No plugins defined for context '%1'"
@@ -1840,8 +1849,7 @@ msgstr "No heu especificat l'atribut '%1'. S'assumeix '%2'"
 # fr.po: Valeur d'attribut interdite. Les valeurs possibles sont seulement parmi '%1'.
 #: misc/xmlhelper.cpp:260
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr ""
-"El valor de l'atribut està prohibit. Només es permet un dels valors de '%1'."
+msgstr "El valor de l'atribut està prohibit. Només es permet un dels valors de '%1'."
 
 #: misc/xmlhelper.cpp:274
 msgid "Illegal attribute value. Only integer numbers are allowed."
@@ -1863,8 +1871,7 @@ msgid "XML-parsing '%1' "
 msgstr "S'està analitzant el XML '%1' "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>S'han produït errors i / o avisos! Una transcripció dels missatges es "
 "mostra aquí sota</b>"
@@ -1978,7 +1985,6 @@ msgstr ""
 "arranjaments->dorsal PHP)"
 
 #: scriptbackends/phpbackend.cpp:197
-#, fuzzy
 msgid ""
 "There has been an error\n"
 "(\"%1\")\n"
@@ -1988,10 +1994,10 @@ msgid ""
 msgstr ""
 "S'ha produït un error\n"
 "(\"%1\")\n"
-"a l'engegar-se el dorsal PHP. Probablement, s'ha degut a un error en el "
-"RKWard o a un arranjament invàlid de la ubicació dels fitxers de suport del "
-"PHP. Comproveu els arranjaments (Arranjaments->Configura->Arranjaments-> "
-"dorsal PHP) i torneu a provar."
+"al iniciar-se el dorsal PHP. Probablement, s'ha degut a un error en el "
+"RKWard o a un problema en la instal·lació del PHP. Comproveu els "
+"arranjaments (Arranjaments->Configura->Arranjaments->dorsal PHP) i torneu a "
+"provar."
 
 #: scriptbackends/phpbackend.cpp:227
 msgid ""
@@ -2206,14 +2212,15 @@ msgstr "Nivell d'informació dels missatges de depuració (0-5)"
 # es.po: Máscara para los componentes a depurar como números binarios (mirar en debug. "h)"
 # fr: Masque en tant que nombre binaire (voir debug.h) des composants à tracer
 #: main.cpp:76
-#, fuzzy
 msgid "Mask for components to debug (see debug.h)"
-msgstr ""
-"Màscara per als components a depurar com a nombre binaris (mireu en depura.h)"
+msgstr "Màscara per als components a depurar (mireu en depura.h)"
 
 #: main.cpp:77
+# ??? Per revisar
+# ó Desactiva la comprovació de la pila C del R?
+#, fuzzy
 msgid "Disable R C stack checking"
-msgstr ""
+msgstr "Desactiva la comprovació de la pila R C"
 
 #: main.cpp:84
 msgid "Project leader / main developer"
@@ -2293,7 +2300,7 @@ msgstr ""
 
 #: rkward.cpp:209
 msgid "What to expect of RKWard"
-msgstr "Què podeu esperar de RKWard?"
+msgstr "Què podeu esperar de RKWard"
 
 #: rkward.cpp:214
 msgid "Existing objects in your workspace."
@@ -2301,7 +2308,7 @@ msgstr "Hi han objectes en l'espai de treball."
 
 #: rkward.cpp:219
 msgid "File-system Browser"
-msgstr ""
+msgstr "Navegador dels fitxer del sistema"
 
 #: rkward.cpp:222
 msgid "Pending Jobs"
@@ -2523,28 +2530,26 @@ msgstr "Evita la consola"
 
 # fr.po: Result of 'print ("
 #: robjectviewer.cpp:70
-#, fuzzy
 msgid ""
 "\n"
 "Result of 'summary (%1)':\n"
 msgstr ""
 "\n"
-"Resultat de 'print ("
+"Resultat de 'summary (%1)':\n"
 
 #: robjectviewer.cpp:72 robjectviewer.cpp:84 robjectviewer.cpp:109
 #: robjectviewer.cpp:120
 msgid "Hide"
-msgstr ""
+msgstr "Amaga"
 
 # fr.po: Result of 'print ("
 #: robjectviewer.cpp:82
-#, fuzzy
 msgid ""
 "\n"
 "Result of 'print (%1)':\n"
 msgstr ""
 "\n"
-"Resultat de 'print ("
+"Resultat de 'print (%1)':\n"
 
 #: robjectviewer.cpp:93
 msgid "Object Viewer: "
@@ -2552,21 +2557,19 @@ msgstr "Visualitzador d'objectes: "
 
 #: robjectviewer.cpp:111 robjectviewer.cpp:122
 msgid "Show"
-msgstr ""
+msgstr "Mostra"
 
 #: robjectviewer.cpp:137
-#, fuzzy
 msgid "Fetching information"
-msgstr "S'està obtenint la llista"
+msgstr "S'està recollint la informació"
 
 #: robjectviewer.cpp:162
 msgid "<b>Object was deleted!</b>"
-msgstr ""
+msgstr "<b>L'objectes s'ha esborrat!</b>"
 
 #: robjectviewer.cpp:175
-#, fuzzy
 msgid "Ready"
-msgstr "Llest."
+msgstr "Preparat"
 
 #: robjectbrowser.cpp:114
 msgid "Objects in the R workspace"
@@ -2679,65 +2682,3 @@ msgid ""
 "Your emails"
 msgstr "pep.roca@gmail.com"
 
-#~ msgid ""
-#~ "The R-backend has reported one or more error(s) while processing the "
-#~ "plugin '%1'.\n"
-#~ "This may lead to an incorrect output and is likely due to a bug in the "
-#~ "plugin.\n"
-#~ "A transcript of the error message(s) is shown below."
-#~ msgstr ""
-#~ "El dorsal R ha informat d'un o més error(s) mentre processava "
-#~ "l'endollable. '%1'.\n"
-#~ "Això pot comportar que els resultats siguin incorrectes i probablement és "
-#~ "degut a un error en l'endollable.\n"
-#~ "Una transcripció dels missatges d'error es mostra aquí sota."
-
-#~ msgid "R-Error"
-#~ msgstr "Error de R"
-
-#~ msgid "Syntax error"
-#~ msgstr "Error de sintaxi"
-
-#~ msgid "command incomplete"
-#~ msgstr "ordre incompleta"
-
-#~ msgid "Browse"
-#~ msgstr "Navega"
-
-#~ msgid "Object name: "
-#~ msgstr "Introduïu el nom de l'objecte: "
-
-# fr.po: Chemin complet :
-#~ msgid ""
-#~ "\n"
-#~ "Full location: "
-#~ msgstr ""
-#~ "\n"
-#~ "Camí complet: "
-
-#~ msgid ""
-#~ "\n"
-#~ "Class(es): "
-#~ msgstr ""
-#~ "\n"
-#~ "Classe(s): "
-
-#~ msgid ""
-#~ "\n"
-#~ "Dimensions: "
-#~ msgstr ""
-#~ "\n"
-#~ "Dimensions: "
-
-#~ msgid ")':\n"
-#~ msgstr ")':\n"
-
-#~ msgid " - Waiting for results from R..."
-#~ msgstr " - S'està a l'espera dels resultats del procés R..."
-
-#~ msgid ""
-#~ "\n"
-#~ "Some errors occurred: "
-#~ msgstr ""
-#~ "\n"
-#~ "S'han produït alguns errors: "
