@@ -175,8 +175,8 @@ void RKVarSlot::selectPressed () {
 	if (add_mode) {
 		if (multi) {
 			ObjectList objlist = source->objectList ();
-			ObjectList::const_iterator it = objlist.begin ();
-			while (it != objlist.end ()) {
+			ObjectList::const_iterator it = objlist.constBegin ();
+			while (it != objlist.constEnd ()) {
 				available->addObjectValue (*it);
 				++it;
 			}

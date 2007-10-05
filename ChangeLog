@@ -1,3 +1,5 @@
+- Fixed: Pressing the add button in a varslot with no object selected could crash RKWard
+
 --- Version 0.4.8 - Oct-03-2007
 - New plugins: pie chart, dot chart, crosstabulation, two time-series tests, and basic linear regression
 - barplot plugin allow specification of custom labels

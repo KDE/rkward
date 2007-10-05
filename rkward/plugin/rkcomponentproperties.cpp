@@ -713,9 +713,10 @@ void RKComponentPropertyRObjects::setObjectList (const ObjectList &newlist) {
 	ObjectList::const_iterator cit = newlist.begin ();
 	while (cit != newlist.end ()) {
 		if (!object_list.contains (*cit)) {
-			if (isObjectValid (*cit));
-			object_list.append (*cit);
-			changes = true;
+			if (isObjectValid (*cit)) {
+				object_list.append (*cit);
+				changes = true;
+			}
 		}
 		++cit;
 	}
@@ -769,6 +770,7 @@ bool RKComponentPropertyRObjects::isObjectValid (RObject *object) {
 RObject *RKComponentPropertyRObjects::objectValue () {
 	RK_TRACE (PLUGIN);
 
+	if (object_list.empty ()) return 0;
 	return (object_list.first ());
 }
 
