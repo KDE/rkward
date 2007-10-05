@@ -19,7 +19,7 @@
 			</tab>
 			<tab label="Options">
 				<checkbox id="length" label="Show Length and NAs" value_unchecked="0" value="1" checked="true" />
-				<checkbox id="excludenas" label="Exclude NAs (the test will not run otherwise if present)" value_unchecked="0" value="1" checked="true" />
+				<checkbox id="excludenas" label="Exclude NAs" value_unchecked="0" value="1" checked="true" />
 				<stretch/>
 			</tab>
 		</tabbook>
