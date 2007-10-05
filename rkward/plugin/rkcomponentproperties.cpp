@@ -2,7 +2,7 @@
                           rkcomponentproperties  -  description
                              -------------------
     begin                : Fri Nov 25 2005
-    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 

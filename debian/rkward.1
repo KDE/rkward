@@ -40,6 +40,12 @@ Verbosity of debug output. 0-5, where 0 is no output, 5 is all output including 
 .TP
 .B \-\-debug-flags <flags>
 Allows to configure, which sections of code to debug. Flags are given as a binary number. Refer to the source files for documentation, as this really is an internal option
+.TP
+.B \-\-debugger <command>
+Run RKWard through the specified debugger command. To add command line options to the debugger command, enclose them in single quotes ('') together with the command.
+.TP
+.B \-\-disable-stack-check
+Disable the R C stack checking mechanism. If you see the error message "C stack usage too close to the limit", this option may serve as a workaround.
 .SH SEE ALSO
 .BR R (1),
 .br

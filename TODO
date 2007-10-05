@@ -6,7 +6,7 @@ Important:
 	- Around March 1st, write to R-devel to achieve having IS_UTF8 and IS_LATIN1 in public API (if not already available, then).
 		- Is Rf_translateChar() what we are looking for?
 
-Should be fixed for 0.4.8:
+Should be fixed for 0.4.9:
 
 Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
