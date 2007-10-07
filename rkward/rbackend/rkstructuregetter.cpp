@@ -282,7 +282,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 
 		SEXP meta_s = callSimpleFun (get_meta_fun, value, R_GlobalEnv);
 		PROTECT (meta_s);
-		metadata->data = SEXPToStringList (classes_s, &count);
+		metadata->data = SEXPToStringList (meta_s, &count);
 		metadata->length = count;
 		UNPROTECT (1);	/* meta_s */
 	} else {
