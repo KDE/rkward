@@ -37,7 +37,7 @@ RKCancelDialog::RKCancelDialog (const QString &caption, const QString &text, QWi
 	
 	Q3VBoxLayout *layout = new Q3VBoxLayout (this, KDialog::marginHint (), KDialog::spacingHint ());
 	QLabel *label = new QLabel (text, this);
-	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+	label->setAlignment (Qt::AlignLeft | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	layout->addWidget (label);
 	
 	QPushButton *cancel_button = new QPushButton (i18n ("Cancel"), this);

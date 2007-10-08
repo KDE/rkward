@@ -114,7 +114,7 @@ int RKComponentGUIXML::addSubMenu (QDomElement& parent, const QDomElement& descr
 
 		RKComponentHandle* handle = RKComponentMap::getComponentHandle (id);
 		if ((!handle) || (!handle->isPlugin ())) {
-			RK_DO (qDebug ("No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", id.latin1 ()), PLUGIN, DL_ERROR);
+			RK_DO (qDebug ("No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", id.toLatin1 ()), PLUGIN, DL_ERROR);
 		} else {
 			findOrCreateElement (menu_element, "Action", id, QString::null, xml->getIntAttribute ((*it), "index", -1, DL_INFO));
 			addedEntry (id, handle);
@@ -154,7 +154,7 @@ void RKComponentMap::clearLocal () {
 	for (ComponentMap::iterator it = components.begin (); it != components.end (); ++it) {
 		delete (it.data ());
 /* TODO: this is not technically correct, as there may be several actions for this id, and we're only deleting one. But practically this should not really be relevant. */
-		delete (actionCollection ()->action (it.key ().latin1 ()));
+		delete (actionCollection ()->action (it.key ().toLatin1 ()));
 	}
 	components.clear ();
 
@@ -180,7 +180,7 @@ RKContextMap *RKComponentMap::getContext (const QString &id) {
 	RKContextMap *context = getMap ()->getContextLocal (id);
 	if (context) return context;
 
-	RK_DO (qDebug ("no such context %s", id.latin1 ()), PLUGIN, DL_WARNING);
+	RK_DO (qDebug ("no such context %s", id.toLatin1 ()), PLUGIN, DL_WARNING);
 	return (0);
 }
 
@@ -197,7 +197,7 @@ RKComponentHandle* RKComponentMap::getComponentHandle (const QString &id) {
 	RKComponentHandle *handle = getMap ()->getComponentHandleLocal (id);
 	if (handle) return handle;
 
-	RK_DO (qDebug ("no such component %s", id.latin1 ()), PLUGIN, DL_WARNING);
+	RK_DO (qDebug ("no such component %s", id.toLatin1 ()), PLUGIN, DL_WARNING);
 	return (0);
 }
 
@@ -237,9 +237,9 @@ int RKComponentMap::addPluginMap (const QString& plugin_map_file) {
 int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	RK_TRACE (PLUGIN);
 
-	QString plugin_map_file_abs = QFileInfo (plugin_map_file).absFilePath ();
+	QString plugin_map_file_abs = QFileInfo (plugin_map_file).absoluteFilePath ();
 	if (pluginmapfiles.contains (plugin_map_file_abs)) {
-		RK_DO (qDebug ("Plugin map file '%s' already loaded", plugin_map_file.latin1()), PLUGIN, DL_INFO);
+		RK_DO (qDebug ("Plugin map file '%s' already loaded", plugin_map_file.toLatin1()), PLUGIN, DL_INFO);
 		return 0;
 	}
 
@@ -250,11 +250,11 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	QDomElement document_element = xml->openXMLFile (plugin_map_file_abs, DL_ERROR);
 	if (xml->highestError () >= DL_ERROR) return (0);
 
-	QString prefix = QFileInfo (plugin_map_file_abs).dirPath (true) + '/' + xml->getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
+	QString prefix = QFileInfo (plugin_map_file_abs).absolutePath() + '/' + xml->getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
 	QString cnamespace = xml->getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";
 
 	RKPluginMapFile *pluginmap_file_desc = new RKPluginMapFile (prefix);
-	pluginmapfiles.insert (QFileInfo (plugin_map_file).absFilePath (), pluginmap_file_desc);
+	pluginmapfiles.insert (QFileInfo (plugin_map_file).absoluteFilePath (), pluginmap_file_desc);
 
 	// step 1: include required files
 	int counter = 0;
@@ -265,7 +265,7 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 		if (QFileInfo (file).isReadable ()) {
 			includelist.append (file);
 		} else {
-			RK_DO (qDebug ("Specified required file '%s' does not exist or is not readable. Ignoring.", file.latin1 ()), PLUGIN, DL_ERROR);
+			RK_DO (qDebug ("Specified required file '%s' does not exist or is not readable. Ignoring.", file.toLatin1 ()), PLUGIN, DL_ERROR);
 		}
 	}
 	for (QStringList::const_iterator it = includelist.constBegin (); it != includelist.constEnd (); ++it) {
@@ -283,9 +283,9 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 		QString label = xml->getStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING);
 
 		if (components.contains (id)) {
-			RK_DO (qDebug ("RKComponentMap already contains a component with id \"%s\". Ignoring second entry.", id.latin1 ()), PLUGIN, DL_WARNING);
+			RK_DO (qDebug ("RKComponentMap already contains a component with id \"%s\". Ignoring second entry.", id.toLatin1 ()), PLUGIN, DL_WARNING);
 		} else if (!QFileInfo (pluginmap_file_desc->makeFileName (filename)).isReadable ()) {
-			RK_DO (qDebug ("Specified file '%s' for component id \"%s\" does not exist or is not readable. Ignoring.", filename.latin1 (), id.latin1 ()), PLUGIN, DL_ERROR);
+			RK_DO (qDebug ("Specified file '%s' for component id \"%s\" does not exist or is not readable. Ignoring.", filename.toLatin1 (), id.toLatin1 ()), PLUGIN, DL_ERROR);
 		} else {
 			// create and initialize component handle
 			RKComponentHandle *handle = new RKComponentHandle (pluginmap_file_desc, filename, label, (RKComponentType) type);
@@ -322,7 +322,7 @@ void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {
 	RK_TRACE (PLUGIN);
 
 	if (handle->isPlugin ()) {
-		new KAction (handle->getLabel (), 0, handle, SLOT (activated ()), actionCollection (), id.latin1 ());
+		new KAction (handle->getLabel (), 0, handle, SLOT (activated ()), actionCollection (), id.toLatin1 ());
 	}
 }
 

@@ -183,7 +183,7 @@ StartupDialog::StartupDialogResult *StartupDialog::getStartupAction (QWidget *pa
 	dialog->exec ();
 	delete dialog;
 	
-	RK_DO (qDebug ("startup-dialog result: %d, url: %s", result->result, result->open_url.fileName ().latin1 ()), DIALOGS, DL_DEBUG);
+	RK_DO (qDebug ("startup-dialog result: %d, url: %s", result->result, result->open_url.fileName ().toLatin1 ()), DIALOGS, DL_DEBUG);
 	
 	return result;
 }

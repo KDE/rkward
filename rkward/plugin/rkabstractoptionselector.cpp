@@ -88,7 +88,7 @@ RKComponentBase* RKAbstractOptionSelector::lookupComponent (const QString &ident
 
 		QString mod = identifier.section (".", 1);
 		if (mod != "enabled") {
-			RK_DO (qDebug ("options do not have property '%s'", mod.latin1()), PLUGIN, DL_DEBUG);
+			RK_DO (qDebug ("options do not have property '%s'", mod.toLatin1()), PLUGIN, DL_DEBUG);
 			return this;
 		}
 

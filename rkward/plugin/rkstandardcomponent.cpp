@@ -83,7 +83,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	// initialize the PHP-backend with the code-template
 	QDomElement element = xml->getChildElement (doc_element, "code", DL_WARNING);
 	if (element.hasAttribute ("file")) {
-		QString dummy = QFileInfo (filename).dirPath () + '/' + xml->getStringAttribute (element, "file", "code.php", DL_WARNING);
+		QString dummy = QFileInfo (filename).path() + '/' + xml->getStringAttribute (element, "file", "code.php", DL_WARNING);
 		backend = new PHPBackend (dummy);
 	} else {
 		SimpleBackend *back = new SimpleBackend ();
@@ -102,7 +102,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 
 	// check for existance of help file
 	element = xml->getChildElement (doc_element, "help", DL_WARNING);
-	QString dummy = QFileInfo (filename).dirPath () + '/' + xml->getStringAttribute (element, "file", "::nosuchfile::", DL_INFO);
+	QString dummy = QFileInfo (filename).path() + '/' + xml->getStringAttribute (element, "file", "::nosuchfile::", DL_INFO);
 	have_help = QFileInfo (dummy).exists ();
 
 	handle_change_timer = new QTimer (this);
@@ -675,7 +675,7 @@ void RKComponentBuilder::makeConnections () {
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	for (ConnectionList::const_iterator it = connection_list.begin (); it != connection_list.end (); ++it) {
-		RK_DO (qDebug ("Connecting '%s' to '%s'", (*it).client_property.latin1 (), (*it).governor_property.latin1 ()), PLUGIN, DL_DEBUG);
+		RK_DO (qDebug ("Connecting '%s' to '%s'", (*it).client_property.toLatin1 (), (*it).governor_property.toLatin1 ()), PLUGIN, DL_DEBUG);
 
 		QString dummy;
 		RKComponentBase *client = parent->lookupComponent ((*it).client_property, &dummy);

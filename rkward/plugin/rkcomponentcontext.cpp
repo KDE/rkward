@@ -82,7 +82,7 @@ RKContextHandler::~RKContextHandler () {
 void RKContextHandler::addAction (const QString &id, RKComponentHandle *handle) {
 	RK_TRACE (PLUGIN);
 
-	action_map.insert (new KAction (handle->getLabel (), 0, this, SLOT (componentActionActivated ()), actionCollection (), id.latin1 ()), handle);
+	action_map.insert (new KAction (handle->getLabel (), 0, this, SLOT (componentActionActivated ()), actionCollection (), id.toLatin1 ()), handle);
 }
 
 void RKContextHandler::componentActionActivated () {
@@ -116,7 +116,7 @@ void RKContextHandler::invokeComponent (RKComponentHandle *handle) {
 
 			RK_ASSERT (it.current ()->isProperty ());
 			if (!(client && remainder.isEmpty () && client->isProperty () && it.current ()->isProperty ())) {
-				RK_DO (qDebug ("Could not set context property %s", id.latin1 ()), PLUGIN, DL_INFO);
+				RK_DO (qDebug ("Could not set context property %s", id.toLatin1 ()), PLUGIN, DL_INFO);
 				continue;
 			}
 

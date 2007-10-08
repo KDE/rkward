@@ -146,7 +146,7 @@ void RKComponentPropertyBase::governorValueChanged (RKComponentPropertyBase *pro
 
 void RKComponentPropertyBase::warnModifierNotRecognized (const QString &modifier) {
 	RK_TRACE (PLUGIN);
-	RK_DO (qDebug ("Modifier '%s' not recognized.", modifier.latin1 ()), PLUGIN, DL_ERROR);
+	RK_DO (qDebug ("Modifier '%s' not recognized.", modifier.toLatin1 ()), PLUGIN, DL_ERROR);
 }
 
 ///////////////////////////////////////////// Bool //////////////////////////////////////////
@@ -758,7 +758,7 @@ bool RKComponentPropertyRObjects::isObjectValid (RObject *object) {
 	if (!types.isEmpty ()) {
 		// TODO: this is not entirely correct, yet
 		if (object->isVariable ()) {
-			if (!types.contains (RObject::typeToText (object->getDataType ()).lower ())) {
+			if (!types.contains (RObject::typeToText (object->getDataType ()).toLower ())) {
 				return false;
 			}
 		} else {
@@ -1076,7 +1076,7 @@ void RKComponentPropertyConvert::setSources (const QString &source_string) {
 			sources.append (s);
 			connect (s.property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (sourcePropertyChanged (RKComponentPropertyBase *)));
 		} else {
-			RK_DO (qDebug ("Not found or not a property: %s", (*it).latin1 ()), PLUGIN, DL_WARNING);
+			RK_DO (qDebug ("Not found or not a property: %s", (*it).toLatin1 ()), PLUGIN, DL_WARNING);
 		}
 	}
 

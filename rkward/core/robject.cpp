@@ -262,7 +262,7 @@ void RObject::rCommandDone (RCommand *command) {
 
 	if (command->getFlags () == ROBJECT_UDPATE_STRUCTURE_COMMAND) {
 		if (command->failed ()) {
-			RK_DO (qDebug ("command failed while trying to update object '%s'. No longer present?", getShortName ().latin1 ()), OBJECTS, DL_INFO);
+			RK_DO (qDebug ("command failed while trying to update object '%s'. No longer present?", getShortName ().toLatin1 ()), OBJECTS, DL_INFO);
 			// this may happen, if the object has been removed in the workspace in between
 			RKGlobals::tracker ()->removeObject (this, 0, true);
 			return;

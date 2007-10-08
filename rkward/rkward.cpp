@@ -305,12 +305,12 @@ void RKWardMainWindow::startR () {
 	
 	QDir dir (RKSettingsModuleGeneral::filesPath());
 	if (!dir.exists ()) {
-		QDir current (dir.currentDirPath ());
+		QDir current (dir.currentPath ());
 		current.mkdir (dir.path (), true);
 	}
 	dir = dir.filePath (".packagetemp");
 	if (!dir.exists ()) {
-		QDir current (dir.currentDirPath ());
+		QDir current (dir.currentPath ());
 		current.mkdir (dir.path (), true);
 	}
 	
@@ -640,13 +640,13 @@ void RKWardMainWindow::slotFileSaveWorkspaceAs () {
 void RKWardMainWindow::updateCWD () {
 	RK_TRACE (APP);
 
-	statusbar_cwd->setText (QDir::currentDirPath ());
+	statusbar_cwd->setText (QDir::currentPath ());
 }
 
 void RKWardMainWindow::slotSetStatusBarText (const QString &text) {
 	RK_TRACE (APP);
 
-	QString ntext = text.stripWhiteSpace ();
+	QString ntext = text.trimmed ();
 	ntext.replace ("<qt>", "");	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
 	if (ntext.isEmpty ()) {
 		statusbar_action->hide ();

@@ -165,7 +165,7 @@ void RKCommandEditorWindow::setRHighlighting () {
 	bool found_mode = false;
 	int i;
 	for (i = 0; i < modes_count; ++i) {
-		if (highlightingInterface (m_doc)->hlModeName (i).lower() == "r script") {
+		if (highlightingInterface (m_doc)->hlModeName (i).toLower() == "r script") {
 			found_mode = true;
 			break;
 		}

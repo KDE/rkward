@@ -131,7 +131,7 @@ ShowEditTextFileDialog::ShowEditTextFileDialog (const QString &text, const QStri
 	setMainWidget (page);
 	Q3VBoxLayout *layout = new Q3VBoxLayout (page, 0, spacingHint ());
 	QLabel *label = new QLabel (text, page);
-	label->setAlignment (Qt::WordBreak | Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs);
+	label->setAlignment (Qt::WordBreak | Qt::AlignLeft | Qt::AlignVCenter | Qt::ExpandTabs);
 	layout->addWidget (label);
 
 	setButtonOK (KGuiItem (i18n ("Done")));

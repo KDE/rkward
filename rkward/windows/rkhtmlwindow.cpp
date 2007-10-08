@@ -359,7 +359,7 @@ void RKOutputWindow::flushOutput () {
 		out_dir.setNameFilter ("graph*.png");
 		QStringList graph_files = out_dir.entryList ();
 		for (QStringList::const_iterator it = graph_files.constBegin (); it != graph_files.constEnd (); ++it) {
-			QFile file (out_dir.absFilePath (*it, false));
+			QFile file (out_dir.absoluteFilePath (*it, false));
 			file.remove ();
 		}
 		refreshOutput (false, false, false);
@@ -478,7 +478,7 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 		} else {
 			help_file_name = help_base_dir + url.path () + ".rkh";
 		}
-		RK_DO (qDebug ("rendering help page for local file %s", help_file_name.latin1 ()), APP, DL_DEBUG);
+		RK_DO (qDebug ("rendering help page for local file %s", help_file_name.toLatin1 ()), APP, DL_DEBUG);
 
 		// open help file
 		QDomElement help_doc_element = help_xml->openXMLFile (help_file_name, DL_ERROR);
@@ -498,12 +498,12 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 		khtmlpart->write ("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\"></head>\n<body><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
 
 		// fix all elements containing an "src" attribute
-		QDir base_path (QFileInfo (help_file_name).dirPath (true));
+		QDir base_path (QFileInfo (help_file_name).absolutePath());
 		XMLChildList src_elements = help_xml->findElementsWithAttribute (help_doc_element, "src", QString (), true, DL_DEBUG);
 		for (XMLChildList::iterator it = src_elements.begin (); it != src_elements.end (); ++it) {
 			QString src = (*it).attribute ("src");
 			if (KURL::isRelativeURL (src)) {
-				src = "file://" + QDir::cleanDirPath (base_path.filePath (src));
+				src = "file://" + QDir::cleanPath (base_path.filePath (src));
 				(*it).setAttribute ("src", src);
 			}
 		}
@@ -630,7 +630,7 @@ QString RKHelpWindow::renderHelpFragment (QDomElement &fragment) {
 	ret.append ("</p>");
 	ret.replace ("\n\n", "</p>\n<p>");
 
-	RK_DO (qDebug ("%s", ret.latin1 ()), APP, DL_DEBUG);
+	RK_DO (qDebug ("%s", ret.toLatin1 ()), APP, DL_DEBUG);
 	return ret;
 }
 
@@ -662,7 +662,7 @@ void RKHelpWindow::prepareHelpLink (QDomElement *link_element) {
 
 			if (text.isEmpty ()) {
 				text = i18n ("BROKEN REFERENCE");
-				RK_DO (qDebug ("Broken reference to %s", url.path ().latin1 ()), APP, DL_WARNING);
+				RK_DO (qDebug ("Broken reference to %s", url.path ().toLatin1 ()), APP, DL_WARNING);
 			}
 
 			link_element->appendChild (link_element->ownerDocument ().createTextNode (text));

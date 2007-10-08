@@ -305,11 +305,11 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			QString object_name = request->call[i];
 			RObject *obj = RObjectList::getObjectList ()->findObject (object_name);
 			if (obj) {
-				RK_DO (qDebug ("triggering update for symbol %s", object_name.latin1 ()), RBACKEND, DL_DEBUG);
+				RK_DO (qDebug ("triggering update for symbol %s", object_name.toLatin1 ()), RBACKEND, DL_DEBUG);
 				obj->markDataDirty ();
 				obj->updateFromR (request->in_chain);
 			} else {
-				RK_DO (qDebug ("lookup failed for changed symbol %s", object_name.latin1 ()), RBACKEND, DL_WARNING);
+				RK_DO (qDebug ("lookup failed for changed symbol %s", object_name.toLatin1 ()), RBACKEND, DL_WARNING);
 			}
 		}
 	} else if (call == "syncall") {
@@ -410,7 +410,7 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		}
 		filename = filename.left (args->int_b - 2);
 		args->int_c = filename.length ();
-		qstrcpy (*(args->chars_a), filename.latin1 ());
+		qstrcpy (*(args->chars_a), filename.toLatin1 ());
 	} else if (type ==RCallbackArgs::RSuicide) {
 		QString message = i18n ("The R engine has encountered a fatal error:\n") + QString (*(args->chars_a));
 		message += i18n ("It will be shut down immediately. This means, you can not use any more functions that rely on the R backend. I.e. you can do hardly anything at all, not even save the workspace. What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");

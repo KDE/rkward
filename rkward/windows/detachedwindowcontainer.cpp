@@ -81,7 +81,7 @@ void DetachedWindowContainer::updateCaption (RKMDIWindow *widget) {
 void DetachedWindowContainer::slotSetStatusBarText (const QString &text) {
 	RK_TRACE (APP);
 
-	QString ntext = text.stripWhiteSpace ();
+	QString ntext = text.trimmed ();
 	ntext.replace ("<qt>", "");	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
 
 	statusBar ()->message (ntext);

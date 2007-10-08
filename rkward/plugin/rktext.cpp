@@ -39,13 +39,13 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
 
 	label = new QLabel (QString::null, this);
-	label->setAlignment (Qt::AlignAuto | Qt::ExpandTabs | Qt::WordBreak);
+	label->setAlignment (Qt::AlignLeft | Qt::ExpandTabs | Qt::WordBreak);
 	vbox->addWidget (label);
 
 	QString initial_text;
 	QStringList lines = lines.split ("\n", element.text (), false);
 	for (unsigned int i=0; i < lines.count (); i++) {
-		QString line = lines[i].stripWhiteSpace ();
+		QString line = lines[i].trimmed ();
 		if (!line.isEmpty ()) {
 			initial_text.append (line + '\n');
 		}

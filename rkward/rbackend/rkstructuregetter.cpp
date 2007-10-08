@@ -154,7 +154,7 @@ void RKStructureGetter::getStructureSafe (SEXP value, const QString &name, bool 
 
 	if (ok != TRUE) {
 		storage->discardData();
-		Rf_warning ("failure to get object %s", name.latin1());
+		Rf_warning ("failure to get object %s", name.toLatin1());
 		getStructureWorker (R_NilValue, name, misplaced, storage);
 	}
 }
@@ -201,7 +201,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	unsigned int type = 0;
 	unsigned int count;
 
-	RK_DO (qDebug ("fetching '%s': %p, s-type %d", name.latin1(), val, TYPEOF (val)), RBACKEND, DL_DEBUG);
+	RK_DO (qDebug ("fetching '%s': %p, s-type %d", name.toLatin1(), val, TYPEOF (val)), RBACKEND, DL_DEBUG);
 
 	PROTECT (val);
 	// manually resolve any promises
@@ -385,7 +385,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		}
 
 		if (do_env) {
-			RK_DO (qDebug ("recurse into environment %s", name.latin1()), RBACKEND, DL_DEBUG);
+			RK_DO (qDebug ("recurse into environment %s", name.toLatin1()), RBACKEND, DL_DEBUG);
 			for (unsigned int i = 0; i < childcount; ++i) {
 				SEXP current_childname = install(CHAR(STRING_ELT(childnames_s, i)));
 				PROTECT (current_childname);
@@ -416,7 +416,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 				UNPROTECT (2); /* childname, child */
 			}
 		} else if (do_cont) {
-			RK_DO (qDebug ("recurse into list %s", name.latin1()), RBACKEND, DL_DEBUG);
+			RK_DO (qDebug ("recurse into list %s", name.toLatin1()), RBACKEND, DL_DEBUG);
 			if (Rf_isList (value) && (!Rf_isObject (value))) {		// old style list
 				for (unsigned int i = 0; i < childcount; ++i) {
 					SEXP child = CAR (value);

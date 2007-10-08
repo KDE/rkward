@@ -133,7 +133,7 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 	list->clear ();
 	item_map.clear ();
 
-	RK_DO (qDebug ("contained in varslot: %s", available->value ().latin1 ()), PLUGIN, DL_DEBUG);
+	RK_DO (qDebug ("contained in varslot: %s", available->value ().toLatin1 ()), PLUGIN, DL_DEBUG);
 
 	ObjectList objlist = available->objectList ();
 	ObjectList::const_iterator it = objlist.begin ();
@@ -171,7 +171,7 @@ void RKVarSlot::updateLook () {
 void RKVarSlot::selectPressed () {
 	RK_TRACE (PLUGIN);
 
-	RK_DO (qDebug ("select press in varslot: mode %d, source %s, selected %s", add_mode, source->value ().latin1 (), selected->value ().latin1 ()), PLUGIN, DL_DEBUG);
+	RK_DO (qDebug ("select press in varslot: mode %d, source %s, selected %s", add_mode, source->value ().toLatin1 (), selected->value ().toLatin1 ()), PLUGIN, DL_DEBUG);
 
 	// first update the properties
 	if (add_mode) {

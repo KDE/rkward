@@ -124,9 +124,9 @@ void PHPBackend::tryNextFunction () {
 			if (!command_stack.count ()) return;
 		}
 		
-		RK_DO (qDebug ("submitting PHP code: %s", command_stack.first ()->command.latin1 ()), PHP, DL_DEBUG);
+		RK_DO (qDebug ("submitting PHP code: %s", command_stack.first ()->command.toLatin1 ()), PHP, DL_DEBUG);
 		current_command = command_stack.first ()->command + eot_string;
-		php_process->writeStdin (current_command.latin1 (), current_command.length ());
+		php_process->writeStdin (current_command.toLatin1 (), current_command.length ());
 		busy_writing = doing_command = busy = true;
 		command_stack.first ()->complete = true;
 		current_flags = command_stack.first ()->flags;
@@ -144,8 +144,8 @@ void PHPBackend::tryWriteData () {
 	RK_TRACE (PHP);
 
 	if ((!busy_writing) && php_process && php_process->isRunning () && busy && (!data_stack.isEmpty ())) {
-		RK_DO (qDebug ("submitting data: %s", data_stack.first ().latin1 ()), PHP, DL_DEBUG);
-		php_process->writeStdin (data_stack.first ().latin1 (), data_stack.first ().length ());
+		RK_DO (qDebug ("submitting data: %s", data_stack.first ().toLatin1 ()), PHP, DL_DEBUG);
+		php_process->writeStdin (data_stack.first ().toLatin1 (), data_stack.first ().length ());
 		busy_writing = true;
 		doing_command = false;
 	}
@@ -194,7 +194,7 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int) {
 	if (have_data) {
 		if (!startup_done) {
 			php_process->detach ();
-			KMessageBox::error (0, i18n ("There has been an error\n(\"%1\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKWard or a problem with your PHP installation. Check the settings (Settings->Configure Settings->PHP backend) and try again.").arg (output_raw_buffer.stripWhiteSpace ()), i18n ("PHP-Error"));
+			KMessageBox::error (0, i18n ("There has been an error\n(\"%1\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKWard or a problem with your PHP installation. Check the settings (Settings->Configure Settings->PHP backend) and try again.").arg (output_raw_buffer.trimmed ()), i18n ("PHP-Error"));
 			emit (haveError ());
 			destroy ();
 			return;
@@ -208,7 +208,7 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int) {
 		return;
 	} else {
 		_output.append (data);
-		RK_DO (qDebug ("request: %s\ndata: %s", request.latin1 (), data.latin1 ()), PHP, DL_DEBUG);
+		RK_DO (qDebug ("request: %s\ndata: %s", request.toLatin1 (), data.toLatin1 ()), PHP, DL_DEBUG);
 
 		if (request == "requesting code") {
 			startup_done = true;
@@ -217,19 +217,19 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int) {
 			_output = QString::null;
 		} else if (request.startsWith ("requesting data:")) {
 			QString requested_object = request.remove ("requesting data:");
-			RK_DO (qDebug ("requested data: \"%s\"", requested_object.latin1 ()), PHP, DL_DEBUG);
+			RK_DO (qDebug ("requested data: \"%s\"", requested_object.toLatin1 ()), PHP, DL_DEBUG);
 			emit (requestValue (requested_object));
 			busy = true;
 //			writeData (res + eot_string);
 		} else if (request.startsWith ("PHP-Error")) {
 			QString error = request.remove ("PHP-Error");
 			php_process->detach ();
-			KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"%1\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings.").arg (error.stripWhiteSpace ()), i18n ("PHP-Error"));
+			KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"%1\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings.").arg (error.trimmed ()), i18n ("PHP-Error"));
 			emit (haveError ());
 			destroy ();
 			return;
 		} else {
-			RK_DO (qDebug ("unrecognized request from PHP backend: \"%s\"", request.latin1()), PHP, DL_ERROR);
+			RK_DO (qDebug ("unrecognized request from PHP backend: \"%s\"", request.toLatin1()), PHP, DL_ERROR);
 		}
 	}
 }

@@ -170,8 +170,8 @@ void RKConsole::setRHighlighting () {
 	int i;
 	RK_DO (qDebug ("%s", "Looking for syntax highlighting definition"), COMMANDEDITOR, DL_INFO);
 	for (i = 0; i < modes_count; ++i) {
-		RK_DO (qDebug ("%s", doc->hlModeName(i).lower().latin1 ()), COMMANDEDITOR, DL_DEBUG);
-		if (doc->hlModeName(i).lower() == "rkward output") {
+		RK_DO (qDebug ("%s", doc->hlModeName(i).toLower().toLatin1 ()), COMMANDEDITOR, DL_DEBUG);
+		if (doc->hlModeName(i).toLower() == "rkward output") {
 			found_mode = true;
 			break;
 		}
@@ -225,14 +225,14 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		submitCommand ();
 		return true;
 	}
-	else if (e->state () == Qt::ShiftButton && e->key () == Qt::Key_Home){
+	else if (e->state () == Qt::ShiftModifier && e->key () == Qt::Key_Home){
 		if(hasSelectedText())
 			pos=selectionInterfaceExt(doc)->selEndCol (); //There is already a selection, we take it into account.
 		selectionInterface(doc)->setSelection(doc->numLines()-1,prefix.length (),doc->numLines()-1, pos);
 		cursorAtTheBeginning ();
 		return true;
 	}
-	else if (e->state () == Qt::ShiftButton && e->key () == Qt::Key_Left){
+	else if (e->state () == Qt::ShiftModifier && e->key () == Qt::Key_Left){
 		if(pos<=prefix.length ()){
 			return true;
 		} else {
@@ -310,7 +310,7 @@ bool RKConsole::doTabCompletionHelper (int line_num, const QString &line, int wo
 		int i=0;
 		for (it = entries.constBegin (); it != entries.constEnd (); ++it) {
 			if (i % 3) {
-				doc->insertText (doc->numLines () - 1, 0, (*it).leftJustify (35));
+				doc->insertText (doc->numLines () - 1, 0, (*it).leftJustified (35));
 			} else {
 				doc->insertText (doc->numLines (), 0, *it);
 			}
@@ -380,8 +380,8 @@ void RKConsole::doTabCompletion () {
 		do_file_completion = true;
 
 		// however, some characters around quotes signify it's probably not really filename string
-		char char_before_quote = current_line.at (quote_start - 1).latin1();
-		char char_after_quote = current_line.at (quote_start + 1).latin1();
+		char char_before_quote = current_line.at (quote_start - 1).toLatin1();
+		char char_after_quote = current_line.at (quote_start + 1).toLatin1();
 		// these signifiy it might be an object in a list somewhere, e.g. my.data$"varname"
 		if ((char_before_quote == '[') || (char_before_quote == '$') || (char_before_quote == ':')) do_file_completion = false;
 		// these indicate, the quote has likely ended rather that started
@@ -394,7 +394,7 @@ void RKConsole::doTabCompletion () {
 	
 			QString current_name = current_line.mid (quote_start + 1, quote_end - quote_start - 1);
 			KURLCompletion comp (KURLCompletion::FileCompletion);
-			comp.setDir (QDir::currentDirPath ());
+			comp.setDir (QDir::currentPath ());
 			QString test = comp.makeCompletion (current_name);
 	
 			if (doTabCompletionHelper (current_line_num, current_line, quote_start+1, quote_end, comp.allMatches ())) return;
@@ -726,7 +726,7 @@ bool RKConsole::hasSelectedText () {
 }
 
 void RKConsole::unplugAction(const QString &action, KActionCollection* ac) {
-	KAction* a = ac->action(action.latin1 ());
+	KAction* a = ac->action(action.toLatin1 ());
 	if( a ){
 		a->setEnabled(false);
 	}

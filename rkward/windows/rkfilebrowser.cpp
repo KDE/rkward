@@ -110,7 +110,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : Q3VBox (parent) {
 
 	connect (dir, SIGNAL (fileSelected (const KFileItem*)), this, SLOT (fileActivated (const KFileItem*)));
 
-	setURL (QDir::currentDirPath ());
+	setURL (QDir::currentPath ());
 }
 
 RKFileBrowserWidget::~RKFileBrowserWidget () {
@@ -149,7 +149,7 @@ bool RKFileBrowserWidget::eventFilter (QObject *watched, QEvent *e) {
 	Q3ListBox *lb = urlbox->listBox ();
 	if (watched == lb && e->type() == QEvent::Show) {
 		int add = lb->height() < lb->contentsHeight() ? lb->verticalScrollBar()->width() : 0;
-		int w = QMIN (topLevelWidget ()->width(), lb->contentsWidth() + add);
+		int w = qMin (topLevelWidget ()->width(), lb->contentsWidth() + add);
 		lb->resize (w, lb->height());
 	}
 	return QWidget::eventFilter (watched, e);
