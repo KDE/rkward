@@ -17,7 +17,7 @@
 #ifndef RKCOMMANDEDITORWINDOW_H
 #define RKCOMMANDEDITORWINDOW_H
 
-#include <qwidget.h>
+#include <QWidget>
 #include <qstring.h>
 //Added by qt3to4:
 #include <QEvent>
