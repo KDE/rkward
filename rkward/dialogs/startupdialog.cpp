@@ -19,12 +19,15 @@
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qcheckbox.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qstringlist.h>
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
 #include <kdeversion.h>
 #if !KDE_IS_VERSION (3, 2,0)
@@ -44,18 +47,18 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 
 	setCaption (i18n ("What would you like to do?"));
 
-	QVBoxLayout *vbox = new QVBoxLayout (this);
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this);
 	
 	logo = new QPixmap (RKCommonFunctions::getRKWardDataDir () + "icons/rkward_logo.png");
 	QLabel *pic = new QLabel (this);
 	pic->setPixmap (*logo);
 	vbox->addWidget (pic);
 
-	choser = new QButtonGroup (this);
+	choser = new Q3ButtonGroup (this);
 	choser->setColumnLayout (0, Qt::Vertical);
 	choser->layout()->setSpacing (6);
 	choser->layout()->setMargin (11);
-	QVBoxLayout *choser_layout = new QVBoxLayout(choser->layout());
+	Q3VBoxLayout *choser_layout = new Q3VBoxLayout(choser->layout());
 	choser_layout->addWidget (empty_workspace_button = new QRadioButton (i18n ("Start with an empty workspace"), choser));
 	choser_layout->addWidget (empty_table_button = new QRadioButton (i18n ("Start with an empty table"), choser));
 	open_button = new QRadioButton (i18n ("Load an existing workspace:"), choser);
@@ -63,24 +66,24 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	empty_table_button->setChecked (true);
 	choser_layout->addWidget (open_button);
 
-	file_list = new QListView (choser);
+	file_list = new Q3ListView (choser);
 	file_list->addColumn (i18n ("Filename"));
 	file_list->setSorting (-1);
-	chose_file_item = new QListViewItem (file_list, i18n ("<<Open another file>>"));
+	chose_file_item = new Q3ListViewItem (file_list, i18n ("<<Open another file>>"));
 	if (recent_files) {
 		QStringList items = recent_files->items ();
 		for (QStringList::iterator it = items.begin (); it != items.end (); ++it) {
-			if (!(*it).isEmpty ()) new QListViewItem (file_list, (*it));
+			if (!(*it).isEmpty ()) new Q3ListViewItem (file_list, (*it));
 		}
 	}
-	connect (file_list, SIGNAL (selectionChanged (QListViewItem *)), this, SLOT (listClicked (QListViewItem*)));
-	connect (file_list, SIGNAL (doubleClicked (QListViewItem *, const QPoint &, int)), this, SLOT (listDoubleClicked (QListViewItem*, const QPoint &, int)));
+	connect (file_list, SIGNAL (selectionChanged (Q3ListViewItem *)), this, SLOT (listClicked (Q3ListViewItem*)));
+	connect (file_list, SIGNAL (doubleClicked (Q3ListViewItem *, const QPoint &, int)), this, SLOT (listDoubleClicked (Q3ListViewItem*, const QPoint &, int)));
 	choser_layout->addWidget (file_list);
 	choser_layout->addWidget (remember_box = new QCheckBox (i18n ("Always do this on startup"), choser));
 	
 	vbox->addWidget (choser);
 	
-	QHBoxLayout *button_hbox = new QHBoxLayout (vbox);
+	Q3HBoxLayout *button_hbox = new Q3HBoxLayout (vbox);
 	ok_button = new QPushButton (i18n ("Ok"), this);
 	connect (ok_button, SIGNAL (clicked ()), this, SLOT (accept ()));
 	button_hbox->addWidget (ok_button);
@@ -106,7 +109,7 @@ void StartupDialog::accept () {
 	} else if (empty_table_button->isChecked ()) {
 		result->result = EmptyTable;
 	} else if (open_button->isChecked ()) {
-		QListViewItem *item = file_list->selectedItem ();
+		Q3ListViewItem *item = file_list->selectedItem ();
 		if (item == chose_file_item) {
 			result->result = ChoseFile;
 		} else {
@@ -128,7 +131,7 @@ void StartupDialog::reject () {
 	QDialog::reject ();
 }
 
-void StartupDialog::listDoubleClicked (QListViewItem *item, const QPoint &, int) {
+void StartupDialog::listDoubleClicked (Q3ListViewItem *item, const QPoint &, int) {
 	RK_TRACE (DIALOGS);
 	
 	if (item) {
@@ -138,7 +141,7 @@ void StartupDialog::listDoubleClicked (QListViewItem *item, const QPoint &, int)
 	}
 }
 
-void StartupDialog::listClicked (QListViewItem *item) {
+void StartupDialog::listClicked (Q3ListViewItem *item) {
 	RK_TRACE (DIALOGS);
 	
 	if (item) {

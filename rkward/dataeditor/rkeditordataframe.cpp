@@ -142,7 +142,7 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 		open_chain = RKGlobals::rInterface ()->closeChain (open_chain);
 		/* make sure enough rows are displayed. Note: Calling QTable::insertRows, since no data should be juggled around, only the number of visible rows is to be changed. */
 		if (dataview->numTrueRows () < getColObject (0)->getLength ()) {
-			dataview->QTable::insertRows (0, getColObject (0)->getLength () - dataview->numTrueRows ());
+			dataview->Q3Table::insertRows (0, getColObject (0)->getLength () - dataview->numTrueRows ());
 		}
 		enableEditing (true);
 	}

@@ -18,14 +18,16 @@
 #ifndef RKDRAG_H
 #define RKDRAG_H
 
-#include <qdragobject.h>
+#include <q3dragobject.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 class TwinTableMember;
 
 /** A QDragObject that gets its data from a TwinTableMember. Used for all copy/paste/drag operations involving TwinTableMembers.
   *@author Thomas Friedrichsmeier
   */
-class RKDrag : public QDragObject  {
+class RKDrag : public Q3DragObject  {
 public: 
 	RKDrag (TwinTableMember *drag_source=0);
 	~RKDrag ();
@@ -33,7 +35,7 @@ public:
 	QByteArray encodedData (const char * mimeType) const;
 	bool provides (const char *mimeType);
 private:
-	QCString data;
+	Q3CString data;
 };
 
 #endif

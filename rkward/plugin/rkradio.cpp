@@ -22,6 +22,8 @@
 #include <qlayout.h>
 #include <qvbuttongroup.h>
 #include <qradiobutton.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include <klocale.h>
 
@@ -36,10 +38,10 @@ RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWi
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	// create layout
-	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
 
 	// create ButtonGroup
-	group = new QVButtonGroup (xml->getStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
+	group = new Q3VButtonGroup (xml->getStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
 
 	// adjust internal layout for the buttons in the ButtonGroup
 	RK_ASSERT (group->layout ());

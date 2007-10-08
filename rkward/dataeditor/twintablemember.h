@@ -18,8 +18,14 @@
 #ifndef TWINTABLEMEMBER_H
 #define TWINTABLEMEMBER_H
 
-#include <qtable.h>
+#include <q3table.h>
 #include <qpoint.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <QEvent>
+#include <Q3MemArray>
+#include <QMouseEvent>
+#include <QKeyEvent>
 
 #define LABEL_ROW 0
 #define TYPE_ROW 1
@@ -35,7 +41,7 @@ class CellEditor;
   *@author Thomas Friedrichsmeier
   */
 
-class TwinTableMember : public QTable {
+class TwinTableMember : public Q3Table {
 	Q_OBJECT
 public: 
 	TwinTableMember (QWidget *parent, TwinTable *table, int trailing_rows=0, int trailing_cols=0);
@@ -52,7 +58,7 @@ public:
 /** like QTable::numCols (), but returns only the "true", i.e. active columns (excluding the trailing_cols) */
 	int numTrueCols () const;
 /** reimplemented form QTable not to use QTableItems. This one raises an assert (should never be called) */
-	void removeRows (const QMemArray<int> &rows);
+	void removeRows (const Q3MemArray<int> &rows);
 /** reimplemented form QTable not to use QTableItems. This one has no effect */
 	void swapRows (int row1, int row2, bool swapHeader);
 /** reimplemented form QTable not to use QTableItems. This one raises an assert (should never be called) */
@@ -60,11 +66,11 @@ public:
 /** reimplemented form QTable not to use QTableItems. This one has no effect */
 	void swapColumns (int col1, int col2, bool swapHeader);
 /** reimplemented form QTable not to use QTableItems. This one always returns 0 */
-	QTableItem *item (int, int) { return 0; }
+	Q3TableItem *item (int, int) { return 0; }
 /** reimplemented form QTable not to use QTableItems. This one has no effect */
-	void setItem (int, int, QTableItem *) {};
+	void setItem (int, int, Q3TableItem *) {};
 /** reimplemented form QTable not to use QTableItems. This one has no effect */
-	void takeItem (QTableItem *) {};
+	void takeItem (Q3TableItem *) {};
 /** reimplemented form QTable not to use QTableItems. This one always returns 0 or tted */
 	QWidget *cellWidget (int row, int col) const;
 /** reimplemented form QTable not to use QTableItems. This one has no effect */
@@ -81,8 +87,8 @@ public:
 	bool eventFilter (QObject *object, QEvent *event);
 /** reimplemented to delete cell contents on DEL and BACKSPACE. Placed in public, here, so CellEditor can have access */
 	void keyPressEvent (QKeyEvent *e);
-	QCString encodeSelection ();
-	QCString encodeRange (int top_row, int left_col, int bottom_row, int right_col);
+	Q3CString encodeSelection ();
+	Q3CString encodeRange (int top_row, int left_col, int bottom_row, int right_col);
 /** blanks out the currently selected cells (or the currently active cell, if there is no selection) */
 	void blankSelected ();
 /** shortcut to get the boundaries of the current selection */

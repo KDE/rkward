@@ -18,6 +18,8 @@
 
 #include <qlayout.h>
 #include <qcheckbox.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
@@ -34,7 +36,7 @@ RKCheckBox::RKCheckBox (const QDomElement &element, RKComponent *parent_componen
 	connect (state, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (changedState (RKComponentPropertyBase *)));
 
 	// create checkbox
-	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
 	checkbox = new QCheckBox (xml->getStringAttribute (element, "label", QString::null, DL_WARNING), this);
 	vbox->addWidget (checkbox);
 	checkbox->setChecked (xml->getBoolAttribute (element, "checked", false, DL_INFO));

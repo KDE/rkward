@@ -17,6 +17,8 @@
 #include "rkvariable.h"
 
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 #include "float.h"
 #include "math.h"
 
@@ -693,13 +695,13 @@ void RKVariable::removeRow (int row) {
 
 void RKVariable::removeRows (int from_row, int to_row) {
 	RK_TRACE (OBJECTS);
-	QValueList<int> *changed_invalids = 0;
+	Q3ValueList<int> *changed_invalids = 0;
 	int offset = (to_row - from_row) + 1;
 
 	for (int row = from_row; row < getLength (); ++row) {
 		QString *dummy = myData ()->invalid_fields.take (row);
 		if (dummy) {
-			if (!changed_invalids) changed_invalids = new QValueList<int>;
+			if (!changed_invalids) changed_invalids = new Q3ValueList<int>;
 			changed_invalids->append (row);
 			if (row > to_row) {
 				changed_invalids->append (row - offset);
@@ -724,7 +726,7 @@ void RKVariable::removeRows (int from_row, int to_row) {
 	}
 
 	if (changed_invalids) {
-		for (QValueList<int>::const_iterator it = changed_invalids->constBegin (); it != changed_invalids->constEnd (); ++it) {
+		for (Q3ValueList<int>::const_iterator it = changed_invalids->constBegin (); it != changed_invalids->constEnd (); ++it) {
 			writeInvalidField (*it, 0);
 		}
 		delete changed_invalids;
@@ -748,11 +750,11 @@ void RKVariable::insertRows (int row, int count) {
 		myData ()->cell_states[i] = RKVarEditData::NA;
 	}
 
-	QValueList<int> *changed_invalids = 0;
+	Q3ValueList<int> *changed_invalids = 0;
 	for (int i = getLength () - count - 1; i >= row; --i) {
 		QString *dummy = myData ()->invalid_fields.take (i);
 		if (dummy) {
-			if (!changed_invalids) changed_invalids = new QValueList<int>;
+			if (!changed_invalids) changed_invalids = new Q3ValueList<int>;
 			changed_invalids->append (i);
 			changed_invalids->append (i + count);
 			myData ()->invalid_fields.replace (i + count, dummy);
@@ -774,7 +776,7 @@ void RKVariable::insertRows (int row, int count) {
 	}
 
 	if (changed_invalids) {
-		for (QValueList<int>::const_iterator it = changed_invalids->constBegin (); it != changed_invalids->constEnd (); ++it) {
+		for (Q3ValueList<int>::const_iterator it = changed_invalids->constBegin (); it != changed_invalids->constEnd (); ++it) {
 			writeInvalidField (*it, 0);
 		}
 		delete changed_invalids;

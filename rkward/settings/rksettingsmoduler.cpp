@@ -29,6 +29,9 @@
 #include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qlineedit.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3VBoxLayout>
 
 #include "../misc/multistringselector.h"
 #include "../rbackend/rinterface.h"
@@ -51,7 +54,7 @@ QString RKSettingsModuleR::options_printcmd;
 RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+	Q3VBoxLayout *main_vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
@@ -59,7 +62,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	main_vbox->addWidget (label);
 
-	QGridLayout *grid = new QGridLayout (main_vbox, 1, 2, RKGlobals::spacingHint ());
+	Q3GridLayout *grid = new Q3GridLayout (main_vbox, 1, 2, RKGlobals::spacingHint ());
 	int row = -1;
 
 	// options (warn)
@@ -274,7 +277,7 @@ QStringList RKSettingsModuleRPackages::package_repositories;
 RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+	Q3VBoxLayout *main_vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 

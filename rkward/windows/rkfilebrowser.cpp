@@ -25,8 +25,11 @@
 
 #include <qdir.h>
 #include <qlayout.h>
-#include <qvbox.h>
-#include <qlistbox.h>
+#include <q3vbox.h>
+#include <q3listbox.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <Q3VBoxLayout>
 
 #include "rkworkplace.h"
 #include "../rkward.h"
@@ -42,8 +45,8 @@ RKFileBrowser::RKFileBrowser (QWidget *parent, bool tool_window, const char *nam
 
 	real_widget = 0;
 
-	QVBoxLayout *layout = new QVBoxLayout (this);
-	layout_widget = new QVBox (this);
+	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
+	layout_widget = new Q3VBox (this);
 	layout->addWidget (layout_widget);
 	layout_widget->setFocusPolicy (QWidget::StrongFocus);
 
@@ -77,7 +80,7 @@ void RKFileBrowser::currentWDChanged () {
 
 
 
-RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QVBox (parent) {
+RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : Q3VBox (parent) {
 	RK_TRACE (APP);
 
 	KToolBar *toolbar = new KToolBar (this);
@@ -143,7 +146,7 @@ bool RKFileBrowserWidget::eventFilter (QObject *watched, QEvent *e) {
 	// don't trace
 
 	// fix size of popup (copied from katefileselector.cpp)
-	QListBox *lb = urlbox->listBox ();
+	Q3ListBox *lb = urlbox->listBox ();
 	if (watched == lb && e->type() == QEvent::Show) {
 		int add = lb->height() < lb->contentsHeight() ? lb->verticalScrollBar()->width() : 0;
 		int w = QMIN (topLevelWidget ()->width(), lb->contentsWidth() + add);

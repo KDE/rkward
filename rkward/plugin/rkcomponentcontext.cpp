@@ -108,7 +108,7 @@ void RKContextHandler::invokeComponent (RKComponentHandle *handle) {
 	RKComponent *component = handle->invoke (0, 0);
 
 	// set context values
-	for (QDictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
+	for (Q3DictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
 		if (it.currentKey () != "#noid#") {
 			QString id = it.currentKey ();
 			QString remainder;

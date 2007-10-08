@@ -19,6 +19,8 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include "../misc/xmlhelper.h"
 #include "../core/rcontainerobject.h"
@@ -36,13 +38,13 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	addChild ("available", available = new RKComponentPropertyRObjects (this, false));
 	addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
 
-	QVBoxLayout  *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	Q3VBoxLayout  *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
 	
 	QLabel *label = new QLabel (element.attribute ("label", "Select Variable(s)"), this);
 	vbox->addWidget (label);
 
 	list_view = new RKObjectListView (this);
-	list_view->setSelectionMode (QListView::Extended);
+	list_view->setSelectionMode (Q3ListView::Extended);
 	connect (list_view, SIGNAL (listChanged ()), this, SLOT (objectListChanged ()));
 	connect (list_view, SIGNAL (selectionChanged ()), this, SLOT (objectSelectionChanged ()));
 

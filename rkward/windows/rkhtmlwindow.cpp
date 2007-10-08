@@ -30,6 +30,8 @@
 #include <qlayout.h>
 #include <qtimer.h>
 #include <qdir.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
 
 #include "../rkglobals.h"
 #include "rkhelpsearchwindow.h"
@@ -54,7 +56,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow:
 	setFocusProxy (khtmlpart->widget ());
 	
 	khtmlpart->widget ()->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding);
-	QHBoxLayout *pLayout = new QHBoxLayout (this);
+	Q3HBoxLayout *pLayout = new Q3HBoxLayout (this);
 	pLayout->addWidget (khtmlpart->widget ());
 
 	// We have to connect this in order to allow browsing.
@@ -91,7 +93,7 @@ void RKHTMLWindow::addCommonActions (KActionCollection *action_collection) {
 	KStdAction::copy (khtmlpart->browserExtension (), SLOT (copy ()), action_collection, "copy");
 
 	// run selection
-	run_selection = new KAction (i18n ("Run selection"), QIconSet (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), this, SLOT (runSelection ()), action_collection, "run_selection");
+	run_selection = new KAction (i18n ("Run selection"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), this, SLOT (runSelection ()), action_collection, "run_selection");
 
 	// needed to enable / disable the run selection action
 	connect (khtmlpart, SIGNAL (selectionChanged()), this, SLOT (selectionChanged()));

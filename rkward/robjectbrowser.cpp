@@ -17,13 +17,17 @@
 #include "robjectbrowser.h"
 
 #include <qlayout.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qpushbutton.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qcheckbox.h>
 #include <qradiobutton.h>
-#include <qbuttongroup.h>
-#include <qvbox.h>
+#include <q3buttongroup.h>
+#include <q3vbox.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <QFocusEvent>
+#include <Q3VBoxLayout>
 
 #include <klocale.h>
 #include <kinputdialog.h>
@@ -53,8 +57,8 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, const char *n
 	internal = 0;
 	locked = true;
 
-	QVBoxLayout *layout = new QVBoxLayout (this);
-	layout_widget = new QVBox (this);
+	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
+	layout_widget = new Q3VBox (this);
 	layout->addWidget (layout_widget);
 	layout_widget->setFocusPolicy (QWidget::StrongFocus);
 
@@ -102,7 +106,7 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 	RK_TRACE (APP);
 	setFocusPolicy (QWidget::ClickFocus);
 
-	QVBoxLayout *vbox = new QVBoxLayout (this);
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this);
 
 	list_view = new RKObjectListView (this);
 	vbox->addWidget (new RKObjectListViewSettingsWidget (list_view->getSettings (), this));
@@ -123,7 +127,7 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 	list_view->contextMenu ()->insertSeparator (7);
 	connect (list_view, SIGNAL (aboutToShowContextMenu (RKListViewItem*, bool*)), this, SLOT (contextMenuCallback (RKListViewItem*, bool*)));
 	
-	connect (list_view, SIGNAL (doubleClicked (QListViewItem *, const QPoint &, int )), this, SLOT (slotListDoubleClicked (QListViewItem *, const QPoint &, int)));
+	connect (list_view, SIGNAL (doubleClicked (Q3ListViewItem *, const QPoint &, int )), this, SLOT (slotListDoubleClicked (Q3ListViewItem *, const QPoint &, int)));
 	
 	resize (minimumSizeHint ().expandedTo (QSize (400, 480)));
 
@@ -212,7 +216,7 @@ void RObjectBrowserInternal::popupRename () {
 void RObjectBrowserInternal::contextMenuCallback (RKListViewItem *, bool *) {
 	RK_TRACE (APP);
 	RObject *object = list_view->menuObject ();
-	QPopupMenu *menu = list_view->contextMenu ();
+	Q3PopupMenu *menu = list_view->contextMenu ();
 
 	if (!object) {
 		menu->setItemVisible (Help, false);
@@ -235,7 +239,7 @@ void RObjectBrowserInternal::contextMenuCallback (RKListViewItem *, bool *) {
 	menu->setItemVisible (Delete, object->canRemove ());
 }
 
-void RObjectBrowserInternal::slotListDoubleClicked (QListViewItem *item, const QPoint &, int) {
+void RObjectBrowserInternal::slotListDoubleClicked (Q3ListViewItem *item, const QPoint &, int) {
 	RK_TRACE (APP);
 	RObject *object = list_view->findItemObject (static_cast<RKListViewItem*> (item));
 	
@@ -257,9 +261,9 @@ RKObjectListViewSettingsWidget::RKObjectListViewSettingsWidget (RKObjectListView
 	RKObjectListViewSettingsWidget::settings = settings;
 	connect (settings, SIGNAL (settingsChanged ()), this, SLOT (settingsChanged ()));
 
-	QVBoxLayout *layout = new QVBoxLayout (this);
-	group = new QButtonGroup (this);
-	QHBoxLayout *grouplayout = new QHBoxLayout (group);
+	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
+	group = new Q3ButtonGroup (this);
+	Q3HBoxLayout *grouplayout = new Q3HBoxLayout (group);
 	all = new QRadioButton (i18n ("All"), group);
 	nonfunctions = new QRadioButton (i18n ("Non-Functions"), group);
 	functions = new QRadioButton (i18n ("Functions"), group);

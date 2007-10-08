@@ -22,7 +22,7 @@
 #include <qmap.h>
 
 class KTabBar;
-class QWidgetStack;
+class Q3WidgetStack;
 class RKMDIWindow;
 class KAction;
 class KActionCollection;
@@ -77,7 +77,7 @@ private:
 	KAction *action_page_left;
 	KAction *action_page_right;
 	KTabBar *tabs;
-	QWidgetStack *widgets;
+	Q3WidgetStack *widgets;
 	typedef QMap<int, RKMDIWindow*> PageMap;
 	PageMap pages;
 /** internal convenience function to get the internal id of the given window */

@@ -22,7 +22,7 @@
 #include <qstringlist.h>
 
 class MultiStringSelector;
-class QButtonGroup;
+class Q3ButtonGroup;
 class QCheckBox;
 class RKSpinBox;
 
@@ -57,7 +57,7 @@ public slots:
 	void browseRequest (QStringList* strings);
 private:
 	MultiStringSelector *map_choser;
-	QButtonGroup *button_group;
+	Q3ButtonGroup *button_group;
 	QCheckBox *show_code_box;
 	RKSpinBox *code_size_box;
 	

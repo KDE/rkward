@@ -20,13 +20,15 @@
 #include "../rkglobals.h"
 #include "../debug.h"
 
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qradiobutton.h>
 #include <qpushbutton.h>
 #include <qspinbox.h>
 #include <qlayout.h>
 #include <qstring.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include <klocale.h>
 
@@ -39,24 +41,24 @@ EditFormatDialog::EditFormatDialog (QWidget *parent, RKVariable *var, int mode) 
 	EditFormatDialog::mode = mode;
 	EditFormatDialog::options = var->getFormattingOptions ();
 
-	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
 	
-	alignment_group = new QButtonGroup (i18n ("Alignment"), this);
+	alignment_group = new Q3ButtonGroup (i18n ("Alignment"), this);
 	alignment_group->setColumnLayout (0, Qt::Vertical);
 	alignment_group->layout()->setSpacing (RKGlobals::spacingHint ());
 	alignment_group->layout()->setMargin (RKGlobals::marginHint ());
-	QVBoxLayout *group_layout = new QVBoxLayout (alignment_group->layout());
+	Q3VBoxLayout *group_layout = new Q3VBoxLayout (alignment_group->layout());
 	group_layout->addWidget (new QRadioButton (i18n ("Default for type '%1'").arg (RObject::typeToText (var->getDataType ())), alignment_group));
 	group_layout->addWidget (new QRadioButton (i18n ("Left"), alignment_group));
 	group_layout->addWidget (new QRadioButton (i18n ("Right"), alignment_group));
 	alignment_group->setButton ((int) RKVariable::FormattingOptions::AlignDefault);
 	vbox->addWidget (alignment_group);
 
-	precision_group = new QButtonGroup (i18n ("Decimal Places"), this);
+	precision_group = new Q3ButtonGroup (i18n ("Decimal Places"), this);
 	precision_group->setColumnLayout (0, Qt::Vertical);
 	precision_group->layout()->setSpacing (RKGlobals::spacingHint ());
 	precision_group->layout()->setMargin (RKGlobals::marginHint ());
-	group_layout = new QVBoxLayout (precision_group->layout());
+	group_layout = new Q3VBoxLayout (precision_group->layout());
 	group_layout->addWidget (new QRadioButton (i18n ("Default setting"), precision_group));
 	group_layout->addWidget (new QRadioButton (i18n ("As required"), precision_group));
 	group_layout->addWidget (new QRadioButton (i18n ("Fixed precision:"), precision_group));

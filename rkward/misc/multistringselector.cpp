@@ -17,10 +17,13 @@
 
 #include "multistringselector.h"
 
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qpushbutton.h>
 #include <qlayout.h>
 #include <qlabel.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
 #include <klocale.h>
 
@@ -30,17 +33,17 @@
 MultiStringSelector::MultiStringSelector (const QString& label, QWidget* parent) : QWidget (parent) {
 	RK_TRACE (MISC);
 
-	QHBoxLayout *hbox = new QHBoxLayout (this, RKGlobals::spacingHint ());
+	Q3HBoxLayout *hbox = new Q3HBoxLayout (this, RKGlobals::spacingHint ());
 
-	QVBoxLayout *main_box = new QVBoxLayout (hbox, RKGlobals::spacingHint ());
-	QVBoxLayout *button_box = new QVBoxLayout (hbox, RKGlobals::spacingHint ());
+	Q3VBoxLayout *main_box = new Q3VBoxLayout (hbox, RKGlobals::spacingHint ());
+	Q3VBoxLayout *button_box = new Q3VBoxLayout (hbox, RKGlobals::spacingHint ());
 
 	QLabel *label_widget = new QLabel (label, this);
 	main_box->addWidget (label_widget);
 
-	list_view = new QListView (this);
+	list_view = new Q3ListView (this);
 	list_view->addColumn (i18n ("Filename"));
-	list_view->setSelectionMode (QListView::Single);
+	list_view->setSelectionMode (Q3ListView::Single);
 	list_view->setSorting (-1);
 	connect (list_view, SIGNAL (selectionChanged ()), this, SLOT (listSelectionChanged ()));
 	main_box->addWidget (list_view);
@@ -76,7 +79,7 @@ QStringList MultiStringSelector::getValues () {
 	RK_TRACE (MISC);
 
 	QStringList list;
-	QListViewItem *item = list_view->firstChild ();
+	Q3ListViewItem *item = list_view->firstChild ();
 	
 	while (item) {
 		list.append (item->text (0));
@@ -91,7 +94,7 @@ void MultiStringSelector::setValues (const QStringList& values) {
 
 	list_view->clear ();
 	for (QStringList::const_iterator it = values.begin (); it != values.end (); ++it) {
-		QListViewItem *item = new QListViewItem (list_view, list_view->lastItem ());
+		Q3ListViewItem *item = new Q3ListViewItem (list_view, list_view->lastItem ());
 		item->setText (0, (*it));
 	}
 	listSelectionChanged ();
@@ -104,7 +107,7 @@ void MultiStringSelector::addButtonClicked () {
 	QStringList new_strings;
 	emit (getNewStrings (&new_strings));
 	for (QStringList::const_iterator it = new_strings.begin (); it != new_strings.end (); ++it) {
-		QListViewItem *item = new QListViewItem (list_view, list_view->lastItem ());
+		Q3ListViewItem *item = new Q3ListViewItem (list_view, list_view->lastItem ());
 		item->setText (0, (*it));
 	}
 	emit (listChanged ());
@@ -121,10 +124,10 @@ void MultiStringSelector::removeButtonClicked () {
 void MultiStringSelector::upButtonClicked () {
 	RK_TRACE (MISC);
 
-	QListViewItem *sel = list_view->selectedItem ();
+	Q3ListViewItem *sel = list_view->selectedItem ();
 	RK_ASSERT (sel);
 
-	QListViewItem *above = sel->itemAbove ();
+	Q3ListViewItem *above = sel->itemAbove ();
 	if (above) {
 		above->moveItem (sel);
 	}
@@ -134,7 +137,7 @@ void MultiStringSelector::upButtonClicked () {
 void MultiStringSelector::downButtonClicked () {
 	RK_TRACE (MISC);
 
-	QListViewItem *sel = list_view->selectedItem ();
+	Q3ListViewItem *sel = list_view->selectedItem ();
 	RK_ASSERT (sel);
 
 	if (sel->nextSibling ()) sel->moveItem (sel->nextSibling ());

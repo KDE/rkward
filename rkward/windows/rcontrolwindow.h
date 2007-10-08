@@ -22,7 +22,7 @@
 
 #include <qmap.h>
 #include <qlabel.h>
-#include <qlistview.h>
+#include <q3listview.h>
 
 #include "rkmdiwindow.h"
 
@@ -84,7 +84,7 @@ public slots:
 /** configure button was clicked. Invoke settings dialog */
 	void configureButtonClicked ();
 private:
-	QListView *commands_view;
+	Q3ListView *commands_view;
 	QPushButton *cancel_button;
 	QPushButton *pause_button;
 
@@ -134,12 +134,12 @@ protected:
 A listview-item with a convenience constructor, and storing some additional information. For use in RControlWindow only.
 
 */
-class RControlWindowListViewItem : public QListViewItem {
+class RControlWindowListViewItem : public Q3ListViewItem {
 public:
 /** constructor. */
-	explicit RControlWindowListViewItem (QListViewItem *parent);
+	explicit RControlWindowListViewItem (Q3ListViewItem *parent);
 /** constructor. */
-	explicit RControlWindowListViewItem (QListView *parent);
+	explicit RControlWindowListViewItem (Q3ListView *parent);
 /** destructor */
 	~RControlWindowListViewItem ();
 
@@ -156,7 +156,7 @@ public:
 	static unsigned int lid;
 
 /** reimplemented to always have the top of the stack at the top */
-	int compare (QListViewItem *i, int col, bool ascending) const;
+	int compare (Q3ListViewItem *i, int col, bool ascending) const;
 };
 
 #endif

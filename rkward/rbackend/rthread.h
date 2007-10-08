@@ -19,7 +19,7 @@
 
 #include <qthread.h>
 #include <qstringlist.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 
 #include "rcommand.h"
 #include "rcommandstack.h"
@@ -188,7 +188,7 @@ private:
 	QStringList changed_symbol_names;
 /** check wether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
-	QValueList<RCommand*> all_current_commands;
+	Q3ValueList<RCommand*> all_current_commands;
 };
 
 #endif

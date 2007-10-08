@@ -29,8 +29,12 @@
 #include <qfont.h>
 #include <qlayout.h>
 #include <qsplitter.h>
-#include <qpopupmenu.h>
-#include <qobjectlist.h>
+#include <q3popupmenu.h>
+#include <qobject.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <QMouseEvent>
+#include <QEvent>
 
 #include <klocale.h>
 #include <kstdaction.h>
@@ -48,7 +52,7 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 	log_view->setUndoRedoEnabled (false);
 	log_view->setReadOnly (true);
 
-	QHBoxLayout *layout = new QHBoxLayout (this, 0, -1, "layout");
+	Q3HBoxLayout *layout = new Q3HBoxLayout (this, 0, -1, "layout");
 	layout->addWidget (log_view);
 
 	setCaption (i18n ("Command log"));
@@ -200,7 +204,7 @@ void RKCommandLog::linesAdded () {
 	}
 
 // scroll to bottom
-	log_view->moveCursor (QTextEdit::MoveEnd, false);
+	log_view->moveCursor (Q3TextEdit::MoveEnd, false);
 	log_view->scrollToBottom ();
 }
 
@@ -217,7 +221,7 @@ void RKCommandLog::clearLog () {
 	// set a fixed width font
 	QFont font ("Courier");
 	log_view->setCurrentFont (font);
-	log_view->setWordWrap (QTextEdit::NoWrap);
+	log_view->setWordWrap (Q3TextEdit::NoWrap);
 }
 
 void RKCommandLog::runSelection () {
@@ -230,7 +234,7 @@ void RKCommandLog::runSelection () {
 /////////////////////// BEGIN RKCommandLogView ////////////////////////
 
 
-RKCommandLogView::RKCommandLogView (RKCommandLog *parent) : QTextEdit (parent) {
+RKCommandLogView::RKCommandLogView (RKCommandLog *parent) : Q3TextEdit (parent) {
 	RK_TRACE (APP);
 
 	const QObjectList *list = children ();
@@ -256,13 +260,13 @@ bool RKCommandLogView::eventFilter (QObject *o, QEvent *e) {
 		}
 	}
 
-	return QTextEdit::eventFilter (o, e);
+	return Q3TextEdit::eventFilter (o, e);
 }
 
 void RKCommandLogView::selectAll () {
 	RK_TRACE (APP);
 
-	QTextEdit::selectAll (true);
+	Q3TextEdit::selectAll (true);
 }
 
 //////////////////////// END RKCommandLogView /////////////////////////
@@ -284,7 +288,7 @@ RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
 	KStdAction::clear (log, SLOT (clearLog ()), actionCollection (), "log_clear");
 	KStdAction::selectAll (log->getView (), SLOT (selectAll ()), actionCollection (), "log_select_all");
 	new KAction (i18n ("Configure"), 0, log, SLOT (configureLog ()), actionCollection (), "log_configure");
-	run_selection = new KAction (i18n ("Run selection"), QIconSet (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), log, SLOT (runSelection ()), actionCollection (), "log_run_selection");
+	run_selection = new KAction (i18n ("Run selection"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), log, SLOT (runSelection ()), actionCollection (), "log_run_selection");
 
 	connect (log->getView (), SIGNAL (popupMenuRequest (const QPoint &)), this, SLOT (doPopupMenu (const QPoint &)));
 }
@@ -296,7 +300,7 @@ RKCommandLogPart::~RKCommandLogPart () {
 void RKCommandLogPart::doPopupMenu (const QPoint &pos) {
 	RK_TRACE (APP);
 
-	QPopupMenu *menu = static_cast<QPopupMenu *> (factory ()->container ("rkcommandlog_context_menu", this));
+	Q3PopupMenu *menu = static_cast<Q3PopupMenu *> (factory ()->container ("rkcommandlog_context_menu", this));
 	copy->setEnabled (log->getView ()->hasSelectedText ());
 	run_selection->setEnabled (log->getView ()->hasSelectedText ());
 

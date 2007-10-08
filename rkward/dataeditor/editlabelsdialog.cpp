@@ -29,6 +29,10 @@
 #include <qrect.h>
 #include <qpalette.h>
 #include <qstyle.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <QResizeEvent>
+#include <Q3VBoxLayout>
 
 #include "../core/rkvariable.h"
 #include "rkdrag.h"
@@ -47,7 +51,7 @@ LevelsTable::LevelsTable (QWidget *parent, RObject::ValueLabels *labels) : TwinT
 	setNumCols (1);
 	setNumRows (storage->count () + 1);
 	horizontalHeader ()->setLabel (0, i18n ("Label"));
-	setHScrollBarMode (QScrollView::AlwaysOff);
+	setHScrollBarMode (Q3ScrollView::AlwaysOff);
 	setLeftMargin (40);
 	setMinimumWidth (80);
 
@@ -191,7 +195,7 @@ void LevelsTable::resizeEvent (QResizeEvent *e) {
 	setColumnWidth (0, nwidth);
 	updating_size = false;
 
-	QTable::resizeEvent (e);
+	Q3Table::resizeEvent (e);
 }
 
 void LevelsTable::columnWidthChanged (int col) {
@@ -208,7 +212,7 @@ void LevelsTable::columnWidthChanged (int col) {
 
 	updating_size = false;
 
-	QTable::columnWidthChanged (col);
+	Q3Table::columnWidthChanged (col);
 }
 
 
@@ -221,12 +225,12 @@ EditLabelsDialog::EditLabelsDialog (QWidget *parent, RKVariable *var, int mode) 
 	EditLabelsDialog::var = var;
 	EditLabelsDialog::mode = mode;
 
-	QVBoxLayout *mainvbox = new QVBoxLayout (this, KDialog::marginHint (), KDialog::spacingHint ());
+	Q3VBoxLayout *mainvbox = new Q3VBoxLayout (this, KDialog::marginHint (), KDialog::spacingHint ());
 	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1 (the index column is read only). To remove levels at the end of the list, just set them to empty."), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	mainvbox->addWidget (label);
 
-	QHBoxLayout *hbox = new QHBoxLayout (mainvbox, KDialog::spacingHint ());
+	Q3HBoxLayout *hbox = new Q3HBoxLayout (mainvbox, KDialog::spacingHint ());
 
 	RObject::ValueLabels *labels = var->getValueLabels ();
 	if (!labels) {
@@ -236,7 +240,7 @@ EditLabelsDialog::EditLabelsDialog (QWidget *parent, RKVariable *var, int mode) 
 	table = new LevelsTable (this, labels);
 	hbox->addWidget (table);
 
-	QHBoxLayout *buttonbox = new QHBoxLayout (mainvbox, KDialog::spacingHint ());
+	Q3HBoxLayout *buttonbox = new Q3HBoxLayout (mainvbox, KDialog::spacingHint ());
 
 	QPushButton *ok_button = new QPushButton (i18n ("Ok"), this);
 	connect (ok_button, SIGNAL (clicked ()), this, SLOT (accept ()));

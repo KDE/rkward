@@ -18,6 +18,8 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include <klocale.h>
 #include <klineedit.h>
@@ -27,7 +29,7 @@
 
 GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, const QString &label, const QString &caption, const QString &initial) : QWidget (parent) {
 	RK_TRACE (MISC);
-	QVBoxLayout *vbox = new QVBoxLayout (this);
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this);
 	vbox->setResizeMode (QLayout::Minimum);
 
 	vbox->addWidget (new QLabel (label, this));

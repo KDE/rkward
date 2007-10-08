@@ -22,18 +22,23 @@
 
 #include <qvariant.h>
 #include <qstring.h>
-#include <qintdict.h>
+#include <q3intdict.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <Q3PopupMenu>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSplitter;
 class TwinTableMember;
 class TwinTableDataMember;
 class TwinTableMetaMember;
 class TableColumn;
-class QPopupMenu;
-class QTable;
+class Q3PopupMenu;
+class Q3Table;
 class RKDrag;
 class RObject;
 struct RObject::ChangeSet;
@@ -89,15 +94,15 @@ public slots:
 	void dataClearSelection ();
 private:
 /** PopupMenu shown when top header is right-clicked */
-	QPopupMenu *top_header_menu;
+	Q3PopupMenu *top_header_menu;
 /** PopupMenu shown when top header is right-clicked */
-	QPopupMenu *left_header_menu;
+	Q3PopupMenu *left_header_menu;
 /** position (row or col) the header_menu is operating on */
 	int header_pos;
 
 	RKEditor::PasteMode paste_mode;
 
-	typedef QIntDict<RKVariable> ColMap;
+	typedef Q3IntDict<RKVariable> ColMap;
 	ColMap col_map;
 protected:	
 /** set a row of cells, expanding the table if necessary. Assumes you provide the correct amount of data! */

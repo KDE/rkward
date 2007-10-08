@@ -19,7 +19,7 @@
 #include <klocale.h>
 #include <kiconloader.h>
 
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qpixmap.h>
 #include <qimage.h>
 
@@ -40,7 +40,7 @@ QPixmap *RKObjectListView::icon_list = 0;
 QPixmap *RKObjectListView::package_environment = 0;
 QPixmap *RKObjectListView::environment = 0;
 
-RKObjectListView::RKObjectListView (QWidget *parent) : QListView (parent) {
+RKObjectListView::RKObjectListView (QWidget *parent) : Q3ListView (parent) {
 	RK_TRACE (APP);
 	if (icon_function == 0) {
 		icon_function = new QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/function.png"));
@@ -57,11 +57,11 @@ RKObjectListView::RKObjectListView (QWidget *parent) : QListView (parent) {
 	settings = new RKObjectListViewSettings ();
 	connect (settings, SIGNAL (settingsChanged ()), this, SLOT (objectBrowserSettingsChanged ()));
 
-	menu = new QPopupMenu (this);
+	menu = new Q3PopupMenu (this);
 	menu->insertItem (i18n ("Show Objects"), settings->showObjectsMenu ());
 	menu->insertItem (i18n ("Show Fields"), settings->showFieldsMenu ());
 	menu->insertItem (i18n ("Configure Defaults"), this, SLOT (popupConfigure ()));
-	connect (this, SIGNAL (contextMenuRequested (QListViewItem *, const QPoint &, int)), this, SLOT (requestedContextMenu (QListViewItem*, const QPoint&, int)));
+	connect (this, SIGNAL (contextMenuRequested (Q3ListViewItem *, const QPoint &, int)), this, SLOT (requestedContextMenu (Q3ListViewItem*, const QPoint&, int)));
 
 	setShowToolTips (false);
 	tip = new RKObjectListViewTip (this);
@@ -89,34 +89,34 @@ void RKObjectListView::setObjectCurrent (RObject *object, bool only_if_none_curr
 }
 
 void RKObjectListView::objectBrowserSettingsChanged () {
-	setColumnWidthMode (0, QListView::Maximum);
+	setColumnWidthMode (0, Q3ListView::Maximum);
 	if (settings->settingActive (RKObjectListViewSettings::ShowFieldsLabel)) {
 		if (columnWidth (1) == 0) setColumnWidth (1, 50);
-		setColumnWidthMode (1, QListView::Maximum);
+		setColumnWidthMode (1, Q3ListView::Maximum);
 	} else {
-		setColumnWidthMode (1, QListView::Manual);
+		setColumnWidthMode (1, Q3ListView::Manual);
 		hideColumn (1);
 	}
 
 	if (settings->settingActive (RKObjectListViewSettings::ShowFieldsType)) {
 		if (columnWidth (2) == 0) setColumnWidth (2, 50);
-		setColumnWidthMode (2, QListView::Maximum);
+		setColumnWidthMode (2, Q3ListView::Maximum);
 	} else {
-		setColumnWidthMode (2, QListView::Manual);
+		setColumnWidthMode (2, Q3ListView::Manual);
 		hideColumn (2);
 	}
 
 	if (settings->settingActive (RKObjectListViewSettings::ShowFieldsClass)) {
 		if (columnWidth (3) == 0) setColumnWidth (3, 50);
-		setColumnWidthMode (3, QListView::Maximum);
+		setColumnWidthMode (3, Q3ListView::Maximum);
 	} else {
-		setColumnWidthMode (3, QListView::Manual);
+		setColumnWidthMode (3, Q3ListView::Manual);
 		hideColumn (3);
 	}
 
 	triggerUpdate ();
 
-	for (QListViewItemIterator it (this); it.current (); ++it) {
+	for (Q3ListViewItemIterator it (this); it.current (); ++it) {
 		RObject *object = findItemObject (static_cast<RKListViewItem*> (it.current ()));
 		RK_ASSERT (object);
 
@@ -129,7 +129,7 @@ void RKObjectListView::popupConfigure () {
 	RKSettings::configureSettings (RKSettings::ObjectBrowser, this);
 }
 
-void RKObjectListView::requestedContextMenu (QListViewItem *item, const QPoint &pos, int) {
+void RKObjectListView::requestedContextMenu (Q3ListViewItem *item, const QPoint &pos, int) {
 	RObject *object = findItemObject (static_cast<RKListViewItem *> (item));
 
 	menu_object = object;
@@ -346,14 +346,14 @@ void RKObjectListView::addObject (RKListViewItem *parent, RObject *object, bool 
 
 
 //////////////////// RKListViewItem //////////////////////////
-int RKListViewItem::width (const QFontMetrics &fm, const QListView * lv, int c) const {
+int RKListViewItem::width (const QFontMetrics &fm, const Q3ListView * lv, int c) const {
 	if (parent ()) {
 		if (!parent ()->isOpen ()) {
 			return 0;
 		}
 	}
 
-	int ret = QListViewItem::width (fm, lv, c);
+	int ret = Q3ListViewItem::width (fm, lv, c);
 	if (ret > 200) return 200;
 	return ret;
 }
@@ -424,7 +424,7 @@ bool RKObjectListViewSettings::shouldShowObject (RObject *object) {
 void RKObjectListViewSettings::createContextMenus () {
 	RK_TRACE (APP);
 
-	show_objects_menu = new QPopupMenu (0);
+	show_objects_menu = new Q3PopupMenu (0);
 	insertPopupItem (show_objects_menu, ShowObjectsAllEnvironments, i18n ("All Environments"));
 	insertPopupItem (show_objects_menu, ShowObjectsContainer, i18n ("Objects with children"));
 	insertPopupItem (show_objects_menu, ShowObjectsVariable, i18n ("Variables"));
@@ -432,7 +432,7 @@ void RKObjectListViewSettings::createContextMenus () {
 	show_objects_menu->insertSeparator ();
 	insertPopupItem (show_objects_menu, ShowObjectsHidden, i18n ("Hidden Objects"));
 
-	show_fields_menu = new QPopupMenu (0);
+	show_fields_menu = new Q3PopupMenu (0);
 	insertPopupItem (show_fields_menu, ShowFieldsType, i18n ("Type"));
 	insertPopupItem (show_fields_menu, ShowFieldsLabel, i18n ("Label"));
 	insertPopupItem (show_fields_menu, ShowFieldsClass, i18n ("Class"));
@@ -454,7 +454,7 @@ void RKObjectListViewSettings::updateSelf () {
 	emit (settingsChanged ());
 }
 
-void RKObjectListViewSettings::insertPopupItem (QPopupMenu *menu, Settings setting, const QString &text) {
+void RKObjectListViewSettings::insertPopupItem (Q3PopupMenu *menu, Settings setting, const QString &text) {
 	RK_TRACE (APP);
 
 	menu->insertItem (text, setting);

@@ -17,9 +17,12 @@
 
 #include "rcontrolwindow.h"
 
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qpushbutton.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -41,8 +44,8 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *n
 	initializeActivationSignals ();
 	setFocusPolicy (QWidget::ClickFocus);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
-	QHBoxLayout *button_hbox = new QHBoxLayout (main_vbox, RKGlobals::spacingHint ());
+	Q3VBoxLayout *main_vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
+	Q3HBoxLayout *button_hbox = new Q3HBoxLayout (main_vbox, RKGlobals::spacingHint ());
 
 	QPushButton *configure_r_button = new QPushButton (i18n ("Configure R backend"), this);
 	connect (configure_r_button, SIGNAL (clicked ()), this, SLOT (configureButtonClicked ()));
@@ -58,13 +61,13 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *n
 	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancelButtonClicked ()));
 	button_hbox->addWidget (cancel_button);
 
-	commands_view = new QListView (this);
+	commands_view = new Q3ListView (this);
 	commands_view->addColumn (i18n ("Command"));
 	commands_view->addColumn (i18n ("Type"));
 	commands_view->addColumn (i18n ("Flags"));
 	commands_view->addColumn (i18n ("Description"));
 	commands_view->setSorting (0);		// actually, we ignore the column, and do our own sorting
-	commands_view->setSelectionMode (QListView::Extended);
+	commands_view->setSelectionMode (Q3ListView::Extended);
 	connect (commands_view, SIGNAL (selectionChanged ()), this, SLOT (commandSelectionChanged ()));
 	main_vbox->addWidget (commands_view);
 
@@ -270,9 +273,9 @@ void RControlWindow::commandSelectionChanged () {
 
 	bool have_selection = false;
 	// if a chain is selected, select all of its child items
-	QListViewItemIterator itemit (commands_view, QListViewItemIterator::Selected);
+	Q3ListViewItemIterator itemit (commands_view, Q3ListViewItemIterator::Selected);
 	while (itemit.current ()) {
-		QListViewItem *item = itemit.current ()->firstChild ();
+		Q3ListViewItem *item = itemit.current ()->firstChild ();
 		while (item) {
 			item->setSelected (true);
 			item = item->nextSibling ();
@@ -344,14 +347,14 @@ RControlWindowPart::~RControlWindowPart () {
 // static
 unsigned int RControlWindowListViewItem::lid = 0;
 
-RControlWindowListViewItem::RControlWindowListViewItem (QListViewItem *parent) : QListViewItem (parent) {
+RControlWindowListViewItem::RControlWindowListViewItem (Q3ListViewItem *parent) : Q3ListViewItem (parent) {
 	chain = 0;
 	chain_closed = false;
 
 	id = ++lid;
 }
 
-RControlWindowListViewItem::RControlWindowListViewItem (QListView *parent) : QListViewItem (parent) {
+RControlWindowListViewItem::RControlWindowListViewItem (Q3ListView *parent) : Q3ListViewItem (parent) {
 	chain = 0;
 	chain_closed = false;
 
@@ -361,7 +364,7 @@ RControlWindowListViewItem::RControlWindowListViewItem (QListView *parent) : QLi
 RControlWindowListViewItem::~RControlWindowListViewItem () {
 }
 
-int RControlWindowListViewItem::compare (QListViewItem *i, int, bool ascending) const {
+int RControlWindowListViewItem::compare (Q3ListViewItem *i, int, bool ascending) const {
 	unsigned int comp_id = static_cast<RControlWindowListViewItem *> (i)->id;
 	if (ascending) {
 		if (comp_id > id) {

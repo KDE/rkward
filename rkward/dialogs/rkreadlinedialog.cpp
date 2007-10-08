@@ -18,9 +18,9 @@
 #include "rkreadlinedialog.h"
 
 #include <qlineedit.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 #include <qlabel.h>
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qapplication.h>
 #include <qdesktopwidget.h>
 
@@ -36,7 +36,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 	RK_TRACE (DIALOGS);
 	RK_ASSERT (command);
 
-	QVBox *page = makeVBoxMainWidget ();
+	Q3VBox *page = makeVBoxMainWidget ();
 	new QLabel (caption, page);
 
 	int screen_width = qApp->desktop ()->width () - 2*marginHint() - 2*spacingHint ();		// TODO is this correct on xinerama?
@@ -45,11 +45,11 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 	if (!context.isEmpty ()) {
 		new QLabel (i18n ("Context:"), page);
 
-		QTextEdit *output = new QTextEdit (page);
+		Q3TextEdit *output = new Q3TextEdit (page);
 		output->setUndoRedoEnabled (false);
-		output->setTextFormat (QTextEdit::PlainText);
+		output->setTextFormat (Q3TextEdit::PlainText);
 		output->setCurrentFont (QFont ("Courier"));
-		output->setWordWrap (QTextEdit::NoWrap);
+		output->setWordWrap (Q3TextEdit::NoWrap);
 		output->setText (context);
 		output->setReadOnly (true);
 		int cwidth = output->contentsWidth ();

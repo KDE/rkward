@@ -23,7 +23,10 @@
 #include <kate/document.h>
 #include <kate/view.h>
 
-#include <qptrlist.h>
+#include <q3ptrlist.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <QKeyEvent>
 
 #include "rbackend/rcommandreceiver.h"
 #include "windows/rkcommandeditorwindow.h"

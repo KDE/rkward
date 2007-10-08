@@ -20,6 +20,8 @@
 #include <qobject.h>
 
 #include <qstring.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 class RKComponentPropertyCode;
 
@@ -79,7 +81,7 @@ protected:
 	/// whether command has finished
 		bool complete;
 	};
-	QValueList<ScriptCommand *> command_stack;
+	Q3ValueList<ScriptCommand *> command_stack;
 
 	int current_flags;
 	int current_type;

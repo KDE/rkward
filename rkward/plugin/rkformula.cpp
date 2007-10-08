@@ -16,14 +16,17 @@
  ***************************************************************************/
 #include "rkformula.h"
 
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qspinbox.h>
 #include <qwidget.h>
 #include <qlayout.h>
 #include <qdom.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
 #include <klocale.h>
 #include <kiconloader.h>
@@ -56,28 +59,28 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	// create layout
-	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
 
-	type_selector = new QButtonGroup (this);
+	type_selector = new Q3ButtonGroup (this);
 	type_selector->setColumnLayout (0, Qt::Vertical);
 	type_selector->layout ()->setSpacing (RKGlobals::spacingHint ());
 	type_selector->layout ()->setMargin (RKGlobals::marginHint ());
-	QVBoxLayout *group_layout = new QVBoxLayout (type_selector->layout());
+	Q3VBoxLayout *group_layout = new Q3VBoxLayout (type_selector->layout());
 	group_layout->addWidget (new QRadioButton (i18n ("Full Model"), type_selector));
 	group_layout->addWidget (new QRadioButton (i18n ("Main Effects only"), type_selector));
 	group_layout->addWidget (new QRadioButton (i18n ("Custom Model:"), type_selector));
 	connect (type_selector, SIGNAL (clicked (int)), this, SLOT (typeChange (int)));
 	
 	custom_model_widget = new QWidget (type_selector);
-	QHBoxLayout *model_hbox = new QHBoxLayout (custom_model_widget, RKGlobals::spacingHint ());
-	predictors_view = new QListView (custom_model_widget);
+	Q3HBoxLayout *model_hbox = new Q3HBoxLayout (custom_model_widget, RKGlobals::spacingHint ());
+	predictors_view = new Q3ListView (custom_model_widget);
 	predictors_view->addColumn (i18n ("Name"));
-	predictors_view->setSelectionMode (QListView::Extended);
+	predictors_view->setSelectionMode (Q3ListView::Extended);
 	predictors_view->setSorting (100);
 	model_hbox->addWidget (predictors_view);
 	model_hbox->addSpacing (6);
 	
-	QVBoxLayout *model_vbox = new QVBoxLayout (model_hbox, RKGlobals::spacingHint ());
+	Q3VBoxLayout *model_vbox = new Q3VBoxLayout (model_hbox, RKGlobals::spacingHint ());
 	add_button = new QPushButton (QString::null, custom_model_widget);
 	add_button->setPixmap (SmallIcon ("1rightarrow"));
 	connect (add_button, SIGNAL (clicked ()), this, SLOT (addButtonClicked ()));
@@ -91,7 +94,7 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	model_vbox->addWidget (level_box);
 	model_hbox->addSpacing (6);
 
-	model_view = new QListView (custom_model_widget);
+	model_view = new Q3ListView (custom_model_widget);
 	model_view->addColumn (i18n ("Level"));
 	model_view->addColumn (i18n ("Term"));
 	model_view->setSorting (0);
@@ -128,7 +131,7 @@ void RKFormula::typeChange (int id) {
 		item_map.clear ();
 		ObjectList fixed_list = fixed_factors->objectList ();
 		for (ObjectList::const_iterator it = fixed_list.begin (); it != fixed_list.end (); ++it) {
-			QListViewItem *new_item = new QListViewItem (predictors_view, (*it)->getShortName ());
+			Q3ListViewItem *new_item = new Q3ListViewItem (predictors_view, (*it)->getShortName ());
 			item_map.insert (new_item, (*it));
 		}
 		checkCustomModel ();
@@ -261,16 +264,16 @@ void RKFormula::addButtonClicked () {
 	
 	// find an appropriate parent item
 	if (level_map.find (level) == level_map.end ()) {
-		QListViewItem *item = new QListViewItem (model_view, QString().setNum (level));
+		Q3ListViewItem *item = new Q3ListViewItem (model_view, QString().setNum (level));
 		level_map.insert (level, item);
 	}
-	QListViewItem *parent = level_map[level];
+	Q3ListViewItem *parent = level_map[level];
 	parent->setOpen (true);
 	
 	// check for duplicates (remove from old list - new terms might have a different order of naming)
 	for (int inter = 0; inter < num_interactions; ++inter) {
 		Interaction *new_inter = &(interactions[inter]);
-		QListViewItem *dupe = 0;
+		Q3ListViewItem *dupe = 0;
 		for (InteractionMap::Iterator it = interaction_map.begin (); it != interaction_map.end (); ++it) {
 			Interaction *existing_inter = &(it.data ());
 			// BEGIN: actual comparison
@@ -305,7 +308,7 @@ void RKFormula::addButtonClicked () {
 			}
 			dummy.append (interactions[i].vars[j]->getShortName ());
 		}
-		QListViewItem *item = new QListViewItem (parent, QString::null, dummy);
+		Q3ListViewItem *item = new Q3ListViewItem (parent, QString::null, dummy);
 		interaction_map.insert (item, interactions[i]);
 	}
 	
@@ -375,10 +378,10 @@ RKFormula::Interaction* RKFormula::makeInteractions (int level, const RObjectPtr
 
 void RKFormula::removeButtonClicked () {
 	RK_TRACE (PLUGIN);
-	QListViewItem *current = model_view->firstChild ();
+	Q3ListViewItem *current = model_view->firstChild ();
 	while (current) {
 		if (current->isSelected ()) {
-			QListViewItem *next = current->nextSibling ();
+			Q3ListViewItem *next = current->nextSibling ();
 			if (current->parent ()) {	// single item
 				InteractionMap::iterator it = interaction_map.find (current);
 				delete it.data ().vars;
@@ -386,8 +389,8 @@ void RKFormula::removeButtonClicked () {
 				interaction_map.remove (it);
 				next = current->parent ();
 			} else {	// level item: remove all children
-				for (QListViewItem *child = current->firstChild (); child; ) {
-					QListViewItem *next_child = child->nextSibling ();
+				for (Q3ListViewItem *child = current->firstChild (); child; ) {
+					Q3ListViewItem *next_child = child->nextSibling ();
 					InteractionMap::iterator it = interaction_map.find (child);
 					delete it.data ().vars;
 					delete it.key ();
@@ -446,7 +449,7 @@ void RKFormula::checkCustomModel () {
 		}
 		if (found_vars < (inter.level + 1)) {
 			delete [] (in.data ().vars);
-			QListViewItem *parent = in.key ()->parent ();
+			Q3ListViewItem *parent = in.key ()->parent ();
 			delete in.key ();
 			if (!parent->firstChild ()) {
 				delete parent;

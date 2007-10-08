@@ -21,7 +21,7 @@
 
 #include "../core/rkvariable.h"
 
-class QButtonGroup;
+class Q3ButtonGroup;
 class QSpinBox;
 
 /**
@@ -41,8 +41,8 @@ protected:
 /// reimplemented to submit the changes to the backend
 	void accept ();
 private:
-	QButtonGroup *alignment_group;
-	QButtonGroup *precision_group;
+	Q3ButtonGroup *alignment_group;
+	Q3ButtonGroup *precision_group;
 	QSpinBox *precision_field;
 	RKVariable::FormattingOptions *options;
 	

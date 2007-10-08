@@ -21,7 +21,7 @@
 #include <kfiledialog.h>
 
 #include <qstringlist.h>
-#include <qhbox.h>
+#include <q3hbox.h>
 
 class QComboBox;
 class RKContextMap;
@@ -56,7 +56,7 @@ private:
 };
 
 /** Internal helper class to RKImportDialog. Needed solely to work around a design flaw in the KFileDialog API */
-class RKImportDialogFormatSelector : public QHBox {
+class RKImportDialogFormatSelector : public Q3HBox {
 friend class RKImportDialog;
 private:
 	RKImportDialogFormatSelector ();

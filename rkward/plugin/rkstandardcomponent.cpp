@@ -19,14 +19,16 @@
 
 #include <qfileinfo.h>
 #include <qlayout.h>
-#include <qvbox.h>
-#include <qhbox.h>
-#include <qgroupbox.h>
-#include <qframe.h>
+#include <q3vbox.h>
+#include <q3hbox.h>
+#include <q3groupbox.h>
+#include <q3frame.h>
 #include <qtabwidget.h>
 #include <qlabel.h>
 #include <qapplication.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -132,8 +134,8 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 				build_wizard = false;
 
 				QWidget *fake_page = parent_component->addPage ();
-				QVBoxLayout *layout = new QVBoxLayout (fake_page);	
-				QVBox *box = new QVBox (fake_page);
+				Q3VBoxLayout *layout = new Q3VBoxLayout (fake_page);	
+				Q3VBox *box = new Q3VBox (fake_page);
 				box->setSpacing (RKGlobals::spacingHint ());
 				layout->addWidget (box);
 				parent_widget = box;
@@ -266,7 +268,7 @@ void RKStandardComponent::discard () {
 	wizard = 0;
 
 	// clear all properties. Not the code property, as the script backend relies on it
-	for (QDictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
+	for (Q3DictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
 		if (it.current () != code) {
 			if (it.current ()->isProperty ()) {
 				static_cast<RKComponentPropertyBase *> (it.current ())->deleteLater ();
@@ -498,35 +500,35 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 
 		if (allow_pages && (e.tagName () == "page")) {
 			widget = component ()->addPage ();
-			QVBoxLayout *layout = new QVBoxLayout (widget);
-			QVBox *box = new QVBox (widget);
+			Q3VBoxLayout *layout = new Q3VBoxLayout (widget);
+			Q3VBox *box = new Q3VBox (widget);
 			box->setSpacing (RKGlobals::spacingHint ());
 			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "row") {
 			widget = new RKComponent (component (), parent_widget);		// wrapping this (and column, frame below) inside an RKComponent has the benefit, that it can have an id, and hence can be set to visibile/hidden, enabled/disabled
-			QVBoxLayout *layout = new QVBoxLayout (widget);
-			QHBox *box = new QHBox (widget);
+			Q3VBoxLayout *layout = new Q3VBoxLayout (widget);
+			Q3HBox *box = new Q3HBox (widget);
 			box->setSpacing (RKGlobals::spacingHint ());
 			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "stretch") {
 			QWidget *stretch = new QWidget (parent_widget);
 			stretch->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-			QHBox *box = dynamic_cast<QHBox *> (parent_widget);
+			Q3HBox *box = dynamic_cast<Q3HBox *> (parent_widget);
 			// RK_ASSERT (box);  <- NO, also meaningful in a <frame>
 			if (box) box->setStretchFactor (stretch, 100);
 		} else if (e.tagName () == "column") {
 			widget = new RKComponent (component (), parent_widget);
-			QVBoxLayout *layout = new QVBoxLayout (widget);
-			QVBox *box = new QVBox (widget);
+			Q3VBoxLayout *layout = new Q3VBoxLayout (widget);
+			Q3VBox *box = new Q3VBox (widget);
 			box->setSpacing (RKGlobals::spacingHint ());
 			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "frame") {
 			widget = new RKComponent (component (), parent_widget);
-			QVBoxLayout *layout = new QVBoxLayout (widget);
-			QGroupBox *box = new QGroupBox (1, Qt::Horizontal, e.attribute ("label"), widget);
+			Q3VBoxLayout *layout = new Q3VBoxLayout (widget);
+			Q3GroupBox *box = new Q3GroupBox (1, Qt::Horizontal, e.attribute ("label"), widget);
 			box->setInsideSpacing (RKGlobals::spacingHint ());
 			layout->addWidget (box);
 			buildElement (e, box, false);

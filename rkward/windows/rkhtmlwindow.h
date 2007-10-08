@@ -23,7 +23,7 @@
 #include <kmdichildview.h>
 #include <kxmlguiclient.h>
 
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 
 #include "../windows/rkmdiwindow.h"
 
@@ -83,7 +83,7 @@ protected:
 /** called from openURL. Takes care of updating caption, and updating back/forward actions, if available */
 	void changeURL (const KURL &url);
 protected:
-	QPtrList<KURL> url_history;
+	Q3PtrList<KURL> url_history;
 	KAction *back;
 	KAction *forward;
 	KAction *print;

@@ -19,10 +19,12 @@
 
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qlayout.h>
-#include <qheader.h>
+#include <q3header.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
 
 #include <klocale.h>
 #include <kiconloader.h>
@@ -40,7 +42,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	// basic layout
-	QGridLayout *g_layout = new QGridLayout (this, 3, 3, RKGlobals::spacingHint ());
+	Q3GridLayout *g_layout = new Q3GridLayout (this, 3, 3, RKGlobals::spacingHint ());
 
 	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Variable:"), DL_INFO), this);
 	g_layout->addWidget (label, 0, 2);
@@ -51,8 +53,8 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	g_layout->addWidget (select, 1, 0);
 	g_layout->addColSpacing (1, 5);
 
-	list = new QListView (this);
-	list->setSelectionMode (QListView::Extended);
+	list = new Q3ListView (this);
+	list->setSelectionMode (Q3ListView::Extended);
 	list->addColumn (" ");		// for counter
 	list->addColumn (i18n ("Name"));
 	list->setSorting (2);
@@ -73,10 +75,10 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 		// make it look like a line-edit
 		list->header ()->hide ();
 		list->setFixedHeight (list->fontMetrics ().height () + 2*list->itemMargin () + 4);	// the height of a single line including margins
-		list->setColumnWidthMode (0, QListView::Manual);
+		list->setColumnWidthMode (0, Q3ListView::Manual);
 		list->setColumnWidth (0, 0);
-		list->setHScrollBarMode (QScrollView::AlwaysOff);
-		list->setVScrollBarMode (QScrollView::AlwaysOff);
+		list->setHScrollBarMode (Q3ScrollView::AlwaysOff);
+		list->setVScrollBarMode (Q3ScrollView::AlwaysOff);
 		g_layout->setRowStretch (3, 1);		// so the label does not get separated from the view
 	}
 
@@ -110,7 +112,7 @@ void RKVarSlot::listSelectionChanged () {
 	bool selection = false;
 
 	ObjectList sellist;
-	QListViewItem *item = list->firstChild ();
+	Q3ListViewItem *item = list->firstChild ();
 	while (item) {
 		if (item->isSelected ()) {
 			selection = true;
@@ -137,7 +139,7 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 	ObjectList::const_iterator it = objlist.begin ();
 	int i = 1;
 	while (it != objlist.end ()) {
-		QListViewItem *new_item = new QListViewItem (list, QString::number (i++), (*it)->getShortName ());
+		Q3ListViewItem *new_item = new Q3ListViewItem (list, QString::number (i++), (*it)->getShortName ());
 		list->insertItem (new_item);
 		item_map.insert (new_item, *it);
 		++it;

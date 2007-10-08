@@ -17,12 +17,15 @@
 #include "robjectviewer.h"
 
 #include <qlayout.h>
-#include <qscrollview.h>
-#include <qvbox.h>
-#include <qhbox.h>
+#include <q3scrollview.h>
+#include <q3vbox.h>
+#include <q3hbox.h>
 #include <qlabel.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 #include <qfont.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <QCloseEvent>
 
 #include <klocale.h>
 
@@ -43,10 +46,10 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 	RK_ASSERT (object);
 	_object = object;
 
-	QVBoxLayout *layout = new QVBoxLayout (this);
-	QScrollView *wrapper = new QScrollView (this);
-	wrapper->setResizePolicy (QScrollView::AutoOneFit);
-	QVBox *box = new QVBox (wrapper->viewport ());
+	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
+	Q3ScrollView *wrapper = new Q3ScrollView (this);
+	wrapper->setResizePolicy (Q3ScrollView::AutoOneFit);
+	Q3VBox *box = new Q3VBox (wrapper->viewport ());
 	wrapper->addChild (box);
 	layout->addWidget (wrapper);
 
@@ -56,9 +59,9 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 
 	QFont font ("Courier");
 
-	QHBox *toprow = new QHBox (box);
+	Q3HBox *toprow = new Q3HBox (box);
 	description_label = new QLabel (toprow);
-	QVBox *statusbox = new QVBox (toprow);
+	Q3VBox *statusbox = new Q3VBox (toprow);
 	statusbox->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
 	status_label = new QLabel (statusbox);
 	update_button = new QPushButton (i18n ("Update"), statusbox);
@@ -66,29 +69,29 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 	connect (update_button, SIGNAL (clicked ()), this, SLOT (update ()));
 	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
 
-	QHBox *row = new QHBox (box);
+	Q3HBox *row = new Q3HBox (box);
 	QLabel *label = new QLabel (i18n("\nResult of 'summary (%1)':\n").arg (object->getFullName ()), row);
 	row->setStretchFactor (label, 10);
 	toggle_summary_button = new QPushButton (i18n ("Hide"), row);
 	connect (toggle_summary_button, SIGNAL (clicked ()), this, SLOT (toggleSummary ()));
 
-	summary_area = new QTextEdit (box);
+	summary_area = new Q3TextEdit (box);
 	summary_area->setTextFormat (PlainText);
 	summary_area->setReadOnly (true);
 	summary_area->setCurrentFont (font);
-	summary_area->setWordWrap (QTextEdit::NoWrap);
+	summary_area->setWordWrap (Q3TextEdit::NoWrap);
 
-	row = new QHBox (box);
+	row = new Q3HBox (box);
 	label = new QLabel (i18n("\nResult of 'print (%1)':\n").arg (object->getFullName ()), row);
 	row->setStretchFactor (label, 10);
 	toggle_print_button = new QPushButton (i18n ("Hide"), row);
 	connect (toggle_print_button, SIGNAL (clicked ()), this, SLOT (togglePrint ()));
 
-	print_area = new QTextEdit (box);
+	print_area = new Q3TextEdit (box);
 	print_area->setTextFormat (PlainText);
 	print_area->setReadOnly (true);
 	print_area->setCurrentFont (font);
-	print_area->setWordWrap (QTextEdit::NoWrap);
+	print_area->setWordWrap (Q3TextEdit::NoWrap);
 
 	setCaption (i18n("Object Viewer: ") + object->getShortName ());
 	//resize (minimumSizeHint ().expandedTo (QSize (640, 480)));

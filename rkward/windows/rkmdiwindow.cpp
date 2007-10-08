@@ -20,6 +20,10 @@
 #include <qapplication.h>
 #include <qpainter.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <Q3Frame>
+#include <QPaintEvent>
 
 #include <kparts/event.h>
 
@@ -28,7 +32,7 @@
 
 #include "../debug.h"
 
-RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const char *name) : QFrame (parent, name) {
+RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const char *name) : Q3Frame (parent, name) {
 	RK_TRACE (APP);
 
 	if (tool_window) {
@@ -194,7 +198,7 @@ void RKMDIWindow::initializeActivationSignals () {
 void RKMDIWindow::paintEvent (QPaintEvent *e) {
 	// RK_TRACE (APP); Do not trace!
 
-	QFrame::paintEvent (e);
+	Q3Frame::paintEvent (e);
 
 	if (isActive ()) {
 		QPainter paint (this);

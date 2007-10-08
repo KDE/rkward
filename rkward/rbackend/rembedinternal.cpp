@@ -16,6 +16,8 @@
  ***************************************************************************/
 
 #include "rembedinternal.h"
+//Added by qt3to4:
+#include <Q3CString>
 
 // static
 REmbedInternal *REmbedInternal::this_pointer = 0; 
@@ -708,7 +710,7 @@ SEXP parseCommand (const QString &command_qstring, REmbedInternal::RKWardRError 
 	SEXP cv, pr;
 
 	int len = -1;
-	QCString localc = REmbedInternal::this_pointer->current_locale_codec->fromUnicode (command_qstring, len);		// needed so the string below does not go out of scope
+	Q3CString localc = REmbedInternal::this_pointer->current_locale_codec->fromUnicode (command_qstring, len);		// needed so the string below does not go out of scope
 	const char *command = localc;
 
 	PROTECT(cv=allocVector(STRSXP, 1));
@@ -883,7 +885,7 @@ hist == 1 iff R wants a parse-able input.
 		bool prev_iteration_was_incomplete = false;
 
 		int len = -1;
-		QCString localc = current_locale_codec->fromUnicode (command_qstring, len);		// needed so the string below does not go out of scope
+		Q3CString localc = current_locale_codec->fromUnicode (command_qstring, len);		// needed so the string below does not go out of scope
 		current_buffer = localc;
 
 		repldll_buffer_transfer_finished = false;

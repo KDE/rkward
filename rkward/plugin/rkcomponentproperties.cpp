@@ -94,6 +94,8 @@ the specialized properties (e.g. RKComponentPropertyInt::intValue () always retu
 #include "rkcomponentproperties.h"
 
 #include "../debug.h"
+//Added by qt3to4:
+#include <Q3ValueList>
 
 ///////////////////////////////////////////// Base //////////////////////////////////////////
 
@@ -774,7 +776,7 @@ RObject *RKComponentPropertyRObjects::objectValue () {
 	return (object_list.first ());
 }
 
-QValueList<RObject *> RKComponentPropertyRObjects::objectList () {
+Q3ValueList<RObject *> RKComponentPropertyRObjects::objectList () {
 	RK_TRACE (PLUGIN);
 
 	return (object_list);
@@ -943,7 +945,7 @@ void RKComponentPropertyRObjects::setFromListView (RKObjectListView *list_view, 
 
 	// first find out the list of objects from the listview
 	ObjectList newlist;
-	QListViewItem *current;
+	Q3ListViewItem *current;
 	current = list_view->firstChild ();
 	while (current->itemBelow ()) {
 		current = current->itemBelow ();
@@ -1105,7 +1107,7 @@ void RKComponentPropertyConvert::selfChanged (RKComponentPropertyBase *) {
 void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase *) {
 	RK_TRACE (PLUGIN);
 
-	for (QValueList<Source>::const_iterator it = sources.constBegin (); it != sources.constEnd (); ++it) {
+	for (Q3ValueList<Source>::const_iterator it = sources.constBegin (); it != sources.constEnd (); ++it) {
 		Source source = *it;		// easier typing
 		switch (_mode) {
 			case Equals: {

@@ -19,6 +19,10 @@
 
 #include <qwidget.h>
 #include <qstring.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <QLabel>
+#include <QCloseEvent>
 
 #include <kate/view.h>
 #include <kate/document.h>
@@ -26,7 +30,7 @@
 
 #include "../windows/rkmdiwindow.h"
 
-class QVBox;
+class Q3VBox;
 class QLabel;
 
 /** classes wishing to use RKFunctionArgHinter should derive from this, and implement provideContext () */
@@ -63,7 +67,7 @@ private:
 	RKScriptContextProvider *provider;
 	Kate::View *view;
 
-	QVBox *arghints_popup;
+	Q3VBox *arghints_popup;
 	QLabel *arghints_popup_text;
 };
 

@@ -22,6 +22,10 @@
 #include <qpushbutton.h>
 #include <qlineedit.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <Q3VBoxLayout>
+#include <QCloseEvent>
 
 // include files for KDE
 #include <kaboutapplication.h>
@@ -113,7 +117,7 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : DCOPObject 
 	initStatusBar();
 
 	KMdiChildView *dummy = new KMdiChildView (this);
-	QVBoxLayout *layout = new QVBoxLayout (dummy);
+	Q3VBoxLayout *layout = new Q3VBoxLayout (dummy);
 	addWindow (dummy);
 	new RKWorkplace (dummy);
 	RKWorkplace::mainWorkplace ()->initActions (actionCollection (), "prev_window", "next_window", "left_window", "right_window");
@@ -402,7 +406,7 @@ void RKWardMainWindow::initStatusBar () {
 
 	// why do we need this QHBox, when the statusbar already does horizontal layout?
 	// Well, apparently the stretch factors do not survive a hide/show, so we need some way to work around this
-	QHBox *statusbar_hbox = new QHBox (statusBar ());
+	Q3HBox *statusbar_hbox = new Q3HBox (statusBar ());
 	statusbar_action = new KSqueezedTextLabel (statusbar_hbox);
 	statusbar_action->hide ();
 	statusbar_ready = new QLabel (i18n ("Ready."), statusbar_hbox);

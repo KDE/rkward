@@ -23,7 +23,7 @@
 #include <qobject.h>
 #include <kprocess.h>
 #include <qstringlist.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <ktempfile.h>
 
 class RKPlugin;

@@ -20,7 +20,7 @@
 
 #include "rkabstractoptionselector.h"
 
-class QButtonGroup;
+class Q3ButtonGroup;
 
 /** This RKPluginWidget provides a group of radio-buttons for use in plugins.
 @author Thomas Friedrichsmeier
@@ -36,7 +36,7 @@ protected:
 	void addOptionToGUI (const QString &label, int id);
 	void setItemEnabledInGUI (int id, bool enabled);
 private:
-	QButtonGroup *group;
+	Q3ButtonGroup *group;
 };
 
 #endif

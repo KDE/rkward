@@ -18,14 +18,17 @@
 #ifndef RKSTANDARDCOMPONENTGUI_H
 #define RKSTANDARDCOMPONENTGUI_H
 
-#include <qwidgetstack.h>
+#include <q3widgetstack.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <QCloseEvent>
 
 #include "rkstandardcomponent.h"
 
 /** For use in RKStandardComponents that are in wizard mode. Keeps a list of all pages, which page we're currently on, which children need to be satisfied in order to be able to move to the next page, etc.
 
 @author Thomas Friedrichsmeier */
-class RKStandardComponentStack: public QWidgetStack {
+class RKStandardComponentStack: public Q3WidgetStack {
 public:
 /** constructor. */
 	explicit RKStandardComponentStack (QWidget *parent);
@@ -46,12 +49,12 @@ public:
 	void addComponentToCurrentPage (RKComponent *component);
 private:
 /** pages are NOT the parent of their components (that would be theoretically possible, but a terrible mess, requiring a fully transparent type of RKComponent), hence we keep a manual list for each page */
-	typedef QValueList<RKComponent *> PageComponents;
+	typedef Q3ValueList<RKComponent *> PageComponents;
 	struct PageDef {
 		PageComponents page_components;
 		RKComponent *page;
 	};
-	typedef QValueList<PageDef *> Pages;
+	typedef Q3ValueList<PageDef *> Pages;
 	Pages pages;
 
 	int num_pages;

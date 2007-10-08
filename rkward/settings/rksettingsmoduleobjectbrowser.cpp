@@ -24,6 +24,8 @@
 #include <qlayout.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include "../rkglobals.h"
 #include "../misc/multistringselector.h"
@@ -39,7 +41,7 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, Q
 
 	checkboxes = new QCheckBox*[RKObjectListViewSettings::SettingsCount];
 
-	QVBoxLayout *layout = new QVBoxLayout (this, RKGlobals::marginHint ());
+	Q3VBoxLayout *layout = new Q3VBoxLayout (this, RKGlobals::marginHint ());
 
 	layout->addWidget (new QLabel (i18n ("Which objects should be shown by default?"), this));
 

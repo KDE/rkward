@@ -18,7 +18,7 @@
 #define RKVARIABLE_H
 
 #include <qstring.h>
-#include <qintdict.h>
+#include <q3intdict.h>
 
 #include "robject.h"
 
@@ -165,7 +165,7 @@ protected:
 /// the formatting options set for this var (see FormattingOptions) */
 		FormattingOptions *formatting_options;
 /// storage for invalid fields
-		QIntDict<QString> invalid_fields;
+		Q3IntDict<QString> invalid_fields;
 	};
 /** reimplemented from RObject */
 	void allocateEditData (RKEditor *editor);

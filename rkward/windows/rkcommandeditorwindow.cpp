@@ -30,12 +30,20 @@
 #include <ktexteditor/popupmenuinterface.h>
 
 #include <qlayout.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qapplication.h>
 #include <qtabwidget.h>
 #include <qfile.h>
 #include <qtimer.h>
-#include <qobjectlist.h>
+#include <qobject.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <QCloseEvent>
+#include <Q3Frame>
+#include <Q3ValueList>
+#include <QLabel>
+#include <QKeyEvent>
+#include <QEvent>
 
 #include <klocale.h>
 #include <kmenubar.h>
@@ -79,7 +87,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	initializeActivationSignals ();
 	setFocusProxy (m_view);
 
-	QHBoxLayout *pLayout = new QHBoxLayout( this, 0, -1, "layout");
+	Q3HBoxLayout *pLayout = new Q3HBoxLayout( this, 0, -1, "layout");
 	pLayout->addWidget(m_view);
 
 	setIcon (SmallIcon ("source"));
@@ -113,7 +121,7 @@ void RKCommandEditorWindow::setPopupMenu () {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (!m_view->factory ()) return;
-	m_view->installPopup (static_cast<QPopupMenu *> (m_view->factory ()->container ("ktexteditor_popup", m_view)));
+	m_view->installPopup (static_cast<Q3PopupMenu *> (m_view->factory ()->container ("ktexteditor_popup", m_view)));
 }
 
 void RKCommandEditorWindow::setPopupMenu (Kate::View*) {
@@ -256,7 +264,7 @@ void RKCommandEditorWindow::tryCompletion () {
 		RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
 
 		if (!map.isEmpty ()) {
-			QValueList<KTextEditor::CompletionEntry> list;
+			Q3ValueList<KTextEditor::CompletionEntry> list;
 	
 			for (it = map.constBegin (); it != map.constEnd (); ++it) {
 				KTextEditor::CompletionEntry entry;
@@ -339,7 +347,7 @@ void RKCommandEditorWindow::runAll() {
 
 //////////////////////// RKFunctionArgHinter //////////////////////////////
 
-#include <qvbox.h>
+#include <q3vbox.h>
 
 #include "../core/rfunctionobject.h"
 
@@ -357,8 +365,8 @@ RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, Kat
 		obj->installEventFilter (this);
 	}
 
-	arghints_popup = new QVBox (0, 0, WType_Popup);
-	arghints_popup->setFrameStyle (QFrame::Box | QFrame::Plain);
+	arghints_popup = new Q3VBox (0, 0, WType_Popup);
+	arghints_popup->setFrameStyle (Q3Frame::Box | Q3Frame::Plain);
 	arghints_popup->setLineWidth (1);
 	arghints_popup_text = new QLabel (arghints_popup);
 	arghints_popup->hide ();

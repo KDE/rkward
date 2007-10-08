@@ -23,6 +23,8 @@
 #include <stdlib.h>
 
 #include <qtextcodec.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 /* NOTE: The code in this file is an almost literal copy taken from setupLocaleMapper in qtextcodec.cpp in Qt 3.3.8 !*/
 
@@ -31,7 +33,7 @@ QTextCodec *checkForCodec(const char *name) {
     if (!c) {
         const char *at = strchr(name, '@');
         if (at) {
-            QCString n(name, at - name + 1);
+            Q3CString n(name, at - name + 1);
             c = QTextCodec::codecForName(n.data());
         }
     }
@@ -118,7 +120,7 @@ static const char * const probably_koi8_rlocales[] = {
 static QTextCodec * ru_RU_hack( const char * i ) {
     QTextCodec * ru_RU_codec = 0;
 
-    QCString origlocale = setlocale( LC_CTYPE, i );
+    Q3CString origlocale = setlocale( LC_CTYPE, i );
     // unicode   koi8r   latin5   name
     // 0x044E    0xC0    0xEE     CYRILLIC SMALL LETTER YU
     // 0x042E    0xE0    0xCE     CYRILLIC CAPITAL LETTER YU

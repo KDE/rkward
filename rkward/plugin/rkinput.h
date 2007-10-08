@@ -22,7 +22,7 @@
 
 #include "rkcomponentproperties.h"
 
-class QTextEdit;
+class Q3TextEdit;
 class QLineEdit;
 class QDomElement;
 
@@ -53,7 +53,7 @@ protected:
 private:
 	void updateColor ();
 	bool updating;
-	QTextEdit *textedit;
+	Q3TextEdit *textedit;
 	QLineEdit *lineedit;
 };
 

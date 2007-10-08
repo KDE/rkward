@@ -18,7 +18,7 @@
 #ifndef RKCOMPONENT_H
 #define RKCOMPONENT_H
 
-#include <qdict.h>
+#include <q3dict.h>
 #include <qmap.h>
 #include <qwidget.h>
 
@@ -84,7 +84,7 @@ public:
 /** simple convenience function to add a child to the map of children */
 	void addChild (const QString &id, RKComponentBase *child);
 protected:
-	QDict<RKComponentBase> child_map;
+	Q3Dict<RKComponentBase> child_map;
 	bool required;
 /** recursively fetch the current values of all properties present as direct or indirect children of this component. Used to transfer values e.g. when switching interfaces (or to store settings per plugin in the future). Values are placed in the dictionary provided (be sure to create one first!).
 @param list the list to store the object values in

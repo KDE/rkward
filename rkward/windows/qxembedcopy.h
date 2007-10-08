@@ -23,6 +23,12 @@
 #define QXEMBED_H
 
 #include <qwidget.h>
+//Added by qt3to4:
+#include <QResizeEvent>
+#include <QShowEvent>
+#include <QEvent>
+#include <QKeyEvent>
+#include <QFocusEvent>
 //#include <kdelibs_export.h>		// this line changed against original QXEmbed
 
 #ifdef Q_WS_X11
@@ -68,7 +74,7 @@ public:
      * The parent, name and f arguments are passed to the QFrame
      * constructor.
      */
-    QXEmbedCopy( QWidget *parent=0, const char *name=0, WFlags f = 0 );
+    QXEmbedCopy( QWidget *parent=0, const char *name=0, Qt::WFlags f = 0 );
 
     /**
      * Destructor. Cleans up the focus if necessary.
@@ -189,7 +195,7 @@ public:
     bool eventFilter( QObject *, QEvent * );
     bool customWhatsThis() const;
     void enterWhatsThisMode(); // temporary, fix in Qt (Matthias, Mon Jul 17 15:20:55 CEST 2000  )
-    virtual void reparent( QWidget * parent, WFlags f, const QPoint & p, bool showIt = false );
+    virtual void reparent( QWidget * parent, Qt::WFlags f, const QPoint & p, bool showIt = false );
 
 signals:
     /**

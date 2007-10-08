@@ -21,6 +21,8 @@
 #include "rkcomponent.h"
 
 #include <qdom.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 class RKStandardComponentGUI;
 class RKComponentHandle;
@@ -138,7 +140,7 @@ private:
 		bool reconcile;
 		QDomElement origin;
 	};
-	typedef QValueList <RKComponentPropertyConnection> ConnectionList;
+	typedef Q3ValueList <RKComponentPropertyConnection> ConnectionList;
 	ConnectionList connection_list;
 	QMap<QString, QString> initial_values;
 };

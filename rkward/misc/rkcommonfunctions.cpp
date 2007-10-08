@@ -19,6 +19,8 @@
 #include <qstringlist.h>
 #include <qdom.h>
 #include <qregexp.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 #include <kxmlguiclient.h>
 #include <kglobal.h>
@@ -50,7 +52,7 @@ namespace RKCommonFunctions {
 		from->setXMLGUIBuildDocument (doc);
 	
 		if (recursive) {
-			QPtrList <KXMLGUIClient> *children = const_cast<QPtrList <KXMLGUIClient> *> (from->childClients ());
+			Q3PtrList <KXMLGUIClient> *children = const_cast<Q3PtrList <KXMLGUIClient> *> (from->childClients ());
 			if (children) {
 				for (KXMLGUIClient *child = children->first (); child; child = children->next ()) {
 					removeContainers (child, names, true);
@@ -90,7 +92,7 @@ namespace RKCommonFunctions {
 
 		// recurse
 		if (recursive) {
-			QPtrList <KXMLGUIClient> *children = const_cast<QPtrList <KXMLGUIClient> *> (client->childClients ());
+			Q3PtrList <KXMLGUIClient> *children = const_cast<Q3PtrList <KXMLGUIClient> *> (client->childClients ());
 			if (children) {
 				for (KXMLGUIClient *child = children->first (); child; child = children->next ()) {
 					moveContainer (child, tagname, name, to_name, true);

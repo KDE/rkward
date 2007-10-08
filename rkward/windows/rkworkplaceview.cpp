@@ -20,11 +20,13 @@
 #include <ktabbar.h>
 #include <klocale.h>
 
-#include <qwidgetstack.h>
+#include <q3widgetstack.h>
 #include <qapplication.h>
 #include <qevent.h>
 #include <qlayout.h>
-#include <qiconset.h>
+#include <qicon.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include "rkmdiwindow.h"
 
@@ -33,7 +35,7 @@
 RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QWidget (parent) {
 	RK_TRACE (APP);
 
-	QVBoxLayout *vbox = new QVBoxLayout (this);
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this);
 	tabs = new KTabBar (this);
 	tabs->setHoverCloseButton (true);
 	tabs->setFocusPolicy (QWidget::NoFocus);
@@ -42,7 +44,7 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QWidget (parent) {
 	connect (tabs, SIGNAL (closeRequest (int)), this, SLOT (closePage (int)));
 	vbox->addWidget (tabs);
 
-	widgets = new QWidgetStack (this);
+	widgets = new Q3WidgetStack (this);
 	vbox->addWidget (widgets);
 }
 

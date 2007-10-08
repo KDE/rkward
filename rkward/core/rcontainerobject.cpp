@@ -17,6 +17,8 @@
 #include "rcontainerobject.h"
 
 #include <qregexp.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 #include "../rbackend/rinterface.h"
 #include "robjectlist.h"
@@ -155,7 +157,7 @@ void RContainerObject::updateChildren (RData *new_children) {
 	}
 
 // now find out, which old ones are missing
-	QValueList<RObject*> removed_list;
+	Q3ValueList<RObject*> removed_list;
 	for (RObjectMap::const_iterator it = childmap.constBegin (); it != childmap.constEnd (); ++it) {
 		QString child_string = it.key ();
 
@@ -169,7 +171,7 @@ void RContainerObject::updateChildren (RData *new_children) {
 	}
 
 // finally delete the missing old ones
-	for (QValueList<RObject*>::iterator it = removed_list.begin (); it != removed_list.end (); ++it) {
+	for (Q3ValueList<RObject*>::iterator it = removed_list.begin (); it != removed_list.end (); ++it) {
 		RK_DO (qDebug ("child no longer present: %s.", (*it)->getFullName ().latin1 ()), OBJECTS, DL_DEBUG);
 		RKGlobals::tracker ()->removeObject ((*it), 0, true);
 	}

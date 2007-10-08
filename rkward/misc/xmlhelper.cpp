@@ -60,7 +60,7 @@ QDomElement XMLHelper::openXMLFile (const QString &filename, int debug_level, bo
 	highest_error = 0;
 	
 	QFile f (filename);
-	if (!f.open (IO_ReadOnly)) displayError (0, i18n("Could not open file for reading"), debug_level, DL_ERROR);
+	if (!f.open (QIODevice::ReadOnly)) displayError (0, i18n("Could not open file for reading"), debug_level, DL_ERROR);
 	if (!doc.setContent(&f, false, &error_message, &error_line, &error_column)) {
 		displayError (0, i18n ("Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. Expect further errors to be reported below").arg (error_message).arg (QString::number (error_line)).arg (QString::number (error_column)), debug_level, DL_ERROR);
 	}

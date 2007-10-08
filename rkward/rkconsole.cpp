@@ -21,9 +21,14 @@
 #include <qstringlist.h>
 #include <qclipboard.h>
 #include <qapplication.h>
-#include <qobjectlist.h>
+#include <qobject.h>
 #include <qevent.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QKeyEvent>
+#include <Q3PopupMenu>
+#include <QMouseEvent>
+#include <Q3VBoxLayout>
 
 #include <klocale.h>
 #include <kaction.h>
@@ -52,7 +57,7 @@ RKConsole* RKConsole::main_console = 0;
 RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, RKMDIWindow::ConsoleWindow, tool_window, name) {
 	RK_TRACE (APP);
 
-	QVBoxLayout *layout = new QVBoxLayout (this);
+	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
 
 	// create a Kate-part as command-editor
 #if !KDE_IS_VERSION (3, 2, 0)
@@ -778,7 +783,7 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	RK_TRACE (APP);
 
 	context_help_action = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT (showContextHelp ()), ac, "function_reference");
-	run_selection_action = new KAction (i18n ("Run selection"), QIconSet (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), this, SLOT (runSelection ()), ac, "run_selection");
+	run_selection_action = new KAction (i18n ("Run selection"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), this, SLOT (runSelection ()), ac, "run_selection");
 
 	interrupt_command_action = new KAction (i18n ("Interrupt running command"), KShortcut ("Ctrl+C"), this, SLOT (slotInterruptCommand ()), ac, "interrupt");
 	interrupt_command_action->setIcon ("player_stop");
@@ -881,7 +886,7 @@ RKConsolePart::~RKConsolePart () {
 void RKConsolePart::showPopupMenu (const QPoint &pos) {
 	RK_TRACE (APP);
 
-	QPopupMenu *menu = static_cast<QPopupMenu *> (factory ()->container ("rkconsole_context_menu", this));
+	Q3PopupMenu *menu = static_cast<Q3PopupMenu *> (factory ()->container ("rkconsole_context_menu", this));
 
 	if (!menu) {
 		RK_ASSERT (false);

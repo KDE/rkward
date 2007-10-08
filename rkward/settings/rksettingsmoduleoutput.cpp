@@ -23,6 +23,8 @@
 #include <qlabel.h>
 #include <qvbuttongroup.h>
 #include <qcheckbox.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include "../rkglobals.h"
 #include "../debug.h"
@@ -34,9 +36,9 @@ bool RKSettingsModuleOutput::auto_raise;
 RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+	Q3VBoxLayout *main_vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
 	
-	QVButtonGroup *group = new QVButtonGroup (i18n ("Output Window options"), this);
+	Q3VButtonGroup *group = new Q3VButtonGroup (i18n ("Output Window options"), this);
 	auto_show_box = new QCheckBox ("show window on new output", group);
 	auto_show_box->setChecked (auto_show);
 	connect (auto_show_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));

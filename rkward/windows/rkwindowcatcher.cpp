@@ -20,7 +20,10 @@
 #ifndef DISABLE_RKWINDOWCATCHER
 
 #include <qlayout.h>
-#include <qvbox.h>
+#include <q3vbox.h>
+//Added by qt3to4:
+#include <Q3Frame>
+#include <Q3VBoxLayout>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -68,8 +71,8 @@ void RKWindowCatcher::stop (int new_cur_device) {
 //////////////////////////////// BEGIN RKCaughtX11Window //////////////////////////////
 
 
-#include <qscrollview.h>
-#include <qvbox.h>
+#include <q3scrollview.h>
+#include <q3vbox.h>
 #include <qlabel.h>
 
 #include <kactionclasses.h>
@@ -95,14 +98,14 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	initializeActivationSignals ();
 	setFocusPolicy (QWidget::ClickFocus);
 
-	QVBoxLayout *layout = new QVBoxLayout (this);
-	box_widget = new QVBox (this);
+	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
+	box_widget = new Q3VBox (this);
 	layout->addWidget (box_widget);
-	scroll_widget = new QScrollView (this);
-	scroll_widget->setFrameStyle (QFrame::NoFrame);
+	scroll_widget = new Q3ScrollView (this);
+	scroll_widget->setFrameStyle (Q3Frame::NoFrame);
 	scroll_widget->hide ();
 	layout->addWidget (scroll_widget);
-	xembed_container = new QVBox (box_widget);	// QXEmbed can not be reparented (between the box_widget, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead
+	xembed_container = new Q3VBox (box_widget);	// QXEmbed can not be reparented (between the box_widget, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead
 	dynamic_size = true;
 	dynamic_size_action->setChecked (true);
 
@@ -191,7 +194,7 @@ void RKCaughtX11Window::setFixedSizeManual () {
 
 // TODO: not very pretty, yet
 	KDialogBase *dialog = new KDialogBase (this, 0, true, i18n ("Specify fixed size"), KDialogBase::Ok|KDialogBase::Cancel);
-	QVBox *page = dialog->makeVBoxMainWidget ();
+	Q3VBox *page = dialog->makeVBoxMainWidget ();
 
 	QLabel *label = new QLabel (i18n ("Width"), page);
 	KIntSpinBox *width = new KIntSpinBox (5, 32767, 1, xembed_container->width (), 10, page);
@@ -235,7 +238,7 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 
 // TODO: not very pretty, yet
 	KDialogBase *dialog = new KDialogBase (this, 0, true, i18n ("Specify R object"), KDialogBase::Ok|KDialogBase::Cancel);
-	QVBox *page = dialog->makeVBoxMainWidget ();
+	Q3VBox *page = dialog->makeVBoxMainWidget ();
 
 	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (page, "my.plot", i18n ("Specify the R object name, you want to save the graph to"));
 	connect (chooser, SIGNAL (okStatusChanged (bool)), dialog, SLOT (enableButtonOK (bool)));

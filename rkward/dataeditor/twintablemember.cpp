@@ -20,19 +20,24 @@
 #include <qevent.h>
 #include <qpainter.h>
 #include <qstyle.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <QMouseEvent>
+#include <QKeyEvent>
+#include <Q3MemArray>
 
 #include "celleditor.h"
 #include "twintable.h"
 #include "../debug.h"
 
-TwinTableMember::TwinTableMember (QWidget *parent, TwinTable *table, int trailing_rows, int trailing_cols) : QTable (parent){
+TwinTableMember::TwinTableMember (QWidget *parent, TwinTable *table, int trailing_rows, int trailing_cols) : Q3Table (parent){
 	twin = 0;
 	TwinTableMember::table = table;
 	setRowMovingEnabled (false);
-	setVScrollBarMode (QScrollView::AlwaysOn);
+	setVScrollBarMode (Q3ScrollView::AlwaysOn);
 	horizontalHeader()->installEventFilter (this);
 	verticalHeader()->installEventFilter (this);
-	setSelectionMode (QTable::Single);
+	setSelectionMode (Q3Table::Single);
 	
 	TwinTableMember::trailing_cols = trailing_cols;
 	TwinTableMember::trailing_rows = trailing_rows;
@@ -51,7 +56,7 @@ int TwinTableMember::numTrueCols () const {
 }
 
 int TwinTableMember::numTrueRows () const {
-	return QTable::numRows () - trailing_rows;
+	return Q3Table::numRows () - trailing_rows;
 }
 
 void TwinTableMember::setTwin (TwinTableMember * new_twin) {
@@ -60,7 +65,7 @@ void TwinTableMember::setTwin (TwinTableMember * new_twin) {
 
 void TwinTableMember::columnWidthChanged (int col) {
 	// does all repainting and stuff ...
-	QTable::columnWidthChanged (col);
+	Q3Table::columnWidthChanged (col);
 
 	// syncs the twin
 	if (twin) {
@@ -91,7 +96,7 @@ bool TwinTableMember::eventFilter (QObject *object, QEvent *event) {
 	}
 
     // default processing
-    return (QTable::eventFilter (object, event));
+    return (Q3Table::eventFilter (object, event));
 }
 
 // virtual
@@ -99,7 +104,7 @@ QString TwinTableMember::rText (int row, int col) const {
 	return (RObject::rQuote (text (row, col)));
 }
 
-void TwinTableMember::removeRows (const QMemArray<int> &) {
+void TwinTableMember::removeRows (const Q3MemArray<int> &) {
 	RK_ASSERT (false);
 }
 
@@ -167,7 +172,7 @@ void TwinTableMember::setCellContentFromEditor (int row, int col) {
 	viewport ()->setFocus ();
 }
 
-QCString TwinTableMember::encodeSelection () {
+Q3CString TwinTableMember::encodeSelection () {
 	RK_TRACE (EDITOR);
 
 	int top_row, left_col, bottom_row, right_col;
@@ -176,7 +181,7 @@ QCString TwinTableMember::encodeSelection () {
 	return (encodeRange (top_row, left_col, bottom_row, right_col));
 }
 
-QCString TwinTableMember::encodeRange (int top_row, int left_col, int bottom_row, int right_col) {
+Q3CString TwinTableMember::encodeRange (int top_row, int left_col, int bottom_row, int right_col) {
 	RK_TRACE (EDITOR);
 
 	QString data;
@@ -220,7 +225,7 @@ void TwinTableMember::getSelectionBoundaries (int *top_row, int *left_col, int *
 	if (currentSelection () >= 0) selnum = currentSelection ();
 	else if (numSelections () >= 1) selnum = 0;		// this is the one and only selection, as we only allow one single selection. Unfortunately, QTable does not regard a selection as current, if it was added programatically, instead of user-selected.
 	if (selnum >= 0) {
-		QTableSelection sel = selection (selnum);
+		Q3TableSelection sel = selection (selnum);
 		*top_row = sel.topRow ();
 		*left_col = sel.leftCol ();
 		*bottom_row = sel.bottomRow ();
@@ -300,7 +305,7 @@ void TwinTableMember::keyPressEvent (QKeyEvent *e) {
 		blankSelected ();
 		e->accept ();
 	} else {
-		QTable::keyPressEvent (e);
+		Q3Table::keyPressEvent (e);
 	}
 }
 

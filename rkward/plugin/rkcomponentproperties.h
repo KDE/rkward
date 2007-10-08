@@ -211,10 +211,10 @@ class RObject;
 class RKObjectListView;
 
 #include <qstringlist.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 
 /** for easier typing. A list of RObjects. Should probably be defined somewhere in core-dir instead. */
-typedef QValueList<RObject *> ObjectList;
+typedef Q3ValueList<RObject *> ObjectList;
 
 /** special type of RKComponentProperty, that prepresents one or more RObject (s) */
 class RKComponentPropertyRObjects : public RKComponentPropertyBase {
@@ -390,7 +390,7 @@ private:
 		RKComponentPropertyBase *property;
 		QString modifier;
 	};
-	QValueList<Source> sources;
+	Q3ValueList<Source> sources;
 };
 
 #endif

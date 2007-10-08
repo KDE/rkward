@@ -34,6 +34,8 @@
 #include "../windows/rkcommandlog.h"
 
 #include "../windows/rkwindowcatcher.h"
+//Added by qt3to4:
+#include <QCustomEvent>
 #ifndef DISABLE_RKWINDOWCATCHER
 // putting this here instead of the class-header so I'm able to mess with it often without long recompiles. Fix when it works!
 RKWindowCatcher *window_catcher;

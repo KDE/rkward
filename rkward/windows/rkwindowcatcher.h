@@ -78,8 +78,8 @@ private:
 class RKCaughtX11WindowPart;
 class KToggleAction;
 class QXEmbedCopy;
-class QScrollView;
-class QVBox;
+class Q3ScrollView;
+class Q3VBox;
 class RKProgressControl;
 
 /** An R X11 device window managed by rkward. */
@@ -122,9 +122,9 @@ private:
 	friend class RKCaughtX11WindowPart;	// needs access to the actions
 	int device_number;
 	WId embedded;
-	QVBox *xembed_container;
-	QScrollView *scroll_widget;
-	QVBox *box_widget;
+	Q3VBox *xembed_container;
+	Q3ScrollView *scroll_widget;
+	Q3VBox *box_widget;
 	RKProgressControl *error_dialog;
 
 	bool dynamic_size;

@@ -20,8 +20,10 @@
 #include "twintablemember.h"
 
 #include "../debug.h"
+//Added by qt3to4:
+#include <Q3CString>
 
-RKDrag::RKDrag (TwinTableMember *drag_source) : QDragObject (drag_source){
+RKDrag::RKDrag (TwinTableMember *drag_source) : Q3DragObject (drag_source){
 	RK_TRACE (EDITOR);
 
 	RK_ASSERT (drag_source);
@@ -52,7 +54,7 @@ QByteArray RKDrag::encodedData (const char * mimeType) const {
 		return data;
 	}
 
-	return QCString ();
+	return Q3CString ();
 }
 
 bool RKDrag::provides (const char *mimeType) {

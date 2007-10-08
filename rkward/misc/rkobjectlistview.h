@@ -17,13 +17,16 @@
 #ifndef RKOBJECTLISTVIEW_H
 #define RKOBJECTLISTVIEW_H
 
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qtooltip.h>
 #include <qmap.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3PopupMenu>
 
 class RObject;
 class QPixmap;
-class QPopupMenu;
+class Q3PopupMenu;
 class RKListViewItem;
 class RKObjectListViewTip;
 class RKObjectListViewSettings;
@@ -33,7 +36,7 @@ This class provides the common functionality for the list-views in the RObjectBr
 
 @author Thomas Friedrichsmeier
 */
-class RKObjectListView : public QListView {
+class RKObjectListView : public Q3ListView {
 	Q_OBJECT
 public:
 	explicit RKObjectListView (QWidget *parent);
@@ -47,7 +50,7 @@ public:
 /** This function returns a pointer to the context menu of the RKObjectListView. It is provided so you can add your own items.
 @returns a pointer to the context menu
 @see aboutToShowContextMenu */
-	QPopupMenu *contextMenu () { return menu; };
+	Q3PopupMenu *contextMenu () { return menu; };
 /** This function returns the RObject the context menu has last been invoked on (or 0 if not invoked on an RObject). You can use this in slots called
 from your custom menu items, to figure out, which object you should operate on. */
 	RObject *menuObject () { return menu_object; };
@@ -74,7 +77,7 @@ public slots:
 
 	void objectBrowserSettingsChanged ();
 
-	void requestedContextMenu (QListViewItem *item, const QPoint &pos, int col);
+	void requestedContextMenu (Q3ListViewItem *item, const QPoint &pos, int col);
 	
 	virtual void popupConfigure ();
 private:
@@ -90,7 +93,7 @@ private:
 	bool update_in_progress;
 	bool changes;
 
-	QPopupMenu *menu;
+	Q3PopupMenu *menu;
 	RObject *menu_object;
 
 	RKObjectListViewSettings *settings;
@@ -106,13 +109,13 @@ private:
 
 @author Thomas Friedrichsmeier
 */
-class RKListViewItem : public QListViewItem {
+class RKListViewItem : public Q3ListViewItem {
 public:
-	RKListViewItem (QListView *parent) : QListViewItem (parent) {};
-	RKListViewItem (QListViewItem *parent) : QListViewItem (parent) {};
+	RKListViewItem (Q3ListView *parent) : Q3ListViewItem (parent) {};
+	RKListViewItem (Q3ListViewItem *parent) : Q3ListViewItem (parent) {};
 	~RKListViewItem () {};
 
-	int width (const QFontMetrics &fm, const QListView * lv, int c) const;
+	int width (const QFontMetrics &fm, const Q3ListView * lv, int c) const;
 };
 
 class RKObjectListViewTip : public QToolTip {
@@ -159,8 +162,8 @@ public:
 
 	bool shouldShowObject (RObject *object);
 
-	QPopupMenu *showObjectsMenu () { return show_objects_menu; };
-	QPopupMenu *showFieldsMenu () { return show_fields_menu; };
+	Q3PopupMenu *showObjectsMenu () { return show_objects_menu; };
+	Q3PopupMenu *showFieldsMenu () { return show_fields_menu; };
 signals:
 	void settingsChanged ();
 public slots:
@@ -169,12 +172,12 @@ public slots:
 private:
 	State *settings;
 	bool *settings_default;
-	void insertPopupItem (QPopupMenu *menu, Settings setting, const QString &text);
+	void insertPopupItem (Q3PopupMenu *menu, Settings setting, const QString &text);
 	void createContextMenus ();
 	void updateSelf ();
 
-	QPopupMenu *show_objects_menu;
-	QPopupMenu *show_fields_menu;
+	Q3PopupMenu *show_objects_menu;
+	Q3PopupMenu *show_fields_menu;
 };
 
 #endif

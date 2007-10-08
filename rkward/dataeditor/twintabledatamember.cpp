@@ -35,7 +35,7 @@ TwinTableDataMember::~TwinTableDataMember () {
 
 void TwinTableDataMember::removeRow (int row) {
 	RK_TRACE (EDITOR);
-	QTable::removeRow (row);
+	Q3Table::removeRow (row);
 	for (int i=0; i < table->numTrueCols (); ++i) {
 		table->getColObject (i)->removeRow (row);
 	}
@@ -51,7 +51,7 @@ void TwinTableDataMember::insertRows (int row, int count) {
 	for (int i=0; i < table->numTrueCols (); ++i) {
 		table->getColObject (i)->insertRows (row, count);
 	}
-	QTable::insertRows (row, count);
+	Q3Table::insertRows (row, count);
 }
 
 void TwinTableDataMember::setText (int row, int col, const QString &text) {

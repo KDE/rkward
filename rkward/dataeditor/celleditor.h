@@ -18,12 +18,17 @@
 #define CELLEDITOR_H
 
 #include <qlineedit.h>
-#include <qintdict.h>
+#include <q3intdict.h>
+//Added by qt3to4:
+#include <QKeyEvent>
+#include <QEvent>
+#include <QTimerEvent>
+#include <Q3PopupMenu>
 
 #include "../core/robject.h"
 
 class QStringList;
-class QPopupMenu;
+class Q3PopupMenu;
 class TwinTableMember;
 
 /**
@@ -50,9 +55,9 @@ protected:
 /// needed to catch Tab-keypresses (not usually sent to keyPressEvent) and relay those to the parent
 	bool event (QEvent *e);
 private:
-	QPopupMenu *value_list;
+	Q3PopupMenu *value_list;
 	int timer_id;
-	QIntDict<QString> popup_values;
+	Q3IntDict<QString> popup_values;
 	TwinTableMember *table;
 };
 

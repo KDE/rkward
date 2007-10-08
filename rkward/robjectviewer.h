@@ -19,12 +19,15 @@
 
 #include <qwidget.h>
 #include <qstring.h>
+//Added by qt3to4:
+#include <QCloseEvent>
+#include <QLabel>
 
 #include "rbackend/rcommandreceiver.h"
 #include "windows/rkmdiwindow.h"
 
 class RObject;
-class QTextEdit;
+class Q3TextEdit;
 class QCloseEvent;
 class QLabel;
 class QPushButton;
@@ -59,8 +62,8 @@ private:
 	QPushButton *cancel_button;
 	QPushButton *toggle_summary_button;
 	QPushButton *toggle_print_button;
-	QTextEdit *print_area;
-	QTextEdit *summary_area;
+	Q3TextEdit *print_area;
+	Q3TextEdit *summary_area;
 	QString caption;
 
 	RObject *_object;

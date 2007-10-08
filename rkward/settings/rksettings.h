@@ -19,7 +19,7 @@
 
 #include <kdialogbase.h>
 
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 
 class RKSettingsModule;
 class KConfig;
@@ -60,7 +60,7 @@ private:
 	void raisePage (SettingsPage page);
 	static void dialogClosed ();
 	
-	typedef QValueList<RKSettingsModule *> ModuleList;
+	typedef Q3ValueList<RKSettingsModule *> ModuleList;
 	ModuleList modules;
 	
 	static RKSettings *settings_dialog;

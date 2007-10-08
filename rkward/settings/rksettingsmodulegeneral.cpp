@@ -26,8 +26,10 @@
 #include <qdir.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qradiobutton.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include "../misc/getfilenamewidget.h"
 #include "../misc/rkspinbox.h"
@@ -45,7 +47,7 @@ int RKSettingsModuleGeneral::warn_size_object_edit;
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+	Q3VBoxLayout *main_vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
 	QLabel *label = new QLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	main_vbox->addWidget (label);
@@ -75,11 +77,11 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	main_vbox->addWidget (label);
 
-	workplace_save_chooser = new QButtonGroup (this);
+	workplace_save_chooser = new Q3ButtonGroup (this);
 	workplace_save_chooser->setColumnLayout (0, Qt::Vertical);
 	workplace_save_chooser->layout()->setSpacing (6);
 	workplace_save_chooser->layout()->setMargin (11);
-	QVBoxLayout *group_layout = new QVBoxLayout(workplace_save_chooser->layout());
+	Q3VBoxLayout *group_layout = new Q3VBoxLayout(workplace_save_chooser->layout());
 	group_layout->addWidget (new QRadioButton (i18n ("Save/restore with R workspace, when saving/loading R workspace"), workplace_save_chooser));
 	group_layout->addWidget (new QRadioButton (i18n ("Save/restore independent of R workspace (save at end of RKWard session, restore at next start)"), workplace_save_chooser));
 	group_layout->addWidget (new QRadioButton (i18n ("Do not save/restore workplace layout"), workplace_save_chooser));

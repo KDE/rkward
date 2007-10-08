@@ -24,6 +24,8 @@
 #include <qlayout.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include "../rbackend/rcommand.h"
 #include "../rkglobals.h"
@@ -41,7 +43,7 @@ bool RKSettingsModuleConsole::context_sensitive_history_by_default;
 RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
 
 	save_history_box = new QCheckBox (i18n ("Load/Save command history"), this);
 	save_history_box->setChecked (save_history);

@@ -19,6 +19,10 @@
 #define RKMDIWINDOW_H
 
 #include <qwidget.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <Q3Frame>
+#include <QPaintEvent>
 
 #include <kparts/part.h>
 #include <kmdimainfrm.h>
@@ -26,7 +30,7 @@
 class RKWorkplace;
 
 /** Base class for rkward document mdi windows */
-class RKMDIWindow : public QFrame {
+class RKMDIWindow : public Q3Frame {
 	Q_OBJECT
 public:
 	enum Type {

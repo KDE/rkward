@@ -17,6 +17,9 @@
 #include "rksettings.h"
 
 #include <qlayout.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3Frame>
 
 #include <klocale.h>
 #include <kapplication.h>
@@ -95,11 +98,11 @@ void RKSettings::initModules () {
 	modules.append (new RKSettingsModuleObjectBrowser (this, this));
 	
 	ModuleList::const_iterator it;
-	QFrame *page;
-	QVBoxLayout *layout;
+	Q3Frame *page;
+	Q3VBoxLayout *layout;
 	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
 		page = addPage ((*it)->caption ());
-		layout = new QVBoxLayout (page, 0, KDialog::spacingHint ());
+		layout = new Q3VBoxLayout (page, 0, KDialog::spacingHint ());
 // this is somewhat ugly, but works fine
 		(*it)->reparent (page, QPoint (0,0), true);
 		layout->addWidget (*it);

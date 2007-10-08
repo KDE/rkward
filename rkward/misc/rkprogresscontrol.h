@@ -18,6 +18,10 @@
 #define RKPROGRESSCONTROL_H
 
 #include <qobject.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <Q3ValueList>
+#include <QCloseEvent>
 #include "../rbackend/rcommandreceiver.h"
 
 #include <qstring.h>
@@ -25,8 +29,8 @@
 
 class QDialog;
 class QLabel;
-class QTextEdit;
-class QVBox;
+class Q3TextEdit;
+class Q3VBox;
 
 class RKProgressControlDialog;
 
@@ -92,7 +96,7 @@ private:
 	void createDialog ();
 
 	RKProgressControlDialog *dialog;
-	QValueList<ROutput> output_log;
+	Q3ValueList<ROutput> output_log;
 
 	RCommand *done_command;
 
@@ -126,8 +130,8 @@ protected:
 private:
 	QLabel *output_caption;
 	QLabel *error_indicator;
-	QTextEdit *output_text;
-	QVBox *output_box;
+	Q3TextEdit *output_text;
+	Q3VBox *output_box;
 
 	QString show_output_text;
 	QString hide_output_text;

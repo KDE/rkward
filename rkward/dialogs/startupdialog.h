@@ -18,15 +18,17 @@
 #define STARTUPDIALOG_H
 
 #include <qdialog.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <kurl.h>
 
 class QPushButton;
 class QCheckBox;
-class QButtonGroup;
+class Q3ButtonGroup;
 class QRadioButton;
-class QListView;
-class QListViewItem;
+class Q3ListView;
+class Q3ListViewItem;
 class QPixmap;
 class KRecentFilesAction;
 
@@ -60,8 +62,8 @@ public:
 public slots:
 	void accept ();
 	void reject ();
-	void listDoubleClicked (QListViewItem *item, const QPoint &, int);
-	void listClicked (QListViewItem *item);
+	void listDoubleClicked (Q3ListViewItem *item, const QPoint &, int);
+	void listClicked (Q3ListViewItem *item);
 	void openButtonSelected (int state);
 private:
 	QPushButton *ok_button;
@@ -71,10 +73,10 @@ private:
 	QRadioButton *open_button;
 	QCheckBox *remember_box;
 	
-	QButtonGroup *choser;
+	Q3ButtonGroup *choser;
 	
-	QListView *file_list;
-	QListViewItem *chose_file_item;
+	Q3ListView *file_list;
+	Q3ListViewItem *chose_file_item;
 	
 	QPixmap *logo;
 	

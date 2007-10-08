@@ -22,6 +22,8 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qdom.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
@@ -34,7 +36,7 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	// create layout and label
-	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
 
 	label = new QLabel (QString::null, this);
 	label->setAlignment (Qt::AlignAuto | Qt::ExpandTabs | Qt::WordBreak);

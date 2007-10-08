@@ -19,6 +19,8 @@
 #define RKHELPSEARCHWINDOW_H
 
 #include <qwidget.h>
+//Added by qt3to4:
+#include <QFocusEvent>
 
 #include "../rbackend/rcommandreceiver.h"
 #include "rkmdiwindow.h"
@@ -26,8 +28,8 @@
 class QComboBox;
 class QCheckBox;
 class QPushButton;
-class QListView;
-class QListViewItem;
+class Q3ListView;
+class Q3ListViewItem;
 
 class RCommandChain;
 
@@ -49,7 +51,7 @@ Will figure out the word under the cursor, and provide help on that (if there is
 	static RKHelpSearchWindow *mainHelpSearch () { return main_help_search; };
 public slots:
 	void slotFindButtonClicked();
-	void slotResultsListDblClicked (QListViewItem *item, const QPoint &, int);
+	void slotResultsListDblClicked (Q3ListViewItem *item, const QPoint &, int);
 protected:
 /** reimplemnented from QWidget to make the input focus default to the input field */
 	void focusInEvent (QFocusEvent *e);
@@ -60,7 +62,7 @@ private:
 	QCheckBox* caseSensitiveCheckBox;
 	QCheckBox* fuzzyCheckBox;
 	QPushButton* findButton;
-	QListView* resultsList;
+	Q3ListView* resultsList;
 friend class RKWardMainWindow;
 	static RKHelpSearchWindow *main_help_search;
 };

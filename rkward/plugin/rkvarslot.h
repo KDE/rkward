@@ -24,8 +24,8 @@
 
 class QLineEdit;
 class QPushButton;
-class QListView;
-class QListViewItem;
+class Q3ListView;
+class Q3ListViewItem;
 class QDomElement;
 
 class RKVariable;
@@ -67,9 +67,9 @@ private:
 /** of the objects in the varslot, those that are marked */
 	RKComponentPropertyRObjects *selected;
 
-	QListView *list;
+	Q3ListView *list;
 	QPushButton *select;
-	typedef QMap<QListViewItem*, RObject*> ItemMap;
+	typedef QMap<Q3ListViewItem*, RObject*> ItemMap;
 	ItemMap item_map;
 };
 

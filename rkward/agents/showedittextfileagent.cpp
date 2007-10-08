@@ -23,6 +23,8 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qfile.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
@@ -127,7 +129,7 @@ void ShowEditTextFileAgent::done () {
 ShowEditTextFileDialog::ShowEditTextFileDialog (const QString &text, const QString &caption) : KDialogBase ((QWidget*) 0, 0, false, caption, KDialogBase::Ok, KDialogBase::Ok) {
 	QWidget *page = new QWidget (this);
 	setMainWidget (page);
-	QVBoxLayout *layout = new QVBoxLayout (page, 0, spacingHint ());
+	Q3VBoxLayout *layout = new Q3VBoxLayout (page, 0, spacingHint ());
 	QLabel *label = new QLabel (text, page);
 	label->setAlignment (Qt::WordBreak | Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs);
 	layout->addWidget (label);

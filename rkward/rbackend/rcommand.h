@@ -21,8 +21,8 @@
 #include <qfile.h>
 #include <qstring.h>
 #include <qobject.h>
-#include <qptrlist.h>
-#include <qvaluelist.h>
+#include <q3ptrlist.h>
+#include <q3valuelist.h>
 
 #include "rdata.h"
 
@@ -39,7 +39,7 @@ protected:
 friend class RControlWindow;
 friend class RControlWindowListViewItem;
 friend class RCommandStack;
-	QPtrList<RChainOrCommand> commands;
+	Q3PtrList<RChainOrCommand> commands;
 	bool closed;
 	RCommandChain *parent;
 };
@@ -77,7 +77,7 @@ struct ROutput {
 	QString output;
 };
 
-typedef QValueList<ROutput*> ROutputList;
+typedef Q3ValueList<ROutput*> ROutputList;
 
 /*
 struct RGetValueRequest {

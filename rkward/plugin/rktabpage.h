@@ -21,7 +21,7 @@
 #include "rkcomponent.h"
 
 #include <qstring.h>
-#include <qvbox.h>
+#include <q3vbox.h>
 
 class QDomElement;
 class QTabWidget;
@@ -38,7 +38,7 @@ public:
 	~RKTabPage ();
 
 	// returns the page child elements should be drawn in
-	QVBox *getPage () { return page; };
+	Q3VBox *getPage () { return page; };
 
 	int type () { return ComponentTab; };
 
@@ -46,7 +46,7 @@ public slots:
 /** called when visibile or enabled properties change */
 	void visibleEnabledChanged (RKComponentPropertyBase *property);
 private:
-	QVBox *page;
+	Q3VBox *page;
 	QTabWidget *tabbook;
 	int index;
 	QString label;

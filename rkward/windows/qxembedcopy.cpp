@@ -47,11 +47,18 @@
 
 
 #include <qapplication.h>
-#include <qptrlist.h>
-#include <qptrdict.h>
-#include <qguardedptr.h>
-#include <qwhatsthis.h>
+#include <q3ptrlist.h>
+#include <q3ptrdict.h>
+#include <qpointer.h>
+#include <q3whatsthis.h>
 #include <qfocusdata.h>
+//Added by qt3to4:
+#include <QKeyEvent>
+#include <Q3CString>
+#include <QResizeEvent>
+#include <QFocusEvent>
+#include <QEvent>
+#include <QShowEvent>
 
 // L0001: QXEmbedCopy works only under X windows.
 #ifdef Q_WS_X11
@@ -162,7 +169,7 @@ namespace
 // L0201: See L0200, L0740
 static QXEmbedCopyAppFilter* filter = 0;
 // L0202: See L0610, L0730
-static QPtrDict<QGuardedPtr<QWidget> > *focusMap = 0;
+static Q3PtrDict<QPointer<QWidget> > *focusMap = 0;
 // L0203: See L0660, L1400, L1450
 static XKeyEvent last_key_event;
 
@@ -331,7 +338,7 @@ bool QXEmbedCopyAppFilter::eventFilter( QObject *o, QEvent * e)
                 //        tell us to restore the focus (L0680, L0683).
                 focusMap->remove( qApp->focusWidget()->topLevelWidget() );
                 focusMap->insert( qApp->focusWidget()->topLevelWidget(),
-                                  new QGuardedPtr<QWidget>(qApp->focusWidget()->topLevelWidget()->focusWidget() ) );
+                                  new QPointer<QWidget>(qApp->focusWidget()->topLevelWidget()->focusWidget() ) );
                 // L0616: qApp->focusWidget() might belong to a modal dialog and not be 
                 //        equal to qApp->focusWidget()->topLevelWidget()->focusWidget() !
                 qApp->focusWidget()->clearFocus();
@@ -360,12 +367,12 @@ bool QXEmbedCopyAppFilter::eventFilter( QObject *o, QEvent * e)
             // L0621: The following tests are copied from QWidget::event().
             bool res = false;
             bool tabForward = true;
-            if ( !(k->state() & ControlButton || k->state() & AltButton) ) {
-                if ( k->key() == Key_Backtab || (k->key() == Key_Tab && (k->state() & ShiftButton)) ) {
+            if ( !(k->state() & Qt::ControlModifier || k->state() & Qt::AltModifier) ) {
+                if ( k->key() == Qt::Key_Backtab || (k->key() == Qt::Key_Tab && (k->state() & Qt::ShiftModifier)) ) {
                     QFocusEvent::setReason( QFocusEvent::Backtab );
                     res = ((QPublicWidget*)w)->focusNextPrev( tabForward = false );
                     QFocusEvent::resetReason();
-                } else if ( k->key() == Key_Tab ) {
+                } else if ( k->key() == Qt::Key_Tab ) {
                     QFocusEvent::setReason( QFocusEvent::Tab );
                     res = ((QPublicWidget*)w)->focusNextPrev( tabForward = true );
                     QFocusEvent::resetReason();
@@ -469,7 +476,7 @@ static int qxembed_x11_event_filter( XEvent* e)
                 {
                     // L0681: Search saved focus widget.
                     QWidget* focusCurrent = 0;
-                    QGuardedPtr<QWidget>* fw = focusMap->find( w->topLevelWidget() );
+                    QPointer<QWidget>* fw = focusMap->find( w->topLevelWidget() );
                     if ( fw ) {
                         focusCurrent = *fw;
                         // L0682: Remove it from the map
@@ -512,7 +519,7 @@ static int qxembed_x11_event_filter( XEvent* e)
                 //        and clear the Qt focus.
                 if ( w->topLevelWidget()->focusWidget() ) {
                     focusMap->insert( w->topLevelWidget(),
-                        new QGuardedPtr<QWidget>(w->topLevelWidget()->focusWidget() ) );
+                        new QPointer<QWidget>(w->topLevelWidget()->focusWidget() ) );
                     w->topLevelWidget()->focusWidget()->clearFocus();
                 }
             break;
@@ -576,7 +583,7 @@ void QXEmbedCopy::initialize()
     // L0720: Install low level filter for X11 events (L0650)
     oldFilter = qt_set_x11_event_filter( qxembed_x11_event_filter );
     // L0730: See L0610 for an explanation about focusMap.
-    focusMap = new QPtrDict<QGuardedPtr<QWidget> >;
+    focusMap = new Q3PtrDict<QPointer<QWidget> >;
     focusMap->setAutoDelete( true );
     // L0740: Create client side application wide event filter (L0610)
     filter = new QXEmbedCopyAppFilter;
@@ -605,7 +612,7 @@ void QXEmbedCopy::initialize()
 
 
 // L0900: Constructs a xembed widget.
-QXEmbedCopy::QXEmbedCopy(QWidget *parent, const char *name, WFlags f)
+QXEmbedCopy::QXEmbedCopy(QWidget *parent, const char *name, Qt::WFlags f)
   : QWidget(parent, name, f)
 {
     // L0901: Create private data. See L0100.
@@ -626,7 +633,7 @@ QXEmbedCopy::QXEmbedCopy(QWidget *parent, const char *name, WFlags f)
     //        See L0660, L0671, L0685.
     initialize();
     window = 0;
-    setFocusPolicy(StrongFocus);
+    setFocusPolicy(Qt::StrongFocus);
     setKeyCompression( false );
 
     // L0910: Trick Qt to create extraData();
@@ -1088,7 +1095,7 @@ bool QXEmbedCopy::x11Event( XEvent* e)
             if ( parent() ) {
                 // L2030: embedded window might have new size requirements.
                 //        see L2500, L2520, L2550.
-                QEvent * layoutHint = new QEvent( QEvent::LayoutHint );
+                QEvent * layoutHint = new QEvent( QEvent::LayoutRequest );
                 QApplication::postEvent( parent(), layoutHint );
             }
             windowChanged( window );
@@ -1179,7 +1186,7 @@ bool QXEmbedCopy::x11Event( XEvent* e)
 	// fall through, workaround for Qt 3.0 < 3.0.3
     case EnterNotify:
         // L2095: See L2200.
-        if ( QWhatsThis::inWhatsThisMode() )
+        if ( Q3WhatsThis::inWhatsThisMode() )
             enterWhatsThisMode();
         break;
     default:
@@ -1197,7 +1204,7 @@ void QXEmbedCopy::enterWhatsThisMode()
     //        cancel what-s-this mode, and use a non stantard _NET_WM_ message
     //        to instruct the embedded client to enter the "what's this" mode.
     //        This works only one way...
-    QWhatsThis::leaveWhatsThisMode();
+    Q3WhatsThis::leaveWhatsThisMode();
     if ( !context_help )
         context_help = XInternAtom( x11Display(), "_NET_WM_CONTEXT_HELP", false );
     sendClientMessage(window , qt_wm_protocols, context_help );
@@ -1224,9 +1231,9 @@ bool QXEmbedCopy::processClientCmdline( QWidget* client, int& argc, char ** argv
             argv[j++] = argv[i];
             continue;
         }
-        QCString arg = argv[i];
+        Q3CString arg = argv[i];
         if ( !strcmp(arg,"-embed") && i < myargc-1 ) {
-            QCString s = argv[++i];
+            Q3CString s = argv[++i];
             window = s.toInt();
         } else
             argv[j++] = argv[i];
@@ -1357,7 +1364,7 @@ void QXEmbedCopy::sendSyntheticConfigureNotifyEvent()
 }
 
 // L3000: One should not call QWidget::reparent after embedding a window.
-void QXEmbedCopy::reparent( QWidget * parent, WFlags f, const QPoint & p, bool showIt )
+void QXEmbedCopy::reparent( QWidget * parent, Qt::WFlags f, const QPoint & p, bool showIt )
 {
     // QWidget::reparent() destroys the old X Window for the widget, and
     // creates a new one, thus QXEmbedCopy after reparenting is no longer the

@@ -23,6 +23,8 @@
 
 #include <qlayout.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <QCloseEvent>
 
 #include "rktoplevelwindowgui.h"
 #include "../rkward.h"

@@ -24,6 +24,9 @@ email                : tfry@users.sourceforge.net
 #endif
 
 #include <dcopobject.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <QCloseEvent>
 
 /** This base provides the DCOP-Interface for RKWardMainWindow */
 class RKWardDCOPInterface : virtual public DCOPObject {
@@ -57,7 +60,7 @@ class RKMenuList;
 class RKCommandEditorWindow;
 class KMdiToolViewAccessor;
 class RKMDIWindow;
-class QHBox;
+class Q3HBox;
 class RKTopLevelWindowGUI;
 
 struct RKWardStartupOptions {

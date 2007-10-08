@@ -23,11 +23,13 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qradiobutton.h>
-#include <qvgroupbox.h>
+#include <q3vgroupbox.h>
 #include <qcheckbox.h>
-#include <qhbox.h>
+#include <q3hbox.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include "../rkward.h"
 #include "../rkglobals.h"
@@ -42,7 +44,7 @@ bool RKSettingsModulePlugins::show_code;
 int RKSettingsModulePlugins::code_size;
 
 RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
-	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+	Q3VBoxLayout *main_vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
 	
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 	
@@ -50,11 +52,11 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	main_vbox->addWidget (label);
 	
-	button_group = new QButtonGroup (this);
+	button_group = new Q3ButtonGroup (this);
 	button_group->setColumnLayout (0, Qt::Vertical);
 	button_group->layout()->setSpacing (6);
 	button_group->layout()->setMargin (11);
-	QVBoxLayout *group_layout = new QVBoxLayout(button_group->layout());
+	Q3VBoxLayout *group_layout = new Q3VBoxLayout(button_group->layout());
 	group_layout->addWidget (new QRadioButton (i18n ("Always prefer dialogs"), button_group));
 	group_layout->addWidget (new QRadioButton (i18n ("Prefer recommended interface"), button_group));
 	group_layout->addWidget (new QRadioButton (i18n ("Always prefer wizards"), button_group));
@@ -64,12 +66,12 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	QVGroupBox *code_frame = new QVGroupBox (i18n ("R syntax display (in dialogs)"), this);
+	Q3VGroupBox *code_frame = new Q3VGroupBox (i18n ("R syntax display (in dialogs)"), this);
 	show_code_box = new QCheckBox (i18n ("Code shown by default"), code_frame);
 	show_code_box->setChecked (show_code);
 	connect (show_code_box, SIGNAL (stateChanged (int)), this, SLOT (settingChanged (int)));
 
-	QHBox *code_size_hbox = new QHBox (code_frame);
+	Q3HBox *code_size_hbox = new Q3HBox (code_frame);
 	new QLabel (i18n ("Default height of code display (pixels)"), code_size_hbox);
 	code_size_box = new RKSpinBox (code_size_hbox);
 	code_size_box->setIntMode (20, 5000, code_size);

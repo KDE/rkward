@@ -23,6 +23,9 @@
 #include <qlayout.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3VBoxLayout>
 
 #include "../rbackend/rcommand.h"
 #include "../rkglobals.h"
@@ -115,14 +118,14 @@ bool RKSettingsModuleWatch::shouldRaiseWindow (RCommand *command) {
 RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
 
 	QLabel *label = new QLabel (i18n ("For now, settings only apply to new commands. All previous commands remain visible/invisible."), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	vbox->addWidget (label);
 	vbox->addSpacing (10);
 	
-	QGridLayout *grid = new QGridLayout (vbox, 5, 5);
+	Q3GridLayout *grid = new Q3GridLayout (vbox, 5, 5);
 
 	label = new QLabel (i18n ("always show command"), this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
@@ -175,7 +178,7 @@ int RKSettingsModuleWatch::getFilterSettings (FilterBoxes *boxes) {
 	return ret;
 }
 
-RKSettingsModuleWatch::FilterBoxes *RKSettingsModuleWatch::addFilterSettings (QWidget *parent, QGridLayout *layout, int row, const QString &label, int state) {
+RKSettingsModuleWatch::FilterBoxes *RKSettingsModuleWatch::addFilterSettings (QWidget *parent, Q3GridLayout *layout, int row, const QString &label, int state) {
 	RK_TRACE (SETTINGS);
 
 	FilterBoxes *filter_boxes = new FilterBoxes;

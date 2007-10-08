@@ -23,6 +23,11 @@
 #include "../rbackend/rinterface.h"
 
 #include "../debug.h"
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <QCloseEvent>
+#include <Q3ValueList>
+#include <Q3VBoxLayout>
 
 RKProgressControl::RKProgressControl (QObject *parent, const QString &text, const QString &caption, int mode_flags) : QObject (parent) {
 	RK_TRACE (MISC);
@@ -157,7 +162,7 @@ void RKProgressControl::createDialog () {
 	dialog = new RKProgressControlDialog (text, caption, mode, modal);
 	connect (dialog, SIGNAL (destroyed ()), this, SLOT (dialogDestroyed ()));
 	if (is_done) done ();
-	for (QValueList<ROutput>::const_iterator it = output_log.begin (); it != output_log.end (); ++it) {
+	for (Q3ValueList<ROutput>::const_iterator it = output_log.begin (); it != output_log.end (); ++it) {
 		dialog->addOutput (&(*it));
 	}
 }
@@ -184,17 +189,17 @@ void RKProgressControl::rCommandDone (RCommand * command) {
 //////////////////////////// RKProgressControlDialog ///////////////////////////////////////////7
 
 #include <qlayout.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <qvbox.h>
+#include <q3vbox.h>
 
 RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QString &caption, int mode_flags, bool modal) : QDialog (0, 0, modal, Qt::WDestructiveClose) {
 	RK_TRACE (MISC);
 
 	setCaption (caption);
 
-	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
 
 	QLabel *label = new QLabel (text, this);
 	label->setAlignment (Qt::AlignAuto | Qt::ExpandTabs | Qt::WordBreak);
@@ -205,7 +210,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 	error_indicator->hide ();
 	vbox->addWidget (error_indicator);
 
-	output_box = new QVBox (this);
+	output_box = new Q3VBox (this);
 	vbox->addWidget (output_box);
 	if (mode_flags & (RKProgressControl::IncludeErrorOutput | RKProgressControl::IncludeRegularOutput)) {
 		QString ocaption;
@@ -220,7 +225,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 		}
 		output_caption = new QLabel (ocaption, output_box);
 
-		output_text = new QTextEdit (output_box);
+		output_text = new Q3TextEdit (output_box);
 		output_text->setReadOnly (true);
 		output_text->setTextFormat (PlainText);
 		output_text->setUndoRedoEnabled (false);
@@ -230,7 +235,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 		}
 	}
 
-	QHBoxLayout *button_layout = new QHBoxLayout (0, 0, RKGlobals::spacingHint ());
+	Q3HBoxLayout *button_layout = new Q3HBoxLayout (0, 0, RKGlobals::spacingHint ());
 	vbox->addLayout (button_layout);
 
 	toggle_output_button = new QPushButton (show_output_text, this);

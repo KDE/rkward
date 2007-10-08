@@ -18,7 +18,7 @@
 #ifndef RKWORKPLACE_H
 #define RKWORKPLACE_H
 
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qstring.h>
 #include <qtabwidget.h>
 
@@ -53,8 +53,8 @@ private:
 	void updateActions ();
 
 	RKMDIWindow *current;
-	QValueList<RKMDIWindow *> back_list;
-	QValueList<RKMDIWindow *> forward_list;
+	Q3ValueList<RKMDIWindow *> back_list;
+	Q3ValueList<RKMDIWindow *> forward_list;
 	KAction *next_action;
 	KAction *prev_action;
 };
@@ -74,7 +74,7 @@ public:
 	RKWorkplaceView *view () { return wview; };
 
 /** convenience typedef: A list of RKMDIWindow s */
-	typedef QValueList<RKMDIWindow *> RKWorkplaceObjectList;
+	typedef Q3ValueList<RKMDIWindow *> RKWorkplaceObjectList;
 /** Returns a list of all windows in the workplace. */
 	RKWorkplaceObjectList getObjectList () { return windows; };
 /** Returns a list of all windows with a given type and state */

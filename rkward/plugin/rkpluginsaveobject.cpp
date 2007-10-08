@@ -18,6 +18,8 @@
 #include "rkpluginsaveobject.h"
 
 #include <qlayout.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include <klocale.h>
 
@@ -36,7 +38,7 @@ RKPluginSaveObject::RKPluginSaveObject (const QDomElement &element, RKComponent 
 	addChild ("selection", selection = new RKComponentPropertyBase (this, xml->getBoolAttribute (element, "required", true, DL_INFO)));
 	connect (selection, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (selectionChanged (RKComponentPropertyBase *)));
 
-	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
 
 	selector = new RKSaveObjectChooser (this, xml->getStringAttribute (element, "initial", i18n ("my.data"), DL_INFO), xml->getStringAttribute (element, "label", i18n ("Save to:"), DL_INFO));
 	connect (selector, SIGNAL (changed ()), SLOT (selectionChanged ()));

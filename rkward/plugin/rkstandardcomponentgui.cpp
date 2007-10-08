@@ -23,10 +23,16 @@
 
 #include <qtimer.h>
 #include <qlayout.h>
-#include <qvbox.h>
-#include <qhbox.h>
+#include <q3vbox.h>
+#include <q3hbox.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <QCloseEvent>
+#include <Q3GridLayout>
+#include <Q3Frame>
+#include <Q3VBoxLayout>
 
 #include "rkcomponentmap.h"
 #include "../windows/rkworkplace.h"
@@ -68,25 +74,25 @@ RKStandardComponentGUI::~RKStandardComponentGUI () {
 void RKStandardComponentGUI::createDialog (bool switchable) {
 	RK_TRACE (PLUGIN);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this);
+	Q3VBoxLayout *main_vbox = new Q3VBoxLayout (this);
 	QWidget *upper_widget = new QWidget (this);
 	
-	QHBoxLayout *hbox = new QHBoxLayout (upper_widget, RKGlobals::marginHint (), RKGlobals::spacingHint ());
-	QVBoxLayout *vbox = new QVBoxLayout (hbox, RKGlobals::spacingHint ());
+	Q3HBoxLayout *hbox = new Q3HBoxLayout (upper_widget, RKGlobals::marginHint (), RKGlobals::spacingHint ());
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (hbox, RKGlobals::spacingHint ());
 
 	// build standard elements
-	main_widget = new QVBox (upper_widget);
+	main_widget = new Q3VBox (upper_widget);
 	hbox->addWidget (main_widget);
 
 	// lines
-	QFrame *line;
-	line = new QFrame (upper_widget);
-	line->setFrameShape (QFrame::VLine);
-	line->setFrameShadow (QFrame::Plain);	
+	Q3Frame *line;
+	line = new Q3Frame (upper_widget);
+	line->setFrameShape (Q3Frame::VLine);
+	line->setFrameShadow (Q3Frame::Plain);	
 	hbox->addWidget (line);
 
 	// buttons
-	vbox = new QVBoxLayout (hbox, RKGlobals::spacingHint ());
+	vbox = new Q3VBoxLayout (hbox, RKGlobals::spacingHint ());
 	ok_button = new QPushButton (i18n ("Submit"), upper_widget);
 	connect (ok_button, SIGNAL (clicked ()), this, SLOT (ok ()));
 	vbox->addWidget (ok_button);
@@ -261,16 +267,16 @@ void RKStandardComponentWizard::createWizard (bool switchable) {
 
 	is_switchable = switchable;
 	// create main layout and stack
-	QGridLayout *main_grid = new QGridLayout (this, 3, 4, RKGlobals::marginHint (), RKGlobals::spacingHint ());
+	Q3GridLayout *main_grid = new Q3GridLayout (this, 3, 4, RKGlobals::marginHint (), RKGlobals::spacingHint ());
 	main_widget = stack = new RKStandardComponentStack (this);
 	main_grid->addMultiCellWidget (stack, 0, 0, 0, 3);
 
 	// build standard elements
 	// lines
-	QFrame *line;
-	line = new QFrame (main_widget);
-	line->setFrameShape (QFrame::HLine);
-	line->setFrameShadow (QFrame::Plain);
+	Q3Frame *line;
+	line = new Q3Frame (main_widget);
+	line->setFrameShape (Q3Frame::HLine);
+	line->setFrameShadow (Q3Frame::Plain);
 	main_grid->addMultiCellWidget (line, 1, 1, 0, 3);
 
 	// buttons
@@ -296,7 +302,7 @@ void RKStandardComponentWizard::addLastPage () {
 	if (!enslaved) {
 		// build the last page
 		RKComponent *last_page = stack->addPage (component);
-		QVBoxLayout *vbox = new QVBoxLayout (last_page, RKGlobals::spacingHint ());
+		Q3VBoxLayout *vbox = new Q3VBoxLayout (last_page, RKGlobals::spacingHint ());
 		QLabel *label = new QLabel (i18n ("Below you can see the command(s) corresponding to the settings you made. Click 'Submit' to run the command(s)."), last_page);
 		label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 		code_display = new RKCommandEditorWindow (last_page, true);
@@ -395,7 +401,7 @@ void RKStandardComponentWizard::enableSubmit (bool enable) {
 
 //////////////////////////////// RKStandardComponentStack ////////////////////////////////////
 
-RKStandardComponentStack::RKStandardComponentStack (QWidget *parent) : QWidgetStack (parent) {
+RKStandardComponentStack::RKStandardComponentStack (QWidget *parent) : Q3WidgetStack (parent) {
 	RK_TRACE (PLUGIN);
 
 	num_pages = current_page = 0;

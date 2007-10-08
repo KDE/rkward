@@ -21,7 +21,9 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qcombobox.h>
-#include <qlistbox.h>
+#include <q3listbox.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include <klocale.h>
 
@@ -36,7 +38,7 @@ RKDropDown::RKDropDown (const QDomElement &element, RKComponent *parent_componen
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	// create layout
-	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::spacingHint ());
+	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
 
 	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
 	vbox->addWidget (label);
@@ -45,7 +47,7 @@ RKDropDown::RKDropDown (const QDomElement &element, RKComponent *parent_componen
 	box = new QComboBox (false, this);
 	if (!(box->listBox ())) {
 		// make sure the combo box uses a list box internally
-		box->setListBox (new QListBox (this));
+		box->setListBox (new Q3ListBox (this));
 	}
 
 	addOptionsAndInit (element);
@@ -61,9 +63,9 @@ RKDropDown::~RKDropDown(){
 void RKDropDown::comboItemActivated (int id) {
 	RK_TRACE (PLUGIN);
 
-	QListBox *list = box->listBox ();
+	Q3ListBox *list = box->listBox ();
 	RK_ASSERT (list);
-	QListBoxItem *item = list->item (id);
+	Q3ListBoxItem *item = list->item (id);
 	RK_ASSERT (item);
 	if (!item->isSelectable ()) return;		// yes, apparently not selectable items can be "activated"
 
@@ -85,9 +87,9 @@ void RKDropDown::addOptionToGUI (const QString &label, int id) {
 void RKDropDown::setItemEnabledInGUI (int id, bool enabled) {
 	RK_TRACE (PLUGIN);
 
-	QListBox *list = box->listBox ();
+	Q3ListBox *list = box->listBox ();
 	RK_ASSERT (list);
-	QListBoxItem *item = list->item (id);
+	Q3ListBoxItem *item = list->item (id);
 	RK_ASSERT (item);
 
 	if (item->rtti () != ID_RKDROPDOWNLISTITEM) {
@@ -103,7 +105,7 @@ void RKDropDown::setItemEnabledInGUI (int id, bool enabled) {
 
 #include <qpainter.h>
 
-RKDropDownListItem::RKDropDownListItem (QListBox *listbox, const QString &text) : QListBoxText (listbox, text) {
+RKDropDownListItem::RKDropDownListItem (Q3ListBox *listbox, const QString &text) : Q3ListBoxText (listbox, text) {
 	RK_TRACE (PLUGIN);
 }
 
@@ -113,7 +115,7 @@ void RKDropDownListItem::paint (QPainter *painter) {
 		painter->setPen (QColor (150, 150, 150));
 	}
 
-	QListBoxText::paint (painter);
+	Q3ListBoxText::paint (painter);
 }
 
 #include "rkdropdown.moc"

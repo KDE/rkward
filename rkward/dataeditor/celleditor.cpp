@@ -17,8 +17,13 @@
 #include "celleditor.h"
 
 #include <qapplication.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qstyle.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <Q3Frame>
+#include <QTimerEvent>
+#include <QKeyEvent>
 
 #include "twintablemember.h"
 #include "../debug.h"
@@ -34,10 +39,10 @@ CellEditor::CellEditor (TwinTableMember *parent, const QString &text, int mode, 
 	
 	timer_id = 0;
 	if (named_values) {
-		value_list = new QPopupMenu ();
+		value_list = new Q3PopupMenu ();
 		value_list->setFont (font ());
 		value_list->setPalette (palette ());
-		value_list->setFrameStyle (QFrame::Box | QFrame::Plain);
+		value_list->setFrameStyle (Q3Frame::Box | Q3Frame::Plain);
 		value_list->setLineWidth (1);
 		value_list->setFocusProxy (this);
 		

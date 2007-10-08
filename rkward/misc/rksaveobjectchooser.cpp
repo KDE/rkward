@@ -21,6 +21,8 @@
 #include <qcheckbox.h>
 #include <qlayout.h>
 #include <qlabel.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include <klocale.h>
 
@@ -34,7 +36,7 @@ RKSaveObjectChooser::RKSaveObjectChooser (QWidget *parent, const QString &initia
 	prev_ok = true;
 	object_exists = false;
 
-	QVBoxLayout *layout = new QVBoxLayout (this);
+	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
 
 	QLabel *label = new QLabel (prompt.isNull () ? i18n ("Object name to save to") : prompt, this);
 	layout->addWidget (label);

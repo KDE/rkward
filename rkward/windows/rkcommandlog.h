@@ -19,7 +19,9 @@
 #define RKCOMMANDLOG_H
 
 #include <qstring.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
+//Added by qt3to4:
+#include <QEvent>
 #include <kmdichildview.h>
 
 #include "rkmdiwindow.h"
@@ -28,9 +30,9 @@
 class RCommand;
 class ROutput;
 class QPushButton;
-class QTextEdit;
+class Q3TextEdit;
 class RKCommandEditor;
-class QBoxLayout;
+class Q3BoxLayout;
 class RKCommandLogView;
 class RKCommandLogPart;
 
@@ -78,7 +80,7 @@ friend class RKWardMainWindow;
 };
 
 /** Simply subclass of QTextEdit to override context menu handling */
-class RKCommandLogView : public QTextEdit {
+class RKCommandLogView : public Q3TextEdit {
 	Q_OBJECT
 public:
 	RKCommandLogView (RKCommandLog *parent);

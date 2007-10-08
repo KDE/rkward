@@ -20,7 +20,7 @@
 #include "robject.h"
 
 #include <qpair.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 
 class RCommand;
 

@@ -18,20 +18,23 @@
 #define ROBJECTBROWSER_H
 
 #include "windows/rkmdiwindow.h"
+//Added by qt3to4:
+#include <Q3PopupMenu>
+#include <QFocusEvent>
 
 class RKObjectListView;
 class RKObjectListViewSettings;
 class RKListViewItem;
-class QListViewItem;
+class Q3ListViewItem;
 class QPushButton;
 class QRadioButton;
-class QButtonGroup;
+class Q3ButtonGroup;
 class QCheckBox;
-class QPopupMenu;
+class Q3PopupMenu;
 class RObject;
 class RKCommandEditorWindow;
 class RObjectBrowserInternal;
-class QVBox;
+class Q3VBox;
 
 /**
 This widget provides a browsable list of all objects in the R workspace
@@ -50,7 +53,7 @@ public:
 	void show ();
 private:
 	RObjectBrowserInternal *internal;
-	QVBox *layout_widget;
+	Q3VBox *layout_widget;
 
 	bool locked;
 	friend class RKWardMainWindow;
@@ -83,7 +86,7 @@ private slots:
 	void popupDelete ();
 	void popupRename ();
 /** when an object in the list is double clicked, insert its name in the current RKCommandEditor window */
-	void slotListDoubleClicked (QListViewItem *item, const QPoint &pos, int);
+	void slotListDoubleClicked (Q3ListViewItem *item, const QPoint &pos, int);
 protected:
 /** reimplemnented from QWidget to make show the globalenv object when activated (other than by mouse click) */
 	void focusInEvent (QFocusEvent *e);
@@ -109,7 +112,7 @@ public slots:
 	void modeActivated (int mode);
 	void boxChanged (int);
 private:
-	QButtonGroup *group;
+	Q3ButtonGroup *group;
 	QRadioButton *all;
 	QRadioButton *nonfunctions;
 	QRadioButton *functions;

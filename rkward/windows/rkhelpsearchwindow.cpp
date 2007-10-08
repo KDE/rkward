@@ -23,10 +23,14 @@
 
 #include <qcheckbox.h>
 #include <qcombobox.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qlineedit.h>
 #include <qlayout.h>
 #include <qlabel.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <QFocusEvent>
+#include <Q3VBoxLayout>
 
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rcommandreceiver.h"
@@ -48,10 +52,10 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	initializeActivationSignals ();
 	setFocusPolicy (QWidget::ClickFocus);
 
-	QVBoxLayout* main_layout = new QVBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
-	QHBoxLayout* selection_layout = new QHBoxLayout (main_layout, RKGlobals::spacingHint ());
+	Q3VBoxLayout* main_layout = new Q3VBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
+	Q3HBoxLayout* selection_layout = new Q3HBoxLayout (main_layout, RKGlobals::spacingHint ());
 
-	QVBoxLayout* labels_layout = new QVBoxLayout (selection_layout, RKGlobals::spacingHint ());
+	Q3VBoxLayout* labels_layout = new Q3VBoxLayout (selection_layout, RKGlobals::spacingHint ());
 	QLabel *label = new QLabel (i18n ("Find:"), this);
 	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
 	labels_layout->addWidget (label);
@@ -59,13 +63,13 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
 	labels_layout->addWidget (label);
 
-	QVBoxLayout* main_settings_layout = new QVBoxLayout (selection_layout, RKGlobals::spacingHint ());
+	Q3VBoxLayout* main_settings_layout = new Q3VBoxLayout (selection_layout, RKGlobals::spacingHint ());
 	field = new QComboBox (true, this);
 	field->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 	connect (field->lineEdit () , SIGNAL (returnPressed ()), this, SLOT (slotFindButtonClicked ()));
 	main_settings_layout->addWidget (field);
 
-	QHBoxLayout* fields_packages_layout = new QHBoxLayout (main_settings_layout, RKGlobals::spacingHint ());
+	Q3HBoxLayout* fields_packages_layout = new Q3HBoxLayout (main_settings_layout, RKGlobals::spacingHint ());
 	fieldsList = new QComboBox (false, this);
 	// HACK the sequence of options is hardcoded, do not modify
 	fieldsList->insertItem (i18n("All"));
@@ -82,7 +86,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	packagesList->insertItem (i18n("All"));
 	fields_packages_layout->addWidget (packagesList);
 
-	QVBoxLayout* checkboxes_layout = new QVBoxLayout (selection_layout, RKGlobals::spacingHint ());
+	Q3VBoxLayout* checkboxes_layout = new Q3VBoxLayout (selection_layout, RKGlobals::spacingHint ());
 	caseSensitiveCheckBox = new QCheckBox (i18n ("Case sensitive"), this);
 	checkboxes_layout->addWidget (caseSensitiveCheckBox);
 	fuzzyCheckBox = new QCheckBox (i18n ("Fuzzy matching"), this);
@@ -94,11 +98,11 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	connect (findButton, SIGNAL (clicked ()), this, SLOT (slotFindButtonClicked ()));
 	selection_layout->addWidget (findButton);
 
-	resultsList = new QListView (this);
+	resultsList = new Q3ListView (this);
 	resultsList->addColumn (i18n ("Topic"));
 	resultsList->addColumn (i18n ("Title"));
 	resultsList->addColumn (i18n ("Package"));
-	connect (resultsList, SIGNAL (doubleClicked (QListViewItem*, const QPoint&, int)), this, SLOT (slotResultsListDblClicked (QListViewItem*, const QPoint&, int)));
+	connect (resultsList, SIGNAL (doubleClicked (Q3ListViewItem*, const QPoint&, int)), this, SLOT (slotResultsListDblClicked (Q3ListViewItem*, const QPoint&, int)));
 	main_layout->addWidget (resultsList);
 
 	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()[[1]]", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_INSTALLED_PACKAGES, 0);
@@ -173,7 +177,7 @@ void RKHelpSearchWindow::slotFindButtonClicked () {
 	field->insertItem (field->currentText ());
 }
 
-void RKHelpSearchWindow::slotResultsListDblClicked (QListViewItem * item, const QPoint &, int) {
+void RKHelpSearchWindow::slotResultsListDblClicked (Q3ListViewItem * item, const QPoint &, int) {
 	RK_TRACE (APP);
 	if (item == NULL) {
 		return;
@@ -199,7 +203,7 @@ void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 		RK_ASSERT ((command->getDataLength () % 3) == 0);
 		int count = (command->getDataLength () / 3);
 		for (int i=0; i < count; ++i) {
-			new QListViewItem (resultsList, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i]);
+			new Q3ListViewItem (resultsList, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i]);
 		}
 		setEnabled(true);
 	} else if (command->getFlags () == GET_HELP_URL) {

@@ -46,7 +46,7 @@ void RKComponentBase::addChild (const QString &id, RKComponentBase *child) {
 void RKComponentBase::fetchPropertyValuesRecursive (QMap<QString, QString> *list, bool include_top_level, const QString &prefix) {
 	RK_TRACE (PLUGIN);
 
-	for (QDictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
+	for (Q3DictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
 		if (it.currentKey () != "#noid#") {
 			if (it.current ()->isProperty ()) {
 				if (include_top_level) {
@@ -157,7 +157,7 @@ void RKComponent::updateEnablednessRecursive () {
 
 	setEnabled (enabled);	/* We do this, even if the state *seems* to be unchanged. This is needed, as isEnabled () also returns false, if the parent QWidget is not enabled. However, the parent QWidget may not always be the parent component. */
 	if (enabled != isEnabled ()) {
-		for (QDictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
+		for (Q3DictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
 			if (it.current ()->isComponent()) {
 				static_cast<RKComponent*> (it.current ())->updateEnablednessRecursive ();
 			}
@@ -168,7 +168,7 @@ void RKComponent::updateEnablednessRecursive () {
 bool RKComponent::isValid () {
 	RK_TRACE (PLUGIN);
 
-	for (QDictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
+	for (Q3DictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
 		if (!(it.current ()->isSatisfied ())) return false;
 	}
 	return true;
@@ -234,7 +234,7 @@ void RKComponent::removeFromParent () {
 	RK_TRACE (PLUGIN);
 
 	if (!parentComponent ()) return;
-	for (QDictIterator<RKComponentBase> it (parentComponent ()->child_map); it.current (); ++it) {
+	for (Q3DictIterator<RKComponentBase> it (parentComponent ()->child_map); it.current (); ++it) {
 		if (it.current () == this) {
 			QString key = it.currentKey ();
 	// unfortunately, several items might hvae the same key, and there seems to be no way to selectively remove the current item only.

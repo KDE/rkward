@@ -22,6 +22,8 @@
 
 #include "../debug.h"
 #include "../rkglobals.h"
+//Added by qt3to4:
+#include <Q3ValueList>
 
 #define MAX_RECEIVERS 3
 
@@ -50,7 +52,7 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 RCommand::~RCommand(){
 	RK_TRACE (RBACKEND);
 
-	for (QValueList<ROutput*>::iterator it = output_list.begin (); it != output_list.end (); ++it) {
+	for (Q3ValueList<ROutput*>::iterator it = output_list.begin (); it != output_list.end (); ++it) {
 		delete (*it);
 	}
 	// The output_list itself is cleared automatically

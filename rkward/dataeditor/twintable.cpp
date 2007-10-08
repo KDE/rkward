@@ -22,11 +22,14 @@
 #include <qsplitter.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qimage.h>
 #include <qpixmap.h>
-#include <qpopupmenu.h>
-#include <qcstring.h>
+#include <q3popupmenu.h>
+#include <q3cstring.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3ValueList>
 
 #include "twintabledatamember.h"
 #include "twintablemetamember.h"
@@ -51,7 +54,7 @@
 TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
 	RK_TRACE (EDITOR);
 
-	QGridLayout *grid_layout = new QGridLayout(this);
+	Q3GridLayout *grid_layout = new Q3GridLayout(this);
 	
 	QSplitter *splitter = new QSplitter(this);
 	splitter->setOrientation(QSplitter::Vertical);
@@ -77,7 +80,7 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
 	dataview->horizontalHeader ()->hide ();
 	dataview->setTopMargin (0);
 	dataview->setLeftMargin (varview->leftMargin ());
-	varview->setHScrollBarMode (QScrollView::AlwaysOff);
+	varview->setHScrollBarMode (Q3ScrollView::AlwaysOff);
 	
 	grid_layout->addWidget (splitter, 0, 0);
 	
@@ -95,14 +98,14 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
 	connect (varview, SIGNAL (headerRightClick (int, int)), this, SLOT (varviewHeaderRightClicked (int, int)));
 	
 	// which will be reacted upon by the following popup-menu:
-	top_header_menu = new QPopupMenu (this);
+	top_header_menu = new Q3PopupMenu (this);
 	top_header_menu->insertItem (i18n ("Insert new variable left"), this, SLOT (insertColumnLeft ()), 0, HEADER_MENU_ID_ADD_COL_LEFT);
 	top_header_menu->insertItem (i18n ("Insert new variable right"), this, SLOT (insertColumnRight ()), 0, HEADER_MENU_ID_ADD_COL_RIGHT);
 	top_header_menu->insertItem (i18n ("Delete this variable"), this, SLOT (requestDeleteColumn ()), 0, HEADER_MENU_ID_DEL_COL);
 	
 	// and the same for the left header
 	connect (dataview, SIGNAL (headerRightClick (int, int)), this, SLOT (dataviewHeaderRightClicked (int, int)));
-	left_header_menu = new QPopupMenu (this);
+	left_header_menu = new Q3PopupMenu (this);
 	left_header_menu->insertItem (i18n ("Insert new case above"), this, SLOT (insertRowAbove ()), 0, HEADER_MENU_ID_ADD_ROW_ABOVE);
 	left_header_menu->insertItem (i18n ("Insert new case below"), this, SLOT (insertRowBelow ()), 0, HEADER_MENU_ID_ADD_ROW_BELOW);
 	left_header_menu->insertItem (QString::null, this, SLOT (deleteRow ()), 0, HEADER_MENU_ID_DEL_ROW);
@@ -210,7 +213,7 @@ void TwinTable::deleteRow (int where, TwinTableMember *table) {
 void TwinTable::headerClicked (int col) {
 	RK_TRACE (EDITOR);
 
-	QTableSelection selection;
+	Q3TableSelection selection;
 	selection.init (0, col);
 	selection.expandTo (dataview->numTrueRows (), col);
 
@@ -355,7 +358,7 @@ void TwinTable::paste (QByteArray &content) {
 		if (bottom_row >= varview->numTrueRows ()) bottom_row = varview->numTrueRows () - 1;
 	}
 
-	QValueList<RKVariable*> col_list;
+	Q3ValueList<RKVariable*> col_list;
 
 	QString pasted = QString::fromLocal8Bit (content);
 	int row = top_row;
@@ -399,7 +402,7 @@ void TwinTable::paste (QByteArray &content) {
 	} while (content_offset < content_length);
 
 	// now do the syncing
-	for (QValueList<RKVariable*>::ConstIterator it = col_list.constBegin (); it != col_list.constEnd (); ++it) {
+	for (Q3ValueList<RKVariable*>::ConstIterator it = col_list.constBegin (); it != col_list.constEnd (); ++it) {
 		(*it)->syncDataToR ();
 		(*it)->setSyncing (true);
 	}
@@ -489,7 +492,7 @@ RKVariable *TwinTable::getColObject (long int col) {
 
 long int TwinTable::getObjectCol (RObject *object) {
 	RK_TRACE (EDITOR);
-	for (QIntDictIterator<RKVariable> it (col_map); it.current (); ++it) {
+	for (Q3IntDictIterator<RKVariable> it (col_map); it.current (); ++it) {
 		if (it.current () == object) return it.currentKey ();
 	}
 	

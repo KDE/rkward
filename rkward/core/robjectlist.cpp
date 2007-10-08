@@ -24,6 +24,8 @@
 
 #include <qtimer.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 #include <klocale.h>
 
@@ -103,7 +105,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 void RObjectList::updateEnvironments (QString *env_names, unsigned int env_count) {
 	RK_TRACE (OBJECTS);
 
-	QValueList<REnvironmentObject *> removelist;
+	Q3ValueList<REnvironmentObject *> removelist;
 
 	// check which envs are removed
 	// we could as well iterate over the childmap, but this is easier
@@ -119,7 +121,7 @@ void RObjectList::updateEnvironments (QString *env_names, unsigned int env_count
 	}
 
 	// remove the environments which are gone
-	for (QValueList<REnvironmentObject *>::const_iterator it = removelist.constBegin (); it != removelist.constEnd (); ++it) {
+	for (Q3ValueList<REnvironmentObject *>::const_iterator it = removelist.constBegin (); it != removelist.constEnd (); ++it) {
 		RK_DO (qDebug ("removing toplevel environment %s from list", (*it)->getShortName ().latin1 ()), OBJECTS, DL_INFO);
 		RKGlobals::tracker ()->removeObject (*it, 0, true);
 	}

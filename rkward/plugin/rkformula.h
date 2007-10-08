@@ -23,12 +23,12 @@
 #include <qmap.h>
 #include "../core/robject.h"
 
-class QListView;
+class Q3ListView;
 class QPushButton;
-class QButtonGroup;
+class Q3ButtonGroup;
 class QWidget;
 class QSpinBox;
-class QListViewItem;
+class Q3ListViewItem;
 class QDomElement;
 
 /**
@@ -65,11 +65,11 @@ private:
 
 	enum ModelType { FullModel=0, MainEffects=1, Custom=2 };
 	ModelType model_type;
-	QButtonGroup *type_selector;
+	Q3ButtonGroup *type_selector;
 	
 	QWidget *custom_model_widget;
-	QListView *model_view;
-	QListView *predictors_view;
+	Q3ListView *model_view;
+	Q3ListView *predictors_view;
 	QPushButton *add_button;
 	QPushButton *remove_button;
 	QSpinBox *level_box;
@@ -78,7 +78,7 @@ private:
 	void makeModelString ();
 	QString mangleName (RObject *var);
 	
-	typedef QMap<QListViewItem*, RObject*> ItemMap;
+	typedef QMap<Q3ListViewItem*, RObject*> ItemMap;
 	ItemMap item_map;
 	
 	struct Interaction {
@@ -86,10 +86,10 @@ private:
 		RObjectPtr* vars;
 	};
 	
-	typedef QMap<QListViewItem*, Interaction> InteractionMap;
+	typedef QMap<Q3ListViewItem*, Interaction> InteractionMap;
 	InteractionMap interaction_map;
 	
-	typedef QMap<int, QListViewItem*> LevelMap;
+	typedef QMap<int, Q3ListViewItem*> LevelMap;
 	LevelMap level_map;
 	
 	/** recursively cross the given source variables on level level. Returns the resulting terms in an array. The number

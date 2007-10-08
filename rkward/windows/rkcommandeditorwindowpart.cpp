@@ -22,7 +22,7 @@
 #include <kaction.h>
 #include <kxmlguifactory.h>
 
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 
 #include "rkcommandeditorwindow.h"
 #include "../misc/rkcommonfunctions.h"
@@ -48,9 +48,9 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 void RKCommandEditorWindowPart::initializeActions () {
 	RK_TRACE (COMMANDEDITOR);
 
-	runAll = new KAction (i18n ("Run all"), QIconSet (RKCommonFunctions::getRKWardDataDir () + "icons/run_all.png"), KShortcut ("F9"), command_editor, SLOT (runAll()), actionCollection (), "run_all");
-	runSelection = new KAction (i18n ("Run selection"), QIconSet (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), command_editor, SLOT (runSelection()), actionCollection (), "run_selection");
-	runLine = new KAction (i18n ("Run current line"), QIconSet (RKCommonFunctions::getRKWardDataDir () + "icons/run_line.png"), KShortcut ("Ctrl+L"), command_editor, SLOT (runLine()), actionCollection (), "run_line");
+	runAll = new KAction (i18n ("Run all"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_all.png"), KShortcut ("F9"), command_editor, SLOT (runAll()), actionCollection (), "run_all");
+	runSelection = new KAction (i18n ("Run selection"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), command_editor, SLOT (runSelection()), actionCollection (), "run_selection");
+	runLine = new KAction (i18n ("Run current line"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_line.png"), KShortcut ("Ctrl+L"), command_editor, SLOT (runLine()), actionCollection (), "run_line");
 
 	helpFunction = new KAction (i18n ("&Function reference"), KShortcut ("F2"), command_editor, SLOT (showHelp()), actionCollection (), "function_reference");
 }

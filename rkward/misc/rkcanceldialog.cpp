@@ -19,6 +19,9 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <QCloseEvent>
 
 #include <klocale.h>
 #include <kdialog.h>
@@ -32,7 +35,7 @@ RKCancelDialog::RKCancelDialog (const QString &caption, const QString &text, QWi
 	RK_TRACE (DIALOGS);
 	setCaption (caption);
 	
-	QVBoxLayout *layout = new QVBoxLayout (this, KDialog::marginHint (), KDialog::spacingHint ());
+	Q3VBoxLayout *layout = new Q3VBoxLayout (this, KDialog::marginHint (), KDialog::spacingHint ());
 	QLabel *label = new QLabel (text, this);
 	label->setAlignment (Qt::AlignAuto | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
 	layout->addWidget (label);
