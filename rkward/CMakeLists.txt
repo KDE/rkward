@@ -1,17 +1,15 @@
-ADD_SUBDIRECTORY( plugins ) 
-ADD_SUBDIRECTORY( dataeditor ) 
-ADD_SUBDIRECTORY( settings ) 
-ADD_SUBDIRECTORY( plugin ) 
-ADD_SUBDIRECTORY( agents ) 
-ADD_SUBDIRECTORY( rbackend ) 
-ADD_SUBDIRECTORY( dialogs ) 
-ADD_SUBDIRECTORY( scriptbackends ) 
-ADD_SUBDIRECTORY( misc ) 
-ADD_SUBDIRECTORY( core ) 
-ADD_SUBDIRECTORY( icons ) 
-ADD_SUBDIRECTORY( windows ) 
-ADD_SUBDIRECTORY( syntax ) 
-ADD_SUBDIRECTORY( pages ) 
+ADD_SUBDIRECTORY( dataeditor )
+ADD_SUBDIRECTORY( settings )
+ADD_SUBDIRECTORY( plugin )
+ADD_SUBDIRECTORY( agents )
+ADD_SUBDIRECTORY( rbackend )
+ADD_SUBDIRECTORY( dialogs )
+ADD_SUBDIRECTORY( scriptbackends )
+ADD_SUBDIRECTORY( misc )
+ADD_SUBDIRECTORY( core )
+ADD_SUBDIRECTORY( icons )
+ADD_SUBDIRECTORY( windows )
+ADD_SUBDIRECTORY( syntax )
 
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE3_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
 
@@ -48,6 +46,9 @@ ADD_CUSTOM_COMMAND(
  )
 
 ########### install files ###############
+
+INSTALL(DIRECTORY plugins/ pages DESTINATION share/apps/rkward
+	PATTERN .svn EXCLUDE)
 
 INSTALL(FILES   rkwardui.rc rkconsolepart.rc DESTINATION share/apps/rkward )
 INSTALL(TARGETS rkward.bin DESTINATION bin)
