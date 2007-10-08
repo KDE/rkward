@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE3_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
 
 
 ########### next target ###############
@@ -9,14 +9,14 @@ SET(scriptbackends_STAT_SRCS
    simplebackend.cpp
    )
 
-KDE3_AUTOMOC(${scriptbackends_STAT_SRCS})
+QT4_AUTOMOC(${scriptbackends_STAT_SRCS})
 
 ADD_LIBRARY(scriptbackends STATIC ${scriptbackends_STAT_SRCS})
 
 
 ########### install files ###############
 
-INSTALL(FILES   common.php php.ini DESTINATION /share/apps/rkward/phpfiles )
+INSTALL(FILES   common.php php.ini DESTINATION ${DATA_INSTALL_DIR}/rkward/phpfiles )
 
 
 

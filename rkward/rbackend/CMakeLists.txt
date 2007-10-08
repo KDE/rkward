@@ -3,7 +3,7 @@ INCLUDE(DetectPthreads.cmake)
 
 ADD_SUBDIRECTORY( rpackages ) 
 
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE3_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
 
 ########### next target ###############
 
@@ -19,7 +19,7 @@ SET(rbackend_STAT_SRCS
    rklocalesupport.cpp
    )
 
-KDE3_AUTOMOC(${rbackend_STAT_SRCS})
+QT4_AUTOMOC(${rbackend_STAT_SRCS})
 
 ADD_LIBRARY(rbackend STATIC ${rbackend_STAT_SRCS})
 TARGET_LINK_LIBRARIES(rbackend ${R_USED_LIBS})

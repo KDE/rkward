@@ -11,7 +11,7 @@ ADD_SUBDIRECTORY( icons )
 ADD_SUBDIRECTORY( windows )
 ADD_SUBDIRECTORY( syntax )
 
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE3_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
 
 SET(RKWard_Sources
 	rkward.cpp
@@ -26,17 +26,17 @@ SET(RKWard_Sources
 ########### next target ###############
 
 # auto-gen sources
-KDE3_AUTOMOC(${RKWard_Sources})
-KDE3_ADD_DCOP_SKELS(RKWard_Sources rkward.h)
+QT4_AUTOMOC(${RKWard_Sources})
+#KDE4_ADD_DCOP_SKELS(RKWard_Sources rkward.h)
 
 
 # somehow the needed libdirs for R do not get passed down automatically
 GET_DIRECTORY_PROPERTY(R_SHAREDLIBDIR DIRECTORY rbackend LINK_DIRECTORIES)
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 
-KDE3_ADD_EXECUTABLE(rkward.bin ${RKWard_Sources})
+KDE4_ADD_EXECUTABLE(rkward.bin ${RKWard_Sources})
 
-TARGET_LINK_LIBRARIES(rkward.bin ${QT_AND_KDECORE_LIBS} windows agents dialogs plugin settings dataeditor core scriptbackends rbackend misc khtml kmdi kdeui katepartinterfaces )
+TARGET_LINK_LIBRARIES(rkward.bin ${KDE4_KDECORE_LIBS} windows agents dialogs plugin settings dataeditor core scriptbackends rbackend misc khtml kmdi ${KDE4_KDEUI_LIBS} katepartinterfaces )
 
 # wrapper script
 GET_DIRECTORY_PROPERTY(R_HOME DIRECTORY rbackend DEFINITION R_HOME)
@@ -49,12 +49,12 @@ ADD_DEPENDENCIES(rkward.bin rkwardwrapper)
 
 ########### install files ###############
 
-INSTALL(DIRECTORY plugins/ pages DESTINATION share/apps/rkward
+INSTALL(DIRECTORY plugins/ pages DESTINATION ${DATA_INSTALL_DIR}rkward
 	PATTERN .svn EXCLUDE)
 
-INSTALL(FILES   rkwardui.rc rkconsolepart.rc DESTINATION share/apps/rkward )
-INSTALL(TARGETS rkward.bin DESTINATION bin)
-INSTALL(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/rkward DESTINATION bin)
+INSTALL(FILES   rkwardui.rc rkconsolepart.rc DESTINATION ${DATA_INSTALL_DIR}/rkward )
+INSTALL(TARGETS rkward.bin DESTINATION ${BIN_INSTALL_DIR})
+INSTALL(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/rkward DESTINATION ${BIN_INSTALL_DIR})
 
 # TODO:
 #INSTALL(FILES rkward.desktop DESTINATION ${XDG_APPS_DIR})

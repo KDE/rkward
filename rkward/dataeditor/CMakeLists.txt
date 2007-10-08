@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE3_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
 
 
 ########### next target ###############
@@ -17,7 +17,7 @@ SET(dataeditor_STAT_SRCS
    rkeditordataframepart.cpp
    )
 
-KDE3_AUTOMOC(${dataeditor_STAT_SRCS})
+QT4_AUTOMOC(${dataeditor_STAT_SRCS})
 
 ADD_LIBRARY(dataeditor STATIC ${dataeditor_STAT_SRCS})
 
