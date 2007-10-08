@@ -2,7 +2,7 @@
 - message extraction
 - po file handling
 - handbook installation
-- R package building
+- need to replace hard-coded "share/apps"?
 - icons
 - rkward.desktop
 - syntax definitions

@@ -39,11 +39,12 @@ KDE3_ADD_EXECUTABLE(rkward.bin ${RKWard_Sources})
 TARGET_LINK_LIBRARIES(rkward.bin ${QT_AND_KDECORE_LIBS} windows agents dialogs plugin settings dataeditor core scriptbackends rbackend misc khtml kmdi kdeui katepartinterfaces )
 
 # wrapper script
-ADD_CUSTOM_COMMAND(
-   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/rkward
-   COMMAND perl ./makerkwardscript.pl rkward.sh.template "$(R_HOMEDIR)" > rkward; ${CMAKE_CURRENT_BINARY_DIR}/rkward
-   DEPENDS makerkwardscript.pl rkward.sh.template
- )
+# TODO: somehow this is built unconditionally, but nevermind
+ADD_CUSTOM_TARGET(rkwardwrapper
+	COMMAND perl ${CMAKE_CURRENT_SOURCE_DIR}/makerkwardscript.pl ${CMAKE_CURRENT_SOURCE_DIR}/rkward.sh.template "${R_HOMEDIR}" > ${CMAKE_CURRENT_BINARY_DIR}/rkward
+	DEPENDS makerkwardscript.pl rkward.sh.template
+)
+ADD_DEPENDENCIES(rkward.bin rkwardwrapper)
 
 ########### install files ###############
 
