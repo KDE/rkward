@@ -24,8 +24,8 @@
 #include <QLabel>
 #include <QCloseEvent>
 
-#include <kate/view.h>
-#include <kate/document.h>
+#include <ktexteditor/view.h>
+#include <ktexteditor/document.h>
 #include <kurl.h>
 
 #include "../windows/rkmdiwindow.h"
@@ -37,7 +37,7 @@ class QLabel;
 class RKScriptContextProvider {
 public:
 	RKScriptContextProvider () {};
-	~RKScriptContextProvider () {};
+	virtual ~RKScriptContextProvider () {};
 
 	/** to be implemented in subclasses. Provide some context (probably a line, but you may provide chunks in arbitrary size). If line_rev is 0, provide the line, the cursor is in. If line_rev is greater than 0, provide context before that.
 	@param context Place the context here
@@ -50,7 +50,7 @@ public:
 class RKFunctionArgHinter : public QObject {
 	Q_OBJECT
 public:
-	RKFunctionArgHinter (RKScriptContextProvider *provider, Kate::View* view);
+	RKFunctionArgHinter (RKScriptContextProvider *provider, KTextEditor::View* view);
 	~RKFunctionArgHinter ();
 
 	/** Try to show an arg hint now */
@@ -65,7 +65,7 @@ protected:
 	bool eventFilter (QObject *, QEvent *e);
 private:
 	RKScriptContextProvider *provider;
-	Kate::View *view;
+	KTextEditor::View *view;
 
 	Q3VBox *arghints_popup;
 	QLabel *arghints_popup_text;
@@ -100,7 +100,7 @@ public:
 /** set the current text (clear all previous text, and sets new text) */
 	void setText (const QString &text);
 /** copy current selection. Wrapper for use by external classes */
-	void copy ();
+//KDE4: no longer needed?	void copy ();
 
 	QString getDescription ();
 
@@ -121,9 +121,10 @@ public slots:
 /** show a code completion box if appropriate. Use tryCompletionProxy () instead, which will call this function after a timeout */
 	void tryCompletion ();
 /** called by the Kate part, if an entry was selected from the code completion box. Will remove the current symbol, as the kate part is about to re-add it (in completed form) */
-	void fixCompletion (KTextEditor::CompletionEntry *, QString *);
-	void setPopupMenu (Kate::View *);
-	void setPopupMenu ();
+// KDE4 TODO: still needed?
+//	void fixCompletion (KTextEditor::CompletionEntry *, QString *);
+//KDE4	void setPopupMenu (KTextEditor::View *);
+//KDE4	void setPopupMenu ();
 /** Show help about the current word. */
 	void showHelp ();
 /** run the currently selected command(s) */
@@ -136,8 +137,8 @@ protected:
 /** reimplemented from KMdiChildView: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e);
 private:
-	Kate::Document *m_doc;
-	Kate::View *m_view;
+	KTextEditor::Document *m_doc;
+	KTextEditor::View *m_view;
 	RKFunctionArgHinter *hinter;
 
 	QTimer *completion_timer;

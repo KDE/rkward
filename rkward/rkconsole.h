@@ -20,8 +20,8 @@
 
 #include <kparts/part.h>
 
-#include <kate/document.h>
-#include <kate/view.h>
+#include <ktexteditor/document.h>
+#include <ktexteditor/view.h>
 
 #include <q3ptrlist.h>
 //Added by qt3to4:
@@ -146,8 +146,8 @@ friend class RKConsolePart;
 	bool output_continuation;
 
 	RCommand *current_command;
-	Kate::Document *doc;
-	Kate::View *view;
+	KTextEditor::Document *doc;
+	KTextEditor::View *view;
 	RKFunctionArgHinter *hinter;
 
 	static RKConsole *main_console;

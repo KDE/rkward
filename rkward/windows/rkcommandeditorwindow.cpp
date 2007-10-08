@@ -23,11 +23,7 @@
 
 #include <ktexteditor/configinterface.h>
 #include <ktexteditor/sessionconfiginterface.h>
-#include <ktexteditor/viewcursorinterface.h>
-#include <ktexteditor/printinterface.h>
-#include <ktexteditor/encodinginterface.h>
 #include <ktexteditor/editorchooser.h>
-#include <ktexteditor/popupmenuinterface.h>
 
 #include <qlayout.h>
 #include <q3popupmenu.h>
@@ -51,7 +47,6 @@
 #include <kfiledialog.h>
 #include <kaction.h>
 #include <kstandardaction.h>
-#include <kaccel.h>
 #include <klibloader.h>
 #include <kiconloader.h>
 
@@ -70,13 +65,12 @@
 RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
 	RK_TRACE (COMMANDEDITOR);
 
-	KLibFactory *factory = KLibLoader::self()->factory( "libkatepart" );
-	if (factory) {
-		// Create the part
-		m_doc = (Kate::Document *) factory->create( this, "katepart", "KParts::ReadWritePart" );
-		RK_ASSERT (m_doc);
-		m_view = (Kate::View *) m_doc->widget();
-	}
+	KTextEditor::Editor* editor = KTextEditor::editor("katepart");
+	RK_ASSERT (editor);
+
+	m_doc = editor->createDocument (this);
+	RK_ASSERT (m_doc);
+	m_view = m_doc->createView (this);
 
 	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
 	RKCommonFunctions::removeContainers (m_doc, QStringList::split (',', "bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line"), true);
@@ -96,7 +90,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	connect (m_doc, SIGNAL (modifiedChanged ()), this, SLOT (updateCaption ()));		// of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 	connect (m_doc, SIGNAL (textChanged ()), this, SLOT (tryCompletionProxy ()));
 	connect (m_view, SIGNAL (filterInsertString (KTextEditor::CompletionEntry *, QString *)), this, SLOT (fixCompletion (KTextEditor::CompletionEntry *, QString *)));
-	connect (m_view, SIGNAL (gotFocus (Kate::View *)), this, SLOT (setPopupMenu (Kate::View *)));
+//KDE4	connect (m_view, SIGNAL (gotFocus (Kate::View *)), this, SLOT (setPopupMenu (Kate::View *)));
 	completion_timer = new QTimer (this);
 	connect (completion_timer, SIGNAL (timeout ()), this, SLOT (tryCompletion()));
 
@@ -108,7 +102,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	}
 
 	updateCaption ();	// initialize
-	QTimer::singleShot (0, this, SLOT (setPopupMenu ()));
+//KDE4	QTimer::singleShot (0, this, SLOT (setPopupMenu ()));
 }
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
@@ -117,6 +111,8 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	delete m_doc;
 }
 
+/*
+KDE4 TODO: still needed? Alternatives?
 void RKCommandEditorWindow::setPopupMenu () {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -126,7 +122,7 @@ void RKCommandEditorWindow::setPopupMenu () {
 
 void RKCommandEditorWindow::setPopupMenu (Kate::View*) {
 	setPopupMenu ();
-}
+}*/
 
 QString RKCommandEditorWindow::fullCaption () {
 	RK_TRACE (COMMANDEDITOR);
@@ -159,29 +155,20 @@ void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 	QWidget::closeEvent (e);
 }
 
+// KDE4 TODO: inline
 void RKCommandEditorWindow::setRHighlighting () {
+	RK_TRACE (COMMANDEDITOR);
+
 	// set syntax-highlighting for R
-	int modes_count = highlightingInterface (m_doc)->hlModeCount ();
-	bool found_mode = false;
-	int i;
-	for (i = 0; i < modes_count; ++i) {
-		if (highlightingInterface (m_doc)->hlModeName (i).toLower() == "r script") {
-			found_mode = true;
-			break;
-		}
-	}
-	if (found_mode) {
-		highlightingInterface (m_doc)->setHlMode (i);
-	} else {
-		RK_DO (qDebug ("No syntax highlighting definition found for r script."), COMMANDEDITOR, DL_WARNING);
-	}
+	m_doc->setHighlightingMode("R Script");
 }
 
+/* KDE4 no longer needed?
 void RKCommandEditorWindow::copy () {
 	RK_TRACE (COMMANDEDITOR);
 
 	m_view->copy ();
-}
+} */
 
 void RKCommandEditorWindow::setReadOnly (bool ro) {
 	RK_TRACE (COMMANDEDITOR);
@@ -191,7 +178,7 @@ void RKCommandEditorWindow::setReadOnly (bool ro) {
 
 bool RKCommandEditorWindow::openURL (const KUrl &url, bool use_r_highlighting, bool read_only){
 	RK_TRACE (COMMANDEDITOR);
-	if (m_doc->openURL (url)){
+	if (m_doc->openUrl (url)){
 		if (use_r_highlighting) setRHighlighting ();
 		setReadOnly (read_only);
 
@@ -214,8 +201,9 @@ bool RKCommandEditorWindow::isModified() {
 }
 
 void RKCommandEditorWindow::insertText (const QString &text) {
+// KDE4: inline?
 	RK_TRACE (COMMANDEDITOR);
-	m_doc->insertText (m_view->cursorLine  (), m_view->cursorColumn (), text);
+	m_view->insertText (text);
 	setFocus();
 }
 
@@ -236,12 +224,11 @@ void RKCommandEditorWindow::updateCaption () {
 
 void RKCommandEditorWindow::showHelp () {
 	RK_TRACE (COMMANDEDITOR);
-	uint para=0; uint p=0;
-	m_view->cursorPosition (&para, &p);
 
-	QString line = m_view->currentTextLine() + ' ';
+	KTextEditor::Cursor c = m_view->cursorPosition();
+	QString line = m_doc->line(c.line ()) + ' ';
 
-	RKHelpSearchWindow::mainHelpSearch ()->getContextHelp (line, p);
+	RKHelpSearchWindow::mainHelpSearch ()->getContextHelp (line, c.column());
 }
 
 void RKCommandEditorWindow::tryCompletionProxy () {
@@ -252,9 +239,10 @@ void RKCommandEditorWindow::tryCompletion () {
 	// TODO: merge this with RKConsole::doTabCompletion () somehow
 	RK_TRACE (COMMANDEDITOR);
 
-	uint para=0; uint cursor_pos=0;
-	m_view->cursorPosition (&para, &cursor_pos);
-	QString current_line = m_view->currentTextLine ();
+	KTextEditor::Cursor c = m_view->cursorPosition();
+	uint para=c.line(); uint cursor_pos=c.column();
+
+	QString current_line = m_doc->line (para);
 	if (current_line.findRev ("#", cursor_pos) >= 0) return;	// do not hint while in comments
 
 	QString current_symbol = RKCommonFunctions::getCurrentSymbol (current_line, cursor_pos, false);
@@ -262,7 +250,7 @@ void RKCommandEditorWindow::tryCompletion () {
 		RObject::RObjectMap map;
 		RObject::RObjectMap::const_iterator it;
 		RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
-
+/* KDE4: TODO rework!
 		if (!map.isEmpty ()) {
 			Q3ValueList<KTextEditor::CompletionEntry> list;
 	
@@ -273,10 +261,11 @@ void RKCommandEditorWindow::tryCompletion () {
 			}
 
 			m_view->showCompletionBox (list);
-		}
+		} */
 	}
 }
 
+/* KDE4 TODO: maybe this is not needed anymore?
 void RKCommandEditorWindow::fixCompletion (KTextEditor::CompletionEntry *entry, QString *string) {
 	RK_TRACE (COMMANDEDITOR);
 	RK_ASSERT (entry);
@@ -294,13 +283,13 @@ void RKCommandEditorWindow::fixCompletion (KTextEditor::CompletionEntry *entry, 
 
 	// remove the start of the word, as the whole string will be inserted by katepart
 	m_doc->removeText (current_line_num, word_start, current_line_num, word_end);
-}
+} */
 
 bool RKCommandEditorWindow::provideContext (unsigned int line_rev, QString *context, int *cursor_position) {
 	RK_TRACE (COMMANDEDITOR);
 
-	uint current_line_num=0; uint cursor_pos=0;
-	m_view->cursorPosition (&current_line_num, &cursor_pos);
+	KTextEditor::Cursor c = m_view->cursorPosition();
+	uint current_line_num=c.line(); uint cursor_pos=c.column();
 
 	if (line_rev > current_line_num) return false;
 
@@ -309,7 +298,7 @@ bool RKCommandEditorWindow::provideContext (unsigned int line_rev, QString *cont
 	} else {
 		*cursor_position = -1;
 	}
-	*context = m_doc->textLine (current_line_num - line_rev);
+	*context = m_doc->line (current_line_num - line_rev);
 
 	return true;
 }
@@ -317,7 +306,7 @@ bool RKCommandEditorWindow::provideContext (unsigned int line_rev, QString *cont
 void RKCommandEditorWindow::runSelection() {
 	RK_TRACE (COMMANDEDITOR);
 
-	QString command = m_doc->selection ();
+	QString command = m_view->selectionText ();
 	if (command.isEmpty ()) return;
 
 	RKConsole::pipeUserCommand (new RCommand (command, RCommand::User, QString::null));
@@ -326,12 +315,13 @@ void RKCommandEditorWindow::runSelection() {
 void RKCommandEditorWindow::runLine() {
 	RK_TRACE (COMMANDEDITOR);
 
-	QString command = m_view->currentTextLine ();
+	KTextEditor::Cursor c = m_view->cursorPosition();
+	QString command = m_doc->line (c.line());
 	if (!command.isEmpty ()) RKConsole::pipeUserCommand (new RCommand (command, RCommand::User, QString::null));
 
-	uint para=0; uint p=0;			// advance to next line (NOTE: m_view->down () won't work on auto-wrapped lines)
-	m_view->cursorPosition (&para, &p);
-	m_view->setCursorPosition (para+1, p);
+	// advance to next line (NOTE: m_view->down () won't work on auto-wrapped lines)
+	c.setLine(c.line() + 1);
+	m_view->setCursorPosition (c);
 }
 
 
@@ -351,21 +341,22 @@ void RKCommandEditorWindow::runAll() {
 
 #include "../core/rfunctionobject.h"
 
-RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, Kate::View* view) {
+RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTextEditor::View* view) {
 	RK_TRACE (COMMANDEDITOR);
 
 	RKFunctionArgHinter::provider = provider;
 	RKFunctionArgHinter::view = view;
 
-	const QObjectList *children = view->children ();
-	QObjectListIt it (*children);
+	const QObjectList children = view->children ();
+	QObjectList::const_iterator it = children.constBegin();
 	QObject *obj;
-	while ((obj = it.current()) != 0) {
+	while ((obj = *it) != 0) {
 		++it;
 		obj->installEventFilter (this);
 	}
 
-	arghints_popup = new Q3VBox (0, 0, WType_Popup);
+//KDE4: we could/should use KTextEditor::TextHintInterface
+	arghints_popup = new Q3VBox (0, 0, Qt::Popup);
 	arghints_popup->setFrameStyle (Q3Frame::Box | Q3Frame::Plain);
 	arghints_popup->setLineWidth (1);
 	arghints_popup_text = new QLabel (arghints_popup);
@@ -455,7 +446,7 @@ void RKFunctionArgHinter::tryArgHintNow () {
 	// initialize and show popup
 	arghints_popup_text->setText (effective_symbol + " (" + static_cast<RFunctionObject*> (object)->printArgs () + ')');
 	arghints_popup->resize (arghints_popup_text->sizeHint () + QSize (2, 2));
-	arghints_popup->move (view->mapToGlobal (view->cursorCoordinates () + QPoint (0, arghints_popup->height ())));
+	arghints_popup->move (view->mapToGlobal (view->cursorPositionCoordinates () + QPoint (0, arghints_popup->height ())));
 	arghints_popup->show ();
 }
 

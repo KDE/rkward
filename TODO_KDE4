@@ -19,3 +19,8 @@
 - adjust debian dir
 
 **Everything else**
+
+rkcommandeditorwindow
+	- code completion will be broken. Fix after porting.
+	- does the popup-menu still work? See SVN rev. 962.
+	- does highlighting work?

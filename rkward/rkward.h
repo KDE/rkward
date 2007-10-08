@@ -23,17 +23,21 @@ email                : tfry@users.sourceforge.net
 #include <config.h>
 #endif
 
-#include <dcopobject.h>
+#include<QDBusAbstractAdaptor>
 //Added by qt3to4:
 #include <QLabel>
 #include <QCloseEvent>
 
-/** This base provides the DCOP-Interface for RKWardMainWindow */
-class RKWardDCOPInterface : virtual public DCOPObject {
-	K_DCOP
-	k_dcop:
-
-	virtual void openHTMLHelp (const QString &url) = 0;
+/** This base provides the DBUS-Interface for RKWardMainWindow */
+class RKWardDBUSInterface : virtual public QDBusAbstractAdaptor {
+	Q_OBJECT
+	Q_CLASSINFO("D-Bus Interface", "org.kde.rkward")
+public:
+	RKWardDBUSInterface (QApplication *application);
+	~RKWardDBUSInterface () {};
+public slots:
+	/** Open the given html help page */
+	void openHTMLHelp (const QString &url);
 };
 
 
@@ -42,7 +46,6 @@ class RKWardDCOPInterface : virtual public DCOPObject {
 // include files for KDE 
 #include <kapplication.h>
 #include <k3mdimainfrm.h>
-#include <kaccel.h>
 #include <kaction.h>
 #include <kurl.h>
 #include <kparts/partmanager.h>
@@ -71,7 +74,7 @@ struct RKWardStartupOptions {
 /**
 The main class of rkward. This is where all strings are tied togther, controlls the initialization, and there are some of the most important slots for user actions. All real work is done elsewhere.
 */
-class RKWardMainWindow : public KMdiMainFrm, virtual public KParts::PartBase, virtual public RKWardDCOPInterface {
+class RKWardMainWindow : public KMdiMainFrm, virtual public KParts::PartBase {
 	Q_OBJECT
 public:
 /** construtor
@@ -87,8 +90,6 @@ public:
 	void fileOpenNoSave (const KUrl &url);
 /** open a workspace. If the current workspace is not empty, ask wether to save first. */
 	void fileOpenAskSave (const KUrl &url);
-/** opens the given url, assuming it is an HTML-help page. Like openHTML (), but with a QString parameter instead for DCOP. Generally you should use openHTML () instead. */
-	void openHTMLHelp (const QString &url);
 /** opens the given url, assuming it is an HTML-help page. */
 	void openHTML (const KUrl &url);
 

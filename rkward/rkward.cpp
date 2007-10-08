@@ -93,6 +93,20 @@ void bogusCalls () {
 	new RKEditObjectAgent (QStringList (), 0);
 }
 
+/** DBUS interface **/
+
+void RKWardDBUSInterface::RKWardDBUSInterface (QApplication *application) : QDBusAbstractAdaptor(application) {
+	RK_TRACE (APP);
+}
+
+void RKWardDBUSInterface::openHTMLHelp (const QString &url) {
+	RK_TRACE (APP);
+
+	RKWorkplace::mainWorkplace ()->openHelpWindow (url);
+}
+
+/** Main window **/
+
 //static
 RKWardMainWindow *RKWardMainWindow::rkward_mainwin = 0;
 
@@ -156,10 +170,11 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : DCOPObject 
 	connect (partManager (), SIGNAL (partAdded (KParts::Part *)), this, SLOT (partAdded (KParts::Part *)));
 	connect (partManager (), SIGNAL (partRemoved (KParts::Part *)), this, SLOT (partRemoved (KParts::Part *)));
 
-	if (!kapp->dcopClient ()->isRegistered ()) {
-		kapp->dcopClient ()->registerAs ("rkward");
-		kapp->dcopClient ()->setDefaultObject (objId ());
-	}
+	// create the DBUS adaptor:
+	new RKWardDBUSInterface (qApp);
+
+	// connect to D-Bus and register as an object:
+	QDBus::sessionBus ().registerObject ("/MainApplication", qApp);
 }
 
 RKWardMainWindow::~RKWardMainWindow() {
@@ -737,11 +752,6 @@ void RKWardMainWindow::openHTML (const KUrl &url) {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->openHelpWindow (url);
-}
-
-void RKWardMainWindow::openHTMLHelp (const QString & url) {
-	RK_TRACE (APP);
-	openHTML (url);
 }
 
 void RKWardMainWindow::setCaption (const QString &) {
