@@ -17,7 +17,7 @@
 
 #include "rkpthreadsupport.h"
 
-#include "../../config.h"
+#include "pthread_config.h"
 
 #include <qstring.h>
 #include "../debug.h"

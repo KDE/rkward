@@ -1,13 +1,13 @@
 # TODO!
+INCLUDE(CheckIncludeFile)
+INCLUDE(CheckLibraryExists)
 
-# dnl check for pthread stack limit getting functions
-# AC_DEFUN([CHECK_PTHREAD_FLAVOR],
-# [
-# ac_check_pthread_flavor_save_LIBS="$LIBS"
-# LIBS="$LIBS $LIBPTHREAD"
-# AC_CHECK_HEADERS([pthread_np.h])
-# AC_CHECK_FUNCS([pthread_getattr_np pthread_attr_get_np pthread_get_stacksize_np pthread_get_stackaddr_np])
-# LIBS="$ac_check_pthread_flavor_save_LIBS"])
-# ])
-# 
-# 
+CHECK_INCLUDE_FILE(phthread_np.h HAVE_PTHREAD_NP_H)
+
+SET (CMAKE_REQUIRED_FLAGS ${CMAKE_THREAD_LIBS_INIT})
+CHECK_LIBRARY_EXISTS ("" pthread_getattr_np "" HAVE_PTHREAD_GETATTR_NP)
+CHECK_LIBRARY_EXISTS ("" pthread_attr_get_np "" HAVE_PTHREAD_ATTR_GET_NP)
+CHECK_LIBRARY_EXISTS ("" pthread_get_stacksize_np "" HAVE_PTHREAD_GET_STACKSIZE_NP)
+CHECK_LIBRARY_EXISTS ("" pthread_get_stackaddr_np "" HAVE_PTHREAD_GET_STACKADDR_NP)
+
+CONFIGURE_FILE(pthread_config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/pthread_config.h)

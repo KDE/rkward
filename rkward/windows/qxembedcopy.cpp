@@ -67,7 +67,7 @@
 # include <kxerrorhandler.h>
 
 // L0002: Is file config.h KDE specific?
-# include <config.h>
+//# include <config.h>
 # ifdef HAVE_UNISTD_H
 #  include <unistd.h>
 #  ifdef HAVE_USLEEP

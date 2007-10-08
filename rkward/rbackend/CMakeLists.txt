@@ -22,7 +22,7 @@ SET(rbackend_STAT_SRCS
 KDE3_AUTOMOC(${rbackend_STAT_SRCS})
 
 ADD_LIBRARY(rbackend STATIC ${rbackend_STAT_SRCS})
-
+TARGET_LINK_LIBRARIES(rbackend ${R_USED_LIBS})
 
 ########### install files ###############
 

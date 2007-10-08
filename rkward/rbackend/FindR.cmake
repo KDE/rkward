@@ -55,7 +55,7 @@ ELSE(NOT R_H)
 	MESSAGE(STATUS "Found at ${R_H}")
 	GET_FILENAME_COMPONENT(R_INCLUDEDIR ${R_H}
 				PATH)
-	SET(R_INCLUDEFLAG -I${R_INCLUDEDIR})
+	INCLUDE_DIRECTORIES(${R_INCLUDEDIR})
 ENDIF(NOT R_H)
 
 # check for existence of libR.so
@@ -71,7 +71,8 @@ ELSE(NOT LIBR_SO)
 	MESSAGE(STATUS "Exists at ${LIBR_SO}")
 	GET_FILENAME_COMPONENT(R_SHAREDLIBDIR ${LIBR_SO}
 				PATH)
-	SET(R_SHAREDLIBFLAG -L${R_SHAREDLIBDIR} -lR)
+	LINK_DIRECTORIES(${R_SHAREDLIBDIR})
+	SET(R_USED_LIBS R)
 ENDIF(NOT LIBR_SO)
 
 # for at least some versions of R, we seem to have to link against -lRlapack. Else loading some
@@ -81,13 +82,13 @@ ENDIF(NOT LIBR_SO)
 MESSAGE(STATUS "Checking whether we should link against libRlapack.so")
 FIND_FILE(LIBR_LAPACK
 	libRlapack.so
-	PATHS ${R_LIBDIR}
+	PATHS ${R_SHAREDLIBDIR}
 	NO_DEFAULT_PATH)
 IF(NOT LIBR_LAPACK)
-	MESSAGE(STATUS "No, ${R_LIBDIR}/libRlapack.so does not exist")
+	MESSAGE(STATUS "No, ${R_SHAREDLIBDIR}/libRlapack.so does not exist")
 ELSE(NOT LIBR_LAPACK)
 	MESSAGE(STATUS "Yes, ${LIBR_LAPACK} exists")
-	SET(R_LIBADDS ${R_LIBADDS} -lRlapack -lgfortran)
+	SET(R_USED_LIBS ${R_USED_LIBS} Rlapack gfortran)
 ENDIF(NOT LIBR_LAPACK)
 
 # for at least some versions of R, we seem to have to link against -lRblas. Else loading some
@@ -97,13 +98,13 @@ ENDIF(NOT LIBR_LAPACK)
 MESSAGE(STATUS "Checking whether we should link against libRblas.so")
 FIND_FILE(LIBR_BLAS
 	libRblas.so
-	PATHS ${R_LIBDIR}
+	PATHS ${R_SHAREDLIBDIR}
 	NO_DEFAULT_PATH)
 IF(NOT LIBR_BLAS)
-	MESSAGE(STATUS "No, ${R_LIBDIR}/libRblas.so does not exist")
+	MESSAGE(STATUS "No, ${R_SHAREDLIBDIR}/libRblas.so does not exist")
 ELSE(NOT LIBR_BLAS)
 	MESSAGE(STATUS "Yes, ${LIBR_BLAS} exists")
-	SET(R_LIBADDS ${R_LIBADDS} -lRblas)
+	SET(R_USED_LIBS ${R_USED_LIBS} Rblas)
 ENDIF(NOT LIBR_BLAS)
 
 
@@ -134,3 +135,4 @@ IF(NOT EXISTS ${R_LIBDIR})
 ENDIF(NOT EXISTS ${R_LIBDIR})
 	MESSAGE(STATUS "Will use ${R_LIBDIR}")
 ENDIF(NOT EXISTS ${R_LIBDIR})
+
