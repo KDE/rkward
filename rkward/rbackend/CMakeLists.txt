@@ -23,6 +23,8 @@ KDE3_AUTOMOC(${rbackend_STAT_SRCS})
 
 ADD_LIBRARY(rbackend STATIC ${rbackend_STAT_SRCS})
 TARGET_LINK_LIBRARIES(rbackend ${R_USED_LIBS})
+LINK_DIRECTORIES(${R_SHAREDLIBDIR})
+INCLUDE_DIRECTORIES(${R_INCLUDEDIR})
 
 ########### install files ###############
 

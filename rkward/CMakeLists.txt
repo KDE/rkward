@@ -16,31 +16,31 @@ ADD_SUBDIRECTORY( pages )
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE3_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
 
 SET(RKWard_Sources
-  rkward.cpp
-  main.cpp
-  rkglobals.cpp
-  robjectbrowser.cpp
-  robjectviewer.cpp
-  rkconsole.cpp
-  rkwardapplication.cpp
+	rkward.cpp
+	main.cpp
+	rkglobals.cpp
+	robjectbrowser.cpp
+	robjectviewer.cpp
+	rkconsole.cpp
+	rkwardapplication.cpp
 )
-  
 
 ########### next target ###############
 
-
+# auto-gen sources
 KDE3_AUTOMOC(${RKWard_Sources})
+KDE3_ADD_DCOP_SKELS(RKWard_Sources rkward.h)
 
-SET( RKWard_DCOP_SKEL_SRCS
-   rkward.h
-   )
 
-KDE3_ADD_DCOP_SKELS(RKWard_Sources ${RKWard_DCOP_SKEL_SRCS})
+# somehow the needed libdirs for R do not get passed down automatically
+GET_DIRECTORY_PROPERTY(R_SHAREDLIBDIR DIRECTORY rbackend LINK_DIRECTORIES)
+LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 
 KDE3_ADD_EXECUTABLE(rkward.bin ${RKWard_Sources})
 
-TARGET_LINK_LIBRARIES(rkward.bin ${QT_AND_KDECORE_LIBS} windows agents dialogs plugin settings dataeditor core rbackend scriptbackends misc khtml kmdi kdeui R katepartinterfaces )
+TARGET_LINK_LIBRARIES(rkward.bin ${QT_AND_KDECORE_LIBS} windows agents dialogs plugin settings dataeditor core scriptbackends rbackend misc khtml kmdi kdeui katepartinterfaces )
 
+# wrapper script
 ADD_CUSTOM_COMMAND(
    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/rkward
    COMMAND perl ./makerkwardscript.pl rkward.sh.template "$(R_HOMEDIR)" > rkward; ${CMAKE_CURRENT_BINARY_DIR}/rkward

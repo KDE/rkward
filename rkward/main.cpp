@@ -59,9 +59,9 @@
 #include "rkward.h"
 #include "rkwardapplication.h"
 
-#include "config.h"
+#include "debug.h"
 
-#include "version.h"
+#include "../version.h"
 
 int RK_Debug_Level = 0;
 int RK_Debug_Flags = ALL;
