@@ -1,21 +1,21 @@
 #!/usr/bin/php
 <?
 
-# filthy script to generate a Makefile.am for the plugins, and pages directories, installing all plugins and help pages as found.
+# filthy script to generate a CMakeLists.txt for the plugins, and pages directories, installing all plugins and help pages as found.
 # usage: (in plugins dir)
-# ./makemakefileam.php > Makefile.am
+# ./makecmakelists.php > CMakeLists.txt
 # usage: (in pages dir)
-# ../plugins/makemakefileam.php pages > Makefile.am
+# ../plugins/makecmakelists.php pages > CMakeLists.txt
 
 if ($argc < 2) {
 	$base_dir = "";
-	readsubs ("", "plugins");
+	readsubs ("");
 } else {
 	$base_dir = $argv[1];
-	readsubs ("", $argv[1]);
+	readsubs ("");
 }
 
-function readsubs ($dir, $prefix) {
+function readsubs ($dir) {
 	global $base_dir;
 
 	if ($dir == "") {
@@ -27,13 +27,13 @@ function readsubs ($dir, $prefix) {
 	}
 	$subdirs = array ();
 	$files = array ();
-	
-	echo (strtr ($prefix, "/", "X") . "dir = $(kde_datadir)/rkward/" . $base_dir . $dir . "\n");
+
+	$destination = "share/apps/rkward/" . $base_dir . $dir;
 	
 	while (false !== ($file = readdir($thisdir))) {
 		if (!is_dir ($ndir . $file)) {
 			if ((substr ($file, -4) == ".xml") || (substr ($file, -4) == ".php") || (substr ($file, -10) == ".pluginmap") || (substr ($file, -4) == ".rkh") || (substr ($file, -4) == ".png") || (substr ($file, -4) == ".css")) {
-				if ($file != "makemakefileam.php") {
+				if ($file != "makecmakelists.php") {
 					array_push ($files, $file);
 				}
 			}
@@ -45,16 +45,16 @@ function readsubs ($dir, $prefix) {
 	}
 
 	if (count ($files)) {
-		echo ("dist_" . strtr ($prefix, "/", "X") . "_DATA =");
+		echo ("INSTALL( FILES");
 		
 		foreach ($files as $item) {
-			echo (" \\\n\t" . $ndir . $item);
+			echo("\n\t" . $ndir . $item);
 		}
-		echo ("\n\n");
+		echo ("\n\tDESTINATION " . $destination . " )\n\n");
 	}
 	
 	foreach ($subdirs as $sub) {
-		readsubs ($ndir . $sub, $prefix . "/" . strtr ($sub, "_.", "UD"));
+		readsubs ($ndir . $sub);
 	}
 	
 	closedir ($thisdir);

@@ -1,0 +1,73 @@
+ADD_SUBDIRECTORY( plugins ) 
+ADD_SUBDIRECTORY( dataeditor ) 
+ADD_SUBDIRECTORY( settings ) 
+ADD_SUBDIRECTORY( plugin ) 
+ADD_SUBDIRECTORY( agents ) 
+ADD_SUBDIRECTORY( rbackend ) 
+ADD_SUBDIRECTORY( dialogs ) 
+ADD_SUBDIRECTORY( scriptbackends ) 
+ADD_SUBDIRECTORY( misc ) 
+ADD_SUBDIRECTORY( core ) 
+ADD_SUBDIRECTORY( icons ) 
+ADD_SUBDIRECTORY( windows ) 
+ADD_SUBDIRECTORY( syntax ) 
+ADD_SUBDIRECTORY( pages ) 
+
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE3_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
+
+SET(RKWard_Sources
+  rkward.cpp
+  main.cpp
+  rkglobals.cpp
+  robjectbrowser.cpp
+  robjectviewer.cpp
+  rkconsole.cpp
+  rkwardapplication.cpp
+)
+  
+
+########### next target ###############
+
+
+KDE3_AUTOMOC(${RKWard_Sources})
+
+SET( RKWard_DCOP_SKEL_SRCS
+   rkward.h
+   )
+
+KDE3_ADD_DCOP_SKELS(RKWard_Sources ${RKWard_DCOP_SKEL_SRCS})
+
+KDE3_ADD_EXECUTABLE(rkward.bin ${RKWard_Sources})
+
+TARGET_LINK_LIBRARIES(rkward.bin ${QT_AND_KDECORE_LIBS} windows agents dialogs plugin settings dataeditor core rbackend scriptbackends misc khtml kmdi kdeui R katepartinterfaces )
+
+ADD_CUSTOM_COMMAND(
+   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/rkward
+   COMMAND perl ./makerkwardscript.pl rkward.sh.template "$(R_HOMEDIR)" > rkward; ${CMAKE_CURRENT_BINARY_DIR}/rkward
+   DEPENDS makerkwardscript.pl rkward.sh.template
+ )
+
+########### install files ###############
+
+INSTALL(FILES   rkwardui.rc rkconsolepart.rc DESTINATION share/apps/rkward )
+INSTALL(TARGETS rkward.bin DESTINATION bin)
+INSTALL(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/rkward DESTINATION bin)
+
+# TODO:
+#INSTALL(FILES rkward.desktop DESTINATION ${XDG_APPS_DIR})
+# icons?!
+
+# TODO:
+#install-data-local:
+#	$(mkinstalldirs) $(kde_appsdir)/Applications/
+#	$(INSTALL_DATA) $(srcdir)/rkward.desktop $(kde_appsdir)/Applications/rkward.desktop
+#	$(mkinstalldirs) $(kde_icondir)/locolor/32x32/apps/
+#	$(INSTALL_DATA) $(srcdir)/lo32-app-rkward.png $(kde_icondir)/locolor/32x32/apps/rkward.png
+#	$(mkinstalldirs) $(kde_icondir)/locolor/16x16/apps/
+#	$(INSTALL_DATA) $(srcdir)/lo16-app-rkward.png $(kde_icondir)/locolor/16x16/apps/rkward.png
+#
+#uninstall-local:
+#	-rm -f $(kde_appsdir)/Applications/rkward.desktop
+#	-rm -f $(kde_icondir)/locolor/32x32/apps/rkward.png
+#	-rm -f $(kde_icondir)/locolor/16x16/apps/rkward.png
+#

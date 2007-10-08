@@ -1,0 +1,42 @@
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE3_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
+
+
+########### next target ###############
+
+SET(misc_STAT_SRCS
+   rkspinbox.cpp
+   getfilenamewidget.cpp
+   rkobjectlistview.cpp
+   rkcanceldialog.cpp
+   xmlhelper.cpp
+   multistringselector.cpp
+   rkcommonfunctions.cpp
+   rkprogresscontrol.cpp
+   rksaveobjectchooser.cpp
+   rkdummypart.cpp
+   )
+
+KDE3_AUTOMOC(${misc_STAT_SRCS})
+
+ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})
+
+
+########### install files ###############
+
+
+
+
+#original Makefile.am contents follow:
+
+#INCLUDES = $(all_includes)
+#METASOURCES = AUTO
+#noinst_LIBRARIES =  libmisc.a
+#libmisc_a_SOURCES = rkspinbox.cpp \
+#	getfilenamewidget.cpp rkobjectlistview.cpp rkcanceldialog.cpp xmlhelper.cpp \
+#	multistringselector.cpp rkcommonfunctions.cpp rkprogresscontrol.cpp rksaveobjectchooser.cpp \
+#	rkdummypart.cpp
+#noinst_HEADERS = rkspinbox.h getfilenamewidget.h \
+#	rkobjectlistview.h rkcanceldialog.h xmlhelper.h multistringselector.h \
+#	rkcommonfunctions.h rkprogresscontrol.h rksaveobjectchooser.h \
+#	rkdummypart.h
+#

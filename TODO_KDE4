@@ -1,0 +1,23 @@
+**CMake**
+- message extraction
+- po file handling
+- handbook installation
+- R package building
+- icons
+- rkward.desktop
+- syntax definitions
+- KDE3 -> KDE4
+- test
+	- configuration
+		- R
+		- pthreads
+	- installation
+- clean up
+- documentation
+	- NOTES
+	- INSTALL
+	- create a dummy ./configure
+	- wiki / web
+- adjust debian dir
+
+**Everything else**
