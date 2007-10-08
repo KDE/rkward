@@ -2,30 +2,10 @@ ADD_SUBDIRECTORY( rkward )
 
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE3_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
 
+CONFIGURE_FILE(
+	"${CMAKE_CURRENT_SOURCE_DIR}/rpackage_install.cmake.in"
+	"${CMAKE_CURRENT_BINARY_DIR}/rpackage_install.cmake"
+	@ONLY)
 
-########### install files ###############
-
-
-
-
-#original Makefile.am contents follow:
-
-#SUBDIRS = rkward
-#
-#all:
-#	-${R_HOMEDIR}/bin/R CMD build rkward
-#install:
-#	-mkdir -p tmp ; \
-#	OLDTMP=$$TMPDIR ; \
-#	export TMPDIR=`pwd`/tmp ; \
-#	mkdir -p $(DESTDIR)/$(R_LIBDIR) ; \
-#	${R_HOMEDIR}/bin/R CMD INSTALL -l $(DESTDIR)/$(R_LIBDIR) rkward ; \
-#	export TMPDIR=$$OLDTMP
-#uninstall:
-#	-${R_HOMEDIR}/bin/R CMD REMOVE -l $(DESTDIR)/$(R_LIBDIR) rkward
-#check:
-#	-${R_HOMEDIR}/bin/R CMD check rkward
-#clean \
-#distclean:
-#	-rm -f rkward_*.tar.gz
-#	-rm -rf tmp
+INSTALL(CODE "EXEC_PROGRAM(\"export DESTDIR=${DESTDIR}\")")
+INSTALL(SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/rpackage_install.cmake -DDESTDIR=${DESTDIR})
