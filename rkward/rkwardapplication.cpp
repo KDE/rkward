@@ -20,7 +20,7 @@
 #include <X11/X.h>
 #include <X11/Xlib.h>
 
-#include <kwin.h>
+#include <kwindowsystem.h>
 #include <netwm_def.h>
 
 #include "debug.h"
@@ -95,7 +95,7 @@ bool RKWardApplication::x11EventFilter (XEvent *e) {
 	if (detect_x11_creations) {
 		if (e->type == CreateNotify) {
 			if (e->xcreatewindow.parent == qt_xrootwin ()) {
-				KWin::WindowInfo info = KWin::windowInfo (e->xcreatewindow.window);
+				KWindowSystem::WindowInfo info = KWindowSystem::windowInfo (e->xcreatewindow.window);
 				if ((info.windowType (0xFFFF) != 0) && (!info.name ().isEmpty ())) {
 					RK_ASSERT (!created_window);
 					created_window = e->xcreatewindow.window;
@@ -110,7 +110,7 @@ bool RKWardApplication::x11EventFilter (XEvent *e) {
 	if (e->type == PropertyNotify) {
 		if (e->xproperty.atom == wm_name_property) {
 			if (name_watchers_list.contains (e->xproperty.window)) {
-				KWin::WindowInfo wininfo = KWin::windowInfo (e->xproperty.window);
+				KWindowSystem::WindowInfo wininfo = KWindowSystem::windowInfo (e->xproperty.window);
 				name_watchers_list[e->xproperty.window]->setCaption (wininfo.name ());
 				return true;
 			}

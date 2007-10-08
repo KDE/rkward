@@ -124,14 +124,14 @@ void RKWorkplace::registerToolWindow (RKMDIWindow *window) {
 	addWindow (window, true);
 }
 
-bool RKWorkplace::openScriptEditor (const KURL &url, bool use_r_highlighting, bool read_only, const QString &force_caption) {
+bool RKWorkplace::openScriptEditor (const KUrl &url, bool use_r_highlighting, bool read_only, const QString &force_caption) {
 	RK_TRACE (APP);
 
 // is this url already opened?
 	if (!url.isEmpty ()) {
 		for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
 			if ((*it)->type == RKMDIWindow::CommandEditorWindow) {
-				KURL ourl = static_cast<RKCommandEditorWindow *> (*it)->url ();
+				KUrl ourl = static_cast<RKCommandEditorWindow *> (*it)->url ();
 				if (url.equals (ourl, true)) {
 					(*it)->activate ();
 					return true;
@@ -145,7 +145,7 @@ bool RKWorkplace::openScriptEditor (const KURL &url, bool use_r_highlighting, bo
 	if (!url.isEmpty ()) {
 		if (!editor->openURL (url, use_r_highlighting, read_only)) {
 			delete editor;
-			KMessageBox::messageBox (view (), KMessageBox::Error, i18n ("Unable to open \"%1\"").arg (url.prettyURL ()), i18n ("Could not open command file"));
+			KMessageBox::messageBox (view (), KMessageBox::Error, i18n ("Unable to open \"%1\"").arg (url.prettyUrl ()), i18n ("Could not open command file"));
 			return false;
 		}
 	}
@@ -155,7 +155,7 @@ bool RKWorkplace::openScriptEditor (const KURL &url, bool use_r_highlighting, bo
 	return true;
 }
 
-void RKWorkplace::openHelpWindow (const KURL &url, bool only_once) {
+void RKWorkplace::openHelpWindow (const KUrl &url, bool only_once) {
 	RK_TRACE (APP);
 
 	if (url.isEmpty ()) {
@@ -178,7 +178,7 @@ void RKWorkplace::openHelpWindow (const KURL &url, bool only_once) {
 	addWindow (hw);
 }
 
-void RKWorkplace::openOutputWindow (const KURL &url) {
+void RKWorkplace::openOutputWindow (const KUrl &url) {
 	RK_TRACE (APP);
 
 	RKOutputWindow::refreshOutput (true, true, false);

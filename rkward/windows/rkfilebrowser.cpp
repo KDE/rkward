@@ -86,14 +86,14 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : Q3VBox (parent) {
 	KToolBar *toolbar = new KToolBar (this);
 	toolbar->setIconSize (16);
 
-	urlbox = new KURLComboBox (KURLComboBox::Directories, true, this);
-	KURLCompletion* cmpl = new KURLCompletion (KURLCompletion::DirCompletion);
+	urlbox = new KUrlComboBox (KUrlComboBox::Directories, true, this);
+	KUrlCompletion* cmpl = new KUrlCompletion (KUrlCompletion::DirCompletion);
 	urlbox->setCompletionObject (cmpl);
 	urlbox->setAutoDeleteCompletionObject (true);
 	urlbox->setSizePolicy (QSizePolicy (QSizePolicy::Expanding, QSizePolicy::Fixed));
 	urlbox->listBox ()->installEventFilter (this);
 
-	dir = new KDirOperator (KURL (), this);
+	dir = new KDirOperator (KUrl (), this);
 	dir->setView(KFile::Simple);
 	dir->setPreviewWidget (0);
 
@@ -104,9 +104,9 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : Q3VBox (parent) {
 	dir->actionCollection ()->action ("short view")->plug (toolbar);
 	dir->actionCollection ()->action ("detailed view")->plug (toolbar);
 
-	connect (dir, SIGNAL (urlEntered (const KURL &)), this, SLOT (urlChangedInView (const KURL &)));
+	connect (dir, SIGNAL (urlEntered (const KUrl &)), this, SLOT (urlChangedInView (const KUrl &)));
 	connect (urlbox, SIGNAL (returnPressed (const QString &)), this, SLOT (urlChangedInCombo (const QString &)));
-	connect (urlbox, SIGNAL (urlActivated (const KURL&)), this, SLOT (urlChangedInCombo (const KURL&)));
+	connect (urlbox, SIGNAL (urlActivated (const KUrl&)), this, SLOT (urlChangedInCombo (const KUrl&)));
 
 	connect (dir, SIGNAL (fileSelected (const KFileItem*)), this, SLOT (fileActivated (const KFileItem*)));
 
@@ -124,7 +124,7 @@ void RKFileBrowserWidget::setURL (const QString &url) {
 	dir->setURL (url, true);
 }
 
-void RKFileBrowserWidget::urlChangedInView (const KURL &url) {
+void RKFileBrowserWidget::urlChangedInView (const KUrl &url) {
 	RK_TRACE (APP);
 
 	urlbox->setURL (url);
@@ -136,7 +136,7 @@ void RKFileBrowserWidget::urlChangedInCombo (const QString &url) {
 	dir->setURL (url, true);
 }
 
-void RKFileBrowserWidget::urlChangedInCombo (const KURL &url) {
+void RKFileBrowserWidget::urlChangedInCombo (const KUrl &url) {
 	RK_TRACE (APP);
 
 	dir->setURL (url, true);

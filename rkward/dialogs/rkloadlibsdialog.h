@@ -34,7 +34,7 @@ class QWidget;
 class QCloseEvent;
 class RCommandChain;
 class QCheckBox;
-class KProcess;
+class K3Process;
 class PackageInstallParamsWidget;
 class InstallPackagesWidget;
 
@@ -77,9 +77,9 @@ protected slots:
 /** User1-button was clicked, i.e.: "Configure Repositories" */
 	void slotUser1 ();
 	void childDeleted ();
-	void processExited (KProcess *);
-	void installationProcessOutput (KProcess *proc, char *buffer, int buflen);
-	void installationProcessError (KProcess *proc, char *buffer, int buflen);
+	void processExited (K3Process *);
+	void installationProcessOutput (K3Process *proc, char *buffer, int buflen);
+	void installationProcessError (K3Process *proc, char *buffer, int buflen);
 	void automatedInstall ();
 private:
 	void tryDestruct ();

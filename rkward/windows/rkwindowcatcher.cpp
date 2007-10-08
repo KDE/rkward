@@ -27,7 +27,7 @@
 
 #include <kmessagebox.h>
 #include <klocale.h>
-#include <kwin.h>
+#include <kwindowsystem.h>
 
 #include "../rkwardapplication.h"
 #include "rkworkplace.h"
@@ -113,7 +113,7 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	capture->setProtocol (QXEmbedCopy::XPLAIN);
 	connect (capture, SIGNAL (embeddedWindowDestroyed ()), this, SLOT (deleteLater ()));
 
-	KWin::WindowInfo wininfo = KWin::windowInfo (window_to_embed);
+	KWindowSystem::WindowInfo wininfo = KWindowSystem::windowInfo (window_to_embed);
 	setGeometry (wininfo.frameGeometry ());
 	setCaption (wininfo.name ());
 	setIcon (SmallIcon ("kcmx"));			// looks like an X, here
@@ -194,7 +194,7 @@ void RKCaughtX11Window::setFixedSizeManual () {
 
 // TODO: not very pretty, yet
 	KDialogBase *dialog = new KDialogBase (this, 0, true, i18n ("Specify fixed size"), KDialogBase::Ok|KDialogBase::Cancel);
-	Q3VBox *page = dialog->makeVBoxMainWidget ();
+	KVBox *page = dialog->makeVBoxMainWidget ();
 
 	QLabel *label = new QLabel (i18n ("Width"), page);
 	KIntSpinBox *width = new KIntSpinBox (5, 32767, 1, xembed_container->width (), 10, page);
@@ -238,11 +238,11 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 
 // TODO: not very pretty, yet
 	KDialogBase *dialog = new KDialogBase (this, 0, true, i18n ("Specify R object"), KDialogBase::Ok|KDialogBase::Cancel);
-	Q3VBox *page = dialog->makeVBoxMainWidget ();
+	KVBox *page = dialog->makeVBoxMainWidget ();
 
 	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (page, "my.plot", i18n ("Specify the R object name, you want to save the graph to"));
-	connect (chooser, SIGNAL (okStatusChanged (bool)), dialog, SLOT (enableButtonOK (bool)));
-	if (!chooser->isOk ()) dialog->enableButtonOK (false);
+	connect (chooser, SIGNAL (okStatusChanged (bool)), dialog, SLOT (enableButtonOk (bool)));
+	if (!chooser->isOk ()) dialog->enableButtonOk (false);
 
 	dialog->exec ();
 

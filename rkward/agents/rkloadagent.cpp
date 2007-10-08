@@ -33,7 +33,7 @@
 
 #define WORKSPACE_LOAD_COMMAND 1
 
-RKLoadAgent::RKLoadAgent (const KURL &url, bool merge) {
+RKLoadAgent::RKLoadAgent (const KUrl &url, bool merge) {
 	RK_TRACE (APP);
 	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Loading Workspace ..."));
 

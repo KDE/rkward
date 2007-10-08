@@ -25,7 +25,7 @@
 #include <QPaintEvent>
 
 #include <kparts/part.h>
-#include <kmdimainfrm.h>
+#include <k3mdimainfrm.h>
 
 class RKWorkplace;
 

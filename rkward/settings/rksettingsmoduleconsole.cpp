@@ -26,6 +26,7 @@
 #include <qlabel.h>
 //Added by qt3to4:
 #include <Q3VBoxLayout>
+#include <kglobal.h>
 
 #include "../rbackend/rcommand.h"
 #include "../rkglobals.h"
@@ -134,7 +135,7 @@ void RKSettingsModuleConsole::loadSettings (KConfig *config) {
 QStringList RKSettingsModuleConsole::loadCommandHistory () {
 	RK_TRACE (SETTINGS);
 
-	KConfig *config = kapp->config ();
+	KConfig *config = KGlobal::config ();
 	config->setGroup ("Console Settings");
 	return config->readListEntry ("history");
 }
@@ -143,7 +144,7 @@ QStringList RKSettingsModuleConsole::loadCommandHistory () {
 void RKSettingsModuleConsole::saveCommandHistory (const QStringList &list) {
 	RK_TRACE (SETTINGS);
 
-	KConfig *config = kapp->config ();
+	KConfig *config = KGlobal::config ();
 	config->setGroup ("Console Settings");
 	if (save_history) {
 		config->writeEntry ("history", list);

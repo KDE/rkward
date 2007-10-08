@@ -37,7 +37,7 @@
 #include <QEvent>
 
 #include <klocale.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 
 #include "../debug.h"
 
@@ -284,9 +284,9 @@ RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
 
 	setXMLFile ("rkcommandlogpart.rc");
 
-	copy = KStdAction::copy (log->getView (), SLOT (copy ()), actionCollection (), "log_copy");
-	KStdAction::clear (log, SLOT (clearLog ()), actionCollection (), "log_clear");
-	KStdAction::selectAll (log->getView (), SLOT (selectAll ()), actionCollection (), "log_select_all");
+	copy = KStandardAction::copy (log->getView (), SLOT (copy ()), actionCollection (), "log_copy");
+	KStandardAction::clear (log, SLOT (clearLog ()), actionCollection (), "log_clear");
+	KStandardAction::selectAll (log->getView (), SLOT (selectAll ()), actionCollection (), "log_select_all");
 	new KAction (i18n ("Configure"), 0, log, SLOT (configureLog ()), actionCollection (), "log_configure");
 	run_selection = new KAction (i18n ("Run selection"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), log, SLOT (runSelection ()), actionCollection (), "log_run_selection");
 

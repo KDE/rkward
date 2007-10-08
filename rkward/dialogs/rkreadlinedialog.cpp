@@ -36,7 +36,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 	RK_TRACE (DIALOGS);
 	RK_ASSERT (command);
 
-	Q3VBox *page = makeVBoxMainWidget ();
+	KVBox *page = makeVBoxMainWidget ();
 	new QLabel (caption, page);
 
 	int screen_width = qApp->desktop ()->width () - 2*marginHint() - 2*spacingHint ();		// TODO is this correct on xinerama?

@@ -51,7 +51,7 @@ public:
 	};
 	struct StartupDialogResult {
 		Result result;
-		KURL open_url;
+		KUrl open_url;
 	};
 
 	StartupDialog (QWidget *parent, StartupDialogResult *result, KRecentFilesAction *recent_files);

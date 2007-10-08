@@ -92,7 +92,7 @@ public:
 /** open given URL. 
 @param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file
 @param read_only Open the file in read-only mode */
-	bool openURL (const KURL &url, bool use_r_highlighting=true, bool read_only=false);
+	bool openURL (const KUrl &url, bool use_r_highlighting=true, bool read_only=false);
 /** returns, whether the document was modified since the last save */
 	bool isModified ();
 /** insert the given text into the document at the current cursor position. Additionally, focuses the view */
@@ -110,7 +110,7 @@ public:
 	void setReadOnly (bool ro);
 
 /** Return current url */
-	KURL url ();
+	KUrl url ();
 
 	bool provideContext (unsigned int line_rev, QString *context, int *cursor_position);
 public slots:

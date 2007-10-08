@@ -50,7 +50,7 @@
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <kaction.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <kaccel.h>
 #include <klibloader.h>
 #include <kiconloader.h>
@@ -189,7 +189,7 @@ void RKCommandEditorWindow::setReadOnly (bool ro) {
 	m_doc->setReadWrite (!ro);
 }
 
-bool RKCommandEditorWindow::openURL (const KURL &url, bool use_r_highlighting, bool read_only){
+bool RKCommandEditorWindow::openURL (const KUrl &url, bool use_r_highlighting, bool read_only){
 	RK_TRACE (COMMANDEDITOR);
 	if (m_doc->openURL (url)){
 		if (use_r_highlighting) setRHighlighting ();
@@ -202,7 +202,7 @@ bool RKCommandEditorWindow::openURL (const KURL &url, bool use_r_highlighting, b
 	return false;
 }
 
-KURL RKCommandEditorWindow::url () {
+KUrl RKCommandEditorWindow::url () {
 	RK_TRACE (COMMANDEDITOR);
 
 	return (m_doc->url ());
@@ -227,7 +227,7 @@ void RKCommandEditorWindow::setText (const QString &text) {
 void RKCommandEditorWindow::updateCaption () {
 	RK_TRACE (COMMANDEDITOR);
 	QString name = m_doc->url ().fileName ();
-	if (name.isEmpty ()) name = m_doc->url ().prettyURL ();
+	if (name.isEmpty ()) name = m_doc->url ().prettyUrl ();
 	if (name.isEmpty ()) name = i18n ("Unnamed");
 	if (isModified ()) name.append (i18n (" [modified]"));
 

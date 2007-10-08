@@ -688,8 +688,8 @@ QXEmbedCopy::~QXEmbedCopy()
 // However, QXEmbedCopy currently doesn't provide support for this detection,
 // so for the time being, it's better to leave the window mapped as toplevel window.
 // This will be ever more complicated with the systray windows, as the simple API
-// for them (KWin::setSystemTrayWindowFor()) doesn't make it possible to detect
-// themselves they have been released from systray, but KWin requires them
+// for them (KWindowSystem::setSystemTrayWindowFor()) doesn't make it possible to detect
+// themselves they have been released from systray, but KWindowSystem requires them
 // to be visible to allow next Kicker instance to swallow them.
 // See also below the L1022 comment.
 //            XUnmapWindow( qt_xdisplay(), window );
@@ -964,7 +964,7 @@ static int get_parent(WId winid, Window *out_parent)
 //        See doc in qxembed.h.
 void QXEmbedCopy::embed(WId w)
 {
-    kdDebug() << "*** Embed " << w << " into " << winId() << ". window=" << window << endl;
+    kDebug() << "*** Embed " << w << " into " << winId() << ". window=" << window << endl;
     if (!w)
         return;
     // L1701: The has_window variable prevents embedding a same window twice.
@@ -998,11 +998,11 @@ void QXEmbedCopy::embed(WId w)
         Window parent = 0;
         get_parent(w, &parent);
         if (parent != qt_xrootwin()) {		// this if added to original QXEmbed
-            kdDebug() << QString(" failure to withdraw window") << endl;
+            kDebug() << QString(" failure to withdraw window") << endl;
             window = 0;
             return;
         }
-        kdDebug() << QString("> before reparent: parent=0x%1").arg(parent,0,16) << endl;
+        kDebug() << QString("> before reparent: parent=0x%1").arg(parent,0,16) << endl;
         for (int i = 0; i < 50; i++) {
             // this is done once more when finishing embedding, but it's done also here
             // just in case we crash before reaching that place
@@ -1010,13 +1010,13 @@ void QXEmbedCopy::embed(WId w)
                 XAddToSaveSet( qt_xdisplay(), w );
             XReparentWindow(qt_xdisplay(), w, winId(), 0, 0);
             if (get_parent(w, &parent) && parent == winId()) {
-               kdDebug() << QString("> Loop %1: ").arg(i)
+               kDebug() << QString("> Loop %1: ").arg(i)
                          << QString("> reparent of 0x%1").arg(w,0,16)
                          << QString(" into 0x%1").arg(winId(),0,16)
                          << QString(" successful") << endl;
                 break;
             }
-            kdDebug() << QString("> Loop %1: ").arg(i)
+            kDebug() << QString("> Loop %1: ").arg(i)
                       << QString("> reparent of 0x%1").arg(w,0,16)
                       << QString(" into 0x%1").arg(winId(),0,16)
                       << QString(" failed") << endl;

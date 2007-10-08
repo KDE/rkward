@@ -393,7 +393,7 @@ void RKConsole::doTabCompletion () {
 			if (quote_end < 0) quote_end = current_line.length ();
 	
 			QString current_name = current_line.mid (quote_start + 1, quote_end - quote_start - 1);
-			KURLCompletion comp (KURLCompletion::FileCompletion);
+			KUrlCompletion comp (KUrlCompletion::FileCompletion);
 			comp.setDir (QDir::currentPath ());
 			QString test = comp.makeCompletion (current_name);
 	
@@ -793,8 +793,8 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 
 	copy_action = new KAction (i18n ("Copy selection cleaned"), 0, this, SLOT (copy ()), ac, "rkconsole_copy");
 	copy_literal_action = new KAction (i18n ("Copy selection literally"), 0, this, SLOT (literalCopy ()), ac, "rkconsole_copy_literal");
-	KStdAction::clear (this, SLOT (clear ()), ac, "rkconsole_clear");
-	paste_action = KStdAction::paste (this, SLOT (paste ()), ac, "rkconsole_paste");
+	KStandardAction::clear (this, SLOT (clear ()), ac, "rkconsole_clear");
+	paste_action = KStandardAction::paste (this, SLOT (paste ()), ac, "rkconsole_paste");
 	new KAction (i18n ("Configure"), 0, this, SLOT (configure ()), ac, "rkconsole_configure");
 }
 

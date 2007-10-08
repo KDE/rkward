@@ -20,7 +20,7 @@
 
 #include <kurl.h>
 #include <kparts/browserextension.h>
-#include <kmdichildview.h>
+#include <k3mdichildview.h>
 #include <kxmlguiclient.h>
 
 #include <q3ptrlist.h>
@@ -49,7 +49,7 @@ protected:
 	virtual ~RKHTMLWindow ();
 public:
 /** open given URL. Returns false, if the URL is not an existing local file. Loading a non-local URL may succeed, even if this returns false! */
-	virtual bool openURL (const KURL &url);
+	virtual bool openURL (const KUrl &url);
 /** Reload current page.*/
 	virtual void refresh ();
 /** Add common actions to the given action collection (currently only "copy")
@@ -59,11 +59,11 @@ public:
 	QString getDescription ();
 	bool isModified ();
 /** Return current url */
-	KURL url ();
+	KUrl url ();
 	void doGotoAnchor (const QString &anchor_name);
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
-	void slotOpenURLRequest (const KURL &url, const KParts::URLArgs &);
+	void slotOpenURLRequest (const KUrl &url, const KParts::URLArgs &);
 	void slotPrint ();
 	void slotForward ();
 	void slotBack ();
@@ -79,11 +79,11 @@ protected:
 /** the KHTMLPart doing all the real work */
 	KHTMLPart * khtmlpart;
 /** update caption according to given URL */
-	virtual void updateCaption (const KURL &url);
+	virtual void updateCaption (const KUrl &url);
 /** called from openURL. Takes care of updating caption, and updating back/forward actions, if available */
-	void changeURL (const KURL &url);
+	void changeURL (const KUrl &url);
 protected:
-	Q3PtrList<KURL> url_history;
+	Q3PtrList<KUrl> url_history;
 	KAction *back;
 	KAction *forward;
 	KAction *print;
@@ -109,7 +109,7 @@ public:
 	~RKOutputWindow ();
 
 /** reimplemented to show "output is empty" message, if file could not be opened */
-	bool openURL (const KURL &url);
+	bool openURL (const KUrl &url);
 /** reimplemented to scroll to the bottom of the page */
 	void refresh ();
 /** refresh output window.
@@ -130,7 +130,7 @@ public slots:
 	void refreshOutput ();
 protected:
 /** reimplemented to never change the caption (it's always "Output") */
-	void updateCaption (const KURL &url);
+	void updateCaption (const KUrl &url);
 private:
 /** print a message "Output is empty" to the output window. Used internally, if loading output fails*/
 	void showOutputEmptyMessage ();
@@ -140,7 +140,7 @@ private:
 
 	static RKOutputWindow* current_output;
 /** In case the output is empty (i.e. output file does not exist), we need to store, where the output *would* be, if it existed, so we can properly refresh the output */
-	KURL output_url;
+	KUrl output_url;
 	static QDateTime last_refresh_time;
 };
 
@@ -165,9 +165,9 @@ public:
 /** destructor */
 	~RKHelpWindow ();
 /** reimplemented to handle our special protocols component://, rhelp://, and rkhelp:// in addition to the regular protocols */
-	bool openURL (const KURL &url);
+	bool openURL (const KUrl &url);
 private:
-	bool renderRKHelp (const KURL &url);
+	bool renderRKHelp (const KUrl &url);
 	QString renderHelpFragment (QDomElement &fragment);
 	void prepareHelpLink (QDomElement *link_element);
 	RKComponentHandle *componentPathToHandle (QString path);

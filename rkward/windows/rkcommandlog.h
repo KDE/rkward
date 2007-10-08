@@ -22,7 +22,7 @@
 #include <q3textedit.h>
 //Added by qt3to4:
 #include <QEvent>
-#include <kmdichildview.h>
+#include <k3mdichildview.h>
 
 #include "rkmdiwindow.h"
 #include "../rbackend/rcommandreceiver.h"

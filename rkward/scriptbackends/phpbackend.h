@@ -21,7 +21,7 @@
 
 #include <qstring.h>
 #include <qobject.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <qstringlist.h>
 #include <q3valuelist.h>
 #include <ktempfile.h>
@@ -49,14 +49,14 @@ public:
 	void preview (int flags) { callFunction ("getPreview ();", flags, Preview); };
 	void writeData (const QString &data);
 public slots:
-	void gotOutput (KProcess *proc, char* buf, int len);
-	//void gotError (KProcess *proc, char* buf, int len);
-	void processDied (KProcess *proc);
-	void doneWriting (KProcess *proc);
+	void gotOutput (K3Process *proc, char* buf, int len);
+	//void gotError (K3Process *proc, char* buf, int len);
+	void processDied (K3Process *proc);
+	void doneWriting (K3Process *proc);
 private:
 	void tryNextFunction ();
 	void tryWriteData ();
-	KProcess *php_process;
+	K3Process *php_process;
 /// The string singalling the end of transmission to/from PHP. TODO: make static
 	QString eot_string;
 /// The string singalling the end of request from PHP. TODO: make static

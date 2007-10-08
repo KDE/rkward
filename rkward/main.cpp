@@ -114,15 +114,15 @@ int main(int argc, char *argv[]) {
 	}
 
 	RKWardStartupOptions *stoptions = new RKWardStartupOptions;
-	KURL *open_url = 0;
+	KUrl *open_url = 0;
 	if (args->count ()) {
-		open_url = new KURL (args->makeURL (args->arg (0)));
+		open_url = new KUrl (args->makeURL (args->arg (0)));
 	}
 	stoptions->initial_url = open_url;
 	stoptions->no_stack_check = args->isSet ("disable-stack-check");
 
 	RKWardApplication app;
-	if (app.isRestored ()) {
+	if (app.isSessionRestored ()) {
 		RESTORE(RKWardMainWindow);	// well, whatever this is supposed to do -> TODO
 	} else {
 		new RKWardMainWindow(stoptions);

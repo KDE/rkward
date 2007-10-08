@@ -40,8 +40,8 @@ class RKWardDCOPInterface : virtual public DCOPObject {
 // include files for Qt
 
 // include files for KDE 
-#include <kapp.h>
-#include <kmdimainfrm.h>
+#include <kapplication.h>
+#include <k3mdimainfrm.h>
 #include <kaccel.h>
 #include <kaction.h>
 #include <kurl.h>
@@ -64,7 +64,7 @@ class Q3HBox;
 class RKTopLevelWindowGUI;
 
 struct RKWardStartupOptions {
-	KURL *initial_url;	/**< The workspace file to load on startup. If 0, show a dialog asking what to do. **/
+	KUrl *initial_url;	/**< The workspace file to load on startup. If 0, show a dialog asking what to do. **/
 	bool no_stack_check;	/**< Disable R C stack checking */
 };
 
@@ -84,13 +84,13 @@ public:
 	void startR ();
 
 /** open a workspace. Do not ask whether to save the old one. The old workspace is deleted! */
-	void fileOpenNoSave (const KURL &url);
+	void fileOpenNoSave (const KUrl &url);
 /** open a workspace. If the current workspace is not empty, ask wether to save first. */
-	void fileOpenAskSave (const KURL &url);
+	void fileOpenAskSave (const KUrl &url);
 /** opens the given url, assuming it is an HTML-help page. Like openHTML (), but with a QString parameter instead for DCOP. Generally you should use openHTML () instead. */
 	void openHTMLHelp (const QString &url);
 /** opens the given url, assuming it is an HTML-help page. */
-	void openHTML (const KURL &url);
+	void openHTML (const KUrl &url);
 
 	KParts::PartManager *partManager () { return part_manager; };
 
@@ -102,7 +102,7 @@ public:
 /** (try to) close all windows, and ask whether it is ok to quit */
 	bool doQueryQuit ();
 protected:
-	void openWorkspace (const KURL &url);
+	void openWorkspace (const KUrl &url);
 	/** save Options/Settings. Includes general Options like all bar positions and status as well as the geometry and the recent file list */
 	void saveOptions();
 /** read general Options again and initialize all variables like the recent file list */
@@ -138,7 +138,7 @@ public slots:
 	/** open a file and load it into the document*/
 	void slotFileOpenWorkspace();
 	/** opens a file from the recent files menu */
-	void slotFileOpenRecentWorkspace(const KURL& url);
+	void slotFileOpenRecentWorkspace(const KUrl& url);
 	/** save a document */
 	void slotFileSaveWorkspace();
 	/** save a document by a new filename*/
@@ -167,7 +167,7 @@ public slots:
 /** open a new command editor (ask for file to open) */
 	void slotOpenCommandEditor ();
 /** open a new command editor (load given url) */
-	void slotOpenCommandEditor (const KURL &url);
+	void slotOpenCommandEditor (const KUrl &url);
 
 /** a child window has received a close event. Check, whether data needs to be saved. Ask if necessary. Close only if safe. */
 	void slotChildWindowCloseRequest (KMdiChildView * window);

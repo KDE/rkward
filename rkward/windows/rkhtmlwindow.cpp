@@ -60,7 +60,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow:
 	pLayout->addWidget (khtmlpart->widget ());
 
 	// We have to connect this in order to allow browsing.
-	connect (khtmlpart->browserExtension (), SIGNAL (openURLRequestDelayed (const KURL &, const KParts::URLArgs &)), this, SLOT (slotOpenURLRequest (const KURL &, const KParts::URLArgs &)));
+	connect (khtmlpart->browserExtension (), SIGNAL (openURLRequestDelayed (const KUrl &, const KParts::URLArgs &)), this, SLOT (slotOpenURLRequest (const KUrl &, const KParts::URLArgs &)));
 	connect (khtmlpart, SIGNAL (completed ()), this, SLOT (loadDone ()));
 
 	url_history.setAutoDelete (true);
@@ -90,7 +90,7 @@ void RKHTMLWindow::addCommonActions (KActionCollection *action_collection) {
 	RK_TRACE (APP);
 
 	// enable copy
-	KStdAction::copy (khtmlpart->browserExtension (), SLOT (copy ()), action_collection, "copy");
+	KStandardAction::copy (khtmlpart->browserExtension (), SLOT (copy ()), action_collection, "copy");
 
 	// run selection
 	run_selection = new KAction (i18n ("Run selection"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), this, SLOT (runSelection ()), action_collection, "run_selection");
@@ -162,12 +162,12 @@ void RKHTMLWindow::slotBack () {
 	url_change_is_from_history = false;
 }
 
-bool RKHTMLWindow::openURL (const KURL &url) {
+bool RKHTMLWindow::openURL (const KUrl &url) {
 	RK_TRACE (APP);
 
 	// asyncrhonously dealing with non-local files would be quite a task. We chose the simple answer instead...
 	if (!url.isLocalFile ()) {
-		if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file. Do you want to open the url in the default application?").arg (url.prettyURL ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
+		if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file. Do you want to open the url in the default application?").arg (url.prettyUrl ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
 			return false;
 		}
 		KRun *runner = new KRun (url);		// according to KRun-documentation, KRun will self-destruct when done.
@@ -181,25 +181,25 @@ bool RKHTMLWindow::openURL (const KURL &url) {
 	return true;
 }
 
-KURL RKHTMLWindow::url () {
+KUrl RKHTMLWindow::url () {
 	if (khtmlpart) {
 		return khtmlpart->url ();
 	} else {
 		RK_ASSERT (false);
-		return KURL ();
+		return KUrl ();
 	}
 }
 
-void RKHTMLWindow::changeURL (const KURL &url) {
+void RKHTMLWindow::changeURL (const KUrl &url) {
 	updateCaption (url);
 
 	if (!url_change_is_from_history) {
 		if (back && forward) {
-			KURL *current_url = url_history.current ();
+			KUrl *current_url = url_history.current ();
 			while (current_url != url_history.getLast ()) {
 				url_history.removeLast ();
 			}
-			KURL *url_copy = new KURL (url);
+			KUrl *url_copy = new KUrl (url);
 			url_history.append (url_copy);
 			back->setEnabled (url_history.count () > 1);
 			forward->setEnabled (false);
@@ -207,12 +207,12 @@ void RKHTMLWindow::changeURL (const KURL &url) {
 	}
 }
 
-void RKHTMLWindow::updateCaption (const KURL &url) {
+void RKHTMLWindow::updateCaption (const KUrl &url) {
 	RK_TRACE (APP);
 	setCaption (url.filename ());
 }
 
-void RKHTMLWindow::slotOpenURLRequest(const KURL &url, const KParts::URLArgs & ) {
+void RKHTMLWindow::slotOpenURLRequest(const KUrl &url, const KParts::URLArgs & ) {
 	RK_TRACE (APP);
 	openURL (url);
 }
@@ -251,7 +251,7 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 
 	outputFlush = new KAction (i18n ("&Flush Output"), "editdelete", 0, this, SLOT (flushOutput ()), actionCollection (), "output_flush");
 	outputRefresh = new KAction (i18n ("&Refresh Output"), "reload", 0, this, SLOT (refreshOutput ()), actionCollection (), "output_refresh");
-	print = KStdAction::print (this, SLOT (slotPrint ()), actionCollection (), "print_output");
+	print = KStandardAction::print (this, SLOT (slotPrint ()), actionCollection (), "print_output");
 	print->setText (i18n ("Print Output"));
 	addCommonActions (actionCollection ());
 
@@ -284,7 +284,7 @@ QString RKOutputWindow::getDescription () {
 	return ("output:" + output_url.url ());
 }
 
-bool RKOutputWindow::openURL (const KURL &url) {
+bool RKOutputWindow::openURL (const KUrl &url) {
 	RK_TRACE (APP);
 
 	output_url = url;
@@ -300,7 +300,7 @@ bool RKOutputWindow::openURL (const KURL &url) {
 	return ok;
 }
 
-void RKOutputWindow::updateCaption (const KURL &) {
+void RKOutputWindow::updateCaption (const KUrl &) {
 }
 
 void RKOutputWindow::refresh () {
@@ -339,7 +339,7 @@ RKOutputWindow* RKOutputWindow::getCurrentOutput () {
 	if (!current_output) {
 		current_output = new RKOutputWindow (RKWorkplace::mainWorkplace ()->view ());
 
-		KURL url (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
+		KUrl url (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
 		current_output->openURL (url);
 	}
 
@@ -387,11 +387,11 @@ RKHelpWindow::RKHelpWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUICli
 	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
 	RKCommonFunctions::removeContainers (khtmlpart, QStringList::split (',', "tools,security,extraToolBar,saveBackground,saveDocument,saveFrame,printFrame,kget_menu"), true);
 
-	back = KStdAction::back (this, SLOT (slotBack ()), actionCollection (), "help_back");
+	back = KStandardAction::back (this, SLOT (slotBack ()), actionCollection (), "help_back");
 	back->setEnabled (false);
-	forward = KStdAction::forward (this, SLOT (slotForward ()), actionCollection (), "help_forward");
+	forward = KStandardAction::forward (this, SLOT (slotForward ()), actionCollection (), "help_forward");
 	forward->setEnabled (false);
-	print = KStdAction::print (this, SLOT (slotPrint ()), actionCollection (), "print_help");
+	print = KStandardAction::print (this, SLOT (slotPrint ()), actionCollection (), "print_help");
 	print->setText (i18n ("Print Help"));
 	addCommonActions (actionCollection ());
 
@@ -411,7 +411,7 @@ RKHelpWindow::~RKHelpWindow () {
 	khtmlpart = 0;	// in case we try to redelete in a parent class
 }
 
-bool RKHelpWindow::openURL (const KURL &url) {
+bool RKHelpWindow::openURL (const KUrl &url) {
 	RK_TRACE (APP);
 
 	bool ok = true;
@@ -439,7 +439,7 @@ bool RKHelpWindow::openURL (const KURL &url) {
 	}
 }
 
-bool RKHelpWindow::renderRKHelp (const KURL &url) {
+bool RKHelpWindow::renderRKHelp (const KUrl &url) {
 	RK_TRACE (APP);
 
 	if (url.protocol () != "rkward") {
@@ -502,7 +502,7 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 		XMLChildList src_elements = help_xml->findElementsWithAttribute (help_doc_element, "src", QString (), true, DL_DEBUG);
 		for (XMLChildList::iterator it = src_elements.begin (); it != src_elements.end (); ++it) {
 			QString src = (*it).attribute ("src");
-			if (KURL::isRelativeURL (src)) {
+			if (KUrl::isRelativeUrl (src)) {
 				src = "file://" + QDir::cleanPath (base_path.filePath (src));
 				(*it).setAttribute ("src", src);
 			}
@@ -574,7 +574,7 @@ bool RKHelpWindow::renderRKHelp (const KURL &url) {
 		}
 
 		// create a navigation bar
-		KURL url_copy = url;
+		KUrl url_copy = url;
 		QString navigation;
 		QStringList::const_iterator names_it = anchornames.constBegin ();
 		for (QStringList::const_iterator it = anchors.constBegin (); it != anchors.constEnd (); ++it) {
@@ -640,7 +640,7 @@ void RKHelpWindow::prepareHelpLink (QDomElement *link_element) {
 	link_element->setTagName ("a");
 	if (link_element->text ().isEmpty ()) {
 		QString text;
-		KURL url = link_element->attribute ("href");
+		KUrl url = link_element->attribute ("href");
 		if (url.protocol () == "rkward") {
 			if (url.host () == "component") {
 				RKComponentHandle *chandle = componentPathToHandle (url.path ());

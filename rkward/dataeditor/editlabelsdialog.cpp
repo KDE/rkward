@@ -56,9 +56,9 @@ LevelsTable::LevelsTable (QWidget *parent, RObject::ValueLabels *labels) : TwinT
 	setMinimumWidth (80);
 
 	KActionCollection *ac = new KActionCollection (this);
-	KStdAction::cut (this, SLOT (cut ()), ac);
-	KStdAction::copy (this, SLOT (copy ()), ac);
-	KStdAction::paste (this, SLOT (paste ()), ac);
+	KStandardAction::cut (this, SLOT (cut ()), ac);
+	KStandardAction::copy (this, SLOT (copy ()), ac);
+	KStandardAction::paste (this, SLOT (paste ()), ac);
 }
 
 LevelsTable::~LevelsTable () {

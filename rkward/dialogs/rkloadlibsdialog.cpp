@@ -33,7 +33,7 @@
 #include <QCloseEvent>
 
 #include <klocale.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kmessagebox.h>
 
 #include "../rkglobals.h"
@@ -60,7 +60,7 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	RK_TRACE (DIALOGS);
 	RKLoadLibsDialog::chain = chain;
 	
-	Q3Frame *page = addPage (i18n ("Local packages"));
+	QFrame *page = addPage (i18n ("Local packages"));
 	Q3VBoxLayout *layout = new Q3VBoxLayout (page, 0, KDialog::spacingHint ());
 	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this, page);
 	connect (this, SIGNAL (installedPackagesChanged ()), luwidget, SLOT (updateInstalledPackages ()));
@@ -202,20 +202,20 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 	}
 
 	QString R_binary (getenv ("R_binary"));
-	KProcess *proc = new KProcess;
+	K3Process *proc = new K3Process;
 	if (as_root) *proc << "kdesu" << "-t";
 	else *proc << "sh" << "-c";
 	*proc << R_binary + " CMD R --no-save < " + file.name ();
 
-	connect (proc, SIGNAL (processExited (KProcess *)), this, SLOT (processExited (KProcess *)));
-	connect (proc, SIGNAL (receivedStdout (KProcess *, char *, int)), this, SLOT (installationProcessOutput (KProcess *, char *, int)));
-	connect (proc, SIGNAL (receivedStderr (KProcess *, char *, int)), this, SLOT (installationProcessError (KProcess *, char *, int)));
+	connect (proc, SIGNAL (processExited (K3Process *)), this, SLOT (processExited (K3Process *)));
+	connect (proc, SIGNAL (receivedStdout (K3Process *, char *, int)), this, SLOT (installationProcessOutput (K3Process *, char *, int)));
+	connect (proc, SIGNAL (receivedStderr (K3Process *, char *, int)), this, SLOT (installationProcessError (K3Process *, char *, int)));
 
 	RKProgressControl *installation_progress = new RKProgressControl (this, i18n ("Please stand by while installing selected packages"), i18n ("Installing packages"), RKProgressControl::CancellableProgress);
 	connect (this, SIGNAL (installationComplete ()), installation_progress, SLOT (done ()));
 	connect (this, SIGNAL (installationOutput (const QString &)), installation_progress, SLOT (newOutput (const QString &)));
 	connect (this, SIGNAL (installationError (const QString &)), installation_progress, SLOT (newError (const QString &)));
-	proc->start (KProcess::NotifyOnExit, KProcess::AllOutput);
+	proc->start (K3Process::NotifyOnExit, K3Process::AllOutput);
 
 	if (!installation_progress->doModal (true)) proc->kill ();
 
@@ -226,17 +226,17 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 	return true;
 }
 
-void RKLoadLibsDialog::installationProcessOutput (KProcess *, char *buffer, int buflen) {
+void RKLoadLibsDialog::installationProcessOutput (K3Process *, char *buffer, int buflen) {
 	RK_TRACE (DIALOGS);
 	emit (installationOutput (Q3CString (buffer, buflen)));
 }
 
-void RKLoadLibsDialog::installationProcessError (KProcess *, char *buffer, int buflen) {
+void RKLoadLibsDialog::installationProcessError (K3Process *, char *buffer, int buflen) {
 	RK_TRACE (DIALOGS);
 	emit (installationError (Q3CString (buffer, buflen)));
 }
 
-void RKLoadLibsDialog::processExited (KProcess *) {
+void RKLoadLibsDialog::processExited (K3Process *) {
 	RK_TRACE (DIALOGS);
 	emit (installationComplete ());
 }

@@ -30,7 +30,7 @@
 
 #include "../debug.h"
 
-RKSaveAgent::RKSaveAgent (KURL url, bool save_file_as, DoneAction when_done, KURL load_url) {
+RKSaveAgent::RKSaveAgent (KUrl url, bool save_file_as, DoneAction when_done, KUrl load_url) {
 	RK_TRACE (APP);
 	save_url = url;
 	RKSaveAgent::when_done = when_done;

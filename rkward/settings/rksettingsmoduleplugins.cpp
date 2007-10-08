@@ -148,7 +148,7 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	bool fix=false;
 	for (QStringList::const_iterator it = plugin_maps.constBegin (); it != plugin_maps.constEnd (); ++it) {
 		if ((*it).contains ("standard_plugins.pluginmap")) {
-			fix = (KMessageBox::questionYesNo (0, i18n ("You appear to have an old configuration for the plugin-paths. The default configuration was changed between rkward 0.3.4 and rkward 0.3.5. Should the configuration be set to the new default (recommended)?"), i18n ("Configuration change"), KStdGuiItem::yes (), KStdGuiItem::no (), "pluginmap_upgrade") == KMessageBox::Yes);
+			fix = (KMessageBox::questionYesNo (0, i18n ("You appear to have an old configuration for the plugin-paths. The default configuration was changed between rkward 0.3.4 and rkward 0.3.5. Should the configuration be set to the new default (recommended)?"), i18n ("Configuration change"), KStandardGuiItem::yes (), KStandardGuiItem::no (), "pluginmap_upgrade") == KMessageBox::Yes);
 		}
 	}
 	if (fix) {

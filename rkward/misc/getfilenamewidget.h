@@ -20,10 +20,10 @@
 #include <qwidget.h>
 #include <qstring.h>
 
-class KURLRequester;
+class KUrlRequester;
 
 /**
-Simple convenience class used to get a file/directoryname from the user. Basically provides a wrapper around KURLRequester.
+Simple convenience class used to get a file/directoryname from the user. Basically provides a wrapper around KUrlRequester.
 
 @author Thomas Friedrichsmeier
 */
@@ -49,7 +49,7 @@ public slots:
 signals:
 	void locationChanged ();
 private:
-	KURLRequester *edit;
+	KUrlRequester *edit;
 };
 
 #endif

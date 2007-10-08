@@ -69,7 +69,7 @@ void ShowEditTextFileAgent::showEditFiles (RCallbackArgs *args) {
 		for (int n = 0; n < args->int_a; ++n) {
 			message.append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
 
-			bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KURL (args->chars_a[n]), false, true, QString (*(args->chars_c)));
+			bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl (args->chars_a[n]), false, true, QString (*(args->chars_c)));
 
 			if (!ok)  {
 				bad_files_list.append ("- ").append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
@@ -82,7 +82,7 @@ void ShowEditTextFileAgent::showEditFiles (RCallbackArgs *args) {
 		for (int n = 0; n < args->int_a; ++n) {
 			message.append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
 
-			bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KURL (args->chars_a[n]), true, false, QString (args->chars_b[n]));
+			bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl (args->chars_a[n]), true, false, QString (args->chars_b[n]));
 
 			if (!ok) {
 				bad_files_list.append ("- ").append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");

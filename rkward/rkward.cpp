@@ -28,7 +28,7 @@
 #include <QCloseEvent>
 
 // include files for KDE
-#include <kaboutapplication.h>
+#include <k3aboutapplication.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
@@ -38,9 +38,9 @@
 #include <kconfig.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <kinputdialog.h>
-#include <kdockwidget.h>
+#include <k3dockwidget.h>
 #include <kmultitabbar.h>
 #include <ksqueezedtextlabel.h>
 #include <dcopclient.h>
@@ -264,7 +264,7 @@ void RKWardMainWindow::doPostInit () {
 	}
 
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
-		RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (kapp->config ()));
+		RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (KGlobal::config ()));
 	}
 
 	if (RKSettingsModuleGeneral::showHelpOnStartup ()) {
@@ -332,26 +332,26 @@ void RKWardMainWindow::initActions()
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
 	new_data_frame = new KAction (i18n ("Dataset"), 0, 0, this, SLOT (slotNewDataFrame ()), actionCollection (), "new_data_frame");
 	new_data_frame->setIcon("spreadsheet");
-	new_command_editor = KStdAction::openNew(this, SLOT(slotNewCommandEditor()), actionCollection(), "new_command_editor");
+	new_command_editor = KStandardAction::openNew(this, SLOT(slotNewCommandEditor()), actionCollection(), "new_command_editor");
 	new_command_editor->setText (i18n ("Script File"));
 	new_command_editor->setIcon ("source");
 
-	fileOpen = KStdAction::open(this, SLOT(slotOpenCommandEditor()), actionCollection(), "file_openy");
+	fileOpen = KStandardAction::open(this, SLOT(slotOpenCommandEditor()), actionCollection(), "file_openy");
 	fileOpen->setText (i18n ("Open R Script File"));
-	fileOpenRecent = KStdAction::openRecent(this, SLOT(slotOpenCommandEditor (const KURL&)), actionCollection(), "file_open_recenty");
+	fileOpenRecent = KStandardAction::openRecent(this, SLOT(slotOpenCommandEditor (const KUrl&)), actionCollection(), "file_open_recenty");
 	KAction *import_data = new KAction (i18n ("Import Data"), 0, 0, this, SLOT (importData ()), actionCollection (), "import_data");
 
-	fileOpenWorkspace = KStdAction::open(this, SLOT(slotFileOpenWorkspace()), actionCollection(), "file_openx");
+	fileOpenWorkspace = KStandardAction::open(this, SLOT(slotFileOpenWorkspace()), actionCollection(), "file_openx");
 	fileOpenWorkspace->setText (i18n ("Open Workspace"));
 	fileOpenWorkspace->setShortcut (KShortcut ("Ctrl+Shift+O"));
-	fileOpenRecentWorkspace = KStdAction::openRecent(this, SLOT(slotFileOpenRecentWorkspace(const KURL&)), actionCollection(), "file_open_recentx");
-	fileSaveWorkspace = KStdAction::save(this, SLOT(slotFileSaveWorkspace()), actionCollection(), "file_savex");
+	fileOpenRecentWorkspace = KStandardAction::openRecent(this, SLOT(slotFileOpenRecentWorkspace(const KUrl&)), actionCollection(), "file_open_recentx");
+	fileSaveWorkspace = KStandardAction::save(this, SLOT(slotFileSaveWorkspace()), actionCollection(), "file_savex");
 	fileSaveWorkspace->setText (i18n ("Save Workspace"));
 	fileSaveWorkspace->setShortcut (KShortcut ("Ctrl+Shift+S"));
-	fileSaveWorkspaceAs = KStdAction::saveAs(this, SLOT(slotFileSaveWorkspaceAs()), actionCollection(), "file_save_asx");
+	fileSaveWorkspaceAs = KStandardAction::saveAs(this, SLOT(slotFileSaveWorkspaceAs()), actionCollection(), "file_save_asx");
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
 
-	fileQuit = KStdAction::quit(this, SLOT(close ()), actionCollection(), "file_quitx");
+	fileQuit = KStandardAction::quit(this, SLOT(close ()), actionCollection(), "file_quitx");
 	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
 
 	setStandardToolBarMenuEnabled (true);
@@ -425,17 +425,17 @@ void RKWardMainWindow::initStatusBar () {
 	connect (actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
 }
 
-void RKWardMainWindow::openWorkspace (const KURL &url) {
+void RKWardMainWindow::openWorkspace (const KUrl &url) {
 	RK_TRACE (APP);
 	if (url.isEmpty ()) return;
 
 	new RKLoadAgent (url, false);
-	fileOpenRecentWorkspace->addURL (url);
+	fileOpenRecentWorkspace->addUrl (url);
 }
 
 void RKWardMainWindow::saveOptions () {
 	RK_TRACE (APP);
-	KConfig *config = kapp->config ();
+	KConfig *config = KGlobal::config ();
 
 	saveMainWindowSettings (config, "main window options");
 
@@ -453,12 +453,12 @@ void RKWardMainWindow::saveOptions () {
 
 void RKWardMainWindow::readOptions () {
 	RK_TRACE (APP);
-	KConfig *config = kapp->config ();
+	KConfig *config = KGlobal::config ();
 
 #if !KDE_IS_VERSION(3,3,0)
-	applyMainWindowSettings (kapp->config (), "main window options");
+	applyMainWindowSettings (KGlobal::config (), "main window options");
 #else
-	applyMainWindowSettings (kapp->config (), "main window options", true);
+	applyMainWindowSettings (KGlobal::config (), "main window options", true);
 #endif
 
 // TODO: WORKAROUND: Actually applyMainWindowSettings could/should do this, but apparently this just does not work for maximized windows. Therefore we use our own version instead.
@@ -491,12 +491,12 @@ void RKWardMainWindow::saveProperties(KConfig *_cfg)
   }
   else */
   {
-    //KURL url=doc->URL();	
+    //KUrl url=doc->URL();	
     //_cfg->writeEntry("filename", url.url());
     //_cfg->writeEntry("modified", doc->isModified());
     //QString tempname = kapp->tempSaveName(url.url());
-    //QString tempurl= KURL::encode_string(tempname);
-    //KURL _url(tempurl);
+    //QString tempurl= KUrl::encode_string(tempname);
+    //KUrl _url(tempurl);
     //doc->saveDocument(_url);
   }
 }
@@ -506,13 +506,13 @@ void RKWardMainWindow::readProperties(KConfig* _cfg)
 {
 	RK_TRACE (APP);
 /*  QString filename = _cfg->readEntry("filename", "");
-  KURL url(filename);
+  KUrl url(filename);
   bool modified = _cfg->readBoolEntry("modified", false);
   if(modified)
   {
     bool canRecover;
     QString tempname = kapp->checkRecoverFile(filename, canRecover);
-    KURL _url(tempname);
+    KUrl _url(tempname);
   	
     if(canRecover)
     {
@@ -536,7 +536,7 @@ bool RKWardMainWindow::doQueryQuit () {
 	slotSetStatusBarText (i18n ("Exiting..."));
 	saveOptions ();
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
-		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ("\n", false), kapp->config ());
+		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ("\n", false), KGlobal::config ());
 	}
 
 //	if (!RObjectList::getGlobalEnv ()->isEmpty ()) {
@@ -577,15 +577,15 @@ void RKWardMainWindow::slotNewDataFrame () {
 	
 }
 
-void RKWardMainWindow::fileOpenNoSave (const KURL &url) {
+void RKWardMainWindow::fileOpenNoSave (const KUrl &url) {
 	RK_TRACE (APP);
 
 	slotCloseAllEditors ();
 
 	slotSetStatusBarText(i18n("Opening workspace..."));
-	KURL lurl = url;
+	KUrl lurl = url;
 	if (lurl.isEmpty ()) {
-		lurl = KFileDialog::getOpenURL (":<rfiles>", i18n("*|All files"), this, i18n("Open File..."));
+		lurl = KFileDialog::getOpenUrl (":<rfiles>", i18n("*|All files"), this, i18n("Open File..."));
 	}
 	if (!lurl.isEmpty ()) {
 		openWorkspace (lurl);
@@ -593,7 +593,7 @@ void RKWardMainWindow::fileOpenNoSave (const KURL &url) {
 	slotSetStatusReady ();
 }
 
-void RKWardMainWindow::fileOpenAskSave (const KURL &url) {
+void RKWardMainWindow::fileOpenAskSave (const KUrl &url) {
 	RK_TRACE (APP);
 	if (RObjectList::getObjectList ()->isEmpty ()) {
 		fileOpenNoSave (url);
@@ -615,7 +615,7 @@ void RKWardMainWindow::slotFileOpenWorkspace () {
 	fileOpenAskSave (QString::null);
 }
 
-void RKWardMainWindow::slotFileOpenRecentWorkspace(const KURL& url)
+void RKWardMainWindow::slotFileOpenRecentWorkspace(const KUrl& url)
 {
 	RK_TRACE (APP);
 	fileOpenAskSave (url);
@@ -704,23 +704,23 @@ void RKWardMainWindow::importData () {
 void RKWardMainWindow::slotNewCommandEditor () {
 	RK_TRACE (APP);
 
-	slotOpenCommandEditor (KURL ());
+	slotOpenCommandEditor (KUrl ());
 }
 
-void RKWardMainWindow::slotOpenCommandEditor (const KURL &url) {
+void RKWardMainWindow::slotOpenCommandEditor (const KUrl &url) {
 	RK_TRACE (APP);
 
 	if (RKWorkplace::mainWorkplace ()->openScriptEditor (url)) {
-		if (!url.isEmpty ()) fileOpenRecent->addURL (url);
+		if (!url.isEmpty ()) fileOpenRecent->addUrl (url);
 	}
 };
 
 void RKWardMainWindow::slotOpenCommandEditor () {
 	RK_TRACE (APP);
-	KURL::List urls;
-	KURL::List::const_iterator it;
+	KUrl::List urls;
+	KUrl::List::const_iterator it;
 	
-	urls = KFileDialog::getOpenURLs (":<rfiles>", "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*.*|All Files (*.*)", this, i18n ("Open command file(s)"));
+	urls = KFileDialog::getOpenUrls (":<rfiles>", "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*.*|All Files (*.*)", this, i18n ("Open command file(s)"));
 
 	for (it = urls.begin() ; it != urls.end() ; ++it) {
 		slotOpenCommandEditor (*it);
@@ -733,7 +733,7 @@ void RKWardMainWindow::slotChildWindowCloseRequest (KMdiChildView * window) {
 	closeWindow (window);
 }
 
-void RKWardMainWindow::openHTML (const KURL &url) {
+void RKWardMainWindow::openHTML (const KUrl &url) {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->openHelpWindow (url);
@@ -748,7 +748,7 @@ void RKWardMainWindow::setCaption (const QString &) {
 	RK_TRACE (APP);
 
 	QString wcaption = RObjectList::getObjectList ()->getWorkspaceURL ().fileName ();
-	if (wcaption.isEmpty ()) wcaption = RObjectList::getObjectList ()->getWorkspaceURL ().prettyURL ();
+	if (wcaption.isEmpty ()) wcaption = RObjectList::getObjectList ()->getWorkspaceURL ().prettyUrl ();
 	if (wcaption.isEmpty ()) wcaption = i18n ("[Unnamed Workspace]");
 	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached);
 	if (window) wcaption.append (" - " + window->fullCaption ());

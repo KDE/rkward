@@ -19,7 +19,7 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kaboutapplication.h>
+#include <k3aboutapplication.h>
 
 #include "../rkconsole.h"
 #include "../robjectbrowser.h"
@@ -47,12 +47,12 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : QObject (for_wi
 	// help menu
 	KAction *help_invoke_r_help = new KAction (i18n ("Help on R"), 0, 0, this, SLOT (invokeRHelp ()), actionCollection(), "invoke_r_help");
 	KAction *show_help_search = new KAction (i18n ("Search R Help"), 0, 0, this, SLOT (showHelpSearch ()), actionCollection(), "show_help_search");
-	KAction *show_rkward_help = KStdAction::helpContents (this, SLOT (showRKWardHelp ()), actionCollection(), "rkward_help");
+	KAction *show_rkward_help = KStandardAction::helpContents (this, SLOT (showRKWardHelp ()), actionCollection(), "rkward_help");
 	show_rkward_help->setText (i18n ("Help on RKWard"));
 
-	KStdAction::aboutApp (this, SLOT (showAboutApplication ()), actionCollection(), "about_app");
-	KStdAction::whatsThis (for_window, SLOT (whatsThis ()), actionCollection(), "whats_this");
-	KStdAction::reportBug (this, SLOT (reportRKWardBug ()), actionCollection(), "report_bug");
+	KStandardAction::aboutApp (this, SLOT (showAboutApplication ()), actionCollection(), "about_app");
+	KStandardAction::whatsThis (for_window, SLOT (whatsThis ()), actionCollection(), "whats_this");
+	KStandardAction::reportBug (this, SLOT (reportRKWardBug ()), actionCollection(), "report_bug");
 
 	help_invoke_r_help->setStatusText (i18n ("Shows the R help index"));
 	show_help_search->setStatusText (i18n ("Shows/raises the R Help Search window"));
@@ -94,7 +94,7 @@ void RKTopLevelWindowGUI::reportRKWardBug () {
 void RKTopLevelWindowGUI::showAboutApplication () {
 	RK_TRACE (APP);
 
-	KAboutApplication *about = new KAboutApplication ();
+	K3AboutApplication *about = new K3AboutApplication ();
 	about->exec ();
 	delete about;
 }
@@ -169,7 +169,7 @@ void RKTopLevelWindowGUI::activateDocumentView () {
 void RKTopLevelWindowGUI::slotOutputShow () {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->openOutputWindow (KURL ());
+	RKWorkplace::mainWorkplace ()->openOutputWindow (KUrl ());
 }
 
 #include "rktoplevelwindowgui.moc"

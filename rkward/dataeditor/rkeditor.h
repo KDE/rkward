@@ -22,7 +22,7 @@
 #include "../core/robject.h"
 
 #include <kparts/part.h>
-#include <kmdichildview.h>
+#include <k3mdichildview.h>
 
 #include "../windows/rkmdiwindow.h"
 

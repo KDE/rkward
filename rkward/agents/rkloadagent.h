@@ -30,7 +30,7 @@ agents, the RKLoadAgent self-destructs when done.
 class RKLoadAgent : public QObject, public RCommandReceiver {
 	Q_OBJECT
 public:
-	explicit RKLoadAgent (const KURL &url, bool merge=false);
+	explicit RKLoadAgent (const KUrl &url, bool merge=false);
 
 	~RKLoadAgent ();
 protected:

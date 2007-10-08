@@ -197,7 +197,7 @@ void RKHelpSearchWindow::slotResultsListDblClicked (Q3ListViewItem * item, const
 
 void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
-	KURL url;
+	KUrl url;
 	if (command->getFlags () == HELP_SEARCH) {
 		resultsList->clear ();
 		RK_ASSERT ((command->getDataLength () % 3) == 0);

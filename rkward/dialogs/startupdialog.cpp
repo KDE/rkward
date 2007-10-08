@@ -114,7 +114,7 @@ void StartupDialog::accept () {
 			result->result = ChoseFile;
 		} else {
 			result->result = OpenFile;
-			result->open_url = KURL (item->text (0));
+			result->open_url = KUrl (item->text (0));
 		}
 	} else {
 		RK_ASSERT (false);

@@ -63,7 +63,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 
 	if (!enslaved) {
 		KActionCollection *action_collection = new KActionCollection (this);
-		KStdAction::copy (this, SLOT (copyCode ()), action_collection);
+		KStandardAction::copy (this, SLOT (copyCode ()), action_collection);
 	}
 }
 
@@ -201,7 +201,7 @@ void RKStandardComponentGUI::help () {
 	QString id = RKComponentMap::getComponentId (component->getHandle ());
 
 	QString path = QStringList::split ("::", id).join ("/");
-	RKWorkplace::mainWorkplace ()->openHelpWindow (KURL ("rkward://component/" + path));
+	RKWorkplace::mainWorkplace ()->openHelpWindow (KUrl ("rkward://component/" + path));
 }
 
 void RKStandardComponentGUI::closeEvent (QCloseEvent *e) {

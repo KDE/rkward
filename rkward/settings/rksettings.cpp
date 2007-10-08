@@ -23,6 +23,7 @@
 
 #include <klocale.h>
 #include <kapplication.h>
+#include <kglobal.h>
 
 #include "../windows/rkworkplace.h"
 
@@ -151,7 +152,7 @@ void RKSettings::slotApply () {
 	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
 		if ((*it)->hasChanges ()) {
 			(*it)->applyChanges ();
-			(*it)->save (kapp->config ());
+			(*it)->save (KGlobal::config ());
 		}
 	}
 	enableButtonApply (false);

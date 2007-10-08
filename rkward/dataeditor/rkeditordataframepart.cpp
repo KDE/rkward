@@ -46,9 +46,9 @@ RKEditorDataFramePart::~RKEditorDataFramePart () {
 }
 
 void RKEditorDataFramePart::initializeActions () {
-	editCut = KStdAction::cut(this, SLOT(slotEditCut()), actionCollection(), "cut");
-	editCopy = KStdAction::copy(this, SLOT(slotEditCopy()), actionCollection(), "copy");
-	editPaste = KStdAction::paste(this, SLOT(slotEditPaste()), actionCollection(), "paste");
+	editCut = KStandardAction::cut(this, SLOT(slotEditCut()), actionCollection(), "cut");
+	editCopy = KStandardAction::copy(this, SLOT(slotEditCopy()), actionCollection(), "copy");
+	editPaste = KStandardAction::paste(this, SLOT(slotEditPaste()), actionCollection(), "paste");
 	editPasteToTable = new KAction(i18n("Paste inside Table"), 0, 0, this, SLOT(slotEditPasteToTable()), actionCollection(), "paste_to_table");
 	editPasteToTable->setIcon("frame_spreadsheet");
 	editPasteToSelection = new KAction(i18n("Paste inside Selection"), 0, 0, this, SLOT(slotEditPasteToSelection()), actionCollection(), "paste_to_selection");

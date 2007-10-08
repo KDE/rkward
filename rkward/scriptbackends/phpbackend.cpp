@@ -64,18 +64,18 @@ bool PHPBackend::initialize (RKComponentPropertyCode *code_property, bool add_he
 		return false;
 	}
 
-	php_process = new KProcess ();
+	php_process = new K3Process ();
 	*php_process << RKSettingsModulePHP::phpBin();
 	*php_process << "-c" << php_ini;	// set correct options
 	*php_process << common_php;
 	
 	// we have to be connected at all times! Otherwise the connection will be gone for good.
-	//connect (php_process, SIGNAL (receivedStderr (KProcess *, char*, int)), this, SLOT (gotError (KProcess *, char*, int)));
-	connect (php_process, SIGNAL (wroteStdin (KProcess *)), this, SLOT (doneWriting (KProcess* )));
-	connect (php_process, SIGNAL (receivedStdout (KProcess *, char*, int)), this, SLOT (gotOutput (KProcess *, char*, int)));
-	connect (php_process, SIGNAL (processExited (KProcess *)), this, SLOT (processDied (KProcess*)));
+	//connect (php_process, SIGNAL (receivedStderr (K3Process *, char*, int)), this, SLOT (gotError (K3Process *, char*, int)));
+	connect (php_process, SIGNAL (wroteStdin (K3Process *)), this, SLOT (doneWriting (K3Process* )));
+	connect (php_process, SIGNAL (receivedStdout (K3Process *, char*, int)), this, SLOT (gotOutput (K3Process *, char*, int)));
+	connect (php_process, SIGNAL (processExited (K3Process *)), this, SLOT (processDied (K3Process*)));
 	
-	if (!php_process->start (KProcess::NotifyOnExit, KProcess::All)) {
+	if (!php_process->start (K3Process::NotifyOnExit, K3Process::All)) {
 		KMessageBox::error (0, i18n ("The PHP backend could not be started. Check whether you have correctly configured the location of the PHP-binary (Settings->Configure Settings->PHP backend)"), i18n ("PHP-Error"));
 		emit (haveError ());
 		return false;
@@ -151,7 +151,7 @@ void PHPBackend::tryWriteData () {
 	}
 }
 
-void PHPBackend::doneWriting (KProcess *) {
+void PHPBackend::doneWriting (K3Process *) {
 	RK_TRACE (PHP);
 
 	busy_writing = false;
@@ -160,7 +160,7 @@ void PHPBackend::doneWriting (KProcess *) {
 	tryNextFunction ();
 }
 
-void PHPBackend::gotOutput (KProcess *, char* buf, int) {
+void PHPBackend::gotOutput (K3Process *, char* buf, int) {
 	RK_TRACE (PHP);
 
 	RK_DO (qDebug ("PHP transmission:\n%s", buf), PHP, DL_DEBUG);
@@ -234,7 +234,7 @@ void PHPBackend::gotOutput (KProcess *, char* buf, int) {
 	}
 }
 
-void PHPBackend::processDied (KProcess *) {
+void PHPBackend::processDied (K3Process *) {
 	RK_TRACE (PHP);
 
 	if (php_process) {		// if the php_process is already 0, this means, we have caught an error message before the process died, have already shown a message, emitted haveError(), and called destroy()

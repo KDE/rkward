@@ -26,7 +26,7 @@
 
 class KDirOperator;
 class RKFileBrowserWidget;
-class KURLComboBox;
+class KUrlComboBox;
 class KFileItem;
 
 /** The file browser (tool) window. In order to save some startup time, the file browser is not really created until it is first shown. Hence, this is mostly just a wrapper around RKFileBrowserWidget */
@@ -60,13 +60,13 @@ public:
 	bool eventFilter (QObject *watched, QEvent *e);
 	void setURL (const QString &url);
 public slots:
-	void urlChangedInView (const KURL &url);
+	void urlChangedInView (const KUrl &url);
 	void urlChangedInCombo (const QString &url);
-	void urlChangedInCombo (const KURL &url);
+	void urlChangedInCombo (const KUrl &url);
 	void fileActivated (const KFileItem *item);
 private:
 	KDirOperator *dir;
-	KURLComboBox *urlbox;
+	KUrlComboBox *urlbox;
 };
 
 #endif

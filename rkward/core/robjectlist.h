@@ -64,7 +64,7 @@ public:
 	/** reimplemented from RContainerObject to validize the name in .GlobalEnv */
 	QString validizeName (const QString &child_name, bool unique=true);
 
-	KURL getWorkspaceURL () { return current_url; };
+	KUrl getWorkspaceURL () { return current_url; };
 
 	static RObjectList *getObjectList () { return object_list; };
 	static REnvironmentObject *getGlobalEnv ();
@@ -89,7 +89,7 @@ protected:
 private:
 	friend class RKLoadAgent;
 	friend class RKSaveAgent;
-	void setWorkspaceURL (const KURL &url) { current_url = url; };
+	void setWorkspaceURL (const KUrl &url) { current_url = url; };
 	QTimer *update_timer;
 	
 	RCommandChain *update_chain;
@@ -99,7 +99,7 @@ private:
 
 	REnvironmentObject *createTopLevelEnvironment (const QString &name);
 
-	KURL current_url;
+	KUrl current_url;
 
 	static RObjectList *object_list;
 };
