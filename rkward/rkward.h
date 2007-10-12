@@ -45,10 +45,9 @@ public slots:
 
 // include files for KDE 
 #include <kapplication.h>
-#include <k3mdimainfrm.h>
 #include <kaction.h>
 #include <kurl.h>
-#include <kparts/partmanager.h>
+#include <kparts/mainwindow.h>
 
 class QLabel;
 // forward declaration of the RKward classes
@@ -74,7 +73,7 @@ struct RKWardStartupOptions {
 /**
 The main class of rkward. This is where all strings are tied togther, controlls the initialization, and there are some of the most important slots for user actions. All real work is done elsewhere.
 */
-class RKWardMainWindow : public KMdiMainFrm, virtual public KParts::PartBase {
+class RKWardMainWindow : public KParts::MainWindow {
 	Q_OBJECT
 public:
 /** construtor
@@ -130,8 +129,6 @@ protected:
 	*/
 	virtual void readProperties(KConfig *_cfg);
 signals:
-/** no idea, why we have to declare this explicitly, but somehow we do. */
-	void childWindowCloseRequest (KMdiChildView *);
 	void aboutToQuitRKWard ();
 public slots:
 	/** creates a new (empty) data.frame */
@@ -170,9 +167,6 @@ public slots:
 /** open a new command editor (load given url) */
 	void slotOpenCommandEditor (const KUrl &url);
 
-/** a child window has received a close event. Check, whether data needs to be saved. Ask if necessary. Close only if safe. */
-	void slotChildWindowCloseRequest (KMdiChildView * window);
-
 /** close current window (Windows->Close). */
 	void slotCloseWindow ();
 /** close all windows (Windows->Close All) */
@@ -183,7 +177,7 @@ public slots:
 /** reimplemented from KMainWindow, to additionally include the workspace url. Actually, we also ignore the caption-parameter, as it sometimes is not the one we want. Rather we create one according to the active view */
 	void setCaption (const QString &caption);
 /** a view has been activated or deactivated. We should make sure to update the main caption to fix strange quirks */
-	void viewChanged (KMdiChildView *) { setCaption (QString::null); };
+// KDE4: do we still need this?	void viewChanged (KMdiChildView *) { setCaption (QString::null); };
 
 /** connected to m_manager->partAdded (). Connects statusbar notifications */
 	void partAdded (KParts::Part *part);

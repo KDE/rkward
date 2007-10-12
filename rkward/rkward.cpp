@@ -148,8 +148,6 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : DCOPObject 
 	connect (toplevel_actions->actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
 	createShellGUI (true);
 
-	connect (this, SIGNAL (childWindowCloseRequest (KMdiChildView *)), this, SLOT (slotChildWindowCloseRequest (KMdiChildView *)));
-
 	RKGlobals::mtracker = new RKModificationTracker (this);
 	RKComponentMap::initialize ();
 
@@ -741,12 +739,6 @@ void RKWardMainWindow::slotOpenCommandEditor () {
 		slotOpenCommandEditor (*it);
 	}
 };
-
-void RKWardMainWindow::slotChildWindowCloseRequest (KMdiChildView * window) {
-	RK_TRACE (APP);
-
-	closeWindow (window);
-}
 
 void RKWardMainWindow::openHTML (const KUrl &url) {
 	RK_TRACE (APP);

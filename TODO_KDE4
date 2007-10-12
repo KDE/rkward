@@ -24,3 +24,9 @@ rkcommandeditorwindow
 	- code completion will be broken. Fix after porting.
 	- does the popup-menu still work? See SVN rev. 962.
 	- does highlighting work?
+
+rkward
+	- does DBUS work (i.e. opening help windows)?	
+	- does closing windows work
+	- does updating captions work (when switching windows / window url changes)?
+
