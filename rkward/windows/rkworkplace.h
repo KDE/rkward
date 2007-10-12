@@ -24,6 +24,7 @@
 #include <QSplitter>
 
 #include <kurl.h>
+#include <kmultitabbar.h>
 
 #include "rkmdiwindow.h"
 #include "../rbackend/rcommandreceiver.h"

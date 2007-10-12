@@ -95,7 +95,7 @@ This class represents the common functionality between RKComponentMap and RKCont
 class RKComponentGUIXML {
 protected:
 	RKComponentGUIXML ();
-	~RKComponentGUIXML ();
+	virtual ~RKComponentGUIXML ();
 
 /** reset the xml file */
 	void clearGUIDescription ();

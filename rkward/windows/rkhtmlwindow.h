@@ -20,7 +20,6 @@
 
 #include <kurl.h>
 #include <kparts/browserextension.h>
-#include <k3mdichildview.h>
 #include <kxmlguiclient.h>
 
 #include <q3ptrlist.h>
@@ -29,6 +28,8 @@
 
 class KHTMLPart;
 class KActionCollection;
+class KRecentFilesAction;
+class QAction;
 
 /**
 	\brief Show html files.
@@ -63,7 +64,7 @@ public:
 	void doGotoAnchor (const QString &anchor_name);
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
-	void slotOpenURLRequest (const KUrl &url, const KParts::URLArgs &);
+	void slotOpenUrl (const KUrl & url, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &);
 	void slotPrint ();
 	void slotForward ();
 	void slotBack ();
@@ -84,10 +85,10 @@ protected:
 	void changeURL (const KUrl &url);
 protected:
 	Q3PtrList<KUrl> url_history;
-	KAction *back;
-	KAction *forward;
-	KAction *print;
-	KAction *run_selection;
+	QAction *back;
+	QAction *forward;
+	QAction *print;
+	QAction *run_selection;
 	bool url_change_is_from_history;	// dirty!!!
 	QString goto_anchor_name;
 };
@@ -135,8 +136,8 @@ private:
 /** print a message "Output is empty" to the output window. Used internally, if loading output fails*/
 	void showOutputEmptyMessage ();
 
-	KAction* outputFlush;
-	KAction* outputRefresh;
+	QAction* outputFlush;
+	QAction* outputRefresh;
 
 	static RKOutputWindow* current_output;
 /** In case the output is empty (i.e. output file does not exist), we need to store, where the output *would* be, if it existed, so we can properly refresh the output */

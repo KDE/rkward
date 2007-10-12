@@ -45,6 +45,11 @@ ADD_CUSTOM_TARGET(rkwardwrapper
 	COMMAND perl ${CMAKE_CURRENT_SOURCE_DIR}/makerkwardscript.pl ${CMAKE_CURRENT_SOURCE_DIR}/rkward.sh.template "${R_HOME}" > ${CMAKE_CURRENT_BINARY_DIR}/rkward
 	DEPENDS makerkwardscript.pl rkward.sh.template
 )
+# will this work?
+#CONFIGURE_FILE(
+#	rkward.sh.template
+#	${CMAKE_CURRENT_BINARY_DIR}/rkward
+#	@ONLY)
 ADD_DEPENDENCIES(rkward.bin rkwardwrapper)
 
 ########### install files ###############
