@@ -20,7 +20,7 @@
 #ifndef RKTOOLWINDOWBAR_H
 #define RKTOOLWINDOWBAR_H
 
-#include <KMultiTabBar>
+#include <kmultitabbar.h>
 
 #include <QMap>
 

@@ -19,6 +19,9 @@
 
 #include <ktabbar.h>
 #include <klocale.h>
+#include <kshortcut.h>
+#include <kactioncollection.h>
+#include <kaction.h>
 
 #include <q3widgetstack.h>
 #include <qapplication.h>
@@ -38,7 +41,7 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QWidget (parent) {
 	Q3VBoxLayout *vbox = new Q3VBoxLayout (this);
 	tabs = new KTabBar (this);
 	tabs->setHoverCloseButton (true);
-	tabs->setFocusPolicy (QWidget::NoFocus);
+	tabs->setFocusPolicy (Qt::NoFocus);
 	tabs->hide ();
 	connect (tabs, SIGNAL (selected (int)), this, SLOT (setPage (int)));
 	connect (tabs, SIGNAL (closeRequest (int)), this, SLOT (closePage (int)));
@@ -55,13 +58,13 @@ RKWorkplaceView::~RKWorkplaceView () {
 void RKWorkplaceView::initActions (KActionCollection *ac, const char *id_left, const char *id_right) {
 	RK_TRACE (APP);
 
-	KShortcut left_short (KKey ("Ctrl+<"));
-	left_short.append (KKey (Qt::CTRL | Qt::Key_Comma));
-	action_page_left = new KAction (i18n ("Window Left"), 0, left_short, this, SLOT (pageLeft ()), ac, id_left);
+	action_page_left = (KAction*) ac->addAction (id_left, this, SLOT (pageLeft()));
+	action_page_left->setText (i18n ("Window Left"));
+	action_page_left->setShortcut (KShortcut (Qt::ControlModifier + Qt::Key_Less, Qt::ControlModifier + Qt::Key_Comma));
 
-	KShortcut right_short (KKey ("Ctrl+>"));
-	right_short.append (KKey (Qt::CTRL | Qt::Key_Period));
-	action_page_right = new KAction (i18n ("Window Right"), 0, right_short, this, SLOT (pageRight ()), ac, id_right);
+	action_page_right = (KAction*) ac->addAction (id_right, this, SLOT (pageRight()));
+	action_page_right->setText (i18n ("Window Right"));
+	action_page_right->setShortcut (KShortcut (Qt::ControlModifier + Qt::Key_Greater, Qt::ControlModifier + Qt::Key_Period));
 
 	updateActions ();
 }

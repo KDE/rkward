@@ -18,7 +18,7 @@
 #include "detachedwindowcontainer.h"
 
 #include <klocale.h>
-#include <kstandardaction.h>
+#include <kactioncollection.h>
 #include <kstatusbar.h>
 
 #include <qlayout.h>
@@ -39,8 +39,11 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	setHelpMenuEnabled (false);
 // create own GUI
 	setXMLFile ("detachedwindowcontainer.rc");
-	KStandardAction::close (this, SLOT (close ()), actionCollection (), "dwindow_close");
-	new KAction (i18n ("Attach to main window"), 0, this, SLOT (slotReattach ()), actionCollection (), "dwindow_attach");
+	actionCollection ()->addAction (KStandardAction::Close, "dwindow_close", this, SLOT(close()));
+
+	QAction *reattach = actionCollection ()->addAction ("dwindow_attach", this, SLOT(slotReattach()));
+	reattach->setText (i18n ("Attach to main window"));
+
 	RKTopLevelWindowGUI *toplevel_actions = new RKTopLevelWindowGUI (this);
 	insertChildClient (toplevel_actions);
 	connect (toplevel_actions->actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));

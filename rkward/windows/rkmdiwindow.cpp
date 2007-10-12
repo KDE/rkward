@@ -26,9 +26,11 @@
 #include <QPaintEvent>
 
 #include <kparts/event.h>
+#include <kactioncollection.h>
 
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
+#include "rktoolwindowbar.h"
 
 #include "../debug.h"
 
@@ -171,7 +173,6 @@ void RKMDIWindow::initializeActivationSignals () {
 
 	RK_ASSERT (getPart ());
 	getPart ()->installEventFilter (this);
-	getPart ()->actionCollection ()->setHighlightingEnabled (true);
 }
 
 void RKMDIWindow::paintEvent (QPaintEvent *e) {
