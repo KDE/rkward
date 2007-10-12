@@ -17,7 +17,7 @@
 #ifndef RKSETTINGS_H
 #define RKSETTINGS_H
 
-#include <kdialogbase.h>
+#include <kpagedialog.h>
 
 #include <q3valuelist.h>
 
@@ -32,7 +32,7 @@ The main settings-dialog. Contains subsections (tabs) for different modules. Use
 
 @author Thomas Friedrichsmeier
 */
-class RKSettings : public KDialogBase {
+class RKSettings : public KPageDialog {
 	Q_OBJECT
 public:
 	enum SettingsPage { NoPage=0, Plugins=1, R=2, RPackages=3, PHP=4, General=5, Output=6, Watch=7, Console=8, ObjectBrowser=9 };
@@ -53,7 +53,7 @@ protected:
 	void slotCancel ();
 	void slotHelp ();
 protected:
-	RKSettings (QWidget *parent = 0, const char *name = 0);
+	RKSettings (QWidget *parent = 0);
 	~RKSettings ();
 private:
 	void initModules ();

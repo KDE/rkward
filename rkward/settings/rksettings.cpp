@@ -64,8 +64,14 @@ void RKSettings::dialogClosed () {
 	settings_dialog = 0;
 }
 
-RKSettings::RKSettings (QWidget *parent, const char *name) : KDialogBase (KDialogBase::Tabbed, i18n ("Settings"), KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel | KDialogBase::Help, KDialogBase::Ok, parent, name, false) {
+RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 	RK_TRACE (SETTINGS);
+
+	setFaceType (KPageDialog::Tabbed);
+	setCaption (i18n ("Settings"));
+	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel | KDialog::Help);
+// KDE4: is this needed?	setModal (false);
+
 	setWFlags (getWFlags () | QWidget::WDestructiveClose);
 
 	initModules ();

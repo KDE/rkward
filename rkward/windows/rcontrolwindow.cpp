@@ -42,7 +42,7 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *n
 	RK_TRACE (APP);
 	setPart (new RControlWindowPart (this));
 	initializeActivationSignals ();
-	setFocusPolicy (QWidget::ClickFocus);
+	setFocusPolicy (Qt::ClickFocus);
 
 	Q3VBoxLayout *main_vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
 	Q3HBoxLayout *button_hbox = new Q3HBoxLayout (main_vbox, RKGlobals::spacingHint ());

@@ -5,6 +5,7 @@
 - need to replace hard-coded "share/apps"?
 - icons
 - rkward.desktop
+- use Configure-File-Makro for wrapperscript
 - test
 	- configuration
 		- R
@@ -30,3 +31,5 @@ rkward
 	- does closing windows work
 	- does updating captions work (when switching windows / window url changes)?
 
+output window
+	- does it reload all changed images?

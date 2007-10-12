@@ -64,6 +64,7 @@ class KMdiToolViewAccessor;
 class RKMDIWindow;
 class Q3HBox;
 class RKTopLevelWindowGUI;
+class KRecentFilesAction;
 
 struct RKWardStartupOptions {
 	KUrl *initial_url;	/**< The workspace file to load on startup. If 0, show a dialog asking what to do. **/
