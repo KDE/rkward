@@ -21,7 +21,7 @@
 #include <kparts/part.h>
 
 class RKCommandEditorWindow;
-class KAction;
+class QAction;
 
 /** This class provides a KPart interface to RKCommandEditorWindow. Basically, it is responsible for creating the menu-entries the RKCommandEditorWindow provides, and keeps the corresponding Actions. The reason to use this, is so the required menus/menu-items can be merged in on the fly.
 
@@ -38,11 +38,11 @@ private:
 
 	void initializeActions ();
 // TODO: move these to RKCommandEditorWindow as well, disable runSelection, when there is no selection
-	KAction* runAll;
-	KAction* runSelection;
-	KAction* runLine;
+	QAction* runAll;
+	QAction* runSelection;
+	QAction* runLine;
 
-	KAction* helpFunction;
+	QAction* helpFunction;
 };
 
 #endif

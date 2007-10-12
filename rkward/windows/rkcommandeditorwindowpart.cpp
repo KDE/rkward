@@ -17,12 +17,10 @@
 
 #include "rkcommandeditorwindowpart.h"
 
-#include <kinstance.h>
 #include <klocale.h>
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kxmlguifactory.h>
-
-#include <q3popupmenu.h>
 
 #include "rkcommandeditorwindow.h"
 #include "../misc/rkcommonfunctions.h"
@@ -31,8 +29,7 @@
 RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent, RKCommandEditorWindow *editor_widget) : KParts::Part (parent) {
 	RK_TRACE (COMMANDEDITOR);
 
-	KInstance* instance = new KInstance ("rkward");
-	setInstance (instance);
+	setComponentData (KGlobal::mainComponent ());
  
 	command_editor = editor_widget;
 
@@ -48,11 +45,24 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 void RKCommandEditorWindowPart::initializeActions () {
 	RK_TRACE (COMMANDEDITOR);
 
-	runAll = new KAction (i18n ("Run all"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_all.png"), KShortcut ("F9"), command_editor, SLOT (runAll()), actionCollection (), "run_all");
-	runSelection = new KAction (i18n ("Run selection"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), command_editor, SLOT (runSelection()), actionCollection (), "run_selection");
-	runLine = new KAction (i18n ("Run current line"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_line.png"), KShortcut ("Ctrl+L"), command_editor, SLOT (runLine()), actionCollection (), "run_line");
+	runAll = actionCollection ()->addAction ("run_all", command_editor, SLOT (runAll()));
+	runAll->setText (i18n ("Run all"));
+	runAll->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_all.png"));
+	runAll->setShortcut (Qt::Key_F9);
 
-	helpFunction = new KAction (i18n ("&Function reference"), KShortcut ("F2"), command_editor, SLOT (showHelp()), actionCollection (), "function_reference");
+	runSelection = actionCollection ()->addAction ("run_selection", command_editor, SLOT (runSelection()));
+	runSelection->setText (i18n ("Run selection"));
+	runSelection->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"));
+	runSelection->setShortcut (Qt::Key_F9);
+
+	runLine = actionCollection ()->addAction ("run_line", command_editor, SLOT (runLine()));
+	runLine->setText (i18n ("Run current line"));
+	runLine->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_line.png"));
+	runLine->setShortcut (Qt::ControlModifier + Qt::Key_L);
+
+	helpFunction = actionCollection ()->addAction ("function_reference", command_editor, SLOT (showHelp()));
+	helpFunction->setText (i18n ("&Function reference"));
+	helpFunction->setShortcut (Qt::Key_F2);
 }
 
 #include "rkcommandeditorwindowpart.moc"
