@@ -25,9 +25,9 @@
 #include <QPaintEvent>
 
 #include <kparts/part.h>
-#include <k3mdimainfrm.h>
 
 class RKWorkplace;
+class RKToolWindowBar;
 
 /** Base class for rkward document mdi windows */
 class RKMDIWindow : public Q3Frame {
@@ -91,8 +91,7 @@ public:
 	virtual void prepareToBeDetached ();
 /** Tool windows will only hide themselves, and ignore the also_delete flag */
 	virtual bool close (bool also_delete);
-/** For tool windows only (and perhaps for KDE3 only): set the wrapper widget that should be shown/raised on activation */
-	void setToolWrapper (KMdiToolViewAccessor *wrapper_widget);
+
 	bool eventFilter (QObject *watched, QEvent *e);
 	bool acceptsEventsFor (QObject *object);
 /** Whether the window is active. This seems to be more reliable than hasFocus () */
@@ -112,10 +111,11 @@ friend class RKWorkplace;
 /** type of this window */
 	int type;
 private:
+friend class RKToolWindowBar;
 /** state of this window (attached / detached). This is usually set from the RKWorkplace */
 	KParts::Part *part;
 	State state;
-	KMdiToolViewAccessor *wrapper;
+	RKToolWindowBar *tool_window_bar;
 	bool active;
 };
 

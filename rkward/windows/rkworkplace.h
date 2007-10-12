@@ -21,6 +21,7 @@
 #include <q3valuelist.h>
 #include <qstring.h>
 #include <qtabwidget.h>
+#include <QSplitter>
 
 #include <kurl.h>
 
@@ -33,6 +34,7 @@ class RKWorkplaceView;
 class RKEditor;
 class KActionCollection;
 class KAction;
+class RKToolWindowBar;
 
 /** Simple class to store the history of recently used RKMDIWindow */
 class RKMDIWindowHistory : public QObject {
@@ -149,6 +151,7 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** In the current design there is only ever one workplace. Use this static function to reference it.
 @returns a pointer to the workplace */
 	static RKWorkplace *mainWorkplace () { return main_workplace; };
+	void placeInToolWindowBar (RKMDIWindow *window, KMultiTabBar::KMultiTabBarPosition position);
 	void registerToolWindow (RKMDIWindow *window);
 signals:
 /** TODO: For future expansion. This signal is neither emitted nor used so far. It could be used to deactivate some options in the "Window" menu. Or maybe it can be removed? */
@@ -173,6 +176,11 @@ private:
 
 	void restoreWorkplaceItem (const QString &desc);
 	RKMDIWindowHistory *history;
+
+	QSplitter horiz_splitter;
+	QSplitter vert_splitter;
+
+	RKToolWindowBar* tool_window_bars[4];
 };
 
 #endif

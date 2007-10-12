@@ -21,11 +21,14 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kiconloader.h>
+#include <KHBox>
+#include <KVBox>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
 #include "rkhtmlwindow.h"
 #include "rkworkplaceview.h"
+#include "rktoolwindowbar.h"
 #include "../core/robject.h"
 #include "../core/rcontainerobject.h"
 #include "../core/robjectlist.h"
@@ -54,7 +57,40 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QObject (parent) {
 	RK_ASSERT (main_workplace == 0);
 
 	main_workplace = this;
-	wview = new RKWorkplaceView (parent);
+
+	/* Splitter setup contains heavy copying from Kate's katemdi! */
+	hbox = new KHBox (this);
+	setCentralWidget (hbox);
+	tool_window_bars[KMultiTabBar::Left] = new RKToolWindowBar (KMultiTabBar::Left, hbox);
+
+	horiz_splitter = new QSplitter (Qt::Horizontal, hbox);
+	horiz_splitter->setOpaqueResize (KGlobalSettings::opaqueResize ());
+
+	tool_window_bars[KMultiTabBar::Left]->setSplitter (horiz_splitter);
+
+	KVBox *vbox = new KVBox (horiz_splitter);
+	horiz_splitter->setCollapsible (horiz_splitter->indexOf (vbox), false);
+	horiz_splitter->setStretchFactor (horiz_splitter->indexOf (vbox), 1);
+
+	tool_window_bars[KMultiTabBar::Top] = new RKToolWindowBar (KMultiTabBar::Top, vbox);
+	vert_splitter = new QSplitter (Qt::Vertical, vbox);
+	vert_splitter->setOpaqueResize (KGlobalSettings::opaqueResize ());
+
+	tool_window_bars[KMultiTabBar::Top]->setSplitter (vert_splitter);
+	wview = new RKWorkplaceView (vert_splitter);
+	wview->layout ()->setSpacing (0);
+	wview->layout ()->setMargin (0);
+
+	vert_splitter->setCollapsible (vert_splitter->indexOf (wview), false);
+	vert_splitter->setStretchFactor(vert_splitter->indexOf (wview), 1);
+
+	tool_window_bars[KMultiTabBar::Bottom] = new RKToolWindowBar (KMultiTabBar::Bottom, vbox);
+	tool_window_bars[KMultiTabBar::Bottom]->setSplitter (vert_splitter);
+
+	tool_window_bars[KMultiTabBar::Right] = new RKToolWindowBar (KMultiTabBar::Right, hbox);
+	tool_window_bars[KMultiTabBar::Right]->setSplitter (horiz_splitter);
+
+
 	history = new RKMDIWindowHistory (this);
 }
 
@@ -115,6 +151,12 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	connect (window, SIGNAL (windowActivated(RKMDIWindow*)), history, SLOT (windowActivated(RKMDIWindow*)));
 	if (attached) attachWindow (window);
 	else detachWindow (window, false);
+}
+
+void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, KMultiTabBar::KMultiTabBarPosition position) {
+	RK_TRACE (APP);
+
+	tool_window_bars[position]->addWidget (window);
 }
 
 void RKWorkplace::registerToolWindow (RKMDIWindow *window) {
