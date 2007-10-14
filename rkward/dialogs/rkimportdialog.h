@@ -40,7 +40,7 @@ public:
 	~RKImportDialog ();
 public slots:
 /** The currently selected file extension filter was changed. Update the file format selection box accordingly. */
-	void filterChanged ();
+	void filterWasChanged (const QString &);
 protected:
 /** reimplemented to a) invoke the relevant plugin, b) trigger self-destruction of the dialog */
 	void accept ();

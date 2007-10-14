@@ -49,6 +49,7 @@ private:
 	QString id;
 };
 
+class KAction;
 
 /** An RKContextHandler can be thought of as an instance of a context. E.g. the x11 device context by itself is just an abstract description. To actually use the context for a given device, an RKContextHandler is used. The normal way to construct an instance of this class is using RKContextMap::makeContextHandler().
 

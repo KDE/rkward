@@ -82,6 +82,8 @@ protected:
 };
 
 #include <qmap.h>
+#include <QDomDocument>
+
 #include <kxmlguiclient.h>
 
 class QDomElement;

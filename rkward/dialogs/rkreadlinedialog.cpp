@@ -25,6 +25,7 @@
 #include <qdesktopwidget.h>
 
 #include <klocale.h>
+#include <kvbox.h>
 
 #include "../rbackend/rcommand.h"
 
@@ -32,11 +33,17 @@
 
 QRect RKReadLineDialog::stored_geom;
 
-RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, const QString &prompt, RCommand *command) : KDialogBase (parent, 0, true, caption, KDialogBase::Ok | KDialogBase::Cancel) {
+RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, const QString &prompt, RCommand *command) : KDialog (parent) {
 	RK_TRACE (DIALOGS);
 	RK_ASSERT (command);
 
-	KVBox *page = makeVBoxMainWidget ();
+	setModal (true);
+	setCaption (caption);
+	setButtons (KDialog::Ok | KDialog::Cancel);
+
+	KVBox *page = new KVBox ();
+	setMainWidget (page);
+
 	new QLabel (caption, page);
 
 	int screen_width = qApp->desktop ()->width () - 2*marginHint() - 2*spacingHint ();		// TODO is this correct on xinerama?
@@ -47,7 +54,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 
 		Q3TextEdit *output = new Q3TextEdit (page);
 		output->setUndoRedoEnabled (false);
-		output->setTextFormat (Q3TextEdit::PlainText);
+		output->setTextFormat (Qt::PlainText);
 		output->setCurrentFont (QFont ("Courier"));
 		output->setWordWrap (Q3TextEdit::NoWrap);
 		output->setText (context);
@@ -55,7 +62,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 		int cwidth = output->contentsWidth ();
 		output->setMinimumWidth (screen_width < cwidth ? screen_width : cwidth);
 		output->scrollToBottom ();
-		output->setFocusPolicy (QWidget::NoFocus);
+		output->setFocusPolicy (Qt::NoFocus);
 	}
 
 	QLabel *promptl = new QLabel (prompt, page);

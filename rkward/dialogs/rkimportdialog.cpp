@@ -37,8 +37,10 @@ RKImportDialogFormatSelector::RKImportDialogFormatSelector () {
 	combo = new QComboBox (this);
 }
 
-RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KFileDialog (QString::null, QString::null, parent, 0, false, format_selector=new RKImportDialogFormatSelector ()) {
+RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KFileDialog (KUrl (), QString (), parent, format_selector=new RKImportDialogFormatSelector ()) {
 	RK_TRACE (DIALOGS);
+
+	setModal (false);
 
 	context = RKComponentMap::getContext (context_id);
 	if (!context) {
@@ -76,8 +78,8 @@ RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KF
 	// initialize
 	setMode (KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
 	setFilter (formats);
-	connect (filterWidget, SIGNAL (filterChanged ()), this, SLOT (filterChanged ()));
-	filterChanged ();
+	connect (this, SIGNAL (filterChanged (const QString&)), this, SLOT (filterWasChanged (const QString&)));
+	filterWasChanged (QString ());
 	show ();
 }
 
@@ -85,10 +87,10 @@ RKImportDialog::~RKImportDialog () {
 	RK_TRACE (DIALOGS);
 }
 
-void RKImportDialog::filterChanged () {
+void RKImportDialog::filterWasChanged (const QString &) {
 	RK_TRACE (DIALOGS);
 
-	int index = filters.findIndex (filterWidget->currentFilter ());
+	int index = filters.findIndex (filterWidget ()->currentFilter ());
 
 	if (index < 0) {		// All files
 		format_selector->combo->setEnabled (true);

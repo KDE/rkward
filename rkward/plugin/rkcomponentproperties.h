@@ -20,6 +20,8 @@
 
 #include <qobject.h>
 
+#include <limits.h>
+
 /* we need these forward declarations for now, due to cylcic includes. TODO: fix this */
 class RKComponentPropertyBase;
 class RKComponentPropertyBool;
