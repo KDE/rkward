@@ -16,7 +16,6 @@
  ***************************************************************************/
 #include "startupdialog.h"
 
-#include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qcheckbox.h>
 #include <q3buttongroup.h>
@@ -29,32 +28,31 @@
 #include <Q3HBoxLayout>
 #include <Q3VBoxLayout>
 
-#include <kdeversion.h>
-#if !KDE_IS_VERSION (3, 2,0)
-	#include <kaction.h>
-#else
-	#include <kactionclasses.h>
-#endif
 #include <klocale.h>
+#include <kvbox.h>
+#include <krecentfilesaction.h>
 
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
 
-StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRecentFilesAction *recent_files) : QDialog (parent, 0, true) {
+StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRecentFilesAction *recent_files) : KDialog (parent) {
 	RK_TRACE (DIALOGS);
+
+	setModal (true);
+	setButtons (KDialog::Ok | KDialog::Cancel);
+
 	StartupDialog::result = result;
 
 	setCaption (i18n ("What would you like to do?"));
 
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (this);
+	KVBox *vbox = new KVBox (this);
+	setMainWidget (vbox);
 	
-	logo = new QPixmap (RKCommonFunctions::getRKWardDataDir () + "icons/rkward_logo.png");
-	QLabel *pic = new QLabel (this);
-	pic->setPixmap (*logo);
-	vbox->addWidget (pic);
+	QLabel *pic = new QLabel (vbox);
+	pic->setPixmap (QPixmap (RKCommonFunctions::getRKWardDataDir () + "icons/rkward_logo.png"));
 
-	choser = new Q3ButtonGroup (this);
+	choser = new Q3ButtonGroup (vbox);
 	choser->setColumnLayout (0, Qt::Vertical);
 	choser->layout()->setSpacing (6);
 	choser->layout()->setMargin (11);
@@ -62,7 +60,7 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	choser_layout->addWidget (empty_workspace_button = new QRadioButton (i18n ("Start with an empty workspace"), choser));
 	choser_layout->addWidget (empty_table_button = new QRadioButton (i18n ("Start with an empty table"), choser));
 	open_button = new QRadioButton (i18n ("Load an existing workspace:"), choser);
-	connect (open_button, SIGNAL (stateChanged (int)), this, SLOT (openButtonSelected (int)));
+	connect (open_button, SIGNAL (toggled (bool)), this, SLOT (openButtonSelected (bool)));
 	empty_table_button->setChecked (true);
 	choser_layout->addWidget (open_button);
 
@@ -80,25 +78,12 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	connect (file_list, SIGNAL (doubleClicked (Q3ListViewItem *, const QPoint &, int)), this, SLOT (listDoubleClicked (Q3ListViewItem*, const QPoint &, int)));
 	choser_layout->addWidget (file_list);
 	choser_layout->addWidget (remember_box = new QCheckBox (i18n ("Always do this on startup"), choser));
-	
-	vbox->addWidget (choser);
-	
-	Q3HBoxLayout *button_hbox = new Q3HBoxLayout (vbox);
-	ok_button = new QPushButton (i18n ("Ok"), this);
-	connect (ok_button, SIGNAL (clicked ()), this, SLOT (accept ()));
-	button_hbox->addWidget (ok_button);
-	button_hbox->addStretch ();
-	
-	cancel_button = new QPushButton (i18n ("Cancel"), this);
-	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (reject ()));
-	button_hbox->addWidget (cancel_button);
 
 	setFixedWidth (minimumWidth ());
 }
 
 StartupDialog::~StartupDialog() {
 	RK_TRACE (DIALOGS);
-	delete logo;
 }
 
 void StartupDialog::accept () {
@@ -146,14 +131,15 @@ void StartupDialog::listClicked (Q3ListViewItem *item) {
 	
 	if (item) {
 		open_button->setChecked (true);
-		openButtonSelected (QButton::On);		// always do processing
+// KDE4: is this needed, or does it happen automatically via toggled() SIGNAL?
+		openButtonSelected (true);		// always do processing
 	}
 }
 
-void StartupDialog::openButtonSelected (int state) {
+void StartupDialog::openButtonSelected (bool checked) {
 	RK_TRACE (DIALOGS);
 
-	if (state == QButton::On) {
+	if (checked) {
 		if (!file_list->selectedItem ()) {
 			file_list->setSelected (file_list->firstChild (), true);
 		}
@@ -163,7 +149,7 @@ void StartupDialog::openButtonSelected (int state) {
 		} else {
 			remember_box->setEnabled (true);
 		}
-	} else if (state == QButton::Off) {
+	} else if (checked) {
 		remember_box->setEnabled (true);
 	}
 }
@@ -183,7 +169,7 @@ StartupDialog::StartupDialogResult *StartupDialog::getStartupAction (QWidget *pa
 	dialog->exec ();
 	delete dialog;
 	
-	RK_DO (qDebug ("startup-dialog result: %d, url: %s", result->result, result->open_url.fileName ().toLatin1 ()), DIALOGS, DL_DEBUG);
+	RK_DO (qDebug ("startup-dialog result: %d, url: %s", result->result, result->open_url.fileName ().toLatin1 ().data ()), DIALOGS, DL_DEBUG);
 	
 	return result;
 }

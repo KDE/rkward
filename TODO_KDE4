@@ -21,6 +21,9 @@
 
 **Everything else**
 
+General:
+	- look out for all failed signal/slot connections
+
 rkcommandeditorwindow
 	- code completion will be broken. Fix after porting.
 	- does the popup-menu still work? See SVN rev. 962.

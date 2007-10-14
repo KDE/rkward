@@ -17,13 +17,12 @@
 #ifndef STARTUPDIALOG_H
 #define STARTUPDIALOG_H
 
-#include <qdialog.h>
+#include <kdialog.h>
+#include <kurl.h>
+
 //Added by qt3to4:
 #include <QPixmap>
 
-#include <kurl.h>
-
-class QPushButton;
 class QCheckBox;
 class Q3ButtonGroup;
 class QRadioButton;
@@ -38,7 +37,7 @@ This class represents the startup dialog asking you whether to open a recent fil
 @author Thomas Friedrichsmeier
 */
 /// the startup dialog
-class StartupDialog : public QDialog {
+class StartupDialog : public KDialog {
 Q_OBJECT
 public:
 	/** enum to hold result of StartupDialog. WARNING: do not change the numeric values! They are saved as user settings in the config (@see RKSettingsModuleGeneral). */
@@ -64,10 +63,8 @@ public slots:
 	void reject ();
 	void listDoubleClicked (Q3ListViewItem *item, const QPoint &, int);
 	void listClicked (Q3ListViewItem *item);
-	void openButtonSelected (int state);
+	void openButtonSelected (bool checked);
 private:
-	QPushButton *ok_button;
-	QPushButton *cancel_button;
 	QRadioButton *empty_workspace_button;
 	QRadioButton *empty_table_button;
 	QRadioButton *open_button;
@@ -77,8 +74,6 @@ private:
 	
 	Q3ListView *file_list;
 	Q3ListViewItem *chose_file_item;
-	
-	QPixmap *logo;
 	
 	StartupDialogResult *result;
 };
