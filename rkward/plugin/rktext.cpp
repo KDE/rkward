@@ -44,7 +44,7 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 
 	QString initial_text;
 	QStringList lines = lines.split ("\n", element.text (), false);
-	for (unsigned int i=0; i < lines.count (); i++) {
+	for (int i=0; i < lines.count (); i++) {
 		QString line = lines[i].trimmed ();
 		if (!line.isEmpty ()) {
 			initial_text.append (line + '\n');

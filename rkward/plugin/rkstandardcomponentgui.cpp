@@ -19,6 +19,7 @@
 
 #include <klocale.h>
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kurl.h>
 
 #include <qtimer.h>
@@ -63,7 +64,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 
 	if (!enslaved) {
 		KActionCollection *action_collection = new KActionCollection (this);
-		KStandardAction::copy (this, SLOT (copyCode ()), action_collection);
+		action_collection->addAction (KStandardAction::Copy, this, SLOT (copyCode()));
 	}
 }
 

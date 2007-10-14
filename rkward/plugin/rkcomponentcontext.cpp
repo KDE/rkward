@@ -18,6 +18,7 @@
 #include "rkcomponentcontext.h"
 
 #include <kaction.h>
+#include <kactioncollection.h>
 
 #include "../misc/xmlhelper.h"
 
@@ -82,7 +83,9 @@ RKContextHandler::~RKContextHandler () {
 void RKContextHandler::addAction (const QString &id, RKComponentHandle *handle) {
 	RK_TRACE (PLUGIN);
 
-	action_map.insert (new KAction (handle->getLabel (), 0, this, SLOT (componentActionActivated ()), actionCollection (), id.toLatin1 ()), handle);
+	QAction *action = actionCollection ()->addAction (id, this, SLOT (componentActionActivated()));
+	action->setText (handle->getLabel ());
+	action_map.insert (action, handle);
 }
 
 void RKContextHandler::componentActionActivated () {
@@ -90,7 +93,7 @@ void RKContextHandler::componentActionActivated () {
 
 	// find handle that triggered action
 	RKComponentHandle *handle = 0;
-	const KAction *action = dynamic_cast<const KAction *> (sender ());
+	const QAction *action = dynamic_cast<const QAction *> (sender ());
 	if (action_map.contains (action)) handle = action_map[action];
 	if (!handle) {
 		RK_ASSERT (false);
@@ -116,7 +119,7 @@ void RKContextHandler::invokeComponent (RKComponentHandle *handle) {
 
 			RK_ASSERT (it.current ()->isProperty ());
 			if (!(client && remainder.isEmpty () && client->isProperty () && it.current ()->isProperty ())) {
-				RK_DO (qDebug ("Could not set context property %s", id.toLatin1 ()), PLUGIN, DL_INFO);
+				RK_DO (qDebug ("Could not set context property %s", id.toLatin1 ().data ()), PLUGIN, DL_INFO);
 				continue;
 			}
 

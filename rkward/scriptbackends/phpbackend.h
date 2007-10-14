@@ -24,7 +24,6 @@
 #include <k3process.h>
 #include <qstringlist.h>
 #include <q3valuelist.h>
-#include <ktempfile.h>
 
 class RKPlugin;
 

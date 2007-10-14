@@ -535,7 +535,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 		} else if (e.tagName () == "tabbook") {
 			QTabWidget *tabbook = new QTabWidget (parent_widget);
 			QDomNodeList tabs = e.childNodes ();
-			for (unsigned int t=0; t < tabs.count (); ++t) {
+			for (int t=0; t < tabs.count (); ++t) {
 				QDomElement tab_e = tabs.item (t).toElement ();
 				if (tab_e.tagName () == "tab") {
 					RKTabPage *tabpage = new RKTabPage (tab_e, component (), tabbook);
@@ -675,7 +675,7 @@ void RKComponentBuilder::makeConnections () {
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	for (ConnectionList::const_iterator it = connection_list.begin (); it != connection_list.end (); ++it) {
-		RK_DO (qDebug ("Connecting '%s' to '%s'", (*it).client_property.toLatin1 (), (*it).governor_property.toLatin1 ()), PLUGIN, DL_DEBUG);
+		RK_DO (qDebug ("Connecting '%s' to '%s'", (*it).client_property.toLatin1 ().data (), (*it).governor_property.toLatin1 ().data ()), PLUGIN, DL_DEBUG);
 
 		QString dummy;
 		RKComponentBase *client = parent->lookupComponent ((*it).client_property, &dummy);

@@ -40,6 +40,7 @@
 #include <QLabel>
 #include <QKeyEvent>
 #include <QEvent>
+#include <QClipboard>
 
 #include <klocale.h>
 #include <kmenubar.h>
@@ -163,12 +164,11 @@ void RKCommandEditorWindow::setRHighlighting () {
 	m_doc->setHighlightingMode("R Script");
 }
 
-/* KDE4 no longer needed?
 void RKCommandEditorWindow::copy () {
 	RK_TRACE (COMMANDEDITOR);
 
-	m_view->copy ();
-} */
+	QApplication::clipboard()->setText (m_view->selectionText ());
+}
 
 void RKCommandEditorWindow::setReadOnly (bool ro) {
 	RK_TRACE (COMMANDEDITOR);

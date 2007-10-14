@@ -100,7 +100,7 @@ public:
 /** set the current text (clear all previous text, and sets new text) */
 	void setText (const QString &text);
 /** copy current selection. Wrapper for use by external classes */
-//KDE4: no longer needed?	void copy ();
+	void copy ();
 
 	QString getDescription ();
 

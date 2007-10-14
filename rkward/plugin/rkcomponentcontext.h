@@ -79,7 +79,8 @@ private slots:
 /** slot to handle plugin activation */
 	void componentActionActivated ();
 private:
-	typedef QMap<const KAction *, RKComponentHandle *> ActionMap;
+// KDE4: TODO: This can probably be made more straight-forward by using QAction::setData()
+	typedef QMap<const QAction *, RKComponentHandle *> ActionMap;
 	ActionMap action_map;
 };
 

@@ -20,7 +20,7 @@
 #include <qdom.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qvbuttongroup.h>
+#include <Q3VButtonGroup>
 #include <qradiobutton.h>
 //Added by qt3to4:
 #include <Q3VBoxLayout>
@@ -74,7 +74,7 @@ void RKRadio::addOptionToGUI (const QString &label, int id) {
 void RKRadio::setItemEnabledInGUI (int id, bool enabled) {
 	RK_TRACE (PLUGIN);
 
-	QButton *button = group->find (id);
+	QAbstractButton *button = group->find (id);
 	RK_ASSERT (button);
 	button->setEnabled (enabled);
 }

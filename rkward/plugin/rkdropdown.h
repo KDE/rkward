@@ -42,18 +42,4 @@ private:
 	QComboBox *box;
 };
 
-#include <q3listbox.h>
-
-#define ID_RKDROPDOWNLISTITEM 1001
-
-/** Item used in RKDropDown. The difference to a regular QListBoxText is that the item looks different when disabled */
-class RKDropDownListItem : public Q3ListBoxText {
-public:
-	RKDropDownListItem (Q3ListBox *listbox, const QString &text);
-	~RKDropDownListItem () {};
-	int rtti () const { return ID_RKDROPDOWNLISTITEM; };
-protected:
-	void paint (QPainter *painter);
-};
-
 #endif

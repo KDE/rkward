@@ -26,7 +26,7 @@ RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QS
 	RK_ASSERT (remainder);
 
 	if (identifier.isEmpty ()) return this;
-	RK_DO (qDebug ("looking up '%s'", identifier.toLatin1 ()), PLUGIN, DL_DEBUG);
+	RK_DO (qDebug ("looking up '%s'", identifier.toLatin1 ().data ()), PLUGIN, DL_DEBUG);
 
 	RKComponentBase *child = child_map.find (identifier.section (".", 0, 0));
 	if (!child) {	// if we do not have such a child, return this (and set remainder)
@@ -84,7 +84,7 @@ QString RKComponentBase::fetchStringValue (const QString &identifier) {
 QString RKComponentBase::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
-	RK_DO (qDebug ("Component type %d does not have a value. Remaining modifier is: '%s'", type (), modifier.toLatin1 ()), PLUGIN, DL_WARNING);
+	RK_DO (qDebug ("Component type %d does not have a value. Remaining modifier is: '%s'", type (), modifier.toLatin1 ().data ()), PLUGIN, DL_WARNING);
 	return QString ();
 }
 

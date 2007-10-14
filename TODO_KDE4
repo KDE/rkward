@@ -52,3 +52,9 @@ rkfilebrowser
 
 rkloadlibsdialog:
 	- does it work?
+
+rkradio:
+	- does disabling single options work (in plugins)?
+
+rkdropdown:
+	- take care of enabling / disabling single options!

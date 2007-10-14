@@ -21,7 +21,6 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qcombobox.h>
-#include <q3listbox.h>
 //Added by qt3to4:
 #include <Q3VBoxLayout>
 
@@ -45,10 +44,6 @@ RKDropDown::RKDropDown (const QDomElement &element, RKComponent *parent_componen
 
 	// create ComboBox
 	box = new QComboBox (false, this);
-	if (!(box->listBox ())) {
-		// make sure the combo box uses a list box internally
-		box->setListBox (new Q3ListBox (this));
-	}
 
 	addOptionsAndInit (element);
 
@@ -63,11 +58,8 @@ RKDropDown::~RKDropDown(){
 void RKDropDown::comboItemActivated (int id) {
 	RK_TRACE (PLUGIN);
 
-	Q3ListBox *list = box->listBox ();
-	RK_ASSERT (list);
-	Q3ListBoxItem *item = list->item (id);
-	RK_ASSERT (item);
-	if (!item->isSelectable ()) return;		// yes, apparently not selectable items can be "activated"
+//KDE4: TODO!!!
+	// make sure only selectable items get selected
 
 	itemSelected (id);
 }
@@ -87,20 +79,13 @@ void RKDropDown::addOptionToGUI (const QString &label, int id) {
 void RKDropDown::setItemEnabledInGUI (int id, bool enabled) {
 	RK_TRACE (PLUGIN);
 
-	Q3ListBox *list = box->listBox ();
-	RK_ASSERT (list);
-	Q3ListBoxItem *item = list->item (id);
-	RK_ASSERT (item);
+//	QModelIndex offset = box->model ()->createIndex (id, box->modelColumn ());
 
-	if (item->rtti () != ID_RKDROPDOWNLISTITEM) {
-		// this item won't show whether it is enabled or not. We need to replace it.
-		item = new RKDropDownListItem (0, list->text (id));
-		list->changeItem (item, id);
-	}
-
-	item->setSelectable (enabled);
+//KDE4 TODO: enable/disable item
+//	item->setSelectable (enabled);
 }
 
+/*
 ////////////////// RKDropDownListItem ////////////////////////
 
 #include <qpainter.h>
@@ -116,6 +101,6 @@ void RKDropDownListItem::paint (QPainter *painter) {
 	}
 
 	Q3ListBoxText::paint (painter);
-}
+}*/
 
 #include "rkdropdown.moc"

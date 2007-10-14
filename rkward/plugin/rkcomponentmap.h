@@ -38,6 +38,8 @@ enum RKComponentType {
 };
 
 #include <qobject.h>
+#include <QPair>
+#include <QMap>
 
 class RKComponent;
 class RKComponentMap;
