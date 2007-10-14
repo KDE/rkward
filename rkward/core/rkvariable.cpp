@@ -21,6 +21,7 @@
 #include <Q3ValueList>
 #include "float.h"
 #include "math.h"
+#include "limits.h"
 
 #include "rcontainerobject.h"
 #include "robjectlist.h"

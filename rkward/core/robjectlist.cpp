@@ -122,7 +122,7 @@ void RObjectList::updateEnvironments (QString *env_names, unsigned int env_count
 
 	// remove the environments which are gone
 	for (Q3ValueList<REnvironmentObject *>::const_iterator it = removelist.constBegin (); it != removelist.constEnd (); ++it) {
-		RK_DO (qDebug ("removing toplevel environment %s from list", (*it)->getShortName ().toLatin1 ()), OBJECTS, DL_INFO);
+		RK_DO (qDebug ("removing toplevel environment %s from list", (*it)->getShortName ().toLatin1 ().data ()), OBJECTS, DL_INFO);
 		RKGlobals::tracker ()->removeObject (*it, 0, true);
 	}
 

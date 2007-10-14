@@ -55,7 +55,7 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 	} else {
 		if (just_created) {
 			RK_ASSERT (false);
-			RK_DO (qDebug ("%s", child->getFullName ().toLatin1 ()), OBJECTS, DL_ERROR);
+			RK_DO (qDebug ("%s", child->getFullName ().toLatin1 ().data ()), OBJECTS, DL_ERROR);
 			delete child;
 			return 0;
 		} else {
@@ -116,7 +116,7 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 	} else if (child_type & RObject::Variable) {
 		child_object = new RKVariable (this, child_name);
 	} else {
-		RK_DO (qDebug ("Can't represent object '%s', type %d", child_name.toLatin1 (), child_type), OBJECTS, DL_WARNING);
+		RK_DO (qDebug ("Can't represent object '%s', type %d", child_name.toLatin1 ().data (), child_type), OBJECTS, DL_WARNING);
 		return 0;
 	}
 	RK_ASSERT (child_object);
@@ -172,7 +172,7 @@ void RContainerObject::updateChildren (RData *new_children) {
 
 // finally delete the missing old ones
 	for (Q3ValueList<RObject*>::iterator it = removed_list.begin (); it != removed_list.end (); ++it) {
-		RK_DO (qDebug ("child no longer present: %s.", (*it)->getFullName ().toLatin1 ()), OBJECTS, DL_DEBUG);
+		RK_DO (qDebug ("child no longer present: %s.", (*it)->getFullName ().toLatin1 ().data ()), OBJECTS, DL_DEBUG);
 		RKGlobals::tracker ()->removeObject ((*it), 0, true);
 	}
 
