@@ -47,11 +47,11 @@ public slots:
 /** return a pointer to the underlying editor widget */
 	RKEditorDataFrame *getEditor () { return editor; };
 private:
-	KAction* editCut;
-	KAction* editCopy;
-	KAction* editPaste;
-	KAction* editPasteToSelection;
-	KAction* editPasteToTable;
+	QAction* editCut;
+	QAction* editCopy;
+	QAction* editPaste;
+	QAction* editPasteToSelection;
+	QAction* editPasteToTable;
 
 /** we could always use static_cast<RKEditorDataFrame*> (widget ()) instead of keeping this pointer. This saves some typing, though */
 	RKEditorDataFrame *editor;

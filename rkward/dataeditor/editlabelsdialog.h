@@ -17,7 +17,7 @@
 #ifndef EDITLABELSDIALOG_H
 #define EDITLABELSDIALOG_H
 
-#include <qdialog.h>
+#include <kdialog.h>
 //Added by qt3to4:
 #include <QResizeEvent>
 
@@ -68,7 +68,7 @@ Allows editing of value labels / factor levels for an (edited) RKVariable
 
 @author Thomas Friedrichsmeier
 */
-class EditLabelsDialog : public QDialog {
+class EditLabelsDialog : public KDialog {
 	Q_OBJECT
 public:
 /** constuctor., the variable to work on.

@@ -57,7 +57,7 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
 	Q3GridLayout *grid_layout = new Q3GridLayout(this);
 	
 	QSplitter *splitter = new QSplitter(this);
-	splitter->setOrientation(QSplitter::Vertical);
+	splitter->setOrientation(Qt::Vertical);
 	
 	varview = new TwinTableMetaMember (splitter, this);
 	varview->setNumRows (5);
@@ -111,7 +111,7 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
 	left_header_menu->insertItem (QString::null, this, SLOT (deleteRow ()), 0, HEADER_MENU_ID_DEL_ROW);
 	left_header_menu->insertItem (QString::null, this, SLOT (deleteRows ()), 0, HEADER_MENU_ID_DEL_ROWS);
 
-	setFocusPolicy (QWidget::StrongFocus);
+	setFocusPolicy (Qt::StrongFocus);
 }
 
 TwinTable::~TwinTable() {

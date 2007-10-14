@@ -260,7 +260,7 @@ void TwinTableMember::paintCellInternal (QPainter *p, int row, int col, const QR
 
 	// draw grid
 	QPen pen (p->pen ());
-	int gridColor = style ().styleHint (QStyle::SH_Table_GridLineColor, this);
+	int gridColor = style ()->styleHint (QStyle::SH_Table_GridLineColor, 0, this);
 	if (gridColor != -1) {
 		const QPalette &pal = palette ();
 		if (cg != colorGroup () && cg != pal.disabled () && cg != pal.inactive ()) p->setPen (cg.mid ());

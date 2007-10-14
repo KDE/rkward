@@ -17,8 +17,10 @@
 #include "editlabelsdialog.h"
 
 #include <klocale.h>
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kaction.h>
+#include <kactioncollection.h>
+#include <kvbox.h>
 
 #include <qapplication.h>
 #include <qclipboard.h>
@@ -56,9 +58,9 @@ LevelsTable::LevelsTable (QWidget *parent, RObject::ValueLabels *labels) : TwinT
 	setMinimumWidth (80);
 
 	KActionCollection *ac = new KActionCollection (this);
-	KStandardAction::cut (this, SLOT (cut ()), ac);
-	KStandardAction::copy (this, SLOT (copy ()), ac);
-	KStandardAction::paste (this, SLOT (paste ()), ac);
+	ac->addAction (KStandardAction::Cut, this, SLOT (cut ()));
+	ac->addAction (KStandardAction::Copy, this, SLOT (copy ()));
+	ac->addAction (KStandardAction::Paste, this, SLOT (paste ()));
 }
 
 LevelsTable::~LevelsTable () {
@@ -217,18 +219,18 @@ void LevelsTable::columnWidthChanged (int col) {
 
 
 
-EditLabelsDialog::EditLabelsDialog (QWidget *parent, RKVariable *var, int mode) : QDialog (parent) {
+EditLabelsDialog::EditLabelsDialog (QWidget *parent, RKVariable *var, int mode) : KDialog (parent) {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (var);
 	RK_ASSERT (var->objectOpened ());
-	
+
 	EditLabelsDialog::var = var;
 	EditLabelsDialog::mode = mode;
 
-	Q3VBoxLayout *mainvbox = new Q3VBoxLayout (this, KDialog::marginHint (), KDialog::spacingHint ());
-	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1 (the index column is read only). To remove levels at the end of the list, just set them to empty."), this);
+	KVBox *mainvbox = new KVBox ();
+	setMainWidget (mainvbox);
+	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1 (the index column is read only). To remove levels at the end of the list, just set them to empty."), mainvbox);
 	label->setAlignment (Qt::AlignLeft | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
-	mainvbox->addWidget (label);
 
 	Q3HBoxLayout *hbox = new Q3HBoxLayout (mainvbox, KDialog::spacingHint ());
 

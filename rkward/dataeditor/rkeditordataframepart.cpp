@@ -19,8 +19,8 @@
 
 #include <qclipboard.h>
 
-#include <kinstance.h>
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <klocale.h>
 
 #include "rkeditordataframe.h"
@@ -30,8 +30,7 @@
 
 RKEditorDataFramePart::RKEditorDataFramePart (QWidget *parent) : KParts::Part (parent) {
 	RK_TRACE (EDITOR);
-	KInstance* instance = new KInstance ("rkward");
-	setInstance (instance);
+	setComponentData (KGlobal::mainComponent ());
  
 	editor = new RKEditorDataFrame (parent, this);
 	setWidget (editor);
@@ -46,19 +45,22 @@ RKEditorDataFramePart::~RKEditorDataFramePart () {
 }
 
 void RKEditorDataFramePart::initializeActions () {
-	editCut = KStandardAction::cut(this, SLOT(slotEditCut()), actionCollection(), "cut");
-	editCopy = KStandardAction::copy(this, SLOT(slotEditCopy()), actionCollection(), "copy");
-	editPaste = KStandardAction::paste(this, SLOT(slotEditPaste()), actionCollection(), "paste");
-	editPasteToTable = new KAction(i18n("Paste inside Table"), 0, 0, this, SLOT(slotEditPasteToTable()), actionCollection(), "paste_to_table");
-	editPasteToTable->setIcon("frame_spreadsheet");
-	editPasteToSelection = new KAction(i18n("Paste inside Selection"), 0, 0, this, SLOT(slotEditPasteToSelection()), actionCollection(), "paste_to_selection");
-	editPasteToSelection->setIcon("frame_edit");
+	editCut = actionCollection ()->addAction (KStandardAction::Cut, "cut", this, SLOT(slotEditCut()));
+	editCopy = actionCollection ()->addAction (KStandardAction::Copy, "copy", this, SLOT(slotEditCopy()));
+	editPaste = actionCollection ()->addAction (KStandardAction::Paste, "paste", this, SLOT(slotEditPaste()));
+	editPasteToTable = actionCollection ()->addAction ("paste_to_table", this, SLOT(slotEditPasteToTable()));
+	editPasteToTable->setText (i18n("Paste inside Table"));
+	editPasteToTable->setIcon (KIcon ("frame_spreadsheet"));
 
-	editCut->setStatusText(i18n("Cuts the selected section and puts it to the clipboard"));
-	editCopy->setStatusText(i18n("Copies the selected section to the clipboard"));
-	editPaste->setStatusText(i18n("Pastes the clipboard contents to actual position"));
-	editPasteToTable->setStatusText(i18n("Pastes the clipboard contents to actual position, but not beyond the table's boundaries"));
-	editPasteToSelection->setStatusText(i18n("Pastes the clipboard contents to actual position, but not beyond the boundaries of the current selection"));
+	editPasteToSelection = actionCollection ()->addAction ("paste_to_selection", this, SLOT(slotEditPasteToSelection()));
+	editPasteToSelection->setText (i18n("Paste inside Selection"));
+	editPasteToSelection->setIcon (KIcon ("frame_edit"));
+
+	editCut->setStatusTip (i18n("Cuts the selected section and puts it to the clipboard"));
+	editCopy->setStatusTip (i18n("Copies the selected section to the clipboard"));
+	editPaste->setStatusTip (i18n("Pastes the clipboard contents to actual position"));
+	editPasteToTable->setStatusTip (i18n("Pastes the clipboard contents to actual position, but not beyond the table's boundaries"));
+	editPasteToSelection->setStatusTip (i18n("Pastes the clipboard contents to actual position, but not beyond the boundaries of the current selection"));
 }
 
 void RKEditorDataFramePart::slotEditCut () {

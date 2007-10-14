@@ -63,3 +63,7 @@ rksettings:
 	- direct page activation?
 	- check wether settings seem to be saved / loaded correctly
 	- are the defaults ok?
+
+data editor:
+	- definitely needs better porting
+	- does cell painting work ok?
