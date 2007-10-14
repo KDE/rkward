@@ -53,13 +53,13 @@ private:
 	ShowEditTextFileDialog *dialog;
 };
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 /** Mini helper class of ShowEditTextFileAgent. Do not use outside of ShowEditTextFileAgent. 
 
 TODO: might be renamed / reused as a more generic non-modal information dialog */
 
-class ShowEditTextFileDialog : public KDialogBase {
+class ShowEditTextFileDialog : public KDialog {
 	public:
 /** constructor
 @param text: Text to display in the dialog */

@@ -17,7 +17,6 @@
 
 #include "showedittextfileagent.h"
 
-#include <kdialogbase.h>
 #include <klocale.h>
 
 #include <qlabel.h>
@@ -126,7 +125,13 @@ void ShowEditTextFileAgent::done () {
 ///################# END ShowEditTextFileAgent ##################
 ///################# BEGIN ShowEditTextFileDialog #################
 
-ShowEditTextFileDialog::ShowEditTextFileDialog (const QString &text, const QString &caption) : KDialogBase ((QWidget*) 0, 0, false, caption, KDialogBase::Ok, KDialogBase::Ok) {
+ShowEditTextFileDialog::ShowEditTextFileDialog (const QString &text, const QString &caption) : KDialog ((QWidget*) 0) {
+	RK_TRACE (APP);
+
+	setCaption (caption);
+	setButtons (KDialog::Ok);
+	setModal (false);
+
 	QWidget *page = new QWidget (this);
 	setMainWidget (page);
 	Q3VBoxLayout *layout = new Q3VBoxLayout (page, 0, spacingHint ());
@@ -134,10 +139,11 @@ ShowEditTextFileDialog::ShowEditTextFileDialog (const QString &text, const QStri
 	label->setAlignment (Qt::WordBreak | Qt::AlignLeft | Qt::AlignVCenter | Qt::ExpandTabs);
 	layout->addWidget (label);
 
-	setButtonOK (KGuiItem (i18n ("Done")));
+	setButtonText (KDialog::Ok, i18n ("Done"));
 }
 
 ShowEditTextFileDialog::~ShowEditTextFileDialog () {
+	RK_TRACE (APP);
 }
 
 #include "showedittextfileagent.moc"
