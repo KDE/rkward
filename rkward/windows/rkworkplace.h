@@ -64,7 +64,7 @@ private:
 
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the workplace, which are detached, etc. Also it is responsible for creating and manipulating those windows.
 It also provides a QWidget (RKWorkplace::view ()), which actually manages the document windows (only those, so far. I.e. this is a half-replacement for KMdi, which will be gone in KDE 4). Currently layout of the document windows is always tabbed. */
-class RKWorkplace : public QObject, public RCommandReceiver {
+class RKWorkplace : public QWidget, public RCommandReceiver {
 	Q_OBJECT
 public:
 /** ctor.
@@ -178,8 +178,8 @@ private:
 	void restoreWorkplaceItem (const QString &desc);
 	RKMDIWindowHistory *history;
 
-	QSplitter horiz_splitter;
-	QSplitter vert_splitter;
+	QSplitter *horiz_splitter;
+	QSplitter *vert_splitter;
 
 	RKToolWindowBar* tool_window_bars[4];
 };

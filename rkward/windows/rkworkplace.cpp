@@ -21,8 +21,10 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kiconloader.h>
-#include <KHBox>
-#include <KVBox>
+#include <khbox.h>
+#include <kvbox.h>
+#include <kglobalsettings.h>
+#include <kactioncollection.h>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
@@ -52,15 +54,14 @@
 // static
 RKWorkplace *RKWorkplace::main_workplace = 0;
 
-RKWorkplace::RKWorkplace (QWidget *parent) : QObject (parent) {
+RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	RK_TRACE (APP);
 	RK_ASSERT (main_workplace == 0);
 
 	main_workplace = this;
 
 	/* Splitter setup contains heavy copying from Kate's katemdi! */
-	hbox = new KHBox (this);
-	setCentralWidget (hbox);
+	KHBox *hbox = new KHBox (this);
 	tool_window_bars[KMultiTabBar::Left] = new RKToolWindowBar (KMultiTabBar::Left, hbox);
 
 	horiz_splitter = new QSplitter (Qt::Horizontal, hbox);
@@ -174,7 +175,7 @@ bool RKWorkplace::openScriptEditor (const KUrl &url, bool use_r_highlighting, bo
 		for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
 			if ((*it)->type == RKMDIWindow::CommandEditorWindow) {
 				KUrl ourl = static_cast<RKCommandEditorWindow *> (*it)->url ();
-				if (url.equals (ourl, true)) {
+				if (url == ourl) {
 					(*it)->activate ();
 					return true;
 				}
@@ -208,7 +209,7 @@ void RKWorkplace::openHelpWindow (const KUrl &url, bool only_once) {
 	if (only_once) {
 		RKWorkplaceObjectList help_windows = getObjectList (RKMDIWindow::HelpWindow, RKMDIWindow::AnyWindowState);
 		for (RKWorkplaceObjectList::const_iterator it = help_windows.constBegin (); it != help_windows.constEnd (); ++it) {
-			if (static_cast<RKHelpWindow *> (*it)->url ().equals (url, true)) {
+			if (static_cast<RKHelpWindow *> (*it)->url ().equals (url, KUrl::CompareWithoutTrailingSlash | KUrl::CompareWithoutFragment)) {
 				(*it)->activate ();
 				return;
 			}
@@ -544,13 +545,16 @@ RKMDIWindowHistory::~RKMDIWindowHistory () {
 void RKMDIWindowHistory::initActions (KActionCollection *ac, const char *prev_id, const char *next_id) {
 	RK_TRACE (APP);
 
-	KShortcut prev_short ("Alt+<");
-	prev_short.append (KKey (Qt::ALT | Qt::Key_Comma));	// "Alt+," does not work, as "," has a special meaning.
-	prev_action = new KAction (i18n ("Previous Window"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"), prev_short, this, SLOT (prev ()), ac, prev_id);
+	prev_action = (KAction*) ac->addAction (prev_id, this, SLOT (prev()));
+	prev_action->setText (i18n ("Previous Window"));
+	prev_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"));
+	prev_action->setShortcut (KShortcut (Qt::AltModifier + Qt::Key_Less, Qt::AltModifier + Qt::Key_Comma));
 
-	KShortcut next_short ("Alt+>");
-	next_short.append (KKey (Qt::ALT | Qt::Key_Period));
-	next_action = new KAction (i18n ("Next Window"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"), next_short, this, SLOT (next ()), ac, next_id);
+	next_action = (KAction*) ac->addAction (next_id, this, SLOT (next()));
+	next_action->setText (i18n ("Next Window"));
+	next_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"));
+	next_action->setShortcut (KShortcut (Qt::AltModifier + Qt::Key_Greater, Qt::AltModifier + Qt::Key_Period));
+
 	updateActions ();
 }
 

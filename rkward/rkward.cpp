@@ -130,12 +130,9 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : DCOPObject 
 	initActions();
 	initStatusBar();
 
-	KMdiChildView *dummy = new KMdiChildView (this);
-	Q3VBoxLayout *layout = new Q3VBoxLayout (dummy);
-	addWindow (dummy);
-	new RKWorkplace (dummy);
+	new RKWorkplace (this);
 	RKWorkplace::mainWorkplace ()->initActions (actionCollection (), "prev_window", "next_window", "left_window", "right_window");
-	layout->addWidget (RKWorkplace::mainWorkplace ()->view ());
+	setCentralWidget (RKWorkplace::mainWorkplace ());
 	connect (RKWorkplace::mainWorkplace ()->view (), SIGNAL (captionChanged (const QString &)), this, SLOT (setCaption (const QString &)));
 
 	///////////////////////////////////////////////////////////////////
