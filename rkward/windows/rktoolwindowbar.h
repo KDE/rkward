@@ -29,6 +29,7 @@ class QObject;
 class QEvent;
 class QAction;
 class KHBox;
+class RKMDIWindow;
 
 /** This class represents one of the bar which tool windows can dock into (top, left, bottom, right). It contains heavy copying from Kate's katemdi SideBar class. I wish this was available as a library, but it isn't, yet.
 

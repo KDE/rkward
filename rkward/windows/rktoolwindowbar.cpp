@@ -19,6 +19,18 @@
 
 #include "rktoolwindowbar.h"
 
+#include <khbox.h>
+#include <kmenu.h>
+#include <klocale.h>
+#include <kiconloader.h>
+#include <kicon.h>
+
+#include <QSplitter>
+
+#include "rkworkplace.h"
+#include "rkworkplaceview.h"
+#include "rkmdiwindow.h"
+
 #include "../debug.h"
 
 #define CHANGE_ATTACHMENT_ACTION_ID 10
@@ -42,27 +54,27 @@ void RKToolWindowBar::setSplitter (QSplitter *splitter) {
 	container->hide ();
 }
 
-void RKToolWindowBar::addWidget (const QPixmap &icon, const QString &text, RKMDIWindow *widget) {
+void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 	RK_TRACE (APP);
 	RK_ASSERT (window);
 	RK_ASSERT (container);
 
-	if (window->toolWindowBar ()) {
-		RK_ASSERT (window->toolWindowBar () != this);	// no problem, but would be useless code
-		window->toolWindowBar ()->removeWidget (widget);
+	if (window->tool_window_bar) {
+		RK_ASSERT (window->tool_window_bar != this);	// no problem, but would be useless code
+		window->tool_window_bar->removeWidget (window);
 	}
 
-	int id = appendTab (widget->windowIcon (), widget->shortCaption (), widget);
+	int id = appendTab (window->windowIcon ().pixmap (QSize (16, 16)), -1, window->shortCaption ());
 
-	widget->tool_window_bar = this;
-	widget_to_id.insert (widget, id);
+	window->tool_window_bar = this;
+	widget_to_id.insert (window, id);
 
-	connect (tab(int), SIGNAL (clicked(int)), this, SLOT (tabClicked(int)));
-	tab (int)->installEventFilter (this);
+	connect (tab (id), SIGNAL (clicked(int)), this, SLOT (tabClicked(int)));
+	tab (id)->installEventFilter (this);
 
-	if (widget->isAttached ()) {
-		widget->hide();
-		widget->setParent (container);
+	if (window->isAttached ()) {
+		window->hide();
+		window->setParent (container);
 	}
 
 	show ();
@@ -70,7 +82,7 @@ void RKToolWindowBar::addWidget (const QPixmap &icon, const QString &text, RKMDI
 
 void RKToolWindowBar::removeWidget (RKMDIWindow *widget) {
 	RK_TRACE (APP);
-	RK_ASSERT (widget_to_id.contains[widget]);
+	RK_ASSERT (widget_to_id.contains (widget));
 
 	int id = widget_to_id[widget];
 	bool was_active_in_bar = isTabRaised (id);
@@ -89,7 +101,7 @@ void RKToolWindowBar::removeWidget (RKMDIWindow *widget) {
 
 void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
 	RK_TRACE (APP);
-	RK_ASSERT (widget_to_id.contains[widget]);
+	RK_ASSERT (widget_to_id.contains (widget));
 
 	int id = widget_to_id[widget];
 
@@ -103,12 +115,12 @@ void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
 				cur->hide ();
 	
 			}
-			setTab (it.value (false));
+			setTab (it.value (), false);
 		}
 	}
 
 	if (widget->isAttached ()) {
-		setTab (id);
+		setTab (id, true);
 		container->show ();
 	} else {
 		widget->topLevelWidget ()->show ();
@@ -120,15 +132,15 @@ void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
 
 void RKToolWindowBar::hideWidget (RKMDIWindow *widget) {
 	RK_TRACE (APP);
-	RK_ASSERT (widget_to_id.contains[widget]);
+	RK_ASSERT (widget_to_id.contains (widget));
 
 	// prevent recursion
 	if (!widget->active) return;
 	int id = widget_to_id[widget];
 
-	bool was_active_in_bar = widget->isTabRaised (id);
+	bool was_active_in_bar = isTabRaised (id);
 	if (was_active_in_bar) {
-		RK_ASSERT (window->isAttached ());
+		RK_ASSERT (widget->isAttached ());
 		container->hide ();
 	}
 
@@ -143,26 +155,27 @@ void RKToolWindowBar::hideWidget (RKMDIWindow *widget) {
 void RKToolWindowBar::tabClicked (int id) {
 	RK_TRACE (APP);
 
-	RKMDIWindow widget = idToWidget (id);
+	RKMDIWindow *widget = idToWidget (id);
 	RK_ASSERT (widget);
 
 	if (widget->isActive ()) {
-		widget->close ();
+		widget->close (false);
 	} else {
 		widget->activate (true);
 	}
 }
 
-RKToolWindowBar::RKMDIWindow * idToWidget (int id) {
+RKMDIWindow* RKToolWindowBar::idToWidget (int id) {
 	RK_TRACE (APP);
 
-	RKMDIWindow widget = 0;
 	QMap<RKMDIWindow*, int>::const_iterator it = widget_to_id.constBegin ();
 	while (it != widget_to_id.constEnd()) {
 		if (it.value () == id) {
 			return (it.key ());
 		}
 	}
+
+	return 0;
 }
 
 bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
@@ -175,14 +188,14 @@ bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
 		if (bt) {
 			id_of_popup = bt->id ();
 
-			RKMDIWindow widget = idToWidget (id);
+			RKMDIWindow *widget = idToWidget (id_of_popup);
 			RK_ASSERT (widget);
 			if (widget) {
 				KMenu *p = new KMenu (this);
 
 				p->addTitle (SmallIcon("view_remove"), i18n("Attachment"));
 				
-				p->addAction (widget->isAttached () ? KIcon("view-restore") : KIcon("view-fullscreen"), w->isAttached () ? i18n("Detach") : i18n("Attach"))->setData (CHANGE_ATTACHMENT_ACTION_ID);
+				p->addAction (widget->isAttached () ? KIcon("view-restore") : KIcon("view-fullscreen"), widget->isAttached () ? i18n("Detach") : i18n("Attach"))->setData (CHANGE_ATTACHMENT_ACTION_ID);
 
 				p->addTitle (SmallIcon("move"), i18n("Move To"));
 	
@@ -207,19 +220,19 @@ bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
 void RKToolWindowBar::buttonPopupActivate (QAction *a) {
 	RK_TRACE (APP);
 
-	int id = a->data().toInt();
-	RKMDIWindow *window = idToWidget[id];
+	int action = a->data().toInt();
+	RKMDIWindow *window = idToWidget (id_of_popup);
 	RK_ASSERT (window);
 
 	// move to another bar
-	if (id < 4) {
+	if (action < 4) {
 		// move + show ;)
-		RKWorkplace::mainWorkplace ()->placeInToolWindowBar (window, (KMultiTabBar::KMultiTabBarPosition) id);
+		RKWorkplace::mainWorkplace ()->placeInToolWindowBar (window, (KMultiTabBar::KMultiTabBarPosition) action);
 		window->activate ();
 	}
 
 	// toggle attachment
-	if (id == CHANGE_ATTACHMENT_ACTION_ID) {
+	if (action == CHANGE_ATTACHMENT_ACTION_ID) {
 		if (window->isAttached ()) RKWorkplace::mainWorkplace ()->detachWindow (window);
 		else RKWorkplace::mainWorkplace ()->attachWindow (window);
 	}
