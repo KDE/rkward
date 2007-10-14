@@ -16,8 +16,6 @@
  ***************************************************************************/
 
 #include "rembedinternal.h"
-//Added by qt3to4:
-#include <Q3CString>
 
 // static
 REmbedInternal *REmbedInternal::this_pointer = 0; 
@@ -27,12 +25,24 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #define FALSE (const bool)!0
 #include <qstring.h>
 #include <qtextcodec.h>
+//Added by qt3to4:
+#include <Q3CString>
 #include "../core/robject.h"
 #include "../debug.h"
 #undef TRUE
 #undef FALSE
 
 #include "rklocalesupport.h"
+
+#include <dlfcn.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
+#include <sys/resource.h>
+#include <sys/types.h>
+//#include <signal.h>
+//#include <unistd.h>
+#include <math.h>
 
 extern "C" {
 #define R_INTERFACE_PTRS 1
@@ -55,15 +65,6 @@ extern "C" {
 #include "Rdevices.h"
 #include "Rversion.h"
 #include "R_ext/Parse.h"
-
-#include <dlfcn.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/resource.h>
-#include <sys/types.h>
-//#include <signal.h>
-//#include <unistd.h>
-#include <math.h>
 
 #if (R_VERSION > R_Version(2, 2, 9))
 #define R_2_3
@@ -657,7 +658,7 @@ SEXP doUpdateLocale () {
 
 	RK_DO (qDebug ("Changing locale"), RBACKEND, DL_WARNING);
 	REmbedInternal::this_pointer->current_locale_codec = RKGetCurrentLocaleCodec ();
-	RK_DO (qDebug ("New locale codec is %s", REmbedInternal::this_pointer->current_locale_codec->name ()), RBACKEND, DL_WARNING);
+	RK_DO (qDebug ("New locale codec is %s", REmbedInternal::this_pointer->current_locale_codec->name ().data ()), RBACKEND, DL_WARNING);
 
 	return R_NilValue;
 }

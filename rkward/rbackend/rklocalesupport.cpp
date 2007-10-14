@@ -21,6 +21,8 @@
 // seems to be needed for GCC 4.3 as well.
 #include <langinfo.h>
 #include <stdlib.h>
+#include <locale.h>
+#include <ctype.h>
 
 #include <qtextcodec.h>
 //Added by qt3to4:

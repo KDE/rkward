@@ -93,36 +93,36 @@ void RData::setData (RData *from) {
 void RData::printStructure (const QString &prefix) {
 	switch (datatype) {
 		case NoData:
-			qDebug ("%s: NoData, length %d", prefix.toLatin1(), length);
+			qDebug ("%s: NoData, length %d", prefix.toLatin1().data(), length);
 			break;
 		case IntVector:
-			qDebug ("%s: IntVector, length %d", prefix.toLatin1(), length);
+			qDebug ("%s: IntVector, length %d", prefix.toLatin1().data(), length);
 			for (unsigned int i = 0; i < length; ++i) {
-				qDebug ("%s%d: %d", prefix.toLatin1(), i, getIntVector ()[i]);
+				qDebug ("%s%d: %d", prefix.toLatin1().data(), i, getIntVector ()[i]);
 			}
 			break;
 		case RealVector:
-			qDebug ("%s: RealVector, length %d", prefix.toLatin1(), length);
+			qDebug ("%s: RealVector, length %d", prefix.toLatin1().data(), length);
 			for (unsigned int i = 0; i < length; ++i) {
-				qDebug ("%s%d: %f", prefix.toLatin1(), i, getRealVector ()[i]);
+				qDebug ("%s%d: %f", prefix.toLatin1().data(), i, getRealVector ()[i]);
 			}
 			break;
 		case StringVector:
-			qDebug ("%s: StringVector, length %d", prefix.toLatin1(), length);
+			qDebug ("%s: StringVector, length %d", prefix.toLatin1().data(), length);
 			for (unsigned int i = 0; i < length; ++i) {
-				qDebug ("%s%d: %s", prefix.toLatin1(), i, getStringVector ()[i].toLatin1());
+				qDebug ("%s%d: %s", prefix.toLatin1().data(), i, getStringVector ()[i].toLatin1().data());
 			}
 			break;
 		case StructureVector:
-			qDebug ("%s: StructureVector, length %d", prefix.toLatin1(), length);
+			qDebug ("%s: StructureVector, length %d", prefix.toLatin1().data(), length);
 			for (unsigned int i = 0; i < length; ++i) {
 				QString sub_prefix = prefix + QString::number (i);
 				getStructureVector ()[i]->printStructure (sub_prefix);
 			}
 			break;
 		default:
-			qDebug ("%s: INVALID %d, length %d", prefix.toLatin1(), datatype, length);
+			qDebug ("%s: INVALID %d, length %d", prefix.toLatin1().data(), datatype, length);
 	}
-	qDebug ("%s: END\n\n", prefix.toLatin1 ());
+	qDebug ("%s: END\n\n", prefix.toLatin1 ().data());
 }
 

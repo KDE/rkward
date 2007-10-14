@@ -305,11 +305,11 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			QString object_name = request->call[i];
 			RObject *obj = RObjectList::getObjectList ()->findObject (object_name);
 			if (obj) {
-				RK_DO (qDebug ("triggering update for symbol %s", object_name.toLatin1 ()), RBACKEND, DL_DEBUG);
+				RK_DO (qDebug ("triggering update for symbol %s", object_name.toLatin1 ().data()), RBACKEND, DL_DEBUG);
 				obj->markDataDirty ();
 				obj->updateFromR (request->in_chain);
 			} else {
-				RK_DO (qDebug ("lookup failed for changed symbol %s", object_name.toLatin1 ()), RBACKEND, DL_WARNING);
+				RK_DO (qDebug ("lookup failed for changed symbol %s", object_name.toLatin1 ().data()), RBACKEND, DL_WARNING);
 			}
 		}
 	} else if (call == "syncall") {
@@ -395,7 +395,7 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 			// not to worry, just some help file to display
 			// TODO: maybe move this to ShowEditTextFileAgent instead
 			for (int n=0; n < args->int_a; ++n) {
-				RKWardMainWindow::getMain ()->openHTML (args->chars_a[n]);
+				RKWardMainWindow::getMain ()->openHTML (KUrl (args->chars_a[n]));
 			}
 		} else {
 			ShowEditTextFileAgent::showEditFiles (args);

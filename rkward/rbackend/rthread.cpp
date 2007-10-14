@@ -28,7 +28,6 @@
 
 #include <kapplication.h>
 #include <klocale.h>
-#include <dcopclient.h>
 
 #include <qstring.h>
 #include <qapplication.h>
@@ -75,7 +74,7 @@ void RThread::interruptProcessing (bool interrupt) {
 
 void RThread::run () {
 	RK_TRACE (RBACKEND);
-	thread_id = currentThread ();
+	thread_id = currentThreadId ();
 	locked = Startup;
 	killed = false;
 	int err;
@@ -159,7 +158,7 @@ void RThread::doCommand (RCommand *command) {
 		int ctype = command->type ();
 		QString ccommand = command->command ();		// easier typing below
 		
-		RK_DO (qDebug ("running command: %s", ccommand.toLatin1()), RBACKEND, DL_DEBUG);
+		RK_DO (qDebug ("running command: %s", ccommand.toLatin1().data ()), RBACKEND, DL_DEBUG);
 	
 		if (command->type () & RCommand::DirectToOutput) {
 			runCommandInternal (".rk.cat.output (\"<hr>\\n\")", &error, false);
@@ -207,7 +206,7 @@ void RThread::doCommand (RCommand *command) {
 				#endif
 				RK_DO (qDebug ("Command failed (other)"), RBACKEND, dl);
 			}
-			RK_DO (qDebug ("failed command was: '%s'", command->command ().toLatin1 ()), RBACKEND, dl);
+			RK_DO (qDebug ("failed command was: '%s'", command->command ().toLatin1 ().data ()), RBACKEND, dl);
 		} else {
 			command->status |= RCommand::WasTried;
 		}
@@ -230,7 +229,7 @@ void RThread::doCommand (RCommand *command) {
 		}
 	
 		if (error) {
-			RK_DO (qDebug ("- error message was: '%s'", command->error ().toLatin1 ()), RBACKEND, dl);
+			RK_DO (qDebug ("- error message was: '%s'", command->error ().toLatin1 ().data ()), RBACKEND, dl);
 	//		runCommandInternal (".rk.init.handlers ()\n", &dummy);
 		}
 		RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
@@ -322,10 +321,10 @@ void RThread::flushOutput () {
 			qApp->postEvent (RKGlobals::rInterface (), event);
 		}
 
-		RK_DO (qDebug ("output '%s'", current_output->output.toLatin1 ()), RBACKEND, DL_DEBUG);
+		RK_DO (qDebug ("output '%s'", current_output->output.toLatin1 ().data ()), RBACKEND, DL_DEBUG);
 	} else {
 		// running Rcmdr, eh?
-		RK_DO (qDebug ("output without receiver'%s'", current_output->output.toLatin1 ()), RBACKEND, DL_WARNING);
+		RK_DO (qDebug ("output without receiver'%s'", current_output->output.toLatin1 ().data ()), RBACKEND, DL_WARNING);
 		delete current_output;
 	}
 
@@ -359,7 +358,7 @@ void RThread::handleError (QString *call, int call_length) {
 		current_command->status |= RCommand::HasError;
 	}
 
-	RK_DO (qDebug ("error '%s'", call[0].toLatin1 ()), RBACKEND, DL_DEBUG);
+	RK_DO (qDebug ("error '%s'", call[0].toLatin1 ().data ()), RBACKEND, DL_DEBUG);
 	MUTEX_UNLOCK;
 }
 
@@ -509,7 +508,7 @@ int RThread::initialize () {
 		runCommandInternal ((*it).local8Bit (), &error);
 		if (error) {
 			status |= OtherFail;
-			RK_DO (qDebug ("error in initialization call '%s'", (*it).toLatin1()), RBACKEND, DL_ERROR);
+			RK_DO (qDebug ("error in initialization call '%s'", (*it).toLatin1().data ()), RBACKEND, DL_ERROR);
 		}
 	}
 
@@ -518,7 +517,7 @@ int RThread::initialize () {
 	if (error) status |= SinkFail;
 	runCommandInternal ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", &error);
 	if (error) status |= SinkFail;
-	runCommandInternal ("options (htmlhelp=TRUE); options (browser=\"dcop " + kapp->dcopClient ()->appId () + " rkwardapp openHTMLHelp \")", &error);
+//KDE4 TODO!	runCommandInternal ("options (htmlhelp=TRUE); options (browser=\"dcop " + kapp->dcopClient ()->appId () + " rkwardapp openHTMLHelp \")", &error);
 	if (error) status |= OtherFail;
 	// TODO: error-handling?
 

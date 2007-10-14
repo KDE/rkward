@@ -67,3 +67,9 @@ rksettings:
 data editor:
 	- definitely needs better porting
 	- does cell painting work ok?
+
+rkthread:
+	- find out how to call dbus for the help browser!
+
+rklocalesupport:
+	- does locale switching / detection work? Does Qt have something, yet?
