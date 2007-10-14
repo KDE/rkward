@@ -12,7 +12,6 @@ SET(windows_STAT_SRCS
 	rkmdiwindow.cpp
 	rkworkplaceview.cpp
 	rkworkplace.cpp
-	qxembedcopy.cpp
 	rkwindowcatcher.cpp
 	rkcommandlog.cpp
 	rkhelpsearchwindow.cpp
