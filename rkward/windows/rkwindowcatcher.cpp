@@ -27,11 +27,9 @@
 
 #include <kmessagebox.h>
 #include <klocale.h>
-#include <kwindowsystem.h>
 
 #include "../rkwardapplication.h"
 #include "rkworkplace.h"
-#include "qxembedcopy.h"
 #include "../debug.h"
 
 RKWindowCatcher::RKWindowCatcher () {
@@ -74,11 +72,15 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #include <q3scrollview.h>
 #include <q3vbox.h>
 #include <qlabel.h>
+#include <QX11EmbedContainer>
 
-#include <kactionclasses.h>
-#include <kdialogbase.h>
+#include <ktoggleaction.h>
+#include <kdialog.h>
 #include <knuminput.h>
 #include <kiconloader.h>
+#include <kvbox.h>
+#include <kwindowsystem.h>
+#include <kactioncollection.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -96,7 +98,7 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	error_dialog = new RKProgressControl (0, i18n ("An error occurred"), i18n ("An error occurred"), RKProgressControl::DetailedError);
 	setPart (new RKCaughtX11WindowPart (this));
 	initializeActivationSignals ();
-	setFocusPolicy (QWidget::ClickFocus);
+	setFocusPolicy (Qt::ClickFocus);
 
 	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
 	box_widget = new Q3VBox (this);
@@ -105,19 +107,20 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	scroll_widget->setFrameStyle (Q3Frame::NoFrame);
 	scroll_widget->hide ();
 	layout->addWidget (scroll_widget);
+	//KDE4 TODO: workaround below still needed?
 	xembed_container = new Q3VBox (box_widget);	// QXEmbed can not be reparented (between the box_widget, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead
 	dynamic_size = true;
 	dynamic_size_action->setChecked (true);
 
-	QXEmbedCopy *capture = new QXEmbedCopy (xembed_container);
-	capture->setProtocol (QXEmbedCopy::XPLAIN);
+	QX11EmbedContainer *capture = new QX11EmbedContainer (xembed_container);
 	connect (capture, SIGNAL (embeddedWindowDestroyed ()), this, SLOT (deleteLater ()));
 
-	KWindowSystem::WindowInfo wininfo = KWindowSystem::windowInfo (window_to_embed);
+	KWindowInfo wininfo = KWindowSystem::windowInfo (window_to_embed, NET::WMName | NET::WMGeometry);
+	RK_ASSERT (wininfo.valid ());
 	setGeometry (wininfo.frameGeometry ());
 	setCaption (wininfo.name ());
 	setIcon (SmallIcon ("kcmx"));			// looks like an X, here
-	capture->embed (window_to_embed);
+	capture->embedClient (window_to_embed);
 
 	RKWardApplication::getApp ()->registerNameWatcher (window_to_embed, this);
 }
@@ -193,15 +196,20 @@ void RKCaughtX11Window::setFixedSizeManual () {
 	RK_TRACE (MISC);
 
 // TODO: not very pretty, yet
-	KDialogBase *dialog = new KDialogBase (this, 0, true, i18n ("Specify fixed size"), KDialogBase::Ok|KDialogBase::Cancel);
-	KVBox *page = dialog->makeVBoxMainWidget ();
+	KDialog *dialog = new KDialog (this);
+	dialog->setButtons (KDialog::Ok|KDialog::Cancel);
+	dialog->setCaption (i18n ("Specify fixed size"));
+	dialog->setModal (true);
+
+	KVBox *page = new KVBox (dialog);
+	dialog->setMainWidget (page);
 
 	QLabel *label = new QLabel (i18n ("Width"), page);
-	KIntSpinBox *width = new KIntSpinBox (5, 32767, 1, xembed_container->width (), 10, page);
+	KIntSpinBox *width = new KIntSpinBox (5, 32767, 1, xembed_container->width (), page, 10);
 	width->setEditFocus (true);
 
 	label = new QLabel (i18n ("Height"), page);
-	KIntSpinBox *height = new KIntSpinBox (5, 32767, 1, xembed_container->height (), 10, page);
+	KIntSpinBox *height = new KIntSpinBox (5, 32767, 1, xembed_container->height (), page, 10);
 
 	dialog->exec ();
 
@@ -237,8 +245,12 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 	RK_TRACE (MISC);
 
 // TODO: not very pretty, yet
-	KDialogBase *dialog = new KDialogBase (this, 0, true, i18n ("Specify R object"), KDialogBase::Ok|KDialogBase::Cancel);
-	KVBox *page = dialog->makeVBoxMainWidget ();
+	KDialog *dialog = new KDialog (this);
+	dialog->setButtons (KDialog::Ok|KDialog::Cancel);
+	dialog->setCaption (i18n ("Specify R object"));
+	dialog->setModal (true);
+	KVBox *page = new KVBox (dialog);
+	dialog->setMainWidget (page);
 
 	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (page, "my.plot", i18n ("Specify the R object name, you want to save the graph to"));
 	connect (chooser, SIGNAL (okStatusChanged (bool)), dialog, SLOT (enableButtonOk (bool)));
@@ -272,26 +284,36 @@ void RKCaughtX11Window::duplicateDevice () {
 RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KParts::Part (0) {
 	RK_TRACE (MISC);
 
-	KInstance* instance = new KInstance ("rkward");
-	setInstance (instance);
+	setComponentData (KGlobal::mainComponent ());
 
 	setWidget (window);
 	RKCaughtX11WindowPart::window = window;
 
 	setXMLFile ("rkcatchedx11windowpart.rc");
 
-	window->dynamic_size_action = new KToggleAction (i18n ("Draw area follows size of window"), 0, window, SLOT (fixedSizeToggled ()), actionCollection (), "toggle_fixed_size");
+	window->dynamic_size_action = new KToggleAction (i18n ("Draw area follows size of window"), window);
+	connect (window->dynamic_size_action, SIGNAL (triggered()), window, SLOT (fixedSizeToggled()));
+	actionCollection ()->addAction ("toggle_fixed_size", window->dynamic_size_action);
 
-	new KAction (i18n ("Set fixed size 500x500"), 0, window, SLOT (setFixedSize1 ()), actionCollection (), "set_fixed_size_1");
-	new KAction (i18n ("Set fixed size 1000x1000"), 0, window, SLOT (setFixedSize2 ()), actionCollection (), "set_fixed_size_2");
-	new KAction (i18n ("Set fixed size 2000x2000"), 0, window, SLOT (setFixedSize3 ()), actionCollection (), "set_fixed_size_3");
-	new KAction (i18n ("Set specified fixed size..."), 0, window, SLOT (setFixedSizeManual ()), actionCollection (), "set_fixed_size_manual");
+	QAction *action;
+	action = actionCollection ()->addAction ("set_fixed_size_1", window, SLOT (setFixedSize()));
+	action->setText (i18n ("Set fixed size 500x500"));
+	action = actionCollection ()->addAction ("set_fixed_size_2", window, SLOT (setFixedSize2()));
+	action->setText (i18n ("Set fixed size 1000x1000"));
+	action = actionCollection ()->addAction ("set_fixed_size_3", window, SLOT (setFixedSize3()));
+	action->setText (i18n ("Set fixed size 2000x2000"));
+	action = actionCollection ()->addAction ("set_fixed_size_manual", window, SLOT (setFixedSizeManual()));
+	action->setText (i18n ("Set specified fixed size..."));
 
-	new KAction (i18n ("Make active"), 0, window, SLOT (activateDevice ()), actionCollection (), "device_activate");
-	new KAction (i18n ("Copy to output"), 0, window, SLOT (copyDeviceToOutput ()), actionCollection (), "device_copy_to_output");
-	new KAction (i18n ("Print"), 0, window, SLOT (printDevice ()), actionCollection (), "device_print");
-	new KAction (i18n ("Store as R object..."), 0, window, SLOT (copyDeviceToRObject ()), actionCollection (), "device_copy_to_r_object");
-	new KAction (i18n ("Duplicate"), 0, window, SLOT (duplicateDevice ()), actionCollection (), "device_duplicate");
+	action = actionCollection ()->addAction ("device_activate", window, SLOT (activateDevice()));
+	action->setText (i18n ("Make active"));
+	action = actionCollection ()->addAction ("device_copy_to_output", window, SLOT (copyDeviceToOutput()));
+	action->setText (i18n ("Copy to output"));
+	action = actionCollection ()->addAction (KStandardAction::Print, "device_print", window, SLOT (printDevice()));
+	action = actionCollection ()->addAction ("device_copy_to_r_object", window, SLOT (copyDeviceToRObject()));
+	action->setText (i18n ("Store as R object..."));
+	action = actionCollection ()->addAction ("device_duplicate", window, SLOT (duplicateDevice()));
+	action->setText (i18n ("Duplicate"));
 
 	// initialize context for plugins
 	RKContextMap *context = RKComponentMap::getContext ("x11");
