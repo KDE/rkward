@@ -25,6 +25,7 @@
 #include <qdir.h>
 #include <qregexp.h>
 #include <qtimer.h>
+#include <qtextstream.h>
 //Added by qt3to4:
 #include <Q3HBoxLayout>
 #include <Q3CString>
@@ -35,6 +36,7 @@
 #include <klocale.h>
 #include <k3process.h>
 #include <kmessagebox.h>
+#include <kvbox.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -56,37 +58,41 @@
 
 #define GET_CURRENT_LIBLOCS_COMMAND 1
 
-RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KDialogBase (KDialogBase::Tabbed, Qt::WStyle_DialogBorder, parent, 0, modal, i18n ("Configure Packages"), KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel | KDialogBase::User1) {
+RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KPageDialog (parent) {
 	RK_TRACE (DIALOGS);
 	RKLoadLibsDialog::chain = chain;
-	
-	QFrame *page = addPage (i18n ("Local packages"));
-	Q3VBoxLayout *layout = new Q3VBoxLayout (page, 0, KDialog::spacingHint ());
+
+	setFaceType (KPageDialog::Tabbed);
+	setModal (modal);
+	setCaption (i18n ("Configure Packages"));
+	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel | KDialog::User1);
+
+	KVBox *page = new KVBox ();
+	addPage (page, i18n ("Local packages"));
 	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this, page);
 	connect (this, SIGNAL (installedPackagesChanged ()), luwidget, SLOT (updateInstalledPackages ()));
-	layout->addWidget (luwidget);
 	
-	page = addPage (i18n ("Update"));
-	layout = new Q3VBoxLayout (page, 0, KDialog::spacingHint ());
-	layout->addWidget (new UpdatePackagesWidget (this, page));
+	page = new KVBox ();
+	addPage (page, i18n ("Update"));
+	new UpdatePackagesWidget (this, page);
 
-	page = addPage (i18n ("Install"));
-	layout = new Q3VBoxLayout (page, 0, KDialog::spacingHint ());
-	layout->addWidget (install_packages_widget = new InstallPackagesWidget (this, page));
+	page = new KVBox ();
+	install_packages_pageitem = addPage (page, i18n ("Install"));
+	install_packages_widget = new InstallPackagesWidget (this, page);
 
-	setButtonText (KDialogBase::User1, i18n ("Configure Repositories"));
+	setButtonText (KDialog::User1, i18n ("Configure Repositories"));
 
 	num_child_widgets = 3;
 	accepted = false;
 
-	RKGlobals::rInterface ()->issueCommand (".libPaths ()", RCommand::App | RCommand::GetStringVector, QString::null, this, GET_CURRENT_LIBLOCS_COMMAND, chain);
+	RKGlobals::rInterface ()->issueCommand (".libPaths ()", RCommand::App | RCommand::GetStringVector, QString (), this, GET_CURRENT_LIBLOCS_COMMAND, chain);
 }
 
 RKLoadLibsDialog::~RKLoadLibsDialog () {
 	RK_TRACE (DIALOGS);
 
-	if (accepted) accept ();
-	else reject ();
+	if (accepted) KPageDialog::accept ();
+	else KPageDialog::reject ();
 }
 
 //static
@@ -96,7 +102,7 @@ void RKLoadLibsDialog::showInstallPackagesModal (QWidget *parent, RCommandChain 
 	RKLoadLibsDialog *dialog = new RKLoadLibsDialog (parent, chain, true);
 	dialog->auto_install_package = package_name;
 	QTimer::singleShot (0, dialog, SLOT (automatedInstall ()));		// to get past the dialog->exec, below
-	dialog->showPage (2);
+	dialog->setCurrentPage (dialog->install_packages_pageitem);
 	dialog->exec ();
 	RK_TRACE (DIALOGS);
 }
@@ -122,38 +128,35 @@ void RKLoadLibsDialog::childDeleted () {
 	tryDestruct ();
 }
 
-void RKLoadLibsDialog::slotOk () {
+void RKLoadLibsDialog::slotButtonClicked (int button) {
 	RK_TRACE (DIALOGS);
 
-	accepted = true;
-	hide ();
-	emit (okClicked ());
-}
-
-void RKLoadLibsDialog::slotApply () {
-	RK_TRACE (DIALOGS);
-
-	emit (apply ());
-}
-
-void RKLoadLibsDialog::slotCancel () {
-	RK_TRACE (DIALOGS);
-	
-	accepted = false;
-	hide ();
-	emit (cancelClicked ()); // will self-destruct via childDeleted ()
-}
-
-void RKLoadLibsDialog::slotUser1 () {
-	RK_TRACE (DIALOGS);
-
-	RKSettings::configureSettings (RKSettings::RPackages, this, chain);
+	switch (button) {
+	case KDialog::Ok:
+		accepted = true;
+		hide ();
+		emit (okClicked ()); // will self-destruct via childDeleted ()
+		break;
+	case KDialog::Cancel:
+		accepted = false;
+		hide ();
+		emit (cancelClicked ()); // will self-destruct via childDeleted ()
+		break;
+	case KDialog::Apply:
+		emit (applyClicked ());
+		break;
+	case KDialog::User1:
+		RKSettings::configureSettings (RKSettings::RPackages, this, chain);
+		break;
+	}
 }
 
 void RKLoadLibsDialog::closeEvent (QCloseEvent *e) {
 	RK_TRACE (DIALOGS);
 	e->accept ();
-	slotCancel ();
+
+	// do as if cancel button was clicked:
+	slotButtonClicked (KDialog::Cancel);
 }
 
 void RKLoadLibsDialog::rCommandDone (RCommand *command) {
@@ -187,7 +190,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 	QFile file (dir.filePath ("install_script.R"));
 // WORKADOUND END
 	if (file.open (QIODevice::WriteOnly)) {
-		Q3TextStream stream (&file);
+		QTextStream stream (&file);
 		stream << "options (repos=" + repos_string + ")\n" + command_string;
 		if (as_root) {
 #ifdef __FreeBSD__
@@ -288,7 +291,7 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	loadedvbox->addWidget (loaded_view);
 
 	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
-	connect (dialog, SIGNAL (apply ()), this, SLOT (apply ()));
+	connect (dialog, SIGNAL (applyClicked ()), this, SLOT (apply ()));
 	connect (dialog, SIGNAL (cancelClicked ()), this, SLOT (cancel ()));
 	connect (this, SIGNAL (destroyed ()), dialog, SLOT (childDeleted ()));
 

@@ -17,7 +17,7 @@
 #ifndef RKLOADLIBSDIALOG_H
 #define RKLOADLIBSDIALOG_H
 
-#include <kdialogbase.h>
+#include <kpagedialog.h>
 
 #include <qstringlist.h>
 //Added by qt3to4:
@@ -27,6 +27,7 @@
 #include "../rbackend/rcommandreceiver.h"
 
 class Q3ListView;
+class Q3ListViewItem;
 class QComboBox;
 class QPushButton;
 class RKProgressControl;
@@ -41,12 +42,14 @@ class InstallPackagesWidget;
 /**
 Dialog which excapsulates widgets to load/unload, update and install R packages
 
+TODO: The logic of passing on the button presses (ok, cancel, etc.) is rather surprising and a bit confusing. This should be made more straight-forward.
+
 @author Thomas Friedrichsmeier
 */
 
 // TODO: add a static member to create (single) instance of the dialog
 
-class RKLoadLibsDialog : public KDialogBase, public RCommandReceiver {
+class RKLoadLibsDialog : public KPageDialog, public RCommandReceiver {
 Q_OBJECT
 public:
 	RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal=false);
@@ -71,11 +74,8 @@ protected:
 	void rCommandDone (RCommand *command);
 	void closeEvent (QCloseEvent *e);
 protected slots:
-	void slotOk ();
-	void slotApply ();
-	void slotCancel ();
-/** User1-button was clicked, i.e.: "Configure Repositories" */
-	void slotUser1 ();
+/** overloaded to catch button presses. */
+	void slotButtonClicked (int button);
 	void childDeleted ();
 	void processExited (K3Process *);
 	void installationProcessOutput (K3Process *proc, char *buffer, int buflen);
@@ -89,6 +89,7 @@ friend class InstallPackagesWidget;
 	RCommandChain *chain;
 
 	InstallPackagesWidget *install_packages_widget;	// needed for automated installation
+	KPageWidgetItem *install_packages_pageitem;
 
 	QString auto_install_package;
 	int num_child_widgets;

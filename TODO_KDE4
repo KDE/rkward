@@ -50,3 +50,5 @@ rkfilebrowser
 	- does it work?
 	- does the completion popup show up in a correct size?
 
+rkloadlibsdialog:
+	- does it work?
