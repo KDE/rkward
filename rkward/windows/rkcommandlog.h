@@ -22,7 +22,6 @@
 #include <q3textedit.h>
 //Added by qt3to4:
 #include <QEvent>
-#include <k3mdichildview.h>
 
 #include "rkmdiwindow.h"
 #include "../rbackend/rcommandreceiver.h"
@@ -108,8 +107,8 @@ public slots:
 private:
 	RKCommandLog *log;
 
-	KAction *run_selection;
-	KAction *copy;
+	QAction *run_selection;
+	QAction *copy;
 };
 
 #endif

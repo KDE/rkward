@@ -37,7 +37,7 @@
 #include <QEvent>
 
 #include <klocale.h>
-#include <kstandardaction.h>
+#include <kactioncollection.h>
 
 #include "../debug.h"
 
@@ -48,7 +48,7 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 	RK_TRACE (APP);
 
 	log_view = new RKCommandLogView (this);
-	log_view->setTextFormat (PlainText);
+	log_view->setTextFormat (Qt::PlainText);
 	log_view->setUndoRedoEnabled (false);
 	log_view->setReadOnly (true);
 
@@ -64,7 +64,7 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 
 	setPart (new RKCommandLogPart (this));
 	initializeActivationSignals ();
-	setFocusPolicy (QWidget::ClickFocus);
+	setFocusPolicy (Qt::ClickFocus);
 }
 
 RKCommandLog::~RKCommandLog(){
@@ -237,13 +237,12 @@ void RKCommandLog::runSelection () {
 RKCommandLogView::RKCommandLogView (RKCommandLog *parent) : Q3TextEdit (parent) {
 	RK_TRACE (APP);
 
-	const QObjectList *list = children ();
-	QObjectListIt it (*list);
-	QObject *obj;
-	
-	while ((obj = it.current()) != 0) {
+	const QList<QObject*> list = children ();
+	QList<QObject*>::const_iterator it = list.constBegin ();
+
+	while (it != list.constEnd()) {
+		(*it)->installEventFilter (this);
 		++it;
-		obj->installEventFilter (this);
 	}
 }
 
@@ -277,18 +276,22 @@ void RKCommandLogView::selectAll () {
 RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
 	RK_TRACE (APP);
 
-	KInstance* instance = new KInstance ("rkward");
-	setInstance (instance);
+	setComponentData (KGlobal::mainComponent ());
 
 	setWidget (log = for_log);
 
 	setXMLFile ("rkcommandlogpart.rc");
 
-	copy = KStandardAction::copy (log->getView (), SLOT (copy ()), actionCollection (), "log_copy");
-	KStandardAction::clear (log, SLOT (clearLog ()), actionCollection (), "log_clear");
-	KStandardAction::selectAll (log->getView (), SLOT (selectAll ()), actionCollection (), "log_select_all");
-	new KAction (i18n ("Configure"), 0, log, SLOT (configureLog ()), actionCollection (), "log_configure");
-	run_selection = new KAction (i18n ("Run selection"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), log, SLOT (runSelection ()), actionCollection (), "log_run_selection");
+	copy = actionCollection ()->addAction (KStandardAction::Copy, "log_copy", log->getView (), SLOT (copy()));
+	actionCollection ()->addAction (KStandardAction::Clear, "log_clear", log, SLOT (clearLog()));
+	actionCollection ()->addAction (KStandardAction::SelectAll, "log_select_all", log->getView (), SLOT (selectAll()));
+	QAction *configure = actionCollection ()->addAction ("log_configure", log, SLOT(configureLog()));
+	configure->setText (i18n ("Configure"));
+
+	run_selection = actionCollection ()->addAction ("log_run_selection", log, SLOT(runSelection()));
+	run_selection->setText (i18n ("Run selection"));
+	run_selection->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"));
+	run_selection->setShortcut (Qt::Key_F8);
 
 	connect (log->getView (), SIGNAL (popupMenuRequest (const QPoint &)), this, SLOT (doPopupMenu (const QPoint &)));
 }

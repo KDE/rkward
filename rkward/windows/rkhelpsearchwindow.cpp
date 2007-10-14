@@ -27,6 +27,7 @@
 #include <qlineedit.h>
 #include <qlayout.h>
 #include <qlabel.h>
+#include <qpushbutton.h>
 //Added by qt3to4:
 #include <Q3HBoxLayout>
 #include <QFocusEvent>
@@ -50,7 +51,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	RK_TRACE (APP);
 	setPart (new RKDummyPart (0, this));
 	initializeActivationSignals ();
-	setFocusPolicy (QWidget::ClickFocus);
+	setFocusPolicy (Qt::ClickFocus);
 
 	Q3VBoxLayout* main_layout = new Q3VBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
 	Q3HBoxLayout* selection_layout = new Q3HBoxLayout (main_layout, RKGlobals::spacingHint ());
@@ -118,7 +119,7 @@ void RKHelpSearchWindow::focusInEvent (QFocusEvent *e) {
 	RK_TRACE (APP);
 
 	RKMDIWindow::focusInEvent (e);
-	if (e->reason () != QFocusEvent::Mouse) {
+	if (e->reason () != Qt::MouseFocusReason) {
 		field->setFocus ();
 	}
 }
