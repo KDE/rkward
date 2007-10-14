@@ -33,7 +33,7 @@ ScriptBackend::~ScriptBackend () {
 
 void ScriptBackend::callFunction (const QString &function, int flags, int type) {
 	RK_TRACE (PHP);
-	RK_DO (qDebug ("callFunction %s", function.toLatin1 ()), PHP, DL_DEBUG);
+	RK_DO (qDebug ("callFunction %s", function.toLatin1 ().data ()), PHP, DL_DEBUG);
 
 	ScriptCommand *command = new ScriptCommand;
 	command->command = function;

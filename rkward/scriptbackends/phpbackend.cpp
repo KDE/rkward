@@ -56,8 +56,8 @@ bool PHPBackend::initialize (RKComponentPropertyCode *code_property, bool add_he
 	}
 
 	QDir files_path (RKCommonFunctions::getRKWardDataDir () + "phpfiles/");
-	QString common_php = files_path.filePath ("common.php", false);
-	QString php_ini = files_path.filePath ("php.ini", false);
+	QString common_php = files_path.absoluteFilePath ("common.php");
+	QString php_ini = files_path.absoluteFilePath ("php.ini");
 	if (!QFileInfo (common_php).isReadable ()) {
 		KMessageBox::error (0, i18n ("The support file \"%1\" could not be found or is not readable. Please check your installation.").arg (common_php), i18n ("PHP-Error"));
 		emit (haveError ());
@@ -124,7 +124,7 @@ void PHPBackend::tryNextFunction () {
 			if (!command_stack.count ()) return;
 		}
 		
-		RK_DO (qDebug ("submitting PHP code: %s", command_stack.first ()->command.toLatin1 ()), PHP, DL_DEBUG);
+		RK_DO (qDebug ("submitting PHP code: %s", command_stack.first ()->command.toLatin1 ().data ()), PHP, DL_DEBUG);
 		current_command = command_stack.first ()->command + eot_string;
 		php_process->writeStdin (current_command.toLatin1 (), current_command.length ());
 		busy_writing = doing_command = busy = true;
@@ -144,7 +144,7 @@ void PHPBackend::tryWriteData () {
 	RK_TRACE (PHP);
 
 	if ((!busy_writing) && php_process && php_process->isRunning () && busy && (!data_stack.isEmpty ())) {
-		RK_DO (qDebug ("submitting data: %s", data_stack.first ().toLatin1 ()), PHP, DL_DEBUG);
+		RK_DO (qDebug ("submitting data: %s", data_stack.first ().toLatin1 ().data ()), PHP, DL_DEBUG);
 		php_process->writeStdin (data_stack.first ().toLatin1 (), data_stack.first ().length ());
 		busy_writing = true;
 		doing_command = false;
@@ -208,7 +208,7 @@ void PHPBackend::gotOutput (K3Process *, char* buf, int) {
 		return;
 	} else {
 		_output.append (data);
-		RK_DO (qDebug ("request: %s\ndata: %s", request.toLatin1 (), data.toLatin1 ()), PHP, DL_DEBUG);
+		RK_DO (qDebug ("request: %s\ndata: %s", request.toLatin1 ().data (), data.toLatin1 ().data ()), PHP, DL_DEBUG);
 
 		if (request == "requesting code") {
 			startup_done = true;
@@ -217,7 +217,7 @@ void PHPBackend::gotOutput (K3Process *, char* buf, int) {
 			_output = QString::null;
 		} else if (request.startsWith ("requesting data:")) {
 			QString requested_object = request.remove ("requesting data:");
-			RK_DO (qDebug ("requested data: \"%s\"", requested_object.toLatin1 ()), PHP, DL_DEBUG);
+			RK_DO (qDebug ("requested data: \"%s\"", requested_object.toLatin1 ().data ()), PHP, DL_DEBUG);
 			emit (requestValue (requested_object));
 			busy = true;
 //			writeData (res + eot_string);
@@ -229,7 +229,7 @@ void PHPBackend::gotOutput (K3Process *, char* buf, int) {
 			destroy ();
 			return;
 		} else {
-			RK_DO (qDebug ("unrecognized request from PHP backend: \"%s\"", request.toLatin1()), PHP, DL_ERROR);
+			RK_DO (qDebug ("unrecognized request from PHP backend: \"%s\"", request.toLatin1().data ()), PHP, DL_ERROR);
 		}
 	}
 }
