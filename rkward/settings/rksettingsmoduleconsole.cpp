@@ -18,6 +18,7 @@
 
 #include <klocale.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <knuminput.h>
 #include <kapplication.h>
 
@@ -52,13 +53,13 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 	vbox->addWidget (save_history_box);
 
 	vbox->addWidget (new QLabel (i18n ("Maximum length of command history"), this));
-	max_history_length_spinner = new KIntSpinBox (0, 10000, 10, max_history_length, 10, this);
+	max_history_length_spinner = new KIntSpinBox (0, 10000, 10, max_history_length, this);
 	max_history_length_spinner->setSpecialValueText (i18n ("Unlimited"));
 	connect (max_history_length_spinner, SIGNAL (valueChanged (int)), this, SLOT (changedSetting (int)));
 	vbox->addWidget (max_history_length_spinner);
 
 	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the console"), this));
-	max_console_lines_spinner = new KIntSpinBox (0, 10000, 10, max_console_lines, 10, this);
+	max_console_lines_spinner = new KIntSpinBox (0, 10000, 10, max_console_lines, this);
 	max_console_lines_spinner->setSpecialValueText (i18n ("Unlimited"));
 	connect (max_console_lines_spinner, SIGNAL (valueChanged (int)), this, SLOT (changedSetting (int)));
 	vbox->addWidget (max_console_lines_spinner);
@@ -98,10 +99,10 @@ void RKSettingsModuleConsole::changedSetting (int) {
 }
 
 //static
-bool RKSettingsModuleConsole::shouldDoHistoryContextSensitive (Qt::ButtonState current_state) {
+bool RKSettingsModuleConsole::shouldDoHistoryContextSensitive (Qt::KeyboardModifiers current_state) {
 	RK_TRACE (SETTINGS);
 
-	if (current_state & ShiftButton) return (!context_sensitive_history_by_default);
+	if (current_state & Qt::ShiftModifier) return (!context_sensitive_history_by_default);
 	return context_sensitive_history_by_default;
 }
 
@@ -109,47 +110,45 @@ bool RKSettingsModuleConsole::shouldDoHistoryContextSensitive (Qt::ButtonState c
 void RKSettingsModuleConsole::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("Console Settings");
-	config->writeEntry ("save history", save_history);
-	config->writeEntry ("max history length", max_history_length);
-	config->writeEntry ("max console lines", max_console_lines);
-	config->writeEntry ("pipe user commands through console", pipe_user_commands_through_console);
-	config->writeEntry ("add piped commands to history", add_piped_commands_to_history);
-	config->writeEntry ("command history defaults to context sensitive", context_sensitive_history_by_default);
+	KConfigGroup cg = config->group ("Console Settings");
+	cg.writeEntry ("save history", save_history);
+	cg.writeEntry ("max history length", max_history_length);
+	cg.writeEntry ("max console lines", max_console_lines);
+	cg.writeEntry ("pipe user commands through console", pipe_user_commands_through_console);
+	cg.writeEntry ("add piped commands to history", add_piped_commands_to_history);
+	cg.writeEntry ("command history defaults to context sensitive", context_sensitive_history_by_default);
 }
 
 //static
 void RKSettingsModuleConsole::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("Console Settings");
-	save_history = config->readBoolEntry ("save history", true);
-	max_history_length = config->readNumEntry ("max history length", 100);
-	max_console_lines = config->readNumEntry ("max console lines", 500);
-	pipe_user_commands_through_console = config->readBoolEntry ("pipe user commands through console", true);
-	add_piped_commands_to_history = config->readBoolEntry ("add piped commands to history", true);
-	context_sensitive_history_by_default = config->readBoolEntry ("command history defaults to context sensitive", false);
+	KConfigGroup cg = config->group ("Console Settings");
+	save_history = cg.readEntry ("save history", true);
+	max_history_length = cg.readEntry ("max history length", 100);
+	max_console_lines = cg.readEntry ("max console lines", 500);
+	pipe_user_commands_through_console = cg.readEntry ("pipe user commands through console", true);
+	add_piped_commands_to_history = cg.readEntry ("add piped commands to history", true);
+	context_sensitive_history_by_default = cg.readEntry ("command history defaults to context sensitive", false);
 }
 
 //static
 QStringList RKSettingsModuleConsole::loadCommandHistory () {
 	RK_TRACE (SETTINGS);
 
-	KConfig *config = KGlobal::config ();
-	config->setGroup ("Console Settings");
-	return config->readListEntry ("history");
+	KConfigGroup cg = KGlobal::config ()->group ("Console Settings");
+	return cg.readEntry ("history", QStringList ());
 }
 
 //static
 void RKSettingsModuleConsole::saveCommandHistory (const QStringList &list) {
 	RK_TRACE (SETTINGS);
 
-	KConfig *config = KGlobal::config ();
-	config->setGroup ("Console Settings");
+	KConfigGroup cg = KGlobal::config ()->group ("Console Settings");
 	if (save_history) {
-		config->writeEntry ("history", list);
+		cg.writeEntry ("history", list);
 	}
-	config->sync ();
+	cg.sync ();
 }
 
 

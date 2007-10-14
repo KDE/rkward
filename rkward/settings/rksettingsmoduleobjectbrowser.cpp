@@ -19,6 +19,7 @@
 
 #include <klocale.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kinputdialog.h>
 
 #include <qlayout.h>
@@ -134,37 +135,34 @@ QString RKSettingsModuleObjectBrowser::caption () {
 void RKSettingsModuleObjectBrowser::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("Object Browser");
-	config->writeEntry ("show hidden vars", settings[RKObjectListViewSettings::ShowObjectsHidden]);
-	config->writeEntry ("show all environments", settings[RKObjectListViewSettings::ShowObjectsAllEnvironments]);
-	config->writeEntry ("show container objects", settings[RKObjectListViewSettings::ShowObjectsContainer]);
-	config->writeEntry ("show function objects", settings[RKObjectListViewSettings::ShowObjectsFunction]);
-	config->writeEntry ("show variable objects", settings[RKObjectListViewSettings::ShowObjectsVariable]);
-	config->writeEntry ("show label field", settings[RKObjectListViewSettings::ShowFieldsLabel]);
-	config->writeEntry ("show type field", settings[RKObjectListViewSettings::ShowFieldsType]);
-	config->writeEntry ("show class field", settings[RKObjectListViewSettings::ShowFieldsClass]);
+	KConfigGroup cg = config->group ("Object Browser");
+	cg.writeEntry ("show hidden vars", settings[RKObjectListViewSettings::ShowObjectsHidden]);
+	cg.writeEntry ("show all environments", settings[RKObjectListViewSettings::ShowObjectsAllEnvironments]);
+	cg.writeEntry ("show container objects", settings[RKObjectListViewSettings::ShowObjectsContainer]);
+	cg.writeEntry ("show function objects", settings[RKObjectListViewSettings::ShowObjectsFunction]);
+	cg.writeEntry ("show variable objects", settings[RKObjectListViewSettings::ShowObjectsVariable]);
+	cg.writeEntry ("show label field", settings[RKObjectListViewSettings::ShowFieldsLabel]);
+	cg.writeEntry ("show type field", settings[RKObjectListViewSettings::ShowFieldsType]);
+	cg.writeEntry ("show class field", settings[RKObjectListViewSettings::ShowFieldsClass]);
 
-	config->writeEntry ("package blacklist", getstructure_blacklist);
+	cg.writeEntry ("package blacklist", getstructure_blacklist);
 }
 
 //static
 void RKSettingsModuleObjectBrowser::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("Object Browser");
-	settings[RKObjectListViewSettings::ShowObjectsHidden] = config->readBoolEntry ("show hidden vars", false);
-	settings[RKObjectListViewSettings::ShowObjectsAllEnvironments] = config->readBoolEntry ("show all environments", true);
-	settings[RKObjectListViewSettings::ShowObjectsContainer] = config->readBoolEntry ("show container objects", true);
-	settings[RKObjectListViewSettings::ShowObjectsFunction] = config->readBoolEntry ("show function objects", true);
-	settings[RKObjectListViewSettings::ShowObjectsVariable] = config->readBoolEntry ("show variable objects", true);
-	settings[RKObjectListViewSettings::ShowFieldsLabel] = config->readBoolEntry ("show label field", true);
-	settings[RKObjectListViewSettings::ShowFieldsType] = config->readBoolEntry ("show type field", true);
-	settings[RKObjectListViewSettings::ShowFieldsClass] = config->readBoolEntry ("show class field", true);
+	KConfigGroup cg = config->group ("Object Browser");
+	settings[RKObjectListViewSettings::ShowObjectsHidden] = cg.readEntry ("show hidden vars", false);
+	settings[RKObjectListViewSettings::ShowObjectsAllEnvironments] = cg.readEntry ("show all environments", true);
+	settings[RKObjectListViewSettings::ShowObjectsContainer] = cg.readEntry ("show container objects", true);
+	settings[RKObjectListViewSettings::ShowObjectsFunction] = cg.readEntry ("show function objects", true);
+	settings[RKObjectListViewSettings::ShowObjectsVariable] = cg.readEntry ("show variable objects", true);
+	settings[RKObjectListViewSettings::ShowFieldsLabel] = cg.readEntry ("show label field", true);
+	settings[RKObjectListViewSettings::ShowFieldsType] = cg.readEntry ("show type field", true);
+	settings[RKObjectListViewSettings::ShowFieldsClass] = cg.readEntry ("show class field", true);
 
-	getstructure_blacklist = config->readListEntry ("package blacklist");
-	if (!getstructure_blacklist.count ()) {
-		getstructure_blacklist.append ("GO");
-	}
+	getstructure_blacklist = cg.readEntry ("package blacklist", QStringList ("GO"));
 }
 
 void RKSettingsModuleObjectBrowser::boxChanged (int) {

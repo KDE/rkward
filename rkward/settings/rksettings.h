@@ -35,7 +35,19 @@ The main settings-dialog. Contains subsections (tabs) for different modules. Use
 class RKSettings : public KPageDialog {
 	Q_OBJECT
 public:
-	enum SettingsPage { NoPage=0, Plugins=1, R=2, RPackages=3, PHP=4, General=5, Output=6, Watch=7, Console=8, ObjectBrowser=9 };
+	enum SettingsPage {
+		NoPage=0,
+		Plugins=1,
+		R=2,
+		RPackages=3,
+		PHP=4,
+		General=5,
+		Output=6,
+		Watch=7,
+		Console=8,
+		ObjectBrowser=9,
+		NumPages = ObjectBrowser + 1
+	};
 
 	static void configureSettings (SettingsPage page=NoPage, QWidget *parent=0, RCommandChain *chain=0);
 
@@ -48,21 +60,20 @@ public:
 public slots:
 	void pageAboutToBeShown (QWidget *page);
 protected:
-	void slotApply ();
-	void slotOk ();
-	void slotCancel ();
-	void slotHelp ();
+	void slotButtonClicked (int button);
 protected:
 	RKSettings (QWidget *parent = 0);
 	~RKSettings ();
 private:
+	void applyAll ();
 	void initModules ();
 	void raisePage (SettingsPage page);
 	static void dialogClosed ();
-	
+
 	typedef Q3ValueList<RKSettingsModule *> ModuleList;
 	ModuleList modules;
-	
+	KPageWidgetItem *pages[NumPages];
+
 	static RKSettings *settings_dialog;
 friend class RKWardMainWindow;
 	static RKSettingsTracker *settings_tracker;

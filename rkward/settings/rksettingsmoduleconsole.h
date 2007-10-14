@@ -52,7 +52,7 @@ public:
 	/** Given the button state, return whether the command history should be navigated context sensitive or insensitive
 	@param current_state the current button state
 	@returns true, if a the search should be context sensitive, false for a normal search */
-	static bool shouldDoHistoryContextSensitive (Qt::ButtonState current_state);
+	static bool shouldDoHistoryContextSensitive (Qt::KeyboardModifiers current_state);
 
 	static QStringList loadCommandHistory ();
 	static void saveCommandHistory (const QStringList &list);

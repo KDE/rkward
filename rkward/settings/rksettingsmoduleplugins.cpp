@@ -130,36 +130,20 @@ void RKSettingsModulePlugins::save (KConfig *config) {
 }
 
 void RKSettingsModulePlugins::saveSettings (KConfig *config) {
-	config->setGroup ("Plugin Settings");
-	config->writeEntry ("Plugin Maps", plugin_maps);
-	config->writeEntry ("Interface Preferences", static_cast<int> (interface_pref));
-	config->writeEntry ("Code display default", show_code);
-	config->writeEntry ("Code display size", code_size);
+	KConfigGroup cg = config->group ("Plugin Settings");
+	cg.writeEntry ("Plugin Maps", plugin_maps);
+	cg.writeEntry ("Interface Preferences", static_cast<int> (interface_pref));
+	cg.writeEntry ("Code display default", show_code);
+	cg.writeEntry ("Code display size", code_size);
 }
 
 void RKSettingsModulePlugins::loadSettings (KConfig *config) {
-	config->setGroup ("Plugin Settings");
-	plugin_maps = config->readListEntry ("Plugin Maps");
-	if (!plugin_maps.count ()) {
-		plugin_maps.append (RKCommonFunctions::getRKWardDataDir () + "/all.pluginmap");
-	}
-// TODO: this code is only needed for transition from rkward 0.3.4 to rkward 0.3.5. Remove some version later!
-// BEGIN
-	bool fix=false;
-	for (QStringList::const_iterator it = plugin_maps.constBegin (); it != plugin_maps.constEnd (); ++it) {
-		if ((*it).contains ("standard_plugins.pluginmap")) {
-			fix = (KMessageBox::questionYesNo (0, i18n ("You appear to have an old configuration for the plugin-paths. The default configuration was changed between rkward 0.3.4 and rkward 0.3.5. Should the configuration be set to the new default (recommended)?"), i18n ("Configuration change"), KStandardGuiItem::yes (), KStandardGuiItem::no (), "pluginmap_upgrade") == KMessageBox::Yes);
-		}
-	}
-	if (fix) {
-		plugin_maps.clear ();
-		plugin_maps.append (RKCommonFunctions::getRKWardDataDir () + "/all.pluginmap");
-	}
-// END
+	KConfigGroup cg = config->group ("Plugin Settings");
+	plugin_maps = cg.readEntry ("Plugin Maps", QStringList (RKCommonFunctions::getRKWardDataDir () + "/all.pluginmap"));
 
-	interface_pref = static_cast<PluginPrefs> (config->readNumEntry ("Interface Preferences", static_cast<int> (PreferRecommended)));
-	show_code = config->readBoolEntry ("Code display default", true);
-	code_size = config->readNumEntry ("Code display size", 40);
+	interface_pref = static_cast<PluginPrefs> (cg.readEntry ("Interface Preferences", static_cast<int> (PreferRecommended)));
+	show_code = cg.readEntry ("Code display default", true);
+	code_size = cg.readEntry ("Code display size", 40);
 }
 
 #include "rksettingsmoduleplugins.moc"

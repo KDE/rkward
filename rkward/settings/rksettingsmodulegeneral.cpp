@@ -147,49 +147,51 @@ void RKSettingsModuleGeneral::save (KConfig *config) {
 void RKSettingsModuleGeneral::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("Logfiles");
-	config->writeEntry ("logfile dir", new_files_path);
+	KConfigGroup cg;
+	cg = config->group ("Logfiles");
+	cg.writeEntry ("logfile dir", new_files_path);
 
-	config->setGroup ("General");
-	config->writeEntry ("startup action", (int) startup_action);
-	config->writeEntry ("show help on startup", show_help_on_startup);
+	cg = config->group ("General");
+	cg.writeEntry ("startup action", (int) startup_action);
+	cg.writeEntry ("show help on startup", show_help_on_startup);
 
-	config->setGroup ("Workplace");
-	config->writeEntry ("save mode", (int) workplace_save_mode);
+	cg = config->group ("Workplace");
+	cg.writeEntry ("save mode", (int) workplace_save_mode);
 
-	config->setGroup ("Editor");
-	config->writeEntry ("large object warning limit", warn_size_object_edit);
+	cg = config->group ("Editor");
+	cg.writeEntry ("large object warning limit", warn_size_object_edit);
 }
 
 void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("Logfiles");
-	files_path = new_files_path = config->readEntry ("logfile dir", QDir ().homePath () + "/.rkward/");
+	KConfigGroup cg;
+	cg = config->group ("Logfiles");
+	files_path = new_files_path = cg.readEntry ("logfile dir", QDir ().homePath () + "/.rkward/");
 
-	config->setGroup ("General");
-	startup_action = (StartupDialog::Result) config->readNumEntry ("startup action", StartupDialog::NoSavedSetting);
-	show_help_on_startup = config->readBoolEntry ("show help on startup", true);
+	cg = config->group ("General");
+	startup_action = (StartupDialog::Result) cg.readEntry ("startup action", (int) StartupDialog::NoSavedSetting);
+	show_help_on_startup = cg.readEntry ("show help on startup", true);
 
-	config->setGroup ("Workplace");
-	workplace_save_mode = (WorkplaceSaveMode) config->readNumEntry ("save mode", SaveWorkplaceWithWorkspace);
+	cg = config->group ("Workplace");
+	workplace_save_mode = (WorkplaceSaveMode) cg.readEntry ("save mode", (int) SaveWorkplaceWithWorkspace);
 
-	config->setGroup ("Editor");
-	warn_size_object_edit = config->readNumEntry ("large object warning limit", 250000);
+	cg = config->group ("Editor");
+	warn_size_object_edit = cg.readEntry ("large object warning limit", 250000);
 }
 
 QString RKSettingsModuleGeneral::getSavedWorkplace (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("Workplace");
-	return (config->readEntry ("last saved layout", QString::null));
+	KConfigGroup cg = config->group ("Workplace");
+	return (cg.readEntry ("last saved layout", QString ()));
 }
 
 void RKSettingsModuleGeneral::setSavedWorkplace (const QString &description, KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("Workplace");
-	config->writeEntry ("last saved layout", description);
+	KConfigGroup cg = config->group ("Workplace");
+	cg.writeEntry ("last saved layout", description);
 }
 
 #include "rksettingsmodulegeneral.moc"

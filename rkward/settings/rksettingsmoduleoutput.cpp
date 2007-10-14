@@ -18,10 +18,11 @@
 
 #include <klocale.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qvbuttongroup.h>
+#include <Q3VButtonGroup>
 #include <qcheckbox.h>
 //Added by qt3to4:
 #include <Q3VBoxLayout>
@@ -88,17 +89,17 @@ void RKSettingsModuleOutput::save (KConfig *config) {
 void RKSettingsModuleOutput::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("Output Window");
-	config->writeEntry ("auto_show", auto_show);
-	config->writeEntry ("auto_raise", auto_raise);
+	KConfigGroup cg = config->group ("Output Window");
+	cg.writeEntry ("auto_show", auto_show);
+	cg.writeEntry ("auto_raise", auto_raise);
 }
 
 void RKSettingsModuleOutput::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("Output Window");
-	auto_show = config->readBoolEntry ("auto_show", true);
-	auto_raise = config->readBoolEntry ("auto_raise", true);
+	KConfigGroup cg = config->group ("Output Window");
+	auto_show = cg.readEntry ("auto_show", true);
+	auto_raise = cg.readEntry ("auto_raise", true);
 }
 
 #include "rksettingsmoduleoutput.moc"

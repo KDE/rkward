@@ -25,7 +25,7 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qvbuttongroup.h>
+#include <Q3VButtonGroup>
 #include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qlineedit.h>
@@ -85,19 +85,19 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 
 	// options (width)
 	grid->addWidget (new QLabel (i18n ("Output width (characters)"), this), ++row, 0);
-	width_input = new KIntSpinBox (10, 10000, 1, options_width, 10, this);
+	width_input = new KIntSpinBox (10, 10000, 1, options_width, this);
 	connect (width_input, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
 	grid->addWidget (width_input, row, 1);
 
 	// options (max.print)
 	grid->addWidget (new QLabel (i18n ("Maximum number of elements shown in print"), this), ++row, 0);
-	maxprint_input = new KIntSpinBox (100, INT_MAX, 1, options_maxprint, 10, this);
+	maxprint_input = new KIntSpinBox (100, INT_MAX, 1, options_maxprint, this);
 	connect (maxprint_input, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
 	grid->addWidget (maxprint_input, row, 1);
 
 	// options (warnings.length)
 	grid->addWidget (new QLabel (i18n ("Maximum length of warnings/errors to print"), this), ++row, 0);
-	warningslength_input = new KIntSpinBox (100, 8192, 1, options_warningslength, 10, this);
+	warningslength_input = new KIntSpinBox (100, 8192, 1, options_warningslength, this);
 	connect (warningslength_input, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
 	grid->addWidget (warningslength_input, row, 1);
 
@@ -121,13 +121,13 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 
 	// options (expressions)
 	grid->addWidget (new QLabel (i18n ("Maximum level of nested expressions"), this), ++row, 0);
-	expressions_input = new KIntSpinBox (25, 500000, 1, options_expressions, 10, this);
+	expressions_input = new KIntSpinBox (25, 500000, 1, options_expressions, this);
 	connect (expressions_input, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
 	grid->addWidget (expressions_input, row, 1);
 
 	// options (digits)
 	grid->addWidget (new QLabel (i18n ("Default decimal precision in print ()"), this), ++row, 0);
-	digits_input = new KIntSpinBox (1, 22, 1, options_digits, 10, this);
+	digits_input = new KIntSpinBox (1, 22, 1, options_digits, this);
 	connect (digits_input, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
 	grid->addWidget (digits_input, row, 1);
 
@@ -231,37 +231,35 @@ void RKSettingsModuleR::save (KConfig *config) {
 void RKSettingsModuleR::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("R Settings");
-
-	config->writeEntry ("OutDec", options_outdec);
-	config->writeEntry ("width", options_width);
-	config->writeEntry ("warn", options_warn);
-	config->writeEntry ("maxprint", options_maxprint);
-	config->writeEntry ("warnings.length", options_warningslength);
-	config->writeEntry ("keep.source", options_keepsource);
-	config->writeEntry ("keep.source.pkgs", options_keepsourcepkgs);
-	config->writeEntry ("expressions", options_expressions);
-	config->writeEntry ("digits", options_digits);
-	config->writeEntry ("check.bounds", options_checkbounds);
-	config->writeEntry ("printcmd", options_printcmd);
+	KConfigGroup cg = config->group ("R Settings");
+	cg.writeEntry ("OutDec", options_outdec);
+	cg.writeEntry ("width", options_width);
+	cg.writeEntry ("warn", options_warn);
+	cg.writeEntry ("maxprint", options_maxprint);
+	cg.writeEntry ("warnings.length", options_warningslength);
+	cg.writeEntry ("keep.source", options_keepsource);
+	cg.writeEntry ("keep.source.pkgs", options_keepsourcepkgs);
+	cg.writeEntry ("expressions", options_expressions);
+	cg.writeEntry ("digits", options_digits);
+	cg.writeEntry ("check.bounds", options_checkbounds);
+	cg.writeEntry ("printcmd", options_printcmd);
 }
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("R Settings");
-
-	options_outdec = config->readEntry ("OutDec", ".");
-	options_width = config->readNumEntry ("width", 80);
-	options_warn = config->readNumEntry ("warn", 0);
-	options_maxprint = config->readNumEntry ("max.print", 99999);
-	options_warningslength = config->readNumEntry ("warnings.length", 1000);
-	options_keepsource = config->readBoolEntry ("keep.source", true);
-	options_keepsourcepkgs = config->readBoolEntry ("keep.source.pkgs", false);
-	options_expressions = config->readNumEntry ("expressions", 5000);
-	options_digits = config->readNumEntry ("digits", 7);
-	options_checkbounds = config->readNumEntry ("check.bounds", false);
-	options_printcmd = config->readEntry ("printcmd", "kprinter");
+	KConfigGroup cg = config->group ("R Settings");
+	options_outdec = cg.readEntry ("OutDec", ".");
+	options_width = cg.readEntry ("width", 80);
+	options_warn = cg.readEntry ("warn", 0);
+	options_maxprint = cg.readEntry ("max.print", 99999);
+	options_warningslength = cg.readEntry ("warnings.length", 1000);
+	options_keepsource = cg.readEntry ("keep.source", true);
+	options_keepsourcepkgs = cg.readEntry ("keep.source.pkgs", false);
+	options_expressions = cg.readEntry ("expressions", 5000);
+	options_digits = cg.readEntry ("digits", 7);
+	options_checkbounds = cg.readEntry ("check.bounds", false);
+	options_printcmd = cg.readEntry ("printcmd", "kprinter");
 }
 
 //#################################################
@@ -321,7 +319,7 @@ void RKSettingsModuleRPackages::boxChanged (int) {
 
 void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 	RK_TRACE (SETTINGS);
-	QString new_string = KFileDialog::getExistingDirectory (QString::null, this, i18n ("Add R Library Directory"));
+	QString new_string = KFileDialog::getExistingDirectory (KUrl (), this, i18n ("Add R Library Directory"));
 	if (!new_string.isEmpty ()) {
 		(*string_list).append (new_string);
 	}
@@ -400,26 +398,20 @@ void RKSettingsModuleRPackages::save (KConfig *config) {
 void RKSettingsModuleRPackages::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("R Settings");
-
-	config->writeEntry ("archive packages", archive_packages);
-	config->writeEntry ("Repositories", package_repositories);
-
-	config->writeEntry ("LibraryLocations", liblocs);
+	KConfigGroup cg = config->group ("R Settings");
+	cg.writeEntry ("archive packages", archive_packages);
+	cg.writeEntry ("Repositories", package_repositories);
+	cg.writeEntry ("LibraryLocations", liblocs);
 }
 
 void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("R Settings");
+	KConfigGroup cg = config->group ("R Settings");
+	archive_packages = cg.readEntry ("archive packages", false);
+	package_repositories = cg.readEntry ("Repositories", QStringList ("@CRAN@"));
 
-	archive_packages = config->readBoolEntry ("archive packages", false);
-	package_repositories = config->readListEntry ("Repositories");
-	if (!package_repositories.count ()) {
-		package_repositories.append ("@CRAN@");
-	}
-
-	liblocs = config->readListEntry ("LibraryLocations");
+	liblocs = cg.readEntry ("LibraryLocations", QStringList ());
 }
 
 #include "rksettingsmoduler.moc"

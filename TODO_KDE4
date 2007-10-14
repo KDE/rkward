@@ -58,3 +58,8 @@ rkradio:
 
 rkdropdown:
 	- take care of enabling / disabling single options!
+
+rksettings:
+	- direct page activation?
+	- check wether settings seem to be saved / loaded correctly
+	- are the defaults ok?

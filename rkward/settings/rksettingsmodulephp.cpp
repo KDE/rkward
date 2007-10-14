@@ -18,6 +18,7 @@
 
 #include <klocale.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -81,15 +82,15 @@ void RKSettingsModulePHP::save (KConfig *config) {
 void RKSettingsModulePHP::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("PHP Settings");
-	config->writeEntry ("PHP binary", php_bin);
+	KConfigGroup cg = config->group ("PHP Settings");
+	cg.writeEntry ("PHP binary", php_bin);
 }
 
 void RKSettingsModulePHP::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	config->setGroup ("PHP Settings");
-	php_bin = config->readEntry ("PHP binary", "/usr/bin/php");
+	KConfigGroup cg = config->group ("PHP Settings");
+	php_bin = cg.readEntry ("PHP binary", "/usr/bin/php");
 }
 
 #include "rksettingsmodulephp.moc"

@@ -24,6 +24,7 @@
 #include <klocale.h>
 #include <kapplication.h>
 #include <kglobal.h>
+#include <kvbox.h>
 
 #include "../windows/rkworkplace.h"
 
@@ -72,7 +73,7 @@ RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel | KDialog::Help);
 // KDE4: is this needed?	setModal (false);
 
-	setWFlags (getWFlags () | QWidget::WDestructiveClose);
+	setAttribute (Qt::WA_DeleteOnClose, true);
 
 	initModules ();
 
@@ -105,22 +106,24 @@ void RKSettings::initModules () {
 	modules.append (new RKSettingsModuleObjectBrowser (this, this));
 	
 	ModuleList::const_iterator it;
-	Q3Frame *page;
-	Q3VBoxLayout *layout;
+	KVBox *page;
+	int i=0;
 	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
-		page = addPage ((*it)->caption ());
-		layout = new Q3VBoxLayout (page, 0, KDialog::spacingHint ());
-// this is somewhat ugly, but works fine
-		(*it)->reparent (page, QPoint (0,0), true);
-		layout->addWidget (*it);
+		page = new KVBox ();
+		pages[i++] = addPage (page, (*it)->caption ());
+
+// this is somewhat ugly, but works fine (KDE4: does it still?)
+		(*it)->setParent (page);
+		(*it)->show ();
 	}
+	RK_ASSERT (i == (NumPages - 1));
 }
 
 void RKSettings::raisePage (SettingsPage page) {
 	RK_TRACE (SETTINGS);
 
 	if (page != NoPage) {
-		showPage (((int) page) - 1);
+		setCurrentPage (pages[(int) page - 1]);
 	}
 }
 
@@ -148,43 +151,45 @@ void RKSettings::pageAboutToBeShown (QWidget *page) {
 	} else {
 		has_help = !(new_module->helpURL ().isEmpty ());
 	}
-	enableButton (KDialogBase::Help, has_help);
+	enableButton (KDialog::Help, has_help);
 }
 
-void RKSettings::slotApply () {
+void RKSettings::slotButtonClicked (int button) {
+	RK_TRACE (SETTINGS);
+
+	if (button == KDialog::Apply) {
+		applyAll ();
+	} else if (button == KDialog::Ok) {
+		applyAll ();
+		accept ();
+		close ();
+	} else if (button == KDialog::Cancel) {
+		reject ();
+	} else if (button == KDialog::Help) {
+		int i = 0;
+		for (i = 0; i < NumPages; ++i) {
+			if (currentPage () == pages[i]) break;
+		}
+		RKSettingsModule *current_module = modules[i];
+		RK_ASSERT (current_module);
+	
+		RKWorkplace::mainWorkplace ()->openHelpWindow (current_module->helpURL ());
+	} else {
+		RK_ASSERT (false);
+	}
+}
+
+void RKSettings::applyAll () {
 	RK_TRACE (SETTINGS);
 
 	ModuleList::const_iterator it;
 	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
 		if ((*it)->hasChanges ()) {
 			(*it)->applyChanges ();
-			(*it)->save (KGlobal::config ());
+			(*it)->save (KGlobal::config ().data ());
 		}
 	}
 	enableButtonApply (false);
-}
-
-void RKSettings::slotOk () {
-	RK_TRACE (SETTINGS);
-
-	slotApply ();
-	accept ();
-	close ();
-}
-
-void RKSettings::slotCancel () {
-	RK_TRACE (SETTINGS);
-	QDialog::reject ();
-}
-
-void RKSettings::slotHelp () {
-	RK_TRACE (SETTINGS);
-
-	// which page are we on?
-	RKSettingsModule *current_module = modules[activePageIndex ()];
-	RK_ASSERT (current_module);
-
-	RKWorkplace::mainWorkplace ()->openHelpWindow (current_module->helpURL ());
 }
 
 void RKSettings::enableApply () {
