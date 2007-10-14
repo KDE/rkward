@@ -73,3 +73,9 @@ rkthread:
 
 rklocalesupport:
 	- does locale switching / detection work? Does Qt have something, yet?
+
+rkspinbox:
+	- does it work at all? in both modes?
+
+rkobjectlistview:
+	- do the tool-tips for the objects work?

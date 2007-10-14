@@ -20,6 +20,7 @@
 #include <qlineedit.h>
 
 #include <math.h>
+#include <limits.h>
 #include <stdlib.h>
 
 #include "../debug.h"
@@ -29,6 +30,11 @@ RKSpinBox::RKSpinBox (QWidget *parent) : QSpinBox (parent) {
 	mode = Integer;
 	updating = updating_b = false;
 	real_value = 0;
+	int_value = 0;
+	int_min = INT_MIN;
+	int_max = INT_MAX;
+
+	connect (this, SIGNAL (valueChanged(int)), this, SLOT(updateValue(int)));
 }
 
 RKSpinBox::~RKSpinBox () {
@@ -38,31 +44,53 @@ RKSpinBox::~RKSpinBox () {
 void RKSpinBox::setRealValue (double new_value) {
 	real_value = new_value;
 	setValue (0);
-};
-
-void RKSpinBox::interpretText () {
-	if (updating) return;
-	updating = true;
-
-	if (mode == Real) {
-		bool ok;
-		double new_value = text ().toFloat (&ok);
-		if (ok) real_value = new_value;
-		valueChange ();
-	} else {
-		QSpinBox::interpretText ();
-	}
-
-	updating = false;
 }
 
-void RKSpinBox::updateDisplay () {
-	if (updating_b) return;
-	updating_b = true;
+void RKSpinBox::setIntValue (int new_value) {
+	int_value = new_value;
+	setValue (0);
+}
 
+
+QString RKSpinBox::textFromValue (int) const {
 	if (mode == Real) {
-		if (value () != 0) {
-			int change = value ();
+		return (QString ().setNum (real_value));
+	} else {
+		return (QString ().setNum (int_value));
+	}
+}
+
+int RKSpinBox::valueFromText (const QString & text) const {
+	if (mode == Real) {
+		bool ok;
+		double new_value = text.toFloat (&ok);
+		if (ok) {
+			double *cheat = const_cast<double*> (&real_value);
+			*cheat = new_value;
+		}
+		return 0;
+	} else {
+		bool ok;
+		int new_value = text.toInt (&ok);
+		if (ok) {
+			int *cheat = const_cast<int*> (&int_value);
+			*cheat = new_value;
+		}
+		return 0;
+	}
+}
+
+void RKSpinBox::stepBy (int steps) {
+	setValue (steps);
+}
+
+QValidator::State RKSpinBox::validate (QString &input, int &pos ) const {
+	return (validator->validate (input, pos));
+}
+
+void RKSpinBox::updateValue (int change) {
+	if (mode == Real) {
+		if (change != 0) {
 			setValue (0);
 
 			int power;
@@ -79,22 +107,22 @@ void RKSpinBox::updateDisplay () {
 			if (real_value > real_max) real_value = real_max;
 			if (real_value < real_min) real_value = real_min;
 		}
-		setUpdatesEnabled (false);
-		QSpinBox::updateDisplay ();	// need this to enable/disable the button correctly
-		editor ()->setText (QString ().setNum (real_value));
-		setUpdatesEnabled (true);
 	} else {
-		QSpinBox::updateDisplay ();
+		if (change != 0) {
+			setValue (0);
 
-		int power;
-		if (value () != 0) power = (int) log10 (abs (value ()));
-		else power = 1;
-		int step = (int) pow (10, power-1);
-		if (step < 1) step = 1;
-		setSteps (step, 10*step);
+			int power;
+			if (int_value != 0) {
+				power = (int) log10 (abs (int_value));
+			} else {
+				power = -default_precision;
+			}
+			int step = (int) pow (10, power-1);
+			if (step < 1) step = 1;
+
+			int_value += change * step;
+		}
 	}
-
-	updating_b = false;
 }
 
 void RKSpinBox::setRealMode (double min, double max, double initial, int default_precision, int max_precision) {
@@ -102,7 +130,6 @@ void RKSpinBox::setRealMode (double min, double max, double initial, int default
 
 	mode = Real;
 	QValidator *new_validator = new QDoubleValidator (min, max, max_precision, this);
-	setValidator (new_validator);
 	delete validator;
 	validator = new_validator;
 
@@ -112,7 +139,7 @@ void RKSpinBox::setRealMode (double min, double max, double initial, int default
 		3) goto 1 */
 	setMinValue (-1000);
 	setMaxValue (1000);
-	setSteps (1, 10);
+	setSingleStep (1);
 
 	real_value = initial;
 	real_min = min;
@@ -125,16 +152,21 @@ void RKSpinBox::setRealMode (double min, double max, double initial, int default
 void RKSpinBox::setIntMode (int min, int max, int initial) {
 	QValidator *new_validator = new QIntValidator (min, max, this);
 
-	setMinValue (min);
-	setMaxValue (max);
-	setValue (initial);
+	/* see setRealMode for comments */
 
-	setValidator (new_validator);
+	setMinValue (-1000);
+	setMaxValue (1000);
+	setSingleStep (1);
+
+	int_min = min;
+	int_max = max;
+	int_value = initial;
+
 	delete validator;
 	validator = new_validator;
 	mode = Integer;
 
-	updateDisplay ();
+	setValue (0);
 }
 
 #include "rkspinbox.moc"

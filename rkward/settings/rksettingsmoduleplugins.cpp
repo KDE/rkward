@@ -120,7 +120,7 @@ void RKSettingsModulePlugins::applyChanges () {
 	interface_pref = static_cast<PluginPrefs> (button_group->selectedId ());
 #endif
 	show_code = show_code_box->isChecked ();
-	code_size = code_size_box->value ();
+	code_size = code_size_box->intValue ();
 
 	RKWardMainWindow::getMain ()->initPlugins();
 }

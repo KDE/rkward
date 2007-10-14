@@ -38,7 +38,7 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, const QStr
 	connect (edit, SIGNAL (textChanged (const QString &)), this, SLOT (locationEditChanged (const QString &)));
 	vbox->addWidget (edit);
 
-	edit->setURL (initial);
+	edit->setUrl (initial);
 	if (mode == ExistingDirectory) {
 		edit->setMode (KFile::Directory | KFile::ExistingOnly);
 	} else if (mode == ExistingFile) {
@@ -67,7 +67,7 @@ void GetFileNameWidget::setFilter (const QString &filter) {
 void GetFileNameWidget::setLocation (const QString &new_location) {
 	RK_TRACE (MISC);
 
-	edit->setURL (new_location);
+	edit->setUrl (new_location);
 }
 
 void GetFileNameWidget::locationEditChanged (const QString &) {
@@ -76,7 +76,7 @@ void GetFileNameWidget::locationEditChanged (const QString &) {
 }
 
 QString GetFileNameWidget::getLocation () {
-	return edit->url ();
+	return (edit->url ().path ());
 }
 
 void GetFileNameWidget::setBackgroundColor (const QColor & color) {

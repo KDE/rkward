@@ -52,11 +52,10 @@ namespace RKCommonFunctions {
 		from->setXMLGUIBuildDocument (doc);
 	
 		if (recursive) {
-			Q3PtrList <KXMLGUIClient> *children = const_cast<Q3PtrList <KXMLGUIClient> *> (from->childClients ());
-			if (children) {
-				for (KXMLGUIClient *child = children->first (); child; child = children->next ()) {
-					removeContainers (child, names, true);
-				}
+			QList<KXMLGUIClient*> children = from->childClients ();
+			QList<KXMLGUIClient*>::const_iterator it;
+			for (it = children.constBegin (); it != children.constEnd (); ++it) {
+				removeContainers ((*it), names, true);
 			}
 		}
 	}
@@ -92,11 +91,10 @@ namespace RKCommonFunctions {
 
 		// recurse
 		if (recursive) {
-			Q3PtrList <KXMLGUIClient> *children = const_cast<Q3PtrList <KXMLGUIClient> *> (client->childClients ());
-			if (children) {
-				for (KXMLGUIClient *child = children->first (); child; child = children->next ()) {
-					moveContainer (child, tagname, name, to_name, true);
-				}
+			QList<KXMLGUIClient*> children = client->childClients ();
+			QList<KXMLGUIClient*>::const_iterator it;
+			for (it = children.constBegin (); it != children.constEnd (); ++it) {
+				moveContainer (*it, tagname, name, to_name, true);
 			}
 		}
 	}

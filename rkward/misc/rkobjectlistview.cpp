@@ -22,6 +22,7 @@
 #include <q3popupmenu.h>
 #include <qpixmap.h>
 #include <qimage.h>
+#include <QHelpEvent>
 
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
@@ -63,16 +64,14 @@ RKObjectListView::RKObjectListView (QWidget *parent) : Q3ListView (parent) {
 	menu->insertItem (i18n ("Configure Defaults"), this, SLOT (popupConfigure ()));
 	connect (this, SIGNAL (contextMenuRequested (Q3ListViewItem *, const QPoint &, int)), this, SLOT (requestedContextMenu (Q3ListViewItem*, const QPoint&, int)));
 
+// KDE4: do we need this?
 	setShowToolTips (false);
-	tip = new RKObjectListViewTip (this);
 
 	objectBrowserSettingsChanged ();
 }
 
 RKObjectListView::~RKObjectListView () {
 	RK_TRACE (APP);
-
-	delete tip;
 }
 
 void RKObjectListView::setObjectCurrent (RObject *object, bool only_if_none_current) {
@@ -343,6 +342,22 @@ void RKObjectListView::addObject (RKListViewItem *parent, RObject *object, bool 
 	} */
 }
 
+bool RKObjectListView::event (QEvent *event) {
+	// don't trace here!
+	if (event->type() == QEvent::ToolTip) {
+		RK_TRACE (APP);
+
+		QHelpEvent *help_event = static_cast<QHelpEvent *>(event);
+		RKListViewItem *item = static_cast<RKListViewItem *> (itemAt (help_event->pos ()));
+		if (item) {
+			RObject *object = findItemObject (item);
+			if (object) {
+				QToolTip::showText (help_event->globalPos(), object->getObjectDescription (), this, itemRect (item));
+			}
+		}
+	}
+	return Q3ListView::event(event);
+}
 
 
 //////////////////// RKListViewItem //////////////////////////
@@ -497,29 +512,6 @@ bool RKObjectListViewSettings::optionConfigurable (Settings setting) {
 	if (settings[setting] == Always) return false;
 	if (settings[setting] == Never) return false;
 	return true;
-}
-
-
-///////// RKObjectListViewTip ////////////
-RKObjectListViewTip::RKObjectListViewTip (RKObjectListView *parent) : QToolTip (parent->viewport ()) {
-	RK_TRACE (APP);
-
-	view = parent;
-}
-
-RKObjectListViewTip::~RKObjectListViewTip () {
-	RK_TRACE (APP);
-}
-
-void RKObjectListViewTip::maybeTip (const QPoint &pos) {
-	RK_TRACE (APP);
-
-	RKListViewItem *item = static_cast<RKListViewItem *> (view->itemAt (pos));
-	if (!item) return;
-	RObject *object = view->findItemObject (item);
-	if (!object) return;
-
-	tip (view->itemRect (item), object->getObjectDescription ());
 }
 
 #include "rkobjectlistview.moc"

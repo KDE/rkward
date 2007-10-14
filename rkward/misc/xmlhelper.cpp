@@ -330,7 +330,7 @@ void XMLHelper::displayError (const QDomNode *in_node, const QString &message, i
 
 		backtrace += list.join ("->");
 
-		RK_DO (qDebug ("%s: %s", backtrace.toLatin1 (), message.toLatin1 ()), XML, message_level);
+		RK_DO (qDebug ("%s: %s", backtrace.toLatin1 ().data (), message.toLatin1 ().data ()), XML, message_level);
 	}
 }
 

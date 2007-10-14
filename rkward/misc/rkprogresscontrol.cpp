@@ -227,7 +227,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 
 		output_text = new Q3TextEdit (output_box);
 		output_text->setReadOnly (true);
-		output_text->setTextFormat (PlainText);
+		output_text->setTextFormat (Qt::PlainText);
 		output_text->setUndoRedoEnabled (false);
 
 		if (!(mode_flags & RKProgressControl::OutputShownByDefault)) {

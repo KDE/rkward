@@ -17,7 +17,7 @@
 #ifndef RKSPINBOX_H
 #define RKSPINBOX_H
 
-#include <qspinbox.h>
+#include <QSpinBox>
 #include <qstring.h>
 
 class QValidator;
@@ -51,14 +51,25 @@ public:
 /** Only meaningful, when in real mode! Returns the current value
 @returns the value if in real mode */
 	double realValue () { return real_value; };
+/** Only meaningful, when in int mode! Returns the current value
+@returns the value if in int mode */
+	int intValue () { return int_value; };
 /** Only meaningful, when in real mode! Sets the new value
 @param new_value the new value */
 	void setRealValue (double new_value);
+/** Only meaningful, when in int mode! Sets the new value
+@param new_value the new value */
+	void setIntValue (int int_value);
 protected:
-/** reimplemented from QSpinBox to update steps and value whenever the internal value changed */
-	void updateDisplay ();
-/** reimplemented from QSpinBox to update steps and value whenever the text was changed */
-	void interpretText ();
+/** reimplemented from QSpinBox to always return the text suitable for the *internal* value. The value given as parameter is ignored. */
+	QString textFromValue (int) const;
+/** reimplemented from QSpinBox to update steps and value whenever the text was changed. WARNING: not really const */
+	int valueFromText (const QString & text) const;
+/** reimplemented from QSpinBox to adjust the internal value */
+	void stepBy (int steps);
+	QValidator::State validate (QString &input, int &pos ) const;
+private slots:
+	void updateValue (int value);
 private:
 	enum Mode { Integer=0, Real=1 };
 	Mode mode;
@@ -67,6 +78,9 @@ private:
 	double real_value;
 	double real_min;
 	double real_max;
+	int int_value;
+	int int_min;
+	int int_max;
 	int default_precision;
 	QValidator *validator;
 };

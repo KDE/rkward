@@ -25,8 +25,7 @@ RKDummyPart::RKDummyPart (QObject *parent, QWidget *widget) : KParts::Part (pare
 	RK_TRACE (MISC);
 	setWidget (widget);
 
-	KInstance* instance = new KInstance ("rkward");
-	setInstance (instance);
+	setComponentData (KGlobal::mainComponent ());
 }
 
 RKDummyPart::~RKDummyPart () {

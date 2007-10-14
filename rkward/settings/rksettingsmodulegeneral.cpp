@@ -136,7 +136,7 @@ void RKSettingsModuleGeneral::applyChanges () {
 #else
 	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->selectedId ());
 #endif
-	warn_size_object_edit = warn_size_object_edit_box->value ();
+	warn_size_object_edit = warn_size_object_edit_box->intValue ();
 }
 
 void RKSettingsModuleGeneral::save (KConfig *config) {

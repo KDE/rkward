@@ -106,7 +106,7 @@ void RKPluginSpinBox::valueChanged (RKComponentPropertyBase *property) {
 
 	// update GUI
 	if (intmode) {
-		spinbox->setValue (intvalue->intValue ());
+		spinbox->setIntValue (intvalue->intValue ());
 	} else {
 		spinbox->setRealValue (realvalue->doubleValue ());
 	}
@@ -118,7 +118,7 @@ void RKPluginSpinBox::valueChanged (int) {
 	RK_TRACE (PLUGIN);
 
 	if (intmode) {
-		intvalue->setIntValue (spinbox->value ());
+		intvalue->setIntValue (spinbox->intValue ());
 	} else {
 		// this may be ugly, but we have to set via text to make sure we get the exact same display
 		realvalue->setValue (spinbox->text ());

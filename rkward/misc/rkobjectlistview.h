@@ -28,7 +28,6 @@ class RObject;
 class QPixmap;
 class Q3PopupMenu;
 class RKListViewItem;
-class RKObjectListViewTip;
 class RKObjectListViewSettings;
 
 /**
@@ -80,6 +79,9 @@ public slots:
 	void requestedContextMenu (Q3ListViewItem *item, const QPoint &pos, int col);
 	
 	virtual void popupConfigure ();
+protected:
+/** reimplemented for tool tips */
+	bool event (QEvent *event);
 private:
 // TODO: keep an additional map from RObject to RKListViewItem, in order to make this (often called) more efficient
 	RKListViewItem *findObjectItem (RObject *object);
@@ -97,7 +99,6 @@ private:
 	RObject *menu_object;
 
 	RKObjectListViewSettings *settings;
-	RKObjectListViewTip *tip;
 
 	static QPixmap *icon_function;
 	static QPixmap *icon_list;
@@ -116,16 +117,6 @@ public:
 	~RKListViewItem () {};
 
 	int width (const QFontMetrics &fm, const Q3ListView * lv, int c) const;
-};
-
-class RKObjectListViewTip : public QToolTip {
-protected:
-friend class RKObjectListView;
-	RKObjectListViewTip (RKObjectListView *parent);
-	~RKObjectListViewTip ();
-
-	void maybeTip (const QPoint &pos);
-	RKObjectListView *view;
 };
 
 /** Represents the filter/view settings possible for an RKListView. */
