@@ -37,3 +37,13 @@ output window
 rkworkplaceview
 	- does it work?
 	- does it have a sunken frame? Can we get rid of that?
+
+rkwindowcatcher
+	- does it work?
+	- does the "set fixed size" dialog work?
+	- does the "copy device to R object" dialog work?
+
+rkfilebrowser
+	- does it work?
+	- does the completion popup show up in a correct size?
+

@@ -22,11 +22,11 @@
 #include <kurlcompletion.h>
 #include <ktoolbar.h>
 #include <krun.h>
+#include <kactioncollection.h>
 
 #include <qdir.h>
 #include <qlayout.h>
 #include <q3vbox.h>
-#include <q3listbox.h>
 //Added by qt3to4:
 #include <QEvent>
 #include <Q3VBoxLayout>
@@ -48,7 +48,7 @@ RKFileBrowser::RKFileBrowser (QWidget *parent, bool tool_window, const char *nam
 	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
 	layout_widget = new Q3VBox (this);
 	layout->addWidget (layout_widget);
-	layout_widget->setFocusPolicy (QWidget::StrongFocus);
+	layout_widget->setFocusPolicy (Qt::StrongFocus);
 
 	RKDummyPart *part = new RKDummyPart (this, layout_widget);
 	setPart (part);
@@ -84,25 +84,25 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : Q3VBox (parent) {
 	RK_TRACE (APP);
 
 	KToolBar *toolbar = new KToolBar (this);
-	toolbar->setIconSize (16);
+	toolbar->setIconSize (QSize (16, 16));
 
 	urlbox = new KUrlComboBox (KUrlComboBox::Directories, true, this);
 	KUrlCompletion* cmpl = new KUrlCompletion (KUrlCompletion::DirCompletion);
 	urlbox->setCompletionObject (cmpl);
 	urlbox->setAutoDeleteCompletionObject (true);
 	urlbox->setSizePolicy (QSizePolicy (QSizePolicy::Expanding, QSizePolicy::Fixed));
-	urlbox->listBox ()->installEventFilter (this);
+// KDE4: do we need this (see eventFilter(), below)	urlbox->listBox ()->installEventFilter (this);
 
 	dir = new KDirOperator (KUrl (), this);
 	dir->setView(KFile::Simple);
 	dir->setPreviewWidget (0);
 
-	dir->actionCollection ()->action ("up")->plug (toolbar);
-	dir->actionCollection ()->action ("back")->plug (toolbar);
-	dir->actionCollection ()->action ("forward")->plug (toolbar);
-	dir->actionCollection ()->action ("home")->plug (toolbar);
-	dir->actionCollection ()->action ("short view")->plug (toolbar);
-	dir->actionCollection ()->action ("detailed view")->plug (toolbar);
+	toolbar->addAction (dir->actionCollection ()->action ("up"));
+	toolbar->addAction (dir->actionCollection ()->action ("back"));
+	toolbar->addAction (dir->actionCollection ()->action ("forward"));
+	toolbar->addAction (dir->actionCollection ()->action ("home"));
+	toolbar->addAction (dir->actionCollection ()->action ("short view"));
+	toolbar->addAction (dir->actionCollection ()->action ("detailed view"));
 
 	connect (dir, SIGNAL (urlEntered (const KUrl &)), this, SLOT (urlChangedInView (const KUrl &)));
 	connect (urlbox, SIGNAL (returnPressed (const QString &)), this, SLOT (urlChangedInCombo (const QString &)));
@@ -120,38 +120,38 @@ RKFileBrowserWidget::~RKFileBrowserWidget () {
 void RKFileBrowserWidget::setURL (const QString &url) {
 	RK_TRACE (APP);
 
-	urlbox->setURL (url);
-	dir->setURL (url, true);
+	urlbox->setUrl (url);
+	dir->setUrl (url, true);
 }
 
 void RKFileBrowserWidget::urlChangedInView (const KUrl &url) {
 	RK_TRACE (APP);
 
-	urlbox->setURL (url);
+	urlbox->setUrl (url);
 }
 
 void RKFileBrowserWidget::urlChangedInCombo (const QString &url) {
 	RK_TRACE (APP);
 
-	dir->setURL (url, true);
+	dir->setUrl (url, true);
 }
 
 void RKFileBrowserWidget::urlChangedInCombo (const KUrl &url) {
 	RK_TRACE (APP);
 
-	dir->setURL (url, true);
+	dir->setUrl (url, true);
 }
 
 bool RKFileBrowserWidget::eventFilter (QObject *watched, QEvent *e) {
 	// don't trace
-
+/* KDE4: do we still need this?
 	// fix size of popup (copied from katefileselector.cpp)
 	Q3ListBox *lb = urlbox->listBox ();
 	if (watched == lb && e->type() == QEvent::Show) {
 		int add = lb->height() < lb->contentsHeight() ? lb->verticalScrollBar()->width() : 0;
 		int w = qMin (topLevelWidget ()->width(), lb->contentsWidth() + add);
 		lb->resize (w, lb->height());
-	}
+	} */
 	return QWidget::eventFilter (watched, e);
 }
 
@@ -171,7 +171,7 @@ void RKFileBrowserWidget::fileActivated (const KFileItem *item) {
 		if (item->name (true).endsWith (".rdata")) {
 			RKWardMainWindow::getMain ()->fileOpenAskSave (item->url ());
 		} else {
-			new KRun (item->url (), item->mode (), item->isLocalFile ());
+			new KRun (item->url (), topLevelWidget(), item->mode (), item->isLocalFile ());
 		}
 	}
 }

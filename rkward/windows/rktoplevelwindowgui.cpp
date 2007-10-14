@@ -20,6 +20,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <k3aboutapplication.h>
+#include <kactioncollection.h>
 
 #include "../rkconsole.h"
 #include "../robjectbrowser.h"
@@ -45,32 +46,49 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : QObject (for_wi
 	setXMLFile ("rktoplevelwindowgui.rc");
 
 	// help menu
-	KAction *help_invoke_r_help = new KAction (i18n ("Help on R"), 0, 0, this, SLOT (invokeRHelp ()), actionCollection(), "invoke_r_help");
-	KAction *show_help_search = new KAction (i18n ("Search R Help"), 0, 0, this, SLOT (showHelpSearch ()), actionCollection(), "show_help_search");
-	KAction *show_rkward_help = KStandardAction::helpContents (this, SLOT (showRKWardHelp ()), actionCollection(), "rkward_help");
+	QAction *help_invoke_r_help = actionCollection ()->addAction ("invoke_r_help", this, SLOT(invokeRHelp()));
+	help_invoke_r_help->setText (i18n ("Help on R"));
+	QAction *show_help_search = actionCollection ()->addAction ("show_help_search", this, SLOT(showHelpSearch()));
+	show_help_search->setText (i18n ("Search R Help"));
+	QAction *show_rkward_help = actionCollection ()->addAction (KStandardAction::HelpContents, "rkward_help", this, SLOT (showRKWardHelp()));
 	show_rkward_help->setText (i18n ("Help on RKWard"));
 
-	KStandardAction::aboutApp (this, SLOT (showAboutApplication ()), actionCollection(), "about_app");
-	KStandardAction::whatsThis (for_window, SLOT (whatsThis ()), actionCollection(), "whats_this");
-	KStandardAction::reportBug (this, SLOT (reportRKWardBug ()), actionCollection(), "report_bug");
+	actionCollection ()->addAction (KStandardAction::AboutApp, "about_app", this, SLOT (showAboutApplication()));
+	actionCollection ()->addAction (KStandardAction::WhatsThis, "whats_this", for_window, SLOT (whatsThis()));
+	actionCollection ()->addAction (KStandardAction::ReportBug, "report_bug", this, SLOT (reportRKWardBug()));
 
-	help_invoke_r_help->setStatusText (i18n ("Shows the R help index"));
-	show_help_search->setStatusText (i18n ("Shows/raises the R Help Search window"));
-	show_rkward_help->setStatusText (i18n ("Show help on RKWard"));
+	help_invoke_r_help->setStatusTip (i18n ("Shows the R help index"));
+	show_help_search->setStatusTip (i18n ("Shows/raises the R Help Search window"));
+	show_rkward_help->setStatusTip (i18n ("Show help on RKWard"));
 
 	// window menu
-	new KAction (i18n ("Show/Hide Workspace Browser"), 0, KShortcut ("Alt+1"), this, SLOT (toggleWorkspace()), actionCollection (), "window_show_workspace");
-	new KAction (i18n ("Show/Hide Filesystem Browser"), 0, KShortcut ("Alt+2"), this, SLOT (toggleFilebrowser()), actionCollection (), "window_show_filebrowser");
-	new KAction (i18n ("Show/Hide Command Log"), 0, KShortcut ("Alt+3"), this, SLOT (toggleCommandLog()), actionCollection (), "window_show_commandlog");
-	new KAction (i18n ("Show/Hide Pending Jobs"), 0, KShortcut ("Alt+4"), this, SLOT (togglePendingJobs()), actionCollection (), "window_show_pendingjobs");
-	new KAction (i18n ("Show/Hide Console"), 0, KShortcut ("Alt+5"), this, SLOT (toggleConsole()), actionCollection (), "window_show_console");
-	new KAction (i18n ("Show/Hide R Help Search"), 0, KShortcut ("Alt+6"), this, SLOT (toggleHelpSearch()), actionCollection (), "window_show_helpsearch");
-	new KAction (i18n ("Activate Document view"), 0, KShortcut ("Alt+0"), this, SLOT (activateDocumentView()), actionCollection (), "window_activate_docview");
+	QAction *action;
+	action = actionCollection ()->addAction ("window_show_workspace", this, SLOT(toggleWorkspace()));
+	action->setText (i18n ("Show/Hide Workspace Browser"));
+	action->setShortcut (Qt::AltModifier + Qt::Key_1);
+	action = actionCollection ()->addAction ("window_show_filebrowser", this, SLOT(toggleFilebrowser()));
+	action->setText (i18n ("Show/Hide Filesystem Browser"));
+	action->setShortcut (Qt::AltModifier + Qt::Key_2);
+	action = actionCollection ()->addAction ("window_show_commandlog", this, SLOT(toggleCommandLog()));
+	action->setText (i18n ("Show/Hide Command Log"));
+	action->setShortcut (Qt::AltModifier + Qt::Key_3);
+	action = actionCollection ()->addAction ("window_show_pendingjobs", this, SLOT(togglePendingJobs()));
+	action->setText (i18n ("Show/Hide Pending Jobs"));
+	action->setShortcut (Qt::AltModifier + Qt::Key_4);
+	action = actionCollection ()->addAction ("window_show_console", this, SLOT(toggleConsole()));
+	action->setText (i18n ("Show/Hide Console"));
+	action->setShortcut (Qt::AltModifier + Qt::Key_5);
+	action = actionCollection ()->addAction ("window_show_helpsearch", this, SLOT(toggleHelpSearch()));
+	action->setText (i18n ("Show/Hide R Help Search"));
+	action->setShortcut (Qt::AltModifier + Qt::Key_6);
+	action = actionCollection ()->addAction ("window_activate_docview", this, SLOT(activateDocumentView()));
+	action->setText (i18n ("Activate Document view"));
+	action->setShortcut (Qt::AltModifier + Qt::Key_0);
 
-	new KAction (i18n ("Show &Output"), 0, 0, this, SLOT (slotOutputShow ()), actionCollection (), "output_show");
+	action = actionCollection ()->addAction ("output_show", this, SLOT (slotOutputShow()));
+	action->setText (i18n ("Show &Output"));
 
-	actionCollection ()->setWidget (for_window);
-	actionCollection ()->setHighlightingEnabled (true);
+	actionCollection ()->setAssociatedWidget (for_window);
 }
 
 RKTopLevelWindowGUI::~RKTopLevelWindowGUI () {
@@ -120,7 +138,7 @@ void RKTopLevelWindowGUI::showHelpSearch () {
 void RKTopLevelWindowGUI::showRKWardHelp () {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->openHelpWindow ("rkward://page/rkward_welcome", true);
+	RKWorkplace::mainWorkplace ()->openHelpWindow (KUrl ("rkward://page/rkward_welcome"), true);
 }
 
 void RKTopLevelWindowGUI::toggleHelpSearch () {
