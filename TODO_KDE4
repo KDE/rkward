@@ -33,3 +33,7 @@ rkward
 
 output window
 	- does it reload all changed images?
+
+rkworkplaceview
+	- does it work?
+	- does it have a sunken frame? Can we get rid of that?

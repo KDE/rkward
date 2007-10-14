@@ -23,7 +23,6 @@
 #include <kactioncollection.h>
 #include <kaction.h>
 
-#include <q3widgetstack.h>
 #include <qapplication.h>
 #include <qevent.h>
 #include <qlayout.h>
@@ -35,20 +34,13 @@
 
 #include "../debug.h"
 
-RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QWidget (parent) {
+
+RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
 	RK_TRACE (APP);
 
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (this);
-	tabs = new KTabBar (this);
-	tabs->setHoverCloseButton (true);
-	tabs->setFocusPolicy (Qt::NoFocus);
-	tabs->hide ();
-	connect (tabs, SIGNAL (selected (int)), this, SLOT (setPage (int)));
-	connect (tabs, SIGNAL (closeRequest (int)), this, SLOT (closePage (int)));
-	vbox->addWidget (tabs);
-
-	widgets = new Q3WidgetStack (this);
-	vbox->addWidget (widgets);
+	setHoverCloseButtonDelayed (true);
+	setTabBarHidden (true);		// initially
+	connect (this, SIGNAL (currentChanged(int)), this, SLOT (currentPageChanged(int)));
 }
 
 RKWorkplaceView::~RKWorkplaceView () {
@@ -74,7 +66,7 @@ void RKWorkplaceView::updateActions () {
 
 	int index = currentIndex ();
 	action_page_left->setEnabled (index > 0);
-	action_page_right->setEnabled (index < (tabs->count () - 1));
+	action_page_right->setEnabled (index < (count () - 1));
 }
 
 void RKWorkplaceView::pageLeft () {
@@ -82,163 +74,101 @@ void RKWorkplaceView::pageLeft () {
 
 	int index = currentIndex ();
 	RK_ASSERT (index > 0);
-	setPageByIndex (index - 1);
+	setCurrentIndex (index - 1);
 }
 
 void RKWorkplaceView::pageRight () {
 	RK_TRACE (APP);
 
 	int index = currentIndex ();
-	RK_ASSERT (index < (tabs->count () - 1));
-	setPageByIndex (index + 1);
-}
-
-int RKWorkplaceView::currentIndex () {
-	RK_TRACE (APP);
-	return (tabs->indexOf (tabs->currentTab ()));
-}
-
-void RKWorkplaceView::setPageByIndex (int index) {
-	RK_TRACE (APP);
-
-	QTab *new_tab = tabs->tabAt (index);
-	if (!new_tab) {
-		RK_ASSERT (false);
-		return;
-	}
-
-	setPage (new_tab->identifier ());
+	RK_ASSERT (index < (count () - 1));
+	setCurrentIndex (index + 1);
 }
 
 void RKWorkplaceView::addPage (RKMDIWindow *widget) {
 	RK_TRACE (APP);
 
-	widgets->addWidget (widget);
-	int id;
+	int id = -1;
+	setUpdatesEnabled (false);
 	if (widget->icon ()) {
-		id = tabs->addTab (new QTab (*(widget->icon ()), widget->shortCaption ()));
+		id = addTab (widget, *(widget->icon ()), widget->shortCaption ());
 	} else if (widget->topLevelWidget ()->icon ()) {
-		id = tabs->addTab (new QTab (*(widget->topLevelWidget ()->icon ()), widget->shortCaption ()));
+		id = addTab (widget, *(widget->topLevelWidget ()->icon ()), widget->shortCaption ());
 	} else {
 		RK_ASSERT (false);
-		id = tabs->addTab (new QTab (widget->shortCaption ()));
+		id = addTab (widget, widget->shortCaption ());
 	}
-	pages.insert (id, widget);
 	connect (widget, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (childCaptionChanged (RKMDIWindow *)));
 	widget->show ();
 
-	if (!tabs->isShown ()) {
-		if (tabs->count () > 1) tabs->show ();
-	}
+	if (count () > 1) setTabBarHidden (false);
 
-	setPage (id);		// active new window
+	setCurrentIndex (id);		// activate the new tab
+
+	setUpdatesEnabled (true);
 }
 
 bool RKWorkplaceView::hasPage (RKMDIWindow *widget) {
-	return (idOfWidget (widget) != -1);
+	return (indexOf (widget) != -1);
 }
 
 void RKWorkplaceView::removePage (RKMDIWindow *widget, bool destroyed) {
 	RK_TRACE (APP);
 
-	int id = idOfWidget (widget);		// which page is it?
+	setUpdatesEnabled (false);
+
+	int id = indexOf (widget);		// which page is it?
 	RK_DO (if (id == -1) qDebug ("did not find page in RKWorkplaceView::removePage"), APP, DL_WARNING);
 	if (!destroyed) disconnect (widget, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (childCaptionChanged (RKMDIWindow *)));
 
-	int oldindex = currentIndex ();	// which page will have to be activated later?
-	int oldcount = tabs->count ();
-	QTab *new_tab = tabs->tabAt (oldindex);
-	if (widget == activePage ()) {
-		if (oldindex >= 1) {
-			new_tab = tabs->tabAt (oldindex - 1);
-		} else if (oldindex < (oldcount - 1)) {
-			new_tab = tabs->tabAt (oldindex + 1);
-		} else {
-			new_tab = 0;
+	removeTab (id);
+	int new_count = count ();
+	if (new_count <= 1) {
+		setTabBarHidden (true);
+		if (new_count < 1) {
+			// KDE4: is this still needed?
+			setCaption (QString ());
+			emit (currentChanged (-1));
 		}
 	}
 
-	widgets->removeWidget (widget);			// remove
-	tabs->removeTab (tabs->tab (id));
-	pages.remove (id);
-
-	if (oldcount <= 2) tabs->hide ();		// activate next page
-	if (new_tab == 0) {
-		RK_ASSERT (oldcount == 1);
-		setCaption (QString ());
-		emit (pageChanged (0));
-	} else {
-		//tabs->setCurrentTab (new_tab); 	// somehome this version is NOT safe! (tabbar fails to emit signal?)
-		setPage (new_tab->identifier ());
-	}
+	setUpdatesEnabled (true);
 }
 
+// KDE4 TODO: we can use setCurrentWidget, instead.
 void RKWorkplaceView::setActivePage (RKMDIWindow *widget) {
 	RK_TRACE (APP);
 
-	int id = idOfWidget (widget);
+	int id = indexOf (widget);
 	RK_DO (if (id == -1) qDebug ("did not find page in RKWorkplaceView::setActivePage"), APP, DL_WARNING);
 
-	tabs->setCurrentTab (id);
+	setCurrentIndex (id);
 }
 
 RKMDIWindow *RKWorkplaceView::activePage () {
 	RK_TRACE (APP);
-	RK_DO (qDebug ("active page %d: %p, visible: %p", tabs->currentTab (), pages[tabs->currentTab ()], widgets->visibleWidget ()), APP, DL_DEBUG);
 
-	if (tabs->currentTab () == -1) return 0;
-	// The assert below can in fact fail temporarily, as the widgetstack (widgets) does not update immediately after widgets->raiseWidget ().
-	//RK_ASSERT (pages[tabs->currentTab ()] == widgets->visibleWidget ());
-	return (pages[tabs->currentTab ()]);
+	QWidget *w = currentWidget ();
+	return (dynamic_cast<RKMDIWindow *> (w));
 }
 
+// KDE4: Where is this called from? do we still need it?
 void RKWorkplaceView::closePage (int index) {
 	RK_TRACE (APP);
-	int page = tabs->tabAt (index)->identifier ();
-	RK_ASSERT (pages.find (page) != pages.end ());
 
-	RKMDIWindow *window = pages[page];
-	window->close (true);
-}
+	QWidget *w = widget (index);
+	RK_ASSERT (w);
 
-void RKWorkplaceView::setPage (int page) {
-	RK_TRACE (APP);
-	RK_ASSERT (pages.find (page) != pages.end ());
-
-	if (tabs->currentTab () != page) {
-		tabs->setCurrentTab (page);
-		return;		// will get here again via signal from tabs
-	}
-
-	RK_DO (qDebug ("setting page %d: %p", page, pages[page]), APP, DL_DEBUG);
-	RKMDIWindow *window = pages[page];
-	widgets->raiseWidget (window);
-
-	window->setFocus ();
-
-	emit (pageChanged (window));
-	setCaption (window->shortCaption ());
-	updateActions ();
+	w->close (true);
 }
 
 void RKWorkplaceView::childCaptionChanged (RKMDIWindow *widget) {
 	RK_TRACE (APP);
 
-	int id = idOfWidget (widget);
-	QTab *tab = tabs->tab (id);
-	RK_ASSERT (tab);
-	tab->setText (widget->shortCaption ());
-	if (id == tabs->currentTab ()) setCaption (widget->shortCaption ());
-}
-
-int RKWorkplaceView::idOfWidget (RKMDIWindow *widget) {
-	RK_TRACE (APP);
-
-	for (PageMap::const_iterator it = pages.constBegin (); it != pages.constEnd (); ++it) {
-		if (it.data () == widget) return it.key ();
-	}
-
-	return -1;
+	int id = indexOf (widget);
+	RK_ASSERT (id >= 0);
+	setTabText (id, widget->shortCaption ());
+	if (id == currentIndex ()) setCaption (widget->shortCaption ());
 }
 
 void RKWorkplaceView::setCaption (const QString &caption) {
