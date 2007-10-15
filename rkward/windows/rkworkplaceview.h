@@ -61,7 +61,6 @@ signals:
 @param new_caption the new caption */
 	void captionChanged (const QString &new_caption);
 public slots:
-/** like setActivePage (), but activates by internal id. Used internally */
 	void currentPageChanged (int page);
 /** called when the caption of a window changes. Updates the tab-label, and - if appropriate - the caption of this widget */
 	void childCaptionChanged (RKMDIWindow *widget);

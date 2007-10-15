@@ -178,4 +178,16 @@ void RKWorkplaceView::setCaption (const QString &caption) {
 	emit (captionChanged (caption));
 }
 
+void RKWorkplaceView::currentPageChanged (int) {
+	RK_TRACE (APP);
+
+	RKMDIWindow *w = activePage ();
+	if (w) {
+		setCaption (w->shortCaption ());
+	} else {
+		setCaption (QString ());
+	}
+}
+
+
 #include "rkworkplaceview.moc"

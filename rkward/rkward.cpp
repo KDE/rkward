@@ -81,7 +81,6 @@
 #include "debug.h"
 
 
-// KDE4: TODO: is all the stuff below still needed?
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
 #include "dialogs/rkreadlinedialog.h"	// TODO: see below: needed purely for linking!
 #include "windows/detachedwindowcontainer.h"	// TODO: see below: needed purely for linking!
