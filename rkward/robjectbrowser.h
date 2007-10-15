@@ -50,7 +50,7 @@ public:
 	void unlock ();
 	static RObjectBrowser *mainBrowser () { return object_browser; };
 /** reimplemented to create the real file browser widget only when the file browser is shown for the first time */
-	void show ();
+	void showEvent (QShowEvent *e);
 private:
 	RObjectBrowserInternal *internal;
 	Q3VBox *layout_widget;

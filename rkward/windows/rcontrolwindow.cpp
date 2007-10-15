@@ -91,10 +91,10 @@ void RControlWindow::initialize () {
 	if (isShown ()) show ();	// refreshes the commands
 }
 
-void RControlWindow::show () {
+void RControlWindow::showEvent (QShowEvent *e) {
 	RK_TRACE (APP);
 
-	RKMDIWindow::show ();
+	RKMDIWindow::showEvent (e);
 	if (!initialized) return;
 	MUTEX_LOCK;
 	refreshCommands ();

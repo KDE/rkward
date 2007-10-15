@@ -87,7 +87,7 @@ public:
 	virtual void enableSubmit (bool enable);
 	virtual void updateCode ();
 /** reimplemented from QWidget to take care of showing the code display if needed */
-	void show ();
+	void showEvent (QShowEvent *e);
 public slots:
 	void ok ();
 	void cancel ();

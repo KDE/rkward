@@ -37,7 +37,7 @@ public:
 	~RKFileBrowser ();
 
 /** reimplemented to create the real file browser widget only when the file browser is shown for the first time */
-	void show ();
+	void showEvent (QShowEvent *e);
 	static RKFileBrowser *getMainBrowser() { return main_browser; };
 public slots:
 	void currentWDChanged ();

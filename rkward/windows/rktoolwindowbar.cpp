@@ -38,6 +38,8 @@
 RKToolWindowBar::RKToolWindowBar (KMultiTabBarPosition position, QWidget *parent) : KMultiTabBar (position, parent),
 	container (0) {
 	RK_TRACE (APP);
+
+	setStyle (KMultiTabBar::KDEV3ICON);
 }
 
 RKToolWindowBar::~RKToolWindowBar () {

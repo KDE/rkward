@@ -61,7 +61,7 @@ RKFileBrowser::~RKFileBrowser () {
 	hide ();
 }
 
-void RKFileBrowser::show () {
+void RKFileBrowser::showEvent (QShowEvent *e) {
 	RK_TRACE (APP);
 
 	if (!real_widget) {
@@ -71,7 +71,7 @@ void RKFileBrowser::show () {
 		layout_widget->setFocusProxy (real_widget);
 	}
 
-	RKMDIWindow::show ();
+	RKMDIWindow::showEvent (e);
 }
 
 void RKFileBrowser::currentWDChanged () {

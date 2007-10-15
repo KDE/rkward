@@ -80,11 +80,11 @@ void RObjectBrowser::unlock () {
 	}
 }
 
-void RObjectBrowser::show () {
+void RObjectBrowser::showEvent (QShowEvent *e) {
 	RK_TRACE (APP);
 
 	initialize ();
-	RKMDIWindow::show ();
+	RKMDIWindow::showEvent (e);
 }
 
 void RObjectBrowser::initialize () {

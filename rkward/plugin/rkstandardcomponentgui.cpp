@@ -135,10 +135,10 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	}
 }
 
-void RKStandardComponentGUI::show () {
+void RKStandardComponentGUI::showEvent (QShowEvent *e) {
 	RK_TRACE (PLUGIN);
 
-	QWidget::show ();
+	QWidget::showEvent (e);
 
 	if (toggle_code_button) {	// this is a dialog, not  wizard
 		QTimer::singleShot (0, this, SLOT (toggleCode ()));

@@ -206,7 +206,7 @@ void RKWardMainWindow::doPostInit () {
 	RControlWindow::control_window = new RControlWindow (0, true, "rcontrol");		// the control window needs to be initialized before startR () is called.
 
 	RKCommandLog *log = new RKCommandLog (0, true, "Command log");
-	log->setIcon (SmallIcon ("text_block"));
+	log->setWindowIcon (SmallIcon ("format-justify-left"));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (log);
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (log, KMultiTabBar::Bottom);
 	RKCommandLog::rkcommand_log = log;
@@ -218,29 +218,30 @@ void RKWardMainWindow::doPostInit () {
 	
 	initPlugins ();
 
-	RObjectBrowser::mainBrowser ()->setIcon(SmallIcon("view_tree"));
+	RObjectBrowser::mainBrowser ()->setWindowIcon(SmallIcon("fileview-detailed"));
 	RObjectBrowser::mainBrowser ()->setCaption (i18n ("Workspace"));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (RObjectBrowser::mainBrowser ());
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RObjectBrowser::mainBrowser (), KMultiTabBar::Left);
 
 	RKFileBrowser::main_browser = new RKFileBrowser (0, true, "file_browser");
-	RKFileBrowser::main_browser->setIcon (SmallIcon ("fileopen"));
+	RKFileBrowser::main_browser->setWindowIcon (SmallIcon ("document-open"));
 	RKFileBrowser::main_browser->setCaption (i18n ("Files"));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (RKFileBrowser::main_browser);
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RKFileBrowser::main_browser, KMultiTabBar::Left);
 
 	RControlWindow::getControl ()->setCaption (i18n ("Pending Jobs"));
+	RControlWindow::getControl ()->setWindowIcon (SmallIcon ("system-run"));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (RControlWindow::getControl ());
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RControlWindow::getControl (), KMultiTabBar::Bottom);
 
 	RKConsole *console = new RKConsole (0, true, "r_console");
-	console->setIcon (SmallIcon ("konsole"));
+	console->setWindowIcon (SmallIcon ("konsole"));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (console);
 	RKConsole::setMainConsole (console);
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (console, KMultiTabBar::Bottom);
 
 	RKHelpSearchWindow *help_search = new RKHelpSearchWindow (0, true, "r_help");
-	help_search->setIcon (SmallIcon ("help"));
+	help_search->setWindowIcon (SmallIcon ("help-contents"));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (help_search);
 	RKHelpSearchWindow::main_help_search = help_search;
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (help_search, KMultiTabBar::Bottom);

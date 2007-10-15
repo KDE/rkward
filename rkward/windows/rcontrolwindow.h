@@ -69,7 +69,7 @@ public:
 	void setCommandRunning (RCommand *command);
 
 /** reimplemented to refresh list of commands when showing. This is needed, as the RControlWindow is only kept up to date as long as it is shown. Hence, if it was hidden, and then gets shown, it will have to update the entire list. */
-	void show ();
+	void showEvent (QShowEvent *e);
 /** Call this once, when the RInterface is ready, and it is ok to try showing commands */
 	void initialize ();
 /** Static reference to the control window */
