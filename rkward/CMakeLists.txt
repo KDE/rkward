@@ -36,7 +36,7 @@ LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 
 KDE4_ADD_EXECUTABLE(rkward.bin ${RKWard_Sources})
 
-TARGET_LINK_LIBRARIES(rkward.bin ${KDE4_KDECORE_LIBS} windows agents dialogs plugin settings dataeditor core scriptbackends rbackend misc khtml kmdi ${KDE4_KDEUI_LIBS} katepartinterfaces )
+TARGET_LINK_LIBRARIES(rkward.bin ${KDE4_KDECORE_LIBS} windows agents dialogs plugin settings dataeditor core scriptbackends rbackend misc ${KDE4_KHTML_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KDEUI_LIBS} katepartinterfaces )
 
 # wrapper script
 GET_DIRECTORY_PROPERTY(R_HOME DIRECTORY rbackend DEFINITION R_HOME)

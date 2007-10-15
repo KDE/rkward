@@ -20,7 +20,9 @@
 #include <X11/X.h>
 #include <X11/Xlib.h>
 
-#include <kwindowsystem.h>
+#include <QX11Info>
+
+#include <kwindowinfo.h>
 #include <netwm_def.h>
 
 #include "debug.h"
@@ -36,7 +38,7 @@ RKWardApplication::RKWardApplication () : KApplication () {
 	rkapp = this;
 	detect_x11_creations = false;
 
-	wm_name_property = XInternAtom (qt_xdisplay (), "WM_NAME", true);
+	wm_name_property = XInternAtom (QX11Info::display (), "WM_NAME", true);
 }
 
 RKWardApplication::~RKWardApplication () {
@@ -56,7 +58,7 @@ void RKWardApplication::startWindowCreationDetection () {
 	created_window = 0;
 	detect_x11_creations = true;
 
-	XSelectInput (qt_xdisplay (), qt_xrootwin (), SubstructureNotifyMask);
+	XSelectInput (QX11Info::display (), QX11Info::appRootWindow (), SubstructureNotifyMask);
 	syncX ();	// this is to make sure we don't miss out on the window creation (if it happens very early). Testing shows, we really need this.
 }
 
@@ -71,7 +73,7 @@ WId RKWardApplication::endWindowCreationDetection () {
 	}
 
 	detect_x11_creations = false;
-	XSelectInput (qt_xdisplay (), qt_xrootwin (), NoEventMask);
+	XSelectInput (QX11Info::display (), QX11Info::appRootWindow (), NoEventMask);
 	return created_window;
 }
 
@@ -79,7 +81,7 @@ void RKWardApplication::registerNameWatcher (WId watched, QWidget *watcher) {
 	RK_TRACE (APP);
 	RK_ASSERT (!name_watchers_list.contains (watched));
 
-	XSelectInput (qt_xdisplay (), watched, PropertyChangeMask);
+	XSelectInput (QX11Info::display (), watched, PropertyChangeMask);
 	name_watchers_list.insert (watched, watcher);
 }
 
@@ -87,15 +89,15 @@ void RKWardApplication::unregisterNameWatcher (WId watched) {
 	RK_TRACE (APP);
 	RK_ASSERT (name_watchers_list.contains (watched));
 
-	XSelectInput (qt_xdisplay (), watched, NoEventMask);
+	XSelectInput (QX11Info::display (), watched, NoEventMask);
 	name_watchers_list.remove (watched);
 }
 
 bool RKWardApplication::x11EventFilter (XEvent *e) {
 	if (detect_x11_creations) {
 		if (e->type == CreateNotify) {
-			if (e->xcreatewindow.parent == qt_xrootwin ()) {
-				KWindowSystem::WindowInfo info = KWindowSystem::windowInfo (e->xcreatewindow.window);
+			if (e->xcreatewindow.parent == QX11Info::appRootWindow ()) {
+				KWindowInfo info = KWindowInfo (e->xcreatewindow.window, NET::WMName, NET::WM2WindowClass);
 				if ((info.windowType (0xFFFF) != 0) && (!info.name ().isEmpty ())) {
 					RK_ASSERT (!created_window);
 					created_window = e->xcreatewindow.window;
@@ -110,7 +112,7 @@ bool RKWardApplication::x11EventFilter (XEvent *e) {
 	if (e->type == PropertyNotify) {
 		if (e->xproperty.atom == wm_name_property) {
 			if (name_watchers_list.contains (e->xproperty.window)) {
-				KWindowSystem::WindowInfo wininfo = KWindowSystem::windowInfo (e->xproperty.window);
+				KWindowInfo wininfo = KWindowInfo (e->xproperty.window, NET::WMName);
 				name_watchers_list[e->xproperty.window]->setCaption (wininfo.name ());
 				return true;
 			}
