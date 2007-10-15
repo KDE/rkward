@@ -246,6 +246,7 @@ void RKWardMainWindow::doPostInit () {
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (help_search, KMultiTabBar::Bottom);
 
 	setUpdatesEnabled (true);
+	show ();
 
 	RKOutputWindow::initialize ();
 	RControlWindow::getControl ()->initialize ();

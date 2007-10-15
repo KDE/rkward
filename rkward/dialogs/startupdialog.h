@@ -64,6 +64,9 @@ public slots:
 	void listDoubleClicked (Q3ListViewItem *item, const QPoint &, int);
 	void listClicked (Q3ListViewItem *item);
 	void openButtonSelected (bool checked);
+protected:
+/** reimplemented from QWidget to achieve fixed width */
+	void showEvent (QShowEvent *event);
 private:
 	QRadioButton *empty_workspace_button;
 	QRadioButton *empty_table_button;

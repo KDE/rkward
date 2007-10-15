@@ -78,8 +78,6 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	connect (file_list, SIGNAL (doubleClicked (Q3ListViewItem *, const QPoint &, int)), this, SLOT (listDoubleClicked (Q3ListViewItem*, const QPoint &, int)));
 	choser_layout->addWidget (file_list);
 	choser_layout->addWidget (remember_box = new QCheckBox (i18n ("Always do this on startup"), choser));
-
-	setFixedWidth (minimumWidth ());
 }
 
 StartupDialog::~StartupDialog() {
@@ -152,6 +150,14 @@ void StartupDialog::openButtonSelected (bool checked) {
 	} else if (checked) {
 		remember_box->setEnabled (true);
 	}
+}
+
+void StartupDialog::showEvent (QShowEvent *event) {
+	RK_TRACE (DIALOGS);
+
+	// somehow, trying to achieve this in the ctor leads to the dialog never actually being shown (KDE4.0 beta)
+	setFixedWidth (width ());
+	KDialog::showEvent (event);
 }
 
 //static
