@@ -79,8 +79,6 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 
 	tool_window_bars[KMultiTabBar::Top]->setSplitter (vert_splitter);
 	wview = new RKWorkplaceView (vert_splitter);
-	wview->layout ()->setSpacing (0);
-	wview->layout ()->setMargin (0);
 
 	vert_splitter->setCollapsible (vert_splitter->indexOf (wview), false);
 	vert_splitter->setStretchFactor(vert_splitter->indexOf (wview), 1);

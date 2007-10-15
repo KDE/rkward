@@ -24,7 +24,7 @@ ADD_LIBRARY(dataeditor STATIC ${dataeditor_STAT_SRCS})
 
 ########### install files ###############
 
-INSTALL(FILES   rkeditordataframepart.rc DESTINATION /share/apps/rkward )
+INSTALL(FILES   rkeditordataframepart.rc DESTINATION ${DATA_INSTALL_DIR}/rkward )
 
 
 

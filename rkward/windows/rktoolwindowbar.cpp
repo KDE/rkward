@@ -58,13 +58,15 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 	RK_TRACE (APP);
 	RK_ASSERT (window);
 	RK_ASSERT (container);
+	static int id_count = 0;
+	int id = ++id_count;
 
 	if (window->tool_window_bar) {
 		RK_ASSERT (window->tool_window_bar != this);	// no problem, but would be useless code
 		window->tool_window_bar->removeWidget (window);
 	}
 
-	int id = appendTab (window->windowIcon ().pixmap (QSize (16, 16)), -1, window->shortCaption ());
+	appendTab (window->windowIcon ().pixmap (QSize (16, 16)), id, window->shortCaption ());
 
 	window->tool_window_bar = this;
 	widget_to_id.insert (window, id);

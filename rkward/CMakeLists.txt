@@ -54,7 +54,7 @@ ADD_DEPENDENCIES(rkward.bin rkwardwrapper)
 
 ########### install files ###############
 
-INSTALL(DIRECTORY plugins/ pages DESTINATION ${DATA_INSTALL_DIR}rkward
+INSTALL(DIRECTORY plugins/ pages DESTINATION ${DATA_INSTALL_DIR}/rkward
 	PATTERN .svn EXCLUDE)
 
 INSTALL(FILES   rkwardui.rc rkconsolepart.rc DESTINATION ${DATA_INSTALL_DIR}/rkward )
