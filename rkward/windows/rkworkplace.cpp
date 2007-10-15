@@ -89,6 +89,9 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	tool_window_bars[KMultiTabBar::Right] = new RKToolWindowBar (KMultiTabBar::Right, hbox);
 	tool_window_bars[KMultiTabBar::Right]->setSplitter (horiz_splitter);
 
+	// now add it all to this widget
+	QVBoxLayout *box = new QVBoxLayout (this);
+	box->addWidget (hbox);
 
 	history = new RKMDIWindowHistory (this);
 }

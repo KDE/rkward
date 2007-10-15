@@ -108,8 +108,7 @@ void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
 	int id = widget_to_id[widget];
 
 	// close any others
-	QMap<RKMDIWindow*, int>::const_iterator it = widget_to_id.constBegin ();
-	while (it != widget_to_id.constEnd()) {
+	for (QMap<RKMDIWindow*, int>::const_iterator it = widget_to_id.constBegin (); it != widget_to_id.constEnd (); ++it) {
 		RKMDIWindow *cur = it.key ();
 		if (cur != widget) {
 			if (cur->isAttached ()) {
@@ -170,8 +169,7 @@ void RKToolWindowBar::tabClicked (int id) {
 RKMDIWindow* RKToolWindowBar::idToWidget (int id) {
 	RK_TRACE (APP);
 
-	QMap<RKMDIWindow*, int>::const_iterator it = widget_to_id.constBegin ();
-	while (it != widget_to_id.constEnd()) {
+	for (QMap<RKMDIWindow*, int>::const_iterator it = widget_to_id.constBegin (); it != widget_to_id.constEnd (); ++it) {
 		if (it.value () == id) {
 			return (it.key ());
 		}
