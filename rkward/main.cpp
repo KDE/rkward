@@ -66,37 +66,31 @@
 int RK_Debug_Level = 0;
 int RK_Debug_Flags = ALL;
 
-static const char *version = I18N_NOOP(VERSION);
-static const char *description = I18N_NOOP("RKWard");
-
-static KCmdLineOptions options[] =
-{
-  { "+[File]", I18N_NOOP ("file to open"), 0 },
-  { "debug-level <level>", I18N_NOOP ("Verbosity of debug messages (0-5)"), "2"}, 
-  { "debug-flags <flags>", I18N_NOOP ("Mask for components to debug (see debug.h)"), "8191" }, 
-  { "debugger <command>", I18N_NOOP ("Debugger (enclose any debugger arguments in single quotes ('') together with the command)"), ""}, 
-  { "disable-stack-check", I18N_NOOP ("Disable R C stack checking"), 0 }, 
-  { 0, 0, 0 }
-  // INSERT YOUR COMMANDLINE OPTIONS HERE
-};
+static KCmdLineOptions options;
 
 int main(int argc, char *argv[]) {
-	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), version, description, KAboutData::License_GPL, "(c) 2002, 2004, 2005, 2006, 2007", 0, "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
-	aboutData.addAuthor ("Thomas Friedrichsmeier", I18N_NOOP ("Project leader / main developer"), 0);
-	aboutData.addAuthor ("Pierre Ecochard",  I18N_NOOP ("C++ coder since 0.2.9"), 0);
-	aboutData.addAuthor ("Stefan Roediger", I18N_NOOP ("Many plugins, suggestions, marketing, translations"), 0);
-	aboutData.addAuthor ("Prasenjit Kapat", I18N_NOOP ("Many plugins, suggestions"), 0);
-	aboutData.addCredit ("Contributors in alphabetical order", 0, 0);
-	aboutData.addCredit ("Philippe Grosjean", I18N_NOOP ("Several helpful comments and discussions"), 0);
-	aboutData.addCredit ("Adrien d'Hardemare", I18N_NOOP ("Plugins and patches"), 0);
-	aboutData.addCredit ("Yves Jacolin", I18N_NOOP ("New website"), 0);
-	aboutData.addCredit ("Marco Martin", I18N_NOOP ("A cool icon"), 0);
-	aboutData.addCredit ("Daniele Medri", I18N_NOOP ("RKWard logo, many suggestions, help on wording"), 0);
-	aboutData.addCredit ("David Sibai", I18N_NOOP ("Several valuable comments, hints and patches"), 0);
-	aboutData.addCredit ("Ilias Soumpasis", I18N_NOOP ("Translation, Suggestions, plugins"), 0);
-	aboutData.addCredit ("Ralf Tautenhahn", I18N_NOOP ("Many comments, useful suggestions, and bug reports"), 0);
-	aboutData.addCredit ("Roland Vollgraf", I18N_NOOP ("Some patches"), 0);
-	aboutData.addCredit (I18N_NOOP ("Many more people on rkward-devel@lists.sourceforge.net"), I18N_NOOP ("Sorry, if we forgot to list you. Please contact us to get added"), 0);
+	options.add ("+[File]", ki18n ("file to open"), 0);
+	options.add ("debug-level <level>", ki18n ("Verbosity of debug messages (0-5)"), "2");
+	options.add ("debug-flags <flags>", ki18n ("Mask for components to debug (see debug.h)"), "8191");
+	options.add ("debugger <command>", ki18n ("Debugger (enclose any debugger arguments in single quotes ('') together with the command)"), "");
+	options.add ("disable-stack-check", ki18n ("Disable R C stack checking"), 0);
+
+	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004, 2005, 2006, 2007"), KLocalizedString (), "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
+	aboutData.addAuthor (ki18n ("%1").subs ("Thomas Friedrichsmeier"), ki18n ("Project leader / main developer"));
+	aboutData.addAuthor (ki18n ("%1").subs ("Pierre Ecochard"), ki18n ("C++ coder since 0.2.9"));
+	aboutData.addAuthor (ki18n ("%1").subs ("Stefan Roediger"), ki18n ("Many plugins, suggestions, marketing, translations"));
+	aboutData.addAuthor (ki18n ("%1").subs ("Prasenjit Kapat"), ki18n ("Many plugins, suggestions"));
+	aboutData.addCredit (ki18n ("Contributors in alphabetical order"));
+	aboutData.addCredit (ki18n ("%1").subs ("Philippe Grosjean"), ki18n ("Several helpful comments and discussions"));
+	aboutData.addCredit (ki18n ("%1").subs ("Adrien d'Hardemare"), ki18n ("Plugins and patches"));
+	aboutData.addCredit (ki18n ("%1").subs ("Yves Jacolin"), ki18n ("New website"));
+	aboutData.addCredit (ki18n ("%1").subs ("Marco Martin"), ki18n ("A cool icon"));
+	aboutData.addCredit (ki18n ("%1").subs ("Daniele Medri"), ki18n ("RKWard logo, many suggestions, help on wording"));
+	aboutData.addCredit (ki18n ("%1").subs ("David Sibai"), ki18n ("Several valuable comments, hints and patches"));
+	aboutData.addCredit (ki18n ("%1").subs ("Ilias Soumpasis"), ki18n ("Translation, Suggestions, plugins"));
+	aboutData.addCredit (ki18n ("%1").subs ("Ralf Tautenhahn"), ki18n ("Many comments, useful suggestions, and bug reports"));
+	aboutData.addCredit (ki18n ("%1").subs ("Roland Vollgraf"), ki18n ("Some patches"));
+	aboutData.addCredit (ki18n ("Many more people on rkward-devel@lists.sourceforge.net"), ki18n ("Sorry, if we forgot to list you. Please contact us to get added"));
 
 	// before initializing the commandline args, remove the ".bin" from "rkward.bin".
 	// This is so it prints "Usage rkward..." instead of "Usage rkward.bin...", etc.
@@ -116,7 +110,7 @@ int main(int argc, char *argv[]) {
 	RKWardStartupOptions *stoptions = new RKWardStartupOptions;
 	KUrl *open_url = 0;
 	if (args->count ()) {
-		open_url = new KUrl (args->makeURL (args->arg (0)));
+		open_url = new KUrl (args->makeURL (args->arg (0).latin1()));
 	}
 	stoptions->initial_url = open_url;
 	stoptions->no_stack_check = args->isSet ("disable-stack-check");

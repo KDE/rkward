@@ -37,6 +37,10 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <kshellcompletion.h>
+#include <ktexteditor/editor.h>
+#include <ktexteditor/configinterface.h>
+#include <ktexteditor/markinterface.h>
+#include <kxmlguifactory.h>
 
 #include "rkglobals.h"
 #include "rkward.h"
@@ -60,42 +64,28 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
 
 	// create a Kate-part as command-editor
-#if !KDE_IS_VERSION (3, 2, 0)
-	doc = static_cast<Kate::Document *> (KTextEditor::createDocument ("libkatepart", this, "Kate::Document"));
-	view = static_cast<Kate::View *> (doc->createView (this));
-# else
-	doc = Kate::document (KTextEditor::createDocument ("libkatepart", this, "Kate::Document"));
-	RK_ASSERT (doc);
-	view = Kate::view (doc->createView (this));
-	RK_ASSERT (view);
-#endif
+	KTextEditor::Editor* editor = KTextEditor::editor("katepart");
+	RK_ASSERT (editor);
+
+	doc = editor->createDocument (this);
+	view = doc->createView (this);
 	layout->addWidget (view);
 
-	view->setDynWordWrap (false);
+// KDE4: does this work?
+	KTextEditor::ConfigInterface *confint = qobject_cast<KTextEditor::ConfigInterface*> (view);
+	RK_ASSERT (view);
+	confint->setConfigValue ("dynamic-word-wrap", false);
 
 	setFocusProxy (view);
-	setFocusPolicy (QWidget::StrongFocus);
+	setFocusPolicy (Qt::StrongFocus);
 	
 	/* We need to unplug kactions that were pluged to the KateViewInternal in kateview.cpp.
 	These actions incluse Key_Up, Key_Down, etc.
 	It's a bit boring to do, but there is no way to do that another way yet.
 	Apparently, things will be different in KDE 4.*/
-	const QObjectList *list = view->children ();
-	QObjectListIt it (*list);
-	QObject *obj;
-	
-	KActionCollection* ac=0;
-	QWidget* Kvi=0; //here we store the KateViewInternal of the view, so we can uplug actions from it
-	
-	while ((obj = it.current()) != 0) {
-		++it;
-		obj->installEventFilter (this);
-		if (obj->inherits("KActionCollection")) {
-			ac= (KActionCollection*) obj;
-		} else if(obj->inherits("KateViewInternal")) {
-			Kvi= (QWidget*) obj;
-		}
-	}
+
+// KDE4: are these still valid? Do we really need to unplug them, or is our key-press handling enough?
+/*	KActionCollection* ac = view->actionCollection ();
 
 	if (ac) {
 		unplugAction("move_line_up", ac);
@@ -124,7 +114,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 		unplugAction("paste", ac);
 	} else {
 		RK_DO (qDebug ("Could not retrieve the view's action collection"), APP, DL_WARNING);
-	}
+	} */
 
 	view->focusProxy()->installEventFilter(this);
 	view->installEventFilter(this);
@@ -144,9 +134,10 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	prefix = nprefix;
 	command_incomplete = false;
 	output_continuation = false;
-	doc->setUndoSteps (0);
+// KDE4: a way to do this?
+//	doc->setUndoSteps (0);
 	clear ();
-	setRHighlighting ();
+	doc->setHighlightingMode ("RKWard output");
 
 	commands_history = RKSettingsModuleConsole::loadCommandHistory ();
 	commands_history_position = commands_history.constEnd ();
@@ -163,46 +154,29 @@ RKConsole::~RKConsole () {
 	RKSettingsModuleConsole::saveCommandHistory (commands_history);
 }
 
-void RKConsole::setRHighlighting () {
-	// set syntax-highlighting for R
-	int modes_count = doc->hlModeCount ();
-	bool found_mode = false;
-	int i;
-	RK_DO (qDebug ("%s", "Looking for syntax highlighting definition"), COMMANDEDITOR, DL_INFO);
-	for (i = 0; i < modes_count; ++i) {
-		RK_DO (qDebug ("%s", doc->hlModeName(i).toLower().toLatin1 ()), COMMANDEDITOR, DL_DEBUG);
-		if (doc->hlModeName(i).toLower() == "rkward output") {
-			found_mode = true;
-			break;
-		}
-	}
-	if (found_mode) {
-		doc->setHlMode(i);
-	} else {
-		RK_DO (qDebug ("rkward output highlighting not found"), COMMANDEDITOR, DL_WARNING);
-	}
-}
-
-
 bool RKConsole::handleKeyPress (QKeyEvent *e) {
 
-	uint para=0; uint pos=0;
-	view->cursorPosition (&para, &pos);
+	KTextEditor::Cursor c = view->cursorPosition ();
+	int para=c.line (); int pos=c.column ();
 	command_was_piped = false;
 
-	if (para < doc->numLines() - 1 || pos < prefix.length ()) {	// not inside the last line?
+	if (para < doc->lines () - 1 || pos < prefix.length ()) {	// not inside the last line?
 		int t = (int) pos;					// adjust position before interpreting keystroke
 		if (prefix.length()>pos) t=prefix.length ();
-		view->setCursorPosition (doc->numLines () -1, t);
+		view->setCursorPosition (KTextEditor::Cursor (doc->lines () -1, t));
 	}
 
-	if (hasSelectedText () && (selectionInterfaceExt(doc)->selStartCol () < (int) prefix.length () || selectionInterfaceExt (doc)->selStartLine () < (int) doc->numLines () -1)) { // There is a selection outside the command line
-		// Eat the key and beep (unless it's just a modifier key). Otherwise it might overwrite or delete the selection
-		if (e->state () == e->stateAfter ()) {
-			KApplication::kApplication ()->beep ();
-			e->ignore ();
+	if (view->selection ()) {
+		KTextEditor::Range selrange = view->selectionRange ();
+		if (selrange.start ().column () < (doc->lines () - 1) || selrange.start ().line () < prefix.length ()) {
+			// There is a selection outside the command line
+			// Eat the key and beep (unless it's just a modifier key). Otherwise it might overwrite or delete the selection
+			if (e->key () - (e->key () & (Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier | Qt::KeypadModifier | Qt::GroupSwitchModifier))) {
+				KApplication::kApplication ()->beep ();
+				e->ignore ();
+			}
+			return true;
 		}
-		return true;
 	}
 
 	if (current_command) {
@@ -211,61 +185,52 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	}
 
 	if (e->key () == Qt::Key_Up) {
-		commandsListUp (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (e->state ()));
+		commandsListUp (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (e->modifiers ()));
 		return true;
 	}
 	else if (e->key () == Qt::Key_Down) {
-		commandsListDown (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (e->state ()));
+		commandsListDown (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (e->modifiers ()));
 		return true;
 	}
 	command_edited = true; // all other keys are considered as "editing" the current comand
+
+	if (e->key () == Qt::Key_Home) {
+		if (e->modifiers () == Qt::ShiftModifier) {
+			int lastline = doc->lines () - 1;
+			int firstcol = prefix.length ();
+			KTextEditor::Range newrange (lastline, firstcol, lastline, pos);
+
+			if (view->selection ()) {
+				KTextEditor::Range oldrange = view->selectionRange ();
+				if (oldrange.end ().column () == pos) {
+					newrange.setBothColumns (firstcol);
+				} else {
+					newrange.expandToRange (oldrange);
+				}
+			}
+			view->setSelection (newrange);
+		} else {
+			cursorAtTheBeginning ();
+		}
+		return true;
+	}
 
 	if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
 		hinter->hideArgHint ();
 		submitCommand ();
 		return true;
-	}
-	else if (e->state () == Qt::ShiftModifier && e->key () == Qt::Key_Home){
-		if(hasSelectedText())
-			pos=selectionInterfaceExt(doc)->selEndCol (); //There is already a selection, we take it into account.
-		selectionInterface(doc)->setSelection(doc->numLines()-1,prefix.length (),doc->numLines()-1, pos);
-		cursorAtTheBeginning ();
-		return true;
-	}
-	else if (e->state () == Qt::ShiftModifier && e->key () == Qt::Key_Left){
+	} else if (e->key () == Qt::Key_Left){
 		if(pos<=prefix.length ()){
-			return true;
-		} else {
-			view->shiftCursorLeft ();
-			return false;
-		}
-	}
-	else if (e->key () == Qt::Key_Left){
-		if(pos<=prefix.length ()){
-			return true;
-		} else {
-			view->cursorLeft();
 			return true;
 		}
 	}
 	else if (e->key () == Qt::Key_Backspace){
 		if(pos<=prefix.length ()){
 			return true;
-		} else {
-			view->backspace();
-			return true;
 		}
 	}
 	else if (e->key () == Qt::Key_Tab){
 		doTabCompletion ();
-		return true;
-	}
-	else if (e->key () == Qt::Key_Home){
-		cursorAtTheBeginning ();
-		return true;
-	}
-	else if (e->key() == Qt::Key_Delete) {
-		view->keyDelete();
 		return true;
 	}
 
@@ -292,8 +257,7 @@ void RKConsole::insertCompletion (int line_num, int word_start, int word_end, co
 	RK_TRACE (APP);
 
 	int offset = prefix.length ();
-	doc->removeText (line_num, offset + word_start, line_num, offset + word_end);
-	doc->insertText (line_num, offset + word_start, completion);
+	doc->replaceText (KTextEditor::Range (line_num, offset + word_start, line_num, offset + word_end), completion);
 }
 
 bool RKConsole::doTabCompletionHelper (int line_num, const QString &line, int word_start, int word_end, const QStringList &entries) {
@@ -310,13 +274,13 @@ bool RKConsole::doTabCompletionHelper (int line_num, const QString &line, int wo
 		int i=0;
 		for (it = entries.constBegin (); it != entries.constEnd (); ++it) {
 			if (i % 3) {
-				doc->insertText (doc->numLines () - 1, 0, (*it).leftJustified (35));
+				doc->insertText (KTextEditor::Cursor (doc->lines () - 1, 0), (*it).leftJustified (35));
 			} else {
-				doc->insertText (doc->numLines (), 0, *it);
+				doc->insertText (KTextEditor::Cursor (doc->lines (), 0), *it);
 			}
 			++i;
 		}
-		doc->insertText (doc->numLines (), 0, prefix + line);
+		doc->insertText (KTextEditor::Cursor (doc->lines (), 0), prefix + line);
 		cursorAtTheEnd ();
 	} else {
 		tab_key_pressed_before = true;
@@ -363,7 +327,7 @@ void RKConsole::doTabCompletion () {
 	RK_TRACE (APP);
 
 	QString current_line = currentCommand ();
-	int current_line_num = doc->numLines () - 1;
+	int current_line_num = doc->lines () - 1;
 	int word_start;
 	int word_end;
 	int cursor_pos = currentCursorPositionInCommand ();
@@ -443,9 +407,9 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 			// prevent cursor from leaving last line
 			uint para=0; uint p=0;
 			view->cursorPosition (&para, &p);
-			if (para != doc->numLines () - 1) {
+			if (para != doc->lines () - 1) {
 				int y = view->y ();
-				view->setCursorPosition (doc->numLines() -1, p);
+				view->setCursorPosition (doc->lines() -1, p);
 				int y2 = view->y ();
 				qDebug ("%d, %d", y, y2);
 				view->scroll (0, y - y2);
@@ -459,26 +423,28 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 
 QString RKConsole::currentCommand () {
 	RK_TRACE (APP);
-	return (doc->textLine (doc->numLines () - 1).mid (prefix.length ()));
+	return (doc->line (doc->lines () - 1).mid (prefix.length ()));
 }
 
 void RKConsole::setCurrentCommand (const QString &command) {
 	RK_TRACE (APP);
-	editInterface(doc)->removeText (doc->numLines() - 1, 0, doc->numLines() - 1, editInterface(doc)->textLine(doc->numLines() - 1).length());
-	editInterface(doc)->insertText (doc->numLines() - 1, 0, prefix + command);
+
+	int lastline = doc->lines () - 1;
+	doc->replaceText (KTextEditor::Range (lastline, prefix.length (), lastline, doc->lineLength (lastline)), command);
 	cursorAtTheEnd ();
 }
 
 void RKConsole::cursorAtTheEnd () {
 	RK_TRACE (APP);
-	view->setCursorPosition (doc->numLines() -1, editInterface(doc)->lineLength (doc->numLines() -1));
-	view->scrollDown ();
+
+	view->setCursorPosition (doc->endOfLine (doc->lines () - 1));
+// KDE4 TODO: view->scrollDown ();
 }
 
 void RKConsole::cursorAtTheBeginning () {
 	RK_TRACE (APP);
-	view->scrollDown ();
-	view->setCursorPosition (doc->numLines() - 1, prefix.length ());
+// KDE4 TODO: view->scrollDown ();
+	view->setCursorPosition (KTextEditor::Cursor (doc->lines() - 1, prefix.length ()));
 }
 
 void RKConsole::submitCommand () {
@@ -492,7 +458,7 @@ void RKConsole::submitCommand () {
 		command.prepend (incomplete_command + '\n');
 	}
 
-	doc->insertText (doc->numLines () - 1, editInterface (doc)->lineLength (doc->numLines () -1), "\n");
+	doc->insertLine (doc->lines (), QString ());
 	if (!current_line.isEmpty ()) {
 		current_command = new RCommand (command, RCommand::User | RCommand::Console, QString::null, this);
 		RKGlobals::rInterface ()->issueCommand (current_command);
@@ -569,7 +535,7 @@ void RKConsole::commandsListDown (bool context_sensitive) {
 void RKConsole::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 	if (command->errorSyntax () && command->error ().isEmpty ()) {
-		editInterface(doc)->insertLine(doc->numLines()-1, i18n ("Syntax error\n"));
+		doc->insertLine (doc->lines () - 1, i18n ("Syntax error\n"));
 	}
 
 	if (command->errorIncomplete ()) {
@@ -582,7 +548,7 @@ void RKConsole::rCommandDone (RCommand *command) {
 		incomplete_command = QString::null;
 	}
 
-	if (output_continuation) doc->insertLine (doc->numLines (), "");
+	if (output_continuation) doc->insertLine (doc->lines (), "");
 	output_continuation = false;
 	commands_history_position = commands_history.constEnd ();
 	tryNextInBatch ();
@@ -591,27 +557,28 @@ void RKConsole::rCommandDone (RCommand *command) {
 void RKConsole::newOutput (RCommand *, ROutput *output) {
 	RK_TRACE (APP);
 
-	int start_line = doc->numLines () -1;
+	int start_line = doc->lines () -1;
 	if (output_continuation) {
-		editInterface (doc)->insertText (doc->numLines () -1, editInterface (doc)->lineLength (doc->numLines () -1), output->output);
+		doc->insertText (doc->documentEnd (), output->output);
 	} else {
-		editInterface (doc)->insertText (doc->numLines () -1, 0, output->output);
+		doc->insertText (KTextEditor::Cursor (doc->lines () -1, 0), output->output);
 	}
-	int end_line = doc->numLines () -1;
+	int end_line = doc->lines () -1;
 	if (output->type != ROutput::Output) {
+		KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (doc);
+		RK_ASSERT (markiface);
 		for (int line = start_line; line < end_line; ++line) {
-			doc->addMark (line, KTextEditor::MarkInterface::BreakpointActive);
+			markiface->addMark (line, KTextEditor::MarkInterface::BreakpointActive);
 		}
 	}
 
 	if (RKSettingsModuleConsole::maxConsoleLines ()) {
-		uint c = (uint) doc->numLines();
+		uint c = (uint) doc->lines();
 // TODO: WORKAROUND: Somehow, when removing paragraph 0, the QTextEdit scrolls to the top in between (yes, this also happens when using removeParagaph (0)). Since this may happen very often in newOutput, we're a bit sloppy, and only remove lines after a certain threshold (20) is exceeded. When the command is finished, this will be cleaned up automatically.
 		if (c > (RKSettingsModuleConsole::maxConsoleLines () + 20)) {
 			view->setUpdatesEnabled (false);		// major performance boost while removing lines!
 			//TODO : deal with the case when there is already a selection
-			selectionInterface (doc)->setSelection (0, 0, c - RKSettingsModuleConsole::maxConsoleLines (), 0);
-			selectionInterface (doc)->removeSelectedText ();
+			doc->removeText (KTextEditor::Range (0, 0, c - RKSettingsModuleConsole::maxConsoleLines (), 0));
 			view->setUpdatesEnabled (true);
 		}
 	}
@@ -631,14 +598,14 @@ void RKConsole::tryNextInBatch (bool add_new_line) {
 	RK_TRACE (APP);
 	if (add_new_line) {
 		if (RKSettingsModuleConsole::maxConsoleLines ()) {
-			uint c = (uint) doc->numLines();
+			uint c = (uint) doc->lines();
 			setUpdatesEnabled (false);
 			for (uint ui = c; ui > RKSettingsModuleConsole::maxConsoleLines (); --ui) {
-				editInterface(doc)->removeText (0, 0,0, editInterface(doc)->textLine(0).length());
+				doc->removeLine (0);
 			}
 			setUpdatesEnabled (true);
 		}
-		editInterface(doc)->insertText (doc->numLines ()-1, 0, prefix);		// somehow, it seems to be safer to do this after removing superfluous lines, than before
+		doc->insertLine (doc->lines (), prefix);		// somehow, it seems to be safer to do this after removing superfluous lines, than before
 		cursorAtTheEnd ();
 	}
 
@@ -668,11 +635,11 @@ void RKConsole::paste () {
 void RKConsole::clear () {
 	RK_TRACE (APP);
 	doc->clear ();
-	doc->insertLine (doc->numLines (), "");
 	tryNextInBatch ();
-	// need this HACK to remove empty line at start
+// KDE 4: still needed?
+/*	// need this HACK to remove empty line at start
 	selectionInterface (doc)->setSelection (0, 0, 1, 0);
-	selectionInterface (doc)->removeSelectedText ();
+	selectionInterface (doc)->removeSelectedText (); */
 }
 
 void RKConsole::addCommandToHistory (const QString &command) {
@@ -693,7 +660,7 @@ void RKConsole::addCommandToHistory (const QString &command) {
 QString RKConsole::cleanedSelection () {
 	RK_TRACE (APP);
 
-	QString ret = doc->selection ();
+	QString ret = view->selectionText ();
 	ret.replace ('\n' + QString (nprefix), "\n");
 	ret.replace ('\n' + QString (iprefix), "\n");
 	if (ret.startsWith (nprefix)) {
@@ -711,24 +678,20 @@ void RKConsole::copy () {
 
 void RKConsole::literalCopy () {
 	RK_TRACE (APP);
-	view->copy();
+
+	QApplication::clipboard()->setText (view->selectionText ());
 }
 
 int RKConsole::currentCursorPosition (){
-	uint para=0; uint p=0;
-	view->cursorPosition (&para, &p);
-	return((int) p);
+	KTextEditor::Cursor c = view->cursorPosition ();
+	return(c.column ());
 }
 
-bool RKConsole::hasSelectedText () {
-	RK_TRACE (APP);
-	return (selectionInterface (doc)->hasSelection ());
-}
-
+//KDE4 still needed? (see ctor)
 void RKConsole::unplugAction(const QString &action, KActionCollection* ac) {
-	KAction* a = ac->action(action.toLatin1 ());
+	QAction* a = ac->action (action);
 	if( a ){
-		a->setEnabled(false);
+		a->setEnabled (false);
 	}
 }
 
@@ -744,7 +707,7 @@ void RKConsole::resetIncompleteCommand () {
 	prefix = nprefix;
 	command_incomplete = false;
 	incomplete_command = QString::null;
-	doc->insertLine (doc->numLines (), "");
+	doc->insertLine (doc->lines (), "");
 
 	tryNextInBatch (true);
 }
@@ -782,20 +745,31 @@ void RKConsole::showContextHelp () {
 void RKConsole::initializeActions (KActionCollection *ac) {
 	RK_TRACE (APP);
 
-	context_help_action = new KAction (i18n ("&Function reference"), KShortcut ("F2"), this, SLOT (showContextHelp ()), ac, "function_reference");
-	run_selection_action = new KAction (i18n ("Run selection"), QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"), KShortcut ("F8"), this, SLOT (runSelection ()), ac, "run_selection");
+	context_help_action = ac->addAction ("function_reference", this, SLOT(showContextHelp()));
+	context_help_action->setText (i18n ("&Function reference"));
+	context_help_action->setShortcut (Qt::Key_F2);
 
-	interrupt_command_action = new KAction (i18n ("Interrupt running command"), KShortcut ("Ctrl+C"), this, SLOT (slotInterruptCommand ()), ac, "interrupt");
-	interrupt_command_action->setIcon ("player_stop");
+	run_selection_action = ac->addAction ("run_selection", this, SLOT (runSelection()));
+	run_selection_action->setText (i18n ("Run selection"));
+	run_selection_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"));
+	run_selection_action->setShortcut (Qt::Key_F8);
+
+	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (slotInterruptCommand()));
+	interrupt_command_action->setText (i18n ("Interrupt running command"));
+	interrupt_command_action->setShortcut (Qt::ControlModifier + Qt::Key_C);
+	interrupt_command_action->setIcon (KIcon ("player_stop"));
 	interrupt_command_action->setEnabled (false);
-// ugly HACK: we need this to override the default Ctrl+C binding
-	interrupt_command_action->setShortcut ("Ctrl+C");
 
-	copy_action = new KAction (i18n ("Copy selection cleaned"), 0, this, SLOT (copy ()), ac, "rkconsole_copy");
-	copy_literal_action = new KAction (i18n ("Copy selection literally"), 0, this, SLOT (literalCopy ()), ac, "rkconsole_copy_literal");
-	KStandardAction::clear (this, SLOT (clear ()), ac, "rkconsole_clear");
-	paste_action = KStandardAction::paste (this, SLOT (paste ()), ac, "rkconsole_paste");
-	new KAction (i18n ("Configure"), 0, this, SLOT (configure ()), ac, "rkconsole_configure");
+	copy_action = ac->addAction ("rkconsole_copy", this, SLOT (copy()));
+	copy_action->setText (i18n ("Copy selection cleaned"));
+
+	copy_literal_action = ac->addAction ("rkconsole_copy_literal", this, SLOT (literalCopy()));
+	copy_literal_action->setText (i18n ("Copy selection literally"));
+
+	ac->addAction (KStandardAction::Clear, "rkconsole_clear", this, SLOT (clear()));
+	paste_action = ac->addAction (KStandardAction::Paste, "rkconsole_paste", this, SLOT (paste()));
+	QAction *action = ac->addAction ("rkconsole_configure", this, SLOT (configure()));
+	action->setText (i18n ("Configure"));
 }
 
 void RKConsole::pipeUserCommand (const QString &command) {
@@ -836,7 +810,7 @@ void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 			}
 		}
 		text.replace ('\n', QString ("\n") + iprefix);
-		doc->insertText (doc->numLines () - 1, QString (nprefix).length (), text + '\n');
+		doc->insertText (KTextEditor::Cursor (doc->lines () - 1, QString (nprefix).length ()), text + '\n');
 		command->addReceiver (this);
 		command->addTypeFlag (RCommand::Console);
 		current_command = command;
@@ -853,9 +827,9 @@ void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 void RKConsole::doPopupMenu (const QPoint &pos) {
 	RK_TRACE (APP);
 
-	copy_action->setEnabled (hasSelectedText ());
-	copy_literal_action->setEnabled (hasSelectedText ());
-	run_selection_action->setEnabled (hasSelectedText ());
+	copy_action->setEnabled (view->selection ());
+	copy_literal_action->setEnabled (view->selection ());
+	run_selection_action->setEnabled (view->selection ());
 
 	console_part->showPopupMenu (pos);
 
@@ -871,8 +845,7 @@ void RKConsole::doPopupMenu (const QPoint &pos) {
 RKConsolePart::RKConsolePart (RKConsole *console) : KParts::Part (0) {
 	RK_TRACE (APP);
 
-	KInstance* instance = new KInstance ("rkward");
-	setInstance (instance);
+	setComponentData (KGlobal::mainComponent ());
 
 	setWidget (console);
 

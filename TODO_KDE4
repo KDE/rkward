@@ -81,3 +81,7 @@ rkspinbox:
 
 rkobjectlistview:
 	- do the tool-tips for the objects work?
+
+rkconsole:
+	- does it work at all?
+	- selection, editing, naivgating

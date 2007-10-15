@@ -23,6 +23,7 @@
 #include <qlabel.h>
 #include <q3textedit.h>
 #include <qfont.h>
+#include <QPushButton>
 //Added by qt3to4:
 #include <Q3VBoxLayout>
 #include <QCloseEvent>
@@ -53,7 +54,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 	wrapper->addChild (box);
 	layout->addWidget (wrapper);
 
-	wrapper->setFocusPolicy (QWidget::StrongFocus);
+	wrapper->setFocusPolicy (Qt::StrongFocus);
 	setPart (new RKDummyPart (this, wrapper));
 	initializeActivationSignals ();
 
@@ -76,7 +77,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 	connect (toggle_summary_button, SIGNAL (clicked ()), this, SLOT (toggleSummary ()));
 
 	summary_area = new Q3TextEdit (box);
-	summary_area->setTextFormat (PlainText);
+	summary_area->setTextFormat (Qt::PlainText);
 	summary_area->setReadOnly (true);
 	summary_area->setCurrentFont (font);
 	summary_area->setWordWrap (Q3TextEdit::NoWrap);
@@ -88,7 +89,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 	connect (toggle_print_button, SIGNAL (clicked ()), this, SLOT (togglePrint ()));
 
 	print_area = new Q3TextEdit (box);
-	print_area->setTextFormat (PlainText);
+	print_area->setTextFormat (Qt::PlainText);
 	print_area->setReadOnly (true);
 	print_area->setCurrentFont (font);
 	print_area->setWordWrap (Q3TextEdit::NoWrap);

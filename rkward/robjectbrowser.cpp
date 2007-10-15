@@ -60,7 +60,7 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, const char *n
 	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
 	layout_widget = new Q3VBox (this);
 	layout->addWidget (layout_widget);
-	layout_widget->setFocusPolicy (QWidget::StrongFocus);
+	layout_widget->setFocusPolicy (Qt::StrongFocus);
 
 	RKDummyPart *part = new RKDummyPart (this, layout_widget);
 	setPart (part);
@@ -104,7 +104,7 @@ void RObjectBrowser::initialize () {
 ///////////////////////// RObjectBrowserInternal /////////////////////////////
 RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (parent) {
 	RK_TRACE (APP);
-	setFocusPolicy (QWidget::ClickFocus);
+	setFocusPolicy (Qt::ClickFocus);
 
 	Q3VBoxLayout *vbox = new Q3VBoxLayout (this);
 
@@ -143,7 +143,7 @@ void RObjectBrowserInternal::focusInEvent (QFocusEvent *e) {
 	RK_TRACE (APP);
 
 	list_view->setFocus ();
-	if (e->reason () != QFocusEvent::Mouse) {
+	if (e->reason () != Qt::MouseFocusReason) {
 		list_view->setObjectCurrent (RObjectList::getGlobalEnv (), true);
 	}
 }

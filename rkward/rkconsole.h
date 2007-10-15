@@ -67,8 +67,6 @@ public:
 	int currentCursorPosition ();
 /** Returns the current cursor position, within the current command (without taking into account the prefix).*/
 	int currentCursorPositionInCommand ();
-/** Returns TRUE if some text is selected; otherwise returns FALSE.  */
-	bool hasSelectedText ();
 /** interrupt the current incomplete command (if any) */
 	void resetIncompleteCommand ();
 	void doTabCompletion ();
@@ -92,8 +90,6 @@ protected:
 private:
 friend class RKConsolePart;
 	bool eventFilter (QObject *o, QEvent *e);
-/** set syntax-highlighting for R */
-	void setRHighlighting ();
 	bool doTabCompletionHelper (int line_num, const QString &line, int word_start, int word_end, const QStringList &entries);
 /** a helper function to doTabCompletionHelper */
 	void insertCompletion (int line_num, int word_start, int word_end, const QString &completion);
@@ -154,12 +150,12 @@ friend class RKConsolePart;
 
 	bool tab_key_pressed_before;
 
-	KAction* context_help_action;
-	KAction* run_selection_action;
-	KAction* interrupt_command_action;
-	KAction* copy_action;
-	KAction* copy_literal_action;
-	KAction* paste_action;
+	QAction* context_help_action;
+	QAction* run_selection_action;
+	QAction* interrupt_command_action;
+	QAction* copy_action;
+	QAction* copy_literal_action;
+	QAction* paste_action;
 
 	void initializeActions (KActionCollection *ac);
 	void pipeCommandThroughConsoleLocal (RCommand *command);
