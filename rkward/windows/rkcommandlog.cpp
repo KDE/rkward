@@ -237,13 +237,14 @@ void RKCommandLog::runSelection () {
 RKCommandLogView::RKCommandLogView (RKCommandLog *parent) : Q3TextEdit (parent) {
 	RK_TRACE (APP);
 
-	const QList<QObject*> list = children ();
+// KDE 4: disabled for now. And WTF was it supposed to be good for?
+/*	const QList<QObject*> list = children ();
 	QList<QObject*>::const_iterator it = list.constBegin ();
 
 	while (it != list.constEnd()) {
 		(*it)->installEventFilter (this);
 		++it;
-	}
+	} */
 }
 
 RKCommandLogView::~RKCommandLogView () {

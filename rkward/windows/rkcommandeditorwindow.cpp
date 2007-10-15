@@ -348,10 +348,8 @@ RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTe
 	RKFunctionArgHinter::view = view;
 
 	const QObjectList children = view->children ();
-	QObjectList::const_iterator it = children.constBegin();
-	QObject *obj;
-	while ((obj = *it) != 0) {
-		++it;
+	for (QObjectList::const_iterator it = children.constBegin(); it != children.constEnd (); ++it) {
+		QObject *obj = *it;
 		obj->installEventFilter (this);
 	}
 
