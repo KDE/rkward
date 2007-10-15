@@ -22,6 +22,8 @@
 #include <qpushbutton.h>
 #include <qlineedit.h>
 #include <qtimer.h>
+#include <QDBusConnection>
+#include <QDesktopWidget>
 //Added by qt3to4:
 #include <QLabel>
 #include <Q3VBoxLayout>
@@ -43,7 +45,10 @@
 #include <k3dockwidget.h>
 #include <kmultitabbar.h>
 #include <ksqueezedtextlabel.h>
-#include <dcopclient.h>
+#include <kparts/partmanager.h>
+#include <kxmlguifactory.h>
+#include <kactioncollection.h>
+#include <krecentfilesaction.h>
 
 // application specific includes
 #include "rkward.h"
@@ -75,10 +80,11 @@
 #include "rkconsole.h"
 #include "debug.h"
 
+
+// KDE4: TODO: is all the stuff below still needed?
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
 #include "dialogs/rkreadlinedialog.h"	// TODO: see below: needed purely for linking!
 #include "windows/detachedwindowcontainer.h"	// TODO: see below: needed purely for linking!
-#include "windows/qxembedcopy.h"	// TODO: see below: needed purely for linking!
 #include "dataeditor/rkeditordataframepart.h"	// TODO: see below: needed purely for linking!
 #include "agents/rkeditobjectagent.h"	// TODO: see below: needed purely for linking!
 
@@ -89,13 +95,12 @@ void bogusCalls () {
 	new RKEditorDataFramePart (0);
 	DetachedWindowContainer (0);
 	new RKWorkplaceView (0);
-	new QXEmbedCopy (0);
 	new RKEditObjectAgent (QStringList (), 0);
 }
 
 /** DBUS interface **/
 
-void RKWardDBUSInterface::RKWardDBUSInterface (QApplication *application) : QDBusAbstractAdaptor(application) {
+RKWardDBUSInterface::RKWardDBUSInterface (QApplication *application) : QDBusAbstractAdaptor(application) {
 	RK_TRACE (APP);
 }
 
@@ -110,20 +115,13 @@ void RKWardDBUSInterface::openHTMLHelp (const QString &url) {
 //static
 RKWardMainWindow *RKWardMainWindow::rkward_mainwin = 0;
 
-RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : DCOPObject ("rkwardapp"), KMdiMainFrm (0, 0, KMdi::IDEAlMode) {
+RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::MainWindow ((QWidget *)0, (Qt::WindowFlags) KDE_DEFAULT_WINDOWFLAGS) {
 	RK_TRACE (APP);
 	RK_ASSERT (rkward_mainwin == 0);
 
 	rkward_mainwin = this;
 	RKGlobals::rinter = 0;
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
-
-#if !KDE_IS_VERSION(3,3,0)
-	setIDEAlModeStyle (KMultiTabBar::KDEV3);
-#else
-	// Nice docks a la Kdevelop.
-	setToolviewStyle (KMultiTabBar::KDEV3ICON);
-#endif
 
 	///////////////////////////////////////////////////////////////////
 	// call inits to invoke all other construction parts
@@ -141,8 +139,6 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : DCOPObject 
 	setHelpMenuEnabled (false);
 	setXMLFile ("rkwardui.rc");
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
-	connect (toplevel_actions->actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
-	connect (toplevel_actions->actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
 	createShellGUI (true);
 
 	RKGlobals::mtracker = new RKModificationTracker (this);
@@ -158,7 +154,7 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : DCOPObject 
 
 	QTimer::singleShot (50, this, SLOT (doPostInit ()));
 
-	part_manager = new KParts::PartManager( this );
+	part_manager = new KParts::PartManager (this);
 	// When the manager says the active part changes,
 	// the builder updates (recreates) the GUI
 	connect (partManager (), SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
@@ -169,12 +165,11 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : DCOPObject 
 	new RKWardDBUSInterface (qApp);
 
 	// connect to D-Bus and register as an object:
-	QDBus::sessionBus ().registerObject ("/MainApplication", qApp);
+	QDBusConnection::sessionBus ().registerObject ("/MainApplication", qApp);
 }
 
 RKWardMainWindow::~RKWardMainWindow() {
 	RK_TRACE (APP);
-	closeAllViews ();
 
 	// these would not be strictly necessary, as we're exiting the app, anyway.
 	delete RKGlobals::rInterface ();
@@ -190,7 +185,7 @@ void RKWardMainWindow::closeEvent (QCloseEvent *e) {
 	RK_TRACE (APP);
 
 	if (RKQuitAgent::quittingInProgress ()) {
-		KMdiMainFrm::closeEvent (e);
+		KParts::MainWindow::closeEvent (e);
 		return;
 	}
 
@@ -213,8 +208,8 @@ void RKWardMainWindow::doPostInit () {
 
 	RKCommandLog *log = new RKCommandLog (0, true, "Command log");
 	log->setIcon (SmallIcon ("text_block"));
-	log->setToolWrapper (addToolWindow (log, KDockWidget::DockBottom, getMainDockWidget (), 10));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (log);
+	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (log, KMultiTabBar::Bottom);
 	RKCommandLog::rkcommand_log = log;
 
 	startR ();
@@ -225,29 +220,31 @@ void RKWardMainWindow::doPostInit () {
 	initPlugins ();
 
 	RObjectBrowser::mainBrowser ()->setIcon(SmallIcon("view_tree"));
-	RObjectBrowser::mainBrowser ()->setToolWrapper (addToolWindow(RObjectBrowser::mainBrowser (), KDockWidget::DockLeft, getMainDockWidget(), 30, i18n ("Existing objects in your workspace."), i18n ("Workspace")));
+	RObjectBrowser::mainBrowser ()->setCaption (i18n ("Workspace"));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (RObjectBrowser::mainBrowser ());
+	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RObjectBrowser::mainBrowser (), KMultiTabBar::Left);
 
 	RKFileBrowser::main_browser = new RKFileBrowser (0, true, "file_browser");
 	RKFileBrowser::main_browser->setIcon (SmallIcon ("fileopen"));
-	RKFileBrowser::main_browser->setToolWrapper (addToolWindow (RKFileBrowser::main_browser, KDockWidget::DockLeft, getMainDockWidget (), 10, i18n ("File-system Browser"), i18n ("Files")));
+	RKFileBrowser::main_browser->setCaption (i18n ("Files"));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (RKFileBrowser::main_browser);
+	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RKFileBrowser::main_browser, KMultiTabBar::Left);
 
 	RControlWindow::getControl ()->setCaption (i18n ("Pending Jobs"));
-	RControlWindow::getControl ()->setToolWrapper (addToolWindow (RControlWindow::getControl (), KDockWidget::DockBottom, getMainDockWidget (), 10));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (RControlWindow::getControl ());
+	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RControlWindow::getControl (), KMultiTabBar::Bottom);
 
 	RKConsole *console = new RKConsole (0, true, "r_console");
 	console->setIcon (SmallIcon ("konsole"));
-	console->setToolWrapper (addToolWindow (console, KDockWidget::DockBottom, getMainDockWidget (), 10));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (console);
 	RKConsole::setMainConsole (console);
+	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (console, KMultiTabBar::Bottom);
 
 	RKHelpSearchWindow *help_search = new RKHelpSearchWindow (0, true, "r_help");
 	help_search->setIcon (SmallIcon ("help"));
-	help_search->setToolWrapper (addToolWindow (help_search, KDockWidget::DockBottom, getMainDockWidget (), 10));
 	RKWorkplace::mainWorkplace ()->registerToolWindow (help_search);
 	RKHelpSearchWindow::main_help_search = help_search;
+	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (help_search, KMultiTabBar::Bottom);
 
 	setUpdatesEnabled (true);
 
@@ -274,14 +271,14 @@ void RKWardMainWindow::doPostInit () {
 	}
 
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
-		RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (KGlobal::config ()));
+		RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (KGlobal::config ().data ()));
 	}
 
 	if (RKSettingsModuleGeneral::showHelpOnStartup ()) {
 		toplevel_actions->showRKWardHelp ();
 	}
 
-	setCaption (QString::null);	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
+	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 
 	delete startup_options;
 	startup_options = 0;
@@ -339,51 +336,69 @@ void RKWardMainWindow::slotConfigure () {
 void RKWardMainWindow::initActions()
 {  
 	RK_TRACE (APP);
+	QAction *action;
+
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
-	new_data_frame = new KAction (i18n ("Dataset"), 0, 0, this, SLOT (slotNewDataFrame ()), actionCollection (), "new_data_frame");
-	new_data_frame->setIcon("spreadsheet");
-	new_command_editor = KStandardAction::openNew(this, SLOT(slotNewCommandEditor()), actionCollection(), "new_command_editor");
+	new_data_frame = actionCollection ()->addAction ("new_data_frame", this, SLOT (slotNewDataFrame ()));
+	new_data_frame->setText (i18n ("Dataset"));
+	new_data_frame->setIcon (KIcon ("spreadsheet"));
+	new_data_frame->setStatusTip (i18n ("Creates new empty dataset and opens it for editing"));
+
+	new_command_editor = actionCollection ()->addAction (KStandardAction::New, "new_command_editor", this, SLOT(slotNewCommandEditor()));
 	new_command_editor->setText (i18n ("Script File"));
-	new_command_editor->setIcon ("source");
+	new_command_editor->setIcon (KIcon ("source"));
 
-	fileOpen = KStandardAction::open(this, SLOT(slotOpenCommandEditor()), actionCollection(), "file_openy");
+	fileOpen = actionCollection ()->addAction (KStandardAction::Open, "file_openy", this, SLOT(slotOpenCommandEditor()));
 	fileOpen->setText (i18n ("Open R Script File"));
-	fileOpenRecent = KStandardAction::openRecent(this, SLOT(slotOpenCommandEditor (const KUrl&)), actionCollection(), "file_open_recenty");
-	KAction *import_data = new KAction (i18n ("Import Data"), 0, 0, this, SLOT (importData ()), actionCollection (), "import_data");
 
-	fileOpenWorkspace = KStandardAction::open(this, SLOT(slotFileOpenWorkspace()), actionCollection(), "file_openx");
+	fileOpenRecent = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recenty", this, SLOT(slotOpenCommandEditor (const KUrl&))));
+
+	action = actionCollection ()->addAction ("import_data", this, SLOT (importData()));
+	action->setText (i18n ("Import Data"));
+	action->setStatusTip (i18n ("Import data from a variety of file formats"));
+
+	fileOpenWorkspace = actionCollection ()->addAction (KStandardAction::Open, "file_openx", this, SLOT(slotFileOpenWorkspace()));
 	fileOpenWorkspace->setText (i18n ("Open Workspace"));
-	fileOpenWorkspace->setShortcut (KShortcut ("Ctrl+Shift+O"));
-	fileOpenRecentWorkspace = KStandardAction::openRecent(this, SLOT(slotFileOpenRecentWorkspace(const KUrl&)), actionCollection(), "file_open_recentx");
-	fileSaveWorkspace = KStandardAction::save(this, SLOT(slotFileSaveWorkspace()), actionCollection(), "file_savex");
-	fileSaveWorkspace->setText (i18n ("Save Workspace"));
-	fileSaveWorkspace->setShortcut (KShortcut ("Ctrl+Shift+S"));
-	fileSaveWorkspaceAs = KStandardAction::saveAs(this, SLOT(slotFileSaveWorkspaceAs()), actionCollection(), "file_save_asx");
-	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
+	fileOpenWorkspace->setShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_O);
+	fileOpenWorkspace->setStatusTip (i18n ("Opens an existing document"));
 
-	fileQuit = KStandardAction::quit(this, SLOT(close ()), actionCollection(), "file_quitx");
-	file_load_libs = new KAction (i18n ("Configure Packages"), 0, 0, this, SLOT (slotFileLoadLibs ()), actionCollection (), "file_load_libs");	
+	fileOpenRecentWorkspace = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recentx", this, SLOT(slotFileOpenRecentWorkspace(const KUrl&))));
+	fileOpenRecentWorkspace->setStatusTip (i18n ("Opens a recently used file"));
+
+	fileSaveWorkspace = actionCollection ()->addAction (KStandardAction::Save, "file_savex", this, SLOT(slotFileSaveWorkspace()));
+	fileSaveWorkspace->setText (i18n ("Save Workspace"));
+	fileSaveWorkspace->setShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_S);
+	fileSaveWorkspace->setStatusTip (i18n ("Saves the actual document"));
+
+	fileSaveWorkspaceAs = actionCollection ()->addAction (KStandardAction::SaveAs, "file_save_asx", this, SLOT(slotFileSaveWorkspaceAs()));
+	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
+	fileSaveWorkspaceAs->setStatusTip (i18n ("Saves the actual document as..."));
+
+	fileQuit = actionCollection ()->addAction (KStandardAction::Quit, "file_quitx", this, SLOT(close()));
+	fileQuit->setStatusTip (i18n ("Quits the application"));
+
+	file_load_libs = actionCollection ()->addAction ("file_load_libs", this, SLOT (slotFileLoadLibs()));
+	file_load_libs->setText (i18n ("Configure Packages"));
 
 	setStandardToolBarMenuEnabled (true);
 	createStandardStatusBarAction ();
 
-	close_all_editors = new KAction (i18n ("Close All Data"), 0, 0, this, SLOT (slotCloseAllEditors ()), actionCollection (), "close_all_editors");
-	new KAction (i18n ("Close"), 0, KShortcut ("Ctrl+W"), this, SLOT (slotCloseWindow ()), actionCollection (), "window_close");
-	window_close_all = new KAction (i18n ("Close All"), 0, 0, this, SLOT (slotCloseAllWindows ()), actionCollection (), "window_close_all");
-	window_detach = new KAction (i18n ("Detach"), 0, 0, this, SLOT (slotDetachWindow ()), actionCollection (), "window_detach");
+	close_all_editors = actionCollection ()->addAction ("close_all_editors", this, SLOT (slotCloseAllEditors()));
+	close_all_editors->setText (i18n ("Close All Data"));
+	close_all_editors->setStatusTip (i18n ("Closes all open data editors"));
 
-	configure = new KAction (i18n ("Configure RKWard"), 0, 0, this, SLOT (slotConfigure ()), actionCollection (), "configure");
+	action = actionCollection ()->addAction ("window_close", this, SLOT (slotCloseWindow()));
+	action->setText (i18n ("Close"));
+	action->setShortcut (Qt::ControlModifier + Qt::Key_W);
 
-	new_data_frame->setStatusText (i18n ("Creates new empty dataset and opens it for editing"));
-	import_data->setStatusText (i18n ("Import data from a variety of file formats"));
-	fileOpenWorkspace->setStatusText(i18n("Opens an existing document"));
-	fileOpenRecentWorkspace->setStatusText(i18n("Opens a recently used file"));
-	fileSaveWorkspace->setStatusText(i18n("Saves the actual document"));
-	fileSaveWorkspaceAs->setStatusText(i18n("Saves the actual document as..."));
-	close_all_editors->setStatusText (i18n ("Closes all open data editors"));
-	fileQuit->setStatusText(i18n("Quits the application"));
+	window_close_all = actionCollection ()->addAction ("window_close_all", this, SLOT (slotCloseAllWindows()));
+	window_close_all->setText (i18n ("Close All"));
 
-	actionCollection ()->setHighlightingEnabled (true);
+	window_detach = actionCollection ()->addAction ("window_detach", this, SLOT (slotDetachWindow()));
+	window_detach->setText (i18n ("Detach"));
+
+	configure = actionCollection ()->addAction ("configure", this, SLOT (slotConfigure()));
+	configure->setText (i18n ("Configure RKWard"));
 }
 
 void RKWardMainWindow::partAdded (KParts::Part *part) {
@@ -394,9 +409,10 @@ void RKWardMainWindow::partAdded (KParts::Part *part) {
 		return;
 	}
 
-	part->actionCollection ()->setHighlightingEnabled (true);
+// KDE4: remove this function?
+/*	part->actionCollection ()->setHighlightingEnabled (true);
 	connect (part->actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
-	connect (part->actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
+	connect (part->actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ())); */
 }
 
 void RKWardMainWindow::partRemoved (KParts::Part *part) {
@@ -407,8 +423,9 @@ void RKWardMainWindow::partRemoved (KParts::Part *part) {
 		return;
 	}
 
-	disconnect (part->actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
-	disconnect (part->actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
+// KDE4: remove this function?
+/*	disconnect (part->actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
+	disconnect (part->actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ())); */
 }
 
 void RKWardMainWindow::initStatusBar () {
@@ -421,7 +438,7 @@ void RKWardMainWindow::initStatusBar () {
 	statusbar_action->hide ();
 	statusbar_ready = new QLabel (i18n ("Ready."), statusbar_hbox);
 	statusbar_cwd = new KSqueezedTextLabel (statusbar_hbox);
-	statusbar_cwd->setAlignment (QLabel::AlignRight);
+	statusbar_cwd->setAlignment (Qt::AlignRight);
 	statusbar_hbox->setStretchFactor (statusbar_cwd, 1);
 	updateCWD ();
 	statusBar ()->addWidget (statusbar_hbox, 1);
@@ -445,15 +462,16 @@ void RKWardMainWindow::openWorkspace (const KUrl &url) {
 
 void RKWardMainWindow::saveOptions () {
 	RK_TRACE (APP);
-	KConfig *config = KGlobal::config ();
+	KConfig *config = KGlobal::config ().data ();
 
-	saveMainWindowSettings (config, "main window options");
+	saveMainWindowSettings (config->group ("main window options"));
 
-	config->setGroup("General Options");
+	KConfigGroup cg = config->group ("General Options");
 // TODO: WORKAROUND. See corresponding line in readOptions ()
-	config->writeEntry("Geometry", size ());
-	fileOpenRecentWorkspace->saveEntries(config, "Recent Files");
-	fileOpenRecent->saveEntries(config, "Recent Command Files");
+	cg.writeEntry("Geometry", size ());
+
+	fileOpenRecentWorkspace->saveEntries (config->group ("Recent Files"));
+	fileOpenRecent->saveEntries (config->group ("Recent Command Files"));
 
 	RKSettings::saveSettings (config);
 
@@ -463,81 +481,25 @@ void RKWardMainWindow::saveOptions () {
 
 void RKWardMainWindow::readOptions () {
 	RK_TRACE (APP);
-	KConfig *config = KGlobal::config ();
+	KConfig *config = KGlobal::config ().data ();
 
-#if !KDE_IS_VERSION(3,3,0)
-	applyMainWindowSettings (KGlobal::config (), "main window options");
-#else
-	applyMainWindowSettings (KGlobal::config (), "main window options", true);
-#endif
+	applyMainWindowSettings (config->group ("main window options"), true);
 
 // TODO: WORKAROUND: Actually applyMainWindowSettings could/should do this, but apparently this just does not work for maximized windows. Therefore we use our own version instead.
-	config->setGroup("General Options");
-	QSize size = config->readSizeEntry ("Geometry");
+// KDE4: still needed?
+	KConfigGroup cg = config->group ("General Options");
+	QSize size = cg.readEntry ("Geometry", QSize ());
 	if (size.isEmpty ()) {
 		size = QApplication::desktop ()->availableGeometry ().size ();
 	}
 	resize (size);
 
 	// initialize the recent file list
-	fileOpenRecentWorkspace->loadEntries (config,"Recent Files");
-	fileOpenRecent->loadEntries (config,"Recent Command Files");
+	fileOpenRecentWorkspace->loadEntries (config->group ("Recent Files"));
+	fileOpenRecent->loadEntries (config->group ("Recent Command Files"));
 
 	// do this last, since we may be setting some different config-group(s) in the process
 	RKSettings::loadSettings (config);
-
-	// explicitly hide the KMdiTaskBar. It could get in the way (and not quite sure, why it shows up on some systems)
-	KToolBar *mditask = (KToolBar*) child ("KMdiTaskBar", "KToolBar");
-	if (mditask) mditask->hide ();
-}
-
-void RKWardMainWindow::saveProperties(KConfig *_cfg)
-{
-	RK_TRACE (APP);
-/*  if(doc->URL().fileName()!=i18n("Untitled") && !doc->isModified())
-  {
-    // saving to tempfile not necessary
-
-  }
-  else */
-  {
-    //KUrl url=doc->URL();	
-    //_cfg->writeEntry("filename", url.url());
-    //_cfg->writeEntry("modified", doc->isModified());
-    //QString tempname = kapp->tempSaveName(url.url());
-    //QString tempurl= KUrl::encode_string(tempname);
-    //KUrl _url(tempurl);
-    //doc->saveDocument(_url);
-  }
-}
-
-
-void RKWardMainWindow::readProperties(KConfig* _cfg)
-{
-	RK_TRACE (APP);
-/*  QString filename = _cfg->readEntry("filename", "");
-  KUrl url(filename);
-  bool modified = _cfg->readBoolEntry("modified", false);
-  if(modified)
-  {
-    bool canRecover;
-    QString tempname = kapp->checkRecoverFile(filename, canRecover);
-    KUrl _url(tempname);
-  	
-    if(canRecover)
-    {
-//      doc->openDocument(_url);
-      doc->setModified();
-      QFile::remove(tempname);
-    }
-  }
-  else
-  {
-    if(!filename.isEmpty())
-    {
-//      doc->openDocument(url);
-    }
-  } */
 }
 
 bool RKWardMainWindow::doQueryQuit () {
@@ -546,7 +508,7 @@ bool RKWardMainWindow::doQueryQuit () {
 	slotSetStatusBarText (i18n ("Exiting..."));
 	saveOptions ();
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
-		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ("\n", false), KGlobal::config ());
+		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ("\n", false), KGlobal::config ().data ());
 	}
 
 //	if (!RObjectList::getGlobalEnv ()->isEmpty ()) {
@@ -595,7 +557,7 @@ void RKWardMainWindow::fileOpenNoSave (const KUrl &url) {
 	slotSetStatusBarText(i18n("Opening workspace..."));
 	KUrl lurl = url;
 	if (lurl.isEmpty ()) {
-		lurl = KFileDialog::getOpenUrl (":<rfiles>", i18n("*|All files"), this, i18n("Open File..."));
+		lurl = KFileDialog::getOpenUrl (KUrl ("kfiledialog:///<rfiles>"), i18n("*|All files"), this, i18n("Open File..."));
 	}
 	if (!lurl.isEmpty ()) {
 		openWorkspace (lurl);
@@ -622,7 +584,7 @@ void RKWardMainWindow::fileOpenAskSave (const KUrl &url) {
 
 void RKWardMainWindow::slotFileOpenWorkspace () {
 	RK_TRACE (APP);
-	fileOpenAskSave (QString::null);
+	fileOpenAskSave (KUrl ());
 }
 
 void RKWardMainWindow::slotFileOpenRecentWorkspace(const KUrl& url)
@@ -730,7 +692,7 @@ void RKWardMainWindow::slotOpenCommandEditor () {
 	KUrl::List urls;
 	KUrl::List::const_iterator it;
 	
-	urls = KFileDialog::getOpenUrls (":<rfiles>", "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*.*|All Files (*.*)", this, i18n ("Open command file(s)"));
+	urls = KFileDialog::getOpenUrls (KUrl ("kfiledialog:///<rfiles>"), "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*.*|All Files (*.*)", this, i18n ("Open command file(s)"));
 
 	for (it = urls.begin() ; it != urls.end() ; ++it) {
 		slotOpenCommandEditor (*it);
@@ -751,7 +713,7 @@ void RKWardMainWindow::setCaption (const QString &) {
 	if (wcaption.isEmpty ()) wcaption = i18n ("[Unnamed Workspace]");
 	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached);
 	if (window) wcaption.append (" - " + window->fullCaption ());
-	KMdiMainFrm::setCaption (wcaption);
+	KParts::MainWindow::setCaption (wcaption);
 }
 
 #include "rkward.moc"

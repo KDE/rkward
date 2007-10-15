@@ -115,20 +115,6 @@ protected:
 	void initStatusBar();
 	/** reimplemented from KMainWindow to call our doQueryClose (), and then (if quitting was not cancelled), invoke an RKQuitAgent to wait for the R-backend to finish up before actually quitting. */
 	virtual void closeEvent (QCloseEvent *e);
-	/** saves the window properties for each open window during session end to the session config file, including saving the currently
-	* opened file by a temporary filename provided by KApplication.
-	* @see KTMainWindow#saveProperties
-
-	// TODO: defunct!! Find out what this is really for.
-	*/
-	virtual void saveProperties(KConfig *_cfg);
-	/** reads the session config file and restores the application's state including the last opened files and documents by reading the
-	* temporary files saved by saveProperties()
-	* @see KTMainWindow#readProperties
-
-	// TODO: defunct!! Find out what this is really for.
-	*/
-	virtual void readProperties(KConfig *_cfg);
 signals:
 	void aboutToQuitRKWard ();
 public slots:
@@ -192,26 +178,26 @@ private:
 	KParts::PartManager *part_manager;
 
 	// KAction pointers to enable/disable actions
-	KAction* fileOpen;
+	QAction* fileOpen;
 	KRecentFilesAction* fileOpenRecent;
 	
-	KAction* fileOpenWorkspace;
+	QAction* fileOpenWorkspace;
 	KRecentFilesAction* fileOpenRecentWorkspace;
-	KAction* fileSaveWorkspace;
-	KAction* fileSaveWorkspaceAs;
-	KAction* fileQuit;
-	KAction* file_load_libs;
-	KAction* close_all_editors;
-	KAction* new_data_frame;
-	KAction* new_command_editor;
+	QAction* fileSaveWorkspace;
+	QAction* fileSaveWorkspaceAs;
+	QAction* fileQuit;
+	QAction* file_load_libs;
+	QAction* close_all_editors;
+	QAction* new_data_frame;
+	QAction* new_command_editor;
 	
-	KAction* editUndo;
-	KAction* editRedo;
+	QAction* editUndo;
+	QAction* editRedo;
 
-	KAction* window_close_all;
-	KAction* window_detach;
+	QAction* window_close_all;
+	QAction* window_detach;
 	
-	KAction* configure;
+	QAction* configure;
 	
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;

@@ -23,6 +23,8 @@
 
 General:
 	- look out for all failed signal/slot connections
+	- grep sources for "KDE4"
+	- remove all the passing around of KGlobal::config() as a parameter
 
 rkcommandeditorwindow
 	- code completion will be broken. Fix after porting.
