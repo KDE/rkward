@@ -51,6 +51,8 @@ void RKToolWindowBar::setSplitter (QSplitter *splitter) {
 	RK_ASSERT (!container);
 
 	container = new KHBox (splitter);
+	splitter->setContentsMargins (0, 0, 0, 0);
+	container->layout ()->setContentsMargins (0, 0, 0, 0);
 	container->layout ()->setSpacing (0);
 	container->layout ()->setMargin (0);
 	container->hide ();

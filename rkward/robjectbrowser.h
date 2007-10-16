@@ -34,7 +34,7 @@ class Q3PopupMenu;
 class RObject;
 class RKCommandEditorWindow;
 class RObjectBrowserInternal;
-class Q3VBox;
+class KVBox;
 
 /**
 This widget provides a browsable list of all objects in the R workspace
@@ -53,7 +53,7 @@ public:
 	void showEvent (QShowEvent *e);
 private:
 	RObjectBrowserInternal *internal;
-	Q3VBox *layout_widget;
+	KVBox *layout_widget;
 
 	bool locked;
 	friend class RKWardMainWindow;

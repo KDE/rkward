@@ -20,9 +20,7 @@
 
 #include "rkmdiwindow.h"
 
-#include <q3vbox.h>
-//Added by qt3to4:
-#include <QEvent>
+#include <kvbox.h>
 
 class KDirOperator;
 class RKFileBrowserWidget;
@@ -43,7 +41,7 @@ public slots:
 	void currentWDChanged ();
 private:
 	RKFileBrowserWidget *real_widget;
-	Q3VBox *layout_widget;
+	KVBox *layout_widget;
 friend class RKWardMainWindow;
 	static RKFileBrowser *main_browser;
 };
@@ -51,7 +49,7 @@ friend class RKWardMainWindow;
 /** The internal widget used in RKFileBrowser 
 TODO: KDE4: check whether there is a ready widget for this. Much of the implementation is a modified copy from Kate / kdevelop.
 */
-class RKFileBrowserWidget : public Q3VBox {
+class RKFileBrowserWidget : public KVBox {
 	Q_OBJECT
 public:
 	RKFileBrowserWidget (QWidget *widget);

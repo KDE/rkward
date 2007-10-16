@@ -29,7 +29,7 @@
 #include <q3vbox.h>
 //Added by qt3to4:
 #include <QEvent>
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include "rkworkplace.h"
 #include "../rkward.h"
@@ -45,8 +45,9 @@ RKFileBrowser::RKFileBrowser (QWidget *parent, bool tool_window, const char *nam
 
 	real_widget = 0;
 
-	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
-	layout_widget = new Q3VBox (this);
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	layout->setContentsMargins (0, 0, 0, 0);
+	layout_widget = new KVBox (this);
 	layout->addWidget (layout_widget);
 	layout_widget->setFocusPolicy (Qt::StrongFocus);
 
@@ -80,7 +81,7 @@ void RKFileBrowser::currentWDChanged () {
 
 
 
-RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : Q3VBox (parent) {
+RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	RK_TRACE (APP);
 
 	KToolBar *toolbar = new KToolBar (this);

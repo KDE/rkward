@@ -32,6 +32,7 @@
 #include <klocale.h>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
+#include <kvbox.h>
 
 #include "rkward.h"
 #include "windows/rkhelpsearchwindow.h"
@@ -57,8 +58,9 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, const char *n
 	internal = 0;
 	locked = true;
 
-	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
-	layout_widget = new Q3VBox (this);
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	layout->setContentsMargins (0, 0, 0, 0);
+	layout_widget = new KVBox (this);
 	layout->addWidget (layout_widget);
 	layout_widget->setFocusPolicy (Qt::StrongFocus);
 
