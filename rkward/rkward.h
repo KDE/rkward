@@ -211,8 +211,13 @@ private:
 	static RKWardMainWindow *rkward_mainwin;
 
 	friend class RInterface;
-/** set the R status message ("R engine idel/busy") to idle or busy */
-	void setRStatus (bool busy);
+	enum RStatus {
+		Busy,
+		Idle,
+		Starting
+	};
+/** set the R status message ("R engine idle/busy") to idle or busy */
+	void setRStatus (RStatus status);
 /** update the display for the current working directory */
 	void updateCWD ();
 

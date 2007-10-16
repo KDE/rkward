@@ -89,6 +89,7 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 
 	// now add it all to this widget
 	QVBoxLayout *box = new QVBoxLayout (this);
+	box->setContentsMargins (0, 0, 0, 0);
 	box->addWidget (vbox);
 
 	history = new RKMDIWindowHistory (this);

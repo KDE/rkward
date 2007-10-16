@@ -24,9 +24,8 @@
 #include <qtimer.h>
 #include <QDBusConnection>
 #include <QDesktopWidget>
-//Added by qt3to4:
 #include <QLabel>
-#include <Q3VBoxLayout>
+//Added by qt3to4:
 #include <QCloseEvent>
 
 // include files for KDE
@@ -438,10 +437,10 @@ void RKWardMainWindow::initStatusBar () {
 	updateCWD ();
 	statusBar ()->addWidget (statusbar_hbox, 1);
 
-	statusbar_r_status = new QLabel (i18n ("starting R engine"), statusBar ());
-	statusbar_r_status->setPaletteBackgroundColor (QColor (255, 255, 0));
+	statusbar_r_status = new QLabel (statusBar ());
 	statusbar_r_status->setFixedHeight (statusBar ()->fontMetrics ().height () + 2);
 	statusBar ()->addWidget (statusbar_r_status, 0, true);
+	setRStatus (Starting);
 
 	connect (actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
 	connect (actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
@@ -651,15 +650,24 @@ void RKWardMainWindow::slotDetachWindow () {
 	RKWorkplace::mainWorkplace ()->detachWindow (RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached));
 }
 
-void RKWardMainWindow::setRStatus (bool busy) {
+void RKWardMainWindow::setRStatus (RStatus status) {
 	RK_TRACE (APP);
-	if (busy) {
+
+	QColor status_color;
+	if (status == Busy) {
 		statusbar_r_status->setText (i18n ("R engine busy"));
-		statusbar_r_status->setPaletteBackgroundColor (QColor (255, 0, 0));
-	} else {
+		status_color = QColor (255, 0, 0);
+	} else if (status == Idle) {
 		statusbar_r_status->setText (i18n ("R engine idle"));
-		statusbar_r_status->setPaletteBackgroundColor (QColor (0, 255, 0));
+		status_color = QColor (0, 255, 0);
+	} else {
+		statusbar_r_status->setText (i18n ("R engine starting"));
+		status_color = QColor (255, 255, 0);
 	}
+	QPalette palette = statusbar_r_status->palette ();
+	palette.setBrush (statusbar_r_status->backgroundRole(), QBrush (status_color));
+	statusbar_r_status->setAutoFillBackground (true);
+	statusbar_r_status->setPalette (palette);
 }
 
 void RKWardMainWindow::importData () {

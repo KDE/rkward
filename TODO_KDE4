@@ -32,9 +32,9 @@ rkcommandeditorwindow
 	- does highlighting work?
 
 rkward
-	- does DBUS work (i.e. opening help windows)?	
 	- does closing windows work
 	- does updating captions work (when switching windows / window url changes)?
+	- when selecting cancel while quitting, app still closes!
 
 output window
 	- does it reload all changed images?
@@ -84,10 +84,10 @@ rkobjectlistview:
 
 rkconsole:
 	- check whether all selection, editing, navigating really works as expected
-	- tab completion
 
 rkcommandlog:
 	- does the RMB-menu work?
+	- get rid of Q3TextEdit
 
 rkhtmlwindow:
 	- when this is open, we always seem to crash on close

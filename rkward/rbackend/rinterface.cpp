@@ -176,9 +176,9 @@ void RInterface::customEvent (QEvent *e) {
 		}
 		delete command;
 	} else if ((e->type () == RIDLE_EVENT)) {
-		RKWardMainWindow::getMain ()->setRStatus (false);	
+		RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Idle);	
 	} else if ((e->type () == RBUSY_EVENT)) {
-		RKWardMainWindow::getMain ()->setRStatus (true);
+		RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Busy);
 	} else if ((e->type () == R_EVAL_REQUEST_EVENT)) {
 		r_thread->pauseOutput (false); // we may be recursing downwards into event loops here. Hence we need to make sure, we don't create a deadlock
 		processREvalRequest (static_cast<REvalRequest *> (static_cast<QCustomEvent*> (e)->data ()));
