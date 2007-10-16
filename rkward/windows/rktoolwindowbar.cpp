@@ -86,6 +86,13 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 	show ();
 }
 
+void RKToolWindowBar::reclaimDetached (RKMDIWindow *window) {
+	RK_TRACE (APP);
+
+	window->hide();
+	window->setParent (container);
+}
+
 void RKToolWindowBar::removeWidget (RKMDIWindow *widget) {
 	RK_TRACE (APP);
 	RK_ASSERT (widget_to_id.contains (widget));
@@ -143,9 +150,8 @@ void RKToolWindowBar::hideWidget (RKMDIWindow *widget) {
 	if (!widget->active) return;
 	int id = widget_to_id[widget];
 
-	bool was_active_in_bar = isTabRaised (id);
+	bool was_active_in_bar = ((widget->parent () == container) && widget->isVisible ());
 	if (was_active_in_bar) {
-		RK_ASSERT (widget->isAttached ());
 		container->hide ();
 	}
 

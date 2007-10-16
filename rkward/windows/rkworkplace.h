@@ -153,7 +153,6 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 @returns a pointer to the workplace */
 	static RKWorkplace *mainWorkplace () { return main_workplace; };
 	void placeInToolWindowBar (RKMDIWindow *window, KMultiTabBar::KMultiTabBarPosition position);
-	void registerToolWindow (RKMDIWindow *window);
 signals:
 /** TODO: For future expansion. This signal is neither emitted nor used so far. It could be used to deactivate some options in the "Window" menu. Or maybe it can be removed? */
 	void lastWindowClosed ();

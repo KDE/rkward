@@ -85,3 +85,6 @@ rkobjectlistview:
 rkconsole:
 	- does it work at all?
 	- selection, editing, naivgating
+
+rkcommandlog:
+	- does the RMB-menu work?

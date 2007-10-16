@@ -86,6 +86,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 
 	KToolBar *toolbar = new KToolBar (this);
 	toolbar->setIconSize (QSize (16, 16));
+	toolbar->setToolButtonStyle (Qt::ToolButtonIconOnly);
 
 	urlbox = new KUrlComboBox (KUrlComboBox::Directories, true, this);
 	KUrlCompletion* cmpl = new KUrlCompletion (KUrlCompletion::DirCompletion);

@@ -82,7 +82,6 @@ bool RKMDIWindow::isActive () {
 void RKMDIWindow::activate (bool with_focus) {
 	RK_TRACE (APP);
 
-	// WORKAROUND for KMDI: it will always grab focus, so we need to make sure to release it again, if needed
 	QWidget *old_focus = qApp->focusWidget ();
 
 	if (isToolWindow ()) {
@@ -97,6 +96,7 @@ void RKMDIWindow::activate (bool with_focus) {
 	}
 
 	if (with_focus) {
+		old_focus->clearFocus ();
 		topLevelWidget ()->setActiveWindow ();
 		setFocus();
 	} else {
@@ -131,8 +131,10 @@ void RKMDIWindow::prepareToBeAttached () {
 void RKMDIWindow::prepareToBeDetached () {
 	RK_TRACE (APP);
 
-
-	// TODO: KDE4 do we still need this?
+	if (isToolWindow ()) {
+		RK_ASSERT (tool_window_bar);
+		tool_window_bar->hideWidget (this);
+	}
 }
 
 bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {

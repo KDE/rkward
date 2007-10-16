@@ -61,27 +61,25 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	main_workplace = this;
 
 	/* Splitter setup contains heavy copying from Kate's katemdi! */
-	KHBox *hbox = new KHBox (this);
-	tool_window_bars[KMultiTabBar::Left] = new RKToolWindowBar (KMultiTabBar::Left, hbox);
-
-	horiz_splitter = new QSplitter (Qt::Horizontal, hbox);
-	horiz_splitter->setOpaqueResize (KGlobalSettings::opaqueResize ());
-
-	tool_window_bars[KMultiTabBar::Left]->setSplitter (horiz_splitter);
-
-	KVBox *vbox = new KVBox (horiz_splitter);
-	horiz_splitter->setCollapsible (horiz_splitter->indexOf (vbox), false);
-	horiz_splitter->setStretchFactor (horiz_splitter->indexOf (vbox), 1);
+	KVBox *vbox = new KVBox (this);
 
 	tool_window_bars[KMultiTabBar::Top] = new RKToolWindowBar (KMultiTabBar::Top, vbox);
 	vert_splitter = new QSplitter (Qt::Vertical, vbox);
 	vert_splitter->setOpaqueResize (KGlobalSettings::opaqueResize ());
-
 	tool_window_bars[KMultiTabBar::Top]->setSplitter (vert_splitter);
-	wview = new RKWorkplaceView (vert_splitter);
 
-	vert_splitter->setCollapsible (vert_splitter->indexOf (wview), false);
-	vert_splitter->setStretchFactor(vert_splitter->indexOf (wview), 1);
+	KHBox *hbox = new KHBox (vert_splitter);
+	vert_splitter->setCollapsible (vert_splitter->indexOf (hbox), false);
+	vert_splitter->setStretchFactor (vert_splitter->indexOf (hbox), 1);
+
+	tool_window_bars[KMultiTabBar::Left] = new RKToolWindowBar (KMultiTabBar::Left, hbox);
+	horiz_splitter = new QSplitter (Qt::Horizontal, hbox);
+	horiz_splitter->setOpaqueResize (KGlobalSettings::opaqueResize ());
+	tool_window_bars[KMultiTabBar::Left]->setSplitter (horiz_splitter);
+
+	wview = new RKWorkplaceView (horiz_splitter);
+	horiz_splitter->setCollapsible (horiz_splitter->indexOf (wview), false);
+	horiz_splitter->setStretchFactor(horiz_splitter->indexOf (wview), 1);
 
 	tool_window_bars[KMultiTabBar::Bottom] = new RKToolWindowBar (KMultiTabBar::Bottom, vbox);
 	tool_window_bars[KMultiTabBar::Bottom]->setSplitter (vert_splitter);
@@ -91,7 +89,7 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 
 	// now add it all to this widget
 	QVBoxLayout *box = new QVBoxLayout (this);
-	box->addWidget (hbox);
+	box->addWidget (vbox);
 
 	history = new RKMDIWindowHistory (this);
 }
@@ -117,11 +115,13 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 
 	// all the rest is done, even if the window was previously "Attached", as this may also mean it was freshly created
 	window->state = RKMDIWindow::Attached;
-	if (!window->isToolWindow ()) {
+	if (window->isToolWindow ()) {
+		window->tool_window_bar->reclaimDetached (window);
+	} else {
 		view ()->addPage (window);
+		view ()->topLevelWidget ()->raise ();
+		view ()->topLevelWidget ()->setActiveWindow ();
 	}
-	view()->topLevelWidget ()->raise ();
-	view()->topLevelWidget ()->setActiveWindow ();
 
 	RK_ASSERT (window->getPart ());
 	RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ());
@@ -158,14 +158,11 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, KMultiTabBar::KMultiTabBarPosition position) {
 	RK_TRACE (APP);
 
-	tool_window_bars[position]->addWidget (window);
-}
-
-void RKWorkplace::registerToolWindow (RKMDIWindow *window) {
-	RK_TRACE (APP);
-
 	RK_ASSERT (window->isToolWindow ());
-	addWindow (window, true);
+	tool_window_bars[position]->addWidget (window);
+	if (windows.find (window) == windows.end ()) {	// must be new
+		addWindow (window, true);
+	}
 }
 
 bool RKWorkplace::openScriptEditor (const KUrl &url, bool use_r_highlighting, bool read_only, const QString &force_caption) {

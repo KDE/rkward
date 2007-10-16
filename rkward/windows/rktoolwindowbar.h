@@ -46,15 +46,16 @@ public:
 
 	void showWidget (RKMDIWindow *widget);
 	void hideWidget (RKMDIWindow *widget);
-
 private slots:
 	void tabClicked (int id);
 	void buttonPopupActivate (QAction *a);
 
 protected:
 	bool eventFilter (QObject *obj, QEvent *ev);
-
 private:
+friend class RKWorkplace;
+	void reclaimDetached (RKMDIWindow *window);
+
 	QMap<RKMDIWindow*, int> widget_to_id;
 	RKMDIWindow * idToWidget (int id);
 
