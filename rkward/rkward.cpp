@@ -189,7 +189,10 @@ void RKWardMainWindow::closeEvent (QCloseEvent *e) {
 
 	if (doQueryQuit ()) {
 		emit (aboutToQuitRKWard());
+		e->accept ();
 		new RKQuitAgent (this);
+	} else {
+		e->ignore ();
 	}
 }
 
@@ -507,10 +510,10 @@ bool RKWardMainWindow::doQueryQuit () {
 
 //	if (!RObjectList::getGlobalEnv ()->isEmpty ()) {
 	int res;
-	res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?\nRKWard will remain open if you press Cancel"), i18n ("Save Workspace?"));
+	res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?"), i18n ("Save Workspace?"), KStandardGuiItem::save (), KStandardGuiItem::discard (), KGuiItem (i18n ("Don't quit")));
 	if (res == KMessageBox::Yes) {
 		new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), false, RKSaveAgent::DoNothing);
-	} else if (res != KMessageBox::No) {
+	} else if (res == KMessageBox::Cancel) {
 		slotSetStatusReady ();
 		return false;
 	}
