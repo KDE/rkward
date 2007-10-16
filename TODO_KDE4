@@ -88,3 +88,7 @@ rkconsole:
 
 rkcommandlog:
 	- does the RMB-menu work?
+
+rkhtmlwindow:
+	- when this is open, we always seem to crash on close
+

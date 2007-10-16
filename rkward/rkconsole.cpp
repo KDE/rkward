@@ -313,11 +313,11 @@ bool RKConsole::doTabCompletionHelper (int line_num, const QString &line, int wo
 			if (i % 3) {
 				doc->insertText (KTextEditor::Cursor (doc->lines () - 1, 0), (*it).leftJustified (35));
 			} else {
-				doc->insertText (KTextEditor::Cursor (doc->lines (), 0), *it);
+				doc->insertLine (doc->lines (), *it);
 			}
 			++i;
 		}
-		doc->insertText (KTextEditor::Cursor (doc->lines (), 0), prefix + line);
+		doc->insertLine (doc->lines (), prefix + line);
 		cursorAtTheEnd ();
 	} else {
 		tab_key_pressed_before = true;
@@ -330,14 +330,13 @@ bool RKConsole::doTabCompletionHelper (int line_num, const QString &line, int wo
 			bool ok = true;
 			QChar current;
 			for (it = entries.constBegin (); it != entries.constEnd (); ++it) {
-				if (it == entries.constBegin ()) {
-					current = (*it).at(i);
-				}
-				QChar dummy = (*it).at(i);
-				if (dummy.isNull ()) {
+				if ((*it).length () <= i) {
 					ok = false;
 					break;
-				} else if (dummy != current) {
+				}
+				if (it == entries.constBegin ()) {
+					current = (*it).at(i);
+				} else if ((*it).at(i) != current) {
 					ok = false;
 					break;
 				}
