@@ -157,6 +157,10 @@ friend class RKConsolePart;
 	QAction* copy_literal_action;
 	QAction* paste_action;
 
+	KActionCollection *kate_edit_actions;
+	void triggerEditAction (QString name);
+	void setCursorClear (int line, int col);
+
 	void initializeActions (KActionCollection *ac);
 	void pipeCommandThroughConsoleLocal (RCommand *command);
 	bool command_was_piped;

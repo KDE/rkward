@@ -362,8 +362,6 @@ RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTe
 	arghints_popup_text = new QLabel (arghints_popup);
 	layout->addWidget (arghints_popup_text);
 	arghints_popup->hide ();
-	arghints_popup->setFocusProxy (view);
-	//arghints_popup->setFocusPolicy (Qt::NoFocus);
 }
 
 RKFunctionArgHinter::~RKFunctionArgHinter () {

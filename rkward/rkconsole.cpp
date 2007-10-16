@@ -79,42 +79,17 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	setFocusProxy (view);
 	setFocusPolicy (Qt::StrongFocus);
 	
-	/* We need to unplug kactions that were pluged to the KateViewInternal in kateview.cpp.
-	These actions incluse Key_Up, Key_Down, etc.
+	/* We need to unplug kactions that were plugged to the KateViewInternal in kateview.cpp.
+	These actions include Key_Up, Key_Down, etc.
 	It's a bit boring to do, but there is no way to do that another way yet.
 	Apparently, things will be different in KDE 4.*/
-
-// KDE4: are these still valid? Do we really need to unplug them, or is our key-press handling enough?
-/*	KActionCollection* ac = view->actionCollection ();
-
-	if (ac) {
-		unplugAction("move_line_up", ac);
-		unplugAction("move_line_down", ac);
-		unplugAction("move_cusor_left", ac);
-		unplugAction("beginning_of_line", ac);
-		unplugAction("backspace", ac);
-		unplugAction("delete_next_character", ac);
-		unplugAction("beginning_of_document", ac);
-		unplugAction("select_beginning_of_line", ac);
-		unplugAction("select_char_left", ac);
-		unplugAction("word_left", ac); //TODO deal with that one
-		unplugAction("select_word_left", ac); //TODO deal with that one
-		unplugAction("select_beginning_of_document", ac);
-		unplugAction("select_end_of_document", ac);
-		unplugAction("select_line_up", ac);
-		unplugAction("select_line_down", ac);
-		unplugAction("select_page_up", ac);
-		unplugAction("move_top_of_view", ac);
-		unplugAction("select_top_of_view", ac);
-		unplugAction("select_page_down", ac);
-		unplugAction("move_bottom_of_view", ac);
-		unplugAction("select_bottom_of_view", ac);
-		unplugAction("to_matching_bracket", ac);
-		unplugAction("select_matching_bracket", ac);
-		unplugAction("paste", ac);
+	kate_edit_actions = view->findChild<KActionCollection*> ("edit_actions");
+	if (kate_edit_actions) {
+		// so they never get activated by shortcuts
+		kate_edit_actions->clearAssociatedWidgets ();
 	} else {
-		RK_DO (qDebug ("Could not retrieve the view's action collection"), APP, DL_WARNING);
-	} */
+		RK_DO (qDebug ("Could not retrieve the katepart's edit action collection"), APP, DL_ERROR);
+	}
 
 	view->focusProxy()->installEventFilter(this);
 	view->installEventFilter(this);
@@ -154,6 +129,22 @@ RKConsole::~RKConsole () {
 	RKSettingsModuleConsole::saveCommandHistory (commands_history);
 }
 
+void RKConsole::triggerEditAction (QString name) {
+	RK_TRACE (APP);
+
+	if (!kate_edit_actions) return;
+	QAction *action = kate_edit_actions->action (name);
+	if (action) action->trigger ();
+	else RK_ASSERT (false);
+}
+
+void RKConsole::setCursorClear (int line, int col) {
+	RK_TRACE (APP);
+
+	view->setCursorPosition (KTextEditor::Cursor (line, col));
+	view->removeSelection ();
+}
+
 bool RKConsole::handleKeyPress (QKeyEvent *e) {
 
 	KTextEditor::Cursor c = view->cursorPosition ();
@@ -168,7 +159,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 
 	if (view->selection ()) {
 		KTextEditor::Range selrange = view->selectionRange ();
-		if (selrange.start ().column () < (doc->lines () - 1) || selrange.start ().line () < prefix.length ()) {
+		if (selrange.start ().line () < (doc->lines () - 1) || selrange.start ().column () < prefix.length ()) {
 			// There is a selection outside the command line
 			// Eat the key and beep (unless it's just a modifier key). Otherwise it might overwrite or delete the selection
 			if (e->key () - (e->key () & (Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier | Qt::KeypadModifier | Qt::GroupSwitchModifier))) {
@@ -213,23 +204,69 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 			cursorAtTheBeginning ();
 		}
 		return true;
-	}
+	} else if (e->key () == Qt::Key_End) {
+		if (e->modifiers () == Qt::ShiftModifier) {
+			int lastline = doc->lines () - 1;
+			int lastcol = doc->lineLength (lastline);
+			KTextEditor::Range newrange (lastline, pos, lastline, lastcol);
 
-	if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
+			if (view->selection ()) {
+				KTextEditor::Range oldrange = view->selectionRange ();
+				if (oldrange.end ().column () == pos) {
+					newrange.expandToRange (oldrange);
+				} else {
+					newrange.setBothColumns (lastcol);
+				}
+			}
+			view->setSelection (newrange);
+		} else {
+			cursorAtTheEnd ();
+		}
+		return true;
+	} else if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
 		hinter->hideArgHint ();
 		submitCommand ();
 		return true;
 	} else if (e->key () == Qt::Key_Left){
-		if(pos<=prefix.length ()){
-			return true;
+		if (pos <= prefix.length ()) return true;
+
+		if (e->modifiers () == Qt::NoModifier) setCursorClear (para, pos - 1);
+		else if (e->modifiers () == Qt::ShiftModifier) triggerEditAction ("select_char_left");
+		else if (e->modifiers () == Qt::ControlModifier) triggerEditAction ("word_left");
+		else if (e->modifiers () == (Qt::ControlModifier + Qt::ShiftModifier)) triggerEditAction ("select_word_left");
+		else return false;
+
+		return true;
+	} else if (e->key () == Qt::Key_Right){
+		if (pos >= doc->lineLength (para)) return true;
+
+		if (e->modifiers () == Qt::NoModifier) setCursorClear (para, pos + 1);
+		else if (e->modifiers () == Qt::ShiftModifier) triggerEditAction ("select_char_right");
+		else if (e->modifiers () == Qt::ControlModifier) triggerEditAction ("word_right");
+		else if (e->modifiers () == (Qt::ControlModifier + Qt::ShiftModifier)) triggerEditAction ("select_word_right");
+		else return false;
+
+		return true;
+	} else if (e->key () == Qt::Key_Backspace){
+		if(pos<=prefix.length ()) return true;
+
+		if (view->selection ()) {
+			doc->removeText (view->selectionRange ());
+			view->removeSelection ();
+		} else {
+			doc->removeText (KTextEditor::Range (para, pos, para, pos-1));
 		}
-	}
-	else if (e->key () == Qt::Key_Backspace){
-		if(pos<=prefix.length ()){
-			return true;
+		return true;
+	} else if (e->key () == Qt::Key_Delete) {
+		// not currently handled by an action in kateview internal, but better not rely on that fact!
+		if (view->selection ()) {
+			doc->removeText (view->selectionRange ());
+			view->removeSelection ();
+		} else {
+			doc->removeText (KTextEditor::Range (para, pos, para, pos + 1));
 		}
-	}
-	else if (e->key () == Qt::Key_Tab){
+		return true;
+	} else if (e->key () == Qt::Key_Tab) {
 		doTabCompletion ();
 		return true;
 	}
@@ -605,7 +642,9 @@ void RKConsole::tryNextInBatch (bool add_new_line) {
 			}
 			setUpdatesEnabled (true);
 		}
-		doc->insertLine (doc->lines (), prefix);		// somehow, it seems to be safer to do this after removing superfluous lines, than before
+		if (!doc->lines ()) doc->insertLine (0, QString ());
+		doc->insertText (KTextEditor::Cursor (doc->lines () - 1, 0), prefix);
+//		doc->insertLine (doc->lines (), prefix);		// somehow, it seems to be safer to do this after removing superfluous lines, than before
 		cursorAtTheEnd ();
 	}
 
@@ -636,9 +675,6 @@ void RKConsole::clear () {
 	RK_TRACE (APP);
 	doc->clear ();
 	tryNextInBatch ();
-// KDE 4: still needed?
-	// need this HACK to remove empty line at start
-	doc->removeText (KTextEditor::Range (0, 0, 1, 0));
 }
 
 void RKConsole::addCommandToHistory (const QString &command) {

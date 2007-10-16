@@ -83,8 +83,8 @@ rkobjectlistview:
 	- do the tool-tips for the objects work?
 
 rkconsole:
-	- does it work at all?
-	- selection, editing, naivgating
+	- check whether all selection, editing, navigating really works as expected
+	- tab completion
 
 rkcommandlog:
 	- does the RMB-menu work?
