@@ -31,6 +31,7 @@
 
 #include <qstring.h>
 #include <qapplication.h>
+#include <QDBusConnection>
 //Added by qt3to4:
 #include <QCustomEvent>
 #include <Q3ValueList>
@@ -517,7 +518,7 @@ int RThread::initialize () {
 	if (error) status |= SinkFail;
 	runCommandInternal ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", &error);
 	if (error) status |= SinkFail;
-//KDE4 TODO!	runCommandInternal ("options (htmlhelp=TRUE); options (browser=\"dcop " + kapp->dcopClient ()->appId () + " rkwardapp openHTMLHelp \")", &error);
+	runCommandInternal ("options (htmlhelp=TRUE); options (browser=\"qdbus " + QDBusConnection::sessionBus ().baseService () + " /MainApplication net.sf.rkward.openHTMLHelp\")", &error);
 	if (error) status |= OtherFail;
 	// TODO: error-handling?
 

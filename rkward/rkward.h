@@ -31,7 +31,7 @@ email                : tfry@users.sourceforge.net
 /** This base provides the DBUS-Interface for RKWardMainWindow */
 class RKWardDBUSInterface : virtual public QDBusAbstractAdaptor {
 	Q_OBJECT
-	Q_CLASSINFO("D-Bus Interface", "org.kde.rkward")
+	Q_CLASSINFO("D-Bus Interface", "net.sf.rkward")
 public:
 	RKWardDBUSInterface (QApplication *application);
 	~RKWardDBUSInterface () {};
