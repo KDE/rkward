@@ -24,11 +24,10 @@
 #include <qobject.h>
 #include <qevent.h>
 #include <qtimer.h>
-//Added by qt3to4:
+#include <QMenu>
 #include <QKeyEvent>
-#include <Q3PopupMenu>
 #include <QMouseEvent>
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include <klocale.h>
 #include <kaction.h>
@@ -61,7 +60,8 @@ RKConsole* RKConsole::main_console = 0;
 RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, RKMDIWindow::ConsoleWindow, tool_window, name) {
 	RK_TRACE (APP);
 
-	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	layout->setContentsMargins (0, 0, 0, 0);
 
 	// create a Kate-part as command-editor
 	KTextEditor::Editor* editor = KTextEditor::editor("katepart");
@@ -325,7 +325,7 @@ bool RKConsole::doTabCompletionHelper (int line_num, const QString &line, int wo
 		// do all entries have a common start?
 		QString common;
 		bool done = false;
-		unsigned int i = 0;
+		int i = 0;
 		while (!done) {
 			bool ok = true;
 			QChar current;
@@ -427,10 +427,11 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 	if (e->type () == QEvent::KeyPress) {
 		QKeyEvent *k = (QKeyEvent *)e;
 		return handleKeyPress (k);
-	} else if (e->type () == QEvent::MouseButtonPress){
+	} else if (e->type () == QEvent::MouseButtonPress) {
+		// we seem to need this, as the kateview will swallow the contextMenuEvent, otherwise
 		QMouseEvent *m = (QMouseEvent *)e;
 		if (m->button() == Qt::RightButton) {
-			doPopupMenu (m->globalPos ());
+			qApp->sendEvent (this, new QContextMenuEvent (QContextMenuEvent::Other, m->globalPos ()));
 			return (true);
 		}
 	} else if (e->type () == QEvent::MouseButtonRelease){
@@ -858,14 +859,14 @@ void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 	}
 }
 
-void RKConsole::doPopupMenu (const QPoint &pos) {
+void RKConsole::contextMenuEvent (QContextMenuEvent * event) {
 	RK_TRACE (APP);
 
 	copy_action->setEnabled (view->selection ());
 	copy_literal_action->setEnabled (view->selection ());
 	run_selection_action->setEnabled (view->selection ());
 
-	console_part->showPopupMenu (pos);
+	console_part->showPopupMenu (event->pos ());
 
 	run_selection_action->setEnabled (true);
 	copy_literal_action->setEnabled (true);
@@ -893,7 +894,7 @@ RKConsolePart::~RKConsolePart () {
 void RKConsolePart::showPopupMenu (const QPoint &pos) {
 	RK_TRACE (APP);
 
-	Q3PopupMenu *menu = static_cast<Q3PopupMenu *> (factory ()->container ("rkconsole_context_menu", this));
+	QMenu *menu = static_cast<QMenu *> (factory ()->container ("rkconsole_context_menu", this));
 
 	if (!menu) {
 		RK_ASSERT (false);

@@ -87,6 +87,8 @@ protected:
 	void rCommandDone (RCommand *command);
 /** reimplemented from RCommandReceiver::newOutput () to handle output of console commands */
 	void newOutput (RCommand *command, ROutput *output);
+/** reimplemented from QWidget to show the context menu */
+	void contextMenuEvent (QContextMenuEvent * event);
 private:
 friend class RKConsolePart;
 	bool eventFilter (QObject *o, QEvent *e);
@@ -166,8 +168,6 @@ friend class RKConsolePart;
 	bool command_was_piped;
 
 	RKConsolePart *console_part;
-
-	void doPopupMenu (const QPoint &pos);
 public slots:
 /** We intercept paste commands and get them executed through submitBatch.
 @sa submitBatch */
