@@ -134,10 +134,10 @@ RCommand *RInterface::runningCommand () {
 	 return r_thread->current_command;
 }
 
-void RInterface::customEvent (QCustomEvent *e) {
+void RInterface::customEvent (QEvent *e) {
 	RK_TRACE (RBACKEND);
 	if (e->type () == RCOMMAND_OUTPUT_EVENT) {
-		RThread::ROutputContainer *container = (static_cast <RThread::ROutputContainer *> (e->data ()));
+		RThread::ROutputContainer *container = (static_cast <RThread::ROutputContainer *> (static_cast<QCustomEvent*> (e)->data ()));
 		container->command->newOutput (container->output);
 		delete container;
 
@@ -149,10 +149,10 @@ void RInterface::customEvent (QCustomEvent *e) {
 			r_thread->pauseOutput (false);
 		}
 	} else if (e->type () == RCOMMAND_IN_EVENT) {
-		RKCommandLog::getLog ()->addInput (static_cast <RCommand *> (e->data ()));
-		RControlWindow::getControl ()->setCommandRunning (static_cast <RCommand *> (e->data ()));
+		RKCommandLog::getLog ()->addInput (static_cast <RCommand *> (static_cast<QCustomEvent*> (e)->data ()));
+		RControlWindow::getControl ()->setCommandRunning (static_cast <RCommand *> (static_cast<QCustomEvent*> (e)->data ()));
 	} else if (e->type () == RCOMMAND_OUT_EVENT) {
-		RCommand *command = static_cast <RCommand *> (e->data ());
+		RCommand *command = static_cast <RCommand *> (static_cast<QCustomEvent*> (e)->data ());
 		if (command->status & RCommand::Canceled) {
 			command->status |= RCommand::HasError;
 			ROutput *out = new ROutput;
@@ -181,10 +181,10 @@ void RInterface::customEvent (QCustomEvent *e) {
 		RKWardMainWindow::getMain ()->setRStatus (true);
 	} else if ((e->type () == R_EVAL_REQUEST_EVENT)) {
 		r_thread->pauseOutput (false); // we may be recursing downwards into event loops here. Hence we need to make sure, we don't create a deadlock
-		processREvalRequest (static_cast<REvalRequest *> (e->data ()));
+		processREvalRequest (static_cast<REvalRequest *> (static_cast<QCustomEvent*> (e)->data ()));
 	} else if ((e->type () == R_CALLBACK_REQUEST_EVENT)) {
 		r_thread->pauseOutput (false); // see above
-		processRCallbackRequest (static_cast<RCallbackArgs *> (e->data ()));
+		processRCallbackRequest (static_cast<RCallbackArgs *> (static_cast<QCustomEvent*> (e)->data ()));
 	} else if ((e->type () == RSTARTED_EVENT)) {
 		r_thread->unlock (RThread::Startup);
 	} else if ((e->type () > RSTARTUP_ERROR_EVENT)) {

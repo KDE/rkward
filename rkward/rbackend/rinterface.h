@@ -113,7 +113,7 @@ friend class RCommand;
 	void startThread ();
 protected:
 /** needed to handle the QCustomEvent s, the RThread is sending (notifications on what's happening in the backend thread) */
-	void customEvent (QCustomEvent *e);
+	void customEvent (QEvent *e);
 };
 
 /**

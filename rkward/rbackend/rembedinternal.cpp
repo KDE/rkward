@@ -25,8 +25,6 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #define FALSE (const bool)!0
 #include <qstring.h>
 #include <qtextcodec.h>
-//Added by qt3to4:
-#include <Q3CString>
 #include "../core/robject.h"
 #include "../debug.h"
 #undef TRUE
@@ -710,9 +708,8 @@ SEXP parseCommand (const QString &command_qstring, REmbedInternal::RKWardRError 
 	ParseStatus status = PARSE_NULL;
 	SEXP cv, pr;
 
-	int len = -1;
-	Q3CString localc = REmbedInternal::this_pointer->current_locale_codec->fromUnicode (command_qstring, len);		// needed so the string below does not go out of scope
-	const char *command = localc;
+	QByteArray localc = REmbedInternal::this_pointer->current_locale_codec->fromUnicode (command_qstring);		// needed so the string below does not go out of scope
+	const char *command = localc.data ();
 
 	PROTECT(cv=allocVector(STRSXP, 1));
 	SET_VECTOR_ELT(cv, 0, mkChar(command));  
@@ -885,9 +882,8 @@ hist == 1 iff R wants a parse-able input.
 		R_ReplDLLinit ();		// resets the parse buffer (things might be left over from a previous incomplete parse)
 		bool prev_iteration_was_incomplete = false;
 
-		int len = -1;
-		Q3CString localc = current_locale_codec->fromUnicode (command_qstring, len);		// needed so the string below does not go out of scope
-		current_buffer = localc;
+		QByteArray localc = current_locale_codec->fromUnicode (command_qstring);		// needed so the string below does not go out of scope
+		current_buffer = localc.data ();
 
 		repldll_buffer_transfer_finished = false;
 		Rboolean ok = (Rboolean) 1;	// set to false, if there is a jump during the R_ToplevelExec (i.e.. some sort of error)
