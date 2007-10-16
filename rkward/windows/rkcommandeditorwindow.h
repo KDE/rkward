@@ -30,7 +30,7 @@
 
 #include "../windows/rkmdiwindow.h"
 
-class Q3VBox;
+class QFrame;
 class QLabel;
 
 /** classes wishing to use RKFunctionArgHinter should derive from this, and implement provideContext () */
@@ -67,7 +67,7 @@ private:
 	RKScriptContextProvider *provider;
 	KTextEditor::View *view;
 
-	Q3VBox *arghints_popup;
+	QFrame *arghints_popup;
 	QLabel *arghints_popup_text;
 };
 

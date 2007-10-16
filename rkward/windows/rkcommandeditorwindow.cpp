@@ -35,7 +35,7 @@
 //Added by qt3to4:
 #include <Q3HBoxLayout>
 #include <QCloseEvent>
-#include <Q3Frame>
+#include <QFrame>
 #include <Q3ValueList>
 #include <QLabel>
 #include <QKeyEvent>
@@ -353,13 +353,17 @@ RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTe
 		obj->installEventFilter (this);
 	}
 
-//KDE4: we could/should use KTextEditor::TextHintInterface
-	arghints_popup = new Q3VBox (0, 0, Qt::Popup);
-	arghints_popup->setFrameStyle (Q3Frame::Box | Q3Frame::Plain);
+	arghints_popup = new QFrame (0, Qt::ToolTip);
+	QVBoxLayout *layout = new QVBoxLayout (arghints_popup);
+	layout->setContentsMargins (2, 2, 2, 2);
+	arghints_popup->setFrameStyle (QFrame::Plain);
+	arghints_popup->setFrameShape (QFrame::Box);
 	arghints_popup->setLineWidth (1);
 	arghints_popup_text = new QLabel (arghints_popup);
+	layout->addWidget (arghints_popup_text);
 	arghints_popup->hide ();
 	arghints_popup->setFocusProxy (view);
+	//arghints_popup->setFocusPolicy (Qt::NoFocus);
 }
 
 RKFunctionArgHinter::~RKFunctionArgHinter () {
@@ -392,6 +396,14 @@ void RKFunctionArgHinter::tryArgHintNow () {
 	int brace_level = 1;
 	int i = cursor_pos;
 
+	// fix up seems to be needed
+	if (current_context.isEmpty ()) {
+		hideArgHint ();
+		return;
+	}
+	if (i >= current_context.size ()) i = current_context.size () -1;
+	if (i < 0) i = 0;
+
 	while (true) {
 		if (current_context.at (i) == QChar (')')) {
 			brace_level++;
@@ -403,9 +415,9 @@ void RKFunctionArgHinter::tryArgHintNow () {
 		--i;
 		if (i < 0) {
 			bool have_context = provider->provideContext (++line_rev, &current_line, &cursor_pos);
-			if (!have_context) break;
+			if ((!have_context) || (current_line.isEmpty ())) break;
 
-			RK_ASSERT (cursor_pos < 0);
+			RK_ASSERT (cursor_pos > 0);
 			current_context.prepend (current_line);
 			i = current_line.length () - 1;
 		}

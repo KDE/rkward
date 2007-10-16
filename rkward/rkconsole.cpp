@@ -637,9 +637,8 @@ void RKConsole::clear () {
 	doc->clear ();
 	tryNextInBatch ();
 // KDE 4: still needed?
-/*	// need this HACK to remove empty line at start
-	selectionInterface (doc)->setSelection (0, 0, 1, 0);
-	selectionInterface (doc)->removeSelectedText (); */
+	// need this HACK to remove empty line at start
+	doc->removeText (KTextEditor::Range (0, 0, 1, 0));
 }
 
 void RKConsole::addCommandToHistory (const QString &command) {
