@@ -48,6 +48,7 @@
 #include <kxmlguifactory.h>
 #include <kactioncollection.h>
 #include <krecentfilesaction.h>
+#include <khbox.h>
 
 // application specific includes
 #include "rkward.h"
@@ -428,21 +429,16 @@ void RKWardMainWindow::partRemoved (KParts::Part *part) {
 void RKWardMainWindow::initStatusBar () {
 	RK_TRACE (APP);
 
-	// why do we need this QHBox, when the statusbar already does horizontal layout?
-	// Well, apparently the stretch factors do not survive a hide/show, so we need some way to work around this
-	Q3HBox *statusbar_hbox = new Q3HBox (statusBar ());
-	statusbar_action = new KSqueezedTextLabel (statusbar_hbox);
-	statusbar_action->hide ();
-	statusbar_ready = new QLabel (i18n ("Ready."), statusbar_hbox);
-	statusbar_cwd = new KSqueezedTextLabel (statusbar_hbox);
+	statusbar_ready = new QLabel (i18n ("Ready."), statusBar ());
+	statusBar ()->addWidget (statusbar_ready);
+	statusbar_cwd = new KSqueezedTextLabel (statusBar ());
 	statusbar_cwd->setAlignment (Qt::AlignRight);
-	statusbar_hbox->setStretchFactor (statusbar_cwd, 1);
+	statusBar ()->addWidget (statusbar_cwd, 10);
 	updateCWD ();
-	statusBar ()->addWidget (statusbar_hbox, 1);
 
 	statusbar_r_status = new QLabel (statusBar ());
 	statusbar_r_status->setFixedHeight (statusBar ()->fontMetrics ().height () + 2);
-	statusBar ()->addWidget (statusbar_r_status, 0, true);
+	statusBar ()->addPermanentWidget (statusbar_r_status, 0);
 	setRStatus (Starting);
 
 	connect (actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
@@ -615,17 +611,13 @@ void RKWardMainWindow::updateCWD () {
 void RKWardMainWindow::slotSetStatusBarText (const QString &text) {
 	RK_TRACE (APP);
 
+//KDE4: still needed?
 	QString ntext = text.trimmed ();
 	ntext.replace ("<qt>", "");	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
 	if (ntext.isEmpty ()) {
-		statusbar_action->hide ();
-		statusbar_ready->show ();
-		statusbar_cwd->show ();
+		statusBar ()->clearMessage ();
 	} else {
-		statusbar_action->show ();
-		statusbar_ready->hide ();
-		statusbar_cwd->hide ();
-		statusbar_action->setText (ntext);
+		statusBar ()->showMessage (ntext);
 	}
 }
 

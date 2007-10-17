@@ -62,9 +62,9 @@ class RKMenuList;
 class RKCommandEditorWindow;
 class KMdiToolViewAccessor;
 class RKMDIWindow;
-class Q3HBox;
 class RKTopLevelWindowGUI;
 class KRecentFilesAction;
+class KSqueezedTextLabel;
 
 struct RKWardStartupOptions {
 	KUrl *initial_url;	/**< The workspace file to load on startup. If 0, show a dialog asking what to do. **/
@@ -172,9 +172,8 @@ public slots:
 	void partRemoved (KParts::Part *part);
 private:
 	QLabel* statusbar_r_status;
-	QLabel* statusbar_cwd;
+	KSqueezedTextLabel* statusbar_cwd;
 	QLabel* statusbar_ready;
-	QLabel* statusbar_action;
 	KParts::PartManager *part_manager;
 
 	// KAction pointers to enable/disable actions

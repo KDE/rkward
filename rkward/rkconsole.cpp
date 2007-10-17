@@ -380,8 +380,10 @@ void RKConsole::doTabCompletion () {
 		do_file_completion = true;
 
 		// however, some characters around quotes signify it's probably not really filename string
-		char char_before_quote = current_line.at (quote_start - 1).toLatin1();
-		char char_after_quote = current_line.at (quote_start + 1).toLatin1();
+		char char_before_quote = ' ';
+		if (quote_start > 1) char_before_quote = current_line.at (quote_start - 1).toLatin1();
+		char char_after_quote = ' ';
+		if (quote_start <= (current_line.length() - 2)) char_after_quote = current_line.at (quote_start + 1).toLatin1();
 		// these signifiy it might be an object in a list somewhere, e.g. my.data$"varname"
 		if ((char_before_quote == '[') || (char_before_quote == '$') || (char_before_quote == ':')) do_file_completion = false;
 		// these indicate, the quote has likely ended rather that started

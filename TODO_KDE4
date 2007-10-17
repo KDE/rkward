@@ -34,6 +34,7 @@ rkcommandeditorwindow
 rkward
 	- does closing windows work
 	- does updating captions work (when switching windows / window url changes)?
+	- status bar does not show working dir
 
 output window
 	- does it reload all changed images?
@@ -83,6 +84,7 @@ rkobjectlistview:
 
 rkconsole:
 	- check whether all selection, editing, navigating really works as expected
+	- is tab completion for file names still crashy?
 
 rkcommandlog:
 	- does the RMB-menu work?
