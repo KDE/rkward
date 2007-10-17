@@ -29,12 +29,8 @@
 #include <qfont.h>
 #include <qlayout.h>
 #include <qsplitter.h>
-#include <q3popupmenu.h>
 #include <qobject.h>
-//Added by qt3to4:
-#include <Q3HBoxLayout>
-#include <QMouseEvent>
-#include <QEvent>
+#include <QMenu>
 
 #include <klocale.h>
 #include <kactioncollection.h>
@@ -48,11 +44,12 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 	RK_TRACE (APP);
 
 	log_view = new RKCommandLogView (this);
-	log_view->setTextFormat (Qt::PlainText);
+	log_view->setLineWrapMode (QTextEdit::NoWrap);
 	log_view->setUndoRedoEnabled (false);
 	log_view->setReadOnly (true);
 
-	Q3HBoxLayout *layout = new Q3HBoxLayout (this, 0, -1, "layout");
+	QHBoxLayout *layout = new QHBoxLayout (this);
+	layout->setContentsMargins (0, 0, 0, 0);
 	layout->addWidget (log_view);
 
 	setCaption (i18n ("Command log"));
@@ -65,6 +62,10 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 	setPart (new RKCommandLogPart (this));
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
+
+// KDE4 TODO
+	connect (RKSettings::tracker (), SIGNAL (maxCommandLogLinesChanged()), this, SLOT (maxCommandLogLinesChanged()));
+	maxCommandLogLinesChanged ();
 }
 
 RKCommandLog::~RKCommandLog(){
@@ -87,21 +88,21 @@ void RKCommandLog::addInputNoCheck (RCommand *command) {
 
 // TODO: make colors/styles configurable
 	if (command->type () & RCommand::User) {
-		log_view->setColor (Qt::red);
+		log_view->setTextColor (Qt::red);
 	} else if (command->type () & RCommand::Sync) {
-		log_view->setColor (Qt::gray);
+		log_view->setTextColor (Qt::gray);
 	} else if (command->type () & RCommand::Plugin) {
-		log_view->setColor (Qt::blue);
+		log_view->setTextColor (Qt::blue);
 	}
 
-	log_view->setItalic (true);
+	log_view->setFontItalic (true);
 
-	log_view->append (command->command () + '\n');
+	log_view->insert (command->command () + '\n');
 
 	checkRaiseWindow (command);
 	linesAdded ();
 
-	log_view->setItalic (false);
+	log_view->setFontItalic (false);
 
 	command_input_shown = command->id ();
 }
@@ -110,24 +111,28 @@ void RKCommandLog::addOutputNoCheck (RCommand *command, ROutput *output) {
 	RK_TRACE (APP);
 
 	if (command->type () & RCommand::User) {
-		log_view->setColor (Qt::red);
+		log_view->setTextColor (Qt::red);
 	} else if (command->type () & RCommand::Sync) {
-		log_view->setColor (Qt::gray);
+		log_view->setTextColor (Qt::gray);
 	} else if (command->type () & RCommand::Plugin) {
-		log_view->setColor (Qt::blue);
+		log_view->setTextColor (Qt::blue);
 	}
-	log_view->setBold (true);
+	log_view->setFontWeight (QFont::Bold);
 	if (output->type != ROutput::Output) {
-		log_view->setParagraphBackgroundColor (log_view->paragraphs () - 1, QColor (255, 200, 200));
+		QTextBlockFormat f;
+		f.setBackground (QBrush (QColor (255, 200, 200)));
+		log_view->textCursor ().mergeBlockFormat (f);
 	}
 
 	log_view->insert (output->output);
 
 	if (output->type != ROutput::Output) {
-		log_view->setParagraphBackgroundColor (log_view->paragraphs () - 1, QColor (255, 255, 255));
+		QTextBlockFormat f;
+		f.setBackground (QBrush (QColor (255, 255, 255)));
+		log_view->textCursor ().mergeBlockFormat (f);
 	}
-	log_view->setBold (false);
-	log_view->setColor (Qt::black);
+	log_view->setFontWeight (QFont::Normal);
+	log_view->setTextColor (Qt::black);
 
 	checkRaiseWindow (command);
 	linesAdded ();
@@ -185,27 +190,21 @@ void RKCommandLog::rCommandDone (RCommand *command) {
 		}
 	}
 
-	if (RKSettingsModuleWatch::shouldShowOutput (command)) log_view->append ("\n");
+	if (RKSettingsModuleWatch::shouldShowOutput (command)) log_view->insert ("\n");
+}
+
+void RKCommandLog::maxCommandLogLinesChanged () {
+	RK_TRACE (APP);
+
+	log_view->document ()->setMaximumBlockCount (RKSettingsModuleWatch::maxLogLines ());
 }
 
 void RKCommandLog::linesAdded () {
 	RK_TRACE (APP);
 
-// limit number of lines shown
-	if (RKSettingsModuleWatch::maxLogLines ()) {
-		uint c = (uint) log_view->paragraphs ();
-		if (c > RKSettingsModuleWatch::maxLogLines ()) {
-			log_view->setUpdatesEnabled (false);			// major performance boost while removing lines!
-			log_view->setSelection (0, 0, c - RKSettingsModuleWatch::maxLogLines (), 0, 1);
-			log_view->removeSelectedText (1);
-			log_view->setUpdatesEnabled (true);
-			log_view->update ();
-		}
-	}
-
 // scroll to bottom
-	log_view->moveCursor (Q3TextEdit::MoveEnd, false);
-	log_view->scrollToBottom ();
+	log_view->moveCursor (QTextCursor::End, QTextCursor::MoveAnchor);
+	log_view->ensureCursorVisible ();
 }
 
 void RKCommandLog::configureLog () {
@@ -216,12 +215,11 @@ void RKCommandLog::configureLog () {
 void RKCommandLog::clearLog () {
 	RK_TRACE (APP);
 
-	log_view->setText (QString::null);
+	log_view->setPlainText (QString ());
 
 	// set a fixed width font
 	QFont font ("Courier");
 	log_view->setCurrentFont (font);
-	log_view->setWordWrap (Q3TextEdit::NoWrap);
 }
 
 void RKCommandLog::runSelection () {
@@ -234,39 +232,26 @@ void RKCommandLog::runSelection () {
 /////////////////////// BEGIN RKCommandLogView ////////////////////////
 
 
-RKCommandLogView::RKCommandLogView (RKCommandLog *parent) : Q3TextEdit (parent) {
+RKCommandLogView::RKCommandLogView (RKCommandLog *parent) : QTextEdit (parent) {
 	RK_TRACE (APP);
-
-// KDE 4: disabled for now. And WTF was it supposed to be good for?
-/*	const QList<QObject*> list = children ();
-	QList<QObject*>::const_iterator it = list.constBegin ();
-
-	while (it != list.constEnd()) {
-		(*it)->installEventFilter (this);
-		++it;
-	} */
 }
 
 RKCommandLogView::~RKCommandLogView () {
 	RK_TRACE (APP);
 }
 
-bool RKCommandLogView::eventFilter (QObject *o, QEvent *e) {
-	if (e->type () == QEvent::MouseButtonPress){
-		QMouseEvent *m = (QMouseEvent *)e;
-		if (m->button() == Qt::RightButton) {
-			emit (popupMenuRequest (m->globalPos ()));
-			return (true);
-		}
-	}
+void RKCommandLogView::contextMenuEvent (QContextMenuEvent *event) {
+	RK_TRACE (APP);
 
-	return Q3TextEdit::eventFilter (o, e);
+	emit (popupMenuRequest (event->globalPos ()));
+	event->accept ();
 }
 
 void RKCommandLogView::selectAll () {
 	RK_TRACE (APP);
 
-	Q3TextEdit::selectAll (true);
+	moveCursor (QTextCursor::Start, QTextCursor::MoveAnchor);
+	moveCursor (QTextCursor::Start, QTextCursor::KeepAnchor);
 }
 
 //////////////////////// END RKCommandLogView /////////////////////////
@@ -304,7 +289,7 @@ RKCommandLogPart::~RKCommandLogPart () {
 void RKCommandLogPart::doPopupMenu (const QPoint &pos) {
 	RK_TRACE (APP);
 
-	Q3PopupMenu *menu = static_cast<Q3PopupMenu *> (factory ()->container ("rkcommandlog_context_menu", this));
+	QMenu *menu = static_cast<QMenu *> (factory ()->container ("rkcommandlog_context_menu", this));
 	copy->setEnabled (log->getView ()->hasSelectedText ());
 	run_selection->setEnabled (log->getView ()->hasSelectedText ());
 

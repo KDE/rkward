@@ -19,19 +19,14 @@
 #define RKCOMMANDLOG_H
 
 #include <qstring.h>
-#include <q3textedit.h>
-//Added by qt3to4:
-#include <QEvent>
+#include <qtextedit.h>
 
 #include "rkmdiwindow.h"
 #include "../rbackend/rcommandreceiver.h"
 
 class RCommand;
 class ROutput;
-class QPushButton;
 class Q3TextEdit;
-class RKCommandEditor;
-class Q3BoxLayout;
 class RKCommandLogView;
 class RKCommandLogPart;
 
@@ -62,6 +57,7 @@ public slots:
 /** clears the log_view-window */
 	void clearLog ();
 	void runSelection ();
+	void maxCommandLogLinesChanged ();
 private:
 	void addInputNoCheck (RCommand *command);
 	void addOutputNoCheck (RCommand *command, ROutput *output);
@@ -79,7 +75,7 @@ friend class RKWardMainWindow;
 };
 
 /** Simply subclass of QTextEdit to override context menu handling */
-class RKCommandLogView : public Q3TextEdit {
+class RKCommandLogView : public QTextEdit {
 	Q_OBJECT
 public:
 	RKCommandLogView (RKCommandLog *parent);
@@ -89,7 +85,7 @@ public slots:
 signals:
 	void popupMenuRequest (const QPoint &pos);
 protected:
-	bool eventFilter (QObject *o, QEvent *e);
+	void contextMenuEvent (QContextMenuEvent *event);
 };
 
 #include <kparts/part.h>

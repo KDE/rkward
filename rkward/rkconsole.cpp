@@ -397,7 +397,7 @@ void RKConsole::doTabCompletion () {
 			QString current_name = current_line.mid (quote_start + 1, quote_end - quote_start - 1);
 			KUrlCompletion comp (KUrlCompletion::FileCompletion);
 			comp.setDir (QDir::currentPath ());
-			QString test = comp.makeCompletion (current_name);
+			comp.makeCompletion (current_name);
 	
 			if (doTabCompletionHelper (current_line_num, current_line, quote_start+1, quote_end, comp.allMatches ())) return;
 		}

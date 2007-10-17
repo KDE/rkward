@@ -85,10 +85,8 @@ rkobjectlistview:
 rkconsole:
 	- check whether all selection, editing, navigating really works as expected
 	- is tab completion for file names still crashy?
-
-rkcommandlog:
-	- does the RMB-menu work?
-	- get rid of Q3TextEdit
+		- currently, problem seems to be inside KUrlCompletion
+	- crash when max number of lines reached
 
 rkhtmlwindow:
 	- when this is open, we always seem to crash on close

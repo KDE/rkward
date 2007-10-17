@@ -88,8 +88,10 @@ public:
 	~RKSettingsTracker ();
 
 	void settingsChangedObjectBrowser ();
+	void settingsChangedMaxCommandLogLines () { maxCommandLogLinesChanged (); };
 signals:
 	void objectBrowserSettingsChanged ();
+	void maxCommandLogLinesChanged ();
 };
 
 #endif
