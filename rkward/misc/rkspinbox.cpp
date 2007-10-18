@@ -26,6 +26,8 @@
 #include "../debug.h"
 
 RKSpinBox::RKSpinBox (QWidget *parent) : QSpinBox (parent) {
+	RK_TRACE (MISC);
+
 	validator = 0;
 	mode = Integer;
 	updating = updating_b = false;
@@ -38,15 +40,21 @@ RKSpinBox::RKSpinBox (QWidget *parent) : QSpinBox (parent) {
 }
 
 RKSpinBox::~RKSpinBox () {
+	RK_TRACE (MISC);
+
 	delete validator;
 }
 
 void RKSpinBox::setRealValue (double new_value) {
+	RK_TRACE (MISC);
+
 	real_value = new_value;
 	setValue (0);
 }
 
 void RKSpinBox::setIntValue (int new_value) {
+	RK_TRACE (MISC);
+
 	int_value = new_value;
 	setValue (0);
 }
@@ -81,14 +89,17 @@ int RKSpinBox::valueFromText (const QString & text) const {
 }
 
 void RKSpinBox::stepBy (int steps) {
+	RK_TRACE (MISC);
 	setValue (steps);
 }
 
-QValidator::State RKSpinBox::validate (QString &input, int &pos ) const {
+QValidator::State RKSpinBox::validate (QString &input, int &pos) const {
+	RK_TRACE (MISC);
 	return (validator->validate (input, pos));
 }
 
 void RKSpinBox::updateValue (int change) {
+	RK_TRACE (MISC);
 	if (mode == Real) {
 		if (change != 0) {
 			setValue (0);
@@ -126,6 +137,7 @@ void RKSpinBox::updateValue (int change) {
 }
 
 void RKSpinBox::setRealMode (double min, double max, double initial, int default_precision, int max_precision) {
+	RK_TRACE (MISC);
 	RK_ASSERT ((max_precision >= default_precision) && (max_precision <= 8));
 
 	mode = Real;
@@ -150,7 +162,10 @@ void RKSpinBox::setRealMode (double min, double max, double initial, int default
 }
 
 void RKSpinBox::setIntMode (int min, int max, int initial) {
+	RK_TRACE (MISC);
 	QValidator *new_validator = new QIntValidator (min, max, this);
+	delete validator;
+	validator = new_validator;
 
 	/* see setRealMode for comments */
 
@@ -162,8 +177,6 @@ void RKSpinBox::setIntMode (int min, int max, int initial) {
 	int_max = max;
 	int_value = initial;
 
-	delete validator;
-	validator = new_validator;
 	mode = Integer;
 
 	setValue (0);
