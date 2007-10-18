@@ -38,8 +38,8 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 	// create layout and label
 	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
 
-	label = new QLabel (QString::null, this);
-	label->setAlignment (Qt::AlignLeft | Qt::ExpandTabs | Qt::WordBreak);
+	label = new QLabel (QString (), this);
+	label->setWordWrap (true);
 	vbox->addWidget (label);
 
 	QString initial_text;

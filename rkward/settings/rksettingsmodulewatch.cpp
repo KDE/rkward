@@ -123,23 +123,23 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
 
 	QLabel *label = new QLabel (i18n ("For now, settings only apply to new commands. All previous commands remain visible/invisible."), this);
-	label->setAlignment (Qt::AlignLeft | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+	label->setWordWrap (true);
 	vbox->addWidget (label);
 	vbox->addSpacing (10);
 	
 	Q3GridLayout *grid = new Q3GridLayout (vbox, 5, 5);
 
 	label = new QLabel (i18n ("always show command"), this);
-	label->setAlignment (Qt::AlignLeft | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+	label->setWordWrap (true);
 	grid->addWidget (label, 0, 1);
 	label = new QLabel (i18n ("always show result"), this);
-	label->setAlignment (Qt::AlignLeft | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+	label->setWordWrap (true);
 	grid->addWidget (label, 0, 2);
 	label = new QLabel (i18n ("show errors"), this);
-	label->setAlignment (Qt::AlignLeft | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+	label->setWordWrap (true);
 	grid->addWidget (label, 0, 3);
 	label = new QLabel (i18n ("show/raise window"), this);
-	label->setAlignment (Qt::AlignLeft | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+	label->setWordWrap (true);
 	grid->addWidget (label, 0, 4);
 	
 	user_filter_boxes = addFilterSettings (this, grid, 1, i18n ("User commands"), user_filter);

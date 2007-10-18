@@ -136,7 +136,7 @@ ShowEditTextFileDialog::ShowEditTextFileDialog (const QString &text, const QStri
 	setMainWidget (page);
 	Q3VBoxLayout *layout = new Q3VBoxLayout (page, 0, spacingHint ());
 	QLabel *label = new QLabel (text, page);
-	label->setAlignment (Qt::WordBreak | Qt::AlignLeft | Qt::AlignVCenter | Qt::ExpandTabs);
+	label->setWordWrap (true);
 	layout->addWidget (label);
 
 	setButtonText (KDialog::Ok, i18n ("Done"));

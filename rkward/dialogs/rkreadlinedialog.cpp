@@ -66,7 +66,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 	}
 
 	QLabel *promptl = new QLabel (prompt, page);
-	promptl->setAlignment (Qt::WordBreak | promptl->alignment ());
+	promptl->setWordWrap (true);
 
 	input = new QLineEdit (QString (), page);
 	input->setMinimumWidth (fontMetrics ().maxWidth ()*20);

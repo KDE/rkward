@@ -256,7 +256,7 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	
 	Q3VBoxLayout *mvbox = new Q3VBoxLayout (this, 0, KDialog::spacingHint ());
 	QLabel *label = new QLabel (i18n ("There are no safeguards against removing essential packages. For example, unloading \"rkward\" will prevent this application from running properly. Please be careful about the packages you unload."), this);
-	label->setAlignment (Qt::AlignLeft | Qt::AlignVCenter | Qt::TextExpandTabs | Qt::TextWordWrap);
+	label->setWordWrap (true);
 	mvbox->addWidget (label);
 	
 	Q3HBoxLayout *hbox = new Q3HBoxLayout (mvbox, KDialog::spacingHint ());
@@ -463,7 +463,7 @@ UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p
 	
 	Q3VBoxLayout *mvbox = new Q3VBoxLayout (this, 0, KDialog::spacingHint ());
 	QLabel *label = new QLabel (i18n ("In order to find out, which of your installed packaged have an update available, click \"Fetch List\". This feature requires a working internet connection."), this);
-	label->setAlignment (Qt::AlignLeft | Qt::AlignVCenter | Qt::TextExpandTabs | Qt::TextWordWrap);
+	label->setWordWrap (true);
 	mvbox->addWidget (label);
 	
 	Q3HBoxLayout *hbox = new Q3HBoxLayout (mvbox, KDialog::spacingHint ());
@@ -614,7 +614,7 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget 
 	
 	Q3VBoxLayout *mvbox = new Q3VBoxLayout (this, 0, KDialog::spacingHint ());
 	QLabel *label = new QLabel (i18n ("Many packages are available on CRAN (Comprehensive R Archive Network), and other repositories (click \"Configure Repositories\" to add more sources). Click \"Fetch List\" to find out, which packages are available. This feature requires a working internet connection."), this);
-	label->setAlignment (Qt::AlignLeft | Qt::AlignVCenter | Qt::TextExpandTabs | Qt::TextWordWrap);
+	label->setWordWrap (true);
 	mvbox->addWidget (label);
 	Q3HBoxLayout *hbox = new Q3HBoxLayout (mvbox, KDialog::spacingHint ());
 	

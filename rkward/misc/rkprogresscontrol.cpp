@@ -202,7 +202,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
 
 	QLabel *label = new QLabel (text, this);
-	label->setAlignment (Qt::AlignLeft | Qt::ExpandTabs | Qt::WordBreak);
+	label->setWordWrap (true);
 	vbox->addWidget (label);
 
 	error_indicator = new QLabel (i18n ("<b>There have been errors and / or warnings! See below for a transcript</b>"), this);

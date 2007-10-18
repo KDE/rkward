@@ -230,7 +230,7 @@ EditLabelsDialog::EditLabelsDialog (QWidget *parent, RKVariable *var, int mode) 
 	KVBox *mainvbox = new KVBox ();
 	setMainWidget (mainvbox);
 	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1 (the index column is read only). To remove levels at the end of the list, just set them to empty."), mainvbox);
-	label->setAlignment (Qt::AlignLeft | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+	label->setWordWrap (true);
 
 	Q3HBoxLayout *hbox = new Q3HBoxLayout (mainvbox, KDialog::spacingHint ());
 

@@ -106,14 +106,9 @@ void RKSettings::initModules () {
 	modules.append (new RKSettingsModuleObjectBrowser (this, this));
 	
 	ModuleList::const_iterator it;
-	KVBox *page;
 	int i=0;
 	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
-		page = new KVBox ();
-		pages[i++] = addPage (page, (*it)->caption ());
-
-// this is somewhat ugly, but works fine (KDE4: does it still?)
-		(*it)->setParent (page);
+		pages[i++] = addPage (*it, (*it)->caption ());
 		(*it)->show ();
 	}
 	RK_ASSERT (i == (NumPages - 1));

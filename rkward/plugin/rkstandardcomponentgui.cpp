@@ -305,7 +305,7 @@ void RKStandardComponentWizard::addLastPage () {
 		RKComponent *last_page = stack->addPage (component);
 		Q3VBoxLayout *vbox = new Q3VBoxLayout (last_page, RKGlobals::spacingHint ());
 		QLabel *label = new QLabel (i18n ("Below you can see the command(s) corresponding to the settings you made. Click 'Submit' to run the command(s)."), last_page);
-		label->setAlignment (Qt::AlignLeft | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+		label->setWordWrap (true);
 		code_display = new RKCommandEditorWindow (last_page, true);
 		vbox->addWidget (label);
 		vbox->addWidget (code_display);
