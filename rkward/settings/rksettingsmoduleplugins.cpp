@@ -20,22 +20,23 @@
 #include <kconfig.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
+#include <khbox.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <q3buttongroup.h>
+#include <qbuttongroup.h>
 #include <qradiobutton.h>
-#include <q3vgroupbox.h>
+#include <qgroupbox.h>
 #include <qcheckbox.h>
-#include <q3hbox.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include "../rkward.h"
 #include "../rkglobals.h"
 #include "../misc/multistringselector.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkspinbox.h"
+
+#include "../debug.h"
 
 // static members
 QStringList RKSettingsModulePlugins::plugin_maps;
@@ -44,41 +45,64 @@ bool RKSettingsModulePlugins::show_code;
 int RKSettingsModulePlugins::code_size;
 
 RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
-	Q3VBoxLayout *main_vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
+	RK_TRACE (SETTINGS);
+
+	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 	
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 	
 	QLabel *label = new QLabel (i18n ("Some plugins are available with both, a wizard-like interface and a traditional dialog interface. If both are available, which mode of presentation do you prefer?"), this);
-	label->setAlignment (Qt::AlignLeft | Qt::AlignVCenter | Qt::ExpandTabs | Qt::WordBreak);
+	label->setWordWrap (true);
 	main_vbox->addWidget (label);
-	
-	button_group = new Q3ButtonGroup (this);
-	button_group->setColumnLayout (0, Qt::Vertical);
-	button_group->layout()->setSpacing (6);
-	button_group->layout()->setMargin (11);
-	Q3VBoxLayout *group_layout = new Q3VBoxLayout(button_group->layout());
-	group_layout->addWidget (new QRadioButton (i18n ("Always prefer dialogs"), button_group));
-	group_layout->addWidget (new QRadioButton (i18n ("Prefer recommended interface"), button_group));
-	group_layout->addWidget (new QRadioButton (i18n ("Always prefer wizards"), button_group));
-	button_group->setButton (static_cast<int> (interface_pref));
-	connect (button_group, SIGNAL (clicked (int)), this, SLOT (settingChanged (int)));
-	main_vbox->addWidget (button_group);
-	
+
+
+	QGroupBox* button_box = new QGroupBox (this);
+	QVBoxLayout* group_layout = new QVBoxLayout (button_box);
+	button_group = new QButtonGroup (button_box);
+
+	QRadioButton* button;
+	button = new QRadioButton (i18n ("Always prefer dialogs"), button_box);
+	group_layout->addWidget (button);
+	button_group->addButton (button, PreferDialog);
+	if (interface_pref == PreferDialog) button->setChecked (true);
+	button = new QRadioButton (i18n ("Prefer recommended interface"), button_box);
+	group_layout->addWidget (button);
+	button_group->addButton (button);
+	button_group->addButton (button, PreferRecommended);
+	if (interface_pref == PreferRecommended) button->setChecked (true);
+	button = new QRadioButton (i18n ("Always prefer wizards"), button_box);
+	group_layout->addWidget (button);
+	button_group->addButton (button);
+	button_group->addButton (button, PreferWizard);
+	if (interface_pref == PreferWizard) button->setChecked (true);
+
+	connect (button_group, SIGNAL (buttonClicked (int)), this, SLOT (settingChanged (int)));
+	main_vbox->addWidget (button_box);
+
+
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	Q3VGroupBox *code_frame = new Q3VGroupBox (i18n ("R syntax display (in dialogs)"), this);
+
+	QGroupBox *code_frame = new QGroupBox (i18n ("R syntax display (in dialogs)"), this);
+	group_layout = new QVBoxLayout (code_frame);
+
 	show_code_box = new QCheckBox (i18n ("Code shown by default"), code_frame);
 	show_code_box->setChecked (show_code);
 	connect (show_code_box, SIGNAL (stateChanged (int)), this, SLOT (settingChanged (int)));
+	group_layout->addWidget (show_code_box);
 
-	Q3HBox *code_size_hbox = new Q3HBox (code_frame);
+	KHBox *code_size_hbox = new KHBox (code_frame);
 	new QLabel (i18n ("Default height of code display (pixels)"), code_size_hbox);
 	code_size_box = new RKSpinBox (code_size_hbox);
 	code_size_box->setIntMode (20, 5000, code_size);
 	connect (code_size_box, SIGNAL (valueChanged (int)), this, SLOT (settingChanged (int)));
+	group_layout->addWidget (code_size_hbox);
+
 	main_vbox->addWidget (code_frame);
-	
+
+
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+
 
 	map_choser = new MultiStringSelector (i18n ("Select .pluginmap file(s)"), this);
 	map_choser->setValues (plugin_maps);
@@ -86,39 +110,45 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	connect (map_choser, SIGNAL (listChanged ()), this, SLOT (pathsChanged ()));
 	main_vbox->addWidget (map_choser);
 
+
 	main_vbox->addStretch ();
 }
 
 RKSettingsModulePlugins::~RKSettingsModulePlugins() {
+	RK_TRACE (SETTINGS);
 }
 
 void RKSettingsModulePlugins::pathsChanged () {
+	RK_TRACE (SETTINGS);
 	change ();
 }
 
 void RKSettingsModulePlugins::settingChanged (int) {
+	RK_TRACE (SETTINGS);
 	change ();
 }
 
 void RKSettingsModulePlugins::browseRequest (QStringList* strings) {
+	RK_TRACE (SETTINGS);
+
 	(*strings) = KFileDialog::getOpenFileNames (RKCommonFunctions::getRKWardDataDir (), "*.pluginmap", this, i18n ("Select .pluginmap-file"));
 }
 
 QString RKSettingsModulePlugins::caption () {
+	RK_TRACE (SETTINGS);
 	return (i18n ("Plugins"));
 }
 
 bool RKSettingsModulePlugins::hasChanges () {
+	RK_TRACE (SETTINGS);
 	return changed;
 }
 
 void RKSettingsModulePlugins::applyChanges () {
+	RK_TRACE (SETTINGS);
+
 	plugin_maps = map_choser->getValues ();
-#if QT_VERSION < 0x030200
-	interface_pref = static_cast<PluginPrefs> (button_group->id (button_group->selected ()));
-#else
-	interface_pref = static_cast<PluginPrefs> (button_group->selectedId ());
-#endif
+	interface_pref = static_cast<PluginPrefs> (button_group->checkedId ());
 	show_code = show_code_box->isChecked ();
 	code_size = code_size_box->intValue ();
 
@@ -126,10 +156,13 @@ void RKSettingsModulePlugins::applyChanges () {
 }
 
 void RKSettingsModulePlugins::save (KConfig *config) {
+	RK_TRACE (SETTINGS);
 	saveSettings (config);
 }
 
 void RKSettingsModulePlugins::saveSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	KConfigGroup cg = config->group ("Plugin Settings");
 	cg.writeEntry ("Plugin Maps", plugin_maps);
 	cg.writeEntry ("Interface Preferences", static_cast<int> (interface_pref));
@@ -138,6 +171,8 @@ void RKSettingsModulePlugins::saveSettings (KConfig *config) {
 }
 
 void RKSettingsModulePlugins::loadSettings (KConfig *config) {
+	RK_TRACE (SETTINGS);
+
 	KConfigGroup cg = config->group ("Plugin Settings");
 	plugin_maps = cg.readEntry ("Plugin Maps", QStringList (RKCommonFunctions::getRKWardDataDir () + "/all.pluginmap"));
 
