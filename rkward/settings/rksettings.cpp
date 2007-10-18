@@ -77,7 +77,8 @@ RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 
 	initModules ();
 
-	connect (this, SIGNAL (aboutToShowPage (QWidget *)), this, SLOT (pageAboutToBeShown (QWidget *)));
+	connect (this, SIGNAL (currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)), this, SLOT (pageChange(KPageWidgetItem*, KPageWidgetItem*)));
+	pageChange (currentPage (), currentPage ());	// init
 }
 
 RKSettings::~RKSettings() {
@@ -120,17 +121,9 @@ void RKSettings::raisePage (SettingsPage page) {
 	}
 }
 
-void RKSettings::pageAboutToBeShown (QWidget *page) {
+void RKSettings::pageChange (KPageWidgetItem *current, KPageWidgetItem *) {
 	RK_TRACE (SETTINGS);
-
-	// which module is it?
-	RKSettingsModule *new_module = 0;
-	for (ModuleList::const_iterator it = modules.constBegin (); it != modules.constEnd (); ++it) {
-		if (it.value () == page) {
-			new_module = it.value ();
-			break;
-		}
-	}
+	RKSettingsModule *new_module = dynamic_cast<RKSettingsModule*> (current->widget ());
 
 	bool has_help;
 	if (!new_module) {

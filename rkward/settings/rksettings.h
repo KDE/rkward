@@ -58,7 +58,7 @@ public:
 	
 	static RKSettingsTracker* tracker () { return settings_tracker; };
 public slots:
-	void pageAboutToBeShown (QWidget *page);
+	void pageChange (KPageWidgetItem *current, KPageWidgetItem *before);
 protected:
 	void slotButtonClicked (int button);
 protected:
