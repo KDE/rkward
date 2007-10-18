@@ -24,6 +24,8 @@
 #include <QPixmap>
 #include <Q3PopupMenu>
 
+#include "../settings/rksettings.h"
+
 class RObject;
 class QPixmap;
 class Q3PopupMenu;
@@ -158,7 +160,7 @@ public:
 signals:
 	void settingsChanged ();
 public slots:
-	void globalSettingsChanged ();
+	void globalSettingsChanged (RKSettings::SettingsPage);
 	void toggleSetting (int which);
 private:
 	State *settings;

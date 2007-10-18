@@ -95,23 +95,21 @@ RKSettings::~RKSettings() {
 void RKSettings::initModules () {
 	RK_TRACE (SETTINGS);
 
-	modules.append (new RKSettingsModulePlugins (this, this));
-	modules.append (new RKSettingsModuleR (this, this));
-	modules.append (new RKSettingsModuleRPackages (this, this));
-	modules.append (new RKSettingsModulePHP (this, this));
-	modules.append (new RKSettingsModuleGeneral (this, this));
-	modules.append (new RKSettingsModuleOutput (this, this));
-	modules.append (new RKSettingsModuleWatch (this, this));
-	modules.append (new RKSettingsModuleConsole (this, this));
-	modules.append (new RKSettingsModuleObjectBrowser (this, this));
-	
+	modules.insert (PagePlugins, new RKSettingsModulePlugins (this, this));
+	modules.insert (PageR, new RKSettingsModuleR (this, this));
+	modules.insert (PageRPackages, new RKSettingsModuleRPackages (this, this));
+	modules.insert (PagePHP, new RKSettingsModulePHP (this, this));
+	modules.insert (PageGeneral, new RKSettingsModuleGeneral (this, this));
+	modules.insert (PageOutput, new RKSettingsModuleOutput (this, this));
+	modules.insert (PageWatch, new RKSettingsModuleWatch (this, this));
+	modules.insert (PageConsole, new RKSettingsModuleConsole (this, this));
+	modules.insert (PageObjectBrowser, new RKSettingsModuleObjectBrowser (this, this));
+
 	ModuleList::const_iterator it;
-	int i=0;
 	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
-		pages[i++] = addPage (*it, (*it)->caption ());
-		(*it)->show ();
+		pages[it.key ()] = addPage (it.value (), it.value ()->caption ());
+		it.value ()->show ();
 	}
-	RK_ASSERT (i == (NumPages - 1));
 }
 
 void RKSettings::raisePage (SettingsPage page) {
@@ -128,15 +126,10 @@ void RKSettings::pageAboutToBeShown (QWidget *page) {
 	// which module is it?
 	RKSettingsModule *new_module = 0;
 	for (ModuleList::const_iterator it = modules.constBegin (); it != modules.constEnd (); ++it) {
-		QWidget *pwidget = *it;
-		while (pwidget) {
-			if (pwidget == page) {
-				new_module = *it;
-				break;
-			}
-			pwidget = pwidget->parentWidget ();
+		if (it.value () == page) {
+			new_module = it.value ();
+			break;
 		}
-		if (new_module) break;
 	}
 
 	bool has_help;
@@ -165,7 +158,7 @@ void RKSettings::slotButtonClicked (int button) {
 		for (i = 0; i < NumPages; ++i) {
 			if (currentPage () == pages[i]) break;
 		}
-		RKSettingsModule *current_module = modules[i];
+		RKSettingsModule *current_module = modules[static_cast<SettingsPage> (i)];
 		RK_ASSERT (current_module);
 	
 		RKWorkplace::mainWorkplace ()->openHelpWindow (current_module->helpURL ());
@@ -179,9 +172,10 @@ void RKSettings::applyAll () {
 
 	ModuleList::const_iterator it;
 	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
-		if ((*it)->hasChanges ()) {
-			(*it)->applyChanges ();
-			(*it)->save (KGlobal::config ().data ());
+		if (it.value ()->hasChanges ()) {
+			it.value ()->applyChanges ();
+			it.value ()->save (KGlobal::config ().data ());
+			tracker ()->signalSettingsChange (it.key ());
 		}
 	}
 	enableButtonApply (false);
@@ -231,9 +225,9 @@ RKSettingsTracker::~RKSettingsTracker () {
 	RK_TRACE (SETTINGS);
 }
 
-void RKSettingsTracker::settingsChangedObjectBrowser () {
+void RKSettingsTracker::signalSettingsChange (RKSettings::SettingsPage page) {
 	RK_TRACE (SETTINGS);
-	emit (objectBrowserSettingsChanged ());
+	emit (settingsChanged (page));
 }
 
 #include "rksettings.moc"

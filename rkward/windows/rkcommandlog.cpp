@@ -21,7 +21,6 @@
 #include "../rkglobals.h"
 #include "../rkconsole.h"
 #include "../settings/rksettingsmodulewatch.h"
-#include "../settings/rksettings.h"
 #include "../misc/rkcommonfunctions.h"
 #include "rkcommandeditorwindow.h"
 
@@ -63,8 +62,8 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 
-	connect (RKSettings::tracker (), SIGNAL (maxCommandLogLinesChanged()), this, SLOT (maxCommandLogLinesChanged()));
-	maxCommandLogLinesChanged ();
+	connect (RKSettings::tracker (), SIGNAL (settingsChanged(RKSettings::SettingsPage)), this, SLOT (settingsChanged(RKSettings::SettingsPage)));
+	settingsChanged (RKSettings::PageWatch);
 }
 
 RKCommandLog::~RKCommandLog(){
@@ -192,7 +191,9 @@ void RKCommandLog::rCommandDone (RCommand *command) {
 	if (RKSettingsModuleWatch::shouldShowOutput (command)) log_view->insert ("\n");
 }
 
-void RKCommandLog::maxCommandLogLinesChanged () {
+void RKCommandLog::settingsChanged (RKSettings::SettingsPage page) {
+	if (page != RKSettings::PageWatch) return;
+
 	RK_TRACE (APP);
 
 	log_view->document ()->setMaximumBlockCount (RKSettingsModuleWatch::maxLogLines ());
@@ -208,7 +209,7 @@ void RKCommandLog::linesAdded () {
 
 void RKCommandLog::configureLog () {
 	RK_TRACE (APP);
-	RKSettings::configureSettings (RKSettings::Watch, this);
+	RKSettings::configureSettings (RKSettings::PageWatch, this);
 }
 
 void RKCommandLog::clearLog () {

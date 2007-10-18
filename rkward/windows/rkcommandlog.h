@@ -22,6 +22,7 @@
 #include <qtextedit.h>
 
 #include "rkmdiwindow.h"
+#include "../settings/rksettings.h"
 #include "../rbackend/rcommandreceiver.h"
 
 class RCommand;
@@ -57,7 +58,7 @@ public slots:
 /** clears the log_view-window */
 	void clearLog ();
 	void runSelection ();
-	void maxCommandLogLinesChanged ();
+	void settingsChanged (RKSettings::SettingsPage page);
 private:
 	void addInputNoCheck (RCommand *command);
 	void addOutputNoCheck (RCommand *command, ROutput *output);

@@ -117,8 +117,6 @@ void RKSettingsModuleObjectBrowser::applyChanges () {
 		settings[i] = checkboxes[i]->isChecked ();
 	}
 	getstructure_blacklist = blacklist_choser->getValues();
-
-	RKSettings::tracker ()->settingsChangedObjectBrowser ();
 }
 
 void RKSettingsModuleObjectBrowser::save (KConfig *config) {

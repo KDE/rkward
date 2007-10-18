@@ -267,9 +267,7 @@ void RKSettingsModuleWatch::applyChanges () {
 	app_filter = getFilterSettings (app_filter_boxes);
 	sync_filter = getFilterSettings (sync_filter_boxes);
 
-	unsigned int max_log_lines_new = max_log_lines_spinner->value ();
-	if (max_log_lines_new != max_log_lines) RKSettings::tracker ()->settingsChangedMaxCommandLogLines ();
-	max_log_lines = max_log_lines_new;
+	max_log_lines = max_log_lines_spinner->value ();
 }
 
 void RKSettingsModuleWatch::save (KConfig *config) {

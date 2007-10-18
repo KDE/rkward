@@ -146,7 +146,7 @@ void RKLoadLibsDialog::slotButtonClicked (int button) {
 		emit (applyClicked ());
 		break;
 	case KDialog::User1:
-		RKSettings::configureSettings (RKSettings::RPackages, this, chain);
+		RKSettings::configureSettings (RKSettings::PageRPackages, this, chain);
 		break;
 	}
 }

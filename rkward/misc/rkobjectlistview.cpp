@@ -30,7 +30,6 @@
 #include "../core/rfunctionobject.h"
 #include "../core/rkvariable.h"
 #include "../core/rkmodificationtracker.h"
-#include "../settings/rksettings.h"
 #include "../settings/rksettingsmoduleobjectbrowser.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
@@ -125,7 +124,7 @@ void RKObjectListView::objectBrowserSettingsChanged () {
 
 //virtual 
 void RKObjectListView::popupConfigure () {
-	RKSettings::configureSettings (RKSettings::ObjectBrowser, this);
+	RKSettings::configureSettings (RKSettings::PageObjectBrowser, this);
 }
 
 void RKObjectListView::requestedContextMenu (Q3ListViewItem *item, const QPoint &pos, int) {
@@ -381,10 +380,10 @@ RKObjectListViewSettings::RKObjectListViewSettings () {
 	settings = new State[SettingsCount];
 	settings_default = new bool[SettingsCount];
 	for (int i = 0; i < SettingsCount; ++i) settings_default[i] = true;
-	connect (RKSettings::tracker (), SIGNAL (objectBrowserSettingsChanged ()), this, SLOT (globalSettingsChanged ()));
+	connect (RKSettings::tracker (), SIGNAL (settingsChanged (RKSettings::SettingsPage)), this, SLOT (globalSettingsChanged (RKSettings::SettingsPage)));
 
 	createContextMenus ();
-	globalSettingsChanged ();
+	globalSettingsChanged (RKSettings::PageObjectBrowser);
 }
 
 RKObjectListViewSettings::~RKObjectListViewSettings () {
@@ -477,7 +476,9 @@ void RKObjectListViewSettings::insertPopupItem (Q3PopupMenu *menu, Settings sett
 	menu->connectItem (setting, this, SLOT (toggleSetting (int)));
 }
 
-void RKObjectListViewSettings::globalSettingsChanged () {
+void RKObjectListViewSettings::globalSettingsChanged (RKSettings::SettingsPage page) {
+	if (page != RKSettings::PageObjectBrowser) return;
+
 	RK_TRACE (APP);
 
 	for (int i = 0; i < SettingsCount; ++i) {

@@ -19,7 +19,7 @@
 
 #include <kpagedialog.h>
 
-#include <q3valuelist.h>
+#include <qmap.h>
 
 class RKSettingsModule;
 class KConfig;
@@ -37,16 +37,16 @@ class RKSettings : public KPageDialog {
 public:
 	enum SettingsPage {
 		NoPage=0,
-		Plugins=1,
-		R=2,
-		RPackages=3,
-		PHP=4,
-		General=5,
-		Output=6,
-		Watch=7,
-		Console=8,
-		ObjectBrowser=9,
-		NumPages = ObjectBrowser + 1
+		PagePlugins=1,
+		PageR=2,
+		PageRPackages=3,
+		PagePHP=4,
+		PageGeneral=5,
+		PageOutput=6,
+		PageWatch=7,
+		PageConsole=8,
+		PageObjectBrowser=9,
+		NumPages = PageObjectBrowser + 1
 	};
 
 	static void configureSettings (SettingsPage page=NoPage, QWidget *parent=0, RCommandChain *chain=0);
@@ -70,7 +70,7 @@ private:
 	void raisePage (SettingsPage page);
 	static void dialogClosed ();
 
-	typedef Q3ValueList<RKSettingsModule *> ModuleList;
+	typedef QMap<SettingsPage, RKSettingsModule *> ModuleList;
 	ModuleList modules;
 	KPageWidgetItem *pages[NumPages];
 
@@ -87,11 +87,9 @@ public:
 	RKSettingsTracker (QObject *parent);
 	~RKSettingsTracker ();
 
-	void settingsChangedObjectBrowser ();
-	void settingsChangedMaxCommandLogLines () { maxCommandLogLinesChanged (); };
+	void signalSettingsChange (RKSettings::SettingsPage page);
 signals:
-	void objectBrowserSettingsChanged ();
-	void maxCommandLogLinesChanged ();
+	void settingsChanged (RKSettings::SettingsPage);
 };
 
 #endif

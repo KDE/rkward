@@ -326,7 +326,7 @@ void RControlWindow::pauseButtonClicked () {
 void RControlWindow::configureButtonClicked () {
 	RK_TRACE (APP);
 
-	RKSettings::configureSettings (RKSettings::R, this);
+	RKSettings::configureSettings (RKSettings::PageR, this);
 }
 
 //############# END RContolWindow #######################

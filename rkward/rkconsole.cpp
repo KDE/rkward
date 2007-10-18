@@ -752,7 +752,7 @@ void RKConsole::resetIncompleteCommand () {
 
 void RKConsole::configure () {
 	RK_TRACE (APP);
-	RKSettings::configureSettings (RKSettings::Console, this);
+	RKSettings::configureSettings (RKSettings::PageConsole, this);
 }
 
 void RKConsole::slotInterruptCommand () {
