@@ -52,8 +52,9 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 
 // capture widget
 	setGeometry (widget_to_capture->frameGeometry ());
-	widget_to_capture->reparent (this, QPoint (0, 0));
+	widget_to_capture->setParent (this);
 	setCentralWidget (widget_to_capture);
+	widget_to_capture->show ();
 	createGUI (widget_to_capture->getPart ());
 	captured = widget_to_capture;
 
@@ -98,7 +99,7 @@ void DetachedWindowContainer::slotReattach () {
 	disconnect (captured, SIGNAL (destroyed (QObject *)), this, SLOT (viewDestroyed (QObject *)));
 	disconnect (captured, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (updateCaption (RKMDIWindow *)));
 
-	captured->reparent (0, QPoint (0, 0));
+	captured->setParent (0);
 	RKWorkplace::mainWorkplace ()->attachWindow (captured);
 
 	hide ();
