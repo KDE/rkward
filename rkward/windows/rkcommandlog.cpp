@@ -63,7 +63,6 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 
-// KDE4 TODO
 	connect (RKSettings::tracker (), SIGNAL (maxCommandLogLinesChanged()), this, SLOT (maxCommandLogLinesChanged()));
 	maxCommandLogLinesChanged ();
 }

@@ -613,10 +613,10 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 
 	if (RKSettingsModuleConsole::maxConsoleLines ()) {
 		uint c = (uint) doc->lines();
-// TODO: WORKAROUND: Somehow, when removing paragraph 0, the QTextEdit scrolls to the top in between (yes, this also happens when using removeParagaph (0)). Since this may happen very often in newOutput, we're a bit sloppy, and only remove lines after a certain threshold (20) is exceeded. When the command is finished, this will be cleaned up automatically.
+// We remove the superflous lines in chunks of 20 while handling output for better performance. Later, in tryNextInBatch(), we trim down to the correct size.
 		if (c > (RKSettingsModuleConsole::maxConsoleLines () + 20)) {
+// KDE4: does the setUpdatesEnabled (false) still affect performance?
 			view->setUpdatesEnabled (false);		// major performance boost while removing lines!
-			//TODO : deal with the case when there is already a selection
 			doc->removeText (KTextEditor::Range (0, 0, c - RKSettingsModuleConsole::maxConsoleLines (), 0));
 			view->setUpdatesEnabled (true);
 		}
@@ -637,12 +637,13 @@ void RKConsole::tryNextInBatch (bool add_new_line) {
 	RK_TRACE (APP);
 	if (add_new_line) {
 		if (RKSettingsModuleConsole::maxConsoleLines ()) {
-			uint c = (uint) doc->lines();
-			setUpdatesEnabled (false);
-			for (uint ui = c; ui > RKSettingsModuleConsole::maxConsoleLines (); --ui) {
-				doc->removeLine (0);
+			int c = doc->lines();
+			if (c > RKSettingsModuleConsole::maxConsoleLines ()) {
+				// KDE4 TODO: setUpdatesEnabled(false) still faster?
+				view->setUpdatesEnabled (false);
+				doc->removeText (KTextEditor::Range (0, 0, c - RKSettingsModuleConsole::maxConsoleLines (), 0));
+				view->setUpdatesEnabled (true);
 			}
-			setUpdatesEnabled (true);
 		}
 		if (!doc->lines ()) doc->insertLine (0, QString ());
 		doc->insertText (KTextEditor::Cursor (doc->lines () - 1, 0), prefix);
