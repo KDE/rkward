@@ -96,7 +96,7 @@ void RKMDIWindow::activate (bool with_focus) {
 	}
 
 	if (with_focus) {
-		old_focus->clearFocus ();
+		if (old_focus) old_focus->clearFocus ();
 		topLevelWidget ()->setActiveWindow ();
 		setFocus();
 	} else {
