@@ -68,7 +68,7 @@ void RKSettings::dialogClosed () {
 RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 	RK_TRACE (SETTINGS);
 
-	setFaceType (KPageDialog::Tabbed);
+	setFaceType (KPageDialog::List);
 	setCaption (i18n ("Settings"));
 	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel | KDialog::Help);
 // KDE4: is this needed?	setModal (false);
@@ -84,7 +84,7 @@ RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 RKSettings::~RKSettings() {
 	RK_TRACE (SETTINGS);
 
-	ModuleList::const_iterator it;
+	ModuleMap::const_iterator it;
 	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
 		delete *it;
 	}
@@ -96,20 +96,19 @@ RKSettings::~RKSettings() {
 void RKSettings::initModules () {
 	RK_TRACE (SETTINGS);
 
-	modules.insert (PagePlugins, new RKSettingsModulePlugins (this, this));
-	modules.insert (PageR, new RKSettingsModuleR (this, this));
-	modules.insert (PageRPackages, new RKSettingsModuleRPackages (this, this));
-	modules.insert (PagePHP, new RKSettingsModulePHP (this, this));
-	modules.insert (PageGeneral, new RKSettingsModuleGeneral (this, this));
-	modules.insert (PageOutput, new RKSettingsModuleOutput (this, this));
-	modules.insert (PageWatch, new RKSettingsModuleWatch (this, this));
-	modules.insert (PageConsole, new RKSettingsModuleConsole (this, this));
-	modules.insert (PageObjectBrowser, new RKSettingsModuleObjectBrowser (this, this));
+	modules.insert (PagePlugins, new RKSettingsModulePlugins (this, 0));
+	modules.insert (PageR, new RKSettingsModuleR (this, 0));
+	modules.insert (PageRPackages, new RKSettingsModuleRPackages (this, 0));
+	modules.insert (PagePHP, new RKSettingsModulePHP (this, 0));
+	modules.insert (PageGeneral, new RKSettingsModuleGeneral (this, 0));
+	modules.insert (PageOutput, new RKSettingsModuleOutput (this, 0));
+	modules.insert (PageWatch, new RKSettingsModuleWatch (this, 0));
+	modules.insert (PageConsole, new RKSettingsModuleConsole (this, 0));
+	modules.insert (PageObjectBrowser, new RKSettingsModuleObjectBrowser (this, 0));
 
-	ModuleList::const_iterator it;
+	ModuleMap::const_iterator it;
 	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
 		pages[it.key ()] = addPage (it.value (), it.value ()->caption ());
-		it.value ()->show ();
 	}
 }
 
@@ -163,7 +162,7 @@ void RKSettings::slotButtonClicked (int button) {
 void RKSettings::applyAll () {
 	RK_TRACE (SETTINGS);
 
-	ModuleList::const_iterator it;
+	ModuleMap::const_iterator it;
 	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
 		if (it.value ()->hasChanges ()) {
 			it.value ()->applyChanges ();

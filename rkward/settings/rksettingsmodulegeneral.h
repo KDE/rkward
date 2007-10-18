@@ -23,7 +23,7 @@
 class GetFileNameWidget;
 class QComboBox;
 class QCheckBox;
-class Q3ButtonGroup;
+class QButtonGroup;
 class RKSpinBox;
 
 /**
@@ -68,7 +68,7 @@ public slots:
 private:
 	GetFileNameWidget *files_choser;
 	QComboBox *startup_action_choser;
-	Q3ButtonGroup *workplace_save_chooser;
+	QButtonGroup *workplace_save_chooser;
 	QCheckBox *show_help_on_startup_box;
 	RKSpinBox *warn_size_object_edit_box;
 

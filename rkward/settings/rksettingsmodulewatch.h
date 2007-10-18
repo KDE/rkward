@@ -18,12 +18,10 @@
 #define RKSETTINGSMODULEWATCH_H
 
 #include "rksettingsmodule.h"
-//Added by qt3to4:
-#include <Q3GridLayout>
 
 class RCommand;
 class QCheckBox;
-class Q3GridLayout;
+class QGridLayout;
 class KIntSpinBox;
 
 /**
@@ -78,7 +76,7 @@ private:
 	FilterBoxes *user_filter_boxes;
 
 	int getFilterSettings (FilterBoxes *boxes);
-	FilterBoxes *addFilterSettings (QWidget *parent, Q3GridLayout *layout, int row, const QString &label, int state);
+	FilterBoxes *addFilterSettings (QWidget *parent, QGridLayout *layout, int row, const QString &label, int state);
 
 	static uint max_log_lines;
 

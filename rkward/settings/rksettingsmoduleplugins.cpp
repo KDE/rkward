@@ -60,21 +60,17 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	QVBoxLayout* group_layout = new QVBoxLayout (button_box);
 	button_group = new QButtonGroup (button_box);
 
-	QRadioButton* button;
+	QAbstractButton* button;
 	button = new QRadioButton (i18n ("Always prefer dialogs"), button_box);
 	group_layout->addWidget (button);
 	button_group->addButton (button, PreferDialog);
-	if (interface_pref == PreferDialog) button->setChecked (true);
 	button = new QRadioButton (i18n ("Prefer recommended interface"), button_box);
 	group_layout->addWidget (button);
-	button_group->addButton (button);
 	button_group->addButton (button, PreferRecommended);
-	if (interface_pref == PreferRecommended) button->setChecked (true);
 	button = new QRadioButton (i18n ("Always prefer wizards"), button_box);
 	group_layout->addWidget (button);
-	button_group->addButton (button);
 	button_group->addButton (button, PreferWizard);
-	if (interface_pref == PreferWizard) button->setChecked (true);
+	if ((button = button_group->button (interface_pref))) button->setChecked (true);
 
 	connect (button_group, SIGNAL (buttonClicked (int)), this, SLOT (settingChanged (int)));
 	main_vbox->addWidget (button_box);

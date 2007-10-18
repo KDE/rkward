@@ -22,8 +22,7 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include "../misc/getfilenamewidget.h"
 #include "../misc/rkcommonfunctions.h"
@@ -36,14 +35,14 @@ QString RKSettingsModulePHP::php_bin;
 RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	Q3VBoxLayout *main_vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
+	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
 	QLabel *label = new QLabel (i18n ("Changes in this section take effect the next time you start a plugin"), this);
 	label->setWordWrap (true);
 	main_vbox->addWidget (label);
 	
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 	
-	bin_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, i18n ("File-location of the PHP binary"), QString::null, php_bin);
+	bin_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, i18n ("File-location of the PHP binary"), QString (), php_bin);
 	connect (bin_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
 	main_vbox->addWidget (bin_choser);
 

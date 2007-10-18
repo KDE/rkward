@@ -70,8 +70,8 @@ private:
 	void raisePage (SettingsPage page);
 	static void dialogClosed ();
 
-	typedef QMap<SettingsPage, RKSettingsModule *> ModuleList;
-	ModuleList modules;
+	typedef QMap<SettingsPage, RKSettingsModule *> ModuleMap;
+	ModuleMap modules;
 	KPageWidgetItem *pages[NumPages];
 
 	static RKSettings *settings_dialog;

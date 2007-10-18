@@ -26,10 +26,10 @@
 #include <qdir.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
-#include <q3buttongroup.h>
+#include <qbuttongroup.h>
+#include <qgroupbox.h>
 #include <qradiobutton.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include "../misc/getfilenamewidget.h"
 #include "../misc/rkspinbox.h"
@@ -47,14 +47,18 @@ int RKSettingsModuleGeneral::warn_size_object_edit;
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	Q3VBoxLayout *main_vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
+	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 	QLabel *label = new QLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard"), this);
 	label->setWordWrap (true);
 	main_vbox->addWidget (label);
 
+	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+
 	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, i18n ("Directory where the logfiles should be kept (*)"), QString::null, new_files_path);
 	connect (files_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
 	main_vbox->addWidget (files_choser);
+
+	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
 	main_vbox->addWidget (new QLabel (i18n ("Startup Action (*)"), this));
 	startup_action_choser = new QComboBox (false, this);
@@ -77,17 +81,23 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	label->setWordWrap (true);
 	main_vbox->addWidget (label);
 
-	workplace_save_chooser = new Q3ButtonGroup (this);
-	workplace_save_chooser->setColumnLayout (0, Qt::Vertical);
-	workplace_save_chooser->layout()->setSpacing (6);
-	workplace_save_chooser->layout()->setMargin (11);
-	Q3VBoxLayout *group_layout = new Q3VBoxLayout(workplace_save_chooser->layout());
-	group_layout->addWidget (new QRadioButton (i18n ("Save/restore with R workspace, when saving/loading R workspace"), workplace_save_chooser));
-	group_layout->addWidget (new QRadioButton (i18n ("Save/restore independent of R workspace (save at end of RKWard session, restore at next start)"), workplace_save_chooser));
-	group_layout->addWidget (new QRadioButton (i18n ("Do not save/restore workplace layout"), workplace_save_chooser));
-	workplace_save_chooser->setButton (static_cast<int> (workplace_save_mode));
-	connect (workplace_save_chooser, SIGNAL (clicked (int)), this, SLOT (boxChanged (int)));
-	main_vbox->addWidget (workplace_save_chooser);
+	workplace_save_chooser = new QButtonGroup (this);
+	QGroupBox* group_box = new QGroupBox (this);
+	QVBoxLayout *group_layout = new QVBoxLayout(group_box);
+
+	QAbstractButton* button;
+	button = new QRadioButton (i18n ("Save/restore with R workspace, when saving/loading R workspace"), group_box);
+	group_layout->addWidget (button);
+	workplace_save_chooser->addButton (button, SaveWorkplaceWithWorkspace);
+	button = new QRadioButton (i18n ("Save/restore independent of R workspace (save at end of RKWard session, restore at next start)"), group_box);
+	group_layout->addWidget (button);
+	workplace_save_chooser->addButton (button, SaveWorkplaceWithSession);
+	button = new QRadioButton (i18n ("Do not save/restore workplace layout"), group_box);
+	group_layout->addWidget (button);
+	workplace_save_chooser->addButton (button, DontSaveWorkplace);	
+	if ((button = workplace_save_chooser->button (workplace_save_mode))) button->setChecked (true);
+	connect (workplace_save_chooser, SIGNAL (buttonClicked (int)), this, SLOT (boxChanged (int)));
+	main_vbox->addWidget (group_box);
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
@@ -131,11 +141,7 @@ void RKSettingsModuleGeneral::applyChanges () {
 	new_files_path = files_choser->getLocation ();
 	startup_action = static_cast<StartupDialog::Result> (startup_action_choser->currentItem ());
 	show_help_on_startup = show_help_on_startup_box->isChecked ();
-#if QT_VERSION < 0x030200
-	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->id (workplace_save_chooser->selected ()));
-#else
-	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->selectedId ());
-#endif
+	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->checkedId ());
 	warn_size_object_edit = warn_size_object_edit_box->intValue ();
 }
 
