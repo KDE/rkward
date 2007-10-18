@@ -81,6 +81,7 @@ class QXEmbedCopy;
 class Q3ScrollView;
 class Q3VBox;
 class RKProgressControl;
+class QX11EmbedContainer;
 
 /** An R X11 device window managed by rkward. */
 class RKCaughtX11Window : public RKMDIWindow {
@@ -126,6 +127,7 @@ private:
 	Q3ScrollView *scroll_widget;
 	Q3VBox *box_widget;
 	RKProgressControl *error_dialog;
+	QX11EmbedContainer *capture;
 
 	bool dynamic_size;
 	KToggleAction *dynamic_size_action;

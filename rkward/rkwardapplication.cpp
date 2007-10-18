@@ -97,7 +97,7 @@ bool RKWardApplication::x11EventFilter (XEvent *e) {
 	if (detect_x11_creations) {
 		if (e->type == CreateNotify) {
 			if (e->xcreatewindow.parent == QX11Info::appRootWindow ()) {
-				KWindowInfo info = KWindowInfo (e->xcreatewindow.window, NET::WMName, NET::WM2WindowClass);
+				KWindowInfo info = KWindowInfo (e->xcreatewindow.window, NET::WMName | NET::WMWindowType);
 				if ((info.windowType (0xFFFF) != 0) && (!info.name ().isEmpty ())) {
 					RK_ASSERT (!created_window);
 					created_window = e->xcreatewindow.window;

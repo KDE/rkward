@@ -112,10 +112,10 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	dynamic_size = true;
 	dynamic_size_action->setChecked (true);
 
-	QX11EmbedContainer *capture = new QX11EmbedContainer (xembed_container);
-	connect (capture, SIGNAL (embeddedWindowDestroyed ()), this, SLOT (deleteLater ()));
+	capture = new QX11EmbedContainer (xembed_container);
+	connect (capture, SIGNAL (clientClosed ()), this, SLOT (deleteLater ()));
 
-	KWindowInfo wininfo = KWindowSystem::windowInfo (window_to_embed, NET::WMName | NET::WMGeometry);
+	KWindowInfo wininfo = KWindowSystem::windowInfo (window_to_embed, NET::WMName | NET::WMFrameExtents);
 	RK_ASSERT (wininfo.valid ());
 	setGeometry (wininfo.frameGeometry ());
 	setCaption (wininfo.name ());
@@ -128,6 +128,7 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 RKCaughtX11Window::~RKCaughtX11Window () {
 	RK_TRACE (MISC);
 
+	capture->close ();
 	RKWardApplication::getApp ()->unregisterNameWatcher (embedded);
 	error_dialog->autoDeleteWhenDone ();
 }
@@ -296,7 +297,7 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	actionCollection ()->addAction ("toggle_fixed_size", window->dynamic_size_action);
 
 	QAction *action;
-	action = actionCollection ()->addAction ("set_fixed_size_1", window, SLOT (setFixedSize()));
+	action = actionCollection ()->addAction ("set_fixed_size_1", window, SLOT (setFixedSize1()));
 	action->setText (i18n ("Set fixed size 500x500"));
 	action = actionCollection ()->addAction ("set_fixed_size_2", window, SLOT (setFixedSize2()));
 	action->setText (i18n ("Set fixed size 1000x1000"));
