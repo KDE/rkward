@@ -112,10 +112,15 @@ ENDIF(NOT LIBR_BLAS)
 MESSAGE(STATUS "Checking for R package library location to use")
 IF(NOT R_LIBDIR)
 	EXEC_PROGRAM(${R_EXECUTABLE}
-		ARGS CMD sh -c 'echo $R_LIBS'
+		ARGS CMD sh -c 'echo $R_LIBS:$R_LIBS_SITE'
 		OUTPUT_VARIABLE R_LIBDIR)
 ELSE(NOT R_LIBDIR)
 	MESSAGE(STATUS "Location specified by user")
+ENDIF(NOT R_LIBDIR)
+
+IF(NOT R_LIBDIR)
+	MESSAGE(STATUS "Not reliably determined or specified. Guessing.")
+	SET(R_LIBDIR ${R_HOME}/library)
 ENDIF(NOT R_LIBDIR)
 
 # strip whitespace
@@ -123,13 +128,32 @@ STRING(REGEX REPLACE "[ \n]+"
 	"" R_LIBDIR
 	"${R_LIBDIR}")
 
-IF(NOT R_LIBDIR)
-	MESSAGE(STATUS "Not reliably determined or specified. Guessing.")
-	SET(R_LIBDIR ${R_HOME}/library)
-ENDIF(NOT R_LIBDIR)
+# strip leading colon(s)
+STRING(REGEX REPLACE "^:+"
+	"" R_LIBDIR
+	"${R_LIBDIR}")
+
+# find first path
+STRING(REGEX REPLACE ":"
+	" " R_LIBDIR
+	"${R_LIBDIR}")
+
+SET(R_LIBDIRS ${R_LIBDIR})
+SEPARATE_ARGUMENTS(R_LIBDIRS)
+
+SET(R_LIBDIR)
+FOREACH(CURRENTDIR ${R_LIBDIRS})
+	IF(NOT USE_R_LIBDIR)
+		IF(EXISTS ${CURRENTDIR})
+			SET(R_LIBDIR ${CURRENTDIR})
+		ELSE(EXISTS ${CURRENTDIR})
+			MESSAGE(STATUS "${CURRENTDIR} does not exist. Skipping")
+		ENDIF(EXISTS ${CURRENTDIR})
+	ENDIF(NOT USE_R_LIBDIR)
+ENDFOREACH(CURRENTDIR ${R_LIBDIRS})
 
 IF(NOT EXISTS ${R_LIBDIR})
-	MESSAGE(FATAL_ERROR "${R_LIBDIR} does not exist")
+	MESSAGE(FATAL_ERROR "No existing library location found")
 ELSE(NOT EXISTS ${R_LIBDIR})
 	MESSAGE(STATUS "Will use ${R_LIBDIR}")
 ENDIF(NOT EXISTS ${R_LIBDIR})
