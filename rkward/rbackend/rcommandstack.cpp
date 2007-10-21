@@ -2,7 +2,7 @@
                           rcommandstack  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -16,6 +16,10 @@
  ***************************************************************************/
 #include "rcommandstack.h"
 
+#include <klocale.h>
+
+#include <QTimer>
+
 #include "rinterface.h"
 
 #include "../debug.h"
@@ -23,58 +27,71 @@
 //static
 RCommandStack *RCommandStack::regular_stack;
 
-RCommandStack::RCommandStack () : RCommandChain () {
+RCommandStack::RCommandStack (RCommand* parent_command) : RCommandChain () {
 	RK_TRACE (RBACKEND);
 	closed = true;
-	parent = 0;
 	current_chain = this;
+
+	RCommandStack::parent_command = parent_command;
+	if (parent_command) {
+		RCommandStack* parent_stack = stackForCommand (parent_command);
+		RK_ASSERT (parent_stack);
+		parent_stack->sub_stack = this;
+	}
 }
 
 RCommandStack::~RCommandStack () {
 	RK_TRACE (RBACKEND);
+
+	if (parent_command) {
+		RCommandStack* parent_stack = stackForCommand (parent_command);
+		RK_ASSERT (parent_stack);
+		parent_stack->sub_stack = 0;
+	}
 }
 
 void RCommandStack::issueCommand (RCommand *command, RCommandChain *chain) {
 	RK_TRACE (RBACKEND);
 	if (!chain) chain = regular_stack;
-	
-	RChainOrCommand *coc = new RChainOrCommand;
-	coc->command = command;
-	coc->chain = 0;
-	chain->commands.append (coc);
+
+	chain->commands.append (command);
+	command->parent = chain;
+
+	RCommandStackModel::getModel ()->newCommand ();
 }
 
 RCommandChain *RCommandStack::startChain (RCommandChain *parent) {
 	RK_TRACE (RBACKEND);
 	if (!parent) parent = regular_stack;
 
-	RChainOrCommand *coc = new RChainOrCommand;
-	coc->command = 0;
-	coc->chain = new RCommandChain;
-	coc->chain->closed = false;
-	coc->chain->parent = parent;
-	parent->commands.append (coc);
+	RCommandChain *chain = new RCommandChain ();
+	chain->closed = false;
+	chain->parent = parent;
+	parent->commands.append (chain);
 
-	return coc->chain;
+	RCommandStackModel::getModel ()->newChain ();
+
+	return chain;
 }
 
-RCommandChain *RCommandStack::closeChain (RCommandChain *chain) {
+void RCommandStack::closeChain (RCommandChain *chain) {
 	RK_TRACE (RBACKEND);
-	if (!chain) return 0;
+	if (!chain) return;
 
 	chain->closed = true;
-	RCommandChain *ret = chain->parent;
-	
-	RCommandStack *stack = chainStack (chain);
-	
-	// lets see, whether we can do some cleanup
-	while (stack->current_chain->commands.isEmpty () && stack->current_chain->closed && stack->current_chain->parent) {
-		RCommandChain *temp = stack->current_chain;
-		stack->current_chain = stack->current_chain->parent;
-		delete temp;
+	chainStack (chain)->clearFinishedChains ();
+}
+
+RCommand* RCommandStack::currentCommand () {
+	RK_TRACE (RBACKEND);
+
+	RCommandBase *coc = current_chain;
+	while (coc->chainPointer ()) {
+		current_chain = coc->chainPointer ();
+		if (current_chain->commands.isEmpty ()) return 0;
+		coc = current_chain->commands.first ();
 	}
-	
-	return ret;
+	return coc->commandPointer ();
 }
 
 bool RCommandStack::isEmpty () {
@@ -101,29 +118,271 @@ RCommandStack *RCommandStack::chainStack (RCommandChain *child) {
 	return static_cast<RCommandStack *> (child);
 }
 
-RCommand *RCommandStack::pop () {
+//static
+RCommandStack *RCommandStack::stackForCommand (RCommand *child) {
 	RK_TRACE (RBACKEND);
 
-	if (!isActive ()) return 0;
-	RCommand *command = 0;
-	
-	RChainOrCommand *coc = current_chain->commands.first ();
-	current_chain->commands.removeFirst ();
-	if (coc->command) {
-		command = coc->command;
-		delete coc;
-	} else {
-		current_chain = coc->chain;
-		delete coc;
-		command = pop ();
+	RCommandBase *chain = child;
+	while (chain->parent) {
+		chain = chain->parent;
 	}
+	return static_cast<RCommandStack *> (chain);
+}
+
+RCommandStack* RCommandStack::currentStack () {
+	RK_TRACE (RBACKEND);
+
+	RCommandStack* stack = regular_stack;
+	while (stack->sub_stack) {
+		stack = stack->sub_stack;
+	}
+	return stack;
+}
+
+void RCommandStack::pop () {
+	RK_TRACE (RBACKEND);
+
+	if (!isActive ()) return;
+	RCommandBase* popped = current_chain->commands.takeFirst ();
+	RK_ASSERT (popped->commandPointer ());
+
+	RCommandStackModel::getModel ()->commandPop (popped->commandPointer ());
+
+	clearFinishedChains ();
+}
+
+void RCommandStack::clearFinishedChains () {
+	RK_TRACE (RBACKEND);
 
 	// reached end of chain and chain is closed? walk up
 	while (current_chain->commands.isEmpty () && current_chain->closed && current_chain->parent) {
-		RCommandChain *temp = current_chain;
+		RCommandChain *prev_chain = current_chain;
+		current_chain->parent->commands.removeFirst ();
 		current_chain = current_chain->parent;
-		delete temp;
+		RCommandStackModel::getModel ()->chainPop (prev_chain);
+		delete prev_chain;
 	}
-	
-	return command;
 }
+
+/////////////////////// RCommandStackModel ////////////////////
+
+// static
+RCommandStackModel* RCommandStackModel::static_model = 0;
+
+RCommandStackModel::RCommandStackModel (QObject *parent) : QAbstractItemModel (parent) {
+	RK_TRACE (RBACKEND);
+	RK_ASSERT (static_model == 0);	// only one instance should be created
+
+	static_model = this;
+	listeners = 0;
+	have_mutex_lock = false;
+
+	connect (this, SIGNAL (change()), this, SLOT (relayChange()), Qt::BlockingQueuedConnection);
+}
+
+RCommandStackModel::~RCommandStackModel () {
+	RK_TRACE (RBACKEND);
+
+	static_model = 0;
+}
+
+QModelIndex RCommandStackModel::index (int row, int column, const QModelIndex& parent) const {
+	RK_ASSERT (listeners > 0);
+	RK_TRACE (RBACKEND);
+	lockMutex ();
+
+	RCommandBase* index_data = 0;
+
+	if (!parent.isValid ()) {
+		index_data = RCommandStack::regular_stack;
+	} else {
+		RCommandBase* parent_index = static_cast<RCommandBase*> (parent.internalPointer ());
+		RK_ASSERT (parent_index);
+
+		// parent is a command -> this must be a substack
+		if (parent_index->commandPointer ()) {
+			RK_ASSERT (parent.row () == 0);
+			index_data = RCommandStack::stackForCommand (parent_index->commandPointer ())->sub_stack;
+			RK_ASSERT (index_data);
+		} else {
+			// parent is a chain or stack
+			RCommandChain *chain = parent_index->chainPointer ();
+			RK_ASSERT (chain->commands.size () > row);
+			index_data = chain->commands[row];
+		}
+	}
+
+	return (createIndex (row, column, index_data));
+}
+
+QModelIndex RCommandStackModel::parent (const QModelIndex& child) const {
+	RK_ASSERT (listeners);
+	RK_TRACE (RBACKEND);
+	lockMutex ();
+
+	RCommandBase* index_data;
+	if (!child.isValid()) {
+		return QModelIndex ();
+	} else {
+		RCommandBase* child_index = static_cast<RCommandBase*> (child.internalPointer ());
+		RK_ASSERT (child_index);
+
+		if (child_index->chainPointer () && child_index->chainPointer ()->isStack ()) {
+			index_data = static_cast<RCommandStack*> (child_index->chainPointer ())->parent_command;
+			if (!index_data) {
+				return QModelIndex ();
+			}
+		} else {	// regular chains or commands
+			index_data = child_index->parent;
+		}
+	}
+
+	return (createIndex (0, 0, index_data));
+}
+
+int RCommandStackModel::rowCount (const QModelIndex& parent) const {
+	RK_ASSERT (listeners);
+	RK_TRACE (RBACKEND);
+	lockMutex ();
+
+	if (!parent.isValid ()) return 1;
+
+	RCommandBase* index_data = static_cast<RCommandBase*> (parent.internalPointer ());
+	RK_ASSERT (index_data);
+	if (index_data->commandPointer ()) {
+		if (RCommandStack::stackForCommand (index_data->commandPointer ())->sub_stack) return 1;
+		return 0;
+	}
+	if (index_data->chainPointer ()) {
+		return (index_data->chainPointer ()->commands.size ());
+	}
+	RK_ASSERT (false);
+	return 0;
+}
+
+int RCommandStackModel::columnCount (const QModelIndex&) const {
+	RK_ASSERT (listeners);
+	RK_TRACE (RBACKEND);
+	lockMutex ();
+
+	return 2;
+}
+
+QVariant RCommandStackModel::data (const QModelIndex& index, int role) const {
+	RK_ASSERT (listeners);
+	RK_TRACE (RBACKEND);
+	lockMutex ();
+
+	if (!index.isValid ()) return QVariant ();
+	RK_ASSERT (index.model () == this);
+
+	RCommandBase* index_data = static_cast<RCommandBase*> (index.internalPointer ());
+
+	if (index_data->commandPointer ()) {
+		if ((index.column () == 0) && (role == Qt::DisplayRole)) return (index_data->commandPointer ()->command ());
+		if ((index.column () == 1) && (role == Qt::DisplayRole)) return ("Some flags");
+	}
+	if (index_data->chainPointer ()) {
+		RCommandChain* chain = index_data->chainPointer ();
+		if (chain->isStack ()) {
+			if ((index.column () == 0) && (role == Qt::DisplayRole)) return (i18n ("Command Stack"));
+			if ((index.column () == 1) && (role == Qt::DisplayRole)) return ("Some flags");
+		} else {
+			if ((index.column () == 0) && (role == Qt::DisplayRole)) return (i18n ("Command Group"));
+			if ((index.column () == 1) && (role == Qt::DisplayRole)) return ("Some flags");
+		}
+	}
+
+	return (QVariant ());
+}
+
+QVariant RCommandStackModel::headerData (int section, Qt::Orientation orientation, int role) const {
+	RK_ASSERT (listeners);
+	RK_TRACE (RBACKEND);
+	lockMutex ();
+
+	if ((orientation == Qt::Horizontal) && (role = Qt::DisplayRole)) {
+		if (section == 0) return (i18n ("Command"));
+		if (section == 1) return (i18n ("Flags"));
+	}
+
+	return QVariant ();
+}
+
+void RCommandStackModel::commandPop (RCommand* popped) {
+	if (!listeners) return;
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (RInterface::inRThread ());
+	MUTEX_UNLOCK;	// release the mutex in the R thread, as the main thread will need it.
+	emit (change ());
+	MUTEX_LOCK;
+}
+
+void RCommandStackModel::chainPop (RCommandChain* popped) {
+	if (!listeners) return;
+	RK_TRACE (RBACKEND);
+
+	// chains can be popped from both threads!
+	if (RInterface::inRThread ()) {
+		MUTEX_UNLOCK;
+		emit (change ());
+		MUTEX_LOCK;
+	} else {
+		relayChange ();
+	}
+}
+
+void RCommandStackModel::newCommand () {
+	if (!listeners) return;
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (!RInterface::inRThread ());
+	relayChange ();
+}
+
+void RCommandStackModel::newChain () {
+	if (!listeners) return;
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (!RInterface::inRThread ());
+	relayChange ();
+}
+
+void RCommandStackModel::lockMutex () const {
+	if (have_mutex_lock) return;
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (!RInterface::inRThread ());
+
+	MUTEX_LOCK;
+// We're playing silly const games, here, as the reimplemenations from QAbstractItemModel need to be const.
+// Well, we're not really changing anything, though, just keeping track of the mutex lock.
+	QTimer::singleShot (0, const_cast<RCommandStackModel*> (this), SLOT (unlockMutex()));
+
+	bool *cheat = const_cast<bool*> (&have_mutex_lock);
+	*cheat = true;
+}
+
+void RCommandStackModel::unlockMutex () {
+	if (!have_mutex_lock) return;
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (!RInterface::inRThread ());
+
+	MUTEX_UNLOCK;
+	have_mutex_lock = false;
+}
+
+void RCommandStackModel::relayChange () {
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (!RInterface::inRThread ());
+// TODO: for now we update everything on every change
+// TODO: will need mutex locking for real solution
+	emit (layoutAboutToBeChanged ());
+	emit (layoutChanged ());
+}
+
+
+#include "rcommandstack.moc"

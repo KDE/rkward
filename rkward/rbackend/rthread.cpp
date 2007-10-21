@@ -80,6 +80,11 @@ void RThread::run () {
 	killed = false;
 	int err;
 	bool previously_idle = false;
+
+	// we create a fake RCommand to capture all the output/errors during startup
+	current_command = new RCommand (i18n ("R Startup"), RCommand::App, i18n ("R Startup"));
+	current_command->parent = RCommandStack::regular_stack;
+
 	if ((err = initialize ())) {
 		qApp->postEvent (RKGlobals::rInterface (), new QCustomEvent (RSTARTUP_ERROR_EVENT + err));
 	}
@@ -92,8 +97,9 @@ void RThread::run () {
 
 	MUTEX_LOCK;
 	checkObjectUpdatesNeeded (true);
+	notifyCommandDone (current_command);
 	MUTEX_UNLOCK;
-	
+
 	while (1) {
 		MUTEX_LOCK;
 		processX11Events ();
@@ -106,16 +112,16 @@ void RThread::run () {
 		}
 	
 		// while commands are in queue, don't wait
-		while (RCommandStack::regular_stack->isActive () && !locked) {
-			RCommand *command = RCommandStack::regular_stack->pop ();
+		while ((!locked) && RCommandStack::regular_stack->isActive () && !locked) {
+			RCommand *command = RCommandStack::regular_stack->currentCommand ();
 			
 			if (command) {
-				// store type. Inside doCommand, command may be deleted (if the other thread gets called)!
-				bool check_list = (command->type () & (RCommand::User | RCommand::ObjectListUpdate));
 				// mutex will be unlocked inside
 				doCommand (command);
-				checkObjectUpdatesNeeded (check_list);
+				checkObjectUpdatesNeeded (command->type () & (RCommand::User | RCommand::ObjectListUpdate));
 				processX11Events ();
+				notifyCommandDone (command);	// command may be deleted after this
+				RCommandStack::regular_stack->pop ();
 			}
 		
 			if (killed) {
@@ -243,9 +249,14 @@ void RThread::doCommand (RCommand *command) {
 			MUTEX_LOCK;
 		}
 	}
+}
+
+
+void RThread::notifyCommandDone (RCommand *command) {
+	RK_TRACE (RBACKEND);
 
 	// notify GUI-thread that command was finished
-	event = new QCustomEvent (RCOMMAND_OUT_EVENT);
+	QCustomEvent* event = new QCustomEvent (RCOMMAND_OUT_EVENT);
 	event->setData (command);
 	qApp->postEvent (RKGlobals::rInterface (), event);
 }
@@ -382,7 +393,7 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 	request->call_length = call_length;
 	MUTEX_LOCK;
 	flushOutput ();
-	RCommandStack *reply_stack = new RCommandStack ();
+	RCommandStack *reply_stack = new RCommandStack (prev_command);
 	request->in_chain = reply_stack->startChain (reply_stack);
 	MUTEX_UNLOCK;
 
@@ -401,7 +412,7 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 				break;
 			}
 
-			RCommand *command = reply_stack->pop ();
+			RCommand *command = reply_stack->currentCommand ();
 			
 			if (command) {
 				// mutex will be unlocked inside
@@ -409,6 +420,8 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 				doCommand (command);
 				if (object_update_forced) checkObjectUpdatesNeeded (true);
 				processX11Events ();
+				notifyCommandDone (command);	// command may be deleted after this
+				reply_stack->pop ();
 			}
 		}
 
@@ -460,9 +473,6 @@ void RThread::currentCommandWasCancelled () {
 
 int RThread::initialize () {
 	RK_TRACE (RBACKEND);
-
-	// we create a fake RCommand to capture all the output/errors during startup
-	current_command = new RCommand (i18n ("R Startup"), RCommand::App, i18n ("R Startup"));
 
 	int argc = 2;
 	char* argv[2] = { qstrdup ("--slave"), qstrdup ("--no-save") };
@@ -525,10 +535,6 @@ int RThread::initialize () {
 	MUTEX_LOCK;
 	flushOutput ();
 	MUTEX_UNLOCK;
-
-	QCustomEvent *event = new QCustomEvent (RCOMMAND_OUT_EVENT);
-	event->setData (current_command);
-	qApp->postEvent (RKGlobals::rInterface (), event);
 
 	return status;
 }

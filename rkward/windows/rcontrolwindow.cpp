@@ -17,12 +17,9 @@
 
 #include "rcontrolwindow.h"
 
-#include <q3listview.h>
 #include <qpushbutton.h>
-#include <qlayout.h>
-//Added by qt3to4:
-#include <Q3HBoxLayout>
-#include <Q3VBoxLayout>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -44,8 +41,8 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *n
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 
-	Q3VBoxLayout *main_vbox = new Q3VBoxLayout (this, RKGlobals::marginHint ());
-	Q3HBoxLayout *button_hbox = new Q3HBoxLayout (main_vbox, RKGlobals::spacingHint ());
+	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+	QHBoxLayout *button_hbox = new QHBoxLayout (main_vbox, RKGlobals::spacingHint ());
 
 	QPushButton *configure_r_button = new QPushButton (i18n ("Configure R backend"), this);
 	connect (configure_r_button, SIGNAL (clicked ()), this, SLOT (configureButtonClicked ()));
@@ -61,13 +58,15 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *n
 	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancelButtonClicked ()));
 	button_hbox->addWidget (cancel_button);
 
-	commands_view = new Q3ListView (this);
-	commands_view->addColumn (i18n ("Command"));
+	commands_view = new QTreeView (this);
+
+/*	commands_view->addColumn (i18n ("Command"));
 	commands_view->addColumn (i18n ("Type"));
 	commands_view->addColumn (i18n ("Flags"));
-	commands_view->addColumn (i18n ("Description"));
-	commands_view->setSorting (0);		// actually, we ignore the column, and do our own sorting
-	commands_view->setSelectionMode (Q3ListView::Extended);
+	commands_view->addColumn (i18n ("Description")); */
+	commands_view->setSortingEnabled (false);
+
+	commands_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
 	connect (commands_view, SIGNAL (selectionChanged ()), this, SLOT (commandSelectionChanged ()));
 	main_vbox->addWidget (commands_view);
 
@@ -77,6 +76,8 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *n
 
 RControlWindow::~RControlWindow () {
 	RK_TRACE (APP);
+
+	RCommandStackModel::getModel ()->removeListener ();
 }
 
 bool RControlWindow::isActive () {
@@ -96,178 +97,14 @@ void RControlWindow::showEvent (QShowEvent *e) {
 
 	RKMDIWindow::showEvent (e);
 	if (!initialized) return;
-	MUTEX_LOCK;
-	refreshCommands ();
-	MUTEX_UNLOCK;
-}
 
-RControlWindowListViewItem *RControlWindow::itemForCommand (RCommand *command) {
-	QMap <RCommand *, RControlWindowListViewItem *>::const_iterator it = command_map.find (command);
-	if (it == command_map.constEnd ()) return 0;
-	return (*it);
-}
-
-RControlWindowListViewItem *RControlWindow::itemForChain (RCommandChain *chain) {
-	QMap <RCommandChain *, RControlWindowListViewItem *>::const_iterator it = chain_map.find (chain);
-	if (it == chain_map.constEnd ()) return 0;
-	return (*it);
-}
-
-void RControlWindow::addChain (RCommandChain *chain) {
-	if (!isActive ()) return;	// do expensive GUI stuff only when visible
-	RK_TRACE (APP);
-
-	RChainOrCommand *dummy = new RChainOrCommand;
-	dummy->command = 0;
-	dummy->chain = chain;
-	addCommands (dummy, itemForChain (chain->parent));
-	delete dummy;
-}
-
-void RControlWindow::addCommand (RCommand *command, RCommandChain *parent) {
-	if (!isActive ()) return;	// do expensive GUI stuff only when visible
-	RK_TRACE (APP);
-
-	if (!parent) parent = RCommandStack::regular_stack;
-	addCommand (command, itemForChain (parent));
-}
-
-void RControlWindow::updateChain (RCommandChain *chain) {
-	if (!isActive ()) return;	// do expensive GUI stuff only when visible
-	RK_TRACE (APP);
-
-	RControlWindowListViewItem *chainitem = itemForChain (chain);
-	if (!chainitem) {
-		RK_ASSERT (false);
-		return;
-	}
-	chainitem->update (chain);
-	checkCleanChain (chainitem);
-}
-
-void RControlWindow::updateCommand (RCommand *command) {
-	if (!isActive ()) return;	// do expensive GUI stuff only when visible
-	RK_TRACE (APP);
-
-	RControlWindowListViewItem *item = itemForCommand (command);
-	if (!item) {
-		RK_ASSERT (false);
-		// unfortunately, yes, this can happen! Namely when the command is in the reply stack. We do not find commands in (the) reply stack(s), in refreshCommands.
-		// TODO: find a way to include reply stacks in refreshCommands!
-		return;
-	}
-	item->update (command);
-}
-
-void RControlWindow::removeCommand (RCommand *command) {
-	if (!isActive ()) return;	// do expensive GUI stuff only when visible
-	RK_TRACE (APP);
-
-	RControlWindowListViewItem *item = itemForCommand (command);
-	if (!item) {
-		RK_ASSERT (false);
-		// TODO: see updateCommand ()
-		return;
-	}
-	RControlWindowListViewItem *chain = static_cast<RControlWindowListViewItem *> (item->parent ());
-
-	delete item;
-	command_map.remove (command);
-
-	checkCleanChain (chain);
-}
-
-void RControlWindow::checkCleanChain (RControlWindowListViewItem *chain) {
-	if (!isActive ()) return;	// do expensive GUI stuff only when visible
-	RK_TRACE (APP);
-
-	while (chain && chain->chain_closed && chain->parent () && (!chain->firstChild ())) {
-		RControlWindowListViewItem *del = chain;
-		chain = static_cast<RControlWindowListViewItem *> (chain->parent ());
-		chain_map.remove (del->chain);
-		delete del;
-	}
-}
-
-void RControlWindow::setCommandRunning (RCommand *command) {
-	if (!isActive ()) return;	// do expensive GUI stuff only when visible
-	RK_TRACE (APP);
-
-	RControlWindowListViewItem *item = itemForCommand (command);
-	if (!item) {
-		RK_ASSERT (false);
-		// TODO: see updateCommand ()
-		return;
-	}
-	item->setText (2, "Running");
-}
-
-void RControlWindow::refreshCommands () {
-	RK_TRACE (APP);
-
-	commands_view->clear ();
-	command_map.clear ();
-	chain_map.clear ();
-
-	RChainOrCommand *dummy = new RChainOrCommand;
-	dummy->command = 0;
-	dummy->chain = RCommandStack::regular_stack;
-
-	addCommands (dummy, 0);
-
-	delete dummy;
-
-/* add the currently running command (if needed). It is not in the stack. */
-	RCommand *running = RKGlobals::rInterface ()->runningCommand ();
-	if (running && (!command_map.contains (running))) {
-		RControlWindowListViewItem *item = static_cast <RControlWindowListViewItem *> (commands_view->firstChild ());
-		while (item->chain && item->firstChild ()) {
-			item = static_cast <RControlWindowListViewItem *> (item->firstChild ());
-		}
-		addCommand (running, item);
-	}
-	if (running) setCommandRunning (running);
-
-	cancel_button->setEnabled (false);
-}
-
-void RControlWindow::addCommands (RChainOrCommand *coc, RControlWindowListViewItem *parent) {
-	RK_TRACE (APP);
-
-	if (coc->chain) {
-		RControlWindowListViewItem *item;
-		RCommandChain *chain = coc->chain;
-		if (!parent) {
-			item = new RControlWindowListViewItem (commands_view);
-			item->setText (0, i18n ("Command Stack"));
-		} else {
-			item = new RControlWindowListViewItem (parent);
-		}
-		item->setOpen (true);
-		chain_map.insert (chain, item);
-		item->update (chain);
-		for (RChainOrCommand *nc = chain->commands.first (); nc; nc = chain->commands.next ()) {
-			addCommands (nc, item);
-		}
-	} else {	// coc->command
-		RK_ASSERT (parent);
-		addCommand (coc->command, parent);
-	}
-}
-
-void RControlWindow::addCommand (RCommand *command, RControlWindowListViewItem *parent) {
-	RK_TRACE (APP);
-
-	RControlWindowListViewItem *item = new RControlWindowListViewItem (parent);
-	item->setMultiLinesEnabled (true);
-	command_map.insert (command, item);
-
-	item->update (command);
+	RCommandStackModel::getModel ()->addListener ();
+	commands_view->setModel (RCommandStackModel::getModel ());
 }
 
 void RControlWindow::commandSelectionChanged () {
 	RK_TRACE (APP);
-
+/*
 	// we will make some modifications to the selection in here, so disconnect the SIGNAL first.
 	disconnect (commands_view, SIGNAL (selectionChanged ()), this, SLOT (commandSelectionChanged ()));
 
@@ -286,12 +123,12 @@ void RControlWindow::commandSelectionChanged () {
 
 	cancel_button->setEnabled (have_selection);
 
-	connect (commands_view, SIGNAL (selectionChanged ()), this, SLOT (commandSelectionChanged ()));
+	connect (commands_view, SIGNAL (selectionChanged ()), this, SLOT (commandSelectionChanged ())); */
 }
 
 void RControlWindow::cancelButtonClicked () {
 	RK_TRACE (APP);
-
+/*
 	bool some_not_cancelable = false;
 	// find out all the RCommands selected (not the chains)
 	for (QMap <RCommand *, RControlWindowListViewItem *>::const_iterator it = command_map.begin (); it != command_map.end (); ++it) {
@@ -306,7 +143,7 @@ void RControlWindow::cancelButtonClicked () {
 
 	if (some_not_cancelable) {
 		KMessageBox::information (this, i18n ("Some of the commands you were trying to cancel are marked as \"sync\" (letter 'S' in the type column). Cancelling such commands could lead to loss of data. These commands have _not_ been cancelled."), i18n ("Some commands not cancelled"), "cancel_sync");
-	}
+	} */
 }
 
 void RControlWindow::pauseButtonClicked () {
@@ -343,7 +180,7 @@ RControlWindowPart::~RControlWindowPart () {
 
 //############# END RContolWindowPart #######################
 //############# BEGIN RContolWindowListViewItem #################
-
+/*
 // static
 unsigned int RControlWindowListViewItem::lid = 0;
 
@@ -369,16 +206,12 @@ int RControlWindowListViewItem::compare (Q3ListViewItem *i, int, bool ascending)
 	if (ascending) {
 		if (comp_id > id) {
 			return -1;
-		} /* else if (comp_id == id) {		// all items have a unique id!
-			return 0;
-		}*/
+		}
 		return 1;
 	} else {
 		if (comp_id > id) {
 			return 1;
-		} /* else if (comp_id == id) {		// all items have a unique id!
-			return 0;
-		}*/
+		}
 		return -1;
 	}
 }
@@ -423,5 +256,5 @@ void RControlWindowListViewItem::update (RCommandChain *cchain) {
 		setText (2, i18n ("Open (Waiting)"));
 	}
 }
-
+*/
 #include "rcontrolwindow.moc"

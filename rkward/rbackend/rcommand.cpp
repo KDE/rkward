@@ -27,9 +27,25 @@
 
 #define MAX_RECEIVERS 3
 
+RCommandBase::RCommandBase (bool is_chain) {
+	is_command_chain = is_chain;
+	RCommandBase::parent = 0;
+}
+
+RCommand* RCommandBase::commandPointer () {
+	if (is_command_chain) return 0;
+	return static_cast<RCommand*> (this);
+}
+
+RCommandChain* RCommandBase::chainPointer () {
+	if (!is_command_chain) return 0;
+	return static_cast<RCommandChain*> (this);
+}
+
+
 int RCommand::next_id = 0;
 
-RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags) : RData () {
+RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags) : RData (), RCommandBase (false) {
 	RK_TRACE (RBACKEND);
 	_id = next_id++;
 // if we ever submit enough commands to get a buffer overflow, use only positive numbers.
@@ -52,7 +68,7 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 RCommand::~RCommand(){
 	RK_TRACE (RBACKEND);
 
-	for (Q3ValueList<ROutput*>::iterator it = output_list.begin (); it != output_list.end (); ++it) {
+	for (QList<ROutput*>::const_iterator it = output_list.constBegin (); it != output_list.constEnd (); ++it) {
 		delete (*it);
 	}
 	// The output_list itself is cleared automatically

@@ -21,37 +21,43 @@
 #include <qfile.h>
 #include <qstring.h>
 #include <qobject.h>
-#include <q3ptrlist.h>
-#include <q3valuelist.h>
+#include <QLinkedList>
 
 #include "rdata.h"
 
 class RCommandReceiver;
 class RCommand;
-class RChainOrCommand;
+class RCommandChain;
+
+/** Base class for RCommand and RCommandChain, to make it possible to store both in the same list */
+class RCommandBase {
+protected:
+friend class RCommandStack;
+friend class RCommandStackModel;
+	RCommandBase (bool is_chain);
+/** Returns the casted pointer, if this is a command, else 0 */
+	RCommand* commandPointer ();
+/** Returns the casted pointer, if this is a chain, else 0 */
+	RCommandChain* chainPointer ();
+	RCommandChain *parent;
+private:
+	bool is_command_chain;
+};
 
 /** this simple struct is used to ensure a sequence of RCommand s does not get interrupted by unrelated RCommands.
 @see \ref UsingTheInterfaceToR
 @see RInterface::startChain
 @see RInterface::closeChain */
-class RCommandChain {
+class RCommandChain : public RCommandBase {
 protected:
 friend class RControlWindow;
 friend class RControlWindowListViewItem;
 friend class RCommandStack;
-	Q3PtrList<RChainOrCommand> commands;
+friend class RCommandStackModel;
+	RCommandChain () : RCommandBase (true) {};
+	QList<RCommandBase*> commands;
 	bool closed;
-	RCommandChain *parent;
-};
-
-/** this struct is needed by the RCommandStack. It is only a wrapper, which stores a pointer to _either_ a command _or_ a chain. Its sole purpose is to
-be able to insert either a command or a chain using the same mechanism, easily. You don't want to use this class outside of RCommandStack (TODO: move it to rcommandstack.h, then!) */
-class RChainOrCommand {
-private:
-friend class RControlWindow;
-friend class RCommandStack;
-	RCommand *command;
-	RCommandChain *chain;
+	bool isStack () { return (parent == 0); }
 };
 
 /** this struct is used to pass on eval-requests (i.e. request for RKWard to do something, which may involve issuing further commands) from the
@@ -77,7 +83,7 @@ struct ROutput {
 	QString output;
 };
 
-typedef Q3ValueList<ROutput*> ROutputList;
+typedef QList<ROutput*> ROutputList;
 
 /*
 struct RGetValueRequest {
@@ -117,7 +123,7 @@ friend class RThread;
   *@author Thomas Friedrichsmeier
   */
   
-class RCommand : public RData {
+class RCommand : public RData, public RCommandBase {
 public:
 /** constructs an RCommand.
 @param command The command (string) to be run in the backend. This may include newlines and ";". The command should be a complete statement. If it is an incomplete statement, the backend will not wait for the rest of the command to come in, but rather the command will fail with RCommand::errorIncomplete.
@@ -207,6 +213,7 @@ public:
 private:
 friend class RThread;
 friend class RInterface;
+friend class RCommandStack;
 /** internal function will be called by the backend, as the command gets passed through. Takes care of sending this command (back) to its receiver(s) */
 	void finished ();
 /** new output was generated. Pass on to receiver(s) */

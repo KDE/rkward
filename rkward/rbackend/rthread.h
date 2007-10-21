@@ -142,8 +142,8 @@ points:
 
 	void currentCommandWasCancelled ();
 
-/** The command currently being executed. This is used from RInterface::cancelCommand to find out, whether the command to be cancelled is
-already/still running. */
+/** The command currently being executed. This is used from RInterface::cancelCommand to find out, whether the command to be cancelled is already/still running.
+TODO: check logic. RCommandStack holds current_command, too. But this may only be non-zero, when the command is actually inside the backend? */
 	RCommand *current_command;
 
 /** convenience struct for event passing */
@@ -169,6 +169,7 @@ protected:
 private:
 /** This is the function in which an RCommand actually gets processed. Basically it passes the command to REmbedInteranl::runCommandInternal () and sends RInterface some events about what is currently happening. */
 	void doCommand (RCommand *command);
+	void notifyCommandDone (RCommand *command);
 /** thread is locked. No new commands will be executed. @see LockType @see lock @see unlock */
 	int locked;
 /** thread is killed. Should exit as soon as possible. @see kill */

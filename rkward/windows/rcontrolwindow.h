@@ -20,9 +20,8 @@
 
 #include <kparts/part.h>
 
-#include <qmap.h>
 #include <qlabel.h>
-#include <q3listview.h>
+#include <QTreeView>
 
 #include "rkmdiwindow.h"
 
@@ -40,10 +39,7 @@ This class provides a GUI interface to inspect, and manipulate the current RComm
 Do create an instance of this class directly. Create a RControlWindowPart instead. Also, probably RInterface should be the only class ever calling
 functions of RControlWindow.
 
-// TODO: probably the QListView of RCommands (and associated functionality) should be separted to an own class
-to allow reuse
-
-// TODO: check, if everything is implemented
+// KDE4 TODO: check, if everything is implemented
 
 @author Thomas Friedrichsmeier
 */
@@ -55,18 +51,6 @@ public:
 	RControlWindow (QWidget *parent, bool tool_window, const char *name=0);
 /** destructor */
 	~RControlWindow ();
-/** Add new chain to the RControlWindow. Has no effect unless RControlWindow::isShown () */
-	void addChain (RCommandChain *chain);
-/** Add new command to the RControlWindow. The command is added to the given parent chain. Has no effect unless RControlWindow::isShown () */
-	void addCommand (RCommand *command, RCommandChain *parent);
-/** Update information on the given chain. Use esp, if the chain was set to closed. Has no effect unless RControlWindow::isShown () */
-	void updateChain (RCommandChain *chain);
-/** Update information on the given command. Use esp, if the command was cancelled. Has no effect unless RControlWindow::isShown () */
-	void updateCommand (RCommand *command);
-/** Remove given command from the RControlWindow. This will also check, whether the parent chain can be torn down, automatically. Has no effect unless RControlWindow::isShown ()*/
-	void removeCommand (RCommand *command);
-/** Set given command as running. Has no effect unless RControlWindow::isShown ()*/
-	void setCommandRunning (RCommand *command);
 
 /** reimplemented to refresh list of commands when showing. This is needed, as the RControlWindow is only kept up to date as long as it is shown. Hence, if it was hidden, and then gets shown, it will have to update the entire list. */
 	void showEvent (QShowEvent *e);
@@ -84,25 +68,9 @@ public slots:
 /** configure button was clicked. Invoke settings dialog */
 	void configureButtonClicked ();
 private:
-	Q3ListView *commands_view;
+	QTreeView *commands_view;
 	QPushButton *cancel_button;
 	QPushButton *pause_button;
-
-	RControlWindowListViewItem *itemForCommand (RCommand *command);
-	RControlWindowListViewItem *itemForChain (RCommandChain *chain);
-
-/** internal: recursively add commands/chains */
-	void addCommands (RChainOrCommand *coc, RControlWindowListViewItem *parent);
-/** internal: add single command */
-	void addCommand (RCommand *command, RControlWindowListViewItem *parent);
-/** internal: delete chain(s) if applicable. This basically mimics the behavior in RCommandStack::pop () */
-	void checkCleanChain (RControlWindowListViewItem *chain);
-
-/** internal: causes the RControlWindow (if shown) to refresh it's entire list of commands. Warning! Does not lock the mutex. Lock the mutex before calling this! */
-	void refreshCommands ();
-
-	QMap <RCommand *, RControlWindowListViewItem *> command_map;
-	QMap <RCommandChain *, RControlWindowListViewItem *> chain_map;
 
 	bool paused;
 	bool isActive ();
@@ -127,7 +95,7 @@ protected:
 /** destructor */
 	~RControlWindowPart ();
 };
-
+#if 0
 /**
 	\brief ListViewItem used in RControlWindow
 
@@ -158,5 +126,6 @@ public:
 /** reimplemented to always have the top of the stack at the top */
 	int compare (Q3ListViewItem *i, int col, bool ascending) const;
 };
+#endif
 
 #endif

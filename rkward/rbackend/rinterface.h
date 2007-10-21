@@ -70,8 +70,8 @@ public:
 
 /** opens a new command chain. Returns a pointer to the new chain. If you specify a parent, the new chain will be a sub-chain of that chain. */
 	RCommandChain *startChain (RCommandChain *parent=0);
-/** closes the command chain returns pointer to parent chain */
-	RCommandChain *closeChain (RCommandChain *chain);
+/** closes the command chain. The chain (and even its parent, if it is already closed) may be deleted right afterwards! */
+	void closeChain (RCommandChain *chain);
 
 /** Ensures that the given command will not be executed, or, if it is already running, interrupts it. Note that commands marked RCommand::Sync can
 not be interrupted. */
@@ -91,6 +91,8 @@ not be interrupted. */
 
 	bool backendIsDead ();
 	bool backendIsIdle ();
+
+	static bool inRThread ();
 public slots:
 /** called periodically to flush output buffer in RThread */
 	void flushOutput ();
