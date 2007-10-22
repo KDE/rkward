@@ -682,10 +682,10 @@ void RKConsole::clear () {
 
 void RKConsole::addCommandToHistory (const QString &command) {
 	RK_TRACE (APP);
-	if (command.isEmpty () || commands_history.last() == command) return; // don't add empty or duplicate lines
+	if (command.isEmpty () || ((!commands_history.isEmpty ()) && commands_history.last() == command)) return; // don't add empty or duplicate lines
 
 	commands_history.append (command);
-	history_editing_line = QString::null;
+	history_editing_line = QString ();
 
 	if (RKSettingsModuleConsole::maxHistoryLength ()) {
 		uint c = commands_history.count ();

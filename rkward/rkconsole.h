@@ -23,15 +23,12 @@
 #include <ktexteditor/document.h>
 #include <ktexteditor/view.h>
 
-#include <q3ptrlist.h>
-//Added by qt3to4:
-#include <QEvent>
-#include <QKeyEvent>
-
 #include "rbackend/rcommandreceiver.h"
 #include "windows/rkcommandeditorwindow.h"
 #include "windows/rkmdiwindow.h"
 
+class QEvent;
+class QKeyEvent;
 class QStringList;
 class KAction;
 class RCommand;
