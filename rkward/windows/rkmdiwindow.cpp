@@ -20,9 +20,7 @@
 #include <qapplication.h>
 #include <qpainter.h>
 #include <qtimer.h>
-//Added by qt3to4:
 #include <QEvent>
-#include <Q3Frame>
 #include <QPaintEvent>
 
 #include <kparts/event.h>
@@ -34,7 +32,7 @@
 
 #include "../debug.h"
 
-RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const char *name) : Q3Frame (parent, name) {
+RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const char *name) : QFrame (parent, name) {
 	RK_TRACE (APP);
 
 	if (tool_window) {
@@ -124,8 +122,6 @@ bool RKMDIWindow::close (bool also_delete) {
 
 void RKMDIWindow::prepareToBeAttached () {
 	RK_TRACE (APP);
-
-	// TODO: KDE4 do we still need this?
 }
 
 void RKMDIWindow::prepareToBeDetached () {
@@ -145,7 +141,7 @@ bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
 	if (watched == getPart ()) {
 		if (KParts::PartActivateEvent::test (e)) {
 			RK_TRACE (APP);		// trace only the "interesting" calls to this function
-qDebug ("a/d %s", fullCaption().toLatin1().data());
+
 			KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *> (e);
 			if (ev->activated ()) {
 				emit (windowActivated (this));
@@ -180,7 +176,7 @@ void RKMDIWindow::initializeActivationSignals () {
 void RKMDIWindow::paintEvent (QPaintEvent *e) {
 	// RK_TRACE (APP); Do not trace!
 
-	Q3Frame::paintEvent (e);
+	QFrame::paintEvent (e);
 
 	if (isActive ()) {
 		QPainter paint (this);

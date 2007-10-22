@@ -19,18 +19,17 @@
 #define RKMDIWINDOW_H
 
 #include <qwidget.h>
-//Added by qt3to4:
-#include <QEvent>
-#include <Q3Frame>
-#include <QPaintEvent>
+#include <QFrame>
 
 #include <kparts/part.h>
 
+class QEvent;
+class QPaintEvent;
 class RKWorkplace;
 class RKToolWindowBar;
 
 /** Base class for rkward document mdi windows */
-class RKMDIWindow : public Q3Frame {
+class RKMDIWindow : public QFrame {
 	Q_OBJECT
 public:
 	enum Type {

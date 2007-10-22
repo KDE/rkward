@@ -26,6 +26,7 @@
 #include <kicon.h>
 
 #include <QSplitter>
+#include <QContextMenuEvent>
 
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
