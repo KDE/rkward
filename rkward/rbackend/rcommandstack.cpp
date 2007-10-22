@@ -169,10 +169,10 @@ void RCommandStack::pop () {
 }
 
 void RCommandStack::clearFinishedChains () {
-	RK_TRACE (RBACKEND);
-
 	// reached end of chain and chain is closed? walk up
 	while (current_chain->commands.isEmpty () && current_chain->closed && current_chain->parent) {
+		RK_TRACE (RBACKEND);	// trace in here. This is actually reach much *less* often
+
 		RCommandChain *prev_chain = current_chain;
 		RCommandStackModel::getModel ()->aboutToPop (current_chain->parent);
 		current_chain->parent->commands.removeFirst ();
