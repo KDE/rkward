@@ -21,7 +21,7 @@
 #include <qfile.h>
 #include <qstring.h>
 #include <qobject.h>
-#include <QLinkedList>
+#include <QList>
 
 #include "rdata.h"
 

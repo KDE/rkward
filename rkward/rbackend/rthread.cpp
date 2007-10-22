@@ -32,9 +32,9 @@
 #include <qstring.h>
 #include <qapplication.h>
 #include <QDBusConnection>
+#include <QList>
 //Added by qt3to4:
 #include <QCustomEvent>
-#include <Q3ValueList>
 
 #include <signal.h>		// needed for pthread_kill
 
@@ -315,7 +315,7 @@ void RThread::flushOutput () {
 	RK_TRACE (RBACKEND);
 
 	if (current_command) {
-		for (Q3ValueList<RCommand*>::const_iterator it = all_current_commands.constBegin (); it != all_current_commands.constEnd(); ++it) {
+		for (QList<RCommand*>::const_iterator it = all_current_commands.constBegin (); it != all_current_commands.constEnd(); ++it) {
 			ROutput *output = current_output;
 			if ((*it) != current_command) {		// this output belongs to several commands at once. So we need to copy it.
 				output = new ROutput;

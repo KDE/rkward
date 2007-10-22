@@ -91,7 +91,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 		RK_DO (qDebug ("Could not retrieve the katepart's edit action collection"), APP, DL_ERROR);
 	}
 
-	view->focusProxy()->installEventFilter(this);
+	if (view->focusProxy ()) view->focusProxy()->installEventFilter(this);
 	view->installEventFilter(this);
 
 	doc->setModified (false);

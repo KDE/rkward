@@ -145,7 +145,7 @@ bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
 	if (watched == getPart ()) {
 		if (KParts::PartActivateEvent::test (e)) {
 			RK_TRACE (APP);		// trace only the "interesting" calls to this function
-	
+qDebug ("a/d %s", fullCaption().toLatin1().data());
 			KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *> (e);
 			if (ev->activated ()) {
 				emit (windowActivated (this));

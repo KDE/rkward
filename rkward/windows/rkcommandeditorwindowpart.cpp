@@ -32,6 +32,7 @@ RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent, RKCommand
 	setComponentData (KGlobal::mainComponent ());
  
 	command_editor = editor_widget;
+	setWidget (parent);
 
 	setXMLFile ("rkcommandeditorwindowpart.rc");
 

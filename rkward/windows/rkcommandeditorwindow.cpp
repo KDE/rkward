@@ -32,8 +32,8 @@
 #include <qfile.h>
 #include <qtimer.h>
 #include <qobject.h>
+#include <QHBoxLayout>
 //Added by qt3to4:
-#include <Q3HBoxLayout>
 #include <QCloseEvent>
 #include <QFrame>
 #include <Q3ValueList>
@@ -73,17 +73,21 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	RK_ASSERT (m_doc);
 	m_view = m_doc->createView (this);
 
-	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
-	RKCommonFunctions::removeContainers (m_doc, QStringList::split (',', "bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line"), true);
-	RKCommonFunctions::moveContainer (m_doc, "Menu", "tools", "edit", true);
-
-	m_doc->insertChildClient (new RKCommandEditorWindowPart (m_view, this));
-	setPart (m_doc);
-	initializeActivationSignals ();
 	setFocusProxy (m_view);
+	setFocusPolicy (Qt::StrongFocus);
 
-	Q3HBoxLayout *pLayout = new Q3HBoxLayout( this, 0, -1, "layout");
-	pLayout->addWidget(m_view);
+	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
+	RKCommonFunctions::removeContainers (m_view, QString ("bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line").split (','), true);
+	RKCommonFunctions::moveContainer (m_view, "Menu", "tools", "edit", true);
+
+	RKCommandEditorWindowPart* part = new RKCommandEditorWindowPart (m_view, this);
+	part->insertChildClient (m_view);
+	setPart (part);
+	initializeActivationSignals ();
+
+	QHBoxLayout *layout = new QHBoxLayout (this);
+	layout->setContentsMargins (0, 0, 0, 0);
+	layout->addWidget(m_view);
 
 	setIcon (SmallIcon ("source"));
 
@@ -161,7 +165,7 @@ void RKCommandEditorWindow::setRHighlighting () {
 	RK_TRACE (COMMANDEDITOR);
 
 	// set syntax-highlighting for R
-	m_doc->setHighlightingMode("R Script");
+	if (!m_doc->setHighlightingMode("R Script")) RK_DO (qDebug ("R syntax highlighting defintion not found!"), COMMANDEDITOR, DL_ERROR);
 }
 
 void RKCommandEditorWindow::copy () {

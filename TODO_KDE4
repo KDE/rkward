@@ -30,7 +30,7 @@ General:
 rkcommandeditorwindow
 	- code completion will be broken. Fix after porting.
 	- does the popup-menu still work? See SVN rev. 962.
-	- does highlighting work?
+	- placement of menu options?
 
 rkward
 	- does closing windows work
@@ -91,3 +91,5 @@ rkconsole:
 rkhtmlwindow:
 	- when this is open, we always seem to crash on close
 
+rcontrolwindow:
+	- this does not really need to be a top-level tool window any more. Since it's rarely used, it might be hidden somewhere.

@@ -30,7 +30,7 @@ RCommandReceiver::RCommandReceiver () {
 RCommandReceiver::~RCommandReceiver () {
 	RK_TRACE (RBACKEND);
 
-	for (RCommandList::const_iterator it = outstanding_commands.begin (); it != outstanding_commands.end (); ++it) {
+	for (RCommandList::const_iterator it = outstanding_commands.constBegin (); it != outstanding_commands.constEnd (); ++it) {
 		(*it)->removeReceiver (this);
 	}
 }
@@ -46,7 +46,7 @@ void RCommandReceiver::newOutput (RCommand *, ROutput *) {
 void RCommandReceiver::cancelOutstandingCommands () {
 	RK_TRACE (RBACKEND);
 
-	for (RCommandList::const_iterator it = outstanding_commands.begin (); it != outstanding_commands.end (); ++it) {
+	for (RCommandList::const_iterator it = outstanding_commands.constBegin (); it != outstanding_commands.constEnd (); ++it) {
 		RKGlobals::rInterface()->cancelCommand (*it);
 	}
 }

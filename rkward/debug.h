@@ -42,7 +42,7 @@ extern int RK_Debug_CommandStep;
 #define DIALOGS 1024
 #define OUTPUT 2048
 #define XML 4096
-#define ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR | RBACKEND | MISC | XML)
+#define ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR | RBACKEND | COMMANDEDITOR | MISC | DIALOGS | OUTPUT | XML)
 
 #ifdef RKWARD_DEBUG
 

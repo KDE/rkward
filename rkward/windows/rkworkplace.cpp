@@ -163,6 +163,7 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, KMultiTabBar::KMult
 	tool_window_bars[position]->addWidget (window);
 	if (windows.find (window) == windows.end ()) {	// must be new
 		addWindow (window, true);
+		RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ());
 	}
 }
 

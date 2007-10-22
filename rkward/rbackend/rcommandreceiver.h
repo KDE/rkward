@@ -17,7 +17,7 @@
 #ifndef RCOMMANDRECEIVER_H
 #define RCOMMANDRECEIVER_H
 
-#include <q3valuelist.h>
+#include <qlist.h>
 
 #include "rcommand.h"
 
@@ -33,7 +33,7 @@ TODO: this mechanism may be slightly costly, if there are *many* commands outsta
 
 class RCommand;
 struct ROutput;
-typedef Q3ValueList<RCommand*> RCommandList;
+typedef QList<RCommand*> RCommandList;
 
 class RCommandReceiver {
 public:
