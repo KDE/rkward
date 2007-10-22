@@ -252,7 +252,7 @@ EditLabelsDialog::EditLabelsDialog (QWidget *parent, RKVariable *var, int mode) 
 	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (reject ()));
 	buttonbox->addWidget (cancel_button);
 	
-	setCaption (i18n ("Levels / Value labels for '%1'").arg (var->getShortName ()));
+	setCaption (i18n ("Levels / Value labels for '%1'", var->getShortName ()));
 }
 
 EditLabelsDialog::~EditLabelsDialog () {

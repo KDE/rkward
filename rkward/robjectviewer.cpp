@@ -71,7 +71,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
 
 	Q3HBox *row = new Q3HBox (box);
-	QLabel *label = new QLabel (i18n("\nResult of 'summary (%1)':\n").arg (object->getFullName ()), row);
+	QLabel *label = new QLabel (i18n("\nResult of 'summary (%1)':\n", object->getFullName ()), row);
 	row->setStretchFactor (label, 10);
 	toggle_summary_button = new QPushButton (i18n ("Hide"), row);
 	connect (toggle_summary_button, SIGNAL (clicked ()), this, SLOT (toggleSummary ()));
@@ -83,7 +83,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 	summary_area->setWordWrap (Q3TextEdit::NoWrap);
 
 	row = new Q3HBox (box);
-	label = new QLabel (i18n("\nResult of 'print (%1)':\n").arg (object->getFullName ()), row);
+	label = new QLabel (i18n("\nResult of 'print (%1)':\n", object->getFullName ()), row);
 	row->setStretchFactor (label, 10);
 	toggle_print_button = new QPushButton (i18n ("Hide"), row);
 	connect (toggle_print_button, SIGNAL (clicked ()), this, SLOT (togglePrint ()));

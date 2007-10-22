@@ -59,7 +59,7 @@ bool PHPBackend::initialize (RKComponentPropertyCode *code_property, bool add_he
 	QString common_php = files_path.absoluteFilePath ("common.php");
 	QString php_ini = files_path.absoluteFilePath ("php.ini");
 	if (!QFileInfo (common_php).isReadable ()) {
-		KMessageBox::error (0, i18n ("The support file \"%1\" could not be found or is not readable. Please check your installation.").arg (common_php), i18n ("PHP-Error"));
+		KMessageBox::error (0, i18n ("The support file \"%1\" could not be found or is not readable. Please check your installation.", common_php), i18n ("PHP-Error"));
 		emit (haveError ());
 		return false;
 	}
@@ -194,7 +194,7 @@ void PHPBackend::gotOutput (K3Process *, char* buf, int) {
 	if (have_data) {
 		if (!startup_done) {
 			php_process->detach ();
-			KMessageBox::error (0, i18n ("There has been an error\n(\"%1\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKWard or a problem with your PHP installation. Check the settings (Settings->Configure Settings->PHP backend) and try again.").arg (output_raw_buffer.trimmed ()), i18n ("PHP-Error"));
+			KMessageBox::error (0, i18n ("There has been an error\n(\"%1\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKWard or a problem with your PHP installation. Check the settings (Settings->Configure Settings->PHP backend) and try again.", output_raw_buffer.trimmed ()), i18n ("PHP-Error"));
 			emit (haveError ());
 			destroy ();
 			return;
@@ -224,7 +224,7 @@ void PHPBackend::gotOutput (K3Process *, char* buf, int) {
 		} else if (request.startsWith ("PHP-Error")) {
 			QString error = request.remove ("PHP-Error");
 			php_process->detach ();
-			KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"%1\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings.").arg (error.trimmed ()), i18n ("PHP-Error"));
+			KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"%1\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings.", error.trimmed ()), i18n ("PHP-Error"));
 			emit (haveError ());
 			destroy ();
 			return;
@@ -239,7 +239,7 @@ void PHPBackend::processDied (K3Process *) {
 
 	if (php_process) {		// if the php_process is already 0, this means, we have caught an error message before the process died, have already shown a message, emitted haveError(), and called destroy()
 		php_process->detach ();
-		KMessageBox::error (0, i18n ("The PHP-backend has died unexpectedly. The current output buffer is shown below:\n%1").arg (output_raw_buffer), i18n ("PHP Process exited"));
+		KMessageBox::error (0, i18n ("The PHP-backend has died unexpectedly. The current output buffer is shown below:\n%1", output_raw_buffer), i18n ("PHP Process exited"));
 		emit (haveError ());
 		destroy ();
 	}

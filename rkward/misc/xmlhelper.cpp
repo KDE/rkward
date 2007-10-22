@@ -62,7 +62,7 @@ QDomElement XMLHelper::openXMLFile (const QString &filename, int debug_level, bo
 	QFile f (filename);
 	if (!f.open (QIODevice::ReadOnly)) displayError (0, i18n("Could not open file for reading"), debug_level, DL_ERROR);
 	if (!doc.setContent(&f, false, &error_message, &error_line, &error_column)) {
-		displayError (0, i18n ("Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. Expect further errors to be reported below").arg (error_message).arg (QString::number (error_line)).arg (QString::number (error_column)), debug_level, DL_ERROR);
+		displayError (0, i18n ("Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. Expect further errors to be reported below", error_message, error_line, error_column), debug_level, DL_ERROR);
 	}
 	f.close();
 
@@ -184,7 +184,7 @@ QDomElement XMLHelper::getChildElement (const QDomElement &parent, const QString
 
 	XMLChildList list = getChildElements (parent, name, debug_level);
 	if (list.count () != 1) {
-		displayError (&parent, i18n ("Expected exactly one element '%1' but found %2").arg (name).arg (QString::number (list.count ())), debug_level);
+		displayError (&parent, i18n ("Expected exactly one element '%1' but found %2", name, list.count ()), debug_level);
 		QDomElement dummy;
 		return dummy;
 	}
@@ -239,7 +239,7 @@ QString XMLHelper::getStringAttribute (const QDomElement &element, const QString
 	RK_TRACE (XML);
 
 	if (!element.hasAttribute (name)) {
-		displayError (&element, i18n ("'%1'-attribute not given. Assuming '%2'").arg (name).arg (def), debug_level);
+		displayError (&element, i18n ("'%1'-attribute not given. Assuming '%2'", name, def), debug_level);
 		return (def);
 	}
 
@@ -257,7 +257,7 @@ int XMLHelper::getMultiChoiceAttribute (const QDomElement &element, const QStrin
 	if ((index = value_list.findIndex (plain_value)) >= 0) {
 		return (index);
 	} else {
-		displayError (&element, i18n ("Illegal attribute value. Allowed values are one of '%1', only.").arg (values), debug_level, DL_ERROR);
+		displayError (&element, i18n ("Illegal attribute value. Allowed values are one of '%1', only.", values), debug_level, DL_ERROR);
 		return def;
 	}
 }
@@ -305,7 +305,7 @@ bool XMLHelper::getBoolAttribute (const QDomElement &element, const QString &nam
 	if (res == "true") return true;
 	if (res == "false") return false;
 
-	displayError (&element, i18n ("Illegal attribute value. Allowed values are '%1' or '%2', only.").arg ("true").arg ("false"), debug_level, DL_ERROR);
+	displayError (&element, i18n ("Illegal attribute value. Allowed values are '%1' or '%2', only.", QString ("true"), QString ("false")), debug_level, DL_ERROR);
 	return def;
 }
 
@@ -316,7 +316,7 @@ void XMLHelper::displayError (const QDomNode *in_node, const QString &message, i
 	if (highest_error < debug_level) highest_error = debug_level;
 
 	if ((RK_Debug_Flags & XML) && (message_level >= RK_Debug_Level)) {
-		QString backtrace = i18n ("XML-parsing '%1' ").arg (filename);
+		QString backtrace = i18n ("XML-parsing '%1' ", filename);
 		// create a "backtrace"
 		QStringList list;
 

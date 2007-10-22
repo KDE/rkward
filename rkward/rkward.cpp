@@ -531,7 +531,7 @@ void RKWardMainWindow::slotNewDataFrame () {
 
 	if (ok) {
 		QString valid = RObjectList::getObjectList ()->validizeName (name);
-		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1").arg (valid), i18n ("Invalid Name"));
+		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1", valid), i18n ("Invalid Name"));
 		RObject *object = RObjectList::getObjectList ()->createNewChild (valid, 0, true, true);
 		RKWorkplace::mainWorkplace ()->editObject (object, true);
 	}

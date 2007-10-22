@@ -74,7 +74,7 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 	if (command->getFlags () == WORKSPACE_LOAD_COMMAND) {
 		if (!tmpfile.isEmpty ()) KIO::NetAccess::removeTempFile (tmpfile);
 		if (command->failed ()) {
-			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2").arg (RObjectList::getObjectList ()->getWorkspaceURL ().path ()).arg (command->error ()), i18n ("Error loading workspace"));
+			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2", RObjectList::getObjectList ()->getWorkspaceURL ().path (), command->error ()), i18n ("Error loading workspace"));
 			RObjectList::getObjectList ()->setWorkspaceURL (KUrl());
 		} else {
 			RKWorkplace::mainWorkplace ()->restoreWorkplace ();

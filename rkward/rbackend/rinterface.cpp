@@ -333,7 +333,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 	} else if (call == "require") {
 		if (request->call_length >= 2) {
 			QString lib_name = request->call[1];
-			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.").arg (lib_name), i18n ("Require package '%1'").arg (lib_name));
+			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n ("Require package '%1'", lib_name));
 			RKLoadLibsDialog::showInstallPackagesModal (0, request->in_chain, lib_name);
 			issueCommand (".rk.set.reply (\"\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		} else {

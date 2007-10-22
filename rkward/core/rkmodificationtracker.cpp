@@ -47,19 +47,19 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 
 	if (removed_in_workspace) {
 		if (ed) {
-			if (KMessageBox::questionYesNo (0, i18n ("The object '%1' was removed from workspace or changed to a different type of object, but is currently opened for editing. Do you want to restore it?").arg (object->getFullName ()), i18n ("Restore object?")) == KMessageBox::Yes) {
+			if (KMessageBox::questionYesNo (0, i18n ("The object '%1' was removed from workspace or changed to a different type of object, but is currently opened for editing. Do you want to restore it?", object->getFullName ()), i18n ("Restore object?")) == KMessageBox::Yes) {
 				if (removed_in_workspace) ed->restoreObject (object);
 				return false;
 			}
 		}
 	} else {
 		if (editor || ed) {
-			if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '%1'? The object is currently opened for editing, it will be removed in the editor, too. There's no way to get it back.").arg (object->getFullName ()), i18n ("Remove object?")) != KMessageBox::Yes) {
+			if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '%1'? The object is currently opened for editing, it will be removed in the editor, too. There's no way to get it back.", object->getFullName ()), i18n ("Remove object?")) != KMessageBox::Yes) {
 				return false;
 			}
 		} else {
 			// TODO: check for other editors editing this object
-			if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '%1'? There's no way to get it back.").arg (object->getFullName ()), i18n ("Remove object?")) != KMessageBox::Yes) {
+			if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '%1'? There's no way to get it back.", object->getFullName ()), i18n ("Remove object?")) != KMessageBox::Yes) {
 				return false;
 			}
 		}

@@ -253,14 +253,14 @@ void TwinTable::dataviewHeaderRightClicked (int row, int col) {
 		dataview->getSelectionBoundaries (&top, &left, &bottom, &right);
 		if (top >= 0 && bottom <= dataview->numTrueRows () && top != bottom) {
 			left_header_menu->setItemVisible (HEADER_MENU_ID_DEL_ROWS, true);
-			left_header_menu->changeItem (HEADER_MENU_ID_DEL_ROWS, i18n ("Delete marked rows (%1-%2)").arg (QString::number (top+1), QString::number (bottom+1)));
+			left_header_menu->changeItem (HEADER_MENU_ID_DEL_ROWS, i18n ("Delete marked rows (%1-%2)", (top+1), (bottom+1)));
 		} else {
 			left_header_menu->setItemVisible (HEADER_MENU_ID_DEL_ROWS, false);
 		}
 		if (row < dataview->numTrueRows ()) {
 			left_header_menu->setItemVisible (HEADER_MENU_ID_ADD_ROW_BELOW, true);
 			left_header_menu->setItemVisible (HEADER_MENU_ID_DEL_ROW, true);
-			left_header_menu->changeItem (HEADER_MENU_ID_DEL_ROW, i18n ("Delete this row (%1)").arg (QString::number (row+1)));
+			left_header_menu->changeItem (HEADER_MENU_ID_DEL_ROW, i18n ("Delete this row (%1)", (row+1)));
 			left_header_menu->popup (dataview->mouse_at);
 		} else if (row == dataview->numTrueRows ()) {		// trailing row
 			left_header_menu->setItemVisible (HEADER_MENU_ID_ADD_ROW_BELOW, false);

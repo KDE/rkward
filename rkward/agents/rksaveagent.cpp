@@ -70,7 +70,7 @@ void RKSaveAgent::rCommandDone (RCommand *command) {
 	if (command->hasError ()) {
 		if (when_done != DoNothing) {
 			int res;
-			res = KMessageBox::warningYesNoCancel (0, i18n ("Saving to file '%1' failed. What do you want to do?").arg (save_url.path ()), i18n ("Save failed"), KGuiItem (i18n ("Try saving with a different filename")), KGuiItem (i18n ("Saving failed")));
+			res = KMessageBox::warningYesNoCancel (0, i18n ("Saving to file '%1' failed. What do you want to do?", save_url.path ()), i18n ("Save failed"), KGuiItem (i18n ("Try saving with a different filename")), KGuiItem (i18n ("Saving failed")));
 			if (res == KMessageBox::Yes) {
 				if (askURL ()) RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.path () + "\")", RCommand::App, QString::null, this), save_chain);
 				return;
@@ -83,7 +83,7 @@ void RKSaveAgent::rCommandDone (RCommand *command) {
 				return;
 			}
 		} else {
-			if (KMessageBox::warningYesNo (0, i18n ("Saving to file '%1' failed. Do you want to try saving to a different filename?").arg (save_url.path ())) == KMessageBox::Yes) {
+			if (KMessageBox::warningYesNo (0, i18n ("Saving to file '%1' failed. Do you want to try saving to a different filename?", save_url.path ())) == KMessageBox::Yes) {
 				if (askURL ()) RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.path () + "\")", RCommand::App, QString::null, this), save_chain);
 				return;
 			} else {

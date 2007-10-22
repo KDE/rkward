@@ -74,7 +74,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
 	QDomElement doc_element = xml->openXMLFile (filename, DL_ERROR);
 	if (xml->highestError () >= DL_ERROR) {
-		KMessageBox::error (this, i18n ("There has been an error while trying to parse the description of this plugin ('%1'). Please refer to stdout for details.").arg (filename), i18n ("Could not create plugin"));
+		KMessageBox::error (this, i18n ("There has been an error while trying to parse the description of this plugin ('%1'). Please refer to stdout for details.", filename), i18n ("Could not create plugin"));
 		removeFromParent ();
 		deleteLater ();
 		return;

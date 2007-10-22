@@ -44,7 +44,7 @@ RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KF
 
 	context = RKComponentMap::getContext (context_id);
 	if (!context) {
-		KMessageBox::sorry (this, i18n ("No plugins defined for context '%1'").arg (context_id));
+		KMessageBox::sorry (this, i18n ("No plugins defined for context '%1'", context_id));
 		return;
 	}
 

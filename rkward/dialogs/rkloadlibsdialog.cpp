@@ -736,7 +736,7 @@ void InstallPackagesWidget::trySelectPackage (const QString &package_name) {
 	}
 
 	if (!found) {
-		KMessageBox::sorry (0, i18n ("The package requested by the backend (\"%1\") was not found in the package repositories. Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\"-button.").arg (package_name), i18n ("Package not available"));
+		KMessageBox::sorry (0, i18n ("The package requested by the backend (\"%1\") was not found in the package repositories. Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\"-button.", package_name), i18n ("Package not available"));
 	}
 }
 
@@ -797,7 +797,7 @@ bool PackageInstallParamsWidget::checkWritable (bool *as_root) {
 
 	QFileInfo fi = QFileInfo (libraryLocation ());
 	if (!fi.isWritable ()) {
-		int res = KMessageBox::questionYesNo (this, i18n ("The directory you are trying to install to (%1) is not writable with your current user permissions. If you are the adminitstrator of this machine, you can try to install the packages as root (you'll be prompted for the root password). Otherwise you'll have to chose a different library location to install to (if none are writable, you will probably want to use the \"Configure Repositories\"-button to set up a writable directory to install packages to).").arg (libraryLocation ()), i18n ("Selected library location not writable"), KGuiItem (i18n ("Become root")), KGuiItem (i18n ("&Cancel")));
+		int res = KMessageBox::questionYesNo (this, i18n ("The directory you are trying to install to (%1) is not writable with your current user permissions. If you are the adminitstrator of this machine, you can try to install the packages as root (you'll be prompted for the root password). Otherwise you'll have to chose a different library location to install to (if none are writable, you will probably want to use the \"Configure Repositories\"-button to set up a writable directory to install packages to).", libraryLocation ()), i18n ("Selected library location not writable"), KGuiItem (i18n ("Become root")), KGuiItem (i18n ("&Cancel")));
 		if (res == KMessageBox::Yes) {
 			*as_root = true;
 			return true;
