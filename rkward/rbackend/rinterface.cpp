@@ -75,11 +75,14 @@ RInterface::RInterface () {
 		RK_DO (qDebug ("No R_HOME environment variable set. RKWard will quit in a moment. Always start rkward in the default way unless you know what you're doing."), RBACKEND, DL_ERROR);
 	}
 
-	RCommandStack::regular_stack = new RCommandStack (0);
 	new RCommandStackModel (this);
+	RCommandStack::regular_stack = new RCommandStack (0);
 	running_command_canceled = 0;
 
 	r_thread = new RThread ();
+
+	// create a fake init command
+	issueCommand (new RCommand (i18n ("R Startup"), RCommand::App, i18n ("R Startup")));
 
 	flush_timer = new QTimer (this);
 	connect (flush_timer, SIGNAL (timeout ()), this, SLOT (flushOutput ()));

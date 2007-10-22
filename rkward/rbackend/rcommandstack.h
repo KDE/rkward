@@ -29,7 +29,6 @@ Remember to lock RInterface::mutex before accessing any of these functions!
 class RCommandStack : public RCommandChain {
 public:
 	RCommandStack (RCommand *parent_command);
-
 	~RCommandStack ();
 
 /** add a command to the given chain (static, as it does no matter, which stack the chain belongs to) */
@@ -106,25 +105,34 @@ public:
 	/** static pointer to the model. Only one model will ever be around. */
 	static RCommandStackModel* getModel () { return static_model; };
 
-	void addListener () { ++listeners; };
+	void addListener ();
 	void removeListener ();
 
-	void aboutToPop (RCommandBase* popped);
-	void popComplete (RCommandBase* popped);
-	void aboutToAdd (RCommandBase* added);
-	void addComplete (RCommandBase* added);
+	void aboutToPop (RCommandBase* parent);
+	void popComplete ();
+	void aboutToAdd (RCommandBase* parent);
+	void addComplete ();
+	void itemChange (RCommandBase* item);
 private slots:
 	void unlockMutex ();
-	void relayAboutToChange ();
-	void relayChange ();
+	void relayItemAboutToBeAdded (RCommandBase* parent);
+	void relayItemAdded ();
+	void relayItemAboutToBeRemoved (RCommandBase* parent);
+	void relayItemRemoved ();
+	void relayItemChanged (RCommandBase* item);
 signals:
-	void change ();
-	void aboutToChange ();
+	void itemAboutToBeAdded (RCommandBase* parent);
+	void itemAdded ();
+	void itemAboutToBeRemoved (RCommandBase* parent);
+	void itemRemoved ();
+	void itemChanged (RCommandBase* item);
 private:
 	void lockMutex () const;
 	int listeners;
 	static RCommandStackModel* static_model;
 	bool have_mutex_lock;
+
+	QModelIndex indexFor (RCommandBase *item);
 };
 
 #endif

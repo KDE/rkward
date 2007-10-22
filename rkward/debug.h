@@ -19,6 +19,7 @@
 
 extern int RK_Debug_Level;
 extern int RK_Debug_Flags;
+extern int RK_Debug_CommandStep;
 
 // Debug-levels
 #define DL_TRACE 0

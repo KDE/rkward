@@ -65,6 +65,7 @@
 
 int RK_Debug_Level = 0;
 int RK_Debug_Flags = ALL;
+int RK_Debug_CommandStep = 0;
 
 static KCmdLineOptions options;
 

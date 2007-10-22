@@ -174,11 +174,12 @@ public:
 		QuitCommand=32768		/**< The R backend should be killed */
 	};
 	enum CommandStatus {
-		WasTried=1,						/**< the command has been passed to the backend. */
-		Failed=2,							/**< the command failed */
-		HasOutput=4,					/**< command has a string output retrievable via RCommand::output () */
-		HasError=8,						/**< command has an error-message retrievable via RCommand::error () */
-		HasWarnings=16,			/**< command has warning-message(s) retrievable via RCommand::warnings () */
+		Running=1,						/**< command is currently running */
+		WasTried=2,						/**< the command has been passed to the backend. */
+		Failed=4,							/**< the command failed */
+		HasOutput=8,					/**< command has a string output retrievable via RCommand::output () */
+		HasError=16,						/**< command has an error-message retrievable via RCommand::error () */
+		HasWarnings=32,			/**< command has warning-message(s) retrievable via RCommand::warnings () */
 		ErrorIncomplete=512,		/**< backend rejected command as being incomplete */
 		ErrorSyntax=1024,			/**< backend rejected command as having a syntax error */
 		ErrorOther=2048,			/**< another error (not incomplete, not syntax error) has occurred while trying to execute the command */
@@ -214,6 +215,7 @@ private:
 friend class RThread;
 friend class RInterface;
 friend class RCommandStack;
+friend class RCommandStackModel;
 /** internal function will be called by the backend, as the command gets passed through. Takes care of sending this command (back) to its receiver(s) */
 	void finished ();
 /** new output was generated. Pass on to receiver(s) */

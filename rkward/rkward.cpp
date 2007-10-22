@@ -171,6 +171,7 @@ RKWardMainWindow::~RKWardMainWindow() {
 	RK_TRACE (APP);
 
 	// these would not be strictly necessary, as we're exiting the app, anyway.
+	delete RControlWindow::getControl ();
 	delete RKGlobals::rInterface ();
 	delete RObjectList::getObjectList ();
 	delete RObjectBrowser::mainBrowser ();
@@ -206,8 +207,6 @@ void RKWardMainWindow::doPostInit () {
 	//It's necessary to give a different name to all tool windows, or they won't be properly displayed
 	RObjectBrowser::object_browser = new RObjectBrowser (0, true, "workspace");
 
-	RControlWindow::control_window = new RControlWindow (0, true, "rcontrol");		// the control window needs to be initialized before startR () is called.
-
 	RKCommandLog *log = new RKCommandLog (0, true, "Command log");
 	log->setWindowIcon (SmallIcon ("format-justify-left"));
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (log, KMultiTabBar::Bottom);
@@ -229,6 +228,7 @@ void RKWardMainWindow::doPostInit () {
 	RKFileBrowser::main_browser->setCaption (i18n ("Files"));
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RKFileBrowser::main_browser, KMultiTabBar::Left);
 
+	RControlWindow::control_window = new RControlWindow (0, true, "rcontrol");
 	RControlWindow::getControl ()->setCaption (i18n ("Pending Jobs"));
 	RControlWindow::getControl ()->setWindowIcon (SmallIcon ("system-run"));
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RControlWindow::getControl (), KMultiTabBar::Bottom);
@@ -247,7 +247,6 @@ void RKWardMainWindow::doPostInit () {
 	show ();
 
 	RKOutputWindow::initialize ();
-	RControlWindow::getControl ()->initialize ();
 
 	if (startup_options->initial_url) {
 		openWorkspace (*(startup_options->initial_url));
@@ -277,9 +276,6 @@ void RKWardMainWindow::doPostInit () {
 	}
 
 	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
-
-	delete startup_options;
-	startup_options = 0;
 }
 
 void RKWardMainWindow::initPlugins () {

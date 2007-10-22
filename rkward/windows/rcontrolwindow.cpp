@@ -20,6 +20,7 @@
 #include <qpushbutton.h>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QHeaderView>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -60,46 +61,45 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *n
 
 	commands_view = new QTreeView (this);
 
-/*	commands_view->addColumn (i18n ("Command"));
-	commands_view->addColumn (i18n ("Type"));
-	commands_view->addColumn (i18n ("Flags"));
-	commands_view->addColumn (i18n ("Description")); */
 	commands_view->setSortingEnabled (false);
+	commands_view->header ()->setMovable (false);
+	commands_view->header ()->setStretchLastSection (false);
 
 	commands_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
-	connect (commands_view, SIGNAL (selectionChanged ()), this, SLOT (commandSelectionChanged ()));
 	main_vbox->addWidget (commands_view);
 
 	paused = false;
-	initialized = false;
 }
 
 RControlWindow::~RControlWindow () {
 	RK_TRACE (APP);
 
+	commands_view->setModel (0);
 	RCommandStackModel::getModel ()->removeListener ();
-}
-
-bool RControlWindow::isActive () {
-	// don't trace!
-	return (initialized && isShown ());
-}
-
-void RControlWindow::initialize () {
-	RK_TRACE (APP);
-	initialized = true;
-
-	if (isShown ()) show ();	// refreshes the commands
 }
 
 void RControlWindow::showEvent (QShowEvent *e) {
 	RK_TRACE (APP);
 
-	RKMDIWindow::showEvent (e);
-	if (!initialized) return;
+	if (!commands_view->model ()) {
+		RCommandStackModel::getModel ()->addListener ();
+		commands_view->setModel (RCommandStackModel::getModel ());
+		commands_view->header ()->setResizeMode (0, QHeaderView::Stretch);
+		commands_view->expandAll ();
+	}
 
-	RCommandStackModel::getModel ()->addListener ();
-	commands_view->setModel (RCommandStackModel::getModel ());
+	RKMDIWindow::showEvent (e);
+}
+
+void RControlWindow::hideEvent (QHideEvent *e) {
+	RK_TRACE (APP);
+
+	if (commands_view->model ()) {
+		commands_view->setModel (0);
+		RCommandStackModel::getModel ()->removeListener ();
+	}
+
+	RKMDIWindow::hideEvent (e);
 }
 
 void RControlWindow::commandSelectionChanged () {

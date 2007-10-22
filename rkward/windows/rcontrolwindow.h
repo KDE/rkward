@@ -52,10 +52,9 @@ public:
 /** destructor */
 	~RControlWindow ();
 
-/** reimplemented to refresh list of commands when showing. This is needed, as the RControlWindow is only kept up to date as long as it is shown. Hence, if it was hidden, and then gets shown, it will have to update the entire list. */
+/** reimplemented to refresh list of commands when showing. This is needed, as the RControlWindow is only kept up to date as long as it is shown. */
 	void showEvent (QShowEvent *e);
-/** Call this once, when the RInterface is ready, and it is ok to try showing commands */
-	void initialize ();
+	void hideEvent (QHideEvent *e);
 /** Static reference to the control window */
 	static RControlWindow* getControl () { return control_window; };
 public slots:
@@ -73,8 +72,6 @@ private:
 	QPushButton *pause_button;
 
 	bool paused;
-	bool isActive ();
-	bool initialized;
 friend class RKWardMainWindow;
 	static RControlWindow *control_window;
 };
