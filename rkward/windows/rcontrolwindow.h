@@ -36,10 +36,6 @@ class RControlWindowPart;
 	\brief Interface to control R command execution
 
 This class provides a GUI interface to inspect, and manipulate the current RCommandStack, and to Pause/Resume the R engine.
-Do create an instance of this class directly. Create a RControlWindowPart instead. Also, probably RInterface should be the only class ever calling
-functions of RControlWindow.
-
-// KDE4 TODO: check, if everything is implemented
 
 @author Thomas Friedrichsmeier
 */
@@ -52,14 +48,13 @@ public:
 /** destructor */
 	~RControlWindow ();
 
-/** reimplemented to refresh list of commands when showing. This is needed, as the RControlWindow is only kept up to date as long as it is shown. */
+/** reimplemented to start listening to the RCommandStackModel when showing. */
 	void showEvent (QShowEvent *e);
+/** when hidden, disconnect from the RCommandStackModel to save ressources */
 	void hideEvent (QHideEvent *e);
 /** Static reference to the control window */
 	static RControlWindow* getControl () { return control_window; };
 public slots:
-/** command selection was changed. Automatically select sub-items of selected chains. Enable/disable "Cancel" button */
-	void commandSelectionChanged ();
 /** cancel button was clicked. Cancel selected commands (unless they are RCommand::Sync). */
 	void cancelButtonClicked ();
 /** pause button was clicked. Pause/Resume processing of the stack */
@@ -92,37 +87,5 @@ protected:
 /** destructor */
 	~RControlWindowPart ();
 };
-#if 0
-/**
-	\brief ListViewItem used in RControlWindow
-
-A listview-item with a convenience constructor, and storing some additional information. For use in RControlWindow only.
-
-*/
-class RControlWindowListViewItem : public Q3ListViewItem {
-public:
-/** constructor. */
-	explicit RControlWindowListViewItem (Q3ListViewItem *parent);
-/** constructor. */
-	explicit RControlWindowListViewItem (Q3ListView *parent);
-/** destructor */
-	~RControlWindowListViewItem ();
-
-/** initialize/update item according to command flags, status, etc. */
-	void update (RCommand *command);
-/** initialize/update item according to chain flags, status, etc. */
-	void update (RCommandChain *chain);
-
-/** warning! do not try to access members of this pointer! RCommandChains get deleted in the stack when done, without notice. Use this pointer only to check, whether this is a chain, and to remove it from the RControlWindow::chain_map! */
-	RCommandChain *chain;
-	bool chain_closed;
-
-	unsigned int id;
-	static unsigned int lid;
-
-/** reimplemented to always have the top of the stack at the top */
-	int compare (Q3ListViewItem *i, int col, bool ascending) const;
-};
-#endif
 
 #endif

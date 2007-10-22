@@ -374,6 +374,21 @@ QVariant RCommandStackModel::data (const QModelIndex& index, int role) const {
 	return (QVariant ());
 }
 
+Qt::ItemFlags RCommandStackModel::flags (const QModelIndex& index) const {
+	RK_ASSERT (listeners);
+	RK_TRACE (RBACKEND);
+	lockMutex ();
+
+	if (!index.isValid ()) return 0;
+	RK_ASSERT (index.model () == this);
+
+	RCommandBase* index_data = static_cast<RCommandBase*> (index.internalPointer ());
+	RK_ASSERT (index_data);
+
+	if (index_data->commandPointer ()) return (Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	return Qt::ItemIsEnabled;
+}
+
 QVariant RCommandStackModel::headerData (int section, Qt::Orientation orientation, int role) const {
 	RK_ASSERT (listeners);
 	RK_TRACE (RBACKEND);

@@ -77,7 +77,7 @@ friend class RCommandStackModel;
 /** The model used to fetch a representation of and signal changes in the RCommandStack. Used for RKControlWindow.
 
 - All insertions / removals are signalled to the (single) model
-- it is ok for the model to be slow. It will simply walk the entire stack to find the corresponding indices
+- it is ok for the model to be slow.
 - the model keeps track of (the number of) listeners, and does not do anything unless there are any listeners (including walking the stack)
 - RControlWindow will only be constructed on show, and destructed on hide, so as not to eat ressources
 
@@ -99,39 +99,66 @@ public:
 	int columnCount (const QModelIndex& parent = QModelIndex ()) const;
 	/** implements QAbstractItemModel::data() */
 	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const;
+	/** reimplemented from  QAbstractItemModel::headerData() to make only commands (not chains/stacks) selectable */
+	Qt::ItemFlags flags (const QModelIndex& index) const;
 	/** reimplemented from  QAbstractItemModel::headerData() to provide column names */
 	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
 	/** static pointer to the model. Only one model will ever be around. */
 	static RCommandStackModel* getModel () { return static_model; };
 
+	/** add a listener. The model will do nothing, if there are no listeners. Remember to remove the listener again as soon as possible. @see removeListener() */
 	void addListener ();
+	/** @see addListener() */
 	void removeListener ();
 
+	/** call this, when you are about to remove an item from a command stack/chain, *before* you actually remove the item. When done, call popComplete().
+	@param parent The parent of the item to be removed */
 	void aboutToPop (RCommandBase* parent);
+	/** @see aboutToPop () */
 	void popComplete ();
+	/** call this, when you are about to add an item to a command stack/chain, *before* you actually add the item. When done, call addComplete().
+	@param parent The parent of the item to be removed */
 	void aboutToAdd (RCommandBase* parent);
+	/** @see aboutToAdd () */
 	void addComplete ();
+	/** call this, when you have made changes to an item, that should be reflected in RControlWindow
+	@param item The item that was changed */
 	void itemChange (RCommandBase* item);
 private slots:
+	/** compagnon to lockMutex () */
 	void unlockMutex ();
+	/** the purpose of these signals and slots is to make sure the aboutToPop(), popComplete(), aboutToAdd(), addComplete(), and itemChange() methods are *always* dealt with in the main (GUI) thread. */
 	void relayItemAboutToBeAdded (RCommandBase* parent);
+	/** @see relayItemAboutToBeAdded() */
 	void relayItemAdded ();
+	/** @see relayItemAboutToBeAdded() */
 	void relayItemAboutToBeRemoved (RCommandBase* parent);
+	/** @see relayItemAboutToBeAdded() */
 	void relayItemRemoved ();
+	/** @see relayItemAboutToBeAdded() */
 	void relayItemChanged (RCommandBase* item);
 signals:
+	/** @see relayItemAboutToBeAdded() */
 	void itemAboutToBeAdded (RCommandBase* parent);
+	/** @see relayItemAboutToBeAdded() */
 	void itemAdded ();
+	/** @see relayItemAboutToBeAdded() */
 	void itemAboutToBeRemoved (RCommandBase* parent);
+	/** @see relayItemAboutToBeAdded() */
 	void itemRemoved ();
+	/** @see relayItemAboutToBeAdded() */
 	void itemChanged (RCommandBase* item);
 private:
+	/** locks the mutex temporarily (until the event loop is next entered again), and only, if not already locked */
 	void lockMutex () const;
+	/** number of listeners. If there are no listeners, the model will do almost nothing at all */
 	int listeners;
 	static RCommandStackModel* static_model;
+	/** @see lockMutex() */
 	bool have_mutex_lock;
 
+	/** create a model index for the given item */
 	QModelIndex indexFor (RCommandBase *item);
 };
 

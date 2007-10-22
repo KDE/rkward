@@ -31,14 +31,15 @@ class RCommandChain;
 
 /** Base class for RCommand and RCommandChain, to make it possible to store both in the same list */
 class RCommandBase {
-protected:
-friend class RCommandStack;
-friend class RCommandStackModel;
-	RCommandBase (bool is_chain);
+public:
 /** Returns the casted pointer, if this is a command, else 0 */
 	RCommand* commandPointer ();
 /** Returns the casted pointer, if this is a chain, else 0 */
 	RCommandChain* chainPointer ();
+protected:
+friend class RCommandStack;
+friend class RCommandStackModel;
+	RCommandBase (bool is_chain);
 	RCommandChain *parent;
 private:
 	bool is_command_chain;
@@ -50,8 +51,6 @@ private:
 @see RInterface::closeChain */
 class RCommandChain : public RCommandBase {
 protected:
-friend class RControlWindow;
-friend class RControlWindowListViewItem;
 friend class RCommandStack;
 friend class RCommandStackModel;
 	RCommandChain () : RCommandBase (true) {};
