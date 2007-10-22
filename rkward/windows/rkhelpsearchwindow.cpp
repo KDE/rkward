@@ -214,7 +214,7 @@ void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 			RKWardMainWindow::getMain ()->openHTML (url);
 			return;
 		} else {
-			KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.").arg (command->command ().section ("\"", 1, 1)), i18n ("No help found"));
+			KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.", command->command ().section ("\"", 1, 1)), i18n ("No help found"));
 		}
 	} else if (command->getFlags () == GET_INSTALLED_PACKAGES) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);

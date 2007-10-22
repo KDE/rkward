@@ -78,7 +78,6 @@ public:
 	~RKCodeCompletionModel ();
 	void completionInvoked (KTextEditor::View *view, const KTextEditor::Range &range, InvocationType);
 	void executeCompletionItem (KTextEditor::Document *document, const KTextEditor::Range &word, int row) const;
-//	int columnCount (const QModelIndex &parent=QModelIndex()) const;
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const;
 private:
 	QList<RObject*> list;

@@ -171,7 +171,7 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 
 	// asyncrhonously dealing with non-local files would be quite a task. We chose the simple answer instead...
 	if (!url.isLocalFile ()) {
-		if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file. Do you want to open the url in the default application?").arg (url.prettyUrl ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
+		if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file. Do you want to open the url in the default application?", url.prettyUrl ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
 			return false;
 		}
 		KRun *runner = new KRun (url, topLevelWidget());		// according to KRun-documentation, KRun will self-destruct when done.
@@ -660,7 +660,7 @@ void RKHelpWindow::prepareHelpLink (QDomElement *link_element) {
 				RKComponentHandle *chandle = componentPathToHandle (url.path ());
 				if (chandle) text = chandle->getLabel ();
 			} else if (url.host () == "rhelp") {
-				text = i18n ("R Reference on '%1'").arg (url.path ().mid (1));
+				text = i18n ("R Reference on '%1'", url.path ().mid (1));
 			} else if (url.host () == "page") {
 				QString help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
 		

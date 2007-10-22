@@ -526,8 +526,7 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 	int row = index.row ();
 
 	if (index.parent ().isValid ()) return QVariant ();
-	if (row > list.count ()) return QVariant ();
-//	if (column > 1) return QVariant;
+	if (row >= list.count ()) return QVariant ();
 
 	RObject* object = list[row];
 	RK_ASSERT (object);

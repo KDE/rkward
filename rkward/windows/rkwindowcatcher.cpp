@@ -227,19 +227,19 @@ void RKCaughtX11Window::setFixedSizeManual () {
 void RKCaughtX11Window::activateDevice () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ')', RCommand::App, i18n ("Activate graphics device number %1").arg (QString::number (device_number)), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ')', RCommand::App, i18n ("Activate graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::copyDeviceToOutput () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=rk.graph.on)\nrk.graph.off ()", RCommand::App | RCommand::DirectToOutput, i18n ("Copy contents of graphics device number %1 to output").arg (QString::number (device_number)), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=rk.graph.on)\nrk.graph.off ()", RCommand::App | RCommand::DirectToOutput, i18n ("Copy contents of graphics device number %1 to output", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::printDevice () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.print ()", RCommand::App, i18n ("Print contents of graphics device number %1").arg (QString::number (device_number)), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.print ()", RCommand::App, i18n ("Print contents of graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::copyDeviceToRObject () {
@@ -264,7 +264,7 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 
 		QString name = chooser->validizedSelectedObjectName ();
 
-		RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\n" + RObject::rQuote (name) + " <- recordPlot ()", RCommand::App | RCommand::ObjectListUpdate, i18n ("Save contents of graphics device number %1 to object '%2'").arg (QString::number (device_number)).arg (name), error_dialog);
+		RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\n" + RObject::rQuote (name) + " <- recordPlot ()", RCommand::App | RCommand::ObjectListUpdate, i18n ("Save contents of graphics device number %1 to object '%2'", device_number, name), error_dialog);
 	}
 
 	delete dialog;
@@ -273,7 +273,7 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 void RKCaughtX11Window::duplicateDevice () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=x11)", RCommand::App, i18n ("Duplicate graphics device number %1").arg (QString::number (device_number)), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=x11)", RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
 }
 
 

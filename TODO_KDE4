@@ -26,7 +26,7 @@ General:
 	- grep sources for "KDE4"
 	- remove all the passing around of KGlobal::config() as a parameter
 	- the whole idea of having a single mutex for everything is flawed. We should use several specialized ones
-	- all i18n with arguments calls need fixing (grep for all i18n with '%')
+	- all i18n with arguments calls need fixing (grep for "i18n.*%.*\.arg")
 
 rkcommandeditorwindow
 	- polish code completion (e.g. hide window, when there are no completions)
