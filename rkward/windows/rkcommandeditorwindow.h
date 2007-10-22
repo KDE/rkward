@@ -19,17 +19,16 @@
 
 #include <QWidget>
 #include <qstring.h>
-//Added by qt3to4:
-#include <QEvent>
-#include <QLabel>
-#include <QCloseEvent>
 
 #include <ktexteditor/view.h>
 #include <ktexteditor/document.h>
+#include <ktexteditor/codecompletionmodel.h>
 #include <kurl.h>
 
 #include "../windows/rkmdiwindow.h"
 
+class QEvent;
+class QCloseEvent;
 class QFrame;
 class QLabel;
 
@@ -46,6 +45,7 @@ public:
 	virtual bool provideContext (unsigned int line_rev, QString *context, int *cursor_position) = 0;
 };
 
+class RObject;
 /** function argument hinting for RKCommandEditorWindow and RKConsole */
 class RKFunctionArgHinter : public QObject {
 	Q_OBJECT
@@ -69,6 +69,19 @@ private:
 
 	QFrame *arghints_popup;
 	QLabel *arghints_popup_text;
+};
+
+/** code completion model for RKCommandEditorWindow */
+class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel {
+public:
+	RKCodeCompletionModel (KTextEditor::View* parent);
+	~RKCodeCompletionModel ();
+	void completionInvoked (KTextEditor::View *view, const KTextEditor::Range &range, InvocationType);
+	void executeCompletionItem (KTextEditor::Document *document, const KTextEditor::Range &word, int row) const;
+//	int columnCount (const QModelIndex &parent=QModelIndex()) const;
+	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const;
+private:
+	QList<RObject*> list;
 };
 
 class QTimer;
@@ -115,14 +128,11 @@ public:
 	bool provideContext (unsigned int line_rev, QString *context, int *cursor_position);
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */
-	void updateCaption ();
+	void updateCaption (KTextEditor::Document* = 0);
 /** called whenever it might be appropriate to show a code completion box. The box is not shown immediately, but only after a timeout (if at all) */
-	void tryCompletionProxy ();
+	void tryCompletionProxy (KTextEditor::Document*);
 /** show a code completion box if appropriate. Use tryCompletionProxy () instead, which will call this function after a timeout */
 	void tryCompletion ();
-/** called by the Kate part, if an entry was selected from the code completion box. Will remove the current symbol, as the kate part is about to re-add it (in completed form) */
-// KDE4 TODO: still needed?
-//	void fixCompletion (KTextEditor::CompletionEntry *, QString *);
 //KDE4	void setPopupMenu (KTextEditor::View *);
 //KDE4	void setPopupMenu ();
 /** Show help about the current word. */
@@ -140,6 +150,7 @@ private:
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;
 	RKFunctionArgHinter *hinter;
+	RKCodeCompletionModel *completion_model;
 
 	QTimer *completion_timer;
 /** set syntax highlighting-mode to R syntax */

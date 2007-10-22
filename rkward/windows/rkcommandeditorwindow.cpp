@@ -23,6 +23,7 @@
 
 #include <ktexteditor/configinterface.h>
 #include <ktexteditor/sessionconfiginterface.h>
+#include <ktexteditor/codecompletioninterface.h>
 #include <ktexteditor/editorchooser.h>
 
 #include <qlayout.h>
@@ -91,19 +92,20 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 
 	setIcon (SmallIcon ("source"));
 
-	connect (m_doc, SIGNAL (fileNameChanged ()), this, SLOT (updateCaption ()));
-	connect (m_doc, SIGNAL (modifiedChanged ()), this, SLOT (updateCaption ()));		// of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
-	connect (m_doc, SIGNAL (textChanged ()), this, SLOT (tryCompletionProxy ()));
-	connect (m_view, SIGNAL (filterInsertString (KTextEditor::CompletionEntry *, QString *)), this, SLOT (fixCompletion (KTextEditor::CompletionEntry *, QString *)));
+	connect (m_doc, SIGNAL (documentUrlChanged (KTextEditor::Document*)), this, SLOT (updateCaption (KTextEditor::Document*)));
+	connect (m_doc, SIGNAL (modifiedChanged (KTextEditor::Document*)), this, SLOT (updateCaption (KTextEditor::Document*)));		// of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
+	connect (m_doc, SIGNAL (textChanged (KTextEditor::Document*)), this, SLOT (tryCompletionProxy (KTextEditor::Document*)));
 //KDE4	connect (m_view, SIGNAL (gotFocus (Kate::View *)), this, SLOT (setPopupMenu (Kate::View *)));
 	completion_timer = new QTimer (this);
 	connect (completion_timer, SIGNAL (timeout ()), this, SLOT (tryCompletion()));
 
 	if (use_r_highlighting) {
 		setRHighlighting ();
+		completion_model = new RKCodeCompletionModel (m_view);
 		hinter = new RKFunctionArgHinter (this, m_view);
 	} else {
 		hinter = 0;
+		completion_model = 0;
 	}
 
 	updateCaption ();	// initialize
@@ -149,7 +151,7 @@ QString RKCommandEditorWindow::getDescription () {
 
 void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 	if (isModified ()) {
-		int status = KMessageBox::warningYesNo (this, i18n ("The document \"%1\" has been modified. Close it anyway?").arg (caption ()), i18n ("File not saved"));
+		int status = KMessageBox::warningYesNo (this, i18n ("The document \"%1\" has been modified. Close it anyway?", caption ()), i18n ("File not saved"));
 	
 		if (status != KMessageBox::Yes) {
 			e->ignore ();
@@ -216,7 +218,7 @@ void RKCommandEditorWindow::setText (const QString &text) {
 	m_doc->setText (text);
 }
 
-void RKCommandEditorWindow::updateCaption () {
+void RKCommandEditorWindow::updateCaption (KTextEditor::Document*) {
 	RK_TRACE (COMMANDEDITOR);
 	QString name = m_doc->url ().fileName ();
 	if (name.isEmpty ()) name = m_doc->url ().prettyUrl ();
@@ -235,13 +237,14 @@ void RKCommandEditorWindow::showHelp () {
 	RKHelpSearchWindow::mainHelpSearch ()->getContextHelp (line, c.column());
 }
 
-void RKCommandEditorWindow::tryCompletionProxy () {
+void RKCommandEditorWindow::tryCompletionProxy (KTextEditor::Document*) {
 	completion_timer->start (100, true);
 }
 
 void RKCommandEditorWindow::tryCompletion () {
 	// TODO: merge this with RKConsole::doTabCompletion () somehow
 	RK_TRACE (COMMANDEDITOR);
+	if (!completion_model) return;
 
 	KTextEditor::Cursor c = m_view->cursorPosition();
 	uint para=c.line(); uint cursor_pos=c.column();
@@ -249,45 +252,24 @@ void RKCommandEditorWindow::tryCompletion () {
 	QString current_line = m_doc->line (para);
 	if (current_line.findRev ("#", cursor_pos) >= 0) return;	// do not hint while in comments
 
-	QString current_symbol = RKCommonFunctions::getCurrentSymbol (current_line, cursor_pos, false);
-	if (current_symbol.length () >= 2) {
-		RObject::RObjectMap map;
-		RObject::RObjectMap::const_iterator it;
-		RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
-/* KDE4: TODO rework!
-		if (!map.isEmpty ()) {
-			Q3ValueList<KTextEditor::CompletionEntry> list;
-	
-			for (it = map.constBegin (); it != map.constEnd (); ++it) {
-				KTextEditor::CompletionEntry entry;
-				entry.text = it.key ();
-				list.append (entry);
-			}
+	int start;
+	int end;
+	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &start, &end);
+	if ((end - start) >= 2) {
+		KTextEditor::Range range (para, start, para, end);
 
-			m_view->showCompletionBox (list);
-		} */
+		KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (m_view);
+		if (!iface) {
+			RK_ASSERT (false);
+			return;
+		}
+		if (iface->isCompletionActive ()) {
+			completion_model->completionInvoked (m_view, range, KTextEditor::CodeCompletionModel::ManualInvocation);
+		} else {
+			iface->startCompletion (range, completion_model);
+		}
 	}
 }
-
-/* KDE4 TODO: maybe this is not needed anymore?
-void RKCommandEditorWindow::fixCompletion (KTextEditor::CompletionEntry *entry, QString *string) {
-	RK_TRACE (COMMANDEDITOR);
-	RK_ASSERT (entry);
-	RK_ASSERT (string);
-
-	*string = entry->text;	// why, oh, why, isn't this always the case?
-
-	uint current_line_num=0; uint cursor_pos=0;
-	m_view->cursorPosition (&current_line_num, &cursor_pos);
-	QString current_line = m_view->currentTextLine ();
-
-	int word_start;
-	int word_end;
-	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &word_start, &word_end);
-
-	// remove the start of the word, as the whole string will be inserted by katepart
-	m_doc->removeText (current_line_num, word_start, current_line_num, word_end);
-} */
 
 bool RKCommandEditorWindow::provideContext (unsigned int line_rev, QString *context, int *cursor_position) {
 	RK_TRACE (COMMANDEDITOR);
@@ -487,6 +469,76 @@ bool RKFunctionArgHinter::eventFilter (QObject *, QEvent *e) {
 	}
 
 	return false;
+}
+
+//////////////////////// RKCodeCompletionModel ////////////////////
+
+RKCodeCompletionModel::RKCodeCompletionModel (KTextEditor::View *parent) : KTextEditor::CodeCompletionModel (parent) {
+	RK_TRACE (COMMANDEDITOR);
+
+	setRowCount (0);
+
+	KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (parent);
+	if (!iface) {
+		RK_ASSERT (false);
+		return;
+	}
+	iface->registerCompletionModel (this);
+	iface->setAutomaticInvocationEnabled (false);
+}
+
+RKCodeCompletionModel::~RKCodeCompletionModel () {
+	RK_TRACE (COMMANDEDITOR);
+}
+
+void RKCodeCompletionModel::completionInvoked (KTextEditor::View *view, const KTextEditor::Range &range, InvocationType) {
+	RK_TRACE (COMMANDEDITOR);
+qDebug ("invoked");
+
+	QString current_symbol = view->document ()->text (range);
+	RObject::RObjectMap map;
+	RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
+
+	list.clear ();
+	// this is silly, but we need an int indexable storage, so we copy the map to a list
+	for (RObject::RObjectMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
+		list.append (it.data ());
+	}
+qDebug ("%d", list.count ());
+	setRowCount (list.count ());
+
+	reset ();
+}
+
+void RKCodeCompletionModel::executeCompletionItem (KTextEditor::Document *document, const KTextEditor::Range &word, int row) const {
+	RK_TRACE (COMMANDEDITOR);
+
+	RK_ASSERT (list.size () > row);
+	RObject *object = list[row];
+	RK_ASSERT (object);
+
+	document->replaceText (word, object->getFullName ());
+}
+
+QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const {
+
+	int col = index.column ();
+	int row = index.row ();
+
+	if (index.parent ().isValid ()) return QVariant ();
+	if (row > list.count ()) return QVariant ();
+//	if (column > 1) return QVariant;
+
+	RObject* object = list[row];
+	RK_ASSERT (object);
+
+	if ((role == Qt::DisplayRole) || (role==KTextEditor::CodeCompletionModel::CompletionRole)) {
+		if (col == KTextEditor::CodeCompletionModel::Name) {
+			return (object->getBaseName ());
+		}
+	}
+
+	return QVariant ();
 }
 
 #include "rkcommandeditorwindow.moc"

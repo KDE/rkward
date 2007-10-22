@@ -26,9 +26,10 @@ General:
 	- grep sources for "KDE4"
 	- remove all the passing around of KGlobal::config() as a parameter
 	- the whole idea of having a single mutex for everything is flawed. We should use several specialized ones
+	- all i18n with arguments calls need fixing (grep for all i18n with '%')
 
 rkcommandeditorwindow
-	- code completion will be broken. Fix after porting.
+	- polish code completion (e.g. hide window, when there are no completions)
 	- does the popup-menu still work? See SVN rev. 962.
 	- placement of menu options?
 
