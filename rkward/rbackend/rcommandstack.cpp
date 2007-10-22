@@ -54,10 +54,12 @@ void RCommandStack::issueCommand (RCommand *command, RCommandChain *chain) {
 	RK_TRACE (RBACKEND);
 	if (!chain) chain = regular_stack;
 
+	RCommandStackModel::getModel ()->aboutToAdd (command);
+
 	chain->commands.append (command);
 	command->parent = chain;
 
-	RCommandStackModel::getModel ()->newCommand ();
+	RCommandStackModel::getModel ()->addComplete (command);
 }
 
 RCommandChain *RCommandStack::startChain (RCommandChain *parent) {
@@ -65,11 +67,13 @@ RCommandChain *RCommandStack::startChain (RCommandChain *parent) {
 	if (!parent) parent = regular_stack;
 
 	RCommandChain *chain = new RCommandChain ();
+	RCommandStackModel::getModel ()->aboutToAdd (chain);
+
 	chain->closed = false;
 	chain->parent = parent;
 	parent->commands.append (chain);
 
-	RCommandStackModel::getModel ()->newChain ();
+	RCommandStackModel::getModel ()->addComplete (chain);
 
 	return chain;
 }
@@ -79,12 +83,12 @@ void RCommandStack::closeChain (RCommandChain *chain) {
 	if (!chain) return;
 
 	chain->closed = true;
-	chainStack (chain)->clearFinishedChains ();
 }
 
 RCommand* RCommandStack::currentCommand () {
 	RK_TRACE (RBACKEND);
 
+	clearFinishedChains ();
 	RCommandBase *coc = current_chain;
 	while (coc->chainPointer ()) {
 		current_chain = coc->chainPointer ();
@@ -143,12 +147,11 @@ void RCommandStack::pop () {
 	RK_TRACE (RBACKEND);
 
 	if (!isActive ()) return;
-	RCommandBase* popped = current_chain->commands.takeFirst ();
+	RCommandBase* popped = current_chain->commands.first ();
 	RK_ASSERT (popped->commandPointer ());
-
-	RCommandStackModel::getModel ()->commandPop (popped->commandPointer ());
-
-	clearFinishedChains ();
+	RCommandStackModel::getModel ()->aboutToPop (popped->commandPointer ());
+	current_chain->commands.removeFirst ();
+	RCommandStackModel::getModel ()->popComplete (popped->commandPointer ());
 }
 
 void RCommandStack::clearFinishedChains () {
@@ -157,10 +160,11 @@ void RCommandStack::clearFinishedChains () {
 	// reached end of chain and chain is closed? walk up
 	while (current_chain->commands.isEmpty () && current_chain->closed && current_chain->parent) {
 		RCommandChain *prev_chain = current_chain;
+		RCommandStackModel::getModel ()->aboutToPop (prev_chain);
 		current_chain->parent->commands.removeFirst ();
 		current_chain = current_chain->parent;
-		RCommandStackModel::getModel ()->chainPop (prev_chain);
 		delete prev_chain;
+		RCommandStackModel::getModel ()->popComplete (prev_chain);
 	}
 }
 
@@ -178,12 +182,21 @@ RCommandStackModel::RCommandStackModel (QObject *parent) : QAbstractItemModel (p
 	have_mutex_lock = false;
 
 	connect (this, SIGNAL (change()), this, SLOT (relayChange()), Qt::BlockingQueuedConnection);
+	connect (this, SIGNAL (aboutToChange()), this, SLOT (relayAboutToChange()), Qt::BlockingQueuedConnection);
 }
 
 RCommandStackModel::~RCommandStackModel () {
 	RK_TRACE (RBACKEND);
 
 	static_model = 0;
+	RK_ASSERT (!listeners);
+}
+
+void RCommandStackModel::removeListener () {
+	RK_TRACE (RBACKEND);
+qDebug ("remove");
+	--listeners;
+	if (!listeners) unlockMutex ();
 }
 
 QModelIndex RCommandStackModel::index (int row, int column, const QModelIndex& parent) const {
@@ -309,7 +322,17 @@ QVariant RCommandStackModel::headerData (int section, Qt::Orientation orientatio
 	return QVariant ();
 }
 
-void RCommandStackModel::commandPop (RCommand* popped) {
+void RCommandStackModel::aboutToPop (RCommandBase* popped) {
+	if (!listeners) return;
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (RInterface::inRThread ());
+	MUTEX_UNLOCK;	// release the mutex in the R thread, as the main thread will need it.
+	emit (aboutToChange ());
+	MUTEX_LOCK;
+}
+
+void RCommandStackModel::popComplete (RCommandBase* popped) {
 	if (!listeners) return;
 	RK_TRACE (RBACKEND);
 
@@ -319,29 +342,15 @@ void RCommandStackModel::commandPop (RCommand* popped) {
 	MUTEX_LOCK;
 }
 
-void RCommandStackModel::chainPop (RCommandChain* popped) {
-	if (!listeners) return;
-	RK_TRACE (RBACKEND);
-
-	// chains can be popped from both threads!
-	if (RInterface::inRThread ()) {
-		MUTEX_UNLOCK;
-		emit (change ());
-		MUTEX_LOCK;
-	} else {
-		relayChange ();
-	}
-}
-
-void RCommandStackModel::newCommand () {
+void RCommandStackModel::aboutToAdd (RCommandBase* added) {
 	if (!listeners) return;
 	RK_TRACE (RBACKEND);
 
 	RK_ASSERT (!RInterface::inRThread ());
-	relayChange ();
+	relayAboutToChange ();
 }
 
-void RCommandStackModel::newChain () {
+void RCommandStackModel::addComplete (RCommandBase* added) {
 	if (!listeners) return;
 	RK_TRACE (RBACKEND);
 
@@ -380,8 +389,18 @@ void RCommandStackModel::relayChange () {
 	RK_ASSERT (!RInterface::inRThread ());
 // TODO: for now we update everything on every change
 // TODO: will need mutex locking for real solution
-	emit (layoutAboutToBeChanged ());
+
 	emit (layoutChanged ());
+}
+
+void RCommandStackModel::relayAboutToChange () {
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (!RInterface::inRThread ());
+// TODO: for now we update everything on every change
+// TODO: will need mutex locking for real solution
+
+	emit (layoutAboutToBeChanged ());
 }
 
 

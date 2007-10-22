@@ -107,17 +107,19 @@ public:
 	static RCommandStackModel* getModel () { return static_model; };
 
 	void addListener () { ++listeners; };
-	void removeListener () { --listeners; };
+	void removeListener ();
 
-	void commandPop (RCommand* popped);
-	void chainPop (RCommandChain* popped);
-	void newCommand ();
-	void newChain ();
+	void aboutToPop (RCommandBase* popped);
+	void popComplete (RCommandBase* popped);
+	void aboutToAdd (RCommandBase* added);
+	void addComplete (RCommandBase* added);
 private slots:
 	void unlockMutex ();
+	void relayAboutToChange ();
 	void relayChange ();
 signals:
 	void change ();
+	void aboutToChange ();
 private:
 	void lockMutex () const;
 	int listeners;
