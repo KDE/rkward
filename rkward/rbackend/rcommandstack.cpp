@@ -114,17 +114,17 @@ RCommand* RCommandStack::currentCommand () {
 
 bool RCommandStack::isEmpty () {
 //	RK_TRACE (RBACKEND);
-	return (current_chain->commands.isEmpty () && current_chain->closed);
-}
-
-bool RCommandStack::isBlocked () {
-//	RK_TRACE (RBACKEND);
-	return ((!current_chain->closed) && (!current_chain->commands.isEmpty ()));
+	return (commands.isEmpty ());
 }
 
 bool RCommandStack::isActive () {
 //	RK_TRACE (RBACKEND);
-	return (!current_chain->commands.isEmpty ());
+
+	bool ret = !current_chain->commands.isEmpty ();
+	if (!ret) {
+		clearFinishedChains ();
+	}
+	return ret;
 }
 
 //static
@@ -160,7 +160,7 @@ RCommandStack* RCommandStack::currentStack () {
 void RCommandStack::pop () {
 	RK_TRACE (RBACKEND);
 
-	if (!isActive ()) return;
+	if (current_chain->commands.isEmpty ()) return;
 	RCommandBase* popped = current_chain->commands.first ();
 	RK_ASSERT (popped->commandPointer ());
 	RCommandStackModel::getModel ()->aboutToPop (popped->parent);

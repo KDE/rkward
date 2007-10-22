@@ -42,8 +42,6 @@ public:
 
 /** @returns true, if there are no commands or open chains waiting in this stack */
 	bool isEmpty ();
-/** @returns true, if the currently processed chain is not closed and not empty */
-	bool isBlocked ();
 /** @returns true, if there are commands to be processed in the current chain */
 	bool isActive ();
 

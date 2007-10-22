@@ -116,7 +116,7 @@ void RThread::run () {
 		}
 	
 		// while commands are in queue, don't wait
-		while ((!locked) && RCommandStack::regular_stack->isActive () && !locked) {
+		while ((!locked) && RCommandStack::regular_stack->isActive ()) {
 			current_command = RCommandStack::regular_stack->currentCommand ();
 			
 			if (current_command) {
@@ -414,7 +414,7 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 		MUTEX_LOCK;
 		processX11Events ();
 		// while commands are in queue, don't wait
-		while (reply_stack->isActive () && !locked) {
+		while ((!locked) && reply_stack->isActive ()) {
 			if (killed) {
 				done = true;
 				break;
