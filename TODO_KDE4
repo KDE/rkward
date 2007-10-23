@@ -29,7 +29,7 @@ General:
 
 rkcommandeditorwindow
 	- polish code completion (e.g. hide window, when there are no completions)
-		- should have a setup page
+		- should go away, when the focus is lost
 		- adding icons should not be too hard?
 	- does the popup-menu still work? See SVN rev. 962.
 	- placement of menu options?
