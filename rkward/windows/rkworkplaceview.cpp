@@ -27,8 +27,6 @@
 #include <qevent.h>
 #include <qlayout.h>
 #include <qicon.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
 
 #include "rkmdiwindow.h"
 

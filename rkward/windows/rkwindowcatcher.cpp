@@ -100,15 +100,16 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 
-	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
-	box_widget = new Q3VBox (this);
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	layout->setContentsMargins (0, 0, 0, 0);
+	box_widget = new KVBox (this);
 	layout->addWidget (box_widget);
 	scroll_widget = new Q3ScrollView (this);
 	scroll_widget->setFrameStyle (Q3Frame::NoFrame);
 	scroll_widget->hide ();
 	layout->addWidget (scroll_widget);
 	//KDE4 TODO: workaround below still needed?
-	xembed_container = new Q3VBox (box_widget);	// QXEmbed can not be reparented (between the box_widget, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead
+	xembed_container = new KVBox (box_widget);	// QXEmbed can not be reparented (between the box_widget, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead
 	dynamic_size = true;
 	dynamic_size_action->setChecked (true);
 

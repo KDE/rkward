@@ -27,7 +27,6 @@
 
 class RCommand;
 class ROutput;
-class Q3TextEdit;
 class RKCommandLogView;
 class RKCommandLogPart;
 

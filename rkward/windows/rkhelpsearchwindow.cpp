@@ -28,10 +28,9 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
-//Added by qt3to4:
-#include <Q3HBoxLayout>
+#include <QHBoxLayout>
 #include <QFocusEvent>
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rcommandreceiver.h"
@@ -53,10 +52,12 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 
-	Q3VBoxLayout* main_layout = new Q3VBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
-	Q3HBoxLayout* selection_layout = new Q3HBoxLayout (main_layout, RKGlobals::spacingHint ());
+	QVBoxLayout* main_layout = new QVBoxLayout (this);
+	QHBoxLayout* selection_layout = new QHBoxLayout (main_layout);
+	selection_layout->setContentsMargins (0, 0, 0, 0);
 
-	Q3VBoxLayout* labels_layout = new Q3VBoxLayout (selection_layout, RKGlobals::spacingHint ());
+	QVBoxLayout* labels_layout = new QVBoxLayout (selection_layout);
+	labels_layout->setContentsMargins (0, 0, 0, 0);
 	QLabel *label = new QLabel (i18n ("Find:"), this);
 	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
 	labels_layout->addWidget (label);
@@ -64,13 +65,15 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
 	labels_layout->addWidget (label);
 
-	Q3VBoxLayout* main_settings_layout = new Q3VBoxLayout (selection_layout, RKGlobals::spacingHint ());
+	QVBoxLayout* main_settings_layout = new QVBoxLayout (selection_layout, RKGlobals::spacingHint ());
+	main_settings_layout->setContentsMargins (0, 0, 0, 0);
 	field = new QComboBox (true, this);
 	field->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 	connect (field->lineEdit () , SIGNAL (returnPressed ()), this, SLOT (slotFindButtonClicked ()));
 	main_settings_layout->addWidget (field);
 
-	Q3HBoxLayout* fields_packages_layout = new Q3HBoxLayout (main_settings_layout, RKGlobals::spacingHint ());
+	QHBoxLayout* fields_packages_layout = new QHBoxLayout (main_settings_layout, RKGlobals::spacingHint ());
+	fields_packages_layout->setContentsMargins (0, 0, 0, 0);
 	fieldsList = new QComboBox (false, this);
 	// HACK the sequence of options is hardcoded, do not modify
 	fieldsList->insertItem (i18n("All"));
@@ -87,7 +90,8 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	packagesList->insertItem (i18n("All"));
 	fields_packages_layout->addWidget (packagesList);
 
-	Q3VBoxLayout* checkboxes_layout = new Q3VBoxLayout (selection_layout, RKGlobals::spacingHint ());
+	QVBoxLayout* checkboxes_layout = new QVBoxLayout (selection_layout, RKGlobals::spacingHint ());
+	checkboxes_layout->setContentsMargins (0, 0, 0, 0);
 	caseSensitiveCheckBox = new QCheckBox (i18n ("Case sensitive"), this);
 	checkboxes_layout->addWidget (caseSensitiveCheckBox);
 	fuzzyCheckBox = new QCheckBox (i18n ("Fuzzy matching"), this);

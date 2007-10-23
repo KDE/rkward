@@ -31,8 +31,7 @@
 #include <qlayout.h>
 #include <qtimer.h>
 #include <qdir.h>
-//Added by qt3to4:
-#include <Q3HBoxLayout>
+#include <QHBoxLayout>
 
 #include "../rkglobals.h"
 #include "rkhelpsearchwindow.h"
@@ -57,7 +56,8 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow:
 	setFocusProxy (khtmlpart->widget ());
 	
 	khtmlpart->widget ()->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding);
-	Q3HBoxLayout *pLayout = new Q3HBoxLayout (this);
+	QHBoxLayout *pLayout = new QHBoxLayout (this);
+	pLayout->setContentsMargins (0, 0, 0, 0);
 	pLayout->addWidget (khtmlpart->widget ());
 
 	// We have to connect this in order to allow browsing.
