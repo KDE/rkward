@@ -55,6 +55,8 @@ public slots:
 	// help menu
 	/** Show the starting page of RKWard help */
 	void showRKWardHelp ();
+	/** enter "what's this" mode */
+	void startWhatsThis ();
 	/** Invokes R help (help.start ()) */
 	void invokeRHelp ();
 	/** show instructions on reporting bugs in rkward */

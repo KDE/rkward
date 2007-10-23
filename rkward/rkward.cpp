@@ -25,11 +25,9 @@
 #include <QDBusConnection>
 #include <QDesktopWidget>
 #include <QLabel>
-//Added by qt3to4:
 #include <QCloseEvent>
 
 // include files for KDE
-#include <k3aboutapplication.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
@@ -41,7 +39,6 @@
 #include <kstandarddirs.h>
 #include <kstandardaction.h>
 #include <kinputdialog.h>
-#include <k3dockwidget.h>
 #include <kmultitabbar.h>
 #include <ksqueezedtextlabel.h>
 #include <kparts/partmanager.h>
@@ -436,9 +433,6 @@ void RKWardMainWindow::initStatusBar () {
 	statusbar_r_status->setFixedHeight (statusBar ()->fontMetrics ().height () + 2);
 	statusBar ()->addPermanentWidget (statusbar_r_status, 0);
 	setRStatus (Starting);
-
-	connect (actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
-	connect (actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ()));
 }
 
 void RKWardMainWindow::openWorkspace (const KUrl &url) {

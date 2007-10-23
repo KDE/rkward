@@ -19,8 +19,11 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <k3aboutapplication.h>
+#include <kaboutapplicationdialog.h>
+#include <kcmdlineargs.h>
 #include <kactioncollection.h>
+
+#include <QWhatsThis>
 
 #include "../rkconsole.h"
 #include "../robjectbrowser.h"
@@ -54,7 +57,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : QObject (for_wi
 	show_rkward_help->setText (i18n ("Help on RKWard"));
 
 	actionCollection ()->addAction (KStandardAction::AboutApp, "about_app", this, SLOT (showAboutApplication()));
-	actionCollection ()->addAction (KStandardAction::WhatsThis, "whats_this", for_window, SLOT (whatsThis()));
+	actionCollection ()->addAction (KStandardAction::WhatsThis, "whats_this", this, SLOT (startWhatsThis()));
 	actionCollection ()->addAction (KStandardAction::ReportBug, "report_bug", this, SLOT (reportRKWardBug()));
 
 	help_invoke_r_help->setStatusTip (i18n ("Shows the R help index"));
@@ -102,6 +105,12 @@ void RKTopLevelWindowGUI::invokeRHelp () {
 	RKWardMainWindow::getMain ()->topLevelWidget ()->raise ();
 }
 
+void RKTopLevelWindowGUI::startWhatsThis () {
+	RK_TRACE (APP);
+
+	QWhatsThis::enterWhatsThisMode ();
+}
+
 void RKTopLevelWindowGUI::reportRKWardBug () {
 	RK_TRACE (APP);
 
@@ -112,7 +121,7 @@ void RKTopLevelWindowGUI::reportRKWardBug () {
 void RKTopLevelWindowGUI::showAboutApplication () {
 	RK_TRACE (APP);
 
-	K3AboutApplication *about = new K3AboutApplication ();
+	KAboutApplicationDialog *about = new KAboutApplicationDialog (KCmdLineArgs::aboutData ());
 	about->exec ();
 	delete about;
 }
