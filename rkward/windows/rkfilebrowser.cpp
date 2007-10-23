@@ -20,16 +20,16 @@
 #include <kdiroperator.h>
 #include <kurlcombobox.h>
 #include <kurlcompletion.h>
+#include <kcompletionbox.h>
 #include <ktoolbar.h>
 #include <krun.h>
 #include <kactioncollection.h>
 
 #include <qdir.h>
 #include <qlayout.h>
-#include <q3vbox.h>
-//Added by qt3to4:
 #include <QEvent>
 #include <QVBoxLayout>
+#include <QScrollBar>
 
 #include "rkworkplace.h"
 #include "../rkward.h"
@@ -49,7 +49,7 @@ RKFileBrowser::RKFileBrowser (QWidget *parent, bool tool_window, const char *nam
 	layout->setContentsMargins (0, 0, 0, 0);
 	layout_widget = new KVBox (this);
 	layout->addWidget (layout_widget);
-	layout_widget->setFocusPolicy (Qt::StrongFocus);
+	setFocusPolicy (Qt::StrongFocus);
 
 	RKDummyPart *part = new RKDummyPart (this, layout_widget);
 	setPart (part);
@@ -69,7 +69,7 @@ void RKFileBrowser::showEvent (QShowEvent *e) {
 		RK_DO (qDebug ("creating file browser"), APP, DL_INFO);
 
 		real_widget = new RKFileBrowserWidget (layout_widget);
-		layout_widget->setFocusProxy (real_widget);
+		setFocusProxy (real_widget);
 	}
 
 	RKMDIWindow::showEvent (e);
@@ -79,7 +79,7 @@ void RKFileBrowser::currentWDChanged () {
 	RK_TRACE (APP);
 }
 
-
+/////////////////// RKFileBrowserWidget ////////////////////
 
 RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	RK_TRACE (APP);
@@ -93,7 +93,8 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	urlbox->setCompletionObject (cmpl);
 	urlbox->setAutoDeleteCompletionObject (true);
 	urlbox->setSizePolicy (QSizePolicy (QSizePolicy::Expanding, QSizePolicy::Fixed));
-// KDE4: do we need this (see eventFilter(), below)	urlbox->listBox ()->installEventFilter (this);
+	urlbox->completionBox (true)->installEventFilter (this);
+	setFocusProxy (urlbox);
 
 	dir = new KDirOperator (KUrl (), this);
 	dir->setView(KFile::Simple);
@@ -110,7 +111,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	connect (urlbox, SIGNAL (returnPressed (const QString &)), this, SLOT (urlChangedInCombo (const QString &)));
 	connect (urlbox, SIGNAL (urlActivated (const KUrl&)), this, SLOT (urlChangedInCombo (const KUrl&)));
 
-	connect (dir, SIGNAL (fileSelected (const KFileItem*)), this, SLOT (fileActivated (const KFileItem*)));
+	connect (dir, SIGNAL (fileSelected (const KFileItem&)), this, SLOT (fileActivated (const KFileItem&)));
 
 	setURL (QDir::currentPath ());
 }
@@ -144,36 +145,40 @@ void RKFileBrowserWidget::urlChangedInCombo (const KUrl &url) {
 	dir->setUrl (url, true);
 }
 
-bool RKFileBrowserWidget::eventFilter (QObject *watched, QEvent *e) {
-	// don't trace
-/* KDE4: do we still need this?
-	// fix size of popup (copied from katefileselector.cpp)
-	Q3ListBox *lb = urlbox->listBox ();
-	if (watched == lb && e->type() == QEvent::Show) {
-		int add = lb->height() < lb->contentsHeight() ? lb->verticalScrollBar()->width() : 0;
-		int w = qMin (topLevelWidget ()->width(), lb->contentsWidth() + add);
-		lb->resize (w, lb->height());
-	} */
-	return QWidget::eventFilter (watched, e);
+bool RKFileBrowserWidget::eventFilter (QObject* o, QEvent* e) {
+	// don't trace here
+
+	if (o == urlbox->completionBox () && e->type () == QEvent::Resize) {
+		RK_TRACE (APP);
+		// this hack (originally from a KDE 3 version of kate allows the completion popup to span beyond the border of the filebrowser widget itself
+
+		KCompletionBox* box = urlbox->completionBox ();
+		RK_ASSERT (box);
+
+		int add = box->verticalScrollBar ()->isVisible () ? box->verticalScrollBar ()->width () : 0;
+		box->setMinimumWidth (qMin (topLevelWidget ()->width (), box->sizeHintForColumn (0) + add));
+
+		return false;
+	}
+
+	return (KVBox::eventFilter (o, e));
 }
 
-void RKFileBrowserWidget::fileActivated (const KFileItem *item) {
+void RKFileBrowserWidget::fileActivated (const KFileItem& item) {
 	RK_TRACE (APP);
 
-	RK_ASSERT (item);
-
-	QString mimetype = item->mimetype ();
+	QString mimetype = item.mimetype ();
 	if (mimetype.startsWith ("text/")) {
 		if (mimetype == "text/html") {
-			RKWorkplace::mainWorkplace ()->openHelpWindow (item->url (), true);
+			RKWorkplace::mainWorkplace ()->openHelpWindow (item.url (), true);
 		} else {
-			RKWorkplace::mainWorkplace ()->openScriptEditor (item->url ());
+			RKWorkplace::mainWorkplace ()->openScriptEditor (item.url ());
 		}
 	} else {
-		if (item->name (true).endsWith (".rdata")) {
-			RKWardMainWindow::getMain ()->fileOpenAskSave (item->url ());
+		if (item.name (true).endsWith (".rdata")) {
+			RKWardMainWindow::getMain ()->fileOpenAskSave (item.url ());
 		} else {
-			new KRun (item->url (), topLevelWidget(), item->mode (), item->isLocalFile ());
+			new KRun (item.url (), topLevelWidget(), item.mode (), item.isLocalFile ());
 		}
 	}
 }

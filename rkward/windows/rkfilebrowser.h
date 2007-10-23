@@ -55,13 +55,13 @@ public:
 	RKFileBrowserWidget (QWidget *widget);
 	~RKFileBrowserWidget ();
 
-	bool eventFilter (QObject *watched, QEvent *e);
 	void setURL (const QString &url);
+	bool eventFilter (QObject* o, QEvent* e);
 public slots:
 	void urlChangedInView (const KUrl &url);
 	void urlChangedInCombo (const QString &url);
 	void urlChangedInCombo (const KUrl &url);
-	void fileActivated (const KFileItem *item);
+	void fileActivated (const KFileItem& item);
 private:
 	KDirOperator *dir;
 	KUrlComboBox *urlbox;
