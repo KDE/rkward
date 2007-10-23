@@ -48,6 +48,7 @@
 
 #include "../misc/rkcommonfunctions.h"
 #include "../core/robjectlist.h"
+#include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
 #include "../rkconsole.h"
 #include "../rkglobals.h"
@@ -243,6 +244,12 @@ void RKCommandEditorWindow::tryCompletion () {
 	RK_TRACE (COMMANDEDITOR);
 	if (!completion_model) return;
 
+	KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (m_view);
+	if (!iface) {
+		RK_ASSERT (false);
+		return;
+	}
+
 	KTextEditor::Cursor c = m_view->cursorPosition();
 	uint para=c.line(); uint cursor_pos=c.column();
 
@@ -255,16 +262,13 @@ void RKCommandEditorWindow::tryCompletion () {
 	if ((end - start) >= RKSettingsModuleCommandEditor::completionMinChars ()) {
 		KTextEditor::Range range (para, start, para, end);
 
-		KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (m_view);
-		if (!iface) {
-			RK_ASSERT (false);
-			return;
-		}
 		if (iface->isCompletionActive ()) {
 			completion_model->completionInvoked (m_view, range, KTextEditor::CodeCompletionModel::ManualInvocation);
 		} else {
 			iface->startCompletion (range, completion_model);
 		}
+	} else {
+		iface->abortCompletion ();
 	}
 }
 
@@ -317,6 +321,11 @@ void RKCommandEditorWindow::runAll() {
 	RKConsole::pipeUserCommand (command);
 }
 
+void RKCommandEditorWindow::configure () {
+	RK_TRACE (COMMANDEDITOR);
+
+	RKSettings::configureSettings (RKSettings::PageCommandEditor, this);
+}
 
 //////////////////////// RKFunctionArgHinter //////////////////////////////
 

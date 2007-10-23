@@ -142,6 +142,8 @@ public slots:
 	void runLine ();
 /** run the entire script */
 	void runAll ();
+/** invoke the settings page for the command editor */
+	void configure ();
 protected:
 /** reimplemented from KMdiChildView: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e);

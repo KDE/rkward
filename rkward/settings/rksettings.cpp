@@ -53,9 +53,9 @@ void RKSettings::configureSettings (SettingsPage page, QWidget *parent, RCommand
 		settings_dialog = new RKSettings (parent);
 	}
 
+	settings_dialog->raisePage (page);
 	settings_dialog->show ();
 	settings_dialog->raise ();
-	settings_dialog->raisePage (page);
 }
 
 //static
@@ -109,7 +109,7 @@ void RKSettings::initModules () {
 
 	ModuleMap::const_iterator it;
 	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
-		pages[it.key ()] = addPage (it.value (), it.value ()->caption ());
+		pages[it.key ()-1] = addPage (it.value (), it.value ()->caption ());
 	}
 }
 

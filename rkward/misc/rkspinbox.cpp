@@ -132,6 +132,8 @@ void RKSpinBox::updateValue (int change) {
 			if (step < 1) step = 1;
 
 			int_value += change * step;
+			if (int_value > int_max) int_value = int_max;
+			if (int_value < int_min) int_value = int_min;
 		}
 	}
 }

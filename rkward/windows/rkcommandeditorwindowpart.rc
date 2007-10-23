@@ -14,6 +14,9 @@
 			<Action name="run_all"/>
 			<Separator/>
 		</Menu>
+		<Menu name="settings"><text>&amp;Settings</text>
+			<Action name="configure_commandeditor"></Action>
+		</Menu>
 		<Menu name="help"><text>&amp;Help</text>
 			<Action name="function_reference"></Action>
 		</Menu>
