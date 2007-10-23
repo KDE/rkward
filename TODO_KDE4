@@ -26,17 +26,17 @@ General:
 	- grep sources for "KDE4"
 	- remove all the passing around of KGlobal::config() as a parameter
 	- the whole idea of having a single mutex for everything is flawed. We should use several specialized ones
-	- all i18n with arguments calls need fixing (grep for "i18n.*%.*\.arg")
 
 rkcommandeditorwindow
 	- polish code completion (e.g. hide window, when there are no completions)
+		- should have a setup page
+		- adding icons should not be too hard?
 	- does the popup-menu still work? See SVN rev. 962.
 	- placement of menu options?
 
 rkward
 	- does closing windows work
 	- does updating captions work (when switching windows / window url changes)?
-	- status bar does not show working dir
 
 output window
 	- does it reload all changed images?
@@ -64,16 +64,12 @@ rkdropdown:
 	- take care of enabling / disabling single options!
 
 rksettings:
-	- direct page activation?
 	- check wether settings seem to be saved / loaded correctly
 	- are the defaults ok?
 
 data editor:
 	- definitely needs better porting
 	- does cell painting work ok?
-
-rkthread:
-	- find out how to call dbus for the help browser!
 
 rklocalesupport:
 	- does locale switching / detection work? Does Qt have something, yet?
