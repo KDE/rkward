@@ -45,8 +45,10 @@ public:
 		PageOutput=6,
 		PageWatch=7,
 		PageConsole=8,
-		PageObjectBrowser=9,
-		NumPages = PageObjectBrowser + 1
+		PageCommandEditor=9,
+		PageObjectBrowser=10,
+		PageDebug=11,
+		NumPages = PageDebug + 1
 	};
 
 	static void configureSettings (SettingsPage page=NoPage, QWidget *parent=0, RCommandChain *chain=0);

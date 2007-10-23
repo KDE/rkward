@@ -16,10 +16,7 @@
  ***************************************************************************/
 #include "rkcommandeditorwindow.h"
 
-#include <kparts/partmanager.h>
-#include <kparts/mainwindow.h>
-#include <kparts/part.h>
-#include <kparts/factory.h>
+#include <kxmlguifactory.h>
 
 #include <ktexteditor/configinterface.h>
 #include <ktexteditor/sessionconfiginterface.h>
@@ -27,17 +24,14 @@
 #include <ktexteditor/editorchooser.h>
 
 #include <qlayout.h>
-#include <q3popupmenu.h>
 #include <qapplication.h>
 #include <qtabwidget.h>
 #include <qfile.h>
 #include <qtimer.h>
 #include <qobject.h>
 #include <QHBoxLayout>
-//Added by qt3to4:
 #include <QCloseEvent>
 #include <QFrame>
-#include <Q3ValueList>
 #include <QLabel>
 #include <QKeyEvent>
 #include <QEvent>
@@ -54,6 +48,7 @@
 
 #include "../misc/rkcommonfunctions.h"
 #include "../core/robjectlist.h"
+#include "../settings/rksettingsmodulecommandeditor.h"
 #include "../rkconsole.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
@@ -95,7 +90,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	connect (m_doc, SIGNAL (documentUrlChanged (KTextEditor::Document*)), this, SLOT (updateCaption (KTextEditor::Document*)));
 	connect (m_doc, SIGNAL (modifiedChanged (KTextEditor::Document*)), this, SLOT (updateCaption (KTextEditor::Document*)));		// of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 	connect (m_doc, SIGNAL (textChanged (KTextEditor::Document*)), this, SLOT (tryCompletionProxy (KTextEditor::Document*)));
-//KDE4	connect (m_view, SIGNAL (gotFocus (Kate::View *)), this, SLOT (setPopupMenu (Kate::View *)));
+	// somehow the katepart loses the context menu each time it loses focus
+	connect (m_view, SIGNAL (focusIn(KTextEditor::View*)), this, SLOT (setPopupMenu(KTextEditor::View*)));
 	completion_timer = new QTimer (this);
 	connect (completion_timer, SIGNAL (timeout ()), this, SLOT (tryCompletion()));
 
@@ -109,7 +105,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	}
 
 	updateCaption ();	// initialize
-//KDE4	QTimer::singleShot (0, this, SLOT (setPopupMenu ()));
+	QTimer::singleShot (0, this, SLOT (setPopupMenu ()));
 }
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
@@ -118,18 +114,17 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	delete m_doc;
 }
 
-/*
-KDE4 TODO: still needed? Alternatives?
-void RKCommandEditorWindow::setPopupMenu () {
+void RKCommandEditorWindow::setPopupMenu (KTextEditor::View* v) {
 	RK_TRACE (COMMANDEDITOR);
+	RK_ASSERT (v == m_view);
 
-	if (!m_view->factory ()) return;
-	m_view->installPopup (static_cast<Q3PopupMenu *> (m_view->factory ()->container ("ktexteditor_popup", m_view)));
+	if (!getPart ()->factory ()) return;
+	m_view->setContextMenu (static_cast<QMenu *> (getPart ()->factory ()->container ("ktexteditor_popup", getPart ())));
 }
 
-void RKCommandEditorWindow::setPopupMenu (Kate::View*) {
-	setPopupMenu ();
-}*/
+void RKCommandEditorWindow::setPopupMenu () {
+	setPopupMenu (m_view);
+}
 
 QString RKCommandEditorWindow::fullCaption () {
 	RK_TRACE (COMMANDEDITOR);
@@ -238,7 +233,9 @@ void RKCommandEditorWindow::showHelp () {
 }
 
 void RKCommandEditorWindow::tryCompletionProxy (KTextEditor::Document*) {
-	completion_timer->start (100, true);
+	if (RKSettingsModuleCommandEditor::completionEnabled ()) {
+		completion_timer->start (RKSettingsModuleCommandEditor::completionTimeout (), true);
+	}
 }
 
 void RKCommandEditorWindow::tryCompletion () {
@@ -255,7 +252,7 @@ void RKCommandEditorWindow::tryCompletion () {
 	int start;
 	int end;
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &start, &end);
-	if ((end - start) >= 2) {
+	if ((end - start) >= RKSettingsModuleCommandEditor::completionMinChars ()) {
 		KTextEditor::Range range (para, start, para, end);
 
 		KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (m_view);
@@ -322,8 +319,6 @@ void RKCommandEditorWindow::runAll() {
 
 
 //////////////////////// RKFunctionArgHinter //////////////////////////////
-
-#include <q3vbox.h>
 
 #include "../core/rfunctionobject.h"
 

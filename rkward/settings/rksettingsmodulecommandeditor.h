@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rksettingsmodulephp  -  description
+                          rksettingsmodulecommandeditor  -  description
                              -------------------
-    begin                : Wed Jul 28 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    begin                : Tue Oct 23 2007
+    copyright            : (C) 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -14,24 +14,25 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef RKSETTINGSMODULEPHP_H
-#define RKSETTINGSMODULEPHP_H
+#ifndef RKSETTINGSMODULECOMMANDEDITOR_H
+#define RKSETTINGSMODULECOMMANDEDITOR_H
 
 #include "rksettingsmodule.h"
 
-class GetFileNameWidget;
+class RKSpinBox;
+class QCheckBox;
 
 /**
-configuration for the PHP-backend
+configuration for the Command Editor windows
 
 @author Thomas Friedrichsmeier
 */
-class RKSettingsModulePHP : public RKSettingsModule {
+class RKSettingsModuleCommandEditor : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModulePHP (RKSettings *gui, QWidget *parent);
+	RKSettingsModuleCommandEditor (RKSettings *gui, QWidget *parent);
 
-	~RKSettingsModulePHP ();
+	~RKSettingsModuleCommandEditor ();
 	
 	bool hasChanges ();
 	void applyChanges ();
@@ -42,14 +43,20 @@ public:
 	
 	QString caption ();
 
-/// returns the filename of the php-binary
-	static QString &phpBin () { return php_bin; };
+/// min number of character to try code completion
+	static int completionMinChars () { return completion_min_chars; };
+	static int completionTimeout () { return completion_timeout; };
+	static bool completionEnabled () { return completion_enabled; };
 public slots:
-	void pathChanged ();
+	void settingChanged (int);
 private:
-	GetFileNameWidget *bin_choser;
+	static int completion_min_chars;
+	static int completion_timeout;
+	static bool completion_enabled;
 
-	static QString php_bin;
+	RKSpinBox* completion_min_chars_box;
+	RKSpinBox* completion_timeout_box;
+	QCheckBox* completion_enabled_box;
 };
 
 #endif

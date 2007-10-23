@@ -76,6 +76,7 @@ rklocalesupport:
 
 rkspinbox:
 	- does it work at all? in both modes?
+	- seems to be at least partially broken
 
 rkobjectlistview:
 	- do the tool-tips for the objects work?

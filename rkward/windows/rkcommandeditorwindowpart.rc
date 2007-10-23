@@ -26,10 +26,13 @@
 	<Menu name="ktexteditor_popup">
 		<Merge/>
 		<Separator/>
-		<Action name="run_line"/>
-		<Action name="run_selection"/>
-		<Action name="run_all"/>
-		<Separator/>
+		<Menu name="run"><text>&amp;Run</text>
+			<Action name="run_line"/>
+			<Action name="run_selection"/>
+			<Action name="run_all"/>
+		</Menu>
 		<Action name="function_reference"/>
+		<Separator/>
+		<Action name="configure_commandeditor"/>
 	</Menu>
 </kpartgui>

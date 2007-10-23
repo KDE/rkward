@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
 	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
 	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-	RK_Debug_Level = 5 - QString (args->getOption ("debug-level")).toInt ();
+	RK_Debug_Level = DL_FATAL - QString (args->getOption ("debug-level")).toInt ();
 	RK_Debug_Flags = QString (args->getOption ("debug-flags")).toInt ();
 	if (!args->getOption ("debugger").isEmpty ()) {
 		RK_DO (qDebug ("--debugger option should have been handled by wrapper script. Ignoring."), ALL, DL_ERROR);

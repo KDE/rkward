@@ -14,6 +14,8 @@ SET(settings_STAT_SRCS
    rksettingsmodulewatch.cpp
    rksettingsmoduleobjectbrowser.cpp
    rksettingsmoduleconsole.cpp
+   rksettingsmodulecommandeditor.cpp
+   rksettingsmoduledebug.cpp
    )
 
 QT4_AUTOMOC(${settings_STAT_SRCS})

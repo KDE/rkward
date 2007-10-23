@@ -64,6 +64,9 @@ void RKCommandEditorWindowPart::initializeActions () {
 	helpFunction = actionCollection ()->addAction ("function_reference", command_editor, SLOT (showHelp()));
 	helpFunction->setText (i18n ("&Function reference"));
 	helpFunction->setShortcut (Qt::Key_F2);
+
+	QAction* configure = actionCollection ()->addAction ("configure_commandeditor", command_editor, SLOT (configure()));
+	configure->setText (i18n ("Configure Script Editor"));
 }
 
 #include "rkcommandeditorwindowpart.moc"

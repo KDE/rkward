@@ -132,8 +132,8 @@ public slots:
 	void tryCompletionProxy (KTextEditor::Document*);
 /** show a code completion box if appropriate. Use tryCompletionProxy () instead, which will call this function after a timeout */
 	void tryCompletion ();
-//KDE4	void setPopupMenu (KTextEditor::View *);
-//KDE4	void setPopupMenu ();
+	void setPopupMenu ();
+	void setPopupMenu (KTextEditor::View *);
 /** Show help about the current word. */
 	void showHelp ();
 /** run the currently selected command(s) */

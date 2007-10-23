@@ -17,9 +17,6 @@
 #include "rksettings.h"
 
 #include <qlayout.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
-#include <Q3Frame>
 
 #include <klocale.h>
 #include <kapplication.h>
@@ -37,6 +34,8 @@
 #include "rksettingsmodulewatch.h"
 #include "rksettingsmoduleobjectbrowser.h"
 #include "rksettingsmoduleconsole.h"
+#include "rksettingsmodulecommandeditor.h"
+#include "rksettingsmoduledebug.h"
 
 #include "../debug.h"
 
@@ -104,7 +103,9 @@ void RKSettings::initModules () {
 	modules.insert (PageOutput, new RKSettingsModuleOutput (this, 0));
 	modules.insert (PageWatch, new RKSettingsModuleWatch (this, 0));
 	modules.insert (PageConsole, new RKSettingsModuleConsole (this, 0));
+	modules.insert (PageCommandEditor, new RKSettingsModuleCommandEditor (this, 0));
 	modules.insert (PageObjectBrowser, new RKSettingsModuleObjectBrowser (this, 0));
+	modules.insert (PageDebug, new RKSettingsModuleDebug (this, 0));
 
 	ModuleMap::const_iterator it;
 	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
@@ -189,6 +190,7 @@ void RKSettings::loadSettings (KConfig *config) {
 	RKSettingsModuleOutput::loadSettings(config);
 	RKSettingsModuleWatch::loadSettings(config);
 	RKSettingsModuleConsole::loadSettings(config);
+	RKSettingsModuleCommandEditor::loadSettings(config);
 	RKSettingsModuleObjectBrowser::loadSettings(config);
 }
 
@@ -203,6 +205,7 @@ void RKSettings::saveSettings (KConfig *config) {
 	RKSettingsModuleOutput::saveSettings(config);
 	RKSettingsModuleWatch::saveSettings(config);
 	RKSettingsModuleConsole::saveSettings(config);
+	RKSettingsModuleCommandEditor::saveSettings(config);
 	RKSettingsModuleObjectBrowser::saveSettings(config);
 }
 
