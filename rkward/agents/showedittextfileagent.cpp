@@ -100,7 +100,7 @@ void ShowEditTextFileAgent::showEditFiles (RCallbackArgs *args) {
 
 void ShowEditTextFileAgent::done () {
 	RK_TRACE (APP);
-	delete dialog;
+	dialog->deleteLater ();
 
 	// int_b in RShowFiles means files are to be deleted
 	if ((args->type == RCallbackArgs::RShowFiles) && args->int_b) {
