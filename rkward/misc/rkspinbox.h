@@ -70,11 +70,10 @@ protected:
 	QValidator::State validate (QString &input, int &pos ) const;
 private slots:
 	void updateValue (int value);
+	void emitValueChange ();
 private:
 	enum Mode { Integer=0, Real=1 };
 	Mode mode;
-	bool updating;
-	bool updating_b;
 	double real_value;
 	double real_min;
 	double real_max;

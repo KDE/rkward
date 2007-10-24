@@ -72,10 +72,9 @@ rklocalesupport:
 	- does locale switching / detection work? Does Qt have something, yet?
 
 rkspinbox:
-	- does it work at all? in both modes?
-	- seems to be at least partially broken
-	- does not work in real mode
-	- in int mode, does not update on typed input
+	- are all of these fixed? Do some thorough testing
+		- does not work in real mode
+		- does not update on typed input
 
 rkobjectlistview:
 	- do the tool-tips for the objects work?

@@ -18,6 +18,7 @@
 
 #include <qvalidator.h>
 #include <qlineedit.h>
+#include <QTimer>
 
 #include <math.h>
 #include <limits.h>
@@ -30,13 +31,12 @@ RKSpinBox::RKSpinBox (QWidget *parent) : QSpinBox (parent) {
 
 	validator = 0;
 	mode = Integer;
-	updating = updating_b = false;
 	real_value = 0;
 	int_value = 0;
 	int_min = INT_MIN;
 	int_max = INT_MAX;
 
-	connect (this, SIGNAL (valueChanged(int)), this, SLOT(updateValue(int)));
+	connect (this, SIGNAL (valueChanged(int)), this, SLOT (updateValue(int)));
 }
 
 RKSpinBox::~RKSpinBox () {
@@ -71,18 +71,20 @@ QString RKSpinBox::textFromValue (int) const {
 int RKSpinBox::valueFromText (const QString & text) const {
 	if (mode == Real) {
 		bool ok;
-		double new_value = text.toFloat (&ok);
-		if (ok) {
+		double new_value = text.toDouble (&ok);
+		if (ok && (new_value != real_value)) {
 			double *cheat = const_cast<double*> (&real_value);
 			*cheat = new_value;
+			QTimer::singleShot (0, const_cast<RKSpinBox*>(this), SLOT (emitValueChange()));
 		}
 		return 0;
 	} else {
 		bool ok;
 		int new_value = text.toInt (&ok);
-		if (ok) {
+		if (ok && (new_value != int_value)) {
 			int *cheat = const_cast<int*> (&int_value);
 			*cheat = new_value;
+			QTimer::singleShot (0, const_cast<RKSpinBox*>(this), SLOT (emitValueChange()));
 		}
 		return 0;
 	}
@@ -98,44 +100,47 @@ QValidator::State RKSpinBox::validate (QString &input, int &pos) const {
 	return (validator->validate (input, pos));
 }
 
+void RKSpinBox::emitValueChange () {
+	RK_TRACE (MISC);
+
+	emit (valueChanged (0));
+}
+
 void RKSpinBox::updateValue (int change) {
 	RK_TRACE (MISC);
+	if (change == 0) return;
+
 	if (mode == Real) {
-		if (change != 0) {
-			setValue (0);
-
-			int power;
-			if (real_value != 0) {
-				power = (int) log10 (fabs (real_value)) - default_precision;
-				if (power < (-default_precision)) power = -default_precision;
-				if (power > 10) power = 10;
-			} else {
-				power = -default_precision;
-			}
-			double step = pow (10, power);
-
-			real_value += change * step;
-			if (real_value > real_max) real_value = real_max;
-			if (real_value < real_min) real_value = real_min;
+		int power;
+		if (real_value != 0) {
+			power = (int) log10 (fabs (real_value)) - default_precision;
+			if (power < (-default_precision)) power = -default_precision;
+			if (power > 10) power = 10;
+		} else {
+			power = -default_precision;
 		}
+		double step = pow (10, power);
+
+		real_value += change * step;
+		if (real_value > real_max) real_value = real_max;
+		if (real_value < real_min) real_value = real_min;
 	} else {
-		if (change != 0) {
-			setValue (0);
-
-			int power;
-			if (int_value != 0) {
-				power = (int) log10 (abs (int_value));
-			} else {
-				power = -default_precision;
-			}
-			int step = (int) pow (10, power-1);
-			if (step < 1) step = 1;
-
-			int_value += change * step;
-			if (int_value > int_max) int_value = int_max;
-			if (int_value < int_min) int_value = int_min;
+		int power;
+		if (int_value != 0) {
+			power = (int) log10 (abs (int_value));
+		} else {
+			power = -default_precision;
 		}
+		int step = (int) pow (10, power-1);
+		if (step < 1) step = 1;
+
+		int_value += change * step;
+		if (int_value > int_max) int_value = int_max;
+		if (int_value < int_min) int_value = int_min;
 	}
+
+	// update display and reset
+	setValue (0);
 }
 
 void RKSpinBox::setRealMode (double min, double max, double initial, int default_precision, int max_precision) {
