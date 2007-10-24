@@ -141,11 +141,7 @@ public:
 /** standard property controlling requiredness */
 	RKComponentPropertyBool *requirednessProperty ()  { return requiredness_property; };
 
-/** convenience call to set visibilty property (and hence visibility of this component). Can't inline due to inclusion problems. */
-	void setVisible (bool visible);
-/** convenience call to set visibilty property (and hence visibility of this component) */
-	void setEnabledness (bool enabled);
-/** convenience call to set visibilty property (and hence visibility of this component) */
+/** convenience call to set requiredness property (and hence requiredness of this component) */
 	void setRequired (bool required);
 
 /** The parent of this component. Should be notified, whenever isSatisfied () or isReady ()-state changed. */

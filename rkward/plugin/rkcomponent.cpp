@@ -204,18 +204,6 @@ void RKComponent::addComponentToCurrentPage (RKComponent *) {
 	RK_ASSERT (false);		// should not be called as isWizardish returns false
 }
 
-void RKComponent::setVisible (bool visible) {
-	RK_TRACE (PLUGIN);
-
-	visibilityProperty ()->setBoolValue (visible);
-}
-
-void RKComponent::setEnabledness (bool enabled) {
-	RK_TRACE (PLUGIN);
-
-	enablednessProperty ()->setBoolValue (enabled);
-}
-
 void RKComponent::setRequired (bool required) {
 	RK_TRACE (PLUGIN);
 
