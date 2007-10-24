@@ -28,7 +28,7 @@ for (i in 1:length (objects)) {
 function printout () {
 ?>
 rk.header ("Statistical Moment",
-	parameters=list ("Order", "<? getRK ("order"); ?>, "Compute central moments", "<? getRK ("central"); ?>", "Compute absolute moments", "<? getRK ("absolute"); ?>", "Remove missing values", "<? getRK ("narm"); ?>"))
+	parameters=list ("Order", "<? getRK ("order"); ?>", "Compute central moments", "<? getRK ("central"); ?>", "Compute absolute moments", "<? getRK ("absolute"); ?>", "Remove missing values", "<? getRK ("narm"); ?>"))
 rk.results (results)
 <?
 }
