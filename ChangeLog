@@ -1,3 +1,4 @@
+- Analysis->Moments->Moment plugin did not use the order-parameter	TODO: backport rev. 2122
 - code completion in script editor shows icons for the different object types
 - settings dialog is now shown in "page list" mode
 - port to KDE 4			(TODO)
