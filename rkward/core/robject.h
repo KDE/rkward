@@ -87,11 +87,11 @@ public:
 	virtual void setLabel (const QString &value, bool sync=true);
 	virtual void setMetaProperty (const QString &id, const QString &value, bool sync=true);
 	
-	bool isContainer () { return (type & Container); };
-	bool isDataFrame () { return (type & DataFrame); };
-	bool isVariable () { return (type & Variable); };
-	bool isType (int type) { return (RObject::type & type); };
-	bool hasMetaObject () { return (type & HasMetaObject); };
+	bool isContainer () const { return (type & Container); };
+	bool isDataFrame () const { return (type & DataFrame); };
+	bool isVariable () const { return (type & Variable); };
+	bool isType (int type) const { return (RObject::type & type); };
+	bool hasMetaObject () const { return (type & HasMetaObject); };
 
 /** trigger an update of this and all descendent objects */
 	virtual void updateFromR (RCommandChain *chain);
@@ -140,7 +140,7 @@ public:
 /** array of child objects. Always 0, reimplemented in RContainerObject */
 	virtual RObject **children () { return 0; };
 
-	RDataType getDataType () { return (typeToDataType (type)); };
+	RDataType getDataType () const { return (typeToDataType (type)); };
 	static RDataType typeToDataType (int ftype) { return ((RDataType) ((ftype & DataTypeMask) >> 14)); };
 	void setDataType (RDataType new_type) {
 		int n_type = type - (type & DataTypeMask);

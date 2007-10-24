@@ -1,7 +1,7 @@
 /***************************************************************************
                           multistringselector  -  description
                              -------------------
-    begin                : Fir Sep 10 2005
+    begin                : Fri Sep 10 2005
     copyright            : (C) 2005 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/

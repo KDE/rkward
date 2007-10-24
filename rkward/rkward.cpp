@@ -58,6 +58,7 @@
 #include "rbackend/rinterface.h"
 #include "core/robjectlist.h"
 #include "core/renvironmentobject.h"
+#include "misc/rkstandardicons.h"
 #include "rkglobals.h"
 #include "robjectbrowser.h"
 #include "dialogs/startupdialog.h"
@@ -121,6 +122,7 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 
 	///////////////////////////////////////////////////////////////////
 	// call inits to invoke all other construction parts
+	RKStandardIcons::initIcons ();
 	initActions();
 	initStatusBar();
 

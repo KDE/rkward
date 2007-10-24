@@ -49,6 +49,7 @@
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleconsole.h"
 #include "misc/rkcommonfunctions.h"
+#include "misc/rkstandardicons.h"
 #include "core/robjectlist.h"
 #include "core/rfunctionobject.h"
 
@@ -789,7 +790,7 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 
 	run_selection_action = ac->addAction ("run_selection", this, SLOT (runSelection()));
 	run_selection_action->setText (i18n ("Run selection"));
-	run_selection_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"));
+	run_selection_action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunSelection));
 	run_selection_action->setShortcut (Qt::Key_F8);
 
 	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (slotInterruptCommand()));

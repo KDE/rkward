@@ -14,6 +14,7 @@ SET(misc_STAT_SRCS
    rkprogresscontrol.cpp
    rksaveobjectchooser.cpp
    rkdummypart.cpp
+   rkstandardicons.cpp
    )
 
 QT4_AUTOMOC(${misc_STAT_SRCS})

@@ -47,6 +47,7 @@
 #include <kiconloader.h>
 
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkstandardicons.h"
 #include "../core/robjectlist.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
@@ -92,7 +93,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	connect (m_doc, SIGNAL (modifiedChanged (KTextEditor::Document*)), this, SLOT (updateCaption (KTextEditor::Document*)));		// of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 	connect (m_doc, SIGNAL (textChanged (KTextEditor::Document*)), this, SLOT (tryCompletionProxy (KTextEditor::Document*)));
 	// somehow the katepart loses the context menu each time it loses focus
-	connect (m_view, SIGNAL (focusIn(KTextEditor::View*)), this, SLOT (setPopupMenu(KTextEditor::View*)));
+	connect (m_view, SIGNAL (focusIn(KTextEditor::View*)), this, SLOT (focusIn(KTextEditor::View*)));
+	connect (m_view, SIGNAL (focusOut(KTextEditor::View*)), this, SLOT (focusOut(KTextEditor::View*)));
 	completion_timer = new QTimer (this);
 	connect (completion_timer, SIGNAL (timeout ()), this, SLOT (tryCompletion()));
 
@@ -115,16 +117,30 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	delete m_doc;
 }
 
-void RKCommandEditorWindow::setPopupMenu (KTextEditor::View* v) {
+void RKCommandEditorWindow::focusIn (KTextEditor::View* v) {
 	RK_TRACE (COMMANDEDITOR);
 	RK_ASSERT (v == m_view);
 
-	if (!getPart ()->factory ()) return;
-	m_view->setContextMenu (static_cast<QMenu *> (getPart ()->factory ()->container ("ktexteditor_popup", getPart ())));
+	setPopupMenu ();
+}
+
+void RKCommandEditorWindow::focusOut (KTextEditor::View* v) {
+	RK_TRACE (COMMANDEDITOR);
+	RK_ASSERT (v == m_view);
+
+	KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (m_view);
+	if (!iface) {
+		RK_ASSERT (false);
+		return;
+	}
+	iface->abortCompletion ();
 }
 
 void RKCommandEditorWindow::setPopupMenu () {
-	setPopupMenu (m_view);
+	RK_TRACE (COMMANDEDITOR);
+
+	if (!getPart ()->factory ()) return;
+	m_view->setContextMenu (static_cast<QMenu *> (getPart ()->factory ()->container ("ktexteditor_popup", getPart ())));
 }
 
 QString RKCommandEditorWindow::fullCaption () {
@@ -267,6 +283,8 @@ void RKCommandEditorWindow::tryCompletion () {
 		} else {
 			iface->startCompletion (range, completion_model);
 		}
+#warning TODO: flicker when no matches. Nag Kate devels? Remove?
+		if (!completion_model->rowCount ()) iface->abortCompletion ();
 	} else {
 		iface->abortCompletion ();
 	}
@@ -538,6 +556,10 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 	if ((role == Qt::DisplayRole) || (role==KTextEditor::CodeCompletionModel::CompletionRole)) {
 		if (col == KTextEditor::CodeCompletionModel::Name) {
 			return (object->getBaseName ());
+		}
+	} else if (role == Qt::DecorationRole) {
+		if (col == KTextEditor::CodeCompletionModel::Icon) {
+			return RKStandardIcons::iconForObject (object);
 		}
 	}
 

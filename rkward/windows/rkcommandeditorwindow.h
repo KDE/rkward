@@ -133,7 +133,8 @@ public slots:
 /** show a code completion box if appropriate. Use tryCompletionProxy () instead, which will call this function after a timeout */
 	void tryCompletion ();
 	void setPopupMenu ();
-	void setPopupMenu (KTextEditor::View *);
+	void focusIn (KTextEditor::View *);
+	void focusOut (KTextEditor::View *);
 /** Show help about the current word. */
 	void showHelp ();
 /** run the currently selected command(s) */

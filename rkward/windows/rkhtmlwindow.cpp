@@ -39,6 +39,7 @@
 #include "../rkconsole.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkstandardicons.h"
 #include "../misc/xmlhelper.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../windows/rkworkplace.h"
@@ -96,7 +97,7 @@ void RKHTMLWindow::addCommonActions (KActionCollection *action_collection) {
 	// run selection
 	run_selection = action_collection->addAction ("run_selection", this, SLOT (runSelection()));
 	run_selection->setText (i18n ("Run selection"));
-	run_selection->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"));
+	run_selection->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunSelection));
 	run_selection->setShortcut (Qt::Key_F8);
 
 	// needed to enable / disable the run selection action

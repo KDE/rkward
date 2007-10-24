@@ -23,7 +23,7 @@
 #include <kxmlguifactory.h>
 
 #include "rkcommandeditorwindow.h"
-#include "../misc/rkcommonfunctions.h"
+#include "../misc/rkstandardicons.h"
 #include "../debug.h"
 
 RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent, RKCommandEditorWindow *editor_widget) : KParts::Part (parent) {
@@ -48,17 +48,17 @@ void RKCommandEditorWindowPart::initializeActions () {
 
 	runAll = actionCollection ()->addAction ("run_all", command_editor, SLOT (runAll()));
 	runAll->setText (i18n ("Run all"));
-	runAll->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_all.png"));
+	runAll->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunAll));
 	runAll->setShortcut (Qt::Key_F9);
 
 	runSelection = actionCollection ()->addAction ("run_selection", command_editor, SLOT (runSelection()));
 	runSelection->setText (i18n ("Run selection"));
-	runSelection->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_selection.png"));
+	runSelection->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunSelection));
 	runSelection->setShortcut (Qt::Key_F9);
 
 	runLine = actionCollection ()->addAction ("run_line", command_editor, SLOT (runLine()));
 	runLine->setText (i18n ("Run current line"));
-	runLine->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/run_line.png"));
+	runLine->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunLine));
 	runLine->setShortcut (Qt::ControlModifier + Qt::Key_L);
 
 	helpFunction = actionCollection ()->addAction ("function_reference", command_editor, SLOT (showHelp()));
