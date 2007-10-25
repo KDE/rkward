@@ -141,6 +141,13 @@ UI-stuff
 			- likely, package environments should try to fetch vignettes, when "updating"
 
 Internal stuff:
+	- Workspace browser / code completion
+		- we might make this a bit less pro-active:
+			- only objects directly on the search path need to be fetched at once
+			- children of these objects do not need to be investigated until we first try to access a child of the object.
+			- i.e. RContainerobject::children() should handle fetching the child structure (numChildren() should probably be populated pro-actively).
+			- isParentOf() should not be affected, as this can only be true for a child object that has previously been investigated
+			- need to make sure, completions are not blocking
 	- Handling fonts:
 		- http://sourceforge.net/mailarchive/forum.php?thread_id=31631211&forum_id=12970
 	- Look at package odfWeave, and find out, how to use this
