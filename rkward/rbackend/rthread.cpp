@@ -101,7 +101,6 @@ void RThread::run () {
 	checkObjectUpdatesNeeded (true);
 	RCommandStack::regular_stack->pop ();	// remove the fake command
 	notifyCommandDone (current_command);
-	current_command = 0;
 	MUTEX_UNLOCK;
 
 	while (1) {
@@ -125,7 +124,6 @@ void RThread::run () {
 				checkObjectUpdatesNeeded (current_command->type () & (RCommand::User | RCommand::ObjectListUpdate));
 				processX11Events ();
 				RCommandStack::regular_stack->pop ();
-				current_command = 0;
 				notifyCommandDone (current_command);	// command may be deleted after this
 			}
 		
@@ -263,6 +261,9 @@ void RThread::doCommand (RCommand *command) {
 
 void RThread::notifyCommandDone (RCommand *command) {
 	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (command == current_command);
+	current_command = 0;
 
 	// notify GUI-thread that command was finished
 	QCustomEvent* event = new QCustomEvent (RCOMMAND_OUT_EVENT);
@@ -430,7 +431,6 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 				if (object_update_forced) checkObjectUpdatesNeeded (true);
 				processX11Events ();
 				reply_stack->pop ();
-				current_command = 0;
 				notifyCommandDone (current_command);	// command may be deleted after this
 			}
 		}
