@@ -104,7 +104,7 @@ RKComponent::RKComponent (RKComponent *parent_component, QWidget *parent_widget)
 
 	_parent = parent_component;
 	// even if this is component has (parent_widget == 0), the component should be added as a QObject child of the parent.
-	if (_parent && (!parent_widget)) _parent->insertChild (this);
+	if (_parent && (!parent_widget)) setParent (_parent);
 }
 
 void RKComponent::createDefaultProperties () {
