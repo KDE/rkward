@@ -23,7 +23,7 @@
 
 #include <qcheckbox.h>
 #include <qcombobox.h>
-#include <q3listview.h>
+#include <QTreeView>
 #include <qlineedit.h>
 #include <qlayout.h>
 #include <qlabel.h>
@@ -43,6 +43,12 @@
 #define GET_HELP_URL 1
 #define HELP_SEARCH 2
 #define GET_INSTALLED_PACKAGES 3
+
+// result columns
+#define COL_TOPIC 0
+#define COL_TITLE 1
+#define COL_PACKAGE 2
+#define COL_COUNT 3
 
 RKHelpSearchWindow* RKHelpSearchWindow::main_help_search = 0;
 
@@ -75,11 +81,10 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	QHBoxLayout* fields_packages_layout = new QHBoxLayout (main_settings_layout, RKGlobals::spacingHint ());
 	fields_packages_layout->setContentsMargins (0, 0, 0, 0);
 	fieldsList = new QComboBox (false, this);
-	// HACK the sequence of options is hardcoded, do not modify
-	fieldsList->insertItem (i18n("All"));
-	fieldsList->insertItem (i18n("All but keywords"));
-	fieldsList->insertItem (i18n("Keywords"));
-	fieldsList->insertItem (i18n("Title"));
+	fieldsList->addItem (i18n ("All"), "c(\"alias\", \"concept\", \"title\",\"keyword\")");
+	fieldsList->addItem (i18n ("All but keywords"), "c(\"alias\", \"concept\", \"title\")");
+	fieldsList->addItem (i18n ("Keywords"), "c(\"keyword\")");
+	fieldsList->addItem (i18n ("Title"), "c(\"title\")");
 	fields_packages_layout->addWidget (fieldsList);
 
 	label = new QLabel (i18n ("Package:"), this);
@@ -103,12 +108,12 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	connect (findButton, SIGNAL (clicked ()), this, SLOT (slotFindButtonClicked ()));
 	selection_layout->addWidget (findButton);
 
-	resultsList = new Q3ListView (this);
-	resultsList->addColumn (i18n ("Topic"));
-	resultsList->addColumn (i18n ("Title"));
-	resultsList->addColumn (i18n ("Package"));
-	connect (resultsList, SIGNAL (doubleClicked (Q3ListViewItem*, const QPoint&, int)), this, SLOT (slotResultsListDblClicked (Q3ListViewItem*, const QPoint&, int)));
-	main_layout->addWidget (resultsList);
+	results = new RKHelpSearchResultsModel (this);
+	results_view = new QTreeView (this);
+	results_view->setRootIsDecorated (false);
+	results_view->setModel (results);
+	connect (results_view, SIGNAL (doubleClicked(const QModelIndex&)), this, SLOT (resultDoubleClicked(const QModelIndex&)));
+	main_layout->addWidget (results_view);
 
 	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()[[1]]", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_INSTALLED_PACKAGES, 0);
 
@@ -159,21 +164,11 @@ void RKHelpSearchWindow::slotFindButtonClicked () {
 	}
 	
 	QString package = "NULL";
-	if (packagesList->currentItem ()!=0) {
-		package="\"";
-		package.append (packagesList->currentText ());
-		package.append ("\"");
+	if (packagesList->currentIndex () != 0) {
+		package= "\"" +	packagesList->currentText () + "\"";
 	}
 
-	// HACK the sequence of options is hardcoded, do not modify
-	QString fields;
-	
-	switch (fieldsList->currentItem ()) {
-		case 1: fields = "c(\"alias\", \"concept\", \"title\")";break;
-		case 2: fields = "c(\"keyword\")";break;
-		case 3: fields = "c(\"title\")";break;
-		default: fields = "c(\"alias\", \"concept\", \"title\",\"keyword\")";
-	}
+	QString fields = fieldsList->itemData (fieldsList->currentIndex ()).toString ();
 
 	QString s = ".rk.get.search.results (\"" + field->currentText () + "\",agrep=" + agrep + ", ignore.case=" + ignoreCase + ", package=" + package + ", fields=" + fields +")";
 	
@@ -182,38 +177,40 @@ void RKHelpSearchWindow::slotFindButtonClicked () {
 	field->insertItem (field->currentText ());
 }
 
-void RKHelpSearchWindow::slotResultsListDblClicked (Q3ListViewItem * item, const QPoint &, int) {
+void RKHelpSearchWindow::resultDoubleClicked (const QModelIndex& index) {
 	RK_TRACE (APP);
-	if (item == NULL) {
-		return;
-	}
-	if (item->text(0).isEmpty ()) {
-		return;
-	}
+
+	if (!index.isValid ()) return;
+
+	int row = index.row ();
+	QString topic = results->data (results->index (row, COL_TOPIC)).toString ();
+	QString package = results->data (results->index (row, COL_PACKAGE)).toString ();
+
+	if (topic.isEmpty ()) return;
 	
-	QString s="help(\"";
-	s.append (item->text (0));
-	s.append ("\", htmlhelp=TRUE, package= \"");
-	s.append (item->text (2));
-	s.append ("\")");
+	QString command = "help(\"" + topic + "\", htmlhelp=TRUE, package= \"" + package + "\")";
 	
-	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
+	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::Sync | RCommand::GetStringVector, i18n ("Show help for %1 in package %2", topic, package), this, GET_HELP_URL);
 }
 
 void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
-	KUrl url;
 	if (command->getFlags () == HELP_SEARCH) {
-		resultsList->clear ();
 		RK_ASSERT ((command->getDataLength () % 3) == 0);
-		int count = (command->getDataLength () / 3);
-		for (int i=0; i < count; ++i) {
-			new Q3ListViewItem (resultsList, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i]);
-		}
+		RK_ASSERT (command->getDataType () == RData::StringVector);
+
+		results->setResults (command->getStringVector (), command->getDataLength () / 3);
+		command->detachData ();		// now owned by the model
+
+		for (int i = 0; i < COL_COUNT; ++i) results_view->resizeColumnToContents (i);
 		setEnabled(true);
 	} else if (command->getFlags () == GET_HELP_URL) {
-		RK_ASSERT (command->getDataLength ());
-		url.setPath(command->getStringVector ()[0]);
+		KUrl url;
+
+		if (command->getDataLength ()) {
+			RK_ASSERT (command->getDataType () == RData::StringVector);
+			url.setPath(command->getStringVector ()[0]);
+		}
 		if (QFile::exists (url.path ())) {
 			RKWardMainWindow::getMain ()->openHTML (url);
 			return;
@@ -229,6 +226,82 @@ void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 	} else {
 		RK_ASSERT (false);
 	}
+}
+
+//////////////// RKHelpResultsModel ////////////////
+
+RKHelpSearchResultsModel::RKHelpSearchResultsModel (QObject *parent) : QAbstractTableModel (parent) {
+	RK_TRACE (APP);
+
+	results = 0;
+	result_count = 0;
+}
+
+RKHelpSearchResultsModel::~RKHelpSearchResultsModel () {
+	RK_TRACE (APP);
+
+	delete [] results;
+}
+
+void RKHelpSearchResultsModel::setResults (QString* new_results, int new_result_count) {
+	RK_TRACE (APP);
+
+	delete [] results;
+	results = new_results;
+	result_count = new_result_count;
+
+	reset ();
+}
+
+int RKHelpSearchResultsModel::rowCount (const QModelIndex& parent) const {
+	// don't trace
+	if (parent.isValid ()) return 0;
+	return result_count;
+}
+
+int RKHelpSearchResultsModel::columnCount (const QModelIndex& parent) const {
+	// don't trace
+	if (parent.isValid ()) return 0;
+	return COL_COUNT;
+}
+
+QVariant RKHelpSearchResultsModel::data (const QModelIndex& index, int role) const {
+	// don't trace
+
+	// easier typing
+	int row = index.row ();
+	int col = index.column ();
+	if (results) {
+		if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
+			if (row < result_count) {
+				if (col < COL_COUNT) {
+					return results[row + col * result_count];
+				} else {
+				
+				}
+			} else {
+				RK_ASSERT (false);
+			}
+		}
+	} else {
+		RK_ASSERT (false);
+	}
+
+	return QVariant ();
+}
+
+QVariant RKHelpSearchResultsModel::headerData (int section, Qt::Orientation orientation, int role) const {
+	// don't trace
+
+	if (orientation == Qt::Horizontal) {
+		if (role == Qt::DisplayRole) {
+			if (section == COL_TOPIC) return (i18n ("Topic"));
+			if (section == COL_TITLE) return (i18n ("Title"));
+			if (section == COL_PACKAGE) return (i18n ("Package"));
+		}
+	}
+
+	return QVariant ();
 }
 
 #include "rkhelpsearchwindow.moc"

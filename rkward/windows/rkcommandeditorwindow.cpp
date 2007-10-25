@@ -278,13 +278,14 @@ void RKCommandEditorWindow::tryCompletion () {
 	if ((end - start) >= RKSettingsModuleCommandEditor::completionMinChars ()) {
 		KTextEditor::Range range (para, start, para, end);
 
-		if (iface->isCompletionActive ()) {
-			completion_model->completionInvoked (m_view, range, KTextEditor::CodeCompletionModel::ManualInvocation);
+		completion_model->updateCompletionList (m_doc->text (range));
+		if (completion_model->isEmpty ()) {
+			iface->abortCompletion ();
 		} else {
-			iface->startCompletion (range, completion_model);
+			if (!iface->isCompletionActive ()) {
+				iface->startCompletion (range, completion_model);
+			}
 		}
-#warning TODO: flicker when no matches. Nag Kate devels? Remove?
-		if (!completion_model->rowCount ()) iface->abortCompletion ();
 	} else {
 		iface->abortCompletion ();
 	}
@@ -513,23 +514,30 @@ RKCodeCompletionModel::~RKCodeCompletionModel () {
 	RK_TRACE (COMMANDEDITOR);
 }
 
-void RKCodeCompletionModel::completionInvoked (KTextEditor::View *view, const KTextEditor::Range &range, InvocationType) {
+void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	RK_TRACE (COMMANDEDITOR);
-qDebug ("invoked");
 
-	QString current_symbol = view->document ()->text (range);
+	if (current_symbol == symbol) return;	// already up to date
+
 	RObject::RObjectMap map;
-	RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
+	RObjectList::getObjectList ()->findObjectsMatching (symbol, &map);
 
 	list.clear ();
 	// this is silly, but we need an int indexable storage, so we copy the map to a list
 	for (RObject::RObjectMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
 		list.append (it.data ());
 	}
-qDebug ("%d", list.count ());
+
 	setRowCount (list.count ());
+	current_symbol = symbol;
 
 	reset ();
+}
+
+void RKCodeCompletionModel::completionInvoked (KTextEditor::View *view, const KTextEditor::Range &range, InvocationType) {
+	RK_TRACE (COMMANDEDITOR);
+
+	updateCompletionList (view->document ()->text (range));
 }
 
 void RKCodeCompletionModel::executeCompletionItem (KTextEditor::Document *document, const KTextEditor::Range &word, int row) const {

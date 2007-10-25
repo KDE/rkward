@@ -19,17 +19,17 @@
 #define RKHELPSEARCHWINDOW_H
 
 #include <qwidget.h>
-//Added by qt3to4:
-#include <QFocusEvent>
+#include <QAbstractTableModel>
 
 #include "../rbackend/rcommandreceiver.h"
 #include "rkmdiwindow.h"
 
+class QFocusEvent;
 class QComboBox;
 class QCheckBox;
 class QPushButton;
-class Q3ListView;
-class Q3ListViewItem;
+class RKHelpSearchResultsModel;
+class QTreeView;
 
 class RCommandChain;
 
@@ -51,7 +51,7 @@ Will figure out the word under the cursor, and provide help on that (if there is
 	static RKHelpSearchWindow *mainHelpSearch () { return main_help_search; };
 public slots:
 	void slotFindButtonClicked();
-	void slotResultsListDblClicked (Q3ListViewItem *item, const QPoint &, int);
+	void resultDoubleClicked (const QModelIndex& index);
 protected:
 /** reimplemnented from QWidget to make the input focus default to the input field */
 	void focusInEvent (QFocusEvent *e);
@@ -62,9 +62,30 @@ private:
 	QCheckBox* caseSensitiveCheckBox;
 	QCheckBox* fuzzyCheckBox;
 	QPushButton* findButton;
-	Q3ListView* resultsList;
+	QTreeView* results_view;
+	RKHelpSearchResultsModel* results;
+
 friend class RKWardMainWindow;
 	static RKHelpSearchWindow *main_help_search;
+};
+
+/** An item model meant for use by RKHelpSearchWindow. Since it is fairly specialized, it is unlikely to be of any use in any other context.
+@author Thomas Friedrichsmeier */
+class RKHelpSearchResultsModel : public QAbstractTableModel {
+public:
+	RKHelpSearchResultsModel (QObject *parent);
+	~RKHelpSearchResultsModel ();
+
+/** Set the results. The model will assume ownership of the results */
+	void setResults (QString* new_results, int new_result_count);
+
+	int rowCount (const QModelIndex& parent=QModelIndex()) const;
+	int columnCount (const QModelIndex& parent=QModelIndex()) const;
+	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const;
+	QVariant headerData (int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const;
+private:
+	QString* results;
+	int result_count;
 };
 
 #endif

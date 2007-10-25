@@ -29,7 +29,8 @@ General:
 	-* the 'X' icon for closing a tab (Ctl-W) is absent
 
 rkcommandeditorwindow
-	- polish code completion (e.g. hide window, when there are no completions)
+	- code completion
+		- probably we can trim down the completion widget by providing custom headerData()? (Low priority)
 	- placement of menu options?
 
 rkward

@@ -76,11 +76,16 @@ class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel {
 public:
 	RKCodeCompletionModel (KTextEditor::View* parent);
 	~RKCodeCompletionModel ();
+
+	void updateCompletionList (const QString& symbol);
 	void completionInvoked (KTextEditor::View *view, const KTextEditor::Range &range, InvocationType);
 	void executeCompletionItem (KTextEditor::Document *document, const KTextEditor::Range &word, int row) const;
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const;
+
+	bool isEmpty () { return list.isEmpty (); };
 private:
 	QList<RObject*> list;
+	QString current_symbol;
 };
 
 class QTimer;
