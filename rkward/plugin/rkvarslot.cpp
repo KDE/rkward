@@ -2,7 +2,7 @@
                           rkvarslot.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -175,8 +175,8 @@ void RKVarSlot::selectPressed () {
 	if (add_mode) {
 		if (multi) {
 			ObjectList objlist = source->objectList ();
-			ObjectList::const_iterator it = objlist.begin ();
-			while (it != objlist.end ()) {
+			ObjectList::const_iterator it = objlist.constBegin ();
+			while (it != objlist.constEnd ()) {
 				available->addObjectValue (*it);
 				++it;
 			}

@@ -41,8 +41,32 @@ else
   echo "Warning: unsetting LC_ALL"
 fi
 
+# handle --debugger argument (if any)
+# the loop partially copied from the R wrapper script
+error () {
+  echo "ERROR: $*" >&2
+  exit 1
+}
+
+debugger=
+args=
+while test -n "${1}"; do
+  case ${1} in
+    --debugger)
+      if test -n "`echo ${2} | sed 's/^-.*//'`"; then
+        debugger="${2}"; shift
+      else
+        error "option '${1}' requires an argument"
+      fi
+      ;;
+    *)
+      args="${args} ${1}" ;;
+  esac
+  shift
+done
+
 ## set LC_NUMERIC to "C"
 export LC_NUMERIC="C"
 
 ## Start rkward. Running through R CMD to set all the relevant R enviroment variables
-exec $R_binary CMD $0.bin "$@"
+exec $R_binary CMD $debugger $0.bin ${args}

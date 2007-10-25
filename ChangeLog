@@ -1,3 +1,9 @@
+- Fixed: Analysis->Moments->Moment plugin did not use the order-parameter
+- Fixed: Crash on simple assignments in globalenv() with R < 2.4.0
+- Fixed: Meta information (labels) did not get shown correctly in the data editor
+- Add command line option "--debugger" for debugging purposes
+- Fixed: Pressing the add button in a varslot with no object selected could crash RKWard
+
 --- Version 0.4.8 - Oct-03-2007
 - New plugins: pie chart, dot chart, crosstabulation, two time-series tests, and basic linear regression
 - barplot plugin allow specification of custom labels

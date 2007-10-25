@@ -74,6 +74,7 @@ static KCmdLineOptions options[] =
   { "+[File]", I18N_NOOP ("file to open"), 0 },
   { "debug-level <level>", I18N_NOOP ("Verbosity of debug messages (0-5)"), "2"}, 
   { "debug-flags <flags>", I18N_NOOP ("Mask for components to debug (see debug.h)"), "8191" }, 
+  { "debugger <command>", I18N_NOOP ("Debugger (enclose any debugger arguments in single quotes ('') together with the command)"), ""}, 
   { "disable-stack-check", I18N_NOOP ("Disable R C stack checking"), 0 }, 
   { 0, 0, 0 }
   // INSERT YOUR COMMANDLINE OPTIONS HERE
@@ -108,6 +109,9 @@ int main(int argc, char *argv[]) {
 	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 	RK_Debug_Level = 5 - QString (args->getOption ("debug-level")).toInt ();
 	RK_Debug_Flags = QString (args->getOption ("debug-flags")).toInt ();
+	if (!args->getOption ("debugger").isEmpty ()) {
+		RK_DO (qDebug ("--debugger option should have been handled by wrapper script. Ignoring."), ALL, DL_ERROR);
+	}
 
 	RKWardStartupOptions *stoptions = new RKWardStartupOptions;
 	KURL *open_url = 0;

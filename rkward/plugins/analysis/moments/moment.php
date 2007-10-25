@@ -15,7 +15,7 @@ for (i in 1:length (objects)) {
 	var <- eval (objects[[i]], envir=globalenv ())
 	results[i, 'Variable Name'] <- rk.get.description (objects[[i]], is.substitute=TRUE)
 
-	try (results[i, 'Moment'] <- moment (var, central = <? getRK ("central"); ?>, absolute = <? getRK ("absolute"); ?>, na.rm = <? getRK ("narm"); ?>))
+	try (results[i, 'Moment'] <- moment (var, order = <? getRK ("order"); ?>, central = <? getRK ("central"); ?>, absolute = <? getRK ("absolute"); ?>, na.rm = <? getRK ("narm"); ?>))
 <?	if (getRK_val ("length")) { ?>
 
 	results[i, 'Length'] <- length (var)
@@ -28,7 +28,7 @@ for (i in 1:length (objects)) {
 function printout () {
 ?>
 rk.header ("Statistical Moment",
-	parameters=list ("Compute central moments", "<? getRK ("central"); ?>","Compute absolute moments", "<? getRK ("absolute"); ?>", "Remove missing values", "<? getRK ("narm"); ?>"))
+	parameters=list ("Order", "<? getRK ("order"); ?>", "Compute central moments", "<? getRK ("central"); ?>", "Compute absolute moments", "<? getRK ("absolute"); ?>", "Remove missing values", "<? getRK ("narm"); ?>"))
 rk.results (results)
 <?
 }
