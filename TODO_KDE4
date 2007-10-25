@@ -26,6 +26,7 @@ General:
 	- grep sources for "KDE4"
 	- remove all the passing around of KGlobal::config() as a parameter
 	- the whole idea of having a single mutex for everything is flawed. We should use several specialized ones
+	-* the 'X' icon for closing a tab (Ctl-W) is absent
 
 rkcommandeditorwindow
 	- polish code completion (e.g. hide window, when there are no completions)
@@ -34,11 +35,15 @@ rkcommandeditorwindow
 rkward
 	- does closing windows work
 	- does updating captions work (when switching windows / window url changes)?
+	-* closing rkward while either the file system or the workspace browser is open, crashes rkward
+	-* Import/Export (all plugins?) cause segmentation fault.
+	-* closing the main window before the "R engine is idle" crashes rkward.
+	-* first time you open the workspace/file-system bowser after starting rkward it does not open properly: opens just enough to be able to drag it open!
 
 output window
 	- does it reload all changed images?
 
-rkworkplaceview
+ rkworkplaceview
 	- does it work?
 	- does it have a sunken frame? Can we get rid of that?
 
@@ -50,6 +55,7 @@ rkwindowcatcher
 rkfilebrowser
 	- does it work?
 	- does the completion popup show up in a correct size?
+	-* does not work for *.R files
 
 rkloadlibsdialog:
 	- does it work?
@@ -63,10 +69,15 @@ rkdropdown:
 rksettings:
 	- check wether settings seem to be saved / loaded correctly
 	- are the defaults ok?
+	-* tooltips for the options on "R-Backend" tab about the internal R-function call
+	-* clicking on "Configure Repositories" button on the Configure Packages dialog 
+	   takes you to the "R-Backend" tab on the Settings dialog. Instead it should go 
+	   to the "R-Packages" tab.
 
 data editor:
 	- definitely needs better porting
 	- does cell painting work ok?
+	-* entering data freezes rkward
 
 rklocalesupport:
 	- does locale switching / detection work? Does Qt have something, yet?
@@ -83,6 +94,7 @@ rkconsole:
 	- check whether all selection, editing, navigating really works as expected
 	- is tab completion for file names still crashy?
 		- currently, problem seems to be inside KUrlCompletion
+	-* one additional newline character printed with every line
 
 rkhtmlwindow:
 	- when this is open, we always seem to crash on close
