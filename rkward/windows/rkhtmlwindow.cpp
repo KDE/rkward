@@ -65,8 +65,8 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow:
 	connect (khtmlpart->browserExtension (), SIGNAL (openUrlRequestDelayed (const KUrl&, const KParts::OpenUrlArguments&, const KParts::BrowserArguments&)), this, SLOT (slotOpenUrl (const KUrl&, const KParts::OpenUrlArguments&, const KParts::BrowserArguments&)));
 	connect (khtmlpart, SIGNAL (completed ()), this, SLOT (loadDone ()));
 
-	url_history.setAutoDelete (true);
 	back = forward = print = run_selection = 0;		// initialization done in subclasses
+	current_history_position = -1;
 	url_change_is_from_history = false;
 }
 
@@ -145,12 +145,15 @@ void RKHTMLWindow::slotForward () {
 	RK_TRACE (APP);
 
 	url_change_is_from_history = true;
-	url_history.next ();
-	RK_ASSERT (url_history.current ());
-	openURL (*(url_history.current ()));
+
+	++current_history_position;
+	int history_last = url_history.count () - 1;
+	RK_ASSERT (current_history_position > 0);
+	RK_ASSERT (current_history_position <= history_last);
+	openURL (url_history[current_history_position]);
 
 	back->setEnabled (true);
-	forward->setEnabled (url_history.current () != url_history.getLast ());
+	forward->setEnabled (current_history_position < history_last);
 	url_change_is_from_history = false;
 }
 
@@ -158,12 +161,12 @@ void RKHTMLWindow::slotBack () {
 	RK_TRACE (APP);
 
 	url_change_is_from_history = true;
-	url_history.prev ();
-	RK_ASSERT (url_history.current ());
-	openURL (*(url_history.current ()));
+	--current_history_position;
+	RK_ASSERT (current_history_position >= 0);
+	openURL (url_history[current_history_position]);
 
 	forward->setEnabled (true);
-	back->setEnabled (url_history.current () != url_history.getFirst ());
+	back->setEnabled (current_history_position > 0);
 	url_change_is_from_history = false;
 }
 
@@ -200,13 +203,14 @@ void RKHTMLWindow::changeURL (const KUrl &url) {
 
 	if (!url_change_is_from_history) {
 		if (back && forward) {
-			KUrl *current_url = url_history.current ();
-			while (current_url != url_history.getLast ()) {
+			int history_last = url_history.count () - 1;
+			for (int i = history_last; i > current_history_position; --i) {
 				url_history.removeLast ();
 			}
-			KUrl *url_copy = new KUrl (url);
-			url_history.append (url_copy);
-			back->setEnabled (url_history.count () > 1);
+
+			url_history.append (url);
+			++current_history_position;
+			back->setEnabled (current_history_position > 0);	// may be false, if this is the very first page to be added to the history
 			forward->setEnabled (false);
 		}
 	}

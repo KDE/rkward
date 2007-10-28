@@ -22,8 +22,6 @@
 #include <kparts/browserextension.h>
 #include <kxmlguiclient.h>
 
-#include <q3ptrlist.h>
-
 #include "../windows/rkmdiwindow.h"
 
 class KHTMLPart;
@@ -84,12 +82,14 @@ protected:
 /** called from openURL. Takes care of updating caption, and updating back/forward actions, if available */
 	void changeURL (const KUrl &url);
 protected:
-	Q3PtrList<KUrl> url_history;
+	QList<KUrl> url_history;
+	int current_history_position;
+	bool url_change_is_from_history;	// dirty!!!
+
 	QAction *back;
 	QAction *forward;
 	QAction *print;
 	QAction *run_selection;
-	bool url_change_is_from_history;	// dirty!!!
 	QString goto_anchor_name;
 };
 
