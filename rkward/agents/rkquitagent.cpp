@@ -35,7 +35,7 @@ RKQuitAgent::RKQuitAgent (QObject *parent) : QObject (parent) {
 	RK_TRACE (APP);
 
 	quitting = true;
-	RCommand *command = new RCommand (QString::null, RCommand::EmptyCommand | RCommand::QuitCommand, QString::null, this);
+	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand | RCommand::QuitCommand, QString (), this);
 
 	RKWardMainWindow::getMain ()->hide ();
 	cancel_dialog = new RKProgressControl (this, i18n ("Waiting for remaining R commands to finish. To quit immediately, press Cancel (WARNING: This may result in loss of data)"), i18n ("Waiting for R to finish"), RKProgressControl::AllowCancel | RKProgressControl::ShowAtOnce);
