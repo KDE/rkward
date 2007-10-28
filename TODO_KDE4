@@ -27,18 +27,26 @@ General:
 	- remove all the passing around of KGlobal::config() as a parameter
 	- the whole idea of having a single mutex for everything is flawed. We should use several specialized ones
 	-* the 'X' icon for closing a tab (Ctl-W) is absent
+	-* when rkward freezes, terminating (window close -> Terminate) rkward does not kill rkward.bin
 
 rkcommandeditorwindow
 	- code completion
 		- probably we can trim down the completion widget by providing custom headerData()? (Low priority)
+		-* completion pop up vanishes on any mouse click - can neither select any completion nor resize the popup
+			-* the "Setup" button on the pop up works though
+		-* Code completion setup wizard could (looks better that way?) be in either tab or page format
 	- placement of menu options?
 
 rkward
 	- does closing windows work
+		+ seems to..
 	- does updating captions work (when switching windows / window url changes)?
+		+ seems to..
 	-* closing rkward while either the file system or the workspace browser is open, crashes rkward
 	-* Import/Export (all plugins?) cause segmentation fault.
-	-* closing the main window before the "R engine is idle" crashes rkward.
+		+ much better now.. no seg faults in preliminary testing (10/27/07)
+	-* closing the main window before the "R engine is idle" crashes rkward
+		-* related to rkhtmlwindow bug?
 	-* first time you open the workspace/file-system bowser after starting rkward it does not open properly: opens just enough to be able to drag it open!
 
 output window
@@ -54,9 +62,12 @@ rkwindowcatcher
 	- does the "copy device to R object" dialog work?
 
 rkfilebrowser
-	- does it work?
+	- does it work? 
+		+ seems to..
 	- does the completion popup show up in a correct size?
+		+ yes, if u mean in the address bar when typing a path
 	-* does not work for *.R files
+		+ Fixed: works for many (ps/eps/pdf/jpg/png) files now...
 
 rkloadlibsdialog:
 	- does it work?
@@ -70,14 +81,15 @@ rkdropdown:
 rksettings:
 	- check wether settings seem to be saved / loaded correctly
 	- are the defaults ok?
-	-* tooltips for the options on "R-Backend" tab about the internal R-function call
 	-* clicking on "Configure Repositories" button on the Configure Packages dialog 
 	   takes you to the "R-Backend" tab on the Settings dialog. Instead it should go 
 	   to the "R-Packages" tab.
+		+ Fixed, but both "Plugins" and "R-Pacakges" text on the left panel remain selected
 
 data editor:
 	- definitely needs better porting
 	- does cell painting work ok?
+		+ seems to.. on an existing data.frame
 	-* entering data freezes rkward
 
 rklocalesupport:
@@ -90,15 +102,28 @@ rkspinbox:
 
 rkobjectlistview:
 	- do the tool-tips for the objects work?
+		-* not quite: tooltip of (i+1)-th object is shown at i-th position
 
 rkconsole:
 	- check whether all selection, editing, navigating really works as expected
+		-* Shift+End should move the cursor to the end of the line, instead of leaving it at the current position. similarly for SHift+Home
 	- is tab completion for file names still crashy?
 		- currently, problem seems to be inside KUrlCompletion
 	-* one additional newline character printed with every line
+		-* function calls, like ls() or getwd() or options("width") still produces an extra new line
 
 rkhtmlwindow:
 	- when this is open, we always seem to crash on close
+		-* crashes on close even when the Help window is not open
 
 rcontrolwindow:
 	- this does not really need to be a top-level tool window any more. Since it's rarely used, it might be hidden somewhere.
+
+Wishlist:
+
+	-* notify if r-base-html package is not installed
+	-* tooltips for the options on "R-Backend" tab about the internal R-function call
+	-* option for a default CRAN mirror, so as not to load the tcl/tk interface everytime
+		-* may be have a drop down menu for the available mirrors instead of tcl/tk which can be fetched just once
+	-* in administrator mode KdeSudo instead of kdesu or option of both? it is a 'fashion' these days not to have root password (ala *ubuntu)!!
+	-* any means of fetching a description of the package before installing?
