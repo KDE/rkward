@@ -124,18 +124,6 @@ void RKCommandEditorWindow::focusIn (KTextEditor::View* v) {
 	setPopupMenu ();
 }
 
-void RKCommandEditorWindow::focusOut (KTextEditor::View* v) {
-	RK_TRACE (COMMANDEDITOR);
-	RK_ASSERT (v == m_view);
-
-	KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (m_view);
-	if (!iface) {
-		RK_ASSERT (false);
-		return;
-	}
-	iface->abortCompletion ();
-}
-
 void RKCommandEditorWindow::setPopupMenu () {
 	RK_TRACE (COMMANDEDITOR);
 

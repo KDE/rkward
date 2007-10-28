@@ -139,7 +139,6 @@ public slots:
 	void tryCompletion ();
 	void setPopupMenu ();
 	void focusIn (KTextEditor::View *);
-	void focusOut (KTextEditor::View *);
 /** Show help about the current word. */
 	void showHelp ();
 /** run the currently selected command(s) */
