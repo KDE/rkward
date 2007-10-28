@@ -188,12 +188,10 @@ void RKWardMainWindow::closeEvent (QCloseEvent *e) {
 		return;
 	}
 
+	e->ignore ();
 	if (doQueryQuit ()) {
 		emit (aboutToQuitRKWard());
-		e->ignore ();
 		new RKQuitAgent (this);
-	} else {
-		e->ignore ();
 	}
 }
 

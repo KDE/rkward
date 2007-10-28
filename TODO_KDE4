@@ -106,7 +106,6 @@ rkobjectlistview:
 
 rkconsole:
 	- check whether all selection, editing, navigating really works as expected
-		-* Shift+End should move the cursor to the end of the line, instead of leaving it at the current position. similarly for SHift+Home
 	- is tab completion for file names still crashy?
 		- currently, problem seems to be inside KUrlCompletion
 	-* one additional newline character printed with every line

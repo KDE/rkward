@@ -201,9 +201,8 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 				}
 			}
 			view->setSelection (newrange);
-		} else {
-			cursorAtTheBeginning ();
 		}
+		cursorAtTheBeginning ();
 		return true;
 	} else if (e->key () == Qt::Key_End) {
 		if (e->modifiers () == Qt::ShiftModifier) {
@@ -220,9 +219,8 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 				}
 			}
 			view->setSelection (newrange);
-		} else {
-			cursorAtTheEnd ();
 		}
+		cursorAtTheEnd ();
 		return true;
 	} else if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
 		hinter->hideArgHint ();
