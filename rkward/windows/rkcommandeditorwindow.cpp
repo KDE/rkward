@@ -439,10 +439,10 @@ void RKFunctionArgHinter::tryArgHintNow () {
 	// now find where the symbol to the left ends
 	// there cannot be a line-break between the opening brace, and the symbol name (or can there?), so no need to fetch further context
 	int potential_symbol_end = matching_left_brace_pos - 1;
-	while ((potential_symbol_end > 0) && current_context.at (potential_symbol_end).isSpace ()) {
+	while ((potential_symbol_end >= 0) && current_context.at (potential_symbol_end).isSpace ()) {
 		--potential_symbol_end;
 	}
-	if (current_context.at (potential_symbol_end).isSpace ()) {
+	if (potential_symbol_end < 0) {
 		hideArgHint ();
 		return;
 	}
