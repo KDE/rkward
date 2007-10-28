@@ -173,7 +173,7 @@ void RThread::doCommand (RCommand *command) {
 			runCommandInternal (".rk.cat.output (\"<hr>\\n\")", &error, false);
 			RK_ASSERT (!error);
 		}
-		command->status |= RCommand::Running;
+		command->status |= RCommand::Running;	// it is important that this happens before the Mutex is unlocked!
 		RCommandStackModel::getModel ()->itemChange (command);
 
 		MUTEX_UNLOCK;

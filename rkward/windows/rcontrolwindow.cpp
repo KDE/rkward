@@ -111,6 +111,7 @@ void RControlWindow::cancelButtonClicked () {
 
 	// find out all the RCommands selected (not the chains)
 	for (QModelIndexList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
+		if ((*it).column ()) continue;		// only react once per row
 		RCommandBase* coc = static_cast<RCommandBase*> ((*it).internalPointer ());
 		RK_ASSERT (coc);
 		RCommand* command = coc->commandPointer ();
