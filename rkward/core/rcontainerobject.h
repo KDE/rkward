@@ -79,9 +79,12 @@ protected:
 	friend class RObjectList;
 	friend class RObject;
 	virtual void renameChild (RObject *object, const QString &new_name);
-	virtual void removeChild (RObject *object, bool removed_in_workspace);
+	void removeChild (RObject *object, bool removed_in_workspace);
 	virtual QString removeChildCommand (RObject *object) const;
 	virtual QString renameChildCommand (RObject *object, const QString &new_name) const;
+friend class RKModificationTracker;
+	void insertChild (RObject* child, int position);
+	void removeChildNoDelete (RObject* child);
 };
 
 #endif

@@ -80,7 +80,6 @@ signals:
 protected:
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	QString removeChildCommand (RObject *object) const;
-	void removeChild (RObject *object, bool removed_in_workspace);
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	QString renameChildCommand (RObject *object, const QString &new_name) const;
 /// reimplemented from RContainerObject to emit a change signal

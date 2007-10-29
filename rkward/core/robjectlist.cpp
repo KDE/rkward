@@ -53,8 +53,7 @@ RObjectList::RObjectList () : RContainerObject (0, QString::null) {
 	type = RObject::Workspace;
 	
 	update_chain = 0;
-	childmap.insert (0, createTopLevelEnvironment (".GlobalEnv"));
-	RKGlobals::tracker ()->addObject (childmap[0], 0);
+	RKGlobals::tracker ()->addObject (createTopLevelEnvironment (".GlobalEnv"), this, 0);
 }
 
 RObjectList::~RObjectList () {
@@ -118,8 +117,7 @@ void RObjectList::updateEnvironments (QString *env_names, unsigned int env_count
 			}
 		} else {
 			obj = createTopLevelEnvironment (name);
-			childmap.insert (i, obj);
-			RKGlobals::tracker ()->addObject (obj, 0);
+			RKGlobals::tracker ()->addObject (obj, this, i);
 		}
 		newchildmap.insert (i, obj);
 	}
@@ -250,16 +248,6 @@ QString RObjectList::removeChildCommand (RObject *object) const {
 	RK_TRACE (OBJECTS);
 
 	return ("remove (" + object->getFullName () + ')');
-}
-
-void RObjectList::removeChild (RObject *object, bool removed_in_workspace) {
-	RK_TRACE (OBJECTS);
-
-	if (removed_in_workspace) {
-		RContainerObject::removeChild (object, removed_in_workspace);
-	} else {
-		RK_ASSERT (false);
-	}
 }
 
 //static

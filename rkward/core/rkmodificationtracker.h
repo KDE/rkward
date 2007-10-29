@@ -42,7 +42,7 @@ public:
 /** essentially like the above function, but requests a renaming of the object. Will also take care of finding out, whether the name is valid and promting for a different name otherwise. */
 	void renameObject (RObject *object, const QString &new_name);
 /** essentially like the above function(s). All objects editing a parent of the new objects are notified of the addition. */
-	void addObject (RObject *object, RKEditor *editor=0);
+	void addObject (RObject *object, RContainerObject* parent, int position, RKEditor *editor=0);
 /** the object's meta data was modified. Tells all editors and lists containing the object to update accordingly. */
 	void objectMetaChanged (RObject *object);
 /** the object's data was modified. Tells all editors and lists containing the object to update accordingly. The ChangeSet given tells which parts of the data have to be updated. The ChangeSet will get deleted by the RKModificationTracker, when done. */
@@ -58,6 +58,10 @@ signals:
 	void objectAdded (RObject *object);
 private:
 	int updates_locked;
+
+friend class RContainerObject;
+/** uncondiontally remove the given object. Do *not* call this except from RContainerObject::moveChild() or internally from removeObject(). Call removeObject(), instead. */
+	void internalRemoveObject (RObject *object, bool removed_in_workspace, bool delete_obj);
 };
 
 #endif

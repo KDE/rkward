@@ -127,8 +127,7 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 		RK_ASSERT (false);
 		return 0;
 	}
-	childmap.insert (position, child_object);
-	RKGlobals::tracker ()->addObject (child_object, 0);
+	RKGlobals::tracker ()->addObject (child_object, this, position);
 	return child_object;
 }
 
@@ -190,11 +189,9 @@ void RContainerObject::moveChild (RObject* child, int from_index, int to_index) 
 
 	RK_ASSERT (childmap[from_index] == child);
 	RK_ASSERT (from_index < childmap.size ());
-	childmap.removeAt (from_index);
+	RKGlobals::tracker ()->internalRemoveObject (child, true, false);
 	RK_ASSERT (to_index <= childmap.size ());
-	childmap.insert (to_index, child);
-
-#warning TODO notify the modification tracker
+	RKGlobals::tracker ()->addObject (child, this, to_index);
 }
 
 int RContainerObject::numChildren () const {
@@ -314,9 +311,7 @@ RObject *RContainerObject::createNewChild (const QString &name, int position, RK
 
 	if ((position < 0) || (position > childmap.size ())) position = childmap.size ();
 
-	childmap.insert (position, ret);
-
-	RKGlobals::tracker ()->addObject (ret, creator);
+	RKGlobals::tracker ()->addObject (ret, this, position, creator);
 	
 	return ret;
 }
@@ -332,22 +327,42 @@ void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 	object->name = new_name;
 }
 
-void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) {
+void RContainerObject::insertChild (RObject* child, int position) {
 	RK_TRACE (OBJECTS);
 
-	if (!removed_in_workspace) {
-		RCommand *command = new RCommand (removeChildCommand (object), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate);
-		RKGlobals::rInterface ()->issueCommand (command, 0);
-	}
+	RK_ASSERT (child->getContainer () == this);
+	if ((position < 0) || (position > childmap.size ())) position = childmap.size ();
+	childmap.insert (position, child);
+}
+
+void RContainerObject::removeChildNoDelete (RObject *object) {
+	RK_TRACE (OBJECTS);
 
 	int i = getIndexOf (object);
 	if (i < 0) {
 		RK_ASSERT (false);
 		return;
 	}
-	RK_ASSERT (childmap[i] == object);
-
 	childmap.removeAt (i);
+}
+
+void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) {
+	RK_TRACE (OBJECTS);
+
+	if (!removed_in_workspace) {
+		if (isType (Environment) && (!isType (GlobalEnv))) {
+			RK_ASSERT (false);
+			return;
+		} else if (isType (Workspace)) {
+			RK_ASSERT (false);
+			return;
+		}
+
+		RCommand *command = new RCommand (removeChildCommand (object), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate);
+		RKGlobals::rInterface ()->issueCommand (command, 0);
+	}
+
+	removeChildNoDelete (object);
 	delete object;
 }
 

@@ -64,7 +64,19 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 			}
 		}
 	}
-	
+
+	internalRemoveObject (object, removed_in_workspace, true);
+
+	return true;
+}
+
+void RKModificationTracker::internalRemoveObject (RObject *object, bool removed_in_workspace, bool delete_obj) {
+	RK_TRACE (OBJECTS);
+
+// TODO: allow more than one editor per object
+// WARNING: This does not work, if a sub-object is being edited!
+	RKEditor *ed = object->objectOpened ();
+
 	if (ed) ed->removeObject (object);		// READ: delete ed
 /* What's this? A child of a removed complex object may be edited somewhere, but not the whole object. In this case, the editor has no chance of restoring the object, but it still needs to be closed. We search all editors for the removed object */
 	if (object->isContainer ()) {
@@ -79,9 +91,9 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 	}
 
 	if (updates_locked <= 0) emit (objectRemoved (object));
-	object->remove (removed_in_workspace);
 
-	return true;
+	if (delete_obj) object->remove (removed_in_workspace);
+	else object->getContainer ()->removeChildNoDelete (object);
 }
 
 void RKModificationTracker::renameObject (RObject *object, const QString &new_name) {
@@ -97,8 +109,11 @@ void RKModificationTracker::renameObject (RObject *object, const QString &new_na
 	if (updates_locked <= 0) emit (objectPropertiesChanged (object));
 }
 
-void RKModificationTracker::addObject (RObject *object, RKEditor *editor) {
+void RKModificationTracker::addObject (RObject *object, RContainerObject* parent, int position, RKEditor *editor) {
 	RK_TRACE (OBJECTS);
+
+	parent->insertChild (object, position);
+
 // TODO: allow more than one editor per object
 	RKEditor *ed = 0;
 	if (object->getContainer ()) ed = object->getContainer ()->objectOpened ();

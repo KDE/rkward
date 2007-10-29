@@ -132,16 +132,6 @@ void REnvironmentObject::renameChild (RObject *object, const QString &new_name) 
 	}
 }
 
-void REnvironmentObject::removeChild (RObject *object, bool removed_in_workspace) {
-	RK_TRACE (OBJECTS);
-
-	if ((type & GlobalEnv) || removed_in_workspace) {
-		RContainerObject::removeChild (object, removed_in_workspace);
-	} else {
-		RK_ASSERT (false);
-	}
-}
-
 QString REnvironmentObject::renameChildCommand (RObject *object, const QString &new_name) const {
 	RK_TRACE (OBJECTS);
 
