@@ -494,7 +494,6 @@ RKCodeCompletionModel::RKCodeCompletionModel (KTextEditor::View *parent) : KText
 		RK_ASSERT (false);
 		return;
 	}
-	iface->registerCompletionModel (this);
 	iface->setAutomaticInvocationEnabled (false);
 }
 

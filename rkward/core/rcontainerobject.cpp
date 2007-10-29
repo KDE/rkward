@@ -55,7 +55,7 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 	} else {
 		if (just_created) {
 			RK_ASSERT (false);
-			RK_DO (qDebug ("%s", child->getFullName ().toLatin1 ().data ()), OBJECTS, DL_ERROR);
+			RK_DO (qDebug ("%s cannot be represented", child->getFullName ().toLatin1 ().data ()), OBJECTS, DL_ERROR);
 			delete child;
 			return 0;
 		} else {
