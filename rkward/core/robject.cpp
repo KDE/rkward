@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -57,37 +57,37 @@ RObject::~RObject () {
 	delete [] classnames;
 }
 
-QString RObject::getShortName () {
+QString RObject::getShortName () const {
 	RK_TRACE (OBJECTS);
 	return name;
 }
 
-QString RObject::getFullName () {
+QString RObject::getFullName () const {
 	RK_TRACE (OBJECTS);
 	return parent->makeChildName (RObject::name, type & Misplaced);
 }
 
-QString RObject::getBaseName () {
+QString RObject::getBaseName () const {
 	RK_TRACE (OBJECTS);
 	return parent->makeChildBaseName (RObject::name);
 }
 
-QString RObject::getLabel () {
+QString RObject::getLabel () const {
 	RK_TRACE (OBJECTS);
 	return getMetaProperty ("label");
 }
 
-RObject *RObject::findObject (const QString &, bool) {
+RObject *RObject::findObject (const QString &, bool) const {
 	RK_TRACE (OBJECTS);
 	return 0;
 }
 
-void RObject::findObjectsMatching (const QString &, RObjectSearchMap *, bool) {
+void RObject::findObjectsMatching (const QString &, RObjectSearchMap *, bool) const {
 	RK_TRACE (OBJECTS);
 	return;
 }
 
-QString RObject::getMetaProperty (const QString &id) {
+QString RObject::getMetaProperty (const QString &id) const {
 	RK_TRACE (OBJECTS);
 	if (meta_map) {
 		RObject::MetaMap::iterator it;
@@ -98,7 +98,7 @@ QString RObject::getMetaProperty (const QString &id) {
 	return QString ();
 }
 
-QString RObject::getDescription () {
+QString RObject::getDescription () const {
 	RK_TRACE (OBJECTS);
 	if (meta_map) {
 		RObject::MetaMap::iterator it;
@@ -109,7 +109,7 @@ QString RObject::getDescription () {
 	return getShortName ();;
 }
 
-QString RObject::getObjectDescription () {
+QString RObject::getObjectDescription () const {
 	RK_TRACE (OBJECTS);
 
 #define ESCS replace ('<', "&lt;")
@@ -123,7 +123,7 @@ QString RObject::getObjectDescription () {
 
 	if (isType (Function)) {
 		ret.append (i18n ("Function"));
-		ret.append ("<br><b>" + i18n ("Usage: ") + " </b>" + getShortName ().ESCS + '(' + static_cast<RFunctionObject *> (this)->printArgs ().ESCS + ')');
+		ret.append ("<br><b>" + i18n ("Usage: ") + " </b>" + getShortName ().ESCS + '(' + static_cast<const RFunctionObject *> (this)->printArgs ().ESCS + ')');
 	} else if (isType (DataFrame)) {
 		ret.append (i18n ("Data frame"));
 	} else if (isType (Array)) {
@@ -190,7 +190,7 @@ void RObject::setMetaProperty (const QString &id, const QString &value, bool syn
 	RKGlobals::tracker ()->objectMetaChanged (this);
 }
 
-QString RObject::makeClassString (const QString &sep) {
+QString RObject::makeClassString (const QString &sep) const {
 	RK_TRACE (OBJECTS);
 	QString ret;
 	bool first = true;
@@ -202,7 +202,7 @@ QString RObject::makeClassString (const QString &sep) {
 	return ret;
 }
 
-bool RObject::inherits (const QString &class_name) {
+bool RObject::inherits (const QString &class_name) const {
 	RK_TRACE (OBJECTS);
 
 	for (unsigned int i=0; i < numClasses (); ++i) {
@@ -213,12 +213,12 @@ bool RObject::inherits (const QString &class_name) {
 	return false;
 }
 
-QString RObject::makeChildName (const QString &short_child_name, bool) {
+QString RObject::makeChildName (const QString &short_child_name, bool) const {
 	RK_TRACE (OBJECTS);
 	return (getFullName () + "[[" + rQuote (short_child_name) + "]]");
 }
 
-QString RObject::makeChildBaseName (const QString &short_child_name){
+QString RObject::makeChildBaseName (const QString &short_child_name) const {
 	RK_TRACE (OBJECTS);
 	return (getBaseName () + "[[" + rQuote (short_child_name) + "]]");
 }
@@ -358,7 +358,7 @@ bool RObject::updateName (RData *new_data) {
 	return changed;
 }
 
-bool RObject::isValidType (RData *new_data) {
+bool RObject::isValidType (RData *new_data) const {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (new_data->getDataLength () == 1);
 	RK_ASSERT (new_data->getDataType () == RData::IntVector);
@@ -535,7 +535,7 @@ QString RObject::canonifyName (const QString &from) {
 	return (copy.replace ("[\"", "$").replace ('[', "").replace ("\"]", "").replace (']', ""));
 }
 
-RKEditor *RObject::objectOpened () {
+RKEditor *RObject::objectOpened () const {
 	RK_TRACE (OBJECTS);
 
 	if (!data) return 0;
@@ -588,7 +588,7 @@ void RObject::allocateEditData (RKEditor *editor) {
 	data->pending = false;
 }
 
-bool RObject::isPending () {
+bool RObject::isPending () const {
 	RK_TRACE (OBJECTS);
 
 	if (!data) return false;
@@ -610,7 +610,7 @@ void RObject::discardEditData () {
 	data = 0;
 }
 
-bool RObject::canEdit () {
+bool RObject::canEdit () const {
 	RK_TRACE (OBJECTS);
 
 	// TODO: find out, if binding is locked:
@@ -618,13 +618,13 @@ bool RObject::canEdit () {
 	return (isInGlobalEnv ());
 }
 
-bool RObject::canRead () {
+bool RObject::canRead () const {
 	RK_TRACE (OBJECTS);
 
 	return (this != RObjectList::getObjectList ());
 }
 
-bool RObject::canRename () {
+bool RObject::canRename () const {
 	RK_TRACE (OBJECTS);
 
 	// TODO: find out, if binding is locked:
@@ -632,7 +632,7 @@ bool RObject::canRename () {
 	return (isInGlobalEnv ());
 }
 
-bool RObject::canRemove () {
+bool RObject::canRemove () const {
 	RK_TRACE (OBJECTS);
 
 	// TODO: find out, if binding is locked:
@@ -640,11 +640,11 @@ bool RObject::canRemove () {
 	return (isInGlobalEnv ());
 }
 
-bool RObject::isInGlobalEnv () {
+bool RObject::isInGlobalEnv () const {
 	RK_TRACE (OBJECTS);
 
 // could be made recursive instead, but likely it's faster like this
-	RObject *o = this;
+	RObject *o = const_cast<RObject*> (this);	// it's ok, all we need to do is find the toplevel parent
 	while (o && (!o->isType (ToplevelEnv))) {
 		o = o->parent;
 	}

@@ -35,7 +35,7 @@ RFunctionObject::~RFunctionObject () {
 	RK_TRACE (OBJECTS);
 }
 
-QString RFunctionObject::printArgs () {
+QString RFunctionObject::printArgs () const {
 	RK_TRACE (OBJECTS);
 
 	QString ret;

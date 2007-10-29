@@ -48,14 +48,14 @@ REnvironmentObject::~REnvironmentObject () {
 	RK_TRACE (OBJECTS);
 }
 
-QString REnvironmentObject::getFullName () {
+QString REnvironmentObject::getFullName () const {
 	RK_TRACE (OBJECTS);
 
 	if (type & ToplevelEnv) return ("as.environment (\"" + name + "\")");
 	return parent->makeChildName (name, type & Misplaced);
 }
 
-QString REnvironmentObject::makeChildName (const QString &short_child_name, bool misplaced) {
+QString REnvironmentObject::makeChildName (const QString &short_child_name, bool misplaced) const {
 	RK_TRACE (OBJECTS);
 
 	if (type & GlobalEnv) return (short_child_name);
@@ -68,7 +68,7 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 	return (name + '$' + short_child_name);
 }
 
-QString REnvironmentObject::makeChildBaseName (const QString &short_child_name) {
+QString REnvironmentObject::makeChildBaseName (const QString &short_child_name) const {
 	RK_TRACE (OBJECTS);
 
 	if (type & ToplevelEnv) {
@@ -142,13 +142,13 @@ void REnvironmentObject::removeChild (RObject *object, bool removed_in_workspace
 	}
 }
 
-QString REnvironmentObject::renameChildCommand (RObject *object, const QString &new_name) {
+QString REnvironmentObject::renameChildCommand (RObject *object, const QString &new_name) const {
 	RK_TRACE (OBJECTS);
 
 	return (makeChildName (new_name) + " <- " + object->getFullName () + '\n' + removeChildCommand (object));
 }
 
-QString REnvironmentObject::removeChildCommand (RObject *object) {
+QString REnvironmentObject::removeChildCommand (RObject *object) const {
 	RK_TRACE (OBJECTS);
 
 	return ("remove (" + object->getFullName () + ')');

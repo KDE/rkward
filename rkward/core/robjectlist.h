@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -47,26 +47,26 @@ public:
 
 	void updateFromR (RCommandChain *chain);
 	
-	QString getFullName () { return QString (); };
-	QString makeChildName (const QString &short_child_name, bool) { return short_child_name; };
+	QString getFullName () const { return QString (); };
+	QString makeChildName (const QString &short_child_name, bool) const { return short_child_name; };
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
 	void writeMetaData (RCommandChain *) {};
 	
 	/** reimplemented from RContainerObject to search the environments in search order */
-	RObject *findObject (const QString &name, bool canonified=false);
+	RObject *findObject (const QString &name, bool canonified=false) const;
 
 	/** reimplemented from RContainerObject to search the environments in search order */
-	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false);
+	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false) const;
 
 	/** reimplemented from RContainerObject to create the child in the .GlobalEnv */
 	RObject *createNewChild (const QString &name, int position=-1, RKEditor *creator=0, bool container=false, bool data_frame=false);
 
 	/** reimplemented from RContainerObject to validize the name in .GlobalEnv */
-	QString validizeName (const QString &child_name, bool unique=true);
+	QString validizeName (const QString &child_name, bool unique=true) const;
 
-	KUrl getWorkspaceURL () { return current_url; };
+	KUrl getWorkspaceURL () const { return current_url; };
 
-	REnvironmentObject* findChildByNamespace (const QString &namespacename);
+	REnvironmentObject* findChildByNamespace (const QString &namespacename) const;
 
 	static RObjectList *getObjectList () { return object_list; };
 	static REnvironmentObject *getGlobalEnv ();
@@ -79,10 +79,10 @@ signals:
 	void updateComplete ();
 protected:
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
-	QString removeChildCommand (RObject *object);
+	QString removeChildCommand (RObject *object) const;
 	void removeChild (RObject *object, bool removed_in_workspace);
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
-	QString renameChildCommand (RObject *object, const QString &new_name);
+	QString renameChildCommand (RObject *object, const QString &new_name) const;
 /// reimplemented from RContainerObject to emit a change signal
 	void objectsChanged ();
 	bool updateStructure (RData *new_data);

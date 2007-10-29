@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -150,7 +150,7 @@ REnvironmentObject *RObjectList::createTopLevelEnvironment (const QString &name)
 	return envobj;
 }
 
-RObject *RObjectList::findObject (const QString &name, bool is_canonified) {
+RObject *RObjectList::findObject (const QString &name, bool is_canonified) const {
 	RK_TRACE (OBJECTS);
 
 	QString canonified = name;
@@ -175,7 +175,7 @@ RObject *RObjectList::findObject (const QString &name, bool is_canonified) {
 	return 0;
 }
 
-void RObjectList::findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified) {
+void RObjectList::findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified) const {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (current_list);
 
@@ -200,7 +200,7 @@ void RObjectList::findObjectsMatching (const QString &partial_name, RObjectSearc
 	}
 }
 
-REnvironmentObject* RObjectList::findChildByNamespace (const QString &namespacename) {
+REnvironmentObject* RObjectList::findChildByNamespace (const QString &namespacename) const {
 	RK_TRACE (OBJECTS);
 
 	for (int i = childmap.size () - 1; i >= 0; --i) {
@@ -220,7 +220,7 @@ RObject *RObjectList::createNewChild (const QString &name, int position, RKEdito
 	return (getGlobalEnv ()->createNewChild (name, position, creator, container, data_frame));
 }
 
-QString RObjectList::validizeName (const QString &child_name, bool unique) {
+QString RObjectList::validizeName (const QString &child_name, bool unique) const {
 	RK_TRACE (OBJECTS);
 
 	return (getGlobalEnv ()->validizeName (child_name, unique));
@@ -240,13 +240,13 @@ void RObjectList::timeout () {
 	updateFromR (0);
 }
 
-QString RObjectList::renameChildCommand (RObject *object, const QString &new_name) {
+QString RObjectList::renameChildCommand (RObject *object, const QString &new_name) const {
 	RK_TRACE (OBJECTS);
 
 	return (makeChildName (new_name, false) + " <- " + object->getFullName () + '\n' + removeChildCommand (object));
 }
 
-QString RObjectList::removeChildCommand (RObject *object) {
+QString RObjectList::removeChildCommand (RObject *object) const {
 	RK_TRACE (OBJECTS);
 
 	return ("remove (" + object->getFullName () + ')');

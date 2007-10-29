@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -77,12 +77,12 @@ public:
 /** @returns false if an object of the given old type cannot represent an object of the given new type (e.g. (new_type & RObjectType::Variable), but (old_type & RObjectType::Container)). */
 	static bool isMatchingType (int old_type, int new_type) { return ((old_type & ROBJECT_TYPE_INTERNAL_MASK) == (new_type & ROBJECT_TYPE_INTERNAL_MASK)); };
 	
-	QString getShortName ();
-	virtual QString getFullName ();
-	virtual QString getBaseName ();
-	virtual QString getLabel ();
-	virtual QString getMetaProperty (const QString &id);
-	virtual QString getDescription ();
+	QString getShortName () const;
+	virtual QString getFullName () const;
+	virtual QString getBaseName () const;
+	QString getLabel () const;
+	QString getMetaProperty (const QString &id) const;
+	QString getDescription () const;
 	
 	virtual void setLabel (const QString &value, bool sync=true);
 	virtual void setMetaProperty (const QString &id, const QString &value, bool sync=true);
@@ -100,28 +100,28 @@ public:
 /** mark the data of this object and all of its children as dirty (recursively). Dirty data will be updated *after* the new structure update (if the object is opened for editing) */
 	void markDataDirty ();
 
-	bool canEdit ();
-	bool canRead ();
-	bool canRename ();
-	bool canRemove ();
-	bool isInGlobalEnv ();
+	bool canEdit () const;
+	bool canRead () const;
+	bool canRename () const;
+	bool canRemove () const;
+	bool isInGlobalEnv () const;
 
 	void rename (const QString &new_short_name);
 	void remove (bool removed_in_workspace);
 
-	unsigned int numClasses () { return num_classes; };
-	QString getClassName (int index) { return classnames[index]; };
-	QString makeClassString (const QString &sep);
+	unsigned int numClasses () const { return num_classes; };
+	QString getClassName (int index) const { return classnames[index]; };
+	QString makeClassString (const QString &sep) const;
 /** @param class_name the name of the class to check for
 @returns true, if the object has (among others) the given class, false otherwise */
-	bool inherits (const QString &class_name);
+	bool inherits (const QString &class_name) const;
 
 /** get number of dimensions. For simplicity, In RKWard each object is considered to have at least one dimension (but that dimension may be 0 in length) */
-	unsigned int numDimensions () { return num_dimensions; };
+	unsigned int numDimensions () const { return num_dimensions; };
 /** get the length of the given dimension. The object is guaranteed to have at least 1 dimension, so calling getDimension (0) is always safe */
-	int getDimension (int index) { return dimensions[index]; };
+	int getDimension (int index) const { return dimensions[index]; };
 /** short hand for getDimension (0). Meaningful for one-dimensional objects */
-	int getLength () { return dimensions[0]; };
+	int getLength () const { return dimensions[0]; };
 
 /** A map of objects accessible by index. Used in RContainerObject. Defined here for technical reasons. */
 	typedef QList<RObject*> RObjectMap;
@@ -134,12 +134,12 @@ public:
 	virtual void writeMetaData (RCommandChain *chain);
 
 /** Returns the parent / container of this object. All objects have a parent except for the RObjectList (which returns 0) */
-	RContainerObject *getContainer () { return (parent); };
+	RContainerObject *getContainer () const { return (parent); };
 
 /** number of child objects. Always 0, reimplemented in RContainerObject */
-	virtual int numChildren () { return 0; };
+	virtual int numChildren () const { return 0; };
 /** array of child objects. Always 0, reimplemented in RContainerObject */
-	virtual RObject **children () { return 0; };
+	virtual RObject **children () const { return 0; };
 
 	RDataType getDataType () const { return (typeToDataType (type)); };
 	static RDataType typeToDataType (int ftype) { return ((RDataType) ((ftype & DataTypeMask) >> 14)); };
@@ -154,7 +154,7 @@ public:
 /** Returns the given string in quotes, taking care of escaping quotation marks inside the string. */
 	static QString rQuote (const QString &string);
 /** Returns a pretty description of the object, and its most important properties. TODO should this be virtual or not? I suppose, it's a close call. For now, we do all work here with casts */
-	QString getObjectDescription ();
+	QString getObjectDescription () const;
 /** Returns a canonified name given a non-canoified name. Warning! This is not (necessarily) suitable for submission to
 R, only for internal lookup. For submission to R, always use RObject::getFullName (), as it will apply more complicated (and correct) rules depending on object type */
 	static QString canonifyName (const QString &from);
@@ -162,10 +162,10 @@ R, only for internal lookup. For submission to R, always use RObject::getFullNam
 @param partial_name The partial name to look up
 @param current_list A pointer to a valid (but probably initially empty) RObjectMap. Matches will be added to this list
 @param name_is_canonified internal parameter. Set to true, if the name to match is already canonfied (else it will be canonified internally) */
-	virtual void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false);
+	virtual void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false) const;
 
 /** If the object is being edited, returns that editor (in the future probably a list of editors). Else returns 0 */
-	RKEditor *objectOpened ();
+	RKEditor *objectOpened () const;
 /** Tells the object it has been opened (opened=true) or closed (opened=false) by the given editor. If the object is opened by the first editor, it will
 automatically take care of fetching its data. When closed by all editors, takes care of de-allocating that memory. */
 	void setObjectOpened (RKEditor *editor, bool opened);
@@ -182,7 +182,7 @@ automatically take care of fetching its data. When closed by all editors, takes 
 @param name of the object (relative to this object)
 @param is_canonified the object name may usually have to be canonified. Since this function may be called recursively, canonification may already have occurred on a higher level. In this case the argument is set to true to avoid some duplicate work. When calling from outside always leave the default false.
 @returns a pointer to the object (if found) or 0 if not found */
-	virtual RObject *findObject (const QString &name, bool is_canonified=false);
+	virtual RObject *findObject (const QString &name, bool is_canonified=false) const;
 protected:
 // why do I need those to compile? I thought they were derived classes!
 	friend class RContainerObject;
@@ -197,8 +197,8 @@ protected:
 	unsigned int num_classes;
 
 /** generates a (full) name for a child of this object with the given name. */
-	virtual QString makeChildName (const QString &short_child_name, bool misplaced=false);
-	virtual QString makeChildBaseName (const QString &short_child_name);
+	virtual QString makeChildName (const QString &short_child_name, bool misplaced=false) const;
+	virtual QString makeChildBaseName (const QString &short_child_name) const;
 
 /** Update object to reflect the structure passed in the new_data argument. If the data is mismatching (i.e. can not be accommodated by this type of object) false is returned (calls canAccommodateStructure () internally). In this case you should delete the object, and create a new one.
 @returns true if the changes could be done, false if this  */
@@ -209,7 +209,7 @@ protected:
 
 	virtual bool canAccommodateStructure (RData *new_data);
 	bool isValidName (RData *new_data);
-	bool isValidType (RData *new_data);
+	bool isValidType (RData *new_data) const;
 
 /** handles updating the object name from the given data (common functionality between RContainerObject and RKVariable. This should really never return true, as the name should never change. Hence also raises an assert. Is still useful for it's side effect of detaching and deleting the data from the RData structure after checking it.
 @param new_data The data. Make sure it really is the classes field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
@@ -247,7 +247,7 @@ In subclasses like RKVariable, the struct is extended to additionally hold the d
 /** see above */
 	virtual void discardEditData ();
 
-	bool isPending ();
+	bool isPending () const;
 
 	void rCommandDone (RCommand *command);
 };

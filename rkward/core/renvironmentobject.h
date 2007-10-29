@@ -34,12 +34,12 @@ public:
 
 	void updateFromR (RCommandChain *chain);
 
-	QString getFullName ();
-	QString makeChildName (const QString &short_child_name, bool misplaced=false);
-	QString makeChildBaseName (const QString &short_child_name);
+	QString getFullName () const;
+	QString makeChildName (const QString &short_child_name, bool misplaced=false) const;
+	QString makeChildBaseName (const QString &short_child_name) const;
 /** reimplemented from RContainerObject: If this is an environment var, call RContainerObject::writeMetaData (). Else, do nothing. An environment has no meta data. */
 	void writeMetaData (RCommandChain *chain);
-	QString namespaceName () { return namespace_name; };
+	QString namespaceName () const { return namespace_name; };
 protected:
 	bool updateStructure (RData *new_data);
 /** reimplemented from RContainerObject to raise an assert if this is not the isGlobalEnv (). Otherwise calls "remove (objectname)" instead of objectname <- NULL" */
@@ -47,9 +47,9 @@ protected:
 /** reimplemented from RContainerObject to raise an assert if this is not the isGlobalEnv (). Otherwise calls "remove (objectname)" instead of objectname <- NULL" */
 	void removeChild (RObject *object, bool removed_in_workspace);
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
-	QString removeChildCommand (RObject *object);
+	QString removeChildCommand (RObject *object) const;
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
-	QString renameChildCommand (RObject *object, const QString &new_name);
+	QString renameChildCommand (RObject *object, const QString &new_name) const;
 	QString namespace_name;
 };
  

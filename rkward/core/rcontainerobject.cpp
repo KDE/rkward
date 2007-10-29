@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -17,8 +17,6 @@
 #include "rcontainerobject.h"
 
 #include <qregexp.h>
-//Added by qt3to4:
-#include <Q3ValueList>
 
 #include "../rbackend/rinterface.h"
 #include "robjectlist.h"
@@ -199,13 +197,13 @@ void RContainerObject::moveChild (RObject* child, int from_index, int to_index) 
 #warning TODO notify the modification tracker
 }
 
-int RContainerObject::numChildren () {
+int RContainerObject::numChildren () const {
 	RK_TRACE (OBJECTS);
 	return childmap.size ();
 }
 
 // KDE4: do we need this? Can't we return the RObjectMap?
-RObject **RContainerObject::children () {
+RObject **RContainerObject::children () const {
 	RK_TRACE (OBJECTS);
 	RObject **ret = new RObject *[childmap.size ()];
 
@@ -232,13 +230,22 @@ RObject *RContainerObject::findChildByName (const QString &name) const {
 	return 0;
 }
 
+RObject *RContainerObject::findChildByIndex (int position) const {
+	// don't trace this
+	if ((position >= 0) && (position < childmap.size ())) {
+		return childmap[position];
+	}
+	RK_ASSERT (false);
+	return 0;
+}
+
 int RContainerObject::getIndexOf (RObject *child) const {
 	RK_TRACE (OBJECTS);
 
 	return childmap.indexOf (child);
 }
 
-RObject *RContainerObject::findObject (const QString &name, bool is_canonified) {
+RObject *RContainerObject::findObject (const QString &name, bool is_canonified) const {
 	RK_TRACE (OBJECTS);
 
 	QString canonified = name;
@@ -256,7 +263,7 @@ RObject *RContainerObject::findObject (const QString &name, bool is_canonified) 
 	return (found->findObject (remainder, true));
 }
 
-void RContainerObject::findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified) {
+void RContainerObject::findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified) const {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (current_list);
 
@@ -344,19 +351,19 @@ void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) 
 	delete object;
 }
 
-QString RContainerObject::removeChildCommand (RObject *object) {
+QString RContainerObject::removeChildCommand (RObject *object) const {
 	RK_TRACE (OBJECTS);
 
 	return (object->getFullName () + " <- NULL");
 }
 
-QString RContainerObject::renameChildCommand (RObject *object, const QString &new_name) {
+QString RContainerObject::renameChildCommand (RObject *object, const QString &new_name) const {
 	RK_TRACE (OBJECTS);
 
 	return ("rk.rename.in.container (" + getFullName () + ", \"" + object->getShortName () + "\", \"" + new_name + "\")");
 }
 
-bool RContainerObject::isParentOf (RObject *object, bool recursive) {
+bool RContainerObject::isParentOf (RObject *object, bool recursive) const {
 	RK_TRACE (OBJECTS);
 
 	for (int i = childmap.size () - 1; i >= 0; --i) {
@@ -373,7 +380,7 @@ bool RContainerObject::isParentOf (RObject *object, bool recursive) {
 	return false;
 }
 
-QString RContainerObject::validizeName (const QString &child_name, bool unique) {
+QString RContainerObject::validizeName (const QString &child_name, bool unique) const {
 	RK_TRACE (OBJECTS);
 	QString ret = child_name;
 	ret = ret.replace (QRegExp ("[^a-zA-Z0-9]"), ".");
