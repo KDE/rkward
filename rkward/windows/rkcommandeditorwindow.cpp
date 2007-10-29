@@ -506,12 +506,13 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 
 	if (current_symbol == symbol) return;	// already up to date
 
-	RObject::RObjectMap map;
+	RObject::RObjectSearchMap map;
 	RObjectList::getObjectList ()->findObjectsMatching (symbol, &map);
 
+//KDE4 TODO: clean up once the format of findObjectsMatching is solid
 	list.clear ();
 	// this is silly, but we need an int indexable storage, so we copy the map to a list
-	for (RObject::RObjectMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
+	for (RObject::RObjectSearchMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
 		list.append (it.data ());
 	}
 

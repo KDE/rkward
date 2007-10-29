@@ -87,7 +87,7 @@ void RKEditorDataFrame::openObject (RObject *object, bool initialize_to_empty) {
 
 	if (initialize_to_empty) {
 		for (int i=0; i < numTrueCols (); ++i) {
-			RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName ("var"), this);
+			RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName ("var"), i, this);
 			if (obj->isVariable ()) {
 				static_cast<RKVariable*> (obj)->setLength (dataview->numTrueRows ());
 				setColObject (i, static_cast<RKVariable*> (obj));
@@ -99,6 +99,7 @@ void RKEditorDataFrame::openObject (RObject *object, bool initialize_to_empty) {
 		pushTable (open_chain);
 	}
 
+	// KDE4 TODO: this is no longer needed, as objects can now be addressed by their position in the parent
 	// actually, given the object, we already know the child-names. We don't know their order, however, so we better fetch the name-row again.
 	object->markDataDirty ();
 	object->updateFromR (open_chain);
@@ -125,7 +126,7 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 			if (numTrueCols () <= col) {
 				insertNewColumn ();
 			}
-			RKVariable *current_child = static_cast<RKVariable *> (static_cast <RContainerObject*> (getObject ())->findChild (command->getStringVector ()[col]));
+			RKVariable *current_child = static_cast<RKVariable *> (static_cast <RContainerObject*> (getObject ())->findChildByName (command->getStringVector ()[col]));
 			RK_ASSERT (current_child);
 			if (current_child->isVariable ()) {
 				if (!getColObject (col)) {		// if we initialized the table to empty, the object may already exist in our map
@@ -186,9 +187,9 @@ void RKEditorDataFrame::columnDeletionRequested (int col) {
 
 void RKEditorDataFrame::columnAdded (int col) {
 	RK_TRACE (EDITOR);
-	RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName (QString::null), this);
+	RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName (QString ()), col, this);
 	RK_ASSERT (obj->isVariable ());
-	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + getObject ()->getFullName () + ", \"" + obj->getShortName () + "\", " + QString ().setNum (col+1) + ")", RCommand::App | RCommand::Sync));
+	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + getObject ()->getFullName () + ", \"" + obj->getShortName () + "\", " + QString::number (col+1) + ")", RCommand::App | RCommand::Sync));
 	static_cast<RKVariable*> (obj)->setLength (dataview->numTrueRows ());
 	obj->setCreatedInEditor (this);
 

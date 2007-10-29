@@ -38,7 +38,7 @@ public:
 
 	/** update the given child with the given data. Since the child may be mismatching, and may need to be recreated, returns a pointer to the child (old or new) */
 	RObject *updateChildStructure (RObject *child, RData *new_data, bool just_created=false);
-	RObject *createChildFromStructure (RData *child_data, const QString &child_name);
+	RObject *createChildFromStructure (RData *child_data, const QString &child_name, int position);
 
 	/** reimplemented from RObject to also update children */
 	bool updateStructure (RData *new_data);
@@ -47,13 +47,15 @@ public:
 	RObject **children ();
 
 	/** like findObject (), but does not recurse, i.e. only direct children */
-	RObject *findChild (const QString &name);
+	RObject *findChildByName (const QString &name) const;
+	/** return the index of the given child, or -1 if there is no such child */
+	int getIndexOf (RObject *child) const;
 	bool isParentOf (RObject *object, bool recursive=false);
 	
 	/** creates a new child. Right now only RKVariables (false, false), or data.frames (true, true), or unspecified containers (true, false) can be created.
 	API will likely change. The child is NOT created in the workspace. That's your resonsibility. All this function returns is a new RObject* of the given
 	type and with the name (if necessary) changed to a legal value. TODO: checking for and changing illegal names is not yet implemented */
-	virtual RObject *createNewChild (const QString &name, RKEditor *creator=0, bool container=false, bool data_frame=false);
+	virtual RObject *createNewChild (const QString &name, int position=-1, RKEditor *creator=0, bool container=false, bool data_frame=false);
 
 	/** returns true, if there are no children in this container. Note: of course the object list may not be up to date! */
 	bool isEmpty () { return childmap.isEmpty (); };
@@ -65,7 +67,7 @@ public:
 	virtual RObject *findObject (const QString &name, bool is_canonified=false);
 
 	/** reimplemented from RObject to actually search for matching objects */
-	void findObjectsMatching (const QString &partial_name, RObjectMap *current_list, bool name_is_canonified=false);
+	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false);
 protected:
 	void updateChildren (RData *new_children);
 	RObjectMap childmap;

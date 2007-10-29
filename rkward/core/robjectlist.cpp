@@ -53,9 +53,8 @@ RObjectList::RObjectList () : RContainerObject (0, QString::null) {
 	type = RObject::Workspace;
 	
 	update_chain = 0;
-	toplevel_environments = new REnvironmentObject*[1];
-	num_toplevel_environments = 1;
-	toplevel_environments[0] = createTopLevelEnvironment (".GlobalEnv");
+	childmap.insert (0, createTopLevelEnvironment (".GlobalEnv"));
+	RKGlobals::tracker ()->addObject (childmap[0], 0);
 }
 
 RObjectList::~RObjectList () {
@@ -105,63 +104,48 @@ void RObjectList::rCommandDone (RCommand *command) {
 void RObjectList::updateEnvironments (QString *env_names, unsigned int env_count) {
 	RK_TRACE (OBJECTS);
 
-	Q3ValueList<REnvironmentObject *> removelist;
+	RObjectMap newchildmap;
 
-	// check which envs are removed
-	// we could as well iterate over the childmap, but this is easier
-	for (unsigned int i = 0; i < num_toplevel_environments; ++i) {
-		bool found = false;
-		for (unsigned int j = 0; j < env_count; ++j) {
-			if (toplevel_environments[i]->getShortName () == env_names[j]) {
-				found = true;
-				break;
-			}
-		}
-		if (!found) removelist.append (toplevel_environments[i]);
-	}
-
-	// remove the environments which are gone
-	for (Q3ValueList<REnvironmentObject *>::const_iterator it = removelist.constBegin (); it != removelist.constEnd (); ++it) {
-		RK_DO (qDebug ("removing toplevel environment %s from list", (*it)->getShortName ().toLatin1 ().data ()), OBJECTS, DL_INFO);
-		RKGlobals::tracker ()->removeObject (*it, 0, true);
-	}
-
-	// find which items are new
+	// find which items are new, and copy the old ones
 	for (unsigned int i = 0; i < env_count; ++i) {
 		QString name = env_names[i];
-		if (childmap.find (name) == childmap.end ()) {
-			createTopLevelEnvironment (name);
-		} else {
-			RObject *obj = childmap[name];
+
+		RObject* obj = findChildByName (name);
+		if (obj) {
 			// for now, we only update the .GlobalEnv. All others we assume to be static
 			if (obj->isType (GlobalEnv)) {
 				obj->updateFromR (update_chain);
 			}
+		} else {
+			obj = createTopLevelEnvironment (name);
+			RKGlobals::tracker ()->addObject (obj, 0);
 		}
+		newchildmap.insert (i, obj);
 	}
 
-	// set the new list of environments in the correct order
-	delete [] toplevel_environments;
-	toplevel_environments = new REnvironmentObject*[env_count];
-	num_toplevel_environments = env_count;
-	for (unsigned int i = 0; i < env_count; ++i) {
-		RObject *obj = childmap[env_names[i]];
-		RK_ASSERT (obj);
-		RK_ASSERT (obj->isType (Environment));
-
-		toplevel_environments[i] = static_cast<REnvironmentObject *> (obj); 
+	// check which envs have been removed
+	QList<RObject *> removelist;
+	for (int i = childmap.size () - 1; i >= 0; --i) {
+		RObject *obj = childmap[i];
+		bool found = newchildmap.contains (obj);
+		if (!found) removelist.append (obj);
 	}
+
+	// remove the environments which are gone
+	for (QList<RObject *>::const_iterator it = removelist.constBegin (); it != removelist.constEnd (); ++it) {
+		RK_DO (qDebug ("removing toplevel environment %s from list", (*it)->getShortName ().toLatin1 ().data ()), OBJECTS, DL_INFO);
+		RKGlobals::tracker ()->removeObject (*it, 0, true);
+	}
+
+	// set the new list
+	childmap = newchildmap;
 }
 
 REnvironmentObject *RObjectList::createTopLevelEnvironment (const QString &name) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (childmap.find (name) == childmap.end ());
+
 	REnvironmentObject *envobj = new REnvironmentObject (this, name);
-
-	childmap.insert (name, envobj);
-	RKGlobals::tracker ()->addObject (envobj, 0);
 	envobj->updateFromR (update_chain);
-
 	return envobj;
 }
 
@@ -176,27 +160,21 @@ RObject *RObjectList::findObject (const QString &name, bool is_canonified) {
 		QString env = canonified.section ("::", 0, 0);
 		QString remainder = canonified.section ("::", 1);
 
-		RObject *found = 0;
-		for (unsigned int i = 0; i < num_toplevel_environments; ++i) {
-			if (toplevel_environments[i]->namespaceName () == env) {
-				found = toplevel_environments[i];
-				break;
-			}
-		}
+		RObject *found = findChildByNamespace (env);
 		if (!found) return 0;
 
 		return (found->findObject (remainder, true));
 	}
 
 	// no "::"-qualification given, do normal search in all environments, return first match
-	for (unsigned int i = 0; i < num_toplevel_environments; ++i) {
-		RObject *found = toplevel_environments[i]->findObject (canonified, true);
+	for (int i = 0; i < childmap.size (); ++i) {
+		RObject *found = childmap[i]->findObject (canonified, true);
 		if (found) return found;
 	}
 	return 0;
 }
 
-void RObjectList::findObjectsMatching (const QString &partial_name, RObjectMap *current_list, bool name_is_canonified) {
+void RObjectList::findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (current_list);
 
@@ -208,29 +186,37 @@ void RObjectList::findObjectsMatching (const QString &partial_name, RObjectMap *
 		QString env = canonified.section ("::", 0, 0);
 		QString remainder = canonified.section ("::", 1);
 
-		RObject *found = 0;
-		for (unsigned int i = 0; i < num_toplevel_environments; ++i) {
-			if (toplevel_environments[i]->namespaceName () == env) {
-				found = toplevel_environments[i];
-				break;
-			}
-		}
+		RObject *found = findChildByNamespace (env);
 		if (!found) return;
 		
 		found->findObjectsMatching (remainder, current_list, true);
 		return;
 	}
 
-	// no "::"-qualification given, do normal search in all environments.
-	for (unsigned int i = 0; i < num_toplevel_environments; ++i) {
-		toplevel_environments[i]->findObjectsMatching (canonified, current_list, true);
+	// no namespace given. Search all environments for matches
+	for (int i = 0; i < childmap.size (); ++i) {
+		childmap[i]->findObjectsMatching (canonified, current_list, true);
 	}
 }
 
-RObject *RObjectList::createNewChild (const QString &name, RKEditor *creator, bool container, bool data_frame) {
+REnvironmentObject* RObjectList::findChildByNamespace (const QString &namespacename) {
 	RK_TRACE (OBJECTS);
 
-	return (getGlobalEnv ()->createNewChild (name, creator, container, data_frame));
+	for (int i = childmap.size () - 1; i >= 0; --i) {
+		RObject* child = childmap[i];
+		RK_ASSERT (child->isType (Environment));
+		REnvironmentObject* env = static_cast<REnvironmentObject *> (child);
+		if (env->namespaceName () == namespacename) {
+			return env;
+		}
+	}
+	return 0;
+}
+
+RObject *RObjectList::createNewChild (const QString &name, int position, RKEditor *creator, bool container, bool data_frame) {
+	RK_TRACE (OBJECTS);
+
+	return (getGlobalEnv ()->createNewChild (name, position, creator, container, data_frame));
 }
 
 QString RObjectList::validizeName (const QString &child_name, bool unique) {
@@ -269,17 +255,6 @@ void RObjectList::removeChild (RObject *object, bool removed_in_workspace) {
 	RK_TRACE (OBJECTS);
 
 	if (removed_in_workspace) {
-		// remove from list of toplevel environments
-		REnvironmentObject **new_toplevel_envs = new REnvironmentObject*[num_toplevel_environments];
-		unsigned int num_new_toplevel_envs = 0;
-		for (unsigned int i=0; i < num_toplevel_environments; ++i) {
-			if (toplevel_environments[i] != object) new_toplevel_envs[num_new_toplevel_envs++] = toplevel_environments[i];
-		}
-		RK_ASSERT ((num_toplevel_environments - 1) == num_new_toplevel_envs);
-		delete [] toplevel_environments;
-		toplevel_environments = new_toplevel_envs;
-		num_toplevel_environments = num_new_toplevel_envs;
-
 		RContainerObject::removeChild (object, removed_in_workspace);
 	} else {
 		RK_ASSERT (false);
@@ -293,7 +268,8 @@ REnvironmentObject *RObjectList::getGlobalEnv () {
 	RObjectList *list = getObjectList ();
 	RK_ASSERT (list);
 
-	REnvironmentObject *envobj = list->toplevel_environments[0];
+	RK_ASSERT (list->numChildren ());
+	REnvironmentObject *envobj = static_cast<REnvironmentObject*> (list->childmap[0]);
 	RK_ASSERT (envobj);
 	RK_ASSERT (envobj->isType (RObject::GlobalEnv));
 

@@ -40,8 +40,8 @@ RContainerObject::~RContainerObject () {
 	RK_TRACE (OBJECTS);
 	
 	// delete child objects. Note: the map itself is cleared/deleted automatically
-	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
-		delete it.data ();
+	for (int i = childmap.size () - 1; i >= 0; --i) {
+		delete childmap[i];
 	}
 }
 
@@ -59,13 +59,15 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 			delete child;
 			return 0;
 		} else {
+			int child_index = getIndexOf (child);
+			RK_ASSERT (child_index >= 0);
 			if (RKGlobals::tracker ()->removeObject (child, 0, true)) {
 				RData *child_name_data = new_data->getStructureVector ()[0];
 				RK_ASSERT (child_name_data->getDataType () == RData::StringVector);
 				RK_ASSERT (child_name_data->getDataLength () >= 1);
 				QString child_name = child_name_data->getStringVector ()[0];
-	
-				return (createChildFromStructure (new_data, child_name));
+
+				return (createChildFromStructure (new_data, child_name, child_index));
 			} else {
 				return child;		// it was restored in it's old shape
 			}
@@ -94,10 +96,9 @@ bool RContainerObject::updateStructure (RData *new_data) {
 	return true;
 }
 
-RObject *RContainerObject::createChildFromStructure (RData *child_data, const QString &child_name) {
+RObject *RContainerObject::createChildFromStructure (RData *child_data, const QString &child_name, int position) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (child_data->getDataType () == RData::StructureVector);
-	RK_ASSERT (childmap.find (child_name) == childmap.end ());
 	RK_ASSERT (child_data->getDataLength () >= 2);		// need to see at least the type at this point
 
 	RData *type_data = child_data->getStructureVector ()[1];
@@ -125,7 +126,7 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 	RKGlobals::tracker ()->lockUpdates (false);
 	RK_ASSERT (child_object);
 
-	if (child_object) childmap.insert (child_name, child_object);
+	if (child_object) childmap.insert (position, child_object);
 	if (child_object) RKGlobals::tracker ()->addObject (child_object, 0);
 	return child_object;
 }
@@ -146,34 +147,43 @@ void RContainerObject::updateChildren (RData *new_children) {
 		RK_ASSERT (child_name_data->getDataLength () >= 1);
 		QString child_name = child_name_data->getStringVector ()[0];
 
-		RObject *child_object;
-		RObjectMap::const_iterator it = childmap.find (child_name);
-		if (it != childmap.end ()) {
-			child_object = updateChildStructure (it.data (), child_data);
+		RObject *child_object = findChildByName (child_name);
+		if (child_object) {
+			child_object = updateChildStructure (child_object, child_data);
 		} else {
-			child_object = createChildFromStructure (child_data, child_name);
+			child_object = createChildFromStructure (child_data, child_name, i);
 		}
-		new_childmap.insert (child_name, child_object);
+		new_childmap.insert (i, child_object);
 	}
 
 // now find out, which old ones are missing
-	Q3ValueList<RObject*> removed_list;
-	for (RObjectMap::const_iterator it = childmap.constBegin (); it != childmap.constEnd (); ++it) {
-		QString child_string = it.key ();
+	QList<RObject*> removed_list;
+	for (int i = childmap.size () - 1; i >= 0; --i) {
+		RObject* old_child = childmap[i];
+		QString child_name = old_child->getShortName ();
 
-		if (new_childmap.find (child_string) == new_childmap.end ()) {
-			if (it.data ()->isPending ()) {
-				new_childmap.insert (child_string, it.data ());
+		RObject* new_child = 0; 
+		for (int j = new_childmap.size () - 1; j >= 0; --j) {
+			RObject* obj = new_childmap[j];
+			if (obj->getShortName () == child_name) {
+				new_child = obj;
+				break;
+			}
+		}
+		if (!new_child) {
+			if (old_child->isPending ()) {
+				new_childmap.append (old_child);
 			} else {
-				removed_list.append (it.data ());
+				removed_list.append (old_child);
 			}
 		}
 	}
 
 // finally delete the missing old ones
-	for (Q3ValueList<RObject*>::iterator it = removed_list.begin (); it != removed_list.end (); ++it) {
-		RK_DO (qDebug ("child no longer present: %s.", (*it)->getFullName ().toLatin1 ().data ()), OBJECTS, DL_DEBUG);
-		RKGlobals::tracker ()->removeObject ((*it), 0, true);
+	for (int i = removed_list.size () - 1; i >= 0; --i) {
+		RObject* child = removed_list[i];
+		RK_DO (qDebug ("child no longer present: %s.", child->getFullName ().toLatin1 ().data ()), OBJECTS, DL_DEBUG);
+		RKGlobals::tracker ()->removeObject (child, 0, true);
 	}
 
 	childmap = new_childmap;
@@ -184,29 +194,38 @@ int RContainerObject::numChildren () {
 	return childmap.size ();
 }
 
+// KDE4: do we need this? Can't we return the RObjectMap?
 RObject **RContainerObject::children () {
 	RK_TRACE (OBJECTS);
 	RObject **ret = new RObject *[childmap.size ()];
 
-	int i = 0;
-	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
-		ret[i++] = it.data ();
+	for (int i = childmap.size () - 1; i >= 0; --i) {
+		ret[i] = childmap[i];
 	}
 	return ret;
 }
 
 void RContainerObject::writeChildMetaData (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
-	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
-		it.data ()->writeMetaData (chain);
+	for (int i = childmap.size () - 1; i >= 0; --i) {
+		childmap[i]->writeMetaData (chain);
 	}
 }
 
-RObject *RContainerObject::findChild (const QString &name) {
+RObject *RContainerObject::findChildByName (const QString &name) const {
 	RK_TRACE (OBJECTS);
-	RObjectMap::iterator it = childmap.find (name);
-	RK_ASSERT (it != childmap.end ());
-	return (it.data ());
+
+	for (int i = childmap.size () - 1; i >= 0; --i) {
+		RObject* obj = childmap[i];
+		if (obj->getShortName () == name) return (obj);
+	}
+	return 0;
+}
+
+int RContainerObject::getIndexOf (RObject *child) const {
+	RK_TRACE (OBJECTS);
+
+	return childmap.indexOf (child);
 }
 
 RObject *RContainerObject::findObject (const QString &name, bool is_canonified) {
@@ -219,16 +238,15 @@ RObject *RContainerObject::findObject (const QString &name, bool is_canonified) 
 	QString current_level = canonified.section (QChar ('$'), 0, 0);
 	QString remainder = canonified.section (QChar ('$'), 1);
 
-	RObjectMap::iterator it = childmap.find (current_level);
-	if (it == childmap.end ()) return 0;
+	RObject* found = findChildByName (current_level);
+	if (!found) return 0;
 
-	RObject *found = it.data ();
 	if (remainder.isEmpty ()) return found;
 
 	return (found->findObject (remainder, true));
 }
 
-void RContainerObject::findObjectsMatching (const QString &partial_name, RObjectMap *current_list, bool name_is_canonified) {
+void RContainerObject::findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (current_list);
 
@@ -240,40 +258,31 @@ void RContainerObject::findObjectsMatching (const QString &partial_name, RObject
 	QString remainder = canonified.section (QChar ('$'), 1);
 
 	if (canonified.endsWith (QChar ('$'))) {
-		RObjectMap::iterator it = childmap.find (current_level);
-		
-		if (it == childmap.end ()) return;
-		
-		RObject *found = it.data ();
-		found->findObjectsMatching (QString (), current_list, true);
-
+		RObject* found = findChildByName (current_level);
+		if (found) found->findObjectsMatching (QString (), current_list, true);
 		return;
 	}
 
 	if (remainder.isEmpty ()) {
-		for (RObjectMap::const_iterator it = childmap.constBegin (); it != childmap.constEnd (); ++it) {
-			if (it.key ().startsWith (current_level)) {
-				QString base_name = it.data ()->getBaseName ();
+		for (int i = 0; i < childmap.size (); ++i) {
+			RObject* child = childmap[i];
+			if (child->getShortName ().startsWith (current_level)) {
+				QString base_name = child->getBaseName ();
 				if (current_list->contains (base_name)) {
-					current_list->insert (it.data ()->getFullName (), it.data ());
+					current_list->insert (child->getFullName (), child);
 				} else {
-					current_list->insert (base_name, it.data ());
+					current_list->insert (base_name, child);
 				}
 			}
 		}
 	} else {
-		RObjectMap::iterator it = childmap.find (current_level);
-
-		if (it == childmap.end ()) return;
-
-		RObject *found = it.data ();
-		found->findObjectsMatching (remainder, current_list, true);
+		RObject* found = findChildByName (current_level);
+		if (found) found->findObjectsMatching (remainder, current_list, true);
 	}
 }
 
-RObject *RContainerObject::createNewChild (const QString &name, RKEditor *creator, bool container, bool data_frame) {
+RObject *RContainerObject::createNewChild (const QString &name, int position, RKEditor *creator, bool container, bool data_frame) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (childmap.find (name) == childmap.end ());
 
 	RObject *ret;
 	if (container) {
@@ -285,8 +294,10 @@ RObject *RContainerObject::createNewChild (const QString &name, RKEditor *creato
 	} else {
 		ret = new RKVariable (this, name);
 	}
-	
-	childmap.insert (name, ret);
+
+	if ((position < 0) || (position > childmap.size ())) position = childmap.size ();
+
+	childmap.insert (position, ret);
 
 	RKGlobals::tracker ()->addObject (ret, creator);
 	
@@ -296,15 +307,11 @@ RObject *RContainerObject::createNewChild (const QString &name, RKEditor *creato
 void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 	RK_TRACE (OBJECTS);
 
-	RObjectMap::iterator it = childmap.find (object->getShortName ());
-	RK_ASSERT (it.data () == object);
-	
+	RK_ASSERT (findChildByName (object->getShortName ()) == object);
+
 	RCommand *command = new RCommand (renameChildCommand (object, new_name), RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
-	
-	childmap.remove (it.key ());
-	childmap.insert (new_name, object);
-	
+
 	object->name = new_name;
 }
 
@@ -316,13 +323,14 @@ void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) 
 		RKGlobals::rInterface ()->issueCommand (command, 0);
 	}
 
-	RObjectMap::iterator it = childmap.find (object->getShortName ());
-	if (it == childmap.end ()) {
+	int i = getIndexOf (object);
+	if (i < 0) {
+		RK_ASSERT (false);
 		return;
 	}
-	RK_ASSERT (it.data () == object);
+	RK_ASSERT (childmap[i] == object);
 
-	childmap.remove (it);
+	childmap.removeAt (i);
 	delete object;
 }
 
@@ -341,8 +349,8 @@ QString RContainerObject::renameChildCommand (RObject *object, const QString &ne
 bool RContainerObject::isParentOf (RObject *object, bool recursive) {
 	RK_TRACE (OBJECTS);
 
-	for (RObjectMap::iterator it = childmap.begin (); it != childmap.end (); ++it) {
-		RObject *child = it.data ();
+	for (int i = childmap.size () - 1; i >= 0; --i) {
+		RObject *child = childmap[i];
 		if (child == object) {
 			return true;
 		} else if (recursive && child->isContainer ()) {
@@ -365,7 +373,7 @@ QString RContainerObject::validizeName (const QString &child_name, bool unique) 
 
 	if (!unique) return ret;
 	QString postfix;
-	while (childmap.contains (ret + postfix)) {
+	while (findChildByName (ret + postfix)) {
 		postfix.setNum (++i);
 	}
 	return (ret + postfix);

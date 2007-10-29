@@ -257,7 +257,7 @@ void RKWardMainWindow::doPostInit () {
 		} else if (result->result == StartupDialog::ChoseFile) {
 			slotFileOpenWorkspace ();
 		} else if (result->result == StartupDialog::EmptyTable) {
-			RObject *object = RObjectList::getObjectList ()->createNewChild (i18n ("my.data"), 0, true, true);
+			RObject *object = RObjectList::getObjectList ()->createNewChild (i18n ("my.data"), -1, 0, true, true);
 			// usually an explicit call to activateView should not be necessary. Somehow however, here, it is.
 			RKWorkplace::mainWorkplace ()->editObject (object, true);
 		}
@@ -526,7 +526,7 @@ void RKWardMainWindow::slotNewDataFrame () {
 	if (ok) {
 		QString valid = RObjectList::getObjectList ()->validizeName (name);
 		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1", valid), i18n ("Invalid Name"));
-		RObject *object = RObjectList::getObjectList ()->createNewChild (valid, 0, true, true);
+		RObject *object = RObjectList::getObjectList ()->createNewChild (valid, -1, 0, true, true);
 		RKWorkplace::mainWorkplace ()->editObject (object, true);
 	}
 	

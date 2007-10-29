@@ -123,8 +123,9 @@ public:
 /** short hand for getDimension (0). Meaningful for one-dimensional objects */
 	int getLength () { return dimensions[0]; };
 
-/** A map of objects accessible by their short name. Used in RContainerObject. Defined here for technical reasons. */
-	typedef QMap<QString, RObject*> RObjectMap;
+/** A map of objects accessible by index. Used in RContainerObject. Defined here for technical reasons. */
+	typedef QList<RObject*> RObjectMap;
+	typedef QMap<QString, RObject*> RObjectSearchMap;
 
 /** A map of values to labels. This is used both in regular objects, in which it just represents a map of named values, if any. The more important use is in factors, where it represents the factor levels. Here, the key is always a string representation of a positive integer. */
 	typedef QMap<QString, QString> ValueLabels;
@@ -161,7 +162,7 @@ R, only for internal lookup. For submission to R, always use RObject::getFullNam
 @param partial_name The partial name to look up
 @param current_list A pointer to a valid (but probably initially empty) RObjectMap. Matches will be added to this list
 @param name_is_canonified internal parameter. Set to true, if the name to match is already canonfied (else it will be canonified internally) */
-	virtual void findObjectsMatching (const QString &partial_name, RObjectMap *current_list, bool name_is_canonified=false);
+	virtual void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false);
 
 /** If the object is being edited, returns that editor (in the future probably a list of editors). Else returns 0 */
 	RKEditor *objectOpened ();

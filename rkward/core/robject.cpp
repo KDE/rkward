@@ -82,7 +82,7 @@ RObject *RObject::findObject (const QString &, bool) {
 	return 0;
 }
 
-void RObject::findObjectsMatching (const QString &, RObjectMap *, bool) {
+void RObject::findObjectsMatching (const QString &, RObjectSearchMap *, bool) {
 	RK_TRACE (OBJECTS);
 	return;
 }

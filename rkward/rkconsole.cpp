@@ -404,8 +404,8 @@ void RKConsole::doTabCompletion () {
 
 	if (!do_file_completion) {
 		if (!current_symbol.isEmpty ()) {		// try object name completion first
-			RObject::RObjectMap map;
-			RObject::RObjectMap::const_iterator it;
+			RObject::RObjectSearchMap map;
+			RObject::RObjectSearchMap::const_iterator it;
 			RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
 	
 			QStringList entries;
