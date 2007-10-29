@@ -28,6 +28,7 @@ General:
 	- the whole idea of having a single mutex for everything is flawed. We should use several specialized ones
 	-* the 'X' icon for closing a tab (Ctl-W) is absent
 	-* when rkward freezes, terminating (window close -> Terminate) rkward does not kill rkward.bin
+	- do some profiling, whether the more expensive lookup in RContainerObject::findObjectByName() is a performance issue
 
 rkcommandeditorwindow
 	- code completion

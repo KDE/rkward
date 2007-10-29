@@ -68,6 +68,8 @@ public:
 
 	/** reimplemented from RObject to actually search for matching objects */
 	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false);
+
+	void moveChild (RObject* child, int from_index, int to_index);
 protected:
 	void updateChildren (RData *new_children);
 	RObjectMap childmap;

@@ -118,27 +118,28 @@ void RObjectList::updateEnvironments (QString *env_names, unsigned int env_count
 			}
 		} else {
 			obj = createTopLevelEnvironment (name);
+			childmap.insert (i, obj);
 			RKGlobals::tracker ()->addObject (obj, 0);
 		}
 		newchildmap.insert (i, obj);
 	}
 
-	// check which envs have been removed
-	QList<RObject *> removelist;
+	// check which envs have been removed or changed position
 	for (int i = childmap.size () - 1; i >= 0; --i) {
 		RObject *obj = childmap[i];
-		bool found = newchildmap.contains (obj);
-		if (!found) removelist.append (obj);
+		int new_pos = newchildmap.indexOf (obj);
+		
+		if (new_pos < 0) {	// environment is gone
+			RK_DO (qDebug ("removing toplevel environment %s from list", obj->getShortName ().toLatin1 ().data ()), OBJECTS, DL_INFO);
+			if (RKGlobals::tracker ()->removeObject (obj, 0, true)) --i;
+			else (newchildmap.insert (i, obj));
+		} else if (new_pos != i) {
+			// this call is rather expensive, all in all, but fortunately called very rarely
+			moveChild (obj, i, new_pos);
+		}
 	}
 
-	// remove the environments which are gone
-	for (QList<RObject *>::const_iterator it = removelist.constBegin (); it != removelist.constEnd (); ++it) {
-		RK_DO (qDebug ("removing toplevel environment %s from list", (*it)->getShortName ().toLatin1 ().data ()), OBJECTS, DL_INFO);
-		RKGlobals::tracker ()->removeObject (*it, 0, true);
-	}
-
-	// set the new list
-	childmap = newchildmap;
+	RK_DO (RK_ASSERT (childmap == newchildmap), OBJECTS, DL_DEBUG);	// this is an expensive assert, hence wrapping it inside RK_DO
 }
 
 REnvironmentObject *RObjectList::createTopLevelEnvironment (const QString &name) {

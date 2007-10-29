@@ -33,6 +33,7 @@ RKSpinBox::RKSpinBox (QWidget *parent) : QSpinBox (parent) {
 	mode = Integer;
 	real_value = 0;
 	int_value = 0;
+	default_precision = 0;
 	int_min = INT_MIN;
 	int_max = INT_MAX;
 
@@ -131,7 +132,7 @@ void RKSpinBox::updateValue (int change) {
 		} else {
 			power = -default_precision;
 		}
-		int step = (int) pow (10, power-1);
+		int step = (int) pow (10, power);
 		if (step < 1) step = 1;
 
 		int_value += change * step;
@@ -163,6 +164,7 @@ void RKSpinBox::setRealMode (double min, double max, double initial, int default
 	real_value = initial;
 	real_min = min;
 	real_max = max;
+	RK_ASSERT (real_min < real_max);
 	RKSpinBox::default_precision = default_precision;
 
 	setValue (0);
@@ -182,7 +184,9 @@ void RKSpinBox::setIntMode (int min, int max, int initial) {
 
 	int_min = min;
 	int_max = max;
+	RK_ASSERT (int_min < int_max);
 	int_value = initial;
+	default_precision = 0;
 
 	mode = Integer;
 

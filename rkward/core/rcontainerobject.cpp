@@ -124,10 +124,13 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 	RKGlobals::tracker ()->lockUpdates (true);	// object not yet added. prevent updates
 	child_object = updateChildStructure (child_object, child_data, true);
 	RKGlobals::tracker ()->lockUpdates (false);
-	RK_ASSERT (child_object);
 
-	if (child_object) childmap.insert (position, child_object);
-	if (child_object) RKGlobals::tracker ()->addObject (child_object, 0);
+	if (!child_object) {
+		RK_ASSERT (false);
+		return 0;
+	}
+	childmap.insert (position, child_object);
+	RKGlobals::tracker ()->addObject (child_object, 0);
 	return child_object;
 }
 
@@ -136,7 +139,7 @@ void RContainerObject::updateChildren (RData *new_children) {
 	RK_ASSERT (new_children->getDataType () == RData::StructureVector);
 	unsigned int new_child_count = new_children->getDataLength ();
 
-// first find out, which children are now available, copy the old ones, create the new ones
+	// first find out, which children are now available, copy the old ones, create the new ones
 	RObjectMap new_childmap;
 	for (unsigned int i = 0; i < new_child_count; ++i) {
 		RData *child_data = new_children->getStructureVector ()[i];
@@ -156,37 +159,44 @@ void RContainerObject::updateChildren (RData *new_children) {
 		new_childmap.insert (i, child_object);
 	}
 
-// now find out, which old ones are missing
-	QList<RObject*> removed_list;
-	for (int i = childmap.size () - 1; i >= 0; --i) {
+	// now find out, which old ones are missing or changed position
+	for (int i = 0; i < childmap.size (); ++i) {	// do *not* cache the childmap.size ()! We may change it in the loop.
 		RObject* old_child = childmap[i];
-		QString child_name = old_child->getShortName ();
 
-		RObject* new_child = 0; 
-		for (int j = new_childmap.size () - 1; j >= 0; --j) {
-			RObject* obj = new_childmap[j];
-			if (obj->getShortName () == child_name) {
-				new_child = obj;
-				break;
-			}
-		}
-		if (!new_child) {
+		int new_pos = new_childmap.indexOf (old_child);
+		if (new_pos < 0) {
 			if (old_child->isPending ()) {
-				new_childmap.append (old_child);
+				new_childmap.insert (i, old_child);
 			} else {
-				removed_list.append (old_child);
+				RK_DO (qDebug ("child no longer present: %s.", old_child->getFullName ().toLatin1 ().data ()), OBJECTS, DL_DEBUG);
+				if (RKGlobals::tracker ()->removeObject (old_child, 0, true)) --i;
+				else (new_childmap.insert (i, old_child));
+			}
+		} else {
+			if (i != new_pos) {
+				// this call is rather expensive, all in all, but fortunately called very rarely
+				moveChild (old_child, i, new_pos);
 			}
 		}
 	}
 
-// finally delete the missing old ones
-	for (int i = removed_list.size () - 1; i >= 0; --i) {
-		RObject* child = removed_list[i];
-		RK_DO (qDebug ("child no longer present: %s.", child->getFullName ().toLatin1 ().data ()), OBJECTS, DL_DEBUG);
-		RKGlobals::tracker ()->removeObject (child, 0, true);
-	}
+	RK_DO (RK_ASSERT (childmap == new_childmap), OBJECTS, DL_DEBUG);	// this is an expensive assert, hence wrapping it inside RK_DO
+}
 
-	childmap = new_childmap;
+void RContainerObject::moveChild (RObject* child, int from_index, int to_index) {
+	RK_TRACE (OBJECTS);
+
+	RK_ASSERT (from_index != to_index);
+
+	RK_DO (qDebug ("Child position changed from %d to %d, %s", from_index, to_index, child->getFullName ().toLatin1 ().data ()), OBJECTS, DL_DEBUG);
+
+	RK_ASSERT (childmap[from_index] == child);
+	RK_ASSERT (from_index < childmap.size ());
+	childmap.removeAt (from_index);
+	RK_ASSERT (to_index <= childmap.size ());
+	childmap.insert (to_index, child);
+
+#warning TODO notify the modification tracker
 }
 
 int RContainerObject::numChildren () {

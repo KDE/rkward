@@ -44,7 +44,7 @@ RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) 
 
 	label = new QLabel (i18n ("Debug level"), this);
 	debug_level_box = new RKSpinBox (this);
-	debug_level_box->setIntMode (DL_FATAL, DL_TRACE, DL_FATAL - RK_Debug_Level);
+	debug_level_box->setIntMode (DL_TRACE, DL_FATAL, DL_FATAL - RK_Debug_Level);
 	connect (debug_level_box, SIGNAL (valueChanged(int)), this, SLOT (settingChanged(int)));
 	main_vbox->addWidget (label);
 	main_vbox->addWidget (debug_level_box);
