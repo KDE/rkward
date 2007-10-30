@@ -21,6 +21,6 @@
 #include <stddef.h>
 
 /** Try different ways to get the stack limits of the currently running thread */
-void RKGetCurrentThreadStackLimits (size_t *size, void **base);
+void RKGetCurrentThreadStackLimits (size_t *size, void **base, char *reference);
 
 #endif

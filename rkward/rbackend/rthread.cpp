@@ -472,7 +472,8 @@ int RThread::initialize () {
 		stacksize = (unsigned long) -1;
 		stackstart = (void *) -1;
 	} else {
-		RKGetCurrentThreadStackLimits (&stacksize, &stackstart);
+		char dummy;
+		RKGetCurrentThreadStackLimits (&stacksize, &stackstart, &dummy);
 	}
 	startR (argc, argv, stacksize, stackstart);
 

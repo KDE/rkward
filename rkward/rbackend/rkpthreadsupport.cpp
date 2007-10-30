@@ -29,8 +29,7 @@
 
 /* Much of this code is borrowed from WINE (http://www.winehq.org) */
 
-void RKGetCurrentThreadStackLimits (size_t *size, void **base) {
-	char dummy;
+void RKGetCurrentThreadStackLimits (size_t *size, void **base, char *reference) {
 	int direction;
 #ifdef HAVE_PTHREAD_GETATTR_NP
 	pthread_attr_t attr;
@@ -49,18 +48,18 @@ void RKGetCurrentThreadStackLimits (size_t *size, void **base) {
 #else
 #	warning Cannot determine the stack limits of a pthread on this system
 #	warning R C stack checking will be disabled
-	*base = &dummy;
+	*base = reference;
 	*size = (unsigned long) -1;
 	return;
 #endif
 	// in which direction does the stack grow?
 	{
 		char dummy2;
-		direction = (&dummy) > (&dummy2) ? 1 : -1;
+		direction = reference > (&dummy2) ? 1 : -1;
 	}
 
 	// in which direction does the stack base lie?
-	int base_direction = (*base) > (&dummy) ? 1 : -1;
+	int base_direction = (*base) > reference ? 1 : -1;
 
 	// switch base / top, if necessary
 	if (base_direction != direction) {
@@ -68,7 +67,7 @@ void RKGetCurrentThreadStackLimits (size_t *size, void **base) {
 	}
 
 	// sanity check, as on some systems the stack direction is mis-detected somehow.
-	long usage = direction * ((unsigned long) (*base) - (unsigned long) (&dummy));
+	long usage = direction * ((unsigned long) (*base) - (unsigned long) (reference));
 	if ((usage < 0) || (unsigned long) usage > (unsigned long) (*size)) {
 		RK_DO (qDebug ("Stack boundaries detection produced bad results. Disabling stack checking."), RBACKEND, DL_WARNING);
 		*size = (unsigned long) -1;
