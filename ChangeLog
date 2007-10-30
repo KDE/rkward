@@ -1,3 +1,4 @@
+- Fixed: Console accepted pasted input while a command is running
 - Fixed: Analysis->Moments->Moment plugin did not use the order-parameter
 - Fixed: Crash on simple assignments in globalenv() with R < 2.4.0
 - Fixed: Meta information (labels) did not get shown correctly in the data editor

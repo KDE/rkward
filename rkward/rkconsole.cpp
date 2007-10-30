@@ -616,6 +616,8 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 
 void RKConsole::submitBatch (const QString &batch) {
 	RK_TRACE (APP);
+
+	if (current_command) return;
 	// splitting batch, not allowing empty entries.
 	// TODO: hack something so we can have empty entries.
 	commands_batch = QStringList::split ("\n", batch, true);
