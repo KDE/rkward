@@ -125,7 +125,7 @@ void RKSettingsModuleCommandEditor::loadSettings (KConfig *config) {
 	KConfigGroup cg = config->group ("Command Editor Windows");
 	completion_enabled = cg.readEntry ("Completion enabled", true);
 	completion_min_chars = cg.readEntry ("Completion min chars", 2);
-	completion_timeout = cg.readEntry ("Completion timeout", 200);
+	completion_timeout = cg.readEntry ("Completion timeout", 500);
 }
 
 #include "rksettingsmodulecommandeditor.moc"
