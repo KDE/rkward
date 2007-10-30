@@ -416,7 +416,7 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 		MUTEX_LOCK;
 		processX11Events ();
 		// while commands are in queue, don't wait
-		while ((!locked) && reply_stack->isActive ()) {
+		while (reply_stack->isActive ()) {		// substack calls are to be considered "sync", and don't respect locks
 			if (killed) {
 				done = true;
 				break;
