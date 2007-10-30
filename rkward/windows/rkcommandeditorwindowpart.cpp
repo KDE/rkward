@@ -54,7 +54,7 @@ void RKCommandEditorWindowPart::initializeActions () {
 	runSelection = actionCollection ()->addAction ("run_selection", command_editor, SLOT (runSelection()));
 	runSelection->setText (i18n ("Run selection"));
 	runSelection->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunSelection));
-	runSelection->setShortcut (Qt::Key_F9);
+	runSelection->setShortcut (Qt::Key_F8);
 
 	runLine = actionCollection ()->addAction ("run_line", command_editor, SLOT (runLine()));
 	runLine->setText (i18n ("Run current line"));

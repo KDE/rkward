@@ -36,6 +36,7 @@ rkcommandeditorwindow
 		-* Code completion setup wizard could (looks better that way?) be in either tab or page format
 			- Can't do any thing about this. It part of the katepart.
 	- placement of menu options?
+	- F9 key seems to be occupied, now (by show/hide folding markers)
 
 rkward
 	- does closing windows work
