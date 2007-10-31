@@ -16,7 +16,6 @@
  ***************************************************************************/
 #include "robjectlist.h"
 
-#define AUTO_UPDATE_INTERVAL 10000
 #define UPDATE_DELAY_INTERVAL 500
 
 #define ROBJECTLIST_UDPATE_ENVIRONMENTS_COMMAND 1
@@ -24,8 +23,6 @@
 
 #include <qtimer.h>
 #include <qstringlist.h>
-//Added by qt3to4:
-#include <Q3ValueList>
 
 #include <klocale.h>
 

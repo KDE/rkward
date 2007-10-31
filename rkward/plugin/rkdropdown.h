@@ -21,6 +21,7 @@
 #include "rkabstractoptionselector.h"
 
 class QComboBox;
+class QListWidget;
 
 /** This RKPluginWidget provides a drop down list of options for use in plugins
 @author Thomas Friedrichsmeier
@@ -40,6 +41,7 @@ protected:
 	void setItemEnabledInGUI (int id, bool enabled);
 private:
 	QComboBox *box;
+	QListWidget *listwidget;
 };
 
 #endif

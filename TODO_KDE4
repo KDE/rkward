@@ -76,9 +76,6 @@ rkloadlibsdialog:
 rkradio:
 	- does disabling single options work (in plugins)?
 
-rkdropdown:
-	- take care of enabling / disabling single options!
-
 rksettings:
 	- check wether settings seem to be saved / loaded correctly
 	- are the defaults ok?
