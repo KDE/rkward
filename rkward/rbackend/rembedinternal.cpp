@@ -425,8 +425,7 @@ void REmbedInternal::shutdown (bool suicidal) {
 
 static int timeout_counter = 0;
 
-void REmbedInternal::processX11Events () {
-	if (!this_pointer->r_running) return;
+void processX11EventsWorker (void *) {
 /* what we do here is walk the list of objects, that have told R, they're listening for events.
 We figure out which ones look for X11-events and tell those to do their stuff (regardless of whether events actually occurred) */
 	extern InputHandler *R_InputHandlers;
@@ -448,6 +447,14 @@ TODO: verify we really need this. */
 		if (R_timeout_handler) R_timeout_handler ();
 		timeout_counter = 0;
 	}
+}
+
+void REmbedInternal::processX11Events () {
+	// do not trace
+	if (!this_pointer->r_running) return;
+
+// In case an error (or user interrupt) is caught inside processX11EventsWorker, we don't want to long-jump out.
+	R_ToplevelExec (processX11EventsWorker, 0);
 }
 
 QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
