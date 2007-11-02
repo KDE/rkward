@@ -128,7 +128,7 @@ void RKSpinBox::updateValue (int change) {
 	} else {
 		int power;
 		if (int_value != 0) {
-			power = (int) log10 (abs (int_value));
+			power = (int) log10 (abs (int_value)) - default_precision;
 		} else {
 			power = -default_precision;
 		}
@@ -186,7 +186,7 @@ void RKSpinBox::setIntMode (int min, int max, int initial) {
 	int_max = max;
 	RK_ASSERT (int_min < int_max);
 	int_value = initial;
-	default_precision = 0;
+	default_precision = 1;
 
 	mode = Integer;
 
