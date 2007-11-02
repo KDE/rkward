@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-27 14:37+0200\n"
+"POT-Creation-Date: 2007-11-02 13:16+0100\n"
 "PO-Revision-Date: 2007-09-19 23:10+0100\n"
 "Last-Translator: Ilias <nono.231@gmail.com>\n"
 "Language-Team: Greek\n"
@@ -540,7 +540,7 @@ msgid "Run all"
 msgstr "Εκτέλεση όλων"
 
 #: windows/rkcommandeditorwindowpart.cpp:52 windows/rkcommandlog.cpp:287
-#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:781
+#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:783
 msgid "Run selection"
 msgstr "Εκτέλεση της επιλογής"
 
@@ -548,7 +548,7 @@ msgstr "Εκτέλεση της επιλογής"
 msgid "Run current line"
 msgstr "Εκτέλεση τρέχουσας γραμμής"
 
-#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:780
+#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:782
 msgid "&Function reference"
 msgstr "&Αναφορά συνάρτησης"
 
@@ -2109,11 +2109,11 @@ msgstr ""
 "rkward-devel@lists.sourceforge.net, και πείτε μας τι προσπαθούσατε να κάνετε "
 "όταν συνέβη αυτό. Συγγνώμη!"
 
-#: rbackend/rthread.cpp:462
+#: rbackend/rthread.cpp:461
 msgid "R Startup"
 msgstr "Εκκίνηση R"
 
-#: main.cpp:70 main.cpp:83
+#: main.cpp:70 main.cpp:84
 msgid "RKWard"
 msgstr "RKWard"
 
@@ -2130,66 +2130,72 @@ msgid "Mask for components to debug (see debug.h)"
 msgstr "Μάσκα για τα συστατικά της αποσφαλμάτωσης (δείτε debug.h)"
 
 #: main.cpp:77
+msgid ""
+"Debugger (enclose any debugger arguments in single quotes ('') together with "
+"the command)"
+msgstr ""
+
+#: main.cpp:78
 msgid "Disable R C stack checking"
 msgstr "Απενεργοποίηση ελέγχου R C σωρού"
 
-#: main.cpp:84
+#: main.cpp:85
 msgid "Project leader / main developer"
 msgstr "Επικεφαλής έργου / κύριος προγραμματιστής"
 
-#: main.cpp:85
+#: main.cpp:86
 msgid "C++ coder since 0.2.9"
 msgstr "C++ προγραμματιστής από την έκδοση 0.2.9"
 
-#: main.cpp:86
+#: main.cpp:87
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Πολλά πρόσθετα, προτάσεις, μάρκετινγκ, μεταφράσεις"
 
-#: main.cpp:87
+#: main.cpp:88
 msgid "Many plugins, suggestions"
 msgstr "Πολλά πρόσθετα, προτάσεις"
 
-#: main.cpp:89
+#: main.cpp:90
 msgid "Several helpful comments and discussions"
 msgstr "Διάφορες χρήσιμα σχόλια και συζητήσεις"
 
-#: main.cpp:90
+#: main.cpp:91
 msgid "Plugins and patches"
 msgstr "Πρόσθετα και προσθήκες"
 
-#: main.cpp:91
+#: main.cpp:92
 msgid "New website"
 msgstr "Νέος δικτυακός τόπος"
 
-#: main.cpp:92
+#: main.cpp:93
 msgid "A cool icon"
 msgstr "Ένα καλό εικονίδιο"
 
-#: main.cpp:93
+#: main.cpp:94
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "Λογότυπο  RKWard, πολλές προτάσεις, βοήθεια στο λεξιλόγιο"
 
-#: main.cpp:94
+#: main.cpp:95
 msgid "Several valuable comments, hints and patches"
 msgstr "Διάφορα αξιόλογα σχόλια, υποδείξεις και διορθώσεις"
 
-#: main.cpp:95
+#: main.cpp:96
 msgid "Translation, Suggestions, plugins"
 msgstr "Μετάφραση, Προτάσεις, πρόσθετα"
 
-#: main.cpp:96
+#: main.cpp:97
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Πολλά σχόλια, χρήσιμες προτάσεις, και αναφορές σφαλμάτων"
 
-#: main.cpp:97
+#: main.cpp:98
 msgid "Some patches"
 msgstr "Μερικές διορθώσεις"
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgstr "Πολύ περισσότερος κόσμος στη λίστα rkward-devel@lists.sourceforge.net"
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Συγγνώμη αν ξεχάσαμε να σας απαριθμήσουμε. Παρακαλούμε επικοινωνήστε μαζί "
@@ -2400,19 +2406,19 @@ msgstr "Τερματικό R"
 msgid "Syntax error\n"
 msgstr "Σφάλμα σύνταξης.\n"
 
-#: rkconsole.cpp:783
+#: rkconsole.cpp:785
 msgid "Interrupt running command"
 msgstr "Διακοπή εντολής που εκτελείται"
 
-#: rkconsole.cpp:789
+#: rkconsole.cpp:791
 msgid "Copy selection cleaned"
 msgstr "Αντιγραφή επιλογής με εκκαθάριση από σύμβολα"
 
-#: rkconsole.cpp:790
+#: rkconsole.cpp:792
 msgid "Copy selection literally"
 msgstr "Αντιγραφή επιλογής ως έχει"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid ""
 "You have configured RKWrad to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -2425,11 +2431,11 @@ msgstr ""
 "τερματικό). Θέλετε να παρακάμψετε το τερματικό αυτήν την φορά, ή θέλετε να "
 "προσπαθήσετε αργότερα?"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid "Console is busy"
 msgstr "Το τερματικό είναι απασχολημένο"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid "Bypass console"
 msgstr "Παράκαμψη τερματικού"
 

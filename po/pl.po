@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-27 14:37+0200\n"
+"POT-Creation-Date: 2007-11-02 13:16+0100\n"
 "PO-Revision-Date: 2004-11-19 00:00+0100\n"
 "Last-Translator: Andrzej Pruszynski\n"
 "Language-Team: LANG <LL@li.org>\n"
@@ -501,7 +501,7 @@ msgid "Run all"
 msgstr "Uruchom wszystko"
 
 #: windows/rkcommandeditorwindowpart.cpp:52 windows/rkcommandlog.cpp:287
-#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:781
+#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:783
 #, fuzzy
 msgid "Run selection"
 msgstr "Uruchom zaznaczone"
@@ -510,7 +510,7 @@ msgstr "Uruchom zaznaczone"
 msgid "Run current line"
 msgstr ""
 
-#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:780
+#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:782
 msgid "&Function reference"
 msgstr ""
 
@@ -1986,11 +1986,11 @@ msgid ""
 "happened. Sorry!"
 msgstr ""
 
-#: rbackend/rthread.cpp:462
+#: rbackend/rthread.cpp:461
 msgid "R Startup"
 msgstr ""
 
-#: main.cpp:70 main.cpp:83
+#: main.cpp:70 main.cpp:84
 msgid "RKWard"
 msgstr "RKWard"
 
@@ -2008,66 +2008,72 @@ msgid "Mask for components to debug (see debug.h)"
 msgstr "Maskuj komponenty debagowane jako liczby binarne (patrz debug.h)"
 
 #: main.cpp:77
+msgid ""
+"Debugger (enclose any debugger arguments in single quotes ('') together with "
+"the command)"
+msgstr ""
+
+#: main.cpp:78
 msgid "Disable R C stack checking"
 msgstr ""
 
-#: main.cpp:84
+#: main.cpp:85
 msgid "Project leader / main developer"
 msgstr ""
 
-#: main.cpp:85
+#: main.cpp:86
 msgid "C++ coder since 0.2.9"
 msgstr ""
 
-#: main.cpp:86
+#: main.cpp:87
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr ""
 
-#: main.cpp:87
+#: main.cpp:88
 msgid "Many plugins, suggestions"
 msgstr ""
 
-#: main.cpp:89
+#: main.cpp:90
 msgid "Several helpful comments and discussions"
 msgstr ""
 
-#: main.cpp:90
+#: main.cpp:91
 msgid "Plugins and patches"
 msgstr "Wtyczki i łatki"
 
-#: main.cpp:91
+#: main.cpp:92
 msgid "New website"
 msgstr ""
 
-#: main.cpp:92
+#: main.cpp:93
 msgid "A cool icon"
 msgstr ""
 
-#: main.cpp:93
+#: main.cpp:94
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr ""
 
-#: main.cpp:94
+#: main.cpp:95
 msgid "Several valuable comments, hints and patches"
 msgstr ""
 
-#: main.cpp:95
+#: main.cpp:96
 msgid "Translation, Suggestions, plugins"
 msgstr ""
 
-#: main.cpp:96
+#: main.cpp:97
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr ""
 
-#: main.cpp:97
+#: main.cpp:98
 msgid "Some patches"
 msgstr ""
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgstr ""
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 
@@ -2278,21 +2284,21 @@ msgstr "R-konsola"
 msgid "Syntax error\n"
 msgstr "Błąd syntaktyczny.\n"
 
-#: rkconsole.cpp:783
+#: rkconsole.cpp:785
 msgid "Interrupt running command"
 msgstr "Przerwij uruchomione polecenie"
 
-#: rkconsole.cpp:789
+#: rkconsole.cpp:791
 #, fuzzy
 msgid "Copy selection cleaned"
 msgstr "Uruchom zaznaczone"
 
-#: rkconsole.cpp:790
+#: rkconsole.cpp:792
 #, fuzzy
 msgid "Copy selection literally"
 msgstr "Uruchom zaznaczone"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid ""
 "You have configured RKWrad to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -2300,12 +2306,12 @@ msgid ""
 "console this one time, or do you want to try again later?"
 msgstr ""
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 #, fuzzy
 msgid "Console is busy"
 msgstr "R-konsola"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 #, fuzzy
 msgid "Bypass console"
 msgstr "R-konsola"

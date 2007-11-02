@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-27 14:37+0200\n"
+"POT-Creation-Date: 2007-11-02 13:16+0100\n"
 "PO-Revision-Date: 2007-07-26 20:34+0800\n"
 "Last-Translator: Roy Qu <quh@thunis.com>\n"
 "Language-Team:  <zh@li.org>\n"
@@ -497,7 +497,7 @@ msgid "Run all"
 msgstr "运行全部"
 
 #: windows/rkcommandeditorwindowpart.cpp:52 windows/rkcommandlog.cpp:287
-#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:781
+#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:783
 msgid "Run selection"
 msgstr "运行选中的部分"
 
@@ -505,7 +505,7 @@ msgstr "运行选中的部分"
 msgid "Run current line"
 msgstr "运行当前行"
 
-#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:780
+#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:782
 msgid "&Function reference"
 msgstr "函数参考(&F)"
 
@@ -1979,11 +1979,11 @@ msgstr ""
 "既然这种情况本不应该发生，所以如果它发生了，请写信给rkward-devel@lists. "
 "sourceforge.net，告诉我们您当时正在做什么。很抱歉！"
 
-#: rbackend/rthread.cpp:462
+#: rbackend/rthread.cpp:461
 msgid "R Startup"
 msgstr "R已启动"
 
-#: main.cpp:70 main.cpp:83
+#: main.cpp:70 main.cpp:84
 msgid "RKWard"
 msgstr "RKWard"
 
@@ -2000,66 +2000,72 @@ msgid "Mask for components to debug (see debug.h)"
 msgstr ""
 
 #: main.cpp:77
+msgid ""
+"Debugger (enclose any debugger arguments in single quotes ('') together with "
+"the command)"
+msgstr ""
+
+#: main.cpp:78
 msgid "Disable R C stack checking"
 msgstr ""
 
-#: main.cpp:84
+#: main.cpp:85
 msgid "Project leader / main developer"
 msgstr "项目领导者/主程序员"
 
-#: main.cpp:85
+#: main.cpp:86
 msgid "C++ coder since 0.2.9"
 msgstr "C++程序员，从0.2.9版本开始"
 
-#: main.cpp:86
+#: main.cpp:87
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "很多插件、建议、营销和翻译"
 
-#: main.cpp:87
+#: main.cpp:88
 msgid "Many plugins, suggestions"
 msgstr "很多插件和建议"
 
-#: main.cpp:89
+#: main.cpp:90
 msgid "Several helpful comments and discussions"
 msgstr "一些有用的评论和讨论"
 
-#: main.cpp:90
+#: main.cpp:91
 msgid "Plugins and patches"
 msgstr "插件和补丁"
 
-#: main.cpp:91
+#: main.cpp:92
 msgid "New website"
 msgstr "新网站"
 
-#: main.cpp:92
+#: main.cpp:93
 msgid "A cool icon"
 msgstr "很酷的图标"
 
-#: main.cpp:93
+#: main.cpp:94
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "RKWard徽标，很多建议，文件上的帮助"
 
-#: main.cpp:94
+#: main.cpp:95
 msgid "Several valuable comments, hints and patches"
 msgstr "很多有价值的建议、提示和补丁"
 
-#: main.cpp:95
+#: main.cpp:96
 msgid "Translation, Suggestions, plugins"
 msgstr "翻译、建议和插件"
 
-#: main.cpp:96
+#: main.cpp:97
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "很多评论，有用的建议和bug报告"
 
-#: main.cpp:97
+#: main.cpp:98
 msgid "Some patches"
 msgstr "一些补丁"
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgstr "在邮件列表中rkward-devel@lists.sourceforge.net有更多的参与者"
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr "抱歉，如果我们忘记提到您，请与我们联系"
 
@@ -2261,19 +2267,19 @@ msgstr "R控制台"
 msgid "Syntax error\n"
 msgstr "语法错误\n"
 
-#: rkconsole.cpp:783
+#: rkconsole.cpp:785
 msgid "Interrupt running command"
 msgstr "中断正在运行的命令"
 
-#: rkconsole.cpp:789
+#: rkconsole.cpp:791
 msgid "Copy selection cleaned"
 msgstr ""
 
-#: rkconsole.cpp:790
+#: rkconsole.cpp:792
 msgid "Copy selection literally"
 msgstr ""
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid ""
 "You have configured RKWrad to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -2284,11 +2290,11 @@ msgstr ""
 "运行，也可能是您在主控台中输入了文字)。是忽略主控台继续执行呢，还是 以后再"
 "试？"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid "Console is busy"
 msgstr "主控台正忙"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid "Bypass console"
 msgstr "忽略主控台"
 

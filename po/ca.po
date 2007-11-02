@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-27 14:37+0200\n"
+"POT-Creation-Date: 2007-11-02 13:16+0100\n"
 "PO-Revision-Date: 2007-10-02 16:56+0200\n"
 "Last-Translator: Pep Roca <pep.roca@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -558,7 +558,7 @@ msgid "Run all"
 msgstr "Executa-ho tot"
 
 #: windows/rkcommandeditorwindowpart.cpp:52 windows/rkcommandlog.cpp:287
-#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:781
+#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:783
 msgid "Run selection"
 msgstr "Executa la selecció"
 
@@ -568,7 +568,7 @@ msgstr "Executa la línia actual"
 
 # fr.po: "&Aide sur la fonction"
 # es.po: "Referencia de la &Función"
-#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:780
+#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:782
 msgid "&Function reference"
 msgstr "&Funció: Ajuda"
 
@@ -2197,11 +2197,11 @@ msgstr ""
 "rkward-devel@lists.sourceforge.net explicant el que intentaveu fer quan s'ha "
 "produït això."
 
-#: rbackend/rthread.cpp:462
+#: rbackend/rthread.cpp:461
 msgid "R Startup"
 msgstr "Engegada del R"
 
-#: main.cpp:70 main.cpp:83
+#: main.cpp:70 main.cpp:84
 msgid "RKWard"
 msgstr "RKWard"
 
@@ -2221,71 +2221,77 @@ msgstr "Nivell d'informació dels missatges de depuració (0-5)"
 msgid "Mask for components to debug (see debug.h)"
 msgstr "Màscara per als components a depurar (mireu en depura.h)"
 
+#: main.cpp:77
+msgid ""
+"Debugger (enclose any debugger arguments in single quotes ('') together with "
+"the command)"
+msgstr ""
+
 # ??? Per revisar
 # ó Desactiva la comprovació de la pila C del R?
-#: main.cpp:77
+#: main.cpp:78
 #, fuzzy
 msgid "Disable R C stack checking"
 msgstr "Desactiva la comprovació de la pila R C"
 
-#: main.cpp:84
+#: main.cpp:85
 msgid "Project leader / main developer"
 msgstr "Líder del projecte / desenvolupador principal"
 
 # Softcatalà: coder: codificador
-#: main.cpp:85
+#: main.cpp:86
 msgid "C++ coder since 0.2.9"
 msgstr "Codificador C++ des de 0.2.9"
 
-#: main.cpp:86
+#: main.cpp:87
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Molts endollables, suggeriments, màrqueting, traduccions"
 
-#: main.cpp:87
+#: main.cpp:88
 msgid "Many plugins, suggestions"
 msgstr "Molts endollables, suggeriments"
 
-#: main.cpp:89
+#: main.cpp:90
 msgid "Several helpful comments and discussions"
 msgstr "Varis comentaris i discussions útils"
 
-#: main.cpp:90
+#: main.cpp:91
 msgid "Plugins and patches"
 msgstr "Endollables i pedaços"
 
-#: main.cpp:91
+#: main.cpp:92
 msgid "New website"
 msgstr "Nova pàgina web"
 
-#: main.cpp:92
+#: main.cpp:93
 msgid "A cool icon"
 msgstr "Una bonica icona"
 
-#: main.cpp:93
+#: main.cpp:94
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "El logotip de RKWard, molts suggeriments, ajudes en la redacció"
 
-#: main.cpp:94
+#: main.cpp:95
 msgid "Several valuable comments, hints and patches"
 msgstr "Alguns valuosos commentaris, consells i pedaços"
 
-#: main.cpp:95
+#: main.cpp:96
 msgid "Translation, Suggestions, plugins"
 msgstr "Traduccions, suggeriments, endollables"
 
-#: main.cpp:96
+#: main.cpp:97
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Molts comentaris, suggeriments útils i informes d'errors"
 
-#: main.cpp:97
+#: main.cpp:98
 msgid "Some patches"
 msgstr "Alguns pedaços"
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgstr "Moltes més persones a rkward-devel@lists.sourceforge.net"
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Ho sento si m'he oblidat d'incloure-us en la llista. Si us plau, poseu-vos "
@@ -2500,21 +2506,21 @@ msgid "Syntax error\n"
 msgstr "Error de sintaxi\n"
 
 # fr.po: Interrompre l'exécution de la commande
-#: rkconsole.cpp:783
+#: rkconsole.cpp:785
 msgid "Interrupt running command"
 msgstr "Interromp l'execució de l'ordre"
 
 # Thomas Friedrichsmeier:
 # Console action: Copy the selection, but remove any leading "> " or "+ " on the copied lines, so it is easier to re-use commands from the console.
-#: rkconsole.cpp:789
+#: rkconsole.cpp:791
 msgid "Copy selection cleaned"
 msgstr "Còpia la selecció de forma neta"
 
-#: rkconsole.cpp:790
+#: rkconsole.cpp:792
 msgid "Copy selection literally"
 msgstr "Copia la selecció literalment"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid ""
 "You have configured RKWrad to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -2526,11 +2532,11 @@ msgstr ""
 "començat a escriure-hi text a la consola). Voleu evitar la consola ara, o ho "
 "voleu intentar de nou més tard?"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid "Console is busy"
 msgstr "La consola és ocupada"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid "Bypass console"
 msgstr "Evita la consola"
 

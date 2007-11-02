@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-27 14:37+0200\n"
+"POT-Creation-Date: 2007-11-02 13:16+0100\n"
 "PO-Revision-Date: 2007-02-10 14:42+0100\n"
 "Last-Translator: Jacolin Yves <yjacolin@free.fr>\n"
 "Language-Team: français <fr@li.org>\n"
@@ -527,7 +527,7 @@ msgid "Run all"
 msgstr "Lancer tout"
 
 #: windows/rkcommandeditorwindowpart.cpp:52 windows/rkcommandlog.cpp:287
-#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:781
+#: windows/rkhtmlwindow.cpp:94 rkconsole.cpp:783
 msgid "Run selection"
 msgstr "Lancer la sélection"
 
@@ -535,7 +535,7 @@ msgstr "Lancer la sélection"
 msgid "Run current line"
 msgstr "Lancer la ligne courante"
 
-#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:780
+#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:782
 msgid "&Function reference"
 msgstr "&Aide sur la fonction"
 
@@ -2075,11 +2075,11 @@ msgstr ""
 "rkward-devel@lists.sourceforge.net et nous dire que vous essayiez de faire "
 "lorsque cela s'est produit. Désolé !"
 
-#: rbackend/rthread.cpp:462
+#: rbackend/rthread.cpp:461
 msgid "R Startup"
 msgstr "Lancez R"
 
-#: main.cpp:70 main.cpp:83
+#: main.cpp:70 main.cpp:84
 msgid "RKWard"
 msgstr "RKWard"
 
@@ -2098,68 +2098,74 @@ msgstr ""
 "Masque en tant que nombre binaire (voir debug.h) des composants à tracer"
 
 #: main.cpp:77
+msgid ""
+"Debugger (enclose any debugger arguments in single quotes ('') together with "
+"the command)"
+msgstr ""
+
+#: main.cpp:78
 msgid "Disable R C stack checking"
 msgstr ""
 
-#: main.cpp:84
+#: main.cpp:85
 msgid "Project leader / main developer"
 msgstr "Chef de projet/ Principal développeur"
 
-#: main.cpp:85
+#: main.cpp:86
 msgid "C++ coder since 0.2.9"
 msgstr "Développeur C++ depuis la version 0.2.9"
 
-#: main.cpp:86
+#: main.cpp:87
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Des commentaires utiles et des discussions"
 
-#: main.cpp:87
+#: main.cpp:88
 #, fuzzy
 msgid "Many plugins, suggestions"
 msgstr "Des commentaires utiles et des discussions"
 
-#: main.cpp:89
+#: main.cpp:90
 msgid "Several helpful comments and discussions"
 msgstr "Des commentaires utiles et des discussions"
 
-#: main.cpp:90
+#: main.cpp:91
 msgid "Plugins and patches"
 msgstr "Greffons et correctifs"
 
-#: main.cpp:91
+#: main.cpp:92
 msgid "New website"
 msgstr "Nouveau site Internet"
 
-#: main.cpp:92
+#: main.cpp:93
 msgid "A cool icon"
 msgstr "Une sympathique icône"
 
-#: main.cpp:93
+#: main.cpp:94
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "Logo de RKWard, nombreuses suggestions, aide à la formulation"
 
-#: main.cpp:94
+#: main.cpp:95
 msgid "Several valuable comments, hints and patches"
 msgstr "Des commentaires utiles, des conseils et des correctifs"
 
-#: main.cpp:95
+#: main.cpp:96
 msgid "Translation, Suggestions, plugins"
 msgstr "Des commentaires utiles et des discussions"
 
-#: main.cpp:96
+#: main.cpp:97
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr ""
 "De nombreux commentaires, des suggestions utiles, et des rapports de bug"
 
-#: main.cpp:97
+#: main.cpp:98
 msgid "Some patches"
 msgstr "Quelques patches"
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgstr "Bien d'autres personnes sur rkward-devel@lists.sourceforge.net"
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr "Désolé, vous avez été oublié. Veuillez nous contacter pour être ajouté"
 
@@ -2367,19 +2373,19 @@ msgstr "Terminal R"
 msgid "Syntax error\n"
 msgstr "Erreur de syntaxe.\n"
 
-#: rkconsole.cpp:783
+#: rkconsole.cpp:785
 msgid "Interrupt running command"
 msgstr "Interrompre l'exécution de la commande"
 
-#: rkconsole.cpp:789
+#: rkconsole.cpp:791
 msgid "Copy selection cleaned"
 msgstr "Copier la sélection"
 
-#: rkconsole.cpp:790
+#: rkconsole.cpp:792
 msgid "Copy selection literally"
 msgstr "Copier la sélection"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid ""
 "You have configured RKWrad to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -2391,11 +2397,11 @@ msgstr ""
 "ou vous avez commencé à entrer du texte dans la console). Voulez-vous court-"
 "circuiter la console pourcette fois ou voulez vous retenter plus tard ?"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid "Console is busy"
 msgstr "Console occupée"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid "Bypass console"
 msgstr "Court-circuiter la console"
 
