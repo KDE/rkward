@@ -87,7 +87,7 @@ public:
 	virtual void setLabel (const QString &value, bool sync=true);
 	virtual void setMetaProperty (const QString &id, const QString &value, bool sync=true);
 	
-	bool isContainer () const { return (type & Container); };
+	bool isContainer () const { return (type & (Container | Environment | Workspace)); };
 	bool isDataFrame () const { return (type & DataFrame); };
 	bool isVariable () const { return (type & Variable); };
 	bool isType (int type) const { return (RObject::type & type); };
@@ -123,8 +123,8 @@ public:
 /** short hand for getDimension (0). Meaningful for one-dimensional objects */
 	int getLength () const { return dimensions[0]; };
 
-/** A map of objects accessible by index. Used in RContainerObject. Defined here for technical reasons. */
-	typedef QList<RObject*> RObjectMap;
+/** A QList of RObjects. Internally the same as RObjectMap, but can be considered "public" */
+	typedef QList<RObject*> ObjectList;
 	typedef QMap<QString, RObject*> RObjectSearchMap;
 
 /** A map of values to labels. This is used both in regular objects, in which it just represents a map of named values, if any. The more important use is in factors, where it represents the factor levels. Here, the key is always a string representation of a positive integer. */
@@ -142,6 +142,7 @@ public:
 	virtual RObject **children () const { return 0; };
 
 	RDataType getDataType () const { return (typeToDataType (type)); };
+	int getType () const { return type; };
 	static RDataType typeToDataType (int ftype) { return ((RDataType) ((ftype & DataTypeMask) >> 14)); };
 	void setDataType (RDataType new_type) {
 		int n_type = type - (type & DataTypeMask);
@@ -188,6 +189,9 @@ protected:
 	friend class RContainerObject;
 	friend class RObjectList;
 	friend class REnvironmentObject;
+/** A map of objects accessible by index. Used in RContainerObject. Defined here for technical reasons. */
+	typedef QList<RObject*> RObjectMap;
+
 	RContainerObject *parent;
 	QString name;
 	int type;

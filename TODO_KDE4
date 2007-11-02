@@ -37,6 +37,7 @@ rkcommandeditorwindow
 			- Can't do any thing about this. It part of the katepart.
 	- placement of menu options?
 	- F9 key seems to be occupied, now (by show/hide folding markers)
+		- perhaps switch to Shift+F7,8,9 for Run line, selection, all (do so globally!)
 
 rkward
 	- does closing windows work
@@ -101,7 +102,7 @@ rkspinbox:
 
 rkobjectlistview:
 	- do the tool-tips for the objects work?
-		-* not quite: tooltip of (i+1)-th object is shown at i-th position
+	- implement sorting / filtering
 
 rkconsole:
 	- check whether all selection, editing, navigating really works as expected

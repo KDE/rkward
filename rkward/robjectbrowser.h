@@ -18,13 +18,14 @@
 #define ROBJECTBROWSER_H
 
 #include "windows/rkmdiwindow.h"
+
+#include <QModelIndex>
+#include <QFocusEvent>
 //Added by qt3to4:
 #include <Q3PopupMenu>
-#include <QFocusEvent>
 
 class RKObjectListView;
 class RKObjectListViewSettings;
-class RKListViewItem;
 class Q3ListViewItem;
 class QPushButton;
 class QRadioButton;
@@ -75,7 +76,7 @@ public:
 	enum PopupItems { Help=1, Edit=2, View=3, Rename=4, Copy=5, CopyToGlobalEnv=6, Delete=7 };
 private slots:
 	void updateButtonClicked ();
-	void contextMenuCallback (RKListViewItem *item, bool *suppress);
+	void contextMenuCallback (RObject *object, bool *suppress);
 	
 	void popupHelp ();
 	void popupEdit ();
@@ -86,7 +87,7 @@ private slots:
 	void popupDelete ();
 	void popupRename ();
 /** when an object in the list is double clicked, insert its name in the current RKCommandEditor window */
-	void slotListDoubleClicked (Q3ListViewItem *item, const QPoint &pos, int);
+	void doubleClicked (const QModelIndex &index);
 protected:
 /** reimplemnented from QWidget to make show the globalenv object when activated (other than by mouse click) */
 	void focusInEvent (QFocusEvent *e);

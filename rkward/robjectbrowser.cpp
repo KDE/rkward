@@ -127,9 +127,9 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 	list_view->contextMenu ()->insertItem (i18n ("Copy to .GlobalEnv"), this, SLOT (popupCopyToGlobalEnv ()), 0, CopyToGlobalEnv, 5);
 	list_view->contextMenu ()->insertItem (i18n ("Delete"), this, SLOT (popupDelete ()), 0, Delete, 6);
 	list_view->contextMenu ()->insertSeparator (7);
-	connect (list_view, SIGNAL (aboutToShowContextMenu (RKListViewItem*, bool*)), this, SLOT (contextMenuCallback (RKListViewItem*, bool*)));
+	connect (list_view, SIGNAL (aboutToShowContextMenu (RObject *, bool*)), this, SLOT (contextMenuCallback (RObject*, bool*)));
 	
-	connect (list_view, SIGNAL (doubleClicked (Q3ListViewItem *, const QPoint &, int )), this, SLOT (slotListDoubleClicked (Q3ListViewItem *, const QPoint &, int)));
+	connect (list_view, SIGNAL (doubleClicked(const QModelIndex&)), this, SLOT (doubleClicked(const QModelIndex&)));
 	
 	resize (minimumSizeHint ().expandedTo (QSize (400, 480)));
 
@@ -215,7 +215,7 @@ void RObjectBrowserInternal::popupRename () {
 	}
 }
 
-void RObjectBrowserInternal::contextMenuCallback (RKListViewItem *, bool *) {
+void RObjectBrowserInternal::contextMenuCallback (RObject *, bool *) {
 	RK_TRACE (APP);
 	RObject *object = list_view->menuObject ();
 	Q3PopupMenu *menu = list_view->contextMenu ();
@@ -241,17 +241,18 @@ void RObjectBrowserInternal::contextMenuCallback (RKListViewItem *, bool *) {
 	menu->setItemVisible (Delete, object->canRemove ());
 }
 
-void RObjectBrowserInternal::slotListDoubleClicked (Q3ListViewItem *item, const QPoint &, int) {
+void RObjectBrowserInternal::doubleClicked (const QModelIndex& index) {
 	RK_TRACE (APP);
-	RObject *object = list_view->findItemObject (static_cast<RKListViewItem*> (item));
+	RObject *object = static_cast<RObject*> (index.internalPointer ());
 	
 	if (!object) return;
 	if (object == RObjectList::getObjectList ()) return;
 	QWidget *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached);
 	if (!w) return;
-	
-	if (w->inherits ("RKCommandEditorWindow")) {
-		static_cast<RKCommandEditorWindow*> (w)->insertText (object->getFullName ());
+
+	RKCommandEditorWindow *cw = qobject_cast<RKCommandEditorWindow*> (w);
+	if (cw) {
+		cw->insertText (object->getFullName ());
 	}
 }
 

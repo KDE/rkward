@@ -209,14 +209,12 @@ private:
 };
 
 ///////////////////////////////////////////////// RObjects ////////////////////////////////////////////////////////
-class RObject;
 class RKObjectListView;
 
 #include <qstringlist.h>
-#include <q3valuelist.h>
+#include <qlist.h>
 
-/** for easier typing. A list of RObjects. Should probably be defined somewhere in core-dir instead. */
-typedef Q3ValueList<RObject *> ObjectList;
+#include "../core/robject.h"
 
 /** special type of RKComponentProperty, that prepresents one or more RObject (s) */
 class RKComponentPropertyRObjects : public RKComponentPropertyBase {
@@ -246,7 +244,7 @@ public:
 @returns false if the object does not qualify as a valid selection according to current settings (class/type/dimensions), true otherwise */
 	bool setObjectValue (RObject *object);
 /** set all the objects in the given new list (if valid), and only those. Emit a signal if there was any change */
-	void setObjectList (const ObjectList &newlist);
+	void setObjectList (const RObject::ObjectList &newlist);
 /** Check whether an object is valid for this property.
 @returns false if the object does not qualify as a valid selection according to current settings (class/type/dimensions), true otherwise */
 	bool isObjectValid (RObject *object);
@@ -255,7 +253,7 @@ public:
 	RObject *objectValue ();
 /** Get current list of objects. Do not modify this list! It is the very same list, the property uses internally!
 @returns an empty list if no valid object is selected */
-	ObjectList objectList ();
+	RObject::ObjectList objectList ();
 /** set separator (used to concatenate object names/labels, etc. if more than one object is selected) */
 	void setSeparator (const QString &sep) { separator = sep; emit (valueChanged (this)); };
 /** reimplemented from RKComponentPropertyBase. Modifier "label" returns label. Modifier "shortname" returns short name. Modifier QString::null returns full name. If no object is set, returns an empty string */
@@ -286,7 +284,7 @@ private:
 	void validizeAll (bool silent=false);
 /** simple helper function: Check whether the number of objects currently selected (and only that!), and set the valid state accordingly */
 	void checkListLengthValid ();
-	ObjectList object_list;
+	RObject::ObjectList object_list;
 	int dims;
 	int min_length;
 	int max_length;
@@ -392,7 +390,7 @@ private:
 		RKComponentPropertyBase *property;
 		QString modifier;
 	};
-	Q3ValueList<Source> sources;
+	QList<Source> sources;
 };
 
 #endif

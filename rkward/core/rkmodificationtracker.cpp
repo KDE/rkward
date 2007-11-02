@@ -22,16 +22,17 @@
 #include "../rkglobals.h"
 #include "../dataeditor/rkeditor.h"
 #include "rcontainerobject.h"
+#include "robjectlist.h"
 #include "../windows/rkworkplace.h"
+#include "../misc/rkstandardicons.h"
 
 #include "../debug.h"
 
-RKModificationTracker::RKModificationTracker (QObject *parent) : QObject (parent) {
+RKModificationTracker::RKModificationTracker (QObject *parent) : RKObjectListModel (parent) {
 	RK_TRACE (OBJECTS);
 
 	updates_locked = 0;
 }
-
 
 RKModificationTracker::~RKModificationTracker () {
 	RK_TRACE (OBJECTS);
@@ -73,6 +74,16 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 void RKModificationTracker::internalRemoveObject (RObject *object, bool removed_in_workspace, bool delete_obj) {
 	RK_TRACE (OBJECTS);
 
+	RK_ASSERT (object);
+	RK_ASSERT (object->getContainer ());
+
+	if (updates_locked <= 0) {
+		QModelIndex object_index = indexFor (object->getContainer ());
+		int object_row = object->getContainer ()->getIndexOf (object);
+		RK_ASSERT (object_row >= 0);
+		beginRemoveRows (object_index, object_row, object_row);
+	}
+
 // TODO: allow more than one editor per object
 // WARNING: This does not work, if a sub-object is being edited!
 	RKEditor *ed = object->objectOpened ();
@@ -94,6 +105,8 @@ void RKModificationTracker::internalRemoveObject (RObject *object, bool removed_
 
 	if (delete_obj) object->remove (removed_in_workspace);
 	else object->getContainer ()->removeChildNoDelete (object);
+
+	if (updates_locked <= 0) endRemoveRows ();
 }
 
 void RKModificationTracker::renameObject (RObject *object, const QString &new_name) {
@@ -106,11 +119,22 @@ void RKModificationTracker::renameObject (RObject *object, const QString &new_na
 
 // since we may end up with a different name that originally requested, we propagate the change also to the original editor
 	if (ed) ed->renameObject (object);
-	if (updates_locked <= 0) emit (objectPropertiesChanged (object));
+
+	if (updates_locked <= 0) {
+		emit (objectPropertiesChanged (object));
+
+		QModelIndex object_index = indexFor (object);
+		emit (dataChanged (object_index, object_index));
+	}
 }
 
 void RKModificationTracker::addObject (RObject *object, RContainerObject* parent, int position, RKEditor *editor) {
 	RK_TRACE (OBJECTS);
+
+	if (updates_locked <= 0) {
+		QModelIndex parent_index = indexFor (parent);
+		beginInsertRows (parent_index, position, position);
+	}
 
 	parent->insertChild (object, position);
 
@@ -124,7 +148,11 @@ void RKModificationTracker::addObject (RObject *object, RContainerObject* parent
 			ed->addObject (object);
 		}
 	}
-	if (updates_locked <= 0) emit (objectAdded (object));
+
+	if (updates_locked <= 0) {
+		emit (objectAdded (object));
+		endInsertRows ();
+	}
 }
 
 void RKModificationTracker::objectMetaChanged (RObject *object) {
@@ -135,7 +163,13 @@ void RKModificationTracker::objectMetaChanged (RObject *object) {
 	if (ed) {
 		ed->updateObjectMeta (object);
 	}
-	if (updates_locked <= 0) emit (objectPropertiesChanged (object));
+
+	if (updates_locked <= 0) {
+		emit (objectPropertiesChanged (object));
+
+		QModelIndex object_index = indexFor (object);
+		emit (dataChanged (object_index, object_index));
+	}
 }
 
 void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeSet *changes) {
@@ -148,6 +182,133 @@ void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeS
 	}
 
 	delete changes;
+
+	if (updates_locked <= 0) {
+		QModelIndex object_index = indexFor (object);
+		emit (dataChanged (object_index, object_index));
+	}
+}
+
+
+///////////////// RKObjectListModel ///////////////////////////
+
+#define COL_NAME 0
+#define COL_LABEL 1
+#define COL_TYPE 2
+#define COL_CLASS 3
+#define NUM_COLS (COL_CLASS + 1)
+
+RKObjectListModel::RKObjectListModel (QObject *parent) : QAbstractItemModel (parent) {
+	RK_TRACE (OBJECTS);
+}
+
+RKObjectListModel::~RKObjectListModel () {
+	RK_TRACE (OBJECTS);
+}
+
+QModelIndex RKObjectListModel::index (int row, int column, const QModelIndex& parent) const {
+	RK_TRACE (OBJECTS);
+	if (!parent.isValid ()) {
+		RK_ASSERT (row == 0);
+		// must cast to RObject, here. Else casting to void* and back will confuse the hell out of GCC 4.2
+		return (createIndex (row, column, static_cast<RObject *> (RObjectList::getObjectList ())));
+	}
+	RObject* parent_object = static_cast<RObject*> (parent.internalPointer ());
+
+	RK_ASSERT (parent_object->isContainer ());
+	RContainerObject* container = static_cast<RContainerObject*> (parent_object);
+	RK_ASSERT (row < container->numChildren ());
+
+	return (createIndex (row, column, container->findChildByIndex (row)));
+}
+
+QModelIndex RKObjectListModel::parent (const QModelIndex& index) const {
+	RK_TRACE (OBJECTS);
+
+	if (!index.isValid ()) return QModelIndex ();
+	RObject* child = static_cast<RObject*> (index.internalPointer ());
+	RK_ASSERT (child);
+	return (indexFor (child->getContainer ()));
+}
+
+int RKObjectListModel::rowCount (const QModelIndex& parent) const {
+	RK_TRACE (OBJECTS);
+
+	RObject* parent_object = 0;
+	if (parent.isValid ()) parent_object = static_cast<RObject*> (parent.internalPointer ());
+	else return 1;		// the root item
+
+	if (!(parent_object && parent_object->isContainer ())) return 0;
+
+	return (static_cast<RContainerObject*> (parent_object)->numChildren ());
+}
+
+int RKObjectListModel::columnCount (const QModelIndex&) const {
+	//RK_TRACE (OBJECTS); // no need to trace this
+
+	return NUM_COLS;
+}
+
+QVariant RKObjectListModel::data (const QModelIndex& index, int role) const {
+	RK_TRACE (OBJECTS);
+
+	int col = index.column ();
+	RObject *object = static_cast<RObject*> (index.internalPointer ());
+
+	if ((!object) || (col >= NUM_COLS)) {
+		RK_ASSERT (false);
+		return QVariant ();
+	}
+
+	if (role == Qt::DisplayRole) {
+		if (col == COL_NAME) return object->getShortName ();
+		if (col == COL_LABEL) return object->getLabel ();
+		if (col == COL_TYPE) {
+			if (object->isVariable ()) return RObject::typeToText (object->getDataType ());
+			return QVariant ();
+		}
+		if (col == COL_CLASS) return object->makeClassString ("; ");
+		RK_ASSERT (false);
+	} else if (role == Qt::DecorationRole) {
+		if (col == COL_NAME) return RKStandardIcons::iconForObject (object);
+	} else if (role == Qt::ToolTipRole) {
+		return object->getObjectDescription ();
+	}
+
+	return QVariant ();
+}
+
+QVariant RKObjectListModel::headerData (int section, Qt::Orientation orientation, int role) const {
+	RK_TRACE (OBJECTS);
+
+	if (orientation != Qt::Horizontal) return QVariant ();
+	if (role != Qt::DisplayRole) return QVariant ();
+
+	if (section == COL_NAME) return i18n ("Name");
+	if (section == COL_LABEL) return i18n ("Label");
+	if (section == COL_TYPE) return i18n ("Type");
+	if (section == COL_CLASS) return i18n ("Class");
+
+	RK_ASSERT (false);
+	return QVariant ();
+}
+
+QModelIndex RKObjectListModel::indexFor (RObject *object) const {
+	RK_TRACE (OBJECTS);
+
+	if (!object) return QModelIndex ();
+
+	RContainerObject *parent = object->getContainer ();
+	// must cast to RObject, here. Else casting to void* and back will confuse the hell out of GCC 4.2
+	if (!parent) return createIndex (0, 0, static_cast<RObject*> (RObjectList::getObjectList ()));
+
+	int row = parent->getIndexOf (object);
+	if (row < 0) {
+		RK_ASSERT (false);
+		return QModelIndex ();
+	}
+
+	return (createIndex (row, 0, object));
 }
 
 #include "rkmodificationtracker.moc"

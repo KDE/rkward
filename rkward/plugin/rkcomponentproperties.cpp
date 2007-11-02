@@ -657,9 +657,7 @@ bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
 void RKComponentPropertyRObjects::removeObjectValue (RObject *object) {
 	RK_TRACE (PLUGIN);
 
-	ObjectList::Iterator it = object_list.find (object);
-	if (it != object_list.end ()) {
-		object_list.erase (it);
+	if (object_list.removeAll (object)) {
 		checkListLengthValid ();
 		emit (valueChanged (this));
 	}
@@ -695,32 +693,29 @@ bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
 	return (addObjectValue (object));
 }
 
-void RKComponentPropertyRObjects::setObjectList (const ObjectList &newlist) {
+void RKComponentPropertyRObjects::setObjectList (const RObject::ObjectList &newlist) {
 	RK_TRACE (PLUGIN);
 
 	bool changes = false;
 
 	// remove items from the old list that are not in the new list
-	ObjectList::Iterator it = object_list.begin ();
-	while (it != object_list.end ()) {
-		if (newlist.contains (*it)) {
-			++it;
-		} else {
-			it = object_list.erase (it);		// it now points to the next object in the list
+	for (int i = 0; i < object_list.size (); ++i) {
+		if (!newlist.contains (object_list[i])) {
+			object_list.removeAt (i);
+			--i;
 			changes = true;
 		}
 	}
 
 	// now add items from the new list that are not in the old list
-	ObjectList::const_iterator cit = newlist.begin ();
-	while (cit != newlist.end ()) {
-		if (!object_list.contains (*cit)) {
-			if (isObjectValid (*cit)) {
-				object_list.append (*cit);
+	for (int i = 0; i < newlist.size (); ++i) {
+		RObject *obj = newlist[i];
+		if (!object_list.contains (obj)) {
+			if (isObjectValid (obj)) {
+				object_list.append (obj);
 				changes = true;
 			}
 		}
-		++cit;
 	}
 
 	// emit a signal if there have been any changes
@@ -776,7 +771,7 @@ RObject *RKComponentPropertyRObjects::objectValue () {
 	return (object_list.first ());
 }
 
-Q3ValueList<RObject *> RKComponentPropertyRObjects::objectList () {
+RObject::ObjectList RKComponentPropertyRObjects::objectList () {
 	RK_TRACE (PLUGIN);
 
 	return (object_list);
@@ -787,16 +782,16 @@ QString RKComponentPropertyRObjects::value (const QString &modifier) {
 
 	QStringList ret;
 	if (modifier.isEmpty ()) {
-		for (ObjectList::const_iterator it = object_list.begin (); it != object_list.end ();++it) {
-			ret.append ((*it)->getFullName ());
+		for (int i = 0; i < object_list.size (); ++i) {
+			ret.append (object_list[i]->getFullName ());
 		}
 	} else if (modifier == "shortname") {
-		for (ObjectList::const_iterator it = object_list.begin (); it != object_list.end ();++it) {
-			ret.append ((*it)->getShortName ());
+		for (int i = 0; i < object_list.size (); ++i) {
+			ret.append (object_list[i]->getShortName ());
 		}
 	} else if (modifier == "label") {
-		for (ObjectList::const_iterator it = object_list.begin (); it != object_list.end ();++it) {
-			ret.append ((*it)->getLabel ());
+		for (int i = 0; i < object_list.size (); ++i) {
+			ret.append (object_list[i]->getLabel ());
 		}
 	} else {
 		warnModifierNotRecognized (modifier);
@@ -943,31 +938,22 @@ void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase 
 void RKComponentPropertyRObjects::setFromListView (RKObjectListView *list_view, bool selected_only) {
 	RK_TRACE (PLUGIN);
 
-	// first find out the list of objects from the listview
-	ObjectList newlist;
-	Q3ListViewItem *current;
-	current = list_view->firstChild ();
-	while (current->itemBelow ()) {
-		current = current->itemBelow ();
-		if ((!selected_only) || current->isSelected ()) {
-			RObject *obj = list_view->findItemObject (static_cast<RKListViewItem *> (current));
-			RK_ASSERT (obj);
-			newlist.append (static_cast<RKVariable*> (obj));
-		}
-	}
-
+#warning KDE4 implement for selected_only==false
+//KDE4: TODO !selected_only
+// Or perhaps remove this parameter altogether? Looks like it is only needed for RKVarselector, and probably it
+// does not do much good, there.
 	// invalid objects will be ignored in setObjectList
-	setObjectList (newlist);
+	setObjectList (list_view->selectedObjects ());
 }
 
 void RKComponentPropertyRObjects::objectPropertiesChanged (RObject *object) {
 	RK_TRACE (PLUGIN);
 
 	// if object list contains this object, check whether it is still valid. Otherwise remove it, revalidize and signal change.
-	ObjectList::Iterator it = object_list.find (object);
-	if (it != object_list.end ()) {
+	int index = object_list.indexOf (object);
+	if (index >= 0) {
 		if (!isObjectValid (object)) {
-			object_list.erase (it);
+			object_list.removeAt (index);
 			checkListLengthValid ();
 			emit (valueChanged (this));
 		}
@@ -979,12 +965,10 @@ void RKComponentPropertyRObjects::validizeAll (bool silent) {
 
 	bool changes = false;
 
-	ObjectList::Iterator it = object_list.begin ();
-	while (it != object_list.end ()) {
-		if (isObjectValid (*it)) {
-			++it;
-		} else {
-			it = object_list.erase (it);		// it now points to the next object in the list
+	for (int i = 0; i < object_list.size (); ++i) {
+		if (!isObjectValid (object_list[i])) {
+			object_list.removeAt (i);
+			--i;
 			changes = true;
 		}
 	}
@@ -1107,8 +1091,8 @@ void RKComponentPropertyConvert::selfChanged (RKComponentPropertyBase *) {
 void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase *) {
 	RK_TRACE (PLUGIN);
 
-	for (Q3ValueList<Source>::const_iterator it = sources.constBegin (); it != sources.constEnd (); ++it) {
-		Source source = *it;		// easier typing
+	for (int i = 0; i < sources.size (); ++i) {
+		Source source = sources[i];		// easier typing
 		switch (_mode) {
 			case Equals: {
 				if (source.property->value (source.modifier) != standard) {

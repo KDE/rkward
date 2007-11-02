@@ -111,7 +111,7 @@ void RKVarSlot::listSelectionChanged () {
 
 	bool selection = false;
 
-	ObjectList sellist;
+	RObject::ObjectList sellist;
 	Q3ListViewItem *item = list->firstChild ();
 	while (item) {
 		if (item->isSelected ()) {
@@ -135,8 +135,8 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 
 	RK_DO (qDebug ("contained in varslot: %s", available->value ().toLatin1 ().data ()), PLUGIN, DL_DEBUG);
 
-	ObjectList objlist = available->objectList ();
-	ObjectList::const_iterator it = objlist.begin ();
+	RObject::ObjectList objlist = available->objectList ();
+	RObject::ObjectList::const_iterator it = objlist.begin ();
 	int i = 1;
 	while (it != objlist.end ()) {
 		Q3ListViewItem *new_item = new Q3ListViewItem (list, QString::number (i++), (*it)->getShortName ());
@@ -176,8 +176,8 @@ void RKVarSlot::selectPressed () {
 	// first update the properties
 	if (add_mode) {
 		if (multi) {
-			ObjectList objlist = source->objectList ();
-			ObjectList::const_iterator it = objlist.constBegin ();
+			RObject::ObjectList objlist = source->objectList ();
+			RObject::ObjectList::const_iterator it = objlist.constBegin ();
 			while (it != objlist.constEnd ()) {
 				available->addObjectValue (*it);
 				++it;
@@ -186,14 +186,14 @@ void RKVarSlot::selectPressed () {
 			if (source->objectValue ()) available->setObjectValue (source->objectValue ());
 		}
 	} else {		// remove-mode
-		ObjectList objlist;
+		RObject::ObjectList objlist;
 		if (multi) {
 			objlist = selected->objectList ();
 		} else {
 			objlist = available->objectList ();
 		}
 
-		ObjectList::const_iterator it = objlist.begin ();
+		RObject::ObjectList::const_iterator it = objlist.begin ();
 		while (it != objlist.end ()) {
 			available->removeObjectValue (*it);
 			selected->removeObjectValue (*it);

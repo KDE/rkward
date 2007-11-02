@@ -129,8 +129,8 @@ void RKFormula::typeChange (int id) {
 	} else if (id == (int) Custom) {
 		predictors_view->clear ();
 		item_map.clear ();
-		ObjectList fixed_list = fixed_factors->objectList ();
-		for (ObjectList::const_iterator it = fixed_list.begin (); it != fixed_list.end (); ++it) {
+		RObject::ObjectList fixed_list = fixed_factors->objectList ();
+		for (RObject::ObjectList::const_iterator it = fixed_list.begin (); it != fixed_list.end (); ++it) {
 			Q3ListViewItem *new_item = new Q3ListViewItem (predictors_view, (*it)->getShortName ());
 			item_map.insert (new_item, (*it));
 		}
@@ -154,7 +154,7 @@ void RKFormula::makeModelString () {
 	if (dep_var) {
 		model_ok = true;
 	}
-	ObjectList vlist = fixed_factors->objectList ();
+	RObject::ObjectList vlist = fixed_factors->objectList ();
 	if (vlist.empty ()) {
 		model_ok = false;
 	}
@@ -163,7 +163,7 @@ void RKFormula::makeModelString () {
 	} else if (!vlist.empty ()) {
 		container = vlist.first ()->getContainer ();
 	}
-	for (ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
+	for (RObject::ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
 		if ((*it)->getContainer () != container) {
 			multitable = true;
 			break;
@@ -172,7 +172,7 @@ void RKFormula::makeModelString () {
 	if (multitable) {
 		table_string = "data.frame (";
 		if (dep_var) table_string.append (mangleName (dep_var) + '=' + dep_var->getFullName ());
-		for (ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
+		for (RObject::ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
 			table_string.append (", " + mangleName ((*it)) + '=' + (*it)->getFullName ());
 		}
 		table_string.append (")");
@@ -183,12 +183,12 @@ void RKFormula::makeModelString () {
 	// construct model string
 	model_string = mangleName (dep_var) + " ~ ";
 	if (model_type == FullModel) {
-		for (ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
+		for (RObject::ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
 			if (it != vlist.begin ()) model_string.append (" * ");
 			model_string.append (mangleName (*it));
 		}
 	} else if (model_type == MainEffects) {
-		for (ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
+		for (RObject::ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
 			if (it != vlist.begin ()) model_string.append (" + ");
 			model_string.append (mangleName (*it));
 		}

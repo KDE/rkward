@@ -34,26 +34,11 @@
 #include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
 
-// static
-QPixmap *RKObjectListView::icon_function = 0;
-QPixmap *RKObjectListView::icon_list = 0;
-QPixmap *RKObjectListView::package_environment = 0;
-QPixmap *RKObjectListView::environment = 0;
-
-RKObjectListView::RKObjectListView (QWidget *parent) : Q3ListView (parent) {
+RKObjectListView::RKObjectListView (QWidget *parent) : QTreeView (parent) {
 	RK_TRACE (APP);
-	if (icon_function == 0) {
-		icon_function = new QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/function.png"));
-		icon_list = new QPixmap (QImage (RKCommonFunctions::getRKWardDataDir () + "icons/list.png"));
-		package_environment = new QPixmap (SmallIcon ("ark", 12));
-		environment = new QPixmap (SmallIcon ("konqueror", 12));
-	}
 
-	setSorting (100);
-	addColumn (i18n("Name"));
-	addColumn (i18n("Label"));
-	addColumn (i18n("Type"));
-	addColumn (i18n("Class"));
+// KDE4: TODO: sorting
+//	setSorting (100);
 	settings = new RKObjectListViewSettings ();
 	connect (settings, SIGNAL (settingsChanged ()), this, SLOT (objectBrowserSettingsChanged ()));
 
@@ -61,10 +46,9 @@ RKObjectListView::RKObjectListView (QWidget *parent) : Q3ListView (parent) {
 	menu->insertItem (i18n ("Show Objects"), settings->showObjectsMenu ());
 	menu->insertItem (i18n ("Show Fields"), settings->showFieldsMenu ());
 	menu->insertItem (i18n ("Configure Defaults"), this, SLOT (popupConfigure ()));
-	connect (this, SIGNAL (contextMenuRequested (Q3ListViewItem *, const QPoint &, int)), this, SLOT (requestedContextMenu (Q3ListViewItem*, const QPoint&, int)));
 
 // KDE4: do we need this?
-	setShowToolTips (false);
+//	setShowToolTips (false);
 
 	objectBrowserSettingsChanged ();
 }
@@ -77,17 +61,32 @@ void RKObjectListView::setObjectCurrent (RObject *object, bool only_if_none_curr
 	RK_TRACE (APP);
 
 	if (!object) return;
-	RKListViewItem *item = findObjectItem (object);
+	if (only_if_none_current && currentIndex ().isValid ()) return;
 
-	if (!item) return;		// this may happen during initialization!
-	if (only_if_none_current && selectedItem ()) return;
+	QModelIndex index = RKGlobals::tracker ()->indexFor (object);
+	if (index.isValid ()) {
+		scrollTo (index);
+		setCurrentIndex (index);
+		resizeColumnToContents (0);
+	}
+}
 
-	ensureItemVisible (item);
-	setCurrentItem (item);
+RObject::ObjectList RKObjectListView::selectedObjects () const {
+	RK_TRACE (APP);
+
+	RObject::ObjectList list;
+	QModelIndexList selected = selectedIndexes ();
+	for (int i = 0; i < selected.size (); ++i) {
+		QModelIndex index = selected[i];
+		if (index.column () != 0) continue;
+		if (!index.isValid ()) continue;
+		list.append (static_cast<RObject*> (index.internalPointer ()));
+	}
+	return list;
 }
 
 void RKObjectListView::objectBrowserSettingsChanged () {
-	setColumnWidthMode (0, Q3ListView::Maximum);
+/*	setColumnWidthMode (0, Q3ListView::Maximum);
 	if (settings->settingActive (RKObjectListViewSettings::ShowFieldsLabel)) {
 		if (columnWidth (1) == 0) setColumnWidth (1, 50);
 		setColumnWidthMode (1, Q3ListView::Maximum);
@@ -119,44 +118,46 @@ void RKObjectListView::objectBrowserSettingsChanged () {
 		RK_ASSERT (object);
 
 		it.current ()->setVisible (settings->shouldShowObject (object));
-	}
+	} */
 }
 
+// KDE4 TODO: does this really need to be virtual?
 //virtual 
 void RKObjectListView::popupConfigure () {
+	RK_TRACE (APP);
 	RKSettings::configureSettings (RKSettings::PageObjectBrowser, this);
 }
 
-void RKObjectListView::requestedContextMenu (Q3ListViewItem *item, const QPoint &pos, int) {
-	RObject *object = findItemObject (static_cast<RKListViewItem *> (item));
+void RKObjectListView::contextMenuEvent (QContextMenuEvent* event) {
+	RK_TRACE (APP);
 
-	menu_object = object;
+	QModelIndex index = indexAt (event->pos ());
+	menu_object = static_cast<RObject*> (index.internalPointer ());
 
 	bool suppress = false;
-	emit (aboutToShowContextMenu (static_cast<RKListViewItem *> (item), &suppress));
+	emit (aboutToShowContextMenu (menu_object, &suppress));
 
-	if (!suppress) menu->popup (pos);
+	if (!suppress) menu->popup (event->globalPos ());
 }
 
 void RKObjectListView::initialize () {
 	RK_TRACE (APP);
 
-	setUpdatesEnabled (false);
-	addObject (0, RObjectList::getObjectList (), true);
-	setUpdatesEnabled (true);
-	RKListViewItem *item = findObjectItem (RObjectList::getGlobalEnv ());
-	RK_ASSERT (item);
-	item->setOpen (true);
-	setMinimumHeight (item->height() * 5);
+	setUniformRowHeights (true);		// KDE4: can we do this?
 
-	connect (RKGlobals::tracker (), SIGNAL (objectRemoved (RObject *)), this, SLOT (objectRemoved (RObject*)));
-	connect (RKGlobals::tracker (), SIGNAL (objectPropertiesChanged (RObject *)), this, SLOT (objectPropertiesChanged (RObject*)));
-	connect (RKGlobals::tracker (), SIGNAL (objectAdded (RObject *)), this, SLOT (objectAdded (RObject*)));
+	// KDE4: initialization logic is likely wrong, now.
+	setModel (RKGlobals::tracker ());
+
+	setExpanded (RKGlobals::tracker ()->indexFor (RObjectList::getObjectList ()), true);
+	setExpanded (RKGlobals::tracker ()->indexFor (RObjectList::getGlobalEnv ()), true);
+	setMinimumHeight (rowHeight (RKGlobals::tracker ()->indexFor (RObjectList::getGlobalEnv ())) * 5);
+	resizeColumnToContents (0);
 
 	connect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (updateComplete ()));
 	disconnect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (initialize ()));
 	connect (RObjectList::getObjectList (), SIGNAL (updateStarted ()), this, SLOT (updateStarted ()));
 
+// KDE4 TODO: this signal needed?
 	emit (listChanged ());
 	changes = false;
 	updateComplete ();
@@ -165,6 +166,7 @@ void RKObjectListView::initialize () {
 void RKObjectListView::initializeLater () {
 	RK_TRACE (APP);
 
+// KDE4: TODO huh?
 	connect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (initialize ()));
 	updateStarted ();
 }
@@ -187,178 +189,7 @@ void RKObjectListView::updateStarted () {
 	update_in_progress = true;
 }
 
-void RKObjectListView::objectAdded (RObject *object) {
-	RK_TRACE (APP);
-
-	RKListViewItem *parent = 0;
-	if (!object->isType (RObject::Workspace)) {
-		parent = findObjectItem (object->getContainer ());
-		RK_ASSERT (parent);
-	}
-	addObject (parent, object, true);
-	
-	if (update_in_progress) {
-		changes = true;
-	} else {
-		emit (listChanged ());
-	}
-}
-
-void RKObjectListView::objectRemoved (RObject *object) {
-	RK_TRACE (APP);
-
-	RKListViewItem *item = findObjectItem (object);
-	RK_ASSERT (item);
-	// also take care of removing the children of the removed item!
-	// this can NOT be done by using QListViewItemIterator (item), as that is NOT constrained to the children!
-	RObject **children = object->children ();
-	for (int i = 0; i < object->numChildren (); ++i) {
-		objectRemoved (children[i]);
-	}
-
-	object_map.remove (item);
-	delete item;
-	
-	if (update_in_progress) {
-		changes = true;
-	} else {
-		emit (listChanged ());
-	}
-}
-
-void RKObjectListView::objectPropertiesChanged (RObject *object) {
-	RK_TRACE (APP);
-
-	RKListViewItem *item = findObjectItem (object);
-	RK_ASSERT (item);
-	updateItem (item, object);
-
-	if (update_in_progress) {
-		changes = true;
-	} else {
-		emit (listChanged ());
-	}
-}
-
-RKListViewItem *RKObjectListView::findObjectItem (RObject *object) {
-	RK_TRACE (APP);
-	for (ObjectMap::const_iterator it = object_map.constBegin (); it != object_map.constEnd (); ++it) {
-		if (it.data () == object) return it.key ();
-	}
-	return 0;
-}
-
-RObject *RKObjectListView::findItemObject (RKListViewItem *item) {
-	RK_TRACE (APP);
-	if (!item) return 0;
-	if (object_map.find (item) == object_map.end ()) {
-		return 0;
-	} else {
-		return object_map[item];
-	}
-}
-
-void RKObjectListView::updateItem (RKListViewItem *item, RObject *object) {
-	RK_TRACE (APP);
-
-	item->setText (0, object->getShortName ());
-	item->setText (1, object->getLabel ());
-	if (object->isVariable ()) {
-		item->setText (2, RObject::typeToText (object->getDataType ()));
-	}
-	item->setText (3, object->makeClassString ("; "));
-
-	if (object->isDataFrame ()) {
-		item->setPixmap (0, SmallIcon("spreadsheet"));
-	} else if (object->isVariable()) {
-		switch(object->getDataType ()) {
-			case RObject::DataNumeric:
-				item->setPixmap (0, SmallIcon("math_paren",12));
-				break;
-			case RObject::DataFactor:
-				item->setPixmap (0, SmallIcon("math_onetwomatrix",12));
-				break;
-			case RObject::DataCharacter:
-				item->setPixmap (0, SmallIcon("text",12));
-				break;
-			case RObject::DataLogical:
-				#warning TODO icon for logical
-			case RObject::DataUnknown:
-				item->setPixmap (0, SmallIcon("help",12));
-				break;
-			default:
-				item->setPixmap (0, SmallIcon("no",12));
-				break;
-		}
-	} else if (object->isType (RObject::List)) {
-		item->setPixmap (0, *icon_list);
-	} else if (object->isType (RObject::Function)) {
-		item->setPixmap (0, *icon_function);
-	} else if (object->isType (RObject::PackageEnv)) {
-		item->setPixmap (0, *package_environment);
-	} else if (object->isType (RObject::Environment)) {
-		item->setPixmap (0, *environment);
-	}
-
-	if (!settings->shouldShowObject (object)) item->setVisible (false);
-}
-
-void RKObjectListView::addObject (RKListViewItem *parent, RObject *object, bool recursive) {
-	RK_TRACE (APP);
-	
-	RKListViewItem *item;
-
-	if (parent) {
-		item = new RKListViewItem (parent);
-	} else {
-		item = new RKListViewItem (this);
-	}
-
-	updateItem (item, object);
-	object_map.insert (item, object);
-
-	if (recursive) {
-		RObject **children = object->children ();
-		for (int i=0; i < object->numChildren (); ++i) {
-			addObject (item, children[i], true);
-		}
-	}
-
-// special treatment for the workspace object
-	if (!parent) {
-		item->setPixmap (0, SmallIcon("view_tree"));
-		item->setText (0, i18n ("[Objects]"));
-		item->setOpen (true);
-	}
-
-// code below won't work, as objects get added before editor is opened. Need to call from RKEditor(Manager)
-/*	if (object->numChildren () && RKGlobals::editorManager ()->objectOpened (object)) {
-		item->setOpen (true);
-		while (item->parent ()) {
-			item = item->parent ();
-			item->setOpen (true);
-		}
-	} */
-}
-
-bool RKObjectListView::event (QEvent *event) {
-	// don't trace here!
-	if (event->type() == QEvent::ToolTip) {
-		RK_TRACE (APP);
-
-		QHelpEvent *help_event = static_cast<QHelpEvent *>(event);
-		RKListViewItem *item = static_cast<RKListViewItem *> (itemAt (help_event->pos ()));
-		if (item) {
-			RObject *object = findItemObject (item);
-			if (object) {
-				QToolTip::showText (help_event->globalPos(), object->getObjectDescription (), this, itemRect (item));
-			}
-		}
-	}
-	return Q3ListView::event(event);
-}
-
-
+/*
 //////////////////// RKListViewItem //////////////////////////
 int RKListViewItem::width (const QFontMetrics &fm, const Q3ListView * lv, int c) const {
 	if (parent ()) {
@@ -370,7 +201,7 @@ int RKListViewItem::width (const QFontMetrics &fm, const Q3ListView * lv, int c)
 	int ret = Q3ListViewItem::width (fm, lv, c);
 	if (ret > 200) return 200;
 	return ret;
-}
+} */
 
 //////////////////// RKObjectListViewSettings //////////////////////////
 

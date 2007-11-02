@@ -19,21 +19,46 @@
 
 #include <qobject.h>
 #include <qstring.h>
+#include <QAbstractItemModel>
 
 #include "robject.h"
 
 class RKEditor;
 class RObject;
 
+/** An item model for the RObjectList . Technically this is the base class for RKModificationTracker. The two could be merged, fully, but this way, it's a little easier to see what belongs where, logically. */
+class RKObjectListModel : public QAbstractItemModel {
+protected:
+	RKObjectListModel (QObject *parent);
+	virtual ~RKObjectListModel ();
+public:
+	/** implements QAbstractItemModel::index() */
+	QModelIndex index (int row, int column, const QModelIndex& parent = QModelIndex ()) const;
+	/** implements QAbstractItemModel::parent() */
+	QModelIndex parent (const QModelIndex& index) const;
+	/** implements QAbstractItemModel::rowCount() */
+	int rowCount (const QModelIndex& parent = QModelIndex ()) const;
+	/** implements QAbstractItemModel::columnCount(). This is identical for all items */
+	int columnCount (const QModelIndex& parent = QModelIndex ()) const;
+	/** implements QAbstractItemModel::data() */
+	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const;
+	/** reimplemented from  QAbstractItemModel::headerData() to provide column names */
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+
+	/** convenience function to create an index for a particular object */
+	QModelIndex indexFor (RObject *object) const;
+};
+
+
 /**
 This class takes care of propagating object-modifications to all editors/variable-browsers etc. that need to know about them. For instance, if an object was removed in the R-workspace, the RObjectList will notify the RKModificationTracker. The modification tracker will then find out, whether there are editor(s) currently editing the removed object. If so, it will prompt the user what to do. Or, if an object is renamed in an editor, the RKModificationTracker will find out, whether the object is opened in further editors (not possible, yet) and tell those to update accordingly. It will further emit signals so the RObjectBrowser and RKVarselector(s) can update their object-lists.
 
 @author Thomas Friedrichsmeier
 */
-class RKModificationTracker : public QObject {
+class RKModificationTracker : public RKObjectListModel {
 Q_OBJECT
 public:
-	RKModificationTracker (QObject *parent = 0);
+	RKModificationTracker (QObject *parent);
 
 	~RKModificationTracker ();
 	
