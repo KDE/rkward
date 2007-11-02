@@ -77,7 +77,7 @@ public:
 /** @returns false if an object of the given old type cannot represent an object of the given new type (e.g. (new_type & RObjectType::Variable), but (old_type & RObjectType::Container)). */
 	static bool isMatchingType (int old_type, int new_type) { return ((old_type & ROBJECT_TYPE_INTERNAL_MASK) == (new_type & ROBJECT_TYPE_INTERNAL_MASK)); };
 	
-	QString getShortName () const;
+	QString getShortName () const { return name; };
 	virtual QString getFullName () const;
 	virtual QString getBaseName () const;
 	QString getLabel () const;

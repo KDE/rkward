@@ -57,11 +57,6 @@ RObject::~RObject () {
 	delete [] classnames;
 }
 
-QString RObject::getShortName () const {
-	RK_TRACE (OBJECTS);
-	return name;
-}
-
 QString RObject::getFullName () const {
 	RK_TRACE (OBJECTS);
 	return parent->makeChildName (RObject::name, type & Misplaced);
