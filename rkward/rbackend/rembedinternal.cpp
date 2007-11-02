@@ -31,6 +31,7 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #undef FALSE
 
 #include "rklocalesupport.h"
+#include "rkpthreadsupport.h"
 
 extern "C" {
 #define R_INTERFACE_PTRS 1
@@ -624,30 +625,58 @@ SEXP doSubstackCall (SEXP call) {
 	return R_NilValue;
 }
 
-bool REmbedInternal::startR (int argc, char** argv, size_t stacksize, void *stackstart) {
+#ifdef R_2_3
+void R_CheckStackWrapper (void *) {
+	R_CheckStack ();
+}
+#endif
+
+bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 	RK_TRACE (RBACKEND);
 
 	r_running = true;
+	bool ok = true;
 #ifdef R_2_3
 	Rf_initialize_R (argc, argv);
-	R_CStackStart = (uintptr_t) stackstart;
-	R_CStackLimit = stacksize;
+
+	if (stack_check) {
+		char dummy;
+		size_t stacksize;
+		void *stackstart;
+		RKGetCurrentThreadStackLimits (&stacksize, &stackstart, &dummy);
+		R_CStackStart = (uintptr_t) stackstart;
+		R_CStackLimit = stacksize;
+	} else {
+		R_CStackStart = (uintptr_t) -1;
+		R_CStackLimit = (uintptr_t) -1;
+	}
+
 	setup_Rmainloop ();
-	RKGlobals::na_double = NA_REAL;
+
+	if (stack_check) {
+		// safety check: If we are beyond the stack boundaries already, we better disable stack checking
+		// this has to come *after* the first setup_Rmainloop ()!
+		Rboolean stack_ok = R_ToplevelExec (R_CheckStackWrapper, (void *) 0);
+		if (!stack_ok) {
+			RK_DO (qDebug ("R_CheckStack() failed during initialization. Will disable stack checking and try to re-initialize."), RBACKEND, DL_WARNING);
+			RK_DO (qDebug ("If this does not work, try the --disable-stack-check command line option, *and* submit a bug report."), RBACKEND, DL_WARNING);
+			R_CStackStart = (uintptr_t) -1;
+			R_CStackLimit = (uintptr_t) -1;
+			setup_Rmainloop ();
+		}
+	}
+
 	R_Interactive = (Rboolean) TRUE;
-	R_ReplDLLinit ();
-	RKWard_RData_Tag = Rf_install ("RKWard_RData_Tag");
-	return true;
 #else
-	bool ok = (Rf_initEmbeddedR (argc, argv) >= 0);
+	ok = (Rf_initEmbeddedR (argc, argv) >= 0);
+#endif
 	RKGlobals::na_double = NA_REAL;
 	R_ReplDLLinit ();
 	RKWard_RData_Tag = Rf_install ("RKWard_RData_Tag");
-#	ifdef R_2_6
+#ifdef R_2_6
 	R_LastvalueSymbol = Rf_install (".Last.value");
-#	endif
-	return ok;
 #endif
+	return ok;
 }
 
 SEXP doUpdateLocale () {

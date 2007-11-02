@@ -87,9 +87,8 @@ protected:
 /** low-level initialization of R
 @param argc Number of arguments as would be passed on the commandline to R
 @param argv Arguments as would be passed on the commandline to R
-@param stacksize Stacksize to use in the R thread
-@param stackstart Base of stack to use in the R thread */
-	bool startR (int argc, char **argv, size_t stacksize, void *stackstart);
+@param stack_check C stack checking enabled */
+	bool startR (int argc, char **argv, bool stack_check);
 /** low-level running of a command.
 @param command command to be run
 @param error this will be set to a value in RKWardError depending on success/failure of the command

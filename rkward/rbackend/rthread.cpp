@@ -18,7 +18,6 @@
 
 #include "rinterface.h"
 #include "rcommandstack.h"
-#include "rkpthreadsupport.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../rkglobals.h"
@@ -466,16 +465,7 @@ int RThread::initialize () {
 	RKWardStartupOptions *options = RKWardMainWindow::getStartupOptions ();
 	RK_ASSERT (options);
 
-	size_t stacksize;
-	void *stackstart;
-	if (options->no_stack_check) {
-		stacksize = (unsigned long) -1;
-		stackstart = (void *) -1;
-	} else {
-		char dummy;
-		RKGetCurrentThreadStackLimits (&stacksize, &stackstart, &dummy);
-	}
-	startR (argc, argv, stacksize, stackstart);
+	startR (argc, argv, !(options->no_stack_check));
 
 	connectCallbacks ();
 
