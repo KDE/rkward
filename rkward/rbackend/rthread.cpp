@@ -18,7 +18,6 @@
 
 #include "rinterface.h"
 #include "rcommandstack.h"
-#include "rkpthreadsupport.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../rkglobals.h"
@@ -491,15 +490,7 @@ int RThread::initialize () {
 	RKWardStartupOptions *options = RKWardMainWindow::getStartupOptions ();
 	RK_ASSERT (options);
 
-	size_t stacksize;
-	void *stackstart;
-	if (options->no_stack_check) {
-		stacksize = (unsigned long) -1;
-		stackstart = (void *) -1;
-	} else {
-		RKGetCurrentThreadStackLimits (&stacksize, &stackstart);
-	}
-	startR (argc, argv, stacksize, stackstart);
+	startR (argc, argv, !(options->no_stack_check));
 
 	connectCallbacks ();
 
@@ -547,6 +538,8 @@ int RThread::initialize () {
 	MUTEX_LOCK;
 	flushOutput ();
 	MUTEX_UNLOCK;
+
+	RKWardMainWindow::discardStartupOptions ();
 
 	return status;
 }
@@ -640,6 +633,4 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 		delete [] call;
 		changed_symbol_names.clear ();
 	}
-
-	RKWardMainWindow::discardStartupOptions ();
 }
