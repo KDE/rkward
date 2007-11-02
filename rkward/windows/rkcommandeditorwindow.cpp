@@ -20,7 +20,6 @@
 
 #include <ktexteditor/configinterface.h>
 #include <ktexteditor/sessionconfiginterface.h>
-#include <ktexteditor/codecompletioninterface.h>
 #include <ktexteditor/editorchooser.h>
 
 #include <qlayout.h>
@@ -94,17 +93,22 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	connect (m_doc, SIGNAL (textChanged (KTextEditor::Document*)), this, SLOT (tryCompletionProxy (KTextEditor::Document*)));
 	// somehow the katepart loses the context menu each time it loses focus
 	connect (m_view, SIGNAL (focusIn(KTextEditor::View*)), this, SLOT (focusIn(KTextEditor::View*)));
-	connect (m_view, SIGNAL (focusOut(KTextEditor::View*)), this, SLOT (focusOut(KTextEditor::View*)));
 	completion_timer = new QTimer (this);
 	connect (completion_timer, SIGNAL (timeout ()), this, SLOT (tryCompletion()));
 
+	completion_model = 0;
+	cc_iface = 0;
+	hinter = 0;
 	if (use_r_highlighting) {
 		setRHighlighting ();
-		completion_model = new RKCodeCompletionModel (m_view);
+		cc_iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (m_view);
+		if (cc_iface) {
+			cc_iface->setAutomaticInvocationEnabled (true);
+			completion_model = new RKCodeCompletionModel (this);
+		} else {
+			RK_ASSERT (false);
+		}
 		hinter = new RKFunctionArgHinter (this, m_view);
-	} else {
-		hinter = 0;
-		completion_model = 0;
 	}
 
 	updateCaption ();	// initialize
@@ -239,17 +243,31 @@ void RKCommandEditorWindow::showHelp () {
 
 void RKCommandEditorWindow::tryCompletionProxy (KTextEditor::Document*) {
 	if (RKSettingsModuleCommandEditor::completionEnabled ()) {
-		completion_timer->start (RKSettingsModuleCommandEditor::completionTimeout (), true);
+		if (cc_iface && cc_iface->isCompletionActive ()) {
+			tryCompletion ();
+		} else {
+			completion_timer->start (RKSettingsModuleCommandEditor::completionTimeout (), true);
+		}
 	}
+}
+
+QString RKCommandEditorWindow::currentCompletionWord () const {
+	RK_TRACE (COMMANDEDITOR);
+// KDE4 TODO: This may no longer be needed, if the katepart gets fixed not to abort completions when the range
+// contains dots or other special characters
+	KTextEditor::Cursor c = m_view->cursorPosition();
+	uint para=c.line(); uint cursor_pos=c.column();
+
+	QString current_line = m_doc->line (para);
+	if (current_line.findRev ("#", cursor_pos) >= 0) return QString ();	// do not hint while in comments
+
+	return RKCommonFunctions::getCurrentSymbol (current_line, cursor_pos, false);
 }
 
 void RKCommandEditorWindow::tryCompletion () {
 	// TODO: merge this with RKConsole::doTabCompletion () somehow
 	RK_TRACE (COMMANDEDITOR);
-	if (!completion_model) return;
-
-	KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (m_view);
-	if (!iface) {
+	if ((!cc_iface) || (!completion_model)) {
 		RK_ASSERT (false);
 		return;
 	}
@@ -258,24 +276,24 @@ void RKCommandEditorWindow::tryCompletion () {
 	uint para=c.line(); uint cursor_pos=c.column();
 
 	QString current_line = m_doc->line (para);
-	if (current_line.findRev ("#", cursor_pos) >= 0) return;	// do not hint while in comments
-
 	int start;
 	int end;
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &start, &end);
-	if ((end - start) >= RKSettingsModuleCommandEditor::completionMinChars ()) {
-		KTextEditor::Range range (para, start, para, end);
 
-		completion_model->updateCompletionList (m_doc->text (range));
+	KTextEditor::Range range = KTextEditor::Range (para, start, para, end);
+	QString word = m_doc->text (range);
+	if (current_line.findRev ("#", cursor_pos) >= 0) word.clear ();	// do not hint while in comments
+	if (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ()) {
+		completion_model->updateCompletionList (word);
 		if (completion_model->isEmpty ()) {
-			iface->abortCompletion ();
+			cc_iface->abortCompletion ();
 		} else {
-			if (!iface->isCompletionActive ()) {
-				iface->startCompletion (range, completion_model);
+			if (!cc_iface->isCompletionActive ()) {
+				cc_iface->startCompletion (range, completion_model);
 			}
 		}
 	} else {
-		iface->abortCompletion ();
+		cc_iface->abortCompletion ();
 	}
 }
 
@@ -484,17 +502,11 @@ bool RKFunctionArgHinter::eventFilter (QObject *, QEvent *e) {
 
 //////////////////////// RKCodeCompletionModel ////////////////////
 
-RKCodeCompletionModel::RKCodeCompletionModel (KTextEditor::View *parent) : KTextEditor::CodeCompletionModel (parent) {
+RKCodeCompletionModel::RKCodeCompletionModel (RKCommandEditorWindow *parent) : KTextEditor::CodeCompletionModel (parent) {
 	RK_TRACE (COMMANDEDITOR);
 
 	setRowCount (0);
-
-	KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (parent);
-	if (!iface) {
-		RK_ASSERT (false);
-		return;
-	}
-	iface->setAutomaticInvocationEnabled (false);
+	command_editor = parent;
 }
 
 RKCodeCompletionModel::~RKCodeCompletionModel () {
@@ -509,33 +521,42 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	RObject::RObjectSearchMap map;
 	RObjectList::getObjectList ()->findObjectsMatching (symbol, &map);
 
-//KDE4 TODO: clean up once the format of findObjectsMatching is solid
+	int count = map.size ();
 	list.clear ();
+	list_names.clear ();
+	list.reserve (count);
+	list_names.reserve (count);
 	// this is silly, but we need an int indexable storage, so we copy the map to a list
 	for (RObject::RObjectSearchMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
 		list.append (it.data ());
+		// the second list is used to store the name that should be used for completion.
+		// This may be object->getBaseName() or object->getFullName () depending on whether the object is
+		// masked or not.
+		list_names.append (it.key ());
 	}
 
-	setRowCount (list.count ());
+	setRowCount (count);
 	current_symbol = symbol;
 
 	reset ();
 }
 
-void RKCodeCompletionModel::completionInvoked (KTextEditor::View *view, const KTextEditor::Range &range, InvocationType) {
+void RKCodeCompletionModel::completionInvoked (KTextEditor::View*, const KTextEditor::Range&, InvocationType) {
 	RK_TRACE (COMMANDEDITOR);
 
-	updateCompletionList (view->document ()->text (range));
+	// we totally ignore whichever range the katepart thinks we should offer a completion on.
+	// it is often wrong, esp, when there are dots in the symbol
+// KDE4 TODO: This may no longer be needed, if the katepart gets fixed not to abort completions when the range
+// contains dots or other special characters
+	updateCompletionList (command_editor->currentCompletionWord ());
 }
 
 void RKCodeCompletionModel::executeCompletionItem (KTextEditor::Document *document, const KTextEditor::Range &word, int row) const {
 	RK_TRACE (COMMANDEDITOR);
 
-	RK_ASSERT (list.size () > row);
-	RObject *object = list[row];
-	RK_ASSERT (object);
+	RK_ASSERT (list_names.size () > row);
 
-	document->replaceText (word, object->getFullName ());
+	document->replaceText (word, list_names[row]);
 }
 
 QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const {

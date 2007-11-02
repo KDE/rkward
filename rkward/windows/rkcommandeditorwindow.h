@@ -18,11 +18,13 @@
 #define RKCOMMANDEDITORWINDOW_H
 
 #include <QWidget>
+#include <QVector>
 #include <qstring.h>
 
 #include <ktexteditor/view.h>
 #include <ktexteditor/document.h>
 #include <ktexteditor/codecompletionmodel.h>
+#include <ktexteditor/codecompletioninterface.h>
 #include <kurl.h>
 
 #include "../windows/rkmdiwindow.h"
@@ -31,6 +33,7 @@ class QEvent;
 class QCloseEvent;
 class QFrame;
 class QLabel;
+class RKCommandEditorWindow;
 
 /** classes wishing to use RKFunctionArgHinter should derive from this, and implement provideContext () */
 class RKScriptContextProvider {
@@ -74,18 +77,20 @@ private:
 /** code completion model for RKCommandEditorWindow */
 class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel {
 public:
-	RKCodeCompletionModel (KTextEditor::View* parent);
+	RKCodeCompletionModel (RKCommandEditorWindow* parent);
 	~RKCodeCompletionModel ();
 
 	void updateCompletionList (const QString& symbol);
-	void completionInvoked (KTextEditor::View *view, const KTextEditor::Range &range, InvocationType);
+	void completionInvoked (KTextEditor::View *, const KTextEditor::Range &, InvocationType);
 	void executeCompletionItem (KTextEditor::Document *document, const KTextEditor::Range &word, int row) const;
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const;
 
-	bool isEmpty () { return list.isEmpty (); };
+	bool isEmpty () const { return list.isEmpty (); };
 private:
-	QList<RObject*> list;
+	QVector<RObject*> list;
+	QVector<QString> list_names;
 	QString current_symbol;
+	RKCommandEditorWindow *command_editor;
 };
 
 class QTimer;
@@ -130,6 +135,7 @@ public:
 	KUrl url ();
 
 	bool provideContext (unsigned int line_rev, QString *context, int *cursor_position);
+	QString currentCompletionWord () const;
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */
 	void updateCaption (KTextEditor::Document* = 0);
@@ -155,6 +161,7 @@ protected:
 private:
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;
+	KTextEditor::CodeCompletionInterface *cc_iface;
 	RKFunctionArgHinter *hinter;
 	RKCodeCompletionModel *completion_model;
 
