@@ -539,8 +539,6 @@ int RThread::initialize () {
 	flushOutput ();
 	MUTEX_UNLOCK;
 
-	RKWardMainWindow::discardStartupOptions ();
-
 	return status;
 }
 

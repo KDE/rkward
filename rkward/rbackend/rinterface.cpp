@@ -193,6 +193,7 @@ void RInterface::customEvent (QEvent *e) {
 		processRCallbackRequest (static_cast<RCallbackArgs *> (static_cast<QCustomEvent*> (e)->data ()));
 	} else if ((e->type () == RSTARTED_EVENT)) {
 		r_thread->unlock (RThread::Startup);
+		RKWardMainWindow::discardStartupOptions ();
 	} else if ((e->type () > RSTARTUP_ERROR_EVENT)) {
 		int err = e->type () - RSTARTUP_ERROR_EVENT;
 		QString message = i18n ("There was a problem starting the R backend. The following error(s) occurred:\n");
