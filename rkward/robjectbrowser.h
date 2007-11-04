@@ -28,7 +28,6 @@ class QPushButton;
 class QRadioButton;
 class QCheckBox;
 class RObject;
-class RKCommandEditorWindow;
 class RObjectBrowserInternal;
 class KVBox;
 

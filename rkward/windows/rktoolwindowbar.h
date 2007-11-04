@@ -21,6 +21,7 @@
 #define RKTOOLWINDOWBAR_H
 
 #include <kmultitabbar.h>
+#include <kconfiggroup.h>
 
 #include <QMap>
 
@@ -46,21 +47,28 @@ public:
 
 	void showWidget (RKMDIWindow *widget);
 	void hideWidget (RKMDIWindow *widget);
+
+	void restoreSize (const KConfigGroup &cg);
+	void saveSize (KConfigGroup &cg) const;
 private slots:
 	void tabClicked (int id);
 	void buttonPopupActivate (QAction *a);
-
 protected:
 	bool eventFilter (QObject *obj, QEvent *ev);
 private:
 friend class RKWorkplace;
 	void reclaimDetached (RKMDIWindow *window);
 
+	int getSplitterSize () const;
+	void setSplitterSize (int new_size);
+
 	QMap<RKMDIWindow*, int> widget_to_id;
-	RKMDIWindow * idToWidget (int id);
+	RKMDIWindow* idToWidget (int id) const;
 
-	KHBox *container;
+	QSplitter* splitter;
+	KHBox* container;
 
+	int initial_size;
 	int id_of_popup;
 };
 

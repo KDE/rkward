@@ -159,6 +159,7 @@ signals:
 public slots:
 /** When windows are attached to the workplace, their QObject::destroyed () signal is connected to this slot. Thereby deleted objects are removed from the workplace automatically */
 	void windowDestroyed (QObject *window);
+	void saveSettings ();
 protected:
 /** handles the result of the command issued in restoreWorkplace. */
 	void rCommandDone (RCommand *command);

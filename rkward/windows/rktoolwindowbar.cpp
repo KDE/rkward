@@ -35,22 +35,65 @@
 #include "../debug.h"
 
 #define CHANGE_ATTACHMENT_ACTION_ID 10
+#define DEFAULT_SPLITTER_SIZE 200
+#define SPLITTER_MIN_SIZE 10
 
 RKToolWindowBar::RKToolWindowBar (KMultiTabBarPosition position, QWidget *parent) : KMultiTabBar (position, parent),
 	container (0) {
 	RK_TRACE (APP);
 
 	setStyle (KMultiTabBar::KDEV3ICON);
+	initial_size = -1;
 }
 
 RKToolWindowBar::~RKToolWindowBar () {
 	RK_TRACE (APP);
 }
 
+void RKToolWindowBar::restoreSize (const KConfigGroup &cg) {
+	RK_TRACE (APP);
+
+	initial_size = cg.readEntry (QString ("view_size_%1").arg (position ()), DEFAULT_SPLITTER_SIZE);
+}
+
+void RKToolWindowBar::saveSize (KConfigGroup &cg) const {
+	RK_TRACE (APP);
+
+	int save_size = getSplitterSize ();
+	if (save_size >= SPLITTER_MIN_SIZE) {
+		cg.writeEntry (QString ("view_size_%1").arg (position ()), save_size);
+	}
+}
+
+int RKToolWindowBar::getSplitterSize () const {
+	RK_TRACE (APP);
+
+	int pos = splitter->indexOf (container);
+	if (pos < 0) {
+		RK_ASSERT (false);
+		return 0;
+	}
+	return (splitter->sizes ()[pos]);
+}
+
+void RKToolWindowBar::setSplitterSize (int new_size) {
+	RK_TRACE (APP);
+
+	int pos = splitter->indexOf (container);
+	if (pos < 0) {
+		RK_ASSERT (false);
+		return;
+	}
+	QList<int> sizes = splitter->sizes ();
+	sizes[pos] = new_size;
+	splitter->setSizes (sizes);
+}
+
 void RKToolWindowBar::setSplitter (QSplitter *splitter) {
 	RK_TRACE (APP);
 	RK_ASSERT (!container);
 
+	RKToolWindowBar::splitter = splitter;
 	container = new KHBox (splitter);
 	splitter->setContentsMargins (0, 0, 0, 0);
 	container->layout ()->setContentsMargins (0, 0, 0, 0);
@@ -126,7 +169,6 @@ void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
 			if (cur->isAttached ()) {
 				cur->active = false;
 				cur->hide ();
-	
 			}
 			setTab (it.value (), false);
 		}
@@ -135,6 +177,13 @@ void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
 	if (widget->isAttached ()) {
 		setTab (id, true);
 		container->show ();
+
+		if (initial_size >= 0) {	// first show
+			setSplitterSize (initial_size);
+			initial_size = -1;
+		} else if (getSplitterSize () < SPLITTER_MIN_SIZE) {
+			setSplitterSize (DEFAULT_SPLITTER_SIZE);
+		}
 	} else {
 		widget->topLevelWidget ()->show ();
 		widget->topLevelWidget ()->raise ();
@@ -177,7 +226,7 @@ void RKToolWindowBar::tabClicked (int id) {
 	}
 }
 
-RKMDIWindow* RKToolWindowBar::idToWidget (int id) {
+RKMDIWindow* RKToolWindowBar::idToWidget (int id) const {
 	RK_TRACE (APP);
 
 	for (QMap<RKMDIWindow*, int>::const_iterator it = widget_to_id.constBegin (); it != widget_to_id.constEnd (); ++it) {

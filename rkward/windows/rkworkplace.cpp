@@ -87,18 +87,36 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	tool_window_bars[KMultiTabBar::Right] = new RKToolWindowBar (KMultiTabBar::Right, hbox);
 	tool_window_bars[KMultiTabBar::Right]->setSplitter (horiz_splitter);
 
+	KConfigGroup toolbar_config = KGlobal::config ()->group ("ToolwindowBars");
+	tool_window_bars[KMultiTabBar::Top]->restoreSize (toolbar_config);
+	tool_window_bars[KMultiTabBar::Left]->restoreSize (toolbar_config);
+	tool_window_bars[KMultiTabBar::Bottom]->restoreSize (toolbar_config);
+	tool_window_bars[KMultiTabBar::Right]->restoreSize (toolbar_config);
+
 	// now add it all to this widget
 	QVBoxLayout *box = new QVBoxLayout (this);
 	box->setContentsMargins (0, 0, 0, 0);
 	box->addWidget (vbox);
 
 	history = new RKMDIWindowHistory (this);
+
+	connect (RKWardMainWindow::getMain (), SIGNAL (aboutToQuitRKWard()), this, SLOT (saveSettings()));
 }
 
 RKWorkplace::~RKWorkplace () {
 	RK_TRACE (APP);
 
 //	closeAll ();	// not needed, as the windows will autodelete themselves using QObject mechanism. Of course, closeAll () should be called *before* quitting.
+}
+
+void RKWorkplace::saveSettings () {
+	RK_TRACE (APP);
+
+	KConfigGroup toolbar_config = KGlobal::config ()->group ("ToolwindowBars");
+	tool_window_bars[KMultiTabBar::Top]->saveSize (toolbar_config);
+	tool_window_bars[KMultiTabBar::Left]->saveSize (toolbar_config);
+	tool_window_bars[KMultiTabBar::Bottom]->saveSize (toolbar_config);
+	tool_window_bars[KMultiTabBar::Right]->saveSize (toolbar_config);
 }
 
 void RKWorkplace::initActions (KActionCollection *ac, const char *prev_id, const char *next_id, const char *left_id, const char *right_id) {
