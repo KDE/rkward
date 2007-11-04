@@ -36,14 +36,14 @@
 
 #define CHANGE_ATTACHMENT_ACTION_ID 10
 #define DEFAULT_SPLITTER_SIZE 200
-#define SPLITTER_MIN_SIZE 10
+#define SPLITTER_MIN_SIZE 30
 
 RKToolWindowBar::RKToolWindowBar (KMultiTabBarPosition position, QWidget *parent) : KMultiTabBar (position, parent),
 	container (0) {
 	RK_TRACE (APP);
 
 	setStyle (KMultiTabBar::KDEV3ICON);
-	initial_size = -1;
+	last_known_size = SPLITTER_MIN_SIZE;
 }
 
 RKToolWindowBar::~RKToolWindowBar () {
@@ -53,16 +53,13 @@ RKToolWindowBar::~RKToolWindowBar () {
 void RKToolWindowBar::restoreSize (const KConfigGroup &cg) {
 	RK_TRACE (APP);
 
-	initial_size = cg.readEntry (QString ("view_size_%1").arg (position ()), DEFAULT_SPLITTER_SIZE);
+	last_known_size = cg.readEntry (QString ("view_size_%1").arg (position ()), DEFAULT_SPLITTER_SIZE);
 }
 
 void RKToolWindowBar::saveSize (KConfigGroup &cg) const {
 	RK_TRACE (APP);
 
-	int save_size = getSplitterSize ();
-	if (save_size >= SPLITTER_MIN_SIZE) {
-		cg.writeEntry (QString ("view_size_%1").arg (position ()), save_size);
-	}
+	cg.writeEntry (QString ("view_size_%1").arg (position ()), last_known_size);
 }
 
 int RKToolWindowBar::getSplitterSize () const {
@@ -79,14 +76,36 @@ int RKToolWindowBar::getSplitterSize () const {
 void RKToolWindowBar::setSplitterSize (int new_size) {
 	RK_TRACE (APP);
 
-	int pos = splitter->indexOf (container);
-	if (pos < 0) {
-		RK_ASSERT (false);
-		return;
-	}
+	// HACK / WORKAROUND: reset the collapsed state of the container (if collapsed). Else we will not be able to open it again
+	int index = splitter->indexOf (container);
 	QList<int> sizes = splitter->sizes ();
-	sizes[pos] = new_size;
-	splitter->setSizes (sizes);
+	if (sizes[index] == 0) {
+		sizes[index] = last_known_size;
+		splitter->setSizes (sizes);
+	}
+
+	if (splitter->orientation () == Qt::Horizontal) {
+		container->resize (new_size, container->height ());
+	} else {
+		container->resize (container->width (), new_size);
+	}
+}
+
+void RKToolWindowBar::splitterMoved (int, int) {
+	RK_TRACE (APP);
+
+	int pos = getSplitterSize ();
+	if (pos > SPLITTER_MIN_SIZE) last_known_size = pos;
+	else last_known_size = SPLITTER_MIN_SIZE;
+
+	if (!pos) {		// collapsed. Hide it properly.
+		for (QMap<RKMDIWindow*, int>::const_iterator it = widget_to_id.constBegin (); it != widget_to_id.constEnd (); ++it) {
+			if (isTabRaised (it.data ())) {
+				hideWidget (it.key ());
+				break;
+			}
+		}
+	}
 }
 
 void RKToolWindowBar::setSplitter (QSplitter *splitter) {
@@ -100,6 +119,8 @@ void RKToolWindowBar::setSplitter (QSplitter *splitter) {
 	container->layout ()->setSpacing (0);
 	container->layout ()->setMargin (0);
 	container->hide ();
+
+	connect (splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved(int,int)));
 }
 
 void RKToolWindowBar::addWidget (RKMDIWindow *window) {
@@ -177,13 +198,8 @@ void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
 	if (widget->isAttached ()) {
 		setTab (id, true);
 		container->show ();
-
-		if (initial_size >= 0) {	// first show
-			setSplitterSize (initial_size);
-			initial_size = -1;
-		} else if (getSplitterSize () < SPLITTER_MIN_SIZE) {
-			setSplitterSize (DEFAULT_SPLITTER_SIZE);
-		}
+		setSplitterSize (last_known_size);
+qDebug ("%d", last_known_size);
 	} else {
 		widget->topLevelWidget ()->show ();
 		widget->topLevelWidget ()->raise ();

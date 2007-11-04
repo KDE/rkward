@@ -49,7 +49,6 @@ rkward
 		+ much better now.. no seg faults in preliminary testing (10/27/07)
 	-* closing the main window before the "R engine is idle" crashes rkward
 		-* related to rkhtmlwindow bug?
-	-* first time you open the workspace/file-system bowser after starting rkward it does not open properly: opens just enough to be able to drag it open!
 
 output window
 	- does it reload all changed images?

@@ -53,6 +53,7 @@ public:
 private slots:
 	void tabClicked (int id);
 	void buttonPopupActivate (QAction *a);
+	void splitterMoved (int, int);
 protected:
 	bool eventFilter (QObject *obj, QEvent *ev);
 private:
@@ -68,7 +69,7 @@ friend class RKWorkplace;
 	QSplitter* splitter;
 	KHBox* container;
 
-	int initial_size;
+	int last_known_size;
 	int id_of_popup;
 };
 
