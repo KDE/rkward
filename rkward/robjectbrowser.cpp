@@ -17,17 +17,14 @@
 #include "robjectbrowser.h"
 
 #include <qlayout.h>
-#include <q3listview.h>
 #include <qpushbutton.h>
-#include <q3popupmenu.h>
 #include <qcheckbox.h>
 #include <qradiobutton.h>
-#include <q3buttongroup.h>
-#include <q3vbox.h>
-//Added by qt3to4:
-#include <Q3HBoxLayout>
+#include <QHBoxLayout>
 #include <QFocusEvent>
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
+#include <QMenu>
+#include <QGroupBox>
 
 #include <klocale.h>
 #include <kinputdialog.h>
@@ -108,7 +105,8 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 	RK_TRACE (APP);
 	setFocusPolicy (Qt::ClickFocus);
 
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (this);
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+	vbox->setContentsMargins (0, 0, 0, 0);
 
 	list_view = new RKObjectListView (this);
 	vbox->addWidget (new RKObjectListViewSettingsWidget (list_view->getSettings (), this));
@@ -119,15 +117,24 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 	
 	setCaption (i18n ("Objects in the R workspace"));
 
-// KDE4: TODO: insertItem is Qt3. Use addAction instead.
-	list_view->contextMenu ()->insertItem (i18n ("Search Help"), this, SLOT (popupHelp ()), 0, Help, 0);
-	list_view->contextMenu ()->insertItem (i18n ("Edit"), this, SLOT (popupEdit ()), 0, Edit, 1);
-	list_view->contextMenu ()->insertItem (i18n ("View"), this, SLOT (popupView ()), 0, View, 2);
-	list_view->contextMenu ()->insertItem (i18n ("Rename"), this, SLOT (popupRename ()), 0, Rename, 3);
-	list_view->contextMenu ()->insertItem (i18n ("Copy to new symbol"), this, SLOT (popupCopy ()), 0, Copy, 4);
-	list_view->contextMenu ()->insertItem (i18n ("Copy to .GlobalEnv"), this, SLOT (popupCopyToGlobalEnv ()), 0, CopyToGlobalEnv, 5);
-	list_view->contextMenu ()->insertItem (i18n ("Delete"), this, SLOT (popupDelete ()), 0, Delete, 6);
-	list_view->contextMenu ()->insertSeparator (7);
+	actions.insert (Help, new QAction (i18n ("Search Help"), this));
+	connect (actions[Help], SIGNAL(triggered(bool)), this, SLOT(popupHelp()));
+	actions.insert (Edit, new QAction (i18n ("Edit"), this));
+	connect (actions[Edit], SIGNAL(triggered(bool)), this, SLOT(popupEdit()));
+	actions.insert (View, new QAction (i18n ("View"), this));
+	connect (actions[View], SIGNAL(triggered(bool)), this, SLOT(popupView()));
+	actions.insert (Rename, new QAction (i18n ("Rename"), this));
+	connect (actions[Rename], SIGNAL(triggered(bool)), this, SLOT(popupRename()));
+	actions.insert (Copy, new QAction (i18n ("Copy to new symbol"), this));
+	connect (actions[Copy], SIGNAL(triggered(bool)), this, SLOT(popupCopy()));
+	actions.insert (CopyToGlobalEnv, new QAction (i18n ("Copy to .GlobalEnv"), this));
+	connect (actions[CopyToGlobalEnv], SIGNAL(triggered(bool)), this, SLOT(popupCopyToGlobalEnv()));
+	actions.insert (Delete, new QAction (i18n ("Delete"), this));
+	connect (actions[Delete], SIGNAL(triggered(bool)), this, SLOT(popupDelete()));
+
+	QAction* sep = list_view->contextMenu ()->insertSeparator (list_view->contextMenu ()->actions ().value (0));
+	list_view->contextMenu ()->insertActions (sep, actions);
+
 	connect (list_view, SIGNAL (aboutToShowContextMenu (RObject *, bool*)), this, SLOT (contextMenuCallback (RObject*, bool*)));
 	
 	connect (list_view, SIGNAL (doubleClicked(const QModelIndex&)), this, SLOT (doubleClicked(const QModelIndex&)));
@@ -219,35 +226,32 @@ void RObjectBrowserInternal::popupRename () {
 void RObjectBrowserInternal::contextMenuCallback (RObject *, bool *) {
 	RK_TRACE (APP);
 	RObject *object = list_view->menuObject ();
-	QMenu *menu = list_view->contextMenu ();
 
 	if (!object) {
-		menu->setItemVisible (Help, false);
-		menu->setItemVisible (Edit, false);
-		menu->setItemVisible (View, false);
-		menu->setItemVisible (Rename, false);
-		menu->setItemVisible (Copy, false);
-		menu->setItemVisible (CopyToGlobalEnv, false);
-		menu->setItemVisible (Delete, false);
-
+		RK_ASSERT (actions.size () == ActionCount);
+		for (int i = 0; i < ActionCount; ++i) {
+			actions[i]->setVisible (false);
+		}
 		return;
 	}
 
-	menu->setItemVisible (Help, !(object->isType (RObject::ToplevelEnv) || object->isInGlobalEnv ()));
-	menu->setItemVisible (Edit, object->canEdit () && RKWorkplace::mainWorkplace ()->canEditObject (object));
-	menu->setItemVisible (View, object->canRead ());
-	menu->setItemVisible (Rename, object->canRename ());
-	menu->setItemVisible (Copy, object->canRead () && (!object->isType (RObject::ToplevelEnv)));
-	menu->setItemVisible (CopyToGlobalEnv, object->canRead () && (!object->isInGlobalEnv()) && (!object->isType (RObject::ToplevelEnv)));
-	menu->setItemVisible (Delete, object->canRemove ());
+	actions[Help]->setVisible (!(object->isType (RObject::ToplevelEnv) || object->isInGlobalEnv ()));
+	actions[Edit]->setVisible (object->canEdit () && RKWorkplace::mainWorkplace ()->canEditObject (object));
+	actions[View]->setVisible (object->canRead ());
+	actions[Rename]->setVisible (object->canRename ());
+	actions[Copy]->setVisible (object->canRead () && (!object->isType (RObject::ToplevelEnv)));
+	actions[CopyToGlobalEnv]->setVisible (object->canRead () && (!object->isInGlobalEnv()) && (!object->isType (RObject::ToplevelEnv)));
+	actions[Delete]->setVisible (object->canRemove ());
 }
 
 void RObjectBrowserInternal::doubleClicked (const QModelIndex& index) {
 	RK_TRACE (APP);
-	RObject *object = static_cast<RObject*> (index.internalPointer ());
-	
+
+	RObject *object = list_view->objectAtIndex (index);
 	if (!object) return;
 	if (object == RObjectList::getObjectList ()) return;
+
+#warning this will never work, as the object browser is active in this case!
 	QWidget *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached);
 	if (!w) return;
 
@@ -265,24 +269,29 @@ RKObjectListViewSettingsWidget::RKObjectListViewSettingsWidget (RKObjectListView
 	RKObjectListViewSettingsWidget::settings = settings;
 	connect (settings, SIGNAL (settingsChanged ()), this, SLOT (settingsChanged ()));
 
-	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
-	group = new Q3ButtonGroup (this);
-	Q3HBoxLayout *grouplayout = new Q3HBoxLayout (group);
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	layout->setContentsMargins (0, 0, 0, 0);
+
+	QGroupBox* group = new QGroupBox (this);
+	QHBoxLayout *grouplayout = new QHBoxLayout (group);
+	grouplayout->setContentsMargins (0, 0, 0, 0);
 	all = new QRadioButton (i18n ("All"), group);
 	nonfunctions = new QRadioButton (i18n ("Non-Functions"), group);
 	functions = new QRadioButton (i18n ("Functions"), group);
 	grouplayout->addWidget (all);
 	grouplayout->addWidget (nonfunctions);
 	grouplayout->addWidget (functions);
-	connect (group, SIGNAL (clicked (int)), this, SLOT (modeActivated (int)));
+	connect (all, SIGNAL(clicked(bool)), this, SLOT(modeChanged(bool)));
+	connect (nonfunctions, SIGNAL(clicked(bool)), this, SLOT(modeChanged(bool)));
+	connect (functions, SIGNAL(clicked(bool)), this, SLOT(modeChanged(bool)));
 	layout->addWidget (group);
 
 	all_envirs = new QCheckBox (i18n ("Show All Environments"), this);
-	connect (all_envirs, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
+	connect (all_envirs, SIGNAL (clicked(bool)), this, SLOT (boxChanged(bool)));
 	layout->addWidget (all_envirs);
 
 	hidden_objects = new QCheckBox (i18n ("Show Hidden Objects"), this);
-	connect (hidden_objects, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
+	connect (hidden_objects, SIGNAL (clicked(bool)), this, SLOT (boxChanged(bool)));
 	layout->addWidget (hidden_objects);
 
 	settingsChanged ();
@@ -295,23 +304,12 @@ RKObjectListViewSettingsWidget::~RKObjectListViewSettingsWidget () {
 void RKObjectListViewSettingsWidget::settingsChanged () {
 	RK_TRACE (APP);
 
-	all_envirs->setChecked (settings->settingActive (RKObjectListViewSettings::ShowObjectsAllEnvironments));
-	all_envirs->setEnabled (settings->optionConfigurable (RKObjectListViewSettings::ShowObjectsAllEnvironments));
+	all_envirs->setChecked (settings->getSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments));
+	hidden_objects->setChecked (settings->getSetting (RKObjectListViewSettings::ShowObjectsHidden));
 
-	hidden_objects->setChecked (settings->settingActive (RKObjectListViewSettings::ShowObjectsHidden));
-	hidden_objects->setEnabled (settings->optionConfigurable (RKObjectListViewSettings::ShowObjectsHidden));
-
-	bool functions_shown = settings->settingActive (RKObjectListViewSettings::ShowObjectsFunction);
-	bool functions_configurable = settings->optionConfigurable (RKObjectListViewSettings::ShowObjectsFunction);
-
-	bool vars_shown = settings->settingActive (RKObjectListViewSettings::ShowObjectsVariable);
-	bool vars_configurable = settings->optionConfigurable (RKObjectListViewSettings::ShowObjectsVariable);
-
-	bool containers_shown = settings->settingActive (RKObjectListViewSettings::ShowObjectsContainer);
-	bool containers_configurable = settings->optionConfigurable (RKObjectListViewSettings::ShowObjectsContainer);
-
-	if (functions_configurable && (vars_configurable || containers_configurable)) group->show ();
-	else group->hide ();
+	bool functions_shown = settings->getSetting (RKObjectListViewSettings::ShowObjectsFunction);
+	bool vars_shown = settings->getSetting (RKObjectListViewSettings::ShowObjectsVariable);
+	bool containers_shown = settings->getSetting (RKObjectListViewSettings::ShowObjectsContainer);
 
 	if (functions_shown && vars_shown && containers_shown) {
 		all->setChecked (true);
@@ -326,33 +324,33 @@ void RKObjectListViewSettingsWidget::settingsChanged () {
 	}
 }
 
-void RKObjectListViewSettingsWidget::modeActivated (int mode) {
+void RKObjectListViewSettingsWidget::modeChanged (bool) {
 	RK_TRACE (APP);
 
-	if (mode == All) {
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsFunction, RKObjectListViewSettings::Yes);
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsVariable, RKObjectListViewSettings::Yes);
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsContainer, RKObjectListViewSettings::Yes);
-	} else if (mode == Functions) {
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsFunction, RKObjectListViewSettings::Yes);
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsVariable, RKObjectListViewSettings::No);
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsContainer, RKObjectListViewSettings::No);
-	} else if (mode == NonFunctions) {
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsFunction, RKObjectListViewSettings::No);
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsVariable, RKObjectListViewSettings::Yes);
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsContainer, RKObjectListViewSettings::Yes);
+	if (all->isChecked ()) {
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsFunction, true);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsVariable, true);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsContainer, true);
+	} else if (functions->isChecked ()) {
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsFunction, true);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsVariable, false);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsContainer, false);
+	} else if (nonfunctions->isChecked ()) {
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsFunction, false);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsVariable, true);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsContainer, true);
 	} else {
 		RK_ASSERT (false);
 	}
 }
 
-void RKObjectListViewSettingsWidget::boxChanged (int) {
+void RKObjectListViewSettingsWidget::boxChanged (bool) {
 	RK_TRACE (APP);
 
 	if (sender () == all_envirs) {
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments, all_envirs->isChecked () ? RKObjectListViewSettings::Yes : RKObjectListViewSettings::No);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments, all_envirs->isChecked ());
 	} else {
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsHidden, hidden_objects->isChecked () ? RKObjectListViewSettings::Yes : RKObjectListViewSettings::No);
+		settings->setSetting (RKObjectListViewSettings::ShowObjectsHidden, hidden_objects->isChecked ());
 	}
 }
 

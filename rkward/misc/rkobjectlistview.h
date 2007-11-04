@@ -27,6 +27,7 @@ class QMenu;
 class RKListViewItem;
 class RKObjectListViewSettings;
 class QActionGroup;
+class QTimer;
 
 /**
 This class provides the common functionality for the tree views in the RObjectBrowser and RKVarselector(s). The caps it (will) provide are: keeping the list up to date and emitting change-signals when appropriate, filtering for certain types of objects, sorting, mapping items to objects. Maybe some GUI-stuff like popup-menus should also be added to this class?
@@ -54,15 +55,16 @@ from your custom menu items, to figure out, which object you should operate on. 
 	void setObjectCurrent (RObject *object, bool only_if_none_current=false);
 
 	RObject::ObjectList selectedObjects () const;
+
+	RObject* objectAtIndex (const QModelIndex& index) const;
+/** Takes care initializing the RKObjectListView */
+	void initialize ();
 signals:
 	void selectionChanged ();
 /** This signal is emitted just before the context-menu is shown. If you connect to this signal, you can make some adjustments to the context-menu.
 If you set *suppress to true, showing the context menu will be suppressed. */
 	void aboutToShowContextMenu (RObject *object, bool *suppress);
 public slots:
-/** Takes care initializing the RKObjectListView (delayed, as the RObjectList may not have been created, yet) and of getting the current list of objects from the RObjectList */
-	void initialize ();
-
 	void updateComplete ();
 	void updateStarted ();
 	void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
@@ -77,7 +79,7 @@ private:
 	RKObjectListViewSettings *settings;
 };
 
-/** Represents the filter/view settings possible for an RKListView. */
+/** Does filtering for an RKObjectListView. Should probably be renamed to RKObjectListViewFilter */
 class RKObjectListViewSettings : public QSortFilterProxyModel {
 	Q_OBJECT
 public:
@@ -97,44 +99,34 @@ public:
 		SettingsCount=ShowFieldsLabel + 1
 	};
 
-	//KDE 4: TODO: do we really need non-configurable settings? Changing this to only Yes/No would allow
-	// for considerable simplifications
-	enum State {
-		Never,
-		No,
-		Yes,
-		Always
-	};
+	void setSetting (Settings setting, bool to);
+	bool getSetting (Settings setting) const { return settings[setting]; };
 
-	void setSetting (Settings setting, State to);
-	State getSetting (Settings setting);
-	bool settingActive (Settings setting);
-	bool optionConfigurable (Settings setting);
-
-	bool shouldShowObject (RObject *object);
-
-	QMenu *showObjectsMenu () { return show_objects_menu; };
-	QMenu *showFieldsMenu () { return show_fields_menu; };
+	QMenu *showObjectsMenu () const { return show_objects_menu; };
+	QMenu *showFieldsMenu () const { return show_fields_menu; };
 signals:
 	void settingsChanged ();
 public slots:
 	void globalSettingsChanged (RKSettings::SettingsPage);
 	void settingToggled (QAction* which);
+	void updateSelfNow ();
 protected:
 	bool filterAcceptsRow (int source_row, const QModelIndex& source_parent) const;
 	bool filterAcceptsColumn (int source_column, const QModelIndex& source_parent) const;
 	bool lessThan (const QModelIndex& left, const QModelIndex& right) const;
 private:
-	State settings[SettingsCount];
+	bool settings[SettingsCount];
+	bool settings_default[SettingsCount];
 	QAction* actions[SettingsCount];
 	QActionGroup* action_group;
-	bool settings_default[SettingsCount];
-	void insertPopupItem (QMenu *menu, Settings setting, const QString &text);
+
 	void createContextMenus ();
 	void updateSelf ();
 
 	QMenu *show_objects_menu;
 	QMenu *show_fields_menu;
+
+	QTimer *update_timer;
 };
 
 #endif

@@ -21,17 +21,12 @@
 
 #include <QModelIndex>
 #include <QFocusEvent>
-//Added by qt3to4:
-#include <Q3PopupMenu>
 
 class RKObjectListView;
 class RKObjectListViewSettings;
-class Q3ListViewItem;
 class QPushButton;
 class QRadioButton;
-class Q3ButtonGroup;
 class QCheckBox;
-class Q3PopupMenu;
 class RObject;
 class RKCommandEditorWindow;
 class RObjectBrowserInternal;
@@ -72,8 +67,6 @@ Q_OBJECT
 public:
 	RObjectBrowserInternal (QWidget *parent);
 	~RObjectBrowserInternal ();
-
-	enum PopupItems { Help=1, Edit=2, View=3, Rename=4, Copy=5, CopyToGlobalEnv=6, Delete=7 };
 private slots:
 	void updateButtonClicked ();
 	void contextMenuCallback (RObject *object, bool *suppress);
@@ -92,6 +85,18 @@ protected:
 /** reimplemnented from QWidget to make show the globalenv object when activated (other than by mouse click) */
 	void focusInEvent (QFocusEvent *e);
 private:
+	enum PopupActions {
+		Help=0,
+		Edit,
+		View,
+		Rename,
+		Copy,
+		CopyToGlobalEnv,
+		Delete,
+		ActionCount
+	};
+	QList<QAction*> actions;
+
 	QPushButton *update_button;
 	RKObjectListView *list_view;
 };
@@ -110,10 +115,9 @@ public:
 	};
 public slots:
 	void settingsChanged ();
-	void modeActivated (int mode);
-	void boxChanged (int);
+	void modeChanged (bool);
+	void boxChanged (bool);
 private:
-	Q3ButtonGroup *group;
 	QRadioButton *all;
 	QRadioButton *nonfunctions;
 	QRadioButton *functions;
