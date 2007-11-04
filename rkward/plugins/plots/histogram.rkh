@@ -4,7 +4,7 @@
 		Plot a histogram.
 	</summary>
 	<usage>
-		Select a variable to plot a histogram for. For available options, see below.
+		Select a variable to plot a histogram. For available options, see below.
 	</usage>
 	<settings>
 		<caption id="tab_variables"/>
