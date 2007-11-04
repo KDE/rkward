@@ -21,6 +21,8 @@
 		<connect client="adjust.enabled" governor="dodensity"/>
 		<connect client="narm.enabled" governor="dodensity"/>
 		<connect client="n.enabled" governor="dodensity"/>
+		
+		<set id="plotoptions.allow_grid" to="true"/>
 	</logic>
 	<dialog label="Histogram" >
 		<tabbook>

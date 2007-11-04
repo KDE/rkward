@@ -21,8 +21,10 @@ function doPrintout ($final) {
 	$bw =  getRK_val ("bw");
 	$adjust = getRK_val ("adjust");
 	$narm = getRK_val ("narm");
-	$n = getRK_val ('n'); //resolution
+	$n = getRK_val ("n"); //calls "resolution"
 	$x = getRK_val ("x");
+	$plot_adds = getRK_val ("plotoptions.code.calculate");
+
 
 	if ($final) { ?>
 rk.header ("Histogram", list ("Variable", rk.get.description (<? echo ($x); ?>) <? if (($densityscaled) && getRK_val ("density")) { ?>, "Density bandwidth", "<? echo ($bw); ?>", "Density adjust", <? echo ($adjust); ?>, "Density resolution", <? echo ($n); ?>, "Density Remove missing values", <? echo ($narm); ?> <? } ?> <? getRK ("histogram_opt.code.preprocess"); ?>))
@@ -35,6 +37,12 @@ try ({
 <?	if (($densityscaled) && getRK_val ("density")) { ?>
 	lines(density(<? echo ($x); ?>, bw="<? echo ($bw); ?>", adjust = <? echo ($adjust); ?>, <? echo ($narm); ?>, n = <? getRK ("n"); ?>)<? getRK ("col_density.code.printout"); ?>)
 <?	} ?>
+<?	if (!empty ($plot_adds)) { ?>
+
+<?		// print the grid() related code
+		printIndented ("\t", $plot_adds);
+	}
+?>
 })
 <?	if ($final) { ?>
 rk.graph.off ()
