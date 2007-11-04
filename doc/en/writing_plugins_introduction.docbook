@@ -2007,10 +2007,6 @@ In addition to this, some elements have additional properties you can connect to
 <listitem>No default property
 	<variablelist>
 	<varlistentry>
-	<term>available</term>
-	<listitem>All objects available for selection. You probably do not want to use this. Used internally (RObject)</listitem>
-	</varlistentry>
-	<varlistentry>
 	<term>selected</term>
 	<listitem>The objects currently selected. You probably do not want to use this. Used internally (RObject)</listitem>
 	</varlistentry>
