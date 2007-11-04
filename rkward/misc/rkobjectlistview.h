@@ -19,17 +19,14 @@
 
 #include <QTreeView>
 #include <QSortFilterProxyModel>
-#include <qtooltip.h>
-#include <qmap.h>
-#include <Q3PopupMenu>
 
 #include "../settings/rksettings.h"
 #include "../core/robject.h"
 
-class QPixmap;
-class Q3PopupMenu;
+class QMenu;
 class RKListViewItem;
 class RKObjectListViewSettings;
+class QActionGroup;
 
 /**
 This class provides the common functionality for the tree views in the RObjectBrowser and RKVarselector(s). The caps it (will) provide are: keeping the list up to date and emitting change-signals when appropriate, filtering for certain types of objects, sorting, mapping items to objects. Maybe some GUI-stuff like popup-menus should also be added to this class?
@@ -46,7 +43,7 @@ public:
 /** This function returns a pointer to the context menu of the RKObjectListView. It is provided so you can add your own items.
 @returns a pointer to the context menu
 @see aboutToShowContextMenu */
-	Q3PopupMenu *contextMenu () { return menu; };
+	QMenu *contextMenu () { return menu; };
 /** This function returns the RObject the context menu has last been invoked on (or 0 if not invoked on an RObject). You can use this in slots called
 from your custom menu items, to figure out, which object you should operate on. */
 	RObject *menuObject () const { return menu_object; };
@@ -74,7 +71,7 @@ public slots:
 protected:
 	void contextMenuEvent (QContextMenuEvent* event);
 private:
-	Q3PopupMenu *menu;
+	QMenu *menu;
 	RObject *menu_object;
 
 	RKObjectListViewSettings *settings;
@@ -90,16 +87,18 @@ public:
 
 	enum Settings {
 		ShowObjectsVariable=0,
-		ShowObjectsAllEnvironments=1,
-		ShowObjectsFunction=2,
-		ShowObjectsContainer=3,
-		ShowObjectsHidden=4,
-		ShowFieldsType=5,
-		ShowFieldsClass=6,
-		ShowFieldsLabel=7,
-		SettingsCount=8
+		ShowObjectsAllEnvironments,
+		ShowObjectsFunction,
+		ShowObjectsContainer,
+		ShowObjectsHidden,
+		ShowFieldsType,
+		ShowFieldsClass,
+		ShowFieldsLabel,
+		SettingsCount=ShowFieldsLabel + 1
 	};
 
+	//KDE 4: TODO: do we really need non-configurable settings? Changing this to only Yes/No would allow
+	// for considerable simplifications
 	enum State {
 		Never,
 		No,
@@ -120,14 +119,16 @@ signals:
 	void settingsChanged ();
 public slots:
 	void globalSettingsChanged (RKSettings::SettingsPage);
-	void toggleSetting (int which);
+	void settingToggled (QAction* which);
 protected:
 	bool filterAcceptsRow (int source_row, const QModelIndex& source_parent) const;
 	bool filterAcceptsColumn (int source_column, const QModelIndex& source_parent) const;
 	bool lessThan (const QModelIndex& left, const QModelIndex& right) const;
 private:
-	State *settings;
-	bool *settings_default;
+	State settings[SettingsCount];
+	QAction* actions[SettingsCount];
+	QActionGroup* action_group;
+	bool settings_default[SettingsCount];
 	void insertPopupItem (QMenu *menu, Settings setting, const QString &text);
 	void createContextMenus ();
 	void updateSelf ();

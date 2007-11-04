@@ -17,21 +17,16 @@
 #include "rkobjectlistview.h"
 
 #include <klocale.h>
-#include <kiconloader.h>
 
-#include <q3popupmenu.h>
-#include <qpixmap.h>
-#include <qimage.h>
 #include <QHelpEvent>
+#include <QMenu>
 
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
-#include "../core/rfunctionobject.h"
-#include "../core/rkvariable.h"
 #include "../core/rkmodificationtracker.h"
 #include "../settings/rksettingsmoduleobjectbrowser.h"
-#include "../misc/rkcommonfunctions.h"
+
 #include "../debug.h"
 
 RKObjectListView::RKObjectListView (QWidget *parent) : QTreeView (parent) {
@@ -40,10 +35,10 @@ RKObjectListView::RKObjectListView (QWidget *parent) : QTreeView (parent) {
 	settings = new RKObjectListViewSettings (this);
 	setSortingEnabled (true);
 
-	menu = new Q3PopupMenu (this);
-	menu->insertItem (i18n ("Show Objects"), settings->showObjectsMenu ());
-	menu->insertItem (i18n ("Show Fields"), settings->showFieldsMenu ());
-	menu->insertItem (i18n ("Configure Defaults"), this, SLOT (popupConfigure ()));
+	menu = new QMenu (this);
+	menu->addMenu (settings->showObjectsMenu ());
+	menu->addMenu (settings->showFieldsMenu ());
+	menu->addAction (i18n ("Configure Defaults"), this, SLOT (popupConfigure ()));
 }
 
 RKObjectListView::~RKObjectListView () {
@@ -96,7 +91,7 @@ void RKObjectListView::popupConfigure () {
 void RKObjectListView::contextMenuEvent (QContextMenuEvent* event) {
 	RK_TRACE (APP);
 
-	QModelIndex index = indexAt (event->pos ());
+	QModelIndex index = settings->mapToSource (indexAt (event->pos ()));
 	menu_object = static_cast<RObject*> (index.internalPointer ());
 
 	bool suppress = false;
@@ -108,7 +103,7 @@ void RKObjectListView::contextMenuEvent (QContextMenuEvent* event) {
 void RKObjectListView::initialize () {
 	RK_TRACE (APP);
 
-	setUniformRowHeights (true);		// KDE4: can we do this?
+	setUniformRowHeights (true);
 
 	settings->setSourceModel (RKGlobals::tracker ());
 	setModel (settings);
@@ -145,8 +140,6 @@ void RKObjectListView::updateStarted () {
 RKObjectListViewSettings::RKObjectListViewSettings (QObject* parent) : QSortFilterProxyModel (parent) {
 	RK_TRACE (APP);
 
-	settings = new State[SettingsCount];
-	settings_default = new bool[SettingsCount];
 	for (int i = 0; i < SettingsCount; ++i) settings_default[i] = true;
 	connect (RKSettings::tracker (), SIGNAL (settingsChanged (RKSettings::SettingsPage)), this, SLOT (globalSettingsChanged (RKSettings::SettingsPage)));
 
@@ -157,8 +150,6 @@ RKObjectListViewSettings::RKObjectListViewSettings (QObject* parent) : QSortFilt
 RKObjectListViewSettings::~RKObjectListViewSettings () {
 	RK_TRACE (APP);
 
-	delete settings;
-	delete settings_default;
 	delete show_fields_menu;
 	delete show_objects_menu;
 }
@@ -207,7 +198,7 @@ bool RKObjectListViewSettings::filterAcceptsRow (int source_row, const QModelInd
 	object = static_cast<RContainerObject*> (object)->findChildByIndex (source_row);
 	RK_ASSERT (object);
 
-	// always show the global evnt
+	// always show the global env
 	if (object->isType (RObject::GlobalEnv)) return true;
 
 	if (settings[ShowObjectsHidden] <= No) {
@@ -252,31 +243,41 @@ bool RKObjectListViewSettings::lessThan (const QModelIndex& left, const QModelIn
 void RKObjectListViewSettings::createContextMenus () {
 	RK_TRACE (APP);
 
-	show_objects_menu = new QMenu (0);
-	insertPopupItem (show_objects_menu, ShowObjectsAllEnvironments, i18n ("All Environments"));
-	insertPopupItem (show_objects_menu, ShowObjectsContainer, i18n ("Objects with children"));
-	insertPopupItem (show_objects_menu, ShowObjectsVariable, i18n ("Variables"));
-	insertPopupItem (show_objects_menu, ShowObjectsFunction, i18n ("Functions"));
-	show_objects_menu->insertSeparator ();
-	insertPopupItem (show_objects_menu, ShowObjectsHidden, i18n ("Hidden Objects"));
+	action_group = new QActionGroup (this);
+	action_group->setExclusive (false);
+	actions[ShowObjectsAllEnvironments] = new QAction (i18n ("All Environments"), action_group);
+	actions[ShowObjectsContainer] = new QAction (i18n ("Objects with children"), action_group);
+	actions[ShowObjectsVariable] = new QAction (i18n ("Variables"), action_group);
+	actions[ShowObjectsFunction] = new QAction (i18n ("Functions"), action_group);
+	actions[ShowObjectsHidden] = new QAction (i18n ("Hidden Objects"), action_group);
+	actions[ShowFieldsType] = new QAction (i18n ("Type"), action_group);
+	actions[ShowFieldsLabel] = new QAction (i18n ("Label"), action_group);
+	actions[ShowFieldsClass] = new QAction (i18n ("Class"), action_group);
+	for (int i = 0; i < SettingsCount; ++i) actions[i]->setCheckable (true);
 
-	show_fields_menu = new QMenu (0);
-	insertPopupItem (show_fields_menu, ShowFieldsType, i18n ("Type"));
-	insertPopupItem (show_fields_menu, ShowFieldsLabel, i18n ("Label"));
-	insertPopupItem (show_fields_menu, ShowFieldsClass, i18n ("Class"));
+	show_objects_menu = new QMenu (i18n ("Show Objects"), 0);
+	show_objects_menu->addAction (actions[ShowObjectsAllEnvironments]);
+	show_objects_menu->addAction (actions[ShowObjectsContainer]);
+	show_objects_menu->addAction (actions[ShowObjectsVariable]);
+	show_objects_menu->addAction (actions[ShowObjectsFunction]);
+	show_objects_menu->addSeparator ();
+	show_objects_menu->addAction (actions[ShowObjectsHidden]);
+
+	show_fields_menu = new QMenu (i18n ("Show Fields"), 0);
+	show_fields_menu->addAction (actions[ShowFieldsType]);
+	show_fields_menu->addAction (actions[ShowFieldsLabel]);
+	show_fields_menu->addAction (actions[ShowFieldsClass]);
+
+	connect (action_group, SIGNAL (triggered(QAction*)), this, SLOT(settingToggled(QAction*)));
+	updateSelf ();
 }
 
 void RKObjectListViewSettings::updateSelf () {
 	RK_TRACE (APP);
 
-	for (int i = 0; i <= ShowObjectsHidden; ++i) {
-		show_objects_menu->setItemChecked (i, settings[(Settings) i] >= Yes);
-		show_objects_menu->setItemEnabled (i, optionConfigurable ((Settings) i));
-	}
-
-	for (int i = ShowFieldsType; i <= ShowFieldsLabel; ++i) {
-		show_fields_menu->setItemChecked (i, settings[(Settings) i] >= Yes);
-		show_fields_menu->setItemEnabled (i, optionConfigurable ((Settings) i));
+	for (int i = 0; i < SettingsCount; ++i) {
+		actions[i]->setChecked (settings[(Settings) i] >= Yes);
+		actions[i]->setEnabled (optionConfigurable ((Settings) i));
 	}
 
 	invalidateFilter ();
@@ -306,20 +307,22 @@ void RKObjectListViewSettings::globalSettingsChanged (RKSettings::SettingsPage p
 	updateSelf ();
 }
 
-void RKObjectListViewSettings::toggleSetting (int which) {
+void RKObjectListViewSettings::settingToggled (QAction* which) {
 	RK_TRACE (APP);
-	RK_ASSERT (which < SettingsCount);
 
-	if (settings[which] == Yes) {
-		settings[which] = No;
-	} else if (settings[which] == No) {
-		settings[which] = Yes;
-	} else {
-		RK_ASSERT (false);
+	int setting = -1;
+	for (int i = 0; i < SettingsCount; ++i) {
+		if (actions[i] == which) {
+			setting = i;
+			break;
+		}
 	}
-	settings_default[which] = false;
+	if (setting < 0) {
+		RK_ASSERT (false);
+		return;
+	}
 
-	updateSelf ();
+	setSetting (static_cast<Settings> (setting), which->isChecked () ? Yes : No);
 }
 
 bool RKObjectListViewSettings::optionConfigurable (Settings setting) {

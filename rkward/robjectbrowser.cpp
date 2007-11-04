@@ -119,6 +119,7 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 	
 	setCaption (i18n ("Objects in the R workspace"));
 
+// KDE4: TODO: insertItem is Qt3. Use addAction instead.
 	list_view->contextMenu ()->insertItem (i18n ("Search Help"), this, SLOT (popupHelp ()), 0, Help, 0);
 	list_view->contextMenu ()->insertItem (i18n ("Edit"), this, SLOT (popupEdit ()), 0, Edit, 1);
 	list_view->contextMenu ()->insertItem (i18n ("View"), this, SLOT (popupView ()), 0, View, 2);
@@ -218,7 +219,7 @@ void RObjectBrowserInternal::popupRename () {
 void RObjectBrowserInternal::contextMenuCallback (RObject *, bool *) {
 	RK_TRACE (APP);
 	RObject *object = list_view->menuObject ();
-	Q3PopupMenu *menu = list_view->contextMenu ();
+	QMenu *menu = list_view->contextMenu ();
 
 	if (!object) {
 		menu->setItemVisible (Help, false);
