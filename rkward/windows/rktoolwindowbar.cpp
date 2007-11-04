@@ -95,8 +95,7 @@ void RKToolWindowBar::splitterMoved (int, int) {
 	RK_TRACE (APP);
 
 	int pos = getSplitterSize ();
-	if (pos > SPLITTER_MIN_SIZE) last_known_size = pos;
-	else last_known_size = SPLITTER_MIN_SIZE;
+	if (pos >= SPLITTER_MIN_SIZE) last_known_size = pos;
 
 	if (!pos) {		// collapsed. Hide it properly.
 		for (QMap<RKMDIWindow*, int>::const_iterator it = widget_to_id.constBegin (); it != widget_to_id.constEnd (); ++it) {
@@ -199,7 +198,6 @@ void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
 		setTab (id, true);
 		container->show ();
 		setSplitterSize (last_known_size);
-qDebug ("%d", last_known_size);
 	} else {
 		widget->topLevelWidget ()->show ();
 		widget->topLevelWidget ()->raise ();
