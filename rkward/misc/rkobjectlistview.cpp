@@ -37,17 +37,13 @@
 RKObjectListView::RKObjectListView (QWidget *parent) : QTreeView (parent) {
 	RK_TRACE (APP);
 
-// KDE4: TODO: sorting
-//	setSorting (100);
-	settings = new RKObjectListViewSettings ();
-	connect (settings, SIGNAL (settingsChanged ()), this, SLOT (objectBrowserSettingsChanged ()));
+	settings = new RKObjectListViewSettings (this);
+	setSortingEnabled (true);
 
 	menu = new Q3PopupMenu (this);
 	menu->insertItem (i18n ("Show Objects"), settings->showObjectsMenu ());
 	menu->insertItem (i18n ("Show Fields"), settings->showFieldsMenu ());
 	menu->insertItem (i18n ("Configure Defaults"), this, SLOT (popupConfigure ()));
-
-	objectBrowserSettingsChanged ();
 }
 
 RKObjectListView::~RKObjectListView () {
@@ -60,11 +56,13 @@ void RKObjectListView::setObjectCurrent (RObject *object, bool only_if_none_curr
 	if (!object) return;
 	if (only_if_none_current && currentIndex ().isValid ()) return;
 
-	QModelIndex index = RKGlobals::tracker ()->indexFor (object);
+	QModelIndex index = settings->mapFromSource (RKGlobals::tracker ()->indexFor (object));
 	if (index.isValid ()) {
 		scrollTo (index);
 		setCurrentIndex (index);
 		resizeColumnToContents (0);
+	} else {
+		RK_ASSERT (false);
 	}
 }
 
@@ -80,48 +78,12 @@ RObject::ObjectList RKObjectListView::selectedObjects () const {
 	RObject::ObjectList list;
 	QModelIndexList selected = selectedIndexes ();
 	for (int i = 0; i < selected.size (); ++i) {
-		QModelIndex index = selected[i];
+		QModelIndex index = settings->mapToSource (selected[i]);
 		if (index.column () != 0) continue;
 		if (!index.isValid ()) continue;
 		list.append (static_cast<RObject*> (index.internalPointer ()));
 	}
 	return list;
-}
-
-void RKObjectListView::objectBrowserSettingsChanged () {
-/*	setColumnWidthMode (0, Q3ListView::Maximum);
-	if (settings->settingActive (RKObjectListViewSettings::ShowFieldsLabel)) {
-		if (columnWidth (1) == 0) setColumnWidth (1, 50);
-		setColumnWidthMode (1, Q3ListView::Maximum);
-	} else {
-		setColumnWidthMode (1, Q3ListView::Manual);
-		hideColumn (1);
-	}
-
-	if (settings->settingActive (RKObjectListViewSettings::ShowFieldsType)) {
-		if (columnWidth (2) == 0) setColumnWidth (2, 50);
-		setColumnWidthMode (2, Q3ListView::Maximum);
-	} else {
-		setColumnWidthMode (2, Q3ListView::Manual);
-		hideColumn (2);
-	}
-
-	if (settings->settingActive (RKObjectListViewSettings::ShowFieldsClass)) {
-		if (columnWidth (3) == 0) setColumnWidth (3, 50);
-		setColumnWidthMode (3, Q3ListView::Maximum);
-	} else {
-		setColumnWidthMode (3, Q3ListView::Manual);
-		hideColumn (3);
-	}
-
-	triggerUpdate ();
-
-	for (Q3ListViewItemIterator it (this); it.current (); ++it) {
-		RObject *object = findItemObject (static_cast<RKListViewItem*> (it.current ()));
-		RK_ASSERT (object);
-
-		it.current ()->setVisible (settings->shouldShowObject (object));
-	} */
 }
 
 // KDE4 TODO: does this really need to be virtual?
@@ -148,12 +110,14 @@ void RKObjectListView::initialize () {
 
 	setUniformRowHeights (true);		// KDE4: can we do this?
 
-	// KDE4: initialization logic is likely wrong, now.
-	setModel (RKGlobals::tracker ());
+	settings->setSourceModel (RKGlobals::tracker ());
+	setModel (settings);
 
-	setExpanded (RKGlobals::tracker ()->indexFor (RObjectList::getObjectList ()), true);
-	setExpanded (RKGlobals::tracker ()->indexFor (RObjectList::getGlobalEnv ()), true);
-	setMinimumHeight (rowHeight (RKGlobals::tracker ()->indexFor (RObjectList::getGlobalEnv ())) * 5);
+	QModelIndex genv = settings->mapFromSource (RKGlobals::tracker ()->indexFor (RObjectList::getGlobalEnv ()));
+	QModelIndex olist = settings->mapFromSource (RKGlobals::tracker ()->indexFor (RObjectList::getObjectList ()));
+	setExpanded (olist, true);
+	setExpanded (genv, true);
+	setMinimumHeight (rowHeight (genv) * 5);
 	resizeColumnToContents (0);
 
 	connect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (updateComplete ()));
@@ -168,19 +132,17 @@ void RKObjectListView::updateComplete () {
 	RK_TRACE (APP);
 
 	setEnabled (true);
-	update_in_progress = false;
 }
 
 void RKObjectListView::updateStarted () {
 	RK_TRACE (APP);
 
 	setEnabled (false);
-	update_in_progress = true;
 }
 
 //////////////////// RKObjectListViewSettings //////////////////////////
 
-RKObjectListViewSettings::RKObjectListViewSettings () {
+RKObjectListViewSettings::RKObjectListViewSettings (QObject* parent) : QSortFilterProxyModel (parent) {
 	RK_TRACE (APP);
 
 	settings = new State[SettingsCount];
@@ -222,29 +184,75 @@ bool RKObjectListViewSettings::settingActive (Settings setting) {
 	return (settings[setting] >= Yes);
 }
 
-bool RKObjectListViewSettings::shouldShowObject (RObject *object) {
+bool RKObjectListViewSettings::filterAcceptsColumn (int source_column, const QModelIndex&) const {
 	RK_TRACE (APP);
 
-	if (object->getShortName ().startsWith (".")) {
-		if ((!object->isType (RObject::GlobalEnv)) && (settings[ShowObjectsHidden] <= No)) return false;
+	if (source_column == RKObjectListModel::NameColumn) return true;
+	if (source_column == RKObjectListModel::LabelColumn) return (settings[ShowFieldsLabel] >= Yes);
+	if (source_column == RKObjectListModel::TypeColumn) return (settings[ShowFieldsType] >= Yes);
+	if (source_column == RKObjectListModel::ClassColumn) return (settings[ShowFieldsClass] >= Yes);
+
+	RK_ASSERT (false);
+	return false;
+}
+
+bool RKObjectListViewSettings::filterAcceptsRow (int source_row, const QModelIndex& source_parent) const {
+	RK_TRACE (APP);
+
+	// always show the root item
+	if (!source_parent.isValid ()) return true;
+
+	RObject* object = static_cast<RObject*> (source_parent.internalPointer ());
+	RK_ASSERT (object->isContainer ());
+	object = static_cast<RContainerObject*> (object)->findChildByIndex (source_row);
+	RK_ASSERT (object);
+
+	// always show the global evnt
+	if (object->isType (RObject::GlobalEnv)) return true;
+
+	if (settings[ShowObjectsHidden] <= No) {
+		if (object->getShortName ().startsWith ('.')) return false;
 	}
+
+	bool base_filter = QSortFilterProxyModel::filterAcceptsRow (source_row, source_parent);
+
 	if (object->isType (RObject::ToplevelEnv)) {
-		if (object->isType (RObject::GlobalEnv)) return true;
-		return (settings[ShowObjectsAllEnvironments] >= Yes);
+		return (base_filter && (settings[ShowObjectsAllEnvironments] >= Yes));
 	} else if (object->isType (RObject::Function)) {
-		return (settings[ShowObjectsFunction] >= Yes);
+		return (base_filter && (settings[ShowObjectsFunction] >= Yes));
 	} else if (object->isType (RObject::Container)) {
-		return (settings[ShowObjectsContainer] >= Yes);
+		return (base_filter && (settings[ShowObjectsContainer] >= Yes));
 	} else if (object->isVariable ()) {
-		return (settings[ShowObjectsVariable] >= Yes);
+		return (base_filter && (settings[ShowObjectsVariable] >= Yes));
 	}
-	return true;
+
+	return base_filter;
+}
+
+bool RKObjectListViewSettings::lessThan (const QModelIndex& left, const QModelIndex& right) const {
+	// don't trace this. Used in sorting
+
+	if (!(left.isValid () && right.isValid ())) return false;
+
+	RObject* left_object = static_cast<RObject*> (left.internalPointer ());
+	RObject* right_object = static_cast<RObject*> (right.internalPointer ());
+
+	// for top-level environments, always use the search order
+	if (left_object->isType (RObject::ToplevelEnv) && right_object->isType (RObject::ToplevelEnv)) {
+		RContainerObject* left_parent = left_object->getContainer ();
+		RContainerObject* right_parent = right_object->getContainer ();
+		if (!(left_parent && right_parent)) return false;
+
+		return (left_parent->getIndexOf (left_object) < right_parent->getIndexOf (right_object));
+	}
+
+	return (QSortFilterProxyModel::lessThan (left, right));
 }
 
 void RKObjectListViewSettings::createContextMenus () {
 	RK_TRACE (APP);
 
-	show_objects_menu = new Q3PopupMenu (0);
+	show_objects_menu = new QMenu (0);
 	insertPopupItem (show_objects_menu, ShowObjectsAllEnvironments, i18n ("All Environments"));
 	insertPopupItem (show_objects_menu, ShowObjectsContainer, i18n ("Objects with children"));
 	insertPopupItem (show_objects_menu, ShowObjectsVariable, i18n ("Variables"));
@@ -252,7 +260,7 @@ void RKObjectListViewSettings::createContextMenus () {
 	show_objects_menu->insertSeparator ();
 	insertPopupItem (show_objects_menu, ShowObjectsHidden, i18n ("Hidden Objects"));
 
-	show_fields_menu = new Q3PopupMenu (0);
+	show_fields_menu = new QMenu (0);
 	insertPopupItem (show_fields_menu, ShowFieldsType, i18n ("Type"));
 	insertPopupItem (show_fields_menu, ShowFieldsLabel, i18n ("Label"));
 	insertPopupItem (show_fields_menu, ShowFieldsClass, i18n ("Class"));
@@ -271,10 +279,11 @@ void RKObjectListViewSettings::updateSelf () {
 		show_fields_menu->setItemEnabled (i, optionConfigurable ((Settings) i));
 	}
 
+	invalidateFilter ();
 	emit (settingsChanged ());
 }
 
-void RKObjectListViewSettings::insertPopupItem (Q3PopupMenu *menu, Settings setting, const QString &text) {
+void RKObjectListViewSettings::insertPopupItem (QMenu *menu, Settings setting, const QString &text) {
 	RK_TRACE (APP);
 
 	menu->insertItem (text, setting);

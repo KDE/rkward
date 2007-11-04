@@ -18,6 +18,7 @@
 #define RKOBJECTLISTVIEW_H
 
 #include <QTreeView>
+#include <QSortFilterProxyModel>
 #include <qtooltip.h>
 #include <qmap.h>
 #include <Q3PopupMenu>
@@ -69,15 +70,10 @@ public slots:
 	void updateStarted ();
 	void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
 
-	void objectBrowserSettingsChanged ();
-
 	virtual void popupConfigure ();
 protected:
 	void contextMenuEvent (QContextMenuEvent* event);
 private:
-	bool update_in_progress;
-	bool changes;
-
 	Q3PopupMenu *menu;
 	RObject *menu_object;
 
@@ -85,11 +81,11 @@ private:
 };
 
 /** Represents the filter/view settings possible for an RKListView. */
-class RKObjectListViewSettings : public QObject {
+class RKObjectListViewSettings : public QSortFilterProxyModel {
 	Q_OBJECT
 public:
 /** ctor. copies the default settings from RKSettingsModuleObjectBrowser */ 
-	RKObjectListViewSettings ();
+	RKObjectListViewSettings (QObject* parent=0);
 	~RKObjectListViewSettings ();
 
 	enum Settings {
@@ -118,22 +114,26 @@ public:
 
 	bool shouldShowObject (RObject *object);
 
-	Q3PopupMenu *showObjectsMenu () { return show_objects_menu; };
-	Q3PopupMenu *showFieldsMenu () { return show_fields_menu; };
+	QMenu *showObjectsMenu () { return show_objects_menu; };
+	QMenu *showFieldsMenu () { return show_fields_menu; };
 signals:
 	void settingsChanged ();
 public slots:
 	void globalSettingsChanged (RKSettings::SettingsPage);
 	void toggleSetting (int which);
+protected:
+	bool filterAcceptsRow (int source_row, const QModelIndex& source_parent) const;
+	bool filterAcceptsColumn (int source_column, const QModelIndex& source_parent) const;
+	bool lessThan (const QModelIndex& left, const QModelIndex& right) const;
 private:
 	State *settings;
 	bool *settings_default;
-	void insertPopupItem (Q3PopupMenu *menu, Settings setting, const QString &text);
+	void insertPopupItem (QMenu *menu, Settings setting, const QString &text);
 	void createContextMenus ();
 	void updateSelf ();
 
-	Q3PopupMenu *show_objects_menu;
-	Q3PopupMenu *show_fields_menu;
+	QMenu *show_objects_menu;
+	QMenu *show_fields_menu;
 };
 
 #endif

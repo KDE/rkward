@@ -28,6 +28,14 @@ class RObject;
 
 /** An item model for the RObjectList . Technically this is the base class for RKModificationTracker. The two could be merged, fully, but this way, it's a little easier to see what belongs where, logically. */
 class RKObjectListModel : public QAbstractItemModel {
+public:
+	enum Column {
+		NameColumn=0,
+		LabelColumn,
+		TypeColumn,
+		ClassColumn,
+		ColumnCount = ClassColumn + 1
+	};
 protected:
 	RKObjectListModel (QObject *parent);
 	virtual ~RKObjectListModel ();

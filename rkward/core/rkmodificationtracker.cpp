@@ -202,12 +202,6 @@ void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeS
 
 ///////////////// RKObjectListModel ///////////////////////////
 
-#define COL_NAME 0
-#define COL_LABEL 1
-#define COL_TYPE 2
-#define COL_CLASS 3
-#define NUM_COLS (COL_CLASS + 1)
-
 RKObjectListModel::RKObjectListModel (QObject *parent) : QAbstractItemModel (parent) {
 	RK_TRACE (OBJECTS);
 }
@@ -256,7 +250,7 @@ int RKObjectListModel::rowCount (const QModelIndex& parent) const {
 int RKObjectListModel::columnCount (const QModelIndex&) const {
 	//RK_TRACE (OBJECTS); // no need to trace this
 
-	return NUM_COLS;
+	return ColumnCount;
 }
 
 QVariant RKObjectListModel::data (const QModelIndex& index, int role) const {
@@ -265,22 +259,22 @@ QVariant RKObjectListModel::data (const QModelIndex& index, int role) const {
 	int col = index.column ();
 	RObject *object = static_cast<RObject*> (index.internalPointer ());
 
-	if ((!object) || (col >= NUM_COLS)) {
+	if ((!object) || (col >= ColumnCount)) {
 		RK_ASSERT (false);
 		return QVariant ();
 	}
 
 	if (role == Qt::DisplayRole) {
-		if (col == COL_NAME) return object->getShortName ();
-		if (col == COL_LABEL) return object->getLabel ();
-		if (col == COL_TYPE) {
+		if (col == NameColumn) return object->getShortName ();
+		if (col == LabelColumn) return object->getLabel ();
+		if (col == TypeColumn) {
 			if (object->isVariable ()) return RObject::typeToText (object->getDataType ());
 			return QVariant ();
 		}
-		if (col == COL_CLASS) return object->makeClassString ("; ");
+		if (col == ClassColumn) return object->makeClassString ("; ");
 		RK_ASSERT (false);
 	} else if (role == Qt::DecorationRole) {
-		if (col == COL_NAME) return RKStandardIcons::iconForObject (object);
+		if (col == NameColumn) return RKStandardIcons::iconForObject (object);
 	} else if (role == Qt::ToolTipRole) {
 		return object->getObjectDescription ();
 	}
@@ -294,10 +288,10 @@ QVariant RKObjectListModel::headerData (int section, Qt::Orientation orientation
 	if (orientation != Qt::Horizontal) return QVariant ();
 	if (role != Qt::DisplayRole) return QVariant ();
 
-	if (section == COL_NAME) return i18n ("Name");
-	if (section == COL_LABEL) return i18n ("Label");
-	if (section == COL_TYPE) return i18n ("Type");
-	if (section == COL_CLASS) return i18n ("Class");
+	if (section == NameColumn) return i18n ("Name");
+	if (section == LabelColumn) return i18n ("Label");
+	if (section == TypeColumn) return i18n ("Type");
+	if (section == ClassColumn) return i18n ("Class");
 
 	RK_ASSERT (false);
 	return QVariant ();
