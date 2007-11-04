@@ -47,9 +47,6 @@ RKObjectListView::RKObjectListView (QWidget *parent) : QTreeView (parent) {
 	menu->insertItem (i18n ("Show Fields"), settings->showFieldsMenu ());
 	menu->insertItem (i18n ("Configure Defaults"), this, SLOT (popupConfigure ()));
 
-// KDE4: do we need this?
-//	setShowToolTips (false);
-
 	objectBrowserSettingsChanged ();
 }
 
@@ -69,6 +66,12 @@ void RKObjectListView::setObjectCurrent (RObject *object, bool only_if_none_curr
 		setCurrentIndex (index);
 		resizeColumnToContents (0);
 	}
+}
+
+void RKObjectListView::selectionChanged (const QItemSelection&, const QItemSelection&) {
+	RK_TRACE (APP);
+
+	emit (selectionChanged ());
 }
 
 RObject::ObjectList RKObjectListView::selectedObjects () const {
@@ -156,19 +159,9 @@ void RKObjectListView::initialize () {
 	connect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (updateComplete ()));
 	disconnect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (initialize ()));
 	connect (RObjectList::getObjectList (), SIGNAL (updateStarted ()), this, SLOT (updateStarted ()));
+	connect (selectionModel (), SIGNAL (selectionChanged(const QItemSelection&, const QItemSelection&)), this, SLOT (selectionChanged(const QItemSelection&, const QItemSelection&)));
 
-// KDE4 TODO: this signal needed?
-	emit (listChanged ());
-	changes = false;
 	updateComplete ();
-}
-
-void RKObjectListView::initializeLater () {
-	RK_TRACE (APP);
-
-// KDE4: TODO huh?
-	connect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (initialize ()));
-	updateStarted ();
 }
 
 void RKObjectListView::updateComplete () {
@@ -176,10 +169,6 @@ void RKObjectListView::updateComplete () {
 
 	setEnabled (true);
 	update_in_progress = false;
-	if (changes) {
-		emit (listChanged ());
-		changes = false;
-	}
 }
 
 void RKObjectListView::updateStarted () {
@@ -188,20 +177,6 @@ void RKObjectListView::updateStarted () {
 	setEnabled (false);
 	update_in_progress = true;
 }
-
-/*
-//////////////////// RKListViewItem //////////////////////////
-int RKListViewItem::width (const QFontMetrics &fm, const Q3ListView * lv, int c) const {
-	if (parent ()) {
-		if (!parent ()->isOpen ()) {
-			return 0;
-		}
-	}
-
-	int ret = Q3ListViewItem::width (fm, lv, c);
-	if (ret > 200) return 200;
-	return ret;
-} */
 
 //////////////////// RKObjectListViewSettings //////////////////////////
 

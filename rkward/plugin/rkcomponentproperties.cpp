@@ -935,17 +935,6 @@ void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase 
 	}
 }
 
-void RKComponentPropertyRObjects::setFromListView (RKObjectListView *list_view, bool selected_only) {
-	RK_TRACE (PLUGIN);
-
-#warning KDE4 implement for selected_only==false
-//KDE4: TODO !selected_only
-// Or perhaps remove this parameter altogether? Looks like it is only needed for RKVarselector, and probably it
-// does not do much good, there.
-	// invalid objects will be ignored in setObjectList
-	setObjectList (list_view->selectedObjects ());
-}
-
 void RKComponentPropertyRObjects::objectPropertiesChanged (RObject *object) {
 	RK_TRACE (PLUGIN);
 

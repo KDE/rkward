@@ -38,6 +38,16 @@ RKModificationTracker::~RKModificationTracker () {
 	RK_TRACE (OBJECTS);
 }
 
+void RKModificationTracker::lockUpdates (bool lock) {
+	RK_TRACE (OBJECTS);
+
+	if (lock) ++updates_locked;
+	else {
+		--updates_locked;
+		RK_ASSERT (updates_locked >= 0);
+	}
+}
+
 bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, bool removed_in_workspace) {
 	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
@@ -77,7 +87,7 @@ void RKModificationTracker::internalRemoveObject (RObject *object, bool removed_
 	RK_ASSERT (object);
 	RK_ASSERT (object->getContainer ());
 
-	if (updates_locked <= 0) {
+	if (!updates_locked) {
 		QModelIndex object_index = indexFor (object->getContainer ());
 		int object_row = object->getContainer ()->getIndexOf (object);
 		RK_ASSERT (object_row >= 0);
@@ -101,12 +111,12 @@ void RKModificationTracker::internalRemoveObject (RObject *object, bool removed_
 		}
 	}
 
-	if (updates_locked <= 0) emit (objectRemoved (object));
+	if (!updates_locked) emit (objectRemoved (object));
 
 	if (delete_obj) object->remove (removed_in_workspace);
 	else object->getContainer ()->removeChildNoDelete (object);
 
-	if (updates_locked <= 0) endRemoveRows ();
+	if (!updates_locked) endRemoveRows ();
 }
 
 void RKModificationTracker::renameObject (RObject *object, const QString &new_name) {
@@ -120,7 +130,7 @@ void RKModificationTracker::renameObject (RObject *object, const QString &new_na
 // since we may end up with a different name that originally requested, we propagate the change also to the original editor
 	if (ed) ed->renameObject (object);
 
-	if (updates_locked <= 0) {
+	if (!updates_locked) {
 		emit (objectPropertiesChanged (object));
 
 		QModelIndex object_index = indexFor (object);
@@ -131,7 +141,7 @@ void RKModificationTracker::renameObject (RObject *object, const QString &new_na
 void RKModificationTracker::addObject (RObject *object, RContainerObject* parent, int position, RKEditor *editor) {
 	RK_TRACE (OBJECTS);
 
-	if (updates_locked <= 0) {
+	if (!updates_locked) {
 		QModelIndex parent_index = indexFor (parent);
 		beginInsertRows (parent_index, position, position);
 	}
@@ -149,7 +159,7 @@ void RKModificationTracker::addObject (RObject *object, RContainerObject* parent
 		}
 	}
 
-	if (updates_locked <= 0) {
+	if (!updates_locked) {
 		emit (objectAdded (object));
 		endInsertRows ();
 	}
@@ -164,7 +174,7 @@ void RKModificationTracker::objectMetaChanged (RObject *object) {
 		ed->updateObjectMeta (object);
 	}
 
-	if (updates_locked <= 0) {
+	if (!updates_locked) {
 		emit (objectPropertiesChanged (object));
 
 		QModelIndex object_index = indexFor (object);
@@ -183,7 +193,7 @@ void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeS
 
 	delete changes;
 
-	if (updates_locked <= 0) {
+	if (!updates_locked) {
 		QModelIndex object_index = indexFor (object);
 		emit (dataChanged (object_index, object_index));
 	}

@@ -42,8 +42,6 @@ public:
 	
 	~RKObjectListView ();
 
-	void initializeLater ();
-
 /** This function returns a pointer to the context menu of the RKObjectListView. It is provided so you can add your own items.
 @returns a pointer to the context menu
 @see aboutToShowContextMenu */
@@ -59,7 +57,7 @@ from your custom menu items, to figure out, which object you should operate on. 
 
 	RObject::ObjectList selectedObjects () const;
 signals:
-	void listChanged ();
+	void selectionChanged ();
 /** This signal is emitted just before the context-menu is shown. If you connect to this signal, you can make some adjustments to the context-menu.
 If you set *suppress to true, showing the context menu will be suppressed. */
 	void aboutToShowContextMenu (RObject *object, bool *suppress);
@@ -69,6 +67,7 @@ public slots:
 
 	void updateComplete ();
 	void updateStarted ();
+	void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
 
 	void objectBrowserSettingsChanged ();
 
@@ -84,20 +83,6 @@ private:
 
 	RKObjectListViewSettings *settings;
 };
-
-/** This subclass of RKListViewItem reimplements the width ()-function to return 0 if the item is not currently visible. This is needed to get a sane column width in the listview. Also limit maximum default width to 200 px (TODO: make this configurable)
-
-@author Thomas Friedrichsmeier
-*/
-/*
-class RKListViewItem : public Q3ListViewItem {
-public:
-	RKListViewItem (Q3ListView *parent) : Q3ListViewItem (parent) {};
-	RKListViewItem (Q3ListViewItem *parent) : Q3ListViewItem (parent) {};
-	~RKListViewItem () {};
-
-	int width (const QFontMetrics &fm, const Q3ListView * lv, int c) const;
-}; */
 
 /** Represents the filter/view settings possible for an RKListView. */
 class RKObjectListViewSettings : public QObject {

@@ -269,9 +269,6 @@ public:
 	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
 /** reimplemented from RKComponentPropertyBase to use special handling for object properties */
 	void governorValueChanged (RKComponentPropertyBase *property);
-/** fill this property with all objects shown in the given RKObjectListView. Emit a signal, if there was a change. Only valid objects are added!
-@param selected_only if true, only the currently selected objects are filled into this property */
-	void setFromListView (RKObjectListView *list_view, bool selected_only=false);
 /** @returns true, if the property holds the maximum number of items (or more) */
 	bool atMaxLength ();
 public slots:

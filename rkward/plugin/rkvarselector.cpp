@@ -17,14 +17,10 @@
 
 #include "rkvarselector.h"
 
-#include <qlayout.h>
+#include <QVBoxLayout>
 #include <qlabel.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
 
 #include "../misc/xmlhelper.h"
-#include "../core/rcontainerobject.h"
-#include "../core/rkvariable.h"
 #include "../rkglobals.h"
 #include "../misc/rkobjectlistview.h"
 #include "../core/robjectlist.h"
@@ -35,17 +31,16 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	RK_TRACE (PLUGIN);
 
 // TODO: read filter settings
-	addChild ("available", available = new RKComponentPropertyRObjects (this, false));
 	addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
 
-	Q3VBoxLayout  *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+	vbox->setContentsMargins (0, 0, 0, 0);
 	
 	QLabel *label = new QLabel (element.attribute ("label", "Select Variable(s)"), this);
 	vbox->addWidget (label);
 
 	list_view = new RKObjectListView (this);
 	list_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
-	connect (list_view, SIGNAL (listChanged ()), this, SLOT (objectListChanged ()));
 	connect (list_view, SIGNAL (selectionChanged ()), this, SLOT (objectSelectionChanged ()));
 
 	vbox->addWidget (list_view);
@@ -57,17 +52,10 @@ RKVarSelector::~RKVarSelector () {
 	RK_TRACE (PLUGIN);
 }
 
-void RKVarSelector::objectListChanged () {
-	RK_TRACE (PLUGIN);
-
-	available->setFromListView (list_view);
-	selected->setFromListView (list_view, true);
-}
-
 void RKVarSelector::objectSelectionChanged () {
 	RK_TRACE (PLUGIN);
 
-	selected->setFromListView (list_view, true);
+	selected->setObjectList (list_view->selectedObjects ());
 	RK_DO (qDebug ("selected in varselector: %s", selected->value ().toLatin1 ().data ()), PLUGIN, DL_DEBUG);
 }
 

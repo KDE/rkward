@@ -35,18 +35,16 @@ you can have more than one, e.g. for serving conceptionally different VarSlots.
 
 
 class RKVarSelector : public RKComponent {
-   Q_OBJECT
+	Q_OBJECT
 public: 
 	RKVarSelector (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKVarSelector ();
 	int type () { return ComponentVarSelector; };
 public slots:
-	void objectListChanged ();
 	void objectSelectionChanged ();
 private:
 	RKObjectListView *list_view;
 	RKComponentPropertyRObjects *selected;
-	RKComponentPropertyRObjects *available;
 };
 
 #endif

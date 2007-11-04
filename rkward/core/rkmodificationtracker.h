@@ -73,7 +73,7 @@ public:
 /** the object's data was modified. Tells all editors and lists containing the object to update accordingly. The ChangeSet given tells which parts of the data have to be updated. The ChangeSet will get deleted by the RKModificationTracker, when done. */
 	void objectDataChanged (RObject *object, RObject::ChangeSet *changes);
 /** recursive! */
-	void lockUpdates (bool lock) { if (lock) ++updates_locked; else --updates_locked; };
+	void lockUpdates (bool lock);
 signals:
 /** classes which are not RKEditor(s) but need to know, when an object was removed, should connect to this signal */
 	void objectRemoved (RObject *object);
