@@ -161,7 +161,8 @@ void TwinTableMember::setCellContentFromEditor (int row, int col) {
 	QString text_save = tted->text ();
 	
 	//tted->removeEventFilter (this);
-	delete tted;
+	tted->hide ();
+	tted->deleteLater ();
 	tted = 0;
 	
 	if (text (row, col) != text_save) {
