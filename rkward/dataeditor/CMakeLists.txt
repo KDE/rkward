@@ -15,6 +15,7 @@ SET(dataeditor_STAT_SRCS
    editlabelsdialog.cpp
    editformatdialog.cpp
    rkeditordataframepart.cpp
+   rkvareditmodel.cpp
    )
 
 QT4_AUTOMOC(${dataeditor_STAT_SRCS})
