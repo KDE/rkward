@@ -17,7 +17,8 @@
 
 #include "rkvareditmodel.h"
 
-#include "../core/rkvariable.h"
+#include <klocale.h>
+
 #include "../core/rcontainerobject.h"
 #include "../core/rkmodificationtracker.h"
 #include "../rkglobals.h"
@@ -64,6 +65,11 @@ void RKVarEditModel::objectRemoved (RObject* object) {
 	endRemoveColumns ();
 }
 
+void RKVarEditModel::doInsertColumn (int) {
+	RK_TRACE (EDITOR);
+	RK_ASSERT (false);	// should be implemented in a subclass, or never called
+}
+
 RKVarEditMetaModel* RKVarEditModel::getMetaModel () {
 	RK_TRACE (EDITOR);
 
@@ -75,11 +81,12 @@ RKVarEditMetaModel* RKVarEditModel::getMetaModel () {
 bool RKVarEditModel::insertRows (int row, int count, const QModelIndex& parent) {
 	RK_TRACE (EDITOR);
 
-	int lastrow = row+count - 1;
-	if (edit_blocks || parent.isValid () || objects.isEmpty () || (row > objects[0]->getLength ())) {
+	if (edit_blocks || parent.isValid () || objects.isEmpty () || (row > apparentRows ())) {
 		RK_ASSERT (false);
 		return false;
 	}
+	if (row > objects[0]->getLength ()) row = objects[0]->getLength ();
+	int lastrow = row+count - 1;
 	RK_ASSERT (row >= 0);
 	RK_ASSERT (lastrow <= row);
 
@@ -96,10 +103,11 @@ bool RKVarEditModel::removeRows (int row, int count, const QModelIndex& parent) 
 	RK_TRACE (EDITOR);
 
 	int lastrow = row+count - 1;
-	if (edit_blocks || parent.isValid () || objects.isEmpty () || (lastrow > objects[0]->getLength ())) {
+	if (edit_blocks || parent.isValid () || objects.isEmpty () || (lastrow >= (apparentRows ()))) {
 		RK_ASSERT (false);
 		return false;
 	}
+	if (lastrow >= objects[0]->getLength ()) lastrow = objects[0]->getLength () - 1;
 	RK_ASSERT (row >= 0);
 	RK_ASSERT (lastrow <= row);
 
@@ -120,34 +128,112 @@ int RKVarEditModel::rowCount (const QModelIndex& parent) const {
 		RK_ASSERT (false);
 		return 0;
 	}
-	return objects[0]->getLength ();
+	return (apparentRows ());
 }
 
 int RKVarEditModel::columnCount (const QModelIndex& parent) const {
 	RK_TRACE (EDITOR);
 
 	if (parent.isValid ()) return 0;
-	return objects.size ();
+	return (apparentCols ());
 }
 
 QVariant RKVarEditModel::data (const QModelIndex& index, int role) const {
 	RK_TRACE (EDITOR);
-#warning implement
+
+	if (!index.isValid ()) return QVariant ();
+	int row = index.row ();
+	int col = index.column ();
+	if ((col >= apparentCols ()) || (row >= apparentRows ())) {
+		RK_ASSERT (false);
+		return QVariant ();
+	}
+
+	// on a trailing row / col
+	if ((col >= objects.size ()) || (row >= objects[0]->getLength ())) {
+		if (role == Qt::BackgroundRole) return (Qt::gray);
+		if (role == Qt::ToolTipRole) {
+			if (col >= objects.size ()) return (i18n ("Type on these fields to add new columns"));
+			else return (i18n ("Type on these fields to add new rows"));
+		}
+		return QVariant ();
+	}
+
+	// a normal cell
+	RKVariable *var = objects[col];
+	RK_ASSERT (var);
+
+	if (role == Qt::DisplayRole) return var->getText (row, true);
+	if (role == Qt::EditRole) return var->getText (row, false);
+
+	RKVariable::Status status = var->cellStatus (row);
+	if ((role == Qt::BackgroundRole) && (status == RKVariable::ValueInvalid)) return (Qt::red);
+	if ((role == Qt::ForegroundRole) && (status == RKVariable::ValueUnknown)) return (Qt::lightGray);
+
+	return QVariant ();
 }
 
 Qt::ItemFlags RKVarEditModel::flags (const QModelIndex& index) const {
 	RK_TRACE (EDITOR);
-#warning implement
+
+	Qt::ItemFlags flags = 0;
+
+	if (!index.isValid ()) return flags;
+	int row = index.row ();
+	int col = index.column ();
+	if ((col >= apparentCols ()) || (row >= apparentRows ())) {
+		RK_ASSERT (false);
+		return flags;
+	}
+
+	if (!edit_blocks) flags |= Qt::ItemIsEditable | Qt::ItemIsEnabled;
+	if ((col < objects.size ()) && (row >= objects[0]->getLength ())) flags |= Qt::ItemIsSelectable;
+
+	return flags;
 }
 
 bool RKVarEditModel::setData (const QModelIndex& index, const QVariant& value, int role) {
 	RK_TRACE (EDITOR);
-#warning implement
+
+	if (!index.isValid ()) return false;
+	int row = index.row ();
+	int col = index.column ();
+	if (edit_blocks || (role != Qt::EditRole) || (col >= apparentCols ()) || (row >= apparentRows ())) {
+		RK_ASSERT (false);
+		return false;
+	}
+
+	if (col >= objects.size ()) {		// trailing col
+		// somebody should add a column for us
+		doInsertColumn (objects.size ());
+
+		if (col >= objects.size ()) {
+			// apparently, no column has been added in the above signal
+			return false;
+		}
+	}
+	if (row >= objects[0]->getLength ()) {		// trailing row
+		insertRows (objects[0]->getLength (), 1);
+	}
+
+	// edit of normal cells
+	RKVariable* var = objects[col];
+	RK_ASSERT (var);
+	var->setText (row, value.toString ());
+	return true;
 }
 
 QVariant RKVarEditModel::headerData (int section, Qt::Orientation orientation, int role) const {
 	RK_TRACE (EDITOR);
-#warning implement
+
+	if (role != Qt::DisplayRole) return QVariant ();
+
+	if (orientation == Qt::Horizontal) {
+		if (section >= objects.size ()) return QVariant ();
+		return objects[section]->getShortName ();
+	}
+
+	return QString::number (section);
 }
 
 
