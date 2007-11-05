@@ -100,8 +100,7 @@ rkspinbox:
 		- does not update on typed input
 
 rkobjectlistview:
-	- do the tool-tips for the objects work?
-	- implement sorting / filtering
+	- test everything
 
 rkconsole:
 	- check whether all selection, editing, navigating really works as expected
@@ -125,3 +124,4 @@ Wishlist:
 		-* may be have a drop down menu for the available mirrors instead of tcl/tk which can be fetched just once
 	-* in administrator mode KdeSudo instead of kdesu or option of both? it is a 'fashion' these days not to have root password (ala *ubuntu)!!
 	-* any means of fetching a description of the package before installing?
+	- when adding vars to a multi varslot, these should become selected (so you can removed them again with a single click)

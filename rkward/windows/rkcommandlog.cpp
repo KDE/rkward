@@ -33,6 +33,7 @@
 
 #include <klocale.h>
 #include <kactioncollection.h>
+#include <kglobalsettings.h>
 
 #include "../debug.h"
 
@@ -218,7 +219,7 @@ void RKCommandLog::clearLog () {
 	log_view->setPlainText (QString ());
 
 	// set a fixed width font
-	QFont font ("Courier");
+	QFont font = KGlobalSettings::fixedFont ();
 	log_view->setCurrentFont (font);
 }
 

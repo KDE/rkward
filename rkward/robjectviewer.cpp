@@ -29,6 +29,7 @@
 #include <QCloseEvent>
 
 #include <klocale.h>
+#include <kglobalsettings.h>
 
 #include "rbackend/rinterface.h"
 #include "rkglobals.h"
@@ -58,8 +59,6 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 	setPart (new RKDummyPart (this, wrapper));
 	initializeActivationSignals ();
 
-	QFont font ("Courier");
-
 	Q3HBox *toprow = new Q3HBox (box);
 	description_label = new QLabel (toprow);
 	Q3VBox *statusbox = new Q3VBox (toprow);
@@ -79,7 +78,6 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 	summary_area = new Q3TextEdit (box);
 	summary_area->setTextFormat (Qt::PlainText);
 	summary_area->setReadOnly (true);
-	summary_area->setCurrentFont (font);
 	summary_area->setWordWrap (Q3TextEdit::NoWrap);
 
 	row = new Q3HBox (box);
@@ -91,7 +89,6 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 	print_area = new Q3TextEdit (box);
 	print_area->setTextFormat (Qt::PlainText);
 	print_area->setReadOnly (true);
-	print_area->setCurrentFont (font);
 	print_area->setWordWrap (Q3TextEdit::NoWrap);
 
 	setCaption (i18n("Object Viewer: ") + object->getShortName ());
@@ -145,6 +142,9 @@ void RObjectViewer::update () {
 
 	summary_area->setText (QString::null);
 	print_area->setText (QString::null);
+	QFont font = KGlobalSettings::fixedFont ();
+	summary_area->setCurrentFont (font);
+	print_area->setCurrentFont (font);
 
 	RCommand *command = new RCommand ("print(summary(" + _object->getFullName () + "))", RCommand::App, QString::null, this, SUMMARY_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, 0);

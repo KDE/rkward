@@ -4,7 +4,9 @@
 
 ---- KDE 3 versions
 
+- Use the KDE default fixed spacing font for command log and object viewer
 
+--- Version 0.4.8a - Nov-XX-2007
 - More reliable C stack limit detection on some systems
 - Fixed: Console accepted pasted input while a command is running
 - Fixed: Analysis->Moments->Moment plugin did not use the order-parameter
