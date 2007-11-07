@@ -333,7 +333,7 @@ void TwinTable::deleteRows () {
 	}
 }
 
-void TwinTable::paste (QByteArray &content) {
+void TwinTable::paste (QByteArray &content, RKEditor::PasteMode paste_mode) {
 	RK_TRACE (EDITOR);
 
 	flushEdit ();
@@ -427,11 +427,6 @@ void TwinTable::clearSelected () {
  	if (!table) return;
 
 	table->blankSelected ();
-}
-
-void TwinTable::setPasteMode (RKEditor::PasteMode mode) {
-	RK_TRACE (EDITOR);
-	paste_mode = mode;
 }
 
 void TwinTable::setRow (TwinTableMember* table, int row, int start_col, int end_col, char **data) {

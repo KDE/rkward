@@ -614,12 +614,15 @@ void RKComponentPropertyDouble::internalSetValue (const QString &new_value) {
 #include "../core/rkmodificationtracker.h"
 #include "../misc/rkobjectlistview.h"
 
-RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool required) : RKComponentPropertyBase (parent, required), RObjectListener (RObjectListener::Other, RObjectListener::ObjectRemoved | RObjectListener::MetaChanged) {
+RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool required) : RKComponentPropertyBase (parent, required), RObjectListener (RObjectListener::Other) {
 	RK_TRACE (PLUGIN);
 
 // no initial requirements
 	dims = min_length = max_length = min_num_objects = min_num_objects_if_any = max_num_objects = -1;
 	separator = "\n";
+
+	addNotificationType (RObjectListener::ObjectRemoved);
+	addNotificationType (RObjectListener::MetaChanged);
 }
 
 RKComponentPropertyRObjects::~RKComponentPropertyRObjects () {

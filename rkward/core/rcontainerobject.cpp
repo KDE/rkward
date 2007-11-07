@@ -189,9 +189,8 @@ void RContainerObject::moveChild (RObject* child, int from_index, int to_index) 
 
 	RK_ASSERT (childmap[from_index] == child);
 	RK_ASSERT (from_index < childmap.size ());
-	RKGlobals::tracker ()->internalRemoveObject (child, true, false);
-	RK_ASSERT (to_index <= childmap.size ());
-	RKGlobals::tracker ()->addObject (child, this, to_index);
+	RK_ASSERT (to_index < childmap.size ());
+	RKGlobals::tracker ()->moveObject (this, child, from_index, to_index);
 }
 
 int RContainerObject::numChildren () const {
@@ -295,10 +294,9 @@ void RContainerObject::findObjectsMatching (const QString &partial_name, RObject
 	}
 }
 
-RObject *RContainerObject::createNewChild (const QString &name, int position, RKEditor *creator, bool container, bool data_frame) {
+RObject *RContainerObject::createPendingChild (const QString &name, int position, bool container, bool data_frame) {
 	RK_TRACE (OBJECTS);
 
-#warning rename to createPendingChild, also in RObjectList
 #warning TODO validize name
 	RObject *ret;
 	if (container) {
@@ -314,7 +312,7 @@ RObject *RContainerObject::createNewChild (const QString &name, int position, RK
 
 	if ((position < 0) || (position > childmap.size ())) position = childmap.size ();
 
-	RKGlobals::tracker ()->addObject (ret, this, position, creator);
+	RKGlobals::tracker ()->addObject (ret, this, position);
 #warning TODO should we create the object in R, here?
 
 	return ret;
@@ -401,13 +399,16 @@ bool RContainerObject::isParentOf (RObject *object, bool recursive) const {
 
 QString RContainerObject::validizeName (const QString &child_name, bool unique) const {
 	RK_TRACE (OBJECTS);
-	QString ret = child_name;
-	ret = ret.replace (QRegExp ("[^a-zA-Z0-9]"), ".");
-	ret = ret.replace (QRegExp ("^\\.*[0-9]+"), ".");
-	if (ret.isEmpty ()) ret = "var";
-	int i=-1;
 
+	QString ret = child_name;
+	if (ret.isEmpty ()) ret = "var";
+	else {
+		ret = ret.replace (QRegExp ("[^a-zA-Z0-9]"), ".");
+		ret = ret.replace (QRegExp ("^\\.*[0-9]+"), ".");
+	}
 	if (!unique) return ret;
+
+	int i=0;
 	QString postfix;
 	while (findChildByName (ret + postfix)) {
 		postfix.setNum (++i);

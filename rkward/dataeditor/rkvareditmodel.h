@@ -70,6 +70,9 @@ friend class RKVarEditMetaModel;
 	/** insert a new column at index. Default implementation does nothing. To be implemented in subclasses */
 	virtual void doInsertColumn (int index);
 
+	virtual void doInsertRowsInBackend (int row, int count);
+	virtual void doRemoveRowsInBackend (int row, int count);
+
 	int trailing_rows;
 	int trailing_cols;
 
@@ -127,6 +130,11 @@ protected:
 	void objectRemoved (RObject* object);
 	/** receives notifications of new objects added to this data.frame */
 	void childAdded (int index, RObject* parent);
+	/** receives notifications of object position changes inside this data.frame */
+	void childMoved (int old_index, int new_index, RObject* parent);
+
+	void doInsertRowsInBackend (int row, int count);
+	void doRemoveRowsInBackend (int row, int count);
 
 	RContainerObject* dataframe;
 };

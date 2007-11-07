@@ -56,6 +56,7 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 // TODO: allow more than one editor per object
 // WARNING: This does not work, if a sub-object is being edited!
 	RKEditor *ed = objectEditor (object);
+	RK_ASSERT (object);
 	RK_ASSERT (!((editor) && (!ed)));
 	RK_ASSERT (!(removed_in_workspace && editor));
 
@@ -79,14 +80,6 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 		}
 	}
 
-	internalRemoveObject (object, removed_in_workspace, true);
-
-	return true;
-}
-
-void RKModificationTracker::internalRemoveObject (RObject *object, bool removed_in_workspace, bool delete_obj) {
-	RK_TRACE (OBJECTS);
-
 	RK_ASSERT (object);
 	RK_ASSERT (object->getContainer ());
 
@@ -97,12 +90,37 @@ void RKModificationTracker::internalRemoveObject (RObject *object, bool removed_
 		beginRemoveRows (object_index, object_row, object_row);
 	}
 
-	if (!updates_locked) sendListenerNotification (RObjectListener::ObjectRemoved, object, 0, 0);
+	if (!updates_locked) sendListenerNotification (RObjectListener::ObjectRemoved, object, 0, 0, 0);
 
-	if (delete_obj) object->remove (removed_in_workspace);
-	else object->getContainer ()->removeChildNoDelete (object);
+	object->remove (removed_in_workspace);
 
 	if (!updates_locked) endRemoveRows ();
+
+	return true;
+}
+
+void RKModificationTracker::moveObject (RContainerObject *parent, RObject* child, int old_index, int new_index) {
+	RK_TRACE (OBJECTS);
+
+	QModelIndex parent_index;
+
+	if (!updates_locked) {
+		parent_index = indexFor (parent->getContainer ());
+		beginRemoveRows (parent_index, old_index, old_index);
+	}
+	RK_ASSERT (parent->findChildByIndex (old_index) == child);
+	parent->removeChildNoDelete (child);
+	if (!updates_locked) {
+		endRemoveRows ();
+
+		beginInsertRows (parent_index, new_index, new_index);
+	}
+	parent->insertChild (child, new_index);
+	RK_ASSERT (parent->findChildByIndex (new_index) == child);
+	if (!updates_locked) {
+		endInsertRows ();
+		sendListenerNotification (RObjectListener::ChildMoved, parent, old_index, new_index, 0);
+	}
 }
 
 void RKModificationTracker::renameObject (RObject *object, const QString &new_name) {
@@ -111,14 +129,14 @@ void RKModificationTracker::renameObject (RObject *object, const QString &new_na
 	object->rename (new_name);
 
 	if (!updates_locked) {
-		sendListenerNotification (RObjectListener::MetaChanged, object, 0, 0);
+		sendListenerNotification (RObjectListener::MetaChanged, object, 0, 0, 0);
 
 		QModelIndex object_index = indexFor (object);
 		emit (dataChanged (object_index, object_index));
 	}
 }
 
-void RKModificationTracker::addObject (RObject *object, RContainerObject* parent, int position, RKEditor *editor) {
+void RKModificationTracker::addObject (RObject *object, RContainerObject* parent, int position) {
 	RK_TRACE (OBJECTS);
 
 	if (!updates_locked) {
@@ -129,7 +147,7 @@ void RKModificationTracker::addObject (RObject *object, RContainerObject* parent
 	parent->insertChild (object, position);
 
 	if (!updates_locked) {
-		sendListenerNotification (RObjectListener::ChildAdded, parent, position, 0);
+		sendListenerNotification (RObjectListener::ChildAdded, parent, position, 0, 0);
 		endInsertRows ();
 	}
 }
@@ -138,7 +156,7 @@ void RKModificationTracker::objectMetaChanged (RObject *object) {
 	RK_TRACE (OBJECTS);
 
 	if (!updates_locked) {
-		sendListenerNotification (RObjectListener::MetaChanged, object, 0, 0);
+		sendListenerNotification (RObjectListener::MetaChanged, object, 0, 0, 0);
 
 		QModelIndex object_index = indexFor (object);
 		emit (dataChanged (object_index, object_index));
@@ -149,7 +167,7 @@ void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeS
 	RK_TRACE (OBJECTS);
 
 	if (!updates_locked) {
-		sendListenerNotification (RObjectListener::DataChanged, object, 0, changes);
+		sendListenerNotification (RObjectListener::DataChanged, object, 0, 0, changes);
 		delete changes;
 
 		QModelIndex object_index = indexFor (object);
@@ -173,7 +191,7 @@ void RKModificationTracker::removeObjectListener (RObject* object, RObjectListen
 	if (listener->listenerType () == RObjectListener::DataModel) object->endEdit ();
 }
 
-void RKModificationTracker::sendListenerNotification (RObjectListener::NotificationType type, RObject* o, int index, RObject::ChangeSet* changes) {
+void RKModificationTracker::sendListenerNotification (RObjectListener::NotificationType type, RObject* o, int index, int new_index, RObject::ChangeSet* changes) {
 	RK_TRACE (OBJECTS);
 
 	QList<RObjectListener*> obj_listeners = listeners.values (o);
@@ -185,6 +203,8 @@ void RKModificationTracker::sendListenerNotification (RObjectListener::Notificat
 			listener->objectRemoved (o);
 		} else if (type == RObjectListener::ChildAdded) {
 			listener->childAdded (index, o);
+		} else if (type == RObjectListener::ChildMoved) {
+			listener->childMoved (index, new_index, o);
 		} else if (type == RObjectListener::MetaChanged) {
 			listener->objectMetaChanged (o);
 		} else if (type == RObjectListener::DataChanged) {
@@ -328,11 +348,11 @@ QModelIndex RKObjectListModel::indexFor (RObject *object) const {
 
 ///////////////////// RObjectListener ////////////////////////
 
-RObjectListener::RObjectListener (ListenerType type, int notifications) {
+RObjectListener::RObjectListener (ListenerType type) {
 	RK_TRACE (OBJECTS);
 
 	RObjectListener::type = type;
-	RObjectListener::notifications = notifications;
+	notifications = 0;
 	num_watched_objects = 0;
 }
 
@@ -343,19 +363,23 @@ RObjectListener::~RObjectListener () {
 }
 
 void RObjectListener::objectRemoved (RObject*) {
-	RK_ASSERT (false);
+	RK_ASSERT (false);	// listeners that receive this notification should have reimplemented this function
 }
 
 void RObjectListener::childAdded (int, RObject*) {
-	RK_ASSERT (false);
+	RK_ASSERT (false);	// listeners that receive this notification should have reimplemented this function
+}
+
+void RObjectListener::childMoved (int, int, RObject*) {
+	RK_ASSERT (false);	// listeners that receive this notification should have reimplemented this function
 }
 
 void RObjectListener::objectMetaChanged (RObject*) {
-	RK_ASSERT (false);
+	RK_ASSERT (false);	// listeners that receive this notification should have reimplemented this function
 }
 
 void RObjectListener::objectDataChanged (RObject*, const RObject::ChangeSet *) {
-	RK_ASSERT (false);
+	RK_ASSERT (false);	// listeners that receive this notification should have reimplemented this function
 }
 
 void RObjectListener::listenForObject (RObject* object) {

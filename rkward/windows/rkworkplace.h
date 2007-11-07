@@ -111,14 +111,16 @@ TODO: this should be obsoleted somehow */
 	void newX11Window (WId window_to_embed, int device_number);
 	void newObjectViewer (RObject *object);
 
-#warning remove initialize_to_empty param. This should happen for all pending objects, but else never.
 /** @returns true if there is a known editor for this type of object, false otherwise */
 	bool canEditObject (RObject *object);
 /** Creates a new editor of an appropriate type, and loads the given object into the editor
 @param object object to edit
-@param initialize_to_empty Create an empty object (no data). Use with care!
 @returns a pointer to the editor */
-	RKEditor *editObject (RObject *object, bool initialize_to_empty=false);
+	RKEditor* editObject (RObject *object);
+/** Creates a new data.frame with the given name, and loads it in an editor. @see editObject()
+@param name Name of the data.frame to create
+@returns a pointer to the editor */
+	RKEditor* editNewDataFrame (const QString& name);
 
 /** tell all DataEditorWindow s to synchronize changes to the R backend
 // TODO: add RCommandChain parameter */

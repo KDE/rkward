@@ -29,8 +29,9 @@ class RCommandChain;
 class RKDrag;
 
 /**
-Use a a base class for all widgets that can be used to display and edit RObjects of whatever type.
+Use as a base class for all widgets that can be used to display and edit RObjects of whatever type.
 
+// TODO: not sure we really need this any longer
 @author Thomas Friedrichsmeier
 */
 class RKEditor : public RKMDIWindow {
@@ -45,33 +46,14 @@ public:
 /// returns the object that is being edited in this editor
 	RObject *getObject () { return object; };
 	
-/// editing functions:
-	virtual void clearSelected () = 0;
-	virtual RKDrag *makeDrag () = 0;
-	virtual void paste (QByteArray &content) = 0;
 	enum PasteMode {PasteEverywhere, PasteToTable, PasteToSelection};
-	virtual void setPasteMode (PasteMode mode) = 0;
 
-/** Tells the editor to (unconditionally!) remove the object from its list. */
-	virtual void removeObject (RObject *object) = 0;
 /** Tells the editor to restore the given object in the R-workspace from its copy of the data */
 	virtual void restoreObject (RObject *object) = 0;
-/** Tells the editor to (unconditionally!) rename the object (the object already carries the new name, so the editor can read the new name from the object). */
-	virtual void renameObject (RObject *object) = 0;
-/** Tell the editor to (unconditionally) add the given object to its view */
-	virtual void addObject (RObject *object) = 0;
-/** Tell the editor to (unconditionally) update its representation of the object meta data */
-	virtual void updateObjectMeta (RObject *object) = 0;
-/** Tell the editor to (unconditionally) update its representation of the object data (in the range given in the ChangeSet) */
-	virtual void updateObjectData (RObject *object, RObject::ChangeSet *changes) = 0;
 
 	QString getDescription ();
 	bool isModified () { return false; };
 protected:
-friend class RKWorkplace;
-/// opens the given object. Implement in the child-classes
-	virtual void openObject (RObject *object, bool initialize_to_empty) = 0;
-
 	RObject *object;
 };
 

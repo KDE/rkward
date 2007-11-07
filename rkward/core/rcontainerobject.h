@@ -58,7 +58,7 @@ public:
 	/** creates a new child. Right now only RKVariables (false, false), or data.frames (true, true), or unspecified containers (true, false) can be created.
 	API will likely change. The child is NOT created in the workspace. That's your resonsibility. All this function returns is a new RObject* of the given
 	type and with the name (if necessary) changed to a legal value. TODO: checking for and changing illegal names is not yet implemented */
-	virtual RObject *createNewChild (const QString &name, int position=-1, RKEditor *creator=0, bool container=false, bool data_frame=false);
+	virtual RObject *createPendingChild (const QString &name, int position=-1, bool container=false, bool data_frame=false);
 
 	/** returns true, if there are no children in this container. Note: of course the object list may not be up to date! */
 	bool isEmpty () const { return childmap.isEmpty (); };

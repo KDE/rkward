@@ -36,7 +36,6 @@
 #include "../core/robjectlist.h"
 #include "../dataeditor/rkeditor.h"
 #include "../dataeditor/rkeditordataframe.h"
-#include "../dataeditor/rkeditordataframepart.h"
 #include "../robjectviewer.h"
 #include "../settings/rksettingsmoduleoutput.h"
 #include "../settings/rksettingsmodulegeneral.h"
@@ -293,14 +292,31 @@ bool RKWorkplace::canEditObject (RObject *object) {
 	return false;
 }
 
-RKEditor *RKWorkplace::editObject (RObject *object, bool initialize_to_empty) {
+RKEditor* RKWorkplace::editNewDataFrame (const QString &name) {
+	RK_TRACE (APP);
+
+	RKEditorDataFrame* ed = new RKEditorDataFrame (name, 0);
+	addWindow (ed);
+	ed->activate ();
+
+	return ed;
+}
+
+RKEditor *RKWorkplace::editObject (RObject *object) {
 	RK_TRACE (APP);
 
 	RObject *iobj = object;
 	RKEditor *ed = 0;
-	RKEditorDataFramePart *part = 0;
 	RKEditor *existing_editor = RKGlobals::tracker ()->objectEditor (object);
 	if (!existing_editor) {
+		if (!iobj->isDataFrame ()) {
+			if (iobj->isVariable () && iobj->getContainer ()->isDataFrame ()) {
+				iobj = iobj->getContainer ();
+			} else {
+				return 0;
+			}
+		}
+
 		unsigned long size = 1;
 		for (unsigned int i = 0; i < iobj->numDimensions (); ++i) {
 			size *= iobj->getDimension (i);
@@ -311,22 +327,13 @@ RKEditor *RKWorkplace::editObject (RObject *object, bool initialize_to_empty) {
 			}
 		}
 
-		part = new RKEditorDataFramePart (0);		// TODO: reverse creation logic, just as in the other classes!
-		ed = part->getEditor ();
-		// TODO: add child objects, too?
-		ed->openObject (iobj, initialize_to_empty);
-
-		ed->setCaption (iobj->getShortName ());		// TODO: move to editor
-		ed->setIcon (SmallIcon ("spreadsheet"));
+		ed = new RKEditorDataFrame (iobj, 0);
 		addWindow (ed);
-		ed->setFocus ();		// somehow we need to call this explicitly
-	}
-
-	if (existing_editor) {		// not strictly an else. existing_editor may be reset inside the above if
-		existing_editor->activate ();
+	} else {
 		ed = existing_editor;
 	}
-	
+
+	ed->activate ();
 	return ed;
 }
 
@@ -518,7 +525,7 @@ void RKWorkplace::restoreWorkplaceItem (const QString &desc) {
 
 	if (type == "data") {
 		RObject *object = RObjectList::getObjectList ()->findObject (specification);
-		if (object) editObject (object, false);
+		if (object) editObject (object);
 	} else if (type == "script") {
 		openScriptEditor (specification);
 	} else if (type == "output") {

@@ -2,7 +2,7 @@
                           rkeditordataframepart  -  description
                              -------------------
     begin                : Wed Sep 14 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -20,6 +20,8 @@
 
 #include <kparts/part.h>
 
+#include "rkeditor.h"
+
 class RKEditorDataFrame;
 class KAction;
 
@@ -29,9 +31,11 @@ class KAction;
 */
 class RKEditorDataFramePart : public KParts::Part {
 	Q_OBJECT
-public:
-	explicit RKEditorDataFramePart (QWidget *parent);
-
+protected:
+friend class RKEditorDataFrame;
+/** ctor. Protected, as this should only be created by an RKEditorDataFrame */
+	RKEditorDataFramePart (QObject *parent, RKEditorDataFrame* editor);
+/** dtor */
 	~RKEditorDataFramePart ();
 public slots:
 /** put the marked cells into the clipboard and remove them from the table */
@@ -45,7 +49,7 @@ public slots:
 /** paste the clipboard into the table, but not beyond selection boundaries	*/
 	void slotEditPasteToSelection();
 /** return a pointer to the underlying editor widget */
-	RKEditorDataFrame *getEditor () { return editor; };
+	RKEditorDataFrame *getEditor () const { return editor; };
 private:
 	QAction* editCut;
 	QAction* editCopy;
@@ -59,7 +63,7 @@ private:
 	void initializeActions ();
 
 /** Does pasting (called from the respective slots) */
-	void doPaste ();
+	void doPaste (RKEditor::PasteMode mode);
 };
 
 #endif

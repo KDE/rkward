@@ -43,11 +43,13 @@
 #define SUMMARY_COMMAND 1
 #define PRINT_COMMAND 2
 
-RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (parent, RKMDIWindow::ObjectWindow, false), RObjectListener (RObjectListener::ObjectView, RObjectListener::ObjectRemoved) {
+RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (parent, RKMDIWindow::ObjectWindow, false), RObjectListener (RObjectListener::ObjectView) {
 // KDE 4: TODO might listen for object meta / data changes as well
 	RK_TRACE (APP);
 	RK_ASSERT (object);
 	_object = object;
+
+	addNotificationType (RObjectListener::ObjectRemoved);
 	listenForObject (_object);
 
 	Q3VBoxLayout *layout = new Q3VBoxLayout (this);

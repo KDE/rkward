@@ -21,16 +21,21 @@
 
 #include "../core/rcontainerobject.h"
 #include "../core/rkmodificationtracker.h"
+#include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
 
 #include "../debug.h"
 
-RKVarEditModel::RKVarEditModel (QObject *parent) : QAbstractTableModel (parent), RObjectListener (RObjectListener::DataModel, RObjectListener::ObjectRemoved) {
+RKVarEditModel::RKVarEditModel (QObject *parent) : QAbstractTableModel (parent), RObjectListener (RObjectListener::DataModel) {
 	RK_TRACE (EDITOR);
 
 	meta_model = 0;
 	trailing_rows = trailing_cols = 0;
 	edit_blocks = 0;
+
+	addNotificationType (RObjectListener::ObjectRemoved);
+#warning TODO: listen for data changes
+#warning TODO: listen for meta changes
 }
 
 RKVarEditModel::~RKVarEditModel () {
@@ -97,8 +102,10 @@ bool RKVarEditModel::insertRows (int row, int count, const QModelIndex& parent) 
 
 	beginInsertRows (QModelIndex (), row, row+count);
 	for (int i=0; i < objects.size (); ++i) {
+// TODO: this does not emit any data change notifications to other editors
 		objects[i]->insertRows (row, count);
 	}
+	doInsertRowsInBackend (row, count);
 	endInsertRows ();
 
 	return true;
@@ -118,11 +125,27 @@ bool RKVarEditModel::removeRows (int row, int count, const QModelIndex& parent) 
 
 	beginRemoveRows (QModelIndex (), row, lastrow);
 	for (int i=0; i < objects.size (); ++i) {
+// TODO: this does not emit any data change notifications to other editors
 		objects[i]->removeRows (row, lastrow);
 	}
+	doRemoveRowsInBackend (row, lastrow - row + 1);
 	endRemoveRows ();
 
 	return true;
+}
+
+void RKVarEditModel::doInsertRowsInBackend (int, int) {
+	RK_TRACE (EDITOR);
+
+	// TODO: implement
+	RK_ASSERT (false);
+}
+
+void RKVarEditModel::doRemoveRowsInBackend (int, int) {
+	RK_TRACE (EDITOR);
+
+	// TODO: implement
+	RK_ASSERT (false);
 }
 
 int RKVarEditModel::rowCount (const QModelIndex& parent) const {
@@ -421,6 +444,7 @@ RKVarEditDataFrameModel::RKVarEditDataFrameModel (RContainerObject* dataframe, Q
 	trailing_cols = 1;
 
 	addNotificationType (RObjectListener::ChildAdded);
+	addNotificationType (RObjectListener::ChildMoved);
 	listenForObject (dataframe);
 
 	for (int i = 0; i < dataframe->numChildren (); ++i) {
@@ -440,20 +464,54 @@ RKVarEditDataFrameModel::~RKVarEditDataFrameModel () {
 bool RKVarEditDataFrameModel::insertColumns (int column, int count, const QModelIndex& parent) {
 	RK_TRACE (EDITOR);
 
-/*	RObject *obj = static_cast<RContainerObject *> (getObject ())->createNewChild (static_cast<RContainerObject *> (getObject ())->validizeName (QString ()), col, this);
-	RK_ASSERT (obj->isVariable ());
-	RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + getObject ()->getFullName () + ", \"" + obj->getShortName () + "\", " + QString::number (col+1) + ")", RCommand::App | RCommand::Sync));
-	static_cast<RKVariable*> (obj)->setLength (dataview->numTrueRows ());
-	obj->setCreatedInEditor (this); */
+	if (parent.isValid ()) {
+		RK_ASSERT (false);
+		return false;
+	}
 
-#warning TODO implement
+	for (int col = column; col < (column + count); ++col) {
+		RObject *obj = dataframe->createPendingChild (dataframe->validizeName (QString ()), col);
+		RK_ASSERT (obj->isVariable ());
+		if (!objects.isEmpty ()) static_cast<RKVariable*> (obj)->setLength (objects[0]->getLength ());
+//		addObject (col, obj);	// the object will be added via RKModificationTracker::addObject -> this::childAdded. That will also take care of calling beginInsertColumns()/endInsertColumns()
+	
+		RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + dataframe->getFullName () + ", \"" + obj->getShortName () + "\", " + QString::number (col+1) + ")", RCommand::App | RCommand::Sync));
+	}
+
+	return true;
 }
 
 bool RKVarEditDataFrameModel::removeColumns (int column, int count, const QModelIndex& parent) {
 	RK_TRACE (EDITOR);
 
-/*	RKGlobals::tracker ()->removeObject (obj); */
-#warning TODO implement
+	if (parent.isValid ()) {
+		RK_ASSERT (false);
+		return false;
+	}
+
+	while ((column + count) > objects.size ()) --count;
+	for (int i = column + count - 1; i >= column; --i) {	// we start at the end so that the index remains valid
+		RKGlobals::tracker ()->removeObject (objects[i]);
+		// the comment in insertColumns, above: The object will be removed from our list in objectRemoved().
+	}
+	return true;
+}
+
+void RKVarEditDataFrameModel::doInsertRowsInBackend (int row, int count) {
+	RK_TRACE (EDITOR);
+
+	// TODO: most of the time we're only adding one row at a time, still we should have a function to add multiple rows at once.
+	for (int i = row; i < row + count; ++i) {
+		RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.row (" + dataframe->getFullName () + ", " + QString::number (i+1) + ')', RCommand::App | RCommand::Sync));
+	}
+}
+
+void RKVarEditDataFrameModel::doRemoveRowsInBackend (int row, int count) {
+	RK_TRACE (EDITOR);
+
+	for (int i = row + count - 1; i >= row; --i) {
+		RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.delete.row (" + dataframe->getFullName () + ", " + QString::number (i+1) + ')', RCommand::App | RCommand::Sync));
+	}
 }
 
 void RKVarEditDataFrameModel::objectRemoved (RObject* object) {
@@ -478,6 +536,26 @@ void RKVarEditDataFrameModel::childAdded (int index, RObject* parent) {
 
 		if (child->isVariable ()) addObject (index, static_cast<RKVariable*> (child));
 		else RK_ASSERT (false);
+	}
+}
+
+void RKVarEditDataFrameModel::childMoved (int old_index, int new_index, RObject* parent) {
+	RK_TRACE (EDITOR);
+
+	if (parent == dataframe) {
+		RObject *child = dataframe->findChildByIndex (new_index);	// it's at the new position, already
+		RK_ASSERT (objects.size () > old_index);
+		RK_ASSERT (child == objects[old_index]);
+		// if an object has changed position, there should be at least two objects left. Hence, the objectRemoved-call will never lead to editor destruction
+		RK_ASSERT (objects.size () >= 2);
+		objectRemoved (child);
+
+		RK_ASSERT (child->isVariable ());
+		addObject (new_index, static_cast<RKVariable*> (child));
+	} else {
+		// even though we are listening for the child objects as well, we should see move notifications
+		// only for children of the parent.
+		RK_ASSERT (false);
 	}
 }
 

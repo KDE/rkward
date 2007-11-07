@@ -32,13 +32,18 @@ An RKEditor for data.frames.
 */
 class RKEditorDataFrame : public TwinTable, public RCommandReceiver {
 	Q_OBJECT
-protected:
-friend class RKEditorDataFramePart;
-/** constructor. Protected as you should not create an RKEditorDataFrame directly. Create an RKEditorDataFramePart instead. */
-	RKEditorDataFrame (QWidget *parent, KParts::Part* part);
+public:
+/** constructor.
+@param object an existing R object
+@param parent parent widget */
+	RKEditorDataFrame (RObject* object, QWidget *parent);
+/** This constructor creates a new (empty) data.frame with the given name and then opens it for editing.
+@param new_object_name name of the new data.frame
+@param parent parent widget */
+	RKEditorDataFrame (const QString& new_object_name, QWidget *parent);
 /** destructor */
 	~RKEditorDataFrame ();
-public:
+
 	void flushChanges ();
 	
 	//void objectDeleted (RObject *object);
@@ -50,27 +55,23 @@ public:
 	void restoreObject (RObject *object);
 /** Tells the editor to (unconditionally!) rename the object (the object already carries the new name, so the editor can read the new name from the object). */
 	void renameObject (RObject *object);
-/** Tell the editor to (unconditionally) add the given object to its view */
-	void addObject (RObject *object);
 /** Tell the editor to (unconditionally) update its representation of the object meta data */
 	void updateObjectMeta (RObject *object);
 /** Tell the editor to (unconditionally) update its representation of the object data (in the range given in the ChangeSet) */
 	void updateObjectData (RObject *object, RObject::ChangeSet *changes);
 public slots:
 	void columnDeletionRequested (int col);
-	void columnAdded (int col);
-	void aboutToAddRow (int row);
-	void aboutToRemoveRow (int row);
 private:
 /// syncs the whole table.
 	void pushTable (RCommandChain *sync_chain);
+	void commonInit ();
 	RCommandChain *open_chain;
 	void enableEditing (bool on);
 	void updateMetaValue (RObject *obj, int row, int col, bool sync=true);
 
 	void modifyObjectMeta (RObject *object, int column);
 protected:
-	void openObject (RObject *object, bool initialize_to_empty=false);
+	void openObject (RObject *object);
 	void rCommandDone (RCommand *command);
 };
 

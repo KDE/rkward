@@ -2,7 +2,7 @@
                           rkeditordataframepart  -  description
                              -------------------
     begin                : Wed Sep 14 2005
-    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -28,11 +28,11 @@
 #include "../rkward.h"
 #include "../debug.h"
 
-RKEditorDataFramePart::RKEditorDataFramePart (QWidget *parent) : KParts::Part (parent) {
+RKEditorDataFramePart::RKEditorDataFramePart (QObject *parent, RKEditorDataFrame* editor) : KParts::Part (parent) {
 	RK_TRACE (EDITOR);
 	setComponentData (KGlobal::mainComponent ());
  
-	editor = new RKEditorDataFrame (parent, this);
+	RKEditorDataFramePart::editor = editor;
 	setWidget (editor);
 
 	setXMLFile ("rkeditordataframepart.rc");
@@ -84,25 +84,22 @@ void RKEditorDataFramePart::slotEditCopy() {
 void RKEditorDataFramePart::slotEditPaste() {
 	RK_TRACE (EDITOR);
 	
-	editor->setPasteMode (RKEditor::PasteEverywhere);
-	doPaste ();
+	doPaste (RKEditor::PasteEverywhere);
 }
 
 void RKEditorDataFramePart::slotEditPasteToTable() {
 	RK_TRACE (EDITOR);
 	
-	editor->setPasteMode (RKEditor::PasteToTable);
-	doPaste ();
+	doPaste (RKEditor::PasteToTable);
 }
 
 void RKEditorDataFramePart::slotEditPasteToSelection() {
 	RK_TRACE (EDITOR);
 	
-	editor->setPasteMode (RKEditor::PasteToSelection);
-	doPaste ();
+	doPaste (RKEditor::PasteToSelection);
 }
 
-void RKEditorDataFramePart::doPaste () {
+void RKEditorDataFramePart::doPaste (RKEditor::PasteMode mode) {
 	RK_TRACE (EDITOR);
 
 	RKWardMainWindow::getMain ()->slotSetStatusBarText(i18n("Inserting clipboard contents..."));
@@ -113,11 +110,11 @@ void RKEditorDataFramePart::doPaste () {
 	if (QApplication::clipboard()->data()->provides ("text/tab-separated-values")) {
 		RK_DO (qDebug ("paste tsv"), EDITOR, DL_DEBUG);
 		QByteArray data = QApplication::clipboard()->data()->encodedData ("text/tab-separated-values");
-		editor->paste (data);
+		editor->paste (data, mode);
 	} else if (QApplication::clipboard()->data()->provides ("text/plain")) {
-		RK_DO (qDebug ("paste plaing"), EDITOR, DL_DEBUG);
+		RK_DO (qDebug ("paste plain text"), EDITOR, DL_DEBUG);
 		QByteArray data = QApplication::clipboard()->data()->encodedData ("text/plain");
-		editor->paste (data);
+		editor->paste (data, mode);
 	}
 
 	RKWardMainWindow::getMain ()->slotSetStatusReady ();

@@ -82,14 +82,14 @@
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
 #include "dialogs/rkreadlinedialog.h"	// TODO: see below: needed purely for linking!
 #include "windows/detachedwindowcontainer.h"	// TODO: see below: needed purely for linking!
-#include "dataeditor/rkeditordataframepart.h"	// TODO: see below: needed purely for linking!
+#include "dataeditor/rkeditordataframe.h"	// TODO: see below: needed purely for linking!
 #include "agents/rkeditobjectagent.h"	// TODO: see below: needed purely for linking!
 
 // This nevers gets called. It's needed to trick ld into linking correctly. Nothing else.
 void bogusCalls () {
 	ShowEditTextFileAgent::showEditFiles (0);		// TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
 	RKReadLineDialog::readLine (0, QString(), QString(), 0, 0);	// TODO: see above
-	new RKEditorDataFramePart (0);
+	new RKEditorDataFrame (0, 0);
 	DetachedWindowContainer (0);
 	new RKWorkplaceView (0);
 	new RKEditObjectAgent (QStringList (), 0);
@@ -257,9 +257,7 @@ void RKWardMainWindow::doPostInit () {
 		} else if (result->result == StartupDialog::ChoseFile) {
 			slotFileOpenWorkspace ();
 		} else if (result->result == StartupDialog::EmptyTable) {
-			RObject *object = RObjectList::getObjectList ()->createNewChild (i18n ("my.data"), -1, 0, true, true);
-			// usually an explicit call to activateView should not be necessary. Somehow however, here, it is.
-			RKWorkplace::mainWorkplace ()->editObject (object, true);
+			RKWorkplace::mainWorkplace ()->editNewDataFrame (i18n ("my.data"));
 		}
 		delete result;
 	}
@@ -523,13 +521,7 @@ void RKWardMainWindow::slotNewDataFrame () {
 
 	QString name = KInputDialog::getText (i18n ("New dataset"), i18n ("Enter name for the new dataset"), "my.data", &ok, this);
 
-	if (ok) {
-		QString valid = RObjectList::getObjectList ()->validizeName (name);
-		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1", valid), i18n ("Invalid Name"));
-		RObject *object = RObjectList::getObjectList ()->createNewChild (valid, -1, 0, true, true);
-		RKWorkplace::mainWorkplace ()->editObject (object, true);
-	}
-	
+	if (ok) RKWorkplace::mainWorkplace ()->editNewDataFrame (name);
 }
 
 void RKWardMainWindow::fileOpenNoSave (const KUrl &url) {

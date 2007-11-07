@@ -60,6 +60,7 @@ void RKStandardIcons::initIcons () {
 
 	// windows
 #warning TODO icons for windows
+	icons[WindowDataFrameEditor] = icons[ObjectDataFrame];
 }
 
 QIcon RKStandardIcons::iconForObject (const RObject* object) {
@@ -94,6 +95,11 @@ QIcon RKStandardIcons::iconForObject (const RObject* object) {
 
 QIcon RKStandardIcons::iconForWindow (const RKMDIWindow* window) {
 	// don't trace this
+	if (!window) return QIcon ();
+
+	if (window->isType (RKMDIWindow::DataEditorWindow)) return icons[WindowDataFrameEditor];
+
 #warning TODO
+	RK_ASSERT (false);
 	return QIcon ();
 }

@@ -209,10 +209,10 @@ REnvironmentObject* RObjectList::findChildByNamespace (const QString &namespacen
 	return 0;
 }
 
-RObject *RObjectList::createNewChild (const QString &name, int position, RKEditor *creator, bool container, bool data_frame) {
+RObject *RObjectList::createPendingChild (const QString &name, int position, bool container, bool data_frame) {
 	RK_TRACE (OBJECTS);
-
-	return (getGlobalEnv ()->createNewChild (name, position, creator, container, data_frame));
+#warning TODO: this is bad style. Callers should call this on getGlobalEnv() directly.
+	return (getGlobalEnv ()->createPendingChild (name, position, container, data_frame));
 }
 
 QString RObjectList::validizeName (const QString &child_name, bool unique) const {

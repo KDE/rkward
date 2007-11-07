@@ -34,8 +34,9 @@ public:
 	enum NotificationType {
 		ObjectRemoved=1,
 		ChildAdded=2,
-		MetaChanged=4,
-		DataChanged=8
+		ChildMoved=4,	/** < a child has changed its position (index) *within* the parent */
+		MetaChanged=8,
+		DataChanged=16
 	};
 	enum ListenerType {
 		DataModel,	/** < listener is an RKVarEditModel */
@@ -46,7 +47,7 @@ public:
 	ListenerType listenerType () const { return type; };
 	bool wantsNotificationType (NotificationType type) const { return (notifications & type); };
 protected:
-	RObjectListener (ListenerType type, int notifications);
+	RObjectListener (ListenerType type);
 	virtual ~RObjectListener ();
 
 friend class RKModificationTracker;
@@ -54,6 +55,8 @@ friend class RKModificationTracker;
 	virtual void objectRemoved (RObject* removed);
 	/** reimplement this, if you are listening for an object with notification type ChildAdded. The default implementation does nothing and raises an assert */
 	virtual void childAdded (int index, RObject* parent);
+	/** reimplement this, if you are listening for an object with notification type ChildMoved. The default implementation does nothing and raises an assert. The child is to be found at new_index at the time the notification is sent. */
+	virtual void childMoved (int old_index, int new_index, RObject* parent);
 	/** reimplement this, if you are listening for an object with notification type MetaChanged. The default implementation does nothing and raises an assert */
 	virtual void objectMetaChanged (RObject* changed);
 	/** reimplement this, if you are listening for an object with notification type DataChanged. The default implementation does nothing and raises an assert */
@@ -111,12 +114,10 @@ public:
 
 	~RKModificationTracker ();
 	
-/** the given object should be removed (either it was removed in the R-workspace, or the user requests removal of the object in an editor or the RObjectList). First, if the object is being edited somewhere, the user will get a chance to object to the removal. If the user does not object, the RKModificationTracker will remove the object and notify all editors/objectlists that the object really was removed. When calling from the RObjectList, you will likely set removed_in_workspace to true, to signal that the object-data is already gone in the workspace. */
+/** the given object should be removed (either it was removed in the R-workspace, or the user requests removal of the object in an editor or the RObjectList). First, if the object is being edited somewhere, the user will get a chance to object to the removal. If the user does not object, the RKModificationTracker will remove the object and notify all interested listeners that the object really was removed. When calling from the RObjectList, you will likely set removed_in_workspace to true, to signal that the object-data is already gone in the workspace. */
 	bool removeObject (RObject *object, RKEditor *editor=0, bool removed_in_workspace=false);
 /** essentially like the above function, but requests a renaming of the object. Will also take care of finding out, whether the name is valid and promting for a different name otherwise. */
 	void renameObject (RObject *object, const QString &new_name);
-/** essentially like the above function(s). All objects editing a parent of the new objects are notified of the addition. */
-	void addObject (RObject *object, RContainerObject* parent, int position, RKEditor *editor=0);
 /** the object's meta data was modified. Tells all editors and lists containing the object to update accordingly. */
 	void objectMetaChanged (RObject *object);
 /** the object's data was modified. Tells all editors and lists containing the object to update accordingly. The ChangeSet given tells which parts of the data have to be updated. The ChangeSet will get deleted by the RKModificationTracker, when done. */
@@ -128,7 +129,7 @@ public:
 private:
 	int updates_locked;
 /** relay change notifications to connected listeners. This is not pretty, since the arguments change their meanings depending on the type of notification, but for now this is ok */
-	void sendListenerNotification (RObjectListener::NotificationType type, RObject* o, int index, RObject::ChangeSet* changes);
+	void sendListenerNotification (RObjectListener::NotificationType type, RObject* o, int index, int new_index, RObject::ChangeSet* changes);
 
 friend class RObjectListener;
 	void addObjectListener (RObject* object, RObjectListener* listener);
@@ -136,8 +137,11 @@ friend class RObjectListener;
 	QMultiHash<RObject*, RObjectListener*> listeners;
 
 friend class RContainerObject;
-/** uncondiontally remove the given object. Do *not* call this except from RContainerObject::moveChild() or internally from removeObject(). Call removeObject(), instead. */
-	void internalRemoveObject (RObject *object, bool removed_in_workspace, bool delete_obj);
+friend class RObjectList;
+/** essentially like the above function(s). All objects listening for child additions on the parent will be notified */
+	void addObject (RObject *object, RContainerObject* parent, int position);
+/** essentially like the above function(s). All objects listening for child position changed on the parent will be notified */
+	void moveObject (RContainerObject *parent, RObject* child, int old_index, int new_index);
 };
 
 #endif

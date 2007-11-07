@@ -78,9 +78,11 @@ public:
 	void setCaption (const QString &caption);
 /** Is this window attached (or detached)?
 @returns true if attached, false if detached */
-	bool isAttached () { return (state == Attached); };
+	bool isAttached () const { return (state == Attached); };
 /** Is this a tool window? */
-	bool isToolWindow () { return (type & ToolWindow); };
+	bool isToolWindow () const { return (type & ToolWindow); };
+/** Returns the type of this window */
+	bool isType (Type t) const { return (type & t); };
 /** Activate (raise) this window, regardless of whether it is attached or detached
 @param with_focus Should the window also get keyboard focus? */
 	virtual void activate (bool with_focus=true);

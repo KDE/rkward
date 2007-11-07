@@ -55,6 +55,8 @@ public:
 		ObjectDataOther,
 		ObjectObjectList,
 
+		WindowDataFrameEditor,
+
 		Last	/**< not really an item, only the count of items available. Do not use. */
 	};
 

@@ -59,7 +59,7 @@ public:
 	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false) const;
 
 	/** reimplemented from RContainerObject to create the child in the .GlobalEnv */
-	RObject *createNewChild (const QString &name, int position=-1, RKEditor *creator=0, bool container=false, bool data_frame=false);
+	RObject *createPendingChild (const QString &name, int position=-1, bool container=false, bool data_frame=false);
 
 	/** reimplemented from RContainerObject to validize the name in .GlobalEnv */
 	QString validizeName (const QString &child_name, bool unique=true) const;
