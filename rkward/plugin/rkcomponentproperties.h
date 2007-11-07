@@ -215,9 +215,10 @@ class RKObjectListView;
 #include <qlist.h>
 
 #include "../core/robject.h"
+#include "../core/rkmodificationtracker.h"
 
 /** special type of RKComponentProperty, that prepresents one or more RObject (s) */
-class RKComponentPropertyRObjects : public RKComponentPropertyBase {
+class RKComponentPropertyRObjects : public RKComponentPropertyBase, public RObjectListener {
 	Q_OBJECT
 public:
 /** constructor */
@@ -271,11 +272,12 @@ public:
 	void governorValueChanged (RKComponentPropertyBase *property);
 /** @returns true, if the property holds the maximum number of items (or more) */
 	bool atMaxLength ();
-public slots:
-/** remove an object value. to be connected to RKModificationTracker::objectRemoved (). This is so we get notified if the object currently selected is removed TODO: is this effectively a duplication of setFromList? */
-	void removeObjectValue (RObject *object);
-/** to be connected to RKModificationTracker::objectPropertiesChanged (). This is so we get notified if the object currently selected is changed */
-	void objectPropertiesChanged (RObject *object);
+	void removeObjectValue (RObject* object) { objectRemoved (object); };
+protected:
+/** remove an object value. reimplemented from RObjectListener::objectRemoved (). This is so we get notified if the object currently selected is removed TODO: is this effectively a duplication of setFromList? */
+	void objectRemoved (RObject *removed);
+/** reimplemented from RObjectListener::objectMetaChanged (). This is so we get notified if the object currently selected is changed */
+	void objectMetaChanged (RObject *changed);
 private:
 /** check all objects currently in the list for validity. Remove invalid objects. Determine validity state depending on how many (valid) objects remain in the list. If the list was changed during validation, and silent!=false a valueChanged () signal is emitted */
 	void validizeAll (bool silent=false);

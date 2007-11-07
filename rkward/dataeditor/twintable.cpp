@@ -120,11 +120,11 @@ TwinTable::~TwinTable() {
 	delete top_header_menu;
 	delete left_header_menu;
 	
-	for (int i=0; i < numTrueCols (); ++i) {
+/*	for (int i=0; i < numTrueCols (); ++i) {
 		RObject *object = getColObject (i);
 		if (object) object->setObjectOpened (this, false);
 		else RK_ASSERT (false);
-	}
+	} */
 }
 
 void TwinTable::scrolled (int x, int) {

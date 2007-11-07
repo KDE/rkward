@@ -62,7 +62,9 @@ public:
 		Factor=2 << 14,
 		Character=3 << 14,
 		Logical=4 << 14,
-		DataTypeMask=Numeric | Factor | Character | Logical
+		DataTypeMask=Numeric | Factor | Character | Logical,
+		NeedDataUpdate=1 << 30,	/** < the object's data should be (re-) fetched from R */
+		Pending=1 << 31		/** < the object is pending, i.e. it has been created in the object list, but we have not seen it in R, yet. This is used by data editors to create the illusion that a new object was added immediately, while in fact it takes some time to create it in the backend. */
 	};
 
 	enum RDataType {
@@ -90,12 +92,15 @@ public:
 	bool isContainer () const { return (type & (Container | Environment | Workspace)); };
 	bool isDataFrame () const { return (type & DataFrame); };
 	bool isVariable () const { return (type & Variable); };
+	/** see RObjectType */
 	bool isType (int type) const { return (RObject::type & type); };
 	bool hasMetaObject () const { return (type & HasMetaObject); };
+	/** see RObjectType::Pending */
+	bool isPending () const { return type & Pending; };
 
 /** trigger an update of this and all descendent objects */
 	virtual void updateFromR (RCommandChain *chain);
-/** fetch updated data from the backend. Default implementation does nothing except clearing the dirty flag */
+/** fetch updated data from the backend, if there are any listeners. Default implementation does nothing except clearing the dirty flag */
 	virtual void updateDataFromR (RCommandChain *chain);
 /** mark the data of this object and all of its children as dirty (recursively). Dirty data will be updated *after* the new structure update (if the object is opened for editing) */
 	void markDataDirty ();
@@ -136,11 +141,6 @@ public:
 /** Returns the parent / container of this object. All objects have a parent except for the RObjectList (which returns 0) */
 	RContainerObject *getContainer () const { return (parent); };
 
-/** number of child objects. Always 0, reimplemented in RContainerObject */
-	virtual int numChildren () const { return 0; };
-/** array of child objects. Always 0, reimplemented in RContainerObject */
-	virtual RObject **children () const { return 0; };
-
 	RDataType getDataType () const { return (typeToDataType (type)); };
 	int getType () const { return type; };
 	static RDataType typeToDataType (int ftype) { return ((RDataType) ((ftype & DataTypeMask) >> 14)); };
@@ -164,14 +164,6 @@ R, only for internal lookup. For submission to R, always use RObject::getFullNam
 @param current_list A pointer to a valid (but probably initially empty) RObjectMap. Matches will be added to this list
 @param name_is_canonified internal parameter. Set to true, if the name to match is already canonfied (else it will be canonified internally) */
 	virtual void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false) const;
-
-/** If the object is being edited, returns that editor (in the future probably a list of editors). Else returns 0 */
-	RKEditor *objectOpened () const;
-/** Tells the object it has been opened (opened=true) or closed (opened=false) by the given editor. If the object is opened by the first editor, it will
-automatically take care of fetching its data. When closed by all editors, takes care of de-allocating that memory. */
-	void setObjectOpened (RKEditor *editor, bool opened);
-/** similar to setObjectOpened, but tells the object it has been created in the given editor. Does not try to fetch data from the backend. */
-	void setCreatedInEditor (RKEditor *editor);
 
 /// For now, the ChangeSet only handles RKVariables!
 	struct ChangeSet {
@@ -235,23 +227,12 @@ protected:
 @param new_data The command. Make sure it really is the dims field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
 @returns whether this caused any changes */
 	bool updateDimensions (RData *new_data);
-/** an instance of this struct is created, when the object is opened for editing. For one thing, it keeps track of which editor(s) are working on the object.
-In subclasses like RKVariable, the struct is extended to additionally hold the data of the object, etc. */
-	struct EditData {
-		RKEditor *editor;
-		bool dirty;
-		bool pending;		// maybe move to type instead
-	};
-/** see EditData. 0 if the object is not being edited. */
-	EditData *data;
-/** see EditData. Allocates the data member. To be reimplemented in classes that need more information in the EditData struct */
-	virtual void allocateEditData (RKEditor *editor);
-/** companion to allocateEditData (). Initializes the data to empty (NA). Default implementation does nothing. Reimplemented in derived classes. */
-	virtual void initializeEditDataToEmpty ();
-/** see above */
-	virtual void discardEditData ();
 
-	bool isPending () const;
+friend class RKModificationTracker;
+/** Notify the object that some model needs its data. The object should take care of fetching the data from the backend, unless it already has the data. The default implementation does nothing (raises an assert). */
+	virtual void beginEdit ();
+/** Notify the object that a model no longer needs its data. If there have been as many endEdit() as beginEdit() calls, the object should discard its data storage. The default implementation does nothing (raises an assert). */
+	virtual void endEdit ();
 
 	void rCommandDone (RCommand *command);
 };

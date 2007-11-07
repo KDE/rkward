@@ -35,7 +35,7 @@
 EditFormatDialog::EditFormatDialog (QWidget *parent, RKVariable *var, int mode) : QDialog (parent) {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (var);
-	RK_ASSERT (var->objectOpened ());
+//	RK_ASSERT (var->objectOpened ());
 
 	EditFormatDialog::var = var;
 	EditFormatDialog::mode = mode;

@@ -43,10 +43,12 @@
 #define SUMMARY_COMMAND 1
 #define PRINT_COMMAND 2
 
-RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (parent, RKMDIWindow::ObjectWindow, false) {
+RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (parent, RKMDIWindow::ObjectWindow, false), RObjectListener (RObjectListener::ObjectView, RObjectListener::ObjectRemoved) {
+// KDE 4: TODO might listen for object meta / data changes as well
 	RK_TRACE (APP);
 	RK_ASSERT (object);
 	_object = object;
+	listenForObject (_object);
 
 	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
 	Q3ScrollView *wrapper = new Q3ScrollView (this);
@@ -94,12 +96,13 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 	setCaption (i18n("Object Viewer: ") + object->getShortName ());
 	//resize (minimumSizeHint ().expandedTo (QSize (640, 480)));
 	update ();
-	connect (RKGlobals::tracker (), SIGNAL (objectRemoved(RObject*)), this, SLOT (objectRemoved(RObject*)));
 	show ();
 }
 
 RObjectViewer::~RObjectViewer () {
 	RK_TRACE (APP);
+
+	if (_object) stopListenForObject (_object);
 }
 
 void RObjectViewer::toggleSummary () {
@@ -134,6 +137,7 @@ void RObjectViewer::cancel () {
 
 void RObjectViewer::update () {
 	RK_TRACE (APP);
+	if (!_object) return;
 
 	status_label->setText (i18n ("Fetching information"));
 	cancel_button->setEnabled (true);
@@ -165,6 +169,10 @@ void RObjectViewer::objectRemoved (RObject *object) {
 	if (object == _object) {
 		status_label->setText (i18n ("<b>Object was deleted!</b>"));
 		update_button->setEnabled (false);
+		stopListenForObject (_object);
+		_object = 0;
+	} else {
+		RK_ASSERT (false);
 	}
 }
 

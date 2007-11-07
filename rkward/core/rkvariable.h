@@ -140,7 +140,7 @@ protected:
 /** reimplemented from RObject to change the internal data storage mode, if the var is being edited */
 	bool updateType (RData *new_data);
 /** Extended from RObject::EditData to actually contain data. */
-	struct RKVarEditData : public EditData {
+	struct RKVarEditData {
 		QString *cell_strings;
 		double *cell_doubles;
 		enum CellState {
@@ -166,20 +166,20 @@ protected:
 		FormattingOptions *formatting_options;
 /// storage for invalid fields
 		Q3IntDict<QString> invalid_fields;
+/// how many models need our data?
+		int num_listeners;
 	};
+	RKVarEditData* data;
+
 /** reimplemented from RObject */
-	void allocateEditData (RKEditor *editor);
+	void beginEdit ();
 /** reimplemented from RObject */
-	void initializeEditDataToEmpty ();
-/** reimplemented from RObject */
-	void discardEditData ();
+	void endEdit ();
 private:
 /** changes the allocated storage to contain a least length elements. More data may be allocated than acutally needed. This function only ever does upsizing. */
 	void extendToLength (int length);
 /** changes the allocated storage to contain a least getLength elements. More data may be allocated than acutally needed. This function only ever does downsizing. */
 	void downSize ();
-/** convenience function to avoid typing static_cast... */
-	RKVarEditData *myData () { return static_cast<RKVarEditData*> (data); };
 /** takes care of syncing the given cell */
 	void cellChanged (int row);
 /** takes care of syncing the given range of cells */
@@ -193,6 +193,11 @@ private:
 	FormattingOptions *parseFormattingOptionsString (const QString &string);
 /** tries to match a value-label to the value in the given cell. Returns the label, or - if there is no label - the original value in textual representation */
 	QString getLabeled (int row);
+
+/** allocate edit data (cells initialized to NAs) */
+	void allocateEditData ();
+/** discard edit data */
+	void discardEditData ();
 /////////////////// END: data-handling //////////////////////
 };
 

@@ -21,6 +21,7 @@
 
 #include "../rkglobals.h"
 #include "../dataeditor/rkeditor.h"
+#include "../dataeditor/rkvareditmodel.h"
 #include "rcontainerobject.h"
 #include "robjectlist.h"
 #include "../windows/rkworkplace.h"
@@ -36,6 +37,8 @@ RKModificationTracker::RKModificationTracker (QObject *parent) : RKObjectListMod
 
 RKModificationTracker::~RKModificationTracker () {
 	RK_TRACE (OBJECTS);
+
+	RK_ASSERT (updates_locked == 0);
 }
 
 void RKModificationTracker::lockUpdates (bool lock) {
@@ -52,7 +55,7 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 	RK_TRACE (OBJECTS);
 // TODO: allow more than one editor per object
 // WARNING: This does not work, if a sub-object is being edited!
-	RKEditor *ed = object->objectOpened ();
+	RKEditor *ed = objectEditor (object);
 	RK_ASSERT (!((editor) && (!ed)));
 	RK_ASSERT (!(removed_in_workspace && editor));
 
@@ -94,24 +97,7 @@ void RKModificationTracker::internalRemoveObject (RObject *object, bool removed_
 		beginRemoveRows (object_index, object_row, object_row);
 	}
 
-// TODO: allow more than one editor per object
-// WARNING: This does not work, if a sub-object is being edited!
-	RKEditor *ed = object->objectOpened ();
-
-	if (ed) ed->removeObject (object);		// READ: delete ed
-/* What's this? A child of a removed complex object may be edited somewhere, but not the whole object. In this case, the editor has no chance of restoring the object, but it still needs to be closed. We search all editors for the removed object */
-	if (object->isContainer ()) {
-		RKWorkplace::RKWorkplaceObjectList list = RKWorkplace::mainWorkplace ()->getObjectList (RKMDIWindow::DataEditorWindow);
-		for (RKWorkplace::RKWorkplaceObjectList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
-			RKEditor *subed = static_cast<RKEditor *> (*it);
-			RObject *subedobj = subed->getObject ();
-			if (static_cast<RContainerObject *> (object)->isParentOf (subedobj, true)) {
-				subed->removeObject (subedobj);
-			}
-		}
-	}
-
-	if (!updates_locked) emit (objectRemoved (object));
+	if (!updates_locked) sendListenerNotification (RObjectListener::ObjectRemoved, object, 0, 0);
 
 	if (delete_obj) object->remove (removed_in_workspace);
 	else object->getContainer ()->removeChildNoDelete (object);
@@ -121,17 +107,11 @@ void RKModificationTracker::internalRemoveObject (RObject *object, bool removed_
 
 void RKModificationTracker::renameObject (RObject *object, const QString &new_name) {
 	RK_TRACE (OBJECTS);
-// TODO: allow more than one editor per object
-// TODO: find out, whether new object-name is valid
-	RKEditor *ed = object->objectOpened ();
 
 	object->rename (new_name);
 
-// since we may end up with a different name that originally requested, we propagate the change also to the original editor
-	if (ed) ed->renameObject (object);
-
 	if (!updates_locked) {
-		emit (objectPropertiesChanged (object));
+		sendListenerNotification (RObjectListener::MetaChanged, object, 0, 0);
 
 		QModelIndex object_index = indexFor (object);
 		emit (dataChanged (object_index, object_index));
@@ -148,34 +128,17 @@ void RKModificationTracker::addObject (RObject *object, RContainerObject* parent
 
 	parent->insertChild (object, position);
 
-// TODO: allow more than one editor per object
-	RKEditor *ed = 0;
-	if (object->getContainer ()) ed = object->getContainer ()->objectOpened ();
-	RK_ASSERT (!((editor) && (!ed)));
-	
-	if (ed) {
-		if (ed != editor) {
-			ed->addObject (object);
-		}
-	}
-
 	if (!updates_locked) {
-		emit (objectAdded (object));
+		sendListenerNotification (RObjectListener::ChildAdded, parent, position, 0);
 		endInsertRows ();
 	}
 }
 
 void RKModificationTracker::objectMetaChanged (RObject *object) {
 	RK_TRACE (OBJECTS);
-// TODO: allow more than one editor per object
-	RKEditor *ed = object->objectOpened ();
-	
-	if (ed) {
-		ed->updateObjectMeta (object);
-	}
 
 	if (!updates_locked) {
-		emit (objectPropertiesChanged (object));
+		sendListenerNotification (RObjectListener::MetaChanged, object, 0, 0);
 
 		QModelIndex object_index = indexFor (object);
 		emit (dataChanged (object_index, object_index));
@@ -184,21 +147,68 @@ void RKModificationTracker::objectMetaChanged (RObject *object) {
 
 void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeSet *changes) {
 	RK_TRACE (OBJECTS);
-// TODO: allow more than one editor per object
-	RKEditor *ed = object->objectOpened ();
-
-	if (ed) {
-		ed->updateObjectData (object, changes);
-	}
-
-	delete changes;
 
 	if (!updates_locked) {
+		sendListenerNotification (RObjectListener::DataChanged, object, 0, changes);
+		delete changes;
+
 		QModelIndex object_index = indexFor (object);
 		emit (dataChanged (object_index, object_index));
 	}
 }
 
+void RKModificationTracker::addObjectListener (RObject* object, RObjectListener* listener) {
+	RK_TRACE (OBJECTS);
+
+	listeners.insert (object, listener);
+#warning: probably we should create and check for an appropriate NotificationType, instead
+	if (listener->listenerType () == RObjectListener::DataModel) object->beginEdit ();
+}
+
+void RKModificationTracker::removeObjectListener (RObject* object, RObjectListener* listener) {
+	RK_TRACE (OBJECTS);
+
+	listeners.remove (object, listener);
+#warning: probably we should create and check for an appropriate NotificationType, instead
+	if (listener->listenerType () == RObjectListener::DataModel) object->endEdit ();
+}
+
+void RKModificationTracker::sendListenerNotification (RObjectListener::NotificationType type, RObject* o, int index, RObject::ChangeSet* changes) {
+	RK_TRACE (OBJECTS);
+
+	QList<RObjectListener*> obj_listeners = listeners.values (o);
+	for (int i = obj_listeners.size () - 1; i >= 0; --i) {
+		RObjectListener* listener = obj_listeners[i];
+		if (!listener->wantsNotificationType (type)) continue;
+
+		if (type == RObjectListener::ObjectRemoved) {
+			listener->objectRemoved (o);
+		} else if (type == RObjectListener::ChildAdded) {
+			listener->childAdded (index, o);
+		} else if (type == RObjectListener::MetaChanged) {
+			listener->objectMetaChanged (o);
+		} else if (type == RObjectListener::DataChanged) {
+			listener->objectDataChanged (o, changes);
+		} else {
+			RK_ASSERT (false);
+		}
+	}
+}
+
+RKEditor* RKModificationTracker::objectEditor (RObject* object) {
+	RK_TRACE (OBJECTS);
+
+	QList<RObjectListener*> obj_listeners = listeners.values (object);
+	for (int i = obj_listeners.size () - 1; i >= 0; --i) {
+		RObjectListener* listener = obj_listeners[i];
+		if (!(listener->listenerType () == RObjectListener::DataModel)) continue;
+
+		RKEditor* ed = static_cast<RKVarEditModel*> (listener)->getEditor ();
+		if (ed) return ed;
+	}
+
+	return 0;
+}
 
 ///////////////// RKObjectListModel ///////////////////////////
 
@@ -313,6 +323,53 @@ QModelIndex RKObjectListModel::indexFor (RObject *object) const {
 	}
 
 	return (createIndex (row, 0, object));
+}
+
+
+///////////////////// RObjectListener ////////////////////////
+
+RObjectListener::RObjectListener (ListenerType type, int notifications) {
+	RK_TRACE (OBJECTS);
+
+	RObjectListener::type = type;
+	RObjectListener::notifications = notifications;
+	num_watched_objects = 0;
+}
+
+RObjectListener::~RObjectListener () {
+	RK_TRACE (OBJECTS);
+
+	RK_ASSERT (num_watched_objects == 0);
+}
+
+void RObjectListener::objectRemoved (RObject*) {
+	RK_ASSERT (false);
+}
+
+void RObjectListener::childAdded (int, RObject*) {
+	RK_ASSERT (false);
+}
+
+void RObjectListener::objectMetaChanged (RObject*) {
+	RK_ASSERT (false);
+}
+
+void RObjectListener::objectDataChanged (RObject*, const RObject::ChangeSet *) {
+	RK_ASSERT (false);
+}
+
+void RObjectListener::listenForObject (RObject* object) {
+	RK_TRACE (OBJECTS);
+
+	RKGlobals::tracker ()->addObjectListener (object, this);
+	++num_watched_objects;
+}
+
+void RObjectListener::stopListenForObject (RObject* object) {
+	RK_TRACE (OBJECTS);
+
+	RKGlobals::tracker ()->removeObjectListener (object, this);
+	--num_watched_objects;
 }
 
 #include "rkmodificationtracker.moc"

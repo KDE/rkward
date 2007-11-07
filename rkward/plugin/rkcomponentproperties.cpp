@@ -614,20 +614,18 @@ void RKComponentPropertyDouble::internalSetValue (const QString &new_value) {
 #include "../core/rkmodificationtracker.h"
 #include "../misc/rkobjectlistview.h"
 
-RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool required) : RKComponentPropertyBase (parent, required) {
+RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool required) : RKComponentPropertyBase (parent, required), RObjectListener (RObjectListener::Other, RObjectListener::ObjectRemoved | RObjectListener::MetaChanged) {
 	RK_TRACE (PLUGIN);
 
 // no initial requirements
 	dims = min_length = max_length = min_num_objects = min_num_objects_if_any = max_num_objects = -1;
 	separator = "\n";
-
-// get notifications about changed/removed objects
-	connect (RKGlobals::tracker (), SIGNAL (objectRemoved (RObject *)), this, SLOT (removeObjectValue (RObject *)));
-	connect (RKGlobals::tracker (), SIGNAL (objectPropertiesChanged (RObject *)), this, SLOT (objectPropertiesChanged (RObject *)));
 }
 
 RKComponentPropertyRObjects::~RKComponentPropertyRObjects () {
 	RK_TRACE (PLUGIN);
+
+	setObjectValue (0);
 }
 
 void RKComponentPropertyRObjects::setListLength (int min_num_objects, int min_num_objects_if_any, int max_num_objects) {
@@ -643,9 +641,10 @@ void RKComponentPropertyRObjects::setListLength (int min_num_objects, int min_nu
 bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
 	RK_TRACE (PLUGIN);
 
-	if (isObjectValid (object)) {
+	if (object && isObjectValid (object)) {
 		if (!object_list.contains (object)) {
 			object_list.append (object);
+			listenForObject (object);
 			checkListLengthValid ();
 			emit (valueChanged (this));
 		}
@@ -654,10 +653,11 @@ bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
 	return false;
 }
 
-void RKComponentPropertyRObjects::removeObjectValue (RObject *object) {
+void RKComponentPropertyRObjects::objectRemoved (RObject *object) {
 	RK_TRACE (PLUGIN);
 
 	if (object_list.removeAll (object)) {
+		stopListenForObject (object);
 		checkListLengthValid ();
 		emit (valueChanged (this));
 	}
@@ -689,7 +689,9 @@ void RKComponentPropertyRObjects::setDimensionFilter (int dimensionality, int mi
 bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
 	RK_TRACE (PLUGIN);
 
-	object_list.clear ();
+	while (!object_list.isEmpty ()) {
+		stopListenForObject (object_list.takeAt (0));
+	}
 	return (addObjectValue (object));
 }
 
@@ -701,7 +703,7 @@ void RKComponentPropertyRObjects::setObjectList (const RObject::ObjectList &newl
 	// remove items from the old list that are not in the new list
 	for (int i = 0; i < object_list.size (); ++i) {
 		if (!newlist.contains (object_list[i])) {
-			object_list.removeAt (i);
+			stopListenForObject (object_list.takeAt (i));
 			--i;
 			changes = true;
 		}
@@ -713,6 +715,7 @@ void RKComponentPropertyRObjects::setObjectList (const RObject::ObjectList &newl
 		if (!object_list.contains (obj)) {
 			if (isObjectValid (obj)) {
 				object_list.append (obj);
+				listenForObject (obj);
 				changes = true;
 			}
 		}
@@ -811,6 +814,7 @@ bool RKComponentPropertyRObjects::setValue (const QString &value) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (value);
 		if (obj && isObjectValid (obj)) {
 			object_list.append (obj);
+			listenForObject (obj);
 		} else {
 			ok = false;
 		}
@@ -935,14 +939,14 @@ void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase 
 	}
 }
 
-void RKComponentPropertyRObjects::objectPropertiesChanged (RObject *object) {
+void RKComponentPropertyRObjects::objectMetaChanged (RObject *object) {
 	RK_TRACE (PLUGIN);
 
 	// if object list contains this object, check whether it is still valid. Otherwise remove it, revalidize and signal change.
 	int index = object_list.indexOf (object);
 	if (index >= 0) {
 		if (!isObjectValid (object)) {
-			object_list.removeAt (index);
+			stopListenForObject (object_list.takeAt (index));
 			checkListLengthValid ();
 			emit (valueChanged (this));
 		}
@@ -956,7 +960,7 @@ void RKComponentPropertyRObjects::validizeAll (bool silent) {
 
 	for (int i = 0; i < object_list.size (); ++i) {
 		if (!isObjectValid (object_list[i])) {
-			object_list.removeAt (i);
+			stopListenForObject (object_list.takeAt (i));
 			--i;
 			changes = true;
 		}

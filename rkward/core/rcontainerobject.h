@@ -44,6 +44,7 @@ public:
 	bool updateStructure (RData *new_data);
 
 	int numChildren () const;
+// KDE 4: TODO: do we need this? Can't we just return a copy of the objectma?
 	RObject **children () const;
 
 	/** like findObject (), but does not recurse, i.e. only direct children */

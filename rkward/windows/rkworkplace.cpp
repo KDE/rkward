@@ -299,40 +299,27 @@ RKEditor *RKWorkplace::editObject (RObject *object, bool initialize_to_empty) {
 	RObject *iobj = object;
 	RKEditor *ed = 0;
 	RKEditorDataFramePart *part = 0;
-	RKEditor *existing_editor = object->objectOpened ();
+	RKEditor *existing_editor = RKGlobals::tracker ()->objectEditor (object);
 	if (!existing_editor) {
-		bool create_editor = false;
-		if (object->isDataFrame ()) {
-			create_editor = true;
-		} else if (object->isVariable () && object->getContainer ()->isDataFrame ()) {
-			existing_editor = object->getContainer ()->objectOpened ();
-			if (!existing_editor) {
-				create_editor = true;
-				iobj = object->getContainer ();
+		unsigned long size = 1;
+		for (unsigned int i = 0; i < iobj->numDimensions (); ++i) {
+			size *= iobj->getDimension (i);
+		}
+		if ((RKSettingsModuleGeneral::warnLargeObjectThreshold () != 0) && (size > RKSettingsModuleGeneral::warnLargeObjectThreshold ())) {
+			if (KMessageBox::warningContinueCancel (view (), i18n ("You are about to edit object \"%1\", which is very large (%2 fields). RKWard is not optimized to handle very large objects in the built in data editor. This will use a lot of memory, and - depending on your system - might be very slow. For large objects it is generally recommended to edit using command line means or to split into smaller chunks before editing. On the other hand, if you have enough memory, or the data is simple enough (numeric data is easier to handle, than factor), editing may not be a problem at all. You can configure this warning (or turn it off entirely) under Settings->Configure RKWard->General.\nReally edit object?", iobj->getFullName (), size), i18n ("About to edit very large object")) != KMessageBox::Continue) {
+				return 0;
 			}
 		}
 
-		if (create_editor) {
-			unsigned long size = 1;
-			for (unsigned int i = 0; i < iobj->numDimensions (); ++i) {
-				size *= iobj->getDimension (i);
-			}
-			if ((RKSettingsModuleGeneral::warnLargeObjectThreshold () != 0) && (size > RKSettingsModuleGeneral::warnLargeObjectThreshold ())) {
-				if (KMessageBox::warningContinueCancel (view (), i18n ("You are about to edit object \"%1\", which is very large (%2 fields). RKWard is not optimized to handle very large objects in the built in data editor. This will use a lot of memory, and - depending on your system - might be very slow. For large objects it is generally recommended to edit using command line means or to split into smaller chunks before editing. On the other hand, if you have enough memory, or the data is simple enough (numeric data is easier to handle, than factor), editing may not be a problem at all. You can configure this warning (or turn it off entirely) under Settings->Configure RKWard->General.\nReally edit object?", iobj->getFullName (), size), i18n ("About to edit very large object")) != KMessageBox::Continue) {
-					return 0;
-				}
-			}
+		part = new RKEditorDataFramePart (0);		// TODO: reverse creation logic, just as in the other classes!
+		ed = part->getEditor ();
+		// TODO: add child objects, too?
+		ed->openObject (iobj, initialize_to_empty);
 
-			part = new RKEditorDataFramePart (0);		// TODO: reverse creation logic, just as in the other classes!
-			ed = part->getEditor ();
-			// TODO: add child objects, too?
-			ed->openObject (iobj, initialize_to_empty);
-
-			ed->setCaption (iobj->getShortName ());		// TODO: move to editor
-			ed->setIcon (SmallIcon ("spreadsheet"));
-			addWindow (ed);
-			ed->setFocus ();		// somehow we need to call this explicitly
-		}
+		ed->setCaption (iobj->getShortName ());		// TODO: move to editor
+		ed->setIcon (SmallIcon ("spreadsheet"));
+		addWindow (ed);
+		ed->setFocus ();		// somehow we need to call this explicitly
 	}
 
 	if (existing_editor) {		// not strictly an else. existing_editor may be reset inside the above if

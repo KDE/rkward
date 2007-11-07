@@ -111,6 +111,7 @@ TODO: this should be obsoleted somehow */
 	void newX11Window (WId window_to_embed, int device_number);
 	void newObjectViewer (RObject *object);
 
+#warning remove initialize_to_empty param. This should happen for all pending objects, but else never.
 /** @returns true if there is a known editor for this type of object, false otherwise */
 	bool canEditObject (RObject *object);
 /** Creates a new editor of an appropriate type, and loads the given object into the editor

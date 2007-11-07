@@ -222,7 +222,7 @@ void LevelsTable::columnWidthChanged (int col) {
 EditLabelsDialog::EditLabelsDialog (QWidget *parent, RKVariable *var, int mode) : KDialog (parent) {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (var);
-	RK_ASSERT (var->objectOpened ());
+//	RK_ASSERT (var->objectOpened ());
 
 	EditLabelsDialog::var = var;
 	EditLabelsDialog::mode = mode;

@@ -40,7 +40,6 @@ RObject::RObject (RContainerObject *parent, const QString &name) {
 	RObject::name = name;
 	type = 0;
 	meta_map = 0;
-	data = 0;
 	classnames = 0;
 	num_classes = 0;
 	dimensions = new int[1];	// safe initialization
@@ -50,8 +49,6 @@ RObject::RObject (RContainerObject *parent, const QString &name) {
 
 RObject::~RObject () {
 	RK_TRACE (OBJECTS);
-
-	if (data) discardEditData ();
 
 	delete [] dimensions;
 	delete [] classnames;
@@ -290,8 +287,8 @@ bool RObject::updateStructure (RData *new_data) {
 	properties_change = updateDimensions (new_data->getStructureVector ()[4]);
 
 	if (properties_change) RKGlobals::tracker ()->objectMetaChanged (this);
-	if (data && (data->dirty)) updateDataFromR (0);
-	if (data) data->pending = false;
+	if (type & NeedDataUpdate) updateDataFromR (0);
+	if (isPending ()) type -= Pending;
 
 	return true;
 }
@@ -299,20 +296,20 @@ bool RObject::updateStructure (RData *new_data) {
 //virtual
 void RObject::updateDataFromR (RCommandChain *) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (data);
-	data->dirty = false;
+
+	type -= (type & NeedDataUpdate);
 }
 
+#warning probably we do not really need this. Rather we should always call updateDataFromR recursively, and that will take care of things. (make sure not to overwrite pending changes, though)
 void RObject::markDataDirty () {
 	RK_TRACE (OBJECTS);
 
-	if (data) data->dirty = true;
-	unsigned int ccount = numChildren ();
-	if (!ccount) return;
-
-	RObject **childcopy = children ();
-	for (unsigned int i = 0; i < ccount; ++i) {
-		childcopy[i]->markDataDirty ();
+	type |= NeedDataUpdate;
+	if (isContainer ()) {
+		RObjectMap children = static_cast<RContainerObject*> (this)->childmap;
+		for (int i = children.size () - 1; i >= 0; --i) {
+			children[i]->markDataDirty ();
+		}
 	}
 }
 
@@ -372,6 +369,8 @@ bool RObject::updateType (RData *new_data) {
 	bool changed = false;
 	int new_type = new_data->getIntVector ()[0];
 	if (type & Misplaced) new_type |= Misplaced;
+	if (type & Pending) new_type |= Pending;	// NOTE: why don't we just clear the pending flag, here? Well, we don't want to generate a change notification for this. TODO: rethink the logic, and maybe use an appropriate mask
+	if (type & NeedDataUpdate) new_type |= NeedDataUpdate;
 	if (type != new_type) {
 		changed = true;
 		type = new_type;
@@ -530,79 +529,14 @@ QString RObject::canonifyName (const QString &from) {
 	return (copy.replace ("[\"", "$").replace ('[', "").replace ("\"]", "").replace (']', ""));
 }
 
-RKEditor *RObject::objectOpened () const {
-	RK_TRACE (OBJECTS);
-
-	if (!data) return 0;
-	return data->editor;
+//virtual
+void RObject::beginEdit () {
+	RK_ASSERT (false);
 }
 
-void RObject::setObjectOpened (RKEditor *editor, bool opened) {
-	RK_TRACE (OBJECTS);
-
-	// TODO: only for now! Currently only a single editor may operate on an object
-	if (opened) {
-		RK_ASSERT (!data);
-	} else {
-		RK_ASSERT (data);
-	}
-
-	if (opened) {
-		if (!data) {
-			allocateEditData (editor);
-			updateDataFromR (0);
-		}
-	} else {
-		discardEditData ();
-	}
-}
-
-void RObject::setCreatedInEditor (RKEditor *editor) {
-	RK_TRACE (OBJECTS);
-
-	// TODO: only for now! Currently only a single editor may operate on an object
-	RK_ASSERT (!data);
-
-	if (!data) {
-		allocateEditData (editor);
-		initializeEditDataToEmpty ();
-	}
-	data->pending = true;
-}
-
-// virtual
-void RObject::allocateEditData (RKEditor *editor) {
-	RK_TRACE (OBJECTS);
-
-	// this assert should stay even when more than one editor is allowed per object. After all, the edit-data should only ever be allocated once!
-	RK_ASSERT (!data);
-	
-	data = new EditData;
-	data->editor = editor;
-	data->dirty = false;
-	data->pending = false;
-}
-
-bool RObject::isPending () const {
-	RK_TRACE (OBJECTS);
-
-	if (!data) return false;
-	return (data->pending);
-}
-
-// virtual
-void RObject::initializeEditDataToEmpty () {
-	RK_TRACE (OBJECTS);
-}
-
-// virtual
-void RObject::discardEditData () {
-	RK_TRACE (OBJECTS);
-
-	RK_ASSERT (data);
-	
-	delete data;
-	data = 0;
+//virtual
+void RObject::endEdit () {
+	RK_ASSERT (false);
 }
 
 bool RObject::canEdit () const {

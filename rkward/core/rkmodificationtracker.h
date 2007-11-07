@@ -20,11 +20,53 @@
 #include <qobject.h>
 #include <qstring.h>
 #include <QAbstractItemModel>
+#include <QMultiHash>
 
 #include "robject.h"
 
 class RKEditor;
 class RObject;
+class RKModificationTracker;
+
+/** Base class for classes that need to know when certain objects have been changed in some way. */
+class RObjectListener {
+public:
+	enum NotificationType {
+		ObjectRemoved=1,
+		ChildAdded=2,
+		MetaChanged=4,
+		DataChanged=8
+	};
+	enum ListenerType {
+		DataModel,	/** < listener is an RKVarEditModel */
+		ObjectView,
+		Other
+	};
+
+	ListenerType listenerType () const { return type; };
+	bool wantsNotificationType (NotificationType type) const { return (notifications & type); };
+protected:
+	RObjectListener (ListenerType type, int notifications);
+	virtual ~RObjectListener ();
+
+friend class RKModificationTracker;
+	/** reimplement this, if you are listening for an object with notification type ObjectRemoved. The default implementation does nothing and raises an assert */
+	virtual void objectRemoved (RObject* removed);
+	/** reimplement this, if you are listening for an object with notification type ChildAdded. The default implementation does nothing and raises an assert */
+	virtual void childAdded (int index, RObject* parent);
+	/** reimplement this, if you are listening for an object with notification type MetaChanged. The default implementation does nothing and raises an assert */
+	virtual void objectMetaChanged (RObject* changed);
+	/** reimplement this, if you are listening for an object with notification type DataChanged. The default implementation does nothing and raises an assert */
+	virtual void objectDataChanged (RObject* object, const RObject::ChangeSet *changes);
+
+	void listenForObject (RObject* object);
+	void stopListenForObject (RObject* object);
+	void addNotificationType (NotificationType type) { notifications |= type; };
+private:
+	ListenerType type;
+	int notifications;
+	int num_watched_objects;
+};
 
 /** An item model for the RObjectList . Technically this is the base class for RKModificationTracker. The two could be merged, fully, but this way, it's a little easier to see what belongs where, logically. */
 class RKObjectListModel : public QAbstractItemModel {
@@ -64,7 +106,6 @@ This class takes care of propagating object-modifications to all editors/variabl
 @author Thomas Friedrichsmeier
 */
 class RKModificationTracker : public RKObjectListModel {
-Q_OBJECT
 public:
 	RKModificationTracker (QObject *parent);
 
@@ -82,15 +123,17 @@ public:
 	void objectDataChanged (RObject *object, RObject::ChangeSet *changes);
 /** recursive! */
 	void lockUpdates (bool lock);
-signals:
-/** classes which are not RKEditor(s) but need to know, when an object was removed, should connect to this signal */
-	void objectRemoved (RObject *object);
-/** classes which are not RKEditor(s) but need to know, when an object was renamed or otherwise changed its properties, should connect to this signal */
-	void objectPropertiesChanged (RObject *object);
-/** classes which are not RKEditor(s) but need to know, when an object was added, should connect to this signal */
-	void objectAdded (RObject *object);
+/** returns (the first) editor that is currently active for this object, or 0, if there is no editor */
+	RKEditor* objectEditor (RObject* object);
 private:
 	int updates_locked;
+/** relay change notifications to connected listeners. This is not pretty, since the arguments change their meanings depending on the type of notification, but for now this is ok */
+	void sendListenerNotification (RObjectListener::NotificationType type, RObject* o, int index, RObject::ChangeSet* changes);
+
+friend class RObjectListener;
+	void addObjectListener (RObject* object, RObjectListener* listener);
+	void removeObjectListener (RObject* object, RObjectListener* listener);
+	QMultiHash<RObject*, RObjectListener*> listeners;
 
 friend class RContainerObject;
 /** uncondiontally remove the given object. Do *not* call this except from RContainerObject::moveChild() or internally from removeObject(). Call removeObject(), instead. */

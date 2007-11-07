@@ -24,7 +24,7 @@ RKEditor::RKEditor (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow::DataEdi
 
 RKEditor::~RKEditor () {
 	RK_TRACE (EDITOR);
-	getObject ()->setObjectOpened (this, false);
+//	getObject ()->setObjectOpened (this, false);
 }
 
 QString RKEditor::getDescription () {

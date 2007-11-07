@@ -24,6 +24,7 @@
 #include <QLabel>
 
 #include "rbackend/rcommandreceiver.h"
+#include "core/rkmodificationtracker.h"
 #include "windows/rkmdiwindow.h"
 
 class RObject;
@@ -37,7 +38,7 @@ An extremely simple object viewer. You pass it an object in the constructor. It 
 
 @author Thomas Friedrichsmeier
 */
-class RObjectViewer : public RKMDIWindow, public RCommandReceiver {
+class RObjectViewer : public RKMDIWindow, public RCommandReceiver, public RObjectListener {
 Q_OBJECT
 public:
 	~RObjectViewer ();
@@ -48,13 +49,13 @@ public slots:
 	void update ();
 	void toggleSummary ();
 	void togglePrint ();
-	void objectRemoved (RObject *object);
 protected:
 	friend class RKWorkplace;
 	RObjectViewer (QWidget *parent, RObject *object);
 
 	void rCommandDone (RCommand *command);
 	void closeEvent (QCloseEvent *e);
+	void objectRemoved (RObject *object);
 private:
 	QLabel *status_label;
 	QLabel *description_label;
