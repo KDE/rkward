@@ -2,7 +2,7 @@
                           rkvariable  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -466,7 +466,7 @@ void RKVariable::downSize () {
 	}
 }
 
-QString RKVariable::getText (int row, bool pretty) {
+QString RKVariable::getText (int row, bool pretty) const {
 	if (row >= getLength ()) {
 		RK_ASSERT (false);
 		return (*unknown_char);
@@ -503,7 +503,7 @@ QString RKVariable::getText (int row, bool pretty) {
 	}
 }
 
-QString RKVariable::getRText (int row) {
+QString RKVariable::getRText (int row) const {
 	RK_TRACE (OBJECTS);
 	
 	Status cell_state = cellStatus (row);
@@ -573,7 +573,7 @@ void RKVariable::setText (int row, const QString &text) {
 	cellChanged (row);
 }
 
-QString RKVariable::getLabeled (int row) {
+QString RKVariable::getLabeled (int row) const {
 	if (data->value_labels) {
 		QString otext = getText (row);
 		if (data->value_labels->contains (otext)) {
@@ -583,7 +583,7 @@ QString RKVariable::getLabeled (int row) {
 	return getText (row);
 }
 
-double *RKVariable::getNumeric (int from_row, int to_row) {
+double *RKVariable::getNumeric (int from_row, int to_row) const {
 	RK_TRACE (OBJECTS);
 	if (to_row >= getLength ()) {
 		RK_ASSERT (false);
@@ -638,7 +638,7 @@ void RKVariable::setNumeric (int from_row, int to_row, double *numdata) {
 	cellsChanged (from_row, to_row);
 }
 
-QString *RKVariable::getCharacter (int from_row, int to_row) {
+QString *RKVariable::getCharacter (int from_row, int to_row) const {
 	RK_TRACE (OBJECTS);
 	if (to_row >= getLength ()) {
 		RK_ASSERT (false);
@@ -694,7 +694,7 @@ void RKVariable::setUnknown (int from_row, int to_row) {
 	}
 }
 
-RKVariable::Status RKVariable::cellStatus (int row) {
+RKVariable::Status RKVariable::cellStatus (int row) const {
 	if (data->cell_states[row] == RKVarEditData::Unknown) return ValueUnknown;
 	if (data->cell_states[row] & RKVarEditData::NA) return ValueUnused;
 	if (data->cell_states[row] & RKVarEditData::Invalid) return ValueInvalid;
@@ -796,7 +796,7 @@ void RKVariable::insertRows (int row, int count) {
 	}
 }
 
-RObject::ValueLabels *RKVariable::getValueLabels () {
+RObject::ValueLabels *RKVariable::getValueLabels () const {
 	RK_ASSERT (data);
 	return (data->value_labels);
 }
@@ -835,7 +835,7 @@ void RKVariable::setValueLabels (ValueLabels *labels) {
 	// TODO: find out whether the object is valid after the operation and update accordingly!
 }
 
-void RKVariable::writeValueLabels (RCommandChain *chain) {
+void RKVariable::writeValueLabels (RCommandChain *chain) const {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (data);
 	
@@ -856,7 +856,7 @@ void RKVariable::writeValueLabels (RCommandChain *chain) {
 	}
 }
 
-QString RKVariable::getValueLabelString () {
+QString RKVariable::getValueLabelString () const {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (data);
 
@@ -896,7 +896,7 @@ void RKVariable::setValueLabelString (const QString &string) {
 	setValueLabels (new_labels);
 }
 
-RKVariable::FormattingOptions *RKVariable::getFormattingOptions () {
+RKVariable::FormattingOptions *RKVariable::getFormattingOptions () const {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (data);
 
@@ -942,7 +942,7 @@ void RKVariable::setFormattingOptions (FormattingOptions *formatting_options) {
 	RKGlobals::tracker ()->objectDataChanged (this, set);
 }
 
-QString RKVariable::getFormattingOptionsString () {
+QString RKVariable::getFormattingOptionsString () const {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (data);
 
@@ -956,9 +956,9 @@ void RKVariable::setFormattingOptionsString (const QString &string) {
 	setFormattingOptions (parseFormattingOptionsString (string));
 }
 
+// static
 RKVariable::FormattingOptions *RKVariable::parseFormattingOptionsString (const QString &string) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (data);
 
 	FormattingOptions *formatting_options = new FormattingOptions;
 	formatting_options->alignment = FormattingOptions::AlignDefault;
@@ -1008,8 +1008,7 @@ RKVariable::FormattingOptions *RKVariable::parseFormattingOptionsString (const Q
 	}
 }
 
-/** returns alignment to use for this variable */
-RKVariable::CellAlign RKVariable::getAlignment () {
+RKVariable::CellAlign RKVariable::getAlignment () const {
 	RK_ASSERT (data);
 	
 	if (data->formatting_options && (data->formatting_options->alignment != FormattingOptions::AlignDefault)) {

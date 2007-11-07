@@ -298,6 +298,8 @@ void RContainerObject::findObjectsMatching (const QString &partial_name, RObject
 RObject *RContainerObject::createNewChild (const QString &name, int position, RKEditor *creator, bool container, bool data_frame) {
 	RK_TRACE (OBJECTS);
 
+#warning rename to createPendingChild, also in RObjectList
+#warning TODO validize name
 	RObject *ret;
 	if (container) {
 		ret = new RContainerObject (this, name);
@@ -313,7 +315,7 @@ RObject *RContainerObject::createNewChild (const QString &name, int position, RK
 	if ((position < 0) || (position > childmap.size ())) position = childmap.size ();
 
 	RKGlobals::tracker ()->addObject (ret, this, position, creator);
-#warning TODO shouldn't we create the object in R, here?
+#warning TODO should we create the object in R, here?
 
 	return ret;
 }

@@ -2,7 +2,7 @@
                           rkvariable  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -62,24 +62,24 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	
 /** get the value at the given row in text-form - regardless of the storage mode.
 @param pretty: get the text in pretty form, e.g. rounding numbers to a certain number of digits, replacing numeric values with value labels if available, etc. Formatting is done according to the meta-information stored in the RObject and global user preferences */
-	QString getText (int row, bool pretty=false);
+	QString getText (int row, bool pretty=false) const;
 /** get the value at the given row in text-form suitable for submission to R. I.e. strings are quoted, numbers are not, empty values are returned as NA */
-	QString getRText (int row);
+	QString getRText (int row) const;
 /** set the value at the given row in text-form. Will try to convert the given string to the internal storage format if possible. */
 	void setText (int row, const QString &text);
 
 /** get a copy of the numeric values of rows starting from from_index, going to to_index. Do not use this before making sure that the rStorage () is really
 numeric!  TODO: unused  */
-	double *getNumeric (int from_row, int to_row);
+	double *getNumeric (int from_row, int to_row) const;
 /** set numeric values in the given range. Assumes you provide enough values for the range. If internalStorage is String, all values will be converted to strings, so you should use this function only, if you know you are dealing with a numeric object */
 	void setNumeric (int from_row, int to_row, double *data);
 /** like getNumeric, but returns values as an array of QString*s. TODO: unused */
-	QString *getCharacter (int from_row, int to_row);
+	QString *getCharacter (int from_row, int to_row) const;
 /** like setNumeric, but sets chars. If internalStorage () is numeric, attempts to convert the given strings to numbers. I.e. the function behaves essentially like setText (), but operates on a range of cells. */
 	void setCharacter (int from_row, int to_row, QString *data);
 	
 /** returns the current status of the given cell */
-	Status cellStatus (int row);
+	Status cellStatus (int row) const;
 
 /** sets the status of the given range of cells to Unknown (the entire row if from_row and to_row are -1). Usually you call this, when you are about to update the given data-range, but haven't fetched the data for that, yet. The unknown-flag is cleared for the cells, as soon as data is written to those cells. The effect is that the cells will not be editable until the data was updated. */
 	void setUnknown (int from_row=-1, int to_row=-1);
@@ -96,11 +96,11 @@ numeric!  TODO: unused  */
 	void setLength (int len);
 
 /** returns the map of value labels for this variable or 0 if no labels/levels are assigned. Does _not_ return a copy, but the real thing. Do not delete! */
-	ValueLabels *getValueLabels ();
+	ValueLabels *getValueLabels () const;
 /** assigns a new map of labels. Also takes care of syncing with the backend. Ownership of the ValueLabels is transferred to the variable. Use setValueLabels (0) to remove all labels */
 	void setValueLabels (ValueLabels *labels);
 /** get value labels as string (for display) */
-	QString getValueLabelString ();
+	QString getValueLabelString () const;
 /** set value labels from string (for paste operations) */
 	void setValueLabelString (const QString &string);
 
@@ -118,18 +118,18 @@ numeric!  TODO: unused  */
 	};
 
 /** returns the formatting options, or 0 if no options specified (i.e. all set to default). Does _not_ return a copy, but the real thing. Do not delete! */
-	FormattingOptions *getFormattingOptions ();
+	FormattingOptions *getFormattingOptions () const;
 /** assigns new formatting options. Ownership of the FormattingOptions -struct is transferred to the variable. Use setFormatting (0) to remove all options */
 	void setFormattingOptions (FormattingOptions *formatting_options);
 /** get formatting options as a string (for display) */
-	QString getFormattingOptionsString ();
+	QString getFormattingOptionsString () const;
 /** parse formatting options from the given string */
 	void setFormattingOptionsString (const QString &string);
 
 /** This enum describes the alignment of text inside a table cell */
 	enum CellAlign { AlignCellLeft=0, AlignCellRight=1 };
 /** returns alignment to use for this variable */
-	CellAlign getAlignment ();
+	CellAlign getAlignment () const;
 
 /// an empty char
 	static QString *na_char;
@@ -188,11 +188,11 @@ private:
 	void writeData (int from_row, int to_row, RCommandChain *chain=0);
 	void writeInvalidField (int row, RCommandChain *chain=0);
 /** writes the values labels to the backend */
-	void writeValueLabels (RCommandChain *chain);
+	void writeValueLabels (RCommandChain *chain) const;
 /** creates/parses formatting options from the stored meta-property string. See also: getFormattingOptions () */
-	FormattingOptions *parseFormattingOptionsString (const QString &string);
+	static FormattingOptions *parseFormattingOptionsString (const QString &string);
 /** tries to match a value-label to the value in the given cell. Returns the label, or - if there is no label - the original value in textual representation */
-	QString getLabeled (int row);
+	QString getLabeled (int row) const;
 
 /** allocate edit data (cells initialized to NAs) */
 	void allocateEditData ();
