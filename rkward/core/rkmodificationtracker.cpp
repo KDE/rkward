@@ -39,6 +39,7 @@ RKModificationTracker::~RKModificationTracker () {
 	RK_TRACE (OBJECTS);
 
 	RK_ASSERT (updates_locked == 0);
+	RK_ASSERT (listeners.isEmpty ());
 }
 
 void RKModificationTracker::lockUpdates (bool lock) {
@@ -171,7 +172,7 @@ void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeS
 		delete changes;
 
 		QModelIndex object_index = indexFor (object);
-		emit (dataChanged (object_index, object_index));
+		emit (dataChanged (object_index, object_index));	// might have changed dimensions, for instance
 	}
 }
 
@@ -179,7 +180,6 @@ void RKModificationTracker::addObjectListener (RObject* object, RObjectListener*
 	RK_TRACE (OBJECTS);
 
 	listeners.insert (object, listener);
-#warning: probably we should create and check for an appropriate NotificationType, instead
 	if (listener->listenerType () == RObjectListener::DataModel) object->beginEdit ();
 }
 
@@ -187,7 +187,6 @@ void RKModificationTracker::removeObjectListener (RObject* object, RObjectListen
 	RK_TRACE (OBJECTS);
 
 	listeners.remove (object, listener);
-#warning: probably we should create and check for an appropriate NotificationType, instead
 	if (listener->listenerType () == RObjectListener::DataModel) object->endEdit ();
 }
 
@@ -211,6 +210,17 @@ void RKModificationTracker::sendListenerNotification (RObjectListener::Notificat
 			listener->objectDataChanged (o, changes);
 		} else {
 			RK_ASSERT (false);
+		}
+	}
+
+	// when a container is removed, we need to send child notifications recursively, so listeners listening
+	// for child objects will know the object is gone.
+	if (type == RObjectListener::ObjectRemoved) {
+		if (o->isContainer ()) {
+			RContainerObject *c = static_cast<RContainerObject*> (o);
+			for (int i = c->numChildren () - 1; i >= 0; --i) {
+				sendListenerNotification (RObjectListener::ObjectRemoved, c->findChildByIndex (i), 0, 0, 0);
+			}
 		}
 	}
 }

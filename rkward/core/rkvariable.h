@@ -73,7 +73,7 @@ numeric!  TODO: unused  */
 	double *getNumeric (int from_row, int to_row) const;
 /** set numeric values in the given range. Assumes you provide enough values for the range. If internalStorage is String, all values will be converted to strings, so you should use this function only, if you know you are dealing with a numeric object */
 	void setNumeric (int from_row, int to_row, double *data);
-/** like getNumeric, but returns values as an array of QString*s. TODO: unused */
+/** like getNumeric, but returns values as an array of QStrings. TODO: unused */
 	QString *getCharacter (int from_row, int to_row) const;
 /** like setNumeric, but sets chars. If internalStorage () is numeric, attempts to convert the given strings to numbers. I.e. the function behaves essentially like setText (), but operates on a range of cells. */
 	void setCharacter (int from_row, int to_row, QString *data);

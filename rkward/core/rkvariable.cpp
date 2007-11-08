@@ -524,6 +524,7 @@ QString RKVariable::getRText (int row) const {
 	}
 }
 
+#warning this could/should be merged with setCharacter (which is currently less complete)
 void RKVariable::setText (int row, const QString &text) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (row < getLength ());

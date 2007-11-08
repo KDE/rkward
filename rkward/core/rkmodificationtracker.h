@@ -51,15 +51,15 @@ protected:
 	virtual ~RObjectListener ();
 
 friend class RKModificationTracker;
-	/** reimplement this, if you are listening for an object with notification type ObjectRemoved. The default implementation does nothing and raises an assert */
+	/** reimplement this, if you are listening for an object with notification type ObjectRemoved. The default implementation does nothing and raises an assert. This gets sent *before* the child is actually removed, so you can safely query it for information in this call, but directly after the pointer will become invalid. Make sure to call stopListenForObject(), when you receive this notification. */
 	virtual void objectRemoved (RObject* removed);
-	/** reimplement this, if you are listening for an object with notification type ChildAdded. The default implementation does nothing and raises an assert */
+	/** reimplement this, if you are listening for an object with notification type ChildAdded. The default implementation does nothing and raises an assert. This notification is sent *after* the child was added. */
 	virtual void childAdded (int index, RObject* parent);
-	/** reimplement this, if you are listening for an object with notification type ChildMoved. The default implementation does nothing and raises an assert. The child is to be found at new_index at the time the notification is sent. */
+	/** reimplement this, if you are listening for an object with notification type ChildMoved. The default implementation does nothing and raises an assert. This notification is sent *after* the child was moved, so it is now at the new_index. */
 	virtual void childMoved (int old_index, int new_index, RObject* parent);
-	/** reimplement this, if you are listening for an object with notification type MetaChanged. The default implementation does nothing and raises an assert */
+	/** reimplement this, if you are listening for an object with notification type MetaChanged. The default implementation does nothing and raises an assert. This notification is sent *after* the object has changed. */
 	virtual void objectMetaChanged (RObject* changed);
-	/** reimplement this, if you are listening for an object with notification type DataChanged. The default implementation does nothing and raises an assert */
+	/** reimplement this, if you are listening for an object with notification type DataChanged. The default implementation does nothing and raises an assert. This notification is sent *after* the object has changed. */
 	virtual void objectDataChanged (RObject* object, const RObject::ChangeSet *changes);
 
 	void listenForObject (RObject* object);
