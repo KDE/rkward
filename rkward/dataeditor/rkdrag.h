@@ -24,6 +24,7 @@
 
 class TwinTableMember;
 
+#warning TODO remove. This class is obsolete
 /** A QDragObject that gets its data from a TwinTableMember. Used for all copy/paste/drag operations involving TwinTableMembers.
   *@author Thomas Friedrichsmeier
   */

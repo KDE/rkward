@@ -60,12 +60,12 @@ public:
 /** Inserts the row at the given position (or at the end for -1) in the given table. Don't try to do this in the varview, yet! */
 	void deleteRow (int where, TwinTableMember *table=0);
 /** Pastes content to the current table */
-	void paste (QByteArray &content, RKEditor::PasteMode paste_mode);
+	void paste (const QString& pasted, RKEditor::PasteMode paste_mode);
 /** Same as above, but flips the data (i.e. row <-> cols) */
 //	void pasteEncodedFlipped (QByteArray content);
 /** Clear the currently selected cells */
 	void clearSelected ();
-	RKDrag *makeDrag ();
+	QString getSelectedText ();
 
 /** Flushes pending edit-operations */
 	void flushEdit ();

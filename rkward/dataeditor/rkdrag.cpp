@@ -27,9 +27,9 @@ RKDrag::RKDrag (TwinTableMember *drag_source) : Q3DragObject (drag_source){
 	RK_TRACE (EDITOR);
 
 	RK_ASSERT (drag_source);
-	if (drag_source) {
+/*	if (drag_source) {
 		data = drag_source->encodeSelection ();
-	}
+	} */
 }
 
 RKDrag::~RKDrag () {

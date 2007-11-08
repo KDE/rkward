@@ -37,7 +37,6 @@
 #include <Q3VBoxLayout>
 
 #include "../core/rkvariable.h"
-#include "rkdrag.h"
 #include "celleditor.h"
 
 #include "../debug.h"
@@ -77,7 +76,12 @@ void LevelsTable::cut () {
 void LevelsTable::copy () {
 	RK_TRACE (EDITOR);
 
-	QApplication::clipboard()->setData (new RKDrag (this));
+#warning copy functionality should be move to TwinTableMember directly. See also RKEditorDataFramePart
+	QString text = getSelectionText ();
+	QMimeData* data = new QMimeData ();
+	data->setText (text);
+	data->setData ("text/tab-separated-values", text.toLocal8Bit ());
+	QApplication::clipboard()->setMimeData (data);
 }
 
 void LevelsTable::paste () {
@@ -89,10 +93,14 @@ void LevelsTable::paste () {
 	// treated the same. We should however encourage external senders to
 	// provided the two in order.
 	QString pasted;
-	if (QApplication::clipboard()->data()->provides ("text/tab-separated-values")) {
-		pasted = QString (QApplication::clipboard ()->data ()->encodedData ("text/tab-separated-values"));
-	} else if (QApplication::clipboard()->data()->provides ("text/plain")) {
-		pasted = QString (QApplication::clipboard ()->data ()->encodedData ("text/plain"));
+	const QMimeData* data = QApplication::clipboard ()->mimeData ();
+	if (data->hasFormat ("text/tab-separated-values")) {
+		pasted = QString::fromLocal8Bit (data->data ("text/tab-separated-values"));
+	} else if (data->hasText ()) {
+		pasted = data->text ();
+	} else {
+		RK_DO (qDebug ("no suitable format for pasting"), EDITOR, DL_INFO);
+		return;
 	}
 
 	int content_offset = 0;

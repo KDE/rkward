@@ -21,7 +21,6 @@
 #include <q3table.h>
 #include <qpoint.h>
 //Added by qt3to4:
-#include <Q3CString>
 #include <QEvent>
 #include <Q3MemArray>
 #include <QMouseEvent>
@@ -87,8 +86,10 @@ public:
 	bool eventFilter (QObject *object, QEvent *event);
 /** reimplemented to delete cell contents on DEL and BACKSPACE. Placed in public, here, so CellEditor can have access */
 	void keyPressEvent (QKeyEvent *e);
-	Q3CString encodeSelection ();
-	Q3CString encodeRange (int top_row, int left_col, int bottom_row, int right_col);
+/** get contents of current selection as text (tab-separated-values) */
+	QString getSelectionText ();
+/** get contents of the specified range as text (tab-separated-values) */
+	QString getRangeText (int top_row, int left_col, int bottom_row, int right_col);
 /** blanks out the currently selected cells (or the currently active cell, if there is no selection) */
 	void blankSelected ();
 /** shortcut to get the boundaries of the current selection */

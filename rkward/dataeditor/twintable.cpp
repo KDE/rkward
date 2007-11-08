@@ -34,7 +34,6 @@
 #include "twintabledatamember.h"
 #include "twintablemetamember.h"
 #include "twintablemember.h"
-#include "rkdrag.h"
 
 #include "../debug.h"
 
@@ -288,9 +287,9 @@ void TwinTable::dataClearSelection () {
 	connect (dataview, SIGNAL (selectionChanged ()), this, SLOT (viewClearSelection ()));
 }
 
-RKDrag *TwinTable::makeDrag () {
+QString TwinTable::getSelectedText () {
 	RK_TRACE (EDITOR);
-	return (new RKDrag (activeTable ()));
+	return (activeTable ()->getSelectionText ());
 }
 
 void TwinTable::insertColumnRight () {
@@ -333,7 +332,7 @@ void TwinTable::deleteRows () {
 	}
 }
 
-void TwinTable::paste (QByteArray &content, RKEditor::PasteMode paste_mode) {
+void TwinTable::paste (const QString& pasted, RKEditor::PasteMode paste_mode) {
 	RK_TRACE (EDITOR);
 
 	flushEdit ();
@@ -360,7 +359,6 @@ void TwinTable::paste (QByteArray &content, RKEditor::PasteMode paste_mode) {
 
 	Q3ValueList<RKVariable*> col_list;
 
-	QString pasted = QString::fromLocal8Bit (content);
 	int row = top_row;
 	int col = left_col;
 	int content_offset = 0;

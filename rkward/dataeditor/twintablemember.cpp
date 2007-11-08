@@ -21,7 +21,6 @@
 #include <qpainter.h>
 #include <qstyle.h>
 //Added by qt3to4:
-#include <Q3CString>
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <Q3MemArray>
@@ -173,16 +172,15 @@ void TwinTableMember::setCellContentFromEditor (int row, int col) {
 	viewport ()->setFocus ();
 }
 
-Q3CString TwinTableMember::encodeSelection () {
+QString TwinTableMember::getSelectionText () {
 	RK_TRACE (EDITOR);
 
 	int top_row, left_col, bottom_row, right_col;
 	getSelectionBoundaries (&top_row, &left_col, &bottom_row, &right_col);
-// QCString uses (explicit) sharing, so we're not being too wasteful, here
-	return (encodeRange (top_row, left_col, bottom_row, right_col));
+	return (getRangeText (top_row, left_col, bottom_row, right_col));
 }
 
-Q3CString TwinTableMember::encodeRange (int top_row, int left_col, int bottom_row, int right_col) {
+QString TwinTableMember::getRangeText (int top_row, int left_col, int bottom_row, int right_col) {
 	RK_TRACE (EDITOR);
 
 	QString data;
@@ -197,8 +195,7 @@ Q3CString TwinTableMember::encodeRange (int top_row, int left_col, int bottom_ro
 			data.append ("\n");
 		}
 	}
-
-	return data.local8Bit ();
+	return data;
 }
 
 void TwinTableMember::blankSelected () {

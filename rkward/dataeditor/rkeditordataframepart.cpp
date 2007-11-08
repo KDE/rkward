@@ -24,7 +24,6 @@
 #include <klocale.h>
 
 #include "rkeditordataframe.h"
-#include "rkdrag.h"
 #include "../rkward.h"
 #include "../debug.h"
 
@@ -76,7 +75,11 @@ void RKEditorDataFramePart::slotEditCopy() {
 	RK_TRACE (EDITOR);
 	
 	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Copying selection to clipboard..."));
-	QApplication::clipboard()->setData(editor->makeDrag ());
+	QString text = editor->getSelectedText ();
+	QMimeData* data = new QMimeData ();
+	data->setText (text);
+	data->setData ("text/tab-separated-values", text.toLocal8Bit ());
+	QApplication::clipboard ()->setMimeData (data);
 	RKWardMainWindow::getMain ()->slotSetStatusReady ();
 }
 
@@ -102,19 +105,18 @@ void RKEditorDataFramePart::slotEditPasteToSelection() {
 void RKEditorDataFramePart::doPaste (RKEditor::PasteMode mode) {
 	RK_TRACE (EDITOR);
 
-	RKWardMainWindow::getMain ()->slotSetStatusBarText(i18n("Inserting clipboard contents..."));
+	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Inserting clipboard contents..."));
 
+	const QMimeData* data = QApplication::clipboard ()->mimeData ();
 	// actually, we don't care, whether tsv or plain gets pasted - it's both
 	// treated the same. We should however encourage external senders to
 	// provided the two in order.
-	if (QApplication::clipboard()->data()->provides ("text/tab-separated-values")) {
+	if (data->hasFormat ("text/tab-separated-values")) {
 		RK_DO (qDebug ("paste tsv"), EDITOR, DL_DEBUG);
-		QByteArray data = QApplication::clipboard()->data()->encodedData ("text/tab-separated-values");
-		editor->paste (data, mode);
-	} else if (QApplication::clipboard()->data()->provides ("text/plain")) {
+		editor->paste (QString::fromLocal8Bit (data->data ("text/tab-separated-values")), mode);
+	} else if (data->hasText ()) {
 		RK_DO (qDebug ("paste plain text"), EDITOR, DL_DEBUG);
-		QByteArray data = QApplication::clipboard()->data()->encodedData ("text/plain");
-		editor->paste (data, mode);
+		editor->paste (data->text (), mode);
 	}
 
 	RKWardMainWindow::getMain ()->slotSetStatusReady ();
