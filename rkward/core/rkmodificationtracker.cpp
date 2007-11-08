@@ -106,7 +106,7 @@ void RKModificationTracker::moveObject (RContainerObject *parent, RObject* child
 	QModelIndex parent_index;
 
 	if (!updates_locked) {
-		parent_index = indexFor (parent->getContainer ());
+		parent_index = indexFor (parent);
 		beginRemoveRows (parent_index, old_index, old_index);
 	}
 	RK_ASSERT (parent->findChildByIndex (old_index) == child);
