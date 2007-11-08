@@ -48,8 +48,6 @@ public:
 public slots:
 /** cut */
 	void cut();
-/** copy */
-	void copy();
 /** paste */
 	void paste();
 protected:

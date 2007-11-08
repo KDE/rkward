@@ -61,6 +61,8 @@ public:
 	void deleteRow (int where, TwinTableMember *table=0);
 /** Pastes content to the current table */
 	void paste (const QString& pasted, RKEditor::PasteMode paste_mode);
+/** Copy selection in the current table to clipboard */
+	void copy ();
 /** Same as above, but flips the data (i.e. row <-> cols) */
 //	void pasteEncodedFlipped (QByteArray content);
 /** Clear the currently selected cells */

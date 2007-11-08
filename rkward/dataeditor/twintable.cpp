@@ -332,6 +332,15 @@ void TwinTable::deleteRows () {
 	}
 }
 
+void TwinTable::copy () {
+	RK_TRACE (EDITOR);
+
+	flushEdit ();
+	TwinTableMember *table = activeTable ();
+	if (!table) return;
+	table->copy ();
+}
+
 void TwinTable::paste (const QString& pasted, RKEditor::PasteMode paste_mode) {
 	RK_TRACE (EDITOR);
 

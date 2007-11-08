@@ -117,6 +117,7 @@ friend class TwinTable;
 	void setTwin (TwinTableMember *new_twin);
 public slots:
 	void editorLostFocus ();
+	void copy ();
 /** called when the current cell is changed. If no selection is in place, will (does not do it yet) pop up the value-list */
 	void currentCellChanged (int row, int col);
 protected slots:

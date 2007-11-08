@@ -20,6 +20,8 @@
 #include <qevent.h>
 #include <qpainter.h>
 #include <qstyle.h>
+#include <qapplication.h>
+#include <qclipboard.h>
 //Added by qt3to4:
 #include <QMouseEvent>
 #include <QKeyEvent>
@@ -170,6 +172,16 @@ void TwinTableMember::setCellContentFromEditor (int row, int col) {
 	}
 	
 	viewport ()->setFocus ();
+}
+
+void TwinTableMember::copy () {
+	RK_TRACE (EDITOR);
+
+	QString text = getSelectionText ();
+	QMimeData* data = new QMimeData ();
+	data->setText (text);
+	data->setData ("text/tab-separated-values", text.toLocal8Bit ());
+	QApplication::clipboard()->setMimeData (data);
 }
 
 QString TwinTableMember::getSelectionText () {

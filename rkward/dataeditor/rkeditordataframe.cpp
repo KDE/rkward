@@ -171,28 +171,6 @@ void RKEditorDataFrame::columnDeletionRequested (int col) {
 	RKGlobals::tracker ()->removeObject (obj);
 }
 
-void RKEditorDataFrame::removeObject (RObject *object) {
-	RK_TRACE (EDITOR);
-	if (object == getObject ()) {
-		// self destruct
-		delete this;
-		return;
-	}
-	
-	int col = getObjectCol (object);
-	RK_ASSERT (col >= 0);
-	// for now:
-	if (col < 0) return;
-
-//	object->setObjectOpened (this, false);
-	
-	for (int i=(col+1); i < numTrueCols (); ++i) {
-		setColObject (i-1, getColObject (i));
-	}
-	setColObject (numTrueCols () - 1, 0);
-	deleteColumn (col);
-}
-
 void RKEditorDataFrame::restoreObject (RObject *object) {
 	RK_TRACE (EDITOR);
 	// for now, simply sync the whole table unconditionally.
@@ -202,18 +180,6 @@ void RKEditorDataFrame::restoreObject (RObject *object) {
 		RK_ASSERT (object->isVariable ());
 		static_cast<RKVariable*> (object)->restore ();
 	}
-}
-
-void RKEditorDataFrame::renameObject (RObject *object) {
-	RK_TRACE (EDITOR);
-	
-	if (object == getObject ()) {
-		setCaption (object->getShortName ());
-		return;
-	}
-
-	int col = getObjectCol (object);
-	varview->updateCell (NAME_ROW, col);
 }
 
 void RKEditorDataFrame::updateObjectMeta (RObject *object) {

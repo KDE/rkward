@@ -73,17 +73,6 @@ void LevelsTable::cut () {
 	blankSelected ();
 }
 
-void LevelsTable::copy () {
-	RK_TRACE (EDITOR);
-
-#warning copy functionality should be move to TwinTableMember directly. See also RKEditorDataFramePart
-	QString text = getSelectionText ();
-	QMimeData* data = new QMimeData ();
-	data->setText (text);
-	data->setData ("text/tab-separated-values", text.toLocal8Bit ());
-	QApplication::clipboard()->setMimeData (data);
-}
-
 void LevelsTable::paste () {
 	RK_TRACE (EDITOR);
 

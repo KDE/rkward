@@ -49,12 +49,8 @@ public:
 	//void objectDeleted (RObject *object);
 	//void objectMetaModified (RObject *object);
 
-/** Tells the editor to (unconditionally!) remove the object from its list. */
-	void removeObject (RObject *object);
 /** Tells the editor to restore the given object in the R-workspace from its copy of the data */
 	void restoreObject (RObject *object);
-/** Tells the editor to (unconditionally!) rename the object (the object already carries the new name, so the editor can read the new name from the object). */
-	void renameObject (RObject *object);
 /** Tell the editor to (unconditionally) update its representation of the object meta data */
 	void updateObjectMeta (RObject *object);
 /** Tell the editor to (unconditionally) update its representation of the object data (in the range given in the ChangeSet) */

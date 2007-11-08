@@ -75,11 +75,7 @@ void RKEditorDataFramePart::slotEditCopy() {
 	RK_TRACE (EDITOR);
 	
 	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Copying selection to clipboard..."));
-	QString text = editor->getSelectedText ();
-	QMimeData* data = new QMimeData ();
-	data->setText (text);
-	data->setData ("text/tab-separated-values", text.toLocal8Bit ());
-	QApplication::clipboard ()->setMimeData (data);
+	editor->copy ();
 	RKWardMainWindow::getMain ()->slotSetStatusReady ();
 }
 

@@ -16,6 +16,7 @@ SET(dataeditor_STAT_SRCS
    editformatdialog.cpp
    rkeditordataframepart.cpp
    rkvareditmodel.cpp
+   rktextmatrix.cpp
    )
 
 QT4_AUTOMOC(${dataeditor_STAT_SRCS})
