@@ -18,7 +18,7 @@
 #define TWINTABLEDATAMEMBER_H
 
 #include "twintablemember.h"
-
+#if 0
 /**
 The TwinTableMember responsible for storing the data (i.e. the bottom half of the TwinTable). See TwinTable and TwinTableMember.
 
@@ -49,5 +49,5 @@ public:
 /** reimplemented form TwinTableDataMember to use information from RKVariable for proper treatment of values */
 	QString rText (int row, int col) const;
 };
-
+#endif
 #endif

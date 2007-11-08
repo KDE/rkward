@@ -144,18 +144,15 @@ QString RKTextMatrix::getText (int row, int col) const {
 	return (columns[col][row]);
 }
 
-QString* RKTextMatrix::getColumn (int col, int* col_length) const {
+QString* RKTextMatrix::getColumn (int col) const {
 	RK_TRACE (EDITOR);
 
 	if (col > colcount) {
-		*col_length = 0;
 		return 0;
 	}
 
 	TextColumn column = columns[col];
 	QString* ret = new QString[column.size ()];
-	*col_length = column.size ();
-	RK_ASSERT (*col_length == rowcount);
 	for (int i = 0; i < column.size (); ++i) {
 		ret[i] = column[i];
 	}

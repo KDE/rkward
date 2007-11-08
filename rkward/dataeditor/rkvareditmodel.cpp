@@ -26,7 +26,7 @@
 
 #include "../debug.h"
 
-RKVarEditModel::RKVarEditModel (QObject *parent) : QAbstractTableModel (parent), RObjectListener (RObjectListener::DataModel) {
+RKVarEditModel::RKVarEditModel (QObject *parent) : RKVarEditModelBase (parent), RObjectListener (RObjectListener::DataModel) {
 	RK_TRACE (EDITOR);
 
 	meta_model = 0;
@@ -75,7 +75,7 @@ void RKVarEditModel::objectRemoved (RObject* object) {
 	}
 }
 
-void RKVarEditModel::doInsertColumn (int) {
+void RKVarEditModel::doInsertColumns (int, int) {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (false);	// should be implemented in a subclass, or never called
 }
@@ -233,7 +233,7 @@ bool RKVarEditModel::setData (const QModelIndex& index, const QVariant& value, i
 
 	if (col >= objects.size ()) {		// trailing col
 		// somebody should add a column for us
-		doInsertColumn (objects.size ());
+		doInsertColumns (objects.size (), 1);
 
 		if (col >= objects.size ()) {
 			// apparently, no column has been added in the above signal
@@ -264,10 +264,95 @@ QVariant RKVarEditModel::headerData (int section, Qt::Orientation orientation, i
 	return QString::number (section);
 }
 
+RKTextMatrix RKVarEditModel::getTextMatrix (const QItemSelectionRange& range) const {
+	RK_TRACE (EDITOR);
+
+	if ((!range.isValid ()) || objects.isEmpty ()) return RKTextMatrix ();
+
+// NOTE: of course, when the range is small, this is terribly inefficient. On the other hand, it doesn't really matter, then, either.
+	QItemSelectionRange erange = range.intersected (QItemSelectionRange (index (0, 0), index (trueRows () - 1, trueCols () - 1)));
+	int top = erange.top ();
+	int bottom = erange.bottom ();
+	int left = erange.left ();
+	int right = erange.right ();
+
+	RKTextMatrix ret;
+	int tcol = 0;
+	for (int col = left; col <= right; ++col) {
+		QString* data = objects[col]->getCharacter (top, bottom);
+		RK_ASSERT (data);
+		ret.setColumn (tcol, data, top - bottom + 1);
+		delete [] data;
+		++tcol;
+	}
+
+	return ret;
+}
+
+void RKVarEditModel::blankRange (const QItemSelectionRange& range) {
+	RK_TRACE (EDITOR);
+
+	if ((!range.isValid ()) || objects.isEmpty ()) return;
+
+// NOTE: of course, when the range is small, this is terribly inefficient. On the other hand, it doesn't really matter, then, either.
+	QItemSelectionRange erange = range.intersected (QItemSelectionRange (index (0, 0), index (trueRows () - 1, trueCols () - 1)));
+	int top = erange.top ();
+	int bottom = erange.bottom ();
+	int left = erange.left ();
+	int right = erange.right ();
+
+	for (int col = left; col <= right; ++col) {
+		RKVariable* var = objects[col];
+		for (int row = top; row <= bottom; ++row) {
+			var->setText (row, QString ());
+		}
+	}
+}
+
+void RKVarEditModel::setTextMatrix (const QModelIndex& offset, const RKTextMatrix& text, const QItemSelectionRange& confine_to) {
+	RK_TRACE (EDITOR);
+
+// NOTE: of course, when the range is small, this is terribly inefficient. On the other hand, it doesn't really matter, then, either. Single cells will be set using setData()
+	if ((!offset.isValid ()) || text.isEmpty ()) return;
+
+	int top = offset.row ();
+	int left = offset.column ();
+	int bottom = top + text.numRows () - 1;
+	int right = left + text.numColumns () - 1;
+	if (confine_to.isValid ()) {
+		if (confine_to.top () > top) return;	// can't confine top-left. Should have been set by caller
+		if (confine_to.left () > left) return;
+		bottom = qMin (confine_to.bottom (), bottom);
+		right = qMin (confine_to.right (), right);
+	}
+
+// TODO: some models might not support column addition.
+	if (right >= trueCols ()) doInsertColumns (objects.size (), right - trueCols () + 1);
+	RK_ASSERT (right < trueCols ());
+	int current_rows = objects[0]->getLength ();
+	if (bottom >= current_rows) insertRows (current_rows, bottom - current_rows + 1);
+
+	int tcol = 0;
+	for (int col = left; col <= right; ++col) {
+		RKVariable* var = objects[col];
+		QString* data = text.getColumn (tcol);
+		RK_ASSERT (data);
+		var->setCharacter (top, bottom, data);
+		delete [] data;		// hm, why doesn't RKVariable take ownership?
+		++tcol;
+	}
+}
+
+void RKVarEditModel::restoreObject (RObject* object, RCommandChain* chain) {
+	RK_TRACE (EDITOR);
+
+	RK_ASSERT (objects.contains (static_cast<RKVariable*> (object)));
+	static_cast<RKVariable*> (object)->restore (chain);
+}
 
 /////////////////// RKVarEditMetaModel ////////////////////////
 
-RKVarEditMetaModel::RKVarEditMetaModel (RKVarEditModel* data_model) : QAbstractTableModel (data_model) {
+RKVarEditMetaModel::RKVarEditMetaModel (RKVarEditModel* data_model) : RKVarEditModelBase (data_model) {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (data_model);
 
@@ -382,7 +467,7 @@ bool RKVarEditMetaModel::setData (const QModelIndex& index, const QVariant& valu
 
 	if (col >= data_model->objects.size ()) {		// trailing col
 		// somebody should add a column for us
-		data_model->doInsertColumn (data_model->objects.size ());
+		data_model->doInsertColumns (data_model->objects.size (), 1);
 
 		if (col >= data_model->objects.size ()) {
 			// apparently, no column has been added in the above signal
@@ -431,11 +516,124 @@ QVariant RKVarEditMetaModel::headerData (int section, Qt::Orientation orientatio
 	return QVariant ();
 }
 
+RKTextMatrix RKVarEditMetaModel::getTextMatrix (const QItemSelectionRange& range) const {
+	RK_TRACE (EDITOR);
+
+	if ((!range.isValid ()) || data_model->objects.isEmpty ()) return RKTextMatrix ();
+
+// NOTE: of course, when the range is small, this is terribly inefficient. On the other hand, it doesn't really matter, then, either.
+	QItemSelectionRange erange = range.intersected (QItemSelectionRange (index (0, 0), index (trueRows () - 1, trueCols () - 1)));
+	int top = erange.top ();
+	int bottom = erange.bottom ();
+	int left = erange.left ();
+	int right = erange.right ();
+
+	RKTextMatrix ret;
+	int tcol = 0;
+	for (int col = left; col <= right; ++col) {
+		int trow = 0;
+		for (int row = top; row <= bottom; ++row) {
+			QVariant celldata = data (index (row, col), Qt::EditRole);
+			if (!celldata.isValid ()) {
+				RK_ASSERT (false);
+				break;
+			}
+			ret.setText (trow, tcol, celldata.toString ());
+			++trow;
+		}
+		++tcol;
+	}
+
+	return ret;
+}
+
+void RKVarEditMetaModel::blankRange (const QItemSelectionRange& range) {
+	RK_TRACE (EDITOR);
+
+	if ((!range.isValid ()) || data_model->objects.isEmpty ()) return;
+
+// NOTE: of course, when the range is small, this is terribly inefficient. On the other hand, it doesn't really matter, then, either.
+	QItemSelectionRange erange = range.intersected (QItemSelectionRange (index (0, 0), index (trueRows () - 1, trueCols () - 1)));
+	int top = erange.top ();
+	int bottom = erange.bottom ();
+	int left = erange.left ();
+	int right = erange.right ();
+
+	for (int col = left; col <= right; ++col) {
+		RKVariable* var = data_model->objects[col];
+		var->setSyncing (false);
+		for (int row = top; row <= bottom; ++row) {
+			setData (createIndex (row, col), QString (), Qt::EditRole);
+		}
+		var->setSyncing (true);
+	}
+}
+
+void RKVarEditMetaModel::setTextMatrix (const QModelIndex& offset, const RKTextMatrix& text, const QItemSelectionRange& confine_to) {
+	RK_TRACE (EDITOR);
+
+	if ((!offset.isValid ()) || text.isEmpty ()) return;
+
+	int top = offset.row ();
+	int left = offset.column ();
+	int bottom = top + text.numRows () - 1;
+	int right = left + text.numColumns () - 1;
+	if (confine_to.isValid ()) {
+		if (confine_to.top () > top) return;	// can't confine top-left. Should have been set by caller
+		if (confine_to.left () > left) return;
+		bottom = qMin (confine_to.bottom (), bottom);
+		right = qMin (confine_to.right (), right);
+	}
+
+// TODO: some models might not support column addition.
+	if (right >= trueCols ()) data_model->doInsertColumns (trueCols (), right - trueCols () + 1);
+	RK_ASSERT (right < data_model->objects.size ());
+	bottom = qMin (bottom, trueRows () - 1);
+
+	int tcol = 0;
+	for (int col = left; col <= right; ++col) {
+		int trow = 0;
+		RKVariable* var = data_model->objects[col];
+		var->setSyncing (false);
+		for (int row = top; row <= bottom; ++row) {
+			setData (index (row, col), text.getText (trow, tcol), Qt::EditRole);
+			++trow;
+		}
+		var->setSyncing (true);
+		++tcol;
+	}
+}
+
 
 /////////////////// RKVarEditDataFrameModel ////////////////////////
 
 
-RKVarEditDataFrameModel::RKVarEditDataFrameModel (RContainerObject* dataframe, QObject *parent) : RKVarEditModel (parent) {
+RKVarEditDataFrameModel::RKVarEditDataFrameModel (RContainerObject* dataframe, QObject* parent) : RKVarEditModel (parent) {
+	RK_TRACE (EDITOR);
+
+	init (dataframe);
+}
+
+RKVarEditDataFrameModel::RKVarEditDataFrameModel (const QString& validized_name, RContainerObject* parent_object, RCommandChain* chain, int initial_cols, QObject* parent) : RKVarEditModel (parent) {
+	RK_TRACE (EDITOR);
+
+	RObject *object = parent_object->createPendingChild (validized_name, -1, true, true);
+	RK_ASSERT (object->isDataFrame ());
+	RContainerObject* df = static_cast<RContainerObject*> (object);
+
+// initialize the new object
+	for (int i = 0; i < initial_cols; ++i) {
+		RObject* child = df->createPendingChild (QString (), -1, false, false);
+		RK_ASSERT (child->isVariable ());
+	}
+
+	init (df);
+
+	// creates the pending object in the backend
+	pushTable (chain);
+}
+
+void RKVarEditDataFrameModel::init (RContainerObject* dataframe) {
 	RK_TRACE (EDITOR);
 
 	RKVarEditDataFrameModel::dataframe = dataframe;
@@ -559,10 +757,47 @@ void RKVarEditDataFrameModel::childMoved (int old_index, int new_index, RObject*
 	}
 }
 
-void RKVarEditDataFrameModel::doInsertColumn (int index) {
+void RKVarEditDataFrameModel::doInsertColumns (int index, int count) {
 	RK_TRACE (EDITOR);
 
-	insertColumns (index, 1);
+	insertColumns (index, count);
 }
+
+void RKVarEditDataFrameModel::pushTable (RCommandChain *sync_chain) {
+	RK_TRACE (EDITOR);
+
+	// first push real data
+	QString command = dataframe->getFullName ();
+	command.append (" <- data.frame (");
+
+	RK_ASSERT (objects.size ());
+	RKVariable* child = objects[0];
+	QString na_vector = "=as.numeric (rep (NA, " + QString::number (child->getLength ()) + "))";
+	for (int col=0; col < objects.size (); ++col) {
+		if (col != 0) command.append (", ");
+		command.append (objects[col]->getShortName () + na_vector);
+	}
+	command.append (")");
+
+	// push all children
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync | RCommand::ObjectListUpdate), sync_chain);
+	for (int col=0; col < objects.size (); ++col) {
+		objects[col]->restore (sync_chain);
+	}
+
+	// now store the meta-data
+	dataframe->writeMetaData (sync_chain);
+}
+
+void RKVarEditDataFrameModel::restoreObject (RObject* object, RCommandChain* chain) {
+	RK_TRACE (EDITOR);
+
+	if (object == dataframe) {
+		pushTable (chain);
+	} else {
+		RKVarEditModel::restoreObject (object, chain);
+	}
+}
+
 
 #include "rkvareditmodel.moc"

@@ -39,13 +39,18 @@ public:
 	void copyToClipboard () const;
 
 	void setText (int row, int col, const QString& text);
+	/** set an entire column at once. This takes a copy of the data, so you will still have to delete it when done. */
 	void setColumn (int column, const QString* textarray, int length);
 
 	QString getText (int row, int col) const;
-	QString* getColumn (int col, int* col_length) const;
+	/** get the contents of an entire column at once. It's your responsibility to delete the data when done. The returned array has length numRows() */
+	QString* getColumn (int col) const;
 
 	void clear ();
 	bool isEmpty () const;
+
+	int numColumns () const { return colcount; }
+	int numRows () const { return rowcount; }
 private:
 	typedef QVector<QString> TextColumn;
 	QVector<TextColumn> columns;

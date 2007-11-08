@@ -103,17 +103,7 @@ void RKEditorDataFramePart::doPaste (RKEditor::PasteMode mode) {
 
 	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Inserting clipboard contents..."));
 
-	const QMimeData* data = QApplication::clipboard ()->mimeData ();
-	// actually, we don't care, whether tsv or plain gets pasted - it's both
-	// treated the same. We should however encourage external senders to
-	// provided the two in order.
-	if (data->hasFormat ("text/tab-separated-values")) {
-		RK_DO (qDebug ("paste tsv"), EDITOR, DL_DEBUG);
-		editor->paste (QString::fromLocal8Bit (data->data ("text/tab-separated-values")), mode);
-	} else if (data->hasText ()) {
-		RK_DO (qDebug ("paste plain text"), EDITOR, DL_DEBUG);
-		editor->paste (data->text (), mode);
-	}
+	editor->paste (mode);
 
 	RKWardMainWindow::getMain ()->slotSetStatusReady ();
 }

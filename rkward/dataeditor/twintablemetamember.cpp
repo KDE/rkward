@@ -32,6 +32,8 @@
 
 #include "../debug.h"
 
+#warning TODO remove
+#if 0
 TwinTableMetaMember::TwinTableMetaMember (QWidget *parent, TwinTable *table) : TwinTableMember (parent, table, 0, 1) {
 	type_values.insert (QString::number (RObject::DataNumeric), RObject::typeToText (RObject::DataNumeric));
 	type_values.insert (QString::number (RObject::DataFactor), RObject::typeToText (RObject::DataFactor));
@@ -166,3 +168,4 @@ QString TwinTableMetaMember::formattedText (int row, int col) const {
 }
 
 #include "twintablemetamember.moc"
+#endif

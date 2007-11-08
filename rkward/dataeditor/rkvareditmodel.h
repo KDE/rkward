@@ -19,16 +19,34 @@
 #define RKVAREDITMODEL
 
 #include <QAbstractTableModel>
+#include <QItemSelectionRange>
 #include <QList>
 
+#include "rktextmatrix.h"
 #include "../core/rkvariable.h"
 #include "../core/rkmodificationtracker.h"
 
 class RKVarEditMetaModel;
+class RCommandChain;
 class RKEditor;
 
+/** Base class for RKVarEditModel and RKVarEditMetaModel. Defines a common interface for copy and paste operations. Models might reimplement these functions for more efficiency.
+@author Thomas Friedrichsmeier */
+class RKVarEditModelBase : public QAbstractTableModel {
+public:
+	RKVarEditModelBase (QObject *parent) : QAbstractTableModel (parent) {};
+	virtual ~RKVarEditModelBase () {};
+
+	virtual RKTextMatrix getTextMatrix (const QItemSelectionRange& range) const = 0;
+	virtual void blankRange (const QItemSelectionRange& range) = 0;
+	virtual void setTextMatrix (const QModelIndex& offset, const RKTextMatrix& text, const QItemSelectionRange& confine_to = QItemSelectionRange ()) = 0;
+
+	virtual int trueRows () const = 0;
+	virtual int trueCols () const = 0;
+};
+
 /** This class represents a collection of RKVariables of uniform length (typically a data.frame) suitable for editing in a model/view editor such as QTableView. Probably it will only ever support editing a single RKVariable, though, as it is not possible to ensure uniform length outside of a data.frame. For a data.frame use RKVarEditDataFrameModel . Since the real data storage is in RKVariable, it is ok (and recommended) to create separate models for separate editors/viewers, even if the objects in question are the same. */
-class RKVarEditModel : public QAbstractTableModel, public RObjectListener {
+class RKVarEditModel : public RKVarEditModelBase, public RObjectListener {
 	Q_OBJECT
 public:
 	RKVarEditModel (QObject *parent);
@@ -55,6 +73,15 @@ public:
 	Qt::ItemFlags flags (const QModelIndex& index) const;
 	bool setData (const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
 	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+
+	RKTextMatrix getTextMatrix (const QItemSelectionRange& range) const;
+	void blankRange (const QItemSelectionRange& range);
+	void setTextMatrix (const QModelIndex& offset, const RKTextMatrix& text, const QItemSelectionRange& confine_to = QItemSelectionRange ());
+
+	int trueCols () const { return objects.size (); };
+	int trueRows () const { return (objects.isEmpty () ? 0 : objects[0]->getLength ()); };
+
+	virtual void restoreObject (RObject* object, RCommandChain* chain);
 protected:
 friend class RKVarEditMetaModel;
 	QList<RKVariable*> objects;
@@ -67,8 +94,8 @@ friend class RKVarEditMetaModel;
 	/** Receives notifications of object removals. Takes care of removing the object from the list. */
 	void objectRemoved (RObject* object);
 
-	/** insert a new column at index. Default implementation does nothing. To be implemented in subclasses */
-	virtual void doInsertColumn (int index);
+	/** insert new columns at index. Default implementation does nothing. To be implemented in subclasses */
+	virtual void doInsertColumns (int index, int count);
 
 	virtual void doInsertRowsInBackend (int row, int count);
 	virtual void doRemoveRowsInBackend (int row, int count);
@@ -83,7 +110,7 @@ friend class RKVarEditMetaModel;
 };
 
 /** Represents the meta information portion belonging to an RKVarEditModel. Implemented in a separate class for technical reasons, only (so this info can be displayed in a separate QTableView). This model mostly acts as a slave of an RKVarEditModel. You will not need to call any functions directly except from the RKVarEditModel, or an item view. */
-class RKVarEditMetaModel : public QAbstractTableModel {
+class RKVarEditMetaModel : public RKVarEditModelBase {
 	Q_OBJECT
 public:
 	enum Rows {
@@ -102,6 +129,13 @@ public:
 	Qt::ItemFlags flags (const QModelIndex& index) const;
 	bool setData (const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
 	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+
+	RKTextMatrix getTextMatrix (const QItemSelectionRange& range) const;
+	void blankRange (const QItemSelectionRange& range);
+	void setTextMatrix (const QModelIndex& offset, const RKTextMatrix& text, const QItemSelectionRange& confine_to = QItemSelectionRange ());
+
+	int trueCols () const { return data_model->trueCols (); };
+	int trueRows () const { return RowCount; };
 protected:
 friend class RKVarEditModel;
 	RKVarEditMetaModel (RKVarEditModel* data_model);
@@ -119,13 +153,19 @@ friend class RKVarEditModel;
 class RKVarEditDataFrameModel : public RKVarEditModel {
 	Q_OBJECT
 public:
-	RKVarEditDataFrameModel (RContainerObject* dataframe, QObject *parent);
+	RKVarEditDataFrameModel (RContainerObject* dataframe, QObject* parent);
+/** ctor that constructs a new empty data frame */
+	RKVarEditDataFrameModel (const QString& validized_name, RContainerObject* parent_object, RCommandChain* chain, int initial_cols, QObject* parent);
 	~RKVarEditDataFrameModel ();
 
 	bool insertColumns (int column, int count, const QModelIndex& parent = QModelIndex());
 	bool removeColumns (int column, int count, const QModelIndex& parent = QModelIndex());
+
+	RContainerObject* getObject () const { return dataframe; };
+
+	void restoreObject (RObject* object, RCommandChain* chain);
 protected:
-	void doInsertColumn (int index);
+	void doInsertColumns (int index, int count);
 	/** reimplemented from RKVarEditModel to listen for the dataframe object as well */
 	void objectRemoved (RObject* object);
 	/** receives notifications of new objects added to this data.frame */
@@ -137,6 +177,9 @@ protected:
 	void doRemoveRowsInBackend (int row, int count);
 
 	RContainerObject* dataframe;
+
+	void init (RContainerObject* dataframe);
+	void pushTable (RCommandChain* sync_chain);
 };
 
 #endif

@@ -27,6 +27,9 @@
 
 #include "../debug.h"
 
+#warning TODO remove
+#if 0
+
 TwinTableDataMember::TwinTableDataMember (QWidget *parent, TwinTable *table) : TwinTableMember (parent, table, 1, 1) {
 }
 
@@ -150,3 +153,4 @@ QString TwinTableDataMember::rText (int row, int col) const {
 }
 
 #include "twintabledatamember.moc"
+#endif

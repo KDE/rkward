@@ -2,7 +2,7 @@
                           editlabelsdialog  -  description
                              -------------------
     begin                : Tue Sep 21 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,47 +18,54 @@
 #define EDITLABELSDIALOG_H
 
 #include <kdialog.h>
-//Added by qt3to4:
-#include <QResizeEvent>
+
+#include <QTableView>
+#include <QAbstractTableModel>
 
 #include "../core/robject.h"
 
 class RKVariable;
-
-#include "twintablemember.h"
+class RKVarLevelsTableModel;
 
 /** special mini class provides the table in EditLabelsDialog
 TODO: make copy/paste work
 
 @author Thomas Friedrichsmeier
 */
-class LevelsTable : public TwinTableMember {
+class RKVarLevelsTable : public QTableView {
 	Q_OBJECT
 public:
-	LevelsTable (QWidget *parent, RObject::ValueLabels *labels);
-	~LevelsTable ();
-/** reimplemented form QTable not to add trailing rows/cols if needed */
-	QWidget *beginEdit (int row, int col, bool replace);
-/** reimplemented form QTable  to work on RObject::ValueLabels instead of QTableItems */
-	void paintCell (QPainter *p, int row, int col, const QRect &cr, bool selected, const QColorGroup &cg);
-/** reimplemented form QTable to work on RObject::ValueLabels instead of QTableItems */
-	void setText (int row, int col, const QString &text);
-/** reimplemented form QTable to work on RObject::ValueLabels instead of QTableItems */
-	QString text (int row, int col) const;
+	RKVarLevelsTable (QWidget *parent, RObject::ValueLabels *labels);
+	~RKVarLevelsTable ();
 public slots:
 /** cut */
-	void cut();
+	void cut ();
+/** cut */
+	void copy ();
 /** paste */
-	void paste();
-protected:
-/** reimplemented to resize the table columns so that there's no unused space to the right */
-	void resizeEvent (QResizeEvent *e);
-/** reimplemented to resize the table columns so that there's no unused space to the right */
-	void columnWidthChanged (int col);
+	void paste ();
+private:
+	bool getSelectionBoundaries (int* top, int* bottom) const;
+friend class EditLabelsDialog;
+	RKVarLevelsTableModel* lmodel;
+	bool updating_size;
+};
+
+/** Data model for the RKVarLevelsTable */
+class RKVarLevelsTableModel : public QAbstractTableModel {
+public:
+	RKVarLevelsTableModel (RObject::ValueLabels* labels, QObject* parent);
+	~RKVarLevelsTableModel ();
+
+	int rowCount (const QModelIndex& parent = QModelIndex()) const;
+	int columnCount (const QModelIndex& parent = QModelIndex()) const;
+	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const;
+	Qt::ItemFlags flags (const QModelIndex& index) const;
+	bool setData (const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 private:
 friend class EditLabelsDialog;
-	RObject::ValueLabels *storage;
-	bool updating_size;
+	RObject::ValueLabels* labels;
 };
 
 /**
@@ -80,7 +87,7 @@ protected:
 /// reimplemented to submit the changes to the backend
 	void accept ();
 private:
-	LevelsTable *table;
+	RKVarLevelsTable *table;
 	RKVariable *var;
 	int mode;
 };

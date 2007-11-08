@@ -23,7 +23,7 @@
 
 class QWidget;
 class TwinTable;
-
+#if 0
 /**
 The TwinTableMember responsible for storing the meta-information (i.e. the top half of the TwinTable). See TwinTable and TwinTableMember.
 
@@ -53,5 +53,5 @@ public:
 private:
 	RObject::ValueLabels type_values;
 };
-
+#endif
 #endif

@@ -408,6 +408,8 @@ QString RContainerObject::validizeName (const QString &child_name, bool unique) 
 	}
 	if (!unique) return ret;
 
+// NOTE: this is potentially a quadratic time algorithm with respect to number of children.
+// Its only called on user actions, though, and hopefully users will not keep all objects named "varX".
 	int i=0;
 	QString postfix;
 	while (findChildByName (ret + postfix)) {

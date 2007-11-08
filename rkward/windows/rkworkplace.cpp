@@ -327,7 +327,7 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 			}
 		}
 
-		ed = new RKEditorDataFrame (iobj, 0);
+		ed = new RKEditorDataFrame (static_cast<RContainerObject*> (iobj), 0);
 		addWindow (ed);
 	} else {
 		ed = existing_editor;

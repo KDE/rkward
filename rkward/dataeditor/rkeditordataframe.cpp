@@ -23,13 +23,11 @@
 #include "../rkglobals.h"
 #include "twintable.h"
 #include "twintablemember.h"
-#include "twintabledatamember.h"
-#include "twintablemetamember.h"
+#include "rkvareditmodel.h"
 #include "../core/robject.h"
 #include "../core/robjectlist.h"
 #include "../core/rkvariable.h"
 #include "../core/rcontainerobject.h"
-#include "../core/rkmodificationtracker.h"
 #include "rkeditordataframepart.h"
 #include "../windows/rkworkplace.h"
 #include "../misc/rkstandardicons.h"
@@ -40,13 +38,19 @@
 // warning! numbers above GET_DATA_OFFSET are used to determine, which row, the data should go to!
 #define GET_DATA_OFFSET 10
 
-RKEditorDataFrame::RKEditorDataFrame (RObject* object, QWidget *parent) : TwinTable (parent) {
+RKEditorDataFrame::RKEditorDataFrame (RContainerObject* object, QWidget *parent) : TwinTable (parent) {
 	RK_TRACE (EDITOR);
 
 	commonInit ();
 
 	RK_ASSERT (!object->isPending ());
-	openObject (object);
+	RKEditor::object = object;
+	RK_ASSERT (object->isDataFrame ());
+
+	RKVarEditDataFrameModel* model = new RKVarEditDataFrameModel (object, this);
+	initTable (model);
+
+	waitForLoad ();
 }
 
 RKEditorDataFrame::RKEditorDataFrame (const QString& new_object_name, QWidget* parent) : TwinTable (parent) {
@@ -56,21 +60,15 @@ RKEditorDataFrame::RKEditorDataFrame (const QString& new_object_name, QWidget* p
 
 	QString valid = RObjectList::getObjectList ()->validizeName (new_object_name);
 	if (valid != new_object_name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1", valid), i18n ("Invalid Name"));
-	RObject *object = RObjectList::getObjectList ()->createPendingChild (valid, -1, true, true);
 
-// initialize the new object
-#warning TODO: call model->insertColumns() instead.
-	for (int i=0; i < numTrueCols (); ++i) {
-		RObject *child = static_cast<RContainerObject *> (object)->createPendingChild (static_cast<RContainerObject *> (object)->validizeName (QString ()), i);
-		if (child->isVariable ()) {
-			static_cast<RKVariable*> (child)->setLength (dataview->numTrueRows ());
-		} else {
-			RK_ASSERT (false);
-		}
-	}
-	pushTable (open_chain);
+	RKVarEditDataFrameModel* model = new RKVarEditDataFrameModel (valid, RObjectList::getObjectList (), open_chain, 5, this);
+	initTable (model);
 
-	openObject (object);
+	RKEditor::object = model->getObject ();;
+	RK_ASSERT (object->isDataFrame ());
+
+#warning is this needed? Of is it enough to close the chain?
+	waitForLoad ();
 }
 
 void RKEditorDataFrame::commonInit () {
@@ -89,10 +87,10 @@ void RKEditorDataFrame::enableEditing (bool on) {
 	if (on) {
 		connect (this, SIGNAL (deleteColumnRequest (int)), this, SLOT (columnDeletionRequested (int)));
 		connect (this, SIGNAL (addedColumn (int)), this, SLOT (columnAdded (int)));
-		varview->setEnabled (true);
+		metaview->setEnabled (true);
 		dataview->setEnabled (true);
 	} else {
-		varview->setEnabled (false);
+		metaview->setEnabled (false);
 		dataview->setEnabled (false);
 		disconnect (this, SIGNAL (deleteColumnRequest (int)), this, SLOT (columnDeletionRequested (int)));
 		disconnect (this, SIGNAL (addedColumn (int)), this, SLOT (columnAdded (int)));
@@ -108,17 +106,11 @@ void RKEditorDataFrame::flushChanges () {
 	flushEdit ();
 }
 
-void RKEditorDataFrame::openObject (RObject *object) {
+void RKEditorDataFrame::waitForLoad () {
 	RK_TRACE (EDITOR);
 	flushEdit ();
-	RKEditor::object = object;
-	RK_ASSERT (object->isDataFrame ());
 
 	enableEditing (false);
-
-	// trigger fetching of the edit data
-	object->markDataDirty ();
-	object->updateFromR (open_chain);
 
 	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand | RCommand::Sync | RCommand::GetStringVector, QString (), this, LOAD_COMPLETE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, open_chain);
@@ -135,72 +127,11 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 	}
 }
 
-void RKEditorDataFrame::pushTable (RCommandChain *sync_chain) {
-	RK_TRACE (EDITOR);
-	flushEdit ();
-	QString command;
-#warning TODO: move to model
-	// first push the data-table
-	TwinTableMember *table = dataview;
-	command = getObject ()->getFullName ();
-	command.append (" <- data.frame (");
-	
-	QString na_vector = "=as.numeric (rep (NA, " + QString::number (getColObject (0)->getLength ()) + "))";
-	for (int col=0; col < table->numTrueCols (); col++) {
-		if (col != 0) command.append (", ");
-		command.append (getColObject (col)->getShortName () + na_vector);
-	}
-	command.append (")");
-
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync | RCommand::ObjectListUpdate), sync_chain);
-	for (int col=0; col < table->numTrueCols (); col++) {
-		getColObject (col)->restore (sync_chain);
-	}
-
-	// now store the meta-data
-	getObject ()->writeMetaData (sync_chain);
-}
-
-void RKEditorDataFrame::columnDeletionRequested (int col) {
-	RK_TRACE (EDITOR);
-	RObject *obj = getColObject (col);
-	RK_ASSERT (obj);
-	// for now:
-	if (!obj) return;
-
-	RKGlobals::tracker ()->removeObject (obj);
-}
-
 void RKEditorDataFrame::restoreObject (RObject *object) {
 	RK_TRACE (EDITOR);
-	// for now, simply sync the whole table unconditionally.
-	if (object == getObject ()) {
-		pushTable (0);
-	} else {
-		RK_ASSERT (object->isVariable ());
-		static_cast<RKVariable*> (object)->restore ();
-	}
-}
 
-void RKEditorDataFrame::updateObjectMeta (RObject *object) {
-	RK_TRACE (EDITOR);
-	if (object == getObject ()) return;	// for now: can't update meta on the table itself
-	
-	int col = getObjectCol (object);
-	for (int i=0; i < varview->numTrueRows (); ++i) {
-		varview->updateCell (i, col);
-	}
-}
-
-void RKEditorDataFrame::updateObjectData (RObject *object, RObject::ChangeSet *changes) {
-	RK_TRACE (EDITOR);
-	
-	if (object != getObject ()) {
-		int col = getObjectCol (object);
-		for (int i=0; i < dataview->numTrueRows (); ++i) {
-			dataview->updateCell (i, col);
-		}
-	}
+#warning TODO: this interface should be moved to the model for good.
+	datamodel->restoreObject (object, 0);
 }
 
 #include "rkeditordataframe.moc"

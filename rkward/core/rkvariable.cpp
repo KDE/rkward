@@ -648,7 +648,7 @@ QString *RKVariable::getCharacter (int from_row, int to_row) const {
 	RK_ASSERT (from_row <= to_row);
 
 	QString *ret = new QString[(to_row - from_row) + 1];
-	
+
 	int i = 0;
 	for (int row = from_row; row <= to_row; ++row) {
 		ret[i] = getText (row);
