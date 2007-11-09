@@ -34,6 +34,41 @@ class RKVarEditModelBase;
 
 #include "rkeditor.h"
 
+class RKVarEditMetaModel;
+class RKVarEditModel;
+
+/** Item delegate for TwinTableMembers.
+@author Thomas Friedrichsmeier */
+class RKItemDelegate : public QItemDelegate {
+	Q_OBJECT
+public:
+	RKItemDelegate (QObject *parent, RKVarEditModel* datamodel);
+	RKItemDelegate (QObject *parent, RKVarEditMetaModel* metamodel);
+	~RKItemDelegate ();
+
+	QWidget* createEditor (QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	void setEditorData (QWidget* editor, const QModelIndex& index) const;
+	void setModelData (QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
+	bool eventFilter (QObject* editor, QEvent* event);
+
+	enum EditorDoneReason {
+		EditorExitLeft,
+		EditorExitRight,
+		EditorExitUp,
+		EditorExitDown,
+		EditorExit
+	};
+signals:
+	// much like QAbstractItemDelegate::closeEditor(), but with our own flexible EndEditHint
+	void doCloseEditor (QWidget* editor, RKItemDelegate::EditorDoneReason);
+public slots:
+	void editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason reason);
+private:
+	RKVarEditModel* datamodel;
+	RKVarEditMetaModel* metamodel;
+};
+
+
 /** One of the tables used in a TwinTable.
 @author Thomas Friedrichsmeier
 */
@@ -60,6 +95,7 @@ public:
 	QItemSelectionRange getSelectionBoundaries ();
 
 	void setRKModel (RKVarEditModelBase* model);
+	void seRKItemDelegate (RKItemDelegate* delegate);
 signals:
 	void contextMenuRequest (int row, int col, const QPoint& pos);
 protected:
@@ -75,6 +111,8 @@ protected:
 friend class TwinTable;
 	void setTwin (TwinTableMember *new_twin);
 public slots:
+	void editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason);
+
 	void editorLostFocus ();
 /** called when the current cell is changed. If no selection is in place, will (does not do it yet) pop up the value-list */
 //	void currentCellChanged (int row, int col);
@@ -82,31 +120,6 @@ protected slots:
 	void headerContextMenuRequested (const QPoint& pos);
 	void updateColWidth (int section, int old_w, int new_w);
 	void tableSelectionChanged (const QItemSelection& selected, const QItemSelection& deselected);
-};
-
-
-/** Item delegate for TwinTableMembers.
-@author Thomas Friedrichsmeier */
-class RKItemDelegate : QItemDelegate {
-	Q_OBJECT
-public:
-	RKItemDelegate (QObject *parent);
-	~RKItemDelegate ();
-
-	QWidget* createEditor (QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
-	void setEditorData (QWidget* editor, const QModelIndex& index) const;
-	void setModelData (QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
-
-	enum EditorDoneReason {
-		Left,
-		Right,
-		Up,
-		Down,
-		No
-	};
-
-public slots:
-	void editorDone (QWidget* editor, EditorDoneReason);
 };
 
 #endif

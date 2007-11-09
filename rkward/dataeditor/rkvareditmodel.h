@@ -85,14 +85,16 @@ public:
 
 	void objectMetaChanged (RObject* changed);
 	void objectDataChanged (RObject* object, const RObject::ChangeSet *changes);
+
+	RKVariable* getObject (int index) const;
 protected:
 friend class RKVarEditMetaModel;
 	QList<RKVariable*> objects;
 
 	/** very simple convenience function to return the number of true cols + trailing cols */
-	int apparentCols () const { return objects.size () + trailing_cols; };
+	int apparentCols () const { return (trueCols () + trailing_cols); };
 	/** very simple convenience function to return the number of true rows + trailing rows */
-	int apparentRows () const { return (trailing_rows + (objects.isEmpty () ? 0 : objects[0]->getLength ())); };
+	int apparentRows () const { return (trueRows () + trailing_rows); };
 
 	/** Receives notifications of object removals. Takes care of removing the object from the list. */
 	void objectRemoved (RObject* object);
@@ -139,6 +141,8 @@ public:
 
 	int trueCols () const { return data_model->trueCols (); };
 	int trueRows () const { return RowCount; };
+
+	RKVariable* getObject (int index) const { return data_model->getObject (index); };
 protected:
 friend class RKVarEditModel;
 	RKVarEditMetaModel (RKVarEditModel* data_model);

@@ -44,6 +44,16 @@ RKVarEditModel::~RKVarEditModel () {
 	for (int i = objects.size () - 1; i >= 0; --i) stopListenForObject (objects[i]);
 }
 
+RKVariable* RKVarEditModel::getObject (int index) const {
+	RK_TRACE (EDITOR);
+
+	if (index >= trueCols ()) {
+		RK_ASSERT (false);
+		return 0;
+	}
+	return objects[index];
+}
+
 void RKVarEditModel::addObject (int index, RKVariable* object) {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (object);

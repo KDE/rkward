@@ -2,7 +2,7 @@
                           celleditor  -  description
                              -------------------
     begin                : Mon Sep 13 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,18 +18,16 @@
 #define CELLEDITOR_H
 
 #include <qlineedit.h>
-#include <q3intdict.h>
+#include <QList>
 //Added by qt3to4:
 #include <QKeyEvent>
 #include <QEvent>
-#include <QTimerEvent>
-#include <Q3PopupMenu>
 
 #include "../core/robject.h"
+#include "twintablemember.h"
 
 class QStringList;
-class Q3PopupMenu;
-class TwinTableMember;
+class QMenu;
 
 /**
 This is the main editor used in the TwinTableMembers
@@ -42,22 +40,23 @@ focus.
 class CellEditor : public QLineEdit {
 Q_OBJECT
 public:
-	CellEditor (TwinTableMember* parent, const QString &text, int mode, const RObject::ValueLabels *named_values=0);
+	CellEditor (QWidget* parent);
+	~CellEditor ();
 
-	~CellEditor();
+	void setValueLabels (const RObject::ValueLabels *labels);
+
+	void setText (const QString& text);
+signals:
+	void done (QWidget* widget, RKItemDelegate::EditorDoneReason reason);
 public slots:
-	void selectedFromList (int id);
+	void selectedFromList (QAction* action);
+	void showValueLabels ();
 protected:
-/// for showing/hiding list of name_values
-	void timerEvent (QTimerEvent *e);
 /// reimplemented to ignore arrow left/right if at the beginning/end
 	void keyPressEvent (QKeyEvent *e);
-/// needed to catch Tab-keypresses (not usually sent to keyPressEvent) and relay those to the parent
-	bool event (QEvent *e);
+	bool eventFilter (QObject* object, QEvent* event);
 private:
-	Q3PopupMenu *value_list;
-	int timer_id;
-	Q3IntDict<QString> popup_values;
+	QMenu *value_list;
 	TwinTableMember *table;
 };
 

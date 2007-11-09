@@ -59,7 +59,14 @@ void TwinTableMember::setRKModel (RKVarEditModelBase* model) {
 	RK_TRACE (EDITOR);
 	mymodel = model;
 	setModel (model);
-};
+}
+
+void TwinTableMember::seRKItemDelegate (RKItemDelegate* delegate) {
+	RK_TRACE (EDITOR);
+
+	setItemDelegate (delegate);
+	connect (delegate, SIGNAL (doCloseEditor(QWidget*,RKItemDelegate::EditorDoneReason)), this, SLOT (editorDone(QWidget*,RKItemDelegate::EditorDoneReason)));
+}
 
 void TwinTableMember::setTwin (TwinTableMember * new_twin) {
 	RK_TRACE (EDITOR);
@@ -74,6 +81,24 @@ void TwinTableMember::tableSelectionChanged (const QItemSelection& selected, con
 	RK_ASSERT (twin);
 
 	if (!selected.isEmpty ()) twin->clearSelection ();
+}
+
+void TwinTableMember::editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason reason) {
+	RK_TRACE (EDITOR);
+
+	int row = currentIndex ().row ();
+	int col = currentIndex ().column ();
+
+	closeEditor (editor, QAbstractItemDelegate::NoHint);
+
+	if (reason == RKItemDelegate::EditorExitRight) ++col;
+	else if (reason == RKItemDelegate::EditorExitLeft) --col;
+	else if (reason == RKItemDelegate::EditorExitUp) --row;
+	else if (reason == RKItemDelegate::EditorExitDown) ++row;
+
+	if ((row < mymodel->rowCount ()) && (col < mymodel->columnCount ())) {
+		setCurrentIndex (mymodel->index (row, col));
+	}
 }
 
 void TwinTableMember::editorLostFocus () {
@@ -211,8 +236,18 @@ void TwinTableMember::headerContextMenuRequested (const QPoint& pos) {
 
 /////////////////// RKItemDelegate /////////////////////
 
-RKItemDelegate::RKItemDelegate (QObject *parent) : QItemDelegate (parent) {
+RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditModel* datamodel) : QItemDelegate (parent) {
 	RK_TRACE (EDITOR);
+
+	RKItemDelegate::datamodel = datamodel;
+	metamodel = 0;
+}
+
+RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditMetaModel* metamodel) : QItemDelegate (parent) {
+	RK_TRACE (EDITOR);
+
+	RKItemDelegate::metamodel = metamodel;
+	datamodel = 0;
 }
 
 RKItemDelegate::~RKItemDelegate () {
@@ -222,7 +257,17 @@ RKItemDelegate::~RKItemDelegate () {
 QWidget* RKItemDelegate::createEditor (QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const {
 	RK_TRACE (EDITOR);
 
-	#warning implement
+	if (datamodel) {
+		CellEditor* ced = new CellEditor (parent);
+		ced->setFont (option.font);
+		connect (ced, SIGNAL (done(QWidget*,RKItemDelegate::EditorDoneReason)), this, SLOT (editorDone(QWidget*,RKItemDelegate::EditorDoneReason)));
+		return ced;
+	} else if (metamodel) {
+#warning implement
+	}
+
+	RK_ASSERT (false);
+	return 0;
 }
 
 void RKItemDelegate::setEditorData (QWidget* editor, const QModelIndex& index) const {
@@ -230,20 +275,63 @@ void RKItemDelegate::setEditorData (QWidget* editor, const QModelIndex& index) c
 
 	if (!index.isValid ()) return;
 
-//	CellEditor* ed = new CellEditor ();
-	#warning implement
+	if (datamodel) {
+		CellEditor* ced = static_cast<CellEditor*> (editor);
+		ced->setText (datamodel->data (index, Qt::EditRole).toString ());
+
+		RObject::ValueLabels* labels = 0;
+		if (index.column () < datamodel->trueCols ()) {
+			labels = datamodel->getObject (index.column ())->getValueLabels ();
+		}
+		if (labels) ced->setValueLabels (labels);
+
+	} else if (metamodel) {
+#warning implement
+	} else {
+		RK_ASSERT (false);
+	}
 }
 
 void RKItemDelegate::setModelData (QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const {
 	RK_TRACE (EDITOR);
 
-	#warning implement
+	if (!index.isValid ()) return;
+
+	if (datamodel) {
+		RK_ASSERT (model == datamodel);
+
+		CellEditor* ced = static_cast<CellEditor*> (editor);
+		model->setData (index, ced->text (), Qt::EditRole);
+	} else if (metamodel) {
+#warning implement
+	} else {
+		RK_ASSERT (false);
+	}
 }
 
-void RKItemDelegate::editorDone (QWidget* editor, EditorDoneReason) {
+bool RKItemDelegate::eventFilter (QObject* object, QEvent* event) {
 	RK_TRACE (EDITOR);
 
-	#warning implement
+	QWidget *editor = qobject_cast<QWidget*> (object);
+	if (!editor) return false;
+
+	if (event->type() == QEvent::KeyPress) {
+		QKeyEvent* ke = static_cast<QKeyEvent *> (event);
+		if (ke->key () == Qt::Key_Tab) editorDone (editor, EditorExitRight);
+		else if (ke->key () == Qt::Key_Tab) editorDone (editor, EditorExitRight);
+		else if (ke->key () == Qt::Key_Enter) editorDone (editor, EditorExitDown);
+		else if (ke->key () == Qt::Key_Return) editorDone (editor, EditorExitDown);
+		else return QItemDelegate::eventFilter (editor, event);
+		return true;
+	}
+	return QItemDelegate::eventFilter (editor, event);
+}
+
+void RKItemDelegate::editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason reason) {
+	RK_TRACE (EDITOR);
+
+	emit (commitData (editor));
+	emit (doCloseEditor (editor, reason));
 }
 
 #include "twintablemember.moc"

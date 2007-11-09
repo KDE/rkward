@@ -91,8 +91,9 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	RK_TRACE (EDITOR);
 
 	datamodel = model;
-	dataview->setModel (model);
-	metaview->setModel (model->getMetaModel ());
+	dataview->setRKModel (model);
+	metaview->setRKModel (model->getMetaModel ());
+	dataview->seRKItemDelegate (new RKItemDelegate (this, datamodel));
 
 	metaview->setMinimumHeight (metaview->horizontalHeader ()->height ());
 	metaview->setMaximumHeight (metaview->rowHeight (0) * 5 + metaview->horizontalHeader ()->height () + 5);
