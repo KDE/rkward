@@ -20,6 +20,7 @@
 
 #include <QTableView>
 #include <QItemSelectionRange>
+#include <QItemDelegate>
 #include <qpoint.h>
 //Added by qt3to4:
 #include <QEvent>
@@ -42,10 +43,6 @@ public:
 	TwinTableMember (QWidget *parent, TwinTable *table);
 	~TwinTableMember();
 	TwinTableMember *getTwin () { return twin; };
-/** like QTable::numRows (), but returns only the "true", i.e. active rows (excluding the trailing_rows) */
-	int numTrueRows () const;
-/** like QTable::numCols (), but returns only the "true", i.e. active columns (excluding the trailing_cols) */
-	int numTrueCols () const;
 /** ends editing. Actually it's just a simple wrapper around QTable::endEdit () */
 	void stopEditing ();
 #warning maybe still needed?
@@ -85,6 +82,31 @@ protected slots:
 	void headerContextMenuRequested (const QPoint& pos);
 	void updateColWidth (int section, int old_w, int new_w);
 	void tableSelectionChanged (const QItemSelection& selected, const QItemSelection& deselected);
+};
+
+
+/** Item delegate for TwinTableMembers.
+@author Thomas Friedrichsmeier */
+class RKItemDelegate : QItemDelegate {
+	Q_OBJECT
+public:
+	RKItemDelegate (QObject *parent);
+	~RKItemDelegate ();
+
+	QWidget* createEditor (QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	void setEditorData (QWidget* editor, const QModelIndex& index) const;
+	void setModelData (QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
+
+	enum EditorDoneReason {
+		Left,
+		Right,
+		Up,
+		Down,
+		No
+	};
+
+public slots:
+	void editorDone (QWidget* editor, EditorDoneReason);
 };
 
 #endif

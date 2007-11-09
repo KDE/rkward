@@ -52,6 +52,7 @@ void RKVarEditModel::addObject (int index, RKVariable* object) {
 
 	beginInsertColumns (QModelIndex (), index, index);
 	if (meta_model) meta_model->beginAddDataObject (index);
+	if (object->isPending ()) object->setLength (trueRows ());	// probably we just created it ourselves
 	listenForObject (object);
 	objects.insert (index, object);
 	if (meta_model) meta_model->endAddDataObject ();
@@ -116,12 +117,12 @@ bool RKVarEditModel::insertRows (int row, int count, const QModelIndex& parent) 
 		RK_ASSERT (false);
 		return false;
 	}
-	if (row > objects[0]->getLength ()) row = objects[0]->getLength ();
+	if (row > trueRows ()) row = trueRows ();
 	int lastrow = row+count - 1;
 	RK_ASSERT (row >= 0);
 	RK_ASSERT (lastrow <= row);
 
-	beginInsertRows (QModelIndex (), row, row+count);
+	beginInsertRows (QModelIndex (), row, row+count-1);
 	for (int i=0; i < objects.size (); ++i) {
 // TODO: this does not emit any data change notifications to other editors
 		objects[i]->insertRows (row, count);
@@ -688,10 +689,10 @@ bool RKVarEditDataFrameModel::insertColumns (int column, int count, const QModel
 		return false;
 	}
 
+	if (column > trueCols ()) column = trueCols ();
 	for (int col = column; col < (column + count); ++col) {
 		RObject *obj = dataframe->createPendingChild (dataframe->validizeName (QString ()), col);
 		RK_ASSERT (obj->isVariable ());
-		if (!objects.isEmpty ()) static_cast<RKVariable*> (obj)->setLength (objects[0]->getLength ());
 //		addObject (col, obj);	// the object will be added via RKModificationTracker::addObject -> this::childAdded. That will also take care of calling beginInsertColumns()/endInsertColumns()
 	
 		RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + dataframe->getFullName () + ", \"" + obj->getShortName () + "\", " + QString::number (col+1) + ")", RCommand::App | RCommand::Sync));

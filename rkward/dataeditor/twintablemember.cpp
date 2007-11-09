@@ -209,4 +209,41 @@ void TwinTableMember::headerContextMenuRequested (const QPoint& pos) {
 	}
 }
 
+/////////////////// RKItemDelegate /////////////////////
+
+RKItemDelegate::RKItemDelegate (QObject *parent) : QItemDelegate (parent) {
+	RK_TRACE (EDITOR);
+}
+
+RKItemDelegate::~RKItemDelegate () {
+	RK_TRACE (EDITOR);
+}
+
+QWidget* RKItemDelegate::createEditor (QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const {
+	RK_TRACE (EDITOR);
+
+	#warning implement
+}
+
+void RKItemDelegate::setEditorData (QWidget* editor, const QModelIndex& index) const {
+	RK_TRACE (EDITOR);
+
+	if (!index.isValid ()) return;
+
+//	CellEditor* ed = new CellEditor ();
+	#warning implement
+}
+
+void RKItemDelegate::setModelData (QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const {
+	RK_TRACE (EDITOR);
+
+	#warning implement
+}
+
+void RKItemDelegate::editorDone (QWidget* editor, EditorDoneReason) {
+	RK_TRACE (EDITOR);
+
+	#warning implement
+}
+
 #include "twintablemember.moc"

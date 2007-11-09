@@ -17,8 +17,6 @@
 #include "rkvariable.h"
 
 #include <qstringlist.h>
-//Added by qt3to4:
-#include <Q3ValueList>
 #include "float.h"
 #include "math.h"
 #include "limits.h"
@@ -274,7 +272,6 @@ void RKVariable::allocateEditData () {
 
 	for (int i = 0; i < getLength (); ++i) {
 		data->cell_states[i] = RKVarEditData::NA;
-#warning TODO initialize storage arrays (see old revisions of initeditdatatoemtpy)
 	}
 }
 
@@ -710,16 +707,16 @@ void RKVariable::removeRow (int row) {
 
 void RKVariable::removeRows (int from_row, int to_row) {
 	RK_TRACE (OBJECTS);
-	Q3ValueList<int> *changed_invalids = 0;
+
+	QList<int> changed_invalids;
 	int offset = (to_row - from_row) + 1;
 
 	for (int row = from_row; row < getLength (); ++row) {
 		QString *dummy = data->invalid_fields.take (row);
 		if (dummy) {
-			if (!changed_invalids) changed_invalids = new Q3ValueList<int>;
-			changed_invalids->append (row);
+			changed_invalids.append (row);
 			if (row > to_row) {
-				changed_invalids->append (row - offset);
+				changed_invalids.append (row - offset);
 				data->invalid_fields.replace (row - offset, dummy);
 			} else {
 				delete dummy;
@@ -740,11 +737,8 @@ void RKVariable::removeRows (int from_row, int to_row) {
 		data->cell_states[row] = RKVarEditData::Unknown;
 	}
 
-	if (changed_invalids) {
-		for (Q3ValueList<int>::const_iterator it = changed_invalids->constBegin (); it != changed_invalids->constEnd (); ++it) {
-			writeInvalidField (*it, 0);
-		}
-		delete changed_invalids;
+	for (int i = 0; i < changed_invalids.size (); ++i) {
+		writeInvalidField (changed_invalids[i], 0);
 	}
 
 	dimensions[0] -= offset;	
@@ -765,13 +759,12 @@ void RKVariable::insertRows (int row, int count) {
 		data->cell_states[i] = RKVarEditData::NA;
 	}
 
-	Q3ValueList<int> *changed_invalids = 0;
+	QList<int> changed_invalids;
 	for (int i = getLength () - count - 1; i >= row; --i) {
 		QString *dummy = data->invalid_fields.take (i);
 		if (dummy) {
-			if (!changed_invalids) changed_invalids = new Q3ValueList<int>;
-			changed_invalids->append (i);
-			changed_invalids->append (i + count);
+			changed_invalids.append (i);
+			changed_invalids.append (i + count);
 			data->invalid_fields.replace (i + count, dummy);
 		}
 	}
@@ -790,11 +783,8 @@ void RKVariable::insertRows (int row, int count) {
 		data->cell_states[i] = RKVarEditData::NA;
 	}
 
-	if (changed_invalids) {
-		for (Q3ValueList<int>::const_iterator it = changed_invalids->constBegin (); it != changed_invalids->constEnd (); ++it) {
-			writeInvalidField (*it, 0);
-		}
-		delete changed_invalids;
+	for (int i = 0; i < changed_invalids.size (); ++i) {
+		writeInvalidField (changed_invalids[i], 0);
 	}
 }
 

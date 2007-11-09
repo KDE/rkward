@@ -25,7 +25,7 @@
 
 class TwinTableMember;
 class QMenu;
-class RKVarEditDataFrameModel;
+class RKVarEditModel;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -49,9 +49,9 @@ public:
 /** Flushes pending edit-operations */
 	void flushEdit ();
 
-	void initTable (RKVarEditDataFrameModel* model);
+	void initTable (RKVarEditModel* model, RObject* object);
 	
-	RKVarEditDataFrameModel* datamodel;
+	RKVarEditModel* datamodel;
 public slots:
 	void dataHeaderContextMenu (int row, int col, const QPoint& pos);
 	void metaHeaderContextMenu (int row, int col, const QPoint& pos);

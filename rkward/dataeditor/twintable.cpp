@@ -87,7 +87,7 @@ TwinTable::~TwinTable() {
 // TODO: are the models auto-destructed?
 }
 
-void TwinTable::initTable (RKVarEditDataFrameModel* model) {
+void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	RK_TRACE (EDITOR);
 
 	datamodel = model;
@@ -98,7 +98,7 @@ void TwinTable::initTable (RKVarEditDataFrameModel* model) {
 	metaview->setMaximumHeight (metaview->rowHeight (0) * 5 + metaview->horizontalHeader ()->height () + 5);
 	dataview->verticalHeader ()->setFixedWidth (metaview->verticalHeader ()->width ());
 
-	setCaption (model->getObject ()->getShortName ());
+	setCaption (object->getShortName ());
 }
 
 // TODO: handle situation when several entire cols are selected!

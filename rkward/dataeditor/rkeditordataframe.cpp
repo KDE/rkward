@@ -47,7 +47,7 @@ RKEditorDataFrame::RKEditorDataFrame (RContainerObject* object, QWidget *parent)
 	RK_ASSERT (object->isDataFrame ());
 
 	RKVarEditDataFrameModel* model = new RKVarEditDataFrameModel (object, this);
-	initTable (model);
+	initTable (model, object);
 
 	waitForLoad ();
 }
@@ -61,12 +61,13 @@ RKEditorDataFrame::RKEditorDataFrame (const QString& new_object_name, QWidget* p
 	if (valid != new_object_name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1", valid), i18n ("Invalid Name"));
 
 	RKVarEditDataFrameModel* model = new RKVarEditDataFrameModel (valid, RObjectList::getObjectList (), open_chain, 5, this);
-	initTable (model);
 
 	RKEditor::object = model->getObject ();;
 	RK_ASSERT (object->isDataFrame ());
 
-#warning is this needed? Of is it enough to close the chain?
+	initTable (model, object);
+
+#warning is this needed? Or is it enough to close the chain?
 	waitForLoad ();
 }
 
