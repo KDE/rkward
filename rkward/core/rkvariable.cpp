@@ -274,6 +274,7 @@ void RKVariable::allocateEditData () {
 
 	for (int i = 0; i < getLength (); ++i) {
 		data->cell_states[i] = RKVarEditData::NA;
+#warning TODO initialize storage arrays (see old revisions of initeditdatatoemtpy)
 	}
 }
 

@@ -28,6 +28,7 @@
 
 #include "twintablemember.h"
 #include "rkvareditmodel.h"
+#include "../core/rcontainerobject.h"
 
 #include "../debug.h"
 
@@ -42,12 +43,12 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
 
 	metaview = new TwinTableMember (splitter, this);
 	splitter->setResizeMode (metaview, QSplitter::KeepSize);
-	metaview->verticalHeader()->setResizeMode (QHeaderView::Fixed);
+	metaview->verticalHeader ()->setResizeMode (QHeaderView::Fixed);
 
 #warning TODO set item delegates
 	
 	dataview = new TwinTableMember (splitter, this);
-	dataview->verticalHeader()->setResizeMode (QHeaderView::Fixed);
+	dataview->verticalHeader ()->setResizeMode (QHeaderView::Fixed);
 	
 	dataview->horizontalHeader ()->hide ();
 #warning is this needed?
@@ -99,6 +100,9 @@ void TwinTable::initTable (RKVarEditDataFrameModel* model) {
 
 	metaview->setMinimumHeight (metaview->horizontalHeader ()->height ());
 	metaview->setMaximumHeight (metaview->rowHeight (0) * 5 + metaview->horizontalHeader ()->height () + 5);
+	dataview->verticalHeader ()->setFixedWidth (metaview->verticalHeader ()->width ());
+
+	setCaption (model->getObject ()->getShortName ());
 }
 
 // TODO: handle situation when several entire cols are selected!

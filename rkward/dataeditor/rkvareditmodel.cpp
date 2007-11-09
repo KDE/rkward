@@ -34,8 +34,8 @@ RKVarEditModel::RKVarEditModel (QObject *parent) : RKVarEditModelBase (parent), 
 	edit_blocks = 0;
 
 	addNotificationType (RObjectListener::ObjectRemoved);
-#warning TODO: listen for data changes
-#warning TODO: listen for meta changes
+	addNotificationType (RObjectListener::MetaChanged);
+	addNotificationType (RObjectListener::DataChanged);
 }
 
 RKVarEditModel::~RKVarEditModel () {
@@ -73,6 +73,27 @@ void RKVarEditModel::objectRemoved (RObject* object) {
 	if (objects.isEmpty ()) {
 #warning TODO notify editor
 	}
+}
+
+void RKVarEditModel::objectMetaChanged (RObject* changed) {
+	RK_TRACE (EDITOR);
+
+	int cindex = objects.indexOf (static_cast<RKVariable*> (changed));	// no check for isVariable needed. we only need to look up, if we have this object, and where.
+	if (cindex < 0) return;	// none of our buisiness
+
+	emit (dataChanged (index (0, cindex), index (trueRows (), cindex)));
+#warning TODO notify the meta model
+}
+
+void RKVarEditModel::objectDataChanged (RObject* object, const RObject::ChangeSet *changes) {
+	RK_TRACE (EDITOR);
+
+	int cindex = objects.indexOf (static_cast<RKVariable*> (object));	// no check for isVariable needed. we only need to look up, if we have this object, and where.
+	if (cindex < 0) return;	// none of our buisiness
+
+	RK_ASSERT (changes);
+
+	emit (dataChanged (index (changes->from_index, cindex), index (changes->to_index, cindex)));
 }
 
 void RKVarEditModel::doInsertColumns (int, int) {
@@ -623,7 +644,7 @@ RKVarEditDataFrameModel::RKVarEditDataFrameModel (const QString& validized_name,
 
 // initialize the new object
 	for (int i = 0; i < initial_cols; ++i) {
-		RObject* child = df->createPendingChild (QString (), -1, false, false);
+		RObject* child = df->createPendingChild (df->validizeName (QString ()), -1, false, false);
 		RK_ASSERT (child->isVariable ());
 	}
 

@@ -27,10 +27,10 @@
 #include "../rkward.h"
 #include "../debug.h"
 
-RKEditorDataFramePart::RKEditorDataFramePart (QObject *parent, RKEditorDataFrame* editor) : KParts::Part (parent) {
+RKEditorDataFramePart::RKEditorDataFramePart (RKEditorDataFrame* editor) : KParts::Part () {
 	RK_TRACE (EDITOR);
+
 	setComponentData (KGlobal::mainComponent ());
- 
 	RKEditorDataFramePart::editor = editor;
 	setWidget (editor);
 

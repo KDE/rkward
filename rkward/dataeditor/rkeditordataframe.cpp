@@ -74,10 +74,9 @@ RKEditorDataFrame::RKEditorDataFrame (const QString& new_object_name, QWidget* p
 void RKEditorDataFrame::commonInit () {
 	RK_TRACE (EDITOR);
 
-	setPart (new RKEditorDataFramePart (parent (), this));
+	setPart (new RKEditorDataFramePart (this));
 	initializeActivationSignals ();
 
-	setCaption (object->getShortName ());
 	setWindowIcon (RKStandardIcons::iconForWindow (this));
 
 	open_chain = RKGlobals::rInterface ()->startChain (0);

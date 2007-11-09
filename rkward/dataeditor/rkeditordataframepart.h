@@ -34,7 +34,7 @@ class RKEditorDataFramePart : public KParts::Part {
 protected:
 friend class RKEditorDataFrame;
 /** ctor. Protected, as this should only be created by an RKEditorDataFrame */
-	RKEditorDataFramePart (QObject *parent, RKEditorDataFrame* editor);
+	RKEditorDataFramePart (RKEditorDataFrame* editor);
 /** dtor */
 	~RKEditorDataFramePart ();
 public slots:

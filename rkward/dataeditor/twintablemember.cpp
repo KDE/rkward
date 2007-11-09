@@ -18,6 +18,7 @@
 #include "twintablemember.h"
 
 #include <QKeyEvent>
+#include <QScrollBar>
 
 #include "celleditor.h"
 #include "twintable.h"
@@ -162,7 +163,8 @@ void TwinTableMember::scrollContentsBy (int dx, int dy) {
 	if (changing_scroll) return;
 	changing_scroll = true;
 	RK_ASSERT (twin);
-	twin->scrollContentsBy (dx, 0);
+	QTableView::scrollContentsBy (dx, dy);
+	twin->horizontalScrollBar ()->setValue (horizontalScrollBar ()->value ());
 	changing_scroll = false;
 }
 

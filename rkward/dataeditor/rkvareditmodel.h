@@ -82,6 +82,9 @@ public:
 	int trueRows () const { return (objects.isEmpty () ? 0 : objects[0]->getLength ()); };
 
 	virtual void restoreObject (RObject* object, RCommandChain* chain);
+
+	void objectMetaChanged (RObject* changed);
+	void objectDataChanged (RObject* object, const RObject::ChangeSet *changes);
 protected:
 friend class RKVarEditMetaModel;
 	QList<RKVariable*> objects;
@@ -89,7 +92,7 @@ friend class RKVarEditMetaModel;
 	/** very simple convenience function to return the number of true cols + trailing cols */
 	int apparentCols () const { return objects.size () + trailing_cols; };
 	/** very simple convenience function to return the number of true rows + trailing rows */
-	int apparentRows () const { return (trailing_rows + objects.isEmpty () ? 0 : objects[0]->getLength ()); };
+	int apparentRows () const { return (trailing_rows + (objects.isEmpty () ? 0 : objects[0]->getLength ())); };
 
 	/** Receives notifications of object removals. Takes care of removing the object from the list. */
 	void objectRemoved (RObject* object);
