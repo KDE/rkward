@@ -19,6 +19,7 @@
 
 #include <QKeyEvent>
 #include <QScrollBar>
+#include <QHeaderView>
 
 #include "celleditor.h"
 #include "twintable.h"
@@ -31,16 +32,21 @@ TwinTableMember::TwinTableMember (QWidget *parent, TwinTable *table) : QTableVie
 	RK_TRACE (EDITOR);
 
 	twin = 0;
-	TwinTableMember::table = table;
+	TwinTableMember::table = table;		// TODO: seems unused
 	setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOn);
 	setSelectionMode (QAbstractItemView::ContiguousSelection);
-	setContextMenuPolicy (Qt::CustomContextMenu);
-	connect (this, SIGNAL (customContextMenuRequested (const QPoint&)), this, SLOT (headerContextMenuRequested (const QPoint&)));
-	
+
+	verticalHeader ()->setContextMenuPolicy (Qt::CustomContextMenu);
+	connect (verticalHeader (), SIGNAL (customContextMenuRequested(const QPoint&)), this, SLOT (headerContextMenuRequested(const QPoint&)));
+	horizontalHeader ()->setContextMenuPolicy (Qt::CustomContextMenu);
+	connect (horizontalHeader (), SIGNAL (customContextMenuRequested(const QPoint&)), this, SLOT (headerContextMenuRequested(const QPoint&)));
+
+	connect (this, SIGNAL (selectionChanged(const QItemSelection&,const QItemSelection&)), this, SLOT (tableSelectionChanged(const QItemSelection&,const QItemSelection&)));
+
+	updating_twin = false;
+
+#warning currently unused, but likey will be used.
 	tted = 0;
-#warning tted and changing width currently unused, but likey will be used.
-	changing_width = false;
-	changing_scroll = false;
 
 	connect (this, SIGNAL (currentChanged (int, int)), this, SLOT (currentCellChanged (int, int)));
 }
@@ -51,12 +57,23 @@ TwinTableMember::~TwinTableMember(){
 
 void TwinTableMember::setRKModel (RKVarEditModelBase* model) {
 	RK_TRACE (EDITOR);
-	mymodel = model; setModel (model);
+	mymodel = model;
+	setModel (model);
 };
 
 void TwinTableMember::setTwin (TwinTableMember * new_twin) {
 	RK_TRACE (EDITOR);
 	twin = new_twin;
+
+	// probably we only need this one way (metaview->dataview), but why not be safe, when it's so easy
+	connect (twin->horizontalHeader (), SIGNAL (sectionResized(int,int,int)), this, SLOT (updateColWidth(int,int,int)));
+}
+
+void TwinTableMember::tableSelectionChanged (const QItemSelection& selected, const QItemSelection&) {
+	RK_TRACE (EDITOR);
+	RK_ASSERT (twin);
+
+	if (!selected.isEmpty ()) twin->clearSelection ();
 }
 
 void TwinTableMember::editorLostFocus () {
@@ -160,19 +177,36 @@ void TwinTableMember::keyPressEvent (QKeyEvent *e) {
 void TwinTableMember::scrollContentsBy (int dx, int dy) {
 	RK_TRACE (EDITOR);
 
-	if (changing_scroll) return;
-	changing_scroll = true;
+	if (updating_twin) return;
+	updating_twin = true;
 	RK_ASSERT (twin);
 	QTableView::scrollContentsBy (dx, dy);
 	twin->horizontalScrollBar ()->setValue (horizontalScrollBar ()->value ());
-	changing_scroll = false;
+	updating_twin = false;
+}
+
+void TwinTableMember::updateColWidth (int section, int old_w, int new_w) {
+	RK_TRACE (EDITOR);
+
+	if (updating_twin) return;
+	updating_twin = true;
+	RK_ASSERT (columnWidth (section) == old_w);
+	setColumnWidth (section, new_w);
+	updating_twin = false;
 }
 
 void TwinTableMember::headerContextMenuRequested (const QPoint& pos) {
 	RK_TRACE (EDITOR);
 
-	mouse_at = pos;
-#warning TODO
+	if (sender () == horizontalHeader ()) {
+		int col = horizontalHeader ()->logicalIndexAt (pos);
+		if (col >= 0) emit (contextMenuRequest (-1, col, horizontalHeader ()->mapToGlobal (pos)));
+	} else if (sender () == verticalHeader ()) {
+		int row = verticalHeader ()->logicalIndexAt (pos);
+		if (row >= 0) emit (contextMenuRequest (row, -1, verticalHeader ()->mapToGlobal (pos)));
+	} else {
+		RK_ASSERT (false);
+	}
 }
 
 #include "twintablemember.moc"

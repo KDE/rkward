@@ -42,6 +42,11 @@ public:
 		ActionRunLine,
 		ActionRunSelection,
 
+		ActionDeleteRow,
+		ActionInsertRow,
+		ActionDeleteVar,
+		ActionInsertVar,
+
 		ObjectList,
 		ObjectFunction,
 		ObjectEnvironment,
@@ -56,6 +61,17 @@ public:
 		ObjectObjectList,
 
 		WindowDataFrameEditor,
+		WindowCommandEditor,
+		WindowOutput,
+		WindowHelp,
+		WindowX11,
+		WindowObject,
+		WindowConsole,
+		WindowCommandLog,
+		WindowWorkspaceBrowser,
+		WindowSearchHelp,
+		WindowPendingJobs,
+		WindowFileBrowser,
 
 		Last	/**< not really an item, only the count of items available. Do not use. */
 	};

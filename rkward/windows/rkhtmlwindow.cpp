@@ -254,7 +254,6 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 
 	khtmlpart->insertChildClient (this);
 
-	setIcon (SmallIcon ("text_block"));
 	setCaption (i18n ("Output"));
 
 	outputFlush = actionCollection ()->addAction ("output_flush", this, SLOT (flushOutput()));
@@ -420,7 +419,6 @@ RKHelpWindow::RKHelpWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUICli
 
 	khtmlpart->insertChildClient (this);
 
-	setIcon (SmallIcon ("help"));
 	setCaption (i18n ("R Help"));
 }
 

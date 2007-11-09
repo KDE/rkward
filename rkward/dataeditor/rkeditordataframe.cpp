@@ -30,7 +30,6 @@
 #include "../core/rcontainerobject.h"
 #include "rkeditordataframepart.h"
 #include "../windows/rkworkplace.h"
-#include "../misc/rkstandardicons.h"
 
 #include "../debug.h"
 
@@ -76,8 +75,6 @@ void RKEditorDataFrame::commonInit () {
 
 	setPart (new RKEditorDataFramePart (this));
 	initializeActivationSignals ();
-
-	setWindowIcon (RKStandardIcons::iconForWindow (this));
 
 	open_chain = RKGlobals::rInterface ()->startChain (0);
 }

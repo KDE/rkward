@@ -64,15 +64,13 @@ public:
 
 	void setRKModel (RKVarEditModelBase* model);
 signals:
-	void contextMenuRequest (int row, int col);
+	void contextMenuRequest (int row, int col, const QPoint& pos);
 protected:
 	TwinTableMember *twin;
 	TwinTable *table;
-	bool changing_width;
-	bool changing_scroll;
+	bool updating_twin;
+
 	CellEditor *tted;
-/** stores the position of the mouse, when headerRightClick gets emitted */
-	QPoint mouse_at;
 /** reimplemented from QTableView to also adjust the twin */
 	void scrollContentsBy (int dx, int dy);
 
@@ -85,6 +83,8 @@ public slots:
 //	void currentCellChanged (int row, int col);
 protected slots:
 	void headerContextMenuRequested (const QPoint& pos);
+	void updateColWidth (int section, int old_w, int new_w);
+	void tableSelectionChanged (const QItemSelection& selected, const QItemSelection& deselected);
 };
 
 #endif

@@ -205,7 +205,6 @@ void RKWardMainWindow::doPostInit () {
 	RObjectBrowser::object_browser = new RObjectBrowser (0, true, "workspace");
 
 	RKCommandLog *log = new RKCommandLog (0, true, "Command log");
-	log->setWindowIcon (SmallIcon ("format-justify-left"));
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (log, KMultiTabBar::Bottom);
 	RKCommandLog::rkcommand_log = log;
 
@@ -216,27 +215,22 @@ void RKWardMainWindow::doPostInit () {
 	
 	initPlugins ();
 
-	RObjectBrowser::mainBrowser ()->setWindowIcon(SmallIcon("fileview-detailed"));
 	RObjectBrowser::mainBrowser ()->setCaption (i18n ("Workspace"));
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RObjectBrowser::mainBrowser (), KMultiTabBar::Left);
 
 	RKFileBrowser::main_browser = new RKFileBrowser (0, true, "file_browser");
-	RKFileBrowser::main_browser->setWindowIcon (SmallIcon ("document-open"));
 	RKFileBrowser::main_browser->setCaption (i18n ("Files"));
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RKFileBrowser::main_browser, KMultiTabBar::Left);
 
 	RControlWindow::control_window = new RControlWindow (0, true, "rcontrol");
 	RControlWindow::getControl ()->setCaption (i18n ("Pending Jobs"));
-	RControlWindow::getControl ()->setWindowIcon (SmallIcon ("system-run"));
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RControlWindow::getControl (), KMultiTabBar::Bottom);
 
 	RKConsole *console = new RKConsole (0, true, "r_console");
-	console->setWindowIcon (SmallIcon ("konsole"));
 	RKConsole::setMainConsole (console);
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (console, KMultiTabBar::Bottom);
 
 	RKHelpSearchWindow *help_search = new RKHelpSearchWindow (0, true, "r_help");
-	help_search->setWindowIcon (SmallIcon ("help-contents"));
 	RKHelpSearchWindow::main_help_search = help_search;
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (help_search, KMultiTabBar::Bottom);
 
@@ -330,12 +324,12 @@ void RKWardMainWindow::initActions()
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
 	new_data_frame = actionCollection ()->addAction ("new_data_frame", this, SLOT (slotNewDataFrame ()));
 	new_data_frame->setText (i18n ("Dataset"));
-	new_data_frame->setIcon (KIcon ("spreadsheet"));
+	new_data_frame->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowDataFrameEditor));
 	new_data_frame->setStatusTip (i18n ("Creates new empty dataset and opens it for editing"));
 
 	new_command_editor = actionCollection ()->addAction (KStandardAction::New, "new_command_editor", this, SLOT(slotNewCommandEditor()));
 	new_command_editor->setText (i18n ("Script File"));
-	new_command_editor->setIcon (KIcon ("source"));
+	new_command_editor->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor));
 
 	fileOpen = actionCollection ()->addAction (KStandardAction::Open, "file_openy", this, SLOT(slotOpenCommandEditor()));
 	fileOpen->setText (i18n ("Open R Script File"));

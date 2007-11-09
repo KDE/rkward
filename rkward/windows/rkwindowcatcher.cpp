@@ -120,7 +120,6 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	RK_ASSERT (wininfo.valid ());
 	setGeometry (wininfo.frameGeometry ());
 	setCaption (wininfo.name ());
-	setIcon (SmallIcon ("kcmx"));			// looks like an X, here
 	capture->embedClient (window_to_embed);
 
 	RKWardApplication::getApp ()->registerNameWatcher (window_to_embed, this);

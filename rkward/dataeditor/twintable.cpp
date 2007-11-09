@@ -29,6 +29,7 @@
 #include "twintablemember.h"
 #include "rkvareditmodel.h"
 #include "../core/rcontainerobject.h"
+#include "../misc/rkstandardicons.h"
 
 #include "../debug.h"
 
@@ -44,43 +45,38 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
 	metaview = new TwinTableMember (splitter, this);
 	splitter->setResizeMode (metaview, QSplitter::KeepSize);
 	metaview->verticalHeader ()->setResizeMode (QHeaderView::Fixed);
-
-#warning TODO set item delegates
+	metaview->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 	
 	dataview = new TwinTableMember (splitter, this);
 	dataview->verticalHeader ()->setResizeMode (QHeaderView::Fixed);
-	
 	dataview->horizontalHeader ()->hide ();
-#warning is this needed?
-//	dataview->setTopMargin (0);
-//	dataview->setLeftMargin (metaview->leftMargin ());
-	metaview->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
+
+#warning TODO set item delegates
 	
 	layout->addWidget (splitter);
-	
+
 	// these are to keep the two tables in sync
 	metaview->setTwin (dataview);
 	dataview->setTwin (metaview);
 	connect (metaview->horizontalHeader (), SIGNAL (sectionClicked(int)), dataview, SLOT (selectColumn(int)));
 	connect (metaview->horizontalHeader (), SIGNAL (sectionPressed(int)), dataview, SLOT (selectColumn(int)));
-	connect (metaview, SIGNAL (selectionChanged (const QItemSelection&, const QItemSelection&)), this, SLOT (metaSelectionChanged (const QItemSelection&, const QItemSelection&)));
-	connect (dataview, SIGNAL (selectionChanged (const QItemSelection&, const QItemSelection&)), this, SLOT (dataSelectionChanged (const QItemSelection&, const QItemSelection&)));
-	
+//connect(d->horizontalHeader, SIGNAL(sectionEntered(int)), this, SLOT(_q_selectColumn(int)));
+
 	// catch header context menu requests
-	connect (dataview, SIGNAL (contextMenuRequest(int,int)), this, SLOT (dataHeaderContextMenu(int,int)));
-	connect (metaview, SIGNAL (contextMenuRequest(int,int)), this, SLOT (metaHeaderContextMenu(int,int)));
+	connect (dataview, SIGNAL (contextMenuRequest(int,int,const QPoint&)), this, SLOT (dataHeaderContextMenu(int,int,const QPoint&)));
+	connect (metaview, SIGNAL (contextMenuRequest(int,int,const QPoint&)), this, SLOT (metaHeaderContextMenu(int,int,const QPoint&)));
 	
-	// which will be reacted upon by the following popup-menu:
+	// which will be reacted upon by the following popup-menus:
 	top_header_menu = new QMenu (this);
-	action_insert_col_left = top_header_menu->addAction (QString (), this, SLOT (insertColumn()));
-	action_insert_col_right = top_header_menu->addAction (QString (), this, SLOT (insertColumn()));
-	action_delete_col = top_header_menu->addAction (QString (), this, SLOT (deleteColumn()));
+	action_insert_col_left = top_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertVar), QString (), this, SLOT (insertColumn()));
+	action_insert_col_right = top_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertVar), QString (), this, SLOT (insertColumn()));
+	action_delete_col = top_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteVar), QString (), this, SLOT (deleteColumn()));
 	
 	left_header_menu = new QMenu (this);
-	action_insert_row_above = left_header_menu->addAction (QString (), this, SLOT (insertRow()));
-	action_insert_row_below = left_header_menu->addAction (QString (), this, SLOT (insertRow()));
-	action_delete_row = left_header_menu->addAction (QString (), this, SLOT (deleteRow()));
-	action_delete_rows = left_header_menu->addAction (QString (), this, SLOT (deleteSelectedRows()));
+	action_insert_row_above = left_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow), QString (), this, SLOT (insertRow()));
+	action_insert_row_below = left_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow), QString (), this, SLOT (insertRow()));
+	action_delete_row = left_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow), QString (), this, SLOT (deleteRow()));
+	action_delete_rows = left_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow), QString (), this, SLOT (deleteSelectedRows()));
 
 	setFocusPolicy (Qt::StrongFocus);
 }
@@ -106,7 +102,7 @@ void TwinTable::initTable (RKVarEditDataFrameModel* model) {
 }
 
 // TODO: handle situation when several entire cols are selected!
-void TwinTable::metaHeaderContextMenu (int row, int col) {
+void TwinTable::metaHeaderContextMenu (int row, int col, const QPoint& pos) {
 	RK_TRACE (EDITOR);
 
 	if (col >= 0) {
@@ -123,12 +119,11 @@ void TwinTable::metaHeaderContextMenu (int row, int col) {
 		action_delete_col->setText (i18n ("Delete this variable"));	// TODO: show name
 		action_delete_col->setData (col);
 
-		// TODO: should be passed as a parameter, instead
-		top_header_menu->popup (metaview->mouse_at);
+		top_header_menu->popup (pos);
 	}
 }
 
-void TwinTable::dataHeaderContextMenu (int row, int col) {
+void TwinTable::dataHeaderContextMenu (int row, int col, const QPoint& pos) {
 	RK_TRACE (EDITOR);
 
 	RK_ASSERT (col < 0);
@@ -136,11 +131,11 @@ void TwinTable::dataHeaderContextMenu (int row, int col) {
 		RK_ASSERT (row <= datamodel->trueRows ());
 
 		action_insert_row_above->setVisible (true);
-		action_insert_row_above->setText (i18n ("Insert new case above (at %1)", col + 1));
-		action_insert_row_above->setData (col);
+		action_insert_row_above->setText (i18n ("Insert new case above (at %1)", row + 1));
+		action_insert_row_above->setData (row);
 		action_insert_row_below->setVisible (row < datamodel->trueRows ());
-		action_insert_row_above->setText (i18n ("Insert new case below (at %1)", col + 2));
-		action_insert_row_below->setData (col + 1);
+		action_insert_row_below->setText (i18n ("Insert new case below (at %1)", row + 2));
+		action_insert_row_below->setData (row + 1);
 
 		QItemSelectionRange sel = dataview->getSelectionBoundaries ();
 		if (sel.isValid ()) {
@@ -159,7 +154,7 @@ void TwinTable::dataHeaderContextMenu (int row, int col) {
 		action_delete_row->setText (i18n ("Delete this row (%1)", (row+1)));
 		action_delete_row->setData (row);
 
-		left_header_menu->popup (dataview->mouse_at);
+		left_header_menu->popup (pos);
 	}
 }
 
@@ -243,18 +238,6 @@ void TwinTable::insertRow () {
 	flushEdit ();
 
 	datamodel->insertRows (where, 1);
-}
-
-void TwinTable::metaSelectionChanged (const QItemSelection& selected, const QItemSelection&) {
-	RK_TRACE (EDITOR);
-
-	if (!selected.isEmpty ()) dataview->clearSelection ();
-}
-
-void TwinTable::dataSelectionChanged (const QItemSelection& selected, const QItemSelection&) {
-	RK_TRACE (EDITOR);
-
-	if (!selected.isEmpty ()) metaview->clearSelection ();
 }
 
 void TwinTable::copy () {

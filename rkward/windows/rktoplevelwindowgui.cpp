@@ -35,6 +35,7 @@
 #include "../windows/rkcommandlog.h"
 #include "../windows/rkhelpsearchwindow.h"
 #include "../windows/rkmdiwindow.h"
+#include "../misc/rkstandardicons.h"
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
@@ -68,21 +69,27 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : QObject (for_wi
 	QAction *action;
 	action = actionCollection ()->addAction ("window_show_workspace", this, SLOT(toggleWorkspace()));
 	action->setText (i18n ("Show/Hide Workspace Browser"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowWorkspaceBrowser));
 	action->setShortcut (Qt::AltModifier + Qt::Key_1);
 	action = actionCollection ()->addAction ("window_show_filebrowser", this, SLOT(toggleFilebrowser()));
 	action->setText (i18n ("Show/Hide Filesystem Browser"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowFileBrowser));
 	action->setShortcut (Qt::AltModifier + Qt::Key_2);
 	action = actionCollection ()->addAction ("window_show_commandlog", this, SLOT(toggleCommandLog()));
 	action->setText (i18n ("Show/Hide Command Log"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowCommandLog));
 	action->setShortcut (Qt::AltModifier + Qt::Key_3);
 	action = actionCollection ()->addAction ("window_show_pendingjobs", this, SLOT(togglePendingJobs()));
 	action->setText (i18n ("Show/Hide Pending Jobs"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowPendingJobs));
 	action->setShortcut (Qt::AltModifier + Qt::Key_4);
 	action = actionCollection ()->addAction ("window_show_console", this, SLOT(toggleConsole()));
 	action->setText (i18n ("Show/Hide Console"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowConsole));
 	action->setShortcut (Qt::AltModifier + Qt::Key_5);
 	action = actionCollection ()->addAction ("window_show_helpsearch", this, SLOT(toggleHelpSearch()));
 	action->setText (i18n ("Show/Hide R Help Search"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowSearchHelp));
 	action->setShortcut (Qt::AltModifier + Qt::Key_6);
 	action = actionCollection ()->addAction ("window_activate_docview", this, SLOT(activateDocumentView()));
 	action->setText (i18n ("Activate Document view"));

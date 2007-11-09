@@ -282,7 +282,7 @@ QVariant RKVarEditModel::headerData (int section, Qt::Orientation orientation, i
 		return objects[section]->getShortName ();
 	}
 
-	return QString::number (section);
+	return QString::number (section + 1);
 }
 
 RKTextMatrix RKVarEditModel::getTextMatrix (const QItemSelectionRange& range) const {

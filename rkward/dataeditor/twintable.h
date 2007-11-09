@@ -53,13 +53,11 @@ public:
 	
 	RKVarEditDataFrameModel* datamodel;
 public slots:
-	void dataHeaderContextMenu (int row, int col);
-	void metaHeaderContextMenu (int row, int col);
+	void dataHeaderContextMenu (int row, int col, const QPoint& pos);
+	void metaHeaderContextMenu (int row, int col, const QPoint& pos);
 /*
 	void headerClicked (int col);
 	void headerPressed (int col); */
-	void metaSelectionChanged (const QItemSelection& selected, const QItemSelection& deselected);
-	void dataSelectionChanged (const QItemSelection& selected, const QItemSelection& deselected);
 private:
 /** PopupMenu shown when top header is right-clicked */
 	QMenu *top_header_menu;

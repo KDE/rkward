@@ -29,6 +29,7 @@
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
 #include "rktoolwindowbar.h"
+#include "../misc/rkstandardicons.h"
 
 #include "../debug.h"
 
@@ -45,6 +46,8 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	tool_window_bar = 0;
 	part = 0;
 	active = false;
+
+	setWindowIcon (RKStandardIcons::iconForWindow (this));
 }
 
 RKMDIWindow::~RKMDIWindow () {
