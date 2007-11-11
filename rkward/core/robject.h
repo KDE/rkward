@@ -72,7 +72,10 @@ public:
 		DataNumeric=1,
 		DataFactor=2,
 		DataCharacter=3,
-		DataLogical=4
+		DataLogical=4,
+
+		MinKnownDataType = DataNumeric,
+		MaxKnownDataType = DataLogical
 	};
 
 	#define ROBJECT_TYPE_INTERNAL_MASK (RObject::Container | RObject::Variable | RObject::Workspace | RObject::Environment | RObject::Function)

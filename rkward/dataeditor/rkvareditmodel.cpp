@@ -293,7 +293,7 @@ QVariant RKVarEditModel::headerData (int section, Qt::Orientation orientation, i
 	if (role != Qt::DisplayRole) return QVariant ();
 
 	if (orientation == Qt::Horizontal) {
-		if (section >= objects.size ()) return QVariant ();
+		if (section >= objects.size ()) return i18n ("#New Variable#");
 		return objects[section]->getShortName ();
 	}
 
@@ -532,6 +532,28 @@ bool RKVarEditMetaModel::setData (const QModelIndex& index, const QVariant& valu
 	}
 
 	return true;
+}
+
+RObject::ValueLabels RKVarEditMetaModel::getValueLabels (int column) const {
+	RK_TRACE (EDITOR);
+
+	if (column >= trueCols ()) return RObject::ValueLabels ();
+	return (getObject (column)->getValueLabels ());
+}
+
+void RKVarEditMetaModel::setValueLabels (int column, const RObject::ValueLabels& labels) {
+	RK_TRACE (EDITOR);
+
+	if (column >= data_model->apparentCols ()) {
+		RK_ASSERT (false);
+		return;
+	}
+	if (column >= trueCols ()) {
+		data_model->doInsertColumns (trueCols (), 1);
+	}
+	RKVariable* var = getObject (column);
+	RK_ASSERT (var);
+	var->setValueLabels (labels);
 }
 
 QVariant RKVarEditMetaModel::headerData (int section, Qt::Orientation orientation, int role) const {

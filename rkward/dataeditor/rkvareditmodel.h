@@ -142,6 +142,9 @@ public:
 	int trueCols () const { return data_model->trueCols (); };
 	int trueRows () const { return RowCount; };
 
+	RObject::ValueLabels getValueLabels (int column) const;
+	void setValueLabels (int column, const RObject::ValueLabels& labels);
+
 	RKVariable* getObject (int index) const { return data_model->getObject (index); };
 	RKVarEditModel* getDataModel () const { return data_model; };
 protected:

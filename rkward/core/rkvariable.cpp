@@ -789,18 +789,28 @@ void RKVariable::insertRows (int row, int count) {
 	}
 }
 
-RObject::ValueLabels *RKVariable::getValueLabels () const {
+RObject::ValueLabels RKVariable::getValueLabels () const {
 	RK_ASSERT (data);
-	return (data->value_labels);
+
+	if (!data->value_labels) return RObject::ValueLabels ();
+	return (*(data->value_labels));
 }
 
-void RKVariable::setValueLabels (ValueLabels *labels) {
+void RKVariable::setValueLabels (const ValueLabels& labels) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (data);
-	
-	if (labels != data->value_labels) {
-		delete (data->value_labels);
-		data->value_labels = labels;
+
+	if (labels.isEmpty ()) {
+		if (!data->value_labels) return;	// no change: was empty, is empty
+
+		delete data->value_labels;
+		data->value_labels = 0;
+	} else {
+		if (!(data->value_labels)) data->value_labels = new RObject::ValueLabels;
+		else {
+			if (*(data->value_labels) == labels) return;	// old and new lists are the same
+		}
+		*(data->value_labels) = labels;
 	}
 
 	writeValueLabels (0);
@@ -809,11 +819,11 @@ void RKVariable::setValueLabels (ValueLabels *labels) {
 	// find out which values got valid / invalid and change those
 	for (int i=0; i < getLength (); ++i) {
 		if (cellStatus (i) == ValueInvalid) {
-			if (labels && labels->contains (getText (i))) {
+			if (labels.contains (getText (i))) {
 				setText (i, getText (i));
 			}
 		} else {
-			if (!(labels && labels->contains (getText (i)))) {
+			if (!(labels.contains (getText (i)))) {
 				setText (i, getText (i));
 			}
 		}
@@ -873,17 +883,12 @@ void RKVariable::setValueLabelString (const QString &string) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (data);
 
+	ValueLabels new_labels;	
 	QStringList list = QStringList::split ("#,#", string);
-	
-	if (list.empty ()) {
-		setValueLabels (0);
-		return;
-	}
-	
+
 	int i = 1;
-	ValueLabels *new_labels = new ValueLabels;
 	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
-		new_labels->insert (QString::number (i), *it);
+		new_labels.insert (QString::number (i), *it);
 		++i;
 	}
 	setValueLabels (new_labels);
@@ -896,7 +901,7 @@ RKVariable::FormattingOptions RKVariable::getFormattingOptions () const {
 	return data->formatting_options;
 }
 
-void RKVariable::setFormattingOptions (FormattingOptions new_options) {
+void RKVariable::setFormattingOptions (const FormattingOptions new_options) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (data);
 

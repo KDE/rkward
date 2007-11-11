@@ -95,10 +95,10 @@ numeric!  TODO: unused  */
 /** Tells the object it has (data) length len. Usually this will only be called directly after creating a new object */
 	void setLength (int len);
 
-/** returns the map of value labels for this variable or 0 if no labels/levels are assigned. Does _not_ return a copy, but the real thing. Do not delete! */
-	ValueLabels *getValueLabels () const;
-/** assigns a new map of labels. Also takes care of syncing with the backend. Ownership of the ValueLabels is transferred to the variable. Use setValueLabels (0) to remove all labels */
-	void setValueLabels (ValueLabels *labels);
+/** returns (a copy of) the map of value labels for this variable or and empty map, if no labels/levels are assigned. */
+	ValueLabels getValueLabels () const;
+/** assigns a new map of labels. Also takes care of syncing with the backend. */
+	void setValueLabels (const ValueLabels& labels);
 /** get value labels as string (for display) */
 	QString getValueLabelString () const;
 /** set value labels from string (for paste operations) */
@@ -118,7 +118,7 @@ numeric!  TODO: unused  */
 	};
 
 /** assigns new formatting options. Ownership of the FormattingOptions -struct is transferred to the variable. Use setFormatting (0) to remove all options */
-	void setFormattingOptions (FormattingOptions new_options);
+	void setFormattingOptions (const FormattingOptions new_options);
 /** get the formatting options for this variable */
 	FormattingOptions getFormattingOptions () const;
 /** get formatting options as a string (for display) TODO: redundant -> remove */
@@ -164,7 +164,7 @@ protected:
 		ChangeSet *changes;
 /// stores whether there were preivously invalid cells. If so, and there are no longer, now, we may change the mode in the backend.
 		bool previously_valid;
-/// the value-labels or factor levels assigned to this variable. 0 if no values/levels given
+/** the value-labels or factor levels assigned to this variable. 0 if no values/levels given. TODO: Should this be made a regular (non-pointer) member, or is the saved mem really worth the trouble? */
 		ValueLabels *value_labels;
 /// the formatting options set for this var (see FormattingOptions) */
 		FormattingOptions formatting_options;

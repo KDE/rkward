@@ -25,7 +25,7 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <QHeaderView>
-//Added by qt3to4:
+#include <QTimer>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
@@ -35,10 +35,8 @@
 
 #include "../debug.h"
 
-RKVarLevelsTable::RKVarLevelsTable (QWidget *parent, RObject::ValueLabels *labels) : QTableView (parent) {
+RKVarLevelsTable::RKVarLevelsTable (QWidget *parent, const RObject::ValueLabels& labels) : QTableView (parent) {
 	RK_TRACE (EDITOR);
-
-	RK_ASSERT (labels);
 
 	setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 	setSelectionMode (QAbstractItemView::ContiguousSelection);
@@ -129,7 +127,7 @@ void RKVarLevelsTable::paste () {
 
 /////////////// RKVarLevelsTableModel /////////////////
 
-RKVarLevelsTableModel::RKVarLevelsTableModel (RObject::ValueLabels* labels, QObject* parent) : QAbstractTableModel (parent) {
+RKVarLevelsTableModel::RKVarLevelsTableModel (const RObject::ValueLabels& labels, QObject* parent) : QAbstractTableModel (parent) {
 	RK_TRACE (EDITOR);
 
 	RKVarLevelsTableModel::labels = labels;
@@ -143,7 +141,7 @@ int RKVarLevelsTableModel::rowCount (const QModelIndex& parent) const {
 	RK_TRACE (EDITOR);
 
 	if (parent.isValid ()) return 0;
-	return labels->count () + 1;
+	return labels.count () + 1;
 }
 
 int RKVarLevelsTableModel::columnCount (const QModelIndex& parent) const {
@@ -158,12 +156,12 @@ QVariant RKVarLevelsTableModel::data (const QModelIndex& index, int role) const 
 
 	if (!index.isValid ()) return QVariant ();
 	if (index.column () != 0) return QVariant ();
-	if ((role == Qt::BackgroundRole) && (index.row () == labels->count ())) return QBrush (Qt::gray);
-	if (index.row () >= labels->count ()) return QVariant ();
+	if ((role == Qt::BackgroundRole) && (index.row () == labels.count ())) return QBrush (Qt::gray);
+	if (index.row () >= labels.count ()) return QVariant ();
 
-	if ((role != Qt::DisplayRole) || (role != Qt::EditRole)) return QVariant ();
+	if ((role == Qt::DisplayRole) || (role == Qt::EditRole)) return labels.value (QString::number (index.row ()+1));
 
-	return labels->value (QString::number (index.row ()+1));
+	return QVariant ();
 }
 
 Qt::ItemFlags RKVarLevelsTableModel::flags (const QModelIndex& index) const {
@@ -171,7 +169,7 @@ Qt::ItemFlags RKVarLevelsTableModel::flags (const QModelIndex& index) const {
 
 	if (!index.isValid ()) return 0;
 	if (index.column () != 0) return 0;
-	if (index.row () >= labels->count ()) return (Qt::ItemIsEditable | Qt::ItemIsEnabled);
+	if (index.row () >= labels.count ()) return (Qt::ItemIsEditable | Qt::ItemIsEnabled);
 	return (Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 }
 
@@ -182,23 +180,23 @@ bool RKVarLevelsTableModel::setData (const QModelIndex& index, const QVariant& v
 	if (!index.isValid ()) return false;
 	if (index.column () != 0) return false;
 	if (!value.isValid ()) return false;
-	if (index.row () > labels->count ()) return false;
+	if (index.row () > labels.count ()) return false;
 
 	QString text = value.toString ();
-	if (index.row () == labels->count ()) {
+	if (index.row () == labels.count ()) {
 		beginInsertRows (QModelIndex (), index.row (), index.row ());
-		labels->insert (QString::number (index.row () + 1), value.toString ());
+		labels.insert (QString::number (index.row () + 1), text);
 		endInsertRows ();
 	} else {
-		labels->insert (QString::number (index.row () + 1), value.toString ());
+		labels.insert (QString::number (index.row () + 1), text);
 		emit (dataChanged (index, index));
 	}
 
 	if (text.isEmpty ()) {	// remove trailing empty rows
-		while ((!labels->isEmpty ()) && labels->value (QString::number (labels->size ())).isEmpty ()) {
-			int row = labels->size () - 1;
+		while ((!labels.isEmpty ()) && labels.value (QString::number (labels.count ())).isEmpty ()) {
+			int row = labels.count () - 1;
 			beginRemoveRows (QModelIndex (), row, row);
-			labels->remove (QString::number (row + 1));
+			labels.remove (QString::number (row + 1));
 			endRemoveRows ();
 		}
 	}
@@ -217,28 +215,18 @@ QVariant RKVarLevelsTableModel::headerData (int section, Qt::Orientation orienta
 
 //////////////// EditLabelsDialog ///////////////////////
 
-EditLabelsDialog::EditLabelsDialog (QWidget *parent, RKVariable *var, int mode) : KDialog (parent) {
+EditLabelsDialog::EditLabelsDialog (QWidget *parent, const RObject::ValueLabels& labels, const QString& varname) : KDialog (parent) {
 	RK_TRACE (EDITOR);
-	RK_ASSERT (var);
-//	RK_ASSERT (var->objectOpened ());
-
-	EditLabelsDialog::var = var;
-	EditLabelsDialog::mode = mode;
 
 	KVBox *mainvbox = new KVBox ();
 	setMainWidget (mainvbox);
 	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1 (the index column is read only). To remove levels at the end of the list, just set them to empty."), mainvbox);
 	label->setWordWrap (true);
 
-	RObject::ValueLabels *labels = var->getValueLabels ();
-	if (!labels) {
-		labels = new RObject::ValueLabels;
-	}
-
 	table = new RKVarLevelsTable (mainvbox, labels);
 
 	setButtons (KDialog::Ok | KDialog::Cancel);
-	setCaption (i18n ("Levels / Value labels for '%1'", var->getShortName ()));
+	setCaption (i18n ("Levels / Value labels for '%1'", varname));
 }
 
 EditLabelsDialog::~EditLabelsDialog () {
@@ -248,17 +236,44 @@ EditLabelsDialog::~EditLabelsDialog () {
 void EditLabelsDialog::accept () {
 	RK_TRACE (EDITOR);
 
-#warning do we need something like this? how to achieve it?
-//	table->stopEditing ();
-
-	RObject::ValueLabels *labels = table->lmodel->labels;
-	if (labels->isEmpty ()) {
-		var->setValueLabels (0);
-	} else {
-		var->setValueLabels (labels);
-	}
-
-	QDialog::accept ();
+	table->setCurrentIndex (QModelIndex ());	// should flush editing
+	KDialog::accept ();
 }
+
+////////////////// EditLabelsDialogProxy /////////////////////////
+
+EditLabelsDialogProxy::EditLabelsDialogProxy (QWidget* parent) : QWidget (parent) {
+	RK_TRACE (EDITOR);
+	dialog = 0;
+}
+
+EditLabelsDialogProxy::~EditLabelsDialogProxy () {
+	RK_TRACE (EDITOR);
+}
+
+void EditLabelsDialogProxy::initialize (const RObject::ValueLabels& labels, const QString& varname) {
+	RK_TRACE (EDITOR);
+
+	EditLabelsDialogProxy::labels = labels;		// we need to take a copy in case the dialog is rejected
+
+	dialog = new EditLabelsDialog (this, labels, varname);
+	connect (dialog, SIGNAL (finished(int)), this, SLOT (dialogDone(int)));
+	QTimer::singleShot (0, dialog, SLOT (exec()));
+}
+
+void EditLabelsDialogProxy::dialogDone (int result) {
+	RK_TRACE (EDITOR);
+	RK_ASSERT (dialog);
+
+	if (result == QDialog::Accepted) {
+		labels = dialog->table->lmodel->labels;
+		emit (done (this, RKItemDelegate::EditorExit));
+	} else {
+		emit (done (this, RKItemDelegate::EditorReject));
+	}
+	dialog->deleteLater ();
+	dialog = 0;
+}
+
 
 #include "editlabelsdialog.moc"

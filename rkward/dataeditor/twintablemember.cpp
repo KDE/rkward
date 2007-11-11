@@ -23,6 +23,7 @@
 
 #include "celleditor.h"
 #include "editformatdialog.h"
+#include "editlabelsdialog.h"
 #include "twintable.h"
 #include "rktextmatrix.h"
 #include "rkvareditmodel.h"
@@ -33,7 +34,8 @@ TwinTableMember::TwinTableMember (QWidget *parent, TwinTable *table) : QTableVie
 	RK_TRACE (EDITOR);
 
 	twin = 0;
-	TwinTableMember::table = table;		// TODO: seems unused
+#warning member "table" seems to be unused
+	TwinTableMember::table = table;
 	setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOn);
 	setSelectionMode (QAbstractItemView::ContiguousSelection);
 
@@ -42,14 +44,7 @@ TwinTableMember::TwinTableMember (QWidget *parent, TwinTable *table) : QTableVie
 	horizontalHeader ()->setContextMenuPolicy (Qt::CustomContextMenu);
 	connect (horizontalHeader (), SIGNAL (customContextMenuRequested(const QPoint&)), this, SLOT (headerContextMenuRequested(const QPoint&)));
 
-	connect (this, SIGNAL (selectionChanged(const QItemSelection&,const QItemSelection&)), this, SLOT (tableSelectionChanged(const QItemSelection&,const QItemSelection&)));
-
 	updating_twin = false;
-
-#warning currently unused, but likey will be used.
-	tted = 0;
-
-	connect (this, SIGNAL (currentChanged (int, int)), this, SLOT (currentCellChanged (int, int)));
 }
 
 TwinTableMember::~TwinTableMember(){
@@ -58,8 +53,12 @@ TwinTableMember::~TwinTableMember(){
 
 void TwinTableMember::setRKModel (RKVarEditModelBase* model) {
 	RK_TRACE (EDITOR);
+
 	mymodel = model;
 	setModel (model);
+
+	// now we should also have a selectionModel() (but not before)
+	connect (selectionModel (), SIGNAL (selectionChanged(const QItemSelection&,const QItemSelection&)), this, SLOT (tableSelectionChanged(const QItemSelection&,const QItemSelection&)));
 }
 
 void TwinTableMember::seRKItemDelegate (RKItemDelegate* delegate) {
@@ -102,46 +101,13 @@ void TwinTableMember::editorDone (QWidget* editor, RKItemDelegate::EditorDoneRea
 	}
 }
 
-void TwinTableMember::editorLostFocus () {
-	RK_TRACE (EDITOR);
-	stopEditing ();
-}
-
 void TwinTableMember::stopEditing () {
 	RK_TRACE (EDITOR);
-#warning todo
-//	if (tted) endEdit (currEditRow (), currEditCol (), true, false);
-	RK_ASSERT (!tted);
-}
 
-#if 0
-void TwinTableMember::endEdit (int row, int col, bool, bool) {
-	RK_TRACE (EDITOR);
-	if (tted) setCellContentFromEditor (row, col);
-	setEditMode (NotEditing, -1, -1);
+	QModelIndex current = currentIndex ();
+	setCurrentIndex (QModelIndex ());
+	setCurrentIndex (current);
 }
-#endif
-
-#if 0
-void TwinTableMember::setCellContentFromEditor (int row, int col) {
-	RK_TRACE (EDITOR);
-	RK_ASSERT (tted);
-
-	QString text_save = tted->text ();
-	
-	//tted->removeEventFilter (this);
-	tted->hide ();
-	tted->deleteLater ();
-	tted = 0;
-	
-	if (text (row, col) != text_save) {
-		setText (row, col, text_save);
-		emit (valueChanged (row, col));
-	}
-	
-	viewport ()->setFocus ();
-}
-#endif
 
 void TwinTableMember::copy () {
 	RK_TRACE (EDITOR);
@@ -211,13 +177,13 @@ void TwinTableMember::scrollContentsBy (int dx, int dy) {
 	updating_twin = false;
 }
 
-void TwinTableMember::updateColWidth (int section, int old_w, int new_w) {
+void TwinTableMember::updateColWidth (int section, int, int new_w) {
 	RK_TRACE (EDITOR);
 
 	if (updating_twin) return;
 	updating_twin = true;
-	RK_ASSERT (columnWidth (section) == old_w);
 	setColumnWidth (section, new_w);
+	twin->setColumnWidth (section, new_w);
 	updating_twin = false;
 }
 
@@ -265,9 +231,10 @@ QWidget* RKItemDelegate::createEditor (QWidget* parent, const QStyleOptionViewIt
 		int row = index.row ();
 		if (row == RKVarEditMetaModel::FormatRow) {
 			ed = new EditFormatDialogProxy (parent);
+		} else if (row == RKVarEditMetaModel::LevelsRow) {
+			ed = new EditLabelsDialogProxy (parent);
 		} else {
 			ed = new CellEditor (parent);
-#warning implement
 		}
 	}
 
@@ -287,24 +254,31 @@ void RKItemDelegate::setEditorData (QWidget* editor, const QModelIndex& index) c
 	if (!index.isValid ()) return;
 
 	if (datamodel) {
-		// do nothing. CellEditor will be intialized below
 		CellEditor* ced = static_cast<CellEditor*> (editor);
 		ced->setText (datamodel->data (index, Qt::EditRole).toString ());
 
-		RObject::ValueLabels* labels = 0;
 		if (index.column () < datamodel->trueCols ()) {
-			labels = datamodel->getObject (index.column ())->getValueLabels ();
+			ced->setValueLabels (datamodel->getObject (index.column ())->getValueLabels ());
 		}
-		if (labels) ced->setValueLabels (labels);
 	} else if (metamodel) {
 		int row = index.row ();
 		if (row == RKVarEditMetaModel::FormatRow) {
 			EditFormatDialogProxy* fed = static_cast<EditFormatDialogProxy*> (editor);
-			fed->initialize (RKVariable::parseFormattingOptionsString (metamodel->data (index, Qt::EditRole).toString ()), metamodel->data (metamodel->index (RKVarEditMetaModel::FormatRow, index.column ())).toString ());
+			fed->initialize (RKVariable::parseFormattingOptionsString (metamodel->data (index, Qt::EditRole).toString ()), metamodel->headerData (index.column (), Qt::Horizontal).toString ());
+		} else if (row == RKVarEditMetaModel::LevelsRow) {
+			EditLabelsDialogProxy* led = static_cast<EditLabelsDialogProxy*> (editor);
+			led->initialize (metamodel->getValueLabels (index.column ()), metamodel->headerData (index.column (), Qt::Horizontal).toString ());
 		} else {
-#warning implement
 			CellEditor* ced = static_cast<CellEditor*> (editor);
 			ced->setText (metamodel->data (index, Qt::EditRole).toString ());
+
+			if (row == RKVarEditMetaModel::TypeRow) {
+				RObject::ValueLabels labels;
+				for (int i = RObject::MinKnownDataType; i <= RObject::MaxKnownDataType; ++i) {
+					labels.insert (QString::number (i), RObject::typeToText ((RObject::RDataType) i));
+				}
+				ced->setValueLabels (labels);
+			}
 		}
 	} else {
 		RK_ASSERT (false);
@@ -329,9 +303,11 @@ void RKItemDelegate::setModelData (QWidget* editor, QAbstractItemModel* model, c
 			EditFormatDialogProxy* fed = static_cast<EditFormatDialogProxy*> (editor);
 			model->setData (index, RKVariable::formattingOptionsToString (fed->getOptions ()), Qt::EditRole);
 			return;
-		} else {
-#warning implement
-		}
+		} else if (row == RKVarEditMetaModel::LevelsRow) {
+			EditLabelsDialogProxy* led = static_cast<EditLabelsDialogProxy*> (editor);
+			metamodel->setValueLabels (index.column (), led->getLabels ());
+			return;
+		} // else all others use the regular CellEditor
 	} else {
 		RK_ASSERT (false);
 	}

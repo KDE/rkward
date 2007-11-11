@@ -42,7 +42,7 @@ public:
 	CellEditor (QWidget* parent);
 	~CellEditor ();
 
-	void setValueLabels (const RObject::ValueLabels *labels);
+	void setValueLabels (const RObject::ValueLabels& labels);
 
 	void setText (const QString& text);
 signals:

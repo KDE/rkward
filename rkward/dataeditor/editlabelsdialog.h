@@ -23,19 +23,19 @@
 #include <QAbstractTableModel>
 
 #include "../core/robject.h"
+#include "twintablemember.h"
 
 class RKVariable;
 class RKVarLevelsTableModel;
 
 /** special mini class provides the table in EditLabelsDialog
-TODO: make copy/paste work
 
 @author Thomas Friedrichsmeier
 */
 class RKVarLevelsTable : public QTableView {
 	Q_OBJECT
 public:
-	RKVarLevelsTable (QWidget *parent, RObject::ValueLabels *labels);
+	RKVarLevelsTable (QWidget *parent, const RObject::ValueLabels& labels);
 	~RKVarLevelsTable ();
 public slots:
 /** cut */
@@ -46,7 +46,7 @@ public slots:
 	void paste ();
 private:
 	bool getSelectionBoundaries (int* top, int* bottom) const;
-friend class EditLabelsDialog;
+friend class EditLabelsDialogProxy;
 	RKVarLevelsTableModel* lmodel;
 	bool updating_size;
 };
@@ -54,7 +54,7 @@ friend class EditLabelsDialog;
 /** Data model for the RKVarLevelsTable */
 class RKVarLevelsTableModel : public QAbstractTableModel {
 public:
-	RKVarLevelsTableModel (RObject::ValueLabels* labels, QObject* parent);
+	RKVarLevelsTableModel (const RObject::ValueLabels& labels, QObject* parent);
 	~RKVarLevelsTableModel ();
 
 	int rowCount (const QModelIndex& parent = QModelIndex()) const;
@@ -64,33 +64,49 @@ public:
 	bool setData (const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
 	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 private:
-friend class EditLabelsDialog;
-	RObject::ValueLabels* labels;
+friend class EditLabelsDialogProxy;
+	RObject::ValueLabels labels;
 };
 
 /**
-Allows editing of value labels / factor levels for an (edited) RKVariable
+Allows editing of value labels / factor levels for an RKVariable. Use EditLabelsDialogProxy.
 
 @author Thomas Friedrichsmeier
 */
 class EditLabelsDialog : public KDialog {
-	Q_OBJECT
-public:
+protected:
+friend class EditLabelsDialogProxy;
 /** constuctor., the variable to work on.
-@param parent a QWidget parent (usually 0)
-@param var the variable/factor to set labels for
-@param mode not yet used */
-	EditLabelsDialog (QWidget *parent, RKVariable *var, int mode=0);
+@param parent a QWidget parent */
+	EditLabelsDialog (QWidget *parent, const RObject::ValueLabels& labels, const QString& varname);
 
 	~EditLabelsDialog ();
-protected:
-/// reimplemented to submit the changes to the backend
+
+/** reimplemented to make sure pending edit operations are not lost */
 	void accept ();
-	void reject ();
 private:
-	RKVarLevelsTable *table;
-	RKVariable *var;
-	int mode;
+	RKVarLevelsTable* table;
+};
+
+/**
+Simple proxy / wrapper to allow using a modal EditLabelsDialog in a QTableView
+@author Thomas Friedrichsmeier */
+class EditLabelsDialogProxy : public QWidget {
+	Q_OBJECT
+public:
+	EditLabelsDialogProxy (QWidget* parent);
+	~EditLabelsDialogProxy ();
+
+	void initialize (const RObject::ValueLabels& labels, const QString& varname);
+
+	RObject::ValueLabels getLabels () const { return labels; };
+signals:
+	void done (QWidget* widget, RKItemDelegate::EditorDoneReason reason);
+protected slots:
+	void dialogDone (int result);
+private:
+	EditLabelsDialog* dialog;
+	RObject::ValueLabels labels;
 };
 
 #endif

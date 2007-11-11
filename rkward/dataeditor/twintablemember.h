@@ -81,9 +81,6 @@ public:
 	TwinTableMember *getTwin () { return twin; };
 /** ends editing. Actually it's just a simple wrapper around QTable::endEdit () */
 	void stopEditing ();
-#warning maybe still needed?
-/** needed to detect right mouse clicks in the header and tab-keypresses in the CellEditor */
-//	bool eventFilter (QObject *object, QEvent *event);
 /** reimplemented to delete cell contents on DEL and BACKSPACE. Placed in public, here, so CellEditor can have access */
 	void keyPressEvent (QKeyEvent *e);
 
@@ -104,7 +101,6 @@ protected:
 	TwinTable *table;
 	bool updating_twin;
 
-	CellEditor *tted;
 /** reimplemented from QTableView to also adjust the twin */
 	void scrollContentsBy (int dx, int dy);
 
@@ -113,10 +109,6 @@ friend class TwinTable;
 	void setTwin (TwinTableMember *new_twin);
 public slots:
 	void editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason);
-
-	void editorLostFocus ();
-/** called when the current cell is changed. If no selection is in place, will (does not do it yet) pop up the value-list */
-//	void currentCellChanged (int row, int col);
 protected slots:
 	void headerContextMenuRequested (const QPoint& pos);
 	void updateColWidth (int section, int old_w, int new_w);

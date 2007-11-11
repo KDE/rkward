@@ -35,9 +35,10 @@ CellEditor::~CellEditor () {
 	RK_TRACE (EDITOR);
 }
 
-void CellEditor::setValueLabels (const RObject::ValueLabels *labels) {
+void CellEditor::setValueLabels (const RObject::ValueLabels& labels) {
 	RK_TRACE (EDITOR);
-	RK_ASSERT (labels);
+
+	if (labels.isEmpty ()) return;
 
 // NOTE: not using a QComboBox, as we do not want it to pop up immediately
 	value_list = new QMenu (this);
@@ -46,7 +47,7 @@ void CellEditor::setValueLabels (const RObject::ValueLabels *labels) {
 	value_list->setFocusProxy (this);
 	value_list->installEventFilter (this);	// somehow setting us as a focus proxy is not enough to continue to receive the key-presses
 
-	for (RObject::ValueLabels::const_iterator it = labels->constBegin (); it != labels->constEnd (); ++it) {
+	for (RObject::ValueLabels::const_iterator it = labels.constBegin (); it != labels.constEnd (); ++it) {
 		value_list->addAction (it.key () + ": " + it.data ())->setData (it.key ());
 	}
 	connect (value_list, SIGNAL (triggered(QAction*)), SLOT (selectedFromList(QAction*)));
@@ -78,7 +79,7 @@ void CellEditor::showValueLabels () {
 
 void CellEditor::keyPressEvent (QKeyEvent *e) {
 	if (!e->state ()) {
-		if (e->key () == Qt::Key_Left) {
+		if ((e->key () == Qt::Key_Left) || (e->key () == Qt::Key_Backspace)) {
 			if (cursorPosition () < 1) {
 				emit (done (this, RKItemDelegate::EditorExitLeft));
 				return;
