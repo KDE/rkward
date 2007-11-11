@@ -229,6 +229,10 @@ QVariant RKVarEditModel::data (const QModelIndex& index, int role) const {
 	RKVariable::Status status = var->cellStatus (row);
 	if ((role == Qt::BackgroundRole) && (status == RKVariable::ValueInvalid)) return (Qt::red);
 	if ((role == Qt::ForegroundRole) && (status == RKVariable::ValueUnknown)) return (Qt::lightGray);
+	if (role == Qt::TextAlignmentRole) {
+		if (var->getAlignment () == RKVariable::AlignCellLeft) return ((int) Qt::AlignLeft | Qt::AlignVCenter);
+		else return ((int) Qt::AlignRight | Qt::AlignVCenter);
+	}
 
 	return QVariant ();
 }

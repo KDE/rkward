@@ -22,6 +22,7 @@
 #include <QHeaderView>
 
 #include "celleditor.h"
+#include "editformatdialog.h"
 #include "twintable.h"
 #include "rktextmatrix.h"
 #include "rkvareditmodel.h"
@@ -257,13 +258,23 @@ RKItemDelegate::~RKItemDelegate () {
 QWidget* RKItemDelegate::createEditor (QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const {
 	RK_TRACE (EDITOR);
 
+	QWidget* ed = 0;
 	if (datamodel) {
-		CellEditor* ced = new CellEditor (parent);
-		ced->setFont (option.font);
-		connect (ced, SIGNAL (done(QWidget*,RKItemDelegate::EditorDoneReason)), this, SLOT (editorDone(QWidget*,RKItemDelegate::EditorDoneReason)));
-		return ced;
+		ed = new CellEditor (parent);
 	} else if (metamodel) {
+		int row = index.row ();
+		if (row == RKVarEditMetaModel::FormatRow) {
+			ed = new EditFormatDialogProxy (parent);
+		} else {
+			ed = new CellEditor (parent);
 #warning implement
+		}
+	}
+
+	if (ed) {
+		ed->setFont (option.font);
+		connect (ed, SIGNAL (done(QWidget*,RKItemDelegate::EditorDoneReason)), this, SLOT (editorDone(QWidget*,RKItemDelegate::EditorDoneReason)));
+		return ed;
 	}
 
 	RK_ASSERT (false);
@@ -276,6 +287,7 @@ void RKItemDelegate::setEditorData (QWidget* editor, const QModelIndex& index) c
 	if (!index.isValid ()) return;
 
 	if (datamodel) {
+		// do nothing. CellEditor will be intialized below
 		CellEditor* ced = static_cast<CellEditor*> (editor);
 		ced->setText (datamodel->data (index, Qt::EditRole).toString ());
 
@@ -284,12 +296,21 @@ void RKItemDelegate::setEditorData (QWidget* editor, const QModelIndex& index) c
 			labels = datamodel->getObject (index.column ())->getValueLabels ();
 		}
 		if (labels) ced->setValueLabels (labels);
-
 	} else if (metamodel) {
+		int row = index.row ();
+		if (row == RKVarEditMetaModel::FormatRow) {
+			EditFormatDialogProxy* fed = static_cast<EditFormatDialogProxy*> (editor);
+			fed->initialize (RKVariable::parseFormattingOptionsString (metamodel->data (index, Qt::EditRole).toString ()), metamodel->data (metamodel->index (RKVarEditMetaModel::FormatRow, index.column ())).toString ());
+		} else {
 #warning implement
+			CellEditor* ced = static_cast<CellEditor*> (editor);
+			ced->setText (metamodel->data (index, Qt::EditRole).toString ());
+		}
 	} else {
 		RK_ASSERT (false);
 	}
+
+
 }
 
 void RKItemDelegate::setModelData (QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const {
@@ -299,14 +320,24 @@ void RKItemDelegate::setModelData (QWidget* editor, QAbstractItemModel* model, c
 
 	if (datamodel) {
 		RK_ASSERT (model == datamodel);
-
-		CellEditor* ced = static_cast<CellEditor*> (editor);
-		model->setData (index, ced->text (), Qt::EditRole);
+		// real work is done down below
 	} else if (metamodel) {
+		RK_ASSERT (model == metamodel);
+
+		int row = index.row ();
+		if (row == RKVarEditMetaModel::FormatRow) {
+			EditFormatDialogProxy* fed = static_cast<EditFormatDialogProxy*> (editor);
+			model->setData (index, RKVariable::formattingOptionsToString (fed->getOptions ()), Qt::EditRole);
+			return;
+		} else {
 #warning implement
+		}
 	} else {
 		RK_ASSERT (false);
 	}
+
+	CellEditor* ced = static_cast<CellEditor*> (editor);
+	model->setData (index, ced->text (), Qt::EditRole);
 }
 
 bool RKItemDelegate::eventFilter (QObject* object, QEvent* event) {
@@ -330,7 +361,7 @@ bool RKItemDelegate::eventFilter (QObject* object, QEvent* event) {
 void RKItemDelegate::editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason reason) {
 	RK_TRACE (EDITOR);
 
-	emit (commitData (editor));
+	if (reason != EditorReject) emit (commitData (editor));
 	emit (doCloseEditor (editor, reason));
 }
 

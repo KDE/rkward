@@ -75,10 +75,10 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 		int num_listeners = data->num_listeners;
 		ValueLabels *value_labels = data->value_labels;
 		data->value_labels = 0;	// prevent destruction
-		FormattingOptions *formatting_options = data->formatting_options;
-		data->formatting_options = 0;	// prevent destruction
+		FormattingOptions formatting_options = data->formatting_options;
 
 		// destroy and re-allocate edit data
+		data->num_listeners = 0;	// to avoid the otherwise useful assert in discardEditData
 		discardEditData ();
 		setDataType (new_type);
 		allocateEditData ();
@@ -263,7 +263,9 @@ void RKVariable::allocateEditData () {
 	data->immediate_sync = true;
 	data->changes = 0;
 	data->value_labels = 0;
-	data->formatting_options = 0;
+	data->formatting_options.alignment = FormattingOptions::AlignDefault;
+	data->formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
+	data->formatting_options.precision = 0;
 	data->previously_valid = true;
 	data->invalid_fields.setAutoDelete (true);
 	data->num_listeners = 0;
@@ -292,7 +294,6 @@ void RKVariable::discardEditData () {
 
 	RK_ASSERT (!(data->changes));
 	delete data->value_labels;
-	delete data->formatting_options;
 	delete data;
 	data = 0;
 }
@@ -491,11 +492,11 @@ QString RKVariable::getText (int row, bool pretty) const {
 		return (data->cell_strings[row]);
 	} else {
 		RK_ASSERT (data->cell_doubles != 0);
-		if (pretty && data->formatting_options && (data->formatting_options->precision_mode != FormattingOptions::PrecisionDefault)) {
-			if (data->formatting_options->precision_mode == FormattingOptions::PrecisionRequired) {
+		if (pretty && (data->formatting_options.precision_mode != FormattingOptions::PrecisionDefault)) {
+			if (data->formatting_options.precision_mode == FormattingOptions::PrecisionRequired) {
 				return QString::number (data->cell_doubles[row], 'g', MAX_PRECISION);
 			}
-			return QString::number (data->cell_doubles[row], 'f', data->formatting_options->precision);
+			return QString::number (data->cell_doubles[row], 'f', data->formatting_options.precision);
 		}
 		return QString::number (data->cell_doubles[row], 'g', MAX_PRECISION);
 	}
@@ -888,44 +889,21 @@ void RKVariable::setValueLabelString (const QString &string) {
 	setValueLabels (new_labels);
 }
 
-RKVariable::FormattingOptions *RKVariable::getFormattingOptions () const {
+RKVariable::FormattingOptions RKVariable::getFormattingOptions () const {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (data);
 
 	return data->formatting_options;
 }
 
-void RKVariable::setFormattingOptions (FormattingOptions *formatting_options) {
+void RKVariable::setFormattingOptions (FormattingOptions new_options) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (data);
-	
-	if (formatting_options != data->formatting_options) {
-		delete data->formatting_options;
-	}
 
-	data->formatting_options = formatting_options;
+	if ((new_options.alignment == data->formatting_options.alignment) && (new_options.precision_mode == data->formatting_options.precision_mode) && (new_options.precision == data->formatting_options.precision)) return;
 
-	if (!formatting_options) {
-		setMetaProperty ("format", QString::null);
-	} else {
-		QString format_string;
-		if (formatting_options->alignment != (int) FormattingOptions::AlignDefault) {
-			format_string.append ("align:");
-			format_string.append (QString::number (formatting_options->alignment));
-		}
-	
-		if (formatting_options->precision_mode != (int) FormattingOptions::PrecisionDefault) {
-			if (!format_string.isEmpty ()) format_string.append ("#");
-			format_string.append ("prec:");
-			if (formatting_options->precision_mode == (int) FormattingOptions::PrecisionRequired) {
-				format_string.append ("v");
-			} else {
-				format_string.append (QString::number (formatting_options->precision));
-			}
-		}
-	
-		setMetaProperty ("format", format_string);
-	}
+	data->formatting_options = new_options;
+	setMetaProperty ("format", formattingOptionsToString (new_options));
 
 	// also update display of all values:
 	ChangeSet *set = new ChangeSet;
@@ -949,13 +927,35 @@ void RKVariable::setFormattingOptionsString (const QString &string) {
 }
 
 // static
-RKVariable::FormattingOptions *RKVariable::parseFormattingOptionsString (const QString &string) {
+QString RKVariable::formattingOptionsToString (const FormattingOptions& options) {
 	RK_TRACE (OBJECTS);
 
-	FormattingOptions *formatting_options = new FormattingOptions;
-	formatting_options->alignment = FormattingOptions::AlignDefault;
-	formatting_options->precision_mode = FormattingOptions::PrecisionDefault;
-	formatting_options->precision = 0;
+	QString format_string;
+	if (options.alignment != (int) FormattingOptions::AlignDefault) {
+		format_string.append ("align:" + QString::number (options.alignment));
+	}
+
+	if (options.precision_mode != (int) FormattingOptions::PrecisionDefault) {
+		if (!format_string.isEmpty ()) format_string.append ("#");
+		format_string.append ("prec:");
+		if (options.precision_mode == (int) FormattingOptions::PrecisionRequired) {
+			format_string.append ("v");
+		} else {
+			format_string.append (QString::number (options.precision));
+		}
+	}
+
+	return format_string;
+}
+
+// static
+RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString (const QString &string) {
+	RK_TRACE (OBJECTS);
+
+	FormattingOptions formatting_options;
+	formatting_options.alignment = FormattingOptions::AlignDefault;
+	formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
+	formatting_options.precision = 0;
 	bool empty = true;
 
 	QStringList list = QStringList::split ("#", string);
@@ -970,21 +970,21 @@ RKVariable::FormattingOptions *RKVariable::parseFormattingOptionsString (const Q
 			int al = parameter.toInt ();
 			if ((al >= (int) FormattingOptions::AlignDefault) && (al <= (int) FormattingOptions::AlignRight)) {
 				empty = false;
-				formatting_options->alignment = (FormattingOptions::Alignment) al;
+				formatting_options.alignment = (FormattingOptions::Alignment) al;
 			}
 		} else if (option == "prec") {
 			if (parameter == "d") {
 				empty = false;
-				formatting_options->precision_mode = FormattingOptions::PrecisionDefault;
+				formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
 			} else if (parameter == "v") {
 				empty = false;
-				formatting_options->precision_mode = FormattingOptions::PrecisionRequired;
+				formatting_options.precision_mode = FormattingOptions::PrecisionRequired;
 			} else {
-				int dig = parameter.toInt ();
-				if ((dig >= 0) && (dig <= 15)) {
+				int digits = parameter.toInt ();
+				if ((digits >= 0) && (digits <= 15)) {
 					empty = false;
-					formatting_options->precision_mode = FormattingOptions::PrecisionFixed;
-					formatting_options->precision = dig;
+					formatting_options.precision_mode = FormattingOptions::PrecisionFixed;
+					formatting_options.precision = digits;
 				}
 			}
 		} else {
@@ -992,19 +992,14 @@ RKVariable::FormattingOptions *RKVariable::parseFormattingOptionsString (const Q
 		}
 	}
 	
-	if (empty) {
-		delete formatting_options;
-		return 0;
-	} else {
-		return formatting_options;
-	}
+	return formatting_options;
 }
 
 RKVariable::CellAlign RKVariable::getAlignment () const {
 	RK_ASSERT (data);
 	
-	if (data->formatting_options && (data->formatting_options->alignment != FormattingOptions::AlignDefault)) {
-		if (data->formatting_options->alignment == FormattingOptions::AlignLeft) return AlignCellLeft;
+	if (data->formatting_options.alignment != FormattingOptions::AlignDefault) {
+		if (data->formatting_options.alignment == FormattingOptions::AlignLeft) return AlignCellLeft;
 		return AlignCellRight;
 	} else {
 	// TODO: use global (configurable) defaults, if not specified

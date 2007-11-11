@@ -143,6 +143,7 @@ public:
 	int trueRows () const { return RowCount; };
 
 	RKVariable* getObject (int index) const { return data_model->getObject (index); };
+	RKVarEditModel* getDataModel () const { return data_model; };
 protected:
 friend class RKVarEditModel;
 	RKVarEditMetaModel (RKVarEditModel* data_model);

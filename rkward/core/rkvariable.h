@@ -117,13 +117,13 @@ numeric!  TODO: unused  */
 		int precision;
 	};
 
-/** returns the formatting options, or 0 if no options specified (i.e. all set to default). Does _not_ return a copy, but the real thing. Do not delete! */
-	FormattingOptions *getFormattingOptions () const;
 /** assigns new formatting options. Ownership of the FormattingOptions -struct is transferred to the variable. Use setFormatting (0) to remove all options */
-	void setFormattingOptions (FormattingOptions *formatting_options);
-/** get formatting options as a string (for display) */
+	void setFormattingOptions (FormattingOptions new_options);
+/** get the formatting options for this variable */
+	FormattingOptions getFormattingOptions () const;
+/** get formatting options as a string (for display) TODO: redundant -> remove */
 	QString getFormattingOptionsString () const;
-/** parse formatting options from the given string */
+/** parse formatting options from the given string TODO: redundant -> remove */
 	void setFormattingOptionsString (const QString &string);
 
 /** This enum describes the alignment of text inside a table cell */
@@ -136,6 +136,10 @@ numeric!  TODO: unused  */
 /// an unknown value
 	static QString *unknown_char;
 
+/** creates/parses formatting options from the stored meta-property string. See also: getFormattingOptions () */
+	static FormattingOptions parseFormattingOptionsString (const QString &string);
+/** inverse of parseFormattingOptionsString () */
+	static QString formattingOptionsToString (const FormattingOptions& options);
 protected:
 /** reimplemented from RObject to change the internal data storage mode, if the var is being edited */
 	bool updateType (RData *new_data);
@@ -163,7 +167,7 @@ protected:
 /// the value-labels or factor levels assigned to this variable. 0 if no values/levels given
 		ValueLabels *value_labels;
 /// the formatting options set for this var (see FormattingOptions) */
-		FormattingOptions *formatting_options;
+		FormattingOptions formatting_options;
 /// storage for invalid fields
 		Q3IntDict<QString> invalid_fields;
 /// how many models need our data?
@@ -189,8 +193,6 @@ private:
 	void writeInvalidField (int row, RCommandChain *chain=0);
 /** writes the values labels to the backend */
 	void writeValueLabels (RCommandChain *chain) const;
-/** creates/parses formatting options from the stored meta-property string. See also: getFormattingOptions () */
-	static FormattingOptions *parseFormattingOptionsString (const QString &string);
 /** tries to match a value-label to the value in the given cell. Returns the label, or - if there is no label - the original value in textual representation */
 	QString getLabeled (int row) const;
 

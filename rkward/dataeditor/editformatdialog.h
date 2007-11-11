@@ -17,40 +17,58 @@
 #ifndef EDITFORMATDIALOG_H
 #define EDITFORMATDIALOG_H
 
-#include <qdialog.h>
+#include <kdialog.h>
 
 #include "../core/rkvariable.h"
+#include "twintablemember.h"
 
 class Q3ButtonGroup;
 class QSpinBox;
 
 /**
-Allows editing of format-attributes for an (edited) RKVariable
+Allows editing of format-attributes for an RKVariable
 
 @author Thomas Friedrichsmeier
 */
-class EditFormatDialog : public QDialog {
-Q_OBJECT
-public:
-	EditFormatDialog (QWidget *parent, RKVariable *var, int mode=0);
-
-	~EditFormatDialog ();
+class EditFormatDialog : public KDialog {
+	Q_OBJECT
 public slots:
 	void precisionFieldChanged (int);
 protected:
-/// reimplemented to submit the changes to the backend
+/** reimplemented to make the newly selected options available */
 	void accept ();
+
+friend class EditFormatDialogProxy;
+/** ctor */
+	EditFormatDialog (QWidget *parent);
+/** dtor */
+	~EditFormatDialog ();
+
+/** initializes the GUI-options from the settings for the variable */
+	void initialize (const RKVariable::FormattingOptions& options, const QString& varname);
 private:
 	Q3ButtonGroup *alignment_group;
 	Q3ButtonGroup *precision_group;
 	QSpinBox *precision_field;
-	RKVariable::FormattingOptions *options;
-	
-	RKVariable *var;
-	int mode;
+	RKVariable::FormattingOptions options;
+};
 
-/** initializes the GUI-options from the settings for the variable */
-	void initialize ();
+/** Simple proxy wrapper to allow using a model EditFormatDialog in a QTableView */
+class EditFormatDialogProxy : public QWidget {
+	Q_OBJECT
+public:
+	EditFormatDialogProxy (QWidget* parent);
+	~EditFormatDialogProxy ();
+
+	void initialize (const RKVariable::FormattingOptions& options, const QString& varname);
+	RKVariable::FormattingOptions getOptions () const { return options; };
+signals:
+	void done (QWidget* widget, RKItemDelegate::EditorDoneReason reason);
+protected slots:
+	void dialogDone (int result);
+private:
+	RKVariable::FormattingOptions options;
+	EditFormatDialog* dialog;
 };
 
 #endif

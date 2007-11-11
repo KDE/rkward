@@ -16,13 +16,9 @@
  ***************************************************************************/
 #include "celleditor.h"
 
-#include <qapplication.h>
 #include <QMenu>
 #include <QTimer>
-
-//Added by qt3to4:
 #include <QEvent>
-#include <QTimerEvent>
 #include <QKeyEvent>
 
 #include "../debug.h"
@@ -47,10 +43,8 @@ void CellEditor::setValueLabels (const RObject::ValueLabels *labels) {
 	value_list = new QMenu (this);
 	value_list->setFont (font ());
 	value_list->setPalette (palette ());
-//	value_list->setFrameStyle (Q3Frame::Box | Q3Frame::Plain);
-//	value_list->setLineWidth (1);
 	value_list->setFocusProxy (this);
-	value_list->installEventFilter (this);
+	value_list->installEventFilter (this);	// somehow setting us as a focus proxy is not enough to continue to receive the key-presses
 
 	for (RObject::ValueLabels::const_iterator it = labels->constBegin (); it != labels->constEnd (); ++it) {
 		value_list->addAction (it.key () + ": " + it.data ())->setData (it.key ());
@@ -64,7 +58,7 @@ void CellEditor::selectedFromList (QAction* action) {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (action);
 
-	setText (action->data ().toString ());	// which is an int, really
+	setText (action->data ().toString ());	// which is a string representation of an int, really
 }
 
 void CellEditor::setText (const QString& text) {

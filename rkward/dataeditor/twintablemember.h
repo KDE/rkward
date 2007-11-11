@@ -56,6 +56,7 @@ public:
 		EditorExitRight,
 		EditorExitUp,
 		EditorExitDown,
+		EditorReject,
 		EditorExit
 	};
 signals:

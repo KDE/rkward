@@ -16,49 +16,43 @@
  ***************************************************************************/
 #include "editformatdialog.h"
 
+#include <q3buttongroup.h>
+#include <qradiobutton.h>
+#include <qspinbox.h>
+#include <qstringlist.h>
+#include <QVBoxLayout>
+#include <QTimer>
+
+#include <klocale.h>
+#include <kvbox.h>
+
 #include "../core/rkvariable.h"
 #include "../rkglobals.h"
 #include "../debug.h"
 
-#include <q3buttongroup.h>
-#include <qradiobutton.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
-#include <qlayout.h>
-#include <qstring.h>
-#include <qstringlist.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
-
-#include <klocale.h>
-
-EditFormatDialog::EditFormatDialog (QWidget *parent, RKVariable *var, int mode) : QDialog (parent) {
+EditFormatDialog::EditFormatDialog (QWidget *parent) : KDialog (parent) {
 	RK_TRACE (EDITOR);
-	RK_ASSERT (var);
-//	RK_ASSERT (var->objectOpened ());
 
-	EditFormatDialog::var = var;
-	EditFormatDialog::mode = mode;
-	EditFormatDialog::options = var->getFormattingOptions ();
-
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
+	KVBox *vbox = new KVBox ();
+	setMainWidget (vbox);
 	
-	alignment_group = new Q3ButtonGroup (i18n ("Alignment"), this);
+	alignment_group = new Q3ButtonGroup (i18n ("Alignment"), vbox);
 	alignment_group->setColumnLayout (0, Qt::Vertical);
 	alignment_group->layout()->setSpacing (RKGlobals::spacingHint ());
 	alignment_group->layout()->setMargin (RKGlobals::marginHint ());
-	Q3VBoxLayout *group_layout = new Q3VBoxLayout (alignment_group->layout());
-	group_layout->addWidget (new QRadioButton (i18n ("Default for type '%1'", RObject::typeToText (var->getDataType ())), alignment_group));
+	QVBoxLayout *group_layout = new QVBoxLayout (alignment_group->layout());
+	group_layout->setContentsMargins (0, 0, 0, 0);
+	group_layout->addWidget (new QRadioButton (i18n ("Default"), alignment_group));
 	group_layout->addWidget (new QRadioButton (i18n ("Left"), alignment_group));
 	group_layout->addWidget (new QRadioButton (i18n ("Right"), alignment_group));
 	alignment_group->setButton ((int) RKVariable::FormattingOptions::AlignDefault);
-	vbox->addWidget (alignment_group);
 
-	precision_group = new Q3ButtonGroup (i18n ("Decimal Places"), this);
+	precision_group = new Q3ButtonGroup (i18n ("Decimal Places"), vbox);
 	precision_group->setColumnLayout (0, Qt::Vertical);
 	precision_group->layout()->setSpacing (RKGlobals::spacingHint ());
 	precision_group->layout()->setMargin (RKGlobals::marginHint ());
-	group_layout = new Q3VBoxLayout (precision_group->layout());
+	group_layout = new QVBoxLayout (precision_group->layout());
+	group_layout->setContentsMargins (0, 0, 0, 0);
 	group_layout->addWidget (new QRadioButton (i18n ("Default setting"), precision_group));
 	group_layout->addWidget (new QRadioButton (i18n ("As required"), precision_group));
 	group_layout->addWidget (new QRadioButton (i18n ("Fixed precision:"), precision_group));
@@ -66,78 +60,83 @@ EditFormatDialog::EditFormatDialog (QWidget *parent, RKVariable *var, int mode) 
 	connect (precision_field, SIGNAL (valueChanged (int)), this, SLOT (precisionFieldChanged (int)));
 	group_layout->addWidget (precision_field);
 	precision_group->setButton ((int) RKVariable::FormattingOptions::PrecisionDefault);
-	vbox->addWidget (precision_group);
 
-	QPushButton *ok_button = new QPushButton (i18n ("Ok"), this);
-	connect (ok_button, SIGNAL (clicked ()), this, SLOT (accept ()));
-	vbox->addWidget (ok_button);
-
-	initialize ();
-
-	setCaption (i18n ("Formatting options for '%1'", var->getShortName ()));
+	setButtons (KDialog::Ok | KDialog::Cancel);
 }
 
 EditFormatDialog::~EditFormatDialog () {
 	RK_TRACE (EDITOR);
 }
 
-void EditFormatDialog::initialize () {
+void EditFormatDialog::initialize (const RKVariable::FormattingOptions& options, const QString& varname) {
 	RK_TRACE (EDITOR);
 
-	if (!options) return;
-	
-	alignment_group->setButton ((int) options->alignment);
-	precision_group->setButton ((int) options->precision_mode);
-	precision_field->setValue (options->precision);
+	setCaption (i18n ("Formatting options for '%1'", varname));
+
+	EditFormatDialog::options = options;
+
+	alignment_group->setButton ((int) options.alignment);
+	precision_group->setButton ((int) options.precision_mode);
+	precision_field->setValue (options.precision);
 }
 
 void EditFormatDialog::accept () {
 	RK_TRACE (EDITOR);
 
-	RKVariable::FormattingOptions *new_options = new RKVariable::FormattingOptions;
-	new_options->alignment = RKVariable::FormattingOptions::AlignDefault;
-	new_options->precision_mode = RKVariable::FormattingOptions::PrecisionDefault;
-	new_options->precision = 0;
-	bool empty = true;
-#if QT_VERSION < 0x030200
-	int al = alignment_group->id (button_group->selected ());
-#else
-	int al = alignment_group->selectedId ();
-#endif
-	if (al != (int) RKVariable::FormattingOptions::AlignDefault) {
-		new_options->alignment = (RKVariable::FormattingOptions::Alignment) al;
-		empty = false;
-	}
+	options.alignment = (RKVariable::FormattingOptions::Alignment) alignment_group->selectedId ();
 
-#if QT_VERSION < 0x030200
-	int prec = precision_group->id (button_group->selected ());
-#else
-	int prec = precision_group->selectedId ();
-#endif
-	if (prec != (int) RKVariable::FormattingOptions::PrecisionDefault) {
-		empty = false;
-		if (prec == (int) RKVariable::FormattingOptions::PrecisionRequired) {
-			new_options->precision_mode = RKVariable::FormattingOptions::PrecisionRequired;
-		} else {
-			new_options->precision_mode = RKVariable::FormattingOptions::PrecisionFixed;
-			new_options->precision = precision_field->value ();
-		}
-	}
-
-	if (empty) {
-		delete new_options;
-		var->setFormattingOptions (0);
+	options.precision_mode = (RKVariable::FormattingOptions::Precision) precision_group->selectedId ();
+	if (options.precision_mode == RKVariable::FormattingOptions::PrecisionFixed) {
+		options.precision = precision_field->value ();
 	} else {
-		var->setFormattingOptions (new_options);
+		options.precision = 0;
 	}
 
-	QDialog::accept ();
+	KDialog::accept ();
 }
 
 void EditFormatDialog::precisionFieldChanged (int) {
 	RK_TRACE (EDITOR);
 
 	precision_group->setButton ((int) RKVariable::FormattingOptions::PrecisionFixed);
+}
+
+
+///////////// EditFormatDialogProxy ////////////////////
+
+EditFormatDialogProxy::EditFormatDialogProxy (QWidget* parent) : QWidget (parent) {
+	RK_TRACE (EDITOR);
+
+	dialog = 0;
+}
+
+EditFormatDialogProxy::~EditFormatDialogProxy () {
+	RK_TRACE (EDITOR);
+}
+
+void EditFormatDialogProxy::initialize (const RKVariable::FormattingOptions& options, const QString& varname) {
+	RK_TRACE (EDITOR);
+
+	EditFormatDialogProxy::options = options;
+	dialog = new EditFormatDialog (this);
+	dialog->initialize (options, varname);
+
+	connect (dialog, SIGNAL (finished(int)), this, SLOT (dialogDone(int)));
+	QTimer::singleShot (0, dialog, SLOT (exec()));
+}
+
+void EditFormatDialogProxy::dialogDone (int result) {
+	RK_TRACE (EDITOR);
+	RK_ASSERT (dialog);
+
+	if (result == QDialog::Accepted) {
+		options = dialog->options;
+		emit (done (this, RKItemDelegate::EditorExit));
+	} else {
+		emit (done (this, RKItemDelegate::EditorReject));
+	}
+	dialog->deleteLater ();
+	dialog = 0;
 }
 
 #include "editformatdialog.moc"

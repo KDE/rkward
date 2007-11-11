@@ -17,17 +17,16 @@
 #ifndef CELLEDITOR_H
 #define CELLEDITOR_H
 
-#include <qlineedit.h>
+#include <QLineEdit>
 #include <QList>
-//Added by qt3to4:
-#include <QKeyEvent>
-#include <QEvent>
 
 #include "../core/robject.h"
 #include "twintablemember.h"
 
 class QStringList;
 class QMenu;
+class QEvent;
+class QKeyEvent;
 
 /**
 This is the main editor used in the TwinTableMembers

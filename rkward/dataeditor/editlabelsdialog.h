@@ -86,6 +86,7 @@ public:
 protected:
 /// reimplemented to submit the changes to the backend
 	void accept ();
+	void reject ();
 private:
 	RKVarLevelsTable *table;
 	RKVariable *var;
