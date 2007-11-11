@@ -21,22 +21,15 @@ else
 	CFLAGS += -O2
 endif
 
-# Add here commands to configure the package.
-CONFCOMMAND = ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --disable-rpath --with-r-home=/usr/lib/R --with-r-libdir=/usr/lib/R/site-library/
-
 config.status: configure
 	dh_testdir
 
-	# r-base > 2.5.1 forces gcc 4.2, so we need to follow suite to make sure, everything is all
-	# all right. the appropriate build-deps are fetched by r-base-dev, automatically.
-	if [ "$(RVERS)" '>' "2.5.1" ] ; then \
-		export F77=gfortran-4.2 ; \
-		export CC=gcc-4.2 ; \
-		export CXX=g++-4.2 ; \
-		CFLAGS="$(CFLAGS)" $(CONFCOMMAND) ; \
-	else \
-		CFLAGS="$(CFLAGS)" $(CONFCOMMAND) ; \
-	fi
+	# Some installations of R need a specific version of the compiler(s)
+	# R CMD config provides info on which compiler to use
+	export F77=`/usr/bin/R CMD config F77` ; \
+	export CC=`/usr/bin/R CMD config CC` ; \
+	export CXX=`/usr/bin/R CMD config CXX` ; \
+	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --disable-rpath --with-r-home=/usr/lib/R --with-r-libdir=/usr/lib/R/site-library/
 
 build: build-stamp
 
