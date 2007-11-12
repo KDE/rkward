@@ -22,12 +22,9 @@
 #include <QItemSelectionRange>
 #include <QItemDelegate>
 #include <qpoint.h>
-//Added by qt3to4:
 #include <QEvent>
-#include <QMouseEvent>
 #include <QKeyEvent>
 
-class QMouseEvent;
 class TwinTable;
 class CellEditor;
 class RKVarEditModelBase;

@@ -93,6 +93,17 @@ void TwinTableMember::editorDone (QWidget* editor, RKItemDelegate::EditorDoneRea
 	else if (reason == RKItemDelegate::EditorExitUp) --row;
 	else if (reason == RKItemDelegate::EditorExitDown) ++row;
 
+	if (row >= mymodel->trueRows ()) {
+		// if we have edited the trailing row, a new row may have been inserted, apparently *above* the
+		// current index. We need to fix this up. Basically, we can only ever be in the last row after
+		// a reject, or an exit to the next row
+		if ((reason != RKItemDelegate::EditorExitDown) && (reason != RKItemDelegate::EditorReject)) --row;
+	}
+	if (col >= mymodel->trueCols ()) {
+		// see above
+		if ((reason != RKItemDelegate::EditorExitRight) && (reason != RKItemDelegate::EditorReject)) --col;
+	}
+
 	if ((row < mymodel->rowCount ()) && (col < mymodel->columnCount ())) {
 		setCurrentIndex (mymodel->index (row, col));
 	}
