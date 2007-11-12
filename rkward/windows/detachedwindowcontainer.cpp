@@ -27,6 +27,7 @@
 
 #include "rktoplevelwindowgui.h"
 #include "../rkward.h"
+#include "../misc/rkstandardicons.h"
 #include "rkworkplace.h"
 #include "../rkglobals.h"
 #include "../debug.h"
@@ -42,6 +43,7 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 
 	QAction *reattach = actionCollection ()->addAction ("dwindow_attach", this, SLOT(slotReattach()));
 	reattach->setText (i18n ("Attach to main window"));
+	reattach->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAttachWindow));
 
 	RKTopLevelWindowGUI *toplevel_actions = new RKTopLevelWindowGUI (this);
 	insertChildClient (toplevel_actions);

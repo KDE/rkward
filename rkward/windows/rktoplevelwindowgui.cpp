@@ -97,6 +97,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : QObject (for_wi
 
 	action = actionCollection ()->addAction ("output_show", this, SLOT (slotOutputShow()));
 	action->setText (i18n ("Show &Output"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
 }
 
 RKTopLevelWindowGUI::~RKTopLevelWindowGUI () {

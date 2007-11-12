@@ -246,6 +246,8 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 	RK_TRACE (APP);
 
 	type = RKMDIWindow::OutputWindow;
+	// for this window, we need to set it explicitely, as the logic in RKHTMLWindow though we are an RKHTMLWindow, only
+	setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
 	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
 	RKCommonFunctions::removeContainers (khtmlpart, QStringList::split (',', "tools,security,extraToolBar,saveBackground,saveFrame,printFrame,kget_menu"), true);
 

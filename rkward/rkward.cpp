@@ -370,14 +370,13 @@ void RKWardMainWindow::initActions()
 	close_all_editors->setText (i18n ("Close All Data"));
 	close_all_editors->setStatusTip (i18n ("Closes all open data editors"));
 
-	action = actionCollection ()->addAction ("window_close", this, SLOT (slotCloseWindow()));
-	action->setText (i18n ("Close"));
-	action->setShortcut (Qt::ControlModifier + Qt::Key_W);
+	action = actionCollection ()->addAction (KStandardAction::Close, "window_close", this, SLOT (slotCloseWindow()));
 
 	window_close_all = actionCollection ()->addAction ("window_close_all", this, SLOT (slotCloseAllWindows()));
 	window_close_all->setText (i18n ("Close All"));
 
 	window_detach = actionCollection ()->addAction ("window_detach", this, SLOT (slotDetachWindow()));
+	window_detach->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDetachWindow));
 	window_detach->setText (i18n ("Detach"));
 
 	configure = actionCollection ()->addAction ("configure", this, SLOT (slotConfigure()));

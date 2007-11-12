@@ -47,6 +47,9 @@ public:
 		ActionDeleteVar,
 		ActionInsertVar,
 
+		ActionDetachWindow,
+		ActionAttachWindow,
+
 		ObjectList,
 		ObjectFunction,
 		ObjectEnvironment,

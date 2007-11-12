@@ -31,6 +31,7 @@
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
 #include "rkmdiwindow.h"
+#include "../misc/rkstandardicons.h"
 
 #include "../debug.h"
 
@@ -267,11 +268,11 @@ bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
 			if (widget) {
 				KMenu *p = new KMenu (this);
 
-				p->addTitle (SmallIcon("view_remove"), i18n("Attachment"));
+				p->addTitle (i18n("Attachment"));
 				
-				p->addAction (widget->isAttached () ? KIcon("view-restore") : KIcon("view-fullscreen"), widget->isAttached () ? i18n("Detach") : i18n("Attach"))->setData (CHANGE_ATTACHMENT_ACTION_ID);
+				p->addAction (RKStandardIcons::getIcon (widget->isAttached () ? RKStandardIcons::ActionDetachWindow : RKStandardIcons::ActionAttachWindow), widget->isAttached () ? i18n("Detach") : i18n("Attach"))->setData (CHANGE_ATTACHMENT_ACTION_ID);
 
-				p->addTitle (SmallIcon("move"), i18n("Move To"));
+				p->addTitle (i18n("Move To"));
 	
 				if (position () != KMultiTabBar::Left) p->addAction(KIcon("go-previous"), i18n("Left Sidebar"))->setData(KMultiTabBar::Left);
 	
