@@ -48,6 +48,7 @@ RKEditorDataFrame::RKEditorDataFrame (RContainerObject* object, QWidget *parent)
 
 	RKVarEditDataFrameModel* model = new RKVarEditDataFrameModel (object, this);
 	initTable (model, object);
+	connect (model, SIGNAL (modelObjectDestroyed()), this, SLOT (deleteLater()));
 
 	waitForLoad ();
 }
@@ -66,6 +67,7 @@ RKEditorDataFrame::RKEditorDataFrame (const QString& new_object_name, QWidget* p
 	RK_ASSERT (object->isDataFrame ());
 
 	initTable (model, object);
+	connect (model, SIGNAL (modelObjectDestroyed()), this, SLOT (deleteLater()));
 
 	RKGlobals::rInterface ()->closeChain (open_chain);
 }

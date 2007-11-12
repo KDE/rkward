@@ -97,6 +97,7 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	datamodel = model;
 	dataview->setRKModel (model);
 	metaview->setRKModel (model->getMetaModel ());
+	model->setEditor (this);
 	dataview->seRKItemDelegate (new RKItemDelegate (this, datamodel));
 	metaview->seRKItemDelegate (new RKItemDelegate (this, datamodel->getMetaModel ()));
 

@@ -73,6 +73,11 @@ public:
 	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false) const;
 
 	void moveChild (RObject* child, int from_index, int to_index);
+
+	/** reimplemented from RObject to do nothing at all, including not raising an assert. This is because container objects do not have any edit data, themselves, but may be opened for editing, e.g. as a data.frame */
+	void beginEdit () {};
+	/** see beginEdit() */
+	void endEdit () {};
 protected:
 	void updateChildren (RData *new_children);
 	RObjectMap childmap;

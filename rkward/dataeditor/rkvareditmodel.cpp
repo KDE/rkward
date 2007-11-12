@@ -81,9 +81,7 @@ void RKVarEditModel::objectRemoved (RObject* object) {
 	if (meta_model) meta_model->endRemoveDataObject ();
 	endRemoveColumns ();
 
-	if (objects.isEmpty ()) {
-#warning TODO notify editor
-	}
+	if (objects.isEmpty ()) emit (modelDepleted ());	// editor may or may want to auto-destruct
 }
 
 void RKVarEditModel::objectMetaChanged (RObject* changed) {
@@ -782,12 +780,15 @@ void RKVarEditDataFrameModel::objectRemoved (RObject* object) {
 
 	if (object == dataframe) {
 		while (!objects.isEmpty ()) RKVarEditModel::objectRemoved (objects[0]);
-#warning TODO: notify editor
 		stopListenForObject (dataframe);
 		dataframe = 0;
 	}
 
 	RKVarEditModel::objectRemoved (object);
+
+	// if the dataframe is gone, the editor will most certainly want to auto-destruct.
+	// since the model will be taken down as well, this has to come last in the function.
+	if (!dataframe) emit (modelObjectDestroyed ());
 }
 
 void RKVarEditDataFrameModel::childAdded (int index, RObject* parent) {

@@ -87,6 +87,8 @@ public:
 	void objectDataChanged (RObject* object, const RObject::ChangeSet *changes);
 
 	RKVariable* getObject (int index) const;
+signals:
+	void modelDepleted ();
 protected:
 friend class RKVarEditMetaModel;
 	QList<RKVariable*> objects;
@@ -176,6 +178,8 @@ public:
 	RContainerObject* getObject () const { return dataframe; };
 
 	void restoreObject (RObject* object, RCommandChain* chain);
+signals:
+	void modelObjectDestroyed ();
 protected:
 	void doInsertColumns (int index, int count);
 	/** reimplemented from RKVarEditModel to listen for the dataframe object as well */
