@@ -2,7 +2,6 @@
 - message extraction
 - po file handling
 - handbook installation
-- need to replace hard-coded "share/apps"?
 - icons
 - rkward.desktop
 - use Configure-File-Makro for wrapperscript
@@ -44,31 +43,15 @@ rkward
 		+ seems to..
 	- does updating captions work (when switching windows / window url changes)?
 		+ seems to..
-	-* closing rkward while either the file system or the workspace browser is open, crashes rkward
-	-* Import/Export (all plugins?) cause segmentation fault.
-		+ much better now.. no seg faults in preliminary testing (10/27/07)
-	-* closing the main window before the "R engine is idle" crashes rkward
-		-* related to rkhtmlwindow bug?
+		- probably still need to make data.editor update its caption when name changed
 
 output window
 	- does it reload all changed images?
-
- rkworkplaceview
-	- does it work?
-	- does it have a sunken frame? Can we get rid of that?
 
 rkwindowcatcher
 	- does it work?
 	- does the "set fixed size" dialog work?
 	- does the "copy device to R object" dialog work?
-
-rkfilebrowser
-	- does it work? 
-		+ seems to..
-	- does the completion popup show up in a correct size?
-		+ yes, if u mean in the address bar when typing a path
-	-* does not work for *.R files
-		+ Fixed: works for many (ps/eps/pdf/jpg/png) files now...
 
 rkloadlibsdialog:
 	- does it work?
@@ -77,19 +60,11 @@ rkradio:
 	- does disabling single options work (in plugins)?
 
 rksettings:
-	- check wether settings seem to be saved / loaded correctly
 	- are the defaults ok?
-	-* clicking on "Configure Repositories" button on the Configure Packages dialog 
-	   takes you to the "R-Backend" tab on the Settings dialog. Instead it should go 
-	   to the "R-Packages" tab.
-		+ Fixed, but both "Plugins" and "R-Pacakges" text on the left panel remain selected
-			- likely bug in KDE libs
+	+ When going to a specific page programmitcally, e.g. "Plugins" and "R-Pacakges" text on the left panel remain selected
+		- likely bug in KDE libs
 
 data editor:
-	- definitely needs better porting
-	- does cell painting work ok?
-		+ seems to.. on an existing data.frame
-	-* entering data freezes rkward
 
 rklocalesupport:
 	- does locale switching / detection work? Does Qt have something, yet?
@@ -108,10 +83,6 @@ rkconsole:
 		- currently, problem seems to be inside KUrlCompletion
 	-* one additional newline character printed with every line
 		-* function calls, like ls() or getwd() or options("width") still produces an extra new line
-
-rkhtmlwindow:
-	- when this is open, we always seem to crash on close
-		-* crashes on close even when the Help window is not open
 
 rcontrolwindow:
 	- this does not really need to be a top-level tool window any more. Since it's rarely used, it might be hidden somewhere.

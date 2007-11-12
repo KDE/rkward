@@ -393,9 +393,7 @@ void RKWardMainWindow::partAdded (KParts::Part *part) {
 	}
 
 // KDE4: remove this function?
-/*	part->actionCollection ()->setHighlightingEnabled (true);
-	connect (part->actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
-	connect (part->actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ())); */
+// well, we might use it to add / remove dummy menu-entries to menus that are other wise empty.
 }
 
 void RKWardMainWindow::partRemoved (KParts::Part *part) {
@@ -407,8 +405,7 @@ void RKWardMainWindow::partRemoved (KParts::Part *part) {
 	}
 
 // KDE4: remove this function?
-/*	disconnect (part->actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
-	disconnect (part->actionCollection (), SIGNAL (clearStatusText ()), this, SLOT (slotSetStatusReady ())); */
+// well, we might use it to add / remove dummy menu-entries to menus that are other wise empty.
 }
 
 void RKWardMainWindow::initStatusBar () {

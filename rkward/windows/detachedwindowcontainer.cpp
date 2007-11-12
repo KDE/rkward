@@ -23,7 +23,6 @@
 
 #include <qlayout.h>
 #include <qwidget.h>
-//Added by qt3to4:
 #include <QCloseEvent>
 
 #include "rktoplevelwindowgui.h"
@@ -46,7 +45,6 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 
 	RKTopLevelWindowGUI *toplevel_actions = new RKTopLevelWindowGUI (this);
 	insertChildClient (toplevel_actions);
-	connect (toplevel_actions->actionCollection (), SIGNAL (actionStatusText (const QString &)), this, SLOT (slotSetStatusBarText (const QString &)));
 	statusBar ()->hide ();
 	createShellGUI ();
 
