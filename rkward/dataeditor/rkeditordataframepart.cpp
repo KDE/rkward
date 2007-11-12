@@ -47,6 +47,7 @@ void RKEditorDataFramePart::initializeActions () {
 	editCut = actionCollection ()->addAction (KStandardAction::Cut, "cut", this, SLOT(slotEditCut()));
 	editCopy = actionCollection ()->addAction (KStandardAction::Copy, "copy", this, SLOT(slotEditCopy()));
 	editPaste = actionCollection ()->addAction (KStandardAction::Paste, "paste", this, SLOT(slotEditPaste()));
+
 	editPasteToTable = actionCollection ()->addAction ("paste_to_table", this, SLOT(slotEditPasteToTable()));
 	editPasteToTable->setText (i18n("Paste inside Table"));
 	editPasteToTable->setIcon (KIcon ("frame_spreadsheet"));

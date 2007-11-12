@@ -76,8 +76,8 @@ private:
 class TwinTableMember : public QTableView {
 	Q_OBJECT
 public: 
-	TwinTableMember (QWidget *parent, TwinTable *table);
-	~TwinTableMember();
+	TwinTableMember (QWidget *parent);
+	~TwinTableMember ();
 	TwinTableMember *getTwin () { return twin; };
 /** ends editing. Actually it's just a simple wrapper around QTable::endEdit () */
 	void stopEditing ();
@@ -98,7 +98,6 @@ signals:
 	void contextMenuRequest (int row, int col, const QPoint& pos);
 protected:
 	TwinTableMember *twin;
-	TwinTable *table;
 	bool updating_twin;
 
 /** reimplemented from QTableView to also adjust the twin */

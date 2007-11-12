@@ -42,17 +42,15 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
 	QSplitter *splitter = new QSplitter(this);
 	splitter->setOrientation(Qt::Vertical);
 
-	metaview = new TwinTableMember (splitter, this);
+	metaview = new TwinTableMember (splitter);
 	splitter->setResizeMode (metaview, QSplitter::KeepSize);
 	metaview->verticalHeader ()->setResizeMode (QHeaderView::Fixed);
 	metaview->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 	
-	dataview = new TwinTableMember (splitter, this);
+	dataview = new TwinTableMember (splitter);
 	dataview->verticalHeader ()->setResizeMode (QHeaderView::Fixed);
 	dataview->horizontalHeader ()->hide ();
 
-#warning TODO set item delegates
-	
 	layout->addWidget (splitter);
 
 	// these are to keep the two tables in sync

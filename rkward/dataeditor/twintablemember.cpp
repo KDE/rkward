@@ -30,12 +30,9 @@
 
 #include "../debug.h"
 
-TwinTableMember::TwinTableMember (QWidget *parent, TwinTable *table) : QTableView (parent){
+TwinTableMember::TwinTableMember (QWidget *parent) : QTableView (parent){
 	RK_TRACE (EDITOR);
 
-	twin = 0;
-#warning member "table" seems to be unused
-	TwinTableMember::table = table;
 	setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOn);
 	setSelectionMode (QAbstractItemView::ContiguousSelection);
 

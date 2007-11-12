@@ -59,9 +59,6 @@ public slots:
 	void metaHeaderPressed (int section);
 	void metaHeaderEntered (int section);
 	void metaHeaderClicked (int section);
-/*
-	void headerClicked (int col);
-	void headerPressed (int col); */
 private:
 /** PopupMenu shown when top header is right-clicked */
 	QMenu *top_header_menu;

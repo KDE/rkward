@@ -22,7 +22,7 @@
 #include "../core/rkvariable.h"
 #include "twintablemember.h"
 
-class Q3ButtonGroup;
+class QButtonGroup;
 class QSpinBox;
 
 /**
@@ -47,8 +47,8 @@ friend class EditFormatDialogProxy;
 /** initializes the GUI-options from the settings for the variable */
 	void initialize (const RKVariable::FormattingOptions& options, const QString& varname);
 private:
-	Q3ButtonGroup *alignment_group;
-	Q3ButtonGroup *precision_group;
+	QButtonGroup *alignment_group;
+	QButtonGroup *precision_group;
 	QSpinBox *precision_field;
 	RKVariable::FormattingOptions options;
 };

@@ -6,11 +6,8 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${K
 SET(dataeditor_STAT_SRCS
    twintable.cpp
    twintablemember.cpp
-   rkdrag.cpp
    rkeditor.cpp
    rkeditordataframe.cpp
-   twintabledatamember.cpp
-   twintablemetamember.cpp
    celleditor.cpp
    editlabelsdialog.cpp
    editformatdialog.cpp

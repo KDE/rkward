@@ -67,8 +67,7 @@ RKEditorDataFrame::RKEditorDataFrame (const QString& new_object_name, QWidget* p
 
 	initTable (model, object);
 
-#warning is this needed? Or is it enough to close the chain?
-	waitForLoad ();
+	RKGlobals::rInterface ()->closeChain (open_chain);
 }
 
 void RKEditorDataFrame::commonInit () {
@@ -82,15 +81,11 @@ void RKEditorDataFrame::commonInit () {
 
 void RKEditorDataFrame::enableEditing (bool on) {
 	if (on) {
-		connect (this, SIGNAL (deleteColumnRequest (int)), this, SLOT (columnDeletionRequested (int)));
-		connect (this, SIGNAL (addedColumn (int)), this, SLOT (columnAdded (int)));
 		metaview->setEnabled (true);
 		dataview->setEnabled (true);
 	} else {
 		metaview->setEnabled (false);
 		dataview->setEnabled (false);
-		disconnect (this, SIGNAL (deleteColumnRequest (int)), this, SLOT (columnDeletionRequested (int)));
-		disconnect (this, SIGNAL (addedColumn (int)), this, SLOT (columnAdded (int)));
 	}
 }
 

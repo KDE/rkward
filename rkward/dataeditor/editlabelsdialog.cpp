@@ -254,6 +254,8 @@ EditLabelsDialogProxy::~EditLabelsDialogProxy () {
 void EditLabelsDialogProxy::initialize (const RObject::ValueLabels& labels, const QString& varname) {
 	RK_TRACE (EDITOR);
 
+	if (dialog) return;	// one dialog at a time, please!
+
 	EditLabelsDialogProxy::labels = labels;		// we need to take a copy in case the dialog is rejected
 
 	dialog = new EditLabelsDialog (this, labels, varname);
