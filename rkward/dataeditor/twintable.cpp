@@ -58,9 +58,15 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
 	// these are to keep the two tables in sync
 	metaview->setTwin (dataview);
 	dataview->setTwin (metaview);
-	connect (metaview->horizontalHeader (), SIGNAL (sectionClicked(int)), dataview, SLOT (selectColumn(int)));
-	connect (metaview->horizontalHeader (), SIGNAL (sectionPressed(int)), dataview, SLOT (selectColumn(int)));
-//connect(d->horizontalHeader, SIGNAL(sectionEntered(int)), this, SLOT(_q_selectColumn(int)));
+
+	// pressing the columns in the metaview-header should select columns in the dataview
+	disconnect (metaview->horizontalHeader (), SIGNAL (sectionClicked(int)));
+	connect (metaview->horizontalHeader (), SIGNAL (sectionClicked(int)), this, SLOT (metaHeaderClicked(int)));
+	disconnect (metaview->horizontalHeader (), SIGNAL (sectionPressed(int)));
+	connect (metaview->horizontalHeader (), SIGNAL (sectionPressed(int)), this, SLOT (metaHeaderPressed(int)));
+	disconnect (metaview->horizontalHeader (), SIGNAL (sectionEntered(int)));
+	connect (metaview->horizontalHeader (), SIGNAL (sectionEntered(int)), this, SLOT (metaHeaderEntered(int)));
+	meta_header_anchor_section = -1;
 
 	// catch header context menu requests
 	connect (dataview, SIGNAL (contextMenuRequest(int,int,const QPoint&)), this, SLOT (dataHeaderContextMenu(int,int,const QPoint&)));
@@ -101,6 +107,33 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	dataview->verticalHeader ()->setFixedWidth (metaview->verticalHeader ()->width ());
 
 	setCaption (object->getShortName ());
+}
+
+void TwinTable::metaHeaderPressed (int section) {
+	RK_TRACE (EDITOR);
+
+	if (meta_header_anchor_section < 0) {
+		meta_header_anchor_section = section;
+		dataview->selectColumn (section);
+	}
+	dataview->setFocus ();
+}
+
+void TwinTable::metaHeaderClicked (int) {
+	RK_TRACE (EDITOR);
+
+	RK_ASSERT (meta_header_anchor_section >= 0);
+	meta_header_anchor_section = -1;
+	dataview->setFocus ();
+}
+
+void TwinTable::metaHeaderEntered (int section) {
+	RK_TRACE (EDITOR);
+
+	if (meta_header_anchor_section >= 0) {
+		dataview->selectionModel ()->select (QItemSelection (datamodel->index (0, qMin (meta_header_anchor_section, section)), datamodel->index (0, qMax (meta_header_anchor_section, section))), QItemSelectionModel::Columns | QItemSelectionModel::Select);
+		dataview->setFocus ();
+	}
 }
 
 // TODO: handle situation when several entire cols are selected!

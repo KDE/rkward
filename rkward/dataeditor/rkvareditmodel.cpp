@@ -663,6 +663,7 @@ void RKVarEditMetaModel::setTextMatrix (const QModelIndex& offset, const RKTextM
 			setData (index (row, col), text.getText (trow, tcol), Qt::EditRole);
 			++trow;
 		}
+		var->syncDataToR ();
 		var->setSyncing (true);
 		++tcol;
 	}

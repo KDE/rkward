@@ -111,8 +111,6 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 	} else {
 		setDataType (new_type);
 	}
-
-	setMetaProperty ("type", QString ().setNum ((int) new_type), sync);
 }
 
 void RKVariable::writeMetaData (RCommandChain *chain) {
@@ -674,9 +672,15 @@ void RKVariable::setCharacter (int from_row, int to_row, QString *txtdata) {
 			data->cell_strings[row] = txtdata[i++];
 		}
 	} else {
+		bool old_sync = data->immediate_sync;
+		setSyncing (false);
 		int i=0;
 		for (int row=from_row; row <= to_row; ++row) {
 			setText (row, txtdata[i++]);
+		}
+		if (old_sync) {
+			syncDataToR ();
+			setSyncing (true);
 		}
 		return;
 	}

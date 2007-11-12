@@ -55,6 +55,10 @@ public:
 public slots:
 	void dataHeaderContextMenu (int row, int col, const QPoint& pos);
 	void metaHeaderContextMenu (int row, int col, const QPoint& pos);
+
+	void metaHeaderPressed (int section);
+	void metaHeaderEntered (int section);
+	void metaHeaderClicked (int section);
 /*
 	void headerClicked (int col);
 	void headerPressed (int col); */
@@ -63,6 +67,8 @@ private:
 	QMenu *top_header_menu;
 /** PopupMenu shown when top header is right-clicked */
 	QMenu *left_header_menu;
+
+	int meta_header_anchor_section;
 protected:	
 /** Returns the active Table (of the two members), 0 if no table active */
 	TwinTableMember *activeTable ();
