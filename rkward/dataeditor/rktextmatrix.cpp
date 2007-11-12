@@ -65,6 +65,7 @@ RKTextMatrix RKTextMatrix::matrixFromTabSeparatedValues (const QString& tsv) {
 	RK_TRACE (EDITOR);
 
 	RKTextMatrix ret;
+	if (tsv.isEmpty ()) return ret;
 
 	QChar tab ('\t');
 	QChar brk ('\n');
@@ -77,17 +78,17 @@ RKTextMatrix RKTextMatrix::matrixFromTabSeparatedValues (const QString& tsv) {
 	for (int pos = 0; pos < buffer_len; ++pos) {
 		QChar c = tsv.at (pos);
 		if (c == tab) {
-			ret.columns[col][row] = current_word;
-			ret.upsize (++row, col);
+			ret.setText (row, col++, current_word);
 			current_word.clear ();
 		} else if (c == brk) {
-			ret.columns[col][row] = current_word;
-			ret.upsize (row, ++col);
+			ret.setText (row++, col, current_word);
+			col = 0;
 			current_word.clear ();
 		} else {
 			current_word.append (c);
 		}
 	}
+	ret.setText (row, col, current_word);
 
 	return ret;
 }
@@ -97,15 +98,13 @@ QString RKTextMatrix::toTabSeparatedValues () const {
 
 	QString ret;
 	RK_ASSERT (columns.size () == colcount);
-	for (int col = 0; col < colcount; ++col) {
-		TextColumn column = columns[col];
-		RK_ASSERT (column.size () == rowcount);
+	for (int row = 0; row < rowcount; ++row) {
+		if (row) ret.append ('\n');
 
-		if (col) ret.append ('\n');
-
-		for (int row = 0; row < rowcount; ++row) {
-			if (row) ret.append ('\t');
-			ret.append (column[row]);
+		for (int col = 0; col < colcount; ++col) {
+			if (col) ret.append ('\t');
+			if (!row) RK_ASSERT (columns[col].size () == rowcount);
+			ret.append (columns[col][row]);
 		}
 	}
 	return ret;
@@ -131,7 +130,7 @@ void RKTextMatrix::setText (int row, int col, const QString& text) {
 void RKTextMatrix::setColumn (int column, const QString* textarray, int length) {
 	RK_TRACE (EDITOR);
 
-	upsize (length, column);
+	upsize (length - 1, column);
 	for (int i = 0; i < length; ++i) {
 		columns[column][i] = textarray[i];
 	}
@@ -174,18 +173,22 @@ bool RKTextMatrix::isEmpty () const {
 	return false;
 }
 
-void RKTextMatrix::upsize (int newrowcount, int newcolcount) {
+void RKTextMatrix::upsize (int newmaxrow, int newmaxcol) {
 //	RK_TRACE (EDITOR);
 
-	if (newcolcount > colcount) {
-		columns.resize (newcolcount);
-		colcount = newcolcount;
+	if (newmaxcol >= colcount) {
+		for (; colcount <= newmaxcol; ++colcount) {
+			TextColumn column;
+			column.resize (rowcount);
+			columns.append (column);
+		}
 		RK_ASSERT (colcount == columns.size ());
 	}
 
-	if (newrowcount > rowcount) {
+	if (newmaxrow >= rowcount) {
 		for (int i = 0; i < colcount; ++i) {
-			columns[i].resize (newrowcount);
+			columns[i].resize (newmaxrow + 1);
 		}
+		rowcount = newmaxrow + 1;
 	}
 }

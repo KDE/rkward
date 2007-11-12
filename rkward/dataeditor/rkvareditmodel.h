@@ -156,6 +156,7 @@ friend class RKVarEditModel;
 	void endAddDataObject ();
 	void beginRemoveDataObject (int index);
 	void endRemoveDataObject ();
+	void objectMetaChanged (int atcolumn);
 
 	RKVarEditModel* data_model;
 };

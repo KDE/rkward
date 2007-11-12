@@ -55,7 +55,7 @@ private:
 	typedef QVector<QString> TextColumn;
 	QVector<TextColumn> columns;
 
-	inline void upsize (int newrowcount, int newcolcount);
+	inline void upsize (int newmaxrow, int newmaxcol);
 
 	int colcount;
 	int rowcount;

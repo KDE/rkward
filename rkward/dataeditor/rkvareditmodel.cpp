@@ -93,7 +93,7 @@ void RKVarEditModel::objectMetaChanged (RObject* changed) {
 	if (cindex < 0) return;	// none of our buisiness
 
 	emit (dataChanged (index (0, cindex), index (trueRows (), cindex)));
-#warning TODO notify the meta model
+	if (meta_model) meta_model->objectMetaChanged (cindex);
 }
 
 void RKVarEditModel::objectDataChanged (RObject* object, const RObject::ChangeSet *changes) {
@@ -130,7 +130,7 @@ bool RKVarEditModel::insertRows (int row, int count, const QModelIndex& parent) 
 	if (row > trueRows ()) row = trueRows ();
 	int lastrow = row+count - 1;
 	RK_ASSERT (row >= 0);
-	RK_ASSERT (lastrow <= row);
+	RK_ASSERT (lastrow >= row);
 
 	beginInsertRows (QModelIndex (), row, row+count-1);
 	for (int i=0; i < objects.size (); ++i) {
@@ -317,7 +317,7 @@ RKTextMatrix RKVarEditModel::getTextMatrix (const QItemSelectionRange& range) co
 	for (int col = left; col <= right; ++col) {
 		QString* data = objects[col]->getCharacter (top, bottom);
 		RK_ASSERT (data);
-		ret.setColumn (tcol, data, top - bottom + 1);
+		ret.setColumn (tcol, data, bottom - top + 1);
 		delete [] data;
 		++tcol;
 	}
@@ -421,6 +421,12 @@ void RKVarEditMetaModel::endRemoveDataObject () {
 	RK_TRACE (EDITOR);
 
 	endRemoveColumns ();
+}
+
+void RKVarEditMetaModel::objectMetaChanged (int atcolumn) {
+	RK_TRACE (EDITOR);
+
+	emit (dataChanged (index (0, atcolumn), index (RowCount - 1, atcolumn)));
 }
 
 int RKVarEditMetaModel::rowCount (const QModelIndex& parent) const {

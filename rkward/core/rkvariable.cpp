@@ -53,8 +53,9 @@ RKVariable::~RKVariable () {
 void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 	RK_TRACE (OBJECTS);
 
-	if (getDataType () == new_type) {
-		return;
+	if (getDataType () == new_type) return;
+	if ((new_type < RObject::MinKnownDataType) || (new_type > RObject::MaxKnownDataType)) {
+		new_type = RObject::DataCharacter;
 	}
 
 	// if the variable is currently opened for editing, all values need to be rechecked / resynced

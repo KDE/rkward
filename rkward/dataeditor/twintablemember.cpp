@@ -104,6 +104,9 @@ void TwinTableMember::editorDone (QWidget* editor, RKItemDelegate::EditorDoneRea
 void TwinTableMember::stopEditing () {
 	RK_TRACE (EDITOR);
 
+	// I wonder why Qt 4.3 doe not provide a function like this...
+	if (state () != QAbstractItemView::EditingState) return;
+
 	QModelIndex current = currentIndex ();
 	setCurrentIndex (QModelIndex ());
 	setCurrentIndex (current);
@@ -130,13 +133,14 @@ void TwinTableMember::paste (RKEditor::PasteMode mode) {
 	RK_TRACE (EDITOR);
 
 	RKTextMatrix pasted = RKTextMatrix::matrixFromClipboard ();
-	QItemSelectionRange range;
+	QItemSelectionRange selrange = getSelectionBoundaries ();
+	QItemSelectionRange limrange;
 	if (mode == RKEditor::PasteToSelection) {
-		range = getSelectionBoundaries ();
+		limrange = selrange;
 	} else if (mode == RKEditor::PasteToTable) {
-		range = QItemSelectionRange (mymodel->index (0, 0), mymodel->index (mymodel->trueRows (), mymodel->trueCols ()));
+		limrange = QItemSelectionRange (mymodel->index (0, 0), mymodel->index (mymodel->trueRows () - 1, mymodel->trueCols () - 1));
 	} // else: range not set means not confined = PasteAnywhere
-	mymodel->setTextMatrix (currentIndex (), pasted, range);
+	mymodel->setTextMatrix (selrange.topLeft (), pasted, limrange);
 }
 
 QItemSelectionRange TwinTableMember::getSelectionBoundaries () {
