@@ -82,11 +82,11 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	
 	Q3VBoxLayout *model_vbox = new Q3VBoxLayout (model_hbox, RKGlobals::spacingHint ());
 	add_button = new QPushButton (QString::null, custom_model_widget);
-	add_button->setPixmap (SmallIcon ("1rightarrow"));
+	add_button->setPixmap (SmallIcon ("arrow-right"));
 	connect (add_button, SIGNAL (clicked ()), this, SLOT (addButtonClicked ()));
 	model_vbox->addWidget (add_button);
 	remove_button = new QPushButton (QString::null, custom_model_widget);
-	remove_button->setPixmap (SmallIcon ("1leftarrow"));
+	remove_button->setPixmap (SmallIcon ("arrow-left"));
 	connect (remove_button, SIGNAL (clicked ()), this, SLOT (removeButtonClicked ()));
 	model_vbox->addWidget (remove_button);
 	level_box = new QSpinBox (0, 0, 1, custom_model_widget);

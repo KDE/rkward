@@ -258,11 +258,11 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 
 	outputFlush = actionCollection ()->addAction ("output_flush", this, SLOT (flushOutput()));
 	outputFlush->setText (i18n ("&Flush Output"));
-	outputFlush->setIcon (KIcon ("editdelete"));
+	outputFlush->setIcon (KIcon ("edit-delete"));
 
 	outputRefresh = actionCollection ()->addAction ("output_refresh", this, SLOT (refreshOutput()));
 	outputRefresh->setText (i18n ("&Refresh Output"));
-	outputRefresh->setIcon (KIcon ("reload"));
+	outputRefresh->setIcon (KIcon ("view-refresh"));
 
 	print = actionCollection ()->addAction (KStandardAction::Print, "print_output", this, SLOT (slotPrint()));
 	print->setText (i18n ("Print Output"));

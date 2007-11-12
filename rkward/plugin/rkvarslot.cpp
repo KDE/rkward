@@ -98,10 +98,10 @@ RKVarSlot::~RKVarSlot (){
 
 void RKVarSlot::setSelectButton (bool add) {
 	if (add) {
-		select->setPixmap (SmallIcon ("1rightarrow"));
+		select->setPixmap (SmallIcon ("arrow-right"));
 		add_mode = true;
 	} else {
-		select->setPixmap (SmallIcon ("1leftarrow"));
+		select->setPixmap (SmallIcon ("arrow-left"));
 		add_mode = false;
 	}
 }

@@ -796,7 +796,7 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (slotInterruptCommand()));
 	interrupt_command_action->setText (i18n ("Interrupt running command"));
 	interrupt_command_action->setShortcut (Qt::ControlModifier + Qt::Key_C);
-	interrupt_command_action->setIcon (KIcon ("player_stop"));
+	interrupt_command_action->setIcon (KIcon ("media-playback-stop"));
 	interrupt_command_action->setEnabled (false);
 
 	copy_action = ac->addAction ("rkconsole_copy", this, SLOT (copy()));

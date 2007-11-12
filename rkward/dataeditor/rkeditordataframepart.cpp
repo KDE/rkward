@@ -54,7 +54,7 @@ void RKEditorDataFramePart::initializeActions () {
 
 	editPasteToSelection = actionCollection ()->addAction ("paste_to_selection", this, SLOT(slotEditPasteToSelection()));
 	editPasteToSelection->setText (i18n("Paste inside Selection"));
-	editPasteToSelection->setIcon (KIcon ("frame_edit"));
+	editPasteToSelection->setIcon (KIcon ("frame-edit"));
 
 	editCut->setStatusTip (i18n("Cuts the selected section and puts it to the clipboard"));
 	editCopy->setStatusTip (i18n("Copies the selected section to the clipboard"));

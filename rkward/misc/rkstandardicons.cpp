@@ -61,7 +61,7 @@ void RKStandardIcons::initIcons () {
 	icons[ObjectDataCharacter] = KIcon ("text");
 #warning TODO icon for logical
 	icons[ObjectDataLogical] = QIcon ();
-	icons[ObjectDataUnknown] = KIcon ("help");
+	icons[ObjectDataUnknown] = KIcon ("unknown");
 	icons[ObjectDataOther] = icons[ActionDeleteRow];
 	icons[ObjectObjectList] = KIcon ("view-tree");
 
@@ -69,7 +69,7 @@ void RKStandardIcons::initIcons () {
 	icons[WindowDataFrameEditor] = icons[ObjectDataFrame];
 	icons[WindowCommandEditor] = KIcon ("make");	// this may not be the most obvious choice, but it is not quite as awfully close to the data.frame editor icons as most other text icons
 	icons[WindowOutput] = KIcon ("xclipboard");
-	icons[WindowHelp] = KIcon ("help");
+	icons[WindowHelp] = KIcon ("help-contents");
 	icons[WindowX11] = KIcon ("x");
 	icons[WindowObject] = KIcon ("zoom-best-fit");
 	icons[WindowConsole] = KIcon ("konsole");
