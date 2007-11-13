@@ -18,7 +18,7 @@
 #define RKVARIABLE_H
 
 #include <qstring.h>
-#include <q3intdict.h>
+#include <QHash>
 
 #include "robject.h"
 
@@ -169,7 +169,7 @@ protected:
 /// the formatting options set for this var (see FormattingOptions) */
 		FormattingOptions formatting_options;
 /// storage for invalid fields
-		Q3IntDict<QString> invalid_fields;
+		QHash<int, QString> invalid_fields;
 /// how many models need our data?
 		int num_listeners;
 	};

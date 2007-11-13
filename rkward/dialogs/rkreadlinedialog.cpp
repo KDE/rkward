@@ -18,14 +18,15 @@
 #include "rkreadlinedialog.h"
 
 #include <qlineedit.h>
-#include <q3textedit.h>
+#include <QTextEdit>
 #include <qlabel.h>
-#include <q3vbox.h>
 #include <qapplication.h>
 #include <qdesktopwidget.h>
+#include <QScrollBar>
 
 #include <klocale.h>
 #include <kvbox.h>
+#include <kglobalsettings.h>
 
 #include "../rbackend/rcommand.h"
 
@@ -52,16 +53,17 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 	if (!context.isEmpty ()) {
 		new QLabel (i18n ("Context:"), page);
 
-		Q3TextEdit *output = new Q3TextEdit (page);
+		QTextEdit *output = new QTextEdit (page);
 		output->setUndoRedoEnabled (false);
-		output->setTextFormat (Qt::PlainText);
-		output->setCurrentFont (QFont ("Courier"));
-		output->setWordWrap (Q3TextEdit::NoWrap);
-		output->setText (context);
+		output->setPlainText (QString ());
+		output->setCurrentFont (KGlobalSettings::fixedFont ());
+		output->setLineWrapMode (QTextEdit::NoWrap);
+		output->insert (context);
 		output->setReadOnly (true);
-		int cwidth = output->contentsWidth ();
+		// there seems to be no easier way to get at the contents width...
+		int cwidth = output->horizontalScrollBar ()->maximum () + output->width ();
 		output->setMinimumWidth (screen_width < cwidth ? screen_width : cwidth);
-		output->scrollToBottom ();
+		output->moveCursor (QTextCursor::End);
 		output->setFocusPolicy (Qt::NoFocus);
 	}
 

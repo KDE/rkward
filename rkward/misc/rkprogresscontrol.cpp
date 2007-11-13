@@ -239,7 +239,6 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 	if (mode_flags & RKProgressControl::AllowCancel) setButtonText (KDialog::Cancel, i18n ("Cancel"));
 	else (setCloseTextToClose ());
 
-#warning TODO the KDialog size adjustment seems to be somewhat buggy in current kdelibs. Investigate later.
 	setDetailsWidgetVisible (mode_flags & RKProgressControl::OutputShownByDefault);
 
 	prevent_close = (mode_flags & RKProgressControl::PreventClose);

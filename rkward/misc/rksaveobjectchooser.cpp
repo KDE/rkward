@@ -19,10 +19,8 @@
 
 #include <qlineedit.h>
 #include <qcheckbox.h>
-#include <qlayout.h>
 #include <qlabel.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include <klocale.h>
 
@@ -36,7 +34,8 @@ RKSaveObjectChooser::RKSaveObjectChooser (QWidget *parent, const QString &initia
 	prev_ok = true;
 	object_exists = false;
 
-	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	layout->setContentsMargins (0, 0, 0, 0);
 
 	QLabel *label = new QLabel (prompt.isNull () ? i18n ("Object name to save to") : prompt, this);
 	layout->addWidget (label);

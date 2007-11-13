@@ -19,10 +19,9 @@
 #define XMLHELPER_H
 
 #include <qdom.h>
-#include <q3valuelist.h>
 
 /** a helper type used to pass a list of direct child elements of a node */
-typedef Q3ValueList<QDomElement> XMLChildList;
+typedef QList<QDomElement> XMLChildList;
 
 /** This class contains some convenience functions for parsing XML files (DOM). Usually you will use a static instance of this class (getStaticHelper ()), which will be created early in rkward initialization. The error-logs will be reset every time you open a new XML-file using openXMLFile (). This is fine as long as you are parsing files one by one instead of mixing several files. In the latter case you will want to create additional instances of XMLHelper (it's quite possible, this mechanism will be changed, but I want to get going before considering all implications ;-)).
 

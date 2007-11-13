@@ -72,7 +72,6 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	view = doc->createView (this);
 	layout->addWidget (view);
 
-// KDE4: does this work?
 	KTextEditor::ConfigInterface *confint = qobject_cast<KTextEditor::ConfigInterface*> (view);
 	RK_ASSERT (view);
 	confint->setConfigValue ("dynamic-word-wrap", false);
@@ -80,10 +79,8 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	setFocusProxy (view);
 	setFocusPolicy (Qt::StrongFocus);
 	
-	/* We need to unplug kactions that were plugged to the KateViewInternal in kateview.cpp.
-	These actions include Key_Up, Key_Down, etc.
-	It's a bit boring to do, but there is no way to do that another way yet.
-	Apparently, things will be different in KDE 4.*/
+	/* We need to disable kactions that were plugged to the KateViewInternal in kateview.cpp.
+	These actions include Key_Up, Key_Down, etc. */
 	kate_edit_actions = view->findChild<KActionCollection*> ("edit_actions");
 	if (kate_edit_actions) {
 		// make sure these actions never get triggered by a shortcut

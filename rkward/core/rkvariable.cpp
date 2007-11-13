@@ -266,7 +266,6 @@ void RKVariable::allocateEditData () {
 	data->formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
 	data->formatting_options.precision = 0;
 	data->previously_valid = true;
-	data->invalid_fields.setAutoDelete (true);
 	data->num_listeners = 0;
 
 	extendToLength (getLength ());
@@ -343,10 +342,10 @@ void RKVariable::restore (RCommandChain *chain) {
 void RKVariable::writeInvalidField (int row, RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 
-	if (data->invalid_fields[row]) {
-		RKGlobals::rInterface ()->issueCommand (".rk.set.invalid.field (" + getFullName () + ", " + QString::number (row+1) + ", " + rQuote (*(data->invalid_fields[row])) + ')', RCommand::App | RCommand::Sync, QString::null, 0,0, chain);
+	if (data->invalid_fields.contains (row)) {
+		RKGlobals::rInterface ()->issueCommand (".rk.set.invalid.field (" + getFullName () + ", " + QString::number (row+1) + ", " + rQuote (data->invalid_fields.value (row)) + ')', RCommand::App | RCommand::Sync, QString::null, 0,0, chain);
 	} else {
-		RKGlobals::rInterface ()->issueCommand (".rk.set.invalid.field (" + getFullName () + ", " + QString::number (row+1) + ", NULL)", RCommand::App | RCommand::Sync, QString::null, 0,0, chain);
+		RKGlobals::rInterface ()->issueCommand (".rk.set.invalid.field (" + getFullName () + ", " + QString::number (row+1) + ", NULL)", RCommand::App | RCommand::Sync, QString (), 0,0, chain);
 	}
 	data->cell_states[row] -= (data->cell_states[row] & RKVarEditData::UnsyncedInvalidState);
 }
@@ -471,8 +470,8 @@ QString RKVariable::getText (int row, bool pretty) const {
 	}
 
 	if (data->cell_states[row] & RKVarEditData::Invalid) {
-		RK_ASSERT (data->invalid_fields[row] != 0);
-		return (*(data->invalid_fields[row]));
+		RK_ASSERT (data->invalid_fields.contains (row));
+		return (data->invalid_fields.value (row));
 	}
 
 	if (data->cell_states[row] & RKVarEditData::NA) {
@@ -550,7 +549,7 @@ void RKVariable::setText (int row, const QString &text) {
 				data->cell_doubles[row] = text.toInt ();
 				data->cell_states[row] |= RKVarEditData::Valid;
 			} else {
-				data->invalid_fields.replace (row, new QString (text));
+				data->invalid_fields.insert (row, text);
 				data->cell_states[row] |= RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
 			}
 		} else {
@@ -563,7 +562,7 @@ void RKVariable::setText (int row, const QString &text) {
 				if (ok) {
 					data->cell_states[row] |= RKVarEditData::Valid;
 				} else {
-					data->invalid_fields.replace (row, new QString (text));
+					data->invalid_fields.insert (row, text);
 					data->cell_states[row] |= RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
 				}
 			}
@@ -718,14 +717,12 @@ void RKVariable::removeRows (int from_row, int to_row) {
 	int offset = (to_row - from_row) + 1;
 
 	for (int row = from_row; row < getLength (); ++row) {
-		QString *dummy = data->invalid_fields.take (row);
-		if (dummy) {
+		if (data->invalid_fields.contains (row)) {
+			QString inv = data->invalid_fields.take (row);
 			changed_invalids.append (row);
 			if (row > to_row) {
 				changed_invalids.append (row - offset);
-				data->invalid_fields.replace (row - offset, dummy);
-			} else {
-				delete dummy;
+				data->invalid_fields.insert (row - offset, inv);
 			}
 		}
 	}
@@ -767,11 +764,11 @@ void RKVariable::insertRows (int row, int count) {
 
 	QList<int> changed_invalids;
 	for (int i = getLength () - count - 1; i >= row; --i) {
-		QString *dummy = data->invalid_fields.take (i);
-		if (dummy) {
+		if (data->invalid_fields.contains (i)) {
+			QString dummy = data->invalid_fields.take (i);
 			changed_invalids.append (i);
 			changed_invalids.append (i + count);
-			data->invalid_fields.replace (i + count, dummy);
+			data->invalid_fields.insert (i + count, dummy);
 		}
 	}
 

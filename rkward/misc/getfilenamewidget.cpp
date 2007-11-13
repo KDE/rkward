@@ -16,10 +16,8 @@
  ***************************************************************************/
 #include "getfilenamewidget.h"
 
-#include <qlayout.h>
 #include <qlabel.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include <klocale.h>
 #include <klineedit.h>
@@ -29,7 +27,8 @@
 
 GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, const QString &label, const QString &caption, const QString &initial) : QWidget (parent) {
 	RK_TRACE (MISC);
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (this);
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+	vbox->setContentsMargins (0, 0, 0, 0);
 	vbox->setResizeMode (QLayout::Minimum);
 
 	vbox->addWidget (new QLabel (label, this));
