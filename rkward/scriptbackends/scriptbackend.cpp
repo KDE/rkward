@@ -21,8 +21,6 @@
 #include "../plugin/rkcomponentproperties.h"
 
 #include "../debug.h"
-//Added by qt3to4:
-#include <Q3ValueList>
 
 ScriptBackend::ScriptBackend () : QObject() {
 	busy = false;
@@ -65,7 +63,7 @@ void ScriptBackend::invalidateCalls (int type) {
 		current_type = Ignore;
 	}
 
-	Q3ValueList<ScriptCommand *>::iterator it = command_stack.begin ();
+	QLinkedList<ScriptCommand *>::iterator it = command_stack.begin ();
 	while (it != command_stack.end ()) {
 		if ((*it)->type == type) {
 			delete (*it);

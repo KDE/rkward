@@ -21,6 +21,7 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qdir.h>
+#include <QTimer>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -34,54 +35,47 @@ PHPBackend::PHPBackend (const QString &filename) : ScriptBackend () {
 	RK_TRACE (PHP);
 
 	php_process = 0;
+	dead = false;
 	eot_string="#RKEND#\n";
 	eoq_string="#RKQEND#\n";
-	busy_writing = false;
 
 	PHPBackend::filename = filename;
 }
 
 
-PHPBackend::~PHPBackend() {
+PHPBackend::~PHPBackend () {
 	RK_TRACE (PHP);
-	destroy ();
+
+	if (php_process) {
+		RK_DO (qDebug ("PHP process has not exited after being killed for ten seconds. We destroy it now, hoping for the best"), PHP, DL_ERROR);
+	}
 }
 
 bool PHPBackend::initialize (RKComponentPropertyCode *code_property, bool add_headings) {
 	RK_TRACE (PHP);
 
-	if (php_process && php_process->isRunning ()) {
+	if (php_process) {
 		RK_DO (qDebug ("another template is already openend in this backend"), PHP, DL_ERROR);
 		return false;
 	}
 
 	QDir files_path (RKCommonFunctions::getRKWardDataDir () + "phpfiles/");
 	QString common_php = files_path.absoluteFilePath ("common.php");
-	QString php_ini = files_path.absoluteFilePath ("php.ini");
+	QString php_ini = files_path.absoluteFilePath ("php.ini");	// make sure to set good options
 	if (!QFileInfo (common_php).isReadable ()) {
 		KMessageBox::error (0, i18n ("The support file \"%1\" could not be found or is not readable. Please check your installation.", common_php), i18n ("PHP-Error"));
 		emit (haveError ());
 		return false;
 	}
 
-	php_process = new K3Process ();
-	*php_process << RKSettingsModulePHP::phpBin();
-	*php_process << "-c" << php_ini;	// set correct options
-	*php_process << common_php;
-	
-	// we have to be connected at all times! Otherwise the connection will be gone for good.
-	//connect (php_process, SIGNAL (receivedStderr (K3Process *, char*, int)), this, SLOT (gotError (K3Process *, char*, int)));
-	connect (php_process, SIGNAL (wroteStdin (K3Process *)), this, SLOT (doneWriting (K3Process* )));
-	connect (php_process, SIGNAL (receivedStdout (K3Process *, char*, int)), this, SLOT (gotOutput (K3Process *, char*, int)));
-	connect (php_process, SIGNAL (processExited (K3Process *)), this, SLOT (processDied (K3Process*)));
-	
-	if (!php_process->start (K3Process::NotifyOnExit, K3Process::All)) {
-		KMessageBox::error (0, i18n ("The PHP backend could not be started. Check whether you have correctly configured the location of the PHP-binary (Settings->Configure Settings->PHP backend)"), i18n ("PHP-Error"));
-		emit (haveError ());
-		return false;
-	}
+	php_process = new QProcess (this);
+	connect (php_process, SIGNAL (readyRead()), this, SLOT (gotOutput()));
+	connect (php_process, SIGNAL (error(QProcess::ProcessError)), this, SLOT (processError(QProcess::ProcessError)));
+	connect (php_process, SIGNAL (finished(int,QProcess::ExitStatus)), this, SLOT (processDead(int,QProcess::ExitStatus)));
 
-	busy_writing = doing_command = startup_done = false;
+	php_process->start (RKSettingsModulePHP::phpBin() + " -c " + php_ini + " " + common_php);
+
+	doing_command = startup_done = false;
 	busy = true;
 
 	// start the real template
@@ -94,40 +88,33 @@ bool PHPBackend::initialize (RKComponentPropertyCode *code_property, bool add_he
 
 void PHPBackend::destroy () {
 	RK_TRACE (PHP);
-
-	if (php_process) {
-		php_process->detach ();
-		php_process->deleteLater ();
-		php_process = 0;
+	if (!dead) {
+		dead = true;
+		php_process->kill ();
+		QTimer::singleShot (10000, this, SLOT (deleteLater()));	// don't wait for ever for the process to die, even if it's somewhat dangerous
 	}
-	
-	busy_writing = false;
+
 	busy = false;
 	
 	while (command_stack.count ()) {
-		delete command_stack.first ();
-		command_stack.pop_front ();
+		delete command_stack.takeFirst ();
 	}
-	
-	data_stack.clear ();
 }
 
 void PHPBackend::tryNextFunction () {
 	RK_TRACE (PHP);
 
-	if ((!busy_writing) && php_process && php_process->isRunning () && (!busy) && (!command_stack.isEmpty ())) {
+	if (php_process && (php_process->state () == QProcess::Running) && (!busy) && (!command_stack.isEmpty ())) {
 	/// clean up previous command if applicable
 		if (command_stack.first ()->complete) {
-			delete command_stack.first ();
-			command_stack.pop_front ();
+			delete command_stack.takeFirst ();
 			
 			if (!command_stack.count ()) return;
 		}
 		
 		RK_DO (qDebug ("submitting PHP code: %s", command_stack.first ()->command.toLatin1 ().data ()), PHP, DL_DEBUG);
-		current_command = command_stack.first ()->command + eot_string;
-		php_process->writeStdin (current_command.toLatin1 (), current_command.length ());
-		busy_writing = doing_command = busy = true;
+		php_process->write (QString (command_stack.first ()->command + eot_string).toLatin1 ());
+		doing_command = busy = true;
 		command_stack.first ()->complete = true;
 		current_flags = command_stack.first ()->flags;
 		current_type = command_stack.first ()->type;
@@ -136,36 +123,22 @@ void PHPBackend::tryNextFunction () {
 
 void PHPBackend::writeData (const QString &data) {
 	RK_TRACE (PHP);
-	data_stack.append (data + eot_string);
-	tryWriteData ();
-}
 
-void PHPBackend::tryWriteData () {
-	RK_TRACE (PHP);
-
-	if ((!busy_writing) && php_process && php_process->isRunning () && busy && (!data_stack.isEmpty ())) {
-		RK_DO (qDebug ("submitting data: %s", data_stack.first ().toLatin1 ().data ()), PHP, DL_DEBUG);
-		php_process->writeStdin (data_stack.first ().toLatin1 (), data_stack.first ().length ());
-		busy_writing = true;
-		doing_command = false;
-	}
-}
-
-void PHPBackend::doneWriting (K3Process *) {
-	RK_TRACE (PHP);
-
-	busy_writing = false;
-	if (!doing_command) data_stack.pop_front ();
-	tryWriteData ();
+	RK_DO (qDebug ("submitting data: %s", data.toLatin1 ().data ()), PHP, DL_DEBUG);
+	php_process->write (QString (data + eot_string).toLatin1 ());
 	tryNextFunction ();
 }
 
-void PHPBackend::gotOutput (K3Process *, char* buf, int) {
+void PHPBackend::gotOutput () {
 	RK_TRACE (PHP);
 
-	RK_DO (qDebug ("PHP transmission:\n%s", buf), PHP, DL_DEBUG);
+	qint64 len = php_process->bytesAvailable ();
+	if (!len) return;	// false alarm
 
-	output_raw_buffer += buf;
+	QByteArray buf = php_process->readAll ();
+	RK_DO (qDebug ("PHP transmission:\n%s", buf.data ()), PHP, DL_DEBUG);
+
+	output_raw_buffer.append (QString::fromLatin1 (buf));
 	QString request;
 	QString data;
 	int i, j;
@@ -193,7 +166,7 @@ void PHPBackend::gotOutput (K3Process *, char* buf, int) {
 	// pending data is always first in a stream, so process it first, too
 	if (have_data) {
 		if (!startup_done) {
-			php_process->detach ();
+			php_process->close ();
 			KMessageBox::error (0, i18n ("There has been an error\n(\"%1\")\nwhile starting up the PHP backend. Most likely this is due to either a bug in RKWard or a problem with your PHP installation. Check the settings (Settings->Configure Settings->PHP backend) and try again.", output_raw_buffer.trimmed ()), i18n ("PHP-Error"));
 			emit (haveError ());
 			destroy ();
@@ -223,7 +196,7 @@ void PHPBackend::gotOutput (K3Process *, char* buf, int) {
 //			writeData (res + eot_string);
 		} else if (request.startsWith ("PHP-Error")) {
 			QString error = request.remove ("PHP-Error");
-			php_process->detach ();
+			php_process->close ();
 			KMessageBox::error (0, i18n ("The PHP-backend has reported an error\n(\"%1\")\nand has been shut down. This is most likely due to a bug in the plugin. But of course you may want to try to close and restart the plugin to see whether it works with different settings.", error.trimmed ()), i18n ("PHP-Error"));
 			emit (haveError ());
 			destroy ();
@@ -234,16 +207,30 @@ void PHPBackend::gotOutput (K3Process *, char* buf, int) {
 	}
 }
 
-void PHPBackend::processDied (K3Process *) {
+void PHPBackend::processError (QProcess::ProcessError error) {
 	RK_TRACE (PHP);
 
-	if (php_process) {		// if the php_process is already 0, this means, we have caught an error message before the process died, have already shown a message, emitted haveError(), and called destroy()
-		php_process->detach ();
+	if (dead) return;	// we are already dead, so we've shown an error before.
+
+	php_process->close ();
+
+	if (error == QProcess::FailedToStart) {
+		KMessageBox::error (0, i18n ("The PHP backend could not be started. Check whether you have correctly configured the location of the PHP-binary (Settings->Configure Settings->PHP backend)"), i18n ("PHP-Error"));
+	} else {
 		KMessageBox::error (0, i18n ("The PHP-backend has died unexpectedly. The current output buffer is shown below:\n%1", output_raw_buffer), i18n ("PHP Process exited"));
-		emit (haveError ());
-		destroy ();
 	}
+
+	emit (haveError ());
+	destroy ();
 }
 
+void PHPBackend::processDead (int, QProcess::ExitStatus) {
+	RK_TRACE (PHP);
+
+	if (dead) {
+		php_process = 0;
+		deleteLater ();
+	} else destroy ();
+}
 
 #include "phpbackend.moc"

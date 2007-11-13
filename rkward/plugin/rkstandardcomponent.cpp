@@ -156,7 +156,7 @@ RKStandardComponent::~RKStandardComponent () {
 	RK_TRACE (PLUGIN);
 
 	if (gui) gui->deleteLater ();
-	delete backend;
+	backend->destroy ();	// it will self-destruct, when it has closed the process.
 }
 
 void RKStandardComponent::hide () {
