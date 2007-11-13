@@ -78,7 +78,7 @@ private:
 class RKCaughtX11WindowPart;
 class KToggleAction;
 class QXEmbedCopy;
-class Q3ScrollView;
+class QScrollArea;
 class KVBox;
 class RKProgressControl;
 class QX11EmbedContainer;
@@ -124,7 +124,7 @@ private:
 	int device_number;
 	WId embedded;
 	KVBox *xembed_container;
-	Q3ScrollView *scroll_widget;
+	QScrollArea *scroll_widget;
 	KVBox *box_widget;
 	RKProgressControl *error_dialog;
 	QX11EmbedContainer *capture;

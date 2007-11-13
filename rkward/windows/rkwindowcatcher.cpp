@@ -20,10 +20,6 @@
 #ifndef DISABLE_RKWINDOWCATCHER
 
 #include <qlayout.h>
-#include <q3vbox.h>
-//Added by qt3to4:
-#include <Q3Frame>
-#include <Q3VBoxLayout>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -69,15 +65,13 @@ void RKWindowCatcher::stop (int new_cur_device) {
 //////////////////////////////// BEGIN RKCaughtX11Window //////////////////////////////
 
 
-#include <q3scrollview.h>
-#include <q3vbox.h>
+#include <QScrollArea>
 #include <qlabel.h>
 #include <QX11EmbedContainer>
 
 #include <ktoggleaction.h>
 #include <kdialog.h>
 #include <knuminput.h>
-#include <kiconloader.h>
 #include <kvbox.h>
 #include <kwindowsystem.h>
 #include <kactioncollection.h>
@@ -104,12 +98,11 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	layout->setContentsMargins (0, 0, 0, 0);
 	box_widget = new KVBox (this);
 	layout->addWidget (box_widget);
-	scroll_widget = new Q3ScrollView (this);
-	scroll_widget->setFrameStyle (Q3Frame::NoFrame);
+	scroll_widget = new QScrollArea (this);
 	scroll_widget->hide ();
 	layout->addWidget (scroll_widget);
-	//KDE4 TODO: workaround below still needed?
-	xembed_container = new KVBox (box_widget);	// QXEmbed can not be reparented (between the box_widget, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead
+
+	xembed_container = new KVBox (box_widget);	// QX11EmbedContainer can not be reparented (between the box_widget, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead
 	dynamic_size = true;
 	dynamic_size_action->setChecked (true);
 
@@ -154,7 +147,7 @@ void RKCaughtX11Window::fixedSizeToggled () {
 	dynamic_size = dynamic_size_action->isChecked ();
 
 	if (dynamic_size_action->isChecked ()) {
-		scroll_widget->removeChild (xembed_container);
+		scroll_widget->takeWidget ();
 		xembed_container->reparent (box_widget, QPoint (0, 0), true);
 		scroll_widget->hide ();
 		box_widget->show ();
@@ -162,8 +155,7 @@ void RKCaughtX11Window::fixedSizeToggled () {
 		xembed_container->setMaximumSize (32767, 32767);
 	} else {
 		xembed_container->setFixedSize (xembed_container->size ());
-		xembed_container->reparent (scroll_widget->viewport (), QPoint (0, 0), true);
-		scroll_widget->addChild (xembed_container);
+		scroll_widget->setWidget (xembed_container);
 		box_widget->hide ();
 		scroll_widget->show ();
 	}

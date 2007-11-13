@@ -21,7 +21,7 @@
 #include <qobject.h>
 
 struct RCallbackArgs;
-class ShowEditTextFileDialog;
+class KDialog;
 
 /** The purpose of this agent is to display text files for showing and/or editing on request of the R backend. Technically speaking, it gets invoked, whenever the standard R callbacks (ptr_)R_ShowFiles, (ptr_)R_EditFiles, or (ptr_)R_EditFile are called. While the task of simply opening such files for display/editing is rather simple, there is one slightly more difficult issue involved (and hence this class to handle it): In standard R, all these calls are blocking further processing, until the user has closed the shown/edited files. In some cases this may be necessary (for instance if R wants to use with the edited files immediately), in some cases this is an unnecessary nuisance (such as when R simply wants to display a help page or some other purely informational text).
 
@@ -50,22 +50,7 @@ public slots:
 	void done ();
 private:
 	RCallbackArgs *args;
-	ShowEditTextFileDialog *dialog;
-};
-
-#include <kdialog.h>
-
-/** Mini helper class of ShowEditTextFileAgent. Do not use outside of ShowEditTextFileAgent. 
-
-TODO: might be renamed / reused as a more generic non-modal information dialog */
-
-class ShowEditTextFileDialog : public KDialog {
-	public:
-/** constructor
-@param text: Text to display in the dialog */
-	ShowEditTextFileDialog (const QString &text, const QString &caption);
-/** destructor */
-	~ShowEditTextFileDialog ();
+	KDialog *dialog;
 };
 
 #endif

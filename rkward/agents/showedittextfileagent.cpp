@@ -18,12 +18,12 @@
 #include "showedittextfileagent.h"
 
 #include <klocale.h>
+#include <kdialog.h>
 
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qfile.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
@@ -39,9 +39,26 @@ ShowEditTextFileAgent::ShowEditTextFileAgent (RCallbackArgs *args, const QString
 
 	ShowEditTextFileAgent::args = args;
 
-	dialog = new ShowEditTextFileDialog (text, caption);
+	dialog = new KDialog (0);
+
+	// dialog setup
+	dialog->setCaption (caption);
+	dialog->setButtons (KDialog::Ok);
+	dialog->setModal (false);
+
+	QWidget *page = new QWidget (dialog);
+	dialog->setMainWidget (page);
+	QVBoxLayout *layout = new QVBoxLayout (page);
+	layout->setContentsMargins (0, 0, 0, 0);
+	QLabel *label = new QLabel (text, page);
+	label->setWordWrap (true);
+	layout->addWidget (label);
+
+	dialog->setButtonText (KDialog::Ok, i18n ("Done"));
+
 	connect (dialog, SIGNAL (finished ()), this, SLOT (done ()));
 
+	// do it
 	dialog->show ();
 }
 
@@ -120,30 +137,6 @@ void ShowEditTextFileAgent::done () {
 	MUTEX_UNLOCK;
 
 	deleteLater ();
-}
-
-///################# END ShowEditTextFileAgent ##################
-///################# BEGIN ShowEditTextFileDialog #################
-
-ShowEditTextFileDialog::ShowEditTextFileDialog (const QString &text, const QString &caption) : KDialog ((QWidget*) 0) {
-	RK_TRACE (APP);
-
-	setCaption (caption);
-	setButtons (KDialog::Ok);
-	setModal (false);
-
-	QWidget *page = new QWidget (this);
-	setMainWidget (page);
-	Q3VBoxLayout *layout = new Q3VBoxLayout (page, 0, spacingHint ());
-	QLabel *label = new QLabel (text, page);
-	label->setWordWrap (true);
-	layout->addWidget (label);
-
-	setButtonText (KDialog::Ok, i18n ("Done"));
-}
-
-ShowEditTextFileDialog::~ShowEditTextFileDialog () {
-	RK_TRACE (APP);
 }
 
 #include "showedittextfileagent.moc"
