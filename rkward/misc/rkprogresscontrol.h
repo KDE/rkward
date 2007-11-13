@@ -28,7 +28,6 @@ class QCloseEvent;
 class QDialog;
 class QLabel;
 class QTextEdit;
-class KVBox;
 
 class RKProgressControlDialog;
 
@@ -123,10 +122,8 @@ public:
 protected:
 	void closeEvent (QCloseEvent *e);
 private:
-	QLabel *output_caption;
 	QLabel *error_indicator;
 	QTextEdit *output_text;
-	KVBox *output_box;
 
 	QString output_button_text;
 

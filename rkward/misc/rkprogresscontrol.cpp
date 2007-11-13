@@ -209,7 +209,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 	error_indicator->setPaletteForegroundColor (QColor (255, 0, 0));
 	error_indicator->hide ();
 
-	output_box = new KVBox ();
+	KVBox* output_box = new KVBox ();
 	if (mode_flags & (RKProgressControl::IncludeErrorOutput | RKProgressControl::IncludeRegularOutput)) {
 		QString ocaption;
 		if (mode_flags & RKProgressControl::IncludeRegularOutput) {
@@ -219,7 +219,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 			output_button_text = i18n ("Errors / Warnings");
 			ocaption = i18n ("Errors / Warnings:");
 		}
-		output_caption = new QLabel (ocaption, output_box);
+		new QLabel (ocaption, output_box);
 
 		output_text = new QTextEdit (output_box);
 		output_text->setReadOnly (true);
@@ -239,6 +239,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 	if (mode_flags & RKProgressControl::AllowCancel) setButtonText (KDialog::Cancel, i18n ("Cancel"));
 	else (setCloseTextToClose ());
 
+#warning TODO the KDialog size adjustment seems to be somewhat buggy in current kdelibs. Investigate later.
 	setDetailsWidgetVisible (mode_flags & RKProgressControl::OutputShownByDefault);
 
 	prevent_close = (mode_flags & RKProgressControl::PreventClose);
@@ -281,7 +282,7 @@ void RKProgressControlDialog::done () {
 
 	is_done = true;
 	setCloseTextToClose ();
-	if (!output_box->isShown ()) reject ();
+	if (!isDetailsWidgetVisible ()) reject ();
 }
 
 void RKProgressControlDialog::closeEvent (QCloseEvent *e) {

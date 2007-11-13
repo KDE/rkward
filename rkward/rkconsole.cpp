@@ -86,8 +86,16 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	Apparently, things will be different in KDE 4.*/
 	kate_edit_actions = view->findChild<KActionCollection*> ("edit_actions");
 	if (kate_edit_actions) {
-		// so they never get activated by shortcuts
-		kate_edit_actions->clearAssociatedWidgets ();
+		// make sure these actions never get triggered by a shortcut
+		QList<QKeySequence> noshort;
+		noshort.append (QKeySequence ());	// no primary
+		noshort.append (QKeySequence ());	// no secondary
+		noshort.append (QKeySequence ());	// for good measure
+
+		QList<QAction*> keas = kate_edit_actions->actions ();
+		for (int i = 0; i < keas.size (); ++i) {
+			keas[i]->setShortcuts (noshort);
+		}
 	} else {
 		RK_DO (qDebug ("Could not retrieve the katepart's edit action collection"), APP, DL_ERROR);
 	}
@@ -121,6 +129,11 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	current_command = 0;
 	tab_key_pressed_before = false;
 	command_was_piped = false;
+
+// Somehow, in a KDE4 pre-version, this widget reacts real bad, if its parent is shown, before itself is shown
+// probably the kate part is to blame.
+// so we need to set it to visible, explicitely (this will not acutally show it, as the parent is still hidden).
+	show ();
 }
 
 RKConsole::~RKConsole () {
