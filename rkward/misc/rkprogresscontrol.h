@@ -18,19 +18,17 @@
 #define RKPROGRESSCONTROL_H
 
 #include <qobject.h>
-//Added by qt3to4:
-#include <QLabel>
-#include <Q3ValueList>
-#include <QCloseEvent>
+#include <QList>
+#include <qstring.h>
+#include <kdialog.h>
+
 #include "../rbackend/rcommandreceiver.h"
 
-#include <qstring.h>
-#include <qdialog.h>
-
+class QCloseEvent;
 class QDialog;
 class QLabel;
-class Q3TextEdit;
-class Q3VBox;
+class QTextEdit;
+class KVBox;
 
 class RKProgressControlDialog;
 
@@ -96,7 +94,7 @@ private:
 	void createDialog ();
 
 	RKProgressControlDialog *dialog;
-	Q3ValueList<ROutput> output_log;
+	QList<ROutput> output_log;
 
 	RCommand *done_command;
 
@@ -112,8 +110,7 @@ protected:
 };
 
 /** This class provides the dialog shown as part of an RKProgressControl. Generally you should not use this class directly, but rather use RKProgressControl. */
-class RKProgressControlDialog : public QDialog {
-	Q_OBJECT
+class RKProgressControlDialog : public KDialog {
 public:
 /** constructor. */
 	RKProgressControlDialog (const QString &text, const QString &caption, int mode_flags, bool modal);
@@ -123,22 +120,17 @@ public:
 	void addOutput (const ROutput *output);
 	void setCloseTextToClose ();
 	void done ();
-public slots:
-	void toggleOutputButtonPressed ();
 protected:
 	void closeEvent (QCloseEvent *e);
 private:
 	QLabel *output_caption;
 	QLabel *error_indicator;
-	Q3TextEdit *output_text;
-	Q3VBox *output_box;
+	QTextEdit *output_text;
+	KVBox *output_box;
 
-	QString show_output_text;
-	QString hide_output_text;
+	QString output_button_text;
 
-	QPushButton *close_button;
-	QPushButton *toggle_output_button;
-
+	ROutput::ROutputType last_output_type;
 	bool prevent_close;
 	bool is_done;
 };

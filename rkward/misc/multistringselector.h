@@ -22,7 +22,8 @@
 #include <qstringlist.h>
 #include <qstring.h>
 
-class Q3ListView;
+class QTreeWidget;
+class QTreeWidgetItem;
 class QPushButton;
 
 /** This convenience widget allows to select one or more strings (e.g. filenames) and sort them in any order. The function to acutally select new strings to add to the selection is not implemented in this class for more flexibility. Rather, connect to the getNewStrings () signal and assign the desired QString(s) in a custom slot.
@@ -47,7 +48,10 @@ public slots:
 	void downButtonClicked ();
 	void listSelectionChanged ();
 private:
-	Q3ListView* list_view;
+/** convenience function to get the (single) selected item of the tree_view, or 0 if no item is selected */
+	QTreeWidgetItem* treeSelectedItem () const;
+
+	QTreeWidget* tree_view;
 	QPushButton* add_button;
 	QPushButton* remove_button;
 	QPushButton* up_button;

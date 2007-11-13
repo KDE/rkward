@@ -231,6 +231,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 
 void RKLoadLibsDialog::installationProcessOutput (K3Process *, char *buffer, int buflen) {
 	RK_TRACE (DIALOGS);
+#warning We seem to handle newlines badly, here. But then, we need to port to QProcess, anyway.
 	emit (installationOutput (Q3CString (buffer, buflen)));
 }
 

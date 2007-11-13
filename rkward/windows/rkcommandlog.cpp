@@ -96,7 +96,7 @@ void RKCommandLog::addInputNoCheck (RCommand *command) {
 
 	log_view->setFontItalic (true);
 
-	log_view->insert (command->command () + '\n');
+	log_view->insertPlainText (command->command () + '\n');
 
 	checkRaiseWindow (command);
 	linesAdded ();
@@ -123,7 +123,7 @@ void RKCommandLog::addOutputNoCheck (RCommand *command, ROutput *output) {
 		log_view->textCursor ().mergeBlockFormat (f);
 	}
 
-	log_view->insert (output->output);
+	log_view->insertPlainText (output->output);
 
 	if (output->type != ROutput::Output) {
 		QTextBlockFormat f;
@@ -189,7 +189,7 @@ void RKCommandLog::rCommandDone (RCommand *command) {
 		}
 	}
 
-	if (RKSettingsModuleWatch::shouldShowOutput (command)) log_view->insert ("\n");
+	if (RKSettingsModuleWatch::shouldShowOutput (command)) log_view->insertPlainText ("\n");
 }
 
 void RKCommandLog::settingsChanged (RKSettings::SettingsPage page) {

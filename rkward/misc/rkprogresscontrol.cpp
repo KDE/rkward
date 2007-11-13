@@ -17,17 +17,16 @@
 
 #include "rkprogresscontrol.h"
 
+#include <QHBoxLayout>
+#include <QCloseEvent>
+#include <QVBoxLayout>
+
 #include <klocale.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
 
 #include "../debug.h"
-//Added by qt3to4:
-#include <Q3HBoxLayout>
-#include <QCloseEvent>
-#include <Q3ValueList>
-#include <Q3VBoxLayout>
 
 RKProgressControl::RKProgressControl (QObject *parent, const QString &text, const QString &caption, int mode_flags) : QObject (parent) {
 	RK_TRACE (MISC);
@@ -146,7 +145,6 @@ void RKProgressControl::done () {
 
 	is_done = true;
 	if (dialog) {
-		dialog->setCloseTextToClose ();
 		dialog->done ();
 	}
 
@@ -162,8 +160,8 @@ void RKProgressControl::createDialog () {
 	dialog = new RKProgressControlDialog (text, caption, mode, modal);
 	connect (dialog, SIGNAL (destroyed ()), this, SLOT (dialogDestroyed ()));
 	if (is_done) done ();
-	for (Q3ValueList<ROutput>::const_iterator it = output_log.begin (); it != output_log.end (); ++it) {
-		dialog->addOutput (&(*it));
+	for (int i = 0; i < output_log.count (); ++i) {
+		dialog->addOutput (&(output_log[i]));
 	}
 }
 
@@ -189,69 +187,63 @@ void RKProgressControl::rCommandDone (RCommand * command) {
 //////////////////////////// RKProgressControlDialog ///////////////////////////////////////////7
 
 #include <qlayout.h>
-#include <q3textedit.h>
+#include <QTextEdit>
 #include <qlabel.h>
-#include <qpushbutton.h>
-#include <q3vbox.h>
 
-RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QString &caption, int mode_flags, bool modal) : QDialog (0, 0, modal, Qt::WDestructiveClose) {
+#include <kvbox.h>
+#include <kstandardguiitem.h>
+
+RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QString &caption, int mode_flags, bool modal) : KDialog (0, Qt::WDestructiveClose) {
 	RK_TRACE (MISC);
 
+	setModal (modal);
 	setCaption (caption);
 
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::marginHint (), RKGlobals::spacingHint ());
+	KVBox *vbox = new KVBox (this);
+	setMainWidget (vbox);
 
-	QLabel *label = new QLabel (text, this);
+	QLabel *label = new QLabel (text, vbox);
 	label->setWordWrap (true);
-	vbox->addWidget (label);
 
-	error_indicator = new QLabel (i18n ("<b>There have been errors and / or warnings! See below for a transcript</b>"), this);
+	error_indicator = new QLabel (i18n ("<b>There have been errors and / or warnings! See below for a transcript</b>"), vbox);
 	error_indicator->setPaletteForegroundColor (QColor (255, 0, 0));
 	error_indicator->hide ();
-	vbox->addWidget (error_indicator);
 
-	output_box = new Q3VBox (this);
-	vbox->addWidget (output_box);
+	output_box = new KVBox ();
 	if (mode_flags & (RKProgressControl::IncludeErrorOutput | RKProgressControl::IncludeRegularOutput)) {
 		QString ocaption;
 		if (mode_flags & RKProgressControl::IncludeRegularOutput) {
-			show_output_text = i18n ("Show Output");
-			hide_output_text = i18n ("Hide Output");
+			output_button_text = i18n ("Output");
 			ocaption = i18n ("Output:");
 		} else {
-			show_output_text = i18n ("Show Errors / Warnings");
-			hide_output_text = i18n ("Hide Errors / Warnings");
+			output_button_text = i18n ("Errors / Warnings");
 			ocaption = i18n ("Errors / Warnings:");
 		}
 		output_caption = new QLabel (ocaption, output_box);
 
-		output_text = new Q3TextEdit (output_box);
+		output_text = new QTextEdit (output_box);
 		output_text->setReadOnly (true);
-		output_text->setTextFormat (Qt::PlainText);
+		output_text->setPlainText (QString ());
 		output_text->setUndoRedoEnabled (false);
 
 		if (!(mode_flags & RKProgressControl::OutputShownByDefault)) {
 			output_box->hide ();
 		}
 	}
+	setDetailsWidget (output_box);
 
-	Q3HBoxLayout *button_layout = new Q3HBoxLayout (0, 0, RKGlobals::spacingHint ());
-	vbox->addLayout (button_layout);
+	KDialog::ButtonCodes button_codes = KDialog::Cancel;
+	if (mode_flags & RKProgressControl::OutputSwitchable) button_codes |= KDialog::Details;
+	setButtons (button_codes);
+	setButtonText (KDialog::Details, output_button_text);
+	if (mode_flags & RKProgressControl::AllowCancel) setButtonText (KDialog::Cancel, i18n ("Cancel"));
+	else (setCloseTextToClose ());
 
-	toggle_output_button = new QPushButton (show_output_text, this);
-	if (!(mode_flags & RKProgressControl::OutputSwitchable)) toggle_output_button->hide ();
-	if (mode_flags & RKProgressControl::OutputShownByDefault) toggle_output_button->setText (hide_output_text);
-	connect (toggle_output_button, SIGNAL (clicked ()), this, SLOT (toggleOutputButtonPressed ()));
-	button_layout->addWidget (toggle_output_button);
-	button_layout->addStretch ();
-
-	close_button = new QPushButton (QString::null, this);
-	if (mode_flags & RKProgressControl::AllowCancel) close_button->setText (i18n ("Cancel"));
-	else setCloseTextToClose ();
-	connect (close_button, SIGNAL (clicked ()), this, SLOT (reject ()));
-	button_layout->addWidget (close_button);
+	setDetailsWidgetVisible (mode_flags & RKProgressControl::OutputShownByDefault);
 
 	prevent_close = (mode_flags & RKProgressControl::PreventClose);
+
+	last_output_type = ROutput::Output;
 	is_done = false;
 }
 
@@ -262,38 +254,33 @@ RKProgressControlDialog::~RKProgressControlDialog () {
 void RKProgressControlDialog::addOutput (const ROutput *output) {
 	RK_TRACE (MISC);
 
-	if (output->type != ROutput::Output) {
-		output_text->setColor (Qt::red);
-		if (!output_box->isShown ()) toggleOutputButtonPressed ();
-		error_indicator->show ();
+	if (output->type != last_output_type) {
+		output_text->insertPlainText ("\n");
+
+		if (output->type == ROutput::Output) {
+			output_text->setColor (Qt::black);
+		} else {
+			output_text->setColor (Qt::red);
+			setDetailsWidgetVisible (true);
+			error_indicator->show ();
+		}
 	}
 
-	output_text->append (output->output);
-	output_text->setColor (Qt::black);
+	output_text->insertPlainText (output->output);
 }
 
 void RKProgressControlDialog::setCloseTextToClose () {
 	RK_TRACE (MISC);
 
-	close_button->setText (i18n ("Done"));
-}
-
-void RKProgressControlDialog::toggleOutputButtonPressed () {
-	RK_TRACE (MISC);
-
-	if (output_box->isShown ()) {
-		output_box->hide ();
-		toggle_output_button->setText (show_output_text);
-	} else {
-		output_box->show ();
-		toggle_output_button->setText (hide_output_text);
-	}
+	setButtonGuiItem (KDialog::Cancel, KStandardGuiItem::ok ());
+	setButtonText (KDialog::Cancel, i18n ("Done"));
 }
 
 void RKProgressControlDialog::done () {
 	RK_TRACE (MISC);
 
 	is_done = true;
+	setCloseTextToClose ();
 	if (!output_box->isShown ()) reject ();
 }
 
@@ -303,7 +290,7 @@ void RKProgressControlDialog::closeEvent (QCloseEvent *e) {
 	if (prevent_close && (!is_done)) {
 		e->ignore ();
 	} else {
-		QDialog::closeEvent (e);
+		KDialog::closeEvent (e);
 	}
 }
 

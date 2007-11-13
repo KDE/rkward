@@ -22,8 +22,6 @@
 
 #include "../debug.h"
 #include "../rkglobals.h"
-//Added by qt3to4:
-#include <Q3ValueList>
 
 #define MAX_RECEIVERS 3
 

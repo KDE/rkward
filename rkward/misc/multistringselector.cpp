@@ -17,13 +17,12 @@
 
 #include "multistringselector.h"
 
-#include <q3listview.h>
+#include <QTreeWidget>
 #include <qpushbutton.h>
 #include <qlayout.h>
 #include <qlabel.h>
-//Added by qt3to4:
-#include <Q3HBoxLayout>
-#include <Q3VBoxLayout>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 
 #include <klocale.h>
 
@@ -33,20 +32,23 @@
 MultiStringSelector::MultiStringSelector (const QString& label, QWidget* parent) : QWidget (parent) {
 	RK_TRACE (MISC);
 
-	Q3HBoxLayout *hbox = new Q3HBoxLayout (this, RKGlobals::spacingHint ());
+	QHBoxLayout *hbox = new QHBoxLayout (this);
+	hbox->setContentsMargins (0, 0, 0, 0);
 
-	Q3VBoxLayout *main_box = new Q3VBoxLayout (hbox, RKGlobals::spacingHint ());
-	Q3VBoxLayout *button_box = new Q3VBoxLayout (hbox, RKGlobals::spacingHint ());
+	QVBoxLayout *main_box = new QVBoxLayout (hbox);
+	main_box->setContentsMargins (0, 0, 0, 0);
+	QVBoxLayout *button_box = new QVBoxLayout (hbox);
+	button_box->setContentsMargins (0, 0, 0, 0);
 
 	QLabel *label_widget = new QLabel (label, this);
 	main_box->addWidget (label_widget);
 
-	list_view = new Q3ListView (this);
-	list_view->addColumn (i18n ("Filename"));
-	list_view->setSelectionMode (Q3ListView::Single);
-	list_view->setSorting (-1);
-	connect (list_view, SIGNAL (selectionChanged ()), this, SLOT (listSelectionChanged ()));
-	main_box->addWidget (list_view);
+	tree_view = new QTreeWidget (this);
+	tree_view->setHeaderLabel (i18n ("Filename"));
+	tree_view->setSelectionMode (QAbstractItemView::SingleSelection);
+	tree_view->setSortingEnabled (false);
+	connect (tree_view, SIGNAL (itemSelectionChanged ()), this, SLOT (listSelectionChanged ()));
+	main_box->addWidget (tree_view);
 
 	add_button = new QPushButton (i18n ("Add"), this);
 	connect (add_button, SIGNAL (clicked ()), this, SLOT (addButtonClicked ()));
@@ -79,11 +81,11 @@ QStringList MultiStringSelector::getValues () {
 	RK_TRACE (MISC);
 
 	QStringList list;
-	Q3ListViewItem *item = list_view->firstChild ();
-	
-	while (item) {
+	for (int i = 0; i < tree_view->topLevelItemCount (); ++i) {
+		QTreeWidgetItem* item = tree_view->topLevelItem (i);
+		RK_ASSERT (item);
 		list.append (item->text (0));
-		item = item->nextSibling ();
+
 	}
 
 	return list;
@@ -92,9 +94,9 @@ QStringList MultiStringSelector::getValues () {
 void MultiStringSelector::setValues (const QStringList& values) {
 	RK_TRACE (MISC);
 
-	list_view->clear ();
+	tree_view->clear ();
 	for (QStringList::const_iterator it = values.begin (); it != values.end (); ++it) {
-		Q3ListViewItem *item = new Q3ListViewItem (list_view, list_view->lastItem ());
+		QTreeWidgetItem* item = new QTreeWidgetItem (tree_view);
 		item->setText (0, (*it));
 	}
 	listSelectionChanged ();
@@ -104,50 +106,72 @@ void MultiStringSelector::setValues (const QStringList& values) {
 void MultiStringSelector::addButtonClicked () {
 	RK_TRACE (MISC);
 
+	tree_view->setFocus ();
 	QStringList new_strings;
 	emit (getNewStrings (&new_strings));
 	for (QStringList::const_iterator it = new_strings.begin (); it != new_strings.end (); ++it) {
-		Q3ListViewItem *item = new Q3ListViewItem (list_view, list_view->lastItem ());
+		QTreeWidgetItem* item = new QTreeWidgetItem (tree_view);
 		item->setText (0, (*it));
 	}
 	emit (listChanged ());
 	listSelectionChanged ();		// update button states
 }
 
+QTreeWidgetItem* MultiStringSelector::treeSelectedItem () const {
+	RK_TRACE (MISC);
+
+	QList<QTreeWidgetItem *> sel = tree_view->selectedItems ();
+	if (sel.isEmpty ()) return 0;
+	RK_ASSERT (sel.count () == 1);
+	return sel[0];
+}
+
 void MultiStringSelector::removeButtonClicked () {
 	RK_TRACE (MISC);
 
-	delete (list_view->selectedItem ());
+	tree_view->setFocus ();
+	delete (treeSelectedItem ());
 	emit (listChanged ());
 }
 
 void MultiStringSelector::upButtonClicked () {
 	RK_TRACE (MISC);
 
-	Q3ListViewItem *sel = list_view->selectedItem ();
-	RK_ASSERT (sel);
-
-	Q3ListViewItem *above = sel->itemAbove ();
-	if (above) {
-		above->moveItem (sel);
+	tree_view->setFocus ();
+	QTreeWidgetItem* sel = treeSelectedItem ();
+	if (!sel) {
+		RK_ASSERT (false);
+		return;
 	}
+	int pos = tree_view->indexOfTopLevelItem (sel);
+	if (pos <= 0) return;	// already at top
+
+	tree_view->insertTopLevelItem (pos - 1, tree_view->takeTopLevelItem (pos));
+	tree_view->setCurrentItem (sel);
 	emit (listChanged ());
 }
 
 void MultiStringSelector::downButtonClicked () {
 	RK_TRACE (MISC);
 
-	Q3ListViewItem *sel = list_view->selectedItem ();
-	RK_ASSERT (sel);
+	tree_view->setFocus ();
+	QTreeWidgetItem* sel = treeSelectedItem ();
+	if (!sel) {
+		RK_ASSERT (false);
+		return;
+	}
+	int pos = tree_view->indexOfTopLevelItem (sel);
+	if (pos >= (tree_view->topLevelItemCount () - 1)) return;	// already at bottom
 
-	if (sel->nextSibling ()) sel->moveItem (sel->nextSibling ());
+	tree_view->insertTopLevelItem (pos + 1, tree_view->takeTopLevelItem (pos));
+	tree_view->setCurrentItem (sel);
 	emit (listChanged ());
 }
 
 void MultiStringSelector::listSelectionChanged () {
 	RK_TRACE (MISC);
 
-	if (list_view->selectedItem ()) {
+	if (treeSelectedItem ()) {
 		remove_button->setEnabled (true);
 		up_button->setEnabled (true);
 		down_button->setEnabled (true);
