@@ -19,11 +19,10 @@
 
 #include <qdom.h>
 #include <qlabel.h>
-#include <qlayout.h>
-#include <Q3VButtonGroup>
+#include <QButtonGroup>
+#include <QGroupBox>
 #include <qradiobutton.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include <klocale.h>
 
@@ -38,20 +37,18 @@ RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWi
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	// create layout
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+	vbox->setContentsMargins (0, 0, 0, 0);
 
 	// create ButtonGroup
-	group = new Q3VButtonGroup (xml->getStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
-
-	// adjust internal layout for the buttons in the ButtonGroup
-	RK_ASSERT (group->layout ());
-	group->layout()->setSpacing (RKGlobals::spacingHint ());
-	group->layout()->setMargin (RKGlobals::marginHint ());
+	group = new QButtonGroup (this);
+	group_box = new QGroupBox (xml->getStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
+	new QVBoxLayout (group_box);
 
 	addOptionsAndInit (element);
 
-	vbox->addWidget (group);
-	connect (group, SIGNAL (clicked (int)), this, SLOT (itemSelected (int)));
+	vbox->addWidget (group_box);
+	connect (group, SIGNAL (buttonClicked (int)), this, SLOT (itemSelected (int)));
 }
 
 RKRadio::~RKRadio(){
@@ -61,20 +58,22 @@ RKRadio::~RKRadio(){
 void RKRadio::setItemInGUI (int id) {
 	RK_TRACE (PLUGIN);
 
-	group->setButton (id);
+	QAbstractButton *button = group->button (id);
+	if (button) button->setChecked (true);
 }
 
 void RKRadio::addOptionToGUI (const QString &label, int id) {
 	RK_TRACE (PLUGIN);
 
-	QRadioButton *button = new QRadioButton (label, group);
-	group->insert (button, id);
+	QRadioButton *button = new QRadioButton (label, group_box);
+	group->addButton (button, id);
+	group_box->layout ()->addWidget (button);
 }
 
 void RKRadio::setItemEnabledInGUI (int id, bool enabled) {
 	RK_TRACE (PLUGIN);
 
-	QAbstractButton *button = group->find (id);
+	QAbstractButton *button = group->button (id);
 	RK_ASSERT (button);
 	button->setEnabled (enabled);
 }

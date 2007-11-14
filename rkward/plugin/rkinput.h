@@ -22,13 +22,11 @@
 
 #include "rkcomponentproperties.h"
 
-class Q3TextEdit;
+class QTextEdit;
 class QLineEdit;
 class QDomElement;
 
 /** A component to enter plain text
-
-TODO: Use separate internal widgets for single line and multi line input
 
 @author Adrien d'Hardemare
 */
@@ -53,7 +51,7 @@ protected:
 private:
 	void updateColor ();
 	bool updating;
-	Q3TextEdit *textedit;
+	QTextEdit *textedit;
 	QLineEdit *lineedit;
 };
 

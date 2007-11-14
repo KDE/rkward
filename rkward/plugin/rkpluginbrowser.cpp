@@ -17,9 +17,7 @@
 
 #include "rkpluginbrowser.h"
 
-#include <qlayout.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include <klocale.h>
 
@@ -41,7 +39,8 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 	setRequired (xml->getBoolAttribute (element, "required", true, DL_INFO));
 	connect (requirednessProperty (), SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (requirednessChanged(RKComponentPropertyBase*)));
 
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+	vbox->setContentsMargins (0, 0, 0, 0);
 
 	int intmode = xml->getMultiChoiceAttribute (element, "type", "file;dir;savefile", 0, DL_INFO);
 	GetFileNameWidget::FileType mode;

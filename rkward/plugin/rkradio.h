@@ -2,7 +2,7 @@
                           rkradio.h  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -20,7 +20,8 @@
 
 #include "rkabstractoptionselector.h"
 
-class Q3ButtonGroup;
+class QButtonGroup;
+class QGroupBox;
 
 /** This RKPluginWidget provides a group of radio-buttons for use in plugins.
 @author Thomas Friedrichsmeier
@@ -36,7 +37,8 @@ protected:
 	void addOptionToGUI (const QString &label, int id);
 	void setItemEnabledInGUI (int id, bool enabled);
 private:
-	Q3ButtonGroup *group;
+	QButtonGroup* group;
+	QGroupBox* group_box;
 };
 
 #endif

@@ -17,12 +17,10 @@
 
 #include "rkinput.h"
 
-#include <qlayout.h>
-#include <q3textedit.h>
+#include <QTextEdit>
 #include <qlineedit.h>
 #include <qlabel.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include <klocale.h>
 
@@ -47,15 +45,17 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 	connect (requirednessProperty (), SIGNAL (valueChanged (RKComponentPropertyBase*)), this, SLOT (requirednessChanged (RKComponentPropertyBase*)));
 
 	// do all the layouting
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+	vbox->setContentsMargins (0, 0, 0, 0);
 	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Enter text"), DL_INFO), this);
 	vbox->addWidget (label);
 
 	int size = xml->getMultiChoiceAttribute (element, "size", "small;medium;large", 1, DL_INFO);
 	if (size == 2) {
-		textedit = new Q3TextEdit (this);
-		int lheight = textedit->fontMetrics ().lineSpacing ();
-		int margin = textedit->height () - textedit->visibleHeight () + textedit->fontMetrics ().descent () + 2;
+		textedit = new QTextEdit (this);
+		QFontMetrics fm = QFontMetrics (textedit->currentFont ());
+		int lheight = fm.lineSpacing ();
+		int margin = fm.descent () + 2;
 		textedit->setMinimumSize (250, lheight * 4 + margin);
 
 		vbox->addWidget (textedit);
