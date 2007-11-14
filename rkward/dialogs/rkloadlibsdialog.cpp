@@ -18,7 +18,7 @@
 
 #include <qwidget.h>
 #include <qlayout.h>
-#include <q3listview.h>
+#include <QTreeWidget>
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qcheckbox.h>
@@ -27,10 +27,7 @@
 #include <qtimer.h>
 #include <qtextstream.h>
 //Added by qt3to4:
-#include <Q3HBoxLayout>
 #include <Q3CString>
-#include <Q3Frame>
-#include <Q3VBoxLayout>
 #include <QCloseEvent>
 
 #include <klocale.h>
@@ -255,23 +252,25 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	RK_TRACE (DIALOGS);
 	LoadUnloadWidget::parent = dialog;
 	
-	Q3VBoxLayout *mvbox = new Q3VBoxLayout (this, 0, KDialog::spacingHint ());
+	QVBoxLayout *mvbox = new QVBoxLayout (this);
+	mvbox->setContentsMargins (0, 0, 0, 0);
 	QLabel *label = new QLabel (i18n ("There are no safeguards against removing essential packages. For example, unloading \"rkward\" will prevent this application from running properly. Please be careful about the packages you unload."), this);
 	label->setWordWrap (true);
 	mvbox->addWidget (label);
 	
-	Q3HBoxLayout *hbox = new Q3HBoxLayout (mvbox, KDialog::spacingHint ());
-	Q3VBoxLayout *instvbox = new Q3VBoxLayout (hbox, KDialog::spacingHint ());
-	Q3VBoxLayout *buttonvbox = new Q3VBoxLayout (hbox, KDialog::spacingHint ());
-	Q3VBoxLayout *loadedvbox = new Q3VBoxLayout (hbox, KDialog::spacingHint ());
+	QHBoxLayout *hbox = new QHBoxLayout (mvbox);
+	hbox->setContentsMargins (0, 0, 0, 0);
+	QVBoxLayout *instvbox = new QVBoxLayout (hbox);
+	instvbox->setContentsMargins (0, 0, 0, 0);
+	QVBoxLayout *buttonvbox = new QVBoxLayout (hbox);
+	buttonvbox->setContentsMargins (0, 0, 0, 0);
+	QVBoxLayout *loadedvbox = new QVBoxLayout (hbox);
+	loadedvbox->setContentsMargins (0, 0, 0, 0);
 	
 	label = new QLabel (i18n ("Installed packages"), this);
-	installed_view = new Q3ListView (this);
-	installed_view->addColumn (i18n ("Name"));
-	installed_view->addColumn (i18n ("Title"));
-	installed_view->addColumn (i18n ("Version"));
-	installed_view->addColumn (i18n ("Location"));
-	installed_view->setSelectionMode (Q3ListView::Extended);
+	installed_view = new QTreeWidget (this);
+	installed_view->setHeaderLabels (QStringList () << i18n ("Name") << i18n ("Title") << i18n ("Version") << i18n ("Location"));
+	installed_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
 	instvbox->addWidget (label);
 	instvbox->addWidget (installed_view);
 	
@@ -285,9 +284,9 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	buttonvbox->addStretch (2);
 	
 	label = new QLabel (i18n ("Loaded packages"), this);
-	loaded_view = new Q3ListView (this);
-	loaded_view->addColumn (i18n ("Name"));
-	loaded_view->setSelectionMode (Q3ListView::Extended);
+	loaded_view = new QTreeWidget (this);
+	loaded_view->setHeaderLabel (i18n ("Name"));
+	loaded_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
 	loadedvbox->addWidget (label);
 	loadedvbox->addWidget (loaded_view);
 
@@ -320,16 +319,23 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 		RK_ASSERT (count == version->getDataLength ());
 		RK_ASSERT (count == libpath->getDataLength ());
 		for (unsigned int i=0; i < count; ++i) {
-			new Q3ListViewItem (installed_view, package->getStringVector ()[i], title->getStringVector ()[i], version->getStringVector ()[i], libpath->getStringVector ()[i]);
+			QTreeWidgetItem* item = new QTreeWidgetItem (installed_view);
+			item->setText (0, package->getStringVector ()[i]);
+			item->setText (1, title->getStringVector ()[i]);
+			item->setText (2, version->getStringVector ()[i]);
+			item->setText (3, libpath->getStringVector ()[i]);
 		}
+		installed_view->resizeColumnToContents (0);
 	} else if (command->getFlags () == GET_LOADED_PACKAGES) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 
 		loaded_view->clear ();
 
 		for (unsigned int i=0; i < command->getDataLength (); ++i) {
-			new Q3ListViewItem (loaded_view, command->getStringVector ()[i]);
+			QTreeWidgetItem* item = new QTreeWidgetItem (loaded_view);
+			item->setText (0, command->getStringVector ()[i]);
 		}
+		loaded_view->resizeColumnToContents (0);
 		setEnabled (true);
 		updateCurrentList ();
 	} else if (command->getFlags () == LOAD_PACKAGE_COMMAND) {
@@ -350,39 +356,26 @@ void LoadUnloadWidget::updateInstalledPackages () {
 
 void LoadUnloadWidget::loadButtonClicked () {
 	RK_TRACE (DIALOGS);
-	
-	Q3ListViewItem *installed = installed_view->firstChild ();
-	while (installed) {
-		if (installed->isSelected ()) {
-			Q3ListViewItem *loaded = loaded_view->firstChild ();
-			// find out, whether package is already loaded
-			bool dup = false;
-			while (loaded) {
-				if (loaded->text (0) == installed->text (0)) {
-					dup = true;
-					loaded = 0;
-				} else {
-					loaded = loaded->nextSibling ();
-				}
-			}
-			if (!dup) {
-				new Q3ListViewItem (loaded_view, installed->text (0));
-			}
+
+	QList<QTreeWidgetItem*> sel = installed_view->selectedItems ();
+	for (int i = 0; i < sel.size (); ++i) {
+		QTreeWidgetItem* installed = sel[0];
+
+		// is this package already loaded?
+		QList<QTreeWidgetItem*> loaded = loaded_view->findItems (installed->text (0), Qt::MatchExactly, 0);
+		if (loaded.isEmpty ()) {
+			QTreeWidgetItem* item = new QTreeWidgetItem (loaded_view);
+			item->setText (0, installed->text (0));
 		}
-		installed = installed->nextSibling ();
 	}
 }
 
 void LoadUnloadWidget::detachButtonClicked () {
 	RK_TRACE (DIALOGS);
-	
-	Q3ListViewItem *loaded = loaded_view->firstChild ();
-	while (loaded) {
-		Q3ListViewItem *next = loaded->nextSibling ();
-		if (loaded->isSelected ()) {
-			delete loaded;
-		}
-		loaded = next;
+
+	QList<QTreeWidgetItem*> sel = loaded_view->selectedItems ();
+	for (int i = 0; i < sel.size (); ++i) {
+		delete (sel[i]);	// remove from list
 	}
 }
 
@@ -394,12 +387,10 @@ void LoadUnloadWidget::ok () {
 
 void LoadUnloadWidget::updateCurrentList () {
 	RK_TRACE (DIALOGS);
-	
+
 	prev_packages.clear ();
-	Q3ListViewItem *loaded = loaded_view->firstChild ();
-	while (loaded) {
-		prev_packages.append (loaded->text (0));
-		loaded = loaded->nextSibling ();
+	for (int i = 0; i < loaded_view->topLevelItemCount (); ++i) {
+		prev_packages.append (loaded_view->topLevelItem (i)->text (0));
 	}
 }
 
@@ -410,30 +401,20 @@ void LoadUnloadWidget::doLoadUnload () {
 	connect (this, SIGNAL (loadUnloadDone ()), control, SLOT (done ()));
 
 	// load packages previously not loaded
-	Q3ListViewItem *loaded = loaded_view->firstChild ();
-	while (loaded) {
+	for (int i = 0; i < loaded_view->topLevelItemCount (); ++i) {
+		QTreeWidgetItem* loaded = loaded_view->topLevelItem (i);
 		if (!prev_packages.contains (loaded->text (0))) {
 			RCommand *command = new RCommand ("library (\"" + loaded->text (0) + "\")", RCommand::App | RCommand::ObjectListUpdate, QString::null, this, LOAD_PACKAGE_COMMAND);
 			control->addRCommand (command);
 			RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 		}
-		loaded = loaded->nextSibling ();
 	}
 	
 	// detach packages previously attached
 	for (QStringList::Iterator it = prev_packages.begin (); it != prev_packages.end (); ++it) {
-		bool found = false;
-		loaded = loaded_view->firstChild ();
-		while (loaded) {
-			Q3ListViewItem *next = loaded->nextSibling ();
-			if (loaded->text (0) == (*it)) {
-				found = true;
-				loaded = 0;
-			}
-			loaded = next;
-		}
-		if (!found) {
-			RCommand *command = new RCommand ("detach (package:" + (*it) + ')', RCommand::App | RCommand::ObjectListUpdate, QString::null, this, LOAD_PACKAGE_COMMAND);
+		QList<QTreeWidgetItem*> loaded = loaded_view->findItems ((*it), Qt::MatchExactly, 0);
+		if (loaded.isEmpty ()) {		// no longer in the list
+			RCommand *command = new RCommand ("detach (package:" + (*it) + ')', RCommand::App | RCommand::ObjectListUpdate, QString (), this, LOAD_PACKAGE_COMMAND);
 			control->addRCommand (command);
 			RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 		}
@@ -462,22 +443,22 @@ UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p
 	RK_TRACE (DIALOGS);
 	UpdatePackagesWidget::parent = dialog;
 	
-	Q3VBoxLayout *mvbox = new Q3VBoxLayout (this, 0, KDialog::spacingHint ());
+	QVBoxLayout *mvbox = new QVBoxLayout (this, 0);
+	mvbox->setContentsMargins (0, 0, 0, 0);
 	QLabel *label = new QLabel (i18n ("In order to find out, which of your installed packaged have an update available, click \"Fetch List\". This feature requires a working internet connection."), this);
 	label->setWordWrap (true);
 	mvbox->addWidget (label);
 	
-	Q3HBoxLayout *hbox = new Q3HBoxLayout (mvbox, KDialog::spacingHint ());
+	QHBoxLayout *hbox = new QHBoxLayout (mvbox);
+	hbox->setContentsMargins (0, 0, 0, 0);
 	
-	updateable_view = new Q3ListView (this);
-	updateable_view->addColumn (i18n ("Name"));
-	updateable_view->addColumn (i18n ("Location"));
-	updateable_view->addColumn (i18n ("Local Version"));
-	updateable_view->addColumn (i18n ("Online Version"));
-	updateable_view->setSelectionMode (Q3ListView::Extended);
+	updateable_view = new QTreeWidget (this);
+	updateable_view->setHeaderLabels (QStringList () << i18n ("Name") << i18n ("Location") << i18n ("Local Version") << i18n ("Online Version"));
+	updateable_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
 	hbox->addWidget (updateable_view);
 	
-	Q3VBoxLayout *buttonvbox = new Q3VBoxLayout (hbox, KDialog::spacingHint ());
+	QVBoxLayout *buttonvbox = new QVBoxLayout (hbox);
+	buttonvbox->setContentsMargins (0, 0, 0, 0);
 	get_list_button = new QPushButton (i18n ("Fetch list"), this);
 	connect (get_list_button, SIGNAL (clicked ()), this, SLOT (getListButtonClicked ()));
 	update_selected_button = new QPushButton (i18n ("Update Selected"), this);
@@ -498,8 +479,9 @@ UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p
 	update_selected_button->setEnabled (false);
 	update_all_button->setEnabled (false);
 	updateable_view->setEnabled (false);
-	//placeholder = new QListViewItem (updateable_view, i18n ("[Click \"Fetch list\" for updates]"));
-	placeholder = new Q3ListViewItem (updateable_view, "...");
+
+	placeholder = new QTreeWidgetItem (updateable_view);
+	placeholder->setText (0, "...");	// i18n ("[Click \"Fetch list\" for updates]")
 	
 	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
 	connect (dialog, SIGNAL (cancelClicked ()), this, SLOT (cancel ()));
@@ -530,17 +512,23 @@ void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 			RK_ASSERT (count == installed->getDataLength ());
 			RK_ASSERT (count == reposver->getDataLength ());
 			for (unsigned int i=0; i < count; ++i) {
-				new Q3ListViewItem (updateable_view, package->getStringVector ()[i], libpath->getStringVector ()[i], installed->getStringVector ()[i], reposver->getStringVector ()[i]);
+				QTreeWidgetItem* item = new QTreeWidgetItem (updateable_view);
+				item->setText (0, package->getStringVector ()[i]);
+				item->setText (1, libpath->getStringVector ()[i]);
+				item->setText (2, installed->getStringVector ()[i]);
+				item->setText (3, reposver->getStringVector ()[i]);
 			}
 
 			updateable_view->setEnabled (true);
 	
-			if (updateable_view->firstChild ()) {
+			if (updateable_view->topLevelItemCount ()) {
 				update_selected_button->setEnabled (true);
 				update_all_button->setEnabled (true);
 			} else {
-				placeholder = new Q3ListViewItem (updateable_view, i18n ("[No updates available]"));
+				placeholder = new QTreeWidgetItem (updateable_view);
+				placeholder->setText (0, i18n ("[No updates available]"));
 			}
+			updateable_view->resizeColumnToContents (0);
 
 			RK_ASSERT (reposstring->getDataLength () == 1);
 			// this is after the repository was chosen. Update the repository string.
@@ -566,8 +554,9 @@ void UpdatePackagesWidget::updatePackages (const QStringList &list) {
 void UpdatePackagesWidget::updateSelectedButtonClicked () {
 	RK_TRACE (DIALOGS);
 	QStringList list;
-	for (Q3ListViewItem *item = updateable_view->firstChild (); item; item = item->nextSibling ()) {
-		if (item->isSelected ()) list.append (item->text (0));
+	QList<QTreeWidgetItem*> selected = updateable_view->selectedItems ();
+	for (int i = 0; i < selected.count (); ++i) {
+		list.append (selected[i]->text (0));
 	}
 	updatePackages (list);
 }
@@ -575,8 +564,8 @@ void UpdatePackagesWidget::updateSelectedButtonClicked () {
 void UpdatePackagesWidget::updateAllButtonClicked () {
 	RK_TRACE (DIALOGS);
 	QStringList list;
-	for (Q3ListViewItem *item = updateable_view->firstChild (); item; item = item->nextSibling ()) {
-		list.append (item->text (0));
+	for (int i = 0; i < updateable_view->topLevelItemCount (); ++i) {
+		list.append (updateable_view->topLevelItem (i)->text (0));
 	}
 	updatePackages (list);
 }
@@ -613,19 +602,21 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget 
 	RK_TRACE (DIALOGS);
 	InstallPackagesWidget::parent = dialog;
 	
-	Q3VBoxLayout *mvbox = new Q3VBoxLayout (this, 0, KDialog::spacingHint ());
+	QVBoxLayout *mvbox = new QVBoxLayout (this);
+	mvbox->setContentsMargins (0, 0, 0, 0);
 	QLabel *label = new QLabel (i18n ("Many packages are available on CRAN (Comprehensive R Archive Network), and other repositories (click \"Configure Repositories\" to add more sources). Click \"Fetch List\" to find out, which packages are available. This feature requires a working internet connection."), this);
 	label->setWordWrap (true);
 	mvbox->addWidget (label);
-	Q3HBoxLayout *hbox = new Q3HBoxLayout (mvbox, KDialog::spacingHint ());
+	QHBoxLayout *hbox = new QHBoxLayout (mvbox);
+	hbox->setContentsMargins (0, 0, 0, 0);
 	
-	installable_view = new Q3ListView (this);
-	installable_view->addColumn (i18n ("Name"));
-	installable_view->addColumn (i18n ("Version"));
-	installable_view->setSelectionMode (Q3ListView::Extended);
+	installable_view = new QTreeWidget (this);
+	installable_view->setHeaderLabels (QStringList () << i18n ("Name") << i18n ("Version"));
+	installable_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
 	hbox->addWidget (installable_view);
-	
-	Q3VBoxLayout *buttonvbox = new Q3VBoxLayout (hbox, KDialog::spacingHint ());
+
+	QVBoxLayout *buttonvbox = new QVBoxLayout (hbox);
+	buttonvbox->setContentsMargins (0, 0, 0, 0);
 	get_list_button = new QPushButton (i18n ("Fetch list"), this);
 	connect (get_list_button, SIGNAL (clicked ()), this, SLOT (getListButtonClicked ()));
 	install_selected_button = new QPushButton (i18n ("Install Selected"), this);
@@ -642,8 +633,9 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget 
 	
 	install_selected_button->setEnabled (false);
 	installable_view->setEnabled (false);
-	//placeholder = new QListViewItem (installable_view, i18n ("[Click \"Fetch list\" to see available packages]"));
-	placeholder = new Q3ListViewItem (installable_view, "...");
+
+	placeholder = new QTreeWidgetItem (installable_view);
+	placeholder->setText (0, "..."); // i18n ("[Click \"Fetch list\" to see available packages]")
 	
 	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
 	connect (dialog, SIGNAL (cancelClicked ()), this, SLOT (cancel ()));
@@ -672,15 +664,19 @@ void InstallPackagesWidget::rCommandDone (RCommand *command) {
 			RK_ASSERT (repos->getDataLength () == 1);
 
 			for (unsigned int i=0; i < count; ++i) {
-				new Q3ListViewItem (installable_view, names->getStringVector ()[i], versions->getStringVector ()[i]);
+				QTreeWidgetItem* item = new QTreeWidgetItem (installable_view);
+				item->setText (0, names->getStringVector ()[i]);
+				item->setText (1, versions->getStringVector ()[i]);
 			}
 			installable_view->setEnabled (true);
 
-			if (installable_view->firstChild ()) {
+			if (installable_view->topLevelItemCount ()) {
 				install_selected_button->setEnabled (true);
 			} else {
-				placeholder = new Q3ListViewItem (installable_view, i18n ("[No packages available]"));
+				placeholder = new QTreeWidgetItem (installable_view);
+				placeholder->setText (0, i18n ("[No packages available]"));
 			}
+			installable_view->resizeColumnToContents (0);
 
 			// this is after the repository was chosen. Update the repository string.
 			parent->repos_string = repos->getStringVector ()[0];
@@ -705,8 +701,9 @@ void InstallPackagesWidget::installPackages (const QStringList &list) {
 void InstallPackagesWidget::installSelectedButtonClicked () {
 	RK_TRACE (DIALOGS);
 	QStringList list;
-	for (Q3ListViewItem *item = installable_view->firstChild (); item; item = item->nextSibling ()) {
-		if (item->isSelected ()) list.append (item->text (0));
+	QList<QTreeWidgetItem*> selected = installable_view->selectedItems ();
+	for (int i = 0; i < selected.count (); ++i) {
+		list.append (selected[i]->text (0));
 	}
 	installPackages (list);
 }
@@ -726,18 +723,14 @@ void InstallPackagesWidget::getListButtonClicked () {
 void InstallPackagesWidget::trySelectPackage (const QString &package_name) {
 	RK_TRACE (DIALOGS);
 
-	bool found = false;
-	for (Q3ListViewItem *item = installable_view->firstChild (); item; item = item->nextSibling ()) {
-		if (item->text (0) == package_name) {
-			found = true;
-			item->setSelected (true);
-			installable_view->ensureItemVisible (item);
-			break;
-		}
-	}
-
-	if (!found) {
+	QList<QTreeWidgetItem*> found = installable_view->findItems (package_name, Qt::MatchExactly, 0);
+	if (found.isEmpty ()) {
 		KMessageBox::sorry (0, i18n ("The package requested by the backend (\"%1\") was not found in the package repositories. Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\"-button.", package_name), i18n ("Package not available"));
+	} else {
+		RK_ASSERT (found.count () == 1);
+		installable_view->setCurrentItem (found[0]);
+		found[0]->setSelected (true);
+		installable_view->scrollToItem (found[0]);
 	}
 }
 
@@ -760,7 +753,8 @@ void InstallPackagesWidget::cancel () {
 PackageInstallParamsWidget::PackageInstallParamsWidget (QWidget *parent, bool ask_depends) : QWidget (parent) {
 	RK_TRACE (DIALOGS);
 
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, 0, KDialog::spacingHint ());
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+	vbox->setContentsMargins (0, 0, 0, 0);
 	vbox->addWidget (new QLabel (i18n ("Install packages to:"), this));
 	libloc_selector = new QComboBox (this);
 	vbox->addWidget (libloc_selector);

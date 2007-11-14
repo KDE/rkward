@@ -20,14 +20,12 @@
 #include <kpagedialog.h>
 
 #include <qstringlist.h>
-//Added by qt3to4:
-#include <QCloseEvent>
 
 #include "../settings/rksettingsmoduler.h"
 #include "../rbackend/rcommandreceiver.h"
 
-class Q3ListView;
-class Q3ListViewItem;
+class QTreeWidget;
+class QTreeWidgetItem;
 class QComboBox;
 class QPushButton;
 class RKProgressControl;
@@ -124,8 +122,8 @@ private:
 	void updateCurrentList ();
 	void doLoadUnload ();
 	
-	Q3ListView *loaded_view;
-	Q3ListView *installed_view;
+	QTreeWidget *loaded_view;
+	QTreeWidget *installed_view;
 
 	QPushButton *load_button;
 	QPushButton *detach_button;
@@ -157,8 +155,8 @@ protected:
 	void rCommandDone (RCommand *command);
 private:
 	void updatePackages (const QStringList &list);
-	Q3ListView *updateable_view;
-	Q3ListViewItem *placeholder;
+	QTreeWidget *updateable_view;
+	QTreeWidgetItem *placeholder;
 
 	QPushButton *update_selected_button;
 	QPushButton *update_all_button;
@@ -190,8 +188,8 @@ protected:
 	void rCommandDone (RCommand *command);
 private:
 	void installPackages (const QStringList &list);
-	Q3ListView *installable_view;
-	Q3ListViewItem *placeholder;
+	QTreeWidget *installable_view;
+	QTreeWidgetItem *placeholder;
 
 	QPushButton *install_selected_button;
 	QPushButton *get_list_button;
