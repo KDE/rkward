@@ -20,15 +20,11 @@
 #include <kdialog.h>
 #include <kurl.h>
 
-//Added by qt3to4:
-#include <QPixmap>
-
 class QCheckBox;
-class Q3ButtonGroup;
+class QButtonGroup;
 class QRadioButton;
-class Q3ListView;
-class Q3ListViewItem;
-class QPixmap;
+class QListWidget;
+class QListWidgetItem;
 class KRecentFilesAction;
 
 /**
@@ -61,8 +57,8 @@ public:
 public slots:
 	void accept ();
 	void reject ();
-	void listDoubleClicked (Q3ListViewItem *item, const QPoint &, int);
-	void listClicked (Q3ListViewItem *item);
+	void listDoubleClicked (QListWidgetItem* item);
+	void listClicked (QListWidgetItem* item);
 	void openButtonSelected (bool checked);
 protected:
 /** reimplemented from QWidget to achieve fixed width */
@@ -73,10 +69,10 @@ private:
 	QRadioButton *open_button;
 	QCheckBox *remember_box;
 	
-	Q3ButtonGroup *choser;
+	QButtonGroup *choser;
 	
-	Q3ListView *file_list;
-	Q3ListViewItem *chose_file_item;
+	QListWidget *file_list;
+	QListWidgetItem *chose_file_item;
 	
 	StartupDialogResult *result;
 };

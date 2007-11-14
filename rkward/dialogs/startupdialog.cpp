@@ -18,15 +18,14 @@
 
 #include <qradiobutton.h>
 #include <qcheckbox.h>
-#include <q3buttongroup.h>
-#include <qlayout.h>
+#include <qbuttongroup.h>
+#include <QGroupBox>
 #include <qlabel.h>
-#include <q3listview.h>
+#include <QListWidget>
 #include <qstringlist.h>
 #include <qpixmap.h>
-//Added by qt3to4:
-#include <Q3HBoxLayout>
-#include <Q3VBoxLayout>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 
 #include <klocale.h>
 #include <kvbox.h>
@@ -52,32 +51,34 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	QLabel *pic = new QLabel (vbox);
 	pic->setPixmap (QPixmap (RKCommonFunctions::getRKWardDataDir () + "icons/rkward_logo.png"));
 
-	choser = new Q3ButtonGroup (vbox);
-	choser->setColumnLayout (0, Qt::Vertical);
-	choser->layout()->setSpacing (6);
-	choser->layout()->setMargin (11);
-	Q3VBoxLayout *choser_layout = new Q3VBoxLayout(choser->layout());
-	choser_layout->addWidget (empty_workspace_button = new QRadioButton (i18n ("Start with an empty workspace"), choser));
-	choser_layout->addWidget (empty_table_button = new QRadioButton (i18n ("Start with an empty table"), choser));
-	open_button = new QRadioButton (i18n ("Load an existing workspace:"), choser);
+	choser = new QButtonGroup (this);
+	QGroupBox* choser_box = new QGroupBox (vbox);
+	QVBoxLayout*choser_layout = new QVBoxLayout(choser_box);
+
+	choser_layout->addWidget (empty_workspace_button = new QRadioButton (i18n ("Start with an empty workspace"), choser_box));
+	choser->addButton (empty_workspace_button);
+	choser_layout->addWidget (empty_table_button = new QRadioButton (i18n ("Start with an empty table"), choser_box));
+	choser->addButton (empty_table_button);
+	choser_layout->addWidget (open_button = new QRadioButton (i18n ("Load an existing workspace:"), choser_box));
+	choser->addButton (open_button);
 	connect (open_button, SIGNAL (toggled (bool)), this, SLOT (openButtonSelected (bool)));
 	empty_table_button->setChecked (true);
-	choser_layout->addWidget (open_button);
 
-	file_list = new Q3ListView (choser);
-	file_list->addColumn (i18n ("Filename"));
-	file_list->setSorting (-1);
-	chose_file_item = new Q3ListViewItem (file_list, i18n ("<<Open another file>>"));
+	file_list = new QListWidget (choser_box);
+	file_list->setSelectionMode (QAbstractItemView::SingleSelection);
+	file_list->setSortingEnabled (false);
+	chose_file_item = new QListWidgetItem (i18n ("<<Open another file>>"), file_list);
 	if (recent_files) {
 		QStringList items = recent_files->items ();
 		for (QStringList::iterator it = items.begin (); it != items.end (); ++it) {
-			if (!(*it).isEmpty ()) new Q3ListViewItem (file_list, (*it));
+#warning this is no longer correct, as the text is a label + url, not only the url
+			if (!(*it).isEmpty ()) new QListWidgetItem ((*it), file_list);
 		}
 	}
-	connect (file_list, SIGNAL (selectionChanged (Q3ListViewItem *)), this, SLOT (listClicked (Q3ListViewItem*)));
-	connect (file_list, SIGNAL (doubleClicked (Q3ListViewItem *, const QPoint &, int)), this, SLOT (listDoubleClicked (Q3ListViewItem*, const QPoint &, int)));
+	connect (file_list, SIGNAL (itemClicked (QListWidgetItem*)), this, SLOT (listClicked (QListWidgetItem*)));
+	connect (file_list, SIGNAL (itemDoubleClicked (QListWidgetItem*)), this, SLOT (listDoubleClicked (QListWidgetItem*)));
 	choser_layout->addWidget (file_list);
-	choser_layout->addWidget (remember_box = new QCheckBox (i18n ("Always do this on startup"), choser));
+	choser_layout->addWidget (remember_box = new QCheckBox (i18n ("Always do this on startup"), choser_box));
 }
 
 StartupDialog::~StartupDialog() {
@@ -92,12 +93,12 @@ void StartupDialog::accept () {
 	} else if (empty_table_button->isChecked ()) {
 		result->result = EmptyTable;
 	} else if (open_button->isChecked ()) {
-		Q3ListViewItem *item = file_list->selectedItem ();
+		QListWidgetItem *item = file_list->currentItem ();
 		if (item == chose_file_item) {
 			result->result = ChoseFile;
 		} else {
 			result->result = OpenFile;
-			result->open_url = KUrl (item->text (0));
+			result->open_url = KUrl (item->text ());
 		}
 	} else {
 		RK_ASSERT (false);
@@ -114,22 +115,22 @@ void StartupDialog::reject () {
 	QDialog::reject ();
 }
 
-void StartupDialog::listDoubleClicked (Q3ListViewItem *item, const QPoint &, int) {
+void StartupDialog::listDoubleClicked (QListWidgetItem *item) {
 	RK_TRACE (DIALOGS);
 	
 	if (item) {
 		open_button->setChecked (true);
+		file_list->setCurrentItem (item);
 		item->setSelected (true);
 		accept ();
 	}
 }
 
-void StartupDialog::listClicked (Q3ListViewItem *item) {
+void StartupDialog::listClicked (QListWidgetItem *item) {
 	RK_TRACE (DIALOGS);
 	
 	if (item) {
 		open_button->setChecked (true);
-// KDE4: is this needed, or does it happen automatically via toggled() SIGNAL?
 		openButtonSelected (true);		// always do processing
 	}
 }
@@ -138,16 +139,16 @@ void StartupDialog::openButtonSelected (bool checked) {
 	RK_TRACE (DIALOGS);
 
 	if (checked) {
-		if (!file_list->selectedItem ()) {
-			file_list->setSelected (file_list->firstChild (), true);
+		if (!file_list->currentItem ()) {
+			file_list->setCurrentRow (0);
 		}
-		if (file_list->selectedItem () != chose_file_item) {
+		if (file_list->currentItem () != chose_file_item) {
 			remember_box->setChecked (false);
 			remember_box->setEnabled (false);
 		} else {
 			remember_box->setEnabled (true);
 		}
-	} else if (checked) {
+	} else {
 		remember_box->setEnabled (true);
 	}
 }

@@ -30,7 +30,7 @@
 
 #include "../debug.h"
 
-RKImportDialogFormatSelector::RKImportDialogFormatSelector () {
+RKImportDialogFormatSelector::RKImportDialogFormatSelector () : KHBox () {
 	RK_TRACE (DIALOGS);
 
 	new QLabel (i18n ("File format: "), this);
