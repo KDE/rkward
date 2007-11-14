@@ -279,9 +279,11 @@ void RKProgressControlDialog::toggleOutputButtonPressed () {
 	if (output_box->isShown ()) {
 		output_box->hide ();
 		toggle_output_button->setText (show_output_text);
+		adjustSize ();
 	} else {
 		output_box->show ();
 		toggle_output_button->setText (hide_output_text);
+		adjustSize ();
 	}
 }
 
