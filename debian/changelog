@@ -1,3 +1,9 @@
+rkward (0.4.8a-2) unstable; urgency=low
+
+  * quote the R CMD config calls, as they may also contain compiler arguments (thanks to Meik Michalke for a patch)
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 14 Nov 2007 13:30:00 +0200
+
 rkward (0.4.8a-1) unstable; urgency=low
 
   * new upstream release
