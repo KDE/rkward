@@ -26,12 +26,9 @@
 #include <qregexp.h>
 #include <qtimer.h>
 #include <qtextstream.h>
-//Added by qt3to4:
-#include <Q3CString>
 #include <QCloseEvent>
 
 #include <klocale.h>
-#include <k3process.h>
 #include <kmessagebox.h>
 #include <kvbox.h>
 
@@ -58,6 +55,7 @@
 RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KPageDialog (parent) {
 	RK_TRACE (DIALOGS);
 	RKLoadLibsDialog::chain = chain;
+	installation_process = 0;
 
 	setFaceType (KPageDialog::Tabbed);
 	setModal (modal);
@@ -202,43 +200,66 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 	}
 
 	QString R_binary (getenv ("R_binary"));
-	K3Process *proc = new K3Process;
-	if (as_root) *proc << "kdesu" << "-t";
-	else *proc << "sh" << "-c";
-	*proc << R_binary + " CMD R --no-save < " + file.name ();
+	QString call;
+	QStringList params;
+	if (as_root) {
+		call = "kdesu";
+		params << "-t";
+	} else {
+		call = "sh";
+		params << "-c";
+	}
+	params << R_binary + " CMD R --no-save < " + file.name ();
 
-	connect (proc, SIGNAL (processExited (K3Process *)), this, SLOT (processExited (K3Process *)));
-	connect (proc, SIGNAL (receivedStdout (K3Process *, char *, int)), this, SLOT (installationProcessOutput (K3Process *, char *, int)));
-	connect (proc, SIGNAL (receivedStderr (K3Process *, char *, int)), this, SLOT (installationProcessError (K3Process *, char *, int)));
+	installation_process = new QProcess ();
+	installation_process->setProcessChannelMode (QProcess::SeparateChannels);
+
+	connect (installation_process, SIGNAL (finished(int,QProcess::ExitStatus)), this, SLOT (processExited(int,QProcess::ExitStatus)));
+	connect (installation_process, SIGNAL (readyReadStandardOutput()), this, SLOT (installationProcessOutput()));
+	connect (installation_process, SIGNAL (readyReadStandardError()), this, SLOT (installationProcessError()));
 
 	RKProgressControl *installation_progress = new RKProgressControl (this, i18n ("Please stand by while installing selected packages"), i18n ("Installing packages"), RKProgressControl::CancellableProgress);
-	connect (this, SIGNAL (installationComplete ()), installation_progress, SLOT (done ()));
-	connect (this, SIGNAL (installationOutput (const QString &)), installation_progress, SLOT (newOutput (const QString &)));
-	connect (this, SIGNAL (installationError (const QString &)), installation_progress, SLOT (newError (const QString &)));
-	proc->start (K3Process::NotifyOnExit, K3Process::AllOutput);
+	connect (this, SIGNAL (installationComplete()), installation_progress, SLOT (done()));
+	connect (this, SIGNAL (installationOutput(const QString&)), installation_progress, SLOT (newOutput(const QString&)));
+	connect (this, SIGNAL (installationError(const QString&)), installation_progress, SLOT (newError(const QString&)));
 
-	if (!installation_progress->doModal (true)) proc->kill ();
+	installation_process->start (call, params, QIODevice::ReadWrite | QIODevice::Unbuffered);
+
+	if (!installation_progress->doModal (true)) {
+		installation_process->kill ();
+		installation_process->waitForFinished (5000);
+	}
 
 	file.remove ();
-	delete proc;
+	delete installation_process;
+	installation_process = 0;
 
 	emit (installedPackagesChanged ());
 	return true;
 }
 
-void RKLoadLibsDialog::installationProcessOutput (K3Process *, char *buffer, int buflen) {
+void RKLoadLibsDialog::installationProcessOutput () {
 	RK_TRACE (DIALOGS);
-#warning We seem to handle newlines badly, here. But then, we need to port to QProcess, anyway.
-	emit (installationOutput (Q3CString (buffer, buflen)));
+	RK_ASSERT (installation_process);
+
+	emit (installationOutput (QString::fromLocal8Bit (installation_process->readAllStandardOutput())));
 }
 
-void RKLoadLibsDialog::installationProcessError (K3Process *, char *buffer, int buflen) {
+void RKLoadLibsDialog::installationProcessError () {
 	RK_TRACE (DIALOGS);
-	emit (installationError (Q3CString (buffer, buflen)));
+	RK_ASSERT (installation_process);
+
+//TODO Somehow we add too many newlines, here
+	emit (installationError (QString::fromLocal8Bit (installation_process->readAllStandardError ())));
 }
 
-void RKLoadLibsDialog::processExited (K3Process *) {
+void RKLoadLibsDialog::processExited (int exitCode, QProcess::ExitStatus exitStatus) {
 	RK_TRACE (DIALOGS);
+
+	if (exitCode || (exitStatus != QProcess::NormalExit)) {
+		installationError ("\n" + i18n ("Installation process died with exit code %1", exitCode));
+	}
+
 	emit (installationComplete ());
 }
 

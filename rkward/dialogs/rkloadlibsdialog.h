@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -20,6 +20,7 @@
 #include <kpagedialog.h>
 
 #include <qstringlist.h>
+#include <QProcess>
 
 #include "../settings/rksettingsmoduler.h"
 #include "../rbackend/rcommandreceiver.h"
@@ -33,7 +34,6 @@ class QWidget;
 class QCloseEvent;
 class RCommandChain;
 class QCheckBox;
-class K3Process;
 class PackageInstallParamsWidget;
 class InstallPackagesWidget;
 
@@ -75,9 +75,9 @@ protected slots:
 /** overloaded to catch button presses. */
 	void slotButtonClicked (int button);
 	void childDeleted ();
-	void processExited (K3Process *);
-	void installationProcessOutput (K3Process *proc, char *buffer, int buflen);
-	void installationProcessError (K3Process *proc, char *buffer, int buflen);
+	void processExited (int exitCode, QProcess::ExitStatus exitStatus);
+	void installationProcessOutput ();
+	void installationProcessError ();
 	void automatedInstall ();
 private:
 	void tryDestruct ();
@@ -93,6 +93,8 @@ friend class InstallPackagesWidget;
 	int num_child_widgets;
 	bool accepted;
 	QString repos_string;
+
+	QProcess* installation_process;
 };
 
 /**
