@@ -19,9 +19,7 @@
 #define RKSTANDARDCOMPONENTGUI_H
 
 #include <q3widgetstack.h>
-//Added by qt3to4:
-#include <Q3ValueList>
-#include <QCloseEvent>
+#include <QList>
 
 #include "rkstandardcomponent.h"
 
@@ -49,7 +47,7 @@ public:
 	void addComponentToCurrentPage (RKComponent *component);
 private:
 /** pages are NOT the parent of their components (that would be theoretically possible, but a terrible mess, requiring a fully transparent type of RKComponent), hence we keep a manual list for each page */
-	typedef Q3ValueList<RKComponent *> PageComponents;
+	typedef QList<RKComponent *> PageComponents;
 	struct PageDef {
 		PageComponents page_components;
 		RKComponent *page;
@@ -71,6 +69,7 @@ class RKCommandEditorWindow;
 class QPushButton;
 class QTimer;
 class QSplitter;
+class QCloseEvent;
 
 /** contains the standard GUI elements for a top-level RKStandardComponent. The base class creates a dialog interface. For a wizard interface use RKStandardComponentWizard. You *must* call createDialog () after construction, since I can't virualize this for reasons I don't understand!
 

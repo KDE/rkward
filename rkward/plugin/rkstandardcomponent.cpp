@@ -18,20 +18,17 @@
 #include "rkstandardcomponent.h"
 
 #include <qfileinfo.h>
-#include <qlayout.h>
-#include <q3vbox.h>
-#include <q3hbox.h>
 #include <q3groupbox.h>
-#include <q3frame.h>
 #include <qtabwidget.h>
 #include <qlabel.h>
 #include <qapplication.h>
 #include <qtimer.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kvbox.h>
+#include <khbox.h>
 
 #include "rkstandardcomponentgui.h"
 #include "../scriptbackends/phpbackend.h"
@@ -134,9 +131,8 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 				build_wizard = false;
 
 				QWidget *fake_page = parent_component->addPage ();
-				Q3VBoxLayout *layout = new Q3VBoxLayout (fake_page);	
-				Q3VBox *box = new Q3VBox (fake_page);
-				box->setSpacing (RKGlobals::spacingHint ());
+				QVBoxLayout *layout = new QVBoxLayout (fake_page);	
+				KVBox *box = new KVBox (fake_page);
 				layout->addWidget (box);
 				parent_widget = box;
 			}
@@ -500,38 +496,41 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 
 		if (allow_pages && (e.tagName () == "page")) {
 			widget = component ()->addPage ();
-			Q3VBoxLayout *layout = new Q3VBoxLayout (widget);
-			Q3VBox *box = new Q3VBox (widget);
-			box->setSpacing (RKGlobals::spacingHint ());
+			QVBoxLayout *layout = new QVBoxLayout (widget);
+			KVBox *box = new KVBox (widget);
 			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "row") {
 			widget = new RKComponent (component (), parent_widget);		// wrapping this (and column, frame below) inside an RKComponent has the benefit, that it can have an id, and hence can be set to visibile/hidden, enabled/disabled
-			Q3VBoxLayout *layout = new Q3VBoxLayout (widget);
-			Q3HBox *box = new Q3HBox (widget);
-			box->setSpacing (RKGlobals::spacingHint ());
+			QVBoxLayout *layout = new QVBoxLayout (widget);
+			layout->setContentsMargins (0, 0, 0, 0);
+			KHBox *box = new KHBox (widget);
 			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "stretch") {
 			QWidget *stretch = new QWidget (parent_widget);
 			stretch->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-			Q3HBox *box = dynamic_cast<Q3HBox *> (parent_widget);
+			KHBox *box = dynamic_cast<KHBox *> (parent_widget);
 			// RK_ASSERT (box);  <- NO, also meaningful in a <frame>
 			if (box) box->setStretchFactor (stretch, 100);
 		} else if (e.tagName () == "column") {
 			widget = new RKComponent (component (), parent_widget);
-			Q3VBoxLayout *layout = new Q3VBoxLayout (widget);
-			Q3VBox *box = new Q3VBox (widget);
-			box->setSpacing (RKGlobals::spacingHint ());
+			QVBoxLayout *layout = new QVBoxLayout (widget);
+			layout->setContentsMargins (0, 0, 0, 0);
+			KVBox *box = new KVBox (widget);
 			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "frame") {
 			widget = new RKComponent (component (), parent_widget);
-			Q3VBoxLayout *layout = new Q3VBoxLayout (widget);
-			Q3GroupBox *box = new Q3GroupBox (1, Qt::Horizontal, e.attribute ("label"), widget);
-			box->setInsideSpacing (RKGlobals::spacingHint ());
+			QVBoxLayout *layout = new QVBoxLayout (widget);
+			layout->setContentsMargins (0, 0, 0, 0);
+			QGroupBox *box = new QGroupBox (e.attribute ("label"), widget);
 			layout->addWidget (box);
-			buildElement (e, box, false);
+			QVBoxLayout* internal_layout = new QVBoxLayout (box);
+			KVBox* internal_box = new KVBox (box);
+			internal_box->setSpacing (RKGlobals::spacingHint ());
+			internal_layout->addWidget (internal_box);
+			buildElement (e, internal_box, false);
 		} else if (e.tagName () == "tabbook") {
 			QTabWidget *tabbook = new QTabWidget (parent_widget);
 			QDomNodeList tabs = e.childNodes ();

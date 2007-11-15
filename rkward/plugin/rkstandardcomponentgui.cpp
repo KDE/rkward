@@ -75,25 +75,26 @@ RKStandardComponentGUI::~RKStandardComponentGUI () {
 void RKStandardComponentGUI::createDialog (bool switchable) {
 	RK_TRACE (PLUGIN);
 
-	Q3VBoxLayout *main_vbox = new Q3VBoxLayout (this);
+	QVBoxLayout *main_vbox = new QVBoxLayout (this);
+	main_vbox->setContentsMargins (0, 0, 0, 0);
 	QWidget *upper_widget = new QWidget (this);
 	
-	Q3HBoxLayout *hbox = new Q3HBoxLayout (upper_widget, RKGlobals::marginHint (), RKGlobals::spacingHint ());
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (hbox, RKGlobals::spacingHint ());
+	QHBoxLayout *hbox = new QHBoxLayout (upper_widget);
 
 	// build standard elements
 	main_widget = new Q3VBox (upper_widget);
 	hbox->addWidget (main_widget);
 
 	// lines
-	Q3Frame *line;
-	line = new Q3Frame (upper_widget);
-	line->setFrameShape (Q3Frame::VLine);
-	line->setFrameShadow (Q3Frame::Plain);	
+	QFrame *line = new QFrame (upper_widget);
+	line->setFrameShape (QFrame::VLine);
+	line->setFrameShadow (QFrame::Plain);	
 	hbox->addWidget (line);
 
 	// buttons
-	vbox = new Q3VBoxLayout (hbox, RKGlobals::spacingHint ());
+	QVBoxLayout* vbox = new QVBoxLayout (hbox);
+	vbox->setContentsMargins (0, 0, 0, 0);
+	vbox->setSpacing (RKGlobals::spacingHint ());
 	ok_button = new QPushButton (i18n ("Submit"), upper_widget);
 	connect (ok_button, SIGNAL (clicked ()), this, SLOT (ok ()));
 	vbox->addWidget (ok_button);
@@ -274,10 +275,9 @@ void RKStandardComponentWizard::createWizard (bool switchable) {
 
 	// build standard elements
 	// lines
-	Q3Frame *line;
-	line = new Q3Frame (main_widget);
-	line->setFrameShape (Q3Frame::HLine);
-	line->setFrameShadow (Q3Frame::Plain);
+	QFrame *line = new QFrame (main_widget);
+	line->setFrameShape (QFrame::HLine);
+	line->setFrameShadow (QFrame::Plain);
 	main_grid->addMultiCellWidget (line, 1, 1, 0, 3);
 
 	// buttons
@@ -454,8 +454,8 @@ bool RKStandardComponentStack::currentPageSatisfied () {
 		return false;
 	}
 
-	for (PageComponents::const_iterator it = current_def->page_components.constBegin (); it != current_def->page_components.constEnd (); ++it) {
-		if (!((*it)->isSatisfied ())) {
+	for (int i = 0; i < current_def->page_components.size (); ++i) {
+		if (!((current_def->page_components[i])->isSatisfied ())) {
 			return false;
 		}
 	}

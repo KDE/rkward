@@ -18,10 +18,10 @@
 #include "rktabpage.h"
 
 #include <qstring.h>
-#include <qlayout.h>
 #include <qtabwidget.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
+
+#include <kvbox.h>
 
 #include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
@@ -33,9 +33,8 @@ RKTabPage::RKTabPage (const QDomElement &element, RKComponent *parent_component,
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
 	label = xml->getStringAttribute (element, "label", QString::null, DL_WARNING);
 
-	Q3VBoxLayout *layout = new Q3VBoxLayout (this);
-	page = new Q3VBox (this);
-	page->setSpacing (RKGlobals::spacingHint ());
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	page = new KVBox (this);
 	layout->addWidget (page);
 
 	tabbook = parent_widget;
