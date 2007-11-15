@@ -68,6 +68,7 @@ public slots:
 	void updateComplete ();
 	void updateStarted ();
 	void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
+	void resetWidths ();
 
 	virtual void popupConfigure ();
 protected:

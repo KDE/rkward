@@ -118,11 +118,12 @@ void RKObjectListView::initialize () {
 	setExpanded (olist, true);
 	setExpanded (genv, true);
 	setMinimumHeight (rowHeight (genv) * 5);
-	resizeColumnToContents (0);
+	resetWidths ();
 
 	connect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (updateComplete ()));
 	connect (RObjectList::getObjectList (), SIGNAL (updateStarted ()), this, SLOT (updateStarted ()));
 	connect (selectionModel (), SIGNAL (selectionChanged(const QItemSelection&, const QItemSelection&)), this, SLOT (selectionChanged(const QItemSelection&, const QItemSelection&)));
+	connect (settings, SIGNAL (settingsChanged()), this, SLOT (resetWidths()));
 
 	updateComplete ();
 }
@@ -137,6 +138,12 @@ void RKObjectListView::updateStarted () {
 	RK_TRACE (APP);
 
 	setEnabled (false);
+}
+
+void RKObjectListView::resetWidths () {
+	RK_TRACE (APP);
+
+	resizeColumnToContents (0);
 }
 
 //////////////////// RKObjectListViewSettings //////////////////////////
@@ -277,7 +284,6 @@ void RKObjectListViewSettings::updateSelf () {
 	RK_TRACE (APP);
 
 	update_timer->start (0);
-	emit (settingsChanged ());
 }
 
 void RKObjectListViewSettings::updateSelfNow () {
@@ -286,6 +292,8 @@ void RKObjectListViewSettings::updateSelfNow () {
 	for (int i = 0; i < SettingsCount; ++i) actions[i]->setChecked (settings[i]);
 
 	invalidateFilter ();
+
+	emit (settingsChanged ());
 }
 
 void RKObjectListViewSettings::globalSettingsChanged (RKSettings::SettingsPage page) {
