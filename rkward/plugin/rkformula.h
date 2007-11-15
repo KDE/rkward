@@ -2,7 +2,7 @@
                           rkformula  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -23,13 +23,13 @@
 #include <qmap.h>
 #include "../core/robject.h"
 
-class Q3ListView;
 class QPushButton;
-class Q3ButtonGroup;
+class QButtonGroup;
 class QWidget;
 class QSpinBox;
-class Q3ListViewItem;
 class QDomElement;
+class QTreeWidget;
+class QTreeWidgetItem;
 
 /**
 @author Thomas Friedrichsmeier
@@ -65,11 +65,11 @@ private:
 
 	enum ModelType { FullModel=0, MainEffects=1, Custom=2 };
 	ModelType model_type;
-	Q3ButtonGroup *type_selector;
+	QButtonGroup *type_selector;
 	
 	QWidget *custom_model_widget;
-	Q3ListView *model_view;
-	Q3ListView *predictors_view;
+	QTreeWidget *model_view;
+	QTreeWidget *predictors_view;
 	QPushButton *add_button;
 	QPushButton *remove_button;
 	QSpinBox *level_box;
@@ -78,23 +78,19 @@ private:
 	void makeModelString ();
 	QString mangleName (RObject *var);
 	
-	typedef QMap<Q3ListViewItem*, RObject*> ItemMap;
-	ItemMap item_map;
+	typedef QMap<QTreeWidgetItem*, RObject*> ItemMap;
+	ItemMap predictors_map;
 	
 	struct Interaction {
 		int level;
-		RObjectPtr* vars;
+		RObject::ObjectList vars;
 	};
 	
-	typedef QMap<Q3ListViewItem*, Interaction> InteractionMap;
+	typedef QMap<QTreeWidgetItem*, Interaction> InteractionMap;
 	InteractionMap interaction_map;
 	
-	typedef QMap<int, Q3ListViewItem*> LevelMap;
-	LevelMap level_map;
-	
-	/** recursively cross the given source variables on level level. Returns the resulting terms in an array. The number
-	of interactions generated is stored in count */
-	Interaction *makeInteractions (int level, const RObjectPtr *source_vars, int source_count, int *count);
+	/** recursively cross the given source variables on level level. Returns the resulting terms in an QList */
+	QList<Interaction> makeInteractions (int level, RObject::ObjectList);
 };
 
 #endif

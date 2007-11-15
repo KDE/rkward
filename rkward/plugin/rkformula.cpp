@@ -2,7 +2,7 @@
                           rkformula  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -19,11 +19,13 @@
 #include <q3listview.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
-#include <q3buttongroup.h>
+#include <QButtonGroup>
+#include <QLabel>
 #include <qspinbox.h>
 #include <qwidget.h>
 #include <qlayout.h>
 #include <qdom.h>
+#include <QTreeWidget>
 //Added by qt3to4:
 #include <Q3HBoxLayout>
 #include <Q3VBoxLayout>
@@ -59,28 +61,32 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	// create layout
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+	vbox->setContentsMargins (0, 0, 0, 0);
 
-	type_selector = new Q3ButtonGroup (this);
-	type_selector->setColumnLayout (0, Qt::Vertical);
-	type_selector->layout ()->setSpacing (RKGlobals::spacingHint ());
-	type_selector->layout ()->setMargin (RKGlobals::marginHint ());
-	Q3VBoxLayout *group_layout = new Q3VBoxLayout (type_selector->layout());
-	group_layout->addWidget (new QRadioButton (i18n ("Full Model"), type_selector));
-	group_layout->addWidget (new QRadioButton (i18n ("Main Effects only"), type_selector));
-	group_layout->addWidget (new QRadioButton (i18n ("Custom Model:"), type_selector));
-	connect (type_selector, SIGNAL (clicked (int)), this, SLOT (typeChange (int)));
-	
-	custom_model_widget = new QWidget (type_selector);
-	Q3HBoxLayout *model_hbox = new Q3HBoxLayout (custom_model_widget, RKGlobals::spacingHint ());
-	predictors_view = new Q3ListView (custom_model_widget);
-	predictors_view->addColumn (i18n ("Name"));
-	predictors_view->setSelectionMode (Q3ListView::Extended);
-	predictors_view->setSorting (100);
+	vbox->addWidget (new QLabel (xml->getStringAttribute (element, "label", i18n ("Specify model"), DL_INFO), this));
+
+	type_selector = new QButtonGroup (this);
+	QRadioButton* button;
+	vbox->addWidget (button = new QRadioButton (i18n ("Full Model"), this));
+	type_selector->addButton (button, (int) FullModel);
+	vbox->addWidget (button = new QRadioButton (i18n ("Main Effects only"), this));
+	type_selector->addButton (button, (int) MainEffects);
+	vbox->addWidget (button = new QRadioButton (i18n ("Custom Model:"), this));
+	type_selector->addButton (button, (int) Custom);
+	connect (type_selector, SIGNAL (buttonClicked (int)), this, SLOT (typeChange (int)));
+
+	custom_model_widget = new QWidget (this);
+	QHBoxLayout *model_hbox = new QHBoxLayout (custom_model_widget);
+	predictors_view = new QTreeWidget (custom_model_widget);
+	predictors_view->setHeaderLabel (i18n ("Name"));
+	predictors_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
+	predictors_view->setSortingEnabled (false);
+	predictors_view->setRootIsDecorated (false);
 	model_hbox->addWidget (predictors_view);
 	model_hbox->addSpacing (6);
 	
-	Q3VBoxLayout *model_vbox = new Q3VBoxLayout (model_hbox, RKGlobals::spacingHint ());
+	QVBoxLayout *model_vbox = new QVBoxLayout (model_hbox);
 	add_button = new QPushButton (QString::null, custom_model_widget);
 	add_button->setPixmap (SmallIcon ("arrow-right"));
 	connect (add_button, SIGNAL (clicked ()), this, SLOT (addButtonClicked ()));
@@ -94,18 +100,14 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	model_vbox->addWidget (level_box);
 	model_hbox->addSpacing (6);
 
-	model_view = new Q3ListView (custom_model_widget);
-	model_view->addColumn (i18n ("Level"));
-	model_view->addColumn (i18n ("Term"));
-	model_view->setSorting (0);
+	model_view = new QTreeWidget (custom_model_widget);
+	model_view->setHeaderLabels (QStringList () << i18n ("Level") << i18n ("Term"));
 	model_view->setRootIsDecorated (true);
 	model_hbox->addWidget (model_view);	
 
-	group_layout->addWidget (custom_model_widget);
+	vbox->addWidget (custom_model_widget);
 
-	type_selector->setCaption (xml->getStringAttribute (element, "label", i18n ("Specify model"), DL_INFO));
-
-	vbox->addWidget (type_selector);
+	typeChange (FullModel);		// initialize
 }
 
 RKFormula::~RKFormula () {
@@ -120,7 +122,10 @@ void RKFormula::factorsChanged (RKComponentPropertyBase *) {
 
 void RKFormula::typeChange (int id) {
 	RK_TRACE (PLUGIN);
-	type_selector->setButton (id);
+
+	QAbstractButton* b = type_selector->button (id);
+	RK_ASSERT (b);
+	b->setChecked (true);
 	
 	if (id == (int) FullModel) {
 		custom_model_widget->setEnabled (false);
@@ -128,11 +133,12 @@ void RKFormula::typeChange (int id) {
 		custom_model_widget->setEnabled (false);
 	} else if (id == (int) Custom) {
 		predictors_view->clear ();
-		item_map.clear ();
+		predictors_map.clear ();
 		RObject::ObjectList fixed_list = fixed_factors->objectList ();
-		for (RObject::ObjectList::const_iterator it = fixed_list.begin (); it != fixed_list.end (); ++it) {
-			Q3ListViewItem *new_item = new Q3ListViewItem (predictors_view, (*it)->getShortName ());
-			item_map.insert (new_item, (*it));
+		for (int i = 0; i < fixed_list.count (); ++i) {
+			QTreeWidgetItem *new_item = new QTreeWidgetItem (predictors_view);
+			new_item->setText (0, fixed_list[i]->getShortName ());
+			predictors_map.insert (new_item, (fixed_list[i]));
 		}
 		checkCustomModel ();
 		custom_model_widget->setEnabled (true);
@@ -241,50 +247,35 @@ QString RKFormula::mangleName (RObject *var) {
 
 void RKFormula::addButtonClicked () {
 	RK_TRACE (PLUGIN);
+
 	// create an array of selected variables
-	// we allocate more than we'll probably need, but it's only going to be a handful of vars anyway.
-	RObject *varlist[predictors_view->childCount ()];
-	int num_selected_vars = 0;
-	for (ItemMap::iterator item = item_map.begin (); item != item_map.end (); ++item) {
-		if (item.key ()->isSelected ()) {
-			varlist[num_selected_vars++] = item.data ();
-		}
+	RObject::ObjectList varlist;
+	QList<QTreeWidgetItem*> selected_predictors = predictors_view->selectedItems ();
+	for (int i = 0; i < selected_predictors.count (); ++i) {
+		varlist.append (predictors_map.value (selected_predictors[i]));
 	}
-	if (!num_selected_vars) {
-		return;
-	}
+	if (varlist.isEmpty ()) return;
 
 	// TODO: allow looping from 0 to level (i.e. adding all interactions up to level)
 	// construct interactions
 	int level = level_box->value ();
-	int num_interactions;
-	Interaction *interactions = makeInteractions (level, varlist, num_selected_vars, &num_interactions);
+	QList<Interaction> interactions = makeInteractions (level, varlist);
 	
-	if (!num_interactions) return;
-	
-	// find an appropriate parent item
-	if (level_map.find (level) == level_map.end ()) {
-		Q3ListViewItem *item = new Q3ListViewItem (model_view, QString().setNum (level));
-		level_map.insert (level, item);
-	}
-	Q3ListViewItem *parent = level_map[level];
-	parent->setOpen (true);
+	if (interactions.isEmpty ()) return;
 	
 	// check for duplicates (remove from old list - new terms might have a different order of naming)
-	for (int inter = 0; inter < num_interactions; ++inter) {
-		Interaction *new_inter = &(interactions[inter]);
-		Q3ListViewItem *dupe = 0;
+	for (int inter = 0; inter < interactions.count (); ++inter) {
+		Interaction new_inter = interactions[inter];
+		QTreeWidgetItem *dupe = 0;
 		for (InteractionMap::Iterator it = interaction_map.begin (); it != interaction_map.end (); ++it) {
-			Interaction *existing_inter = &(it.data ());
+			Interaction existing_inter = it.data ();
 			// BEGIN: actual comparison
-			if (new_inter->level == existing_inter->level) {
+			if (new_inter.level == existing_inter.level) {
 				int num_matches = 0;
-				for (int a=0; a <= new_inter->level; ++a) {
-					for (int b=0; b <= existing_inter->level; ++b) {
-						if (new_inter->vars[a] == existing_inter->vars[b]) ++num_matches;
-					}
+				for (int a=0; a <= new_inter.level; ++a) {
+					if (existing_inter.vars.contains (new_inter.vars[a])) ++num_matches;
 				}
-				if (num_matches == (new_inter->level + 1)) {
+				if (num_matches == (new_inter.level + 1)) {
 					dupe = it.key ();
 					break;
 				}
@@ -292,14 +283,13 @@ void RKFormula::addButtonClicked () {
 			// END: actual comparison
 		}
 		if (dupe) {
-			delete [] interaction_map[dupe].vars;
 			interaction_map.remove (dupe);
 			delete dupe;
 		}
 	}
 	
 	// add new interactions
-	for (int i = 0; i < num_interactions; ++i) {
+	for (int i = 0; i < interactions.count (); ++i) {
 		QString dummy;
 		for (int j=0; j <= interactions[i].level; ++j) {
 			RK_DO (qDebug ("inserting interaction %d, level %d", i, j), PLUGIN, DL_DEBUG);
@@ -308,118 +298,72 @@ void RKFormula::addButtonClicked () {
 			}
 			dummy.append (interactions[i].vars[j]->getShortName ());
 		}
-		Q3ListViewItem *item = new Q3ListViewItem (parent, QString::null, dummy);
+		QTreeWidgetItem *item = new QTreeWidgetItem (model_view);
+		item->setText (0, QString::number (level));
+		item->setText (1, dummy);
 		interaction_map.insert (item, interactions[i]);
 	}
-	
+
+	model_view->sortItems (0, Qt::AscendingOrder);
+
 	makeModelString ();
 }
 
-RKFormula::Interaction* RKFormula::makeInteractions (int level, const RObjectPtr *source_vars, int source_count, int *count) {
+QList<RKFormula::Interaction> RKFormula::makeInteractions (int level, RObject::ObjectList source_vars) {
 	RK_TRACE (PLUGIN);
-	RK_DO (qDebug ("makeInteractions: level %d, source_count %d", level, source_count), PLUGIN, DL_DEBUG);
+	RK_DO (qDebug ("makeInteractions: level %d, source_count %d", level, source_vars.count ()), PLUGIN, DL_DEBUG);
 	RK_ASSERT (level >= 0);
 
+	QList<Interaction> ret;
+
 	int start_var;
-	
-	// enough vars available?
-	if (source_count < (level + 1)) {
-		*count = 0;
-		return 0;
-	}
+
+	// enough vars available for this level of crossing?
+	if (source_vars.count () < (level + 1)) return ret;
 	
 	// reached bottom level?
 	if (!level) {
-		// return an array of level 0 interactions
-		*count = source_count;
-		Interaction *ret = new Interaction[source_count];
-		for (start_var = 0; start_var < source_count; ++start_var) {
-			RK_DO (qDebug ("start_var %d, source_count %d", start_var, source_count), PLUGIN, DL_DEBUG);
-			ret[start_var].level = 0;
-			ret[start_var].vars = new RObjectPtr[1];
-			ret[start_var].vars[0] = source_vars[start_var];
+		// return an list of level 0 interactions (i.e. each var in a single "interaction")
+		for (start_var = 0; start_var < source_vars.count (); ++start_var) {
+			Interaction inter;
+			inter.level = 0;
+			inter.vars.append (source_vars[start_var]);
+			ret.append (inter);
 		}
 		return ret;
 	}
 
-	// first get all sub-interactions on the lower levels
-	Interaction **sub_interactions = new Interaction* [source_count];
-	int sub_counts[source_count];
-	int sub_total = 0;
-	for (start_var = 0; start_var < source_count; ++start_var) {
-		sub_interactions[start_var] = makeInteractions (level - 1, &(source_vars[start_var+1]), source_count - start_var - 1, &sub_counts[start_var]);
-		sub_total += sub_counts[start_var];
-	}
-	
-	// now cross the lower level interactions with the current level stuff
-	int current_interaction = 0;
-	Interaction *ret = new Interaction[(source_count-level) * sub_total];
-	for (start_var = 0; start_var < (source_count - level); ++start_var) {
-		for (int sub = 0; sub < sub_counts[start_var]; ++sub) {
-			// copy values
-			ret[current_interaction].vars = new RObjectPtr [sub_interactions[start_var][sub].level + 2];
-			ret[current_interaction].vars[0] = source_vars[start_var];
-			for (int i=1; i <= (sub_interactions[start_var][sub].level + 1); ++i) {
-				ret[current_interaction].vars[i] = sub_interactions[start_var][sub].vars[i-1];
-			}
-			ret[current_interaction].level = sub_interactions[start_var][sub].level + 1;
-			current_interaction++;
-			// delete sub-interaction
-			delete sub_interactions[start_var][sub].vars;
+	// cross each input variable with all interactions of the further variables at the next lower level
+	RObject::ObjectList sub_vars = source_vars;
+	for (int i = 0; i < source_vars.count (); ++i) {
+		// get the next lower level interactions
+		sub_vars.removeFirst ();	// not to be included in the sub-interactions
+		QList<Interaction> sub_interactions = makeInteractions (level - 1, sub_vars);
+
+		// now cross each with the current var
+		for (int sub = 0; sub < sub_interactions.count (); ++sub) {
+			Interaction inter;
+			inter.level = level;
+			inter.vars = sub_interactions[sub].vars;
+			inter.vars.insert (0, source_vars[i]);
+			ret.append (inter);
 		}
-		// delete interaction arrays;
-		delete sub_interactions[start_var];
 	}
-	delete [] sub_interactions;
 	
-	*count = current_interaction;
 	return ret;
 }
 
 void RKFormula::removeButtonClicked () {
 	RK_TRACE (PLUGIN);
-	Q3ListViewItem *current = model_view->firstChild ();
-	while (current) {
-		if (current->isSelected ()) {
-			Q3ListViewItem *next = current->nextSibling ();
-			if (current->parent ()) {	// single item
-				InteractionMap::iterator it = interaction_map.find (current);
-				delete it.data ().vars;
-				delete it.key ();
-				interaction_map.remove (it);
-				next = current->parent ();
-			} else {	// level item: remove all children
-				for (Q3ListViewItem *child = current->firstChild (); child; ) {
-					Q3ListViewItem *next_child = child->nextSibling ();
-					InteractionMap::iterator it = interaction_map.find (child);
-					delete it.data ().vars;
-					delete it.key ();
-					interaction_map.remove (it);
-					child = next_child;
-				}
-			}
-			current = next;
-		// else: walk tree
-		} else if (current->firstChild ()) {
-			current = current->firstChild ();
-		} else if (current->nextSibling ()) {
-			current = current->nextSibling ();
-		} else if (current->parent ()) {
-			current = current->parent ()->nextSibling ();
-		} else {
-			current = 0;
-		}
-	}
-	
-	// check whether some levels can be cleaned up
-	for (int i=0; i < predictors_view->childCount (); ++i) {
-		LevelMap::iterator lit;
-		if ((lit = level_map.find (i)) != level_map.end ()) {
-			if (!(lit.data ()->firstChild ())) {
-				delete lit.data ();
-				level_map.remove (lit);
-			}
-		}
+
+	QList<QTreeWidgetItem*> selected = model_view->selectedItems ();
+	if (selected.isEmpty ()) return;
+
+	for (int i = 0; i < selected.count (); ++i) {
+		QTreeWidgetItem* current = selected[i];
+
+		interaction_map.remove (current);
+		delete current;
 	}
 	
 	makeModelString ();
@@ -427,7 +371,7 @@ void RKFormula::removeButtonClicked () {
 
 void RKFormula::checkCustomModel () {
 	RK_TRACE (PLUGIN);
-	int max_level = predictors_view->childCount () - 1;
+	int max_level = predictors_view->topLevelItemCount () - 1;
 	if (max_level >= 0) {
 		level_box->setMaxValue (max_level);
 	} else {
@@ -439,7 +383,7 @@ void RKFormula::checkCustomModel () {
 		Interaction inter = in.data ();
 		int found_vars = 0;
 		for (int i=0; i <= inter.level; ++i) {
-			for (ItemMap::iterator item = item_map.begin (); item != item_map.end (); ++item) {
+			for (ItemMap::iterator item = predictors_map.begin (); item != predictors_map.end (); ++item) {
 				RK_DO (qDebug ("level %d", i), PLUGIN, DL_DEBUG);
 				if (item.data () == inter.vars[i]) {
 					++found_vars;
@@ -448,14 +392,8 @@ void RKFormula::checkCustomModel () {
 			}
 		}
 		if (found_vars < (inter.level + 1)) {
-			delete [] (in.data ().vars);
-			Q3ListViewItem *parent = in.key ()->parent ();
-			delete in.key ();
-			if (!parent->firstChild ()) {
-				delete parent;
-				level_map.remove (inter.level);
-			}
-			interaction_map.remove (in);
+			delete (in.key ());
+			interaction_map.erase (in);
 		}
 	}
 }

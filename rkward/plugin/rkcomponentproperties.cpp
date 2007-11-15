@@ -94,8 +94,6 @@ the specialized properties (e.g. RKComponentPropertyInt::intValue () always retu
 #include "rkcomponentproperties.h"
 
 #include "../debug.h"
-//Added by qt3to4:
-#include <Q3ValueList>
 
 ///////////////////////////////////////////// Base //////////////////////////////////////////
 

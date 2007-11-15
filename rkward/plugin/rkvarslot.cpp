@@ -114,7 +114,7 @@ void RKVarSlot::listSelectionChanged () {
 	RObject::ObjectList sellist;
 	QList<QTreeWidgetItem*> selitems = list->selectedItems ();
 	for (int i = 0; i < selitems.count (); ++i) sellist.append (item_map.value (selitems[i]));
-qDebug ("%d", selitems.count ());
+
 	selected->setObjectList (sellist);
 
 	setSelectButton (((!multi) || (selitems.isEmpty ())) && (!available->atMaxLength ()));
