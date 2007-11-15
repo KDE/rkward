@@ -55,9 +55,9 @@ private:
 	typedef Q3ValueList<PageDef *> Pages;
 	Pages pages;
 
-	int num_pages;
+	int num_pages;			// KDE4: TODO remove
 	int current_page;
-	PageDef *current_def;		// to save a few lookups
+	PageDef *current_def;		// to save a few lookups	// KDE4: TODO remove
 
 	int previousVisiblePage ();
 	int nextVisiblePage ();

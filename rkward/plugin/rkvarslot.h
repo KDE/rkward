@@ -2,7 +2,7 @@
                           rkvarslot.h  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,8 +24,8 @@
 
 class QLineEdit;
 class QPushButton;
-class Q3ListView;
-class Q3ListViewItem;
+class QTreeWidget;
+class QTreeWidgetItem;
 class QDomElement;
 
 class RKVariable;
@@ -67,9 +67,9 @@ private:
 /** of the objects in the varslot, those that are marked */
 	RKComponentPropertyRObjects *selected;
 
-	Q3ListView *list;
+	QTreeWidget *list;
 	QPushButton *select;
-	typedef QMap<Q3ListViewItem*, RObject*> ItemMap;
+	typedef QMap<QTreeWidgetItem*, RObject*> ItemMap;
 	ItemMap item_map;
 };
 

@@ -19,12 +19,10 @@
 
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <q3listview.h>
-#include <qlayout.h>
-#include <q3header.h>
+#include <QTreeWidget>
+#include <QHeaderView>
 #include <qstringlist.h>
-//Added by qt3to4:
-#include <Q3GridLayout>
+#include <QGridLayout>
 
 #include <klocale.h>
 #include <kiconloader.h>
@@ -42,7 +40,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	// basic layout
-	Q3GridLayout *g_layout = new Q3GridLayout (this, 3, 3, RKGlobals::spacingHint ());
+	QGridLayout *g_layout = new QGridLayout (this);
 
 	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Variable:"), DL_INFO), this);
 	g_layout->addWidget (label, 0, 2);
@@ -53,11 +51,12 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	g_layout->addWidget (select, 1, 0);
 	g_layout->addColSpacing (1, 5);
 
-	list = new Q3ListView (this);
-	list->setSelectionMode (Q3ListView::Extended);
-	list->addColumn (" ");		// for counter
-	list->addColumn (i18n ("Name"));
-	list->setSorting (2);
+	list = new QTreeWidget (this);
+	list->setSelectionMode (QAbstractItemView::ExtendedSelection);
+	list->setHeaderLabels (QStringList () << " " << i18n ("Name"));
+	list->setSortingEnabled (false);
+	list->setUniformRowHeights (true);
+	list->setRootIsDecorated (false);
 	g_layout->addWidget (list, 1, 2);
 
 	// initialize properties
@@ -68,17 +67,20 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	// find out about options
 	if (multi = xml->getBoolAttribute (element, "multi", false, DL_INFO)) {
 		available->setListLength (xml->getIntAttribute (element, "min_vars", 1, DL_INFO), xml->getIntAttribute (element, "min_vars_if_any", 1, DL_INFO), xml->getIntAttribute (element, "max_vars", 0, DL_INFO));
-		connect (list, SIGNAL (selectionChanged ()), this, SLOT (listSelectionChanged ()));
+		connect (list, SIGNAL (itemSelectionChanged ()), this, SLOT (listSelectionChanged ()));
 	} else {
 		available->setListLength (1, 1, 1);
 
 		// make it look like a line-edit
 		list->header ()->hide ();
-		list->setFixedHeight (list->fontMetrics ().height () + 2*list->itemMargin () + 4);	// the height of a single line including margins
-		list->setColumnWidthMode (0, Q3ListView::Manual);
-		list->setColumnWidth (0, 0);
-		list->setHScrollBarMode (Q3ScrollView::AlwaysOff);
-		list->setVScrollBarMode (Q3ScrollView::AlwaysOff);
+		QTreeWidgetItem* dummy = new QTreeWidgetItem (list);
+		dummy->setText (0, " ");
+		list->setFixedHeight (list->visualItemRect (dummy).height () + 2*list->visualItemRect (dummy).top () + 4);
+		delete dummy;
+		list->header ()->setStretchLastSection (true);
+		list->hideColumn (0);
+		list->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
+		list->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 		g_layout->setRowStretch (3, 1);		// so the label does not get separated from the view
 	}
 
@@ -109,22 +111,13 @@ void RKVarSlot::setSelectButton (bool add) {
 void RKVarSlot::listSelectionChanged () {
 	RK_TRACE (PLUGIN);
 
-	bool selection = false;
-
 	RObject::ObjectList sellist;
-	Q3ListViewItem *item = list->firstChild ();
-	while (item) {
-		if (item->isSelected ()) {
-			selection = true;
-			RObject *robj = item_map[item];
-			RK_ASSERT (robj);
-			sellist.append (robj);
-		}
-		item = item->nextSibling ();
-	}
+	QList<QTreeWidgetItem*> selitems = list->selectedItems ();
+	for (int i = 0; i < selitems.count (); ++i) sellist.append (item_map.value (selitems[i]));
+qDebug ("%d", selitems.count ());
 	selected->setObjectList (sellist);
 
-	setSelectButton (((!multi) || (!selection)) && (!available->atMaxLength ()));
+	setSelectButton (((!multi) || (selitems.isEmpty ())) && (!available->atMaxLength ()));
 }
 
 void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
@@ -139,11 +132,13 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 	RObject::ObjectList::const_iterator it = objlist.begin ();
 	int i = 1;
 	while (it != objlist.end ()) {
-		Q3ListViewItem *new_item = new Q3ListViewItem (list, QString::number (i++), (*it)->getShortName ());
-		list->insertItem (new_item);
+		QTreeWidgetItem *new_item = new QTreeWidgetItem (list);
+		new_item->setText (0, QString::number (i++));
+		new_item->setText (1, (*it)->getShortName ());
 		item_map.insert (new_item, *it);
 		++it;
 	}
+	if (multi) list->resizeColumnToContents (0);
 
 	listSelectionChanged ();		// takes care of updating the select button
 
