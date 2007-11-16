@@ -18,9 +18,8 @@
 #define RKCANCELDIALOG_H
 
 #include <qdialog.h>
-//Added by qt3to4:
-#include <QCloseEvent>
 
+class QCloseEvent;
 class RCommand;
 
 /**

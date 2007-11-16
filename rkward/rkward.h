@@ -24,9 +24,8 @@ email                : tfry@users.sourceforge.net
 #endif
 
 #include<QDBusAbstractAdaptor>
-//Added by qt3to4:
-#include <QLabel>
-#include <QCloseEvent>
+
+class QApplication;
 
 /** This base provides the DBUS-Interface for RKWardMainWindow */
 class RKWardDBUSInterface : virtual public QDBusAbstractAdaptor {
@@ -50,6 +49,7 @@ public slots:
 #include <kparts/mainwindow.h>
 
 class QLabel;
+class QCloseEvent;
 // forward declaration of the RKward classes
 class RSettings;
 class RKMenu;

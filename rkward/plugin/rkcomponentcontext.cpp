@@ -111,19 +111,19 @@ void RKContextHandler::invokeComponent (RKComponentHandle *handle) {
 	RKComponent *component = handle->invoke (0, 0);
 
 	// set context values
-	for (Q3DictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
-		if (it.currentKey () != "#noid#") {
-			QString id = it.currentKey ();
+	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
+		if (it.key () != "#noid#") {
+			QString id = it.key ();
 			QString remainder;
 			RKComponentBase *client = component->lookupComponent (id, &remainder);
 
-			RK_ASSERT (it.current ()->isProperty ());
-			if (!(client && remainder.isEmpty () && client->isProperty () && it.current ()->isProperty ())) {
+			RK_ASSERT (it.value ()->isProperty ());
+			if (!(client && remainder.isEmpty () && client->isProperty () && it.value ()->isProperty ())) {
 				RK_DO (qDebug ("Could not set context property %s", id.toLatin1 ().data ()), PLUGIN, DL_INFO);
 				continue;
 			}
 
-			static_cast<RKComponentPropertyBase *> (client)->connectToGovernor (static_cast<RKComponentPropertyBase *> (it.current ()), QString::null, false);
+			static_cast<RKComponentPropertyBase *> (client)->connectToGovernor (static_cast<RKComponentPropertyBase *> (it.value ()), QString::null, false);
 		}
 	}
 }

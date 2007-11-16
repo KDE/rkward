@@ -18,7 +18,7 @@
 #ifndef RKSTANDARDCOMPONENTGUI_H
 #define RKSTANDARDCOMPONENTGUI_H
 
-#include <q3widgetstack.h>
+#include <QStackedWidget>
 #include <QList>
 
 #include "rkstandardcomponent.h"
@@ -26,7 +26,7 @@
 /** For use in RKStandardComponents that are in wizard mode. Keeps a list of all pages, which page we're currently on, which children need to be satisfied in order to be able to move to the next page, etc.
 
 @author Thomas Friedrichsmeier */
-class RKStandardComponentStack: public Q3WidgetStack {
+class RKStandardComponentStack: public QStackedWidget {
 public:
 /** constructor. */
 	explicit RKStandardComponentStack (QWidget *parent);
@@ -52,12 +52,7 @@ private:
 		PageComponents page_components;
 		RKComponent *page;
 	};
-	typedef Q3ValueList<PageDef *> Pages;
-	Pages pages;
-
-	int num_pages;			// KDE4: TODO remove
-	int current_page;
-	PageDef *current_def;		// to save a few lookups	// KDE4: TODO remove
+	QList<PageDef*> pages;
 
 	int previousVisiblePage ();
 	int nextVisiblePage ();

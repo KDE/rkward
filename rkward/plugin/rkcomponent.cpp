@@ -28,7 +28,7 @@ RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QS
 	if (identifier.isEmpty ()) return this;
 	RK_DO (qDebug ("looking up '%s'", identifier.toLatin1 ().data ()), PLUGIN, DL_DEBUG);
 
-	RKComponentBase *child = child_map.find (identifier.section (".", 0, 0));
+	RKComponentBase *child = child_map.value (identifier.section (".", 0, 0));
 	if (!child) {	// if we do not have such a child, return this (and set remainder)
 		*remainder = identifier;
 		return this;
@@ -40,20 +40,20 @@ RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QS
 void RKComponentBase::addChild (const QString &id, RKComponentBase *child) {
 	RK_TRACE (PLUGIN);
 
-	child_map.insert (id, child);		// no overwriting even on duplicate ("#noid#") ids, als this is really a QDict, not a QMap
+	child_map.insertMulti (id, child);		// no overwriting even on duplicate ("#noid#") ids
 }
 
 void RKComponentBase::fetchPropertyValuesRecursive (QMap<QString, QString> *list, bool include_top_level, const QString &prefix) {
 	RK_TRACE (PLUGIN);
 
-	for (Q3DictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
-		if (it.currentKey () != "#noid#") {
-			if (it.current ()->isProperty ()) {
+	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
+		if (it.key () != "#noid#") {
+			if (it.value ()->isProperty ()) {
 				if (include_top_level) {
-					list->insert (prefix + it.currentKey (), it.current ()->value ());
+					list->insert (prefix + it.key (), it.value ()->value ());
 				}
 			} else {
-				it.current ()->fetchPropertyValuesRecursive (list, true, prefix + it.currentKey () + '.');
+				it.value ()->fetchPropertyValuesRecursive (list, true, prefix + it.key () + '.');
 			}
 		}
 	}
@@ -157,9 +157,9 @@ void RKComponent::updateEnablednessRecursive () {
 
 	setEnabled (enabled);	/* We do this, even if the state *seems* to be unchanged. This is needed, as isEnabled () also returns false, if the parent QWidget is not enabled. However, the parent QWidget may not always be the parent component. */
 	if (enabled != isEnabled ()) {
-		for (Q3DictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
-			if (it.current ()->isComponent()) {
-				static_cast<RKComponent*> (it.current ())->updateEnablednessRecursive ();
+		for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
+			if (it.value ()->isComponent()) {
+				static_cast<RKComponent*> (it.value ())->updateEnablednessRecursive ();
 			}
 		}
 	}
@@ -168,8 +168,8 @@ void RKComponent::updateEnablednessRecursive () {
 bool RKComponent::isValid () {
 	RK_TRACE (PLUGIN);
 
-	for (Q3DictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
-		if (!(it.current ()->isSatisfied ())) return false;
+	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
+		if (!(it.value ()->isSatisfied ())) return false;
 	}
 	return true;
 }
@@ -222,9 +222,10 @@ void RKComponent::removeFromParent () {
 	RK_TRACE (PLUGIN);
 
 	if (!parentComponent ()) return;
-	for (Q3DictIterator<RKComponentBase> it (parentComponent ()->child_map); it.current (); ++it) {
-		if (it.current () == this) {
-			QString key = it.currentKey ();
+
+	for (QHash<QString, RKComponentBase*>::const_iterator it = parentComponent ()->child_map.constBegin (); it != parentComponent ()->child_map.constEnd (); ++it) {
+		if (it.value () == this) {
+			QString key = it.key ();
 	// unfortunately, several items might hvae the same key, and there seems to be no way to selectively remove the current item only.
 	// however, this function should only ever be called in cases of emergency and to prevent crashes. So we make extra sure to remove the child,
 	// even if we remove a little more than necessary along the way.

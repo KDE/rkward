@@ -18,8 +18,6 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
 
 #include <klocale.h>
 
@@ -41,7 +39,8 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 	addChild ("real", realvalue = new RKComponentPropertyDouble (this, !intmode, 0));
 
 	// layout and label
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+	vbox->setContentsMargins (0, 0, 0, 0);
 	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Enter value:"), DL_WARNING), this);
 	vbox->addWidget (label);
 

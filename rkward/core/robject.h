@@ -240,6 +240,4 @@ friend class RKModificationTracker;
 	void rCommandDone (RCommand *command);
 };
 
-typedef RObject* RObjectPtr;
-
 #endif

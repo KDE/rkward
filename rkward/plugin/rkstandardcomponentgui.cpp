@@ -21,19 +21,14 @@
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kurl.h>
+#include <kvbox.h>
+#include <khbox.h>
 
 #include <qtimer.h>
 #include <qlayout.h>
-#include <q3vbox.h>
-#include <q3hbox.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
-//Added by qt3to4:
-#include <Q3HBoxLayout>
 #include <QCloseEvent>
-#include <Q3GridLayout>
-#include <Q3Frame>
-#include <Q3VBoxLayout>
 
 #include "rkcomponentmap.h"
 #include "../windows/rkworkplace.h"
@@ -82,7 +77,7 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	QHBoxLayout *hbox = new QHBoxLayout (upper_widget);
 
 	// build standard elements
-	main_widget = new Q3VBox (upper_widget);
+	main_widget = new KVBox (upper_widget);
 	hbox->addWidget (main_widget);
 
 	// lines
@@ -269,7 +264,7 @@ void RKStandardComponentWizard::createWizard (bool switchable) {
 
 	is_switchable = switchable;
 	// create main layout and stack
-	Q3GridLayout *main_grid = new Q3GridLayout (this, 3, 4, RKGlobals::marginHint (), RKGlobals::spacingHint ());
+	QGridLayout *main_grid = new QGridLayout (this);
 	main_widget = stack = new RKStandardComponentStack (this);
 	main_grid->addMultiCellWidget (stack, 0, 0, 0, 3);
 
@@ -303,7 +298,8 @@ void RKStandardComponentWizard::addLastPage () {
 	if (!enslaved) {
 		// build the last page
 		RKComponent *last_page = stack->addPage (component);
-		Q3VBoxLayout *vbox = new Q3VBoxLayout (last_page, RKGlobals::spacingHint ());
+		QVBoxLayout *vbox = new QVBoxLayout (last_page);
+		vbox->setContentsMargins (0, 0, 0, 0);
 		QLabel *label = new QLabel (i18n ("Below you can see the command(s) corresponding to the settings you made. Click 'Submit' to run the command(s)."), last_page);
 		label->setWordWrap (true);
 		code_display = new RKCommandEditorWindow (last_page, true);
@@ -402,18 +398,15 @@ void RKStandardComponentWizard::enableSubmit (bool enable) {
 
 //////////////////////////////// RKStandardComponentStack ////////////////////////////////////
 
-RKStandardComponentStack::RKStandardComponentStack (QWidget *parent) : Q3WidgetStack (parent) {
+RKStandardComponentStack::RKStandardComponentStack (QWidget *parent) : QStackedWidget (parent) {
 	RK_TRACE (PLUGIN);
-
-	num_pages = current_page = 0;
-	current_def = 0;
 }
 
 RKStandardComponentStack::~RKStandardComponentStack () {
 	RK_TRACE (PLUGIN);
 
-	for (Pages::const_iterator it = pages.constBegin (); it != pages.constEnd (); ++it) {
-		delete (*it);
+	for (int i = 0; i < pages.count (); ++i) {
+		delete (pages[i]);
 	}
 }
 
@@ -421,7 +414,7 @@ bool RKStandardComponentStack::havePage (bool next) {
 	RK_TRACE (PLUGIN);
 
 	if (next) {
-		return (nextVisiblePage () <= (num_pages-1));
+		return (nextVisiblePage () <= (count () - 1));
 	} else {
 		return (previousVisiblePage () >= 0);
 	}
@@ -442,20 +435,20 @@ void RKStandardComponentStack::movePage (bool next) {
 		return;
 	}
 
-	current_page = id;
-	current_def = pages[id];
-	raiseWidget (current_def->page);
+	setCurrentIndex (id);
 }
 
 bool RKStandardComponentStack::currentPageSatisfied () {
 	RK_TRACE (PLUGIN);
-	if (!current_def) {
+
+	PageDef* current_page = pages.value (currentIndex ());
+	if (!current_page) {
 		RK_ASSERT (false);
 		return false;
 	}
 
-	for (int i = 0; i < current_def->page_components.size (); ++i) {
-		if (!((current_def->page_components[i])->isSatisfied ())) {
+	for (int i = 0; i < current_page->page_components.size (); ++i) {
+		if (!((current_page->page_components[i])->isSatisfied ())) {
 			return false;
 		}
 	}
@@ -466,9 +459,7 @@ bool RKStandardComponentStack::currentPageSatisfied () {
 void RKStandardComponentStack::goToFirstPage () {
 	RK_TRACE (PLUGIN);
 
-	current_page = 0;
-	current_def = pages.first ();
-	raiseWidget (current_def->page);
+	setCurrentIndex (0);
 }
 
 RKComponent *RKStandardComponentStack::addPage (RKComponent *parent) {
@@ -476,30 +467,28 @@ RKComponent *RKStandardComponentStack::addPage (RKComponent *parent) {
 
 	PageDef *def = new PageDef;
 	def->page = new RKComponent (parent, this);
-	addWidget (def->page);
+	setCurrentIndex (addWidget (def->page));
 	pages.append (def);
-
-	current_def = def;
-	num_pages++;
-	current_page++;
 
 	return def->page;
 }
 
 void RKStandardComponentStack::addComponentToCurrentPage (RKComponent *component) {
 	RK_TRACE (PLUGIN);
-	if (!current_def) {
+
+	PageDef* current_page = pages.value (currentIndex ());
+	if (!current_page) {
 		RK_ASSERT (false);
 		return;
 	}
 
-	current_def->page_components.append (component);
+	current_page->page_components.append (component);
 }
 
 int RKStandardComponentStack::previousVisiblePage () {
 	RK_TRACE (PLUGIN);
 
-	int prev_page = current_page - 1;
+	int prev_page = currentIndex () - 1;
 	while (prev_page >= 0) {
 		if (pages[prev_page]->page->visibilityProperty ()->boolValue ()) return prev_page;
 		--prev_page;
@@ -511,8 +500,8 @@ int RKStandardComponentStack::previousVisiblePage () {
 int RKStandardComponentStack::nextVisiblePage () {
 	RK_TRACE (PLUGIN);
 
-	int next_page = current_page + 1;
-	while (next_page <= (num_pages-1)) {
+	int next_page = currentIndex () + 1;
+	while (next_page <= (count ()-1)) {
 		if (pages[next_page]->page->visibilityProperty ()->boolValue ()) return next_page;
 		++next_page;
 	}

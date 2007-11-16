@@ -20,8 +20,6 @@
 #include <qlabel.h>
 #include <qcheckbox.h>
 #include <qtimer.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
 
 #include <klocale.h>
 
@@ -45,7 +43,8 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	connect (state, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (changedState (RKComponentPropertyBase *)));
 
 	// create checkbox
-	Q3VBoxLayout *vbox = new Q3VBoxLayout (this, RKGlobals::spacingHint ());
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+	vbox->setContentsMargins (0, 0, 0, 0);
 	toggle_preview_box = new QCheckBox (xml->getStringAttribute (element, "label", i18n ("Preview"), DL_INFO), this);
 	vbox->addWidget (toggle_preview_box);
 	toggle_preview_box->setChecked (preview_active);

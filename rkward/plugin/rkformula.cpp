@@ -16,7 +16,6 @@
  ***************************************************************************/
 #include "rkformula.h"
 
-#include <q3listview.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <QButtonGroup>
@@ -26,9 +25,6 @@
 #include <qlayout.h>
 #include <qdom.h>
 #include <QTreeWidget>
-//Added by qt3to4:
-#include <Q3HBoxLayout>
-#include <Q3VBoxLayout>
 
 #include <klocale.h>
 #include <kiconloader.h>
@@ -343,7 +339,7 @@ QList<RKFormula::Interaction> RKFormula::makeInteractions (int level, RObject::O
 		// now cross each with the current var
 		for (int sub = 0; sub < sub_interactions.count (); ++sub) {
 			Interaction inter;
-			inter.level = level;
+			inter.level = level;	// well, actually level should always be count of vars - 1, so redundant...
 			inter.vars = sub_interactions[sub].vars;
 			inter.vars.insert (0, source_vars[i]);
 			ret.append (inter);

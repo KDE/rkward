@@ -21,7 +21,6 @@
 #include <kfilefiltercombo.h>
 #include <klocale.h>
 
-#include <q3hbox.h>
 #include <qcombobox.h>
 #include <qlabel.h>
 

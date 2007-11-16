@@ -18,12 +18,12 @@
 #include "rkstandardcomponent.h"
 
 #include <qfileinfo.h>
-#include <q3groupbox.h>
 #include <qtabwidget.h>
 #include <qlabel.h>
 #include <qapplication.h>
 #include <qtimer.h>
 #include <QVBoxLayout>
+#include <QGroupBox>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -264,12 +264,12 @@ void RKStandardComponent::discard () {
 	wizard = 0;
 
 	// clear all properties. Not the code property, as the script backend relies on it
-	for (Q3DictIterator<RKComponentBase> it (child_map); it.current (); ++it) {
-		if (it.current () != code) {
-			if (it.current ()->isProperty ()) {
-				static_cast<RKComponentPropertyBase *> (it.current ())->deleteLater ();
+	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
+		if (it.value () != code) {
+			if (it.value ()->isProperty ()) {
+				static_cast<RKComponentPropertyBase *> (it.value ())->deleteLater ();
 			} else {
-				static_cast<RKComponent *> (it.current ())->deleteLater ();
+				static_cast<RKComponent *> (it.value ())->deleteLater ();
 			}
 		}
 	}
@@ -673,7 +673,7 @@ void RKComponentBuilder::makeConnections () {
 
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
-	for (ConnectionList::const_iterator it = connection_list.begin (); it != connection_list.end (); ++it) {
+	for (ConnectionList::const_iterator it = connection_list.constBegin (); it != connection_list.constEnd (); ++it) {
 		RK_DO (qDebug ("Connecting '%s' to '%s'", (*it).client_property.toLatin1 ().data (), (*it).governor_property.toLatin1 ().data ()), PLUGIN, DL_DEBUG);
 
 		QString dummy;

@@ -23,8 +23,6 @@
 #include "rkcomponentproperties.h"
 
 #include "../rbackend/rcommandreceiver.h"
-//Added by qt3to4:
-#include <QLabel>
 
 class QCheckBox;
 class QDomElement;

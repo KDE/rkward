@@ -19,9 +19,6 @@
 
 #include "robject.h"
 
-#include <qpair.h>
-#include <q3valuelist.h>
-
 class RCommand;
 
 /**
