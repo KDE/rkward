@@ -20,6 +20,7 @@
 #include <qthread.h>
 #include <qstringlist.h>
 #include <QList>
+#include <QEvent>
 
 #include "rcommand.h"
 #include "rcommandstack.h"
@@ -28,6 +29,30 @@
 class RInterface;
 struct RCallbackArgs;
 struct ROutput;
+
+/** Simple event class to relay information from the RThread to the main thread. This is basically like QCustomEvent in Qt3*/
+class RKRBackendEvent : public QEvent {
+public:
+	enum EventType {
+		BaseEvent = QEvent::User + 1,
+		RCommandInEvent,
+		RCommandOutEvent,
+		RBusyEvent,
+		RIdleEvent,
+		RCommandOutputEvent,
+		RStaredEvent,
+		REvalRequestEvent,
+		RCallbackRequestEvent,
+		RStartupErrorEvent
+	};
+
+	RKRBackendEvent (EventType type, void* data) : QEvent (type) { _data = data; };
+	RKRBackendEvent ();
+
+	void* data () { return _data; };
+private:
+	void* _data;
+};
 
 #define RCOMMAND_IN_EVENT 10001
 #define RCOMMAND_OUT_EVENT 10002

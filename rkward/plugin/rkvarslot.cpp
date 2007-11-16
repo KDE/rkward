@@ -25,14 +25,13 @@
 #include <QGridLayout>
 
 #include <klocale.h>
-#include <kiconloader.h>
 
 #include "rkvarselector.h"
 #include "../core/robject.h"
 #include "../rkglobals.h"
 #include "../debug.h"
 #include "../misc/xmlhelper.h"
-
+#include "../misc/rkstandardicons.h"
 
 RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
@@ -49,7 +48,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	setSelectButton (false);
 	connect (select, SIGNAL (clicked ()), this, SLOT (selectPressed ()));
 	g_layout->addWidget (select, 1, 0);
-	g_layout->addColSpacing (1, 5);
+	g_layout->addItem (new QSpacerItem (5, 0), 0, 1);
 
 	list = new QTreeWidget (this);
 	list->setSelectionMode (QAbstractItemView::ExtendedSelection);
@@ -85,9 +84,9 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	}
 
 	// initialize filters
-	available->setClassFilter (QStringList::split (" ", xml->getStringAttribute (element, "classes", QString::null, DL_INFO)));
+	available->setClassFilter (xml->getStringAttribute (element, "classes", QString (), DL_INFO).split (" "));
 	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
-	available->setTypeFilter (QStringList::split (" ", xml->getStringAttribute (element, "types", QString::null, DL_INFO)));
+	available->setTypeFilter (xml->getStringAttribute (element, "types", QString::null, DL_INFO).split (" "));
 	available->setDimensionFilter (xml->getIntAttribute (element, "num_dimensions", 0, DL_INFO), xml->getIntAttribute (element, "min_length", 0, DL_INFO), xml->getIntAttribute (element, "max_length", INT_MAX, DL_INFO));
 
 	connect (available, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (availablePropertyChanged (RKComponentPropertyBase *)));
@@ -100,10 +99,10 @@ RKVarSlot::~RKVarSlot (){
 
 void RKVarSlot::setSelectButton (bool add) {
 	if (add) {
-		select->setPixmap (SmallIcon ("arrow-right"));
+		select->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAddRight));
 		add_mode = true;
 	} else {
-		select->setPixmap (SmallIcon ("arrow-left"));
+		select->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemoveLeft));
 		add_mode = false;
 	}
 }
@@ -148,19 +147,21 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 void RKVarSlot::updateLook () {
 	RK_TRACE (PLUGIN);
 
+	QPalette palette = list->palette ();
 	if (isEnabled ()) {
 		if (!isSatisfied ()) {
-			list->setPaletteBackgroundColor (QColor (255, 0, 0));
+			palette.setColor (list->backgroundRole (), QColor (255, 0, 0));
 		} else {
-			list->setPaletteBackgroundColor (QColor (255, 255, 255));
+			palette.setColor (list->backgroundRole (), QColor (255, 255, 255));
 		}
 	} else {
 		if (!isSatisfied ()) {
-			list->setPaletteBackgroundColor (QColor (200, 0, 0));
+			palette.setColor (list->backgroundRole (), QColor (200, 0, 0));
 		} else {
-			list->setPaletteBackgroundColor (QColor (200, 200, 200));
+			palette.setColor (list->backgroundRole (), QColor (200, 200, 200));
 		}
 	}
+	list->setPalette(palette);
 }
 
 void RKVarSlot::selectPressed () {

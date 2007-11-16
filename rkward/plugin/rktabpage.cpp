@@ -56,17 +56,18 @@ void RKTabPage::visibleEnabledChanged (RKComponentPropertyBase *property) {
 	if (property == visibility_property) {
 		if (visibility_property->boolValue ()) {
 			if (!inserted) {
-				tabbook->insertTab (this, label, index);
+#warning this may not be reliable, if an earlier page is invisible as well
+				tabbook->insertTab (index, this, label);
 				inserted = true;
 			}
 		} else {
 			if (inserted) {
-				tabbook->removePage (this);
+				tabbook->removeTab (tabbook->indexOf (this));
 				inserted = false;
 			}
 		}
 	} else if (property == enabledness_property) {
-		tabbook->setTabEnabled (this, enabledness_property->boolValue ());
+		tabbook->setTabEnabled (tabbook->indexOf (this), enabledness_property->boolValue ());
 	}
 }
 

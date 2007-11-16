@@ -27,11 +27,11 @@
 #include <QTreeWidget>
 
 #include <klocale.h>
-#include <kiconloader.h>
 
 #include "rkcomponent.h"
 #include "../core/rcontainerobject.h"
 #include "../misc/xmlhelper.h"
+#include "../misc/rkstandardicons.h"
 #include "../rkglobals.h"
 
 #include "../debug.h"
@@ -82,16 +82,18 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	model_hbox->addWidget (predictors_view);
 	model_hbox->addSpacing (6);
 	
-	QVBoxLayout *model_vbox = new QVBoxLayout (model_hbox);
+	QVBoxLayout *model_vbox = new QVBoxLayout ();
+	model_hbox->addLayout (model_vbox);
 	add_button = new QPushButton (QString::null, custom_model_widget);
-	add_button->setPixmap (SmallIcon ("arrow-right"));
+	add_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAddRight));
 	connect (add_button, SIGNAL (clicked ()), this, SLOT (addButtonClicked ()));
 	model_vbox->addWidget (add_button);
 	remove_button = new QPushButton (QString::null, custom_model_widget);
-	remove_button->setPixmap (SmallIcon ("arrow-left"));
+	remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemoveLeft));
 	connect (remove_button, SIGNAL (clicked ()), this, SLOT (removeButtonClicked ()));
 	model_vbox->addWidget (remove_button);
-	level_box = new QSpinBox (0, 0, 1, custom_model_widget);
+	level_box = new QSpinBox (custom_model_widget);
+	level_box->setRange (0, 0);
 	level_box->setSpecialValueText (i18n ("Main effects"));
 	model_vbox->addWidget (level_box);
 	model_hbox->addSpacing (6);
@@ -200,11 +202,11 @@ void RKFormula::makeModelString () {
 			if (it != interaction_map.begin ()) {
 				model_string.append (" + ");
 			}
-			for (int i=0; i <= it.data ().level; ++i) {
+			for (int i=0; i <= it.value ().level; ++i) {
 				if (i) {
 					model_string.append (":");
 				}
-				model_string.append (mangleName (it.data ().vars[i]));
+				model_string.append (mangleName (it.value ().vars[i]));
 			}
 		}
 	}
@@ -216,7 +218,7 @@ void RKFormula::makeModelString () {
 		if (it != mangled_names.begin ()) {
 			labels_string.append (", ");
 		}
-		labels_string.append (it.key () + "=\"" + it.data ()->getDescription () + "\"");
+		labels_string.append (it.key () + "=\"" + it.value ()->getDescription () + "\"");
 	}
 	labels_string.append (")");
 
@@ -234,7 +236,7 @@ QString RKFormula::mangleName (RObject *var) {
 	QString dummy2 = dummy;
 	MangledNames::iterator it;
 	int i=-1;
-	while (((it = mangled_names.find (dummy)) != mangled_names.end ()) && (it.data () != var)) {
+	while (((it = mangled_names.find (dummy)) != mangled_names.end ()) && (it.value () != var)) {
 		dummy = dummy2.append (QString ().setNum (++i));
 	}
 	mangled_names.insert (dummy, var);
@@ -264,7 +266,7 @@ void RKFormula::addButtonClicked () {
 		Interaction new_inter = interactions[inter];
 		QTreeWidgetItem *dupe = 0;
 		for (InteractionMap::Iterator it = interaction_map.begin (); it != interaction_map.end (); ++it) {
-			Interaction existing_inter = it.data ();
+			Interaction existing_inter = it.value ();
 			// BEGIN: actual comparison
 			if (new_inter.level == existing_inter.level) {
 				int num_matches = 0;
@@ -369,19 +371,19 @@ void RKFormula::checkCustomModel () {
 	RK_TRACE (PLUGIN);
 	int max_level = predictors_view->topLevelItemCount () - 1;
 	if (max_level >= 0) {
-		level_box->setMaxValue (max_level);
+		level_box->setMaximum (max_level);
 	} else {
-		level_box->setMaxValue (0);
+		level_box->setMaximum (0);
 	}
 
 	// clear terms which are no longer valid
 	for (InteractionMap::iterator in = interaction_map.begin (); in != interaction_map.end (); ++in) {
-		Interaction inter = in.data ();
+		Interaction inter = in.value ();
 		int found_vars = 0;
 		for (int i=0; i <= inter.level; ++i) {
-			for (ItemMap::iterator item = predictors_map.begin (); item != predictors_map.end (); ++item) {
+			for (ItemMap::const_iterator item = predictors_map.constBegin (); item != predictors_map.constEnd (); ++item) {
 				RK_DO (qDebug ("level %d", i), PLUGIN, DL_DEBUG);
-				if (item.data () == inter.vars[i]) {
+				if (item.value () == inter.vars[i]) {
 					++found_vars;
 					break;
 				}

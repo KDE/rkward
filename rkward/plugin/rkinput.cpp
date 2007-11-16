@@ -93,15 +93,17 @@ void RKInput::updateColor () {
 	if (!widget) widget = textedit;
 	RK_ASSERT (widget);
 
+	QPalette palette = widget->palette ();
 	if (isEnabled ()) {
 		if (isSatisfied ()) {
-			widget->setPaletteBackgroundColor (QColor (255, 255, 255));
+			palette.setColor (widget->backgroundRole (), QColor (255, 255, 255));
 		} else {
-			widget->setPaletteBackgroundColor (QColor (255, 0, 0));
+			palette.setColor (widget->backgroundRole (), QColor (255, 0, 0));
 		}
 	} else {
-		widget->setPaletteBackgroundColor (QColor (200, 200, 200));
+		palette.setColor (widget->backgroundRole (), QColor (200, 200, 200));
 	}
+	widget->setPalette (palette);
 }
 
 void RKInput::requirednessChanged (RKComponentPropertyBase *) {
@@ -142,7 +144,7 @@ void RKInput::textChanged () {
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (textedit);
-	textChanged (textedit->text ());
+	textChanged (textedit->toPlainText ());
 }
 
 bool RKInput::isValid () {

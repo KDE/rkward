@@ -47,6 +47,9 @@ public:
 		ActionDeleteVar,
 		ActionInsertVar,
 
+		ActionAddRight,
+		ActionRemoveLeft,
+
 		ActionDetachWindow,
 		ActionAttachWindow,
 

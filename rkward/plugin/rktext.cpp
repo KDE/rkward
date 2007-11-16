@@ -42,7 +42,7 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 	vbox->addWidget (label);
 
 	QString initial_text;
-	QStringList lines = lines.split ("\n", element.text (), false);
+	QStringList lines = element.text ().split ("\n");
 	for (int i=0; i < lines.count (); i++) {
 		QString line = lines[i].trimmed ();
 		if (!line.isEmpty ()) {
@@ -53,13 +53,15 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 	int type = xml->getMultiChoiceAttribute (element, "type", "normal;warning;error", 0, DL_INFO);
 	if (type != 0) {
 		QFont font = label->font ();
+		QPalette palette = label->palette ();
 		if (type == 1) {		// warning
-			label->setPaletteForegroundColor (QColor (255, 100, 0));
+			palette.setColor (label->foregroundRole (), QColor (255, 100, 0));
 			font.setWeight (QFont::DemiBold);
 		} else if (type == 2) {		// error
-			label->setPaletteForegroundColor (QColor (255, 0, 0));
+			palette.setColor (label->foregroundRole (), QColor (255, 0, 0));
 			font.setWeight (QFont::Bold);
 		}
+		label->setPalette (palette);
 		label->setFont (font);
 	}
 

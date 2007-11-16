@@ -47,6 +47,9 @@ void RKStandardIcons::initIcons () {
 	icons[ActionDeleteVar] = icons[ActionDeleteRow];
 	icons[ActionInsertVar] = icons[ActionInsertRow];
 
+	icons[ActionAddRight] = KIcon ("arrow-right");
+	icons[ActionRemoveLeft] = KIcon ("arrow-left");
+
 	icons[ActionDetachWindow] = KIcon ("view-fullscreen");
 	icons[ActionAttachWindow] = KIcon ("view-restore");
 
