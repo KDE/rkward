@@ -64,7 +64,6 @@ public slots:
 	void currentPageChanged (int page);
 /** called when the caption of a window changes. Updates the tab-label, and - if appropriate - the caption of this widget */
 	void childCaptionChanged (RKMDIWindow *widget);
-	void closePage (int index);
 /** Active the page left of the current tab */
 	void pageLeft ();
 /** Active the page right of the current tab */

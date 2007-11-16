@@ -59,10 +59,12 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	setFocusPolicy (Qt::ClickFocus);
 
 	QVBoxLayout* main_layout = new QVBoxLayout (this);
-	QHBoxLayout* selection_layout = new QHBoxLayout (main_layout);
+	QHBoxLayout* selection_layout = new QHBoxLayout ();
+	main_layout->addLayout (selection_layout);
 	selection_layout->setContentsMargins (0, 0, 0, 0);
 
-	QVBoxLayout* labels_layout = new QVBoxLayout (selection_layout);
+	QVBoxLayout* labels_layout = new QVBoxLayout ();
+	selection_layout->addLayout (labels_layout);
 	labels_layout->setContentsMargins (0, 0, 0, 0);
 	QLabel *label = new QLabel (i18n ("Find:"), this);
 	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
@@ -71,16 +73,20 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
 	labels_layout->addWidget (label);
 
-	QVBoxLayout* main_settings_layout = new QVBoxLayout (selection_layout, RKGlobals::spacingHint ());
+	QVBoxLayout* main_settings_layout = new QVBoxLayout ();
+	selection_layout->addLayout (main_settings_layout);
 	main_settings_layout->setContentsMargins (0, 0, 0, 0);
-	field = new QComboBox (true, this);
+	field = new QComboBox (this);
+	field->setEditable (true);
 	field->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 	connect (field->lineEdit () , SIGNAL (returnPressed ()), this, SLOT (slotFindButtonClicked ()));
 	main_settings_layout->addWidget (field);
 
-	QHBoxLayout* fields_packages_layout = new QHBoxLayout (main_settings_layout, RKGlobals::spacingHint ());
+	QHBoxLayout* fields_packages_layout = new QHBoxLayout ();
+	main_settings_layout->addLayout (fields_packages_layout);
 	fields_packages_layout->setContentsMargins (0, 0, 0, 0);
-	fieldsList = new QComboBox (false, this);
+	fieldsList = new QComboBox (this);
+	fieldsList->setEditable (false);
 	fieldsList->addItem (i18n ("All"), "c(\"alias\", \"concept\", \"title\",\"keyword\")");
 	fieldsList->addItem (i18n ("All but keywords"), "c(\"alias\", \"concept\", \"title\")");
 	fieldsList->addItem (i18n ("Keywords"), "c(\"keyword\")");
@@ -91,11 +97,13 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
 	fields_packages_layout->addWidget (label);
 
-	packagesList = new QComboBox (false, this);
-	packagesList->insertItem (i18n("All"));
+	packagesList = new QComboBox (this);
+	packagesList->setEditable (false);
+	packagesList->addItem (i18n("All"));
 	fields_packages_layout->addWidget (packagesList);
 
-	QVBoxLayout* checkboxes_layout = new QVBoxLayout (selection_layout, RKGlobals::spacingHint ());
+	QVBoxLayout* checkboxes_layout = new QVBoxLayout ();
+	selection_layout->addLayout (checkboxes_layout);
 	checkboxes_layout->setContentsMargins (0, 0, 0, 0);
 	caseSensitiveCheckBox = new QCheckBox (i18n ("Case sensitive"), this);
 	checkboxes_layout->addWidget (caseSensitiveCheckBox);
@@ -174,7 +182,7 @@ void RKHelpSearchWindow::slotFindButtonClicked () {
 	
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, HELP_SEARCH, 0);
 	setEnabled (false);
-	field->insertItem (field->currentText ());
+	field->addItem (field->currentText ());
 }
 
 void RKHelpSearchWindow::resultDoubleClicked (const QModelIndex& index) {
@@ -221,7 +229,7 @@ void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 		unsigned int count = command->getDataLength ();
 		for (unsigned int i=0; i < count; ++i) {
-			packagesList->insertItem (command->getStringVector ()[i]);
+			packagesList->addItem (command->getStringVector ()[i]);
 		}
 	} else {
 		RK_ASSERT (false);

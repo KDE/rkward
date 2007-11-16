@@ -153,14 +153,14 @@ void RKComponentMap::clearLocal () {
 
 	actionCollection ()->clear ();
 	for (ComponentMap::iterator it = components.begin (); it != components.end (); ++it) {
-		delete (it.data ());
+		delete (it.value ());
 /* TODO: this is not technically correct, as there may be several actions for this id, and we're only deleting one. But practically this should not really be relevant. */
 		delete (actionCollection ()->action (it.key ()));
 	}
 	components.clear ();
 
 	for (PluginMapFileMap::const_iterator it = pluginmapfiles.constBegin (); it != pluginmapfiles.constEnd (); ++it) {
-		delete (it.data ());
+		delete (it.value ());
 	}
 	pluginmapfiles.clear ();
 
@@ -220,7 +220,7 @@ QString RKComponentMap::getComponentIdLocal (RKComponentHandle* component) {
 	RK_TRACE (PLUGIN);
 
 	for (ComponentMap::iterator it = components.begin (); it != components.end (); ++it) {
-		if (it.data () == component) {
+		if (it.value () == component) {
 			return it.key ();
 		}
 	}
@@ -356,7 +356,7 @@ bool RKComponentHandle::isPlugin () {
 	return true;
 }
 
-RKComponent *RKComponentHandle::invoke (RKComponent *parent_component, QWidget *parent_widget) {
+RKStandardComponent *RKComponentHandle::invoke (RKComponent *parent_component, QWidget *parent_widget) {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (isPlugin ());
 

@@ -127,7 +127,7 @@ void RKWorkplace::initActions (KActionCollection *ac, const char *prev_id, const
 
 void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	RK_TRACE (APP);
-	RK_ASSERT (windows.find (window) != windows.end ());		// This should not happen for now.
+	RK_ASSERT (windows.contains (window));		// This should not happen for now.
 
 	if (!window->isAttached ()) window->prepareToBeAttached ();
 
@@ -138,7 +138,7 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	} else {
 		view ()->addPage (window);
 		view ()->topLevelWidget ()->raise ();
-		view ()->topLevelWidget ()->setActiveWindow ();
+		view ()->topLevelWidget ()->activateWindow ();
 	}
 
 	RK_ASSERT (window->getPart ());
@@ -148,7 +148,7 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
 	RK_TRACE (APP);
 	if (!window) return;
-	RK_ASSERT (windows.find (window) != windows.end ());		// Can't detach a window that is not registered
+	RK_ASSERT (windows.contains (window));		// Can't detach a window that is not registered
 
 	window->prepareToBeDetached ();
 	window->state = RKMDIWindow::Detached;
@@ -178,7 +178,7 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, KMultiTabBar::KMult
 
 	RK_ASSERT (window->isToolWindow ());
 	tool_window_bars[position]->addWidget (window);
-	if (windows.find (window) == windows.end ()) {	// must be new
+	if (!windows.contains (window)) {	// must be new
 		addWindow (window, true);
 		RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ());
 	}
@@ -242,7 +242,7 @@ void RKWorkplace::openOutputWindow (const KUrl &url) {
 	RK_TRACE (APP);
 
 	RKOutputWindow::refreshOutput (true, true, false);
-	if (windows.find (RKOutputWindow::getCurrentOutput ()) == windows.end ()) {
+	if (!windows.contains (RKOutputWindow::getCurrentOutput ())) {
 		addWindow (RKOutputWindow::getCurrentOutput ());
 	}
 }
@@ -251,7 +251,7 @@ void RKWorkplace::newOutput (bool only_if_modified) {
 	RK_TRACE (APP);
 	RKOutputWindow *window = RKOutputWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise (), only_if_modified);
 	if (window) {
-		if (windows.find (window) == windows.end ()) {
+		if (!windows.contains (window)) {
 			addWindow (window);
 		}
 	}
@@ -349,7 +349,7 @@ void RKWorkplace::flushAllData () {
 
 void RKWorkplace::closeWindow (RKMDIWindow *window) {
 	RK_TRACE (APP);
-	RK_ASSERT (windows.find (window) != windows.end ());
+	RK_ASSERT (windows.contains (window));
 
 	bool tool_window = window->isToolWindow ();
 	window->close (true);		// all the rest should happen in windowDestroyed ()
@@ -394,8 +394,8 @@ void RKWorkplace::windowDestroyed (QObject *object) {
 
 	// WARNING: the window is dead. Don't call any functions on it.
 
-	RK_ASSERT (windows.find (window) != windows.end ());
-	windows.remove (window);		// do this first! view()->removePage will call activePage() indirectly from setCaption, causing us to iterate over all known windows!
+	RK_ASSERT (windows.contains (window));
+	windows.removeAll (window);		// do this first! view()->removePage will call activePage() indirectly from setCaption, causing us to iterate over all known windows!
 	if (view ()->hasPage (window)) view ()->removePage (window, true);
 
 	windowRemoved ();
@@ -495,7 +495,7 @@ void RKWorkplace::restoreWorkplace (RCommandChain *chain) {
 void RKWorkplace::restoreWorkplace (const QString &description) {
 	RK_TRACE (APP);
 
-	QStringList list = QStringList::split ("\n", description);
+	QStringList list = description.split ("\n");
 	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
 		restoreWorkplaceItem (*it);
 	}
@@ -578,7 +578,7 @@ void RKMDIWindowHistory::windowActivated (RKMDIWindow *window) {
 	if (window->isToolWindow ()) return;		// exclude tool windows for now. Make configurable?
 
 	// update lists
-	back_list.remove (window);		// remove dupes
+	back_list.removeAll (window);		// remove dupes
 	forward_list.clear ();
 	if (current) back_list.append (current);
 	current = window;
@@ -641,8 +641,8 @@ void RKMDIWindowHistory::updateActions () {
 void RKMDIWindowHistory::windowDestroyed (QObject *window) {
 	RK_TRACE (APP);
 
-	back_list.remove (static_cast<RKMDIWindow *> (window));
-	forward_list.remove (static_cast<RKMDIWindow *> (window));
+	back_list.removeAll (static_cast<RKMDIWindow *> (window));
+	forward_list.removeAll (static_cast<RKMDIWindow *> (window));
 	if (current == window) current = 0;
 	updateActions ();
 }

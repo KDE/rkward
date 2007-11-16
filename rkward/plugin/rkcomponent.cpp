@@ -67,7 +67,7 @@ void RKComponentBase::setPropertyValues (QMap<QString, QString> *list) {
 		QString mod;
 		RKComponentBase *prop = lookupComponent (it.key (), &mod);
 		if (mod.isEmpty () && prop->isProperty ()) {		// found a property
-			static_cast<RKComponentPropertyBase*>(prop)->setValue (it.data ());
+			static_cast<RKComponentPropertyBase*>(prop)->setValue (it.value ());
 		}
 	}
 }
@@ -133,9 +133,9 @@ void RKComponent::propertyValueChanged (RKComponentPropertyBase *property) {
 	// slightly more elaborat than necessary on first thought, to prevent loops
 	if (property == visibility_property) {
 		if (visibility_property->boolValue ()) {
-			if (!isShown ()) show ();
+			if (isHidden ()) show ();
 		} else {
-			if (isShown ()) hide ();
+			if (!isHidden ()) hide ();
 		}
 	} else if (property == enabledness_property) {
 		updateEnablednessRecursive ();

@@ -42,8 +42,10 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *n
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
-	QHBoxLayout *button_hbox = new QHBoxLayout (main_vbox, RKGlobals::spacingHint ());
+	QVBoxLayout *main_vbox = new QVBoxLayout (this);
+	QHBoxLayout *button_hbox = new QHBoxLayout ();
+	button_hbox->setContentsMargins (0, 0, 0, 0);
+	main_vbox->addLayout (button_hbox);
 
 	QPushButton *configure_r_button = new QPushButton (i18n ("Configure R backend"), this);
 	connect (configure_r_button, SIGNAL (clicked ()), this, SLOT (configureButtonClicked ()));

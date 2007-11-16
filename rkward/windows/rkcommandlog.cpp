@@ -28,8 +28,8 @@
 #include <qfont.h>
 #include <qlayout.h>
 #include <qsplitter.h>
-#include <qobject.h>
 #include <QMenu>
+#include <QContextMenuEvent>
 
 #include <klocale.h>
 #include <kactioncollection.h>
@@ -226,7 +226,7 @@ void RKCommandLog::clearLog () {
 void RKCommandLog::runSelection () {
 	RK_TRACE (APP);
 
-	RKConsole::pipeUserCommand (getView ()->selectedText ());
+	RKConsole::pipeUserCommand (getView ()->textCursor ().selectedText ());
 }
 
 ////////////////////////// END RKCommandLog ///////////////////////////
@@ -292,8 +292,8 @@ void RKCommandLogPart::doPopupMenu (const QPoint &pos) {
 	RK_TRACE (APP);
 
 	QMenu *menu = static_cast<QMenu *> (factory ()->container ("rkcommandlog_context_menu", this));
-	copy->setEnabled (log->getView ()->hasSelectedText ());
-	run_selection->setEnabled (log->getView ()->hasSelectedText ());
+	copy->setEnabled (log->getView ()->textCursor ().hasSelection ());
+	run_selection->setEnabled (log->getView ()->textCursor ().hasSelection ());
 
 	if (!menu) {
 		RK_ASSERT (false);

@@ -148,7 +148,8 @@ void RKCaughtX11Window::fixedSizeToggled () {
 
 	if (dynamic_size_action->isChecked ()) {
 		scroll_widget->takeWidget ();
-		xembed_container->reparent (box_widget, QPoint (0, 0), true);
+		xembed_container->setParent (box_widget);
+		xembed_container->show ();
 		scroll_widget->hide ();
 		box_widget->show ();
 		xembed_container->setMinimumSize (5, 5);

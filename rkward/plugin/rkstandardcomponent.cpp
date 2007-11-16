@@ -103,6 +103,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	have_help = QFileInfo (dummy).exists ();
 
 	handle_change_timer = new QTimer (this);
+	handle_change_timer->setSingleShot (true);
 	connect (handle_change_timer, SIGNAL (timeout ()), this, SLOT (handleChange ()));
 
 // construct the GUI
@@ -177,7 +178,7 @@ void RKStandardComponent::setCaption (const QString &caption) {
 	RK_TRACE (PLUGIN);
 
 	if (!gui) return;
-	gui->setCaption (caption);
+	gui->setWindowTitle (caption);
 }
 
 bool RKStandardComponent::createTopLevel (const QDomElement &doc_element, int force_mode, bool enslaved) {
@@ -314,7 +315,7 @@ void RKStandardComponent::changed () {
 	if (gui) gui->enableSubmit (false);
 
 	// delay actual handling, until all changes have run up
-	handle_change_timer->start (10, true);
+	handle_change_timer->start (10);
 }
 
 void RKStandardComponent::handleChange () {
@@ -577,9 +578,10 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			RKComponentHandle *handle = RKComponentMap::getComponentHandle (component_id);
 			if (handle) {
 				if (xml->getBoolAttribute (e, "as_button", false, DL_INFO)) {
-					widget = handle->invoke (component (), 0);
+					RKStandardComponent* swidget = handle->invoke (component (), 0);
+					widget = swidget;
 					QString dummy = xml->getStringAttribute (e, "label", "Options", DL_WARNING);
-					widget->setCaption (dummy);
+					swidget->setCaption (dummy);
 // TODO we should use a specialized pushbutton, that changes color if the corresponding component is dissatisfied!
 					QPushButton *button = new QPushButton (dummy, parent_widget);
 					component ()->connect (button, SIGNAL (clicked ()), widget, SLOT (showGUI ()));

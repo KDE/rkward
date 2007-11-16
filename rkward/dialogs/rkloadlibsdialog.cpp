@@ -209,7 +209,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 		call = "sh";
 		params << "-c";
 	}
-	params << R_binary + " CMD R --no-save < " + file.name ();
+	params << R_binary + " CMD R --no-save < " + file.fileName ();
 
 	installation_process = new QProcess ();
 	installation_process->setProcessChannelMode (QProcess::SeparateChannels);
@@ -279,13 +279,17 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	label->setWordWrap (true);
 	mvbox->addWidget (label);
 	
-	QHBoxLayout *hbox = new QHBoxLayout (mvbox);
+	QHBoxLayout *hbox = new QHBoxLayout ();
+	mvbox->addLayout (hbox);
 	hbox->setContentsMargins (0, 0, 0, 0);
-	QVBoxLayout *instvbox = new QVBoxLayout (hbox);
+	QVBoxLayout *instvbox = new QVBoxLayout ();
+	hbox->addLayout (instvbox);
 	instvbox->setContentsMargins (0, 0, 0, 0);
-	QVBoxLayout *buttonvbox = new QVBoxLayout (hbox);
+	QVBoxLayout *buttonvbox = new QVBoxLayout ();
+	hbox->addLayout (buttonvbox);
 	buttonvbox->setContentsMargins (0, 0, 0, 0);
-	QVBoxLayout *loadedvbox = new QVBoxLayout (hbox);
+	QVBoxLayout *loadedvbox = new QVBoxLayout ();
+	hbox->addLayout (loadedvbox);
 	loadedvbox->setContentsMargins (0, 0, 0, 0);
 	
 	label = new QLabel (i18n ("Installed packages"), this);
@@ -464,13 +468,14 @@ UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p
 	RK_TRACE (DIALOGS);
 	UpdatePackagesWidget::parent = dialog;
 	
-	QVBoxLayout *mvbox = new QVBoxLayout (this, 0);
+	QVBoxLayout *mvbox = new QVBoxLayout (this);
 	mvbox->setContentsMargins (0, 0, 0, 0);
 	QLabel *label = new QLabel (i18n ("In order to find out, which of your installed packaged have an update available, click \"Fetch List\". This feature requires a working internet connection."), this);
 	label->setWordWrap (true);
 	mvbox->addWidget (label);
 	
-	QHBoxLayout *hbox = new QHBoxLayout (mvbox);
+	QHBoxLayout *hbox = new QHBoxLayout ();
+	mvbox->addLayout (hbox);
 	hbox->setContentsMargins (0, 0, 0, 0);
 	
 	updateable_view = new QTreeWidget (this);
@@ -478,7 +483,8 @@ UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p
 	updateable_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
 	hbox->addWidget (updateable_view);
 	
-	QVBoxLayout *buttonvbox = new QVBoxLayout (hbox);
+	QVBoxLayout *buttonvbox = new QVBoxLayout ();
+	hbox->addLayout (buttonvbox);
 	buttonvbox->setContentsMargins (0, 0, 0, 0);
 	get_list_button = new QPushButton (i18n ("Fetch list"), this);
 	connect (get_list_button, SIGNAL (clicked ()), this, SLOT (getListButtonClicked ()));
@@ -628,7 +634,8 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget 
 	QLabel *label = new QLabel (i18n ("Many packages are available on CRAN (Comprehensive R Archive Network), and other repositories (click \"Configure Repositories\" to add more sources). Click \"Fetch List\" to find out, which packages are available. This feature requires a working internet connection."), this);
 	label->setWordWrap (true);
 	mvbox->addWidget (label);
-	QHBoxLayout *hbox = new QHBoxLayout (mvbox);
+	QHBoxLayout *hbox = new QHBoxLayout ();
+	mvbox->addLayout (hbox);
 	hbox->setContentsMargins (0, 0, 0, 0);
 	
 	installable_view = new QTreeWidget (this);
@@ -636,7 +643,8 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget 
 	installable_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
 	hbox->addWidget (installable_view);
 
-	QVBoxLayout *buttonvbox = new QVBoxLayout (hbox);
+	QVBoxLayout *buttonvbox = new QVBoxLayout ();
+	hbox->addLayout (buttonvbox);
 	buttonvbox->setContentsMargins (0, 0, 0, 0);
 	get_list_button = new QPushButton (i18n ("Fetch list"), this);
 	connect (get_list_button, SIGNAL (clicked ()), this, SLOT (getListButtonClicked ()));
@@ -829,7 +837,7 @@ void PackageInstallParamsWidget::liblocsChanged (const QStringList &newlist) {
 	RK_TRACE (DIALOGS);
 
 	libloc_selector->clear ();
-	libloc_selector->insertStringList (newlist);
+	libloc_selector->insertItems (0, newlist);
 }
 
 #include "rkloadlibsdialog.moc"

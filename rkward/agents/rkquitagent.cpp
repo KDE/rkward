@@ -68,7 +68,7 @@ void RKQuitAgent::showWaitDialog () {
 void RKQuitAgent::doQuitNow () {
 	RK_TRACE (APP);
 
-	RKWardMainWindow::getMain ()->close (true);		// this will kill the agent as well.
+	RKWardMainWindow::getMain ()->close ();		// this will kill the agent as well.
 }
 
 void RKQuitAgent::rCommandDone (RCommand *) {

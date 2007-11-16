@@ -58,7 +58,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 		output->setPlainText (QString ());
 		output->setCurrentFont (KGlobalSettings::fixedFont ());
 		output->setLineWrapMode (QTextEdit::NoWrap);
-		output->insert (context);
+		output->insertPlainText (context);
 		output->setReadOnly (true);
 		// there seems to be no easier way to get at the contents width...
 		int cwidth = output->horizontalScrollBar ()->maximum () + output->width ();

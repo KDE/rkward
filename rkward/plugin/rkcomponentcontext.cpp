@@ -20,6 +20,7 @@
 #include <kaction.h>
 #include <kactioncollection.h>
 
+#include "rkstandardcomponent.h"
 #include "../misc/xmlhelper.h"
 
 #include "../debug.h"

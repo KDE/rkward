@@ -92,6 +92,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	// somehow the katepart loses the context menu each time it loses focus
 	connect (m_view, SIGNAL (focusIn(KTextEditor::View*)), this, SLOT (focusIn(KTextEditor::View*)));
 	completion_timer = new QTimer (this);
+	completion_timer->setSingleShot (true);
 	connect (completion_timer, SIGNAL (timeout ()), this, SLOT (tryCompletion()));
 
 	completion_model = 0;
@@ -153,7 +154,7 @@ QString RKCommandEditorWindow::getDescription () {
 
 void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 	if (isModified ()) {
-		int status = KMessageBox::warningYesNo (this, i18n ("The document \"%1\" has been modified. Close it anyway?", caption ()), i18n ("File not saved"));
+		int status = KMessageBox::warningYesNo (this, i18n ("The document \"%1\" has been modified. Close it anyway?", windowTitle ()), i18n ("File not saved"));
 	
 		if (status != KMessageBox::Yes) {
 			e->ignore ();
@@ -244,7 +245,7 @@ void RKCommandEditorWindow::tryCompletionProxy (KTextEditor::Document*) {
 		if (cc_iface && cc_iface->isCompletionActive ()) {
 			tryCompletion ();
 		} else {
-			completion_timer->start (RKSettingsModuleCommandEditor::completionTimeout (), true);
+			completion_timer->start (RKSettingsModuleCommandEditor::completionTimeout ());
 		}
 	}
 }
@@ -257,7 +258,7 @@ QString RKCommandEditorWindow::currentCompletionWord () const {
 	uint para=c.line(); uint cursor_pos=c.column();
 
 	QString current_line = m_doc->line (para);
-	if (current_line.findRev ("#", cursor_pos) >= 0) return QString ();	// do not hint while in comments
+	if (current_line.lastIndexOf ("#", cursor_pos) >= 0) return QString ();	// do not hint while in comments
 
 	return RKCommonFunctions::getCurrentSymbol (current_line, cursor_pos, false);
 }
@@ -280,7 +281,7 @@ void RKCommandEditorWindow::tryCompletion () {
 
 	KTextEditor::Range range = KTextEditor::Range (para, start, para, end);
 	QString word = m_doc->text (range);
-	if (current_line.findRev ("#", cursor_pos) >= 0) word.clear ();	// do not hint while in comments
+	if (current_line.lastIndexOf ("#", cursor_pos) >= 0) word.clear ();	// do not hint while in comments
 	if (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ()) {
 		completion_model->updateCompletionList (word);
 		if (completion_model->isEmpty ()) {
@@ -477,7 +478,7 @@ void RKFunctionArgHinter::hideArgHint () {
 }
 
 bool RKFunctionArgHinter::eventFilter (QObject *, QEvent *e) {
-	if (e->type () == QEvent::KeyPress || e->type () == QEvent::AccelOverride) {
+	if (e->type () == QEvent::KeyPress || e->type () == QEvent::ShortcutOverride) {
 		RK_TRACE (COMMANDEDITOR);	// avoid loads of empty traces, putting this here
 		QKeyEvent *k = static_cast<QKeyEvent *> (e);
 
@@ -526,7 +527,7 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	list_names.reserve (count);
 	// this is silly, but we need an int indexable storage, so we copy the map to a list
 	for (RObject::RObjectSearchMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
-		list.append (it.data ());
+		list.append (it.value ());
 		// the second list is used to store the name that should be used for completion.
 		// This may be object->getBaseName() or object->getFullName () depending on whether the object is
 		// masked or not.

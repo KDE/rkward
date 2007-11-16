@@ -33,7 +33,8 @@
 
 #include "../debug.h"
 
-RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const char *name) : QFrame (parent, name) {
+// TODO: remove name parameter
+RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const char *) : QFrame (parent) {
 	RK_TRACE (APP);
 
 	if (tool_window) {
@@ -63,13 +64,12 @@ QString RKMDIWindow::fullCaption () {
 //virtual
 QString RKMDIWindow::shortCaption () {
 	RK_TRACE (APP);
-	return caption ();
+	return windowTitle ();
 }
 
-// virtual from QWidget
 void RKMDIWindow::setCaption (const QString &caption) {
 	RK_TRACE (APP);
-	QWidget::setCaption (caption);
+	QWidget::setWindowTitle (caption);
 	emit (captionChanged (this));
 }
 
@@ -98,7 +98,7 @@ void RKMDIWindow::activate (bool with_focus) {
 
 	if (with_focus) {
 		if (old_focus) old_focus->clearFocus ();
-		topLevelWidget ()->setActiveWindow ();
+		topLevelWidget ()->activateWindow ();
 		setFocus();
 	} else {
 		if (old_focus) old_focus->setFocus ();
@@ -120,7 +120,16 @@ bool RKMDIWindow::close (bool also_delete) {
 		return true;
 	}
 
-	return QWidget::close (also_delete);
+// TODO: can the also_delete parameter be removed? If the asserts never trigger, likely so.
+	if (also_delete) {
+		RK_ASSERT (testAttribute (Qt::WA_DeleteOnClose));
+		bool closed = QWidget::close ();
+//		if (closed) deleteLater ();
+		return closed;
+	} else {
+		RK_ASSERT (!testAttribute (Qt::WA_DeleteOnClose));
+		return QWidget::close ();
+	}
 }
 
 void RKMDIWindow::prepareToBeAttached () {

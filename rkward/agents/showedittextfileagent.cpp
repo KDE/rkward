@@ -122,12 +122,7 @@ void ShowEditTextFileAgent::done () {
 	// int_b in RShowFiles means files are to be deleted
 	if ((args->type == RCallbackArgs::RShowFiles) && args->int_b) {
 		for (int n = 0; n < args->int_a; ++n) {
-			// does not compile on some systems (October 2005).
-			//QFile (QString (args->chars_a[n])).remove ();
-			// Workaround (use this instead for a couple of months):
-			QFile file;
-			file.setName (QString (args->chars_a[n]));
-			file.remove ();
+			RK_ASSERT (QFile::remove (QString (args->chars_a[n])));
 		}
 	}
 

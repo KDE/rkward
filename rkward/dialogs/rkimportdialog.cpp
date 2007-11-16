@@ -72,7 +72,7 @@ RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KF
 	}
 
 	// file format selection box
-	format_selector->combo->insertStringList (format_labels);
+	format_selector->combo->insertItems (0, format_labels);
 
 	// initialize
 	setMode (KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
@@ -89,13 +89,13 @@ RKImportDialog::~RKImportDialog () {
 void RKImportDialog::filterWasChanged (const QString &) {
 	RK_TRACE (DIALOGS);
 
-	int index = filters.findIndex (filterWidget ()->currentFilter ());
+	int index = filters.indexOf (filterWidget ()->currentFilter ());
 
 	if (index < 0) {		// All files
 		format_selector->combo->setEnabled (true);
 	} else {
 		format_selector->combo->setEnabled (false);
-		format_selector->combo->setCurrentItem (index);
+		format_selector->combo->setCurrentIndex (index);
 	}
 }
 
@@ -104,7 +104,7 @@ void RKImportDialog::accept () {
 
 	KFileDialog::accept ();
 
-	int index = format_selector->combo->currentItem ();
+	int index = format_selector->combo->currentIndex ();
 	QString cid = component_ids[index];
 	RKComponentHandle *handle = RKComponentMap::getComponentHandle (cid);
 	RKContextHandler *chandler = context->makeContextHandler (this, false);

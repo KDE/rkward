@@ -88,14 +88,13 @@ void RKWorkplaceView::addPage (RKMDIWindow *widget) {
 
 	int id = -1;
 	setUpdatesEnabled (false);
-	if (widget->icon ()) {
-		id = addTab (widget, *(widget->icon ()), widget->shortCaption ());
-	} else if (widget->topLevelWidget ()->icon ()) {
-		id = addTab (widget, *(widget->topLevelWidget ()->icon ()), widget->shortCaption ());
-	} else {
-		RK_ASSERT (false);
-		id = addTab (widget, widget->shortCaption ());
-	}
+
+	QIcon icon = widget->windowIcon ();
+	if (icon.isNull ()) icon = widget->topLevelWidget ()->windowIcon ();
+	if (icon.isNull ()) RK_ASSERT (false);
+
+	id = addTab (widget, icon, widget->shortCaption ());
+
 	connect (widget, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (childCaptionChanged (RKMDIWindow *)));
 	widget->show ();
 
@@ -150,16 +149,6 @@ RKMDIWindow *RKWorkplaceView::activePage () {
 	return (dynamic_cast<RKMDIWindow *> (w));
 }
 
-// KDE4: Where is this called from? do we still need it?
-void RKWorkplaceView::closePage (int index) {
-	RK_TRACE (APP);
-
-	QWidget *w = widget (index);
-	RK_ASSERT (w);
-
-	w->close (true);
-}
-
 void RKWorkplaceView::childCaptionChanged (RKMDIWindow *widget) {
 	RK_TRACE (APP);
 
@@ -172,7 +161,7 @@ void RKWorkplaceView::childCaptionChanged (RKMDIWindow *widget) {
 void RKWorkplaceView::setCaption (const QString &caption) {
 	RK_TRACE (APP);
 
-	QWidget::setCaption (caption);
+	QWidget::setWindowTitle (caption);
 	emit (captionChanged (caption));
 }
 

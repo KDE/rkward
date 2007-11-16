@@ -43,6 +43,7 @@ enum RKComponentType {
 
 class RKComponent;
 class RKComponentMap;
+class RKStandardComponent;
 class QWidget;
 class KActionCollection;
 /** This simple class keeps the most basic information about a component in RKWard. Most work is done in RKComponentMap.
@@ -61,7 +62,7 @@ public:
 	RKComponentType getType () { return type; };
 	bool isPlugin ();
 
-	RKComponent *invoke (RKComponent *parent_component, QWidget *parent_widget);
+	RKStandardComponent *invoke (RKComponent *parent_component, QWidget *parent_widget);
 
 	QString getAttributeValue (const QString &attribute_id);
 	QString getAttributeLabel (const QString &attribute_id);

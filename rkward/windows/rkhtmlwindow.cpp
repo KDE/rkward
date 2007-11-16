@@ -249,7 +249,7 @@ RKOutputWindow::RKOutputWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGU
 	// for this window, we need to set it explicitely, as the logic in RKHTMLWindow though we are an RKHTMLWindow, only
 	setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
 	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
-	RKCommonFunctions::removeContainers (khtmlpart, QStringList::split (',', "tools,security,extraToolBar,saveBackground,saveFrame,printFrame,kget_menu"), true);
+	RKCommonFunctions::removeContainers (khtmlpart, QString ("tools,security,extraToolBar,saveBackground,saveFrame,printFrame,kget_menu").split (','), true);
 
 	setComponentData (KGlobal::mainComponent ());
 	setXMLFile ("rkoutputwindow.rc");
@@ -370,11 +370,11 @@ void RKOutputWindow::flushOutput () {
 	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to flush the output? It will not be possible to restore it."), i18n ("Flush output?"));
 	if (res==KMessageBox::Yes) {
 		QFile out_file (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
-		QDir out_dir = QFileInfo (out_file).dir (true);
+		QDir out_dir = QFileInfo (out_file).absoluteDir ();
 		out_file.remove ();
 
 		// remove all the graphs
-		out_dir.setNameFilter ("graph*.png");
+		out_dir.setNameFilters (QStringList ("graph*.png"));
 		QStringList graph_files = out_dir.entryList ();
 		for (QStringList::const_iterator it = graph_files.constBegin (); it != graph_files.constEnd (); ++it) {
 			QFile file (out_dir.absoluteFilePath (*it));
@@ -405,7 +405,7 @@ RKHelpWindow::RKHelpWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUICli
 	setComponentData (KGlobal::mainComponent ());
 
 	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
-	RKCommonFunctions::removeContainers (khtmlpart, QStringList::split (',', "tools,security,extraToolBar,saveBackground,saveDocument,saveFrame,printFrame,kget_menu"), true);
+	RKCommonFunctions::removeContainers (khtmlpart, QString ("tools,security,extraToolBar,saveBackground,saveDocument,saveFrame,printFrame,kget_menu").split ('.'), true);
 
 	back = actionCollection ()->addAction (KStandardAction::Back, "help_back", this, SLOT (slotBack()));
 	back->setEnabled (false);
@@ -493,7 +493,7 @@ bool RKHelpWindow::renderRKHelp (const KUrl &url) {
 			if (element.isNull ()) break;
 			help_file_name = component_xml->getStringAttribute (element, "file", QString::null, DL_ERROR);
 			if (help_file_name.isNull ()) break;
-			help_file_name = QFileInfo (chandle->getFilename ()).dir (true).filePath (help_file_name);
+			help_file_name = QFileInfo (chandle->getFilename ()).absoluteDir ().filePath (help_file_name);
 		} else {
 			help_file_name = help_base_dir + url.path () + ".rkh";
 		}
@@ -640,7 +640,7 @@ QString RKHelpWindow::renderHelpFragment (QDomElement &fragment) {
 
 	// render to string
 	QString ret;
-	QTextOStream stream (&ret);
+	QTextStream stream (&ret, QIODevice::WriteOnly);
 	for (QDomNode node = fragment.firstChild (); !node.isNull (); node = node.nextSibling ()) {
 		node.save (stream, 0);
 	}
@@ -692,7 +692,7 @@ void RKHelpWindow::prepareHelpLink (QDomElement *link_element) {
 RKComponentHandle *RKHelpWindow::componentPathToHandle (QString path) {
 	RK_TRACE (APP);
 
-	QStringList path_segments = QStringList::split ('/', path);
+	QStringList path_segments = path.split ('/');
 	if (path_segments.count () > 2) return 0;
 	if (path_segments.count () < 1) return 0;
 	if (path_segments.count () == 1) path_segments.push_front ("rkward");

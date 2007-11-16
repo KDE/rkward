@@ -809,7 +809,7 @@ bool RKComponentPropertyRObjects::setValue (const QString &value) {
 	object_list.clear ();
 
 	bool ok = true;
-	QStringList slist = QStringList::split (separator, value);
+	QStringList slist = value.split (separator);
 
 	for (QStringList::const_iterator it = slist.begin (); it != slist.end (); ++it) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (value);
@@ -829,7 +829,7 @@ bool RKComponentPropertyRObjects::setValue (const QString &value) {
 bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
 	RK_TRACE (PLUGIN);
 
-	QStringList slist = QStringList::split (separator, value);
+	QStringList slist = value.split (separator);
 
 	for (QStringList::const_iterator it = slist.begin (); it != slist.end (); ++it) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (value);
@@ -1045,7 +1045,7 @@ void RKComponentPropertyConvert::setSources (const QString &source_string) {
 	RK_TRACE (PLUGIN);
 
 	sources.clear ();
-	QStringList source_ids = QStringList::split (";", source_string);
+	QStringList source_ids = source_string.split (";");
 	for (QStringList::const_iterator it = source_ids.constBegin (); it != source_ids.constEnd (); ++it) {
 		Source s;
 		RKComponentBase *prop = c_parent->lookupComponent (*it, &(s.modifier));

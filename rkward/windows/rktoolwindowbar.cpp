@@ -100,7 +100,7 @@ void RKToolWindowBar::splitterMoved (int, int) {
 
 	if (!pos) {		// collapsed. Hide it properly.
 		for (QMap<RKMDIWindow*, int>::const_iterator it = widget_to_id.constBegin (); it != widget_to_id.constEnd (); ++it) {
-			if (isTabRaised (it.data ())) {
+			if (isTabRaised (it.value ())) {
 				hideWidget (it.key ());
 				break;
 			}
@@ -195,6 +195,7 @@ void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
 		}
 	}
 
+	widget->show ();
 	if (widget->isAttached ()) {
 		setTab (id, true);
 		container->show ();
@@ -204,7 +205,6 @@ void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
 		widget->topLevelWidget ()->raise ();
 	}
 	widget->active = true;
-	widget->show ();
 }
 
 void RKToolWindowBar::hideWidget (RKMDIWindow *widget) {
@@ -221,7 +221,7 @@ void RKToolWindowBar::hideWidget (RKMDIWindow *widget) {
 	}
 
 	widget->active = false;
-	widget->close (false);
+	widget->hide ();
 
 	setTab (id, false);
 
