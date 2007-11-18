@@ -21,7 +21,7 @@
 #include "../rkglobals.h"
 #include "../rkconsole.h"
 #include "../settings/rksettingsmodulewatch.h"
-#include "../misc/rkstandardicons.h"
+#include "../misc/rkstandardactions.h"
 #include "rkcommandeditorwindow.h"
 
 #include <qpushbutton.h>
@@ -276,10 +276,7 @@ RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
 	QAction *configure = actionCollection ()->addAction ("log_configure", log, SLOT(configureLog()));
 	configure->setText (i18n ("Configure"));
 
-	run_selection = actionCollection ()->addAction ("log_run_selection", log, SLOT(runSelection()));
-	run_selection->setText (i18n ("Run selection"));
-	run_selection->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunSelection));
-	run_selection->setShortcut (Qt::Key_F8);
+	run_selection = RKStandardActions::runSelection (actionCollection (), "log_run_selection", log, SLOT(runSelection()));
 
 	connect (log->getView (), SIGNAL (popupMenuRequest (const QPoint &)), this, SLOT (doPopupMenu (const QPoint &)));
 }

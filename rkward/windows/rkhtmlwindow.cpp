@@ -39,6 +39,7 @@
 #include "../rkconsole.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkstandardactions.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/xmlhelper.h"
 #include "../plugin/rkcomponentmap.h"
@@ -95,10 +96,7 @@ void RKHTMLWindow::addCommonActions (KActionCollection *action_collection) {
 	action_collection->addAction (KStandardAction::Copy, "copy", khtmlpart->browserExtension (), SLOT (copy ()));
 
 	// run selection
-	run_selection = action_collection->addAction ("run_selection", this, SLOT (runSelection()));
-	run_selection->setText (i18n ("Run selection"));
-	run_selection->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunSelection));
-	run_selection->setShortcut (Qt::Key_F8);
+	run_selection = RKStandardActions::runSelection (action_collection, "run_selection", this, SLOT (runSelection()));
 
 	// needed to enable / disable the run selection action
 	connect (khtmlpart, SIGNAL (selectionChanged()), this, SLOT (selectionChanged()));

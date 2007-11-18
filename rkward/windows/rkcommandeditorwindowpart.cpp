@@ -23,7 +23,7 @@
 #include <kxmlguifactory.h>
 
 #include "rkcommandeditorwindow.h"
-#include "../misc/rkstandardicons.h"
+#include "../misc/rkstandardactions.h"
 #include "../debug.h"
 
 RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent, RKCommandEditorWindow *editor_widget) : KParts::Part (parent) {
@@ -46,24 +46,11 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 void RKCommandEditorWindowPart::initializeActions () {
 	RK_TRACE (COMMANDEDITOR);
 
-	runAll = actionCollection ()->addAction ("run_all", command_editor, SLOT (runAll()));
-	runAll->setText (i18n ("Run all"));
-	runAll->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunAll));
-	runAll->setShortcut (Qt::Key_F9);
+	runAll = RKStandardActions::runAll (actionCollection (), "run_all", command_editor, SLOT (runAll()));
+	runSelection = RKStandardActions::runSelection (actionCollection (), "run_selection", command_editor, SLOT (runSelection()));
+	runLine = RKStandardActions::runLine (actionCollection (), "run_line", command_editor, SLOT (runLine()));
 
-	runSelection = actionCollection ()->addAction ("run_selection", command_editor, SLOT (runSelection()));
-	runSelection->setText (i18n ("Run selection"));
-	runSelection->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunSelection));
-	runSelection->setShortcut (Qt::Key_F8);
-
-	runLine = actionCollection ()->addAction ("run_line", command_editor, SLOT (runLine()));
-	runLine->setText (i18n ("Run current line"));
-	runLine->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunLine));
-	runLine->setShortcut (Qt::ControlModifier + Qt::Key_L);
-
-	helpFunction = actionCollection ()->addAction ("function_reference", command_editor, SLOT (showHelp()));
-	helpFunction->setText (i18n ("&Function reference"));
-	helpFunction->setShortcut (Qt::Key_F2);
+	helpFunction = RKStandardActions::functionHelp (actionCollection (), "function_reference", command_editor, SLOT (showHelp()));
 
 	QAction* configure = actionCollection ()->addAction ("configure_commandeditor", command_editor, SLOT (configure()));
 	configure->setText (i18n ("Configure Script Editor"));

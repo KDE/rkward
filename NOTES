@@ -1,5 +1,8 @@
 Notes about changes in RKWard that existing users need to adapt to:
 
+*** From 0.4.x to 0.5.0 ***
+- Due to clashes with other default shortcuts, the shortcuts for Run->Run Line, Run Selection, and Run All were changed to Shift+F7, Shift+F8, Shift+F9, respectively.
+
 *** From 0.4.7a to 0.4.8 ***
 - With the addition of the new filesystem browser, the shortcuts to show/hide the main tool windows have changed. The filesystem browser window can be toggled using Alt+2, the shortcuts for command log, pending jobs, console, and help search are now Alt+3 through 6, respectively, instead of Alt+2 through 5.
 - All commands run through the console are now added to the command history of the console, by default. This setting can be changed back to the old behavior (only commands *entered* in the console are added to the history) under Settings->Configure RKWard->Console.

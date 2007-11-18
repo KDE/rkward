@@ -27,8 +27,6 @@ SET(RKWard_Sources
 
 # auto-gen sources
 QT4_AUTOMOC(${RKWard_Sources})
-#KDE4_ADD_DCOP_SKELS(RKWard_Sources rkward.h)
-
 
 # somehow the needed libdirs for R do not get passed down automatically
 GET_DIRECTORY_PROPERTY(R_SHAREDLIBDIR DIRECTORY rbackend LINK_DIRECTORIES)
@@ -37,6 +35,8 @@ LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 KDE4_ADD_EXECUTABLE(rkward.bin ${RKWard_Sources})
 
 TARGET_LINK_LIBRARIES(rkward.bin ${KDE4_KDECORE_LIBS} windows agents dialogs plugin settings dataeditor core scriptbackends rbackend misc ${KDE4_KHTML_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KDEUI_LIBS})
+
+# NOTE: KDE4_KFILE_LIBS still links against Qt3Support
 
 # wrapper script
 GET_DIRECTORY_PROPERTY(R_HOME DIRECTORY rbackend DEFINITION R_HOME)

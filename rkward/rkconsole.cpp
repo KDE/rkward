@@ -50,6 +50,7 @@
 #include "settings/rksettingsmoduleconsole.h"
 #include "misc/rkcommonfunctions.h"
 #include "misc/rkstandardicons.h"
+#include "misc/rkstandardactions.h"
 #include "core/robjectlist.h"
 #include "core/rfunctionobject.h"
 
@@ -794,14 +795,9 @@ void RKConsole::showContextHelp () {
 void RKConsole::initializeActions (KActionCollection *ac) {
 	RK_TRACE (APP);
 
-	context_help_action = ac->addAction ("function_reference", this, SLOT(showContextHelp()));
-	context_help_action->setText (i18n ("&Function reference"));
-	context_help_action->setShortcut (Qt::Key_F2);
+	context_help_action = RKStandardActions::functionHelp (ac, "function_reference", this, SLOT(showContextHelp()));
 
-	run_selection_action = ac->addAction ("run_selection", this, SLOT (runSelection()));
-	run_selection_action->setText (i18n ("Run selection"));
-	run_selection_action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunSelection));
-	run_selection_action->setShortcut (Qt::Key_F8);
+	run_selection_action = RKStandardActions::runSelection (ac, "run_selection", this, SLOT (runSelection()));
 
 	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (slotInterruptCommand()));
 	interrupt_command_action->setText (i18n ("Interrupt running command"));
