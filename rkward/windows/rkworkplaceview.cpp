@@ -22,11 +22,12 @@
 #include <kshortcut.h>
 #include <kactioncollection.h>
 #include <kaction.h>
+#include <kicon.h>
 
 #include <qapplication.h>
 #include <qevent.h>
 #include <qlayout.h>
-#include <qicon.h>
+#include <QToolButton>
 
 #include "rkmdiwindow.h"
 
@@ -36,7 +37,13 @@
 RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
 	RK_TRACE (APP);
 
-	setHoverCloseButtonDelayed (true);
+	// close button
+	QToolButton* close_button = new QToolButton (this);
+	close_button->setIcon (KIcon ("tab-close"));
+	connect (close_button, SIGNAL (clicked()), this, SLOT (closeCurrentPage()));
+	close_button->adjustSize ();
+	setCornerWidget (close_button, Qt::TopRightCorner);
+
 	setTabBarHidden (true);		// initially
 	connect (this, SIGNAL (currentChanged(int)), this, SLOT (currentPageChanged(int)));
 }
@@ -147,6 +154,19 @@ RKMDIWindow *RKWorkplaceView::activePage () {
 
 	QWidget *w = currentWidget ();
 	return (dynamic_cast<RKMDIWindow *> (w));
+}
+
+void RKWorkplaceView::closeCurrentPage () {
+	RK_TRACE (APP);
+
+	RKMDIWindow* w = activePage ();
+
+	if (!w) {
+		RK_ASSERT (false);	// the close button should not be visible, if there are no pages
+		return;
+	}
+
+	w->close (true);
 }
 
 void RKWorkplaceView::childCaptionChanged (RKMDIWindow *widget) {

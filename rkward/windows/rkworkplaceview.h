@@ -68,6 +68,9 @@ public slots:
 	void pageLeft ();
 /** Active the page right of the current tab */
 	void pageRight ();
+private slots:
+/** (Attempts to) close the current tab */
+	void closeCurrentPage ();
 private:
 	void updateActions ();
 
