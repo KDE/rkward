@@ -29,7 +29,7 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, const QStr
 	RK_TRACE (MISC);
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	vbox->setResizeMode (QLayout::Minimum);
+	vbox->setSizeConstraint (QLayout::SetMinimumSize);
 
 	vbox->addWidget (new QLabel (label, this));
 
@@ -48,8 +48,8 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, const QStr
 		RK_ASSERT (false);
 	}
 
-	if (caption.isEmpty ()) edit->setCaption (label);
-	else edit->setCaption (caption);
+	if (caption.isEmpty ()) edit->setWindowTitle (label);
+	else edit->setWindowTitle (caption);
 }
 
 GetFileNameWidget::~GetFileNameWidget () {
@@ -81,7 +81,9 @@ QString GetFileNameWidget::getLocation () {
 void GetFileNameWidget::setBackgroundColor (const QColor & color) {
 	RK_TRACE (MISC);
 
-	edit->lineEdit ()->setBackgroundColor (color);
+	QPalette palette = edit->lineEdit ()->palette ();
+	palette.setColor (edit->lineEdit ()->backgroundRole (), color);
+	edit->lineEdit ()->setPalette (palette);
 }
 
 #include "getfilenamewidget.moc"

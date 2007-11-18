@@ -313,7 +313,6 @@ RObject *RContainerObject::createPendingChild (const QString &name, int position
 	if ((position < 0) || (position > childmap.size ())) position = childmap.size ();
 
 	RKGlobals::tracker ()->addObject (ret, this, position);
-#warning TODO should we create the object in R, here?
 
 	return ret;
 }

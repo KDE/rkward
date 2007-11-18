@@ -47,7 +47,7 @@ int RKSettingsModulePlugins::code_size;
 RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 	
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 	

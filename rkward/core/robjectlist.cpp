@@ -42,7 +42,7 @@ RObjectList::RObjectList () : RContainerObject (0, QString::null) {
 	object_list = this;
 
 	update_timer = new QTimer (this);
-	
+	update_timer->setSingleShot (true);
 	connect (update_timer, SIGNAL (timeout ()), this, SLOT (timeout ()));
 	
 	//update_timer->start (AUTO_UPDATE_INTERVAL, true);
@@ -61,7 +61,7 @@ void RObjectList::updateFromR (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 	if (update_chain) {
 		// gee, looks like another update is still on the way. lets schedule one for later:
-		update_timer->start (UPDATE_DELAY_INTERVAL, true);
+		update_timer->start (UPDATE_DELAY_INTERVAL);
 		RK_DO (qDebug ("another object-list update is already running. Rescheduling a further update for later"), OBJECTS, DL_DEBUG);
 		return;
 	}

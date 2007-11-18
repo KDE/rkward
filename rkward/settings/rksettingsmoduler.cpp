@@ -59,17 +59,19 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	label->setWordWrap (true);
 	main_vbox->addWidget (label);
 
-	QGridLayout *grid = new QGridLayout (main_vbox, 1, 2, RKGlobals::spacingHint ());
+	QGridLayout *grid = new QGridLayout ();
+	main_vbox->addLayout (grid);
 	int row = -1;
 
 	// options (warn)
 	grid->addWidget (new QLabel (i18n ("Display warnings"), this), ++row, 0);
-	warn_input = new QComboBox (false, this);
-	warn_input->insertItem (i18n ("Suppress warnings"));			// do not change the order of options! See also: applyChanges ()
-	warn_input->insertItem (i18n ("Print warnings later (default)"));
-	warn_input->insertItem (i18n ("Print warnings immediately"));
-	warn_input->insertItem (i18n ("Convert warnings to errors"));
-	warn_input->setCurrentItem (options_warn + 1);
+	warn_input = new QComboBox (this);
+	warn_input->setEditable (false);
+	warn_input->insertItem (0, i18n ("Suppress warnings"));			// do not change the order of options! See also: applyChanges ()
+	warn_input->insertItem (1, i18n ("Print warnings later (default)"));
+	warn_input->insertItem (2, i18n ("Print warnings immediately"));
+	warn_input->insertItem (3, i18n ("Convert warnings to errors"));
+	warn_input->setCurrentIndex (options_warn + 1);
 	connect (warn_input, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
 	grid->addWidget (warn_input, row, 1);
 
@@ -100,19 +102,21 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 
 	// options (keep.source)
 	grid->addWidget (new QLabel (i18n ("Keep comments in functions"), this), ++row, 0);
-	keepsource_input = new QComboBox (false, this);
-	keepsource_input->insertItem (i18n ("TRUE (default)"));			// do not change the order of options! See also: applyChanges ()
-	keepsource_input->insertItem (i18n ("FALSE"));
-	keepsource_input->setCurrentItem (options_keepsource ? 0 : 1);
+	keepsource_input = new QComboBox (this);
+	keepsource_input->setEditable (false);
+	keepsource_input->addItem (i18n ("TRUE (default)"), true);
+	keepsource_input->addItem (i18n ("FALSE"), false);
+	keepsource_input->setCurrentIndex (options_keepsource ? 0 : 1);
 	connect (keepsource_input, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
 	grid->addWidget (keepsource_input, row, 1);
 
 	// options (keep.source.pkgs)
 	grid->addWidget (new QLabel (i18n ("Keep comments in packages"), this), ++row, 0);
-	keepsourcepkgs_input = new QComboBox (false, this);
-	keepsourcepkgs_input->insertItem (i18n ("TRUE)"));			// do not change the order of options! See also: applyChanges ()
-	keepsourcepkgs_input->insertItem (i18n ("FALSE (default)"));
-	keepsourcepkgs_input->setCurrentItem (options_keepsourcepkgs ? 0 : 1);
+	keepsourcepkgs_input = new QComboBox (this);
+	keepsourcepkgs_input->setEditable (false);
+	keepsourcepkgs_input->addItem (i18n ("TRUE)"), true);
+	keepsourcepkgs_input->addItem (i18n ("FALSE (default)"), false);
+	keepsourcepkgs_input->setCurrentIndex (options_keepsourcepkgs ? 0 : 1);
 	connect (keepsourcepkgs_input, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
 	grid->addWidget (keepsourcepkgs_input, row, 1);
 
@@ -130,10 +134,11 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 
 	// options (check.bounds)
 	grid->addWidget (new QLabel (i18n ("Check vector bounds (warn)"), this), ++row, 0);
-	checkbounds_input = new QComboBox (false, this);
-	checkbounds_input->insertItem (i18n ("TRUE)"));			// do not change the order of options! See also: applyChanges ()
-	checkbounds_input->insertItem (i18n ("FALSE (default)"));
-	checkbounds_input->setCurrentItem (options_checkbounds ? 0 : 1);
+	checkbounds_input = new QComboBox (this);
+	checkbounds_input->setEditable (false);
+	checkbounds_input->addItem (i18n ("TRUE)"), true);
+	checkbounds_input->addItem (i18n ("FALSE (default)"), false);
+	checkbounds_input->setCurrentIndex (options_checkbounds ? 0 : 1);
 	connect (checkbounds_input, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
 	grid->addWidget (checkbounds_input, row, 1);
 
@@ -179,14 +184,14 @@ void RKSettingsModuleR::applyChanges () {
 
 	options_outdec = outdec_input->text ();
 	options_width = width_input->value ();
-	options_warn = warn_input->currentItem () - 1;
+	options_warn = warn_input->currentIndex () - 1;
 	options_warningslength = warningslength_input->value ();
 	options_maxprint = maxprint_input->value ();
-	options_keepsource = (keepsource_input->currentItem () == 0);
-	options_keepsourcepkgs = (keepsourcepkgs_input->currentItem () == 0);
+	options_keepsource = keepsource_input->itemData (keepsource_input->currentIndex ()).toBool ();
+	options_keepsourcepkgs = keepsourcepkgs_input->itemData (keepsourcepkgs_input->currentIndex ()).toBool ();
 	options_expressions = expressions_input->value ();
 	options_digits = digits_input->value ();
-	options_checkbounds = (checkbounds_input->currentItem () == 0);
+	options_checkbounds = checkbounds_input->itemData (checkbounds_input->currentIndex ()).toBool ();
 	options_printcmd = printcmd_input->text ();
 
 // apply run time options in R

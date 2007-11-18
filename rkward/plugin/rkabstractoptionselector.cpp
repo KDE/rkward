@@ -36,7 +36,7 @@ RKAbstractOptionSelector::~RKAbstractOptionSelector(){
 	RK_TRACE (PLUGIN);
 
 	for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
-		delete (it.data ());
+		delete (it.value ());
 	}
 }
 
@@ -135,9 +135,9 @@ void RKAbstractOptionSelector::ItemPropertyChanged (RKComponentPropertyBase *pro
 	Option *opt = 0;
 	int id = -1;
 	for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
-		RK_ASSERT (it.data ());
-		if (it.data ()->enabledness_prop == property) {
-			opt = it.data ();
+		RK_ASSERT (it.value ());
+		if (it.value ()->enabledness_prop == property) {
+			opt = it.value ();
 			id = it.key ();
 			break;
 		}
@@ -155,9 +155,9 @@ void RKAbstractOptionSelector::ItemPropertyChanged (RKComponentPropertyBase *pro
 		if (id == number->intValue ()) {	// current item was disabled
 			int settable_opt = -1;
 			for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
-				RK_ASSERT (it.data ());
+				RK_ASSERT (it.value ());
 
-				if ((!(it.data ()->enabledness_prop)) || (it.data ()->enabledness_prop->boolValue ())) {
+				if ((!(it.value ()->enabledness_prop)) || (it.value ()->enabledness_prop->boolValue ())) {
 					settable_opt = it.key();
 					break;
 				}
@@ -184,8 +184,8 @@ int RKAbstractOptionSelector::findOption (const QString &option_string) {
 	RK_TRACE (PLUGIN);
 
 	for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
-		RK_ASSERT (it.data ());
-		if (it.data ()->value == option_string) return (it.key ());
+		RK_ASSERT (it.value ());
+		if (it.value ()->value == option_string) return (it.key ());
 	}
 	return -1;
 }

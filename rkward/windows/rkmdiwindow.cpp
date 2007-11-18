@@ -120,11 +120,9 @@ bool RKMDIWindow::close (bool also_delete) {
 		return true;
 	}
 
-// TODO: can the also_delete parameter be removed? If the asserts never trigger, likely so.
 	if (also_delete) {
-		RK_ASSERT (testAttribute (Qt::WA_DeleteOnClose));
 		bool closed = QWidget::close ();
-//		if (closed) deleteLater ();
+		if (closed) deleteLater ();
 		return closed;
 	} else {
 		RK_ASSERT (!testAttribute (Qt::WA_DeleteOnClose));

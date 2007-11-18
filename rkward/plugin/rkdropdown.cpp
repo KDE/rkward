@@ -43,7 +43,8 @@ RKDropDown::RKDropDown (const QDomElement &element, RKComponent *parent_componen
 	vbox->addWidget (label);
 
 	// create ComboBox
-	box = new QComboBox (false, this);
+	box = new QComboBox (this);
+	box->setEditable (false);
 	listwidget = new QListWidget (box);
 	box->setModel (listwidget->model ());
 	box->setView (listwidget);

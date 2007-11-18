@@ -34,7 +34,7 @@
 RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	QVBoxLayout* main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+	QVBoxLayout* main_vbox = new QVBoxLayout (this);
 
 	QLabel* label = new QLabel (i18n ("<b>These settings are for debugging purposes, only.</b> It is safe to leave the untouched. Also, these settings will only apply to the current session, and not be saved."), this);
 	label->setWordWrap (true);

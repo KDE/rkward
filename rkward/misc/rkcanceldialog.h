@@ -17,6 +17,9 @@
 #ifndef RKCANCELDIALOG_H
 #define RKCANCELDIALOG_H
 
+#warning TODO: remove
+#if 0
+
 #include <qdialog.h>
 
 class QCloseEvent;
@@ -46,4 +49,5 @@ protected slots:
 	virtual void reject ();
 };
 
+#endif
 #endif

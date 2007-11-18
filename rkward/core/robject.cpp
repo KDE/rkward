@@ -84,7 +84,7 @@ QString RObject::getMetaProperty (const QString &id) const {
 	if (meta_map) {
 		RObject::MetaMap::iterator it;
 		if ((it = meta_map->find (id)) != meta_map->end ()) {
-			return (it.data ());
+			return (it.value ());
 		}
 	}
 	return QString ();
@@ -95,7 +95,7 @@ QString RObject::getDescription () const {
 	if (meta_map) {
 		RObject::MetaMap::iterator it;
 		if ((it = meta_map->find ("label")) != meta_map->end ()) {
-			return (getShortName () + " (" + it.data () + ')');
+			return (getShortName () + " (" + it.value () + ')');
 		}
 	}
 	return getShortName ();;
@@ -171,7 +171,7 @@ void RObject::setMetaProperty (const QString &id, const QString &value, bool syn
 	if (meta_map) {
 		RObject::MetaMap::iterator it;
 		if ((it = meta_map->find (id)) != meta_map->end ()) {
-			if (it.data () == value) return;
+			if (it.value () == value) return;
 		}
 	} else {
 		meta_map = new MetaMap;
@@ -232,7 +232,7 @@ void RObject::writeMetaData (RCommandChain *chain) {
 		if (it != meta_map->constBegin ()) {
 			command_string.append (", ");
 		}
-		command_string.append (rQuote (it.key ()) + '=' + rQuote (it.data ()));
+		command_string.append (rQuote (it.key ()) + '=' + rQuote (it.value ()));
 	}
 	command_string.append ("))");
 	

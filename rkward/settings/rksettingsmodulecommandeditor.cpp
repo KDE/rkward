@@ -38,7 +38,7 @@ bool RKSettingsModuleCommandEditor::completion_enabled;
 RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	QVBoxLayout* main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+	QVBoxLayout* main_vbox = new QVBoxLayout (this);
 
 	QGroupBox* group = new QGroupBox (i18n ("Code Completion"), this);
 	QVBoxLayout* box_layout = new QVBoxLayout (group);

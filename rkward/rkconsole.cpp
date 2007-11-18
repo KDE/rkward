@@ -381,8 +381,8 @@ void RKConsole::doTabCompletion () {
 
 	// should we try a file name completion? Let's do some heuristics
 	bool do_file_completion = false;
-	int quote_start = current_line.findRev ('"', cursor_pos - 1);
-	if (quote_start < 0) quote_start = current_line.findRev ('\'', cursor_pos - 1);
+	int quote_start = current_line.lastIndexOf ('"', cursor_pos - 1);
+	if (quote_start < 0) quote_start = current_line.lastIndexOf ('\'', cursor_pos - 1);
 
 	if (quote_start >= 0) {
 		// we found a quoting char at some earlier position on the line, we might need a filename completion
@@ -399,8 +399,8 @@ void RKConsole::doTabCompletion () {
 		if ((char_after_quote == ',') || (char_after_quote == ')') || (char_after_quote == ' ') || (char_after_quote == ';')) do_file_completion = false;
 
 		if (do_file_completion) {
-			int quote_end = current_line.find ('"', cursor_pos);
-			if (quote_end < 0) quote_end = current_line.find ('\'', cursor_pos);
+			int quote_end = current_line.indexOf ('"', cursor_pos);
+			if (quote_end < 0) quote_end = current_line.indexOf ('\'', cursor_pos);
 			if (quote_end < 0) quote_end = current_line.length ();
 	
 			QString current_name = current_line.mid (quote_start + 1, quote_end - quote_start - 1);
@@ -640,7 +640,7 @@ void RKConsole::submitBatch (const QString &batch) {
 	if (current_command) return;
 	// splitting batch, not allowing empty entries.
 	// TODO: hack something so we can have empty entries.
-	commands_batch = QStringList::split ("\n", batch, true);
+	commands_batch = batch.split ("\n", QString::SkipEmptyParts);
 	tryNextInBatch (false);
 }
 
@@ -648,7 +648,7 @@ void RKConsole::tryNextInBatch (bool add_new_line) {
 	RK_TRACE (APP);
 	if (add_new_line) {
 		if (RKSettingsModuleConsole::maxConsoleLines ()) {
-			int c = doc->lines();
+			uint c = doc->lines();
 			if (c > RKSettingsModuleConsole::maxConsoleLines ()) {
 				// KDE4 TODO: setUpdatesEnabled(false) still faster?
 				view->setUpdatesEnabled (false);
@@ -853,7 +853,7 @@ void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 		QString command_string = command->command ();
 		QString text = command_string;
 		if (RKSettingsModuleConsole::addPipedCommandsToHistory()) {
-			QStringList lines = QStringList::split ('\n', text);
+			QStringList lines = text.split ('\n');
 			for (QStringList::const_iterator it = lines.constBegin (); it != lines.constEnd (); ++it) {
 				addCommandToHistory (*it);
 			}

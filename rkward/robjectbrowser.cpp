@@ -64,6 +64,8 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, const char *n
 	RKDummyPart *part = new RKDummyPart (this, layout_widget);
 	setPart (part);
 	initializeActivationSignals ();
+
+	setCaption (i18n ("Objects in the R workspace"));
 }
 
 RObjectBrowser::~RObjectBrowser () {
@@ -74,7 +76,7 @@ void RObjectBrowser::unlock () {
 	RK_TRACE (APP);
 
 	locked = false;
-	if (isShown ()) {
+	if (!isHidden ()) {
 		initialize ();
 	}
 }
@@ -114,8 +116,6 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 
 	update_button = new QPushButton (i18n ("Update"), this);
 	vbox->addWidget (update_button);
-	
-	setCaption (i18n ("Objects in the R workspace"));
 
 	actions.insert (Help, new QAction (i18n ("Search Help"), this));
 	connect (actions[Help], SIGNAL(triggered(bool)), this, SLOT(popupHelp()));

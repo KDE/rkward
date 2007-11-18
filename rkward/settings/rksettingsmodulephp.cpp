@@ -35,7 +35,7 @@ QString RKSettingsModulePHP::php_bin;
 RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 	QLabel *label = new QLabel (i18n ("Changes in this section take effect the next time you start a plugin"), this);
 	label->setWordWrap (true);
 	main_vbox->addWidget (label);

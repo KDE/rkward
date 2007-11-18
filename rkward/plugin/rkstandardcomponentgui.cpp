@@ -55,6 +55,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 
 	// code update timer
 	code_update_timer = new QTimer (this);
+	code_update_timer->setSingleShot (true);
 	connect (code_update_timer, SIGNAL (timeout ()), this, SLOT (updateCodeNow ()));
 
 	if (!enslaved) {
@@ -87,7 +88,8 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	hbox->addWidget (line);
 
 	// buttons
-	QVBoxLayout* vbox = new QVBoxLayout (hbox);
+	QVBoxLayout* vbox = new QVBoxLayout ();
+	hbox->addLayout (vbox);
 	vbox->setContentsMargins (0, 0, 0, 0);
 	vbox->setSpacing (RKGlobals::spacingHint ());
 	ok_button = new QPushButton (i18n ("Submit"), upper_widget);
@@ -113,7 +115,7 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	vbox->addStretch (2);
 	
 	toggle_code_button = new QPushButton (i18n ("Code"), upper_widget);
-	toggle_code_button->setToggleButton (true);
+	toggle_code_button->setCheckable (true);
 	connect (toggle_code_button, SIGNAL (clicked ()), this, SLOT (toggleCode ()));
 	vbox->addWidget (toggle_code_button);
 	if (enslaved) toggle_code_button->hide ();
@@ -127,7 +129,7 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	main_vbox->addWidget (code_display);
 
 	if (!enslaved && RKSettingsModulePlugins::showCodeByDefault ()) {
-		toggle_code_button->setOn (true);	// will trigger showing the code along with the dialog
+		toggle_code_button->setChecked (true);	// will trigger showing the code along with the dialog
 	}
 }
 
@@ -170,7 +172,7 @@ void RKStandardComponentGUI::toggleCode () {
 
 	int new_height = height ();
 
-	if (toggle_code_button->isOn()) {
+	if (toggle_code_button->isChecked ()) {
 		new_height += RKSettingsModulePlugins::defaultCodeHeight ();
 		code_display->show ();
 	} else {
@@ -197,7 +199,7 @@ void RKStandardComponentGUI::help () {
 
 	QString id = RKComponentMap::getComponentId (component->getHandle ());
 
-	QString path = QStringList::split ("::", id).join ("/");
+	QString path = id.split ("::").join ("/");
 	RKWorkplace::mainWorkplace ()->openHelpWindow (KUrl ("rkward://component/" + path));
 }
 
@@ -223,8 +225,8 @@ void RKStandardComponentGUI::codeChanged (RKComponentPropertyBase *) {
 void RKStandardComponentGUI::updateCode () {
 	RK_TRACE (PLUGIN);
 
-	if (!code_display->isShown ()) return;
-	code_update_timer->start (0, true);
+	if (code_display->isHidden ()) return;
+	code_update_timer->start (0);
 }
 
 void RKStandardComponentGUI::updateCodeNow () {
@@ -266,14 +268,14 @@ void RKStandardComponentWizard::createWizard (bool switchable) {
 	// create main layout and stack
 	QGridLayout *main_grid = new QGridLayout (this);
 	main_widget = stack = new RKStandardComponentStack (this);
-	main_grid->addMultiCellWidget (stack, 0, 0, 0, 3);
+	main_grid->addWidget (stack, 0, 0, 1, 4);
 
 	// build standard elements
 	// lines
 	QFrame *line = new QFrame (main_widget);
 	line->setFrameShape (QFrame::HLine);
 	line->setFrameShadow (QFrame::Plain);
-	main_grid->addMultiCellWidget (line, 1, 1, 0, 3);
+	main_grid->addWidget (line, 1, 0, 1, 4);
 
 	// buttons
 	cancel_button = new QPushButton (i18n ("Cancel"), this);
@@ -374,7 +376,7 @@ void RKStandardComponentWizard::updateState () {
 		next_button->setEnabled (stack->currentPageSatisfied ());
 	} else {			// on last page
 		// do code update when on last page
-		if (!stack->havePage (true)) code_update_timer->start (0, true);
+		if (!stack->havePage (true)) code_update_timer->start (0);
 		next_button->setText (i18n ("Submit"));
 		next_button->setEnabled (submit_enabled);
 	}

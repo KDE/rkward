@@ -127,8 +127,8 @@ namespace RKCommonFunctions {
 		}
 
 		// find out the next non-word stuff left and right of the current cursor position
-		*start = context_line.findRev (rx_no_word, cursor_pos-1) + 1;
-		*end = context_line.find (rx_no_word, cursor_pos);
+		*start = context_line.lastIndexOf (rx_no_word, cursor_pos-1) + 1;
+		*end = context_line.indexOf (rx_no_word, cursor_pos);
 		if (*end < 0) *end = context_line.length ();
 	}
 

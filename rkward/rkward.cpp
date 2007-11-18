@@ -296,12 +296,12 @@ void RKWardMainWindow::startR () {
 	QDir dir (RKSettingsModuleGeneral::filesPath());
 	if (!dir.exists ()) {
 		QDir current (dir.currentPath ());
-		current.mkdir (dir.path (), true);
+		current.mkdir (dir.path ());
 	}
 	dir = dir.filePath (".packagetemp");
 	if (!dir.exists ()) {
 		QDir current (dir.currentPath ());
-		current.mkdir (dir.path (), true);
+		current.mkdir (dir.path ());
 	}
 	
 	RKGlobals::rinter = new RInterface ();

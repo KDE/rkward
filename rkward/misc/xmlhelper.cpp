@@ -74,7 +74,7 @@ QDomElement XMLHelper::openXMLFile (const QString &filename, int debug_level, bo
 			QDomElement el = *it;
 
 			QString inc_filename = getStringAttribute (el, "file", QString::null, DL_ERROR);
-			QDir base = QFileInfo (filename).dir (true);
+			QDir base = QFileInfo (filename).absoluteDir ();
 			inc_filename = base.filePath (inc_filename);
 
 			// import
@@ -249,12 +249,12 @@ QString XMLHelper::getStringAttribute (const QDomElement &element, const QString
 int XMLHelper::getMultiChoiceAttribute (const QDomElement &element, const QString &name, const QString &values, int def, int debug_level) {
 	RK_TRACE (XML);
 
-	QStringList value_list = QStringList::split (';', values);
+	QStringList value_list = values.split (';');
 
 	QString plain_value = getStringAttribute (element, name, value_list[def], debug_level);
 	
 	int index;
-	if ((index = value_list.findIndex (plain_value)) >= 0) {
+	if ((index = value_list.indexOf (plain_value)) >= 0) {
 		return (index);
 	} else {
 		displayError (&element, i18n ("Illegal attribute value. Allowed values are one of '%1', only.", values), debug_level, DL_ERROR);

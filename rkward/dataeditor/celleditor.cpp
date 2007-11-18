@@ -48,7 +48,7 @@ void CellEditor::setValueLabels (const RObject::ValueLabels& labels) {
 	value_list->installEventFilter (this);	// somehow setting us as a focus proxy is not enough to continue to receive the key-presses
 
 	for (RObject::ValueLabels::const_iterator it = labels.constBegin (); it != labels.constEnd (); ++it) {
-		value_list->addAction (it.key () + ": " + it.data ())->setData (it.key ());
+		value_list->addAction (it.key () + ": " + it.value ())->setData (it.key ());
 	}
 	connect (value_list, SIGNAL (triggered(QAction*)), SLOT (selectedFromList(QAction*)));
 
@@ -78,7 +78,7 @@ void CellEditor::showValueLabels () {
 }
 
 void CellEditor::keyPressEvent (QKeyEvent *e) {
-	if (!e->state ()) {
+	if (e->modifiers () == Qt::NoModifier) {
 		if ((e->key () == Qt::Key_Left) || (e->key () == Qt::Key_Backspace)) {
 			if (cursorPosition () < 1) {
 				emit (done (this, RKItemDelegate::EditorExitLeft));

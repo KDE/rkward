@@ -193,9 +193,10 @@ void RKProgressControl::rCommandDone (RCommand * command) {
 #include <kvbox.h>
 #include <kstandardguiitem.h>
 
-RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QString &caption, int mode_flags, bool modal) : KDialog (0, Qt::WDestructiveClose) {
+RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QString &caption, int mode_flags, bool modal) : KDialog (0) {
 	RK_TRACE (MISC);
 
+	setAttribute (Qt::WA_DeleteOnClose, true);
 	setModal (modal);
 	setCaption (caption);
 
@@ -206,7 +207,9 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 	label->setWordWrap (true);
 
 	error_indicator = new QLabel (i18n ("<b>There have been errors and / or warnings! See below for a transcript</b>"), vbox);
-	error_indicator->setPaletteForegroundColor (QColor (255, 0, 0));
+	QPalette palette = error_indicator->palette ();
+	palette.setColor (error_indicator->foregroundRole (), QColor (255, 0, 0));
+	error_indicator->setPalette (palette);
 	error_indicator->hide ();
 
 	KVBox* output_box = new KVBox ();
@@ -258,9 +261,9 @@ void RKProgressControlDialog::addOutput (const ROutput *output) {
 		output_text->insertPlainText ("\n");
 
 		if (output->type == ROutput::Output) {
-			output_text->setColor (Qt::black);
+			output_text->setTextColor (Qt::black);
 		} else {
-			output_text->setColor (Qt::red);
+			output_text->setTextColor (Qt::red);
 			setDetailsWidgetVisible (true);
 			error_indicator->show ();
 		}

@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
 	// This is so it prints "Usage rkward..." instead of "Usage rkward.bin...", etc.
 	// it seems safest to keep a copy, since the shell still owns argv[0]
 	char *argv_zero_copy = argv[0];
-	argv[0] = qstrdup (QString (argv_zero_copy).remove (".bin").local8Bit ());
+	argv[0] = qstrdup (QString (argv_zero_copy).remove (".bin").toLocal8Bit ());
 	KCmdLineArgs::init( argc, argv, &aboutData );
 	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
@@ -111,7 +111,7 @@ int main(int argc, char *argv[]) {
 	RKWardStartupOptions *stoptions = new RKWardStartupOptions;
 	KUrl *open_url = 0;
 	if (args->count ()) {
-		open_url = new KUrl (args->makeURL (args->arg (0).latin1()));
+		open_url = new KUrl (args->makeURL (args->arg (0).toLatin1()));
 	}
 	stoptions->initial_url = open_url;
 	stoptions->no_stack_check = args->isSet ("disable-stack-check");

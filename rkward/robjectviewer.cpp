@@ -108,22 +108,22 @@ RObjectViewer::~RObjectViewer () {
 void RObjectViewer::toggleSummary () {
 	RK_TRACE (APP);
 
-	summary_area->setShown (!summary_area->isShown ());
-	if (summary_area->isShown ()) {
-		toggle_summary_button->setText (i18n ("Hide"));
-	} else {
+	summary_area->setShown (summary_area->isHidden ());
+	if (summary_area->isHidden ()) {
 		toggle_summary_button->setText (i18n ("Show"));
+	} else {
+		toggle_summary_button->setText (i18n ("Hide"));
 	}
 }
 
 void RObjectViewer::togglePrint () {
 	RK_TRACE (APP);
 
-	print_area->setShown (!print_area->isShown ());
-	if (print_area->isShown ()) {
-		toggle_print_button->setText (i18n ("Hide"));
-	} else {
+	print_area->setShown (print_area->isHidden ());
+	if (print_area->isHidden ()) {
 		toggle_print_button->setText (i18n ("Show"));
+	} else {
+		toggle_print_button->setText (i18n ("Hide"));
 	}
 }
 

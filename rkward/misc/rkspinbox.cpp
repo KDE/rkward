@@ -157,8 +157,7 @@ void RKSpinBox::setRealMode (double min, double max, double initial, int default
 		1) set the value to 0
 		2) whenever the value has changed, change the real value by that many steps (updateDisplay ())
 		3) goto 1 */
-	setMinValue (-1000);
-	setMaxValue (1000);
+	setRange (-1000, 1000);
 	setSingleStep (1);
 
 	real_value = initial;
@@ -178,8 +177,7 @@ void RKSpinBox::setIntMode (int min, int max, int initial) {
 
 	/* see setRealMode for comments */
 
-	setMinValue (-1000);
-	setMaxValue (1000);
+	setRange (-1000, 1000);
 	setSingleStep (1);
 
 	int_min = min;

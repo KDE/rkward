@@ -16,6 +16,8 @@
  ***************************************************************************/
 #include "rkcanceldialog.h"
 
+#if 0
+
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
@@ -83,3 +85,4 @@ void RKCancelDialog::reject () {
 }
 
 #include "rkcanceldialog.moc"
+#endif

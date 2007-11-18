@@ -34,36 +34,26 @@ struct ROutput;
 class RKRBackendEvent : public QEvent {
 public:
 	enum EventType {
-		BaseEvent = QEvent::User + 1,
-		RCommandInEvent,
-		RCommandOutEvent,
-		RBusyEvent,
-		RIdleEvent,
-		RCommandOutputEvent,
-		RStaredEvent,
-		REvalRequestEvent,
-		RCallbackRequestEvent,
-		RStartupErrorEvent
+		Base = QEvent::User + 1,
+		RCommandIn,
+		RCommandOut,
+		RBusy,
+		RIdle,
+		RCommandOutput,
+		RStarted,
+		REvalRequest,
+		RCallbackRequest,
+		RStartupError
 	};
 
-	RKRBackendEvent (EventType type, void* data) : QEvent (type) { _data = data; };
+	RKRBackendEvent (EventType type, void* data=0) : QEvent ((QEvent::Type) type) { _data = data; };
 	RKRBackendEvent ();
 
+	EventType etype () { return ((EventType) type ()); };
 	void* data () { return _data; };
 private:
 	void* _data;
 };
-
-#define RCOMMAND_IN_EVENT 10001
-#define RCOMMAND_OUT_EVENT 10002
-#define RBUSY_EVENT 10003
-#define RIDLE_EVENT 10004
-#define RCOMMAND_OUTPUT_EVENT 10005
-#define RSTARTED_EVENT 11001
-#define R_EVAL_REQUEST_EVENT 12001
-#define R_CALLBACK_REQUEST_EVENT 12002
-// don't use the numbers following RSTARTUP_ERROR_EVENT, because an error code will be added!
-#define RSTARTUP_ERROR_EVENT 13000
 
 /** This class represents the thread the R backend is running in. So to speak, this is where the "eventloop" of R is running. The main thing happening
 in this class, is that an infinite loop is running. Whenever there are commands to be executed, those get evaluated. Also, at regular intervals,

@@ -146,8 +146,8 @@ void PHPBackend::gotOutput () {
 	bool have_request = false;
 
 	// is there a request in the output stream?
-	if ((i = output_raw_buffer.find (eot_string)) >= 0) {
-		if ((j = output_raw_buffer.find (eoq_string, i)) >= 0) {
+	if ((i = output_raw_buffer.indexOf (eot_string)) >= 0) {
+		if ((j = output_raw_buffer.indexOf (eoq_string, i)) >= 0) {
 			have_request = true;
 			// is there also pending data?
 			if (i) {

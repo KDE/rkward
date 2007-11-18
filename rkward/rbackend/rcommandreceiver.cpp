@@ -58,7 +58,7 @@ void RCommandReceiver::addCommand (RCommand *command) {
 
 void RCommandReceiver::delCommand (RCommand *command) {
 	RK_TRACE (RBACKEND);
-	outstanding_commands.remove (command);
+	outstanding_commands.removeAll (command);
 
 	if (delete_when_done && outstanding_commands.isEmpty ()) delete this;
 }

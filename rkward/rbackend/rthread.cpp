@@ -32,8 +32,6 @@
 #include <qapplication.h>
 #include <QDBusConnection>
 #include <QList>
-//Added by qt3to4:
-#include <QCustomEvent>
 
 #include <signal.h>		// needed for pthread_kill
 
@@ -87,9 +85,11 @@ void RThread::run () {
 	MUTEX_UNLOCK;
 
 	if ((err = initialize ())) {
-		qApp->postEvent (RKGlobals::rInterface (), new QCustomEvent (RSTARTUP_ERROR_EVENT + err));
+		int* err_c = new int;
+		*err_c = err;
+		qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RStartupError, err_c));
 	}
-	qApp->postEvent (RKGlobals::rInterface (), new QCustomEvent (RSTARTED_EVENT));
+	qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RStarted));
 
 	// wait until RKWard is set to go (esp, it has handled any errors during startup, etc.)
 	while (locked) {
@@ -108,7 +108,7 @@ void RThread::run () {
 
 		if (previously_idle) {
 			if (!RCommandStack::regular_stack->isEmpty ()) {
-				qApp->postEvent (RKGlobals::rInterface (), new QCustomEvent (RBUSY_EVENT));
+				qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RBusy));
 				previously_idle = false;
 			}
 		}
@@ -135,7 +135,7 @@ void RThread::run () {
 
 		if (!previously_idle) {
 			if (RCommandStack::regular_stack->isEmpty ()) {
-				qApp->postEvent (RKGlobals::rInterface (), new QCustomEvent (RIDLE_EVENT));
+				qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RIdle));
 				previously_idle = true;
 			}
 		}
@@ -154,8 +154,7 @@ void RThread::run () {
 void RThread::doCommand (RCommand *command) {
 	RK_TRACE (RBACKEND);
 	// step 1: notify GUI-thread that a new command is being tried and initialize
-	QCustomEvent *event = new QCustomEvent (RCOMMAND_IN_EVENT);
-	event->setData (command);
+	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandIn, command);
 	qApp->postEvent (RKGlobals::rInterface (), event);
 
 	// step 2: actual handling
@@ -265,8 +264,7 @@ void RThread::notifyCommandDone (RCommand *command) {
 	current_command = 0;
 
 	// notify GUI-thread that command was finished
-	QCustomEvent* event = new QCustomEvent (RCOMMAND_OUT_EVENT);
-	event->setData (command);
+	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandOut, command);
 	qApp->postEvent (RKGlobals::rInterface (), event);
 }
 
@@ -334,11 +332,10 @@ void RThread::flushOutput () {
 			}
 
 			// pass a signal to the main thread for real-time update of output
-			QCustomEvent *event = new QCustomEvent (RCOMMAND_OUTPUT_EVENT);
 			ROutputContainer *outc = new ROutputContainer;
 			outc->output = output;
 			outc->command = *it;
-			event->setData (outc);
+			RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandOutput, outc);
 			qApp->postEvent (RKGlobals::rInterface (), event);
 		}
 
@@ -406,8 +403,7 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 	request->in_chain = reply_stack->startChain (reply_stack);
 	MUTEX_UNLOCK;
 
-	QCustomEvent *event = new QCustomEvent (R_EVAL_REQUEST_EVENT);
-	event->setData (request);
+	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::REvalRequest, request);
 	qApp->postEvent (RKGlobals::rInterface (), event);
 	
 	bool done = false;
@@ -445,6 +441,7 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 	}
 
 	MUTEX_LOCK;
+	delete request;
 	delete reply_stack;
 	MUTEX_UNLOCK;
 }
@@ -457,8 +454,7 @@ void RThread::handleStandardCallback (RCallbackArgs *args) {
 	MUTEX_UNLOCK;
 	args->done = false;
 
-	QCustomEvent *event = new QCustomEvent (R_CALLBACK_REQUEST_EVENT);
-	event->setData (args);
+	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCallbackRequest, args);
 	qApp->postEvent (RKGlobals::rInterface (), event);
 	
 	bool *done = &(args->done);
@@ -504,7 +500,7 @@ int RThread::initialize () {
 	if ((error) || (c != 1)) {
 		status |= LibLoadFail;
 	} else {
-		if (!registerFunctions (paths[0].local8Bit ())) status |= LibLoadFail;
+		if (!registerFunctions (paths[0].toLocal8Bit ())) status |= LibLoadFail;
 	}
 	delete [] paths;
 
@@ -519,7 +515,7 @@ int RThread::initialize () {
 // apply user configurable run time options
 	QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
-		runCommandInternal ((*it).local8Bit (), &error);
+		runCommandInternal ((*it).toLocal8Bit (), &error);
 		if (error) {
 			status |= OtherFail;
 			RK_DO (qDebug ("error in initialization call '%s'", (*it).toLatin1().data ()), RBACKEND, DL_ERROR);

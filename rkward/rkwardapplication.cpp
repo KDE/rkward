@@ -17,6 +17,8 @@
 
 #include "rkwardapplication.h"
 
+#include "windows/rkmdiwindow.h"
+
 #include <X11/X.h>
 #include <X11/Xlib.h>
 
@@ -77,7 +79,7 @@ WId RKWardApplication::endWindowCreationDetection () {
 	return created_window;
 }
 
-void RKWardApplication::registerNameWatcher (WId watched, QWidget *watcher) {
+void RKWardApplication::registerNameWatcher (WId watched, RKMDIWindow *watcher) {
 	RK_TRACE (APP);
 	RK_ASSERT (!name_watchers_list.contains (watched));
 

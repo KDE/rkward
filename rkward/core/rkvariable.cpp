@@ -420,7 +420,7 @@ void RKVariable::extendToLength (int length) {
 		RK_ASSERT (data->cell_doubles == 0);
 		QString *new_data = new QString[target];
 		if (data->allocated_length) {		// if not yet allocated, don't mem-move
-			qmemmove (new_data, data->cell_strings, data->allocated_length * sizeof (QString));
+			memmove (new_data, data->cell_strings, data->allocated_length * sizeof (QString));
 		}
 		delete [] (data->cell_strings);
 		data->cell_strings = new_data;
@@ -428,14 +428,14 @@ void RKVariable::extendToLength (int length) {
 		RK_ASSERT (data->cell_strings == 0);
 		double *new_data = new double[target];
 		if (data->allocated_length) {		// if not yet allocated, don't mem-move
-			qmemmove (new_data, data->cell_doubles, data->allocated_length * sizeof (double));
+			memmove (new_data, data->cell_doubles, data->allocated_length * sizeof (double));
 		}
 		delete [] (data->cell_doubles);
 		data->cell_doubles = new_data;
 	}
 	int *new_states = new int[target];
 	if (data->allocated_length) {		// if not yet allocated, don't mem-move
-		qmemmove (new_states, data->cell_states, data->allocated_length * sizeof (int));
+		memmove (new_states, data->cell_states, data->allocated_length * sizeof (int));
 	}
 	delete [] (data->cell_states);
 	data->cell_states = new_states;
@@ -729,11 +729,11 @@ void RKVariable::removeRows (int from_row, int to_row) {
 
 	if (to_row < (data->allocated_length - 1)) {	// not the last rows
 		if (data->cell_strings) {
-			qmemmove (&(data->cell_strings[from_row]), &(data->cell_strings[to_row+1]), (data->allocated_length - to_row - 1) * sizeof (QString));
+			memmove (&(data->cell_strings[from_row]), &(data->cell_strings[to_row+1]), (data->allocated_length - to_row - 1) * sizeof (QString));
 		} else {
-			qmemmove (&(data->cell_doubles[from_row]), &(data->cell_doubles[to_row+1]), (data->allocated_length - to_row - 1) * sizeof (double));
+			memmove (&(data->cell_doubles[from_row]), &(data->cell_doubles[to_row+1]), (data->allocated_length - to_row - 1) * sizeof (double));
 		}
-		qmemmove (&(data->cell_states[from_row]), &(data->cell_states[to_row+1]), (data->allocated_length - to_row - 1) * sizeof (int));
+		memmove (&(data->cell_states[from_row]), &(data->cell_states[to_row+1]), (data->allocated_length - to_row - 1) * sizeof (int));
 	}
 
 	for (int row = (data->allocated_length - offset); row < data->allocated_length; ++row) {
@@ -777,9 +777,9 @@ void RKVariable::insertRows (int row, int count) {
 		if (data->cell_doubles) data->cell_doubles[row+count] = 0.0;
 		data->cell_states[row+count] = RKVarEditData::NA;
 	} else {
-		if (data->cell_strings) qmemmove (&(data->cell_strings[row+count]), &(data->cell_strings[row]), (data->allocated_length - (row + count) - 1) * sizeof (QString));
-		if (data->cell_doubles) qmemmove (&(data->cell_doubles[row+count]), &(data->cell_doubles[row]), (data->allocated_length - (row + count) - 1) * sizeof (double));
-		qmemmove (&(data->cell_states[row+count]), &(data->cell_states[row]), (data->allocated_length - (row + count) - 1) * sizeof (int));
+		if (data->cell_strings) memmove (&(data->cell_strings[row+count]), &(data->cell_strings[row]), (data->allocated_length - (row + count) - 1) * sizeof (QString));
+		if (data->cell_doubles) memmove (&(data->cell_doubles[row+count]), &(data->cell_doubles[row]), (data->allocated_length - (row + count) - 1) * sizeof (double));
+		memmove (&(data->cell_states[row+count]), &(data->cell_states[row]), (data->allocated_length - (row + count) - 1) * sizeof (int));
 	}
 	
 	for (int i=row+count-1; i >= row; --i) {
@@ -886,7 +886,7 @@ void RKVariable::setValueLabelString (const QString &string) {
 	RK_ASSERT (data);
 
 	ValueLabels new_labels;	
-	QStringList list = QStringList::split ("#,#", string);
+	QStringList list = string.split ("#,#");
 
 	int i = 1;
 	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
@@ -965,7 +965,7 @@ RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString (const QS
 	formatting_options.precision = 0;
 	bool empty = true;
 
-	QStringList list = QStringList::split ("#", string);
+	QStringList list = string.split ("#");
 	QString option, parameter;
 	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
 		option = (*it).section (':', 0, 0);

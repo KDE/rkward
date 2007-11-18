@@ -57,7 +57,7 @@ RKWindowCatcher *window_catcher;
 #define FLUSH_INTERVAL 100
 
 //static
-QMutex RInterface::mutex (true);
+QMutex RInterface::mutex (QMutex::Recursive);
 #ifdef DEBUG_MUTEX
 	int RInterface::mutex_counter;
 #endif // DEBUG_MUTEX
@@ -96,12 +96,12 @@ void RInterface::issueCommand (const QString &command, int type, const QString &
 RInterface::~RInterface(){
 	RK_TRACE (RBACKEND);
 
-	if (r_thread->running ()) {
+	if (r_thread->isRunning ()) {
 		RK_DO (qDebug ("Waiting for R thread to finish up..."), RBACKEND, DL_INFO);
 		r_thread->interruptProcessing (true);
 		r_thread->kill ();
 		r_thread->wait (1000);
-		if (r_thread->running ()) {
+		if (r_thread->isRunning ()) {
 			RK_DO (qDebug ("Backend thread is still running. It will be killed, now."), RBACKEND, DL_WARNING);
 			r_thread->terminate ();
 			RK_ASSERT (false);
@@ -115,7 +115,7 @@ RInterface::~RInterface(){
 bool RInterface::backendIsDead () {
 	RK_TRACE (RBACKEND);
 
-	return (!r_thread->running ());
+	return (!r_thread->isRunning ());
 }
 
 bool RInterface::backendIsIdle () {
@@ -143,8 +143,17 @@ RCommand *RInterface::runningCommand () {
 
 void RInterface::customEvent (QEvent *e) {
 	RK_TRACE (RBACKEND);
-	if (e->type () == RCOMMAND_OUTPUT_EVENT) {
-		RThread::ROutputContainer *container = (static_cast <RThread::ROutputContainer *> (static_cast<QCustomEvent*> (e)->data ()));
+
+	RKRBackendEvent *ev;
+	if (((int) e->type ()) >= ((int) RKRBackendEvent::Base)) {
+		ev = static_cast<RKRBackendEvent*> (e);
+	} else {
+		RK_ASSERT (false);
+		return;
+	}
+
+	if (ev->etype () == RKRBackendEvent::RCommandOutput) {
+		RThread::ROutputContainer *container = (static_cast <RThread::ROutputContainer *> (ev->data ()));
 		container->command->newOutput (container->output);
 		delete container;
 
@@ -155,10 +164,10 @@ void RInterface::customEvent (QEvent *e) {
 			qApp->processEvents ();
 			r_thread->pauseOutput (false);
 		}
-	} else if (e->type () == RCOMMAND_IN_EVENT) {
-		RKCommandLog::getLog ()->addInput (static_cast <RCommand *> (static_cast<QCustomEvent*> (e)->data ()));
-	} else if (e->type () == RCOMMAND_OUT_EVENT) {
-		RCommand *command = static_cast <RCommand *> (static_cast<QCustomEvent*> (e)->data ());
+	} else if (ev->etype () == RKRBackendEvent::RCommandIn) {
+		RKCommandLog::getLog ()->addInput (static_cast <RCommand *> (ev->data ()));
+	} else if (ev->etype () == RKRBackendEvent::RCommandOut) {
+		RCommand *command = static_cast <RCommand *> (ev->data ());
 		if (command->status & RCommand::Canceled) {
 			command->status |= RCommand::HasError;
 			ROutput *out = new ROutput;
@@ -180,21 +189,23 @@ void RInterface::customEvent (QEvent *e) {
 			RKWorkplace::mainWorkplace ()->newOutput (true);
 		}
 		delete command;
-	} else if ((e->type () == RIDLE_EVENT)) {
+	} else if ((ev->etype () == RKRBackendEvent::RIdle)) {
 		RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Idle);	
-	} else if ((e->type () == RBUSY_EVENT)) {
+	} else if ((ev->etype () == RKRBackendEvent::RBusy)) {
 		RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Busy);
-	} else if ((e->type () == R_EVAL_REQUEST_EVENT)) {
+	} else if ((ev->etype () == RKRBackendEvent::REvalRequest)) {
 		r_thread->pauseOutput (false); // we may be recursing downwards into event loops here. Hence we need to make sure, we don't create a deadlock
-		processREvalRequest (static_cast<REvalRequest *> (static_cast<QCustomEvent*> (e)->data ()));
-	} else if ((e->type () == R_CALLBACK_REQUEST_EVENT)) {
+		processREvalRequest (static_cast<REvalRequest *> (ev->data ()));
+	} else if ((ev->etype () == RKRBackendEvent::RCallbackRequest)) {
 		r_thread->pauseOutput (false); // see above
-		processRCallbackRequest (static_cast<RCallbackArgs *> (static_cast<QCustomEvent*> (e)->data ()));
-	} else if ((e->type () == RSTARTED_EVENT)) {
+		processRCallbackRequest (static_cast<RCallbackArgs *> (ev->data ()));
+	} else if ((ev->etype () == RKRBackendEvent::RStarted)) {
 		r_thread->unlock (RThread::Startup);
 		RKWardMainWindow::discardStartupOptions ();
-	} else if ((e->type () > RSTARTUP_ERROR_EVENT)) {
-		int err = e->type () - RSTARTUP_ERROR_EVENT;
+	} else if ((ev->etype () == RKRBackendEvent::RStartupError)) {
+		int* err_p = static_cast<int*> (ev->data ());
+		int err = *err_p;
+		delete err_p;
 		QString message = i18n ("There was a problem starting the R backend. The following error(s) occurred:\n");
 		if (err & RThread::LibLoadFail) {
 			message.append (i18n ("\t- The 'rkward' R-library could not be loaded. This library is needed for communication between R and RKWard and many things will not work properly if this library is not present. Likely RKWard will even crash. The 'rkward' R-library should have been included in your distribution or RKWard, and should have been set up when you ran 'make install'. Please try 'make install' again and check for any errors. You should quit RKWard now.\n"));
@@ -207,6 +218,8 @@ void RInterface::customEvent (QEvent *e) {
 		}
 		KMessageBox::error (0, message, i18n ("Error starting R"));
 		r_thread->unlock (RThread::Startup);
+	} else {
+		RK_ASSERT (false);
 	}
 }
 
@@ -387,7 +400,7 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		bool ok = RKReadLineDialog::readLine (0, i18n ("R backend requests information"), *(args->chars_a), runningCommand (), &result);
 
 		result = result.left (args->int_a - 2) + '\n';
-		qstrcpy (*(args->chars_b), result.local8Bit ());
+		qstrcpy (*(args->chars_b), result.toLocal8Bit ());
 
 		if (!ok) args->int_c = 0;	// will be cancelled deep inside REmbedInternal, where it's safest
 	} else if ((type == RCallbackArgs::RShowFiles) || (type == RCallbackArgs::REditFiles)) {

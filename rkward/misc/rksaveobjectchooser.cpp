@@ -106,7 +106,9 @@ void RKSaveObjectChooser::overwriteConfirmChanged (int) {
 void RKSaveObjectChooser::setBackgroundColor (const QColor &color) {
 	RK_TRACE (MISC);
 
-	name_edit->setBackgroundColor (color);
+	QPalette palette = name_edit->palette ();
+	palette.setColor (name_edit->backgroundRole (), color);
+	name_edit->setPalette (palette);
 }
 
 #include "rksaveobjectchooser.moc"

@@ -19,7 +19,6 @@
 
 #include <QTreeWidget>
 #include <qpushbutton.h>
-#include <qlayout.h>
 #include <qlabel.h>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -35,9 +34,11 @@ MultiStringSelector::MultiStringSelector (const QString& label, QWidget* parent)
 	QHBoxLayout *hbox = new QHBoxLayout (this);
 	hbox->setContentsMargins (0, 0, 0, 0);
 
-	QVBoxLayout *main_box = new QVBoxLayout (hbox);
+	QVBoxLayout *main_box = new QVBoxLayout ();
+	hbox->addLayout (main_box);
 	main_box->setContentsMargins (0, 0, 0, 0);
-	QVBoxLayout *button_box = new QVBoxLayout (hbox);
+	QVBoxLayout *button_box = new QVBoxLayout ();
+	hbox->addLayout (button_box);
 	button_box->setContentsMargins (0, 0, 0, 0);
 
 	QLabel *label_widget = new QLabel (label, this);

@@ -67,6 +67,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 
 	// initialize
 	update_timer = new QTimer (this);
+	update_timer->setSingleShot (true);
 	connect (update_timer, SIGNAL (timeout ()), this, SLOT (tryPreviewNow ()));
 	updating = false;
 	changedState (0);
@@ -105,7 +106,7 @@ void RKPreviewBox::changedState (int) {
 void RKPreviewBox::tryPreview () {
 	RK_TRACE (PLUGIN);
 
-	if (isEnabled () && toggle_preview_box->isChecked ()) update_timer->start (10, true);
+	if (isEnabled () && toggle_preview_box->isChecked ()) update_timer->start (10);
 	else killPreview ();
 
 	updateStatusLabel ();

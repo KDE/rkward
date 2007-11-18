@@ -118,14 +118,15 @@ bool RKSettingsModuleWatch::shouldRaiseWindow (RCommand *command) {
 RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	QVBoxLayout *vbox = new QVBoxLayout (this, RKGlobals::marginHint ());
+	QVBoxLayout *vbox = new QVBoxLayout (this);
 
 	QLabel *label = new QLabel (i18n ("For now, settings only apply to new commands. All previous commands remain visible/invisible."), this);
 	label->setWordWrap (true);
 	vbox->addWidget (label);
 	vbox->addSpacing (10);
 	
-	QGridLayout *grid = new QGridLayout (vbox, 5, 5);
+	QGridLayout *grid = new QGridLayout ();
+	vbox->addLayout (grid);
 
 	label = new QLabel (i18n ("always show command"), this);
 	label->setWordWrap (true);
