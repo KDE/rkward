@@ -23,6 +23,8 @@
 #include <qstring.h>
 #include <QItemSelection>
 
+#include "../core/rkmodificationtracker.h"
+
 class TwinTableMember;
 class QMenu;
 class RKVarEditModel;
@@ -31,7 +33,7 @@ class RKVarEditModel;
   *@author Thomas Friedrichsmeier
   */
 
-class TwinTable : public RKEditor {
+class TwinTable : public RKEditor, public RObjectListener {
 	Q_OBJECT
 public: 
 	TwinTable (QWidget *parent=0);
@@ -81,6 +83,11 @@ protected:
 	QAction* action_insert_row_below;
 	QAction* action_delete_row;
 	QAction* action_delete_rows;
+
+/** receives object meta change notifications. This updates the caption */
+	void objectMetaChanged (RObject* changed);
+
+	RObject* main_object;
 private slots:
 /** inserts a new column (NOTE the action connected to this signal carries the info, where the column is to be inserted) */
 	void insertColumn ();

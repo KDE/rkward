@@ -33,8 +33,10 @@
 
 #include "../debug.h"
 
-TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
+TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (RObjectListener::Other) {
 	RK_TRACE (EDITOR);
+
+	main_object = 0;
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->setContentsMargins (0, 0, 0, 0);
@@ -89,6 +91,8 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent) {
 TwinTable::~TwinTable() {
 	RK_TRACE (EDITOR);
 
+	RK_ASSERT (main_object);
+	stopListenForObject (main_object);
 // TODO: are the models auto-destructed?
 }
 
@@ -96,6 +100,7 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	RK_TRACE (EDITOR);
 
 	datamodel = model;
+	main_object = object;
 	dataview->setRKModel (model);
 	metaview->setRKModel (model->getMetaModel ());
 	model->setEditor (this);
@@ -106,7 +111,17 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	metaview->setMaximumHeight (metaview->rowHeight (0) * 5 + metaview->horizontalHeader ()->height () + 5);
 	dataview->verticalHeader ()->setFixedWidth (metaview->verticalHeader ()->width ());
 
-	setCaption (object->getShortName ());
+// init caption
+	addNotificationType (RObjectListener::MetaChanged);
+	listenForObject (object);
+	objectMetaChanged (object);
+}
+
+void TwinTable::objectMetaChanged (RObject* changed) {
+	RK_TRACE (EDITOR);
+
+	RK_ASSERT (changed == main_object);
+	setCaption (main_object->getShortName ());
 }
 
 void TwinTable::metaHeaderPressed (int section) {

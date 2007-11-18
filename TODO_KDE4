@@ -35,13 +35,6 @@ rkcommandeditorwindow
 			- Can't do any thing about this. It part of the katepart.
 	- placement of menu options?
 
-rkward
-	- does closing windows work
-		+ seems to..
-	- does updating captions work (when switching windows / window url changes)?
-		+ seems to..
-		- probably still need to make data.editor update its caption when name changed
-
 output window
 	- does it reload all changed images?
 
