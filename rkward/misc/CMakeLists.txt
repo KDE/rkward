@@ -7,7 +7,6 @@ SET(misc_STAT_SRCS
    rkspinbox.cpp
    getfilenamewidget.cpp
    rkobjectlistview.cpp
-   rkcanceldialog.cpp
    xmlhelper.cpp
    multistringselector.cpp
    rkcommonfunctions.cpp
