@@ -1,7 +1,6 @@
 **CMake**
 - message extraction
 - po file handling
-- use Configure-File-Makro for wrapperscript
 - test
 	- configuration
 		- R

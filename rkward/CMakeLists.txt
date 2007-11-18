@@ -23,34 +23,25 @@ SET(RKWard_Sources
 	rkwardapplication.cpp
 )
 
-########### next target ###############
-
 # auto-gen sources
-QT4_AUTOMOC(${RKWard_Sources})
+#QT4_AUTOMOC(${RKWard_Sources})	# not needed here, as KDE4_ADD_EXECUTABLE mocs the sources in this dir.
 
 # somehow the needed libdirs for R do not get passed down automatically
 GET_DIRECTORY_PROPERTY(R_SHAREDLIBDIR DIRECTORY rbackend LINK_DIRECTORIES)
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 
 KDE4_ADD_EXECUTABLE(rkward.bin ${RKWard_Sources})
+# wrapper script
+GET_DIRECTORY_PROPERTY(R_HOME DIRECTORY rbackend DEFINITION R_HOME)
+CONFIGURE_FILE(
+	rkward.sh.template
+	${CMAKE_CURRENT_BINARY_DIR}/rkward
+	@ONLY)
+ADD_DEPENDENCIES(rkward.bin ${CMAKE_CURRENT_BINARY_DIR}/rkward)
 
 TARGET_LINK_LIBRARIES(rkward.bin ${KDE4_KDECORE_LIBS} windows agents dialogs plugin settings dataeditor core scriptbackends rbackend misc ${KDE4_KHTML_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KDEUI_LIBS})
 
 # NOTE: KDE4_KFILE_LIBS still links against Qt3Support
-
-# wrapper script
-GET_DIRECTORY_PROPERTY(R_HOME DIRECTORY rbackend DEFINITION R_HOME)
-# TODO: somehow this is built unconditionally, but nevermind
-ADD_CUSTOM_TARGET(rkwardwrapper
-	COMMAND perl ${CMAKE_CURRENT_SOURCE_DIR}/makerkwardscript.pl ${CMAKE_CURRENT_SOURCE_DIR}/rkward.sh.template "${R_HOME}" > ${CMAKE_CURRENT_BINARY_DIR}/rkward
-	DEPENDS makerkwardscript.pl rkward.sh.template
-)
-# will this work?
-#CONFIGURE_FILE(
-#	rkward.sh.template
-#	${CMAKE_CURRENT_BINARY_DIR}/rkward
-#	@ONLY)
-ADD_DEPENDENCIES(rkward.bin rkwardwrapper)
 
 ########### install files ###############
 
@@ -62,3 +53,4 @@ INSTALL(TARGETS rkward.bin DESTINATION ${BIN_INSTALL_DIR})
 INSTALL(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/rkward DESTINATION ${BIN_INSTALL_DIR})
 
 INSTALL(FILES rkward.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+

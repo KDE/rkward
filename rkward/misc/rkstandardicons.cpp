@@ -62,8 +62,8 @@ void RKStandardIcons::initIcons () {
 	icons[ObjectEnvironment] = KIcon ("konqueror");
 	icons[ObjectPackageEnvironment] = KIcon ("ark");
 	icons[ObjectDataFrame] = KIcon ("table");
-	icons[ObjectDataNumeric] = KIcon ("math_paren");
-	icons[ObjectDataFactor] = KIcon ("math_onetwomatrix");
+	icons[ObjectDataNumeric] = KIcon ("math_paren");	// TODO: needs to be replaced
+	icons[ObjectDataFactor] = KIcon ("math_onetwomatrix");	// TODO: needs to be replaced
 	icons[ObjectDataCharacter] = KIcon ("text");
 #warning TODO icon for logical
 	icons[ObjectDataLogical] = QIcon ();

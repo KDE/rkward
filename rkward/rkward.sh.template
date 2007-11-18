@@ -19,7 +19,7 @@ else
   fi
 fi
 
-R_HOME_DIR=###R_HOME_DIR###
+R_HOME_DIR=@R_HOME@
 export R_binary="$R_HOME_DIR/bin/R"
 
 ## Location of R may have moved, so check
