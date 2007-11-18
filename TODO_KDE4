@@ -1,9 +1,6 @@
 **CMake**
 - message extraction
 - po file handling
-- handbook installation
-- icons
-- rkward.desktop
 - use Configure-File-Makro for wrapperscript
 - test
 	- configuration
@@ -39,12 +36,8 @@ output window
 	- does it reload all changed images?
 
 rkwindowcatcher
-	- does it work?
 	- does the "set fixed size" dialog work?
 	- does the "copy device to R object" dialog work?
-
-rkloadlibsdialog:
-	- does it work?
 
 rkradio:
 	- does disabling single options work (in plugins)?
@@ -53,8 +46,6 @@ rksettings:
 	- are the defaults ok?
 	+ When going to a specific page programmitcally, e.g. "Plugins" and "R-Pacakges" text on the left panel remain selected
 		- likely bug in KDE libs
-
-data editor:
 
 rklocalesupport:
 	- does locale switching / detection work? Does Qt have something, yet?
