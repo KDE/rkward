@@ -403,7 +403,7 @@ RKHelpWindow::RKHelpWindow (QWidget *parent) : RKHTMLWindow (parent), KXMLGUICli
 	setComponentData (KGlobal::mainComponent ());
 
 	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
-	RKCommonFunctions::removeContainers (khtmlpart, QString ("tools,security,extraToolBar,saveBackground,saveDocument,saveFrame,printFrame,kget_menu").split ('.'), true);
+	RKCommonFunctions::removeContainers (khtmlpart, QString ("tools,security,extraToolBar,saveBackground,saveDocument,saveFrame,printFrame,kget_menu").split (','), true);
 
 	back = actionCollection ()->addAction (KStandardAction::Back, "help_back", this, SLOT (slotBack()));
 	back->setEnabled (false);
