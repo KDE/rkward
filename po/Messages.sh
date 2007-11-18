@@ -6,6 +6,7 @@ WDIR=`pwd`		# working dir
 
 echo "Preparing rc files"
 cd ${BASEDIR}
+# we use simple sorting to make sure the lines don't jump around too much from system to system
 find . -name '*.rc' -o -name '*.ui' -o -name '*.kcfg' | sort > ${WDIR}/rcfiles.list
 xargs --arg-file=${WDIR}/rcfiles.list extractrc > ${WDIR}/extractedrc.cpp
 cd ${WDIR}
@@ -14,6 +15,7 @@ echo "Done preparing rc files"
 
 echo "Extracting messages"
 cd ${BASEDIR}
+# see above on sorting
 find . -name '*.cpp' -o -name '*.h' -o -name '*.c' | sort > ${WDIR}/infiles.list
 echo "extractedrc.cpp" >> ${WDIR}/infiles.list
 cd ${WDIR}
