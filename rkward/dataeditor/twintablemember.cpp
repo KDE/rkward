@@ -33,6 +33,8 @@
 TwinTableMember::TwinTableMember (QWidget *parent) : QTableView (parent){
 	RK_TRACE (EDITOR);
 
+	rw = true;
+
 	setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOn);
 	setSelectionMode (QAbstractItemView::ContiguousSelection);
 
@@ -133,12 +135,16 @@ void TwinTableMember::copy () {
 void TwinTableMember::blankSelected () {
 	RK_TRACE (EDITOR);
 
+	if (!rw) return;
+
 	QItemSelectionRange range = getSelectionBoundaries ();
 	if (range.isValid ()) mymodel->blankRange (range);
 }
 
 void TwinTableMember::paste (RKEditor::PasteMode mode) {
 	RK_TRACE (EDITOR);
+
+	if (!rw) return;
 
 	RKTextMatrix pasted = RKTextMatrix::matrixFromClipboard ();
 	QItemSelectionRange selrange = getSelectionBoundaries ();

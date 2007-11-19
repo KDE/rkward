@@ -28,6 +28,7 @@
 class TwinTableMember;
 class QMenu;
 class RKVarEditModel;
+class QActionGroup;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -54,6 +55,8 @@ public:
 	void initTable (RKVarEditModel* model, RObject* object);
 	
 	RKVarEditModel* datamodel;
+
+	QActionGroup* editActions () const { return edit_actions; };
 public slots:
 	void dataHeaderContextMenu (int row, int col, const QPoint& pos);
 	void metaHeaderContextMenu (int row, int col, const QPoint& pos);
@@ -61,6 +64,8 @@ public slots:
 	void metaHeaderPressed (int section);
 	void metaHeaderEntered (int section);
 	void metaHeaderClicked (int section);
+
+	void enableEditing (bool on);
 private:
 /** PopupMenu shown when top header is right-clicked */
 	QMenu *top_header_menu;
@@ -68,6 +73,8 @@ private:
 	QMenu *left_header_menu;
 
 	int meta_header_anchor_section;
+/** read-write */
+	bool rw;
 protected:	
 /** Returns the active Table (of the two members), 0 if no table active */
 	TwinTableMember *activeTable ();
@@ -83,6 +90,10 @@ protected:
 	QAction* action_insert_row_below;
 	QAction* action_delete_row;
 	QAction* action_delete_rows;
+
+	QAction* action_enable_editing;
+
+	QActionGroup* edit_actions;
 
 /** receives object meta change notifications. This updates the caption */
 	void objectMetaChanged (RObject* changed);

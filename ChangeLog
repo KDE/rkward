@@ -1,3 +1,4 @@
+- data.frame editor can be set to read-only mode
 - code completion in script editor shows icons for the different object types
 - settings dialog is now shown in "page list" mode
 - port to KDE 4			(TODO)

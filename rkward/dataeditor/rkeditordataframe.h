@@ -55,7 +55,6 @@ private:
 	void pushTable (RCommandChain *sync_chain);
 	void commonInit ();
 	RCommandChain *open_chain;
-	void enableEditing (bool on);
 	void waitForLoad ();
 protected:
 	void rCommandDone (RCommand *command);

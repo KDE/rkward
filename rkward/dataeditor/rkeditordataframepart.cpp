@@ -44,17 +44,24 @@ RKEditorDataFramePart::~RKEditorDataFramePart () {
 }
 
 void RKEditorDataFramePart::initializeActions () {
+	RK_TRACE (EDITOR);
+
 	editCut = actionCollection ()->addAction (KStandardAction::Cut, "cut", this, SLOT(slotEditCut()));
+	editor->editActions ()->addAction (editCut);
 	editCopy = actionCollection ()->addAction (KStandardAction::Copy, "copy", this, SLOT(slotEditCopy()));
+//	editor->editActions ()->addAction (editCopy);	// this is a read-only action, not an "edit" action
 	editPaste = actionCollection ()->addAction (KStandardAction::Paste, "paste", this, SLOT(slotEditPaste()));
+	editor->editActions ()->addAction (editPaste);
 
 	editPasteToTable = actionCollection ()->addAction ("paste_to_table", this, SLOT(slotEditPasteToTable()));
 	editPasteToTable->setText (i18n("Paste inside Table"));
 	editPasteToTable->setIcon (KIcon ("frame_spreadsheet"));
+	editor->editActions ()->addAction (editPasteToTable);
 
 	editPasteToSelection = actionCollection ()->addAction ("paste_to_selection", this, SLOT(slotEditPasteToSelection()));
 	editPasteToSelection->setText (i18n("Paste inside Selection"));
 	editPasteToSelection->setIcon (KIcon ("frame-edit"));
+	editor->editActions ()->addAction (editPasteToSelection);
 
 	editCut->setStatusTip (i18n("Cuts the selected section and puts it to the clipboard"));
 	editCopy->setStatusTip (i18n("Copies the selected section to the clipboard"));

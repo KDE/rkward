@@ -81,16 +81,6 @@ void RKEditorDataFrame::commonInit () {
 	open_chain = RKGlobals::rInterface ()->startChain (0);
 }
 
-void RKEditorDataFrame::enableEditing (bool on) {
-	if (on) {
-		metaview->setEnabled (true);
-		dataview->setEnabled (true);
-	} else {
-		metaview->setEnabled (false);
-		dataview->setEnabled (false);
-	}
-}
-
 RKEditorDataFrame::~RKEditorDataFrame () {
 	RK_TRACE (EDITOR);
 }
@@ -127,5 +117,3 @@ void RKEditorDataFrame::restoreObject (RObject *object) {
 #warning TODO: this interface should be moved to the model for good.
 	datamodel->restoreObject (object, 0);
 }
-
-#include "rkeditordataframe.moc"

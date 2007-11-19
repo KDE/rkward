@@ -101,6 +101,8 @@ protected:
 	void scrollContentsBy (int dx, int dy);
 
 	RKVarEditModelBase* mymodel;
+
+	bool rw;
 friend class TwinTable;
 	void setTwin (TwinTableMember *new_twin);
 public slots:

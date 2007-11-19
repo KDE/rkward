@@ -78,12 +78,33 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (ROb
 	action_insert_col_left = top_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertVar), QString (), this, SLOT (insertColumn()));
 	action_insert_col_right = top_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertVar), QString (), this, SLOT (insertColumn()));
 	action_delete_col = top_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteVar), QString (), this, SLOT (deleteColumn()));
-	
+
 	left_header_menu = new QMenu (this);
 	action_insert_row_above = left_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow), QString (), this, SLOT (insertRow()));
 	action_insert_row_below = left_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow), QString (), this, SLOT (insertRow()));
 	action_delete_row = left_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow), QString (), this, SLOT (deleteRow()));
 	action_delete_rows = left_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow), QString (), this, SLOT (deleteSelectedRows()));
+
+	// add all actions to a group, so they can be enabled/disabled easily
+	edit_actions = new QActionGroup (this);
+	edit_actions->addAction (action_insert_col_left);
+	edit_actions->addAction (action_insert_col_right);
+	edit_actions->addAction (action_delete_col);
+	edit_actions->addAction (action_insert_row_above);
+	edit_actions->addAction (action_insert_row_below);
+	edit_actions->addAction (action_delete_row);
+	edit_actions->addAction (action_delete_rows);
+
+	action_enable_editing = new QAction (i18n ("Enable editing"), this);
+	action_enable_editing->setCheckable (true);
+	connect (action_enable_editing, SIGNAL (toggled(bool)), this, SLOT (enableEditing(bool)));
+
+// TODO this action should probably be part of a global context menu
+// ... and of course all actions should be moved from the rkeditordataframepart to this class
+	left_header_menu->addAction (action_enable_editing);
+	top_header_menu->addAction (action_enable_editing);
+
+	enableEditing (true);
 
 	setFocusPolicy (Qt::StrongFocus);
 }
@@ -121,7 +142,9 @@ void TwinTable::objectMetaChanged (RObject* changed) {
 	RK_TRACE (EDITOR);
 
 	RK_ASSERT (changed == main_object);
-	setCaption (main_object->getShortName ());
+	QString caption = main_object->getShortName ();
+	if (!rw) caption += i18n (" [read-only]");
+	setCaption (caption);
 }
 
 void TwinTable::metaHeaderPressed (int section) {
@@ -210,6 +233,7 @@ void TwinTable::dataHeaderContextMenu (int row, int col, const QPoint& pos) {
 
 void TwinTable::deleteColumn () {
 	RK_TRACE (EDITOR);
+	RK_ASSERT (rw);
 
 	QObject *s = sender ();
 	int col;
@@ -226,6 +250,7 @@ void TwinTable::deleteColumn () {
 
 void TwinTable::insertColumn () {
 	RK_TRACE (EDITOR);
+	RK_ASSERT (rw);
 
 	QObject *s = sender ();
 	int where;
@@ -243,6 +268,7 @@ void TwinTable::insertColumn () {
 
 void TwinTable::deleteRow () {
 	RK_TRACE (EDITOR);
+	RK_ASSERT (rw);
 
 	QObject *s = sender ();
 	int where;
@@ -259,6 +285,7 @@ void TwinTable::deleteRow () {
 
 void TwinTable::deleteSelectedRows () {
 	RK_TRACE (EDITOR);
+	RK_ASSERT (rw);
 
 	QItemSelectionRange sel = dataview->getSelectionBoundaries ();
 	if (sel.isValid ()) {
@@ -275,6 +302,7 @@ void TwinTable::deleteSelectedRows () {
 
 void TwinTable::insertRow () {
 	RK_TRACE (EDITOR);
+	RK_ASSERT (rw);
 
 	QObject *s = sender ();
 	int where;
@@ -302,6 +330,8 @@ void TwinTable::copy () {
 void TwinTable::paste (RKEditor::PasteMode paste_mode) {
 	RK_TRACE (EDITOR);
 
+	if (!rw) return;
+
 	flushEdit ();
 	
 	TwinTableMember *table = activeTable ();
@@ -325,6 +355,8 @@ TwinTableMember *TwinTable::activeTable () {
 void TwinTable::clearSelected () {
 	RK_TRACE (EDITOR);
 
+	if (!rw) return;
+
 	TwinTableMember *table = activeTable ();
 	if (!table) return;
 
@@ -337,6 +369,36 @@ void TwinTable::flushEdit () {
 	// flush pending edit operations
 	metaview->stopEditing ();
 	dataview->stopEditing ();
+}
+
+void TwinTable::enableEditing (bool on) {
+	RK_TRACE (EDITOR);
+
+	flushEdit ();
+
+	rw = on;
+	metaview->rw = rw;
+	dataview->rw = rw;
+
+	QPalette palette = metaview->palette ();
+	if (on) palette.setColor (QPalette::Base, QColor (255, 255, 255));
+	else palette.setColor (QPalette::Base, QColor (240, 240, 240));
+	metaview->setPalette (palette);
+	dataview->setPalette (palette);
+
+	metaview->viewport ()->setEnabled (rw);
+	dataview->viewport ()->setEnabled (rw);
+
+	QAbstractItemView::EditTriggers triggers = QAbstractItemView::NoEditTriggers;
+	if (rw) triggers = QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed | QAbstractItemView::AnyKeyPressed;
+
+	metaview->setEditTriggers (triggers);
+	dataview->setEditTriggers (triggers);
+
+	edit_actions->setEnabled (rw);
+	action_enable_editing->setChecked (rw);
+
+	if (main_object) objectMetaChanged (main_object);	// update_caption;
 }
 
 #include "twintable.moc"
