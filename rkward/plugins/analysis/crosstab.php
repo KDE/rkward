@@ -44,7 +44,7 @@ function doPrintout ($final) {
 	if ($final) { ?>
 for (i in 1:length (results)) {
 	rk.header ("Crosstabs (n to 1)", parameters=list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']]))
-	rk.print (results[[i]])
+	rk.results (results[[i]], titles=c(descriptions[[i]][['Dependent']], descriptions[[i]][['Independent']]))
 <?		if (getRK_val ("chisq") == "TRUE") { ?>
 
 	rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']], "Method", chisquares[[i]][["method"]]))

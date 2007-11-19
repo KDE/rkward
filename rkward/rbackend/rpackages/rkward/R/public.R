@@ -172,6 +172,22 @@
 	sink (rk.get.output.html.file(), append=TRUE)
 	on.exit (sink ())
 
+	# convert 2d tables to data.frames with values labelled
+	if (is.table(x) && (length(dim(x)) == 2)) {
+		rows = dim(x)[1]
+		cols = dim(x)[2]
+		if (is.null(titles)) {
+			titles <- names(dimnames(x))
+		}
+		rn <- c ()   # row names
+		for (row in 1:rows) rn[row] <- paste (titles[1], "=", dimnames(x)[[1]][row])
+		internal <- data.frame (cbind (x))
+		temp <- data.frame (as.character (rn), stringsAsFactors=FALSE)
+		for (col in 1:cols) temp[[col+1]] <- internal[[col]]
+		titles <- c ("", paste (titles[2], "=", names (internal)))
+		x <- temp
+	}
+
 	if (is.list (x)) {	# or a data.frame
 		if (is.null (titles)) {
 			titles <- names (x)
