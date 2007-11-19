@@ -1,14 +1,20 @@
-FIND_PACKAGE (Gettext REQUIRED)
+FIND_PROGRAM(GETTEXT_MSGFMT_EXECUTABLE msgfmt)
 
-ADD_CUSTOM_TARGET(translations ALL)
+IF(NOT GETTEXT_MSGFMT_EXECUTABLE)
+	MESSAGE("msgfmt not found. Translations will *not* be installed")
+ELSE(NOT GETTEXT_MSGFMT_EXECUTABLE)
 
-FILE(GLOB PO_FILES *.po)
+	ADD_CUSTOM_TARGET(translations ALL)
+	
+	FILE(GLOB PO_FILES *.po)
+	
+	FOREACH(_poFile ${PO_FILES})
+		GET_FILENAME_COMPONENT(_basename ${_poFile} NAME_WE)
+		SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/${_basename}.gmo)
+		ADD_CUSTOM_COMMAND(TARGET translations
+			COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} -o ${_gmoFile} ${_poFile}
+			DEPENDS ${_poFile})
+		INSTALL(FILES ${_gmoFile} DESTINATION ${LOCALE_INSTALL_DIR}/${_basename}/LC_MESSAGES/ RENAME ${_basename}.mo)
+	ENDFOREACH(_poFile ${PO_FILES})
 
-FOREACH(_poFile ${PO_FILES})
-	GET_FILENAME_COMPONENT(_basename ${_poFile} NAME_WE)
-	SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/${_basename}.gmo)
-	ADD_CUSTOM_COMMAND(TARGET translations
-		COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} -o ${_gmoFile} ${_poFile}
-		DEPENDS ${_poFile})
-	INSTALL(FILES ${_gmoFile} DESTINATION ${LOCALE_INSTALL_DIR}/${_basename}/LC_MESSAGES/ RENAME ${_basename}.mo)
-ENDFOREACH(_poFile ${PO_FILES})
+ENDIF(NOT GETTEXT_MSGFMT_EXECUTABLE)
