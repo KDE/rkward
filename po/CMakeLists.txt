@@ -7,10 +7,8 @@ FILE(GLOB PO_FILES *.po)
 FOREACH(_poFile ${PO_FILES})
 	GET_FILENAME_COMPONENT(_basename ${_poFile} NAME_WE)
 	SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/${_basename}.gmo)
-	SET(_target translation_${_basename})
-	ADD_CUSTOM_TARGET(${_target}
+	ADD_CUSTOM_COMMAND(TARGET translations
 		COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} -o ${_gmoFile} ${_poFile}
 		DEPENDS ${_poFile})
 	INSTALL(FILES ${_gmoFile} DESTINATION ${LOCALE_INSTALL_DIR}/${_basename}/LC_MESSAGES/ RENAME ${_basename}.mo)
-	ADD_DEPENDENCIES(translations ${_target})
 ENDFOREACH(_poFile ${PO_FILES})
