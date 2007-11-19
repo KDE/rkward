@@ -1,6 +1,4 @@
 **CMake**
-- message extraction
-- po file handling
 - test
 	- configuration
 		- R

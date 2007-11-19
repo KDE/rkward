@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "
+RKWard now uses CMake (http://cmake.org) for compilation and installation.
+
+Please refer to the file INSTALL in this directory for details.
+
+If you need help, please check http://rkward.sourceforge.net/wiki/index.php?title=General_FAQ, or write to rkward-users AT lists DOT sourceforget DOT net.
+
+"

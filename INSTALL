@@ -1,39 +1,55 @@
 Requirements
-==================
+===================
 
 RKWard requires:
-- KDE-libraries and headers (>= 3.x) (http://www.kde.org)
-- Qt-libraries and headers (>= 3.x) (http://www.trolltech.com)
+- KDE-libraries and headers (>= 4.0) (http://www.kde.org)
+- Qt-libraries and headers (>= 4.3) (http://www.trolltech.com)
 - R and headers (http://www.r-project.org)
 - PHP with commandline-interface (http://www.php.net)
+- CMake (http://cmake.org)
 
 
 Compilation
-==================
+===================
 
 IMPORTANT: You will need to have the R shared library installed. This is typically located in a place like /usr/lib/R/lib/libR.so. Unfortunately, some distributions do not yet ship their R binary with the shared library. In those (rare) cases, you'll have to compile and install R on your own with the option --enable-R-shlib.
 
-Compilation / installation is basically just a
+Compilation can be done "in-source" or "out-of-source" (recommended).
 
-# ./configure
-# make
-# make install
+For an in-source build, do
+> cd path_to_rkward_sources
+> cmake . [options]		# see below
+> make
+> sudo make install
 
-and in 95% of the cases this should be all you need. Here are some ./configure options you may need to set in the other 5%:
+For an out-of-source build, do
+> mkdir build; cd build
+> cmake path_to_rkward_sources [options]	# see below
+> make
+> sudo make install
 
---prefix=/path/to/kde
 
-defaults to 1) $KDEDIR or if that is not set 2) the output of "kde-config --prefix". If you have multiple versions of KDE installed, or need to specify the kde-directory for any other reason, you need to set this option explicitely.
+CMake options (configuring)
+===================
 
-One some systems you might also have to specify your qt (3) directory, passing the commandline-option
---with-qt-dir=/usr/lib/qt3			(or similar)
-to configure.
+The cmake command offers a number of parameters to control the build process. Some commonly needed are:
 
-The options
---with-r-home
---with-r-includes
---with-r-libdir
-can be used to configure the details of your R installation. Usually these settings should be detected automatically, but especially if you have several versions of R installed, these may be relevant. NOTE: --with-r-libdir does not refer to the location of the shared R library, but rather to where the rkward R package should be installed to. By default, the first entry in .libPaths () will be used, (typically something like /usr/lib/R/site-library), but in case you keep several dedicated library paths, this allows you to specify, which one to install to.
+-DCMAKE_INSTALL_PREFIX
+	set the installation base directory. Generally -DCMAKE_INSTALL_PREFIX=$KDEDIR should be correct
+-DCMAKE_BUILD_TYPE
+	type of build. Useful settings include -DCMAKE_BUILD_TYPE=Release and -DCMAKE_BUILD_TYPE=debugfull
+
+
+In some cases you may want to set the following options:
+
+-DR_EXECUTABLE
+	path to the R executable. You may want to set this, if you have multiple versions of R installed, or R is not in your path. Example -DR_EXECUTABLE=/usr/bin/R
+-DR_LIBDIR
+	directory where R packages should be installed. Generally, this option should not be needed.
+-DR_HOME
+	R home directory. Almost certainly this option is not needed.
+-DR_INCLUDE
+	path to R include files. Almost certainly this option is not needed.
 
 
 Installation
@@ -43,7 +59,7 @@ You _have to_ install RKWard. Otherwise RKWard will be missing important menu-op
 As root run:
 # make install
 
-Make sure you have set the correct path in ./configure (the --prefix=... option)
+Make sure you have set the correct path in cmake (the -DCMAKE_INSTALL_PREFIX option)
 
 
 Running
