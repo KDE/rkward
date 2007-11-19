@@ -1,16 +1,16 @@
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE3_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
+FIND_PACKAGE (Gettext REQUIRED)
 
+ADD_CUSTOM_TARGET(translations ALL)
 
-########### install files ###############
+FILE(GLOB PO_FILES *.po)
 
-
-
-
-#original Makefile.am contents follow:
-
-######## kdevelop will overwrite this part!!! (begin)##########
-#
-#
-######## kdevelop will overwrite this part!!! (end)############
-#POFILES = AUTO
-#
+FOREACH(_poFile ${PO_FILES})
+	GET_FILENAME_COMPONENT(_basename ${_poFile} NAME_WE)
+	SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/${_basename}.gmo)
+	SET(_target translation_${_basename})
+	ADD_CUSTOM_TARGET(${_target}
+		COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} -o ${_gmoFile} ${_poFile}
+		DEPENDS ${_poFile})
+	INSTALL(FILES ${_gmoFile} DESTINATION ${LOCALE_INSTALL_DIR}/${_basename}/LC_MESSAGES/ RENAME ${_basename}.mo)
+	ADD_DEPENDENCIES(translations ${_target})
+ENDFOREACH(_poFile ${PO_FILES})
