@@ -50,6 +50,11 @@ void RKStandardIcons::initIcons () {
 	icons[ActionAddRight] = KIcon ("arrow-right");
 	icons[ActionRemoveLeft] = KIcon ("arrow-left");
 
+	icons[ActionMoveLeft] = KIcon("go-previous");
+	icons[ActionMoveRight] = KIcon("go-next");
+	icons[ActionMoveUp] = KIcon("go-up");
+	icons[ActionMoveDown] = KIcon("go-down");
+
 	icons[ActionDetachWindow] = KIcon ("view-fullscreen");
 	icons[ActionAttachWindow] = KIcon ("view-restore");
 

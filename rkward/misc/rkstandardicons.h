@@ -50,6 +50,11 @@ public:
 		ActionAddRight,
 		ActionRemoveLeft,
 
+		ActionMoveLeft,
+		ActionMoveRight,
+		ActionMoveUp,
+		ActionMoveDown,
+
 		ActionDetachWindow,
 		ActionAttachWindow,
 

@@ -22,8 +22,6 @@
 #include <khbox.h>
 #include <kmenu.h>
 #include <klocale.h>
-#include <kiconloader.h>
-#include <kicon.h>
 
 #include <QSplitter>
 #include <QContextMenuEvent>
@@ -274,11 +272,10 @@ bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
 
 				p->addTitle (i18n("Move To"));
 	
-				if (position () != KMultiTabBar::Left) p->addAction(KIcon("go-previous"), i18n("Left Sidebar"))->setData(KMultiTabBar::Left);
-	
-				if (position () != KMultiTabBar::Right) p->addAction(KIcon("go-next"), i18n("Right Sidebar"))->setData(KMultiTabBar::Right);
-				if (position () != KMultiTabBar::Top) p->addAction(KIcon("go-up"), i18n("Top Sidebar"))->setData(KMultiTabBar::Top);
-				if (position () != KMultiTabBar::Bottom) p->addAction(KIcon("go-down"), i18n("Bottom Sidebar"))->setData(KMultiTabBar::Bottom);
+				if (position () != KMultiTabBar::Left) p->addAction(RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft), i18n("Left Sidebar"))->setData(KMultiTabBar::Left);
+				if (position () != KMultiTabBar::Right) p->addAction(RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight), i18n("Right Sidebar"))->setData(KMultiTabBar::Right);
+				if (position () != KMultiTabBar::Top) p->addAction(RKStandardIcons::getIcon (RKStandardIcons::ActionMoveUp), i18n("Top Sidebar"))->setData(KMultiTabBar::Top);
+				if (position () != KMultiTabBar::Bottom) p->addAction(RKStandardIcons::getIcon (RKStandardIcons::ActionMoveDown), i18n("Bottom Sidebar"))->setData(KMultiTabBar::Bottom);
 	
 				connect (p, SIGNAL (triggered(QAction *)), this, SLOT (buttonPopupActivate(QAction *)));
 				p->exec (e->globalPos());

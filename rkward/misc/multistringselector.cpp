@@ -25,7 +25,7 @@
 
 #include <klocale.h>
 
-#include "../rkglobals.h"
+#include "rkstandardicons.h"
 #include "../debug.h"
 
 MultiStringSelector::MultiStringSelector (const QString& label, QWidget* parent) : QWidget (parent) {
@@ -61,11 +61,11 @@ MultiStringSelector::MultiStringSelector (const QString& label, QWidget* parent)
 
 	button_box->addSpacing (10);
 
-	up_button = new QPushButton (i18n ("Up"), this);
+	up_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveUp), i18n ("Up"), this);
 	connect (up_button, SIGNAL (clicked ()), this, SLOT (upButtonClicked ()));
 	button_box->addWidget (up_button);
 
-	down_button = new QPushButton (i18n ("Down"), this);
+	down_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveDown), i18n ("Down"), this);
 	connect (down_button, SIGNAL (clicked ()), this, SLOT (downButtonClicked ()));
 	button_box->addWidget (down_button);
 
