@@ -1,3 +1,6 @@
+--- Version 0.4.9 - Xxx-XX-XXXX
+
+- Fixed: correct installation of rkward.desktop file
 - Use the KDE default fixed spacing font for command log and object viewer
 
 --- Version 0.4.8a - Nov-11-2007

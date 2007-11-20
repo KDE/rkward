@@ -41,15 +41,12 @@ SUBDIRS = plugins dataeditor settings plugin agents rbackend dialogs scriptbacke
 	misc core icons windows syntax pages
 
 install-data-local:
-	$(mkinstalldirs) $(kde_appsdir)/Applications/
-	$(INSTALL_DATA) $(srcdir)/rkward.desktop $(kde_appsdir)/Applications/rkward.desktop
 	$(mkinstalldirs) $(kde_icondir)/locolor/32x32/apps/
 	$(INSTALL_DATA) $(srcdir)/lo32-app-rkward.png $(kde_icondir)/locolor/32x32/apps/rkward.png
 	$(mkinstalldirs) $(kde_icondir)/locolor/16x16/apps/
 	$(INSTALL_DATA) $(srcdir)/lo16-app-rkward.png $(kde_icondir)/locolor/16x16/apps/rkward.png
 
 uninstall-local:
-	-rm -f $(kde_appsdir)/Applications/rkward.desktop
 	-rm -f $(kde_icondir)/locolor/32x32/apps/rkward.png
 	-rm -f $(kde_icondir)/locolor/16x16/apps/rkward.png
 
@@ -63,6 +60,8 @@ rkward_bin_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 
 rcdir = $(kde_datadir)/rkward
 rc_DATA = rkwardui.rc rkconsolepart.rc
+
+xdg_apps_DATA = rkward.desktop
 
 bin_SCRIPTS = rkward
 
