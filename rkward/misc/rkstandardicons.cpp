@@ -43,7 +43,7 @@ void RKStandardIcons::initIcons () {
 	icons[ActionRunSelection] = QIcon (rkward_icon_base + "run_selection.png");
 
 	icons[ActionDeleteRow] = KIcon ("no");
-	icons[ActionInsertRow] = KIcon ("edit_add");
+	icons[ActionInsertRow] = KIcon ("edit-add");
 	icons[ActionDeleteVar] = icons[ActionDeleteRow];
 	icons[ActionInsertVar] = icons[ActionInsertRow];
 
@@ -88,8 +88,6 @@ void RKStandardIcons::initIcons () {
 	icons[WindowSearchHelp] = KIcon ("help-contents");
 	icons[WindowPendingJobs] = KIcon ("system-run");
 	icons[WindowFileBrowser] = KIcon ("document-open");
-
-
 }
 
 QIcon RKStandardIcons::iconForObject (const RObject* object) {

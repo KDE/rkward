@@ -386,9 +386,6 @@ void TwinTable::enableEditing (bool on) {
 	metaview->setPalette (palette);
 	dataview->setPalette (palette);
 
-	metaview->viewport ()->setEnabled (rw);
-	dataview->viewport ()->setEnabled (rw);
-
 	QAbstractItemView::EditTriggers triggers = QAbstractItemView::NoEditTriggers;
 	if (rw) triggers = QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed | QAbstractItemView::AnyKeyPressed;
 
