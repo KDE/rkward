@@ -57,6 +57,7 @@ public:
 		ObjectFunction,
 		ObjectEnvironment,
 		ObjectPackageEnvironment,
+		ObjectMatrix,
 		ObjectDataFrame,
 		ObjectDataNumeric,
 		ObjectDataFactor,

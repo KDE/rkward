@@ -60,6 +60,7 @@ void RKStandardIcons::initIcons () {
 	icons[ObjectFunction] = QIcon (rkward_icon_base + "function.png");
 	icons[ObjectEnvironment] = KIcon ("konqueror");
 	icons[ObjectPackageEnvironment] = KIcon ("ark");
+	icons[ObjectMatrix] = QIcon (rkward_icon_base + "matrix.png");
 	icons[ObjectDataFrame] = KIcon ("table");
 	icons[ObjectDataNumeric] = QIcon (rkward_icon_base + "data-numeric.png");
 	icons[ObjectDataFactor] = QIcon (rkward_icon_base + "data-factor.png");
@@ -109,6 +110,7 @@ QIcon RKStandardIcons::iconForObject (const RObject* object) {
 	}
 	if (object->isType (RObject::List)) return icons[ObjectList];
 	if (object->isType (RObject::Function)) return icons[ObjectFunction];
+	if (object->isType (RObject::Matrix)) return icons[ObjectMatrix];
 	if (object->isType (RObject::PackageEnv)) return icons[ObjectPackageEnvironment];
 	if (object->isType (RObject::Environment)) return icons[ObjectEnvironment];
 	if (object == RObjectList::getObjectList ()) return icons[ObjectObjectList];

@@ -4,6 +4,7 @@ INSTALL(FILES
 	rkward_logo.png
 	function.png
 	list.png
+	matrix.png
 	data-numeric.png
 	data-factor.png
 	data-logical.png

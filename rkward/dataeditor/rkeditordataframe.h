@@ -44,9 +44,6 @@ public:
 	~RKEditorDataFrame ();
 
 	void flushChanges ();
-	
-	//void objectDeleted (RObject *object);
-	//void objectMetaModified (RObject *object);
 
 /** Tells the editor to restore the given object in the R-workspace from its copy of the data */
 	void restoreObject (RObject *object);
