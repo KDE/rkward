@@ -2,7 +2,7 @@
                           rkmodificationtracker  -  description
                              -------------------
     begin                : Tue Aug 31 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -407,5 +407,3 @@ void RObjectListener::stopListenForObject (RObject* object) {
 	RKGlobals::tracker ()->removeObjectListener (object, this);
 	--num_watched_objects;
 }
-
-#include "rkmodificationtracker.moc"

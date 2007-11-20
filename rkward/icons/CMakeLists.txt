@@ -1,16 +1,15 @@
 ADD_SUBDIRECTORY(app-icon)
 
-########### install files ###############
-
-INSTALL(FILES   rkward_logo.png function.png list.png window_back.png window_forward.png run_line.png run_selection.png run_all.png DESTINATION ${DATA_INSTALL_DIR}/rkward/icons)
-
-
-#original Makefile.am contents follow:
-
-#INCLUDES = $(all_includes)
-#METASOURCES = AUTO
-#KDE_ICON = rkward
-#iconsdir = $(kde_datadir)/rkward/icons
-#
-#icons_DATA = rkward_logo.png function.png list.png window_back.png window_forward.png run_line.png run_selection.png run_all.png
-#
+INSTALL(FILES
+	rkward_logo.png
+	function.png
+	list.png
+	data-numeric.png
+	data-factor.png
+	data-logical.png
+	window_back.png
+	window_forward.png
+	run_line.png
+	run_selection.png
+	run_all.png
+	DESTINATION ${DATA_INSTALL_DIR}/rkward/icons)

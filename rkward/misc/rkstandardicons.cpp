@@ -58,15 +58,13 @@ void RKStandardIcons::initIcons () {
 	// objects
 	icons[ObjectList] = QIcon (rkward_icon_base + "list.png");
 	icons[ObjectFunction] = QIcon (rkward_icon_base + "function.png");
-#warning KDE 4: some of these icons have been renamed
 	icons[ObjectEnvironment] = KIcon ("konqueror");
 	icons[ObjectPackageEnvironment] = KIcon ("ark");
 	icons[ObjectDataFrame] = KIcon ("table");
-	icons[ObjectDataNumeric] = KIcon ("math_paren");	// TODO: needs to be replaced
-	icons[ObjectDataFactor] = KIcon ("math_onetwomatrix");	// TODO: needs to be replaced
+	icons[ObjectDataNumeric] = QIcon (rkward_icon_base + "data-numeric.png");
+	icons[ObjectDataFactor] = QIcon (rkward_icon_base + "data-factor.png");
 	icons[ObjectDataCharacter] = KIcon ("text");
-#warning TODO icon for logical
-	icons[ObjectDataLogical] = QIcon ();
+	icons[ObjectDataLogical] = QIcon (rkward_icon_base + "data-logical.png");
 	icons[ObjectDataUnknown] = KIcon ("unknown");
 	icons[ObjectDataOther] = icons[ActionDeleteRow];
 	icons[ObjectObjectList] = KIcon ("view-tree");
