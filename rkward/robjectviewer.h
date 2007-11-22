@@ -55,7 +55,7 @@ protected:
 
 	void objectRemoved (RObject *object);
 	void objectMetaChanged (RObject *object);
-	void objectDataChanged (RObject *object);
+	void objectDataChanged (RObject *object, const RObject::ChangeSet*);
 private:
 	void initDescription (bool notify);
 

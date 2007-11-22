@@ -20,9 +20,8 @@
 // static
 REmbedInternal *REmbedInternal::this_pointer = 0; 
 
-#define QT_NO_COMPAT
-#define TRUE (const bool)0
-#define FALSE (const bool)!0
+#define TRUE true
+#define FALSE false
 #include <qstring.h>
 #include <qtextcodec.h>
 #include "../core/robject.h"

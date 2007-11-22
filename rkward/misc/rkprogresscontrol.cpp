@@ -145,7 +145,7 @@ void RKProgressControl::done () {
 
 	is_done = true;
 	if (dialog) {
-		dialog->done ();
+		dialog->finished ();
 	}
 
 	if ((!modal) && autodelete) {
@@ -279,7 +279,7 @@ void RKProgressControlDialog::setCloseTextToClose () {
 	setButtonText (KDialog::Cancel, i18n ("Done"));
 }
 
-void RKProgressControlDialog::done () {
+void RKProgressControlDialog::finished () {
 	RK_TRACE (MISC);
 
 	is_done = true;

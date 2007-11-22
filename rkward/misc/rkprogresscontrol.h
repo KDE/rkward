@@ -118,7 +118,7 @@ public:
 public:
 	void addOutput (const ROutput *output);
 	void setCloseTextToClose ();
-	void done ();
+	void finished ();
 protected:
 	void closeEvent (QCloseEvent *e);
 private:

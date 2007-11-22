@@ -110,7 +110,7 @@ void RObjectViewer::objectMetaChanged (RObject* object) {
 	}
 }
 
-void RObjectViewer::objectDataChanged (RObject* object) {
+void RObjectViewer::objectDataChanged (RObject* object, const RObject::ChangeSet*) {
 	RK_TRACE (APP);
 
 	if (object == _object) {
