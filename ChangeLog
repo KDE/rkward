@@ -1,3 +1,4 @@
+- more icons added
 - data.frame editor can be set to read-only mode
 - code completion in script editor shows icons for the different object types
 - settings dialog is now shown in "page list" mode
@@ -5,6 +6,9 @@
 
 ---- KDE 3 versions
 
+--- Version 0.4.9 - Xxx-XX-XXXX
+
+- Fixed: correct installation of rkward.desktop file
 - Use the KDE default fixed spacing font for command log and object viewer
 
 --- Version 0.4.8a - Nov-11-2007

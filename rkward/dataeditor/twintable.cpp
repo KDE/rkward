@@ -388,7 +388,6 @@ void TwinTable::enableEditing (bool on) {
 
 	QAbstractItemView::EditTriggers triggers = QAbstractItemView::NoEditTriggers;
 	if (rw) triggers = QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed | QAbstractItemView::AnyKeyPressed;
-
 	metaview->setEditTriggers (triggers);
 	dataview->setEditTriggers (triggers);
 

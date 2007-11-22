@@ -31,6 +31,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kvbox.h>
+#include <kuser.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -40,12 +41,6 @@
 #include "../misc/rkprogresscontrol.h"
 
 #include "../debug.h"
-
-#ifdef __FreeBSD__
-#include <sys/types.h>
-#include <unistd.h>
-#include <pwd.h>
-#endif
 
 #include <stdlib.h>
 
@@ -188,17 +183,14 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 		QTextStream stream (&file);
 		stream << "options (repos=" + repos_string + ")\n" + command_string;
 		if (as_root) {
-#ifdef __FreeBSD__
-			struct passwd *passe = getpwuid(getuid ());
-			stream << QString ("system (\"chown ") + passe->pw_name + ' ' + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "/*\")\n";
-#else
-			stream << QString ("system (\"chown ") + cuserid (0) + ' ' + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "/*\")\n";
-#endif
+			KUser user;
+			stream << QString ("system (\"chown ") + user.loginName() + ' ' + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "/*\")\n";
 		}
 		stream << "q ()\n";
 		file.close();
 	}
 
+#warning kdesu may not be in the path. It might be in libexec.
 	QString R_binary (getenv ("R_binary"));
 	QString call;
 	QStringList params;
@@ -249,7 +241,7 @@ void RKLoadLibsDialog::installationProcessError () {
 	RK_TRACE (DIALOGS);
 	RK_ASSERT (installation_process);
 
-//TODO Somehow we add too many newlines, here
+//TODO Somehow we add too many newlines, here -> kdesu issue
 	emit (installationError (QString::fromLocal8Bit (installation_process->readAllStandardError ())));
 }
 
