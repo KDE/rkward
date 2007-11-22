@@ -39,19 +39,19 @@
 #include "debug.h"
 
 RObjectViewer::RObjectViewer (QWidget *parent, RObject *object, ViewerPage initial_page) : RKMDIWindow (parent, RKMDIWindow::ObjectWindow, false), RObjectListener (RObjectListener::ObjectView) {
-// KDE 4: TODO might listen for object meta / data changes as well
 	RK_TRACE (APP);
 	RK_ASSERT (object);
 	_object = object;
 
 	addNotificationType (RObjectListener::ObjectRemoved);
+	addNotificationType (RObjectListener::MetaChanged);
+	addNotificationType (RObjectListener::DataChanged);
 	listenForObject (_object);
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 
-	// TODO: what an ugly hack... This should be the job of RObject::getObjectDescription().
-	description_label = new QLabel ("<nobr>" + _object->getObjectDescription ().replace ("<br>", "&nbsp; -</nobr> &nbsp;<nobr>") + "</nobr>", this);
+	description_label = new QLabel (this);
 	description_label->setWordWrap (true);
 	layout->addWidget (description_label);
 	status_label = new QLabel (this);
@@ -71,7 +71,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object, ViewerPage initi
 	currentTabChanged (initial_page);
 	connect (tabs, SIGNAL (currentChanged(int)), this, SLOT (currentTabChanged (int)));
 
-	setCaption (i18n("Object Viewer: ") + object->getShortName ());
+	initDescription (false);
 }
 
 RObjectViewer::~RObjectViewer () {
@@ -101,6 +101,41 @@ void RObjectViewer::objectRemoved (RObject *object) {
 		_object = 0;
 	} else {
 		RK_ASSERT (false);
+	}
+}
+
+void RObjectViewer::objectMetaChanged (RObject* object) {
+	RK_TRACE (APP);
+
+	if (object == _object) {
+		initDescription (true);
+	} else {
+		RK_ASSERT (false);
+	}
+}
+
+void RObjectViewer::objectDataChanged (RObject* object) {
+	RK_TRACE (APP);
+
+	if (object == _object) {
+		initDescription (true);
+	} else {
+		RK_ASSERT (false);
+	}
+}
+
+void RObjectViewer::initDescription (bool notify) {
+	RK_TRACE (APP);
+
+	if (!_object) return;
+
+	setCaption (i18n("Object Viewer: %1", _object->getShortName ()));
+	// TODO: what an ugly hack... This should be the job of RObject::getObjectDescription().
+	description_label->setText ("<nobr>" + _object->getObjectDescription ().replace ("<br>", "&nbsp; -</nobr> &nbsp;<nobr>") + "</nobr>");
+	if (notify) {
+		QString reason = i18n ("The object was changed. You may want to click \"Update\"");
+		summary_widget->invalidate (reason);
+		print_widget->invalidate (reason);
 	}
 }
 

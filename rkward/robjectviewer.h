@@ -54,7 +54,11 @@ protected:
 	RObjectViewer (QWidget *parent, RObject *object, ViewerPage initial_page = SummaryPage);
 
 	void objectRemoved (RObject *object);
+	void objectMetaChanged (RObject *object);
+	void objectDataChanged (RObject *object);
 private:
+	void initDescription (bool notify);
+
 	QLabel *status_label;
 	QLabel *description_label;
 	QTabWidget* tabs;
