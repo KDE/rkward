@@ -39,7 +39,7 @@ CONFIGURE_FILE(
 	@ONLY)
 ADD_DEPENDENCIES(rkward.bin ${CMAKE_CURRENT_BINARY_DIR}/rkward)
 
-TARGET_LINK_LIBRARIES(rkward.bin ${KDE4_KDECORE_LIBS} windows agents dialogs plugin settings dataeditor core scriptbackends rbackend misc ${KDE4_KHTML_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KDEUI_LIBS})
+TARGET_LINK_LIBRARIES(rkward.bin ${KDE4_KDECORE_LIBS} windows agents dialogs plugin settings dataeditor core scriptbackends rbackend misc ${KDE4_KHTML_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KDEUI_LIBS})
 
 # NOTE: KDE4_KFILE_LIBS still links against Qt3Support
 
