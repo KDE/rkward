@@ -32,6 +32,7 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 
 #include "rklocalesupport.h"
 #include "rkpthreadsupport.h"
+#include "rksignalsupport.h"
 
 #include <dlfcn.h>
 #include <stdlib.h>
@@ -642,6 +643,8 @@ void R_CheckStackWrapper (void *) {
 bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 	RK_TRACE (RBACKEND);
 
+	RKSignalSupport::saveDefaultSigSegvHandler ();
+
 	r_running = true;
 	bool ok = true;
 #ifdef R_2_3
@@ -684,6 +687,9 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 #ifdef R_2_6
 	R_LastvalueSymbol = Rf_install (".Last.value");
 #endif
+
+	RKSignalSupport::installSigSegvProxy ();
+
 	return ok;
 }
 

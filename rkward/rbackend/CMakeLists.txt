@@ -17,6 +17,7 @@ SET(
 	rcommandstack.cpp
 	rdata.cpp
 	rkpthreadsupport.cpp
+	rksignalsupport.cpp
 	rklocalesupport.cpp
 )
 
