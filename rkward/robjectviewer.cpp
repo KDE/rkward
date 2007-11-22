@@ -16,14 +16,13 @@
  ***************************************************************************/
 #include "robjectviewer.h"
 
-#include <qlayout.h>
-#include <QScrollArea>
 #include <qlabel.h>
 #include <QTextEdit>
 #include <qfont.h>
 #include <QPushButton>
-#include <QCloseEvent>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QTabWidget>
 
 #include <klocale.h>
 #include <kvbox.h>
@@ -39,10 +38,7 @@
 
 #include "debug.h"
 
-#define SUMMARY_COMMAND 1
-#define PRINT_COMMAND 2
-
-RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (parent, RKMDIWindow::ObjectWindow, false), RObjectListener (RObjectListener::ObjectView) {
+RObjectViewer::RObjectViewer (QWidget *parent, RObject *object, ViewerPage initial_page) : RKMDIWindow (parent, RKMDIWindow::ObjectWindow, false), RObjectListener (RObjectListener::ObjectView) {
 // KDE 4: TODO might listen for object meta / data changes as well
 	RK_TRACE (APP);
 	RK_ASSERT (object);
@@ -53,50 +49,29 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object) : RKMDIWindow (p
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	QScrollArea *wrapper = new QScrollArea (this);
-	wrapper->setWidgetResizable (true);
-	KVBox *box = new KVBox (wrapper);
-	wrapper->setWidget (box);
-	layout->addWidget (wrapper);
 
-	wrapper->setFocusPolicy (Qt::StrongFocus);
-	setPart (new RKDummyPart (this, wrapper));
+	// TODO: what an ugly hack... This should be the job of RObject::getObjectDescription().
+	description_label = new QLabel ("<nobr>" + _object->getObjectDescription ().replace ("<br>", "&nbsp; -</nobr> &nbsp;<nobr>") + "</nobr>", this);
+	description_label->setWordWrap (true);
+	layout->addWidget (description_label);
+	status_label = new QLabel (this);
+	status_label->hide ();
+	layout->addWidget (status_label);
+
+	tabs = new QTabWidget (this);
+	tabs->insertTab (SummaryPage, summary_widget = new RObjectSummaryWidget (tabs, object), i18n ("summary (x)"));
+	tabs->insertTab (PrintPage, print_widget = new RObjectPrintWidget (tabs, object), i18n ("print (x)"));
+	layout->addWidget (tabs);
+
+	tabs->setFocusPolicy (Qt::StrongFocus);
+	setPart (new RKDummyPart (this, tabs));
 	initializeActivationSignals ();
 
-	KHBox *toprow = new KHBox (box);
-	description_label = new QLabel (toprow);
-	KVBox *statusbox = new KVBox (toprow);
-	statusbox->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
-	status_label = new QLabel (statusbox);
-	update_button = new QPushButton (i18n ("Update"), statusbox);
-	cancel_button = new QPushButton (i18n ("Cancel"), statusbox);
-	connect (update_button, SIGNAL (clicked ()), this, SLOT (update ()));
-	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
-
-	KHBox *row = new KHBox (box);
-	QLabel *label = new QLabel (i18n("\nResult of 'summary (%1)':\n", object->getFullName ()), row);
-	row->setStretchFactor (label, 10);
-	toggle_summary_button = new QPushButton (i18n ("Hide"), row);
-	connect (toggle_summary_button, SIGNAL (clicked ()), this, SLOT (toggleSummary ()));
-
-	summary_area = new QTextEdit (box);
-	summary_area->setReadOnly (true);
-	summary_area->setLineWrapMode (QTextEdit::NoWrap);
-
-	row = new KHBox (box);
-	label = new QLabel (i18n("\nResult of 'print (%1)':\n", object->getFullName ()), row);
-	row->setStretchFactor (label, 10);
-	toggle_print_button = new QPushButton (i18n ("Hide"), row);
-	connect (toggle_print_button, SIGNAL (clicked ()), this, SLOT (togglePrint ()));
-
-	print_area = new QTextEdit (box);
-	print_area->setReadOnly (true);
-	print_area->setLineWrapMode (QTextEdit::NoWrap);
+	tabs->setCurrentIndex (initial_page);
+	currentTabChanged (initial_page);
+	connect (tabs, SIGNAL (currentChanged(int)), this, SLOT (currentTabChanged (int)));
 
 	setCaption (i18n("Object Viewer: ") + object->getShortName ());
-	//resize (minimumSizeHint ().expandedTo (QSize (640, 480)));
-	update ();
-	show ();
 }
 
 RObjectViewer::~RObjectViewer () {
@@ -105,70 +80,23 @@ RObjectViewer::~RObjectViewer () {
 	if (_object) stopListenForObject (_object);
 }
 
-void RObjectViewer::toggleSummary () {
-	RK_TRACE (APP);
-
-	summary_area->setShown (summary_area->isHidden ());
-	if (summary_area->isHidden ()) {
-		toggle_summary_button->setText (i18n ("Show"));
-	} else {
-		toggle_summary_button->setText (i18n ("Hide"));
-	}
-}
-
-void RObjectViewer::togglePrint () {
-	RK_TRACE (APP);
-
-	print_area->setShown (print_area->isHidden ());
-	if (print_area->isHidden ()) {
-		toggle_print_button->setText (i18n ("Show"));
-	} else {
-		toggle_print_button->setText (i18n ("Hide"));
-	}
-}
-
-void RObjectViewer::cancel () {
-	RK_TRACE (APP);
-
-	cancel_button->setEnabled (false);
-	update_button->setEnabled (true);
-	cancelOutstandingCommands ();
-}
-
-void RObjectViewer::update () {
-	RK_TRACE (APP);
-	if (!_object) return;
-
-	status_label->setText (i18n ("Fetching information"));
-	cancel_button->setEnabled (true);
-	update_button->setEnabled (false);
-	description_label->setText (_object->getObjectDescription ());
-
-	summary_area->setPlainText (QString::null);
-	print_area->setPlainText (QString::null);
-	QFont font = KGlobalSettings::fixedFont ();
-	summary_area->setCurrentFont (font);
-	print_area->setCurrentFont (font);
-
-	RCommand *command = new RCommand ("print(summary(" + _object->getFullName () + "))", RCommand::App, QString::null, this, SUMMARY_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
-
-	// make sure to print as wide as possible
-	command = new RCommand ("local({\n"
-	                                  "\trk.temp.width.save <- getOption(\"width\")\n"
-	                                  "\toptions(width=10000)\n"
-	                                  "\ton.exit(options(width=rk.temp.width.save))\n"
-	                                  "\tprint(" + _object->getFullName () + ")\n"
-	                                  "})", RCommand::App, QString::null, this, PRINT_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
-}
-
 void RObjectViewer::objectRemoved (RObject *object) {
 	RK_TRACE (APP);
 
 	if (object == _object) {
-		status_label->setText (i18n ("<b>Object was deleted!</b>"));
-		update_button->setEnabled (false);
+		summary_widget->objectKilled ();
+		print_widget->objectKilled ();
+
+		QString reason = i18n ("<b>Object was deleted!</b>");
+		summary_widget->invalidate (reason);
+		print_widget->invalidate (reason);
+
+		QPalette palette = status_label->palette ();
+		palette.setColor (status_label->foregroundRole (), Qt::red);
+		status_label->setPalette (palette);
+		status_label->setText (reason);
+		status_label->show ();
+
 		stopListenForObject (_object);
 		_object = 0;
 	} else {
@@ -176,27 +104,165 @@ void RObjectViewer::objectRemoved (RObject *object) {
 	}
 }
 
-void RObjectViewer::rCommandDone (RCommand *command) {
+void RObjectViewer::currentTabChanged (int new_current) {
 	RK_TRACE (APP);
-	RK_ASSERT (command);
 
-	if (command->getFlags () == SUMMARY_COMMAND) {
-		summary_area->insertPlainText (command->fullOutput ());
-	} else if (command->getFlags () == PRINT_COMMAND) {
-		print_area->insertPlainText (command->fullOutput ());
-		status_label->setText (i18n ("Ready"));
-		update_button->setEnabled (true);
-		cancel_button->setEnabled (false);
+	if (new_current == SummaryPage) {
+		summary_widget->initialize ();
+	} else if (new_current == PrintPage) {
+		print_widget->initialize ();
 	} else {
 		RK_ASSERT (false);
 	}
-
 }
 
-void RObjectViewer::closeEvent (QCloseEvent *e) {
-	hide ();
-	e->accept ();
-	deleteLater ();
+///////////////// RObjectViewerWidget /////////////////////
+
+RObjectViewerWidget::RObjectViewerWidget (QWidget* parent, RObject* object) : QWidget (parent), RCommandReceiver () {
+	RK_TRACE (APP);
+
+	_object = object;
+	QVBoxLayout* main_layout = new QVBoxLayout (this);
+	main_layout->setContentsMargins (0, 0, 0, 0);
+	QHBoxLayout* status_layout = new QHBoxLayout ();
+	main_layout->addLayout (status_layout);
+
+	status_label = new QLabel (this);
+	status_layout->addWidget (status_label);
+
+	status_layout->addStretch ();
+
+	update_button = new QPushButton (i18n ("Update"), this);
+	connect (update_button, SIGNAL (clicked ()), this, SLOT (update ()));
+	status_layout->addWidget (update_button);
+
+	cancel_button = new QPushButton (i18n ("Cancel"), this);
+	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
+	status_layout->addWidget (cancel_button);
+
+	area = new QTextEdit (this);
+	area->setReadOnly (true);
+	area->setLineWrapMode (QTextEdit::NoWrap);
+	main_layout->addWidget (area);
+
+	initialized = false;
+}
+
+RObjectViewerWidget::~RObjectViewerWidget () {
+	RK_TRACE (APP);
+}
+
+void RObjectViewerWidget::invalidate (const QString& reason) {
+	RK_TRACE (APP);
+
+	if (outstanding_commands.isEmpty ()) {
+		QPalette palette = status_label->palette ();
+		palette.setColor (status_label->foregroundRole (), Qt::red);
+		status_label->setPalette (palette);
+
+		status_label->setText (reason);
+		update_button->setEnabled (_object != 0);
+		cancel_button->setEnabled (false);
+	}
+}
+
+void RObjectViewerWidget::initialize () {
+	RK_TRACE (APP);
+
+	if (initialized) return;
+	update ();
+	initialized = true;
+}
+
+void RObjectViewerWidget::update () {
+	RK_TRACE (APP);
+
+	RK_ASSERT (outstanding_commands.isEmpty ());
+	RK_ASSERT (_object);
+
+	setText (i18n ("Fetching information. Please wait."));
+
+	update_button->setEnabled (false);
+	cancel_button->setEnabled (true);
+}
+
+void RObjectViewerWidget::cancel () {
+	RK_TRACE (APP);
+
+	cancelOutstandingCommands ();
+	setText (i18n ("Click \"Update\" to fetch information"));
+	cancel_button->setEnabled (false);
+	update_button->setEnabled (_object != 0);
+}
+
+void RObjectViewerWidget::setText (const QString& text) {
+	RK_TRACE (APP);
+
+	area->setPlainText (QString ());
+	QFont font = KGlobalSettings::fixedFont ();
+	area->setCurrentFont (font);
+
+	area->insertPlainText (text);
+}
+
+void RObjectViewerWidget::ready () {
+	RK_TRACE (APP);
+
+	QPalette palette = status_label->palette ();
+	palette.setColor (status_label->foregroundRole (), Qt::black);
+	status_label->setPalette (palette);
+	status_label->setText (i18n ("Ready"));
+	cancel_button->setEnabled (false);
+	update_button->setEnabled (_object != 0);
+}
+
+void RObjectViewerWidget::rCommandDone (RCommand* command) {
+	RK_TRACE (APP);
+
+	if (command->wasCanceled ()) {
+		cancel ();
+	} else {
+		setText (command->fullOutput ());
+		ready ();
+	}
+}
+
+////////////////// summary widget /////////////////
+
+void RObjectSummaryWidget::update () {
+	RK_TRACE (APP);
+
+	if (!_object) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	RObjectViewerWidget::update ();
+
+	RCommand *command = new RCommand ("print(summary(" + _object->getFullName () + "))", RCommand::App, QString (), this);
+	RKGlobals::rInterface ()->issueCommand (command, 0);
+}
+
+////////////////// print widget /////////////////
+
+void RObjectPrintWidget::update () {
+	RK_TRACE (APP);
+
+	if (!_object) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	RObjectViewerWidget::update ();
+
+	// make sure to print as wide as possible
+	RCommand* command = new RCommand ("local({\n"
+	                                  "\trk.temp.width.save <- getOption(\"width\")\n"
+	                                  "\toptions(width=10000)\n"
+	                                  "\ton.exit(options(width=rk.temp.width.save))\n"
+	                                  "\tprint(" + _object->getFullName () + ")\n"
+	                                  "})", RCommand::App, QString (), this);
+	RKGlobals::rInterface ()->issueCommand (command, 0);
 }
 
 #include "robjectviewer.moc"

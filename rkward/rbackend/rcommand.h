@@ -188,6 +188,8 @@ public:
 	bool wasTried () { return (status & WasTried); };
 /** the command failed */
 	bool failed () { return (status & Failed); };
+/** the command was cancelled before it was executed */
+	bool wasCanceled () { return (wasTried () && failed () && (status & Canceled)); }
 /** the command succeeded (wasTried () && (!failed ()) */
 	bool succeeded () { return ((status & WasTried) && !(status & Failed)); };
 /** command has a string output retrievable via RCommand::output () */

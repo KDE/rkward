@@ -1,3 +1,4 @@
+- object viewer was redesigned to use space better, and only fetch the print-representation when needed
 - more icons added
 - data.frame editor can be set to read-only mode
 - code completion in script editor shows icons for the different object types
