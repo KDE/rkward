@@ -1,3 +1,4 @@
+- make sure that R only handles SIGSEV, when the R thread is active. Should give better backtraces and less hangs
 - object viewer was redesigned to use space better, and only fetch the print-representation when needed
 - more icons added
 - data.frame editor can be set to read-only mode

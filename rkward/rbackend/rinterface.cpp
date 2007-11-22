@@ -52,6 +52,35 @@ RKWindowCatcher *window_catcher;
 #include <qvalidator.h>
 
 #include <stdlib.h>
+#include <signal.h>
+
+#ifndef __sighandler_t
+typedef void (*__sighandler_t) (int);
+#endif
+__sighandler_t r_sigsegv_handler = 0;
+__sighandler_t default_sigsegv_handler = 0;
+
+void sigsegv_proxy (int signum) {
+	RK_ASSERT (signum == SIGSEGV);
+
+	// if we are not in the R thread, handling the signal in R does more harm than good.
+	if (RInterface::inRThread ()) {
+		if (r_sigsegv_handler) {
+			r_sigsegv_handler (signum);
+			return;
+		}
+	}
+
+	// this might be a Qt/KDE override
+	if (default_sigsegv_handler) {
+		default_sigsegv_handler (signum);
+		return;
+	}
+
+	signal(SIGSEGV,SIG_DFL);
+	raise(SIGSEGV);
+}
+
 
 // update output (for immediate output commands) at least this often (msecs):
 #define FLUSH_INTERVAL 100
@@ -134,6 +163,8 @@ bool RInterface::inRThread () {
 
 void RInterface::startThread () {
 	RK_TRACE (RBACKEND);
+
+	default_sigsegv_handler = signal (SIGSEGV, SIG_DFL);
 	r_thread->start ();
 }
 
@@ -200,6 +231,7 @@ void RInterface::customEvent (QEvent *e) {
 		r_thread->pauseOutput (false); // see above
 		processRCallbackRequest (static_cast<RCallbackArgs *> (ev->data ()));
 	} else if ((ev->etype () == RKRBackendEvent::RStarted)) {
+		r_sigsegv_handler = signal (SIGSEGV, &sigsegv_proxy);
 		r_thread->unlock (RThread::Startup);
 		RKWardMainWindow::discardStartupOptions ();
 	} else if ((ev->etype () == RKRBackendEvent::RStartupError)) {
