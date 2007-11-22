@@ -91,6 +91,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 		noshort.append (QKeySequence ());	// for good measure
 
 		QList<QAction*> keas = kate_edit_actions->actions ();
+		keas += view->actionCollection ()->actions ();
 		for (int i = 0; i < keas.size (); ++i) {
 			keas[i]->setShortcuts (noshort);
 		}
