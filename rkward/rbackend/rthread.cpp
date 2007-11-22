@@ -461,9 +461,9 @@ void RThread::handleStandardCallback (RCallbackArgs *args) {
 	while (!(*done)) {
 		msleep (10); // callback not done yet? Sleep for a while
 
-		if (!locked) {			// what's with that lock? If the current command is cancelled, while we're in this loop, we must not lock the mutex and/or call anything in R. We may get long-jumped out of the loop before we get a chance to unlock
+		if (!(locked || killed)) {			// what's with that lock? If the current command is cancelled, while we're in this loop, we must not lock the mutex and/or call anything in R. We may get long-jumped out of the loop before we get a chance to unlock
 			MUTEX_LOCK;
-			if (!locked) processX11Events ();
+			if (!(locked || killed)) processX11Events ();
 			MUTEX_UNLOCK;
 		}
 	}

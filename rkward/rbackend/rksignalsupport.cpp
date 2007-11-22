@@ -28,27 +28,39 @@ typedef void (*__sighandler_t) (int);
 #endif
 
 namespace RKSignalSupportPrivate {
-	__sighandler_t r_sigsegv_handler = 0;
-	__sighandler_t default_sigsegv_handler = 0;
+	struct sigaction r_sigsegv_action;
+	struct sigaction default_sigsegv_action;
 
-	void sigsegv_proxy (int signum) {
+/*	__sighandler_t r_sigsegv_handler = 0;
+	__sighandler_t default_sigsegv_handler = 0; */
+
+	void sigsegv_proxy (int signum, siginfo_t *info, void *context) {
 		RK_ASSERT (signum == SIGSEGV);
 	
 		// if we are not in the R thread, handling the signal in R does more harm than good.
 		if (RInterface::inRThread ()) {
-			if (r_sigsegv_handler) {
-				r_sigsegv_handler (signum);
+			if (r_sigsegv_action.sa_sigaction) {
+				r_sigsegv_action.sa_sigaction (signum, info, context);
+				return;
+			} else if (r_sigsegv_action.sa_handler) {
+				r_sigsegv_action.sa_handler (signum);
 				return;
 			}
 		}
 	
-		// this might be a Qt/KDE override
-		if (default_sigsegv_handler) {
-			default_sigsegv_handler (signum);
+		// this might be a Qt/KDE override or default handling
+		if (default_sigsegv_action.sa_sigaction) {
+			default_sigsegv_action.sa_sigaction (signum, info, context);
+			return;
+		} else if (default_sigsegv_action.sa_handler) {
+			default_sigsegv_action.sa_handler (signum);
 			return;
 		}
-	
-		// do the default handling
+
+		// not handled? should not happen
+		RK_ASSERT (false);
+
+		// do the default fallback handling
 		signal (SIGSEGV, SIG_DFL);
 		raise (SIGSEGV);
 	}
@@ -57,11 +69,23 @@ namespace RKSignalSupportPrivate {
 void RKSignalSupport::saveDefaultSigSegvHandler () {
 	RK_TRACE (RBACKEND);
 
-	RKSignalSupportPrivate::default_sigsegv_handler = signal (SIGSEGV, SIG_DFL);
+	sigaction (SIGSEGV, 0, &RKSignalSupportPrivate::default_sigsegv_action);
+//	RKSignalSupportPrivate::default_sigsegv_handler = signal (SIGSEGV, SIG_DFL);
 }
 
 void RKSignalSupport::installSigSegvProxy () {
 	RK_TRACE (RBACKEND);
 
-	RKSignalSupportPrivate::r_sigsegv_handler = signal (SIGSEGV, &RKSignalSupportPrivate::sigsegv_proxy);
+	// retrieve R signal handler
+	sigaction (SIGSEGV, 0, &RKSignalSupportPrivate::r_sigsegv_action);
+
+	struct sigaction proxy_action;
+	proxy_action = RKSignalSupportPrivate::r_sigsegv_action;
+	proxy_action.sa_flags |= SA_SIGINFO;
+	proxy_action.sa_sigaction = &RKSignalSupportPrivate::sigsegv_proxy;
+
+	// set new proxy handler
+	sigaction (SIGSEGV, &proxy_action, 0);
+
+//	RKSignalSupportPrivate::r_sigsegv_handler = signal (SIGSEGV, &RKSignalSupportPrivate::sigsegv_proxy);
 }

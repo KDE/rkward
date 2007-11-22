@@ -148,6 +148,7 @@ void RSuicide (char* message) {
 	args.chars_a = &message;
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 	REmbedInternal::this_pointer->shutdown (true);
+	Rf_error ("Backend dead");	// this jumps us out of the REPL.
 }
 
 void RShowMessage (char* message) {
@@ -254,16 +255,16 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 		if(saveact == SA_DEFAULT) saveact = SA_SAVE;
 		if (saveact == SA_SAVE) {
 				if (RunLast) R_dot_Last ();
-				if( R_DirtyImage) R_SaveGlobalEnv ();
+				if (R_DirtyImage) R_SaveGlobalEnv ();
 		} else {
 				if (RunLast) R_dot_Last ();
 		}
 
 		REmbedInternal::this_pointer->shutdown (false);
+	} else {
+		REmbedInternal::this_pointer->shutdown (true);
 	}
-	/*else {
-		we've already informed the user, and shut down the backend in RSuicide
-	}*/
+	Rf_error ("Backend dead");	// this jumps us out of the REPL.
 }
 
 int RShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean del, char *pager) {
@@ -395,7 +396,8 @@ REmbedInternal::~REmbedInternal () {
 void REmbedInternal::shutdown (bool suicidal) {
 	RK_TRACE (RBACKEND);
 
-	if (!REmbedInternal::this_pointer->r_running) return;		// already shut down
+	if (!r_running) return;		// already shut down
+	r_running = false;
 
 // Code-recipe below essentially copied from http://stat.ethz.ch/R-manual/R-devel/doc/manual/R-exts.html#Linking-GUIs-and-other-front_ends-to-R
 // modified quite a bit for our needs.
@@ -420,8 +422,6 @@ void REmbedInternal::shutdown (bool suicidal) {
 	/* close all the graphics devices */
 	if (!suicidal) KillAllDevices ();
 	fpu_setup ((Rboolean) FALSE);
-
-	REmbedInternal::this_pointer->r_running = false;
 }
 
 static int timeout_counter = 0;
