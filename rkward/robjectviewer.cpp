@@ -16,25 +16,21 @@
  ***************************************************************************/
 #include "robjectviewer.h"
 
-#include <qlabel.h>
+#include <QLabel>
 #include <QTextEdit>
-#include <qfont.h>
+#include <QFont>
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QTabWidget>
 
 #include <klocale.h>
-#include <kvbox.h>
-#include <khbox.h>
 #include <kglobalsettings.h>
 
 #include "rbackend/rinterface.h"
 #include "rkglobals.h"
 #include "core/robject.h"
-#include "core/rcontainerobject.h"
 #include "misc/rkdummypart.h"
-#include "core/rkmodificationtracker.h"
 
 #include "debug.h"
 
