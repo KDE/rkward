@@ -106,7 +106,7 @@ public:
 	void openOutputWindow (const KUrl &url=KUrl ());
 /** signal there was new output, show/raise/refresh the output window as appropriate.
 TODO: this should be obsoleted somehow */
-	void newOutput (bool only_if_modified);
+	void refreshOutputWindow ();
 
 	void newX11Window (WId window_to_embed, int device_number);
 	void newObjectViewer (RObject *object);

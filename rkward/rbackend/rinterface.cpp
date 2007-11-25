@@ -185,9 +185,9 @@ void RInterface::customEvent (QEvent *e) {
 		}
 		command->finished ();
 		if (command->type () & RCommand::DirectToOutput) {
-			RKWorkplace::mainWorkplace ()->newOutput (false);
+			RKWorkplace::mainWorkplace ()->refreshOutputWindow ();
 		} else if (command->type () & RCommand::User) {
-			RKWorkplace::mainWorkplace ()->newOutput (true);
+			RKWorkplace::mainWorkplace ()->refreshOutputWindow ();
 		}
 		delete command;
 	} else if ((ev->etype () == RKRBackendEvent::RIdle)) {

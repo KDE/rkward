@@ -38,12 +38,12 @@ public:
 	~RKWorkplaceView ();
 
 /** add the given window to the view */
-	void addPage (RKMDIWindow *widget);
+	void addWindow (RKMDIWindow *widget);
 /** remove the given window to the view
 @param destroyed if the window is already destroyed, set this to true */
-	void removePage (RKMDIWindow *widget, bool destroyed=false);
+	void removeWindow (RKMDIWindow *widget, bool destroyed=false);
 /** does this window exist in the view? */
-	bool hasPage (RKMDIWindow *widget);
+	bool hasWindow (RKMDIWindow *widget);
 
 /** activate the given window */
 	void setActivePage (RKMDIWindow *widget);

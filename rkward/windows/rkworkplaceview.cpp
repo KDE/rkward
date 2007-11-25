@@ -90,7 +90,7 @@ void RKWorkplaceView::pageRight () {
 	setCurrentIndex (index + 1);
 }
 
-void RKWorkplaceView::addPage (RKMDIWindow *widget) {
+void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
 	RK_TRACE (APP);
 
 	int id = -1;
@@ -112,17 +112,17 @@ void RKWorkplaceView::addPage (RKMDIWindow *widget) {
 	setUpdatesEnabled (true);
 }
 
-bool RKWorkplaceView::hasPage (RKMDIWindow *widget) {
+bool RKWorkplaceView::hasWindow (RKMDIWindow *widget) {
 	return (indexOf (widget) != -1);
 }
 
-void RKWorkplaceView::removePage (RKMDIWindow *widget, bool destroyed) {
+void RKWorkplaceView::removeWindow (RKMDIWindow *widget, bool destroyed) {
 	RK_TRACE (APP);
 
 	setUpdatesEnabled (false);
 
 	int id = indexOf (widget);		// which page is it?
-	RK_DO (if (id == -1) qDebug ("did not find page in RKWorkplaceView::removePage"), APP, DL_WARNING);
+	RK_DO (if (id == -1) qDebug ("did not find page in RKWorkplaceView::removeWindow"), APP, DL_WARNING);
 	if (!destroyed) disconnect (widget, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (childCaptionChanged (RKMDIWindow *)));
 
 	removeTab (id);

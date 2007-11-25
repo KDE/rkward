@@ -165,11 +165,10 @@ public slots:
 /** detach current window (Windows->Detach) */
 	void slotDetachWindow ();
 
-/** reimplemented from KMainWindow, to additionally include the workspace url. Actually, we also ignore the caption-parameter, as it sometimes is not the one we want. Rather we create one according to the active view */
-	void setCaption (const QString &caption);
-/** a view has been activated or deactivated. We should make sure to update the main caption to fix strange quirks */
-// KDE4: do we still need this?	void viewChanged (KMdiChildView *) { setCaption (QString::null); };
-
+/** reimplemented from KMainWindow, to additionally include the workspace url. Parameters are ignored. Rather we create a caption according to the active view */
+	void setCaption (const QString &);
+/** HACK this is only to make the compiler happy with -Woverloaded-virtual */
+	void setCaption (const QString &dummy, bool) { setCaption (dummy); };
 /** connected to m_manager->partAdded (). Connects statusbar notifications */
 	void partAdded (KParts::Part *part);
 /** connected to m_manager->partAdded (). Disconnects statusbar notifications */

@@ -330,7 +330,7 @@ RKOutputWindow* RKOutputWindow::refreshOutput (bool show, bool raise, bool only_
 
 	if (only_if_modified) {
 		QFileInfo out_file (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
-		if (out_file.lastModified () <= last_refresh_time) return current_output;
+		if (last_refresh_time.isValid () && (out_file.lastModified () <= last_refresh_time)) return current_output;
 	}
 
 	if (current_output) {

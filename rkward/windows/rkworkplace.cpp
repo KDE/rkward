@@ -136,7 +136,7 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	if (window->isToolWindow ()) {
 		window->tool_window_bar->reclaimDetached (window);
 	} else {
-		view ()->addPage (window);
+		view ()->addWindow (window);
 		view ()->topLevelWidget ()->raise ();
 		view ()->topLevelWidget ()->activateWindow ();
 	}
@@ -156,7 +156,7 @@ void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
 	RK_ASSERT (window->getPart ());
 	if (was_attached) {
 		RKWardMainWindow::getMain ()->partManager ()->removePart (window->getPart ());
-		if (!window->isToolWindow ()) view ()->removePage (window);
+		if (!window->isToolWindow ()) view ()->removeWindow (window);
 	}
 
 	DetachedWindowContainer *detached = new DetachedWindowContainer (window);
@@ -247,9 +247,9 @@ void RKWorkplace::openOutputWindow (const KUrl &url) {
 	}
 }
 
-void RKWorkplace::newOutput (bool only_if_modified) {
+void RKWorkplace::refreshOutputWindow () {
 	RK_TRACE (APP);
-	RKOutputWindow *window = RKOutputWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise (), only_if_modified);
+	RKOutputWindow *window = RKOutputWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise (), false);
 	if (window) {
 		if (!windows.contains (window)) {
 			addWindow (window);
@@ -395,8 +395,8 @@ void RKWorkplace::windowDestroyed (QObject *object) {
 	// WARNING: the window is dead. Don't call any functions on it.
 
 	RK_ASSERT (windows.contains (window));
-	windows.removeAll (window);		// do this first! view()->removePage will call activePage() indirectly from setCaption, causing us to iterate over all known windows!
-	if (view ()->hasPage (window)) view ()->removePage (window, true);
+	windows.removeAll (window);		// do this first! view()->removeWindow will call activePage() indirectly from setCaption, causing us to iterate over all known windows!
+	if (view ()->hasWindow (window)) view ()->removeWindow (window, true);
 
 	windowRemoved ();
 }
