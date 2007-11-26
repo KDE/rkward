@@ -69,11 +69,7 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	file_list->setSortingEnabled (false);
 	chose_file_item = new QListWidgetItem (i18n ("<<Open another file>>"), file_list);
 	if (recent_files) {
-		QStringList items = recent_files->items ();
-		for (QStringList::iterator it = items.begin (); it != items.end (); ++it) {
-#warning this is no longer correct, as the text is a label + url, not only the url
-			if (!(*it).isEmpty ()) new QListWidgetItem ((*it), file_list);
-		}
+		file_list->addItems (recent_files->urls ().toStringList ());
 	}
 	connect (file_list, SIGNAL (itemClicked (QListWidgetItem*)), this, SLOT (listClicked (QListWidgetItem*)));
 	connect (file_list, SIGNAL (itemDoubleClicked (QListWidgetItem*)), this, SLOT (listDoubleClicked (QListWidgetItem*)));

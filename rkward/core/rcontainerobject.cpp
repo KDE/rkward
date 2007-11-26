@@ -296,6 +296,7 @@ void RContainerObject::findObjectsMatching (const QString &partial_name, RObject
 
 RObject *RContainerObject::createPendingChild (const QString &name, int position, bool container, bool data_frame) {
 	RK_TRACE (OBJECTS);
+	RK_ASSERT (isType (GlobalEnv) || isInGlobalEnv ());
 
 #warning TODO validize name
 	RObject *ret;
@@ -398,6 +399,7 @@ bool RContainerObject::isParentOf (RObject *object, bool recursive) const {
 
 QString RContainerObject::validizeName (const QString &child_name, bool unique) const {
 	RK_TRACE (OBJECTS);
+	RK_ASSERT (isType (GlobalEnv) || isInGlobalEnv ());
 
 	QString ret = child_name;
 	if (ret.isEmpty ()) ret = "var";

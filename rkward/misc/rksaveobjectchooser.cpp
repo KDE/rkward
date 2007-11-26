@@ -24,7 +24,8 @@
 
 #include <klocale.h>
 
-#include <../core/robjectlist.h>
+#include "../core/robjectlist.h"
+#include "../core/renvironmentobject.h"
 
 #include "../debug.h"
 
@@ -66,7 +67,7 @@ void RKSaveObjectChooser::setObjectName (const QString &name) {
 QString RKSaveObjectChooser::validizedSelectedObjectName () {
 	RK_TRACE (MISC);
 
-	return (RObjectList::getObjectList ()->validizeName (name_edit->text (), false));
+	return (RObjectList::getGlobalEnv ()->validizeName (name_edit->text (), false));
 }
 
 bool RKSaveObjectChooser::isOk () const {

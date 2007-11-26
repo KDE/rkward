@@ -209,18 +209,6 @@ REnvironmentObject* RObjectList::findChildByNamespace (const QString &namespacen
 	return 0;
 }
 
-RObject *RObjectList::createPendingChild (const QString &name, int position, bool container, bool data_frame) {
-	RK_TRACE (OBJECTS);
-#warning TODO: this is bad style. Callers should call this on getGlobalEnv() directly.
-	return (getGlobalEnv ()->createPendingChild (name, position, container, data_frame));
-}
-
-QString RObjectList::validizeName (const QString &child_name, bool unique) const {
-	RK_TRACE (OBJECTS);
-
-	return (getGlobalEnv ()->validizeName (child_name, unique));
-}
-
 bool RObjectList::updateStructure (RData *) {
 	RK_TRACE (OBJECTS);
 

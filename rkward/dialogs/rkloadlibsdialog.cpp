@@ -241,7 +241,6 @@ void RKLoadLibsDialog::installationProcessError () {
 	RK_TRACE (DIALOGS);
 	RK_ASSERT (installation_process);
 
-//TODO Somehow we add too many newlines, here -> kdesu issue
 	emit (installationError (QString::fromLocal8Bit (installation_process->readAllStandardError ())));
 }
 

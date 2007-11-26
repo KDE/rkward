@@ -26,7 +26,7 @@
 #include "rkvareditmodel.h"
 #include "../core/robject.h"
 #include "../core/robjectlist.h"
-#include "../core/rkvariable.h"
+#include "../core/renvironmentobject.h"
 #include "../core/rcontainerobject.h"
 #include "rkeditordataframepart.h"
 #include "../windows/rkworkplace.h"
@@ -58,10 +58,10 @@ RKEditorDataFrame::RKEditorDataFrame (const QString& new_object_name, QWidget* p
 
 	commonInit ();
 
-	QString valid = RObjectList::getObjectList ()->validizeName (new_object_name);
+	QString valid = RObjectList::getGlobalEnv ()->validizeName (new_object_name);
 	if (valid != new_object_name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1", valid), i18n ("Invalid Name"));
 
-	RKVarEditDataFrameModel* model = new RKVarEditDataFrameModel (valid, RObjectList::getObjectList (), open_chain, 5, this);
+	RKVarEditDataFrameModel* model = new RKVarEditDataFrameModel (valid, RObjectList::getGlobalEnv (), open_chain, 5, this);
 
 	RKEditor::object = model->getObject ();;
 	RK_ASSERT (object->isDataFrame ());
