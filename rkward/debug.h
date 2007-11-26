@@ -45,16 +45,16 @@ extern int RK_Debug_CommandStep;
 #define ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR | RBACKEND | COMMANDEDITOR | MISC | DIALOGS | OUTPUT | XML)
 
 #ifdef RKWARD_DEBUG
-
 // Debug functions 
-#define RK_DO(expr,flags,level) if ((flags & RK_Debug_Flags) && (level >= RK_Debug_Level)) { expr; }
-#define RK_ASSERT(x) if (!(x)) qDebug ("Assert failed at %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__);
-#define RK_TRACE(flags) RK_DO (qDebug ("Trace: %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__), flags, DL_TRACE); 
-
+#	define RK_DO(expr,flags,level) if ((flags & RK_Debug_Flags) && (level >= RK_Debug_Level)) { expr; }
+#	define RK_ASSERT(x) if (!(x)) qDebug ("Assert failed at %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__);
+#	ifndef RKWARD_NO_TRACE
+#		define RK_TRACE(flags) RK_DO (qDebug ("Trace: %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__), flags, DL_TRACE);
+#	else
+#		define RK_TRACE(flags)
+#	endif
 #else
-
-#define RK_DO(expr,flags,level) ;
-#define RK_ASSERT(x) ;
-#define RK_TRACE(flags) ;
-
+#	define RK_DO(expr,flags,level)
+#	define RK_ASSERT(x)
+#	define RK_TRACE(flags)
 #endif

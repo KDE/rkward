@@ -7,8 +7,6 @@
 - clean up
 - documentation
 	- NOTES
-	- INSTALL
-	- create a dummy ./configure
 	- wiki / web
 - adjust debian dir
 
@@ -19,8 +17,6 @@ General:
 	- grep sources for "KDE4"
 	- remove all the passing around of KGlobal::config() as a parameter
 	- the whole idea of having a single mutex for everything is flawed. We should use several specialized ones
-	-* when rkward freezes, terminating (window close -> Terminate) rkward does not kill rkward.bin
-	- do some profiling, whether the more expensive lookup in RContainerObject::findObjectByName() is a performance issue
 
 rkcommandeditorwindow
 	- code completion
@@ -41,8 +37,6 @@ rkradio:
 
 rksettings:
 	- are the defaults ok?
-	+ When going to a specific page programmitcally, e.g. "Plugins" and "R-Pacakges" text on the left panel remain selected
-		- likely bug in KDE libs
 
 rklocalesupport:
 	- does locale switching / detection work? Does Qt have something, yet?
