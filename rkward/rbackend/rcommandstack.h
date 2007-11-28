@@ -77,7 +77,7 @@ friend class RCommandStackModel;
 - All insertions / removals are signalled to the (single) model
 - it is ok for the model to be slow.
 - the model keeps track of (the number of) listeners, and does not do anything unless there are any listeners (including walking the stack)
-- RControlWindow will only be constructed on show, and destructed on hide, so as not to eat ressources
+- RControlWindow will only be constructed on show, and destructed on hide, so as not to eat resources
 
 @author Thomas Friedrichsmeier
 */

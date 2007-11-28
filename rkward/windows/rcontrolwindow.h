@@ -50,7 +50,7 @@ public:
 
 /** reimplemented to start listening to the RCommandStackModel when showing. */
 	void showEvent (QShowEvent *e);
-/** when hidden, disconnect from the RCommandStackModel to save ressources */
+/** when hidden, disconnect from the RCommandStackModel to save resources */
 	void hideEvent (QHideEvent *e);
 /** Static reference to the control window */
 	static RControlWindow* getControl () { return control_window; };

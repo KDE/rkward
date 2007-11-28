@@ -768,7 +768,6 @@ void InstallPackagesWidget::cancel () {
 
 #include <qcombobox.h>
 #include <qfileinfo.h>
-#include <kmessagebox.h>
 
 PackageInstallParamsWidget::PackageInstallParamsWidget (QWidget *parent, bool ask_depends) : QWidget (parent) {
 	RK_TRACE (DIALOGS);

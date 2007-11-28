@@ -97,7 +97,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	connect (backend, SIGNAL (haveError ()), this, SLOT (deleteLater ()));
 	if (!backend->initialize (code, parent_component == 0)) return;
 
-	// check for existance of help file
+	// check for existence of help file
 	element = xml->getChildElement (doc_element, "help", DL_WARNING);
 	QString dummy = QFileInfo (filename).path() + '/' + xml->getStringAttribute (element, "file", "::nosuchfile::", DL_INFO);
 	have_help = QFileInfo (dummy).exists ();

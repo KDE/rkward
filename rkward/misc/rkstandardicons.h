@@ -25,7 +25,7 @@ class RKMDIWindow;
 
 /** This class (it's a namespace, really, except I did not figure out how to put the storage array in it as a "private" member) provides easy access to the icons used in RKWard. This helps staying consistent across the whole application.
 
-Also, since QIcons are only loaded on demand, and implicitely shared, this should save some ressources for icons that are used often.
+Also, since QIcons are only loaded on demand, and implicitely shared, this should save some resources for icons that are used often.
 
 Eventually all icons (even those that are only used once, so far) should be added, here. All direct constructions of QIcons (or KIconLoader) should be removed elsewhere.
 

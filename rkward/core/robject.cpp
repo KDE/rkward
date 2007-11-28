@@ -15,12 +15,11 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <qregexp.h>
-#include <klocale.h>
 
 #include "robject.h"
 
-#include "rcontainerobject.h"
+#include <qregexp.h>
+#include <klocale.h>
 
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"

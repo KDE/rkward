@@ -496,7 +496,7 @@ void RCommandStackModel::lockMutex () const {
 	RK_ASSERT (!RInterface::inRThread ());
 
 	MUTEX_LOCK;
-// We're playing silly const games, here, as the reimplemenations from QAbstractItemModel need to be const.
+// We're playing silly const games, here, as the reimplementations from QAbstractItemModel need to be const.
 // Well, we're not really changing anything, though, just keeping track of the mutex lock.
 	bool *cheat = const_cast<bool*> (&have_mutex_lock);
 	*cheat = true;

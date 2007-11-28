@@ -1,5 +1,5 @@
 /***************************************************************************
-                          robjectbrowser  -  description
+                          rkconsole  -  description
                              -------------------
     begin                : Thu Aug 19 2004
     copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
@@ -98,7 +98,7 @@ friend class RKConsolePart;
 	QStringList commands_history;
 /** current position in the commands history */
 	QStringList::const_iterator commands_history_position;
-/** A flag to indicate wheter the command was edited while scrolling in the history */ 
+/** A flag to indicate whether the command was edited while scrolling in the history */ 
 	bool command_edited;
 /** The last line in the history is special, in that it is stored before it is submitted, but not permanently so */
 	QString history_editing_line;
