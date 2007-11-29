@@ -4,7 +4,6 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KD
 
 SET(windows_STAT_SRCS
 	rkcommandeditorwindow.cpp
-	rkcommandeditorwindowpart.cpp
 	rkhtmlwindow.cpp
 	rcontrolwindow.cpp
 	detachedwindowcontainer.cpp

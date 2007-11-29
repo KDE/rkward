@@ -43,10 +43,11 @@
 #include <kaction.h>
 #include <kstandardaction.h>
 #include <klibloader.h>
-#include <kiconloader.h>
+#include <kactioncollection.h>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkstandardactions.h"
 #include "../core/robjectlist.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
@@ -54,9 +55,21 @@
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
-#include "rkcommandeditorwindowpart.h"
 
 #include "../debug.h"
+
+RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent, RKCommandEditorWindow *editor_widget) : KParts::Part (parent) {
+	RK_TRACE (COMMANDEDITOR);
+
+	setComponentData (KGlobal::mainComponent ());
+	setWidget (parent);
+	setXMLFile ("rkcommandeditorwindowpart.rc");
+	editor_widget->initializeActions (actionCollection ());
+}
+
+RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
+	RK_TRACE (COMMANDEDITOR);
+}
 
 #define GET_HELP_URL 1
 
@@ -118,6 +131,19 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
 	delete hinter;
 	delete m_doc;
+}
+
+void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
+	RK_TRACE (COMMANDEDITOR);
+
+	action_run_all = RKStandardActions::runAll (ac, "run_all", this, SLOT (runAll()));
+	action_run_selection = RKStandardActions::runSelection (ac, "run_selection", this, SLOT (runSelection()));
+	action_run_line = RKStandardActions::runLine (ac, "run_line", this, SLOT (runLine()));
+
+	action_help_function = RKStandardActions::functionHelp (ac, "function_reference", this, SLOT (showHelp()));
+
+	QAction* action_configure = ac->addAction ("configure_commandeditor", this, SLOT (configure()));
+	action_configure->setText (i18n ("Configure Script Editor"));
 }
 
 void RKCommandEditorWindow::focusIn (KTextEditor::View* v) {

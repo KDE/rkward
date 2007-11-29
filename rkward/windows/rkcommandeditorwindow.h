@@ -33,7 +33,21 @@ class QEvent;
 class QCloseEvent;
 class QFrame;
 class QLabel;
+class QAction;
 class RKCommandEditorWindow;
+class KActionCollection;
+
+/** This class provides a KPart interface to RKCommandEditorWindow. The reason to use this, is so the required menus/menu-items can be merged in on the fly.
+
+@author Thomas Friedrichsmeier
+*/
+class RKCommandEditorWindowPart : public KParts::Part {
+protected:
+friend class RKCommandEditorWindow;
+	RKCommandEditorWindowPart (QWidget *parent, RKCommandEditorWindow *editor_widget);
+
+	~RKCommandEditorWindowPart ();
+};
 
 /** classes wishing to use RKFunctionArgHinter should derive from this, and implement provideContext () */
 class RKScriptContextProvider {
@@ -155,6 +169,8 @@ public slots:
 	void runAll ();
 /** invoke the settings page for the command editor */
 	void configure ();
+
+	void initializeActions (KActionCollection* ac);
 protected:
 /** reimplemented from KMdiChildView: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e);
@@ -168,6 +184,12 @@ private:
 	QTimer *completion_timer;
 /** set syntax highlighting-mode to R syntax */
 	void setRHighlighting ();
+
+	QAction* action_run_all;
+	QAction* action_run_selection;
+	QAction* action_run_line;
+
+	QAction* action_help_function;
 };
 
 #endif
