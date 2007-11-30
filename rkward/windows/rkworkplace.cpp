@@ -249,7 +249,7 @@ void RKWorkplace::openOutputWindow (const KUrl &url) {
 
 void RKWorkplace::refreshOutputWindow () {
 	RK_TRACE (APP);
-	RKOutputWindow *window = RKOutputWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise (), false);
+	RKOutputWindow *window = RKOutputWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise (), true);
 	if (window) {
 		if (!windows.contains (window)) {
 			addWindow (window);

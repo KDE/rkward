@@ -13,8 +13,9 @@
 		<Menu name="run"><text>&amp;Run</text>
 			<Action name="run_line"/>
 			<Action name="run_selection"/>
-			<Action name="run_block"/>
 			<Action name="run_all"/>
+			<Separator/>
+			<Action name="run_block"/>
 			<Separator/>
 		</Menu>
 		<Menu name="settings"><text>&amp;Settings</text>
@@ -28,6 +29,8 @@
 		<Action name="run_line"/>
 		<Action name="run_selection"/>
 		<Action name="run_all"/>
+		<Separator/>
+		<Action name="run_block"/>
 	</ToolBar>
 	<Menu name="ktexteditor_popup">
 		<Merge/>
@@ -37,8 +40,9 @@
 		<Menu name="run"><text>&amp;Run</text>
 			<Action name="run_line"/>
 			<Action name="run_selection"/>
-			<Action name="run_block"/>
 			<Action name="run_all"/>
+			<Separator/>
+			<Action name="run_block"/>
 		</Menu>
 		<Action name="function_reference"/>
 		<Separator/>

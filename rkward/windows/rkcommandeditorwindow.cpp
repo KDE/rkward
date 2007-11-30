@@ -37,13 +37,14 @@
 #include <QClipboard>
 
 #include <klocale.h>
-#include <kmenubar.h>
+#include <kmenu.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <kaction.h>
 #include <kstandardaction.h>
 #include <klibloader.h>
 #include <kactioncollection.h>
+#include <kactionmenu.h>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
@@ -71,6 +72,7 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 }
 
 #define GET_HELP_URL 1
+#define NUM_BLOCK_RECORDS 6
 
 RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
 	RK_TRACE (COMMANDEDITOR);
@@ -103,7 +105,6 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	connect (m_doc, SIGNAL (modifiedChanged (KTextEditor::Document*)), this, SLOT (updateCaption (KTextEditor::Document*)));		// of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 	connect (m_doc, SIGNAL (textChanged (KTextEditor::Document*)), this, SLOT (tryCompletionProxy (KTextEditor::Document*)));
 	connect (m_view, SIGNAL (selectionChanged(KTextEditor::View*)), this, SLOT (selectionChanged(KTextEditor::View*)));
-	connect (m_view, SIGNAL (cursorPositionChanged(KTextEditor::View*,const KTextEditor::Cursor&)), this, SLOT (cursorPositionChanged(KTextEditor::View*,const KTextEditor::Cursor&)));
 	// somehow the katepart loses the context menu each time it loses focus
 	connect (m_view, SIGNAL (focusIn(KTextEditor::View*)), this, SLOT (focusIn(KTextEditor::View*)));
 	completion_timer = new QTimer (this);
@@ -125,16 +126,9 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 		hinter = new RKFunctionArgHinter (this, m_view);
 	}
 
-	top_block_range = 0;
-	last_active_block = 0;
 	smart_iface = qobject_cast<KTextEditor::SmartInterface*> (m_doc);
-	if (smart_iface) {
-		top_block_range = smart_iface->newSmartRange (m_doc->documentRange());
-		top_block_range->setInsertBehavior (KTextEditor::SmartRange::ExpandLeft | KTextEditor::SmartRange::ExpandRight);
-		smart_iface->addHighlightToView (m_view, top_block_range);
-	} else {
-		RK_ASSERT (false);
-	}
+	initBlocks ();
+	RK_ASSERT (smart_iface);
 
 	updateCaption ();	// initialize
 	QTimer::singleShot (0, this, SLOT (setPopupMenu ()));
@@ -150,25 +144,85 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	RK_TRACE (COMMANDEDITOR);
 
 	action_run_all = RKStandardActions::runAll (ac, "run_all", this, SLOT (runAll()));
-#warning TODO: move to RKStandardActions
-	action_run_block = ac->addAction ("run_block", this, SLOT (runBlock()));
-	action_run_block->setText (i18n ("Run this block"));
-	action_run_block->setEnabled (false);
 	action_run_selection = RKStandardActions::runSelection (ac, "run_selection", this, SLOT (runSelection()));
 	action_run_selection->setEnabled (false);
 	action_run_line = RKStandardActions::runLine (ac, "run_line", this, SLOT (runLine()));
 
 	action_help_function = RKStandardActions::functionHelp (ac, "function_reference", this, SLOT (showHelp()));
 
-	action_mark_block = ac->addAction ("mark_block", this, SLOT (markBlock()));
-	action_mark_block->setText (i18n ("Mark selection as block"));
-	action_mark_block->setEnabled (false);
-	action_unmark_block = ac->addAction ("unmark_block", this, SLOT (unmarkBlock()));
-	action_unmark_block->setText (i18n ("Unmark this block"));
-	action_unmark_block->setEnabled (false);
+	actionmenu_run_block = new KActionMenu (i18n ("Run block"), this);
+	actionmenu_run_block->setDelayed (false);	// KDE4: TODO does not work correctly in the tool bar.
+	ac->addAction ("run_block", actionmenu_run_block);
+	connect (actionmenu_run_block->menu(), SIGNAL (aboutToShow()), this, SLOT (clearUnusedBlocks()));
+	actionmenu_mark_block = new KActionMenu (i18n ("Mark selection as block"), this);
+	ac->addAction ("mark_block", actionmenu_mark_block);
+	connect (actionmenu_mark_block->menu(), SIGNAL (aboutToShow()), this, SLOT (clearUnusedBlocks()));
+	actionmenu_unmark_block = new KActionMenu (i18n ("Unmark block"), this);
+	ac->addAction ("unmark_block", actionmenu_unmark_block);
+	connect (actionmenu_unmark_block->menu(), SIGNAL (aboutToShow()), this, SLOT (clearUnusedBlocks()));
 
 	QAction* action_configure = ac->addAction ("configure_commandeditor", this, SLOT (configure()));
 	action_configure->setText (i18n ("Configure Script Editor"));
+}
+
+void RKCommandEditorWindow::initBlocks () {
+	RK_TRACE (COMMANDEDITOR);
+	RK_ASSERT (block_records.isEmpty ());
+
+	KActionCollection* ac = getPart ()->actionCollection ();
+
+	int i = 0;
+	QColor colors[NUM_BLOCK_RECORDS];
+	colors[i++] = QColor (255, 0, 0);
+	colors[i++] = QColor (0, 255, 0);
+	colors[i++] = QColor (0, 0, 255);
+	colors[i++] = QColor (255, 255, 0);
+	colors[i++] = QColor (255, 0, 255);
+	colors[i++] = QColor (0, 255, 255);
+	RK_ASSERT (i == NUM_BLOCK_RECORDS);
+
+	// sorry for those idiotic shortcuts, but I just could not find any decent unused ones
+	i = 0;
+	QKeySequence shortcuts[NUM_BLOCK_RECORDS];
+	shortcuts[i++] = QKeySequence (Qt::AltModifier | Qt::ShiftModifier | Qt::Key_F1);
+	shortcuts[i++] = QKeySequence (Qt::AltModifier | Qt::ShiftModifier | Qt::Key_F2);
+	shortcuts[i++] = QKeySequence (Qt::AltModifier | Qt::ShiftModifier | Qt::Key_F3);
+	shortcuts[i++] = QKeySequence (Qt::AltModifier | Qt::ShiftModifier | Qt::Key_F4);
+	shortcuts[i++] = QKeySequence (Qt::AltModifier | Qt::ShiftModifier | Qt::Key_F5);
+	shortcuts[i++] = QKeySequence (Qt::AltModifier | Qt::ShiftModifier | Qt::Key_F6);
+	RK_ASSERT (i == NUM_BLOCK_RECORDS);
+
+	for (i = 0; i < NUM_BLOCK_RECORDS; ++i) {
+		BlockRecord record;
+
+		QColor shaded = colors[i];
+		shaded.setAlpha (30);
+		record.attribute = KTextEditor::Attribute::Ptr (new KTextEditor::Attribute ());
+		record.attribute->clearProperty (KTextEditor::Attribute::BackgroundFillWhitespace);
+		record.attribute->setBackground (shaded);
+
+		QPixmap colorsquare (16, 16);
+		colorsquare.fill (colors[i]);
+		QIcon icon (colorsquare);
+
+		record.mark = ac->addAction ("markblock" + QString::number (i), this, SLOT (markBlock()));
+		record.mark->setIcon (icon);
+		record.mark->setData (i);
+		actionmenu_mark_block->addAction (record.mark);
+		record.unmark = ac->addAction ("unmarkblock" + QString::number (i), this, SLOT (unmarkBlock()));
+		record.unmark->setIcon (icon);
+		record.unmark->setData (i);
+		actionmenu_unmark_block->addAction (record.unmark);
+		record.run = ac->addAction ("runblock" + QString::number (i), this, SLOT (runBlock()));
+		record.run->setShortcut (shortcuts[i]);
+		record.run->setIcon (icon);
+		record.run->setData (i);
+		actionmenu_run_block->addAction (record.run);
+
+		block_records.append (record);
+		removeBlock (i, true);	// initialize to empty
+	}
+	RK_ASSERT (block_records.size () == NUM_BLOCK_RECORDS);
 }
 
 void RKCommandEditorWindow::focusIn (KTextEditor::View* v) {
@@ -399,84 +453,108 @@ void RKCommandEditorWindow::runAll () {
 void RKCommandEditorWindow::runBlock () {
 	RK_TRACE (COMMANDEDITOR);
 
-#warning implement
+	QAction* action = qobject_cast<QAction*>(sender ());
+	if (!action) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	clearUnusedBlocks ();	// this block might have been removed meanwhile
+	int index = action->data ().toInt ();
+	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
+	if (block_records[index].active) {
+		QString command = m_doc->text (*(block_records[index].range));
+		if (command.isEmpty ()) return;
+	
+		RKConsole::pipeUserCommand (new RCommand (command, RCommand::User, QString::null));
+	}
 }
 
 void RKCommandEditorWindow::markBlock () {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (m_view->selection ()) {
-		KTextEditor::SmartRange* range = smart_iface->newSmartRange (m_view->selectionRange (), top_block_range, KTextEditor::SmartRange::ExpandRight);
-		range->addWatcher (this);
+	QAction* action = qobject_cast<QAction*>(sender ());
+	if (!action) {
+		RK_ASSERT (false);
+		return;
+	}
 
-		highlightBlock (range, true);
+	int index = action->data ().toInt ();
+	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
+	if (m_view->selection ()) {
+		addBlock (index, m_view->selectionRange ());
 	} else {
 		RK_ASSERT (false);
 	}
 }
 
-void RKCommandEditorWindow::highlightBlock (KTextEditor::SmartRange* block, bool active) {
-	RK_TRACE (COMMANDEDITOR);
-
-	if (!block) return;
-	if (!block->isValid ()) return;
-
-	QColor color;
-	if (active) color = QColor (255, 255, 30);
-	else color = QColor (255, 255, 180);
-
-	KTextEditor::Attribute::Ptr attribute (new KTextEditor::Attribute());
-	attribute->setBackground (color);
-	block->setAttribute (attribute);
-}
-
 void RKCommandEditorWindow::unmarkBlock () {
 	RK_TRACE (COMMANDEDITOR);
 
-	KTextEditor::SmartRange* block = currentBlock ();
-	RK_ASSERT (block);
-	delete block;
-	last_active_block = 0;
+	QAction* action = qobject_cast<QAction*>(sender ());
+	if (!action) {
+		RK_ASSERT (false);
+		return;
+	}
 
-	// update state
-	cursorPositionChanged (m_view, m_view->cursorPosition ());
+	int index = action->data ().toInt ();
+	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
+	removeBlock (index);
 }
 
-void RKCommandEditorWindow::cursorPositionChanged (KTextEditor::View* view, const KTextEditor::Cursor &) {
+void RKCommandEditorWindow::clearUnusedBlocks () {
 	RK_TRACE (COMMANDEDITOR);
-	RK_ASSERT (view == m_view);
 
-	KTextEditor::SmartRange* new_block = currentBlock ();
-	if (new_block) {
-		action_run_block->setEnabled (true);
-		action_unmark_block->setEnabled (true);
-	} else {
-		action_run_block->setEnabled (false);
-		action_unmark_block->setEnabled (false);
+	for (int i = 0; i < block_records.size (); ++i) {
+		if (block_records[i].active) {
+// TODO: do we need to check whether the range was deleted? Does the katepart do such evil things?
+			if (!block_records[i].range->isValid () || block_records[i].range->isEmpty ()) {
+				removeBlock (i, true);
+			}
+		}
 	}
-
-	if (new_block != last_active_block) {
-		highlightBlock (last_active_block, false);
-		highlightBlock (new_block, true);
-#warning the kateview repainting is no good
-	}
-	last_active_block = new_block;
 }
 
-KTextEditor::SmartRange* RKCommandEditorWindow::currentBlock() const {
+void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range) {
 	RK_TRACE (COMMANDEDITOR);
+	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
 
-	KTextEditor::Range active_range = KTextEditor::Range (m_view->cursorPosition (), m_view->cursorPosition ());
-	if (m_view->selection ()) {
-		active_range = m_view->selectionRange ();
+	clearUnusedBlocks ();
+	removeBlock (index);
+
+	KTextEditor::SmartRange* srange = smart_iface->newSmartRange (range);
+	srange->setInsertBehavior (KTextEditor::SmartRange::ExpandRight);
+
+	QString actiontext = i18n ("%1 (Active)", index + 1);
+	block_records[index].range = srange;
+	srange->setAttribute (block_records[index].attribute);
+	block_records[index].active = true;
+	block_records[index].mark->setText (actiontext);
+	block_records[index].unmark->setText (actiontext);
+	block_records[index].unmark->setEnabled (true);
+	block_records[index].run->setText (actiontext);
+	block_records[index].run->setEnabled (true);
+
+	smart_iface->addHighlightToView (m_view, srange);
+}
+
+void RKCommandEditorWindow::removeBlock (int index, bool was_deleted) {
+	RK_TRACE (COMMANDEDITOR);
+	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
+
+	if (!was_deleted) {
+		smart_iface->removeHighlightFromView (m_view, block_records[index].range);
+		delete (block_records[index].range);
 	}
 
-	KTextEditor::SmartRange* active_block = top_block_range->mostSpecificRange (active_range);
-	if (active_block && (active_block != top_block_range) && active_block->isValid () && !active_block->isEmpty()) {
-		return active_block;
-	} else {
-		return 0;
-	}
+	QString actiontext = i18n ("%1 (Unused)", index + 1);
+	block_records[index].range = 0;
+	block_records[index].active = false;
+	block_records[index].mark->setText (actiontext);
+	block_records[index].unmark->setText (actiontext);
+	block_records[index].unmark->setEnabled (false);
+	block_records[index].run->setText (actiontext);
+	block_records[index].run->setEnabled (false);
 }
 
 void RKCommandEditorWindow::selectionChanged (KTextEditor::View* view) {
@@ -485,26 +563,10 @@ void RKCommandEditorWindow::selectionChanged (KTextEditor::View* view) {
 
 	if (view->selection ()) {
 		action_run_selection->setEnabled (true);
-
-		KTextEditor::Range selrange = view->selectionRange ();
-		bool intersects_existing_block = false;
-		QList<KTextEditor::SmartRange*> blocks = top_block_range->childRanges ();
-		for (int i = 0; i < blocks.size (); ++i) {
-			KTextEditor::SmartRange* range = blocks[i];
-			if (range->isEmpty () || !range->isValid ()) {
-				if (range == last_active_block) last_active_block = 0;
-				delete range;		// Needed?
-				continue;
-			}
-			if (range->overlaps (selrange)) {
-				intersects_existing_block = true;
-				break;
-			}
-		}
-		action_mark_block->setEnabled (!intersects_existing_block);
+		actionmenu_mark_block->setEnabled (true);
 	} else {
 		action_run_selection->setEnabled (false);
-		action_mark_block->setEnabled (false);
+		actionmenu_mark_block->setEnabled (false);
 	}
 }
 

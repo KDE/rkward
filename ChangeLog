@@ -1,3 +1,4 @@
+- ability to mark arbitrary "blocks" in script editor and run them with a shortcut
 - make sure that R only handles SIGSEV, when the R thread is active. Should give better backtraces and less hangs
 - object viewer was redesigned to use space better, and only fetch the print-representation when needed
 - more icons added

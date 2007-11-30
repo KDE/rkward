@@ -27,7 +27,6 @@
 #include <ktexteditor/codecompletioninterface.h>
 #include <ktexteditor/smartrange.h>
 #include <ktexteditor/smartinterface.h>
-#include <ktexteditor/rangefeedback.h>
 #include <kurl.h>
 
 #include "../windows/rkmdiwindow.h"
@@ -37,6 +36,7 @@ class QCloseEvent;
 class QFrame;
 class QLabel;
 class QAction;
+class KActionMenu;
 class RKCommandEditorWindow;
 class KActionCollection;
 
@@ -118,7 +118,7 @@ While being called RKCommandEditorWindow, this class handles all sorts of text-f
 
 @author Pierre Ecochard
 */
-class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider, public KTextEditor::SmartRangeWatcher {
+class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider {
 // we need the Q_OBJECT thing for some inherits ("RKCommandEditorWindow")-calls in rkward.cpp.
 	Q_OBJECT
 public:
@@ -169,34 +169,27 @@ public slots:
 	void runLine ();
 /** run the entire script */
 	void runAll ();
-/** run the current block */
-	void runBlock ();
 /** invoke the settings page for the command editor */
 	void configure ();
 
-/** mark current selection as a block */
-	void markBlock ();
-/** unmark current block */
-	void unmarkBlock ();
-
 /** selection has changed. Enable / disable actions accordingly */
 	void selectionChanged (KTextEditor::View* view);
-/** cursor position has changed. Enable / disable actions accordingly */
-	void cursorPositionChanged (KTextEditor::View* view, const KTextEditor::Cursor &new_position);
 protected:
 /** reimplemented from RKMDIWindow: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e);
+private slots:
+/** mark current selection as a block */
+	void markBlock ();
+/** unmark a block */
+	void unmarkBlock ();
+/** run a block */
+	void runBlock ();
+	void clearUnusedBlocks ();
 private:
-	KTextEditor::SmartRange* currentBlock() const;
-	KTextEditor::SmartRange* last_active_block;
-
-	void highlightBlock (KTextEditor::SmartRange* block, bool active);
-
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;
 	KTextEditor::CodeCompletionInterface *cc_iface;
 	KTextEditor::SmartInterface *smart_iface;
-	KTextEditor::SmartRange *top_block_range;
 	RKFunctionArgHinter *hinter;
 	RKCodeCompletionModel *completion_model;
 
@@ -206,12 +199,25 @@ private:
 
 	void initializeActions (KActionCollection* ac);
 
-	QAction* action_mark_block;
-	QAction* action_unmark_block;
+	struct BlockRecord {
+		KTextEditor::SmartRange* range;
+		bool active;
+		KTextEditor::Attribute::Ptr attribute;
+		QAction* mark;
+		QAction* unmark;
+		QAction* run;
+	};
+	QVector<BlockRecord> block_records;
+	void initBlocks ();
+	void addBlock (int index, const KTextEditor::Range& range);
+	void removeBlock (int index, bool was_deleted=false);
+
+	KActionMenu* actionmenu_mark_block;
+	KActionMenu* actionmenu_unmark_block;
+	KActionMenu* actionmenu_run_block;
 
 	QAction* action_run_all;
 	QAction* action_run_selection;
-	QAction* action_run_block;
 	QAction* action_run_line;
 
 	QAction* action_help_function;
