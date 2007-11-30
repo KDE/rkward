@@ -58,13 +58,12 @@
 
 #include "../debug.h"
 
-RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent, RKCommandEditorWindow *editor_widget) : KParts::Part (parent) {
+RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent) : KParts::Part (parent) {
 	RK_TRACE (COMMANDEDITOR);
 
 	setComponentData (KGlobal::mainComponent ());
 	setWidget (parent);
 	setXMLFile ("rkcommandeditorwindowpart.rc");
-	editor_widget->initializeActions (actionCollection ());
 }
 
 RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
@@ -90,9 +89,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	RKCommonFunctions::removeContainers (m_view, QString ("bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line").split (','), true);
 	RKCommonFunctions::moveContainer (m_view, "Menu", "tools", "edit", true);
 
-	RKCommandEditorWindowPart* part = new RKCommandEditorWindowPart (m_view, this);
+	RKCommandEditorWindowPart* part = new RKCommandEditorWindowPart (m_view);
 	part->insertChildClient (m_view);
 	setPart (part);
+	initializeActions (part->actionCollection ());
 	initializeActivationSignals ();
 
 	QHBoxLayout *layout = new QHBoxLayout (this);
@@ -102,6 +102,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	connect (m_doc, SIGNAL (documentUrlChanged (KTextEditor::Document*)), this, SLOT (updateCaption (KTextEditor::Document*)));
 	connect (m_doc, SIGNAL (modifiedChanged (KTextEditor::Document*)), this, SLOT (updateCaption (KTextEditor::Document*)));		// of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 	connect (m_doc, SIGNAL (textChanged (KTextEditor::Document*)), this, SLOT (tryCompletionProxy (KTextEditor::Document*)));
+	connect (m_view, SIGNAL (selectionChanged(KTextEditor::View*)), this, SLOT (selectionChanged(KTextEditor::View*)));
+	connect (m_view, SIGNAL (cursorPositionChanged(KTextEditor::View*,const KTextEditor::Cursor&)), this, SLOT (cursorPositionChanged(KTextEditor::View*,const KTextEditor::Cursor&)));
 	// somehow the katepart loses the context menu each time it loses focus
 	connect (m_view, SIGNAL (focusIn(KTextEditor::View*)), this, SLOT (focusIn(KTextEditor::View*)));
 	completion_timer = new QTimer (this);
@@ -123,6 +125,17 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 		hinter = new RKFunctionArgHinter (this, m_view);
 	}
 
+	top_block_range = 0;
+	last_active_block = 0;
+	smart_iface = qobject_cast<KTextEditor::SmartInterface*> (m_doc);
+	if (smart_iface) {
+		top_block_range = smart_iface->newSmartRange (m_doc->documentRange());
+		top_block_range->setInsertBehavior (KTextEditor::SmartRange::ExpandLeft | KTextEditor::SmartRange::ExpandRight);
+		smart_iface->addHighlightToView (m_view, top_block_range);
+	} else {
+		RK_ASSERT (false);
+	}
+
 	updateCaption ();	// initialize
 	QTimer::singleShot (0, this, SLOT (setPopupMenu ()));
 }
@@ -137,10 +150,22 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	RK_TRACE (COMMANDEDITOR);
 
 	action_run_all = RKStandardActions::runAll (ac, "run_all", this, SLOT (runAll()));
+#warning TODO: move to RKStandardActions
+	action_run_block = ac->addAction ("run_block", this, SLOT (runBlock()));
+	action_run_block->setText (i18n ("Run this block"));
+	action_run_block->setEnabled (false);
 	action_run_selection = RKStandardActions::runSelection (ac, "run_selection", this, SLOT (runSelection()));
+	action_run_selection->setEnabled (false);
 	action_run_line = RKStandardActions::runLine (ac, "run_line", this, SLOT (runLine()));
 
 	action_help_function = RKStandardActions::functionHelp (ac, "function_reference", this, SLOT (showHelp()));
+
+	action_mark_block = ac->addAction ("mark_block", this, SLOT (markBlock()));
+	action_mark_block->setText (i18n ("Mark selection as block"));
+	action_mark_block->setEnabled (false);
+	action_unmark_block = ac->addAction ("unmark_block", this, SLOT (unmarkBlock()));
+	action_unmark_block->setText (i18n ("Unmark this block"));
+	action_unmark_block->setEnabled (false);
 
 	QAction* action_configure = ac->addAction ("configure_commandeditor", this, SLOT (configure()));
 	action_configure->setText (i18n ("Configure Script Editor"));
@@ -362,13 +387,125 @@ void RKCommandEditorWindow::runLine() {
 }
 
 
-void RKCommandEditorWindow::runAll() {
+void RKCommandEditorWindow::runAll () {
 	RK_TRACE (COMMANDEDITOR);
 
 	QString command = m_doc->text ();
 	if (command.isEmpty ()) return;
 
 	RKConsole::pipeUserCommand (command);
+}
+
+void RKCommandEditorWindow::runBlock () {
+	RK_TRACE (COMMANDEDITOR);
+
+#warning implement
+}
+
+void RKCommandEditorWindow::markBlock () {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (m_view->selection ()) {
+		KTextEditor::SmartRange* range = smart_iface->newSmartRange (m_view->selectionRange (), top_block_range, KTextEditor::SmartRange::ExpandRight);
+		range->addWatcher (this);
+
+		highlightBlock (range, true);
+	} else {
+		RK_ASSERT (false);
+	}
+}
+
+void RKCommandEditorWindow::highlightBlock (KTextEditor::SmartRange* block, bool active) {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (!block) return;
+	if (!block->isValid ()) return;
+
+	QColor color;
+	if (active) color = QColor (255, 255, 30);
+	else color = QColor (255, 255, 180);
+
+	KTextEditor::Attribute::Ptr attribute (new KTextEditor::Attribute());
+	attribute->setBackground (color);
+	block->setAttribute (attribute);
+}
+
+void RKCommandEditorWindow::unmarkBlock () {
+	RK_TRACE (COMMANDEDITOR);
+
+	KTextEditor::SmartRange* block = currentBlock ();
+	RK_ASSERT (block);
+	delete block;
+	last_active_block = 0;
+
+	// update state
+	cursorPositionChanged (m_view, m_view->cursorPosition ());
+}
+
+void RKCommandEditorWindow::cursorPositionChanged (KTextEditor::View* view, const KTextEditor::Cursor &) {
+	RK_TRACE (COMMANDEDITOR);
+	RK_ASSERT (view == m_view);
+
+	KTextEditor::SmartRange* new_block = currentBlock ();
+	if (new_block) {
+		action_run_block->setEnabled (true);
+		action_unmark_block->setEnabled (true);
+	} else {
+		action_run_block->setEnabled (false);
+		action_unmark_block->setEnabled (false);
+	}
+
+	if (new_block != last_active_block) {
+		highlightBlock (last_active_block, false);
+		highlightBlock (new_block, true);
+#warning the kateview repainting is no good
+	}
+	last_active_block = new_block;
+}
+
+KTextEditor::SmartRange* RKCommandEditorWindow::currentBlock() const {
+	RK_TRACE (COMMANDEDITOR);
+
+	KTextEditor::Range active_range = KTextEditor::Range (m_view->cursorPosition (), m_view->cursorPosition ());
+	if (m_view->selection ()) {
+		active_range = m_view->selectionRange ();
+	}
+
+	KTextEditor::SmartRange* active_block = top_block_range->mostSpecificRange (active_range);
+	if (active_block && (active_block != top_block_range) && active_block->isValid () && !active_block->isEmpty()) {
+		return active_block;
+	} else {
+		return 0;
+	}
+}
+
+void RKCommandEditorWindow::selectionChanged (KTextEditor::View* view) {
+	RK_TRACE (COMMANDEDITOR);
+	RK_ASSERT (view == m_view);
+
+	if (view->selection ()) {
+		action_run_selection->setEnabled (true);
+
+		KTextEditor::Range selrange = view->selectionRange ();
+		bool intersects_existing_block = false;
+		QList<KTextEditor::SmartRange*> blocks = top_block_range->childRanges ();
+		for (int i = 0; i < blocks.size (); ++i) {
+			KTextEditor::SmartRange* range = blocks[i];
+			if (range->isEmpty () || !range->isValid ()) {
+				if (range == last_active_block) last_active_block = 0;
+				delete range;		// Needed?
+				continue;
+			}
+			if (range->overlaps (selrange)) {
+				intersects_existing_block = true;
+				break;
+			}
+		}
+		action_mark_block->setEnabled (!intersects_existing_block);
+	} else {
+		action_run_selection->setEnabled (false);
+		action_mark_block->setEnabled (false);
+	}
 }
 
 void RKCommandEditorWindow::configure () {
@@ -455,7 +592,7 @@ void RKFunctionArgHinter::tryArgHintNow () {
 			bool have_context = provider->provideContext (++line_rev, &current_line, &cursor_pos);
 			if ((!have_context) || (current_line.isEmpty ())) break;
 
-			RK_ASSERT (cursor_pos > 0);
+			RK_ASSERT (cursor_pos < 0);
 			current_context.prepend (current_line);
 			i = current_line.length () - 1;
 		}

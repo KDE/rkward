@@ -25,6 +25,9 @@
 #include <ktexteditor/document.h>
 #include <ktexteditor/codecompletionmodel.h>
 #include <ktexteditor/codecompletioninterface.h>
+#include <ktexteditor/smartrange.h>
+#include <ktexteditor/smartinterface.h>
+#include <ktexteditor/rangefeedback.h>
 #include <kurl.h>
 
 #include "../windows/rkmdiwindow.h"
@@ -44,8 +47,7 @@ class KActionCollection;
 class RKCommandEditorWindowPart : public KParts::Part {
 protected:
 friend class RKCommandEditorWindow;
-	RKCommandEditorWindowPart (QWidget *parent, RKCommandEditorWindow *editor_widget);
-
+	RKCommandEditorWindowPart (QWidget *parent);
 	~RKCommandEditorWindowPart ();
 };
 
@@ -116,7 +118,7 @@ While being called RKCommandEditorWindow, this class handles all sorts of text-f
 
 @author Pierre Ecochard
 */
-class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider {
+class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider, public KTextEditor::SmartRangeWatcher {
 // we need the Q_OBJECT thing for some inherits ("RKCommandEditorWindow")-calls in rkward.cpp.
 	Q_OBJECT
 public:
@@ -167,17 +169,34 @@ public slots:
 	void runLine ();
 /** run the entire script */
 	void runAll ();
+/** run the current block */
+	void runBlock ();
 /** invoke the settings page for the command editor */
 	void configure ();
 
-	void initializeActions (KActionCollection* ac);
+/** mark current selection as a block */
+	void markBlock ();
+/** unmark current block */
+	void unmarkBlock ();
+
+/** selection has changed. Enable / disable actions accordingly */
+	void selectionChanged (KTextEditor::View* view);
+/** cursor position has changed. Enable / disable actions accordingly */
+	void cursorPositionChanged (KTextEditor::View* view, const KTextEditor::Cursor &new_position);
 protected:
-/** reimplemented from KMdiChildView: give the editor window a chance to object to being closed (if unsaved) */
+/** reimplemented from RKMDIWindow: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e);
 private:
+	KTextEditor::SmartRange* currentBlock() const;
+	KTextEditor::SmartRange* last_active_block;
+
+	void highlightBlock (KTextEditor::SmartRange* block, bool active);
+
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;
 	KTextEditor::CodeCompletionInterface *cc_iface;
+	KTextEditor::SmartInterface *smart_iface;
+	KTextEditor::SmartRange *top_block_range;
 	RKFunctionArgHinter *hinter;
 	RKCodeCompletionModel *completion_model;
 
@@ -185,8 +204,14 @@ private:
 /** set syntax highlighting-mode to R syntax */
 	void setRHighlighting ();
 
+	void initializeActions (KActionCollection* ac);
+
+	QAction* action_mark_block;
+	QAction* action_unmark_block;
+
 	QAction* action_run_all;
 	QAction* action_run_selection;
+	QAction* action_run_block;
 	QAction* action_run_line;
 
 	QAction* action_help_function;

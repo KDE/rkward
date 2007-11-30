@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.4.2">
+<kpartgui name="rkward" version="0.5.0">
 	<MenuBar>
 		<Menu name="edit" noMerge="1"><text>&amp;Edit</text>
 			<Menu name="tools"><text>&amp;Tools Move</text>
@@ -7,10 +7,13 @@
 			</Menu>
 			<Action name="copy"/>
 			<Merge/>
+			<Action name="mark_block"/>
+			<Action name="unmark_block"/>
 		</Menu>
 		<Menu name="run"><text>&amp;Run</text>
 			<Action name="run_line"/>
 			<Action name="run_selection"/>
+			<Action name="run_block"/>
 			<Action name="run_all"/>
 			<Separator/>
 		</Menu>
