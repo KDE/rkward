@@ -155,9 +155,7 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 	part_manager = new KParts::PartManager (this);
 	// When the manager says the active part changes,
 	// the builder updates (recreates) the GUI
-	connect (partManager (), SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (createGUI (KParts::Part *)));
-	connect (partManager (), SIGNAL (partAdded (KParts::Part *)), this, SLOT (partAdded (KParts::Part *)));
-	connect (partManager (), SIGNAL (partRemoved (KParts::Part *)), this, SLOT (partRemoved (KParts::Part *)));
+	connect (partManager (), SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (partChanged (KParts::Part *)));
 
 	// create the DBUS adaptor:
 	new RKWardDBUSInterface (qApp);
@@ -381,30 +379,34 @@ void RKWardMainWindow::initActions()
 
 	configure = actionCollection ()->addAction ("configure", this, SLOT (slotConfigure()));
 	configure->setText (i18n ("Configure RKWard"));
+
+	edit_menu_dummy = actionCollection ()->addAction ("edit_menu_dummy", this);
+	edit_menu_dummy->setText (i18n ("[No actions available for current view]"));
+	edit_menu_dummy->setEnabled (false);
+	view_menu_dummy = actionCollection ()->addAction ("view_menu_dummy", this);
+	view_menu_dummy->setText (edit_menu_dummy->text ());
+	view_menu_dummy->setEnabled (false);
+	run_menu_dummy = actionCollection ()->addAction ("run_menu_dummy", this);
+	run_menu_dummy->setText (edit_menu_dummy->text ());
+	run_menu_dummy->setEnabled (false);
 }
 
-void RKWardMainWindow::partAdded (KParts::Part *part) {
+void RKWardMainWindow::partChanged (KParts::Part *part) {
 	RK_TRACE (APP);
 
-	if (!part->actionCollection ()) {
+	createGUI (part);
+
+	if (!guiFactory ()) {
 		RK_ASSERT (false);
 		return;
 	}
 
-// KDE4: remove this function?
-// well, we might use it to add / remove dummy menu-entries to menus that are other wise empty.
-}
-
-void RKWardMainWindow::partRemoved (KParts::Part *part) {
-	RK_TRACE (APP);
-
-	if (!part->actionCollection ()) {
-		RK_ASSERT (false);
-		return;
-	}
-
-// KDE4: remove this function?
-// well, we might use it to add / remove dummy menu-entries to menus that are other wise empty.
+	QMenu* menu = dynamic_cast<QMenu*>(guiFactory ()->container ("edit", this));
+	edit_menu_dummy->setVisible (menu && (menu->actions ().size () <= 1));
+	menu = dynamic_cast<QMenu*>(guiFactory ()->container ("view", this));
+	view_menu_dummy->setVisible (menu && (menu->actions ().size () <= 1));
+	menu = dynamic_cast<QMenu*>(guiFactory ()->container ("run", this));
+	run_menu_dummy->setVisible (menu && (menu->actions ().size () <= 1));
 }
 
 void RKWardMainWindow::initStatusBar () {

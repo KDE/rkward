@@ -22,6 +22,7 @@
 #include <khbox.h>
 #include <kmenu.h>
 #include <klocale.h>
+#include <kparts/partmanager.h>
 
 #include <QSplitter>
 #include <QContextMenuEvent>
@@ -29,6 +30,7 @@
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
 #include "rkmdiwindow.h"
+#include "../rkward.h"
 #include "../misc/rkstandardicons.h"
 
 #include "../debug.h"
@@ -218,6 +220,7 @@ void RKToolWindowBar::hideWidget (RKMDIWindow *widget) {
 		container->hide ();
 	}
 
+	RKWardMainWindow::getMain()->partManager()->setActivePart (0);
 	widget->active = false;
 	widget->hide ();
 

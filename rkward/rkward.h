@@ -169,10 +169,8 @@ public slots:
 	void setCaption (const QString &);
 /** HACK this is only to make the compiler happy with -Woverloaded-virtual */
 	void setCaption (const QString &dummy, bool) { setCaption (dummy); };
-/** connected to m_manager->partAdded (). Connects statusbar notifications */
-	void partAdded (KParts::Part *part);
-/** connected to m_manager->partAdded (). Disconnects statusbar notifications */
-	void partRemoved (KParts::Part *part);
+private slots:
+	void partChanged (KParts::Part *new_part);
 private:
 	QLabel* statusbar_r_status;
 	KSqueezedTextLabel* statusbar_cwd;
@@ -200,7 +198,14 @@ private:
 	QAction* window_detach;
 	
 	QAction* configure;
-	
+
+	/** used so that if the menu is empty, there is a note in it, explaining that fact */
+	QAction* edit_menu_dummy;
+	/** used so that if the menu is empty, there is a note in it, explaining that fact */
+	QAction* view_menu_dummy;
+	/** used so that if the menu is empty, there is a note in it, explaining that fact */
+	QAction* run_menu_dummy;
+
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;
 	friend class RKSettings;
