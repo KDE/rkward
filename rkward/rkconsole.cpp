@@ -129,10 +129,9 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	tab_key_pressed_before = false;
 	command_was_piped = false;
 
-// Somehow, in a KDE4 pre-version, this widget reacts real bad, if its parent is shown, before itself is shown
-// probably the kate part is to blame.
-// so we need to set it to visible, explicitely (this will not acutally show it, as the parent is still hidden).
-	show ();
+// KDE4 TODO: workaround for KDE 4 pre-release versions. Hope this gets fixed before 4.0
+// see http://lists.kde.org/?l=kwrite-devel&m=119721420603507&w=2
+	setMinimumHeight (50);
 }
 
 RKConsole::~RKConsole () {
