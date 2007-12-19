@@ -1,5 +1,5 @@
 --- Version 0.4.9 - Xxx-XX-XXXX
-
+- new plugin (experimental): Levene Test
 - Fixed: use.value.labels option was wrong in SPSS import plugin
 - Fixed: SPSS tables would only be imported to the workspace, when the edit option was checked
 - Fixed: correct installation of rkward.desktop file
