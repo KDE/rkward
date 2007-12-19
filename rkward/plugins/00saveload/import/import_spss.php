@@ -25,14 +25,15 @@ function calculate () {
 	}
 
 	if (getRK_val ("use_labels")) {
-		$labels_opt = ", use.value.labels=TRUE";
 		$labels_opt .= ", max.value.labels=" . getRK_val ("labels_limit");
 		if (getRK_val ("trim_labels")) $labels_opt .= ", trim.factor.names=TRUE";
-	}
+	} else {
+		$labels_opt = ", use.value.labels=FALSE";
+        }
 
 	$object = getRK_val ("saveto");
 ?>
-<? echo ($object); ?> <- read.spss ("<? getRK ("file"); ?>"<? echo ($data_frame_opt); echo ($labels_opt); ?>)
+data <- read.spss ("<? getRK ("file"); ?>"<? echo ($data_frame_opt); echo ($labels_opt); ?>)
 <?	if (getRK_val ("do_locale_conversion")) {
 		$from_locale = getRK_val ("encoding");
 		if ($from_locale == "other") {
@@ -40,24 +41,25 @@ function calculate () {
 		} ?>
 
 # convert all strings to the current encoding
-<? echo ($object); ?> <- iconv.recursive (<? echo ($object); ?>, from="<? echo ($from_locale); ?>")
+data <- iconv.recursive (data, from="<? echo ($from_locale); ?>")
 <?	}
 	if (getRK_val ("convert_var_labels")) { ?>
 
 # set variable labels for use in RKWard
-labels <- attr (<? echo ($object); ?>, "variable.labels");
+labels <- attr (data, "variable.labels");
 if (!is.null (labels)) {
 	for (i in 1:length (labels)) {
 		col <- make.names (names (labels[i]))
 		if (!is.null (col)) {
-			rk.set.label (<? echo ($object); ?>[[col]], labels[i])
+			rk.set.label (data[[col]], labels[i])
 		}
 	}
 }
-<?	}
-	if (getRK_val ("doedit") && $data_frame) { ?>
+<?	} ?>
 
-<? echo ($object); ?> <<- <? echo ($object); ?>		# assign to globalenv()
+<? echo ($object); ?> <<- data		# assign to globalenv()
+<?
+	if (getRK_val ("doedit") && $data_frame) { ?>
 rk.edit (<? echo ($object); ?>)
 <?	}
 }
