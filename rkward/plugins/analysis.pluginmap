@@ -88,9 +88,9 @@
 				<entry component="linear_regression"/>
 			</menu>
 			<menu id="variances" label="Variances" index="10">
-				<entry component="bartlett_test"/>
-				<entry component="F_test"/>
-				<entry component="fligner_test"/>
+				<entry component="bartlett_test" index="0"/>
+				<entry component="F_test" index="1"/>
+				<entry component="fligner_test" index="2"/>
 			</menu>
 			<menu id="time_series" label="Time Series" index="10">
 				<entry component="Box_test"/>
