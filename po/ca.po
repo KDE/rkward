@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-28 11:01+0200\n"
+"POT-Creation-Date: 2007-12-30 16:01+0100\n"
 "PO-Revision-Date: 2007-10-02 16:56+0200\n"
 "Last-Translator: Pep Roca <pep.roca@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -179,7 +179,8 @@ msgid "Delete this row (%1)"
 msgstr "Esborra aquesta fila (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid ""
+"No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "No heu proporcionat cap nom de fitxer. Les dades NO s'han desat. Voleu "
 "continuar malgrat això?"
@@ -342,7 +343,8 @@ msgid "Remove object?"
 msgstr "Elimino l'objecte?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid "Do you really want to remove the object '%1'? There's no way to get it back."
+msgid ""
+"Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr "Realment voleu eliminar l'objecte '%1'? No podrà recuperar-se mai més."
 
 #: core/robject.cpp:119
@@ -415,9 +417,9 @@ msgstr "Dimensions: "
 msgid "Class(es):"
 msgstr "Classe(s):"
 
-#: core/renvironmentobject.cpp:91
 # ??? Per revisar
 # Completar i revisar amb fr.po i es.po
+#: core/renvironmentobject.cpp:91
 #, fuzzy
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
@@ -430,16 +432,16 @@ msgid ""
 ">Configure RKWard->Workspace."
 msgstr ""
 "El paquet '%1' (que probablement acabeu de carregar) està actualment en la "
-"llista negra per recuperar informació sobre la seva estructura. A la pràctica, "
-"això vol dir que els seus objectes no apareixaran en el navegador d'objectes. "
-"\n"
+"llista negra per recuperar informació sobre la seva estructura. A la "
+"pràctica, això vol dir que els seus objectes no apareixaran en el navegador "
+"d'objectes. \n"
 "Habitualment un paquet es fica a la llista negra, si es trigaria molt en "
 "carregar per tenir una enorme quantitat de dades. Per treure'l de la llista, "
 "anar a Arranjaments->Configura RKWard->Espai de treball."
 
-#: core/renvironmentobject.cpp:91
 # ??? Per revisar
 # Revisar amb fr.po i es.po
+#: core/renvironmentobject.cpp:91
 #, fuzzy
 msgid "Package blacklisted"
 msgstr "El paquet està en la llista negra"
@@ -449,7 +451,7 @@ msgid "Run all"
 msgstr "Executa-ho tot"
 
 #: windows/rkcommandeditorwindowpart.cpp:52 windows/rkhtmlwindow.cpp:94
-#: windows/rkcommandlog.cpp:287 rkconsole.cpp:781
+#: windows/rkcommandlog.cpp:288 rkconsole.cpp:783
 msgid "Run selection"
 msgstr "Executa la selecció"
 
@@ -459,7 +461,7 @@ msgstr "Executa la línia actual"
 
 # fr.po: "&Aide sur la fonction"
 # es.po: "Referencia de la &Función"
-#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:780
+#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:782
 msgid "&Function reference"
 msgstr "&Funció: Ajuda"
 
@@ -726,19 +728,19 @@ msgid "Next Window"
 msgstr "Finestra següent"
 
 # Termcat: diari  m. Registre cronològic de les operacions de processament de dades dutes a terme en un fitxer.
-#: windows/rkcommandlog.cpp:54 settings/rksettingsmodulewatch.cpp:277
+#: windows/rkcommandlog.cpp:55 settings/rksettingsmodulewatch.cpp:277
 msgid "Command log"
 msgstr "Bitàcola de les ordres"
 
-#: windows/rkcommandlog.cpp:173
+#: windows/rkcommandlog.cpp:174
 msgid "Incomplete statement.\n"
 msgstr "Sentència incompleta.\n"
 
-#: windows/rkcommandlog.cpp:175
+#: windows/rkcommandlog.cpp:176
 msgid "Syntax error.\n"
 msgstr "Error de sintaxi.\n"
 
-#: windows/rkcommandlog.cpp:177
+#: windows/rkcommandlog.cpp:178
 msgid "An unspecified error occurred while running the command.\n"
 msgstr "S'ha produït un error desconegut mentre s'executava l'ordre.\n"
 
@@ -1175,8 +1177,8 @@ msgstr "Camp del tipus"
 msgid "Class field"
 msgstr "Camp de la classe"
 
-#: settings/rksettingsmoduleobjectbrowser.cpp:76
 # Softcatalà 4.0: fetch, to =  recollir
+#: settings/rksettingsmoduleobjectbrowser.cpp:76
 msgid "Never fetch the structure of these packages:"
 msgstr "Mai recollis l'estructura d'aquests paquets:"
 
@@ -1196,7 +1198,8 @@ msgstr "Espai de treball"
 # Recull de termes de Softcatalà: settings - m pl paràmetres
 #: settings/rksettingsmodulegeneral.cpp:49
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
-msgstr "Els arranjaments marcats amb un (*) només s'aplicaran si reengegueu RKWard"
+msgstr ""
+"Els arranjaments marcats amb un (*) només s'aplicaran si reengegueu RKWard"
 
 #: settings/rksettingsmodulegeneral.cpp:53
 msgid "Directory where the logfiles should be kept (*)"
@@ -1392,8 +1395,8 @@ msgstr "Caràcter decimal (només per a la impressió)"
 msgid "Output width (characters)"
 msgstr "Ample dels resultats (caràcters)"
 
-#: settings/rksettingsmoduler.cpp:90
 # ??? Per revisar: és l'ordre print, no la impressió
+#: settings/rksettingsmoduler.cpp:90
 #, fuzzy
 msgid "Maximum number of elements shown in print"
 msgstr "Nombre màxim d'elements que s'han de mostrar en la impressió"
@@ -1464,7 +1467,8 @@ msgstr "Arxiva els paquets descarregats"
 
 #: settings/rksettingsmoduler.cpp:294
 msgid "R Library locations  (where libraries get installed to, locally)"
-msgstr "Ubicació de les biblioteques R (on localment s'instal·len les biblioteques)"
+msgstr ""
+"Ubicació de les biblioteques R (on localment s'instal·len les biblioteques)"
 
 #: settings/rksettingsmoduler.cpp:299
 msgid ""
@@ -1621,7 +1625,7 @@ msgstr "Configura els paquets"
 msgid "Local packages"
 msgstr "Paquets locals"
 
-#: dialogs/rkloadlibsdialog.cpp:63 robjectviewer.cpp:64 robjectbrowser.cpp:111
+#: dialogs/rkloadlibsdialog.cpp:63 robjectviewer.cpp:63 robjectbrowser.cpp:111
 msgid "Update"
 msgstr "Actualitza"
 
@@ -1849,7 +1853,8 @@ msgstr "No heu especificat l'atribut '%1'. S'assumeix '%2'"
 # fr.po: Valeur d'attribut interdite. Les valeurs possibles sont seulement parmi '%1'.
 #: misc/xmlhelper.cpp:260
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr "El valor de l'atribut està prohibit. Només es permet un dels valors de '%1'."
+msgstr ""
+"El valor de l'atribut està prohibit. Només es permet un dels valors de '%1'."
 
 #: misc/xmlhelper.cpp:274
 msgid "Illegal attribute value. Only integer numbers are allowed."
@@ -1871,7 +1876,8 @@ msgid "XML-parsing '%1' "
 msgstr "S'està analitzant el XML '%1' "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid ""
+"<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>S'han produït errors i / o avisos! Una transcripció dels missatges es "
 "mostra aquí sota</b>"
@@ -2191,11 +2197,11 @@ msgstr ""
 "rkward-devel@lists.sourceforge.net explicant el que intentaveu fer quan s'ha "
 "produït això."
 
-#: rbackend/rthread.cpp:462
+#: rbackend/rthread.cpp:461
 msgid "R Startup"
 msgstr "Engegada del R"
 
-#: main.cpp:70 main.cpp:83
+#: main.cpp:70 main.cpp:84
 msgid "RKWard"
 msgstr "RKWard"
 
@@ -2216,70 +2222,76 @@ msgid "Mask for components to debug (see debug.h)"
 msgstr "Màscara per als components a depurar (mireu en depura.h)"
 
 #: main.cpp:77
+msgid ""
+"Debugger (enclose any debugger arguments in single quotes ('') together with "
+"the command)"
+msgstr ""
+
 # ??? Per revisar
 # ó Desactiva la comprovació de la pila C del R?
+#: main.cpp:78
 #, fuzzy
 msgid "Disable R C stack checking"
 msgstr "Desactiva la comprovació de la pila R C"
 
-#: main.cpp:84
+#: main.cpp:85
 msgid "Project leader / main developer"
 msgstr "Líder del projecte / desenvolupador principal"
 
 # Softcatalà: coder: codificador
-#: main.cpp:85
+#: main.cpp:86
 msgid "C++ coder since 0.2.9"
 msgstr "Codificador C++ des de 0.2.9"
 
-#: main.cpp:86
+#: main.cpp:87
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Molts endollables, suggeriments, màrqueting, traduccions"
 
-#: main.cpp:87
+#: main.cpp:88
 msgid "Many plugins, suggestions"
 msgstr "Molts endollables, suggeriments"
 
-#: main.cpp:89
+#: main.cpp:90
 msgid "Several helpful comments and discussions"
 msgstr "Varis comentaris i discussions útils"
 
-#: main.cpp:90
+#: main.cpp:91
 msgid "Plugins and patches"
 msgstr "Endollables i pedaços"
 
-#: main.cpp:91
+#: main.cpp:92
 msgid "New website"
 msgstr "Nova pàgina web"
 
-#: main.cpp:92
+#: main.cpp:93
 msgid "A cool icon"
 msgstr "Una bonica icona"
 
-#: main.cpp:93
+#: main.cpp:94
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "El logotip de RKWard, molts suggeriments, ajudes en la redacció"
 
-#: main.cpp:94
+#: main.cpp:95
 msgid "Several valuable comments, hints and patches"
 msgstr "Alguns valuosos commentaris, consells i pedaços"
 
-#: main.cpp:95
+#: main.cpp:96
 msgid "Translation, Suggestions, plugins"
 msgstr "Traduccions, suggeriments, endollables"
 
-#: main.cpp:96
+#: main.cpp:97
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Molts comentaris, suggeriments útils i informes d'errors"
 
-#: main.cpp:97
+#: main.cpp:98
 msgid "Some patches"
 msgstr "Alguns pedaços"
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgstr "Moltes més persones a rkward-devel@lists.sourceforge.net"
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Ho sento si m'he oblidat d'incloure-us en la llista. Si us plau, poseu-vos "
@@ -2494,21 +2506,21 @@ msgid "Syntax error\n"
 msgstr "Error de sintaxi\n"
 
 # fr.po: Interrompre l'exécution de la commande
-#: rkconsole.cpp:783
+#: rkconsole.cpp:785
 msgid "Interrupt running command"
 msgstr "Interromp l'execució de l'ordre"
 
 # Thomas Friedrichsmeier:
 # Console action: Copy the selection, but remove any leading "> " or "+ " on the copied lines, so it is easier to re-use commands from the console.
-#: rkconsole.cpp:789
+#: rkconsole.cpp:791
 msgid "Copy selection cleaned"
 msgstr "Còpia la selecció de forma neta"
 
-#: rkconsole.cpp:790
+#: rkconsole.cpp:792
 msgid "Copy selection literally"
 msgstr "Copia la selecció literalment"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid ""
 "You have configured RKWrad to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -2520,16 +2532,16 @@ msgstr ""
 "començat a escriure-hi text a la consola). Voleu evitar la consola ara, o ho "
 "voleu intentar de nou més tard?"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid "Console is busy"
 msgstr "La consola és ocupada"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid "Bypass console"
 msgstr "Evita la consola"
 
 # fr.po: Result of 'print ("
-#: robjectviewer.cpp:70
+#: robjectviewer.cpp:69
 msgid ""
 "\n"
 "Result of 'summary (%1)':\n"
@@ -2537,13 +2549,13 @@ msgstr ""
 "\n"
 "Resultat de 'summary (%1)':\n"
 
-#: robjectviewer.cpp:72 robjectviewer.cpp:84 robjectviewer.cpp:109
-#: robjectviewer.cpp:120
+#: robjectviewer.cpp:71 robjectviewer.cpp:82 robjectviewer.cpp:106
+#: robjectviewer.cpp:117
 msgid "Hide"
 msgstr "Amaga"
 
 # fr.po: Result of 'print ("
-#: robjectviewer.cpp:82
+#: robjectviewer.cpp:80
 msgid ""
 "\n"
 "Result of 'print (%1)':\n"
@@ -2551,15 +2563,15 @@ msgstr ""
 "\n"
 "Resultat de 'print (%1)':\n"
 
-#: robjectviewer.cpp:93
+#: robjectviewer.cpp:90
 msgid "Object Viewer: "
 msgstr "Visualitzador d'objectes: "
 
-#: robjectviewer.cpp:111 robjectviewer.cpp:122
+#: robjectviewer.cpp:108 robjectviewer.cpp:119
 msgid "Show"
 msgstr "Mostra"
 
-#: robjectviewer.cpp:137
+#: robjectviewer.cpp:134
 msgid "Fetching information"
 msgstr "S'està recollint la informació"
 
@@ -2681,4 +2693,3 @@ msgid ""
 "_: EMAIL OF TRANSLATORS\n"
 "Your emails"
 msgstr "pep.roca@gmail.com"
-

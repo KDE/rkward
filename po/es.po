@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-28 11:01+0200\n"
+"POT-Creation-Date: 2007-12-30 16:01+0100\n"
 "PO-Revision-Date: 2007-09-27 15:05-0500\n"
 "Last-Translator: Germán Márquez Mejía <gmarquez@javeriana.edu.co>\n"
 "Language-Team: español <es@li.org>\n"
@@ -426,7 +426,7 @@ msgid "Run all"
 msgstr "Ejecutar todo"
 
 #: windows/rkcommandeditorwindowpart.cpp:52 windows/rkhtmlwindow.cpp:94
-#: windows/rkcommandlog.cpp:287 rkconsole.cpp:781
+#: windows/rkcommandlog.cpp:288 rkconsole.cpp:783
 msgid "Run selection"
 msgstr "Ejecutar la selección"
 
@@ -434,7 +434,7 @@ msgstr "Ejecutar la selección"
 msgid "Run current line"
 msgstr "Ejecutar esta línea"
 
-#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:780
+#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:782
 msgid "&Function reference"
 msgstr "Referencia para la &función"
 
@@ -681,19 +681,19 @@ msgstr "Ventana anterior"
 msgid "Next Window"
 msgstr "Siguiente ventana"
 
-#: windows/rkcommandlog.cpp:54 settings/rksettingsmodulewatch.cpp:277
+#: windows/rkcommandlog.cpp:55 settings/rksettingsmodulewatch.cpp:277
 msgid "Command log"
 msgstr "Bitácora de comandos"
 
-#: windows/rkcommandlog.cpp:173
+#: windows/rkcommandlog.cpp:174
 msgid "Incomplete statement.\n"
 msgstr "Sentencia incompleta.\n"
 
-#: windows/rkcommandlog.cpp:175
+#: windows/rkcommandlog.cpp:176
 msgid "Syntax error.\n"
 msgstr "Error de sintaxis.\n"
 
-#: windows/rkcommandlog.cpp:177
+#: windows/rkcommandlog.cpp:178
 msgid "An unspecified error occurred while running the command.\n"
 msgstr ""
 "Ha ocurrido un error no especificado durante la ejecución del comando.\n"
@@ -1522,7 +1522,7 @@ msgstr "Configurar paquetes"
 msgid "Local packages"
 msgstr "Paquetes locales"
 
-#: dialogs/rkloadlibsdialog.cpp:63 robjectviewer.cpp:64 robjectbrowser.cpp:111
+#: dialogs/rkloadlibsdialog.cpp:63 robjectviewer.cpp:63 robjectbrowser.cpp:111
 msgid "Update"
 msgstr "Actualizar"
 
@@ -2079,11 +2079,11 @@ msgstr ""
 "correo a rkward-devel@lists.sourceforge.net y nos diga qué estaba intentando "
 "hacer cuando esto ocurrió. ¡Lo sentimos!"
 
-#: rbackend/rthread.cpp:462
+#: rbackend/rthread.cpp:461
 msgid "R Startup"
 msgstr "Arranque de R"
 
-#: main.cpp:70 main.cpp:83
+#: main.cpp:70 main.cpp:84
 msgid "RKWard"
 msgstr "RKWard"
 
@@ -2102,66 +2102,72 @@ msgstr ""
 "h)"
 
 #: main.cpp:77
+msgid ""
+"Debugger (enclose any debugger arguments in single quotes ('') together with "
+"the command)"
+msgstr ""
+
+#: main.cpp:78
 msgid "Disable R C stack checking"
 msgstr "Deshabilitar verificación de pila C de R"
 
-#: main.cpp:84
+#: main.cpp:85
 msgid "Project leader / main developer"
 msgstr "Líder del proyecto / Desarrollador(a) en jefe"
 
-#: main.cpp:85
+#: main.cpp:86
 msgid "C++ coder since 0.2.9"
 msgstr "Programador C++ desde 0.2.9"
 
-#: main.cpp:86
+#: main.cpp:87
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Varios complementos, sugerencias, mercadeo, traducciones"
 
-#: main.cpp:87
+#: main.cpp:88
 msgid "Many plugins, suggestions"
 msgstr "Varios complementos, sugerencias"
 
-#: main.cpp:89
+#: main.cpp:90
 msgid "Several helpful comments and discussions"
 msgstr "Muchos comentarios útiles y discusiones"
 
-#: main.cpp:90
+#: main.cpp:91
 msgid "Plugins and patches"
 msgstr "Complementos y parches"
 
-#: main.cpp:91
+#: main.cpp:92
 msgid "New website"
 msgstr "Nuevo sitio web"
 
-#: main.cpp:92
+#: main.cpp:93
 msgid "A cool icon"
 msgstr "Un bonito ícono"
 
-#: main.cpp:93
+#: main.cpp:94
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "Logotipo de RKWard, múltiples sugerencias, ayuda con las expresiones"
 
-#: main.cpp:94
+#: main.cpp:95
 msgid "Several valuable comments, hints and patches"
 msgstr "Muchos comentarios valiosos, pistas y parches"
 
-#: main.cpp:95
+#: main.cpp:96
 msgid "Translation, Suggestions, plugins"
 msgstr "Traducción, sugerencias, complementos"
 
-#: main.cpp:96
+#: main.cpp:97
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Muchos comentarios, sugerencias útiles y reportes de errores"
 
-#: main.cpp:97
+#: main.cpp:98
 msgid "Some patches"
 msgstr "Algunos parches"
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgstr "Mucha más gente en rkward-devel@lists.sourceforge.net"
 
-#: main.cpp:98
+#: main.cpp:99
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Lo sentimos. Si nos olvidamos de incluirte en esta lista, por favor "
@@ -2370,19 +2376,19 @@ msgstr "Consola de R"
 msgid "Syntax error\n"
 msgstr "Error de sintaxis\n"
 
-#: rkconsole.cpp:783
+#: rkconsole.cpp:785
 msgid "Interrupt running command"
 msgstr "Interrumpir el comando en ejecución"
 
-#: rkconsole.cpp:789
+#: rkconsole.cpp:791
 msgid "Copy selection cleaned"
 msgstr "Copiar la selección después de limpiarla"
 
-#: rkconsole.cpp:790
+#: rkconsole.cpp:792
 msgid "Copy selection literally"
 msgstr "Copiar la selección tal cual"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid ""
 "You have configured RKWrad to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -2394,15 +2400,15 @@ msgstr ""
 "comando o usted ha comenzado a introducir texto). ¿Desea obviar la consola "
 "por esta vez o desea intentar nuevamente más tarde?"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid "Console is busy"
 msgstr "La consola está ocupada"
 
-#: rkconsole.cpp:818
+#: rkconsole.cpp:820
 msgid "Bypass console"
 msgstr "Obviar la consola"
 
-#: robjectviewer.cpp:70
+#: robjectviewer.cpp:69
 msgid ""
 "\n"
 "Result of 'summary (%1)':\n"
@@ -2410,12 +2416,12 @@ msgstr ""
 "\n"
 "Resultado de «summary (%1)»:\n"
 
-#: robjectviewer.cpp:72 robjectviewer.cpp:84 robjectviewer.cpp:109
-#: robjectviewer.cpp:120
+#: robjectviewer.cpp:71 robjectviewer.cpp:82 robjectviewer.cpp:106
+#: robjectviewer.cpp:117
 msgid "Hide"
 msgstr "Ocultar"
 
-#: robjectviewer.cpp:82
+#: robjectviewer.cpp:80
 msgid ""
 "\n"
 "Result of 'print (%1)':\n"
@@ -2423,15 +2429,15 @@ msgstr ""
 "\n"
 "Resultado de «print (%1)»:\n"
 
-#: robjectviewer.cpp:93
+#: robjectviewer.cpp:90
 msgid "Object Viewer: "
 msgstr "Visor de objeto: "
 
-#: robjectviewer.cpp:111 robjectviewer.cpp:122
+#: robjectviewer.cpp:108 robjectviewer.cpp:119
 msgid "Show"
 msgstr "Mostrar"
 
-#: robjectviewer.cpp:137
+#: robjectviewer.cpp:134
 msgid "Fetching information"
 msgstr "Obteniendo información"
 
