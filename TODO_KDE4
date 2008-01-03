@@ -1,10 +1,4 @@
 **CMake**
-- test
-	- configuration
-		- R
-		- pthreads
-	- installation
-- clean up
 - documentation
 	- NOTES
 	- wiki / web
@@ -25,29 +19,8 @@ rkcommandeditorwindow
 			- Can't do any thing about this. It part of the katepart.
 	- placement of menu options?
 
-output window
-	- does it reload all changed images?
-
-rkwindowcatcher
-	- does the "set fixed size" dialog work?
-	- does the "copy device to R object" dialog work?
-
-rkradio:
-	- does disabling single options work (in plugins)?
-
-rksettings:
-	- are the defaults ok?
-
 rklocalesupport:
 	- does locale switching / detection work? Does Qt have something, yet?
-
-rkspinbox:
-	- are all of these fixed? Do some thorough testing
-		- does not work in real mode
-		- does not update on typed input
-
-rkobjectlistview:
-	- test everything
 
 rkconsole:
 	- check whether all selection, editing, navigating really works as expected
