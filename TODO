@@ -6,10 +6,6 @@ Important:
 	- Around March 1st, write to R-devel to achieve having IS_UTF8 and IS_LATIN1 in public API (if not already available, then).
 		- Is Rf_translateChar() what we are looking for?
 
-Should be fixed for 0.4.9:
-	- make rk.results work with matrices
-		- use in crosstabs n to 1 plugin
-
 Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
 
@@ -67,7 +63,6 @@ UI-stuff
 		- smooth handling of updating packages installed in different repositories
 		- auto-updating functionality (every x days, every new session, never; see https://sourceforge.net/mailarchive/message.php?msg_id=37960665)
 	- RObjectListView
-		- use better icons to mark up the different base types
 		- double click action should be configurable: View, Edit, insert name into current script, insert name into console, nothing
 		- context menu action "detach" for package environments (probably with a warning, at least for base packages)
 	- RKConsole:
@@ -78,12 +73,10 @@ UI-stuff
 		- When inside a string, should offer tab-completion for system paths (will maybe have to wait for KDE4, when we get better clues, what context we are currently in)
 		- Allow multi-line command editing?
 	- Script editor:
-		- new action "Run Toplevel expression" (see https://sourceforge.net/mailarchive/forum.php?thread_id=31463482&forum_id=12970)
 		- new action "Source file"
 	- RKConsole / Script editor:
 		- highlight only valid function names
-	- RKHelpDlg:
-		- in the mid term, this should probably be renamed and moved to windows
+	- RKHelpSerachWindow:
 		- call .rk.get.installed.packages, and update package selection drop down on every show, but not on startup? Really? Maybe both.
 	- RKVarslot:
 		- allow "save as" selection mode (i.e. new object names, or selection of existing symbol) -> RKSaveObjectChooser
@@ -95,7 +88,6 @@ UI-stuff
 	- find out how to save toolbar states properly in parts-GUI
 		- also setting the toolbar state for all windows with that toolbar
 	- David's usability items
-	- use RKGlobals::marginHint (), RKGlobals::spacingHint () everywhere
 	- from Ralf:
 		- show first few values of vectors/scalars in tool-tip in workspace browser
 	- Debugging functionality
@@ -129,12 +121,6 @@ UI-stuff
 	- provide a menu action / shortcut to switch to the directory of the current script file.
 	- Quitting:
 		- instead of closing windows one by one, and asking to save changes if necessary, first list all windows that might need to be saved, let the user chose to save them, then close all windows without further questions.
-	- RObjectViewer
-		- also show the summary for objects
-		- do some formatting to make it look nicer
-		- make it an MDI window
-		- add update buttons and such
-			- on updating: if object has changed, display a note to that effect in the window
 	- Vignettes:
 		- Add a vignettes browser to the help menu
 		- Add context menu with vignettes to package environments in object browser
@@ -174,8 +160,6 @@ Internal stuff:
 		- It will be possible to "store" these in the RObjectList and select them just like any other object
 		- RKVarslot will allow editing the selected value by hand (or just typing the name in)
 			- How to do this nicely UI wise?
-	- RKCancelDialog:
-		- remove this class. Port to use RKProgressControl instead
 	- RThread:
 		- Detection of commands that run for a suspiciously long time
 			- Show "do you want to cancel ..." option after configurable amount of time
@@ -198,7 +182,6 @@ Internal stuff:
 General code:
 	- use constBegin (), constEnd ()
 	- get rid of all the superflous dependencies: http://lists.debian.org/debian-devel/2005/12/msg00439.html
-	- use more QDicts instead of QMap<QString,...>s
 	- remove classes/files:
 		- RKGlobals
 			- static members should be moved to the respective classes. Much cleaner!
@@ -227,7 +210,6 @@ R plugins:
 		- provide SVG export option
 	- provide context menu / other UI to export to different formats / edit
 	- PHP-backend:
-		- switch to KProcIO for easier logic
 		- http://de3.php.net/manual/en/function.call-user-func.php seems to be faster than eval
 		- find out why an error in the backend often leads to a subsequent crash
 		- it might be possible to create only one "master" PHP process, and fork off child processes as needed from that (pcntl_fork() in PHP).
