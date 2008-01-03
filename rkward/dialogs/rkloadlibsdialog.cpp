@@ -32,6 +32,7 @@
 #include <kmessagebox.h>
 #include <kvbox.h>
 #include <kuser.h>
+#include <kstandarddirs.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -190,12 +191,11 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 		file.close();
 	}
 
-#warning kdesu may not be in the path. It might be in libexec.
 	QString R_binary (getenv ("R_binary"));
 	QString call;
 	QStringList params;
 	if (as_root) {
-		call = "kdesu";
+		call = KStandardDirs::findExe ("kdesu");
 		params << "-t";
 	} else {
 		call = "sh";
