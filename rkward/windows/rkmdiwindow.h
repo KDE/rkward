@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2008 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -108,6 +108,9 @@ protected:
 	void initializeActivationSignals ();
 	void paintEvent (QPaintEvent *e);
 	void windowActivationChange (bool);
+
+/** reimplemented from QWidget to emulate focus-follows-mouse behavior */
+	void enterEvent (QEvent *event);
 friend class RKWorkplace;
 /** type of this window */
 	int type;

@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2008 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -43,6 +43,7 @@ StartupDialog::Result RKSettingsModuleGeneral::startup_action;
 RKSettingsModuleGeneral::WorkplaceSaveMode RKSettingsModuleGeneral::workplace_save_mode;
 bool RKSettingsModuleGeneral::show_help_on_startup;
 int RKSettingsModuleGeneral::warn_size_object_edit;
+RKSettingsModuleGeneral::RKMDIFocusPolicy RKSettingsModuleGeneral::mdi_focus_policy;
 
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -110,6 +111,18 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	main_vbox->addWidget (label);
 	main_vbox->addWidget (warn_size_object_edit_box);
 
+	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+
+	label = new QLabel (i18n ("MDI window focus behavior"), this);
+	mdi_focus_policy_chooser = new QComboBox (this);
+	mdi_focus_policy_chooser->setEditable (false);
+	mdi_focus_policy_chooser->insertItem (RKMDIClickFocus, i18n ("Click to focus"));
+	mdi_focus_policy_chooser->insertItem (RKMDIFocusFollowsMouse, i18n ("Focus follows mouse"));
+	mdi_focus_policy_chooser->setCurrentIndex (mdi_focus_policy);
+	connect (mdi_focus_policy_chooser, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
+	main_vbox->addWidget (label);
+	main_vbox->addWidget (mdi_focus_policy_chooser);
+
 	main_vbox->addStretch ();
 }
 
@@ -144,6 +157,7 @@ void RKSettingsModuleGeneral::applyChanges () {
 	show_help_on_startup = show_help_on_startup_box->isChecked ();
 	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->checkedId ());
 	warn_size_object_edit = warn_size_object_edit_box->intValue ();
+	mdi_focus_policy = static_cast<RKMDIFocusPolicy> (mdi_focus_policy_chooser->currentIndex ());
 }
 
 void RKSettingsModuleGeneral::save (KConfig *config) {
@@ -167,6 +181,9 @@ void RKSettingsModuleGeneral::saveSettings (KConfig *config) {
 
 	cg = config->group ("Editor");
 	cg.writeEntry ("large object warning limit", warn_size_object_edit);
+
+	cg = config->group ("MDI");
+	cg.writeEntry ("focus policy", (int) mdi_focus_policy);
 }
 
 void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
@@ -185,6 +202,9 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 
 	cg = config->group ("Editor");
 	warn_size_object_edit = cg.readEntry ("large object warning limit", 250000);
+
+	cg = config->group ("MDI");
+	mdi_focus_policy = (RKMDIFocusPolicy) cg.readEntry ("focus policy", (int) RKMDIClickFocus);
 }
 
 QString RKSettingsModuleGeneral::getSavedWorkplace (KConfig *config) {

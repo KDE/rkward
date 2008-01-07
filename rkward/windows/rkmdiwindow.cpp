@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2008 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -29,6 +29,7 @@
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
 #include "rktoolwindowbar.h"
+#include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkstandardicons.h"
 
 #include "../debug.h"
@@ -203,6 +204,18 @@ void RKMDIWindow::windowActivationChange (bool) {
 
 	// NOTE: active is NOT the same as isActive(). Active just means that this window *would* be active, if its toplevel window is active.
 	if (active || (!isAttached ())) update ();
+}
+
+void RKMDIWindow::enterEvent (QEvent *event) {
+	RK_TRACE (APP);
+
+	if (!isActive ()) {
+		if (RKSettingsModuleGeneral::mdiFocusPolicy () == RKSettingsModuleGeneral::RKMDIFocusFollowsMouse) {
+			activate (true);
+		}
+	}
+
+	QFrame::enterEvent (event);
 }
 
 #include "rkmdiwindow.moc"

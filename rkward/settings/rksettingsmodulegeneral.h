@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2008 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -42,6 +42,11 @@ public:
 		DontSaveWorkplace=2
 	};
 
+	enum RKMDIFocusPolicy {		// don't change the int values of this enum, or you'll ruin users saved settings. Append new values at the end
+		RKMDIClickFocus=0,
+		RKMDIFocusFollowsMouse=1
+	};
+
 	bool hasChanges ();
 	void applyChanges ();
 	void save (KConfig *config);
@@ -62,6 +67,7 @@ public:
 /** set the saved workplace description. Meaningful only is workplaceSaveMode () == SaveWorkplaceWithSession */
 	static void setSavedWorkplace (const QString &description, KConfig *config);
 	static unsigned long warnLargeObjectThreshold () { return warn_size_object_edit; };
+	static RKMDIFocusPolicy mdiFocusPolicy () { return mdi_focus_policy; }
 public slots:
 	void pathChanged ();
 	void boxChanged (int);
@@ -71,6 +77,7 @@ private:
 	QButtonGroup *workplace_save_chooser;
 	QCheckBox *show_help_on_startup_box;
 	RKSpinBox *warn_size_object_edit_box;
+	QComboBox *mdi_focus_policy_chooser;
 
 	static StartupDialog::Result startup_action;
 	static QString files_path;
@@ -79,6 +86,7 @@ private:
 	static WorkplaceSaveMode workplace_save_mode;
 	static bool show_help_on_startup;
 	static int warn_size_object_edit;
+	static RKMDIFocusPolicy mdi_focus_policy;
 };
 
 #endif
