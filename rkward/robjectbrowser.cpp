@@ -59,7 +59,7 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, const char *n
 	layout->setContentsMargins (0, 0, 0, 0);
 	layout_widget = new KVBox (this);
 	layout->addWidget (layout_widget);
-	layout_widget->setFocusPolicy (Qt::StrongFocus);
+	setFocusPolicy (Qt::StrongFocus);
 
 	RKDummyPart *part = new RKDummyPart (this, layout_widget);
 	setPart (part);
@@ -97,7 +97,7 @@ void RObjectBrowser::initialize () {
 	RK_DO (qDebug ("creating workspace browser"), APP, DL_INFO);
 
 	internal = new RObjectBrowserInternal (layout_widget);
-	layout_widget->setFocusProxy (internal);
+	setFocusProxy (internal);
 	setMinimumSize (internal->minimumSize ());
 }
 
