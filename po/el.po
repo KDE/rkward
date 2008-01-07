@@ -3,13 +3,14 @@
 # This file is put in the public domain.
 #
 # Ilias Soumpasis <isoumpasis@gmail.com>, 2006, 2007.
-# Ilias <nono.231@gmail.com>, 2007.
+# Ilias <nono.231@gmail.com>, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-28 11:01+0200\n"
-"PO-Revision-Date: 2007-09-29 08:23+0100\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
+"group_id=50231&atid=459007\n"
+"POT-Creation-Date: 2008-01-07 22:34+0100\n"
+"PO-Revision-Date: 2008-01-07 19:40+0000\n"
 "Last-Translator: Ilias <nono.231@gmail.com>\n"
 "Language-Team: Greek\n"
 "MIME-Version: 1.0\n"
@@ -18,253 +19,18 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: dataeditor/editformatdialog.cpp:44
-msgid "Alignment"
-msgstr "Στοίχιση"
-
-#: dataeditor/editformatdialog.cpp:49
-msgid "Default for type '%1'"
-msgstr "Προκαθορισμένο για τον τύπο '%1'"
-
-#: dataeditor/editformatdialog.cpp:55
-msgid "Decimal Places"
-msgstr "Θέση Υποδιαστολής"
-
-#: dataeditor/editformatdialog.cpp:60
-msgid "Default setting"
-msgstr "Προκαθορισμένες ρυθμίσεις"
-
-#: dataeditor/editformatdialog.cpp:61
-msgid "As required"
-msgstr "Όπως απαιτείται"
-
-#: dataeditor/editformatdialog.cpp:62
-msgid "Fixed precision:"
-msgstr "Σταθερή ακρίβεια"
-
-#: dataeditor/editformatdialog.cpp:69 dataeditor/editlabelsdialog.cpp:241
-#: dialogs/startupdialog.cpp:84
-msgid "Ok"
-msgstr "Εντάξει"
-
-#: dataeditor/editformatdialog.cpp:75
-msgid "Formatting options for '%1'"
-msgstr "Επιλογές μορφοποίησης για '%1'"
-
-#: dataeditor/rkeditordataframepart.cpp:52
-msgid "Paste inside Table"
-msgstr "Επικόλληση εντός του πίνακα"
-
-#: dataeditor/rkeditordataframepart.cpp:54
-msgid "Paste inside Selection"
-msgstr "Επικόλληση εντός της επιλογής"
-
-#: dataeditor/rkeditordataframepart.cpp:57
-msgid "Cuts the selected section and puts it to the clipboard"
-msgstr "Αποκοπή του επιλεγμένου τμήματος και τοποθέτηση στο πρόχειρο"
-
-#: dataeditor/rkeditordataframepart.cpp:58
-msgid "Copies the selected section to the clipboard"
-msgstr "Αντιγραφή του επιλεγμένου τμήματος και τοποθέτηση στο πρόχειρο"
-
-#: dataeditor/rkeditordataframepart.cpp:59
-msgid "Pastes the clipboard contents to actual position"
-msgstr "Επικόλληση των περιεχομένων του πρόχειρου στην τρέχουσα θέση."
-
-#: dataeditor/rkeditordataframepart.cpp:60
+#: agents/rkeditobjectagent.cpp:56
 msgid ""
-"Pastes the clipboard contents to actual position, but not beyond the table's "
-"boundaries"
+"The object '%1', could not be opened for editing. Either it does not exist, "
+"or RKWard does not support editing this type of object, yet."
 msgstr ""
-"Επικόλληση των περιεχομένων του πρόχειρου στην τρέχουσα θέση, αλλά όχι πέρα "
-"από τα όρια του πίνακα"
+"Το αντικείμενο '%1' δεν μπορεί να ανοιχθεί για επεξεργασία. Είτε δεν υπάρχει "
+"ή το RKWard δεν υποστηρίζει την επεξεργασία αυτού του τύπου των αντικειμένων "
+"ακόμη."
 
-#: dataeditor/rkeditordataframepart.cpp:61
-msgid ""
-"Pastes the clipboard contents to actual position, but not beyond the "
-"boundaries of the current selection"
-msgstr ""
-"Επικόλληση των περιεχομένων του πρόχειρου στην τρέχουσα θέση, αλλά όχι πέρα "
-"από τα όρια της συγκεκριμένης επιλογής"
-
-#: dataeditor/rkeditordataframepart.cpp:67
-msgid "Cutting selection..."
-msgstr "Αποκοπή επιλογής..."
-
-#: dataeditor/rkeditordataframepart.cpp:76
-msgid "Copying selection to clipboard..."
-msgstr "Αντιγραφή της επιλογής στο πρόχειρο..."
-
-#: dataeditor/rkeditordataframepart.cpp:106
-msgid "Inserting clipboard contents..."
-msgstr "Εισαγωγή περιεχομένων προχείρου..."
-
-#: dataeditor/editlabelsdialog.cpp:49 dataeditor/twintable.cpp:62
-#: misc/rkobjectlistview.cpp:54 misc/rkobjectlistview.cpp:437
-msgid "Label"
-msgstr "Ετικέτα"
-
-#: dataeditor/editlabelsdialog.cpp:225
-msgid ""
-"Levels can be assigned only to consecutive integers starting with 1 (the "
-"index column is read only). To remove levels at the end of the list, just "
-"set them to empty."
-msgstr ""
-"Επίπεδα μπορούν να τεθούν μόνο σε αύξοντες αριθμούς ξεκινώντας από το 1 (η "
-"στήλη ευρετηρίου είναι μόνο για ανάγνωση). Για να αφαιρέσετε τα επίπεδα από "
-"το τέλος της λίστας απλά ρυθμίστε τα να είναι άδεια."
-
-#: dataeditor/editlabelsdialog.cpp:249
-msgid "Levels / Value labels for '%1'"
-msgstr "Επίπεδα / Ετικέτες τιμών για το '%1'"
-
-#: dataeditor/twintable.cpp:63 windows/rcontrolwindow.cpp:63
-#: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:436
-msgid "Type"
-msgstr "Τύπος"
-
-#: dataeditor/twintable.cpp:64
-msgid "Levels"
-msgstr "Επίπεδα"
-
-#: dataeditor/twintable.cpp:65
-msgid "Format"
-msgstr "Μορφοποίηση"
-
-#: dataeditor/twintable.cpp:66 plugin/rkformula.cpp:74 plugin/rkvarslot.cpp:57
-#: dialogs/rkloadlibsdialog.cpp:260 dialogs/rkloadlibsdialog.cpp:279
-#: dialogs/rkloadlibsdialog.cpp:463 dialogs/rkloadlibsdialog.cpp:613
-#: misc/rkobjectlistview.cpp:53
-msgid "Name"
-msgstr "Όνομα"
-
-#: dataeditor/twintable.cpp:99
-msgid "Insert new variable left"
-msgstr "Εισάγετε καινούρια μεταβλητή αριστερά"
-
-#: dataeditor/twintable.cpp:100
-msgid "Insert new variable right"
-msgstr "Εισάγετε καινούρια μεταβλητή δεξιά"
-
-#: dataeditor/twintable.cpp:101
-msgid "Delete this variable"
-msgstr "Διαγραφή αυτής της μεταβλητής"
-
-#: dataeditor/twintable.cpp:106
-msgid "Insert new case above"
-msgstr "Εισάγετε καινούρια περίπτωση παραπάνω"
-
-#: dataeditor/twintable.cpp:107
-msgid "Insert new case below"
-msgstr "Εισάγετε καινούρια περίπτωση παρακάτω"
-
-#: dataeditor/twintable.cpp:253
-msgid "Delete marked rows (%1-%2)"
-msgstr "Διαγραφή επιλεγμένων σειρών (%1-%2)"
-
-#: dataeditor/twintable.cpp:260
-msgid "Delete this row (%1)"
-msgstr "Διαγραφή αυτής της σειράς (%1)"
-
-#: agents/rksaveagent.cpp:60
-msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
-msgstr ""
-"Δεν δόθηκε όνομα αρχείου. Τα δεδομένα σας δεν αποθηκεύτηκαν. Θέλετε να "
-"συνεχίσετε;"
-
-#: agents/rksaveagent.cpp:73
-msgid "Saving to file '%1' failed. What do you want to do?"
-msgstr "Η αποθήκευση στο αρχείο '%1' απέτυχε. Τι θέλετε να κάνετε;"
-
-#: agents/rksaveagent.cpp:73
-msgid "Save failed"
-msgstr "Η αποθήκευση απέτυχε"
-
-#: agents/rksaveagent.cpp:73
-msgid "Try saving with a different filename"
-msgstr "Προσπαθήστε να το αποθηκεύσετε με διαφορετικό όνομα αρχείου"
-
-#: agents/rksaveagent.cpp:73
-msgid "Saving failed"
-msgstr "Η αποθήκευση απέτυχε"
-
-#: agents/rksaveagent.cpp:86
-msgid ""
-"Saving to file '%1' failed. Do you want to try saving to a different "
-"filename?"
-msgstr ""
-"Η αποθήκευση του αρχείου '%1' απέτυχε. Θέλετε να το αποθηκεύσετε με "
-"διαφορετικό όνομα;"
-
-#: agents/showedittextfileagent.cpp:59
-msgid ""
-" For that reason processing has been stopped for now. Press the \"Done\"-"
-"button, or close this dialog once you think it is safe to resume.\n"
-"\n"
-msgstr ""
-"Γιαυτό το λόγο η επεξεργασία έχει σταματήσει προς το παρόν. Πιέστε το κουμπί "
-"\"Έγινε\", ή κλείστε το παράθυρο διαλόγου όταν νομίζετε ότι είναι ασφαλές να "
-"συνεχίσετε.\n"
-"\n"
-
-#: agents/showedittextfileagent.cpp:60
-msgid ""
-"The file(s) have been opened in text-windows. The following is a list of the "
-"file(s) in question:\n"
-"\n"
-msgstr ""
-"Τα αρχεία έχουν ανοιχθεί σε παράθυρο κειμένου. Ακολουθεί η λίστα με τους εν "
-"λόγω φακέλους:\n"
-"\n"
-
-#: agents/showedittextfileagent.cpp:64
-msgid "Showing file(s)"
-msgstr "Προβολή των αρχείων"
-
-#: agents/showedittextfileagent.cpp:65
-msgid ""
-"A command running in the R-engine wants you to see one or more file(s). "
-"RKWard can not determine, whether it is safe to continue processing R "
-"commands, before you have read the file(s) in question."
-msgstr ""
-"Μία εντολή που εκτελείται στην μηχανή R θέλει να προβάλλετε ένα ή "
-"περισσότερα αρχεία. Το Rkward δεν μπορεί να κρίνει αν είναι ασφαλές να "
-"συνεχίσετε να εκτελείτε τις εντολές στο R, πριν να έχετε διαβάσει τα "
-"αμφισβητούμενα αρχεία."
-
-#: agents/showedittextfileagent.cpp:77
-msgid "Edit file(s)"
-msgstr "Επεξεργασία αρχείου"
-
-#: agents/showedittextfileagent.cpp:78
-msgid ""
-"A command running in the R-engine wants you to edit one or more file(s). "
-"RKWard can not determine, whether it is safe to continue processing R "
-"commands, before you have read/edited (and saved) the file(s) in question."
-msgstr ""
-"Μία εντολή που εκτελείται στην μηχανή R θέλει να επεξεργαστείτε ένα ή "
-"περισσότερα αρχεία. Το Rkward δεν μπορεί να κρίνει αν είναι ασφαλές να "
-"συνεχίσετε να εκτελείτε τις εντολές στο R, πριν να έχετε διαβάσει/"
-"επεξεργαστεί (και αποθηκεύσει) τα αμφισβητούμενα αρχεία."
-
-#: agents/showedittextfileagent.cpp:93
-msgid ""
-"\n"
-"\n"
-"The following of the above files were not readable and have not been "
-"opened:\n"
-"\n"
-msgstr ""
-"\n"
-"\n"
-"Τα ακόλουθα από τα ανωτέρω αρχεία δεν ήταν δυνατόν να αναγνωστούν και δεν "
-"ανοίχθηκαν:\n"
-"\n"
-
-#: agents/showedittextfileagent.cpp:135 plugin/rkstandardcomponentgui.cpp:356
-#: misc/rkprogresscontrol.cpp:273
-msgid "Done"
-msgstr "Έγινε"
+#: agents/rkeditobjectagent.cpp:56
+msgid "Cannot edit '%1'"
+msgstr "Δεν μπορεί να γίνει επεξεργασία του'%1'"
 
 #: agents/rkloadagent.cpp:38
 msgid "Loading Workspace ..."
@@ -295,111 +61,106 @@ msgstr ""
 msgid "Waiting for R to finish"
 msgstr "Αναμένοντας το R να τελειώσει"
 
-#: agents/rkeditobjectagent.cpp:56
+#: agents/rksaveagent.cpp:60
 msgid ""
-"The object '%1', could not be opened for editing. Either it does not exist, "
-"or RKWard does not support editing this type of object, yet."
+"No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
-"Το αντικείμενο '%1' δεν μπορεί να ανοιχθεί για επεξεργασία. Είτε δεν υπάρχει "
-"ή το RKWard δεν υποστηρίζει την επεξεργασία αυτού του τύπου των αντικειμένων "
-"ακόμη."
+"Δεν δόθηκε όνομα αρχείου. Τα δεδομένα σας δεν αποθηκεύτηκαν. Θέλετε να "
+"συνεχίσετε;"
 
-#: agents/rkeditobjectagent.cpp:56
-msgid "Cannot edit '%1'"
-msgstr "Δεν μπορεί να γίνει επεξεργασία του'%1'"
+#: agents/rksaveagent.cpp:73
+msgid "Saving to file '%1' failed. What do you want to do?"
+msgstr "Η αποθήκευση στο αρχείο '%1' απέτυχε. Τι θέλετε να κάνετε;"
 
-#: core/rkmodificationtracker.cpp:50
+#: agents/rksaveagent.cpp:73
+msgid "Save failed"
+msgstr "Η αποθήκευση απέτυχε"
+
+#: agents/rksaveagent.cpp:73
+msgid "Try saving with a different filename"
+msgstr "Προσπαθήστε να το αποθηκεύσετε με διαφορετικό όνομα αρχείου"
+
+#: agents/rksaveagent.cpp:73
+msgid "Saving failed"
+msgstr "Η αποθήκευση απέτυχε"
+
+#: agents/rksaveagent.cpp:86
 msgid ""
-"The object '%1' was removed from workspace or changed to a different type of "
-"object, but is currently opened for editing. Do you want to restore it?"
+"Saving to file '%1' failed. Do you want to try saving to a different "
+"filename?"
 msgstr ""
-"Το αντικείμενο '%1' διαγράφηκε από το χώρο εργασίας ή μετατράπηκε σε άλλο "
-"τύπο αντικειμένου, αλλά είναι προσωρινά ανοικτό για επεξεργασία. Επιθυμείτε "
-"την ανάκτησή του;"
+"Η αποθήκευση του αρχείου '%1' απέτυχε. Θέλετε να το αποθηκεύσετε με "
+"διαφορετικό όνομα;"
 
-#: core/rkmodificationtracker.cpp:50
-msgid "Restore object?"
-msgstr "Ανάκτηση αντικειμένου;"
+#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:279
+#: plugin/rkstandardcomponentgui.cpp:361
+msgid "Done"
+msgstr "Έγινε"
 
-#: core/rkmodificationtracker.cpp:57
+#: agents/showedittextfileagent.cpp:77
 msgid ""
-"Do you really want to remove the object '%1'? The object is currently opened "
-"for editing, it will be removed in the editor, too. There's no way to get it "
-"back."
+" For that reason processing has been stopped for now. Press the \"Done\"-"
+"button, or close this dialog once you think it is safe to resume.\n"
+"\n"
 msgstr ""
-"Θέλετε να διαγράψετε το αντικείμενο '%1'; Το αντικείμενο είναι προσωρινά "
-"ανοικτό για επεξεργασία, και θα αφαιρεθεί και από τον επεξεργαστή. Δεν θα "
-"υπάρχει περίπτωση να το ανακτήσετε."
+"Γιαυτό το λόγο η επεξεργασία έχει σταματήσει προς το παρόν. Πιέστε το κουμπί "
+"\"Έγινε\", ή κλείστε το παράθυρο διαλόγου όταν νομίζετε ότι είναι ασφαλές να "
+"συνεχίσετε.\n"
+"\n"
 
-#: core/rkmodificationtracker.cpp:57 core/rkmodificationtracker.cpp:62
-msgid "Remove object?"
-msgstr "Αφαίρεση αντικειμένου;"
-
-#: core/rkmodificationtracker.cpp:62
-msgid "Do you really want to remove the object '%1'? There's no way to get it back."
+#: agents/showedittextfileagent.cpp:78
+msgid ""
+"The file(s) have been opened in text-windows. The following is a list of the "
+"file(s) in question:\n"
+"\n"
 msgstr ""
-"Θέλετε πραγματικά να διαγράψετε το αντικείμενο '%1'; Δεν θα υπάρχει τρόπος "
-"να το ανακτήσετε."
+"Τα αρχεία έχουν ανοιχθεί σε παράθυρο κειμένου. Ακολουθεί η λίστα με τους εν "
+"λόγω φακέλους:\n"
+"\n"
 
-#: core/robject.cpp:119
-msgid "Full location:"
-msgstr "Πλήρης διαδρομή τοποθεσίας:"
+#: agents/showedittextfileagent.cpp:82
+msgid "Showing file(s)"
+msgstr "Προβολή των αρχείων"
 
-#: core/robject.cpp:121
-msgid "Label:"
-msgstr "Ετικέτα:"
+#: agents/showedittextfileagent.cpp:83
+msgid ""
+"A command running in the R-engine wants you to see one or more file(s). "
+"RKWard can not determine, whether it is safe to continue processing R "
+"commands, before you have read the file(s) in question."
+msgstr ""
+"Μία εντολή που εκτελείται στην μηχανή R θέλει να προβάλλετε ένα ή "
+"περισσότερα αρχεία. Το Rkward δεν μπορεί να κρίνει αν είναι ασφαλές να "
+"συνεχίσετε να εκτελείτε τις εντολές στο R, πριν να έχετε διαβάσει τα "
+"αμφισβητούμενα αρχεία."
 
-#: core/robject.cpp:122
-msgid "Type:"
-msgstr "Τύπος:"
+#: agents/showedittextfileagent.cpp:95
+msgid "Edit file(s)"
+msgstr "Επεξεργασία αρχείου"
 
-#: core/robject.cpp:125
-msgid "Function"
-msgstr "Συνάρτηση"
+#: agents/showedittextfileagent.cpp:96
+msgid ""
+"A command running in the R-engine wants you to edit one or more file(s). "
+"RKWard can not determine, whether it is safe to continue processing R "
+"commands, before you have read/edited (and saved) the file(s) in question."
+msgstr ""
+"Μία εντολή που εκτελείται στην μηχανή R θέλει να επεξεργαστείτε ένα ή "
+"περισσότερα αρχεία. Το Rkward δεν μπορεί να κρίνει αν είναι ασφαλές να "
+"συνεχίσετε να εκτελείτε τις εντολές στο R, πριν να έχετε διαβάσει/"
+"επεξεργαστεί (και αποθηκεύσει) τα αμφισβητούμενα αρχεία."
 
-#: core/robject.cpp:126
-msgid "Usage: "
-msgstr "Χρήση: "
-
-#: core/robject.cpp:128
-msgid "Data frame"
-msgstr "Πλαίσιο δεδομένων"
-
-#: core/robject.cpp:130
-msgid "Array"
-msgstr "Διάταξη"
-
-#: core/robject.cpp:132
-msgid "Matrix"
-msgstr "Μήτρα"
-
-#: core/robject.cpp:134
-msgid "List"
-msgstr "Λίστα"
-
-#: core/robject.cpp:136
-msgid "Variable"
-msgstr "Μεταβλητή"
-
-#: core/robject.cpp:137
-msgid "Data Type:"
-msgstr "Τύπος δεδομένων:"
-
-#: core/robject.cpp:139
-msgid "Environment"
-msgstr "Περιβάλλον"
-
-#: core/robject.cpp:144
-msgid "Length: "
-msgstr "Μήκος: "
-
-#: core/robject.cpp:146
-msgid "Dimensions: "
-msgstr "Διαστάσεις: "
-
-#: core/robject.cpp:154
-msgid "Class(es):"
-msgstr "Κλάσεις:"
+#: agents/showedittextfileagent.cpp:111
+msgid ""
+"\n"
+"\n"
+"The following of the above files were not readable and have not been "
+"opened:\n"
+"\n"
+msgstr ""
+"\n"
+"\n"
+"Τα ακόλουθα από τα ανωτέρω αρχεία δεν ήταν δυνατόν να αναγνωστούν και δεν "
+"ανοίχθηκαν:\n"
+"\n"
 
 #: core/renvironmentobject.cpp:91
 msgid ""
@@ -426,1132 +187,332 @@ msgstr ""
 msgid "Package blacklisted"
 msgstr "Το πακέτο είναι μπλοκαρισμένο"
 
-#: windows/rkcommandeditorwindowpart.cpp:51
-msgid "Run all"
-msgstr "Εκτέλεση όλων"
-
-#: windows/rkcommandeditorwindowpart.cpp:52 windows/rkhtmlwindow.cpp:94
-#: windows/rkcommandlog.cpp:287 rkconsole.cpp:781
-msgid "Run selection"
-msgstr "Εκτέλεση της επιλογής"
-
-#: windows/rkcommandeditorwindowpart.cpp:53
-msgid "Run current line"
-msgstr "Εκτέλεση τρέχουσας γραμμής"
-
-#: windows/rkcommandeditorwindowpart.cpp:55 rkconsole.cpp:780
-msgid "&Function reference"
-msgstr "&Αναφορά συνάρτησης"
-
-#: windows/rkhtmlwindow.cpp:168
+#: core/rkmodificationtracker.cpp:66
 msgid ""
-"The url you are trying to open ('%1') is not a local file. Do you want to "
-"open the url in the default application?"
+"The object '%1' was removed from workspace or changed to a different type of "
+"object, but is currently opened for editing. Do you want to restore it?"
 msgstr ""
-"Η ιστοσελίδα που προσπαθείτε να ανοίξετε ('%1') δεν είναι ένα τοπικό αρχείο. "
-"Θέλετε να ανοίξετε το αρχείο με την προεπιλεγμένη εφαρμογή;"
+"Το αντικείμενο '%1' διαγράφηκε από το χώρο εργασίας ή μετατράπηκε σε άλλο "
+"τύπο αντικειμένου, αλλά είναι προσωρινά ανοικτό για επεξεργασία. Επιθυμείτε "
+"την ανάκτησή του;"
 
-#: windows/rkhtmlwindow.cpp:168
-msgid "Open in default application?"
-msgstr "Άνοιγμα με·την·προεπιλεγμένη·εφαρμογή;"
+#: core/rkmodificationtracker.cpp:66
+msgid "Restore object?"
+msgstr "Ανάκτηση αντικειμένου;"
 
-#: windows/rkhtmlwindow.cpp:248 settings/rksettingsmoduleoutput.cpp:65
-msgid "Output"
-msgstr "Παράθυρο αποτελεσμάτων"
-
-#: windows/rkhtmlwindow.cpp:250
-msgid "&Flush Output"
-msgstr "&Εκκαθάριση Παραθύρου Αποτελεσμάτων"
-
-#: windows/rkhtmlwindow.cpp:251
-msgid "&Refresh Output"
-msgstr "&Ανανέωση Παραθύρου Αποτελεσμάτων"
-
-#: windows/rkhtmlwindow.cpp:253
-msgid "Print Output"
-msgstr "Εκτύπωση αποτελεσμάτων"
-
-#: windows/rkhtmlwindow.cpp:257
-msgid "Save Output as HTML"
-msgstr "Αποθήκευση αποτελεσμάτων ως ιστοσελίδα"
-
-#: windows/rkhtmlwindow.cpp:350
+#: core/rkmodificationtracker.cpp:75
 msgid ""
-"Do you really want to flush the output? It will not be possible to restore "
-"it."
+"Do you really want to remove the object '%1'? The object is currently opened "
+"for editing, it will be removed in the editor, too. There's no way to get it "
+"back."
 msgstr ""
-"Θέλετε σίγουρα να εκκαθαρίσετε το παράθυρο αποτελεσμάτων; Δεν θα είναι "
-"δυνατόν να το ανακτήσετε."
+"Θέλετε να διαγράψετε το αντικείμενο '%1'; Το αντικείμενο είναι προσωρινά "
+"ανοικτό για επεξεργασία, και θα αφαιρεθεί και από τον επεξεργαστή. Δεν θα "
+"υπάρχει περίπτωση να το ανακτήσετε."
 
-#: windows/rkhtmlwindow.cpp:350
-msgid "Flush output?"
-msgstr "Εκκαθάριση παραθύρου αποτελεσμάτων;"
+#: core/rkmodificationtracker.cpp:75 core/rkmodificationtracker.cpp:80
+msgid "Remove object?"
+msgstr "Αφαίρεση αντικειμένου;"
 
-#: windows/rkhtmlwindow.cpp:375
+#: core/rkmodificationtracker.cpp:80
 msgid ""
-"<HTML><BODY><H1>RKWard output</H1>\n"
-"<P>The output is empty.</P>\n"
-"</BODY></HTML>"
+"Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
-"<HTML><BODY><H1>Παράθυρο αποτελεσμάτων του RKWard</H1>\n"
-"<P>Το παράθυρο αποτελεσμάτων είναι άδειο</P>\n"
-"</BODY></HTML>"
+"Θέλετε πραγματικά να διαγράψετε το αντικείμενο '%1'; Δεν θα υπάρχει τρόπος "
+"να το ανακτήσετε."
 
-#: windows/rkhtmlwindow.cpp:393
-msgid "Print Help"
-msgstr "Εκτύπωση Βοήθειας"
+#: core/rkmodificationtracker.cpp:333 dataeditor/rkvareditmodel.cpp:571
+#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:304
+#: dialogs/rkloadlibsdialog.cpp:473 dialogs/rkloadlibsdialog.cpp:633
+#: plugin/rkformula.cpp:78 plugin/rkvarslot.cpp:55
+msgid "Name"
+msgstr "Όνομα"
 
-#: windows/rkhtmlwindow.cpp:403
-msgid "R Help"
-msgstr "Βοήθεια R"
+#: core/rkmodificationtracker.cpp:334 dataeditor/editlabelsdialog.cpp:213
+#: dataeditor/rkvareditmodel.cpp:572 misc/rkobjectlistview.cpp:168
+msgid "Label"
+msgstr "Ετικέτα"
 
-#: windows/rkhtmlwindow.cpp:429
-msgid "Page does not exist or is broken"
-msgstr "Η σελίδα δεν υπάρχει ή είναι προβληματική "
+#: core/rkmodificationtracker.cpp:335 dataeditor/rkvareditmodel.cpp:573
+#: misc/rkobjectlistview.cpp:167 rbackend/rcommandstack.cpp:399
+msgid "Type"
+msgstr "Τύπος"
 
-#: windows/rkhtmlwindow.cpp:487
-msgid "No Title"
-msgstr "Χωρίς τίτλο"
+#: core/rkmodificationtracker.cpp:336 misc/rkobjectlistview.cpp:169
+msgid "Class"
+msgstr "Κλάση"
 
-#: windows/rkhtmlwindow.cpp:512
-msgid "Summary"
-msgstr "Περίληψη"
+#: core/robject.cpp:110
+msgid "Full location:"
+msgstr "Πλήρης διαδρομή τοποθεσίας:"
 
-#: windows/rkhtmlwindow.cpp:518
-msgid "Usage"
-msgstr "Χρήση"
+#: core/robject.cpp:112
+msgid "Label:"
+msgstr "Ετικέτα:"
 
-#: windows/rkhtmlwindow.cpp:535
-msgid "GUI settings"
-msgstr "Ρυθμίσεις GUI"
+#: core/robject.cpp:113
+msgid "Type:"
+msgstr "Τύπος:"
 
-#: windows/rkhtmlwindow.cpp:543
-msgid "Unnamed GUI element"
-msgstr "Στοιχείο του GUI χωρίς όνομα"
+#: core/robject.cpp:116
+msgid "Function"
+msgstr "Συνάρτηση"
 
-#: windows/rkhtmlwindow.cpp:563
-msgid "Related functions and pages"
-msgstr "Σχετικές λειτουργίες και σελίδες"
+#: core/robject.cpp:117
+msgid "Usage: "
+msgstr "Χρήση: "
 
-#: windows/rkhtmlwindow.cpp:570
-msgid "Technical details"
-msgstr "Τεχνικές λεπτομέρειες"
+#: core/robject.cpp:119
+msgid "Data frame"
+msgstr "Πλαίσιο δεδομένων"
 
-#: windows/rkhtmlwindow.cpp:647
-msgid "R Reference on '%1'"
-msgstr "Αναφορά του R για το '%1'"
+#: core/robject.cpp:121
+msgid "Array"
+msgstr "Διάταξη"
 
-#: windows/rkhtmlwindow.cpp:662
-msgid "BROKEN REFERENCE"
-msgstr "ΠΡΟΒΛΗΜΑΤΙΚΗ ΑΝΑΦΟΡΑ"
+#: core/robject.cpp:123
+msgid "Matrix"
+msgstr "Μήτρα"
 
-#: windows/rcontrolwindow.cpp:47
-msgid "Configure R backend"
-msgstr "Ρύθμιση του συστήματος υποστήριξης R"
+#: core/robject.cpp:125
+msgid "List"
+msgstr "Λίστα"
 
-#: windows/rcontrolwindow.cpp:52 windows/rcontrolwindow.cpp:314
-msgid "Pause execution"
-msgstr "Παύση εκτέλεσης"
+#: core/robject.cpp:127
+msgid "Variable"
+msgstr "Μεταβλητή"
 
-#: windows/rcontrolwindow.cpp:57
-msgid "Cancel selected commands"
-msgstr "Ακύρωση επιλεγμένων εντολών"
+#: core/robject.cpp:128
+msgid "Data Type:"
+msgstr "Τύπος δεδομένων:"
 
-#: windows/rcontrolwindow.cpp:62
-msgid "Command"
-msgstr "Εντολή"
+#: core/robject.cpp:130
+msgid "Environment"
+msgstr "Περιβάλλον"
 
-#: windows/rcontrolwindow.cpp:64
-msgid "Flags"
-msgstr "Σημαίες"
+#: core/robject.cpp:135
+msgid "Length: "
+msgstr "Μήκος: "
 
-#: windows/rcontrolwindow.cpp:65
-msgid "Description"
-msgstr "Περιγραφή"
+#: core/robject.cpp:137
+msgid "Dimensions: "
+msgstr "Διαστάσεις: "
 
-#: windows/rcontrolwindow.cpp:239
-msgid "Command Stack"
-msgstr "Σωρός εντολών"
+#: core/robject.cpp:145
+msgid "Class(es):"
+msgstr "Κλάσεις:"
 
-#: windows/rcontrolwindow.cpp:305
+#: dataeditor/editformatdialog.cpp:41
+msgid "Alignment"
+msgstr "Στοίχιση"
+
+#: dataeditor/editformatdialog.cpp:45
+msgid "Default"
+msgstr "Προκαθορισμένο"
+
+#: dataeditor/editformatdialog.cpp:47
+msgid "Left"
+msgstr "Αριστερά"
+
+#: dataeditor/editformatdialog.cpp:49
+msgid "Right"
+msgstr "Δεξιά"
+
+#: dataeditor/editformatdialog.cpp:54
+msgid "Decimal Places"
+msgstr "Θέση Υποδιαστολής"
+
+#: dataeditor/editformatdialog.cpp:56
+msgid "Default setting"
+msgstr "Προκαθορισμένες ρυθμίσεις"
+
+#: dataeditor/editformatdialog.cpp:58
+msgid "As required"
+msgstr "Όπως απαιτείται"
+
+#: dataeditor/editformatdialog.cpp:60
+msgid "Fixed precision:"
+msgstr "Σταθερή ακρίβεια"
+
+#: dataeditor/editformatdialog.cpp:78
+msgid "Formatting options for '%1'"
+msgstr "Επιλογές μορφοποίησης για '%1'"
+
+#: dataeditor/editlabelsdialog.cpp:223
 msgid ""
-"Some of the commands you were trying to cancel are marked as \"sync"
-"\" (letter 'S' in the type column). Cancelling such commands could lead to "
-"loss of data. These commands have _not_ been cancelled."
+"Levels can be assigned only to consecutive integers starting with 1 (the "
+"index column is read only). To remove levels at the end of the list, just "
+"set them to empty."
 msgstr ""
-"Κάποιες από τις εντολές που προσπαθείτε να διαγράψετε έχουν χαρακτηριστεί ως "
-"\"sync\"·(γράμμα 'S' στην στήλη του τύπου). Ακυρώνοντας τέτοιες εντολές "
-"μπορεί να οδηγήσει σε απώλεια δεδομένων. Αυτές οι εντολές δεν έχουν ακυρωθεί."
+"Επίπεδα μπορούν να τεθούν μόνο σε αύξοντες αριθμούς ξεκινώντας από το 1 (η "
+"στήλη ευρετηρίου είναι μόνο για ανάγνωση). Για να αφαιρέσετε τα επίπεδα από "
+"το τέλος της λίστας απλά ρυθμίστε τα να είναι άδεια."
 
-#: windows/rcontrolwindow.cpp:305
-msgid "Some commands not cancelled"
-msgstr "Κάποιες εντολές δεν ακυρώθηκαν"
+#: dataeditor/editlabelsdialog.cpp:229
+msgid "Levels / Value labels for '%1'"
+msgstr "Επίπεδα / Ετικέτες τιμών για το '%1'"
 
-#: windows/rcontrolwindow.cpp:318
-msgid "Resume execution"
-msgstr "Συνέχιση εκτέλεσης"
+#: dataeditor/rkeditordataframe.cpp:62 robjectbrowser.cpp:187
+#: robjectbrowser.cpp:221
+msgid "The name you specified was already in use or not valid. Renamed to %1"
+msgstr ""
+"Το όνομα που δώσατε ήδη υπάρχει ή δεν είναι έγκυρο. Μετονομάστηκε σε %1"
 
-#: windows/rcontrolwindow.cpp:404
-msgid "Cancelled"
-msgstr "Ακυρώθηκε"
+#: dataeditor/rkeditordataframe.cpp:62 robjectbrowser.cpp:187
+#: robjectbrowser.cpp:221
+msgid "Invalid Name"
+msgstr "Μη έγκυρο όνομα"
 
-#: windows/rcontrolwindow.cpp:416
-msgid "Chain"
-msgstr "Αλληλουχία"
+#: dataeditor/rkeditordataframepart.cpp:57
+msgid "Paste inside Table"
+msgstr "Επικόλληση εντός του πίνακα"
 
-#: windows/rcontrolwindow.cpp:418
-msgid "Closed"
-msgstr "Έκλεισε"
+#: dataeditor/rkeditordataframepart.cpp:62
+msgid "Paste inside Selection"
+msgstr "Επικόλληση εντός της επιλογής"
 
-#: windows/rcontrolwindow.cpp:420
-msgid "Open (Waiting)"
-msgstr "Άνοιγμα (Αναμονή)"
+#: dataeditor/rkeditordataframepart.cpp:66
+msgid "Cuts the selected section and puts it to the clipboard"
+msgstr "Αποκοπή του επιλεγμένου τμήματος και τοποθέτηση στο πρόχειρο"
 
-#: windows/rkcommandeditorwindow.cpp:130 windows/rkcommandeditorwindow.cpp:224
-msgid " [modified]"
-msgstr " [τροποποιήθηκε]"
+#: dataeditor/rkeditordataframepart.cpp:67
+msgid "Copies the selected section to the clipboard"
+msgstr "Αντιγραφή του επιλεγμένου τμήματος και τοποθέτηση στο πρόχειρο"
 
-#: windows/rkcommandeditorwindow.cpp:143
-msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr "Το έγγραφο \"%1\" έχει τροποποιηθεί. Θέλετε να το κλείσετε;"
+#: dataeditor/rkeditordataframepart.cpp:68
+msgid "Pastes the clipboard contents to actual position"
+msgstr "Επικόλληση των περιεχομένων του πρόχειρου στην τρέχουσα θέση."
 
-#: windows/rkcommandeditorwindow.cpp:143
-msgid "File not saved"
-msgstr "Το αρχείο δεν αποθηκεύτηκε"
-
-#: windows/rkcommandeditorwindow.cpp:223
-msgid "Unnamed"
-msgstr "Ανώνυμο"
-
-#: windows/detachedwindowcontainer.cpp:41
-msgid "Attach to main window"
-msgstr "Επισύναψη στο κύριο παράθυρο"
-
-#: windows/rkworkplaceview.cpp:58
-msgid "Window Left"
-msgstr "Παράθυρο αριστερά"
-
-#: windows/rkworkplaceview.cpp:62
-msgid "Window Right"
-msgstr "Παράθυρο δεξιά"
-
-#: windows/rkworkplace.cpp:148
-msgid "Unable to open \"%1\""
-msgstr "Αδυναμία ανοίγματος του \"%1\""
-
-#: windows/rkworkplace.cpp:148
-msgid "Could not open command file"
-msgstr "Αδυναμία ανοίγματος του φακέλου εντολών"
-
-#: windows/rkworkplace.cpp:260
+#: dataeditor/rkeditordataframepart.cpp:69
 msgid ""
-"You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
-"is not optimized to handle very large objects in the built in data editor. "
-"This will use a lot of memory, and - depending on your system - might be "
-"very slow. For large objects it is generally recommended to edit using "
-"command line means or to split into smaller chunks before editing. On the "
-"other hand, if you have enough memory, or the data is simple enough (numeric "
-"data is easier to handle, than factor), editing may not be a problem at all. "
-"You can configure this warning (or turn it off entirely) under Settings-"
-">Configure RKWard->General.\n"
-"Really edit object?"
+"Pastes the clipboard contents to actual position, but not beyond the table's "
+"boundaries"
 msgstr ""
-"Πρόκειται να επεξεργαστείτε το αντικείμενο \"%1\", το οποίο είναι πολύ "
-"μεγάλο (%2 πεδία). Το RKWard δεν είναι βελτιστοποιημένο να χειρίζεται πολύ "
-"μεγάλα αντικείμενα στο ενσωματωμένο επεξεργαστή δεδομένων. Αυτό θα "
-"χρησιμοποιήσει πολύ μνήμη και-ανάλογα με το σύστημά σας- μπορεί να γίνει "
-"πολύ αργό. Για μεγάλα αντικείμενα συνίσταται γενικά να τα επεξεργαστείτε "
-"μέσω της γραμμής εντολών ή να τα χωρίσετε σε μικρότερα κομμάτια πριν τα "
-"επεξεργαστείτε. Από την άλλη αν έχετε αρκετή μνήμη ή τα δεδομένα είναι "
-"αρκετά απλά (αριθμητικά δεδομένα είναι ευκολότερο να διαχειριστούν από μη "
-"αριθμητικά), η επεξεργασία μπορεί να μην σας δημιουργήσει κανένα πρόβλημα. "
-"Μπορείτε να ρυθμίσετε / απενεργοποιήσετε αυτήν την προειδοποίηση από το "
-"μενού Ρυθμίσεις->Ρύθμιση RKWard->Γενικά.\n"
-"Θέλετε πραγματικά να επεξεργαστείτε το αντικείμενο;"
+"Επικόλληση των περιεχομένων του πρόχειρου στην τρέχουσα θέση, αλλά όχι πέρα "
+"από τα όρια του πίνακα"
 
-#: windows/rkworkplace.cpp:260
-msgid "About to edit very large object"
-msgstr "Πρόκειται να επεξεργαστείτε ένα πολύ μεγάλο αντικείμενο"
-
-#: windows/rkworkplace.cpp:430
-msgid "Save Workplace layout"
-msgstr "Αποθήκευση διάταξης χώρου εργασίας"
-
-#: windows/rkworkplace.cpp:437
-msgid "Restore Workplace layout"
-msgstr "Ανάκτηση διάταξης χώρου εργασίας"
-
-#: windows/rkworkplace.cpp:507
-msgid "Previous Window"
-msgstr "Προηγούμενο Παράθυρο"
-
-#: windows/rkworkplace.cpp:511
-msgid "Next Window"
-msgstr "Επόμενο Παράθυρο"
-
-#: windows/rkcommandlog.cpp:54 settings/rksettingsmodulewatch.cpp:277
-msgid "Command log"
-msgstr "Αρχείο καταγραφής εντολών"
-
-#: windows/rkcommandlog.cpp:173
-msgid "Incomplete statement.\n"
-msgstr "Μη ολοκληρωμένη δήλωση.\n"
-
-#: windows/rkcommandlog.cpp:175
-msgid "Syntax error.\n"
-msgstr "Σφάλμα σύνταξης.\n"
-
-#: windows/rkcommandlog.cpp:177
-msgid "An unspecified error occurred while running the command.\n"
-msgstr "Ένα απροσδιόριστο σφάλμα συνέβη κατά την εκτέλεση της εντολής.\n"
-
-#: windows/rkwindowcatcher.cpp:60
+#: dataeditor/rkeditordataframepart.cpp:70
 msgid ""
-"You have created a new X11 device window in R. Usually, RKWard tries to "
-"detect such windows, to take control of them, and add a menu-bar to them. "
-"This time, however, RKWard failed to detect, which window was created, and "
-"so can not embed it.\n"
-"If you created the window on a different screen or X11 display, that is to "
-"be expected. You might want to consider changing options(\"display\"), "
-"then.\n"
-"If you can see the X11 window on the same screen as this message, then "
-"RKWard should do better. In this case, please contact us at rkward-"
-"devel@lists.sourceforge.net with details on your setup, so we can try to fix "
-"this in future versions of RKWard."
+"Pastes the clipboard contents to actual position, but not beyond the "
+"boundaries of the current selection"
 msgstr ""
-"Έχετε δημιουργήσει ένα νέο παράθυρο στης συσκευής Χ11 στο R. Συνήθως το "
-"RKWard προσπαθεί να εντοπίσει τέτοια παράθυρα, να τα ελέγξει και να "
-"προσθέσει μία γραμμή εργαλείων σε αυτά. Αυτή τη φορά όμως το RKWard απέτυχε "
-"να εντοπίσει ποιο παράθυρο δημιουργήθηκε και γιαυτό δεν μπορεί να το "
-"ενσωματώσει. \n"
-"Αν δημιουργήσατε εσείς αυτό το νέο παράθυρο σε διαφορετική οθόνη ή προβολή "
-"Χ11, αυτό είναι αναμενόμενο. Τότε θα σας ενδιέφερε να αλλάξετε τις επιλογές "
-"(\"προβολή\").\n"
-"Αν μπορείτε να δείτε το παράθυρο Χ11 στην ίδια οθόνη με αυτό το μήνυμα, τότε "
-"είναι πρόβλημα του RKWard. Σε αυτήν την περίπτωση στείλτε μας μήνυμα στο "
-"devel@lists.sourceforge.net με λεπτομέρειες για τις ρυθμίσεις σας, ώστε να "
-"προσπαθήσουμε να το διορθώσουμε στις μελλοντικές εκδόσεις του RKWard."
+"Επικόλληση των περιεχομένων του πρόχειρου στην τρέχουσα θέση, αλλά όχι πέρα "
+"από τα όρια της συγκεκριμένης επιλογής"
 
-#: windows/rkwindowcatcher.cpp:60
-msgid "Could not embed R X11 window"
-msgstr "Δεν ήταν δυνατή η ενσωμάτωση του παραθύρου Χ11"
+#: dataeditor/rkeditordataframepart.cpp:76
+msgid "Cutting selection..."
+msgstr "Αποκοπή επιλογής..."
 
-#: windows/rkwindowcatcher.cpp:93
-msgid "An error occurred"
-msgstr "Υπήρξαν κάποιο σφάλμα"
+#: dataeditor/rkeditordataframepart.cpp:85
+msgid "Copying selection to clipboard..."
+msgstr "Αντιγραφή της επιλογής στο πρόχειρο..."
 
-#: windows/rkwindowcatcher.cpp:193
-msgid "Specify fixed size"
-msgstr "Προσδιορισμός σταθερού μέγεθος"
+#: dataeditor/rkeditordataframepart.cpp:112
+msgid "Inserting clipboard contents..."
+msgstr "Εισαγωγή περιεχομένων προχείρου..."
 
-#: windows/rkwindowcatcher.cpp:218
-msgid "Activate graphics device number %1"
-msgstr "Ενεργοποίηση συσκευής γραφικών νούμερο %1"
+#: dataeditor/rkvareditmodel.cpp:214 dataeditor/rkvareditmodel.cpp:457
+msgid "Type on these fields to add new columns"
+msgstr "Πληκτρολογίστε σε αυτά τα πεδία για να προσθέσετε νέες στήλες"
 
-#: windows/rkwindowcatcher.cpp:224
-msgid "Copy contents of graphics device number %1 to output"
-msgstr ""
-"Αντιγραφή περιεχομένων της συσκευής γραφικών νούμερο %1 στο παράθυρο "
-"αποτελεσμάτων"
+#: dataeditor/rkvareditmodel.cpp:215
+msgid "Type on these fields to add new rows"
+msgstr "Πληκτρολογίστε σε αυτά τα πεδία για να προσθέσετε νέες γραμμές"
 
-#: windows/rkwindowcatcher.cpp:230
-msgid "Print contents of graphics device number %1"
-msgstr "Εκτύπωση περιεχομένων της συσκευής γραφικών νούμερο %1"
+#: dataeditor/rkvareditmodel.cpp:294
+msgid "#New Variable#"
+msgstr "#Νέα Μεταβλητή#"
 
-#: windows/rkwindowcatcher.cpp:237
-msgid "Specify R object"
-msgstr "Προσδιορισμός αντικειμένου R"
+#: dataeditor/rkvareditmodel.cpp:574
+msgid "Format"
+msgstr "Μορφοποίηση"
 
-#: windows/rkwindowcatcher.cpp:240
-msgid "Specify the R object name, you want to save the graph to"
-msgstr "Επιλέξτε το όνομα του αντικειμένου R με το οποίο θέλετε να σώσετε το γράφημα"
+#: dataeditor/rkvareditmodel.cpp:575
+msgid "Levels"
+msgstr "Επίπεδα"
 
-#: windows/rkwindowcatcher.cpp:251
-msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr "Αποθήκευση περιεχομένων της συσκευής γραφικών νούμερο %1 στο αντικείμενο '%2'"
+#: dataeditor/twintable.cpp:98
+msgid "Enable editing"
+msgstr "Ενεργοποίηση επεξεργασίας"
 
-#: windows/rkwindowcatcher.cpp:260
-msgid "Duplicate graphics device number %1"
-msgstr "Διπλασιασμός συσκευής γραφικών νούμερο %1"
+#: dataeditor/twintable.cpp:146
+msgid " [read-only]"
+msgstr " [μόνο για ανάγνωση]"
 
-#: windows/rkwindowcatcher.cpp:280
-msgid "Draw area follows size of window"
-msgstr "Η περιοχή σχεδιασμού ακολουθεί το μέγεθος του παραθύρου"
+#: dataeditor/twintable.cpp:186
+msgid "Insert new variable left"
+msgstr "Εισάγετε καινούρια μεταβλητή αριστερά"
 
-#: windows/rkwindowcatcher.cpp:282
-msgid "Set fixed size 500x500"
-msgstr "Σταθερό μέγεθος 500x500"
+#: dataeditor/twintable.cpp:189
+msgid "Insert new variable right"
+msgstr "Εισάγετε καινούρια μεταβλητή δεξιά"
 
-#: windows/rkwindowcatcher.cpp:283
-msgid "Set fixed size 1000x1000"
-msgstr "Σταθερό μέγεθος 1000x1000"
+#: dataeditor/twintable.cpp:192
+msgid "Delete this variable"
+msgstr "Διαγραφή αυτής της μεταβλητής"
 
-#: windows/rkwindowcatcher.cpp:284
-msgid "Set fixed size 2000x2000"
-msgstr "Σταθερό μέγεθος 2000x2000"
+#: dataeditor/twintable.cpp:207
+msgid "Insert new case above (at %1)"
+msgstr "Εισάγετε καινούρια περίπτωση παραπάνω (στο %1)"
 
-#: windows/rkwindowcatcher.cpp:285
-msgid "Set specified fixed size..."
-msgstr "Προσαρμοσμένο σταθερό μέγεθος..."
+#: dataeditor/twintable.cpp:210
+msgid "Insert new case below (at %1)"
+msgstr "Εισάγετε καινούρια περίπτωση παρακάτω (στο %1)"
 
-#: windows/rkwindowcatcher.cpp:287
-msgid "Make active"
-msgstr "Ενεργοποίηση"
+#: dataeditor/twintable.cpp:221
+msgid "Delete marked rows (%1-%2)"
+msgstr "Διαγραφή επιλεγμένων σειρών (%1-%2)"
 
-#: windows/rkwindowcatcher.cpp:288
-msgid "Copy to output"
-msgstr "Αντιγραφή στο παράθυρο αποτελεσμάτων"
+#: dataeditor/twintable.cpp:227
+msgid "Delete this row (%1)"
+msgstr "Διαγραφή αυτής της σειράς (%1)"
 
-#: windows/rkwindowcatcher.cpp:290
-msgid "Store as R object..."
-msgstr "Αποθήκευση ως αντικειμένου R..."
+#: dialogs/rkimportdialog.cpp:35
+msgid "File format: "
+msgstr "Μορφοποίηση: "
 
-#: windows/rkwindowcatcher.cpp:291
-msgid "Duplicate"
-msgstr "Διπλασιασμός"
+#: dialogs/rkimportdialog.cpp:46
+msgid "No plugins defined for context '%1'"
+msgstr "Δεν ορίστηκαν πρόσθετα για το πλαίσιο '%1'"
 
-#: windows/rktoplevelwindowgui.cpp:48
-msgid "Help on R"
-msgstr "Βοήθεια R"
+#: dialogs/rkimportdialog.cpp:51
+msgid "All Files"
+msgstr "Όλα τα αρχεία"
 
-#: windows/rktoplevelwindowgui.cpp:49
-msgid "Search R Help"
-msgstr "Αναζήτηση βοήθειας R"
-
-#: windows/rktoplevelwindowgui.cpp:51
-msgid "Help on RKWard"
-msgstr "Βοήθεια RKWard"
-
-#: windows/rktoplevelwindowgui.cpp:57
-msgid "Shows the R help index"
-msgstr "Προβάλει το ευρετήριο βοήθειας του R"
-
-#: windows/rktoplevelwindowgui.cpp:58
-msgid "Shows/raises the R Help Search window"
-msgstr "Προβάλει/εμφανίζει το παράθυρο αναζήτησης βοήθειας του R"
-
-#: windows/rktoplevelwindowgui.cpp:59
-msgid "Show help on RKWard"
-msgstr "Προβολή βοήθειας του RKWard"
-
-#: windows/rktoplevelwindowgui.cpp:62
-msgid "Show/Hide Workspace Browser"
-msgstr "Εμφάνιση/Απόκρυψη του περιηγητή του χώρου εργασίας"
-
-#: windows/rktoplevelwindowgui.cpp:63
-msgid "Show/Hide Filesystem Browser"
-msgstr "Εμφάνιση/Απόκρυψη του περιηγητή αρχείων του συστήματος"
-
-#: windows/rktoplevelwindowgui.cpp:64
-msgid "Show/Hide Command Log"
-msgstr "Απόκρυψη/Εμφάνιση αρχείου καταγραφής εντολών"
-
-#: windows/rktoplevelwindowgui.cpp:65
-msgid "Show/Hide Pending Jobs"
-msgstr "Απόκρυψη/Εμφάνιση εργασιών σε εκκρεμότητα"
-
-#: windows/rktoplevelwindowgui.cpp:66
-msgid "Show/Hide Console"
-msgstr "Απόκρυψη/Εμφάνιση τερματικού"
-
-#: windows/rktoplevelwindowgui.cpp:67
-msgid "Show/Hide R Help Search"
-msgstr "Απόκρυψη/Εμφάνιση παράθυρου αναζήτησης βοήθειας του R"
-
-#: windows/rktoplevelwindowgui.cpp:68
-msgid "Activate Document view"
-msgstr "Ενεργοποίηση προβολής εγγράφου"
-
-#: windows/rktoplevelwindowgui.cpp:70
-msgid "Show &Output"
-msgstr "Προβολή &Παραθύρου αποτελεσμάτων"
-
-#: windows/rktoplevelwindowgui.cpp:91
-msgid ""
-"Please submit your bug reports or wishes at http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
-"net"
-msgstr ""
-"Παρακαλούμε υποβάλετε τις αναφορές σφαλμάτων ή τις επιθυμίες σας στο http://"
-"sourceforge.net/tracker/?group_id=50231&atid=459007 ή στείλτε μήνυμα στο "
-"rkward-devel@lists.sourceforge.net"
-
-#: windows/rkhelpsearchwindow.cpp:55
-msgid "Find:"
-msgstr "Αναζήτηση:"
-
-#: windows/rkhelpsearchwindow.cpp:58
-msgid "Fields:"
-msgstr "Πεδία:"
-
-#: windows/rkhelpsearchwindow.cpp:71 windows/rkhelpsearchwindow.cpp:82
-#: robjectbrowser.cpp:263
-msgid "All"
-msgstr "Όλα"
-
-#: windows/rkhelpsearchwindow.cpp:72
-msgid "All but keywords"
-msgstr "Όλα εκτός από τις λέξεις κλειδιά"
-
-#: windows/rkhelpsearchwindow.cpp:73
-msgid "Keywords"
-msgstr "Λέξεις κλειδιά"
-
-#: windows/rkhelpsearchwindow.cpp:74 windows/rkhelpsearchwindow.cpp:99
-#: dialogs/rkloadlibsdialog.cpp:261
-msgid "Title"
-msgstr "Τίτλος"
-
-#: windows/rkhelpsearchwindow.cpp:77
-msgid "Package:"
-msgstr "Πακέτο:"
-
-#: windows/rkhelpsearchwindow.cpp:86
-msgid "Case sensitive"
-msgstr "Διάκριση πεζών/κεφαλαίων"
-
-#: windows/rkhelpsearchwindow.cpp:88
-msgid "Fuzzy matching"
-msgstr "Ασαφές ταίριασμα"
-
-#: windows/rkhelpsearchwindow.cpp:92
-msgid "Find"
-msgstr "Αναζήτηση"
-
-#: windows/rkhelpsearchwindow.cpp:98
-msgid "Topic"
-msgstr "Θέμα"
-
-#: windows/rkhelpsearchwindow.cpp:100
-msgid "Package"
-msgstr "Πακέτο"
-
-#: windows/rkhelpsearchwindow.cpp:106
-msgid "Help search"
-msgstr "Αναζήτηση βοήθειας"
-
-#: windows/rkhelpsearchwindow.cpp:212
-msgid ""
-"No help found on '%1'. Maybe the corresponding package is not installed/"
-"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
-"more options."
-msgstr ""
-"Δεν βρέθηκε βοήθεια στο '%1'. Πιθανόν το αντίστοιχο πακέτο να μην είναι "
-"εγκατεστημένο/ φορτωμένο, ή πιθανόν να μην έχετε πληκτρολογήσει σωστά την "
-"εντολή. Προσπαθήστε χρησιμοποιώντας τη Βοήθεια->Αναζήτηση βοήθειας R για "
-"περισσότερες επιλογές."
-
-#: windows/rkhelpsearchwindow.cpp:212
-msgid "No help found"
-msgstr "Δεν βρέθηκε βοήθεια"
-
-#: plugin/rkpluginspinbox.cpp:43
-msgid "Enter value:"
-msgstr "Εισάγετε τιμή:"
-
-#: plugin/rkpluginbrowser.cpp:50
-msgid "Enter filename"
-msgstr "Εισαγωγή ονόματος αρχείου"
-
-#: plugin/rkpluginbrowser.cpp:50
-msgid "Select"
-msgstr "Επιλογή"
-
-#: plugin/rkformula.cpp:66
-msgid "Full Model"
-msgstr "Πλήρες μοντέλο"
-
-#: plugin/rkformula.cpp:67
-msgid "Main Effects only"
-msgstr "Κύριες επιδράσεις μόνο"
-
-#: plugin/rkformula.cpp:68
-msgid "Custom Model:"
-msgstr "Προσαρμοσμένο μοντέλο:"
-
-#: plugin/rkformula.cpp:90
-msgid "Main effects"
-msgstr "Κύρια εφέ"
-
-#: plugin/rkformula.cpp:95
-msgid "Level"
-msgstr "Επίπεδο"
-
-#: plugin/rkformula.cpp:96
-msgid "Term"
-msgstr "Όρος"
-
-#: plugin/rkformula.cpp:103
-msgid "Specify model"
-msgstr "Προσδιορισμός μοντέλου"
-
-#: plugin/rkstandardcomponent.cpp:75
-msgid ""
-"There has been an error while trying to parse the description of this plugin "
-"('%1'). Please refer to stdout for details."
-msgstr ""
-"Υπήρξε ένα σφάλμα κατά την προσπάθεια ανάλυσης της περιγραφής αυτού του "
-"πρόσθετου ('%1'). Παρακαλώ κοιτάξτε στο stdout για λεπτομέρειες."
-
-#: plugin/rkstandardcomponent.cpp:75
-msgid "Could not create plugin"
-msgstr "Αδύνατη η δημιουργία προσθέτου"
-
-#: plugin/rkstandardcomponentgui.cpp:90 plugin/rkstandardcomponentgui.cpp:375
-msgid "Submit"
-msgstr "Υποβολή"
-
-#: plugin/rkstandardcomponentgui.cpp:106
-msgid "Use Wizard"
-msgstr "Χρήση μάγου"
-
-#: plugin/rkstandardcomponentgui.cpp:112
-msgid "Code"
-msgstr "Κώδικας"
-
-#: plugin/rkstandardcomponentgui.cpp:232
-msgid "Processing. Please wait"
-msgstr "Επεξεργασία. Παρακαλώ περιμένετε"
-
-#: plugin/rkstandardcomponentgui.cpp:300
-msgid ""
-"Below you can see the command(s) corresponding to the settings you made. "
-"Click 'Submit' to run the command(s)."
-msgstr ""
-"Παρακάτω μπορείτε να δείτε τις εντολές που αντιστοιχούν στις ρυθμίσεις που "
-"κάνατε. Πιέστε 'Υποβολή' για να εκτελέσετε τις εντολές."
-
-#: plugin/rkstandardcomponentgui.cpp:352 plugin/rkstandardcomponentgui.cpp:370
-msgid "Next >"
-msgstr "Επόμενο >"
-
-#: plugin/rkstandardcomponentgui.cpp:362 plugin/rkstandardcomponentgui.cpp:380
-msgid "< Back"
-msgstr "< Προηγούμενο"
-
-#: plugin/rkstandardcomponentgui.cpp:383
-msgid "Use Dialog"
-msgstr "Χρήση διαλόγου"
-
-#: plugin/rkvarslot.cpp:45
-msgid "Variable:"
-msgstr "Μεταβλητή:"
-
-#: plugin/rkradio.cpp:42 plugin/rkdropdown.cpp:41
-msgid "Select one:"
-msgstr "Επιλέξτε ένα:"
-
-#: plugin/rkinput.cpp:49
-msgid "Enter text"
-msgstr "Εισαγωγή κειμένου"
-
-#: plugin/rkcomponentmap.cpp:102 plugin/rkcomponentmap.cpp:283
-msgid "(no label)"
-msgstr "(χωρίς ετικέτα)"
-
-#: plugin/rkpreviewbox.cpp:47
-msgid "Preview"
-msgstr "Προεπισκόπηση"
-
-#: plugin/rkpreviewbox.cpp:167
-msgid "Preview disabled"
-msgstr "Απενεργοποιημένη προεπισκόπηση"
-
-#: plugin/rkpreviewbox.cpp:171
-msgid "Preview up to date"
-msgstr "Ενημερωμένη προεπισκόπηση"
-
-#: plugin/rkpreviewbox.cpp:173
-msgid "Preview updating"
-msgstr "Ενημέρωση προεπισκόπησης"
-
-#: plugin/rkpreviewbox.cpp:176
-msgid "Preview not (yet) possible"
-msgstr "Μη διαθέσιμη προεπισκόπηση"
-
-#: plugin/rkpluginsaveobject.cpp:41 rkward.cpp:255
-msgid "my.data"
-msgstr "my.data"
-
-#: plugin/rkpluginsaveobject.cpp:41
-msgid "Save to:"
-msgstr "Αποθήκευση σε:"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:44
-msgid "Which objects should be shown by default?"
-msgstr "Ποια αντικείμενα να φαίνονται από την αρχή;"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:46
-msgid "Show hidden objects"
-msgstr "Εμφάνιση κρυφών αντικειμένων"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:48
-msgid "Show all environments"
-msgstr "Προβολή όλων των περιβάλλοντων"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:51
-msgid "Show objects with children"
-msgstr "Προβολή αντικειμένων με απογόνους"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:53
-msgid "Show functions"
-msgstr "Εμφάνιση συναρτήσεων"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:55
-msgid "Show variables"
-msgstr "Εμφάνιση μεταβλητών"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:60
-msgid "Which columns should be shown by default?"
-msgstr "Ποιες στήλες να φαίνονται από την αρχή;"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:62
-msgid "Label field"
-msgstr "Πεδίο ετικέτας"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:64
-msgid "Type field"
-msgstr "Πεδίο τύπου"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:66
-msgid "Class field"
-msgstr "Πεδίο κλάσης"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:76
-msgid "Never fetch the structure of these packages:"
-msgstr "Να μην γίνεται ανάκτηση ποτέ της δομής αυτών των πακέτων"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:101
-msgid "Add exclusion"
-msgstr "Προσθέστε εξαίρεση"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:101
-msgid "Add the name of the package that no structure should be fetched for"
-msgstr "Προσθέστε το όνομα του πακέτου για το οποίο δεν μπόρεσε να βρεθεί η δομή"
-
-#: settings/rksettingsmoduleobjectbrowser.cpp:128 rkward.cpp:214
-msgid "Workspace"
-msgstr "Χώρος εργασίας"
-
-#: settings/rksettingsmodulegeneral.cpp:49
-msgid "Settings marked with (*) do not take effect until you restart RKWard"
-msgstr ""
-"Ρυθμίσεις σημειωμένες με (*) δεν έχουν επίδραση μέχρι να επανεκκινήσετε το "
-"Rkward"
-
-#: settings/rksettingsmodulegeneral.cpp:53
-msgid "Directory where the logfiles should be kept (*)"
-msgstr "Φάκελος όπου θα αποθηκεύονται τα αρχεία καταγραφών (*)"
-
-#: settings/rksettingsmodulegeneral.cpp:57
-msgid "Startup Action (*)"
-msgstr "Ενέργεια κατά την εκκίνηση (*)"
-
-#: settings/rksettingsmodulegeneral.cpp:59 dialogs/startupdialog.cpp:59
-msgid "Start with an empty workspace"
-msgstr "Εκκίνηση με ένα κενό χώρο εργασίας"
-
-#: settings/rksettingsmodulegeneral.cpp:60 dialogs/startupdialog.cpp:60
-msgid "Start with an empty table"
-msgstr "Εκκίνηση με ένα κενό πίνακα"
-
-#: settings/rksettingsmodulegeneral.cpp:61
-msgid "Ask for a file to open"
-msgstr "Ερώτηση για άνοιγμα αρχείου"
-
-#: settings/rksettingsmodulegeneral.cpp:62
-msgid "Show selection dialog (default)"
-msgstr "Προβολή διαλόγου επιλογής (προεπιλεγμένο)"
-
-#: settings/rksettingsmodulegeneral.cpp:67
-msgid "Show RKWard Help on Startup"
-msgstr "Προβολή βοήθειας RKWard κατά την εκκίνηση"
-
-#: settings/rksettingsmodulegeneral.cpp:74
-msgid ""
-"The workplace layout (i.e. which script-, data-, help-windows are open) may "
-"be saved (and loaded) per R workspace, or independent of the R workspace. "
-"Which do you prefer?"
-msgstr ""
-"Η διάταξη του χώρου εργασίας του RKWard (π.χ. εκεί όπου τα παράθυρα "
-"σεναρίων, δεδομένων, βοήθειας ανοίγουν) μπορεί να αποθηκευτούν (και να "
-"ανοιχτούν) για κάθε χώρο εργασίας του R ή ανεξάρτητα του χώρο εργασίας του "
-"R. Τι προτιμάτε;"
-
-#: settings/rksettingsmodulegeneral.cpp:83
-msgid "Save/restore with R workspace, when saving/loading R workspace"
-msgstr ""
-"Αποθήκευση/ανάκτηση μαζί με το χώρο εργασίας του R, όταν γίνεται αποθήκευση/"
-"ανάκτηση του χώρου εργασίας του R"
-
-#: settings/rksettingsmodulegeneral.cpp:84
-msgid ""
-"Save/restore independent of R workspace (save at end of RKWard session, "
-"restore at next start)"
-msgstr ""
-"Αποθήκευση/ανάκτηση ανεξάρτητα από το χώρο εργασίας του R (αποθήκευση στο "
-"τέλος της συνεδρίας του RKWard, ανάκτηση στην επόμενη εκκίνηση του)"
-
-#: settings/rksettingsmodulegeneral.cpp:85
-msgid "Do not save/restore workplace layout"
-msgstr "Μη αποθήκευση/ανάκτηση της διάταξης χώρου εργασίαςτου RKWard"
-
-#: settings/rksettingsmodulegeneral.cpp:92
-msgid ""
-"Warn when editing objects with more than this number of fields (0 for no "
-"limit):"
-msgstr ""
-"Προειδοποίηση όταν πρόκειται να επεξεργαστούν αντικείμενα με περισσότερα από "
-"αυτόν τον αριθμό πεδίων (0 για απεριόριστο):"
-
-#: settings/rksettingsmodulegeneral.cpp:95
-msgid "No limit"
-msgstr "Απεριόριστο"
-
-#: settings/rksettingsmodulegeneral.cpp:119
-msgid "General"
-msgstr "Γενικά"
-
-#: settings/rksettingsmoduleplugins.cpp:49
-msgid ""
-"Some plugins are available with both, a wizard-like interface and a "
-"traditional dialog interface. If both are available, which mode of "
-"presentation do you prefer?"
-msgstr ""
-"Μερικά πρόσθετα είναι διαθέσιμα και με διάταξη μάγου και με παραδοσιακή "
-"τύπου διαλόγου. Εάν και οι δύο είναι διαθέσιμες ποια διάταξη προτιμάτε;"
-
-#: settings/rksettingsmoduleplugins.cpp:58
-msgid "Always prefer dialogs"
-msgstr "Πάντα διάταξη διαλόγου"
-
-#: settings/rksettingsmoduleplugins.cpp:59
-msgid "Prefer recommended interface"
-msgstr "Προτίμηση συνιστώμενης διάταξης"
-
-#: settings/rksettingsmoduleplugins.cpp:60
-msgid "Always prefer wizards"
-msgstr "Πάντα διάταξη μάγου"
-
-#: settings/rksettingsmoduleplugins.cpp:67
-msgid "R syntax display (in dialogs)"
-msgstr "Προβολή σύνταξης R (σε παράθυρα διαλόγων)"
-
-#: settings/rksettingsmoduleplugins.cpp:68
-msgid "Code shown by default"
-msgstr "Ο κώδικας να φαίνεται από την αρχή"
-
-#: settings/rksettingsmoduleplugins.cpp:73
-msgid "Default height of code display (pixels)"
-msgstr "Προκαθορισμένο ύψος προβολής κώδικα (εικονοστοιχεία)"
-
-#: settings/rksettingsmoduleplugins.cpp:81
-msgid "Select .pluginmap file(s)"
-msgstr "Επιλέξτε αρχεία .pluginmap"
-
-#: settings/rksettingsmoduleplugins.cpp:102
-msgid "Select .pluginmap-file"
-msgstr "Επιλέξτε αρχείο .pluginmap"
-
-#: settings/rksettingsmoduleplugins.cpp:106
-msgid "Plugins"
-msgstr "Πρόσθετα"
-
-#: settings/rksettingsmoduleplugins.cpp:149
-msgid ""
-"You appear to have an old configuration for the plugin-paths. The default "
-"configuration was changed between rkward 0.3.4 and rkward 0.3.5. Should the "
-"configuration be set to the new default (recommended)?"
-msgstr ""
-"Φαίνεται να έχετε μία παλιά ρύθμιση για τη διαδρομή των προσθέτων. Η "
-"προκαθορισμένη ρύθμιση έχει αλλάξει μεταξύ του rkward 0.3.4 και του rkward "
-"0.3.5. Να μετατραπεί η ρύθμιση στην καινούρια προκαθορισμένη (συνιστώμενο);"
-
-#: settings/rksettingsmoduleplugins.cpp:149
-msgid "Configuration change"
-msgstr "Η ρύθμιση άλλαξε"
-
-#: settings/rksettingsmodulephp.cpp:37
-msgid "Changes in this section take effect the next time you start a plugin"
-msgstr ""
-"Οι αλλαγές σε αυτόν τον τομέα επιδρούν την επόμενη φορά που εκκινήσετε το "
-"πρόσθετο"
-
-#: settings/rksettingsmodulephp.cpp:43
-msgid "File-location of the PHP binary"
-msgstr "Τοποθεσία του δυαδικού αρχείου της PHP"
-
-#: settings/rksettingsmodulephp.cpp:61
-msgid "PHP backend"
-msgstr "Σύστημα υποστήριξης PHP"
-
-#: settings/rksettingsmoduleoutput.cpp:39
-msgid "Output Window options"
-msgstr "Επιλογές παραθύρου αποτελεσμάτων"
-
-#: settings/rksettingsmoduler.cpp:58
-msgid ""
-"The following settings mostly affect R behavior in the console. It is "
-"generally safe to keep these unchanged."
-msgstr ""
-"Οι ακόλουθες ρυθμίσεις επηρεάζουν κυρίως την συμπεριφορά του R στο "
-"τερματικό . Είναι γενικά ασφαλές να μην αλλάξετε αυτές τις ρυθμίσεις."
-
-#: settings/rksettingsmoduler.cpp:66
-msgid "Display warnings"
-msgstr "Προβολή προειδοποιήσεων"
-
-#: settings/rksettingsmoduler.cpp:68
-msgid "Suppress warnings"
-msgstr "Καταστολή προειδοποιήσεων"
-
-#: settings/rksettingsmoduler.cpp:69
-msgid "Print warnings later (default)"
-msgstr "Εμφάνιση προειδοποιήσεων αργότερα (προκαθορισμένο)"
-
-#: settings/rksettingsmoduler.cpp:70
-msgid "Print warnings immediately"
-msgstr "Εμφάνιση προειδοποιήσεων άμεσα"
-
-#: settings/rksettingsmoduler.cpp:71
-msgid "Convert warnings to errors"
-msgstr "Μετατροπή προειδοποιήσεων σε σφάλματα"
-
-#: settings/rksettingsmoduler.cpp:77
-msgid "Decimal character (only for printing)"
-msgstr "Δεκαδικός χαρακτήρας (μόνο για εμφάνιση)"
-
-#: settings/rksettingsmoduler.cpp:84
-msgid "Output width (characters)"
-msgstr "Πλάτος αποτελεσμάτων (χαρακτήρες)"
-
-#: settings/rksettingsmoduler.cpp:90
-msgid "Maximum number of elements shown in print"
-msgstr "Μέγιστος αριθμός εμφάνισης στοιχείων στην εντολή print"
-
-#: settings/rksettingsmoduler.cpp:96
-msgid "Maximum length of warnings/errors to print"
-msgstr "Μέγιστο μήκος προειδοποιήσεων/λάθών στην εμφάνιση"
-
-#: settings/rksettingsmoduler.cpp:102
-msgid "Keep comments in functions"
-msgstr "Διατήρηση των σχολίων στις εντολές"
-
-#: settings/rksettingsmoduler.cpp:104
-msgid "TRUE (default)"
-msgstr "ΑΛΗΘΕΣ (προκαθορισμένο)"
-
-#: settings/rksettingsmoduler.cpp:105
-msgid "FALSE"
-msgstr "ΨΕΥΔΕΣ"
-
-#: settings/rksettingsmoduler.cpp:111
-msgid "Keep comments in packages"
-msgstr "Διατήρηση των σχολίων στα πακέτα"
-
-#: settings/rksettingsmoduler.cpp:113 settings/rksettingsmoduler.cpp:134
-msgid "TRUE)"
-msgstr "ΑΛΗΘΕΣ)"
-
-#: settings/rksettingsmoduler.cpp:114 settings/rksettingsmoduler.cpp:135
-msgid "FALSE (default)"
-msgstr "ΨΕΥΔΕΣ (προκαθορισμένο)"
-
-#: settings/rksettingsmoduler.cpp:120
-msgid "Maximum level of nested expressions"
-msgstr "Μέγιστο επίπεδο συγγενών εκφράσεων"
-
-#: settings/rksettingsmoduler.cpp:126
-msgid "Default decimal precision in print ()"
-msgstr "Προκαθορισμένη δεκαδική ακρίβεια στην εμφάνιση print ()"
-
-#: settings/rksettingsmoduler.cpp:132
-msgid "Check vector bounds (warn)"
-msgstr "Ελέγξτε τα όρια διανυσμάτων (προειδοποίηση)"
-
-#: settings/rksettingsmoduler.cpp:140
-msgid "Command used to send files to printer"
-msgstr "Η εντολή χρησιμεύει για την αποστολή αρχείων για εκτύπωση"
-
-#: settings/rksettingsmoduler.cpp:169
-msgid "R-Backend"
-msgstr "Σύστημα υποστήριξης R"
-
-#: settings/rksettingsmoduler.cpp:281
-msgid "Package repositories (where libraries are downloaded from)"
-msgstr "Αποθήκες πακέτων (από όπου οι βιβλιοθήκες μεταφορτώνονται)"
-
-#: settings/rksettingsmoduler.cpp:287
-msgid "Archive downloaded packages"
-msgstr "Αρχικοποίηση μεταφορτομένων πακέτων "
-
-#: settings/rksettingsmoduler.cpp:294
-msgid "R Library locations  (where libraries get installed to, locally)"
-msgstr "Τοποθεσίες βιβλιοθηκών R (εκεί όπου οι βιβλιοθήκες εγκαθιστώνται τοπικά)"
-
-#: settings/rksettingsmoduler.cpp:299
-msgid ""
-"Note: The startup defaults will always be used in addition to the locations "
-"you specify in this list"
-msgstr ""
-"Σημείωση: Τα προκαθορισμένα κατά την έναρξη θα χρησιμοποιούνται πάντα μαζί "
-"με τις τοποθεσίες που θα καθορίσετε σε αυτήν την λίστα"
-
-#: settings/rksettingsmoduler.cpp:321
-msgid "Add R Library Directory"
-msgstr "Προσθήκη φακέλου βιβλιοθηκών R"
-
-#: settings/rksettingsmoduler.cpp:329
-msgid "Add repository"
-msgstr "Προσθήκη αποθήκης πακέτων"
-
-#: settings/rksettingsmoduler.cpp:329
-msgid ""
-"Add URL of new repository\n"
-"(Enter \"@CRAN@\" for the standard CRAN-mirror)"
-msgstr ""
-"Προσθήκη διεύθυνσης URL μιας καινούργιας αποθήκης πακέτων\n"
-"(Εισάγετε \"@CRAN@\" για τον πρότυπο mirror του CRAN)"
-
-#: settings/rksettingsmoduler.cpp:335
-msgid "R-Packages"
-msgstr "Πακέτα R "
-
-#: settings/rksettingsmoduleconsole.cpp:46
-msgid "Load/Save command history"
-msgstr "Φόρτωση/αποθήκευση ιστορικού εντολών"
-
-#: settings/rksettingsmoduleconsole.cpp:51
-msgid "Maximum length of command history"
-msgstr "Μέγιστο μήκος ιστορικού εντολών"
-
-#: settings/rksettingsmoduleconsole.cpp:53
-#: settings/rksettingsmoduleconsole.cpp:59
-#: settings/rksettingsmodulewatch.cpp:149
-msgid "Unlimited"
-msgstr "Χωρίς περιορισμό"
-
-#: settings/rksettingsmoduleconsole.cpp:57
-msgid "Maximum number of paragraphs/lines to display in the console"
-msgstr "Μέγιστος αριθμός παραγράφων/γραμμών προβολής στο τερματικό"
-
-#: settings/rksettingsmoduleconsole.cpp:65
-msgid "Run commands from script editor through console"
-msgstr "Εκτέλεση εντολών από τον επεξεργαστή σεναρίων στο τερματικό"
-
-#: settings/rksettingsmoduleconsole.cpp:70
-msgid "Also add those commands to console history"
-msgstr "Προσθήκη επίσης αυτών των εντολών στο ιστορικό του τερματικού"
-
-#: settings/rksettingsmoduleconsole.cpp:78
-msgid "Command history is context sensitive by default"
-msgstr "Το ιστορικό εντολών είναι ευαίσθητο στα περιεχόμενα (προκαθορισμένο)"
-
-#: settings/rksettingsmoduleconsole.cpp:179
-msgid "Console"
-msgstr "Τερματικό"
-
-#: settings/rksettingsmodulewatch.cpp:120
-msgid ""
-"For now, settings only apply to new commands. All previous commands remain "
-"visible/invisible."
-msgstr ""
-"Από τώρα οι ρυθμίσεις έχουν εφαρμογή μόνο στιςκαινούριες εντολές. Όλες οι "
-"προηγούμενες εντολές παραμένουν ορατές/αόρατες."
-
-#: settings/rksettingsmodulewatch.cpp:127
-msgid "always show command"
-msgstr "πάντα προβολή εντολής"
-
-#: settings/rksettingsmodulewatch.cpp:130
-msgid "always show result"
-msgstr "πάντα προβολή αποτελέσματος"
-
-#: settings/rksettingsmodulewatch.cpp:133
-msgid "show errors"
-msgstr "προβολή σφαλμάτων"
-
-#: settings/rksettingsmodulewatch.cpp:136
-msgid "show/raise window"
-msgstr "προβολή/εμφάνιση παραθύρου"
-
-#: settings/rksettingsmodulewatch.cpp:140
-msgid "User commands"
-msgstr "Εντολές χρήστη"
-
-#: settings/rksettingsmodulewatch.cpp:141
-msgid "Plugin generated commands"
-msgstr "Εντολές που δημιουργήθηκαν από τα πρόσθετα"
-
-#: settings/rksettingsmodulewatch.cpp:142
-msgid "Application commands"
-msgstr "Εντολές εφαρμογής"
-
-#: settings/rksettingsmodulewatch.cpp:143
-msgid "Synchronization commands"
-msgstr "Εντολές συγχρονισμού "
-
-#: settings/rksettingsmodulewatch.cpp:147
-msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr "Μέγιστος αριθμός παραγράφων/γραμμών προβολής στο αρχείο καταγραφής εντολών"
-
-#: settings/rksettings.cpp:63
-msgid "Settings"
-msgstr "Ρυθμίσεις"
-
-#: dialogs/rkreadlinedialog.cpp:46
-msgid "Context:"
-msgstr "Σχετικό:"
-
-#: dialogs/startupdialog.cpp:45
-msgid "What would you like to do?"
-msgstr "Τι θέλετε να κάνετε;"
-
-#: dialogs/startupdialog.cpp:61
-msgid "Load an existing workspace:"
-msgstr "Φόρτωση ενός υπάρχοντος χώρου εργασίας"
-
-#: dialogs/startupdialog.cpp:67 misc/multistringselector.cpp:42
-msgid "Filename"
-msgstr "Όνομα αρχείου"
-
-#: dialogs/startupdialog.cpp:69
-msgid "<<Open another file>>"
-msgstr "<<Άνοιγμα ενός άλλου αρχείου>>"
-
-#: dialogs/startupdialog.cpp:79
-msgid "Always do this on startup"
-msgstr "Να γίνεται πάντα αυτό κατά την έναρξη"
-
-#: dialogs/rkloadlibsdialog.cpp:53 rkward.cpp:351
+#: dialogs/rkloadlibsdialog.cpp:58 rkward.cpp:362
 msgid "Configure Packages"
 msgstr "Ρύθμιση πακέτων"
 
-#: dialogs/rkloadlibsdialog.cpp:57
+#: dialogs/rkloadlibsdialog.cpp:62
 msgid "Local packages"
 msgstr "Τοπικά πακέτα"
 
-#: dialogs/rkloadlibsdialog.cpp:63 robjectviewer.cpp:64 robjectbrowser.cpp:111
+#: dialogs/rkloadlibsdialog.cpp:67 robjectbrowser.cpp:117
+#: robjectviewer.cpp:166
 msgid "Update"
 msgstr "Ενημέρωση"
 
-#: dialogs/rkloadlibsdialog.cpp:67
+#: dialogs/rkloadlibsdialog.cpp:71
 msgid "Install"
 msgstr "Εγκατάσταση"
 
-#: dialogs/rkloadlibsdialog.cpp:71
+#: dialogs/rkloadlibsdialog.cpp:74
 msgid "Configure Repositories"
 msgstr "Ρύθμιση αποθηκών"
 
-#: dialogs/rkloadlibsdialog.cpp:208
+#: dialogs/rkloadlibsdialog.cpp:213
 msgid "Please stand by while installing selected packages"
 msgstr "Παρακαλώ πριμένετε όσο εγκαθίστανται τα επιλεγμένα πακέτα"
 
-#: dialogs/rkloadlibsdialog.cpp:208
+#: dialogs/rkloadlibsdialog.cpp:213
 msgid "Installing packages"
 msgstr "Εγκατάσταση πακέτων"
 
-#: dialogs/rkloadlibsdialog.cpp:249
+#: dialogs/rkloadlibsdialog.cpp:251
+msgid "Installation process died with exit code %1"
+msgstr "Η διαδικασία εγκατάστασης τερματίστηκε με κωδικό εξόδου %1"
+
+#: dialogs/rkloadlibsdialog.cpp:269
 msgid ""
 "There are no safeguards against removing essential packages. For example, "
 "unloading \"rkward\" will prevent this application from running properly. "
@@ -1562,31 +523,36 @@ msgstr ""
 "λειτουργία αυτής της εφαρμογής. Να είστε προσεκτικοί για τα πακέτα που "
 "αποφορτώνετε."
 
-#: dialogs/rkloadlibsdialog.cpp:258
+#: dialogs/rkloadlibsdialog.cpp:286
 msgid "Installed packages"
 msgstr "Εγκατεστημένα πακέτα"
 
-#: dialogs/rkloadlibsdialog.cpp:262 dialogs/rkloadlibsdialog.cpp:614
+#: dialogs/rkloadlibsdialog.cpp:288 windows/rkhelpsearchwindow.cpp:93
+#: windows/rkhelpsearchwindow.cpp:307
+msgid "Title"
+msgstr "Τίτλος"
+
+#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:633
 msgid "Version"
 msgstr "Έκδοση"
 
-#: dialogs/rkloadlibsdialog.cpp:263 dialogs/rkloadlibsdialog.cpp:464
+#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:473
 msgid "Location"
 msgstr "Τοποθεσία"
 
-#: dialogs/rkloadlibsdialog.cpp:268
+#: dialogs/rkloadlibsdialog.cpp:293
 msgid "Load"
 msgstr "Φόρτωση"
 
-#: dialogs/rkloadlibsdialog.cpp:270
+#: dialogs/rkloadlibsdialog.cpp:295
 msgid "Unload"
 msgstr "Αποφόρτωση"
 
-#: dialogs/rkloadlibsdialog.cpp:277
+#: dialogs/rkloadlibsdialog.cpp:302
 msgid "Loaded packages"
 msgstr "Φορτωμένα πακέτα"
 
-#: dialogs/rkloadlibsdialog.cpp:399
+#: dialogs/rkloadlibsdialog.cpp:416
 msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
@@ -1594,11 +560,11 @@ msgstr ""
 "Υπήρξε ένα σφάλμα κατά την φόρτωση / αποφόρτωση πακέτων. Δείτε την περιγραφή "
 "παρακάτω για λεπτομέρειες"
 
-#: dialogs/rkloadlibsdialog.cpp:399
+#: dialogs/rkloadlibsdialog.cpp:416
 msgid "Error while handling packages"
 msgstr "Σφάλμα κατά την διαχείριση πακέτων"
 
-#: dialogs/rkloadlibsdialog.cpp:456
+#: dialogs/rkloadlibsdialog.cpp:464
 msgid ""
 "In order to find out, which of your installed packaged have an update "
 "available, click \"Fetch List\". This feature requires a working internet "
@@ -1608,31 +574,31 @@ msgstr ""
 "ενημέρωση πατήστε \"Ανάκτηση λίστας\". Αυτή η δυνατότητα απαιτεί μία ενεργή "
 "σύνδεση στο Ίντερνετ."
 
-#: dialogs/rkloadlibsdialog.cpp:465
+#: dialogs/rkloadlibsdialog.cpp:473
 msgid "Local Version"
 msgstr "Τοπική Έκδοση"
 
-#: dialogs/rkloadlibsdialog.cpp:466
+#: dialogs/rkloadlibsdialog.cpp:473
 msgid "Online Version"
 msgstr "Έκδοση στο Ίντερνετ"
 
-#: dialogs/rkloadlibsdialog.cpp:471 dialogs/rkloadlibsdialog.cpp:619
+#: dialogs/rkloadlibsdialog.cpp:480 dialogs/rkloadlibsdialog.cpp:640
 msgid "Fetch list"
 msgstr "Ανάκτηση λίστας"
 
-#: dialogs/rkloadlibsdialog.cpp:473
+#: dialogs/rkloadlibsdialog.cpp:482
 msgid "Update Selected"
 msgstr "Ενημέρωση επιλεγμένων"
 
-#: dialogs/rkloadlibsdialog.cpp:475
+#: dialogs/rkloadlibsdialog.cpp:484
 msgid "Update All"
 msgstr "Ενημέρωση όλων"
 
-#: dialogs/rkloadlibsdialog.cpp:532
+#: dialogs/rkloadlibsdialog.cpp:547
 msgid "[No updates available]"
 msgstr "[Δεν υπάρχουν διαθέσιμες ανανεώσεις]"
 
-#: dialogs/rkloadlibsdialog.cpp:581
+#: dialogs/rkloadlibsdialog.cpp:598
 msgid ""
 "Please stand by while determining, which packages have an update available "
 "online."
@@ -1640,11 +606,11 @@ msgstr ""
 "Παρακαλώ περιμένετε όσο καθορίζονται ποια πακέτα έχουν διαθέσιμη ανανέωση "
 "στο 'Ιντερνετ."
 
-#: dialogs/rkloadlibsdialog.cpp:581 dialogs/rkloadlibsdialog.cpp:710
+#: dialogs/rkloadlibsdialog.cpp:598 dialogs/rkloadlibsdialog.cpp:737
 msgid "Fetching list"
 msgstr "Ανάκτηση λίστας"
 
-#: dialogs/rkloadlibsdialog.cpp:607
+#: dialogs/rkloadlibsdialog.cpp:625
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories (click \"Configure Repositories\" to add more sources). "
@@ -1656,19 +622,19 @@ msgstr ""
 "πηγές). Πιέστε \"Ανάκτηση Λίστας\" για να δείτε ποια πακέτα είναι διαθέσιμα. "
 "Αυτή η δυνατότητα απαιτεί μία ενεργή σύνδεση στο Ίντερνετ."
 
-#: dialogs/rkloadlibsdialog.cpp:621
+#: dialogs/rkloadlibsdialog.cpp:642
 msgid "Install Selected"
 msgstr "Εγκατάσταση επιλεγμένων"
 
-#: dialogs/rkloadlibsdialog.cpp:672
+#: dialogs/rkloadlibsdialog.cpp:697
 msgid "[No packages available]"
 msgstr "[Δεν υπάρχουν διαθέσιμα πακέτα]"
 
-#: dialogs/rkloadlibsdialog.cpp:710
+#: dialogs/rkloadlibsdialog.cpp:737
 msgid "Please stand by while downloading the list of available packages."
 msgstr "Παρακαλώ περιμένετε όσο μεταφορτώνεται η λίστα των διαθέσιμων πακέτων."
 
-#: dialogs/rkloadlibsdialog.cpp:730
+#: dialogs/rkloadlibsdialog.cpp:748
 msgid ""
 "The package requested by the backend (\"%1\") was not found in the package "
 "repositories. Maybe the package name was mis-spelled. Or maybe you need to "
@@ -1679,19 +645,19 @@ msgstr ""
 "πρέπει να προσθέσετε επιπλέον αποθήκες πακέτων μέσω του κουμπιού \"Ρύθμιση "
 "Αποθηκών\"."
 
-#: dialogs/rkloadlibsdialog.cpp:730
+#: dialogs/rkloadlibsdialog.cpp:748
 msgid "Package not available"
 msgstr "Το πακέτο δεν είναι διαθέσιμο"
 
-#: dialogs/rkloadlibsdialog.cpp:754
+#: dialogs/rkloadlibsdialog.cpp:777
 msgid "Install packages to:"
 msgstr "Αποθήκευση πακέτων στο:"
 
-#: dialogs/rkloadlibsdialog.cpp:759
+#: dialogs/rkloadlibsdialog.cpp:782
 msgid "Include dependencies"
 msgstr "Να συμπεριληφθούν οι εξαρτήσεις"
 
-#: dialogs/rkloadlibsdialog.cpp:791
+#: dialogs/rkloadlibsdialog.cpp:814
 msgid ""
 "The directory you are trying to install to (%1) is not writable with your "
 "current user permissions. If you are the adminitstrator of this machine, you "
@@ -1710,25 +676,262 @@ msgstr ""
 "Αποθηκών\" για να ρυθμίσετε ένα φάκελο με δικαιώματα εγγραφής στο οποίο θα "
 "εγκαθιστάτε τα πακέτα)"
 
-#: dialogs/rkloadlibsdialog.cpp:791
+#: dialogs/rkloadlibsdialog.cpp:814
 msgid "Selected library location not writable"
 msgstr "Δεν έχετε δικαίωμα εγγραφής στην επιλεγμένη τοποθεσία βιβλιοθηκών"
 
-#: dialogs/rkloadlibsdialog.cpp:791
+#: dialogs/rkloadlibsdialog.cpp:814
 msgid "Become root"
 msgstr "Γίνετε υπερχρήστης"
 
-#: dialogs/rkimportdialog.cpp:36
-msgid "File format: "
-msgstr "Μορφοποίηση: "
+#: dialogs/rkloadlibsdialog.cpp:814
+msgid "&Cancel"
+msgstr "&Ακύρωση"
 
-#: dialogs/rkimportdialog.cpp:45
-msgid "No plugins defined for context '%1'"
-msgstr "Δεν ορίστηκαν πρόσθετα για το πλαίσιο '%1'"
+#: dialogs/rkreadlinedialog.cpp:54
+msgid "Context:"
+msgstr "Σχετικό:"
 
-#: dialogs/rkimportdialog.cpp:50
-msgid "All Files"
-msgstr "Όλα τα αρχεία"
+#: dialogs/startupdialog.cpp:46
+msgid "What would you like to do?"
+msgstr "Τι θέλετε να κάνετε;"
+
+#: dialogs/startupdialog.cpp:58 settings/rksettingsmodulegeneral.cpp:67
+msgid "Start with an empty workspace"
+msgstr "Εκκίνηση με ένα κενό χώρο εργασίας"
+
+#: dialogs/startupdialog.cpp:60 settings/rksettingsmodulegeneral.cpp:68
+msgid "Start with an empty table"
+msgstr "Εκκίνηση με ένα κενό πίνακα"
+
+#: dialogs/startupdialog.cpp:62
+msgid "Load an existing workspace:"
+msgstr "Φόρτωση ενός υπάρχοντος χώρου εργασίας"
+
+#: dialogs/startupdialog.cpp:70
+msgid "<<Open another file>>"
+msgstr "<<Άνοιγμα ενός άλλου αρχείου>>"
+
+#: dialogs/startupdialog.cpp:77
+msgid "Always do this on startup"
+msgstr "Να γίνεται πάντα αυτό κατά την έναρξη"
+
+#: main.cpp:73
+msgid "file to open"
+msgstr "αρχείο για άνοιγμα"
+
+#: main.cpp:74
+msgid "Verbosity of debug messages (0-5)"
+msgstr "Βαθμός μηνυμάτων αποσφαλμάτωσης (0-5)"
+
+#: main.cpp:75
+msgid "Mask for components to debug (see debug.h)"
+msgstr "Μάσκα για τα συστατικά της αποσφαλμάτωσης (δείτε debug.h)"
+
+#: main.cpp:76
+msgid ""
+"Debugger (enclose any debugger arguments in single quotes ('') together with "
+"the command)"
+msgstr ""
+"Αποσφαλματωτής (Συμπεριλάβετε οποιεσδήποτε παραμέτρους του αποσφαλματωτή "
+"μέσα σε εισαγωγικά ('') μαζί με την εντολή)"
+
+#: main.cpp:77
+msgid "Disable R C stack checking"
+msgstr "Απενεργοποίηση ελέγχου R C σωρού"
+
+#: main.cpp:79
+msgid "RKWard"
+msgstr "RKWard"
+
+#: main.cpp:79
+msgid "Frontend to the R statistics language"
+msgstr "Γραφικό περιβάλλον για τη γλώσσα στατιστικής R"
+
+#: main.cpp:79
+msgid "(c) 2002, 2004, 2005, 2006, 2007"
+msgstr "(c) 2002, 2004, 2005, 2006, 2007"
+
+#: main.cpp:80 main.cpp:81 main.cpp:82 main.cpp:83 main.cpp:85 main.cpp:86
+#: main.cpp:87 main.cpp:88 main.cpp:89 main.cpp:90 main.cpp:91 main.cpp:92
+#: main.cpp:93
+msgid "%1"
+msgstr "%1"
+
+#: main.cpp:80
+msgid "Project leader / main developer"
+msgstr "Επικεφαλής έργου / κύριος προγραμματιστής"
+
+#: main.cpp:81
+msgid "C++ coder since 0.2.9"
+msgstr "C++ προγραμματιστής από την έκδοση 0.2.9"
+
+#: main.cpp:82
+msgid "Many plugins, suggestions, marketing, translations"
+msgstr "Πολλά πρόσθετα, προτάσεις, μάρκετινγκ, μεταφράσεις"
+
+#: main.cpp:83
+msgid "Many plugins, suggestions"
+msgstr "Πολλά πρόσθετα, προτάσεις"
+
+#: main.cpp:84
+msgid "Contributors in alphabetical order"
+msgstr "Συντελεστές με αλφαβητική σειρά"
+
+#: main.cpp:85
+msgid "Several helpful comments and discussions"
+msgstr "Διάφορες χρήσιμα σχόλια και συζητήσεις"
+
+#: main.cpp:86
+msgid "Plugins and patches"
+msgstr "Πρόσθετα και προσθήκες"
+
+#: main.cpp:87
+msgid "New website"
+msgstr "Νέος δικτυακός τόπος"
+
+#: main.cpp:88
+msgid "A cool icon"
+msgstr "Ένα καλό εικονίδιο"
+
+#: main.cpp:89
+msgid "RKWard logo, many suggestions, help on wording"
+msgstr "Λογότυπο  RKWard, πολλές προτάσεις, βοήθεια στο λεξιλόγιο"
+
+#: main.cpp:90
+msgid "Several valuable comments, hints and patches"
+msgstr "Διάφορα αξιόλογα σχόλια, υποδείξεις και διορθώσεις"
+
+#: main.cpp:91
+msgid "Translation, Suggestions, plugins"
+msgstr "Μετάφραση, Προτάσεις, πρόσθετα"
+
+#: main.cpp:92
+msgid "Many comments, useful suggestions, and bug reports"
+msgstr "Πολλά σχόλια, χρήσιμες προτάσεις, και αναφορές σφαλμάτων"
+
+#: main.cpp:93
+msgid "Some patches"
+msgstr "Μερικές διορθώσεις"
+
+#: main.cpp:94
+msgid "Many more people on rkward-devel@lists.sourceforge.net"
+msgstr "Πολύ περισσότερος κόσμος στη λίστα rkward-devel@lists.sourceforge.net"
+
+#: main.cpp:94
+msgid "Sorry, if we forgot to list you. Please contact us to get added"
+msgstr ""
+"Συγγνώμη αν ξεχάσαμε να σας απαριθμήσουμε. Παρακαλούμε επικοινωνήστε μαζί "
+"μας για να σας προσθέσουμε"
+
+#: misc/multistringselector.cpp:48
+msgid "Filename"
+msgstr "Όνομα αρχείου"
+
+#: misc/multistringselector.cpp:54
+msgid "Add"
+msgstr "Προσθήκη"
+
+#: misc/multistringselector.cpp:58
+msgid "Remove"
+msgstr "Αφαίρεση"
+
+#: misc/multistringselector.cpp:64
+msgid "Up"
+msgstr "Πάνω"
+
+#: misc/multistringselector.cpp:68
+msgid "Down"
+msgstr "Κάτω"
+
+#: misc/rkobjectlistview.cpp:42
+msgid "Configure Defaults"
+msgstr "Ρύθμιση προκαθορισμένων"
+
+#: misc/rkobjectlistview.cpp:162
+msgid "All Environments"
+msgstr "Όλα τα Περιβάλλοντα"
+
+#: misc/rkobjectlistview.cpp:163
+msgid "Objects with children"
+msgstr "Αντικείμενα με απογόνους"
+
+#: misc/rkobjectlistview.cpp:164
+msgid "Variables"
+msgstr "Μεταβλητές"
+
+#: misc/rkobjectlistview.cpp:165 robjectbrowser.cpp:280
+msgid "Functions"
+msgstr "Συναρτήσεις"
+
+#: misc/rkobjectlistview.cpp:166
+msgid "Hidden Objects"
+msgstr "Κρυφά Αντικείμενα"
+
+#: misc/rkobjectlistview.cpp:266
+msgid "Show Objects"
+msgstr "Εμφάνιση αντικειμένων"
+
+#: misc/rkobjectlistview.cpp:274
+msgid "Show Fields"
+msgstr "Εμφάνιση πεδίων"
+
+#: misc/rkprogresscontrol.cpp:209
+msgid ""
+"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgstr ""
+"<b>Υπήρξαν σφάλματα ή / και προειδοποιήσεις! Δείτε παρακάτω για μια "
+"περιγραφή</b>"
+
+#: misc/rkprogresscontrol.cpp:219 settings/rksettingsmoduleoutput.cpp:68
+#: windows/rkhtmlwindow.cpp:257
+msgid "Output"
+msgstr "Παράθυρο αποτελεσμάτων"
+
+#: misc/rkprogresscontrol.cpp:220
+msgid "Output:"
+msgstr "Αποτελέσματα:"
+
+#: misc/rkprogresscontrol.cpp:222
+msgid "Errors / Warnings"
+msgstr "Σφάλματα / Προειδοποιήσεις"
+
+#: misc/rkprogresscontrol.cpp:223
+msgid "Errors / Warnings:"
+msgstr "Σφάλματα / Προειδοποιήσεις "
+
+#: misc/rkprogresscontrol.cpp:242 plugin/rkstandardcomponentgui.cpp:281
+#: rkconsole.cpp:842 robjectviewer.cpp:170
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: misc/rksaveobjectchooser.cpp:41
+msgid "Object name to save to"
+msgstr "Όνομα αντικειμένου στο οποίο θέλετε να αποθηκευτεί "
+
+#: misc/rksaveobjectchooser.cpp:85
+msgid "Overwrite? (The given object name already exists)"
+msgstr "Αντικατάσταση; (Το όνομα του αντικειμένου που δόθηκε ήδη υπάρχει)"
+
+#: misc/rksaveobjectchooser.cpp:89
+msgid "Overwrite?"
+msgstr "Αντικατάσταση;"
+
+#: misc/rkstandardactions.cpp:32
+msgid "Run current line"
+msgstr "Εκτέλεση τρέχουσας γραμμής"
+
+#: misc/rkstandardactions.cpp:42
+msgid "Run selection"
+msgstr "Εκτέλεση της επιλογής"
+
+#: misc/rkstandardactions.cpp:52
+msgid "Run all"
+msgstr "Εκτέλεση όλων"
+
+#: misc/rkstandardactions.cpp:62
+msgid "&Function reference"
+msgstr "&Αναφορά συνάρτησης"
 
 #: misc/xmlhelper.cpp:63
 msgid "Could not open file for reading"
@@ -1756,7 +959,8 @@ msgstr "'%1'- Δεν δόθηκε τιμή ιδιότητας. Υποτίθετ�
 
 #: misc/xmlhelper.cpp:260
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Επιτρεπόμενες τιμές είναι μόνο μία από '%1'."
+msgstr ""
+"Μη επιτρεπόμενη τιμής ιδιότητας. Επιτρεπόμενες τιμές είναι μόνο μία από '%1'."
 
 #: misc/xmlhelper.cpp:274
 msgid "Illegal attribute value. Only integer numbers are allowed."
@@ -1764,7 +968,8 @@ msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο α
 
 #: misc/xmlhelper.cpp:290
 msgid "Illegal attribute value. Only real numbers are allowed."
-msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο πραγματικοί αριθμοί επιτρέπονται."
+msgstr ""
+"Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο πραγματικοί αριθμοί επιτρέπονται."
 
 #: misc/xmlhelper.cpp:308
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
@@ -1776,175 +981,187 @@ msgstr ""
 msgid "XML-parsing '%1' "
 msgstr "Ανάλυση XML '%1' "
 
-#: misc/rkprogresscontrol.cpp:203
-msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
-msgstr ""
-"<b>Υπήρξαν σφάλματα ή / και προειδοποιήσεις! Δείτε παρακάτω για μια "
-"περιγραφή</b>"
+#: plugin/rkcomponentmap.cpp:103 plugin/rkcomponentmap.cpp:284
+msgid "(no label)"
+msgstr "(χωρίς ετικέτα)"
 
-#: misc/rkprogresscontrol.cpp:213
-msgid "Show Output"
-msgstr "Προβολή παραθύρου αποτελεσμάτων"
+#: plugin/rkdropdown.cpp:42 plugin/rkradio.cpp:45
+msgid "Select one:"
+msgstr "Επιλέξτε ένα:"
 
-#: misc/rkprogresscontrol.cpp:214
-msgid "Hide Output"
-msgstr "Απόκρυψη παραθύρου αποτελεσμάτων"
+#: plugin/rkformula.cpp:63
+msgid "Specify model"
+msgstr "Προσδιορισμός μοντέλου"
 
-#: misc/rkprogresscontrol.cpp:215
-msgid "Output:"
-msgstr "Αποτελέσματα:"
+#: plugin/rkformula.cpp:67
+msgid "Full Model"
+msgstr "Πλήρες μοντέλο"
 
-#: misc/rkprogresscontrol.cpp:217
-msgid "Show Errors / Warnings"
-msgstr "Εμφάνιση Σφαλμάτων / Προειδοποιήσεων"
+#: plugin/rkformula.cpp:69
+msgid "Main Effects only"
+msgstr "Κύριες επιδράσεις μόνο"
 
-#: misc/rkprogresscontrol.cpp:218
-msgid "Hide Errors / Warnings"
-msgstr "Απόκρυψη Σφαλμάτων / Προειδοποιήσεων"
+#: plugin/rkformula.cpp:71
+msgid "Custom Model:"
+msgstr "Προσαρμοσμένο μοντέλο:"
 
-#: misc/rkprogresscontrol.cpp:219
-msgid "Errors / Warnings:"
-msgstr "Σφάλματα / Προειδοποιήσεις "
+#: plugin/rkformula.cpp:97
+msgid "Main effects"
+msgstr "Κύρια εφέ"
 
-#: misc/multistringselector.cpp:58
-msgid "Up"
-msgstr "Πάνω"
+#: plugin/rkformula.cpp:102
+msgid "Level"
+msgstr "Επίπεδο"
 
-#: misc/multistringselector.cpp:62
-msgid "Down"
-msgstr "Κάτω"
+#: plugin/rkformula.cpp:102
+msgid "Term"
+msgstr "Όρος"
 
-#: misc/rkobjectlistview.cpp:56 misc/rkobjectlistview.cpp:438
-msgid "Class"
-msgstr "Κλάση"
+#: plugin/rkinput.cpp:50
+msgid "Enter text"
+msgstr "Εισαγωγή κειμένου"
 
-#: misc/rkobjectlistview.cpp:61
-msgid "Show Objects"
-msgstr "Εμφάνιση αντικειμένων"
+#: plugin/rkpluginbrowser.cpp:51
+msgid "Enter filename"
+msgstr "Εισαγωγή ονόματος αρχείου"
 
-#: misc/rkobjectlistview.cpp:62
-msgid "Show Fields"
-msgstr "Εμφάνιση πεδίων"
+#: plugin/rkpluginbrowser.cpp:51
+msgid "Select"
+msgstr "Επιλογή"
 
-#: misc/rkobjectlistview.cpp:63
-msgid "Configure Defaults"
-msgstr "Ρύθμιση προκαθορισμένων"
+#: plugin/rkpluginsaveobject.cpp:42 rkward.cpp:252
+msgid "my.data"
+msgstr "my.data"
 
-#: misc/rkobjectlistview.cpp:332
-msgid "[Objects]"
-msgstr "[Αντικείμενα]"
+#: plugin/rkpluginsaveobject.cpp:42
+msgid "Save to:"
+msgstr "Αποθήκευση σε:"
 
-#: misc/rkobjectlistview.cpp:428
-msgid "All Environments"
-msgstr "Όλα τα Περιβάλλοντα"
+#: plugin/rkpluginspinbox.cpp:44
+msgid "Enter value:"
+msgstr "Εισάγετε τιμή:"
 
-#: misc/rkobjectlistview.cpp:429
-msgid "Objects with children"
-msgstr "Αντικείμενα με απογόνους"
+#: plugin/rkpreviewbox.cpp:48
+msgid "Preview"
+msgstr "Προεπισκόπηση"
 
-#: misc/rkobjectlistview.cpp:430
-msgid "Variables"
-msgstr "Μεταβλητές"
+#: plugin/rkpreviewbox.cpp:169
+msgid "Preview disabled"
+msgstr "Απενεργοποιημένη προεπισκόπηση"
 
-#: misc/rkobjectlistview.cpp:431 robjectbrowser.cpp:265
-msgid "Functions"
-msgstr "Συναρτήσεις"
+#: plugin/rkpreviewbox.cpp:173
+msgid "Preview up to date"
+msgstr "Ενημερωμένη προεπισκόπηση"
 
-#: misc/rkobjectlistview.cpp:433
-msgid "Hidden Objects"
-msgstr "Κρυφά Αντικείμενα"
+#: plugin/rkpreviewbox.cpp:175
+msgid "Preview updating"
+msgstr "Ενημέρωση προεπισκόπησης"
 
-#: misc/rksaveobjectchooser.cpp:39
-msgid "Object name to save to"
-msgstr "Όνομα αντικειμένου στο οποίο θέλετε να αποθηκευτεί "
+#: plugin/rkpreviewbox.cpp:178
+msgid "Preview not (yet) possible"
+msgstr "Μη διαθέσιμη προεπισκόπηση"
 
-#: misc/rksaveobjectchooser.cpp:83
-msgid "Overwrite? (The given object name already exists)"
-msgstr "Αντικατάσταση; (Το όνομα του αντικειμένου που δόθηκε ήδη υπάρχει)"
-
-#: misc/rksaveobjectchooser.cpp:87
-msgid "Overwrite?"
-msgstr "Αντικατάσταση;"
-
-#: scriptbackends/phpbackend.cpp:62
+#: plugin/rkstandardcomponent.cpp:74
 msgid ""
-"The support file \"%1\" could not be found or is not readable. Please check "
-"your installation."
+"There has been an error while trying to parse the description of this plugin "
+"('%1'). Please refer to stdout for details."
 msgstr ""
-"Ο φάκελος υποστήριξης \"%1\" δεν μπορεί να βρεθεί ή δεν είναι αναγνώσιμος. "
-"Παρακαλώ ελέγξτε την εγκατάστασή σας."
+"Υπήρξε ένα σφάλμα κατά την προσπάθεια ανάλυσης της περιγραφής αυτού του "
+"πρόσθετου ('%1'). Παρακαλώ κοιτάξτε στο stdout για λεπτομέρειες."
 
-#: scriptbackends/phpbackend.cpp:62 scriptbackends/phpbackend.cpp:79
-#: scriptbackends/phpbackend.cpp:197 scriptbackends/phpbackend.cpp:227
-msgid "PHP-Error"
-msgstr "Σφάλμα PHP"
+#: plugin/rkstandardcomponent.cpp:74
+msgid "Could not create plugin"
+msgstr "Αδύνατη η δημιουργία προσθέτου"
 
-#: scriptbackends/phpbackend.cpp:79
+#: plugin/rkstandardcomponentgui.cpp:95 plugin/rkstandardcomponentgui.cpp:380
+msgid "Submit"
+msgstr "Υποβολή"
+
+#: plugin/rkstandardcomponentgui.cpp:100 plugin/rkstandardcomponentgui.cpp:369
+msgid "Close"
+msgstr "Κλείσιμο"
+
+#: plugin/rkstandardcomponentgui.cpp:105
+msgid "Help"
+msgstr "Βοήθεια"
+
+#: plugin/rkstandardcomponentgui.cpp:111
+msgid "Use Wizard"
+msgstr "Χρήση μάγου"
+
+#: plugin/rkstandardcomponentgui.cpp:117
+msgid "Code"
+msgstr "Κώδικας"
+
+#: plugin/rkstandardcomponentgui.cpp:237
+msgid "Processing. Please wait"
+msgstr "Επεξεργασία. Παρακαλώ περιμένετε"
+
+#: plugin/rkstandardcomponentgui.cpp:305
 msgid ""
-"The PHP backend could not be started. Check whether you have correctly "
-"configured the location of the PHP-binary (Settings->Configure Settings->PHP "
-"backend)"
+"Below you can see the command(s) corresponding to the settings you made. "
+"Click 'Submit' to run the command(s)."
 msgstr ""
-"Η μηχανή υπόστήριξης ήταν αδύνατο να εκκινήσει. Ελέγξτε αν έχετε ρυθμίσει "
-"σωστά την τοποθεσία του δυαδικού αρχείου της PHP (Ρυθμίσεις->Ρύθμιση->Μηχανή "
-"υποστήριξης PHP)"
+"Παρακάτω μπορείτε να δείτε τις εντολές που αντιστοιχούν στις ρυθμίσεις που "
+"κάνατε. Πιέστε 'Υποβολή' για να εκτελέσετε τις εντολές."
 
-#: scriptbackends/phpbackend.cpp:197
-msgid ""
-"There has been an error\n"
-"(\"%1\")\n"
-"while starting up the PHP backend. Most likely this is due to either a bug "
-"in RKWard or a problem with your PHP installation. Check the settings "
-"(Settings->Configure Settings->PHP backend) and try again."
-msgstr ""
-"Υπήρξε ένα σφάλμα\n"
-"(\"%1\")\n"
-"κατά την έναρξη της μηχανής υποστήριξης PHP. Το πιο πιθανόν είναι να "
-"οφείλεται είτε σε σφάλμα (bug) του RKWard ή σε πρόβλημα στην εγκατάσταση της "
-"PHP. Ελέγξτε τις ρυθμίσεις (Ρυθμίσεις->Ρύθμιση->Μηχανή υποστήριξης PHP) και "
-"προσπαθήστε ξανά."
+#: plugin/rkstandardcomponentgui.cpp:357 plugin/rkstandardcomponentgui.cpp:375
+msgid "Next >"
+msgstr "Επόμενο >"
 
-#: scriptbackends/phpbackend.cpp:227
-msgid ""
-"The PHP-backend has reported an error\n"
-"(\"%1\")\n"
-"and has been shut down. This is most likely due to a bug in the plugin. But "
-"of course you may want to try to close and restart the plugin to see whether "
-"it works with different settings."
-msgstr ""
-"Υπήρξε ένα σφάλμα\n"
-"(\"%1\")\n"
-"της μηχανής υποστήριξης PHP και έκλεισε. Το πιο πιθανόν είναι να οφείλεται "
-"σε bug σε κάποιο πρόσθετο. Μπορείτε να δοκιμάσετε να κλείσετε και να "
-"ξανανοίξετε το πρόσθετο για να δείτε εάν δουλεύει με διαφορετικές ρυθμίσεις."
+#: plugin/rkstandardcomponentgui.cpp:367 plugin/rkstandardcomponentgui.cpp:385
+msgid "< Back"
+msgstr "< Προηγούμενο"
 
-#: scriptbackends/phpbackend.cpp:242
-msgid ""
-"The PHP-backend has died unexpectedly. The current output buffer is shown "
-"below:\n"
-"%1"
-msgstr ""
-"Το σύστημα υποστήριξης PHP σταμάτησε απρόβλεπτα. Το τρέχων κομμάτι "
-"αποτελεσμάτων φαίνεται παρακάτω:\n"
-"%1"
+#: plugin/rkstandardcomponentgui.cpp:388
+msgid "Use Dialog"
+msgstr "Χρήση διαλόγου"
 
-#: scriptbackends/phpbackend.cpp:242
-msgid "PHP Process exited"
-msgstr "Η διαδικασία PHP σταμάτησε"
+#: plugin/rkvarslot.cpp:44
+msgid "Variable:"
+msgstr "Μεταβλητή:"
 
-#: scriptbackends/scriptbackend.cpp:86
-msgid "## Prepare\n"
-msgstr "## Ετοιμάζεται\n"
+#: rbackend/rcommandstack.cpp:350
+msgid "Running"
+msgstr "Εκτελείται"
 
-#: scriptbackends/scriptbackend.cpp:89
-msgid "## Compute\n"
-msgstr "## Υπολογισμός\n"
+#: rbackend/rcommandstack.cpp:353
+msgid "Cancelled"
+msgstr "Ακυρώθηκε"
 
-#: scriptbackends/scriptbackend.cpp:92
-msgid "## Print result\n"
-msgstr "## Εκτύπωση Αποτελέσματος\n"
+#: rbackend/rcommandstack.cpp:364
+msgid "Command Stack"
+msgstr "Σωρός εντολών"
 
-#: rbackend/rinterface.cpp:190
+#: rbackend/rcommandstack.cpp:366
+msgid "Command Chain"
+msgstr "Σωρός εντολών"
+
+#: rbackend/rcommandstack.cpp:368
+msgid "Closed"
+msgstr "Έκλεισε"
+
+#: rbackend/rcommandstack.cpp:369
+msgid "Waiting"
+msgstr "Αναμονή"
+
+#: rbackend/rcommandstack.cpp:398
+msgid "Command"
+msgstr "Εντολή"
+
+#: rbackend/rcommandstack.cpp:400
+msgid "Status"
+msgstr "Κατάσταση"
+
+#: rbackend/rcommandstack.cpp:401
+msgid "Description"
+msgstr "Περιγραφή"
+
+#: rbackend/rinterface.cpp:84
+msgid "R Startup"
+msgstr "Εκκίνηση R"
+
+#: rbackend/rinterface.cpp:210
 msgid ""
 "There was a problem starting the R backend. The following error(s) "
 "occurred:\n"
@@ -1952,7 +1169,7 @@ msgstr ""
 "Σφάλμα κατά την έναρξη της μηχανής υποστήριξης R. Τα ακόλουθα σφάλματα "
 "συνέβησαν:\n"
 
-#: rbackend/rinterface.cpp:192
+#: rbackend/rinterface.cpp:212
 msgid ""
 "\t- The 'rkward' R-library could not be loaded. This library is needed for "
 "communication between R and RKWard and many things will not work properly if "
@@ -1969,7 +1186,7 @@ msgstr ""
 "εκτελείτε το 'make install'. Προσπαθήστε το 'make install' ξανά και ελέγξτε "
 "για τυχόν λάθη. Πρέπει να κλείσετε το RKWard τώρα.\n"
 
-#: rbackend/rinterface.cpp:195
+#: rbackend/rinterface.cpp:215
 msgid ""
 "\t-There was a problem opening the files needed for communication with R. "
 "Most likely this is due to an incorrect setting for the location of these "
@@ -1982,7 +1199,7 @@ msgstr ""
 "των αρχείων καταγραφών (Ρυθμίσεις ->Ρύθμιση->Αρχεία Καταγραφών) και "
 "επανεκκινήσετε RKWard.\n"
 
-#: rbackend/rinterface.cpp:198
+#: rbackend/rinterface.cpp:218
 msgid ""
 "\t-An unspecified error occurred that is not yet handled by RKWard. Likely "
 "RKWard will not function properly. Please check your setup.\n"
@@ -1991,11 +1208,11 @@ msgstr ""
 "RKWard. Πιθανόν το RKWard να μην λειτουργεί σωστά. Παρακαλώ ελέγξτε τις "
 "ρυθμίσεις σας.\n"
 
-#: rbackend/rinterface.cpp:200
+#: rbackend/rinterface.cpp:220
 msgid "Error starting R"
 msgstr "Σφάλμα κατά την έναρξη του R"
 
-#: rbackend/rinterface.cpp:334
+#: rbackend/rinterface.cpp:350
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -2007,11 +1224,11 @@ msgstr ""
 "ανοίξει το εργαλείο διαχείρισης πακέτων, και εκεί μπορείτε να εντοπίσετε και "
 "να εγκαταστήσετε το πακέτο. "
 
-#: rbackend/rinterface.cpp:334
+#: rbackend/rinterface.cpp:350
 msgid "Require package '%1'"
 msgstr "Απαιτείται το πακέτο '%1'"
 
-#: rbackend/rinterface.cpp:363
+#: rbackend/rinterface.cpp:379
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -2035,23 +1252,23 @@ msgstr ""
 "συστήνεται να επιλέξτε Άκυρο, να κλείσετε να παράθυρα δεδομένων και να "
 "ξαναπροσπαθήσετε."
 
-#: rbackend/rinterface.cpp:363
+#: rbackend/rinterface.cpp:379
 msgid "Locale change"
 msgstr "Αλλαγή εντοπιότητας (locale)"
 
-#: rbackend/rinterface.cpp:381
+#: rbackend/rinterface.cpp:397
 msgid "Message from the R backend"
 msgstr "Μήνυμα από το σύστημα υποστήριξης R"
 
-#: rbackend/rinterface.cpp:385
+#: rbackend/rinterface.cpp:401
 msgid "R backend requests information"
 msgstr "Το σύστημα υποστήριξης R απαιτεί πληροφορίες "
 
-#: rbackend/rinterface.cpp:413
+#: rbackend/rinterface.cpp:429
 msgid "The R engine has encountered a fatal error:\n"
 msgstr "Το σύστημα υποστήριξης R αντιμετώπισε ένα κρίσιμο σφάλμα:\n"
 
-#: rbackend/rinterface.cpp:414
+#: rbackend/rinterface.cpp:430
 msgid ""
 "It will be shut down immediately. This means, you can not use any more "
 "functions that rely on the R backend. I.e. you can do hardly anything at "
@@ -2067,15 +1284,15 @@ msgstr ""
 "τους ανοιχτούς επεξεργαστές δεδομένων. Κλείστε το RKWard μετά από αυτά. "
 "Συγγνώμη!"
 
-#: rbackend/rinterface.cpp:415 rbackend/rinterface.cpp:420
+#: rbackend/rinterface.cpp:431 rbackend/rinterface.cpp:436
 msgid "R engine has died"
 msgstr "Το σύστημα υποστήριξης R έκλεισε"
 
-#: rbackend/rinterface.cpp:418
+#: rbackend/rinterface.cpp:434
 msgid "The R engine has shut down with status: "
 msgstr "Το σύστημα υποστήριξης R έκλεισε με κατάσταση:"
 
-#: rbackend/rinterface.cpp:419
+#: rbackend/rinterface.cpp:435
 msgid ""
 "\n"
 "It will be shut down immediately. This means, you can not use any more "
@@ -2099,93 +1316,52 @@ msgstr ""
 "rkward-devel@lists.sourceforge.net, και πείτε μας τι προσπαθούσατε να κάνετε "
 "όταν συνέβη αυτό. Συγγνώμη!"
 
-#: rbackend/rthread.cpp:462
-msgid "R Startup"
-msgstr "Εκκίνηση R"
+#: rkconsole.cpp:109
+msgid "R Console"
+msgstr "Τερματικό R"
 
-#: main.cpp:70 main.cpp:83
-msgid "RKWard"
-msgstr "RKWard"
+#: rkconsole.cpp:587
+msgid "Syntax error\n"
+msgstr "Σφάλμα σύνταξης.\n"
 
-#: main.cpp:74
-msgid "file to open"
-msgstr "αρχείο για άνοιγμα"
+#: rkconsole.cpp:803
+msgid "Interrupt running command"
+msgstr "Διακοπή εντολής που εκτελείται"
 
-#: main.cpp:75
-msgid "Verbosity of debug messages (0-5)"
-msgstr "Βαθμός μηνυμάτων αποσφαλμάτωσης (0-5)"
+#: rkconsole.cpp:809
+msgid "Copy selection cleaned"
+msgstr "Αντιγραφή επιλογής με εκκαθάριση από σύμβολα"
 
-#: main.cpp:76
-msgid "Mask for components to debug (see debug.h)"
-msgstr "Μάσκα για τα συστατικά της αποσφαλμάτωσης (δείτε debug.h)"
+#: rkconsole.cpp:812
+msgid "Copy selection literally"
+msgstr "Αντιγραφή επιλογής ως έχει"
 
-#: main.cpp:77
-msgid "Disable R C stack checking"
-msgstr "Απενεργοποίηση ελέγχου R C σωρού"
+#: rkconsole.cpp:817 windows/rkcommandlog.cpp:277
+msgid "Configure"
+msgstr "Ρύθμιση"
 
-#: main.cpp:84
-msgid "Project leader / main developer"
-msgstr "Επικεφαλής έργου / κύριος προγραμματιστής"
-
-#: main.cpp:85
-msgid "C++ coder since 0.2.9"
-msgstr "C++ προγραμματιστής από την έκδοση 0.2.9"
-
-#: main.cpp:86
-msgid "Many plugins, suggestions, marketing, translations"
-msgstr "Πολλά πρόσθετα, προτάσεις, μάρκετινγκ, μεταφράσεις"
-
-#: main.cpp:87
-msgid "Many plugins, suggestions"
-msgstr "Πολλά πρόσθετα, προτάσεις"
-
-#: main.cpp:89
-msgid "Several helpful comments and discussions"
-msgstr "Διάφορες χρήσιμα σχόλια και συζητήσεις"
-
-#: main.cpp:90
-msgid "Plugins and patches"
-msgstr "Πρόσθετα και προσθήκες"
-
-#: main.cpp:91
-msgid "New website"
-msgstr "Νέος δικτυακός τόπος"
-
-#: main.cpp:92
-msgid "A cool icon"
-msgstr "Ένα καλό εικονίδιο"
-
-#: main.cpp:93
-msgid "RKWard logo, many suggestions, help on wording"
-msgstr "Λογότυπο  RKWard, πολλές προτάσεις, βοήθεια στο λεξιλόγιο"
-
-#: main.cpp:94
-msgid "Several valuable comments, hints and patches"
-msgstr "Διάφορα αξιόλογα σχόλια, υποδείξεις και διορθώσεις"
-
-#: main.cpp:95
-msgid "Translation, Suggestions, plugins"
-msgstr "Μετάφραση, Προτάσεις, πρόσθετα"
-
-#: main.cpp:96
-msgid "Many comments, useful suggestions, and bug reports"
-msgstr "Πολλά σχόλια, χρήσιμες προτάσεις, και αναφορές σφαλμάτων"
-
-#: main.cpp:97
-msgid "Some patches"
-msgstr "Μερικές διορθώσεις"
-
-#: main.cpp:98
-msgid "Many more people on rkward-devel@lists.sourceforge.net"
-msgstr "Πολύ περισσότερος κόσμος στη λίστα rkward-devel@lists.sourceforge.net"
-
-#: main.cpp:98
-msgid "Sorry, if we forgot to list you. Please contact us to get added"
+#: rkconsole.cpp:842
+msgid ""
+"You have configured RKWrad to run script commands through the console. "
+"However, the console is currently busy (either a command is running, or you "
+"have started to enter text in the console). Do you want to bypass the "
+"console this one time, or do you want to try again later?"
 msgstr ""
-"Συγγνώμη αν ξεχάσαμε να σας απαριθμήσουμε. Παρακαλούμε επικοινωνήστε μαζί "
-"μας για να σας προσθέσουμε"
+"Έχετε ρυθμίσει το RKWard να εκτελεί τις εντολές των σεναρίων μέσω του "
+"τερματικού. Παρόλα αυτά, το τερματικό είναι προσωρινά απασχολημένο (είτε "
+"εκτελείται μία εντολή ή εσείς έχετε αρχίσει να πληκτρολογείτε κείμενο στο "
+"τερματικό). Θέλετε να παρακάμψετε το τερματικό αυτήν την φορά, ή θέλετε να "
+"προσπαθήσετε αργότερα?"
 
-#: rkward.cpp:208
+#: rkconsole.cpp:842
+msgid "Console is busy"
+msgstr "Το τερματικό είναι απασχολημένο"
+
+#: rkconsole.cpp:842
+msgid "Bypass console"
+msgstr "Παράκαμψη τερματικού"
+
+#: rkward.cpp:211
 msgid ""
 "RKWard has made great progress in the past few months and it is already "
 "helpful for many tasks, but some features may be lacking. You can help us by "
@@ -2199,27 +1375,27 @@ msgstr ""
 "μορφή. Παρακαλούμε επισκεφθείτε το http://rkward.sourceforge.net για "
 "περισσότερες πληροφορίες."
 
-#: rkward.cpp:209
+#: rkward.cpp:212
 msgid "What to expect of RKWard"
 msgstr "Τι να περιμένετε από το RKWard"
 
-#: rkward.cpp:214
-msgid "Existing objects in your workspace."
-msgstr "Υπάρχοντα αντικείμενα στο χώρο εργασίας σας."
+#: rkward.cpp:216 settings/rksettingsmoduleobjectbrowser.cpp:128
+msgid "Workspace"
+msgstr "Χώρος εργασίας"
 
-#: rkward.cpp:219
-msgid "File-system Browser"
-msgstr "Περιηγητής συστήματος αρχείων"
+#: rkward.cpp:220
+msgid "Files"
+msgstr "Αρχεία"
 
-#: rkward.cpp:222
+#: rkward.cpp:224
 msgid "Pending Jobs"
 msgstr "Εργασίες σε εκκρεμότητα"
 
-#: rkward.cpp:278
+#: rkward.cpp:270
 msgid "Setting up plugins..."
 msgstr "Ρύθμιση προσθέτων..."
 
-#: rkward.cpp:290
+#: rkward.cpp:282
 msgid ""
 "Plugins are needed: you may manage these through \"Settings->Configure RKWard"
 "\".\n"
@@ -2227,19 +1403,25 @@ msgstr ""
 "Απαιτούνται πρόσθετα. Μπορείτε να τα διαχειριστείτε μέσα από το \"Ρυθμίσεις-"
 ">Ρύθμιση RKWard \".\n"
 
-#: rkward.cpp:290
+#: rkward.cpp:282
 msgid "No (valid) plugins found"
 msgstr "Δεν βρέθηκαν (έγκυρα) πρόσθετα"
 
-#: rkward.cpp:329
+#: rkward.cpp:324
 msgid "Dataset"
 msgstr "Πακέτο δεδομένων"
 
-#: rkward.cpp:332
+#: rkward.cpp:326
+msgid "Creates new empty dataset and opens it for editing"
+msgstr ""
+"Δημιουργεί ένα καινούριο άδειο πακέτο δεδομένων και το ανοίγει για "
+"επεξεργασία"
+
+#: rkward.cpp:329
 msgid "Script File"
 msgstr "Αρχείο σεναρίου"
 
-#: rkward.cpp:336
+#: rkward.cpp:333
 msgid "Open R Script File"
 msgstr "Άνοιγμα αρχείου σεναρίου R"
 
@@ -2247,251 +1429,172 @@ msgstr "Άνοιγμα αρχείου σεναρίου R"
 msgid "Import Data"
 msgstr "Εισαγωγή δεδομένων"
 
-#: rkward.cpp:341
+#: rkward.cpp:339
+msgid "Import data from a variety of file formats"
+msgstr "Εισαγωγή δεδομένων από διάφορους τύπους αρχείων"
+
+#: rkward.cpp:342
 msgid "Open Workspace"
 msgstr "Άνοιγμα χώρου εργασίας"
 
-#: rkward.cpp:345
+#: rkward.cpp:344
+msgid "Opens an existing document"
+msgstr "Άνοιγμα ενός υπάρχοντος εγγράφου"
+
+#: rkward.cpp:347
+msgid "Opens a recently used file"
+msgstr "Άνοιγμα ενός πρόσφατου αρχείου"
+
+#: rkward.cpp:350
 msgid "Save Workspace"
 msgstr "Αποθήκευση χώρου εργασίας"
 
-#: rkward.cpp:348
+#: rkward.cpp:352
+msgid "Saves the actual document"
+msgstr "Αποθηκεύει το τρέχον έγγραφο"
+
+#: rkward.cpp:355
 msgid "Save Workspace As"
 msgstr "Αποθήκευση χώρου εργασίας ως"
 
 #: rkward.cpp:356
-msgid "Close All Data"
-msgstr "Κλείσιμο όλων των δεδομένων"
-
-#: rkward.cpp:358
-msgid "Close All"
-msgstr "Κλείσιμο όλων"
-
-#: rkward.cpp:359
-msgid "Detach"
-msgstr "Αποσύνδεση"
-
-#: rkward.cpp:361
-msgid "Configure RKWard"
-msgstr "Ρύθμιση RKWard"
-
-#: rkward.cpp:363
-msgid "Creates new empty dataset and opens it for editing"
-msgstr ""
-"Δημιουργεί ένα καινούριο άδειο πακέτο δεδομένων και το ανοίγει για "
-"επεξεργασία"
-
-#: rkward.cpp:364
-msgid "Import data from a variety of file formats"
-msgstr "Εισαγωγή δεδομένων από διάφορους τύπους αρχείων"
-
-#: rkward.cpp:365
-msgid "Opens an existing document"
-msgstr "Άνοιγμα ενός υπάρχοντος εγγράφου"
-
-#: rkward.cpp:366
-msgid "Opens a recently used file"
-msgstr "Άνοιγμα ενός πρόσφατου αρχείου"
-
-#: rkward.cpp:367
-msgid "Saves the actual document"
-msgstr "Αποθηκεύει το τρέχον έγγραφο"
-
-#: rkward.cpp:368
 msgid "Saves the actual document as..."
 msgstr "Αποθηκεύει το τρέχον έγγραφο ως..."
+
+#: rkward.cpp:359
+msgid "Quits the application"
+msgstr "Κλείνει την εφαρμογή"
+
+#: rkward.cpp:368
+msgid "Close All Data"
+msgstr "Κλείσιμο όλων των δεδομένων"
 
 #: rkward.cpp:369
 msgid "Closes all open data editors"
 msgstr "Κλείνει όλους τους ανοιχτούς επεξεργαστές δεδομένων"
 
-#: rkward.cpp:370
-msgid "Quits the application"
-msgstr "Κλείνει την εφαρμογή"
+#: rkward.cpp:374
+msgid "Close All"
+msgstr "Κλείσιμο όλων"
 
-#: rkward.cpp:408
+#: rkward.cpp:378 windows/rktoolwindowbar.cpp:274
+msgid "Detach"
+msgstr "Αποσύνδεση"
+
+#: rkward.cpp:381
+msgid "Configure RKWard"
+msgstr "Ρύθμιση RKWard"
+
+#: rkward.cpp:384
+msgid "[No actions available for current view]"
+msgstr "[Καμία διαθέσιμη ενέργεια για την παρούσα προβολή]"
+
+#: rkward.cpp:415
 msgid "Ready."
 msgstr "Έτοιμο."
 
-#: rkward.cpp:415
-msgid "starting R engine"
-msgstr "Eκκίνηση της μηχανής R"
-
-#: rkward.cpp:532
+#: rkward.cpp:481
 msgid "Exiting..."
 msgstr "Έξοδος..."
 
-#: rkward.cpp:540
-msgid ""
-"Quitting RKWard: Do you want to save the workspace?\n"
-"RKWard will remain open if you press Cancel"
+#: rkward.cpp:489
+msgid "Quitting RKWard: Do you want to save the workspace?"
 msgstr ""
-"Τερματισμόςτου RKWard: Θέλετε να αποθηκεύσετε το χώρο εργασίας;\n"
-"Το RKWard θα παραμείνει ανοιχτό εάν πατήσετε Ακύρωση"
+"Τερματισμός του RKWard: Θέλετε να αποθηκεύσετε τον τρέχοντα χώρο εργασίας;"
 
-#: rkward.cpp:540 rkward.cpp:600
+#: rkward.cpp:489 rkward.cpp:543
 msgid "Save Workspace?"
 msgstr "Αποθήκευση χώρου εργασίας;"
 
-#: rkward.cpp:565
+#: rkward.cpp:489
+msgid "Don't quit"
+msgstr "Να μην τερματισθεί"
+
+#: rkward.cpp:514
 msgid "New dataset"
 msgstr "Νέο πακέτο δεδομένων"
 
-#: rkward.cpp:565
+#: rkward.cpp:514
 msgid "Enter name for the new dataset"
 msgstr "Εισάγετε το όνομα για το νέο πακέτο δεδομένων"
 
-#: rkward.cpp:569 robjectbrowser.cpp:173 robjectbrowser.cpp:207
-msgid "The name you specified was already in use or not valid. Renamed to %1"
-msgstr "Το όνομα που δώσατε ήδη υπάρχει ή δεν είναι έγκυρο. Μετονομάστηκε σε %1"
-
-#: rkward.cpp:569 robjectbrowser.cpp:173 robjectbrowser.cpp:207
-msgid "Invalid Name"
-msgstr "Μη έγκυρο όνομα"
-
-#: rkward.cpp:581
+#: rkward.cpp:524
 msgid "Opening workspace..."
 msgstr "Άνοιγμα χώρου εργασίας..."
 
-#: rkward.cpp:584
+#: rkward.cpp:527
 msgid "*|All files"
 msgstr "*|Όλα τα αρχεία"
 
-#: rkward.cpp:584
+#: rkward.cpp:527
 msgid "Open File..."
 msgstr "Άνοιγμα αρχείου..."
 
-#: rkward.cpp:600
+#: rkward.cpp:543
 msgid "Do you want to save the current workspace?"
 msgstr "Θέλετε να αποθηκεύσετε τον τρέχοντα χώρο εργασίας;"
 
-#: rkward.cpp:686
+#: rkward.cpp:627
 msgid "R engine busy"
 msgstr "Μηχανή R απασχολημένη"
 
-#: rkward.cpp:689
+#: rkward.cpp:630
 msgid "R engine idle"
 msgstr "Μηχανή R αδρανής"
 
-#: rkward.cpp:719
+#: rkward.cpp:633
+msgid "R engine starting"
+msgstr "Εκκίνηση μηχανής R "
+
+#: rkward.cpp:667
 msgid "Open command file(s)"
 msgstr "Άνοιγμα αρχείου εντολών"
 
-#: rkward.cpp:748
+#: rkward.cpp:685
 msgid "[Unnamed Workspace]"
 msgstr "[Χώρος εργασίας χωρίς όνομα]"
 
-#: rkconsole.cpp:131
-msgid "R Console"
-msgstr "Τερματικό R"
-
-#: rkconsole.cpp:567
-msgid "Syntax error\n"
-msgstr "Σφάλμα σύνταξης.\n"
-
-#: rkconsole.cpp:783
-msgid "Interrupt running command"
-msgstr "Διακοπή εντολής που εκτελείται"
-
-#: rkconsole.cpp:789
-msgid "Copy selection cleaned"
-msgstr "Αντιγραφή επιλογής με εκκαθάριση από σύμβολα"
-
-#: rkconsole.cpp:790
-msgid "Copy selection literally"
-msgstr "Αντιγραφή επιλογής ως έχει"
-
-#: rkconsole.cpp:818
-msgid ""
-"You have configured RKWrad to run script commands through the console. "
-"However, the console is currently busy (either a command is running, or you "
-"have started to enter text in the console). Do you want to bypass the "
-"console this one time, or do you want to try again later?"
-msgstr ""
-"Έχετε ρυθμίσει το RKWard να εκτελεί τις εντολές των σεναρίων μέσω του "
-"τερματικού. Παρόλα αυτά, το τερματικό είναι προσωρινά απασχολημένο (είτε "
-"εκτελείται μία εντολή ή εσείς έχετε αρχίσει να πληκτρολογείτε κείμενο στο "
-"τερματικό). Θέλετε να παρακάμψετε το τερματικό αυτήν την φορά, ή θέλετε να "
-"προσπαθήσετε αργότερα?"
-
-#: rkconsole.cpp:818
-msgid "Console is busy"
-msgstr "Το τερματικό είναι απασχολημένο"
-
-#: rkconsole.cpp:818
-msgid "Bypass console"
-msgstr "Παράκαμψη τερματικού"
-
-#: robjectviewer.cpp:70
-msgid ""
-"\n"
-"Result of 'summary (%1)':\n"
-msgstr ""
-"\n"
-"Αποτέλεσμα του 'summary (%1)':\n"
-
-#: robjectviewer.cpp:72 robjectviewer.cpp:84 robjectviewer.cpp:109
-#: robjectviewer.cpp:120
-msgid "Hide"
-msgstr "Απόκρυψη"
-
-#: robjectviewer.cpp:82
-msgid ""
-"\n"
-"Result of 'print (%1)':\n"
-msgstr ""
-"\n"
-"Αποτέλεσμα του print (%1)':\n"
-
-#: robjectviewer.cpp:93
-msgid "Object Viewer: "
-msgstr "Προβολέας αντικειμένων"
-
-#: robjectviewer.cpp:111 robjectviewer.cpp:122
-msgid "Show"
-msgstr "Προβολή"
-
-#: robjectviewer.cpp:137
-msgid "Fetching information"
-msgstr "Ανάκτηση πληροφοριών"
-
-#: robjectviewer.cpp:162
-msgid "<b>Object was deleted!</b>"
-msgstr "<b>Το αντικείμενο έχει διαγραφεί!</b>"
-
-#: robjectviewer.cpp:175
-msgid "Ready"
-msgstr "Έτοιμο"
-
-#: robjectbrowser.cpp:114
+#: robjectbrowser.cpp:68
 msgid "Objects in the R workspace"
 msgstr "Αντικείμενα στο χώρο εργασίας R"
 
-#: robjectbrowser.cpp:116
+#: robjectbrowser.cpp:120
 msgid "Search Help"
 msgstr "Αναζήτηση βοήθειας"
 
-#: robjectbrowser.cpp:119
+#: robjectbrowser.cpp:122
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#: robjectbrowser.cpp:124
+msgid "View"
+msgstr "Προβολή"
+
+#: robjectbrowser.cpp:126
 msgid "Rename"
 msgstr "Μετονομασία"
 
-#: robjectbrowser.cpp:120
+#: robjectbrowser.cpp:128
 msgid "Copy to new symbol"
 msgstr "Αντιγραφή σε καινούριο σύμβολο"
 
-#: robjectbrowser.cpp:121
+#: robjectbrowser.cpp:130
 msgid "Copy to .GlobalEnv"
 msgstr "Αντιγραφή στο .GlobalEnv"
 
-#: robjectbrowser.cpp:169
+#: robjectbrowser.cpp:132
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: robjectbrowser.cpp:183
 msgid "Copy object"
 msgstr "Αντιγραφή αντικειμένου"
 
-#: robjectbrowser.cpp:169
+#: robjectbrowser.cpp:183
 msgid "Enter the name to copy to"
 msgstr "Εισάγετε το όνομα στο οποίο θέλετε να αντιγράψετε"
 
-#: robjectbrowser.cpp:185
+#: robjectbrowser.cpp:199
 msgid ""
 "An object named '%1' already exists in the GlobalEnv. Created the copy as '%"
 "2' instead."
@@ -2499,80 +1602,1283 @@ msgstr ""
 "Ένα αντικείμενο με το όνομα '%1' ήδη υπάρχει στο GlobalEnv. Το αντίγραφο "
 "δημιουργήθηκε με το όνομα '%2'."
 
-#: robjectbrowser.cpp:185
+#: robjectbrowser.cpp:199
 msgid "Name already in use"
 msgstr "Το όνομα είναι ήδη σε χρήση"
 
-#: robjectbrowser.cpp:203
+#: robjectbrowser.cpp:217
 msgid "Rename object"
 msgstr "Μετονομασία αντικειμένου"
 
-#: robjectbrowser.cpp:203
+#: robjectbrowser.cpp:217
 msgid "Enter the new name"
 msgstr "Εισάγετε ένα νέο όνομα"
 
-#: robjectbrowser.cpp:264
+#: robjectbrowser.cpp:278 windows/rkhelpsearchwindow.cpp:90
+#: windows/rkhelpsearchwindow.cpp:102
+msgid "All"
+msgstr "Όλα"
+
+#: robjectbrowser.cpp:279
 msgid "Non-Functions"
 msgstr "Όχι-Συναρτήσεις"
 
-#: robjectbrowser.cpp:272
+#: robjectbrowser.cpp:289
 msgid "Show All Environments"
 msgstr "Προβολή όλων των περιβάλλοντων"
 
-#: robjectbrowser.cpp:276
+#: robjectbrowser.cpp:293
 msgid "Show Hidden Objects"
 msgstr "Εμφάνιση κρυφών αντικειμένων"
 
-#. i18n: file rkconsolepart.rc line 11
-#. i18n: file rkwardui.rc line 32
-#: rc.cpp:6 rc.cpp:33
-#, no-c-format
-msgid "&Run"
-msgstr "&Εκτέλεση"
+#: robjectviewer.cpp:58
+msgid "summary (x)"
+msgstr "summary (x)"
 
-#. i18n: file rkwardui.rc line 5
-#: rc.cpp:18
-#, no-c-format
-msgid "&New"
-msgstr "&Νέο"
+#: robjectviewer.cpp:59
+msgid "print (x)"
+msgstr "print (x)"
 
-#. i18n: file rkwardui.rc line 12
-#: rc.cpp:21
-#, no-c-format
-msgid "&Import"
-msgstr "&Εισαγωγή"
+#: robjectviewer.cpp:86
+msgid "<b>Object was deleted!</b>"
+msgstr "<b>Το αντικείμενο έχει διαγραφεί!</b>"
 
-#. i18n: file rkwardui.rc line 22
-#: rc.cpp:24
-#, no-c-format
-msgid "&Workspace"
-msgstr "&Χώρος εργασίας"
+#: robjectviewer.cpp:128
+msgid "Object Viewer: %1"
+msgstr "Προβολέας αντικειμένων: %1"
 
-#. i18n: file rkwardui.rc line 36
-#: rc.cpp:36
+#: robjectviewer.cpp:132
+msgid "The object was changed. You may want to click \"Update\""
+msgstr "Το αντικείμενο έχει αλλάξει. Ισως να θέλετε να πατήσετε  \"Ανανέωση\""
+
+#: robjectviewer.cpp:214
+msgid "Fetching information. Please wait."
+msgstr "Ανάκτηση πληροφοριών. Παρακαλώ περιμένετε."
+
+#: robjectviewer.cpp:224
+msgid "Click \"Update\" to fetch information"
+msgstr "Πατήστε \"Ανανέωση\" για να ανακτήσετε τις πληροφορίες"
+
+#: robjectviewer.cpp:245
+msgid "Ready"
+msgstr "Έτοιμο"
+
+#: scriptbackends/phpbackend.cpp:66
+msgid ""
+"The support file \"%1\" could not be found or is not readable. Please check "
+"your installation."
+msgstr ""
+"Ο φάκελος υποστήριξης \"%1\" δεν μπορεί να βρεθεί ή δεν είναι αναγνώσιμος. "
+"Παρακαλώ ελέγξτε την εγκατάστασή σας."
+
+#: scriptbackends/phpbackend.cpp:66 scriptbackends/phpbackend.cpp:170
+#: scriptbackends/phpbackend.cpp:200 scriptbackends/phpbackend.cpp:218
+msgid "PHP-Error"
+msgstr "Σφάλμα PHP"
+
+#: scriptbackends/phpbackend.cpp:170
+msgid ""
+"There has been an error\n"
+"(\"%1\")\n"
+"while starting up the PHP backend. Most likely this is due to either a bug "
+"in RKWard or a problem with your PHP installation. Check the settings "
+"(Settings->Configure Settings->PHP backend) and try again."
+msgstr ""
+"Υπήρξε ένα σφάλμα\n"
+"(\"%1\")\n"
+"κατά την έναρξη της μηχανής υποστήριξης PHP. Το πιο πιθανόν είναι να "
+"οφείλεται είτε σε σφάλμα (bug) του RKWard ή σε πρόβλημα στην εγκατάσταση της "
+"PHP. Ελέγξτε τις ρυθμίσεις (Ρυθμίσεις->Ρύθμιση->Μηχανή υποστήριξης PHP) και "
+"προσπαθήστε ξανά."
+
+#: scriptbackends/phpbackend.cpp:200
+msgid ""
+"The PHP-backend has reported an error\n"
+"(\"%1\")\n"
+"and has been shut down. This is most likely due to a bug in the plugin. But "
+"of course you may want to try to close and restart the plugin to see whether "
+"it works with different settings."
+msgstr ""
+"Υπήρξε ένα σφάλμα\n"
+"(\"%1\")\n"
+"της μηχανής υποστήριξης PHP και έκλεισε. Το πιο πιθανόν είναι να οφείλεται "
+"σε bug σε κάποιο πρόσθετο. Μπορείτε να δοκιμάσετε να κλείσετε και να "
+"ξανανοίξετε το πρόσθετο για να δείτε εάν δουλεύει με διαφορετικές ρυθμίσεις."
+
+#: scriptbackends/phpbackend.cpp:218
+msgid ""
+"The PHP backend could not be started. Check whether you have correctly "
+"configured the location of the PHP-binary (Settings->Configure Settings->PHP "
+"backend)"
+msgstr ""
+"Η μηχανή υπόστήριξης ήταν αδύνατο να εκκινήσει. Ελέγξτε αν έχετε ρυθμίσει "
+"σωστά την τοποθεσία του δυαδικού αρχείου της PHP (Ρυθμίσεις->Ρύθμιση->Μηχανή "
+"υποστήριξης PHP)"
+
+#: scriptbackends/phpbackend.cpp:220
+msgid ""
+"The PHP-backend has died unexpectedly. The current output buffer is shown "
+"below:\n"
+"%1"
+msgstr ""
+"Το σύστημα υποστήριξης PHP σταμάτησε απρόβλεπτα. Το τρέχων κομμάτι "
+"αποτελεσμάτων φαίνεται παρακάτω:\n"
+"%1"
+
+#: scriptbackends/phpbackend.cpp:220
+msgid "PHP Process exited"
+msgstr "Η διαδικασία PHP σταμάτησε"
+
+#: scriptbackends/scriptbackend.cpp:86
+msgid "## Prepare\n"
+msgstr "## Ετοιμάζεται\n"
+
+#: scriptbackends/scriptbackend.cpp:89
+msgid "## Compute\n"
+msgstr "## Υπολογισμός\n"
+
+#: scriptbackends/scriptbackend.cpp:92
+msgid "## Print result\n"
+msgstr "## Εκτύπωση Αποτελέσματος\n"
+
+#: settings/rksettings.cpp:71
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+#: settings/rksettingsmodulecommandeditor.cpp:43
+msgid "Code Completion"
+msgstr "Συμπλήρωση κώδικα"
+
+#: settings/rksettingsmodulecommandeditor.cpp:46
+msgid "Enable code completion"
+msgstr "Ενεργοποίηση συμπλήρωσης κώδικα"
+
+#: settings/rksettingsmodulecommandeditor.cpp:53
+msgid "Minimum number of characters before completion is attempted"
+msgstr ""
+"Ελάχιστος αριθμός χαρακτήρων πριν να αρχίσει η προσπάθεια συμπλήρωσης κώδικα"
+
+#: settings/rksettingsmodulecommandeditor.cpp:64
+msgid "Timeout (milli seconds) before completion is attempted"
+msgstr ""
+"Χρονικό όριο (χιλιοστά δευτερολέπτου) πριν να αρχίσει η προσπάθεια "
+"συμπλήρωσης κώδικα"
+
+#: settings/rksettingsmodulecommandeditor.cpp:92
+msgid "Script editor"
+msgstr "Επεξεργαστής σεναρίων"
+
+#: settings/rksettingsmoduleconsole.cpp:49
+msgid "Load/Save command history"
+msgstr "Φόρτωση/αποθήκευση ιστορικού εντολών"
+
+#: settings/rksettingsmoduleconsole.cpp:54
+msgid "Maximum length of command history"
+msgstr "Μέγιστο μήκος ιστορικού εντολών"
+
+#: settings/rksettingsmoduleconsole.cpp:56
+#: settings/rksettingsmoduleconsole.cpp:62
+#: settings/rksettingsmodulewatch.cpp:153
+msgid "Unlimited"
+msgstr "Χωρίς περιορισμό"
+
+#: settings/rksettingsmoduleconsole.cpp:60
+msgid "Maximum number of paragraphs/lines to display in the console"
+msgstr "Μέγιστος αριθμός παραγράφων/γραμμών προβολής στο τερματικό"
+
+#: settings/rksettingsmoduleconsole.cpp:68
+msgid "Run commands from script editor through console"
+msgstr "Εκτέλεση εντολών από τον επεξεργαστή σεναρίων στο τερματικό"
+
+#: settings/rksettingsmoduleconsole.cpp:73
+msgid "Also add those commands to console history"
+msgstr "Προσθήκη επίσης αυτών των εντολών στο ιστορικό του τερματικού"
+
+#: settings/rksettingsmoduleconsole.cpp:81
+msgid "Command history is context sensitive by default"
+msgstr "Το ιστορικό εντολών είναι ευαίσθητο στα περιεχόμενα (προκαθορισμένο)"
+
+#: settings/rksettingsmoduleconsole.cpp:180
+msgid "Console"
+msgstr "Τερματικό"
+
+#: settings/rksettingsmoduledebug.cpp:39
+msgid ""
+"<b>These settings are for debugging purposes, only.</b> It is safe to leave "
+"the untouched. Also, these settings will only apply to the current session, "
+"and not be saved."
+msgstr ""
+"<b>Αυτές οι  ρυθμίσεις είναι μόνο για τους σκοπούς της αποσφαλμάτωσης.</b> "
+"Είναι ασφαλές να τις αφήσετε ως έχουν. Επίσης αυτές οι ρυθμίσεις θα έχουν "
+"εφαρμογή μόνο στην παρούσα συνεδρία και δεν θα αποθηκευτούν."
+
+#: settings/rksettingsmoduledebug.cpp:45
+msgid "Debug level"
+msgstr "Επίπεδο αποσφαλμάτωσης"
+
+#: settings/rksettingsmoduledebug.cpp:55
+msgid "Debug flags"
+msgstr "Σημαίες αποσφαλμάτωσης"
+
+#: settings/rksettingsmoduledebug.cpp:80
+msgid "Command timeout"
+msgstr "Χρονικό περιθώριο εκτέλεσης εντολής"
+
+#: settings/rksettingsmoduledebug.cpp:101
+msgid "Debug"
+msgstr "Αποσφαλμάτωση"
+
+#: settings/rksettingsmodulegeneral.cpp:52
+msgid "Settings marked with (*) do not take effect until you restart RKWard"
+msgstr ""
+"Ρυθμίσεις σημειωμένες με (*) δεν έχουν επίδραση μέχρι να επανεκκινήσετε το "
+"Rkward"
+
+#: settings/rksettingsmodulegeneral.cpp:58
+msgid "Directory where the logfiles should be kept (*)"
+msgstr "Φάκελος όπου θα αποθηκεύονται τα αρχεία καταγραφών (*)"
+
+#: settings/rksettingsmodulegeneral.cpp:64
+msgid "Startup Action (*)"
+msgstr "Ενέργεια κατά την εκκίνηση (*)"
+
+#: settings/rksettingsmodulegeneral.cpp:69
+msgid "Ask for a file to open"
+msgstr "Ερώτηση για άνοιγμα αρχείου"
+
+#: settings/rksettingsmodulegeneral.cpp:70
+msgid "Show selection dialog (default)"
+msgstr "Προβολή διαλόγου επιλογής (προεπιλεγμένο)"
+
+#: settings/rksettingsmodulegeneral.cpp:75
+msgid "Show RKWard Help on Startup"
+msgstr "Προβολή βοήθειας RKWard κατά την εκκίνηση"
+
+#: settings/rksettingsmodulegeneral.cpp:82
+msgid ""
+"The workplace layout (i.e. which script-, data-, help-windows are open) may "
+"be saved (and loaded) per R workspace, or independent of the R workspace. "
+"Which do you prefer?"
+msgstr ""
+"Η διάταξη του χώρου εργασίας του RKWard (π.χ. εκεί όπου τα παράθυρα "
+"σεναρίων, δεδομένων, βοήθειας ανοίγουν) μπορεί να αποθηκευτούν (και να "
+"ανοιχτούν) για κάθε χώρο εργασίας του R ή ανεξάρτητα του χώρο εργασίας του "
+"R. Τι προτιμάτε;"
+
+#: settings/rksettingsmodulegeneral.cpp:91
+msgid "Save/restore with R workspace, when saving/loading R workspace"
+msgstr ""
+"Αποθήκευση/ανάκτηση μαζί με το χώρο εργασίας του R, όταν γίνεται αποθήκευση/"
+"ανάκτηση του χώρου εργασίας του R"
+
+#: settings/rksettingsmodulegeneral.cpp:94
+msgid ""
+"Save/restore independent of R workspace (save at end of RKWard session, "
+"restore at next start)"
+msgstr ""
+"Αποθήκευση/ανάκτηση ανεξάρτητα από το χώρο εργασίας του R (αποθήκευση στο "
+"τέλος της συνεδρίας του RKWard, ανάκτηση στην επόμενη εκκίνηση του)"
+
+#: settings/rksettingsmodulegeneral.cpp:97
+msgid "Do not save/restore workplace layout"
+msgstr "Μη αποθήκευση/ανάκτηση της διάταξης χώρου εργασίαςτου RKWard"
+
+#: settings/rksettingsmodulegeneral.cpp:106
+msgid ""
+"Warn when editing objects with more than this number of fields (0 for no "
+"limit):"
+msgstr ""
+"Προειδοποίηση όταν πρόκειται να επεξεργαστούν αντικείμενα με περισσότερα από "
+"αυτόν τον αριθμό πεδίων (0 για απεριόριστο):"
+
+#: settings/rksettingsmodulegeneral.cpp:109
+msgid "No limit"
+msgstr "Απεριόριστο"
+
+#: settings/rksettingsmodulegeneral.cpp:116
+msgid "MDI window focus behavior"
+msgstr ""
+
+#: settings/rksettingsmodulegeneral.cpp:119
+msgid "Click to focus"
+msgstr ""
+
+#: settings/rksettingsmodulegeneral.cpp:120
+msgid "Focus follows mouse"
+msgstr ""
+
+#: settings/rksettingsmodulegeneral.cpp:145
+msgid "General"
+msgstr "Γενικά"
+
+#: settings/rksettingsmoduleobjectbrowser.cpp:46
+msgid "Which objects should be shown by default?"
+msgstr "Ποια αντικείμενα να φαίνονται από την αρχή;"
+
+#: settings/rksettingsmoduleobjectbrowser.cpp:48
+msgid "Show hidden objects"
+msgstr "Εμφάνιση κρυφών αντικειμένων"
+
+#: settings/rksettingsmoduleobjectbrowser.cpp:50
+msgid "Show all environments"
+msgstr "Προβολή όλων των περιβάλλοντων"
+
+#: settings/rksettingsmoduleobjectbrowser.cpp:53
+msgid "Show objects with children"
+msgstr "Προβολή αντικειμένων με απογόνους"
+
+#: settings/rksettingsmoduleobjectbrowser.cpp:55
+msgid "Show functions"
+msgstr "Εμφάνιση συναρτήσεων"
+
+#: settings/rksettingsmoduleobjectbrowser.cpp:57
+msgid "Show variables"
+msgstr "Εμφάνιση μεταβλητών"
+
+#: settings/rksettingsmoduleobjectbrowser.cpp:62
+msgid "Which columns should be shown by default?"
+msgstr "Ποιες στήλες να φαίνονται από την αρχή;"
+
+#: settings/rksettingsmoduleobjectbrowser.cpp:64
+msgid "Label field"
+msgstr "Πεδίο ετικέτας"
+
+#: settings/rksettingsmoduleobjectbrowser.cpp:66
+msgid "Type field"
+msgstr "Πεδίο τύπου"
+
+#: settings/rksettingsmoduleobjectbrowser.cpp:68
+msgid "Class field"
+msgstr "Πεδίο κλάσης"
+
+#: settings/rksettingsmoduleobjectbrowser.cpp:78
+msgid "Never fetch the structure of these packages:"
+msgstr "Να μην γίνεται ανάκτηση ποτέ της δομής αυτών των πακέτων"
+
+#: settings/rksettingsmoduleobjectbrowser.cpp:103
+msgid "Add exclusion"
+msgstr "Προσθέστε εξαίρεση"
+
+#: settings/rksettingsmoduleobjectbrowser.cpp:103
+msgid "Add the name of the package that no structure should be fetched for"
+msgstr ""
+"Προσθέστε το όνομα του πακέτου για το οποίο δεν μπόρεσε να βρεθεί η δομή"
+
+#: settings/rksettingsmoduleoutput.cpp:41
+msgid "Output Window options"
+msgstr "Επιλογές παραθύρου αποτελεσμάτων"
+
+#: settings/rksettingsmodulephp.cpp:39
+msgid "Changes in this section take effect the next time you start a plugin"
+msgstr ""
+"Οι αλλαγές σε αυτόν τον τομέα επιδρούν την επόμενη φορά που εκκινήσετε το "
+"πρόσθετο"
+
+#: settings/rksettingsmodulephp.cpp:45
+msgid "File-location of the PHP binary"
+msgstr "Τοποθεσία του δυαδικού αρχείου της PHP"
+
+#: settings/rksettingsmodulephp.cpp:63
+msgid "PHP backend"
+msgstr "Σύστημα υποστήριξης PHP"
+
+#: settings/rksettingsmoduleplugins.cpp:54
+msgid ""
+"Some plugins are available with both, a wizard-like interface and a "
+"traditional dialog interface. If both are available, which mode of "
+"presentation do you prefer?"
+msgstr ""
+"Μερικά πρόσθετα είναι διαθέσιμα και με διάταξη μάγου και με παραδοσιακή "
+"τύπου διαλόγου. Εάν και οι δύο είναι διαθέσιμες ποια διάταξη προτιμάτε;"
+
+#: settings/rksettingsmoduleplugins.cpp:64
+msgid "Always prefer dialogs"
+msgstr "Πάντα διάταξη διαλόγου"
+
+#: settings/rksettingsmoduleplugins.cpp:67
+msgid "Prefer recommended interface"
+msgstr "Προτίμηση συνιστώμενης διάταξης"
+
+#: settings/rksettingsmoduleplugins.cpp:70
+msgid "Always prefer wizards"
+msgstr "Πάντα διάταξη μάγου"
+
+#: settings/rksettingsmoduleplugins.cpp:82
+msgid "R syntax display (in dialogs)"
+msgstr "Προβολή σύνταξης R (σε παράθυρα διαλόγων)"
+
+#: settings/rksettingsmoduleplugins.cpp:85
+msgid "Code shown by default"
+msgstr "Ο κώδικας να φαίνεται από την αρχή"
+
+#: settings/rksettingsmoduleplugins.cpp:91
+msgid "Default height of code display (pixels)"
+msgstr "Προκαθορισμένο ύψος προβολής κώδικα (εικονοστοιχεία)"
+
+#: settings/rksettingsmoduleplugins.cpp:103
+msgid "Select .pluginmap file(s)"
+msgstr "Επιλέξτε αρχεία .pluginmap"
+
+#: settings/rksettingsmoduleplugins.cpp:130
+msgid "Select .pluginmap-file"
+msgstr "Επιλέξτε αρχείο .pluginmap"
+
+#: settings/rksettingsmoduleplugins.cpp:135
+msgid "Plugins"
+msgstr "Πρόσθετα"
+
+#: settings/rksettingsmoduler.cpp:58
+msgid ""
+"The following settings mostly affect R behavior in the console. It is "
+"generally safe to keep these unchanged."
+msgstr ""
+"Οι ακόλουθες ρυθμίσεις επηρεάζουν κυρίως την συμπεριφορά του R στο "
+"τερματικό . Είναι γενικά ασφαλές να μην αλλάξετε αυτές τις ρυθμίσεις."
+
+#: settings/rksettingsmoduler.cpp:67
+msgid "Display warnings"
+msgstr "Προβολή προειδοποιήσεων"
+
+#: settings/rksettingsmoduler.cpp:70
+msgid "Suppress warnings"
+msgstr "Καταστολή προειδοποιήσεων"
+
+#: settings/rksettingsmoduler.cpp:71
+msgid "Print warnings later (default)"
+msgstr "Εμφάνιση προειδοποιήσεων αργότερα (προκαθορισμένο)"
+
+#: settings/rksettingsmoduler.cpp:72
+msgid "Print warnings immediately"
+msgstr "Εμφάνιση προειδοποιήσεων άμεσα"
+
+#: settings/rksettingsmoduler.cpp:73
+msgid "Convert warnings to errors"
+msgstr "Μετατροπή προειδοποιήσεων σε σφάλματα"
+
+#: settings/rksettingsmoduler.cpp:79
+msgid "Decimal character (only for printing)"
+msgstr "Δεκαδικός χαρακτήρας (μόνο για εμφάνιση)"
+
+#: settings/rksettingsmoduler.cpp:86
+msgid "Output width (characters)"
+msgstr "Πλάτος αποτελεσμάτων (χαρακτήρες)"
+
+#: settings/rksettingsmoduler.cpp:92
+msgid "Maximum number of elements shown in print"
+msgstr "Μέγιστος αριθμός εμφάνισης στοιχείων στην εντολή print"
+
+#: settings/rksettingsmoduler.cpp:98
+msgid "Maximum length of warnings/errors to print"
+msgstr "Μέγιστο μήκος προειδοποιήσεων/λάθών στην εμφάνιση"
+
+#: settings/rksettingsmoduler.cpp:104
+msgid "Keep comments in functions"
+msgstr "Διατήρηση των σχολίων στις εντολές"
+
+#: settings/rksettingsmoduler.cpp:107
+msgid "TRUE (default)"
+msgstr "ΑΛΗΘΕΣ (προκαθορισμένο)"
+
+#: settings/rksettingsmoduler.cpp:108
+msgid "FALSE"
+msgstr "ΨΕΥΔΕΣ"
+
+#: settings/rksettingsmoduler.cpp:114
+msgid "Keep comments in packages"
+msgstr "Διατήρηση των σχολίων στα πακέτα"
+
+#: settings/rksettingsmoduler.cpp:117 settings/rksettingsmoduler.cpp:139
+msgid "TRUE)"
+msgstr "ΑΛΗΘΕΣ)"
+
+#: settings/rksettingsmoduler.cpp:118 settings/rksettingsmoduler.cpp:140
+msgid "FALSE (default)"
+msgstr "ΨΕΥΔΕΣ (προκαθορισμένο)"
+
+#: settings/rksettingsmoduler.cpp:124
+msgid "Maximum level of nested expressions"
+msgstr "Μέγιστο επίπεδο συγγενών εκφράσεων"
+
+#: settings/rksettingsmoduler.cpp:130
+msgid "Default decimal precision in print ()"
+msgstr "Προκαθορισμένη δεκαδική ακρίβεια στην εμφάνιση print ()"
+
+#: settings/rksettingsmoduler.cpp:136
+msgid "Check vector bounds (warn)"
+msgstr "Ελέγξτε τα όρια διανυσμάτων (προειδοποίηση)"
+
+#: settings/rksettingsmoduler.cpp:145
+msgid "Command used to send files to printer"
+msgstr "Η εντολή χρησιμεύει για την αποστολή αρχείων για εκτύπωση"
+
+#: settings/rksettingsmoduler.cpp:174
+msgid "R-Backend"
+msgstr "Σύστημα υποστήριξης R"
+
+#: settings/rksettingsmoduler.cpp:284
+msgid "Package repositories (where libraries are downloaded from)"
+msgstr "Αποθήκες πακέτων (από όπου οι βιβλιοθήκες μεταφορτώνονται)"
+
+#: settings/rksettingsmoduler.cpp:290
+msgid "Archive downloaded packages"
+msgstr "Αρχικοποίηση μεταφορτομένων πακέτων "
+
+#: settings/rksettingsmoduler.cpp:297
+msgid "R Library locations  (where libraries get installed to, locally)"
+msgstr ""
+"Τοποθεσίες βιβλιοθηκών R (εκεί όπου οι βιβλιοθήκες εγκαθιστώνται τοπικά)"
+
+#: settings/rksettingsmoduler.cpp:302
+msgid ""
+"Note: The startup defaults will always be used in addition to the locations "
+"you specify in this list"
+msgstr ""
+"Σημείωση: Τα προκαθορισμένα κατά την έναρξη θα χρησιμοποιούνται πάντα μαζί "
+"με τις τοποθεσίες που θα καθορίσετε σε αυτήν την λίστα"
+
+#: settings/rksettingsmoduler.cpp:324
+msgid "Add R Library Directory"
+msgstr "Προσθήκη φακέλου βιβλιοθηκών R"
+
+#: settings/rksettingsmoduler.cpp:332
+msgid "Add repository"
+msgstr "Προσθήκη αποθήκης πακέτων"
+
+#: settings/rksettingsmoduler.cpp:332
+msgid ""
+"Add URL of new repository\n"
+"(Enter \"@CRAN@\" for the standard CRAN-mirror)"
+msgstr ""
+"Προσθήκη διεύθυνσης URL μιας καινούργιας αποθήκης πακέτων\n"
+"(Εισάγετε \"@CRAN@\" για τον πρότυπο mirror του CRAN)"
+
+#: settings/rksettingsmoduler.cpp:338
+msgid "R-Packages"
+msgstr "Πακέτα R "
+
+#: settings/rksettingsmodulewatch.cpp:123
+msgid ""
+"For now, settings only apply to new commands. All previous commands remain "
+"visible/invisible."
+msgstr ""
+"Από τώρα οι ρυθμίσεις έχουν εφαρμογή μόνο στιςκαινούριες εντολές. Όλες οι "
+"προηγούμενες εντολές παραμένουν ορατές/αόρατες."
+
+#: settings/rksettingsmodulewatch.cpp:131
+msgid "always show command"
+msgstr "πάντα προβολή εντολής"
+
+#: settings/rksettingsmodulewatch.cpp:134
+msgid "always show result"
+msgstr "πάντα προβολή αποτελέσματος"
+
+#: settings/rksettingsmodulewatch.cpp:137
+msgid "show errors"
+msgstr "προβολή σφαλμάτων"
+
+#: settings/rksettingsmodulewatch.cpp:140
+msgid "show/raise window"
+msgstr "προβολή/εμφάνιση παραθύρου"
+
+#: settings/rksettingsmodulewatch.cpp:144
+msgid "User commands"
+msgstr "Εντολές χρήστη"
+
+#: settings/rksettingsmodulewatch.cpp:145
+msgid "Plugin generated commands"
+msgstr "Εντολές που δημιουργήθηκαν από τα πρόσθετα"
+
+#: settings/rksettingsmodulewatch.cpp:146
+msgid "Application commands"
+msgstr "Εντολές εφαρμογής"
+
+#: settings/rksettingsmodulewatch.cpp:147
+msgid "Synchronization commands"
+msgstr "Εντολές συγχρονισμού "
+
+#: settings/rksettingsmodulewatch.cpp:151
+msgid "Maximum number of paragraphs/lines to display in the Command Log"
+msgstr ""
+"Μέγιστος αριθμός παραγράφων/γραμμών προβολής στο αρχείο καταγραφής εντολών"
+
+#: settings/rksettingsmodulewatch.cpp:281 windows/rkcommandlog.cpp:55
+msgid "Command log"
+msgstr "Αρχείο καταγραφής εντολών"
+
+#: windows/detachedwindowcontainer.cpp:45
+msgid "Attach to main window"
+msgstr "Επισύναψη στο κύριο παράθυρο"
+
+#: windows/rcontrolwindow.cpp:50
+msgid "Configure R backend"
+msgstr "Ρύθμιση του συστήματος υποστήριξης R"
+
+#: windows/rcontrolwindow.cpp:55 windows/rcontrolwindow.cpp:139
+msgid "Pause execution"
+msgstr "Παύση εκτέλεσης"
+
+#: windows/rcontrolwindow.cpp:60
+msgid "Cancel selected commands"
+msgstr "Ακύρωση επιλεγμένων εντολών"
+
+#: windows/rcontrolwindow.cpp:130
+msgid ""
+"Some of the commands you were trying to cancel are marked as \"sync"
+"\" (letter 'S' in the type column). Cancelling such commands could lead to "
+"loss of data. These commands have _not_ been cancelled."
+msgstr ""
+"Κάποιες από τις εντολές που προσπαθείτε να διαγράψετε έχουν χαρακτηριστεί ως "
+"\"sync\"·(γράμμα 'S' στην στήλη του τύπου). Ακυρώνοντας τέτοιες εντολές "
+"μπορεί να οδηγήσει σε απώλεια δεδομένων. Αυτές οι εντολές δεν έχουν ακυρωθεί."
+
+#: windows/rcontrolwindow.cpp:130
+msgid "Some commands not cancelled"
+msgstr "Κάποιες εντολές δεν ακυρώθηκαν"
+
+#: windows/rcontrolwindow.cpp:143
+msgid "Resume execution"
+msgstr "Συνέχιση εκτέλεσης"
+
+#: windows/rkcommandeditorwindow.cpp:153
+msgid "Run block"
+msgstr "Εκτέλεση τμήματος"
+
+#: windows/rkcommandeditorwindow.cpp:157
+msgid "Mark selection as block"
+msgstr "Σήμανση επιλογής σαν τμήμα"
+
+#: windows/rkcommandeditorwindow.cpp:160
+msgid "Unmark block"
+msgstr "Αναίρεση σήμανσης επιλογής σαν τμήμα"
+
+#: windows/rkcommandeditorwindow.cpp:165
+msgid "Configure Script Editor"
+msgstr "Ρύθμιση επεξεργαστή σεναρίων"
+
+#: windows/rkcommandeditorwindow.cpp:249 windows/rkcommandeditorwindow.cpp:334
+msgid " [modified]"
+msgstr " [τροποποιήθηκε]"
+
+#: windows/rkcommandeditorwindow.cpp:262
+msgid "The document \"%1\" has been modified. Close it anyway?"
+msgstr "Το έγγραφο \"%1\" έχει τροποποιηθεί. Θέλετε να το κλείσετε;"
+
+#: windows/rkcommandeditorwindow.cpp:262
+msgid "File not saved"
+msgstr "Το αρχείο δεν αποθηκεύτηκε"
+
+#: windows/rkcommandeditorwindow.cpp:333
+msgid "Unnamed"
+msgstr "Ανώνυμο"
+
+#: windows/rkcommandeditorwindow.cpp:528
+msgid "%1 (Active)"
+msgstr "%1 (Ενεργό)"
+
+#: windows/rkcommandeditorwindow.cpp:550
+msgid "%1 (Unused)"
+msgstr "%1 (Όχι σε χρήση)"
+
+#: windows/rkcommandlog.cpp:181
+msgid "Incomplete statement.\n"
+msgstr "Μη ολοκληρωμένη δήλωση.\n"
+
+#: windows/rkcommandlog.cpp:183
+msgid "Syntax error.\n"
+msgstr "Σφάλμα σύνταξης.\n"
+
+#: windows/rkcommandlog.cpp:185
+msgid "An unspecified error occurred while running the command.\n"
+msgstr "Ένα απροσδιόριστο σφάλμα συνέβη κατά την εκτέλεση της εντολής.\n"
+
+#: windows/rkhelpsearchwindow.cpp:69
+msgid "Find:"
+msgstr "Αναζήτηση:"
+
+#: windows/rkhelpsearchwindow.cpp:72
+msgid "Fields:"
+msgstr "Πεδία:"
+
+#: windows/rkhelpsearchwindow.cpp:91
+msgid "All but keywords"
+msgstr "Όλα εκτός από τις λέξεις κλειδιά"
+
+#: windows/rkhelpsearchwindow.cpp:92
+msgid "Keywords"
+msgstr "Λέξεις κλειδιά"
+
+#: windows/rkhelpsearchwindow.cpp:96
+msgid "Package:"
+msgstr "Πακέτο:"
+
+#: windows/rkhelpsearchwindow.cpp:108
+msgid "Case sensitive"
+msgstr "Διάκριση πεζών/κεφαλαίων"
+
+#: windows/rkhelpsearchwindow.cpp:110
+msgid "Fuzzy matching"
+msgstr "Ασαφές ταίριασμα"
+
+#: windows/rkhelpsearchwindow.cpp:114
+msgid "Find"
+msgstr "Αναζήτηση"
+
+#: windows/rkhelpsearchwindow.cpp:128
+msgid "Help search"
+msgstr "Αναζήτηση βοήθειας"
+
+#: windows/rkhelpsearchwindow.cpp:201
+msgid "Show help for %1 in package %2"
+msgstr "Βοήθεια για %1 στο πακέτο %2"
+
+#: windows/rkhelpsearchwindow.cpp:226
+msgid ""
+"No help found on '%1'. Maybe the corresponding package is not installed/"
+"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
+"more options."
+msgstr ""
+"Δεν βρέθηκε βοήθεια στο '%1'. Πιθανόν το αντίστοιχο πακέτο να μην είναι "
+"εγκατεστημένο/ φορτωμένο, ή πιθανόν να μην έχετε πληκτρολογήσει σωστά την "
+"εντολή. Προσπαθήστε χρησιμοποιώντας τη Βοήθεια->Αναζήτηση βοήθειας R για "
+"περισσότερες επιλογές."
+
+#: windows/rkhelpsearchwindow.cpp:226
+msgid "No help found"
+msgstr "Δεν βρέθηκε βοήθεια"
+
+#: windows/rkhelpsearchwindow.cpp:306
+msgid "Topic"
+msgstr "Θέμα"
+
+#: windows/rkhelpsearchwindow.cpp:308
+msgid "Package"
+msgstr "Πακέτο"
+
+#: windows/rkhtmlwindow.cpp:176
+msgid ""
+"The url you are trying to open ('%1') is not a local file. Do you want to "
+"open the url in the default application?"
+msgstr ""
+"Η ιστοσελίδα που προσπαθείτε να ανοίξετε ('%1') δεν είναι ένα τοπικό αρχείο. "
+"Θέλετε να ανοίξετε το αρχείο με την προεπιλεγμένη εφαρμογή;"
+
+#: windows/rkhtmlwindow.cpp:176
+msgid "Open in default application?"
+msgstr "Άνοιγμα με·την·προεπιλεγμένη·εφαρμογή;"
+
+#: windows/rkhtmlwindow.cpp:260
+msgid "&Flush Output"
+msgstr "&Εκκαθάριση Παραθύρου Αποτελεσμάτων"
+
+#: windows/rkhtmlwindow.cpp:264
+msgid "&Refresh Output"
+msgstr "&Ανανέωση Παραθύρου Αποτελεσμάτων"
+
+#: windows/rkhtmlwindow.cpp:268
+msgid "Print Output"
+msgstr "Εκτύπωση αποτελεσμάτων"
+
+#: windows/rkhtmlwindow.cpp:272
+msgid "Save Output as HTML"
+msgstr "Αποθήκευση αποτελεσμάτων ως ιστοσελίδα"
+
+#: windows/rkhtmlwindow.cpp:368
+msgid ""
+"Do you really want to flush the output? It will not be possible to restore "
+"it."
+msgstr ""
+"Θέλετε σίγουρα να εκκαθαρίσετε το παράθυρο αποτελεσμάτων; Δεν θα είναι "
+"δυνατόν να το ανακτήσετε."
+
+#: windows/rkhtmlwindow.cpp:368
+msgid "Flush output?"
+msgstr "Εκκαθάριση παραθύρου αποτελεσμάτων;"
+
+#: windows/rkhtmlwindow.cpp:393
+msgid ""
+"<HTML><BODY><H1>RKWard output</H1>\n"
+"<P>The output is empty.</P>\n"
+"</BODY></HTML>"
+msgstr ""
+"<HTML><BODY><H1>Παράθυρο αποτελεσμάτων του RKWard</H1>\n"
+"<P>Το παράθυρο αποτελεσμάτων είναι άδειο</P>\n"
+"</BODY></HTML>"
+
+#: windows/rkhtmlwindow.cpp:415
+msgid "Print Help"
+msgstr "Εκτύπωση Βοήθειας"
+
+#: windows/rkhtmlwindow.cpp:422
+msgid "R Help"
+msgstr "Βοήθεια R"
+
+#: windows/rkhtmlwindow.cpp:448
+msgid "Page does not exist or is broken"
+msgstr "Η σελίδα δεν υπάρχει ή είναι προβληματική "
+
+#: windows/rkhtmlwindow.cpp:506
+msgid "No Title"
+msgstr "Χωρίς τίτλο"
+
+#: windows/rkhtmlwindow.cpp:531
+msgid "Summary"
+msgstr "Περίληψη"
+
+#: windows/rkhtmlwindow.cpp:537
+msgid "Usage"
+msgstr "Χρήση"
+
+#: windows/rkhtmlwindow.cpp:554
+msgid "GUI settings"
+msgstr "Ρυθμίσεις GUI"
+
+#: windows/rkhtmlwindow.cpp:562
+msgid "Unnamed GUI element"
+msgstr "Στοιχείο του GUI χωρίς όνομα"
+
+#: windows/rkhtmlwindow.cpp:582
+msgid "Related functions and pages"
+msgstr "Σχετικές λειτουργίες και σελίδες"
+
+#: windows/rkhtmlwindow.cpp:589
+msgid "Technical details"
+msgstr "Τεχνικές λεπτομέρειες"
+
+#: windows/rkhtmlwindow.cpp:666
+msgid "R Reference on '%1'"
+msgstr "Αναφορά του R για το '%1'"
+
+#: windows/rkhtmlwindow.cpp:681
+msgid "BROKEN REFERENCE"
+msgstr "ΠΡΟΒΛΗΜΑΤΙΚΗ ΑΝΑΦΟΡΑ"
+
+#: windows/rktoolwindowbar.cpp:272
+msgid "Attachment"
+msgstr "Συνημμένο"
+
+#: windows/rktoolwindowbar.cpp:274
+msgid "Attach"
+msgstr "Επισύναψη"
+
+#: windows/rktoolwindowbar.cpp:276
+msgid "Move To"
+msgstr "Μετακίνηση στο"
+
+#: windows/rktoolwindowbar.cpp:278
+msgid "Left Sidebar"
+msgstr "Αριστερή πλευρική μπάρα"
+
+#: windows/rktoolwindowbar.cpp:279
+msgid "Right Sidebar"
+msgstr "Δεξιά πλευρική μπάρα"
+
+#: windows/rktoolwindowbar.cpp:280
+msgid "Top Sidebar"
+msgstr "Άνω πλευρική μπάρα"
+
+#: windows/rktoolwindowbar.cpp:281
+msgid "Bottom Sidebar"
+msgstr "Κάτω πλευρική μπάρα"
+
+#: windows/rktoplevelwindowgui.cpp:54
+msgid "Help on R"
+msgstr "Βοήθεια R"
+
+#: windows/rktoplevelwindowgui.cpp:56
+msgid "Search R Help"
+msgstr "Αναζήτηση βοήθειας R"
+
+#: windows/rktoplevelwindowgui.cpp:58
+msgid "Help on RKWard"
+msgstr "Βοήθεια RKWard"
+
+#: windows/rktoplevelwindowgui.cpp:64
+msgid "Shows the R help index"
+msgstr "Προβάλει το ευρετήριο βοήθειας του R"
+
+#: windows/rktoplevelwindowgui.cpp:65
+msgid "Shows/raises the R Help Search window"
+msgstr "Προβάλει/εμφανίζει το παράθυρο αναζήτησης βοήθειας του R"
+
+#: windows/rktoplevelwindowgui.cpp:66
+msgid "Show help on RKWard"
+msgstr "Προβολή βοήθειας του RKWard"
+
+#: windows/rktoplevelwindowgui.cpp:71
+msgid "Show/Hide Workspace Browser"
+msgstr "Εμφάνιση/Απόκρυψη του περιηγητή του χώρου εργασίας"
+
+#: windows/rktoplevelwindowgui.cpp:75
+msgid "Show/Hide Filesystem Browser"
+msgstr "Εμφάνιση/Απόκρυψη του περιηγητή αρχείων του συστήματος"
+
+#: windows/rktoplevelwindowgui.cpp:79
+msgid "Show/Hide Command Log"
+msgstr "Απόκρυψη/Εμφάνιση αρχείου καταγραφής εντολών"
+
+#: windows/rktoplevelwindowgui.cpp:83
+msgid "Show/Hide Pending Jobs"
+msgstr "Απόκρυψη/Εμφάνιση εργασιών σε εκκρεμότητα"
+
+#: windows/rktoplevelwindowgui.cpp:87
+msgid "Show/Hide Console"
+msgstr "Απόκρυψη/Εμφάνιση τερματικού"
+
+#: windows/rktoplevelwindowgui.cpp:91
+msgid "Show/Hide R Help Search"
+msgstr "Απόκρυψη/Εμφάνιση παράθυρου αναζήτησης βοήθειας του R"
+
+#: windows/rktoplevelwindowgui.cpp:95
+msgid "Activate Document view"
+msgstr "Ενεργοποίηση προβολής εγγράφου"
+
+#: windows/rktoplevelwindowgui.cpp:99
+msgid "Show &Output"
+msgstr "Προβολή &Παραθύρου αποτελεσμάτων"
+
+#: windows/rktoplevelwindowgui.cpp:124
+msgid ""
+"Please submit your bug reports or wishes at http://sourceforge.net/tracker/?"
+"group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
+"net"
+msgstr ""
+"Παρακαλούμε υποβάλετε τις αναφορές σφαλμάτων ή τις επιθυμίες σας στο http://"
+"sourceforge.net/tracker/?group_id=50231&atid=459007 ή στείλτε μήνυμα στο "
+"rkward-devel@lists.sourceforge.net"
+
+#: windows/rkwindowcatcher.cpp:57
+msgid ""
+"You have created a new X11 device window in R. Usually, RKWard tries to "
+"detect such windows, to take control of them, and add a menu-bar to them. "
+"This time, however, RKWard failed to detect, which window was created, and "
+"so can not embed it.\n"
+"If you created the window on a different screen or X11 display, that is to "
+"be expected. You might want to consider changing options(\"display\"), "
+"then.\n"
+"If you can see the X11 window on the same screen as this message, then "
+"RKWard should do better. In this case, please contact us at rkward-"
+"devel@lists.sourceforge.net with details on your setup, so we can try to fix "
+"this in future versions of RKWard."
+msgstr ""
+"Έχετε δημιουργήσει ένα νέο παράθυρο στης συσκευής Χ11 στο R. Συνήθως το "
+"RKWard προσπαθεί να εντοπίσει τέτοια παράθυρα, να τα ελέγξει και να "
+"προσθέσει μία γραμμή εργαλείων σε αυτά. Αυτή τη φορά όμως το RKWard απέτυχε "
+"να εντοπίσει ποιο παράθυρο δημιουργήθηκε και γιαυτό δεν μπορεί να το "
+"ενσωματώσει. \n"
+"Αν δημιουργήσατε εσείς αυτό το νέο παράθυρο σε διαφορετική οθόνη ή προβολή "
+"Χ11, αυτό είναι αναμενόμενο. Τότε θα σας ενδιέφερε να αλλάξετε τις επιλογές "
+"(\"προβολή\").\n"
+"Αν μπορείτε να δείτε το παράθυρο Χ11 στην ίδια οθόνη με αυτό το μήνυμα, τότε "
+"είναι πρόβλημα του RKWard. Σε αυτήν την περίπτωση στείλτε μας μήνυμα στο "
+"devel@lists.sourceforge.net με λεπτομέρειες για τις ρυθμίσεις σας, ώστε να "
+"προσπαθήσουμε να το διορθώσουμε στις μελλοντικές εκδόσεις του RKWard."
+
+#: windows/rkwindowcatcher.cpp:57
+msgid "Could not embed R X11 window"
+msgstr "Δεν ήταν δυνατή η ενσωμάτωση του παραθύρου Χ11"
+
+#: windows/rkwindowcatcher.cpp:92
+msgid "An error occurred"
+msgstr "Υπήρξαν κάποιο σφάλμα"
+
+#: windows/rkwindowcatcher.cpp:195
+msgid "Specify fixed size"
+msgstr "Προσδιορισμός σταθερού μέγεθος"
+
+#: windows/rkwindowcatcher.cpp:201
+msgid "Width"
+msgstr "Πλάτος"
+
+#: windows/rkwindowcatcher.cpp:205
+msgid "Height"
+msgstr "Ύψος"
+
+#: windows/rkwindowcatcher.cpp:223
+msgid "Activate graphics device number %1"
+msgstr "Ενεργοποίηση συσκευής γραφικών νούμερο %1"
+
+#: windows/rkwindowcatcher.cpp:229
+msgid "Copy contents of graphics device number %1 to output"
+msgstr ""
+"Αντιγραφή περιεχομένων της συσκευής γραφικών νούμερο %1 στο παράθυρο "
+"αποτελεσμάτων"
+
+#: windows/rkwindowcatcher.cpp:235
+msgid "Print contents of graphics device number %1"
+msgstr "Εκτύπωση περιεχομένων της συσκευής γραφικών νούμερο %1"
+
+#: windows/rkwindowcatcher.cpp:244
+msgid "Specify R object"
+msgstr "Προσδιορισμός αντικειμένου R"
+
+#: windows/rkwindowcatcher.cpp:249
+msgid "Specify the R object name, you want to save the graph to"
+msgstr ""
+"Επιλέξτε το όνομα του αντικειμένου R με το οποίο θέλετε να σώσετε το γράφημα"
+
+#: windows/rkwindowcatcher.cpp:260
+msgid "Save contents of graphics device number %1 to object '%2'"
+msgstr ""
+"Αποθήκευση περιεχομένων της συσκευής γραφικών νούμερο %1 στο αντικείμενο '%2'"
+
+#: windows/rkwindowcatcher.cpp:269
+msgid "Duplicate graphics device number %1"
+msgstr "Διπλασιασμός συσκευής γραφικών νούμερο %1"
+
+#: windows/rkwindowcatcher.cpp:288
+msgid "Draw area follows size of window"
+msgstr "Η περιοχή σχεδιασμού ακολουθεί το μέγεθος του παραθύρου"
+
+#: windows/rkwindowcatcher.cpp:294
+msgid "Set fixed size 500x500"
+msgstr "Σταθερό μέγεθος 500x500"
+
+#: windows/rkwindowcatcher.cpp:296
+msgid "Set fixed size 1000x1000"
+msgstr "Σταθερό μέγεθος 1000x1000"
+
+#: windows/rkwindowcatcher.cpp:298
+msgid "Set fixed size 2000x2000"
+msgstr "Σταθερό μέγεθος 2000x2000"
+
+#: windows/rkwindowcatcher.cpp:300
+msgid "Set specified fixed size..."
+msgstr "Προσαρμοσμένο σταθερό μέγεθος..."
+
+#: windows/rkwindowcatcher.cpp:303
+msgid "Make active"
+msgstr "Ενεργοποίηση"
+
+#: windows/rkwindowcatcher.cpp:305
+msgid "Copy to output"
+msgstr "Αντιγραφή στο παράθυρο αποτελεσμάτων"
+
+#: windows/rkwindowcatcher.cpp:308
+msgid "Store as R object..."
+msgstr "Αποθήκευση ως αντικειμένου R..."
+
+#: windows/rkwindowcatcher.cpp:310
+msgid "Duplicate"
+msgstr "Διπλασιασμός"
+
+#: windows/rkworkplace.cpp:208
+msgid "Unable to open \"%1\""
+msgstr "Αδυναμία ανοίγματος του \"%1\""
+
+#: windows/rkworkplace.cpp:208
+msgid "Could not open command file"
+msgstr "Αδυναμία ανοίγματος του φακέλου εντολών"
+
+#: windows/rkworkplace.cpp:325
+msgid ""
+"You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
+"is not optimized to handle very large objects in the built in data editor. "
+"This will use a lot of memory, and - depending on your system - might be "
+"very slow. For large objects it is generally recommended to edit using "
+"command line means or to split into smaller chunks before editing. On the "
+"other hand, if you have enough memory, or the data is simple enough (numeric "
+"data is easier to handle, than factor), editing may not be a problem at all. "
+"You can configure this warning (or turn it off entirely) under Settings-"
+">Configure RKWard->General.\n"
+"Really edit object?"
+msgstr ""
+"Πρόκειται να επεξεργαστείτε το αντικείμενο \"%1\", το οποίο είναι πολύ "
+"μεγάλο (%2 πεδία). Το RKWard δεν είναι βελτιστοποιημένο να χειρίζεται πολύ "
+"μεγάλα αντικείμενα στο ενσωματωμένο επεξεργαστή δεδομένων. Αυτό θα "
+"χρησιμοποιήσει πολύ μνήμη και-ανάλογα με το σύστημά σας- μπορεί να γίνει "
+"πολύ αργό. Για μεγάλα αντικείμενα συνίσταται γενικά να τα επεξεργαστείτε "
+"μέσω της γραμμής εντολών ή να τα χωρίσετε σε μικρότερα κομμάτια πριν τα "
+"επεξεργαστείτε. Από την άλλη αν έχετε αρκετή μνήμη ή τα δεδομένα είναι "
+"αρκετά απλά (αριθμητικά δεδομένα είναι ευκολότερο να διαχειριστούν από μη "
+"αριθμητικά), η επεξεργασία μπορεί να μην σας δημιουργήσει κανένα πρόβλημα. "
+"Μπορείτε να ρυθμίσετε / απενεργοποιήσετε αυτήν την προειδοποίηση από το "
+"μενού Ρυθμίσεις->Ρύθμιση RKWard->Γενικά.\n"
+"Θέλετε πραγματικά να επεξεργαστείτε το αντικείμενο;"
+
+#: windows/rkworkplace.cpp:325
+msgid "About to edit very large object"
+msgstr "Πρόκειται να επεξεργαστείτε ένα πολύ μεγάλο αντικείμενο"
+
+#: windows/rkworkplace.cpp:485
+msgid "Save Workplace layout"
+msgstr "Αποθήκευση διάταξης χώρου εργασίας"
+
+#: windows/rkworkplace.cpp:492
+msgid "Restore Workplace layout"
+msgstr "Ανάκτηση διάταξης χώρου εργασίας"
+
+#: windows/rkworkplace.cpp:561
+msgid "Previous Window"
+msgstr "Προηγούμενο Παράθυρο"
+
+#: windows/rkworkplace.cpp:566
+msgid "Next Window"
+msgstr "Επόμενο Παράθυρο"
+
+#: windows/rkworkplaceview.cpp:59
+msgid "Window Left"
+msgstr "Παράθυρο αριστερά"
+
+#: windows/rkworkplaceview.cpp:63
+msgid "Window Right"
+msgstr "Παράθυρο δεξιά"
+
+#. i18n: tag text
+#. i18n: file ./dataeditor/rkeditordataframepart.rc line 4
+#. i18n: tag text
+#. i18n: file ./rkconsolepart.rc line 4
+#. i18n: tag text
+#. i18n: file ./rkwardui.rc line 30
+#. i18n: tag text
+#. i18n: file ./windows/rkcommandeditorwindowpart.rc line 4
+#. i18n: tag text
+#. i18n: file ./windows/rkcommandlogpart.rc line 4
+#. i18n: tag text
+#. i18n: file ./windows/rkhelpwindow.rc line 7
+#. i18n: tag text
+#. i18n: file ./windows/rkoutputwindow.rc line 7
+#: rc.cpp:4 rc.cpp:12 rc.cpp:44 rc.cpp:92 rc.cpp:116 rc.cpp:132 rc.cpp:144
+#, no-c-format
+msgid "&Edit"
+msgstr "&Επεξεργασία"
+
+#. i18n: tag text
+#. i18n: file ./dataeditor/rkeditordataframepart.rc line 13
+#. i18n: tag text
+#. i18n: file ./rkwardui.rc line 45
+#: rc.cpp:8 rc.cpp:56
 #, no-c-format
 msgid "&Windows"
 msgstr "&Παράθυρα"
 
-#. i18n: file rkwardui.rc line 42
-#: rc.cpp:39
+#. i18n: tag text
+#. i18n: file ./rkconsolepart.rc line 11
+#. i18n: tag text
+#. i18n: file ./rkwardui.rc line 38
+#. i18n: tag text
+#. i18n: file ./windows/rkcommandeditorwindowpart.rc line 13
+#. i18n: tag text
+#. i18n: file ./windows/rkcommandeditorwindowpart.rc line 40
+#. i18n: tag text
+#. i18n: file ./windows/rkcommandlogpart.rc line 9
+#. i18n: tag text
+#. i18n: file ./windows/rkhelpwindow.rc line 10
+#: rc.cpp:16 rc.cpp:52 rc.cpp:100 rc.cpp:112 rc.cpp:120 rc.cpp:136
+#, no-c-format
+msgid "&Run"
+msgstr "&Εκτέλεση"
+
+#. i18n: tag text
+#. i18n: file ./rkconsolepart.rc line 17
+#. i18n: tag text
+#. i18n: file ./rkwardui.rc line 64
+#. i18n: tag text
+#. i18n: file ./windows/rkcommandeditorwindowpart.rc line 21
+#. i18n: tag text
+#. i18n: file ./windows/rkcommandlogpart.rc line 12
+#: rc.cpp:20 rc.cpp:64 rc.cpp:104 rc.cpp:124
+#, no-c-format
+msgid "&Settings"
+msgstr "Ρ&υθμίσεις"
+
+#. i18n: tag text
+#. i18n: file ./rkconsolepart.rc line 20
+#. i18n: tag text
+#. i18n: file ./rkwardui.rc line 69
+#. i18n: tag text
+#. i18n: file ./windows/detachedwindowcontainer.rc line 13
+#. i18n: tag text
+#. i18n: file ./windows/rkcommandeditorwindowpart.rc line 24
+#. i18n: tag text
+#. i18n: file ./windows/rktoplevelwindowgui.rc line 21
+#: rc.cpp:24 rc.cpp:68 rc.cpp:80 rc.cpp:108 rc.cpp:160
+#, no-c-format
+msgid "&Help"
+msgstr "&Βοήθεια"
+
+#. i18n: tag text
+#. i18n: file ./rkwardui.rc line 4
+#. i18n: tag text
+#. i18n: file ./windows/rkhelpwindow.rc line 4
+#. i18n: tag text
+#. i18n: file ./windows/rkoutputwindow.rc line 4
+#: rc.cpp:28 rc.cpp:128 rc.cpp:140
+#, no-c-format
+msgid "&File"
+msgstr "&Αρχείο"
+
+#. i18n: tag text
+#. i18n: file ./rkwardui.rc line 5
+#: rc.cpp:32
+#, no-c-format
+msgid "&New"
+msgstr "&Νέο"
+
+#. i18n: tag text
+#. i18n: file ./rkwardui.rc line 12
+#: rc.cpp:36
+#, no-c-format
+msgid "&Import"
+msgstr "&Εισαγωγή"
+
+#. i18n: tag text
+#. i18n: file ./rkwardui.rc line 22
+#: rc.cpp:40
+#, no-c-format
+msgid "&Workspace"
+msgstr "&Χώρος εργασίας"
+
+#. i18n: tag text
+#. i18n: file ./rkwardui.rc line 34
+#. i18n: tag text
+#. i18n: file ./windows/rkcatchedx11windowpart.rc line 13
+#. i18n: tag text
+#. i18n: file ./windows/rkoutputwindow.rc line 12
+#: rc.cpp:48 rc.cpp:88 rc.cpp:148
+#, no-c-format
+msgid "&View"
+msgstr "Π&ροβολή"
+
+#. i18n: tag text
+#. i18n: file ./rkwardui.rc line 51
+#. i18n: tag text
+#. i18n: file ./windows/detachedwindowcontainer.rc line 9
+#. i18n: tag text
+#. i18n: file ./windows/rktoplevelwindowgui.rc line 9
+#: rc.cpp:60 rc.cpp:76 rc.cpp:156
 #, no-c-format
 msgid "&Activate"
 msgstr "&Ενεργοποίηση"
 
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr ""
-"_: NAME OF TRANSLATORS\n"
-"Ηλίας Σούμπασης"
+#. i18n: tag text
+#. i18n: file ./windows/detachedwindowcontainer.rc line 5
+#. i18n: tag text
+#. i18n: file ./windows/rktoplevelwindowgui.rc line 5
+#: rc.cpp:72 rc.cpp:152
+#, no-c-format
+msgid "&Window"
+msgstr "Παρά&θυρο"
 
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr ""
-"_: EMAIL OF TRANSLATORS\n"
-"isoumpasis@gmail.com, isoumpasis@yahoo.gr"
+#. i18n: tag text
+#. i18n: file ./windows/rkcatchedx11windowpart.rc line 4
+#: rc.cpp:84
+#, no-c-format
+msgid "&Device"
+msgstr "&Συσκευή"
 
+#. i18n: tag text
+#. i18n: file ./windows/rkcommandeditorwindowpart.rc line 5
+#: rc.cpp:96
+#, no-c-format
+msgid "&Tools Move"
+msgstr "&Μετακίνηση Εργαλείων"
+
+#: rc.cpp:161
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Ilias Soumpasis"
+
+#: rc.cpp:162
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "nono.231@gmail.com"
