@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2008 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,7 +24,7 @@
 #include <QFocusEvent>
 #include <QVBoxLayout>
 #include <QMenu>
-#include <QGroupBox>
+#include <QButtonGroup>
 
 #include <klocale.h>
 #include <kinputdialog.h>
@@ -272,19 +272,19 @@ RKObjectListViewSettingsWidget::RKObjectListViewSettingsWidget (RKObjectListView
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 
-	QGroupBox* group = new QGroupBox (this);
-	QHBoxLayout *grouplayout = new QHBoxLayout (group);
-	grouplayout->setContentsMargins (0, 0, 0, 0);
-	all = new QRadioButton (i18n ("All"), group);
-	nonfunctions = new QRadioButton (i18n ("Non-Functions"), group);
-	functions = new QRadioButton (i18n ("Functions"), group);
-	grouplayout->addWidget (all);
-	grouplayout->addWidget (nonfunctions);
-	grouplayout->addWidget (functions);
+	QButtonGroup *group = new QButtonGroup (this);
+	QHBoxLayout *hbox = new QHBoxLayout ();
+	hbox->setContentsMargins (0, 0, 0, 0);
+	group->addButton (all = new QRadioButton (i18n ("All"), this));
+	group->addButton (nonfunctions = new QRadioButton (i18n ("Non-Functions"), this));
+	group->addButton (functions = new QRadioButton (i18n ("Functions"), this));
+	hbox->addWidget (all);
+	hbox->addWidget (nonfunctions);
+	hbox->addWidget (functions);
 	connect (all, SIGNAL(clicked(bool)), this, SLOT(modeChanged(bool)));
 	connect (nonfunctions, SIGNAL(clicked(bool)), this, SLOT(modeChanged(bool)));
 	connect (functions, SIGNAL(clicked(bool)), this, SLOT(modeChanged(bool)));
-	layout->addWidget (group);
+	layout->addLayout (hbox);
 
 	all_envirs = new QCheckBox (i18n ("Show All Environments"), this);
 	connect (all_envirs, SIGNAL (clicked(bool)), this, SLOT (boxChanged(bool)));
