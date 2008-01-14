@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-30 16:01+0100\n"
+"POT-Creation-Date: 2008-01-14 20:28+0100\n"
 "PO-Revision-Date: 2007-12-30 11:40-0500\n"
 "Last-Translator: Germán Márquez Mejía <gmarquez@javeriana.edu.co>\n"
 "Language-Team: español <es@li.org>\n"
@@ -2083,6 +2083,43 @@ msgstr ""
 msgid "R Startup"
 msgstr "Arranque de R"
 
+#. i18n: file rkconsolepart.rc line 11
+#. i18n: file rkwardui.rc line 32
+#: rc.cpp:6 rc.cpp:33
+#, no-c-format
+msgid "&Run"
+msgstr "&Ejecutar"
+
+#. i18n: file rkwardui.rc line 5
+#: rc.cpp:18
+#, no-c-format
+msgid "&New"
+msgstr "&Nuevo"
+
+#. i18n: file rkwardui.rc line 12
+#: rc.cpp:21
+#, no-c-format
+msgid "&Import"
+msgstr "&Importar"
+
+#. i18n: file rkwardui.rc line 22
+#: rc.cpp:24
+#, no-c-format
+msgid "&Workspace"
+msgstr "Espacio de &trabajo"
+
+#. i18n: file rkwardui.rc line 36
+#: rc.cpp:36
+#, no-c-format
+msgid "&Windows"
+msgstr "&Ventanas"
+
+#. i18n: file rkwardui.rc line 42
+#: rc.cpp:39
+#, no-c-format
+msgid "&Activate"
+msgstr "&Activar"
+
 #: main.cpp:70 main.cpp:84
 msgid "RKWard"
 msgstr "RKWard"
@@ -2105,8 +2142,9 @@ msgstr ""
 msgid ""
 "Debugger (enclose any debugger arguments in single quotes ('') together with "
 "the command)"
-msgstr "Depurador (encerrar los argumentos de depurado entre comillas sencillas ('') junto con "
-"el comando)"
+msgstr ""
+"Depurador (encerrar los argumentos de depurado entre comillas sencillas ('') "
+"junto con el comando)"
 
 #: main.cpp:78
 msgid "Disable R C stack checking"
@@ -2450,6 +2488,18 @@ msgstr "<b>¡El objeto fue borrado!</b>"
 msgid "Ready"
 msgstr "Preparado"
 
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Marcelino Villarino, Germán Márquez Mejía"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "mvillarino@users.sourceforge.net, gmarquez@javeriana.edu.co"
+
 #: robjectbrowser.cpp:114
 msgid "Objects in the R workspace"
 msgstr "Objetos en el espacio de trabajo de R"
@@ -2509,55 +2559,6 @@ msgstr "Mostrar todos los entornos"
 #: robjectbrowser.cpp:276
 msgid "Show Hidden Objects"
 msgstr "Mostrar objetos ocultos"
-
-#. i18n: file rkconsolepart.rc line 11
-#. i18n: file rkwardui.rc line 32
-#: rc.cpp:6 rc.cpp:33
-#, no-c-format
-msgid "&Run"
-msgstr "&Ejecutar"
-
-#. i18n: file rkwardui.rc line 5
-#: rc.cpp:18
-#, no-c-format
-msgid "&New"
-msgstr "&Nuevo"
-
-#. i18n: file rkwardui.rc line 12
-#: rc.cpp:21
-#, no-c-format
-msgid "&Import"
-msgstr "&Importar"
-
-#. i18n: file rkwardui.rc line 22
-#: rc.cpp:24
-#, no-c-format
-msgid "&Workspace"
-msgstr "Espacio de &trabajo"
-
-#. i18n: file rkwardui.rc line 36
-#: rc.cpp:36
-#, no-c-format
-msgid "&Windows"
-msgstr "&Ventanas"
-
-#. i18n: file rkwardui.rc line 42
-#: rc.cpp:39
-#, no-c-format
-msgid "&Activate"
-msgstr "&Activar"
-
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr "Marcelino Villarino, Germán Márquez Mejía"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr "mvillarino@users.sourceforge.net, gmarquez@javeriana.edu.co"
 
 #~ msgid ""
 #~ "The R-backend has reported one or more error(s) while processing the "

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-30 16:01+0100\n"
+"POT-Creation-Date: 2008-01-14 20:28+0100\n"
 "PO-Revision-Date: 2004-11-19 00:00+0100\n"
 "Last-Translator: Andrzej Pruszynski\n"
 "Language-Team: LANG <LL@li.org>\n"
@@ -1990,6 +1990,43 @@ msgstr ""
 msgid "R Startup"
 msgstr ""
 
+#. i18n: file rkconsolepart.rc line 11
+#. i18n: file rkwardui.rc line 32
+#: rc.cpp:6 rc.cpp:33
+#, no-c-format
+msgid "&Run"
+msgstr "U&ruchom"
+
+#. i18n: file rkwardui.rc line 5
+#: rc.cpp:18
+#, no-c-format
+msgid "&New"
+msgstr "&Nowy"
+
+#. i18n: file rkwardui.rc line 12
+#: rc.cpp:21
+#, fuzzy, no-c-format
+msgid "&Import"
+msgstr "Eksportuj log"
+
+#. i18n: file rkwardui.rc line 22
+#: rc.cpp:24
+#, fuzzy, no-c-format
+msgid "&Workspace"
+msgstr "Otwórz przestrzeń roboczą"
+
+#. i18n: file rkwardui.rc line 36
+#: rc.cpp:36
+#, no-c-format
+msgid "&Windows"
+msgstr ""
+
+#. i18n: file rkwardui.rc line 42
+#: rc.cpp:39
+#, no-c-format
+msgid "&Activate"
+msgstr ""
+
 #: main.cpp:70 main.cpp:84
 msgid "RKWard"
 msgstr "RKWard"
@@ -2361,6 +2398,18 @@ msgstr ""
 msgid "Ready"
 msgstr "Gotowe."
 
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+
 #: robjectbrowser.cpp:114
 msgid "Objects in the R workspace"
 msgstr "Obiekty w R obszarze roboczym"
@@ -2421,55 +2470,6 @@ msgstr ""
 #, fuzzy
 msgid "Show Hidden Objects"
 msgstr "Pokaż ukryte obiekty"
-
-#. i18n: file rkconsolepart.rc line 11
-#. i18n: file rkwardui.rc line 32
-#: rc.cpp:6 rc.cpp:33
-#, no-c-format
-msgid "&Run"
-msgstr "U&ruchom"
-
-#. i18n: file rkwardui.rc line 5
-#: rc.cpp:18
-#, no-c-format
-msgid "&New"
-msgstr "&Nowy"
-
-#. i18n: file rkwardui.rc line 12
-#: rc.cpp:21
-#, fuzzy, no-c-format
-msgid "&Import"
-msgstr "Eksportuj log"
-
-#. i18n: file rkwardui.rc line 22
-#: rc.cpp:24
-#, fuzzy, no-c-format
-msgid "&Workspace"
-msgstr "Otwórz przestrzeń roboczą"
-
-#. i18n: file rkwardui.rc line 36
-#: rc.cpp:36
-#, no-c-format
-msgid "&Windows"
-msgstr ""
-
-#. i18n: file rkwardui.rc line 42
-#: rc.cpp:39
-#, no-c-format
-msgid "&Activate"
-msgstr ""
-
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr ""
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr ""
 
 #, fuzzy
 #~ msgid "Syntax error"

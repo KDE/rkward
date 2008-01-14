@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-30 16:01+0100\n"
+"POT-Creation-Date: 2008-01-14 20:28+0100\n"
 "PO-Revision-Date: 2008-01-07 18:42+0000\n"
 "Last-Translator: Ilias <nono.231@gmail.com>\n"
 "Language-Team: Greek\n"
@@ -167,7 +167,8 @@ msgid "Delete this row (%1)"
 msgstr "Διαγραφή αυτής της σειράς (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid ""
+"No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Δεν δόθηκε όνομα αρχείου. Τα δεδομένα σας δεν αποθηκεύτηκαν. Θέλετε να "
 "συνεχίσετε;"
@@ -336,7 +337,8 @@ msgid "Remove object?"
 msgstr "Αφαίρεση αντικειμένου;"
 
 #: core/rkmodificationtracker.cpp:62
-msgid "Do you really want to remove the object '%1'? There's no way to get it back."
+msgid ""
+"Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "Θέλετε πραγματικά να διαγράψετε το αντικείμενο '%1'; Δεν θα υπάρχει τρόπος "
 "να το ανακτήσετε."
@@ -764,11 +766,13 @@ msgstr "Προσδιορισμός αντικειμένου R"
 
 #: windows/rkwindowcatcher.cpp:240
 msgid "Specify the R object name, you want to save the graph to"
-msgstr "Επιλέξτε το όνομα του αντικειμένου R με το οποίο θέλετε να σώσετε το γράφημα"
+msgstr ""
+"Επιλέξτε το όνομα του αντικειμένου R με το οποίο θέλετε να σώσετε το γράφημα"
 
 #: windows/rkwindowcatcher.cpp:251
 msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr "Αποθήκευση περιεχομένων της συσκευής γραφικών νούμερο %1 στο αντικείμενο '%2'"
+msgstr ""
+"Αποθήκευση περιεχομένων της συσκευής γραφικών νούμερο %1 στο αντικείμενο '%2'"
 
 #: windows/rkwindowcatcher.cpp:260
 msgid "Duplicate graphics device number %1"
@@ -1127,7 +1131,8 @@ msgstr "Προσθέστε εξαίρεση"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:101
 msgid "Add the name of the package that no structure should be fetched for"
-msgstr "Προσθέστε το όνομα του πακέτου για το οποίο δεν μπόρεσε να βρεθεί η δομή"
+msgstr ""
+"Προσθέστε το όνομα του πακέτου για το οποίο δεν μπόρεσε να βρεθεί η δομή"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:128 rkward.cpp:214
 msgid "Workspace"
@@ -1387,7 +1392,8 @@ msgstr "Αρχικοποίηση μεταφορτομένων πακέτων "
 
 #: settings/rksettingsmoduler.cpp:294
 msgid "R Library locations  (where libraries get installed to, locally)"
-msgstr "Τοποθεσίες βιβλιοθηκών R (εκεί όπου οι βιβλιοθήκες εγκαθιστώνται τοπικά)"
+msgstr ""
+"Τοποθεσίες βιβλιοθηκών R (εκεί όπου οι βιβλιοθήκες εγκαθιστώνται τοπικά)"
 
 #: settings/rksettingsmoduler.cpp:299
 msgid ""
@@ -1493,7 +1499,8 @@ msgstr "Εντολές συγχρονισμού "
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr "Μέγιστος αριθμός παραγράφων/γραμμών προβολής στο αρχείο καταγραφής εντολών"
+msgstr ""
+"Μέγιστος αριθμός παραγράφων/γραμμών προβολής στο αρχείο καταγραφής εντολών"
 
 #: settings/rksettings.cpp:63
 msgid "Settings"
@@ -1756,7 +1763,8 @@ msgstr "'%1'- Δεν δόθηκε τιμή ιδιότητας. Υποτίθετ�
 
 #: misc/xmlhelper.cpp:260
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Επιτρεπόμενες τιμές είναι μόνο μία από '%1'."
+msgstr ""
+"Μη επιτρεπόμενη τιμής ιδιότητας. Επιτρεπόμενες τιμές είναι μόνο μία από '%1'."
 
 #: misc/xmlhelper.cpp:274
 msgid "Illegal attribute value. Only integer numbers are allowed."
@@ -1764,7 +1772,8 @@ msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο α
 
 #: misc/xmlhelper.cpp:290
 msgid "Illegal attribute value. Only real numbers are allowed."
-msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο πραγματικοί αριθμοί επιτρέπονται."
+msgstr ""
+"Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο πραγματικοί αριθμοί επιτρέπονται."
 
 #: misc/xmlhelper.cpp:308
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
@@ -1777,7 +1786,8 @@ msgid "XML-parsing '%1' "
 msgstr "Ανάλυση XML '%1' "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid ""
+"<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>Υπήρξαν σφάλματα ή / και προειδοποιήσεις! Δείτε παρακάτω για μια "
 "περιγραφή</b>"
@@ -2103,6 +2113,43 @@ msgstr ""
 msgid "R Startup"
 msgstr "Εκκίνηση R"
 
+#. i18n: file rkconsolepart.rc line 11
+#. i18n: file rkwardui.rc line 32
+#: rc.cpp:6 rc.cpp:33
+#, no-c-format
+msgid "&Run"
+msgstr "&Εκτέλεση"
+
+#. i18n: file rkwardui.rc line 5
+#: rc.cpp:18
+#, no-c-format
+msgid "&New"
+msgstr "&Νέο"
+
+#. i18n: file rkwardui.rc line 12
+#: rc.cpp:21
+#, no-c-format
+msgid "&Import"
+msgstr "&Εισαγωγή"
+
+#. i18n: file rkwardui.rc line 22
+#: rc.cpp:24
+#, no-c-format
+msgid "&Workspace"
+msgstr "&Χώρος εργασίας"
+
+#. i18n: file rkwardui.rc line 36
+#: rc.cpp:36
+#, no-c-format
+msgid "&Windows"
+msgstr "&Παράθυρα"
+
+#. i18n: file rkwardui.rc line 42
+#: rc.cpp:39
+#, no-c-format
+msgid "&Activate"
+msgstr "&Ενεργοποίηση"
+
 #: main.cpp:70 main.cpp:84
 msgid "RKWard"
 msgstr "RKWard"
@@ -2123,7 +2170,9 @@ msgstr "Μάσκα για τα συστατικά της αποσφαλμάτω�
 msgid ""
 "Debugger (enclose any debugger arguments in single quotes ('') together with "
 "the command)"
-msgstr "Αποσφαλματωτής (Συμπεριλάβετε οποιεσδήποτε παραμέτρους του αποσφαλματωτή μέσα σε εισαγωγικά ('') μαζί με την εντολή)"
+msgstr ""
+"Αποσφαλματωτής (Συμπεριλάβετε οποιεσδήποτε παραμέτρους του αποσφαλματωτή "
+"μέσα σε εισαγωγικά ('') μαζί με την εντολή)"
 
 #: main.cpp:78
 msgid "Disable R C stack checking"
@@ -2349,7 +2398,8 @@ msgstr "Εισάγετε το όνομα για το νέο πακέτο δεδ�
 
 #: rkward.cpp:569 robjectbrowser.cpp:173 robjectbrowser.cpp:207
 msgid "The name you specified was already in use or not valid. Renamed to %1"
-msgstr "Το όνομα που δώσατε ήδη υπάρχει ή δεν είναι έγκυρο. Μετονομάστηκε σε %1"
+msgstr ""
+"Το όνομα που δώσατε ήδη υπάρχει ή δεν είναι έγκυρο. Μετονομάστηκε σε %1"
 
 #: rkward.cpp:569 robjectbrowser.cpp:173 robjectbrowser.cpp:207
 msgid "Invalid Name"
@@ -2469,6 +2519,22 @@ msgstr "<b>Το αντικείμενο έχει διαγραφεί!</b>"
 msgid "Ready"
 msgstr "Έτοιμο"
 
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+"_: NAME OF TRANSLATORS\n"
+"Ηλίας Σούμπασης"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+"_: EMAIL OF TRANSLATORS\n"
+"isoumpasis@gmail.com, isoumpasis@yahoo.gr"
+
 #: robjectbrowser.cpp:114
 msgid "Objects in the R workspace"
 msgstr "Αντικείμενα στο χώρο εργασίας R"
@@ -2528,57 +2594,3 @@ msgstr "Προβολή όλων των περιβάλλοντων"
 #: robjectbrowser.cpp:276
 msgid "Show Hidden Objects"
 msgstr "Εμφάνιση κρυφών αντικειμένων"
-
-#. i18n: file rkconsolepart.rc line 11
-#. i18n: file rkwardui.rc line 32
-#: rc.cpp:6 rc.cpp:33
-#, no-c-format
-msgid "&Run"
-msgstr "&Εκτέλεση"
-
-#. i18n: file rkwardui.rc line 5
-#: rc.cpp:18
-#, no-c-format
-msgid "&New"
-msgstr "&Νέο"
-
-#. i18n: file rkwardui.rc line 12
-#: rc.cpp:21
-#, no-c-format
-msgid "&Import"
-msgstr "&Εισαγωγή"
-
-#. i18n: file rkwardui.rc line 22
-#: rc.cpp:24
-#, no-c-format
-msgid "&Workspace"
-msgstr "&Χώρος εργασίας"
-
-#. i18n: file rkwardui.rc line 36
-#: rc.cpp:36
-#, no-c-format
-msgid "&Windows"
-msgstr "&Παράθυρα"
-
-#. i18n: file rkwardui.rc line 42
-#: rc.cpp:39
-#, no-c-format
-msgid "&Activate"
-msgstr "&Ενεργοποίηση"
-
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr ""
-"_: NAME OF TRANSLATORS\n"
-"Ηλίας Σούμπασης"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr ""
-"_: EMAIL OF TRANSLATORS\n"
-"isoumpasis@gmail.com, isoumpasis@yahoo.gr"
-
