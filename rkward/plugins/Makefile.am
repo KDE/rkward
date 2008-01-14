@@ -419,7 +419,10 @@ dist_pluginsXanalysisXvariances_DATA = \
 	analysis/variances/F_test.rkh \
 	analysis/variances/fligner_test.rkh \
 	analysis/variances/F_test.php \
-	analysis/variances/fligner_test.php
+	analysis/variances/fligner_test.php \
+	analysis/variances/levene_test.rkh \
+	analysis/variances/levene_test.php \
+	analysis/variances/levene_test.xml
 
 pluginsXanalysisXregressiondir = $(kde_datadir)/rkward/analysis/regression
 dist_pluginsXanalysisXregression_DATA = \
