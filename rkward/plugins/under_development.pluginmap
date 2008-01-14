@@ -3,9 +3,7 @@
 <document base_prefix="" namespace="rkward">
 	<components>
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
-		<component type="standard" id="jb_test" file="distributions/tests/jb_test.xml" label="Jarque-Bera Normality Test" />
 
-		<component type="standard" id="levene_test" file="analysis/variances/levene_test.xml" label="Levene's Test" />
 	</components>
 
 	<hierarchy>
@@ -17,16 +15,10 @@
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
 			<entry component="simple_anova" index="9"/>
-			<menu id="variances" label="Variances" index="10">
-				<entry component="levene_test" index="3"/>
-			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
-			<menu id="distribution_analysis" label="Distribution Analysis" index="0">
-				<entry component="jb_test" label="Jarque-Bera Normality Test"/>
-			</menu>
 		</menu>
 	</hierarchy>
 </document>
