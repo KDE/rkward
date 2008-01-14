@@ -1,6 +1,7 @@
 rkward (0.4.9-1) unstable; urgency=low
 
   * new upstream release
+  * add --ignore-missing-info paramater to dpkg-shlibdeps, as libR.so will not be found
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 14 Jan 2008 20:30:00 +0200
 
