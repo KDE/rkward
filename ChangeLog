@@ -1,15 +1,16 @@
+- add support for a focus-follows-mouse activation behavior of the MDI windows (Settings->General)
 - ability to mark arbitrary "blocks" in script editor and run them with a shortcut
 - make sure that R only handles SIGSEV, when the R thread is active. Should give better backtraces and less hangs
 - object viewer was redesigned to use space better, and only fetch the print-representation when needed
 - more icons added
 - data.frame editor can be set to read-only mode
 - code completion in script editor shows icons for the different object types
-- settings dialog is now shown in "page list" mode
-- port to KDE 4			(TODO)
+- settings dialog is now shown in "page tree" mode
+- port to KDE 4
 
 ---- KDE 3 versions
 
---- Version 0.4.9 - Xxx-XX-XXXX
+--- Version 0.4.9 - Jan-14-2008
 
 - Improved user interface for CSV import plugin
 - Support drawing grids in histogram and stripchart plots
