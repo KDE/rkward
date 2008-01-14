@@ -10,6 +10,7 @@
 		<component type="standard" id="pearson_test" file="tests/pearson_test.xml" label="Pearson chi-square Normality Test" />
 		<component type="standard" id="sf_test" file="tests/sf_test.xml" label="Shapiro-Francia Normality Test" />
 		<component type="standard" id="lillie_test" file="tests/lillie_test.xml" label="Lilliefors (Kolmogorov-Smirnov) Normality Test" />
+		<component type="standard" id="jb_test" file="tests/jb_test.xml" label="Jarque-Bera Normality Test" />
 
 		<!-- distributions -->
 		<component type="standard" id="beta_quantiles" file="beta_quantiles.xml" label="Beta quantiles" />
@@ -122,6 +123,7 @@
 				<entry component="pearson_test" label="Pearson chi-square Normality Test" index="3"/>
 				<entry component="sf_test" label="Shapiro-Francia Normality Test" index="4"/>
 				<entry component="shapiro_test" label="Shapiro-Wilk Normality Test" index="5"/>
+				<entry component="jb_test" label="Jarque-Bera Normality Test"/>
 			</menu>
 			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions" index="1">
 				<menu id="beta_distribution" label="Beta" index="0">
