@@ -49,7 +49,7 @@ RKFileBrowser::RKFileBrowser (QWidget *parent, bool tool_window, const char *nam
 	layout->setContentsMargins (0, 0, 0, 0);
 	layout_widget = new KVBox (this);
 	layout->addWidget (layout_widget);
-	setFocusPolicy (Qt::StrongFocus);
+	layout_widget->setFocusPolicy (Qt::StrongFocus);
 
 	RKDummyPart *part = new RKDummyPart (this, layout_widget);
 	setPart (part);
