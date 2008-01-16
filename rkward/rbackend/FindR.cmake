@@ -118,11 +118,6 @@ ELSE(NOT R_LIBDIR)
 	MESSAGE(STATUS "Location specified by user")
 ENDIF(NOT R_LIBDIR)
 
-IF(NOT R_LIBDIR)
-	MESSAGE(STATUS "Not reliably determined or specified. Guessing.")
-	SET(R_LIBDIR ${R_HOME}/library)
-ENDIF(NOT R_LIBDIR)
-
 # strip whitespace
 STRING(REGEX REPLACE "[ \n]+"
 	"" R_LIBDIR
@@ -142,6 +137,11 @@ STRING(REGEX REPLACE ":+$"
 STRING(REGEX REPLACE ":"
 	" " R_LIBDIR
 	"${R_LIBDIR}")
+
+IF(NOT R_LIBDIR)
+	MESSAGE(STATUS "Not reliably determined or specified. Guessing.")
+	SET(R_LIBDIR ${R_HOME}/library)
+ENDIF(NOT R_LIBDIR)
 
 SET(R_LIBDIRS ${R_LIBDIR})
 SEPARATE_ARGUMENTS(R_LIBDIRS)
