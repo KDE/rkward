@@ -1,3 +1,11 @@
+rkward (0.4.9-2) unstable; urgency=low
+
+  * remove --ignore-missing-info parameter again (dpkg-shlibdeps 1.14.12 does not need it, anymore)
+  * when uploaded to main archive, this
+    closes: #460745
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 16 Jan 2008 17:30:00 +0200
+
 rkward (0.4.9-1) unstable; urgency=low
 
   * new upstream release
