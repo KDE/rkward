@@ -94,7 +94,7 @@ binary-arch: build install
 	dh_compress -Xusr/share/doc/kde/HTML
 	dh_fixperms
 	dh_installdeb
-	dh_shlibdeps -- --ignore-missing-info
+	dh_shlibdeps
 	# unfortunately, the r-base-core dependency can not be found by dh_shlibdeps, so we need to get at the version manually
 	@if [ "$(RVERS)" '>' "2.4.9" ] ; then \
 		echo "rvers=r-base-core (>= 2.4.9)" >> $(CURDIR)/debian/rkward.substvars ; \
