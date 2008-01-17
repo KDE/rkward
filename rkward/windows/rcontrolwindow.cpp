@@ -76,8 +76,10 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *n
 RControlWindow::~RControlWindow () {
 	RK_TRACE (APP);
 
-	commands_view->setModel (0);
-	RCommandStackModel::getModel ()->removeListener ();
+	if (commands_view->model ()) {
+		commands_view->setModel (0);
+		RCommandStackModel::getModel ()->removeListener ();
+	}
 }
 
 void RControlWindow::showEvent (QShowEvent *e) {
