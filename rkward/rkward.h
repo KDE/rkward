@@ -2,7 +2,7 @@
 			rkward.h  -  description
 			-------------------
 begin                : Tue Oct 29 20:06:08 CET 2002 
-copyright            : (C) 2002, 2005, 2006, 2007 by Thomas Friedrichsmeier 
+copyright            : (C) 2002, 2005, 2006, 2007, 2008 by Thomas Friedrichsmeier 
 email                : tfry@users.sourceforge.net
 ***************************************************************************/
 
@@ -67,7 +67,7 @@ class KRecentFilesAction;
 class KSqueezedTextLabel;
 
 struct RKWardStartupOptions {
-	KUrl *initial_url;	/**< The workspace file to load on startup. If 0, show a dialog asking what to do. **/
+	KUrl initial_url;	/**< The workspace file to load on startup. If empty, show a dialog asking what to do. **/
 	bool no_stack_check;	/**< Disable R C stack checking */
 };
 

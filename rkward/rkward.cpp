@@ -2,7 +2,7 @@
                           rkward.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002, 2005, 2006, 2007 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002, 2005, 2006, 2007, 2008 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -147,7 +147,7 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 	} else {
 		startup_options = new RKWardStartupOptions;
 		startup_options->no_stack_check = false;
-		startup_options->initial_url = 0;
+		startup_options->initial_url = KUrl();
 	}
 
 	QTimer::singleShot (50, this, SLOT (doPostInit ()));
@@ -206,6 +206,8 @@ void RKWardMainWindow::doPostInit () {
 	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (log, KMultiTabBar::Bottom);
 	RKCommandLog::rkcommand_log = log;
 
+	// startup options will be deleted from the R thread (TODO correct this!), so we need to copy the initial_url here, or run into race conditions
+	KUrl open_url = startup_options->initial_url;
 	startR ();
 
 	QString dummy = i18n ("RKWard has made great progress in the past few months and it is already helpful for many tasks, but some features may be lacking. You can help us by filing bug reports, feature requests, or providing feedback in any other form. Please visit http://rkward.sourceforge.net for more information.");
@@ -237,10 +239,8 @@ void RKWardMainWindow::doPostInit () {
 
 	RKOutputWindow::initialize ();
 
-	if (startup_options->initial_url) {
-		openWorkspace (*(startup_options->initial_url));
-		delete (startup_options->initial_url);
-		startup_options->initial_url = 0;
+	if (!open_url.isEmpty()) {
+		openWorkspace (open_url);
 	} else {
 		StartupDialog::StartupDialogResult *result = StartupDialog::getStartupAction (this, fileOpenRecentWorkspace);
 		if (result->result == StartupDialog::EmptyWorkspace) {
