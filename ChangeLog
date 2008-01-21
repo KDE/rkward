@@ -1,3 +1,4 @@
+--- Version 0.5.0 - Jan-21-2008
 - add support for a focus-follows-mouse activation behavior of the MDI windows (Settings->General)
 - ability to mark arbitrary "blocks" in script editor and run them with a shortcut
 - make sure that R only handles SIGSEV, when the R thread is active. Should give better backtraces and less hangs
