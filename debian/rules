@@ -32,8 +32,8 @@ config.status:
 	# appear to have no effect
 
 	cd $(CURDIR)/build && \
-	CC="`/usr/bin/R CMD config CC asdfa`" \
-	CXX="`/usr/bin/R CMD config CXX asfas`" \
+	CC="`/usr/bin/R CMD config CC`" \
+	CXX="`/usr/bin/R CMD config CXX`" \
 	F77="`/usr/bin/R CMD config F77`" \
 	cmake .. \
 		-DCMAKE_INSTALL_PREFIX=/usr \
@@ -45,6 +45,7 @@ config.status:
 		-DCMAKE_CXX_FLAGS="$(CXXFLAGS)" \
 		-DCMAKE_C_FLAGS="$(CFLAGS)" \
 		-DCMAKE_VERBOSE_MAKEFILE=ON \
+		-DKDE4_DISABLE_MULTIMEDIA=ON \
 		-DR_EXECUTABLE=/usr/bin/R/ \
 		-DR_LIBDIR=/usr/lib/R/site-library/
 
