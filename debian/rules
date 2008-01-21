@@ -21,15 +21,34 @@ else
 	CFLAGS += -O2
 endif
 
-config.status: configure
+config.status:
 	dh_testdir
+
+	mkdir -p $(CURDIR)/build
 
 	# Some installations of R need a specific version of the compiler(s)
 	# R CMD config provides info on which compiler to use
-	export F77="`/usr/bin/R CMD config F77`" ; \
-	export CC="`/usr/bin/R CMD config CC`" ; \
-	export CXX="`/usr/bin/R CMD config CXX`" ; \
-	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --disable-rpath --with-r-home=/usr/lib/R --with-r-libdir=/usr/lib/R/site-library/
+	# TODO: somehow contrary to documentation, the environment variables CC and CXX
+	# appear to have no effect
+
+	cd $(CURDIR)/build && \
+	CC="`/usr/bin/R CMD config CC asdfa`" \
+	CXX="`/usr/bin/R CMD config CXX asfas`" \
+	F77="`/usr/bin/R CMD config F77`" \
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DDATA_INSTALL_DIR=/usr/share/apps/ \
+		-DINFO_INSTALL_DIR=/usr/share/info \
+		-DMAN_INSTALL_DIR=/usr/share/man \
+		-DCMAKE_SKIP_RPATH=true \
+		-DKDE4_USE_ALWAYS_FULL_RPATH=false \
+		-DCMAKE_CXX_FLAGS="$(CXXFLAGS)" \
+		-DCMAKE_C_FLAGS="$(CFLAGS)" \
+		-DCMAKE_VERBOSE_MAKEFILE=ON \
+		-DR_EXECUTABLE=/usr/bin/R/ \
+		-DR_LIBDIR=/usr/lib/R/site-library/
+
+	# TODO --disable-rpath ?
 
 build: build-stamp
 
@@ -37,7 +56,7 @@ build-stamp:  config.status
 	dh_testdir
 
 	# Add here commands to compile the package.
-	$(MAKE)
+	cd $(CURDIR)/build && $(MAKE)
 
 	touch build-stamp
 
@@ -49,13 +68,7 @@ clean:
 	rm -rf $(CURDIR)/debian/.svn
 
 	# Add here commands to clean up after the build process.
-	[ ! -f Makefile ] || $(MAKE) distclean
-ifneq "$(wildcard /usr/share/misc/config.sub)" ""
-	cp -f /usr/share/misc/config.sub config.sub
-endif
-ifneq "$(wildcard /usr/share/misc/config.guess)" ""
-	cp -f /usr/share/misc/config.guess config.guess
-endif
+	rm -rf $(CURDIR)/build/
 
 	dh_clean 
 
@@ -66,7 +79,7 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/rkward.
-	$(MAKE) install kde_htmldir=/usr/share/doc/kde/HTML DESTDIR=$(CURDIR)/debian/rkward
+	cd $(CURDIR)/build && $(MAKE) install DESTDIR=$(CURDIR)/debian/rkward
 	# dirty hack to get rid of conflicting r.xml file without adjusting all makefiles
 	rm -vf $(CURDIR)/debian/rkward/usr/share/apps/katepart/syntax/r.xml
 	

@@ -2,7 +2,7 @@ Source: rkward
 Section: math
 Priority: optional
 Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
-Build-Depends: debhelper (>= 4.0.0), autotools-dev, kdelibs4-dev, r-base-dev (>= 2.1.0)
+Build-Depends: debhelper (>= 4.0.0), cmake, kdelibs5-dev, r-base-dev (>= 2.1.0)
 Standards-Version: 3.7.3
 
 Package: rkward
