@@ -7,8 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: lala\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2008-01-07 22:34+0100\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
+"group_id=50231&atid=459007\n"
+"POT-Creation-Date: 2008-01-21 19:45+0100\n"
 "PO-Revision-Date: 2008-01-17 09:48+0800\n"
 "Last-Translator: Roy Qu <royqh1979@gmail.com>\n"
 "Language-Team: Simplified Chinese\n"
@@ -58,7 +59,8 @@ msgid "Waiting for R to finish"
 msgstr "等待R结束"
 
 #: agents/rksaveagent.cpp:60
-msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid ""
+"No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr "未指定文件名。您的数据尚未保存。您仍要继续吗？"
 
 #: agents/rksaveagent.cpp:73
@@ -156,10 +158,11 @@ msgid ""
 "that would take too long to load. To unlist the package, visit Settings-"
 ">Configure RKWard->Workspace."
 msgstr ""
-"函数包\"%1\"（它可能已经背载入）目前已被列入黑名单，因此无法获取结构信息。 "
-"这通常意味着，该包中的对象将不会显示在对象浏览器中，也没有对象名自动补全及函数参数提示。 "
-"通常，如果函数包中含有过于巨量的数据，载入所需的时间过长时，它就会被列入黑名单。 "
-"如果要将它从黑名单中删除，请访问“配置RKWard”对话框的“工作区”标签页。"
+"函数包\"%1\"（它可能已经背载入）目前已被列入黑名单，因此无法获取结构信息。 这"
+"通常意味着，该包中的对象将不会显示在对象浏览器中，也没有对象名自动补全及函数"
+"参数提示。 通常，如果函数包中含有过于巨量的数据，载入所需的时间过长时，它就会"
+"被列入黑名单。 如果要将它从黑名单中删除，请访问“配置RKWard”对话框的“工作区”标"
+"签页。"
 
 #: core/renvironmentobject.cpp:91
 msgid "Package blacklisted"
@@ -191,7 +194,8 @@ msgid "Remove object?"
 msgstr "删除对象？"
 
 #: core/rkmodificationtracker.cpp:80
-msgid "Do you really want to remove the object '%1'? There's no way to get it back."
+msgid ""
+"Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr "您真的想删除对象\"%1\"吗？一旦删除就无法恢复。"
 
 #: core/rkmodificationtracker.cpp:333 dataeditor/rkvareditmodel.cpp:571
@@ -700,7 +704,8 @@ msgid "Frontend to the R statistics language"
 msgstr "R统计语言前端"
 
 #: main.cpp:79
-msgid "(c) 2002, 2004, 2005, 2006, 2007"
+#, fuzzy
+msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008"
 msgstr "(c) 2002, 2004, 2005, 2006, 2007"
 
 #: main.cpp:80 main.cpp:81 main.cpp:82 main.cpp:83 main.cpp:85 main.cpp:86
@@ -826,7 +831,8 @@ msgid "Show Fields"
 msgstr "显示字段"
 
 #: misc/rkprogresscontrol.cpp:209
-msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid ""
+"<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr "<b>存在错误或警告！请查看下面的记录</b>"
 
 #: misc/rkprogresscontrol.cpp:219 settings/rksettingsmoduleoutput.cpp:68
@@ -1276,7 +1282,7 @@ msgstr "主控台正忙"
 msgid "Bypass console"
 msgstr "忽略主控台"
 
-#: rkward.cpp:211
+#: rkward.cpp:213
 msgid ""
 "RKWard has made great progress in the past few months and it is already "
 "helpful for many tasks, but some features may be lacking. You can help us by "
@@ -1288,19 +1294,19 @@ msgstr ""
 "行动来帮助我们的开发。请访问 网站http://rkward.sourceforge.net以获取进一步的"
 "信息。"
 
-#: rkward.cpp:212
+#: rkward.cpp:214
 msgid "What to expect of RKWard"
 msgstr "对RKWard的期待"
 
-#: rkward.cpp:216 settings/rksettingsmoduleobjectbrowser.cpp:128
+#: rkward.cpp:218 settings/rksettingsmoduleobjectbrowser.cpp:128
 msgid "Workspace"
 msgstr "工作区"
 
-#: rkward.cpp:220
+#: rkward.cpp:222
 msgid "Files"
 msgstr "文件"
 
-#: rkward.cpp:224
+#: rkward.cpp:226
 msgid "Pending Jobs"
 msgstr "挂起的工作"
 
@@ -1589,8 +1595,7 @@ msgid ""
 "(Settings->Configure Settings->PHP backend) and try again."
 msgstr ""
 "在启动PHP后台时出错(\"%1\")。 这很有可能是因为RKWard中有bug，也可能是因为PHP"
-"安装又问题。 请检查设置(\"设置\"->\"配置RKWard\"->PHP后台)之后"
-"重试。"
+"安装又问题。 请检查设置(\"设置\"->\"配置RKWard\"->PHP后台)之后重试。"
 
 #: scriptbackends/phpbackend.cpp:200
 msgid ""
@@ -1701,8 +1706,8 @@ msgid ""
 "the untouched. Also, these settings will only apply to the current session, "
 "and not be saved."
 msgstr ""
-"<b>这些设置仅用于调试。</b>最安全的做法就是让它们保持初始状态。 "
-"同时，这些设置只对当前会话有效，也不会被保存。"
+"<b>这些设置仅用于调试。</b>最安全的做法就是让它们保持初始状态。 同时，这些设"
+"置只对当前会话有效，也不会被保存。"
 
 #: settings/rksettingsmoduledebug.cpp:45
 msgid "Debug level"
@@ -2084,7 +2089,7 @@ msgstr "挂接到主窗口"
 msgid "Configure R backend"
 msgstr "配置R后台"
 
-#: windows/rcontrolwindow.cpp:55 windows/rcontrolwindow.cpp:139
+#: windows/rcontrolwindow.cpp:55 windows/rcontrolwindow.cpp:141
 msgid "Pause execution"
 msgstr "暂停执行"
 
@@ -2092,7 +2097,7 @@ msgstr "暂停执行"
 msgid "Cancel selected commands"
 msgstr "取消选中的命令"
 
-#: windows/rcontrolwindow.cpp:130
+#: windows/rcontrolwindow.cpp:132
 msgid ""
 "Some of the commands you were trying to cancel are marked as \"sync"
 "\" (letter 'S' in the type column). Cancelling such commands could lead to "
@@ -2101,11 +2106,11 @@ msgstr ""
 "在您试图取消的命令中，有些被标记为\"同步的\"(在类型栏中以\"S\"标记)。取消这类"
 "命令可能会导致数据丢失。因此这些命令并未被取消。"
 
-#: windows/rcontrolwindow.cpp:130
+#: windows/rcontrolwindow.cpp:132
 msgid "Some commands not cancelled"
 msgstr "部分命令未被取消"
 
-#: windows/rcontrolwindow.cpp:143
+#: windows/rcontrolwindow.cpp:145
 msgid "Resume execution"
 msgstr "恢复执行"
 
@@ -2226,7 +2231,8 @@ msgstr "包"
 msgid ""
 "The url you are trying to open ('%1') is not a local file. Do you want to "
 "open the url in the default application?"
-msgstr "您正要打开的URL(\"%1\")不是一个本地文件。您想用缺省的应用程序打开并处理它吗？"
+msgstr ""
+"您正要打开的URL(\"%1\")不是一个本地文件。您想用缺省的应用程序打开并处理它吗？"
 
 #: windows/rkhtmlwindow.cpp:176
 msgid "Open in default application?"
@@ -2730,4 +2736,3 @@ msgstr "Roy Qu"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "royqh1979@gmail.com"
-

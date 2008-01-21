@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2008-01-07 22:34+0100\n"
+"POT-Creation-Date: 2008-01-21 19:45+0100\n"
 "PO-Revision-Date: 2008-01-07 19:40+0000\n"
 "Last-Translator: Ilias <nono.231@gmail.com>\n"
 "Language-Team: Greek\n"
@@ -749,7 +749,8 @@ msgid "Frontend to the R statistics language"
 msgstr "Γραφικό περιβάλλον για τη γλώσσα στατιστικής R"
 
 #: main.cpp:79
-msgid "(c) 2002, 2004, 2005, 2006, 2007"
+#, fuzzy
+msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008"
 msgstr "(c) 2002, 2004, 2005, 2006, 2007"
 
 #: main.cpp:80 main.cpp:81 main.cpp:82 main.cpp:83 main.cpp:85 main.cpp:86
@@ -1361,7 +1362,7 @@ msgstr "Το τερματικό είναι απασχολημένο"
 msgid "Bypass console"
 msgstr "Παράκαμψη τερματικού"
 
-#: rkward.cpp:211
+#: rkward.cpp:213
 msgid ""
 "RKWard has made great progress in the past few months and it is already "
 "helpful for many tasks, but some features may be lacking. You can help us by "
@@ -1375,19 +1376,19 @@ msgstr ""
 "μορφή. Παρακαλούμε επισκεφθείτε το http://rkward.sourceforge.net για "
 "περισσότερες πληροφορίες."
 
-#: rkward.cpp:212
+#: rkward.cpp:214
 msgid "What to expect of RKWard"
 msgstr "Τι να περιμένετε από το RKWard"
 
-#: rkward.cpp:216 settings/rksettingsmoduleobjectbrowser.cpp:128
+#: rkward.cpp:218 settings/rksettingsmoduleobjectbrowser.cpp:128
 msgid "Workspace"
 msgstr "Χώρος εργασίας"
 
-#: rkward.cpp:220
+#: rkward.cpp:222
 msgid "Files"
 msgstr "Αρχεία"
 
-#: rkward.cpp:224
+#: rkward.cpp:226
 msgid "Pending Jobs"
 msgstr "Εργασίες σε εκκρεμότητα"
 
@@ -2213,7 +2214,7 @@ msgstr "Επισύναψη στο κύριο παράθυρο"
 msgid "Configure R backend"
 msgstr "Ρύθμιση του συστήματος υποστήριξης R"
 
-#: windows/rcontrolwindow.cpp:55 windows/rcontrolwindow.cpp:139
+#: windows/rcontrolwindow.cpp:55 windows/rcontrolwindow.cpp:141
 msgid "Pause execution"
 msgstr "Παύση εκτέλεσης"
 
@@ -2221,7 +2222,7 @@ msgstr "Παύση εκτέλεσης"
 msgid "Cancel selected commands"
 msgstr "Ακύρωση επιλεγμένων εντολών"
 
-#: windows/rcontrolwindow.cpp:130
+#: windows/rcontrolwindow.cpp:132
 msgid ""
 "Some of the commands you were trying to cancel are marked as \"sync"
 "\" (letter 'S' in the type column). Cancelling such commands could lead to "
@@ -2231,11 +2232,11 @@ msgstr ""
 "\"sync\"·(γράμμα 'S' στην στήλη του τύπου). Ακυρώνοντας τέτοιες εντολές "
 "μπορεί να οδηγήσει σε απώλεια δεδομένων. Αυτές οι εντολές δεν έχουν ακυρωθεί."
 
-#: windows/rcontrolwindow.cpp:130
+#: windows/rcontrolwindow.cpp:132
 msgid "Some commands not cancelled"
 msgstr "Κάποιες εντολές δεν ακυρώθηκαν"
 
-#: windows/rcontrolwindow.cpp:143
+#: windows/rcontrolwindow.cpp:145
 msgid "Resume execution"
 msgstr "Συνέχιση εκτέλεσης"
 

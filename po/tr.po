@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2008-01-07 22:34+0100\n"
+"POT-Creation-Date: 2008-01-21 19:45+0100\n"
 "PO-Revision-Date: 2007-04-12 10:40+0300\n"
 "Last-Translator: ertugrulerata <ertugrulerata@gmail.com>\n"
 "Language-Team:  <tr@li.org>\n"
@@ -729,7 +729,7 @@ msgid "Frontend to the R statistics language"
 msgstr ""
 
 #: main.cpp:79
-msgid "(c) 2002, 2004, 2005, 2006, 2007"
+msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008"
 msgstr ""
 
 #: main.cpp:80 main.cpp:81 main.cpp:82 main.cpp:83 main.cpp:85 main.cpp:86
@@ -1324,7 +1324,7 @@ msgstr "Konsol meşgul"
 msgid "Bypass console"
 msgstr "Konsolu pas geç"
 
-#: rkward.cpp:211
+#: rkward.cpp:213
 msgid ""
 "RKWard has made great progress in the past few months and it is already "
 "helpful for many tasks, but some features may be lacking. You can help us by "
@@ -1336,20 +1336,20 @@ msgstr ""
 "sorunlu olabilir. Hata raporlarını doldurarak, bize yardım edebilirsiniz. "
 "Lütfen bilgi için http://rkward.sourceforge.net 'i  ziyaret ediniz."
 
-#: rkward.cpp:212
+#: rkward.cpp:214
 msgid "What to expect of RKWard"
 msgstr "RKWard'ın beklentisi ne"
 
-#: rkward.cpp:216 settings/rksettingsmoduleobjectbrowser.cpp:128
+#: rkward.cpp:218 settings/rksettingsmoduleobjectbrowser.cpp:128
 msgid "Workspace"
 msgstr "Çalışma alanı"
 
-#: rkward.cpp:220
+#: rkward.cpp:222
 #, fuzzy
 msgid "Files"
 msgstr "Bütün Dosyalar"
 
-#: rkward.cpp:224
+#: rkward.cpp:226
 msgid "Pending Jobs"
 msgstr "Bekleyen işler"
 
@@ -2166,7 +2166,7 @@ msgstr "Ana pencereye ekle"
 msgid "Configure R backend"
 msgstr "R backend'i yapılandır"
 
-#: windows/rcontrolwindow.cpp:55 windows/rcontrolwindow.cpp:139
+#: windows/rcontrolwindow.cpp:55 windows/rcontrolwindow.cpp:141
 msgid "Pause execution"
 msgstr "İşlemi durdur"
 
@@ -2174,7 +2174,7 @@ msgstr "İşlemi durdur"
 msgid "Cancel selected commands"
 msgstr "Seçilen komutları iptal et"
 
-#: windows/rcontrolwindow.cpp:130
+#: windows/rcontrolwindow.cpp:132
 msgid ""
 "Some of the commands you were trying to cancel are marked as \"sync"
 "\" (letter 'S' in the type column). Cancelling such commands could lead to "
@@ -2184,11 +2184,11 @@ msgstr ""
 "type column). olarak işaretlenmiş. Bu gibi komutları iptal ederek veri "
 "kaybına yol açabilirsiz. Bu komutlar iptal edilmemeli."
 
-#: windows/rcontrolwindow.cpp:130
+#: windows/rcontrolwindow.cpp:132
 msgid "Some commands not cancelled"
 msgstr "Bazı komutlar iptal edilmedi"
 
-#: windows/rcontrolwindow.cpp:143
+#: windows/rcontrolwindow.cpp:145
 msgid "Resume execution"
 msgstr "İşlemi yeniden başlat"
 

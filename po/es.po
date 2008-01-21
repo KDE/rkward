@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2008-01-07 22:34+0100\n"
+"POT-Creation-Date: 2008-01-21 19:45+0100\n"
 "PO-Revision-Date: 2007-09-27 15:05-0500\n"
 "Last-Translator: Germán Márquez Mejía <gmarquez@javeriana.edu.co>\n"
 "Language-Team: español <es@li.org>\n"
@@ -211,8 +211,7 @@ msgstr "¿Eliminar objeto?"
 msgid ""
 "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
-"¿Realmente desea eliminar el objeto «%1»? Esta operación no se puede "
-"deshacer."
+"¿Realmente desea eliminar el objeto «%1»? Esta operación no se puede deshacer."
 
 #: core/rkmodificationtracker.cpp:333 dataeditor/rkvareditmodel.cpp:571
 #: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:304
@@ -568,8 +567,8 @@ msgid ""
 "connection."
 msgstr ""
 "Para averiguar cuáles de los paquetes que tiene instalados tienen "
-"actualizaciones disponibles pulse «Obtener lista». Esto requiere una "
-"conexión a internet activa."
+"actualizaciones disponibles pulse «Obtener lista». Esto requiere una conexión "
+"a internet activa."
 
 #: dialogs/rkloadlibsdialog.cpp:473
 msgid "Local Version"
@@ -637,9 +636,9 @@ msgid ""
 "repositories. Maybe the package name was mis-spelled. Or maybe you need to "
 "add additional repositories via the \"Configure Repositories\"-button."
 msgstr ""
-"El paquete solicitado por el motor («%1») no se encontró en los "
-"repositorios. Tal vez hay un error en el nombre del paquete o debe añadir "
-"repositorios adicionales por medio del botón «Configurar repositorios»."
+"El paquete solicitado por el motor («%1») no se encontró en los repositorios. "
+"Tal vez hay un error en el nombre del paquete o debe añadir repositorios "
+"adicionales por medio del botón «Configurar repositorios»."
 
 #: dialogs/rkloadlibsdialog.cpp:748
 msgid "Package not available"
@@ -668,8 +667,8 @@ msgstr ""
 "los paquetes como root (se le solicitará la contraseña de administrador(a)). "
 "De lo contrario, deberá seleccionar una ubicación diferente para la "
 "instalación (si no tiene permisos de escritura en ninguna, probablemente "
-"desee usar el botón «Configurar repositorios» e indicar un directorio con "
-"los permisos adecuados para instalar los paquetes)."
+"desee usar el botón «Configurar repositorios» e indicar un directorio con los "
+"permisos adecuados para instalar los paquetes)."
 
 #: dialogs/rkloadlibsdialog.cpp:814
 msgid "Selected library location not writable"
@@ -745,7 +744,7 @@ msgid "Frontend to the R statistics language"
 msgstr ""
 
 #: main.cpp:79
-msgid "(c) 2002, 2004, 2005, 2006, 2007"
+msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008"
 msgstr ""
 
 #: main.cpp:80 main.cpp:81 main.cpp:82 main.cpp:83 main.cpp:85 main.cpp:86
@@ -1355,7 +1354,7 @@ msgstr "La consola está ocupada"
 msgid "Bypass console"
 msgstr "Obviar la consola"
 
-#: rkward.cpp:211
+#: rkward.cpp:213
 msgid ""
 "RKWard has made great progress in the past few months and it is already "
 "helpful for many tasks, but some features may be lacking. You can help us by "
@@ -1368,20 +1367,20 @@ msgstr ""
 "cualquier otra ayuda. Por favor visite http://rkward.sourceforge.net para "
 "más información."
 
-#: rkward.cpp:212
+#: rkward.cpp:214
 msgid "What to expect of RKWard"
 msgstr "Qué esperar de RKWard"
 
-#: rkward.cpp:216 settings/rksettingsmoduleobjectbrowser.cpp:128
+#: rkward.cpp:218 settings/rksettingsmoduleobjectbrowser.cpp:128
 msgid "Workspace"
 msgstr "Espacio de trabajo"
 
-#: rkward.cpp:220
+#: rkward.cpp:222
 #, fuzzy
 msgid "Files"
 msgstr "Todos los archivos"
 
-#: rkward.cpp:224
+#: rkward.cpp:226
 msgid "Pending Jobs"
 msgstr "Tareas pendientes"
 
@@ -2203,7 +2202,7 @@ msgstr "Adosar a la ventana principal"
 msgid "Configure R backend"
 msgstr "Configurar el motor R"
 
-#: windows/rcontrolwindow.cpp:55 windows/rcontrolwindow.cpp:139
+#: windows/rcontrolwindow.cpp:55 windows/rcontrolwindow.cpp:141
 msgid "Pause execution"
 msgstr "Pausar la ejecución"
 
@@ -2211,21 +2210,21 @@ msgstr "Pausar la ejecución"
 msgid "Cancel selected commands"
 msgstr "Cancelar los comandos seleccionados"
 
-#: windows/rcontrolwindow.cpp:130
+#: windows/rcontrolwindow.cpp:132
 msgid ""
 "Some of the commands you were trying to cancel are marked as \"sync"
 "\" (letter 'S' in the type column). Cancelling such commands could lead to "
 "loss of data. These commands have _not_ been cancelled."
 msgstr ""
 "Algunos de los comandos que estaba intentando cancelar están marcados como "
-"«sync» (letra S en la columna tipo). Cancelarlos podría ocasionar pérdidas "
-"de datos. Los comandos _no_  han sido cancelados."
+"«sync» (letra S en la columna tipo). Cancelarlos podría ocasionar pérdidas de "
+"datos. Los comandos _no_  han sido cancelados."
 
-#: windows/rcontrolwindow.cpp:130
+#: windows/rcontrolwindow.cpp:132
 msgid "Some commands not cancelled"
 msgstr "Algunos comandos no han sido cancelados"
 
-#: windows/rcontrolwindow.cpp:143
+#: windows/rcontrolwindow.cpp:145
 msgid "Resume execution"
 msgstr "Continuar con la ejecución"
 
@@ -2331,9 +2330,9 @@ msgid ""
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
 "more options."
 msgstr ""
-"No se encontró ayuda relacionada con «%1». Tal vez el paquete "
-"correspondiente no está instalado/cargado o escribió mal el comando. Pruebe "
-"usando Ayuda->Buscar en la ayuda de R para más opciones."
+"No se encontró ayuda relacionada con «%1». Tal vez el paquete correspondiente "
+"no está instalado/cargado o escribió mal el comando. Pruebe usando Ayuda-"
+">Buscar en la ayuda de R para más opciones."
 
 #: windows/rkhelpsearchwindow.cpp:226
 msgid "No help found"
@@ -2669,16 +2668,16 @@ msgid ""
 ">Configure RKWard->General.\n"
 "Really edit object?"
 msgstr ""
-"Se dispone a editar el objeto «%1», el cual es muy grande (%2 campos). "
-"RKWard no ha sido optimizado para manejar objetos muy grandes en el editor "
-"de datos incorporado. Esto hace uso de mucha memoria, y -dependiendo de su "
-"sistema- puede ser muy lento. Para objetos grandes, generalmente se "
-"recomienda la edición por línea de comandos o separar los datos en porciones "
-"más pequeñas antes de editar. Por otro lado, si cuenta con suficiente "
-"memoria, o los datos son lo bastante simples (los datos numéricos son más "
-"fáciles de manejar que los factores), editarlos no ha de representar un "
-"problema. Puede configurar este aviso (o desactivarlo completamente) en "
-"Preferencias->Configurar RKWard->General.\n"
+"Se dispone a editar el objeto «%1», el cual es muy grande (%2 campos). RKWard "
+"no ha sido optimizado para manejar objetos muy grandes en el editor de datos "
+"incorporado. Esto hace uso de mucha memoria, y -dependiendo de su sistema- "
+"puede ser muy lento. Para objetos grandes, generalmente se recomienda la "
+"edición por línea de comandos o separar los datos en porciones más pequeñas "
+"antes de editar. Por otro lado, si cuenta con suficiente memoria, o los "
+"datos son lo bastante simples (los datos numéricos son más fáciles de "
+"manejar que los factores), editarlos no ha de representar un problema. Puede "
+"configurar este aviso (o desactivarlo completamente) en Preferencias-"
+">Configurar RKWard->General.\n"
 "¿Realmente desea editar el objeto?"
 
 #: windows/rkworkplace.cpp:325
