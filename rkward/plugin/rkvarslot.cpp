@@ -84,9 +84,9 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	}
 
 	// initialize filters
-	available->setClassFilter (xml->getStringAttribute (element, "classes", QString (), DL_INFO).split (" "));
+	available->setClassFilter (xml->getStringAttribute (element, "classes", QString (), DL_INFO).split (" ", QString::SkipEmptyParts));
 	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
-	available->setTypeFilter (xml->getStringAttribute (element, "types", QString::null, DL_INFO).split (" "));
+	available->setTypeFilter (xml->getStringAttribute (element, "types", QString::null, DL_INFO).split (" ", QString::SkipEmptyParts));
 	available->setDimensionFilter (xml->getIntAttribute (element, "num_dimensions", 0, DL_INFO), xml->getIntAttribute (element, "min_length", 0, DL_INFO), xml->getIntAttribute (element, "max_length", INT_MAX, DL_INFO));
 
 	connect (available, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (availablePropertyChanged (RKComponentPropertyBase *)));
