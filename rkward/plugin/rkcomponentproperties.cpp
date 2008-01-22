@@ -806,10 +806,10 @@ QString RKComponentPropertyRObjects::value (const QString &modifier) {
 bool RKComponentPropertyRObjects::setValue (const QString &value) {
 	RK_TRACE (PLUGIN);
 
-	object_list.clear ();
+	setObjectValue (0);
 
 	bool ok = true;
-	QStringList slist = value.split (separator);
+	QStringList slist = value.split (separator, QString::SkipEmptyParts);
 
 	for (QStringList::const_iterator it = slist.begin (); it != slist.end (); ++it) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (value);
@@ -829,7 +829,7 @@ bool RKComponentPropertyRObjects::setValue (const QString &value) {
 bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
 	RK_TRACE (PLUGIN);
 
-	QStringList slist = value.split (separator);
+	QStringList slist = value.split (separator, QString::SkipEmptyParts);
 
 	for (QStringList::const_iterator it = slist.begin (); it != slist.end (); ++it) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (value);

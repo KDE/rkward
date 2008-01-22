@@ -965,7 +965,7 @@ RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString (const QS
 	formatting_options.precision = 0;
 	bool empty = true;
 
-	QStringList list = string.split ("#");
+	QStringList list = string.split ("#", QString::SkipEmptyParts);
 	QString option, parameter;
 	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
 		option = (*it).section (':', 0, 0);
