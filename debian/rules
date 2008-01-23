@@ -28,9 +28,6 @@ config.status:
 
 	# Some installations of R need a specific version of the compiler(s)
 	# R CMD config provides info on which compiler to use
-	# TODO: somehow contrary to documentation, the environment variables CC and CXX
-	# appear to have no effect
-
 	cd $(CURDIR)/build && \
 	CC="`/usr/bin/R CMD config CC`" \
 	CXX="`/usr/bin/R CMD config CXX`" \

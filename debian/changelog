@@ -1,3 +1,10 @@
+rkward (0.5.0a-1) experimental; urgency=low
+
+  * new upstream release
+  * remove some obsolete comments in rules
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 23 Jan 2008 16:30:00 +0200
+
 rkward (0.5.0-1) experimental; urgency=low
 
   * new upstream release
