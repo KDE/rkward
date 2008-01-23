@@ -1,5 +1,5 @@
 - Fixed: no objects were selectable in most varslots
-- Compilation: check for minimum kdelibs version 4.0rc2
+- Compilation: check for minimum kdelibs version during cmake stage
 
 --- Version 0.5.0 - Jan-21-2008
 - add support for a focus-follows-mouse activation behavior of the MDI windows (Settings->General)
