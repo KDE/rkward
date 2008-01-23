@@ -107,6 +107,11 @@ private:
 	bool paused;
 	bool isActive ();
 	bool initialized;
+
+	void lockMutex ();
+	void unlockMutex ();
+	int mutex_lockcount;
+
 friend class RKWardMainWindow;
 	static RControlWindow *control_window;
 };

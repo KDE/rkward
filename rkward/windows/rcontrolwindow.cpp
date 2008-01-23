@@ -70,10 +70,27 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *n
 
 	paused = false;
 	initialized = false;
+	mutex_lockcount = 0;
 }
 
 RControlWindow::~RControlWindow () {
 	RK_TRACE (APP);
+}
+
+void RControlWindow::lockMutex () {
+	if (!mutex_lockcount) {
+		RK_TRACE (APP);
+		MUTEX_LOCK;
+	}
+	++mutex_lockcount;
+}
+
+void RControlWindow::unlockMutex () {
+	--mutex_lockcount;
+	if (!mutex_lockcount) {
+		RK_TRACE (APP);
+		MUTEX_UNLOCK;
+	}
 }
 
 bool RControlWindow::isActive () {
@@ -114,24 +131,33 @@ void RControlWindow::addChain (RCommandChain *chain) {
 	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
-	RChainOrCommand *dummy = new RChainOrCommand;
-	dummy->command = 0;
-	dummy->chain = chain;
-	addCommands (dummy, itemForChain (chain->parent));
-	delete dummy;
+	lockMutex ();
+
+	RChainOrCommand dummy;
+	dummy.command = 0;
+	dummy.chain = chain;
+	addCommands (&dummy, itemForChain (chain->parent));
+
+	unlockMutex ();
 }
 
 void RControlWindow::addCommand (RCommand *command, RCommandChain *parent) {
 	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
+	lockMutex ();
+
 	if (!parent) parent = RCommandStack::regular_stack;
 	addCommand (command, itemForChain (parent));
+
+	unlockMutex ();
 }
 
 void RControlWindow::updateChain (RCommandChain *chain) {
 	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
+
+	lockMutex ();
 
 	RControlWindowListViewItem *chainitem = itemForChain (chain);
 	if (!chainitem) {
@@ -140,6 +166,8 @@ void RControlWindow::updateChain (RCommandChain *chain) {
 	}
 	chainitem->update (chain);
 	checkCleanChain (chainitem);
+
+	unlockMutex ();
 }
 
 void RControlWindow::updateCommand (RCommand *command) {
@@ -178,12 +206,16 @@ void RControlWindow::checkCleanChain (RControlWindowListViewItem *chain) {
 	if (!isActive ()) return;	// do expensive GUI stuff only when visible
 	RK_TRACE (APP);
 
+	lockMutex ();
+
 	while (chain && chain->chain_closed && chain->parent () && (!chain->firstChild ())) {
 		RControlWindowListViewItem *del = chain;
 		chain = static_cast<RControlWindowListViewItem *> (chain->parent ());
 		chain_map.remove (del->chain);
 		delete del;
 	}
+
+	unlockMutex ();
 }
 
 void RControlWindow::setCommandRunning (RCommand *command) {
@@ -202,17 +234,17 @@ void RControlWindow::setCommandRunning (RCommand *command) {
 void RControlWindow::refreshCommands () {
 	RK_TRACE (APP);
 
+	lockMutex ();
+
 	commands_view->clear ();
 	command_map.clear ();
 	chain_map.clear ();
 
-	RChainOrCommand *dummy = new RChainOrCommand;
-	dummy->command = 0;
-	dummy->chain = RCommandStack::regular_stack;
+	RChainOrCommand dummy;
+	dummy.command = 0;
+	dummy.chain = RCommandStack::regular_stack;
 
-	addCommands (dummy, 0);
-
-	delete dummy;
+	addCommands (&dummy, 0);
 
 /* add the currently running command (if needed). It is not in the stack. */
 	RCommand *running = RKGlobals::rInterface ()->runningCommand ();
@@ -226,10 +258,14 @@ void RControlWindow::refreshCommands () {
 	if (running) setCommandRunning (running);
 
 	cancel_button->setEnabled (false);
+
+	unlockMutex ();
 }
 
 void RControlWindow::addCommands (RChainOrCommand *coc, RControlWindowListViewItem *parent) {
 	RK_TRACE (APP);
+
+	lockMutex ();
 
 	if (coc->chain) {
 		RControlWindowListViewItem *item;
@@ -250,6 +286,8 @@ void RControlWindow::addCommands (RChainOrCommand *coc, RControlWindowListViewIt
 		RK_ASSERT (parent);
 		addCommand (coc->command, parent);
 	}
+
+	unlockMutex ();
 }
 
 void RControlWindow::addCommand (RCommand *command, RControlWindowListViewItem *parent) {
@@ -409,7 +447,7 @@ void RControlWindowListViewItem::update (RCommand *command) {
 void RControlWindowListViewItem::update (RCommandChain *cchain) {
 	RK_TRACE (APP);
 	RK_ASSERT (this);
-	
+
 	chain = cchain;
 	chain_closed = cchain->closed;
 
