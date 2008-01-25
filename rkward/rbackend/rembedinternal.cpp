@@ -2,7 +2,7 @@
                           rembedinternal  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004, 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2005, 2006, 2007, 2008 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -117,6 +117,7 @@ extern void setup_Rmainloop(void); /* in main.c */
 extern uintptr_t R_CStackLimit;
 extern uintptr_t R_CStackStart;
 extern Rboolean R_Interactive;
+#include "R_ext/eventloop.h"
 #endif
 #ifndef USE_R_REPLDLLDO1
 extern Rboolean R_Visible;
@@ -427,6 +428,16 @@ void REmbedInternal::shutdown (bool suicidal) {
 static int timeout_counter = 0;
 
 void processX11EventsWorker (void *) {
+#ifdef R_2_3
+// this basically copied from R's unix/sys-std.c (Rstd_ReadConsole)
+// we stop processing, if there are more than 10 events
+	for (;;) {
+		fd_set *what;
+		what = R_checkActivity(R_wait_usec > 0 ? R_wait_usec : 50, 1);
+		R_runHandlers(R_InputHandlers, what);
+		if (what == NULL) break;
+	}
+#else
 /* what we do here is walk the list of objects, that have told R, they're listening for events.
 We figure out which ones look for X11-events and tell those to do their stuff (regardless of whether events actually occurred) */
 	extern InputHandler *R_InputHandlers;
@@ -448,6 +459,7 @@ TODO: verify we really need this. */
 		if (R_timeout_handler) R_timeout_handler ();
 		timeout_counter = 0;
 	}
+#endif
 }
 
 void REmbedInternal::processX11Events () {

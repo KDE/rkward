@@ -2,7 +2,7 @@
                           rthread  -  description
                              -------------------
     begin                : Mon Aug 2 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2008 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -244,7 +244,9 @@ void RThread::doCommand (RCommand *command) {
 		RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
 		all_current_commands.pop_back();
 	} else {
-		if (command->type () & RCommand::QuitCommand) {
+		if (command->status & RCommand::Canceled) {
+			command->status |= RCommand::Failed;
+		} else if (command->type () & RCommand::QuitCommand) {
 			killed = true;
 			MUTEX_UNLOCK;
 			shutdown (false);
@@ -418,15 +420,17 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 			}
 
 			current_command = reply_stack->currentCommand ();
-			
 			if (current_command) {
 				// mutex will be unlocked inside
 				bool object_update_forced = (current_command->type () & RCommand::ObjectListUpdate);
 				doCommand (current_command);
+				if (!(locked || killed)) processX11Events ();
+				else msleep (100);
 				if (object_update_forced) checkObjectUpdatesNeeded (true);
-				processX11Events ();
 				reply_stack->pop ();
 				notifyCommandDone (current_command);	// command may be deleted after this
+			} else {
+				msleep (10);
 			}
 		}
 

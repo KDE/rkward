@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2008 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -320,6 +320,7 @@ LoadUnloadWidget::~LoadUnloadWidget () {
 
 void LoadUnloadWidget::rCommandDone (RCommand *command) {
 	RK_TRACE (DIALOGS);
+	if (command->failed ()) return;
 	if (command->getFlags () == GET_INSTALLED_PACKAGES) {
 		RK_ASSERT (command->getDataLength () == 4);
 
