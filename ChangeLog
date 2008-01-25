@@ -1,3 +1,6 @@
+- Better resize handling in progress and R input (readline()) dialogs
+- Somewhat better handling of the R event loop (esp. when calling "require(not_yet_installed_package)")
+
 --- Version 0.5.0a - Jan-23-2008
 - Fixed: no objects were selectable in most varslots
 - Compilation: check for minimum kdelibs version during cmake stage

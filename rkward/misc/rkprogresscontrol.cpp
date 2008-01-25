@@ -2,7 +2,7 @@
                           rkprogresscontol  -  description
                              -------------------
     begin                : Sun Sep 10 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2008 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -201,6 +201,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 	setCaption (caption);
 
 	KVBox *vbox = new KVBox (this);
+	vbox->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
 	setMainWidget (vbox);
 
 	QLabel *label = new QLabel (text, vbox);
@@ -228,6 +229,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 		output_text->setReadOnly (true);
 		output_text->setPlainText (QString ());
 		output_text->setUndoRedoEnabled (false);
+		output_box->setStretchFactor (output_text, 10);
 
 		if (!(mode_flags & RKProgressControl::OutputShownByDefault)) {
 			output_box->hide ();
@@ -264,7 +266,7 @@ void RKProgressControlDialog::addOutput (const ROutput *output) {
 			output_text->setTextColor (Qt::black);
 		} else {
 			output_text->setTextColor (Qt::red);
-			setDetailsWidgetVisible (true);
+			if (!isDetailsWidgetVisible ()) setDetailsWidgetVisible (true);
 			error_indicator->show ();
 		}
 	}

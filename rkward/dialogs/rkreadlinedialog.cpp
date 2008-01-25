@@ -2,7 +2,7 @@
                           rkreadlinedialog  -  description
                              -------------------
     begin                : Fri Sep 15 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2008 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -65,6 +65,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 		output->setMinimumWidth (screen_width < cwidth ? screen_width : cwidth);
 		output->moveCursor (QTextCursor::End);
 		output->setFocusPolicy (Qt::NoFocus);
+		page->setStretchFactor (output, 10);
 	}
 
 	QLabel *promptl = new QLabel (prompt, page);
