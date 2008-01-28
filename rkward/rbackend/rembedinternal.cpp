@@ -433,9 +433,9 @@ void processX11EventsWorker (void *) {
 // we stop processing, if there are more than 10 events
 	for (;;) {
 		fd_set *what;
-		what = R_checkActivity(R_wait_usec > 0 ? R_wait_usec : 50, 1);
-		R_runHandlers(R_InputHandlers, what);
+		what = R_checkActivityEx(R_wait_usec > 0 ? R_wait_usec : 50, 1, Rf_onintr);
 		if (what == NULL) break;
+		R_runHandlers(R_InputHandlers, what);
 	}
 #else
 /* what we do here is walk the list of objects, that have told R, they're listening for events.

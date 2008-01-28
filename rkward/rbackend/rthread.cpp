@@ -175,7 +175,6 @@ void RThread::doCommand (RCommand *command) {
 		RCommandStackModel::getModel ()->itemChange (command);
 
 		MUTEX_UNLOCK;
-	
 		if (ctype & RCommand::GetStringVector) {
 			command->datatype = RData::StringVector;
 			command->data = getCommandAsStringVector (ccommand, &(command->length), &error);
@@ -191,7 +190,6 @@ void RThread::doCommand (RCommand *command) {
 		} else {
 			runCommandInternal (ccommand, &error, ctype & RCommand::User);
 		}
-
 		MUTEX_LOCK;
 
 		#ifdef RKWARD_DEBUG
