@@ -1,0 +1,44 @@
+** Notes for restructuring the R event processing **
+
+I've had it with fighting R's event processing. In the current design (two threads in one app), there appear to be some incompatibilities and threading issues with are very hard to solve. See e.g. https://sourceforge.net/tracker/index.php?func=detail&aid=1878594&group_id=50231&atid=459007 .
+
+The new plan: Move the R backend to a separate slave application, instead of just a separate thread.
+
+** The slave app **
+
+The slave app will be single threaded and mostly just run the regular R event loop using Rf_mainloop(). ptr_R_ReadConsole will be overridden, and responsible for getting the code (based on the R_Busy status), as before. We will instantiate a top level callback to find out, when a toplevel command has finished. Substack-calls are handled as before in a tryEval(). Since these are no user calls, they do not need to go through ReadConsole. We leave all event processing to R.
+
+Inside ptr_R_ReadConsole we will run a minimal loop, which simply checks for new commands available.
+
+** The main app **
+
+We can flatten the frontend to only single threaded as well. This will keep a command stack as before, and check for new output in regular intervals as before. However, it only needs to sumbit commands, when the slave app requests that, or a new command has been issued while the slave app is idle. So we save all the ugly processing, here.
+
+** Communication between the apps **
+
+Eventually, we will want network-transparent communication. For now, we focus on the more important single machine case. To keep things fast, we'll use a block of shared memory at least for command result data, and for output. For all other purposes, we can probably simply copy stuff around, even though this, too will probably go through shared memory.
+
+*** Communication routes ***
+
+- Send command string to execute and flags to slave
+- Retrieve current status flag from slave
+- Retrieve status flag of last command from slave
+- Retrieve data of finished command from slave
+- Retrieve list of changed symbols from slave
+- Retrieve callback request from slave
+- Write callback reply to slave
+- Retrieve current output (and type) from slave
+separately:
+- Send interrupt to slave
+
+** Dealing with shared memory **
+
+The devil will be in the details:
+- libmm seems to be a decent standard shared memory library
+	- other libraries: NSPR
+- can this handle only fork()ed processes? I sure hope it also support exec()ed ones!
+- I don't think the implicitely shared Qt classes (most importantly QStrings!) will make it through shared memory. Therefore we will basically pass plain char*s (all UTF8, though). For the other data types we need, we will not have a problem.
+
+** Alternatives **
+
+Maybe we really should use message passing, instead of shared memory? For the case of a local process, we should be able to safely pass raw binary data, so we can probably get very good speed. This would also make it easier to support a remote backend in the future.
