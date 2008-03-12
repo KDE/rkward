@@ -839,7 +839,7 @@ void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 
 	activate (false);
 	if ((!command_was_piped) && (isBusy () || (!currentCommand ().isEmpty ()))) {
-		int res = KMessageBox::questionYesNo (this, i18n ("You have configured RKWrad to run script commands through the console. However, the console is currently busy (either a command is running, or you have started to enter text in the console). Do you want to bypass the console this one time, or do you want to try again later?"), i18n ("Console is busy"), KGuiItem (i18n ("Bypass console")), KGuiItem (i18n ("Cancel")));
+		int res = KMessageBox::questionYesNo (this, i18n ("You have configured RKWard to run script commands through the console. However, the console is currently busy (either a command is running, or you have started to enter text in the console). Do you want to bypass the console this one time, or do you want to try again later?"), i18n ("Console is busy"), KGuiItem (i18n ("Bypass console")), KGuiItem (i18n ("Cancel")));
 		if (res == KMessageBox::Yes) {
 			RKGlobals::rInterface ()->issueCommand (command);
 		} else {
