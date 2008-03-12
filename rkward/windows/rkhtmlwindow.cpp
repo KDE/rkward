@@ -690,7 +690,7 @@ void RKHelpWindow::prepareHelpLink (QDomElement *link_element) {
 RKComponentHandle *RKHelpWindow::componentPathToHandle (QString path) {
 	RK_TRACE (APP);
 
-	QStringList path_segments = path.split ('/');
+	QStringList path_segments = path.split ('/', QString::SkipEmptyParts);
 	if (path_segments.count () > 2) return 0;
 	if (path_segments.count () < 1) return 0;
 	if (path_segments.count () == 1) path_segments.push_front ("rkward");
