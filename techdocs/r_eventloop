@@ -42,3 +42,25 @@ The devil will be in the details:
 ** Alternatives **
 
 Maybe we really should use message passing, instead of shared memory? For the case of a local process, we should be able to safely pass raw binary data, so we can probably get very good speed. This would also make it easier to support a remote backend in the future.
+
+*** Outline of a communication protocol ***
+
+1. Main app opens server port, then starts slave, passing port number as command-line argument
+2. Main app waits for slave to connect
+3. Main app initiates handshake:
+	1. send 'H'
+		- slave inits R
+		- slave connects callbacks
+		- slave enters Rf_mainloop()
+		- when back in ReadConsole, slave sends
+			- reply 'H:pid:Version_number'
+	2. handle version number mismatch
+4. Main app sends startup sequence
+	1. intiate
+	2. send all initailization commands including "library(rkward)" (see below)
+	3. check for command results as usual
+
+Command sending:
+	- when slave enters ReadConsole, it sends 'ready'
+	- main app sends e.g. 'command:doSomething()"
+	- slave acks, then starts the command

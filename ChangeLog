@@ -1,3 +1,5 @@
+- New plugin: Hodrick-Prescott Filter 			(manchito; TODO: review, back-merge)
+- Fix a problem with plugin help pages not loading correctly
 - Better resize handling in progress and R input (readline()) dialogs
 - Somewhat better handling of the R event loop (esp. when calling "require(not_yet_installed_package)")
 
