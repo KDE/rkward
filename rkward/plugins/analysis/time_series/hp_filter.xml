@@ -6,6 +6,7 @@
 	<logic>
 		<connect client="lambda.enabled" governor="custom.state.not"/>
 		<connect client="clambda.enabled" governor="custom.state"/>
+		<connect client="trend_name.enabled" governor="create_trend.state"/>
 		<connect client="cycle_name.enabled" governor="create_cycle.state"/>
 		<connect client="cycle_frame.enabled" governor="plot_cycle.state"/>
 		<connect client="cycle_col.color.enabled" governor="plot_cycle.state"/>
