@@ -33,27 +33,7 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #include "rklocalesupport.h"
 #include "rkpthreadsupport.h"
 
-extern "C" {
-#define R_INTERFACE_PTRS 1
-
-// needed to detect CHARSXP encoding
-#define USE_RINTERNALS 1
-#define UTF8_MASK (1<<3)
-#define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
-#define LATIN1_MASK (1<<2)
-#define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
-// end
-
-#include "Rdefines.h"
-#include "R_ext/Rdynload.h"
-#include "R_ext/eventloop.h"
-#include "R_ext/Callbacks.h"
-#include "R.h"
-#include "Rinternals.h"
-#include "Rinterface.h"
-#include "Rdevices.h"
 #include "Rversion.h"
-#include "R_ext/Parse.h"
 
 #include <dlfcn.h>
 #include <stdlib.h>
@@ -79,6 +59,36 @@ extern "C" {
 #if (R_VERSION > R_Version(2, 5, 9))
 #define R_2_6
 #endif
+
+#if (R_VERSION > R_Version(2, 6, 9))
+#define R_2_7
+#endif
+
+extern "C" {
+#define R_INTERFACE_PTRS 1
+
+// needed to detect CHARSXP encoding
+#ifdef R_2_7
+#	define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
+#	define IS_LATIN1(x) (Rf_getCharCE(x) == CE_LATIN1)
+#else
+#	define USE_RINTERNALS 1
+#	define UTF8_MASK (1<<3)
+#	define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
+#	define LATIN1_MASK (1<<2)
+#	define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
+#endif
+// end
+
+#include "Rdefines.h"
+#include "R_ext/Rdynload.h"
+#include "R_ext/eventloop.h"
+#include "R_ext/Callbacks.h"
+#include "R.h"
+#include "Rinternals.h"
+#include "Rinterface.h"
+#include "Rdevices.h"
+#include "R_ext/Parse.h"
 
 #ifdef R_2_4
 #define USE_R_REPLDLLDO1
@@ -139,26 +149,38 @@ bool repldll_last_parse_successful = false;
 SEXP RKWard_RData_Tag;
 
 // ############## R Standard callback overrides BEGIN ####################
+#ifdef R_2_7
+void RSuicide (const char* message) {
+#else
 void RSuicide (char* message) {
+#endif
 	RK_TRACE (RBACKEND);
 
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RSuicide;
-	args.chars_a = &message;
+	args.chars_a = const_cast<char**>(&message);
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 	REmbedInternal::this_pointer->shutdown (true);
 }
 
+#ifdef R_2_7
+void RShowMessage (const char* message) {
+#else
 void RShowMessage (char* message) {
+#endif
 	RK_TRACE (RBACKEND);
 
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RShowMessage;
-	args.chars_a = &message;
+	args.chars_a = const_cast<char**>(&message);
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 }
 
+#ifdef R_2_7
+int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) {
+#else
 int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
+#endif
 	RK_TRACE (RBACKEND);
 
 #ifdef USE_R_REPLDLLDO1
@@ -188,7 +210,7 @@ int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
 	// here, we handle readline calls and such, i.e. not the regular prompt for code
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RReadConsole;
-	args.chars_a = &prompt;
+	args.chars_a = const_cast<char**> (&prompt);
 	args.chars_b = (char **) (&buf);
 	args.int_a = buflen;
 	args.int_b = hist;		// actually, we ignore hist
@@ -205,7 +227,11 @@ int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
 }
 
 #ifdef R_2_5
+#	ifdef R_2_7
+void RWriteConsoleEx (const char *buf, int buflen, int type) {
+#	else
 void RWriteConsoleEx (char *buf, int buflen, int type) {
+#	endif
 	RK_TRACE (RBACKEND);
 
 	REmbedInternal::this_pointer->handleOutput (REmbedInternal::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0);
@@ -265,16 +291,20 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	}*/
 }
 
+#ifdef R_2_7
+int RShowFiles (int nfile, const char **file, const char **headers, const char *wtitle, Rboolean del, const char *pager) {
+#else
 int RShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean del, char *pager) {
+#endif
 	RK_TRACE (RBACKEND);
 
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RShowFiles;
 	args.int_a = nfile;
-	args.chars_a = file;
-	args.chars_b = headers;		// what exactly are the "headers"?!?
-	args.chars_c = &wtitle;
-	args.chars_d = &pager;		// we ingnore the pager-parameter for now.
+	args.chars_a = const_cast<char**> (file);
+	args.chars_b = const_cast<char**> (headers);		// what exactly are the "headers"?!?
+	args.chars_c = const_cast<char**> (&wtitle);
+	args.chars_d = const_cast<char**> (&pager);		// we ingnore the pager-parameter for now.
 	args.int_b = del;
 
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
@@ -298,15 +328,15 @@ int RChooseFile (int isnew, char *buf, int len) {
 	return args.int_c;
 }
 
-int REditFiles (int nfile, char **file, char **title, char *editor) {
+int REditFiles (int nfile, const char **file, const char **title, const char *editor) {
 	RK_TRACE (RBACKEND);
 
 	RCallbackArgs args;
 	args.type = RCallbackArgs::REditFiles;
 	args.int_a = nfile;
-	args.chars_a = file;
-	args.chars_b = title;
-	args.chars_c = &editor;
+	args.chars_a = const_cast<char**> (file);
+	args.chars_b = const_cast<char**> (title);
+	args.chars_c = const_cast<char**> (&editor);
 
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 
@@ -314,15 +344,18 @@ int REditFiles (int nfile, char **file, char **title, char *editor) {
 	return (nfile <= 0);
 }
 
+#ifdef R_2_7
+int REditFile (const char *buf) {
+#else
 int REditFile (char *buf) {
+#endif
 	RK_TRACE (RBACKEND);
 
-// REditFiles (below) is takes non-const char** parameters, although it actually treats them as consts. TODO: fix this up, one day
-	char *editor = (char *) "none";
-	char *title = (char *) "";
+	const char *editor = "none";
+	const char *title = "";
 
 // does not exist in standard R 2.1.0, so no idea what to return.
-	return REditFiles (1, &buf, &title, editor);
+	return REditFiles (1, const_cast<const char**> (&buf), &title, editor);
 }
 
 #ifdef USE_R_REPLDLLDO1
@@ -417,7 +450,7 @@ void REmbedInternal::shutdown (bool suicidal) {
 #endif
 
 	/* close all the graphics devices */
-	if (!suicidal) KillAllDevices ();
+	if (!suicidal) Rf_KillAllDevices ();
 	fpu_setup ((Rboolean) FALSE);
 
 	REmbedInternal::this_pointer->r_running = false;
