@@ -3,7 +3,6 @@
 <document base_prefix="" namespace="rkward">
 	<components>
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
-		<component type="standard" id="hp_filter" file="analysis/time_series/hp_filter.xml" label="Hodrick-Prescott Filter" />
 	</components>
 
 	<hierarchy>
@@ -15,9 +14,6 @@
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
 			<entry component="simple_anova" index="9"/>
-			<menu id="time_series" label="Time Series">
-				<entry component="hp_filter"/>
-			</menu>
 		</menu>
 	</hierarchy>
 </document>
