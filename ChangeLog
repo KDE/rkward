@@ -1,5 +1,6 @@
---- Version 0.4.9a - XXX-XX-2008
-- Fixed some lockups during startup			TODO: really fixed?
+--- Version 0.4.9a-pre1 - Apr-15-2008
+- Support from compilation with R 2.7
+- Fixed some lockups during startup
 
 --- Version 0.4.9 - Jan-14-2008
 - Improved user interface for CSV import plugin
