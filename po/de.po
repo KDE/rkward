@@ -8,13 +8,13 @@
 # SJR <stefan_roediger@gmx.de>, 2006, 2007.
 # Thomas Friedrichsmeier <tfry@users.sourceforge.net>, 2006, 2007.
 # Stefan Roediger <stefan_roediger@gmx.de>, 2007.
-# Stefan Rödiger <stefan_roediger@gmx.de>, 2007.
+# Stefan Rödiger <stefan_roediger@gmx.de>, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-01-14 20:28+0100\n"
-"PO-Revision-Date: 2007-09-28 00:55+0200\n"
+"PO-Revision-Date: 2008-04-15 21:12+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -122,7 +122,7 @@ msgstr ""
 
 #: dataeditor/editlabelsdialog.cpp:249
 msgid "Levels / Value labels for '%1'"
-msgstr "Levels / Label-Werte für '%1'"
+msgstr "Levels / Werte Bezeichnung für '%1'"
 
 #: dataeditor/twintable.cpp:63 windows/rcontrolwindow.cpp:63
 #: misc/rkobjectlistview.cpp:55 misc/rkobjectlistview.cpp:436
@@ -173,8 +173,7 @@ msgid "Delete this row (%1)"
 msgstr "Lösche diese Zeile (%1)"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Kein Dateiname angegeben. Ihre Daten wurden NICHT gespeichert. Möchten Sie "
 "dennoch fortfahren?"
@@ -220,7 +219,7 @@ msgid ""
 "file(s) in question:\n"
 "\n"
 msgstr ""
-"Die Datei(en) wurden in den Text-Fenstern geöffnet. Die folgende ist eine "
+"Die Datei(en) wurden in den Textfenstern geöffnet. Die folgende ist eine "
 "Liste der fraglichen Datei(en):\n"
 "\n"
 
@@ -294,7 +293,7 @@ msgid ""
 "Cancel (WARNING: This may result in loss of data)"
 msgstr ""
 "Bitte warten, bis noch laufende R-Kommandos beendet sind. Um sofort zu "
-"beenden bitte Cancel wählen (Warnung: Das könnte zu Datenverlust führen)"
+"beenden bitte Abbrechen wählen (Warnung: Das könnte zu Datenverlust führen)"
 
 #: agents/rkquitagent.cpp:41
 msgid "Waiting for R to finish"
@@ -341,8 +340,7 @@ msgid "Remove object?"
 msgstr "Objekt entfernen?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "Wollen Sie das Objekt '%1' wirklich entfernen? Es gibt keine Möglichkeit es "
 "wieder herzustellen."
@@ -585,9 +583,9 @@ msgid ""
 "\" (letter 'S' in the type column). Cancelling such commands could lead to "
 "loss of data. These commands have _not_ been cancelled."
 msgstr ""
-"Einige Kommandos die Sie versuchen zurückzunehmen wurden als \"sync"
+"Einige Kommandos die Sie versuchten abzubrechen wurden als \"sync"
 "\" (Buchstabe 'S' in Typ-Spalte). Abbrechen solcher Kommandos könnte zu "
-"Datenverlußt führen. Diese Kommandos sind nicht zurückgenommen wurden."
+"Datenverlust führen. Diese Kommandos sind nicht zurückgenommen wurden."
 
 #: windows/rcontrolwindow.cpp:305
 msgid "Some commands not cancelled"
@@ -619,8 +617,7 @@ msgstr "[verändert]"
 
 #: windows/rkcommandeditorwindow.cpp:143
 msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr ""
-"Das Dokument \"%1\" wurde verändert. Soll es dennoch geschlossen werden?"
+msgstr "Das Dokument \"%1\" wurde verändert. Soll es dennoch geschlossen werden?"
 
 #: windows/rkcommandeditorwindow.cpp:143
 msgid "File not saved"
@@ -939,6 +936,7 @@ msgid "Help search"
 msgstr "Suche in Hilfe"
 
 #: windows/rkhelpsearchwindow.cpp:212
+#, fuzzy
 msgid ""
 "No help found on '%1'. Maybe the corresponding package is not installed/"
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
@@ -1010,7 +1008,7 @@ msgstr "Übergeben"
 
 #: plugin/rkstandardcomponentgui.cpp:106
 msgid "Use Wizard"
-msgstr "Nuzte Wizard"
+msgstr "Nutzte Wizard"
 
 #: plugin/rkstandardcomponentgui.cpp:112
 msgid "Code"
@@ -1098,7 +1096,7 @@ msgstr "Zeige alle Umgebungen"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:51
 msgid "Show objects with children"
-msgstr "Zeige Objekte mit Children"
+msgstr "Zeige Objekte mit \"Children\""
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:53
 msgid "Show functions"
@@ -1135,8 +1133,7 @@ msgstr "Ausnahme hinzufügen"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:101
 msgid "Add the name of the package that no structure should be fetched for"
-msgstr ""
-"Füge die Namen der Pakte hinzu, deren Struktur nicht abgerufen werden soll"
+msgstr "Füge die Namen der Pakte hinzu, deren Struktur nicht abgerufen werden soll"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:128 rkward.cpp:214
 msgid "Workspace"
@@ -1177,29 +1174,30 @@ msgid "Show RKWard Help on Startup"
 msgstr "Zeige RKWard-Hilfe beim Start"
 
 #: settings/rksettingsmodulegeneral.cpp:74
+#, fuzzy
 msgid ""
 "The workplace layout (i.e. which script-, data-, help-windows are open) may "
 "be saved (and loaded) per R workspace, or independent of the R workspace. "
 "Which do you prefer?"
 msgstr ""
 "Die Anordnung des Arbeitsplatzes (d.h. welche Skript-, Daten- oder "
-"Hilfefenster geöffnet sind), kann entweder pro R Arbeitsdatei, oder davon "
+"Hilfefenster geöffnet sind), kann entweder pro R Workspace, oder davon "
 "unabhängig gespeichert (und wieder hergestellt) werden. Welche Option "
 "wünschen Sie?"
 
 #: settings/rksettingsmodulegeneral.cpp:83
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr ""
-"Zusammen mit Arbeitsdatei speichern / wieder herstellen, wenn Arbeitsdatei "
-"gepeichert / wiederhergestellt wird"
+"Zusammen mit R Workspace speichern / wieder herstellen, wenn Workspace "
+"gespeichert / wiederhergestellt wird"
 
 #: settings/rksettingsmodulegeneral.cpp:84
 msgid ""
 "Save/restore independent of R workspace (save at end of RKWard session, "
 "restore at next start)"
 msgstr ""
-"Unabhängig von der Arbeitsdatei speichern / wieder herstellen (gepeichert "
-"wird am Ende einer RKWard Sitzung, wiederhergestellt beim neuen Start)"
+"Unabhängig vom R Workspace speichern / wieder herstellen (speichern "
+"am Ende einer RKWard-Sitzung, wiederhergestellt beim nächsten Start)"
 
 #: settings/rksettingsmodulegeneral.cpp:85
 msgid "Do not save/restore workplace layout"
@@ -1280,7 +1278,7 @@ msgstr ""
 
 #: settings/rksettingsmoduleplugins.cpp:149
 msgid "Configuration change"
-msgstr "Konfigurations Änderung"
+msgstr "Änderung der Konfiguration"
 
 #: settings/rksettingsmodulephp.cpp:37
 msgid "Changes in this section take effect the next time you start a plugin"
@@ -1290,11 +1288,11 @@ msgstr ""
 
 #: settings/rksettingsmodulephp.cpp:43
 msgid "File-location of the PHP binary"
-msgstr "Adresse wo PHP-Binärdatei zu finden ist"
+msgstr "Speicherort der PHP-Binärdatei"
 
 #: settings/rksettingsmodulephp.cpp:61
 msgid "PHP backend"
-msgstr "PHP Backend"
+msgstr "PHP-Backend"
 
 #: settings/rksettingsmoduleoutput.cpp:39
 msgid "Output Window options"
@@ -1504,12 +1502,11 @@ msgstr "Anwendungsbefehle"
 
 #: settings/rksettingsmodulewatch.cpp:143
 msgid "Synchronization commands"
-msgstr "Synchronisations Befehle"
+msgstr "Synchronisationsbefehle"
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr ""
-"Maximale Anzahl von Absätzen/Zeile die im Command Log angezeigt werden sollen"
+msgstr "Maximale Anzahl von Absätzen/Zeile die im Command Log angezeigt werden sollen"
 
 #: settings/rksettings.cpp:63
 msgid "Settings"
@@ -1561,8 +1558,7 @@ msgstr "Konfiguriere Repositories"
 
 #: dialogs/rkloadlibsdialog.cpp:208
 msgid "Please stand by while installing selected packages"
-msgstr ""
-"Bitte warten warten Sie während die gewählten Pakete installiert werden."
+msgstr "Bitte warten warten Sie während die gewählten Pakete installiert werden."
 
 #: dialogs/rkloadlibsdialog.cpp:208
 msgid "Installing packages"
@@ -1785,16 +1781,14 @@ msgstr "Illegaler Attributwert. Nur Dezimalzahlen sind erlaubt."
 
 #: misc/xmlhelper.cpp:308
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
-msgstr ""
-"Illegaler Attributwert. Erlaubt sind nur Werte die Werte '%1' und '%2'."
+msgstr "Illegaler Attributwert. Erlaubt sind nur Werte die Werte '%1' und '%2'."
 
 #: misc/xmlhelper.cpp:319
 msgid "XML-parsing '%1' "
 msgstr "XML-parsing '%1' "
 
 #: misc/rkprogresscontrol.cpp:203
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>Es gab Fehler und / oder Warnungen! Betrachten Sie das Transkript "
 "unterhalb</b>"
@@ -1903,12 +1897,11 @@ msgid ""
 "configured the location of the PHP-binary (Settings->Configure Settings->PHP "
 "backend)"
 msgstr ""
-"Das PHP Backend konnte nicht gestartet werden. Überprüfen Sie bitte ob Sie "
-"den Speicherort der PHP- Binary korrekt angegeben haben (Einstellungen-"
-">Konfiguriere Einstellungen->PHP Backend)"
+"Das PHP-Backend konnte nicht gestartet werden. Überprüfen Sie bitte ob Sie "
+"den Speicherort der PHP-Binary korrekt angegeben haben (Einstellungen-"
+">Konfiguriere Einstellungen->PHP-Backend)"
 
 #: scriptbackends/phpbackend.cpp:197
-#, fuzzy
 msgid ""
 "There has been an error\n"
 "(\"%1\")\n"
@@ -1918,9 +1911,8 @@ msgid ""
 msgstr ""
 "Es ist ein Fehler\n"
 "(\"%1\")\n"
-"während des Starts des PHP Backend. Ursache ist meistens ein Bug in RKWard, "
-"oder einer invaliden Einstellung für den Speicherort der PHP Support "
-"Dateien. Überprüfen Sie diese Einstellungen (Einstellungen->Konfiguriere "
+"während des Starts des PHP-Backends aufgetreten. Ursache ist wahrscheinlich ein Programmfehler in RKWard, "
+"oder ein Problem mit Ihrer PHP-Installation. Überprüfen Sie diese Einstellungen (Einstellungen->Konfiguriere "
 "Einstellungen->PHP backend) und versuchen Sie es nochmals."
 
 #: scriptbackends/phpbackend.cpp:227
@@ -2090,7 +2082,7 @@ msgstr "R-Engine ist 'gestorben'"
 
 #: rbackend/rinterface.cpp:418
 msgid "The R engine has shut down with status: "
-msgstr "Die R Engine wurde beendet mit dem Status:"
+msgstr "Die R-Engine wurde beendet mit dem Status:"
 
 #: rbackend/rinterface.cpp:419
 msgid ""
@@ -2176,7 +2168,7 @@ msgstr "Maskieren für Komponenten die debugt werden sollen (siehe debug.h)"
 msgid ""
 "Debugger (enclose any debugger arguments in single quotes ('') together with "
 "the command)"
-msgstr ""
+msgstr "Debugger (schließen Sie jegliche Debuggerargumente einzelnen in Zitate ('') zusammen mit dem Befehl ein)"
 
 #: main.cpp:78
 #, fuzzy
@@ -2372,7 +2364,7 @@ msgstr "Fertig."
 
 #: rkward.cpp:415
 msgid "starting R engine"
-msgstr "Starte die R Engine"
+msgstr "Starte die R-Engine"
 
 #: rkward.cpp:532
 msgid "Exiting..."
@@ -2426,11 +2418,11 @@ msgstr "Möchten Sie den aktuellen Workspace speichern?"
 
 #: rkward.cpp:686
 msgid "R engine busy"
-msgstr "R Engine ist beschäftigt"
+msgstr "R-Engine ist beschäftigt"
 
 #: rkward.cpp:689
 msgid "R engine idle"
-msgstr "R Engine im Ruhezustand"
+msgstr "R-Engine im Ruhezustand"
 
 #: rkward.cpp:719
 msgid "Open command file(s)"
@@ -2593,3 +2585,4 @@ msgstr "Zeige alle Umgebungen"
 #: robjectbrowser.cpp:276
 msgid "Show Hidden Objects"
 msgstr "Zeige versteckte Objekte"
+
