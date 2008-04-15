@@ -1,4 +1,6 @@
-- New plugin: Hodrick-Prescott Filter 			(manchito; TODO: review, back-merge)
+--- Version 0.5.0b-pre1 - Apr-15-2008
+- Support compilation with R 2.7
+- New plugin: Hodrick-Prescott Filter
 - Fix a problem with plugin help pages not loading correctly
 - Better resize handling in progress and R input (readline()) dialogs
 - Somewhat better handling of the R event loop (esp. when calling "require(not_yet_installed_package)")
@@ -19,6 +21,11 @@
 - port to KDE 4
 
 ---- KDE 3 versions
+
+--- Version 0.4.9a-pre1 - Apr-15-2008
+- Support from compilation with R 2.7
+- New plugin: Hodrick-Prescott Filter
+- Fixed some lockups during startup
 
 --- Version 0.4.9 - Jan-14-2008
 - Improved user interface for CSV import plugin
