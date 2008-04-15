@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2008-01-21 19:45+0100\n"
+"POT-Creation-Date: 2008-04-15 12:36+0200\n"
 "PO-Revision-Date: 2007-04-12 10:40+0300\n"
 "Last-Translator: ertugrulerata <ertugrulerata@gmail.com>\n"
 "Language-Team:  <tr@li.org>\n"
@@ -92,7 +92,7 @@ msgstr ""
 "'%1' dosyasına kaydetme başarısız oldu. Farklı dosya ismiyle kaydetmeyi "
 "denemek ister misiniz?"
 
-#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:279
+#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:281
 #: plugin/rkstandardcomponentgui.cpp:361
 msgid "Done"
 msgstr "Bitti"
@@ -208,7 +208,7 @@ msgstr ""
 
 #: core/rkmodificationtracker.cpp:333 dataeditor/rkvareditmodel.cpp:571
 #: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:304
-#: dialogs/rkloadlibsdialog.cpp:473 dialogs/rkloadlibsdialog.cpp:633
+#: dialogs/rkloadlibsdialog.cpp:474 dialogs/rkloadlibsdialog.cpp:634
 #: plugin/rkformula.cpp:78 plugin/rkvarslot.cpp:55
 msgid "Name"
 msgstr "İsim"
@@ -520,11 +520,11 @@ msgstr "Kurulan paketler"
 msgid "Title"
 msgstr "Başlık"
 
-#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:633
+#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:634
 msgid "Version"
 msgstr "Versiyon"
 
-#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:473
+#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:474
 msgid "Location"
 msgstr "Yer"
 
@@ -540,7 +540,7 @@ msgstr "Çıkar"
 msgid "Loaded packages"
 msgstr "Yüklenen paketler"
 
-#: dialogs/rkloadlibsdialog.cpp:416
+#: dialogs/rkloadlibsdialog.cpp:417
 msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
@@ -548,11 +548,11 @@ msgstr ""
 "Paketler yükleme/çıkarmaya çalışılırken hata oluştu. Detaylar için aşağıya "
 "bakın"
 
-#: dialogs/rkloadlibsdialog.cpp:416
+#: dialogs/rkloadlibsdialog.cpp:417
 msgid "Error while handling packages"
 msgstr "Paketler elden geçirilirken hata"
 
-#: dialogs/rkloadlibsdialog.cpp:464
+#: dialogs/rkloadlibsdialog.cpp:465
 msgid ""
 "In order to find out, which of your installed packaged have an update "
 "available, click \"Fetch List\". This feature requires a working internet "
@@ -561,41 +561,41 @@ msgstr ""
 "Kurulan paketlerden güncellemesi olanlarını bulabilmek için  \"Listeyi al\"."
 "düğmesine tıklayın. Bu özellik internet bağlantısı gerektirir."
 
-#: dialogs/rkloadlibsdialog.cpp:473
+#: dialogs/rkloadlibsdialog.cpp:474
 msgid "Local Version"
 msgstr "Yerel Sürüm"
 
-#: dialogs/rkloadlibsdialog.cpp:473
+#: dialogs/rkloadlibsdialog.cpp:474
 msgid "Online Version"
 msgstr "Online Sürüm"
 
-#: dialogs/rkloadlibsdialog.cpp:480 dialogs/rkloadlibsdialog.cpp:640
+#: dialogs/rkloadlibsdialog.cpp:481 dialogs/rkloadlibsdialog.cpp:641
 msgid "Fetch list"
 msgstr "Listeyi al"
 
-#: dialogs/rkloadlibsdialog.cpp:482
+#: dialogs/rkloadlibsdialog.cpp:483
 msgid "Update Selected"
 msgstr "Seçileni güncelle"
 
-#: dialogs/rkloadlibsdialog.cpp:484
+#: dialogs/rkloadlibsdialog.cpp:485
 msgid "Update All"
 msgstr "Hepsini güncelle"
 
-#: dialogs/rkloadlibsdialog.cpp:547
+#: dialogs/rkloadlibsdialog.cpp:548
 msgid "[No updates available]"
 msgstr "[Güncelleme yok]"
 
-#: dialogs/rkloadlibsdialog.cpp:598
+#: dialogs/rkloadlibsdialog.cpp:599
 msgid ""
 "Please stand by while determining, which packages have an update available "
 "online."
 msgstr "Online güncellemesi olan paketler belirlenirken lütfen bekleyin."
 
-#: dialogs/rkloadlibsdialog.cpp:598 dialogs/rkloadlibsdialog.cpp:737
+#: dialogs/rkloadlibsdialog.cpp:599 dialogs/rkloadlibsdialog.cpp:738
 msgid "Fetching list"
 msgstr "Listeyi alınıyor"
 
-#: dialogs/rkloadlibsdialog.cpp:625
+#: dialogs/rkloadlibsdialog.cpp:626
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories (click \"Configure Repositories\" to add more sources). "
@@ -607,19 +607,19 @@ msgstr ""
 "tıklayın). Uygun olan paketleri görmek için \"Listeyi Al\" 'a tıklayın. Bu "
 "özellik internet bağlantısı gerektirmektedir."
 
-#: dialogs/rkloadlibsdialog.cpp:642
+#: dialogs/rkloadlibsdialog.cpp:643
 msgid "Install Selected"
 msgstr "Seçileni kur"
 
-#: dialogs/rkloadlibsdialog.cpp:697
+#: dialogs/rkloadlibsdialog.cpp:698
 msgid "[No packages available]"
 msgstr "[Uygun paket yok]"
 
-#: dialogs/rkloadlibsdialog.cpp:737
+#: dialogs/rkloadlibsdialog.cpp:738
 msgid "Please stand by while downloading the list of available packages."
 msgstr "Varolan paketlerin listesi indirilirken lütfen bekleyin."
 
-#: dialogs/rkloadlibsdialog.cpp:748
+#: dialogs/rkloadlibsdialog.cpp:749
 msgid ""
 "The package requested by the backend (\"%1\") was not found in the package "
 "repositories. Maybe the package name was mis-spelled. Or maybe you need to "
@@ -629,19 +629,19 @@ msgstr ""
 "bulunamadı. Paket ismi yanlış yazılmış olabilir. Veya \"Configure "
 "Repositories\"-tuşu ile ek paket depoları eklemeye ihtiyaç olabilir."
 
-#: dialogs/rkloadlibsdialog.cpp:748
+#: dialogs/rkloadlibsdialog.cpp:749
 msgid "Package not available"
 msgstr "Uygun paket yok"
 
-#: dialogs/rkloadlibsdialog.cpp:777
+#: dialogs/rkloadlibsdialog.cpp:778
 msgid "Install packages to:"
 msgstr "Paketleri kur:"
 
-#: dialogs/rkloadlibsdialog.cpp:782
+#: dialogs/rkloadlibsdialog.cpp:783
 msgid "Include dependencies"
 msgstr "İçeren bağımlılıklar"
 
-#: dialogs/rkloadlibsdialog.cpp:814
+#: dialogs/rkloadlibsdialog.cpp:815
 msgid ""
 "The directory you are trying to install to (%1) is not writable with your "
 "current user permissions. If you are the adminitstrator of this machine, you "
@@ -657,15 +657,15 @@ msgstr ""
 "seçmelisiniz (eğer hiçbirine yazılamazsa büyük olasılıkla kullanıcı "
 "\"Configure Repositories\"-tuşu ile yazılabilir klasör ayarlayabilirsiniz.)."
 
-#: dialogs/rkloadlibsdialog.cpp:814
+#: dialogs/rkloadlibsdialog.cpp:815
 msgid "Selected library location not writable"
 msgstr "Seçilen kütüphane yeri yazılabilir değil"
 
-#: dialogs/rkloadlibsdialog.cpp:814
+#: dialogs/rkloadlibsdialog.cpp:815
 msgid "Become root"
 msgstr "Yetkili kullanıcı olun"
 
-#: dialogs/rkloadlibsdialog.cpp:814
+#: dialogs/rkloadlibsdialog.cpp:815
 #, fuzzy
 msgid "&Cancel"
 msgstr "İptal edildi"
@@ -857,30 +857,30 @@ msgstr "Nesneleri göster"
 msgid "Show Fields"
 msgstr "Alanları Göster"
 
-#: misc/rkprogresscontrol.cpp:209
+#: misc/rkprogresscontrol.cpp:210
 msgid ""
 "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr "<b>Hatalar veya uyarılar var! Bir kopyası için aşağıya bakın</b>"
 
-#: misc/rkprogresscontrol.cpp:219 settings/rksettingsmoduleoutput.cpp:68
+#: misc/rkprogresscontrol.cpp:220 settings/rksettingsmoduleoutput.cpp:68
 #: windows/rkhtmlwindow.cpp:257
 msgid "Output"
 msgstr "Çıktı"
 
-#: misc/rkprogresscontrol.cpp:220
+#: misc/rkprogresscontrol.cpp:221
 msgid "Output:"
 msgstr "Çıktı:"
 
-#: misc/rkprogresscontrol.cpp:222
+#: misc/rkprogresscontrol.cpp:223
 #, fuzzy
 msgid "Errors / Warnings"
 msgstr "Hatalar/Uyarılar:"
 
-#: misc/rkprogresscontrol.cpp:223
+#: misc/rkprogresscontrol.cpp:224
 msgid "Errors / Warnings:"
 msgstr "Hatalar/Uyarılar:"
 
-#: misc/rkprogresscontrol.cpp:242 plugin/rkstandardcomponentgui.cpp:281
+#: misc/rkprogresscontrol.cpp:244 plugin/rkstandardcomponentgui.cpp:281
 #: rkconsole.cpp:842 robjectviewer.cpp:170
 #, fuzzy
 msgid "Cancel"
@@ -1305,8 +1305,9 @@ msgid "Configure"
 msgstr "Rkward'ı yapılandır"
 
 #: rkconsole.cpp:842
+#, fuzzy
 msgid ""
-"You have configured RKWrad to run script commands through the console. "
+"You have configured RKWard to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
 "have started to enter text in the console). Do you want to bypass the "
 "console this one time, or do you want to try again later?"
@@ -2660,162 +2661,122 @@ msgstr "Sol Pencere"
 msgid "Window Right"
 msgstr "Sağ Pencere"
 
-#. i18n: tag text
 #. i18n: file ./dataeditor/rkeditordataframepart.rc line 4
-#. i18n: tag text
 #. i18n: file ./rkconsolepart.rc line 4
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 30
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 4
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandlogpart.rc line 4
-#. i18n: tag text
 #. i18n: file ./windows/rkhelpwindow.rc line 7
-#. i18n: tag text
 #. i18n: file ./windows/rkoutputwindow.rc line 7
-#: rc.cpp:4 rc.cpp:12 rc.cpp:44 rc.cpp:92 rc.cpp:116 rc.cpp:132 rc.cpp:144
+#: rc.cpp:3 rc.cpp:9 rc.cpp:33 rc.cpp:69 rc.cpp:87 rc.cpp:99 rc.cpp:108
 #, no-c-format
 msgid "&Edit"
 msgstr ""
 
-#. i18n: tag text
 #. i18n: file ./dataeditor/rkeditordataframepart.rc line 13
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 45
-#: rc.cpp:8 rc.cpp:56
+#: rc.cpp:6 rc.cpp:42
 #, no-c-format
 msgid "&Windows"
 msgstr "&Pencereler"
 
-#. i18n: tag text
 #. i18n: file ./rkconsolepart.rc line 11
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 38
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 13
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 40
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandlogpart.rc line 9
-#. i18n: tag text
 #. i18n: file ./windows/rkhelpwindow.rc line 10
-#: rc.cpp:16 rc.cpp:52 rc.cpp:100 rc.cpp:112 rc.cpp:120 rc.cpp:136
+#: rc.cpp:12 rc.cpp:39 rc.cpp:75 rc.cpp:84 rc.cpp:90 rc.cpp:102
 #, no-c-format
 msgid "&Run"
 msgstr "&Çalıştır"
 
-#. i18n: tag text
 #. i18n: file ./rkconsolepart.rc line 17
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 64
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 21
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandlogpart.rc line 12
-#: rc.cpp:20 rc.cpp:64 rc.cpp:104 rc.cpp:124
+#: rc.cpp:15 rc.cpp:48 rc.cpp:78 rc.cpp:93
 #, fuzzy, no-c-format
 msgid "&Settings"
 msgstr "Ayarlar"
 
-#. i18n: tag text
 #. i18n: file ./rkconsolepart.rc line 20
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 69
-#. i18n: tag text
 #. i18n: file ./windows/detachedwindowcontainer.rc line 13
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 24
-#. i18n: tag text
 #. i18n: file ./windows/rktoplevelwindowgui.rc line 21
-#: rc.cpp:24 rc.cpp:68 rc.cpp:80 rc.cpp:108 rc.cpp:160
+#: rc.cpp:18 rc.cpp:51 rc.cpp:60 rc.cpp:81 rc.cpp:120
 #, fuzzy, no-c-format
 msgid "&Help"
 msgstr "R Yardım"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 4
-#. i18n: tag text
 #. i18n: file ./windows/rkhelpwindow.rc line 4
-#. i18n: tag text
 #. i18n: file ./windows/rkoutputwindow.rc line 4
-#: rc.cpp:28 rc.cpp:128 rc.cpp:140
+#: rc.cpp:21 rc.cpp:96 rc.cpp:105
 #, fuzzy, no-c-format
 msgid "&File"
 msgstr "Dosya ismi"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 5
-#: rc.cpp:32
+#: rc.cpp:24
 #, no-c-format
 msgid "&New"
 msgstr "&Yeni"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 12
-#: rc.cpp:36
+#: rc.cpp:27
 #, no-c-format
 msgid "&Import"
 msgstr "&İçeri Aktar"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 22
-#: rc.cpp:40
+#: rc.cpp:30
 #, no-c-format
 msgid "&Workspace"
 msgstr "&Çalışma alanı"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 34
-#. i18n: tag text
 #. i18n: file ./windows/rkcatchedx11windowpart.rc line 13
-#. i18n: tag text
 #. i18n: file ./windows/rkoutputwindow.rc line 12
-#: rc.cpp:48 rc.cpp:88 rc.cpp:148
+#: rc.cpp:36 rc.cpp:66 rc.cpp:111
 #, fuzzy, no-c-format
 msgid "&View"
 msgstr "&Yeni"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 51
-#. i18n: tag text
 #. i18n: file ./windows/detachedwindowcontainer.rc line 9
-#. i18n: tag text
 #. i18n: file ./windows/rktoplevelwindowgui.rc line 9
-#: rc.cpp:60 rc.cpp:76 rc.cpp:156
+#: rc.cpp:45 rc.cpp:57 rc.cpp:117
 #, no-c-format
 msgid "&Activate"
 msgstr "&Etkinleştir"
 
-#. i18n: tag text
 #. i18n: file ./windows/detachedwindowcontainer.rc line 5
-#. i18n: tag text
 #. i18n: file ./windows/rktoplevelwindowgui.rc line 5
-#: rc.cpp:72 rc.cpp:152
+#: rc.cpp:54 rc.cpp:114
 #, fuzzy, no-c-format
 msgid "&Window"
 msgstr "&Pencereler"
 
-#. i18n: tag text
 #. i18n: file ./windows/rkcatchedx11windowpart.rc line 4
-#: rc.cpp:84
+#: rc.cpp:63
 #, no-c-format
 msgid "&Device"
 msgstr ""
 
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 5
-#: rc.cpp:96
+#: rc.cpp:72
 #, no-c-format
 msgid "&Tools Move"
 msgstr ""
 
-#: rc.cpp:161
+#: rc.cpp:121
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 
-#: rc.cpp:162
+#: rc.cpp:122
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""

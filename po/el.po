@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2008-01-21 19:45+0100\n"
+"POT-Creation-Date: 2008-04-15 12:36+0200\n"
 "PO-Revision-Date: 2008-01-07 19:40+0000\n"
 "Last-Translator: Ilias <nono.231@gmail.com>\n"
 "Language-Team: Greek\n"
@@ -92,7 +92,7 @@ msgstr ""
 "Η αποθήκευση του αρχείου '%1' απέτυχε. Θέλετε να το αποθηκεύσετε με "
 "διαφορετικό όνομα;"
 
-#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:279
+#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:281
 #: plugin/rkstandardcomponentgui.cpp:361
 msgid "Done"
 msgstr "Έγινε"
@@ -223,7 +223,7 @@ msgstr ""
 
 #: core/rkmodificationtracker.cpp:333 dataeditor/rkvareditmodel.cpp:571
 #: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:304
-#: dialogs/rkloadlibsdialog.cpp:473 dialogs/rkloadlibsdialog.cpp:633
+#: dialogs/rkloadlibsdialog.cpp:474 dialogs/rkloadlibsdialog.cpp:634
 #: plugin/rkformula.cpp:78 plugin/rkvarslot.cpp:55
 msgid "Name"
 msgstr "Όνομα"
@@ -532,11 +532,11 @@ msgstr "Εγκατεστημένα πακέτα"
 msgid "Title"
 msgstr "Τίτλος"
 
-#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:633
+#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:634
 msgid "Version"
 msgstr "Έκδοση"
 
-#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:473
+#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:474
 msgid "Location"
 msgstr "Τοποθεσία"
 
@@ -552,7 +552,7 @@ msgstr "Αποφόρτωση"
 msgid "Loaded packages"
 msgstr "Φορτωμένα πακέτα"
 
-#: dialogs/rkloadlibsdialog.cpp:416
+#: dialogs/rkloadlibsdialog.cpp:417
 msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
@@ -560,11 +560,11 @@ msgstr ""
 "Υπήρξε ένα σφάλμα κατά την φόρτωση / αποφόρτωση πακέτων. Δείτε την περιγραφή "
 "παρακάτω για λεπτομέρειες"
 
-#: dialogs/rkloadlibsdialog.cpp:416
+#: dialogs/rkloadlibsdialog.cpp:417
 msgid "Error while handling packages"
 msgstr "Σφάλμα κατά την διαχείριση πακέτων"
 
-#: dialogs/rkloadlibsdialog.cpp:464
+#: dialogs/rkloadlibsdialog.cpp:465
 msgid ""
 "In order to find out, which of your installed packaged have an update "
 "available, click \"Fetch List\". This feature requires a working internet "
@@ -574,31 +574,31 @@ msgstr ""
 "ενημέρωση πατήστε \"Ανάκτηση λίστας\". Αυτή η δυνατότητα απαιτεί μία ενεργή "
 "σύνδεση στο Ίντερνετ."
 
-#: dialogs/rkloadlibsdialog.cpp:473
+#: dialogs/rkloadlibsdialog.cpp:474
 msgid "Local Version"
 msgstr "Τοπική Έκδοση"
 
-#: dialogs/rkloadlibsdialog.cpp:473
+#: dialogs/rkloadlibsdialog.cpp:474
 msgid "Online Version"
 msgstr "Έκδοση στο Ίντερνετ"
 
-#: dialogs/rkloadlibsdialog.cpp:480 dialogs/rkloadlibsdialog.cpp:640
+#: dialogs/rkloadlibsdialog.cpp:481 dialogs/rkloadlibsdialog.cpp:641
 msgid "Fetch list"
 msgstr "Ανάκτηση λίστας"
 
-#: dialogs/rkloadlibsdialog.cpp:482
+#: dialogs/rkloadlibsdialog.cpp:483
 msgid "Update Selected"
 msgstr "Ενημέρωση επιλεγμένων"
 
-#: dialogs/rkloadlibsdialog.cpp:484
+#: dialogs/rkloadlibsdialog.cpp:485
 msgid "Update All"
 msgstr "Ενημέρωση όλων"
 
-#: dialogs/rkloadlibsdialog.cpp:547
+#: dialogs/rkloadlibsdialog.cpp:548
 msgid "[No updates available]"
 msgstr "[Δεν υπάρχουν διαθέσιμες ανανεώσεις]"
 
-#: dialogs/rkloadlibsdialog.cpp:598
+#: dialogs/rkloadlibsdialog.cpp:599
 msgid ""
 "Please stand by while determining, which packages have an update available "
 "online."
@@ -606,11 +606,11 @@ msgstr ""
 "Παρακαλώ περιμένετε όσο καθορίζονται ποια πακέτα έχουν διαθέσιμη ανανέωση "
 "στο 'Ιντερνετ."
 
-#: dialogs/rkloadlibsdialog.cpp:598 dialogs/rkloadlibsdialog.cpp:737
+#: dialogs/rkloadlibsdialog.cpp:599 dialogs/rkloadlibsdialog.cpp:738
 msgid "Fetching list"
 msgstr "Ανάκτηση λίστας"
 
-#: dialogs/rkloadlibsdialog.cpp:625
+#: dialogs/rkloadlibsdialog.cpp:626
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories (click \"Configure Repositories\" to add more sources). "
@@ -622,19 +622,19 @@ msgstr ""
 "πηγές). Πιέστε \"Ανάκτηση Λίστας\" για να δείτε ποια πακέτα είναι διαθέσιμα. "
 "Αυτή η δυνατότητα απαιτεί μία ενεργή σύνδεση στο Ίντερνετ."
 
-#: dialogs/rkloadlibsdialog.cpp:642
+#: dialogs/rkloadlibsdialog.cpp:643
 msgid "Install Selected"
 msgstr "Εγκατάσταση επιλεγμένων"
 
-#: dialogs/rkloadlibsdialog.cpp:697
+#: dialogs/rkloadlibsdialog.cpp:698
 msgid "[No packages available]"
 msgstr "[Δεν υπάρχουν διαθέσιμα πακέτα]"
 
-#: dialogs/rkloadlibsdialog.cpp:737
+#: dialogs/rkloadlibsdialog.cpp:738
 msgid "Please stand by while downloading the list of available packages."
 msgstr "Παρακαλώ περιμένετε όσο μεταφορτώνεται η λίστα των διαθέσιμων πακέτων."
 
-#: dialogs/rkloadlibsdialog.cpp:748
+#: dialogs/rkloadlibsdialog.cpp:749
 msgid ""
 "The package requested by the backend (\"%1\") was not found in the package "
 "repositories. Maybe the package name was mis-spelled. Or maybe you need to "
@@ -645,19 +645,19 @@ msgstr ""
 "πρέπει να προσθέσετε επιπλέον αποθήκες πακέτων μέσω του κουμπιού \"Ρύθμιση "
 "Αποθηκών\"."
 
-#: dialogs/rkloadlibsdialog.cpp:748
+#: dialogs/rkloadlibsdialog.cpp:749
 msgid "Package not available"
 msgstr "Το πακέτο δεν είναι διαθέσιμο"
 
-#: dialogs/rkloadlibsdialog.cpp:777
+#: dialogs/rkloadlibsdialog.cpp:778
 msgid "Install packages to:"
 msgstr "Αποθήκευση πακέτων στο:"
 
-#: dialogs/rkloadlibsdialog.cpp:782
+#: dialogs/rkloadlibsdialog.cpp:783
 msgid "Include dependencies"
 msgstr "Να συμπεριληφθούν οι εξαρτήσεις"
 
-#: dialogs/rkloadlibsdialog.cpp:814
+#: dialogs/rkloadlibsdialog.cpp:815
 msgid ""
 "The directory you are trying to install to (%1) is not writable with your "
 "current user permissions. If you are the adminitstrator of this machine, you "
@@ -676,15 +676,15 @@ msgstr ""
 "Αποθηκών\" για να ρυθμίσετε ένα φάκελο με δικαιώματα εγγραφής στο οποίο θα "
 "εγκαθιστάτε τα πακέτα)"
 
-#: dialogs/rkloadlibsdialog.cpp:814
+#: dialogs/rkloadlibsdialog.cpp:815
 msgid "Selected library location not writable"
 msgstr "Δεν έχετε δικαίωμα εγγραφής στην επιλεγμένη τοποθεσία βιβλιοθηκών"
 
-#: dialogs/rkloadlibsdialog.cpp:814
+#: dialogs/rkloadlibsdialog.cpp:815
 msgid "Become root"
 msgstr "Γίνετε υπερχρήστης"
 
-#: dialogs/rkloadlibsdialog.cpp:814
+#: dialogs/rkloadlibsdialog.cpp:815
 msgid "&Cancel"
 msgstr "&Ακύρωση"
 
@@ -877,31 +877,31 @@ msgstr "Εμφάνιση αντικειμένων"
 msgid "Show Fields"
 msgstr "Εμφάνιση πεδίων"
 
-#: misc/rkprogresscontrol.cpp:209
+#: misc/rkprogresscontrol.cpp:210
 msgid ""
 "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>Υπήρξαν σφάλματα ή / και προειδοποιήσεις! Δείτε παρακάτω για μια "
 "περιγραφή</b>"
 
-#: misc/rkprogresscontrol.cpp:219 settings/rksettingsmoduleoutput.cpp:68
+#: misc/rkprogresscontrol.cpp:220 settings/rksettingsmoduleoutput.cpp:68
 #: windows/rkhtmlwindow.cpp:257
 msgid "Output"
 msgstr "Παράθυρο αποτελεσμάτων"
 
-#: misc/rkprogresscontrol.cpp:220
+#: misc/rkprogresscontrol.cpp:221
 msgid "Output:"
 msgstr "Αποτελέσματα:"
 
-#: misc/rkprogresscontrol.cpp:222
+#: misc/rkprogresscontrol.cpp:223
 msgid "Errors / Warnings"
 msgstr "Σφάλματα / Προειδοποιήσεις"
 
-#: misc/rkprogresscontrol.cpp:223
+#: misc/rkprogresscontrol.cpp:224
 msgid "Errors / Warnings:"
 msgstr "Σφάλματα / Προειδοποιήσεις "
 
-#: misc/rkprogresscontrol.cpp:242 plugin/rkstandardcomponentgui.cpp:281
+#: misc/rkprogresscontrol.cpp:244 plugin/rkstandardcomponentgui.cpp:281
 #: rkconsole.cpp:842 robjectviewer.cpp:170
 msgid "Cancel"
 msgstr "Ακύρωση"
@@ -1342,8 +1342,9 @@ msgid "Configure"
 msgstr "Ρύθμιση"
 
 #: rkconsole.cpp:842
+#, fuzzy
 msgid ""
-"You have configured RKWrad to run script commands through the console. "
+"You have configured RKWard to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
 "have started to enter text in the console). Do you want to bypass the "
 "console this one time, or do you want to try again later?"
@@ -2724,162 +2725,122 @@ msgstr "Παράθυρο αριστερά"
 msgid "Window Right"
 msgstr "Παράθυρο δεξιά"
 
-#. i18n: tag text
 #. i18n: file ./dataeditor/rkeditordataframepart.rc line 4
-#. i18n: tag text
 #. i18n: file ./rkconsolepart.rc line 4
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 30
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 4
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandlogpart.rc line 4
-#. i18n: tag text
 #. i18n: file ./windows/rkhelpwindow.rc line 7
-#. i18n: tag text
 #. i18n: file ./windows/rkoutputwindow.rc line 7
-#: rc.cpp:4 rc.cpp:12 rc.cpp:44 rc.cpp:92 rc.cpp:116 rc.cpp:132 rc.cpp:144
+#: rc.cpp:3 rc.cpp:9 rc.cpp:33 rc.cpp:69 rc.cpp:87 rc.cpp:99 rc.cpp:108
 #, no-c-format
 msgid "&Edit"
 msgstr "&Επεξεργασία"
 
-#. i18n: tag text
 #. i18n: file ./dataeditor/rkeditordataframepart.rc line 13
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 45
-#: rc.cpp:8 rc.cpp:56
+#: rc.cpp:6 rc.cpp:42
 #, no-c-format
 msgid "&Windows"
 msgstr "&Παράθυρα"
 
-#. i18n: tag text
 #. i18n: file ./rkconsolepart.rc line 11
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 38
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 13
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 40
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandlogpart.rc line 9
-#. i18n: tag text
 #. i18n: file ./windows/rkhelpwindow.rc line 10
-#: rc.cpp:16 rc.cpp:52 rc.cpp:100 rc.cpp:112 rc.cpp:120 rc.cpp:136
+#: rc.cpp:12 rc.cpp:39 rc.cpp:75 rc.cpp:84 rc.cpp:90 rc.cpp:102
 #, no-c-format
 msgid "&Run"
 msgstr "&Εκτέλεση"
 
-#. i18n: tag text
 #. i18n: file ./rkconsolepart.rc line 17
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 64
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 21
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandlogpart.rc line 12
-#: rc.cpp:20 rc.cpp:64 rc.cpp:104 rc.cpp:124
+#: rc.cpp:15 rc.cpp:48 rc.cpp:78 rc.cpp:93
 #, no-c-format
 msgid "&Settings"
 msgstr "Ρ&υθμίσεις"
 
-#. i18n: tag text
 #. i18n: file ./rkconsolepart.rc line 20
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 69
-#. i18n: tag text
 #. i18n: file ./windows/detachedwindowcontainer.rc line 13
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 24
-#. i18n: tag text
 #. i18n: file ./windows/rktoplevelwindowgui.rc line 21
-#: rc.cpp:24 rc.cpp:68 rc.cpp:80 rc.cpp:108 rc.cpp:160
+#: rc.cpp:18 rc.cpp:51 rc.cpp:60 rc.cpp:81 rc.cpp:120
 #, no-c-format
 msgid "&Help"
 msgstr "&Βοήθεια"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 4
-#. i18n: tag text
 #. i18n: file ./windows/rkhelpwindow.rc line 4
-#. i18n: tag text
 #. i18n: file ./windows/rkoutputwindow.rc line 4
-#: rc.cpp:28 rc.cpp:128 rc.cpp:140
+#: rc.cpp:21 rc.cpp:96 rc.cpp:105
 #, no-c-format
 msgid "&File"
 msgstr "&Αρχείο"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 5
-#: rc.cpp:32
+#: rc.cpp:24
 #, no-c-format
 msgid "&New"
 msgstr "&Νέο"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 12
-#: rc.cpp:36
+#: rc.cpp:27
 #, no-c-format
 msgid "&Import"
 msgstr "&Εισαγωγή"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 22
-#: rc.cpp:40
+#: rc.cpp:30
 #, no-c-format
 msgid "&Workspace"
 msgstr "&Χώρος εργασίας"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 34
-#. i18n: tag text
 #. i18n: file ./windows/rkcatchedx11windowpart.rc line 13
-#. i18n: tag text
 #. i18n: file ./windows/rkoutputwindow.rc line 12
-#: rc.cpp:48 rc.cpp:88 rc.cpp:148
+#: rc.cpp:36 rc.cpp:66 rc.cpp:111
 #, no-c-format
 msgid "&View"
 msgstr "Π&ροβολή"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 51
-#. i18n: tag text
 #. i18n: file ./windows/detachedwindowcontainer.rc line 9
-#. i18n: tag text
 #. i18n: file ./windows/rktoplevelwindowgui.rc line 9
-#: rc.cpp:60 rc.cpp:76 rc.cpp:156
+#: rc.cpp:45 rc.cpp:57 rc.cpp:117
 #, no-c-format
 msgid "&Activate"
 msgstr "&Ενεργοποίηση"
 
-#. i18n: tag text
 #. i18n: file ./windows/detachedwindowcontainer.rc line 5
-#. i18n: tag text
 #. i18n: file ./windows/rktoplevelwindowgui.rc line 5
-#: rc.cpp:72 rc.cpp:152
+#: rc.cpp:54 rc.cpp:114
 #, no-c-format
 msgid "&Window"
 msgstr "Παρά&θυρο"
 
-#. i18n: tag text
 #. i18n: file ./windows/rkcatchedx11windowpart.rc line 4
-#: rc.cpp:84
+#: rc.cpp:63
 #, no-c-format
 msgid "&Device"
 msgstr "&Συσκευή"
 
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 5
-#: rc.cpp:96
+#: rc.cpp:72
 #, no-c-format
 msgid "&Tools Move"
 msgstr "&Μετακίνηση Εργαλείων"
 
-#: rc.cpp:161
+#: rc.cpp:121
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Ilias Soumpasis"
 
-#: rc.cpp:162
+#: rc.cpp:122
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "nono.231@gmail.com"

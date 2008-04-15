@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2008-01-21 19:45+0100\n"
+"POT-Creation-Date: 2008-04-15 12:36+0200\n"
 "PO-Revision-Date: 2007-09-28 00:55+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -96,7 +96,7 @@ msgstr ""
 "Speichern in Datei '%1' gescheitert. Wollen Sie versuchen, die Datei unter "
 "einem anderen Dateinamen zu speichern?"
 
-#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:279
+#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:281
 #: plugin/rkstandardcomponentgui.cpp:361
 msgid "Done"
 msgstr "Erledigt"
@@ -226,7 +226,7 @@ msgstr ""
 
 #: core/rkmodificationtracker.cpp:333 dataeditor/rkvareditmodel.cpp:571
 #: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:304
-#: dialogs/rkloadlibsdialog.cpp:473 dialogs/rkloadlibsdialog.cpp:633
+#: dialogs/rkloadlibsdialog.cpp:474 dialogs/rkloadlibsdialog.cpp:634
 #: plugin/rkformula.cpp:78 plugin/rkvarslot.cpp:55
 msgid "Name"
 msgstr "Name"
@@ -541,11 +541,11 @@ msgstr "Installierte Pakete"
 msgid "Title"
 msgstr "Titel"
 
-#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:633
+#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:634
 msgid "Version"
 msgstr "Version"
 
-#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:473
+#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:474
 msgid "Location"
 msgstr "Speicherstelle"
 
@@ -561,7 +561,7 @@ msgstr "Entfernen"
 msgid "Loaded packages"
 msgstr "Geladene Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:416
+#: dialogs/rkloadlibsdialog.cpp:417
 msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
@@ -569,11 +569,11 @@ msgstr ""
 "Beim Versuch zu laden / entladen ist ein Fehler aufgetreten /. Bitte "
 "Transkript unterhalb für Details ansehen"
 
-#: dialogs/rkloadlibsdialog.cpp:416
+#: dialogs/rkloadlibsdialog.cpp:417
 msgid "Error while handling packages"
 msgstr "Fehler beim bearbeiten der Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:464
+#: dialogs/rkloadlibsdialog.cpp:465
 msgid ""
 "In order to find out, which of your installed packaged have an update "
 "available, click \"Fetch List\". This feature requires a working internet "
@@ -582,31 +582,31 @@ msgstr ""
 "Um herauszufinden von welchen Paketen ein Update verfügbar ist wählen Sie "
 "bitte \"Hole Liste\". Diese Funktion setzt eine Internetverbindung voraus."
 
-#: dialogs/rkloadlibsdialog.cpp:473
+#: dialogs/rkloadlibsdialog.cpp:474
 msgid "Local Version"
 msgstr "Lokale Version"
 
-#: dialogs/rkloadlibsdialog.cpp:473
+#: dialogs/rkloadlibsdialog.cpp:474
 msgid "Online Version"
 msgstr "Online Version"
 
-#: dialogs/rkloadlibsdialog.cpp:480 dialogs/rkloadlibsdialog.cpp:640
+#: dialogs/rkloadlibsdialog.cpp:481 dialogs/rkloadlibsdialog.cpp:641
 msgid "Fetch list"
 msgstr "Hole Liste"
 
-#: dialogs/rkloadlibsdialog.cpp:482
+#: dialogs/rkloadlibsdialog.cpp:483
 msgid "Update Selected"
 msgstr "Aktualisiere Auswahl"
 
-#: dialogs/rkloadlibsdialog.cpp:484
+#: dialogs/rkloadlibsdialog.cpp:485
 msgid "Update All"
 msgstr "Aktualisiere Alle"
 
-#: dialogs/rkloadlibsdialog.cpp:547
+#: dialogs/rkloadlibsdialog.cpp:548
 msgid "[No updates available]"
 msgstr "[Keine aktuellere Version verfügbar]"
 
-#: dialogs/rkloadlibsdialog.cpp:598
+#: dialogs/rkloadlibsdialog.cpp:599
 msgid ""
 "Please stand by while determining, which packages have an update available "
 "online."
@@ -614,11 +614,11 @@ msgstr ""
 "Bitte haben Sie etwas Geduld während überprüft wird Pakete online eine "
 "aktualisiert Version zur bereitstellen."
 
-#: dialogs/rkloadlibsdialog.cpp:598 dialogs/rkloadlibsdialog.cpp:737
+#: dialogs/rkloadlibsdialog.cpp:599 dialogs/rkloadlibsdialog.cpp:738
 msgid "Fetching list"
 msgstr "Lade Liste"
 
-#: dialogs/rkloadlibsdialog.cpp:625
+#: dialogs/rkloadlibsdialog.cpp:626
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories (click \"Configure Repositories\" to add more sources). "
@@ -630,21 +630,21 @@ msgstr ""
 "hinzuzufügen). Klicke \"Hole Liste\" um herauszufinden welche Pakete "
 "verfügbar sind. Diese Funktion setzt eine Internetverbindung voraus."
 
-#: dialogs/rkloadlibsdialog.cpp:642
+#: dialogs/rkloadlibsdialog.cpp:643
 msgid "Install Selected"
 msgstr "Installiere Auswahl"
 
-#: dialogs/rkloadlibsdialog.cpp:697
+#: dialogs/rkloadlibsdialog.cpp:698
 msgid "[No packages available]"
 msgstr "[Keine Pakete verfügbar]"
 
-#: dialogs/rkloadlibsdialog.cpp:737
+#: dialogs/rkloadlibsdialog.cpp:738
 msgid "Please stand by while downloading the list of available packages."
 msgstr ""
 "Bitte haben Sie etwas Geduld während die Liste verfügbarer Pakete "
 "heruntergeladen wird."
 
-#: dialogs/rkloadlibsdialog.cpp:748
+#: dialogs/rkloadlibsdialog.cpp:749
 msgid ""
 "The package requested by the backend (\"%1\") was not found in the package "
 "repositories. Maybe the package name was mis-spelled. Or maybe you need to "
@@ -655,19 +655,19 @@ msgstr ""
 "möglicherweise benötigen sie zusätzliche Repositories mittels dem "
 "\"Konfiguriere Repositories\"-Button."
 
-#: dialogs/rkloadlibsdialog.cpp:748
+#: dialogs/rkloadlibsdialog.cpp:749
 msgid "Package not available"
 msgstr "Keine Pakete verfügbar"
 
-#: dialogs/rkloadlibsdialog.cpp:777
+#: dialogs/rkloadlibsdialog.cpp:778
 msgid "Install packages to:"
 msgstr "Installierte Pakete zu:"
 
-#: dialogs/rkloadlibsdialog.cpp:782
+#: dialogs/rkloadlibsdialog.cpp:783
 msgid "Include dependencies"
 msgstr "Beinhalte Abhängigkeiten"
 
-#: dialogs/rkloadlibsdialog.cpp:814
+#: dialogs/rkloadlibsdialog.cpp:815
 msgid ""
 "The directory you are trying to install to (%1) is not writable with your "
 "current user permissions. If you are the adminitstrator of this machine, you "
@@ -686,15 +686,15 @@ msgstr ""
 "\"Konfiguriere Repositories\"-Button verwenden um ein beschreibbares "
 "Verzeichnis für die Installation Ihrer Pakete zu wählen)."
 
-#: dialogs/rkloadlibsdialog.cpp:814
+#: dialogs/rkloadlibsdialog.cpp:815
 msgid "Selected library location not writable"
 msgstr "Gewählter Speicheroft für Bibliotheken ist nicht beschreibbar"
 
-#: dialogs/rkloadlibsdialog.cpp:814
+#: dialogs/rkloadlibsdialog.cpp:815
 msgid "Become root"
 msgstr "Werden sie root"
 
-#: dialogs/rkloadlibsdialog.cpp:814
+#: dialogs/rkloadlibsdialog.cpp:815
 #, fuzzy
 msgid "&Cancel"
 msgstr "Abgebrochen"
@@ -887,32 +887,32 @@ msgstr "Zeige Objekte"
 msgid "Show Fields"
 msgstr "Zeige Felder"
 
-#: misc/rkprogresscontrol.cpp:209
+#: misc/rkprogresscontrol.cpp:210
 msgid ""
 "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>Es gab Fehler und / oder Warnungen! Betrachten Sie das Transkript "
 "unterhalb</b>"
 
-#: misc/rkprogresscontrol.cpp:219 settings/rksettingsmoduleoutput.cpp:68
+#: misc/rkprogresscontrol.cpp:220 settings/rksettingsmoduleoutput.cpp:68
 #: windows/rkhtmlwindow.cpp:257
 msgid "Output"
 msgstr "Ausgabe"
 
-#: misc/rkprogresscontrol.cpp:220
+#: misc/rkprogresscontrol.cpp:221
 msgid "Output:"
 msgstr "Ausgabe:"
 
-#: misc/rkprogresscontrol.cpp:222
+#: misc/rkprogresscontrol.cpp:223
 #, fuzzy
 msgid "Errors / Warnings"
 msgstr "Fehler / Warnungen:"
 
-#: misc/rkprogresscontrol.cpp:223
+#: misc/rkprogresscontrol.cpp:224
 msgid "Errors / Warnings:"
 msgstr "Fehler / Warnungen:"
 
-#: misc/rkprogresscontrol.cpp:242 plugin/rkstandardcomponentgui.cpp:281
+#: misc/rkprogresscontrol.cpp:244 plugin/rkstandardcomponentgui.cpp:281
 #: rkconsole.cpp:842 robjectviewer.cpp:170
 #, fuzzy
 msgid "Cancel"
@@ -1354,8 +1354,9 @@ msgid "Configure"
 msgstr "Konfiguriere RKWard"
 
 #: rkconsole.cpp:842
+#, fuzzy
 msgid ""
-"You have configured RKWrad to run script commands through the console. "
+"You have configured RKWard to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
 "have started to enter text in the console). Do you want to bypass the "
 "console this one time, or do you want to try again later?"
@@ -2744,162 +2745,122 @@ msgstr "Fenster Links"
 msgid "Window Right"
 msgstr "Fenster Rechts"
 
-#. i18n: tag text
 #. i18n: file ./dataeditor/rkeditordataframepart.rc line 4
-#. i18n: tag text
 #. i18n: file ./rkconsolepart.rc line 4
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 30
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 4
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandlogpart.rc line 4
-#. i18n: tag text
 #. i18n: file ./windows/rkhelpwindow.rc line 7
-#. i18n: tag text
 #. i18n: file ./windows/rkoutputwindow.rc line 7
-#: rc.cpp:4 rc.cpp:12 rc.cpp:44 rc.cpp:92 rc.cpp:116 rc.cpp:132 rc.cpp:144
+#: rc.cpp:3 rc.cpp:9 rc.cpp:33 rc.cpp:69 rc.cpp:87 rc.cpp:99 rc.cpp:108
 #, no-c-format
 msgid "&Edit"
 msgstr ""
 
-#. i18n: tag text
 #. i18n: file ./dataeditor/rkeditordataframepart.rc line 13
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 45
-#: rc.cpp:8 rc.cpp:56
+#: rc.cpp:6 rc.cpp:42
 #, no-c-format
 msgid "&Windows"
 msgstr "&Fenster"
 
-#. i18n: tag text
 #. i18n: file ./rkconsolepart.rc line 11
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 38
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 13
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 40
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandlogpart.rc line 9
-#. i18n: tag text
 #. i18n: file ./windows/rkhelpwindow.rc line 10
-#: rc.cpp:16 rc.cpp:52 rc.cpp:100 rc.cpp:112 rc.cpp:120 rc.cpp:136
+#: rc.cpp:12 rc.cpp:39 rc.cpp:75 rc.cpp:84 rc.cpp:90 rc.cpp:102
 #, no-c-format
 msgid "&Run"
 msgstr "&Ausführen"
 
-#. i18n: tag text
 #. i18n: file ./rkconsolepart.rc line 17
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 64
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 21
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandlogpart.rc line 12
-#: rc.cpp:20 rc.cpp:64 rc.cpp:104 rc.cpp:124
+#: rc.cpp:15 rc.cpp:48 rc.cpp:78 rc.cpp:93
 #, fuzzy, no-c-format
 msgid "&Settings"
 msgstr "Einstellungen"
 
-#. i18n: tag text
 #. i18n: file ./rkconsolepart.rc line 20
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 69
-#. i18n: tag text
 #. i18n: file ./windows/detachedwindowcontainer.rc line 13
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 24
-#. i18n: tag text
 #. i18n: file ./windows/rktoplevelwindowgui.rc line 21
-#: rc.cpp:24 rc.cpp:68 rc.cpp:80 rc.cpp:108 rc.cpp:160
+#: rc.cpp:18 rc.cpp:51 rc.cpp:60 rc.cpp:81 rc.cpp:120
 #, fuzzy, no-c-format
 msgid "&Help"
 msgstr "R Hilfe"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 4
-#. i18n: tag text
 #. i18n: file ./windows/rkhelpwindow.rc line 4
-#. i18n: tag text
 #. i18n: file ./windows/rkoutputwindow.rc line 4
-#: rc.cpp:28 rc.cpp:128 rc.cpp:140
+#: rc.cpp:21 rc.cpp:96 rc.cpp:105
 #, fuzzy, no-c-format
 msgid "&File"
 msgstr "Dateiname"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 5
-#: rc.cpp:32
+#: rc.cpp:24
 #, no-c-format
 msgid "&New"
 msgstr "&Neu"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 12
-#: rc.cpp:36
+#: rc.cpp:27
 #, no-c-format
 msgid "&Import"
 msgstr "&Import"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 22
-#: rc.cpp:40
+#: rc.cpp:30
 #, no-c-format
 msgid "&Workspace"
 msgstr "&Workspace"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 34
-#. i18n: tag text
 #. i18n: file ./windows/rkcatchedx11windowpart.rc line 13
-#. i18n: tag text
 #. i18n: file ./windows/rkoutputwindow.rc line 12
-#: rc.cpp:48 rc.cpp:88 rc.cpp:148
+#: rc.cpp:36 rc.cpp:66 rc.cpp:111
 #, fuzzy, no-c-format
 msgid "&View"
 msgstr "&Neu"
 
-#. i18n: tag text
 #. i18n: file ./rkwardui.rc line 51
-#. i18n: tag text
 #. i18n: file ./windows/detachedwindowcontainer.rc line 9
-#. i18n: tag text
 #. i18n: file ./windows/rktoplevelwindowgui.rc line 9
-#: rc.cpp:60 rc.cpp:76 rc.cpp:156
+#: rc.cpp:45 rc.cpp:57 rc.cpp:117
 #, no-c-format
 msgid "&Activate"
 msgstr "&Aktiviere"
 
-#. i18n: tag text
 #. i18n: file ./windows/detachedwindowcontainer.rc line 5
-#. i18n: tag text
 #. i18n: file ./windows/rktoplevelwindowgui.rc line 5
-#: rc.cpp:72 rc.cpp:152
+#: rc.cpp:54 rc.cpp:114
 #, fuzzy, no-c-format
 msgid "&Window"
 msgstr "&Fenster"
 
-#. i18n: tag text
 #. i18n: file ./windows/rkcatchedx11windowpart.rc line 4
-#: rc.cpp:84
+#: rc.cpp:63
 #, no-c-format
 msgid "&Device"
 msgstr ""
 
-#. i18n: tag text
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 5
-#: rc.cpp:96
+#: rc.cpp:72
 #, no-c-format
 msgid "&Tools Move"
 msgstr ""
 
-#: rc.cpp:161
+#: rc.cpp:121
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 
-#: rc.cpp:162
+#: rc.cpp:122
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
