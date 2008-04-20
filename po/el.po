@@ -1,4 +1,4 @@
-# translation of el.po to Greek
+# translation of el.po to
 # Greek translation of Rkward.
 # This file is put in the public domain.
 #
@@ -7,12 +7,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2008-04-15 12:36+0200\n"
-"PO-Revision-Date: 2008-01-07 19:40+0000\n"
-"Last-Translator: Ilias <nono.231@gmail.com>\n"
-"Language-Team: Greek\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
+"POT-Creation-Date: 2008-04-15 12:47+0200\n"
+"PO-Revision-Date: 2008-04-17 09:27+0100\n"
+"Last-Translator: \n"
+"Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -62,8 +61,7 @@ msgid "Waiting for R to finish"
 msgstr "Αναμένοντας το R να τελειώσει"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Δεν δόθηκε όνομα αρχείου. Τα δεδομένα σας δεν αποθηκεύτηκαν. Θέλετε να "
 "συνεχίσετε;"
@@ -215,8 +213,7 @@ msgid "Remove object?"
 msgstr "Αφαίρεση αντικειμένου;"
 
 #: core/rkmodificationtracker.cpp:80
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 "Θέλετε πραγματικά να διαγράψετε το αντικείμενο '%1'; Δεν θα υπάρχει τρόπος "
 "να το ανακτήσετε."
@@ -355,8 +352,7 @@ msgstr "Επίπεδα / Ετικέτες τιμών για το '%1'"
 #: dataeditor/rkeditordataframe.cpp:62 robjectbrowser.cpp:187
 #: robjectbrowser.cpp:221
 msgid "The name you specified was already in use or not valid. Renamed to %1"
-msgstr ""
-"Το όνομα που δώσατε ήδη υπάρχει ή δεν είναι έγκυρο. Μετονομάστηκε σε %1"
+msgstr "Το όνομα που δώσατε ήδη υπάρχει ή δεν είναι έγκυρο. Μετονομάστηκε σε %1"
 
 #: dataeditor/rkeditordataframe.cpp:62 robjectbrowser.cpp:187
 #: robjectbrowser.cpp:221
@@ -749,9 +745,8 @@ msgid "Frontend to the R statistics language"
 msgstr "Γραφικό περιβάλλον για τη γλώσσα στατιστικής R"
 
 #: main.cpp:79
-#, fuzzy
 msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008"
-msgstr "(c) 2002, 2004, 2005, 2006, 2007"
+msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008"
 
 #: main.cpp:80 main.cpp:81 main.cpp:82 main.cpp:83 main.cpp:85 main.cpp:86
 #: main.cpp:87 main.cpp:88 main.cpp:89 main.cpp:90 main.cpp:91 main.cpp:92
@@ -878,8 +873,7 @@ msgid "Show Fields"
 msgstr "Εμφάνιση πεδίων"
 
 #: misc/rkprogresscontrol.cpp:210
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>Υπήρξαν σφάλματα ή / και προειδοποιήσεις! Δείτε παρακάτω για μια "
 "περιγραφή</b>"
@@ -960,8 +954,7 @@ msgstr "'%1'- Δεν δόθηκε τιμή ιδιότητας. Υποτίθετ�
 
 #: misc/xmlhelper.cpp:260
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr ""
-"Μη επιτρεπόμενη τιμής ιδιότητας. Επιτρεπόμενες τιμές είναι μόνο μία από '%1'."
+msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Επιτρεπόμενες τιμές είναι μόνο μία από '%1'."
 
 #: misc/xmlhelper.cpp:274
 msgid "Illegal attribute value. Only integer numbers are allowed."
@@ -969,8 +962,7 @@ msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο α
 
 #: misc/xmlhelper.cpp:290
 msgid "Illegal attribute value. Only real numbers are allowed."
-msgstr ""
-"Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο πραγματικοί αριθμοί επιτρέπονται."
+msgstr "Μη επιτρεπόμενη τιμής ιδιότητας. Μόνο πραγματικοί αριθμοί επιτρέπονται."
 
 #: misc/xmlhelper.cpp:308
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
@@ -1342,7 +1334,6 @@ msgid "Configure"
 msgstr "Ρύθμιση"
 
 #: rkconsole.cpp:842
-#, fuzzy
 msgid ""
 "You have configured RKWard to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -1353,7 +1344,7 @@ msgstr ""
 "τερματικού. Παρόλα αυτά, το τερματικό είναι προσωρινά απασχολημένο (είτε "
 "εκτελείται μία εντολή ή εσείς έχετε αρχίσει να πληκτρολογείτε κείμενο στο "
 "τερματικό). Θέλετε να παρακάμψετε το τερματικό αυτήν την φορά, ή θέλετε να "
-"προσπαθήσετε αργότερα?"
+"προσπαθήσετε αργότερα;"
 
 #: rkconsole.cpp:842
 msgid "Console is busy"
@@ -1501,8 +1492,7 @@ msgstr "Έξοδος..."
 
 #: rkward.cpp:489
 msgid "Quitting RKWard: Do you want to save the workspace?"
-msgstr ""
-"Τερματισμός του RKWard: Θέλετε να αποθηκεύσετε τον τρέχοντα χώρο εργασίας;"
+msgstr "Τερματισμός του RKWard: Θέλετε να αποθηκεύσετε τον τρέχοντα χώρο εργασίας;"
 
 #: rkward.cpp:489 rkward.cpp:543
 msgid "Save Workspace?"
@@ -1757,8 +1747,7 @@ msgstr "Ενεργοποίηση συμπλήρωσης κώδικα"
 
 #: settings/rksettingsmodulecommandeditor.cpp:53
 msgid "Minimum number of characters before completion is attempted"
-msgstr ""
-"Ελάχιστος αριθμός χαρακτήρων πριν να αρχίσει η προσπάθεια συμπλήρωσης κώδικα"
+msgstr "Ελάχιστος αριθμός χαρακτήρων πριν να αρχίσει η προσπάθεια συμπλήρωσης κώδικα"
 
 #: settings/rksettingsmodulecommandeditor.cpp:64
 msgid "Timeout (milli seconds) before completion is attempted"
@@ -1899,15 +1888,15 @@ msgstr "Απεριόριστο"
 
 #: settings/rksettingsmodulegeneral.cpp:116
 msgid "MDI window focus behavior"
-msgstr ""
+msgstr "Συμπεριφορά εστίασης παραθύρου εργασίας"
 
 #: settings/rksettingsmodulegeneral.cpp:119
 msgid "Click to focus"
-msgstr ""
+msgstr "Κλίκ για εστίαση"
 
 #: settings/rksettingsmodulegeneral.cpp:120
 msgid "Focus follows mouse"
-msgstr ""
+msgstr "Εστίαση ακολουθεί την κίνηση του ποντικιού"
 
 #: settings/rksettingsmodulegeneral.cpp:145
 msgid "General"
@@ -1963,8 +1952,7 @@ msgstr "Προσθέστε εξαίρεση"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:103
 msgid "Add the name of the package that no structure should be fetched for"
-msgstr ""
-"Προσθέστε το όνομα του πακέτου για το οποίο δεν μπόρεσε να βρεθεί η δομή"
+msgstr "Προσθέστε το όνομα του πακέτου για το οποίο δεν μπόρεσε να βρεθεί η δομή"
 
 #: settings/rksettingsmoduleoutput.cpp:41
 msgid "Output Window options"
@@ -2127,8 +2115,7 @@ msgstr "Αρχικοποίηση μεταφορτομένων πακέτων "
 
 #: settings/rksettingsmoduler.cpp:297
 msgid "R Library locations  (where libraries get installed to, locally)"
-msgstr ""
-"Τοποθεσίες βιβλιοθηκών R (εκεί όπου οι βιβλιοθήκες εγκαθιστώνται τοπικά)"
+msgstr "Τοποθεσίες βιβλιοθηκών R (εκεί όπου οι βιβλιοθήκες εγκαθιστώνται τοπικά)"
 
 #: settings/rksettingsmoduler.cpp:302
 msgid ""
@@ -2200,8 +2187,7 @@ msgstr "Εντολές συγχρονισμού "
 
 #: settings/rksettingsmodulewatch.cpp:151
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr ""
-"Μέγιστος αριθμός παραγράφων/γραμμών προβολής στο αρχείο καταγραφής εντολών"
+msgstr "Μέγιστος αριθμός παραγράφων/γραμμών προβολής στο αρχείο καταγραφής εντολών"
 
 #: settings/rksettingsmodulewatch.cpp:281 windows/rkcommandlog.cpp:55
 msgid "Command log"
@@ -2615,13 +2601,11 @@ msgstr "Προσδιορισμός αντικειμένου R"
 
 #: windows/rkwindowcatcher.cpp:249
 msgid "Specify the R object name, you want to save the graph to"
-msgstr ""
-"Επιλέξτε το όνομα του αντικειμένου R με το οποίο θέλετε να σώσετε το γράφημα"
+msgstr "Επιλέξτε το όνομα του αντικειμένου R με το οποίο θέλετε να σώσετε το γράφημα"
 
 #: windows/rkwindowcatcher.cpp:260
 msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr ""
-"Αποθήκευση περιεχομένων της συσκευής γραφικών νούμερο %1 στο αντικείμενο '%2'"
+msgstr "Αποθήκευση περιεχομένων της συσκευής γραφικών νούμερο %1 στο αντικείμενο '%2'"
 
 #: windows/rkwindowcatcher.cpp:269
 msgid "Duplicate graphics device number %1"
@@ -2844,3 +2828,4 @@ msgstr "Ilias Soumpasis"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "nono.231@gmail.com"
+
