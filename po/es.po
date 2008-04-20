@@ -6,20 +6,21 @@
 #
 # Mvillarino <mvillarino@dubmail.net>, 2005.
 # Mvillarino <mvillarino@users.sourceforge.net>, 2006.
-# Germán Márquez Mejía <gmarquez@javeriana.edu.co>, 2007.
+# Germán Márquez Mejía <gmarquez@javeriana.edu.co>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
+"Report-Msgid-Bugs-To: http://sourceforge."
+"net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2008-04-15 12:36+0200\n"
-"PO-Revision-Date: 2007-09-27 15:05-0500\n"
+"PO-Revision-Date: 2008-04-16 13:07-0500\n"
 "Last-Translator: Germán Márquez Mejía <gmarquez@javeriana.edu.co>\n"
-"Language-Team: español <es@li.org>\n"
+"Language-Team: es <kde-i18n-doc@lists.kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: KAider 0.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: agents/rkeditobjectagent.cpp:56
 msgid ""
@@ -55,7 +56,7 @@ msgid ""
 "Cancel (WARNING: This may result in loss of data)"
 msgstr ""
 "En espera de que terminen los comandos restantes de R. Para salir "
-"inmediatamente presione Cancelar (AVISO: esto puede causar pérdida de datos)"
+"inmediatamente pulse Cancelar (AVISO: esto puede causar pérdida de datos)"
 
 #: agents/rkquitagent.cpp:41
 msgid "Waiting for R to finish"
@@ -299,17 +300,16 @@ msgid "Alignment"
 msgstr "Alineación"
 
 #: dataeditor/editformatdialog.cpp:45
-#, fuzzy
 msgid "Default"
-msgstr "Configuración por defecto"
+msgstr "Predeterminado"
 
 #: dataeditor/editformatdialog.cpp:47
 msgid "Left"
-msgstr ""
+msgstr "Izquierda"
 
 #: dataeditor/editformatdialog.cpp:49
 msgid "Right"
-msgstr ""
+msgstr "Derecha"
 
 #: dataeditor/editformatdialog.cpp:54
 msgid "Decimal Places"
@@ -317,7 +317,7 @@ msgstr "Cifras decimales"
 
 #: dataeditor/editformatdialog.cpp:56
 msgid "Default setting"
-msgstr "Configuración por defecto"
+msgstr "Configuración predeterminada"
 
 #: dataeditor/editformatdialog.cpp:58
 msgid "As required"
@@ -407,16 +407,15 @@ msgstr "Insertando el contenido del portapapeles..."
 
 #: dataeditor/rkvareditmodel.cpp:214 dataeditor/rkvareditmodel.cpp:457
 msgid "Type on these fields to add new columns"
-msgstr ""
+msgstr "Digite en estos campos para agregar nuevas columnas"
 
 #: dataeditor/rkvareditmodel.cpp:215
 msgid "Type on these fields to add new rows"
-msgstr ""
+msgstr "Digite en estos campos para agregar nuevas filas"
 
 #: dataeditor/rkvareditmodel.cpp:294
-#, fuzzy
 msgid "#New Variable#"
-msgstr "Variable"
+msgstr "#Nueva variable#"
 
 #: dataeditor/rkvareditmodel.cpp:574
 msgid "Format"
@@ -428,11 +427,11 @@ msgstr "Niveles"
 
 #: dataeditor/twintable.cpp:98
 msgid "Enable editing"
-msgstr ""
+msgstr "Habilitar edición"
 
 #: dataeditor/twintable.cpp:146
 msgid " [read-only]"
-msgstr ""
+msgstr "[sólo lectura]"
 
 #: dataeditor/twintable.cpp:186
 msgid "Insert new variable left"
@@ -447,14 +446,12 @@ msgid "Delete this variable"
 msgstr "Borrar esta variable"
 
 #: dataeditor/twintable.cpp:207
-#, fuzzy
 msgid "Insert new case above (at %1)"
-msgstr "Insertar nuevo caso por encima"
+msgstr "Insertar nuevo caso por encima (en %1)"
 
 #: dataeditor/twintable.cpp:210
-#, fuzzy
 msgid "Insert new case below (at %1)"
-msgstr "Insertar nuevo caso por debajo"
+msgstr "Insertar nuevo caso por debajo (en %1)"
 
 #: dataeditor/twintable.cpp:221
 msgid "Delete marked rows (%1-%2)"
@@ -507,7 +504,7 @@ msgstr "Instalando paquetes"
 
 #: dialogs/rkloadlibsdialog.cpp:251
 msgid "Installation process died with exit code %1"
-msgstr ""
+msgstr "El proceso de instalación terminó con código de salida %1"
 
 #: dialogs/rkloadlibsdialog.cpp:269
 msgid ""
@@ -679,9 +676,8 @@ msgid "Become root"
 msgstr "Ejecutar como root"
 
 #: dialogs/rkloadlibsdialog.cpp:815
-#, fuzzy
 msgid "&Cancel"
-msgstr "Cancelado"
+msgstr "&Cancelar"
 
 #: dialogs/rkreadlinedialog.cpp:54
 msgid "Context:"
@@ -730,6 +726,8 @@ msgid ""
 "Debugger (enclose any debugger arguments in single quotes ('') together with "
 "the command)"
 msgstr ""
+"Depurador (encierre los argumentos para el depurador en comillas sencillas "
+"('') junto con el comando)"
 
 #: main.cpp:77
 msgid "Disable R C stack checking"
@@ -741,17 +739,17 @@ msgstr "RKWard"
 
 #: main.cpp:79
 msgid "Frontend to the R statistics language"
-msgstr ""
+msgstr "Interfaz gráfica para el lenguaje estadístico R"
 
 #: main.cpp:79
 msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008"
-msgstr ""
+msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008"
 
 #: main.cpp:80 main.cpp:81 main.cpp:82 main.cpp:83 main.cpp:85 main.cpp:86
 #: main.cpp:87 main.cpp:88 main.cpp:89 main.cpp:90 main.cpp:91 main.cpp:92
 #: main.cpp:93
 msgid "%1"
-msgstr ""
+msgstr "%1"
 
 #: main.cpp:80
 msgid "Project leader / main developer"
@@ -771,7 +769,7 @@ msgstr "Varios complementos, sugerencias"
 
 #: main.cpp:84
 msgid "Contributors in alphabetical order"
-msgstr ""
+msgstr "Contribuyentes en orden alfabético"
 
 #: main.cpp:85
 msgid "Several helpful comments and discussions"
@@ -825,12 +823,11 @@ msgstr "Nombre de archivo"
 
 #: misc/multistringselector.cpp:54
 msgid "Add"
-msgstr ""
+msgstr "Agregar"
 
 #: misc/multistringselector.cpp:58
-#, fuzzy
 msgid "Remove"
-msgstr "Renombrar"
+msgstr "Quitar"
 
 #: misc/multistringselector.cpp:64
 msgid "Up"
@@ -875,8 +872,7 @@ msgstr "Mostrar campos"
 #: misc/rkprogresscontrol.cpp:210
 msgid ""
 "<b>There have been errors and / or warnings! See below for a transcript</b>"
-msgstr ""
-"<b>¡Se han encontrado errores y/o avisos! Mire el reporte más abajo</b>"
+msgstr "<b>¡Se han encontrado errores y/o avisos! Mire el reporte más abajo</b>"
 
 #: misc/rkprogresscontrol.cpp:220 settings/rksettingsmoduleoutput.cpp:68
 #: windows/rkhtmlwindow.cpp:257
@@ -888,9 +884,8 @@ msgid "Output:"
 msgstr "Salida:"
 
 #: misc/rkprogresscontrol.cpp:223
-#, fuzzy
 msgid "Errors / Warnings"
-msgstr "Errores/avisos"
+msgstr "Errores / Avisos"
 
 #: misc/rkprogresscontrol.cpp:224
 msgid "Errors / Warnings:"
@@ -898,9 +893,8 @@ msgstr "Errores/avisos"
 
 #: misc/rkprogresscontrol.cpp:244 plugin/rkstandardcomponentgui.cpp:281
 #: rkconsole.cpp:842 robjectviewer.cpp:170
-#, fuzzy
 msgid "Cancel"
-msgstr "Cancelado"
+msgstr "Cancelar"
 
 #: misc/rksaveobjectchooser.cpp:41
 msgid "Object name to save to"
@@ -1071,14 +1065,12 @@ msgid "Submit"
 msgstr "Enviar"
 
 #: plugin/rkstandardcomponentgui.cpp:100 plugin/rkstandardcomponentgui.cpp:369
-#, fuzzy
 msgid "Close"
-msgstr "Cerrado"
+msgstr "Cerrar"
 
 #: plugin/rkstandardcomponentgui.cpp:105
-#, fuzzy
 msgid "Help"
-msgstr "Ayuda de R"
+msgstr "Ayuda"
 
 #: plugin/rkstandardcomponentgui.cpp:111
 msgid "Use Wizard"
@@ -1118,7 +1110,7 @@ msgstr "Variable:"
 
 #: rbackend/rcommandstack.cpp:350
 msgid "Running"
-msgstr ""
+msgstr "Ejecutándose"
 
 #: rbackend/rcommandstack.cpp:353
 msgid "Cancelled"
@@ -1129,27 +1121,24 @@ msgid "Command Stack"
 msgstr "Pila de comandos"
 
 #: rbackend/rcommandstack.cpp:366
-#, fuzzy
 msgid "Command Chain"
-msgstr "Comando"
+msgstr "Cadena de comandos"
 
 #: rbackend/rcommandstack.cpp:368
 msgid "Closed"
 msgstr "Cerrado"
 
 #: rbackend/rcommandstack.cpp:369
-#, fuzzy
 msgid "Waiting"
-msgstr "Abierto (esperando)"
+msgstr "En espera"
 
 #: rbackend/rcommandstack.cpp:398
 msgid "Command"
 msgstr "Comando"
 
 #: rbackend/rcommandstack.cpp:400
-#, fuzzy
 msgid "Status"
-msgstr "Arranque de R"
+msgstr "Estado"
 
 #: rbackend/rcommandstack.cpp:401
 msgid "Description"
@@ -1330,12 +1319,10 @@ msgid "Copy selection literally"
 msgstr "Copiar la selección tal cual"
 
 #: rkconsole.cpp:817 windows/rkcommandlog.cpp:277
-#, fuzzy
 msgid "Configure"
-msgstr "Configurar RKWard"
+msgstr "Configurar"
 
 #: rkconsole.cpp:842
-#, fuzzy
 msgid ""
 "You have configured RKWard to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -1377,9 +1364,8 @@ msgid "Workspace"
 msgstr "Espacio de trabajo"
 
 #: rkward.cpp:222
-#, fuzzy
 msgid "Files"
-msgstr "Todos los archivos"
+msgstr "Archivos"
 
 #: rkward.cpp:226
 msgid "Pending Jobs"
@@ -1479,7 +1465,7 @@ msgstr "Configurar RKWard"
 
 #: rkward.cpp:384
 msgid "[No actions available for current view]"
-msgstr ""
+msgstr "[No hay acciones disponibles para la vista actual]"
 
 #: rkward.cpp:415
 msgid "Ready."
@@ -1490,9 +1476,8 @@ msgid "Exiting..."
 msgstr "Saliendo..."
 
 #: rkward.cpp:489
-#, fuzzy
 msgid "Quitting RKWard: Do you want to save the workspace?"
-msgstr "¿Desea guardar el espacio de trabajo actual?"
+msgstr "Saliendo de RKWard: ¿desea guardar el espacio de trabajo?"
 
 #: rkward.cpp:489 rkward.cpp:543
 msgid "Save Workspace?"
@@ -1500,7 +1485,7 @@ msgstr "¿Guardar espacio de trabajo?"
 
 #: rkward.cpp:489
 msgid "Don't quit"
-msgstr ""
+msgstr "No salir"
 
 #: rkward.cpp:514
 msgid "New dataset"
@@ -1532,12 +1517,11 @@ msgstr "Motor R ocupado"
 
 #: rkward.cpp:630
 msgid "R engine idle"
-msgstr "Motor R a la espera"
+msgstr "Motor R en espera"
 
 #: rkward.cpp:633
-#, fuzzy
 msgid "R engine starting"
-msgstr "Motor R ocupado"
+msgstr "Motor R iniciando"
 
 #: rkward.cpp:667
 msgid "Open command file(s)"
@@ -1557,11 +1541,11 @@ msgstr "Búsqueda en la ayuda"
 
 #: robjectbrowser.cpp:122
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #: robjectbrowser.cpp:124
 msgid "View"
-msgstr ""
+msgstr "Ver"
 
 #: robjectbrowser.cpp:126
 msgid "Rename"
@@ -1576,9 +1560,8 @@ msgid "Copy to .GlobalEnv"
 msgstr "Copiar a .GlobalEnv"
 
 #: robjectbrowser.cpp:132
-#, fuzzy
 msgid "Delete"
-msgstr "Seleccionar"
+msgstr "Eliminar"
 
 #: robjectbrowser.cpp:183
 msgid "Copy object"
@@ -1626,35 +1609,32 @@ msgid "Show Hidden Objects"
 msgstr "Mostrar objetos ocultos"
 
 #: robjectviewer.cpp:58
-#, fuzzy
 msgid "summary (x)"
-msgstr "Resumen"
+msgstr "summary (x)"
 
 #: robjectviewer.cpp:59
 msgid "print (x)"
-msgstr ""
+msgstr "print (x)"
 
 #: robjectviewer.cpp:86
 msgid "<b>Object was deleted!</b>"
 msgstr "<b>¡El objeto fue borrado!</b>"
 
 #: robjectviewer.cpp:128
-#, fuzzy
 msgid "Object Viewer: %1"
-msgstr "Visor de objeto: "
+msgstr "Visor de objeto: %1"
 
 #: robjectviewer.cpp:132
 msgid "The object was changed. You may want to click \"Update\""
-msgstr ""
+msgstr "El objeto fue modificado. Tal vez desee pulsar «Actualizar»"
 
 #: robjectviewer.cpp:214
-#, fuzzy
 msgid "Fetching information. Please wait."
-msgstr "Obteniendo información"
+msgstr "Obteniendo la información. Por favor espere."
 
 #: robjectviewer.cpp:224
 msgid "Click \"Update\" to fetch information"
-msgstr ""
+msgstr "Pulse «Actualizar» para obtener la información"
 
 #: robjectviewer.cpp:245
 msgid "Ready"
@@ -1743,24 +1723,23 @@ msgstr "Preferencias"
 
 #: settings/rksettingsmodulecommandeditor.cpp:43
 msgid "Code Completion"
-msgstr ""
+msgstr "Completado de código"
 
 #: settings/rksettingsmodulecommandeditor.cpp:46
 msgid "Enable code completion"
-msgstr ""
+msgstr "Habilitar completado de código"
 
 #: settings/rksettingsmodulecommandeditor.cpp:53
 msgid "Minimum number of characters before completion is attempted"
-msgstr ""
+msgstr "Número mínimo de caracteres antes de intentar el completado"
 
 #: settings/rksettingsmodulecommandeditor.cpp:64
 msgid "Timeout (milli seconds) before completion is attempted"
-msgstr ""
+msgstr "Límite de tiempo (milisegundos) antes de intentar el completado"
 
 #: settings/rksettingsmodulecommandeditor.cpp:92
-#, fuzzy
 msgid "Script editor"
-msgstr "Archivo de guiones"
+msgstr "Editor de guiones"
 
 #: settings/rksettingsmoduleconsole.cpp:49
 msgid "Load/Save command history"
@@ -1802,23 +1781,25 @@ msgid ""
 "the untouched. Also, these settings will only apply to the current session, "
 "and not be saved."
 msgstr ""
+"<b>Estas opciones sólo son para propósitos de depurado.</b> Es seguro "
+"dejarlas como están. Además, estas opciones solamente tendrán efecto en la "
+"sesión actual y no se guardarán."
 
 #: settings/rksettingsmoduledebug.cpp:45
 msgid "Debug level"
-msgstr ""
+msgstr "Nivel de depurado"
 
 #: settings/rksettingsmoduledebug.cpp:55
 msgid "Debug flags"
-msgstr ""
+msgstr "Parámetros de depurado"
 
 #: settings/rksettingsmoduledebug.cpp:80
-#, fuzzy
 msgid "Command timeout"
-msgstr "Bitácora de comandos"
+msgstr "Tiempo límite de los comandos"
 
 #: settings/rksettingsmoduledebug.cpp:101
 msgid "Debug"
-msgstr ""
+msgstr "Depurar"
 
 #: settings/rksettingsmodulegeneral.cpp:52
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
@@ -1888,15 +1869,15 @@ msgstr "Sin limite"
 
 #: settings/rksettingsmodulegeneral.cpp:116
 msgid "MDI window focus behavior"
-msgstr ""
+msgstr "Comportamiento de foco de ventana MDI"
 
 #: settings/rksettingsmodulegeneral.cpp:119
 msgid "Click to focus"
-msgstr ""
+msgstr "Clic para focalizar"
 
 #: settings/rksettingsmodulegeneral.cpp:120
 msgid "Focus follows mouse"
-msgstr ""
+msgstr "El foco sigue al ratón"
 
 #: settings/rksettingsmodulegeneral.cpp:145
 msgid "General"
@@ -2048,7 +2029,7 @@ msgstr "Convertir los avisos en errores"
 
 #: settings/rksettingsmoduler.cpp:79
 msgid "Decimal character (only for printing)"
-msgstr "Caracter decimal (sólo para impresión)"
+msgstr "Carácter decimal (sólo para impresión)"
 
 #: settings/rksettingsmoduler.cpp:86
 msgid "Output width (characters)"
@@ -2230,22 +2211,20 @@ msgid "Resume execution"
 msgstr "Continuar con la ejecución"
 
 #: windows/rkcommandeditorwindow.cpp:153
-#, fuzzy
 msgid "Run block"
-msgstr "Ejecutar todo"
+msgstr "Ejecutar bloque"
 
 #: windows/rkcommandeditorwindow.cpp:157
 msgid "Mark selection as block"
-msgstr ""
+msgstr "Marcar la selección como bloque"
 
 #: windows/rkcommandeditorwindow.cpp:160
 msgid "Unmark block"
-msgstr ""
+msgstr "Desmarcar bloque"
 
 #: windows/rkcommandeditorwindow.cpp:165
-#, fuzzy
 msgid "Configure Script Editor"
-msgstr "Configurar repositorios"
+msgstr "Configurar el editor de guiones"
 
 #: windows/rkcommandeditorwindow.cpp:249 windows/rkcommandeditorwindow.cpp:334
 msgid " [modified]"
@@ -2264,13 +2243,12 @@ msgid "Unnamed"
 msgstr "Sin nombre"
 
 #: windows/rkcommandeditorwindow.cpp:528
-#, fuzzy
 msgid "%1 (Active)"
-msgstr "&Activar"
+msgstr "%1 (Activo)"
 
 #: windows/rkcommandeditorwindow.cpp:550
 msgid "%1 (Unused)"
-msgstr ""
+msgstr "%1 (Sin usar)"
 
 #: windows/rkcommandlog.cpp:181
 msgid "Incomplete statement.\n"
@@ -2323,7 +2301,7 @@ msgstr "Buscar en la ayuda"
 
 #: windows/rkhelpsearchwindow.cpp:201
 msgid "Show help for %1 in package %2"
-msgstr ""
+msgstr "Mostrar la ayuda para %1 en el paquete %2"
 
 #: windows/rkhelpsearchwindow.cpp:226
 msgid ""
@@ -2445,32 +2423,31 @@ msgstr "REFERENCIA DAÑADA"
 
 #: windows/rktoolwindowbar.cpp:272
 msgid "Attachment"
-msgstr ""
+msgstr "Adosado"
 
 #: windows/rktoolwindowbar.cpp:274
-#, fuzzy
 msgid "Attach"
-msgstr "Separar"
+msgstr "Adosar"
 
 #: windows/rktoolwindowbar.cpp:276
 msgid "Move To"
-msgstr ""
+msgstr "Mover a"
 
 #: windows/rktoolwindowbar.cpp:278
 msgid "Left Sidebar"
-msgstr ""
+msgstr "Barra lateral izquierda"
 
 #: windows/rktoolwindowbar.cpp:279
 msgid "Right Sidebar"
-msgstr ""
+msgstr "Barra lateral derecha"
 
 #: windows/rktoolwindowbar.cpp:280
 msgid "Top Sidebar"
-msgstr ""
+msgstr "Barra superior"
 
 #: windows/rktoolwindowbar.cpp:281
 msgid "Bottom Sidebar"
-msgstr ""
+msgstr "Barra inferior"
 
 #: windows/rktoplevelwindowgui.cpp:54
 msgid "Help on R"
@@ -2578,11 +2555,11 @@ msgstr "Especificar tamaño fijo"
 
 #: windows/rkwindowcatcher.cpp:201
 msgid "Width"
-msgstr ""
+msgstr "Ancho"
 
 #: windows/rkwindowcatcher.cpp:205
 msgid "Height"
-msgstr ""
+msgstr "Alto"
 
 #: windows/rkwindowcatcher.cpp:223
 msgid "Activate graphics device number %1"
@@ -2719,14 +2696,14 @@ msgstr "Ventana derecha"
 #: rc.cpp:3 rc.cpp:9 rc.cpp:33 rc.cpp:69 rc.cpp:87 rc.cpp:99 rc.cpp:108
 #, no-c-format
 msgid "&Edit"
-msgstr ""
+msgstr "&Editar"
 
 #. i18n: file ./dataeditor/rkeditordataframepart.rc line 13
 #. i18n: file ./rkwardui.rc line 45
 #: rc.cpp:6 rc.cpp:42
 #, no-c-format
 msgid "&Windows"
-msgstr "&Ventanas"
+msgstr "Venta&nas"
 
 #. i18n: file ./rkconsolepart.rc line 11
 #. i18n: file ./rkwardui.rc line 38
@@ -2737,16 +2714,16 @@ msgstr "&Ventanas"
 #: rc.cpp:12 rc.cpp:39 rc.cpp:75 rc.cpp:84 rc.cpp:90 rc.cpp:102
 #, no-c-format
 msgid "&Run"
-msgstr "&Ejecutar"
+msgstr "E&jecutar"
 
 #. i18n: file ./rkconsolepart.rc line 17
 #. i18n: file ./rkwardui.rc line 64
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 21
 #. i18n: file ./windows/rkcommandlogpart.rc line 12
 #: rc.cpp:15 rc.cpp:48 rc.cpp:78 rc.cpp:93
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "&Settings"
-msgstr "Preferencias"
+msgstr "Preferencia&s"
 
 #. i18n: file ./rkconsolepart.rc line 20
 #. i18n: file ./rkwardui.rc line 69
@@ -2754,17 +2731,17 @@ msgstr "Preferencias"
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 24
 #. i18n: file ./windows/rktoplevelwindowgui.rc line 21
 #: rc.cpp:18 rc.cpp:51 rc.cpp:60 rc.cpp:81 rc.cpp:120
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "&Help"
-msgstr "Ayuda de R"
+msgstr "A&yuda"
 
 #. i18n: file ./rkwardui.rc line 4
 #. i18n: file ./windows/rkhelpwindow.rc line 4
 #. i18n: file ./windows/rkoutputwindow.rc line 4
 #: rc.cpp:21 rc.cpp:96 rc.cpp:105
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "&File"
-msgstr "Nombre de archivo"
+msgstr "&Archivo"
 
 #. i18n: file ./rkwardui.rc line 5
 #: rc.cpp:24
@@ -2788,9 +2765,9 @@ msgstr "Espacio de &trabajo"
 #. i18n: file ./windows/rkcatchedx11windowpart.rc line 13
 #. i18n: file ./windows/rkoutputwindow.rc line 12
 #: rc.cpp:36 rc.cpp:66 rc.cpp:111
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "&View"
-msgstr "&Nuevo"
+msgstr "&Ver"
 
 #. i18n: file ./rkwardui.rc line 51
 #. i18n: file ./windows/detachedwindowcontainer.rc line 9
@@ -2798,36 +2775,36 @@ msgstr "&Nuevo"
 #: rc.cpp:45 rc.cpp:57 rc.cpp:117
 #, no-c-format
 msgid "&Activate"
-msgstr "&Activar"
+msgstr "Activa&r"
 
 #. i18n: file ./windows/detachedwindowcontainer.rc line 5
 #. i18n: file ./windows/rktoplevelwindowgui.rc line 5
 #: rc.cpp:54 rc.cpp:114
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "&Window"
-msgstr "&Ventanas"
+msgstr "Venta&na"
 
 #. i18n: file ./windows/rkcatchedx11windowpart.rc line 4
 #: rc.cpp:63
 #, no-c-format
 msgid "&Device"
-msgstr ""
+msgstr "&Dispositivo"
 
 #. i18n: file ./windows/rkcommandeditorwindowpart.rc line 5
 #: rc.cpp:72
 #, no-c-format
 msgid "&Tools Move"
-msgstr ""
+msgstr "M&ovimiento de herramientas"
 
 #: rc.cpp:121
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Marcelino Villarino, Germán Márquez Mejía"
 
 #: rc.cpp:122
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "mvillarino@users.sourceforge.net, gmarquez@javeriana.edu.co"
 
 #~ msgid "Default for type '%1'"
 #~ msgstr "Predeterminado para el tipo «%1»"
@@ -2976,3 +2953,4 @@ msgstr ""
 #~ msgstr ""
 #~ "\n"
 #~ "Ocurrieron algunos errores: "
+
