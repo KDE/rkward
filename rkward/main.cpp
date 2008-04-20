@@ -90,6 +90,7 @@ int main(int argc, char *argv[]) {
 	aboutData.addCredit ("Philippe Grosjean", I18N_NOOP ("Several helpful comments and discussions"), 0);
 	aboutData.addCredit ("Adrien d'Hardemare", I18N_NOOP ("Plugins and patches"), 0);
 	aboutData.addCredit ("Yves Jacolin", I18N_NOOP ("New website"), 0);
+	aboutData.addCredit ("Germán Márquez Mejía", I18N_NOOP ("HP filter plugin, spanish translation"), 0);
 	aboutData.addCredit ("Marco Martin", I18N_NOOP ("A cool icon"), 0);
 	aboutData.addCredit ("Daniele Medri", I18N_NOOP ("RKWard logo, many suggestions, help on wording"), 0);
 	aboutData.addCredit ("David Sibai", I18N_NOOP ("Several valuable comments, hints and patches"), 0);
