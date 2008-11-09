@@ -3,6 +3,7 @@
 <document base_prefix="" namespace="rkward">
 	<components>
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
+	<component type="standard" id="sieve_plot" file="plots/sieve_plot.xml" label="Extended Sieve Plot" />
 
 	</components>
 
@@ -17,6 +18,7 @@
 			<entry component="simple_anova" index="9"/>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
+			<entry component="sieve_plot" />
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
 		</menu>
