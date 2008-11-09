@@ -1,0 +1,22 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Draw Extended Mosaic Plot
+	</summary>
+
+	<usage>
+DUMMY:
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Matrix, vector or a factor. Data needs to be numeric unless the tabulate option is checked, below.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://component/mosaic"/></li>
+			<li><link href="rkward://component/mosaic_plot"/></li>
+			<li><link href="rkward://rhelp/mosaic"/></li>
+		</ul>
+	</related>
+</document>
