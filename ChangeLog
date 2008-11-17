@@ -1,3 +1,5 @@
+- added bunch of irt analysis an plot plug-ins by meik michalke
+
 --- Version 0.4.9a - Apr-20-2008
 - Support from compilation with R 2.7
 - Fixed some lockups during startup
@@ -6,7 +8,7 @@
 - Improved user interface for CSV import plugin
 - Support drawing grids in histogram and stripchart plots
 - New plugin: Levene test
-- New plugin: Jarque-Bera test (by Germán Márquez Mejía)
+- New plugin: Jarque-Bera test (by Germï¿½n Mï¿½rquez Mejï¿½a)
 - Fixed: Crosstabs plugin produces better output
 - Fixed: use.value.labels option was wrong in SPSS import plugin
 - Fixed: SPSS tables would only be imported to the workspace, when the edit option was checked
