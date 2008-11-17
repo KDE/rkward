@@ -1,0 +1,33 @@
+<!DOCTYPE rkplugin>
+<document>
+  <code file="ltm_cronbach_alpha.php" />
+  <!--<help file="ltm_cronbach_alpha.rkh" />-->
+
+  <logic>
+    <convert id="conf_int" mode="and" sources="chk_bsci.state;chk_bsci.enabled" />
+
+    <connect client="spin_ci.enabled" governor="conf_int" />
+  </logic>
+
+  <dialog label="Cronbach's alpha">
+    <tabbook>
+      <tab id="tab_var_options" label="Data">
+        <row id="row_vars">
+          <varselector id="vars" />
+          <column>
+            <varslot type="numeric" id="x" source="vars" required="true" label="Item responses:"/>
+            <text>Must be a matrix or data.frame, with items as columns.</text>
+            <stretch />
+            <frame id="frame_options" label="Options">
+              <spinbox id="spin_samples" label="Number of Bootstrap samples:" type="integer" initial="1000" min="1" size="small" />
+              <checkbox id="chk_standard" label="Compute standardized Cronbach's alpha" value="standard" />
+              <checkbox id="chk_na" label="Ignore missing values" value="rm" />
+              <checkbox id="chk_bsci" label="Compute Bootstrap confidence interval (CI)" value="bsci" />
+              <spinbox id="spin_ci" label="Confidence interval:" type="real" initial=".95" min="0" max="1" size="small" />
+            </frame>
+          </column>
+        </row>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>
