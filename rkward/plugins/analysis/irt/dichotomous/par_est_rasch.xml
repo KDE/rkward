@@ -1,0 +1,64 @@
+<!DOCTYPE rkplugin>
+<document>
+  <code file="par_est_rasch.php" />
+  <help file="par_est_rasch.rkh" />
+
+  <logic>
+    <convert id="sv_matrix"   mode="equals" sources="startval.string" standard="matrix" />
+
+    <connect client="startval_mtx.enabled" governor="sv_matrix" />
+    <connect client="startval_mtx.required" governor="sv_matrix" />
+  </logic>
+
+  <dialog label="IRT parameter estimation: Rasch model">
+    <tabbook>
+      <tab id="tab_data" label="Manifest variables">
+        <row id="manifest_resp_row">
+          <varselector id="vars" />
+          <column>
+            <varslot type="numeric" id="x" classes="data.frame matrix" source="vars" required="true" label="Matrix of manifest variables:"/>
+            <stretch />
+          </column>
+        </row>
+      </tab>
+      <tab id="tab_options" label="Options">
+        <row id="options_row">
+          <varselector id="vars2" />
+          <column id="opt_var_col">
+            <frame id="frame_constraints" label="Should parameters be fixed (constraints)?">
+              <varslot type="numeric" id="constraint" classes="data.frame matrix" source="vars2" label="Constraint matrix:"/>
+            </frame>
+            <stretch />
+            <radio label="Start values" id="startval">
+              <option label="Compute automatically" value="NULL" checked="true" />
+              <option label="Use random start values" value="random" />
+              <option label="Use own matrix of start values" value="matrix" />
+            </radio>
+            <varslot type="numeric" id="startval_mtx" classes="data.frame matrix" source="vars2" label="Matrix of start values:"/>
+            <frame label="Misc options">
+              <checkbox id="naaction" label="Use only complete cases" value="na.exclude" />
+              <checkbox id="irtparam" label="Usual IRT parameterization" checked="true" value="TRUE" />
+            </frame>
+          </column>
+        </row>
+      </tab>
+      <tab id="tab_advanced_control" label="Advanced control">
+        <row>
+        <column id="control_col">
+          <spinbox id="iterqn_rasch" label="Number of quasi-Newton iterations:" type="integer" initial="150" size="small" />
+          <spinbox id="ghk_rasch" label="Number of Gauss-Hermite quadrature points:" type="integer" initial="21" size="small" />
+          <dropdown id="optimeth" label="Optimization method:">
+            <option label="BFGS" value="BFGS" checked="true" />
+            <option label="Nelder-Mead" value="Nelder-Mead" />
+            <option label="CG" value="CG" />
+            <option label="L-BFGS-B" value="L-BFGS-B" />
+            <option label="SANN" value="SANN" />
+          </dropdown>
+          <stretch />
+          <checkbox id="verbose" label="Print verbose info about optimization" value="TRUE" />
+        </column>
+      </row>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>

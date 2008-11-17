@@ -1,0 +1,63 @@
+<!DOCTYPE rkhelp>
+  <document>
+    <summary>
+      This plugin estimates parameters under Item Response Theory approach, using the <link href="rkward://rhelp/ltm-package">ltm</link> package.
+    </summary>
+
+    <usage>
+      To fit the two parameter logistic model with default settings, just the matrix of manifest variables (dichotomous item responses) must be selected. Further options are described in the sections below.
+
+      The complete results are stored as a new object in the current workspace for further use (e.g. plotting item characteristic curves). This object will be called <code>estimates.2pl</code>.
+    </usage>
+
+    <settings>
+      <caption id="tab_data"/>
+      <setting id="x" title="Matrix of manifest variables">
+        Select the matrix of dichotomous item responses from the objects shown on the left.
+      </setting>
+
+      <caption id="tab_options"/>
+      <setting id="frame_constraints">
+        If you want to fix parameters, you have to prepare a matrix of fixed-value constraints first and then select it here. For detailed information on the specific layout of that matrix please refer to the manual for the <link href="rkward://rhelp/ltm">ltm()</link> function.
+      </setting>
+      <setting id="startval">
+        By default start values for the parameters are computed automatically. Alternatively, you can force the use of random start values, or give a matrix of values to be used. For detailed information on the specific layout of that matrix please refer to the manual for the <link href="rkward://rhelp/ltm">ltm()</link> function.
+      </setting>
+      <setting id="naaction">
+        Specifies how missing values are to be treated. By default all available cases are used. If checked, only complete cases will be considered.
+      </setting>
+      <setting id="irtparam">
+        If checked, the coefficients' estimates are reported under the usual Item Response Theory parameterization (which is the default).
+      </setting>
+
+      <caption id="tab_advanced_control"/>
+      <setting id="iterem" title="Number of EM iterations">
+        Defaults to 40.
+      </setting>
+      <setting id="iterqn_2pl" title="Number of quasi-Newton iterations">
+        Defaults to 150.
+      </setting>
+      <setting id="ghk_2pl" title="Number of Gauss-Hermite quadrature points">
+        Defaults to 15.
+      </setting>
+      <setting id="optimeth" title="Optimization method">
+        The default optimization method is BFGS. It can be set to Nelder-Mead, CG, L-BFGS-B, or SANN instead. Please refer to the <link href="rkward://rhelp/optim">optim()</link> manual for details.
+      </setting>
+      <setting id="verbose">
+        Pretty much speaks for itself ;-)
+      </setting>
+    </settings>
+
+   <related>
+       Please refer to the <code>ltm</code> manuals for further information and detailed command line options:
+        <ul>
+                <li><link href="rkward://rhelp/ltm-package"/></li>
+                <li><link href="rkward://rhelp/ltm"/></li>
+        </ul>
+   </related>
+
+   <technical>
+       <ul>
+         <li>The two factor solution of the <code>ltm()</code> function is not yet fully implemented (quadratic term is missing).</li>
+       </ul>
+   </technical>

@@ -1,0 +1,51 @@
+<!DOCTYPE rkplugin>
+<document>
+  <code file="par_est_pcm.php" />
+  <help file="par_est_pcm.rkh" />
+
+  <logic>
+    <convert id="design_matrix"   mode="equals" sources="design.string" standard="matrix" />
+    <convert id="eta_vector"      mode="equals" sources="etastart.string" standard="startval" />
+
+    <connect client="design_mtx.enabled" governor="design_matrix" />
+    <connect client="design_mtx.required" governor="design_matrix" />
+    <connect client="etastart_vec.enabled" governor="eta_vector" />
+    <connect client="etastart_vec.required" governor="eta_vector" />
+  </logic>
+
+  <dialog label="IRT parameter estimation: Partial credit model">
+    <tabbook>
+      <tab id="tab_data" label="Manifest variables">
+        <row id="manifest_resp_row">
+          <varselector id="vars" />
+          <column>
+            <varslot type="numeric" id="x" classes="data.frame matrix" source="vars" required="true" label="Matrix of manifest variables:"/>
+            <stretch />
+          </column>
+        </row>
+      </tab>
+      <tab id="tab_options" label="Options">
+        <row id="options_row">
+          <varselector id="vars2" />
+          <column id="opt_var_col">
+            <radio label="Design matrix" id="design">
+              <option label="Compute automatically" value="auto" checked="true" />
+              <option label="Use own design matrix" value="matrix" />
+            </radio>
+            <varslot type="numeric" id="design_mtx" classes="data.frame matrix" source="vars2" label="Design matrix:"/>
+            <stretch />
+            <radio label="Eta start values" id="etastart">
+              <option label="Use 0-vector" value="NULL" checked="true" />
+              <option label="Use own vector of eta start values" value="startval" />
+            </radio>
+            <varslot type="numeric" id="etastart_vec" source="vars2" label="Vector of start values:"/>
+            <frame label="Misc options">
+              <checkbox id="stderr" label="Compute standard error" checked="true" value="se" />
+              <checkbox id="sumnull" label="Normalize parameters to sum-0" checked="true" value="sum0" />
+            </frame>
+          </column>
+        </row>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>
