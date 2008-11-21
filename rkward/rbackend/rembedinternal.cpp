@@ -87,6 +87,9 @@ extern "C" {
 #include "R.h"
 #include "Rinternals.h"
 #include "Rinterface.h"
+#ifndef R_2_7
+#	include "Rdevices.h"
+#endif
 #include "R_ext/Parse.h"
 
 #ifdef R_2_4
