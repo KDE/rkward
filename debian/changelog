@@ -1,3 +1,21 @@
+rkward (0.5.0c-1) unstable; urgency=low
+
+  * new upstream release
+    closes: 						TODO!!
+  * adjust to the new KDE4 installation paths
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Xxx, XX Xxx 2008 21:30:00 +0200
+
+rkward (0.5.0b-1) unstable; urgency=low
+
+  * new upstream release
+    closes: #475175
+    closes: #463348
+    closes: #475982
+    closes: #455709
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sun, 20 Apr 2008 21:30:00 +0200
+
 rkward (0.5.0a-1) experimental; urgency=low
 
   * new upstream release
@@ -12,6 +30,15 @@ rkward (0.5.0-1) experimental; urgency=low
   * adjusted to build with KDE4 libraries / CMake
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 21 Jan 2008 20:30:00 +0200
+
+rkward (0.4.9a-1) unstable; urgency=low
+
+  * new upstream release
+    closes: #475175
+    closes: #463348
+    closes: #475982
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sun, 20 Apr 2008 21:30:00 +0200
 
 rkward (0.4.9-2) unstable; urgency=low
 
