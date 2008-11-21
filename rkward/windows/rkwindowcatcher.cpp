@@ -68,6 +68,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #include <QScrollArea>
 #include <qlabel.h>
 #include <QX11EmbedContainer>
+#include <QTimer>
 
 #include <ktoggleaction.h>
 #include <kdialog.h>
@@ -106,16 +107,25 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	dynamic_size = true;
 	dynamic_size_action->setChecked (true);
 
-	capture = new QX11EmbedContainer (xembed_container);
-	connect (capture, SIGNAL (clientClosed ()), this, SLOT (deleteLater ()));
-
-	KWindowInfo wininfo = KWindowSystem::windowInfo (window_to_embed, NET::WMName | NET::WMFrameExtents);
+	KWindowInfo wininfo = KWindowSystem::windowInfo (embedded, NET::WMName | NET::WMFrameExtents);
 	RK_ASSERT (wininfo.valid ());
 	setGeometry (wininfo.frameGeometry ());
 	setCaption (wininfo.name ());
-	capture->embedClient (window_to_embed);
+
+	// somehow in Qt 4.4.3, when the RKCaughtWindow is reparented the first time, the QX11EmbedContainer may kill its client. Hence we delay the actual embedding until after the window was shown.
+	// In some previous version of Qt, this was not an issue, but I did not track the versions.
+	QTimer::singleShot (0, this, SLOT (doEmbed()));
 
 	RKWardApplication::getApp ()->registerNameWatcher (window_to_embed, this);
+}
+
+void RKCaughtX11Window::doEmbed () {
+	RK_TRACE (MISC);
+
+	capture = new QX11EmbedContainer (xembed_container);
+	capture->embedClient (embedded);
+
+	connect (capture, SIGNAL (clientClosed ()), this, SLOT (deleteLater ()));
 }
 
 RKCaughtX11Window::~RKCaughtX11Window () {

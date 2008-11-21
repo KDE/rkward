@@ -119,6 +119,9 @@ public slots:
 	void printDevice ();
 	void copyDeviceToRObject ();
 	void duplicateDevice ();
+
+private slots:
+	void doEmbed ();
 private:
 	friend class RKCaughtX11WindowPart;	// needs access to the actions
 	int device_number;

@@ -531,6 +531,8 @@ int RThread::initialize () {
 	if (error) status |= SinkFail;
 	runCommandInternal ("options (htmlhelp=TRUE); options (browser=\"qdbus " + QDBusConnection::sessionBus ().baseService () + " /MainApplication net.sf.rkward.openHTMLHelp\")", &error);
 	if (error) status |= OtherFail;
+/*	runCommandInternal (".rk.default.device <- \"x11\"\n", &error);
+	if (error) status |= OtherFail; */
 	// TODO: error-handling?
 
 	MUTEX_LOCK;
