@@ -141,15 +141,25 @@
 #}
 
 # overriding x11 to get informed, when a new x11 window is opened
-"x11" <- function (...) {
+"rk.screen.device" <- function (...) {
 	.rk.do.call ("startOpenX11", as.character (dev.cur ()));
 
-	x <- grDevices::X11 (...)
+	if (!exists (".rk.default.device")) {
+		device <- grDevices::x11
+	} else {
+		device <- .rk.default.device
+		if (is.character (.rk.default.device)) {
+			device <- get (.rk.default.device)
+		}
+	}
+	x <- device (...)
 
 	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
 
 	invisible (x)
 }
+
+"x11" <- rk.screen.device
 
 "X11" <- x11
 

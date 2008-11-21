@@ -1,3 +1,4 @@
+- Fix device window capturing with R 2.8.0
 - added bunch of irt analysis an plot plug-ins by meik michalke
 
 --- Version 0.4.9a - Apr-20-2008

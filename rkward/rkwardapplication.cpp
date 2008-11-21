@@ -96,8 +96,9 @@ bool RKWardApplication::x11EventFilter (XEvent *e) {
 		if (e->type == CreateNotify) {
 			if (e->xcreatewindow.parent == qt_xrootwin ()) {
 				KWin::WindowInfo info = KWin::windowInfo (e->xcreatewindow.window);
-				if ((info.windowType (0xFFFF) != 0) && (!info.name ().isEmpty ())) {
-					RK_ASSERT (!created_window);
+				// at this point, we used to check, whether this window has some name or another. This heuristic allowed to sieve out helper windows of the window manager. However, since R 2.8.0, sometimes the window is mapped, before it has been give a name.
+				// Now we rely on the fact (we hope it *is* a fact), that the device window is always the first one created.
+				if ((info.windowType (0xFFFF) != 0) && (!created_window)) {
 					created_window = e->xcreatewindow.window;
 					return true;
 				}

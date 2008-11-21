@@ -216,6 +216,9 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	list.append ("options (checkbounds=" + tf + ")\n");
 	list.append ("options (printcmd=\"" + options_printcmd + "\")\n");
 
+#warning TODO make configurable
+	list.append ("options (device=rk.screen.device)\n");
+
 	return list;
 }
 
