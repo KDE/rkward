@@ -50,10 +50,10 @@ void RKStandardIcons::initIcons () {
 	icons[ActionAddRight] = KIcon ("arrow-right");
 	icons[ActionRemoveLeft] = KIcon ("arrow-left");
 
-	icons[ActionMoveLeft] = KIcon("go-previous");
-	icons[ActionMoveRight] = KIcon("go-next");
-	icons[ActionMoveUp] = KIcon("go-up");
-	icons[ActionMoveDown] = KIcon("go-down");
+	icons[ActionMoveLeft] = KIcon ("go-previous");
+	icons[ActionMoveRight] = KIcon ("go-next");
+	icons[ActionMoveUp] = KIcon ("go-up");
+	icons[ActionMoveDown] = KIcon ("go-down");
 
 	icons[ActionDetachWindow] = KIcon ("view-fullscreen");
 	icons[ActionAttachWindow] = KIcon ("view-restore");
@@ -66,28 +66,36 @@ void RKStandardIcons::initIcons () {
 	icons[ObjectEnvironment] = KIcon ("konqueror");
 	icons[ObjectPackageEnvironment] = KIcon ("ark");
 	icons[ObjectMatrix] = QIcon (rkward_icon_base + "matrix.png");
-	icons[ObjectDataFrame] = KIcon ("table");
+	icons[ObjectDataFrame] = KIcon ("x-office-spreadsheet");
 	icons[ObjectDataNumeric] = QIcon (rkward_icon_base + "data-numeric.png");
 	icons[ObjectDataFactor] = QIcon (rkward_icon_base + "data-factor.png");
-	icons[ObjectDataCharacter] = KIcon ("text");
+	icons[ObjectDataCharacter] = KIcon ("draw-text");
 	icons[ObjectDataLogical] = QIcon (rkward_icon_base + "data-logical.png");
 	icons[ObjectDataUnknown] = KIcon ("unknown");
 	icons[ObjectDataOther] = icons[ActionDeleteRow];
-	icons[ObjectObjectList] = KIcon ("view-tree");
+	icons[ObjectObjectList] = KIcon ("view-list-tree");
 
 	// windows
 	icons[WindowDataFrameEditor] = icons[ObjectDataFrame];
-	icons[WindowCommandEditor] = KIcon ("make");	// this may not be the most obvious choice, but it is not quite as awfully close to the data.frame editor icons as most other text icons
+	icons[WindowCommandEditor] = KIcon ("text-x-makefile");	// this may not be the most obvious choice, but it is not quite as awfully close to the data.frame editor icons as most other text icons
 	icons[WindowOutput] = KIcon ("xclipboard");
 	icons[WindowHelp] = KIcon ("help-contents");
 	icons[WindowX11] = KIcon ("x");
 	icons[WindowObject] = KIcon ("zoom-best-fit");
 	icons[WindowConsole] = KIcon ("konsole");
 	icons[WindowCommandLog] = KIcon ("format-justify-left");
-	icons[WindowWorkspaceBrowser] = KIcon("fileview-detailed");
+	icons[WindowWorkspaceBrowser] = icons[ObjectObjectList];
 	icons[WindowSearchHelp] = KIcon ("help-contents");
 	icons[WindowPendingJobs] = KIcon ("system-run");
 	icons[WindowFileBrowser] = KIcon ("document-open");
+
+/*	This does not work, as the icons are not really Null in this case, but some default icon. Any way to really test this?
+	RK_DO ({
+		for (int i = ActionRunAll; i < Last; ++i) {
+			if (icons[i].isNull ()) qDebug ("Icon %d could not be loaded", i);
+		}
+	}, MISC, DL_ERROR);
+*/
 }
 
 QIcon RKStandardIcons::iconForObject (const RObject* object) {
