@@ -83,15 +83,18 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	/* We need to disable kactions that were plugged to the KateViewInternal in kateview.cpp.
 	These actions include Key_Up, Key_Down, etc. */
 	kate_edit_actions = view->findChild<KActionCollection*> ("edit_actions");
+	if (!kate_edit_actions) {
+		kate_edit_actions=view->actionCollection();
+	}
 	if (kate_edit_actions) {
 		// make sure these actions never get triggered by a shortcut
+
 		QList<QKeySequence> noshort;
 		noshort.append (QKeySequence ());	// no primary
 		noshort.append (QKeySequence ());	// no secondary
 		noshort.append (QKeySequence ());	// for good measure
 
 		QList<QAction*> keas = kate_edit_actions->actions ();
-		keas += view->actionCollection ()->actions ();
 		for (int i = 0; i < keas.size (); ++i) {
 			keas[i]->setShortcuts (noshort);
 		}
