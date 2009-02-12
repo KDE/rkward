@@ -178,33 +178,33 @@ private:
 	KParts::PartManager *part_manager;
 
 	// KAction pointers to enable/disable actions
-	QAction* fileOpen;
+	KAction* fileOpen;
 	KRecentFilesAction* fileOpenRecent;
 	
-	QAction* fileOpenWorkspace;
+	KAction* fileOpenWorkspace;
 	KRecentFilesAction* fileOpenRecentWorkspace;
-	QAction* fileSaveWorkspace;
-	QAction* fileSaveWorkspaceAs;
-	QAction* fileQuit;
-	QAction* file_load_libs;
-	QAction* close_all_editors;
-	QAction* new_data_frame;
-	QAction* new_command_editor;
+	KAction* fileSaveWorkspace;
+	KAction* fileSaveWorkspaceAs;
+	KAction* fileQuit;
+	KAction* file_load_libs;
+	KAction* close_all_editors;
+	KAction* new_data_frame;
+	KAction* new_command_editor;
 	
-	QAction* editUndo;
-	QAction* editRedo;
+	KAction* editUndo;
+	KAction* editRedo;
 
-	QAction* window_close_all;
-	QAction* window_detach;
+	KAction* window_close_all;
+	KAction* window_detach;
 	
-	QAction* configure;
+	KAction* configure;
 
 	/** used so that if the menu is empty, there is a note in it, explaining that fact */
-	QAction* edit_menu_dummy;
+	KAction* edit_menu_dummy;
 	/** used so that if the menu is empty, there is a note in it, explaining that fact */
-	QAction* view_menu_dummy;
+	KAction* view_menu_dummy;
 	/** used so that if the menu is empty, there is a note in it, explaining that fact */
-	QAction* run_menu_dummy;
+	KAction* run_menu_dummy;
 
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;
