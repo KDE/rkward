@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
 	options.add ("debugger <command>", ki18n ("Debugger (enclose any debugger arguments in single quotes ('') together with the command)"), "");
 	options.add ("disable-stack-check", ki18n ("Disable R C stack checking"), 0);
 
-	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004, 2005, 2006, 2007, 2008"), KLocalizedString (), "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
+	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009"), KLocalizedString (), "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
 	aboutData.addAuthor (ki18n ("%1").subs ("Thomas Friedrichsmeier"), ki18n ("Project leader / main developer"));
 	aboutData.addAuthor (ki18n ("%1").subs ("Pierre Ecochard"), ki18n ("C++ coder since 0.2.9"));
 	aboutData.addAuthor (ki18n ("%1").subs ("Stefan Roediger"), ki18n ("Many plugins, suggestions, marketing, translations"));
@@ -92,6 +92,8 @@ int main(int argc, char *argv[]) {
 	aboutData.addCredit (ki18n ("%1").subs ("Ilias Soumpasis"), ki18n ("Translation, Suggestions, plugins"));
 	aboutData.addCredit (ki18n ("%1").subs ("Ralf Tautenhahn"), ki18n ("Many comments, useful suggestions, and bug reports"));
 	aboutData.addCredit (ki18n ("%1").subs ("Roland Vollgraf"), ki18n ("Some patches"));
+	aboutData.addCredit (ki18n ("%1").subs ("Roy Qu"), ki18n ("patches and helpful comments"));
+	aboutData.addCredit (ki18n ("%1").subs ("Meik Michalke"), ki18n ("Many plugins, suggestions"));
 	aboutData.addCredit (ki18n ("Many more people on rkward-devel@lists.sourceforge.net"), ki18n ("Sorry, if we forgot to list you. Please contact us to get added"));
 
 	// before initializing the commandline args, remove the ".bin" from "rkward.bin".
