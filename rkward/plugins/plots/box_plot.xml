@@ -49,8 +49,19 @@
 					<stretch/>
 				</column>
 				<column>
-					<checkbox id="mean" checked="false" value="TRUE" label="show mean" />
-					<checkbox id="sd" checked="false" value="TRUE" label="show standard deviation" />
+					<row>
+						<checkbox id="mean" checked="false" value="TRUE" label="show mean" />
+						<spinbox type="integer" id="pch_mean" label="mean symbol" initial="19"/>
+					</row>
+					<row>
+						<column>
+							<checkbox id="sd" checked="false" value="TRUE" label="show standard deviation" />
+						</column>
+						<column>
+							<spinbox type="integer" id="pch_sd_high" label="standard deviation symbol (upper)" initial="3"/>
+							<spinbox type="integer" id="pch_sd_low" label="standard deviation symbol (lower)" initial="3"/>
+						</column>
+					</row>
 					<spinbox type="real" id="cex_sd_mean" label="size" initial="1"/>
 					<embed id="sd_mean_color" component="rkward::color_chooser" label="Color"/>
 					<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
