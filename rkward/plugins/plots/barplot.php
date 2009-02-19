@@ -37,6 +37,7 @@ x <- table(x, exclude=NULL)
 <?      } else { ?>
 # barplot is a bit picky about attributes, so we need to convert to vector explicitely
 if(!is.matrix(x)) x <- as.vector(x)
+if(!is.matrix(x) && is.data.frame(x)) x <- data.matrix(x)
 <?	}
 
 	if ($names_mode == "rexp") {
