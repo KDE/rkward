@@ -47,7 +47,7 @@
 					<option value="'.'" label="'.'" />
 					<option value="','" label="','" />
 				</radio>
-				<radio id="sep" label="Character to separe value" >
+				<radio id="sep" label="Character to separate value" >
 					<option value="'\t'" label="Tab" />
 					<option value="';'" label="';'" />
 					<option value="','" label="','" />
