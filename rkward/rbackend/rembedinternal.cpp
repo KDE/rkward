@@ -64,6 +64,10 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #define R_2_7
 #endif
 
+#if (R_VERSION > R_Version(2, 8, 9))
+#define R_2_9
+#endif
+
 extern "C" {
 #define R_INTERFACE_PTRS 1
 
@@ -502,7 +506,11 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 	QString *list = new QString[*count];
 	unsigned int i = 0;
 	for (; i < *count; ++i) {
+#ifdef R_2_9
+		SEXP dummy = STRING_ELT (from_exp, i);
+#else
 		SEXP dummy = VECTOR_ELT (from_exp, i);
+#endif
 
 		if (TYPEOF (dummy) != CHARSXP) {
 			list[i] = QString ("not defined");	// can this ever happen?
@@ -776,7 +784,11 @@ SEXP parseCommand (const QString &command_qstring, REmbedInternal::RKWardRError 
 	const char *command = localc;
 
 	PROTECT(cv=allocVector(STRSXP, 1));
-	SET_VECTOR_ELT(cv, 0, mkChar(command));  
+#ifdef R_2_9
+	SET_STRING_ELT(cv, 0, mkChar(command));
+#else
+	SET_VECTOR_ELT(cv, 0, mkChar(command));
+#endif
 
 	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails. Nope: not exported API
 #ifdef R_2_5
