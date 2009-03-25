@@ -1,7 +1,11 @@
-
---- Version 0.5.?? - Feb-20-2009
-- Extended Boxplot
-- little code change in Barplot
+--- Version 0.5.0c - ????????
+- Fix immediate crash issue wirh R 2.9.0 (requires recompilation against R 2.9)
+- Fixed some shortcut problems with KDElibs 4.2.x
+- Fixed: Several icons would not be loaded
+- Fix device window capturing Qt 4.4.3 (possibly other versions were broken as well)
+- Fix device window capturing with R 2.8.0
+- Extended Boxplot plugin
+- Internal code change in Barplot plugin
 
 --- Version 0.5.0b - Apr-20-2008
 - Support compilation with R 2.7
