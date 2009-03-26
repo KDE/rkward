@@ -6,6 +6,7 @@
 - Fix device window capturing with R 2.8.0
 - Extended Boxplot plugin
 - Internal code change in Barplot plugin
+- New set of plugins: Item Response Theory (by Meik Michalke)
 
 --- Version 0.5.0b - Apr-20-2008
 - Support compilation with R 2.7
