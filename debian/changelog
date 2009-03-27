@@ -1,5 +1,6 @@
-rkward (0.5.0c-test2-1) unstable; urgency=low
+rkward (0.5.0c-test3-1) experimental; urgency=low
 
+  * support both Debian and Ubuntu KDE installation paths
   * new upstream release
     closes: #520969
   * adjust to the new KDE4 installation paths

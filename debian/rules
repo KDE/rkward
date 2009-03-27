@@ -16,7 +16,7 @@ RVERS = $(shell dpkg-query -W --showformat='$${Version}' r-base-core)
 # Check for location of kde4 installation. Debian and Ubuntu currently
 # use different paths. We want to be compatible with both.
 KDE4ALT = $(shell test -d /usr/lib/kde4/share/kde4 && echo TRUE)
-ifdef KDE4ALT
+ifeq ($(KDE4ALT),TRUE)
 	KDE4INST = /usr/lib/kde4
 else
 	KDE4INST = /usr
