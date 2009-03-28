@@ -170,7 +170,10 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	KConfigGroup cg = config->group ("Plugin Settings");
-	plugin_maps = cg.readEntry ("Plugin Maps", QStringList (RKCommonFunctions::getRKWardDataDir () + "/all.pluginmap"));
+	plugin_maps = cg.readEntry ("Plugin Maps", QStringList ());
+	if (plugin_maps.isEmpty ()) {
+		plugin_maps.append (RKCommonFunctions::getRKWardDataDir () + "/all.pluginmap");
+	}
 
 	interface_pref = static_cast<PluginPrefs> (cg.readEntry ("Interface Preferences", static_cast<int> (PreferRecommended)));
 	show_code = cg.readEntry ("Code display default", true);
