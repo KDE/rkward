@@ -35,7 +35,7 @@ CMake options (configuring)
 The cmake command offers a number of parameters to control the build process. Some commonly needed are:
 
 -DCMAKE_INSTALL_PREFIX
-	set the installation base directory. Generally -DCMAKE_INSTALL_PREFIX=$KDEDIR should be correct
+	set the installation base directory. Generally -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` should be correct.
 -DCMAKE_BUILD_TYPE
 	type of build. Useful settings include -DCMAKE_BUILD_TYPE=Release and -DCMAKE_BUILD_TYPE=debugfull
 
