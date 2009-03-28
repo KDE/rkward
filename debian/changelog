@@ -1,9 +1,8 @@
 rkward (0.5.0c-test3-1) experimental; urgency=low
 
-  * support both Debian and Ubuntu KDE installation paths
   * new upstream release
     closes: #520969
-  * adjust to the new KDE4 installation paths
+  * query kde4-config to set the correct installation paths
     closes: #491110
     closes: #501649
 		TODO: what about #489473?

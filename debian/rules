@@ -13,15 +13,6 @@ DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 #we need to know the R version
 RVERS = $(shell dpkg-query -W --showformat='$${Version}' r-base-core) 
 
-# Check for location of kde4 installation. Debian and Ubuntu currently
-# use different paths. We want to be compatible with both.
-KDE4ALT = $(shell test -d /usr/lib/kde4/share/kde4 && echo TRUE)
-ifeq ($(KDE4ALT),TRUE)
-	KDE4INST = /usr/lib/kde4
-else
-	KDE4INST = /usr
-endif
-
 CFLAGS = -Wall -g
 
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
@@ -42,10 +33,10 @@ config.status:
 	CXX="`/usr/bin/R CMD config CXX`" \
 	F77="`/usr/bin/R CMD config F77`" \
 	cmake .. \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DDATA_INSTALL_DIR=$(KDE4INST)/share/kde4/apps \
-		-DHTML_INSTALL_DIR=$(KDE4INST)/share/doc/kde4/HTML \
-		-DKCFG_INSTALL_DIR=$(KDE4INST)/share/kde4/config.kcfg \
+		-DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` \
+		-DDATA_INSTALL_DIR=`kde4-config --install data` \
+		-DHTML_INSTALL_DIR=`kde4-config --install html` \
+		-DKCFG_INSTALL_DIR=`kde4-config --install kcfg` \
 		-DINFO_INSTALL_DIR=/usr/share/info \
 		-DMAN_INSTALL_DIR=/usr/share/man \
 		-DKDE_DEFAULT_HOME=.kde4 \
@@ -89,9 +80,7 @@ install: build
 	# Add here commands to install the package into debian/rkward.
 	cd $(CURDIR)/build && $(MAKE) install DESTDIR=$(CURDIR)/debian/rkward
 	# dirty hack to get rid of conflicting r.xml file without adjusting all makefiles
-	rm -vf $(CURDIR)/debian/rkward/$(KDE4INST)/share/apps/katepart/syntax/r.xml
-	# May be in different locations Debian / Ubuntu
-	rm -vf $(CURDIR)/debian/rkward/$(KDE4INST)/share/kde4/apps/katepart/syntax/r.xml
+	rm -vf $(CURDIR)/debian/rkward/`kde4-config --install data`/katepart/syntax/r.xml
 	
 	# remove unneeded R package files
 	rm -vf $(CURDIR)/debian/rkward/usr/lib/R/site-library/R.css $(CURDIR)/debian/rkward/usr/lib/R/site-library/rkward/COPYING
