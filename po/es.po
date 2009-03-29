@@ -6,20 +6,20 @@
 #
 # Mvillarino <mvillarino@dubmail.net>, 2005.
 # Mvillarino <mvillarino@users.sourceforge.net>, 2006.
-# Germán Márquez Mejía <gmarquez@javeriana.edu.co>, 2008.
+# Germán Márquez Mejía <gmarquez@javeriana.edu.co>, 2008, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: http://sourceforge."
 "net/tracker/?group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2008-04-15 12:36+0200\n"
-"PO-Revision-Date: 2008-04-16 13:07-0500\n"
+"POT-Creation-Date: 2009-03-27 21:40+0100\n"
+"PO-Revision-Date: 2009-03-29 13:35-0500\n"
 "Last-Translator: Germán Márquez Mejía <gmarquez@javeriana.edu.co>\n"
-"Language-Team: es <kde-i18n-doc@lists.kde.org>\n"
+"Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KAider 0.1\n"
+"X-Generator: Lokalize 0.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: agents/rkeditobjectagent.cpp:56
@@ -742,12 +742,12 @@ msgid "Frontend to the R statistics language"
 msgstr "Interfaz gráfica para el lenguaje estadístico R"
 
 #: main.cpp:79
-msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008"
-msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008"
+msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009"
+msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009"
 
 #: main.cpp:80 main.cpp:81 main.cpp:82 main.cpp:83 main.cpp:85 main.cpp:86
 #: main.cpp:87 main.cpp:88 main.cpp:89 main.cpp:90 main.cpp:91 main.cpp:92
-#: main.cpp:93
+#: main.cpp:93 main.cpp:94 main.cpp:95 main.cpp:96
 msgid "%1"
 msgstr "%1"
 
@@ -763,7 +763,7 @@ msgstr "Programador C++ desde 0.2.9"
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Varios complementos, sugerencias, mercadeo, traducciones"
 
-#: main.cpp:83
+#: main.cpp:83 main.cpp:96
 msgid "Many plugins, suggestions"
 msgstr "Varios complementos, sugerencias"
 
@@ -784,34 +784,42 @@ msgid "New website"
 msgstr "Nuevo sitio web"
 
 #: main.cpp:88
+msgid "HP filter plugin, spanish translation"
+msgstr "Complemento del filtro HP, traducción al español"
+
+#: main.cpp:89
 msgid "A cool icon"
 msgstr "Un bonito ícono"
 
-#: main.cpp:89
+#: main.cpp:90
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "Logotipo de RKWard, múltiples sugerencias, ayuda con las expresiones"
 
-#: main.cpp:90
+#: main.cpp:91
 msgid "Several valuable comments, hints and patches"
 msgstr "Muchos comentarios valiosos, pistas y parches"
 
-#: main.cpp:91
+#: main.cpp:92
 msgid "Translation, Suggestions, plugins"
 msgstr "Traducción, sugerencias, complementos"
 
-#: main.cpp:92
+#: main.cpp:93
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Muchos comentarios, sugerencias útiles y reportes de errores"
 
-#: main.cpp:93
+#: main.cpp:94
 msgid "Some patches"
 msgstr "Algunos parches"
 
-#: main.cpp:94
+#: main.cpp:95
+msgid "patches and helpful comments"
+msgstr "parches y comentarios útiles"
+
+#: main.cpp:97
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgstr "Mucha más gente en rkward-devel@lists.sourceforge.net"
 
-#: main.cpp:94
+#: main.cpp:97
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Lo sentimos. Si nos olvidamos de incluirte en esta lista, por favor "
@@ -892,7 +900,7 @@ msgid "Errors / Warnings:"
 msgstr "Errores/avisos"
 
 #: misc/rkprogresscontrol.cpp:244 plugin/rkstandardcomponentgui.cpp:281
-#: rkconsole.cpp:842 robjectviewer.cpp:170
+#: rkconsole.cpp:845 robjectviewer.cpp:170
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -1298,31 +1306,31 @@ msgstr ""
 "correo a rkward-devel@lists.sourceforge.net y nos diga qué estaba intentando "
 "hacer cuando esto ocurrió. ¡Lo sentimos!"
 
-#: rkconsole.cpp:109
+#: rkconsole.cpp:112
 msgid "R Console"
 msgstr "Consola de R"
 
-#: rkconsole.cpp:587
+#: rkconsole.cpp:590
 msgid "Syntax error\n"
 msgstr "Error de sintaxis\n"
 
-#: rkconsole.cpp:803
+#: rkconsole.cpp:806
 msgid "Interrupt running command"
 msgstr "Interrumpir el comando en ejecución"
 
-#: rkconsole.cpp:809
+#: rkconsole.cpp:812
 msgid "Copy selection cleaned"
 msgstr "Copiar la selección después de limpiarla"
 
-#: rkconsole.cpp:812
+#: rkconsole.cpp:815
 msgid "Copy selection literally"
 msgstr "Copiar la selección tal cual"
 
-#: rkconsole.cpp:817 windows/rkcommandlog.cpp:277
+#: rkconsole.cpp:820 windows/rkcommandlog.cpp:277
 msgid "Configure"
 msgstr "Configurar"
 
-#: rkconsole.cpp:842
+#: rkconsole.cpp:845
 msgid ""
 "You have configured RKWard to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -1334,11 +1342,11 @@ msgstr ""
 "comando o usted ha comenzado a introducir texto). ¿Desea obviar la consola "
 "por esta vez o desea intentar nuevamente más tarde?"
 
-#: rkconsole.cpp:842
+#: rkconsole.cpp:845
 msgid "Console is busy"
 msgstr "La consola está ocupada"
 
-#: rkconsole.cpp:842
+#: rkconsole.cpp:845
 msgid "Bypass console"
 msgstr "Obviar la consola"
 
@@ -2087,19 +2095,19 @@ msgstr "Comando usado para enviar archivos a la impresora"
 msgid "R-Backend"
 msgstr "Motor R"
 
-#: settings/rksettingsmoduler.cpp:284
+#: settings/rksettingsmoduler.cpp:287
 msgid "Package repositories (where libraries are downloaded from)"
 msgstr "Repositorios de paquetes (de donde son descargadas las bibliotecas)"
 
-#: settings/rksettingsmoduler.cpp:290
+#: settings/rksettingsmoduler.cpp:293
 msgid "Archive downloaded packages"
 msgstr "Archivar los paquetes descargados"
 
-#: settings/rksettingsmoduler.cpp:297
+#: settings/rksettingsmoduler.cpp:300
 msgid "R Library locations  (where libraries get installed to, locally)"
 msgstr "Ubicación de las bibliotecas de R (donde son instaladas localmente)"
 
-#: settings/rksettingsmoduler.cpp:302
+#: settings/rksettingsmoduler.cpp:305
 msgid ""
 "Note: The startup defaults will always be used in addition to the locations "
 "you specify in this list"
@@ -2107,15 +2115,15 @@ msgstr ""
 "Nota: siempre se usarán las ubicaciones predeterminadas además de las que "
 "especifique en esta lista"
 
-#: settings/rksettingsmoduler.cpp:324
+#: settings/rksettingsmoduler.cpp:327
 msgid "Add R Library Directory"
 msgstr "Añadir directorio de bibliotecas de R"
 
-#: settings/rksettingsmoduler.cpp:332
+#: settings/rksettingsmoduler.cpp:335
 msgid "Add repository"
 msgstr "Añadir repositorio"
 
-#: settings/rksettingsmoduler.cpp:332
+#: settings/rksettingsmoduler.cpp:335
 msgid ""
 "Add URL of new repository\n"
 "(Enter \"@CRAN@\" for the standard CRAN-mirror)"
@@ -2123,7 +2131,7 @@ msgstr ""
 "Añadir URL de un nuevo repositorio\n"
 "(Introduzca @CRAN@ para el servidor CRAN estándar)"
 
-#: settings/rksettingsmoduler.cpp:338
+#: settings/rksettingsmoduler.cpp:341
 msgid "R-Packages"
 msgstr "Paquetes de R"
 
@@ -2545,83 +2553,83 @@ msgstr ""
 msgid "Could not embed R X11 window"
 msgstr "No se pudo embeber la ventana X11 de R"
 
-#: windows/rkwindowcatcher.cpp:92
+#: windows/rkwindowcatcher.cpp:93
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: windows/rkwindowcatcher.cpp:195
+#: windows/rkwindowcatcher.cpp:205
 msgid "Specify fixed size"
 msgstr "Especificar tamaño fijo"
 
-#: windows/rkwindowcatcher.cpp:201
+#: windows/rkwindowcatcher.cpp:211
 msgid "Width"
 msgstr "Ancho"
 
-#: windows/rkwindowcatcher.cpp:205
+#: windows/rkwindowcatcher.cpp:215
 msgid "Height"
 msgstr "Alto"
 
-#: windows/rkwindowcatcher.cpp:223
+#: windows/rkwindowcatcher.cpp:233
 msgid "Activate graphics device number %1"
 msgstr "Activar dispositivo de gráficos número %1"
 
-#: windows/rkwindowcatcher.cpp:229
+#: windows/rkwindowcatcher.cpp:239
 msgid "Copy contents of graphics device number %1 to output"
 msgstr "Copiar el contenido del dispositivo de gráficos número %1 a la salida"
 
-#: windows/rkwindowcatcher.cpp:235
+#: windows/rkwindowcatcher.cpp:245
 msgid "Print contents of graphics device number %1"
 msgstr "Imprimir el contenido del dispositivo de gráficos número %1"
 
-#: windows/rkwindowcatcher.cpp:244
+#: windows/rkwindowcatcher.cpp:254
 msgid "Specify R object"
 msgstr "Especificar objeto"
 
-#: windows/rkwindowcatcher.cpp:249
+#: windows/rkwindowcatcher.cpp:259
 msgid "Specify the R object name, you want to save the graph to"
 msgstr "Especifique el nombre del objeto en el que desea guardar el gráfico"
 
-#: windows/rkwindowcatcher.cpp:260
+#: windows/rkwindowcatcher.cpp:270
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr "Guardar el contenido del dispositivo de gráficos %1 en el objeto «%2»"
 
-#: windows/rkwindowcatcher.cpp:269
+#: windows/rkwindowcatcher.cpp:279
 msgid "Duplicate graphics device number %1"
 msgstr "Duplicar el dispositivo de gráficos %1"
 
-#: windows/rkwindowcatcher.cpp:288
+#: windows/rkwindowcatcher.cpp:298
 msgid "Draw area follows size of window"
 msgstr "El área de dibujo se ajusta al tamaño de la ventana"
 
-#: windows/rkwindowcatcher.cpp:294
+#: windows/rkwindowcatcher.cpp:304
 msgid "Set fixed size 500x500"
 msgstr "Establecer tamaño fijo de 500x500"
 
-#: windows/rkwindowcatcher.cpp:296
+#: windows/rkwindowcatcher.cpp:306
 msgid "Set fixed size 1000x1000"
 msgstr "Establecer tamaño fijo de 1000x1000"
 
-#: windows/rkwindowcatcher.cpp:298
+#: windows/rkwindowcatcher.cpp:308
 msgid "Set fixed size 2000x2000"
 msgstr "Establecer tamaño fijo de 2000x2000"
 
-#: windows/rkwindowcatcher.cpp:300
+#: windows/rkwindowcatcher.cpp:310
 msgid "Set specified fixed size..."
 msgstr "Especificar tamaño fijo..."
 
-#: windows/rkwindowcatcher.cpp:303
+#: windows/rkwindowcatcher.cpp:313
 msgid "Make active"
 msgstr "Establecer como activa"
 
-#: windows/rkwindowcatcher.cpp:305
+#: windows/rkwindowcatcher.cpp:315
 msgid "Copy to output"
 msgstr "Copiar a la salida"
 
-#: windows/rkwindowcatcher.cpp:308
+#: windows/rkwindowcatcher.cpp:318
 msgid "Store as R object..."
 msgstr "Almacenar como objeto R..."
 
-#: windows/rkwindowcatcher.cpp:310
+#: windows/rkwindowcatcher.cpp:320
 msgid "Duplicate"
 msgstr "Duplicar"
 
@@ -2953,4 +2961,3 @@ msgstr "mvillarino@users.sourceforge.net, gmarquez@javeriana.edu.co"
 #~ msgstr ""
 #~ "\n"
 #~ "Ocurrieron algunos errores: "
-

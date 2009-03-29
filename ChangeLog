@@ -1,5 +1,5 @@
 --- Version 0.5.0c - ????????
-- Updated translations: German
+- Updated translations: German, Spanish
 - Fix immediate crash issue with R 2.9.0 (requires recompilation against R 2.9)
 - Fixed some shortcut problems with KDElibs 4.2.x
 - Fixed: Several icons would not be loaded
