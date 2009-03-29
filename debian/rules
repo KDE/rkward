@@ -39,7 +39,7 @@ config.status:
 		-DKCFG_INSTALL_DIR=`kde4-config --install kcfg` \
 		-DINFO_INSTALL_DIR=/usr/share/info \
 		-DMAN_INSTALL_DIR=/usr/share/man \
-		-DKDE_DEFAULT_HOME=.kde4 \
+		-DKDE_DEFAULT_HOME=`kde4-config --localprefix` \
 		-DCMAKE_SKIP_RPATH=true \
 		-DKDE4_USE_ALWAYS_FULL_RPATH=false \
 		-DCMAKE_CXX_FLAGS="$(CXXFLAGS)" \

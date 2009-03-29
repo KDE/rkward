@@ -1,11 +1,11 @@
 --- Version 0.5.0c - ????????
-- Fix immediate crash issue wirh R 2.9.0 (requires recompilation against R 2.9)
+- Fix immediate crash issue with R 2.9.0 (requires recompilation against R 2.9)
 - Fixed some shortcut problems with KDElibs 4.2.x
 - Fixed: Several icons would not be loaded
 - Fix device window capturing Qt 4.4.3 (possibly other versions were broken as well)
 - Fix device window capturing with R 2.8.0
-- Extended Boxplot plugin
-- Internal code change in Barplot plugin
+- Extended boxplot plugin
+- Support data.frames in barplot plugin
 - New set of plugins: Item Response Theory (by Meik Michalke)
 
 --- Version 0.5.0b - Apr-20-2008
