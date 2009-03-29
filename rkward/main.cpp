@@ -91,6 +91,7 @@ int main(int argc, char *argv[]) {
 	aboutData.addCredit (ki18n ("%1").subs ("David Sibai"), ki18n ("Several valuable comments, hints and patches"));
 	aboutData.addCredit (ki18n ("%1").subs ("Ilias Soumpasis"), ki18n ("Translation, Suggestions, plugins"));
 	aboutData.addCredit (ki18n ("%1").subs ("Ralf Tautenhahn"), ki18n ("Many comments, useful suggestions, and bug reports"));
+	aboutData.addCredit (ki18n ("%1").subs ("Jannis Vajen"), ki18n ("German Translation, bug reports"));
 	aboutData.addCredit (ki18n ("%1").subs ("Roland Vollgraf"), ki18n ("Some patches"));
 	aboutData.addCredit (ki18n ("%1").subs ("Roy Qu"), ki18n ("patches and helpful comments"));
 	aboutData.addCredit (ki18n ("%1").subs ("Meik Michalke"), ki18n ("Many plugins, suggestions"));
