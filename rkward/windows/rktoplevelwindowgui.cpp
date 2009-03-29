@@ -66,7 +66,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : QObject (for_wi
 	show_rkward_help->setStatusTip (i18n ("Show help on RKWard"));
 
 	// window menu
-	QAction *action;
+	KAction *action;
 	action = actionCollection ()->addAction ("window_show_workspace", this, SLOT(toggleWorkspace()));
 	action->setText (i18n ("Show/Hide Workspace Browser"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowWorkspaceBrowser));

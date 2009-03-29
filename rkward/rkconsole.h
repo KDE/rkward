@@ -149,12 +149,12 @@ friend class RKConsolePart;
 
 	bool tab_key_pressed_before;
 
-	QAction* context_help_action;
-	QAction* run_selection_action;
-	QAction* interrupt_command_action;
-	QAction* copy_action;
-	QAction* copy_literal_action;
-	QAction* paste_action;
+	KAction* context_help_action;
+	KAction* run_selection_action;
+	KAction* interrupt_command_action;
+	KAction* copy_action;
+	KAction* copy_literal_action;
+	KAction* paste_action;
 
 	KActionCollection *kate_edit_actions;
 	void triggerEditAction (QString name);

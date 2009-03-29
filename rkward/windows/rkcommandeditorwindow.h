@@ -35,7 +35,7 @@ class QEvent;
 class QCloseEvent;
 class QFrame;
 class QLabel;
-class QAction;
+class KAction;
 class KActionMenu;
 class RKCommandEditorWindow;
 class KActionCollection;
@@ -203,9 +203,9 @@ private:
 		KTextEditor::SmartRange* range;
 		bool active;
 		KTextEditor::Attribute::Ptr attribute;
-		QAction* mark;
-		QAction* unmark;
-		QAction* run;
+		KAction* mark;
+		KAction* unmark;
+		KAction* run;
 	};
 	QVector<BlockRecord> block_records;
 	void initBlocks ();
@@ -216,11 +216,11 @@ private:
 	KActionMenu* actionmenu_unmark_block;
 	KActionMenu* actionmenu_run_block;
 
-	QAction* action_run_all;
-	QAction* action_run_selection;
-	QAction* action_run_line;
+	KAction* action_run_all;
+	KAction* action_run_selection;
+	KAction* action_run_line;
 
-	QAction* action_help_function;
+	KAction* action_help_function;
 };
 
 #endif
