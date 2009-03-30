@@ -1,13 +1,22 @@
-rkward (0.5.0c-test3-1) experimental; urgency=low
+rkward (0.5.0c-2) unstable; urgency=low
+
+  * upload to unstable
+    closes: #520969
+    closes: #491110
+    closes: #501649
+		TODO: what about #489473?
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sun, 20 Apr 2008 21:30:00 +0200
+
+rkward (0.5.0c-1) experimental; urgency=low
 
   * new upstream release
     closes: #520969
   * query kde4-config to set the correct installation paths
     closes: #491110
     closes: #501649
-		TODO: what about #489473?
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Xxx, XX Xxx 2009 21:30:00 +0200
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 30 Mar 2009 20:30:00 +0200
 
 rkward (0.5.0b-1) unstable; urgency=low
 

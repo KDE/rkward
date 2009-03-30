@@ -1,4 +1,5 @@
---- Version 0.5.0c - ????????
+--- Version 0.5.0c - Mar-30-2009
+- Fix assorted installation problems
 - Updated translations: German, Spanish
 - Fix immediate crash issue with R 2.9.0 (requires recompilation against R 2.9)
 - Fixed some shortcut problems with KDElibs 4.2.x
