@@ -151,7 +151,7 @@ bool RKVarEditModel::removeRows (int row, int count, const QModelIndex& parent) 
 	}
 	if (lastrow >= objects[0]->getLength ()) lastrow = objects[0]->getLength () - 1;
 	RK_ASSERT (row >= 0);
-	RK_ASSERT (lastrow <= row);
+	RK_ASSERT (lastrow >= row);
 
 	beginRemoveRows (QModelIndex (), row, lastrow);
 	for (int i=0; i < objects.size (); ++i) {
