@@ -193,6 +193,19 @@ private:
 	FormattingOptions *parseFormattingOptionsString (const QString &string);
 /** tries to match a value-label to the value in the given cell. Returns the label, or - if there is no label - the original value in textual representation */
 	QString getLabeled (int row);
+
+/** TODO: QStrings can't be memmoved. We should use QVector/QList instead. */
+	void memMoveQStrings (QString *dst, QString *src, int count) {
+		if (dst > src) {
+			for (int i = count - 1; i >= 0; --i) {
+				dst[i] = src[i];
+			}
+		} else {
+			for (int i = 0; i < count; ++i) {
+				dst[i] = src[i];
+			}
+		}
+	};
 /////////////////// END: data-handling //////////////////////
 };
 

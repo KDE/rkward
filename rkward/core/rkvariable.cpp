@@ -408,7 +408,7 @@ void RKVariable::extendToLength (int length) {
 		RK_ASSERT (myData ()->cell_doubles == 0);
 		QString *new_data = new QString[target];
 		if (myData ()->allocated_length) {		// if not yet allocated, don't mem-move
-			qmemmove (new_data, myData ()->cell_strings, myData ()->allocated_length * sizeof (QString));
+			memMoveQStrings (new_data, myData ()->cell_strings, myData ()->allocated_length);
 		}
 		delete [] (myData ()->cell_strings);
 		myData ()->cell_strings = new_data;
@@ -712,7 +712,7 @@ void RKVariable::removeRows (int from_row, int to_row) {
 
 	if (to_row < (myData ()->allocated_length - 1)) {	// not the last rows
 		if (myData ()->cell_strings) {
-			qmemmove (&(myData ()->cell_strings[from_row]), &(myData ()->cell_strings[to_row+1]), (myData ()->allocated_length - to_row - 1) * sizeof (QString));
+			memMoveQStrings (&(myData ()->cell_strings[from_row]), &(myData ()->cell_strings[to_row+1]), myData ()->allocated_length - to_row - 1);
 		} else {
 			qmemmove (&(myData ()->cell_doubles[from_row]), &(myData ()->cell_doubles[to_row+1]), (myData ()->allocated_length - to_row - 1) * sizeof (double));
 		}
@@ -764,7 +764,7 @@ void RKVariable::insertRows (int row, int count) {
 		if (myData ()->cell_doubles) myData ()->cell_doubles[row+count] = 0.0;
 		myData ()->cell_states[row+count] = RKVarEditData::NA;
 	} else {
-		if (myData ()->cell_strings) qmemmove (&(myData ()->cell_strings[row+count]), &(myData ()->cell_strings[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (QString));
+		if (myData ()->cell_strings) memMoveQStrings (&(myData ()->cell_strings[row+count]), &(myData ()->cell_strings[row]), myData ()->allocated_length - (row + count) - 1);
 		if (myData ()->cell_doubles) qmemmove (&(myData ()->cell_doubles[row+count]), &(myData ()->cell_doubles[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (double));
 		qmemmove (&(myData ()->cell_states[row+count]), &(myData ()->cell_states[row]), (myData ()->allocated_length - (row + count) - 1) * sizeof (int));
 	}

@@ -1,8 +1,10 @@
---- Version 0.4.9?? - Feb-20-2009
-- Extended Boxplot
-- little code change in Barplot
+--- Version 0.4.9b - ???????????
+- Fix crash while inserting rows in a data.frame with string variables
+- Fix immediate crash issue with R 2.9.0 (requires recompilation against R 2.9)
 - Fix device window capturing with R 2.8.0
-- added bunch of irt analysis an plot plug-ins by meik michalke
+- Extended boxplot plugin
+- Support data.frames in barplot plugin
+- New set of plugins: Item Response Theory (by Meik Michalke)
 
 --- Version 0.4.9a - Apr-20-2008
 - Support from compilation with R 2.7
