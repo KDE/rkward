@@ -200,6 +200,19 @@ private:
 	void allocateEditData ();
 /** discard edit data */
 	void discardEditData ();
+
+/** TODO: QStrings can't be memmoved. We should use QVector/QList instead. */
+	void memMoveQStrings (QString *dst, QString *src, int count) {
+		if (dst > src) {
+			for (int i = count - 1; i >= 0; --i) {
+				dst[i] = src[i];
+			}
+		} else {
+			for (int i = 0; i < count; ++i) {
+				dst[i] = src[i];
+			}
+		}
+	};
 /////////////////// END: data-handling //////////////////////
 };
 

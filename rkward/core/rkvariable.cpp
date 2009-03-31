@@ -420,7 +420,7 @@ void RKVariable::extendToLength (int length) {
 		RK_ASSERT (data->cell_doubles == 0);
 		QString *new_data = new QString[target];
 		if (data->allocated_length) {		// if not yet allocated, don't mem-move
-			memmove (new_data, data->cell_strings, data->allocated_length * sizeof (QString));
+			memMoveQStrings (new_data, data->cell_strings, data->allocated_length);
 		}
 		delete [] (data->cell_strings);
 		data->cell_strings = new_data;
@@ -729,7 +729,7 @@ void RKVariable::removeRows (int from_row, int to_row) {
 
 	if (to_row < (data->allocated_length - 1)) {	// not the last rows
 		if (data->cell_strings) {
-			memmove (&(data->cell_strings[from_row]), &(data->cell_strings[to_row+1]), (data->allocated_length - to_row - 1) * sizeof (QString));
+			memMoveQStrings (&(data->cell_strings[from_row]), &(data->cell_strings[to_row+1]), (data->allocated_length - to_row - 1));
 		} else {
 			memmove (&(data->cell_doubles[from_row]), &(data->cell_doubles[to_row+1]), (data->allocated_length - to_row - 1) * sizeof (double));
 		}
@@ -777,7 +777,9 @@ void RKVariable::insertRows (int row, int count) {
 		if (data->cell_doubles) data->cell_doubles[row+count] = 0.0;
 		data->cell_states[row+count] = RKVarEditData::NA;
 	} else {
-		if (data->cell_strings) memmove (&(data->cell_strings[row+count]), &(data->cell_strings[row]), (data->allocated_length - (row + count) - 1) * sizeof (QString));
+		if (data->cell_strings) {
+			memMoveQStrings (&(data->cell_strings[row+count]), &(data->cell_strings[row]), (data->allocated_length - (row + count) - 1));
+		}
 		if (data->cell_doubles) memmove (&(data->cell_doubles[row+count]), &(data->cell_doubles[row]), (data->allocated_length - (row + count) - 1) * sizeof (double));
 		memmove (&(data->cell_states[row+count]), &(data->cell_states[row]), (data->allocated_length - (row + count) - 1) * sizeof (int));
 	}
