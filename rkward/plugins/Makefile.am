@@ -2,6 +2,7 @@ pluginsdir = $(kde_datadir)/rkward/
 dist_plugins_DATA = \
 	embedded.pluginmap \
 	analysis.pluginmap \
+	irt.pluginmap \
 	import_export.pluginmap \
 	plots.pluginmap \
 	all.pluginmap \
@@ -55,7 +56,9 @@ dist_pluginsXplots_DATA = \
 	plots/plot_options.xml \
 	plots/barplot.xml \
 	plots/color_chooser.xml \
+	plots/sieve_plot.rkh \
 	plots/stripchart_plot.xml \
+	plots/sieve_plot.php \
 	plots/pareto.php \
 	plots/scatterplot_matrix.xml \
 	plots/piechart.php \
@@ -103,9 +106,34 @@ dist_pluginsXplots_DATA = \
 	plots/cor_graph.php \
 	plots/histogram.rkh \
 	plots/plot_stepfun_options.rkh \
+	plots/sieve_plot.xml \
 	plots/piechart.xml \
 	plots/color_chooser.php \
 	plots/histogram_options.xml
+
+pluginsXplotsXirtdir = $(kde_datadir)/rkward/plots/irt
+pluginsXplotsXirtXpolytomousdir = $(kde_datadir)/rkward/plots/irt/polytomous
+dist_pluginsXplotsXirtXpolytomous_DATA = \
+	plots/irt/polytomous/plot_rsm.xml \
+	plots/irt/polytomous/plot_pcm.xml \
+	plots/irt/polytomous/plot_pcm.php \
+	plots/irt/polytomous/plot_grm.xml \
+	plots/irt/polytomous/plot_grm.php \
+	plots/irt/polytomous/plot_rsm.php
+
+pluginsXplotsXirtXdichotomousdir = $(kde_datadir)/rkward/plots/irt/dichotomous
+dist_pluginsXplotsXirtXdichotomous_DATA = \
+	plots/irt/dichotomous/plot_tpm.xml \
+	plots/irt/dichotomous/plot_ltm.xml \
+	plots/irt/dichotomous/plot_ltm.php \
+	plots/irt/dichotomous/plot_tpm.php \
+	plots/irt/dichotomous/plot_rasch.php \
+	plots/irt/dichotomous/plot_rasch.xml
+
+pluginsXplotsXirtXtestsdir = $(kde_datadir)/rkward/plots/irt/tests
+dist_pluginsXplotsXirtXtests_DATA = \
+	plots/irt/tests/eRm_plotLR.php \
+	plots/irt/tests/eRm_plotLR.xml
 
 pluginsXdistributionsdir = $(kde_datadir)/rkward/distributions
 dist_pluginsXdistributions_DATA = \
@@ -430,6 +458,55 @@ dist_pluginsXanalysisXregression_DATA = \
 	analysis/regression/linear_regression.xml \
 	analysis/regression/linear_regression.php \
 	analysis/regression/linear_regression.rkh
+
+pluginsXanalysisXirtdir = $(kde_datadir)/rkward/analysis/irt
+pluginsXanalysisXirtXpolytomousdir = $(kde_datadir)/rkward/analysis/irt/polytomous
+dist_pluginsXanalysisXirtXpolytomous_DATA = \
+	analysis/irt/polytomous/par_est_pcm.php \
+	analysis/irt/polytomous/par_est_rsm.php \
+	analysis/irt/polytomous/par_est_lpcm.rkh \
+	analysis/irt/polytomous/par_est_lpcm.php \
+	analysis/irt/polytomous/par_est_grm.php \
+	analysis/irt/polytomous/par_est_lpcm.xml \
+	analysis/irt/polytomous/par_est_grm.xml \
+	analysis/irt/polytomous/par_est_pcm.xml \
+	analysis/irt/polytomous/par_est_lrsm.xml \
+	analysis/irt/polytomous/par_est_pcm.rkh \
+	analysis/irt/polytomous/par_est_rsm.rkh \
+	analysis/irt/polytomous/par_est_grm.rkh \
+	analysis/irt/polytomous/par_est_lrsm.rkh \
+	analysis/irt/polytomous/par_est_rsm.xml \
+	analysis/irt/polytomous/par_est_lrsm.php
+
+pluginsXanalysisXirtXdichotomousdir = $(kde_datadir)/rkward/analysis/irt/dichotomous
+dist_pluginsXanalysisXirtXdichotomous_DATA = \
+	analysis/irt/dichotomous/par_est_rasch.php \
+	analysis/irt/dichotomous/par_est_rasch.xml \
+	analysis/irt/dichotomous/par_est_2pl.xml \
+	analysis/irt/dichotomous/par_est_lltm.xml \
+	analysis/irt/dichotomous/par_est_2pl.rkh \
+	analysis/irt/dichotomous/par_est_2pl.php \
+	analysis/irt/dichotomous/par_est_3pl.xml \
+	analysis/irt/dichotomous/par_est_lltm.php \
+	analysis/irt/dichotomous/par_est_rasch.rkh \
+	analysis/irt/dichotomous/par_est_lltm.rkh \
+	analysis/irt/dichotomous/par_est_3pl.rkh \
+	analysis/irt/dichotomous/par_est_3pl.php
+
+pluginsXanalysisXirtXtestsdir = $(kde_datadir)/rkward/analysis/irt/tests
+dist_pluginsXanalysisXirtXtests_DATA = \
+	analysis/irt/tests/ltm_cronbach_alpha.php \
+	analysis/irt/tests/ltm_person_fit.php \
+	analysis/irt/tests/ltm_unidimensional.php \
+	analysis/irt/tests/ltm_person_fit.xml \
+	analysis/irt/tests/ltm_gof_rasch.xml \
+	analysis/irt/tests/ltm_gof_rasch.php \
+	analysis/irt/tests/ltm_item_fit.php \
+	analysis/irt/tests/ltm_cronbach_alpha.xml \
+	analysis/irt/tests/ltm_unidimensional.xml \
+	analysis/irt/tests/ltm_item_fit.xml \
+	analysis/irt/tests/eRm_waldtest.xml \
+	analysis/irt/tests/eRm_waldtest.php
 
 pluginsXanalysisXmomentsdir = $(kde_datadir)/rkward/analysis/moments
 dist_pluginsXanalysisXmoments_DATA = \

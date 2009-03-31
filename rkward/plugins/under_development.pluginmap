@@ -3,36 +3,6 @@
 <document base_prefix="" namespace="rkward">
 	<components>
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
-		<component type="standard" id="sieve_plot" file="plots/sieve_plot.xml" label="Extended Sieve Plot" />
-		<component type="standard" id="mosaic_plot" file="plots/mosaic_plot.xml" label="Extended Mosaic Plot" />
-
-		<component type="standard" id="par_est_rasch" file="analysis/irt/dichotomous/par_est_rasch.xml" label="Rasch model fit" />
-		<component type="standard" id="par_est_2pl" file="analysis/irt/dichotomous/par_est_2pl.xml" label="Two parameter logistic model fit" />
-  		<component type="standard" id="par_est_3pl" file="analysis/irt/dichotomous/par_est_3pl.xml" label="Birnbaum three parameter model fit" />
-  		<component type="standard" id="par_est_lltm" file="analysis/irt/dichotomous/par_est_lltm.xml" label="Linear logistic test model fit" />
-
-  		<component type="standard" id="par_est_grm" file="analysis/irt/polytomous/par_est_grm.xml" label="Graded response model fit" />
-  		<component type="standard" id="par_est_rsm" file="analysis/irt/polytomous/par_est_rsm.xml" label="Rating scale model fit" />
-  		<component type="standard" id="par_est_pcm" file="analysis/irt/polytomous/par_est_pcm.xml" label="Partial credit model fit" />
-  		<component type="standard" id="par_est_lrsm" file="analysis/irt/polytomous/par_est_lrsm.xml" label="Linear rating scale model fit" />
-  		<component type="standard" id="par_est_lpcm" file="analysis/irt/polytomous/par_est_lpcm.xml" label="Linear partial credit model fit" />
-
- 		 <component type="standard" id="ltm_cronbach_alpha" file="analysis/irt/tests/ltm_cronbach_alpha.xml" label="Cronbach's alpha" />
-
- 		 <component type="standard" id="ltm_gof_rasch" file="analysis/irt/tests/ltm_gof_rasch.xml" label="Goodness of Fit (Rasch)" />
- 		 <component type="standard" id="ltm_unidimensional" file="analysis/irt/tests/ltm_unidimensional.xml" label="Unidimensionality check (Rasch, LTM, 3PM)" />
- 		 <component type="standard" id="ltm_item_fit" file="analysis/irt/tests/ltm_item_fit.xml" label="Item-fit statistics (Rasch, LTM, 3PM)" />
-  		<component type="standard" id="ltm_person_fit" file="analysis/irt/tests/ltm_person_fit.xml" label="Person-fit statistics (Rasch, LTM, 3PM)" />
-  		<component type="standard" id="eRm_waldtest" file="analysis/irt/tests/eRm_waldtest.xml" label="Wald test (RSM, PCM)" />
-  		<component type="standard" id="eRm_plotLR" file="plots/irt/tests/eRm_plotLR.xml" label="Andersen LR Plot (RSM, PCM)" />
-
- 		 <component type="standard" id="plot_rasch" file="plots/irt/dichotomous/plot_rasch.xml" label="Plot fitted Rasch model" />
-  		<component type="standard" id="plot_ltm" file="plots/irt/dichotomous/plot_ltm.xml" label="Plot fitted two parameter logistic model" />
-  		<component type="standard" id="plot_tpm" file="plots/irt/dichotomous/plot_tpm.xml" label="Plot fitted Birnbaum three parameter model" />
-
-  		<component type="standard" id="plot_grm" file="plots/irt/polytomous/plot_grm.xml" label="Plot fitted graded response model" />
-  		<component type="standard" id="plot_rsm" file="plots/irt/polytomous/plot_rsm.xml" label="Plot fitted rating scale model" />
-  		<component type="standard" id="plot_pcm" file="plots/irt/polytomous/plot_pcm.xml" label="Plot fitted partial credit model" />
 	</components>
 
 	<hierarchy>
@@ -44,46 +14,8 @@
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
 			<entry component="simple_anova" index="9"/>
-			<menu id="menu_irt" label="Item Response Theory" index="4">
-      				<menu id="menu_dichot" label="Dichotomous data" index="1">
-        				<entry component="par_est_rasch" />
-        				<entry component="par_est_2pl" />
-        				<entry component="par_est_3pl" />
-        				<entry component="par_est_lltm" />
-      				</menu>
-      				<menu id="menu_poly" label="Polytomous data" index="2">
-        				<entry component="par_est_grm" />
-        				<entry component="par_est_rsm" />
-        				<entry component="par_est_pcm" />
-        				<entry component="par_est_lrsm" />
-        				<entry component="par_est_lpcm" />
-      				</menu>
-      				<menu id="menu_tests" label="Tests" index="3">
-        				<entry component="ltm_gof_rasch" />
-        				<entry component="ltm_unidimensional" />
-        				<entry component="ltm_item_fit" />
-       					<entry component="ltm_person_fit" />
-        				<entry component="eRm_waldtest" />
-        				<entry component="eRm_plotLR" />
-      				</menu>
-      				<entry component="ltm_cronbach_alpha" />
-    			</menu>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
-			<entry component="mosaic_plot" />
-			<entry component="sieve_plot" />
-    			<menu id="menu_plot_irt" label="Item Response Theory" index="8">
-      				<menu id="menu_plot_dichot" label="Dichotomous data" index="1">
-        				<entry component="plot_rasch" />
-        				<entry component="plot_ltm" />
-        				<entry component="plot_tpm" />
-      				</menu>
-      				<menu id="menu_plot_poly" label="Polytomous data" index="2">
-        				<entry component="plot_grm" />
-        				<entry component="plot_rsm" />
-        				<entry component="plot_pcm" />
-      				</menu>
-    			</menu>
 		</menu>
 		<menu id="distributions" label="Distributions" index="7">
 		</menu>

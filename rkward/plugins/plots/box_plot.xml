@@ -51,7 +51,7 @@
 				<column>
 					<row>
 						<checkbox id="mean" checked="false" value="TRUE" label="show mean" />
-						<spinbox type="integer" id="pch_mean" label="mean symbol" initial="19"/>
+						<spinbox type="integer" id="pch_mean" label="mean symbol" initial="15"/>
 					</row>
 					<row>
 						<column>

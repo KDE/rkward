@@ -6,4 +6,5 @@
 	<require file="distributions.pluginmap"/>
 	<require file="plots.pluginmap"/>
 	<require file="x11device.pluginmap"/>
+	<require file="irt.pluginmap"/>
 </document>
