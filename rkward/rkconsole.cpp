@@ -573,8 +573,7 @@ void RKConsole::commandsListDown (bool context_sensitive) {
 		return;
 	}
 
-	while (commands_history_position != commands_history.constEnd ()) {
-		++commands_history_position;
+	while (++commands_history_position != commands_history.constEnd ()) {
 		if ((!context_sensitive) || (*commands_history_position).startsWith (command_history_context)) { // we found a match or next line
 			break;
 		}

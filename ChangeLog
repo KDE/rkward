@@ -1,3 +1,5 @@
+- Fix crash when reaching bottom of command history in context sensitive search
+		TODO: Backport needed?
 - Fix crash while inserting rows in a data.frame with string variables
 
 --- Version 0.5.0c - Mar-30-2009
