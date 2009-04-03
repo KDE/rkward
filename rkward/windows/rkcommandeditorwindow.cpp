@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -601,6 +601,9 @@ RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTe
 	arghints_popup_text = new QLabel (arghints_popup);
 	layout->addWidget (arghints_popup_text);
 	arghints_popup->hide ();
+	active = false;
+
+	connect (&updater, SIGNAL (timeout()), this, SLOT (updateArgHintWindow()));
 }
 
 RKFunctionArgHinter::~RKFunctionArgHinter () {
@@ -693,13 +696,26 @@ void RKFunctionArgHinter::tryArgHintNow () {
 	// initialize and show popup
 	arghints_popup_text->setText (effective_symbol + " (" + static_cast<RFunctionObject*> (object)->printArgs () + ')');
 	arghints_popup->resize (arghints_popup_text->sizeHint () + QSize (2, 2));
+	active = true;
+	updater.start (50);
+	updateArgHintWindow ();
+}
+
+void RKFunctionArgHinter::updateArgHintWindow () {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (!active) return;
+
 	arghints_popup->move (view->mapToGlobal (view->cursorPositionCoordinates () + QPoint (0, arghints_popup->height ())));
-	arghints_popup->show ();
+	if (view->hasFocus ()) arghints_popup->show ();
+	else arghints_popup->hide ();
 }
 
 void RKFunctionArgHinter::hideArgHint () {
 	RK_TRACE (COMMANDEDITOR);
 	arghints_popup->hide ();
+	active = false;
+	updater.stop ();
 }
 
 bool RKFunctionArgHinter::eventFilter (QObject *, QEvent *e) {

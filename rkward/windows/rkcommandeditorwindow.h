@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -19,7 +19,8 @@
 
 #include <QWidget>
 #include <QVector>
-#include <qstring.h>
+#include <QTimer>
+#include <QString>
 
 #include <ktexteditor/view.h>
 #include <ktexteditor/document.h>
@@ -79,6 +80,8 @@ public:
 public slots:
 	/** Internal worker function for tryArgHint () */
 	void tryArgHintNow ();
+
+	void updateArgHintWindow ();
 protected:
 	/** The (keypress) events of the view are filtered to determine, when to show / hide an argument hint */
 	bool eventFilter (QObject *, QEvent *e);
@@ -86,6 +89,9 @@ private:
 	RKScriptContextProvider *provider;
 	KTextEditor::View *view;
 
+	/** A timer to refresh the hint window periodically. This is a bit sorry, but it's really hard to find out, when the view has been moved, or gains/loses focus. While possible, this approach uses much less code. */
+	QTimer updater;
+	bool active;
 	QFrame *arghints_popup;
 	QLabel *arghints_popup_text;
 };

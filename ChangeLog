@@ -1,3 +1,4 @@
+- Fixed: Argument hints would always stay on top regardless of focus
 - Fix crash when reaching bottom of command history in context sensitive search
 		TODO: Backport needed?
 - Fix crash while inserting rows in a data.frame with string variables
