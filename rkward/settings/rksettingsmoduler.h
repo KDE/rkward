@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -51,6 +51,8 @@ public:
 	
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
+
+	static int getDefaultWidth () { return options_width; };
 public slots:
 	void boxChanged (int);
 	void pathChanged ();

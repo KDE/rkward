@@ -2,7 +2,7 @@
                           rkprogresscontol  -  description
                              -------------------
     begin                : Sun Sep 10 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -110,6 +110,7 @@ protected:
 
 /** This class provides the dialog shown as part of an RKProgressControl. Generally you should not use this class directly, but rather use RKProgressControl. */
 class RKProgressControlDialog : public KDialog {
+	Q_OBJECT
 public:
 /** constructor. */
 	RKProgressControlDialog (const QString &text, const QString &caption, int mode_flags, bool modal);
@@ -121,6 +122,8 @@ public:
 	void finished ();
 protected:
 	void closeEvent (QCloseEvent *e);
+private slots:
+	void scrollDown ();
 private:
 	QLabel *error_indicator;
 	QTextEdit *output_text;

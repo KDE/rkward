@@ -2,7 +2,7 @@
                           rkprogresscontol  -  description
                              -------------------
     begin                : Sun Sep 10 2006
-    copyright            : (C) 2006, 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -20,11 +20,14 @@
 #include <QHBoxLayout>
 #include <QCloseEvent>
 #include <QVBoxLayout>
+#include <QScrollBar>
+#include <QTimer>
 
 #include <klocale.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
+#include "../settings/rksettingsmoduler.h"
 
 #include "../debug.h"
 
@@ -229,6 +232,8 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 		output_text->setReadOnly (true);
 		output_text->setPlainText (QString ());
 		output_text->setUndoRedoEnabled (false);
+		output_text->setLineWrapMode (QTextEdit::NoWrap);
+		output_text->setMinimumWidth (QFontMetrics (output_text->font ()).averageCharWidth () * RKSettingsModuleR::getDefaultWidth ());
 		output_box->setStretchFactor (output_text, 10);
 
 		if (!(mode_flags & RKProgressControl::OutputShownByDefault)) {
@@ -236,6 +241,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 		}
 	}
 	setDetailsWidget (output_box);
+	connect (this, SIGNAL(aboutToShowDetails()), this, SLOT(scrollDown()));
 
 	KDialog::ButtonCodes button_codes = KDialog::Cancel;
 	if (mode_flags & RKProgressControl::OutputSwitchable) button_codes |= KDialog::Details;
@@ -259,6 +265,11 @@ RKProgressControlDialog::~RKProgressControlDialog () {
 void RKProgressControlDialog::addOutput (const ROutput *output) {
 	RK_TRACE (MISC);
 
+	// scrolled all the way to the bottom?
+	bool at_end = true;
+	QScrollBar *bar = output_text->verticalScrollBar ();
+	if (bar && (bar->value () < bar->maximum ())) at_end = false;
+
 	if (output->type != last_output_type) {
 		output_text->insertPlainText ("\n");
 
@@ -272,6 +283,19 @@ void RKProgressControlDialog::addOutput (const ROutput *output) {
 	}
 
 	output_text->insertPlainText (output->output);
+
+	// if previously at end, auto-scroll
+	if (at_end && output_text->isVisible ()) scrollDown ();
+}
+
+void RKProgressControlDialog::scrollDown () {
+	RK_TRACE (MISC);
+
+	// oh what an ugly hack... (to cope with changing slider position just when the details widget becomes visible
+	if (!output_text->isVisible ()) QTimer::singleShot (0, this, SLOT(scrollDown()));
+
+	QScrollBar *bar = output_text->verticalScrollBar ();
+	if (bar) bar->setValue (bar->maximum ());
 }
 
 void RKProgressControlDialog::setCloseTextToClose () {
