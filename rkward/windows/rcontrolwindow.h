@@ -2,7 +2,7 @@
                           rcontrolwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,8 +18,6 @@
 #ifndef RCONTROLWINDOW_H
 #define RCONTROLWINDOW_H
 
-#include <kparts/part.h>
-
 #include <qlabel.h>
 #include <QTreeView>
 
@@ -30,7 +28,6 @@ class RCommand;
 class RCommandChain;
 class RChainOrCommand;
 class RControlWindowListViewItem;
-class RControlWindowPart;
 
 /**
 	\brief Interface to control R command execution
@@ -69,23 +66,6 @@ private:
 	bool paused;
 friend class RKWardMainWindow;
 	static RControlWindow *control_window;
-};
-
-/**
-	\brief Part interface to RControlWindow
-
-Part interface to RControlWindow
-
-@author Thomas Friedrichsmeier
-*/
-class RControlWindowPart : public KParts::Part {
-	Q_OBJECT
-friend class RControlWindow;
-protected:
-/** constructor. */
-	RControlWindowPart (RControlWindow *widget);
-/** destructor */
-	~RControlWindowPart ();
 };
 
 #endif

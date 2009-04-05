@@ -2,16 +2,15 @@ The following list of TODO-items is NOT complete!
 Also, plans change frequently. If something is listed for a specific release, that's no more than a rough plan.
 All in all, this TODO list is mostly for internal purposes, and many parts may not necessarily be intellegible to anybody but the authors.
 
-Important:
-	- Around March 1st, write to R-devel to achieve having IS_UTF8 and IS_LATIN1 in public API (if not already available, then).
-		- Is Rf_translateChar() what we are looking for?
-
 Advertizing:
 	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
 
-Should be done before 0.5.0 release:
-	- document building with KDE 4 in wiki / web
-	- adjust debian dir?
+Bugs outside RKWard:
+	- KDE 4
+		- KPageDialog does not take all pages into acount when calculating minimum size
+			- known workarounds:
+				http://article.gmane.org/gmane.comp.kde.cvs/700027
+				http://kdepim.sourcearchive.com/documentation/4.1.80/kleopatra_2conf_2configuredialog_8cpp-source.html
 
 Bugs:
 	- "cannot create html package index" when installing package as a regular user (due to R.home ("doc") not writable)

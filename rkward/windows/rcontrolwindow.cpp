@@ -2,7 +2,7 @@
                           rcontrolwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -26,6 +26,7 @@
 #include <kmessagebox.h>
 
 #include "../settings/rksettings.h"
+#include "../misc/rkdummypart.h"
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rcommand.h"
 #include "../rbackend/rcommandstack.h"
@@ -38,7 +39,7 @@ RControlWindow *RControlWindow::control_window = 0;
 
 RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, PendingJobsWindow, tool_window, name) {
 	RK_TRACE (APP);
-	setPart (new RControlWindowPart (this));
+	setPart (new RKDummyPart (0, this));
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 
@@ -151,21 +152,6 @@ void RControlWindow::configureButtonClicked () {
 	RK_TRACE (APP);
 
 	RKSettings::configureSettings (RKSettings::PageR, this);
-}
-
-//############# END RContolWindow #######################
-//############# BEGIN RContolWindowPart ###################
-
-RControlWindowPart::RControlWindowPart (RControlWindow *widget) : KParts::Part () {
-	RK_TRACE (APP);
-
-	setComponentData (KGlobal::mainComponent ());
-
-	setWidget (widget);
-}
-
-RControlWindowPart::~RControlWindowPart () {
-	RK_TRACE (APP);
 }
 
 #include "rcontrolwindow.moc"

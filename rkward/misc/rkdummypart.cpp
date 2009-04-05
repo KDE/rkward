@@ -2,7 +2,7 @@
                           rkdummypart  -  description
                              -------------------
     begin                : Wed Feb 28 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -26,6 +26,8 @@ RKDummyPart::RKDummyPart (QObject *parent, QWidget *widget) : KParts::Part (pare
 	setWidget (widget);
 
 	setComponentData (KGlobal::mainComponent ());
+
+	setXMLFile ("rkdummypart.rc");
 }
 
 RKDummyPart::~RKDummyPart () {
