@@ -2,7 +2,7 @@
                           rkeditordataframepart  -  description
                              -------------------
     begin                : Wed Sep 14 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,6 +24,7 @@
 #include <klocale.h>
 
 #include "rkeditordataframe.h"
+#include "../misc/rkstandardicons.h"
 #include "../rkward.h"
 #include "../debug.h"
 
@@ -54,13 +55,13 @@ void RKEditorDataFramePart::initializeActions () {
 	editor->editActions ()->addAction (editPaste);
 
 	editPasteToTable = actionCollection ()->addAction ("paste_to_table", this, SLOT(slotEditPasteToTable()));
-	editPasteToTable->setText (i18n("Paste inside Table"));
-	editPasteToTable->setIcon (KIcon ("frame_spreadsheet"));
+	editPasteToTable->setText (i18n("Paste inside table"));
+	editPasteToTable->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionPasteInsideTable));
 	editor->editActions ()->addAction (editPasteToTable);
 
 	editPasteToSelection = actionCollection ()->addAction ("paste_to_selection", this, SLOT(slotEditPasteToSelection()));
-	editPasteToSelection->setText (i18n("Paste inside Selection"));
-	editPasteToSelection->setIcon (KIcon ("frame-edit"));
+	editPasteToSelection->setText (i18n("Paste inside selection"));
+	editPasteToSelection->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionPasteInsideSelection));
 	editor->editActions ()->addAction (editPasteToSelection);
 
 	editCut->setStatusTip (i18n("Cuts the selected section and puts it to the clipboard"));

@@ -13,4 +13,6 @@ INSTALL(FILES
 	run_line.png
 	run_selection.png
 	run_all.png
+	paste_inside_selection.png
+	paste_inside_table.png
 	DESTINATION ${DATA_INSTALL_DIR}/rkward/icons)

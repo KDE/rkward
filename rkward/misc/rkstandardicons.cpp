@@ -2,7 +2,7 @@
                           rkstandardicons  -  description
                              -------------------
     begin                : Wed Oct 24 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -46,6 +46,8 @@ void RKStandardIcons::initIcons () {
 	icons[ActionInsertRow] = KIcon ("edit-add");
 	icons[ActionDeleteVar] = icons[ActionDeleteRow];
 	icons[ActionInsertVar] = icons[ActionInsertRow];
+	icons[ActionPasteInsideTable] = QIcon (rkward_icon_base + "paste_inside_table.png");
+	icons[ActionPasteInsideSelection] = QIcon (rkward_icon_base + "paste_inside_selection.png");
 
 	icons[ActionAddRight] = KIcon ("arrow-right");
 	icons[ActionRemoveLeft] = KIcon ("arrow-left");
