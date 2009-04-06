@@ -1,3 +1,4 @@
+- Fixed: Auto-scroll missing in progress dialogs and data editor
 - Fix jumping toolbar
 - Fixed: Several harmless warnings were silenced
 - Fixed: Argument hints would always stay on top regardless of focus

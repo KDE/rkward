@@ -2,7 +2,7 @@
                           twintablemember.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -181,6 +181,7 @@ void TwinTableMember::keyPressEvent (QKeyEvent *e) {
 		e->accept ();
 	} else {
 		QTableView::keyPressEvent (e);
+		scrollTo (currentIndex ());	// why oh why isn't this the default behavior?
 	}
 }
 
