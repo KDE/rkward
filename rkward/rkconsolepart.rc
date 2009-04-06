@@ -21,11 +21,9 @@
 			<Action name="function_reference"></Action>
 		</Menu>
 	</MenuBar>
-	<ToolBar fullWidth="true" name="runToolBar">
+	<ToolBar fullWidth="true" name="mdiToolBar">
 		<Action name="run_selection"/>
 		<Action name="interrupt"/>
-		<Separator/>
-		<Merge/>
 	</ToolBar>
 	<Menu name="rkconsole_context_menu">
 		<Action name="rkconsole_copy"></Action>

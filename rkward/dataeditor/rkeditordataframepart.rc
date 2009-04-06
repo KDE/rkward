@@ -13,13 +13,13 @@
 <!--		<Menu name="windows"><text>&amp;Windows</text>
 			<Action name="window_close"/>
 		</Menu>-->
-		<ToolBar fullWidth="true" name="editToolBar">
-			<Action name="cut"/>
-			<Action name="copy"/>
-			<Action name="paste"/>
-			<Separator/>
-			<Action name="paste_to_selection"/>
-			<Action name="paste_to_table"/>
-		</ToolBar>
 	</MenuBar>
+	<ToolBar fullWidth="true" name="mdiToolBar">
+		<Action name="cut"/>
+		<Action name="copy"/>
+		<Action name="paste"/>
+		<Separator/>
+		<Action name="paste_to_selection"/>
+		<Action name="paste_to_table"/>
+	</ToolBar>
 </kpartgui>

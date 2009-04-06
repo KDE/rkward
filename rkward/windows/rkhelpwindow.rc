@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.4.8">
+<kpartgui name="rkward" version="0.5.0">
 	<MenuBar>
 		<Menu name="file"><text>&amp;File</text>
 			<Action name="print_help"/>
@@ -12,11 +12,10 @@
 		</Menu>
 		<Merge/>
 	</MenuBar>
-	<ToolBar fullWidth="true" name="navigation_toolbar">
+	<ToolBar fullWidth="true" name="mdiToolbar">
 		<Action name="help_back"/>
 		<Action name="help_forward"/>
-	</ToolBar>
-	<ToolBar name="runToolBar">
+		<Separator/>
 		<Action name="run_selection"/>
 	</ToolBar>
 </kpartgui>

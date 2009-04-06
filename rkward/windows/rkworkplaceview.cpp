@@ -2,7 +2,7 @@
                           rkworkplaceview  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -191,6 +191,7 @@ void RKWorkplaceView::currentPageChanged (int) {
 	RKMDIWindow *w = activePage ();
 	if (w) {
 		setCaption (w->shortCaption ());
+		w->activate ();		// not always automatically active
 	} else {
 		setCaption (QString ());
 	}

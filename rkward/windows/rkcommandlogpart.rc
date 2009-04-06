@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.4.8">
+<kpartgui name="rkward" version="0.5.0">
 	<Menubar>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="log_select_all"/>
@@ -23,7 +23,7 @@
 		<Separator/>
 		<Action name="log_configure"/>
 	</Menu>
-	<ToolBar fullWidth="true" name="runToolBar">
+	<ToolBar fullWidth="true" name="mdiToolBar">
 		<Action name="log_run_selection"/>
 	</ToolBar>
 </kpartgui>

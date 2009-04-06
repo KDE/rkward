@@ -25,7 +25,7 @@
 			<Action name="function_reference"></Action>
 		</Menu>
 	</MenuBar>
-	<ToolBar fullWidth="true" name="runToolBar">
+	<ToolBar fullWidth="true" name="mdiToolBar">
 		<Action name="run_line"/>
 		<Action name="run_selection"/>
 		<Action name="run_all"/>

@@ -80,6 +80,6 @@
 		<Action name="prev_window"/>
 		<Action name="next_window"/>
 </ToolBar>
-<ToolBar fullWidth="true" name="runToolBar">
+<ToolBar fullWidth="true" name="mdiToolBar">
 </ToolBar>
 </kpartgui>
