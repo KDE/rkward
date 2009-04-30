@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: http://sourceforge."
 "net/tracker/?group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2009-03-27 21:40+0100\n"
-"PO-Revision-Date: 2009-03-29 13:35-0500\n"
+"POT-Creation-Date: 2009-04-28 18:56+0200\n"
+"PO-Revision-Date: 2009-04-29 18:59-0500\n"
 "Last-Translator: Germán Márquez Mejía <gmarquez@javeriana.edu.co>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -93,7 +93,7 @@ msgstr ""
 "Fallo en la grabación del archivo «%1». ¿Desea intentarlo guardando con otro "
 "nombre?"
 
-#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:281
+#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:305
 #: plugin/rkstandardcomponentgui.cpp:361
 msgid "Done"
 msgstr "Hecho"
@@ -357,27 +357,27 @@ msgstr ""
 msgid "Invalid Name"
 msgstr "Nombre no válido"
 
-#: dataeditor/rkeditordataframepart.cpp:57
-msgid "Paste inside Table"
+#: dataeditor/rkeditordataframepart.cpp:58
+msgid "Paste inside table"
 msgstr "Pegar dentro de la tabla"
 
-#: dataeditor/rkeditordataframepart.cpp:62
-msgid "Paste inside Selection"
+#: dataeditor/rkeditordataframepart.cpp:63
+msgid "Paste inside selection"
 msgstr "Pegar dentro de la selección"
 
-#: dataeditor/rkeditordataframepart.cpp:66
+#: dataeditor/rkeditordataframepart.cpp:67
 msgid "Cuts the selected section and puts it to the clipboard"
 msgstr "Corta la sección actual y la pone en el portapapeles"
 
-#: dataeditor/rkeditordataframepart.cpp:67
+#: dataeditor/rkeditordataframepart.cpp:68
 msgid "Copies the selected section to the clipboard"
 msgstr "Copia la sección actual al portapapeles"
 
-#: dataeditor/rkeditordataframepart.cpp:68
+#: dataeditor/rkeditordataframepart.cpp:69
 msgid "Pastes the clipboard contents to actual position"
 msgstr "Pega el contenido del portapapeles en la posición actual"
 
-#: dataeditor/rkeditordataframepart.cpp:69
+#: dataeditor/rkeditordataframepart.cpp:70
 msgid ""
 "Pastes the clipboard contents to actual position, but not beyond the table's "
 "boundaries"
@@ -385,7 +385,7 @@ msgstr ""
 "Pega el contenido del portapapeles en la posición actual, sin traspasar los "
 "límites de la tabla"
 
-#: dataeditor/rkeditordataframepart.cpp:70
+#: dataeditor/rkeditordataframepart.cpp:71
 msgid ""
 "Pastes the clipboard contents to actual position, but not beyond the "
 "boundaries of the current selection"
@@ -393,15 +393,15 @@ msgstr ""
 "Pega el contenido del portapapeles en la posición actual, sin traspasar los "
 "límites de la selección activa"
 
-#: dataeditor/rkeditordataframepart.cpp:76
+#: dataeditor/rkeditordataframepart.cpp:77
 msgid "Cutting selection..."
 msgstr "Cortando la selección..."
 
-#: dataeditor/rkeditordataframepart.cpp:85
+#: dataeditor/rkeditordataframepart.cpp:86
 msgid "Copying selection to clipboard..."
 msgstr "Copiando la selección al portapapeles..."
 
-#: dataeditor/rkeditordataframepart.cpp:112
+#: dataeditor/rkeditordataframepart.cpp:113
 msgid "Inserting clipboard contents..."
 msgstr "Insertando el contenido del portapapeles..."
 
@@ -747,7 +747,7 @@ msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009"
 
 #: main.cpp:80 main.cpp:81 main.cpp:82 main.cpp:83 main.cpp:85 main.cpp:86
 #: main.cpp:87 main.cpp:88 main.cpp:89 main.cpp:90 main.cpp:91 main.cpp:92
-#: main.cpp:93 main.cpp:94 main.cpp:95 main.cpp:96
+#: main.cpp:93 main.cpp:94 main.cpp:95 main.cpp:96 main.cpp:97
 msgid "%1"
 msgstr "%1"
 
@@ -763,7 +763,7 @@ msgstr "Programador C++ desde 0.2.9"
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Varios complementos, sugerencias, mercadeo, traducciones"
 
-#: main.cpp:83 main.cpp:96
+#: main.cpp:83 main.cpp:97
 msgid "Many plugins, suggestions"
 msgstr "Varios complementos, sugerencias"
 
@@ -808,18 +808,22 @@ msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Muchos comentarios, sugerencias útiles y reportes de errores"
 
 #: main.cpp:94
+msgid "German Translation, bug reports"
+msgstr "Traducción al alemán, reportes de errores"
+
+#: main.cpp:95
 msgid "Some patches"
 msgstr "Algunos parches"
 
-#: main.cpp:95
+#: main.cpp:96
 msgid "patches and helpful comments"
 msgstr "parches y comentarios útiles"
 
-#: main.cpp:97
+#: main.cpp:98
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgstr "Mucha más gente en rkward-devel@lists.sourceforge.net"
 
-#: main.cpp:97
+#: main.cpp:98
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Lo sentimos. Si nos olvidamos de incluirte en esta lista, por favor "
@@ -877,30 +881,30 @@ msgstr "Mostrar objetos"
 msgid "Show Fields"
 msgstr "Mostrar campos"
 
-#: misc/rkprogresscontrol.cpp:210
+#: misc/rkprogresscontrol.cpp:213
 msgid ""
 "<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr "<b>¡Se han encontrado errores y/o avisos! Mire el reporte más abajo</b>"
 
-#: misc/rkprogresscontrol.cpp:220 settings/rksettingsmoduleoutput.cpp:68
+#: misc/rkprogresscontrol.cpp:223 settings/rksettingsmoduleoutput.cpp:68
 #: windows/rkhtmlwindow.cpp:257
 msgid "Output"
 msgstr "Salida"
 
-#: misc/rkprogresscontrol.cpp:221
+#: misc/rkprogresscontrol.cpp:224
 msgid "Output:"
 msgstr "Salida:"
 
-#: misc/rkprogresscontrol.cpp:223
+#: misc/rkprogresscontrol.cpp:226
 msgid "Errors / Warnings"
 msgstr "Errores / Avisos"
 
-#: misc/rkprogresscontrol.cpp:224
+#: misc/rkprogresscontrol.cpp:227
 msgid "Errors / Warnings:"
 msgstr "Errores/avisos"
 
-#: misc/rkprogresscontrol.cpp:244 plugin/rkstandardcomponentgui.cpp:281
-#: rkconsole.cpp:845 robjectviewer.cpp:170
+#: misc/rkprogresscontrol.cpp:250 plugin/rkstandardcomponentgui.cpp:281
+#: rkconsole.cpp:844 robjectviewer.cpp:170
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -1310,27 +1314,27 @@ msgstr ""
 msgid "R Console"
 msgstr "Consola de R"
 
-#: rkconsole.cpp:590
+#: rkconsole.cpp:589
 msgid "Syntax error\n"
 msgstr "Error de sintaxis\n"
 
-#: rkconsole.cpp:806
+#: rkconsole.cpp:805
 msgid "Interrupt running command"
 msgstr "Interrumpir el comando en ejecución"
 
-#: rkconsole.cpp:812
+#: rkconsole.cpp:811
 msgid "Copy selection cleaned"
 msgstr "Copiar la selección después de limpiarla"
 
-#: rkconsole.cpp:815
+#: rkconsole.cpp:814
 msgid "Copy selection literally"
 msgstr "Copiar la selección tal cual"
 
-#: rkconsole.cpp:820 windows/rkcommandlog.cpp:277
+#: rkconsole.cpp:819 windows/rkcommandlog.cpp:277
 msgid "Configure"
 msgstr "Configurar"
 
-#: rkconsole.cpp:845
+#: rkconsole.cpp:844
 msgid ""
 "You have configured RKWard to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -1342,11 +1346,11 @@ msgstr ""
 "comando o usted ha comenzado a introducir texto). ¿Desea obviar la consola "
 "por esta vez o desea intentar nuevamente más tarde?"
 
-#: rkconsole.cpp:845
+#: rkconsole.cpp:844
 msgid "Console is busy"
 msgstr "La consola está ocupada"
 
-#: rkconsole.cpp:845
+#: rkconsole.cpp:844
 msgid "Bypass console"
 msgstr "Obviar la consola"
 
@@ -2188,19 +2192,19 @@ msgstr "Bitácora de comandos"
 msgid "Attach to main window"
 msgstr "Adosar a la ventana principal"
 
-#: windows/rcontrolwindow.cpp:50
+#: windows/rcontrolwindow.cpp:51
 msgid "Configure R backend"
 msgstr "Configurar el motor R"
 
-#: windows/rcontrolwindow.cpp:55 windows/rcontrolwindow.cpp:141
+#: windows/rcontrolwindow.cpp:56 windows/rcontrolwindow.cpp:142
 msgid "Pause execution"
 msgstr "Pausar la ejecución"
 
-#: windows/rcontrolwindow.cpp:60
+#: windows/rcontrolwindow.cpp:61
 msgid "Cancel selected commands"
 msgstr "Cancelar los comandos seleccionados"
 
-#: windows/rcontrolwindow.cpp:132
+#: windows/rcontrolwindow.cpp:133
 msgid ""
 "Some of the commands you were trying to cancel are marked as \"sync"
 "\" (letter 'S' in the type column). Cancelling such commands could lead to "
@@ -2210,11 +2214,11 @@ msgstr ""
 "«sync» (letra S en la columna tipo). Cancelarlos podría ocasionar pérdidas de "
 "datos. Los comandos _no_  han sido cancelados."
 
-#: windows/rcontrolwindow.cpp:132
+#: windows/rcontrolwindow.cpp:133
 msgid "Some commands not cancelled"
 msgstr "Algunos comandos no han sido cancelados"
 
-#: windows/rcontrolwindow.cpp:145
+#: windows/rcontrolwindow.cpp:146
 msgid "Resume execution"
 msgstr "Continuar con la ejecución"
 
