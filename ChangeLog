@@ -1,9 +1,9 @@
+--- Version 0.5.0d - ??????????
 - Fixed: Auto-scroll missing in progress dialogs and data editor
 - Fix jumping toolbar
 - Fixed: Several harmless warnings were silenced
 - Fixed: Argument hints would always stay on top regardless of focus
 - Fix crash when reaching bottom of command history in context sensitive search
-		TODO: Backport needed?
 - Fix crash while inserting rows in a data.frame with string variables
 
 --- Version 0.5.0c - Mar-30-2009
@@ -41,6 +41,14 @@
 - port to KDE 4
 
 ---- KDE 3 versions
+
+--- Version 0.4.9b - ???????????
+- Fix crash while inserting rows in a data.frame with string variables
+- Fix immediate crash issue with R 2.9.0 (requires recompilation against R 2.9)
+- Fix device window capturing with R 2.8.0
+- Extended boxplot plugin
+- Support data.frames in barplot plugin
+- New set of plugins: Item Response Theory (by Meik Michalke)
 
 --- Version 0.4.9a - Apr-20-2008
 - Support from compilation with R 2.7
