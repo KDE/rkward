@@ -6,13 +6,13 @@
 #
 # Mvillarino <mvillarino@dubmail.net>, 2005.
 # Mvillarino <mvillarino@users.sourceforge.net>, 2006.
-# Germán Márquez Mejía <gmarquez@javeriana.edu.co>, 2007.
+# Germán Márquez Mejía <gmarquez@javeriana.edu.co>, 2007, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: rkward\n"
+"Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-20 20:50+0200\n"
-"PO-Revision-Date: 2007-12-30 11:40-0500\n"
+"PO-Revision-Date: 2009-04-29 19:11-0500\n"
 "Last-Translator: Germán Márquez Mejía <gmarquez@javeriana.edu.co>\n"
 "Language-Team: español <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -303,7 +303,6 @@ msgid "Copy selection literally"
 msgstr "Copiar la selección tal cual"
 
 #: rkconsole.cpp:820
-#, fuzzy
 msgid ""
 "You have configured RKWard to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -414,8 +413,7 @@ msgid "Waiting for R to finish"
 msgstr "Esperando a que R termine"
 
 #: agents/rksaveagent.cpp:60
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "No se ha indicado un nombre de archivo. Sus datos NO han sido guardados. "
 "¿Aun así desea continuar?"
@@ -719,10 +717,8 @@ msgid "Hidden Objects"
 msgstr "Objetos ocultos"
 
 #: misc/rkprogresscontrol.cpp:203
-msgid ""
-"<b>There have been errors and / or warnings! See below for a transcript</b>"
-msgstr ""
-"<b>¡Se han encontrado errores y/o avisos! Mire el reporte más abajo</b>"
+msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgstr "<b>¡Se han encontrado errores y/o avisos! Mire el reporte más abajo</b>"
 
 #: misc/rkprogresscontrol.cpp:213
 msgid "Show Output"
@@ -808,7 +804,7 @@ msgstr "Nuevo sitio web"
 
 #: main.cpp:93
 msgid "HP filter plugin, spanish translation"
-msgstr ""
+msgstr "Complemento del filtro HP, traducción al español"
 
 #: main.cpp:94
 msgid "A cool icon"
@@ -1099,10 +1095,8 @@ msgid "Remove object?"
 msgstr "¿Eliminar objeto?"
 
 #: core/rkmodificationtracker.cpp:62
-msgid ""
-"Do you really want to remove the object '%1'? There's no way to get it back."
-msgstr ""
-"¿Realmente desea eliminar el objeto «%1»? Esta operación no se puede deshacer."
+msgid "Do you really want to remove the object '%1'? There's no way to get it back."
+msgstr "¿Realmente desea eliminar el objeto «%1»? Esta operación no se puede deshacer."
 
 #: core/renvironmentobject.cpp:91
 msgid ""
@@ -1449,8 +1443,7 @@ msgstr "Error de sintaxis.\n"
 
 #: windows/rkcommandlog.cpp:178
 msgid "An unspecified error occurred while running the command.\n"
-msgstr ""
-"Ha ocurrido un error no especificado durante la ejecución del comando.\n"
+msgstr "Ha ocurrido un error no especificado durante la ejecución del comando.\n"
 
 #: windows/rkhelpsearchwindow.cpp:55
 msgid "Find:"
@@ -1918,8 +1911,7 @@ msgstr "Comandos de sincronización"
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr ""
-"Número máximo de párrafos/renglones a mostrar en la bitácora de comandos"
+msgstr "Número máximo de párrafos/renglones a mostrar en la bitácora de comandos"
 
 #: settings/rksettingsmodulewatch.cpp:149
 #: settings/rksettingsmoduleconsole.cpp:53
@@ -1929,8 +1921,7 @@ msgstr "Ilimitado"
 
 #: settings/rksettingsmodulegeneral.cpp:49
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
-msgstr ""
-"Los ajustes marcados con (*) no tienen efecto hasta que se reinicia RKWard"
+msgstr "Los ajustes marcados con (*) no tienen efecto hasta que se reinicia RKWard"
 
 #: settings/rksettingsmodulegeneral.cpp:53
 msgid "Directory where the logfiles should be kept (*)"
@@ -2564,64 +2555,3 @@ msgstr "<b>¡El objeto fue borrado!</b>"
 msgid "Ready"
 msgstr "Preparado"
 
-#~ msgid ""
-#~ "The R-backend has reported one or more error(s) while processing the "
-#~ "plugin '%1'.\n"
-#~ "This may lead to an incorrect output and is likely due to a bug in the "
-#~ "plugin.\n"
-#~ "A transcript of the error message(s) is shown below."
-#~ msgstr ""
-#~ "El motor R ha reportado uno o más errores mientras procesaba el "
-#~ "complemento «%1».\n"
-#~ "Esto puede dar lugar a un resultado incorrecto y posiblemente se deba a "
-#~ "un error en el complemento.\n"
-#~ "Debajo se muestra(n) el(los) mensaje(s) de error."
-
-#~ msgid "R-Error"
-#~ msgstr "Error de R"
-
-#~ msgid "Syntax error"
-#~ msgstr "Error de sintaxis"
-
-#~ msgid "command incomplete"
-#~ msgstr "comando incompleto"
-
-#~ msgid "Browse"
-#~ msgstr "Navegar"
-
-#~ msgid "Object name: "
-#~ msgstr "Nombre de objeto: "
-
-#~ msgid ""
-#~ "\n"
-#~ "Full location: "
-#~ msgstr ""
-#~ "\n"
-#~ "Ubicación completa: "
-
-#~ msgid ""
-#~ "\n"
-#~ "Class(es): "
-#~ msgstr ""
-#~ "\n"
-#~ "Clase(s): "
-
-#~ msgid ""
-#~ "\n"
-#~ "Dimensions: "
-#~ msgstr ""
-#~ "\n"
-#~ "Dimensiones: "
-
-#~ msgid ")':\n"
-#~ msgstr ")»:\n"
-
-#~ msgid " - Waiting for results from R..."
-#~ msgstr " - Esperando resultados de R..."
-
-#~ msgid ""
-#~ "\n"
-#~ "Some errors occurred: "
-#~ msgstr ""
-#~ "\n"
-#~ "Ocurrieron algunos errores: "
