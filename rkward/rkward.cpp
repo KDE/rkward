@@ -2,7 +2,7 @@
                           rkward.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002, 2005, 2006, 2007, 2008 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -46,6 +46,7 @@
 #include <kactioncollection.h>
 #include <krecentfilesaction.h>
 #include <khbox.h>
+#include <ktoolbar.h>
 
 // application specific includes
 #include "rkward.h"
@@ -454,6 +455,13 @@ void RKWardMainWindow::saveOptions () {
 
 void RKWardMainWindow::readOptions () {
 	RK_TRACE (APP);
+	// first make sure to give the global defaults a chance, if needed.
+	// TODO: Why don't the toolbars honor the global style automatically?
+	QList<KToolBar*> tool_bars = toolBars ();
+	for (int i=0; i < tool_bars.size (); ++i) {
+		tool_bars[i]->setToolButtonStyle (KToolBar::toolButtonStyleSetting ());
+	}
+
 	KConfig *config = KGlobal::config ().data ();
 
 	applyMainWindowSettings (config->group ("main window options"), true);

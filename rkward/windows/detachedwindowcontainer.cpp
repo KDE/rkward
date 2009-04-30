@@ -2,7 +2,7 @@
                           detachedwindowcontainer  -  description
                              -------------------
     begin                : Wed Oct 21 2005
-    copyright            : (C) 2005, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -20,6 +20,7 @@
 #include <klocale.h>
 #include <kactioncollection.h>
 #include <kstatusbar.h>
+#include <ktoolbar.h>
 
 #include <qlayout.h>
 #include <qwidget.h>
@@ -50,6 +51,12 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	statusBar ()->hide ();
 	createShellGUI ();
 
+// copy main window toolbar settings
+	QMap<QString, Qt::ToolButtonStyle> main_window_toolbar_styles;
+	foreach (KToolBar *bar, RKWardMainWindow::getMain ()->toolBars ()) {
+		main_window_toolbar_styles.insert (bar->objectName (), bar->toolButtonStyle ());
+	}
+
 // capture widget
 	setGeometry (widget_to_capture->frameGeometry ());
 	widget_to_capture->setParent (this);
@@ -57,6 +64,15 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	widget_to_capture->show ();
 	createGUI (widget_to_capture->getPart ());
 	captured = widget_to_capture;
+
+// sanitize toolbars
+	foreach (KToolBar *bar, toolBars ()) {
+		if (main_window_toolbar_styles.contains (bar->objectName ())) {
+			bar->setToolButtonStyle (main_window_toolbar_styles[bar->objectName ()]);
+		} else {
+			RK_ASSERT (false);
+		}
+	}
 
 // should self-destruct, when child widget is destroyed
 	connect (widget_to_capture, SIGNAL (destroyed (QObject *)), this, SLOT (viewDestroyed (QObject *)));

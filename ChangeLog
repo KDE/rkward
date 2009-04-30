@@ -1,4 +1,5 @@
 --- Version 0.5.0d - ??????????
+- Fixed: Global toolbar style was not honored
 - Fixed: Auto-scroll missing in progress dialogs and data editor
 - Fix jumping toolbar
 - Fixed: Several harmless warnings were silenced
