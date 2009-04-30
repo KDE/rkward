@@ -12,7 +12,7 @@
 		</Menu>
 		<Merge/>
 	</MenuBar>
-	<ToolBar fullWidth="true" name="mdiToolbar">
+	<ToolBar fullWidth="true" name="mdiToolBar">
 		<Action name="help_back"/>
 		<Action name="help_forward"/>
 		<Separator/>
