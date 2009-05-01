@@ -90,7 +90,13 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QVBox (parent) {
 	urlbox->setSizePolicy (QSizePolicy (QSizePolicy::Expanding, QSizePolicy::Fixed));
 	urlbox->listBox ()->installEventFilter (this);
 
+// Workaround: KDirOperator sneaks its actions into its toplevel QWidget. Among those "trash", bound to the Del key, and
+// that can lead to ugly results (see http://sourceforge.net/tracker/?func=detail&aid=2033636&group_id=50231&atid=459007).
+// For good measure we deactivate all shortcuts.
 	dir = new KDirOperator (KURL (), this);
+	for (int i = 0; i < dir->actionCollection ()->count (); ++i) {
+		dir->actionCollection ()->action (i)->setShortcut (KShortcut::null ());
+	}
 	dir->setView(KFile::Simple);
 	dir->setPreviewWidget (0);
 
