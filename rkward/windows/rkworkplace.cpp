@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -129,7 +129,13 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	RK_TRACE (APP);
 	RK_ASSERT (windows.contains (window));		// This should not happen for now.
 
-	if (!window->isAttached ()) window->prepareToBeAttached ();
+	if (!window->isAttached ()) {
+		QWidget *old_parent = window->parentWidget ();
+		window->prepareToBeAttached ();
+		if (old_parent && qobject_cast<DetachedWindowContainer*> (old_parent)) {
+			old_parent->deleteLater ();
+		}
+	}
 
 	// all the rest is done, even if the window was previously "Attached", as this may also mean it was freshly created
 	window->state = RKMDIWindow::Attached;

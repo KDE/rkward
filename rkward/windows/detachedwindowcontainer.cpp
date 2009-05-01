@@ -111,15 +111,7 @@ void DetachedWindowContainer::slotSetStatusBarText (const QString &text) {
 void DetachedWindowContainer::slotReattach () {
 	RK_TRACE (APP);
 
-// we will not handle any more signals from the window
-	disconnect (captured, SIGNAL (destroyed (QObject *)), this, SLOT (viewDestroyed (QObject *)));
-	disconnect (captured, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (updateCaption (RKMDIWindow *)));
-
-	captured->setParent (0);
 	RKWorkplace::mainWorkplace ()->attachWindow (captured);
-
-	hide ();
-	deleteLater ();
 }
 
 void DetachedWindowContainer::closeEvent (QCloseEvent *e) {

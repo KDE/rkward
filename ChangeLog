@@ -1,4 +1,5 @@
 --- Version 0.5.0d - ??????????
+- Fixed: Container of detached windows would sometimes remain after reattaching
 - Fixed: Global toolbar style was not honored
 - Fixed: Auto-scroll missing in progress dialogs and data editor
 - Fix jumping toolbar
