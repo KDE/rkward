@@ -12,6 +12,7 @@ Bugs outside RKWard:
 				http://article.gmane.org/gmane.comp.kde.cvs/700027
 				http://kdepim.sourcearchive.com/documentation/4.1.80/kleopatra_2conf_2configuredialog_8cpp-source.html
 		- why is the icon style only honored for mainToolBar (in KXMLGUIBuilder)? It looks like this is done on purpose, but why???
+			- http://lists.kde.org/?l=kde-core-devel&m=103307809508725&w=2
 
 Bugs:
 	- "cannot create html package index" when installing package as a regular user (due to R.home ("doc") not writable)
