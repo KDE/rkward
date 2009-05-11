@@ -1,4 +1,4 @@
---- Version 0.4.9b-rc1 - May-06-2009
+--- Version 0.4.9b - May-10-2009
 - Workaround: Deactivate all filemanagement shortcuts in the File Browser. These would sometimes trigger when they should not.
 - Fix crash while inserting rows in a data.frame with string variables
 - Fix immediate crash issue with R 2.9.0 (requires recompilation against R 2.9)
