@@ -3,7 +3,7 @@ Section: math
 Priority: optional
 Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
 Build-Depends: debhelper (>= 4.0.0), cmake, libphonon-dev, kdelibs5-dev, r-base-dev (>= 2.1.0)
-Standards-Version: 3.7.3
+Standards-Version: 3.8.1
 
 Package: rkward
 Architecture: any

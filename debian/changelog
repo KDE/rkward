@@ -1,20 +1,20 @@
-rkward (0.5.0c-2) unstable; urgency=low
+rkward (0.5.0d-1) unstable; urgency=low
 
-  * upload to unstable
+  * new upstream release
+  * upload to unstable (repeat closes because 0.5.0c-1 was not uploaded)
     closes: #520969
     closes: #491110
     closes: #501649
-		TODO: what about #489473?
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Xxx, XX Xxx 2009 21:30:00 +0200
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sun, 10 May 2009 21:30:00 +0200
 
 rkward (0.5.0c-1) experimental; urgency=low
 
   * new upstream release
-    closes: #520969
+    closes: #520969 (added support for R 2.9.0)
   * query kde4-config to set the correct installation paths
-    closes: #491110
-    closes: #501649
+    closes: #491110 (resource files were not found)
+    closes: #501649 (plugin files were not found)
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 30 Mar 2009 20:30:00 +0200
 
