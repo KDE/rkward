@@ -1,3 +1,5 @@
+- Fixed: Screen device in rkward was not seen as interactive by R	TODO: backport
+
 --- Version 0.5.0d - May-10-2009
 - Fixed: Container of detached windows would sometimes remain after reattaching
 - Fixed: Global toolbar style was not honored
