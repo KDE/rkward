@@ -1,3 +1,14 @@
+rkward (0.5.0d-2) unstable; urgency=low
+
+  * bumped standards version to 3.8.1
+  * increased debhelper compat-level to 7
+  * upload to unstable (repeat closes because 0.5.0d-1 was not uploaded)
+    closes: #520969
+    closes: #491110
+    closes: #501649
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sun, 11 May 2009 14:30:00 +0200
+
 rkward (0.5.0d-1) unstable; urgency=low
 
   * new upstream release
