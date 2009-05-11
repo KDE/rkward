@@ -380,10 +380,10 @@ void RThread::handleError (QString *call, int call_length) {
 	MUTEX_UNLOCK;
 }
 
-void RThread::handleSubstackCall (QString *call, int call_length) {
+void RThread::handleSubstackCall (QStringList &call) {
 	RK_TRACE (RBACKEND);
 
-	if (call_length == 2) {		// schedule symbol update for later
+	if (call.count () == 2) {		// schedule symbol update for later
 		if (call[0] == "ws") {
 			RK_ASSERT (current_command);
 			if ((current_command->type () & RCommand::ObjectListUpdate) || (!(current_command->type () & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
@@ -394,16 +394,15 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 	}
 
 	RCommand *prev_command = current_command;
-	REvalRequest *request = new REvalRequest;
-	request->call = call;
-	request->call_length = call_length;
+	REvalRequest request;
+	request.call = call;
 	MUTEX_LOCK;
 	flushOutput ();
 	RCommandStack *reply_stack = new RCommandStack (prev_command);
-	request->in_chain = reply_stack->startChain (reply_stack);
+	request.in_chain = reply_stack->startChain (reply_stack);
 	MUTEX_UNLOCK;
 
-	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::REvalRequest, request);
+	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::REvalRequest, &request);
 	qApp->postEvent (RKGlobals::rInterface (), event);
 	
 	bool done = false;
@@ -443,7 +442,6 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 	}
 
 	MUTEX_LOCK;
-	delete request;
 	delete reply_stack;
 	MUTEX_UNLOCK;
 }
@@ -599,14 +597,14 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 		global_env_toplevel_count = count;
 	
 		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
-			QString call = "syncall";
 			MUTEX_UNLOCK;
-			handleSubstackCall (&call, 1);
+			QStringList call ("syncall");
+			handleSubstackCall (call);
 			MUTEX_LOCK;
 		} else if (globalenv_update_needed) {
-			QString call = "syncglobal";
 			MUTEX_UNLOCK;
-			handleSubstackCall (&call, 1);
+			QStringList call ("syncglobal");
+			handleSubstackCall (call);
 			MUTEX_LOCK;
 		}
 	}
@@ -617,18 +615,11 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 	}
 
 	if (!changed_symbol_names.isEmpty ()) {
-		int call_length = changed_symbol_names.count () + 1;
-		QString *call = new QString[call_length];
-		call[0] = "sync";
-		int i = 1;
-		for (QStringList::const_iterator it = changed_symbol_names.constBegin (); it != changed_symbol_names.constEnd (); ++it) {
-			call[i++] = *it;
-		}
-		RK_ASSERT (i == call_length);
+		QStringList call = changed_symbol_names;
+		call.prepend (QString ("sync"));	// should be faster than reverse
 		MUTEX_UNLOCK;
-		handleSubstackCall (call, call_length);
+		handleSubstackCall (call);
 		MUTEX_LOCK;
-		delete [] call;
 		changed_symbol_names.clear ();
 	}
 }

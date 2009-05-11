@@ -2,7 +2,7 @@
                           rembedinternal  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004, 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -47,6 +47,7 @@ struct RCallbackArgs {
 	bool bool_a;		/**< a bool parameter. Look at the respective callbacks to find out, what it is used for. */
 };
 
+class QStringList;
 class QString;
 class RData;
 class QTextCodec;
@@ -144,7 +145,7 @@ public:
 
 /** The main callback from R to rkward. Since we need QStrings and stuff to handle the requests, this is only a pure virtual function. The real
 implementation is in RThread::handleSubstackCall () */
-	virtual void handleSubstackCall (QString *call, int call_length) = 0;
+	virtual void handleSubstackCall (QStringList &list) = 0;
 
 /** This second callback handles R standard callbacks. The difference to the first one is, that these are typically required to finish within the same
 function. On the other hand, also, they don't require further computations in R, and hence no full-fledged substack.

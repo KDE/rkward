@@ -2,7 +2,7 @@
                           rembedinternal  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004, 2005, 2006, 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2005, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -23,6 +23,7 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #define TRUE true
 #define FALSE false
 #include <qstring.h>
+#include <QStringList>
 #include <qtextcodec.h>
 #include "../core/robject.h"
 #include "../debug.h"
@@ -683,7 +684,11 @@ SEXP doSubstackCall (SEXP call) {
 
 	unsigned int count;
 	QString *strings = SEXPToStringList (call, &count);
-	REmbedInternal::this_pointer->handleSubstackCall (strings, count);
+	QStringList list;
+	for (int i = 0; i < count; ++i) {
+		list.append (strings[i]);
+	}
+	REmbedInternal::this_pointer->handleSubstackCall (list);
 	delete [] strings;
 	return R_NilValue;
 }

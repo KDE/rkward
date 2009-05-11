@@ -36,8 +36,7 @@ struct REvalRequest {
 private:
 friend class RInterface;
 friend class RThread;
-	QString *call;
-	int call_length;
+	QStringList call;
 	RCommandChain *in_chain;
 };
 
@@ -154,7 +153,7 @@ reports an error. @see REmbedInternal::handleError () */
 
 This is a sub-eventloop, being run when the backend request information from the frontend. See \ref RThread for a more detailed description
 @see REmbedInternal::handleSubstackCall () */
-	void handleSubstackCall (QString *call, int call_length);
+	void handleSubstackCall (QStringList &call);
 
 /** This function is public for technical reasons, only. Don't use except from REmbedInternal!
 

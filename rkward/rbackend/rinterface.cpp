@@ -291,7 +291,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 
 	// clear reply object
 	issueCommand (".rk.set.reply (NULL)", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
-	if (!request->call_length) {
+	if (request->call.isEmpty ()) {
 		RK_ASSERT (false);
 		closeChain (request->in_chain);
 		return;
@@ -299,7 +299,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 	
 	QString call = request->call[0];
 	if (call == "get.tempfile.name") {
-		if (request->call_length >= 3) {
+		if (request->call.count () >= 3) {
 			QString file_prefix = request->call[1];
 			QString file_extension = request->call[2];
 			QDir dir (RKSettingsModuleGeneral::filesPath ());
@@ -313,9 +313,9 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			issueCommand (".rk.set.reply (\"Too few arguments in call to get.tempfile.name.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		}
 	} else if (call == "sync") {
-		RK_ASSERT (request->call_length >= 2);
+		RK_ASSERT (request->call.count () >= 2);
 
-		for (int i = 1; i < request->call_length; ++i) {
+		for (int i = 1; i < request->call.count (); ++i) {
 			QString object_name = request->call[i];
 			RObject *obj = RObjectList::getObjectList ()->findObject (object_name);
 			if (obj) {
@@ -327,25 +327,22 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			}
 		}
 	} else if (call == "syncall") {
-		RK_ASSERT (request->call_length == 1);
+		RK_ASSERT (request->call.count () == 1);
 
 		RK_DO (qDebug ("triggering update of object list"), RBACKEND, DL_DEBUG);
 		RObjectList::getObjectList ()->updateFromR (request->in_chain);
 	} else if (call == "syncglobal") {
-		RK_ASSERT (request->call_length == 1);
+		RK_ASSERT (request->call.count () == 1);
 
 		RK_DO (qDebug ("triggering update of globalenv"), RBACKEND, DL_DEBUG);
 		RObjectList::getGlobalEnv ()->updateFromR (request->in_chain);
 	} else if (call == "edit") {
-		RK_ASSERT (request->call_length >= 2);
+		RK_ASSERT (request->call.count () >= 2);
 
-		QStringList object_list;
-		for (int i = 1; i < request->call_length; ++i) {
-			object_list.append (request->call[i]);
-		}
+		QStringList object_list = request->call.mid (1);
 		new RKEditObjectAgent (object_list, request->in_chain);
 	} else if (call == "require") {
-		if (request->call_length >= 2) {
+		if (request->call.count () >= 2) {
 			QString lib_name = request->call[1];
 			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n ("Require package '%1'", lib_name));
 			RKLoadLibsDialog::showInstallPackagesModal (0, request->in_chain, lib_name);
@@ -360,14 +357,14 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 #ifndef DISABLE_RKWINDOWCATCHER
  	} else if (call == "startOpenX11") {
 		// TODO: error checking/handling (wrong parameter count/type)
-		if (request->call_length >= 2) {
+		if (request->call.count () >= 2) {
 			MUTEX_LOCK;
 			window_catcher->start (QString (request->call[1]).toInt ());
 			MUTEX_UNLOCK;
 		}
  	} else if (call == "endOpenX11") {
 		// TODO: error checking/handling (wrong parameter count/type)
-		if (request->call_length >= 2) {
+		if (request->call.count () >= 2) {
 			MUTEX_LOCK;
 			window_catcher->stop (QString (request->call[1]).toInt ());
 			MUTEX_UNLOCK;
