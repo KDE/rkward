@@ -1,4 +1,4 @@
---- Version 0.5.0d-rc1 - May-06-2009
+--- Version 0.5.0d - May-10-2009
 - Fixed: Container of detached windows would sometimes remain after reattaching
 - Fixed: Global toolbar style was not honored
 - Fixed: Auto-scroll missing in progress dialogs and data editor
@@ -44,7 +44,7 @@
 
 ---- KDE 3 versions
 
---- Version 0.4.9b-rc1 - May-06-2009
+--- Version 0.4.9b - May-10-2009
 - Workaround: Deactivate all filemanagement shortcuts in the File Browser. These would sometimes trigger when they should not.
 - Fix crash while inserting rows in a data.frame with string variables
 - Fix immediate crash issue with R 2.9.0 (requires recompilation against R 2.9)
