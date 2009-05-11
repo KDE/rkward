@@ -203,13 +203,9 @@ private:
 	bool output_paused;
 
 /** A copy of the names of the toplevel environments (as returned by "search ()"). */
-	QString *toplevel_env_names;
-/** number of toplevel environments */
-	unsigned int toplevel_env_count;
+	QStringList toplevel_env_names;
 /** A copy of the names of the toplevel symbols in the .GlobalEnv. */
-	QString *global_env_toplevel_names;
-/** number of symbols in .GlobalEnv */
-	unsigned int global_env_toplevel_count;
+	QStringList global_env_toplevel_names;
 /** A list of symbols that have been assigned new values during the current command */
 	QStringList changed_symbol_names;
 /** check wether the object list / global environment / individual symbols have changed, and updates them, if needed */

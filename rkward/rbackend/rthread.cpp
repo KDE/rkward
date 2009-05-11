@@ -2,7 +2,7 @@
                           rthread  -  description
                              -------------------
     begin                : Mon Aug 2 2004
-    copyright            : (C) 2004, 2006, 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -47,11 +47,6 @@ RThread::RThread () : QThread (), REmbedInternal () {
 	current_output = 0;
 	out_buf_len = 0;
 	output_paused = false;
-
-	toplevel_env_names = 0;
-	toplevel_env_count = 0;
-	global_env_toplevel_names = 0;
-	global_env_toplevel_count = 0;
 }
 
 RThread::~RThread() {
@@ -558,43 +553,44 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 	// TODO: avoid parsing this over and over again
 		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting search list"), RBACKEND, DL_TRACE);
 		strings = getCommandAsStringVector ("search ()\n", &count, &error);
-		if (count != toplevel_env_count) {
+		if ((int) count != toplevel_env_names.count ()) {
 			search_update_needed = true;
 		} else {
-			for (unsigned int i = 0; i < toplevel_env_count; ++i) {
+			for (unsigned int i = 0; i < count; ++i) {
+				// order is important in the search path
 				if (toplevel_env_names[i] != strings[i]) {
 					search_update_needed = true;
 					break;
 				}
 			}
 		}
-		delete [] toplevel_env_names;
-		toplevel_env_names = strings;
-		toplevel_env_count = count;
+		if (search_update_needed) {
+			toplevel_env_names.clear ();
+			for (unsigned int i = 0; i < count; ++i) {
+				toplevel_env_names.append (strings[i]);
+			}
+		}
 	
 	// TODO: avoid parsing this over and over again
 		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting globalenv symbols"), RBACKEND, DL_TRACE);
 		strings = getCommandAsStringVector ("ls (globalenv (), all.names=TRUE)\n", &count, &error);
-		if (count != global_env_toplevel_count) {
+		if ((int) count != global_env_toplevel_names.count ()) {
 			globalenv_update_needed = true;
 		} else {
-			for (unsigned int i = 0; i < global_env_toplevel_count; ++i) {
-				bool found = false;
-				for (unsigned int j = 0; j < global_env_toplevel_count; ++j) {
-					if (global_env_toplevel_names[j] == strings[i]) {
-						found = true;
-						break;
-					}
-				}
-				if (!found) {
+			for (unsigned int i = 0; i < count; ++i) {
+				// order is not important in the symbol list
+				if (!global_env_toplevel_names.contains (strings[i])) {
 					globalenv_update_needed = true;
 					break;
 				}
 			}
 		}
-		delete [] global_env_toplevel_names;
-		global_env_toplevel_names = strings;
-		global_env_toplevel_count = count;
+		if (globalenv_update_needed) {
+			global_env_toplevel_names.clear ();
+			for (unsigned int i = 0; i < count; ++i) {
+				global_env_toplevel_names.append (strings[i]);
+			}
+		}
 	
 		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
 			MUTEX_UNLOCK;

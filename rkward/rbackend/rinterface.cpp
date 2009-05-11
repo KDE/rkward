@@ -2,7 +2,7 @@
                           rinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002, 2004, 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
