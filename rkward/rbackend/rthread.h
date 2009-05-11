@@ -2,7 +2,7 @@
                           rthread  -  description
                              -------------------
     begin                : Mon Aug 2 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -29,6 +29,17 @@
 class RInterface;
 struct RCallbackArgs;
 struct ROutput;
+
+/** this struct is used to pass on eval-requests (i.e. request for RKWard to do something, which may involve issuing further commands) from the
+backend-thread to the main thread. Do not use outside the backend-classes. */
+struct REvalRequest {
+private:
+friend class RInterface;
+friend class RThread;
+	QString *call;
+	int call_length;
+	RCommandChain *in_chain;
+};
 
 /** Simple event class to relay information from the RThread to the main thread. This is basically like QCustomEvent in Qt3*/
 class RKRBackendEvent : public QEvent {

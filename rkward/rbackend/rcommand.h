@@ -2,7 +2,7 @@
                           rcommand.h  -  description
                              -------------------
     begin                : Mon Nov 11 2002
-    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -57,17 +57,6 @@ friend class RCommandStackModel;
 	QList<RCommandBase*> commands;
 	bool closed;
 	bool isStack () { return (parent == 0); }
-};
-
-/** this struct is used to pass on eval-requests (i.e. request for RKWard to do something, which may involve issuing further commands) from the
-backend-thread to the main thread. Do not use outside the backend-classes. */
-struct REvalRequest {
-private:
-friend class RInterface;
-friend class RThread;
-	QString *call;
-	int call_length;
-	RCommandChain *in_chain;
 };
 
 /** this struct is used to store the R output to an RCommand. The RCommand basically keeps a list of ROutputString (s). The difference to a normal
