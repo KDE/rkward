@@ -32,6 +32,7 @@ Bugs:
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org
 	- cleanup DISABLE_RKWINDOWCATCHER (either get rid of it, or do it right)
+	- eventually the whole RData-structure should be made to use QList-types
 
 UI-stuff
 	- find/create a set of menu icons (https://sourceforge.net/mailarchive/message.php?msg_id=37891606)

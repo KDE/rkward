@@ -2,7 +2,7 @@
                           renvironmentobject  -  description
                              -------------------
     begin                : Wed Sep 27 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -23,6 +23,7 @@
 #include "robjectlist.h"
 #include "../rbackend/rinterface.h"
 #include "../settings/rksettingsmoduleobjectbrowser.h"
+#include "rkmodificationtracker.h"
 #include "../rkglobals.h"
 
 #include "../debug.h"
@@ -99,6 +100,31 @@ void REnvironmentObject::updateFromR (RCommandChain *chain) {
 
 	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + options + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
+}
+
+void REnvironmentObject::updateFromR (RCommandChain *chain, const QStringList &current_symbols) {
+	RK_TRACE (OBJECTS);
+
+	// only needed for the assert at the end
+	int debug_baseline = 0;
+
+	// which children are missing?
+	for (int i = childmap.size () - 1; i >= 0; --i) {
+		RObject *object = childmap[i];
+		if (!current_symbols.contains (object->getShortName ())) {
+			if (!(RKGlobals::tracker ()->removeObject (object, 0, true))) debug_baseline++;
+		}
+	}
+
+	// which ones are new in the list?
+	for (int i = current_symbols.count () - 1; i >= 0; --i) {
+		if (!findChildByName (current_symbols[i])) {
+			RObject *child = createPendingChild (current_symbols[i], i, false, false);
+			child->updateFromR (chain);
+		}
+	}
+
+	RK_ASSERT ((debug_baseline + current_symbols.count ()) == childmap.size ());
 }
 
 bool REnvironmentObject::updateStructure (RData *new_data) {

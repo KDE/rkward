@@ -2,7 +2,7 @@
                           rkmodificationtracker  -  description
                              -------------------
     begin                : Tue Aug 31 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -64,9 +64,7 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 	if (removed_in_workspace) {
 		if (ed) {
 			if (KMessageBox::questionYesNo (0, i18n ("The object '%1' was removed from workspace or changed to a different type of object, but is currently opened for editing. Do you want to restore it?", object->getFullName ()), i18n ("Restore object?")) == KMessageBox::Yes) {
-qDebug ("a");
 				ed->restoreObject (object);
-qDebug ("b");
 				return false;
 			}
 		}

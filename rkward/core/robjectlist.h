@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -46,6 +46,8 @@ public:
 	~RObjectList ();
 
 	void updateFromR (RCommandChain *chain);
+	/** like updateFromR, but only adjusts to new / missing environments, but does not update the .GlobalEnv. Designed to be used from the backend, when packages were loaded/unloaded . */
+	void updateFromR (RCommandChain *chain, const QStringList &current_searchpath);
 	
 	QString getFullName () const { return QString (); };
 	QString makeChildName (const QString &short_child_name, bool) const { return short_child_name; };
@@ -80,7 +82,7 @@ protected:
 	void objectsChanged ();
 	bool updateStructure (RData *new_data);
 	void rCommandDone (RCommand *command);
-	void updateEnvironments (QString *env_names, unsigned int env_count);
+	void updateEnvironments (const QStringList &env_names, bool force_globalenv_update);
 private:
 	friend class RKLoadAgent;
 	friend class RKSaveAgent;

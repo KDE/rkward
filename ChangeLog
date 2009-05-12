@@ -1,4 +1,5 @@
-- Fixed: Screen device in rkward was not seen as interactive by R	TODO: backport
+- Fixed: All objects in .Globalenv would be revisited if a single object was added / removed		TODO: backport? (r2466)
+- Fixed: Screen device in rkward was not seen as interactive by R	TODO: backport (r2462)
 
 --- Version 0.5.0d - May-10-2009
 - Fixed: Container of detached windows would sometimes remain after reattaching

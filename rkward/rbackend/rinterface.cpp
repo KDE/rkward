@@ -326,16 +326,12 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 				RK_DO (qDebug ("lookup failed for changed symbol %s", object_name.toLatin1 ().data()), RBACKEND, DL_WARNING);
 			}
 		}
-	} else if (call == "syncall") {
-		RK_ASSERT (request->call.count () == 1);
-
+	} else if (call == "syncenvs") {
 		RK_DO (qDebug ("triggering update of object list"), RBACKEND, DL_DEBUG);
-		RObjectList::getObjectList ()->updateFromR (request->in_chain);
+		RObjectList::getObjectList ()->updateFromR (request->in_chain, request->call.mid (1));
 	} else if (call == "syncglobal") {
-		RK_ASSERT (request->call.count () == 1);
-
 		RK_DO (qDebug ("triggering update of globalenv"), RBACKEND, DL_DEBUG);
-		RObjectList::getGlobalEnv ()->updateFromR (request->in_chain);
+		RObjectList::getGlobalEnv ()->updateFromR (request->in_chain, request->call.mid (1));
 	} else if (call == "edit") {
 		RK_ASSERT (request->call.count () >= 2);
 

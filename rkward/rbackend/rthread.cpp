@@ -594,12 +594,15 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 	
 		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
 			MUTEX_UNLOCK;
-			QStringList call ("syncall");
+			QStringList call = toplevel_env_names;
+			call.prepend ("syncenvs");	// should be faster than the reverse
 			handleSubstackCall (call);
 			MUTEX_LOCK;
-		} else if (globalenv_update_needed) {
+		} 
+		if (globalenv_update_needed) {
 			MUTEX_UNLOCK;
-			QStringList call ("syncglobal");
+			QStringList call = global_env_toplevel_names;
+			call.prepend ("syncglobal");	// should be faster than the reverse
 			handleSubstackCall (call);
 			MUTEX_LOCK;
 		}

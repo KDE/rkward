@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -59,6 +59,7 @@ RObjectList::~RObjectList () {
 
 void RObjectList::updateFromR (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
+
 	if (update_chain) {
 		// gee, looks like another update is still on the way. lets schedule one for later:
 		update_timer->start (UPDATE_DELAY_INTERVAL);
@@ -73,6 +74,25 @@ void RObjectList::updateFromR (RCommandChain *chain) {
 	RKGlobals::rInterface ()->issueCommand (command, update_chain);
 }
 
+void RObjectList::updateFromR (RCommandChain *chain, const QStringList &current_searchpath) {
+	RK_TRACE (OBJECTS);
+
+// TODO: can this happen? when?
+	if (update_chain) {
+		// gee, looks like another update is still on the way. lets schedule one for later:
+		update_timer->start (UPDATE_DELAY_INTERVAL);
+		RK_DO (qDebug ("another object-list update is already running. Rescheduling a further update for later"), OBJECTS, DL_DEBUG);
+		return;
+	}
+
+	emit (updateStarted ());
+	update_chain = RKGlobals::rInterface ()->startChain (chain);
+
+	updateEnvironments (current_searchpath, false);
+
+	RKGlobals::rInterface ()->issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UDPATE_COMPLETE_COMMAND, update_chain);
+}
+
 void RObjectList::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
 
@@ -80,9 +100,12 @@ void RObjectList::rCommandDone (RCommand *command) {
 		unsigned int num_new_environments = command->getDataLength ();
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 		RK_ASSERT (num_new_environments >= 2);
-		QString *new_environments = command->getStringVector ();
 
-		updateEnvironments (new_environments, num_new_environments);
+		QStringList new_environments;
+		for (unsigned int i = 0; i < num_new_environments; ++i) {
+			new_environments.append (command->getStringVector ()[i]);
+		}
+		updateEnvironments (new_environments, true);
 
 		RKGlobals::rInterface ()->issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UDPATE_COMPLETE_COMMAND, update_chain);
 	} else if (command->getFlags () == ROBJECTLIST_UDPATE_COMPLETE_COMMAND) {
@@ -97,19 +120,19 @@ void RObjectList::rCommandDone (RCommand *command) {
 	}
 }
 
-void RObjectList::updateEnvironments (QString *env_names, unsigned int env_count) {
+void RObjectList::updateEnvironments (const QStringList &env_names, bool force_globalenv_update) {
 	RK_TRACE (OBJECTS);
 
 	RObjectMap newchildmap;
 
 	// find which items are new, and copy the old ones
-	for (unsigned int i = 0; i < env_count; ++i) {
+	for (int i = 0; i < env_names.count (); ++i) {
 		QString name = env_names[i];
 
 		RObject* obj = findChildByName (name);
 		if (obj) {
 			// for now, we only update the .GlobalEnv. All others we assume to be static
-			if (obj->isType (GlobalEnv)) {
+			if (obj->isType (GlobalEnv) && force_globalenv_update) {
 				obj->updateFromR (update_chain);
 			}
 		} else {
