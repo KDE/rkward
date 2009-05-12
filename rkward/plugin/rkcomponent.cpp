@@ -64,7 +64,7 @@ void RKComponentBase::fetchPropertyValuesRecursive (QMap<QString, QString> *list
 	}
 }
 
-void RKComponentBase::setPropertyValues (QMap<QString, QString> *list) {
+void RKComponentBase::setPropertyValues (QMap<QString, QString> *list, bool warn_internal) {
 	RK_TRACE (PLUGIN);
 	// TODO: visibility enabledness and requiredness should be excluded, as those are not directly user settable. Perhaps even mark up all properties as user settable or not.
 
@@ -73,7 +73,7 @@ void RKComponentBase::setPropertyValues (QMap<QString, QString> *list) {
 		RKComponentBase *prop = lookupComponent (it.key (), &mod);
 		if (mod.isEmpty () && prop->isProperty ()) {		// found a property
 			RKComponentPropertyBase* p = static_cast<RKComponentPropertyBase*>(prop);
-			RK_ASSERT (!p->isInternal ());
+			RK_ASSERT (!(p->isInternal () && warn_internal));
 			p->setValue (it.value ());
 		}
 	}
