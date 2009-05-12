@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.5.0">
+<kpartgui name="rkward" version="0.5.1">
 <MenuBar>
 	<Menu name="file"><text>&amp;File</text>
 		<Menu name="new_data"><text>&amp;New</text>
@@ -75,7 +75,6 @@
 		<Action name="new_data_frame"/>
 		<Action name="new_command_editor"/>
 		<Action name="file_openy"/>
-		<Action name="file_open_recenty"/>
 		<Separator/>
 		<Action name="prev_window"/>
 		<Action name="next_window"/>

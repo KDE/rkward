@@ -1,3 +1,4 @@
+- Adjust some icons
 - Add "Run again" link for plugin generated output		TODO: add error handling, revisit plugins without header, what about wizard/dialog?
 - Fixed: All objects in .Globalenv would be revisited if a single object was added / removed		TODO: backport? (r2466)
 - Fixed: Screen device in rkward was not seen as interactive by R	TODO: backport (r2462)
