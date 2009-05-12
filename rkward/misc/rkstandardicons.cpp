@@ -66,7 +66,7 @@ void RKStandardIcons::initIcons () {
 	icons[ObjectList] = QIcon (rkward_icon_base + "list.png");
 	icons[ObjectFunction] = QIcon (rkward_icon_base + "function.png");
 	icons[ObjectEnvironment] = KIcon ("konqueror");
-	icons[ObjectPackageEnvironment] = KIcon ("ark");
+	icons[ObjectPackageEnvironment] = KIcon ("utilities-file-archiver");
 	icons[ObjectMatrix] = QIcon (rkward_icon_base + "matrix.png");
 	icons[ObjectDataFrame] = KIcon ("x-office-spreadsheet");
 	icons[ObjectDataNumeric] = QIcon (rkward_icon_base + "data-numeric.png");
@@ -83,13 +83,13 @@ void RKStandardIcons::initIcons () {
 	icons[WindowOutput] = KIcon ("xclipboard");
 	icons[WindowHelp] = KIcon ("help-contents");
 	icons[WindowX11] = KIcon ("x");
-	icons[WindowObject] = KIcon ("zoom-best-fit");
-	icons[WindowConsole] = KIcon ("konsole");
+	icons[WindowObject] = KIcon ("zoom-original");
+	icons[WindowConsole] = KIcon ("utilities-terminal");
 	icons[WindowCommandLog] = KIcon ("format-justify-left");
 	icons[WindowWorkspaceBrowser] = icons[ObjectObjectList];
 	icons[WindowSearchHelp] = KIcon ("help-contents");
 	icons[WindowPendingJobs] = KIcon ("system-run");
-	icons[WindowFileBrowser] = KIcon ("document-open");
+	icons[WindowFileBrowser] = KIcon ("folder");
 
 /*	This does not work, as the icons are not really Null in this case, but some default icon. Any way to really test this?
 	RK_DO ({
