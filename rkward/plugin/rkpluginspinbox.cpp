@@ -2,7 +2,7 @@
                           rkpluginspinbox  -  description
                              -------------------
     begin                : Wed Aug 11 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -36,6 +36,7 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 
 	// create and add properties
 	addChild ("int", intvalue = new RKComponentPropertyInt (this, intmode, 0));
+	intvalue->setInternal (true);
 	addChild ("real", realvalue = new RKComponentPropertyDouble (this, !intmode, 0));
 
 	// layout and label

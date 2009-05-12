@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -168,8 +168,29 @@ void RKHTMLWindow::slotBack () {
 	url_change_is_from_history = false;
 }
 
+bool RKHTMLWindow::handleRKWardURL (const KUrl &url) {
+	RK_TRACE (APP);
+
+	if (url.protocol () == "rkward") {
+		if (url.host () == "runplugin") {
+			QString path = url.path ();
+			if (path.startsWith ('/')) path = path.mid (1);
+			int sep = path.indexOf ('/');
+			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1));
+#warning TODO: error handling!
+			return true;
+		} else {
+			RKWorkplace::mainWorkplace ()->openHelpWindow (url);
+			return true;
+		}
+	}
+	return false;
+}
+
 bool RKHTMLWindow::openURL (const KUrl &url) {
 	RK_TRACE (APP);
+
+	if (handleRKWardURL (url)) return true;
 
 	// asyncrhonously dealing with non-local files would be quite a task. We chose the simple answer instead...
 	if (!url.isLocalFile ()) {
@@ -301,6 +322,8 @@ QString RKOutputWindow::getDescription () {
 bool RKOutputWindow::openURL (const KUrl &url) {
 	RK_TRACE (APP);
 
+	if (handleRKWardURL (url)) return true;
+
 	output_url = url;
 	QFileInfo out_file (url.path ());
 	bool ok = out_file.exists();
@@ -428,11 +451,11 @@ RKHelpWindow::~RKHelpWindow () {
 	khtmlpart = 0;	// in case we try to redelete in a parent class
 }
 
-bool RKHelpWindow::openURL (const KUrl &url) {
+bool RKHelpWindow::handleRKWardURL (const KUrl &url) {
 	RK_TRACE (APP);
 
-	bool ok = true;
 	if (url.protocol () == "rkward") {
+		bool ok;
 		if (url.host () == "component") {
 			ok = renderRKHelp (url);
 		} else if (url.host () == "rhelp") {
@@ -441,6 +464,8 @@ bool RKHelpWindow::openURL (const KUrl &url) {
 			return true;
 		} else if (url.host () == "page") {
 			ok = renderRKHelp (url);
+		} else {
+			return RKHTMLWindow::handleRKWardURL (url);
 		}
 
 		if (!ok) {
@@ -450,9 +475,9 @@ bool RKHelpWindow::openURL (const KUrl &url) {
 		}
 	
 		changeURL (url);
-		return ok;
+		return true;
 	} else {
-		return (RKHTMLWindow::openURL (url));
+		return false;
 	}
 }
 

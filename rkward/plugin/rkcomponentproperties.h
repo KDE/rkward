@@ -2,7 +2,7 @@
                           rkcomponentproperties  -  description
                              -------------------
     begin                : Fri Nov 25 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -53,6 +53,10 @@ public:
 Generally with few exceptions, you can only connect to properties that are either of the same class as this property, or of an extended class. Maybe in the future we will add some sophisticated converters allowing to connect vastly different types of properties in a meaningful way.
 If you specify a modifier, only the sub-value indicated by the modifier will be retrieved from the governing property on governorValueChanged. In this case reconcile_requirements is ignored. */
 	virtual void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+
+/** Some properties will be marked as internal, such as visibility properties, which are not meant to be set directly by the user. These will be ignored in RKComponent::fetchPropertyValuesRecursive() */
+	void setInternal (bool internal) { is_internal = internal; };
+	bool isInternal () const { return is_internal; };
 signals:
 /** property has changed its value. Any connected RKComponentPropertys/RKComponents should update their state
 @param property A pointer to the changed property for easy reference */
@@ -66,6 +70,8 @@ protected:
 	QString _value;
 /** if we're only interested in a specific sub-information of the governor-property, we need to remember the corresponding modifier */
 	QString governor_modifier;
+private:
+	bool is_internal;
 };
 
 

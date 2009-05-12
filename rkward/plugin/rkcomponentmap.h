@@ -2,7 +2,7 @@
                           rkcomponentmap.h  -  description
                              -------------------
     begin                : Thu May 12 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -164,6 +164,8 @@ public:
 	static void initialize ();
 /** returns the context identified by id */
 	static RKContextMap *getContext (const QString &id);
+/** invokes the specified component as toplevel */
+	static bool invokeComponent (const QString &component_id, const QString &serialized_settings, bool dosubmit=false);
 private:
 /** typedef for easy reference to iterator */
 	typedef QMap<QString, RKComponentHandle*> ComponentMap;

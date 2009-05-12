@@ -2,7 +2,7 @@
                           rkvarselector.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002,2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -32,6 +32,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 
 // TODO: read filter settings
 	addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
+	selected->setInternal (true);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);

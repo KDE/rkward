@@ -2,7 +2,7 @@
                           rkcomponentproperties  -  description
                              -------------------
     begin                : Fri Nov 25 2005
-    copyright            : (C) 2005, 2006, 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -101,6 +101,7 @@ RKComponentPropertyBase::RKComponentPropertyBase (QObject *parent, bool required
 	RK_TRACE (PLUGIN);
 	RKComponentPropertyBase::required = required;
 	is_valid = true;
+	is_internal = false;
 }
 
 RKComponentPropertyBase::~RKComponentPropertyBase () {
@@ -172,6 +173,7 @@ RKComponentBase* RKComponentPropertyBool::lookupComponent (const QString &identi
 	if (next == "not") {
 		RKComponentPropertyBool *negated = new RKComponentPropertyBool (this, false, false, value_true, value_false);
 		negated->setInverted (true);
+		negated->setInternal (true);
 		negated->connectToGovernor (this);
 		*remainder = QString::null;		// reset
 		addChild ("not", negated);		// so subsequent lookups will not recreate the negated property

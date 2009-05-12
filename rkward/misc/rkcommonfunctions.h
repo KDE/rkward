@@ -2,7 +2,7 @@
                           rkcommonfunctions  -  description
                              -------------------
     begin                : Mon Oct 17 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -42,6 +42,11 @@ namespace RKCommonFunctions {
 	QString getCurrentSymbol (const QString &context_line, int cursor_pos, bool strict=true);
 /** like get current symbol, but merely returns the start and end position of the current symbol */
 	void getCurrentSymbolOffset (const QString &context_line, int cursor_pos, bool strict, int *start, int *end);
+
+/** escape special chars in a QString */
+	QString escape (const QString &in);
+/** reverse of escape () */
+	QString unescape (const QString &in);
 };
 
 #endif

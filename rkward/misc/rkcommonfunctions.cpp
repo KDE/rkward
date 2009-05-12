@@ -2,7 +2,7 @@
                           rkcommonfunctions  -  description
                              -------------------
     begin                : Mon Oct 17 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -136,4 +136,36 @@ namespace RKCommonFunctions {
 		return (KGlobal::dirs ()->findResourceDir ("data", "rkward/all.pluginmap") + "rkward/");
 	}
 
+
+	QString escape (const QString &in) {
+		QString out;
+
+		for (int i = 0; i < in.size (); ++i) {
+			QChar c = in[i];
+			if (c == '\\') out.append ("\\\\");
+			else if (c == '\n') out.append ("\\n");
+			else if (c == '"') out.append ("\\\"");
+			else out.append (c);
+		}
+
+		return out;
+	}
+
+	QString unescape (const QString &in) {
+		QString out;
+
+		for (int i = 0; i < in.size (); ++i) {
+			QChar c = in[i];
+			if (c == '\\') {
+				++i;
+				if (i >= in.size ()) break;
+				c = in[i];
+				if (c == 'n') c = '\n';
+				else if (c == '"') c = '"';
+			}
+			out.append (c);
+		}
+
+		return out;
+	}
 }	// namespace

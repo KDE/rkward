@@ -2,7 +2,7 @@
                           rkcomponentmap.cpp  -  description
                              -------------------
     begin                : Thu May 12 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,6 +24,7 @@
 #include <kactioncollection.h>
 
 #include "rkcomponentcontext.h"
+#include "rkstandardcomponent.h"
 #include "../misc/xmlhelper.h"
 #include "../debug.h"
 #include "../rkglobals.h"
@@ -227,6 +228,21 @@ QString RKComponentMap::getComponentIdLocal (RKComponentHandle* component) {
 
 	RK_ASSERT (false);
 	return (QString ());
+}
+
+//static
+bool RKComponentMap::invokeComponent (const QString &component_id, const QString &serialized_settings, bool dosubmit) {
+	RK_TRACE (PLUGIN);
+
+	RKComponentHandle *handle = getComponentHandle (component_id);
+	if (!handle) return false;
+
+	RKStandardComponent *component = handle->invoke (0, 0);
+	RK_ASSERT (component);
+
+	bool ok = component->unserializeState (serialized_settings);
+#warning TODO: support automatic submit
+	return ok;
 }
 
 int RKComponentMap::addPluginMap (const QString& plugin_map_file) {

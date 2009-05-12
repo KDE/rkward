@@ -2,7 +2,7 @@
                           rkcomponent  -  description
                              -------------------
     begin                : Tue Dec 13 2005
-    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -16,6 +16,8 @@
  ***************************************************************************/
 
 #include "rkcomponent.h"
+
+#include "../misc/rkcommonfunctions.h"
 
 #include "../debug.h"
 
@@ -43,14 +45,17 @@ void RKComponentBase::addChild (const QString &id, RKComponentBase *child) {
 	child_map.insertMulti (id, child);		// no overwriting even on duplicate ("#noid#") ids
 }
 
-void RKComponentBase::fetchPropertyValuesRecursive (QMap<QString, QString> *list, bool include_top_level, const QString &prefix) {
+void RKComponentBase::fetchPropertyValuesRecursive (QMap<QString, QString> *list, bool include_top_level, const QString &prefix) const {
 	RK_TRACE (PLUGIN);
 
 	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		if (it.key () != "#noid#") {
 			if (it.value ()->isProperty ()) {
 				if (include_top_level) {
-					list->insert (prefix + it.key (), it.value ()->value ());
+					RKComponentPropertyBase *p = static_cast<RKComponentPropertyBase*> (it.value ());
+					if (!p->isInternal ()) { 
+						list->insert (prefix + it.key (), it.value ()->value ());
+					}
 				}
 			} else {
 				it.value ()->fetchPropertyValuesRecursive (list, true, prefix + it.key () + '.');
@@ -67,9 +72,44 @@ void RKComponentBase::setPropertyValues (QMap<QString, QString> *list) {
 		QString mod;
 		RKComponentBase *prop = lookupComponent (it.key (), &mod);
 		if (mod.isEmpty () && prop->isProperty ()) {		// found a property
-			static_cast<RKComponentPropertyBase*>(prop)->setValue (it.value ());
+			RKComponentPropertyBase* p = static_cast<RKComponentPropertyBase*>(prop);
+			RK_ASSERT (!p->isInternal ());
+			p->setValue (it.value ());
 		}
 	}
+}
+
+QString RKComponentBase::serializeState () const {
+	RK_TRACE (PLUGIN);
+
+	QMap<QString, QString> props;
+	fetchPropertyValuesRecursive (&props, true);
+
+	QString out;
+	for (QMap<QString, QString>::const_iterator it = props.constBegin (); it != props.constEnd (); ++it) {
+		if (!out.isEmpty ()) out.append ("\n");
+		out.append (RKCommonFunctions::escape (it.key () + "=" + it.value ()));
+	}
+
+	return out;
+}
+
+bool RKComponentBase::unserializeState (const QString &state) {
+	RK_TRACE (PLUGIN);
+
+	QMap<QString, QString> props;
+
+	QStringList lines = state.split ('\n');
+	for (int i = 0; i < lines.count (); ++i) {
+		QString line = lines[i];
+		int sep = line.indexOf ('=');
+		if (sep < 0) return false;		// TODO: message
+		props.insert (RKCommonFunctions::unescape (line.left (sep)), RKCommonFunctions::unescape (line.mid (sep+1)));
+	}
+
+	setPropertyValues (&props);
+
+	return true;
 }
 
 QString RKComponentBase::fetchStringValue (const QString &identifier) {
@@ -112,12 +152,15 @@ void RKComponent::createDefaultProperties () {
 
 	addChild ("enabled", enabledness_property = new RKComponentPropertyBool (this, false));
 	enabledness_property->setBoolValue (true);
+	enabledness_property->setInternal (true);
 	connect (enabledness_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyValueChanged (RKComponentPropertyBase *)));
 	addChild ("visible", visibility_property = new RKComponentPropertyBool (this, false));
 	visibility_property->setBoolValue (true);
+	visibility_property->setInternal (true);
 	connect (visibility_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyValueChanged (RKComponentPropertyBase *)));
 	addChild ("required", requiredness_property = new RKComponentPropertyBool (this, false));
 	requiredness_property->setBoolValue (true);
+	requiredness_property->setInternal (true);
 	connect (requiredness_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyValueChanged (RKComponentPropertyBase *)));
 }
 
@@ -229,7 +272,7 @@ void RKComponent::removeFromParent () {
 	// unfortunately, several items might hvae the same key, and there seems to be no way to selectively remove the current item only.
 	// however, this function should only ever be called in cases of emergency and to prevent crashes. So we make extra sure to remove the child,
 	// even if we remove a little more than necessary along the way.
-			while (parentComponent ()->child_map.remove (key));
+			while (parentComponent ()->child_map.remove (key)) {;}
 			return;
 		}
 	}

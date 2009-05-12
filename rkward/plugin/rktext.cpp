@@ -70,6 +70,7 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 
 	// create and add property
 	addChild ("text", text = new RKComponentPropertyBase (this, true));
+	text->setInternal (true);
 	connect (text, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (textChanged (RKComponentPropertyBase *)));
 
 	// initialize

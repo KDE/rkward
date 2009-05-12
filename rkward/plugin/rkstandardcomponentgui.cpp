@@ -154,6 +154,13 @@ void RKStandardComponentGUI::ok () {
 	command.append (code_property->calculate ());
 	command.append (code_property->printout ());
 	command.append ("})\n");
+
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate));
+
+	// re-run link
+	command = "\n.rk.rerun.plugin.link(plugin=\"" + RKComponentMap::getComponentId (component->getHandle ()) + "\", settings=\"" + component->serializeState () + "\", label=\"" + i18n ("Run again") + "\")\n";
+	// horizontal line
+	command.append (".rk.make.hr()\n");
 	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate));
 }
 

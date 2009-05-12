@@ -484,3 +484,11 @@ formals (setwd) <- formals (base::setwd)
 ".rk.cat.output" <- function (x) {
 	cat (x, file = rk.get.output.html.file(), append = TRUE)
 }
+
+".rk.rerun.plugin.link" <- function (plugin, settings, label) {
+	.rk.cat.output (paste ("<a href=\"rkward://runplugin/", plugin, "/", URLencode (settings), "\">", label, "</a>", sep=""))
+}
+
+".rk.make.hr" <- function () {
+	.rk.cat.output ("<hr>\n");
+}

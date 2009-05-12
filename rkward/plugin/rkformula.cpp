@@ -2,7 +2,7 @@
                           rkformula  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -48,10 +48,13 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	addChild ("dependent", dependent);
 	model = new RKComponentPropertyBase (this, true);
 	addChild ("model", model);
+	model->setInternal (true);
 	table = new RKComponentPropertyBase (this, true);
 	addChild ("table", table);
+	table->setInternal (true);
 	labels = new RKComponentPropertyBase (this, true);
 	addChild ("labels", labels);
+	labels->setInternal (true);
 
 	// get xmlHelper
 	XMLHelper *xml = XMLHelper::getStaticHelper ();

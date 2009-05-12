@@ -162,10 +162,6 @@ void RThread::doCommand (RCommand *command) {
 		
 		RK_DO (qDebug ("running command: %s", ccommand.toLatin1().data ()), RBACKEND, DL_DEBUG);
 	
-		if (command->type () & RCommand::DirectToOutput) {
-			runCommandInternal (".rk.cat.output (\"<hr>\\n\")", &error, false);
-			RK_ASSERT (!error);
-		}
 		command->status |= RCommand::Running;	// it is important that this happens before the Mutex is unlocked!
 		RCommandStackModel::getModel ()->itemChange (command);
 

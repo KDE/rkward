@@ -2,7 +2,7 @@
                           rkstandardcomponent  -  description
                              -------------------
     begin                : Sun Feb 19 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -66,7 +66,8 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	wizard = 0;
 	created = false;
 	addChild ("code", code = new RKComponentPropertyCode (this, true));		// do not change this name!
-	
+	code->setInternal (true);
+
 	// open the main description file for parsing
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
 	QDomElement doc_element = xml->openXMLFile (filename, DL_ERROR);
@@ -627,6 +628,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element) {
 		QString id = xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING);
 		RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), xml->getBoolAttribute (*it, "required", false, DL_INFO));
 		component ()->addChild (id, prop);
+		prop->setInternal (true);
 		component ()->connect (prop, SIGNAL (valueChanged (RKComponentPropertyBase *)), component (), SLOT (outsideValueChanged (RKComponentPropertyBase *)));
 
 		QString dummy = xml->getStringAttribute (*it, "default", QString::null, DL_INFO);
@@ -640,6 +642,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element) {
 	children = xml->getChildElements (element, "convert", DL_INFO);
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
 		RKComponentPropertyConvert *convert = new RKComponentPropertyConvert (component ());
+		convert->setInternal (true);
 		QString id = xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING);
 		int mode = xml->getMultiChoiceAttribute (*it, "mode", convert->convertModeOptionString (), 0, DL_WARNING);
 		QString sources = xml->getStringAttribute (*it, "sources", QString::null, DL_WARNING);

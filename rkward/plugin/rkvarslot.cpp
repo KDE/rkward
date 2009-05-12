@@ -2,7 +2,7 @@
                           rkvarslot.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2007, 2008, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -60,8 +60,10 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 
 	// initialize properties
 	addChild ("source", source = new RKComponentPropertyRObjects (this, false));
+	source->setInternal (true);
 	addChild ("available", available = new RKComponentPropertyRObjects (this, true));
 	addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
+	selected->setInternal (true);
 
 	// find out about options
 	if (multi = xml->getBoolAttribute (element, "multi", false, DL_INFO)) {

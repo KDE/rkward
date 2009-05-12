@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -49,6 +49,8 @@ protected:
 public:
 /** open given URL. Returns false, if the URL is not an existing local file. Loading a non-local URL may succeed, even if this returns false! */
 	virtual bool openURL (const KUrl &url);
+/** takes care of special handling, if the url is an rkward://-url. Does nothing and returns false, otherwise. */
+	virtual bool handleRKWardURL (const KUrl &url);
 /** Reload current page.*/
 	virtual void refresh ();
 /** Add common actions to the given action collection (currently only "copy")
@@ -165,8 +167,8 @@ public:
 	RKHelpWindow (QWidget *parent = 0);
 /** destructor */
 	~RKHelpWindow ();
-/** reimplemented to handle our special protocols component://, rhelp://, and rkhelp:// in addition to the regular protocols */
-	bool openURL (const KUrl &url);
+
+	bool handleRKWardURL (const KUrl &url);
 private:
 	bool renderRKHelp (const KUrl &url);
 	QString renderHelpFragment (QDomElement &fragment);

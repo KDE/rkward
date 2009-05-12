@@ -2,7 +2,7 @@
                           rkabstractoptionselector  -  description
                              -------------------
     begin                : Tue Mar 20 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -30,6 +30,7 @@ RKAbstractOptionSelector::RKAbstractOptionSelector (RKComponent *parent_componen
 	connect (string, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyChanged (RKComponentPropertyBase *)));
 	addChild ("number", number = new RKComponentPropertyInt (this, true, -1));
 	connect (number, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyChanged (RKComponentPropertyBase *)));
+	number->setInternal (true);
 }
 
 RKAbstractOptionSelector::~RKAbstractOptionSelector(){
