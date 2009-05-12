@@ -2,7 +2,7 @@
                           rkpreviewbox  -  description
                              -------------------
     begin                : Wed Jan 24 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -40,6 +40,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 
 	// create and add property
 	addChild ("state", state = new RKComponentPropertyBool (this, true, preview_active, "active", "inactive"));
+	state->setInternal (true);	// restoring this does not make sense.
 	connect (state, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (changedState (RKComponentPropertyBase *)));
 
 	// create checkbox
