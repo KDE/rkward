@@ -304,3 +304,18 @@
 
 	x
 }
+
+"rk.edit.files" <- function (file = file, title = file, name = NULL)
+{
+	if (!is.character (file)) {
+		nfile = tempfile()
+		env = environment (file)
+		dput (file, file=nfile)
+		file = nfile
+		.Call("rk.edit.files", file, title, name)
+		x <- dget (file)
+		environment (x) <- env
+		return (x)
+	}
+	.Call ("rk.edit.files", file, title, name)
+}

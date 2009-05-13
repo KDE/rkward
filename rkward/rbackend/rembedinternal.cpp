@@ -156,6 +156,7 @@ bool repldll_last_parse_successful = false;
 #endif
 
 SEXP RKWard_RData_Tag;
+QString *SEXPToStringList (SEXP from_exp, unsigned int *count);
 
 // ############## R Standard callback overrides BEGIN ####################
 #ifdef R_2_7
@@ -354,6 +355,36 @@ int REditFiles (int nfile, const char **file, const char **title, const char *ed
 	return (nfile <= 0);
 }
 
+SEXP doEditFiles (SEXP files, SEXP titles, SEXP name) {
+	unsigned int files_count, titles_count, name_count;
+	QString *file_strings = SEXPToStringList (files, &files_count);
+	QString *title_strings = SEXPToStringList (titles, &titles_count);
+	QString *name_strings = SEXPToStringList (name, &name_count);
+
+	RK_ASSERT (name_count <= 1);
+	RK_ASSERT (files_count == titles_count);
+	RK_ASSERT (files_count >= 1);
+
+	files_count = titles_count = qMin (files_count, titles_count);
+
+	char **file_chars = new char*[files_count];
+	char **title_chars = new char*[files_count];
+	for (unsigned int i = 0; i < files_count; ++i) {
+		file_chars[i] = file_strings[i].toLocal8Bit ().data ();
+		title_chars[i] = title_strings[i].toLocal8Bit ().data ();
+	}
+	char *name_char;
+	if (name_count > 0) name_char = name_strings[0].toLocal8Bit ().data ();
+	else {
+		name_char = new char[1];
+		name_char[0] = '\0';
+	}
+
+	REditFiles (files_count, const_cast<const char**> (file_chars), const_cast<const char**> (title_chars), name_char);
+// TODO: fix memory leak!
+	return (R_NilValue);
+}
+
 #ifdef R_2_7
 int REditFile (const char *buf) {
 #else
@@ -422,6 +453,7 @@ void REmbedInternal::connectCallbacks () {
 	ptr_R_CleanUp = RCleanUp;			// unfortunately, it seems, we can't safely cancel quitting anymore, here!
 	ptr_R_ShowFiles = RShowFiles;
 	ptr_R_ChooseFile = RChooseFile;
+// TODO: R devels disabled this for some reason. We set it anyway...
 	ptr_R_EditFile = REditFile;
 //	ptr_R_EditFiles = REditFiles;		// undefined reference
 
@@ -685,7 +717,7 @@ SEXP doSubstackCall (SEXP call) {
 	unsigned int count;
 	QString *strings = SEXPToStringList (call, &count);
 	QStringList list;
-	for (int i = 0; i < count; ++i) {
+	for (unsigned int i = 0; i < count; ++i) {
 		list.append (strings[i]);
 	}
 	REmbedInternal::this_pointer->handleSubstackCall (list);
@@ -796,6 +828,7 @@ bool REmbedInternal::registerFunctions (const char *library_path) {
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.get.structure", (DL_FUNC) &doGetStructure, 4 },
 		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 3 },
+		{ "rk.edit.files", (DL_FUNC) &doEditFiles, 3 },
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (info, NULL, callMethods, NULL, NULL);
