@@ -9,5 +9,6 @@ write.table ( x =  <? getRK("data") ; ?> , file =  "<? getRK("file") ; ?>" , app
 }
 
 function printout () {
+	makeHeaderCode ("Write as table", array ("File" => getRK_val ("file"), "Data" => getRK_val ("data")));
 }
 ?>

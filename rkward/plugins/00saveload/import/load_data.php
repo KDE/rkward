@@ -3,6 +3,8 @@ function preprocess () {
 }
 
 function calculate () {
+	global $envir;
+
 	if (getRK_val ("other_env")) {
 		$other_env = true;
 		$envir = getRK_val ("envir");
@@ -18,6 +20,8 @@ load (file="<? getRK("file"); ?>", envir=<? echo ($envir); ?>)
 }
 
 function printout () {
+	global $envir; 
+	makeHeaderCode ("Load data", array ("File" => getRK_val ("file"), "Import to environment" => $envir));
 }
 
 ?>

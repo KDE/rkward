@@ -42,6 +42,7 @@ rk.edit (<? getRK ("name"); ?>)
 <?	}
 }
 
-function printout () {
+function printout () { 
+	makeHeaderCode ("Import text / csv data", array ("File" => getRK_val ("file"), "Import as" => getRK_val ("name")));
 }
 ?>

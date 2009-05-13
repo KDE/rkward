@@ -23,6 +23,7 @@ source (file="<? getRK("file"); ?>", local=<? getRK("local"); echo ($options); ?
 }
 
 function printout () {
+	makeHeadercode ("Source R file", array ("File" => getRK_val ("file")));
 }
 
 ?>

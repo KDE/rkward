@@ -10,5 +10,6 @@ package.skeleton(name="<? getRK("name"); ?>", list=c('<? echo ($vars); ?>'), pat
 }
 
 function printout () {
+	makeHeaderCode ("Create package skeleton", array ("Name" => getRK_val ("name"), "Directory" => getRK_val ("path")));
 }
 ?>

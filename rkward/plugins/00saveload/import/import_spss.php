@@ -65,5 +65,6 @@ rk.edit (<? echo ($object); ?>)
 }
 
 function printout () {
+	makeHeaderCode ("Import SPSS data", array ("File" => getRK_val ("file"), "Import as" => getRK_val ("saveto")));
 }
 ?>
