@@ -68,6 +68,9 @@ public:
 	QString getAttributeLabel (const QString &attribute_id);
 	bool hasAttribute (const QString &attribute_id);
 	void addAttribute (const QString &id, const QString &value, const QString &label);
+	void setAccessible (bool accessible) { is_accessible = accessible; };
+/** Returns whether this component is accessible from the menu, somewhere (else it might be in a context) */
+	bool isAccessible () const { return is_accessible; };
 public slots:
 /** Slot called, when the menu-item for this component is selected. Responsible for creating the GUI. */
 	void activated ();
@@ -82,6 +85,8 @@ protected:
 	typedef QPair<QString, QString> AttributeValue;
 	typedef QMap<QString, AttributeValue> AttributeMap;
 	AttributeMap *attributes;
+private:
+	bool is_accessible;
 };
 
 #include <qmap.h>

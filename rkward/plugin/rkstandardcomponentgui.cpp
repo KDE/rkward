@@ -2,7 +2,7 @@
                           rkstandardcomponentgui  -  description
                              -------------------
     begin                : Sun Mar 19 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -158,8 +158,12 @@ void RKStandardComponentGUI::ok () {
 	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate));
 
 	// re-run link
-	command = "\n.rk.rerun.plugin.link(plugin=\"" + RKComponentMap::getComponentId (component->getHandle ()) + "\", settings=\"" + component->serializeState () + "\", label=\"" + i18n ("Run again") + "\")\n";
-	// horizontal line
+	command.clear ();
+	RKComponentHandle *handle = component->getHandle ();
+	if (handle->isAccessible ()) {
+		command.append ("\n.rk.rerun.plugin.link(plugin=\"" + RKComponentMap::getComponentId (handle) + "\", settings=\"" + component->serializeState () + "\", label=\"" + i18n ("Run again") + "\")\n");
+	}
+	// separator line
 	command.append (".rk.make.hr()\n");
 	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate));
 }

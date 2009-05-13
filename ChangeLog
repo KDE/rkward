@@ -1,6 +1,6 @@
 - Adjust some icons
 - Add "Run again" link for plugin generated output		TODO: revisit plugins without header
-- Fixed: All objects in .Globalenv would be revisited if a single object was added / removed		TODO: backport? (r2466)
+- Fixed: All objects in .Globalenv would be revisited if a single object was added / removed		TODO: backport? (r2466, 2473)
 - Fixed: Screen device in rkward was not seen as interactive by R	TODO: backport (r2462)
 
 --- Version 0.5.0d - May-10-2009

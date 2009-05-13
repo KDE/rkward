@@ -354,6 +354,7 @@ void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {
 	RK_TRACE (PLUGIN);
 
 	if (handle->isPlugin ()) {
+		handle->setAccessible (true);
 		actionCollection ()->addAction (id, handle, SLOT (activated()))->setText (handle->getLabel ());
 	}
 }
@@ -372,6 +373,7 @@ RKComponentHandle::RKComponentHandle (RKPluginMapFile *pluginmap, const QString 
 	RKComponentHandle::plugin_map = pluginmap;
 
 	attributes = 0;
+	is_accessible = false;
 }
 
 RKComponentHandle::~RKComponentHandle () {
