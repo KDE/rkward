@@ -61,6 +61,12 @@ public:
 		ComponentContextHandler = 2900,
 		ComponentUser = 3000	/**< for user expansion */
 	};
+	enum UnserializeError {
+		NoError,
+		BadFormat,
+		NotAllSettingsApplied,
+		NoSuchComponent
+	};
 /** for RTTI. see RKComponentBase::RKComponentTypes */
 	virtual int type () = 0;
 /** tries to locate a component (or property) described by identifier as a child (of any generation) of this RKComponentBase. If found, a pointer to this is returned. Also, the modifier parameter is set to hold any remaining modifier contained in the identifier.
@@ -87,8 +93,8 @@ public:
 /** serialize the state of this component / property and all its children. Note: Only the non-internal property-values are serialzed, not the components / properties themselves. @see fetchPropertyValuesRecursive() */
 	QString serializeState () const;
 /** set values from a string created with serializeState(). @see serializeState (), @see setPropertyValues ().
-@returns false if unserializing failed. */
-	bool unserializeState (const QString &state);
+@returns status code */
+	UnserializeError unserializeState (const QString &state);
 protected:
 	QHash<QString, RKComponentBase*> child_map;
 	bool required;

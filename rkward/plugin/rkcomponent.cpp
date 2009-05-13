@@ -94,7 +94,7 @@ QString RKComponentBase::serializeState () const {
 	return out;
 }
 
-bool RKComponentBase::unserializeState (const QString &state) {
+RKComponent::UnserializeError RKComponentBase::unserializeState (const QString &state) {
 	RK_TRACE (PLUGIN);
 
 	QMap<QString, QString> props;
@@ -103,13 +103,22 @@ bool RKComponentBase::unserializeState (const QString &state) {
 	for (int i = 0; i < lines.count (); ++i) {
 		QString line = lines[i];
 		int sep = line.indexOf ('=');
-		if (sep < 0) return false;		// TODO: message
+		if (sep < 0) return BadFormat;
 		props.insert (RKCommonFunctions::unescape (line.left (sep)), RKCommonFunctions::unescape (line.mid (sep+1)));
 	}
 
 	setPropertyValues (&props);
 
-	return true;
+	// verify
+	UnserializeError error = NoError;
+	for (QMap<QString, QString>::const_iterator it = props.constBegin (); it != props.constEnd (); ++it) {
+		if (fetchStringValue (it.key ()) != it.value ()) {
+			RK_DO(qDebug ("Tried to apply value %s to property %s, but got %s", qPrintable (it.value ()), qPrintable (it.key ()), qPrintable (fetchStringValue (it.key ()))), PLUGIN, DL_INFO);
+			error = NotAllSettingsApplied;
+		}
+	}
+
+	return error;
 }
 
 QString RKComponentBase::fetchStringValue (const QString &identifier) {

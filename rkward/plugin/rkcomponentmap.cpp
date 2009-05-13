@@ -22,6 +22,7 @@
 
 #include <klocale.h>
 #include <kactioncollection.h>
+#include <kmessagebox.h>
 
 #include "rkcomponentcontext.h"
 #include "rkstandardcomponent.h"
@@ -127,7 +128,7 @@ int RKComponentGUIXML::addSubMenu (QDomElement& parent, const QDomElement& descr
 }
 
 /////////////////////////// END RKComponentXMLGUIClient /////////////////////////////////
-////////////////////////////// BEGIN RKComponentMap /////////////////////////////////////
+////////////////////////////// Bhttp://apps.sourceforge.net/mediawiki/rkward/nfs/project/r/rk/rkward/6/6d/RKWardApplicationDetached.pngEGIN RKComponentMap /////////////////////////////////////
 
 // static members
 RKComponentMap *RKComponentMap::component_map = 0;
@@ -235,14 +236,28 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	RK_TRACE (PLUGIN);
 
 	RKComponentHandle *handle = getComponentHandle (component_id);
-	if (!handle) return false;
+	if (!handle) {
+		KMessageBox::sorry (RKWardMainWindow::getMain (), i18n ("You tried to invoke a plugin called '%1', but that plugin is currently unknown. Probably you need to load the corresponding PluginMap (Settings->Configure RKWard->Plugins), or perhaps the plugin was renamed.").arg (component_id), i18n ("No such plugin"));
+		return false;
+	}
 
 	RKStandardComponent *component = handle->invoke (0, 0);
 	RK_ASSERT (component);
 
-	bool ok = component->unserializeState (serialized_settings);
+	RKComponent::UnserializeError error = component->unserializeState (serialized_settings);
+	if (error == RKComponent::NoError) return true;
+	if (error == RKComponent::BadFormat) {
+		KMessageBox::error (component, i18n ("Bad serialization format while trying to invoke plugin '%1'. Please contact the RKWard team (Help->About RKWard->Authors).").arg (component_id), i18n ("Bad serialization format"));
+		return false;
+	}
+	if (error == RKComponent::NotAllSettingsApplied) {
+		KMessageBox::information (component, i18n ("Not all specified settings could be applied. Most likely this is because some R objects are no longer present in your current workspace."), i18n ("Not all settings applied"));
+		// TODO: Don't show again-box?
+		// not considered an error
+	}
+
 #warning TODO: support automatic submit
-	return ok;
+	return true;
 }
 
 int RKComponentMap::addPluginMap (const QString& plugin_map_file) {
