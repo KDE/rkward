@@ -20,6 +20,25 @@ function getPreview () {
 	}
 }
 
+function makeHeaderCode ($title, $parameters=array ()) {
+	echo ("rk.header(\"" . escapeQuotes ($title) . "\"");
+	if (!empty ($parameters)) {
+		echo (", parameters=list(");
+		$first = true;
+		foreach ($parameters as $key => $value) {
+			if ($first) $first = false;
+			else echo (",\n\t");
+			echo ("\"" . escapeQuotes ($key) . "\", \"" . escapeQuotes ($value) . "\"");
+		}
+		echo (")");
+	}
+	echo (")\n");
+}
+
+function escapeQuotes ($input) {
+	return (str_replace ("\"", "\\\"", $input));
+}
+
 function getInput ($prompt) {
 	fputs (STDOUT, "#RKEND#\n" . $prompt . "#RKQEND#\n");
 	fflush (STDOUT);
