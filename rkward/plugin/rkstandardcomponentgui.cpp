@@ -31,6 +31,7 @@
 #include <QCloseEvent>
 
 #include "rkcomponentmap.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
@@ -161,7 +162,8 @@ void RKStandardComponentGUI::ok () {
 	command.clear ();
 	RKComponentHandle *handle = component->getHandle ();
 	if (handle->isAccessible ()) {
-		command.append ("\n.rk.rerun.plugin.link(plugin=\"" + RKComponentMap::getComponentId (handle) + "\", settings=\"" + component->serializeState () + "\", label=\"" + i18n ("Run again") + "\")\n");
+		command.append ("\n.rk.rerun.plugin.link(plugin=\"" + RKComponentMap::getComponentId (handle) + "\", settings=\"" + RKCommonFunctions::escape (component->serializeState ()) + "\", label=\"" + i18n ("Run again") + "\")\n");
+		// NOTE: the serialized state is quote-escape *again* for passing to R.
 	}
 	// separator line
 	command.append (".rk.make.hr()\n");

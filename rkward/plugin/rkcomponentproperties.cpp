@@ -814,7 +814,7 @@ bool RKComponentPropertyRObjects::setValue (const QString &value) {
 	QStringList slist = value.split (separator, QString::SkipEmptyParts);
 
 	for (QStringList::const_iterator it = slist.begin (); it != slist.end (); ++it) {
-		RObject *obj = RObjectList::getObjectList ()->findObject (value);
+		RObject *obj = RObjectList::getObjectList ()->findObject (*it);
 		if (obj && isObjectValid (obj)) {
 			object_list.append (obj);
 			listenForObject (obj);
@@ -834,7 +834,7 @@ bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
 	QStringList slist = value.split (separator, QString::SkipEmptyParts);
 
 	for (QStringList::const_iterator it = slist.begin (); it != slist.end (); ++it) {
-		RObject *obj = RObjectList::getObjectList ()->findObject (value);
+		RObject *obj = RObjectList::getObjectList ()->findObject (*it);
 		if (!(obj && isObjectValid (obj))) {
 			return false;
 		}
