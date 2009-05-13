@@ -118,10 +118,9 @@ void REnvironmentObject::updateFromR (RCommandChain *chain, const QStringList &c
 
 	// which ones are new in the list?
 	for (int i = current_symbols.count () - 1; i >= 0; --i) {
-		if (!findChildByName (current_symbols[i])) {
-			RObject *child = createPendingChild (current_symbols[i], i, false, false);
-			child->updateFromR (chain);
-		}
+		RObject *child = findChildByName (current_symbols[i]);
+		if (!child) child = createPendingChild (current_symbols[i], i, false, false);
+		if (child->isPending ()) child->updateFromR (chain);
 	}
 
 	RK_ASSERT ((debug_baseline + current_symbols.count ()) == childmap.size ());
