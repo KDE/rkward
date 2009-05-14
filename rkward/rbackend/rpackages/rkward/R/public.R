@@ -311,9 +311,8 @@
 		nfile = tempfile()
 		env = environment (file)
 		dput (file, file=nfile)
-		file = nfile
-		.Call("rk.edit.files", file, title, name)
-		x <- dget (file)
+		.Call("rk.edit.files", nfile, title, name)
+		x <- dget (nfile)
 		environment (x) <- env
 		return (x)
 	}
