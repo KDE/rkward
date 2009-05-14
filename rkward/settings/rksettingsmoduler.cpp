@@ -47,6 +47,9 @@ int RKSettingsModuleR::options_expressions;
 int RKSettingsModuleR::options_digits;
 bool RKSettingsModuleR::options_checkbounds;
 QString RKSettingsModuleR::options_printcmd;
+QString RKSettingsModuleR::options_editor;
+// static constants
+QString RKSettingsModuleR::builtin_editor = "<rkward>";
 
 RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -114,7 +117,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	grid->addWidget (new QLabel (i18n ("Keep comments in packages"), this), ++row, 0);
 	keepsourcepkgs_input = new QComboBox (this);
 	keepsourcepkgs_input->setEditable (false);
-	keepsourcepkgs_input->addItem (i18n ("TRUE)"), true);
+	keepsourcepkgs_input->addItem (i18n ("TRUE"), true);
 	keepsourcepkgs_input->addItem (i18n ("FALSE (default)"), false);
 	keepsourcepkgs_input->setCurrentIndex (options_keepsourcepkgs ? 0 : 1);
 	connect (keepsourcepkgs_input, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
@@ -136,7 +139,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	grid->addWidget (new QLabel (i18n ("Check vector bounds (warn)"), this), ++row, 0);
 	checkbounds_input = new QComboBox (this);
 	checkbounds_input->setEditable (false);
-	checkbounds_input->addItem (i18n ("TRUE)"), true);
+	checkbounds_input->addItem (i18n ("TRUE"), true);
 	checkbounds_input->addItem (i18n ("FALSE (default)"), false);
 	checkbounds_input->setCurrentIndex (options_checkbounds ? 0 : 1);
 	connect (checkbounds_input, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
@@ -146,6 +149,17 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	printcmd_input = new QLineEdit (options_printcmd, this);
 	connect (printcmd_input, SIGNAL (textChanged (const QString &)), this, SLOT (textChanged (const QString &)));
 	grid->addWidget (printcmd_input, row, 1);
+
+	grid->addWidget (new QLabel (i18n ("Editor command"), this), ++row, 0);
+	editor_input = new QComboBox (this);
+	editor_input->setEditable (true);
+	editor_input->addItem (builtin_editor);
+	if (options_editor != builtin_editor) {
+		editor_input->addItem (options_editor);
+		editor_input->setCurrentIndex (1);
+	}
+	connect (editor_input, SIGNAL (editTextChanged (const QString &)), this, SLOT (textChanged (const QString &)));
+	grid->addWidget (editor_input, row, 1);
 
 	main_vbox->addStretch ();
 }
@@ -193,6 +207,7 @@ void RKSettingsModuleR::applyChanges () {
 	options_digits = digits_input->value ();
 	options_checkbounds = checkbounds_input->itemData (checkbounds_input->currentIndex ()).toBool ();
 	options_printcmd = printcmd_input->text ();
+	options_editor = editor_input->currentText ();
 
 // apply run time options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
@@ -220,6 +235,8 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	if (options_checkbounds) tf = "TRUE"; else tf = "FALSE";
 	list.append ("options (checkbounds=" + tf + ")\n");
 	list.append ("options (printcmd=\"" + options_printcmd + "\")\n");
+	if (options_editor == builtin_editor) list.append ("options (editor=rk.edit.files)\n");
+	else list.append ("options (editor=\"" + options_editor + "\")\n");
 
 #warning TODO make configurable
 	list.append ("options (device=\"rk.screen.device\")\n");
@@ -250,6 +267,7 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	cg.writeEntry ("digits", options_digits);
 	cg.writeEntry ("check.bounds", options_checkbounds);
 	cg.writeEntry ("printcmd", options_printcmd);
+	cg.writeEntry ("editor", options_editor);
 }
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
@@ -267,6 +285,7 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	options_digits = cg.readEntry ("digits", 7);
 	options_checkbounds = cg.readEntry ("check.bounds", false);
 	options_printcmd = cg.readEntry ("printcmd", "kprinter");
+	options_editor = cg.readEntry ("editor", builtin_editor);
 }
 
 //#################################################

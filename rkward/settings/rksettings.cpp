@@ -2,7 +2,7 @@
                           rksettings  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2008, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -70,6 +70,7 @@ RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 	setFaceType (KPageDialog::Tree);
 	setCaption (i18n ("Settings"));
 	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel | KDialog::Help);
+	enableButtonApply (false);
 
 	setAttribute (Qt::WA_DeleteOnClose, true);
 

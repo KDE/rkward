@@ -1,4 +1,4 @@
-- Fixed: Make built-in editor work again for file.edit ()	TODO: set options("editor")
+- Fixed: Make built-in editor work again for file.edit ()
 - (Almost) all plugins now write a header to the output window		TODO: work in progress; which ones should not?
 - Add makeHeaderCode convenience function for use inside plugins	TODO: document
 - Adjust some icons

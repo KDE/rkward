@@ -69,6 +69,7 @@ private:
 	KIntSpinBox *digits_input;
 	QComboBox *checkbounds_input;
 	QLineEdit *printcmd_input;
+	QComboBox *editor_input;
 
 	static QString options_outdec;
 	static int options_width;
@@ -81,6 +82,10 @@ private:
 	static int options_digits;
 	static bool options_checkbounds;
 	static QString options_printcmd;
+	static QString options_editor;
+
+// constants
+	static QString builtin_editor;
 };
 
 /**
