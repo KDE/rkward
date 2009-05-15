@@ -28,6 +28,8 @@ class KHTMLPart;
 class KActionCollection;
 class KRecentFilesAction;
 class QAction;
+class QDomElement;
+class RKComponentHandle;
 
 /**
 	\brief Show html files.
@@ -38,30 +40,41 @@ It is used as a base for several purposes: Display R-help (in HTML format), disp
 
 @author Pierre Ecochard
 */
-class RKHTMLWindow : public RKMDIWindow {
+class RKHTMLWindow : public RKMDIWindow, public KXMLGUIClient {
 	Q_OBJECT
-protected:
-/** constructor. Protected. Use derived classes instead, or derive your own class.
-@param parent parent QWidget, usually RKGlobals::rkApp () or similar */
-	RKHTMLWindow (QWidget *parent = 0);
-/** destructor */
-	virtual ~RKHTMLWindow ();
 public:
+	enum WindowMode {
+		Undefined,
+		HTMLHelpWindow,
+		HTMLOutputWindow
+	};
+
+/** constructor. 
+@param parent parent QWidget, usually RKGlobals::rkApp () or similar */
+	RKHTMLWindow (QWidget *parent, WindowMode mode=HTMLHelpWindow);
+/** destructor */
+	~RKHTMLWindow ();
 /** open given URL. Returns false, if the URL is not an existing local file. Loading a non-local URL may succeed, even if this returns false! */
-	virtual bool openURL (const KUrl &url);
+	bool openURL (const KUrl &url);
 /** takes care of special handling, if the url is an rkward://-url. Does nothing and returns false, otherwise. */
-	virtual bool handleRKWardURL (const KUrl &url);
-/** Reload current page.*/
-	virtual void refresh ();
-/** Add common actions to the given action collection (currently only "copy")
-@param action_collection A KActionCollection to insert actions in. */
-	void addCommonActions (KActionCollection *action_collection);
+	bool handleRKWardURL (const KUrl &url);
+/** initialize all actions */
+	void initActions ();
 
 	QString getDescription ();
 	bool isModified ();
 /** Return current url */
 	KUrl url ();
 	void doGotoAnchor (const QString &anchor_name);
+
+	static void initializeOutputWindow ();
+
+/** return a pointer to the current output. If there is no output window, one will be created (and shown) automatically */
+	static RKHTMLWindow* getCurrentOutput ();
+/** refresh output window.
+@param show Show the window, if not currently shown (this actually means: it is created if not currently existant)
+@param raise Raise the window (if currently shown, or show==true) */
+	static RKHTMLWindow* refreshOutput (bool show, bool raise, bool only_if_modified);
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
 	void slotOpenUrl (const KUrl & url, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &);
@@ -70,6 +83,10 @@ public slots:
 	void slotBack ();
 	void selectionChanged ();
 	void runSelection ();
+/** flush current output. */
+	void flushOutput ();
+/** Reload current page.*/
+	void refresh ();
 private slots:
 /** This slot is called when the new page has finished loading. Sets scroll position to scroll_position */
 	void loadDone ();
@@ -83,98 +100,53 @@ protected:
 	virtual void updateCaption (const KUrl &url);
 /** called from openURL. Takes care of updating caption, and updating back/forward actions, if available */
 	void changeURL (const KUrl &url);
-protected:
+private:
 	QList<KUrl> url_history;
 	int current_history_position;
 	bool url_change_is_from_history;	// dirty!!!
 
-	QAction *back;
-	QAction *forward;
-	QAction *print;
+	// general actions
 	QAction *run_selection;
-	QString goto_anchor_name;
-};
-
-/**
-	\brief RKWard output window.
-
-Specialized RKHTMLWindow used for RKWard output.
-
-@author Thomas Friedrichsmeier
-*/
-class RKOutputWindow : public RKHTMLWindow, public KXMLGUIClient {
-	Q_OBJECT
-public:
-/** constructor.
-@param parent parent QWidget, usually RKGlobals::rkApp () or similar */
-	RKOutputWindow (QWidget *parent = 0);
-/** destructor */
-	~RKOutputWindow ();
-
-/** reimplemented to show "output is empty" message, if file could not be opened */
-	bool openURL (const KUrl &url);
-/** reimplemented to scroll to the bottom of the page */
-	void refresh ();
-/** refresh output window.
-@param show Show the window, if not currently shown (this actually means: it is created if not currently existant)
-@param raise Raise the window (if currently shown, or show==true) */
-	static RKOutputWindow* refreshOutput (bool show, bool raise, bool only_if_modified);
-
-/** return a pointer to the current output. If there is no output window, one will be created (and shown) automatically */
-	static RKOutputWindow* getCurrentOutput ();
-
-	static void initialize ();
-
-	QString getDescription ();
-public slots:
-/** flush current output. */
-	void flushOutput ();
-/** Slot wrapper around refreshOutput (bool, bool, bool). */
-	void refreshOutput ();
-protected:
-/** reimplemented to never change the caption (it's always "Output") */
-	void updateCaption (const KUrl &url);
-private:
-/** print a message "Output is empty" to the output window. Used internally, if loading output fails*/
-	void showOutputEmptyMessage ();
-
+	QAction* print;
+	// actions in output window mode
 	QAction* outputFlush;
 	QAction* outputRefresh;
+	// actions in help window mode
+	QAction *back;
+	QAction *forward;
 
-	static RKOutputWindow* current_output;
-/** In case the output is empty (i.e. output file does not exist), we need to store, where the output *would* be, if it existed, so we can properly refresh the output */
-	KUrl output_url;
+	QString goto_anchor_name;
+	KUrl current_url;
+
+	WindowMode window_mode;
+	void useMode (WindowMode);
+
+	void fileDoesNotExistMessage ();
+
+	static RKHTMLWindow *current_output;
 	static QDateTime last_refresh_time;
-};
 
-class QDomElement;
-class RKComponentHandle;
-class XMLHelper;
-
-/**
-	\brief Show html help files.
-
-This class wraps a khtml part.
-
-Specialized HTML window for displaying R help pages.
-
-@author Pierre Ecochard
-*/
-class RKHelpWindow : public RKHTMLWindow, public KXMLGUIClient {
-public:
-/** constructor.
-@param parent parent QWidget, usually RKGlobals::rkApp () or similar */
-	RKHelpWindow (QWidget *parent = 0);
-/** destructor */
-	~RKHelpWindow ();
-
-	bool handleRKWardURL (const KUrl &url);
-private:
+	// for dealing with rkward://[page|component]-pages
 	bool renderRKHelp (const KUrl &url);
 	QString renderHelpFragment (QDomElement &fragment);
 	void prepareHelpLink (QDomElement *link_element);
 	RKComponentHandle *componentPathToHandle (QString path);
 	QString startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names);
+
 };
+
+/**
+	\brief Renders RKWard help pages.
+
+@author Thomas Friedrichsmeier
+*/
+class RKHelpRenderer {
+public:
+/** ctor */
+	RKHelpRenderer () {};
+/** destructor */
+	~RKHelpRenderer () {};
+};
+
 
 #endif

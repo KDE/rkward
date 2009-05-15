@@ -25,6 +25,8 @@
 #include <kvbox.h>
 #include <kglobalsettings.h>
 #include <kactioncollection.h>
+#include <krun.h>
+#include <kmimetype.h>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
@@ -190,6 +192,33 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, KMultiTabBar::KMult
 	}
 }
 
+bool RKWorkplace::openAnyUrl (const KUrl &url) {
+	RK_TRACE (APP);
+
+#warning TODO support rkward:\/\/-protocol, here, too
+	if (url.isLocalFile ()) {
+		KMimeType::Ptr mimetype = KMimeType::findByUrl (url);
+		if (mimetype->is ("text/html")) {
+			openHelpWindow (url, true);
+			return true;	// TODO
+		}
+		if (url.fileName ().toLower ().endsWith (".rdata")) {
+			RKWardMainWindow::getMain ()->fileOpenAskSave (url);
+			return true;	// TODO
+		}
+		if (mimetype->name ().startsWith ("text")) {
+			return (openScriptEditor (url, false));
+		}
+	}
+
+	if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.prettyUrl ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
+		return false;
+	}
+	KRun *runner = new KRun (url, topLevelWidget());		// according to KRun-documentation, KRun will self-destruct when done.
+	runner->setRunExecutables (false);
+	return false;
+}
+
 bool RKWorkplace::openScriptEditor (const KUrl &url, bool use_r_highlighting, bool read_only, const QString &force_caption) {
 	RK_TRACE (APP);
 
@@ -232,14 +261,14 @@ void RKWorkplace::openHelpWindow (const KUrl &url, bool only_once) {
 	if (only_once) {
 		RKWorkplaceObjectList help_windows = getObjectList (RKMDIWindow::HelpWindow, RKMDIWindow::AnyWindowState);
 		for (RKWorkplaceObjectList::const_iterator it = help_windows.constBegin (); it != help_windows.constEnd (); ++it) {
-			if (static_cast<RKHelpWindow *> (*it)->url ().equals (url, KUrl::CompareWithoutTrailingSlash | KUrl::CompareWithoutFragment)) {
+			if (static_cast<RKHTMLWindow *> (*it)->url ().equals (url, KUrl::CompareWithoutTrailingSlash | KUrl::CompareWithoutFragment)) {
 				(*it)->activate ();
 				return;
 			}
 		}
 	}
 
-	RKHelpWindow *hw = new RKHelpWindow (view ());
+	RKHTMLWindow *hw = new RKHTMLWindow (view (), RKHTMLWindow::HTMLHelpWindow);
 	hw->openURL (url);
 	addWindow (hw);
 }
@@ -247,15 +276,15 @@ void RKWorkplace::openHelpWindow (const KUrl &url, bool only_once) {
 void RKWorkplace::openOutputWindow (const KUrl &url) {
 	RK_TRACE (APP);
 
-	RKOutputWindow::refreshOutput (true, true, false);
-	if (!windows.contains (RKOutputWindow::getCurrentOutput ())) {
-		addWindow (RKOutputWindow::getCurrentOutput ());
+	RKHTMLWindow::refreshOutput (true, true, false);
+	if (!windows.contains (RKHTMLWindow::getCurrentOutput ())) {
+		addWindow (RKHTMLWindow::getCurrentOutput ());
 	}
 }
 
 void RKWorkplace::refreshOutputWindow () {
 	RK_TRACE (APP);
-	RKOutputWindow *window = RKOutputWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise (), true);
+	RKHTMLWindow *window = RKHTMLWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise (), true);
 	if (window) {
 		if (!windows.contains (window)) {
 			addWindow (window);

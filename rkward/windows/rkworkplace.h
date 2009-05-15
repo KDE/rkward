@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -89,6 +89,9 @@ public:
 	void detachWindow (RKMDIWindow *window, bool was_attached=true);
 /** @returns a pointer to the current window. state specifies, which windows should be considered. */
 	RKMDIWindow *activeWindow (RKMDIWindow::State state);
+
+/** Opens the given url in the appropriate way. */
+	bool openAnyUrl (const KUrl &url);
 
 /** Opens a new script editor
 @param url URL to load. Default option is to open an empty document

@@ -2,7 +2,7 @@
                           rkfilebrowser  -  description
                              -------------------
     begin                : Thu Apr 26 2007
-    copyright            : (C) 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2008, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -22,7 +22,6 @@
 #include <kurlcompletion.h>
 #include <kcompletionbox.h>
 #include <ktoolbar.h>
-#include <krun.h>
 #include <kactioncollection.h>
 
 #include <qdir.h>
@@ -167,20 +166,7 @@ bool RKFileBrowserWidget::eventFilter (QObject* o, QEvent* e) {
 void RKFileBrowserWidget::fileActivated (const KFileItem& item) {
 	RK_TRACE (APP);
 
-	QString mimetype = item.mimetype ();
-	if (mimetype.startsWith ("text/")) {
-		if (mimetype == "text/html") {
-			RKWorkplace::mainWorkplace ()->openHelpWindow (item.url (), true);
-		} else {
-			RKWorkplace::mainWorkplace ()->openScriptEditor (item.url ());
-		}
-	} else {
-		if (item.name (true).endsWith (".rdata")) {
-			RKWardMainWindow::getMain ()->fileOpenAskSave (item.url ());
-		} else {
-			new KRun (item.url (), topLevelWidget(), item.mode (), item.isLocalFile ());
-		}
-	}
+	RKWorkplace::mainWorkplace ()->openAnyUrl (item.url ());
 }
 
 #include "rkfilebrowser.moc"
