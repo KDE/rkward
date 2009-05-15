@@ -14,15 +14,7 @@ Compilation
 
 IMPORTANT: You will need to have the R shared library installed. This is typically located in a place like /usr/lib/R/lib/libR.so. Unfortunately, some distributions do not yet ship their R binary with the shared library. In those (rare) cases, you'll have to compile and install R on your own with the option --enable-R-shlib.
 
-Compilation can be done "in-source" or "out-of-source" (recommended).
-
-For an in-source build, do
-> cd path_to_rkward_sources
-> cmake . [options]		# see below
-> make
-> sudo make install
-
-For an out-of-source build, do
+The recommended way to build from source is:
 > mkdir build; cd build
 > cmake path_to_rkward_sources [options]	# see below
 > make
@@ -39,13 +31,12 @@ The cmake command offers a number of parameters to control the build process. So
 -DCMAKE_BUILD_TYPE
 	type of build. Useful settings include -DCMAKE_BUILD_TYPE=Release and -DCMAKE_BUILD_TYPE=debugfull
 
-
 In some cases you may want to set the following options:
 
 -DR_EXECUTABLE
-	path to the R executable. You may want to set this, if you have multiple versions of R installed, or R is not in your path. Example -DR_EXECUTABLE=/usr/bin/R
+	path to the R executable. You may want to set this, if you have multiple versions of R installed, or R is not in your path. Example: -DR_EXECUTABLE=/usr/bin/R
 -DR_LIBDIR
-	directory where R packages should be installed. Generally, this option should not be needed.
+	directory where R packages should be installed. Generally, this option is only of interest to packagers.
 -DR_HOME
 	R home directory. Almost certainly this option is not needed.
 -DR_INCLUDE
@@ -53,14 +44,15 @@ In some cases you may want to set the following options:
 
 Further generic options are listed on http://www.cmake.org/Wiki/CMake_Useful_Variables .
 
+
 Installation
 ==================
 
-You _have to_ install RKWard. Otherwise RKWard will be missing important menu-options, may behave strangely, or may not run at all.
+As a last step, you _have to_ run 'make install'. Otherwise RKWard will be missing important menu-options, may behave strangely, or may not run at all.
 As root run:
-# make install
+> make install
 
-Make sure you have set the correct path in cmake (the -DCMAKE_INSTALL_PREFIX option)
+Make sure you have set the correct path in cmake (the -DCMAKE_INSTALL_PREFIX option).
 
 
 Running
@@ -68,5 +60,4 @@ Running
 
 For now it's recommended to run RKWard from the command-line for debug-output. For the few available command-line options see
 
-# rkward --help
-
+> rkward --help
