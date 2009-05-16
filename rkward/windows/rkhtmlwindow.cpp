@@ -253,9 +253,16 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 	RK_TRACE (APP);
 
 	if (handleRKWardURL (url)) return true;
+	if (window_mode == HTMLOutputWindow) {
+		// output window should not change url after initialization
+		if ((url != current_url) && (!current_url.isEmpty ())) {
+			RK_ASSERT (false);
+			return false;
+		}
+	}
 
-	// asyncrhonously dealing with non-local files would be quite a task. We chose the simple answer instead...
-	if (!(url.isLocalFile () && KMimeType::findByUrl (url)->is ("text/html"))) {
+	// this also means, that we bail out on almost all non-local files.
+	if (!KMimeType::findByUrl (url)->is ("text/html")) {
 		RKWorkplace::mainWorkplace ()->openAnyUrl (url);
 		return true;
 	}

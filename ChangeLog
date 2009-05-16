@@ -1,4 +1,4 @@
-- Fixed: Opening most file type (e.g. PDF) from the help browser was broken	TODO: backport in basic form
+- Fixed: Opening most file types (e.g. PDF) from the help browser was broken	TODO: backport in basic form
 - Fixed: Make built-in editor work again for file.edit ()
 - (Almost) all plugins now write a header to the output window		TODO: work in progress; which ones should not?
 - Add convenience function "makeHeaderCode()" for use inside plugins	TODO: document, adjust for tests (->rk.describe.alternative())
