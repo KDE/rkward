@@ -1,3 +1,5 @@
+- Fix: Do not try to open mimetypes other than text/html directly in the help browser.
+
 --- Version 0.4.9b - May-10-2009
 - Workaround: Deactivate all filemanagement shortcuts in the File Browser. These would sometimes trigger when they should not.
 - Fix crash while inserting rows in a data.frame with string variables

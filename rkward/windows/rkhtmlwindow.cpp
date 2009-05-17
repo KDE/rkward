@@ -24,6 +24,7 @@
 #include <kmessagebox.h>
 #include <krun.h>
 #include <kparts/partmanager.h>
+#include <kmimetype.h>
 
 #include <qfileinfo.h>
 #include <qwidget.h>
@@ -164,8 +165,8 @@ bool RKHTMLWindow::openURL (const KURL &url) {
 	RK_TRACE (APP);
 
 	// asyncrhonously dealing with non-local files would be quite a task. We chose the simple answer instead...
-	if (!url.isLocalFile ()) {
-		if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file. Do you want to open the url in the default application?").arg (url.prettyURL ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
+	if (!(url.isLocalFile () && KMimeType::findByURL (url)->is ("text/html"))) {
+		if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file or not HTML. Do you want to open the url in the default application?").arg (url.prettyURL ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
 			return false;
 		}
 		KRun *runner = new KRun (url);		// according to KRun-documentation, KRun will self-destruct when done.
