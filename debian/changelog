@@ -1,3 +1,11 @@
+rkward (0.5.0d-3) unstable; urgency=low
+
+  * build-depend on libx11-dev
+    closes: #529024
+  * use dh_prep instead of deprecated dh_clean -k
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 19 May 2009 14:30:00 +0200
+
 rkward (0.5.0d-2) unstable; urgency=low
 
   * bumped standards version to 3.8.1
