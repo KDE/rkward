@@ -1,4 +1,5 @@
 - Fix: Do not try to open mimetypes other than text/html directly in the help browser.
+- Fixed: Screen device in rkward was not seen as interactive by R
 
 --- Version 0.4.9b - May-10-2009
 - Workaround: Deactivate all filemanagement shortcuts in the File Browser. These would sometimes trigger when they should not.

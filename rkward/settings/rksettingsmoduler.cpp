@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -217,7 +217,9 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	list.append ("options (printcmd=\"" + options_printcmd + "\")\n");
 
 #warning TODO make configurable
-	list.append ("options (device=rk.screen.device)\n");
+	list.append ("options (device=\"rk.screen.device\")\n");
+	// register as interactive
+	list.append ("try (deviceIsInteractive(name=\"rk.screen.device\"))\n");
 
 	return list;
 }
