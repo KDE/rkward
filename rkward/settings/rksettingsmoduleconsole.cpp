@@ -2,7 +2,7 @@
                           rksettingsmoduleconsole  -  description
                              -------------------
     begin                : Sun Oct 16 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -27,6 +27,7 @@
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <QVBoxLayout>
+#include <QComboBox>
 
 #include "../rbackend/rcommand.h"
 #include "../rkglobals.h"
@@ -38,7 +39,7 @@ bool RKSettingsModuleConsole::save_history;
 uint RKSettingsModuleConsole::max_history_length;
 uint RKSettingsModuleConsole::max_console_lines;
 bool RKSettingsModuleConsole::pipe_user_commands_through_console;
-bool RKSettingsModuleConsole::add_piped_commands_to_history;
+RKSettingsModuleConsole::PipedCommandsHistoryMode RKSettingsModuleConsole::add_piped_commands_to_history;
 bool RKSettingsModuleConsole::context_sensitive_history_by_default;
 
 RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
@@ -70,9 +71,13 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 	connect (pipe_user_commands_through_console_box, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
 	vbox->addWidget (pipe_user_commands_through_console_box);
 
-	add_piped_commands_to_history_box = new QCheckBox (i18n ("Also add those commands to console history"), this);
-	add_piped_commands_to_history_box->setChecked (add_piped_commands_to_history);
-	connect (add_piped_commands_to_history_box, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
+	vbox->addWidget (new QLabel (i18n ("Also add those commands to console history"), this));
+	add_piped_commands_to_history_box = new QComboBox (this);
+	add_piped_commands_to_history_box->insertItem ((int) DontAdd, i18n ("Do not add"));
+	add_piped_commands_to_history_box->insertItem ((int) AddSingleLine, i18n ("Add only if single line"));
+	add_piped_commands_to_history_box->insertItem ((int) AlwaysAdd, i18n ("Add all commands"));
+	add_piped_commands_to_history_box->setCurrentIndex ((int) add_piped_commands_to_history);
+	connect (add_piped_commands_to_history_box, SIGNAL (currentIndexChanged (int)), this, SLOT (changedSetting (int)));
 	add_piped_commands_to_history_box->setEnabled (pipe_user_commands_through_console_box->isChecked ());
 	vbox->addWidget (add_piped_commands_to_history_box);
 
@@ -114,7 +119,7 @@ void RKSettingsModuleConsole::saveSettings (KConfig *config) {
 	cg.writeEntry ("max history length", max_history_length);
 	cg.writeEntry ("max console lines", max_console_lines);
 	cg.writeEntry ("pipe user commands through console", pipe_user_commands_through_console);
-	cg.writeEntry ("add piped commands to history", add_piped_commands_to_history);
+	cg.writeEntry ("add piped commands to history", (int) add_piped_commands_to_history);
 	cg.writeEntry ("command history defaults to context sensitive", context_sensitive_history_by_default);
 }
 
@@ -127,7 +132,7 @@ void RKSettingsModuleConsole::loadSettings (KConfig *config) {
 	max_history_length = cg.readEntry ("max history length", 100);
 	max_console_lines = cg.readEntry ("max console lines", 500);
 	pipe_user_commands_through_console = cg.readEntry ("pipe user commands through console", true);
-	add_piped_commands_to_history = cg.readEntry ("add piped commands to history", true);
+	add_piped_commands_to_history = (PipedCommandsHistoryMode) cg.readEntry ("add piped commands to history", (int) AddSingleLine);
 	context_sensitive_history_by_default = cg.readEntry ("command history defaults to context sensitive", false);
 }
 
@@ -164,7 +169,7 @@ void RKSettingsModuleConsole::applyChanges () {
 	max_history_length = max_history_length_spinner->value ();
 	max_console_lines = max_console_lines_spinner->value ();
 	pipe_user_commands_through_console = pipe_user_commands_through_console_box->isChecked ();
-	add_piped_commands_to_history = add_piped_commands_to_history_box->isChecked ();
+	add_piped_commands_to_history = (PipedCommandsHistoryMode) add_piped_commands_to_history_box->currentIndex ();
 	context_sensitive_history_by_default = reverse_context_mode_box->isChecked ();
 }
 

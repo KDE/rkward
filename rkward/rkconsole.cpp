@@ -2,7 +2,7 @@
                           rkconsole  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -850,10 +850,12 @@ void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
 	} else {
 		QString command_string = command->command ();
 		QString text = command_string;
-		if (RKSettingsModuleConsole::addPipedCommandsToHistory()) {
-			QStringList lines = text.split ('\n');
-			for (QStringList::const_iterator it = lines.constBegin (); it != lines.constEnd (); ++it) {
-				addCommandToHistory (*it);
+		if (RKSettingsModuleConsole::addPipedCommandsToHistory() != RKSettingsModuleConsole::DontAdd) {
+			QStringList lines = text.split ('\n', QString::SkipEmptyParts);
+			if ((RKSettingsModuleConsole::addPipedCommandsToHistory() == RKSettingsModuleConsole::AlwaysAdd) || (lines.count () == 1)) {
+				for (int i = 0; i < lines.count (); ++i) {
+					addCommandToHistory (lines[i]);
+				}
 			}
 		}
 		text.replace ('\n', QString ("\n") + iprefix);

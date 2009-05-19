@@ -1,3 +1,4 @@
+- Add option to add only single line commands from script editor to the console history
 - Add action to change working directory to that of the current script file
 - Fixed: No warning was shown, when an open script file was changed on disk, externally
 - Fixed: Opening most file types (e.g. PDF) from the help browser was broken		TODO: output refresh is somewhat broken, now
