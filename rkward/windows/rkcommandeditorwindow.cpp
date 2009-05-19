@@ -66,6 +66,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	if (factory) {
 		// Create the part
 		m_doc = (Kate::Document *) factory->create( this, "katepart", "KParts::ReadWritePart" );
+		m_doc->setFileChangedDialogsActivated (true);
 		RK_ASSERT (m_doc);
 		m_view = (Kate::View *) m_doc->widget();
 	}
