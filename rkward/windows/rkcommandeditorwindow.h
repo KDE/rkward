@@ -180,6 +180,8 @@ public slots:
 
 /** selection has changed. Enable / disable actions accordingly */
 	void selectionChanged (KTextEditor::View* view);
+/** change to the directory of the current script */
+	void setWDToScript ();
 protected:
 /** reimplemented from RKMDIWindow: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e);
@@ -225,6 +227,8 @@ private:
 	KAction* action_run_all;
 	KAction* action_run_selection;
 	KAction* action_run_line;
+
+	KAction* action_setwd_to_script;
 
 	KAction* action_help_function;
 };

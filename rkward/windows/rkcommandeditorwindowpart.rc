@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.5.0">
+<kpartgui name="rkward" version="0.5.1">
 	<MenuBar>
 		<Menu name="edit" noMerge="1"><text>&amp;Edit</text>
 			<Menu name="tools"><text>&amp;Tools Move</text>
@@ -17,6 +17,7 @@
 			<Separator/>
 			<Action name="run_block"/>
 			<Separator/>
+			<Action name="setwd_to_script"/>
 		</Menu>
 		<Menu name="settings"><text>&amp;Settings</text>
 			<Action name="configure_commandeditor"></Action>
@@ -31,6 +32,8 @@
 		<Action name="run_all"/>
 		<Separator/>
 		<Action name="run_block"/>
+		<Separator/>
+		<Action name="setwd_to_script"/>
 	</ToolBar>
 	<Menu name="ktexteditor_popup">
 		<Merge/>
@@ -43,6 +46,8 @@
 			<Action name="run_all"/>
 			<Separator/>
 			<Action name="run_block"/>
+			<Separator/>
+			<Action name="setwd_to_script"/>
 		</Menu>
 		<Action name="function_reference"/>
 		<Separator/>

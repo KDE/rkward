@@ -168,7 +168,14 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	ac->addAction ("unmark_block", actionmenu_unmark_block);
 	connect (actionmenu_unmark_block->menu(), SIGNAL (aboutToShow()), this, SLOT (clearUnusedBlocks()));
 
-	QAction* action_configure = ac->addAction ("configure_commandeditor", this, SLOT (configure()));
+	action_setwd_to_script = ac->addAction ("setwd_to_script", this, SLOT (setWDToScript ()));
+	action_setwd_to_script->setText (i18n ("CD to this script"));
+#if KDE_IS_VERSION(4,3,0)
+	action_setwd_to_script->setHelpText (i18n ("Change the working directory to the directory of this script"));
+#endif
+	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
+
+	KAction* action_configure = ac->addAction ("configure_commandeditor", this, SLOT (configure()));
 	action_configure->setText (i18n ("Configure Script Editor"));
 }
 
@@ -311,8 +318,7 @@ bool RKCommandEditorWindow::openURL (const KUrl &url, bool use_r_highlighting, b
 }
 
 KUrl RKCommandEditorWindow::url () {
-	RK_TRACE (COMMANDEDITOR);
-
+//	RK_TRACE (COMMANDEDITOR);
 	return (m_doc->url ());
 }
 
@@ -335,12 +341,15 @@ void RKCommandEditorWindow::setText (const QString &text) {
 
 void RKCommandEditorWindow::updateCaption (KTextEditor::Document*) {
 	RK_TRACE (COMMANDEDITOR);
-	QString name = m_doc->url ().fileName ();
-	if (name.isEmpty ()) name = m_doc->url ().prettyUrl ();
+	QString name = url ().fileName ();
+	if (name.isEmpty ()) name = url ().prettyUrl ();
 	if (name.isEmpty ()) name = i18n ("Unnamed");
 	if (isModified ()) name.append (i18n (" [modified]"));
 
 	setCaption (name);
+
+	// Well, this does not really belong, here, but needs to happen on pretty much the same occastions:
+	action_setwd_to_script->setEnabled (!url ().isEmpty ());
 }
 
 void RKCommandEditorWindow::showHelp () {
@@ -424,6 +433,13 @@ bool RKCommandEditorWindow::provideContext (unsigned int line_rev, QString *cont
 	*context = m_doc->line (current_line_num - line_rev);
 
 	return true;
+}
+
+void RKCommandEditorWindow::setWDToScript () {
+	RK_TRACE (COMMANDEDITOR);
+
+	RK_ASSERT (!url ().isEmpty ());
+	RKConsole::pipeUserCommand (new RCommand ("setwd (\"" + url ().directory () + "\")", RCommand::User, i18n ("cd to current script directory")));
 }
 
 void RKCommandEditorWindow::runSelection() {

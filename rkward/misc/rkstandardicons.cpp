@@ -41,6 +41,7 @@ void RKStandardIcons::initIcons () {
 	icons[ActionRunAll] = QIcon (rkward_icon_base + "run_all.png");
 	icons[ActionRunLine] = QIcon (rkward_icon_base + "run_line.png");
 	icons[ActionRunSelection] = QIcon (rkward_icon_base + "run_selection.png");
+	icons[ActionCDToScript] = KIcon ("folder-txt");
 
 	icons[ActionDeleteRow] = KIcon ("no");
 	icons[ActionInsertRow] = KIcon ("edit-add");

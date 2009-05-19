@@ -476,7 +476,7 @@ if (compareVersion (paste (R.version$major, R.version$minor, sep="."), "2.4.0") 
 
 "setwd" <- function () {
 	eval (body (base::setwd))
-	.rk.do.call ("wdChange", NULL);
+	invisible (.rk.do.call ("wdChange", NULL));
 }
 formals (setwd) <- formals (base::setwd)
 

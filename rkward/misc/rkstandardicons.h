@@ -41,6 +41,7 @@ public:
 		ActionRunAll=0,
 		ActionRunLine,
 		ActionRunSelection,
+		ActionCDToScript,
 
 		ActionDeleteRow,
 		ActionInsertRow,
