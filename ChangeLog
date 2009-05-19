@@ -1,11 +1,12 @@
-- Fixed: Opening most file types (e.g. PDF) from the help browser was broken	TODO: backport in basic form
+- Fixed: Opening most file types (e.g. PDF) from the help browser was broken		TODO: output refresh is somewhat broken, now
 - Fixed: Make built-in editor work again for file.edit ()
 - (Almost) all plugins now write a header to the output window		TODO: work in progress; which ones should not?
 - Add convenience function "makeHeaderCode()" for use inside plugins	TODO: document, adjust for tests (->rk.describe.alternative())
 - Adjust some icons
+- Plugins can be invoked from R code (mostly for internal purposes)
 - Add "Run again" link for plugin generated output		TODO: revisit plugins without header
 - Fixed: All objects in .Globalenv would be revisited if a single object was added / removed		TODO: backport? (r2466, 2473)
-- Fixed: Screen device in rkward was not seen as interactive by R	TODO: backport (r2462)
+- Fixed: Screen device in rkward was not seen as interactive by R
 
 --- Version 0.5.0d - May-10-2009
 - Fixed: Container of detached windows would sometimes remain after reattaching

@@ -232,12 +232,15 @@ QString RKComponentMap::getComponentIdLocal (RKComponentHandle* component) {
 }
 
 //static
-bool RKComponentMap::invokeComponent (const QString &component_id, const QString &serialized_settings, bool dosubmit) {
+bool RKComponentMap::invokeComponent (const QString &component_id, const QStringList &serialized_settings, ComponentInvocationMode submit_mode, QString *message) {
 	RK_TRACE (PLUGIN);
 
+	QString _message;
 	RKComponentHandle *handle = getComponentHandle (component_id);
 	if (!handle) {
-		KMessageBox::sorry (RKWardMainWindow::getMain (), i18n ("You tried to invoke a plugin called '%1', but that plugin is currently unknown. Probably you need to load the corresponding PluginMap (Settings->Configure RKWard->Plugins), or perhaps the plugin was renamed.").arg (component_id), i18n ("No such plugin"));
+		_message = i18n ("You tried to invoke a plugin called '%1', but that plugin is currently unknown. Probably you need to load the corresponding PluginMap (Settings->Configure RKWard->Plugins), or perhaps the plugin was renamed.").arg (component_id);
+		if (message) *message = _message;
+		else KMessageBox::sorry (RKWardMainWindow::getMain (), _message, i18n ("No such plugin"));
 		return false;
 	}
 
@@ -245,18 +248,34 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	RK_ASSERT (component);
 
 	RKComponent::UnserializeError error = component->unserializeState (serialized_settings);
-	if (error == RKComponent::NoError) return true;
 	if (error == RKComponent::BadFormat) {
-		KMessageBox::error (component, i18n ("Bad serialization format while trying to invoke plugin '%1'. Please contact the RKWard team (Help->About RKWard->Authors).").arg (component_id), i18n ("Bad serialization format"));
+		_message = i18n ("Bad serialization format while trying to invoke plugin '%1'. Please contact the RKWard team (Help->About RKWard->Authors).").arg (component_id);
+		if (message) *message = _message;
+		else KMessageBox::error (component, _message, i18n ("Bad serialization format"));
 		return false;
 	}
 	if (error == RKComponent::NotAllSettingsApplied) {
-		KMessageBox::information (component, i18n ("Not all specified settings could be applied. Most likely this is because some R objects are no longer present in your current workspace."), i18n ("Not all settings applied"));
+		_message = i18n ("Not all specified settings could be applied. Most likely this is because some R objects are no longer present in your current workspace.");
+		if (message) *message = _message;
+		else KMessageBox::information (component, _message, i18n ("Not all settings applied"));
 		// TODO: Don't show again-box?
 		// not considered an error
 	}
 
-#warning TODO: support automatic submit
+	// Auto-Submit
+	if (submit_mode != ManualSubmit) {
+		// if the plugin takes longer than 5 seconds to settle, than that really is sort of buggy...
+		bool submit_ok = component->submit (5000);
+		if (submit_ok || (submit_mode == AutoSubmitOrFail)) component->close ();
+		if (!submit_ok) {
+			_message.append (i18n ("\nThe plugin could not be auto-submitted with these settings."));
+			if (message) *message = _message;
+			else KMessageBox::sorry (RKWardMainWindow::getMain (), _message, i18n ("Could not submit"));
+
+			return (submit_mode != AutoSubmitOrFail);
+		}
+	}
+
 	return true;
 }
 

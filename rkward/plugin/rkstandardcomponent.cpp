@@ -24,6 +24,7 @@
 #include <qtimer.h>
 #include <QVBoxLayout>
 #include <QGroupBox>
+#include <QTime>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -308,6 +309,33 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	changed ();
 }
 
+bool RKStandardComponent::submit (int max_wait) {
+	RK_TRACE (PLUGIN);
+
+	QTime t;
+	t.start ();
+	while ((handle_change_timer->isActive () || backend->isBusy ()) && (t.elapsed () < max_wait)) {
+		QCoreApplication::processEvents (QEventLoop::ExcludeUserInputEvents, (max_wait / 2));
+	}
+	if (handle_change_timer->isActive () || backend->isBusy ()) {
+		return false;
+	}
+	if (isSatisfied ()) {
+		gui->ok ();
+		return true;
+	}
+	return false;
+}
+
+void RKStandardComponent::close () {
+	RK_TRACE (PLUGIN);
+
+	if (gui && (!parentComponent ())) {
+		QTimer::singleShot (0, gui, SLOT (close ()));
+	} else {
+		RK_ASSERT (false);
+	}
+}
 
 void RKStandardComponent::changed () {
 	RK_TRACE (PLUGIN);

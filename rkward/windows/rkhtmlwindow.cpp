@@ -222,8 +222,7 @@ bool RKHTMLWindow::handleRKWardURL (const KUrl &url) {
 			QString path = url.path ();
 			if (path.startsWith ('/')) path = path.mid (1);
 			int sep = path.indexOf ('/');
-			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1));
-#warning TODO: error handling!
+			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1).split ('\n'));
 			return true;
 		} else {
 			bool ok = false;

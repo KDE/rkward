@@ -92,9 +92,9 @@ public:
 
 /** serialize the state of this component / property and all its children. Note: Only the non-internal property-values are serialzed, not the components / properties themselves. @see fetchPropertyValuesRecursive() */
 	QString serializeState () const;
-/** set values from a string created with serializeState(). @see serializeState (), @see setPropertyValues ().
+/** set values from a string created with serializeState() (split by "\n"). @see serializeState (), @see setPropertyValues ().
 @returns status code */
-	UnserializeError unserializeState (const QString &state);
+	UnserializeError unserializeState (const QStringList &state);
 protected:
 	QHash<QString, RKComponentBase*> child_map;
 	bool required;

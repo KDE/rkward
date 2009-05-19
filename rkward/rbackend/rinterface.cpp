@@ -32,6 +32,8 @@
 #include "../windows/rcontrolwindow.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandlog.h"
+#include "../plugin/rkcomponentmap.h"
+#include "../misc/rkcommonfunctions.h"
 
 #include "../windows/rkwindowcatcher.h"
 
@@ -372,6 +374,25 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		int res = KMessageBox::warningContinueCancel (0, i18n ("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please chose 'Cancel' now, then close the data windows, save, and retry."), i18n ("Locale change"));
 		if (res != KMessageBox::Continue) {
 			issueCommand (".rk.set.reply (FALSE)", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+		}
+	} else if (call == "doPlugin") {
+		if (request->call.count () >= 3) {
+			QString message;
+			bool ok;
+			RKComponentMap::ComponentInvocationMode mode = RKComponentMap::ManualSubmit;
+			if (request->call[2] == "auto") mode = RKComponentMap::AutoSubmit;
+			else if (request->call[2] == "test") mode = RKComponentMap::AutoSubmitOrFail;
+			ok = RKComponentMap::invokeComponent (request->call[1], request->call.mid (3), mode, &message);
+
+			if (message.isEmpty ()) {
+				issueCommand (".rk.set.reply (NULL)", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+			} else {
+				QString type = "warning";
+				if (!ok) type = "error";
+				issueCommand (".rk.set.reply (list (type=\"" + type + "\", message=\"" + RKCommonFunctions::escape (message) + "\"))", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+			}
+		} else {
+			RK_ASSERT (false);
 		}
 	} else {
 		issueCommand (".rk.set.reply (\"Unrecognized call '" + call + "'. Ignoring\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);

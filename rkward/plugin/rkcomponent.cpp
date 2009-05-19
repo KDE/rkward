@@ -94,14 +94,13 @@ QString RKComponentBase::serializeState () const {
 	return out;
 }
 
-RKComponent::UnserializeError RKComponentBase::unserializeState (const QString &state) {
+RKComponent::UnserializeError RKComponentBase::unserializeState (const QStringList &state) {
 	RK_TRACE (PLUGIN);
 
 	QMap<QString, QString> props;
 
-	QStringList lines = state.split ('\n');
-	for (int i = 0; i < lines.count (); ++i) {
-		QString line = lines[i];
+	for (int i = 0; i < state.count (); ++i) {
+		QString line = state[i];
 		int sep = line.indexOf ('=');
 		if (sep < 0) return BadFormat;
 		props.insert (RKCommonFunctions::unescape (line.left (sep)), RKCommonFunctions::unescape (line.mid (sep+1)));

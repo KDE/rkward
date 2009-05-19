@@ -318,3 +318,28 @@
 	}
 	.Call ("rk.edit.files", file, title, name)
 }
+
+"rk.call.plugin" <- function (plugin, ..., submit.mode = c ("manual", "auto", "test")) {
+	# prepare arguments
+	settings <- list (...)
+	callstrings <- list ()
+	callstrings[1] <- plugin
+	callstrings[2] <- match.arg (submit.mode)
+	if (length (settings) > 0) {
+		for (i in 1:length(settings)) {
+			callstrings[i+2] = paste (names(settings)[i], settings[i], sep="=")
+		}
+	}
+
+	# do call
+	res <- .rk.do.call ("doPlugin", callstrings)
+
+	# handle result
+	if (!is.null (res)) {
+		if (res$type == "warning") {
+			warning (res$message)
+		} else {
+			stop (res$message)
+		}
+	}
+}

@@ -2,7 +2,7 @@
                           rkstandardcomponent  -  description
                              -------------------
     begin                : Sun Feb 19 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -68,6 +68,12 @@ public:
 	QString getFilename () { return filename; };
 	RKComponentHandle *getHandle () { return handle; };
 	bool haveHelp () { return have_help; };
+/** tries to submit. Warning: This function waits for all changes to come in and may not return immediately!
+@param max_wait Maximum time to wait for changes to settle in msecs (approx.)
+@return true, if the plugin-code could be submitted */
+	bool submit (int max_wait=1000);
+/** convenience access function: closes the corresponding GUI */
+	void close ();
 public slots:
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */
