@@ -21,6 +21,7 @@
 #include <ktexteditor/configinterface.h>
 #include <ktexteditor/sessionconfiginterface.h>
 #include <ktexteditor/editorchooser.h>
+#include <ktexteditor/modificationinterface.h>
 
 #include <qlayout.h>
 #include <qapplication.h>
@@ -82,6 +83,12 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 
 	m_doc = editor->createDocument (this);
 	RK_ASSERT (m_doc);
+	// yes, we want to be notified, if the file has changed on disk.
+	// why, oh why is this not the default?
+	// this needs to be set *before* the view is created!
+	KTextEditor::ModificationInterface* em_iface = qobject_cast<KTextEditor::ModificationInterface*> (m_doc);
+	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
+	else RK_ASSERT (false);
 	m_view = m_doc->createView (this);
 
 	setFocusProxy (m_view);
