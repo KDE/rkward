@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.4.8">
+<kpartgui name="rkward" version="0.5.1">
 	<MenuBar>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="rkconsole_copy"></Action>
@@ -9,31 +9,24 @@
 			<Action name="rkconsole_clear"></Action>
 		</Menu>
 		<Menu name="run"><text>&amp;Run</text>
-			<Merge/>
-			<Separator/>
-			<Action name="run_selection"/>
-			<Action name="interrupt"/>
+			<Action name="interrupt" group="postrun_actions_merge"/>
 		</Menu>
 		<Menu name="settings"><text>&amp;Settings</text>
 			<Action name="rkconsole_configure"></Action>
 		</Menu>
-		<Menu name="help"><text>&amp;Help</text>
-			<Action name="function_reference"></Action>
-		</Menu>
 	</MenuBar>
 	<ToolBar fullWidth="true" name="mdiToolBar">
-		<Action name="run_selection"/>
-		<Action name="interrupt"/>
+		<Action name="interrupt" group="postrun_actions_merge"/>
 	</ToolBar>
 	<Menu name="rkconsole_context_menu">
 		<Action name="rkconsole_copy"></Action>
 		<Action name="rkconsole_copy_literal"></Action>
 		<Action name="rkconsole_paste"></Action>
 		<Separator/>
-		<Action name="function_reference"></Action>
-		<Separator/>
-		<Action name="run_selection"/>
+		<DefineGroup name="rkconsole_context_merge1" append="rkconsole_context_merge1"/>
 		<Action name="interrupt"></Action>
+		<Separator/>
+		<DefineGroup name="rkconsole_context_merge2" append="rkconsole_context_merge2"/>
 		<Separator/>
 		<Action name="rkconsole_clear"></Action>
 		<Separator/>

@@ -2,7 +2,7 @@
                           rkstandardactions  -  description
                              -------------------
     begin                : Sun Nov 18 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -21,17 +21,17 @@
 class KAction;
 class QString;
 class QObject;
-class KActionCollection;
+class RKMDIWindow;
 
 /** This namespace provides functions to generate some standard actions, i.e. actions which are needed at more than one place.
 
 @author Thomas Friedrichsmeier */
 namespace RKStandardActions {
-	KAction* runLine (KActionCollection* action_collection, const QString &name, const QObject *receiver=0, const char *member=0);
-	KAction* runSelection (KActionCollection* action_collection, const QString &name, const QObject *receiver=0, const char *member=0);
-	KAction* runAll (KActionCollection* action_collection, const QString &name, const QObject *receiver=0, const char *member=0);
+	KAction* runLine (RKMDIWindow *window, const QString &name, const QObject *receiver=0, const char *member=0);
+	KAction* runSelection (RKMDIWindow *window, const QString &name, const QObject *receiver=0, const char *member=0);
+	KAction* runAll (RKMDIWindow *window, const QString &name, const QObject *receiver=0, const char *member=0);
 
-	KAction* functionHelp (KActionCollection* action_collection, const QString &name, const QObject *receiver=0, const char *member=0);
+	KAction* functionHelp (RKMDIWindow *window, const QString &name, const QObject *receiver=0, const char *member=0);
 };
 
 #endif

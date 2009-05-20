@@ -1,6 +1,9 @@
 <!DOCTYPE kpartgui>
 <kpartgui name="rkward" version="0.5.1">
 <MenuBar>
+	<!-- The Main Window ui.rc is the only one, where merging happens, reliably. That is, why we need to define
+	     a lot of merge points, here, which can then be used be mdi windows and their children.
+	     That's a bit unfortunate, as it's rather non-modular, but so it is... -->
 	<Menu name="file"><text>&amp;File</text>
 		<Menu name="new_data"><text>&amp;New</text>
 			<Action name="new_data_frame"/>
@@ -29,15 +32,15 @@
 	<!-- These menus are actually defined in KParts. We also declare them here, to avoid menus jumping around -->
 	<Menu name="edit"><text>&amp;Edit</text>
 		<Action name="edit_menu_dummy"/>
-		<Merge/>
 	</Menu>
 	<Menu name="view"><text>&amp;View</text>
 		<Action name="view_menu_dummy"/>
-		<Merge/>
 	</Menu>
 	<Menu name="run"><text>&amp;Run</text>
 		<Action name="run_menu_dummy"/>
-		<Merge/>
+		<DefineGroup name="prerun_actions_merge" append="prerun_actions_merge"/>
+		<DefineGroup name="run_actions_merge" append="run_actions_merge"/>
+		<DefineGroup name="postrun_actions_merge" append="postrun_actions_merge"/>
 	</Menu>
 	
 	<Merge name="rkwardcomponents" />
@@ -67,9 +70,10 @@
 	</Menu>
 
 	<Menu name="help"><text>&amp;Help</text>
-		<Merge/>
+		<DefineGroup name="prehelp_actions_merge" append="prehelp_actions_merge"/>
+		<DefineGroup name="help_actions_merge" append="help_actions_merge"/>
+		<DefineGroup name="posthelp_actions_merge" append="posthelp_actions_merge"/>
 	</Menu>
-
 </MenuBar>
 <ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="new_data_frame"/>
@@ -80,5 +84,8 @@
 		<Action name="next_window"/>
 </ToolBar>
 <ToolBar fullWidth="true" name="mdiToolBar">
+	<DefineGroup name="pretoolbar_actions_merge" append="pretoolbar_actions_merge"/>
+	<DefineGroup name="toolbar_actions_merge" append="toolbar_actions_merge"/>
+	<DefineGroup name="posttoolbar_actions_merge" append="posttoolbar_actions_merge"/>
 </ToolBar>
 </kpartgui>
