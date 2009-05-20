@@ -2,7 +2,7 @@
                           rkcommandlog  -  description
                              -------------------
     begin                : Sun Nov 3 2002
-    copyright            : (C) 2002, 2004, 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -98,6 +98,8 @@ class RKCommandLogPart : public KParts::Part {
 public:
 	explicit RKCommandLogPart (RKCommandLog *for_log);
 	~RKCommandLogPart ();
+
+	void initActions ();
 public slots:
 	void doPopupMenu (const QPoint &pos);
 private:

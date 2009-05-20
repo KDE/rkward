@@ -33,4 +33,5 @@ INSTALL(FILES
 	rkcatchedx11windowpart.rc
 	rkcommandlogpart.rc
 	rktoplevelwindowgui.rc
+	rkstandardactions.rc
 	DESTINATION ${DATA_INSTALL_DIR}/rkward)

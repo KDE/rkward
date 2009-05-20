@@ -2,7 +2,7 @@
                           rkcommandlog  -  description
                              -------------------
     begin                : Sun Nov 3 2002
-    copyright            : (C) 2002, 2004, 2005 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -59,7 +59,9 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 	last_raised_command = 0;
 	command_input_shown = 0;
 
-	setPart (new RKCommandLogPart (this));
+	RKCommandLogPart *part = new RKCommandLogPart (this);
+	setPart (part);
+	part->initActions ();
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 
@@ -265,10 +267,16 @@ RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
 	RK_TRACE (APP);
 
 	setComponentData (KGlobal::mainComponent ());
-
 	setWidget (log = for_log);
-
 	setXMLFile ("rkcommandlogpart.rc");
+}
+
+RKCommandLogPart::~RKCommandLogPart () {
+	RK_TRACE (APP);
+}
+
+void RKCommandLogPart::initActions () {
+	RK_TRACE (APP);
 
 	copy = actionCollection ()->addAction (KStandardAction::Copy, "log_copy", log->getView (), SLOT (copy()));
 	actionCollection ()->addAction (KStandardAction::Clear, "log_clear", log, SLOT (clearLog()));
@@ -276,18 +284,12 @@ RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
 	QAction *configure = actionCollection ()->addAction ("log_configure", log, SLOT(configureLog()));
 	configure->setText (i18n ("Configure"));
 
-	run_selection = RKStandardActions::runSelection (actionCollection (), "log_run_selection", log, SLOT(runSelection()));
+	run_selection = RKStandardActions::runSelection (log, "run_selection", log, SLOT(runSelection()));
 
 	connect (log->getView (), SIGNAL (popupMenuRequest (const QPoint &)), this, SLOT (doPopupMenu (const QPoint &)));
 }
 
-RKCommandLogPart::~RKCommandLogPart () {
-	RK_TRACE (APP);
-}
-
 void RKCommandLogPart::doPopupMenu (const QPoint &pos) {
-	RK_TRACE (APP);
-
 	QMenu *menu = static_cast<QMenu *> (factory ()->container ("rkcommandlog_context_menu", this));
 	copy->setEnabled (log->getView ()->textCursor ().hasSelection ());
 	run_selection->setEnabled (log->getView ()->textCursor ().hasSelection ());

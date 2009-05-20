@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.4.8">
+<kpartgui name="rkward" version="0.5.1">
 	<MenuBar>
 		<Merge/>
 		<Menu name="window"><text>&amp;Window</text>
@@ -18,16 +18,19 @@
 			</Menu>
 			<Merge/>
 		</Menu>
+		<Menu name="settings"><text>&amp;Settings</text>
+			<Action name="options_configure_keybinding"/>
+		</Menu>
 		<Menu name="help"><text>&amp;Help</text>
-			<Action name="rkward_help"/>
-			<Action name="whats_this"/>
-			<Separator/>
-			<Action name="invoke_r_help"/>
-			<Action name="show_help_search"/>
-			<Action name="report_bug"/>
-			<Separator/>
-			<Action name="about_app"/>
-			<Merge/>
+			<Action name="rkward_help" group="prehelp_actions_merge"/>
+			<Action name="whats_this" group="prehelp_actions_merge"/>
+			<Separator group="prehelp_actions_merge"/>
+			<Action name="invoke_r_help" group="prehelp_actions_merge"/>
+
+			<Action name="show_help_search" group="posthelp_actions_merge"/>
+			<Separator group="posthelp_actions_merge"/>
+			<Action name="report_bug" group="posthelp_actions_merge"/>
+			<Action name="about_app" group="posthelp_actions_merge"/>
 		</Menu>
 	</MenuBar>
 </kpartgui>

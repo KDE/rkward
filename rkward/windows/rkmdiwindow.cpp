@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -34,6 +34,18 @@
 
 #include "../debug.h"
 
+RKMDIStandardActionClient::RKMDIStandardActionClient () : KXMLGUIClient () {
+	RK_TRACE (APP);
+
+	setComponentData (KGlobal::mainComponent ());
+	setXMLFile ("rkstandardactions.rc", true);
+}
+
+RKMDIStandardActionClient::~RKMDIStandardActionClient () {
+	RK_TRACE (APP);
+}
+
+
 // TODO: remove name parameter
 RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const char *) : QFrame (parent) {
 	RK_TRACE (APP);
@@ -48,12 +60,25 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	tool_window_bar = 0;
 	part = 0;
 	active = false;
+	standard_client = 0;
 
 	setWindowIcon (RKStandardIcons::iconForWindow (this));
 }
 
 RKMDIWindow::~RKMDIWindow () {
 	RK_TRACE (APP);
+
+	delete standard_client;
+}
+
+KActionCollection *RKMDIWindow::standardActionCollection () {
+	if (!standard_client) {
+		RK_TRACE (APP);
+		standard_client = new RKMDIStandardActionClient ();
+		RK_ASSERT (part);	// call setPart () first!
+		part->insertChildClient (standard_client);
+	}
+	return standard_client->actionCollection ();
 }
 
 //virtual

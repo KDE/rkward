@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -27,6 +27,12 @@ class QEvent;
 class QPaintEvent;
 class RKWorkplace;
 class RKToolWindowBar;
+
+class RKMDIStandardActionClient : public KXMLGUIClient {
+public:
+	RKMDIStandardActionClient ();
+	~RKMDIStandardActionClient ();
+};
 
 /** Base class for rkward document mdi windows */
 class RKMDIWindow : public QFrame {
@@ -97,6 +103,8 @@ public:
 	bool acceptsEventsFor (QObject *object);
 /** Whether the window is active. This seems to be more reliable than hasFocus () */
 	bool isActive ();
+
+	KActionCollection *standardActionCollection ();
 signals:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */
@@ -121,6 +129,7 @@ friend class RKToolWindowBar;
 	State state;
 	RKToolWindowBar *tool_window_bar;
 	bool active;
+	RKMDIStandardActionClient *standard_client;
 };
 
 #endif

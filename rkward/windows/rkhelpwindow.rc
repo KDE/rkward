@@ -7,15 +7,10 @@
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="copy"/>
 		</Menu>
-		<Menu name="run"><text>&amp;Run</text>
-			<Action name="run_selection"/>
-		</Menu>
-		<Merge/>
 	</MenuBar>
 	<ToolBar fullWidth="true" name="mdiToolBar">
-		<Action name="help_back"/>
-		<Action name="help_forward"/>
-		<Separator/>
-		<Action name="run_selection"/>
+		<Action name="help_back" group="pretoolbar_actions_merge"/>
+		<Action name="help_forward" group="pretoolbar_actions_merge"/>
+		<Separator group="pretoolbar_actions_merge"/>
 	</ToolBar>
 </kpartgui>

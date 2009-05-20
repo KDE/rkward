@@ -1,0 +1,42 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="rkward" version="0.5.1">
+<!-- What is this for, wouldn't it be easier to just inline these actions in the parts where they
+     end up? Yes, but then they would be separate actions, internally, and each could be assigned
+     a shortcut of its own. This is needed to tie them all together. -->
+	<MenuBar>
+		<Menu name="run">
+			<Action name="run_line" group="run_actions_merge"/>
+			<Action name="run_selection" group="run_actions_merge"/>
+			<Action name="run_all" group="run_actions_merge"/>
+			<WeakSeparator group="postrun_actions_merge"/>
+			<Action name="interrupt" group="postrun_actions_merge"/>
+		</Menu>
+		<Menu name="help">
+			<Action name="function_reference" group="help_actions_merge"/>
+		</Menu>
+	</MenuBar>
+	<ToolBar fullWidth="true" name="mdiToolBar">
+		<Action name="run_line" group="toolbar_actions_merge"/>
+		<Action name="run_selection" group="toolbar_actions_merge"/>
+		<Action name="run_all" group="toolbar_actions_merge"/>
+		<WeakSeparator group="postrun_actions_merge"/>
+		<Action name="interrupt" group="postrun_actions_merge"/>
+	</ToolBar>
+
+
+	<Menu name="ktexteditor_popup">
+		<Menu name="run">
+			<Action name="run_line" group="run_actions_merge"/>
+			<Action name="run_selection" group="run_actions_merge"/>
+			<Action name="run_all" group="run_actions_merge"/>
+		</Menu>
+		<Action name="function_reference" group="ktexteditor_popup_merge2"/>
+	</Menu>
+	<Menu name="rkconsole_context_menu">
+		<Action name="run_selection" group="rkconsole_context_merge1"/>
+		<Action name="function_reference" group="rkconsole_context_merge2"/>
+	</Menu>
+	<Menu name="rkcommandlog_context_menu">
+		<Action name="run_selection" group="rkcommandlog_context_merge1"/>
+	</Menu>
+</kpartgui>

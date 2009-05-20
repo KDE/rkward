@@ -124,7 +124,7 @@ void RKHTMLWindow::initActions () {
 
 	print = actionCollection ()->addAction (KStandardAction::Print, "print_html", this, SLOT (slotPrint()));
 
-	run_selection = RKStandardActions::runSelection (actionCollection (), "run_selection", this, SLOT (runSelection()));
+	run_selection = RKStandardActions::runSelection (this, "run_selection", this, SLOT (runSelection()));
 
 		// needed to enable / disable the run selection action
 	connect (khtmlpart, SIGNAL (selectionChanged()), this, SLOT (selectionChanged()));
@@ -384,6 +384,8 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 		else RK_ASSERT (false);		// we should know about this
 
 		setXMLFile ("rkoutputwindow.rc");
+		run_selection->setVisible (false);
+
 		khtmlpart->removeChildClient (this);
 		khtmlpart->insertChildClient (this);
 	} else {
@@ -398,6 +400,8 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 		else RK_ASSERT (false);		// we should know about this
 
 		setXMLFile ("rkhelpwindow.rc");
+		run_selection->setVisible (true);
+
 		khtmlpart->removeChildClient (this);
 		khtmlpart->insertChildClient (this);
 	}

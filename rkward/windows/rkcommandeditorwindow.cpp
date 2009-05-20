@@ -150,12 +150,12 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	RK_TRACE (COMMANDEDITOR);
 
-	action_run_all = RKStandardActions::runAll (ac, "run_all", this, SLOT (runAll()));
-	action_run_selection = RKStandardActions::runSelection (ac, "run_selection", this, SLOT (runSelection()));
+	action_run_all = RKStandardActions::runAll (this, "run_all", this, SLOT (runAll()));
+	action_run_selection = RKStandardActions::runSelection (this, "run_selection", this, SLOT (runSelection()));
 	action_run_selection->setEnabled (false);
-	action_run_line = RKStandardActions::runLine (ac, "run_line", this, SLOT (runLine()));
+	action_run_line = RKStandardActions::runLine (this, "run_line", this, SLOT (runLine()));
 
-	action_help_function = RKStandardActions::functionHelp (ac, "function_reference", this, SLOT (showHelp()));
+	action_help_function = RKStandardActions::functionHelp (this, "function_reference", this, SLOT (showHelp()));
 
 	actionmenu_run_block = new KActionMenu (i18n ("Run block"), this);
 	actionmenu_run_block->setDelayed (false);	// KDE4: TODO does not work correctly in the tool bar.
