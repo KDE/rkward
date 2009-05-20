@@ -58,6 +58,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 
 	khtmlpart = new KHTMLPart (this, 0, KHTMLPart::BrowserViewGUI);
 	setPart (khtmlpart);
+	fixupPartGUI (false);
 	initializeActivationSignals ();
 	khtmlpart->setSelectable (true);
 	setFocusProxy (khtmlpart->widget ());
@@ -66,9 +67,6 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	QHBoxLayout *pLayout = new QHBoxLayout (this);
 	pLayout->setContentsMargins (0, 0, 0, 0);
 	pLayout->addWidget (khtmlpart->widget ());
-
-	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
-	RKCommonFunctions::removeContainers (khtmlpart, QString ("tools,security,extraToolBar,saveBackground,saveFrame,printFrame,kget_menu").split (','), true);
 
 	// We have to connect this in order to allow browsing.
 	connect (khtmlpart->browserExtension (), SIGNAL (openUrlRequestDelayed (const KUrl&, const KParts::OpenUrlArguments&, const KParts::BrowserArguments&)), this, SLOT (slotOpenUrl (const KUrl&, const KParts::OpenUrlArguments&, const KParts::BrowserArguments&)));
@@ -91,6 +89,15 @@ RKHTMLWindow::~RKHTMLWindow () {
 	}
 
 	delete khtmlpart;
+}
+
+void RKHTMLWindow::fixupPartGUI (bool reload) {
+	RK_TRACE (APP);
+
+	RKMDIWindow::fixupPartGUI (reload);
+
+	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
+	RKCommonFunctions::removeContainers (khtmlpart, QString ("tools,security,extraToolBar,saveBackground,saveFrame,printFrame,kget_menu").split (','), true);
 }
 
 // static

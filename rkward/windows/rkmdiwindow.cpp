@@ -81,6 +81,20 @@ KActionCollection *RKMDIWindow::standardActionCollection () {
 	return standard_client->actionCollection ();
 }
 
+void RKMDIWindow::fixupPartGUI (bool reload) {
+	RK_TRACE (APP);
+	RK_ASSERT (part);
+
+	if (reload) {
+		// needed esp. to apply changed shortcut settings
+		part->reloadXML ();
+		foreach (KXMLGUIClient *client, part->childClients ()) {
+			// no further recursion needed in our case
+			client->reloadXML ();
+		}
+	}
+}
+
 //virtual
 QString RKMDIWindow::fullCaption () {
 	RK_TRACE (APP);

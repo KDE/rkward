@@ -114,32 +114,14 @@ void RKTopLevelWindowGUI::configureShortcuts () {
 
 	KMessageBox::information (for_window, i18n ("For technical reasons, the following dialog allows you to configure the keyboard shortcuts only for those parts of RKWard that are currently active.\n\nTherefore, if you want to configure keyboard shortcuts e.g. for use inside the script editor, you need to open a script editor window, and activate it."), i18n ("Note"), "configure_shortcuts_kparts");
 
-#warning TODO: improve this mess
-	KShortcutsDialog dlg (KShortcutsEditor::AllActions, KShortcutsEditor::LetterShortcutsAllowed, qobject_cast<QWidget*> (parent()));
-	foreach (KXMLGUIClient *client, factory ()->clients ()) {
-		if (client && !client->xmlFile ().isEmpty ()) dlg.addCollection (client->actionCollection());
-	}
-	dlg.configure (true);
+	factory ()->configureShortcuts ();
 
-	// WORKAROUND:
-	// KXML forgets to reload the child clients as well
-	// TODO: perhaps reimplement setXMLFile where needed, instead?
-	// TODO: Also we need to iterate over all existing mdi windows, even if they are not in the factory at this moment
-	foreach (KXMLGUIClient *client, factory ()->clients ()) {
-		foreach (KXMLGUIClient *clientc, client->childClients ()) {
-			// no need for deeper nesting in our usecase
-			clientc->reloadXML ();
-		}
-		client->reloadXML ();
+	// we need to update all MDI windows, even if they are not currently in the factory.
+	// (they may share some or all shortcuts of the currently active window)
+	QList<RKMDIWindow*> list = RKWorkplace::mainWorkplace ()->getObjectList ();
+	for (int i = 0; i < list.count (); ++i) {
+		list[i]->fixupPartGUI (true);
 	}
-	// TODO: the above causes havoc when we called RKCommonFunctions::(re)moveContainer, previously
-
-/*	KConfig *config = KGlobal::config ().data ();
-	KConfigGroup cg = config->group ("cuts");
-	foreach (KActionCollection *ac, dlg.actionCollections ()) {
-		ac->writeSettings (&cg);
-	}
-	config->sync (); */
 }
 
 void RKTopLevelWindowGUI::invokeRHelp () {

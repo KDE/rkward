@@ -94,13 +94,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	setFocusProxy (m_view);
 	setFocusPolicy (Qt::StrongFocus);
 
-	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
-	RKCommonFunctions::removeContainers (m_view, QString ("bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line").split (','), true);
-	RKCommonFunctions::moveContainer (m_view, "Menu", "tools", "edit", true);
-
 	RKCommandEditorWindowPart* part = new RKCommandEditorWindowPart (m_view);
 	part->insertChildClient (m_view);
 	setPart (part);
+	fixupPartGUI (false);
 	initializeActions (part->actionCollection ());
 	initializeActivationSignals ();
 
@@ -145,6 +142,16 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
 	delete hinter;
 	delete m_doc;
+}
+
+void RKCommandEditorWindow::fixupPartGUI (bool reload) {
+	RK_TRACE (COMMANDEDITOR);
+
+	RKMDIWindow::fixupPartGUI (reload);
+
+	// strip down the katepart's GUI. remove some stuff we definitely don't need.
+	RKCommonFunctions::removeContainers (m_view, QString ("bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line").split (','), true);
+	RKCommonFunctions::moveContainer (m_view, "Menu", "tools", "edit", true);
 }
 
 void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {

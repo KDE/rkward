@@ -75,6 +75,8 @@ public:
 @param show Show the window, if not currently shown (this actually means: it is created if not currently existant)
 @param raise Raise the window (if currently shown, or show==true) */
 	static RKHTMLWindow* refreshOutput (bool show, bool raise, bool only_if_modified);
+/** reimplemented from RKMDIWindow */
+	void fixupPartGUI (bool reload);
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
 	void slotOpenUrl (const KUrl & url, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &);
