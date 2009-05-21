@@ -2,7 +2,7 @@
                           rktoplevelwindowgui  -  description
                              -------------------
     begin                : Tue Apr 24 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 

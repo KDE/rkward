@@ -2,7 +2,7 @@
                           rktoplevelwindowgui  -  description
                              -------------------
     begin                : Tue Apr 24 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -38,6 +38,7 @@
 #include "../windows/rkhelpsearchwindow.h"
 #include "../windows/rkmdiwindow.h"
 #include "../misc/rkstandardicons.h"
+#include "../plugin/rkcomponentmap.h"
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
@@ -114,7 +115,12 @@ void RKTopLevelWindowGUI::configureShortcuts () {
 
 	KMessageBox::information (for_window, i18n ("For technical reasons, the following dialog allows you to configure the keyboard shortcuts only for those parts of RKWard that are currently active.\n\nTherefore, if you want to configure keyboard shortcuts e.g. for use inside the script editor, you need to open a script editor window, and activate it."), i18n ("Note"), "configure_shortcuts_kparts");
 
-	factory ()->configureShortcuts ();
+	KShortcutsDialog dlg (KShortcutsEditor::AllActions, KShortcutsEditor::LetterShortcutsAllowed, qobject_cast<QWidget*> (parent()));
+	foreach (KXMLGUIClient *client, factory ()->clients ()) {
+		if (client && !client->xmlFile ().isEmpty ()) dlg.addCollection (client->actionCollection());
+	}
+	dlg.addCollection (RKComponentMap::getMap ()->actionCollection (), i18n ("RKWard Plugins"));
+	dlg.configure (true);
 
 	// we need to update all MDI windows, even if they are not currently in the factory.
 	// (they may share some or all shortcuts of the currently active window)
