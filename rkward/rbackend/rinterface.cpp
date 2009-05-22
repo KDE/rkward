@@ -381,7 +381,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			bool ok;
 			RKComponentMap::ComponentInvocationMode mode = RKComponentMap::ManualSubmit;
 			if (request->call[2] == "auto") mode = RKComponentMap::AutoSubmit;
-			else if (request->call[2] == "test") mode = RKComponentMap::AutoSubmitOrFail;
+			else if (request->call[2] == "submit.or.fail") mode = RKComponentMap::AutoSubmitOrFail;
 			ok = RKComponentMap::invokeComponent (request->call[1], request->call.mid (3), mode, &message);
 
 			if (message.isEmpty ()) {

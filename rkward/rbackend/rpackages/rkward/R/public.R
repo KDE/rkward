@@ -319,7 +319,7 @@
 	.Call ("rk.edit.files", file, title, name)
 }
 
-"rk.call.plugin" <- function (plugin, ..., submit.mode = c ("manual", "auto", "test")) {
+"rk.call.plugin" <- function (plugin, ..., submit.mode = c ("manual", "auto", "submit.or.fail")) {
 	# prepare arguments
 	settings <- list (...)
 	callstrings <- list ()
