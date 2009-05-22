@@ -60,6 +60,7 @@
 #include "core/robjectlist.h"
 #include "core/renvironmentobject.h"
 #include "misc/rkstandardicons.h"
+#include "misc/rkcommonfunctions.h"
 #include "rkglobals.h"
 #include "robjectbrowser.h"
 #include "dialogs/startupdialog.h"
@@ -78,6 +79,7 @@
 #include "windows/rkfilebrowser.h"
 #include "rkconsole.h"
 #include "debug.h"
+#include "version.h"
 
 
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
@@ -197,6 +199,12 @@ void RKWardMainWindow::closeEvent (QCloseEvent *e) {
 void RKWardMainWindow::doPostInit () {
 	RK_TRACE (APP);
 
+	// Check intallation first
+	QFile resource_ver (RKCommonFunctions::getRKWardDataDir () + "resource.ver");
+	if (!(resource_ver.open (QIODevice::ReadOnly) && (resource_ver.read (100).trimmed () == VERSION))) {
+		KMessageBox::error (this, i18n ("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>"), i18n ("Broken installation"), KMessageBox::Notify | KMessageBox::AllowLink);
+	}
+
 	setUpdatesEnabled (false);
 
 	readOptions();
@@ -210,9 +218,6 @@ void RKWardMainWindow::doPostInit () {
 	// startup options will be deleted from the R thread (TODO correct this!), so we need to copy the initial_url here, or run into race conditions
 	KUrl open_url = startup_options->initial_url;
 	startR ();
-
-	QString dummy = i18n ("RKWard has made great progress in the past few months and it is already helpful for many tasks, but some features may be lacking. You can help us by filing bug reports, feature requests, or providing feedback in any other form. Please visit http://rkward.sourceforge.net for more information.");
-	KMessageBox::information (this, dummy, i18n("What to expect of RKWard"), "state_of_rkward");
 	
 	initPlugins ();
 

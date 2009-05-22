@@ -8,8 +8,10 @@ DISTDIR=$BASEDIR/disttemp/$DISTDIRREL
 mkdir $DISTDIR
 
 #prepare version.h
-echo "/* Version number of package */" > $DISTDIR/version.h
-echo "#define VERSION \"$VERSION\"" >> $DISTDIR/version.h
+echo "/* Version number of package */" > $BASEDIR/rkward/version.h
+echo "#define VERSION \"$VERSION\"" >> $BASEDIR/rkward/version.h
+#prepare resource.ver
+echo "$VERSION" > $BASEDIR/rkward/resource.ver
 
 cp -a AUTHORS CMakeLists.txt COPYING ChangeLog TODO INSTALL NOTES README configure $DISTDIR
 mkdir $DISTDIR/doc

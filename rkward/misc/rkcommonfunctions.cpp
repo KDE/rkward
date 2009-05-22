@@ -133,7 +133,7 @@ namespace RKCommonFunctions {
 	}
 
 	QString getRKWardDataDir () {
-		return (KGlobal::dirs ()->findResourceDir ("data", "rkward/all.pluginmap") + "rkward/");
+		return (KGlobal::dirs ()->findResourceDir ("data", "rkward/resource.ver") + "rkward/");
 	}
 
 
