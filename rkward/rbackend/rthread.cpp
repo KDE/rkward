@@ -34,6 +34,7 @@
 #include <QList>
 
 #include <signal.h>		// needed for pthread_kill
+#include <pthread.h>		// seems to be needed at least on FreeBSD
 
 #define MAX_BUF_LENGTH 4000
 
