@@ -12,100 +12,39 @@ ELSE(R_EXECUTABLE-NOTFOUND)
 	MESSAGE(STATUS "Using R at ${R_EXECUTABLE}")
 ENDIF(R_EXECUTABLE-NOTFOUND)
 
-# find R_HOME
+# CPP flags
 
-MESSAGE(STATUS "Looking for R_HOME")
-IF(NOT R_HOME)
+MESSAGE(STATUS "Quering R for CPP flags")
+IF(NOT R_CPPFLAGS)
 	EXEC_PROGRAM(${R_EXECUTABLE}
-		ARGS CMD sh -c 'echo $R_HOME'
-		OUTPUT_VARIABLE R_HOME)
-ELSE(NOT R_HOME)
-	MESSAGE(STATUS "Specified by user")
-ENDIF(NOT R_HOME)
-IF(NOT R_HOME)
-	MESSAGE(FATAL_ERROR "Could NOT determine R_HOME (probably you misspecified the location of R)")
-ELSE(NOT R_HOME)
-	MESSAGE(STATUS "R_HOME is ${R_HOME}")
-ENDIF(NOT R_HOME)
+		ARGS CMD config --cppflags
+		OUTPUT_VARIABLE R_CPPFLAGS)
+ELSE(NOT R_CPPFLAGS)
+	MESSAGE(STATUS "Overridded by user")
+ENDIF(NOT R_CPPFLAGS)
+IF(NOT R_CPPFLAGS)
+	MESSAGE(STATUS "CPP flags are empty. This looks suspicious, but we'll proceed...")
+ELSE(NOT R_CPPFLAGS)
+	MESSAGE(STATUS "CPP flags are '${R_CPPFLAGS}'")
+ENDIF(NOT R_CPPFLAGS)
 
-# find R include dir
+# LD flags
 
-MESSAGE(STATUS "Looking for R include files")
-IF(NOT R_INCLUDEDIR)
+MESSAGE(STATUS "Quering R for LD flags")
+IF(NOT R_LDFLAGS)
 	EXEC_PROGRAM(${R_EXECUTABLE}
-		ARGS CMD sh -c 'echo $R_INCLUDE_DIR'
-		OUTPUT_VARIABLE R_INCLUDEDIR)
-ELSE(NOT R_INCLUDEDIR)
-	MESSAGE(STATUS "Location specified by user")
-ENDIF(NOT R_INCLUDEDIR)
+		ARGS CMD config --ldflags
+		OUTPUT_VARIABLE R_LDFLAGS)
+ELSE(NOT R_LDFLAGS)
+	MESSAGE(STATUS "Overridded by user")
+ENDIF(NOT R_LDFLAGS)
+IF(NOT R_LDFLAGS)
+	MESSAGE(STATUS "LD flags are empty. This looks suspicious, but we'll proceed...")
+ELSE(NOT R_LDFLAGS)
+	MESSAGE(STATUS "LD flags are '${R_LDFLAGS}'")
+ENDIF(NOT R_LDFLAGS)
 
-IF(NOT R_INCLUDEDIR)
-	SET(R_INCLUDEDIR ${R_HOME}/include)
-	MESSAGE(STATUS "Not findable via R. Guessing")
-ENDIF(NOT R_INCLUDEDIR)
-MESSAGE(STATUS "Include files should be at ${R_INCLUDEDIR}. Checking for R.h")
-
-FIND_FILE(R_H
-	R.h
-	PATHS ${R_INCLUDEDIR}
-	NO_DEFAULT_PATH)
-IF(NOT R_H)
-	MESSAGE(FATAL_ERROR "Not found")
-ELSE(NOT R_H)
-	MESSAGE(STATUS "Found at ${R_H}")
-	GET_FILENAME_COMPONENT(R_INCLUDEDIR ${R_H}
-				PATH)
-ENDIF(NOT R_H)
-
-# check for existence of libR.so
-
-MESSAGE(STATUS "Checking for existence of libR.so")
-FIND_FILE(LIBR_SO
-	libR.so
-	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR}
-	NO_DEFAULT_PATH)
-IF(NOT LIBR_SO)
-	MESSAGE(FATAL_ERROR "Not found. Make sure the location of R was detected correctly, above, and R was compiled with the --enable-shlib option")
-ELSE(NOT LIBR_SO)
-	MESSAGE(STATUS "Exists at ${LIBR_SO}")
-	GET_FILENAME_COMPONENT(R_SHAREDLIBDIR ${LIBR_SO}
-				PATH)
-	SET(R_USED_LIBS R)
-ENDIF(NOT LIBR_SO)
-
-# for at least some versions of R, we seem to have to link against -lRlapack. Else loading some
-# R packages will fail due to unresolved symbols. However, we can't do this unconditionally,
-# as this is not available in some configurations of R
-
-MESSAGE(STATUS "Checking whether we should link against libRlapack.so")
-FIND_FILE(LIBR_LAPACK
-	libRlapack.so
-	PATHS ${R_SHAREDLIBDIR}
-	NO_DEFAULT_PATH)
-IF(NOT LIBR_LAPACK)
-	MESSAGE(STATUS "No, ${R_SHAREDLIBDIR}/libRlapack.so does not exist")
-ELSE(NOT LIBR_LAPACK)
-	MESSAGE(STATUS "Yes, ${LIBR_LAPACK} exists")
-	SET(R_USED_LIBS ${R_USED_LIBS} Rlapack gfortran)
-ENDIF(NOT LIBR_LAPACK)
-
-# for at least some versions of R, we seem to have to link against -lRblas. Else loading some
-# R packages will fail due to unresolved symbols. However, we can't do this unconditionally,
-# as this is not available in some configurations of R
-
-MESSAGE(STATUS "Checking whether we should link against libRblas.so")
-FIND_FILE(LIBR_BLAS
-	libRblas.so
-	PATHS ${R_SHAREDLIBDIR}
-	NO_DEFAULT_PATH)
-IF(NOT LIBR_BLAS)
-	MESSAGE(STATUS "No, ${R_SHAREDLIBDIR}/libRblas.so does not exist")
-ELSE(NOT LIBR_BLAS)
-	MESSAGE(STATUS "Yes, ${LIBR_BLAS} exists")
-	SET(R_USED_LIBS ${R_USED_LIBS} Rblas)
-ENDIF(NOT LIBR_BLAS)
-
-
+# TODO: perhaps we should try to compile a simple prog at this point?
 
 # find R package library location
 
@@ -139,8 +78,7 @@ STRING(REGEX REPLACE ":"
 	"${R_LIBDIR}")
 
 IF(NOT R_LIBDIR)
-	MESSAGE(STATUS "Not reliably determined or specified. Guessing.")
-	SET(R_LIBDIR ${R_HOME}/library)
+	MESSAGE(STATUS "Not detected and not specified.")
 ENDIF(NOT R_LIBDIR)
 
 SET(R_LIBDIRS ${R_LIBDIR})

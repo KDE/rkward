@@ -1,3 +1,4 @@
+- Internal: Simplify FindR.cmake.		TODO: libRblas.so / libRlapack.so
 - Add basic check for a correct installation of the RKWard resource files
 - Remove "What to expect" dialog at startup
 - Make keyboard shorcuts configurable

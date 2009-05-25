@@ -26,13 +26,15 @@ SET(RKWard_Sources
 # auto-gen sources
 #QT4_AUTOMOC(${RKWard_Sources})	# not needed here, as KDE4_ADD_EXECUTABLE mocs the sources in this dir.
 
-# somehow the needed libdirs for R do not get passed down automatically
-GET_DIRECTORY_PROPERTY(R_SHAREDLIBDIR DIRECTORY rbackend LINK_DIRECTORIES)
-LINK_DIRECTORIES(${R_SHAREDLIBDIR})
-
 KDE4_ADD_EXECUTABLE(rkward.bin ${RKWard_Sources})
+# link against R
+GET_DIRECTORY_PROPERTY(R_LDFLAGS DIRECTORY rbackend DEFINITION R_LDFLAGS)
+SET_TARGET_PROPERTIES(
+	rkward.bin
+	PROPERTIES LINK_FLAGS "${R_LDFLAGS}")
+
 # wrapper script
-GET_DIRECTORY_PROPERTY(R_HOME DIRECTORY rbackend DEFINITION R_HOME)
+GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
 CONFIGURE_FILE(
 	rkward.sh.template
 	${CMAKE_CURRENT_BINARY_DIR}/rkward
