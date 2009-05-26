@@ -16,8 +16,9 @@ ENDIF(R_EXECUTABLE-NOTFOUND)
 
 MESSAGE(STATUS "Looking for R_HOME")
 IF(NOT R_HOME)
-	EXEC_PROGRAM(${R_EXECUTABLE}
-		ARGS CMD sh -c 'echo $R_HOME'
+	EXECUTE_PROCESS(
+		COMMAND echo "cat(R.home())"
+		COMMAND ${R_EXECUTABLE} "--slave" "--no-save"
 		OUTPUT_VARIABLE R_HOME)
 ELSE(NOT R_HOME)
 	MESSAGE(STATUS "Specified by user")
@@ -32,8 +33,9 @@ ENDIF(NOT R_HOME)
 
 MESSAGE(STATUS "Looking for R include files")
 IF(NOT R_INCLUDEDIR)
-	EXEC_PROGRAM(${R_EXECUTABLE}
-		ARGS CMD sh -c 'echo $R_INCLUDE_DIR'
+	EXECUTE_PROCESS(
+		COMMAND echo "cat(R.home('include'))"
+		COMMAND ${R_EXECUTABLE} "--slave" "--no-save"
 		OUTPUT_VARIABLE R_INCLUDEDIR)
 ELSE(NOT R_INCLUDEDIR)
 	MESSAGE(STATUS "Location specified by user")
@@ -59,10 +61,10 @@ ENDIF(NOT R_H)
 
 # check for existence of libR.so
 
-MESSAGE(STATUS "Checking for existence of libR.so")
-FIND_FILE(LIBR_SO
-	libR.so
-	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR}
+MESSAGE(STATUS "Checking for existence of R shared library")
+FIND_LIBRARY(LIBR_SO
+	R
+	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin
 	NO_DEFAULT_PATH)
 IF(NOT LIBR_SO)
 	MESSAGE(FATAL_ERROR "Not found. Make sure the location of R was detected correctly, above, and R was compiled with the --enable-shlib option")
@@ -74,38 +76,38 @@ ELSE(NOT LIBR_SO)
 ENDIF(NOT LIBR_SO)
 
 # for at least some versions of R, we seem to have to link against -lRlapack. Else loading some
-# R packages will fail due to unresolved symbols. However, we can't do this unconditionally,
+# R packages will fail due to unresolved symbols, or we can't link against -lR.
+# However, we can't do this unconditionally,
 # as this is not available in some configurations of R
 
-MESSAGE(STATUS "Checking whether we should link against libRlapack.so")
-FIND_FILE(LIBR_LAPACK
-	libRlapack.so
+MESSAGE(STATUS "Checking whether we should link against Rlapack library")
+FIND_LIBRARY(LIBR_LAPACK
+	Rlapack
 	PATHS ${R_SHAREDLIBDIR}
 	NO_DEFAULT_PATH)
 IF(NOT LIBR_LAPACK)
-	MESSAGE(STATUS "No, ${R_SHAREDLIBDIR}/libRlapack.so does not exist")
+	MESSAGE(STATUS "No, it does not exist in ${R_SHAREDLIBDIR}")
 ELSE(NOT LIBR_LAPACK)
 	MESSAGE(STATUS "Yes, ${LIBR_LAPACK} exists")
 	SET(R_USED_LIBS ${R_USED_LIBS} Rlapack gfortran)
 ENDIF(NOT LIBR_LAPACK)
 
-# for at least some versions of R, we seem to have to link against -lRblas. Else loading some
-# R packages will fail due to unresolved symbols. However, we can't do this unconditionally,
+# for at least some versions of R, we seem to have to link against -lRlapack. Else loading some
+# R packages will fail due to unresolved symbols, or we can't link against -lR.
+# However, we can't do this unconditionally,
 # as this is not available in some configurations of R
 
-MESSAGE(STATUS "Checking whether we should link against libRblas.so")
-FIND_FILE(LIBR_BLAS
-	libRblas.so
+MESSAGE(STATUS "Checking whether we should link against Rblas library")
+FIND_LIBRARY(LIBR_BLAS
+	Rblas
 	PATHS ${R_SHAREDLIBDIR}
 	NO_DEFAULT_PATH)
 IF(NOT LIBR_BLAS)
-	MESSAGE(STATUS "No, ${R_SHAREDLIBDIR}/libRblas.so does not exist")
+	MESSAGE(STATUS "No, it does not exist in ${R_SHAREDLIBDIR}")
 ELSE(NOT LIBR_BLAS)
 	MESSAGE(STATUS "Yes, ${LIBR_BLAS} exists")
 	SET(R_USED_LIBS ${R_USED_LIBS} Rblas)
 ENDIF(NOT LIBR_BLAS)
-
-
 
 # find R package library location
 
