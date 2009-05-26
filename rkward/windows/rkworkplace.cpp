@@ -274,7 +274,7 @@ void RKWorkplace::openHelpWindow (const KUrl &url, bool only_once) {
 void RKWorkplace::openOutputWindow (const KUrl &url) {
 	RK_TRACE (APP);
 
-	RKHTMLWindow::refreshOutput (true, true, false);
+	RKHTMLWindow::refreshOutput (true, true);
 	if (!windows.contains (RKHTMLWindow::getCurrentOutput ())) {
 		addWindow (RKHTMLWindow::getCurrentOutput ());
 	}
@@ -282,7 +282,7 @@ void RKWorkplace::openOutputWindow (const KUrl &url) {
 
 void RKWorkplace::refreshOutputWindow () {
 	RK_TRACE (APP);
-	RKHTMLWindow *window = RKHTMLWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise (), true);
+	RKHTMLWindow *window = RKHTMLWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise ());
 	if (window) {
 		if (!windows.contains (window)) {
 			addWindow (window);

@@ -67,14 +67,12 @@ public:
 	KUrl url ();
 	void doGotoAnchor (const QString &anchor_name);
 
-	static void initializeOutputWindow ();
-
 /** return a pointer to the current output. If there is no output window, one will be created (and shown) automatically */
 	static RKHTMLWindow* getCurrentOutput ();
 /** refresh output window.
 @param show Show the window, if not currently shown (this actually means: it is created if not currently existant)
 @param raise Raise the window (if currently shown, or show==true) */
-	static RKHTMLWindow* refreshOutput (bool show, bool raise, bool only_if_modified);
+	static RKHTMLWindow* refreshOutput (bool show, bool raise);
 /** reimplemented from RKMDIWindow */
 	void fixupPartGUI (bool reload);
 public slots:
@@ -126,7 +124,6 @@ private:
 	void fileDoesNotExistMessage ();
 
 	static RKHTMLWindow *current_output;
-	static QDateTime last_refresh_time;
 
 	// for dealing with rkward://[page|component]-pages
 	bool renderRKHelp (const KUrl &url);

@@ -243,8 +243,6 @@ void RKWardMainWindow::doPostInit () {
 	setUpdatesEnabled (true);
 	show ();
 
-	RKHTMLWindow::initializeOutputWindow ();
-
 	if (!open_url.isEmpty()) {
 		openWorkspace (open_url);
 	} else {

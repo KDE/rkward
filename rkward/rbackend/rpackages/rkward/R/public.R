@@ -110,6 +110,7 @@
 
 "rk.set.output.html.file" <- function (x) {
 	stopifnot (is.character (x))
+	.rk.do.call ("set.output.file", x);
 	assign (".rk.output.html.file", x, as.environment ("package:rkward"))
 }
 

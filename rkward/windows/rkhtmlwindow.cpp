@@ -48,7 +48,6 @@
 
 //static 
 RKHTMLWindow* RKHTMLWindow::current_output = 0;
-QDateTime RKHTMLWindow::last_refresh_time;
 
 RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (parent, RKMDIWindow::HelpWindow) {
 	RK_TRACE (APP);
@@ -98,13 +97,6 @@ void RKHTMLWindow::fixupPartGUI (bool reload) {
 
 	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
 	RKCommonFunctions::removeContainers (khtmlpart, QString ("tools,security,extraToolBar,saveBackground,saveFrame,printFrame,kget_menu").split (','), true);
-}
-
-// static
-void RKHTMLWindow::initializeOutputWindow () {
-	RK_TRACE (APP);
-
-	last_refresh_time = QDateTime::currentDateTime ();
 }
 
 QString RKHTMLWindow::getDescription () {
@@ -277,7 +269,6 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 	bool ok = out_file.exists();
 	if (ok)  {
 		khtmlpart->openUrl (url);
-		last_refresh_time = out_file.lastModified ();
 	} else {
 		fileDoesNotExistMessage ();
 	}
@@ -327,15 +318,19 @@ void RKHTMLWindow::refresh () {
 	args.setReload (true);		// this forces the next openURL to reload all images
 	khtmlpart->setArguments (args);
 
-	if (window_mode == HTMLOutputWindow) scroll_position = khtmlpart->view ()->contentsHeight ();
-	else scroll_position = khtmlpart->view ()->contentsY ();
+	scroll_position = khtmlpart->view ()->contentsY ();
 
 	openURL (current_url);
 }
 
 void RKHTMLWindow::loadDone () {
 	RK_TRACE (APP);
-	if (scroll_position >= 0) khtmlpart->view()->setContentsPos (0, scroll_position);
+
+	if (window_mode == HTMLOutputWindow) {	// scroll to bottom
+		khtmlpart->view ()->setContentsPos (0, khtmlpart->view ()->contentsHeight ());
+	} else {	// scroll to previous pos
+		if (scroll_position >= 0) khtmlpart->view()->setContentsPos (0, scroll_position);
+	}
 }
 
 //static
@@ -353,13 +348,8 @@ RKHTMLWindow* RKHTMLWindow::getCurrentOutput () {
 }
 
 //static
-RKHTMLWindow* RKHTMLWindow::refreshOutput (bool show, bool raise, bool only_if_modified) {
+RKHTMLWindow* RKHTMLWindow::refreshOutput (bool show, bool raise) {
 	RK_TRACE (APP);
-
-	if (only_if_modified) {
-		QFileInfo out_file (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
-		if (last_refresh_time.isValid () && (out_file.lastModified () <= last_refresh_time)) return current_output;
-	}
 
 	if (current_output) {
 		if (raise) {

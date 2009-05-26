@@ -186,11 +186,6 @@ void RInterface::customEvent (QEvent *e) {
 			}
 		}
 		command->finished ();
-		if (command->type () & RCommand::DirectToOutput) {
-			RKWorkplace::mainWorkplace ()->refreshOutputWindow ();
-		} else if (command->type () & RCommand::User) {
-			RKWorkplace::mainWorkplace ()->refreshOutputWindow ();
-		}
 		delete command;
 	} else if ((ev->etype () == RKRBackendEvent::RIdle)) {
 		RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Idle);	
@@ -314,6 +309,10 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		} else {
 			issueCommand (".rk.set.reply (\"Too few arguments in call to get.tempfile.name.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		}
+	} else if (call == "refreshOutput") {
+		RK_ASSERT (request->call.count () == 2); //but we don't use the second parameter, yet
+
+		RKWorkplace::mainWorkplace ()->refreshOutputWindow ();
 	} else if (call == "sync") {
 		RK_ASSERT (request->call.count () >= 2);
 
