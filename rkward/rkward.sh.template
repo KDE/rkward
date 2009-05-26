@@ -19,7 +19,7 @@ else
   fi
 fi
 
-export R_binary=@R_EXECUTABLE@
+export R_binary="@R_EXECUTABLE@"
 
 ## Location of R may have moved, so check
 if test -x "${R_binary}"; then
