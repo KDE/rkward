@@ -21,22 +21,22 @@ function getPreview () {
 }
 
 function makeHeaderCode ($title, $parameters=array ()) {
-	echo ("rk.header(\"" . escapeQuotes ($title) . "\"");
+	echo ("rk.header(" . quote ($title));
 	if (!empty ($parameters)) {
 		echo (", parameters=list(");
 		$first = true;
 		foreach ($parameters as $key => $value) {
 			if ($first) $first = false;
 			else echo (",\n\t");
-			echo ("\"" . escapeQuotes ($key) . "\", \"" . escapeQuotes ($value) . "\"");
+			echo (quote($key) . ', ' . quote ($value));
 		}
 		echo (")");
 	}
 	echo (")\n");
 }
 
-function escapeQuotes ($input) {
-	return (str_replace ("\"", "\\\"", $input));
+function quote ($input) {
+	return ('"' . str_replace ("\"", "\\\"", $input) . '"');
 }
 
 function getInput ($prompt) {
