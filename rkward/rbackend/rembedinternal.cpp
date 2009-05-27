@@ -46,24 +46,12 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 
 #include "Rversion.h"
 
-#if (R_VERSION > R_Version(2, 2, 9))
-#define R_2_3
-#endif
-
-#if (R_VERSION > R_Version(2, 3, 9))
-#define R_2_4
-#endif
-
-#if (R_VERSION > R_Version(2, 4, 9))
-#define R_2_5
-#endif
-
-#if (R_VERSION > R_Version(2, 5, 9))
-#define R_2_6
-#endif
-
 #if (R_VERSION > R_Version(2, 6, 9))
 #define R_2_7
+#endif
+
+#ifndef R_2_7
+#error R version 2.7.0 or later is needed to compile this version of RKWard
 #endif
 
 #if (R_VERSION > R_Version(2, 8, 9))
@@ -74,17 +62,8 @@ extern "C" {
 #define R_INTERFACE_PTRS 1
 
 // needed to detect CHARSXP encoding
-#ifdef R_2_7
-#	define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
-#	define IS_LATIN1(x) (Rf_getCharCE(x) == CE_LATIN1)
-#else
-#	define USE_RINTERNALS 1
-#	define UTF8_MASK (1<<3)
-#	define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
-#	define LATIN1_MASK (1<<2)
-#	define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
-#endif
-// end
+#define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
+#define IS_LATIN1(x) (Rf_getCharCE(x) == CE_LATIN1)
 
 #include "Rdefines.h"
 #include "R_ext/Rdynload.h"
@@ -93,77 +72,43 @@ extern "C" {
 #include "R.h"
 #include "Rinternals.h"
 #include "Rinterface.h"
-#ifndef R_2_7
-#	include "Rdevices.h"
-#endif
 #include "R_ext/Parse.h"
 
-#ifdef R_2_4
-#define USE_R_REPLDLLDO1
-#endif
-
-#ifdef R_2_5
-#define USE_ENCODING_HINTS
-#endif
-
-#ifdef R_2_6
 // hidden in Rinternals.h if USE_RINTERNALS is defined
 extern Rboolean (Rf_isNull)(SEXP s);
 extern Rboolean (Rf_isObject)(SEXP s);
 SEXP R_LastvalueSymbol;
-// most chars should be const char *, now
-#	define CONSTCHAR const char
-#else
-#	define CONSTCHAR char
-#endif
 
-#ifdef R_2_4
 #include "Rembedded.h"
-#else
-extern void R_ReplDLLinit (void);
-extern Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
-#endif
 
 // some functions we need that are not declared
 extern int Rf_initEmbeddedR(int argc, char **argv);
 extern void Rf_PrintWarnings (void);
 extern int R_interrupts_pending;
-#ifdef R_2_3
 extern int Rf_initialize_R(int ac, char **av);
 extern void setup_Rmainloop(void); /* in main.c */
 extern uintptr_t R_CStackLimit;
 extern uintptr_t R_CStackStart;
 extern Rboolean R_Interactive;
 #include "R_ext/eventloop.h"
-#endif
-#ifndef USE_R_REPLDLLDO1
-extern Rboolean R_Visible;
-#endif
-#ifndef R_2_5
-extern SEXP R_ParseVector(SEXP, int, ParseStatus*);
-#endif
 }
 
 #include "../rkglobals.h"
 #include "rdata.h"
 
-#ifdef USE_R_REPLDLLDO1
+// Needed for the REPL
 const char *current_buffer = 0;
 bool repldlldo1_wants_code = false;
 bool repldll_buffer_transfer_finished = false;
 int repldll_result = 0;		/* -2: error; -1: incomplete; 0: nothing, yet 1: ok 2: incomplete statement, while buffer not empty. Should not happen */
 bool repldll_last_parse_successful = false;
-#endif
+
 
 SEXP RKWard_RData_Tag;
 QString *SEXPToStringList (SEXP from_exp, unsigned int *count);
 
 // ############## R Standard callback overrides BEGIN ####################
-#ifdef R_2_7
 void RSuicide (const char* message) {
-#else
-void RSuicide (char* message) {
-#endif
 	RK_TRACE (RBACKEND);
 
 	RCallbackArgs args;
@@ -174,11 +119,7 @@ void RSuicide (char* message) {
 	Rf_error ("Backend dead");	// this jumps us out of the REPL.
 }
 
-#ifdef R_2_7
 void RShowMessage (const char* message) {
-#else
-void RShowMessage (char* message) {
-#endif
 	RK_TRACE (RBACKEND);
 
 	RCallbackArgs args;
@@ -187,14 +128,9 @@ void RShowMessage (char* message) {
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 }
 
-#ifdef R_2_7
 int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) {
-#else
-int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
-#endif
 	RK_TRACE (RBACKEND);
 
-#ifdef USE_R_REPLDLLDO1
 	// handle requests for new code
 	if (repldlldo1_wants_code) {
 		//Rprintf ("wants code, buffsize: %d\n", buflen);
@@ -217,7 +153,7 @@ int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
 		//Rprintf ("buffer now: '%s'\n", buf);
 		return 1;
 	}
-#endif
+
 	// here, we handle readline calls and such, i.e. not the regular prompt for code
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RReadConsole;
@@ -230,6 +166,7 @@ int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 // default implementation seems to return 1 on success, 0 on failure, contrary to some documentation. see unix/std-sys.c
 	if (!(args.int_c)) {
+#warning TODO: this should be handled in rthread.cpp, instead
 		REmbedInternal::this_pointer->currentCommandWasCancelled ();
 		Rf_onintr ();
 	}
@@ -237,23 +174,11 @@ int RReadConsole (char* prompt, unsigned char* buf, int buflen, int hist) {
 	return 0;
 }
 
-#ifdef R_2_5
-#	ifdef R_2_7
 void RWriteConsoleEx (const char *buf, int buflen, int type) {
-#	else
-void RWriteConsoleEx (char *buf, int buflen, int type) {
-#	endif
 	RK_TRACE (RBACKEND);
 
 	REmbedInternal::this_pointer->handleOutput (REmbedInternal::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0);
 }
-#else
-void RWriteConsole (char *buf, int buflen) {
-	RK_TRACE (RBACKEND);
-
-	REmbedInternal::this_pointer->handleOutput (REmbedInternal::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, true);
-}
-#endif
 
 void RResetConsole () {
 	RK_TRACE (RBACKEND);
@@ -302,11 +227,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	Rf_error ("Backend dead");	// this jumps us out of the REPL.
 }
 
-#ifdef R_2_7
 int RShowFiles (int nfile, const char **file, const char **headers, const char *wtitle, Rboolean del, const char *pager) {
-#else
-int RShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean del, char *pager) {
-#endif
 	RK_TRACE (RBACKEND);
 
 	RCallbackArgs args;
@@ -385,11 +306,7 @@ SEXP doEditFiles (SEXP files, SEXP titles, SEXP name) {
 	return (R_NilValue);
 }
 
-#ifdef R_2_7
 int REditFile (const char *buf) {
-#else
-int REditFile (char *buf) {
-#endif
 	RK_TRACE (RBACKEND);
 
 	const char *editor = "none";
@@ -399,7 +316,6 @@ int REditFile (char *buf) {
 	return REditFiles (1, const_cast<const char**> (&buf), &title, editor);
 }
 
-#ifdef USE_R_REPLDLLDO1
 void RBusy (int busy) {
 	RK_TRACE (RBACKEND);
 
@@ -409,7 +325,6 @@ void RBusy (int busy) {
 		repldll_last_parse_successful = true;
 	}
 }
-#endif
 
 // ############## R Standard callback overrides END ####################
 
@@ -438,18 +353,12 @@ void REmbedInternal::connectCallbacks () {
 	ptr_R_Suicide = RSuicide;
 	ptr_R_ShowMessage = RShowMessage;			// when exactly does this ever get used?
 	ptr_R_ReadConsole = RReadConsole;
-#ifdef R_2_5
 	ptr_R_WriteConsoleEx = RWriteConsoleEx;
 	ptr_R_WriteConsole = 0;
-#else
-	ptr_R_WriteConsole = RWriteConsole;
-#endif
 	ptr_R_ResetConsole = RResetConsole;
 	ptr_R_FlushConsole = RFlushConsole;
 	ptr_R_ClearerrConsole = RClearerrConsole;
-#ifdef USE_R_REPLDLLDO1
 	ptr_R_Busy = RBusy;
-#endif
 	ptr_R_CleanUp = RCleanUp;			// unfortunately, it seems, we can't safely cancel quitting anymore, here!
 	ptr_R_ShowFiles = RShowFiles;
 	ptr_R_ChooseFile = RChooseFile;
@@ -481,46 +390,28 @@ void REmbedInternal::shutdown (bool suicidal) {
 
 	R_RunExitFinalizers();
 
-#ifdef R_2_4
 	R_CleanTempDir ();
-#else
-	char *tmpdir;
-	if((tmpdir = getenv("R_SESSION_TMPDIR"))) {
-		char buf[1024];
-		snprintf((char *)buf, 1024, "rm -rf %s", tmpdir);
-		R_system((char *)buf);
-	}
-#endif
 
 	/* close all the graphics devices */
 	if (!suicidal) Rf_KillAllDevices ();
 	fpu_setup ((Rboolean) FALSE);
 }
 
+#if 0
 static int timeout_counter = 0;
+#endif
 
 void processX11EventsWorker (void *) {
-#ifdef R_2_3
 // this basically copied from R's unix/sys-std.c (Rstd_ReadConsole)
-// we stop processing, if there are more than 10 events
 	for (;;) {
 		fd_set *what;
 		what = R_checkActivityEx(R_wait_usec > 0 ? R_wait_usec : 50, 1, Rf_onintr);
 		if (what == NULL) break;
 		R_runHandlers(R_InputHandlers, what);
 	}
-#else
-/* what we do here is walk the list of objects, that have told R, they're listening for events.
-We figure out which ones look for X11-events and tell those to do their stuff (regardless of whether events actually occurred) */
-	extern InputHandler *R_InputHandlers;
-	InputHandler *handler = R_InputHandlers;
-	while (handler) {
-		if (handler->activity == XActivity) {
-			handler->handler ((void*) 0);
-		}
-		handler = handler->next;
-	}
 
+#if 0
+// TODO: The remainder of this function had been commented out since R 2.3.x and is not in Rstd_ReadConsole. Do we still need this?
 	/* I don't really understand what I'm doing here, but apparently this is necessary for Tcl-Tk windows to function properly. */
 	R_PolledEvents ();
 	
@@ -571,7 +462,6 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 			if (dummy == NA_STRING) {
 				list[i] = QString::null;
 			} else {
-#ifdef USE_ENCODING_HINTS
 				if (IS_UTF8 (dummy)) {
 					list[i] = QString::fromUtf8 ((char *) STRING_PTR (dummy));
 				} else if (IS_LATIN1 (dummy)) {
@@ -579,9 +469,6 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 				} else {
 					list[i] = REmbedInternal::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy));
 				}
-#else
-				list[i] = REmbedInternal::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy));
-#endif
 			}
 		}
 	}
@@ -725,63 +612,8 @@ SEXP doSubstackCall (SEXP call) {
 	return R_NilValue;
 }
 
-#ifdef R_2_3
 void R_CheckStackWrapper (void *) {
 	R_CheckStack ();
-}
-#endif
-
-bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
-	RK_TRACE (RBACKEND);
-
-	RKSignalSupport::saveDefaultSigSegvHandler ();
-
-	r_running = true;
-	bool ok = true;
-#ifdef R_2_3
-	Rf_initialize_R (argc, argv);
-
-	if (stack_check) {
-		char dummy;
-		size_t stacksize;
-		void *stackstart;
-		RKGetCurrentThreadStackLimits (&stacksize, &stackstart, &dummy);
-		R_CStackStart = (uintptr_t) stackstart;
-		R_CStackLimit = stacksize;
-	} else {
-		R_CStackStart = (uintptr_t) -1;
-		R_CStackLimit = (uintptr_t) -1;
-	}
-
-	setup_Rmainloop ();
-
-	if (stack_check) {
-		// safety check: If we are beyond the stack boundaries already, we better disable stack checking
-		// this has to come *after* the first setup_Rmainloop ()!
-		Rboolean stack_ok = R_ToplevelExec (R_CheckStackWrapper, (void *) 0);
-		if (!stack_ok) {
-			RK_DO (qDebug ("R_CheckStack() failed during initialization. Will disable stack checking and try to re-initialize."), RBACKEND, DL_WARNING);
-			RK_DO (qDebug ("If this does not work, try the --disable-stack-check command line option, *and* submit a bug report."), RBACKEND, DL_WARNING);
-			R_CStackStart = (uintptr_t) -1;
-			R_CStackLimit = (uintptr_t) -1;
-			setup_Rmainloop ();
-		}
-	}
-
-	R_Interactive = (Rboolean) TRUE;
-#else
-	ok = (Rf_initEmbeddedR (argc, argv) >= 0);
-#endif
-	RKGlobals::na_double = NA_REAL;
-	R_ReplDLLinit ();
-	RKWard_RData_Tag = Rf_install ("RKWard_RData_Tag");
-#ifdef R_2_6
-	R_LastvalueSymbol = Rf_install (".Last.value");
-#endif
-
-	RKSignalSupport::installSigSegvProxy ();
-
-	return ok;
 }
 
 SEXP doUpdateLocale () {
@@ -815,12 +647,52 @@ SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
 	return (R_NilValue);
 }
 
-bool REmbedInternal::registerFunctions (const char *library_path) {
+bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 	RK_TRACE (RBACKEND);
 
-	DllInfo *info = R_getDllInfo (library_path);
-	if (!info) return false;
+	RKSignalSupport::saveDefaultSigSegvHandler ();
 
+	r_running = true;
+	Rf_initialize_R (argc, argv);
+
+	if (stack_check) {
+		char dummy;
+		size_t stacksize;
+		void *stackstart;
+		RKGetCurrentThreadStackLimits (&stacksize, &stackstart, &dummy);
+		R_CStackStart = (uintptr_t) stackstart;
+		R_CStackLimit = stacksize;
+	} else {
+		R_CStackStart = (uintptr_t) -1;
+		R_CStackLimit = (uintptr_t) -1;
+	}
+
+	setup_Rmainloop ();
+
+	if (stack_check) {
+		// safety check: If we are beyond the stack boundaries already, we better disable stack checking
+		// this has to come *after* the first setup_Rmainloop ()!
+		Rboolean stack_ok = R_ToplevelExec (R_CheckStackWrapper, (void *) 0);
+		if (!stack_ok) {
+			RK_DO (qDebug ("R_CheckStack() failed during initialization. Will disable stack checking and try to re-initialize."), RBACKEND, DL_WARNING);
+			RK_DO (qDebug ("If this does not work, try the --disable-stack-check command line option, *and* submit a bug report."), RBACKEND, DL_WARNING);
+			R_CStackStart = (uintptr_t) -1;
+			R_CStackLimit = (uintptr_t) -1;
+			setup_Rmainloop ();
+		}
+	}
+
+	R_Interactive = (Rboolean) TRUE;
+
+	RKGlobals::na_double = NA_REAL;
+	R_ReplDLLinit ();
+
+	RKWard_RData_Tag = Rf_install ("RKWard_RData_Tag");
+	R_LastvalueSymbol = Rf_install (".Last.value");
+
+	RKSignalSupport::installSigSegvProxy ();
+
+// register our functions
 	R_CallMethodDef callMethods [] = {
 //		{ "rk.do.condition", (DL_FUNC) &doCondition, 1 },
 		{ "rk.do.error", (DL_FUNC) &doError, 1 },
@@ -831,7 +703,7 @@ bool REmbedInternal::registerFunctions (const char *library_path) {
 		{ "rk.edit.files", (DL_FUNC) &doEditFiles, 3 },
 		{ 0, 0, 0 }
 	};
-	R_registerRoutines (info, NULL, callMethods, NULL, NULL);
+	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);
 
 	return true;
 }
@@ -853,11 +725,7 @@ SEXP parseCommand (const QString &command_qstring, REmbedInternal::RKWardRError 
 #endif
 
 	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails. Nope: not exported API
-#ifdef R_2_5
 	pr=R_ParseVector(cv, -1, &status, R_NilValue);
-#else
-	pr=R_ParseVector(cv, -1, &status);
-#endif
 	UNPROTECT(1);
 
 	if ((!pr) || (TYPEOF (pr) == NILSXP)) {
@@ -928,7 +796,8 @@ SEXP runCommandInternalBase (SEXP pr, REmbedInternal::RKWardRError *error) {
 	return exp;
 }
 
-#ifndef USE_R_REPLDLLDO1
+#if 0
+// This is currently unused, but might come in handy, again.
 /* Basically a safe version of Rf_PrintValue, as yes, Rf_PrintValue may lead to an error and long_jump->crash!
 For example in help (function, htmlhelp=TRUE), when no HTML-help is installed!
 SEXP exp should be PROTECTed prior to calling this function.
@@ -959,7 +828,6 @@ void tryPrintValue (SEXP exp, REmbedInternal::RKWardRError *error) {
 }
 #endif
 
-#ifdef USE_R_REPLDLLDO1
 void runUserCommandInternal (void *) {
 	RK_TRACE (RBACKEND);
 
@@ -976,7 +844,6 @@ void runUserCommandInternal (void *) {
 	//Rprintf ("iteration complete, status: %d\n", repldll_result);
 	PROTECT (R_LastvalueSymbol);		// why do we need this? No idea, but R_ToplevelExec tries to unprotect something
 }
-#endif
 
 void REmbedInternal::runCommandInternal (const QString &command_qstring, RKWardRError *error, bool print_result) {
 	RK_TRACE (RBACKEND);
@@ -988,14 +855,6 @@ void REmbedInternal::runCommandInternal (const QString &command_qstring, RKWardR
 		SEXP parsed = parseCommand (command_qstring, error);
 		if (*error == NoError) runCommandInternalBase (parsed, error);
 	} else {		// run a user command
-#ifndef USE_R_REPLDLLDO1
-		SEXP parsed = parseCommand (command_qstring, error);
-#endif
-		// do not run incomplete commands, but *do* run commands with syntax errors if USE_R_REPLDLLDO1. Why? Because this is the only way to get a syntax error messages, so far.
-		if ((*error != NoError)) {
-			if (*error != SyntaxError) return;
-		}
-#ifdef USE_R_REPLDLLDO1
 /* Using R_ReplDLLdo1 () is a pain, but it seems to be the only entry point for evaluating a command as if it had been entered on a plain R console (with auto-printing if not invisible, etc.). Esp. since R_Visible is no longer exported in R 2.5.0, as it seems as of today (2007-01-17).
 
 Problems to deal with:
@@ -1048,29 +907,6 @@ hist == 1 iff R wants a parse-able input.
 			}
 		}
 		repldlldo1_wants_code = false;		// make sure we don't get confused in RReadConsole
-
-#else
-		// in the non USE_R_REPLDLLDO1 case, any error is fatal, and we should not try running the command at all.
-		if ((*error) != NoError) return;
-
-		R_Visible = (Rboolean) 0;
-
-		SEXP exp;
-		PROTECT (exp = runCommandInternalBase (parsed, error));
-
-		if (*error == NoError) {
-			SET_SYMVALUE (R_LastvalueSymbol, exp);
-			if (R_Visible) {
-				tryPrintValue (exp, error);
-			}
-		}
-		UNPROTECT (1); /* exp */
-
-		/* See the comment in the corresponding code in runCommandInternalBase. And yes, apparently, we need this at both places! */
-		Rprintf ("");
-
-		Rf_PrintWarnings ();
-#endif
 	}
 }
 

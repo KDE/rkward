@@ -2,7 +2,7 @@
                           rkstructuregetter  -  description
                              -------------------
     begin                : Wed Apr 11 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -54,7 +54,7 @@ RKStructureGetter::~RKStructureGetter () {
 	UNPROTECT (num_prefetched_funs + 1); /* all the pre-resolved functions and the meta attribute */
 }
 
-SEXP RKStructureGetter::prefetch_fun (CONSTCHAR *name, bool from_base) {
+SEXP RKStructureGetter::prefetch_fun (const char *name, bool from_base) {
 	SEXP ret;
 
 	if (from_base) {

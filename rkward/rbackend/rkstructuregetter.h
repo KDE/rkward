@@ -2,7 +2,7 @@
                           rkstructuregetter  -  description
                              -------------------
     begin                : Wed Apr 11 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -42,7 +42,7 @@ private:
 	void getStructureSafe (SEXP value, const QString &name, bool misplaced, RData *storage);
 	SEXP resolvePromise (SEXP from);
 
-	SEXP prefetch_fun (CONSTCHAR *name, bool from_base=true);
+	SEXP prefetch_fun (const char *name, bool from_base=true);
 
 	bool with_namespace;
 	SEXP namespace_envir;

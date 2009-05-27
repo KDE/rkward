@@ -510,16 +510,9 @@ int RThread::initialize () {
 	
 	runCommandInternal ("library (\"rkward\")\n", &error);
 	if (error) status |= LibLoadFail;
-	unsigned int c;
-	QString *paths = getCommandAsStringVector ("library.dynam (\"rkward\", \"rkward\")[[\"path\"]]\n", &c, &error);
-	if ((error) || (c != 1)) {
-		status |= LibLoadFail;
-	} else {
-		if (!registerFunctions (paths[0].toLocal8Bit ())) status |= LibLoadFail;
-	}
-	delete [] paths;
 
 // find out about standard library locations
+	unsigned int c;
 	QString *standardliblocs = getCommandAsStringVector (".libPaths ()\n", &c, &error);
 	if (error) status |= OtherFail;
 	for (unsigned int i = 0; i < c; ++i) {
@@ -542,11 +535,11 @@ int RThread::initialize () {
 	if (error) status |= SinkFail;
 	runCommandInternal ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", &error);
 	if (error) status |= SinkFail;
+#warning TODO: we can/should set an R function, instead, since R 2.7.0
 	runCommandInternal ("options (htmlhelp=TRUE); options (browser=\"qdbus " + QDBusConnection::sessionBus ().baseService () + " /MainApplication net.sf.rkward.openHTMLHelp\")", &error);
 	if (error) status |= OtherFail;
 /*	runCommandInternal (".rk.default.device <- \"x11\"\n", &error);
 	if (error) status |= OtherFail; */
-	// TODO: error-handling?
 
 	MUTEX_LOCK;
 	flushOutput ();
