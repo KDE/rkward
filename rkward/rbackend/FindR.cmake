@@ -110,11 +110,17 @@ ELSE(NOT LIBR_BLAS)
 ENDIF(NOT LIBR_BLAS)
 
 # find R package library location
+IF(WIN32)
+	SET(PATH_SEP ";")
+ELSE(WIN32)
+	SET(PATH_SEP ":")
+ENDIF(WIN32)
 
 MESSAGE(STATUS "Checking for R package library location to use")
 IF(NOT R_LIBDIR)
-	EXEC_PROGRAM(${R_EXECUTABLE}
-		ARGS CMD sh -c 'echo $R_LIBS:$R_LIBS_SITE'
+	EXECUTE_PROCESS(
+		COMMAND echo "cat(paste(unique (c(.Library.site, .Library)), collapse='${PATH_SEP}'))"
+		COMMAND ${R_EXECUTABLE} "--slave" "--no-save"
 		OUTPUT_VARIABLE R_LIBDIR)
 ELSE(NOT R_LIBDIR)
 	MESSAGE(STATUS "Location specified by user")
@@ -126,17 +132,17 @@ STRING(REGEX REPLACE "[ \n]+"
 	"${R_LIBDIR}")
 
 # strip leading colon(s)
-STRING(REGEX REPLACE "^:+"
+STRING(REGEX REPLACE "^${PATH_SEP}+"
 	"" R_LIBDIR
 	"${R_LIBDIR}")
 
 # strip trailing colon(s)
-STRING(REGEX REPLACE ":+$"
+STRING(REGEX REPLACE "${PATH_SEP}+$"
 	"" R_LIBDIR
 	"${R_LIBDIR}")
 
 # find first path
-STRING(REGEX REPLACE ":"
+STRING(REGEX REPLACE "${PATH_SEP}"
 	" " R_LIBDIR
 	"${R_LIBDIR}")
 
