@@ -34,14 +34,17 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #include "rkpthreadsupport.h"
 #include "rksignalsupport.h"
 
-#include <dlfcn.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#ifdef Q_WS_WIN
+#	include <winsock.h>
+#	undef ERROR	// windows define clashes with R define
+#else
+#include <dlfcn.h>
 #include <sys/resource.h>
 #include <sys/types.h>
-//#include <signal.h>
-//#include <unistd.h>
+#endif
 #include <math.h>
 
 #include "Rversion.h"
@@ -71,20 +74,23 @@ extern "C" {
 #include "R_ext/Callbacks.h"
 #include "R.h"
 #include "Rinternals.h"
-#include "Rinterface.h"
+#ifdef Q_WS_WIN
+#	include "R_ext/RStartup.h"
+#else
+#	include "Rinterface.h"
+#endif
 #include "R_ext/Parse.h"
 
-// hidden in Rinternals.h if USE_RINTERNALS is defined
-extern Rboolean (Rf_isNull)(SEXP s);
-extern Rboolean (Rf_isObject)(SEXP s);
 SEXP R_LastvalueSymbol;
 
 #include "Rembedded.h"
 
 // some functions we need that are not declared
-extern int Rf_initEmbeddedR(int argc, char **argv);
 extern void Rf_PrintWarnings (void);
-extern int R_interrupts_pending;
+#ifdef Q_WS_WIN
+	extern int R_interrupts_pending;
+#	warning Or is it UserBreak?
+#endif
 extern int Rf_initialize_R(int ac, char **av);
 extern void setup_Rmainloop(void); /* in main.c */
 extern uintptr_t R_CStackLimit;
@@ -168,7 +174,12 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	if (!(args.int_c)) {
 #warning TODO: this should be handled in rthread.cpp, instead
 		REmbedInternal::this_pointer->currentCommandWasCancelled ();
+#ifdef Q_WS_WIN
+		R_interrupts_pending = 1;
+		R_CheckUserInterrupt ();
+#else
 		Rf_onintr ();
+#endif
 	}
 	if (buf && args.int_c) return 1;
 	return 0;
@@ -180,26 +191,9 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	REmbedInternal::this_pointer->handleOutput (REmbedInternal::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0);
 }
 
-void RResetConsole () {
+/** For R callbacks that we want to disable, entirely */
+void RDoNothing () {
 	RK_TRACE (RBACKEND);
-
-// we leave this un-implemented on purpose! We simply don't want that sort of thing to be done.
-}
-
-void RFlushConsole () {
-	RK_TRACE (RBACKEND);
-
-/* nope, we're not going to do the line below after all. Two reasons:
-1) We'd still have to add mutex protection around this call (ok, doable of course)
-2) I don't think we need it at all: We do our own flushing, and R rarely flushes, for obscure reasons, anyway.
-In order to prevent R from doing silly things, we still override this function and leave it unimplemented on purpose. */
-//	REmbedInternal::this_pointer->flushOutput ();
-}
-
-void RClearerrConsole () {
-	RK_TRACE (RBACKEND);
-
-// we leave this un-implemented on purpose! We simply don't want that sort of thing to be done.
 }
 
 void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
@@ -355,9 +349,9 @@ void REmbedInternal::connectCallbacks () {
 	ptr_R_ReadConsole = RReadConsole;
 	ptr_R_WriteConsoleEx = RWriteConsoleEx;
 	ptr_R_WriteConsole = 0;
-	ptr_R_ResetConsole = RResetConsole;
-	ptr_R_FlushConsole = RFlushConsole;
-	ptr_R_ClearerrConsole = RClearerrConsole;
+	ptr_R_ResetConsole = RDoNothing;
+	ptr_R_FlushConsole = RDoNothing;
+	ptr_R_ClearerrConsole = RDoNothing;
 	ptr_R_Busy = RBusy;
 	ptr_R_CleanUp = RCleanUp;			// unfortunately, it seems, we can't safely cancel quitting anymore, here!
 	ptr_R_ShowFiles = RShowFiles;
