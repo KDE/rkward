@@ -176,7 +176,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	connect (actionmenu_unmark_block->menu(), SIGNAL (aboutToShow()), this, SLOT (clearUnusedBlocks()));
 
 	action_setwd_to_script = ac->addAction ("setwd_to_script", this, SLOT (setWDToScript ()));
-	action_setwd_to_script->setText (i18n ("CD to this script"));
+	action_setwd_to_script->setText (i18n ("CD to script directory"));
 #if KDE_IS_VERSION(4,3,0)
 	action_setwd_to_script->setHelpText (i18n ("Change the working directory to the directory of this script"));
 #endif
