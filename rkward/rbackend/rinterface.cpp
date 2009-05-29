@@ -413,45 +413,28 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 	RCallbackArgs::RCallbackType type = args->type;
 
 	if (type == RCallbackArgs::RShowMessage) {
-		KMessageBox::information (0, QString (*(args->chars_a)), i18n ("Message from the R backend"));
-	} else if (type == RCallbackArgs::RReadConsole) {
+		KMessageBox::information (0, args->params["message"].toString (), i18n ("Message from the R backend"));
+	} else if (type == RCallbackArgs::RReadLine) {
 		QString result;
 
-		bool ok = RKReadLineDialog::readLine (0, i18n ("R backend requests information"), *(args->chars_a), runningCommand (), &result);
+		bool ok = RKReadLineDialog::readLine (0, i18n ("R backend requests information"), args->params["prompt"].toString (), runningCommand (), &result);
+		args->params["result"] = QVariant (result);
 
-		result = result.left (args->int_a - 2) + '\n';
-		qstrcpy (*(args->chars_b), result.toLocal8Bit ());
-
-		if (!ok) args->int_c = 0;	// will be cancelled deep inside REmbedInternal, where it's safest
+		if (!ok) args->params["cancelled"] = QVariant (true);
 	} else if ((type == RCallbackArgs::RShowFiles) || (type == RCallbackArgs::REditFiles)) {
-		if ((type == RCallbackArgs::RShowFiles) && (QString (*(args->chars_d)) == "rkwardhtml")) {
-			// not to worry, just some help file to display
-			// TODO: maybe move this to ShowEditTextFileAgent instead
-			for (int n=0; n < args->int_a; ++n) {
-				RKWardMainWindow::getMain ()->openHTML (KUrl (args->chars_a[n]));
-			}
-		} else {
-			ShowEditTextFileAgent::showEditFiles (args);
-			return;
-		}
-	} else if (type ==RCallbackArgs::RChooseFile) {
+		ShowEditTextFileAgent::showEditFiles (args);
+		return;		// we are not done, yet!
+	} else if (type == RCallbackArgs::RChooseFile) {
 		QString filename;
-		if (args->int_a) {
+		if (args->params["new"].toBool ()) {
 			filename = KFileDialog::getSaveFileName ();
 		} else {
 			filename = KFileDialog::getOpenFileName ();
 		}
-		filename = filename.left (args->int_b - 2);
-		args->int_c = filename.length ();
-		qstrcpy (*(args->chars_a), filename.toLatin1 ());
-	} else if (type ==RCallbackArgs::RSuicide) {
-		QString message = i18n ("The R engine has encountered a fatal error:\n") + QString (*(args->chars_a));
-		message += i18n ("It will be shut down immediately. This means, you can not use any more functions that rely on the R backend. I.e. you can do hardly anything at all, not even save the workspace. What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
-		KMessageBox::error (0, message, i18n ("R engine has died"));
-		r_thread->kill ();
-	} else if (type ==RCallbackArgs::RCleanUp) {
-		QString message = i18n ("The R engine has shut down with status: ") + QString::number (args->int_a);
-		message += i18n ("\nIt will be shut down immediately. This means, you can not use any more functions that rely on the R backend. I.e. you can do hardly anything at all, not even save the workspace. Hopefully, however, R has already saved the workspace. What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that.\nSince this should never happen, please write a mail to rkward-devel@lists.sourceforge.net, and tell us, what you were trying to do, when this happened. Sorry!");
+		args->params["result"] = QVariant (filename);
+	} else if (type == RCallbackArgs::RBackendExit) {
+		QString message = args->params["message"].toString ();
+		message += i18n ("\nIt will be shut down immediately. This means, you can not use any more functions that rely on the R backend. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that.\nSince this should never happen, please write a mail to rkward-devel@lists.sourceforge.net, and tell us, what you were trying to do, when this happened. Sorry!");
 		KMessageBox::error (0, message, i18n ("R engine has died"));
 		r_thread->kill ();
 	}

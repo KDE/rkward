@@ -20,15 +20,12 @@
 // static
 REmbedInternal *REmbedInternal::this_pointer = 0; 
 
-#define TRUE true
-#define FALSE false
 #include <qstring.h>
 #include <QStringList>
 #include <qtextcodec.h>
+#include <klocale.h>
 #include "../core/robject.h"
 #include "../debug.h"
-#undef TRUE
-#undef FALSE
 
 #include "rklocalesupport.h"
 #include "rkpthreadsupport.h"
@@ -118,8 +115,8 @@ void RSuicide (const char* message) {
 	RK_TRACE (RBACKEND);
 
 	RCallbackArgs args;
-	args.type = RCallbackArgs::RSuicide;
-	args.chars_a = const_cast<char**>(&message);
+	args.type = RCallbackArgs::RBackendExit;
+	args.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1").arg (message));
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 	REmbedInternal::this_pointer->shutdown (true);
 	Rf_error ("Backend dead");	// this jumps us out of the REPL.
@@ -130,7 +127,7 @@ void RShowMessage (const char* message) {
 
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RShowMessage;
-	args.chars_a = const_cast<char**>(&message);
+	args.params["message"] = QVariant (message);
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 }
 
@@ -160,18 +157,16 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 		return 1;
 	}
 
-	// here, we handle readline calls and such, i.e. not the regular prompt for code
+	// here, we handle readline() calls and such, i.e. not the regular prompt for code
+	// browser() also takes us here.
 	RCallbackArgs args;
-	args.type = RCallbackArgs::RReadConsole;
-	args.chars_a = const_cast<char**> (&prompt);
-	args.chars_b = (char **) (&buf);
-	args.int_a = buflen;
-	args.int_b = hist;		// actually, we ignore hist
-	args.int_c = 1;			// not cancelled
+	args.type = RCallbackArgs::RReadLine;
+	args.params["prompt"] = QVariant (prompt);
+	args.params["cancelled"] = QVariant (false);
 
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 // default implementation seems to return 1 on success, 0 on failure, contrary to some documentation. see unix/std-sys.c
-	if (!(args.int_c)) {
+	if (args.params["cancelled"].toBool ()) {
 #warning TODO: this should be handled in rthread.cpp, instead
 		REmbedInternal::this_pointer->currentCommandWasCancelled ();
 #ifdef Q_WS_WIN
@@ -180,8 +175,14 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 #else
 		Rf_onintr ();
 #endif
+		return 0;	// we should not ever get here, but still...
 	}
-	if (buf && args.int_c) return 1;
+	if (buf) {
+		QByteArray localres = REmbedInternal::this_pointer->current_locale_codec->fromUnicode (args.params["result"].toString ());
+		// need to append a newline, here. TODO: theoretically, RReadConsole comes back for more, if \0 was encountered before \n.
+		qstrncpy ((char *) buf, localres.left (buflen - 2).append ('\n').data (), buflen);
+		return 1;
+	}
 	return 0;
 }
 
@@ -201,9 +202,8 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 
 	if (saveact != SA_SUICIDE) {
 		RCallbackArgs args;
-		args.type = RCallbackArgs::RCleanUp;
-		args.int_a = status;
-		args.int_b = RunLast;
+		args.type = RCallbackArgs::RBackendExit;
+		args.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1").arg (status));
 		REmbedInternal::this_pointer->handleStandardCallback (&args);
 
 		if(saveact == SA_DEFAULT) saveact = SA_SAVE;
@@ -221,18 +221,24 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	Rf_error ("Backend dead");	// this jumps us out of the REPL.
 }
 
+QStringList charPArrayToQStringList (const char** chars, int count) {
+	QStringList ret;
+	for (int i = 0; i < count; ++i) {
+		// do we need to do locale conversion, here?
+		ret.append (chars[i]);
+	}
+	return ret;
+}
+
 int RShowFiles (int nfile, const char **file, const char **headers, const char *wtitle, Rboolean del, const char *pager) {
 	RK_TRACE (RBACKEND);
 
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RShowFiles;
-	args.int_a = nfile;
-	args.chars_a = const_cast<char**> (file);
-	args.chars_b = const_cast<char**> (headers);		// what exactly are the "headers"?!?
-	args.chars_c = const_cast<char**> (&wtitle);
-	args.chars_d = const_cast<char**> (&pager);		// we ingnore the pager-parameter for now.
-	args.int_b = del;
-
+	args.params["files"] = QVariant (charPArrayToQStringList (file, nfile));
+	args.params["titles"] = QVariant (charPArrayToQStringList (headers, nfile));
+	args.params["wtitle"] = QVariant (wtitle);
+	args.params["delete"] = QVariant (del);
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 
 // default implementation seems to returns 1 on success, 0 on failure. see unix/std-sys.c
@@ -244,33 +250,41 @@ int RChooseFile (int isnew, char *buf, int len) {
 
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RChooseFile;
-	args.int_a = isnew;
-	args.int_b = len;
-	args.chars_a = &buf;
+	args.params["new"] = QVariant ((bool) isnew);
 
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 
+	QByteArray localres = REmbedInternal::this_pointer->current_locale_codec->fromUnicode (args.params["result"].toString ());
+	qstrncpy ((char *) buf, localres.data (), len);
+
 // return length of filename (strlen (buf))
-	return args.int_c;
+	return (qMin (len - 1, localres.size ()));
+}
+
+void REditFilesHelper (QStringList files, QStringList titles, QString name_or_something) {
+	RK_TRACE (RBACKEND);
+
+	RCallbackArgs args;
+	args.type = RCallbackArgs::REditFiles;
+	args.params["files"] = QVariant (files);
+	args.params["titles"] = QVariant (titles);
+	// and whatever the name_or_something from REditFiles is for...
+	REmbedInternal::this_pointer->handleStandardCallback (&args);
 }
 
 int REditFiles (int nfile, const char **file, const char **title, const char *editor) {
 	RK_TRACE (RBACKEND);
 
-	RCallbackArgs args;
-	args.type = RCallbackArgs::REditFiles;
-	args.int_a = nfile;
-	args.chars_a = const_cast<char**> (file);
-	args.chars_b = const_cast<char**> (title);
-	args.chars_c = const_cast<char**> (&editor);
-
-	REmbedInternal::this_pointer->handleStandardCallback (&args);
+	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (title, nfile), editor);
 
 // default implementation seems to return 1 if nfile <= 0, else 1. No idea, what for. see unix/std-sys.c
 	return (nfile <= 0);
 }
 
 SEXP doEditFiles (SEXP files, SEXP titles, SEXP name) {
+	RK_TRACE (RBACKEND);
+
+	// this function would be much shorter, if SEXPToStringList would simply return a QStringList...
 	unsigned int files_count, titles_count, name_count;
 	QString *file_strings = SEXPToStringList (files, &files_count);
 	QString *title_strings = SEXPToStringList (titles, &titles_count);
@@ -282,21 +296,21 @@ SEXP doEditFiles (SEXP files, SEXP titles, SEXP name) {
 
 	files_count = titles_count = qMin (files_count, titles_count);
 
-	char **file_chars = new char*[files_count];
-	char **title_chars = new char*[files_count];
+	QStringList files_list;
+	QStringList titles_list;
 	for (unsigned int i = 0; i < files_count; ++i) {
-		file_chars[i] = file_strings[i].toLocal8Bit ().data ();
-		title_chars[i] = title_strings[i].toLocal8Bit ().data ();
+		files_list.append (file_strings[i]);
+		titles_list.append (title_strings[i]);
 	}
-	char *name_char;
-	if (name_count > 0) name_char = name_strings[0].toLocal8Bit ().data ();
-	else {
-		name_char = new char[1];
-		name_char[0] = '\0';
-	}
+	QString name_string;
+	if (name_count) name_string = name_strings[0];
 
-	REditFiles (files_count, const_cast<const char**> (file_chars), const_cast<const char**> (title_chars), name_char);
-// TODO: fix memory leak!
+	REditFilesHelper (files_list, titles_list, name_string);
+
+	delete [] file_strings;
+	delete [] title_strings;
+	delete [] name_strings;
+
 	return (R_NilValue);
 }
 

@@ -20,35 +20,30 @@
 
 #include <stddef.h>
 
-/** This struct is an ugly hack that allows us to pass all R standard callbacks to the main thread and back using the same mechanism.
-Basically, it contains enough space for all arguments and return values ever used. However, of course, it is inherently totally unsafe.
-All rests on having the handling functions know exactly, how these variables are used. So be extremely careful with modifications!
+#include <QMap>
+#include <QVariant>
 
-Also, of course, this method of passing the arguments is somewhat wasteful, as most of the time we're alocating a lot more memory than needed.
-However, since all R standard callbacks are used very infrequently (and ask for user interaction), this is not really an issue.
-
-The bool done member is used to find out, when exactly the main thread has finished processing the callback. */
+/** This struct is used to pass the standard callbacks from R to the main thread (if needed; some are handled in the backend thread). Note that for the callbacks that need to be passed to the main
+thread, we can be quite wasteful both in terms of cycles and memory, since these are usually
+requests for user interaction. Hence we use a QVariantMap to accommodate all the different needed
+parameters, easily, and in a readable way. */
 struct RCallbackArgs {
 /** is main thread done with the callback, yet? Initialized to false inside the true handler: RThread::doStandardCallback () */
 	bool done;
-
-/** This enum specifies, what sort of callback this is */
-	enum RCallbackType { RSuicide, RShowMessage, RReadConsole, RWriteConsole, RResetConsole, RFlushConsole, RClearerrConsole,
-											RBusy, RCleanUp, RShowFiles, RChooseFile, /*REditFile,*/ REditFiles
-	} type;
-
-	char **chars_a;		/**< a char** parameter. Look at the respective callbacks to find out, what it is used for. */
-	char **chars_b;		/**< a char** parameter. Look at the respective callbacks to find out, what it is used for. */
-	char **chars_c;		/**< a char** parameter. Look at the respective callbacks to find out, what it is used for. */
-	char **chars_d;		/**< a char** parameter. Look at the respective callbacks to find out, what it is used for. */
-	int int_a;		/**< an int parameter. Look at the respective callbacks to find out, what it is used for. */
-	int int_b;		/**< an int parameter. Look at the respective callbacks to find out, what it is used for. */
-	int int_c;		/**< an int parameter. Look at the respective callbacks to find out, what it is used for. */
-	bool bool_a;		/**< a bool parameter. Look at the respective callbacks to find out, what it is used for. */
+/** type of the callback */
+	enum RCallbackType {
+		RBackendExit,
+		RShowMessage,
+		RShowFiles,
+		RChooseFile,
+		REditFiles,
+		RReadLine
+       } type;
+/** All the parameters sent in either direction */
+	QVariantMap params;
 };
 
 class QStringList;
-class QString;
 class RData;
 class QTextCodec;
 /** This function converts a list of strings to a QStringList (locale aware), and returns the pointer. Needed to keep R and Qt includes separate. The strings can be deleted afterwards. Implementation is in rthread.cpp */

@@ -77,31 +77,37 @@ void ShowEditTextFileAgent::showEditFiles (RCallbackArgs *args) {
 	QString message_snip1 = i18n (" For that reason processing has been stopped for now. Press the \"Done\"-button, or close this dialog once you think it is safe to resume.\n\n");
 	QString message_snip2 = i18n ("The file(s) have been opened in text-windows. The following is a list of the file(s) in question:\n\n");
 
+	QStringList files = args->params["files"].toStringList ();
+	QStringList titles = args->params["titles"].toStringList ();
+	int count = files.count ();
+	RK_ASSERT (titles.count () == count);
+
 	QString bad_files_list;
 	if (args->type == RCallbackArgs::RShowFiles) {
+
 		caption = i18n ("Showing file(s)");
 		message = i18n ("A command running in the R-engine wants you to see one or more file(s). RKWard can not determine, whether it is safe to continue processing R commands, before you have read the file(s) in question.") + message_snip1 + message_snip2;
 
-		for (int n = 0; n < args->int_a; ++n) {
-			message.append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
+		for (int n = 0; n < count; ++n) {
+			message.append (files[n]).append (" (\"").append (titles[n]).append ("\")\n");
 
-			bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl::fromPath (args->chars_a[n]), false, true, QString (*(args->chars_c)));
+			bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl::fromPath (files[n]), false, true, args->params["wtitle"].toString ());
 
 			if (!ok)  {
-				bad_files_list.append ("- ").append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
+				bad_files_list.append ("- ").append (files[n]).append (" (\"").append (titles[n]).append ("\")\n");
 			}
 		}
 	} else if (args->type == RCallbackArgs::REditFiles) {
 		caption = i18n ("Edit file(s)");
 		message = i18n ("A command running in the R-engine wants you to edit one or more file(s). RKWard can not determine, whether it is safe to continue processing R commands, before you have read/edited (and saved) the file(s) in question.") + message_snip1 + message_snip2;
 
-		for (int n = 0; n < args->int_a; ++n) {
-			message.append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
+		for (int n = 0; n < count; ++n) {
+			message.append (files[n]).append (" (\"").append (titles[n]).append ("\")\n");
 
-			bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl::fromPath (args->chars_a[n]), true, false, QString (args->chars_b[n]));
+			bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl::fromPath (files[n]), true, false, QString (titles[n]));
 
 			if (!ok) {
-				bad_files_list.append ("- ").append (args->chars_a[n]).append (" (\"").append (args->chars_b[n]).append ("\")\n");
+				bad_files_list.append ("- ").append (files[n]).append (" (\"").append (titles[n]).append ("\")\n");
 			}
 		}
 	}
@@ -119,10 +125,10 @@ void ShowEditTextFileAgent::done () {
 	RK_TRACE (APP);
 	dialog->deleteLater ();
 
-	// int_b in RShowFiles means files are to be deleted
-	if ((args->type == RCallbackArgs::RShowFiles) && args->int_b) {
-		for (int n = 0; n < args->int_a; ++n) {
-			RK_ASSERT (QFile::remove (QString (args->chars_a[n])));
+	QStringList files = args->params["files"].toStringList ();
+	if ((args->type == RCallbackArgs::RShowFiles) && args->params["delete"].toBool ()) {
+		for (int n = 0; n < files.count (); ++n) {
+			RK_ASSERT (QFile::remove (QString (files[n])));
 		}
 	}
 
