@@ -88,11 +88,11 @@ extern void Rf_PrintWarnings (void);
 	extern int R_interrupts_pending;
 #	warning Or is it UserBreak?
 #endif
-extern int Rf_initialize_R(int ac, char **av);
-extern void setup_Rmainloop(void); /* in main.c */
-extern uintptr_t R_CStackLimit;
-extern uintptr_t R_CStackStart;
-extern Rboolean R_Interactive;
+extern int Rf_initialize_R(int ac, char **av);	// in embedded.h in R 2.9.0. TODO: check presence in R 2.7.0
+extern void setup_Rmainloop(void);	// in embedded.h in R 2.9.0. TODO: check presence in R 2.7.0
+extern uintptr_t R_CStackLimit;	// inRinterface.h in R 2.9.0. TODO: check presence in R 2.7.0
+extern uintptr_t R_CStackStart;	// inRinterface.h in R 2.9.0. TODO: check presence in R 2.7.0
+extern Rboolean R_Interactive;	// inRinterface.h in R 2.9.0. TODO: check presence in R 2.7.0
 #include "R_ext/eventloop.h"
 }
 
@@ -359,7 +359,7 @@ void REmbedInternal::connectCallbacks () {
 	R_Outputfile = NULL;
 	R_Consolefile = NULL;
 	ptr_R_Suicide = RSuicide;
-	ptr_R_ShowMessage = RShowMessage;			// when exactly does this ever get used?
+	ptr_R_ShowMessage = RShowMessage;		// rarely used in R on unix
 	ptr_R_ReadConsole = RReadConsole;
 	ptr_R_WriteConsoleEx = RWriteConsoleEx;
 	ptr_R_WriteConsole = 0;
