@@ -22,6 +22,7 @@
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../rkglobals.h"
 #include "../rkward.h"		// for startup options
+#include "../version.h"
 
 #include "../debug.h"
 
@@ -78,12 +79,14 @@ void RThread::run () {
 	// in RInterface::RInterface() we create a fake RCommand to capture all the output/errors during startup
 	MUTEX_LOCK;
 	current_command = RCommandStack::regular_stack->currentCommand ();
+	all_current_commands.append (current_command);
 	RK_ASSERT (current_command);
 	MUTEX_UNLOCK;
 
 	if ((err = initialize ())) {
 		int* err_c = new int;
 		*err_c = err;
+		flushOutput ();		// to make errors/warnings available to the main thread
 		qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RStartupError, err_c));
 	}
 	qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RStarted));
@@ -509,6 +512,8 @@ int RThread::initialize () {
 	int status = 0;
 	
 	runCommandInternal ("library (\"rkward\")\n", &error);
+	if (error) status |= LibLoadFail;
+	runCommandInternal (QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (VERSION), &error);
 	if (error) status |= LibLoadFail;
 
 // find out about standard library locations

@@ -1,11 +1,5 @@
-This procedure helps working around a number of strange problems while creating releases, such as .moc-files not being generated, generated files not being removed, autotools being run again (with bad results) for no good reason... The following procedure seems to eliminate those problems, and thus should be followed for releases. Some items may also serve to keep the package lean.
+Since RKWard 0.5.0 and the use of cmake, creating a new source .tar.gz is as easy as:
 
-make clean
-make dist
-unpack tarball and cd there
-rm -rf admin/.svn
-make -f Makefile.svn
-rm rkward/rkward_skel.cpp
-touch config.h.in
-rm -r autom4te.cache
-repackage tarball
+./makedist.sh VERSION
+
+in the toplevel source directory. Be sure to keep your sources clean, when producing official releases, tough. (If in doubt, get a clean SVN-checkout, and use that).

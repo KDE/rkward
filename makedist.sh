@@ -7,10 +7,10 @@ DISTDIRREL=rkward-$VERSION
 DISTDIR=$BASEDIR/disttemp/$DISTDIRREL
 mkdir $DISTDIR
 
-#prepare version.h
+#prepare version information
 echo "/* Version number of package */" > $BASEDIR/rkward/version.h
 echo "#define VERSION \"$VERSION\"" >> $BASEDIR/rkward/version.h
-#prepare resource.ver
+echo "\".rk.app.version\" <- \"$VERSION\"" > $BASEDIR/rkward/rbackend/rpackages/rkward/R/ver.R
 echo "$VERSION" > $BASEDIR/rkward/resource.ver
 
 cp -a AUTHORS CMakeLists.txt COPYING ChangeLog TODO INSTALL NOTES README configure $DISTDIR

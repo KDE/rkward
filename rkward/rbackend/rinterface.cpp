@@ -204,18 +204,24 @@ void RInterface::customEvent (QEvent *e) {
 		int* err_p = static_cast<int*> (ev->data ());
 		int err = *err_p;
 		delete err_p;
-		QString message = i18n ("There was a problem starting the R backend. The following error(s) occurred:\n");
+		QString message = i18n ("<p>There was a problem starting the R backend. The following error(s) occurred:</p>\n");
 		if (err & RThread::LibLoadFail) {
-			message.append (i18n ("\t- The 'rkward' R-library could not be loaded. This library is needed for communication between R and RKWard and many things will not work properly if this library is not present. Likely RKWard will even crash. The 'rkward' R-library should have been included in your distribution or RKWard, and should have been set up when you ran 'make install'. Please try 'make install' again and check for any errors. You should quit RKWard now.\n"));
+			message.append (i18n ("</p>\t- The 'rkward' R-library either could not be loaded at all, or not in the correct version. This may lead to all sorts of errors, from single missing features to complete failure to function. The most likely cause is that the last installation did not place all files in the correct place. However, in some cases, left-overs from a previous installation that was not cleanly removed may be the cause.</p>\
+			<p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"));
 		}
 		if (err & RThread::SinkFail) {
-			message.append (i18n ("\t-There was a problem opening the files needed for communication with R. Most likely this is due to an incorrect setting for the location of these files. Check whether you have correctly configured the location of the log-files (Settings->Configure Settings->Logfiles) and restart RKWard.\n"));
+			message.append (i18n ("<p>\t-There was a problem opening the files needed for communication with R. Most likely this is due to an incorrect setting for the location of these files. Check whether you have correctly configured the location of the log-files (Settings->Configure Settings->Logfiles) and restart RKWard.</p>\n"));
 		}
 		if (err & RThread::OtherFail) {
-			message.append (i18n ("\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.\n"));
+			message.append (i18n ("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
 		}
-		KMessageBox::error (0, message, i18n ("Error starting R"));
-		r_thread->unlock (RThread::Startup);
+		QString details = runningCommand()->fullOutput();
+		if (!details.isEmpty ()) {
+			// WORKAROUND for stupid KMessageBox behavior. (kdelibs 4.2.3)
+			// If length of details <= 512, it tries to show the details as a QLabel.
+			details = details.replace('<', "&lt;").replace('\n', "<br>").leftJustified (513);
+		}
+		KMessageBox::detailedError (0, message, details, i18n ("Error starting R"), KMessageBox::Notify | KMessageBox::AllowLink);
 	} else {
 		RK_ASSERT (false);
 	}
@@ -380,7 +386,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			bool ok;
 			RKComponentMap::ComponentInvocationMode mode = RKComponentMap::ManualSubmit;
 			if (request->call[2] == "auto") mode = RKComponentMap::AutoSubmit;
-			else if (request->call[2] == "submit.or.fail") mode = RKComponentMap::AutoSubmitOrFail;
+			else if (request->call[2] == "submit") mode = RKComponentMap::AutoSubmitOrFail;
 			ok = RKComponentMap::invokeComponent (request->call[1], request->call.mid (3), mode, &message);
 
 			if (message.isEmpty ()) {

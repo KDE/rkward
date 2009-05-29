@@ -1,5 +1,5 @@
 - Remove support for R 2.6.x and earlier		TODO: clean up more (browser, internal.R, RCallbackArgs, RData?), adjust debian control
-- Add basic check for a correct installation of the RKWard resource files
+- Add basic checks for a correct installation of the RKWard resource files
 - Remove "What to expect" dialog at startup
 - Make keyboard shorcuts configurable
 - Add option to add only single line commands from script editor to the console history
