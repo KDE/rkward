@@ -99,6 +99,7 @@ void RThread::run () {
 	MUTEX_LOCK;
 	checkObjectUpdatesNeeded (true);
 	RCommandStack::regular_stack->pop ();	// remove the fake command
+	all_current_commands.pop_back ();
 	notifyCommandDone (current_command);
 	MUTEX_UNLOCK;
 
