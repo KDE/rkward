@@ -65,6 +65,8 @@ public:
 /** destructor */
 	virtual ~REmbedInternal ();
 
+/** set up R standard callbacks */
+	void setupCallbacks ();
 /** connect R standard callbacks */
 	void connectCallbacks ();
 

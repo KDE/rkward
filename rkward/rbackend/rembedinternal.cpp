@@ -65,34 +65,40 @@ extern "C" {
 #define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
 #define IS_LATIN1(x) (Rf_getCharCE(x) == CE_LATIN1)
 
+#ifdef Q_WS_WIN
+#	define Win32
+#	include "R_ext/RStartup.h"
+#	include "R_ext/Utils.h"
+
+	extern int R_interrupts_pending;
+#	warning Or is it UserBreak?
+	void RK_doIntr () {
+		R_interrupts_pending = 1;
+		R_CheckUserInterrupt ();
+	}
+
+	structRstart RK_R_Params;
+#else
+#	define RK_doIntr Rf_onintr
+#	include "Rinterface.h"
+#endif
 #include "Rdefines.h"
 #include "R_ext/Rdynload.h"
 #include "R_ext/eventloop.h"
 #include "R_ext/Callbacks.h"
 #include "R.h"
 #include "Rinternals.h"
-#ifdef Q_WS_WIN
-#	include "R_ext/RStartup.h"
-#else
-#	include "Rinterface.h"
-#endif
 #include "R_ext/Parse.h"
-
-SEXP R_LastvalueSymbol;
-
 #include "Rembedded.h"
 
 // some functions we need that are not declared
 extern void Rf_PrintWarnings (void);
-#ifdef Q_WS_WIN
-	extern int R_interrupts_pending;
-#	warning Or is it UserBreak?
-#endif
 extern int Rf_initialize_R(int ac, char **av);	// in embedded.h in R 2.9.0. TODO: check presence in R 2.7.0
 extern void setup_Rmainloop(void);	// in embedded.h in R 2.9.0. TODO: check presence in R 2.7.0
 extern uintptr_t R_CStackLimit;	// inRinterface.h in R 2.9.0. TODO: check presence in R 2.7.0
 extern uintptr_t R_CStackStart;	// inRinterface.h in R 2.9.0. TODO: check presence in R 2.7.0
 extern Rboolean R_Interactive;	// inRinterface.h in R 2.9.0. TODO: check presence in R 2.7.0
+SEXP R_LastvalueSymbol;
 #include "R_ext/eventloop.h"
 }
 
@@ -129,6 +135,26 @@ void RShowMessage (const char* message) {
 	args.type = RCallbackArgs::RShowMessage;
 	args.params["message"] = QVariant (message);
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
+}
+
+// TODO: currently used on windows, only!
+#warning implement in rinterface.cpp!
+/* FROM R_ext/RStartup.h: "Return value here is expected to be 1 for Yes, -1 for No and 0 for Cancel:
+   symbolic constants in graphapp.h" */
+int RAskYesNoCancel (const char* message) {
+	RK_TRACE (RBACKEND);
+
+	RCallbackArgs args;
+	args.type = RCallbackArgs::RShowMessage;
+	args.params["message"] = QVariant (message);
+	args.params["askync"] = QVariant (true);
+
+	REmbedInternal::this_pointer->handleStandardCallback (&args);
+
+	QString ret = args.params["result"].toString ();
+	if (ret == "yes") return 1;
+	if (ret == "no") return -1;
+	return 0;
 }
 
 int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) {
@@ -169,12 +195,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	if (args.params["cancelled"].toBool ()) {
 #warning TODO: this should be handled in rthread.cpp, instead
 		REmbedInternal::this_pointer->currentCommandWasCancelled ();
-#ifdef Q_WS_WIN
-		R_interrupts_pending = 1;
-		R_CheckUserInterrupt ();
-#else
-		Rf_onintr ();
-#endif
+		RK_doIntr();
 		return 0;	// we should not ever get here, but still...
 	}
 	if (buf) {
@@ -185,6 +206,12 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	}
 	return 0;
 }
+
+#ifdef Q_WS_WIN
+int RReadConsoleWin (const char* prompt, char* buf, int buflen, int hist) {
+	return RReadConsole (prompt, (unsigned char*) buf, buflen, hist);
+}
+#endif
 
 void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	RK_TRACE (RBACKEND);
@@ -345,16 +372,45 @@ REmbedInternal::REmbedInternal () {
 	r_running = false;
 }
 
+#ifdef Q_WS_WIN
+void REmbedInternal::setupCallbacks () {
+	RK_TRACE (RBACKEND);
+
+	R_setStartTime();
+	R_DefParams(&RK_R_Params);
+
+// IMPORTANT: see also the #ifndef QS_WS_WIN-portion!
+	RK_R_Params.rhome = get_R_HOME ();
+	RK_R_Params.home = getRUser ();
+	RK_R_Params.CharacterMode = LinkDLL;
+	RK_R_Params.ShowMessage = RShowMessage;
+	RK_R_Params.ReadConsole = RReadConsoleWin;
+	RK_R_Params.WriteConsoleEx = RWriteConsoleEx;
+	RK_R_Params.WriteConsole = 0;
+	RK_R_Params.CallBack = RDoNothing;
+	RK_R_Params.YesNoCancel = RAskYesNoCancel;
+	RK_R_Params.Busy = RBusy;
+
+	// TODO: callback mechanism(s) for ChosseFile, ShowFiles, EditFiles
+	// TODO: also for RSuicide / RCleanup? (Less important, obviously, since those should not be triggered, in normal operation).
+
+	RK_R_Params.R_Quiet = (Rboolean) 0;
+	RK_R_Params.R_Interactive = (Rboolean) 1;
+}
+
+void REmbedInternal::connectCallbacks () {
+	RK_TRACE (RBACKEND);
+	R_SetParams(&RK_R_Params);
+}
+#else
+void REmbedInternal::setupCallbacks () {
+	RK_TRACE (RBACKEND);
+}
+
 void REmbedInternal::connectCallbacks () {
 	RK_TRACE (RBACKEND);
 
-// R standard callback pointers.
-// Rinterface.h thinks this can only ever be done on aqua, apparently. Here, we define it the other way around, i.e. #ifndef instead of #ifdef
-// No, does not work -> undefined reference! -> TODO: nag R-devels
-#ifndef HAVE_AQUA
-	//extern int  (*ptr_R_EditFiles)(int, char **, char **, char *);
-#endif
-
+// IMPORTANT: see also the #ifdef QS_WS_WIN-portion!
 // connect R standard callback to our own functions. Important: Don't do so, before our own versions are ready to be used!
 	R_Outputfile = NULL;
 	R_Consolefile = NULL;
@@ -378,6 +434,7 @@ void REmbedInternal::connectCallbacks () {
 //	ptr_R_loadhistory = ... 	// we keep our own history
 //	ptr_R_savehistory = ...	// we keep our own history
 }
+#endif
 
 REmbedInternal::~REmbedInternal () {
 	RK_TRACE (RBACKEND);
@@ -402,7 +459,9 @@ void REmbedInternal::shutdown (bool suicidal) {
 
 	/* close all the graphics devices */
 	if (!suicidal) Rf_KillAllDevices ();
+#ifndef Q_WS_WIN
 	fpu_setup ((Rboolean) FALSE);
+#endif
 }
 
 #if 0
@@ -413,7 +472,7 @@ void processX11EventsWorker (void *) {
 // this basically copied from R's unix/sys-std.c (Rstd_ReadConsole)
 	for (;;) {
 		fd_set *what;
-		what = R_checkActivityEx(R_wait_usec > 0 ? R_wait_usec : 50, 1, Rf_onintr);
+		what = R_checkActivityEx(R_wait_usec > 0 ? R_wait_usec : 50, 1, RK_doIntr);
 		if (what == NULL) break;
 		R_runHandlers(R_InputHandlers, what);
 	}
@@ -658,6 +717,8 @@ SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
 bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 	RK_TRACE (RBACKEND);
 
+	setupCallbacks ();
+
 	RKSignalSupport::saveDefaultSigSegvHandler ();
 
 	r_running = true;
@@ -674,6 +735,11 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 		R_CStackStart = (uintptr_t) -1;
 		R_CStackLimit = (uintptr_t) -1;
 	}
+
+#ifdef Q_WS_WIN
+	R_set_command_line_arguments(argc, argv);
+	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+#endif
 
 	setup_Rmainloop ();
 
