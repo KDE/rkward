@@ -23,6 +23,12 @@
 #include <QMap>
 #include <QVariant>
 
+#ifdef Q_WS_WIN
+extern "C" {
+	void RK_scheduleIntr();
+}
+#endif
+
 /** This struct is used to pass the standard callbacks from R to the main thread (if needed; some are handled in the backend thread). Note that for the callbacks that need to be passed to the main
 thread, we can be quite wasteful both in terms of cycles and memory, since these are usually
 requests for user interaction. Hence we use a QVariantMap to accommodate all the different needed

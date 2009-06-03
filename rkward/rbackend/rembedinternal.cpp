@@ -72,8 +72,12 @@ extern "C" {
 
 	extern int R_interrupts_pending;
 #	warning Or is it UserBreak?
-	void RK_doIntr () {
+	void RK_scheduleIntr () {
 		R_interrupts_pending = 1;
+	}
+
+	void RK_doIntr () {
+		RK_scheduleIntr ();
 		R_CheckUserInterrupt ();
 	}
 

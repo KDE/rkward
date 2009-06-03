@@ -35,8 +35,10 @@
 #include <QList>
 #include <QFileInfo>
 
-#include <signal.h>		// needed for pthread_kill
-#include <pthread.h>		// seems to be needed at least on FreeBSD
+#ifndef Q_WS_WIN
+#	include <signal.h>		// needed for pthread_kill
+#	include <pthread.h>		// seems to be needed at least on FreeBSD
+#endif
 
 #define MAX_BUF_LENGTH 4000
 
@@ -57,15 +59,12 @@ RThread::~RThread() {
 }
 
 void RThread::interruptProcessing (bool interrupt) {
-// TODO: find a good #ifdef to use the uncommented version below, if on a system without pthreads
-	if (interrupt) {
-		pthread_kill ((pthread_t) thread_id, SIGINT);
-	}
-/*	if (interrupt) {
-		R_interrupts_pending = 1;
-	} else {
-		R_interrupts_pending = 0;
-	} */
+	if (!interrupt) return;
+#ifdef Q_WS_WIN
+	RK_scheduleIntr ();
+#else
+	pthread_kill ((pthread_t) thread_id, SIGINT);
+#endif
 }
 
 void RThread::run () {
