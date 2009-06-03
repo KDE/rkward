@@ -34,8 +34,10 @@ public:
 	/** like KApplication::kApplication () (and actually, this should always return the same pointer), but without the need to cast */
 	static RKWardApplication *getApp ();
 
+#ifndef Q_WS_WIN
 	/** reimplemented from KApplication to look for CreateNotify and PropertyNotify events */
 	bool x11EventFilter (XEvent *e);
+#endif
 
 	/** start looking for new top-level windows created on the screen */
 	void startWindowCreationDetection ();

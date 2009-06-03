@@ -2,7 +2,7 @@
                           rwindowcatcher.h  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -82,6 +82,7 @@ class QScrollArea;
 class KVBox;
 class RKProgressControl;
 class QX11EmbedContainer;
+class QWinHost;
 
 /** An R X11 device window managed by rkward. */
 class RKCaughtX11Window : public RKMDIWindow {
@@ -130,7 +131,11 @@ private:
 	QScrollArea *scroll_widget;
 	KVBox *box_widget;
 	RKProgressControl *error_dialog;
+#ifdef Q_WS_WIN
+	QWinHost *capture;
+#else
 	QX11EmbedContainer *capture;
+#endif
 
 	bool dynamic_size;
 	KToggleAction *dynamic_size_action;

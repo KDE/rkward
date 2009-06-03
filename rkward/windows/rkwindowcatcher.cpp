@@ -2,7 +2,7 @@
                           rwindowcatcher.cpp  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -67,7 +67,11 @@ void RKWindowCatcher::stop (int new_cur_device) {
 
 #include <QScrollArea>
 #include <qlabel.h>
-#include <QX11EmbedContainer>
+#ifdef Q_WS_WIN
+#	include "../foreign/qwinhost.h"
+#else
+#	include <QX11EmbedContainer>
+#endif
 #include <QTimer>
 
 #include <ktoggleaction.h>
@@ -107,10 +111,14 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	dynamic_size = true;
 	dynamic_size_action->setChecked (true);
 
+#ifdef Q_WS_WIN
+#	warning TODO: set geometry
+#else
 	KWindowInfo wininfo = KWindowSystem::windowInfo (embedded, NET::WMName | NET::WMFrameExtents);
 	RK_ASSERT (wininfo.valid ());
 	setGeometry (wininfo.frameGeometry ());
 	setCaption (wininfo.name ());
+#endif
 
 	// somehow in Qt 4.4.3, when the RKCaughtWindow is reparented the first time, the QX11EmbedContainer may kill its client. Hence we delay the actual embedding until after the window was shown.
 	// In some previous version of Qt, this was not an issue, but I did not track the versions.
@@ -122,10 +130,16 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 void RKCaughtX11Window::doEmbed () {
 	RK_TRACE (MISC);
 
+#ifdef Q_WS_WIN
+	capture = new QWinHost (xembed_container);
+	capture->setWindow (embedded);
+#	warning TODO: deletion
+#else
 	capture = new QX11EmbedContainer (xembed_container);
 	capture->embedClient (embedded);
 
 	connect (capture, SIGNAL (clientClosed ()), this, SLOT (deleteLater ()));
+#endif
 }
 
 RKCaughtX11Window::~RKCaughtX11Window () {

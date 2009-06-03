@@ -8,6 +8,10 @@ ADD_SUBDIRECTORY( scriptbackends )
 ADD_SUBDIRECTORY( misc )
 ADD_SUBDIRECTORY( core )
 ADD_SUBDIRECTORY( icons )
+IF(WIN32)
+	ADD_SUBDIRECTORY( qwinhost )
+	LIST(APPEND RKWARD_ADDLIBS qwinhost)
+ENDIF(WIN32)
 ADD_SUBDIRECTORY( windows )
 ADD_SUBDIRECTORY( syntax )
 
@@ -39,7 +43,7 @@ CONFIGURE_FILE(
 	@ONLY)
 ADD_DEPENDENCIES(rkward.bin ${CMAKE_CURRENT_BINARY_DIR}/rkward)
 
-TARGET_LINK_LIBRARIES(rkward.bin ${KDE4_KDECORE_LIBS} windows agents dialogs plugin settings dataeditor core scriptbackends rbackend misc ${KDE4_KHTML_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KDEUI_LIBS})
+TARGET_LINK_LIBRARIES(rkward.bin ${KDE4_KDECORE_LIBS} windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc ktexteditor ${KDE4_KHTML_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KDEUI_LIBS})
 
 # NOTE: KDE4_KFILE_LIBS still links against Qt3Support
 

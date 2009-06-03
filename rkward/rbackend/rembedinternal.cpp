@@ -474,12 +474,17 @@ static int timeout_counter = 0;
 
 void processX11EventsWorker (void *) {
 // this basically copied from R's unix/sys-std.c (Rstd_ReadConsole)
+#ifndef Q_WS_WIN
 	for (;;) {
 		fd_set *what;
 		what = R_checkActivityEx(R_wait_usec > 0 ? R_wait_usec : 50, 1, RK_doIntr);
 		if (what == NULL) break;
 		R_runHandlers(R_InputHandlers, what);
 	}
+#else
+#warning TODO: correct?
+	R_ProcessEvents();
+#endif
 
 #if 0
 // TODO: The remainder of this function had been commented out since R 2.3.x and is not in Rstd_ReadConsole. Do we still need this?
