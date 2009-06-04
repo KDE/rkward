@@ -66,14 +66,25 @@ extern "C" {
 #define IS_LATIN1(x) (Rf_getCharCE(x) == CE_LATIN1)
 
 #ifdef Q_WS_WIN
+	// needed for R includes
 #	define Win32
+#endif
+
+#include "Rdefines.h"
+#include "R_ext/Rdynload.h"
+#include "R_ext/eventloop.h"
+#include "R_ext/Callbacks.h"
+#include "R.h"
+#include "Rinternals.h"
+#include "R_ext/Parse.h"
+#include "Rembedded.h"
+
+#ifdef Q_WS_WIN
 #	include "R_ext/RStartup.h"
 #	include "R_ext/Utils.h"
 
-	extern int R_interrupts_pending;
-#	warning Or is it UserBreak?
 	void RK_scheduleIntr () {
-		R_interrupts_pending = 1;
+		UserBreak = 1;
 	}
 
 	void RK_doIntr () {
@@ -86,22 +97,16 @@ extern "C" {
 #	define RK_doIntr Rf_onintr
 #	include "Rinterface.h"
 #endif
-#include "Rdefines.h"
-#include "R_ext/Rdynload.h"
-#include "R_ext/eventloop.h"
-#include "R_ext/Callbacks.h"
-#include "R.h"
-#include "Rinternals.h"
-#include "R_ext/Parse.h"
-#include "Rembedded.h"
 
 // some functions we need that are not declared
 extern void Rf_PrintWarnings (void);
 extern int Rf_initialize_R(int ac, char **av);	// in embedded.h in R 2.9.0. TODO: check presence in R 2.7.0
 extern void setup_Rmainloop(void);	// in embedded.h in R 2.9.0. TODO: check presence in R 2.7.0
+#ifndef Q_WS_WIN
 extern uintptr_t R_CStackLimit;	// inRinterface.h in R 2.9.0. TODO: check presence in R 2.7.0
 extern uintptr_t R_CStackStart;	// inRinterface.h in R 2.9.0. TODO: check presence in R 2.7.0
 extern Rboolean R_Interactive;	// inRinterface.h in R 2.9.0. TODO: check presence in R 2.7.0
+#endif
 SEXP R_LastvalueSymbol;
 #include "R_ext/eventloop.h"
 }
@@ -733,6 +738,8 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 	r_running = true;
 	Rf_initialize_R (argc, argv);
 
+#ifndef Q_WS_WIN
+	// in R on windows the stack limits detection seems to work out of the box for threads
 	if (stack_check) {
 		char dummy;
 		size_t stacksize;
@@ -744,6 +751,7 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 		R_CStackStart = (uintptr_t) -1;
 		R_CStackLimit = (uintptr_t) -1;
 	}
+#endif
 
 #ifdef Q_WS_WIN
 	R_set_command_line_arguments(argc, argv);
@@ -752,6 +760,8 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 
 	setup_Rmainloop ();
 
+#ifndef Q_WS_WIN
+	// in R on windows the stack limits detection seems to work out of the box for threads
 	if (stack_check) {
 		// safety check: If we are beyond the stack boundaries already, we better disable stack checking
 		// this has to come *after* the first setup_Rmainloop ()!
@@ -764,8 +774,12 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 			setup_Rmainloop ();
 		}
 	}
+#endif
 
+#ifndef Q_WS_WIN
+	// on windows, set in connectCallbacks() for technical reasons
 	R_Interactive = (Rboolean) TRUE;
+#endif
 
 	RKGlobals::na_double = NA_REAL;
 	R_ReplDLLinit ();

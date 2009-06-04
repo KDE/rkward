@@ -52,6 +52,11 @@ RThread::RThread () : QThread (), REmbedInternal () {
 	current_output = 0;
 	out_buf_len = 0;
 	output_paused = false;
+
+#ifdef Q_WS_WIN
+	// we hope that on other platforms the default is reasonable
+	setStackSize (0xa00000);	// 10MB as recommended by r_exts-manual
+#endif
 }
 
 RThread::~RThread() {

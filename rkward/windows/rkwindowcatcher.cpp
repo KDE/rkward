@@ -68,7 +68,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #include <QScrollArea>
 #include <qlabel.h>
 #ifdef Q_WS_WIN
-#	include "../foreign/qwinhost.h"
+#	include "../qwinhost/qwinhost.h"
 #else
 #	include <QX11EmbedContainer>
 #endif

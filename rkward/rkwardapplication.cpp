@@ -31,9 +31,47 @@
 #	include <netwm_def.h>
 //static
 Atom wm_name_property;
-#endif
+#endif	//Q_WS_WIN
 
 #include "debug.h"
+
+#warning TODO: We could really use the detection logic from windows for x11, too. It seems much easier.
+#ifdef Q_WS_WIN
+#include <stdio.h>
+namespace RKWardApplicationPrivate {
+	QList<WId> toplevel_windows;
+
+	BOOL CALLBACK EnumWindowsCallback (HWND hwnd, LPARAM) {
+		toplevel_windows.append (hwnd);
+		return true;
+	}
+
+	void updateToplevelWindowList () {
+		RK_TRACE (APP);
+
+		toplevel_windows.clear ();
+		EnumWindows (EnumWindowsCallback, 0);
+	};
+
+// TODO: this is a test, only
+	BOOL CALLBACK ChildWindowCallback (HWND hwnd, LPARAM) {
+		WINDOWINFO info;
+		info.cbSize = sizeof (WINDOWINFO);
+		GetWindowInfo (hwnd, &info);
+qDebug ("%p: rect: %d, %d, %d, %d, client: %d, %d, %d, %d, style: %d, exstyle: %d, status: %d, borders: %d %d", hwnd,
+		info.rcWindow.left, info.rcWindow.top, info.rcWindow.right, info.rcWindow.bottom,
+		info.rcClient.left, info.rcClient.top, info.rcClient.right, info.rcClient.bottom,
+		info.dwStyle, info.dwExStyle, info.dwWindowStatus, info.cxWindowBorders, info.cyWindowBorders);
+
+		return true;
+	}
+
+	void showWindowChildren (HWND hwnd) {
+		ChildWindowCallback (hwnd, 0);
+		EnumChildWindows (hwnd, ChildWindowCallback, 0);
+	}
+}
+#endif	//Q_WS_WIN
 
 //static
 RKWardApplication *RKWardApplication::rkapp = 0;
@@ -47,7 +85,7 @@ RKWardApplication::RKWardApplication () : KApplication () {
 
 #ifndef Q_WS_WIN
 	wm_name_property = XInternAtom (QX11Info::display (), "WM_NAME", true);
-#endif
+#endif	//nQ_WS_WIN
 }
 
 RKWardApplication::~RKWardApplication () {
@@ -67,10 +105,12 @@ void RKWardApplication::startWindowCreationDetection () {
 	created_window = 0;
 	detect_x11_creations = true;
 
-#ifndef Q_WS_WIN
+#ifdef Q_WS_WIN
+	RKWardApplicationPrivate::updateToplevelWindowList ();
+#else	//Q_WS_WIN
 	XSelectInput (QX11Info::display (), QX11Info::appRootWindow (), SubstructureNotifyMask);
 	syncX ();	// this is to make sure we don't miss out on the window creation (if it happens very early). Testing shows, we really need this.
-#endif
+#endif	//Q_WS_WIN
 }
 
 WId RKWardApplication::endWindowCreationDetection () {
@@ -78,12 +118,32 @@ WId RKWardApplication::endWindowCreationDetection () {
 	RK_ASSERT (detect_x11_creations);
 
 #ifdef Q_WS_WIN
-	created_window = FindWindow (NULL, "RKTest (ACTIVE)");
-qDebug ("found window %p", created_window);
+	QList<WId> old_windows = RKWardApplicationPrivate::toplevel_windows;
+	RKWardApplicationPrivate::updateToplevelWindowList ();
+	QList<WId> candidate_windows = RKWardApplicationPrivate::toplevel_windows;
+
 	detect_x11_creations = false;
-	return created_window;
-#	warning TODO: correct this mockup (EnumWindows, etc.)
-#else
+
+	// remove all windows that existed before the call to startWindowCreationDetection
+	for (int i = 0; i < old_windows.size (); ++i) {
+		candidate_windows.removeAll (old_windows[i]);
+	}
+	// ideally we have a single candidate remaining, now
+
+	// we could do some more checking, e.g. based on whether the window belongs to our
+	// own process, and whether it appears to be of a sane size, but for now, we keep
+	// things simple.
+
+	if (candidate_windows.size ()) {
+		RK_ASSERT (candidate_windows.size () < 2);
+		for (int i = 0; i < candidate_windows.size (); ++i) {
+			qDebug ("candidate: %d", i);
+			RKWardApplicationPrivate::showWindowChildren (candidate_windows[i]);
+		}
+		return candidate_windows[0];
+	}	// else
+	return 0;
+#else	//Q_WS_WIN
 	if (!created_window) {
 		// we did not see the window, yet? Maybe the event simply hasn't been processed, yet.
 		syncX ();
@@ -93,7 +153,7 @@ qDebug ("found window %p", created_window);
 	detect_x11_creations = false;
 	XSelectInput (QX11Info::display (), QX11Info::appRootWindow (), NoEventMask);
 	return created_window;
-#endif
+#endif	//Q_WS_WIN
 }
 
 void RKWardApplication::registerNameWatcher (WId watched, RKMDIWindow *watcher) {
@@ -102,7 +162,7 @@ void RKWardApplication::registerNameWatcher (WId watched, RKMDIWindow *watcher) 
 
 #ifndef Q_WS_WIN
 	XSelectInput (QX11Info::display (), watched, PropertyChangeMask);
-#endif
+#endif	//nQ_WS_WIN
 	name_watchers_list.insert (watched, watcher);
 }
 
@@ -112,7 +172,7 @@ void RKWardApplication::unregisterNameWatcher (WId watched) {
 
 #ifndef Q_WS_WIN
 	XSelectInput (QX11Info::display (), watched, NoEventMask);
-#endif
+#endif	//nQ_WS_WIN
 	name_watchers_list.remove (watched);
 }
 
@@ -146,4 +206,4 @@ bool RKWardApplication::x11EventFilter (XEvent *e) {
 
 	return KApplication::x11EventFilter (e);
 }
-#endif
+#endif	//nQ_WS_WIN
