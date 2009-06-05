@@ -69,6 +69,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #include <qlabel.h>
 #ifdef Q_WS_WIN
 #	include "../qwinhost/qwinhost.h"
+#	include <windows.h>
 #else
 #	include <QX11EmbedContainer>
 #endif
@@ -108,17 +109,30 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	layout->addWidget (scroll_widget);
 
 	xembed_container = new KVBox (box_widget);	// QX11EmbedContainer can not be reparented (between the box_widget, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead
-	dynamic_size = true;
-	dynamic_size_action->setChecked (true);
 
 #ifdef Q_WS_WIN
-#	warning TODO: set geometry
+	// unfortunately, trying to get KWindowInfo as below hangs on windows (KDElibs 4.2.3)
+	WINDOWINFO wininfo;
+	wininfo.cbSize = sizeof (WINDOWINFO);
+	GetWindowInfo (embedded, &wininfo);
+
+	// clip off the window frame and menubar
+	xembed_container->setContentsMargins (wininfo.rcWindow.left - wininfo.rcClient.left, wininfo.rcWindow.top - wininfo.rcClient.top,
+				wininfo.rcClient.right - wininfo.rcWindow.right, wininfo.rcClient.bottom - wininfo.rcWindow.bottom);
+	// set a fixed size until the window is shown
+	xembed_container->setFixedSize (wininfo.rcClient.right - wininfo.rcClient.left, wininfo.rcClient.bottom - wininfo.rcClient.top);
+	move (wininfo.rcClient.left, wininfo.rcClient.top);
 #else
-	KWindowInfo wininfo = KWindowSystem::windowInfo (embedded, NET::WMName | NET::WMFrameExtents);
+	KWindowInfo wininfo = KWindowSystem::windowInfo (embedded, NET::WMName | NET::WMGeometry);
 	RK_ASSERT (wininfo.valid ());
-	setGeometry (wininfo.frameGeometry ());
+
+	// set a fixed size until the window is shown
+	xembed_container->setFixedSize (wininfo.geometry ().width (), wininfo.geometry ().height ());
+	move (wininfo.geometry ().topLeft());
 	setCaption (wininfo.name ());
 #endif
+	dynamic_size = false;
+	dynamic_size_action->setChecked (false);
 
 	// somehow in Qt 4.4.3, when the RKCaughtWindow is reparented the first time, the QX11EmbedContainer may kill its client. Hence we delay the actual embedding until after the window was shown.
 	// In some previous version of Qt, this was not an issue, but I did not track the versions.
@@ -131,15 +145,22 @@ void RKCaughtX11Window::doEmbed () {
 	RK_TRACE (MISC);
 
 #ifdef Q_WS_WIN
+#	warning TODO: set name
 	capture = new QWinHost (xembed_container);
 	capture->setWindow (embedded);
-#	warning TODO: deletion
+	capture->setAutoDestruct (true);
+	connect (capture, SIGNAL (clientDestroyed()), this, SLOT (deleteLater()), Qt::QueuedConnection);
+	connect (capture, SIGNAL (clientTitleChanged(const QString&)), this, SLOT (setWindowTitle(const QString&)), Qt::QueuedConnection);
 #else
 	capture = new QX11EmbedContainer (xembed_container);
+
 	capture->embedClient (embedded);
 
 	connect (capture, SIGNAL (clientClosed ()), this, SLOT (deleteLater ()));
 #endif
+	// make xembed_container resizable, again, now that it actually has a content
+	dynamic_size_action->setChecked (true);
+	fixedSizeToggled ();
 }
 
 RKCaughtX11Window::~RKCaughtX11Window () {

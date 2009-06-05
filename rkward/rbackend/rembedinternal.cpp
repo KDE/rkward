@@ -455,22 +455,7 @@ void REmbedInternal::shutdown (bool suicidal) {
 	if (!r_running) return;		// already shut down
 	r_running = false;
 
-// Code-recipe below essentially copied from http://stat.ethz.ch/R-manual/R-devel/doc/manual/R-exts.html#Linking-GUIs-and-other-front_ends-to-R
-// modified quite a bit for our needs.
-
-	if (!suicidal) {
-		R_dot_Last ();
-	}
-
-	R_RunExitFinalizers();
-
-	R_CleanTempDir ();
-
-	/* close all the graphics devices */
-	if (!suicidal) Rf_KillAllDevices ();
-#ifndef Q_WS_WIN
-	fpu_setup ((Rboolean) FALSE);
-#endif
+	Rf_endEmbeddedR (suicidal);
 }
 
 #if 0

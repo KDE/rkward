@@ -52,24 +52,6 @@ namespace RKWardApplicationPrivate {
 		toplevel_windows.clear ();
 		EnumWindows (EnumWindowsCallback, 0);
 	};
-
-// TODO: this is a test, only
-	BOOL CALLBACK ChildWindowCallback (HWND hwnd, LPARAM) {
-		WINDOWINFO info;
-		info.cbSize = sizeof (WINDOWINFO);
-		GetWindowInfo (hwnd, &info);
-qDebug ("%p: rect: %d, %d, %d, %d, client: %d, %d, %d, %d, style: %d, exstyle: %d, status: %d, borders: %d %d", hwnd,
-		info.rcWindow.left, info.rcWindow.top, info.rcWindow.right, info.rcWindow.bottom,
-		info.rcClient.left, info.rcClient.top, info.rcClient.right, info.rcClient.bottom,
-		info.dwStyle, info.dwExStyle, info.dwWindowStatus, info.cxWindowBorders, info.cyWindowBorders);
-
-		return true;
-	}
-
-	void showWindowChildren (HWND hwnd) {
-		ChildWindowCallback (hwnd, 0);
-		EnumChildWindows (hwnd, ChildWindowCallback, 0);
-	}
 }
 #endif	//Q_WS_WIN
 
@@ -136,10 +118,7 @@ WId RKWardApplication::endWindowCreationDetection () {
 
 	if (candidate_windows.size ()) {
 		RK_ASSERT (candidate_windows.size () < 2);
-		for (int i = 0; i < candidate_windows.size (); ++i) {
-			qDebug ("candidate: %d", i);
-			RKWardApplicationPrivate::showWindowChildren (candidate_windows[i]);
-		}
+#warning TODO: the above assert fails. More windows get created. Sieve out the invisible ones, first?
 		return candidate_windows[0];
 	}	// else
 	return 0;

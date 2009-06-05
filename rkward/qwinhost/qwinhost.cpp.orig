@@ -53,9 +53,7 @@
 #include "qwinhost.h"
 
 #include <QtCore/QEvent>
-
-//static
-QMap<HWND, QWinHost*> QWinHost::winhosts;
+#include <qt_windows.h>
 
 /*!
     \class QWinHost qwinhost.h
@@ -89,7 +87,7 @@ QMap<HWND, QWinHost*> QWinHost::winhosts;
     QWidget::setParent or move the QWinHost into a different layout.
 */
 QWinHost::QWinHost(QWidget *parent, Qt::WFlags f)
-: QWidget(parent, f), wndproc(0),auto_destruct(false), hwnd(0)
+: QWidget(parent, f), wndproc(0),own_hwnd(false), hwnd(0)
 {
     setAttribute(Qt::WA_NoBackground);
     setAttribute(Qt::WA_NoSystemBackground);
@@ -118,21 +116,8 @@ QWinHost::~QWinHost()
 #endif
     }
 
-    if (hwnd) {
-	winhosts.remove(hwnd);
-    }
-
-    if (hwnd && isAutoDestruct()) {
-	setAutoDestruct(false);
-	SendMessage(hwnd, WM_CLOSE, 0, 0);
+    if (hwnd && own_hwnd)
 	DestroyWindow(hwnd);
-qDebug ("destruct");
-    }
-}
-
-// static
-QWinHost *QWinHost::findHost (HWND client) {
-	return (winhosts.value(client));
 }
 
 /*!
@@ -158,125 +143,6 @@ HWND QWinHost::createWindow(HWND parent, HINSTANCE instance)
     return 0;
 }
 
-
-/*!
-    Sets the native Win32 window to \a window. If \a window is not a child 
-    window of this widget, then it is reparented to become one. If \a window 
-    is not a child window (i.e. WS_OVERLAPPED is set), then this function does nothing.
-
-    \sa window(), createWindow(), setAutoDestruct()
-*/
-void QWinHost::setWindow(HWND window)
-{
-    if (hwnd && isAutoDestruct())
-	DestroyWindow(hwnd);
-
-    hwnd = window;
-    fixParent();
-}
-
-/*!
-    Returns the handle to the native Win32 window, or null if no
-    window has been set or created yet.
-
-    \sa setWindow(), createWindow()
-*/
-HWND QWinHost::window() const
-{
-    return hwnd;
-}
-
-/*!
-    \see setAutoDestruct()
-*/
-bool QWinHost::isAutoDestruct() const
-{
-    return auto_destruct;
-}
-
-/*!
-    \a destruct if this is false (the default), the lifetime of the window handle
-    will be managed by Windows, QWinHost does not
-    call DestroyWindow. To verify that the handle is destroyed when expected, handle
-    WM_DESTROY in the window procedure. If \a destruct is true, the client window
-    will be destroyed, when this window is destroyed.
-
-    For windows created by createWindow(), this is set to true, else the default is false.
-
-    \sa isAutoDestruct()
- */
-void QWinHost::setAutoDestruct(bool destruct)
-{
-    auto_destruct = destruct;
-}
-
-void *getWindowProc(QWinHost *host)
-{
-    return host ? host->wndproc : 0;
-}
-
-bool QWinHost::handleWindowCallback (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-qDebug ("%p, %x, %x, %x", hwnd, msg, wParam, lParam);
-	switch(msg) {
-		case WM_LBUTTONDOWN:
-			if (::GetFocus() != hwnd && (focusPolicy() & Qt::ClickFocus)) {
-#warning TODO: async handling!
-				setFocus(Qt::MouseFocusReason);
-			}
-			break;
-
-		case WM_SYSKEYDOWN:
-		case WM_SYSKEYUP:
-			QT_WA({
-				SendMessage(winId(), msg, wParam, lParam);
-			}, {
-				SendMessageA(winId(), msg, wParam, lParam);
-			})
-			break;
-
-		case WM_KEYDOWN:
-			if (wParam == VK_TAB) {
-			QT_WA({
-				SendMessage(winId(), msg, wParam, lParam);
-			}, {
-				SendMessageA(winId(), msg, wParam, lParam);
-			})
-			}
-			break;
-		case WM_SETTEXT:
-			clientTitleChanged((char *) lParam);
-			break;
-		case WM_DESTROY:
-qDebug ("client destruct");
-			clientDestroyed();
-			break;
-		default:
-			break;
-	}
-}
-
-
-LRESULT CALLBACK WinHostProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-    QWinHost *widget = QWinHost::findHost(hwnd);
-    WNDPROC oldproc = (WNDPROC)getWindowProc(widget);
-    if (widget) {
-	if (!widget->handleWindowCallback (hwnd, msg, wParam, lParam)) {
-		return 0;
-	}
-    }
-
-    QT_WA({
-	if (oldproc)
-	    return CallWindowProc(oldproc, hwnd, msg, wParam, lParam);
-	return DefWindowProc(hwnd,msg,wParam,lParam);
-    }, {
-	if (oldproc)
-	    return CallWindowProcA(oldproc, hwnd, msg, wParam, lParam);
-	return DefWindowProcA(hwnd,msg,wParam,lParam);
-    })
-}
-
 /*!
     Ensures that the window provided a child of this widget, unless
     it is a WS_OVERLAPPED window.
@@ -295,9 +161,106 @@ void QWinHost::fixParent()
     if (style & WS_OVERLAPPED)
         return;
     ::SetParent(hwnd, winId());
+}
 
-    winhosts.insert(hwnd, this);
+/*!
+    Sets the native Win32 window to \a window. If \a window is not a child 
+    window of this widget, then it is reparented to become one. If \a window 
+    is not a child window (i.e. WS_OVERLAPPED is set), then this function does nothing.
 
+    The lifetime of the window handle will be managed by Windows, QWinHost does not
+    call DestroyWindow. To verify that the handle is destroyed when expected, handle
+    WM_DESTROY in the window procedure.
+
+    \sa window(), createWindow()
+*/
+void QWinHost::setWindow(HWND window)
+{
+    if (hwnd && own_hwnd)
+	DestroyWindow(hwnd);
+
+    hwnd = window;
+    fixParent();
+
+    own_hwnd = false;
+}
+
+/*!
+    Returns the handle to the native Win32 window, or null if no
+    window has been set or created yet.
+
+    \sa setWindow(), createWindow()
+*/
+HWND QWinHost::window() const
+{
+    return hwnd;
+}
+
+void *getWindowProc(QWinHost *host)
+{
+    return host ? host->wndproc : 0;
+}
+
+LRESULT CALLBACK WinHostProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    QWinHost *widget = qobject_cast<QWinHost*>(QWidget::find(::GetParent(hwnd)));
+    WNDPROC oldproc = (WNDPROC)getWindowProc(widget);
+    if (widget) {
+	switch(msg) {
+	case WM_LBUTTONDOWN:
+	    if (::GetFocus() != hwnd && (widget->focusPolicy() & Qt::ClickFocus)) {
+		widget->setFocus(Qt::MouseFocusReason);
+	    }
+	    break;
+
+	case WM_SYSKEYDOWN:
+	case WM_SYSKEYUP:
+	    QT_WA({
+		SendMessage(widget->winId(), msg, wParam, lParam);
+	    }, {
+		SendMessageA(widget->winId(), msg, wParam, lParam);
+	    })
+	    break;
+
+	case WM_KEYDOWN:
+	    if (wParam == VK_TAB) {
+		QT_WA({
+		    SendMessage(widget->winId(), msg, wParam, lParam);
+		}, {
+		    SendMessageA(widget->winId(), msg, wParam, lParam);
+		})
+	    }
+	    break;
+
+	default:
+	    break;
+	}
+    }
+
+    QT_WA({
+	if (oldproc)
+	    return CallWindowProc(oldproc, hwnd, msg, wParam, lParam);
+	return DefWindowProc(hwnd,msg,wParam,lParam);
+    }, {
+	if (oldproc)
+	    return CallWindowProcA(oldproc, hwnd, msg, wParam, lParam);
+	return DefWindowProcA(hwnd,msg,wParam,lParam);
+    })
+}
+
+/*!
+    \reimp
+*/
+bool QWinHost::event(QEvent *e)
+{
+    switch(e->type()) {
+    case QEvent::Polish:
+        if (!hwnd) {
+            hwnd = createWindow(winId(), qWinAppInst());
+            fixParent();
+            own_hwnd = hwnd != 0;
+        }
+        if (hwnd && !wndproc && GetParent(hwnd) == winId()) {
 #if defined(GWLP_WNDPROC)
             QT_WA({
                 wndproc = (void*)GetWindowLongPtr(hwnd, GWLP_WNDPROC);
@@ -316,21 +279,14 @@ void QWinHost::fixParent()
             })
 #endif
 
+            LONG style;
+            QT_WA({
+                style = GetWindowLong(hwnd, GWL_STYLE);
+            }, {
+                style = GetWindowLongA(hwnd, GWL_STYLE);
+            })
             if (style & WS_TABSTOP)
                 setFocusPolicy(Qt::FocusPolicy(focusPolicy() | Qt::StrongFocus));
-}
-
-/*!
-    \reimp
-*/
-bool QWinHost::event(QEvent *e)
-{
-    switch(e->type()) {
-    case QEvent::Polish:
-        if (!hwnd) {
-            hwnd = createWindow(winId(), qWinAppInst());
-            fixParent();
-            setAutoDestruct(hwnd != 0);
         }
         break;
     case QEvent::WindowBlocked:
