@@ -320,6 +320,10 @@
 	.Call ("rk.edit.files", file, title, name)
 }
 
+"rk.show.html" <- function (url) {
+	.rk.do.call ("showHTML", as.character (url));
+}
+
 "rk.call.plugin" <- function (plugin, ..., submit.mode = c ("manual", "auto", "submit")) {
 	# prepare arguments
 	settings <- list (...)

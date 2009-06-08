@@ -145,7 +145,11 @@
 	.rk.do.call ("startOpenX11", as.character (dev.cur ()));
 
 	if (!exists (".rk.default.device")) {
-		device <- grDevices::x11
+		if (base::.Platform$OS.type == "unix") {
+			device <- grDevices::x11
+		} else {
+			device <- grDevices::windows
+		}
 	} else {
 		device <- .rk.default.device
 		if (is.character (.rk.default.device)) {
@@ -162,6 +166,11 @@
 "x11" <- rk.screen.device
 
 "X11" <- x11
+
+if (base::.Platform$OS.type == "windows") {
+	  "windows" = rk.screen.device
+	  "win.graph" = rk.screen.device
+}
 
 # set from rkward the application:
 # options(device="rk.screen.device")

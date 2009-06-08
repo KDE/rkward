@@ -30,8 +30,6 @@
 #include <klocale.h>
 
 #include <qstring.h>
-#include <qapplication.h>
-#include <QDBusConnection>
 #include <QList>
 #include <QFileInfo>
 
@@ -545,11 +543,6 @@ int RThread::initialize () {
 	if (error) status |= SinkFail;
 	runCommandInternal ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", &error);
 	if (error) status |= SinkFail;
-#warning TODO: we can/should set an R function, instead, since R 2.7.0
-	runCommandInternal ("options (htmlhelp=TRUE); options (browser=\"qdbus " + QDBusConnection::sessionBus ().baseService () + " /MainApplication net.sf.rkward.openHTMLHelp\")", &error);
-	if (error) status |= OtherFail;
-/*	runCommandInternal (".rk.default.device <- \"x11\"\n", &error);
-	if (error) status |= OtherFail; */
 
 	MUTEX_LOCK;
 	flushOutput ();

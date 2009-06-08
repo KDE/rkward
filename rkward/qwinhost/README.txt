@@ -24,3 +24,5 @@ Changes with respect to the qwinhost.cpp.orig and qwinhost.h.orig:
 - Support for auto-destruction of client
 - Notification when client is destroyed
 - Notification when client window title changes
+- Asynchronous handling of client focus changes
+- Do not rely on GetParent() to return the right thing for captured windows

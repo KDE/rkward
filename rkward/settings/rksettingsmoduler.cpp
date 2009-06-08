@@ -238,10 +238,12 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	if (options_editor == builtin_editor) list.append ("options (editor=rk.edit.files)\n");
 	else list.append ("options (editor=\"" + options_editor + "\")\n");
 
-#warning TODO make configurable
+#warning TODO make the following options configurable
 	list.append ("options (device=\"rk.screen.device\")\n");
 	// register as interactive
 	list.append ("try (deviceIsInteractive(name=\"rk.screen.device\"))\n");
+	list.append ("options (htmlhelp=TRUE); options (chmhelp=FALSE)\n");
+	list.append ("options (browser=rk.show.html)\n");
 
 	return list;
 }

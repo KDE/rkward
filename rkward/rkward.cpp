@@ -98,18 +98,6 @@ void bogusCalls () {
 	new RKEditObjectAgent (QStringList (), 0);
 }
 
-/** DBUS interface **/
-
-RKWardDBUSInterface::RKWardDBUSInterface (QApplication *application) : QDBusAbstractAdaptor(application) {
-	RK_TRACE (APP);
-}
-
-void RKWardDBUSInterface::openHTMLHelp (const QString &url) {
-	RK_TRACE (APP);
-
-	RKWorkplace::mainWorkplace ()->openHelpWindow (url);
-}
-
 /** Main window **/
 
 //static
@@ -159,12 +147,6 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 	// When the manager says the active part changes,
 	// the builder updates (recreates) the GUI
 	connect (partManager (), SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (partChanged (KParts::Part *)));
-
-	// create the DBUS adaptor:
-	new RKWardDBUSInterface (qApp);
-
-	// connect to D-Bus and register as an object:
-	QDBusConnection::sessionBus ().registerObject ("/MainApplication", qApp);
 }
 
 RKWardMainWindow::~RKWardMainWindow() {

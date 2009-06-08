@@ -53,6 +53,7 @@
 #include "qwinhost.h"
 
 #include <QtCore/QEvent>
+#include <QtCore/QTimer>
 
 //static
 QMap<HWND, QWinHost*> QWinHost::winhosts;
@@ -93,6 +94,8 @@ QWinHost::QWinHost(QWidget *parent, Qt::WFlags f)
 {
     setAttribute(Qt::WA_NoBackground);
     setAttribute(Qt::WA_NoSystemBackground);
+
+    connect(this, SIGNAL(clientFocused()), this, SLOT(setFocusSlot()), Qt::QueuedConnection);
 }
 
 /*!
@@ -126,7 +129,6 @@ QWinHost::~QWinHost()
 	setAutoDestruct(false);
 	SendMessage(hwnd, WM_CLOSE, 0, 0);
 	DestroyWindow(hwnd);
-qDebug ("destruct");
     }
 }
 
@@ -215,13 +217,20 @@ void *getWindowProc(QWinHost *host)
     return host ? host->wndproc : 0;
 }
 
+/*! just a thin wrapper around QWidget::setFocus(). Needed to handle focus asynchronously. */
+void QWinHost::setFocusSlot() {
+	if(!hasFocus())	{
+		setFocus(Qt::MouseFocusReason);
+		activateWindow();
+	}
+}
+
 bool QWinHost::handleWindowCallback (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-qDebug ("%p, %x, %x, %x", hwnd, msg, wParam, lParam);
 	switch(msg) {
+		case WM_SETFOCUS:
 		case WM_LBUTTONDOWN:
-			if (::GetFocus() != hwnd && (focusPolicy() & Qt::ClickFocus)) {
-#warning TODO: async handling!
-				setFocus(Qt::MouseFocusReason);
+			if (!hasFocus () && (focusPolicy() & Qt::ClickFocus)) {
+				emit (clientFocused());		// handled asynchronously
 			}
 			break;
 
@@ -247,12 +256,12 @@ qDebug ("%p, %x, %x, %x", hwnd, msg, wParam, lParam);
 			clientTitleChanged((char *) lParam);
 			break;
 		case WM_DESTROY:
-qDebug ("client destruct");
 			clientDestroyed();
 			break;
 		default:
 			break;
 	}
+	return true;	// regular handling should happen, too
 }
 
 
@@ -275,6 +284,14 @@ LRESULT CALLBACK WinHostProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	    return CallWindowProcA(oldproc, hwnd, msg, wParam, lParam);
 	return DefWindowProcA(hwnd,msg,wParam,lParam);
     })
+}
+
+QString QWinHost::getClientTitle() const {
+	if (!hwnd) return QString();
+
+	char buffer[256];
+	::GetWindowText(hwnd, buffer, 255);
+	return (QString(buffer));
 }
 
 /*!

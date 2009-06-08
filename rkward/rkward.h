@@ -2,7 +2,7 @@
 			rkward.h  -  description
 			-------------------
 begin                : Tue Oct 29 20:06:08 CET 2002 
-copyright            : (C) 2002, 2005, 2006, 2007, 2008 by Thomas Friedrichsmeier 
+copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier 
 email                : tfry@users.sourceforge.net
 ***************************************************************************/
 
@@ -18,31 +18,6 @@ email                : tfry@users.sourceforge.net
 #ifndef RKWARD_H
 #define RKWARD_H
 
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include<QDBusAbstractAdaptor>
-
-class QApplication;
-
-/** This base provides the DBUS-Interface for RKWardMainWindow */
-class RKWardDBUSInterface : virtual public QDBusAbstractAdaptor {
-	Q_OBJECT
-	Q_CLASSINFO("D-Bus Interface", "net.sf.rkward")
-public:
-	RKWardDBUSInterface (QApplication *application);
-	~RKWardDBUSInterface () {};
-public slots:
-	/** Open the given html help page */
-	void openHTMLHelp (const QString &url);
-};
-
-
-// include files for Qt
-
-// include files for KDE 
 #include <kapplication.h>
 #include <kaction.h>
 #include <kurl.h>

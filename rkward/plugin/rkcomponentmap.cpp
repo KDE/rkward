@@ -32,7 +32,7 @@
 #include "../rkward.h"
 
 QString RKPluginMapFile::makeFileName (const QString &filename) {
-	return QDir (basedir).filePath (filename);
+	return QDir::cleanPath (QDir (basedir).filePath (filename));
 }
 
 RKComponentGUIXML::RKComponentGUIXML () {

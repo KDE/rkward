@@ -110,7 +110,15 @@ WId RKWardApplication::endWindowCreationDetection () {
 	for (int i = 0; i < old_windows.size (); ++i) {
 		candidate_windows.removeAll (old_windows[i]);
 	}
-	// ideally we have a single candidate remaining, now
+	// ideally we have a single candidate remaining, now, but sometimes, additional
+	// invisible windows are created somehow (probably by R's graphapp)
+	for (int i = 0; i < candidate_windows.size (); ++i) {
+		HWND hwnd = candidate_windows[i];
+		if ((!IsWindow(hwnd)) || (!IsWindowVisible(hwnd))) {
+			 candidate_windows.removeAt (i);
+			 --i;
+		}
+	}
 
 	// we could do some more checking, e.g. based on whether the window belongs to our
 	// own process, and whether it appears to be of a sane size, but for now, we keep
@@ -118,9 +126,8 @@ WId RKWardApplication::endWindowCreationDetection () {
 
 	if (candidate_windows.size ()) {
 		RK_ASSERT (candidate_windows.size () < 2);
-#warning TODO: the above assert fails. More windows get created. Sieve out the invisible ones, first?
 		return candidate_windows[0];
-	}	// else
+	}
 	return 0;
 #else	//Q_WS_WIN
 	if (!created_window) {
@@ -135,13 +142,12 @@ WId RKWardApplication::endWindowCreationDetection () {
 #endif	//Q_WS_WIN
 }
 
+#ifndef Q_WS_WIN
 void RKWardApplication::registerNameWatcher (WId watched, RKMDIWindow *watcher) {
 	RK_TRACE (APP);
 	RK_ASSERT (!name_watchers_list.contains (watched));
 
-#ifndef Q_WS_WIN
 	XSelectInput (QX11Info::display (), watched, PropertyChangeMask);
-#endif	//nQ_WS_WIN
 	name_watchers_list.insert (watched, watcher);
 }
 
@@ -149,13 +155,10 @@ void RKWardApplication::unregisterNameWatcher (WId watched) {
 	RK_TRACE (APP);
 	RK_ASSERT (name_watchers_list.contains (watched));
 
-#ifndef Q_WS_WIN
 	XSelectInput (QX11Info::display (), watched, NoEventMask);
-#endif	//nQ_WS_WIN
 	name_watchers_list.remove (watched);
 }
 
-#ifndef Q_WS_WIN
 bool RKWardApplication::x11EventFilter (XEvent *e) {
 	if (detect_x11_creations) {
 		if (e->type == CreateNotify) {

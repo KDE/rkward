@@ -2,7 +2,7 @@
                           rkhelpsearchwindow  -  description
                              -------------------
     begin                : Fri Feb 25 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -149,9 +149,14 @@ void RKHelpSearchWindow::getContextHelp (const QString &context_line, int cursor
 	getFunctionHelp (result);
 }
 
-void RKHelpSearchWindow::getFunctionHelp (const QString &function_name) {
+void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QString &package) {
 	RK_TRACE (APP);
-	RKGlobals::rInterface ()->issueCommand ("help(\"" + function_name + "\", htmlhelp=TRUE)[1]", RCommand::App | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
+
+	QString command = "help(\"" + function_name + '\"';
+	if (!package.isEmpty ()) command.append (", package=" + package);
+	command.append (", chmhelp=FALSE, htmlhelp=TRUE)[1]");
+
+	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::GetStringVector, i18n ("Find HTML help for %1").arg (function_name), this, GET_HELP_URL);
 }
 
 void RKHelpSearchWindow::slotFindButtonClicked () {
@@ -193,12 +198,9 @@ void RKHelpSearchWindow::resultDoubleClicked (const QModelIndex& index) {
 	int row = index.row ();
 	QString topic = results->data (results->index (row, COL_TOPIC)).toString ();
 	QString package = results->data (results->index (row, COL_PACKAGE)).toString ();
-
 	if (topic.isEmpty ()) return;
-	
-	QString command = "help(\"" + topic + "\", htmlhelp=TRUE, package= \"" + package + "\")";
-	
-	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::Sync | RCommand::GetStringVector, i18n ("Show help for %1 in package %2", topic, package), this, GET_HELP_URL);
+
+	getFunctionHelp (topic, package);
 }
 
 void RKHelpSearchWindow::rCommandDone (RCommand *command) {

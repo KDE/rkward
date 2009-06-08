@@ -2,7 +2,7 @@
                           rkwardapplication  -  description
                              -------------------
     begin                : Sun Nov 26 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -34,21 +34,21 @@ public:
 	/** like KApplication::kApplication () (and actually, this should always return the same pointer), but without the need to cast */
 	static RKWardApplication *getApp ();
 
-#ifndef Q_WS_WIN
-	/** reimplemented from KApplication to look for CreateNotify and PropertyNotify events */
-	bool x11EventFilter (XEvent *e);
-#endif
-
 	/** start looking for new top-level windows created on the screen */
 	void startWindowCreationDetection ();
 	/** stop looking for new top-level windows created on the screen
 	@returns the window id of the last top-level window created after the last call to startWindowCreation, hoping it was only one. 0 if no window was created/detected. */
 	WId endWindowCreationDetection ();
 
+#ifndef Q_WS_WIN
 	/** watch the given window for changes in its WM_NAME property (i.e. changes in caption). When a change is detected, the caption will be set on watcher. WARNING: Do not use to watch windows managed by Qt! Will override the event mask for this window (within qt_xdisplay ()). WARNING: Remember to call unregisterNameWatcher, when watcher is deleted! */
 	void registerNameWatcher (WId watched, RKMDIWindow *watcher);
 	/** remove a watch created with registerNameWatcher */
 	void unregisterNameWatcher (WId watched);
+
+	/** reimplemented from KApplication to look for CreateNotify and PropertyNotify events */
+	bool x11EventFilter (XEvent *e);
+#endif
 private:
 	static RKWardApplication *rkapp;
 	bool detect_x11_creations;

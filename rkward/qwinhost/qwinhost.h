@@ -85,10 +85,15 @@ public:
 
     static QWinHost *findHost(HWND);
 
-    virtual bool handleWindowCallback (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    bool handleWindowCallback (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+    QString getClientTitle() const;
+public slots:
+    void setFocusSlot();
 signals:
     void clientDestroyed();
     void clientTitleChanged(const QString& new_title);
+    void clientFocused();
 protected:
     virtual HWND createWindow(HWND parent, HINSTANCE instance);
 

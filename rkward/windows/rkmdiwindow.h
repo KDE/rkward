@@ -68,6 +68,9 @@ protected:
 @param type Type of window (see RKMDIWindow::Type).*/
 	RKMDIWindow (QWidget *parent, int type, bool tool_window=false, const char *name=0);
 	virtual ~RKMDIWindow ();
+public slots:
+/** Reimplemented from QWidget::setCaption () to emit the signal captionChanged () when the caption is changed. */
+	void setCaption (const QString &caption);
 public:
 /** @returns true, if the window's document was modified (and would need to be saved) */
 	virtual bool isModified () { return false; };
@@ -80,8 +83,6 @@ public:
 /** This is used in RKWorkplace::saveWorkplace () to save the info about the workplace. Make sure to add corresponding code to RKWorkplace::restoreWorkplace (), so your window(s) get restored when loading a Workspace
 @returns An internal descriptive string. */
 	virtual QString getDescription () { return QString (); };
-/** Reimplemented from QWidget::setCaption () to emit the signal captionChanged () when the caption is changed. */
-	void setCaption (const QString &caption);
 /** Is this window attached (or detached)?
 @returns true if attached, false if detached */
 	bool isAttached () const { return (state == Attached); };

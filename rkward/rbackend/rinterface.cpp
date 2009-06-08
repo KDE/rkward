@@ -399,6 +399,12 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		} else {
 			RK_ASSERT (false);
 		}
+	} else if (call == "showHTML") {
+		if (request->call.count () == 2) {
+			RKWorkplace::mainWorkplace ()->openHelpWindow (request->call[1]);
+		} else {
+			RK_ASSERT (false);
+		}
 	} else {
 		issueCommand (".rk.set.reply (\"Unrecognized call '" + call + "'. Ignoring\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 	}
