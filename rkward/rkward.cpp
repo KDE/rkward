@@ -508,7 +508,7 @@ void RKWardMainWindow::slotNewDataFrame () {
 
 	if (ok) RKWorkplace::mainWorkplace ()->editNewDataFrame (name);
 }
-#include <krecentdirs.h>
+
 void RKWardMainWindow::fileOpenNoSave (const KUrl &url) {
 	RK_TRACE (APP);
 
