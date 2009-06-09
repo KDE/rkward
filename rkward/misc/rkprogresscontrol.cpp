@@ -235,10 +235,6 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 		output_text->setLineWrapMode (QTextEdit::NoWrap);
 		output_text->setMinimumWidth (QFontMetrics (output_text->font ()).averageCharWidth () * RKSettingsModuleR::getDefaultWidth ());
 		output_box->setStretchFactor (output_text, 10);
-
-		if (!(mode_flags & RKProgressControl::OutputShownByDefault)) {
-			output_box->hide ();
-		}
 	}
 	setDetailsWidget (output_box);
 	connect (this, SIGNAL(aboutToShowDetails()), this, SLOT(scrollDown()));
@@ -246,11 +242,11 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 	KDialog::ButtonCodes button_codes = KDialog::Cancel;
 	if (mode_flags & RKProgressControl::OutputSwitchable) button_codes |= KDialog::Details;
 	setButtons (button_codes);
-	setButtonText (KDialog::Details, output_button_text);
+	if (button_codes & KDialog::Details) setButtonText (KDialog::Details, output_button_text);
 	if (mode_flags & RKProgressControl::AllowCancel) setButtonText (KDialog::Cancel, i18n ("Cancel"));
 	else (setCloseTextToClose ());
 
-	setDetailsWidgetVisible (mode_flags & RKProgressControl::OutputShownByDefault);
+	if (mode_flags & RKProgressControl::OutputShownByDefault) setDetailsWidgetVisible (true);
 
 	prevent_close = (mode_flags & RKProgressControl::PreventClose);
 
