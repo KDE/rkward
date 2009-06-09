@@ -157,6 +157,10 @@ void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QS
 	command.append (", chmhelp=FALSE, htmlhelp=TRUE)[1]");
 
 	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::GetStringVector, i18n ("Find HTML help for %1").arg (function_name), this, GET_HELP_URL);
+
+	// we *could* simply call show() on the object that help() returns. However, since this function
+	// may be called externally, we need to handle the case when no help can be found. So we use
+	// this two-stage approach, instead.
 }
 
 void RKHelpSearchWindow::slotFindButtonClicked () {
