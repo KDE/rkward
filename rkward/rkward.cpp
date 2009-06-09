@@ -508,7 +508,7 @@ void RKWardMainWindow::slotNewDataFrame () {
 
 	if (ok) RKWorkplace::mainWorkplace ()->editNewDataFrame (name);
 }
-
+#include <krecentdirs.h>
 void RKWardMainWindow::fileOpenNoSave (const KUrl &url) {
 	RK_TRACE (APP);
 
@@ -517,7 +517,13 @@ void RKWardMainWindow::fileOpenNoSave (const KUrl &url) {
 	slotSetStatusBarText(i18n("Opening workspace..."));
 	KUrl lurl = url;
 	if (lurl.isEmpty ()) {
+#ifdef Q_WS_WIN
+	// getOpenUrl(KUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
+#	warning Track this bug down and/or report it
+		lurl = KFileDialog::getOpenUrl (KUrl (), i18n("*|All files"), this, i18n("Open File..."));
+#else
 		lurl = KFileDialog::getOpenUrl (KUrl ("kfiledialog:///<rfiles>"), i18n("*|All files"), this, i18n("Open File..."));
+#endif
 	}
 	if (!lurl.isEmpty ()) {
 		openWorkspace (lurl);
@@ -656,9 +662,14 @@ void RKWardMainWindow::slotOpenCommandEditor () {
 	RK_TRACE (APP);
 	KUrl::List urls;
 	KUrl::List::const_iterator it;
-	
-	urls = KFileDialog::getOpenUrls (KUrl ("kfiledialog:///<rfiles>"), "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*.*|All Files (*.*)", this, i18n ("Open command file(s)"));
 
+#ifdef Q_WS_WIN
+	// getOpenUrls(KUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
+#	warning Track this bug down and/or report it
+	urls = KFileDialog::getOpenUrls (KUrl (), "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*.*|All Files (*.*)", this, i18n ("Open command file(s)"));
+#else
+	urls = KFileDialog::getOpenUrls (KUrl ("kfiledialog:///<rfiles>"), "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*.*|All Files (*.*)", this, i18n ("Open command file(s)"));
+#endif
 	for (it = urls.begin() ; it != urls.end() ; ++it) {
 		slotOpenCommandEditor (*it);
 	}

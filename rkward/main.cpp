@@ -2,7 +2,7 @@
                           main.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002, 2005, 2006, 2007, 2008 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -99,10 +99,13 @@ int main(int argc, char *argv[]) {
 
 	// before initializing the commandline args, remove the ".bin" from "rkward.bin".
 	// This is so it prints "Usage rkward..." instead of "Usage rkward.bin...", etc.
-	// it seems safest to keep a copy, since the shell still owns argv[0]
-	char *argv_zero_copy = argv[0];
-	argv[0] = qstrdup (QString (argv_zero_copy).remove (".bin").toLocal8Bit ());
-	KCmdLineArgs::init( argc, argv, &aboutData );
+	// it seems safest to keep a copy, since the shell still owns argv
+	char *argv_copy[argc];
+	argv_copy[0] = qstrdup (QString (argv[0]).remove (".bin").replace (".exe", ".bat").toLocal8Bit ());
+	for (int i = 1; i < argc; ++i) {
+		argv_copy[i] = argv[i];
+	}
+	KCmdLineArgs::init (argc, argv_copy, &aboutData);
 	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
 	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
@@ -128,7 +131,5 @@ int main(int argc, char *argv[]) {
 
 	// do it!
 	int status = app.exec ();
-	// restore old argv[0] so the shell is happy
-	argv[0] = argv_zero_copy;
 	return status;
 }
