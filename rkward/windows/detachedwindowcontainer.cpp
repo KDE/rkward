@@ -59,6 +59,7 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 
 // capture widget
 	setGeometry (widget_to_capture->frameGeometry ());
+	if (!widget_to_capture->isWindow ()) move (widget_to_capture->mapToGlobal (widget_to_capture->pos ()));
 	widget_to_capture->setParent (this);
 	setCentralWidget (widget_to_capture);
 	widget_to_capture->show ();
