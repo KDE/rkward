@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2006, 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -184,16 +184,27 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 		QTextStream stream (&file);
 		stream << "options (repos=" + repos_string + ")\n" + command_string;
 		if (as_root) {
+#ifdef Q_WS_WIN
+			RK_ASSERT (false);
+#else
 			KUser user;
 			stream << QString ("system (\"chown ") + user.loginName() + ' ' + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "/*\")\n";
+#endif
 		}
 		stream << "q ()\n";
 		file.close();
+	} else {
+		RK_ASSERT (false);
 	}
 
 	QString R_binary (getenv ("R_binary"));
 	QString call;
 	QStringList params;
+#ifdef Q_WS_WIN
+	RK_ASSERT (!as_root);
+	call = R_binary;
+	params << "--no-save" << "--file=" + file.fileName ();
+#else
 	if (as_root) {
 		call = KStandardDirs::findExe ("kdesu");
 		params << "-t";
@@ -202,6 +213,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 		params << "-c";
 	}
 	params << R_binary + " CMD R --no-save < " + file.fileName ();
+#endif
 
 	installation_process = new QProcess ();
 	installation_process->setProcessChannelMode (QProcess::SeparateChannels);
@@ -812,11 +824,23 @@ bool PackageInstallParamsWidget::checkWritable (bool *as_root) {
 
 	QFileInfo fi = QFileInfo (libraryLocation ());
 	if (!fi.isWritable ()) {
-		int res = KMessageBox::questionYesNo (this, i18n ("The directory you are trying to install to (%1) is not writable with your current user permissions. If you are the adminitstrator of this machine, you can try to install the packages as root (you'll be prompted for the root password). Otherwise you'll have to chose a different library location to install to (if none are writable, you will probably want to use the \"Configure Repositories\"-button to set up a writable directory to install packages to).", libraryLocation ()), i18n ("Selected library location not writable"), KGuiItem (i18n ("Become root")), KGuiItem (i18n ("&Cancel")));
-		if (res == KMessageBox::Yes) {
+		QString mcaption = i18n ("Selected library location not writable");
+		QString message = i18n ("The directory you are trying to install to (%1) is not writable with your current user permissions. "
+			"You can chose a different library location to install to (if none are wirtable, you will probably want to use the "
+			"\"Configure Repositories\"-button to set up a writable directory to install package to).\n", libraryLocation ());
+#ifdef Q_WS_WIN
+		message.append (i18n ("If have access to an administrator account on this machine, you can use that to install the package(s), or "
+			"you could change the permissions of '%1'. Sorry, automatic switching to Administrator is not yet supported in RKWard on Windows", libraryLocation ()));
+		int res = KMessageBox::warningContinueCancel (this, message, mcaption, KGuiItem (i18n ("Attempt installation, anyway")));
+		if (res == KMessageBox::Continue) return true;
+#else
+		message.append (i18n ("If you are the adminitstrator of this machine, you can try to install the packages as root (you'll be prompted for the root password)."));
+		int res = KMessageBox::warningContinueCancel (this, message, mcaption, KGuiItem (i18n ("Become root")));
+		if (res == KMessageBox::Continue) {
 			*as_root = true;
 			return true;
 		}
+#endif
 		return false;
 	}
 
