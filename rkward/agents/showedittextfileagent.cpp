@@ -79,39 +79,41 @@ void ShowEditTextFileAgent::showEditFiles (RCallbackArgs *args) {
 
 	QStringList files = args->params["files"].toStringList ();
 	QStringList titles = args->params["titles"].toStringList ();
+	QString wtitle = args->params["wtitle"].toString ();
 	int count = files.count ();
 	RK_ASSERT (titles.count () == count);
 
 	QString bad_files_list;
+	bool r_highlighting = false;
+	bool read_only = true;
 	if (args->type == RCallbackArgs::RShowFiles) {
-
 		caption = i18n ("Showing file(s)");
 		message = i18n ("A command running in the R-engine wants you to see one or more file(s). RKWard can not determine, whether it is safe to continue processing R commands, before you have read the file(s) in question.") + message_snip1 + message_snip2;
-
-		for (int n = 0; n < count; ++n) {
-			message.append (files[n]).append (" (\"").append (titles[n]).append ("\")\n");
-
-			bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl::fromPath (files[n]), false, true, args->params["wtitle"].toString ());
-
-			if (!ok)  {
-				bad_files_list.append ("- ").append (files[n]).append (" (\"").append (titles[n]).append ("\")\n");
-			}
-		}
 	} else if (args->type == RCallbackArgs::REditFiles) {
 		caption = i18n ("Edit file(s)");
 		message = i18n ("A command running in the R-engine wants you to edit one or more file(s). RKWard can not determine, whether it is safe to continue processing R commands, before you have read/edited (and saved) the file(s) in question.") + message_snip1 + message_snip2;
 
-		for (int n = 0; n < count; ++n) {
-			message.append (files[n]).append (" (\"").append (titles[n]).append ("\")\n");
-
-			bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl::fromPath (files[n]), true, false, QString (titles[n]));
-
-			if (!ok) {
-				bad_files_list.append ("- ").append (files[n]).append (" (\"").append (titles[n]).append ("\")\n");
-			}
-		}
+		r_highlighting = true;
+		read_only = false;
 	}
 
+	for (int n = 0; n < count; ++n) {
+		QString title;
+		if (!titles[n].isEmpty ()) title = titles[n];
+		else if (count > 1) title = files[n];
+		if (!wtitle.isEmpty ()) {
+			if (!title.isEmpty ()) title.prepend (": ");
+			title.prepend (wtitle);
+		}
+
+		message.append (title + "\n");
+
+		bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl::fromLocalFile (files[n]), r_highlighting, read_only, title);
+
+		if (!ok)  {
+			bad_files_list.append ("- ").append (title).append (" (").append (files[n]).append (")\n");
+		}
+	}
 
 	if (!bad_files_list.isEmpty ()) {
 		message.append (i18n ("\n\nThe following of the above files were not readable and have not been opened:\n\n"));

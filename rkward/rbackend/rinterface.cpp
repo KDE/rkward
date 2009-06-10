@@ -419,7 +419,14 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 	RCallbackArgs::RCallbackType type = args->type;
 
 	if (type == RCallbackArgs::RShowMessage) {
-		KMessageBox::information (0, args->params["message"].toString (), i18n ("Message from the R backend"));
+		if (args->params.value ("askync").toBool ()) {
+			int res = KMessageBox::questionYesNoCancel (0, args->params["message"].toString (), i18n ("Question from the R backend"));
+			if (res == KMessageBox::Yes) args->params["result"] = "yes";
+			else if (res == KMessageBox::No) args->params["result"] = "no";
+			// else: cancel
+		} else {
+			KMessageBox::information (0, args->params["message"].toString (), i18n ("Message from the R backend"));
+		}
 	} else if (type == RCallbackArgs::RReadLine) {
 		QString result;
 

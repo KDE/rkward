@@ -317,11 +317,16 @@
 		environment (x) <- env
 		return (x)
 	}
-	.Call ("rk.edit.files", file, title, name)
+	invisible (.Call ("rk.edit.files", file, title, name))
+}
+
+"rk.show.files" <- function (file = file, title = file, wtitle = NULL, delete=FALSE)
+{
+	invisible (.Call ("rk.show.files", as.character (file), as.character (title), as.character (wtitle), delete))
 }
 
 "rk.show.html" <- function (url) {
-	.rk.do.call ("showHTML", as.character (url));
+	invisible (.rk.do.call ("showHTML", as.character (url)));
 }
 
 "rk.call.plugin" <- function (plugin, ..., submit.mode = c ("manual", "auto", "submit")) {
@@ -347,4 +352,6 @@
 			stop (res$message)
 		}
 	}
+
+	invisible (TRUE)
 }

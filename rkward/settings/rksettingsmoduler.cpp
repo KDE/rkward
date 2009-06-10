@@ -48,6 +48,7 @@ int RKSettingsModuleR::options_digits;
 bool RKSettingsModuleR::options_checkbounds;
 QString RKSettingsModuleR::options_printcmd;
 QString RKSettingsModuleR::options_editor;
+QString RKSettingsModuleR::options_pager;
 // static constants
 QString RKSettingsModuleR::builtin_editor = "<rkward>";
 
@@ -161,6 +162,17 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	connect (editor_input, SIGNAL (editTextChanged (const QString &)), this, SLOT (textChanged (const QString &)));
 	grid->addWidget (editor_input, row, 1);
 
+	grid->addWidget (new QLabel (i18n ("Pager command"), this), ++row, 0);
+	pager_input = new QComboBox (this);
+	pager_input->setEditable (true);
+	pager_input->addItem (builtin_editor);
+	if (options_pager != builtin_editor) {
+		pager_input->addItem (options_pager);
+		pager_input->setCurrentIndex (1);
+	}
+	connect (pager_input, SIGNAL (editTextChanged (const QString &)), this, SLOT (textChanged (const QString &)));
+	grid->addWidget (pager_input, row, 1);
+
 	main_vbox->addStretch ();
 }
 
@@ -208,6 +220,7 @@ void RKSettingsModuleR::applyChanges () {
 	options_checkbounds = checkbounds_input->itemData (checkbounds_input->currentIndex ()).toBool ();
 	options_printcmd = printcmd_input->text ();
 	options_editor = editor_input->currentText ();
+	options_pager = pager_input->currentText ();
 
 // apply run time options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
@@ -237,6 +250,8 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	list.append ("options (printcmd=\"" + options_printcmd + "\")\n");
 	if (options_editor == builtin_editor) list.append ("options (editor=rk.edit.files)\n");
 	else list.append ("options (editor=\"" + options_editor + "\")\n");
+	if (options_pager == builtin_editor) list.append ("options (pager=rk.show.files)\n");
+	else list.append ("options (pager=\"" + options_pager + "\")\n");
 
 #warning TODO make the following options configurable
 	list.append ("options (device=\"rk.screen.device\")\n");
@@ -270,6 +285,7 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	cg.writeEntry ("check.bounds", options_checkbounds);
 	cg.writeEntry ("printcmd", options_printcmd);
 	cg.writeEntry ("editor", options_editor);
+	cg.writeEntry ("pager", options_pager);
 }
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
@@ -288,6 +304,7 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	options_checkbounds = cg.readEntry ("check.bounds", false);
 	options_printcmd = cg.readEntry ("printcmd", "kprinter");
 	options_editor = cg.readEntry ("editor", builtin_editor);
+	options_pager = cg.readEntry ("pager", builtin_editor);
 }
 
 //#################################################

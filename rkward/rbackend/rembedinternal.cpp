@@ -124,6 +124,7 @@ bool repldll_last_parse_successful = false;
 
 SEXP RKWard_RData_Tag;
 QString *SEXPToStringList (SEXP from_exp, unsigned int *count);
+int *SEXPToIntArray (SEXP from_exp, unsigned int *count);
 
 // ############## R Standard callback overrides BEGIN ####################
 void RSuicide (const char* message) {
@@ -147,7 +148,6 @@ void RShowMessage (const char* message) {
 }
 
 // TODO: currently used on windows, only!
-#warning implement in rinterface.cpp!
 /* FROM R_ext/RStartup.h: "Return value here is expected to be 1 for Yes, -1 for No and 0 for Cancel:
    symbolic constants in graphapp.h" */
 int RAskYesNoCancel (const char* message) {
@@ -266,21 +266,6 @@ QStringList charPArrayToQStringList (const char** chars, int count) {
 	return ret;
 }
 
-int RShowFiles (int nfile, const char **file, const char **headers, const char *wtitle, Rboolean del, const char *pager) {
-	RK_TRACE (RBACKEND);
-
-	RCallbackArgs args;
-	args.type = RCallbackArgs::RShowFiles;
-	args.params["files"] = QVariant (charPArrayToQStringList (file, nfile));
-	args.params["titles"] = QVariant (charPArrayToQStringList (headers, nfile));
-	args.params["wtitle"] = QVariant (wtitle);
-	args.params["delete"] = QVariant (del);
-	REmbedInternal::this_pointer->handleStandardCallback (&args);
-
-// default implementation seems to returns 1 on success, 0 on failure. see unix/std-sys.c
-	return 1;
-}
-
 int RChooseFile (int isnew, char *buf, int len) {
 	RK_TRACE (RBACKEND);
 
@@ -297,36 +282,49 @@ int RChooseFile (int isnew, char *buf, int len) {
 	return (qMin (len - 1, localres.size ()));
 }
 
-void REditFilesHelper (QStringList files, QStringList titles, QString name_or_something) {
+/* There are about one million possible entry points to editing / showing files. We try to cover them all, using the
+following bunch of functions (REditFilesHelper() and doShowEditFiles() are helpers, only) */
+
+void REditFilesHelper (QStringList files, QStringList titles, QString wtitle, RCallbackArgs::RCallbackType edit, bool delete_files) {
 	RK_TRACE (RBACKEND);
 
 	RCallbackArgs args;
-	args.type = RCallbackArgs::REditFiles;
+	if (edit == RCallbackArgs::REditFiles) args.type = RCallbackArgs::REditFiles;
+	else {
+		RK_ASSERT (edit == RCallbackArgs::RShowFiles);
+		args.type = RCallbackArgs::RShowFiles;
+		args.params["delete"] = QVariant (delete_files);
+	}
+	// see ?file.show() for what appears to be the intended meaning of these first three parameters
+	// (which seem to be inconsistently named even in R itself...)
 	args.params["files"] = QVariant (files);
 	args.params["titles"] = QVariant (titles);
-	// and whatever the name_or_something from REditFiles is for...
+	args.params["wtitle"] = QVariant (wtitle);
+
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 }
 
-int REditFiles (int nfile, const char **file, const char **title, const char *editor) {
+int REditFiles (int nfile, const char **file, const char **title, const char *wtitle) {
 	RK_TRACE (RBACKEND);
 
-	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (title, nfile), editor);
+	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (title, nfile), wtitle, RCallbackArgs::REditFiles, false);
 
 // default implementation seems to return 1 if nfile <= 0, else 1. No idea, what for. see unix/std-sys.c
 	return (nfile <= 0);
 }
 
-SEXP doEditFiles (SEXP files, SEXP titles, SEXP name) {
+SEXP doShowEditFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP del, RCallbackArgs::RCallbackType edit) {
 	RK_TRACE (RBACKEND);
 
 	// this function would be much shorter, if SEXPToStringList would simply return a QStringList...
-	unsigned int files_count, titles_count, name_count;
+	unsigned int files_count, titles_count, wtitle_count, del_count;
 	QString *file_strings = SEXPToStringList (files, &files_count);
 	QString *title_strings = SEXPToStringList (titles, &titles_count);
-	QString *name_strings = SEXPToStringList (name, &name_count);
+	QString *wtitle_strings = SEXPToStringList (wtitle, &wtitle_count);
+	int *del_bools = SEXPToIntArray (del, &del_count);
 
-	RK_ASSERT (name_count <= 1);
+	RK_ASSERT (wtitle_count <= 1);
+	RK_ASSERT (del_count <= 1);
 	RK_ASSERT (files_count == titles_count);
 	RK_ASSERT (files_count >= 1);
 
@@ -338,16 +336,23 @@ SEXP doEditFiles (SEXP files, SEXP titles, SEXP name) {
 		files_list.append (file_strings[i]);
 		titles_list.append (title_strings[i]);
 	}
-	QString name_string;
-	if (name_count) name_string = name_strings[0];
+	QString wtitle_string;
+	if (wtitle_count) wtitle_string = wtitle_strings[0];
+	bool del_files = false;
+	if (del_count) del_files = (del_bools[0] != 0);
 
-	REditFilesHelper (files_list, titles_list, name_string);
+	REditFilesHelper (files_list, titles_list, wtitle_string, edit, del_files);
 
 	delete [] file_strings;
 	delete [] title_strings;
-	delete [] name_strings;
+	delete [] wtitle_strings;
+	delete [] del_bools;
 
 	return (R_NilValue);
+}
+
+SEXP doEditFiles (SEXP files, SEXP titles, SEXP wtitle) {
+	return (doShowEditFiles (files, titles, wtitle, R_NilValue, RCallbackArgs::REditFiles));
 }
 
 int REditFile (const char *buf) {
@@ -358,6 +363,19 @@ int REditFile (const char *buf) {
 
 // does not exist in standard R 2.1.0, so no idea what to return.
 	return REditFiles (1, const_cast<const char**> (&buf), &title, editor);
+}
+
+SEXP doShowFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP delete_files) {
+	return (doShowEditFiles (files, titles, wtitle, delete_files, RCallbackArgs::RShowFiles));
+}
+
+int RShowFiles (int nfile, const char **file, const char **headers, const char *wtitle, Rboolean del, const char */* pager */) {
+	RK_TRACE (RBACKEND);
+
+	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (headers, nfile), QString (wtitle), RCallbackArgs::RShowFiles, (bool) del);
+
+// default implementation seems to returns 1 on success, 0 on failure. see unix/std-sys.c
+	return 1;
 }
 
 void RBusy (int busy) {
@@ -783,6 +801,7 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 		{ "rk.get.structure", (DL_FUNC) &doGetStructure, 4 },
 		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 3 },
 		{ "rk.edit.files", (DL_FUNC) &doEditFiles, 3 },
+		{ "rk.show.files", (DL_FUNC) &doShowFiles, 4 },
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);

@@ -70,6 +70,7 @@ private:
 	QComboBox *checkbounds_input;
 	QLineEdit *printcmd_input;
 	QComboBox *editor_input;
+	QComboBox *pager_input;
 
 	static QString options_outdec;
 	static int options_width;
@@ -83,6 +84,7 @@ private:
 	static bool options_checkbounds;
 	static QString options_printcmd;
 	static QString options_editor;
+	static QString options_pager;
 
 // constants
 	static QString builtin_editor;

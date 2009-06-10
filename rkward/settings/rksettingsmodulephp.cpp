@@ -2,7 +2,7 @@
                           rksettingsmodulephp  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -89,7 +89,12 @@ void RKSettingsModulePHP::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	KConfigGroup cg = config->group ("PHP Settings");
+#ifdef Q_WS_WIN
+	// on windows, our best hope is that php is in the path
+	php_bin = cg.readEntry ("PHP binary", "php");
+#else
 	php_bin = cg.readEntry ("PHP binary", "/usr/bin/php");
+#endif
 }
 
 #include "rksettingsmodulephp.moc"
