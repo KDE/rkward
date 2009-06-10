@@ -1,0 +1,14 @@
+Platform specific TODOs / issues:
+
+Win32:
+- The PHP backend is slooooooow
+	- Perhaps one more reason to switch the scripting language
+- How to build binaries?
+- Support for switching to Administrator when installing packages
+- KFileDialog-bug (marked TODO in rkward.cpp)
+- Termination-bug (marked HACK in main.cpp)
+
+Linux:
+- There is a hang when you do
+	library (rcdklibs)
+- Can we use R_ProcessEvents as well?
