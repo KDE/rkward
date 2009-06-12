@@ -1,17 +1,14 @@
 #!/bin/bash
 
 VERSION=${1}
+cd `dirname $0`
 BASEDIR=`pwd`
 mkdir $BASEDIR/disttemp
 DISTDIRREL=rkward-$VERSION
 DISTDIR=$BASEDIR/disttemp/$DISTDIRREL
 mkdir $DISTDIR
 
-#prepare version information
-echo "/* Version number of package */" > $BASEDIR/rkward/version.h
-echo "#define VERSION \"$VERSION\"" >> $BASEDIR/rkward/version.h
-echo "\".rk.app.version\" <- \"$VERSION\"" > $BASEDIR/rkward/rbackend/rpackages/rkward/R/ver.R
-echo "$VERSION" > $BASEDIR/rkward/resource.ver
+$BASEDIR/set_dist_version.sh $VERSION
 
 cp -a AUTHORS CMakeLists.txt COPYING ChangeLog TODO INSTALL NOTES README configure $DISTDIR
 mkdir $DISTDIR/doc
