@@ -17,8 +17,7 @@ ENDIF(R_EXECUTABLE-NOTFOUND)
 MESSAGE(STATUS "Looking for R_HOME")
 IF(NOT R_HOME)
 	EXECUTE_PROCESS(
-		COMMAND echo "cat(R.home())"
-		COMMAND ${R_EXECUTABLE} "--slave" "--no-save"
+		COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(R.home())"
 		OUTPUT_VARIABLE R_HOME)
 ELSE(NOT R_HOME)
 	MESSAGE(STATUS "Specified by user")
@@ -34,8 +33,7 @@ ENDIF(NOT R_HOME)
 MESSAGE(STATUS "Looking for R include files")
 IF(NOT R_INCLUDEDIR)
 	EXECUTE_PROCESS(
-		COMMAND echo "cat(R.home('include'))"
-		COMMAND ${R_EXECUTABLE} "--slave" "--no-save"
+		COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(R.home('include'))"
 		OUTPUT_VARIABLE R_INCLUDEDIR)
 ELSE(NOT R_INCLUDEDIR)
 	MESSAGE(STATUS "Location specified by user")
@@ -125,8 +123,7 @@ ENDIF(WIN32)
 MESSAGE(STATUS "Checking for R package library location to use")
 IF(NOT R_LIBDIR)
 	EXECUTE_PROCESS(
-		COMMAND echo "cat(paste(unique (c(.Library.site, .Library)), collapse='${PATH_SEP}'))"
-		COMMAND ${R_EXECUTABLE} "--slave" "--no-save"
+		COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(paste(unique (c(.Library.site, .Library)), collapse='${PATH_SEP}'))"
 		OUTPUT_VARIABLE R_LIBDIR)
 ELSE(NOT R_LIBDIR)
 	MESSAGE(STATUS "Location specified by user")
