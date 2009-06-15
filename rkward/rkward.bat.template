@@ -2,7 +2,14 @@
 REM Wrapper script to start RKWard.
 REM It the *first* parameter is "--debugger", run through the specified debugger
 
+REM ATTENTION: The SET R_BINARY=... line should remain on line number 10 of this script.
+REM This is where the NSIS installer assumes to find it.
+
+
+
 SET R_BINARY=@R_EXECUTABLE@
+
+
 SET RKWARD.BIN=%~dp0\rkward.bin.exe
 SET DEBUGGER=
 

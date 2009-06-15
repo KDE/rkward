@@ -244,6 +244,12 @@ Function CreateDirSelectionPage
 FunctionEnd
 
 ## installation
+
+Function setRBinaryPath
+	StrCpy $R9 "SET R_BINARY=$INST_RHOME\bin\R.exe$\r$\n"
+	Push $0
+FunctionEnd
+
 # set desktop as install directory
 installDir $DESKTOP
 
@@ -251,8 +257,11 @@ installDir $DESKTOP
 section
 	setOutPath $INST_KDEPREFIX
 	File /r install\_KDEPREFIX_\*.*
+	${LineFind} "$INST_KDEPREFIX\bin\rkward.bat" "" 10 setRBinaryPath
+
 	setOutPath $INST_RHOME
 	File /r install\_RHOME_\*.*
+
 	CreateShortCut "$DESKTOP\RKWard.lnk" "$INST_KDEPREFIX\bin\rkward.bat"
 
 #	writeUninstaller $INST_KDEPREFIX\uninstaller.exe

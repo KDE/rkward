@@ -10,6 +10,8 @@ REM --------------------------------------------
 REM everything below should not need customizing
 REM --------------------------------------------
 
+SET ADD_CMAKE_FLAGS=" -DCMAKE_BUILD_TYPE=Release "
+
 SET RELEASE_DIR=%~dp0
 SET SOURCE_DIR=%RELEASE_DIR%\..
 SET INSTALL_DIR=%RELEASE_DIR%/install
@@ -20,7 +22,7 @@ rmdir /Q /S %RELEASE_DIR%\install
 mkdir install
 mkdir build
 cd build
-cmake %SOURCE_DIR% -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=%KDEPREFIXDRIVE%/%KDEPREFIX% -DR_EXECUTABLE=%RHOMEDRIVE%/%RHOME%/bin/R.exe -DR_LIBDIR=%RHOMEDRIVE%/%RHOME%/library
+cmake %SOURCE_DIR% -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=%KDEPREFIXDRIVE%/%KDEPREFIX% -DR_EXECUTABLE=%RHOMEDRIVE%/%RHOME%/bin/R.exe -DR_LIBDIR=%RHOMEDRIVE%/%RHOME%/library %ADD_CMAKE_FLAGS%
 REM sh.exe must not be in path during cmake call, but must be in path for R package install...
 SET PATH=%PATH%;%SH_PATH%
 mingw32-make install DESTDIR=%INSTALL_DIR%
