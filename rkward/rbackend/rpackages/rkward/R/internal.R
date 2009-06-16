@@ -116,14 +116,15 @@
 
 "require" <- function (package, quietly = FALSE, character.only = FALSE, ...)
 {
-    if (!character.only) {
-        package <- as.character(substitute(package))
-    }
-        if (!base::require(as.character(package), quietly = quietly, character.only = TRUE, ...)) {
-            .rk.do.call("require", as.character(package))
-            return(base::require(as.character(package), quietly = TRUE, character.only = TRUE, ...))
-        }
-    return(TRUE)
+	if (!character.only) {
+		package <- as.character(substitute(package))
+	}
+	if (!base::require(as.character(package), quietly = quietly, character.only = TRUE, ...)) {
+		.rk.do.call("require", as.character(package))
+		invisible(base::require(as.character(package), quietly = TRUE, character.only = TRUE, ...))
+	} else {
+		invisible(TRUE)
+	}
 }
 
 # overriding q, to ask via GUI instead. Arguments are not interpreted.
@@ -189,45 +190,24 @@ if (base::.Platform$OS.type == "windows") {
 	}
 }
 
-if (compareVersion (paste (R.version$major, R.version$minor, sep="."), "2.4.0") >= 0) {
-	".rk.make.watch.f" <- function (k) {
-		# we need to make sure, the functions we use are *not* looked up as symbols in .GlobalEnv.
-		# else, for instance, if the user names a symbol "missing", and we try to resolve it in the
-		# wrapper function below, evaluation would recurse to look up "missing" in the .GlobalEnv
-		# due to the call to "if (!missing(value))".
-		get <- base::get
-		missing <- base::missing
-		assign <- base::assign
-		.rk.do.call <- rkward::.rk.do.call
-		invisible <- base::invisible
-	
-		function (value) {
-			if (!missing (value)) {
-				assign (k, value, envir=.rk.watched.symbols)
-				.rk.do.call ("ws", k);
-				invisible (value)
-			} else {
-				get (k, envir=.rk.watched.symbols)
-			}
-		}
-	}
-} else {
-	# see above, but '::' operator was more picky in R < 2.4
-	".rk.make.watch.f" <- function (k) {
-		get <- base::get
-		missing <- base::missing
-		assign <- base::assign
-		.rk.do.call <- get (".rk.do.call", envir=as.environment ("package:rkward"))
-		invisible <- base::invisible
-	
-		function (value) {
-			if (!missing (value)) {
-				assign (k, value, envir=.rk.watched.symbols)
-				.rk.do.call ("ws", k);
-				invisible (value)
-			} else {
-				get (k, envir=.rk.watched.symbols)
-			}
+".rk.make.watch.f" <- function (k) {
+	# we need to make sure, the functions we use are *not* looked up as symbols in .GlobalEnv.
+	# else, for instance, if the user names a symbol "missing", and we try to resolve it in the
+	# wrapper function below, evaluation would recurse to look up "missing" in the .GlobalEnv
+	# due to the call to "if (!missing(value))".
+	get <- base::get
+	missing <- base::missing
+	assign <- base::assign
+	.rk.do.call <- rkward::.rk.do.call
+	invisible <- base::invisible
+
+	function (value) {
+		if (!missing (value)) {
+			assign (k, value, envir=.rk.watched.symbols)
+			.rk.do.call ("ws", k);
+			invisible (value)
+		} else {
+			get (k, envir=.rk.watched.symbols)
 		}
 	}
 }
@@ -243,7 +223,7 @@ if (compareVersion (paste (R.version$major, R.version$minor, sep="."), "2.4.0") 
 	invisible (TRUE)
 }
 
-# not needed by rkward
+# not needed by rkward but provided for completeness
 ".rk.unwatch.symbol" <- function (k) {
 	rm (list=k, envir=globalenv ())
 
@@ -300,88 +280,6 @@ if (compareVersion (paste (R.version$major, R.version$minor, sep="."), "2.4.0") 
 	eval (substitute (x <- y), envir=envir)
 }
 
-".rk.get.structure.old" <- function (x, name, envlevel=0, namespacename=NULL, misplaced=FALSE, envir) {
-	fun <- FALSE
-	cont <- FALSE
-	type <- 0
-
-# Do not change the order! Make sure all fields exist, even if empty
-	if (missing (x)) {
-#		.Call ("rk.test.type", name, envir) # Testing code. TODO: clean up
-		x <- get (name, envir=envir)
-	}
-
-# 1: name should always be first
-	name <- as.character (name)
-
-# 2: classification
-	if (is.data.frame (x)) type <- type + 1
-	if (is.matrix (x)) type <- type + 2
-	if (is.array (x)) type <- type + 4
-	if (is.list (x)) type <- type + 8
-	if (type != 0) {
-		type <- type + 16
-		cont <- TRUE
-	} else {
-		if (is.function (x)) {
-			fun <- TRUE
-			type <- 128
-		} else if (is.environment (x)) {
-			type <- 256
-			cont <- TRUE
-		} else {
-			type <- 32
-			if (is.factor (x)) type <- type + 32768			# 2 << 14
-			else if (is.numeric (x)) type <- type + 16384		# 1 << 14
-			else if (is.character (x)) type <- type + 49152		# 3 << 14
-			else if (is.logical (x)) type <- type + 65536		# 4 << 14
-		}
-	}
-	if (!is.null (attr (x, ".rk.meta"))) type = type + 4096
-	if (misplaced) type <- type + 8192
-	type <- as.integer (type)
-
-# 3: classes
-	classes <- class (x)
-	if (is.null (classes)) classes = ""
-
-# 4: meta info
-	meta <- .rk.get.meta (x)
-	if (is.null (meta)) meta <- ""
-
-# 5: dimensionality
-	dims <- dim(x)
-	if (is.null (dims)) dims <- length (x)	# handling for objects that - according to R - do not have a dimension (such as vectors, functions, etc.)
-	if (is.null (dims)) dims <- 0	# according to help ("length"), we need to play safe
-	dims <- as.integer (dims)
-
-# 6: Special info valid for some objects ony. This should always be last in the returned structure, as the number of fields may vary
-	if (cont) {		# a container
-		if (is.environment (x)) {
-			sub <- .rk.get.environment.children (x, envlevel+1, namespacename)
-		} else {
-			sub <- list ()
-			nms <- names (x)
-			if (!is.null (nms)) {
-				i <- 0
-				for (child in x) {
-					i <- i+1
-					sub[[nms[i]]] <- .rk.get.structure (child, nms[i], envlevel)
-				}
-			}
-		}
-		return (invisible (list (name, type, classes, meta, dims, sub)))
-	} else if (fun) {	# a function
-		argnames <- as.character (names (formals (x)))
-		argvalues <- as.character (lapply (formals (x), function (v) {
-						if (is.character (v)) return (encodeString (v, quote="\""))
-						else return (v)
-					} ))
-		return (invisible (list (name, type, classes, meta, dims, argnames, argvalues)))
-	}
-	return (invisible (list (name, type, classes, meta, dims)))
-}
-
 ".rk.get.structure.new" <- function (x, name, envlevel=0, namespacename=NULL) {
 	.Call ("rk.get.structure", x, as.character (name), as.integer (envlevel), namespacename)
 }
@@ -412,23 +310,12 @@ if (compareVersion (paste (R.version$major, R.version$minor, sep="."), "2.4.0") 
 				ret[[childname]] <- .rk.get.structure (name=childname, envlevel=envlevel, envir=x)
 			}
 		} else {
-			# before R 2.4.0, operator "::" would only work on true namespaces, not on package names (operator "::" work, if there is a namespace, and that namespace has the symbol in it)
-			# TODO remove once we depend on R >= 2.4.0
-			if (compareVersion (paste (R.version$major, R.version$minor, sep="."), "2.4.0") < 0) {
-				ns <- tryCatch (asNamespace (namespacename), error = function(e) NULL)
-				for (childname in lst) {
-					misplaced <- FALSE
-					if (is.null (ns) || (!exists (childname, envir=ns, inherits=FALSE))) misplaced <- TRUE
-					ret[[childname]] <- .rk.get.structure (name=childname, envlevel=envlevel, misplaced=misplaced, envir=x)
-				}
-			} else {
 			# for R 2.4.0 or greater: operator "::" works if package has no namespace at all, or has a namespace with the symbol in it
-				ns <- tryCatch (asNamespace (namespacename), error = function(e) NULL)
-				for (childname in lst) {
-					misplaced <- FALSE
-					if ((!is.null (ns)) && (!exists (childname, envir=ns, inherits=FALSE))) misplaced <- TRUE
-					ret[[childname]] <- .rk.get.structure (name=childname, envlevel=envlevel, misplaced=misplaced, envir=x)
-				}
+			ns <- tryCatch (asNamespace (namespacename), error = function(e) NULL)
+			for (childname in lst) {
+				misplaced <- FALSE
+				if ((!is.null (ns)) && (!exists (childname, envir=ns, inherits=FALSE))) misplaced <- TRUE
+				ret[[childname]] <- .rk.get.structure (name=childname, envlevel=envlevel, misplaced=misplaced, envir=x)
 			}
 		}
 	}
