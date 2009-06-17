@@ -10,7 +10,7 @@ REM --------------------------------------------
 REM everything below should not need customizing
 REM --------------------------------------------
 
-SET ADD_CMAKE_FLAGS=" -DCMAKE_BUILD_TYPE=Release "
+SET ADD_CMAKE_FLAGS=-DCMAKE_BUILD_TYPE=Release
 
 SET RELEASE_DIR=%~dp0
 SET SOURCE_DIR=%RELEASE_DIR%\..
@@ -35,5 +35,8 @@ echo !define RKWARD_VERSION \ > %RELEASE_DIR%/rkward_version.nsh
 more %SOURCE_DIR%\rkward\resource.ver >> %RELEASE_DIR%/rkward_version.nsh
 copy /Y %SOURCE_DIR%\COPYING %RELEASE_DIR%
 
+REM icon needs to be set by the installer
+svg2ico "%SOURCE_DIR%\rkward\icons\app-icon\hisc-app-rkward.svgz" "%RELEASE_DIR%\rkward.ico"
+
 cd %RELEASE_DIR%
-%MAKENSIS% installer.nsi
+"%MAKENSIS%" installer.nsi

@@ -1,6 +1,6 @@
 @ECHO off
 REM Wrapper script to start RKWard.
-REM It the *first* parameter is "--debugger", run through the specified debugger
+REM If the *first* parameter is "--debugger", run through the specified debugger
 
 REM ATTENTION: The SET R_BINARY=... line should remain on line number 10 of this script.
 REM This is where the NSIS installer assumes to find it.
@@ -20,4 +20,4 @@ SET DEBUGGER=%1
 SHIFT
 
 :run
-CALL %R_BINARY% CMD %DEBUGGER% %RKWARD.BIN% %1 %2 %3 %4 %5 %6 %7 %8 %9
+CALL "%R_BINARY%" CMD %DEBUGGER% "%RKWARD.BIN%" %1 %2 %3 %4 %5 %6 %7 %8 %9

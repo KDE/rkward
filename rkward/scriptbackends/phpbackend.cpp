@@ -73,7 +73,7 @@ bool PHPBackend::initialize (RKComponentPropertyCode *code_property, bool add_he
 	connect (php_process, SIGNAL (error(QProcess::ProcessError)), this, SLOT (processError(QProcess::ProcessError)));
 	connect (php_process, SIGNAL (finished(int,QProcess::ExitStatus)), this, SLOT (processDead(int,QProcess::ExitStatus)));
 
-	php_process->start (RKSettingsModulePHP::phpBin() + " -c " + php_ini + " " + common_php);
+	php_process->start ("\"" + RKSettingsModulePHP::phpBin() + "\"" + " -c \"" + php_ini + "\" \"" + common_php + "\"");
 
 	doing_command = startup_done = false;
 	busy = true;
