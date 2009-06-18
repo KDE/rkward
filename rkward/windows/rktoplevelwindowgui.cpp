@@ -147,7 +147,9 @@ void RKTopLevelWindowGUI::reportRKWardBug () {
 	RK_TRACE (APP);
 
 // TOOD: something pretty
-	KMessageBox::information (for_window, i18n ("Please submit your bug reports or wishes at http://sourceforge.net/tracker/?group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge.net"));
+	KMessageBox::information (for_window, i18n ("<p>Please submit your bug reports or wishes at <a href=\"%1\">%1</a> or send email to <a href=\"mailto:%2\">%2</a>.</p>"
+							, "http://sourceforge.net/tracker/?group_id=50231&atid=459007", "rkward-devel@lists.sourceforge.net"),
+							i18n ("Reporting bugs in RKWard"), QString (), KMessageBox::Notify | KMessageBox::AllowLink);
 }
 
 void RKTopLevelWindowGUI::showAboutApplication () {
