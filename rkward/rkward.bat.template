@@ -10,14 +10,14 @@ REM This is where the NSIS installer assumes to find it.
 SET R_BINARY=@R_EXECUTABLE@
 
 
-SET RKWARD.BIN=%~dp0\rkward.bin.exe
+SET RKWARD.BIN=%~dsp0\rkward.bin.exe
 SET DEBUGGER=
 
 IF NOT "%1" == "--debugger" GOTO run
 REM else:
 SHIFT
-SET DEBUGGER=%1
+SET DEBUGGER=%~s1
 SHIFT
 
 :run
-CALL "%R_BINARY%" CMD %DEBUGGER% "%RKWARD.BIN%" %1 %2 %3 %4 %5 %6 %7 %8 %9
+CALL "%R_BINARY%" CMD %DEBUGGER% %RKWARD.BIN% %1 %2 %3 %4 %5 %6 %7 %8 %9
