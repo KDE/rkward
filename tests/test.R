@@ -155,7 +155,7 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd ()) {
 	# clean any old results
 	rktest.cleanRKTestSuite (suite, basedir)
 
-	system (paste ("tar -xf", suite@id, ".tar", sep=""))
+	system (paste ("tar -xzf", suite@id, ".tar.gz", sep=""))
 	oldwd = getwd ()
 	on.exit (setwd (oldwd))
 	setwd (paste (basedir, suite@id, sep="/"))
@@ -196,7 +196,7 @@ rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
 
 	# create package
 	setwd (basedir)
-	system (paste ("tar -cf ", suite@id, ".tar ", suite@id, sep=""))
+	system (paste ("tar -czf ", suite@id, ".tar.gz ", suite@id, sep=""))
 }
 
 
