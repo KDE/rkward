@@ -2,7 +2,7 @@
                           rinterface.h  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002, 2004, 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -20,6 +20,7 @@
 
 #include <qobject.h>
 #include <qmutex.h>
+#include <QFile>
 
 #include "rcommand.h"
 
@@ -101,6 +102,13 @@ private:
 	QTimer *flush_timer;
 /** canceling the command that is (or seems to be) currently running is tricky: In order to do so, we need to signal an interrupt to the RThread. We need this pointer to find out, when the command has actually been interrupted, and we can resume processing. */
 	RCommand *running_command_canceled;
+/** Used by the testing framework. see R function rk.record.commands(). */
+	QFile command_logfile;
+	enum {
+		NotRecordingCommands,
+		RecordingCommands,
+		RecordingCommandsWithSync
+	} command_logfile_mode;
 
 /** See \ref RThread::doSubstack (). Does the actual job. */
 	void processREvalRequest (REvalRequest *request);

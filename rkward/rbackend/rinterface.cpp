@@ -79,6 +79,7 @@ RInterface::RInterface () {
 	new RCommandStackModel (this);
 	RCommandStack::regular_stack = new RCommandStack (0);
 	running_command_canceled = 0;
+	command_logfile_mode = NotRecordingCommands;
 
 	r_thread = new RThread ();
 
@@ -168,7 +169,15 @@ void RInterface::customEvent (QEvent *e) {
 			r_thread->pauseOutput (false);
 		}
 	} else if (ev->etype () == RKRBackendEvent::RCommandIn) {
-		RKCommandLog::getLog ()->addInput (static_cast <RCommand *> (ev->data ()));
+		RCommand *command = static_cast <RCommand *> (ev->data ());
+		RKCommandLog::getLog ()->addInput (command);
+
+		if (command_logfile_mode != NotRecordingCommands) {
+			if ((!(command->type () & RCommand::Sync)) || command_logfile_mode == RecordingCommandsWithSync) {
+				command_logfile.write (command->command ().toUtf8 ());
+				command_logfile.write ("\n");
+			}
+		}
 	} else if (ev->etype () == RKRBackendEvent::RCommandOut) {
 		RCommand *command = static_cast <RCommand *> (ev->data ());
 		if (command->status & RCommand::Canceled) {
@@ -387,7 +396,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			RKComponentMap::ComponentInvocationMode mode = RKComponentMap::ManualSubmit;
 			if (request->call[2] == "auto") mode = RKComponentMap::AutoSubmit;
 			else if (request->call[2] == "submit") mode = RKComponentMap::AutoSubmitOrFail;
-			ok = RKComponentMap::invokeComponent (request->call[1], request->call.mid (3), mode, &message);
+			ok = RKComponentMap::invokeComponent (request->call[1], request->call.mid (3), mode, &message, request->in_chain);
 
 			if (message.isEmpty ()) {
 				issueCommand (".rk.set.reply (NULL)", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
@@ -402,6 +411,31 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 	} else if (call == "showHTML") {
 		if (request->call.count () == 2) {
 			RKWorkplace::mainWorkplace ()->openHelpWindow (request->call[1]);
+		} else {
+			RK_ASSERT (false);
+		}
+	} else if (call == "recordCommands") {
+		if (request->call.count () == 3) {
+			QString filename = request->call[1];
+			bool with_sync = (request->call[2] == "include.sync");
+
+			if (filename.isEmpty ()) {
+				command_logfile_mode = NotRecordingCommands;
+				command_logfile.close ();
+			} else {
+				if (command_logfile_mode != NotRecordingCommands) {
+					issueCommand (".rk.set.reply (\"Attempt to start recording, while already recording commands. Ignoring.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+				} else {
+					command_logfile.setFileName (filename);
+					bool ok = command_logfile.open (QIODevice::WriteOnly | QIODevice::Truncate);
+					if (ok) {
+						command_logfile_mode = RecordingCommands;
+						if (with_sync) command_logfile_mode = RecordingCommandsWithSync;
+					} else {
+						issueCommand (".rk.set.reply (\"Could not open file for writing. Not recording commands.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+					}
+				}
+			}
 		} else {
 			RK_ASSERT (false);
 		}

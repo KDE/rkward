@@ -53,11 +53,13 @@ void RKComponentBase::fetchPropertyValuesRecursive (QMap<QString, QString> *list
 			if (it.value ()->isProperty ()) {
 				if (include_top_level) {
 					RKComponentPropertyBase *p = static_cast<RKComponentPropertyBase*> (it.value ());
-					if (!p->isInternal ()) { 
+					if (!p->isInternal ()) {
 						list->insert (prefix + it.key (), it.value ()->value ());
 					}
 				}
 			} else {
+				RK_ASSERT (it.value ()->isComponent ());
+				if (!static_cast<RKComponent *> (it.value ())->isEnabled ()) continue;
 				it.value ()->fetchPropertyValuesRecursive (list, true, prefix + it.key () + '.');
 			}
 		}

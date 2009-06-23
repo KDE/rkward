@@ -156,7 +156,7 @@ void RKStandardComponentGUI::ok () {
 	command.append (code_property->printout ());
 	command.append ("})\n");
 
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate));
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate), component->commandChain ());
 
 	// re-run link
 	command.clear ();
@@ -167,7 +167,7 @@ void RKStandardComponentGUI::ok () {
 	}
 	// separator line
 	command.append (".rk.make.hr()\n");
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate));
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate), component->commandChain ());
 }
 
 void RKStandardComponentGUI::cancel () {

@@ -43,6 +43,7 @@ enum RKComponentType {
 
 class RKComponent;
 class RKComponentMap;
+class RCommandChain;
 class RKStandardComponent;
 class QWidget;
 class KActionCollection;
@@ -177,7 +178,7 @@ public:
 	};
 /** invokes the specified component as toplevel
 @param message If a non-null pointer to QString is given, error messages are written into this string *instead* of being displayed */
-	static bool invokeComponent (const QString &component_id, const QStringList &serialized_settings, ComponentInvocationMode submit_mode = ManualSubmit, QString *message=0);
+	static bool invokeComponent (const QString &component_id, const QStringList &serialized_settings, ComponentInvocationMode submit_mode = ManualSubmit, QString *message=0, RCommandChain *in_chain = 0);
 private:
 /** typedef for easy reference to iterator */
 	typedef QMap<QString, RKComponentHandle*> ComponentMap;

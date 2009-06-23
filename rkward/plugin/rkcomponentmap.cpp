@@ -235,7 +235,7 @@ QString RKComponentMap::getComponentIdLocal (RKComponentHandle* component) {
 }
 
 //static
-bool RKComponentMap::invokeComponent (const QString &component_id, const QStringList &serialized_settings, ComponentInvocationMode submit_mode, QString *message) {
+bool RKComponentMap::invokeComponent (const QString &component_id, const QStringList &serialized_settings, ComponentInvocationMode submit_mode, QString *message, RCommandChain *in_chain) {
 	RK_TRACE (PLUGIN);
 
 	QString _message;
@@ -268,7 +268,7 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	// Auto-Submit
 	if (submit_mode != ManualSubmit) {
 		// if the plugin takes longer than 5 seconds to settle, than that really is sort of buggy...
-		bool submit_ok = component->submit (5000);
+		bool submit_ok = component->submit (5000, in_chain);
 		if (submit_ok || (submit_mode == AutoSubmitOrFail)) component->close ();
 		if (!submit_ok) {
 			_message.append (i18n ("\nThe plugin could not be auto-submitted with these settings."));

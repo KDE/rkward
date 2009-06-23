@@ -373,10 +373,14 @@ void RThread::handleError (QString *call, int call_length) {
 	waitIfOutputPaused ();
 
 	MUTEX_LOCK;
-	// Unfortunately, errors still get printed to the output. We try this crude method for the time being:
+	// Unfortunately, errors still get printed to the output, UNLESS a sink() is in place. We try this crude method for the time being:
 	flushOutput ();
 	if (current_command) {
-		current_command->output_list.last ()->type = ROutput::Error;
+		if (!current_command->output_list.isEmpty ()) {
+			if (current_command->output_list.last ()->output == call[0]) {
+				current_command->output_list.last ()->type = ROutput::Error;
+			}
+		}
 		current_command->status |= RCommand::HasError;
 	}
 

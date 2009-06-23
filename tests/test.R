@@ -9,8 +9,8 @@ setClass ("RKTestSuite",
 	)
 
 setClass ("RKTest",
-		representation (id="character", call="function", compare_code="logical", compare_output="logical", fuzzy_output="logical", expect_error="logical"),
-		prototype(character(0), id=NULL, call=function () { stop () }, compare_code=TRUE, compare_output=TRUE, fuzzy_output=FALSE, expect_error=FALSE),
+		representation (id="character", call="function", fuzzy_output="logical", expect_error="logical"),
+		prototype(character(0), id=NULL, call=function () { stop () }, fuzzy_output=FALSE, expect_error=FALSE),
 		validity=function (object) {
 			if (is.null (object@id)) return (FALSE)
 			return (TRUE)
@@ -30,11 +30,11 @@ setMethod ("show", "RKTestResult", function (object) {
 
 	for (i in 1:length (object@id)) {
 		cat (format (object@id[i], width=20))
-		cat (format (as.character (object@code_match[i]), width=15))
-		cat (format (as.character (object@output_match[i]), width=15))
-		cat (format (as.character (object@message_match[i]), width=15))
-		cat (format (as.character (object@error[i]), width=15))
-		cat (format (if (object@passed[i]) "PASS" else "FAIL", width=15))
+		cat (format (if (object@code_match[i]) "true" else "FALSE", width=15))
+		cat (format (if (object@output_match[i]) "true" else "FALSE", width=15))
+		cat (format (if (object@message_match[i]) "true" else "FALSE", width=15))
+		cat (format (if (object@error[i]) "TRUE" else "false", width=15))
+		cat (format (if (object@passed[i]) "pass" else "FAIL", width=15))
 		cat ("\n")
 	}
 })
@@ -78,7 +78,35 @@ rktest.compare.against.standard <- function (file) {
 
 	output.diff <- system(paste("diff", shQuote(file), shQuote(standard_file), "2>&1"), intern=TRUE)
 	if (!length (output.diff)) return (TRUE)
-	return (!nzchar (output.diff))
+	if ((length (output.diff) == 1) && (!nzchar (output.diff))) return (TRUE)
+
+	print (paste ("Differences between", file, "and", standard_file, ":"))
+	print (output.diff)
+	return (FALSE)
+}
+
+rktest.runRKTest.internal <- function (test, output_file, code_file, message_file) {
+	# save / restore old output file
+	old_output <- rk.get.output.html.file ()
+	rk.set.output.html.file (output_file)
+	on.exit (rk.set.output.html.file (old_output), add=TRUE)
+
+	message_file_handle <- file (message_file, open="w+")
+	sink(message_file_handle, type="message")
+	on.exit ({
+			sink (NULL, type="message")
+			close (message_file_handle)
+		}, add=TRUE)
+
+	rk.record.commands (code_file)
+	on.exit (rk.record.commands (NULL), add=TRUE)
+
+	failed <- TRUE
+	try ({
+		test@call ()
+		failed <- FALSE
+	})
+	return (failed)
 }
 
 rktest.runRKTest <- function (test) {
@@ -88,33 +116,34 @@ rktest.runRKTest <- function (test) {
 	result@id <- test@id
 	if (!validObject (test)) return (result)
 
-	# save / restore old output file
-	old_output <- rk.get.output.html.file ()
-	rk.set.output.html.file (rk.testrun.file (test@id, ".rkout"))
-	on.exit (rk.set.output.html.file (old_output), add=TRUE)
-
+	output_file <- rktest.file (test@id, ".rkout")
+	code_file <- rktest.file (test@id, ".rkcom")
 	message_file <- rktest.file (test@id, ".rkwarn")
-	#sink(message_file, type="message")
-	#on.exit (sink (NULL, type="message"))
 
-	#code_file <- rk.testrun.file (test@id, ".rkcom")
-	#rk.record.user.commands (code_file)
-	#on.exit (rk.record.user.commands (NULL))
+	# the essence of the test:
+	result@error <- rktest.runRKTest.internal (test, output_file, code_file, message_file)
 
-	result@error <- TRUE
-	try ({
-		test@call ()
-		result@error <- FALSE
-	})
-
-	result@output_match = rktest.compare.against.standard (rk.get.output.html.file ())
+	result@output_match = rktest.compare.against.standard (output_file)
 	result@message_match = rktest.compare.against.standard (message_file)
-	#result@code_match = rktest.compare.against.standard (code_file)
-	result@code_match = TRUE		# TODO: only for now!
+	result@code_match = rktest.compare.against.standard (code_file)
 
 	if ((result@error == test@expect_error) && (result@output_match || test@fuzzy_output) && result@code_match && result@message_match) result@passed = TRUE
 	
 	result
+}
+
+rktest.cleanRKTestSuite <- function (suite, basedir=getwd ()) {
+	oldwd = getwd ()
+	on.exit (setwd (oldwd))
+	setwd (paste (basedir, suite@id, sep="/"))
+
+	files <- list.files ()
+	# do not delete the standards!
+	files <- grep (".*\\.standard$", files, value=TRUE, invert=TRUE)
+
+	file.remove (files)
+
+	invisible (NULL)
 }
 
 rktest.runRKTestSuite <- function (suite, basedir=getwd ()) {
@@ -123,14 +152,12 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd ()) {
 	if (!inherits (suite, "RKTestSuite")) return (result)
 	if (!validObject (suite)) return (result)
 
+	# clean any old results
+	rktest.cleanRKTestSuite (suite, basedir)
+
 	system (paste ("tar -xf", suite@id, ".tar", sep=""))
 	oldwd = getwd ()
 	on.exit (setwd (oldwd))
-
-	# clean any old files
-	setwd (paste (basedir, suite@id, sep="/"))
-	system ("find . -name '*.standard' -o -exec rm {} \\;")#
-
 	setwd (paste (basedir, suite@id, sep="/"))
 
 	if (length (suite@initCalls) > 0) {
@@ -149,43 +176,45 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd ()) {
 	result
 }
 
-rktest.packageSuiteStandards <- function (suite, basedir=getwd ()) {
+rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
 	if (!inherits (suite, "RKTestSuite")) return (result)
 	if (!validObject (suite)) return (result)
 
+	ok <- readline ("You are about to set new standards for this suite. This means you are certain that ALL tests in this suite have produced the expected/correct result on the last run. If you are absolutely sure, enter \"I am sure\" to proceed.");
+	if (ok != "I am sure") stop ("Aborted")
+
 	oldwd = getwd ()
 	on.exit (setwd (oldwd))
+	setwd (paste (basedir, suite@id, sep="/"))
+
+	files <- list.files ()
+	files <- grep (".*\\.(rkwarn|rkcom|rkout)$", files, value=TRUE)
+	file.copy (files, paste (files, ".standard", sep=""), overwrite=TRUE)
+
+	# clean anything that is *not* a standard file
+	rktest.cleanRKTestSuite (suite, basedir)
 
 	# create package
 	setwd (basedir)
 	system (paste ("tar -cf ", suite@id, ".tar ", suite@id, sep=""))
 }
 
-rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
-	if (!inherits (suite, "RKTestSuite")) return (result)
-	if (!validObject (suite)) return (result)
 
-	oldwd = getwd ()
-	on.exit (setwd (oldwd))
-	setwd (paste (basedir, suite@id, sep="/"))
-
-	system ("find . -name '*.standard' -o -exec cp {} {}.standard \\;")#
+# You can use this to temporarily replace .rk.rerun.plugin.link.
+# This way, after running a plugin, you are shown the call needed to run this
+# plugin with those settings, instead of the link.
+.rk.rerun.plugin.link.replacement <- function (plugin, settings, label) {
+	.rk.cat.output ("<h3>Rerun code:</h3>")
+	.rk.cat.output ("<pre>")
+	.rk.cat.output ("rk.call.plugin (\"")
+	.rk.cat.output (plugin)
+	.rk.cat.output ("\", ")
+	.rk.cat.output (gsub ("=", "=\"", gsub ("\n", "\", ", gsub ("\"", "\\\"", settings))))
+	.rk.cat.output ("\", submit.mode=\"submit\")</pre>")
 }
 
-x <- new ("RKTest", id="firsttest", call=function () rk.print (1))
-
-suite <- new ("RKTestSuite", id="testsuite",
-	initCalls = list (
-		function () {
-			library ("R2HTML")
-		}
-	), tests = list (
-		new ("RKTest", id="firsttestb", call=function () rk.print (1)),
-		new ("RKTest", id="secondtest", call=function () rk.print (2)),
-		x
-	), postCalls = list ()
-)
-
-y <- rktest.runRKTestSuite (suite)
-
-y
+# HACK: Override date, so we don't get a difference for each call of rk.header ()
+# TODO: implement a clean solution inside rk.header()
+date <- function () {
+	return ("DATE")
+}

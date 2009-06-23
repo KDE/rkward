@@ -24,6 +24,7 @@
 #include <QList>
 
 class RKStandardComponentGUI;
+class RCommandChain;
 class RKComponentHandle;
 class RKStandardComponentStack;
 class ScriptBackend;
@@ -70,10 +71,13 @@ public:
 	bool haveHelp () { return have_help; };
 /** tries to submit. Warning: This function waits for all changes to come in and may not return immediately!
 @param max_wait Maximum time to wait for changes to settle in msecs (approx.)
+@param in_chain The command chain to insert the command in (0 for regular command stack).
 @return true, if the plugin-code could be submitted */
-	bool submit (int max_wait=1000);
+	bool submit (int max_wait=1000, RCommandChain *in_chain = 0);
 /** convenience access function: closes the corresponding GUI */
 	void close ();
+
+	RCommandChain *commandChain () const { return command_chain; };
 public slots:
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */
@@ -99,6 +103,7 @@ private:
 	RKComponentHandle *handle;
 	RKStandardComponentStack *wizard;
 	QTimer *handle_change_timer;
+	RCommandChain *command_chain;
 /** Avoid updating code-display, etc. until the component is fully created */
 	bool created;
 	bool createTopLevel (const QDomElement &doc_element, int force_mode=0, bool enslaved=false);

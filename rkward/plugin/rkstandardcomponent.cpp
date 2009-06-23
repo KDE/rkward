@@ -62,6 +62,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 
 	RKStandardComponent::filename = filename;
 	RKStandardComponent::handle = handle;
+	command_chain = 0;
 	backend = 0;
 	gui = 0;
 	wizard = 0;
@@ -309,22 +310,26 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	changed ();
 }
 
-bool RKStandardComponent::submit (int max_wait) {
+bool RKStandardComponent::submit (int max_wait, RCommandChain *in_chain) {
 	RK_TRACE (PLUGIN);
+
+	RCommandChain *old_chain = command_chain; 	// should always be 0, but let's store it cleanly
+	command_chain = in_chain;
+	bool result = false;
 
 	QTime t;
 	t.start ();
 	while ((handle_change_timer->isActive () || backend->isBusy ()) && (t.elapsed () < max_wait)) {
 		QCoreApplication::processEvents (QEventLoop::ExcludeUserInputEvents, (max_wait / 2));
 	}
-	if (handle_change_timer->isActive () || backend->isBusy ()) {
-		return false;
+	if (!(handle_change_timer->isActive () || backend->isBusy ())) {
+		if (isSatisfied ()) {
+			gui->ok ();
+			result = true;
+		}
 	}
-	if (isSatisfied ()) {
-		gui->ok ();
-		return true;
-	}
-	return false;
+	command_chain = old_chain;
+	return result;
 }
 
 void RKStandardComponent::close () {

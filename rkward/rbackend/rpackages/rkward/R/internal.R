@@ -388,3 +388,21 @@ formals (setwd) <- formals (base::setwd)
 ".rk.make.hr" <- function () {
 	.rk.cat.output ("<hr>\n");
 }
+
+# Start recording commands that are submitted from rkward to R.
+# filename: filename to write to (file will be truncated!).
+# include.sync.commands: Should internal synchronisation commands be included?
+# To stop recording, supply NULL or "" as filename
+# Currently used for the purpose of automated testing, only. Perhaps in the future
+# this or a similar mechanism could also be added as a user feature.
+"rk.record.commands" <- function (filename, include.sync.commands = FALSE) {
+	if (is.null (filename)) filename = ""
+
+	res <- .rk.do.call ("recordCommands", c(as.character (filename), if (include.sync.commands) "include.sync" else "normal"))
+
+	if (is.null (res)) invisible (TRUE)
+	else {
+		warning (res)
+		invisible (FALSE)
+	}
+}
